@@ -586,6 +586,7 @@ function flog(msg){
  * Returns: 
  * null
  */ 
+if(window == window.top) 
 window['ghostwriter']['flushloadhandlers']= window['ghostwriter']['fh']= (function(){ 
 var 
  D= document
@@ -746,6 +747,7 @@ return flushloadhandlers;
 
 /* Title: DOMTree 
  */
+if(window == window.top) 
 window['ghostwriter']['domtree']= (function(){
 	var 
 
@@ -930,6 +932,7 @@ return domtree;
  * (end code) 
  *
  */
+if(window == window.top)  
 window['ghostwriter']['domelement']= (function(){
 var 
  D= document
@@ -1302,7 +1305,7 @@ return function (tn,attributes){
 
 })(); 
 
-
+if(window == window.top)
 window['ghostwriter']['htmlstreamparser']= (function(){
 var 
 startTag= /^<(\w+)((?:\s+[\w\-:]+(?:\s*=\s*(?:(?:"[^"]*")|(?:'[^']*')|[^>\s]+))?)*)\s*(\/?)>/,
@@ -1622,6 +1625,7 @@ return HTMLParser;
 
 
 /* Section: Script Loading */
+if(window == window.top)
 window['ghostwriter']['loadscripts']= function(){
 var	
 	 D= document
