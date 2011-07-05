@@ -31,10 +31,6 @@ if ( isset( $options['help'] ) && $options['help'] ) {
 
 require_once( "$IP/extensions/wikia/hacks/UserPathPrediction/UserPathPrediction.setup.php" );
 
-
-
-
-
 $app = F::app();
 
 $app->sendRequest( "UserPathPredictionService", "processOneDotData" );
