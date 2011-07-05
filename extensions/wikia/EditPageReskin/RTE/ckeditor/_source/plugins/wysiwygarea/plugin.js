@@ -129,8 +129,13 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			if ( selIsLocked )
 				this.getSelection().lock();
 		}
-		else
-			this.document.$.execCommand( 'inserthtml', false, data );
+		else {
+			// fix NS_ERROR_FAILURE exception in Firefox
+			var self = this;
+			setTimeout(function() {
+				self.document.$.execCommand( 'inserthtml', false, data );
+			}, 100);
+		}
 
 		// Webkit does not scroll to the cursor position after pasting (#5558)
 		if ( CKEDITOR.env.webkit )

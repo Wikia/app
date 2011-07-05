@@ -375,8 +375,6 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				// it's introduced by a document command execution (e.g. toolbar buttons) or
 				// user paste behaviors. (e.g. Ctrl-V)
 
-				// Wikia - start
-				// commented out (caused RT #40922)
 				editor.on( 'contentDom', function()
 				{
 					var body = editor.document.getBody();
@@ -384,23 +382,28 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
   						{
   							if ( depressBeforeEvent )
   								return;
-  
+
  							// Fire 'beforePaste' event so clipboard flavor get customized
  							// by other plugins.
  							var eventData =  { mode : 'html' };
  							editor.fire( 'beforePaste', eventData );
- 
+
+							/**
+							 * Wikia change
+							 * Commented out because of RT#40922
+							 *
  							getClipboardData.call( editor, evt, eventData.mode, function ( data )
   							{
   								// The very last guard to make sure the
   								// paste has successfully happened.
  								if ( !( data = CKEDITOR.tools.trim( data.replace( /<span[^>]+data-cke-bookmark[^<]*?<\/span>/ig,'' ) ) ) )
   									return;
-  
+
   								var dataTransfer = {};
  								dataTransfer[ eventData.mode ] = data;
   								editor.fire( 'paste', dataTransfer );
 							} );
+							/**/
 						});
 
 					body.on( 'beforecut', function() { !depressBeforeEvent && fixCut( editor ); } );
@@ -450,7 +453,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
  */
 
 /**
- * Force plain text pasting 
+ * Force plain text pasting
  * @type Boolean
  * @default false
  * @example

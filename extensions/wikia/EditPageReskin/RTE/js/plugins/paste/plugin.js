@@ -22,15 +22,21 @@ CKEDITOR.plugins.add('rte-paste',
 		});
 
 		// @see clipboard CK core plugin
-		editor.on('beforepaste', function(ev) {
-			// store HTML before paste
-			self.htmlBeforePaste = self.getHtml();
+		if (!editor.config.forcePasteAsPlainText) {
+			editor.on('beforePaste', function(ev) {
+				if (ev.data.mode && ev.data.mode == 'text') {
+					return true;
+				}
 
-			// handle pasted HTML (mainly for tracking stuff)
-			setTimeout(function() {
-				self.handlePaste(editor);
-			}, 250);
-		});
+				// store HTML before paste
+				self.htmlBeforePaste = self.getHtml();
+
+				// handle pasted HTML (mainly for tracking stuff)
+				setTimeout(function() {
+					self.handlePaste(editor);
+				}, 250);
+			});
+		}
 	},
 
 	// get pasted HTML
