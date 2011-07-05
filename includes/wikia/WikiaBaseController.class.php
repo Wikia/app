@@ -106,7 +106,7 @@ abstract class WikiaBaseController {
 	/**
 	 * force framework to skip rendering the template
 	 */
-	protected function skipRendering() {
+	public function skipRendering() {
 		$this->response->setBody('');
 	}
 
