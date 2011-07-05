@@ -588,16 +588,13 @@ class WikiaPhotoGallery extends ImageGallery {
 		$fileObjectsCache = array();
 		$heights = array();
 		$widths = array();
-		$images = array();
 
 		// loop throught the images and get height of the tallest one
 		foreach ($this->mImages as $imageData) {
 
 			$img = $this->getImage($imageData[0]);
-
+			$fileObjectsCache[] = $img;
 			if (!empty($img)) {
-				$images[] = $imageData;
-				$fileObjectsCache[] = $img;
 
 				// get thumbnail limited only by given width
 				if ( $img->width > $thumbSize ) {
@@ -617,7 +614,6 @@ class WikiaPhotoGallery extends ImageGallery {
 			}
 		}
 
-		$this->mImages = $images;
 
 		// calculate height based on gallery width
 		$height = round($thumbSize / $ratio);
@@ -849,18 +845,23 @@ class WikiaPhotoGallery extends ImageGallery {
 					'class' => $image['classes'],
 					'data-image-name' => $image['linkTitle'],
 					'href' => $image['link'],
-					'title' => $image['linkTitle']. (isset($image['bytes'])?' ('.$skin->formatSize($image['bytes']).')':"")
+					'title' => $image['linkTitle']. (isset($image['bytes'])?' ('.$skin->formatSize($image['bytes']).')':""),
+					'style' => (!empty($image['thumbnail'])? '' : "height:{$image['height']}px;")
 				)
 			);
-			$html .= Xml::openElement(
-				'img',
-				array(
-					'style' => ((!empty($image['titleText'])) ? " line-height:{$image['height']}px;" : null).
-						$imgStyle,
-					'src' => (($image['thumbnail']) ? $image['thumbnail'] : null),
-					'title' => $image['linkTitle']. (isset($image['bytes'])?' ('.$skin->formatSize($image['bytes']).')':"")
-				)
-			);
+			if (!empty($image['thumbnail'])) {
+				$html .= Xml::openElement(
+					'img',
+					array(
+						'style' => ((!empty($image['titleText'])) ? " line-height:{$image['height']}px;" : null).
+							$imgStyle,
+						'src' => (($image['thumbnail']) ? $image['thumbnail'] : null),
+						'title' => $image['linkTitle']. (isset($image['bytes'])?' ('.$skin->formatSize($image['bytes']).')':"")
+					)
+				);
+			} else {
+				$html .= $image['linkTitle'];
+			}
 			$html .= Xml::closeElement('a');
 			if ( $orientation != 'none' ) {
 				$html .= Xml::closeElement('p');
