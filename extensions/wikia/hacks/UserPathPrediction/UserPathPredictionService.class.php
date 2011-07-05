@@ -19,7 +19,7 @@ class UserPathPredictionService extends WikiaService {
 
 	private function log( $msg ) {
 		if( $this->wg->DevelEnvironment ) {
-			file_put_contents($this->logPath, var_export( $msg, true ) . "\n", FILE_APPEND);
+			file_put_contents($this->logPath, var_export( date("Y-m-d H:i:s")." : ".$msg, true ) . "\n", FILE_APPEND);
 		}
 	}
 
@@ -30,64 +30,81 @@ class UserPathPredictionService extends WikiaService {
 
 	//Parse - extracts needed data from downloaded onedot files
 	function processOneDotData() {
+						
+					//$this->model->cleanSourceFolder();
+					//return true;
 		//TODO: move to model
-		$this->wikis = $this->model->getWikis();
-		$this->model->gets3Data($this->yesterday);		
-		$this->model->resetParsedData();
-		
 		$this->log( "Starting parsing part\n" );
+		
+		$this->wikis = $this->model->getWikis();
+	
+		
+		if( $this->model->gets3Data( $this->yesterday ) ) {	
 
-		while( ( $src = $this->model->getContent() ) === false ) {
-
-			$fileHandle = fopen( $src );
-			while( !feof( $fileHandle ) ) {
-				$wholeLine = explode( "&", fgets( $fileHandle ));
-				$result = array();
-				foreach( $wholeLine as $param ) {
-					$parameters = explode( "=", $param );
-					$value = $parameters[1];
-					switch( $parameters[0] ) {
-						case "c" :
-							$result["c"] = $value;
+			$this->model->resetParsedData();
+			
+			while( ( $src = $this->model->getContent() ) !== false ) {
+				
+				$fileHandle = fopen( $src , "r" );
+				
+				while( !feof( $fileHandle ) ) {
+					$skip = false;
+					$wholeLine = explode( "&", fgets( $fileHandle ));
+					$result = array();
+					foreach( $wholeLine as $param ) {
+						$parameters = explode( "=", $param );
+						$value = $parameters[1];
+						
+						switch ( $parameters[0] ) {
+							case "r" :
+								$result["r"] = $value;
+								break;
+							case "a" :
+								$result["a"] = $value;
+								break;
+							case "lv" :
+								$result["lv"] = $value;
+								break;
+							case "event":
+									$skip = true;									
+								break;
+						}
+						
+						if($skip == true) {
 							break;
-						case "r" :
-							$result["r"] = $value;
-							break;
-						case "a" :
-							$result["a"] = $value;
-							break;
-						case "lv" :
-							$result["lv"] = $value;
-							break;
+						}
 					}
-				}
-				if( !empty( $result["r"] ) ) {
-					foreach( $this->model->getWikis() as $wiki ) {
-						$hasWikiPrefix = strpos( $wiki["domain_name"], '.wikia.com' );
-						$mainURL = ( $hasWikiPrefix ? 
-							$this->fixURL('http://' . $wiki["domain_name"] . '/') : 
-							$this->fixURL('http://www.' . $wiki["domain_name"] . '/') );
-							
-						if( strpos( $result["r"], $mainURL ) === 0 ) {
-							if( $hasWikiPrefix) {
-								$articleName = str_ireplace( $mainURL . 'wiki/', '', $result["r"] );
-							} else {
-								$articleName = str_ireplace( $mainURL, '', $result["r"] );
-							}
-
-							$title = Title::newFromText( rawurlencode($articleName) );
-							
-							if( $title->exists() ) {
-								$result["r"] = $title->getArticleID();
-								$this->model->saveParsedData( $wikis["db_name"], $result );	
+					
+					if($skip == true) {
+							continue;
+					}
+					
+					if( !empty( $result["r"] ) ) {
+						foreach( $this->model->getWikis() as $wiki ) {
+							$hasWikiPrefix = strpos( $wiki["domain_name"], '.wikia.com' );
+							$mainURL = ( $hasWikiPrefix ? 
+								$this->fixURL('http://' . $wiki["domain_name"] . '/') : 
+								$this->fixURL('http://www.' . $wiki["domain_name"] . '/') );
+								
+							if( strpos( $result["r"], $mainURL ) === 0 ) {
+								if( $hasWikiPrefix) {
+									$articleName = str_ireplace( $mainURL . 'wiki/', '', $result["r"] );
+								} else {
+									$articleName = str_ireplace( $mainURL, '', $result["r"] );
+								}
+								
+								if( !empty( $articleName ) ) {
+									$result["r"] = $articleName;
+									$this->model->saveParsedData( $wiki["db_name"], $result );	
+								}
 							}
 						}
 					}
 				}
+				fclose( $fileHandle );
+				$this->log( "File " . $src . " has been processed\n" );
 			}
-			fclose( $fileHandle );
-			$this->log( "File " . $src . " has been processed\n" );
+			$this->model->cleanSourceFolder();
 		}
-		$this->model->cleanSourceFolder();
 	}
 }

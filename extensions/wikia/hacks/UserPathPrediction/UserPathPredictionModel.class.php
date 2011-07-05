@@ -33,15 +33,15 @@ class UserPathPredictionModel {
 	} 
 	
 	function gets3Data( $timestr ) {
-		$this->removeDir(self::SAVE_PATH);
-		$s3directory = self::S3_ARCHIVE . "{$timestr}/";
-		$this->createDir( self::SAVE_PATH );
-		echo shell_exec( "s3cmd get --recursive {$s3directory} " . self::SAVE_PATH );
+		//$this->removeDir(self::SAVE_PATH);
+		//$s3directory = self::S3_ARCHIVE . "{$timestr}/";
+		//$this->createDir( self::SAVE_PATH );
+		//echo shell_exec( "s3cmd get --recursive {$s3directory} " . self::SAVE_PATH );
 		
 		$tmpFiles = scandir( self::SAVE_PATH );
 		
 		if(count( $tmpFiles )  > 2 ) {
-			$this->files = array_slice($this->files,2);	
+			$this->files = array_slice( $tmpFiles, 2 );	
 			return true;
 		}
 		
@@ -53,21 +53,18 @@ class UserPathPredictionModel {
 
 		if($read === false) {
 			reset($this->files);
+			return false;
 		} 
 		
-		return $read;
+		return self::SAVE_PATH . $read;
 	}
 	
-	function resetParsedData() {
-		$this->removeDir(self::SPLIT_DIR);
-	}
-	
-	function saveParsedData( $domain, $a, $c, $ra, $lv ) {
+	function saveParsedData( $domain, $data ) {
 		if( !is_dir( self::SPLIT_DIR )) {
 				$this->createDir( self::SPLIT_DIR );
 		}
 		
-		file_put_contents( self::SPLIT_DIR . $domain, serialize( array("a" => $a, "c" => $c, "ra" => $ra, "lv" => $lv)) . "\n", FILE_APPEND );
+		file_put_contents( self::SPLIT_DIR . $domain, serialize( $data ) . "\n", FILE_APPEND );
 	}
 	
 	function getWikis() {
@@ -88,7 +85,11 @@ class UserPathPredictionModel {
 					
 	}
 	
+	function resetParsedData() {
+		$this->removeDir(self::SPLIT_DIR);
+	}
+	
 	function cleanSourceFolder() {
-		$this->removeDir( self::SAVE_PATH );
+		//$this->removeDir( self::SAVE_PATH );
 	}
 }
