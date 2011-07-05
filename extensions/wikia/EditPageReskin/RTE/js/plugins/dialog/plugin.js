@@ -153,6 +153,8 @@ CKEDITOR.plugins.add('rte-dialog',
 		};
 
 		// always show body's scrollbars when modal is shown (BugId:7498)
+		/**
+		 * addClass/removeClass causes issues with pasting as editor focus is lost
 		editor.on('dialogShow', function(ev) {
 			$(document.body).addClass('modalShown');
 		});
@@ -160,5 +162,6 @@ CKEDITOR.plugins.add('rte-dialog',
 		editor.on('dialogHide', function(ev) {
 			$(document.body).removeClass('modalShown');
 		});
+		**/
 	}
 });
