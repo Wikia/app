@@ -59,6 +59,12 @@
 	border-style: solid;
 }
 
+.wikia-gallery-item .thumb .gallery-image-wrapper .broken-image {
+	display: table-cell;
+	line-height: 15px;
+	vertical-align: middle;
+}
+
 /* bordersize  */
 .wikia-gallery-border-none .thumb .gallery-image-wrapper {
 	border: none;
