@@ -477,13 +477,14 @@ class FounderProgressBarController extends WikiaController {
 	private function getCompletionData(Array $list) {
 		$data = array();
 		$total_tasks = count($list);
+		if ($total_tasks == 0) return $data;  // Prevent any divide by zero possibility
 		$tasks_completed = 0;
 		$tasks_skipped = 0;
 		$bonus_tasks = 0;
 		foreach ($list as $task) {
 			if ($task['task_skipped'] == 1) $tasks_skipped ++;
 			if ($task['task_completed'] == 1) $tasks_completed ++;
-			if (isset($this->bonus_tasks[$task['task_id']])) {
+			if (in_array($task['task_id'], $this->bonus_tasks)) {
 				$bonus_tasks ++;
 			}
 		}
