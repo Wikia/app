@@ -8,6 +8,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'controlcenter-title' => '{{SITENAME}} Dashboard',
 	'controlcenter-header' => 'Admin Dashboard',
 	'controlcenter-header-help' => 'Need <a href="$1">Help?</a>',
 	'controlcenter-header-exit' => '<a href="$1">Exit</a>',

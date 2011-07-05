@@ -17,6 +17,12 @@ class ControlCenterSpecialPageController extends WikiaSpecialPageController {
 	 * 
 	 */
 	public function index() {
+		F::app()->wg->Out->setPageTitle(wfMsg('controlcenter-title'));
+		if (!F::app()->wg->User->isAllowed( 'controlcenter' )) {
+			$this->displayRestrictionError();
+			$this->skipRendering();
+			return true;
+		}
 		global $wgRequest;
 		$this->response->setVal('tab', $wgRequest->getVal('tab', 'general'));
 		
@@ -48,6 +54,12 @@ class ControlCenterSpecialPageController extends WikiaSpecialPageController {
 	 */
 	public function getAdvancedSection() {
 		global $wgOut, $wgUser, $wgMessageCache, $wgSortSpecialPages, $wgSpecialPagesRequiredLogin;
+		
+		if (!F::app()->wg->User->isAllowed( 'controlcenter' )) {
+			$this->displayRestrictionError();
+			$this->skipRendering();
+			return true;
+		}
 		
 		$excludedPages = array(
 			'ThemeDesigner' => true,
@@ -101,43 +113,14 @@ class ControlCenterSpecialPageController extends WikiaSpecialPageController {
 
 		$this->setVal('sk', $sk);
 		$this->setVal('groups', $groups);
-		/*
-	
-		$includesRestrictedPages = false;
-		foreach ( $groups as $group => $sortedPages ) {
-			$middle = ceil( count($sortedPages)/2 );
-			$total = count($sortedPages);
-			$count = 0;
-	
-			$wgOut->wrapWikiMsg( "<h4 class=\"mw-specialpagesgroup\" id=\"mw-specialpagesgroup-$group\">$1</h4>\n", "specialpages-group-$group" );
-			$wgOut->addHTML( "<table style='width: 100%;' class='mw-specialpages-table'><tr>" );
-			$wgOut->addHTML( "<td width='30%' valign='top'><ul>\n" );
-			foreach( $sortedPages as $desc => $specialpage ) {
-				list( $title, $restricted ) = $specialpage;
-				$link = $sk->linkKnown( $title , htmlspecialchars( $desc ) );
-				if( $restricted ) {
-					$includesRestrictedPages = true;
-					$wgOut->addHTML( "<li class='mw-specialpages-page mw-specialpagerestricted'><strong>{$link}</strong></li>\n" );
-				} else {
-					$wgOut->addHTML( "<li>{$link}</li>\n" );
-				}
-	
-				# Split up the larger groups
-				$count++;
-				if( $total > 3 && $count == $middle ) {
-					$wgOut->addHTML( "</ul></td><td width='10%'></td><td width='30%' valign='top'><ul>" );
-				}
-			}
-			$wgOut->addHTML( "</ul></td><td width='30%' valign='top'></td></tr></table>\n" );
-		}
-	
-		if ( $includesRestrictedPages ) {
-			$wgOut->wrapWikiMsg( "<div class=\"mw-specialpages-notes\">\n$1\n</div>", 'specialpages-note' );
-		}
-		*/
 	}
 	
 	public function chromedArticleHeader() {
+		if (!F::app()->wg->User->isAllowed( 'controlcenter' )) {
+			$this->displayRestrictionError();
+			$this->skipRendering();
+			return true;
+		}
 		$this->response->setVal('headerText', $this->request->getVal('headerText'));
 		$this->response->setVal('backLink', Title::newFromText('ControlCenter', NS_SPECIAL)->getFullURL());
 	}
@@ -153,6 +136,11 @@ class ControlCenterSpecialPageController extends WikiaSpecialPageController {
 	 */
 	
 	public function GetSpecialPage () {
+		if (!F::app()->wg->User->isAllowed( 'controlcenter' )) {
+			$this->displayRestrictionError();
+			$this->skipRendering();
+			return true;
+		}
 
 		// Construct title object from request params
 		$pageName = $this->request->getVal("page");
