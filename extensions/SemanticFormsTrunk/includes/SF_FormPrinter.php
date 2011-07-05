@@ -652,7 +652,7 @@ END;
 					$input_type = null;
 					$field_args = array();
 					$show_on_select = array();
-					$default_value = "";
+					$default_value = null;
 					$possible_values = null;
 					$semantic_property = null;
 					$preload_page = null;
@@ -780,12 +780,15 @@ END;
 						// necessary.
 						$field_args['no autocomplete'] = true;
 					}
-					if ( $allow_multiple )
+					if ( $allow_multiple ) {
 						$field_args['part_of_multiple'] = $allow_multiple;
-					if ( count( $show_on_select ) > 0 )
+					}
+					if ( count( $show_on_select ) > 0 ) {
 						$field_args['show on select'] = $show_on_select;
+					}
 					// Get the value from the request, if
 					// it's there, and if it's not an array.
+					$cur_value = null;
 					$escaped_field_name = str_replace( "'", "\'", $field_name );
 					if ( isset( $template_instance_query_values ) &&
 						$template_instance_query_values != null &&
@@ -805,8 +808,6 @@ END;
 						if ( $form_submitted || ( ! empty( $field_query_val ) && ! is_array( $field_query_val ) ) ) {
 							$cur_value = $field_query_val;
 						}
-					} else {
-						$cur_value = '';
 					}
 
 					if ( empty( $cur_value ) && !$form_submitted ) {
@@ -1372,8 +1373,8 @@ END;
 		$page_article = new Article( $this->mPageTitle );
 		$edittime = $page_article->getTimestamp();
 		if ( !$is_query ) {
-			$form_text .= "\t" . Html::Hidden( 'wpStarttime', wfTimestampNow() ) . "\n";
-			$form_text .= "\t" . Html::Hidden( 'wpEdittime', $page_article->getTimestamp() ) . "\n";
+			$form_text .= SFFormUtils::hiddenFieldHTML( 'wpStarttime', wfTimestampNow() );
+			$form_text .= SFFormUtils::hiddenFieldHTML( 'wpEdittime', $page_article->getTimestamp() );
 		}
 		$form_text .= "\t</form>\n";
 

@@ -233,18 +233,18 @@ class SFUtils {
 	<p style="position: absolute; left: 45%; top: 45%;"><img src="$sfgScriptPath/skins/loading.gif" /></p>
 
 END;
-		$form_body = "\t" . Html::hidden( 'wpTextbox1', $page_contents ) . "\n";
-		$form_body .= "\t" . Html::hidden( 'wpSummary', $edit_summary ) . "\n";
-		$form_body .= "\t" . Html::hidden( 'wpStarttime', $start_time ) . "\n";
-		$form_body .= "\t" . Html::hidden( 'wpEdittime', $edit_time ) . "\n";
-		$form_body .= "\t" . Html::hidden( 'wpEditToken', $wgUser->isLoggedIn() ? $wgUser->editToken() : EDIT_TOKEN_SUFFIX ) . "\n";
-		$form_body .= "\t" . Html::hidden( $action, null ) . "\n";
+		$form_body = SFFormUtils::hiddenFieldHTML( 'wpTextbox1', $page_contents );
+		$form_body .= SFFormUtils::hiddenFieldHTML( 'wpSummary', $edit_summary );
+		$form_body .= SFFormUtils::hiddenFieldHTML( 'wpStarttime', $start_time );
+		$form_body .= SFFormUtils::hiddenFieldHTML( 'wpEdittime', $edit_time );
+		$form_body .= SFFormUtils::hiddenFieldHTML( 'wpEditToken', $wgUser->isLoggedIn() ? $wgUser->editToken() : EDIT_TOKEN_SUFFIX );
+		$form_body .= SFFormUtils::hiddenFieldHTML( $action, null );
 
 		if ( $is_minor_edit ) {
-			$form_body .= "\t" . Html::hidden( 'wpMinoredit' , null ) . "\n";
+			$form_body .= SFFormUtils::hiddenFieldHTML( 'wpMinoredit' , null );
 		}
 		if ( $watch_this ) {
-			$form_body .= "\t" . Html::hidden( 'wpWatchthis', null ) . "\n";
+			$form_body .= SFFormUtils::hiddenFieldHTML( 'wpWatchthis', null );
 		}
 		$text .= Xml::tags(
 			'form',

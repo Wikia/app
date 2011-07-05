@@ -209,7 +209,7 @@ class SFParserFunctions {
 					$query_component = urldecode( $query_component );
 					$var_and_val = explode( '=', $query_component );
 					if ( count( $var_and_val ) == 2 ) {
-						$hidden_inputs .= Html::Hidden( $var_and_val[0], $var_and_val[1] ) . "\n";
+						$hidden_inputs .= SFFormUtils::hiddenFieldHTML( $var_and_val[0], $var_and_val[1] );
 					}
 				}
 			} else {
@@ -351,12 +351,12 @@ END;
 		// (i.e., it's in the default URL style), add in the title as a
 		// hidden value
 		if ( ( $pos = strpos( $fs_url, "title=" ) ) > - 1 ) {
-			$str .= "\t\t\t" . Html::Hidden( "title", urldecode( substr( $fs_url, $pos + 6 ) ) ) . "\n";
+			$str .= SFFormUtils::hiddenFieldHTML( "title", urldecode( substr( $fs_url, $pos + 6 ) ) );
 		}
 		if ( $inFormName == '' ) {
 			$str .= SFUtils::formDropdownHTML();
 		} else {
-			$str .= "\t\t\t" . Html::Hidden( "form", $inFormName ) . "\n";
+			$str .= SFFormUtils::hiddenFieldHTML( "form", $inFormName );
 		}
 		// Recreate the passed-in query string as a set of hidden
 		// variables.
