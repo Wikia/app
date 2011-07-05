@@ -11,9 +11,9 @@
 				<span class="category-gallery-placeholder" ></span>
 			<? } else { ?>
 			<span class="category-gallery-item-image">
-				<a href="<?=$row['url'] ?>" data-ref="<?=$row['data-ref']; ?>" class="<?=$row['class']; ?>" title="<?=$row['title']; ?>">
+				<a href="<?=$row['url'] ?>" data-ref="<?=$row['data-ref']; ?>" class="<?=$row['class']; ?>" title="<?=htmlspecialchars($row['title']); ?>">
 					<? if($row['class'] != 'lightbox'){ ?><div class="category-gallery-item-play"></div><? } ?>
-					<img src="<?=$row['img'] ?>" alt="<?=$row['title'] ?>" style="<?
+					<img src="<?=$row['img'] ?>" alt="<?=htmlspecialchars($row['title']) ?>" style="<?
 						if(!empty($row['dimensions']['w'])){
 							echo "width:".$row['dimensions']['w']."px; ";
 						};
@@ -24,7 +24,7 @@
 				</a>
 			</span>
 			<? } ?>
-			<div class="title"><a href="<?=$row['url'] ?>" class="<?=$row['class']; ?>" title="<?=$row['title']; ?>"><?=$row['title']; ?></a></div>
+			<div class="title"><a href="<?=$row['url'] ?>" class="<?=$row['class']; ?>" title="<?=htmlspecialchars($row['title']); ?>"><?=htmlspecialchars($row['title']); ?></a></div>
 			<div class="title bigger"><? if(!empty($row['targetUrl']) && !empty($row['targetText'])){ echo 'Posted in: <a href="'.$row['targetUrl'].'" title="'.$row['targetText'].'">'.$row['targetText'].'</a>';  } ; ?></div>
 		</div>
 		<? }; if(!$fromAjax){ ?>
