@@ -67,13 +67,17 @@ class SFAutoEditAjaxHandler {
 
 		// If the wiki is read-only we might as well stop right away
 		if ( wfReadOnly ( ) ) {
-			return array( 'autoedit-readonly', wfReadOnlyReason() );
+			$result = new AjaxResponse( wfMsg( 'sf_autoedit_readonly', wfReadOnlyReason() ) );
+			$result->setResponseCode( '400 Bad Request' );
+			return $result;
 		}
 
 		// If we have no target article and no form we might as well stop right away
 		if ( !array_key_exists( 'target', $this->mOptions )
 			&& !array_key_exists( 'form', $this->mOptions ) ) {
-			return 'autoedit-notargetspecified';
+			$result = new AjaxResponse( wfMsg( 'sf_autoedit_notargetspecified' ) );
+			$result->setResponseCode( '400 Bad Request' );
+			return $result;
 		}
 
 		// check if form was specified
@@ -86,12 +90,16 @@ class SFAutoEditAjaxHandler {
 
 			// if no form can be found, return
 			if ( count( $form_names ) == 0 ) {
-				return 'autoedit-noformfound';
+				$result = new AjaxResponse( wfMsg( 'sf_autoedit_noformfound' ) );
+				$result->setResponseCode( '400 Bad Request' );
+				return $result;
 			}
 
 			// if more than one form found, return
 			if ( count( $form_names ) > 1 ) {
-				return 'autoedit-toomanyformsfound';
+				$result = new AjaxResponse( wfMsg( 'sf_autoedit_toomanyformsfound' ) );
+				$result->setResponseCode( '400 Bad Request' );
+				return $result;
 			}
 
 			// There should now be exactly one form.
@@ -124,13 +132,13 @@ class SFAutoEditAjaxHandler {
 			if ( !$form ) {
 				// something went wrong
 				$wgRequest = $oldRequest;
-				return array(
-					'autoedit-nosemanticform',
+				
+				$result = new AjaxResponse( wfMsg( 'sf_autoedit_nosemanticform',
 					array(
 						$this->mOptions['target'],
-						$this->mOptions['form']
-					)
-				);
+						$this->mOptions['form'] ) ) );
+				$result->setResponseCode( '400 Bad Request' );
+				return $result;
 			}
 		} else {
 			$this->addToArray( $data, "wpSave", "Save" );

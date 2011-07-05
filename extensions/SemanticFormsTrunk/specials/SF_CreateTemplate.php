@@ -193,7 +193,7 @@ END;
 
 		$text .= '	<form id="createTemplateForm" action="" method="post">' . "\n";
 		// Set 'title' field, in case there's no URL niceness
-		$text .= "\t" . Html::hidden( 'title', $this->getTitle()->getPrefixedText() ) . "\n";
+		$text .= SFFormUtils::hiddenFieldHTML( 'title', $this->getTitle()->getPrefixedText() );
 		$text .= "\t<p id=\"template_name_p\">" . wfMsg( 'sf_createtemplate_namelabel' ) . ' <input size="25" id="template_name" name="template_name" /></p>' . "\n";
 		$text .= "\t<p>" . wfMsg( 'sf_createtemplate_categorylabel' ) . ' <input size="25" name="category" /></p>' . "\n";
 		$text .= "\t<fieldset>\n";

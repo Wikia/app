@@ -221,7 +221,7 @@ jQuery(document).ready(function() {
 
 		$text = "\t" . '<form action="" method="post">' . "\n";
 		// Set 'title' field, in case there's no URL niceness
-		$text .= "\t" . Html::hidden( 'title', $this->getTitle()->getPrefixedText() ) . "\n";
+		$text .= SFFormUtils::hiddenFieldHTML( 'title', $this->getTitle()->getPrefixedText() );
 		$text .= "\t<p>" . wfMsg( 'sf_createform_nameinput' ) . ' ' . wfMsg( 'sf_createform_nameinputdesc' ) . ' <input size=25 name="form_name" value="' . $form_name . '" />';
 		if ( ! empty( $form_name_error_str ) )
 			$text .= "\t" . Xml::element( 'font', array( 'color' => 'red' ), $form_name_error_str );

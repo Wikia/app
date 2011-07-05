@@ -117,7 +117,7 @@ class SFRunQuery extends IncludableSpecialPage {
 	<form id="sfForm" name="createbox" action="$action" method="post" class="createbox">
 
 END;
-			$text .= "\t" . Html::Hidden( 'query', 'true' ) . "\n";
+			$text .= SFFormUtils::hiddenFieldHTML( 'query', 'true' );
 			$text .= $form_text;
 		}
 		if ( $embedded ) {
