@@ -24,7 +24,7 @@ $wgHooks['OutputPageParserOutput'][] = 'wfWikiAnswersPageTitle';
 // show the answer box
 $wgHooks['OutputPageBeforeHTML'][] = 'wfWikiAnswersAnswerBox';
 
-function wfWikiAnswersAddStyle( &$out, &$sk ) {
+function wfWikiAnswersAddStyle( &$out, &$skin ) {
 	global $wgExtensionsPath, $wgStyleVersion;
 	$out->addExtensionStyle( "$wgExtensionsPath/wikia/WikiAnswers/WikiAnswers.css?$wgStyleVersion" );
 	return true;

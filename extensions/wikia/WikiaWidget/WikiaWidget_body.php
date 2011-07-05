@@ -19,7 +19,7 @@ class WikiaWidget extends SpecialPage {
 		if( !$wgUser->isAllowed( 'wikiawidget' ) ) {
    			$wgOut->addHTML( 'Sorry, this feature is hidden away for staff only. Once we get it working really nicely, we\'ll open it up for everyone.' );
 			return;
-      		}
+		}
 		
 		$tmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 		$output = $tmpl->execute('main'); 

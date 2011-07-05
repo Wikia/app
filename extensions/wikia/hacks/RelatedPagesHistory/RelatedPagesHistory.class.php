@@ -7,7 +7,7 @@
 
 class RelatedPagesHistory {
 
-	public function onBeforePageDisplay( &$out, &$sk ) {
+	public function onBeforePageDisplay( &$out, &$skin ) {
 
 		$app = F::app();
 	
