@@ -37,7 +37,5 @@ require_once( "$IP/extensions/wikia/hacks/UserPathPrediction/UserPathPrediction.
 
 $app = F::app();
 
-echo $app->wg->AutoloadClasses['UserPathPredictionService'];
-
-$app->sendRequest( "UserPathPredictionService", "Download" );
+$app->sendRequest( "UserPathPredictionService", "processOneDotData" );
 ?>
