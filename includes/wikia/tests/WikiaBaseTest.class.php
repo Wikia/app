@@ -25,18 +25,18 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		$this->mockedClasses[] = $className;
 	}
 
-	protected function mockGlobalVariable( $globalName, $returnValue, $callsNum = 1 ) {
+	protected function mockGlobalVariable( $globalName, $returnValue ) {
 		if($this->appMock == null) {
 			$this->markTestSkipped('WikiaBaseTest Error - add parent::setUp() and/or parent::tearDown() to your own setUp/tearDown methods');
 		}
-		$this->appMock->mockGlobalVariable( $globalName, $returnValue, $callsNum );
+		$this->appMock->mockGlobalVariable( $globalName, $returnValue );
 	}
 
-	protected function mockGlobalFunction( $functionName, $returnValue, $callsNum = 1 ) {
+	protected function mockGlobalFunction( $functionName, $returnValue, $callsNum = 1, $inputParams = array() ) {
 		if($this->appMock == null) {
 			$this->markTestSkipped('WikiaBaseTest Error - add parent::setUp() and/or parent::tearDown() to your own setUp/tearDown methods');
 		}
-		$this->appMock->mockGlobalFunction( $functionName, $returnValue, $callsNum );
+		$this->appMock->mockGlobalFunction( $functionName, $returnValue, $callsNum, $inputParams );
 	}
 
 	protected function mockApp() {
@@ -75,13 +75,7 @@ class WikiaAppMock {
 
 		if( in_array( 'getGlobal', $this->methods )) {
 			$globalRegistryMock = $this->testCase->getMock( 'WikiaGlobalRegistry', array( 'get', 'set' ) );
-			// Add up how many globals we are mocking, and how many times each one is supposed to be called
-			// If this number doesn't match, we will get different errors depending on order, but it's the best we can do
-			$total_calls = 0;
-			foreach( $this->mockedGlobals as $globalName => $globalData ) {
-				$total_calls += $globalData['calls'];
-			}
-			$globalRegistryMock->expects( $this->testCase->exactly( $total_calls ) )
+			$globalRegistryMock->expects( $this->testCase->any() )
 				->method( 'get' )
 				->will( $this->testCase->returnCallback(array( $this, 'getGlobalCallback')) );
 		}
@@ -102,12 +96,12 @@ class WikiaAppMock {
 		F::setInstance('App', $this->mock);
 	}
 
-	public function mockGlobalVariable($globalName, $returnValue, $callsNum = 1) {
+	public function mockGlobalVariable($globalName, $returnValue) {
 		if(!in_array( 'getGlobal', $this->methods )) {
 			$this->methods[] = 'getGlobal';
 		}
 		if(!in_array($globalName, $this->mockedGlobals)) {
-			$this->mockedGlobals[$globalName] = array( 'value' => $returnValue, 'calls' => $callsNum );
+			$this->mockedGlobals[$globalName] = array( 'value' => $returnValue );
 		}
 		else {
 			$this->markTestSkipped( "Global variable $globalName already mocked, multiple mocks of the same variable not supported." );
@@ -118,7 +112,8 @@ class WikiaAppMock {
 	 * @brief mock global function
 	 * @param string $functionName
 	 * @param mixed $returnValue
-	 * @param array $inputParams
+	 * @param int $callsNum
+	 * @param array $inputParams  // FIXME: not used
 	 *
 	 * @todo support params
 	 */
@@ -127,15 +122,16 @@ class WikiaAppMock {
 			$this->methods[] = 'runFunction';
 		}
 		if(!in_array($functionName, $this->mockedFunctions)) {
-			$this->mockedFunctions[$functionName] = array( 'value' => $returnValue, 'calls' => $callsNum );
+			$this->mockedFunctions[$functionName] = array( 'value' => $returnValue, 'calls' => $callsNum, 'params' => $inputParams );
 		}
 		else {
 			$this->markTestSkipped( "Function $functionName already mocked, multiple mocks of the same function not supported." );
 		}
 	}
 
+	// If the global variable is not being overridden, return the actual global variable
 	public function getGlobalCallback( $globalName ) {
-		return ( isset($this->mockedGlobals[$globalName]['value']) ? $this->mockedGlobals[$globalName]['value'] : null );
+		return ( isset($this->mockedGlobals[$globalName]['value']) ? $this->mockedGlobals[$globalName]['value'] : $GLOBALS[$globalName] );
 	}
 
 }
