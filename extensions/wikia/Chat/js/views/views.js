@@ -143,7 +143,7 @@ var UserView = Backbone.View.extend({
 	},
 	
 	getUserElement: function() {
-		return $("[id='" + this.liId() + "']");
+		return $(document.getElementById(this.liId()));
 	}
 });
 
