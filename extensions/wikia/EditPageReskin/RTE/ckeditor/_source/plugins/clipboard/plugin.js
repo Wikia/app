@@ -377,7 +377,6 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 				// Wikia - start
 				// commented out (caused RT #40922)
-				/*
 				editor.on( 'contentDom', function()
 				{
 					var body = editor.document.getBody();
@@ -408,24 +407,6 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 					body.on( 'mouseup', function(){ setTimeout( function(){ setToolbarStates.call( editor ); }, 0 ); }, editor );
 					body.on( 'keyup', setToolbarStates, editor );
 				});
-				*/
-
-				// macbre: Trigger custom CK event when beforepaste DOM event is triggered
-				editor.on( 'contentDom', function()	{
-					var body = editor.document.getBody();
-
-					body.on('beforepaste', function(ev) {
-						// IE Bug: queryCommandEnabled('paste') fires also 'beforepaste(copy/cut)',
-						// guard to distinguish from the ordinary sources( either
-						// keyboard paste or execCommand ) (#4874).
-						if (depressBeforeEvent) {
-							return;
-						}
-
-						editor.fire('beforepaste', {originalEvent: ev});
-					});
-				});
-				// Wikia - end
 
 				// For improved performance, we're checking the readOnly state on selectionChange instead of hooking a key event for that.
 				editor.on( 'selectionChange', function( evt )
@@ -467,3 +448,12 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
  * @name CKEDITOR.editor#pasteDialog
  * @event
  */
+
+/**
+ * Force plain text pasting 
+ * @type Boolean
+ * @default false
+ * @example
+ * config.forcePasteAsPlainText = false;
+ */
+CKEDITOR.config.forcePasteAsPlainText = false;
