@@ -21,6 +21,7 @@ window.RTE = {
 		disableObjectResizing: true,
 		entities: false,
 		forcePasteAsPlainText: true, // BugId:7605
+		forcePasteInDialog: true, // BugId:7605
 		format_tags: 'p;h2;h3;h4;h5;pre',
 		language: window.wgUserLanguage,
 		plugins:
