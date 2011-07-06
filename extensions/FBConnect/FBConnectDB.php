@@ -139,9 +139,9 @@ class FBConnectDB {
 				__METHOD__,
 				array('IGNORE')
 			);
+			$dbw->commit();
 		}
 		
-		$dbw->commit();
 		$wgMemc->set($memkey, self::getFacebookIDs($user, DB_MASTER )  );
 		
 		wfProfileOut(__METHOD__);
