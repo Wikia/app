@@ -132,6 +132,18 @@ class FounderProgressBarController extends WikiaController {
 				FT_BONUS_PAGELAYOUT_ADD,
 				FT_BONUS_EDIT_50			
 		);
+		
+		// tracked events on the frontend
+		$this->clickEvents = array(
+				FT_THEMEDESIGNER_VISIT => true,
+				FT_COMMCENTRAL_VISIT => true,
+				FT_WIKIACTIVITY_VISIT => true,
+				FT_WIKIALABS_VISIT => true,
+				FT_PAGELAYOUT_VISIT => true,
+				FT_RECENTCHANGES_VISIT => true,
+				FT_MOSTVISITED_VISIT => true,
+				FT_UNCATEGORIZED_VISIT => true,
+		);
 	}
 	
 	/**
@@ -415,19 +427,27 @@ class FounderProgressBarController extends WikiaController {
 		$this->response->setVal('activeTaskList', $activeTaskList);
 		$this->response->setVal('skippedTaskList', $skippedTaskList);
 		$this->response->setVal('bonusTaskList', $bonusTaskList);
-		
-		$clickEvents = array(
-				FT_THEMEDESIGNER_VISIT => true,
-				FT_COMMCENTRAL_VISIT => true,
-				FT_WIKIACTIVITY_VISIT => true,
-				FT_WIKIALABS_VISIT => true,
-				FT_PAGELAYOUT_VISIT => true,
-				FT_RECENTCHANGES_VISIT => true,
-				FT_MOSTVISITED_VISIT => true,
-				FT_UNCATEGORIZED_VISIT => true,
-		);
-		
-		$this->response->setVal('clickEvents', $clickEvents);
+		$this->response->setVal('clickEvents', $this->clickEvents);
+	}
+	
+	public function getNextTask() {
+		$excluded_task_id = $this->request->getVal('excluded_task_id', '');
+		$shortList = F::app()->sendRequest( 'FounderProgressBar', 'getShortTaskList', array())->getData();
+		$activity = '';
+		foreach ($shortList['list'] as $task) {
+			if($task['task_id'] == $excluded_task_id) {
+				continue;
+			} else {
+				$activity = $task;
+				break;
+			}
+		}
+		if(!empty($activity)) {
+			$html = F::app()->getView( 'FounderProgressBar', 'widgetActivityPreview', array('activity' => $activity, 'clickEvents' => $this->clickEvents, 'index' => 1, 'wgBlankImgUrl' => F::app()->wg->BlankImgUrl, 'visible' => false ))->render();
+		} else {
+			$html = '';
+		}
+		$this->response->setVal('html', $html);
 	}
 	
 	// Messages defined in i18n file

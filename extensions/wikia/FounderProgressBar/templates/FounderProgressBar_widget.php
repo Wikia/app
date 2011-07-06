@@ -16,7 +16,7 @@
 				<?= F::app()->getView( 'FounderProgressBar', 'widgetTaskGroup', array('taskList' => $activeTaskList, 'clickEvents' => $clickEvents ) ) ?>
 			</div>
 		</li>
-		<li class="task collapsed">
+		<li class="task collapsed skipped">
 			<div class="task-label">
 				<?= wfMsg('founderprogressbar-list-skipped-task-label') ?> <span class="sub-label"><?= wfMsg('founderprogressbar-list-skipped-task-desc') ?></span>
 				<img class="chevron" src="<?= $wgBlankImgUrl ?>">
@@ -25,7 +25,7 @@
 				<?= F::app()->getView( 'FounderProgressBar', 'widgetTaskGroup', array('taskList' => $skippedTaskList, 'clickEvents' => $clickEvents )) ?>
 			</div>
 		</li>
-		<li class="task collapsed">
+		<li class="task collapsed bonus">
 			<div class="task-label">
 				<?= wfMsg('founderprogressbar-list-bonus-task-label') ?> <span class="sub-label"><?= wfMsg('founderprogressbar-list-bonus-task-desc') ?></span>
 				<img class="chevron" src="<?= $wgBlankImgUrl ?>">
@@ -54,20 +54,8 @@
 		<ul class="activities">
 			<? $index = 0; ?>
 			<? foreach($activityListPreview as $activity) { ?>
-				<li class="activity<?= $index == 0 ? ' active' : '' ?><?= isset($clickEvents[$activity['task_id']]) ? ' clickevent' : '' ?>" data-task-id="<?= $activity['task_id'] ?>">
-					<div class="label">
-						<div class="activity-name">
-							<?= $activity['task_label'] ?>
-						</div>
-						<img class="chevron" src="<?= $wgBlankImgUrl ?>">
-					</div>
-					<div class="description" style="<?= $index++ == 0 ? '' : 'display:none'?>">
-						<?= $activity['task_description'] ?>
-						<div class="actions">
-							<span style=""><?= wfMsg('founderprogressbar-skip-for-now') ?></span> <a class="wikia-button" href="<?= $activity['task_url']?>"><?= $activity['task_action'] ?></a>
-						</div>
-					</div>
-				</li>
+				<?= F::app()->getView( 'FounderProgressBar', 'widgetActivityPreview', array('activity' => $activity, 'clickEvents' => $clickEvents, 'index' => $index, 'wgBlankImgUrl' => $wgBlankImgUrl )) ?>
+				<? $index++; ?>
 			<? } ?>
 		</ul>
 	</sction>
