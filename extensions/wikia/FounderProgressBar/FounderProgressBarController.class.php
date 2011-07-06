@@ -307,12 +307,12 @@ class FounderProgressBarController extends WikiaController {
 		//if (empty($task_skipped)) throw error;
 		//if (Task_Completed) throw error;
 		$response = $this->sendSelfRequest('isTaskComplete');
-		if ($this->response->getVal('task_completed')) {
+		if ($response->getVal('task_completed')) {
 			$this->response->setVal("error", "task_completed");
 			$this->response->setVal("result", "error");
 		}
 		
-		$dbw = $this->wf->GetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
+		$dbw = $this->getDB(DB_MASTER);
 		$dbw->update(
 			'founder_progress_bar_tasks',
 			array(
@@ -348,7 +348,7 @@ class FounderProgressBarController extends WikiaController {
 		$dbw->commit();
 		// DB updated so clear memcache val
 		$memKey = $this->wf->MemcKey('FounderLongTaskList');
-		$this->wg->Memc->delete($memKey);
+		$this->getMCache()->delete($memKey);
 		$this->response->setVal("result", "OK");
 	}
 	

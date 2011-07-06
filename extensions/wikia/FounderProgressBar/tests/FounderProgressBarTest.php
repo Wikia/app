@@ -27,7 +27,7 @@ class FounderProgressBarTest extends PHPUnit_Framework_TestCase {
 			
 			$mock_result = $this->getMock('ResultWrapper', array(), array(), '', false);
 			
-			$this->mock_db = $this->getMock('DatabaseMysql', array('select', 'query', 'update', 'fetchObject', 'fetchRow'));
+			$this->mock_db = $this->getMock('DatabaseMysql', array('select', 'query', 'update', 'commit', 'fetchObject', 'fetchRow'));
 			$this->mock_db->expects($this->any())
 							->method('select')
 							->will($this->returnValue($mock_result));
@@ -35,6 +35,8 @@ class FounderProgressBarTest extends PHPUnit_Framework_TestCase {
 							->method('query');
 			$this->mock_db->expects($this->any())
 							->method('update');
+			$this->mock_db->expects($this->any())
+							->method('commit');
 			
 			$cache = $this->getMock('stdClass', array('get', 'set', 'delete'));
 			$cache->expects($this->any())
@@ -126,7 +128,7 @@ class FounderProgressBarTest extends PHPUnit_Framework_TestCase {
 			$result_fetchObj2 = self::arrayToStdClass($fetch_obj2);
 			$result_fetchObj2->task_timestamp = '2011-06-24 01:39:17';
 
-			$fetch_obj3 = array(
+			$fetch_obj3 = array(	// skipped task
 				'task_id' => '50',
 				'task_count' => '2',
 				'task_completed' => '0',
@@ -144,9 +146,36 @@ class FounderProgressBarTest extends PHPUnit_Framework_TestCase {
 			$result_fetchObj4 = self::arrayToStdClass($fetch_obj4);
 			$result_fetchObj4->task_timestamp = '2011-06-26 01:39:17';
 			
-			$this->mock_db->expects($this->exactly(5))
+			$fetch_obj5 = array(	// bonus task
+				'task_id' => '510',
+				'task_count' => '10',
+				'task_completed' => '1',
+				'task_skipped' => '0',
+			);
+			$result_fetchObj5 = self::arrayToStdClass($fetch_obj5);
+			$result_fetchObj5->task_timestamp = '2011-06-29 01:39:17';
+		
+			$fetch_obj6 = array(	// bonus task
+				'task_id' => '530',
+				'task_count' => '1',
+				'task_completed' => '0',
+				'task_skipped' => '0',
+			);
+			$result_fetchObj6 = self::arrayToStdClass($fetch_obj6);
+			$result_fetchObj6->task_timestamp = '2011-06-30 02:39:17';
+		
+			$fetch_obj7 = array(	// skipped task
+				'task_id' => '90',
+				'task_count' => '20',
+				'task_completed' => '1',
+				'task_skipped' => '1',
+			);
+			$result_fetchObj7 = self::arrayToStdClass($fetch_obj7);
+			$result_fetchObj7->task_timestamp = '2011-06-27 01:39:17';
+
+			$this->mock_db->expects($this->exactly(8))
 							->method('fetchObject')
-							->will($this->onConsecutiveCalls($result_fetchObj1, $result_fetchObj2, $result_fetchObj3, $result_fetchObj4, null));
+							->will($this->onConsecutiveCalls($result_fetchObj1, $result_fetchObj2, $result_fetchObj3, $result_fetchObj5, $result_fetchObj6, $result_fetchObj7, $result_fetchObj4, null));
 			
 			$response = $this->app->sendRequest('FounderProgressBar', 'getLongTaskList');
 			
@@ -158,10 +187,10 @@ class FounderProgressBarTest extends PHPUnit_Framework_TestCase {
 			$this->assertEquals($first_element['task_skipped'], $fetch_obj4['task_skipped']);
 			
 			$response_data = $response->getVal('data');
-			$this->assertEquals($response_data['tasks_completed'], 2);
-			$this->assertEquals($response_data['tasks_skipped'], 1);
-			$this->assertEquals($response_data['total_tasks'], 4);
-			$this->assertEquals($response_data['completion_percent'], 50);
+			$this->assertEquals($response_data['tasks_completed'], 4);
+			$this->assertEquals($response_data['tasks_skipped'], 2);
+			$this->assertEquals($response_data['total_tasks'], 5);
+			$this->assertEquals($response_data['completion_percent'], 57);
 		}
 		
 		/**
@@ -220,10 +249,50 @@ class FounderProgressBarTest extends PHPUnit_Framework_TestCase {
 					);
 		}
 		
+		/**
+		 * @dataProvider skipTaskDataProvider
+		 */
+		public function testskipTask($task_id, $task_skipped, $result, $extra_task) {
+			global $wgCityId;
+			
+			$wgCityId = self::TEST_CITY_ID;
+			$this->task_id = $task_id;
+			$this->extra_task_data = $extra_task;
+			$req = array(
+				'task_id' => $this->task_id,
+				'task_skipped' => $task_skipped,
+			);
+					
+			$response = $this->app->sendRequest('FounderProgressBar', 'skipTask', $req);
+			
+			$response_data = $response->getVal('result');
+			$this->assertEquals($response_data, $result);
+		}
+
+		public function skipTaskDataProvider() {
+			$extra_task1 = array();
+			$extra_task2 = array(
+								530 => array (
+									'task_id' => 530,
+									'task_count' => 1,
+									'task_completed' => 0,
+									'task_skipped' => 0,
+									'task_timestamp' => '5 hours ago',
+									'task_label' => 'Uncompleted Bonus task',
+									'task_action' => 'Uncompleted Bonus task'),
+							);
+		return array(
+						array(10, 1, 'OK', $extra_task1),
+						array(20, 1, 'OK', $extra_task2)
+					);
+		}
+
 		public function getValCallback($param) {
 
 			$task_id = $this->task_id;
 			$task_data = $this->getTaskData();
+			if (isset($this->extra_task_data))
+				$task_data = $task_data + $this->extra_task_data;
 			
 			switch ($param) {
 				case "list": return $task_data;
