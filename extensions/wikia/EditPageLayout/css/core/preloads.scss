@@ -34,6 +34,7 @@
 
 	// expand link
 	> .expand {
+		@include opacity(80);
 		background-color: lighten(#e7f0f9, 80%);
 		bottom: 5px;
 		color: $color-links;
