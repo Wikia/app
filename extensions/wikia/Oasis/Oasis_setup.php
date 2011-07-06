@@ -24,7 +24,6 @@ function wfOasisSetup() {
 	$wgHooks['BlogTemplateGetResults'][] = 'BlogListingModule::getResults';
 	$wgHooks['BlogsRenderBlogArticlePage'][] = 'BlogListingModule::renderBlogListing';
 	$wgHooks['DoEditSectionLink'][] = 'ContentDisplayModule::onDoEditSectionLink';
-	$wgHooks['Linker::makeHeadLine'][] = 'ContentDisplayModule::onLinkerMakeHeadLine';
 	$wgHooks['EditPage::showEditForm:initial'][] = 'BodyModule::onEditPageRender';
 	if ( empty($wgEnableEditPageReskinExt) ) {
 		$wgHooks['EditPage::showEditForm:initial'][] = 'EditPageModule::onShowEditFormInitial';
