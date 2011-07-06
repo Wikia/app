@@ -155,7 +155,9 @@
 		font-size: 9px;
 		line-height: 18px;
 		position: relative;
-		padding-left: 55px;
+		&.cke_license_with_icons {
+			padding-left: 55px;
+		}
 		.cke_license_icon {
 			height: 20px;
 			margin-top: -10px;
