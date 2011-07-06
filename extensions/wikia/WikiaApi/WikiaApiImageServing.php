@@ -1,6 +1,6 @@
 <?php
 /**
- * WikiaApiImageService
+ * WikiaApiImageServing
  *
  * @author Sean Colombo <sean@wikia-inc.com>
  * @author Jakub Kurcek
@@ -13,36 +13,36 @@
  * WikiaApiCroppedImage instead.
  */
 
-$wgAPIModules['imageserving'] = 'WikiaApiImageServing';
-
-class WikiaApiImageService extends ApiBase {
+class WikiaApiImageServing extends ApiBase {
 
 	public function __construct( $main, $action ) {
-		parent :: __construct( $main, $action, 'img' );
+		parent :: __construct( $main, $action, 'wis' /* prefix for parameters... so wisTitle becomes $Title */ );
 	}
 
 	/**
 	 * See functions below for expected URL params
 	 */
 	public function execute() {
-		global $wgRequest;
+		global $wgRequest, $wgCacheBuster;
 		wfProfileIn(__METHOD__);
 
 		extract( $this->extractRequestParams() );
 
+		// Allow optionally using a prefixed-title instead of the page_id.
+		if(empty($Id)){
+			$title = Title::newFromText( $Title );
+			if(is_object($title)){
+				$Id = $title->getArticleID();
+			}
+		}
+
 		$imageServing = new ImageServing( array( $Id ) );
 		foreach ( $imageServing->getImages( 1 ) as $key => $value ){
-/*
-			$tmpTitle = Title::newFromText( $value[0]['name'], NS_FILE );
-			$image = wfFindFile( $tmpTitle );
-			$imageInfo = getimagesize( $image->getPath() );
-			$imageUrl = wfReplaceImageServer(
-				$image->getThumbUrl(
-					$imageServing->getCut( $imageInfo[0], $imageInfo[1] )."-".$image->getName()
-				)
-			);
-*/
+			$imgTitle = Title::newFromText( $value[0]['name'], NS_FILE );
+			$imgFile = wfFindFile($imgTitle);
+			$imageUrl = wfReplaceImageServer( $imgFile->getFullUrl(), $wgCacheBuster );
 		}
+
 		$result = $this->getResult();
 		$result->addValue( 'image', $this->getModuleName(), $imageUrl );
 		wfProfileOut(__METHOD__);
@@ -54,19 +54,14 @@ class WikiaApiImageService extends ApiBase {
 				ApiBase :: PARAM_TYPE => "integer",
 				ApiBase :: PARAM_MIN => 0,
 			),
-			'Size' => array(
-				ApiBase :: PARAM_TYPE => "integer",
-				ApiBase :: PARAM_MIN => 0,
-			),
-			'Height' => array(
-				ApiBase :: PARAM_TYPE => "integer",
-				ApiBase :: PARAM_MIN => 0,
+			'Title' => array(
+				ApiBase :: PARAM_TYPE => "string"
 			)
 		);
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiCroppedImage.php jakub';
+		return __CLASS__ . ': $Id: WikiaApiImageServing.php sean';
 	}
 
 	public function getParamDescription()
@@ -74,8 +69,7 @@ class WikiaApiImageService extends ApiBase {
 		return array
 		(
 			'Id'	=> 'article Id (integer)',
-			'Size'	=> 'size of cropped image (integer)',
-			'Height' => 'image Height used for right cropped image proportions (integer)'
+			'Title' => 'article Title (string)',
 		);
 	}
 
@@ -83,8 +77,18 @@ class WikiaApiImageService extends ApiBase {
 	{
 		return array
 		(
-			" This module is used to return one cropped image from specified article \n ".
-			" No example because article id is specific for every wikia ",
+			"This module is used to return one image from specified article given either the article id or article title (with prefix if applicable)."
+		);
+	}
+
+	/**
+	 * Examples
+	 */
+	protected function getQueryExamples() {
+		return array (
+			'api.php?action=imageserving&wisTitle=Cake',
+			'api.php?action=imageserving&wisTitle=LyricWiki:Community_Portal',
+			'api.php?action=imageserving&wisId=90286',
 		);
 	}
 }

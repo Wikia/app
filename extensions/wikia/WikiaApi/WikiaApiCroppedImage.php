@@ -11,7 +11,7 @@ if (!defined('MEDIAWIKI')) {
 class WikiaApiCroppedImage extends ApiBase {
 
 	public function __construct( $main, $action ) {
-		parent :: __construct( $main, $action, 'img' );
+		parent :: __construct( $main, $action, 'img' /* prefix for parameters... so imgId becomes $Id */ );
 	}
 
 	public function execute() {
