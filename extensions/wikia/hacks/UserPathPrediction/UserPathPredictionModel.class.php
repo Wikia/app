@@ -28,6 +28,11 @@ class UserPathPredictionModel {
 		$this->app->sendRequest( 'UserPathPredictionService', 'log', array( 'msg' => $msg ) );
 	}
 	
+	private function getDBConnection( $mode = DB_SLAVE ) {
+		//TODO: replace with wfGetDB as soon as we stop using local DB for devboxes and get production storage
+		return Database::newFromParams( 'localhost', $this->app->wg->DBadminuser, $this->app->wg->DBadminpassword, 'user_path_prediction' );
+	}
+	
 	private function removePath( $path ) {
 		if ( is_dir( $path ) ) {
 			$objects = scandir( $path );
@@ -91,7 +96,12 @@ class UserPathPredictionModel {
 	}
 	
 	public function storeAnalyzedData( $data ) {
-		$this->log( $data );
+		global $wgAllDBsAreLocalhost;
+		$origValue = $wgAllDBsAreLocalhost;
+		$wgAllDBsAreLocalhost = true;
+		
+		$dbw = $this->wf->getDB( DB_MASTER, null, self::DB_NAME );
+		
 		$this->cleanParsedDataFolder();
 	}
 	
