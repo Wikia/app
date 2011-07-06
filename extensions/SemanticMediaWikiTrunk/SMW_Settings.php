@@ -65,9 +65,6 @@ $smwgSparqlUpdateEndpoint = 'http://localhost:8080/update/';
 $smwgSparqlDataEndpoint = 'http://localhost:8080/data/';
 ##
 
-// Wikia overrides
-require_once( 'Wikia_Settings.php' );
-
 // load global constants and setup functions
 require_once( 'includes/SMW_Setup.php' );
 
