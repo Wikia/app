@@ -9,11 +9,3 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 @import url("panel.css");
 @import url("menu.css");
 @import url("icons.css");
-
-/* Restore the container visibility */
-html .cke_skin_wikia,
-html.cke_skin_wikia_container
-{
-	clear: both;
-	visibility: visible;
-}
