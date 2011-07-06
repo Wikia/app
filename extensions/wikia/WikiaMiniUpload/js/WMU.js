@@ -1139,13 +1139,17 @@ function WMU_box_in_article() {
 	return box;
 }
 
+/**
+ * @brief Adjusts UI for specifically-sized images
+ * @details With a recent UI change, the ImageUploadWidthCheckbox is always checked (and hidden)
+            This function is run if modifying an existing image in the article
+            with a precise width set.
+ */
 function MWU_imageWidthChanged(changes) {
-
-	//test
-	return;
 
 	var image = $G('ImageUploadThumb').firstChild;
 	if( !$G( 'ImageUploadWidthCheckbox' ).checked ) {
+		// This will never be run
 		$G('ImageUploadManualWidth').value = '';
 		$G('ImageUploadSlider').style.visibility = 'hidden';
 		$G('ImageUploadSliderThumb').style.visibility = 'hidden';
