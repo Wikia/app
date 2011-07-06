@@ -104,7 +104,7 @@ class UserPathPredictionService extends WikiaService {
 							$hasWikiPrefix = strpos( $wiki["domain_name"], '.wikia.com' );
 							$mainURL = ( $hasWikiPrefix ) ? 
 								$this->fixURL( "http://{$wiki['domain_name']}/" ) : 
-								$this->fixURL( "http://www{$wiki['domain_name']}/" );
+								$this->fixURL( "http://www.{$wiki['domain_name']}/" );
 							
 							if ( strpos( $result["r"], $mainURL ) === 0 ) {
 								$articleName = ( $hasWikiPrefix ) ?
