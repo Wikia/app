@@ -20,6 +20,11 @@ var UserPathPrediction = {
 	
 	drawGraph: function() {
 		
+	},
+	
+	load: function() {
+		alert("asd");
+		return false;
 	}
 	
 };
