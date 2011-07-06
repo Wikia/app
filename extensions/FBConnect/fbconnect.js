@@ -142,7 +142,7 @@ function sendToConnectOnLoginForSpecificForm(formName){
 		if(formName != ""){
 	        formName = "/"+formName;
 	    }
-		var destUrl = wgServer + wgScript + "?title=Special:Connect" + formName + "&returnto=" + (fbReturnToTitle ? fbReturnToTitle : wgPageName) + "&returntoquery=" + wgPageQuery;
+		var destUrl = wgServer + wgScript + "?title=Special:Connect" + formName + "&returnto=" + encodeURIComponent(fbReturnToTitle ? fbReturnToTitle : wgPageName) + "&returntoquery=" + encodeURIComponent(wgPageQuery);
 
 		if (formName == "/ConnectExisting") {
 			window.location.href = destUrl;
@@ -151,7 +151,7 @@ function sendToConnectOnLoginForSpecificForm(formName){
 		$('#fbConnectModalWrapper').remove();
 		$.postJSON(window.wgScript + '?action=ajax&rs=SpecialConnect::checkCreateAccount&cb='+wgStyleVersion, function(data) {
 			if(data.status == "ok") {
-				$().getModal(window.wgScript + '?action=ajax&rs=SpecialConnect::ajaxModalChooseName&returnto=' + wgPageName + '&returntoquery=' + wgPageQuery,  "#fbConnectModal", {
+				$().getModal(window.wgScript + '?action=ajax&rs=SpecialConnect::ajaxModalChooseName&returnto=' + encodeURIComponent(wgPageName) + '&returntoquery=' + encodeURIComponent(wgPageQuery),  "#fbConnectModal", {
 			        id: "fbConnectModalWrapper",
 			        width: 600,
 			        callback: function() {
