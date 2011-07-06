@@ -34,7 +34,6 @@ CKEDITOR.plugins.add('rte-paste',
 			});
 		});
 
-
 		// @see clipboard CK core plugin
 		if (!editor.config.forcePasteAsPlainText) {
 			editor.on('beforePaste', function(ev) {
@@ -47,6 +46,13 @@ CKEDITOR.plugins.add('rte-paste',
 				}, 250);
 			});
 		}
+
+		// track pasting from "Paste as Plain text" dialog
+		editor.on('paste', function(ev) {
+			if (typeof ev.data.text != 'undefined') {
+				self.track('plainText');
+			}
+		});
 	},
 
 	// get pasted HTML
