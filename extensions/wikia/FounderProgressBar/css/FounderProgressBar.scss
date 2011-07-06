@@ -73,8 +73,9 @@
 			margin: 10px;
 			.activity {
 				border: 1px solid #e8e8e8;
+				margin-top: 10px;
 				&:first-child {
-					margin-bottom: 10px;
+					margin-top: 0px;
 				}
 				.label {
 					@include clearfix;
@@ -114,7 +115,14 @@
 					padding: 10px;
 					.actions {
 						margin-top: 10px;
+						position: relative;
 						text-align: right;
+						.skip {
+							color: #aaa;
+							left: 0;
+							position: absolute;
+							top: 5px;
+						}
 					}
 				}
 			}
@@ -237,6 +245,12 @@
 						position: relative;
 						text-align: right;
 						z-index: 9;
+						.skip {
+							color: #aaa;
+							left: 10px;
+							position: absolute;
+							top: 10px;
+						}
 					}
 					>.tail {
 						bottom: -15px;

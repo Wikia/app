@@ -14,6 +14,7 @@
 						<p><?= $taskList[$index]['task_description'] ?></p>
 						<div class="actions">
 							<? if(empty($taskList[$index]['task_locked']) && empty($taskList[$index]['task_completed'])) { ?>
+								<a href="#" class="skip"><?= wfMsg('founderprogressbar-skip-for-now') ?></a>
 								<a href="<?= $taskList[$index]['task_url'] ?>" class="wikia-button"><?= $taskList[$index]['task_action'] ?></a>
 							<? } ?>
 						</div>

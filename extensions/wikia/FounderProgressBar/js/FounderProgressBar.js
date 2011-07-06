@@ -4,23 +4,14 @@ var FounderProgressList = {
 	init: function() {
 		FounderProgressList.d = $('#FounderProgressList');
 		FounderProgressList.article = $('#WikiaArticle');
+		FounderProgressList.skippedTaskGroup = FounderProgressList.d.find('.tasks .task.skipped');
 		FounderProgressList.article.after(FounderProgressList.d);
 		FounderProgressList.allActivities = FounderProgressList.d.find('.activity');
 		FounderProgressList.seeFullList = $('#FounderProgressListToggle .see-full-list');
 		FounderProgressList.hideFullList = $('#FounderProgressListToggle .hide-full-list');
 		FounderProgressList.trackedActivities = FounderProgressList.d.find('.clickevent');
 		
-		FounderProgressList.allActivities.hover(function() {
-			clearTimeout(FounderProgressList.hoverHandle);
-			var el = $(this).find('.activity-description');
-			FounderProgressList.hoverHandle = setTimeout(function() {
-				el.show();
-				FounderProgressList.drawActivityTail(el);
-			}, 400);
-		}, function() {
-			clearTimeout(FounderProgressList.hoverHandle);
-			$(this).find('.activity-description').fadeOut(200);
-		});
+		FounderProgressList.allActivities.hover(FounderProgressList.showActivity, FounderProgressList.hideActivity);
 		
 		$('#FounderProgressListToggle').click(function(e) {
 			e.preventDefault();
@@ -43,15 +34,24 @@ var FounderProgressList = {
 			var el = $(this).closest(".task");
 			var group = el.find('.task-group');
 			if(group.is(':visible')) {
-				el.removeClass('expanded').addClass('collapsed');
-				group.slideUp(200);
+				FounderProgressList.collapseTask(el);
 			} else {
-				el.removeClass('collapsed').addClass('expanded');
-				group.slideDown(200);
+				FounderProgressList.expandTask(el);
 			}
 		});
 		
 		FounderProgressList.trackedActivities.find('.actions .wikia-button').click(FounderProgressList.trackActivity);
+		FounderProgressList.allActivities.find('.actions .skip').click(FounderProgressList.skipActivity);
+	},
+	collapseTask: function(task) {
+		var group = task.find('.task-group');
+		task.removeClass('expanded').addClass('collapsed');
+		group.slideUp(200);
+	},
+	expandTask: function(task) {
+		var group = task.find('.task-group');
+		task.removeClass('collapsed').addClass('expanded');
+		group.slideDown(200);
 	},
 	trackActivity: function(e) {
 		e.preventDefault();
@@ -64,10 +64,53 @@ var FounderProgressList = {
 			format: 'json',
 			task_id: taskId
 		}, function(res) {
-			$().log('event tracked');
 			$().log(res);
 			window.location.href = url;
 		});
+	},
+	skipActivity: function(e) {
+		e.preventDefault();
+		var el = $(this);
+		var activity = el.closest('.activity');
+		var taskId = activity.data('task-id');
+		activity.find('.activity-description').hide();
+		$.post(wgScriptPath + '/wikia.php', {
+			controller: 'FounderProgressBar',
+			method: 'skipTask',
+			format: 'json',
+			task_id: taskId
+		}, function(res) {
+			if(res['result'] && res.result == 'OK') {
+				var activityInPreview = $('#FounderProgressWidget .preview .activity[data-task-id=' + taskId + ']');
+				FounderProgressList.moveToSkipped(activity);
+				if(activityInPreview.length) {
+					FounderProgressWidget.hideActivity(activityInPreview, function() {
+						FounderProgressWidget.getNextTask(activityInPreview);
+					});
+				}
+			}
+		});
+	},
+	moveToSkipped: function(activity) {
+		FounderProgressList.skippedTaskGroup.slideDown(200);
+		var skippedActivities = FounderProgressList.skippedTaskGroup.find('.activity');
+		var columnIndex = (skippedActivities.length % 3) + 1;
+		activity.hide(600, function() {
+			FounderProgressList.expandTask(FounderProgressList.skippedTaskGroup);
+			activity.appendTo(FounderProgressList.skippedTaskGroup.find('ul:nth-child('+columnIndex+')')).hide().show(600);
+		});
+	},
+	showActivity: function(e) {
+		clearTimeout(FounderProgressList.hoverHandle);
+		var el = $(this).find('.activity-description');
+		FounderProgressList.hoverHandle = setTimeout(function() {
+			el.show();
+			FounderProgressList.drawActivityTail(el);
+		}, 400);
+	},
+	hideActivity: function(e) {
+		clearTimeout(FounderProgressList.hoverHandle);
+		$(this).find('.activity-description').fadeOut(200);
 	},
 	drawMainTail: function() {
 		var el = FounderProgressList.d.find('>.tail');
@@ -114,19 +157,59 @@ var FounderProgressWidget = {
 	init: function() {
 		// pre-cache dom
 		FounderProgressWidget.widget = $('#FounderProgressWidget');
-		FounderProgressWidget.allActivityPreviews = FounderProgressWidget.widget.find('.preview .activities .activity');
-		FounderProgressWidget.allActivityPreviewDescriptions = FounderProgressWidget.widget.find('.preview .activities .activity .description');
+		FounderProgressWidget.preview = FounderProgressWidget.widget.find('.preview');
 		
 		// events
-		FounderProgressWidget.allActivityPreviews.find('.label').click(FounderProgressWidget.handleActivityPreview);
-		FounderProgressWidget.allActivityPreviews.find('.actions .wikia-button').click(FounderProgressList.trackActivity);
+		FounderProgressWidget.preview.find('.label').live('click', FounderProgressWidget.handleActivityPreview);
+		FounderProgressWidget.preview.find('.clickevent .actions .wikia-button').live('click', FounderProgressList.trackActivity);
+		FounderProgressWidget.preview.find('.actions .skip').live('click', FounderProgressWidget.skipActivity);
 	},
 	handleActivityPreview: function() {
 		var el = $(this);
-		FounderProgressWidget.allActivityPreviews.removeClass('active');
+		$('#FounderProgressWidget .preview .activity').removeClass('active');
 		var desc = el.closest('.activity').addClass('active').find('.description');
-		FounderProgressWidget.allActivityPreviewDescriptions.not(desc).slideUp(120, 'linear');//.animate({'height':'hide'}, 400);
-		desc.slideDown(120, 'linear');//.animate({'height':'show'}, 400);
+		$('#FounderProgressWidget .preview .description').not(desc).slideUp(120, 'linear');//.animate({'height':'hide'}, 400);
+		desc.slideDown(120, 'linear');
+	},
+	skipActivity: function(e) {
+		e.preventDefault();
+		var el = $(this);
+		var activity = el.closest('.activity');
+		var taskId = activity.data('task-id');
+		var activityInList = $('#FounderProgressList .activity[data-task-id=' + taskId + ']');
+		FounderProgressWidget.hideActivity(activity, function() {
+			$.post(wgScriptPath + '/wikia.php', {
+				controller: 'FounderProgressBar',
+				method: 'skipTask',
+				format: 'json',
+				task_id: taskId
+			}, function(res) {
+				FounderProgressList.moveToSkipped(activityInList);
+				if(res['result'] && res.result == 'OK') {
+					FounderProgressWidget.getNextTask(activity);
+				}
+			});
+		});
+		
+	},
+	hideActivity: function(activity, callback) {
+		activity.slideUp(400, callback);
+	},
+	getNextTask: function(activity) {
+		var excludedTaskId = $('#FounderProgressWidget .preview .activity').not(activity).data('task-id');
+		$().log('excluded:' + excludedTaskId);
+		activity.remove();
+		$.post(wgScriptPath + '/wikia.php', {
+			controller: 'FounderProgressBar',
+			method: 'getNextTask',
+			format: 'json',
+			excluded_task_id: excludedTaskId
+		}, function(res) {
+			$().log(res);
+			var html = $(res.html);
+			FounderProgressWidget.preview.find('.activities').append(html);
+			html.slideDown();
+		});
 	}
 };
 
