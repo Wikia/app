@@ -1,17 +1,25 @@
 $(function() {
-	HelloWorld.init();
+	UserPathPrediction.init();
 })
 
-var HelloWorld = {
+var UserPathPrediction = {
 	
 	init: function() {
 
 		// Bind click to button
-		$('#HelloWorldAjax button').click(function() {
-			$.get( wgScriptPath + '/wikia.php?controller=HelloWorld&method=index&format=html', function(data) {
-				$('#HelloWorldAjax').append(data);
-			});
+		$('#selectWiki').change(function() {
+
 		});
+		
+		$('#selectArticle').change(function() {
+			//load graph or actually draw it
+		});
+		
+		$("#articleTable").tablesorter(); 
+	},
+	
+	drawGraph: function() {
+		
 	}
 	
 };

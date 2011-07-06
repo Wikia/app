@@ -1,0 +1,26 @@
+#sectionUserPathPrediction {
+  border: 1px solid maroon;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  padding: 5px;
+}
+
+table {
+  border: 1px dotted black;
+}
+
+tr {
+  border-bottom: 1px dotted black;
+}
+
+td {
+  padding: 5px;
+}
+
+tr:nth-child(odd) {
+  background-color: #BADA55;
+}
+
+th {
+  background-color: #DDD;
+}
