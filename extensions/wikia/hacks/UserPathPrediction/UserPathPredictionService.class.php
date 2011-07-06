@@ -23,11 +23,14 @@ class UserPathPredictionService extends WikiaService {
 	}
 
 	public function log( $msg = null ) {
-		$msg = $this->getVal( 'msg', $msg );
+		$msg = ( !empty( $msg ) ) ? $msg : $this->getVal( 'msg' );
 		
 		if( $this->wg->DevelEnvironment ) {
 			file_put_contents( $this->logPath, date("H:i:s") . " : " . var_export( $msg, true ) . "\n", FILE_APPEND );
 		}
+		
+		//reset the parameter value to avoid re-printing the same on internal calls, this class is a singleton
+		$this->request->setVal( 'msg', null );
 	}
 
 	//change colons to %3A in URL
@@ -50,10 +53,6 @@ class UserPathPredictionService extends WikiaService {
 		
 		$this->model->cleanRawDataFolder();
 		
-		if ( empty ( $this->wikis ) ) {
-			$this->wikis = $this->model->getWikis();
-		}
-		
 		$this->log( "Fetching OneDot data from archive for {$strDate}..." );
 		
 		if( $this->model->retrieveDataFromArchive( $strDate ) ) {
@@ -61,12 +60,12 @@ class UserPathPredictionService extends WikiaService {
 			
 			while( ( $src = $this->model->fetchRawDataFilePath() ) !== false ) {
 				$fileHandle = fopen( $src , "r" );
-				$skip = false;
 				$result = array();
 				
 				$this->log( "Processing: {$src}..." );
 				
 				while( !feof( $fileHandle ) ) {
+					$skip = false;
 					$wholeLine = explode( "&", fgets( $fileHandle ));
 					
 					foreach( $wholeLine as $param ) {
@@ -78,7 +77,7 @@ class UserPathPredictionService extends WikiaService {
 								$result["r"] = $value;
 								break;
 							case "a" :
-								$result["a"] = $value;
+								$result["a"] = (int) $value;
 								break;
 							case "lv" :
 								$result["lv"] = $value;
@@ -100,7 +99,7 @@ class UserPathPredictionService extends WikiaService {
 					}
 					
 					if ( !empty( $result["r"] ) ) {
-						foreach ( $this->model->getWikis() as $wiki ) {
+						foreach ( $this->getWikis() as $wiki ) {
 							$hasWikiPrefix = strpos( $wiki["domain_name"], '.wikia.com' );
 							$mainURL = ( $hasWikiPrefix ) ? 
 								$this->fixURL( "http://{$wiki['domain_name']}/" ) : 
@@ -109,7 +108,7 @@ class UserPathPredictionService extends WikiaService {
 							if ( strpos( $result["r"], $mainURL ) === 0 ) {
 								$articleName = ( $hasWikiPrefix ) ?
 									str_ireplace( $mainURL . 'wiki/', '', $result["r"] ) :
-									$articleName = str_ireplace( $mainURL, '', $result["r"] );
+									str_ireplace( $mainURL, '', $result["r"] );
 								
 								if( !empty( $articleName ) ) {
 									$result["r"] = $articleName;
@@ -121,7 +120,6 @@ class UserPathPredictionService extends WikiaService {
 				}
 				
 				fclose( $fileHandle );
-				
 				$this->log( "Done." );
 			}
 			
@@ -130,8 +128,58 @@ class UserPathPredictionService extends WikiaService {
 			$this->log( "Done." );
 		} else {
 			$this->log( "Failure." );
-			
 			throw new WikiaException( "Cannot fetch data from OneDot archive." );
 		}
+	}
+	
+	/**
+	 * Analyzes the data extracted from OneDot archive for the local (current) wiki
+	 * and store the results in DB
+	 * 
+	 * @see UserPathPredictionService::extractOneDotData
+	 */
+	public function analyzeLocalData(){
+		$wikiID = $this->wg->CityId;
+		$dbName = strtolower( $this->wg->DBname );//need to make it small letters to match onedot records
+		$filePath = $this->model->getWikiParsedDataPath( $dbName );
+		
+		if ( file_exists( $filePath ) ) {
+			$fileHandle = fopen( $filePath , "r" );
+			$counters = array();
+			
+			$this->log( "Processing: {$filePath}..." );
+			
+			while( !feof( $fileHandle ) ) {
+				$data = unserialize( fgets( $fileHandle ) );
+				
+				$referrer = $data[ 'r' ];
+				$title = F::build( 'Title', array( $referrer ), 'newFromText' );
+				
+				if ( $title instanceof Title && $title->exists() && $title->getArticleID() != $data[ 'a' ] ) {
+					$key = $title->getArticleID() . '_' . $data[ 'a' ];
+					
+					if ( key_exists( $key, $counters ) ) {
+						$counters[$key] += 1;
+					} else {
+						$counters[$key] = 1;
+					}
+				}
+			}
+			
+			fclose( $fileHandle );
+			$this->log( 'Found ' . count( $counters ) . ' valid segments.' );
+			$this->model->storeAnalyzedData( $counters );
+		} else {
+			$this->log( 'No data found.' );
+		}
+	}
+	
+	public function getWikis() {
+		if ( empty( $this->wikis ) ) {
+			$this->wikis = $this->model->getWikis();
+		}
+		
+		$this->setVal( 'wikis', $this->wikis );
+		return $this->wikis;
 	}
 }

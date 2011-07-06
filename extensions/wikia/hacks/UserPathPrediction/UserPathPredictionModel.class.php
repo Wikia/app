@@ -11,9 +11,12 @@ class UserPathPredictionModel {
 	const PARSED_DATA_PATH = "/tmp/UserPathPredictionParsedData/";
 	
 	private $files;
+	private $app;
 	private $excludePaths = array( ".", ".." );
 	
-	function __construct() {}
+	function __construct() {
+		$this->app = F::app();
+	}
 
 	private function createDir( $folder ) {
 		if( !is_dir( $folder )) {
@@ -21,12 +24,16 @@ class UserPathPredictionModel {
 		}
 	}
 	
+	private function log ( $msg ) {
+		$this->app->sendRequest( 'UserPathPredictionService', 'log', array( 'msg' => $msg ) );
+	}
+	
 	private function removePath( $path ) {
 		if ( is_dir( $path ) ) {
 			$objects = scandir( $path );
 			
 			foreach ( $objects as $object ) {
-				if ( !in_array( $object, $this->$excludePaths ) ) {
+				if ( !in_array( $object, $this->excludePaths ) ) {
 					$fullPath = "{$path}/{$object}";
 					
 					if ( filetype( $fullPath ) == 'dir' ) {
@@ -48,11 +55,14 @@ class UserPathPredictionModel {
 	
 	public function retrieveDataFromArchive( $timestr, &$commandOutput = null ) {
 		$s3directory = self::S3_ARCHIVE . "{$timestr}/";
+		$cmd = "s3cmd get --recursive {$s3directory} " . self::RAW_DATA_PATH;
 		
 		$this->cleanRawDataFolder();
 		$this->createDir( self::RAW_DATA_PATH );
 		
-		$commandOutput = shell_exec( "s3cmd get --recursive {$s3directory} " . self::RAW_DATA_PATH );
+		$this->log( "Running \"{$cmd}\" ..." );
+		$commandOutput = shell_exec( $cmd );
+		$this->log( "Done, command output: {$commandOutput}." );
 		
 		$tmpFiles = scandir( self::RAW_DATA_PATH );
 		
@@ -75,16 +85,20 @@ class UserPathPredictionModel {
 		return self::RAW_DATA_PATH . $ret;
 	}
 	
-	public function saveParsedData( $domain, $data ) {
-		if( !is_dir( self::PARSED_DATA_PATH )) {
-				$this->createDir( self::PARSED_DATA_PATH );
-		}
-		
-		file_put_contents( self::PARSED_DATA_PATH . $domain, serialize( $data ) . "\n", FILE_APPEND );
+	public function saveParsedData( $dbName, $data ) {
+		$this->createDir( self::PARSED_DATA_PATH );
+		file_put_contents( $this->getWikiParsedDataPath( $dbName ) , serialize( $data ) . "\n", FILE_APPEND );
+	}
+	
+	public function storeAnalyzedData( $data ) {
+		$this->log( $data );
+		$this->cleanParsedDataFolder();
 	}
 	
 	public function getWikis() {
 		//TODO: get data from WF
+		
+		//TODO: IMPORTANT, remember to strtolower the db name otherwise it won't always match onedot records!!!
 		return array(
 			"490" => array(
 				"db_name" => "wowwiki",
@@ -99,6 +113,10 @@ class UserPathPredictionModel {
 				"domain_name" => "callofduty.wikia.com"
 			)
 		);
+	}
+	
+	function getWikiParsedDataPath( $dbName ) {
+		return self::PARSED_DATA_PATH . $dbName;
 	}
 	
 	public function cleanParsedDataFolder() {
