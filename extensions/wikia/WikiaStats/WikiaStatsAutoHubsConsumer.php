@@ -31,13 +31,13 @@ class WikiaStatsAutoHubsConsumer {
 	public function receiveFromEvents() {
 		global $wgStatsDB, $wgCityId, $wgMemc, $wgStatsDBEnabled;
 		wfProfileIn( __METHOD__ );
-		
-		if ( empty( $wgStatsDBEnabled ) {
-			wfProfileOut( __METHOD__ );	
-			return false;		
+
+		if ( empty( $wgStatsDBEnabled ) ) {
+			wfProfileOut( __METHOD__ );
+			return false;
 		}
-		
-		try {	
+
+		try {
 			while( 1 ) {
 				$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
 				$where = array(
@@ -47,7 +47,7 @@ class WikiaStatsAutoHubsConsumer {
 				if ( !empty($wgStatsIgnoreWikis) ) {
 					$where[] = 'wiki_id not in ('.$dbr->makeList( $wgStatsIgnoreWikis ).')';
 				}
-				
+
 				$oRes = $dbr->select(
 					array( 'events' ),
 					array( 'wiki_id, page_id, page_ns, user_id, rev_timestamp, user_is_bot' ),
@@ -62,10 +62,10 @@ class WikiaStatsAutoHubsConsumer {
 					$result[$oRow->wiki_id][$oRow->page_id] = $oRow;
 					$loop++;
 				}
-				$dbr->freeResult( $oRes );			
+				$dbr->freeResult( $oRes );
 
-				Wikia::log( __METHOD__, 'events', 'Read ' . $loop . ' events (for ' . count($result). ' Wikis) successfully. Next timestamp: ' . $this->mDate );				
-		
+				Wikia::log( __METHOD__, 'events', 'Read ' . $loop . ' events (for ' . count($result). ' Wikis) successfully. Next timestamp: ' . $this->mDate );
+
 				$records = count($result);
 				if ( !empty($result) ) {
 					$producerDB = new WikiaStatsAutoHubsConsumerDB(DB_MASTER);
@@ -80,32 +80,32 @@ class WikiaStatsAutoHubsConsumer {
 						$start = time();
 						$loop++;
 						Wikia::log( __METHOD__, 'events', 'Wikia ' . $city_id . ' (' . $loop . '/' . $records . ') processing: ' . count($rows) . ' rows' );
-				
+
 						$memkey = sprintf("%s:wikia:%d", __METHOD__, $city_id);
 						$info = $wgMemc->get($memkey);
-						if ( empty($info) ) { 
+						if ( empty($info) ) {
 							# wikia
 							$oWikia = WikiFactory::getWikiByID($city_id);
 							if ( !is_object($oWikia) ) {
 								Wikia::log ( __METHOD__, "Wikia not found: " . $city_id );
 								continue;
-							}							
+							}
 							# server
 							$server = WikiFactory::getVarValueByName( "wgServer", $city_id );
-							$info = array( 
+							$info = array(
 								'lang'		=> $oWikia->city_lang,
 								'db'		=> $oWikia->city_dbname,
 								'sitename'	=> $oWikia->city_title,
-								'server'	=> $server 
+								'server'	=> $server
 							);
 							$wgMemc->set( $memkey, $info, 60*60*2 );
-						} 
-						
+						}
+
 						if ( !isset( $info['db'] ) && !isset( $info['sitename'] ) && !isset( $info['lang'] ) && !isset( $info['server'] ) ) {
 							Wikia::log ( __METHOD__, "Wikia not found: " . $city_id );
-							continue;							
+							continue;
 						}
-						
+
 						# initial table
 						$lang = $info['lang'];
 						if ( !isset($data['blogs'][$lang]) ) {
@@ -116,18 +116,18 @@ class WikiaStatsAutoHubsConsumer {
 						}
 						if ( !isset($data['user'][$lang]) ) {
 							$data['user'][$lang] = array();
-						}				
-						
+						}
+
 						# tags
 						$oWFTags = new WikiFactoryTags($city_id);
 						$tags = $oWFTags->getTags();
-											
+
 						foreach ( $rows as $oRow ) {
 							if ( is_object( $oRow ) ) {
-								
+
 								$oUser = User::newFromId( $oRow->user_id );
-								if ( !is_object( $oUser ) ) continue;		
-														
+								if ( !is_object( $oUser ) ) continue;
+
 								if( NS_BLOG_ARTICLE == $oRow->page_ns ) {
 									if ( !empty($tags) ) {
 										foreach( $tags as $id => $val ) {
@@ -136,30 +136,30 @@ class WikiaStatsAutoHubsConsumer {
 											}
 											# prepare insert data
 											$data['blogs'][$lang][$id][] = array(
-												'tb_city_id'	=> $city_id, 
-												'tb_page_id'	=> $oRow->page_id, 
-												'tb_tag_id'		=> $id, 
+												'tb_city_id'	=> $city_id,
+												'tb_page_id'	=> $oRow->page_id,
+												'tb_tag_id'		=> $id,
 												'tb_date'		=> date("Y-m-d"),
 												'tb_city_lang'	=> $lang,
-												'tb_count'		=> 1										
+												'tb_count'		=> 1
 											);
 										}
 									}
-								} else {		
-									$memkey = sprintf( "%s:user:%d", __METHOD__, $oRow->user_id );	
-									$user = $wgMemc->get($memkey);	
+								} else {
+									$memkey = sprintf( "%s:user:%d", __METHOD__, $oRow->user_id );
+									$user = $wgMemc->get($memkey);
 									if ( empty($user) ) {
-										$groups = $oUser->getGroups();	
+										$groups = $oUser->getGroups();
 										$user_groups = implode(";", $groups);
-										
+
 										$user = array( 'name' => $oUser->getName(), 'groups' => $user_groups );
 										$wgMemc->set( $memkey, $user, 60*60*2 );
-									} 
-									
+									}
+
 									if ( !isset($user['name']) ) {
 										continue;
 									}
-				
+
 									if ( !empty($tags) ) {
 										foreach( $tags as $id => $val ) {
 											$date = date("Y-m-d");
@@ -167,9 +167,9 @@ class WikiaStatsAutoHubsConsumer {
 											$out = $wgMemc->get($mcKey,null);
 											if ($out == 1) { continue ; }
 											$wgMemc->set($mcKey, 1, 24*60*60);
-											
+
 											$allowed = ( $oRow->user_is_bot != 'Y' && !in_array( $oUser->getName(), $producerDB->getBanedUsers() ) );
-																					
+
 											if ( !isset($data['user'][$lang][$id]) && $allowed ) {
 												$data['user'][$lang][$id] = array();
 											}
@@ -178,24 +178,24 @@ class WikiaStatsAutoHubsConsumer {
 											}
 											#
 											# prepare insert data
-											$data['articles'][$lang][$id][] = array(									
-												'ta_city_id'	=> $city_id, 
-												'ta_page_id' 	=> $oRow->page_id, 
-												'ta_tag_id' 	=> $id, 
+											$data['articles'][$lang][$id][] = array(
+												'ta_city_id'	=> $city_id,
+												'ta_page_id' 	=> $oRow->page_id,
+												'ta_tag_id' 	=> $id,
 												'ta_date'		=> $date,
 												'ta_city_lang' 	=> $lang,
 												'ta_count'		=> 1
-											);	
-											
+											);
+
 											if ( $allowed ) {
-												$data['user'][$lang][$id][] = array(									
-													'tu_user_id'	=> $oRow->user_id, 
-													'tu_tag_id'		=> $id, 
+												$data['user'][$lang][$id][] = array(
+													'tu_user_id'	=> $oRow->user_id,
+													'tu_tag_id'		=> $id,
 													'tu_date'		=> $date,
 													'tu_groups'		=> $user['groups'],
-													'tu_username'	=> addslashes($user['name']), 
+													'tu_username'	=> addslashes($user['name']),
 													'tu_city_lang'	=> $lang,
-													'tu_count'		=> 1										
+													'tu_count'		=> 1
 												);
 											}
 										}
@@ -207,64 +207,64 @@ class WikiaStatsAutoHubsConsumer {
 						$time = Wikia::timeDuration($end - $start);
 						Wikia::log( __METHOD__, 'events', 'Wikia ' . $city_id . ' processed in: ' . $time );
 					}
-					
+
 					// insert data to database
-					# blogs 
-					$start = time(); 
+					# blogs
+					$start = time();
 					Wikia::log( __METHOD__, 'events', 'Insert ' . count($data['blogs']) . ' blogs' );
 					$producerDB->insertBlogComment($data['blogs']);
 					$end = time();
 					$time = Wikia::timeDuration($end - $start);
 					Wikia::log( __METHOD__, 'events', 'Inserts done in: ' . $time );
-					
+
 					# articles
-					$start = time(); 
+					$start = time();
 					Wikia::log( __METHOD__, 'events', 'Insert ' . count($data['articles']) . ' articles' );
 					$producerDB->insertArticleEdit($data['articles']);
 					$end = time();
 					$time = Wikia::timeDuration($end - $start);
-					Wikia::log( __METHOD__, 'events', 'Inserts done in: ' . $time );					
-					
-					$start = time(); 					
+					Wikia::log( __METHOD__, 'events', 'Inserts done in: ' . $time );
+
+					$start = time();
 					Wikia::log( __METHOD__, 'events', 'Insert ' . count($data['user']) . ' users' );
-					$producerDB->insertUserEdit($data['user']);	
+					$producerDB->insertUserEdit($data['user']);
 					$end = time();
 					$time = Wikia::timeDuration($end - $start);
 					Wikia::log( __METHOD__, 'events', 'Inserts done in: ' . $time );
 
-					// unset data		
+					// unset data
 					unset($data);
 				} else {
 					Wikia::log ( __METHOD__, "No data found in events table. Last timestamp: " . $this->mDate );
 				}
 				Wikia::log ( __METHOD__, "Wait " . self::sleepTime . " sec. " );
-				sleep(self::sleepTime);				
-			}	
+				sleep(self::sleepTime);
+			}
 		} catch( MWException $e ) {
 			$mesg = $e->getMessage();
-			$class = get_class( $e ); 			
+			$class = get_class( $e );
 			Wikia::log( __METHOD__, 'events', $mesg );
 			die( 'Cannot proceed events data. Message was: ' . $mesg . '. Class was:' . $class );
 		}
 
 		wfProfileOut( __METHOD__ );
 	}
-	
-	public static function ErrorHandler($errno, $errstr, $errfile, $errline){		
+
+	public static function ErrorHandler($errno, $errstr, $errfile, $errline){
 		/* skip memc error because of @ */
 		if ( strpos( $errfile, 'memcached-client.php' ) > 0 ) {
 			return true;
 		}
-		
 
-		if ($errno  == E_STRICT){	
-			return true;	
+
+		if ($errno  == E_STRICT){
+			return true;
 		}
 
 		$log = "php error: [$errno] $errstr; file: $errfile ; line: $errline \n";
 		Wikia::log( __METHOD__, 'php error', $log );
 		die( $log );
 		sleep(3);
-		return true; 
+		return true;
 	}
 }
