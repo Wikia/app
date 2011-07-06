@@ -33,3 +33,7 @@ if ( !empty( $wgEnablePartnerFeedExt ) ) {
 	$wgAutoloadClasses[ "WikiaApiCroppedImage"         ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiCroppedImage.php";
 	$wgAPIModules[ "imagecrop" ] = "WikiaApiCroppedImage";
 }
+
+// Load the MediaWiki API endpoint for ImageServing
+$wgAutoloadClasses[ "WikiaApiImageServing"         ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiImageServing.php";
+$wgAPIModules['imageserving'] = 'WikiaApiImageServing';

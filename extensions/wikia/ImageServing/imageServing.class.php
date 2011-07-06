@@ -1,7 +1,10 @@
 <?php
 /*
- * Author: Tomek Odrobny
- * Class to serving list of top 5 images for article
+ * @author: Tomek Odrobny, Sean Colombo
+ *
+ * Class for getting a list of the top images on a given article.  Also allows
+ * retriving thumbnails of those images which are scaled either by an aspect-ratio
+ * or specific dimensions.
  */
 class ImageServing{
 	private $maxCount = 10;
@@ -47,7 +50,6 @@ class ImageServing{
 	 *
 	 * @return  \type{\arrayof{\topImage}}
 	 */
-
 	public function getImages( $n = 5, $article_lp = 0 ) {
 		global $wgMemc;
 
@@ -278,7 +280,6 @@ class ImageServing{
 	 *
 	 * @return \string prefix for thumb image
 	 */
-
 	public function getCut( $width, $height, $align = "center", $issvg = false  ) {
 		//rescal of png always use width 512;
 		if($issvg) {
@@ -299,7 +300,6 @@ class ImageServing{
 			$right = $left + $pWidth + 1;
 			$bottom = $height;
 		} else {
-
 			if ($align == "center") {
 				$deltaYpx = round($height*$this->deltaY);
 				$bottom = $pHeight + $deltaYpx;
