@@ -60,7 +60,13 @@
 		}
 	}
 
-	.editpage-intro > .editpage-intro-wrapper > div {
-		background-color: #3a3a3a;
+	// BugId:7021
+	.editpage-intro {
+		> .editpage-intro-wrapper > div {
+			background-color: #4b4b4b;
+		}
+		> .expand {
+			background-color: #070707;
+		}
 	}
 }
