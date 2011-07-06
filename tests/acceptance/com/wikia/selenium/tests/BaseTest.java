@@ -70,6 +70,10 @@ public class BaseTest {
 
 	@AfterMethod(alwaysRun = true)
 	protected void closeSession() throws Exception {
+		if (isLoggedIn()) {
+			logout();
+		}
+		
 		if (noCloseAfterFail == null || noCloseAfterFail.equals("0")) {
 			closeSeleniumSession();
 		}
@@ -85,6 +89,10 @@ public class BaseTest {
 
 	protected String getTimeout() {
 		return this.timeout;
+	}
+	
+	protected boolean isLoggedIn() throws Exception {
+		return session().isElementPresent("link=Log out");
 	}
 
 	protected void login(String username, String password) throws Exception {
