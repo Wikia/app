@@ -35,16 +35,26 @@ class WikiaApiImageServing extends ApiBase {
 				$Id = $title->getArticleID();
 			}
 		}
+		
+		$article = Article::newFromID( $Id );
+		if(is_object($article)){
 
-		$imageServing = new ImageServing( array( $Id ) );
-		foreach ( $imageServing->getImages( 1 ) as $key => $value ){
-			$imgTitle = Title::newFromText( $value[0]['name'], NS_FILE );
-			$imgFile = wfFindFile($imgTitle);
-			$imageUrl = wfReplaceImageServer( $imgFile->getFullUrl(), $wgCacheBuster );
+			// Automatically follow redirects.
+			if($article->isRedirect()){
+				$title = $article->followRedirect();
+				$Id = $title->getArticleID();
+			}
+
+			$imageServing = new ImageServing( array( $Id ) );
+			foreach ( $imageServing->getImages( 1 ) as $key => $value ){
+				$imgTitle = Title::newFromText( $value[0]['name'], NS_FILE );
+				$imgFile = wfFindFile($imgTitle);
+				$imageUrl = wfReplaceImageServer( $imgFile->getFullUrl(), $wgCacheBuster );
+			}
+
+			$result = $this->getResult();
+			$result->addValue( 'image', $this->getModuleName(), $imageUrl );
 		}
-
-		$result = $this->getResult();
-		$result->addValue( 'image', $this->getModuleName(), $imageUrl );
 		wfProfileOut(__METHOD__);
 	}
 
