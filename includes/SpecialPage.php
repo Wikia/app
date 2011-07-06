@@ -185,7 +185,7 @@ class SpecialPage {
 		'Mytalk'                    => array( 'SpecialMytalk' ),
 		'Revisiondelete'            => 'SpecialRevisionDelete',
 		'Specialpages'              => array( 'UnlistedSpecialPage', 'Specialpages' ),
-		'Userlogout'                => array( 'UnlistedSpecialPage', 'Userlogout' ),
+		'Userlogout'                => array( 'UnlistedSpecialPage', 'Userlogout' )
 	);
 
 	static public $mAliases;

@@ -46,14 +46,13 @@ $app->wg->set( 'wgAutoloadClasses', "{$dir}/UserPathPredictionService.class.php"
  * controllers
  */
 $app->wg->set( 'wgAutoloadClasses', "{$dir}/UserPathPredictionController.class.php", 'UserPathPredictionController' );
-//$app->wg->set( 'wgAutoloadClasses', "{$dir}/UserPathPredictionSpecialController.class.php", 'UserPathPredictionSpecialController' );
+$app->wg->set( 'wgAutoloadClasses', "{$dir}/UserPathPredictionSpecialController.class.php", 'UserPathPredictionSpecialController' );
 
 /**
  * special pages
  */
-/*
+
 $app->wg->set( 'wgSpecialPages', 'UserPathPredictionSpecialController', 'UserPathPrediction' );
-*/
 
 /**
  * message files
