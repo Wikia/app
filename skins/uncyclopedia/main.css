@@ -1802,20 +1802,3 @@ p.mw-ipb-conveniencelinks {
 	padding-left: 12.2em;
 	background: none;
 }
-
-.editsection {
-	background: none;
-	border: none;
-	display: inline;
-}
-
-.headline-wrapper-h2 {
-	*overflow: hidden;
-	margin-top: .5em;
-	margin-bottom: 20px;
-}
-
-.headline-wrapper-h2 h2 {
-	margin: 0;
-	padding: 0;
-}
