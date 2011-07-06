@@ -1,24 +1,32 @@
 <?php
 /**
+ * User Path Prediction Service
+ * @details This class is a singleton
+ *
  * @author Jakub Olek <bukaj.kelo(at)gmail.com
- *
- *
+ * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com
  */
 
 class UserPathPredictionService extends WikiaService {
 	private $wikis;
 	private $model;
+	private $logPath;
+	private $initialized = false;
 
 	public function init() {
-		$this->model = new UserPathPredictionModel();
-		$this->logPath = "/tmp/" . __CLASS__;
-		
-		unlink( $this->logPath );
+		if ( !$this->initialized ) {
+			$this->model = F::build( 'UserPathPredictionModel' );
+			$this->logPath = "/tmp/UserPathPrediction_" . date( 'Ymd' ) . ".log";
+			F::setInstance( __CLASS__, $this );
+			$this->initialized = true;
+		}
 	}
 
-	private function log( $msg ) {
+	public function log( $msg = null ) {
+		$msg = $this->getVal( 'msg', $msg );
+		
 		if( $this->wg->DevelEnvironment ) {
-			file_put_contents($this->logPath, var_export( date("Y-m-d H:i:s")." : ".$msg, true ) . "\n", FILE_APPEND);
+			file_put_contents( $this->logPath, date("H:i:s") . " : " . var_export( $msg, true ) . "\n", FILE_APPEND );
 		}
 	}
 
@@ -27,29 +35,36 @@ class UserPathPredictionService extends WikiaService {
 		return str_replace( ":", "%3A", $url );
 	}
 
-	//Parse - extracts needed data from downloaded onedot files
-	function processOneDotData() {
-		$this->model->cleanSourceFolder();
+	/**
+	 * @brief Downloads data for the requested date from OneDot S3 Archive and extracts the data for the wikis of interest
+	 * @details Produces a series of intermediate files, one per each wiki, those will need further processing
+	 * 
+	 * @requestParam string $date the target date for the data to be downloaded and extracted
+	 */
+	function extractOneDotData() {
+		$strDate = $this->getVal( 'date' );
+		
+		if ( empty( $strDate ) ) {
+			throw new WikiaException( 'Target date not specified.' );
+		}
+		
+		$this->model->cleanRawDataFolder();
 		
 		if ( empty ( $this->wikis ) ) {
 			$this->wikis = $this->model->getWikis();
 		}
 		
-		$strDate = date( "Ymd", strtotime( "-1 day" ) );//"20110504";
+		$this->log( "Fetching OneDot data from archive for {$strDate}..." );
 		
-		$this->log( "Fetching OneDot data for {$strDate}...\n" );
-		
-		if( $this->model->gets3Data( $strDate ) ) {
-			$this->log( "Done.\n" );
+		if( $this->model->retrieveDataFromArchive( $strDate ) ) {
+			$this->log( "Done." );
 			
-			$this->model->cleanParsedDataFolder();
-			
-			while( ( $src = $this->model->getDataFilePath() ) !== false ) {
+			while( ( $src = $this->model->fetchRawDataFilePath() ) !== false ) {
 				$fileHandle = fopen( $src , "r" );
 				$skip = false;
 				$result = array();
 				
-				$this->log( "Processing: {$src}...\n" );
+				$this->log( "Processing: {$src}..." );
 				
 				while( !feof( $fileHandle ) ) {
 					$wholeLine = explode( "&", fgets( $fileHandle ));
@@ -107,11 +122,16 @@ class UserPathPredictionService extends WikiaService {
 				
 				fclose( $fileHandle );
 				
-				$this->log( "Done.\n" );
+				$this->log( "Done." );
 			}
 			
-			$this->log( "Cleaning up...\n" );
-			$this->model->cleanSourceFolder();
+			$this->log( "Cleaning up..." );
+			$this->model->cleanRawDataFolder();
+			$this->log( "Done." );
+		} else {
+			$this->log( "Failure." );
+			
+			throw new WikiaException( "Cannot fetch data from OneDot archive." );
 		}
 	}
 }

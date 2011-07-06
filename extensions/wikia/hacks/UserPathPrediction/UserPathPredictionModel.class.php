@@ -1,8 +1,13 @@
 <?php
+/**
+ * A Model for User Path Prediction data
+ * 
+ * @author Jakub Olek <bukaj.kelo(at)gmail.com>
+ * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
+ */
 class UserPathPredictionModel {
-
 	const S3_ARCHIVE = "s3://one_dot_archive/";
-	const SAVE_PATH = "/tmp/UserPathPredictionRawData/";
+	const RAW_DATA_PATH = "/tmp/UserPathPredictionRawData/";
 	const PARSED_DATA_PATH = "/tmp/UserPathPredictionParsedData/";
 	
 	private $files;
@@ -16,36 +21,42 @@ class UserPathPredictionModel {
 		}
 	}
 	
-	private function removeDir($dir) {
-		if ( is_dir( $dir ) ) {
-			$objects = scandir( $dir );
+	private function removePath( $path ) {
+		if ( is_dir( $path ) ) {
+			$objects = scandir( $path );
 			
 			foreach ( $objects as $object ) {
 				if ( !in_array( $object, $this->$excludePaths ) ) {
-					$path = "{$dir}/{$object}";
+					$fullPath = "{$path}/{$object}";
 					
-					if ( filetype( $path ) == 'dir' ) {
-						$this->removeDir( $path );
+					if ( filetype( $fullPath ) == 'dir' ) {
+						$this->removePath( $fullPath );
 					} else {
-						unlink( $path );
+						unlink( $fullPath );
 					}
 				}
 			}
 			
 			reset( $objects );
-			rmdir( $dir );
+			return rmdir( $path );
+		} elseif ( is_file( $path ) ) {
+			return unlink ( $path );
 		}
+		
+		return false;
 	} 
 	
-	function gets3Data( $timestr ) {
-		$this->removeDir(self::SAVE_PATH);
+	public function retrieveDataFromArchive( $timestr, &$commandOutput = null ) {
 		$s3directory = self::S3_ARCHIVE . "{$timestr}/";
-		$this->createDir( self::SAVE_PATH );
-		echo shell_exec( "s3cmd get --recursive {$s3directory} " . self::SAVE_PATH );
 		
-		$tmpFiles = scandir( self::SAVE_PATH );
+		$this->cleanRawDataFolder();
+		$this->createDir( self::RAW_DATA_PATH );
 		
-		if ( count( $tmpFiles )  > 2 ) {
+		$commandOutput = shell_exec( "s3cmd get --recursive {$s3directory} " . self::RAW_DATA_PATH );
+		
+		$tmpFiles = scandir( self::RAW_DATA_PATH );
+		
+		if ( is_array( $tmpFiles ) && count( $tmpFiles )  > 2 ) {
 			$this->files = array_slice( $tmpFiles, 2 );
 			return true;
 		}
@@ -53,18 +64,18 @@ class UserPathPredictionModel {
 		return false;
 	}
 	
-	function getDataFilePath() {
-		$read = next( $this->files );
+	public function fetchRawDataFilePath() {
+		$ret = next( $this->files );
 
-		if($read === false) {
+		if ( $ret === false ) {
 			reset( $this->files );
 			return false;
 		} 
 		
-		return self::SAVE_PATH . $read;
+		return self::RAW_DATA_PATH . $ret;
 	}
 	
-	function saveParsedData( $domain, $data ) {
+	public function saveParsedData( $domain, $data ) {
 		if( !is_dir( self::PARSED_DATA_PATH )) {
 				$this->createDir( self::PARSED_DATA_PATH );
 		}
@@ -72,7 +83,7 @@ class UserPathPredictionModel {
 		file_put_contents( self::PARSED_DATA_PATH . $domain, serialize( $data ) . "\n", FILE_APPEND );
 	}
 	
-	function getWikis() {
+	public function getWikis() {
 		//TODO: get data from WF
 		return array(
 			"490" => array(
@@ -90,11 +101,11 @@ class UserPathPredictionModel {
 		);
 	}
 	
-	function cleanParsedDataFolder() {
-		$this->removeDir( self::PARSED_DATA_PATH );
+	public function cleanParsedDataFolder() {
+		$this->removePath( self::PARSED_DATA_PATH );
 	}
 	
-	function cleanSourceFolder() {
-		$this->removeDir( self::SAVE_PATH );
+	public function cleanRawDataFolder() {
+		$this->removePath( self::RAW_DATA_PATH );
 	}
 }
