@@ -28,6 +28,16 @@ public class CreateNewWikiTest extends BaseTest {
 
 		return wikiName;
 	}
+
+	@BeforeMethod(alwaysRun=true)
+	public void enforceMainWebsite() throws Exception {
+		enforceWebsite("http://www.wikia.com");
+	}
+
+	public void enforceWebsite(String website) throws Exception {
+		closeSeleniumSession();
+		startSession(this.seleniumHost, this.seleniumPort, this.browser, website, this.timeout, this.noCloseAfterFail);
+	}
 	
 	@DataProvider(name = "wikiLanguages")
 	public Iterator<Object[]> wikiLanguages() throws Exception {
@@ -65,7 +75,7 @@ public class CreateNewWikiTest extends BaseTest {
 		
 		assertTrue(session().getLocation().contains(url));
 		
-		session().open(url);
+		enforceWebsite(url);
 		
 		editArticle("A new article", "Lorem ipsum dolor sit amet");
 		session().open("index.php?title=A_new_article");
