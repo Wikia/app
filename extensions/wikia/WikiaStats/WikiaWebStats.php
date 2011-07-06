@@ -13,9 +13,14 @@ function wfWikiaWebStatsScript($this, $bottomScriptText) {
 	if ( !empty($wgCityId) && !empty($wgDotDisplay) && empty($wgReadOnly) ) {
 		$url = getOneDotURL();
 
-		$bottomScriptText .= "<script type=\"text/javascript\" src=\"$url\"></script>";
-		$bottomScriptText .= '<noscript><img src="'.$url.'" width="1" height="1" border="0" alt="" /></noscript>';
-		$bottomScriptText .= "\n";
+		$bottomScriptText .= <<<SCRIPT
+<script type="text/javascript">
+	var oneDotURL = "$url" + ((typeof document.referrer != "undefined") ? "&amp;r=" + escape(document.referrer) : "") + "&amp;cb=" + (new Date).valueOf();
+ 	document.write('<'+'script type="text/javascript" src="' + oneDotURL + '"><'+'/script>');
+</script>
+<noscript><img src="$url" width="1" height="1" border="0" alt="" /></noscript>
+SCRIPT;
+
 	}
 	return true;
 }
