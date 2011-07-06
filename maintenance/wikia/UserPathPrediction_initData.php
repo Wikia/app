@@ -14,10 +14,12 @@
  * @usage: SERVER_ID=177 php UserPathPrediction_initData.php --conf /usr/wikia/conf/current/wiki.factory/LocalSettings.php --aconf /usr/wikia/conf/current/AdminSettings.php
  */
 
-ini_set( "include_path", dirname(__FILE__)."/../" );
+ini_set( 'include_path', dirname( __FILE__ ) . '/../' );
 
 $options = array(
 	'help',
+	'conf',
+	'aconf',
 	'date'
 );
 
@@ -30,7 +32,7 @@ if ( isset( $options['help'] ) ) {
 		"Usage: SERVER_ID=177 php UserPathPrediction_initData.php " .
 		"--conf /usr/wikia/conf/current/wiki.factory/LocalSettings.php " .
 		"--aconf /usr/wikia/conf/current/AdminSettings.php " .
-		"--date 20110623\n\n"
+		"--date=20110623\n\n"
 	);
 	exit( 0 );
 }
@@ -41,8 +43,29 @@ $date = ( !empty( $options['date'] ) ) ? $options['date'] : date( "Ymd", strtoti
 require_once( "$IP/extensions/wikia/hacks/UserPathPrediction/UserPathPrediction.setup.php" );
 
 $app = F::app();
+$wikis;
 
-echo( "Initializing data analysis for User Path Prediction\n\n" );
+$app->sendRequest( 'UserPathPredictionService', 'log', array( 'msg' => 'Start' ) );
+echo( "Initializing data analysis for User Path Prediction, this could take a while...\n" );
 
-$app->sendRequest( "UserPathPredictionService", "extractOneDotData", array( "date" => $date ) );
+try{
+	$app->sendRequest( 'UserPathPredictionService', 'extractOneDotData', array( 'date' => $date ) );
+	
+	$response = $app->sendRequest( 'UserPathPredictionService', 'getWikis' );
+	$wikis = $response->getVal( 'wikis', array() );
+} catch (WikiaException $e) {
+	$msg = $e->__toString();
+	$app->sendRequest( 'UserPathPredictionService', 'log', array( 'msg' => $msg ) );
+	echo $msg;
+	exit( 1 );
+}
+
+echo( "Done.\n" );
+
+echo( "Running data Analysis for " . count( $wikis ) . " wikis...\n" );
+
+foreach ( $wikis as $wikiID => $wiki ) {
+	$output = shell_exec( "SERVER_ID={$wikiID} php {$IP}/maintenance/wikia/UserPathPrediction_analyzeData.php --conf {$options['conf']} --aconf {$options['aconf']}" );
+	echo( $output );
+}
 ?>
