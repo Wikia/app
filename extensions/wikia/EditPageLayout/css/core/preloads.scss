@@ -12,6 +12,7 @@
 			background-color: #e7f0f9;
 			color: $color-text;
 			padding: 5px;
+			padding-bottom: 35px;
 		}
 
 		// links
@@ -30,12 +31,14 @@
 
 	// expand link
 	> .expand {
+		background-color: lighten(#e7f0f9, 80%);
 		bottom: 5px;
 		color: $color-links;
 		cursor: pointer;
 		display: none;
 		font-size: 11px;
 		position: absolute;
+		padding: 5px;
 		right: 20px;
 		&:hover {
 			text-decoration: none;
