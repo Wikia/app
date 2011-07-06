@@ -19,7 +19,21 @@ CKEDITOR.plugins.add('rte-paste',
 			if (editor.mode != 'wysiwyg') {
 				return;
 			}
+
+			// prevent pasting using Ctrl+V shortcut (BugId:7605)
+			editor.document.getBody().on('beforepasteonkey', function(ev) {
+				if (editor.config.forcePasteInDialog) {
+					RTE.log('"direct" paste prevented');
+
+					// i.e. preventDefault()
+					ev.cancel();
+
+					// show paste dialog
+					editor.fire('pasteDialog');
+				}
+			});
 		});
+
 
 		// @see clipboard CK core plugin
 		if (!editor.config.forcePasteAsPlainText) {
@@ -155,3 +169,12 @@ CKEDITOR.plugins.add('rte-paste',
 		return {pasted: pasted, prefix: prefix, suffix: suffix, 'new': n, 'old': o, 'start': idx.start, 'end': idx.end};
 	}
 });
+
+/**
+ * Force paste to happen in dialog (force plain text pasting and prevent pasting via Ctrl+V shortcut) - BugId:7605
+ * @type Boolean
+ * @default false
+ * @example
+ * config.forcePasteInDialog = false;
+ */
+CKEDITOR.config.forcePasteInDialog = false;
