@@ -21,16 +21,6 @@ public class CreateNewWikiTest extends BaseTest {
 	private static String wikiName;
 	private static List<String> testedLanguages = new ArrayList<String>();
 	
-	@BeforeMethod(alwaysRun=true)
-	public void enforceMainWebsite() throws Exception {
-		enforceWebsite("http://www.wikia.com");
-	}
-	
-	public void enforceWebsite(String website) throws Exception {
-		closeSeleniumSession();
-		startSession(this.seleniumHost, this.seleniumPort, this.browser, website, this.timeout, this.noCloseAfterFail);
-	}
-	
 	private static String getWikiName() {
 		if (null == wikiName) {
 			wikiName = "testwiki" + Long.toString(Math.abs(new Random().nextLong()), 36).toLowerCase();
@@ -75,7 +65,7 @@ public class CreateNewWikiTest extends BaseTest {
 		
 		assertTrue(session().getLocation().contains(url));
 		
-		enforceWebsite(url);
+		session().open(url);
 		
 		editArticle("A new article", "Lorem ipsum dolor sit amet");
 		session().open("index.php?title=A_new_article");
@@ -197,9 +187,9 @@ public class CreateNewWikiTest extends BaseTest {
 			session().uncheck("flag_2");
 			session().check("flag_4");
 			session().check("flag_8");
-			clickAndWait("close_saveBtn");
+			clickAndWait("//input[@name='close_saveBtn']");
 
-			clickAndWait("close_saveBtn");
+			clickAndWait("//input[@name='close_saveBtn']");
 			assertTrue(session().isTextPresent("was closed"));
 		}
 	}
