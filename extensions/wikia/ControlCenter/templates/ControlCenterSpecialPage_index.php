@@ -117,7 +117,7 @@
 					<li class="control" data-tooltip="<?= wfMsg("controlcenter-control-add-photo-tooltip") ?>" data-modal="AddPhoto">
 						<a href="<?= $urlAddPhoto ?>" class="set">
 							<span class="representation">
-								<span class="icon addimage"></span>
+								<span class="icon addphoto"></span>
 							</span>
 							<?= wfMsg("controlcenter-control-add-photo-label") ?>
 						</a>
