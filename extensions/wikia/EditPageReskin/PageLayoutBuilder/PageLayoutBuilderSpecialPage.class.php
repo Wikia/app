@@ -401,7 +401,7 @@ class SpecialPageLayoutBuilder extends SpecialCustomEditPage {
 	 * @author Tomek Odrobny
 	 */
 	protected function executeListDelete($request) {
-		$plbId = intval( $request->getVal(self::FIELD_LAYOUT_ID) );
+		$plbId = intval( $request->getVal(self::FIELD_PAGE_ID) );
 		PageLayoutBuilderModel::layoutMarkAsDelete($plbId);
 	}
 
@@ -411,7 +411,7 @@ class SpecialPageLayoutBuilder extends SpecialCustomEditPage {
 	 * @author Tomek Odrobny
 	 */
 	protected function executeListPublish($request) {
-		$plbId = intval( $request->getVal(self::FIELD_LAYOUT_ID) );
+		$plbId = intval( $request->getVal(self::FIELD_PAGE_ID) );
 		PageLayoutBuilderModel::layoutUnMarkAsNoPublish($plbId);
 	}
 
