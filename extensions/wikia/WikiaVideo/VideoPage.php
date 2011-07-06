@@ -26,8 +26,16 @@ class VideoPage extends Article {
 	const V_GAMETRAILERS = 20;
 	const V_SCREENPLAY = 21;
 	
-	private static $SCREENPLAY_HIGHDEF_BITRATE_ID = 449;	// 720p
-	private static $SCREENPLAY_STANDARD_BITRATE_ID = 461;	// 360
+	const SCREENPLAY_MEDIUM_JPEG_BITRATE_ID = 267;	// 250x200
+	const SCREENPLAY_LARGE_JPEG_BITRATE_ID = 382;	// 480x360
+	const SCREENPLAY_HIGHDEF_BITRATE_ID = 449;	// 720p
+	const SCREENPLAY_STANDARD_43_BITRATE_ID = 455;	// 360
+	const SCREENPLAY_STANDARD_BITRATE_ID = 461;	// 360
+	const SCREENPLAY_ENCODEFORMATCODE_JPEG = 9;
+	const SCREENPLAY_ENCODEFORMATCODE_MP4 = 20;
+	
+	private static $SCREENPLAY_VENDOR_ID = 1893;
+	private static $SCREENPLAY_VIDEO_TYPE = '.mp4';
 
 	var	$mName,
 		$mVideoName,
@@ -882,7 +890,7 @@ EOD;
 			if( !empty( $qsvars['eclipid'] ) ) {
 				$this->mId = $qsvars['eclipid'];
 				$this->mProvider = $provider;
-				$this->mData = array($qsvars['bitrateid'], $qsvars['vendorid'], $qsvars['type']);
+				$this->mData = array($qsvars['bitrateid'], 0);	// 2nd param: does HD exist? assume no
 				//@todo get name and description
 				return true;
 			}
@@ -935,7 +943,12 @@ EOD;
 				$ratio = (512 / 296);
 				break;
 			case self::V_SCREENPLAY:
-				$ratio = (480 / 270);
+				$ratio = (480 / 360);
+				if (!empty($this->mData[0])) {
+					if ($this->mData[0] == self::SCREENPLAY_STANDARD_BITRATE_ID) {
+						$ratio = 480 / 270;
+					}
+				}
 				break;
 			default:
 				$ratio = 1;
@@ -988,7 +1001,12 @@ EOD;
 				$ratio = "512 x 296";
 				break;
 			case self::V_SCREENPLAY:
-				$ratio = "480 x 270";
+				$ratio = "480 x 360";
+				if (!empty($this->mData[0])) {
+					if ($this->mData[0] == self::SCREENPLAY_STANDARD_BITRATE_ID) {
+						$ratio = "480 x 270";
+					}
+				}
 				break;
 			default:
 				$ratio = "300 x 300";
@@ -1205,7 +1223,7 @@ EOD;
 				$url = 'http://www.hulu.com/watch/' . $id;
 				break;
 			case self::V_SCREENPLAY:
-				$url = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid='.$id.'&bitrateid='.$mData[0].'&vendorid='.$mData[1].'&type='.$mData[2];
+				$url = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid='.$id.'&bitrateid='.$mData[0].'&vendorid='.self::$SCREENPLAY_VENDOR_ID.'&type='.self::$SCREENPLAY_VIDEO_TYPE;
 				break;
 			default:
 				$url = '';
@@ -1697,9 +1715,9 @@ EOD;
 			case self::V_SCREENPLAY:
 				$player = '/extensions/wikia/JWPlayer/player.swf';
 				$swfobject = '/extensions/wikia/JWPlayer/swfobject.js';
-				$file = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid='.$this->mId.'&bitrateid='.$this->mData[0].'&vendorid='.$this->mData[1].'&type='.$this->mData[2];
-				$hdfile = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid='.$this->mId.'&bitrateid='.self::$SCREENPLAY_HIGHDEF_BITRATE_ID.'&vendorid='.$this->mData[1].'&type='.$this->mData[2];
-				$image = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid='.$this->mId.'&bitrateid=382&vendorid='.$this->mData[1].'&type=.jpg';
+				$file = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid='.$this->mId.'&bitrateid='.$this->mData[0].'&vendorid='.self::$SCREENPLAY_VENDOR_ID.'&type='.self::$SCREENPLAY_VIDEO_TYPE;
+				$hdfile = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid='.$this->mId.'&bitrateid='.self::SCREENPLAY_HIGHDEF_BITRATE_ID.'&vendorid='.self::$SCREENPLAY_VENDOR_ID.'&type='.self::$SCREENPLAY_VIDEO_TYPE;
+				$image = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid='.$this->mId.'&bitrateid='.self::SCREENPLAY_LARGE_JPEG_BITRATE_ID.'&vendorid='.self::$SCREENPLAY_VENDOR_ID.'&type=.jpg';
 				
 				$flashvars = 'file='.urlencode($file).'&image='.urlencode($image).'&provider=video&type=video&stretching=fill';		//@todo add title, description variables
 //				$embed = '<object 
@@ -1721,27 +1739,34 @@ EOD;
 //				    />
 //				</object>';
 				//@todo add title, description variables
+				//
 				//@todo show object in Add Video flow. show swfobject in article mode
 				// swfobject
 				$playerId = 'player-'.$this->mId;
-				$embed = '<script type="text/javascript" src="'.$swfobject.'"></script>
-				<div id="'.$playerId.'"></div>
+				$embed = '<div id="'.$playerId.'"></div>
 				<script type="text/javascript">
-					var so = new SWFObject("'.$player.'","'.$playerId.'","'.$width.'","'.$height.'","9");
-					so.addParam("allowfullscreen","true");
-					so.addParam("allowscriptaccess","always");
-					so.addParam("wmode", "opaque");
-					so.addVariable("file", "'.urlencode($file).'");
-					so.addVariable("image","'.urlencode($image).'");
-					so.addVariable("type","video");
-					so.addVariable("provider","video");
-					so.addVariable("stretching", "fill");
-					so.addVariable("plugins", "hd-1");
-					so.addVariable("hd.file", "'.urlencode($hdfile).'");
-					so.addVariable("hd.state", "false");
-					so.write("'.$playerId.'");
+					wgAfterContentAndJS.push(function() {
+						$.getScript("'.$swfobject.'", function(){
+							var so = new SWFObject("'.$player.'","'.$playerId.'","'.$width.'","'.$height.'","9");
+							so.addParam("allowfullscreen","true");
+							so.addParam("allowscriptaccess","always");
+							so.addParam("wmode", "opaque");
+							so.addVariable("file", "'.urlencode($file).'");
+							so.addVariable("image","'.urlencode($image).'");
+							so.addVariable("type","video");
+							so.addVariable("provider","video");
+							so.addVariable("stretching", "fill");';
+				if ($this->mData[1]) {
+					$embed .= '
+							so.addVariable("plugins", "hd-1");
+							so.addVariable("hd.file", "'.urlencode($hdfile).'");
+							so.addVariable("hd.state", "false");';
+				}
+				$embed .= '
+							so.write("'.$playerId.'");
+						});
+					});
 				</script>';
-				//@todo load HD only if it exists
 
 				$code = 'custom';
 				break;
@@ -1802,7 +1827,7 @@ EOD;
 				$thumb = $huluData['thumbnailUrl'];
 				break;
 			case self::V_SCREENPLAY:
-				$thumb = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid='.$this->mId.'&bitrateid=382&vendorid='.$this->mData[1].'&type=.jpg';
+				$thumb = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid='.$this->mId.'&bitrateid='.self::SCREENPLAY_LARGE_JPEG_BITRATE_ID.'&vendorid='.self::$SCREENPLAY_VENDOR_ID.'&type=.jpg';
 				break;
 			default:
 				break;
