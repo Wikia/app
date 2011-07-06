@@ -7,20 +7,25 @@
 
 table {
   border: 1px dotted black;
+  th {
+    background-color: #DDD;
+  }
+  td {
+    padding: 5px;
+  }
+  tr {
+      border-bottom: 1px dotted black;
+      &:nth-child(even) {
+        background-color: #BADA55;
+      }
+    } 
 }
 
-tr {
-  border-bottom: 1px dotted black;
-}
-
-td {
+footer {
+  padding: 10px;
+  li {
   padding: 5px;
+  }
 }
 
-tr:nth-child(odd) {
-  background-color: #BADA55;
-}
 
-th {
-  background-color: #DDD;
-}

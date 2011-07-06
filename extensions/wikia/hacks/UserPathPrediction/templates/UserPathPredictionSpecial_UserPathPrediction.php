@@ -6,18 +6,21 @@
 
 <section id="sectionUserPathPrediction">
 <nav>
-	<label for="selectWiki">Select Wiki: 
-	<select id="selectWiki">
-		<? foreach ( $wikis as $wiki ) :?>
-				<option value="<?= $wiki["db_name"] . '">' . $wiki["db_name"] ?></option>
-		<? endforeach; ?>
-	</select>
-	</label>
-	<label for="articleId">Article Id:
-		<input id="articleId" type="number" />
-	</label>
+	<form id="wikiForm">
+		<label for="selectWiki">Select Wiki: 
+		<select id="selectWiki">
+			<? foreach ( $wikis as $wiki ) :?>
+					<option value="<?= $wiki["db_name"] . '">' . $wiki["db_name"] ?></option>
+			<? endforeach; ?>
+		</select>
+		</label>
+		<label for="articleId">Article Id:
+			<input id="articleId" type="number" />
+		</label>
+	<button type="submit" onclick="return UserPathPrediction.load()">Load</button>
+	</form>
 </nav>
-<div>
+<div id="table">
 	<table id="articleTable" class="tablesorter">
 		<thead>
 			<tr>
