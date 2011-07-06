@@ -475,6 +475,7 @@ function WikiaVideoArticleFromTitle($title, $article) {
 		// i.e. Video:Foo/width=480px&caption=Hello World
 		$parts = explode('/', $title->getFullText());
 		if (sizeof($parts) > 1) {
+			$oldEnableParserCache = $wgEnableParserCache;
 			$wgEnableParserCache = false;
 			$vars = array();
 			parse_str($parts[1], $vars);
@@ -486,9 +487,11 @@ function WikiaVideoArticleFromTitle($title, $article) {
 
 			$newTitle = Title::newFromText($parts[0], $title->getNamespace());
 			$title = $newTitle;
+			
+			$wgEnableParserCache = $oldEnableParserCache;
 		}
 
-		$article = new VideoPage($title);
+		$article = new VideoPage($title);		
 	}
 	return true;
 }
