@@ -47,7 +47,7 @@ class EditPageLayoutAjax {
 		$mode = $wgRequest->getVal('mode', '');
 		$page = $wgRequest->getVal('page', '');
 		$section = $wgRequest->getInt('section', 0);
-		
+
 		$wikitext = self::resolveWikitext($content, $mode, $page, $method, $section);
 		wfProfileOut(__METHOD__);
 		return $wikitext;
@@ -57,9 +57,21 @@ class EditPageLayoutAjax {
 	 * Parse provided wikitext to HTML using MW parser
 	 */
 	static public function preview() {
+		global $wgRequest, $wgLang;
 		wfProfileIn(__METHOD__);
 
 		$res = self::resolveWikitextFromRequest('preview');
+
+		// parse summary
+
+		// taken from EditPage.php
+		# Truncate for whole multibyte characters. +5 bytes for ellipsis
+		$summary = $wgLang->truncate($wgRequest->getText('summary'), 150);
+
+		# Remove extra headings from summaries and new sections.
+		$summary = preg_replace('/^\s*=+\s*(.*?)\s*=+\s*$/', '$1', $summary);
+
+		$res['summary'] = wfMsgExt('wikia-editor-preview-editSummary', array('parse'), $summary);
 
 		wfProfileOut(__METHOD__);
 		return $res;
