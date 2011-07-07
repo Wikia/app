@@ -17,7 +17,7 @@ $app->registerClass('ControlCenterLogic', $dir . 'ControlCenterLogic.class.php')
 $wgExtensionMessagesFiles['ControlCenter'] = $dir . 'ControlCenter.i18n.php';
 
 // special pages
-$app->registerSpecialPage('ControlCenter', 'ControlCenterSpecialPageController');
+$app->registerSpecialPage('AdminDashboard', 'ControlCenterSpecialPageController');
 
 $wgAvailableRights[] = 'controlcenter';
 

@@ -9,7 +9,7 @@ class ControlCenterSpecialPageController extends WikiaSpecialPageController {
 
 	public function __construct() {
 		wfLoadExtensionMessages('ControlCenter');
-		parent::__construct('ControlCenter', '', false);
+		parent::__construct('AdminDashboard', '', false);
 	}
 
 	/**
@@ -122,7 +122,7 @@ class ControlCenterSpecialPageController extends WikiaSpecialPageController {
 			return true;
 		}
 		$this->response->setVal('headerText', $this->request->getVal('headerText'));
-		$this->response->setVal('backLink', Title::newFromText('ControlCenter', NS_SPECIAL)->getFullURL());
+		$this->response->setVal('backLink', Title::newFromText('AdminDashboard', NS_SPECIAL)->getFullURL());
 	}
 	
 	/**
