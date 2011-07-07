@@ -27,8 +27,8 @@ class ControlCenterModule extends Module {
 
 		$this->founderProgressBar = (string)F::app()->sendRequest( 'FounderProgressBar', 'widget' );
 		
-		$this->controlCenterUrlGeneral = Title::newFromText('ControlCenter', NS_SPECIAL)->getFullURL().'?tab=general';
-		$this->controlCenterUrlAdvanced = Title::newFromText('ControlCenter', NS_SPECIAL)->getFullURL().'?tab=advanced';
+		$this->controlCenterUrlGeneral = Title::newFromText('AdminDashboard', NS_SPECIAL)->getFullURL().'?tab=general';
+		$this->controlCenterUrlAdvanced = Title::newFromText('AdminDashboard', NS_SPECIAL)->getFullURL().'?tab=advanced';
 	}
 	
 }

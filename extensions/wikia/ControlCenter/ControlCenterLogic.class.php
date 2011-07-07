@@ -17,7 +17,7 @@ class ControlCenterLogic {
 		if (!$app->wg->User->isLoggedIn()) return false;
 		if (!$app->wg->User->isAllowed( 'controlcenter' )) return false;
 		
-		$pageList = array ( "ControlCenter", "UserRights", "ListUsers", "RecentChanges", "Categories", "MultipleUpload", "SponsorshipDashboard");
+		$pageList = array ( "AdminDashboard", "UserRights", "ListUsers", "RecentChanges", "Categories", "MultipleUpload", "SponsorshipDashboard");
 //		print_pre($title->getDBKey());
 		if ($title && $title->isSpecialPage() && in_array($title->getDBKey(), $pageList)) {
 			return true;

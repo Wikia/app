@@ -446,7 +446,7 @@ class BodyModule extends Module {
 			$this->wgSuppressAds = true;
 			$this->wgSuppressWikiHeader = true;
 			$this->displayControlCenter = true;
-			$this->displayControlCenterChromedArticle = ($wgTitle->getText() != Title::newFromText("ControlCenter", NS_SPECIAL)->getText());
+			$this->displayControlCenterChromedArticle = ($wgTitle->getText() != Title::newFromText("AdminDashboard", NS_SPECIAL)->getText());
 		} else {
 			$this->displayControlCenter = false;
 			$this->displayControlCenterChromedArticle = false;
