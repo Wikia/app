@@ -147,7 +147,7 @@ class UserPathPredictionService extends WikiaService {
 		
 		if ( file_exists( $filePath ) ) {
 			$fileHandle = fopen( $filePath , "r" );
-			$counters = array();
+			$segments = array();
 			
 			$this->log( "Processing: {$filePath}..." );
 			
@@ -158,19 +158,27 @@ class UserPathPredictionService extends WikiaService {
 				$title = F::build( 'Title', array( $referrer ), 'newFromText' );
 				
 				if ( $title instanceof Title && $title->exists() && $title->getArticleID() != $data[ 'a' ] ) {
-					$key = $title->getArticleID() . '_' . $data[ 'a' ];
+					$referrerID = $title->getArticleID();
+					$targetID = $data[ 'a' ];
+					$key = "{$referrerID}_{$targetID}";
 					
-					if ( key_exists( $key, $counters ) ) {
-						$counters[$key] += 1;
+					if ( key_exists( $key, $segments ) ) {
+						$segments[$key]->counter += 1;
 					} else {
-						$counters[$key] = 1;
+						$obj = new stdClass();
+						
+						$obj->counter = 1;
+						$obj->referrerID = (int) $referrerID;
+						$obj->targetID = (int) $targetID;
+						
+						$segments[$key] = $obj;
 					}
 				}
 			}
 			
 			fclose( $fileHandle );
-			$this->log( 'Found ' . count( $counters ) . ' valid segments.' );
-			$this->model->storeAnalyzedData( $counters );
+			$this->log( 'Found ' . count( $segments ) . ' valid segments.' );
+			$this->model->storeAnalyzedData( $segments );
 		} else {
 			$this->log( 'No data found.' );
 		}

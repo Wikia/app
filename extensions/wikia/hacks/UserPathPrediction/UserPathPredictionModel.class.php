@@ -37,7 +37,7 @@ class UserPathPredictionModel {
 			empty( $this->app->wg->UserPathPredictionDBuser ) ||
 			empty( $this->app->wg->UserPathPredictionDBpassword )
 		) {
-			throw new WikiaException( 'Missing settings for UserPathPrediction DB' );
+			throw new Exception( 'Missing settings for UserPathPrediction DB' );
 		}
 		
 		return Database::newFromParams(
@@ -117,13 +117,37 @@ class UserPathPredictionModel {
 	}
 	
 	public function storeAnalyzedData( $data ) {
-		global $wgAllDBsAreLocalhost;
-		$origValue = $wgAllDBsAreLocalhost;
-		$wgAllDBsAreLocalhost = true;
+		$dbw = $this->getDBConnection( DB_MASTER );
 		
-		$dbw = $this->wf->getDB( DB_MASTER, null, self::DB_NAME );
+		foreach ( $data as $segment ) {
+			$sql = 'INSERT INTO `path_segments_archive` ' .
+				'(`city_id`, `referrer_id`, `target_id`, `count`, `updated`) ' .
+				'values (' . $dbw->addQuotes( $this->app->wg->CityId ) .
+				', ' . $dbw->addQuotes( $segment->referrerID ) .
+				', ' . $dbw->addQuotes( $segment->targetID ) .
+				', ' . $dbw->addQuotes( $segment->counter ) . 
+				', CURDATE() ) ON DUPLICATE KEY UPDATE count = (count + ' . $dbw->addQuotes( $segment->counter ) . '); ';
+				
+			$this->log("Running SQL query: " . substr( $sql, 0, 350 ) . " [...]");
+			
+			$result = $dbw->query( $sql, __METHOD__ );
+			
+			if ( $result === false ) {
+				$error = 'DB error: ' . $dbw->lastError();
+				
+				$this->log( $error );
+				throw new WikiaException( $error );
+			}
+		}
 		
+		$this->log("Committing DB transaction...");
+		$dbw->commit();
+		$dbw->close();
+		$this->log("Done.");
+		
+		$this->log("Cleaning up...");
 		$this->cleanParsedDataFolder();
+		$this->log("Done.");
 	}
 	
 	public function getWikis() {
