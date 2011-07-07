@@ -16,18 +16,10 @@ var FounderProgressList = {
 		$('#FounderProgressListToggle').click(function(e) {
 			e.preventDefault();
 			if(FounderProgressList.isHidden) {
-				FounderProgressList.seeFullList.hide();
-				FounderProgressList.hideFullList.show();
-				FounderProgressList.d.show();
-				FounderProgressList.article.hide()
-				FounderProgressList.drawMainTail();
+				FounderProgressList.showListModal();
 			} else {
-				FounderProgressList.seeFullList.show();
-				FounderProgressList.hideFullList.hide();
-				FounderProgressList.d.hide();
-				FounderProgressList.article.show()
+				FounderProgressList.hideListModal();
 			}
-			FounderProgressList.isHidden = !FounderProgressList.isHidden;
 		});
 		
 		FounderProgressList.d.find(".task .task-label").click(function() {
@@ -42,6 +34,21 @@ var FounderProgressList = {
 		
 		FounderProgressList.trackedActivities.find('.actions .wikia-button').click(FounderProgressList.trackActivity);
 		FounderProgressList.allActivities.find('.actions .skip').click(FounderProgressList.skipActivity);
+	},
+	showListModal: function() {
+		FounderProgressList.isHidden = false;
+		FounderProgressList.seeFullList.hide();
+		FounderProgressList.hideFullList.show();
+		FounderProgressList.d.show();
+		FounderProgressList.article.hide()
+		FounderProgressList.drawMainTail();
+	},
+	hideListModal: function() {
+		FounderProgressList.isHidden = true;
+		FounderProgressList.seeFullList.show();
+		FounderProgressList.hideFullList.hide();
+		FounderProgressList.d.hide();
+		FounderProgressList.article.show()
 	},
 	collapseTask: function(task) {
 		var group = task.find('.task-group');

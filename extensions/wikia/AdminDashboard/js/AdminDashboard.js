@@ -76,6 +76,7 @@ var AdminDashboard = {
 			AdminDashboard.section.contentarea.html('Loading...');	//i18n this later
 			AdminDashboard.wikiaArticle.removeClass('AdminDashboardChromedArticle expanded');
 			$('.AdminDashboardDrawer, .AdminDashboardNavigation, .AdminDashboardArticleHeader').remove();
+			FounderProgressList.hideListModal();
 		},
 		hideAllSections: function() {
 			for(var s in AdminDashboard.section) {
