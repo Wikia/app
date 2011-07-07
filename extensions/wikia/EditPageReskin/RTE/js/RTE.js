@@ -466,7 +466,6 @@ jQuery.fn.getData = function() {
 	return data;
 }
 
-//TO ponizej DO OSOBNEGO PLIKU /RTE/JS/JQUERY.EDITOR.js (+ladowanie tego przez assetmanagera)
 // set meta data for given node
 jQuery.fn.setData = function(key, value) {
 	var data = {};
