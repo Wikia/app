@@ -59,5 +59,12 @@ class WikiaGlobalRegistry extends WikiaRegistry {
 	public function __set($propertyName, $value) {
 		$this->set( ( 'wg' . ucfirst($propertyName) ), $value );
 	}
-
+	
+	public function __isset( $propertyName ) {
+		return $this->has( 'wg' . ucfirst($propertyName) );
+	}
+	
+	public function __unset( $propertyName ) {
+		return $this->remove( 'wg' . ucfirst($propertyName) );
+	}
 }
