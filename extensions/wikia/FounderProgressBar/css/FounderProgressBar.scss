@@ -245,11 +245,13 @@
 						position: relative;
 						text-align: right;
 						z-index: 9;
-						.skip {
-							color: #aaa;
+						.skip, .completed, .skipped {
 							left: 10px;
 							position: absolute;
 							top: 10px;
+						}
+						.skip {
+							color: #aaa;
 						}
 					}
 					>.tail {
