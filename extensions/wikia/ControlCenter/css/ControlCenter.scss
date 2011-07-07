@@ -118,7 +118,7 @@ $base-z: 5;
 					}
 					.representation {
 						@include border-radius(7px);
-						@include linear-gradient(#ebebeb, top, #fff, 50%, #ebebeb, 100%);
+						@include linear-gradient(#fafafa, top, #fff, 33%, #fafafa, 66%, #f0f0f0, 100%);
 						border: 1px solid #cfcfd0;
 						display: block;
 						height: 50px;
@@ -173,6 +173,11 @@ $base-z: 5;
 						}
 					}
 					&:hover {
+						.representation {
+							@include linear-gradient(#e4e4e4, top, #f5f5f5, 33%, #ededed, 66%, #e4e4e4, 100%);
+						}
+					}
+					&:active {
 						.representation {
 							background: #e2e2e2;
 							@include box-shadow(-5px, 5px, 5px, #cacaca, true, 0);
