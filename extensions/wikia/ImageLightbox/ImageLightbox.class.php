@@ -88,8 +88,7 @@ class ImageLightbox {
 		$linkWWW = "<a href=\"$linkStd\"><img width=\"" . $thumb->getWidth() . "\" height=\"" . $thumb->getHeight() . "\" src=\"$thumbUrl\"/></a>";
 		$linkBBcode = "[url=$linkStd][img]{$thumbUrl}[/img][/url]";
 
-		//double encode - JSON is decoding it
-		$linkStdEncoded = rawurlencode(str_replace('&', '%26', $linkStd));
+		$linkStdEncoded = rawurlencode($linkStd);
 		$linkDescription = wfMsg('lightbox-share-description', $currentTitle->getText(), $wgSitename);
 		$shareButtons = array();
 		foreach (self::$shareFeatureSites as $button) {
