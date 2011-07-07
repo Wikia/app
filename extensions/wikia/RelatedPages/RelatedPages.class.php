@@ -86,10 +86,7 @@ class RelatedPages {
 			$pages = $this->getPagesForCategories($articleId, $limit * 2, $categories);
 
 			//use text snippets for mobile skins
-			if(
-				class_exists('ImageServing') &&
-				!in_array( get_class( $wgUser->getSkin() ), array( 'SkinWikiaphone', 'SkinWikiaApp' ) )
-			){
+			if( !in_array( get_class( $wgUser->getSkin() ), array( 'SkinWikiaphone', 'SkinWikiaApp' ) ) ){
 				// ImageServing extension enabled, get images
 				$imageServing = new ImageServing( array_keys($pages), 200, array( 'w' => 2, 'h' => 1 ) );
 				$images = $imageServing->getImages(1); // get just one image per article
