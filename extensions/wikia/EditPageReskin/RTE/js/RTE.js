@@ -177,11 +177,6 @@ window.RTE = {
 		// editor is loaded
 		CKEDITOR.on('instanceReady', RTE.onEditorReady);
 
-		// user wants to switch modes - send AJAX request
-		RTE.instance.on('modeSwitch', function() {
-			RTE.modeSwitch(RTE.instance.mode);
-		});
-
 		// mode is ready
 		RTE.instance.on('mode', function() {
 			RTE.log('mode "' + this.mode + '" is loaded');
@@ -347,86 +342,6 @@ window.RTE = {
 	// get jQuery object wrapping body of editor' iframe
 	getEditor: function() {
 		return jQuery(RTE.instance.document.$.body);
-	},
-
-	// handle mode switching (prepare data)
-	modeSwitch: function(mode) {
-		RTE.log('switching from "' + mode +'" mode');
-
-		var editor = RTE.instance,
-			content = editor.getData();
-
-		// BugId:1852 - error handling
-		var onError = function() {
-			RTE.log('error occured during mode switch');
-
-			// remove loading indicator, don't switch mode
-			RTE.instance.fire('modeSwitchCancelled');
-
-			// track errors
-			RTE.track('switchMode', 'error');
-
-			// modal with a message
-			$.showModal(editor.lang.errorPopupTitle, editor.lang.modeSwitch.error, {width: 400});
-		};
-
-		switch (mode) {
-			case 'wysiwyg':
-				RTE.ajax('html2wiki', {html: content, title: window.wgPageName}, function(data) {
-					if (!data) {
-						onError();
-						return;
-					}
-
-					editor.setMode('source');
-					editor.setData(data.wikitext);
-
-					RTE.track('switchMode', 'wysiwyg2source');
-				});
-				break;
-
-			case 'source':
-				RTE.ajax('wiki2html', {wikitext: content, title: window.wgPageName}, function(data) {
-					if (!data) {
-						onError();
-						return;
-					}
-
-					// RT #36073 - don't allow mode switch when __NOWYSIWYG__ is found in another article section
-					if ( (typeof window.RTEEdgeCase != 'undefined') && (window.RTEEdgeCase == 'nowysiwyg') ) {
-						RTE.log('article contains __NOWYSIWYG__ magic word');
-
-						data.edgecase = {
-							type: window.RTEEdgeCase,
-							info: {
-								title: window.RTEMessages.edgecase.title,
-								content: window.RTEMessages.edgecase.content
-							}
-						};
-					}
-
-					if (data.edgecase) {
-						RTE.log('edgecase found!');
-						RTE.tools.alert(data.edgecase.info.title, data.edgecase.info.content);
-
-						// stay in source mode
-						RTE.instance.fire('modeSwitchCancelled');
-
-						// tracking
-						RTE.track('switchMode', 'edgecase', data.edgecase.type);
-						return;
-					}
-
-					editor.setMode('wysiwyg');
-					editor.setData(data.html);
-
-					// RT #84586: update instanceId
-					RTE.instanceId = data.instanceId;
-
-					RTE.track('switchMode', 'source2wysiwyg');
-				});
-				break;
-		}
 	},
 
 	// filter HTML returned by CKEditor
