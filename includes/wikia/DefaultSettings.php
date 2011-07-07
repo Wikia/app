@@ -821,7 +821,7 @@ $wgGlobalUserProperties = array('language');
 $wgMemCachedDebugLevel = 1;
 
 /**
- * enable this defaultly, since we 100% include it in assetmanager now
+ * enable this by default, since we 100% include it in assetmanager now
  */
 $wgEnableMWSuggest = true;
 
@@ -830,3 +830,13 @@ $wgEnableMWSuggest = true;
  * @name wgTexvc
  */
 $wgTexvc = "$IP/math/texvc";
+
+/**
+ * enable extension to output OpenGraph meta tags so that facebook sharing
+ * and liking works well
+ *
+ * @name wgEnableOpenGraphMetaExt
+ * @see /extensions/OpenGraphMeta
+ * @see /extensions/wikia/OpenGraphMetaCustomizations
+ */
+$wgEnableOpenGraphMetaExt = true;
