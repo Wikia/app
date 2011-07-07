@@ -15,11 +15,17 @@
 			}
 		}
 		.modalToolbar {
+			float: right;
 			padding: 13px 0 0 0;
 		}
 	}
 }
 #EditPagePreviewEditSummary {
-	bottom: 20px;
-	position: absolute;
+	display: table-cell;
+	height: 50px;
+	padding-top: 13px;
+	vertical-align: middle;
+	> p {
+		line-height: 18px;
+	}
 }
