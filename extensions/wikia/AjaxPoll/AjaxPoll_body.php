@@ -96,7 +96,6 @@ class AjaxPollClass {
 	 * @return boolean	status of operation
 	 */
 	private function save() {
-		global $wgParser;
 		$status = false;
 
 		if( is_null( $this->mId ) ) {
@@ -123,7 +122,7 @@ class AjaxPollClass {
 					"poll_id" => $this->mId,
 					"poll_txt" => $this->mBody,
 					"poll_date" => $this->mCreated,
-					"poll_title" => $wgParser->mTitle->getText(),
+					"poll_title" => $this->mTitle->getText(),
 				),
 				__METHOD__
 			);
