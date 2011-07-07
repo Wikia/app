@@ -9,6 +9,7 @@ $messages['en'] = array(
 	'founderprogressbar-progress-see-full-list' => 'See full list',
 	'founderprogressbar-progress-hide-full-list' => 'Hide full list',
 	'founderprogressbar-skip-for-now' => 'Skip for now',
+	'founderprogressbar-task-completed' => 'Completed',
 	'founderprogressbar-list-label' => "{{SITENAME}}'s Tasks",
 	'founderprogressbar-list-task-label' => "Tasks",
 	'founderprogressbar-list-skipped-task-label' => "Skipped Tasks",
