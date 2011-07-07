@@ -221,10 +221,6 @@ class FounderProgressBarController extends WikiaController {
 					"task_completed" => $row->task_completed,
 					"task_skipped" => $row->task_skipped,
 					"task_timestamp" => $this->wf->TimeFormatAgo($row->task_timestamp),
-					"task_label" => $this->getMsgForTask($task_id, "label"),
-					"task_description" => $this->getMsgForTask($task_id, "description"),
-					"task_action" => $this->getMsgForTask($task_id, "action"),
-					"task_url" => $this->getURLForTask($task_id)
 					);
 			}
 			
@@ -234,8 +230,9 @@ class FounderProgressBarController extends WikiaController {
 
 			$this->wf->ProfileOut(__METHOD__ . '::miss');
 		}
-		$data = $this->getCompletionData($list);
+		$this->buildURLs($list);  // must build urls after getting data from memcache because we can't cache them
 		$this->response->setVal("list", $list);
+		$data = $this->getCompletionData($list);
 		$this->response->setVal("data", $data);
 	}
 
@@ -269,7 +266,6 @@ class FounderProgressBarController extends WikiaController {
 				task_count=1
 			ON DUPLICATE KEY UPDATE task_count = task_count + 1";
 		$dbw->query ($sql);
-//		file_put_contents("/tmp/founder.log", "doing INSERT sql\n", FILE_APPEND);
 		$res = $dbw->select (
 				'founder_progress_bar_tasks',
 				array('task_id', 'task_count'),
@@ -317,12 +313,7 @@ class FounderProgressBarController extends WikiaController {
 		$task_skipped = $this->request->getVal("task_skipped", 1);
 		//if (empty($task_id)) throw error;
 		//if (empty($task_skipped)) throw error;
-		//if (Task_Completed) throw error;
-		$response = $this->sendSelfRequest('isTaskComplete');
-		if ($response->getVal('task_completed')) {
-			$this->response->setVal("error", "task_completed");
-			$this->response->setVal("result", "error");
-		}
+		//if (Task_Completed) it's okay;
 		
 		$dbw = $this->getDB(DB_MASTER);
 		$dbw->update(
@@ -335,18 +326,16 @@ class FounderProgressBarController extends WikiaController {
 					'wiki_id' => $this->wg->CityId
 			)
 		);
-		
-		//TODO: If everything is completed or skipped, open up a bonus task
+
+		// If everything is completed or skipped, open up a bonus task
 		$response = $this->sendSelfRequest("getLongTaskList", array("use_master" => true));
 		$list = $response->getVal('list');
 		$total_tasks = count($list);
-		$tasks_skipped = 0; 
-		$tasks_completed = 0;
+		$tasks_completed_or_skipped = 0; 
 		foreach ($list as $task) {
-			$tasks_skipped += $task["task_skipped"];
-			$tasks_completed += $task["task_completed"];
+			if ($task["task_skipped"] || $task["task_completed"]) $tasks_completed_or_skipped != 1;
 		}
-		if ($total_tasks <= ($tasks_skipped + $tasks_completed)) {
+		if ($tasks_completed_or_skipped >= $total_tasks) {
 			$wiki_id = $this->wg->CityId;
 			// Special case, unlock one bonus task, in the order in which they appear in our bonus_tasks array
 			foreach ($this->bonus_tasks as $bonus_task_id) {
@@ -472,6 +461,16 @@ class FounderProgressBarController extends WikiaController {
 		// Default case
 		$messageStr = "founderprogressbar-". $messageStr . "-" . $type;			
 		return wfMsg($messageStr);
+	}
+	
+	// Build URLs by lookup into $this->urls
+	private function buildURLs(Array &$list) {
+		foreach ($list as $task_id => $data) {
+			$list[$task_id]["task_label"] = $this->getMsgForTask($task_id, "label");
+			$list[$task_id]["task_description"] = $this->getMsgForTask($task_id, "description");
+			$list[$task_id]["task_action"] = $this->getMsgForTask($task_id, "action");
+			$list[$task_id]["task_url"] = $this->getURLForTask($task_id);
+		}
 	}
 	
 	// URL list defined above in init()

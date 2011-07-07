@@ -21,10 +21,11 @@ class FounderProgressBarHooks {
 		$title = $article->getTitle();
 		
 		if ($flags & EDIT_NEW) {
-			// Tasks related to adding new pages X
-			$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_PAGE_ADD_10));			
-			$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_PAGE_ADD_20));			
-
+			// Tasks related to adding new pages X (do not count auto generated user pages)
+			if ($title->getNamespace() != NS_USER) {
+				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_PAGE_ADD_10));			
+				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_PAGE_ADD_20));			
+			}
 			// if blogpost
 			if ($app->wg->EnableBlogArticles && $title->getNamespace() == NS_BLOG_ARTICLE) {
 				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_BLOGPOST_ADD));				
