@@ -44,7 +44,7 @@
 			print $jsFiles . "\n";
 		}
 	?>
-	<? if($displayControlCenter) { ?>
+	<? if($displayAdminDashboard) { ?>
 		<!--[if IE]><script src="<?= $wgStylePath ?>/common/excanvas.js"></script><![endif]-->
 	<? } ?>
 </head>

@@ -29,8 +29,8 @@ class BodyModule extends Module {
 	var $railModuleList;
 	var $displayComments;
 	var $noexternals;
-	var $displayControlCenter;
-	var $displayControlCenterChromedArticle;
+	var $displayAdminDashboard;
+	var $displayAdminDashboardChromedArticle;
 	var $isMainPage;
 
 	private static $onEditPage;
@@ -441,15 +441,15 @@ class BodyModule extends Module {
 		}
 
 		// Display Control Center Header on certain special pages
-		if (!empty($wgEnableAdminDashboardExt) && ControlCenterLogic::displayControlCenter($this->app, $wgTitle)) {
+		if (!empty($wgEnableAdminDashboardExt) && AdminDashboardLogic::displayAdminDashboard($this->app, $wgTitle)) {
 			$this->headerModuleName = null;
 			$this->wgSuppressAds = true;
 			$this->wgSuppressWikiHeader = true;
-			$this->displayControlCenter = true;
-			$this->displayControlCenterChromedArticle = ($wgTitle->getText() != Title::newFromText("AdminDashboard", NS_SPECIAL)->getText());
+			$this->displayAdminDashboard = true;
+			$this->displayAdminDashboardChromedArticle = ($wgTitle->getText() != Title::newFromText("AdminDashboard", NS_SPECIAL)->getText());
 		} else {
-			$this->displayControlCenter = false;
-			$this->displayControlCenterChromedArticle = false;
+			$this->displayAdminDashboard = false;
+			$this->displayAdminDashboardChromedArticle = false;
 		}
 	}
 }
