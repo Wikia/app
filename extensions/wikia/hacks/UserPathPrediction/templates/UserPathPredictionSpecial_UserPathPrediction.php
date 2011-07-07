@@ -1,6 +1,6 @@
 <header>
 	<h1><?= $header ?></h1>
-	<p>This is a demonstration of predeiction of users' paths.</p>
+	<p>This is a demonstration of prediction of users' paths.</p>
 	<br>
 </header>
 
@@ -10,12 +10,12 @@
 		<label for="selectWiki">Select Wiki: 
 		<select id="selectWiki">
 			<? foreach ( $wikis as $wiki ) :?>
-					<option value="<?= $wiki["db_name"] . '">' . $wiki["db_name"] ?></option>
+					<option value="<?= $wiki['citi_id'] . '">' . $wiki["db_name"] ?></option>
 			<? endforeach; ?>
 		</select>
 		</label>
 		<label for="articleId">Article Id:
-			<input id="articleId" type="number" />
+			<input id="articleId" type="number" value="10" />
 		</label>
 	<button type="submit" onclick="return UserPathPrediction.load()">Load</button>
 	</form>
@@ -39,6 +39,9 @@
 		<? endforeach; ?>	
 		</tbody>
 	</table>
+</div>
+<h1>Database says:</h1>
+<div id="nodes">
 </div>
 <canvas id="usersPath"></canvas>
 </section>

@@ -46,8 +46,9 @@ class UserPathPredictionSpecialController extends WikiaSpecialPageController {
 		$result = $this->sendRequest( 'UserPathPredictionController', 'getPath');
 		$result = $result->getData();
 		$result = $result["articles"];
-		
+
 		$this->setVal( 'articles', $result );
+		$this->setVal( 'nodes', $this->model->getNodes( 11, 12 ) );
 		
 		//get Wiki names	
 		$wikis = $this->model->getWikis();
@@ -59,6 +60,19 @@ class UserPathPredictionSpecialController extends WikiaSpecialPageController {
 		$this->wf->profileOut( __METHOD__ );
 	}
 		
-	
+	public function getNodes() {
+		$this->model = F::build( 'UserPathPredictionModel' );
+		/*$nodes = $this->model->getNodes(490, 126007, 10 );
+
+		if ( count($nodes) > 0 ) {
+			foreach ( $nodes as $node ) {
+				$result += $node->citi_id ." ". $node->referrer_id ." ". $node->target_id ." ". $node->count . " ". $node->updated;
+			}	
+		} else {
+			$result = "Database is silent " . $nodes;
+
+		}*/
+		$this->setVal('nodes',  $this->model->getNodes(490, 126007, 10 ));
+	}
 
 }
