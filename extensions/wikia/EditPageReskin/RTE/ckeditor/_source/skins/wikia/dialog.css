@@ -243,64 +243,6 @@ body .cke_dialog
 	padding: 0;
 }
 
-.cke_skin_wikia a.cke_dialog_ui_button_ok span,
-.cke_skin_wikia a.cke_dialog_ui_button_cancel span
-{
-	padding-right: 20px;
-	padding-left: 20px;
-}
-
-.cke_skin_wikia a.cke_dialog_ui_button_ok
-{
-	background-position: 0 -1143px;
-}
-
-.cke_skin_wikia a.cke_dialog_ui_button_ok span
-{
-	background: transparent url(images/sprites.png) no-repeat scroll right -1219px;
-}
-
-.cke_skin_wikia .cke_rtl a.cke_dialog_ui_button_ok span
-{
-	background-position: left -1219px;
-}
-
-.cke_skin_wikia .cke_browser_iequirks a.cke_dialog_ui_button_ok span,
-.cke_skin_wikia .cke_browser_ie6 a.cke_dialog_ui_button_ok span
-{
-	background-color: #B8E834;
-	margin-right: 0;
-}
-
-.cke_skin_wikia a.cke_dialog_ui_button_cancel
-{
-	background-position: 0 -1104px;
-}
-
-.cke_skin_wikia a.cke_dialog_ui_button_cancel span
-{
-	background: transparent url(images/sprites.png) no-repeat scroll right -1245px;
-}
-
-.cke_skin_wikia .cke_rtl a.cke_dialog_ui_button_cancel span
-{
-	background-position: left -1245px;
-}
-
-.cke_skin_wikia .cke_browser_iequirks a.cke_dialog_ui_button_cancel span,
-.cke_skin_wikia .cke_browser_ie6 a.cke_dialog_ui_button_cancel span
-{
-	background-color: #F65D20;
-}
-
-.cke_skin_wikia .cke_browser_iequirks a.cke_dialog_ui_button_cancel span,
-.cke_skin_wikia .cke_browser_ie6 a.cke_dialog_ui_button_cancel span,
-.cke_skin_wikia .cke_browser_iequirks a.cke_dialog_ui_button_ok span,
-.cke_skin_wikia .cke_browser_ie6 a.cke_dialog_ui_button_ok span
-{
-	background-image: none;
-}
-
 /* Gecko 1.8 does not support display: inline-block */
 .cke_skin_wikia .cke_browser_gecko18 .cke_dialog_footer_buttons span.cke_dialog_ui_button
 {
