@@ -59,10 +59,14 @@ class AssetsManager {
 	/**
 	 * @author Inez Korczyński <korczynski@gmail.com>
  	 */
-	public function getSassCommonURL(/* string */ $scssFilePath, /* boolean */ $minify = null) {
+	public function getSassCommonURL(/* string */ $scssFilePath, /* boolean */ $minify = null, $alternateOasisSettings = null) {
 		global $wgOasisHD;
 
-		$params = SassUtil::getOasisSettings();
+		if($alternateOasisSettings != null) {
+			$params = $alternateOasisSettings;
+		} else {
+			$params = SassUtil::getOasisSettings();
+		}
 		if($wgOasisHD) {
 			$params['hd'] = 1;
 		}

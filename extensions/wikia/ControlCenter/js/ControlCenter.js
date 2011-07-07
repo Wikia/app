@@ -114,11 +114,9 @@ var ControlCenter = {
 			});
 		},
 		loadListUsers: function() {
+			//sassParams['color-page'] = '#fff';
 			var sassUrl = $.getSassCommonURL('/extensions/wikia/Listusers/css/table.scss');
-			$.getResources([wgScriptPath + '/extensions/wikia/Listusers/js/jquery.dataTables.min.js',
-				wgScriptPath + '/extensions/wikia/Listusers/css/table.css',
-				sassUrl
-			], function() {
+			$.getResources([wgScriptPath + '/extensions/wikia/Listusers/js/jquery.dataTables.min.js'], function() {
 				ControlCenter.contentload.loadSpecialPage('ListUsers');
 			});
 		},
