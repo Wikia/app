@@ -152,7 +152,7 @@ Feeds ara available in the following formats
 *{{fullurl:Special:WikiFeeds/atom/newestarticles}} - ATOM 1.0 feed of newest articles in the wiki
 *{{fullurl:Special:WikiFeeds/atom/recentuserchanges/user/Gregory.Szorc}} - ATOM 1.0 feed for recent changes by [[User:Gregory.Szorc|Gregory.Szorc]]
 *{{fullurl:Special:WikiFeeds/rss/watchlist/user/Jeremy.Smith/count/50}} - RSS feed for [[User:Jeremy.Smith|Jeremy.Smith]]'s watchlist
-*{{fullurl:Special:WikiFeeds/rss/recentcategorychanges/category/Buildings}} - RSS feed for recently changed articles in the [[:Category:Buildings|Buildings]] category 
+*{{fullurl:Special:WikiFeeds/rss/recentcategorychanges/category/Buildings}} - RSS feed for recently changed articles in the [[:Category:Buildings|Buildings]] category
 
 __NOTOC__
 ",
@@ -198,20 +198,20 @@ __NOTOC__
 
 			if (!$request) {
 				$wgOut->addWikiText(wfMsg('wikifeeds_mainpage'));
-				
+
 				// do special voodoo if private watchlist is enabled
 				if ($wgWikiFeedsSettings['watchlistPrivate'] && $wgUser->isLoggedIn()) {
 					if (!$wgUser->getOption('watchlistToken')) {
 						$token = md5(microtime() . $wgUser->getID());
-						
+
 						$wgUser->setOption('watchlistToken', $token);
 						$wgUser->saveSettings();
 					}
-					
+
 					$token = $wgUser->getOption('watchlistToken');
-					
+
 					$privateFeedUrl = Title::newFromText('WikiFeeds/atom/watchlist/user/' . $wgUser->getName() . '/token/' . $token, NS_SPECIAL);
-					
+
 					// and display blurb about token
 					$wgOut->addWikiText(wfMsg('wikifeeds_tokeninfo', $token, $privateFeedUrl->getFullUrl()));
 				}
@@ -314,10 +314,10 @@ __NOTOC__
 									$areSane = false;
 								} else {
 									$token = $params['token'];
-									
+
 									// verify token is sane
 									$user = User::newFromId($userId);
-								
+
 									if ($token != $user->getOption('watchlistToken')) {
 										$wgOut->addWikiText(wfMsg('wikifeeds_invalidwatchlisttoken'));
 										$areSane = false;
@@ -351,7 +351,7 @@ __NOTOC__
 						} else { //no cache was hit, assemble the feed
 
 							$Feed = new GenericXmlSyndicationFeed($format);
-							 
+
 							switch ($feed) {
 								case self::FEED_NEWESTARTICLES:
 									$this->makeNewestArticles($Feed, $count);
@@ -396,7 +396,7 @@ __NOTOC__
 							$Feed->linkSelf = $wgServer.$_SERVER['REQUEST_URI'];
 
 							$Feed->sendOutput();
-							 
+
 							//finally, cache the feed
 							if ($this->_settings['cacheEnable']) {
 								$this->_cacheSaveFeed($Feed, $feed, $format, $params);
@@ -734,11 +734,11 @@ __NOTOC__
 		 */
 		protected function _cacheFetchFeed($feed, $format, $params) {
 			$filename = $this->_cacheFilename($feed, $format, $params);
-			 
+
 			if (file_exists($filename) && is_readable($filename)) {
 				if ( (time() - filemtime($filename)) < $this->_settings['cacheMaxAge']) {
 					$content = unserialize(file_get_contents($filename));
-					 
+
 					if (is_array($content)) {
 						return $content;
 					}
@@ -748,7 +748,7 @@ __NOTOC__
 					unlink($filename);
 				}
 			}
-			 
+
 			return false;
 		}
 
@@ -758,12 +758,12 @@ __NOTOC__
 		 */
 		protected function _cacheSaveFeed(GenericXmlSyndicationFeed $feedObj, $feed, $format, $params) {
 			$filename = $this->_cacheFilename($feed, $format, $params);
-			 
+
 			$cacheContent = array(
     		'content-type' => $feedObj->contentType,
     		'content' => $feedObj->getContent(false)
 			);
-			 
+
 			file_put_contents($filename, serialize($cacheContent), LOCK_EX);
 		}
 
@@ -777,9 +777,9 @@ __NOTOC__
 		 */
 		protected function _cacheFilename($feed, $format, $params) {
 			$s = $this->_settings['cacheRoot'] . 'wikifeeds_cache-';
-			 
+
 			$s .= md5($feed.$format.serialize($params));
-			 
+
 			return $s;
 		}
 
@@ -809,9 +809,9 @@ __NOTOC__
 		 */
 		protected function _getCacheFiles() {
 			$return = array();
-			 
+
 			$directory = new DirectoryIterator($this->_settings['cacheRoot']);
-			 
+
 			foreach ($directory as $file) {
 				if ($file->isFile()) {
 					if (strpos($file->getPathname(), $this->_settings['cacheRoot'] . 'wikifeeds_cache-') === 0) {
@@ -819,7 +819,7 @@ __NOTOC__
 					}
 				}
 			}
-			 
+
 			return $return;
 		}
 
@@ -902,9 +902,9 @@ __NOTOC__
 
 /**
  * Hooks registered on ParserAfterTidy hook
- * 
+ *
  * Injects links to feeds in HTML <head>
- * 
+ *
  */
 function wfWikiFeeds_Linker($a, $b) {
 	global $wgWikiFeedsSettings, $wgTitle;
@@ -913,15 +913,15 @@ function wfWikiFeeds_Linker($a, $b) {
 	if (!array_key_exists('__linkerTracker', $wgWikiFeedsSettings)) {
 		$wgWikiFeedsSettings['__linkerTracker'] = array();
 	}
-	
+
 	// if we have already processed this title, don't do it again
-	if (in_array($wgTitle->getFullText(), $wgWikiFeedsSettings['__linkerTracker'])) {		
+	if (in_array($wgTitle->getFullText(), $wgWikiFeedsSettings['__linkerTracker'])) {
 		return true;
 	} else {
 		// mark as processed
 		$wgWikiFeedsSettings['__linkerTracker'][] = $wgTitle->getFullText();
 	}
-	
+
 	switch ($wgTitle->getNamespace()) {
 		case NS_USER:
 		case NS_USER_TALK:
@@ -940,12 +940,17 @@ function wfWikiFeeds_Linker($a, $b) {
 				$t4 = Title::newFromText("WikiFeeds/atom/watchlist/user/$username", NS_SPECIAL);
 				$t5 = Title::newFromText("WikiFeeds/rss/watchlist/user/$username", NS_SPECIAL);
 
-				wfWikiFeeds_AddLink('atom', "Recently changed articles by $username (ATOM 1.0)", $t0->getFullUrl());
-				wfWikiFeeds_AddLink('atom', "Latest articles created by $username (ATOM 1.0)", $t2->getFullUrl());
-				wfWikiFeeds_AddLink('atom', "Watchlist for $username (ATOM 1.0)", $t4->getFullUrl());
-				wfWikiFeeds_AddLink('rss', "Recently changes articles by $username (RSS 2.0)", $t1->getFullUrl());
-				wfWikiFeeds_AddLink('rss', "Latest articles created by $username (RSS 2.0)", $t3->getFullUrl());
-				wfWikiFeeds_AddLink('rss', "Watchlist for $username (RSS 2.0)", $t5->getFullUrl());
+				/* Wikia change begin - @author: macbre */
+				/* $username can contain illegal characters detected by Title::secureAndSplit() - BugId:8126 */
+				if (!empty($t0)) {
+					wfWikiFeeds_AddLink('atom', "Recently changed articles by $username (ATOM 1.0)", $t0->getFullUrl());
+					wfWikiFeeds_AddLink('atom', "Latest articles created by $username (ATOM 1.0)", $t2->getFullUrl());
+					wfWikiFeeds_AddLink('atom', "Watchlist for $username (ATOM 1.0)", $t4->getFullUrl());
+					wfWikiFeeds_AddLink('rss', "Recently changes articles by $username (RSS 2.0)", $t1->getFullUrl());
+					wfWikiFeeds_AddLink('rss', "Latest articles created by $username (RSS 2.0)", $t3->getFullUrl());
+					wfWikiFeeds_AddLink('rss', "Watchlist for $username (RSS 2.0)", $t5->getFullUrl());
+				}
+				/* Wikia change end */
 
 			}
 			break;
@@ -961,10 +966,15 @@ function wfWikiFeeds_Linker($a, $b) {
 				$atomCatRecent = Title::newFromText("WikiFeeds/atom/recentcategorychanges/category/$catName", NS_SPECIAL);
 				$rssCatRecent = Title::newFromText("WikiFeeds/rss/recentcategorychanges/category/$catName", NS_SPECIAL);
 
-				wfWikiFeeds_AddLink('atom', "Newest pages to join the $catName category (ATOM 1.0)", $atomCatNew->getFullUrl());
-				wfWikiFeeds_AddLink('atom', "Recently changed articles in the $catName category (ATOM 1.0)", $atomCatRecent->getFullUrl());
-				wfWikiFeeds_AddLink('rss', "Newest pages to join the $catName category (RSS 2.0)", $rssCatNew->getFullUrl());
-				wfWikiFeeds_AddLink('rss', "Recently changed articles in the $catName category (RSS 2.0)", $rssCatRecent->getFullUrl());
+				/* Wikia change begin - @author: macbre */
+				/* $username can contain illegal characters detected by Title::secureAndSplit() - BugId:8126 */
+				if (!empty($atomCatNew)) {
+					wfWikiFeeds_AddLink('atom', "Newest pages to join the $catName category (ATOM 1.0)", $atomCatNew->getFullUrl());
+					wfWikiFeeds_AddLink('atom', "Recently changed articles in the $catName category (ATOM 1.0)", $atomCatRecent->getFullUrl());
+					wfWikiFeeds_AddLink('rss', "Newest pages to join the $catName category (RSS 2.0)", $rssCatNew->getFullUrl());
+					wfWikiFeeds_AddLink('rss', "Recently changed articles in the $catName category (RSS 2.0)", $rssCatRecent->getFullUrl());
+				}
+				/* Wikia change end */
 			}
 	}
 
