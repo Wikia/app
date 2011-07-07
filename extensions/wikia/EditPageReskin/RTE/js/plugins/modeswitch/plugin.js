@@ -30,7 +30,10 @@ CKEDITOR.plugins.add('rte-modeswitch',
 
 		// update switching tabs tooltips
 		editor.on('mode', $.proxy(this.updateTooltips, this));
+		editor.on('mode', $.proxy(this.mode, this));
 		editor.on('modeSwitch', $.proxy(this.modeSwitch, this));
+		editor.on('dataReady', $.proxy(this.dataReady, this));
+		editor.on('wysiwygModeReady', $.proxy(this.wysiwygModeReady, this));
 	},
 
 	modeSwitch: function(ev) {
@@ -44,7 +47,7 @@ CKEDITOR.plugins.add('rte-modeswitch',
 			RTE.log('error occured during mode switch');
 
 			// remove loading indicator, don't switch mode
-			RTE.instance.fire('modeSwitchCancelled');
+			editor.fire('modeSwitchCancelled');
 
 			// track errors
 			RTE.track('switchMode', 'error');
@@ -93,7 +96,7 @@ CKEDITOR.plugins.add('rte-modeswitch',
 						RTE.tools.alert(data.edgecase.info.title, data.edgecase.info.content);
 
 						// stay in source mode
-						RTE.instance.fire('modeSwitchCancelled');
+						editor.fire('modeSwitchCancelled');
 
 						// tracking
 						RTE.track('switchMode', 'edgecase', data.edgecase.type);
@@ -112,6 +115,41 @@ CKEDITOR.plugins.add('rte-modeswitch',
 		}
 	},
 	
+	mode: function(ev) {
+		RTE.log('mode "' + ev.editor.mode + '" is loaded');
+	},
+
+	dataReady: function(ev) {
+		if (ev.editor.mode == 'wysiwyg') {
+			ev.editor.fire('wysiwygModeReady');
+		}
+	},
+
+	wysiwygModeReady: function(ev) {
+		RTE.log('onWysiwygModeReady');
+
+		var editor = ev.editor,
+			body = jQuery(editor.document.$.body);
+
+		body.
+			// set ID, so CSS rules from MW can be applied
+			attr('id', editor.config.bodyId).
+			// set CSS class with content language of current wiki (used by RT #40248)
+			addClass('lang-' + window.wgContentLanguage);
+
+		// RT #38516: remove first <BR> tag (fix strange Opera bug)
+		setTimeout(function() {
+			if (CKEDITOR.env.opera) {
+				var firstChild = jQuery(editor.document.$.body).children().eq(0);
+
+				// first child is <br> without any attributes
+				if (firstChild.is('br')) {
+					firstChild.remove();
+				}
+			}
+		}, 750);
+	},
+
 	updateModeInfo: function(ev) {
 		// set class for body indicating current editor mode (used mainly by automated tests)
 		$('body').
