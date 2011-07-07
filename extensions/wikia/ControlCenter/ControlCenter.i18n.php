@@ -50,6 +50,6 @@ $messages['en'] = array(
 	'controlcenter-control-multiple-upload-label' => 'Multiple Photo Upload',
 	'controlcenter-control-multiple-upload-tooltip' => 'Upload more than one photo at once with the multiple photo upload tool.',
 // Chrome
-	'controlcenter-back-to-dashboard' => 'Show Dashboard'
+	'controlcenter-back-to-dashboard' => 'Back to Dashboard'
 );
 
