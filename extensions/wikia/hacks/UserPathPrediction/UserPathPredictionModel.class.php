@@ -30,7 +30,22 @@ class UserPathPredictionModel {
 	
 	private function getDBConnection( $mode = DB_SLAVE ) {
 		//TODO: replace with wfGetDB as soon as we stop using local DB for devboxes and get production storage
-		return Database::newFromParams( 'localhost', $this->app->wg->DBadminuser, $this->app->wg->DBadminpassword, 'user_path_prediction' );
+		
+		if (
+			empty( $this->app->wg->UserPathPredictionDBserver ) ||
+			empty( $this->app->wg->UserPathPredictionDBname ) ||
+			empty( $this->app->wg->UserPathPredictionDBuser ) ||
+			empty( $this->app->wg->UserPathPredictionDBpassword )
+		) {
+			throw new WikiaException( 'Missing settings for UserPathPrediction DB' );
+		}
+		
+		return Database::newFromParams(
+			$this->app->wg->UserPathPredictionDBserver,
+			$this->app->wg->UserPathPredictionDBuser,
+			$this->app->wg->UserPathPredictionDBpassword,
+			$this->app->wg->UserPathPredictionDBname
+		);
 	}
 	
 	private function removePath( $path ) {
@@ -58,9 +73,15 @@ class UserPathPredictionModel {
 		return false;
 	} 
 	
-	public function retrieveDataFromArchive( $timestr, &$commandOutput = null ) {
+	public function retrieveDataFromArchive( $timestr, $extraParams = array(), &$commandOutput = null ) {
+		$params = '';
 		$s3directory = self::S3_ARCHIVE . "{$timestr}/";
-		$cmd = "s3cmd get --recursive {$s3directory} " . self::RAW_DATA_PATH;
+		
+		if ( empty( $extraParams['s3ConfigFile'] ) ) {
+			$params += " -c {$extraParams['s3ConfigFile']}";
+		}
+		
+		$cmd = "s3cmd get{$params} --recursive {$s3directory} " . self::RAW_DATA_PATH;
 		
 		$this->cleanRawDataFolder();
 		$this->createDir( self::RAW_DATA_PATH );
