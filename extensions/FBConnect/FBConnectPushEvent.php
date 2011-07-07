@@ -55,7 +55,7 @@ class FBConnectPushEvent {
 
 		// TODO: Can we detect if this is Special:Preferences and only add the checkboxes if that is the case?  Can't think of anything else that would break.
 		// TODO: Can we detect if this is Special:Preferences and only add the checkboxes if that is the case?  Can't think of anything else that would break.
-        
+
 		wfProfileOut(__METHOD__);
 	} // end initExtension()
 
@@ -68,7 +68,7 @@ class FBConnectPushEvent {
 		global $fbPushEventClasses, $wgUser;
 		wfLoadExtensionMessages('FBConnect');
 		$id = FBConnectDB::getFacebookIDs($wgUser);
-		if( count($id) > 0 ) {			
+		if( count($id) > 0 ) {
 			if(!empty($fbPushEventClasses)){
 				foreach($fbPushEventClasses as $pushEventClassName){
 					$pushObj = new $pushEventClassName;
@@ -80,19 +80,19 @@ class FBConnectPushEvent {
 						'label-message' => 'tog-'.$prefName,
 						'section' => self::$PREFERENCES_TAB_NAME,
 					);
-					
-					/* < v1.16 */ 
+
+					/* < v1.16 */
 					if( defined('PREF_TOGGLE_T') ) {
 						$preferences[$prefName]['int-type'] = PREF_TOGGLE_T;
 						$preferences[$prefName]['name'] = $prefName;
-					}	
+					}
 				}
 			}
 		}
 		wfProfileOut(__METHOD__);
 		return true;
 	} // end addPreferencesToggles()
-	
+
 	/**
 	 * This function returns HTML which contains toggles (in a list) for setting the push
 	 * Preferences.  It is designed to be used inside of a form (such as on Special:Connect).
@@ -113,10 +113,10 @@ class FBConnectPushEvent {
 			foreach($fbPushEventClasses as $pushEventClassName){
 				$pushObj = new $pushEventClassName;
 				$prefName = $pushObj->getUserPreferenceName();
-				
+
 				$prefText = $wgLang->getUserToggle( $prefName );
 				$prefTextShort = $wgLang->getUserToggle($prefName.'-short');
-				
+
 				$result = array(
 					'id' => $prefName,
 					'name' => $prefName,
@@ -125,23 +125,23 @@ class FBConnectPushEvent {
 					'shortText' => $prefTextShort,
 					'checked' => true
 				);
-				
+
 				$results[] = $result;
 			}
 
 			// Create an option to opt out of all current and future push-events.
 			$prefName = self::$PREF_TO_DISABLE_ALL;
 			$prefText = wfMsg('tog-' . self::$PREF_TO_DISABLE_ALL);
-			
+
 			$result = array(
 					'fullLine' => true,
 					'id' => $prefName,
 					'name' => $prefName,
 					'section' => self::$PREFERENCES_TAB_NAME,
 					'text' => $prefText,
-					'shortText' => $prefText 
+					'shortText' => $prefText
 			);
-				
+
 			$results[] = $result;
 		}
 
@@ -178,7 +178,7 @@ class FBConnectPushEvent {
 				$pushObj->loadMsg();
 				if( !$wgUser->getOption(self::$PREF_TO_DISABLE_ALL) ) {
 					if( $wgUser->getOption($prefName) ) {
-						$pushObj->init();	
+						$pushObj->init();
 					}
 				}
 			}
@@ -194,30 +194,30 @@ class FBConnectPushEvent {
 	 * and the getUserPreferenceName() call checks out (the result must be non-empty).
 	 */
 	public function init(){}
-	
-	
+
+
 	public function loadMsg() {}
-	
-	
+
+
 	/**
 	 * put facebook message
-	 * @author Tomasz Odrobny 
+	 * @author Tomasz Odrobny
 	 */
-	
+
 	static public function pushEvent($message, $params, $class){
 		global $wgServer, $wgUser;
 
 		$id = FBConnectDB::getFacebookIDs($wgUser);
 		if( count($id) < 1 ) {
-			return 1001; //status for disconnected 
+			return 1001; //status for disconnected
 		}
 		/* only one event par request */
 		if( self::$eventCounter > 0 ) {
-			return 1000; //status for out of limit  
+			return 1000; //status for out of limit
 		}
-		
+
 		self::$eventCounter++ ;
-		
+
 		if( wfRunHooks( 'FBConnect::BeforePushEvent', array( $id, &$message, &$params, &$class ) ) ) {
 			$fb = new FBConnectAPI();
 
@@ -248,18 +248,19 @@ class FBConnectPushEvent {
 		}
 
 		return false;
-	} 
-	
+	}
+
 	/**
 	 * put stats for facebook
-	 * @author Tomasz Odrobny  
+	 * @author Tomasz Odrobny
 	 */
-	
+
 	static public function addEventStat($status, $class){
-		global $wgStatsDB, $wgUser, $wgCityId, $wgStatsDBEnabled;
-		if ( !empty( $wgStatsDBEnabled ) ) {
+		global $wgStatsDB, $wgUser, $wgCityId, $wgStatsDBEnabled, $wgDevelEnvironment;
+
+		if ( !empty( $wgStatsDBEnabled ) && $wgDevelEnvironment !== true ) { // devboxes don't have writable stats
 			$class = str_replace('FBPush_', '', $class);
-			$dbs = wfGetDB( DB_MASTER, array(), $wgStatsDB);  
+			$dbs = wfGetDB( DB_MASTER, array(), $wgStatsDB);
 			$dbs->begin();
 			$dbs->insert('fbconnect_event_stats',
 				array(
@@ -271,27 +272,27 @@ class FBConnectPushEvent {
 			$dbs->commit();
 		}
 	}
-	
+
 	/**
 	 * short text for blog
 	 *
-	 * @author Tomasz Odrobny 
+	 * @author Tomasz Odrobny
 	 * @access public
 	 *
-	 */	
-	
-	static public function shortenText($source_text, $char_count = 100) 
-	{		
-		$source_text = preg_replace('/(<figure.+?)+(<\/figure>)/i', '', $source_text); 
+	 */
+
+	static public function shortenText($source_text, $char_count = 100)
+	{
+		$source_text = preg_replace('/(<figure.+?)+(<\/figure>)/i', '', $source_text);
 
 		$source_text = self::stripHtmlTags($source_text);
 		$source_text = trim($source_text);
 		$source_text_no_endline = str_replace("\n", " ", $source_text);
-    	
+
 		if ($source_text == "" ){
 			return "";
 		}
-	    
+
 		if (strlen($source_text) <= $char_count ) {
 			return $source_text;
 		}
@@ -339,15 +340,15 @@ class FBConnectPushEvent {
 		);
 		return strip_tags( $text );
 	}
-	
+
 	/**
 	 * easy parse of article text
 	 *
-	 * @author Tomasz Odrobny 
+	 * @author Tomasz Odrobny
 	 * @access private
 	 *
-	 */	
-		
+	 */
+
 	static public function parseArticle(&$qArticle, $text = null) {
 		$articleText = $qArticle->getRawText();
 		if ( $text != null ) {
@@ -395,5 +396,5 @@ class FBConnectPushEvent {
 		header("Location: $redirect");
 		exit;
 	}
-	
+
 } // end FBConnectPushEvent class
