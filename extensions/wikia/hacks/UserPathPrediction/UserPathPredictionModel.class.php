@@ -30,7 +30,6 @@ class UserPathPredictionModel {
 	
 	private function getDBConnection( $mode = DB_SLAVE ) {
 		//TODO: replace with wfGetDB as soon as we stop using local DB for devboxes and get production storage
-		
 		if (
 			empty( $this->app->wg->UserPathPredictionDBserver ) ||
 			empty( $this->app->wg->UserPathPredictionDBname ) ||
@@ -155,15 +154,18 @@ class UserPathPredictionModel {
 		
 		//TODO: IMPORTANT, remember to strtolower the db name otherwise it won't always match onedot records!!!
 		return array(
-			"490" => array(
+			array(
+				"citi_id" => "490",
 				"db_name" => "wowwiki",
 				"domain_name" => "wowwiki.com"
 			),
-			"10150" => array(
+			array(
+				"citi_id" => "10150",
 				"db_name" => "dragonage",
 				"domain_name" => "dragonage.wikia.com"
 			),
-			"3125" => array(
+			array(
+				"citi_id" => "3125",
 				"db_name" => "callofduty",
 				"domain_name" => "callofduty.wikia.com"
 			)
@@ -181,4 +183,33 @@ class UserPathPredictionModel {
 	public function cleanRawDataFolder() {
 		$this->removePath( self::RAW_DATA_PATH );
 	}
+	
+	public function getNodes( $citiId, $articleId, $nodeCount = 10 ) {
+				
+		$resultArray = array();
+		
+			
+		$dbr =$this->getDBConnection();
+		
+		
+		for( $i = 0; $i++; $i < $nodeCount ) {
+				
+			$res = $dbr->select( 'path_segments_archive', 'citi_id, referrer_id, target_id, count, updated', array( 'city_id' => $citiId, 'referrer_id' => $articleId ), __METHOD__);
+		return $dbr->lastQuery();
+			while( $row = $dbr->fetchObject( $res ) ) {
+				$result = array (
+						'citi_id' => $row->citi_id,
+						'referrer_id' => $row->referrer_id,
+						'target_id' => $row->target_id,
+						'count' => $row->count,
+						'updated' => $row->updated
+					);
+			}
+			$resultArray[] = $result;
+
+		}  
+		
+		
+	}
+	
 }

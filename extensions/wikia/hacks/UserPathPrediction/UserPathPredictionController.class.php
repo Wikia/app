@@ -65,4 +65,5 @@ class UserPathPredictionController extends WikiaController {
 
 		$this->setVal( 'articles', $result );
 	}
+	
 }
