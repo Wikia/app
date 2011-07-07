@@ -168,7 +168,6 @@ class FounderProgressBarHooks {
 		$app = F::app();
 		$memKey = $app->wf->MemcKey('FounderTasksComplete');
 		$task_complete = $app->wg->Memc->get($memKey);
-$task_complete = null;
 		if (empty($task_complete)) {
 			$response = $app->sendRequest('FounderProgressBar',"getLongTaskList");
 			$list = $response->getVal('list');
