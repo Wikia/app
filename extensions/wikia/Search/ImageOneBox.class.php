@@ -111,13 +111,7 @@ class ImageOneBox {
 	 */
 	public function getImagesFromResultSet ( SearchResultSet $resultSet ) {
 		wfProfileIn(__METHOD__);
-
-		if( !class_exists('imageServing') ) {
-			// ImageServing extension disabled, skipping
-			wfProfileOut(__METHOD__);
-			return null;
-		}
-
+		
 		$pages = array();
 		while( $result = $resultSet->next() ) {
 			$titleText = $result->mTitle->mTextform;
