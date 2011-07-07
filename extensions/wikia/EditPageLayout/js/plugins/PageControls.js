@@ -26,7 +26,7 @@
 
 			// pressing enter in edit summary should initiate publish button
 			this.textarea.bind('keypress', this.proxy(this.onSummaryKeypress));
-			
+
 			this.minorEditCheck = pageControls.find('#wpMinoredit');
 			// pressing enter on minor edit checkbox should not save the edition
 			this.minorEditCheck.bind('keypress', this.proxy(this.onMinorEditKeypress));
@@ -138,7 +138,7 @@
 				form.submit();
 			}
 		},
-		
+
 		// handle keypressing on "Minor edit" checkbox
 		onMinorEditKeypress: function(ev) {
 			if (ev.keyCode == 13 /* enter */) {
@@ -333,9 +333,17 @@
 
 		// render "Preview" modal
 		renderPreview: function(extraData) {
-			var self = this, width = 680, config = this.editor.config;
-			if (config.isWidePage) width += 300;
-			if (config.extraPageWidth) width += config.extraPageWidth;
+			var self = this,
+				width = 733,
+				config = this.editor.config;
+
+			if (config.isWidePage) {
+				width += 300;
+			}
+			if (config.extraPageWidth) {
+				width += config.extraPageWidth;
+			}
+
 			this.renderDialog($.msg('preview'), {
 				buttons: [
 					{
@@ -355,7 +363,7 @@
 						}
 					}
 				],
-				width: width, 
+				width: width,
 				className: 'preview'
 			}, function(contentNode) {
 				self.getContent(function(content) {

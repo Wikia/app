@@ -1,7 +1,4 @@
 #EditPageDialog {
-	.pagetitle {
-		border-bottom: solid 1px $color-headline-border;
-	}
 	.loading {
 		left: 50%;
 		position: absolute;
@@ -14,10 +11,11 @@
 			.WikiaArticle {
 				border: 1px solid $color-page-border;
 				overflow-y: scroll;
+				padding: 6px 12px;
 			}
 		}
 		.modalToolbar {
-			padding: 6px 0 0 0;
+			padding: 13px 0 0 0;
 		}
 	}
 }
