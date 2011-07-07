@@ -84,10 +84,10 @@ class RelatedPages {
 
 			// limit * 2 - get more pages (some can be filtered out - RT #72703)
 			$pages = $this->getPagesForCategories($articleId, $limit * 2, $categories);
-			
+
 			//use text snippets for mobile skins
 			if(
-				class_exists('imageServing') &&
+				class_exists('ImageServing') &&
 				!in_array( get_class( $wgUser->getSkin() ), array( 'SkinWikiaphone', 'SkinWikiaApp' ) )
 			){
 				// ImageServing extension enabled, get images
