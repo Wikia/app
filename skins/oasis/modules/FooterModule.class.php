@@ -2,6 +2,7 @@
 class FooterModule extends Module {
 
 	var $wgBlankImgUrl;
+	var $wgEnableAdminDashboardExt;
 
 	var $showToolbar;
 	var $showNotifications;
