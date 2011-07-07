@@ -374,7 +374,10 @@
 						extraData,
 						function(data) {
 							// wrap article's HTML inside .WikiaArticle
-							var html = '<h1 class="pagetitle">' + window.wgEditedTitle + '</h1>' + data.html;
+							var pageTitle = '<h1 class="pagetitle">' + window.wgEditedTitle + '</h1>',
+								isSectionEdit = !!parseInt(window.wgEditPageSection),
+								html = (!isSectionEdit ? pageTitle : '') + data.html;
+
 							contentNode.html(html);
 
 							// move "edit" link to the right side of heading names

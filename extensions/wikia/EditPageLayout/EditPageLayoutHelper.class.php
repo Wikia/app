@@ -91,6 +91,7 @@ class EditPageLayoutHelper {
 		$this->addJsVariableRef('wgEditPageIsConflict', $this->editPage->isConflict);
 		$this->addJsVariable('wgEditPageIsReadOnly', $this->editPage->isReadOnlyPage());
 		$this->addJsVariableRef('wgEditPageHasEditPermissionError', $this->editPage->mHasPermissionError);
+		$this->addJsVariableRef('wgEditPageSection', $this->editPage->section);
 
 		// data for license module (BugId:6967)
 		$titleLicensing = GlobalTitle::newFromText( 'Community_Central:Licensing', null, 177 );
