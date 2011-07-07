@@ -1,4 +1,3 @@
-
 <?php
 
 /**
@@ -9,26 +8,20 @@
  * @author Adrian 'ADi' Wieczorek <adi(at)wikia-inc.com>
  * @author Owen Davis <owen(at)wikia-inc.com>
  * @author Wojciech Szela <wojtek(at)wikia-inc.com>
- * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
 class WikiaGlobalRegistry extends WikiaRegistry {
-	private function preparePropertyName( $propertyName ) {
-		return 'wg' . ucfirst( $propertyName );
-	}
-	
+
 	public function get($propertyName) {
-		if ( $this->has($propertyName ) ) {
-			return $GLOBALS[$this->preparePropertyName( $propertyName )];
+		if($this->has($propertyName)) {
+			return $GLOBALS[$propertyName];
 		}
 
 		return null;
 	}
 
 	public function append($propertyName, $value, $key = null) {
-		$propertyName = $this->preparePropertyName( $propertyName );
 		$this->validatePropertyName($propertyName);
-		
-		if ( is_null( $key ) ) {
+		if(is_null($key)) {
 			$GLOBALS[$propertyName][] = $value;
 		}
 		else {
@@ -39,9 +32,7 @@ class WikiaGlobalRegistry extends WikiaRegistry {
 	}
 
 	public function set($propertyName, $value, $key = null) {
-		$propertyName = $this->preparePropertyName( $propertyName );
-		$this->validatePropertyName( $propertyName );
-		
+		$this->validatePropertyName($propertyName);
 		if (is_null($key)) {
 			$GLOBALS[$propertyName] = $value;
 		} else {
@@ -51,32 +42,22 @@ class WikiaGlobalRegistry extends WikiaRegistry {
 	}
 
 	public function remove($propertyName) {
-		$propertyName = $this->preparePropertyName( $propertyName );
-		$this->validatePropertyName( $propertyName );
-		unset( $GLOBALS[$propertyName] );
+		$this->validatePropertyName($propertyName);
+		unset($GLOBALS[$propertyName]);
 		return $this;
 	}
 
 	public function has($propertyName) {
-		$propertyName = $this->preparePropertyName( $propertyName );
-		$this->validatePropertyName( $propertyName );
-		
-		return isset( $GLOBALS[$propertyName] );
+		$this->validatePropertyName($propertyName);
+		return isset($GLOBALS[$propertyName]);
 	}
 
 	public function __get($propertyName) {
-		return $this->get( $propertyName );
+		return $this->get( 'wg' . ucfirst($propertyName) );
 	}
 
 	public function __set($propertyName, $value) {
-		$this->set( $propertyName, $value );
+		$this->set( ( 'wg' . ucfirst($propertyName) ), $value );
 	}
-	
-	public function __isset($propertyName){
-		return $this->has($propertyName);
-	}
-	
-	public function __unset( $propertyName ) {
-		$this->remove( $propertyName  );
-	}
+
 }
