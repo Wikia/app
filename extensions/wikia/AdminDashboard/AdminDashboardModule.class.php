@@ -32,6 +32,8 @@ class AdminDashboardModule extends Module {
 		
 		$this->adminDashboardUrlGeneral = Title::newFromText('AdminDashboard', NS_SPECIAL)->getFullURL().'?tab=general';
 		$this->adminDashboardUrlAdvanced = Title::newFromText('AdminDashboard', NS_SPECIAL)->getFullURL().'?tab=advanced';
+		
+		$this->mainPageUrl = wfMsgForContent( 'mainpage' );
 	}
 	
 	/**

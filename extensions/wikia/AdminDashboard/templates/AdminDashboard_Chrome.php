@@ -1,11 +1,13 @@
 <header class="AdminDashboardHeader" id="AdminDashboardHeader">
 	<h1>
-		<? if(empty($wordmarkUrl)) { ?>
-			<?= $wordmarkText ?>
-		<? } else { ?>
-			<img src="<?= $wordmarkUrl ?>" alt="<?= $wordmarkText ?>" height="48">
-		<? } ?>
-		<?= wfMsg("admindashboard-header") ?>
+		<a href="<?= $mainPageUrl ?>">
+			<? if(empty($wordmarkUrl)) { ?>
+				<?= $wordmarkText ?>
+			<? } else { ?>
+				<img src="<?= $wordmarkUrl ?>" alt="<?= $wordmarkText ?>" height="48">
+			<? } ?>
+			<?= wfMsg("admindashboard-header") ?>
+		</a>
 	</h1>
 	<nav>
 		<?= wfMsg("admindashboard-header-help", "") ?> | <?= wfMsg("admindashboard-header-exit", "") ?>
