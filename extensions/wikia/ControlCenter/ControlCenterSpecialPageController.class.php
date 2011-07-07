@@ -183,5 +183,9 @@ class ControlCenterSpecialPageController extends WikiaSpecialPageController {
 		$this->response->setVal("output", $output);
 		
 	}
+	
+	public function toolbarItem() {
+		$this->response->setVal("url", Title::newFromText('AdminDashboard', NS_SPECIAL)->getFullURL());
+	}
 
 }
