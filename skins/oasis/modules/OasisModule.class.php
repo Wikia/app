@@ -40,7 +40,7 @@ class OasisModule extends Module {
 	var $pageclass;
 	var $skinnameclass;
 	var $bottomscripts;
-	var $displayControlCenter;
+	var $displayAdminDashboard;
 
 	// global vars
 	var $wgEnableOpenXSPC;
@@ -191,10 +191,10 @@ class OasisModule extends Module {
 			$this->mainsassfile = 'skins/oasis/css/oasis-epl.scss';
 		}
 		
-		if (!empty($wgEnableAdminDashboardExt) && ControlCenterLogic::displayControlCenter($this->app, $wgTitle)) {
-			$this->displayControlCenter = true;
+		if (!empty($wgEnableAdminDashboardExt) && AdminDashboardLogic::displayAdminDashboard($this->app, $wgTitle)) {
+			$this->displayAdminDashboard = true;
 		} else {
-			$this->displayControlCenter = false;
+			$this->displayAdminDashboard = false;
 		}
 
 	} // end executeIndex()

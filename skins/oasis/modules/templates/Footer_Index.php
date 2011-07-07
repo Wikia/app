@@ -10,9 +10,9 @@
 	 	} ?>
 		<ul class="tools">
 			<?php echo wfRenderModule('Footer','Toolbar');
-                        /* BugId:5497 PerformanceStats are now displayed via OasisToolbarService (see: DevInfoUserCommand) */ ?>
-            <? if (!empty($wgEnableAdminDashboardExt) && F::app()->wg->User->isAllowed( 'controlcenter' )) { 
-            	echo (string)F::app()->sendRequest( 'ControlCenterSpecialPage', 'toolbarItem', array());
+            /* BugId:5497 PerformanceStats are now displayed via OasisToolbarService (see: DevInfoUserCommand) */ ?>
+            <? if (!empty($wgEnableAdminDashboardExt) && F::app()->wg->User->isAllowed( 'admindashboard' )) { 
+            	echo (string)F::app()->sendRequest( 'AdminDashboardSpecialPage', 'toolbarItem', array());
              } ?>
 		</ul>
 		<img src="<?= $wgBlankImgUrl; ?>" class="banner-corner-left" height="0" width="0">

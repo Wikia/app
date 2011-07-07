@@ -51,8 +51,8 @@
 		<?php
 		
 			// Needs to be above page header so it can suppress page header
-			if ($displayControlCenter) {
-				echo wfRenderModule('ControlCenter', 'Chrome');
+			if ($displayAdminDashboard) {
+				echo wfRenderModule('AdminDashboard', 'Chrome');
 			}					
 			
 			// render UserPagesHeader or PageHeader or nothing...
@@ -60,9 +60,9 @@
 				echo wfRenderModule($headerModuleName, $headerModuleAction, $headerModuleParams);
 			}
 		?>
-		<div id="WikiaArticle" class="WikiaArticle<?= $displayControlCenterChromedArticle ? ' ControlCenterChromedArticle' : '' ?>">
-			<? if($displayControlCenterChromedArticle) { ?>
-				<?= (string)F::app()->sendRequest( 'ControlCenterSpecialPage', 'chromedArticleHeader', array('headerText' => $wgTitle->getText() )) ?>
+		<div id="WikiaArticle" class="WikiaArticle<?= $displayAdminDashboardChromedArticle ? ' AdminDashboardChromedArticle' : '' ?>">
+			<? if($displayAdminDashboardChromedArticle) { ?>
+				<?= (string)F::app()->sendRequest( 'AdminDashboardSpecialPage', 'chromedArticleHeader', array('headerText' => $wgTitle->getText() )) ?>
 			<? } ?>
 			<div class="home-top-right-ads">
 			<?php 
