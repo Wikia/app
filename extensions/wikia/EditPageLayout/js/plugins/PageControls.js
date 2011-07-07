@@ -370,6 +370,7 @@
 			}, function(contentNode) {
 				self.getContent(function(content) {
 					extraData.content = content;
+					extraData.summary = $('#wpSummary').val();
 					self.ajax('preview',
 						extraData,
 						function(data) {
@@ -384,6 +385,14 @@
 							contentNode.find('.editsection').each(function() {
 								$(this).appendTo($(this).next());
 							});
+							
+							// add summary
+							if (typeof data.summary != 'undefined') {
+								$('<div>', {id: "EditPagePreviewEditSummary"}).
+									width(width - 150).
+									appendTo(contentNode.parent()).
+									html(data.summary);
+							}
 						});
 				});
 			});

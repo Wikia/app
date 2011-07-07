@@ -55,6 +55,8 @@ $messages['en'] = array(
 
 	'wikia-editor-notices-dialog-title' => 'Notices details',
 
+	'wikia-editor-preview-editSummary' => 'Edit Summary: $1',
+
 	// Short notices
 	'nonunicodebrowser-notice' => "'''Warning: Your browser is not Unicode compliant.'''",
 	'rev-deleted-text-notice' => "This page revision has been '''deleted'''. [More info]",
