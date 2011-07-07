@@ -28,15 +28,10 @@ class SFAutoEditAjaxHandler {
 
 		$title = Title::newFromText( 'DummyTitle' );
 
-//		if ( version_compare( substr( $wgVersion, 0, 4 ), '1.17', '<' ) ) {
 		if ( !StubObject::isRealObject( $wgParser ) )
 			$wgParser->_unstub();
 
-		// perform offensive operation
 		$wgParser->startExternalParse( $title, ParserOptions::newFromUser( $wgUser ), Parser::OT_HTML, true );
-//		} else {
-//			$wgParser->startExternalParse( $title, ParserOptions::newFromUser( $wgUser ), Parser::OT_HTML, true );
-//		}
 
 		// parse options
 		$this->parseDataFromQueryString( $this->mOptions, $options );
@@ -306,7 +301,7 @@ class SFAutoEditAjaxHandler {
 			if ( $key == "query string" ) {
 				$this->parseDataFromQueryString( $data, $value );
 			} else {
-				$this->addToArray( $data, $key, $value, true );
+				$this->addToArray( $data, $key, $value );
 			}
 		}
 
@@ -319,7 +314,7 @@ class SFAutoEditAjaxHandler {
 	// Format: 1stLevelName[2ndLevel][3rdLevel][...], i.e. normal array notation
 	// $value: the value to insert
 	// $toplevel: if this is a toplevel value.
-	private function addToArray( &$array, $key, $value, $toplevel = false ) {
+	private function addToArray( &$array, $key, $value, $toplevel = true ) {
 		$matches = array();
 
 		if ( preg_match( '/^([^\[\]]*)\[([^\[\]]*)\](.*)/', $key, $matches ) ) {
@@ -336,7 +331,7 @@ class SFAutoEditAjaxHandler {
 			if ( !array_key_exists( $key, $array ) )
 				$array[$key] = array();
 
-			$this->addToArray( $array[$key], $matches[2] . $matches[3], $value );
+			$this->addToArray( $array[$key], $matches[2] . $matches[3], $value, false );
 		} else {
 
 			if ( $key ) {

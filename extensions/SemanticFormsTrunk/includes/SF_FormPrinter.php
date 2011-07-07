@@ -653,6 +653,7 @@ END;
 					$field_args = array();
 					$show_on_select = array();
 					$default_value = null;
+					$values = null;
 					$possible_values = null;
 					$semantic_property = null;
 					$preload_page = null;
@@ -743,9 +744,9 @@ END;
 									// 'external' autocompletion is always done remotely, i.e. via API
 									$field_args['remote autocompletion'] = true;
 								} elseif ( $sub_components[0] == 'values' ) {
-									// remove whitespaces, and un-escape characters
-									$possible_values = array_map( 'trim', explode( ',', $sub_components[1] ) );
-									$possible_values = array_map( 'htmlspecialchars_decode', $possible_values );
+									// Handle this one only after 'delimiter' has
+									// also been set.
+									$values = $sub_components[1];
 								} elseif ( $sub_components[0] == 'values from property' ) {
 									$propertyName = $sub_components[1];
 									$propValue = SMWPropertyValue::makeUserProperty( $propertyName );
@@ -961,6 +962,20 @@ END;
 							$input_name = $template_name . '[num][' . $field_name . ']';
 						} else {
 							$input_name = $template_name . '[' . $field_name . ']';
+						}
+
+
+						// If the 'values' parameter was set, separate it based on the
+						// 'delimiter' parameter, if any.
+						if ( ! empty( $values ) ) {
+							if ( array_key_exists( 'delimiter', $field_args ) ) {
+								$delimiter = $field_args['delimiter'];
+							} else {
+								$delimiter = ",";
+							}
+							// Remove whitespaces, and un-escape characters
+							$possible_values = array_map( 'trim', explode( $delimiter, $values ) );
+							$possible_values = array_map( 'htmlspecialchars_decode', $possible_values );
 						}
 
 						// if we're creating the page name from a formula based on
