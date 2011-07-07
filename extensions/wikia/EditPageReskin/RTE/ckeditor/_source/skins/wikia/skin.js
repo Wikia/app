@@ -16,7 +16,7 @@ CKEDITOR.skins.add( 'wikia', (function()
 
 	return {
 		preload		: preload,
-		editor		: { css : [ window.RTEDevMode ? 'editor.css' : 'editor.min.css' ] },
+		editor		: { css : [ wgServer + $.getSassCommonURL('/extensions/wikia/EditPageReskin/RTE/ckeditor/_source/skins/wikia/editor.scss') ] },
 		dialog		: { css : [ 'dialog.css' ] },
 		templates	: { css : [ 'templates.css' ] },
 		margins		: [ 0, 0, 0, 0 ],

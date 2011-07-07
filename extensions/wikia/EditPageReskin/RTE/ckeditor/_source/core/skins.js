@@ -37,7 +37,9 @@ CKEDITOR.skins = (function()
 		{
 			for ( var n = 0 ; n < fileNames.length ; n++ )
 			{
-				fileNames[ n ] = CKEDITOR.getUrl( paths[ skinName ] + fileNames[ n ] );
+				if ( fileNames[ n ].indexOf('://') == -1 && fileNames[ n ].indexOf( '/' ) !== 0 ) {
+					fileNames[ n ] = CKEDITOR.getUrl( paths[ skinName ] + fileNames[ n ] );
+				}
 			}
 		};
 
