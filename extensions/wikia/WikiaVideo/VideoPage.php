@@ -1778,7 +1778,9 @@ EOD;
                 return $embed;
         }
 
-	public function getThumbnailCode($width, $addCover = true) {
+
+	public function getThumbnailParams( $width ){
+
 		global $wgExtensionsPath;
 
 		$thumb = $wgExtensionsPath . '/wikia/VideoEmbedTool/images/vid_thumb.jpg';
@@ -1834,6 +1836,21 @@ EOD;
 		}
 
 		$height = round( $width / $this->getRatio() );
+		return array(
+			'width' => $width,
+			'height' => $height,
+			'thumb' => $thumb
+		);
+	}
+
+	public function getThumbnailCode($width, $addCover = true) {
+
+		$aParams = $this->getThumbnailParams( $width );
+
+		$thumb = $aParams['thumb'];
+		$height = $aParams['height'];
+		$width = $aParams['width'];
+
 		if ( '' != $thumb) {
 			$image = "<img src=\"$thumb\" height=\"$height\" width=\"$width\" alt=\"\" />";
 		} else {
