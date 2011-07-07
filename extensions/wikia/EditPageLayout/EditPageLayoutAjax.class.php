@@ -71,7 +71,9 @@ class EditPageLayoutAjax {
 		# Remove extra headings from summaries and new sections.
 		$summary = preg_replace('/^\s*=+\s*(.*?)\s*=+\s*$/', '$1', $summary);
 
-		$res['summary'] = wfMsgExt('wikia-editor-preview-editSummary', array('parse'), $summary);
+		if ($summary != '') {
+			$res['summary'] = wfMsgExt('wikia-editor-preview-editSummary', array('parse'), $summary);
+		}
 
 		wfProfileOut(__METHOD__);
 		return $res;
