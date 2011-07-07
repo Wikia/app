@@ -20,7 +20,8 @@ $options = array(
 	'help',
 	'conf',
 	'aconf',
-	'date'
+	'date',
+	's3conf'
 );
 
 require_once( 'commandLine.inc' );
@@ -32,13 +33,15 @@ if ( isset( $options['help'] ) ) {
 		"Usage: SERVER_ID=177 php UserPathPrediction_initData.php " .
 		"--conf /usr/wikia/conf/current/wiki.factory/LocalSettings.php " .
 		"--aconf /usr/wikia/conf/current/AdminSettings.php " .
-		"--date=20110623\n\n"
+		"--date=20110623 " .
+		"--s3conf=PATH_TO_S3_CONFIG\n\n"
 	);
 	exit( 0 );
 }
 
 //by default the script will download and process data for the last 24 hours
 $date = ( !empty( $options['date'] ) ) ? $options['date'] : date( "Ymd", strtotime( "-1 day" ) );//"20110504"
+$s3ConfigFile = ( !empty( $options['s3conf'] ) ) ? $options['s3conf'] : null;
 
 require_once( "$IP/extensions/wikia/hacks/UserPathPrediction/UserPathPrediction.setup.php" );
 
@@ -49,7 +52,7 @@ $app->sendRequest( 'UserPathPredictionService', 'log', array( 'msg' => 'Start' )
 echo( "Initializing data analysis for User Path Prediction, this could take a while...\n" );
 
 try{
-	$app->sendRequest( 'UserPathPredictionService', 'extractOneDotData', array( 'date' => $date ) );
+	$app->sendRequest( 'UserPathPredictionService', 'extractOneDotData', array( 'date' => $date, 'backendParams' => array( 's3ConfigFile' => $s3ConfigFile ) ) );
 	
 	$response = $app->sendRequest( 'UserPathPredictionService', 'getWikis' );
 	$wikis = $response->getVal( 'wikis', array() );

@@ -43,9 +43,11 @@ class UserPathPredictionService extends WikiaService {
 	 * @details Produces a series of intermediate files, one per each wiki, those will need further processing
 	 * 
 	 * @requestParam string $date the target date for the data to be downloaded and extracted
+	 * @requestParam array $backendParams any extra configuration to pass to the backend storage
 	 */
 	function extractOneDotData() {
 		$strDate = $this->getVal( 'date' );
+		$backendParams = $this->getVal( 'backendParams', array() );
 		
 		if ( empty( $strDate ) ) {
 			throw new WikiaException( 'Target date not specified.' );
@@ -55,7 +57,7 @@ class UserPathPredictionService extends WikiaService {
 		
 		$this->log( "Fetching OneDot data from archive for {$strDate}..." );
 		
-		if( $this->model->retrieveDataFromArchive( $strDate ) ) {
+		if( $this->model->retrieveDataFromArchive( $strDate, $backendParams ) ) {
 			$this->log( "Done." );
 			
 			while( ( $src = $this->model->fetchRawDataFilePath() ) !== false ) {
