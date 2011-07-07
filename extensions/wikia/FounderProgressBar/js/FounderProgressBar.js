@@ -205,10 +205,17 @@ var FounderProgressWidget = {
 			format: 'json',
 			excluded_task_id: excludedTaskId
 		}, function(res) {
-			$().log(res);
-			var html = $(res.html);
-			FounderProgressWidget.preview.find('.activities').append(html);
-			html.slideDown();
+			var html = '';
+			var existingActivity = FounderProgressWidget.preview.find('.activity');
+			if(res && res.html) {
+				html = $(res.html);
+				FounderProgressWidget.preview.find('.activities').append(html);
+			}
+			existingActivity.addClass('active').find('.description').slideDown(120, 'linear');
+			if(html) {
+				html.slideDown();
+			}
+			
 		});
 	}
 };
