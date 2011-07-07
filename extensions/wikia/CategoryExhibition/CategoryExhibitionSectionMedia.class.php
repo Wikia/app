@@ -33,10 +33,10 @@ class CategoryExhibitionSectionMedia extends CategoryExhibitionSection {
 							$oVideo = new VideoPage( $itemTitle );
 							$oVideo->load();
 							if ( $oVideo->getVideoId() ) {
-								$aImage	= simplexml_load_string( $oVideo->getThumbnailCode( $this->thumbMedia, false ) );
-								$imageSrc	= $aImage['src'];
-								$forceHeight	= $aImage['height'];
-								$forceWidth	= $aImage['width'];
+								$aParams = $oVideo->getThumbnailParams( $this->thumbMedia );
+								$imageSrc	= $aParams['thumb'];
+								$forceHeight	= $aParams['height'];
+								$forceWidth	= $aParams['width'];
 							} else {
 								$imageSrc = '';
 							}
