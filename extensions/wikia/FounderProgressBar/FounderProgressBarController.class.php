@@ -201,7 +201,6 @@ class FounderProgressBarController extends WikiaController {
 		} else {  // memcache ok for non-master requests
 			$list = $this->getMCache()->get($memKey);
 		}
-$list = null;
 		if (empty($list)) {
 			$this->wf->ProfileIn(__METHOD__ . '::miss');
 			$list = array();
