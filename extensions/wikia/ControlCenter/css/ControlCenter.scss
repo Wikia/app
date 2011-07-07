@@ -5,6 +5,13 @@
 @import "../../../../skins/oasis/css/mixins/opacity";
 @import "../../../../skins/oasis/css/mixins/transition";
 @import "../../../../skins/oasis/css/core/layout";
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/core/body";
+@import "../../../../skins/oasis/css/core/buttons";
+@import "../../../../skins/oasis/css/core/tablepager";
+@import "../../Listusers/css/table";
+
+
 
 $control-center-content-width: 690px;
 $control-center-header-height: 48px;
@@ -292,6 +299,9 @@ $base-z: 5;
 	&.expanded {
 		float: none;
 		width: 982px;
+	}
+	fieldset {
+		border: solid 1px $color-links;
 	}
 }
 
