@@ -149,3 +149,4 @@ $devBoxImageServer = "http://{$wgDevelEnvironmentName}.wikia-dev.com";
 $wgStylePath = $devBoxImageServer . '/skins';
 $wgExtensionsPath = $devBoxImageServer . '/extensions';
 $wgCdnStylePath = $devBoxImageServer; // paths for images requested from CSS/SASS
+$wgDevBoxImageServerOverride ="images.{$wgDevelEnvironmentName}.wikia-dev.com";
