@@ -336,7 +336,7 @@ class BodyModule extends Module {
 
 
 	public function executeIndex() {
-		global $wgOut, $wgTitle, $wgSitename, $wgUser, $wgEnableBlog, $wgEnableCorporatePageExt, $wgEnableInfoBoxTest, $wgEnableWikiAnswers, $wgRequest, $wgMaximizeArticleAreaArticleIds, $wgEnableControlCenterExt;
+		global $wgOut, $wgTitle, $wgSitename, $wgUser, $wgEnableBlog, $wgEnableCorporatePageExt, $wgEnableInfoBoxTest, $wgEnableWikiAnswers, $wgRequest, $wgMaximizeArticleAreaArticleIds, $wgEnableAdminDashboardExt;
 
 		// set up global vars
 		if (is_array($wgMaximizeArticleAreaArticleIds)
@@ -441,7 +441,7 @@ class BodyModule extends Module {
 		}
 
 		// Display Control Center Header on certain special pages
-		if (!empty($wgEnableControlCenterExt) && ControlCenterLogic::displayControlCenter($this->app, $wgTitle)) {
+		if (!empty($wgEnableAdminDashboardExt) && ControlCenterLogic::displayControlCenter($this->app, $wgTitle)) {
 			$this->headerModuleName = null;
 			$this->wgSuppressAds = true;
 			$this->wgSuppressWikiHeader = true;
