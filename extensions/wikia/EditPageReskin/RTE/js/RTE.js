@@ -111,17 +111,7 @@ window.RTE = {
 		}, 'json');
 	},
 
-	// track events
-	// @see http://code.google.com/intl/pl-PL/apis/analytics/docs/tracking/eventTrackerGuide.html
 	track: function(action, label, value) {
-		// get method attributes
-		var args = ['ckeditor']; for (i=0; i < arguments.length; i++) args.push(arguments[i]);
-
-		// TODO: use GA event tracking
-		// pageTracker._trackEvent.apply(window, args);
-		if (typeof jQuery.tracker != 'undefined') {
-			jQuery.tracker.byStr(args.join('/'));
-		}
 	},
 
 	// start editor in mode provided
@@ -176,24 +166,6 @@ window.RTE = {
 
 		// editor is loaded
 		CKEDITOR.on('instanceReady', RTE.onEditorReady);
-
-		// mode is ready
-		RTE.instance.on('mode', function() {
-			RTE.log('mode "' + this.mode + '" is loaded');
-		});
-
-		// wysiwyg mode is ready - fire "wysiwygModeReady" custom event
-		RTE.instance.on('dataReady', function() {
-			if (this.mode == 'wysiwyg') {
-				this.fire('wysiwygModeReady');
-			}
-		});
-
-		RTE.instance.on('wysiwygModeReady', RTE.onWysiwygModeReady);
-
-		// event fired when Widescreen button in pressed
-		// TODO: remove
-		RTE.instance.on('widescreen', RTE.onWidescreen);
 
 		// clean HTML returned by CKeditor
 		RTE.instance.on('getData', RTE.filterHtml);
@@ -293,37 +265,6 @@ window.RTE = {
 		if (formatDropdown) {
 			formatDropdown.createPanel(editor);
 		}
-	},
-
-	// extra setup of <body> wrapping editing area in wysiwyg mode
-	onWysiwygModeReady: function(ev) {
-		RTE.log('onWysiwygModeReady');
-
-		var body = RTE.getEditor(),
-			editor = ev.editor;
-
-		body.
-			// set ID, so CSS rules from MW can be applied
-			attr('id', editor.config.bodyId).
-			// set CSS class with content language of current wiki (used by RT #40248)
-			addClass('lang-' + window.wgContentLanguage);
-
-		// RT #38516: remove first <BR> tag (fix strange Opera bug)
-		setTimeout(function() {
-			if (CKEDITOR.env.opera) {
-				var firstChild = RTE.getEditor().children().eq(0);
-
-				// first child is <br> without any attributes
-				if (firstChild.is('br')) {
-					firstChild.remove();
-				}
-			}
-		}, 750);
-	},
-
-	// reposition of #RTEStuff div when Widescreen button is pressed
-	onWidescreen: function() {
-		RTE.repositionRTEStuff();
 	},
 
 	// reposition #RTEStuff div
@@ -525,6 +466,7 @@ jQuery.fn.getData = function() {
 	return data;
 }
 
+//TO ponizej DO OSOBNEGO PLIKU /RTE/JS/JQUERY.EDITOR.js (+ladowanie tego przez assetmanagera)
 // set meta data for given node
 jQuery.fn.setData = function(key, value) {
 	var data = {};
