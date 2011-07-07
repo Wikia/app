@@ -334,13 +334,15 @@
 		// render "Preview" modal
 		renderPreview: function(extraData) {
 			var self = this,
-				width = 733,
+				width = 660 + 32 /* modal padding */,
 				config = this.editor.config;
 
 			if (config.isWidePage) {
-				width += 300;
+				// 980 px of content width on main pages / pages without right rail
+				width += 320;
 			}
 			if (config.extraPageWidth) {
+				// wide wikis
 				width += config.extraPageWidth;
 			}
 
