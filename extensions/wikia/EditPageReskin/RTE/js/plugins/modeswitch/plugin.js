@@ -30,8 +30,88 @@ CKEDITOR.plugins.add('rte-modeswitch',
 
 		// update switching tabs tooltips
 		editor.on('mode', $.proxy(this.updateTooltips, this));
+		editor.on('modeSwitch', $.proxy(this.modeSwitch, this));
 	},
 
+	modeSwitch: function(ev) {
+		var editor = ev.editor,
+			content = editor.getData();
+
+				RTE.log('switching from "' + editor.mode +'" mode');
+
+		// BugId:1852 - error handling
+		var onError = function() {
+			RTE.log('error occured during mode switch');
+
+			// remove loading indicator, don't switch mode
+			RTE.instance.fire('modeSwitchCancelled');
+
+			// track errors
+			RTE.track('switchMode', 'error');
+
+			// modal with a message
+			$.showModal(editor.lang.errorPopupTitle, editor.lang.modeSwitch.error, {width: 400});
+		};
+
+		switch (editor.mode) {
+			case 'wysiwyg':
+				RTE.ajax('html2wiki', {html: content, title: window.wgPageName}, function(data) {
+					if (!data) {
+						onError();
+						return;
+					}
+
+					editor.setMode('source');
+					editor.setData(data.wikitext);
+
+					RTE.track('switchMode', 'wysiwyg2source');
+				});
+				break;
+
+			case 'source':
+				RTE.ajax('wiki2html', {wikitext: content, title: window.wgPageName}, function(data) {
+					if (!data) {
+						onError();
+						return;
+					}
+
+					// RT #36073 - don't allow mode switch when __NOWYSIWYG__ is found in another article section
+					if ( (typeof window.RTEEdgeCase != 'undefined') && (window.RTEEdgeCase == 'nowysiwyg') ) {
+						RTE.log('article contains __NOWYSIWYG__ magic word');
+
+						data.edgecase = {
+							type: window.RTEEdgeCase,
+							info: {
+								title: window.RTEMessages.edgecase.title,
+								content: window.RTEMessages.edgecase.content
+							}
+						};
+					}
+
+					if (data.edgecase) {
+						RTE.log('edgecase found!');
+						RTE.tools.alert(data.edgecase.info.title, data.edgecase.info.content);
+
+						// stay in source mode
+						RTE.instance.fire('modeSwitchCancelled');
+
+						// tracking
+						RTE.track('switchMode', 'edgecase', data.edgecase.type);
+						return;
+					}
+
+					editor.setMode('wysiwyg');
+					editor.setData(data.html);
+
+					// RT #84586: update instanceId
+					RTE.instanceId = data.instanceId;
+
+					RTE.track('switchMode', 'source2wysiwyg');
+				});
+				break;
+		}
+	},
+	
 	updateModeInfo: function(ev) {
 		// set class for body indicating current editor mode (used mainly by automated tests)
 		$('body').
