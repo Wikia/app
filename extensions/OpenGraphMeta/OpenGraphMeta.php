@@ -69,7 +69,15 @@ function efOpenGraphMetaPageHook( &$out, &$sk ) {
 	
 	$meta["og:type"] = $isMainpage ? "website" : "article";
 	$meta["og:site_name"] = $wgSitename;
-	$meta["og:title"] = $title->getPrefixedText();
+	
+	// Try to chose the most appropriate title for showing in news feeds.
+	if ((defined('NS_BLOG_ARTICLE') && $title->getNamespace() == NS_BLOG_ARTICLE) || 
+		(defined('NS_BLOG_ARTICLE_TALK') && $title->getNamespace() == NS_BLOG_ARTICLE_TALK)){
+		$meta["og:title"] = $title->getSubpageText();
+	} else {
+		$meta["og:title"] = $title->getText();
+	}
+
 	if ( isset($out->mMainImage) ) {
 		$meta["og:image"] = wfExpandUrl($out->mMainImage->createThumb(100*3, 100));
 	} else if ( $isMainpage ) {
