@@ -357,7 +357,7 @@ class MediaWiki {
 					}
 				}
 
-				// Originally implemented by Nick for HardRedirectsWithJSText Extension
+				// Originally implemented by Nick for HardRedirectsWithJSText Extension (which is now deprecated and deleted)
 				wfRunHooks('BeforeRedirect', array( &$title, &$target ) );
 
 				if( is_object( $target ) ) {

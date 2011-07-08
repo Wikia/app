@@ -6,9 +6,6 @@
  * http://googlewebmastercentral.blogspot.com/2009/02/specify-your-canonical.html
  * http://ysearchblog.com/2009/02/12/fighting-duplication-adding-more-arrows-to-your-quiver/
  * http://blogs.msdn.com/webmaster/archive/2009/02/12/partnering-to-help-solve-duplicate-content-issues.aspx
- *
- * Note this extension should be mutually exclusive with extensions that do "Hard" redirects,
- * https://wikia-code.com/wikia/trunk/extensions/wikia/HardRedirectsWithJSText/
  */
 
 $wgExtensionCredits['specialpage'][] = array(
@@ -19,7 +16,7 @@ $wgExtensionCredits['specialpage'][] = array(
 
 $wgHooks['BeforePageDisplay'][] = 'wfCanonicalHref';
 function wfCanonicalHref(&$out, &$sk) {
-        global $wgTitle;
+	global $wgTitle;
 
 	if ( !($wgTitle instanceof Title) ) {
 		return true;
@@ -30,5 +27,5 @@ function wfCanonicalHref(&$out, &$sk) {
 		'href' => $wgTitle->getFullURL(),
 	));
 
-        return true;
+	return true;
 }
