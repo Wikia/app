@@ -111,9 +111,12 @@ class EditPageLayoutModule extends Module {
 		// extra checkboxes
 		$this->customCheckboxes = $editPage->getCustomCheckboxes();
 
-		// dismissable notices
+		// dismissable notifications
 		$this->notices = $editPage->getNotices();
 		$this->noticesHtml = $editPage->getNoticesHtml();
+
+		// notifications link (BugId:7951)
+		$this->notificationsLink = $app->runFunction('wfMsgExt', 'editpagelayout-notificationsLink', array('parsemag'), count($this->notices));
 
 		// check if we're in read only mode
 		// disable edit form when in read-only mode

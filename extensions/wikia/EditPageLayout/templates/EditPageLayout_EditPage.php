@@ -13,7 +13,7 @@
 						$wordmarkShortText = htmlspecialchars(mb_substr($wordmark['wordmarkText'], 0, 10)).'&hellip;';
 					} ?>
 					<?= $wordmarkShortText ?>
-					
+
 				<? } ?>
 				</a>
 			</span>
@@ -31,7 +31,12 @@
 			</a>
 			<!-- mode switching tabs -->
 			<nav id="EditPageTabs" class="editpage-tabs" data-space-type="tabs" data-space-autoshow="true" style="display:none"></nav>
+
+			<!-- help link -->
 			<aside id="HelpLink"><?= $helpLink ?></aside>
+
+			<!-- notifications link -->
+			<aside id="NotificationsLink"><a href="#"><?= $notificationsLink ?></a></aside>
 		</header>
 
 		<form id="editform" name="editform" method="post" action="<?= htmlspecialchars($editFormAction) ?>" enctype="multipart/form-data">
@@ -41,7 +46,7 @@
 					<div id="EditPageEditorWrapper" data-space-type="editor">
 						<div id="EditPageEditor" class="editpage-content">
 
-							<!-- notices -->
+							<!-- notifications -->
 							<noscript><style>
 								.edit-page-notices {
 									display: block;
@@ -64,7 +69,7 @@
 							<!-- preloads -->
 							<?php
 								if (!empty($editPagePreloads)) {
-									
+
 									foreach($editPagePreloads as $preloadId => $preload) {
 							?>
 							<div id="<?= $preloadId ?>" class="editpage-intro">
