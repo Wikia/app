@@ -17,7 +17,7 @@
 <h3>More Info articles</h3>
 <ul>
 <? foreach ($data['moreinfo'] as $moreinfo) { ?>
-	<li><a href="<?=$moreinfo['url']?>"><?=$moreinfo['text']?htmlentities($moreinfo['text']):htmlentities($moreinfo['article'])?></a></li>
+	<li><a href="<?=$moreinfo['url']?>"><?=$moreinfo['text']?$moreinfo['text']:$moreinfo['article']?></a></li>
 <? } ?>
 </ul>
 <? } ?>
@@ -26,7 +26,7 @@
 <ul>
 <? foreach ($data['elements'] as $element) { ?>
 	<li>
-	<p><a href="<?=$element['url'] ?>"><?=htmlentities($element['question']) ?></a></p>
+	<p><a href="<?=$element['url'] ?>"><?=$element['question'] ?></a></p>
 	</li>
 <?	} ?>
 </ul>
