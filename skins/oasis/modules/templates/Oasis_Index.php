@@ -3,6 +3,11 @@
 <head>
 	<meta http-equiv="Content-Type" content="<?= $mimetype ?>; charset=<?= $charset ?>">
 	<meta name="viewport" content="width=1200">
+	
+	<?php if( !$showAllowRobotsMetaTag ): ?>
+		<meta name="robots" content="noindex, nofollow">
+	<?php endif; ?>
+	
 	<?= $headlinks ?>
 
 	<title><?= $pagetitle ?></title>

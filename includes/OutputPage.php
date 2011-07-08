@@ -2210,9 +2210,11 @@ class OutputPage {
 		global $wgDocType, $wgDTD, $wgContLanguageCode, $wgOutputEncoding, $wgMimeType;
 		global $wgXhtmlDefaultNamespace, $wgXhtmlNamespaces, $wgHtml5Version;
 		global $wgContLang, $wgUseTrackbacks, $wgStyleVersion, $wgHtml5, $wgWellFormedXml;
-		global $wgUser, $wgRequest, $wgLang;
-
+		global $wgUser, $wgRequest, $wgLang, $wgDevelEnvironment;
+		
 		$this->addMeta( "http:Content-Type", "$wgMimeType; charset={$wgOutputEncoding}" );
+		if( $wgDevelEnvironment ) $this->addMeta( 'robots', 'noindex, nofollow' );
+		
 		if ( $sk->commonPrintStylesheet() ) {
 			$this->addStyle( 'common/wikiprintable.css', 'print' );
 		}
