@@ -6,17 +6,17 @@
 }
 
 table {
+  top: 20px;
+  margin: auto;
   border: 1px dotted black;
-  th {
-    background-color: #DDD;
-  }
+  width: 90%;
   td {
     padding: 5px;
   }
   tr {
       border-bottom: 1px dotted black;
       &:nth-child(even) {
-        background-color: #BADA55;
+        background-color: #222;
       }
     } 
 }

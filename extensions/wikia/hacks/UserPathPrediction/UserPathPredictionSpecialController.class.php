@@ -48,7 +48,7 @@ class UserPathPredictionSpecialController extends WikiaSpecialPageController {
 		$result = $result["articles"];
 
 		$this->setVal( 'articles', $result );
-		$this->setVal( 'nodes', $this->model->getNodes( 11, 12 ) );
+
 		
 		//get Wiki names	
 		$wikis = $this->model->getWikis();
@@ -62,17 +62,42 @@ class UserPathPredictionSpecialController extends WikiaSpecialPageController {
 		
 	public function getNodes() {
 		$this->model = F::build( 'UserPathPredictionModel' );
-		/*$nodes = $this->model->getNodes(490, 126007, 10 );
-
-		if ( count($nodes) > 0 ) {
-			foreach ( $nodes as $node ) {
-				$result += $node->citi_id ." ". $node->referrer_id ." ". $node->target_id ." ". $node->count . " ". $node->updated;
-			}	
+		
+		if ( $this->getVal( 'selectby' ) == 'byTitle' ) {
+			$title = F::build( 'Title', array( $this->getVal( 'article' ) ), 'newFromText' );
+			$articleId = $title->getArticleID();
+			
 		} else {
-			$result = "Database is silent " . $nodes;
+			$articleId = $this->getVal( 'article' );
+		}
+		
+		$nodes = $this->model->getNodes($this->wg->CityId, $articleId, $this->getVal('datespan'), $this->getVal('count'));
+		$resultArray;
+		
+		if ( count($nodes) > 0 ) {
 
-		}*/
-		$this->setVal('nodes',  $this->model->getNodes(490, 126007, 10 ));
+			foreach ( $nodes as $node ) {
+			
+				$referrerTitle = F::build( 'Title', array( $node->referrer_id ), 'newFromID' );
+				$targetTitle = F::build( 'Title', array( $node->target_id ), 'newFromID' );
+				$referrerURL = $referrerTitle->getLocalURL();
+				$targetURL = $targetTitle->getLocalURL();
+				
+				$resultArray[] = array(
+						'cityid' => $node->city_id,
+						'referrerTitle' => $referrerTitle,
+						'referrerURL' => $referrerURL,
+						'targetTitle' => $targetTitle,
+						'targetURL' => $targetURL,
+						'count' => $node->count,
+						'updated' => $node->updated
+						);
+			}	
+
+		} else {
+			$resultArray = array("No Result");
+		}
+		$this->setVal('nodes',  $resultArray );
 	}
 
 }
