@@ -228,6 +228,7 @@ Example output: edited by Avatar 3 hours ago',
 Example output: deleted by Avatar 3 hours ago',
 
 	'oasis-toolbar-devinfo' => 'This is a label for information for developers (site speed statistics, etc.)',
+	'oasis-wiki-navigation' => 'Parameter $1 is the name of the wiki, e.g. "Muppet Wiki"',
 );
 
 /** Afrikaans (Afrikaans)
