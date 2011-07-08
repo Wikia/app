@@ -18,7 +18,7 @@ class WikiaQuizArticle extends Article {
 	 * Render Quiz namespace page
 	 */
 	public function view() {
-		global $wgOut, $wgUser, $wgTitle, $wgJsMimeType, $wgExtensionsPath;
+		global $wgOut, $wgTitle;
 		wfProfileIn(__METHOD__);
 		
 		wfLoadExtensionMessages('WikiaQuiz');

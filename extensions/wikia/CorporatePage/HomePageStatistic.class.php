@@ -14,7 +14,6 @@ class HomePageStatistic
 	}
 	
 	public static function getWordsAddedLastWeek(){
-		global $wgMemc;
         wfProfileIn( __METHOD__ );          
 
 		$result = (int) (WikiaGlobalStats::countWordsInLastDays());

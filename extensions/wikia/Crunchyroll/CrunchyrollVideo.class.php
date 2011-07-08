@@ -113,8 +113,7 @@ class CrunchyrollVideo {
 	}
 
 	public function getPaginatedGallery( $page = 1, $fromAjax = false ){
-
-		global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgMemc;
+		global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
 
 		$this->currentPage = $page;
 		
@@ -171,8 +170,6 @@ class CrunchyrollVideo {
 	// cache functions
 
 	protected function getKey( ) {
-		global $wgCityId;
-
 		return wfSharedMemcKey(
 			'CrunchyrollVideoFromRSS',
 			$this->getSerie(),

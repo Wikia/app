@@ -22,7 +22,7 @@ class CrunchyrollAjax {
 	 */
 
 	static public function axGetPage(){
-		global $wgRequest, $wgUser, $wgTitle;
+		global $wgRequest;
 
 		$pageId = (int)$wgRequest->getVal( 'page' );
 		$serieId = (int)$wgRequest->getVal( 'serie' );
