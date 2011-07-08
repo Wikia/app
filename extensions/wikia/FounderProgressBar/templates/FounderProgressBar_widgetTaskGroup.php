@@ -7,6 +7,9 @@
 		<? $extraItems--; ?>
 		<? for ($i = 0; $i < $itemsInThisRow; $i++) { ?>
 			<li class="activity<?= empty($taskList[$index]['task_completed']) ? '' : ' completed' ?><?= isset($clickEvents[$taskList[$index]['task_id']]) ? ' clickevent' : '' ?><?= empty($taskList[$index]['task_locked']) ? '' : ' locked'?>" data-task-id="<?= $taskList[$index]['task_id'] ?>">
+				<? if(!empty($taskList[$index]['task_completed'])) { ?>
+					<div class="activity-checkmark"></div>
+				<? } ?>
 				<div class="activity-label"><?= $taskList[$index]['task_label'] ?></div>
 				<div class="activity-description">
 					<div class="description">
