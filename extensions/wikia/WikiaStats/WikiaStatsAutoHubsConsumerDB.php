@@ -487,7 +487,8 @@ class WikiaStatsAutoHubsConsumerDB {
 			array( 'user_id, tag_id, username, groups, all_count' ),
 			array(
 				'tag_id' => $tag_id,
-				'city_lang' => $lang
+				'city_lang' => $lang,
+                                'user_id <> 0'
 			),
 			__METHOD__,
 			array(
