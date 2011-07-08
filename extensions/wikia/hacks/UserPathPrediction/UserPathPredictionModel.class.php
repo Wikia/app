@@ -76,8 +76,8 @@ class UserPathPredictionModel {
 		$params = '';
 		$s3directory = self::S3_ARCHIVE . "{$timestr}/";
 		
-		if ( empty( $extraParams['s3ConfigFile'] ) ) {
-			$params += " -c {$extraParams['s3ConfigFile']}";
+		if ( !empty( $extraParams['s3ConfigFile'] ) ) {
+			$params .= " -c {$extraParams['s3ConfigFile']}";
 		}
 		
 		$cmd = "s3cmd get{$params} --recursive {$s3directory} " . self::RAW_DATA_PATH;
@@ -155,17 +155,17 @@ class UserPathPredictionModel {
 		//TODO: IMPORTANT, remember to strtolower the db name otherwise it won't always match onedot records!!!
 		return array(
 			array(
-				"citi_id" => "490",
+				"city_id" => "490",
 				"db_name" => "wowwiki",
 				"domain_name" => "wowwiki.com"
 			),
 			array(
-				"citi_id" => "10150",
+				"city_id" => "10150",
 				"db_name" => "dragonage",
 				"domain_name" => "dragonage.wikia.com"
 			),
 			array(
-				"citi_id" => "3125",
+				"city_id" => "3125",
 				"db_name" => "callofduty",
 				"domain_name" => "callofduty.wikia.com"
 			)
