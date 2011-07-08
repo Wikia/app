@@ -14,7 +14,7 @@ class Amazon_ApiClient_Soap extends Amazon_AApiClient
     {
             global $wgHTTPProxy;
 
-            list($proxyHost, $proxyPort) = split(':', $wgHTTPProxy);
+            list($proxyHost, $proxyPort) = explode(':', $wgHTTPProxy);
             $this->_soapClient = new SoapClient(self::WSDL_URL, array(
                 'exceptions' => 1,
                 'classmap' => array(

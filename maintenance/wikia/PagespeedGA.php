@@ -53,7 +53,7 @@ class GoogleAnalyticsPageSpeed {
 				$hour = $result->getHour();
 				$pageviews = $result->getPageviews();
 
-				$pagePath = split('/', $result);
+				$pagePath = explode('/', $result);
 				if(count($pagePath) == 3) {
 					if($pagePath[2] >= 0) {
 						$loadtime = $pagePath[2] * 1000;

@@ -197,7 +197,7 @@ function SharedHelpHook(&$out, &$text) {
 					$content = "\n\n" . wfMsg( 'shared_help_was_redirect', "<a href=" . $link . ">$destinationPage</a>" );
 				}
 			} else {
-				$tmp = split("\r\n\r\n", $content, 2);
+				$tmp = explode("\r\n\r\n", $content, 2);
 				$content = isset($tmp[1]) ? $tmp[1] : '';
 			}
 			if(strpos($content, '"noarticletext"') > 0) {

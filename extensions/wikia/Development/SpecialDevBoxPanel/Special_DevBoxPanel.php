@@ -284,14 +284,14 @@ function getHtmlForSvnTool() {
 	$tmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 	$data = shell_exec("svn info ".dirname(dirname(dirname(dirname(dirname( __FILE__ ))))));
 
-	foreach (split("\n", $data) as $line) {
+	foreach (explode("\n", $data) as $line) {
 		if (empty($line)) continue;
-		list($k, $v) = split(": ", $line);
+		list($k, $v) = explode(": ", $line);
 		$info{$k} = $v;
 	}
 
 	$data = shell_exec("svn list https://svn.wikia-code.com/wikia/branches/");
-	$branches = array_map(create_function('$v', 'return rtrim($v, "/");'), split("\n", $data));
+	$branches = array_map(create_function('$v', 'return rtrim($v, "/");'), explode("\n", $data));
 
 	$tmpl->set_vars(array(
 						"svnUrl"     => $info{'URL'},

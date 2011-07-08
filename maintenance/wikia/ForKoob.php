@@ -58,7 +58,7 @@ whatilikeaboutyou';
 
 $cityIds = array();
 
-$cityDBnamesArray = split("\n", $cityDBnames);
+$cityDBnamesArray = explode("\n", $cityDBnames);
 
 foreach($cityDBnamesArray as $cityDBname) {
 	$city_id = $dbr2->selectField('city_list', 'city_id', array('city_dbname' => trim($cityDBname)));
