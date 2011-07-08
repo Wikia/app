@@ -1,6 +1,19 @@
 <?php
 
-$optionsWithArgs = array( 'u', 'f' );
+///////////////////////////////////////////////////////
+////// importPartnerVideo.php                    //////
+////// import video from a partner into one wiki //////
+////// Author: William Lee (wlee@wikia-inc.com)  //////
+///////////////////////////////////////////////////////
+
+// CONFIG
+
+$SCREENPLAY_FTP_HOST = 'ftp.screenplayinc.com';
+$SCREENPLAY_REMOTE_FILE = 'feed.zip';
+$SCREENPLAY_FEED_FILE = 'feed.xml';
+$TEMP_DIR = '/tmp';
+
+$optionsWithArgs = array( 'u', 'f', 'r', 'p' );
 
 ini_set( "include_path", dirname(__FILE__)."/.." );
 require_once( 'commandLine.inc' );
@@ -14,6 +27,8 @@ Usage: php importPartnerVideo.php [options...] <partner>
 Options:
   -u <user>         Username
   -f <filename>     Import video from specified file instead of API
+  -r <remoteuser>   Remote username
+  -p <password>     Remote password
   -d                Debug mode
   
 Args:
@@ -27,6 +42,8 @@ EOT;
 
 $userName = isset( $options['u'] ) ? $options['u'] : 'Maintenance script';
 $filename = isset( $options['f'] ) ? $options['f'] : null;
+$remoteUser = isset( $options['r'] ) ? $options['r'] : null;
+$remotePassword = isset( $options['p'] ) ? $options['p'] : null;
 $debug = isset($options['d']);
 
 // INPUT VALIDATION
@@ -44,13 +61,15 @@ if (!empty($filename)) {
 		die("Invalid filename\n");
 	}
 }
-
-// CONFIG SETTINGS
+else {
+	if (!$remoteUser || !$remotePassword) {
+		die("must provide username and password\n");
+	}
+}
 
 $provider = strtolower($args[0]);
 switch ($provider) {
 	case VideoPage::V_SCREENPLAY:
-		$url = '';
 		break;
 	default:
 		die("unknown provider $provider. aborting.\n");		
@@ -61,27 +80,111 @@ switch ($provider) {
 print("Starting import for provider $provider ({$wgWikiaVideoProviders[$provider]})...\n");
 
 // open file
+$file = '';
 if ($filename) {
 	$file = file_get_contents($filename);
 	if ($file === false) {
-		print "Error reading file $filename\n";
-		exit( 1 );
+		die("Error reading file $filename\n");
 	}
 }
 else {
-	$file = @Http::get( $url );
-	if ($file === false) {
-		print "Error reading URL $url\n";
-		exit( 1 );
+	switch ($provider) {
+		case VideoPage::V_SCREENPLAY:
+			$file = downloadScreenplayFeed();
+			break;
+		default:
+			$file = @Http::get( $url );
+			if ($file === false) {
+				die("Error reading URL $url\n");
+			}
 	}
 }
-
 
 importFromPartner($provider, $file);
 
 // END OF MAIN
 
 // HELPER FUNCTIONS
+
+function downloadScreenplayFeed() {
+	global $SCREENPLAY_FTP_HOST, $SCREENPLAY_REMOTE_FILE, $SCREENPLAY_FEED_FILE, $TEMP_DIR;
+	global $remoteUser, $remotePassword, $wgHTTPProxy;
+	// Screenplay uses a zipped xml file. Retrieve from
+	// ftp server, unzip, and open.
+	
+	print("Connecting to $SCREENPLAY_FTP_HOST as $remoteUser...\n");
+
+	// must use cURL because of the http proxy
+	$curl = curl_init();
+	curl_setopt($curl, CURLOPT_PROXY, $wgHTTPProxy);
+	curl_setopt($curl, CURLOPT_URL, "ftp://$remoteUser:$remotePassword@$SCREENPLAY_FTP_HOST/$SCREENPLAY_REMOTE_FILE");
+	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($curl, CURLOPT_BINARYTRANSFER, true);
+	$localFile = $TEMP_DIR . '/screenplay.' . date("Ymd") . '.zip';
+	$result = curl_exec($curl);	
+	curl_close($curl);
+	file_put_contents($localFile, $result);	// wlee: this uses memory less efficiently than
+						// CURLOPT_FILE. However, in my testing,
+						// CURLOPT_FILE saved incomplete files!
+	if (!$result) die("Couldn't connect to $SCREENPLAY_FTP_HOST\n");
+	unset($result);
+
+	print("Downloaded $SCREENPLAY_REMOTE_FILE to $localFile...\n");
+
+	// unzip	
+	$feedFile = '';	
+	$zip = new ZipArchive;
+	if ($zip->open($localFile) === true) {
+		$zip->extractTo($TEMP_DIR);
+		$zip->close();
+		$feedFile = file_get_contents($TEMP_DIR.'/'.$SCREENPLAY_FEED_FILE);
+	}
+	else {
+		die(zipFileErrMsg($zip)."\n");
+	}
+	
+	if (!$feedFile) {
+		die("could not open or read $SCREENPLAY_FEED_FILE in $localFile\n");
+	}
+	
+	return $feedFile;	
+}
+
+function zipFileErrMsg($errno) {
+  // using constant name as a string to make this function PHP4 compatible
+  $zipFileFunctionsErrors = array(
+    'ZIPARCHIVE::ER_MULTIDISK' => 'Multi-disk zip archives not supported.',
+    'ZIPARCHIVE::ER_RENAME' => 'Renaming temporary file failed.',
+    'ZIPARCHIVE::ER_CLOSE' => 'Closing zip archive failed', 
+    'ZIPARCHIVE::ER_SEEK' => 'Seek error',
+    'ZIPARCHIVE::ER_READ' => 'Read error',
+    'ZIPARCHIVE::ER_WRITE' => 'Write error',
+    'ZIPARCHIVE::ER_CRC' => 'CRC error',
+    'ZIPARCHIVE::ER_ZIPCLOSED' => 'Containing zip archive was closed',
+    'ZIPARCHIVE::ER_NOENT' => 'No such file.',
+    'ZIPARCHIVE::ER_EXISTS' => 'File already exists',
+    'ZIPARCHIVE::ER_OPEN' => 'Can\'t open file', 
+    'ZIPARCHIVE::ER_TMPOPEN' => 'Failure to create temporary file.', 
+    'ZIPARCHIVE::ER_ZLIB' => 'Zlib error',
+    'ZIPARCHIVE::ER_MEMORY' => 'Memory allocation failure', 
+    'ZIPARCHIVE::ER_CHANGED' => 'Entry has been changed',
+    'ZIPARCHIVE::ER_COMPNOTSUPP' => 'Compression method not supported.', 
+    'ZIPARCHIVE::ER_EOF' => 'Premature EOF',
+    'ZIPARCHIVE::ER_INVAL' => 'Invalid argument',
+    'ZIPARCHIVE::ER_NOZIP' => 'Not a zip archive',
+    'ZIPARCHIVE::ER_INTERNAL' => 'Internal error',
+    'ZIPARCHIVE::ER_INCONS' => 'Zip archive inconsistent', 
+    'ZIPARCHIVE::ER_REMOVE' => 'Can\'t remove file',
+    'ZIPARCHIVE::ER_DELETED' => 'Entry has been deleted',
+  );
+  $errmsg = 'unknown';
+  foreach ($zipFileFunctionsErrors as $constName => $errorMessage) {
+    if (defined($constName) and constant($constName) === $errno) {
+      return 'Zip File Function error: '.$errorMessage;
+    }
+  }
+  return 'Zip File Function error: unknown';
+}
 
 function importFromPartner($provider, $file) {
 	$numCreated = 0;
@@ -155,7 +258,6 @@ function importFromScreenplay($file) {
 				}
 			}
 			
-			$clipData['name'] = generateNameForPartnerVideo(VideoPage::V_SCREENPLAY, $clipData);
 			$msg = '';
 			$articlesCreated += createVideoPageForPartnerVideo(VideoPage::V_SCREENPLAY, $clipData, $msg);
 			if ($msg) {
@@ -181,17 +283,39 @@ function generateNameForPartnerVideo($provider, array $data) {
 	return $name;
 }
 
+function generateCategoriesForPartnerVideo($provider, array $data) {
+	global $wgWikiaVideoProviders;
+	
+	$categories = array();
+	$categories[] = $wgWikiaVideoProviders[$provider];
+	
+	switch ($provider) {
+		case VideoPage::V_SCREENPLAY:
+			$categories[] = $data['trailerVersion'];
+			break;
+		default:
+			return array();
+	}
+	
+	return $categories;
+}
+
 function createVideoPageForPartnerVideo($provider, array $data, &$msg) {
 	global $debug;
 	
 	$id = null;
-	$name = null;
 	$metadata = null;	
+	$name = generateNameForPartnerVideo($provider, $data);
+	$categories = generateCategoriesForPartnerVideo($provider, $data);
+	$categoryStr = '';
+	foreach ($categories as $categoryName) {
+		$category = Category::newFromName($categoryName);
+		$categoryStr .= '[[' . $category->getTitle()->getFullText() . ']]';
+	}
 
 	switch ($provider) {
 		case VideoPage::V_SCREENPLAY:
 			$id = $data['eclipId'];
-			$name = $data['name'];
 
 			if (empty($data['stdBitrateCode'])) {
 				$msg = "no video encoding exists for $name: clip $id";
@@ -206,12 +330,13 @@ function createVideoPageForPartnerVideo($provider, array $data, &$msg) {
 			return 0;
 	}
 
+	
 	$title = Title::makeTitleSafe(NS_VIDEO, $name);	
 	if(is_null($title)) {
 		$msg = "article title was null: clip id $id";
 		return 0;
 	}
-	if($title->exists()) {
+	if(!$debug && $title->exists()) {
 		$msg = "article named $name already exists: clip id $id";
 		return 0;
 	}	
@@ -221,10 +346,10 @@ function createVideoPageForPartnerVideo($provider, array $data, &$msg) {
 		$video->loadFromPars( $provider, $id, $metadata );
 		$video->setName( $name );
 		if ($debug) {
-			print "parsed partner clip id $id. name: $name. data: " . implode(',', $metadata) . "\n";
+			print "parsed partner clip id $id. name: $name. data: " . implode(',', $metadata) . ". categories: " . implode(',', $categories) . "\n";
 		}
 		else {
-			$video->save();
+			$video->save($categoryStr);
 			print "created article {$video->getID()} from partner clip id $id\n";
 		}
 		return 1;

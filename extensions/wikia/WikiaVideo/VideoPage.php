@@ -1258,8 +1258,11 @@ EOD;
 		return ":" . $name;
 	}
 
-	// save the video info in db, handles overwrite too
-	public function save() {
+	/*
+	 * Save video in DB. Handles overwrite.
+	 * @param string $addlWikitext for new articles, additional wiki text to include in article (meant for adding categories)
+	 */
+	public function save($addlWikitext='') {
 		global $wgUser, $wgContLang;
 
 		$desc = wfMsg( 'wikiavideo-added', $this->mTitle->getText() );
@@ -1318,6 +1321,9 @@ EOD;
 
 		$cat = $wgContLang->getFormattedNsText( NS_CATEGORY );
 		$saved_text = '[[' . $cat . ':' . wfMsgForContent( 'wikiavideo-category' ) . ']]';
+		if ($addlWikitext) {
+			$saved_text .= $addlWikitext;
+		}
 
 		if( $dbw->affectedRows() == 0 ) {
 			// we are updating
