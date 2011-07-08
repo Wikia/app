@@ -19,17 +19,9 @@
 		foreach( $sortedPages as $desc => $specialpage ) {
 			list( $title, $restricted ) = $specialpage;
 			$link = $sk->linkKnown( $title , htmlspecialchars( $desc ) );
-			if( $restricted ) {
-				$includesRestrictedPages = true;
-?>
-				<li class='mw-specialpages-page mw-specialpagerestricted'><strong><?= $link ?></strong></li>
-<?
-			} else {
 ?>
 				<li><?= $link ?></li>
 <?
-			}
-
 			# Split up the larger groups
 			$count++;
 			if( $total > 3 && $count == $middle ) {
