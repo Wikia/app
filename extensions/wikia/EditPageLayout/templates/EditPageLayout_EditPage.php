@@ -53,6 +53,7 @@
 								}
 							</style></noscript>
 							<div class="editpage-notices" data-space-type="notices-short">
+								<span class="splotch"><?= count($notices) ?></span>
 								<ul>
 <?php
 	foreach ($notices as $notice) {
@@ -62,7 +63,6 @@
 	}
 ?>
 								</ul>
-								<span class="dismiss-icon sprite-small close"></span>
 							</div>
 							<div class="editpage-notices-html" data-space-type="notices-html" style="display:none"><?= $noticesHtml?></div>
 

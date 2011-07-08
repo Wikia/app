@@ -19,30 +19,42 @@
 			this.htmlEl = this.editor.getSpace('notices-html');
 			this.html = this.htmlEl.html();
 
-			this.ul.click(this.proxy(this.areaClicked));
+			this.el.click(this.proxy(this.areaClicked));
 
 			this.notificationsLink = $('#NotificationsLink > a');
 			this.notificationsLink.click(this.proxy(this.areaClicked));
 
+			this.notificationsLinkSplotch = this.notificationsLink.children('span');
+
 			this.update();
 		},
 
+		getCount: function() {
+			return this.ul.children().length;
+		},
+
 		update: function() {
-			this.visible = (this.ul.children().length > 0);
+			this.visible = (this.getCount() > 0);
 			this.el[ this.visible ? 'show' : 'hide' ]();
 		},
 
-		areaClicked: function() {
-			var self = this;
-			if (this.html) {
-				var header = $.htmlentities(this.editor.msg('notices-dialog-title'));
-				$.showModal(header,this.html,{
-					width: 700,
-					onClose: function() {
-						self.dismissClicked();
-					}
-				});
+		areaClicked: function(ev) {
+			ev.preventDefault();
+
+			var self = this,
+				header = $.htmlentities(this.editor.msg('notices-dialog-title')),
+				content = this.html;
+
+			if (!content) {
+				content = this.editor.msg('notices-no-notifications');
 			}
+
+			$.showModal(header, content, {
+				width: 700,
+				onClose: function() {
+					self.dismissClicked();
+				}
+			});
 		},
 
 		dismissClicked: function() {
@@ -50,6 +62,9 @@
 			el.fadeOut('slow',function(){
 				el.hide();
 			});
+
+			// hide notification link splotch
+			this.notificationsLinkSplotch.fadeOut('slow');
 		},
 
 		add: function( message, type, html ) {
