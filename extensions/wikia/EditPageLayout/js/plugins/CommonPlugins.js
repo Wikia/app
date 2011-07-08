@@ -20,7 +20,9 @@
 			this.html = this.htmlEl.html();
 
 			this.ul.click(this.proxy(this.areaClicked));
-			this.el.find('.dismiss-icon').click(this.proxy(this.dismissClicked));
+
+			this.notificationsLink = $('#NotificationsLink > a');
+			this.notificationsLink.click(this.proxy(this.areaClicked));
 
 			this.update();
 		},
@@ -30,21 +32,23 @@
 			this.el[ this.visible ? 'show' : 'hide' ]();
 		},
 
-		areaClicked: function( event ) {
+		areaClicked: function() {
+			var self = this;
 			if (this.html) {
 				var header = $.htmlentities(this.editor.msg('notices-dialog-title'));
 				$.showModal(header,this.html,{
-					width: 700
+					width: 700,
+					onClose: function() {
+						self.dismissClicked();
+					}
 				});
 			}
 		},
 
-		dismissClicked: function( event ) {
-			var el = this.el, self = this;
+		dismissClicked: function() {
+			var el = this.el;
 			el.fadeOut('slow',function(){
 				el.hide();
-				self.ul.empty();
-				self.html = '';
 			});
 		},
 
