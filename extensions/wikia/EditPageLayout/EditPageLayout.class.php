@@ -667,4 +667,14 @@ class EditPageLayout extends EditPage {
 	protected function previewOnOpen() {
 		return false;
 	}
+
+	/**
+	 * Return contribution/copyright notice
+	 */
+	public function getCopyrightNotice() {
+		$wikitext = parent::getCopywarn();
+		$parser = new Parser();
+
+		return $parser->parse($wikitext, $this->app->wg->Title, new ParserOptions())->getText();
+	}
 }
