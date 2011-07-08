@@ -449,7 +449,7 @@ END;
 						$component = $tag_components[$i];
 						if ( $component == 'multiple' ) $allow_multiple = true;
 						if ( $component == 'strict' ) $strict_parsing = true;
-						$sub_components = explode( '=', $component, 2 );
+						$sub_components = array_map( 'trim', explode( '=', $component, 2 ) );
 						if ( count( $sub_components ) == 2 ) {
 							if ( $sub_components[0] == 'label' ) {
 								$template_label = $sub_components[1];
@@ -678,7 +678,7 @@ END;
 						} elseif ( $component == 'edittools' ) { // free text only
 							$free_text_components[] = 'edittools';
 						} else {
-							$sub_components = explode( '=', $component, 2 );
+							$sub_components = array_map( 'trim', explode( '=', $component, 2 ) );
 							if ( count( $sub_components ) == 1 ) {
 								// add handling for single-value params, for custom input types
 								$field_args[$sub_components[0]] = null;
@@ -1138,7 +1138,7 @@ END;
 					// cycle through the other components
 					for ( $i = 2; $i < count( $tag_components ); $i++ ) {
 						$component = $tag_components[$i];
-						$sub_components = explode( '=', $component );
+						$sub_components = array_map( 'trim', explode( '=', $component ) );
 						if ( count( $sub_components ) == 1 ) {
 							if ( $sub_components[0] == 'edittools' ) {
 								$free_text_components[] = 'edittools';
@@ -1187,7 +1187,7 @@ END;
 				} elseif ( $tag_title == 'info' ) {
 					// TODO: Generate an error message if this is included more than once
 					foreach ( array_slice( $tag_components, 1 ) as $component ) {
-						$sub_components = explode( '=', $component, 2 );
+						$sub_components = array_map( 'trim', explode( '=', $component, 2 ) );
 						$tag = $sub_components[0];
 						if ( $tag == 'create title' || $tag == 'add title' ) {
 							// Handle this only if
