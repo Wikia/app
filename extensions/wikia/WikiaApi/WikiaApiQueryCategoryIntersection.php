@@ -5,6 +5,10 @@
  * @author Sean Colombo <sean@wikia.com>
  *
  * This extension was initially written for LyricWiki, but should be able to work on other wikis.
+ *
+ * The structure of the result and parameters were chosen to be similar to 'categorymembers': http://www.mediawiki.org/wiki/API:Categorymembers
+ * One notable difference is that categorymembers has a prefix of "cm" on all of its parameters, while this extension does not have a prefix.
+ * For example, the limit is "cmlimit" for CategoryMembers and just "limit" here.
  */
 
 $wgAPIListModules[ "categoryintersection" ] = "WikiaApiQueryCategoryIntersection";
@@ -194,40 +198,6 @@ class WikiaApiQueryCategoryIntersection extends ApiQueryGeneratorBase {
 					 array( 'query', $this->getModuleName() ), 'cm' );
 		}
 
-		/*
-		// Structure of result was chosen to be similar to 'categorymembers': http://www.mediawiki.org/wiki/API:Categorymembers
-		$articles = array(
-			array(
-				'pageid' => '123',
-				'ns' => NS_MAIN,
-				'title' => 'First Article (This Is Test Data)'
-			),
-			array(
-				'pageid' => '456',
-				'ns' => NS_MAIN,
-				'title' => 'Second Article (Also Faked For Testing)'
-			),
-			array(
-				'pageid' => '222',
-				'ns' => '220',
-				'title' => 'Gracenote:Third Article (Note The NS Prefix)'
-			),
-		);
-
-		$this->getResult()->setIndexedTagName_internal( array( 'query', $this->getModuleName() ), 'article' );
-		foreach($articles as $article){
-			$this->getResult()->addValue(
-									array('query', $this->getModuleName()),
-									null,
-									array(
-										'pageid' => $article['pageid'],
-										'ns' => $article['ns'],
-										'title' => $article['title']
-									)
-								);
-		}
-		*/
-
 		wfProfileOut( __METHOD__ );
 	} // end getCategoryIntersection()
 	
@@ -359,8 +329,10 @@ class WikiaApiQueryCategoryIntersection extends ApiQueryGeneratorBase {
 	 */
 	protected function getQueryExamples() {
 		return array (
-			'api.php?action=query&list=categoryintersection&categories=Category:Artist_C|Category:Hometown/United_States/Pennsylvania',
-			'api.php?action=query&list=categoryintersection&categories=Category:Artist_T|Category:Hometown/United_States|Category:Genre/Progressive_Rock',
+			'api.php?action=query&list=categoryintersection&categories=Category:Artists_C|Category:Hometown/United_States/California/San_Francisco', // simple result
+			'api.php?action=query&list=categoryintersection&categories=Category:Artist|Category:Hometown/United_States/Pennsylvania/Pittsburgh&limit=50', // there are less than 50 results (at the moment)
+ 			'api.php?action=query&list=categoryintersection&categories=Category:Artist|Category:Hometown/Sweden/Stockholm&limit=100', // there are more than 100 resutls
+			'api.php?action=query&list=categoryintersection&categories=Category:Artists_T|Category:Hometown/United_States|Category:Genre/Progressive_Rock&limit=25', // three categories
 		);
 	}
 
