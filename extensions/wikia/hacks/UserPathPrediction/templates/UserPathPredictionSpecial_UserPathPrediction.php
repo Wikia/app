@@ -12,13 +12,13 @@
 				<option value="byId">ID</option>
 				<option value="byTitle">Title</option>
 			</select>
-			<span id="articlePlace"><input id="article" type="number" value="202575" /></span>
+			<span id="articlePlace"><input id="article" type="number" value="" /></span>
 		</label>
 		<label for="nodeCount">Node count:
-			<input id="nodeCount" type="number" value="10" />
+			<input id="nodeCount" type="number" value="" />
 		</label>
 		<label for="dateSpan">Last:
-			<input id="dateSpan" type="number" value="30" />
+			<input id="dateSpan" type="number" value="" />
 		</label> days
 	<button type="submit" onclick="return UserPathPrediction.load()">Load</button>
 	</form>

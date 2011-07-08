@@ -17,12 +17,13 @@ class UserPathPredictionSpecialController extends WikiaSpecialPageController {
 	
 	public function init() {
 		//TODO: initialization code here
+		$this->model = F::build( 'UserPathPredictionModel' );
 	}
 	
 	public function index() {
 		
-		$this->wg->Out->setPageTitle( "User Path Prediction Demonstration" );
-		//$this->wg->Out->setPageTitle( $this->wf->msg( 'helloworld-specialpage-title' ) );
+		$this->wg->Out->setPageTitle( $this->wf->Msg( 'userpathprediction-special-header' ) );
+		
 		$this->response->addAsset( 'extensions/wikia/hacks/UserPathPrediction/css/UserPathPrediction.scss' );
 		$this->response->addAsset( 'extensions/wikia/hacks/UserPathPrediction/js/UserPathPrediction.js' );
 		$this->response->addAsset( 'extensions/wikia/hacks/UserPathPrediction/js/tablesorter.min.js' );
@@ -34,35 +35,22 @@ class UserPathPredictionSpecialController extends WikiaSpecialPageController {
 	public function UserPathPrediction() {
 		$this->wf->profileIn( __METHOD__ );
 		
-		$this->model = F::build( 'UserPathPredictionModel' );
-		$this->controller = F::build('UserPathPredictionController');
-		
 		// getting request data
 		$wikiId = $this->getVal( 'wikiId', $this->wg->CityId );
-
+		
 		// setting response data
-		$this->setVal( 'header', $this->wf->msg('header') );
-		
-		$result = $this->sendRequest( 'UserPathPredictionController', 'getPath');
-		$result = $result->getData();
-		$result = $result["articles"];
-
-		$this->setVal( 'articles', $result );
-
-		
-		//get Wiki names	
-		$wikis = $this->model->getWikis();
-		$this->setVal( 'wikis', $wikis );
+		$this->setVal( 'header', $this->wf->Msg( 'userpathprediction-special-header' ) );
 		
 		// example of setting SpecialPage::mIncluding
 		$this->mIncluding = true;
-
+		
 		$this->wf->profileOut( __METHOD__ );
 	}
 		
 	public function getNodes() {
-		$this->model = F::build( 'UserPathPredictionModel' );
+		$this->wf->profileIn( __METHOD__ );
 		
+		//TODO move to UserPathPredictionController
 		if ( $this->getVal( 'selectby' ) == 'byTitle' ) {
 			$title = F::build( 'Title', array( $this->getVal( 'article' ) ), 'newFromText' );
 			$articleId = $title->getArticleID();
@@ -72,32 +60,33 @@ class UserPathPredictionSpecialController extends WikiaSpecialPageController {
 		}
 		
 		$nodes = $this->model->getNodes($this->wg->CityId, $articleId, $this->getVal('datespan'), $this->getVal('count'));
-		$resultArray;
+		$result = array();
 		
-		if ( count($nodes) > 0 ) {
-
+		if ( count( $nodes ) > 0 ) {
 			foreach ( $nodes as $node ) {
-			
 				$referrerTitle = F::build( 'Title', array( $node->referrer_id ), 'newFromID' );
 				$targetTitle = F::build( 'Title', array( $node->target_id ), 'newFromID' );
+				
 				$referrerURL = $referrerTitle->getLocalURL();
 				$targetURL = $targetTitle->getLocalURL();
 				
-				$resultArray[] = array(
-						'cityid' => $node->city_id,
-						'referrerTitle' => $referrerTitle,
-						'referrerURL' => $referrerURL,
-						'targetTitle' => $targetTitle,
-						'targetURL' => $targetURL,
-						'count' => $node->count,
-						'updated' => $node->updated
-						);
-			}	
-
+				$result[] = array(
+					'cityid' => $node->city_id,
+					'referrerTitle' => $referrerTitle,
+					'referrerURL' => $referrerURL,
+					'targetTitle' => $targetTitle,
+					'targetURL' => $targetURL,
+					'count' => $node->count,
+					'updated' => $node->updated
+				);
+			}
 		} else {
-			$resultArray = array("No Result");
+			$result = array( "No Result" );
 		}
-		$this->setVal('nodes',  $resultArray );
+		
+		$this->setVal( 'nodes',  $result );
+		
+		$this->wf->profileOut( __METHOD__ );
 	}
 
 }

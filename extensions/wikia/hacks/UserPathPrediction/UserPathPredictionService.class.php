@@ -53,8 +53,6 @@ class UserPathPredictionService extends WikiaService {
 			throw new WikiaException( 'Target date not specified.' );
 		}
 		
-		$this->model->cleanRawDataFolder();
-		
 		$this->log( "Fetching OneDot data from archive for {$strDate}..." );
 		
 		if( $this->model->retrieveDataFromArchive( $strDate, $backendParams ) ) {
@@ -75,14 +73,19 @@ class UserPathPredictionService extends WikiaService {
 						$value = $parameters[1];
 						
 						switch ( $parameters[0] ) {
+							//cityId
+							case "c":
+							//article ID
+							case "a" :
+							//article namespace
+							case "n":
+							//User ID (if logged in)
+							case "u":
+								$result[$parameters[0]] = (int) $value;
+								break;
+							//referrer
 							case "r" :
 								$result["r"] = $value;
-								break;
-							case "a" :
-								$result["a"] = (int) $value;
-								break;
-							case "lv" :
-								$result["lv"] = $value;
 								break;
 							case "event":
 								//we take into consideration only pure pageviews, no events tracking requests
@@ -96,26 +99,25 @@ class UserPathPredictionService extends WikiaService {
 						}
 					}
 					
-					if ($skip == true ) {
+					if ( $skip == true || empty( $result['a'] ) || empty( $result['r'] ) || empty( $result['c'] ) ) {
 						continue;
 					}
 					
-					if ( !empty( $result["r"] ) ) {
-						foreach ( $this->getWikis() as $wiki ) {
-							$hasWikiPrefix = strpos( $wiki["domain_name"], '.wikia.com' );
-							$mainURL = ( $hasWikiPrefix ) ? 
-								$this->fixURL( "http://{$wiki['domain_name']}/" ) : 
-								$this->fixURL( "http://www.{$wiki['domain_name']}/" );
+					if ( array_key_exists( $result['c'], $this->getWikis() ) ) {
+						$wiki = $this->wikis[$result['c']];
+						$hasWikiPrefix = strpos( $wiki["domain_name"], '.wikia.com' );
+						$mainURL = $this->fixURL( "http://{$wiki['domain_name']}/" );
+						
+						if( $hasWikiPrefix ) {
+							$mainURL = "{$mainURL}wiki/";
+						}
+						
+						if ( strpos( $result["r"], $mainURL ) === 0 ) {
+							$articleName = str_ireplace( $mainURL, '', $result["r"] );
 							
-							if ( strpos( $result["r"], $mainURL ) === 0 ) {
-								$articleName = ( $hasWikiPrefix ) ?
-									str_ireplace( $mainURL . 'wiki/', '', $result["r"] ) :
-									str_ireplace( $mainURL, '', $result["r"] );
-								
-								if( !empty( $articleName ) ) {
-									$result["r"] = $articleName;
-									$this->model->saveParsedData( $wiki["db_name"], $result );	
-								}
+							if( !empty( $articleName ) ) {
+								$result["r"] = $articleName;
+								$this->model->saveParsedData( $wiki["db_name"], $result );
 							}
 						}
 					}
@@ -125,9 +127,7 @@ class UserPathPredictionService extends WikiaService {
 				$this->log( "Done." );
 			}
 			
-			$this->log( "Cleaning up..." );
 			$this->model->cleanRawDataFolder();
-			$this->log( "Done." );
 		} else {
 			$this->log( "Failure." );
 			throw new WikiaException( "Cannot fetch data from OneDot archive." );
@@ -153,26 +153,32 @@ class UserPathPredictionService extends WikiaService {
 			
 			while( !feof( $fileHandle ) ) {
 				$data = unserialize( fgets( $fileHandle ) );
+				$title = F::build( 'Title', array( $data[ 'r' ] ), 'newFromText' );
 				
-				$referrer = $data[ 'r' ];
-				$title = F::build( 'Title', array( $referrer ), 'newFromText' );
+				if ( !( $title instanceof Title && $title->exists() && $title->getArticleID() != $data[ 'a' ] ) ) {
+					continue;
+				}
 				
-				if ( $title instanceof Title && $title->exists() && $title->getArticleID() != $data[ 'a' ] ) {
-					$referrerID = $title->getArticleID();
-					$targetID = $data[ 'a' ];
-					$key = "{$referrerID}_{$targetID}";
+				$referrerID = $title->getArticleID();
+				$title = F::build( 'Title', array( $data[ 'a' ] ), 'newFromID' );
+				
+				if ( !( $title instanceof Title && $title->exists() ) ) {
+					continue;
+				}
+				
+				$targetID = $data[ 'a' ];
+				$key = "{$referrerID}_{$targetID}";
+				
+				if ( key_exists( $key, $segments ) ) {
+					$segments[$key]->counter += 1;
+				} else {
+					$obj = new stdClass();
 					
-					if ( key_exists( $key, $segments ) ) {
-						$segments[$key]->counter += 1;
-					} else {
-						$obj = new stdClass();
-						
-						$obj->counter = 1;
-						$obj->referrerID = (int) $referrerID;
-						$obj->targetID = (int) $targetID;
-						
-						$segments[$key] = $obj;
-					}
+					$obj->counter = 1;
+					$obj->referrerID = (int) $referrerID;
+					$obj->targetID = (int) $targetID;
+					
+					$segments[$key] = $obj;
 				}
 			}
 			
@@ -191,5 +197,10 @@ class UserPathPredictionService extends WikiaService {
 		
 		$this->setVal( 'wikis', $this->wikis );
 		return $this->wikis;
+	}
+	
+	public function cleanup(){
+		$this->model->cleanParsedDataFolder();
+		$this->model->cleanRawDataFolder();
 	}
 }

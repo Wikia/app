@@ -17,12 +17,6 @@ class UserPathPredictionModel {
 	function __construct() {
 		$this->app = F::app();
 	}
-
-	private function createDir( $folder ) {
-		if( !is_dir( $folder )) {
-			return mkdir( $folder, 0777, true );
-		}
-	}
 	
 	private function log ( $msg ) {
 		$this->app->sendRequest( 'UserPathPredictionService', 'log', array( 'msg' => $msg ) );
@@ -47,8 +41,16 @@ class UserPathPredictionModel {
 		);
 	}
 	
+	private function createDir( $folder ) {
+		if( !is_dir( $folder )) {
+			$this->log( "Creating {$folder} ...");
+			return mkdir( $folder, 0777, true );
+		}
+	}
+	
 	private function removePath( $path ) {
 		if ( is_dir( $path ) ) {
+			$this->log( "Removing {$path} ...");	
 			$objects = scandir( $path );
 			
 			foreach ( $objects as $object ) {
@@ -80,9 +82,8 @@ class UserPathPredictionModel {
 			$params .= " -c {$extraParams['s3ConfigFile']}";
 		}
 		
-		$cmd = "s3cmd get{$params} --recursive {$s3directory} " . self::RAW_DATA_PATH;
+		$cmd = "s3cmd get{$params} --recursive --skip-existing {$s3directory} " . self::RAW_DATA_PATH;
 		
-		$this->cleanRawDataFolder();
 		$this->createDir( self::RAW_DATA_PATH );
 		
 		$this->log( "Running \"{$cmd}\" ..." );
@@ -100,14 +101,18 @@ class UserPathPredictionModel {
 	}
 	
 	public function fetchRawDataFilePath() {
-		$ret = next( $this->files );
-
-		if ( $ret === false ) {
-			reset( $this->files );
-			return false;
-		} 
+		if ( is_array( $this->files ) ) {
+			$ret = next( $this->files );
+	
+			if ( $ret === false ) {
+				reset( $this->files );
+				return false;
+			} 
+			
+			return self::RAW_DATA_PATH . $ret;
+		}
 		
-		return self::RAW_DATA_PATH . $ret;
+		return false;
 	}
 	
 	public function saveParsedData( $dbName, $data ) {
@@ -125,9 +130,11 @@ class UserPathPredictionModel {
 				', ' . $dbw->addQuotes( $segment->referrerID ) .
 				', ' . $dbw->addQuotes( $segment->targetID ) .
 				', ' . $dbw->addQuotes( $segment->counter ) . 
-				', CURDATE() ) ON DUPLICATE KEY UPDATE count = (count + ' . $dbw->addQuotes( $segment->counter ) . '); ';
+				', CURDATE() ) ON DUPLICATE KEY UPDATE ' .
+				'`count` = (`count` + ' . $dbw->addQuotes( $segment->counter ) . '), ' . 
+				'`updated` = CURDATE();';
 				
-			$this->log("Running SQL query: " . substr( $sql, 0, 350 ) . " [...]");
+			$this->log("Running SQL query: {$sql} ...");
 			
 			$result = $dbw->query( $sql, __METHOD__ );
 			
@@ -143,10 +150,6 @@ class UserPathPredictionModel {
 		$dbw->commit();
 		$dbw->close();
 		$this->log("Done.");
-		
-		$this->log("Cleaning up...");
-		$this->cleanParsedDataFolder();
-		$this->log("Done.");
 	}
 	
 	public function getWikis() {
@@ -154,20 +157,17 @@ class UserPathPredictionModel {
 		
 		//TODO: IMPORTANT, remember to strtolower the db name otherwise it won't always match onedot records!!!
 		return array(
-			array(
-				"city_id" => "490",
+			"490" => array(
 				"db_name" => "wowwiki",
-				"domain_name" => "wowwiki.jolek.wikia-dev.com"
+				"domain_name" => "www.wowwiki.com"
 			),
-			array(
-				"city_id" => "10150",
+			"10150" => array(
 				"db_name" => "dragonage",
-				"domain_name" => "dragonage.jolek.wikia-dev.com"
+				"domain_name" => "dragonage.wikia.com"
 			),
-			array(
-				"city_id" => "3125",
+			"3125" => array(
 				"db_name" => "callofduty",
-				"domain_name" => "callofduty.jolek.wikia-dev.com"
+				"domain_name" => "callofduty.wikia.com"
 			)
 		);
 	}
@@ -182,36 +182,30 @@ class UserPathPredictionModel {
 	
 	public function cleanRawDataFolder() {
 		$this->removePath( self::RAW_DATA_PATH );
+		$this->files = null;
 	}
 	
 	public function getNodes( $cityId, $articleId, $dateSpan = 30, $nodeCount = 10 ) {
-				
 		$resultArray = array();
-			
 		$dbr =$this->getDBConnection();
-		
 		$prevTargetId;
-
 		
-		for( $i = 0; $i < $nodeCount; $i++ ) {
-					
+		for ( $i = 0; $i < $nodeCount; $i++ ) {
 			$where = array( 'city_id' => $cityId, 'referrer_id' => $articleId );	
 			
-			if ($i > 0 ) {
+			if ( $i > 0 && !empty( $prevTargetId ) ) {
 				$where[] = 'target_id != ' . $prevTargetId ;
-			}	
-			$res = $dbr->select( 'path_segments_archive', '*', $where , __METHOD__, array("LIMIT" => 1, "ORDER BY" => "count DESC"));
+			}
+			
+			$res = $dbr->select( 'path_segments_archive', '*', $where , __METHOD__, array( "LIMIT" => 1, "ORDER BY" => "count DESC" ));
 
 			if ( $row = $dbr->fetchObject( $res ) ) {
-				
 				$resultArray[] = $row;
 				$articleId = $row->target_id;
-				$prevTargetId = $row->referrer_id;		
+				$prevTargetId = $row->referrer_id;
 			}
-
-		}  
+		}
 		
 		return $resultArray;
 	}
-	
 }

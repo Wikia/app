@@ -49,11 +49,14 @@ $app = F::app();
 $wikis;
 
 $app->sendRequest( 'UserPathPredictionService', 'log', array( 'msg' => 'Start' ) );
-echo( "Initializing data analysis for User Path Prediction, this could take a while...\n" );
+echo( "Initializing data analysis for User Path Prediction.\n\n" );
 
 try{
+	echo( "Downloading and parsing data from {$date}, this could take a while...\n\n");
 	$app->sendRequest( 'UserPathPredictionService', 'extractOneDotData', array( 'date' => $date, 'backendParams' => array( 's3ConfigFile' => $s3ConfigFile ) ) );
+	echo( 'Done.');
 	
+	echo( "Getting the list of wikis for data analysis...\n\n" );
 	$response = $app->sendRequest( 'UserPathPredictionService', 'getWikis' );
 	$wikis = $response->getVal( 'wikis', array() );
 } catch (WikiaException $e) {
@@ -65,10 +68,16 @@ try{
 
 echo( "Done.\n" );
 
-echo( "Running data Analysis for " . count( $wikis ) . " wikis...\n" );
+echo( "Running data Analysis for " . count( $wikis ) . " wikis...\n\n" );
 
-foreach ( $wikis as $wiki ) {
-	$output = shell_exec( "SERVER_ID={$wiki['city_id']} php {$IP}/maintenance/wikia/UserPathPrediction_analyzeData.php --conf {$options['conf']} --aconf {$options['aconf']}" );
-	echo( $output );
+foreach ( $wikis as $cityId => $wiki ) {
+	$cmd = "SERVER_ID={$cityId} php {$IP}/maintenance/wikia/UserPathPrediction_analyzeData.php --conf {$options['conf']} --aconf {$options['aconf']}";
+	
+	echo( "Running command: {$cmd} ...\n\n");
+	passthru( $cmd );
 }
+
+echo( "Cleaning up..." );
+$app->sendRequest( 'UserPathPredictionService', 'cleanup' );
+echo( "Done." );
 ?>
