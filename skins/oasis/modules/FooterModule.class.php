@@ -23,8 +23,8 @@ class FooterModule extends Module {
 		}
 
 		$this->showNotifications = true;
-                
-                // BugId:5497 PerformanceStats are now displayed via OasisToolbarService (see: DevInfoUserCommand)
+
+		// BugId:5497 PerformanceStats are now displayed via OasisToolbarService (see: DevInfoUserCommand)
 	}
 
 	static protected $toolbarService = null;

@@ -43,7 +43,7 @@ function what_to_sync () {
 	// Skip any links that don't start with Sync: and strip the Sync: off the
 	// links that do match
 	$dbnames = array();
-	foreach (split("\n", $response) as $name) {
+	foreach (explode("\n", $response) as $name) {
 		if (preg_match('/^Sync:(.+)$/', $name, $matches)) {
 			$dbnames[$matches[1]] = array();
 		}
@@ -66,7 +66,7 @@ function find_dumps (&$wikis) {
 		}
 		
 		// Get the directory list
-		$dir_list = split("\n", $response);
+		$dir_list = explode("\n", $response);
 		
 		// Iterate through each dump directory in this bucket
 		foreach ($dir_list as $dir_entry) {
@@ -97,7 +97,7 @@ function find_dumps (&$wikis) {
 
 				// If we have a response it means it found a dump for our dbname
 				if ($response) {
-					foreach (split("\n", $response) as $line) {
+					foreach (explode("\n", $response) as $line) {
 						// Looks like:
 						// 2010-08-31 02:03     74744   s3://database_A/fulldump_30.08.10/superheros.sql.gz
 						preg_match("!^(\d+-\d+-\d+\s+\d+:\d+)\s+(\d+)\s+(${dir}${dbname}[\._].+)$!", $line, $matches);

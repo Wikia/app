@@ -13,10 +13,10 @@ if( ! $user_name ){
 }
 
 //Can specifiy just specific tuples in querystring
-$full_qs = split("&",$_SERVER['QUERY_STRING']);
+$full_qs = explode("&",$_SERVER['QUERY_STRING']);
 $tuples_request = "";
 foreach($full_qs as $qs){
-	$var = split("=",$qs);
+	$var = explode("=",$qs);
 	if( count( $var ) > 1 && $var[0] == "t" ){
 		$tuples_request .= "&t=" . $var[1];
 	}

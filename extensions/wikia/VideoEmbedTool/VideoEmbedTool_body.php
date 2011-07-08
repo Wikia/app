@@ -95,7 +95,7 @@ class VideoEmbedTool {
 					$metacafeResult['page'] = $page;
 					$count = 0;
 					foreach( $items as $item ) {
-						$links = split( "/", $item->getElementsByTagName('link')->item(0)->textContent );
+						$links = explode( "/", $item->getElementsByTagName('link')->item(0)->textContent );
 						$link = $links[count( $links ) -2];
 						$preResult[] = array(
 							'provider' => 'metacafe',
@@ -388,7 +388,7 @@ class VideoEmbedTool {
 				preg_match_all( '/\[\[' . $ns_vid . ':Placeholder[^\]]*\]\]/s', $text, $matches, PREG_OFFSET_CAPTURE );
 				if( is_array( $matches ) ) {
 					$our_gallery = $matches[0][$box][0];				
-					$gallery_split = split( ':', $our_gallery );
+					$gallery_split = explode( ':', $our_gallery );
 					$thumb = false;
 					
 					$tag = $gallery_split[0] . ":" . $name;	
