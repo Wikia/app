@@ -11,7 +11,7 @@
 
 		beforeInit: function() {
 			this.editor.on('notice',this.proxy(this.add));
-			this.editor.on('editorFocus', this.proxy(this.dismissClicked));
+			//this.editor.on('editorFocus', this.proxy(this.dismissClicked));
 		},
 
 		initDom: function() {
@@ -46,8 +46,9 @@
 				header = $.htmlentities(this.editor.msg('notices-dialog-title')),
 				content = this.html;
 
-			if (!content) {
-				content = this.editor.msg('notices-no-notifications');
+			// add copyright notice
+			if (window.wgCopywarn) {
+				content += window.wgCopywarn;
 			}
 
 			$.showModal(header, content, {

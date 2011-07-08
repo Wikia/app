@@ -55,7 +55,6 @@ $messages['en'] = array(
 	'wikia-editor-edittools-dialog-title' => 'Wikitext shortcuts',
 
 	'wikia-editor-notices-dialog-title' => 'Notification details',
-	'wikia-editor-notices-no-notifications' => 'No notifications',
 
 	'wikia-editor-preview-editSummary' => 'Edit Summary: $1',
 

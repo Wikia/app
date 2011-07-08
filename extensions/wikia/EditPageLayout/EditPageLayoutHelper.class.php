@@ -98,6 +98,9 @@ class EditPageLayoutHelper {
 		$this->addJsVariable('wgEditPageLicensingUrl', $titleLicensing->getFullUrl());
 		$this->addJsVariable('wgRightsText', $this->app->wg->RightsText);
 
+		// copyright warning for notifications (BugId:7951)
+		$this->addJsVariable('wgCopywarn', $this->editPage->getCopyrightNotice());
+
 		// extra hooks for edit page
 		$this->app->registerHook('MakeGlobalVariablesScript', 'EditPageLayoutHelper', 'onMakeGlobalVariablesScript', array(), false, $this);
 		$this->app->registerHook('SkinGetPageClasses', 'EditPageLayoutHelper', 'onSkinGetPageClasses', array(), false, $this);
