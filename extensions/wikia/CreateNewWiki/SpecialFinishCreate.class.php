@@ -7,7 +7,7 @@ class SpecialFinishCreate extends UnlistedSpecialPage {
 	}
 	
 	public function execute() {
-		global $wgUser, $wgOut, $wgExtensionsPath;
+		global $wgUser;
 		wfProfileIn( __METHOD__ );
 		
 		if (!$wgUser->isAllowed('finishcreate')) {
