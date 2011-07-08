@@ -13,7 +13,7 @@ class FounderProgressBarHooks {
 	function onArticleSaveComplete (&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
 
 		// Quick exit if we are already done with Founder Progress Bar (memcache key set for 30 days)
-		if (FounderProgressBarHooks::allTasksComplete()) {
+		if (self::allTasksComplete()) {
 			return true;
 		}
 		
@@ -25,6 +25,9 @@ class FounderProgressBarHooks {
 			if ($title->getNamespace() != NS_USER) {
 				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_PAGE_ADD_10));			
 				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_PAGE_ADD_20));			
+				if (self::bonusTaskEnabled(FT_BONUS_PAGE_ADD_5)) {
+					$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_BONUS_PAGE_ADD_5));			
+				}
 			}
 			// if blogpost
 			if ($app->wg->EnableBlogArticles && $title->getNamespace() == NS_BLOG_ARTICLE) {
@@ -39,6 +42,11 @@ class FounderProgressBarHooks {
 				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_CATEGORY_ADD_3));
 				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_CATEGORY_ADD_5));
 			}
+			// Bonus task: add page layout builder
+			if ($title->getNamespace() == NS_PLB_LAYOUT && self::bonusTaskEnabled(FT_BONUS_PAGELAYOUT_ADD) ) {
+				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_BONUS_PAGELAYOUT_ADD));
+			} 	
+
 		}
 		
 		// Tasks related to updating existing pages
@@ -47,6 +55,9 @@ class FounderProgressBarHooks {
 			// Tasks related to editing any article content X
 			$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_TOTAL_EDIT_75));
 			$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_TOTAL_EDIT_300));		
+			if (self::bonusTaskEnabled(FT_BONUS_EDIT_50)) {
+				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_BONUS_EDIT_50));		
+			}
 			
 			// if main page
 			if (ArticleAdLogic::isMainPage()) {
@@ -100,7 +111,7 @@ class FounderProgressBarHooks {
 	function onUploadComplete (&$image) {
 
 		// Quick exit if tasks are all completed
-		if (FounderProgressBarHooks::allTasksComplete()) {
+		if (self::allTasksComplete()) {
 			return true;
 		}
 		
@@ -112,6 +123,9 @@ class FounderProgressBarHooks {
 		if ($image && $image->getTitle()->getText() == "Wiki-wordmark.png") {
 			$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_WORDMARK_EDIT));
 		}
+		if (self::bonusTaskEnabled(FT_BONUS_PHOTO_ADD_10)) {
+			$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_BONUS_PHOTO_ADD_10));		
+		}		
 				
 		return true;
 	}
@@ -148,7 +162,15 @@ class FounderProgressBarHooks {
 		}
 		return true;
 	}
+
+	// When a bonus task is enabled it is added to the full task list
+	public static function bonusTaskEnabled($task_id) {
+		$data = F::app()->sendRequest('FounderProgressBar', 'getLongTaskList', array())->getData();
+		if (isset($data['list'][$task_id])) return true;
+		return false;
+	}
 	
+	// Initialize a scratch record for each of the initial available tasks
 	public static function initRecords($wiki_id) {
 		// Records go into global wikicites table
 		$app = F::app();
