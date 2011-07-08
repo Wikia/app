@@ -36,3 +36,19 @@
 		color: $color-epl-text-color;
 	}
 }
+
+// copied from Chat.scss
+@mixin splotch {
+	@include border-radius(10px);
+	@include linear-gradient(#dc0d0e, top, #e63031, 0, #dc0d0e, 50%, #e63031, 100%);
+	background-clip: padding-box;
+	border: 1px solid white;
+	color: white;
+	display: inline-block;
+	font-size: 9px;
+	height: 12px;
+	line-height: 13px;
+	min-width: 8px;
+	padding: 0 2px;
+	text-align: center;
+}

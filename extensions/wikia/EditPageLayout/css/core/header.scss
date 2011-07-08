@@ -71,11 +71,27 @@
 
 /* Need [Help]? */
 #HelpLink {
-	bottom: 5px;
+	bottom: 25px;
 	color: $color-text;
 	position: absolute;
 	right: 21px;
 	> a {
 		color: $color-epl-header-links;
+	}
+}
+
+/* (X) notifications */
+#NotificationsLink {
+	bottom: 5px;
+	line-height: 13px;
+	position: absolute;
+	right: 21px;
+	> a {
+		color: $color-epl-header-links;
+
+		// splotch
+		> span {
+			@include splotch;
+		}
 	}
 }
