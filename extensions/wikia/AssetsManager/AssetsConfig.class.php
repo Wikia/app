@@ -59,6 +59,7 @@ class AssetsConfig {
 		} else {
 			$files[] = $path . '/ckeditor/ckeditor_source.js';
 			$files[] = $path . '/js/RTE.js';
+			$files[] = $path . '/js/jquery.editor.js';
 		}
 
 		return $files;
