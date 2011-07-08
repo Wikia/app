@@ -114,7 +114,7 @@ class Apache_Solr_Response
 			//Thanks to Daniel Andersson for pointing out this oversight
 			while (isset($httpHeaders[0]) && substr($httpHeaders[0], 0, 4) == 'HTTP')
 			{
-				$parts = split(' ', substr($httpHeaders[0], 9), 2);
+				$parts = explode(' ', substr($httpHeaders[0], 9), 2);
 
 				$status = $parts[0];
 				$statusMessage = trim($parts[1]);
@@ -129,14 +129,14 @@ class Apache_Solr_Response
 				if (strncasecmp($header, 'Content-Type:', 13) == 0)
 				{
 					//split content type value into two parts if possible
-					$parts = split(';', substr($header, 13), 2);
+					$parts = explode(';', substr($header, 13), 2);
 
 					$type = trim($parts[0]);
 
 					if ($parts[1])
 					{
 						//split the encoding section again to get the value
-						$parts = split('=', $parts[1], 2);
+						$parts = explode('=', $parts[1], 2);
 
 						if ($parts[1])
 						{
