@@ -222,13 +222,14 @@
 			}
 			.task-group {
 				@include clearfix;
-				padding: 20px 0 0 55px;
+				padding: 20px 0 0 31px;
 				background: white;
 			}
 		}
 	}
 	.activities {
 		float: left;
+		margin-left: 18px;
 		width: 200px;
 		.activity {
 			cursor: default;
@@ -244,6 +245,16 @@
 			}
 			&.locked .activity-label {
 				color: #e2e2e2;
+			}
+			.activity-checkmark {
+				background-image: url(/extensions/wikia/AdminDashboard/images/icons.png);	/* $wgCdnStylePath */
+				background-repeat: no-repeat;
+				background-position: -663px 0;	
+				height: 12px;
+				left: -15px;
+				position: absolute;
+				top: 2px;
+				width: 12px;
 			}
 			.activity-description {
 				bottom: 0px;
