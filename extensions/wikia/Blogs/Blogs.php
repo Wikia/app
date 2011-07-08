@@ -85,6 +85,10 @@ if (in_array($wgLanguageCode, array('de', 'ru', 'es', 'no', 'nn'))) {
 			$wgExtraNamespaces[503] = 'Bloggdiskusjon';
 
 			break;
+		case 'fr':
+			$wgExtraNamespaces[500] = 'Blog_utilisateur';
+			$wgExtraNamespaces[501] = 'Commentaire_blog_utilisateur';
+			break;
 	}
 }
 
