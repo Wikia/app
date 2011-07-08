@@ -11,6 +11,7 @@
 
 		beforeInit: function() {
 			this.editor.on('notice',this.proxy(this.add));
+			this.editor.on('editorFocus', this.proxy(this.dismissClicked));
 		},
 
 		initDom: function() {
@@ -52,19 +53,21 @@
 			$.showModal(header, content, {
 				width: 700,
 				onClose: function() {
-					self.dismissClicked();
+					self.dismissClicked(true /* hideSplotch */);
 				}
 			});
 		},
 
-		dismissClicked: function() {
+		dismissClicked: function(hideSplotch) {
 			var el = this.el;
 			el.fadeOut('slow',function(){
 				el.hide();
 			});
 
 			// hide notification link splotch
-			this.notificationsLinkSplotch.fadeOut('slow');
+			if (hideSplotch === true) {
+				this.notificationsLinkSplotch.fadeOut('slow');
+			}
 		},
 
 		add: function( message, type, html ) {
