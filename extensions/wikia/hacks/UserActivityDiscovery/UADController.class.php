@@ -65,7 +65,7 @@ class UADController extends WikiaController {
 			$token = $this->cookie->token;
 		}
 
-		$events = $this->fetchEventsFromCookie( $token );
+		//$events = $this->fetchEventsFromCookie( $token );
 
 		$this->getResponse()->setVal( 'token', $token );
 		$this->updateCookie();

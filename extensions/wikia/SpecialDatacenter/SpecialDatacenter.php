@@ -21,7 +21,7 @@ class SpecialDatacenter extends UnlistedSpecialPage {
 	}
 
 	public function execute( $subpage ) {
-		global $wgOut, $wgUser, $wgRequest, $wgMessageCache, $wgCookiePrefix;
+		global $wgOut, $wgRequest, $wgMessageCache, $wgCookiePrefix;
 
 		$wgMessageCache->addMessages( array( "datacenter" => "Datacenter" ), "en" );
 

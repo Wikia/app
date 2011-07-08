@@ -4,14 +4,14 @@ class WikiaWidget extends SpecialPage {
 		parent::__construct( 'WikiaWidget' );
 		wfLoadExtensionMessages('WikiaWidget');
 	}
- 
+
 	function execute( $par ) {
 		global $wgUser, $wgRequest, $wgOut;
  
 		$this->setHeaders();
  		$wgOut->setPageTitle('Configure a Wikia Widget');
 		# Get request data from, e.g.
-		$param = $wgRequest->getText('param');
+		//$param = $wgRequest->getText('param');
  
 		# Do stuff
 		# ...
