@@ -291,6 +291,7 @@ function generateCategoriesForPartnerVideo($provider, array $data) {
 	
 	switch ($provider) {
 		case VideoPage::V_SCREENPLAY:
+			$categories[] = $data['titleName'] . ' (' . $data['year'] . ')';
 			$categories[] = $data['trailerVersion'];
 			break;
 		default:
@@ -306,12 +307,6 @@ function createVideoPageForPartnerVideo($provider, array $data, &$msg) {
 	$id = null;
 	$metadata = null;	
 	$name = generateNameForPartnerVideo($provider, $data);
-	$categories = generateCategoriesForPartnerVideo($provider, $data);
-	$categoryStr = '';
-	foreach ($categories as $categoryName) {
-		$category = Category::newFromName($categoryName);
-		$categoryStr .= '[[' . $category->getTitle()->getFullText() . ']]';
-	}
 
 	switch ($provider) {
 		case VideoPage::V_SCREENPLAY:
@@ -340,6 +335,13 @@ function createVideoPageForPartnerVideo($provider, array $data, &$msg) {
 		$msg = "article named $name already exists: clip id $id";
 		return 0;
 	}	
+
+	$categories = generateCategoriesForPartnerVideo($provider, $data);
+	$categoryStr = '';
+	foreach ($categories as $categoryName) {
+		$category = Category::newFromName($categoryName);
+		$categoryStr .= '[[' . $category->getTitle()->getFullText() . ']]';
+	}
 
 	$video = new VideoPage( $title );
 	if ($video instanceof VideoPage) {
