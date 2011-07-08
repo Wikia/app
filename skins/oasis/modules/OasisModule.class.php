@@ -46,10 +46,13 @@ class OasisModule extends Module {
 	var $wgEnableOpenXSPC;
 	var $wgEnableCorporatePageExt;
 	var $wgStylePath;
+	var $wgDevelEnvironment;
 
 	public function executeIndex($params) {
-		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgCityId, $wgAllInOne, $wgContLang, $wgJsMimeType, $wgEnableEditPageReskinExt, $wgEnableAdminDashboardExt;
+		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgCityId, $wgAllInOne, $wgContLang, $wgJsMimeType, $wgEnableEditPageReskinExt, $wgEnableAdminDashboardExt, $wgDevelEnvironment;
 
+		$this->showAllowRobotsMetaTag = !$this->wgDevelEnvironment;
+		
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();
 
 		$wikiWelcome = $wgRequest->getVal('wiki-welcome');
@@ -135,8 +138,7 @@ class OasisModule extends Module {
 			global $parserMemc, $wgStyleVersion;
 			$cb = $parserMemc->get(wfMemcKey('wgMWrevId'));
 
-			global $wgDevelEnvironment;
-			if(empty($wgDevelEnvironment)){
+			if( empty($this->wgDevelEnvironment) ) {
 				$prefix = "__wikia_combined/";
 			} else {
 				global $wgWikiaCombinedPrefix;
