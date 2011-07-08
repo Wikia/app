@@ -7,16 +7,19 @@
 <section id="sectionUserPathPrediction">
 <nav>
 	<form id="wikiForm">
-		<label for="selectWiki">Select Wiki: 
-		<select id="selectWiki">
-			<? foreach ( $wikis as $wiki ) :?>
-					<option value="<?= $wiki['citi_id'] . '">' . $wiki["db_name"] ?></option>
-			<? endforeach; ?>
-		</select>
+		<label for="articleId">Article:
+			<select id="selectBy">
+				<option value="byId">ID</option>
+				<option value="byTitle">Title</option>
+			</select>
+			<span id="articlePlace"><input id="article" type="number" value="202575" /></span>
 		</label>
-		<label for="articleId">Article Id:
-			<input id="articleId" type="number" value="10" />
+		<label for="nodeCount">Node count:
+			<input id="nodeCount" type="number" value="10" />
 		</label>
+		<label for="dateSpan">Last:
+			<input id="dateSpan" type="number" value="30" />
+		</label> days
 	<button type="submit" onclick="return UserPathPrediction.load()">Load</button>
 	</form>
 </nav>
@@ -24,25 +27,16 @@
 	<table id="articleTable" class="tablesorter">
 		<thead>
 			<tr>
-				<th>A</th>
-				<th>B</th>
-				<th>C</th>
+				<th>From:</th>
+				<th>To:</th>
+				<th>Clicks:</th>
 			</tr>
 		</thead>
-		<tbody>
-		<? foreach ( $articles as $oneArticle ) :?>
-			<tr>
-				<td><?=$oneArticle["A"]["id"]. ": ". $oneArticle["A"]["text"];?></td>
-				<td><?=$oneArticle["B"]["id"]. ": ". $oneArticle["B"]["text"];?></td>
-				<td><?=$oneArticle["Count"]?></td>
-			</tr>
-		<? endforeach; ?>	
+		<tbody id="nodes">
 		</tbody>
 	</table>
 </div>
-<h1>Database says:</h1>
-<div id="nodes">
-</div>
+
 <canvas id="usersPath"></canvas>
 </section>
 <footer>

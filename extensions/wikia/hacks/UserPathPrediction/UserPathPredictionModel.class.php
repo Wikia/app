@@ -157,17 +157,17 @@ class UserPathPredictionModel {
 			array(
 				"city_id" => "490",
 				"db_name" => "wowwiki",
-				"domain_name" => "wowwiki.com"
+				"domain_name" => "wowwiki.jolek.wikia-dev.com"
 			),
 			array(
 				"city_id" => "10150",
 				"db_name" => "dragonage",
-				"domain_name" => "dragonage.wikia.com"
+				"domain_name" => "dragonage.jolek.wikia-dev.com"
 			),
 			array(
 				"city_id" => "3125",
 				"db_name" => "callofduty",
-				"domain_name" => "callofduty.wikia.com"
+				"domain_name" => "callofduty.jolek.wikia-dev.com"
 			)
 		);
 	}
@@ -184,32 +184,34 @@ class UserPathPredictionModel {
 		$this->removePath( self::RAW_DATA_PATH );
 	}
 	
-	public function getNodes( $citiId, $articleId, $nodeCount = 10 ) {
+	public function getNodes( $cityId, $articleId, $dateSpan = 30, $nodeCount = 10 ) {
 				
 		$resultArray = array();
-		
 			
 		$dbr =$this->getDBConnection();
 		
+		$prevTargetId;
+
 		
-		for( $i = 0; $i++; $i < $nodeCount ) {
+		for( $i = 0; $i < $nodeCount; $i++ ) {
+					
+			$where = array( 'city_id' => $cityId, 'referrer_id' => $articleId );	
+			
+			if ($i > 0 ) {
+				$where[] = 'target_id != ' . $prevTargetId ;
+			}	
+			$res = $dbr->select( 'path_segments_archive', '*', $where , __METHOD__, array("LIMIT" => 1, "ORDER BY" => "count DESC"));
+
+			if ( $row = $dbr->fetchObject( $res ) ) {
 				
-			$res = $dbr->select( 'path_segments_archive', 'citi_id, referrer_id, target_id, count, updated', array( 'city_id' => $citiId, 'referrer_id' => $articleId ), __METHOD__);
-		return $dbr->lastQuery();
-			while( $row = $dbr->fetchObject( $res ) ) {
-				$result = array (
-						'citi_id' => $row->citi_id,
-						'referrer_id' => $row->referrer_id,
-						'target_id' => $row->target_id,
-						'count' => $row->count,
-						'updated' => $row->updated
-					);
+				$resultArray[] = $row;
+				$articleId = $row->target_id;
+				$prevTargetId = $row->referrer_id;		
 			}
-			$resultArray[] = $result;
 
 		}  
 		
-		
+		return $resultArray;
 	}
 	
 }
