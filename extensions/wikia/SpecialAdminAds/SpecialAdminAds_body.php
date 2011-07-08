@@ -266,7 +266,7 @@ class SpecialAdminAds extends SpecialPage {
 							$ad->user_email = $email;
 							$ad->Save();
 						}else{
-							mail($this->emergencyEmail, "Invalid Payment Amount or Currency", "AD ID: " . $ad->ad_id . "\n\n" . print_r($_POST,1) . "\n\n" . $req);
+							//mail($this->emergencyEmail, "Invalid Payment Amount or Currency", "AD ID: " . $ad->ad_id . "\n\n" . print_r($_POST,1) . "\n\n" . $req);
 						}
 					}
 					//we could trap for some other statuses here... worry about that later
@@ -274,9 +274,9 @@ class SpecialAdminAds extends SpecialPage {
 				wfRunHooks( "PayPalInstantPaymentNotification", array( &$wgRequest ) );
 			} else if (strcmp ($result, "INVALID") == 0) { 
 			// If 'INVALID', send an email. TODO: Log for manual investigation. 
-				mail($this->emergencyEmail, "Invalid PayPal Payment IPN Verfication", "AD ID: " . $ad->ad_id . "\n\n" . print_r($_POST,1) . "\n\n" . $req); 
+				//mail($this->emergencyEmail, "Invalid PayPal Payment IPN Verfication", "AD ID: " . $ad->ad_id . "\n\n" . print_r($_POST,1) . "\n\n" . $req); 
 			} else {
-				mail($this->emergencyEmail,"Error in IPN", "AD ID: " . $ad->ad_id . "\n\n" . "result=".$result."\n\n".print_r($_POST,1)."\n\n".$req);
+				//mail($this->emergencyEmail,"Error in IPN", "AD ID: " . $ad->ad_id . "\n\n" . "result=".$result."\n\n".print_r($_POST,1)."\n\n".$req);
 			}
 			return true;
 		}
