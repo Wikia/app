@@ -30,7 +30,7 @@
 		</li>
 		<li class="task collapsed bonus">
 			<div class="task-label">
-				<?= wfMsg('founderprogressbar-list-bonus-task-label') ?> <span class="sub-label"><?= wfMsg('founderprogressbar-list-bonus-task-desc') ?></span>
+				<?= wfMsg('founderprogressbar-list-bonus-task-label') ?> <img class="lock" src="<?= $wgBlankImgUrl ?>" width="13" height="17"> <span class="sub-label"><?= wfMsg('founderprogressbar-list-bonus-task-desc') ?></span>
 				<img class="chevron" src="<?= $wgBlankImgUrl ?>">
 			</div>
 			<div class="task-group" style="display:none">

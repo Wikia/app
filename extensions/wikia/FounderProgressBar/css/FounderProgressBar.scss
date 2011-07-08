@@ -209,6 +209,16 @@
 					font-weight: normal;
 					margin-left: 20px;
 				}
+				.lock {
+					background-image: url(/extensions/wikia/AdminDashboard/images/icons.png);	/* $wgCdnStylePath */
+					background-repeat: no-repeat;
+					background-position: -650px 0;	
+					height: 17px;
+					margin-left: 5px;
+					position: relative;
+					top: 2px;
+					width: 13px;
+				}
 			}
 			.task-group {
 				@include clearfix;
