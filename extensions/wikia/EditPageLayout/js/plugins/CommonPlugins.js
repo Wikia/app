@@ -11,7 +11,7 @@
 
 		beforeInit: function() {
 			this.editor.on('notice',this.proxy(this.add));
-			//this.editor.on('editorFocus', this.proxy(this.dismissClicked));
+			this.editor.on('editorClick', this.proxy(this.dismissClicked));
 		},
 
 		initDom: function() {
