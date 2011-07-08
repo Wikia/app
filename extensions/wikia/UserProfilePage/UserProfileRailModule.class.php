@@ -31,7 +31,7 @@ class UserProfileRailModule extends Module {
 			$this->userIsOwner = $userProfilePage->userIsOwner();
 			$this->userName =  $user->getName();
 			$title = Title::newFromText($this->userName, NS_USER);
-			$this->userPageUrl = $title->getLocalUrl();
+			$this->userPageUrl = $title->getLocalUrl( '' /* query */, 'en' /* lang variant to make NS_USER work */ );
 			$this->maxEdits = 0;
 			$this->currentWikiId = $wgCityId;
 
