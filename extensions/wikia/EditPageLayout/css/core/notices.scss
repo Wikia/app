@@ -17,7 +17,7 @@
 	li {
 		display: block;
 		border-top: 1px solid $color-epl-notices-border;
-		padding: 2px 8px;
+		padding: 2px 20px;
 		text-align: center;
 		height: 18px;
 		line-height: 18px;
@@ -32,10 +32,9 @@
 		}
 	}
 
-	.dismiss-icon {
+	> .splotch {
+		@include splotch;
 		position: absolute;
-		display: block;
 		top: 6px;
-		right: 6px;
 	}
 }
