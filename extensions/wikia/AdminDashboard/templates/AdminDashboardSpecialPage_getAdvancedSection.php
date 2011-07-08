@@ -51,12 +51,4 @@
 </section>
 <?
 	}
-
-	if ( $includesRestrictedPages ) {
-?>
-<div class="mw-specialpages-notes">
-	<?= wfMsgNoTrans( "specialpages-note" ) ?>
-</div>
-<?
-	}
 ?>
