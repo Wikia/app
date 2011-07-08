@@ -7,7 +7,7 @@ $messages['en'] = array(
 	'editpagelayout-less' => 'less',
 	'editpagelayout-helpLink-url' => 'Help:Editing',
 	'editpagelayout-helpLink' => 'Need [[{{MediaWiki:Editpagelayout-helpLink-url}}|Help?]]',
-	'editpagelayout-notificationsLink' => '<span>$1</span> {{PLURAL:$1|Notification|Notifications}}',
+	'editpagelayout-notificationsLink' => '<span>$1</span> Notifications',
 	'editpagelayout-edit-title' => 'Edit title',
 	'editpagelayout-edit-info' => 'Edit info',
 	'editpagelayout-diff-header-url' => 'Help:Diff',
@@ -54,7 +54,7 @@ $messages['en'] = array(
 	'wikia-editor-edittools-caption' => 'More shortcuts',
 	'wikia-editor-edittools-dialog-title' => 'Wikitext shortcuts',
 
-	'wikia-editor-notices-dialog-title' => 'Notices details',
+	'wikia-editor-notices-dialog-title' => 'Notification details',
 	'wikia-editor-notices-no-notifications' => 'No notifications',
 
 	'wikia-editor-preview-editSummary' => 'Edit Summary: $1',
