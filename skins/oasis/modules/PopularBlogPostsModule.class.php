@@ -8,7 +8,7 @@ class PopularBlogPostsModule extends Module {
 		global $wgParser, $wgMemc, $wgLang, $wgPopularBlogPostsOnlyTitles;
 
 		$mcKey = wfMemcKey( "OasisPopularBlogPosts", $wgLang->getCode() );
-		$this->body = $wgMemc->get($mcKey);
+	//	$this->body = $wgMemc->get($mcKey);
 		if (empty ($this->body)) {
 			$input = "	<title>" .wfMsg('oasis-popular-blogs-title') ."</title>
 						<type>box</type>
@@ -18,7 +18,7 @@ class PopularBlogPostsModule extends Module {
 //			$time = '20091212000000';  // use this value for testing if there are no recent posts
 			$params = array (
 					"paging" => false,
-					"timestamp" => $time,
+					"create_timestamp" => $time,
 					"count" => 50,
 					"displaycount" => 4,
 					"order" => "comments"
