@@ -1,3 +1,17 @@
+// get meta data from given node
+jQuery.fn.getData = function() {
+	var json = this.attr('data-rte-meta');
+	if (!json) {
+		return {};
+	}
+
+	// decode JSON
+	json = decodeURIComponent(json);
+
+	var data = $.secureEvalJSON(json) || {};
+	return data;
+}
+
 // set meta data for given node
 jQuery.fn.setData = function(key, value) {
 	var data = {};

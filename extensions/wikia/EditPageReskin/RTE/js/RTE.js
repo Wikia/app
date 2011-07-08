@@ -447,21 +447,3 @@ CKEDITOR.dom.element.prototype.setState = function( state ) {
  * Used in selection.getRanges() as an additional value for the onlyEditables parameter
  */
 CKEDITOR.ONLY_FORMATTABLES = 2;
-
-//
-// extend jQuery
-//
-
-// get meta data from given node
-jQuery.fn.getData = function() {
-	var json = this.attr('data-rte-meta');
-	if (!json) {
-		return {};
-	}
-
-	// decode JSON
-	json = decodeURIComponent(json);
-
-	var data = $.secureEvalJSON(json) || {};
-	return data;
-}
