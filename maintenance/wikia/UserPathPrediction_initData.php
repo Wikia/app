@@ -67,8 +67,8 @@ echo( "Done.\n" );
 
 echo( "Running data Analysis for " . count( $wikis ) . " wikis...\n" );
 
-foreach ( $wikis as $wikiID => $wiki ) {
-	$output = shell_exec( "SERVER_ID={$wikiID} php {$IP}/maintenance/wikia/UserPathPrediction_analyzeData.php --conf {$options['conf']} --aconf {$options['aconf']}" );
+foreach ( $wikis as $wiki ) {
+	$output = shell_exec( "SERVER_ID={$wiki['city_id']} php {$IP}/maintenance/wikia/UserPathPrediction_analyzeData.php --conf {$options['conf']} --aconf {$options['aconf']}" );
 	echo( $output );
 }
 ?>
