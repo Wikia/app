@@ -32,6 +32,7 @@ var AdminDashboard = {
 		AdminDashboard.allControls = AdminDashboard.cc.find('.control');
 		AdminDashboard.tabs = $('#AdminDashboardTabs');
 		AdminDashboard.allTabs = AdminDashboard.tabs.find('.tab');
+		AdminDashboard.generalTab = AdminDashboard.tabs.find('[data-section=general]');
 		AdminDashboard.section.general = $('#AdminDashboardGeneral');
 		AdminDashboard.section.advanced = $('#AdminDashboardAdvanced');
 		AdminDashboard.section.contentarea = $('#AdminDashboardContentArea');
@@ -102,6 +103,12 @@ var AdminDashboard = {
 			}, function(html) {
 				AdminDashboard.wikiaArticle.addClass('AdminDashboardChromedArticle');
 				AdminDashboard.wikiaArticle.prepend(html);
+				AdminDashboard.wikiaArticle.find('.AdminDashboardNavigation a').click(function(e) {
+					e.preventDefault();
+					AdminDashboard.ui.resetAll();
+					AdminDashboard.ui.selectTab(AdminDashboard.generalTab);
+					AdminDashboard.ui.showSection('general');
+				});
 				AdminDashboardChrome.init();
 			});
 			AdminDashboard.section.contentarea.load(wgScriptPath + '/wikia.php', {

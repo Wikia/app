@@ -132,16 +132,36 @@
 
 .FounderProgressList {
 	@include box-shadow(2px, 2px, 2px, #e2e2e2, false, 0);
-	background: green;
 	border: 1px solid #e8e8e8;
 	position: relative; 
 	width: 698px;
 	z-index: 7;
-	header {
+	>nav {
+		background: white;
+		height: 20px;
+		padding: 9px 10px 10px 14px;
 		position: relative;
 		z-index: 5;
+		.back-to-dash {
+			font-size: 13px;
+			line-height: 23px;
+			padding-left: 5px;
+			&:before {
+				border: 6px solid transparent;
+				border-right: 6px solid #c5c5c5;
+				content: "";
+				display: block;
+				float: left;
+				left: -5px;
+				position: relative;
+				top: 5px;
+				width: 0;
+			}
+		}
+	}
+	header {
 		@include linear-gradient(#f2f2f2, top, #fff, 40%, #f2f2f2, 100%);
-		padding: 20px 40px;
+		padding: 0 40px 20px;
 		h1 {
 			font-size: 16px;
 			font-weight: bold;
