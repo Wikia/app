@@ -23,8 +23,7 @@
  * DONE: Make the thumbnails and song titles a link to the product and the artist-name a link to a search for the Artist in Amazon's MP3 Downloads category.
  *
  * TODO: Make it look good.
- * TODO: Get it to run as an ad on a page.
- * TODO: Make it use skin-colors in Oasis? Might require loading a big CSS file though. oh... maybe not actually.. just a scss file for this widget.
+ * MAYBE: Make it use skin-colors in Oasis? Might require loading a big CSS file though. oh... maybe not actually.. just a scss file for this widget.
  * TODO: Can we embed a play button? (if we can't use Amazons, is it worth licensing from developer.7digital.net to play 30 second previews?).
  * TODO: If we use scroll-bars, add a "more" link below the bottom (which links to a search for the artist on Amazon in DigitalMusic category).
  */

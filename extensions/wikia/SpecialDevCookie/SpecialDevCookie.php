@@ -33,7 +33,7 @@ class SpecialDevCookie extends UnlistedSpecialPage {
 
 	public function execute( $subpage ) {
 		global $wgOut, $wgUser, $wgMessageCache;
-		global $wgDevCookieName, $wgStagingCookieName;
+		global $wgDevCookieName;
 
 		$wgMessageCache->addMessages( array( 'devcookie' => 'DevCookie' ), 'en' );
 
