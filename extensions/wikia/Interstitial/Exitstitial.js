@@ -1,6 +1,6 @@
 $(window).load(function() {
 	/*ExitstitialOutboundScreen set in Interstitial.php*/
-	if (ExitstitialOutboundScreen) {
+	if (window.ExitstitialOutboundScreen) {
 		Exitstitial.init();
 	}
 });
