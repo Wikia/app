@@ -155,10 +155,15 @@ class FounderProgressBarHooks {
 	// Initialize schema if not already initialized
 	function onWikiFactoryChanged( $cv_name, $wiki_id, $value ) {
 
-		Wikia::log( __METHOD__, $wiki_id, "{$cv_name} = {$value}" );
+            Wikia::log( __METHOD__, $wiki_id, "{$cv_name} = {$value}" );
 		// Initialize data if extension is enabled. Safe to do multiple times, just gives a warning
 		if( $cv_name == 'wgEnableFounderProgressBarExt' && $value == true ){
 			FounderProgressBarHooks::initRecords($wiki_id);
+			// also clear out any lingering memcache keys
+			$app = F::app();
+			$memc = $app->wg->Memc;
+			$memc->delete( $app->wf->MemcKey('FounderLongTaskList') );
+			$memc->delete( $app->wf->MemcKey('FounderTasksComplete') );
 		}
 		return true;
 	}
