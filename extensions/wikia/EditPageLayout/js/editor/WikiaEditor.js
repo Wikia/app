@@ -65,7 +65,7 @@
 			LOADING_SOURCE: 4,
 			LOADING_VISUAL: 5
 		},
-		
+
 		editorElement: false,
 
 		constructor: function( plugins, config ) {
@@ -268,7 +268,7 @@
 				scope: this
 			});
 		},
-		
+
 		buildClickHandler: function( config ) {
 			if (!config.click) {
 				var editor = this.editor;
@@ -281,7 +281,7 @@
 				};
 				this.editor.fire('uiBuildClickHandler',this.editor,config);
 			}
-		},		
+		},
 
 		addDefaults: function() {
 			var elements = {}, config = this.editor.config;
@@ -358,9 +358,9 @@
 	 * Automatically register UI element types defined in namespaces WikiaEditor.ui
 	 */
 	WE.plugins.uiautoregister = $.createClass(WE.plugin,{
-		
+
 		requires: ['ui', 'functions'],
-		
+
 		init: function() {
 			if (WE.ui) {
 				for (var i in WE.ui) {
@@ -370,17 +370,17 @@
 				}
 			}
 		},
-		
+
 		render: function( config, data ) {
 			var type = config.type;
 			if (!WE.ui[type]) return '';
-			
+
 			var e = new WE.ui[type](this.editor,config,data);
 			return e.render();
 		}
 
 	});
-	
+
 
 	/**
 	 * Space manager plugin for Wikia Editor
@@ -473,7 +473,7 @@
 	});
 
 	/**
-	 * Toolbars manager - automatically fills in appropriate spaces 
+	 * Toolbars manager - automatically fills in appropriate spaces
 	 * with configured modules during editor initialization.
 	 */
 	WE.plugins.toolbarspaces = $.createClass(WE.plugin,{
@@ -597,7 +597,8 @@
 			}
 			this.textarea
 				.focus(this.proxy(this.editorFocused))
-				.blur(this.proxy(this.editorBlurred));
+				.blur(this.proxy(this.editorBlurred))
+				.click(this.proxy(this.editorClicked));
 
 			//this.editor.fire('editboxReady',this.editor,this.getEditbox());
 		},
@@ -609,7 +610,7 @@
 		getEditbox: function() {
 			return this.textarea;
 		},
-		
+
 		getEditorElement: function() {
 			return this.textarea;
 		},
@@ -620,6 +621,10 @@
 
 		editorBlurred: function() {
 			this.editor.fire('editorBlur',this.editor);
+		},
+
+		editorClicked: function() {
+			this.editor.fire('editorClick',this.editor);
 		}
 
 	});
@@ -667,6 +672,8 @@
 			this.editor.setMode(mode,this.loading);
 			this.editor.setState(this.editor.states.IDLE);
 
+			this.getEditbox().click(this.proxy(this.editorClicked));
+
 			this.loading = false;
 		},
 
@@ -701,7 +708,7 @@
 
 			return editbox;
 		},
-		
+
 		getEditorElement: function() {
 			switch (this.instance.mode) {
 			case 'wysiwyg':
@@ -719,6 +726,10 @@
 
 		editorBlurred: function() {
 			this.editor.fire('editorBlur',this.editor);
+		},
+
+		editorClicked: function() {
+			this.editor.fire('editorClick',this.editor);
 		}
 
 	});
