@@ -326,7 +326,12 @@ class EditPage {
 			$this->preview = true;
 		}
 
-		$wgOut->addScriptFile( 'edit.js' );
+		/* Wikia change begin - @author: Marcin, #BugId: 7845 */
+		global $wgEnableEditPageReskinExt;
+		if ( empty($wgEnableEditPageReskinExt) ) {
+			$wgOut->addScriptFile( 'edit.js' );
+		}
+		/* Wikia change end */
 
 		if ( $wgUser->getOption( 'uselivepreview', false ) ) {
 			$wgOut->includeJQuery();
