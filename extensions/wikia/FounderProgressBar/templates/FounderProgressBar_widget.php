@@ -1,5 +1,8 @@
 <section id="FounderProgressList" class="FounderProgressList" style="display:none;">
 	<canvas height="45" width="25" class="tail"></canvas>
+	<nav>
+		<a href="#" class="back-to-dash"><?= wfMsg('admindashboard-back-to-dashboard') ?></a>
+	</nav>
 	<header>
 		<h1><?= wfMsg('founderprogressbar-list-label') ?></h1>
 		<p class="task-description">

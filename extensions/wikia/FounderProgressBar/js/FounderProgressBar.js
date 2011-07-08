@@ -22,6 +22,8 @@ var FounderProgressList = {
 			}
 		});
 		
+		FounderProgressList.d.find('nav .back-to-dash').click(FounderProgressList.hideListModal);
+		
 		FounderProgressList.d.find(".task .task-label").click(function() {
 			var el = $(this).closest(".task");
 			var group = el.find('.task-group');
