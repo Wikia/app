@@ -11,8 +11,14 @@ class AdminDashboardModule extends Module {
 	
 	// Render the Admin Dashboard chrome
 	public function executeChrome () {
-		global $wgRequest;
+		global $wgRequest, $wgTitle;
+		
+		$adminDashboardTitle = Title::newFromText('AdminDashboard', NS_SPECIAL);
+		
 		$this->tab = $wgRequest->getVal("tab", "");
+		if(empty($this->tab) && $wgTitle->getText() == $adminDashboardTitle->getText()) {
+			$this->tab = 'general';
+		}
 
 		$this->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/AdminDashboard/css/AdminDashboard.scss', null, $this->getAlternateOasisSetting()));
 		$this->wg->Out->addScriptFile($this->wg->ExtensionsPath . '/wikia/AdminDashboard/js/AdminDashboard.js');
