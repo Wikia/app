@@ -116,6 +116,36 @@ $(document).ready(function() {
 		}
 		WET.byStr( 'FBconnect/userfromfb' + suffix );
 	}
+
+
+	//Checks for visibility of Facebook Like button's hover panel and hides ads accordingly to prevent z-index problems
+	// Christian: (BugId 7297)
+	if (skin == 'oasis') {
+		var timer = null;
+		var mouseIn = false;
+		var FBbutton = $('#WikiaPageHeader .likes :first-child');
+
+		$('#WikiaPageHeader .likes').hover(function() {
+			mouseIn = true;
+			timer = setInterval('poll()', 250);
+		}, function() {
+			mouseIn = false;
+			if (FBbutton.children('span').filter(':visible').length < 2) {
+				clearInterval(timer);
+			}
+		});
+
+		poll = function() {
+			if (FBbutton.children('span').filter(':visible').length > 1) {
+				$.hideAds();
+			} else {
+				$.showAds();
+				if (!mouseIn) {
+					clearInterval(timer);
+				}
+			}
+		}
+	}
 });
 
 
