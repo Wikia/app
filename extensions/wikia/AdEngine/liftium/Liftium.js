@@ -2112,7 +2112,7 @@ Liftium.buildTrackUrl = function(data) {
 };
 
 Liftium.langForTracking = function(lang) {
-	if (!Liftium.in_array(lang, ["en", "es", "de", "pl", "fr"])) {
+	if (!Liftium.in_array(lang, ["en", "es", "de", "fr"])) {
 		Liftium.d("Wiki lang " + lang + " changed to 'other' for tracking", 7);
 		lang = "other";
 	}
@@ -2130,7 +2130,7 @@ Liftium.dbnameForTracking = function(dbname) {
 };
 
 Liftium.geoForTracking = function(country) {
-	if (!Liftium.in_array(country, ["unknown", "us", "uk", "ca", "pl"])) {
+	if (!Liftium.in_array(country, ["unknown", "us", "uk", "ca"])) {
 		Liftium.d("Country " + country + " changed to 'other' for tracking", 7);
 		// fall back to the continent FIXME NEF
 		country = "other";
