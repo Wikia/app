@@ -17,15 +17,18 @@ AIC2.init = function() {
 	if ($("#WikiaMainContent").width() != AIC2.WMCbaseWidth) {
 		AIC2.marginLeft = AIC2.marginLeft + parseInt( ($("#WikiaMainContent").width() - AIC2.baseWidth) / 2 );
 		Liftium.d("AIC2: non standard width, new marginLeft set to " + AIC2.marginLeft, 5);
+		Liftium.trackEvent(Liftium.buildTrackUrl(["AIC2", "wide"]));
 	}
 	if ($('body').hasClass('rtl')) {
 		Liftium.d("AIC2: rtl wiki", 7);
+		Liftium.trackEvent(Liftium.buildTrackUrl(["AIC2", "rtl"]));
 		AIC2.isRightToLeft = true;
 	}
 
 // FIXME
 if ($.getViewportWidth() < 1010) {
 	Liftium.d("AIC2: window too narrow, bailing out", 3);
+	Liftium.trackEvent(Liftium.buildTrackUrl(["AIC2", "too_narrow"]));
 	return;
 }
 
@@ -41,6 +44,7 @@ if ($.getViewportWidth() < 1010) {
 		//}
 	} else {
 		Liftium.d("AIC2: page too short", 3);
+		Liftium.trackEvent(Liftium.buildTrackUrl(["AIC2", "too_short"]));
 	}
 };
 
@@ -59,6 +63,7 @@ AIC2.checkStartStopPosition = function() {
 		}
 	} catch (e) {
 		Liftium.d("AIC2: catched in start/stop:", 1, e);
+		Liftium.trackEvent(Liftium.buildTrackUrl(["AIC2", "try_catch"]));
 		// bail out - missing elements, broken dom, erroneous cast...
 		return false;
 	}
