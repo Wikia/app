@@ -58,7 +58,7 @@ class GlobalTitle extends Title {
 		
 		$memkey = sprintf( "GlobalTitle:%d:%d", $id, $city_id );
 		$res = $wgMemc->get( $memkey ); 
-		if ( empty($res) ) {
+		if ( empty($res) && '1' === WikiFactory::getPublicStatus($city_id) ) {
 			$dbr = wfGetDB( DB_SLAVE, array(), ( $dbname ) ? $dbname : WikiFactory::IDtoDB($city_id) );
 			$row = $dbr->selectRow( 'page', 
 				array( 'page_namespace', 'page_title' ),
@@ -68,6 +68,7 @@ class GlobalTitle extends Title {
 			$res = array( 'title' => $row->page_title, 'namespace' => $row->page_namespace );
 			$wgMemc->set($memkey, $res, 60 * 60);
 		}
+		
 		if ( isset( $res['title'] ) && isset($res['namespace']) ) {
 			$title = GlobalTitle::newFromText( $res['title'], $res['namespace'], $city_id );
 		} else {
@@ -197,25 +198,28 @@ class GlobalTitle extends Title {
 	 * @return MW timestamp
 	 */
 	public function getLastEdit() {
-
 		$this->loadAll();
 
 		if ( $this->mLastEdit ) {
 			return $this->mLastEdit;
 		}
-
-		$dbr = wfGetDB( DB_SLAVE, array(), WikiFactory::IDtoDB($this->mCityId) );
 		
-		$this->mLastEdit = $dbr->selectField(
-			array( 'revision', 'page' ),
-			array( 'rev_timestamp' ),
-			array(
-				'page_title' => $this->mText,
-				'page_namespace' => $this->mNamespace,
-				'page_latest=rev_id' 
-			),
-			__METHOD__ 
-		);
+		if( '1' === WikiFactory::getPublicStatus($this->mCityId) ) {
+			$dbName = WikiFactory::IDtoDB($this->mCityId);
+			
+			$dbr = wfGetDB( DB_SLAVE, array(), $dbName );
+			
+			$this->mLastEdit = $dbr->selectField(
+				array( 'revision', 'page' ),
+				array( 'rev_timestamp' ),
+				array(
+					'page_title' => $this->mText,
+					'page_namespace' => $this->mNamespace,
+					'page_latest=rev_id' 
+				),
+				__METHOD__ 
+			);
+		}
 
 		return $this->mLastEdit;
 	}
