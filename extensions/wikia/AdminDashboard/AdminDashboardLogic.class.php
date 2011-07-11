@@ -15,10 +15,9 @@ class AdminDashboardLogic {
 		// Admin Dashboard is only for logged in plus a list of groups
 		if (!$app->wg->User->isLoggedIn()) return false;
 		if (!$app->wg->User->isAllowed( 'admindashboard' )) return false;
-		
-		$pageList = array ( "AdminDashboard", "UserRights", "ListUsers", "RecentChanges", "Categories", "MultipleUpload", "SponsorshipDashboard");
-		if ($title && $title->isSpecialPage() && in_array($title->getDBKey(), $pageList)) {
-			return true;
+		if ($title && $title->isSpecialPage()) {
+			$exclusionList = array("Connect", "UserLogin", "Signup", "WikiaLabs", "PageLayoutBuilder", "Preferences", "LayoutBuilder", "ThemeDesigner");
+			return (!in_array($title->getDBKey(), $exclusionList));
 		}
 		return false;
 	}
