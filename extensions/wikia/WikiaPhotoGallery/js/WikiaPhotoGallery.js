@@ -2532,7 +2532,7 @@ var WikiaPhotoGallery = {
 
 		if (skin == 'oasis') {
 			height -= 150;
-			width = 710;
+			width = 740;
 		}
 
 		height = Math.max(460, height);
