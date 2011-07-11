@@ -36,7 +36,7 @@ jQuery(function($){
 
 		sajax_request_type = 'POST';
 
-		sajax_do_call( 'SFAutoEditAjaxHandler::handleAutoEdit', data, function( ajaxHeader ){
+		sajax_do_call( 'SFAutoeditAPI::handleAutoEdit', data, function( ajaxHeader ){
 			jresult.empty().append( ajaxHeader.responseText );
 
 			if ( ajaxHeader.status == 200 ) {

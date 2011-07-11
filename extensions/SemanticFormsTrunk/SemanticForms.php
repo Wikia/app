@@ -88,6 +88,7 @@ $wgHooks['ParserFirstCallInit'][] = 'SFParserFunctions::registerFunctions';
 $wgHooks['MakeGlobalVariablesScript'][] = 'SFFormUtils::setGlobalJSVariables';
 
 $wgAPIModules['sfautocomplete'] = 'SFAutocompleteAPI';
+$wgAPIModules['sfautoedit'] = 'SFAutoeditAPI';
 
 // register all special pages and other classes
 $wgSpecialPages['Forms'] = 'SFForms';
@@ -154,12 +155,12 @@ $wgAutoloadClasses['SFUtils'] = $sfgIP . '/includes/SF_Utils.php';
 $wgAutoloadClasses['SFFormLinker'] = $sfgIP . '/includes/SF_FormLinker.php';
 $wgAutoloadClasses['SFParserFunctions'] = $sfgIP . '/includes/SF_ParserFunctions.php';
 $wgAutoloadClasses['SFAutocompleteAPI'] = $sfgIP . '/includes/SF_AutocompleteAPI.php';
-$wgAutoloadClasses['SFAutoEditAjaxHandler'] = $sfgIP . '/includes/SF_AutoEditAjaxHandler.php';
+$wgAutoloadClasses['SFAutoeditAPI'] = $sfgIP . '/includes/SF_AutoeditAPI.php';
 $wgJobClasses['createPage'] = 'SFCreatePageJob';
 $wgAutoloadClasses['SFCreatePageJob'] = $sfgIP . '/includes/SF_CreatePageJob.php';
 require_once( $sfgIP . '/languages/SF_Language.php' );
 
-$wgAjaxExportList[] = 'SFAutoEditAjaxHandler::handleAutoEdit';
+$wgAjaxExportList[] = 'SFAutoeditAPI::handleAutoEdit';
 
 $wgExtensionMessagesFiles['SemanticForms'] = $sfgIP . '/languages/SF_Messages.php';
 $wgExtensionAliasesFiles['SemanticForms'] = $sfgIP . '/languages/SF_Aliases.php';

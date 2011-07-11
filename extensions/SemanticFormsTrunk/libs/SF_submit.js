@@ -60,7 +60,7 @@ jQuery(function($){
 			sajax_request_type = 'POST';
 			var form = $('#sfForm');
 
-			sajax_do_call( 'SFAutoEditAjaxHandler::handleAutoEdit', new Array(collectData( form ), false), function( ajaxHeader ){
+			sajax_do_call( 'SFAutoeditAPI::handleAutoEdit', new Array(collectData( form ), false), function( ajaxHeader ){
 
 				if ( ajaxHeader.status == 200 ) {
 
@@ -141,6 +141,8 @@ jQuery(function($){
 			}
 
 		}
+
+		params += "&wpMinoredit=1";
 
 		return params;
 	}
