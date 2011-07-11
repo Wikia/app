@@ -3017,6 +3017,11 @@ $messages['he'] = array(
 	'sf_formedit_tooltip_saveandcontinueediting' => 'לשמור את הנתונים והמשיך לערוך',
 	'sf_autoedit_anoneditwarning' => 'אזהרה: לא נכנסתם לחשבון. כתובת ה־IP שלכם תירשם בהיסטוריית הדף הזה.',
 	'sf_autoedit_success' => '[[$1]] שוּנה בהצלחה באמצעות הטופס $2.',
+	'sf_autoedit_notargetspecified' => 'לא צוין דף יעד.',
+	'sf_autoedit_noformfound' => 'לא צוין טופס.',
+	'sf_autoedit_toomanyformsfound' => 'יש יותר מטופס אחד לדף.',
+	'sf_autoedit_readonly' => 'מסד הנתונים נעול לשינויים. סיבה: $1',
+	'sf_autoedit_nosemanticform' => 'לא הצליחה קבלת טופס $2 עבור דף $1. ר׳ [[{{#special:FormEdit}}/$2/$1]] לפרטים.',
 	'runquery' => 'הרצת שאילתה',
 	'sf_runquery_badurl' => "יש לציין את שם הטופס בכתובת;
 על הכתובת להיות מהצורה 'Special:RunQuery/<שם הטופס>'.",
@@ -4842,6 +4847,7 @@ $messages['mr'] = array(
  */
 $messages['ms'] = array(
 	'sf_createproperty_proptype' => 'Jenis:',
+	'sf_createtemplate_deletefield' => 'Hapuskan',
 	'sf_createform_inputtypedefault' => '(tersedia)',
 	'sf_formedit_createtitle' => 'Cipta $1: $2',
 	'sf_formedit_createtitlenotarget' => 'Cipta $1',
