@@ -14,15 +14,18 @@ class UserPathPredictionService extends WikiaService {
 	private $initialized = false;
 
 	public function init() {
+		$this->app->wf->profileIn( __METHOD__ );
 		if ( !$this->initialized ) {
 			$this->model = F::build( 'UserPathPredictionModel' );
 			$this->logPath = "/tmp/UserPathPrediction_" . date( 'Ymd' ) . ".log";
 			F::setInstance( __CLASS__, $this );
 			$this->initialized = true;
 		}
+		$this->app->wf->profileOut( __METHOD__ );
 	}
 
 	public function log( $msg = null ) {
+		$this->app->wf->profileIn(__METHOD__);
 		$msg = ( !empty( $msg ) ) ? $msg : $this->getVal( 'msg' );
 		
 		if( $this->wg->DevelEnvironment ) {
@@ -31,6 +34,7 @@ class UserPathPredictionService extends WikiaService {
 		
 		//reset the parameter value to avoid re-printing the same on internal calls, this class is a singleton
 		$this->request->setVal( 'msg', null );
+		$this->app->wf->profileOut(__METHOD__);
 	}
 
 	//change colons to %3A in URL
@@ -46,10 +50,12 @@ class UserPathPredictionService extends WikiaService {
 	 * @requestParam array $backendParams any extra configuration to pass to the backend storage
 	 */
 	function extractOneDotData() {
+		$this->app->wf->profileIn(__METHOD__);
 		$strDate = $this->getVal( 'date' );
 		$backendParams = $this->getVal( 'backendParams', array() );
 		
 		if ( empty( $strDate ) ) {
+			$this->app->wf->profileOut( __METHOD__ );
 			throw new WikiaException( 'Target date not specified.' );
 		}
 		
@@ -130,8 +136,10 @@ class UserPathPredictionService extends WikiaService {
 			$this->model->cleanRawDataFolder();
 		} else {
 			$this->log( "Failure." );
+			$this->app->wf->profileOut( __METHOD__ );
 			throw new WikiaException( "Cannot fetch data from OneDot archive." );
 		}
+		$this->app->wf->profileOut( __METHOD__ );
 	}
 	
 	/**
@@ -141,6 +149,7 @@ class UserPathPredictionService extends WikiaService {
 	 * @see UserPathPredictionService::extractOneDotData
 	 */
 	public function analyzeLocalData(){
+		$this->app->wf->profileIn( __METHOD__ );
 		$wikiID = $this->wg->CityId;
 		$dbName = strtolower( $this->wg->DBname );//need to make it small letters to match onedot records
 		$filePath = $this->model->getWikiParsedDataPath( $dbName );
@@ -188,19 +197,24 @@ class UserPathPredictionService extends WikiaService {
 		} else {
 			$this->log( 'No data found.' );
 		}
+		$this->app->wf->profileOut( __METHOD__ );
 	}
 	
 	public function getWikis() {
+		$this->app->wf->profileIn(__METHOD__);
 		if ( empty( $this->wikis ) ) {
 			$this->wikis = $this->model->getWikis();
 		}
 		
 		$this->setVal( 'wikis', $this->wikis );
+		$this->app->wf->profileOut( __METHOD__ );
 		return $this->wikis;
 	}
 	
 	public function cleanup(){
+		$this->app->wf->profileIn(__METHOD__);
 		$this->model->cleanParsedDataFolder();
 		$this->model->cleanRawDataFolder();
+		$this->app->wf->profileOut( __METHOD__ );
 	}
 }
