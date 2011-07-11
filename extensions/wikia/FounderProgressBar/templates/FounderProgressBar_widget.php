@@ -47,6 +47,7 @@
 	<section class="preview">
 		<canvas id="FounderProgressBar" class="founder-progress-bar" height="95" width="95">
 		</canvas>
+		<div id="FounderProgressListClickArea" class="founder-progress-bar-click-area"></div>
 		<div class="numeric-progress">
 			<span class="score"><?= $progressData['completion_percent'] ?></span><span class="percentage">%</span>
 		</div>

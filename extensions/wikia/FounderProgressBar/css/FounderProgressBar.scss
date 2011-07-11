@@ -16,6 +16,15 @@
 		.founder-progress-bar {
 			margin: 10px;
 		}
+		.founder-progress-bar-click-area {
+			cursor: pointer;
+			height: 95px;
+			left: 10px;
+			position: absolute;
+			top: 10px;
+			width: 95px;
+			z-index: 1;
+		}
 		.numeric-progress {
 			color: #3a3a3a;
 			font-size: 36px;
