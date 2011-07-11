@@ -3011,7 +3011,7 @@ function &wfGetDB( $db, $groups = array(), $wiki = false ) {
 		}
 	}
 	// wikia change end
-
+//echo $wiki;
 	return wfGetLB( $wiki )->getConnection( $db, $groups, $wiki );
 }
 
