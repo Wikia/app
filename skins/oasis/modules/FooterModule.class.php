@@ -2,14 +2,14 @@
 class FooterModule extends Module {
 
 	var $wgBlankImgUrl;
-	var $wgEnableAdminDashboardExt;
 
 	var $showToolbar;
 	var $showNotifications;
 	var $showLoadTime;
+	var $showAdminDashboardLink;
 
 	public function executeIndex() {
-		global $wgTitle, $wgContentNamespaces, $wgUser, $wgSuppressToolbar, $wgShowMyToolsOnly;
+		global $wgTitle, $wgContentNamespaces, $wgUser, $wgSuppressToolbar, $wgShowMyToolsOnly, $wgEnableAdminDashboardExt;
 
 		// don't show toolbar when wgSuppressToolbar is set (for instance on edit pages)
 		$this->showToolbar = empty($wgSuppressToolbar) && !$wgUser->isAnon();
@@ -17,6 +17,10 @@ class FooterModule extends Module {
 			return;
 		}
 
+		if (!empty($wgEnableAdminDashboardExt) && F::app()->wg->User->isAllowed( 'admindashboard' )) {
+			$this->showAdminDashboardLink = true;
+		}
+				
 		// show only "My Tools" dropdown on toolbar
 		if (!empty($wgShowMyToolsOnly)) {
 			return;
