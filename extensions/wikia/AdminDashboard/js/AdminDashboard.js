@@ -127,7 +127,8 @@ var AdminDashboard = {
 			$.post(wgScriptPath + '/wikia.php', {
 				controller: 'AdminDashboardSpecialPage',
 				method: 'chromedArticleHeader',
-				headerText: 'Replace Me'
+				page: page,
+				headerText: ''
 			}, function(html) {
 				AdminDashboard.wikiaArticle.addClass('AdminDashboardChromedArticle');
 				AdminDashboard.wikiaArticle.prepend(html);
