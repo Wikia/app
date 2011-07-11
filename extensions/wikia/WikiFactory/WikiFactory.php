@@ -1489,6 +1489,46 @@ class WikiFactory {
 
 		return $city_public;
 	}
+	
+	/**
+	 * getPublicStatus
+	 *
+	 * method for getting city_public value in city_list table
+	 *
+	 * @author Andrzej 'nAndy' Lukaszewski <nandy@wikia-inc.com>
+	 * @access public
+	 * @static
+	 *
+	 * @param integer $city_id wikia identifier in city_list
+	 *
+	 * @return integer
+	 */
+	static public function getPublicStatus( $city_id ) {
+		global $wgWikicitiesReadOnly;
+		if( ! self::isUsed() ) {
+			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
+			return false;
+		}
+
+		if($wgWikicitiesReadOnly){
+			Wikia::log( __METHOD__, "", "wgWikicitiesReadOnly mode. Skipping update.");
+			return false;
+		}
+
+		wfProfileIn( __METHOD__ );
+
+		$dbw = self::db( DB_MASTER );
+		$cityPublic = $dbw->selectField(
+			"city_list",
+			array('city_public'),
+			array( "city_id" => $city_id ),
+			__METHOD__
+		);
+
+		wfProfileOut( __METHOD__ );
+
+		return $cityPublic;
+	}
 
 	/**
 	 * loadVariableFromDB
