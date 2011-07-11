@@ -13,7 +13,7 @@ var FounderProgressList = {
 		
 		FounderProgressList.allActivities.hover(FounderProgressList.showActivity, FounderProgressList.hideActivity);
 		
-		$('#FounderProgressListToggle').click(function(e) {
+		$('#FounderProgressListToggle, #FounderProgressListClickArea').click(function(e) {
 			e.preventDefault();
 			if(FounderProgressList.isHidden) {
 				FounderProgressList.showListModal();
