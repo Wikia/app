@@ -6,7 +6,10 @@
 	<header>
 		<h1><?= wfMsg('founderprogressbar-list-label') ?></h1>
 		<p class="task-description">
-			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin id nunc mi. Maecenas elit velit, tempus quis pharetra a, fringilla blandit neque.
+			<?= wfMsg('founderprogressbar-list-description1') ?>
+		</p>
+		<p class="task-description">
+			<?= wfMsg('founderprogressbar-list-description2') ?>
 		</p>
 	</header>
 	<ul class="tasks">

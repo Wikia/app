@@ -125,7 +125,7 @@ var FounderProgressList = {
 		var el = FounderProgressList.d.find('>.tail');
 		if(!el.data('drawn')){
 			var c = (el[0]).getContext('2d');
-			c.fillStyle = '#f2f2f2';
+			c.fillStyle = '#fff';
 			c.shadowOffsetX = 2;
 			c.shadowOffsetY = 0;
 			c.shadowBlur = 5;
