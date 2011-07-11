@@ -687,3 +687,8 @@ section.SalesSupportModule {
 	   color: #000;
 	}
 }
+
+// hide bottom ad (BugId:4910)
+body.mainpage #WikiaArticleBottomAd {
+	display: none;
+}
