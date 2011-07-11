@@ -12,34 +12,32 @@ class UserPathPredictionSpecialController extends WikiaSpecialPageController {
 	private $model,$controller;	
 		
 	public function __construct() {
+		$this->wf->profileIn( __METHOD__ );
 		parent::__construct( 'UserPathPrediction', '', false );
+		$this->wf->profileOut( __METHOD__ );
 	}
 	
 	public function init() {
-		//TODO: initialization code here
+		$this->wf->profileIn( __METHOD__ );
 		$this->model = F::build( 'UserPathPredictionModel' );
+		$this->wf->profileOut( __METHOD__ );
 	}
 	
 	public function index() {
-		
+		$this->wf->profileIn( __METHOD__ );
 		$this->wg->Out->setPageTitle( $this->wf->Msg( 'userpathprediction-special-header' ) );
-		
 		$this->response->addAsset( 'extensions/wikia/hacks/UserPathPrediction/css/UserPathPrediction.scss' );
 		$this->response->addAsset( 'extensions/wikia/hacks/UserPathPrediction/js/UserPathPrediction.js' );
 		$this->response->addAsset( 'extensions/wikia/hacks/UserPathPrediction/js/tablesorter.min.js' );
-		
 		$this->redirect( 'UserPathPredictionSpecial', 'UserPathPrediction' );
+		$this->wf->profileOut( __METHOD__ );
 	}
 	
 	
 	public function UserPathPrediction() {
-		$this->wf->profileIn( __METHOD__ );
-		
+		$this->wf->profileIn( __METHOD__ );		
 		$this->setVal( 'par', $this->getVal( 'par' ) );
-
-		// example of setting SpecialPage::mIncluding
 		$this->mIncluding = true;
-		
 		$this->wf->profileOut( __METHOD__ );
 	}
 		

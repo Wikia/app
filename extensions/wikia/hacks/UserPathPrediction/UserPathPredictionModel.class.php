@@ -23,6 +23,7 @@ class UserPathPredictionModel {
 	}
 	
 	private function getDBConnection( $mode = DB_SLAVE ) {
+		$this->app->wf->profileIn(__METHOD__);
 		//TODO: replace with wfGetDB as soon as we stop using local DB for devboxes and get production storage
 		if (
 			empty( $this->app->wg->UserPathPredictionDBserver ) ||
@@ -30,9 +31,10 @@ class UserPathPredictionModel {
 			empty( $this->app->wg->UserPathPredictionDBuser ) ||
 			empty( $this->app->wg->UserPathPredictionDBpassword )
 		) {
+			$this->app->wf->profileOut(__METHOD__);
 			throw new Exception( 'Missing settings for UserPathPrediction DB' );
 		}
-		
+		$this->app->wf->profileOut(__METHOD__);
 		return Database::newFromParams(
 			$this->app->wg->UserPathPredictionDBserver,
 			$this->app->wg->UserPathPredictionDBuser,
@@ -42,13 +44,16 @@ class UserPathPredictionModel {
 	}
 	
 	private function createDir( $folder ) {
+		$this->app->wf->profileIn(__METHOD__);
 		if( !is_dir( $folder )) {
 			$this->log( "Creating {$folder} ...");
 			return mkdir( $folder, 0777, true );
 		}
+		$this->app->wf->profileOut(__METHOD__);
 	}
 	
 	private function removePath( $path ) {
+		$this->app->wf->profileIn(__METHOD__);
 		if ( is_dir( $path ) ) {
 			$this->log( "Removing {$path} ...");	
 			$objects = scandir( $path );
@@ -66,8 +71,10 @@ class UserPathPredictionModel {
 			}
 			
 			reset( $objects );
+			$this->app->wf->profileOut(__METHOD__);
 			return rmdir( $path );
 		} elseif ( is_file( $path ) ) {
+			$this->app->wf->profileOut(__METHOD__);
 			return unlink ( $path );
 		}
 		
@@ -75,6 +82,7 @@ class UserPathPredictionModel {
 	} 
 	
 	public function retrieveDataFromArchive( $timestr, $extraParams = array(), &$commandOutput = null ) {
+		$this->app->wf->profileIn(__METHOD__);	
 		$params = '';
 		$s3directory = self::S3_ARCHIVE . "{$timestr}/";
 		
@@ -94,9 +102,10 @@ class UserPathPredictionModel {
 		
 		if ( is_array( $tmpFiles ) && count( $tmpFiles )  > 2 ) {
 			$this->files = array_slice( $tmpFiles, 2 );
+			$this->app->wf->profileOut(__METHOD__);
 			return true;
 		}
-		
+		$this->app->wf->profileOut(__METHOD__);
 		return false;
 	}
 	
@@ -116,11 +125,14 @@ class UserPathPredictionModel {
 	}
 	
 	public function saveParsedData( $dbName, $data ) {
+		$this->app->wf->profileIn(__METHOD__);
 		$this->createDir( self::PARSED_DATA_PATH );
 		file_put_contents( $this->getWikiParsedDataPath( $dbName ) , serialize( $data ) . "\n", FILE_APPEND );
+		$this->app->wf->profileOut(__METHOD__);
 	}
 	
 	public function storeAnalyzedData( $data ) {
+		$this->app->wf->profileIn(__METHOD__);
 		$dbw = $this->getDBConnection( DB_MASTER );
 		
 		foreach ( $data as $segment ) {
@@ -142,6 +154,7 @@ class UserPathPredictionModel {
 				$error = 'DB error: ' . $dbw->lastError();
 				
 				$this->log( $error );
+				$this->app->wf->profileOut(__METHOD__);
 				throw new WikiaException( $error );
 			}
 		}
@@ -150,11 +163,13 @@ class UserPathPredictionModel {
 		$dbw->commit();
 		$dbw->close();
 		$this->log("Done.");
+		$this->app->wf->profileOut(__METHOD__);
 	}
 	
 	public function getWikis() {
+		$this->app->wf->profileIn(__METHOD__);
 		//TODO: get data from WF
-		
+		$this->app->wf->profileOut(__METHOD__);
 		//TODO: IMPORTANT, remember to strtolower the db name otherwise it won't always match onedot records!!!
 		return array(
 			"490" => array(
@@ -186,6 +201,7 @@ class UserPathPredictionModel {
 	}
 	
 	public function getNodes( $cityId, $articleId, $dateSpan = 30, $nodeCount = 10 ) {
+		$this->app->wf->profileIn(__METHOD__);
 		$resultArray = array();
 		$dbr =$this->getDBConnection();
 		$prevTargetId;
@@ -205,7 +221,7 @@ class UserPathPredictionModel {
 				$prevTargetId = $row->referrer_id;
 			}
 		}
-		
+		$this->app->wf->profileOut(__METHOD__);
 		return $resultArray;
 	}
 }
