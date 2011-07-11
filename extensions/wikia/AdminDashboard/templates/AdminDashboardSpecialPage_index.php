@@ -69,6 +69,14 @@
 							<?= wfMsg("admindashboard-control-user-rights-label") ?>
 						</a>
 					</li>
+					<li class="control" data-tooltip="<?= wfMsg("admindashboard-control-community-corner-tooltip") ?>">
+						<a href="<?= $urlCommunityCorner ?>" class="set">
+							<span class="representation">
+								<span class="icon communitycorner"></span>
+							</span>
+							<?= wfMsg("admindashboard-control-community-corner-label") ?>
+						</a>
+					</li>
 					<!--
 					<li class="control" data-tooltip="<?= wfMsg("admindashboard-control-group-rights-tooltip") ?>">
 						<div class="representation">
@@ -90,14 +98,6 @@
 					<h1><?= wfMsg("admindashboard-controls-content-header") ?></h1><span class="tooltip"></span>
 				</header>
 				<ul class="controls">
-					<li class="control" data-tooltip="<?= wfMsg("admindashboard-control-community-corner-tooltip") ?>">
-						<a href="<?= $urlCommunityCorner ?>" class="set">
-							<span class="representation">
-								<span class="icon communitycorner"></span>
-							</span>
-							<?= wfMsg("admindashboard-control-community-corner-label") ?>
-						</a>
-					</li>
 					<li class="control" data-tooltip="<?= wfMsg("admindashboard-control-categories-list-tooltip") ?>" data-control="Categories">
 						<a href="<?= $urlAllCategories ?>" class="set">
 							<span class="representation">
