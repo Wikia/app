@@ -189,11 +189,7 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 		$this->response->setVal("output", $output);
 		
 	}
-	
-	public function toolbarItem() {
-		$this->response->setVal("url", Title::newFromText('AdminDashboard', NS_SPECIAL)->getFullURL());
-	}
-	
+		
 	public function saveDrawerState() {
 		$_SESSION['admindashboard-state'] = $this->request->getVal('state');
 	}
