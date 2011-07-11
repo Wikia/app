@@ -840,3 +840,13 @@ $wgTexvc = "$IP/math/texvc";
  * @see /extensions/wikia/OpenGraphMetaCustomizations
  */
 $wgEnableOpenGraphMetaExt = true;
+
+/**
+ * List of internal usernames that shouldn't be allowed in Special:EditCount, e.g. "Default", bots
+ * Please use lowercase.
+ * 
+ * @see /extensions/wikia/EditCount/SpecialEditCount_body.php
+ */
+$wgSpecialEditCountExludedUsernames = array(
+	'default'
+);

@@ -16,7 +16,7 @@ class Editcount extends SpecialPage {
 	 * main()
 	 */
 	function execute( $par = null ) {
-		global $wgVersion, $wgRequest, $wgOut, $wgContLang;
+		global $wgVersion, $wgRequest, $wgOut, $wgContLang, $wgSpecialEditCountExludedUsernames;
 
 		if ( version_compare( $wgVersion, '1.5beta4', '<' ) ) {
 			$wgOut->versionRequired( '1.5beta4' );
@@ -34,9 +34,14 @@ class Editcount extends SpecialPage {
 
 		$username = Title::newFromText( $username );
 		$username = is_object( $username ) ? $username->getText() : '';
-
-		$uid = User::idFromName( $username );
-
+		
+		//FB#1040: block requests for 'Default' username, using a configurable array, could be useful for further blocks
+		if ( in_array( strtolower( $username ), $wgSpecialEditCountExludedUsernames ) ) {
+			$uid = 0;
+		} else {
+			$uid = User::idFromName( $username );
+		}
+		
 		if ( $this->including() ) {
 			if ( !isset($namespace) ) {
 				if ($uid != 0) {
