@@ -18,6 +18,7 @@ $messages['en'] = array(
 	'founderprogressbar-list-skipped-task-desc' => "You can come back to these later.",
 	'founderprogressbar-list-bonus-task-label' => "Bonus Tasks",
 	'founderprogressbar-list-bonus-task-desc' => "Complete the tasks list to unlock bonus tasks",
+	'founderprogressbar-task-call-to-action' => "Go to task",
 	# Each task has a label(short description), action(button text) and long description.  Initial task list has 30 actions.
 	'founderprogressbar-page-add10-label' => 'Add $1 pages',
 	'founderprogressbar-page-add10-action' => 'Add a page',	
