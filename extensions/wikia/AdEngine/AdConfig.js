@@ -22,6 +22,7 @@ AdConfig = {
 			case 'IT':
 			case 'NL':
 			case 'NO':
+			case 'RU':
 			case 'SE':
 			case 'UK':
 			case 'US':
