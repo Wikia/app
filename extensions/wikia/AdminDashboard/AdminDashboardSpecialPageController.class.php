@@ -119,7 +119,13 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 			$this->displayRestrictionError();
 			return false; // skip rendering
 		}
-		$this->response->setVal('headerText', $this->request->getVal('headerText'));
+		$page = $this->request->getVal('page', '');
+		if(empty($page)) {
+			$headerText = $this->request->getVal('headerText', '');
+		} else {
+			$headerText = SpecialPage::getTitleFor($page)->getText();
+		}
+		$this->response->setVal('headerText', $headerText);
 		$this->response->setVal('backLink', Title::newFromText('AdminDashboard', NS_SPECIAL)->getFullURL());
 		
 		$state = F::app()->sendRequest( 'AdminDashboardSpecialPage', 'getDrawerState', array())->getData();
