@@ -18,7 +18,7 @@ $admin-dashboard-header-height: 48px;
 $base-z: 5;
 
 .AdminDashboardHeader {
-	@include linear-gradient(false, top, #cde2f0, 20%, #bbd6e8, 70%, #9db9cd, 100%);
+	@include linear-gradient(#bbd6e8, top, #cde2f0, 20%, #bbd6e8, 70%, #9db9cd, 100%);
 	position: relative;
 	border-bottom: 1px solid #b6c1c9;
 	border-top: 1px solid #c8d4dd;

@@ -169,7 +169,7 @@
 		}
 	}
 	header {
-		@include linear-gradient(#f2f2f2, top, #fff, 40%, #f2f2f2, 100%);
+		@include linear-gradient(#f8f8f8, top, #fff, 0%, #f8f8f8, 25%, #f2f2f2, 100%);
 		padding: 0 40px 20px;
 		h1 {
 			font-size: 16px;
@@ -268,7 +268,7 @@
 			.activity-description {
 				bottom: 0px;
 				display: none;
-				padding-bottom: 30px;
+				padding-bottom: 25px;
 				position: absolute;
 				width: 250px;
 				z-index: 9;

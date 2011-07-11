@@ -65,5 +65,5 @@
 				<? $index++; ?>
 			<? } ?>
 		</ul>
-	</sction>
+	</section>
 </section>
