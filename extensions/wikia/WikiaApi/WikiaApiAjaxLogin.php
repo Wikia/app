@@ -118,7 +118,7 @@ class WikiaApiAjaxLogin extends ApiBase {
 				$result['text'] = wfMsg('noname');
 			} else {
 				$u = User::newFromName( $loginForm->mName );
-				if( is_null( $u ) ) {
+				if( empty( $u ) ) {
 					$result['result'] = 'noname';
 					$result['text'] = wfMsg('noname');
 				} else if ( 0 == $u->getID() ) {
