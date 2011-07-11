@@ -186,7 +186,6 @@ class SpecialCustomEditPage extends SpecialPage {
 	/**
 	 * Function used to render some html instead of editpage textarea
 	 */
-
 	public function showOwnTextbox() {
 		return false;
 	}
@@ -195,17 +194,25 @@ class SpecialCustomEditPage extends SpecialPage {
 	 * create and return default title can be override by not empty title
 	 */
 	protected function getDefaultTitle() {
-		return new Title;
+		$defaultTitle = new Title;
+
+		// default title should be in the $titleNS namespace (BugId:8331)
+		if (!is_null($this->titleNS)) {
+			$defaultTitle->mNamespace = $defaultTitle->mDefaultNamespace = $this->titleNS;
+
+			// don't show recreation warning (FIXME, I'am an ugly hack)
+			$defaultTitle->mPrefixedText = 'DummyPrefixedText';
+		}
+
+		return $defaultTitle;
 	}
 
 	/**
 	 * Get edit page object
 	 */
-
 	public function getEditPage() {
 		return $this->mEditPage;
 	}
-
 
 	/**
 	 * initialize article title
@@ -259,11 +266,9 @@ class SpecialCustomEditPage extends SpecialPage {
 	/**
 	 * used by to add same prefix before title (example: blogs)
 	 */
-
 	protected function getTitlePrefix() {
 		return "";
 	}
-
 
 	/**
 	 * initialize article edit page
