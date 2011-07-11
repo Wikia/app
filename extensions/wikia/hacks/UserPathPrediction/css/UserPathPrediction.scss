@@ -6,10 +6,16 @@
 }
 
 table {
-  top: 20px;
+  position: relative;
+  top: 30px;
   margin: auto;
   border: 1px dotted black;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
   width: 90%;
+  th {
+    background-color: #333;
+  }
   td {
     padding: 5px;
   }

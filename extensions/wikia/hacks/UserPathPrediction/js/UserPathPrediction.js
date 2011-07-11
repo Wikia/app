@@ -1,40 +1,33 @@
 $(function() {
 	UserPathPrediction.init();
+
 })
 
 var UserPathPrediction = {
 	
 	init: function() {
-
-		// Bind click to button
-		$('#selectWiki').change(function() {
-
-		});
 		
 		$('#selectBy').change(function() {
 
 			if ($(this).val() == "byId") {
-				$('#articlePlace').html('<input id="article" type="number" value="202575" />')
+				$('#articlePlace').html('<input id="article" type="number" />');
 			} else {
-				$('#articlePlace').html('<input id="article" type="text" placeholder="Article name" />')
+				$('#articlePlace').html('<input id="article" type="text" />');
 			}
 		});
 		
-		$("#articleTable").tablesorter(); 
-	},
-	
-	drawGraph: function() {
-		var canvas = document.getElementById("usersPath");
+		$("#articleTable").tablesorter();
+		$('#articleTable').hide();
+		$('#noresult').hide();
 
-		if( canvas.getContext() ) {
-			var ctx = canvas.getContext("2d");
-
-		} else {
-			
-			//TODO:canvas not supported
+		if( $( '#table' ).attr( 'data-page' ) != undefined ) {
+			$( '#selectBy' ).val( 'byTitle' );
+			$( '#articlePlace' ).html( '<input id="article" type="text" value="'+ $( '#table' ).attr( 'data-page' ) +'"/>' );
+			$(this).load();
 		}
 		
 	},
+
 	
 	load: function() {
 		$.get(
@@ -49,19 +42,26 @@ var UserPathPrediction = {
 				'format': 'json'
 			},
 			function(data) {
-				$("#nodes").html("");
 				nodes = data.nodes;
-				for (var i = 0; i < nodes.length; i++){
-					$("#nodes").append('<tr><td><a href="'+ 
-					nodes[i].referrerURL +'" target="_BLANK">'+ 
-					nodes[i].referrerTitle.mTextform +'</a><td><a href="'+ 
-					nodes[i].targetURL + '" target="_BLANK">' + 
-					nodes[i].targetTitle.mTextform + '</td><td>' +
-					nodes[i].count + '</td></tr>');
-				};
-
-
+				if(data['nodes'] != "No Result") {
+					$('#noresult').hide('fast');
+					$('#articleTable').hide('fast');
+					$("#nodes").html("");
+					for ( var i = 0; i < nodes.length; i++ ) {
+						$("#nodes").append('<tr><td><a href="'+ 
+						nodes[i].referrerURL +'" target="_BLANK">'+ 
+						nodes[i].referrerTitle.mTextform +'</a><td><a href="'+ 
+						nodes[i].targetURL + '" target="_BLANK">' + 
+						nodes[i].targetTitle.mTextform + '</td><td>' +
+						nodes[i].count + '</td></tr>');
+					}
+					$('#articleTable').show('fast');
+				} else {
+					$('#articleTable').hide('fast');
+					$('#noresult').show('fast');
+				}
 			}
+
 		);
 		return false;
 	}
