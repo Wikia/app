@@ -97,17 +97,19 @@ class FBConnectAPI {
 	/**
 	 * Calls users.getInfo. Requests information about the user from Facebook.
 	 */
-	public function getUserInfo( $user = 0 ) {
+	public function getUserInfo( $user = 0, $fields = null ) {
 		if ($user == 0) {
 			$user = $this->user();
 		}
-		if ($user != 0 && !isset($userinfo[$user]))
+		if ($user != 0 && !isset($userinfo[$user]) )
 		{
 			try {
-				$fields = array('first_name', 'name', 'sex', 'timezone', 'locale',
+				// Query the Facebook API with the users.getInfo method
+				if( is_null($fields) || !is_array($fields) ) {
+					$fields = array('first_name', 'name', 'sex', 'timezone', 'locale',
 				                /*'profile_url',*/
 				                'username', 'proxied_email', 'contact_email');
-				// Query the Facebook API with the users.getInfo method
+				} 
 				$user_details = $this->Facebook()->api_client->users_getInfo($user, $fields);
 				// Cache the data in the $userinfo array
 				

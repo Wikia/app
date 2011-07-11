@@ -174,6 +174,7 @@ class UserPagesHeaderModule extends Module {
 	
 	public function executeIndex() {
 		wfProfileIn(__METHOD__);
+		
 		global $wgTitle, $wgEnableUserProfilePagesExt, $wgRequest, $wgUser, $wgOut;
 		
 		$namespace = $wgTitle->getNamespace();

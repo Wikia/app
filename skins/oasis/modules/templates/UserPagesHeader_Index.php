@@ -6,56 +6,9 @@
 <?php } ?>
 
 <?php if ( empty( $isUserProfilePageExt ) ) { ?>
-	<ul class="wikia-avatar<?= !empty($avatarMenu) ? ' wikia-avatar-menu' : '' ?>">
-		<li>
-			<a href="<?= htmlspecialchars($userPage) ?>" class="avatar-link"><?= $avatar ?></a>
-<?php
-	if (!empty($avatarMenu)) {
-?>
-			<ul>
-<?php
-		foreach($avatarMenu as $item) {
-?>
-				<li><?= $item ?></li>
-<?php
-		}
-?>
-			</ul>
-<?php
-	}
-?>
-		</li>
-	</ul>
-	<?php
-		// render edit button / dropdown menu
-		if (!empty($actionButton)) {
-			echo wfRenderModule('MenuButton', 'Index', array(
-				'action' => $actionButton,
-				'image' => $actionImage,
-				'name' => $actionName,
-			));
-		}
-		else if (!empty($actionMenu)) {
-			echo wfRenderModule('MenuButton', 'Index', array(
-				'action' => $actionMenu['action'],
-				'image' => $actionImage,
-				'dropdown' => $actionMenu['dropdown'],
-				'name' => $actionName,
-			));
-		}
-	?>
-	<h1><?= $displaytitle != "" ? $title : htmlspecialchars($title) ?></h1>
-	<?= wfRenderModule('CommentsLikes', 'Index', array('likes' => $likes)); ?>
-
-
-	<?php
-		if (!empty($stats) && !empty($stats['edits'])) {
-	?>
-		<span class="member-since"><?= wfMsg('oasis-member-since', $stats['date']) ?></span>
-		<span class="member-edits"><?= wfMsgExt('oasis-edits-counter', array('parsemag'), $stats['edits']) ?></span>
-	<?php
-		}
-	?>
+	<!-- UPPv3 /BEGIN -->
+	<?php echo F::app()->renderView( 'UserProfilePage', 'renderUserIdentityBox', array() ); ?>
+	<!-- UPPv3 /END -->
 <?php } else { ?>
 	<!-- UserProfilePage Extension /BEGIN -->
 	<?= wfRenderModule( 'UserProfilePage', 'Masthead', array( 'userName' => $userName, 'userPage' => $userPage, 'avatarMenu' => $avatarMenu, 'displayTitle' => $displaytitle, 'title' => $title, 'actionButton' => $actionButton, 'actionImage' => $actionImage, 'actionName' => $actionName, 'actionMenu' => $actionMenu, 'likes' => $likes, 'stats' => $stats ) ); ?>

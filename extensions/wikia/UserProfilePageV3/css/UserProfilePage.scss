@@ -1,0 +1,86 @@
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/gradient";
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+
+$radius-user-profile-masthead: 5px;
+$color-user-profile-masthead-aka: #CCC;
+@if lightness($color-button-text) < 50 {
+	$color-user-profile-masthead-aka: #333;
+}
+
+
+.WikiaUserPagesHeader {
+	@include linear-gradient(null, top, $color-page, 0%, mix($color-links, $color-page, 20%), 100%); 
+}
+
+.UserProfileMasthead {
+	
+	padding: 0 15px;
+	position: relative;
+	.masthead-avatar {
+		left: 15px;
+		position: absolute;
+		top: 0;
+		.avatar {
+			border: 4px solid $color-page;
+			height: 140px;
+			width: 140px;
+		}
+	}
+	.masthead-info {
+		// Top radius included to ensure that the top corners are hidden behind the hgroup radius
+		@include border-radius-nw($radius-user-profile-masthead * 2);
+		@include border-radius-ne($radius-user-profile-masthead * 2);
+		@include border-radius-sw($radius-user-profile-masthead);
+		@include border-radius-se($radius-user-profile-masthead);
+		@include box-shadow(0px, 2px, 10px, rgba(0,0,0,.25));
+		
+		@include clearfix;	
+		background: $color-page;
+		margin-left: 178px;
+		margin-bottom: 20px;
+		
+		>div {
+			float: left;
+			width: 300px;
+		}
+		hgroup {
+			@include border-radius-nw($radius-user-profile-masthead);
+			@include border-radius-ne($radius-user-profile-masthead);
+			@include linear-gradient(null, top, $color-button-highlight, 0%, $color-buttons, 100%);
+			color: $color-button-text;
+			height: 62px;
+			overflow: hidden;
+			padding: 8px 25px;
+		}
+		h1 {
+			display: inline;
+			font-size: 32px;
+			font-weight: bold;
+		}
+		.group {
+			@include border-radius(3px);
+			background: mix($color-button-highlight, $color-page, 80%);
+			display: inline-block;
+			margin-left: 10px;
+			padding: 2px 5px;
+			position: relative;
+			text-transform: uppercase;
+			top: -5px;
+		}
+		h2 {
+			font-size: 21px;
+			font-weight: lighter;
+			span {
+				color: $color-user-profile-masthead-aka;
+			}
+		}
+	}
+	
+}
+
+#userIdentityBoxEdit {
+	float: right;
+}

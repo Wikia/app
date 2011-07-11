@@ -292,6 +292,10 @@ class User {
 		if ( !is_array( $data ) || $data['mVersion'] < MW_USER_VERSION ) {
 			# Object is expired, load from DB
 			$data = false;
+			
+			file_put_contents('/tmp/upp3.log', print_r(array('info' => 'User::loadFromId(): user expired!'), true), FILE_APPEND);
+		} else {
+			file_put_contents('/tmp/upp3.log', print_r(array('info' => 'User::loadFromId(): user was in memcache!'), true), FILE_APPEND);
 		}
 
 		$isExpired = false;
@@ -2723,7 +2727,16 @@ class User {
 		}
 		// wikia change end
 
-		$dbw = wfGetDB( DB_MASTER );
+		// wikia change
+		global $wgExternalSharedDB, $wgSharedDB, $wgGlobalUserProperties;
+		if( isset( $wgSharedDB ) ) {
+			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+		}
+		else {
+			$dbw = wfGetDB( DB_MASTER );
+		}
+		// wikia change end
+		
 		$dbw->update( 'user',
 			array( /* SET */
 				'user_name' => $this->mName,
