@@ -495,8 +495,7 @@ class FounderProgressBarController extends WikiaController {
 	 */
 	private function getCompletionData(Array $list) {
 		$data = array();
-		$total_tasks = count($list);
-		if ($total_tasks == 0) return $data;  // Prevent any divide by zero possibility
+		$total_tasks = max(count($list), 1); // Prevent any divide by zero possibility
 		$tasks_completed = 0;
 		$tasks_skipped = 0;
 		$bonus_tasks = 0;

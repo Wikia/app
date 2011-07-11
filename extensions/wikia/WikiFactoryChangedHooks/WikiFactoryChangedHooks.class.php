@@ -145,4 +145,27 @@ Class WikiFactoryChangedHooks {
 
 		return true;
 	}
+	
+	// Initialize schema if not already initialized
+	static public function FounderProgressBar( $cv_name, $wiki_id, $value ) {
+
+		Wikia::log( __METHOD__, $wiki_id, "{$cv_name} = {$value}" );
+		// Initialize data if extension is enabled. Safe to do multiple times, just gives a warning
+		if( $cv_name == 'wgEnableFounderProgressBarExt' && $value == true ){
+			$app = F::app();
+			$dbw = $app->wf->GetDB(DB_MASTER, array(), $app->wg->ExternalSharedDB);
+
+			// FIXME: right now this has to be updated when new tasks are added
+			for($task_id = 10; $task_id <= 300; $task_id+=10) {
+				$sql = "INSERT IGNORE INTO founder_progress_bar_tasks SET wiki_id=$wiki_id, task_id=$task_id";
+				$dbw->query ($sql);
+			}		
+			// also clear out any lingering memcache keys
+			$memc = $app->wg->Memc;
+			$memc->delete( $app->wf->MemcKey('FounderLongTaskList') );
+			$memc->delete( $app->wf->MemcKey('FounderTasksComplete') );
+		}
+		return true;
+	}
+		
 }
