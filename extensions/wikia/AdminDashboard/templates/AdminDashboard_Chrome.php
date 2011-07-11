@@ -17,6 +17,6 @@
 	<a href="<?= $adminDashboardUrlAdvanced ?>" class="tab <?= $tab == 'advanced' ? 'active' : '' ?>" data-section="advanced">Advanced</a>
 	<a href="<?= $adminDashboardUrlGeneral ?>" class="tab <?= $tab == 'general' ? 'active' : '' ?>" data-section="general">General</a>
 </nav>
-<aside class="AdminDashboardRail" id="AdminDashboardRail">
+<aside class="AdminDashboardRail" id="AdminDashboardRail" <?= $hideRail ? 'style="display:none"' : '' ?>>
 	<?= $founderProgressBar ?>
 </aside>

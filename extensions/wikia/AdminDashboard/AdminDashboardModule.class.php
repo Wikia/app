@@ -14,9 +14,10 @@ class AdminDashboardModule extends Module {
 		global $wgRequest, $wgTitle;
 		
 		$adminDashboardTitle = Title::newFromText('AdminDashboard', NS_SPECIAL);
+		$isAdminDashboard = $wgTitle->getText() == $adminDashboardTitle->getText();
 		
 		$this->tab = $wgRequest->getVal("tab", "");
-		if(empty($this->tab) && $wgTitle->getText() == $adminDashboardTitle->getText()) {
+		if(empty($this->tab) && $isAdminDashboard) {
 			$this->tab = 'general';
 		}
 
@@ -40,6 +41,9 @@ class AdminDashboardModule extends Module {
 		$this->adminDashboardUrlAdvanced = Title::newFromText('AdminDashboard', NS_SPECIAL)->getFullURL().'?tab=advanced';
 		
 		$this->mainPageUrl = wfMsgForContent( 'mainpage' );
+		
+		$state = F::app()->sendRequest( 'AdminDashboardSpecialPage', 'getDrawerState', array())->getData();
+		$this->hideRail = ($state['state'] != 'true') && !$isAdminDashboard;
 	}
 	
 	/**

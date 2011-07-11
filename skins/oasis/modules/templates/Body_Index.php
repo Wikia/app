@@ -60,7 +60,7 @@
 				echo wfRenderModule($headerModuleName, $headerModuleAction, $headerModuleParams);
 			}
 		?>
-		<div id="WikiaArticle" class="WikiaArticle<?= $displayAdminDashboardChromedArticle ? ' AdminDashboardChromedArticle' : '' ?>">
+		<div id="WikiaArticle" class="WikiaArticle<?= $displayAdminDashboardChromedArticle ? ' AdminDashboardChromedArticle'.($adminDashboardCollapsed ? '' : ' expanded') : '' ?>">
 			<? if($displayAdminDashboardChromedArticle) { ?>
 				<?= (string)F::app()->sendRequest( 'AdminDashboardSpecialPage', 'chromedArticleHeader', array('headerText' => $wgTitle->getText() )) ?>
 			<? } ?>
