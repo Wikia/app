@@ -200,7 +200,7 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 	
 	public function getDrawerState() {
 		$state = isset($_SESSION['admindashboard-state']) ? $_SESSION['admindashboard-state'] : 'true';
-		$this->response->setVal('state', $_SESSION['admindashboard-state']);
+		$this->response->setVal('state', $state);
 	}
 
 }
