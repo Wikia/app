@@ -35,12 +35,8 @@ class UserPathPredictionSpecialController extends WikiaSpecialPageController {
 	public function UserPathPrediction() {
 		$this->wf->profileIn( __METHOD__ );
 		
-		// getting request data
-		//$wikiId = $this->getVal( 'wikiId', $this->wg->CityId );
-		
-		// setting response data
-		$this->setVal( 'header', $this->wf->Msg( 'userpathprediction-special-header' ) );
-		
+		$this->setVal( 'par', $this->getVal( 'par' ) );
+
 		// example of setting SpecialPage::mIncluding
 		$this->mIncluding = true;
 		

@@ -1,46 +1,40 @@
-<header>
-	<h1><?= $header ?></h1>
-	<p>This is a demonstration of prediction of users' paths.</p>
-	<br>
-</header>
-
 <section id="sectionUserPathPrediction">
 <nav>
 	<form id="wikiForm">
-		<label for="articleId">Article:
+		<label for="articleId"><?= wfMsg( 'userpathprediction-article' ); ?>:
 			<select id="selectBy">
-				<option value="byId">ID</option>
-				<option value="byTitle">Title</option>
+				<option value="byId"><?= wfMsg( 'userpathprediction-id' ); ?></option>
+				<option value="byTitle"><?= wfMsg( 'userpathprediction-title' ); ?></option>
 			</select>
 			<span id="articlePlace"><input id="article" type="number" value="" /></span>
 		</label>
-		<label for="nodeCount">Node count:
-			<input id="nodeCount" type="number" value="" />
+		<label for="nodeCount"><?= wfMsg( 'userpathprediction-nodecount' ); ?>:
+			<input id="nodeCount" type="number" value="10" />
 		</label>
-		<label for="dateSpan">Last:
-			<input id="dateSpan" type="number" value="" />
-		</label> days
-	<button type="submit" onclick="return UserPathPrediction.load()">Load</button>
+		<label for="dateSpan"><?= wfMsg( 'userpathprediction-last' ); ?>:
+			<input id="dateSpan" type="number" value="30" />
+		</label> <?= wfMsg( 'userpathprediction-days' ); ?>
+	<button type="submit" onclick="return UserPathPrediction.load()"><?= wfMsg( 'userpathprediction-show' ); ?></button>
 	</form>
 </nav>
-<div id="table">
+<div id="table" <?= ( $par != NULL )  ? "data-page=\"".$par."\"" : "" ?>>
 	<table id="articleTable" class="tablesorter">
 		<thead>
 			<tr>
-				<th>From:</th>
-				<th>To:</th>
-				<th>Clicks:</th>
+				<th><?= wfMsg( 'userpathprediction-from' ); ?>:</th>
+				<th><?= wfMsg( 'userpathprediction-to' ); ?>:</th>
+				<th><?= wfMsg( 'userpathprediction-clicks' ); ?>:</th>
 			</tr>
 		</thead>
 		<tbody id="nodes">
 		</tbody>
 	</table>
 </div>
-
+<div id="noresult">No Result</div>
 <canvas id="usersPath"></canvas>
 </section>
 <footer>
-	Created by: 
+	<?= wfMsg( 'userpathprediction-createdby' ); ?>: 
 		<ul>
 			<li>
 				<a href="mailto:bukaj.kelo@gmail.com">Jakub Olek</a>
