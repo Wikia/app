@@ -17,6 +17,7 @@ test('isHighValueCountry', function() {
   ok( AdConfig.isHighValueCountry('IT'), 'IT' );
   ok( AdConfig.isHighValueCountry('NL'), 'NL' );
   ok( AdConfig.isHighValueCountry('NO'), 'NO' );
+  ok( AdConfig.isHighValueCountry('RU'), 'RU' );
   ok( AdConfig.isHighValueCountry('SE'), 'SE' );
   ok( AdConfig.isHighValueCountry('UK'), 'UK' );
   ok( AdConfig.isHighValueCountry('US'), 'US' );
