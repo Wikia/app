@@ -1,5 +1,8 @@
+<script>
+	AdminDashboardChrome.isCollapsed = <?= $isCollapsed ?>;
+</script>
 <div id="AdminDashboardDrawer" class="AdminDashboardDrawer">
-	<span class="arrow"></span>
+	<span class="arrow<?= ($isCollapsed ? '' : ' expanded') ?>"></span>
 </div>
 <nav class="AdminDashboardNavigation">
 	<a href="<?= $backLink ?>"><?= wfMsg('admindashboard-back-to-dashboard') ?></a>

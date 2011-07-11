@@ -4,16 +4,43 @@ var AdminDashboardChrome = {
 		AdminDashboardChrome.drawer = $('#AdminDashboardDrawer');
 		AdminDashboardChrome.wikiaArticle = $('#WikiaArticle');
 		AdminDashboardChrome.arrow = $('#AdminDashboardDrawer .arrow');
-		AdminDashboardChrome.drawer.click(function() {
-			if(AdminDashboardChrome.rail.is(':visible')) {
-				AdminDashboardChrome.rail.hide();
-				AdminDashboardChrome.wikiaArticle.addClass('expanded');
-				AdminDashboardChrome.arrow.addClass('expanded');
-			} else {
-				AdminDashboardChrome.arrow.removeClass('expanded');
-				AdminDashboardChrome.wikiaArticle.removeClass('expanded');
-				AdminDashboardChrome.rail.show();
-			}
+		AdminDashboardChrome.drawer.click(AdminDashboardChrome.toggleDrawer);
+	},
+	collapseDrawer: function() {
+		AdminDashboardChrome.arrow.removeClass('expanded');
+		AdminDashboardChrome.wikiaArticle.removeClass('expanded');
+		AdminDashboardChrome.rail.show();
+		AdminDashboardChrome.isCollapsed = true;
+	},
+	expandDrawer: function() {
+		AdminDashboardChrome.rail.hide();
+		AdminDashboardChrome.wikiaArticle.addClass('expanded');
+		AdminDashboardChrome.arrow.addClass('expanded');
+		AdminDashboardChrome.isCollapsed = false;
+	},
+	toggleDrawer: function() {
+		if(AdminDashboardChrome.rail.is(':visible')) {
+			AdminDashboardChrome.expandDrawer();
+		} else {
+			AdminDashboardChrome.collapseDrawer();
+		}
+		AdminDashboardChrome.saveState();
+	},
+	restoreDefaultState: function() {
+		if(AdminDashboardChrome.isCollapsed) {
+			AdminDashboardChrome.collapseDrawer();
+		} else {
+			AdminDashboardChrome.expandDrawer();
+		}
+	},
+	saveState: function() {
+		$.post(wgScriptPath + '/wikia.php', {
+			controller: 'AdminDashboardSpecialPage',
+			method: 'saveDrawerState',
+			format: 'json',
+			state: AdminDashboardChrome.isCollapsed
+		}, function(res) {
+			// do nothing
 		});
 	}
 };
@@ -78,6 +105,7 @@ var AdminDashboard = {
 			AdminDashboard.wikiaArticle.removeClass('AdminDashboardChromedArticle expanded');
 			$('.AdminDashboardDrawer, .AdminDashboardNavigation, .AdminDashboardArticleHeader').remove();
 			FounderProgressList.hideListModal();
+			AdminDashboardChrome.rail.show();
 		},
 		hideAllSections: function() {
 			for(var s in AdminDashboard.section) {
@@ -110,6 +138,7 @@ var AdminDashboard = {
 					AdminDashboard.ui.showSection('general');
 				});
 				AdminDashboardChrome.init();
+				AdminDashboardChrome.restoreDefaultState();
 			});
 			AdminDashboard.section.contentarea.load(wgScriptPath + '/wikia.php', {
 				controller: 'AdminDashboardSpecialPage',
@@ -122,7 +151,6 @@ var AdminDashboard = {
 			});
 		},
 		loadListUsers: function() {
-			//sassParams['color-page'] = '#fff';
 			var sassUrl = $.getSassCommonURL('/extensions/wikia/Listusers/css/table.scss');
 			$.getResources([wgScriptPath + '/extensions/wikia/Listusers/js/jquery.dataTables.min.js'], function() {
 				AdminDashboard.contentload.loadSpecialPage('ListUsers');
