@@ -1,5 +1,4 @@
 <?php
-
 function sandboxParse($wikiText)
 	{
 		global $wgTitle, $wgUser;
@@ -20,12 +19,16 @@ class SpecialMyExtension extends SpecialPage
 	}
 	function execute ($par)
 	{
-		global $wgRequest, $wgOut, $wgCityId, $wgTitle/*, $wgUser*/;
-		
+		global $wgRequest, $wgOut/*, $wgUser*/;
+		/*
+	if ( !$this->userCanExecute($wgUser) ) {
+                $this->displayRestrictionError();
+                return;
+        }*/
 		$this->setHeaders();
+		$wgOut->setPagetitle("Pepson");
 		$param = $wgRequest->getText('param');
 		$output = "Hello world!";
-		$wgOut->addWikiText($_SERVER['HTTP_USER_AGENT']);
 		$wgOut->addWikiText($output);
 		$wgOut->addHTML(sandboxParse("A teraz tekst powinien byc '''sformatowany''' poprawnie."));
 		$wgOut->addHTML('<b>Pogrubiebie..</b>');
@@ -35,29 +38,6 @@ class SpecialMyExtension extends SpecialPage
 		$wgOut->addWikiText('* Item 1');
 		$wgOut->addWikiText('* Item 2');
 		$wgOut->addWikiText('* Item 3');
-		$topTenViewers = new GetViewers();
-		$topusers = $topTenViewers->GetTenTopUsers(intval($wgCityId));
-		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/Templates/" );
-		$oTmpl->set_vars( array("users" => $topusers, "wikicity" => intval($wgCityId), "url" => $wgTitle->getFullUrl())
-		);
-		
-		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/MyExtension/css/myextension.scss'));
-		//if (isset($_POST["add"])) unset($_POST["add"]); 
-		$wgOut->addHTML( $oTmpl->execute('table.tmpl.php') );
-		if (isset($_POST["add"])){
-			//$_POST = $_SESSION["POSTDATA"];
-			//if(!is_null($_POST["add"])){
-				print_r($_POST["id"]);
-				print_r($_POST["styled-textarea"]);
-				//exit;
-	  			$id = $_POST["id"];// BEZ SENSU, BO KOMENTARZE WRZUCA DO WSZYSTKICH I POWIELA OSTATNI PRZY ODSWIEZANIU STRONY
-	  			$comment = $_POST["styled-textarea"];
-	  			$topTenViewers->saveComment($id, $comment, $wgCityId); //
-				$wgOut->redirect($wgTitle->GetFullURL());
-			//}
-			//header('Location: '.$_SERVER['PHP_SELF']);
-			//unset($_SESSION["POSTDATA"]);
-		}
 		//$wgOut->showErrorPage('error','badarticleerror');
 	}
 }
