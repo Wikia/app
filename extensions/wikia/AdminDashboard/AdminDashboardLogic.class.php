@@ -16,7 +16,7 @@ class AdminDashboardLogic {
 		if (!$app->wg->User->isLoggedIn()) return false;
 		if (!$app->wg->User->isAllowed( 'admindashboard' )) return false;
 		if ($title && $title->isSpecialPage()) {
-			$exclusionList = array("Connect", "UserLogin", "Signup", "WikiaLabs", "PageLayoutBuilder", "Preferences", "LayoutBuilder", "ThemeDesigner");
+			$exclusionList = array("Connect", "UserLogin", "Signup", "WikiaLabs", "PageLayoutBuilder", "Preferences", "LayoutBuilder", "ThemeDesigner", "WikiFactory");
 			return (!in_array($title->getDBKey(), $exclusionList));
 		}
 		return false;
