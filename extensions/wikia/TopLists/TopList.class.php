@@ -42,8 +42,13 @@ class TopList extends TopListBase {
 	 */
 	static public function newFromTitle( Title $title ) {
 		global $wgMemc;
-
-		if ( $title->getNamespace() == NS_TOPLIST && !$title->isSubpage() ) {
+		
+		if (
+			$title->getNamespace() == NS_TOPLIST &&
+			!$title->isSubpage() &&
+			//FB#8083: blocked titles are not being filtered, this should be handled automatically by Phalanx though...
+			TitleBlock::checkTitle( $title )
+		) {
 			$list = new self();
 			$list->mTitle = $title;
 
