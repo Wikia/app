@@ -106,6 +106,14 @@ class Masthead {
 	 * @access public
 	 */
 	public static function newFromUser( User $User ) {
+		file_put_contents('/tmp/upp3.log', print_r(array('info' => 'Masthead::newFromUser() fired!'), true), FILE_APPEND);
+		
+		if( isset($user->mOptions['avatar']) ) {
+			file_put_contents('/tmp/upp3.log', print_r(array('Masthead::newFromUser()::avatar' => $user->mOptions['avatar']), true), FILE_APPEND);
+		} else {
+			file_put_contents('/tmp/upp3.log', print_r(array('Masthead::newFromUser()::avatar' => 'none'), true), FILE_APPEND);
+		}
+		
 		return new Masthead( $User );
 	}
 
@@ -245,9 +253,15 @@ class Masthead {
 	 * @return String
 	 */
 	public function getUrl( $thumb = "" ) {
+		file_put_contents('/tmp/upp3.log', print_r(array('info' => 'Masthead::getPurgeUrl() fired!'), true), FILE_APPEND);
+		
 		if (!empty($this->avatarUrl)) {
+			file_put_contents('/tmp/upp3.log', print_r(array('Masthead::getUrl()::$this->avatarUrl' => $this->avatarUrl), true), FILE_APPEND);
+			
 			return $this->avatarUrl;
 		} else {
+			file_put_contents('/tmp/upp3.log', print_r(array('Masthead::getUrl()::$this->avatarUrl' => 'empty'), true), FILE_APPEND);
+			
 			$url = $this->getPurgeUrl($thumb); // get the basic URL
 			return wfReplaceImageServer( $url, $this->mUser->getTouched() );
 		}
@@ -265,8 +279,11 @@ class Masthead {
 	 * @return String
 	 */
 	public function getPurgeUrl( $thumb = "" ) {
+		file_put_contents('/tmp/upp3.log', print_r(array('info' => 'Masthead::getPurgeUrl() fired!'), true), FILE_APPEND);
+		
 		global $wgBlogAvatarPath;
 		$url = $this->mUser->getOption( AVATAR_USER_OPTION_NAME );
+		
 		if( $url ) {
 			/**
 			 * if default avatar we glue with messaging.wikia.com
@@ -313,7 +330,6 @@ class Masthead {
 	 * @return string -- url to Avatar
 	 */
 	public function getThumbnail( $width, $inPurgeFormat = false, $avoidUpscaling = false ) {
-
 		if( $avoidUpscaling ) {
 			list( $imageWidth ) = getimagesize( $this->getFullPath );
 
@@ -869,20 +885,10 @@ class Masthead {
 			'bUploadsPossible' => $bUploadsPossible,
 		) );
 
-		$html = wfHidden( 'MAX_FILE_SIZE', AVATAR_MAX_SIZE );
-		$html .= $oTmpl->execute('pref-avatar-form');
-
 		$defaultPreferencesTemp = array();
 
 		foreach($defaultPreferences as $k => $v) {
 			$defaultPreferencesTemp[$k] = $v;
-			if($k == 'showAds') {
-				$defaultPreferencesTemp['avatarupload'] = array(
-					'help' => $html,
-					'label' => '&nbsp;',
-					'type' => 'info',
-					'section' => 'personal/avatarupload');
-			}
 		}
 
 		$defaultPreferences = $defaultPreferencesTemp;

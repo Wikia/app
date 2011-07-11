@@ -6,18 +6,17 @@ class AvatarService extends Service {
 	 */
 	static private function getUser($userName) {
 		wfProfileIn(__METHOD__);
-
+		
 		static $usersCache;
-
-		if (isset($usersCache[$userName])) {
+		
+		if( isset($usersCache[$userName]) ) {
 			$user = $usersCache[$userName];
-		}
-		else {
+		} else {
 			$user = User::newFromName($userName);
-
+			
 			$usersCache[$userName] = $user;
 		}
-
+		
 		wfProfileOut(__METHOD__);
 		return $user;
 	}
@@ -51,10 +50,9 @@ class AvatarService extends Service {
 
 		$url = '';
 
-		if (isset($linksCache[$userName])) {
+		if( isset($linksCache[$userName]) ) {
 			$url = $linksCache[$userName];
-		}
-		else {
+		} else {
 			if (User::isIP($userName)) {
 				// anon: point to Special:Contributions
 				$url = Skin::makeSpecialUrl('Contributions').'/'.$userName;
@@ -77,28 +75,34 @@ class AvatarService extends Service {
 	/**
 	 * Get URL for avatar
 	 */
-	static function getAvatarUrl($userName, $avatarSize = 20, $avoidUpscaling = false) {
+	static function getAvatarUrl($user, $avatarSize = 20, $avoidUpscaling = false) {
 		wfProfileIn(__METHOD__);
-
+		
 		static $avatarsCache;
-		$key = "{$userName}::{$avatarSize}";
-
-		if (isset($avatarsCache[$key])) {
-			$avatarUrl = $avatarsCache[$key];
+		if( $user instanceof User ) {
+			$key = "{$user->getName()}::{$avatarSize}";
+		} else {
+		//assumes $user is a string with user name
+			$key = "{$user}::{$avatarSize}";
 		}
-		else {
-			$user = self::getUser($userName);
-
+		
+		if( isset($avatarsCache[$key]) ) {
+			$avatarUrl = $avatarsCache[$key];
+		} else {
+			if( !($user instanceof User) ) {
+				$user = self::getUser($user);
+			}
+			
 			// handle anon users - return default avatar
-			if (empty($user) || !class_exists('Masthead')) {
+			if( empty($user) || !class_exists('Masthead') ) {
 				$avatarUrl = self::getDefaultAvatar($avatarSize);
-
+				
 				wfProfileOut(__METHOD__);
 				return $avatarUrl;
 			}
-
-			$avatarUrl = Masthead::newFromUser($user)->getThumbnail($avatarSize, $avoidUpscaling);
-
+			
+			$avatarUrl = Masthead::newFromUser($user)->getThumbnail($avatarSize, true, $avoidUpscaling);
+			
 			$avatarsCache[$key] = $avatarUrl;
 		}
 

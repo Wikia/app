@@ -1182,8 +1182,8 @@ class Preferences {
 
 	static function getFormObject( $user ) {
 		$formDescriptor = Preferences::getPreferences( $user );
+		
 		$htmlForm = new PreferencesForm( $formDescriptor, 'prefs' );
-
 		$htmlForm->setSubmitText( wfMsg( 'saveprefs' ) );
 		$htmlForm->setTitle( SpecialPage::getTitleFor( 'Preferences' ) );
 		$htmlForm->setSubmitID( 'prefsubmit' );

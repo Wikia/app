@@ -171,6 +171,7 @@ function wfSpecialPreferencesExtension()
             $html = $wgOut->getHTML();
             $wgOut->clearHTML();
             $sections = array();
+            
             foreach ($wgExtensionPreferences as $p)
             {
                 if (! isset($p['section']) || ! $p['section'])
