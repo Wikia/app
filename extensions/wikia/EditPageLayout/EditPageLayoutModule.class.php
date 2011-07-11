@@ -116,7 +116,10 @@ class EditPageLayoutModule extends Module {
 		$this->noticesHtml = $editPage->getNoticesHtml();
 
 		// notifications link (BugId:7951)
-		$this->notificationsLink = $app->runFunction('wfMsgExt', 'editpagelayout-notificationsLink', array('parsemag'), count($this->notices));
+		$this->notificationsLink =
+			(count($this->notices) == 0)
+			? $app->runFunction('wfMsg', 'editpagelayout-notificationsLink-none')
+			: $app->runFunction('wfMsgExt', 'editpagelayout-notificationsLink', array('parsemag'), count($this->notices));
 
 		// check if we're in read only mode
 		// disable edit form when in read-only mode

@@ -8,6 +8,7 @@ $messages['en'] = array(
 	'editpagelayout-helpLink-url' => 'Help:Editing',
 	'editpagelayout-helpLink' => 'Need [[{{MediaWiki:Editpagelayout-helpLink-url}}|Help?]]',
 	'editpagelayout-notificationsLink' => '<span>$1</span> Notifications',
+	'editpagelayout-notificationsLink-none' => 'Notifications',
 	'editpagelayout-edit-title' => 'Edit title',
 	'editpagelayout-edit-info' => 'Edit info',
 	'editpagelayout-diff-header-url' => 'Help:Diff',
