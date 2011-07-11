@@ -9,7 +9,9 @@
 		<?= $activity['task_description'] ?>
 		<div class="actions">
 			<a href="#" class="skip"><?= wfMsg('founderprogressbar-skip-for-now') ?></a>
-			<a class="wikia-button" href="<?= $activity['task_url']?>"><?= $activity['task_action'] ?></a>
+			<a class="wikia-button" href="<?= $activity['task_url']?>">
+				<?= wfMsg('founderprogressbar-task-call-to-action') ?>
+			</a>
 		</div>
 	</div>
 </li>

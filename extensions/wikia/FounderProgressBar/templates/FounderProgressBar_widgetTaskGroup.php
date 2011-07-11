@@ -22,7 +22,9 @@
 							<? if(!empty($taskList[$index]['task_completed'])) { ?>
 								<span class="completed"><?= wfMsg('founderprogressbar-task-completed') ?></span>
 							<? } ?>
-							<a href="<?= $taskList[$index]['task_url'] ?>" class="wikia-button"><?= $taskList[$index]['task_action'] ?></a>
+							<a href="<?= $taskList[$index]['task_url'] ?>" class="wikia-button">
+								<?= wfMsg('founderprogressbar-task-call-to-action') ?>
+							</a>
 						</div>
 						<canvas class="tail" height="15" width="25"></canvas>
 					</div>
