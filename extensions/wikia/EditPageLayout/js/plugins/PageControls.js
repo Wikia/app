@@ -369,14 +369,24 @@
 				className: 'preview'
 			}, function(contentNode) {
 				self.getContent(function(content) {
+					var summary = $('#wpSummary').val();
+
+					// add section name when adding new section (BugId:7658)
+					if (window.wgEditPageSection == 'new') {
+						content = '== ' + summary + ' ==\n\n' + content;
+					}
+					else {
+						extraData.summary = summary;
+					}
+
 					extraData.content = content;
-					extraData.summary = $('#wpSummary').val();
+
 					self.ajax('preview',
 						extraData,
 						function(data) {
 							// wrap article's HTML inside .WikiaArticle
 							var pageTitle = '<h1 class="pagetitle">' + window.wgEditedTitle + '</h1>',
-								isSectionEdit = !!parseInt(window.wgEditPageSection),
+								isSectionEdit = !!parseInt(window.wgEditPageSection) || (window.wgEditPageSection == 'new'),
 								html = (!isSectionEdit ? pageTitle : '') + data.html;
 
 							contentNode.html(html);
@@ -385,7 +395,7 @@
 							contentNode.find('.editsection').each(function() {
 								$(this).appendTo($(this).next());
 							});
-							
+
 							// add summary
 							if (typeof data.summary != 'undefined') {
 								$('<div>', {id: "EditPagePreviewEditSummary"}).
