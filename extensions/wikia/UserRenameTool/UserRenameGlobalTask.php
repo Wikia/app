@@ -33,6 +33,44 @@ class UserRenameGlobalTask extends BatchTask {
 	 * @return boolean - status of operation
 	 */
 	public function execute( $params = null ) {
+                global $wgStatsDB, $wgStatsDBEnabled;
+                
+		//no working stats DB instance on devboxes
+		if( !defined('ENV_DEVBOX') && !empty($wgStatsDBEnabled) ) {
+		
+                        $this->mParams = unserialize( $params->task_arguments );
+                        $process = RenameUserProcess::newFromData( array_merge( $this->mParams, array( 'local_task' => $this ) ) );
+                        
+                        if( defined( 'ENV_DEVBOX' ) ) {
+                            $process->addLogDestination( RenameUserProcess::LOG_BATCH_TASK, $this );
+                        } else {
+                            $process->setLogDestination( RenameUserProcess::LOG_BATCH_TASK, $this );
+                        }
+                        
+                        $process->addLog( 'Updating global shared database: stats' );
+                        
+			$dbw = wfGetDB(DB_MASTER, array(), $wgStatsDB);
+                        $dbw->begin();
+                        
+                        $tasks = $this->mParams['tasks'];
+
+			$hookName = 'UserRename::Stats';
+			$process->addLog( "Broadcasting hook: {$hookName}" );
+			wfRunHooks( $hookName, array( $dbw, $this->mParams['rename_user_id'], $this->mParams['rename_old_name'], $this->mParams['rename_new_name'], $this, &$tasks ) );
+
+			foreach( $tasks as $task ) {
+				$this->addLog( "Updating stats: {$task['table']}:{$task['username_column']}" );
+				$this->renameInTable( $dbw, $task['table'], $this->mParams['rename_user_id'], $this->mParams['rename_old_name'], $this->mParams['rename_new_name'], $task );
+			}
+
+			$hookName = 'UserRename::AfterStats';
+                        $process->addLog( "Broadcasting hook: {$hookName}" );
+                        wfRunHooks( $hookName, array( $dbw, $this->mParams['rename_user_id'], $this->mParams['rename_old_name'], $this->mParams['rename_new_name'], $this, &$tasks ) );
+
+			$dbw->commit();
+			$process->addLog( 'Finished updating shared database: stats' );
+		}
+                
 		return true;
 	}
 

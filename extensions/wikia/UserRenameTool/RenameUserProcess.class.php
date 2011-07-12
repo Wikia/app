@@ -644,7 +644,20 @@ class RenameUserProcess {
 		//process global tables
 		$this->addLog("Initializing update of global shared DB's.");
 		$this->updateGlobal();
-		
+                
+                // create a new task for the Task Manager to handle all the global tables
+                $this->addLog("Setting up a task for processing global DB");
+                $task = new UserRenameGlobalTask();
+                $task->createTask(
+                        array(
+                            'rename_user_id'  => $this->mUserId,
+                            'rename_old_name' => $this->mOldUsername,
+                            'rename_new_name' => $this->mNewUsername,
+                            'tasks'           => self::$mStatsDefaults
+                        ),
+                        TASK_QUEUED
+                );
+                $this->addLog("Task created with ID " . $task->getID());
 		$this->addLog("Setting up a task for processing local DB's");
 		//create a new task for the Task Manager to handle all the local tables per each wiki
 		$task = new UserRenameLocalTask();
@@ -663,7 +676,7 @@ class RenameUserProcess {
 			),
 			TASK_QUEUED
 		);
-
+                
 		$this->addLog("Task created with ID " . $task->getID());
 		$this->addLog("User rename global task end.");
 
@@ -700,32 +713,6 @@ class RenameUserProcess {
 
 		$dbw->commit();
 		$this->addLog("Finished updating shared database: wikicities.");
-
-
-		//no working stats DB instance on devboxes
-		if( !defined('ENV_DEVBOX') && !empty($wgStatsDBEnabled) ) {
-			// stats
-			$this->addLog("Updating global shared database: stats");
-			$dbw = wfGetDB(DB_MASTER, array(), $wgStatsDB);
-			$dbw->begin();
-			$tasks = self::$mStatsDefaults;
-
-			$hookName = 'UserRename::Stats';
-			$this->addLog("Broadcasting hook: {$hookName}");
-			wfRunHooks($hookName, array($dbw, $this->mUserId, $this->mOldUsername, $this->mNewUsername, $this, &$tasks));
-
-			foreach($tasks as $task){
-				$this->addLog("Updating stats: {$task['table']}:{$task['username_column']}");
-				$this->renameInTable($dbw, $task['table'], $this->mUserId, $this->mOldUsername, $this->mNewUsername, $task);
-			}
-
-			$hookName = 'UserRename::AfterStats';
-			$this->addLog("Broadcasting hook: {$hookName}");
-			wfRunHooks($hookName, array($dbw, $this->mUserId, $this->mOldUsername, $this->mNewUsername, $this, &$tasks));
-
-			$dbw->commit();
-			$this->addLog("Finished updating shared database: stats");
-		}
 
 		wfProfileOut(__METHOD__);
 	}
