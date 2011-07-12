@@ -331,7 +331,7 @@ class Masthead {
 	 */
 	public function getThumbnail( $width, $inPurgeFormat = false, $avoidUpscaling = false ) {
 		if( $avoidUpscaling ) {
-			list( $imageWidth ) = getimagesize( $this->getFullPath );
+			list( $imageWidth ) = getimagesize( $this->getFullPath() );
 
 			if( $width > $imageWidth ) {
 					$width = $imageWidth;
