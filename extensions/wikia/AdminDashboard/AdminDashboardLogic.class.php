@@ -23,6 +23,7 @@ class AdminDashboardLogic {
 				"Preferences", 
 				"Signup", 
 				"ThemeDesigner", 
+				"ThemeDesignerPreview",
 				"UserLogin", 
 				"WikiActivity",
 				"WikiFactory", 
