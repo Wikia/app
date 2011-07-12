@@ -1,4 +1,6 @@
 <?php
+require_once dirname(__FILE__) . '/../UserProfilePage.setup.php';
+wfLoadAllExtensions();
 
 class InterviewQuestionTest extends WikiaBaseTest {
 
