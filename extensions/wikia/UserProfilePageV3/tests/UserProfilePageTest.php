@@ -1,4 +1,6 @@
 <?php
+require_once dirname(__FILE__) . '/../UserProfilePage.setup.php';
+wfLoadAllExtensions();
 
 class UserProfilePageTest extends WikiaBaseTest {
 	const TEST_WIKI_ID = 111;
