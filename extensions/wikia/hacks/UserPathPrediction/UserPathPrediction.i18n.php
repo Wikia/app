@@ -16,7 +16,8 @@ $messages['en'] = array(
 	'userpathprediction-from' => "From",
 	'userpathprediction-to' => "To",
 	'userpathprediction-clicks' => "Clicks",
-	'userpathprediction-createdby' => "Created by"
+	'userpathprediction-createdby' => "Created by",
+	'userpathprediction-noresult' => "No Results"
 
 );
 
@@ -34,5 +35,6 @@ $messages['pl'] = array(
 	'userpathprediction-from' => "Z",
 	'userpathprediction-to' => "Do",
 	'userpathprediction-clicks' => "Kliknięć",
-	'userpathprediction-createdby' => "Stworzone przez"
+	'userpathprediction-createdby' => "Stworzone przez",
+	'userpathprediction-noresult' => "Brak Wyników"
 );

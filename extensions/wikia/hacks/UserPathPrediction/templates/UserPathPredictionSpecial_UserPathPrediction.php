@@ -18,20 +18,15 @@
 	</form>
 </nav>
 <div id="table" <?= ( $par != NULL )  ? "data-page=\"".$par."\"" : "" ?>>
-	<table id="articleTable" class="tablesorter">
-		<thead>
-			<tr>
-				<th><?= wfMsg( 'userpathprediction-from' ); ?>:</th>
-				<th><?= wfMsg( 'userpathprediction-to' ); ?>:</th>
-				<th><?= wfMsg( 'userpathprediction-clicks' ); ?>:</th>
-			</tr>
-		</thead>
-		<tbody id="nodes">
-		</tbody>
-	</table>
+
+<div id="articles">
+<iframe id="showArticle"></iframe>
+	<div id="relatedArticles">
+	</div>
+	<div id="navigationArticles">
+	</div>
 </div>
-<div id="noresult">No Result</div>
-<canvas id="usersPath"></canvas>
+	<div id="noresult"><?= wfMsg( 'userpathprediction-noresult' ); ?></div>
 </section>
 <footer>
 	<?= wfMsg( 'userpathprediction-createdby' ); ?>: 

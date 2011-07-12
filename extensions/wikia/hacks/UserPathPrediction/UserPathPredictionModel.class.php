@@ -224,4 +224,20 @@ class UserPathPredictionModel {
 		$this->app->wf->profileOut(__METHOD__);
 		return $resultArray;
 	}
+	
+public function getRelated( $cityId, $articleId, $dateSpan = 30 ) {
+		$this->app->wf->profileIn(__METHOD__);
+		$resultArray = array();
+		$dbr =$this->getDBConnection();
+		
+		$where = array( 'city_id' => $cityId, 'referrer_id' => $articleId );	
+		
+		$res = $dbr->select( 'path_segments_archive', '*', $where , __METHOD__, array( "LIMIT" => 10, "ORDER BY" => "count DESC" ));
+
+		while ( $row = $dbr->fetchObject( $res ) ) {
+			$resultArray[] = $row;
+		}
+		$this->app->wf->profileOut(__METHOD__);
+		return $resultArray;
+	}
 }

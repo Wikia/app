@@ -29,7 +29,7 @@ var UserPathPrediction = {
 	},
 
 	
-	load: function() {
+	loadNodes: function() {
 		$.get(
 			'/wikia.php',
 			{
@@ -38,7 +38,6 @@ var UserPathPrediction = {
 				'selectby': $( '#selectBy' ).val(),
 				'article': $( '#article' ).val(),
 				'datespan': $( '#dateSpan' ).val(),
-				'count': $( '#nodeCount' ).val(),
 				'format': 'json'
 			},
 			function(data) {
@@ -46,19 +45,64 @@ var UserPathPrediction = {
 				if(data['nodes'] != "No Result") {
 					$('#noresult').hide('fast');
 					$('#articleTable').hide('fast');
-					$("#nodes").html("");
+					$("#relatedArticles").html("<ul></ul>");
 					for ( var i = 0; i < nodes.length; i++ ) {
-						$("#nodes").append('<tr><td><a href="'+ 
-						nodes[i].referrerURL +'" target="_BLANK">'+ 
-						nodes[i].referrerTitle.mTextform +'</a><td><a href="'+ 
-						nodes[i].targetURL + '" target="_BLANK">' + 
-						nodes[i].targetTitle.mTextform + '</td><td>' +
-						nodes[i].count + '</td></tr>');
+						$("#relatedArticles > ul").append('<li><a href="'+ 
+						nodes[i].referrerURL +'" target="showArticle">'+ 
+						nodes[i].referrerTitle.mTextform +'</a><a href="'+ 
+						nodes[i].targetURL + '" target="showArticle">' + 
+						nodes[i].targetTitle.mTextform + '</a>' +
+						nodes[i].count + '</li>');
+						//$('#showArticle').attr('src',nodes[i].targetURL);
 					}
 					$('#articleTable').show('fast');
 				} else {
-					$('#articleTable').hide('fast');
+					$('#relatedArticles > ul').hide('fast');
 					$('#noresult').show('fast');
+				}
+			}
+
+		);
+		return false;
+	},
+	
+	load: function() {
+		$.get(
+			'/wikia.php',
+			{
+				'controller': 'UserPathPredictionSpecialController',
+				'method': 'getRelated',
+				'selectby': $( '#selectBy' ).val(),
+				'article': $( '#article' ).val(),
+				'datespan': $( '#dateSpan' ).val(),
+				'format': 'json'
+			},
+			function( data ) {
+				nodes = data.nodes;
+				thumbnails = data.thumbnails;
+				
+				if ( data['nodes'] != "No Result" ) {
+					$('#noresult').hide('fast');
+					$('#relatedArticles > ul ').hide('fast');
+					$("#relatedArticles").html("<ul></ul>");
+					for ( var i = 0; i < nodes.length; i++ ) {
+						
+						if ( thumbnails[nodes[i].targetTitle.mArticleID] ) {
+							$imgsrc = thumbnails[nodes[i].targetTitle.mArticleID][0]['url'];
+						} else {
+							$imgsrc = "http://dummyimage.com/100x50/000/bada55.gif&text=Thumbs";
+						}
+						
+						$( "#relatedArticles > ul" ).append( '<li><div><a href="'+ 
+						nodes[i].targetURL + '" target="showArticle">' + 
+						nodes[i].targetTitle.mTextform + '<br /><img src="' + 
+						$imgsrc + '"></a>' +
+						nodes[i].count + '</div></li>');
+					}
+					$('#relatedArticles > ul').show('fast');
+				} else {
+					$( '#relatedArticles > ul' ).hide( 'fast' );
+					$( '#noresult' ).show( 'fast' );
 				}
 			}
 

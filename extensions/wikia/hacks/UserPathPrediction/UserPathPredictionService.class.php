@@ -1,3 +1,4 @@
+
 <?php
 /**
  * User Path Prediction Service
@@ -216,5 +217,25 @@ class UserPathPredictionService extends WikiaService {
 		$this->model->cleanParsedDataFolder();
 		$this->model->cleanRawDataFolder();
 		$this->app->wf->profileOut( __METHOD__ );
+	}
+	
+	public function getThumbnails( $articleIds = null, $width = null ) {
+		$this->app->wf->profileIn(__METHOD__);
+		
+		$articleIds = ( !empty( $articleIds ) ) ? $articleIds : $this->getVal( 'articleIds' );
+		$width = ( !empty( $width ) ) ? $width : $this->getVal( 'width' );
+		
+		$source = new ImageServing(
+			$articleIds,
+			$width,
+			array(
+				"w" => 3,
+				"h" => 2
+			)
+		);
+		$result = $source->getImages( 1 );
+		$this->setVal( 'thumbnails', $result );
+		$this->app->wf->profileOut( __METHOD__ );
+		return $result;	
 	}
 }
