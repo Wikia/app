@@ -521,8 +521,9 @@ class FounderProgressBarController extends WikiaController {
 		}
 		$data['tasks_completed'] = $tasks_completed;  // bonus tasks do count as completed tasks, like any task
 		$data['tasks_skipped'] = $tasks_skipped;
-		$data['total_tasks'] = $total_tasks - $bonus_tasks;  // bonus tasks do NOT count against total # of tasks
-		$data['completion_percent'] = min(100, round(100 * ($tasks_completed / $total_tasks), 0));
+		$adjusted_total_tasks =  $total_tasks - $bonus_tasks;  // bonus tasks do NOT count against total # of tasks
+		$data['total_tasks'] = $adjusted_total_tasks;
+		$data['completion_percent'] = min(100, round(100 * ($tasks_completed / $adjusted_total_tasks), 0));
 		return $data;
 	}
 }
