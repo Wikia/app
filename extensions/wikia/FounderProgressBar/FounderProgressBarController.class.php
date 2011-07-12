@@ -486,14 +486,11 @@ class FounderProgressBarController extends WikiaController {
 		foreach ($list as $task) {
 			if ($task["task_skipped"] || $task["task_completed"]) $tasks_completed_or_skipped += 1;
 		}
-		file_put_contents("/tmp/founder.log", "completed/skipped = " . $tasks_completed_or_skipped . "\n", FILE_APPEND);
-		file_put_contents("/tmp/founder.log", "total = " . $total_tasks . "\n", FILE_APPEND);
 		if ($tasks_completed_or_skipped >= $total_tasks) {
 			$wiki_id = $this->wg->CityId;
 			// Special case, unlock one bonus task, in the order in which they appear in our bonus_tasks array
 			foreach ($this->bonus_tasks as $bonus_task_id) {
 				if (!isset($list[$bonus_task_id])) {
-					file_put_contents("/tmp/founder.log", "unlocking " . $bonus_task_id . "\n", FILE_APPEND);
 					$sql = "INSERT IGNORE INTO founder_progress_bar_tasks SET wiki_id=$wiki_id, task_id=$bonus_task_id";
 					$dbw = $this->getDB(DB_MASTER);			
 					$dbw->query ($sql);
