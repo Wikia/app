@@ -294,10 +294,13 @@ class FounderProgressBarController extends WikiaController {
 			$this->setVal('result', "task_completed");
 		}
 		$dbw->commit();
+		// Open bonus task if necessary
+		// Doing this before the memcache clear so that we load new data into memcache
+		$this->openBonusTask();
 		// Task data was updated so clear task list from memcache
 		$memKey = $this->wf->MemcKey('FounderLongTaskList');
 		$this->getMCache()->delete($memKey);
-		// else error?
+		
 	}
 	
 	/**
@@ -326,27 +329,10 @@ class FounderProgressBarController extends WikiaController {
 					'wiki_id' => $this->wg->CityId
 			)
 		);
-
-		// If everything is completed or skipped, open up a bonus task
-		$response = $this->sendSelfRequest("getLongTaskList", array("use_master" => true));
-		$list = $response->getVal('list');
-		$total_tasks = count($list);
-		$tasks_completed_or_skipped = 0; 
-		foreach ($list as $task) {
-			if ($task["task_skipped"] || $task["task_completed"]) $tasks_completed_or_skipped += 1;
-		}
-		if ($tasks_completed_or_skipped >= $total_tasks) {
-			$wiki_id = $this->wg->CityId;
-			// Special case, unlock one bonus task, in the order in which they appear in our bonus_tasks array
-			foreach ($this->bonus_tasks as $bonus_task_id) {
-				if (!isset($list[$bonus_task_id])) {
-					$sql = "INSERT IGNORE INTO founder_progress_bar_tasks SET wiki_id=$wiki_id, task_id=$bonus_task_id";
-					$dbw->query ($sql);
-					break;
-				}
-			}
-		}
 		$dbw->commit();
+		// Checks if everything is completed or skipped and possibly open up a bonus task
+		// Doing this before the memcache clear so that we load new data into memcache
+		$this->openBonusTask();
 		// DB updated so clear memcache val
 		$memKey = $this->wf->MemcKey('FounderLongTaskList');
 		$this->getMCache()->delete($memKey);
@@ -383,6 +369,8 @@ class FounderProgressBarController extends WikiaController {
 		foreach($activityFull['list'] as $activity) {
 			if(!empty($activity['task_skipped'])) {
 				$skippedTaskList[] = $activity;
+			} else if (in_array($activity['task_id'], $this->bonus_tasks)) {
+				// bonus task list is built in the next step
 			} else {
 				$activeTaskList[] = $activity;
 			}
@@ -398,10 +386,10 @@ class FounderProgressBarController extends WikiaController {
 					"task_url" => $this->getURLForTask($task_id)
 				);
 			// Task is opened up
-			if (isset($activityFull[$task_id])) {
-				$bonusTask["task_count"] = $activityFull[$task_id]["task_count"];
-				$bonusTask["task_completed"] = $activityFull[$task_id]["task_completed"];
-				$bonusTask["task_timestamp"] = $this->wf->TimeFormatAgo($activityFull[$task_id]["task_timestamp"]);
+			if (isset($activityFull['list'][$task_id])) {
+				$bonusTask["task_count"] = $activityFull['list'][$task_id]["task_count"];
+				$bonusTask["task_completed"] = $activityFull['list'][$task_id]["task_completed"];
+				$bonusTask["task_timestamp"] = $this->wf->TimeFormatAgo($activityFull['list'][$task_id]["task_timestamp"]);
 				$bonusTask["task_locked"] = 0;	
 			} else {				
 				$bonusTask["task_completed"] = 0;
@@ -488,6 +476,34 @@ class FounderProgressBarController extends WikiaController {
 		}
 	}
 
+	// Check task list, and if all tasks are completed or skipped open a bonus task
+	private function openBonusTask() {
+		
+		$response = $this->sendSelfRequest("getLongTaskList", array("use_master" => true));
+		$list = $response->getVal('list');
+		$total_tasks = count($list);
+		$tasks_completed_or_skipped = 0; 
+		foreach ($list as $task) {
+			if ($task["task_skipped"] || $task["task_completed"]) $tasks_completed_or_skipped += 1;
+		}
+		file_put_contents("/tmp/founder.log", "completed/skipped = " . $tasks_completed_or_skipped . "\n", FILE_APPEND);
+		file_put_contents("/tmp/founder.log", "total = " . $total_tasks . "\n", FILE_APPEND);
+		if ($tasks_completed_or_skipped >= $total_tasks) {
+			$wiki_id = $this->wg->CityId;
+			// Special case, unlock one bonus task, in the order in which they appear in our bonus_tasks array
+			foreach ($this->bonus_tasks as $bonus_task_id) {
+				if (!isset($list[$bonus_task_id])) {
+					file_put_contents("/tmp/founder.log", "unlocking " . $bonus_task_id . "\n", FILE_APPEND);
+					$sql = "INSERT IGNORE INTO founder_progress_bar_tasks SET wiki_id=$wiki_id, task_id=$bonus_task_id";
+					$dbw = $this->getDB(DB_MASTER);			
+					$dbw->query ($sql);
+					$dbw->commit();
+					break;
+				}
+			}
+		}
+	}
+	
 	/**
 	 * Returns array of task data
 	 * @param Array $list
