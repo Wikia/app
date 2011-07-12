@@ -30,7 +30,7 @@ class PageLayoutBuilderForm extends SpecialPage {
 		$staticChute = new StaticChute('js');
 		$staticChute->useLocalChuteUrl();
 
-		$wgOut->addScript($staticChute->getChuteHtmlForPackage('yui'));
+		$wgOut->addScript($staticChute->getChuteHtmlForPackage('yui')); // FIXME: why are we loading YUI here?  What needs it?
 		
 		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/PageLayoutBuilder/css/form.scss'));
 		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/core/_EditPage.scss'));
