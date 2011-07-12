@@ -9,21 +9,22 @@ AdConfig = {
 	isHighValueCountry: function(country) {
 		country = country.toUpperCase();
 		switch (country) {
+			case 'AT': // Austria
 			case 'CA':
-			case 'CH':
+			case 'CH': // Switzerland
 			case 'DE':
-			case 'DK':
+			case 'DK': // Denmark
 			case 'ES':
-			case 'FI':
+			case 'FI': // Finland
 			case 'FR':
-			case 'GB':
-			case 'GR':
-			case 'HU':
+			case 'GB': // United Kingdom
+			case 'GR': // Greece
+			case 'HU': // Hungary
 			case 'IT':
 			case 'NL':
-			case 'NO':
-			case 'RU':
-			case 'SE':
+			case 'NO': // Norway
+			case 'RU': // Russia
+			case 'SE': // Sweden
 			case 'UK':
 			case 'US':
 				return true;
