@@ -102,12 +102,27 @@ class SqlScript {
 class DatabaseWalker {
 	protected $connection = null;
 	protected $name = '';
+	protected $tables = array();
 	public function __construct( $connection ) {
 		$this->connection = $connection;
 		$this->name = $this->connection->getDBname();
 	}
 	protected function getDb() {
 		return $this->connection;
+	}
+	protected function parseSql( $sql ) {
+		$tableRow = new stdClass;
+		
+		 
+	}
+	protected function getTable( $tableName ) {
+		if (!array_key_exists($tableName,$this->tables)) {
+			$this->tables[$tableName] = false;
+			$row = $this->getDb()->query("SHOW CREATE TABLE `{$tableName}`;")->fetchRow();
+			$sql = $row[1];
+			$this->tables[$tableName] = $this->parseSql( $sql );
+		}
+		return $this->tables[$tableName];
 	}
 	public function getDatabases() {
 		$db = $this->getDb();
@@ -121,7 +136,10 @@ class DatabaseWalker {
 		}
 		return $data;
 	}
-	public function getTables() {
+	public function getTables( $frmOnly = false ) {
+		$fields = '*';
+		if ($frmOnly)
+			$fields = array( 'table_schema', 'table_name', 'table_collation' );
 		$db = $this->getDb();
 		$set = $db->select("`information_schema`.`tables`",'*',array(
 			'table_schema' => $this->name,
@@ -147,6 +165,207 @@ class DatabaseWalker {
 	}
 }
 
+class SqlParser {
+	protected $db = null;
+	protected $charsets = null;
+	public function __construct( $db ) {
+		$this->db = $db;
+	}
+	public function getCollation( $charset, $collation, $default = false ) {
+		if ($collation) {
+			return $collation;
+		}
+		if ($charset) {
+			if (is_null($this->charsets)) {
+				$charsets = array();
+				$res = $this->db->query("SHOW CHARACTER SET;");
+				while ($row = $this->db->fetchRow($res)) {
+					$charsets[$row['Charset']] = $row['Default collation'];
+				}
+				$this->db->freeResult($res);
+				$this->charsets = $charsets;
+			}
+			if (isset($this->charsets[$charset])) {
+				return $this->charsets[$charset];
+			}
+		}
+		return $default;
+	}
+	public function isTextualType( $type ) {
+		$textualTypes = array( 'text' ,'tinytext', 'mediumtext', 'longtext', 'char', 'varchar' );
+		list($type) = explode('(',strtolower($type));
+		return in_array($type,$textualTypes);
+	}
+	public function parseColumn( $line, $defaults = array() ) {
+		$field = false;
+		$options = array(
+			"(?<unsigned>unsigned)",
+			"(?<null>null)",
+			"(?<notnull>not null)",
+			"(?<autoincrement>auto_increment)",
+			"default (?<default>'(?<defaultv>[^']*)'|(?<defaulte>null|current_timestamp))",
+			"comment '(?<comment>[^']*)'",
+			"character set (?<charset>[^\s]+)",
+			"collate (?<collation>[^\s]+)",
+			"on update (?<onupdate>'(?<onupdatev>[^']*)'|(?<onupdatee>null|current_timestamp))",
+		);
+		$pattern = "/^\s+`(?<name>[^`]+)`\s(?<type>[^\s]+)"
+			."(\s+(".implode("|",$options)."))*,?\$/i";
+		if (preg_match($pattern,$line,$matches)) {
+			$field = new stdclass;
+			foreach ($defaults as $k => $v)
+				$field->$k = $v;
+			$field->COLUMN_NAME = $matches['name'];
+			$field->COLUMN_TYPE = $matches['type'];
+			if (!empty($matches['unsigned']))
+				$field->COLUMN_TYPE .= " unsigned";
+			$field->EXTRA = '';
+			if (!empty($matches['autoincrement']))
+				$field->EXTRA .= "auto_increment";
+			$field->IS_NULLABLE = !empty($matches['notnull']) ? 'NO' : 'YES';
+			$field->COLUMN_DEFAULT = isset($matches['defaultv']) ? $matches['defaultv'] : null;
+			$field->COLUMN_DEFAULT_EXPR = !empty($matches['default']) ? $matches['default'] : null;
+			if (!$this->isTextualType($matches['type'])) {
+				$field->COLLATION_NAME = null;
+			} else {
+				$collation = $this->getCollation(@$matches['charset'],@$matches['collation'],$field->COLLATION_NAME);
+				$field->COLLATION_NAME = isset($collation) ? $collation : null;
+			}
+			$field->COLUMN_COMMENT = isset($matches['comment']) ? $matches['comment'] : null;
+			$field->COLUMN_ONUPDATE_EXPR = isset($matches['onupdate']) ? $matches['onupdate'] : null;
+		}
+		return $field;
+	}
+	public function parseTable( $sql ) {
+		$lines = preg_split("/[\r\n]+/",$sql);
+		$data = array(
+			'sql' => $sql,
+			'table' => new stdclass,
+			'fields' => array(),
+		);
+		$mode = 0;
+		$columns = array();
+		foreach ($lines as $line) {
+			// create table
+			if ($mode == 0) {
+				if (!preg_match("/^CREATE TABLE `([^`]+)`/i",$line,$matches))
+					return false;
+				$tableName = $matches[1];
+				$data['table']->TABLE_NAME = $tableName;
+				$mode = 1;
+				continue;
+			}
+			// inside create table
+			if ($mode == 1) {
+				if (preg_match("/^\)/",$line)) {
+					$mode = 2;
+				} else {
+					if (preg_match("/^\s+(primary |unique )?key/i",$line,$matches)) {
+						// index - ignore for now
+					} else if (preg_match("/^\s+constraint/i",$line,$matches)) {
+						// constraint - ignore for now
+					} else {
+						// column definition - save for future processing
+						$columns[] = $line;
+					}
+				}
+			}
+			// closing line
+			if ($mode == 2) {
+				if (preg_match("/^\)\s*engine=(?<engine>[^\s]+)(\s+auto_increment=([^\s]+))?(\s+default charset=(?<charset>[^\s]+)(\s+collate=(?<collation>[^\s]+))?)?/i",$line,$matches)) {
+					$data['table']->ENGINE = $matches['engine'];
+					$data['table']->TABLE_COLLATION = $this->getCollation(@$matches['charset'],@$matches['collation']);
+					$mode = 3;
+				}
+			}
+		}
+		$columnDefaults = array(
+			'TABLE_NAME' => $data['table']->TABLE_NAME,
+			'COLLATION_NAME' => $data['table']->TABLE_COLLATION,
+		);
+		foreach ($columns as $column) {
+			$columnObj = $this->parseColumn($column,$columnDefaults);
+			if (!$columnObj)
+				throw new Exception("Could not parse column definiton: $column");
+			$data['fields'][] = $columnObj;
+		}
+		return $data;
+	}
+}
+
+class DatabaseWalker_UsingShow {
+	protected $connection = null;
+	protected $name = '';
+	protected $tableList = false;
+	protected $tables = array();
+	protected $parser = null;
+	public function __construct( $connection ) {
+		$this->connection = $connection;
+		$this->parser = new SqlParser($this->connection);
+		$this->name = $this->connection->getDBname();
+	}
+	protected function getDb() {
+		return $this->connection;
+	}
+	protected function getTableList() {
+		if ($this->tableList === false) {
+			$db = $this->getDb();
+			$res = $db->query("SHOW TABLES;");
+			$tables = array();
+			while ($row = $db->fetchRow($res)) {
+				$tables[] = $row[0];
+			}
+			$this->tableList = $tables;
+		}
+		return $this->tableList;
+	}
+	protected function getTable( $tableName ) {
+		if (!array_key_exists($tableName,$this->tables)) {
+			$this->tables[$tableName] = null;
+			$row = $this->getDb()->query("SHOW CREATE TABLE `{$tableName}`;")->fetchRow();
+			if ($row) {
+				$sql = $row[1];
+				$this->tables[$tableName] = $this->parser->parseTable($sql);
+			}
+		}
+		return $this->tables[$tableName];
+	}
+	public function getDatabases() {
+		$db = $this->getDb();
+		$set = $db->select("`information_schema`.`schemata`",'*',array(
+			'schema_name' => $this->name,
+		),__METHOD__);
+		
+		$data = array();
+		while ($row = $db->fetchObject($set)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+	public function getTables( $frmOnly = false ) {
+		$data = array();
+		$tables = $this->getTableList();
+		foreach ($tables as $tableName) {
+			$table = $this->getTable($tableName);
+			$data[] = $table['table'];
+		}
+		return $data;
+	}
+	public function getFields() {
+		$data = array();
+		$tables = $this->getTableList();
+		foreach ($tables as $tableName) {
+			$table = $this->getTable($tableName);
+			$data = array_merge($data,$table['fields']);
+		}
+		return $data;
+	}
+	public function getCreateTable( $tableName ) {
+		$table = $this->getTable($tableName);
+		return $table ? $table['sql'] : false;
+	}
+}
+
 
 class Utf8DbConvert {
 
@@ -162,7 +381,7 @@ class Utf8DbConvert {
 		$this->databaseName = isset($options['database']) ? $options['database'] : $wgDBname;
 		
 		$this->db = wfGetDb(DB_SLAVE,array(),$this->databaseName);
-		$this->walker = new DatabaseWalker($this->db);
+		$this->walker = new DatabaseWalker_UsingShow($this->db);
 		
 		$this->script = new SqlScript();
 	}
@@ -192,7 +411,7 @@ class Utf8DbConvert {
 	}
 
 	protected function processTables() {
-		$tables = $this->walker->getTables();
+		$tables = $this->walker->getTables(true);
 		foreach ($tables as $table) {
 			if ($table->TABLE_COLLATION !== 'utf8_bin') {
 				$this->script->table($table->TABLE_NAME)->add("DEFAULT CHARACTER SET utf8 COLLATE utf8_bin");
@@ -247,7 +466,10 @@ class Utf8DbConvert {
 					}
 				}
 				$rest = ($field->IS_NULLABLE == 'YES' ? "NULL" : "NOT NULL")
-					. (!is_null($field->COLUMN_DEFAULT) ? " DEFAULT '{$field->COLUMN_DEFAULT}'" : "");
+					. (isset($field->COLUMN_DEFAULT_EXPR) ? " DEFAULT {$field->COLUMN_DEFAULT_EXPR}" :
+						(!is_null($field->COLUMN_DEFAULT) ? " DEFAULT '{$field->COLUMN_DEFAULT}'" : ""))
+					. (!empty($field->COLUMN_COMMENT) ? " COMMENT '{$field->COLUMN_COMMENT}'" : "")
+					. (!empty($field->COLUMN_ONUPDATE_EXPR) ? " ON UPDATE {$field->COLUMN_ONUPDATE_EXPR}" : "");
 				$baseType = null;
 				$transColumnType = $this->getIntermediateFieldType( $field->COLUMN_TYPE, $baseType );
 				if ($transColumnType) {
@@ -271,8 +493,13 @@ class Utf8DbConvert {
 		if ($this->quick)
 			$mode = SqlScript::MODE_QUICK;
 		$sql = $this->script->getSql($mode);
-		foreach ($sql as $stmt)
-			$this->query($stmt);
+		foreach ($sql as $stmt) {
+			try {
+				$this->query($stmt);
+			} catch (Exception $e) {
+				echo "-- ERROR!!! {$e->getMessage()}\n";
+			}
+		}
 	}
 
 	public function execute() {
@@ -281,7 +508,7 @@ class Utf8DbConvert {
 		$this->processTables();
 		$this->processFields();
 //		echo "execute\n";
-//		var_dump($this->script);
+//		var_dump($this->script);•••••
 		$this->query("-- PERFORMING CHANGES");
 		$this->executeScript();
 		$this->query("-- ALL DONE");
