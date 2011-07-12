@@ -688,7 +688,7 @@ section.SalesSupportModule {
 	}
 }
 
-// hide bottom ad (BugId:4910)
+// hide bottom ad on corporate main page (BugId:4910)
 body.mainpage #WikiaArticleBottomAd {
 	display: none;
 }
