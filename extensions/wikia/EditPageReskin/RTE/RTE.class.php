@@ -144,10 +144,7 @@ class RTE {
 		self::$devMode = $wgRequest->getBool('allinone', $wgAllInOne) == false;
 
 		// add RTE javascript files
-		$srcs = AssetsManager::getInstance()->getGroupCommonURL('rteepl');
-		foreach($srcs as $src) {
-			$wgOut->addScript("<script src=\"$src\" type=\"$wgJsMimeType\"></script>");
-		}
+		// scripts loaded by edit page layout
 
 		// add RTE css file
 		$wgOut->addExtensionStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/EditPageReskin/RTE/css/RTE.scss'));

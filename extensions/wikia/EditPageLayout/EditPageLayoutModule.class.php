@@ -49,6 +49,17 @@ class EditPageLayoutModule extends Module {
 		$helper = WF::build('EditPageLayoutHelper');
 		$editPage = $helper->getEditPage();
 
+		if ($helper->fullScreen) {
+			// add stylesheet
+			$app->wg->Out->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/EditPageLayout/css/EditPageLayout.scss'));
+			$packageName = empty($app->wg->WysiwygEdit) ? 'epl' : 'eplrte';
+			$srcs = F::build('AssetsManager',array(),'getInstance')->getGroupCommonURL($packageName);
+			$wgJsMimeType = $app->wg->JsMimeType;
+			foreach($srcs as $src) {
+				$app->wg->Out->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$src}\"></script>");
+			}
+		}
+		
 		// render WikiLogo
 		$wikiHeaderData = Module::get('WikiHeader')->getData();
 

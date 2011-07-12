@@ -39,18 +39,8 @@ class EditPageLayoutHelper {
 		}
 
 		// use "reskined" edit page layout
+		$this->fullScreen = $fullScreen;
 		if ($fullScreen) {
-			// add stylesheet
-			$this->out->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/EditPageLayout/css/EditPageLayout.scss'));
-
-			// add javascript engine
-			$srcs = F::build('AssetsManager',array(),'getInstance')->getGroupCommonURL('epl');
-			$wgJsMimeType = $this->app->wg->JsMimeType;
-
-			foreach($srcs as $src) {
-				$this->out->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$src}\"></script>");
-			}
-
 			// set Oasis entry-point
 			Wikia::setVar('OasisEntryModuleName', 'EditPageLayout');
 		}
