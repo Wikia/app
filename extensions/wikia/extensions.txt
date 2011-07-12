@@ -47,7 +47,7 @@ Community Messages
 
 Content Feeds
 
-Control Center
+Admin Dashboard
 
 #Commented out 2010-02-01 -- tor
 #Dropping in favour of CreatePage (below)
