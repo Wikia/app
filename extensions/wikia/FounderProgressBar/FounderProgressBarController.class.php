@@ -333,7 +333,7 @@ class FounderProgressBarController extends WikiaController {
 		$total_tasks = count($list);
 		$tasks_completed_or_skipped = 0; 
 		foreach ($list as $task) {
-			if ($task["task_skipped"] || $task["task_completed"]) $tasks_completed_or_skipped != 1;
+			if ($task["task_skipped"] || $task["task_completed"]) $tasks_completed_or_skipped += 1;
 		}
 		if ($tasks_completed_or_skipped >= $total_tasks) {
 			$wiki_id = $this->wg->CityId;
