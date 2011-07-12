@@ -4,6 +4,7 @@
 module('AdConfig');
 
 test('isHighValueCountry', function() {
+  ok( AdConfig.isHighValueCountry('AT'), 'AT' );
   ok( AdConfig.isHighValueCountry('CA'), 'CA' );
   ok( AdConfig.isHighValueCountry('CH'), 'CH' );
   ok( AdConfig.isHighValueCountry('DE'), 'DE' );
