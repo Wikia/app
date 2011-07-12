@@ -8,6 +8,7 @@
 	}
 
 	#diff {
+		@include bodytext;
 		background-color: #e6f0fb;
 		margin-right: -10px;
 		padding: 5px;
