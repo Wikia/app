@@ -53,7 +53,7 @@
 						<?= wfMsg('user-identity-box-my-twitter', array( '$1' => $user['twitter'] )); ?>
 					</li>
 				<? else: ?>
-					<? if( $isUserPageOwner || $isWikiStaff ): ?>
+					<? if( $user['showZeroStates'] && ($isUserPageOwner || $isWikiStaff) ): ?>
 					<li class="zero">
 						<img src="<?= $wgBlankImgUrl ?>" class="twitter icon">
 						<?= wfMsg('user-identity-box-zero-state-twitter'); ?>
@@ -69,7 +69,7 @@
 						<?= wfMsg('user-identity-box-my-website', array( '$1' => $user['website'] )); ?>
 					</li>
 				<? else: ?>
-					<? if( $isUserPageOwner || $isWikiStaff ): ?>
+					<? if( $user['showZeroStates'] && ($isUserPageOwner || $isWikiStaff) ): ?>
 					<li class="zero">
 						<img src="<?= $wgBlankImgUrl ?>" class="website icon">
 						<?= wfMsg('user-identity-box-zero-state-website'); ?>
@@ -85,7 +85,7 @@
 						<?= wfMsg('user-identity-box-my-fb-page', array( '$1' => $user['fbPage'] )); ?>
 					</li>
 				<? else: ?>
-					<? if( $isUserPageOwner || $isWikiStaff ): ?>
+					<? if( $user['showZeroStates'] && ($isUserPageOwner || $isWikiStaff) ): ?>
 					<li class="zero">
 						<img src="<?= $wgBlankImgUrl ?>" class="facebook icon">
 						<?= wfMsg('user-identity-box-zero-state-fb-page'); ?>
@@ -103,14 +103,14 @@
 				<? endforeach; ?>
 				</ul>
 			</ul>
-			<? endif; ?>			
+			<? endif; ?>
 		</div>
 		<div>		
 			<ul class="details">
 				<? if( !empty($user['location']) ): ?>
 					<li><?= wfMsg('user-identity-box-location', array( '$1' => $user['location'] )); ?></li>
 				<? else: ?>
-					<? if( $isUserPageOwner || $isWikiStaff ): ?>
+					<? if( $user['showZeroStates'] && ($isUserPageOwner || $isWikiStaff) ): ?>
 					<li><?= wfMsg('user-identity-box-zero-state-location'); ?></li>
 					<? endif; ?>
 				<? endif; ?>
@@ -118,7 +118,7 @@
 				<? if( !empty($user['birthday']) ): ?>
 					<li><?= wfMsg('user-identity-box-was-born-on', array( '$1' => wfMsg('user-identity-box-about-date-'.$user['birthday']['month']), '$2' => $user['birthday']['day'] )); ?></li>
 				<? else: ?>
-					<? if( $isUserPageOwner || $isWikiStaff ): ?>
+					<? if( $user['showZeroStates'] && ($isUserPageOwner || $isWikiStaff) ): ?>
 					<li><?= wfMsg('user-identity-box-zero-state-birthday'); ?></li>
 					<? endif; ?>
 				<? endif; ?>
@@ -126,7 +126,7 @@
 				<? if( !empty($user['occupation']) ): ?>
 					<li><?= wfMsg('user-identity-box-occupation', array( '$1' => $user['occupation'] )); ?></li>
 				<? else: ?>
-					<? if( $isUserPageOwner || $isWikiStaff ): ?>
+					<? if( $user['showZeroStates'] && ($isUserPageOwner || $isWikiStaff) ): ?>
 					<li><?= wfMsg('user-identity-box-zero-state-occupation'); ?></li>
 					<? endif; ?>
 				<? endif; ?>
@@ -134,7 +134,7 @@
 				<? if( !empty($user['gender']) ): ?>
 					<li><?= wfMsg('user-identity-i-am', array( '$1' => $user['gender'] )); ?></li>
 				<? else: ?>
-					<? if( $isUserPageOwner || $isWikiStaff ): ?>
+					<? if( $user['showZeroStates'] && ($isUserPageOwner || $isWikiStaff) ): ?>
 					<li><?= wfMsg('user-identity-box-zero-state-gender'); ?></li>
 					<? endif; ?>
 				<? endif; ?>

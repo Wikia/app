@@ -41,14 +41,16 @@ class UserIdentityBox {
 		$data['location'] = $this->user->getOption('location');
 		$data['occupation'] = $this->user->getOption('occupation');
 		$data['gender'] = $this->user->getOption('UserProfilePagesV3_gender');
-		$iEdits = $this->user->getEditCount();
-		$data['edits'] = is_null($iEdits) ? 0 : $iEdits;
 		$data['registration'] = $this->user->getRegistration();
 		$data['birthday'] = $this->user->getOption('UserProfilePagesV3_birthday');
 		$data['website'] = $this->user->getOption('website');
 		$data['twitter'] = $this->user->getOption('twitter');
 		$data['fbPage'] = $this->user->getOption('fbPage');
 		$data['topWikis'] = $this->getTopWikis();
+		
+		$iEdits = $this->user->getEditCount();
+		$data['edits'] = is_null($iEdits) ? 0 : $iEdits;
+		
 		$this->getUserGroup($data);
 		
 		$birthdate = $data['birthday'];
@@ -58,6 +60,8 @@ class UserIdentityBox {
 		} else {
 			$data['birthday'] = '';
 		}
+		
+		$data['showZeroStates'] = $this->checkIfDisplayZeroStates($data);
 		
 		$this->app->wf->ProfileOut( __METHOD__ );
 		return $data;
@@ -151,6 +155,30 @@ class UserIdentityBox {
 		}
 		
 		$this->app->wf->ProfileOut( __METHOD__ );
+	}
+	
+	/**
+	 * Gets user group and additionaly sets other user's data (blocked, founder)
+	 * 
+	 * @param array reference to user data array
+	 * 
+	 * @author Andrzej 'nAndy' Łukaszewski
+	 */
+	private function checkIfDisplayZeroStates($data) {
+		$this->app->wf->ProfileIn( __METHOD__ );
+		
+		$result = true;
+		$fieldsToCheck = array('location', 'occupation', 'birthday', 'gender', 'website', 'twitter', 'topWikis');
+		
+		foreach($data as $property => $value) {
+			if( in_array($property, $fieldsToCheck) && !empty($value) ) {
+				$result = false;
+				break;
+			}
+		}
+		
+		$this->app->wf->ProfileOut( __METHOD__ );
+		return $result;
 	}
 	
 	/**
