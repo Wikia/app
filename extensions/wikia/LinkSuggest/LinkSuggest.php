@@ -91,7 +91,7 @@ function getLinkSuggestImage() {
 }
 
 function getLinkSuggest() {
-	global $wgRequest, $wgContLang, $wgCityId, $wgExternalDatawareDB;
+	global $wgRequest, $wgContLang, $wgCityId, $wgExternalDatawareDB, $wgContentNamespaces;
 
 	// trim passed query and replace spaces by underscores
 	// - this is how MediaWiki store article titles in database
@@ -118,47 +118,48 @@ function getLinkSuggest() {
 		}
 	}
 
+	// which namespaces to search in?
+	if (empty($namespace)) {
+		// search only within content namespaces (BugId:4625) - default behaviour
+		$namespaces = $wgContentNamespaces;
+	}
+	else {
+		// search only within a given namespace
+		$namespaces = array($namespace);
+	}
+
 	$results = array();
 
-	if (empty($namespace))
-		// default namespace to search in
-		$namespace = NS_MAIN;
-
-	// get localized namespace name
-	$namespaceName = $wgContLang->getNsText($namespace);
-	// and prepare it for later use...
-	$namespacePrefix = (!empty($namespaceName)) ? $namespaceName . ':' : '';
-
 	$query = addslashes(mb_strtolower($query));
-	$db = wfGetDB(DB_SLAVE, 'search' );
+	$db = wfGetDB(DB_SLAVE, 'search');
 
 	$res = $db->select(
 		array( "querycache", "page" ),
-		array( "qc_title" ),
+		array( "qc_namespace", "qc_title" ),
 		array(
 			" qc_title = page_title ",
 			" qc_namespace = page_namespace ",
 			" page_is_redirect = 0 ",
 			" qc_type = 'Mostlinked' ",
 			" LOWER(qc_title) LIKE LOWER('{$query}%') ",
-			" qc_namespace = {$namespace} "
+			" qc_namespace IN (" . implode(',', $namespaces) . ")"
 		),
 		__METHOD__,
 		array("ORDER BY" => "qc_value DESC", "LIMIT" => 10)
 	);
 	while($row = $db->fetchObject($res)) {
-		$results[] = str_replace('_', ' ', $namespacePrefix . $row->qc_title);
+		$results[] = wfLinkSuggestFormatTitle($row->qc_namespace, $row->qc_title);
 	}
 	$db->freeResult( $res );
 
 	$dbs = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
 	$res = $dbs->select(
 		array( "pages" ),
-		array( "page_title" ),
+		array( "page_namespace", "page_title" ),
 		array(
 			" page_wikia_id " => $wgCityId,
 			" page_title_lower LIKE '{$query}%' ",
-			" page_namespace = {$namespace} ",
+			" page_namespace IN (" . implode(',', $namespaces) . ")",
 			" page_status = 0 "
 		),
 		__METHOD__,
@@ -168,7 +169,7 @@ function getLinkSuggest() {
 		)
 	);
 	while($row = $dbs->fetchObject($res)) {
-		$results[] = str_replace('_', ' ', $namespacePrefix . $row->page_title);
+		$results[] = wfLinkSuggestFormatTitle($row->page_namespace, $row->page_title);
 	}
 	$dbs->freeResult( $res );
 
@@ -193,4 +194,19 @@ function getLinkSuggest() {
 	}
 
 	return $ar;
+}
+
+/**
+ * Returns formatted title based on given namespace and title
+ *
+ * @param $namespace integer page namespace ID
+ * @param $title string page title
+ * @return string formatted title (prefixed with namespace)
+ */
+function wfLinkSuggestFormatTitle($namespace, $title) {
+	if ($namespace > 0) {
+		$title = MWNamespace::getCanonicalName($namespace) . ':' . $title;
+	}
+
+	return str_replace('_', ' ', $title);
 }
