@@ -29,13 +29,21 @@ $opts = getopt ("l:i:f:c:?::");
 if( count($opts) == 0 || in_array( 'help', $opts )) die( $USAGE );
 // Grind through s3 for a bit and figure out what the most recent dump is
 
+$HOME=trim(`echo ~`,"\n");
+$defaultConfig = "$HOME/.getDatabase.conf.php";
 if (array_key_exists( 'l', $opts )) {
-	if (is_readable($opts['l'])) 
+	if ($opts['l'] == '-') {
+		// do nothing
+	} else if (is_readable($opts['l'])) {
+		echo "loading configuration file: {$opts['l']}\n";
 		include_once $opts['l'];
-	else {
+	} else {
 		echo "error: configuration file could not be read: {$opts['l']}\n";
 		die();
 	}
+} else if (is_readable($defaultConfig)) {
+	echo "loading configuration file: $defaultConfig\n";
+	include_once $defaultConfig;
 }
 
 if(array_key_exists( 'c', $opts )) {
