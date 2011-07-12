@@ -8,6 +8,7 @@ var UserProfilePage = {
 	currQuestionIndex: 0,
 	modal: null,
 	userId: null,
+	wasDataChanged: false,
 	
 	init: function() {
 		UserProfilePage.userId = $('#user').val();
@@ -54,6 +55,11 @@ var UserProfilePage = {
 	},
 	
 	switchTab: function(anchor) {
+		if( true === UserProfilePage.wasDataChanged ) {
+			UserProfilePage.saveUserData(false);
+			UserProfilePage.wasDataChanged = false;
+		}
+		
 		$('.tab').each(function(id, val){
 			var tab = $(val);
 			tab.removeClass('current');
@@ -82,14 +88,14 @@ var UserProfilePage = {
 		var saveButton = modal.find('#UPPLightboxAvatarSaveBtn');
 		saveButton.click(function(e) {
 			UserProfilePage.track('edit/lightbox/save_personal_data');
-			modal.closeModal();
+			UserProfilePage.closeModal(modal);
 			window.location = wgScript + '?title=' + wgPageName; //+ '&action=purge';
 			e.preventDefault();
 		});
 		
 		var cancelButton = modal.find('#UPPLightboxAvatarCancelBtn');
 		cancelButton.click(function(e) {
-			modal.closeModal();
+			UserProfilePage.closeModal(modal);
 			e.preventDefault();
 		});
 		
@@ -201,7 +207,7 @@ var UserProfilePage = {
 		
 		var cancelButton = modal.find('#UPPLightboxAboutMeCancelBtn');
 		cancelButton.click(function() {
-			modal.closeModal();
+			UserProfilePage.closeModal(modal);
 		});
 		
 		var fbUnsyncButton = modal.find('#facebookUnsync');
@@ -226,6 +232,14 @@ var UserProfilePage = {
 			$(this).hide();
 			UserProfilePage.refreshFavWikis();
 		});
+		
+		var formFields = modal.find('input[type="text"], select');
+		formFields.change(function() {
+			UserProfilePage.wasDataChanged = true;
+			
+			$().log( 'Data has changed!' );
+			$().log( UserProfilePage.wasDataChanged );
+		});
 	},
 	
 	renderInterviewLightbox: function(modal) {
@@ -237,7 +251,7 @@ var UserProfilePage = {
 		
 		var cancelButton = modal.find('#UPPLightboxInterviewCancelBtn');
 		cancelButton.click(function() {
-			modal.closeModal();
+			UserProfilePage.closeModal(modal);
 		});
 		
 		var nextButton = modal.find('#UPPLightboxNextQuestionBtn');
@@ -276,7 +290,7 @@ var UserProfilePage = {
 					errorBox.empty();
 					errorBox.append( data.errorMsg );
 				} else {
-					UserProfilePage.modal.closeModal();
+					UserProfilePage.closeModal(UserProfilePage.modal);
 					window.location = wgScript + '?title=' + wgPageName; //+ '&action=purge'; 
 				}
 			}
@@ -310,7 +324,37 @@ var UserProfilePage = {
 	
 	//updatePrevNextButtons
 	
-	saveUserData: function() {
+	saveUserData: function(doRedirect) {
+		if( typeof(doRedirect) === 'undefined' ) {
+			var doRedirect = true;
+		}
+		
+		var userData = UserProfilePage.getFormData();
+		
+		$.ajax({
+			type: 'POST',
+			url: this.ajaxEntryPoint+'&method=saveUserData',
+			dataType: 'json',
+			data: 'userId=' + UserProfilePage.userId + '&data=' + $.toJSON(userData),
+			success: function(data) {
+				if( data.status == "error" ) {
+					var errorBox = $(".UPPLightbox #errorBox").show().find('div');
+					errorBox.empty();
+					errorBox.append( data.errorMsg );
+				} else {
+					$().log('doRedirect value is...');
+					$().log(doRedirect);
+					
+					if( true === doRedirect ) {
+						UserProfilePage.closeModal(UserProfilePage.modal);
+						window.location = wgScript + '?title=' + wgPageName; // + '&action=purge';
+					}
+				}
+			}
+		});
+	},
+	
+	getFormData: function() {
 		//array didn't want to go to php, so i changed it to an object --nAndy
 		var userData = {
 			name: null,
@@ -331,22 +375,7 @@ var UserProfilePage = {
 			}
 		}
 		
-		$.ajax({
-			type: 'POST',
-			url: this.ajaxEntryPoint+'&method=saveUserData',
-			dataType: 'json',
-			data: 'userId=' + UserProfilePage.userId + '&data=' + $.toJSON(userData),
-			success: function(data) {
-				if( data.status == "error" ) {
-					var errorBox = $(".UPPLightbox #errorBox").show().find('div');
-					errorBox.empty();
-					errorBox.append( data.errorMsg );
-				} else {
-					UserProfilePage.modal.closeModal();
-					window.location = wgScript + '?title=' + wgPageName; // + '&action=purge'; 
-				}
-			}
-		});
+		return userData;
 	},
 	
 	refillBDayDaySelectbox: function(selectboxes) {
@@ -485,5 +514,15 @@ var UserProfilePage = {
 		} else if( attr === 'avatar' ) {
 			UserProfilePage.track('edit/lightbox/continue_2');
 		}
+	},
+	
+	closeModal: function(modal, resetDataChangedFlag) {
+		if( typeof(resetDataChangedFlag) === 'undefined' || resetDataChangedFlag === true ) {
+			//changing it for next lightbox openings
+			UserProfilePage.wasDataChanged = false;
+			$().log( 'Reseting property wasDataChanged...' );
+		}
+		
+		modal.closeModal();
 	}
 }
