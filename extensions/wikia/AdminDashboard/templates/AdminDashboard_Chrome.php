@@ -10,7 +10,7 @@
 		</a>
 	</h1>
 	<nav>
-		<?= wfMsg("admindashboard-header-help", "") ?> | <?= wfMsg("admindashboard-header-exit", "") ?>
+		<?= wfMsgExt("admindashboard-header-help", "parseinline") ?> | <?= wfMsgExt("admindashboard-header-exit", "parseinline") ?>
 	</nav>
 </header>
 <nav class="AdminDashboardTabs" id="AdminDashboardTabs">
