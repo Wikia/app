@@ -50,7 +50,7 @@ WikiaSearchApp = {
 	},
 
 	// download necessary dependencies (AutoComplete plugin) and initialize search suggest feature for #search_field
-	initSuggest: function () {
+	initSuggest: function() {
 		$.loadJQueryAutocomplete(function() {
 			WikiaSearchApp.searchField.autocomplete({
 				serviceUrl: wgServer + wgScript + '?action=ajax&rs=getLinkSuggest&format=json',
@@ -62,7 +62,8 @@ WikiaSearchApp = {
 				deferRequestBy: 250,
 				maxHeight: 1000,
 				selectedClass: 'selected',
-				width: '270px'
+				width: '270px',
+				skipBadQueries: true // BugId:4625 - always send the request even if previous one returned no suggestions
 			});
 		});
 	}

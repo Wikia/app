@@ -48,7 +48,9 @@
       fnFormatResult: fnFormatResult,
       delimiter: null,
       selectedClass: 'selected',
-      appendTo: 'body'
+      appendTo: 'body',
+      /* Wikia change */
+     skipBadQueries: false
     };
     if (options) { $.extend(this.options, options); }
     if(this.options.lookup){
@@ -239,7 +241,7 @@
       this.selectedIndex = -1;
       this.container.hide();
 
-	  // Wikia: fire event when suggestios are shown
+	  // Wikia: fire event when suggestions are shown
 	  this.el.trigger('suggestHide');
     },
 
@@ -265,7 +267,7 @@
       this.enabled = true;
       this.container.show();
 
-	  // Wikia: fire event when suggestios are shown
+	  // Wikia: fire event when suggestions are shown
 	  this.el.trigger('suggestShow');
     },
 
@@ -278,7 +280,7 @@
       this.suggestions = response.suggestions;
       this.data = response.data;
       this.cachedResponse[response.query] = response;
-      if (response.suggestions.length === 0) { this.badQueries.push(response.query); }
+      if (response.suggestions.length === 0 && !this.options.skipBadQueries /* Wikia change */) { this.badQueries.push(response.query); }
       if (response.query === this.getQuery(this.currentValue)) { this.suggest(); }
     },
 
