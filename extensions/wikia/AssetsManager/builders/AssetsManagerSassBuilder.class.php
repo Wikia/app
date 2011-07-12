@@ -41,7 +41,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 		if ($sassResult != '') {
 			Wikia::log("Sass commandline error: " . $sassResult);
 			unlink($tempOutFile);
-			throw new Exception('Problem with SASS processing.');
+			throw new Exception('Problem with SASS processing. Check the PHP error log for more info.'); // TODO: Should these exceptions be wrapped as comments like in the old system?
 		}
 
 		$this->mContent = file_get_contents($tempOutFile);
