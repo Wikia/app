@@ -140,9 +140,6 @@ class ImageOperationsHelper {
 			//remove tmp object
 			imagedestroy($oImg);
 			
-			//debug
-			//file_put_contents('/tmp/upp3.log', 'User #'.$userData['userId'].' avatar saved in: '.$sFilePath."\n", FILE_APPEND);
-			
 			$sUserText =  $userData['username'];
 			$userPage = F::build('Title', array($sUserText, NS_USER), 'newFromText');
 			unlink($sTmpFile);
