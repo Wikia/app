@@ -1,23 +1,33 @@
 <?php
 $config = array();
 
-// Rich Text Editor JavaScript
-$config['rte'] = array(
+// Rich Text Editor JavaScript (before reskin)
+$config['oldrte'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'#function_AssetsConfig::getRTEAssets'
 	)
 );
-$config['rteepl'] = array(
+// Reskined rich text editor
+$config['rte'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'#function_AssetsConfig::getRTEAssetsEPL'
 	)
 );
+// Generic edit page JavaScript
 $config['epl'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'#function_AssetsConfig::getEPLAssets',
+	)
+);
+// Generic edit page JavaScript + reskined rich text editor
+$config['eplrte'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'#group_epl',
+		'#group_rte'
 	)
 );
 

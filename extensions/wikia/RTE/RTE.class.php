@@ -114,7 +114,7 @@ class RTE {
 		$wgOut->addInlineScript('var wgRTEStart = new Date();');
 
 		// add RTE javascript files
-		$srcs = AssetsManager::getInstance()->getGroupCommonURL('rte');
+		$srcs = AssetsManager::getInstance()->getGroupCommonURL('oldrte');
 		foreach($srcs as $src) {
 			$wgOut->addScript("<script src=\"$src\" type=\"$wgJsMimeType\"></script>");
 		}
