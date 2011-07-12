@@ -850,3 +850,5 @@ $wgEnableOpenGraphMetaExt = true;
 $wgSpecialEditCountExludedUsernames = array(
 	'default'
 );
+
+$wgDefaultUserOptions['imagesize'] = 1;
