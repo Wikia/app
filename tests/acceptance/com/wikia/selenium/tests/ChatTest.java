@@ -19,6 +19,9 @@ public class ChatTest {
 		private ChatTest test;
 		private Selenium selenium;
 		
+		ChatOne() {
+		}
+		
 		ChatOne(ChatTest sharedTest) {
 			System.out.println("ChatOne constructor");
 			test = sharedTest;
@@ -61,6 +64,9 @@ public class ChatTest {
 	class ChatTwo implements Runnable {
 		private ChatTest test;
 		private Selenium selenium;
+		
+		ChatTwo() {
+		}
 		
 		ChatTwo(ChatTest sharedTest) {
 			System.out.println("ChatTwo constructor");
