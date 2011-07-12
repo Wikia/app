@@ -22,58 +22,86 @@
 
 
 		<? if( $isUserPageOwner || $isWikiStaff ): ?>
-			<a href="#" id="userIdentityBoxEdit">Edit</a>
+			<span id="userIdentityBoxEdit">
+				<img src="<?= $wgBlankImgUrl ?>" class="sprite edit-pencil"><a href="#">Edit</a>
+			</span>
 			<input type="hidden" id="user" value="<?= $user['id']; ?>" />
 		<? endif; ?>
 
 		
 		<div>
-				<div class="tally">
-					<? if( !empty($user['registration']) ): ?>
-						<? if( !empty($user['edits']) ): ?>
-							<em><?= $user['edits'] ?></em>
-							<span>
-								<?= wfMsg('user-identity-box-edits-since-joining') ?><br>
-								<?= $user['registration'] ?>
-							</span>
-						<? endif; ?>
-					<? else: ?>
-						<?= wfMsg('user-identity-box-edits', array( '$1' => $user['edits'] ) ); ?>
+			<div class="tally">
+				<? if( !empty($user['registration']) ): ?>
+					<? if( !empty($user['edits']) ): ?>
+						<em><?= $user['edits'] ?></em>
+						<span>
+							<?= wfMsg('user-identity-box-edits-since-joining') ?><br>
+							<?= $user['registration'] ?>
+						</span>
 					<? endif; ?>
-				</div>
+				<? else: ?>
+					<?= wfMsg('user-identity-box-edits', array( '$1' => $user['edits'] ) ); ?>
+				<? endif; ?>
+			</div>
 
-			<ul class="websiteLinks">
+			<ul class="links">
 				<? if( !empty($user['twitter']) ): ?>
-					<li><?= wfMsg('user-identity-box-my-twitter', array( '$1' => $user['twitter'] )); ?></li>
+					<li>
+						<a href="<?= $user['twitter'] ?>">
+							<img src="<?= $wgBlankImgUrl ?>" class="twitter icon">
+						</a>
+						<?= wfMsg('user-identity-box-my-twitter', array( '$1' => $user['twitter'] )); ?>
+					</li>
 				<? else: ?>
 					<? if( $isUserPageOwner || $isWikiStaff ): ?>
-					<li><?= wfMsg('user-identity-box-zero-state-twitter'); ?></li>
+					<li class="zero">
+						<img src="<?= $wgBlankImgUrl ?>" class="twitter icon">
+						<?= wfMsg('user-identity-box-zero-state-twitter'); ?>
+					</li>
 					<? endif; ?>
 				<? endif; ?>
 				
 				<? if( !empty($user['website']) ): ?>
-					<li><?= wfMsg('user-identity-box-my-website', array( '$1' => $user['website'] )); ?></li>
+					<li>
+						<a href="<?= $user['website'] ?>">
+							<img src="<?= $wgBlankImgUrl ?>" class="website icon">
+						</a>
+						<?= wfMsg('user-identity-box-my-website', array( '$1' => $user['website'] )); ?>
+					</li>
 				<? else: ?>
 					<? if( $isUserPageOwner || $isWikiStaff ): ?>
-					<li><?= wfMsg('user-identity-box-zero-state-website'); ?></li>
+					<li class="zero">
+						<img src="<?= $wgBlankImgUrl ?>" class="website icon">
+						<?= wfMsg('user-identity-box-zero-state-website'); ?>
+					</li>
 					<? endif; ?>
 				<? endif; ?>
 				
 				<? if( !empty($user['fbPage']) ): ?>
-					<li><?= wfMsg('user-identity-box-my-fb-page', array( '$1' => $user['fbPage'] )); ?></li>
+					<li>
+						<a href="<?= $user['fbPage'] ?>">
+							<img src="<?= $wgBlankImgUrl ?>" class="facebook icon">
+						</a>
+						<?= wfMsg('user-identity-box-my-fb-page', array( '$1' => $user['fbPage'] )); ?>
+					</li>
 				<? else: ?>
 					<? if( $isUserPageOwner || $isWikiStaff ): ?>
-					<li><?= wfMsg('user-identity-box-zero-state-fb-page'); ?></li>
+					<li class="zero">
+						<img src="<?= $wgBlankImgUrl ?>" class="facebook icon">
+						<?= wfMsg('user-identity-box-zero-state-fb-page'); ?>
+					</li>
 					<? endif; ?>
 				<? endif; ?>
 			</ul>
 
 			<? if( !empty($user['topWikis']) && is_array($user['topWikis']) ): ?>
-			<ul class="favWikis">
+			<ul class="wikis">
 				<span><?= wfMsg('user-identity-box-fav-wikis'); ?></span>
+				<ul>
 				<? foreach($user['topWikis'] as $wiki): ?>
 					<li><a href="<?= $wiki['wikiUrl']; ?>"><?= $wiki['wikiName']; ?></a></li>
 				<? endforeach; ?>
+				</ul>
 			</ul>
 			<? endif; ?>			
 		</div>

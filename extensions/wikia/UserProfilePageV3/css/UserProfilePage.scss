@@ -10,13 +10,21 @@ $color-user-profile-masthead-aka: #CCC;
 	$color-user-profile-masthead-aka: #333;
 }
 
+$y-user-profile-masthead-links-icon: -17px;
+@if lightness($color-page) < 50 {
+	$y-user-profile-masthead-links-icon: 0;
+}
+
+$color-user-profile-gray-text: #999;
+@if lightness($color-page) < 50 {
+	$color-user-profile-gray-text: #666;
+}
 
 .WikiaUserPagesHeader {
 	@include linear-gradient(null, top, $color-page, 0%, mix($color-links, $color-page, 20%), 100%); 
 }
 
-.UserProfileMasthead {
-	
+.UserProfileMasthead {	
 	padding: 0 15px;
 	position: relative;
 	.masthead-avatar {
@@ -39,12 +47,27 @@ $color-user-profile-masthead-aka: #CCC;
 		
 		@include clearfix;	
 		background: $color-page;
-		margin-left: 178px;
+		margin-left: 165px;
 		margin-bottom: 20px;
+		position: relative;
+		
+		&:before {
+			border-color: $color-page $color-page transparent transparent;
+			border-style: solid;
+			border-width: 14px;
+			content: ' ';
+			display: block;
+			height: 1px;
+			left: -28px;
+			position: absolute;
+			top: 78px;
+			width: 1px;
+		}
 		
 		>div {
 			float: left;
-			width: 300px;
+			padding: 20px 25px;
+			width: 320px;
 		}
 		hgroup {
 			@include border-radius-nw($radius-user-profile-masthead);
@@ -79,8 +102,95 @@ $color-user-profile-masthead-aka: #CCC;
 		}
 	}
 	
+	.tally {
+		margin-bottom: 25px;
+		em {
+			margin-right: 5px;
+		}
+	}
+
+	.links {
+		@include clearfix;
+		li {
+			float: left;
+			margin-right: 1em;		
+		}
+		.icon {
+			@include border-radius(50px);
+			background: $color-links url(/extensions/wikia/UserProfilePageV3/images/UPP-sprite.png);
+			height: 17px;
+			position: relative;
+			top: .3em;
+			width: 17px;
+			&.twitter {
+				background-position: 0 $y-user-profile-masthead-links-icon;
+			}
+			&.website {
+				background-position: -16px $y-user-profile-masthead-links-icon;			
+			}
+			&.facebook {
+				background-position: -32px $y-user-profile-masthead-links-icon;			
+			}
+		}
+		.zero {
+			color: $color-user-profile-gray-text;
+			.icon {
+				background-color: $color-user-profile-gray-text;
+			}
+		}
+	}	
+
+	.wikis {
+		margin-top: 13px;
+		span {
+			color: $color-user-profile-gray-text;
+			float: left;
+			font-weight: bold;
+			margin-right: 10px;
+			text-align: right;
+			text-transform: uppercase;
+			width: 85px;
+		}
+		ul {
+			float: left;
+			width: 225px;
+			li {
+				float: left;
+				margin-right: 1em;
+				max-width: 225px;
+				overflow: hidden;
+				padding-bottom: .4em;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+		}
+	}
+	
+	.details {
+		font-size: 14px;
+		li {
+			padding-top: 10px;
+			&:first-child {
+				padding-top: 0;
+			}
+		}
+		span {
+			color: $color-user-profile-gray-text;
+			font-size: 12px;
+			font-weight: bold;
+			text-transform: uppercase;
+		}
+	}
 }
 
 #userIdentityBoxEdit {
-	float: right;
+	margin-top: 10px;
+	position: absolute;
+	right: 10px;
+	img {
+		position: relative;
+		top: 2px;
+	}
 }
+
+

@@ -30,7 +30,7 @@ class UserProfilePageController extends WikiaController {
 		
 		// CSS
 		$this->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/UserProfilePageV3/css/UserProfilePage.scss'));
-
+		
 		$user = $this->getVal( 'user' );
 		$pageBody = $this->getVal( 'userPageBody' );
 		$wikiId = $this->getVal( 'wikiId' );
@@ -72,6 +72,12 @@ class UserProfilePageController extends WikiaController {
 	 */
 	public function renderUserIdentityBox() {
 		$this->app->wf->ProfileIn( __METHOD__ );
+
+		// Website links icon shade
+		//$this->setVal( 'linkIconShade', ( SassUtil::isThemeDark('color-links') ) ? 'light' : 'dark');
+		//$this->setVal( 'linkIconShadeZeroState', ( SassUtil::isThemeDark() ) ? 'dark' : 'light');
+		
+		$this->setVal( 'wgBlankImgUrl', $this->wg->BlankImgUrl );
 		
 		$sessionUser = $this->wg->User;
 		$user = $this->getUserFromTitle($this->title);
