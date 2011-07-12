@@ -131,7 +131,7 @@ class AchConfig {
 				),
 				'infinite' => false
 			),
-			BADGE_SHARING => array(
+/*			BADGE_SHARING => array(
 				'laps' => array(
 					array('level' => BADGE_LEVEL_BRONZE, 'events' => 0),
 					array('level' => BADGE_LEVEL_BRONZE, 'events' => 1),
@@ -140,7 +140,7 @@ class AchConfig {
 					array('level' => BADGE_LEVEL_SILVER, 'events' => 50),
 				),
 				'infinite' => true
-			)			
+			) */
 		);
 	}
 	private function reset() {
