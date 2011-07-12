@@ -10,8 +10,8 @@ $messages = array();
 $messages['en'] = array(
 	'admindashboard-title' => '{{SITENAME}} Dashboard',
 	'admindashboard-header' => 'Admin Dashboard',
-	'admindashboard-header-help' => 'Need <a href="$1">Help?</a>',
-	'admindashboard-header-exit' => '<a href="$1">Exit</a>',
+	'admindashboard-header-help' => 'Need [http://www.community.wikia.com Help?]',
+	'admindashboard-header-exit' => '[[{{mediawiki:mainpage}}|Exit]]',
 	'admindashboard-toolbar-link' => 'Admin',
 // Wiki Controls
 	'admindashboard-controls-wiki-header' => 'Wiki',
