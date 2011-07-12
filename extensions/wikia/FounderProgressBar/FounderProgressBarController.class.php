@@ -291,12 +291,13 @@ class FounderProgressBarController extends WikiaController {
 				array('task_completed' => '1'),
 				array('wiki_id' => $wiki_id, 'task_id' => $task_id)
 			);
-			$this->setVal('result', "task_completed");
+			$this->setVal('result', "task_completed");		
+			// Check to see if we got to 100% complete
+			FounderProgressBarHooks::allTasksComplete();
+			// Open bonus task if necessary
+			$this->openBonusTask();			
 		}
 		$dbw->commit();
-		// Open bonus task if necessary
-		// Doing this before the memcache clear so that we load new data into memcache
-		$this->openBonusTask();
 		// Task data was updated so clear task list from memcache
 		$memKey = $this->wf->MemcKey('FounderLongTaskList');
 		$this->getMCache()->delete($memKey);
@@ -316,8 +317,11 @@ class FounderProgressBarController extends WikiaController {
 		$task_skipped = $this->request->getVal("task_skipped", 1);
 		//if (empty($task_id)) throw error;
 		//if (empty($task_skipped)) throw error;
-		//if (Task_Completed) it's okay;
-		
+		if (in_array($task_id, $this->bonus_tasks)) {		
+			$this->setVal('result', 'error');
+			$this->setVal('error', 'illegal_task');
+			return;
+		}
 		$dbw = $this->getDB(DB_MASTER);
 		$dbw->update(
 			'founder_progress_bar_tasks',
@@ -331,12 +335,12 @@ class FounderProgressBarController extends WikiaController {
 		);
 		$dbw->commit();
 		// Checks if everything is completed or skipped and possibly open up a bonus task
-		// Doing this before the memcache clear so that we load new data into memcache
+		// Do this before the memcache clear so that we load correct data into memcache if a bonus task is added
 		$this->openBonusTask();
 		// DB updated so clear memcache val
 		$memKey = $this->wf->MemcKey('FounderLongTaskList');
 		$this->getMCache()->delete($memKey);
-		$this->response->setVal("result", "OK");
+		$this->setVal("result", "OK");
 	}
 	
 	/**
@@ -371,6 +375,8 @@ class FounderProgressBarController extends WikiaController {
 				$skippedTaskList[] = $activity;
 			} else if (in_array($activity['task_id'], $this->bonus_tasks)) {
 				// bonus task list is built in the next step
+			} else if ($activity['task_id'] == FT_COMPLETION) {
+				// TODO: notify front end that all tasks are complete
 			} else {
 				$activeTaskList[] = $activity;
 			}
