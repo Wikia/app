@@ -292,10 +292,6 @@ class User {
 		if ( !is_array( $data ) || $data['mVersion'] < MW_USER_VERSION ) {
 			# Object is expired, load from DB
 			$data = false;
-			
-			file_put_contents('/tmp/upp3.log', print_r(array('info' => 'User::loadFromId(): user expired!'), true), FILE_APPEND);
-		} else {
-			file_put_contents('/tmp/upp3.log', print_r(array('info' => 'User::loadFromId(): user was in memcache!'), true), FILE_APPEND);
 		}
 
 		$isExpired = false;

@@ -106,14 +106,6 @@ class Masthead {
 	 * @access public
 	 */
 	public static function newFromUser( User $User ) {
-		file_put_contents('/tmp/upp3.log', print_r(array('info' => 'Masthead::newFromUser() fired!'), true), FILE_APPEND);
-		
-		if( isset($user->mOptions['avatar']) ) {
-			file_put_contents('/tmp/upp3.log', print_r(array('Masthead::newFromUser()::avatar' => $user->mOptions['avatar']), true), FILE_APPEND);
-		} else {
-			file_put_contents('/tmp/upp3.log', print_r(array('Masthead::newFromUser()::avatar' => 'none'), true), FILE_APPEND);
-		}
-		
 		return new Masthead( $User );
 	}
 
@@ -253,15 +245,9 @@ class Masthead {
 	 * @return String
 	 */
 	public function getUrl( $thumb = "" ) {
-		file_put_contents('/tmp/upp3.log', print_r(array('info' => 'Masthead::getPurgeUrl() fired!'), true), FILE_APPEND);
-		
 		if (!empty($this->avatarUrl)) {
-			file_put_contents('/tmp/upp3.log', print_r(array('Masthead::getUrl()::$this->avatarUrl' => $this->avatarUrl), true), FILE_APPEND);
-			
 			return $this->avatarUrl;
 		} else {
-			file_put_contents('/tmp/upp3.log', print_r(array('Masthead::getUrl()::$this->avatarUrl' => 'empty'), true), FILE_APPEND);
-			
 			$url = $this->getPurgeUrl($thumb); // get the basic URL
 			return wfReplaceImageServer( $url, $this->mUser->getTouched() );
 		}
@@ -279,8 +265,6 @@ class Masthead {
 	 * @return String
 	 */
 	public function getPurgeUrl( $thumb = "" ) {
-		file_put_contents('/tmp/upp3.log', print_r(array('info' => 'Masthead::getPurgeUrl() fired!'), true), FILE_APPEND);
-		
 		global $wgBlogAvatarPath;
 		$url = $this->mUser->getOption( AVATAR_USER_OPTION_NAME );
 		
