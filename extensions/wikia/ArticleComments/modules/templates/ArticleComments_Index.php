@@ -3,13 +3,15 @@
 	<ul class="controls">
 		<li id="article-comments-counter-recent"><?= wfMsg('oasis-comments-showing-most-recent', count($commentListRaw)) ?></li>
 	<?php
+	global $wgLang;
+	$countCommentsNestedFormatted = $wgLang->formatNum($countCommentsNested);
 	 /*see RT#64641*/  /*see RT#65179*/  /*see RT#68572 */
 	if ( $countCommentsNested > 1 && $countCommentsNested <= 200 && $countComments > $commentsPerPage ) {
 	?>
 		<li><a href="<?= $wgTitle->getFullURL("showall=1") ?>"><?= wfMsg('oasis-comments-show-all') ?></a></li>
 	<?php } ?>
 	</ul>
-	<h1 id="article-comments-counter-header"><?= wfMsgExt('oasis-comments-header', array('parsemag'), $countCommentsNested) ?></h1>
+	<h1 id="article-comments-counter-header"><?= wfMsgExt('oasis-comments-header', array('parsemag'), $countCommentsNestedFormatted) ?></h1>
 
 	<div id="article-comments">
 	<?php
