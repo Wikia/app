@@ -58,7 +58,7 @@ class GlobalTitle extends Title {
 		
 		$memkey = sprintf( "GlobalTitle:%d:%d", $id, $city_id );
 		$res = $wgMemc->get( $memkey ); 
-		if ( empty($res) && '1' === WikiFactory::getPublicStatus($city_id) ) {
+		if ( empty($res) && WikiFactory::isPublic($city_id) ) {
 			$dbr = wfGetDB( DB_SLAVE, array(), ( $dbname ) ? $dbname : WikiFactory::IDtoDB($city_id) );
 			$row = $dbr->selectRow( 'page', 
 				array( 'page_namespace', 'page_title' ),
@@ -204,7 +204,7 @@ class GlobalTitle extends Title {
 			return $this->mLastEdit;
 		}
 		
-		if( '1' === WikiFactory::getPublicStatus($this->mCityId) ) {
+		if( WikiFactory::isPublic($this->mCityId) ) {
 			$dbName = WikiFactory::IDtoDB($this->mCityId);
 			
 			$dbr = wfGetDB( DB_SLAVE, array(), $dbName );
@@ -219,8 +219,10 @@ class GlobalTitle extends Title {
 				),
 				__METHOD__ 
 			);
+		} else {
+			$this->mLastEdit = false;
 		}
-
+		
 		return $this->mLastEdit;
 	}
 

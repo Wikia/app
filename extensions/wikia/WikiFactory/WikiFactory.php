@@ -1491,32 +1491,26 @@ class WikiFactory {
 	}
 	
 	/**
-	 * getPublicStatus
+	 * getPublic
 	 *
 	 * method for getting city_public value in city_list table
 	 *
 	 * @author Andrzej 'nAndy' Lukaszewski <nandy@wikia-inc.com>
-	 * @access public
+	 * @access private
 	 * @static
 	 *
 	 * @param integer $city_id wikia identifier in city_list
 	 *
-	 * @return integer
+	 * @return integer | boolean false if WikiFactory is not used; integer otherwise
 	 */
-	static public function getPublicStatus( $city_id ) {
-		global $wgWikicitiesReadOnly;
-		if( ! self::isUsed() ) {
+	static private function getPublic( $city_id ) {
+		if( !self::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return false;
 		}
-
-		if($wgWikicitiesReadOnly){
-			Wikia::log( __METHOD__, "", "wgWikicitiesReadOnly mode. Skipping update.");
-			return false;
-		}
-
+		
 		wfProfileIn( __METHOD__ );
-
+		
 		$dbw = self::db( DB_MASTER );
 		$cityPublic = $dbw->selectField(
 			"city_list",
@@ -1527,7 +1521,31 @@ class WikiFactory {
 
 		wfProfileOut( __METHOD__ );
 
-		return $cityPublic;
+		return intval($cityPublic);
+	}
+	
+	/**
+	 * @brief Returns true if wiki is public ("probably" its database exists)
+	 * 
+	 * @desc Returns true if wiki is public which should mean its database exists. 
+	 * However we noticed one case when wiki was public and its database doesn't exist.
+	 * If this case wasn't singular we'll be having to create maintance script which
+	 * will check wikis' databases and set right value to city_public field in DB.
+	 *
+	 * @author Andrzej 'nAndy' Lukaszewski <nandy@wikia-inc.com>
+	 * @access public
+	 * @static
+	 *
+	 * @param integer $city_id wikia identifier in city_list
+	 *
+	 * @return boolean
+	 */
+	static public function isPublic($city_id) {
+		if( WikiFactory::getPublic($city_id) === 1 ) {
+			return true;
+		}
+		
+		return false;
 	}
 
 	/**
