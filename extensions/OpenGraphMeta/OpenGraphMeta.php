@@ -78,7 +78,7 @@ function efOpenGraphMetaPageHook( &$out, &$sk ) {
 		$meta["og:title"] = $title->getText();
 	}
 
-	if ( isset($out->mMainImage) ) {
+	if ( isset($out->mMainImage) && ($out->mMainImage !== false) ) {
 		$meta["og:image"] = wfExpandUrl($out->mMainImage->createThumb(100*3, 100));
 	} else if ( $isMainpage ) {
 		$meta["og:image"] = $wgLogo;

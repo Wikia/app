@@ -54,8 +54,11 @@ function egOgmcParserOutputApplyValues( $out, $parserOutput, $data ) {
 		$imgTitle = Title::newFromText( $value[0]['name'], NS_FILE );
 	}
 	if(!empty($imgTitle) && is_object($imgTitle)){
-		$parserOutput->setProperty("mainImage", wfFindFile($imgTitle));
-		$out->mMainImage = $parserOutput->getProperty("mainImage");
+		$mainImage = wfFindFile($imgTitle);
+		if($mainImage !== false){
+			$parserOutput->setProperty("mainImage", $mainImage);
+			$out->mMainImage = $parserOutput->getProperty("mainImage");
+		}
 	}
 
 	// Get description from ArticleService
