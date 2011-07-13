@@ -28,7 +28,12 @@
 			<input type="hidden" id="user" value="<?= $user['id']; ?>" />
 		<? endif; ?>
 
-		
+		<?php if( $isWikiStaff || $isCommunityWikiAndVSTF ): ?>
+			<span id="userIdentityBoxDeleteAvatar">
+				<img src="<?= $wgBlankImgUrl ?>" class="sprite trash"><a href="<?= $deleteAvatarLink ?>">Delete avatar</a>
+			</span>
+		<?php endif; ?>
+
 		<div>
 			<div class="tally">
 				<? if( !empty($user['registration']) ): ?>
@@ -105,7 +110,7 @@
 			</ul>
 			<? endif; ?>
 		</div>
-		<div>		
+		<div>
 			<ul class="details">
 				<? if( !empty($user['location']) ): ?>
 					<li><?= wfMsg('user-identity-box-location', array( '$1' => $user['location'] )); ?></li>
