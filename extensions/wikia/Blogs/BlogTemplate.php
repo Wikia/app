@@ -145,13 +145,28 @@ class BlogTemplateClass {
 		),
 
 		/*
-		 * limit for query date of blog creation
+		 * limit for query date of last blog edit
 		 * timestamp = integer date yyyymmddhhmmss
 		 *
 		 * type: 	number,
 		 * default: 20081101000000
 		 */
 		'timestamp' => array (
+			'type' 		=> 'number',
+			'default' 	=> '20081101000000',
+			'pattern' 	=> '/^\d*$/',
+			'min'		=> '20081101000000'
+		),
+		
+		/*
+		 * limit for query date of blog creation
+		 * timestamp = integer date yyyymmddhhmmss
+		 *
+		 * type: 	number,
+		 * default: 20081101000000
+		 */
+		
+		'create_timestamp' => array (
 			'type' 		=> 'number',
 			'default' 	=> '20081101000000',
 			'pattern' 	=> '/^\d*$/',
@@ -241,7 +256,7 @@ class BlogTemplateClass {
 			'type' 		=> 'number',
 			'pattern' 	=> '/^\d*$/'
 		),
-
+		
 		'seemore' => array(
 			'type' => 'string',
 			'default' 	=> '',
@@ -250,6 +265,8 @@ class BlogTemplateClass {
 
 	private static $aTables		= array( );
 	private static $aWhere 		= array( );
+	private static $aHaving 	= array( );
+
 	private static $aOptions	= array( );
 	private static $aCategoryNames = array( );
 
@@ -577,8 +594,8 @@ class BlogTemplateClass {
 				self::__makeStringOption('style', self::$aBlogParams['style']['default']);
 			}
 		}
-		/* see more */
-		if ( !isset(self::$aOptions['seemore']) ) {
+		/* see more */ 
+		if ( !isset(self::$aOptions['seemore']) ) { 
 			self::__makeStringOption('seemore', Title::newFromText(wfMsg('blogs-recent-url'))->getFullURL());
 		}
     	wfProfileOut( __METHOD__ );
@@ -650,6 +667,10 @@ class BlogTemplateClass {
 			} else {
 				self::$aWhere[] = "rev_timestamp >= '".BLOGS_TIMESTAMP."'";
 			}
+			
+			if ( !empty (self::$aOptions['create_timestamp'])) {
+				self::$aHaving[] = "create_timestamp >= '".self::$aOptions['create_timestamp']."'";
+			}
 
 		}
     	wfProfileOut( __METHOD__ );
@@ -679,6 +700,11 @@ class BlogTemplateClass {
 		} else {
     		$dbOption['OFFSET'] = intval(self::$aOptions['offset']['default']);
 		}
+		
+		if ( !empty(self::$aHaving) ) {
+			$dbOption['HAVING'] = implode(' AND ', self::$aHaving );
+		}
+		
     	wfProfileOut( __METHOD__ );
     	return $dbOption;
 	}
@@ -908,7 +934,7 @@ class BlogTemplateClass {
     	wfProfileIn( __METHOD__ );
     	/* main query */
     	$aResult = array();
-    	$aFields = array( '/* BLOGS */ rev_page as page_id','page_namespace','page_title','unix_timestamp(rev_timestamp) as timestamp','rev_timestamp','min(rev_id) as rev_id','rev_user' );
+    	$aFields = array( '/* BLOGS */ rev_page as page_id','page_namespace','page_title','min(rev_timestamp) as create_timestamp', 'unix_timestamp(rev_timestamp) as timestamp','rev_timestamp','min(rev_id) as rev_id','rev_user' );
 		$res = self::$dbr->select(
 			array_map(array(self::$dbr, 'tableName'), self::$aTables),
 			$aFields,
@@ -916,6 +942,7 @@ class BlogTemplateClass {
 			__METHOD__,
 			self::__makeDBOrder()
 		);
+		
 		while ( $oRow = self::$dbr->fetchObject( $res ) ) {
 			if (class_exists('ArticleCommentList')) {
 				$oComments = ArticleCommentList::newFromText( $oRow->page_title, $oRow->page_namespace );
@@ -1105,6 +1132,7 @@ class BlogTemplateClass {
 					case 'displaycount' :
 					case 'offset'		:
 					case 'summarylength':
+					case 'create_timestamp'	:
 					case 'timestamp'	:
 						if ( !empty($aParamValues) && is_array($aParamValues) ) {
 							list ($sParamValue) = $aParamValues;
@@ -1161,6 +1189,7 @@ class BlogTemplateClass {
 					case 'count'		:
 					case 'displaycount' :
 					case 'offset'		:
+					case 'create_timestamp'	:
 					case 'timestamp'	:
 					case 'summarylength':
 						self::__makeIntOption($sParamName, $sParamValue);
