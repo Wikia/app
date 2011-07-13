@@ -6,7 +6,8 @@
  *
  * This extension is designed to be portable, so it doesn't use the Nirvana framework.
  *
- * TODO: Autocompletion for the text-fields
+ * TODO: Autocompletion for the text-fields (if not, then pull "Category:" out in front of the textfield so they don't have to type it).
+ * TODO: Autocompletion for the text-fields (if not, then pull "Category:" out in front of the textfield so they don't have to type it).
  *
  * @file
  * @ingroup SpecialPage
@@ -31,6 +32,9 @@ $wgExtensionCredits['specialpage'][] = array(
  */
 class SpecialCategoryIntersection extends SpecialPage {
 	public $defaultLimit = 25;
+	
+	static private $CAT_PREFIX = "category_";
+	static private $CATEGORY_NS_PREFIX = "Category:"; // the actual namespace prefix (includes the colon at the end).  FIXME: There must be a way to get this programatically.
 
 	public function __construct() {
 		parent::__construct( 'CategoryIntersection' );
@@ -49,15 +53,43 @@ class SpecialCategoryIntersection extends SpecialPage {
 
 		$wgOut->setPagetitle( wfMsg('categoryintersection') );
 		
+		// Just splurt some CSS onto the page for now (TODO: Make this an external file)
+		$wgOut->addHTML("
+			<style type='text/css'>
+				h3{
+					font-weight:bold;
+				}
+				table{
+					width:100%;
+				}
+				td{
+					vertical-align:top;
+					width: 50%;
+				}
+				td.form{
+					background-color:#eee;
+				}
+				td.form input[type=text]{
+					width:95%;
+				}
+				td.results{
+					background-color:#ccc;
+				}
+			</style>
+		");
+		
 		// Show the header
-		$wgOut->addHTML( wfMsg('categoryintersection-header') );
+		$wgOut->addHTML( "<h2>" . wfMsg('categoryintersection-header-title') . "</h2>" );
+// TODO: CREATE THE HEADER BODY WITH A LINK TO THE DOCUMENTATION
+// TODO: CREATE THE HEADER BODY WITH A LINK TO THE DOCUMENTATION
+		$wgOut->addHTML( wfMsg('categoryintersection-header-body') );
 
-		$wgOut->addHTML("<table><tr><td width='50%'>"); // oh snap, tables for layout!
+		$wgOut->addHTML("<table><tr><td class='form'>"); // oh snap, tables for layout!
 			$this->showForm( $wgOut );
-		$wgOut->addHTML("</td><td width='50%'>");
+		$wgOut->addHTML("</td><td class='results'>");
 			$this->showResults( $wgOut );
 		$wgOut->addHTML("</td></tr></table>\n");
-		
+
 		// Show a footer w/links to more info and some example queries
 		$this->showFooter( $wgOut );
 
@@ -82,12 +114,12 @@ class SpecialCategoryIntersection extends SpecialPage {
 			$html .= $this->getHtmlForCategoryBox(1);
 			$html .= wfMsg('categoryintersection-and') . "<br/>\n";
 			$html .= $this->getHtmlForCategoryBox(2);
-			
-	// TODO: Display a button to make more rows....
-	// TODO: Display a button to make more rows....
+
+// TODO: Display a button to make more rows....
+// TODO: Display a button to make more rows....
 
 			// Display limit (default to this->defaultLimit)
-			$html .= wfMsg('categoryintersection-limit') . "<select name='limit'>";
+			$html .= wfMsg('categoryintersection-limit') . " <select name='limit'>";
 			$limit = $wgRequest->getVal('limit', $this->defaultLimit);
 			$limits = array(10, 25, 50, 100);
 			foreach($limits as $currLimit){
@@ -113,11 +145,9 @@ class SpecialCategoryIntersection extends SpecialPage {
 	 */
 	private function getHtmlForCategoryBox($num){
 		global $wgRequest;
-		$id = "category_$num";
-// TODO: If there is no value, provide hint-text
-// TODO: If there is no value, provide hint-text
+		$id = self::$CAT_PREFIX . "$num";
 		$value = $wgRequest->getVal($id);
-		return "<input type='text' name='$id' value='$value'/><br/>\n";
+		return "<input type='text' name='$id' value='$value' placeholder='".self::$CATEGORY_NS_PREFIX."...'/><br/>\n";
 	} // end getHtmlForCategoryBox()
 
 	/**
@@ -128,9 +158,70 @@ class SpecialCategoryIntersection extends SpecialPage {
 	 */
 	private function showResults($out){
 		wfProfileIn( __METHOD__ );
+		global $wgRequest, $wgServer, $wgScriptPath;
 
-		// TODO: IMPLEMENT
-		// TODO: IMPLEMENT
+		$html = "";
+		$html .= "<div class='ci_results'>\n";
+		
+			$html .= "<h3>". wfMsg('categoryintersection-results-title') ."</h3>\n";
+			
+// TODO: Summarize the results here (what was searched for, the limit, and the number of results found (because there may be some missing if the limit was less than the total number of possible matches).
+// TODO: Summarize the results here (what was searched for, the limit, and the number of results found (because there may be some missing if the limit was less than the total number of possible matches).
+
+			$submit = $wgRequest->getVal('wpSubmit');
+			if(!empty($submit)){
+				$limit = $wgRequest->getVal('limit', $this->defaultLimit);
+			
+				$categories = array();
+				$keys = array_keys($_GET);
+				foreach($keys as $key){
+					if(startsWith($key, self::$CAT_PREFIX)){
+						$cat = $wgRequest->getVal($key);
+						if(!empty($cat)){
+							$categories[] = $cat;
+
+							if(!startsWith($cat, self::$CATEGORY_NS_PREFIX)){
+								$html .= "<em>Warning: \"$cat\" does not start with \"{self::$CATEGORY_NS_PREFIX}\".</em><br/>\n";
+							}
+						}
+					}
+				}
+
+				// Use the API to get actual results.
+				$apiParams = array(
+					'action' => 'query',
+					'list' => 'categoryintersection',
+					'limit' => $limit,
+					'categories' => implode("|", $categories)
+				);
+				$apiData = ApiService::call($apiParams);
+				if (empty($apiData)) {
+					$html .= "<em>". wfMsg('categoryintersection-noresults'). "</em>\n";
+				} else {
+					$articles = $apiData['query']['categoryintersection'];
+					print "<ul>\n";
+					foreach($articles as $articleData){
+						$title = $articleData['title'];
+						$titleObj = Title::newFromText($title);
+						$html .= "<li><a href='".$titleObj->getFullURL()."'>$title</a></li>\n";
+					}
+					print "</ul>\n";
+				}
+
+				// Display the URL that could be used to make that API call.
+				$apiUrl = $wgServer.$wgScriptPath."/api.php?".http_build_query($apiParams);
+				$apiUrl = strtr($apiUrl, array( // several of the very commonly used characters shouldn't be encoded (less confusing URL this way)
+								"%3A" => ":",
+								"%2F" => "/",
+								"%7C" => "|"
+							));
+				$html .= "<br/><strong>" . wfMsg('categoryintersection-query-used') . "</strong><br/>\n";
+				$html .= "<a href='$apiUrl'>$apiUrl</a>\n";
+			}
+
+		$html .= "</div>\n";
+
+		$out->addHTML( $html );
 
 		wfProfileOut( __METHOD__ );
 	} // end showResults()
@@ -143,10 +234,77 @@ class SpecialCategoryIntersection extends SpecialPage {
 	 */
 	private function showFooter($out){
 		wfProfileIn( __METHOD__ );
-		
-		// TODO: IMPLEMENT
-		// TODO: IMPLEMENT
-		
+		global $wgServer, $wgScriptPath;
+
+		$html = "";
+		$html .= "<h2>" . wfMsg('categoryintersection-footer-title') . "</h2>";
+		$html .= wfMsg('categoryintersection-footer-body') . "<br/>\n";
+
+// TODO: Think of some other cool examples (with more than 2 dimensions)
+// TODO: Think of some other cool examples (with more than 2 dimensions)
+		$examples = array(
+			array(
+				"Category:Artists_S",
+				"Category:Hometown/Sweden/Stockholm",
+			),
+			array(
+				"Category:Artist",
+				"Category:Hometown/United_States/Pennsylvania/Pittsburgh",
+			),
+			array(
+				"Category:Hometown/Germany/North_Rhine-Westphalia",
+				"Category:Genre/Rock"
+			),
+			array(
+				"Category:Artists_S",
+				"Category:Genre/Rock"
+			),
+			array(
+				"Category:Album",
+				"Category:Genre/Nerdcore_Hip_Hop"
+			),
+			array(
+				"Category:Language/Simlish"
+			),
+			array(
+				"Category:Label/Ultra_Records",
+				"Category:Hometown/Canada"
+			),
+			array(
+				"Category:Genre/Hip_Hop",
+				"Category:Hometown/United_States/California"
+			),
+		);
+
+		// Format and output the examples.
+		$html .= "<ul>\n";
+		foreach($examples as $exampleCategories){
+			$readableCats = array();
+			$queryParams = array(
+				"wpSubmit" => "Example" // so that the page can detect that there was a request for API data
+			);
+			$catNum = 1;
+			foreach($exampleCategories as $cat){
+				$queryParams[self::$CAT_PREFIX . $catNum++] = $cat;
+				if(startsWith($cat, self::$CATEGORY_NS_PREFIX)){
+					$readableCats[] = substr($cat, strlen(self::$CATEGORY_NS_PREFIX));
+				} else {
+					$readableCats[] = $cat;
+				}
+			}
+
+			// Create URL
+			$baseUrl = $this->getTitle()->getFullURL();
+			$baseUrl .= ((strpos($baseUrl, "?")===false) ? "?" : "&" ); // first delimiter depends on whether there has been a '?' in the url already
+			$link = $baseUrl . http_build_query($queryParams);
+
+			// Create readable text
+			$html .= "<li><a href='$link'>(". implode($readableCats, "), (") .")</a></li>\n";
+		}
+		$html .= "</ul>\n";
+
+		$out->addHTML( $html );
+
 		wfProfileOut( __METHOD__ );
 	} // end showFooter()
 
