@@ -15,10 +15,11 @@ $messages['en'] = array(
 	'founderprogressbar-list-description2' => "The tasks area lists all of the tasks you need to complete. If you skip a task it will move into the Skipped Tasks section and remain available for you to complete at any time. Is there a task on the list that you don't feel will ever be right for your wiki? Don't worry -- when only Skipped Tasks remain to be completed we'll unlock your Bonus Tasks. Complete bonus tasks to make up the percentage points for tasks you're going to skip forever and reach the coveted 100%.",
 	'founderprogressbar-list-task-label' => "Tasks",
 	'founderprogressbar-list-skipped-task-label' => "Skipped Tasks",
-	'founderprogressbar-list-skipped-task-desc' => "You can come back to these later.",
+	'founderprogressbar-list-skipped-task-desc' => "You can complete these at any time.",
 	'founderprogressbar-list-bonus-task-label' => "Bonus Tasks",
 	'founderprogressbar-list-bonus-task-desc' => "Complete the tasks list to unlock bonus tasks",
 	'founderprogressbar-task-call-to-action' => "Go to task",
+	'founderprogressbar-completion-message' => "Congratulations! You've done an amazing job and completed all of the tasks to 100%. Your wiki is well on its way to success, or even already there. Keep up the awesome work!",
 	# Each task has a label(short description), action(button text) and long description.  Initial task list has 30 actions.
 	'founderprogressbar-page-add10-label' => 'Add $1 pages',
 	'founderprogressbar-page-add10-action' => 'Add a page',	

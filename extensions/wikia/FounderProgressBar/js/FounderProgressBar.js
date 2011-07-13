@@ -172,6 +172,18 @@ var FounderProgressWidget = {
 		FounderProgressWidget.preview.find('.label').live('click', FounderProgressWidget.handleActivityPreview);
 		FounderProgressWidget.preview.find('.clickevent .actions .wikia-button').live('click', FounderProgressList.trackActivity);
 		FounderProgressWidget.preview.find('.actions .skip').live('click', FounderProgressWidget.skipActivity);
+		FounderProgressWidget.preview.find('.completion-message .close').click(function() {
+			$.post(wgScriptPath + '/wikia.php', {
+				controller: 'FounderProgressBar',
+				method: 'skipTask',
+				format: 'json',
+				task_id: 1000
+			}, function(res) {
+				if(res['result'] && res.result == 'OK') {
+					FounderProgressWidget.preview.find('.completion-message').slideUp(400);
+				}
+			});
+		});
 	},
 	handleActivityPreview: function() {
 		var el = $(this);
