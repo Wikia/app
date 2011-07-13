@@ -202,7 +202,7 @@ class FounderEmails {
 		global $wgStatsDB, $wgStatsDBEnabled;
 		wfProfileIn( __METHOD__ );
 		
-		$today = date( 'Ymd' );
+		$today = date( 'Ymd', strtotime('-1 day') );
 
 		$views = 0;
 		if ( !empty( $wgStatsDBEnabled ) ) {
@@ -228,7 +228,7 @@ class FounderEmails {
 		
 		$edits = 0;
 		if ( !empty( $wgStatsDBEnabled ) ) {
-			$today = ( empty( $day ) ) ? date( 'Y-m-d' ) : $day;
+			$today = ( empty( $day ) ) ? date( 'Y-m-d', strtotime('-1 day') ) : $day;
 			
 			$db = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
 
@@ -251,7 +251,7 @@ class FounderEmails {
 		wfProfileIn( __METHOD__ );
 		
 		$userEdits = array();
-		$today = ( empty( $day ) ) ? date( 'Ymd' ) : str_replace( "-", "", $day );
+		$today = ( empty( $day ) ) ? date( 'Ymd', strtotime('-1 day') ) : str_replace( "-", "", $day );
 		
 		$dbname = WikiFactory::IDtoDB( $cityID );
 		
@@ -285,7 +285,7 @@ class FounderEmails {
 		
 		$userJoined = array();
 		if ( !empty( $wgStatsDBEnabled ) ) {
-			$today = ( empty( $day ) ) ? date( 'Y-m-d' ) : $day;
+			$today = ( empty( $day ) ) ? date( 'Y-m-d', strtotime('-1 day') ) : $day;
 			
 			$db = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
 			$oRes = $db->select(
