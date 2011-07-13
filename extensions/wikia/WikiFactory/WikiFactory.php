@@ -1489,7 +1489,7 @@ class WikiFactory {
 
 		return $city_public;
 	}
-	
+
 	/**
 	 * getPublic
 	 *
@@ -1508,9 +1508,9 @@ class WikiFactory {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return false;
 		}
-		
+
 		wfProfileIn( __METHOD__ );
-		
+
 		$dbw = self::db( DB_MASTER );
 		$cityPublic = $dbw->selectField(
 			"city_list",
@@ -1523,11 +1523,11 @@ class WikiFactory {
 
 		return intval($cityPublic);
 	}
-	
+
 	/**
 	 * @brief Returns true if wiki is public ("probably" its database exists)
-	 * 
-	 * @desc Returns true if wiki is public which should mean its database exists. 
+	 *
+	 * @desc Returns true if wiki is public which should mean its database exists.
 	 * However we noticed one case when wiki was public and its database doesn't exist.
 	 * If this case wasn't singular we'll be having to create maintance script which
 	 * will check wikis' databases and set right value to city_public field in DB.
@@ -1544,7 +1544,7 @@ class WikiFactory {
 		if( WikiFactory::getPublic($city_id) === 1 ) {
 			return true;
 		}
-		
+
 		return false;
 	}
 
@@ -2141,7 +2141,7 @@ class WikiFactory {
 			array( "city_id" => $city_id ),
 			__METHOD__
 		);
-		
+
 		if ($skip)
 			Wikia::log( __METHOD__, "", "skip logging.");
 		else
@@ -2558,7 +2558,7 @@ class WikiFactory {
 		$aWikis = array( );
 
 		while ( $oRow = $dbr->fetchObject( $oRes ) ) {
-			$aWikis[] = $oRow->cv_city_id;
+			$aWikis[] = (int) $oRow->cv_city_id;
 		}
 
 		$dbr->freeResult( $oRes );
