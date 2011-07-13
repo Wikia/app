@@ -23,6 +23,7 @@ window.RTE = {
 		forcePasteAsPlainText: CKEDITOR.env.webkit, // BugId:7605
 		forcePasteInDialog: CKEDITOR.env.webkit, // BugId:7605
 		format_tags: 'p;h2;h3;h4;h5;pre',
+		height: 400, // default height when "auto resizing" is not applied
 		language: window.wgUserLanguage,
 		plugins:
 			'basicstyles,' +
