@@ -23,7 +23,7 @@ if (!defined('MEDIAWIKI')) {
 }
 
 class CategorySelect {
-	private static $categories, $maybeCategory, $maybeCategoryBegin, $outerTag, $nodeLevel, $frame, $categoryNamespace;
+	private static $categories, $maybeCategory, $maybeCategoryBegin, $outerTag, $nodeLevel, $frame, $categoryNamespace, $tagsWhiteList;
 
 	static function SelectCategoryAPIgetData($wikitext) {
 		global $wgCategorySelectMetaData;
@@ -50,6 +50,9 @@ class CategorySelect {
 		self::$nodeLevel = 0;
 		self::$categoryNamespace = 'Category|' . $wgContLang->getNsText(NS_CATEGORY);
 
+		// we will ignore categories added inside following list of tags (BugId:8208)
+		self::$tagsWhiteList = array_keys($wgParser->mTagHooks);
+
 		//create XML DOM document from provided XML
 		$dom = new DOMDocument();
 		$dom->loadXML($xml);
@@ -57,7 +60,7 @@ class CategorySelect {
 		$root = $dom->getElementsByTagName('root')->item(0);
 
 		self::$frame = $wgParser->getPreprocessor()->newFrame();
-		
+
 		$categories = self::parseNode($root);
 
 		//make wikitext from DOM tree
@@ -72,7 +75,7 @@ class CategorySelect {
 
 	static private function parseNode(&$root, $outerTag = '') {
 		self::$nodeLevel++;
-		$tagsWhiteList = array('nowiki', 'pre', 'gallery', 'ref', 'mainpage-rightcolumn-start', 'mainpage-leftcolumn-start', 'mainpage-endcolumn');
+
 		$out = array();
 		if ($root->hasChildNodes()) {
 			$nodes = &$root->childNodes;
@@ -85,7 +88,7 @@ class CategorySelect {
 								break;
 							case 'ext':
 								$tmpOuterTag = $node->getElementsByTagName('name')->item(0)->textContent;
-								if (in_array($tmpOuterTag, $tagsWhiteList)) {
+								if (in_array($tmpOuterTag, self::$tagsWhiteList)) {
 									continue;
 								}
 								$inner = $node->getElementsByTagName('inner')->item(0);
