@@ -7,8 +7,11 @@
 			border-color: #006CB0;
 			color: #fff;
 
-			&:active,
 			&:hover {
+				@include linear-gradient(#082860, top, #254C90, 35%, #082860, 65%);
+			}
+
+			&:active {
 				@include linear-gradient(#006CB0, top, #005F9C, 35%, #1D88CB, 65%);
 			}
 
@@ -17,9 +20,12 @@
 				border-color: #D9D9D9;
 				color: #3A3A3A;
 
-				&:active,
 				&:hover {
 					@include linear-gradient(#e8e8e8, top, #f5f5f5, 35%, #e8e8e8, 65%);
+				}
+
+				&:active {
+					@include linear-gradient(#e8e8e8, top, #e8e8e8, 35%, #f5f5f5, 65%);
 				}
 
 				ul {

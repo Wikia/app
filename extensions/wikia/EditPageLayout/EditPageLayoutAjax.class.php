@@ -20,7 +20,7 @@ class EditPageLayoutAjax {
 					if($method == 'preview') {
 						$html = $service->getPreview($wikitext);
 
-						// allow extensions to modify preview
+						// allow extensions to modify preview (BugId:6721)
 						wfRunHooks('EditPageLayoutModifyPreview', array($wgTitle, &$html));
 
 					} elseif($method == 'diff') {
