@@ -6,7 +6,7 @@ class EditPageLayoutAjax {
 	 * Perform reverse parsing on given HTML (when needed)
 	 */
 	static private function resolveWikitext($content, $mode, $page, $method, $section ) {
-		global $wgRequest, $wgTitle;
+		global $wgRequest, $wgTitle, $wgOut;
 		wfProfileIn(__METHOD__);
 		if(class_exists($page)) {
 			$pageObj = new $page();
@@ -19,6 +19,9 @@ class EditPageLayoutAjax {
 					$html = '';
 					if($method == 'preview') {
 						$html = $service->getPreview($wikitext);
+
+						// allow extensions to modify preview (BugId:8354)
+						wfRunHooks('OutputPageBeforeHTML', array(&$wgOut, &$html));
 
 						// allow extensions to modify preview (BugId:6721)
 						wfRunHooks('EditPageLayoutModifyPreview', array($wgTitle, &$html));
