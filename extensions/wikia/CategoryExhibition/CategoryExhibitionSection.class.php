@@ -286,7 +286,7 @@ class CategoryExhibitionSection {
 			'category_exhibition_category_cache',
 			$pageId,
 			F::App()->wg->cityId,
-			$this->getIsVerify()
+			$this->isVerify()
 		);
 
 		$cachedResult = $oMemCache->get( $sKey );
