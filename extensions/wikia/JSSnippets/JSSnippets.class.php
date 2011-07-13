@@ -76,14 +76,34 @@ class JSSnippets {
 	}
 
 	/**
+	 * @brief Return <script> tag loading JSSnippets main JS on-demand
+	 *
+	 * @return string <script> tag
+	 */
+	private function getBottomScript() {
+		$src = AssetsManager::getInstance()->getOneCommonURL('extensions/wikia/JSSnippets/js/JSSnippets.js');
+		return Html::inlineScript("if (JSSnippetsStack.length) $.getScript('{$src}');");
+	}
+
+	/**
 	 * @brief Loads JSSnippets main JS if there's any item on the stack
 	 *
 	 * @param Skin $skin MW skin instance
 	 * @param string $text content of bottom scripts
 	 */
 	public function onSkinAfterBottomScripts($skin, &$text) {
-		$jsFile = "{$this->app->wg->extensionsPath}/wikia/JSSnippets/js/JSSnippets.js?{$this->app->wg->styleVersion}";
-		$text .= Html::inlineScript("if (JSSnippetsStack.length) $.getScript('{$jsFile}');");
+		$text .= $this->getBottomScript();
+		return true;
+	}
+
+	/**
+	 * @brief Loads JSSnippets main JS inside preview modal
+	 *
+	 * @param Title $title article preview is generated for
+	 * @param string $html preview content
+	 */
+	public function onEditPageLayoutModifyPreview(Title $title, &$html) {
+		$html .= $this->getBottomScript();
 		return true;
 	}
 }
