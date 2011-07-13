@@ -63,9 +63,27 @@ $app->wg->set( 'wgExtensionMessagesFiles', "{$dir}/UserPathPrediction.i18n.php",
  * setup functions
  */
 $app->wg->append( 'wgExtensionFunctions', 'wfUserPathPredictionInit');
+	
+$wgHooks['BeforePageDisplay'][] = 'wfUserPathPredictiononBeforePageDisplayAddButton';
 
 function wfUserPathPredictionInit() {
 	//TODO: place extension init stuff here
-	
 	return true; // needed so that other extension initializations continue
+}
+
+function wfUserPathPredictiononBeforePageDisplayAddButton( $article, $row ) {
+			
+	$app = F::app();
+	
+	$title = $app->wg->title;
+	
+	if( $app->wg->DevelEnvironment  ) {
+		
+		//$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
+		$script = '<script type="text/javascript">(function(){$("#WikiaPageHeader ul.commentslikes").append("<li><a href=\"\">Show Path</a></li>")})();</script>';
+		
+		$app->wg->Out->addScript( $script );
+		
+	} 
+	return true;
 }
