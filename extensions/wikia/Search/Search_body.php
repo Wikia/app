@@ -143,7 +143,7 @@ class SolrSearchSet extends SearchResultSet {
 	 * @access public
 	 */
 	public static function newFromQuery( $query, $queryFields, $namespaces = array(), $limit = 20, $offset = 0, $crossWikiaSearch = false ) {
-		global $wgSolrHost, $wgSolrPort, $wgCityId, $wgErrorLog, $wgCrossWikiaSearchExcludedWikis, $wgSolrDebugWikiId;
+		global $wgSolrHost, $wgSolrPort, $wgCityId, $wgErrorLog, $wgSolrDebugWikiId;
 
 		$fname = 'SolrSearchSet::newFromQuery';
 		wfProfileIn( $fname );
@@ -184,7 +184,7 @@ class SolrSearchSet extends SearchResultSet {
 			$params['bq'] = '(*:* -html:(' . $sanitizedQuery . '))^10 host:(' . $sanitizedQuery . '.wikia.com)^20';
 
 			$widQuery = '';
-			foreach($wgCrossWikiaSearchExcludedWikis as $wikiId) {
+			foreach(self::getCrossWikiaSearchExcludedWikis() as $wikiId) {
 				$widQuery .= ( !empty($widQuery) ? ' AND ' : '' ) . '!wid:' . $wikiId;
 			}
 			$params['fq'] = ( !empty( $params['fq'] ) ? "(" . $params['fq'] . ") AND " : "" ) . $widQuery . " AND lang:en AND iscontent:true";
@@ -230,6 +230,26 @@ class SolrSearchSet extends SearchResultSet {
 
 		wfProfileOut( $fname );
 		return $resultSet;
+	}
+
+	/**
+	 * get list of wikis excluded from cross-wikia search
+	 * @return array
+	 */
+	private static function getCrossWikiaSearchExcludedWikis() {
+		global $wgCrossWikiaSearchExcludedWikis, $wgCityId, $wgMemc;
+
+		$cacheKey = wfSharedMemcKey( 'crossWikiaSearchExcludedWikis' );
+		$privateWikis = $wgMemc->get( $cacheKey );
+
+		if(!is_array($privateWikis)) {
+			// get private wikis from db
+			$wgIsPrivateWiki = WikiFactory::getVarByName( 'wgIsPrivateWiki', $wgCityId );
+			$privateWikis = WikiFactory::getCityIDsFromVarValue( $wgIsPrivateWiki->cv_id, true, '=' );
+			$wgMemc->set( $cacheKey, $privateWikis, 3600 ); // cache for 1 hour
+		}
+
+		return count( $privateWikis ) ? array_merge( $privateWikis, $wgCrossWikiaSearchExcludedWikis ) : $wgCrossWikiaSearchExcludedWikis;
 	}
 
 	/**
