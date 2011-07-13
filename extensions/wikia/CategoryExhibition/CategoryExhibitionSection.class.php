@@ -14,6 +14,8 @@ class CategoryExhibitionSection {
 	protected $allowedSortOptions = array( 'alphabetical', 'recentedits', 'mostvisited' );
 	protected $allowedDisplayOptions = array( 'exhibition', 'page' );
 
+	protected $verifyChecker = '';
+
 	public $urlParameter = 'section';	// contains section url variable that stores pagination
 	public $paginatorPosition = 1;		// default pagination
 	public $sUrl = '';
@@ -269,13 +271,22 @@ class CategoryExhibitionSection {
 		return $aData;
 	}
 
+	protected function isVerify(){
+
+		if ( empty( $this->verifyChecker ) ){
+			$this->verifyChecker = md5( F::app()->wg->server );
+		}
+		return $this->verifyChecker;
+	}
+
 	protected function getArticleData( $pageId ){
 
 		$oMemCache = F::App()->wg->memc;
 		$sKey = F::App()->wf->sharedMemcKey(
 			'category_exhibition_category_cache',
 			$pageId,
-			F::App()->wg->cityId
+			F::App()->wg->cityId,
+			$this->getIsVerify()
 		);
 
 		$cachedResult = $oMemCache->get( $sKey );
@@ -303,7 +314,7 @@ class CategoryExhibitionSection {
 		);
 
 		// will be purged elsewhere after edit
-		$oMemCache->set( $sKey, $returnData, 60*60*24*7 );
+		$oMemCache->set( $sKey, $returnData, 60*60*24 );
 		
 		return $returnData ;
 	}
@@ -351,6 +362,7 @@ class CategoryExhibitionSection {
 			$this->paginatorPosition,
 			$this->getDisplayType(),
 			$this->getSortType(),
+			$this->isVerify(),
 			$wgCityId
 		);
 	}
