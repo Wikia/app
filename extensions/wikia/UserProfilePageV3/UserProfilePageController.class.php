@@ -196,13 +196,13 @@ class UserProfilePageController extends WikiaController {
 		$this->app->wf->ProfileIn( __METHOD__ );
 		
 		$user = F::build('User', array($this->getVal('userId')), 'newFromId');
-		
+		$isAllowed = ( $this->app->wg->User->isAllowed('staff') || intval($user->getID()) === intval($this->app->wg->User->getID()) );
 		$userData = json_decode($this->getVal('data'));
 		
 		$status = 'error';
-		$errorMsg = $this->wf->msg('userprofilepage-interview-save-internal-error');
+		$errorMsg = $this->wf->msg('user-identity-box-saving-internal-error');
 		
-		if( !$user->isAnon() && is_object($userData) ) {
+		if( $isAllowed && is_object($userData) ) {
 			$userIdentityBox = F::build('UserIdentityBox', array($this->app, $user, self::MAX_TOP_WIKIS));
 			
 			if( !empty($userData->website) && 0 !== strpos($userData->website, 'http') ) {
@@ -215,6 +215,10 @@ class UserProfilePageController extends WikiaController {
 			} else {
 				$status = 'ok';
 			}
+		}
+		
+		if( $isAllowed && is_null($userData) ) {
+			$errorMsg = $this->wf->msg('user-identity-box-saving-error');
 		}
 		
 		$this->setVal('status', $status);
@@ -242,6 +246,8 @@ class UserProfilePageController extends WikiaController {
 			$user = F::build('User', array($userId), 'newFromId');
 		}
 		
+		$isAllowed = ( $this->app->wg->User->isAllowed('staff') || intval($user->getID()) === intval($this->app->wg->User->getID()) );
+		
 		if( is_null($data) ) {
 			$data = json_decode($this->getVal('data'));
 		}
@@ -249,10 +255,9 @@ class UserProfilePageController extends WikiaController {
 		$errorMsg = $this->wf->msg('userprofilepage-interview-save-internal-error');
 		$result = array('success' => true, 'error' => $errorMsg);
 		
-		if( !$user->isAnon() && is_object($data) ) {
-		
+		if( $isAllowed && isset($data->source) && isset($data->file) ) {
 			$userIdentityBox = F::build('UserIdentityBox', array($this->app, $user, self::MAX_TOP_WIKIS));
-		
+			
 			switch($data->source) {
 				case 'sample':
 					$userData->avatar = $data->file;
@@ -757,6 +762,8 @@ class UserProfilePageController extends WikiaController {
 	/**
 	 * @brief Gets facebook user data from database or tries to connect via FB API and get those data then returns it as a JSON data
 	 * 
+	 * @desc Checks if user is logged-in only because we decided to put facebook connect button only for owners of a profile; staff can not see the button
+	 * 
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public function onFacebookConnect() {
@@ -764,41 +771,46 @@ class UserProfilePageController extends WikiaController {
 		
 		$user = $this->app->wg->User;
 		$result = array('success' => false);
-		$avatar = (bool) $this->getVal('avatar');
-		$fb_ids = F::build('FBConnectDB', array($user), 'getFacebookIDs');
-		$fbConnectAPI  = F::build('FBConnectAPI');
 		
-		if( count($fb_ids) > 0 ) {
-			$fbUserId = $fb_ids[0];
-		} else {
-			$fbUserId = $fbConnectAPI->user();
-		}
-		
-		if( $fbUserId > 0 ) {
-			if( $avatar === true ) {
-				$userFbData = $fbConnectAPI->getUserInfo(
-					$fbUserId,
-					array('pic_big') 
-				);
-				
-				$data->source = 'facebook';
-				$data->file = $userFbData['pic_big'];
-				$this->saveUsersAvatar($user->getID(), $data);
-				
-				$this->app->wf->ProfileOut( __METHOD__ );
-				return true;
-				
+		if( !$user->isAnon() ) {
+			$avatar = (bool) $this->getVal('avatar');
+			$fb_ids = F::build('FBConnectDB', array($user), 'getFacebookIDs');
+			$fbConnectAPI  = F::build('FBConnectAPI');
+			
+			if( count($fb_ids) > 0 ) {
+				$fbUserId = $fb_ids[0];
 			} else {
-				$userFbData = $fbConnectAPI->getUserInfo(
-					$fbUserId,
-					array('name, current_location, hometown_location, work_history, profile_url, sex, birthday_date, pic_big, website')
-				);
-				$userFbData = $this->cleanFbData($userFbData);
+				$fbUserId = $fbConnectAPI->user();
 			}
 			
-			$result = array('success' => true, 'fbUser' => $userFbData);
+			if( $fbUserId > 0 ) {
+				if( $avatar === true ) {
+					$userFbData = $fbConnectAPI->getUserInfo(
+						$fbUserId,
+						array('pic_big') 
+					);
+					
+					$data->source = 'facebook';
+					$data->file = $userFbData['pic_big'];
+					$this->saveUsersAvatar($user->getID(), $data);
+					
+					$this->app->wf->ProfileOut( __METHOD__ );
+					return true;
+					
+				} else {
+					$userFbData = $fbConnectAPI->getUserInfo(
+						$fbUserId,
+						array('name, current_location, hometown_location, work_history, profile_url, sex, birthday_date, pic_big, website')
+					);
+					$userFbData = $this->cleanFbData($userFbData);
+				}
+				
+				$result = array('success' => true, 'fbUser' => $userFbData);
+			} else {
+				$result = array('success' => false, 'error' => $this->app->wf->Msg('user-identity-box-invalid-fb-id-error'));
+			}
 		} else {
-			$result = array('success' => false, 'error' => $this->app->wf->Msg('user-identity-box-invalid-fb-id-error'));
+			$result = array('success' => false, 'error' => $this->wf->Msg('userprofilepage-interview-save-internal-error'));
 		}
 		
 		$this->setVal('result', $result);
@@ -883,8 +895,9 @@ class UserProfilePageController extends WikiaController {
 		$wikiId = intval( $this->getVal('wikiId') );
 		
 		$user = F::build('User', array($userId), 'newFromId');
+		$isAllowed = ( $this->app->wg->User->isAllowed('staff') || intval($user->getID()) === intval($this->app->wg->User->getID()) );
 		
-		if( $wikiId > 0 ) {
+		if( $isAllowed && $wikiId > 0 ) {
 			$userIdentityBox = F::build('UserIdentityBox', array($this->app, $user, self::MAX_TOP_WIKIS));
 			$result = array( 'success' => $userIdentityBox->hideWiki($wikiId) );
 		}
