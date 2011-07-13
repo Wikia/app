@@ -275,7 +275,15 @@ class EditPageLayoutHelper {
 			// >> Wikia specific editor plugins
 			'extensions/wikia/EditPageLayout/js/plugins/Tracker.js',
 			'extensions/wikia/EditPageLayout/js/plugins/PageControls.js',
-			'extensions/wikia/EditPageLayout/js/plugins/CommonPlugins.js',
+			'extensions/wikia/EditPageLayout/js/plugins/Autoresizer.js',
+			'extensions/wikia/EditPageLayout/js/plugins/Collapsiblemodules.js',
+			'extensions/wikia/EditPageLayout/js/plugins/Cssloadcheck.js',
+			'extensions/wikia/EditPageLayout/js/plugins/Edittools.js',
+			'extensions/wikia/EditPageLayout/js/plugins/Loadingstatus.js',
+			'extensions/wikia/EditPageLayout/js/plugins/Noticearea.js',
+			'extensions/wikia/EditPageLayout/js/plugins/Railminimumheight.js',
+			'extensions/wikia/EditPageLayout/js/plugins/Sizechangedevent.js',
+			'extensions/wikia/EditPageLayout/js/plugins/Wikiacore.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Widescreen.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Preloads.js',
 			// >> extras (mainly things which should be moved elsewhere)
