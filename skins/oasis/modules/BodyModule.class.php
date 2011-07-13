@@ -142,7 +142,7 @@ class BodyModule extends Module {
 			$wgEnableWikiaCommentsExt, $wgExtraNamespaces, $wgExtraNamespacesLocal,
 			$wgEnableCorporatePageExt, $wgEnableSpotlightsV2_Rail,
 			$wgEnableUserProfilePagesExt, $wgABTests, $wgEnableWikiAnswers, $wgEnableWikiReviews,
-			$wgEnableBlogsAsClassifieds, $wgSalesTitles, $wgEnableHuluVideoPanelRailModule;
+			$wgEnableBlogsAsClassifieds, $wgSalesTitles, $wgEnableHuluVideoPanel;
 
 		if ($this->wgSuppressRail) {
 			return array();
@@ -170,7 +170,7 @@ class BodyModule extends Module {
 
 				if( empty( $wgEnableWikiAnswers ) ) {
 					$railModuleList[$latestPhotosKey] = array('LatestPhotos', 'Index', null);
-					if ($wgEnableHuluVideoPanelRailModule) {
+					if ($wgEnableHuluVideoPanel) {
 						$railModuleList[$huluVideoPanelKey] = array('HuluVideoPanel', 'Index', null);
 					}
 				}
@@ -205,7 +205,7 @@ class BodyModule extends Module {
 				}
 				if( empty( $wgEnableWikiAnswers ) ) {
 					$railModuleList[$latestPhotosKey] = array('LatestPhotos', 'Index', null);
-					if ($wgEnableHuluVideoPanelRailModule) {
+					if ($wgEnableHuluVideoPanel) {
 						$railModuleList[$huluVideoPanelKey] = array('HuluVideoPanel', 'Index', null);
 					}
 				}
@@ -245,7 +245,7 @@ class BodyModule extends Module {
 			}
 			if( empty( $wgEnableWikiAnswers ) ) {
 				$railModuleList[$latestPhotosKey] = array('LatestPhotos', 'Index', null);
-				if ($wgEnableHuluVideoPanelRailModule) {
+				if ($wgEnableHuluVideoPanel) {
 					$railModuleList[$huluVideoPanelKey] = array('HuluVideoPanel', 'Index', null);
 				}
 			}
