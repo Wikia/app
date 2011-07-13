@@ -236,9 +236,6 @@ var UserProfilePage = {
 		var formFields = modal.find('input[type="text"], select');
 		formFields.change(function() {
 			UserProfilePage.wasDataChanged = true;
-			
-			$().log( 'Data has changed!' );
-			$().log( UserProfilePage.wasDataChanged );
 		});
 	},
 	
@@ -342,9 +339,6 @@ var UserProfilePage = {
 					errorBox.empty();
 					errorBox.append( data.errorMsg );
 				} else {
-					$().log('doRedirect value is...');
-					$().log(doRedirect);
-					
 					if( true === doRedirect ) {
 						UserProfilePage.closeModal(UserProfilePage.modal);
 						window.location = wgScript + '?title=' + wgPageName; // + '&action=purge';
@@ -520,7 +514,6 @@ var UserProfilePage = {
 		if( typeof(resetDataChangedFlag) === 'undefined' || resetDataChangedFlag === true ) {
 			//changing it for next lightbox openings
 			UserProfilePage.wasDataChanged = false;
-			$().log( 'Reseting property wasDataChanged...' );
 		}
 		
 		modal.closeModal();

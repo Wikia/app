@@ -70,7 +70,7 @@ class UserIdentityBox {
 	/**
 	 * Saves user data
 	 * 
-	 * @param object $data new user data
+	 * @param object $data an user data
 	 * 
 	 * @return true
 	 */
@@ -82,6 +82,9 @@ class UserIdentityBox {
 		
 		foreach(array('location', 'occupation', 'birthday', 'gender', 'website', 'twitter', 'avatar', 'fbPage') as $option) {
 			if( isset($data->$option) ) {
+				$data->$option = $this->app->wg->Parser->parse($data->$option, $this->user->getUserPage(), new ParserOptions($this->user))->getText();
+				$data->$option = strip_tags($data->$option);
+				
 				//if( in_array($option, array('gender', 'birthday')) ) { -- just an example how can it be used later
 				if( $option === 'gender' ) {
 					$this->user->setOption($prefix.'_'.$option, $data->$option);

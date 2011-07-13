@@ -19,6 +19,8 @@ $messages['en'] = array(
 	'userprofilepage-interview-section-title' => 'User Interview',
 	'userprofilepage-stuff-section-title' => 'Stuff',
 	
+	'user-identity-box-edit' => 'Edit',
+	'user-identity-box-delete-avatar' => 'Delete avatar',
 	'user-identity-box-avatar-upload-avatar' => 'Upload an avatar',
 	'user-identity-box-avatar-fb-import-avatar' => 'Import my avatar from Facebook',
 	'user-identity-box-avatar-choose-avatar' => 'Choose an avatar',
@@ -88,6 +90,9 @@ $messages['en'] = array(
 	
 	'userprofilepage-lightbox-about-me-cancel' => "Cancel",
 	'userprofilepage-lightbox-about-me-save' => "Save, I'm Done",
+	
+	'user-identity-box-saving-error' => 'Saving user data failed - your data should be a plain text',
+	'user-identity-box-saving-internal-error' => 'Saving user data failed - internal error occured',
 );
 
 $messages['qqq'] = array(

@@ -23,14 +23,14 @@
 
 		<? if( $isUserPageOwner || $isWikiStaff ): ?>
 			<span id="userIdentityBoxEdit">
-				<img src="<?= $wgBlankImgUrl ?>" class="sprite edit-pencil"><a href="#">Edit</a>
+				<img src="<?= $wgBlankImgUrl ?>" class="sprite edit-pencil"><a href="#"><?= wfMsg('user-identity-box-edit'); ?></a>
 			</span>
 			<input type="hidden" id="user" value="<?= $user['id']; ?>" />
 		<? endif; ?>
 
 		<?php if( $isWikiStaff || $isCommunityWikiAndVSTF ): ?>
 			<span id="userIdentityBoxDeleteAvatar">
-				<img src="<?= $wgBlankImgUrl ?>" class="sprite trash"><a href="<?= $deleteAvatarLink ?>">Delete avatar</a>
+				<img src="<?= $wgBlankImgUrl ?>" class="sprite trash"><a href="<?= $deleteAvatarLink ?>"><?= wfMsg('user-identity-box-delete-avatar'); ?></a>
 			</span>
 		<?php endif; ?>
 
