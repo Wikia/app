@@ -16,7 +16,7 @@
 						<h4><?= $taskList[$index]['task_label'] ?></h4>
 						<p><?= $taskList[$index]['task_description'] ?></p>
 						<div class="actions">
-							<? if(empty($taskList[$index]['task_locked']) && empty($taskList[$index]['task_completed'])) { ?>
+							<? if(empty($taskList[$index]['task_locked']) && empty($taskList[$index]['task_completed']) && $taskList[$index]['task_skippable']) { ?>
 								<a href="#" class="skip"><?= wfMsg('founderprogressbar-skip-for-now') ?></a>
 							<? } ?>
 							<? if(!empty($taskList[$index]['task_completed'])) { ?>

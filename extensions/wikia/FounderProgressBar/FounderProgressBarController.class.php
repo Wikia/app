@@ -374,12 +374,14 @@ class FounderProgressBarController extends WikiaController {
 		$bonusTaskList = array();
 		foreach($activityFull['list'] as $activity) {
 			if(!empty($activity['task_skipped'])) {
+				$activity['task_skippable'] = 0;
 				$skippedTaskList[] = $activity;
 			} else if (in_array($activity['task_id'], $this->bonus_tasks)) {
 				// bonus task list is built in the next step
 			} else if ($activity['task_id'] == FT_COMPLETION) {
 				$showCompletionMessage = !$activity['task_skipped'];
 			} else {
+				$activity['task_skippable'] = 1;
 				$activeTaskList[] = $activity;
 			}
 		}
@@ -403,6 +405,7 @@ class FounderProgressBarController extends WikiaController {
 				$bonusTask["task_completed"] = 0;
 				$bonusTask["task_locked"] = 1;
 			}
+			$bonusTask["task_skippable"] = 0;
 			
 			$bonusTaskList[] = $bonusTask;
 		}
