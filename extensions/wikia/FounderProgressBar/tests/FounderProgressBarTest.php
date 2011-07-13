@@ -105,92 +105,201 @@ class FounderProgressBarTest extends PHPUnit_Framework_TestCase {
 			$this->assertEquals($first_element['task_skipped'], 0);			
 		}
 
-		public function testLongTaskList() {
+		/**
+		 * @dataProvider longTaskListDataProvider
+		 */
+		public function testLongTaskList($fetch_obj, $exp_list, $exp_data) {
 			global $wgCityId;
 			
 			$wgCityId = self::TEST_CITY_ID;
 			
-			$fetch_obj1 = array(
-				'task_id' => '10',
-				'task_count' => '1',
-				'task_completed' => '0',
-				'task_skipped' => '0',
-			);
-			$result_fetchObj1 = self::arrayToStdClass($fetch_obj1);
-			$result_fetchObj1->task_timestamp = '2011-06-28 01:25:23';
-
-			$fetch_obj2 = array(
-				'task_id' => '120',
-				'task_count' => '6',
-				'task_completed' => '1',
-				'task_skipped' => '0',
-			);
-			$result_fetchObj2 = self::arrayToStdClass($fetch_obj2);
-			$result_fetchObj2->task_timestamp = '2011-06-24 01:39:17';
-
-			$fetch_obj3 = array(	// skipped task
-				'task_id' => '50',
-				'task_count' => '2',
-				'task_completed' => '0',
-				'task_skipped' => '1',
-			);
-			$result_fetchObj3 = self::arrayToStdClass($fetch_obj3);
-			$result_fetchObj3->task_timestamp = '2011-06-25 01:39:17';
-
-			$fetch_obj4 = array(
-				'task_id' => '70',
-				'task_count' => '1',
-				'task_completed' => '1',
-				'task_skipped' => '0',
-			);
-			$result_fetchObj4 = self::arrayToStdClass($fetch_obj4);
-			$result_fetchObj4->task_timestamp = '2011-06-26 01:39:17';
+			$fetchObj = array();
+			foreach($fetch_obj as $obj) {
+				$tmp = self::arrayToStdClass($obj);
+				$tmp->task_timestamp = '2011-06-28 01:25:23';
+				$fetchObj[] = $tmp;
+			}
 			
-			$fetch_obj5 = array(	// bonus task
-				'task_id' => '510',
-				'task_count' => '10',
-				'task_completed' => '1',
-				'task_skipped' => '0',
-			);
-			$result_fetchObj5 = self::arrayToStdClass($fetch_obj5);
-			$result_fetchObj5->task_timestamp = '2011-06-29 01:39:17';
-		
-			$fetch_obj6 = array(	// bonus task
-				'task_id' => '530',
-				'task_count' => '1',
-				'task_completed' => '0',
-				'task_skipped' => '0',
-			);
-			$result_fetchObj6 = self::arrayToStdClass($fetch_obj6);
-			$result_fetchObj6->task_timestamp = '2011-06-30 02:39:17';
-		
-			$fetch_obj7 = array(	// skipped task
-				'task_id' => '90',
-				'task_count' => '20',
-				'task_completed' => '1',
-				'task_skipped' => '1',
-			);
-			$result_fetchObj7 = self::arrayToStdClass($fetch_obj7);
-			$result_fetchObj7->task_timestamp = '2011-06-27 01:39:17';
-
-			$this->mock_db->expects($this->exactly(8))
+			$required_obj = 8;
+			for ($i=count($fetchObj); $i<$required_obj; $i++) {
+				$fetchObj[] = null;
+			}
+			
+			$this->mock_db->expects($this->any())
 							->method('fetchObject')
-							->will($this->onConsecutiveCalls($result_fetchObj1, $result_fetchObj2, $result_fetchObj3, $result_fetchObj5, $result_fetchObj6, $result_fetchObj7, $result_fetchObj4, null));
+							->will($this->onConsecutiveCalls($fetchObj[0], $fetchObj[1], $fetchObj[2], $fetchObj[3], $fetchObj[4], $fetchObj[5], $fetchObj[6], null));
 			
 			$response = $this->app->sendRequest('FounderProgressBar', 'getLongTaskList');
 			
 			$response_data = $response->getVal('list');
 			$first_element = array_pop($response_data);
-			$this->assertEquals($first_element['task_id'], $fetch_obj4['task_id']);
-			$this->assertEquals($first_element['task_completed'], $fetch_obj4['task_completed']);
-			$this->assertEquals($first_element['task_count'], $fetch_obj4['task_count']);
-			$this->assertEquals($first_element['task_skipped'], $fetch_obj4['task_skipped']);
+			$this->assertEquals($first_element['task_id'], $exp_list['task_id']);
+			$this->assertEquals($first_element['task_completed'], $exp_list['task_completed']);
+			$this->assertEquals($first_element['task_count'], $exp_list['task_count']);
+			$this->assertEquals($first_element['task_skipped'], $exp_list['task_skipped']);
 			
 			$response_data = $response->getVal('data');
-			$this->assertEquals($response_data['tasks_completed'], 4);
-			$this->assertEquals($response_data['tasks_skipped'], 2);
-			$this->assertEquals($response_data['total_tasks'], 5);
-			$this->assertEquals($response_data['completion_percent'], 57);
+			//$this->assertEquals($response_data['tasks_completed'], $exp_data['tasks_completed']);
+			//$this->assertEquals($response_data['tasks_skipped'], $exp_data['tasks_skipped']);
+			//$this->assertEquals($response_data['total_tasks'], $exp_data['total_tasks']);
+			//$this->assertEquals($response_data['completion_percent'], $exp_data['completion_percent']);
+			$this->assertEquals($response_data, $exp_data);
+		}
+		
+		public function longTaskListDataProvider() {
+			$fetch_obj1 = array(	// uncompleted
+				'task_id' => '10',
+				'task_count' => '1',
+				'task_completed' => '0',
+				'task_skipped' => '0',
+			);
+			$fetch_obj2 = array(	// completed
+				'task_id' => '120',
+				'task_count' => '6',
+				'task_completed' => '1',
+				'task_skipped' => '0',
+			);
+			$fetch_obj3 = array(	// skipped task + uncompleted
+				'task_id' => '50',
+				'task_count' => '2',
+				'task_completed' => '0',
+				'task_skipped' => '1',
+			);
+			$fetch_obj4 = array(	// completed
+				'task_id' => '70',
+				'task_count' => '1',
+				'task_completed' => '1',
+				'task_skipped' => '0',
+			);
+			
+			$fetch_obj5 = array(	// bonus task + completed
+				'task_id' => '510',
+				'task_count' => '10',
+				'task_completed' => '1',
+				'task_skipped' => '0',
+			);
+			$fetch_obj6 = array(	// bonus task + uncompleted
+				'task_id' => '530',
+				'task_count' => '1',
+				'task_completed' => '0',
+				'task_skipped' => '0',
+			);
+			$fetch_obj7 = array(	// skipped task + completed
+				'task_id' => '90',
+				'task_count' => '20',
+				'task_completed' => '1',
+				'task_skipped' => '1',
+			);
+			
+			$input1 = array($fetch_obj1, $fetch_obj2, $fetch_obj3, $fetch_obj5, $fetch_obj6, $fetch_obj7, $fetch_obj4);
+			$exp_data1 = array(
+				'tasks_completed' => 4,
+				'tasks_skipped' => 2,
+				'total_tasks' => 5,
+				'completion_percent' => 80,
+			);
+
+			$input2 = array($fetch_obj1, $fetch_obj2, $fetch_obj3, $fetch_obj5, $fetch_obj7, $fetch_obj4);
+			
+			$input3 = array($fetch_obj1);
+			$exp_data3 = array(
+				'tasks_completed' => 0,
+				'tasks_skipped' => 0,
+				'total_tasks' => 1,
+				'completion_percent' => 0,
+			);
+			
+			$input4 = array($fetch_obj1, $fetch_obj2);
+			$exp_data4 = array(
+				'tasks_completed' => 1,
+				'tasks_skipped' => 0,
+				'total_tasks' => 2,
+				'completion_percent' => 50,
+			);
+			
+			$input5 = array($fetch_obj1, $fetch_obj3);
+			$exp_data5 = array(
+				'tasks_completed' => 0,
+				'tasks_skipped' => 1,
+				'total_tasks' => 2,
+				'completion_percent' => 0,
+			);
+			
+			$input6 = array($fetch_obj1, $fetch_obj7);
+			$exp_data6 = array(
+				'tasks_completed' => 1,
+				'tasks_skipped' => 1,
+				'total_tasks' => 2,
+				'completion_percent' => 50,
+			);
+			
+			$input7 = array($fetch_obj3, $fetch_obj7);
+			$exp_data7 = array(
+				'tasks_completed' => 1,
+				'tasks_skipped' => 2,
+				'total_tasks' => 2,
+				'completion_percent' => 50,
+			);
+			
+			$input8 = array_merge($input4, $input7);
+			$exp_data8 = array(
+				'tasks_completed' => 2,
+				'tasks_skipped' => 2,
+				'total_tasks' => 4,
+				'completion_percent' => 50,
+			);
+			
+			$input9 = array($fetch_obj1, $fetch_obj2, $fetch_obj3, $fetch_obj6, $fetch_obj7);
+			
+			$input10 = array($fetch_obj3);
+			$exp_data10 = array(
+				'tasks_completed' => 0,
+				'tasks_skipped' => 1,
+				'total_tasks' => 1,
+				'completion_percent' => 0,
+			);
+			
+			$input11 = array($fetch_obj3, $fetch_obj6);
+			
+			$input12 = array($fetch_obj3, $fetch_obj5, $fetch_obj6);
+			$exp_data12 = array(
+				'tasks_completed' => 1,
+				'tasks_skipped' => 1,
+				'total_tasks' => 1,
+				'completion_percent' => 100,
+			);
+			
+			$input13 = array($fetch_obj3, $fetch_obj5, $fetch_obj6, $fetch_obj7);
+			$exp_data13 = array(
+				'tasks_completed' => 2,
+				'tasks_skipped' => 2,
+				'total_tasks' => 2,
+				'completion_percent' => 100,
+			);
+
+			$input14 = array($fetch_obj2, $fetch_obj5, $fetch_obj6);
+			$exp_data14 = array(
+				'tasks_completed' => 2,
+				'tasks_skipped' => 0,
+				'total_tasks' => 1,
+				'completion_percent' => 100,
+			);
+
+			return array(
+						array($input1, $fetch_obj4, $exp_data1),	// all tasks: completed/uncompleted, regular/skipped/bonus
+						array($input2, $fetch_obj4, $exp_data1),	// 2 regular (completed/uncompleted) + 2 skipped (completed/uncompleted) + 1 bonus (competed)
+						array($input3, $fetch_obj1, $exp_data3),	// 1 regular (uncompleted)
+						array($input4, $fetch_obj2, $exp_data4),	// 2 regular (completed/uncompleted)
+						array($input5, $fetch_obj3, $exp_data5),	// 1 regular (uncompleted) + 1 skipped (uncompleted)
+						array($input6, $fetch_obj7, $exp_data6),	// 1 regular (uncompleted) + 1 skipped (completed)
+						array($input7, $fetch_obj7, $exp_data7),	// 2 skipped (completed/uncompleted)
+						array($input8, $fetch_obj7, $exp_data8),	// 2 regular (completed/uncompleted) + 2 skipped (completed/uncompleted)
+						array($input9, $fetch_obj7, $exp_data8),	// 2 regular (completed/uncompleted) + 2 skipped (completed/uncompleted) + 1 bonus (uncompleted)
+						array($input10, $fetch_obj3, $exp_data10),	// 1 skipped (uncompleted)
+						array($input11, $fetch_obj6, $exp_data10),	// 1 skipped (uncompleted) + 1 bonus (uncompleted)
+						array($input13, $fetch_obj7, $exp_data13),	// 2 skipped (completed/uncompleted) + 2 bonus (completed/uncompleted)
+						array($input14, $fetch_obj6, $exp_data14),	// 1 regular (completed) + 2 bonus (completed/uncompleted)
+					);
 		}
 		
 		/**
