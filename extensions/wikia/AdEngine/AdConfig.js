@@ -10,6 +10,7 @@ AdConfig = {
 		country = country.toUpperCase();
 		switch (country) {
 			case 'AT': // Austria
+			case 'BE':
 			case 'CA':
 			case 'CH': // Switzerland
 			case 'DE':
