@@ -11,15 +11,22 @@
 }
 
 .scavenger-start-button {
-	float: right;
+	position: absolute;
 	input {
 		font-size: 18px;
 		height: auto;
+		margin: 5px;
 		padding: 10px;
 	}
 }
 
+#scavenger-progress-clue-area {
+	display: none;
+	text-align: center;
+}
+
 .scavenger-share-button {
+	margin-bottom: 15px;
 	text-align: right;
 }
 
@@ -33,12 +40,13 @@
 }
 
 .scavenger-clue-button {
-	padding-top: 20px;
+	padding: 20px 0;
 	text-align: right;
 	a.button, input.wikia-button {
 		font-size: 18px;
 		height: auto;
 		padding: 10px;
+		margin-left: 5px;
 	}
 }
 
@@ -46,9 +54,14 @@
 	h1, .modalContent {
 		border: none;
 		margin-bottom: 0;
-		margin-left: 100px;
-		padding: 10px;
 	}
+}
+
+#scavengerConflictMessage {
+	color: $color-buttons;
+	display: none;
+	font-weight: bold;
+	margin: 10px 0px 10px 0px;
 }
 
 #scavengerEntryFormModal {
@@ -67,9 +80,9 @@
 			display: block;
 		}
 		&>textarea, &>input {
-			width: 99%;
-			margin-bottom: 12px;
 			border: 1px solid $color-page-border;
+			margin-bottom: 12px;
+			width: 99%;
 			&:focus {
 				border-color: $color-links;
 			}
@@ -81,4 +94,34 @@
 			height: 22px;
 		}
 	}
+}
+
+/* new styles, SH 2.0 - clean up those above */
+.scavenger-progress-image {
+	cursor: pointer;
+	position: absolute;
+}
+
+.scavenger-progress-image-bg {
+	position: absolute;
+}
+
+.scavenger-ingame-image {
+	cursor: pointer;
+	position: absolute;
+	z-index: 1;
+}
+
+#scavenger-hunt-progress-bar {
+	bottom: 0;
+	height: 0;
+	position: fixed;
+	right: 0;
+	width: 0;
+	z-index: 1001; /* 1 above toolbar */
+}
+
+#scavenger-hunt-progress-bar-clue {
+/*	visibility: hidden;*/
+	z-index: 1100; /* allows 100 elements between progress bar background and a clue box */
 }

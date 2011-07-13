@@ -20,31 +20,35 @@ $messages = array();
 
 $messages['en'] = array(
 	'scavengerhunt-desc' => 'Alows creation a scavenger hunt game on a wiki',
-	'scavengerhunt' => 'Scavenger hunt interface',
+	'scavengerhunt' => 'Scavenger hunt builder',
+
+	'scavengerhunt-common-modal-title' => 'Scavenger hunt',
 
 	'scavengerhunt-list-header-name' => 'Game name',
-	'scavengerhunt-list-header-is-enabled' => 'Enabled?',
+	'scavengerhunt-list-header-is-enabled' => 'Enabled? (click to toggle)',
 	'scavengerhunt-list-header-actions' => 'Actions',
 	'scavengerhunt-list-enabled' => 'Enabled',
 	'scavengerhunt-list-disabled' => 'Disabled',
 	'scavengerhunt-list-edit' => 'edit',
 
-	'scavengerhunt-label-dialog-check' => '(show dialog)',
+	'scavengerhunt-label-dialog-check' => '(show visual editor - pre-alpha, not working yet)',
 	'scavengerhunt-label-image-check' => '(show image)',
 	'scavengerhunt-label-general' => 'General',
 	'scavengerhunt-label-name' => 'Name:',
-	'scavengerhunt-label-landing-title' => 'Landing page name (article title on this wiki):',
+	'scavengerhunt-label-landing-title' => 'Landing page name (article URL on any wiki):',
 	'scavengerhunt-label-landing-button-text' => 'Landing page button text:',
+	'scavengerhunt-label-landing-button-x' => 'Landing page button position X:',
+	'scavengerhunt-label-landing-button-y' => 'Landing page button position Y:',
 
 	'scavengerhunt-label-starting-clue' => 'Starting Clue popup',
 	'scavengerhunt-label-starting-clue-title' => 'Popup title:',
-	'scavengerhunt-label-starting-clue-text' => 'Popup text: <i>(text in &lt;div&gt; will have link color)</i>',
+	'scavengerhunt-label-starting-clue-text' => 'Popup text:',
 	'scavengerhunt-label-starting-clue-image' => 'Popup image (URL address):',
 	'scavengerhunt-label-starting-clue-button-text' => 'Popup button text:',
 	'scavengerhunt-label-starting-clue-button-target' => 'Popup button target (URL address):',
 
-	'scavengerhunt-label-article' => 'In-game page',
-	'scavengerhunt-label-article-title' => 'Page title (article title on this wiki):',
+	'scavengerhunt-label-article' => 'Article (in-game page)',
+	'scavengerhunt-label-article-title' => 'Page title (article URL on any wiki):',
 	'scavengerhunt-label-article-hidden-image' => 'Hidden image:',
 	'scavengerhunt-label-article-clue-title' => 'Clue popup title:',
 	'scavengerhunt-label-article-clue-text' => 'Clue popup text:',
@@ -57,7 +61,7 @@ $messages['en'] = array(
 	'scavengerhunt-label-entry-form-text' => 'Popup text:',
 	'scavengerhunt-label-entry-form-image' => 'Popup image (URL address):',
 	'scavengerhunt-label-entry-form-question' => 'Popup question:',
-
+	'scavengerhunt-label-entry-form-button-text' => 'Button text:',
 	'scavengerhunt-label-goodbye' => 'Goodbye popup',
 	'scavengerhunt-label-goodbye-title' => 'Popup title:',
 	'scavengerhunt-label-goodbye-text' => 'Popup message:',
@@ -69,19 +73,35 @@ $messages['en'] = array(
 	'scavengerhunt-button-enable' => 'Enable',
 	'scavengerhunt-button-delete' => 'Delete',
 	'scavengerhunt-button-export' => 'Export to CSV',
-
+	'scavengerhunt-button-add-section' => 'Add another step in the Hunt',
+	'scavengerhunt-button-remove-section' => 'Remove this step',
+	
 	'scavengerhunt-form-error' => 'Please correct the following errors:',
-	'scavengerhunt-form-error-name' => '',
-	'scavengerhunt-form-error-no-landing-title' => 'Please enter the starting page title.',
+	'scavengerhunt-form-error-name' => 'Please enter the hunt name',
+	'scavengerhunt-form-error-no-landing-title' => 'Please enter the Landing page name (valid URL).',
 	'scavengerhunt-form-error-invalid-title' => 'The following page title was not found: "$1".',
-	'scavengerhunt-form-error-landing-button-text' => 'Please enter the starting button text.',
+	'scavengerhunt-form-error-landing-button-text' => 'Please enter the Landing page button text.',
 	'scavengerhunt-form-error-starting-clue' => 'Please fill in all fields in the starting clue section.',
 	'scavengerhunt-form-error-entry-form' => 'Please fill in all fields in the entry form section.',
 	'scavengerhunt-form-error-goodbye' => 'Please fill in all fields in goodbye popup section.',
-	'scavengerhunt-form-error-no-article-title' => 'Please enter all article titles.',
+	'scavengerhunt-form-error-no-article-title' => 'Please enter all article titles (as valid URLs).',
+	'scavengerhunt-form-error-duplicated-article-title' => 'Hunt steps cannot have duplicated titles',
 	'scavengerhunt-form-error-article-hidden-image' => 'Please enter all addresses for hidden images.',
 	'scavengerhunt-form-error-article-clue' => 'Please fill in all information about article clues.',
-
+	'scavengerhunt-form-error-clue' => 'Please fill in all information about article congratulation message.',
+	'scavengerhunt-form-error-progressBarHintLabel-sprite-empty' => 'Please select proper dimensions for clue label sprite.',
+	'scavengerhunt-form-error-startPopupSprite-sprite-empty' => 'Starting popup sprite dimensions is invalid',
+	'scavengerhunt-form-error-finishPopupSprite-sprite-empty' => 'Goodbye popup sprite dimensions is invalid',
+	'scavengerhunt-form-error-progressBarBackgroundSprite-sprite-empty' => 'Progress bar sprite dimensions is invalid',
+	'scavengerhunt-form-error-progressBarExitSprite-sprite-empty' => "Progress bar's Exit button sprite dimensions are invalid.",
+	'scavengerhunt-form-error-article-spriteNotFound-sprite-empty' => 'Please select proper dimensions for ScavengerHunt\'s item sprite',
+	'scavengerhunt-form-error-article-spriteInProgressBar-sprite-empty' => 'Please select proper dimensions for ScavengerHunt\'s progress bar item\'s sprite',
+	'scavengerhunt-form-error-article-spriteInProgressBarHover-sprite-empty' => 'Please select proper dimensions for ScavengerHunt\'s progress bar hovered item\'s sprite',
+	'scavengerhunt-form-error-no-sprite-image' => 'Please give full path to the image file',
+	'scavengerhunt-form-error-article-spriteInProgressBarNotFound-sprite-empty' => 'Please select proper dimensions for ScavengerHunt\'s progress bar not found item\'s sprite',
+	'scavengerhunt-form-error-no-articles' => 'Hunt must have at least one clue/article.',
+	'scavengerhunt-form-error-invalid-url' => 'Please provide a valid URL.',
+	'scavengerhunt-form-error-clueColor' => 'Please provide a valid color in #XXX notation',
 	'scavengerhunt-game-has-been-created' => 'New Scavenger Hunt game has been created.',
 	'scavengerhunt-game-has-been-saved' => 'Scavenger Hunt game has been saved.',
 	'scavengerhunt-game-has-been-enabled' => 'Selected Scavenger Hunt game has been enabled.',
@@ -93,8 +113,70 @@ $messages['en'] = array(
 	'scavengerhunt-entry-form-name' => 'Your name:',
 	'scavengerhunt-entry-form-email' => 'Your e-mail address:',
 	'scavengerhunt-entry-form-submit' => 'Submit entry',
-);
 
+	'scavengerhunt-label-sprite-img' => 'Sprite image path',
+	'scavengerhunt-label-sprite-X' => 'Element position',
+	'scavengerhunt-label-sprite-X1' => 'Sprite top-left',
+	'scavengerhunt-label-sprite-X2' => 'Sprite bottom-right',
+	'scavengerhunt-game-has-been-deleted' => 'Hunt game has been deleted',
+	'scavengerhunt-game-more-to-go' => 'Only # more to go.',
+	'scavengerhunt-label-progress-bar' => 'Progress bar',
+	'scavengerhunt-quit-game-content' => 'Are you really sure you want to quit the Scavenger Hunt?',
+	'scavengerhunt-switch-game-content' => 'Would you like to quit the current Scavenger Hunt and start this new one?',
+	'scavengerhunt-quit-game-button-quit' => 'Quit',
+	'scavengerhunt-quit-game-button-cancel' => 'Cancel',
+	'scavengerhunt-quit-game-button-stay' => 'Keep Playing',
+
+	'scavengerhunt-label-progressBarHintLabel' => 'Clue label coordinates',
+	'scavengerhunt-label-entry-form-email' => 'User E-mail',
+	'scavengerhunt-label-entry-form-username' => 'User Name',
+	'scavengerhunt-label-progressBarBackgroundSprite' => 'Progress bar background sprite',
+	'scavengerhunt-label-progressBarExitSprite' => 'Exit button sprite coordinates',
+	'scavengerhunt-label-startPopupSprite' => 'Popup image sprite coordinates',
+	'scavengerhunt-label-spriteNotFound' => 'Hunt item sprite coordinates',
+	'scavengerhunt-label-spriteInProgressBar' => 'Progress bar item sprite coordinates',
+	'scavengerhunt-label-spriteInProgressBarHover' => 'Progress bar item on hover sprite coordinates',
+	'scavengerhunt-label-spriteInProgressBarNotFound' => 'Progress bar item not found',
+	'scavengerhunt-label-startPopupSprite' => 'Popup image sprite coordinates',
+	'scavengerhunt-label-finishPopupSprite' => 'Popup image sprite coordinates',
+	'scavengerhunt-label-clue-color' => 'Font color',
+	'scavengerhunt-label-clue-size' => 'Font size',
+	'scavengerhunt-label-clue-font' => 'Font decorations',
+	'scavengerhunt-label-article-congrats' => 'Congratulations message',
+
+	'scavengerhunt-editor-tip-name' => 'This is the name that appears in the list of all Hunts.',
+	'scavengerhunt-editor-tip-landing-title' => 'This is the page where users go to begin the Hunt.',
+	'scavengerhunt-editor-tip-landing-button-text' => 'This is the text label on the \'start\' button (e.g., "Click here to start hunting!")',
+	'scavengerhunt-editor-tip-sprite-img' => 'This is the link to the sprite file containing all the Hunt\'s images. To avoid disclosing the image to wiki users, post it to an external URL.',
+	'scavengerhunt-editor-tip-progressBarBackgroundSprite' => 'Use these coordinates to indicate: <br>
+(1) where to position the sprite file<br>
+(2) which portion of the sprite file is the active image element.',
+	'scavengerhunt-editor-tip-progressBarExitSprite' => 'NOTE: all coordinates are relative to the reference point in the lower-right corner of the page',
+	'scavengerhunt-editor-tip-progressBarHintLabel' => '',
+	'scavengerhunt-editor-tip-starting-clue-title' => 'This is the title of the modal dialog box that kicks off the Hunt.',
+	'scavengerhunt-editor-tip-starting-clue-text' => 'This is the text that orients the player and begins the Hunt.',
+	'scavengerhunt-editor-tip-starting-clue-button-text' => 'This text is the label on the button that takes the user to the page with the first item.',
+	'scavengerhunt-editor-tip-starting-clue-button-target' => 'This is the address of the page with the first item.',
+	'scavengerhunt-editor-tip-startPopupSprite' => 'If an image is desired on the Starting Clue popup dialog, please enter the coordinates here.',
+	'scavengerhunt-editor-tip-articleTitle' => 'This is the location of the page with the next item.',
+	'scavengerhunt-editor-tip-spriteNotFound' => 'This section defines the image to appear as the clue.',
+	'scavengerhunt-editor-tip-spriteInProgressBar' => 'This section defines the icon to appear in the progress bar once the item has been found.',
+	'scavengerhunt-editor-tip-spriteInProgressBarHover' => 'This section defines the icon to appear in the progress bar on mouseover.',
+	'scavengerhunt-editor-tip-spriteInProgressBarNotFound' => 'This section defines the icon to appear in the progress bar when the item has not yet been found.',
+	'scavengerhunt-editor-tip-article-clue-text' => '',
+	'scavengerhunt-editor-tip-article-congrats' => '',
+	'scavengerhunt-editor-tip-article-title' => 'This is the location of the page with the next item.',
+	'scavengerhunt-editor-tip-entry-form-title' => 'This is the title of the popup dialog that appears at the end of the Hunt.',
+	'scavengerhunt-editor-tip-entry-form-text' => 'This is the text of the popup dialog that appears at the end of the Hunt.',
+	'scavengerhunt-editor-tip-entry-form-question' => 'If you wish to display a free text field for players to answer a question or enter a comment, please enter the text here. If you do not want this field, leave it blank.',
+	'scavengerhunt-editor-tip-entry-form-email' => 'This is the text to be displayed instructing the user to enter their email address. N.B. This field is optional; if left blank the field will not appear to the user',
+	'scavengerhunt-editor-tip-entry-form-username' => 'This is the text to be displayed instructing the user to enter their User Name. N.B. This field is optional; if left blank the field will not appear to the user.',
+	'scavengerhunt-editor-tip-finishPopupSprite' => 'If you would like to display an image in the final popup message, define it here.',
+	'scavengerhunt-editor-tip-goodbye-title' => 'This is the title of the final popup message from the Hunt.',
+	'scavengerhunt-editor-tip-goodbye-text' => 'This is the text of the final popup message from the Hunt.',
+	'scavengerhunt-editor-tip-clue-color' => 'Colors should have hexadecymal notation like #F00',
+	'scavengerhunt-editor-tip-entry-form-button-text' => 'This is the text for the button that appears on the dialog at the end of the hunt. '
+);
 /** Message documentation (Message documentation) */
 $messages['qqq'] = array(
 	'scavengerhunt-desc' => '{{desc}}',
@@ -302,7 +384,6 @@ $messages['es'] = array(
 	'scavengerhunt-game-has-been-enabled' => 'El juego seleccionado ha sido habilitado.',
 	'scavengerhunt-game-has-been-disabled' => 'El juego seleccionado ha sido deshabilitado.',
 	'scavengerhunt-game-has-not-been-saved' => 'El juego Scavenger Hunt no ha sido guardado.',
-	'scavengerhunt-edit-token-mismatch' => 'Token inválido. Inténtalo nuevamente.',
 	'scavengerhunt-entry-form-name' => 'Tu nombre:',
 	'scavengerhunt-entry-form-email' => 'Tu dirección de correo electrónico:',
 	'scavengerhunt-entry-form-submit' => 'Enviar entrada',
@@ -385,37 +466,6 @@ $messages['fr'] = array(
 	'scavengerhunt-entry-form-name' => 'Votre nom :',
 	'scavengerhunt-entry-form-email' => 'Votre adresse de courriel :',
 	'scavengerhunt-entry-form-submit' => 'Soumettre l’entrée',
-);
-
-/** Galician (Galego)
- * @author Toliño
- */
-$messages['gl'] = array(
-	'scavengerhunt-list-header-name' => 'Nome do xogo',
-	'scavengerhunt-list-header-is-enabled' => 'Activado?',
-	'scavengerhunt-list-header-actions' => 'Accións',
-	'scavengerhunt-list-enabled' => 'Activado',
-	'scavengerhunt-list-disabled' => 'Desactivado',
-	'scavengerhunt-list-edit' => 'editar',
-	'scavengerhunt-label-dialog-check' => '(mostrar o diálogo)',
-	'scavengerhunt-label-image-check' => '(mostrar a imaxe)',
-	'scavengerhunt-label-general' => 'Xeral',
-	'scavengerhunt-label-name' => 'Nome:',
-	'scavengerhunt-label-article-hidden-image' => 'Imaxe agochada:',
-	'scavengerhunt-label-entry-form' => 'Formulario de inscrición',
-	'scavengerhunt-button-add' => 'Engadir un xogo',
-	'scavengerhunt-button-save' => 'Gardar',
-	'scavengerhunt-button-disable' => 'Desactivar',
-	'scavengerhunt-button-enable' => 'Activar',
-	'scavengerhunt-button-delete' => 'Borrar',
-	'scavengerhunt-button-export' => 'Exportar a CSV',
-	'scavengerhunt-form-error' => 'Corrixa os seguintes erros:',
-	'scavengerhunt-form-error-no-landing-title' => 'Introduza o título da páxina inicial.',
-	'scavengerhunt-form-error-invalid-title' => 'O título da seguinte páxina non se atopou: "$1".',
-	'scavengerhunt-form-error-landing-button-text' => 'Introduza o texto do botón de inicio.',
-	'scavengerhunt-entry-form-name' => 'O seu nome:',
-	'scavengerhunt-entry-form-email' => 'O seu enderezo de correo electrónico:',
-	'scavengerhunt-entry-form-submit' => 'Enviar a entrada',
 );
 
 /** Hungarian (Magyar)
@@ -524,7 +574,6 @@ $messages['ku-latn'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
-	'scavengerhunt-list-header-name' => 'Numm vum Spill',
 	'scavengerhunt-label-name' => 'Numm:',
 	'scavengerhunt-button-save' => 'Späicheren',
 	'scavengerhunt-button-delete' => 'Läschen',
@@ -924,24 +973,6 @@ $messages['sr-ec'] = array(
 	'scavengerhunt-button-delete' => 'Обриши',
 );
 
-/** Swedish (Svenska)
- * @author WikiPhoenix
- */
-$messages['sv'] = array(
-	'scavengerhunt-list-header-name' => 'Spelnamn',
-	'scavengerhunt-list-header-is-enabled' => 'Aktiverat?',
-	'scavengerhunt-label-name' => 'Namn:',
-	'scavengerhunt-button-add' => 'Lägg till ett spel',
-	'scavengerhunt-button-save' => 'Spara',
-	'scavengerhunt-button-disable' => 'Inaktivera',
-	'scavengerhunt-button-enable' => 'Aktivera',
-	'scavengerhunt-button-delete' => 'Radera',
-	'scavengerhunt-button-export' => 'Exportera till CSV',
-	'scavengerhunt-form-error' => 'Vänligen rätta följande fel:',
-	'scavengerhunt-entry-form-name' => 'Ditt namn:',
-	'scavengerhunt-entry-form-email' => 'Din e-postadress:',
-);
-
 /** Telugu (తెలుగు)
  * @author Veeven
  */
@@ -1036,4 +1067,3 @@ $messages['zh-hans'] = array(
 	'scavengerhunt-entry-form-name' => '您的名字：',
 	'scavengerhunt-entry-form-email' => '您的电子邮件地址：',
 );
-

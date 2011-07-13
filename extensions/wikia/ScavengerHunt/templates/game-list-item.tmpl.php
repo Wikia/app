@@ -3,9 +3,9 @@
 					<?= htmlspecialchars($game->getName()) ?>
 				</td>
 				<td>
-					<?= wfMsg( $game->isEnabled() ? 'scavengerhunt-list-enabled' : 'scavengerhunt-list-disabled' ) ?>
+					<a href="<?= $toggleUrl ?>"><?= wfMsg( $game->isEnabled() ? 'scavengerhunt-list-enabled' : 'scavengerhunt-list-disabled' ) ?></a>
 				</td>
 				<td>
-					<a href="<?= $editUrl ?>" ><?= wfMsg('scavengerhunt-list-edit') ?></a>
+					<a href="<?= $editUrl ?>"><?= wfMsg('scavengerhunt-list-edit') ?></a>
 				</td>
 			</tr>
