@@ -19,6 +19,7 @@ $app = F::build('App');
 $app->registerClass('JSSnippets', $dir . '/JSSnippets.class.php');
 
 // hooks
+$app->registerHook('EditPageLayoutModifyPreview', 'JSSnippets', 'onEditPageLayoutModifyPreview');
 $app->registerHook('MakeGlobalVariablesScript', 'JSSnippets', 'onMakeGlobalVariablesScript');
 $app->registerHook('SkinAfterBottomScripts', 'JSSnippets', 'onSkinAfterBottomScripts');
 

@@ -6,9 +6,9 @@ var JSSnippets = {
 	// @see http://net.tutsplus.com/tutorials/javascript-ajax/javascript-from-null-utility-functions-and-debugging/
 	unique: function(origArr) {
 		var newArr = [],
-		origLen = origArr.length,
-		found,
-		x, y;
+			origLen = origArr.length,
+			found,
+			x, y;
 
 		for ( x = 0; x < origLen; x++ ) {
 			found = undefined;
@@ -22,10 +22,23 @@ var JSSnippets = {
 		}
 		return newArr;
 	},
+
+	// clear the stack
+	clear: function() {
+		this.stack = window.JSSnippetsStack = [];
+		this.log('stack cleared');
+	},
+
+	// resolve dependencies, load them and initialize stuff
 	init: function() {
 		var self = this;
 
-		this.stack = window.JSSnippetsStack;
+		this.stack = window.JSSnippetsStack || [];
+
+		// stack is empty - leave now
+		if (this.stack.length == 0) {
+			return;
+		}
 
 		this.log('init');
 		this.log(this.stack);
@@ -99,6 +112,9 @@ var JSSnippets = {
 
 			self.log('done');
 		});
+
+		// clear the stack
+		this.clear();
 	}
 };
 
