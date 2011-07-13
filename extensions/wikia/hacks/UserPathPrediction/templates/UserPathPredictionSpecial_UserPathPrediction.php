@@ -17,16 +17,15 @@
 	<button type="submit" onclick="return UserPathPrediction.load()"><?= wfMsg( 'userpathprediction-show' ); ?></button>
 	</form>
 </nav>
-<div id="table" <?= ( $par != NULL )  ? "data-page=\"".$par."\"" : "" ?>>
 
-<div id="articles">
-<iframe id="showArticle"></iframe>
-	<div id="relatedArticles">
+<div id="articles" <?= ( $par != NULL )  ? "data-page=\"".$par."\"" : "" ?>>
+<iframe id="showArticle" <?= ( $par != NULL )  ? "src=\"/wiki/".$par."\"" : "" ?>></iframe>
+	<div id="relatedArticles">	
 	</div>
 	<div id="navigationArticles">
 	</div>
 </div>
-	<div id="noresult"><?= wfMsg( 'userpathprediction-noresult' ); ?></div>
+<div id="noresult"><?= wfMsg( 'userpathprediction-noresult' ); ?></div>
 </section>
 <footer>
 	<?= wfMsg( 'userpathprediction-createdby' ); ?>: 

@@ -26,7 +26,6 @@ class UserPathPredictionSpecialController extends WikiaSpecialPageController {
 		$this->wg->Out->setPageTitle( $this->wf->Msg( 'userpathprediction-special-header' ) );
 		$this->response->addAsset( 'extensions/wikia/hacks/UserPathPrediction/css/UserPathPrediction.scss' );
 		$this->response->addAsset( 'extensions/wikia/hacks/UserPathPrediction/js/UserPathPrediction.js' );
-		$this->response->addAsset( 'extensions/wikia/hacks/UserPathPrediction/js/tablesorter.min.js' );
 		$this->redirect( 'UserPathPredictionSpecial', 'UserPathPrediction' );
 		$this->wf->profileOut( __METHOD__ );
 	}
@@ -41,7 +40,9 @@ class UserPathPredictionSpecialController extends WikiaSpecialPageController {
 		
 	public function getNodes() {
 		$this->wf->profileIn( __METHOD__ );
-		
+		$result = array();
+		$articleIds = array();
+		$thumbnailsReplaced = array();
 		//TODO move to UserPathPredictionController
 		if ( $this->getVal( 'selectby' ) == 'byTitle' ) {
 			$title = F::build( 'Title', array( $this->getVal( 'article' ) ), 'newFromText' );
@@ -50,33 +51,42 @@ class UserPathPredictionSpecialController extends WikiaSpecialPageController {
 		} else {
 			$articleId = $this->getVal( 'article' );
 		}
-		
+
 		$nodes = $this->model->getNodes($this->wg->CityId, $articleId, $this->getVal('datespan'), $this->getVal('count'));
-		$result = array();
+
 		
 		if ( count( $nodes ) > 0 ) {
 			foreach ( $nodes as $node ) {
-				$referrerTitle = F::build( 'Title', array( $node->referrer_id ), 'newFromID' );
+				
 				$targetTitle = F::build( 'Title', array( $node->target_id ), 'newFromID' );
 				
-				$referrerURL = $referrerTitle->getLocalURL();
-				$targetURL = $targetTitle->getLocalURL();
-				
-				$result[] = array(
-					'cityid' => $node->city_id,
-					'referrerTitle' => $referrerTitle,
-					'referrerURL' => $referrerURL,
-					'targetTitle' => $targetTitle,
-					'targetURL' => $targetURL,
-					'count' => $node->count,
-					'updated' => $node->updated
-				);
+				if($targetTitle != NULL) {
+					$targetURL = $targetTitle->getLocalURL();
+					$result[] = array(
+						'cityid' => $node->city_id,
+						'targetTitle' => $targetTitle,
+						'targetURL' => $targetURL,
+						'count' => $node->count,
+						'updated' => $node->updated
+					);
+					$articleIds[] = $targetTitle->mArticleID;
+				}
 			}
 		} else {
 			$result = array( "No Result" );
 		}
 		
 		$this->setVal( 'nodes',  $result );
+		
+		$thumbnails = $this->sendRequest( 'UserPathPredictionService', 'getThumbnails', array( 'articleIds' => $articleIds, 'width' => 75 ) );
+		$thumbnails = $thumbnails->getVal('thumbnails');
+		
+		foreach ( $thumbnails as $key => $thumbnail ) {
+			$thumbnail[0]['url'] = str_replace("http://images.jolek.wikia-dev.com", "http://images2.wikia.nocookie.net", $thumbnail[0]['url']);
+			$thumbnailsReplaced[$key] = $thumbnail;
+		
+		}
+		$this->setVal( 'thumbnails', $thumbnailsReplaced );
 		
 		$this->wf->profileOut( __METHOD__ );
 	}

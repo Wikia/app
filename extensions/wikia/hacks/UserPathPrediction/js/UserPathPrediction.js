@@ -15,19 +15,28 @@ var UserPathPrediction = {
 				$('#articlePlace').html('<input id="article" type="text" />');
 			}
 		});
-		
-		$("#articleTable").tablesorter();
-		$('#articleTable').hide();
-		$('#noresult').hide();
 
-		if( $( '#table' ).attr( 'data-page' ) != undefined ) {
+		if( $( '#articles' ).attr( 'data-page' ) != undefined ) {
 			$( '#selectBy' ).val( 'byTitle' );
-			$( '#articlePlace' ).html( '<input id="article" type="text" value="'+ $( '#table' ).attr( 'data-page' ) +'"/>' );
-			$(this).load();
-		}
+			$( '#articlePlace' ).html( '<input id="article" type="text" value="'+ $( '#articles' ).attr( 'data-page' ) +'"/>' );
+			UserPathPrediction.load();
+		};
+		
+		$( '#relatedArticles #reletedItem' ).live('click', function( event ) {		
+			event.stopPropagation();
+			$( '#showArticle' ).attr( 'src', $(this).attr('data-url') );
+			$( '#articlePlace' ).html( '<input id="article" type="text" value="'+ $(this).text() +'"/>' );
+			UserPathPrediction.load();
+		});
 		
 	},
 
+	load: function() {
+		UserPathPrediction.loadNodes();
+		UserPathPrediction.loadRelated();
+		$( '#showArticle' ).attr( 'src', '/wiki/' + $( '#article' ).val() );
+		return false;
+	},
 	
 	loadNodes: function() {
 		$.get(
@@ -38,27 +47,32 @@ var UserPathPrediction = {
 				'selectby': $( '#selectBy' ).val(),
 				'article': $( '#article' ).val(),
 				'datespan': $( '#dateSpan' ).val(),
+				'count': $( '#nodeCount' ).val(),
 				'format': 'json'
 			},
 			function(data) {
 				nodes = data.nodes;
+				thumbnails = data.thumbnails;
+				
 				if(data['nodes'] != "No Result") {
-					$('#noresult').hide('fast');
-					$('#articleTable').hide('fast');
-					$("#relatedArticles").html("<ul></ul>");
+					$("#navigationArticles").html("<ul></ul>");
 					for ( var i = 0; i < nodes.length; i++ ) {
-						$("#relatedArticles > ul").append('<li><a href="'+ 
-						nodes[i].referrerURL +'" target="showArticle">'+ 
-						nodes[i].referrerTitle.mTextform +'</a><a href="'+ 
+						
+						if ( thumbnails[nodes[i].targetTitle.mArticleID] ) {
+							$imgsrc = thumbnails[nodes[i].targetTitle.mArticleID][0]['url'];
+						} else {
+							$imgsrc = "http://dummyimage.com/100x50/000/bada55.gif&text=NoImage";
+						}
+						
+						$( "#navigationArticles > ul" ).append( '<li><div><a href="'+ 
 						nodes[i].targetURL + '" target="showArticle">' + 
-						nodes[i].targetTitle.mTextform + '</a>' +
-						nodes[i].count + '</li>');
-						//$('#showArticle').attr('src',nodes[i].targetURL);
+						nodes[i].targetTitle.mTextform + '<br /><img src="' + 
+						$imgsrc + '"></a><span id="counts">' +
+						nodes[i].count + '</span></div></li>');
 					}
-					$('#articleTable').show('fast');
 				} else {
-					$('#relatedArticles > ul').hide('fast');
-					$('#noresult').show('fast');
+					$( '#navigationArticles > ul' ).hide( 'fast' );
+					$( '#navigationArticles' ).html('<span class="noresult">' + $( '#noresult' ).text() + "</span>").show( 'fast' );
 				}
 			}
 
@@ -66,7 +80,7 @@ var UserPathPrediction = {
 		return false;
 	},
 	
-	load: function() {
+	loadRelated: function() {
 		$.get(
 			'/wikia.php',
 			{
@@ -82,7 +96,6 @@ var UserPathPrediction = {
 				thumbnails = data.thumbnails;
 				
 				if ( data['nodes'] != "No Result" ) {
-					$('#noresult').hide('fast');
 					$('#relatedArticles > ul ').hide('fast');
 					$("#relatedArticles").html("<ul></ul>");
 					for ( var i = 0; i < nodes.length; i++ ) {
@@ -90,19 +103,19 @@ var UserPathPrediction = {
 						if ( thumbnails[nodes[i].targetTitle.mArticleID] ) {
 							$imgsrc = thumbnails[nodes[i].targetTitle.mArticleID][0]['url'];
 						} else {
-							$imgsrc = "http://dummyimage.com/100x50/000/bada55.gif&text=Thumbs";
+							$imgsrc = "http://dummyimage.com/100x50/000/bada55.gif&text=NoImage";
 						}
 						
-						$( "#relatedArticles > ul" ).append( '<li><div><a href="'+ 
-						nodes[i].targetURL + '" target="showArticle">' + 
+						$( "#relatedArticles > ul" ).append( '<li><div><span id="reletedItem" data-url="'+ 
+						nodes[i].targetURL + '">' + 
 						nodes[i].targetTitle.mTextform + '<br /><img src="' + 
-						$imgsrc + '"></a>' +
-						nodes[i].count + '</div></li>');
+						$imgsrc + '"></span><span id="counts">' +
+						nodes[i].count + '</span></div></li>');
 					}
 					$('#relatedArticles > ul').show('fast');
 				} else {
 					$( '#relatedArticles > ul' ).hide( 'fast' );
-					$( '#noresult' ).show( 'fast' );
+					$( '#relatedArticles' ).html('<span class="noresult">' + $( '#noresult' ).text() + "</span>").show( 'fast' );
 				}
 			}
 
