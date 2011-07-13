@@ -341,9 +341,6 @@ CKEDITOR.config.baseBackgroundColor = '#ddd';
 */
 CKEDITOR.config.baseColor = '#000';
 
-// Wikia toolbar
-CKEDITOR.config.baseColor = '#000';
-
 //
 // extend CK core objects
 //
