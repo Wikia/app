@@ -33,7 +33,7 @@ define('NS_WIKIA_POLL_TALK', 801);
 $wgExtensionNamespacesFiles['WikiaPoll'] = "{$dir}/WikiaPoll.namespaces.php";
 wfLoadExtensionNamespaces('WikiaPoll', array(NS_WIKIA_POLL, NS_WIKIA_POLL_TALK));
 // use comments and not talk pages for poll pages
-$wgArticleCommentsNamespaces[] = NS_WIKIA_POLL;  
+$wgArticleCommentsNamespaces[] = NS_WIKIA_POLL;
 
 // classes
 $wgAutoloadClasses['WikiaPoll'] = "{$dir}/WikiaPoll.class.php";
@@ -79,6 +79,7 @@ function WikiaPollAjax() {
 $wgHooks['EditPage::showEditForm:initial2'][] = 'CreatePollSetup';
 function CreatePollSetup($editform) {
 	global $wgOut, $wgExtensionsPath, $wgStylePath;
+	// TODO: load jQueryUI library on demand in CreateWikiPoll.js - use $.loadJQueryUI()
 	$wgOut->addScript('<script src="'.$wgStylePath.'/common/jquery/jquery-ui-1.8.13.custom.js"></script>');
 	$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/WikiaPoll/js/CreateWikiaPoll.js"></script>');
 	return true;
