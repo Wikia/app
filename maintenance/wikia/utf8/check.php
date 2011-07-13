@@ -26,7 +26,9 @@ require_once "utils.php";
 
 class Utf8DbConvert {
 
+	protected $verbose = false;
 	protected $force = false;
+	protected $short = false;
 	protected $quick = false;
 
 	public function __construct( $options ) {
@@ -36,6 +38,8 @@ class Utf8DbConvert {
 		global $wgDBname;
 //		$this->force = isset($options['force']);
 //		$this->quick = isset($options['quick']);
+		$this->short = isset($options['short']);
+		$this->verbose = isset($options['verbose']);
 		$this->databaseName = isset($options['database']) ? $options['database'] : $wgDBname;
 		
 		$this->db = wfGetDb(DB_SLAVE,array(),$this->databaseName);
@@ -51,8 +55,10 @@ class Utf8DbConvert {
 	protected function query( $sql ) {
 		$t = microtime(true);
 		$timestamp = gmdate( 'Y-m-d H:i:s.', (int)$t ) . sprintf("%06d",($t - floor($t)) * 1000000);
-		echo "-- $timestamp\n";
-		echo $sql . "\n";
+		if ($this->verbose) {
+			echo "-- $timestamp\n";
+			echo $sql . "\n";
+		}
 		if ($this->force) {
 			$this->getDb()->query($sql);
 		}
@@ -91,20 +97,47 @@ class Utf8DbConvert {
 			$res = $this->db->select($tableName,$columnNames);
 			$badColumns = array();
 			while ($row = $this->db->fetchRow($res)) {
-				foreach ($columnNames as $columnName)
-					if (strlen($row[$columnName]) > 0)
-						if ($row[$columnName] !== iconv('utf8','utf8',$row[$columnName]))
-							$badColumns[$columnName][] = $row[$columnName];
+				foreach ($columns as $columnName => $column) {
+					if (strlen($row[$columnName]) > 0) {
+						$original = $row[$columnName];
+						$converted = $original;
+						/*
+						if (substr($column->COLLATION_NAME,0,5) == 'utf8_') {
+							$converted = iconv('utf8','latin1',$converted);
+						}
+						*/
+						$converted = iconv('utf8','utf8',$converted);
+						if ($original !== $converted) {
+							$text = !$this->short ? $original : "";
+							if (strlen($original) > strlen($converted)) {
+								$len = strlen($original);
+								$pos = strlen($converted);
+								$text .= "//error at offset {$pos}/{$len} near [" . substr($original,$pos,4) . "]";
+							} else {
+								$text .= "//string length matches, but contents changed";
+							}
+							$badColumns[$columnName][] = $text;
+						}
+					}
+				}
 			}
 			$this->db->freeResult($res);
 			
 			// show bad columns
-			echo "-- TABLE {$tableName}\n";
-			foreach ($columnNames as $columnName) {
-				echo "--   " . (isset($badColumns[$columnName])?"[FAIL]":"[ok  ]") . " "
-					. $columnName . "\n";
-				if (isset($badColumns[$columnName])) {
-					echo "--   [????] " . $this->showBadValues($badColumns[$columnName]) . "\n";
+			if ($this->verbose) {
+				echo "-- TABLE {$tableName}\n";
+				foreach ($columnNames as $columnName) {
+					echo "--   " . (isset($badColumns[$columnName])?"[FAIL]":"[ok  ]") . " "
+						. $columnName
+						. (isset($badColumns[$columnName]) ? " (" . count($badColumns[$columnName]) . ")": "") 
+						. "\n";
+					if (isset($badColumns[$columnName])) {
+						echo "--   [????] " . $this->showBadValues($badColumns[$columnName]) . "\n";
+					}
+				}
+			} else {
+				foreach ($badColumns as $columnName => $badList) {
+					echo "-- {$this->databaseName}.{$tableName}.{$columnName} (" . count($badList) . ")\n";
 				}
 			}
 		}
