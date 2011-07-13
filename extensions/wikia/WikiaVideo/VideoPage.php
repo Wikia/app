@@ -1749,30 +1749,25 @@ EOD;
 				//@todo show object in Add Video flow. show swfobject in article mode
 				// swfobject
 				$playerId = 'player-'.$this->mId;
-				$embed = '<div id="'.$playerId.'"></div>
-				<script type="text/javascript">
-					wgAfterContentAndJS.push(function() {
-						$.getScript("'.$swfobject.'", function(){
-							var so = new SWFObject("'.$player.'","'.$playerId.'","'.$width.'","'.$height.'","9");
-							so.addParam("allowfullscreen","true");
-							so.addParam("allowscriptaccess","always");
-							so.addParam("wmode", "opaque");
-							so.addVariable("file", "'.urlencode($file).'");
-							so.addVariable("image","'.urlencode($image).'");
-							so.addVariable("type","video");
-							so.addVariable("provider","video");
-							so.addVariable("stretching", "fill");';
+				$embed = '<div id="'.$playerId.'"></div>'
+					. '<script type="text/javascript" src="'.$swfobject.'"></script>'
+					. ' <script type="text/javascript">'
+					. ' var so = new SWFObject("'.$player.'","'.$playerId.'","'.$width.'","'.$height.'","9");'
+					. ' so.addParam("allowfullscreen","true");'
+					. ' so.addParam("allowscriptaccess","always");'
+					. ' so.addParam("wmode", "opaque");'
+					. ' so.addVariable("file", "'.urlencode($file).'");'
+					. ' so.addVariable("image","'.urlencode($image).'");'
+					. ' so.addVariable("type","video");'
+					. ' so.addVariable("provider","video");'
+					. ' so.addVariable("stretching", "fill");';
 				if ($this->mData[1]) {
-					$embed .= '
-							so.addVariable("plugins", "hd-1");
-							so.addVariable("hd.file", "'.urlencode($hdfile).'");
-							so.addVariable("hd.state", "false");';
+					$embed .= ' so.addVariable("plugins", "hd-1");'
+						. ' so.addVariable("hd.file", "'.urlencode($hdfile).'");'
+						. ' so.addVariable("hd.state", "false");';
 				}
-				$embed .= '
-							so.write("'.$playerId.'");
-						});
-					});
-				</script>';
+				$embed .= ' so.write("'.$playerId.'");'
+					. ' </script>';
 
 				$code = 'custom';
 				break;
