@@ -921,10 +921,12 @@ class LocalFile extends File {
 			$latest = $descTitle->getLatestRevID();
 			$nullRevision = Revision::newNullRevision( $dbw, $descTitle->getArticleId(),
 				$log->getRcComment(), false );
-			$nullRevision->insertOn( $dbw );
+			if (!is_null($nullRevision)) {
+				$nullRevision->insertOn( $dbw );
 
-			wfRunHooks( 'NewRevisionFromEditComplete', array( $article, $nullRevision, $latest, $user ) );
-			$article->updateRevisionOn( $dbw, $nullRevision );
+				$article->updateRevisionOn( $dbw, $nullRevision );
+				wfRunHooks( 'NewRevisionFromEditComplete', array( $article, $nullRevision, $latest, $user ) );
+			} 
 
 			# Invalidate the cache for the description page
 			$descTitle->invalidateCache();
