@@ -193,4 +193,14 @@ $color-user-profile-gray-text: #999;
 	}
 }
 
+#userIdentityBoxDeleteAvatar {
+	margin-top: 25px;
+	position: absolute;
+	right: 10px;
+	img {
+		position: relative;
+		top: 2px;
+	}
+}
+
 

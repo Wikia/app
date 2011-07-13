@@ -88,10 +88,11 @@ class UserProfilePageController extends WikiaController {
 			$userData['registration'] = $this->wg->Lang->date($userData['registration']);
 		}
 		
-		$this->setVal('user', $userData);
-		
+		$this->setVal( 'user', $userData );
+		$this->setVal( 'deleteAvatarLink', F::build('SpecialPage', array('RemoveUserAvatar'), 'getTitleFor')->getFullUrl('av_user='.$userData['name']) );
 		$this->setVal( 'isUserPageOwner', ( ( $user->getId() == $sessionUser->getId() ) ? true : false ) );
 		$this->setVal( 'isWikiStaff', ( $sessionUser->isAllowed('staff') ? true : false ) );
+		$this->setVal( 'isCommunityWikiAndVSTF', ($this->app->wg->CityId === '177' && $sessionUser->isAllowed('vstf')) );
 		
 		$this->app->wg->Out->addScript('<script type="'.$this->app->wg->JsMimeType.' src="'.$this->app->wg->StylePath.'/common/jquery/jquery.aim.js?'.$this->app->wg->StyleVersion.'"></script>');
 		
