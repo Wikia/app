@@ -164,7 +164,7 @@ class FounderProgressBarController extends WikiaController {
 		$short_list = array();
 		// Grab the first two available items from the long list
 		foreach ($list as $id => $item) {
-			if ($item['task_skipped'] == 0 && $item['task_completed'] == 0) {
+			if ($item['task_skipped'] == 0 && $item['task_completed'] == 0 && $item['task_id'] < 500) {
 				$short_list[$id] = $item;
 			}
 			if (count($short_list) == 2) break; 
@@ -367,6 +367,8 @@ class FounderProgressBarController extends WikiaController {
 		$activityListPreview = F::app()->sendRequest( 'FounderProgressBar', 'getShortTaskList', array())->getData();
 		$activityFull = F::app()->sendRequest('FounderProgressBar', 'getLongTaskList', array())->getData();
 		
+		$showCompletionMessage = false;
+		
 		$activeTaskList = array();
 		$skippedTaskList = array();
 		$bonusTaskList = array();
@@ -376,7 +378,7 @@ class FounderProgressBarController extends WikiaController {
 			} else if (in_array($activity['task_id'], $this->bonus_tasks)) {
 				// bonus task list is built in the next step
 			} else if ($activity['task_id'] == FT_COMPLETION) {
-				// TODO: notify front end that all tasks are complete
+				$showCompletionMessage = !$activity['task_skipped'];
 			} else {
 				$activeTaskList[] = $activity;
 			}
@@ -411,6 +413,7 @@ class FounderProgressBarController extends WikiaController {
 		$this->response->setVal('skippedTaskList', $skippedTaskList);
 		$this->response->setVal('bonusTaskList', $bonusTaskList);
 		$this->response->setVal('clickEvents', $this->clickEvents);
+		$this->response->setVal('showCompletionMessage', $showCompletionMessage);
 	}
 	
 	public function getNextTask() {
