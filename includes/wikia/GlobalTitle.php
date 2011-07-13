@@ -50,25 +50,25 @@ class GlobalTitle extends Title {
 	}
 
 	/**
-	 * static constructor, Create new Title from id of page 
+	 * static constructor, Create new Title from id of page
 	 */
 	public static function newFromId( $id, $city_id, $dbname = "" ) {
 		global $wgMemc;
 		$title = null;
-		
+
 		$memkey = sprintf( "GlobalTitle:%d:%d", $id, $city_id );
-		$res = $wgMemc->get( $memkey ); 
+		$res = $wgMemc->get( $memkey );
 		if ( empty($res) && WikiFactory::isPublic($city_id) ) {
 			$dbr = wfGetDB( DB_SLAVE, array(), ( $dbname ) ? $dbname : WikiFactory::IDtoDB($city_id) );
-			$row = $dbr->selectRow( 'page', 
+			$row = $dbr->selectRow( 'page',
 				array( 'page_namespace', 'page_title' ),
-				array( 'page_id' => $id ), 
-				__METHOD__ 
+				array( 'page_id' => $id ),
+				__METHOD__
 			);
 			$res = array( 'title' => $row->page_title, 'namespace' => $row->page_namespace );
 			$wgMemc->set($memkey, $res, 60 * 60);
 		}
-		
+
 		if ( isset( $res['title'] ) && isset($res['namespace']) ) {
 			$title = GlobalTitle::newFromText( $res['title'], $res['namespace'], $city_id );
 		} else {
@@ -173,7 +173,7 @@ class GlobalTitle extends Title {
 		if( is_array( $query ) ) {
 			$query = wfArrayToCGI( $query );
 		}
-		
+
 		$url = str_replace( '$1', $namespace . $this->mUrlform, $this->mArticlePath );
 		$url = wfAppendQuery( $this->mServer . $url, $query );
 
@@ -203,27 +203,64 @@ class GlobalTitle extends Title {
 		if ( $this->mLastEdit ) {
 			return $this->mLastEdit;
 		}
-		
+
 		if( WikiFactory::isPublic($this->mCityId) ) {
 			$dbName = WikiFactory::IDtoDB($this->mCityId);
-			
+
 			$dbr = wfGetDB( DB_SLAVE, array(), $dbName );
-			
+
 			$this->mLastEdit = $dbr->selectField(
 				array( 'revision', 'page' ),
 				array( 'rev_timestamp' ),
 				array(
 					'page_title' => $this->mText,
 					'page_namespace' => $this->mNamespace,
-					'page_latest=rev_id' 
+					'page_latest=rev_id'
 				),
-				__METHOD__ 
+				__METHOD__
 			);
 		} else {
 			$this->mLastEdit = false;
 		}
-		
+
 		return $this->mLastEdit;
+	}
+
+	/*
+	 * @author Marooned
+	 *
+	 * This function is written to be fast. It assumes that we may have 3 different types of URLs (/index.php?title=A, /A or /wiki/A)
+	 * If new variation of URL will be introduced in the future, function should check wgArticlePath for particular wiki
+	 *
+	 * This is a helper function, it doesn't return GlobalTitle (to be honest, it's more like ReversedGlobalTitle)
+	 */
+	public static function explodeURL( $url ) {
+		$app = F::app();
+
+		$urlParts = parse_url( $url );
+
+		if ( isset( $urlParts['query'] ) ) {
+			parse_str( $urlParts['query'], $queryParts );
+		}
+		if ( isset( $queryParts['title'] ) ) {
+			$articleName = $queryParts['title'];
+		} else {
+			$articleName = preg_replace( '!^/wiki/!i', '', $urlParts['path'] );
+		}
+
+		if ( $app->wg->develEnvironment ){
+			$explodedServer = explode( '.', $url );
+			$url = $explodedServer[0].'.wikia.com';
+		}
+
+		$wikiId = WikiFactory::UrlToID( $url );
+
+		$result = array(
+			'wikiId' => $wikiId,
+			'articleName' => $articleName
+		);
+
+		return $result;
 	}
 
 	/**

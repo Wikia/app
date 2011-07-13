@@ -3,139 +3,97 @@ require_once dirname(__FILE__) . '/../ScavengerHunt_setup.php';
 wfLoadAllExtensions();
 
 class ScavengerHuntTest extends PHPUnit_Framework_TestCase {
+
+	protected function setUp() {
+		$this->app = F::build( 'App' );
+	}
+
+	protected function tearDown() {
+		F::setInstance( 'App', $this->app );
+		F::reset( 'EasyTemplate' );
+		F::reset( '' );
+	}
+
 	public static function setUpBeforeClass() {
 		//ScavengerHuntSetup();
 	}
 
-	public function testAddingHunt() {
-		$app = WF::build('App');
-		$games = WF::build('ScavengerHuntGames');
-
-		$article = WF::build('ScavengerHuntGames')->newGameArticle();
-		$article->setTitleAndId('bnm', 333);
-		$article->setHiddenImage('him');
-		$article->setClueTitle('clt');
-		$article->setClueText('cly');
-		$article->setClueImage('cli');
-		$article->setClueImageTopOffset('100');
-		$article->setClueImageLeftOffset('-100');
-		$article->setClueButtonText('cbt');
-		$article->setClueButtonTarget('cby');
-
-		$data = array(
-			'landingTitle' => 'lti',
-			'landingArticleId' => 123,
-			'landingButtonText' => 'zxc',
-			'startingClueTitle' => 'sct',
-			'startingClueText' => 'scy',
-			'startingClueImage' => 'sci',
-			'startingClueImageTopOffset' => '10',
-			'startingClueImageLeftOffset' => '-10',
-			'startingClueButtonText' => 'sbt',
-			'startingClueButtonTarget' => 'sby',
-			'articles' => array( $article ),
-			'entryFormTitle' => 'eft',
-			'entryFormText' => 'efy',
-			'entryFormImage' => 'efi',
-			'entryFormImageTopOffset' => '20',
-			'entryFormImageLeftOffset' => '-20',
-			'entryFormQuestion' => 'efq',
-			'goodbyeTitle' => 'gdw',
-			'goodbyeText' => 'gdt',
-			'goodbyeImage' => 'gdi',
-			'goodbyeImageTopOffset' => '30',
-			'goodbyeImageLeftOffset' => '-30',
-		);
-		$dataToSerialize = $data;
-		$dataToSerialize['articles'] = array( $article->getAll() );
-
-		$fields = array(
-			'wiki_id' => 412,
-			'game_name' => 'asd',
-			'game_is_enabled' => true,
-			'game_data' => serialize( $dataToSerialize ),
-		);
-
-		$db = $this->getMock('DatabaseBase');
-		$db->expects($this->once())
-			->method('insert')
-			->with($this->anything(), $this->equalTo($fields), $this->anything());
-
-		$games = $this->getMock('ScavengerHuntGames', array('getDb', 'clearCache'), array($app));
-		$games->expects($this->once())
-			->method('getDb')
-			->will($this->returnValue($db));
-		$games->expects($this->once())
-			->method('clearCache')
-			->will($this->returnValue(null));
-
-		$game = $games->newGame();
-		$this->assertEquals(0, $game->getId());
-		$this->assertFalse($game->isEnabled());
-
-		$articles = array();
-		$article = $game->newGameArticle();
-		$article->setTitleAndId('bnm', 333);
-		$article->setHiddenImage('him');
-		$article->setClueTitle('clt');
-		$article->setClueText('cly');
-		$article->setClueImage('cli');
-		$article->setClueImageTopOffset('100');
-		$article->setClueImageLeftOffset('-100');
-		$article->setClueButtonText('cbt');
-		$article->setClueButtonTarget('cby');
-		$articles[] = $article;
-
-		$game->setWikiId(412);
-		$game->setName('asd');
-		$game->setEnabled(true);
-		$game->setData($data);
-
-		$this->assertTrue($game->save());
+	public function getFakeSprite() {
+		return array( 'X' => 50, 'Y' => 50, 'X1' => 0, 'Y1' => 0, 'X2' => 10, 'Y2' => 20 );
 	}
 
+	public function getFakeWrongSprite() {
+		return array( 'X' => 50, 'Y' => 50, 'X1' => 20, 'Y1' => 30, 'X2' => 10, 'Y2' => 20 );
+	}
+
+	const LANDING_WIKI_ID = 411;
+	const LANDING_ARTICLE_NAME = 'this will be so mocked';
+	const LANDING_ARTICLE_ID = 666;
+	const MOCK_TEXT = 'Lorem ipsum';
+	const MOCK_URL = 'http://firefly.wikia.com/wiki/test';
+	const MOCK_GAME_ID = 1001;
+
+
+	public function appServiceCallback( $sGlobal ) {
+		switch ( $sGlobal ) {
+			case 'wgDevEnvironment' : return false;	break;
+			default: $return = $this->app->getGlobal( $sGlobal );
+		}
+		return $return;
+	}
+
+
 	public function getFakeRow() {
-		$app = WF::build('App');
 
 		$article = WF::build('ScavengerHuntGames')->newGameArticle();
-		$article->setTitleAndId('bnm', 333);
-		$article->setHiddenImage('him');
-		$article->setClueTitle('clt');
-		$article->setClueText('cly');
-		$article->setClueImage('cli');
-		$article->setClueImageTopOffset('100');
-		$article->setClueImageLeftOffset('-100');
-		$article->setClueButtonText('cbt');
-		$article->setClueButtonTarget('cby');
+
+		$article->setArticleName( self::MOCK_TEXT );
+		$article->setWikiId( self::LANDING_WIKI_ID );
+
+		foreach( array( 'spriteNotFound', 'spriteInProgressBar', 'spriteInProgressBarHover', 'spriteInProgressBarNotFound' ) as $spriteName ) {
+			$methodName = 'set'.ucfirst( $spriteName );
+			$article->$methodName( $this->getFakeSprite() );
+		}
+		$article->setSpriteNotFound( self::MOCK_URL );
+		$article->setClueText( self::MOCK_TEXT );
+		$article->setCongrats( self::MOCK_TEXT );
 
 		$row = new stdClass();
-		$row->game_id = 1001;
-		$row->wiki_id = 412;
-		$row->game_name = 'asd';
+		$row->game_id = self::MOCK_GAME_ID;
+		$row->wiki_id = self::LANDING_WIKI_ID;
+		$row->game_name = self::MOCK_TEXT;
 		$row->game_is_enabled = 0;
 		$row->game_data = serialize(array(
-			'landingTitle' => 'lti',
-			'landingArticleId' => 123,
-			'landingButtonText' => 'zxc',
-			'startingClueTitle' => 'sct',
-			'startingClueText' => 'scy',
-			'startingClueImage' => 'sci',
-			'startingClueImageTopOffset' => '10',
-			'startingClueImageLeftOffset' => '-10',
-			'startingClueButtonText' => 'sbt',
-			'startingClueButtonTarget' => 'sby',
+			'clueColor' => '#fff',
+			'clueFont' => 'bold',
+			'clueSize' => '14',
+			'name' => self::MOCK_TEXT,
+			'hash' => self::MOCK_TEXT,
+			'landingTitle' => self::MOCK_TEXT,
+			'landingArticleName' => self::MOCK_TEXT,
+			'landingArticleWikiId' => self::LANDING_WIKI_ID,
+			'landingButtonText' => self::MOCK_TEXT,
+			'startingClueTitle' => self::MOCK_TEXT,
+			'startingClueText' => self::MOCK_TEXT,
+			'startingClueButtonText' => self::MOCK_TEXT,
+			'startingClueButtonTarget' => self::MOCK_URL,
+			'entryFormTitle' => self::MOCK_TEXT,
+			'entryFormText' => self::MOCK_TEXT,
+			'entryFormButtonText' => self::MOCK_TEXT,
+			'entryFormQuestion' => self::MOCK_TEXT,
+			'goodbyeTitle' => self::MOCK_TEXT,
+			'goodbyeText' => self::MOCK_TEXT,
+			'goodbyeImage' => self::MOCK_TEXT,
+			'spriteImg' => self::MOCK_URL,
+			'entryFormEmail' => self::MOCK_TEXT,
+			'entryFormUsername' => self::MOCK_TEXT,
 			'articles' => array( $article ),
-			'entryFormTitle' => 'eft',
-			'entryFormText' => 'efy',
-			'entryFormImage' => 'efi',
-			'entryFormImageTopOffset' => '20',
-			'entryFormImageLeftOffset' => '-20',
-			'entryFormQuestion' => 'efq',
-			'goodbyeTitle' => 'gdw',
-			'goodbyeText' => 'gdt',
-			'goodbyeImage' => 'gdi',
-			'goodbyeImageTopOffset' => '30',
-			'goodbyeImageLeftOffset' => '-30',
+			'progressBarBackgroundSprite' => $this->getFakeSprite(),
+			'progressBarExitSprite' => $this->getFakeSprite(),
+			'progressBarHintLabel' => $this->getFakeSprite(),
+			'startPopupSprite' => $this->getFakeSprite(),
+			'finishPopupSprite' => $this->getFakeSprite(),
+
 		));
 
 		return $row;
@@ -146,7 +104,7 @@ class ScavengerHuntTest extends PHPUnit_Framework_TestCase {
 
 		$fakeRow = $this->getFakeRow();
 		$where = array(
-			'game_id' => 1001,
+			'game_id' => self::MOCK_GAME_ID,
 		);
 
 		$db = $this->getMock('DatabaseBase');
@@ -155,15 +113,15 @@ class ScavengerHuntTest extends PHPUnit_Framework_TestCase {
 			->with($this->anything(), $this->anything(), $this->equalTo($where), $this->anything(), $this->anything())
 			->will($this->returnValue($fakeRow));
 
-		$games = $this->getMock('ScavengerHuntGames', array('getDb', 'clearCache'), array($app));
+		$games = $this->getMock('ScavengerHuntGames', array('getDb'), array($app));
 		$games->expects($this->once())
 			->method('getDb')
 			->will($this->returnValue($db));
-		$games->expects($this->never())
-			->method('clearCache')
-			->will($this->returnValue(null));
+//		$games->expects($this->never())
+//			->method('clearCache')
+//			->will($this->returnValue(null));
 
-		$game = $games->findById(1001);
+		$game = $games->findById( self::MOCK_GAME_ID );
 		$this->assertNotEmpty($game);
 
 		$this->assertEquals($fakeRow->game_id, $game->getId());
@@ -171,183 +129,5 @@ class ScavengerHuntTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($fakeRow->game_name, $game->getName());
 		$this->assertEquals($fakeRow->game_is_enabled, $game->isEnabled());
 		$this->assertEquals(unserialize($fakeRow->game_data), $game->getData());
-	}
-
-	public function testDeletingHunt() {
-		$app = WF::build('App');
-
-		$where = array(
-			'game_id' => 412,
-		);
-
-		$db = $this->getMock('DatabaseBase');
-		$db->expects($this->once())
-			->method('delete')
-			->with($this->anything(), $this->equalTo($where))
-			->will($this->returnValue(true));
-
-		$games = $this->getMock('ScavengerHuntGames', array('getDb', 'clearCache'), array($app));
-		$games->expects($this->once())
-			->method('getDb')
-			->will($this->returnValue($db));
-		$games->expects($this->once())
-			->method('clearCache')
-			->will($this->returnValue(null));
-
-		$game = $games->newGame();
-		$game->setId(412);
-		$this->assertNotEmpty($game->delete());
-	}
-
-	public function mock_Games_getTitleDbKey( $text) {
-		return str_replace(' ', '_', $text);
-	}
-
-	public function testIndexCacheGeneration() {
-		$app = WF::build('App');
-
-		$cacheData = array(
-			'About_Wikia' => array(
-				'start' => array( 10001 ),
-				'article' => array( 10002 ),
-			),
-			'The_new_look_2' => array(
-				'article' => array( 10001, 10002 ),
-			),
-			'Alice_Soft' => array(
-				'start' => array( 10002 ),
-				'article' => array( 10001 ),
-			),
-		);
-
-		$cache = $this->getMock('stdClass', array('get', 'set'));
-		$cache->expects($this->once())
-			->method('get')
-			->will($this->returnValue(null));
-		$cache->expects($this->once())
-			->method('set')
-			->with($this->anything(), $this->equalTo($cacheData), $this->anything());
-
-		$article1 = WF::build('ScavengerHuntGameArticle');
-		$article1->setAll(array(
-			'title' => 'The new look 2',
-			'articleId' => 123,
-		));
-		$article2 = WF::build('ScavengerHuntGameArticle');
-		$article2->setAll(array(
-			'title' => 'About Wikia',
-			'articleId' => 234,
-		));
-		$article3 = WF::build('ScavengerHuntGameArticle');
-		$article3->setAll(array(
-			'title' => 'Alice_Soft',
-			'articleId' => 345,
-		));
-
-		$game1 = WF::build('ScavengerHuntGame');
-		$game1->setAll(array(
-			'id' => 10001,
-			'idEnabled' => true,
-			'landingTitle' => 'About Wikia',
-			'landingArticleId' => 123,
-			'articles' => array( $article1, $article3 ),
-		));
-		$game2 = WF::build('ScavengerHuntGame');
-		$game2->setAll(array(
-			'id' => 10002,
-			'idEnabled' => true,
-			'landingTitle' => 'Alice Soft',
-			'landingArticleId' => 345,
-			'articles' => array( $article2, $article1 ),
-		));
-		$gamesData = array( $game1, $game2 );
-
-		$games = $this->getMock('ScavengerHuntGames', array('getCache', 'findAllEnabledByWikiId', 'getTitleDbKey'), array($app));
-		$games->expects($this->exactly(2))
-			->method('getCache')
-			->will($this->returnValue($cache));
-		$games->expects($this->once())
-			->method('findAllEnabledByWikiId')
-			->will($this->returnValue($gamesData));
-		$games->expects($this->any())
-			->method('getTitleDbKey')
-			->will($this->returnCallback(array($this, 'mock_Games_getTitleDbKey')));
-
-		$this->assertEquals($cacheData, $games->getIndexCache());
-	}
-
-	public function testIndexCacheReading() {
-		$app = WF::build('App');
-
-		$cacheData = array(
-			'About_Wikia' => array(
-				'start' => array( 10001 ),
-				'article' => array( 10002 ),
-			),
-			'The_new_look_2' => array(
-				'article' => array( 10001, 10002 ),
-			),
-			'Alice_Soft' => array(
-				'start' => array( 10002 ),
-				'article' => array( 10001 ),
-			),
-		);
-
-		$cache = $this->getMock('stdClass', array('get', 'set'));
-		$cache->expects($this->once())
-			->method('get')
-			->will($this->returnValue($cacheData));
-		$cache->expects($this->never())
-			->method('set');
-
-		$games = $this->getMock('ScavengerHuntGames', array('getCache', 'findAllEnabledByWikiId', 'getTitleDbKey'), array($app));
-		$games->expects($this->once())
-			->method('getCache')
-			->will($this->returnValue($cache));
-		$games->expects($this->never())
-			->method('findAllEnabledByWikiId');
-		$games->expects($this->never())
-			->method('getTitleDbKey');
-
-		$this->assertEquals($cacheData, $games->getIndexCache());
-	}
-
-	public function testSavingEntry() {
-		$app = WF::build('App');
-
-		$fields = array(
-			'game_id' => 1001,
-			'user_id' => 123123,
-			'entry_name' => 'asd',
-			'entry_email' => 'ema',
-			'entry_answer' => 'ans',
-		);
-
-		$db = $this->getMock('DatabaseBase');
-		$db->expects($this->once())
-			->method('insert')
-			->with($this->anything(), $this->equalTo($fields), $this->anything());
-
-		$entries = $this->getMock('ScavengerHuntEntries', array('getDb'), array($app));
-		$entries->expects($this->once())
-			->method('getDb')
-			->will($this->returnValue($db));
-
-		$games = $this->getMock('ScavengerHuntGames', array('getEntries'), array($app));
-		$games->expects($this->any())
-			->method('getEntries')
-			->will($this->returnValue($entries));
-
-		$game = $games->newGame();
-		$game->setId(1001);
-
-		$entry = $entries->newEntry();
-		$entry->setUserId(123123);
-		$entry->setName('asd');
-		$entry->setEmail('ema');
-		$entry->setAnswer('ans');
-
-		$this->assertTrue($game->addEntry($entry));
-
 	}
 }

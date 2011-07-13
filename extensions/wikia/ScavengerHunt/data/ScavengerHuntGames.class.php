@@ -9,7 +9,6 @@ class ScavengerHuntGames {
 		$this->app = $app;
 	}
 
-
 	public function getEntries() {
 		return WF::build('ScavengerHuntEntries');
 	}
@@ -17,7 +16,6 @@ class ScavengerHuntGames {
 	public function getCurrentWikiId() {
 		return $this->app->getGlobal('wgCityId');
 	}
-
 
 	public function newGameArticle() {
 		return WF::build('ScavengerHuntGameArticle');
@@ -55,7 +53,7 @@ class ScavengerHuntGames {
 			$options
 		);
 
-		if (empty($row)) {
+		if ( empty( $row ) ) {
 			return false;
 		}
 
@@ -109,7 +107,28 @@ class ScavengerHuntGames {
 		));
 	}
 
+	public function findAll( $where = array() ) {
+		$db = $this->getDb();
+		$set = $db->select(
+			array( self::GAMES_TABLE_NAME ),
+			array( 'game_id', 'wiki_id', 'game_name', 'game_is_enabled', 'game_data' ),
+			$where,
+			__METHOD__
+		);
 
+		$games = array();
+		while( $row = $set->fetchObject( $set ) ) {
+			$games[] = $this->newGameFromRow($row);
+		}
+
+		return $games;
+	}
+
+	public function findAllEnabled( ) {
+		return $this->findAll( array(
+			'game_is_enabled' => 1,
+		));
+	}
 
 	/**
 	 * get db handler
@@ -145,6 +164,7 @@ class ScavengerHuntGames {
 	}
 
 	public function save( ScavengerHuntGame $game ) {
+
 		$data = $game->getData();
 		foreach ($data['articles'] as $k => $v)
 			$data['articles'][$k] = $v->getAll();
@@ -214,8 +234,7 @@ class ScavengerHuntGames {
 	public function getIndexCache() {
 		$data = $this->getCache()->get($this->getIndexMemcKey());
 		if (!is_array($data)) {
-			$cityId = $this->app->getGlobal('wgCityId');
-			$games = $this->findAllEnabledByWikiId($cityId);
+			$games = $this->findAllEnabled();
 			$data = array();
 			foreach ($games as $game) {
 				$gameId = $game->getId();
@@ -238,33 +257,27 @@ class ScavengerHuntGames {
 
 	protected function clearCache( $oldGame, $newGame ) {
 		$this->clearIndexCache();
-
 		if ( (!$oldGame || !$oldGame->isEnabled()) && (!$newGame || !$newGame->isEnabled()) ) {
 			// no squid purges required - game not enabled
 			return;
 		}
-
 		$titles = array();
-		if ($oldGame) {
-			$title = WF::build('Title', array($oldGame->getLandingTitle()), 'newFromText');
-			if ($title) $titles[$title->getPrefixedDBkey()] = $title;
-			foreach ($oldGame->getArticles() as $article) {
-				$title = WF::build('Title', array($article->getTitle()), 'newFromText');
-				if ($title) $titles[$title->getPrefixedDBkey()] = $title;
+		if ( !empty( $oldGame ) ) {
+			$titles[] = $oldGame->getLandingTitle();
+		}
+		if ( !empty( $newGame ) )  {
+			$titles[] = $newGame->getLandingTitle();
+		}
+
+		foreach( $titles as $title ){
+			$url = $title;
+			if ( strpos( $title, '?' ) === false ){
+				$url.= '?action=purge';
+			} else {
+				$url.= '&action=purge';
 			}
 		}
-		if ($newGame) {
-			$title = WF::build('Title', array($newGame->getLandingTitle()), 'newFromText');
-			if ($title) $titles[$title->getPrefixedDBkey()] = $title;
-			foreach ($newGame->getArticles() as $article) {
-				$title = WF::build('Title', array($article->getTitle()), 'newFromText');
-				if ($title) $titles[$title->getPrefixedDBkey()] = $title;
-			}
-		}
-		foreach ($titles as $title) {
-			$title->invalidateCache();
-			$title->purgeSquid();
-		}
+		Http::post( $url );
 	}
 
 	protected function clearIndexCache() {
