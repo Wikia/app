@@ -35,7 +35,7 @@ var UserProfilePage = {
 		$.getResources([$.getSassCommonURL('/extensions/wikia/UserProfilePageV3/css/UserProfilePage_modal.scss')]);
 		
 		$.postJSON( this.ajaxEntryPoint, { method: 'getLightboxData', tab: tabName, userId: UserProfilePage.userId, rand: Math.floor(Math.random()*100001) }, function(data) {
-			UserProfilePage.modal = $(data.body).makeModal({ width : 750});
+			UserProfilePage.modal = $(data.body).makeModal({width : 450, onClose: UserProfilePage.closeModal, closeOnBlackoutClick: UserProfilePage.closeModal});
 			var modal = UserProfilePage.modal;
 			
 			UserProfilePage.renderAvatarLightbox(modal);
@@ -516,11 +516,16 @@ var UserProfilePage = {
 	},
 	
 	closeModal: function(modal, resetDataChangedFlag) {
+		if( typeof(modal.closeModal) === 'function' ) {
+			modal.closeModal();
+		} else {
+		//here we can implement checking the UserProfilePage.wasDataChanged property 
+		//and create new modal with three buttons (save changes, cance, don't save changes) or not 
+		}
+		
 		if( typeof(resetDataChangedFlag) === 'undefined' || resetDataChangedFlag === true ) {
 			//changing it for next lightbox openings
 			UserProfilePage.wasDataChanged = false;
 		}
-		
-		modal.closeModal();
 	}
 }
