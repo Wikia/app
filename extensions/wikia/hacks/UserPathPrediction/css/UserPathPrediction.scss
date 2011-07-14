@@ -1,3 +1,8 @@
+/**
+ * @author Jakub Olek <bukaj.kelo+wikia@gmail.com>
+ *
+ * Styles for User Path Prediction Special Page
+ */
 #sectionUserPathPrediction {
   border: 1px solid #333;
   -webkit-border-radius: 6px;
@@ -31,14 +36,14 @@ footer {
 #articles {
   position: relative;
   width: 100%;
-  height: 530px;
+  height: 565px;
   margin: 5px auto;
-
 }
 
 #showArticle {
   position: absolute;
-  height: 400px;
+  top: 20px;
+  height: 410px;
   width: 79%;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
@@ -46,9 +51,9 @@ footer {
 
 #relatedArticles {
   position: absolute;
-  height: 510px;
+  height: 555px;
   width: 19%;
-  top: 0;
+  top: 20px;
   left: 80%;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
@@ -70,12 +75,13 @@ footer {
       -webkit-box-shadow:inset 0 0 10px #111;
        box-shadow:inset 0 0 10px #111;
        &:hover {
-       -webkit-box-shadow:inset 0 0 10px #333;
-       box-shadow:inset 0 0 10px #333;
+       -webkit-box-shadow: 0 0 10px #333;
+       box-shadow: 0 0 10px #333;
       }
       #reletedItem {
         cursor: pointer; 
       }
+      
       #counts {
         font-size: 2em;
         left: 15%;
@@ -100,7 +106,7 @@ footer {
 
 #navigationArticles {
   position: absolute;
-  top: 410px;
+  top: 455px;
   left: 0;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
@@ -140,4 +146,25 @@ footer {
       }
     }
   }
+}
+
+.UPPHeader {
+  font-size: 1.5em;
+  margin-left: 10px;
+  padding: 5px;
+  text-shadow: 0 0 20px #FFF;
+}
+
+#relatedPages {
+  position: absolute;
+  left: 80%;
+  top: -1%;
+  z-index: 3;
+}
+
+#possiblePath {
+  position: absolute;
+  top:76%;
+  left: -1%;
+  z-index: 3;
 }

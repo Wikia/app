@@ -19,10 +19,13 @@
 </nav>
 
 <div id="articles" <?= ( $par != NULL )  ? "data-page=\"".$par."\"" : "" ?>>
+<span class="UPPHeader"><?= wfMsg( 'userpathprediction-preview' ); ?></span>
 <iframe id="showArticle" <?= ( $par != NULL )  ? "src=\"/wiki/".$par."\"" : "" ?>></iframe>
-	<div id="relatedArticles">	
+		<span class="UPPHeader" id="relatedPages"><?= wfMsg( 'userpathprediction-relatedPages' ); ?></span>
+	<div id="relatedArticles">
 	</div>
-	<div id="navigationArticles">
+		<span class="UPPHeader" id="possiblePath"><?= wfMsg( 'userpathprediction-possiblePath' ); ?></span>
+	<div id="navigationArticles">	
 	</div>
 </div>
 <div id="noresult"><?= wfMsg( 'userpathprediction-noresult' ); ?></div>
