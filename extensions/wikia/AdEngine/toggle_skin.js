@@ -2,15 +2,16 @@ var displayToggleSkin = function(){
 	var ToggleSkin = {
 		settings: {
 			background: "2e0002",
-			buttonBorder: "2px solid #750000",
-			buttonBorderSelectedColor: "FFF",
+			buttonBorder: "",
+			buttonBorderSelectedColor: "",
 			buttonHeight: 85,
 			buttonWidth: 85,
 			buttonsX: 560,
 			buttonsY: 45,
 			buttonSpace: 5,
 			creativeButtons: "",
-			creativeSkins: []
+			creativeSkins: [],
+			orientation: ""
 		},
 
 		getCreative: function() {
@@ -33,31 +34,51 @@ var displayToggleSkin = function(){
 			}
 			html += '\
 				#skin_switcher ul {\
-					display: inline-block;\
-					*display: inline; /* IE7 hack */\
-					left: ' + ToggleSkin.settings.buttonsX + 'px;\
+					left: 50%;\
 					list-style: none;\
+					margin-left: ' + ToggleSkin.settings.buttonsX + 'px;\
 					padding: 0;\
-					position: relative;\
+					position: absolute;\
 					top: ' + ToggleSkin.settings.buttonsY + 'px;\
-					zoom: 1; /* IE7 hack */\
+					width: ' + (ToggleSkin.settings.buttonWidth+ToggleSkin.settings.buttonSpace)*ToggleSkin.settings.creativeSkins.length + 'px;\
 				}\
 				#skin_switcher li {\
-					background-image: url(' + ToggleSkin.settings.creativeButtons + ');\
-					border: ' + ToggleSkin.settings.buttonBorder + ';\
-					cursor: pointer;\
+					background-image: url(' + ToggleSkin.settings.creativeButtons + ');';
+			if (ToggleSkin.settings.buttonBorder) {
+				html += '\
+					border: ' + ToggleSkin.settings.buttonBorder + ';';
+			}
+			html += '\
+					cursor: pointer;';
+			if (ToggleSkin.settings.orientation == 'horizontal') {
+				html += '\
+					float: left;';
+			}
+			html += '\
 					height: ' + ToggleSkin.settings.buttonHeight + 'px;\
-					margin-right: ' + ToggleSkin.settings.buttonSpace + 'px;\
 					margin-bottom: ' + ToggleSkin.settings.buttonSpace + 'px;\
+					margin-right: ' + ToggleSkin.settings.buttonSpace + 'px;\
 					width: ' + ToggleSkin.settings.buttonWidth + 'px;\
 				}\
-				#skin_switcher li.switcher_selected {\
-					border-color: #' + ToggleSkin.settings.buttonBorderSelectedColor + ';\
+				#skin_switcher li.switcher_selected {';
+			if (ToggleSkin.settings.buttonBorderSelectedColor) {
+				html += '\
+					border-color: #' + ToggleSkin.settings.buttonBorderSelectedColor + ';';
+			}
+			html += '\
 				}';
 			for (var i=0; i<ToggleSkin.settings.creativeSkins.length; i++) {
 				html += '\
-				#skin_thumb' + i + ' {\
-					background-position: 0 -' + i*85 + 'px;\
+				#skin_thumb' + i + ' {';
+				if (ToggleSkin.settings.orientation == 'horizontal') {
+					html += '\
+					background-position: -' + i*ToggleSkin.settings.buttonWidth + 'px 0;';
+				}
+				else {
+					html += '\
+					background-position: 0 -' + i*ToggleSkin.settings.buttonHeight + 'px;';
+				}
+				html += '\
 				}';
 			}
 			html += '\
@@ -86,7 +107,7 @@ var displayToggleSkin = function(){
 		switchSkin: function (num) {
 			var adSkin = $("#ad-skin");
 			var className = adSkin.attr('class');
-			className = className.replace(/\bad-skin\d+\b/g, "").trim() + " ad-skin" + num;
+			className = $.trim(className.replace(/\bad-skin\d+\b/g, "")) + " ad-skin" + num;
 			adSkin.attr('class', className);
 			var thumbs = $("#skin_switcher li");
 			for (var i=0; i<thumbs.length; i++) {
