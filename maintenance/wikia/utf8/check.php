@@ -91,10 +91,18 @@ class Utf8DbConvert {
 		return implode(", ",$badValues);
 	}
 	
+	public function dbQuote( $data ) {
+		if (is_array($data)) {
+			return array_map(array($this,'dbQuote'),$data);
+		} else {
+			return "`{$data}`";
+		}
+	}
+	
 	protected function checkData() {
 		foreach ($this->list as $tableName => $columns) {
 			$columnNames = array_keys($columns);
-			$res = $this->db->select($tableName,$columnNames);
+			$res = $this->db->select(" " . $this->dbQuote($tableName),$this->dbQuote($columnNames));
 			$badColumns = array();
 			while ($row = $this->db->fetchRow($res)) {
 				foreach ($columns as $columnName => $column) {

@@ -187,6 +187,7 @@ class SqlParser {
 		$field = false;
 		$options = array(
 			"(?<unsigned>unsigned)",
+			"(?<zerofill>zerofill)",
 			"(?<null>null)",
 			"(?<notnull>not null)",
 			"(?<autoincrement>auto_increment)",
@@ -206,6 +207,8 @@ class SqlParser {
 			$field->COLUMN_TYPE = $matches['type'];
 			if (!empty($matches['unsigned']))
 				$field->COLUMN_TYPE .= " unsigned";
+			if (!empty($matches['zerofill']))
+				$field->COLUMN_TYPE .= " zerofill";
 			$field->EXTRA = '';
 			if (!empty($matches['autoincrement']))
 				$field->EXTRA .= "auto_increment";
