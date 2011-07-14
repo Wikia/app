@@ -157,9 +157,9 @@ function getDynamicRobots($bot=''){
 		$r .= "Noindex: /*action=history*\n";
 		$r .= "Noindex: /*action=delete*\n";
 		$r .= "Noindex: /*action=watch*\n";
-	
+
 	}else{
-	
+
 		$r  = "\n";
 		$r .= "User-agent: *\n";
 		$r .= "Disallow: /w/\n";
@@ -170,20 +170,20 @@ function getDynamicRobots($bot=''){
 		$r .= "Disallow: /*action=history*\n";
 		$r .= "Disallow: /*action=delete*\n";
 		$r .= "Disallow: /*action=watch*\n";
-	
+
 	}
-	
+
 	//process english first
 
 	$code = trim( $wgContLang->getCode() );
-	
+
 	//always add english since its' namespaces are always working as aliases
 	$r .= getLangSpecificNamespace( new Language(), "en", $bot );
-	
+
 	if ( !empty( $code ) && $code != 'en' ) {
 		$r .= getLangSpecificNamespace( $wgContLang, $code, $bot );
 	}
-	
+
 	return $r;
 }
 
@@ -198,11 +198,11 @@ function getSitemapUrl(){
 
 function getLangSpecificNamespace( &$lang, $code, $bot='' ){
 	global $wgSpecialPages, $wgArticleRobotPolicies;
-	
+
 	$r = '';
-	
+
 	$ns = $lang->getNamespaces();
-	
+
 	if($bot == 'goog'){
 		$r .= "# " . $code . "\n" ;
 		if ( $code == "en" && !empty( $wgArticleRobotPolicies['Special:WhatLinksHere'] ) ) {
@@ -249,59 +249,23 @@ function getLangSpecificNamespace( &$lang, $code, $bot='' ){
 	return $r;
 }
 
-function oldrobots(){
+/**
+ * deny all robots
+ */
+function deny( ) {
+	header("Content-Type: text/plain");
+	echo "User-agent: *\n";
+	echo "Disallow: /\n";
+}
 
 /**
- * rewrite /robots.txt to proper file
- * eloy@wikia.com
+ * check for preview & verify
  */
-$sBasePath = "/images/wikia_robots/";
-$sFallback = "/images/wikia_robots/www.wikia.com.robots.txt";
+$headers = function_exists('apache_request_headers') ? apache_request_headers() : array();
 
-/**
- * array with exceptions, is used for replacing
- */
-$aExceptions = array(
-	"wikia.com"	=> "www.wikia.com",
-);
-
-#--- drop www from server name
-if (!empty($_SERVER['SERVER_NAME'])) {
-	#--- faster than regexp
-	$aDomain = explode(".", strtolower($_SERVER['SERVER_NAME']));
-	if ($aDomain[0] == "www") {
-		array_shift($aDomain);
-	}
-	$sDomain = implode(".", $aDomain);
-	if (!empty($aExceptions[$sDomain])) {
-		$sDomain = $aExceptions[$sDomain];
-	}
-	$sRobots = $sBasePath.$sDomain.".robots.txt";
+if( isset( $headers[ "X-Staging" ] ) && ( $headers[ "X-Staging" ] === "preview" || $headers[ "X-Staging" ] === "verify" ) ) {
+	deny();
 }
-
-header("Content-type: text/plain");
-#header("Pragma: no-cache");
-#header("Expires: 0");
-if (file_exists($sRobots)) {
-	@readfile($sRobots);
-}
-else {
-	@readfile($sFallback);
-}
-die;
-}
-
-$oldrobotswikiset = array(
-	'bttf.wikia.com',
-	'futurama.wikia.com',
-	'irwinallen.wikia.com',
-	'lostodyssey.wikia.com',
-	'bionicle.wikia.com'
-);
-
-if(in_array(strtolower($_SERVER['SERVER_NAME']), $oldrobotswikiset)){
-	oldrobots();
-}else{
+else{
 	newrobots();
 }
-?>
