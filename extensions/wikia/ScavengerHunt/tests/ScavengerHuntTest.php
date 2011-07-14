@@ -11,7 +11,6 @@ class ScavengerHuntTest extends PHPUnit_Framework_TestCase {
 	protected function tearDown() {
 		F::setInstance( 'App', $this->app );
 		F::reset( 'EasyTemplate' );
-		F::reset( '' );
 	}
 
 	public static function setUpBeforeClass() {
