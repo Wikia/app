@@ -1,10 +1,10 @@
-<section id="UserProfileMasthead" class="UserProfileMasthead">
+<section id="UserProfileMasthead" class="UserProfileMasthead" itemscope itemtype="http://schema.org/Person">
 	
 	<div class="masthead-avatar">
 	<? if( $isUserPageOwner || $isWikiStaff ): ?>
 		<a href="#" id="userAvatarEdit">
 	<? endif; ?>
-			<?= $user['avatar']; ?>
+			<img src="<?= $user['avatar']; ?>" itemprop="image" height="150" width="150" class="avatar">
 	<? if( $isUserPageOwner || $isWikiStaff ): ?>
 		</a>
 	<? endif; ?>
@@ -12,14 +12,12 @@
 	
 	<div class="masthead-info">
 		<hgroup>
-			<h1><?= $user['name']; ?></h1>
+			<h1 itemprop="name"><?= $user['name']; ?></h1>
 			<span class="group"><?= $user['group']; ?></span>
 			<? if( !empty($user['realName']) ): ?>
 				<h2><?= wfMsg('user-identity-box-aka-label', array('$1' => $user['realName']) ); ?></h2>
 			<? endif; ?>
 		</hgroup>
-
-
 
 		<? if( $isUserPageOwner || $isWikiStaff ): ?>
 			<span id="userIdentityBoxEdit">
@@ -113,7 +111,7 @@
 		<div>
 			<ul class="details">
 				<? if( !empty($user['location']) ): ?>
-					<li><?= wfMsg('user-identity-box-location', array( '$1' => $user['location'] )); ?></li>
+					<li itemprop="address"><?= wfMsg('user-identity-box-location', array( '$1' => $user['location'] )); ?></li>
 				<? else: ?>
 					<? if( $user['showZeroStates'] && ($isUserPageOwner || $isWikiStaff) ): ?>
 					<li><?= wfMsg('user-identity-box-zero-state-location'); ?></li>

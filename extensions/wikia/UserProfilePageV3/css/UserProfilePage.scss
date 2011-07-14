@@ -5,6 +5,7 @@
 @import "../../../../skins/oasis/css/mixins/box-shadow";
 
 $radius-user-profile-masthead: 5px;
+
 $color-user-profile-masthead-aka: #CCC;
 @if lightness($color-button-text) < 50 {
 	$color-user-profile-masthead-aka: #333;
@@ -20,8 +21,15 @@ $color-user-profile-gray-text: #999;
 	$color-user-profile-gray-text: #666;
 }
 
+$color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%), 25%);
+
+/* Temporary - waiting for UI Styleguide team */
+@import "tabFix.scss";
+@import "modalFix.scss";
+
+
 .WikiaUserPagesHeader {
-	@include linear-gradient(null, top, $color-page, 0%, mix($color-links, $color-page, 20%), 100%); 
+	@include linear-gradient(null, top, $color-page, 0%, $color-user-profile-gradient-bottom, 100%); 
 }
 
 .UserProfileMasthead {	
@@ -62,6 +70,11 @@ $color-user-profile-gray-text: #999;
 			position: absolute;
 			top: 78px;
 			width: 1px;
+		}
+		&:hover {
+			#userIdentityBoxEdit {
+				display: block;
+			}
 		}
 		
 		>div {
@@ -184,6 +197,7 @@ $color-user-profile-gray-text: #999;
 }
 
 #userIdentityBoxEdit {
+	display: none;
 	margin-top: 10px;
 	position: absolute;
 	right: 10px;
