@@ -1,10 +1,13 @@
 <?php
-
 /**
  * Show a formatted view of the wikia_mailer table
  * Allows searching and sorting on most columns and adjustable page paging.
  * Shows bounced email in addition to delivered
  *
+ * TODO: i18n
+ * TODO: Some intro on the top to explain how to use it (and to explain that non-staff users will only be able to see emails to themselves).
+ *
+ * @author Garth Webb
  */
 
 
