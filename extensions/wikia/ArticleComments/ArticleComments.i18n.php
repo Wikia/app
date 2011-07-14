@@ -26,6 +26,7 @@ $messages['en'] = array(
 	'article-comments-login' => 'Please <a href="$1">log in</a> to post a comment on this wiki.',
 	'article-comments-toc-item' => 'Comments',
 	'article-comments-comment-cannot-add' => 'You cannot add a comment to the article.',
+	'article-comments-vote' => 'Vote up',
 	'article-comments-reply' => 'Reply',
 	'article-comments-show-all' => 'Show all comments',
 	'article-comments-prev-page' => 'Prev',

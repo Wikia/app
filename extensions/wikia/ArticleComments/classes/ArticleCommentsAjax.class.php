@@ -233,9 +233,14 @@ class ArticleCommentsAjax {
 				$addedCommentParent = ArticleComment::newFromId($parentId);
 				$comments = array($parentId => array('level1' => $addedCommentParent, 'level2' => array($response[1]->getID() => $addedComment)));
 			}
+
+			// a very ugly hack...
+			global $wgArticleCommentsEnableVoting;
+			$tmp_wgArticleCommentsEnableVoting = $wgArticleCommentsEnableVoting;
+			$wgArticleCommentsEnableVoting = false;
 			// RT#68254 RT#69919 RT#86385
 			if (get_class($wgUser->getSkin()) == 'SkinOasis') {
-				$commentsHTML = wfRenderPartial('ArticleComments', 'CommentList', array('commentListRaw' => $comments, 'useMaster' => true));
+				$commentsHTML = wfRenderPartial('ArticleComments', 'CommentList', array('commentListRaw' => $comments, 'page' => $page, 'useMaster' => true));
 				$countAll = $wgLang->formatNum($listing->getCountAllNested());
 				$countDisplayed = $countAll;
 				if (!$showall && ($countAll > $wgArticleCommentsMaxPerPage)) {
@@ -247,9 +252,10 @@ class ArticleCommentsAjax {
 				    'recent' =>		wfMsg('oasis-comments-showing-most-recent', $countDisplayed)
 				);
 			} else {
-				$commentsHTML = wfRenderPartial('ArticleComments', 'CommentList', array('commentListRaw' => $comments, 'useMaster' => false));
+				$commentsHTML = wfRenderPartial('ArticleComments', 'CommentList', array('commentListRaw' => $comments, 'page' => $page, 'useMaster' => false));
 				$counter = wfMsg('article-comments-comments', $wgLang->formatNum($listing->getCountAllNested()));
 			}
+			$wgArticleCommentsEnableVoting = $tmp_wgArticleCommentsEnableVoting;
 			// Owen removed pagination from results since we ajax one comment at a time now RT#141141
 			$result = array('text' => $commentsHTML, 'counter' => $counter);
 		}
@@ -280,7 +286,7 @@ class ArticleCommentsAjax {
 			wfLoadExtensionMessages('ArticleComments');
 			$listing = ArticleCommentList::newFromTitle($title);
 			$comments = $listing->getCommentPages(false, $page);
-			$text = wfRenderPartial('ArticleComments', 'CommentList', array('commentListRaw' => $comments, 'useMaster' => false));
+			$text = wfRenderPartial('ArticleComments', 'CommentList', array('commentListRaw' => $comments, 'page' => $page, 'useMaster' => false));
 			$pagination = ArticleCommentList::doPagination($listing->getCountAll(), count($comments), $page === false ? 1 : $page, $title);
 		}
 

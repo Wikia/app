@@ -173,7 +173,7 @@ class ArticleComment {
 	}
 
 	public function getData($master = false) {
-		global $wgLang, $wgContLang, $wgUser, $wgParser, $wgOut, $wgTitle, $wgBlankImgUrl, $wgMemc;
+		global $wgLang, $wgContLang, $wgUser, $wgParser, $wgOut, $wgTitle, $wgBlankImgUrl, $wgMemc, $wgArticleCommentsEnableVoting;
 
 		wfProfileIn( __METHOD__ );
 
@@ -208,6 +208,9 @@ class ArticleComment {
 			if ( ( count( $parts['partsStripped'] ) == 1 ) && $commentingAllowed && !ArticleCommentInit::isFbConnectionNeeded() ) {
 				$replyButton = '<a href="#" class="article-comm-reply wikia-button secondary">' . wfMsg('article-comments-reply') . '</a>';
 			}
+			if( defined('NS_QUESTION_TALK') && ( $this->mTitle->getNamespace() == NS_QUESTION_TALK ) ) {
+				$replyButton = '';
+			}
 
 			if ( $canDelete && !ArticleCommentInit::isFbConnectionNeeded() ) {
 				$img = '<img class="remove sprite" alt="" src="'. $wgBlankImgUrl .'" width="16" height="16" />';
@@ -241,8 +244,11 @@ class ArticleComment {
 				'text' => $text,
 				'timestamp' => $timestamp,
 				'title' => $this->mTitle,
-				'isStaff' => $isStaff
+				'isStaff' => $isStaff,
 			);
+			if( !empty( $wgArticleCommentsEnableVoting ) ) {
+				$comment['votes'] = $this->getVotesCount();
+			}
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -545,6 +551,7 @@ class ArticleComment {
 		global $wgUser, $wgDBname;
 		global $wgDevelEnvironment;
 
+		wfRunHooks( 'ArticleCommentAfterPost', array( $status, &$article, $commentId ) );
 		$error = false; $id = 0;
 		switch( $status ) {
 			case EditPage::AS_SUCCESS_UPDATE:
@@ -877,4 +884,52 @@ class ArticleComment {
 		}
 		return $this->mProps;
 	}
+
+	//Voting functions
+
+	public function getVotesCount() {
+		$pageId = $this->mTitle->getArticleId();
+		$oFauxRequest = new FauxRequest(array( "action" => "query", "list" => "wkvoteart", "wkpage" => $pageId, "wkuservote" => 0, "wktimestamps" => 1 ));
+		$oApi = new ApiMain($oFauxRequest);
+		$oApi->execute();
+		$aResult = $oApi->getResultData();
+
+		if( isset( $aResult['query']['wkvoteart'][$pageId]['votescount'] ) ) {
+			return $aResult['query']['wkvoteart'][$pageId]['votescount'];
+		} else {
+			return 0;
+		}
+	}
+
+	public function vote() {
+		$oFauxRequest = new FauxRequest(array( "action" => "insert", "list" => "wkvoteart", "wkpage" => $this->mTitle->getArticleId(), "wkvote" => 3 ));
+		$oApi = new ApiMain($oFauxRequest);
+
+		$oApi->execute();
+
+		$aResult = $oApi->getResultData();
+
+		$success = !empty( $aResult );
+
+		return $success;
+	}
+
+	public function userCanVote() {
+		$pageId = $this->mTitle->getArticleId();
+		$result = true;
+
+		$oFauxRequest = new FauxRequest(array( "action" => "query", "list" => "wkvoteart", "wkpage" => $pageId, "wkuservote" => 1 ));
+		$oApi = new ApiMain($oFauxRequest);
+		$oApi->execute();
+		$aResult = $oApi->GetResultData();
+
+		if( isset( $aResult['query']['wkvoteart'][$pageId]['uservote'] ) ) {
+			$result = false;
+		} else {
+			$result = true;
+		}
+
+		return $result;
+	}
+
 }
