@@ -1,0 +1,29 @@
+@import "../../../../skins/oasis/css/mixins/clearfix";
+
+.UPPLightbox {
+	
+	.tab-content li {
+		@include clearfix;
+		font-size: 14px;
+	}
+	
+	.column {
+		float: left;
+		padding: 0 10px;
+		width: 350px;
+		label:first-child {
+			margin-top: 0;
+		}
+	}
+	
+	label {
+		display: block;
+		margin-top: 20px;
+	}
+	
+	input[type=text] {
+		font-size: 14px;
+		padding: 3px;
+		width: 250px;
+	}
+}

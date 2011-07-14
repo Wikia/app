@@ -13,15 +13,18 @@ var UserProfilePage = {
 	init: function() {
 		UserProfilePage.userId = $('#user').val();
 		
-		$('#UPPAnswerQuestions').click(function() {
+		$('#UPPAnswerQuestions').click(function(event) {
+			event.preventDefault();
 			UserProfilePage.renderLightbox('interview');
 		});
 		
-		$('#userIdentityBoxEdit').click(function() {
+		$('#userIdentityBoxEdit').click(function(event) {
+			event.preventDefault();
 			UserProfilePage.renderLightbox('about');
 		});
 		
 		$('#userAvatarEdit').click(function() {
+			event.preventDefault();
 			UserProfilePage.renderLightbox('avatar');
 		});
 	},
@@ -29,19 +32,25 @@ var UserProfilePage = {
 	renderLightbox: function(tabName) {
 		UserProfilePage.track('edit/personal_data');
 		
+		$.getResources([$.getSassCommonURL('/extensions/wikia/UserProfilePageV3/css/UserProfilePage_modal.scss')]);
+		
 		$.postJSON( this.ajaxEntryPoint, { method: 'getLightboxData', tab: tabName, userId: UserProfilePage.userId, rand: Math.floor(Math.random()*100001) }, function(data) {
-			UserProfilePage.modal = $(data.body).makeModal({ width : 450});
+			UserProfilePage.modal = $(data.body).makeModal({ width : 750});
 			var modal = UserProfilePage.modal;
 			
 			UserProfilePage.renderAvatarLightbox(modal);
 			UserProfilePage.renderAboutMeLightbox(modal);
 			//UserProfilePage.renderInterviewLightbox(modal);
 			
-			var tab = modal.find('.tab');
-			tab.click(UserProfilePage.trackClick);
-			tab.click(function() {
-				UserProfilePage.switchTab($(this));
+			var tab = modal.find('.tabs a');
+			tab.click(function(event) {
+				event.preventDefault();
+				UserProfilePage.trackClick(event);
+				UserProfilePage.switchTab($(this).closest('li'));
 			});
+			
+			// Synthesize a click on the tab to hide/show the right panels
+			$('[data-tab=' + tabName + '] a').click();
 			
 			if(typeof FB != 'undefined'){
 				// parse FBXML login button
@@ -54,28 +63,29 @@ var UserProfilePage = {
 		});
 	},
 	
-	switchTab: function(anchor) {
+	switchTab: function(tab) {
 		if( true === UserProfilePage.wasDataChanged ) {
 			UserProfilePage.saveUserData(false);
 			UserProfilePage.wasDataChanged = false;
 		}
+
+		// Move 'selected' class to the right tab
+		var tabs = tab.closest('ul');
+		tabs.children('li').each(function(){
+			$(this).removeClass('selected');
+		});		
+		tab.addClass('selected');
 		
-		$('.tab').each(function(id, val){
-			var tab = $(val);
-			tab.removeClass('current');
-		});
-		
-		anchor.addClass('current');
-		
-		var tabName = anchor.attr('id');
-		$('.tabContent').each(function(id, val){
-			var tab = $(val);
-			if( tab.attr('id') === tabName ) {
-				$(val).css('display', 'block');
+		// Show correct tab content
+		var tabName = tab.data('tab');
+		console.log(tab.data('tab'));
+		$('.tab-content > li').each(function() {
+			if( $(this).attr('class') === tabName ) {
+				$(this).css('display', 'block');
 			} else {
-				$(val).css('display', 'none');
+				$(this).css('display', 'none');
 			}
-		});
+		});		
 	},
 	
 	renderAvatarLightbox: function(modal) {
@@ -85,16 +95,14 @@ var UserProfilePage = {
 			UserProfilePage.saveAvatarAIM(avatarForm);
 		});
 		
-		var saveButton = modal.find('#UPPLightboxAvatarSaveBtn');
-		saveButton.click(function(e) {
+		modal.find('.modalToolbar .save').unbind('click').click(function(e) {
 			UserProfilePage.track('edit/lightbox/save_personal_data');
 			UserProfilePage.closeModal(modal);
 			window.location = wgScript + '?title=' + wgPageName; //+ '&action=purge';
 			e.preventDefault();
 		});
 		
-		var cancelButton = modal.find('#UPPLightboxAvatarCancelBtn');
-		cancelButton.click(function(e) {
+		modal.find('.modalToolbar .cancel').unbind('click').click(function(e) {
 			UserProfilePage.closeModal(modal);
 			e.preventDefault();
 		});
@@ -199,14 +207,12 @@ var UserProfilePage = {
 	},
 	
 	renderAboutMeLightbox: function(modal) {
-		var saveButton = modal.find('#UPPLightboxAboutMeSaveBtn');
-		saveButton.click(function() {
+		modal.find('.modalToolbar .save').unbind('click').click(function() {
 			UserProfilePage.track('edit/lightbox/save_personal_data');
 			UserProfilePage.saveUserData();
 		});
 		
-		var cancelButton = modal.find('#UPPLightboxAboutMeCancelBtn');
-		cancelButton.click(function() {
+		modal.find('.modalToolbar .cancel').unbind('click').click(function() {
 			UserProfilePage.closeModal(modal);
 		});
 		
@@ -240,14 +246,13 @@ var UserProfilePage = {
 	},
 	
 	renderInterviewLightbox: function(modal) {
-		var saveButton = modal.find('#UPPLightboxInterviewSaveBtn');
-		saveButton.click(function() {
+
+		modal.find('.modalToolbar .save').unbind('click').click(function() {
 			UserProfilePage.storeCurrAnswer();
 			UserProfilePage.saveInterviewAnswers();
 		});
 		
-		var cancelButton = modal.find('#UPPLightboxInterviewCancelBtn');
-		cancelButton.click(function() {
+		modal.find('.modalToolbar .cancel').unbind('click').click(function() {
 			UserProfilePage.closeModal(modal);
 		});
 		

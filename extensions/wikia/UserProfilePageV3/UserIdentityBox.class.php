@@ -34,7 +34,7 @@ class UserIdentityBox {
 		
 		$data = array();
 		$data['id'] = $this->user->getId();
-		$data['avatar'] = F::build( 'AvatarService', array( $userName, 150 ), 'renderAvatar' );
+		$data['avatar'] = F::build( 'AvatarService', array( $userName, 150 ), 'getAvatarUrl' );
 		$data['name'] = $userName;
 		$data['realName'] = $this->user->getRealName();
 		$data['userPage'] = $this->user->getUserPage()->getFullURL();
