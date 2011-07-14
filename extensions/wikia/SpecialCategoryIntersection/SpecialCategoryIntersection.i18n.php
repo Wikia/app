@@ -22,6 +22,7 @@ $messages['en'] = array(
 	'categoryintersection-query-used' => 'API Query Used:',
 	'categoryintersection-footer-title' => 'Examples',
 	'categoryintersection-footer-body' => 'Here are some example queries, just to show a few of the types of things that can be done with this API. There are numerous other cool possibilies though... be creative!',
+	'categoryintersection-summary' => 'Searched for categories: $1; limit: $2; number of results returned: $3',
 );
 
 /** Message documentation (Message documentation)

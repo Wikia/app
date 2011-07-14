@@ -6,7 +6,7 @@
  *
  * This extension is designed to be portable, so it doesn't use the Nirvana framework.
  *
- * TODO:Autocompletion for the text-fields (if not, then pull "Category:" out in front of the textfield so they don't have to type it).
+ * TODO: Autocompletion for the text-fields (if not, then pull "Category:" out in front of the textfield so they don't have to type it).
  * TODO: Autocompletion for the text-fields (if not, then pull "Category:" out in front of the textfield so they don't have to type it).
  *
  * @file
@@ -34,7 +34,7 @@ class SpecialCategoryIntersection extends SpecialPage {
 	public $defaultLimit = 25;
 	
 	static private $CAT_PREFIX = "category_";
-	static private $CATEGORY_NS_PREFIX = "Category:"; // the actual namespace prefix (includes the colon at the end).  FIXME: There must be a way to get this programatically.
+	static private $CATEGORY_NS_PREFIX = "Category:"; // the actual namespace prefix (includes the colon at the end).  FIXME: There must be a way to get this programatically. - perhaps: MWNamespace::getCanonicalIndex(strtolower($namespaceName)) mixed with  $wgContLang->getNamespaces()?
 	static private $DOCUMENTATION_URL = "http://lyrics.wikia.com/api.php"; // TODO: URL OF DOCS HERE.
 
 	public function __construct() {
@@ -47,7 +47,7 @@ class SpecialCategoryIntersection extends SpecialPage {
 	 * @param $subpage Mixed: string if any subpage provided, else null
 	 */
 	public function execute( $subpage ) {
-		global $wgOut;
+		global $wgOut, $wgExtensionsPath, $wgStyleVersion;
 		wfProfileIn( __METHOD__ );
 	
 		wfLoadExtensionMessages( 'CategoryIntersection' );
@@ -65,7 +65,8 @@ class SpecialCategoryIntersection extends SpecialPage {
 				}
 				td{
 					vertical-align:top;
-					width: 50%;
+					width: 512px; /* why does 50% not work? (causes the API query line to take massive width in Chrome) */
+					word-wrap:break-word; /* so that the API query doesn't make the cell grow in Chrome */
 				}
 				td.form{
 					background-color:#eee;
@@ -93,6 +94,10 @@ class SpecialCategoryIntersection extends SpecialPage {
 
 		// Show a footer w/links to more info and some example queries
 		$this->showFooter( $wgOut );
+		
+		// Javascript for the autocompletion - this must be done after the form exists since it does calculations on the form.
+		$js = "{$wgExtensionsPath}/wikia/SpecialCategoryIntersection/CategoryAutoComplete.js?{$wgStyleVersion}";
+		$wgOut->addScript('<script type="text/javascript" src="'.$js.'"></script>');
 
 		wfProfileOut( __METHOD__ );
 	} // end execute()
@@ -108,8 +113,8 @@ class SpecialCategoryIntersection extends SpecialPage {
 
 		$html = "";
 		$html .= "<h3>". wfMsg('categoryintersection-form-title') ."</h3>";
-
-		$html .= "<form name='categoryintersection' action='' method='GET'>\n";
+		
+		$html .= "<form name='categoryintersection' id='CategoryAutoComplete' action='' method='GET'>\n";
 
 			// Display a couple of rows
 			$html .= $this->getHtmlForCategoryBox(1);
@@ -146,9 +151,9 @@ class SpecialCategoryIntersection extends SpecialPage {
 	 */
 	private function getHtmlForCategoryBox($num){
 		global $wgRequest;
-		$id = self::$CAT_PREFIX . "$num";
-		$value = $wgRequest->getVal($id);
-		return "<input type='text' name='$id' value='$value' placeholder='".self::$CATEGORY_NS_PREFIX."...'/><br/>\n";
+		$formName = self::$CAT_PREFIX . "$num";
+		$value = $wgRequest->getVal($formName);
+		return "<input type='text' name='$formName' value='$value' autocomplete='off' placeholder='".self::$CATEGORY_NS_PREFIX."...'/><br/>\n";
 	} // end getHtmlForCategoryBox()
 
 	/**
@@ -165,9 +170,6 @@ class SpecialCategoryIntersection extends SpecialPage {
 		$html .= "<div class='ci_results'>\n";
 		
 			$html .= "<h3>". wfMsg('categoryintersection-results-title') ."</h3>\n";
-
-// TODO: Summarize the results here (what was searched for, the limit, and the number of results found (because there may be some missing if the limit was less than the total number of possible matches).
-// TODO: Summarize the results here (what was searched for, the limit, and the number of results found (because there may be some missing if the limit was less than the total number of possible matches).
 
 			$submit = $wgRequest->getVal('wpSubmit');
 			if(!empty($submit)){
@@ -197,9 +199,15 @@ class SpecialCategoryIntersection extends SpecialPage {
 				);
 				$apiData = ApiService::call($apiParams);
 				if (empty($apiData)) {
+					$RESULTS_FOUND = 0;
+					$html .= "<em>".wfMsg('categoryintersection-summary', implode($categories, ", "), $limit, $RESULTS_FOUND)."</em>\n";
 					$html .= "<em>". wfMsg('categoryintersection-noresults'). "</em>\n";
 				} else {
 					$articles = $apiData['query']['categoryintersection'];
+
+					// Summary of the query and the results.
+					$html .= "<small><em>".wfMsg('categoryintersection-summary', implode($categories, ", "), $limit, count($articles))."</em></small><br/>\n";
+
 					print "<ul>\n";
 					foreach($articles as $articleData){
 						$title = $articleData['title'];
@@ -218,6 +226,9 @@ class SpecialCategoryIntersection extends SpecialPage {
 							));
 				$html .= "<br/><strong>" . wfMsg('categoryintersection-query-used') . "</strong><br/>\n";
 				$html .= "<a href='$apiUrl'>$apiUrl</a>\n";
+			} else {
+				// TODO: Some placeholder text that explains that you should use the form on the left to make a query.
+				// TODO: Some placeholder text that explains that you should use the form on the left to make a query.
 			}
 
 		$html .= "</div>\n";
