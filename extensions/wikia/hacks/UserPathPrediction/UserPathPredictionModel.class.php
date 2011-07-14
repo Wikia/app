@@ -174,8 +174,10 @@ class UserPathPredictionModel {
 		$resultArray = array();
 		$dbr =$this->getDBConnection();
 		$prevTargetId;
+		$firstTargetId;
 		
 		for ( $i = 0; $i < $nodeCount; $i++ ) {
+
 			$where = array( 'city_id' => $cityId, 'referrer_id' => $articleId );	
 			
 			if ( $i > 0 && !empty( $prevTargetId ) ) {
@@ -185,11 +187,32 @@ class UserPathPredictionModel {
 			$res = $dbr->select( 'path_segments_archive', '*', $where , __METHOD__, array( "LIMIT" => 1, "ORDER BY" => "count DESC" ));
 
 			if ( $row = $dbr->fetchObject( $res ) ) {
-				$resultArray[] = $row;
+	
 				$articleId = $row->target_id;
 				$prevTargetId = $row->referrer_id;
+				
+				if ( $i == 0 ) {
+					
+					$firstTargetId = $prevTargetId;
+					$resultArray[] = $row;
+					
+				} else {
+					
+					if ( $articleId == $firstTargetId  ) {
+						
+						break;
+						
+					} else {
+						
+						$resultArray[] = $row;	
+						
+					}
+					
+				}
+				
 			}
 		}
+		
 		$this->app->wf->profileOut(__METHOD__);
 		return $resultArray;
 	}
