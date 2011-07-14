@@ -30,19 +30,15 @@ $wgExtensionFunctions[] = 'efSetupComboAjaxLogin';
 
 function efSetupComboAjaxLogin() {
 	wfProfileIn( __METHOD__ );
-	
-	// Instead of loading this on ever page, we load it on-demand in AjaxLoginBindings.js
-	//F::build('JSMessages')->enqueuePackage('ComboAjaxLogin', JSMessages::EXTERNAL);
+
+	// register messages package for JS
+	F::build('JSMessages')->registerPackage('ComboAjaxLogin', array(
+		'comboajaxlogin-ajaxerror',
+	));
 
 	wfProfileOut( __METHOD__ );
 	return true;
 }
-
-// register messages package for JS
-F::build('JSMessages')->registerPackage('ComboAjaxLogin', array(
-	'comboajaxlogin-ajaxerror',
-));
-
 
 /**
  * Hooked to BeforePageDisplay to allow adding of required JS scripts.
