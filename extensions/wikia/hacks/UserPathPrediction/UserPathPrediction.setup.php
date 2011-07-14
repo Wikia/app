@@ -86,12 +86,8 @@ function wfUserPathPredictionOnBeforePageDisplayAddButton( $article, $row ) {
 	$app = F::app();
 	
 	$title = $app->wg->title;
-	
-	if( $app->wg->DevelEnvironment  ) {
-		
-		//$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
-		$script = '<script type="text/javascript">(function(){$("#WikiaPageHeader ul.commentslikes").append("<li><a href=\"\">Show Path</a></li>")})();</script>';
-		
+	if( $app->wg->DevelEnvironment && !$title->isSpecialPage()) {
+		$script = '<script>$("#WikiaPageHeader ul.commentslikes").append(\'<li><a href="/wiki/Special:UserPathPrediction/' . $title->getPrefixedUrl() . '" class="wikia-button secondary" >Show Path</a></li>\');</script>';
 		$app->wg->Out->addScript( $script );
 		
 	} 
