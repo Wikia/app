@@ -22,7 +22,7 @@ $wgExtensionCredits['parserhook'][] = array(
         'author' => "[http://www.wikia.com/wiki/User:TOR Łukasz 'TOR' Garczewski]",
 );
 
-$wgHooks['ParserFirstCallInit'][] = 'wfSigSetup';
+$wgHooks['ParserFirstCallInit'][] = 'efDisplayOnMobileInit';
 
 function efDisplayOnMobileInit(&$parser) {
         $parser->setHook( 'mobile', 'efOnMobileDisplay' );
