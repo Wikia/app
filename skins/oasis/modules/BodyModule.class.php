@@ -142,7 +142,7 @@ class BodyModule extends Module {
 			$wgEnableWikiaCommentsExt, $wgExtraNamespaces, $wgExtraNamespacesLocal,
 			$wgEnableCorporatePageExt, $wgEnableSpotlightsV2_Rail,
 			$wgEnableUserProfilePagesExt, $wgABTests, $wgEnableWikiAnswers, $wgEnableWikiReviews,
-			$wgEnableBlogsAsClassifieds, $wgSalesTitles, $wgEnableHuluVideoPanel;
+			$wgEnableBlogsAsClassifieds, $wgSalesTitles, $wgEnableHuluVideoPanel, $wgEnableGamingCalendar;
 
 		if ($this->wgSuppressRail) {
 			return array();
@@ -336,7 +336,20 @@ class BodyModule extends Module {
 		$railModuleList[1430] = array('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BUTTON'));
 		$railModuleList[1291] = array('Ad', 'Index', array('slotname' => 'MIDDLE_RIGHT_BOXAD'));
 		$railModuleList[1100] = array('Ad', 'Index', array('slotname' => 'LEFT_SKYSCRAPER_2'));
-
+                
+                /**
+                 * Michał Roszka <michal@wikia-inc.com>
+                 * 
+                 * SSW Gaming Calendar
+                 * 
+                 * This is most likely going to be replaced with something similar to:
+                 * 
+                 * $railModuleList[1260] = array( 'Ad', 'Index', array( 'slotname' => 'GAMING_CALENDAR_RAIL' ) );
+                 */
+                if ( !empty( $wgEnableGamingCalendar ) ) {
+                    $railModuleList[1260] = array( 'GamingCalendar', 'Rail', array( ) );
+                }
+                    
 		wfRunHooks( 'GetRailModuleList', array( &$railModuleList ) );
 
 		wfProfileOut(__METHOD__);
