@@ -140,7 +140,7 @@ class ArticleCommentList {
 		 * skip cache if purging or using master connection
 		 */
 		if ( $action != 'purge' && !$master ) {
-			//$this->mCommentsAll = $wgMemc->get( $memckey );
+			$this->mCommentsAll = $wgMemc->get( $memckey );
 		}
 
 		if ( empty( $this->mCommentsAll ) ) {
