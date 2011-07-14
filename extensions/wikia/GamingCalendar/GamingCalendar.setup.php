@@ -17,3 +17,5 @@ $dir = dirname( __FILE__ );
 
 $wgAutoloadClasses['GamingCalendar'] = "$dir/GamingCalendar.class.php";
 $wgExtensionMessagesFiles['GamingCalendar'] = "$dir/GamingCalendar.i18n.php";
+
+$wgAutoloadClasses['GamingCalendarModule'] = 'skins/oasis/modules/GamingCalendarModule.php';
