@@ -1,3 +1,7 @@
+<style type="text/css">
+	a { color: #2C85D5; }
+</style>
+
 <table width="100%" style="font: 18px normal Helvetica,Arial;" cellpadding="20">
 <tr>
 <td>

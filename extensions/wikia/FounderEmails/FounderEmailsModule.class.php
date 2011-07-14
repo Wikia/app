@@ -12,6 +12,7 @@ class FounderEmailsModule extends Module {
 			$this->previewBody = wfRenderModule("FounderEmails", $day, array('language' => 'en'));
 			$this->previewBody = strtr($this->previewBody, 
 				array('$FOUNDERNAME' => 'WEB TESTING',
+					'$WIKINAME' => '<a href="#">WikiWiki</a>',
 					'$UNIQUEVIEWS' => '6')
 			);
 		} else if(!empty($type)) {
@@ -19,12 +20,15 @@ class FounderEmailsModule extends Module {
 				array('type' => $type, 
 					'language' => 'en', 
 					'$PAGEURL' => 'http://www.wikia.com',
+					'$MYHOMEURL' => 'http://www.wikia.com',
 					'$USERTALKPAGEURL' => 'http://www.wikia.com'
 					)
 				);
 			$this->previewBody = strtr($this->previewBody, 
 				array('$FOUNDERNAME' => 'WEB TESTING',
 					'$UNIQUEVIEWS' => '6',
+					'$WIKINAME' => '<a href="#">WikiWiki</a>',
+					'$PAGETITLE' => '<a href="#">WikiWiki</a>',
 					)
 			);
 		}
