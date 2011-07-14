@@ -18,6 +18,7 @@ class AdminDashboardLogic {
 		if ($title && $title->isSpecialPage()) {
 			$exclusionList = array(
 				"Connect", 
+				"Contact",
 				"LayoutBuilder", 
 				"PageLayoutBuilder", 
 				"Preferences", 
