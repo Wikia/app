@@ -428,7 +428,8 @@ $wgSkipSkins = array(
 		'smartphone',
 		'efmonaco',
 		'answers',
-		'vector'
+		'vector',
+		'campfire',
 );
 /**
  * @name wgSkipOldSkins
