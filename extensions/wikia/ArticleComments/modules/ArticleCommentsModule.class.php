@@ -5,6 +5,7 @@ class ArticleCommentsModule extends Module {
 
 	var $wgTitle;
 	var $wgStylePath;
+	var $wgArticleCommentsEnableVoting;
 
 	var $avatar;
 	var $canEdit;
@@ -12,6 +13,7 @@ class ArticleCommentsModule extends Module {
 	var $reason;
 	var $commentListRaw;
 	var $isReadOnly;
+	var $page;
 	var $pagination;
 	var $countComments;
 	var $countCommentsNested;
@@ -41,6 +43,7 @@ class ArticleCommentsModule extends Module {
 			$this->reason = $data['reason'];
 			$this->commentListRaw = $data['commentListRaw'];
 			$this->isReadOnly = $data['isReadOnly'];
+			$this->page = $data['page'];
 			$this->pagination = $data['pagination'];
 			$this->countComments = $data['countComments'];
 			$this->countCommentsNested = $data['countCommentsNested'];

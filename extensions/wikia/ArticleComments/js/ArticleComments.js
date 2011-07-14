@@ -1,5 +1,6 @@
 var ArticleComments = {
 	processing: false,
+	clickedElementSelector: "",
 
 	init: function() {
 		$('#article-comm-submit').bind('click', {source: '#article-comm'}, ArticleComments.postComment);
@@ -9,6 +10,7 @@ var ArticleComments = {
 		// TODO: remove use of live() if/when monobook version of jquery is upgraded and use delegate() instead
 		if (jQuery.delegate == undefined) {
 			$('#article-comments').each( function() {
+				$('.article-comm-vote', this).live('click', ArticleComments.vote);
 				$('.article-comm-delete', this).live('click', ArticleComments.linkDelete);
 				$('.article-comm-edit', this).live('click', ArticleComments.edit);
 				$('.article-comm-history', this).live('click', ArticleComments.linkHistory);
@@ -21,6 +23,7 @@ var ArticleComments = {
 				});
 			});
  		} else {
+			$('#article-comments').delegate('.article-comm-vote', 'click', ArticleComments.vote);
 			$('#article-comments').delegate('.article-comm-delete', 'click', ArticleComments.linkDelete);
 			$('#article-comments').delegate('.article-comm-edit', 'click', ArticleComments.edit);
 			$('#article-comments').delegate('.article-comm-history', 'click', ArticleComments.linkHistory);
@@ -101,6 +104,38 @@ var ArticleComments = {
 			ArticleComments.processing = true;
 		}
 		ArticleComments.log('end: save');
+	},
+
+	vote: function(e) {
+		ArticleComments.log('begin: vote');
+		e.preventDefault();
+		ArticleComments.track('vote');
+		if (ArticleComments.processing) return;
+
+		var data = {
+			action: 'insert',
+			list: 'wkvoteart',
+			wkpage: $(this).closest('li').attr('id').replace(/^comm-/, ''),
+			wkvote: 3,
+			format: 'json'
+		};
+
+		$.postJSON(wgScriptPath + '/api.php', data, function(json) {
+			var commId = 0;
+			if(json.item.wkvoteart.article_id != undefined) {
+				commId = json.item.wkvoteart.article_id;
+			} else if (json.item.wkvoteart[0].article_id != undefined) {
+				commId = json.item.wkvoteart[0].article_id;
+			}
+
+			if(commId) {
+				ArticleComments.clickedElementSelector = 'li#comm-'+commId;
+				$('.article-comments-pagination-link-active').eq(0).click();
+			}
+			ArticleComments.processing = false;
+		});
+		ArticleComments.processing = true;
+		ArticleComments.log('end: vote');
 	},
 
 	edit: function(e) {
@@ -274,16 +309,25 @@ var ArticleComments = {
 		$.getJSON(wgScript + '?action=ajax&rs=ArticleCommentsAjax&method=axGetComments&article=' + wgArticleId, {page: page, order: $('#article-comm-order').attr('value')}, function(json) {
 			if (!json.error) {
 				$('#article-comments-ul').replaceWith(json.text);
-				// oasis
 				if ($('.article-comments-pagination').exists()) {
 					$('.article-comments-pagination').find('div').html(json.pagination);
-					$('html, body').animate({ scrollTop: $('.article-comments-pagination').eq(0).offset().top }, 1);
-				} else {//monaco
-					$('#article-comments-pagination').find('div').html(json.pagination);
-					$('html, body').animate({scrollTop: $('#article-comment-header').offset().top}, 400);
+
+					if(ArticleComments.clickedElementSelector == "" || !$(ArticleComments.clickedElementSelector).exists()) {
+						ArticleComments.clickedElementSelector = '.article-comments-pagination';
+					}
 				}
 				ArticleComments.addHover();
+
+				if(ArticleComments.clickedElementSelector != "") {
+					var docViewTop = $(window).scrollTop();
+					var docViewBottom = docViewTop + $(window).height();
+					var elemTop = $(ArticleComments.clickedElementSelector).eq(0).offset().top;
+					if(elemTop < docViewTop || elemTop > docViewBottom) {
+						$('html, body').animate({ scrollTop: elemTop }, 1);
+					}
+				}
 			}
+			ArticleComments.clickedElementSelector = "";
 			ArticleComments.processing = false;
 		});
 		ArticleComments.log('end: setPage');

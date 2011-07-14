@@ -1,19 +1,8 @@
 <section id="WikiaArticleComments" class="WikiaArticleComments noprint">
 
-	<ul class="controls">
-		<li id="article-comments-counter-recent"><?= wfMsg('oasis-comments-showing-most-recent', count($commentListRaw)) ?></li>
-	<?php
-	global $wgLang;
-	$countCommentsNestedFormatted = $wgLang->formatNum($countCommentsNested);
-	 /*see RT#64641*/  /*see RT#65179*/  /*see RT#68572 */
-	if ( $countCommentsNested > 1 && $countCommentsNested <= 200 && $countComments > $commentsPerPage ) {
-	?>
-		<li><a href="<?= $wgTitle->getFullURL("showall=1") ?>"><?= wfMsg('oasis-comments-show-all') ?></a></li>
-	<?php } ?>
-	</ul>
-	<h1 id="article-comments-counter-header"><?= wfMsgExt('oasis-comments-header', array('parsemag'), $countCommentsNestedFormatted) ?></h1>
-
 	<div id="article-comments">
+	<ul class="comments">
+	<ul class="sub-comments">
 	<?php
 	if ( $canEdit && !$isBlocked && $commentingAllowed ) {
 	?>
@@ -45,7 +34,7 @@
 			<input type="hidden" name="wpArticleId" value="<?= $wgTitle->getArticleId() ?>" />
 			<textarea name="wpArticleComment" id="article-comm"></textarea>
 			<? if (!$isReadOnly) { ?>
-				<input type="submit" name="wpArticleSubmit" id="article-comm-submit" class="wikia-button" value="<?= wfMsg('article-comments-post') ?>" />
+				<input type="submit" name="wpArticleSubmit" id="article-comm-submit" class="wikia-button" value="<?= wfMsg('answer-button') ?>" />
 			<? } ?>
 			<img src="<?= $wgStylePath ?>/common/images/ajax.gif" class="throbber" />
 		</form>
@@ -65,7 +54,20 @@
 	<?php
 		}
 	}
+	?>
+	</ul></ul>
 
+	<ul class="controls">
+	<?php
+	 /*see RT#64641*/  /*see RT#65179*/  /*see RT#68572 */
+	if ( $countCommentsNested > 1 && $countCommentsNested <= 200 && $countComments > $commentsPerPage ) {
+	?>
+		<li><a href="<?= $wgTitle->getFullURL("showall=1") ?>"><?= wfMsg('oasis-comments-show-all') ?></a></li>
+	<?php } ?>
+	</ul>
+	<h1 id="article-comments-counter-header"><?= wfMsgExt('answers-header', array('parsemag'), $countCommentsNested) ?></h1>
+
+	<?php
 	if ($countComments) {
 		echo '<div class="article-comments-pagination upper-pagination"><div>' . $pagination . '</div></div>';
 	}

@@ -105,7 +105,7 @@ class ArticleCommentList {
 		// grab article contents for each comment
 		foreach($this->mComments as $id => &$levels) {
 			if(isset($levels['level1'])) {
-				$levels['level1'] = ArticleComment::newFromId($levels['level1']);
+				$levels['level1'] = ArticleComment::newFromId($id);
 				$this->mCountNested++;
 			}
 			if(isset($levels['level2'])) {
@@ -128,7 +128,7 @@ class ArticleCommentList {
 	 * @return array
 	 */
 	public function getCommentList( $master = true ) {
-		global $wgRequest, $wgMemc;
+		global $wgRequest, $wgMemc, $wgArticleCommentsEnableVoting;
 
 		wfProfileIn( __METHOD__ );
 
@@ -140,39 +140,88 @@ class ArticleCommentList {
 		 * skip cache if purging or using master connection
 		 */
 		if ( $action != 'purge' && !$master ) {
-			$this->mCommentsAll = $wgMemc->get( $memckey );
+			//$this->mCommentsAll = $wgMemc->get( $memckey );
 		}
 
 		if ( empty( $this->mCommentsAll ) ) {
 			$pages = array();
+			$subpages = array();
 			$dbr = wfGetDB( $master ? DB_MASTER : DB_SLAVE );
 
-			$res = $dbr->select(
-				array( 'page' ),
-				array( 'page_id', 'page_title' ),
-				array(
+			$table = array( 'page' );
+			$vars = array( 'page_id', 'page_title' );
+			$conds = array(
 					'page_namespace' => MWNamespace::getTalk($this->getTitle()->getNamespace()),
 					"page_title LIKE '" . $dbr->escapeLike( $this->mText ) . '/' . ARTICLECOMMENT_PREFIX . "%'"
-				),
-				__METHOD__,
-				array( 'ORDER BY' => 'page_id ASC' )
-			);
+				      );
+			$options = array( 'ORDER BY' => 'page_id DESC' );
+			$join_conds = array();
+			if( !empty( $wgArticleCommentsEnableVoting ) ) {
+				//add votes to the result set
+				$table[] = 'page_vote';
+				$vars[] = 'count(vote) as vote_cnt';
+				$options['GROUP BY'] = 'page_id, page_title';
+				$join_conds['page_vote'] = array( 'LEFT JOIN', 'page_id = article_id' );
+
+				// a placeholder for 3 top voted answers
+				$top3 = array();
+			}
+			$res = $dbr->select( $table, $vars, $conds, __METHOD__, $options, $join_conds );
 
 			$helperArray = array();
 			while ( $row = $dbr->fetchObject( $res ) ) {
 				$parts = ArticleComment::explode($row->page_title);
+				$p0 = $parts['partsStripped'][0];
 
 				if (count($parts['partsStripped']) == 2) {
-					//if helperArray is empty for this key that means that someone created the "fake" nested comment by editing regular MW page - shouldn't happen at all
-					if (isset($helperArray[$parts['partsStripped'][0]])) {
-						//$pages[$helperArray[$parts['partsStripped'][0]]]['level2'][$row->page_id] = ArticleComment::newFromId( $row->page_id );
-						$pages[$helperArray[$parts['partsStripped'][0]]]['level2'][$row->page_id] = $row->page_id;
-					}
+					// push comment replies aside, we'll merge them later
+					$subpages[$p0][$row->page_id] = $row->page_id;
 				} else {
-					$helperArray[$parts['partsStripped'][0]] = $row->page_id;
-					//$pages[$row->page_id]['level1'] = ArticleComment::newFromId( $row->page_id );
+					// map title to page_id
+					$helperArray[$p0] = $row->page_id;
+
 					$pages[$row->page_id]['level1'] = $row->page_id;
+
+					if( !empty( $wgArticleCommentsEnableVoting ) ) {
+						// check if the answer is in top 3
+						for( $i=0; $i<3; $i++ ) {
+							if( !isset($top3[$i]) ) {
+								$top3[$i] = array('id' => $row->page_id, 'votes' => $row->vote_cnt);
+								break;
+							}
+							if( $top3[$i]['votes'] > $row->vote_cnt ) {
+								continue;
+							}
+							if( $top3[$i]['votes'] == $row->vote_cnt && $top3[$i]['id'] > $row->page_id ) {
+								continue;
+							}
+							$top3[$i+1] = $top3[$i];
+							$top3[$i] = array('id' => $row->page_id, 'votes' => $row->vote_cnt);
+							break;
+						}
+					}
 				}
+			}
+			// attach replies to comments
+			foreach( $subpages as $p0 => $level2 ) {
+				$pages[$helperArray[$p0]]['level2'] = array_reverse( $level2, true );
+			}
+
+			if( !empty( $wgArticleCommentsEnableVoting ) ) {
+				// move 3 most voted answers to the top
+				$newPages = array();
+				for( $i=0; $i<3; $i++ ) {
+					if( isset( $top3[$i] ) ) {
+						$newPages[$top3[$i]['id']] = $pages[$top3[$i]['id']];
+						$pages[$top3[$i]['id']] = null;
+					}
+				}
+				foreach( $pages as $id => $val ) {
+					if( $val ) {
+						$newPages[$id] = $val;
+					}
+				}
+				$pages = $newPages;
 			}
 
 			$dbr->freeResult( $res );
@@ -181,8 +230,6 @@ class ArticleCommentList {
 		}
 
 		$this->mCountAll = count($this->mCommentsAll);
-		//1st level descending, 2nd level ascending
-		krsort($this->mCommentsAll, SORT_NUMERIC);
 		// Set our nested count here RT#85503
 		$this->mCountAllNested = 0;
 		foreach ($this->mCommentsAll as $comment) {
@@ -323,7 +370,7 @@ class ArticleCommentList {
 		}
 		$comments = $this->getCommentPages(false, $page);
 		$pagination = self::doPagination($countComments, count($comments), $page);
-		$commentListHTML = wfRenderPartial('ArticleComments', 'CommentList', array('commentListRaw' => $comments, 'useMaster' => false));
+		$commentListHTML = wfRenderPartial('ArticleComments', 'CommentList', array('commentListRaw' => $comments, 'page' => $page, 'useMaster' => false));
 
 		$commentingAllowed = true;
 
@@ -345,6 +392,7 @@ class ArticleCommentList {
 			'isBlocked' => $isBlocked,
 			'isFBConnectionProblem' => ArticleCommentInit::isFbConnectionNeeded(),
 			'isReadOnly' => $isReadOnly,
+			'page' => $page,
 			'pagination' => $pagination,
 			'reason' => $isBlocked ? $this->blockedPage() : '',
 			'stylePath' => $wgStylePath,
