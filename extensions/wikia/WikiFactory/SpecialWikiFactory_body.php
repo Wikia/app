@@ -393,7 +393,7 @@ class WikiFactoryPage extends SpecialPage {
 		if( $this->mTab === "google" ) {
 			global $wgGoogleWebToolsAccts;
 		
-			$api = new WebmasterToolsAPI('wikiastaff0001@gmail.com', 'wikia123', $this->mWiki);
+			$api = new WebmasterToolsAPI('', '', $this->mWiki);
 			$info = $api->site_info();
 
 			$vars[ "google" ] = array(
@@ -951,14 +951,14 @@ class WikiFactoryPage extends SpecialPage {
 	}
 	
 	private function doRemoveFromWebmasterTools () {
-		$api = new WebmasterToolsAPI('wikiastaff0001@gmail.com', 'wikia123', $this->mWiki);
+		$api = new WebmasterToolsAPI('', '', $this->mWiki);
 		$api->remove_site();
 		
 		return true;
 	}
 	
 	private function doVerifyWithWebmasterTools () {
-		$api = new WebmasterToolsAPI('wikiastaff0001@gmail.com', 'wikia123', $this->mWiki);
+		$api = new WebmasterToolsAPI('', '', $this->mWiki);
 		$api->verify_site();
 		
 		return true;
@@ -1234,10 +1234,33 @@ class WebmasterToolsAPI {
 
 	/**
 	 * constructor
+	 * If email and password are empty, will use the default preferred account from '
 	 *
 	 * @access public
 	 */
 	public function __construct( $email, $pass, $wiki ) {
+		global $wgGoogleWebToolsAccts;
+		
+		// If email and password weren't specified, use the preferred account.
+		if(empty($email) && empty($pass)){
+			if(is_array($wgGoogleWebToolsAccts)){
+				foreach($wgGoogleWebToolsAccts as $acctEmail => $acctData){
+					if(isset($acctData['preferred']) && ($acctData['preferred'] == 1)){
+						$email = $acctEmail;
+						$pass = $acctData['pass'];
+						break;
+					}
+				}
+				
+				// If no preferred email/pass was found, just grab the first one
+				if(empty($email) && empty($pass) && (count($wgGoogleWebToolsAccts) > 0)){
+					$keys = array_keys($wgGoogleWebToolsAccts);
+					$email = $keys[0];
+					$pass = (isset($wgGoogleWebToolsAccts[$email]['pass']) ? $wgGoogleWebToolsAccts[$email]['pass'] : "");
+				}
+			}
+		}
+
 		$this->mEmail   = $email;
 		$this->mPass    = $pass;
 		$this->mType    = 'GOOGLE';
