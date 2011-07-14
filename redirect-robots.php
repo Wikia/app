@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @todo this code is messy and should be reviewed
+ */
+
 $wgDBadminuser = $wgDBadminpassword = $wgDBserver = $wgDBname = $wgEnableProfileInfo = false;
 define( 'MW_NO_SETUP', 1 );
 require_once( dirname(__FILE__) . '/includes/WebStart.php' );
@@ -263,7 +267,12 @@ function deny( ) {
  */
 $headers = function_exists('apache_request_headers') ? apache_request_headers() : array();
 
-if( isset( $headers[ "X-Staging" ] ) && ( $headers[ "X-Staging" ] === "preview" || $headers[ "X-Staging" ] === "verify" ) ) {
+$isdeny = isset( $headers[ "X-Staging" ] ) &&
+	( $headers[ "X-Staging" ] === "preview" || $headers[ "X-Staging" ] === "verify" )
+	? true
+	: false;
+
+if( $isdeny ) {
 	deny();
 }
 else{
