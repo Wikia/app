@@ -6,7 +6,7 @@
  *
  * This extension is designed to be portable, so it doesn't use the Nirvana framework.
  *
- * TODO: Autocompletion for the text-fields (if not, then pull "Category:" out in front of the textfield so they don't have to type it).
+ * TODO:Autocompletion for the text-fields (if not, then pull "Category:" out in front of the textfield so they don't have to type it).
  * TODO: Autocompletion for the text-fields (if not, then pull "Category:" out in front of the textfield so they don't have to type it).
  *
  * @file
@@ -35,6 +35,7 @@ class SpecialCategoryIntersection extends SpecialPage {
 	
 	static private $CAT_PREFIX = "category_";
 	static private $CATEGORY_NS_PREFIX = "Category:"; // the actual namespace prefix (includes the colon at the end).  FIXME: There must be a way to get this programatically.
+	static private $DOCUMENTATION_URL = "http://lyrics.wikia.com/api.php"; // TODO: URL OF DOCS HERE.
 
 	public function __construct() {
 		parent::__construct( 'CategoryIntersection' );
@@ -53,7 +54,7 @@ class SpecialCategoryIntersection extends SpecialPage {
 
 		$wgOut->setPagetitle( wfMsg('categoryintersection') );
 		
-		// Just splurt some CSS onto the page for now (TODO: Make this an external file)
+		// Just splurt some CSS onto the page for now (TODO: Make this an external file.. do it in a way that works for both AssetsManager and for MediaWiki in general)
 		$wgOut->addHTML("
 			<style type='text/css'>
 				h3{
@@ -77,12 +78,12 @@ class SpecialCategoryIntersection extends SpecialPage {
 				}
 			</style>
 		");
-		
+
 		// Show the header
 		$wgOut->addHTML( "<h2>" . wfMsg('categoryintersection-header-title') . "</h2>" );
-// TODO: CREATE THE HEADER BODY WITH A LINK TO THE DOCUMENTATION
-// TODO: CREATE THE HEADER BODY WITH A LINK TO THE DOCUMENTATION
-		$wgOut->addHTML( wfMsg('categoryintersection-header-body') );
+		$docLink = "<a href='".self::$DOCUMENTATION_URL."'>". wfMsg('categoryintersection-docs-linktext') ."</a>";
+		$wgOut->addHTML( wfMsg('categoryintersection-header-body', $docLink) );
+		$wgOut->addHTML( "<br/><br/>" );
 
 		$wgOut->addHTML("<table><tr><td class='form'>"); // oh snap, tables for layout!
 			$this->showForm( $wgOut );
@@ -164,14 +165,14 @@ class SpecialCategoryIntersection extends SpecialPage {
 		$html .= "<div class='ci_results'>\n";
 		
 			$html .= "<h3>". wfMsg('categoryintersection-results-title') ."</h3>\n";
-			
+
 // TODO: Summarize the results here (what was searched for, the limit, and the number of results found (because there may be some missing if the limit was less than the total number of possible matches).
 // TODO: Summarize the results here (what was searched for, the limit, and the number of results found (because there may be some missing if the limit was less than the total number of possible matches).
 
 			$submit = $wgRequest->getVal('wpSubmit');
 			if(!empty($submit)){
 				$limit = $wgRequest->getVal('limit', $this->defaultLimit);
-			
+
 				$categories = array();
 				$keys = array_keys($_GET);
 				foreach($keys as $key){
