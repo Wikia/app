@@ -852,3 +852,8 @@ $wgEnableOpenGraphMetaExt = true;
 $wgSpecialEditCountExludedUsernames = array(
 	'default'
 );
+
+/**
+ * List of mobile skins
+ */
+$wgMobileSkins = array( 'wikiphone', 'wikiaapp' );
