@@ -40,7 +40,7 @@ if ( isset( $options['help'] ) ) {
 }
 
 //by default the script will download and process data for the last 24 hours
-$date = ( !empty( $options['date'] ) ) ? $options['date'] : date( "Ymd", strtotime( "-1 day" ) );//"20110504"
+$date = ( !empty( $options['date'] ) ) ? $options['date'] : date( "Ymd", strtotime( "-2 day" ) );//"20110504"
 $s3ConfigFile = ( !empty( $options['s3conf'] ) ) ? $options['s3conf'] : null;
 
 require_once( "$IP/extensions/wikia/hacks/UserPathPrediction/UserPathPrediction.setup.php" );
