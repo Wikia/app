@@ -38,7 +38,7 @@ class FounderEmailsCompleteDigestEvent extends FounderEmailsEvent {
 			$emailParams = array(
 				'$FOUNDERNAME' => $foundingUser->getName(),
 				'$UNSUBSCRIBEURL' => $unsubscribe_url,
-				'$WIKINAME' => $foundingWiki->city_sitename,
+				'$WIKINAME' => $foundingWiki->city_title,
 				'$WIKIURL' => $foundingWiki->city_url,
 				'$PAGEURL' => $page_url,
 				'$UNIQUEVIEWS' => $founderEmailObj->getPageViews( $cityID ),	
