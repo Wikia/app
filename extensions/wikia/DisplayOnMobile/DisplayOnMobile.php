@@ -31,11 +31,11 @@ function efDisplayOnMobileInit(&$parser) {
 }
 
 function efOnMobileDisplay( $contents, $attributes, $parser ) {
-	$wgUser;
+	$app = F::build('App');
+	$skin = $app->getGlobal( 'wgUser' )->getSkin();
+	$wgMobileSkins = $app->getGlobal( 'wgMobileSkins' );
 
-	$skin = $wgUser->getSkin();
-
-	if ( $skin->getSkinName() == 'wikiaphone' ) {
+	if ( in_array( $skin->getSkinName(), $wgMobileSkins ) ) {
 		return $contents;
 	} else {
 		return '';
@@ -43,11 +43,11 @@ function efOnMobileDisplay( $contents, $attributes, $parser ) {
 }
 
 function efOnMobileHide( $contents, $attributes, $parser ) {
-	global $wgUser;
+        $app = F::build('App');
+        $skin = $app->getGlobal( 'wgUser' )->getSkin();
+        $wgMobileSkins = $app->getGlobal( 'wgMobileSkins' );
 
-	$skin = $wgUser->getSkin();
-
-	if ( $skin->getSkinName() == 'wikiaphone' ) {
+	if ( in_array( $skin->getSkinName(), $wgMobileSkins ) ) {
 		return '';
 	} else {
 		return $contents;
