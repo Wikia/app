@@ -60,11 +60,6 @@ $app->wg->set( 'wgSpecialPages', 'UserPathPredictionSpecialController', 'UserPat
 $app->wg->set( 'wgExtensionMessagesFiles', "{$dir}/UserPathPrediction.i18n.php", 'UserPathPrediction' );
 
 /**
- * setup functions
- */
-$app->wg->append( 'wgExtensionFunctions', 'wfUserPathPredictionInit');
-
-/**
  * hooks
  */
 $app->wg->append( 'wgHooks', 'wfUserPathPredictionOnBeforePageDisplayAddButton', 'BeforePageDisplay' );
@@ -75,11 +70,6 @@ $app->wg->append( 'wgHooks', 'wfUserPathPredictionOnBeforePageDisplayAddButton',
  * TODO: move to DefaultSettings before landing on production
  */
 $wgUserPathPredictionExludeNamespaces = array( NS_SPECIAL );
-
-function wfUserPathPredictionInit() {
-	F::addClassConstructor( 'UserPathPredictionModule', array(), 'getInstance' );
-	return true; // needed so that other extension initializations continue
-}
 
 //this is a devbox only hack, will disappear before reaching production
 function wfUserPathPredictionOnBeforePageDisplayAddButton( $article, $row ) {

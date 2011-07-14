@@ -14,18 +14,11 @@ class UserPathPredictionModel {
 	private $wikis;
 	private $app;
 	private $excludePaths = array( ".", ".." );
-	private static $instance;
-	
-	public static function getInstance(){
-		if( empty( self::$instance ) ) {
-			self::$instance = new UserPathPredictionModel;
-		}
-		
-		return self::$instance;
-	}
 	
 	function __construct() {
 		$this->app = F::app();
+		//singleton
+		F::setInstance( __CLASS__, $this );
 	}
 	
 	public function retrieveDataFromArchive( $timestr, $extraParams = array(), &$commandOutput = null ) {
@@ -246,7 +239,7 @@ class UserPathPredictionModel {
 			empty( $this->app->wg->UserPathPredictionDBuser ) ||
 			empty( $this->app->wg->UserPathPredictionDBpassword )
 		) {
-			$exception = newUserPathPredictionMissingDBSettingsException();
+			$exception = new UserPathPredictionMissingDBSettingsException();
 			$this->log( $exception->getMessage(), UserPathPredictionLogService::LOG_TYPE_ERROR );
 			
 			$this->app->wf->profileOut(__METHOD__);
