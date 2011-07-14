@@ -24,6 +24,9 @@ $wgExtensionCredits['parserhook'][] = array(
 
 $wgHooks['ParserFirstCallInit'][] = 'efDisplayOnMobileInit';
 
+// allow for override in DefaultSettings
+if ( empty( $wgMobileSkins ) ) $wgMobileSkins = array(  'wikiphone', 'wikiaapp' );
+
 function efDisplayOnMobileInit(&$parser) {
         $parser->setHook( 'mobile', 'efOnMobileDisplay' );
         $parser->setHook( 'nomobile', 'efOnMobileHide' );
