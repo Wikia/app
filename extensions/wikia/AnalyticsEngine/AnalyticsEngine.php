@@ -23,7 +23,12 @@ class AnalyticsEngine {
 	static public function track($provider, $event, $eventDetails=array()){
 		global $wgDevelEnvironment;
 		global $wgNoExternals, $wgRequest;
+		global $wgBlockedAnalyticsProviders;
 		$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
+
+		if ( !empty($wgBlockedAnalyticsProviders) && in_array($provider, $wgBlockedAnalyticsProviders) ) {
+			return '<!-- AnalyticsEngine::track - ' . $provider . ' blocked via $wgBlockedAnalyticsProviders -->';
+		}
 
 		if ( !empty($wgDevelEnvironment) ) {
 			return '<!-- DevelEnvironment -->';
