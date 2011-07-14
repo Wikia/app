@@ -25,7 +25,8 @@ class SpecialMailerLog extends UnlistedSpecialPage {
 		global $wgExternalDatawareDB;
 		wfProfileIn( __METHOD__ );
 
-		if ( !$wgUser || $wgUser->getID() == 0 ) {
+		// Allow any logged in users to use this page (below, we make it so that non-staff can only see emails sent to themselves).
+		if ( !$wgUser || !$wgUser->isLoggedIn() ) {
 			$login = SpecialPage::getTitleFor( 'UserLogin' );
 			$wgOut->redirect( $login->getFullURL( 'returnto=Special:MailerLog' ) );
 			return false;
