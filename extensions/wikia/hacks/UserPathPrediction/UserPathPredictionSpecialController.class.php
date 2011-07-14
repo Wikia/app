@@ -129,7 +129,7 @@ class UserPathPredictionSpecialController extends WikiaSpecialPageController {
 			$result = array( "No Result" );
 		}
 		$this->setVal( 'nodes',  $result );
-		$thumbnails = $this->sendRequest( 'UserPathPredictionService', 'getThumbnails', array( 'articleIds' => $articleIds, 'width' => 100 ) );
+		$thumbnails = $this->sendRequest( 'UserPathPredictionService', 'getThumbnails', array( 'articleIds' => $articleIds, 'width' => 75 ) );
 		$thumbnails = $thumbnails->getVal('thumbnails');
 
 		foreach ( $thumbnails as $key => $thumbnail ) {

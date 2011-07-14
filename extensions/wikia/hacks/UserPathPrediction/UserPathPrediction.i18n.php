@@ -17,7 +17,10 @@ $messages['en'] = array(
 	'userpathprediction-to' => "To",
 	'userpathprediction-clicks' => "Clicks",
 	'userpathprediction-createdby' => "Created by",
-	'userpathprediction-noresult' => "No Results"
+	'userpathprediction-noresult' => "No Results",
+	'userpathprediction-preview' => "Preview",
+	'userpathprediction-relatedPages' => "Related Pages",
+	'userpathprediction-possiblePath' => "Possible Path"
 
 );
 
@@ -36,5 +39,8 @@ $messages['pl'] = array(
 	'userpathprediction-to' => "Do",
 	'userpathprediction-clicks' => "Kliknięć",
 	'userpathprediction-createdby' => "Stworzone przez",
-	'userpathprediction-noresult' => "Brak Wyników"
+	'userpathprediction-noresult' => "Brak Wyników",
+	'userpathprediction-preview' => "Podgląd",
+	'userpathprediction-relatedPages' => "Powiązane strony",
+	'userpathprediction-possiblePath' => "Możliwa ścieżka"
 );

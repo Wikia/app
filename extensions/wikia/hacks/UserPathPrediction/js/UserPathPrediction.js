@@ -50,29 +50,29 @@ var UserPathPrediction = {
 				'count': $( '#nodeCount' ).val(),
 				'format': 'json'
 			},
-			function(data) {
+			function( data ) {
 				nodes = data.nodes;
 				thumbnails = data.thumbnails;
 				
-				if(data['nodes'] != "No Result") {
-					$("#navigationArticles").html("<ul></ul>");
+				if ( data['nodes'] != "No Result" ) {
+					$( "#navigationArticles" ).html( "<ul></ul>" );
 					for ( var i = 0; i < nodes.length; i++ ) {
 						
 						if ( thumbnails[nodes[i].targetTitle.mArticleID] ) {
 							$imgsrc = thumbnails[nodes[i].targetTitle.mArticleID][0]['url'];
 						} else {
-							$imgsrc = "http://dummyimage.com/100x50/000/bada55.gif&text=NoImage";
+							$imgsrc = "http://dummyimage.com/100x67/000/bada55.gif&text=NoImage";
 						}
 						
 						$( "#navigationArticles > ul" ).append( '<li><div><a href="'+ 
 						nodes[i].targetURL + '" target="showArticle">' + 
-						nodes[i].targetTitle.mTextform + '<br /><img src="' + 
+						nodes[i].targetTitle.mTextform + '<br /><img height="50px" width="75px" src="' + 
 						$imgsrc + '"></a><span id="counts">' +
 						nodes[i].count + '</span></div></li>');
 					}
 				} else {
-					$( '#navigationArticles > ul' ).hide( 'fast' );
-					$( '#navigationArticles' ).html('<span class="noresult">' + $( '#noresult' ).text() + "</span>").show( 'fast' );
+					$( '#navigationArticles > ul' ).fadeOut( 'slow' );
+					$( '#navigationArticles' ).html('<span class="noresult">' + $( '#noresult' ).text() + "</span>").fadeIn( 'slow' );
 				}
 			}
 
@@ -96,26 +96,26 @@ var UserPathPrediction = {
 				thumbnails = data.thumbnails;
 				
 				if ( data['nodes'] != "No Result" ) {
-					$('#relatedArticles > ul ').hide('fast');
+					$('#relatedArticles > ul ').fadeOut('slow');
 					$("#relatedArticles").html("<ul></ul>");
 					for ( var i = 0; i < nodes.length; i++ ) {
 						
 						if ( thumbnails[nodes[i].targetTitle.mArticleID] ) {
 							$imgsrc = thumbnails[nodes[i].targetTitle.mArticleID][0]['url'];
 						} else {
-							$imgsrc = "http://dummyimage.com/100x50/000/bada55.gif&text=NoImage";
+							$imgsrc = "http://dummyimage.com/75x50/000/bada55.gif&text=NoImage";
 						}
 						
 						$( "#relatedArticles > ul" ).append( '<li><div><span id="reletedItem" data-url="'+ 
 						nodes[i].targetURL + '">' + 
-						nodes[i].targetTitle.mTextform + '<br /><img src="' + 
+						nodes[i].targetTitle.mTextform + '<br /><img height="50px" width="75px" src="' + 
 						$imgsrc + '"></span><span id="counts">' +
 						nodes[i].count + '</span></div></li>');
 					}
-					$('#relatedArticles > ul').show('fast');
+					$('#relatedArticles > ul').fadeIn( 'slow' );
 				} else {
-					$( '#relatedArticles > ul' ).hide( 'fast' );
-					$( '#relatedArticles' ).html('<span class="noresult">' + $( '#noresult' ).text() + "</span>").show( 'fast' );
+					$( '#relatedArticles > ul' ).fadeOut( 'slow' );
+					$( '#relatedArticles' ).html('<span class="noresult">' + $( '#noresult' ).text() + "</span>").fadeIn( 'slow' );
 				}
 			}
 
