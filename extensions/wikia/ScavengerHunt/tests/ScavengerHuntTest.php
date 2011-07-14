@@ -31,7 +31,7 @@ class ScavengerHuntTest extends PHPUnit_Framework_TestCase {
 	const MOCK_TEXT = 'Lorem ipsum';
 	const MOCK_URL = 'http://firefly.wikia.com/wiki/test';
 	const MOCK_GAME_ID = 1001;
-
+	const MOCK_INT = 666;
 
 	public function appServiceCallback( $sGlobal ) {
 		switch ( $sGlobal ) {
@@ -72,6 +72,8 @@ class ScavengerHuntTest extends PHPUnit_Framework_TestCase {
 			'landingArticleName' => self::MOCK_TEXT,
 			'landingArticleWikiId' => self::LANDING_WIKI_ID,
 			'landingButtonText' => self::MOCK_TEXT,
+			'landingButtonX' => self::MOCK_INT,
+			'landingButtonY' => self::MOCK_INT,
 			'startingClueTitle' => self::MOCK_TEXT,
 			'startingClueText' => self::MOCK_TEXT,
 			'startingClueButtonText' => self::MOCK_TEXT,
@@ -91,8 +93,7 @@ class ScavengerHuntTest extends PHPUnit_Framework_TestCase {
 			'progressBarExitSprite' => $this->getFakeSprite(),
 			'progressBarHintLabel' => $this->getFakeSprite(),
 			'startPopupSprite' => $this->getFakeSprite(),
-			'finishPopupSprite' => $this->getFakeSprite(),
-
+			'finishPopupSprite' => $this->getFakeSprite()
 		));
 
 		return $row;
