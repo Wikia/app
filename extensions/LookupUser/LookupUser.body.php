@@ -132,6 +132,8 @@ EOT
 	 */
 	function showInfo( $target, $emailUser = "" ) {
 		global $wgOut, $wgLang, $wgScript;
+		//Small Stuff Week - adding table from Special:LookupContribs --nAndy
+		global $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType, $wgStylePath;
 		
 		/**
 		 * look for @ in username
@@ -228,9 +230,113 @@ EOT
 			$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-email', $email, $name ) );
 			$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-info-authenticated', $authenticated ) );
 			$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-realname', $user->getRealName() ) );
+			
+			//Begin: Small Stuff Week - adding table from Special:LookupContribs --nAndy
+			$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/LookupContribs/css/table.css?{$wgStyleVersion}");
+			$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgStylePath}/common/jquery/jquery.dataTables.min.js?{$wgStyleVersion}\"></script>\n");
+			
+			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+			$oTmpl->set_vars(array(
+				'username'  => $name
+			));
+			$wgOut->addHTML( $oTmpl->execute('contribution.table') );
+			//End: Small Stuff Week
+			
 			$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-registration', $registration ) );
 			$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-touched', $wgLang->timeanddate( $user->mTouched ) ) );
 			$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-useroptions' ) . '<br />' . $optionsString );
 		}
+	}
+	
+	public function loadAjaxContribData() {
+		global $wgRequest, $wgUser, $wgCityId, $wgDBname, $wgLang;
+		
+		wfProfileIn( __METHOD__ );
+	
+		$username 	= $wgRequest->getVal('username');
+		$dbname		= $wgRequest->getVal('wiki');
+		$mode 		= $wgRequest->getVal('mode');
+		$nspace		= $wgRequest->getVal('ns', -1);
+		$limit		= $wgRequest->getVal('limit');
+		$offset		= $wgRequest->getVal('offset');
+		$loop		= $wgRequest->getVal('loop');
+		$order		= $wgRequest->getVal('order');
+		$numOrder	= $wgRequest->getVal('numOrder');
+
+		$result = array(
+			'sEcho' => intval($loop), 
+			'iTotalRecords' => 0, 
+			'iTotalDisplayRecords' => 0, 
+			'sColumns' => '',
+			'aaData' => array()
+		);
+		
+		if ( empty($wgUser) ) return '';
+		if ( $wgUser->isBlocked() ) return '';
+		if ( !$wgUser->isLoggedIn() ) return '';
+		if ( !$wgUser->isAllowed( 'lookupcontribs' ) ) {
+			wfProfileOut( __METHOD__ );
+			return Wikia::json_encode($result);
+		}
+		
+		$oLC = new LookupContribsCore($username);
+		if ( $oLC->checkUser() ) {
+			if ( empty($mode) ) {
+				$oLC->setLimit($limit);
+				$oLC->setOffset($offset);
+				$activity = $oLC->checkUserActivity();
+				if ( !empty($activity) ) {
+					$result['iTotalRecords'] = intval($limit);
+					$result['iTotalDisplayRecords'] = intval($activity['cnt']);
+					$result['sColumns'] = 'id,title,url,lastedit';
+					$rows = array();
+					foreach ( $activity['data'] as $row ) {
+						$rows[] = array(
+							$row['id'], // wiki Id
+							$row['title'], //wiki title
+							$row['url'], // wiki url 
+							$wgLang->timeanddate( wfTimestamp( TS_MW, $row['last_edit'] ), true ), //last edited
+						);
+					}
+					$result['aaData'] = $rows;
+				}
+			} else {
+				$oLC->setDBname($dbname);
+				$oLC->setMode($mode);
+				$oLC->setNamespaces($nspace);
+				$oLC->setLimit($limit);
+				$oLC->setOffset($offset);
+				$data = $oLC->fetchContribs();
+				/* order by timestamp desc */
+				$nbr_records = 0;
+				$result = array();
+				$res = array();
+				if ( !empty($data) && is_array($data) ) {
+					$result['iTotalRecords'] = intval($limit);
+					$result['iTotalDisplayRecords'] = intval($data['cnt']);
+					$result['sColumns'] = 'id,title,url,lastedit';
+					$rows = array();
+					if ( isset($data['data']) ) {
+						$loop = 1;
+						foreach ($data['data'] as $id => $row) {
+							list ($link, $diff, $hist, $contrib, $edit, $removed) = array_values($oLC->produceLine( $row ));
+							$rows[] = array(
+								$loop + $offset, // id
+								$link, // title 
+								$diff, // diff 
+								$hist, // history
+								$contrib, //user contribution (link to special page)
+								$edit
+							);
+							$loop++;
+						}
+					}
+					$result['aaData'] = $rows;
+				}
+			}
+		}
+		
+		wfProfileOut( __METHOD__ );
+		return Wikia::json_encode($result);
 	}
 }
