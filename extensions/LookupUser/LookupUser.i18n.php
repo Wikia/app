@@ -30,6 +30,11 @@ $messages['en'] = array(
 	'lookupuser-foundmoreusers'    => 'Found more than one\'s user',
 	'right-lookupuser' => 'Look up user preferences',
 	'lookupuser-toollinks' => '',
+	'lookupuser-table-title' => 'Title',
+	'lookupuser-table-url' => 'URL',
+	'lookupuser-table-lastedited' => 'Last edited',
+	'lookupuser-table-contribs' => 'contribs',
+	'lookupuser-table-recordspager' => 'Showing \'\'\'$1\'\'\' to \'\'\'$2\'\'\' of \'\'\'$3\'\'\' records.',
 );
 
 /** Message documentation (Message documentation)
