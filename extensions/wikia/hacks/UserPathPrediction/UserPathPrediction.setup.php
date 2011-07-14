@@ -5,7 +5,6 @@
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  * @author Jakub Olek <bukaj.kelo(at)gmail.com>
  */
-
 if ( !defined( 'MEDIAWIKI' ) ) {
 	echo "This file is part of MediaWiki, it is not a valid entry point.\n";
 	exit( 1 );
@@ -40,6 +39,7 @@ $app->wg->set( 'wgAutoloadClasses', "{$dir}/UserPathPredictionModel.class.php", 
 /**
  * services
  */
+$app->wg->set( 'wgAutoloadClasses', "{$dir}/UserPathPredictionLogService.class.php", 'UserPathPredictionLogService' );
 $app->wg->set( 'wgAutoloadClasses', "{$dir}/UserPathPredictionService.class.php", 'UserPathPredictionService' );
 
 /**
@@ -63,16 +63,26 @@ $app->wg->set( 'wgExtensionMessagesFiles', "{$dir}/UserPathPrediction.i18n.php",
  * setup functions
  */
 $app->wg->append( 'wgExtensionFunctions', 'wfUserPathPredictionInit');
-	
-$wgHooks['BeforePageDisplay'][] = 'wfUserPathPredictiononBeforePageDisplayAddButton';
+
+/**
+ * hooks
+ */
+$app->wg->append( 'wgHooks', 'wfUserPathPredictionOnBeforePageDisplayAddButton', 'BeforePageDisplay' );
+
+/*
+ * settings
+ * 
+ * TODO: move to DefaultSettings before landing on production
+ */
+$wgUserPathPredictionExludeNamespaces = array( NS_SPECIAL );
 
 function wfUserPathPredictionInit() {
-	//TODO: place extension init stuff here
+	F::addClassConstructor( 'UserPathPredictionModule', array(), 'getInstance' );
 	return true; // needed so that other extension initializations continue
 }
 
-function wfUserPathPredictiononBeforePageDisplayAddButton( $article, $row ) {
-			
+//this is a devbox only hack, will disappear before reaching production
+function wfUserPathPredictionOnBeforePageDisplayAddButton( $article, $row ) {
 	$app = F::app();
 	
 	$title = $app->wg->title;

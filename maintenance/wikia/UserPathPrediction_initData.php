@@ -48,7 +48,7 @@ require_once( "$IP/extensions/wikia/hacks/UserPathPrediction/UserPathPrediction.
 $app = F::app();
 $wikis;
 
-$app->sendRequest( 'UserPathPredictionService', 'log', array( 'msg' => 'Start' ) );
+$app->sendRequest( 'UserPathPredictionLogService', 'log', array( 'msg' => 'Start' ) );
 echo( "Initializing data analysis for User Path Prediction.\n\n" );
 
 try{
@@ -60,9 +60,7 @@ try{
 	$response = $app->sendRequest( 'UserPathPredictionService', 'getWikis' );
 	$wikis = $response->getVal( 'wikis', array() );
 } catch (WikiaException $e) {
-	$msg = $e->__toString();
-	$app->sendRequest( 'UserPathPredictionService', 'log', array( 'msg' => $msg ) );
-	echo $msg;
+	echo $e;
 	exit( 1 );
 }
 

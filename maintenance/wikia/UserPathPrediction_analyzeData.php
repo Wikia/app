@@ -36,15 +36,13 @@ require_once( "$IP/extensions/wikia/hacks/UserPathPrediction/UserPathPrediction.
 $app = F::app();
 $wikiInfo =  $app->wg->DBname . '(' . $app->wg->CityId . ')';
 
-$app->sendRequest( 'UserPathPredictionService', 'log', array( 'msg' => "Start data analysis for wiki: {$wikiInfo}" ) );
+$app->sendRequest( 'UserPathPredictionLogService', 'log', array( 'msg' => "Start data analysis for wiki: {$wikiInfo}" ) );
 echo( "Analyzing data for wiki: {$wikiInfo}, this could take a while...\n\n" );
 
 try{
 	$app->sendRequest( 'UserPathPredictionService', 'analyzeLocalData' );
 } catch (WikiaException $e) {
-	$msg = $e->__toString();
-	$app->sendRequest( 'UserPathPredictionService', 'log', array( 'msg' => $msg ) );
-	echo $msg;
+	echo $e;
 	exit( 1 );
 }
 
