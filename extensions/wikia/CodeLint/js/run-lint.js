@@ -9,7 +9,8 @@
 
 // require generic functions
 var print = require("sys").print,
-	parseArgs = require('./utils').parseArgs;
+	parseArgs = require('./utils').parseArgs,
+	formatGlobalsComment = require('./utils').formatGlobalsComment;
 
 // options for JSLint
 // @see http://www.jslint.com/lint.html
@@ -22,10 +23,12 @@ var OPTIONS = {
 	eqeq: true,
 	// tolerate unfiltered for in
 	forin: true,
-	// strict white space indentation
-	indent: false,
+	// perform no white space indentation check
+	indent: 0,
 	// max. number of errors to report
 	maxerr: 750,
+	// tolerate uncapitalized constructors
+	newcap: true,
 	// tolerate ++ and -- operators
 	plusplus: true,
 	// tolerate missing 'use strict' pragma
@@ -54,11 +57,19 @@ if (typeof jslint == 'undefined') {
 	process.exit(1);
 }
 
-// read the file
-var file = require("fs").readFileSync(args.file, "utf8");
+// check usage of globals
+var forbiddenGlobals = ['alert', 'console'],
+	knownGlobals = (args.knownGlobals ? args.knownGlobals.split(',') : {}),
+	globalsComment = formatGlobalsComment(forbiddenGlobals, knownGlobals);
+
+// read the file's content
+var fileSrc = require("fs").readFileSync(args.file, "utf8");
+
+ // add extra directives for jslint
+fileSrc = globalsComment + fileSrc;
 
 // lint it
-jslint(file, OPTIONS);
+jslint(fileSrc, OPTIONS);
 
 // prepare output object
 var result = {
