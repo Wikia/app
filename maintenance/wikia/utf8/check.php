@@ -124,7 +124,12 @@ class Utf8DbConvert {
 							} else {
 								$text .= "//string length matches, but contents changed";
 							}
-							$badColumns[$columnName][] = $text;
+							
+							if ($this->verbose) {
+								$badColumns[$columnName][] = $text;
+							} else {
+								$badColumns[$columnName][] = 1;
+							}
 						}
 					}
 				}
