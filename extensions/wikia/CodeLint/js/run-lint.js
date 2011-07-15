@@ -10,7 +10,7 @@
 // require generic functions
 var print = require("sys").print,
 	parseArgs = require('./utils').parseArgs,
-	formatGlobalsComment = require('./utils').formatGlobalsComment;
+	formatKnownGlobalsComment = require('./utils').formatKnownGlobalsComment;
 
 // options for JSLint
 // @see http://www.jslint.com/lint.html
@@ -57,13 +57,19 @@ if (typeof jslint == 'undefined') {
 	process.exit(1);
 }
 
-// check usage of globals
-var forbiddenGlobals = ['alert', 'console'],
-	knownGlobals = (args.knownGlobals ? args.knownGlobals.split(',') : {}),
-	globalsComment = formatGlobalsComment(forbiddenGlobals, knownGlobals);
-
 // read the file's content
-var fileSrc = require("fs").readFileSync(args.file, "utf8");
+var fileSrc;
+
+try {
+	fileSrc = require("fs").readFileSync(args.file, "utf8");
+}
+catch(ex) {
+	print(ex.message);
+	process.exit(1);
+}
+
+// check usage of globals
+var globalsComment = (args.knownGlobals ? formatKnownGlobalsComment(args.knownGlobals.split(',')) : '');
 
  // add extra directives for jslint
 fileSrc = globalsComment + fileSrc;
@@ -73,10 +79,12 @@ jslint(fileSrc, OPTIONS);
 
 // prepare output object
 var result = {
-	jslint: jslint.edition,
-	nodejs: process.version,
 	fileChecked: args.file,
-	errors: jslint.errors
+	errors: jslint.errors,
+	info: {
+		jslint: jslint.edition,
+		nodejs: process.version
+	}
 };
 
 // return JSON-encoded result

@@ -23,15 +23,9 @@ exports.parseArgs = function(argv) {
 /**
  * Generate global directive for jslint
  */
-exports.formatGlobalsComment = function(forbiddenGlobals, knownGlobals) {
+exports.formatKnownGlobalsComment = function(knownGlobals) {
 	var globals = [],
 		globalsComment = '';
-
-	if (forbiddenGlobals && forbiddenGlobals.length) {
-		forbiddenGlobals.forEach(function(elem) {
-			globals.push(elem + ':true');
-		});
-	}
 
 	if (knownGlobals && knownGlobals.length) {
 		knownGlobals.forEach(function(elem) {

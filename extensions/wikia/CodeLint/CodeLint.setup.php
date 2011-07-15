@@ -30,4 +30,6 @@ $app = F::app();
 
 // classes
 $app->registerClass('CodeLint', $dir . '/CodeLint.class.php');
+$app->registerClass('CodeLintReport', $dir . '/CodeLintReport.class.php');
+$app->registerClass('CodeLintReportText', $dir . '/reports/CodeLintReportText.class.php');
 $app->registerClass('JsLint', $dir . '/JsLint.class.php');
