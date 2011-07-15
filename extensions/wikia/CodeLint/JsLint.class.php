@@ -15,6 +15,9 @@ class JsLint extends CodeLint {
 	// array of known JS globals
 	private $knownGlobals;
 
+	// file name pattern - used when linting directories
+	protected $filePattern = '*.js';
+
 	/**
 	 * Initialize list of know JS globals
 	 */
@@ -22,7 +25,9 @@ class JsLint extends CodeLint {
 		$this->knownGlobals = array(
 			'$',
 			'$G',
+			'addOnloadHook',
 			'AjaxLogin',
+			'CKEDITOR',
 			'FB',
 			'insertTags',
 			'jQuery',
@@ -30,6 +35,8 @@ class JsLint extends CodeLint {
 			'Observable',
 			'RTE',
 			'skin',
+			'stylepath',
+			'Timer',
 			'YAHOO',
 			'WET',
 		);
