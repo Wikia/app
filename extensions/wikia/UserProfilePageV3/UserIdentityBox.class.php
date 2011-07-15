@@ -8,6 +8,11 @@ class UserIdentityBox {
 	private $hiddenWikis = null;
 	private $topWikisLimit = 5;
 	
+	/**
+	 * @param WikiaApp $app wikia appliacation object
+	 * @param User $user core user object
+	 * @param integer $topWikisLimit limit of top wikis
+	 */
 	public function __construct(WikiaApp $app, $user, $topWikisLimit) {
 		$this->app = $app;
 		$this->user = $user;
@@ -185,9 +190,9 @@ class UserIdentityBox {
 	}
 	
 	/**
-	 * Gets array with user's groups (code might be similar to the one from: Preferences::profilePreferences() in includes/Preferences.php)
+	 * @brief Gets string with user most important group
 	 * 
-	 * @return string | null
+	 * @return string | false
 	 * 
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
