@@ -1,3 +1,5 @@
+/*global CKEDITOR: true */
+
 window.RTE = {
 	// configuration
 	// @see http://docs.cksource.com/ckeditor_api/symbols/CKEDITOR.config.html
