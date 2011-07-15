@@ -155,7 +155,8 @@ class SpecialCategoryIntersection extends SpecialPage {
 		global $wgRequest;
 		$formName = self::$CAT_PREFIX . "$num";
 		$value = $wgRequest->getVal($formName);
-		return "<input type='text' name='$formName' value='$value' autocomplete='off' placeholder='".self::$CATEGORY_NS_PREFIX."...'/><br/>\n";
+		// The wrapper is what the auto-complete popupwill be appended to.
+		return "<div class='autoCompleteWrapper'><input type='text' name='$formName' value='$value' autocomplete='off' placeholder='".self::$CATEGORY_NS_PREFIX."...'/></div>\n";
 	} // end getHtmlForCategoryBox()
 
 	/**
