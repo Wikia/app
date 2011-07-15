@@ -1,6 +1,6 @@
 <?php
 /**
- * DisplayOnMobile
+ * MobileContent
  *
  * @file
  * @ingroup Extensions
@@ -11,27 +11,29 @@
  */
 
 if ( !defined( 'MEDIAWIKI' ) ) {
-        echo "This is a MediaWiki extension named DisplayOnMobile.\n";
+        echo "This is a MediaWiki extension named MobileContent.\n";
         exit( 1 );
 }
 
-// Extension credits that will show up on Special:Version
-$wgExtensionCredits['parserhook'][] = array(
-        'name' => 'DisplayOnMobile',
-        'version' => '1.0',
-        'author' => "[http://www.wikia.com/wiki/User:TOR Łukasz 'TOR' Garczewski]",
+$app = F::build( 'App' );
+
+$app->wg->append(
+        'wgExtensionCredits',
+        array(
+        	'name' => 'MobileContent',
+		'version' => '1.0',
+		'author' => array( 
+			"[http://www.wikia.com/wiki/User:TOR Łukasz 'TOR' Garczewski]",
+			'Federico',
+		),
+	),
+	'parserhook'
 );
 
-$wgHooks['ParserFirstCallInit'][] = 'efDisplayOnMobileInit';
+$app->registerHook( 'ParserFirstCallInit', 'MobileContentParser', 'onParserFirstCallInit' );
 
 // allow for override in DefaultSettings
 if ( empty( $wgMobileSkins ) ) $wgMobileSkins = array(  'wikiphone', 'wikiaapp' );
-
-function efDisplayOnMobileInit(&$parser) {
-        $parser->setHook( 'mobile', 'efOnMobileDisplay' );
-        $parser->setHook( 'nomobile', 'efOnMobileHide' );
-        return true;
-}
 
 function efOnMobileDisplay( $contents, $attributes, $parser ) {
 	$app = F::build('App');
