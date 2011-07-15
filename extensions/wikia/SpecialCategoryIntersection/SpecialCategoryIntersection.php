@@ -77,6 +77,13 @@ class SpecialCategoryIntersection extends SpecialPage {
 				td.results{
 					background-color:#ccc;
 				}
+				.autoCompleteWrapper{
+					position: relative;
+				}
+				div.autoCompleteWrapper div{
+					background-color:#000;
+					background-color:#fff; /* Do we need to use an Oasis theme mixin? */
+				}
 			</style>
 		");
 
@@ -156,7 +163,8 @@ class SpecialCategoryIntersection extends SpecialPage {
 		$formName = self::$CAT_PREFIX . "$num";
 		$value = $wgRequest->getVal($formName);
 		// The wrapper is what the auto-complete popupwill be appended to.
-		return "<div class='autoCompleteWrapper'><input type='text' name='$formName' value='$value' autocomplete='off' placeholder='".self::$CATEGORY_NS_PREFIX."...'/></div>\n";
+		$zIndex = (300 - $num); // make the top boxes show up on top of anything below them
+		return "<div class='autoCompleteWrapper' style='z-index:$zIndex'><input type='text' name='$formName' value='$value' autocomplete='off' placeholder='".self::$CATEGORY_NS_PREFIX."...'/></div>\n";
 	} // end getHtmlForCategoryBox()
 
 	/**
