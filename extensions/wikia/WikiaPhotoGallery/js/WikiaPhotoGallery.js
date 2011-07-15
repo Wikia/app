@@ -2523,12 +2523,12 @@ var WikiaPhotoGallery = {
 
 		// get width of article to be used for editor
 		var width = parseInt($('#article').width());
-		width = Math.min($.getViewportWidth() - 75, width);
+		width = Math.min($(window).width() - 75, width);
 		width = Math.max(670, width);
 		width = Math.min(1300, width);
 
 		// get full height available (RT #55203)
-		var height = parseInt($.getViewportHeight() - 125);
+		var height = parseInt($(window).height() - 125);
 
 		if (skin == 'oasis') {
 			height -= 150;
@@ -2637,8 +2637,8 @@ var WikiaPhotoGallery = {
 
 		var params = {
 			'hash': hash,
-			'maxwidth': $.getViewportWidth(),
-			'maxheight': $.getViewportHeight(),
+			'maxwidth': $(window).width(),
+			'maxheight': $(window).height(),
 			'title': wgPageName,
 			'revid': window.wgRevisionId
 		};

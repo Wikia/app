@@ -37,7 +37,7 @@ EditEnhancementsPreview = {
 
 	calculate: function() {
 		var editBarHeight = $('#edit_enhancements_toolbar').outerHeight();
-		var scrollBottomOffset = $(document).scrollTop() + $.getViewportHeight();
+		var scrollBottomOffset = $(document).scrollTop() + $(window).height();
 
 		if (typeof FCK == 'undefined') {
 			textAreaOffset = $('#wpTextbox1').offset().top + $('#wpTextbox1').outerHeight();

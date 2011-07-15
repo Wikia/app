@@ -23,13 +23,13 @@
 		// get height needed to fit given node into browser's viewport height
 		getHeightToFit: function(node) {
 			var topOffset = node.offset().top,
-				viewportHeight = $.getViewportHeight();
+				viewportHeight = $(window).height();
 
 			return viewportHeight - topOffset;
 		},
 
 		resize: function() {
-			var viewportHeight = $.getViewportHeight();
+			var viewportHeight = $(window).height();
 			var el, rail = this.editor.getSpace('rail');
 
 			if (rail.exists() && (el = rail.find(this.CONTAINER_SELECTOR)) && el.exists()) {

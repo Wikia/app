@@ -183,8 +183,8 @@ var ImageLightbox = {
 		this.track('/init');
 
 		// calculate maximum dimensions for image
-		var maxWidth = $.getViewportWidth();
-		var maxHeight = $.getViewportHeight();
+		var maxWidth = $(window).width();
+		var maxHeight = $(window).height();
 
 		if (window.skin == 'oasis') {
 			maxHeight -= 75;
@@ -325,7 +325,7 @@ if ( (typeof window.skin != 'undefined') && (window.skin == 'monaco' || window.s
 		ImageLightbox.init.call(ImageLightbox);
 		var image = $('#' + $.getUrlVar('image'));
 		if (image.exists()) {
-			$(window).scrollTop(image.offset().top + image.height()/2 - $.getViewportHeight()/2);
+			$(window).scrollTop(image.offset().top + image.height()/2 - $(window).height()/2);
 			image.find('img').click();
 		}
 	});

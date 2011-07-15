@@ -121,7 +121,7 @@
 
 		// BugId:4335
 		getDefaultState: function() {
-			var viewport = $.getViewportHeight();
+			var viewport = $(window).height();
 
 			if (viewport < 600) {
 				// expand the first module only
