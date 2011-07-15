@@ -22,11 +22,14 @@ var UserPathPrediction = {
 			UserPathPrediction.load();
 		};
 		
-		$( '#relatedArticles #reletedItem' ).live('click', function( event ) {		
-			event.stopPropagation();
-			$( '#showArticle' ).attr( 'src', $(this).attr('data-url') );
-			$( '#articlePlace' ).html( '<input id="article" type="text" value="'+ $(this).text() +'"/>' );
+		$( '#relatedArticles li' ).live('click', function() {		
+			$( '#showArticle' ).attr( 'src', $(this).attr( 'data-url' ) );
+			$( '#articlePlace' ).html( '<input id="article" type="text" value="'+ $(this).find("#reletedItem").text() +'"/>' );
 			UserPathPrediction.load();
+		});
+		
+		$( '#navigationArticles li' ).live('click', function() {		
+			$( '#showArticle' ).attr( 'src', $(this).attr( 'data-url' ) );
 		});
 		
 	},
@@ -64,8 +67,8 @@ var UserPathPrediction = {
 							$imgsrc = "http://dummyimage.com/100x67/000/bada55.gif&text=NoImage";
 						}
 						
-						$( "#navigationArticles > ul" ).append( '<li><div><a href="'+ 
-						nodes[i].targetURL + '" target="showArticle">' + 
+						$( "#navigationArticles > ul" ).append( '<li data-url="' +
+						nodes[i].targetURL + '"><div>'+ 
 						nodes[i].targetTitle.mTextform + '<br /><img height="50px" width="75px" src="' + 
 						$imgsrc + '"></a><span id="counts">' +
 						nodes[i].count + '</span></div></li>');
@@ -106,8 +109,8 @@ var UserPathPrediction = {
 							$imgsrc = "http://dummyimage.com/75x50/000/bada55.gif&text=NoImage";
 						}
 						
-						$( "#relatedArticles > ul" ).append( '<li><div><span id="reletedItem" data-url="'+ 
-						nodes[i].targetURL + '">' + 
+						$( "#relatedArticles > ul" ).append( '<li data-url="' +
+						nodes[i].targetURL + '"><div><span id="reletedItem">' + 
 						nodes[i].targetTitle.mTextform + '<br /><img height="50px" width="75px" src="' + 
 						$imgsrc + '"></span><span id="counts">' +
 						nodes[i].count + '</span></div></li>');
