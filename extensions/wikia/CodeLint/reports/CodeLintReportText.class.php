@@ -12,7 +12,7 @@
 
 class CodeLintReportText extends CodeLintReport {
 
-	const FORMAT = "%3d | %-100s | %s\n";
+	const FORMAT = "%3d | %-90s %3s | %s\n";
 
 	/**
 	 * Return report for a given set of results
@@ -25,10 +25,6 @@ class CodeLintReportText extends CodeLintReport {
 		$line = str_repeat('-', 130) . "\n";
 
 		foreach($results as $fileEntry) {
-			if ($fileEntry['errorsCount'] == 0) {
-				continue;
-			}
-
 			$tracUrl = $this->getTracUrl($fileEntry['fileChecked']);
 
 			$report .= $line;
@@ -39,13 +35,19 @@ class CodeLintReportText extends CodeLintReport {
 				$fileEntry['time'] / 1000
 			);
 			$report .= $line;
-
-			foreach($fileEntry['errors'] as $n => $entry) {
-				$report .= sprintf(self::FORMAT,
-					$n+1,
-					$entry['error'],
-					implode(',', $entry['lines'])
-				);
+			
+			if ($fileEntry['errorsCount'] == 0) {
+				$report .= "Yay! No issues found!\n";
+			}
+			else {
+				foreach($fileEntry['errors'] as $n => $entry) {
+					$report .= sprintf(self::FORMAT,
+						$n+1,
+						$entry['error'],
+						(!empty($entry['isImportant']) ? '!!!' : ''),
+						implode(',', $entry['lines'])
+					);
+				}
 			}
 
 			$report .= "\n";

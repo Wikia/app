@@ -19,7 +19,7 @@ class JsLint extends CodeLint {
 	protected $filePattern = '*.js';
 
 	/**
-	 * Initialize list of know JS globals
+	 * Initialize list of known JS globals
 	 */
 	function __construct() {
 		$this->knownGlobals = array(
@@ -32,6 +32,7 @@ class JsLint extends CodeLint {
 			'insertTags',
 			'jQuery',
 			'GlobalTriggers',
+			'Liftium',
 			'Observable',
 			'RTE',
 			'skin',
@@ -109,5 +110,28 @@ class JsLint extends CodeLint {
 		));
 
 		return $output;
+	}
+
+	/**
+	 * Decide whether given error is important and should be eventaully marked in the report
+	 *
+	 * @param string $errorMsg error message
+	 * @return boolean is it an important error
+	 */
+	protected function isImportantError($errorMsg) {
+		switch($errorMsg) {
+			case "Missing 'break' after 'case'.":
+			case "eval is evil.":
+			case "Empty block.":
+			case "'alert' was used before it was defined.":
+			case "'console' was used before it was defined.":
+				$ret = true;
+				break;
+
+			default:
+				$ret = false;
+		}
+
+		return $ret;
 	}
 }

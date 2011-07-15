@@ -126,6 +126,14 @@ abstract class CodeLint {
 	abstract public function internalCheckFile($fileName);
 
 	/**
+	 * Decide whether given error is important and should be eventaully marked in the report
+	 *
+	 * @param string $errorMsg error message
+	 * @return boolean is it an important error
+	 */
+	abstract protected function isImportantError($errorMsg);
+
+	/**
 	 * Check given file and return list of warnings
 	 *
 	 * @param string $fileName file to be checked
@@ -159,10 +167,17 @@ abstract class CodeLint {
 			ksort($errorsFolded);
 
 			foreach($errorsFolded as $msg => $lines) {
-				$output['errors'][] = array(
+				$entry = array(
 					'error' => $msg,
 					'lines' => $lines,
 				);
+
+				// mark important errors
+				if ($this->isImportantError($msg)) {
+					$entry['isImportant'] = true;
+				}
+
+				$output['errors'][] = $entry;
 			}
 		}
 
@@ -176,7 +191,7 @@ abstract class CodeLint {
 	 * @return array list of reported warnings
 	 */
 	public function checkDirectory($directoryName) {
-		$files = $this->findFiles($directoryName, $this->filePattern);
+		$files = $this->findFiles(rtrim($directoryName, '/'), $this->filePattern);
 		$results = array();
 
 		if (!empty($files)) {
