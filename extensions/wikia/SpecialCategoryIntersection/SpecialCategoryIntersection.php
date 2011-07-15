@@ -114,8 +114,9 @@ class SpecialCategoryIntersection extends SpecialPage {
 		$html = "";
 		$html .= "<h3>". wfMsg('categoryintersection-form-title') ."</h3>";
 		
+		$html .= "<div>\n";
 		$html .= "<form name='categoryintersection' id='CategoryAutoComplete' action='' method='GET'>\n";
-
+		
 			// Display a couple of rows
 			$html .= $this->getHtmlForCategoryBox(1);
 			$html .= wfMsg('categoryintersection-and') . "<br/>\n";
@@ -138,6 +139,7 @@ class SpecialCategoryIntersection extends SpecialPage {
 			$html .= "<input class='wikia-button' type='submit' name='wpSubmit' value='". wfMsg('categoryintersection-form-submit') ."'/>\n";
 
 		$html .= "</form>\n";
+		$html .= "</div>\n";
 
 		$out->addHTML($html);
 		

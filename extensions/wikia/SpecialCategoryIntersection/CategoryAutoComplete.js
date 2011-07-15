@@ -5,7 +5,7 @@ $(function() {
 CategoryAutoComplete = {
 	FORM_ID: "CategoryAutoComplete",
 	searchForm: false,
-	searchField: false,
+	searchFields: false,
 
 	ads: false,
 
@@ -15,19 +15,19 @@ CategoryAutoComplete = {
 	},
 
 	init : function() {
-		CategoryAutoComplete.searchForm = $('#'+this.FORM_ID);
-		CategoryAutoComplete.searchField = CategoryAutoComplete.searchForm.children('input[placeholder]');
+		CategoryAutoComplete.searchForm = $('#'+CategoryAutoComplete.FORM_ID);
+		CategoryAutoComplete.searchFields = CategoryAutoComplete.searchForm.children('input[placeholder]');
 
 		// RT #141437 - hide HOME_TOP_RIGHT_BOXAD when showing search suggestions
 		CategoryAutoComplete.ads = $("[id$='TOP_RIGHT_BOXAD']");
 
-		CategoryAutoComplete.searchField.bind({
+		CategoryAutoComplete.searchFields.bind({
 			'suggestShow': CategoryAutoComplete.hideAds,
 			'suggestHide': CategoryAutoComplete.showAds
 		});
 
 		// load autosuggest code on first focus
-		CategoryAutoComplete.searchField.one('focus', CategoryAutoComplete.initSuggest);
+		CategoryAutoComplete.searchFields.one('focus', CategoryAutoComplete.initSuggest);
 
 		// track form submittion
 		CategoryAutoComplete.searchForm.submit(function(ev) {
@@ -49,15 +49,16 @@ CategoryAutoComplete = {
 
 	// download necessary dependencies (AutoComplete plugin) and initialize search suggest feature for #search_field
 	initSuggest: function () {
+		var appendToId = '#'+CategoryAutoComplete.FORM_ID;
 		$.loadJQueryAutocomplete(function() {
-			CategoryAutoComplete.searchField.autocomplete({
+			CategoryAutoComplete.searchFields.autocomplete({
 // TODO: Make this use the category namespace
 				serviceUrl: wgServer + wgScript + '?action=ajax&rs=getLinkSuggest&format=json',
 				onSelect: function(v, d) {
 					CategoryAutoComplete.track('suggest');
 					window.location.href = wgArticlePath.replace(/\$1/, encodeURIComponent(v.replace(/ /g, '_')));
 				},
-				appendTo: '#'+this.FORM_ID,
+				appendTo: appendToId,
 				deferRequestBy: 250,
 				maxHeight: 1000,
 				selectedClass: 'selected',
