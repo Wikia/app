@@ -18,7 +18,9 @@ var JSSnippets = {
 					break;
 				}
 			}
-			if ( !found) newArr.push( origArr[x] );
+			if ( !found) {
+				newArr.push( origArr[x] );
+			}
 		}
 		return newArr;
 	},

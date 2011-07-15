@@ -36,6 +36,8 @@ var OPTIONS = {
 	nomen: true,
 	// tolerate ++ and -- operators
 	plusplus: true,
+	// tolerate . and [^...]. in /RegExp/
+	regexp: true,
 	// tolerate missing 'use strict' pragma
 	sloppy: true,
 	// tTolerate many var statements per function
