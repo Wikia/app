@@ -24,6 +24,8 @@ var OPTIONS = {
 	confusion: true,
 	// tolerate == and != operators
 	eqeq: true,
+	// tolerate ES5 syntax - allow multi-rows JS strings definitions
+	es5: true,
 	// tolerate unfiltered for in
 	forin: true,
 	// perform no white space indentation check

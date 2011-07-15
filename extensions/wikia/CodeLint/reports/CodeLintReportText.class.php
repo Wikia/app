@@ -23,6 +23,7 @@ class CodeLintReportText extends CodeLintReport {
 	public function render($results) {
 		$report = '';
 		$line = str_repeat('-', 130) . "\n";
+		$totalTime = 0;
 
 		foreach($results as $fileEntry) {
 			$tracUrl = $this->getTracUrl($fileEntry['fileChecked']);
@@ -35,7 +36,7 @@ class CodeLintReportText extends CodeLintReport {
 				$fileEntry['time'] / 1000
 			);
 			$report .= $line;
-			
+
 			if ($fileEntry['errorsCount'] == 0) {
 				$report .= "Yay! No issues found!\n";
 			}
@@ -49,12 +50,17 @@ class CodeLintReportText extends CodeLintReport {
 					);
 				}
 			}
-
+			
 			$report .= "\n";
+			
+			$totalTime += $fileEntry['time'] / 1000;
 		}
 
 		$report .= $line;
-		$report .= sprintf("Generated on %s\n", date('r'));
+		$report .= sprintf("Generated on %s in %.4f s\n",
+			date('r'),
+			$totalTime
+		);
 		$report .= $line;
 
 		return $report;

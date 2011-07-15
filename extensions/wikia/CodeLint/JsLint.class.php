@@ -130,6 +130,10 @@ class JsLint extends CodeLint {
 			case "Expected '{' and instead saw 'return'.":
 			// don't define functions within other functions
 			case "Function statements should not be placed in blocks. Use a function expression or move the statement to the top of the outer function.":
+			// unsafe UTF character (usually it's BOM)
+			case "Unsafe character.":
+			// there's no such thing as global FCK object in JS :)
+			case "'FCK' was used before it was defined.":
 				$ret = true;
 				break;
 
