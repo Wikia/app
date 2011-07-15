@@ -50,7 +50,7 @@ $config['site_user_css'] = array(
 $config['oasis_jquery'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//skins/common/jquery/jquery-1.5.2.js',
+		'//skins/common/jquery/jquery-1.6.2.js',
 		'//skins/common/jquery/jquery.json-1.3.js',
 		'//skins/common/jquery/jquery.getcss.js',
 		'//skins/common/jquery/jquery.cookies.2.1.0.js',
