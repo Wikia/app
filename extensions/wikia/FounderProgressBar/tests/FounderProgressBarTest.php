@@ -171,7 +171,6 @@ class FounderProgressBarTest extends PHPUnit_Framework_TestCase {
 				'task_completed' => '1',
 				'task_skipped' => '0',
 			);
-			
 			$fetch_obj5 = array(	// bonus task + completed
 				'task_id' => '510',
 				'task_count' => '10',
@@ -189,6 +188,18 @@ class FounderProgressBarTest extends PHPUnit_Framework_TestCase {
 				'task_count' => '20',
 				'task_completed' => '1',
 				'task_skipped' => '1',
+			);
+			$fetch_obj8 = array(	// bonus task + completed (2nd round)
+				'task_id' => '510',
+				'task_count' => '0',
+				'task_completed' => '2',
+				'task_skipped' => '0',
+			);
+			$fetch_obj9 = array(	// bonus task + uncompleted (2nd round)
+				'task_id' => '530',
+				'task_count' => '1',
+				'task_completed' => '1',
+				'task_skipped' => '0',
 			);
 			
 			$input1 = array($fetch_obj1, $fetch_obj2, $fetch_obj3, $fetch_obj5, $fetch_obj6, $fetch_obj7, $fetch_obj4);
@@ -285,6 +296,22 @@ class FounderProgressBarTest extends PHPUnit_Framework_TestCase {
 				'completion_percent' => 100,
 			);
 
+			$input15 = array($fetch_obj1, $fetch_obj3, $fetch_obj9);
+			$exp_data15 = array(
+				'tasks_completed' => 1,
+				'tasks_skipped' => 1,
+				'total_tasks' => 2,
+				'completion_percent' => 50,
+			);
+
+			$input16 = array($fetch_obj1, $fetch_obj3, $fetch_obj8, $fetch_obj9);
+			$exp_data16 = array(
+				'tasks_completed' => 3,
+				'tasks_skipped' => 1,
+				'total_tasks' => 2,
+				'completion_percent' => 100,
+			);
+
 			return array(
 						array($input1, $fetch_obj4, $exp_data1),	// all tasks: completed/uncompleted, regular/skipped/bonus
 						array($input2, $fetch_obj4, $exp_data1),	// 2 regular (completed/uncompleted) + 2 skipped (completed/uncompleted) + 1 bonus (competed)
@@ -299,17 +326,22 @@ class FounderProgressBarTest extends PHPUnit_Framework_TestCase {
 						array($input11, $fetch_obj6, $exp_data10),	// 1 skipped (uncompleted) + 1 bonus (uncompleted)
 						array($input13, $fetch_obj7, $exp_data13),	// 2 skipped (completed/uncompleted) + 2 bonus (completed/uncompleted)
 						array($input14, $fetch_obj6, $exp_data14),	// 1 regular (completed) + 2 bonus (completed/uncompleted)
+						array($input15, $fetch_obj9, $exp_data15),	// 1 regular (uncompleted) + 1 skipped (uncompleted) + 1 bonus [2nd round] (uncompleted)
+						array($input16, $fetch_obj9, $exp_data16),	// 1 regular (uncompleted) + 1 skipped (uncompleted) + 2 bonus [2nd round] (completed/uncompleted)
 					);
 		}
 		
 		/**
 		 * @dataProvider doTaskDataProvider
 		 */
-		public function testDoTask($task_id, $result, $sql_result) {
+		public function testDoTask($case) {
 			global $wgCityId;
 			
 			$wgCityId = self::TEST_CITY_ID;
-			$this->task_id = $task_id;
+			$this->task_id = $case['task_id'];
+			$sql_result = $case['sql_result'];
+			if (array_key_exists('extra_task',$case))
+				$this->extra_task_data = $case['extra_task'];
 			
 			$this->mock_db->expects($this->any())
 							->method('fetchRow')
@@ -317,44 +349,118 @@ class FounderProgressBarTest extends PHPUnit_Framework_TestCase {
 			
 			$response = $this->app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => $this->task_id));
 
-			if (is_array($sql_result)) {				
+			if ($sql_result) {
 				$response_data = $response->getVal('actions_completed');
 				$expect = $sql_result['task_count'];
 				$this->assertEquals($response_data, $expect);
 				
 				$response_data = $response->getVal('actions_remaining');
-				$expect = 10-$sql_result['task_count'];	// counters = 10 for task_id 10
-				$this->assertEquals($response_data, $expect);				
+				$expect = $this->object->counters[$this->task_id]-$sql_result['task_count'];	// counters = 10 for task_id 10
+				$this->assertEquals($response_data, $expect);
 			}
 			
 			$response_data = $response->getVal('result');
-			$this->assertEquals($response_data, $result);
+			$this->assertEquals($response_data, $case['exp_result']);
+			
+			if(array_key_exists('error', $case)) {
+				$response_data = $response->getVal('error');
+				$this->assertEquals($response_data, $case['exp_error']);
+			}
 		}
 		
 		// @brief data provider for testDoTask()
 		public function doTaskDataProvider() {
-			$input1 = array(
+			$case1 = array(
+							'task_id' => '5',
+							'sql_result' => null,
+							'exp_result' => 'error',
+							'exp_error' => 'invalid task_id',
+						);
+			
+			$case2 = array(
+							'task_id' => '20',
+							'sql_result' => null,
+							'exp_result' => 'error',
+							'exp_error' => 'task_completed',
+						);
+			
+			$case3 = array(
 							'task_id' => '10',
-							'task_count' => '7',
+							'sql_result' => null,
+							'exp_result' => 'error',
+							'exp_error' => 'invalid task_id',
+						);
+			
+			$case4 = array(
+							'task_id' => '10',
+							'sql_result' => array('task_id' => '10', 'task_count' => '7'),
+							'exp_result' => 'OK',
 						);
 
-			$input2 = array(
+			$case5 = array(
 							'task_id' => '10',
-							'task_count' => '10',
+							'sql_result' => array('task_id' => '10', 'task_count' => '10'),
+							'exp_result' => 'task_completed',
 						);
 			
-			$input3 = array(
+			$case6 = array(
 							'task_id' => '10',
-							'task_count' => '15',
+							'sql_result' => array('task_id' => '10', 'task_count' => '15'),
+							'exp_result' => 'task_completed',
 						);
+			
+			$extra_task = array(
+								510 => array (
+									'task_id' => '510',
+									'task_count' => '5',
+									'task_completed' => '0',
+									'task_skipped' => '0',
+									'task_timestamp' => '5 hours ago',
+									'task_label' => 'Uncompleted Bonus task',
+									'task_action' => 'Uncompleted Bonus task'),
+							);
+			
+			$case7 = array(
+							'task_id' => '510',
+							'sql_result' => array('task_id' => '510', 'task_count' => '9'),
+							'exp_result' => 'OK',
+							'extra_task' => $extra_task,
+						);
+			
+			$case8 = array(
+							'task_id' => '510',
+							'sql_result' => array('task_id' => '510', 'task_count' => '10'),
+							'exp_result' => 'task_completed',
+							'extra_task' => $extra_task,
+						);
+			
+			$case9 = array(
+							'task_id' => '510',
+							'sql_result' => array('task_id' => '510', 'task_count' => '9'),
+							'exp_result' => 'OK',
+							'extra_task' => $extra_task,
+						);
+			$case9['extra_task']['task_completed'] = '1';
+			
+			$case10 = array(
+							'task_id' => '510',
+							'sql_result' => array('task_id' => '510', 'task_count' => '10'),
+							'exp_result' => 'task_completed',
+							'extra_task' => $extra_task,
+						);
+			$case10['extra_task']['task_completed'] = '1';
 			
 			return array(
-						array(5,'error', null),		// invalid task_id - task id not found
-						array(20, 'error', null),	// task completed
-						array(10, 'error', null),	// invalid task_id - no data in db
-						array(10, 'OK', $input1),	// success - task count < counters
-						array(10, 'task_completed', $input2),	// success - task count = counters
-						array(10, 'task_completed', $input3)	// success - task count > counters
+						array($case1),	// invalid task_id - task id not found
+						array($case2),	// task completed (task_completed = 1)
+						array($case3),	// invalid task_id - no data in db
+						array($case4),	// success - task count < counters
+						array($case5),	// success - task count = counters
+						array($case6),	// success - task count > counters
+						array($case7),	// success - bonus task count < counters
+						array($case8),	// success - bonus task count = counters
+						array($case9),	// success - bonus task count < counters (task_completed = 1)
+						array($case10),	// success - bonus task count = counters (task_completed = 1)
 					);
 		}
 		
@@ -382,10 +488,10 @@ class FounderProgressBarTest extends PHPUnit_Framework_TestCase {
 			$extra_task1 = array();
 			$extra_task2 = array(
 								530 => array (
-									'task_id' => 530,
-									'task_count' => 1,
-									'task_completed' => 0,
-									'task_skipped' => 0,
+									'task_id' => '530',
+									'task_count' => '1',
+									'task_completed' => '0',
+									'task_skipped' => '0',
 									'task_timestamp' => '5 hours ago',
 									'task_label' => 'Uncompleted Bonus task',
 									'task_action' => 'Uncompleted Bonus task'),
@@ -416,26 +522,26 @@ class FounderProgressBarTest extends PHPUnit_Framework_TestCase {
 			
 			$task_data = array ( 
 				10 => array (
-				'task_id' => 10,
-				'task_count' => 10,
-				'task_completed' => 0,
-				'task_skipped' => 0,
+				'task_id' => '10',
+				'task_count' => '10',
+				'task_completed' => '0',
+				'task_skipped' => '0',
 				'task_timestamp' => '21 hours ago',
 				'task_label' => 'Uncompleted task',
 				'task_action' => 'Uncompleted task'), 
 				20 => array (
-				'task_id' => 20,
-				'task_count' => 20,
-				'task_completed' => 1,
-				'task_skipped' => 0,
+				'task_id' => '20',
+				'task_count' => '20',
+				'task_completed' => '1',
+				'task_skipped' => '0',
 				'task_timestamp' => '21 hours ago',
 				'task_label' => 'Completed Task',
 				'task_action' => 'Completed Task'),
 				30 => array (
-				'task_id' => 30,
-				'task_count' => 1,
-				'task_completed' => 0,
-				'task_skipped' => 1,
+				'task_id' => '30',
+				'task_count' => '1',
+				'task_completed' => '0',
+				'task_skipped' => '1',
 				'task_timestamp' => '24 hours ago',
 				'task_label' => 'Skipped Task',
 				'task_action' => 'Skipped Task'),
