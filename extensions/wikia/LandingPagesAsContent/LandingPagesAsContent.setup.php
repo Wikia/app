@@ -54,3 +54,16 @@ define('__NOHEADER__', '__NOHEADER__');
 $app->registerHook( 'LanguageGetMagic', 'LandingPagesParser', 'onLanguageGetMagicHook' );
 $app->registerHook( 'InternalParseBeforeLinks', 'LandingPagesParser', 'onInternalParseBeforeLinksHook' );
 $app->registerHook( 'ArticleFromTitle', 'LandingPagesParser', 'onArticleFromTitle' );
+$app->registerHook( 'ArticlePurge', 'LandingPagesParser', 'onArticlePurge' );
+$app->registerHook( 'ArticleSaveComplete', 'LandingPagesParser', 'onArticleSaveComplete' );
+
+/**
+ * settings
+ */
+if ( empty( $app->wg->LandingPagesAsContentMagicWords ) ) {
+	 $app->wg->LandingPagesAsContentMagicWords = array(
+		__NORAIL__ => 'wgSuppressRail',
+		__NONAV__ => 'wgSuppressWikiHeader',
+		__NOHEADER__ => 'wgSuppressPageHeader'
+	);
+}
