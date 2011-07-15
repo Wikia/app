@@ -4,6 +4,7 @@ $(function() {
 
 CategoryAutoComplete = {
 	FORM_ID: "CategoryAutoComplete",
+	NS_CATEGORY: 14, // TODO: is there a more programmatic way to get this?
 	searchForm: false,
 	searchFields: false,
 
@@ -53,8 +54,8 @@ CategoryAutoComplete = {
 		$.loadJQueryAutocomplete(function() {
 			CategoryAutoComplete.searchFields.each(function(){
 				$(this).autocomplete({
-	// TODO: Make this use the category namespace
-					serviceUrl: wgServer + wgScript + '?action=ajax&rs=getLinkSuggest&format=json',
+// TODO: Make this use the category namespace
+					serviceUrl: wgServer + wgScript + '?action=ajax&rs=getLinkSuggest&format=json&ns=' + CategoryAutoComplete.NS_CATEGORY,
 					onSelect: function(v, d) {
 						CategoryAutoComplete.track('suggest');
 						window.location.href = wgArticlePath.replace(/\$1/, encodeURIComponent(v.replace(/ /g, '_')));
