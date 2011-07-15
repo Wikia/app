@@ -10,13 +10,10 @@ require_once( 'commandLine.inc' );
 function printHelp() {
 		echo <<<HELP
 Performs lint check on given file / directory
-USAGE: php codelint.php [--help] [--mode] [--format] --file|--dir
+USAGE: php codelint.php --file|--dir [--help] [--mode] [--format] [--output]
 
 	--help
 		Show this help information
-
-	--mode
-		Set working mode (can be either "js" or "css")
 
 	--file
 		File to lint
@@ -24,8 +21,14 @@ USAGE: php codelint.php [--help] [--mode] [--format] --file|--dir
 	--dir
 		Directory to lint (subdirectories will be included)
 
+	--mode
+		Set working mode (can be either "js" or "css")
+
 	--format[=text]
 		Report format (either text, json or html)
+
+	--output
+		Name of the file to write report to
 
 HELP;
 }
@@ -45,10 +48,12 @@ if (isset($options['help'])) {
 }
 
 // parse command line options
-$mode = isset($options['mode']) ? $options['mode'] : 'js';
-$format = isset($options['format']) ? $options['format'] : 'text';
 $file = isset($options['file']) ? $options['file'] : false;
 $dir = isset($options['dir']) ? $options['dir'] : false;
+$mode = isset($options['mode']) ? $options['mode'] : 'js';
+$format = isset($options['format']) ? $options['format'] : 'text';
+$output = isset($options['output']) ? $options['output'] : false;
+
 
 switch($mode) {
 	case 'js':
@@ -77,7 +82,17 @@ else {
 
 //var_dump($results);
 
-echo $lint->formatReport($results, $format);
+// generate report
+$report = $lint->formatReport($results, $format);
+
+// save it to file
+if (!empty($output)) {
+	file_put_contents($output, $report);
+	echo "Report saved to {$output}...\n\n";
+}
+else {
+	echo $report;
+}
 
 // this script is run by CruiseControl requiring return code to equal zero
 die(0);
