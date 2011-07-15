@@ -62,17 +62,18 @@ $app->wg->set( 'wgExtensionMessagesFiles', "{$dir}/UserPathPrediction.i18n.php",
 /**
  * hooks
  */
-$app->wg->append( 'wgHooks', 'wfUserPathPredictionOnBeforePageDisplayAddButton', 'BeforePageDisplay' );
+$app->wg->append( 'wgHooks', 'efUserPathPredictionOnBeforePageDisplayAddButton', 'BeforePageDisplay' );
 
 /*
  * settings
- * 
- * TODO: move to DefaultSettings before landing on production
  */
-$wgUserPathPredictionExludeNamespaces = array( NS_SPECIAL );
+//allow overriding in Default/LocalSettings or via WikiFactory
+if ( empty( $wgUserPathPredictionExludeNamespaces ) ) {
+	$wgUserPathPredictionExludeNamespaces = array( NS_SPECIAL );
+}
 
 //this is a devbox only hack, will disappear before reaching production
-function wfUserPathPredictionOnBeforePageDisplayAddButton( $article, $row ) {
+function efUserPathPredictionOnBeforePageDisplayAddButton( $article, $row ) {
 	$app = F::app();
 	
 	$title = $app->wg->title;
