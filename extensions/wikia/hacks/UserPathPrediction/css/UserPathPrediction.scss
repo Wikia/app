@@ -42,7 +42,7 @@ footer {
 
 #showArticle {
   position: absolute;
-  top: 20px;
+  top: 23px;
   height: 410px;
   width: 79%;
   -webkit-border-radius: 4px;
@@ -66,6 +66,7 @@ footer {
     list-style-type: none;
     margin: 10px 5px;
     li {
+      cursor: pointer; 
       padding: 3px;
       border: 1px solid #444;
       margin: 3px auto;
@@ -76,10 +77,8 @@ footer {
        box-shadow:inset 0 0 10px #111;
        &:hover {
        -webkit-box-shadow: 0 0 10px #333;
+       -moz-box-shadow: 0 0 10px #333;
        box-shadow: 0 0 10px #333;
-      }
-      #reletedItem {
-        cursor: pointer; 
       }
       
       #counts {
@@ -124,6 +123,7 @@ footer {
     list-style-type: none;
     margin: 10px 5px;
     & > li {
+      cursor: pointer; 
       display: inline-block;
       padding: 3px;
       border: 1px solid #444;
@@ -135,6 +135,7 @@ footer {
        box-shadow:inset 0 0 10px #111;
       &:hover {
        -webkit-box-shadow: 0 0 10px #444;
+       -moz-box-shadow: 0 0 10px #333;
        box-shadow: 0 0 10px #444;
       }
       
@@ -153,17 +154,16 @@ footer {
   margin-left: 10px;
   padding: 5px;
   text-shadow: 0 0 20px #FFF;
+  position: absolute;
 }
 
 #relatedPages {
-  position: absolute;
   left: 80%;
   top: -1%;
   z-index: 3;
 }
 
 #possiblePath {
-  position: absolute;
   top:76%;
   left: -1%;
   z-index: 3;

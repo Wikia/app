@@ -20,7 +20,7 @@
 
 <div id="articles" <?= ( $par != NULL )  ? "data-page=\"".$par."\"" : "" ?>>
 <span class="UPPHeader"><?= wfMsg( 'userpathprediction-preview' ); ?></span>
-<iframe id="showArticle" <?= ( $par != NULL )  ? "src=\"/wiki/".$par."\"" : "" ?>></iframe>
+<iframe name="showArticle" id="showArticle" <?= ( $par != NULL )  ? "src=\"/wiki/".$par."\"" : "" ?>></iframe>
 		<span class="UPPHeader" id="relatedPages"><?= wfMsg( 'userpathprediction-relatedPages' ); ?></span>
 	<div id="relatedArticles">
 	</div>
