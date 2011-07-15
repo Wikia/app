@@ -22,6 +22,7 @@ class AdminDashboardLogic {
 				"LayoutBuilder", 
 				"PageLayoutBuilder", 
 				"Preferences", 
+				"Search",
 				"Signup", 
 				"ThemeDesigner", 
 				"ThemeDesignerPreview",
