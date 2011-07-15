@@ -77,6 +77,8 @@ class JsLint extends CodeLint {
 				case "Missing radix parameter.":
 				// ignore mixed whitespaces
 				case "Mixed spaces and tabs.":
+				// ignore (function(){...})()
+				case "Move the invocation into the parens that contain the function.":
 					$remove = true;
 					break;
 			}
@@ -125,6 +127,9 @@ class JsLint extends CodeLint {
 			case "Empty block.":
 			case "'alert' was used before it was defined.":
 			case "'console' was used before it was defined.":
+			case "Expected '{' and instead saw 'return'.":
+			// don't define functions within other functions
+			case "Function statements should not be placed in blocks. Use a function expression or move the statement to the top of the outer function.":
 				$ret = true;
 				break;
 
