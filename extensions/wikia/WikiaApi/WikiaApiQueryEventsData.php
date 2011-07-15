@@ -8,18 +8,24 @@
  */
 class WikiaApiQueryEventsData extends ApiQueryBase {
 
+	const 
+		REGEX = '@<(?P<tag>%s)(?P<parameters>\s[^>]+)?(\s*/?>)|((.*)</(?P=tag)>)@xsi',
+		REGEX_PARAMS = '@(?P<name>\w+)\s*=\s*((?P<quote>[\"\'])(?P<value_quoted>.*?)(?P=quote)|(?P<value_unquoted>[^\s"\']+?)(?:\s+|$))@xsi';
+
 	private 
 		$mPageId		= false,
 		$mLogid			= false,
 		$mRevId 		= false,
+		$mDetails		= false,
 		$mTimestamp		= false, 
 		$mSize 			= false,
 		$mIsNew			= false,
-		$mCityId		= 0;
-		
+		$mCityId		= 0,
+		$mTitle			= null,
+		$mContent		= '';
 	private 
 		$mediaNS = array(NS_VIDEO, NS_IMAGE, NS_FILE);
-		
+	
 	private $stripTags = array(
 		"/\{\{#dpl(.*)\}\}/siU",
 		"/\{\{#dplchapter(.*)\}\}/siU",
@@ -66,6 +72,16 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 		$count = $this->mLogid > 0;
 		wfProfileOut( __METHOD__ );
 		return $count;
+	}
+	
+	private function getDetailsCount() {
+		wfProfileIn( __METHOD__ );
+		$this->mLogid = 0;
+		if ( isset($this->params['details']) ) {
+			$this->mDetails = (bool)$this->params['details'];
+		}
+		wfProfileOut( __METHOD__ );
+		return $this->mDetails === true;
 	}
 	
 	private function getArchivePage($oRC) {
@@ -395,7 +411,6 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 		# extract request params
 		$this->mCityId = $wgCityId;
 		$this->params = $this->extractRequestParams(false);
-
 		
 		if( ! ( isset($this->params[ "token" ] ) && $this->params[ "token" ] === $wgTheSchwartzSecretToken ) ) {
 			if (!$wgUser->isAllowed('scribeevents')) {
@@ -414,6 +429,9 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 
 		# check "logid" param
 		$logCount = $this->getLoggingCount();
+		
+		# check "details" param
+		$showDetails = $this->getDetailsCount();
 
 		if ( $revCount === 0 && $pageCount === 0 && $logCount == 0 ) {
 			wfProfileOut( __METHOD__ );
@@ -466,9 +484,19 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 			'latest' => intval($vals['page_latest']),
 		);
 		
+		$details = array();
+		if ( $showDetails ) {
+			$details = $this->getDetailsInfo( $oRow );
+		}
+		
 		$this->getResult()->setIndexedTagName($vals, 'events');
 		$this->getResult()->addValue('query', 'page', $pageInfo);
 		$this->getResult()->addValue('query', 'revision', $vals);
+		
+		if ( $showDetails ) {
+			$this->getResult()->setIndexedTagName($details, 'details');
+			$this->getResult()->addValue('query', 'details', $details);
+		}
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -545,31 +573,33 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 		return $user_is_bot;
 	}
 	
-	private function _revision_is_redirect($content) {
-		$titleObj = Title::newFromRedirect( $content );
+	private function _revision_is_redirect() {
+		$titleObj = Title::newFromRedirect( $this->mContent );
 		$rev_is_redirect = is_object($titleObj) ;
 		return $rev_is_redirect;
 	}
 
-	private function _revision_is_content($oTitle) {
+	private function _revision_is_content() {
 		global $wgEnableBlogArticles;
 		$is_content_ns = 0;
-		if ( $oTitle instanceof Title ) {
-			$is_content_ns = $oTitle->isContentPage();
+		if ( $this->mTitle instanceof Title ) {
+			$is_content_ns = $this->mTitle->isContentPage();
 			/*if ( empty($is_content_ns) && $wgEnableBlogArticles ) { 
-				$is_content_ns = (in_array($oTitle->getNamespace(), array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK, NS_BLOG_LISTING, NS_BLOG_LISTING_TALK)));
+				$is_content_ns = (in_array($this->mTitle->getNamespace(), array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK, NS_BLOG_LISTING, NS_BLOG_LISTING_TALK)));
 			}*/
 		}
 		return (int) $is_content_ns;
 	}
 	
-	private function _make_links($content, $oTitle) {
+	private function _make_links() {
 		$links = array(
 			'image' => 0,
 			'video' => 0			
 		);
 			
+		$content = $this->mContent;
 		$oArticle = Article::newFromId($this->mPageId);
+
 		if ( $oArticle instanceof Article ) {
 			
 			if (!empty($this->stripTags)) {
@@ -604,11 +634,11 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 		if ( $deleted == 0 ) {
 			$oRevision = new Revision($oRow);
 			if ( isset($oRow->is_archive) && ($oRow->is_archive == 1) ) {
-				$oTitle = Title::makeTitle( $oRow->page_namespace, $oRow->page_title );
+				$this->mTitle = Title::makeTitle( $oRow->page_namespace, $oRow->page_title );
 			} else {
-				$oTitle = $oRevision->getTitle();
+				$this->mTitle = $oRevision->getTitle();
 			}
-			$content = $oRevision->revText();
+			$this->mContent = $oRevision->revText();
 
 			# revision id
 			$vals['revid'] = intval($oRevision->getId());
@@ -628,19 +658,19 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 			# size
 			$vals['size'] = intval($oRevision->getSize());
 			#words
-			$vals['words'] = str_word_count( $content );
+			$vals['words'] = str_word_count( $this->mContent );
 			# revision is redirect
-			$vals['isredirect'] = intval( $this->_revision_is_redirect( $content ) );
+			$vals['isredirect'] = intval( $this->_revision_is_redirect() );
 			# revision is content
-			$vals['iscontent'] = intval( $this->_revision_is_content( $oTitle ) );
+			$vals['iscontent'] = intval( $this->_revision_is_content() );
 			# is deleted
 			$vals['isdeleted'] = $deleted;
 			# links
-			$links = $this->_make_links( $content, $oTitle );
+			$links = $this->_make_links();
 			$vals['imagelinks'] = $links['image'];
 			$vals['video'] = $links['video'];
 		} else {
-			$oTitle = Title::makeTitle( $oRow->page_namespace, $oRow->page_title );
+			$this->mTitle = Title::makeTitle( $oRow->page_namespace, $oRow->page_title );
 			# revision id
 			$vals['revid'] = intval($oRow->rev_id);
 			# username
@@ -662,30 +692,31 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 			# revision is redirect
 			$vals['isredirect'] = 0;
 			# revision is content
-			$vals['iscontent'] = intval( $this->_revision_is_content( $oTitle ) );
+			$vals['iscontent'] = intval( $this->_revision_is_content() );
 			# is deleted
 			$vals['isdeleted'] = $deleted;
 			# links
 			$vals['imagelinks'] = 0;
 			$vals['video'] = 0;
 		}
-		$vals['media_type'] = $this->getMediaType($oTitle, $oRow->page_namespace);
-		$vals['page_latest'] = $oTitle->getLatestRevID();
+		$vals['media_type'] = $this->getMediaType($oRow->page_namespace);
+		$vals['page_latest'] = $this->mTitle->getLatestRevID();
 
 		wfProfileOut( __METHOD__ );
 		return $vals;
 	}
 
-	private function getMediaType($oTitle, $ns) {
+	private function getMediaType($ns) {
 		global $wgEnableVideoToolExt;
 		wfProfileIn( __METHOD__ );
 		$result = 0;
 		
+		$oTitle = $this->mTitle;
 		if ( in_array($ns, $this->mediaNS) ) {
 			# NS_VIDEO 
 			if ( $ns == NS_VIDEO ) {
 				if ( !empty($wgEnableVideoToolExt) && class_exists('VideoPage') ) {
-					$videoName = VideoPage::getNameFromTitle($oTitle);
+					$videoName = VideoPage::getNameFromTitle( $oTitle );
 					if ( $videoName ) {
 						$oTitle = Title::makeTitle($ns, $videoName);
 					}
@@ -719,7 +750,128 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 		
 		return $result;
 	}
+	
+	private function _get_metrics_types() {
+		$metricsTypes = array();
+		
+		$dbr = 	wfGetDB( DB_SLAVE, array(), 'metrics' );
+		$oRes = $dbr->select(
+			array( 'event_type' ), 
+			array( 'type_id, type_name' ), 
+			array(), 
+			__METHOD__,
+			array( 'ORDER BY' => 'type_id') 
+		);
 
+		while( $oRow = $dbr->fetchObject( $oRes ) ) {
+			$metricsTypes[ $oRow->type_id ] = $oRow->type_name;
+		}
+		$dbr->freeResult( $oRes );
+		
+		return $metricsTypes;	
+	}
+	
+	private function getDetailsInfo( $oRow ) {
+		$details = array();
+		
+		$metricsTypes = $this->_get_metrics_types();
+			
+		foreach ( $metricsTypes as $id => $name ) {
+			$res = null;
+			switch ( $id ) {
+				case 1: /* mainpage */
+					$res = $this->_is_main_page();
+					break;
+				case 2: /* gallery */
+				case 3: /* slider */
+				case 4: /* slideshow */
+					$tags = $this->_get_magic_tags( $this->mContent, 'gallery' );
+					if ( $id == 2 ) {
+						$res = $this->_count_gallery( $tags ) ;
+					} elseif ( $id == 3 ) {
+						$res = $this->_count_gallery_slider( $tags );
+					} elseif ( $id == 4 ) {
+						$res = $this->_count_gallery_slideshow( $tags );
+					}
+					break;
+				default:
+					break;
+			}
+			
+			if ( !is_null( $res ) ) {
+				$details[] = array( 'id' => $id, 'name' => $name, 'count' => $res );
+			}
+		}
+
+		return $details;
+	}
+
+	private function _is_main_page() {
+		$is_main_page = $this->mTitle->getArticleId() == Title::newMainPage()->getArticleId() && $this->mTitle->getArticleId() != 0;
+		return intval($is_main_page);
+	}
+	
+	private function _get_magic_tags( $content, $tag ) {
+		
+		$regex = sprintf( self::REGEX, $tag  );
+	 
+		if ( !preg_match_all( $regex, $content, $matches, PREG_SET_ORDER | PREG_OFFSET_CAPTURE ) ) {
+			return array();
+		}
+	 
+		$tags = array();
+		foreach ($matches as $match) {
+			$tag_params = array();
+			if ( 
+				( !empty($match['parameters']) && !empty($match['parameters'][0]) ) && 
+				( preg_match_all( self::REGEX_PARAMS, $match['parameters'][0], $attribute_data, PREG_SET_ORDER ) )
+			) {
+				foreach ( $attribute_data as $attr )  {
+					$tag_params[ $attr['name'] ] = ( !empty($attr['value_quoted']) ) ? $attr['value_quoted'] : $attr['value_unquoted'];
+				}
+			}
+	 
+			$tags[] = array( 'name' => reset($match['tag']), 'params' => $tag_params, 'tag' => $match[0][0] );
+		}
+	 
+		return $tags;
+	}
+	
+	private function _count_gallery( $tags ) {
+		$count = 0;
+		if ( !empty( $tags ) ) {
+			foreach ( $tags as $tag ) {
+				if ( !empty( $tag['params'] ) && in_array( $tag['params']['type'], array( 'slider', 'slideshow' ) ) ) continue;
+				$count++;
+			}
+		}
+		return $count;
+	}
+	
+	private function _count_gallery_slider( $tags ) {
+		$count = 0;
+		if ( !empty( $tags ) ) {
+			foreach ( $tags as $tag ) {
+				if ( !empty( $tag['params'] ) && ( $tag['params']['type'] == 'slider' ) ) {
+					$count++;
+				}
+			}
+		}
+		return $count;
+	}
+	
+	private function _count_gallery_slideshow( $tags ) {
+		$count = 0;
+		if ( !empty( $tags ) ) {
+			foreach ( $tags as $tag ) {
+				if ( !empty( $tag['params'] ) && ( $tag['params']['type'] == 'slideshow' ) ) {
+					$count++;
+				}
+			}
+		}
+		return $count;
+	}
+	
 	public function getAllowedParams() {
 		return array (
 			'pageid' => array (
@@ -738,6 +890,10 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 				ApiBase :: PARAM_TYPE => 'string',
 				ApiBase :: PARAM_ISMULTI => false
 			),
+			'details' => array (
+				ApiBase :: PARAM_TYPE => 'boolean',
+				ApiBase :: PARAM_ISMULTI => false
+			),
 		);
 	}
 
@@ -747,6 +903,7 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 			'revid' 	=> 'Identifier of revision',
 			'logid' 	=> 'Identifier of log (from logging)',
 			'token'		=> 'Used for internal communication',
+			'details'	=> 'Show event details'
 		);
 	}
 
