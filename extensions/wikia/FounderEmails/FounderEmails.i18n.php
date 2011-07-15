@@ -183,7 +183,7 @@ There\'s a lot happening on your wiki today! Drop by $MYHOMEURL to see what\'s b
 	'founderemails-email-footer-line2' => 'Want to control which emails you receive? Go to your [{{fullurl:{{ns:special}}:Preferences}} Preferences]',
 // day 0
 	'founderemails-email-0-day-heading' => 'Nice to meet you $FOUNDERNAME,',
-	'founderemails-email-0-day-congratulations' => 'Congratulations on creating $WIKINAME!',
+	'founderemails-email-0-day-congratulations' => 'Congratulations on creating $HDWIKINAME!',
 	'founderemails-email-0-day-tips-heading' => 'Here are a few helpful tips to get you started:',
 	'founderemails-email-0-day-addpages-heading' => 'Add pages.',
 	'founderemails-email-0-day-addpages-content' => 'A wiki is all about sharing information about your unique topic.  Create pages by clicking on <a style="color:#2a87d5;text-decoration:none;" href="$ADDAPAGEURL">"Add a Page"</a> and fill out more specific information about your topic.',
@@ -198,7 +198,7 @@ There\'s a lot happening on your wiki today! Drop by $MYHOMEURL to see what\'s b
 	'founderemails-email-0-day-wikiahelps-signature' => 'Happy wiki building!<br />The Wikia Team',
 // day 3
 	'founderemails-email-3-day-heading' => 'Hi there $FOUNDERNAME,',
-	'founderemails-email-3-day-congratulations' => 'We wanted to check in and see how things are going at $WIKINAME.',
+	'founderemails-email-3-day-congratulations' => 'We wanted to check in and see how things are going at $HDWIKINAME.',
 	'founderemails-email-3-day-tips-heading' => 'It\'s been 3 days since you started and we thought we\'d drop by to offer some more tips on building your wiki:',
 	'founderemails-email-3-day-editmainpage-heading' => 'Spruce up your main page.',
 	'founderemails-email-3-day-editmainpage-content' => 'The main page is one of the first things people see when they visit <a href="$WIKIURL" style="color:#2a87d5;text-decoration:none;">$WIKINAME</a>.  Make a good first impression by writing a detailed summary of what your topic is about and adding a slideshow, gallery, or photo slider.',
@@ -213,7 +213,7 @@ There\'s a lot happening on your wiki today! Drop by $MYHOMEURL to see what\'s b
 	'founderemails-email-3-day-wikiahelps-signature' => 'Keep up the great work!<br />The Wikia Team',
 // day 10
 	'founderemails-email-10-day-heading' => 'How\'s it going $FOUNDERNAME?',
-	'founderemails-email-10-day-congratulations' => 'Whoa, time flies!  It\'s already been 10 days since you started $WIKINAME.',
+	'founderemails-email-10-day-congratulations' => 'Whoa, time flies!  It\'s already been 10 days since you started $HDWIKINAME.',
 	'founderemails-email-10-day-tips-heading' => 'Get others involved in your project and show off all the awesome work you\'ve been doing!  Here are some ways to spread the word:',
 	'founderemails-email-10-day-share-heading' => 'Didn\'t your mother tell you to Share?',
 	'founderemails-email-10-day-share-content' => 'Use the Share button on your toolbar, article pages and photos to show them off to your friends and followers on Facebook, Twitter, or other popular sites.',
@@ -227,13 +227,13 @@ There\'s a lot happening on your wiki today! Drop by $MYHOMEURL to see what\'s b
 	'founderemails-email-views-digest-subject' => 'Today\'s views on $WIKINAME',
 	'founderemails-email-views-digest-body' => 'Hi $FOUNDERNAME,
 
-Today $WIKINAME was viewed by # people.
+Today $WIKINAME was viewed by $1 {{PLURAL:$1|person|people}}.
 
 Keep adding new content and promoting your wiki to encourage more people to read, edit and spread the word.
 
 The Wikia Team',
 	'founderemails-email-views-digest-greeting' => 'Hi $FOUNDERNAME,',
-	'founderemails-email-views-digest-headline' => 'Today $WIKINAME was viewed by $UNIQUEVIEWS people.',
+	'founderemails-email-views-digest-headline' => 'Today $WIKINAME was viewed by $1 {{PLURAL:$1|person|people}}.',
 	'founderemails-email-views-digest-content' => 'Keep adding new content and promoting your wiki to encourage more people to read, edit and spread the word.',
 	'founderemails-email-views-digest-signature' => 'The Wikia Team',
 	'founderemails-email-views-digest-button' => 'Add more pages',	
@@ -243,15 +243,15 @@ The Wikia Team',
 
 It\'s time for your daily dose of activity from $WIKINAME.
 
-$UNIQUEVIEWS people viewed your wiki.
+$1 {{PLURAL:$1|person|people}} viewed your wiki.
 
 Keep up the great work adding interesting content for people to read!
 
-$USEREDITS edits were made.
+$2 {{PLURAL:$2|edit was|edits were}} made.
 
 Happy editors make happy wikis. Make sure to thank your editors and check in with them from time to time.
 
-$USERJOINS people joined your wiki.
+$3 {{PLURAL:$3|person|people}} joined your wiki.
 
 Welcome new people to your wiki with a talk page message.
 
@@ -260,11 +260,11 @@ You can always head over to wiki activity to view all of the exiting changes bei
 The Wikia Team',
 	'founderemails-email-complete-digest-greeting' => 'Hi $FOUNDERNAME,',
 	'founderemails-email-complete-digest-headline' => 'It\'s time for your daily dose of activity from $WIKINAME.',
-	'founderemails-email-complete-digest-content-heading1' => '$UNIQUEVIEWS people viewed your wiki.',
+	'founderemails-email-complete-digest-content-heading1' => '$1 {{PLURAL:$1|person|people}} viewed your wiki.',
 	'founderemails-email-complete-digest-content1' => 'Keep up the great work adding interesting content for people to read!',
-	'founderemails-email-complete-digest-content-heading2' => '$USEREDITS edits were made.',
+	'founderemails-email-complete-digest-content-heading2' => '$1 {{PLURAL:$1|edit was|edits were}} made.',
 	'founderemails-email-complete-digest-content2' => 'Happy editors make happy wikis. Make sure to thank your editors and check in with them from time to time.',
-	'founderemails-email-complete-digest-content-heading3' => '$USERJOINS people joined your wiki.',
+	'founderemails-email-complete-digest-content-heading3' => '$1 {{PLURAL:$1|person|people}} joined your wiki.',
 	'founderemails-email-complete-digest-content3' => 'Welcome new people to your wiki with a talk page message.
 <br><br>
 You can always head over to wiki activity to view all of the exiting changes being made on $WIKINAME. Check in often, as the founder your community looks to you to help guide and run the wiki.',

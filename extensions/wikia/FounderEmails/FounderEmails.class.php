@@ -335,11 +335,11 @@ class FounderEmails {
 	 * @param array $links
 	 * @return array 
 	 */
-	public static function addLink($params, $links) {
+	public static function addLink($params, $links, $color='#2C85D5') {
 		if (is_array($params) && is_array($links)) {
 			foreach($links as $key => $value) {
 				if (array_key_exists($key, $params))
-					$params[$key] = '<a href="'.$value.'">'.$params[$key].'</a>';
+					$params[$key] = '<a href="'.$value.'" style="color:'.$color.';">'.$params[$key].'</a>';
 			}
 		}
 		return $params;

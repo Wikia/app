@@ -59,8 +59,10 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 					$links = array(
 						'$WIKINAME' => $emailParams['$WIKIURL'],
 					);
+					$emailParams_new = FounderEmails::addLink($emailParams,$links);
+					$emailParams_new['$HDWIKINAME'] = str_replace('#2C85D5', '#fa5c1f', $emailParams_new['$WIKINAME']);	// header color = #fa5c1f
 					$mailBodyHTML = wfRenderModule("FounderEmails", $event['data']['dayName'], array('language' => 'en'));
-					$mailBodyHTML = strtr($mailBodyHTML, FounderEmails::addLink($emailParams,$links));
+					$mailBodyHTML = strtr($mailBodyHTML, $emailParams_new);
 				} else {
 					$mailBodyHTML = $this->getLocalizedMsg( 'founderemails' . $wikiType . '-email-' . $activateDays . '-days-passed-body-HTML', $emailParams );
 				}
