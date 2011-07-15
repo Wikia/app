@@ -22,12 +22,16 @@ class JsLint extends CodeLint {
 		$this->knownGlobals = array(
 			'$',
 			'$G',
+			'AjaxLogin',
+			'FB',
+			'insertTags',
 			'jQuery',
 			'GlobalTriggers',
 			'Observable',
 			'RTE',
 			'skin',
 			'YAHOO',
+			'WET',
 		);
 	}
 
@@ -38,7 +42,7 @@ class JsLint extends CodeLint {
 	 * @return boolean returns true if entry should be removed
 	 */
 	public function filterErrorsOut($error) {
-		$remove = is_null($error);
+		$remove = is_null($error) || !isset($error['id']);
 
 		if (isset($error['raw'])) {
 			switch($error['raw']) {
@@ -74,22 +78,29 @@ class JsLint extends CodeLint {
 	}
 
 	/**
-	 * Check given file and return list of warnings
+	 * Simplify error report to match the generic format
+	 *
+	 * @param array $entry single entry from error report
+	 * @return array modified entry
+	 */
+	public function internalFormatReportEntry($entry) {
+		return array(
+			'error' => $entry['reason'],
+			'line' => $entry['line'],
+		);
+	}
+
+	/**
+	 * Perform lint on a file and return list of errors
 	 *
 	 * @param string $fileName file to be checked
 	 * @return array list of reported warnings
 	 */
-	public function checkFile($fileName) {
+	public function internalCheckFile($fileName) {
 		$output = $this->runJsLint($fileName, array(
 			'knownGlobals' => implode(',', $this->knownGlobals),
 		));
 
-		// cleanup the list of errors reported
-		if (isset($output['errors'])) {
-			$output['errors'] = array_filter($output['errors'], array($this, 'filterErrorsOut'));
-			$output['errors'] = array_values($output['errors']);
-		}
-
-		var_dump($output);
+		return $output;
 	}
 }

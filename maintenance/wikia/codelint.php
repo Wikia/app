@@ -10,7 +10,7 @@ require_once( 'commandLine.inc' );
 function printHelp() {
 		echo <<<HELP
 Performs lint check on given file / directory
-USAGE: php codelint.php [--help] [--mode] --file|--dir
+USAGE: php codelint.php [--help] [--mode] [--format] --file|--dir
 
 	--help
 		Show this help information
@@ -24,19 +24,19 @@ USAGE: php codelint.php [--help] [--mode] --file|--dir
 	--dir
 		Directory to lint (subdirectories will be included)
 
+	--format[=text]
+		Report format (either text, json or html)
 
 HELP;
 }
 
-$codeLint = F::build('CodeLint');
-
-if (!$codeLint->isNodeJsInstalled()) {
+if (!CodeLint::isNodeJsInstalled()) {
 	die('You need to have nodejs installed in order to use this tool!');
 }
 
-$nodeJsVersion = $codeLint->getNodeJsVersion();
+$nodeJsVersion = CodeLint::getNodeJsVersion();
 
-echo "Using nodejs {$nodeJsVersion}\n\n";
+//echo "Using nodejs {$nodeJsVersion}\n\n";
 
 // show help and quit
 if (isset($options['help'])) {
@@ -46,6 +46,7 @@ if (isset($options['help'])) {
 
 // parse command line options
 $mode = isset($options['mode']) ? $options['mode'] : 'js';
+$format = isset($options['format']) ? $options['format'] : 'text';
 $file = isset($options['file']) ? $options['file'] : false;
 $dir = isset($options['dir']) ? $options['dir'] : false;
 
@@ -61,7 +62,21 @@ switch($mode) {
 		break;
 }
 
-$lint->checkFile($file);
+if (!empty($file)) {
+	$results = array($lint->checkFile($file));
+}
+else if (!empty($dir)) {
+	$results = $lint->checkDirectory($dir);
+}
+else {
+	echo "Please provide either file name or directory to lint\n\n";
+	printHelp();
+	die(1);
+}
+
+//var_dump($results);
+
+echo $lint->formatReport($results, $format);
 
 // this script is run by CruiseControl requiring return code to equal zero
 die(0);

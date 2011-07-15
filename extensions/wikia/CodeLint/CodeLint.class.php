@@ -10,14 +10,14 @@
  * @package MediaWiki
  */
 
-class CodeLint {
+abstract class CodeLint {
 
 	/**
 	 * Check whether nodejs is installed
 	 *
 	 * @return boolean is nodejs installed
 	 */
-	public function isNodeJsInstalled() {
+	static public function isNodeJsInstalled() {
 		return !is_null(`which node`);
 	}
 
@@ -26,7 +26,7 @@ class CodeLint {
 	 *
 	 * @return string nodejs version
 	 */
-	public function getNodeJsVersion() {
+	static public function getNodeJsVersion() {
 		return trim(`node --version`);
 	}
 
@@ -73,12 +73,72 @@ class CodeLint {
 	}
 
 	/**
+	 * Filter out message we don't really want in the report
+	 *
+	 * @param array $error error entry reported by jslint
+	 * @return boolean returns true if entry should be removed
+	 */
+	abstract public function filterErrorsOut($error);
+
+	/**
+	 * Simplify error report to match the generic format
+	 *
+	 * @param array $entry single entry from error report
+	 * @return array modified entry (it should contain 'error' and 'line' keys)
+	 */
+	abstract public function internalFormatReportEntry($entry);
+
+	/**
+	 * Perform lint on a file and return list of errors
+	 *
+	 * @param string $fileName file to be checked
+	 * @return array list of reported warnings
+	 */
+	abstract public function internalCheckFile($fileName);
+
+	/**
 	 * Check given file and return list of warnings
 	 *
 	 * @param string $fileName file to be checked
 	 * @return array list of reported warnings
 	 */
-	public function checkFile($fileName) {}
+	public function checkFile($fileName) {
+		$output = $this->internalCheckFile($fileName);
+
+		// cleanup the list of errors reported
+		if (isset($output['errors'])) {
+			$output['errors'] = array_filter($output['errors'], array($this, 'filterErrorsOut'));
+			$output['errors'] = array_values($output['errors']);
+
+			// keep the original number of errors
+			$output['errorsCount'] = count($output['errors']);
+
+			// simplify the report and fold multiple occurances of the same error
+			$errorsFolded = array();
+
+			foreach($output['errors'] as $entry) {
+				$entry = $this->internalFormatReportEntry($entry);
+
+				if (!isset($errorsFolded[ $entry['error'] ])) {
+					$errorsFolded[ $entry['error'] ] = array();
+				}
+
+				$errorsFolded[ $entry['error'] ][] = $entry['line'];
+			}
+
+			$output['errors'] = array();
+			ksort($errorsFolded);
+
+			foreach($errorsFolded as $msg => $lines) {
+				$output['errors'][] = array(
+					'error' => $msg,
+					'lines' => $lines,
+				);
+			}
+		}
+
+		return $output;
+	}
 
 	/**
 	 * Check all files in a given directory recursively
@@ -88,5 +148,18 @@ class CodeLint {
 	 */
 	public function checkDirectory($directoryName) {
 
+	}
+
+	/**
+	 * Generate report from given results
+	 *
+	 * @param array $results results returned by checkFile / checkDirectory method
+	 * @param string $format report format
+	 * @return string report
+	 */
+	public function formatReport($results, $format = 'text') {
+		$report = CodeLintReport::factory($format);
+
+		return $report->render($results);
 	}
 }
