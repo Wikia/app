@@ -247,6 +247,47 @@ AdConfig.DART.getUrl = function(slotname, size, useIframe, adProvider) {
 	return url;
 }
 
+AdConfig.DART.getMobileUrl = function(slotname, size, useIframe, adProvider) {
+		size = '5x5';
+
+	var mtfIFPath = '';
+	var src = 'mobile';
+
+	AdConfig.DART.initSiteAndZones();
+
+	var url = 'http://' +
+		'ad.mo' +
+		'.doubleclick.net/' +
+		'DARTProxy/mobile.handler?k=' +
+		AdConfig.DART.site + '/' + AdConfig.DART.zone1 + '/' + AdConfig.DART.zone2 + ';' +
+		's0=' + AdConfig.DART.site.replace(/wka\./, '') + ';' +
+		's1=' + AdConfig.DART.zone1 + ';' +
+		's2=' + AdConfig.DART.zone2 + ';' +
+		AdConfig.DART.getCustomKeyValues() +
+		AdConfig.DART.getArticleKV() +
+		AdConfig.DART.getDomainKV(window.location.hostname) +
+		'pos=' + slotname + ';' +
+		AdConfig.DART.getTitle() +
+		AdConfig.DART.getLanguage() +
+		// TODO when we get better at search, support "kw" key-value
+		AdConfig.DART.getResolution() +
+		AdConfig.DART.getPrefooterStatus() +
+		AdConfig.DART.getQuantcastSegmentKV() +
+		AdConfig.DART.getImpressionCount(slotname) +
+		AdConfig.DART.getPartnerKeywords() +
+		AdConfig.DART.getCategories() +
+		AdConfig.DART.getLocKV(slotname) +
+		AdConfig.DART.getDcoptKV(slotname) +
+		mtfIFPath +
+		'src=' + src + ';' +
+		'sz=' + size + ';' +
+		'mtfInline=true;' +	// http://www.google.com/support/richmedia/bin/answer.py?hl=en&answer=182220
+		AdConfig.DART.getTileKV(slotname, adProvider) +
+		'&dw=1';
+
+	return url;
+}
+
 AdConfig.DART.getSubdomain = function() {
 	var subdomain = 'ad';
 
