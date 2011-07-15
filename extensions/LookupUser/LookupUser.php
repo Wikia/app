@@ -42,6 +42,7 @@ $wgGroupPermissions['staff']['lookupuser'] = true;
 //small stuff week --nAndy
 global $wgAjaxExportList;
 $wgAjaxExportList[] = "LookupUserPage::loadAjaxContribData";
+$wgAjaxExportList[] = "LookupUserPage::requestApiAboutUser";
 
 // Hooked function
 $wgHooks['ContributionsToolLinks'][] = 'efLoadLookupUserLink';

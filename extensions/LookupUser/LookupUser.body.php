@@ -248,6 +248,11 @@ EOT
 		}
 	}
 	
+	/**
+	 * @brief: Ajax call loads data for jQuery.table plugin
+	 * 
+	 * @author Andrzej 'nAndy' Łukaszewski
+	 */
 	public function loadAjaxContribData() {
 		global $wgRequest, $wgUser, $wgCityId, $wgDBname, $wgLang;
 		
@@ -288,7 +293,7 @@ EOT
 				if ( !empty($activity) ) {
 					$result['iTotalRecords'] = intval($limit);
 					$result['iTotalDisplayRecords'] = intval($activity['cnt']);
-					$result['sColumns'] = 'id,title,url,lastedit';
+					$result['sColumns'] = 'id,title,url,lastedit,userrights,blocked';
 					$rows = array();
 					foreach ( $activity['data'] as $row ) {
 						$rows[] = array(
@@ -296,6 +301,8 @@ EOT
 							$row['title'], //wiki title
 							$row['url'], // wiki url 
 							$wgLang->timeanddate( wfTimestamp( TS_MW, $row['last_edit'] ), true ), //last edited
+							LookupUserPage::getUserData($username, $row['id'], $row['url']),
+							LookupUserPage::getUserData($username, $row['id'], $row['url'], true),
 						);
 					}
 					$result['aaData'] = $rows;
@@ -338,5 +345,160 @@ EOT
 		
 		wfProfileOut( __METHOD__ );
 		return Wikia::json_encode($result);
+	}
+	
+	/**
+	 * @brief: Returns memc key
+	 * 
+	 * @param string $userName name of a use
+	 * @param integer $wikiId id of a wiki
+	 * 
+	 * @author Andrzej 'nAndy' Łukaszewski
+	 * 
+	 * @return string
+	 */
+	public static function getUserLookupMemcKey($userName, $wikiId) {
+		return 'lookupUser'.'user'.$userName.'on'.$wikiId;
+	}
+	
+	/**
+	 * @brief: Returns data for jQuery.table plugin used by ajax call LookupUserPage::loadAjaxContribData()
+	 * 
+	 * @param string $userName name of a use
+	 * @param integer $wikiId id of a wiki
+	 * @param string $wikiUrl url address of a wiki
+	 * @param boolean $checkingBlocks a flag which says if we're checking user groups or block information
+	 * 
+	 * @author Andrzej 'nAndy' Łukaszewski
+	 * 
+	 * @return string
+	 */
+	public static function getUserData($userName, $wikiId, $wikiUrl, $checkingBlocks = false) {
+		wfProfileIn( __METHOD__ );
+		
+		global $wgMemc;
+		
+		$cachedData = $wgMemc->get( LookupUserPage::getUserLookupMemcKey($userName, $wikiId) );
+		$cachedData = null;
+		
+		if( !empty($cachedData) ) {
+			if( $checkingBlocks === false ) {
+				if( $cachedData['groups'] === false ) {
+					
+					wfProfileOut( __METHOD__ );
+					return '-';
+				} else {
+					
+					wfProfileOut( __METHOD__ );
+					return implode(', ', $cachedData['groups']);
+				}
+			} else {
+				wfProfileOut( __METHOD__ );
+				return ( $cachedData['blocked'] === true ) ? 'Y' : 'N';
+			}
+		} else {
+			if( $checkingBlocks === false ) {
+				$result = '<span class="user-groups-placeholder">';
+			} else {
+				$result = '<span class="user-blocked-placeholder">';
+			}
+			
+			$result .= '<img src="/skins/common/images/ajax.gif" />'.
+				'<input type="hidden" class="name" value="'.$userName.'" />'.
+				'<input type="hidden" class="wikiId" value="'.$wikiId.'" />'.
+				'<input type="hidden" class="wikiUrl" value="'.$wikiUrl.'" />'.
+				'</span>';
+			
+			wfProfileOut( __METHOD__ );
+			return $result;
+		}
+	}
+	
+	/**
+	 * @brief: Ajax call loads data for two new columns: user rights and blocked
+	 * 
+	 * @author Andrzej 'nAndy' Łukaszewski
+	 */
+	public function requestApiAboutUser() {
+		wfProfileIn( __METHOD__ );
+		
+		global $wgRequest, $wgMemc;
+		
+		$userName = $wgRequest->getVal('username');
+		$wikiUrl = $wgRequest->getVal('url');
+		$wikiId = $wgRequest->getVal('id');
+		$apiUrl = $wikiUrl.'api.php?action=query&list=users&ususers='.$userName.'&usprop=blockinfo|groups&format=php';
+		
+		$cachedData = $wgMemc->get( LookupUserPage::getUserLookupMemcKey($userName, $wikiId) );
+		$cachedData = null;
+		
+		if( !empty($cachedData) ) {
+			//$result = array('success' => true, 'data' => $cachedData);
+			$result = array('success' => true, 'data' => $cachedData, '$apiUrl' => $apiUrl);
+		} else {
+			/*
+			$req = HttpRequest::factory($apiUrl, array());
+			$req->execute();
+			$httpRequestResult = $req;
+			*/
+			$result = unserialize(file_get_contents($apiUrl));
+			
+			if( isset($result['query']['users'][0]) ) {
+				$userData = $result['query']['users'][0];
+				
+				if( !isset($userData['groups']) ) {
+					$userData['groups'] = false;
+				} else {
+					$userData['groups'] = LookupUserPage::selectGroups($userData['groups']);
+				}
+				
+				if( !isset($userData['blockedby']) ) {
+					$userData['blocked'] = false;
+				} else {
+					$userData['blocked'] = true;
+				}
+				
+				//$result = array('success' => true, 'data' => $userData);
+				$result = array('success' => true, 'data' => $userData, '$apiUrl' => $apiUrl);
+				$wgMemc->set( LookupUserPage::getUserLookupMemcKey($userName, $wikiId), $userData, 3600 ); //1h
+			} else {
+				$result = array('success' => false);
+			}
+		}
+		
+		wfProfileOut( __METHOD__ );
+		return json_encode($result);
+	}
+	
+	/**
+	 * @brief: Returns only selected user groups/rights
+	 * 
+	 * @param array $groups array with wiki names of groups like: sysop, bureaucrat, chatmoderator
+	 * 
+	 * @return array
+	 * 
+	 * @author Andrzej 'nAndy' Łukaszewski
+	 */
+	public static function selectGroups($groups) {
+		wfProfileIn( __METHOD__ );
+		
+		$userGroups = array();
+		
+		foreach($groups as $group) {
+			if( $group == 'sysop') {
+				$userGroups[] = wfMsg('lookupuser-admin');
+			}
+			
+			if( $group == 'bureaucrat') {
+				$userGroups[] = wfMsg('lookupuser-bureaucrat');
+			}
+			
+			if( $group == 'chatmoderator') {
+				$userGroups[] = wfMsg('lookupuser-chatmoderator');
+			}
+		}
+		
+		wfProfileOut( __METHOD__ );
+		return $userGroups;
 	}
 }

@@ -35,6 +35,11 @@ $messages['en'] = array(
 	'lookupuser-table-lastedited' => 'Last edited',
 	'lookupuser-table-contribs' => 'contribs',
 	'lookupuser-table-recordspager' => 'Showing \'\'\'$1\'\'\' to \'\'\'$2\'\'\' of \'\'\'$3\'\'\' records.',
+	'lookupuser-table-userrights' => 'User rights',
+	'lookupuser-table-blocked' => 'Blocked',
+	'lookupuser-admin' => 'Admin',
+	'lookupuser-bureaucrat' => 'Bureaucrat',
+	'lookupuser-chatmoderator' => 'Chat moderator',
 );
 
 /** Message documentation (Message documentation)
