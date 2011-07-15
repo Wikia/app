@@ -56,7 +56,7 @@ class FounderEmailsViewsDigestEvent extends FounderEmailsEvent {
 					'$WIKINAME' => $emailParams['$WIKIURL'],
 				);
 				$mailSubject = strtr(wfMsgExt('founderemails-email-views-digest-subject', array('content')), $emailParams);
-				$mailBody = strtr(wfMsgExt('founderemails-email-views-digest-body', array('content')), $emailParams);
+				$mailBody = strtr(wfMsgExt('founderemails-email-views-digest-body', array('content','parsemag'), $emailParams['$UNIQUEVIEWS']), $emailParams);
 				$mailBodyHTML = wfRenderModule("FounderEmails", "GeneralUpdate", array_merge($emailParams, array('language' => 'en', 'type' => 'views-digest')));
 				$mailBodyHTML = strtr($mailBodyHTML, FounderEmails::addLink($emailParams,$links));
 				$mailCategory = FounderEmailsEvent::CATEGORY_VIEWS_DIGEST.(!empty($langCode) && $langCode == 'en' ? 'EN' : 'INT');

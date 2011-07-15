@@ -12,7 +12,7 @@ class FounderEmailsModule extends Module {
 			$this->previewBody = wfRenderModule("FounderEmails", $day, array('language' => 'en'));
 			$this->previewBody = strtr($this->previewBody, 
 				array('$FOUNDERNAME' => 'WEB TESTING',
-					'$WIKINAME' => '<a href="#">WikiWiki</a>',
+					'$WIKINAME' => '<a href="#" style="color:#2C85D5;">WikiWiki</a>',
 					'$UNIQUEVIEWS' => '6')
 			);
 		} else if(!empty($type)) {
@@ -21,14 +21,16 @@ class FounderEmailsModule extends Module {
 					'language' => 'en', 
 					'$PAGEURL' => 'http://www.wikia.com',
 					'$MYHOMEURL' => 'http://www.wikia.com',
+					'$UNIQUEVIEWS' => '1',
+					'$USEREDITS' => '1',
+					'$USERJOINS' => '1',
 					'$USERTALKPAGEURL' => 'http://www.wikia.com'
 					)
 				);
 			$this->previewBody = strtr($this->previewBody, 
 				array('$FOUNDERNAME' => 'WEB TESTING',
-					'$UNIQUEVIEWS' => '6',
-					'$WIKINAME' => '<a href="#">WikiWiki</a>',
-					'$PAGETITLE' => '<a href="#">WikiWiki</a>',
+					'$WIKINAME' => '<a href="#" style="color:#2C85D5;">WikiWiki</a>',
+					'$PAGETITLE' => '<a href="#" style="color:#2C85D5;">WikiWiki</a>',
 					)
 			);
 		}
@@ -88,13 +90,14 @@ class FounderEmailsModule extends Module {
 				$this->buttonUrl = $params['$MYHOMEURL'];
 				break;
 			case 'views-digest':
+				$this->headline = wfMsgExt('founderemails-email-'.$this->type.'-headline', array('content','parsemag'), $params['$UNIQUEVIEWS']);
 				break;
 			case 'complete-digest':
-				$this->heading1 = wfMsgForContent('founderemails-email-complete-digest-content-heading1');
+				$this->heading1 = wfMsgExt('founderemails-email-complete-digest-content-heading1', array('content','parsemag'), $params['$UNIQUEVIEWS']);
 				$this->content1 = wfMsgForContent('founderemails-email-complete-digest-content1');
-				$this->heading2 = wfMsgForContent('founderemails-email-complete-digest-content-heading2');
+				$this->heading2 = wfMsgExt('founderemails-email-complete-digest-content-heading2', array('content','parsemag'), $params['$USEREDITS']);
 				$this->content2 = wfMsgForContent('founderemails-email-complete-digest-content2');
-				$this->heading3 = wfMsgForContent('founderemails-email-complete-digest-content-heading3');
+				$this->heading3 = wfMsgExt('founderemails-email-complete-digest-content-heading3', array('content','parsemag'), $params['$USERJOINS']);
 				$this->content3 = wfMsgForContent('founderemails-email-complete-digest-content3');
 				break;
 			default:

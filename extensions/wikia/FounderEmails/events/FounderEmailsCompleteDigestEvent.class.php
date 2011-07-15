@@ -54,7 +54,7 @@ class FounderEmailsCompleteDigestEvent extends FounderEmailsEvent {
 				);
 
 				$mailSubject = strtr(wfMsgExt('founderemails-email-complete-digest-subject', array('content')), $emailParams);
-				$mailBody = strtr(wfMsgExt('founderemails-email-complete-digest-body', array('content')), $emailParams);
+				$mailBody = strtr(wfMsgExt('founderemails-email-complete-digest-body', array('content','parsemag'), $emailParams['$UNIQUEVIEWS'], $emailParams['$USEREDITS'], $emailParams['$USERJOINS']), $emailParams);
 				$mailBodyHTML = wfRenderModule("FounderEmails", "GeneralUpdate", array_merge($emailParams, array('language' => 'en', 'type' => 'complete-digest')));
 				$mailBodyHTML = strtr($mailBodyHTML, FounderEmails::addLink($emailParams,$links));
 				$mailCategory = FounderEmailsEvent::CATEGORY_COMPLETE_DIGEST.(!empty($langCode) && $langCode == 'en' ? 'EN' : 'INT');

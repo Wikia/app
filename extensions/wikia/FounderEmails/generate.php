@@ -42,7 +42,7 @@
 	
 	$emailParams = array(
 						'$FOUNDERNAME' => $params['name'],
-						'$WIKINAME' => $foundingWiki->city_sitename,
+						'$WIKINAME' => $foundingWiki->city_title,
 						'$WIKIURL' => $foundingWiki->city_url,
 						'$UNIQUEVIEWS' => 789,	
 						'$USERJOINS' => 456,
@@ -141,6 +141,7 @@
 								'$PAGETITLE' => $emailParams['$PAGEURL'],
 							);
 					$emailParams_new = FounderEmails::addLink($emailParams, $links);
+					$emailParams_new['$HDWIKINAME'] = str_replace('#2C85D5', '#fa5c1f', $emailParams_new['$WIKINAME']);	// header color = #fa5c1f
 					$mailBodyHTML = wfRenderModule("FounderEmails", $html_template, array_merge($emailParams_new, $params));
 					$mailBodyHTML = strtr($mailBodyHTML, $emailParams_new);
 				} else {	// old emails
@@ -149,7 +150,13 @@
 				
 				UserMailer::sendHTML($to, $sender, $subject, '', $mailBodyHTML);
 			} else {
-				$mailBody = strtr(wfMsgExt($msg_key_body, array('content')), $emailParams);
+				if($params['type']=='views-digest') {
+					$mailBody = strtr(wfMsgExt($msg_key_body, array('content','parsemag'), $emailParams['$UNIQUEVIEWS']), $emailParams);
+				} else if ($params['type']=='complete-digest') {
+					$mailBody = strtr(wfMsgExt($msg_key_body, array('content','parsemag'), $emailParams['$UNIQUEVIEWS'], $emailParams['$USEREDITS'], $emailParams['$USERJOINS']), $emailParams);
+				} else {
+					$mailBody = strtr(wfMsgExt($msg_key_body, array('content')), $emailParams);
+				}
 				
 				UserMailer::send( $to, $sender, $subject, $mailBody);
 			}

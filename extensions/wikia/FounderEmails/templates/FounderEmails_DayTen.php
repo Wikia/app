@@ -1,8 +1,3 @@
-<style type="text/css">
-	a { color: #2C85D5; }
-	h1 a, h2 a { color:#fa5c1f; }
-</style>
-
 <table width="100%" style="font: 18px normal Helvetica,Arial;" bgcolor="2c85d7" cellpadding="20">
 <tr>
 <td>
