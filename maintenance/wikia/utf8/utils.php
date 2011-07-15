@@ -250,7 +250,7 @@ class SqlParser {
 				if (preg_match("/^\)/",$line)) {
 					$mode = 2;
 				} else {
-					if (preg_match("/^\s+(primary |unique )?key/i",$line,$matches)) {
+					if (preg_match("/^\s+(primary |unique |fulltext )?key/i",$line,$matches)) {
 						// index - ignore for now
 					} else if (preg_match("/^\s+constraint/i",$line,$matches)) {
 						// constraint - ignore for now
