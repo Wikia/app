@@ -17,7 +17,8 @@ $messages['en'] = array(
 	'themedesigner-small' => 'Small',
 	'themedesigner-medium' => 'Medium',
 	'themedesigner-large' => 'Large',
-	'themedesigner-tile-background' => 'tile background',
+	'themedesigner-tile-background' => 'tile',
+	'themedesigner-fix-background' => 'fix',
 	'themedesigner-tab-theme' => 'Theme',
 	'themedesigner-tab-customize' => 'Customize',
 	'themedesigner-tab-wordmark' => 'Wordmark',
@@ -144,7 +145,7 @@ $messages['az'] = array(
 	'themedesigner-history-item' => '$1 tərəfindən $2',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author Jim-by
  */
 $messages['be-tarask'] = array(
@@ -1058,7 +1059,7 @@ $messages['nl'] = array(
 	'themedesugber-uknown-error' => 'Er is helaas een onbekende fout opgetreden. Probeer het opnieuw.',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian (bokmål) (Norsk (bokmål))
  * @author Audun
  * @author Nghtwlkr
  */
@@ -1404,7 +1405,7 @@ $messages['ru'] = array(
 	'themedesugber-uknown-error' => 'Произошла ошибка, к сожалению мы не смогли идентифицировать его, пожалуйста, попробуйте снова',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -1634,7 +1635,7 @@ $messages['vi'] = array(
 	'themedesugber-uknown-error' => 'Lỗi đã xảy ra, tiếc là chúng tôi không thể xác định nó, xin vui lòng thử lại',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (中文(简体))
  * @author Hydra
  */
 $messages['zh-hans'] = array(

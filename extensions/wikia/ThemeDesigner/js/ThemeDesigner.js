@@ -129,8 +129,10 @@ var ThemeDesigner = {
 			} else {
 				ThemeDesigner.set("background-tiled", "false");
 			}
-
 			ThemeDesigner.track('customize/background-image/tile');
+		});
+		$("#fix-background").change(function() {
+			ThemeDesigner.set("background-fixed", $(this).attr("checked") ? "true" : "false");
 		});
 	},
 
@@ -349,8 +351,20 @@ var ThemeDesigner = {
 			if (newValue == "true") {
 				//all tiled images are centered
 				ThemeDesigner.set("background-align", "center");
-			} else if (ThemeDesigner.settings["background-align"] == "center" && ThemeDesigner.settings["background-image"].indexOf("images/themes") < 0 && ThemeDesigner.settings["user-background-align"] == "left") {
+			} else if (ThemeDesigner.settings["background-align"] == "center" && ThemeDesigner.settings["background-image"].indexOf("images/themes") < 0 && ThemeDesigner.settings["user-background-align"] == "left" && ThemeDesigner.settings["background-fixed"] == "false") {
 				//align is currently center, background image is user-specified, and user background image should be aligned left
+				//only reset if background is not fixed
+				ThemeDesigner.set("background-align", "left");
+			}
+		}
+		
+		if (setting == "background-fixed") {
+			if (newValue == "true") {
+				//all fixed images are centered
+				ThemeDesigner.set("background-align", "center");
+			} else if (ThemeDesigner.settings["background-align"] == "center" && ThemeDesigner.settings["background-image"].indexOf("images/themes") < 0 && ThemeDesigner.settings["user-background-align"] == "left" && ThemeDesigner.settings["background-tiled"] == "false") {
+				//align is currently center, background image is user-specified, and user background image should be aligned left
+				//only reset if background is not tiled
 				ThemeDesigner.set("background-align", "left");
 			}
 		}
@@ -363,7 +377,7 @@ var ThemeDesigner = {
 			reloadCSS = true;
 		}
 
-		if(setting == "color-body" || setting == "color-page" || setting == "color-buttons" || setting == "color-links" || setting == "background-image" || setting == "background-tiled" || setting == "color-header" || setting == "wordmark-font") {
+		if(setting == "color-body" || setting == "color-page" || setting == "color-buttons" || setting == "color-links" || setting == "background-image" || setting == "background-tiled" || setting == "color-header" || setting == "wordmark-font" || setting == "background-fixed") {
 			reloadCSS = true;
 		}
 
@@ -566,6 +580,8 @@ var ThemeDesigner = {
 		} else {
 			$("#tile-background").attr("checked", false);
 		}
+		
+		$("#fix-background").attr("checked", ThemeDesigner.settings["background-fixed"] == "true");
 
 		/*** Wordmark Tab ***/
 		// style wordmark preview

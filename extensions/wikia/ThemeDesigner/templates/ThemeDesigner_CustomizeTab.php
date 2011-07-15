@@ -10,6 +10,7 @@
 				<h2><?= wfMsg('themedesigner-graphic') ?></h2>
 				<img src="<?= $wgBlankImgUrl ?>" class="background-image" id="swatch-image-background">
 				<input type="checkbox" id="tile-background"> <label for="tile-background"><?= wfMsg('themedesigner-tile-background') ?></label>
+				<input type="checkbox" id="fix-background"> <label for="fix-background"><?= wfMsg('themedesigner-fix-background') ?></label>
 			</li>
 		</ul>
 	</fieldset>

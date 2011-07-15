@@ -66,6 +66,7 @@ class AdminDashboardModule extends Module {
 		$oasisSettings["background-image"] = wfReplaceImageServer($settings['background-image'], SassUtil::getCacheBuster());
 		$oasisSettings["background-align"] = $settings["background-align"];
 		$oasisSettings["background-tiled"] = $settings["background-tiled"];
+		$oasisSettings["background-fixed"] = $settings["background-fixed"];
 		if (isset($settings["wordmark-font"]) && $settings["wordmark-font"] != "default") {
 			$oasisSettings["wordmark-font"] = $settings["wordmark-font"];
 		}
