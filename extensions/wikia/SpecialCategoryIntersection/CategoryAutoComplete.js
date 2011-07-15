@@ -16,7 +16,7 @@ CategoryAutoComplete = {
 
 	init : function() {
 		CategoryAutoComplete.searchForm = $('#'+CategoryAutoComplete.FORM_ID);
-		CategoryAutoComplete.searchFields = CategoryAutoComplete.searchForm.children('input[placeholder]');
+		CategoryAutoComplete.searchFields = CategoryAutoComplete.searchForm.find('input[placeholder]');
 
 		// RT #141437 - hide HOME_TOP_RIGHT_BOXAD when showing search suggestions
 		CategoryAutoComplete.ads = $("[id$='TOP_RIGHT_BOXAD']");
@@ -51,18 +51,20 @@ CategoryAutoComplete = {
 	initSuggest: function () {
 		var appendToId = '#'+CategoryAutoComplete.FORM_ID;
 		$.loadJQueryAutocomplete(function() {
-			CategoryAutoComplete.searchFields.autocomplete({
-// TODO: Make this use the category namespace
-				serviceUrl: wgServer + wgScript + '?action=ajax&rs=getLinkSuggest&format=json',
-				onSelect: function(v, d) {
-					CategoryAutoComplete.track('suggest');
-					window.location.href = wgArticlePath.replace(/\$1/, encodeURIComponent(v.replace(/ /g, '_')));
-				},
-				appendTo: appendToId,
-				deferRequestBy: 250,
-				maxHeight: 1000,
-				selectedClass: 'selected',
-				width: '270px'
+			CategoryAutoComplete.searchFields.each(function(){
+				$(this).autocomplete({
+	// TODO: Make this use the category namespace
+					serviceUrl: wgServer + wgScript + '?action=ajax&rs=getLinkSuggest&format=json',
+					onSelect: function(v, d) {
+						CategoryAutoComplete.track('suggest');
+						window.location.href = wgArticlePath.replace(/\$1/, encodeURIComponent(v.replace(/ /g, '_')));
+					},
+					appendTo: $(this).parent('.autoCompleteWrapper'),
+					deferRequestBy: 250,
+					maxHeight: 1000,
+					selectedClass: 'selected',
+					width: '270px'
+				});
 			});
 		});
 	}
