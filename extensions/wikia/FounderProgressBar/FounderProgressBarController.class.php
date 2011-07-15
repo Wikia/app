@@ -5,6 +5,11 @@ class FounderProgressBarController extends WikiaController {
 	/**
 	 * Initialize static data
 	 */
+	var $messages;
+	var $counters;
+	var $urls;
+	var $bonus_tasks;
+	var $click_events;
 	
 	public function init() {
 		// Messages are defined in the i18n file
@@ -134,7 +139,7 @@ class FounderProgressBarController extends WikiaController {
 		);
 		
 		// tracked events on the frontend
-		$this->clickEvents = array(
+		$this->click_events = array(
 				FT_THEMEDESIGNER_VISIT => true,
 				FT_COMMCENTRAL_VISIT => true,
 				FT_WIKIACTIVITY_VISIT => true,
@@ -253,8 +258,9 @@ class FounderProgressBarController extends WikiaController {
 			$this->setVal('error', 'invalid task_id');
 			return;
 		}
+		$isBonusTask = in_array($task_id, $this->bonus_tasks) ? true : false;
 		$response = $this->sendSelfRequest('isTaskComplete', array("task_id" => $task_id));
-		if ($response->getVal('task_completed', 0) == "1") {
+		if (!$isBonusTask && $response->getVal('task_completed', 0) == "1") {
 			$this->setVal('result', 'error');
 			$this->setVal('error', 'task_completed');
 			return;
@@ -279,7 +285,7 @@ class FounderProgressBarController extends WikiaController {
 			$this->setVal('error', 'invalid task_id');
 			return;
 		}
-		$actions_completed = $row['task_count'];
+		$actions_completed = (int) $row['task_count'];
 		$actions_remaining = $this->counters[$task_id] - $actions_completed;
 
 		$this->setVal('actions_completed', $actions_completed);
@@ -288,7 +294,7 @@ class FounderProgressBarController extends WikiaController {
 		if ($actions_remaining <= 0) {
 			$dbw->update(
 				'founder_progress_bar_tasks',
-				array('task_completed' => '1'),
+				array('task_count' => '0', 'task_completed =task_completed + 1'),
 				array('wiki_id' => $wiki_id, 'task_id' => $task_id)
 			);
 			$this->setVal('result', "task_completed");		
@@ -345,7 +351,7 @@ class FounderProgressBarController extends WikiaController {
 	
 	/**
 	 * @requestParam int task_id
-	 * @responseParam int task_completed 0 or 1
+	 * @responseParam int task_completed 0 or 1+  (bonus tasks can be completed more than once)
 	 */
 	public function isTaskComplete() {
 		$task_id = $this->getVal("task_id");
@@ -415,7 +421,7 @@ class FounderProgressBarController extends WikiaController {
 		$this->response->setVal('activeTaskList', $activeTaskList);
 		$this->response->setVal('skippedTaskList', $skippedTaskList);
 		$this->response->setVal('bonusTaskList', $bonusTaskList);
-		$this->response->setVal('clickEvents', $this->clickEvents);
+		$this->response->setVal('clickEvents', $this->click_events);
 		$this->response->setVal('showCompletionMessage', $showCompletionMessage);
 	}
 	
@@ -432,7 +438,7 @@ class FounderProgressBarController extends WikiaController {
 			}
 		}
 		if(!empty($activity)) {
-			$html = F::app()->getView( 'FounderProgressBar', 'widgetActivityPreview', array('activity' => $activity, 'clickEvents' => $this->clickEvents, 'index' => 1, 'wgBlankImgUrl' => F::app()->wg->BlankImgUrl, 'visible' => false ))->render();
+			$html = F::app()->getView( 'FounderProgressBar', 'widgetActivityPreview', array('activity' => $activity, 'clickEvents' => $this->click_events, 'index' => 1, 'wgBlankImgUrl' => F::app()->wg->BlankImgUrl, 'visible' => false ))->render();
 		} else {
 			$html = '';
 		}
@@ -493,6 +499,12 @@ class FounderProgressBarController extends WikiaController {
 		
 		$response = $this->sendSelfRequest("getLongTaskList", array("use_master" => true));
 		$list = $response->getVal('list');
+
+		// If bonus tasks already exist in the task list, no need to continue
+		if (isset($list[$this->bonus_tasks[0]])) {
+			return;
+		}
+		
 		$total_tasks = count($list);
 		$tasks_completed_or_skipped = 0; 
 		foreach ($list as $task) {
@@ -500,14 +512,13 @@ class FounderProgressBarController extends WikiaController {
 		}
 		if ($tasks_completed_or_skipped >= $total_tasks) {
 			$wiki_id = $this->wg->CityId;
-			// Special case, unlock one bonus task, in the order in which they appear in our bonus_tasks array
+			// Special case, unlock all bonus tasks
 			foreach ($this->bonus_tasks as $bonus_task_id) {
 				if (!isset($list[$bonus_task_id])) {
 					$sql = "INSERT IGNORE INTO founder_progress_bar_tasks SET wiki_id=$wiki_id, task_id=$bonus_task_id";
 					$dbw = $this->getDB(DB_MASTER);			
 					$dbw->query ($sql);
 					$dbw->commit();
-					break;
 				}
 			}
 		}
@@ -526,7 +537,7 @@ class FounderProgressBarController extends WikiaController {
 		$bonus_tasks = 0;
 		foreach ($list as $task) {
 			if ($task['task_skipped'] == 1) $tasks_skipped ++;
-			if ($task['task_completed'] == 1) $tasks_completed ++;
+			if ($task['task_completed'] > 0) $tasks_completed += $task['task_completed'];
 			if (in_array($task['task_id'], $this->bonus_tasks)) {
 				$bonus_tasks ++;
 			}
