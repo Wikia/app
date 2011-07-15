@@ -16,6 +16,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 }
 
 $app = F::build( 'App' );
+$dir = dirname( __FILE__ );
 
 $app->wg->append(
         'wgExtensionCredits',
@@ -32,29 +33,10 @@ $app->wg->append(
 
 $app->registerHook( 'ParserFirstCallInit', 'MobileContentParser', 'onParserFirstCallInit' );
 
+/** 
+ * services
+ */
+$app->wg->set( 'wgAutoloadClasses', "{$dir}/MobileContentParser.class.php", 'MobileContentParser' );
+
 // allow for override in DefaultSettings
-if ( empty( $wgMobileSkins ) ) $wgMobileSkins = array(  'wikiphone', 'wikiaapp' );
-
-function efOnMobileDisplay( $contents, $attributes, $parser ) {
-	$app = F::build('App');
-	$skin = $app->getGlobal( 'wgUser' )->getSkin();
-	$wgMobileSkins = $app->getGlobal( 'wgMobileSkins' );
-
-	if ( in_array( $skin->getSkinName(), $wgMobileSkins ) ) {
-		return $contents;
-	} else {
-		return '';
-	}
-}
-
-function efOnMobileHide( $contents, $attributes, $parser ) {
-        $app = F::build('App');
-        $skin = $app->getGlobal( 'wgUser' )->getSkin();
-        $wgMobileSkins = $app->getGlobal( 'wgMobileSkins' );
-
-	if ( in_array( $skin->getSkinName(), $wgMobileSkins ) ) {
-		return '';
-	} else {
-		return $contents;
-	}
-}
+if ( empty( $app->wg->mobileSkins ) ) $app->wg->mobileSkins = array(  'wikiphone', 'wikiaapp' );
