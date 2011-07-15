@@ -68,8 +68,8 @@ $app->wg->append( 'wgHooks', 'efUserPathPredictionOnBeforePageDisplayAddButton',
  * settings
  */
 //allow overriding in Default/LocalSettings or via WikiFactory
-if ( empty( $wgUserPathPredictionExludeNamespaces ) ) {
-	$wgUserPathPredictionExludeNamespaces = array( NS_SPECIAL );
+if ( empty( $app->wg->UserPathPredictionExludeNamespaces ) ) {
+	 $app->setGlobal( 'UserPathPredictionExludeNamespaces', array( NS_SPECIAL ) );
 }
 
 //this is a devbox only hack, will disappear before reaching production
