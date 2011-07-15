@@ -34,28 +34,39 @@ class CodeLint {
 	 * Run jslint for a given file
 	 *
 	 * @param string $fileName file to run jslint for
+	 * @param array $params additional params to be passed to JS
 	 * @return string output from jslint
 	 */
-	protected function runJsLint($fileName) {
-		// generate path to script which will run jslint
+	protected function runJsLint($fileName, $params = array()) {
+		// generate path to "wrapper" script running jslint
 		$runScript = escapeshellcmd(dirname(__FILE__) . '/js/run-lint.js');
 
 		// generate path to jslint.js
 		$libDirectory = F::app()->getGlobal('IP') . '/lib';
-		$jsLint = escapeshellcmd("{$libDirectory}/jslint/jslint.js");
+		$params['jslint'] = "{$libDirectory}/jslint/jslint.js";
 
-		$fileName = escapeshellcmd($fileName);
+		// file to perform lint on
+		$params['file'] = $fileName;
 
-		$cmd = "node {$runScript} --jslint={$jsLint} --file={$fileName}"; var_dump($cmd);
+		// format additional params for JS script
+		$extraParams = '';
+
+		foreach($params as $key => $value) {
+			$extraParams .= " --{$key}=" . escapeshellcmd(trim($value));
+		}
+
+		$cmd = "node {$runScript}{$extraParams}";
 		exec($cmd, $output, $retVal);
+
+		// concatenate script output
+		$output = implode("\n", $output);
 
 		if ($retVal == 0 ) {
 			// success!
-			$output = implode("\n", $output);
 			$res = json_decode($output, true /* $assoc */);
 		}
 		else {
-			$res = null;
+			throw new Exception($output);
 		}
 
 		return $res;

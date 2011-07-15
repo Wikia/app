@@ -18,4 +18,28 @@ exports.parseArgs = function(argv) {
 	}
 
 	return args;
-}
+};
+
+/**
+ * Generate global directive for jslint
+ */
+exports.formatGlobalsComment = function(forbiddenGlobals, knownGlobals) {
+	var globals = [],
+		globalsComment = '';
+
+	if (forbiddenGlobals && forbiddenGlobals.length) {
+		forbiddenGlobals.forEach(function(elem) {
+			globals.push(elem + ':true');
+		});
+	}
+
+	if (knownGlobals && knownGlobals.length) {
+		knownGlobals.forEach(function(elem) {
+			globals.push(elem + ':false');
+		});
+	}
+
+	globalsComment = "/*global " + globals.join(', ') + " */";
+
+	return globalsComment;
+};
