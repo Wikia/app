@@ -53,6 +53,7 @@ $dir = isset($options['dir']) ? $options['dir'] : false;
 switch($mode) {
 	case 'js':
 		$lint = new JsLint();
+		$pattern = '*.js';
 		break;
 
 	default:

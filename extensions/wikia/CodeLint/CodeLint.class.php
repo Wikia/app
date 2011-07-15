@@ -12,6 +12,9 @@
 
 abstract class CodeLint {
 
+	// file name pattern - used when linting directories
+	protected $filePattern = null;
+
 	/**
 	 * Check whether nodejs is installed
 	 *
@@ -28,6 +31,32 @@ abstract class CodeLint {
 	 */
 	static public function getNodeJsVersion() {
 		return trim(`node --version`);
+	}
+
+	/**
+	 * Find files matching a pattern using PHP "glob" function and recursion
+	 *
+	 * @see http://www.redips.net/php/find-files-with-php/
+	 *
+	 * @return array containing all pattern-matched files
+	 *
+	 * @param string $dir     - directory to start with
+	 * @param string $pattern - pattern to glob for
+	 */
+	protected function findFiles($dir, $pattern) {
+		// escape any character in a string that might be used to trick
+		// a shell command into executing arbitrary commands
+		$dir = escapeshellcmd($dir);
+		// get a list of all matching files in the current directory
+		$files = glob("$dir/$pattern");
+		// find a list of all directories in the current directory
+		// directories beginning with a dot are also included
+		foreach (glob("$dir/{.[^.]*,*}", GLOB_BRACE|GLOB_ONLYDIR) as $sub_dir) {
+		    $arr   = $this->findFiles($sub_dir, $pattern);  // resursive call
+		    $files = array_merge($files, $arr); // merge array with files from subdirectory
+		}
+		// return all found files
+	    return $files;
 	}
 
 	/**
@@ -147,7 +176,23 @@ abstract class CodeLint {
 	 * @return array list of reported warnings
 	 */
 	public function checkDirectory($directoryName) {
+		$files = $this->findFiles($directoryName, $this->filePattern);
+		$results = array();
 
+		if (!empty($files)) {
+			foreach($files as $fileName) {
+				// skip minified versions
+				if (strpos($fileName, '.min.') !== false || strpos($fileName, '-min.') !== false) {
+					continue;
+				}
+
+				echo "Linting {$fileName}...";
+				$results[] = $this->checkFile($fileName);
+				echo " [done]\n";
+			}
+		}
+
+		return $results;
 	}
 
 	/**

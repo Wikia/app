@@ -7,6 +7,9 @@
  * @author Maciej Brencz (Macbre) <macbre at wikia-inc.com>
  */
 
+// benchmark
+var time = +new Date();
+
 // require generic functions
 var print = require("sys").print,
 	parseArgs = require('./utils').parseArgs,
@@ -29,6 +32,8 @@ var OPTIONS = {
 	maxerr: 750,
 	// tolerate uncapitalized constructors
 	newcap: true,
+	// tolerate dangling _ in identifiers
+	nomen: true,
 	// tolerate ++ and -- operators
 	plusplus: true,
 	// tolerate missing 'use strict' pragma
@@ -84,7 +89,8 @@ var result = {
 	info: {
 		jslint: jslint.edition,
 		nodejs: process.version
-	}
+	},
+	time: +new Date() - time
 };
 
 // return JSON-encoded result

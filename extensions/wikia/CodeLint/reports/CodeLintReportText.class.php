@@ -34,7 +34,10 @@ class CodeLintReportText extends CodeLintReport {
 			$report .= $line;
 			$report .= "File: {$fileEntry['fileChecked']}\n";
 			$report .= "Blame: <{$tracUrl}>\n";
-			$report .= "No. of errors: {$fileEntry['errorsCount']}\n";
+			$report .= sprintf("No. of errors: %d / checked in %.4f s\n",
+				$fileEntry['errorsCount'],
+				$fileEntry['time'] / 1000
+			);
 			$report .= $line;
 
 			foreach($fileEntry['errors'] as $n => $entry) {
@@ -44,6 +47,8 @@ class CodeLintReportText extends CodeLintReport {
 					implode(',', $entry['lines'])
 				);
 			}
+
+			$report .= "\n";
 		}
 
 		$report .= $line;
