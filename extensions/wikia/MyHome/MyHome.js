@@ -77,8 +77,8 @@ MyHome.loadFullSizeImage = function(ev) {
 	MyHome.ajax('getImagePreview', {
 		'title': url,
 		'timestamp': timestamp,
-		'maxwidth': $.getViewportWidth(),
-		'maxheight': $.getViewportHeight()
+		'maxwidth': $(window).width(),
+		'maxheight': $(window).height()
 	}, function(res) {
 		// replace thumbnail with video preview
 		if (res.html) {

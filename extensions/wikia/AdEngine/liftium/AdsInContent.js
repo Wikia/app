@@ -26,7 +26,7 @@ AIC2.init = function() {
 	}
 
 // FIXME
-if ($.getViewportWidth() < 1010) {
+if ($(window).width() < 1010) {
 	Liftium.d("AIC2: window too narrow, bailing out", 3);
 	Liftium.trackEvent(Liftium.buildTrackUrl(["AIC2", "too_narrow"]));
 	return;

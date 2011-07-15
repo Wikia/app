@@ -69,7 +69,7 @@ var VideoUpload = {
 
 		// get width of article to be used for editor
 		var width = parseInt($('#WikiaPage').width() - 75);
-		width = Math.min($.getViewportWidth() - 75, width);
+		width = Math.min($(window).width() - 75, width);
 		width = Math.max(670, width);
 		width = Math.min(1300, width);
 

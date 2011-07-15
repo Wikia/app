@@ -46,7 +46,7 @@
 		// get height needed to fit given node into browser's viewport height
 		getHeightToFit: function(node) {
 			var topOffset = node.offset().top,
-				viewportHeight = $.getViewportHeight();
+				viewportHeight = $(window).height();
 
 			return viewportHeight - topOffset;
 		},

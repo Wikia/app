@@ -360,48 +360,6 @@ $.bulkLoad = function(list,success,failure) {
 	return true;
 }
 
-/*
-Copyright (c) 2008, Yahoo! Inc. All rights reserved.
-Code licensed under the BSD License:
-http://developer.yahoo.net/yui/license.txt
-version: 2.5.2
-*/
-
-/**
- * Returns the current height of the viewport.
- * @method getViewportHeight
- * @return {Int} The height of the viewable area of the page (excludes scrollbars).
- */
-$.getViewportHeight = function() {
-    var height = self.innerHeight; // Safari, Opera
-    var mode = document.compatMode;
-
-    if ( (mode || $.browser.msie) && !$.browser.opera ) { // IE, Gecko
-	height = (mode == 'CSS1Compat') ?
-		document.documentElement.clientHeight : // Standards
-		document.body.clientHeight; // Quirks
-    }
-
-    return height;
-};
-
-/**
- * Returns the current width of the viewport.
- * @method getViewportWidth
- * @return {Int} The width of the viewable area of the page (excludes scrollbars).
- */
-
-$.getViewportWidth = function() {
-    var width = self.innerWidth;  // Safari
-    var mode = document.compatMode;
-
-    if (mode || $.browser.msie) { // IE, Gecko, Opera
-	width = (mode == 'CSS1Compat') ?
-		document.documentElement.clientWidth : // Standards
-		document.body.clientWidth; // Quirks
-    }
-    return width;
-};
 
 /**
 * Finds the event in the window object, the caller's arguments, or

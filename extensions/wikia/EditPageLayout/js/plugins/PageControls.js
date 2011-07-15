@@ -313,7 +313,7 @@
 							ev.preventDefault();
 						}).
 						css({
-							height: $.getViewportHeight() - 250,
+							height: $(window).height() - 250,
 							overflow: 'auto'
 						});
 
