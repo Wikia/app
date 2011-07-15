@@ -15,6 +15,11 @@ body {
 		background-repeat: no-repeat;
 	}
 }
+@if $background-fixed == true {
+	body {
+		background-attachment: fixed;
+	}
+}
 @if $oasisHD == 1 {
 	body {
 		min-width: $width-outside + 40;

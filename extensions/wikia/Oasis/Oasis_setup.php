@@ -91,6 +91,7 @@ $wgOasisThemes = array(
 		"color-header" => "#3A5766",
 		"background-image" => $wgCdnStylePath ."/skins/oasis/images/themes/oasis.png",
 		"background-align" => "center",
+		"background-fixed" => "false",
 		"background-tiled" => "true"
 	),
 	'jade' => array(
@@ -101,6 +102,7 @@ $wgOasisThemes = array(
 		"color-header" => "#002C11",
 		"background-image" => "",
 		"background-align" => "center",
+		"background-fixed" => "false",
 		"background-tiled" => "false"
 	),
 	'babygirl' => array(
@@ -111,6 +113,7 @@ $wgOasisThemes = array(
 		"color-header" => "#2A1124",
 		"background-image" => $wgCdnStylePath ."/skins/oasis/images/themes/babygirl.jpg",
 		"background-align" => "center",
+		"background-fixed" => "false",
 		"background-tiled" => "false"
 	),
 	'carbon' => array(
@@ -131,6 +134,7 @@ $wgOasisThemes = array(
 		"color-header" => "#04180C",
 		"background-image" => $wgCdnStylePath ."/skins/oasis/images/themes/rockgarden.jpg",
 		"background-align" => "center",
+		"background-fixed" => "false",
 		"background-tiled" => "false"
 	),
 	'opulence' => array(
@@ -141,6 +145,7 @@ $wgOasisThemes = array(
 		"color-header" => "#610038",
 		"background-image" => $wgCdnStylePath ."/skins/oasis/images/themes/opulence.png",
 		"background-align" => "center",
+		"background-fixed" => "false",
 		"background-tiled" => "true"
 	),
 	'bluesteel' => array(
@@ -151,6 +156,7 @@ $wgOasisThemes = array(
 		"color-header" => "#0A3073",
 		"background-image" => $wgCdnStylePath ."/skins/oasis/images/themes/bluesteel.jpg",
 		"background-align" => "center",
+		"background-fixed" => "false",
 		"background-tiled" => "false"
 	),
 	'creamsicle' => array(
@@ -161,6 +167,7 @@ $wgOasisThemes = array(
 		"color-header" => "#A1774F",
 		"background-image" => $wgCdnStylePath ."/skins/oasis/images/themes/creamsicle.jpg",
 		"background-align" => "center",
+		"background-fixed" => "false",
 		"background-tiled" => "false"
 	),
 	'plated' => array(
@@ -171,6 +178,7 @@ $wgOasisThemes = array(
 		"color-header" => "#000000",
 		"background-image" => $wgCdnStylePath ."/skins/oasis/images/themes/plated.jpg",
 		"background-align" => "center",
+		"background-fixed" => "false",
 		"background-tiled" => "false"
 	),
 	'police' => array(
@@ -181,6 +189,7 @@ $wgOasisThemes = array(
 		"color-header" => "#181010",
 		"background-image" => $wgCdnStylePath ."/skins/oasis/images/themes/police.jpg",
 		"background-align" => "center",
+		"background-fixed" => "false",
 		"background-tiled" => "false"
 	),
 	'aliencrate' => array(
@@ -191,6 +200,7 @@ $wgOasisThemes = array(
 		"color-header" => "#433E1F",
 		"background-image" => $wgCdnStylePath ."/skins/oasis/images/themes/aliencrate.jpg",
 		"background-align" => "center",
+		"background-fixed" => "false",
 		"background-tiled" => "false"
 	),
 );

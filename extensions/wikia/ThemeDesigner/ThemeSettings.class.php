@@ -58,6 +58,7 @@ class ThemeSettings {
 		$this->defaultSettings['background-image-name'] = '';
 		$this->defaultSettings['background-image-revision'] = false; //what is this?
 		$this->defaultSettings['background-tiled'] = false;
+		$this->defaultSettings['background-fixed'] = false;
 		$this->defaultSettings['background-align'] = "center";
 	}
 
@@ -71,6 +72,12 @@ class ThemeSettings {
 					break;
 				}
 			}
+			
+			// add variables that might not be saved already in WF
+			if(!isset($settings['background-fixed'])) {
+				$settings['background-fixed'] = false;
+			}
+			
 			return $settings;
 		} else {
 			return $this->defaultSettings;
