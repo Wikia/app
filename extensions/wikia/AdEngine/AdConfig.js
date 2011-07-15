@@ -282,8 +282,7 @@ AdConfig.DART.getMobileUrl = function(slotname, size, useIframe, adProvider) {
 		'src=' + src + ';' +
 		'sz=' + size + ';' +
 		'mtfInline=true;' +	// http://www.google.com/support/richmedia/bin/answer.py?hl=en&answer=182220
-		AdConfig.DART.getTileKV(slotname, adProvider) +
-		'&dw=1';
+		AdConfig.DART.getTileKV(slotname, adProvider);
 
 	return url;
 }
