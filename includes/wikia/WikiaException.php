@@ -77,4 +77,28 @@ class WikiaException extends MWException {
 	protected function _getPrevious() {
 		return $this->_previous;
 	}
+
+	/**
+	 * Override MWException report() and write exceptions to error_log
+	 * 
+	 * Uncomment the flush() line to override normal MWException headers 
+	 * so we can display an error page instead of a 500 error (varnish doesn't like those)
+	 *
+	 * TODO: display a nice walter?
+	 */
+	function report() {
+		global $wgRequest;
+		$file = $this->getFile();
+		$line = $this->getLine();
+		$message = $this->getMessage();
+		$url = '[no URL]';
+		if ( isset( $wgRequest ) ) {
+			$url = $wgRequest->getFullRequestURL();
+		}
+		error_log("Exception from line $line of $file: $message ($url)");
+		
+		//flush();   // bust the headers_sent check in MWException::report()
+		parent::report();
+	}
+
 }
