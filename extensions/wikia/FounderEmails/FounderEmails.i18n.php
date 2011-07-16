@@ -38,7 +38,7 @@ Now that you\'re a few days into your wiki, we thought you might want to check o
 	'founderemails-email-3-days-passed-body-HTML' => 'Hey there $FOUNDERNAME,<br /><br />
 Now that you\'re a few days into your wiki, we thought you might want to check out a few other things you can do.<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- The Wikia Team</div>',
-	'founderemails-email-10-days-passed-subject' => 'How\'s things going with your wiki?',
+	'founderemails-email-10-days-passed-subject' => 'How are things going on your wiki?',
 	'founderemails-email-10-days-passed-body' => 'Hey $FOUNDERNAME,
 
 It\'s been a little while since you started a wiki on Wikia - we hope it\'s going great! We wanted to share a few final tidbits to help make your wiki more like home.
@@ -123,7 +123,7 @@ Now that you\'re a few days into your wiki, we thought you might want to check o
 	'founderemails-answers-email-3-days-passed-body-HTML' => 'Hey there $FOUNDERNAME,<br /><br />
 Now that you\'re a few days into your wiki, we thought you might want to check out a few other things you can do.<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- The Wikia Team</div>',
-	'founderemails-answers-email-10-days-passed-subject' => 'How\'s things going with your wiki?',
+	'founderemails-answers-email-10-days-passed-subject' => 'How are things going on your wiki?',
 	'founderemails-answers-email-10-days-passed-body' => 'Hey $FOUNDERNAME,
 
 It\'s been a little while since you started a wiki on Wikia - we hope it\'s going great! We wanted to share a few final tidbits to help make your wiki more like home.
@@ -216,7 +216,7 @@ There\'s a lot happening on your wiki today! Drop by $MYHOMEURL to see what\'s b
 	'founderemails-email-10-day-congratulations' => 'Whoa, time flies!  It\'s already been 10 days since you started $HDWIKINAME.',
 	'founderemails-email-10-day-tips-heading' => 'Get others involved in your project and show off all the awesome work you\'ve been doing!  Here are some ways to spread the word:',
 	'founderemails-email-10-day-share-heading' => 'Didn\'t your mother tell you to Share?',
-	'founderemails-email-10-day-share-content' => 'Use the Share button on your toolbar, article pages and photos to show them off to your friends and followers on Facebook, Twitter, or other popular sites.',
+	'founderemails-email-10-day-share-content' => 'Use the Facebook Like button on your wiki\'s main page, article pages and photos to show them off to your friends and followers on Facebook.',
 	'founderemails-email-10-day-email-heading' => 'Harness the power of email.',
 	'founderemails-email-10-day-email-content' => 'Email others you know who are interested in your topic or interested in helping you, like a friend from school or a co-worker.  You can also email specific photos from your wiki using the email button',
 	'founderemails-email-10-day-join-heading' => 'Join up with similar websites.',
