@@ -67,6 +67,8 @@ abstract class CodeLint {
 	 * @return string output from jslint
 	 */
 	protected function runJsLint($fileName, $params = array()) {
+		$timeStart = microtime(true /* $get_as_float */);
+
 		// generate path to "wrapper" script running jslint
 		$runScript = escapeshellcmd(dirname(__FILE__) . '/js/run-lint.js');
 
@@ -90,9 +92,15 @@ abstract class CodeLint {
 		// concatenate script output
 		$output = implode("\n", $output);
 
+		$timeEnd = microtime(true /* $get_as_float */);
+
 		if ($retVal == 0 ) {
 			// success!
 			$res = json_decode($output, true /* $assoc */);
+
+			if (!empty($res)) {
+				$res['time'] = round($timeEnd - $timeStart, 4);
+			}
 		}
 		else {
 			throw new Exception($output);
@@ -164,7 +172,6 @@ abstract class CodeLint {
 			}
 
 			$output['errors'] = array();
-			ksort($errorsFolded);
 
 			foreach($errorsFolded as $msg => $lines) {
 				$entry = array(

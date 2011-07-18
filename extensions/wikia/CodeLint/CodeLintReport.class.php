@@ -43,7 +43,7 @@ abstract class CodeLintReport {
 	 * @param string $fileName file to generate link for
 	 * @return string trac link
 	 */
-	protected function getTracUrl($fileName) {
+	protected function getTracBlameUrl($fileName) {
 		$root = realpath('../../');
 		$file = realpath($fileName);
 

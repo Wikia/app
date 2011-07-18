@@ -134,11 +134,23 @@ class JsLint extends CodeLint {
 			case "Unsafe character.":
 			// there's no such thing as global FCK object in JS :)
 			case "'FCK' was used before it was defined.":
+			// return statement followed by the object in the next line (but this will return undefined)
+			case "Unreachable '{' after 'return'.":
+			// use [] and {} literals, instead of new Array() and new Object()
+			case "Use the array literal notation [].":
+			case "Use the object literal notation {}.":
+			// Trailing Comma Of Death
+			case "Unexpected ','.":
 				$ret = true;
 				break;
 
 			default:
 				$ret = false;
+		}
+
+		// Unreachable 'XXX' after 'return'.
+		if (strpos($errorMsg, 'Unreachable ') === 0 && strpos($errorMsg, "after 'return'.") !== false) {
+			$ret = true;
 		}
 
 		return $ret;

@@ -26,14 +26,14 @@ class CodeLintReportText extends CodeLintReport {
 		$totalTime = 0;
 
 		foreach($results as $fileEntry) {
-			$tracUrl = $this->getTracUrl($fileEntry['fileChecked']);
+			$tracUrl = $this->getTracBlameUrl($fileEntry['fileChecked']);
 
 			$report .= $line;
 			$report .= "File: {$fileEntry['fileChecked']}\n";
 			$report .= "Blame: <{$tracUrl}>\n";
 			$report .= sprintf("No. of errors: %d / checked in %.4f s\n",
 				$fileEntry['errorsCount'],
-				$fileEntry['time'] / 1000
+				$fileEntry['time']
 			);
 			$report .= $line;
 
@@ -53,7 +53,7 @@ class CodeLintReportText extends CodeLintReport {
 			
 			$report .= "\n";
 			
-			$totalTime += $fileEntry['time'] / 1000;
+			$totalTime += $fileEntry['time'];
 		}
 
 		$report .= $line;
