@@ -1,7 +1,7 @@
 <?php
 
 /**
- * JsLint
+ * CodeLintJs
  *
  * Class used for linting JS code
  *
@@ -10,7 +10,7 @@
  * @package MediaWiki
  */
 
-class JsLint extends CodeLint {
+class CodeLintJs extends CodeLint {
 
 	// array of known JS globals
 	private $knownGlobals;
