@@ -10,7 +10,7 @@ var UserPathPrediction = {
 		$('#selectBy').change(function() {
 
 			if ($(this).val() == "byId") {
-				$('#articlePlace').html('<input id="article" type="number" />');
+				$('#articlePlace').html('<input id="article" type="number" min="0"/>');
 			} else {
 				$('#articlePlace').html('<input id="article" type="text" />');
 			}
@@ -56,10 +56,11 @@ var UserPathPrediction = {
 			},
 			function( data ) {
 				paths = data.paths;
-				thumbnails = data.thumbnails;
 				
-				if ( data['paths'] != "No Result" ) {
+				
+				if ( paths != "No Result" ) {
 					$( "#navigationArticles" ).html("");
+					thumbnails = data.thumbnails;
 					
 					for ( var i = 0; i < paths.length; i++ ) {
 					
@@ -85,8 +86,7 @@ var UserPathPrediction = {
 						}
 					}
 				} else {
-					alert("as");
-					$( '#navigationArticles > ul' ).fadeOut( 'slow' );
+					$( '#navigationArticles' ).fadeOut( 'slow' );
 					$( '#navigationArticles' ).html('<span class="noresult">' + $( '#noresult' ).text() + "</span>").fadeIn( 'slow' );
 				}
 			}
@@ -104,15 +104,17 @@ var UserPathPrediction = {
 				'selectby': $( '#selectBy' ).val(),
 				'article': $( '#article' ).val(),
 				'datespan': $( '#dateSpan' ).val(),
+				'userHaveSeenNumber': $( '#userHaveSeenNumber' ).val(),
 				'format': 'json'
 			},
 			function( data ) {
 				nodes = data.nodes;
-				thumbnails = data.thumbnails;
 				
-				if ( data['nodes'] != "No Result" ) {
+				if ( nodes != "No Result" ) {
 					$('#relatedArticles > ul ').fadeOut('slow');
 					$("#relatedArticles").html("<ul></ul>");
+					thumbnails = data.thumbnails;
+					
 					for ( var i = 0; i < nodes.length; i++ ) {
 						
 						if ( thumbnails[nodes[i].targetTitle.mArticleID] ) {

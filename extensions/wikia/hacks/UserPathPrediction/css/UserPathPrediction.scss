@@ -98,8 +98,9 @@ footer {
   font-size: 2em;
   text-shadow: 0 0 20px #FFF;
   position: relative;
-  top: 45px;
-  left: 10px;
+  display: block;
+  margin: 20px auto;
+  padding: 23px;
 }
 
 #navigationArticles {

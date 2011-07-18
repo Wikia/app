@@ -182,7 +182,7 @@ class UserPathPredictionModel {
 			$articleId = $next->target_id;
 			$prevTargetId = $next->referrer_id;
 			
-			for ( $i = 0; $i < $nodeCount; $i++ ) {
+			for ( $i = 0; $i < ($nodeCount - 1); $i++ ) {
 	
 				$where = array( 'city_id' => $cityId, 'referrer_id' => $articleId, 'updated > ' . $date);
 				
@@ -228,14 +228,16 @@ class UserPathPredictionModel {
 		return $resultArray;
 	}
 	
-	public function getRelated( $cityId, $articleId, $dateSpan = 30 ) {
+	public function getRelated( $cityId, $articleId, $dateSpan = 30 ,$userHaveSeenNumber = 3 ) {
 		$this->app->wf->profileIn(__METHOD__);
 		$resultArray = array();
+		$dateString = "-" . $dateSpan . " day";
+		$date = date( "Ymd", strtotime( $dateString ) );
 		$dbr =$this->getDBConnection();
 		
-		$where = array( 'city_id' => $cityId, 'referrer_id' => $articleId );	
+		$where = array( 'city_id' => $cityId, 'referrer_id' => $articleId, 'updated > ' . $date );	
 		
-		$res = $dbr->select( 'path_segments_archive', '*', $where , __METHOD__, array( "LIMIT" => 10, "ORDER BY" => "count DESC" ));
+		$res = $dbr->select( 'path_segments_archive', '*', $where , __METHOD__, array( "LIMIT" => $userHaveSeenNumber, "ORDER BY" => "count DESC" ));
 
 		while ( $row = $dbr->fetchObject( $res ) ) {
 			$resultArray[] = $row;
