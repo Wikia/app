@@ -40,6 +40,9 @@ $messages['en'] = array(
 	'lookupuser-admin' => 'Admin',
 	'lookupuser-bureaucrat' => 'Bureaucrat',
 	'lookupuser-chatmoderator' => 'Chat moderator',
+	'lookupuser-user-blocked-globally' => 'This user <strong>is</strong> blocked globally.',
+	'lookupuser-user-not-blocked-globally' => 'This user <strong>is not</strong> blocked globally.',
+	'lookupuser-founder' => 'Founder',
 );
 
 /** Message documentation (Message documentation)

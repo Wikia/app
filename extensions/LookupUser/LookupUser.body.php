@@ -237,7 +237,8 @@ EOT
 			
 			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 			$oTmpl->set_vars(array(
-				'username'  => $name
+				'username' => $name,
+				'isGloballyBlocked' => $user->isBlockedGlobally(),
 			));
 			$wgOut->addHTML( $oTmpl->execute('contribution.table') );
 			//End: Small Stuff Week
@@ -246,105 +247,6 @@ EOT
 			$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-touched', $wgLang->timeanddate( $user->mTouched ) ) );
 			$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-useroptions' ) . '<br />' . $optionsString );
 		}
-	}
-	
-	/**
-	 * @brief: Ajax call loads data for jQuery.table plugin
-	 * 
-	 * @author Andrzej 'nAndy' Łukaszewski
-	 */
-	public function loadAjaxContribData() {
-		global $wgRequest, $wgUser, $wgCityId, $wgDBname, $wgLang;
-		
-		wfProfileIn( __METHOD__ );
-	
-		$username 	= $wgRequest->getVal('username');
-		$dbname		= $wgRequest->getVal('wiki');
-		$mode 		= $wgRequest->getVal('mode');
-		$nspace		= $wgRequest->getVal('ns', -1);
-		$limit		= $wgRequest->getVal('limit');
-		$offset		= $wgRequest->getVal('offset');
-		$loop		= $wgRequest->getVal('loop');
-		$order		= $wgRequest->getVal('order');
-		$numOrder	= $wgRequest->getVal('numOrder');
-
-		$result = array(
-			'sEcho' => intval($loop), 
-			'iTotalRecords' => 0, 
-			'iTotalDisplayRecords' => 0, 
-			'sColumns' => '',
-			'aaData' => array()
-		);
-		
-		if ( empty($wgUser) ) return '';
-		if ( $wgUser->isBlocked() ) return '';
-		if ( !$wgUser->isLoggedIn() ) return '';
-		if ( !$wgUser->isAllowed( 'lookupcontribs' ) ) {
-			wfProfileOut( __METHOD__ );
-			return Wikia::json_encode($result);
-		}
-		
-		$oLC = new LookupContribsCore($username);
-		if ( $oLC->checkUser() ) {
-			if ( empty($mode) ) {
-				$oLC->setLimit($limit);
-				$oLC->setOffset($offset);
-				$activity = $oLC->checkUserActivity();
-				if ( !empty($activity) ) {
-					$result['iTotalRecords'] = intval($limit);
-					$result['iTotalDisplayRecords'] = intval($activity['cnt']);
-					$result['sColumns'] = 'id,title,url,lastedit,userrights,blocked';
-					$rows = array();
-					foreach ( $activity['data'] as $row ) {
-						$rows[] = array(
-							$row['id'], // wiki Id
-							$row['title'], //wiki title
-							$row['url'], // wiki url 
-							$wgLang->timeanddate( wfTimestamp( TS_MW, $row['last_edit'] ), true ), //last edited
-							LookupUserPage::getUserData($username, $row['id'], $row['url']),
-							LookupUserPage::getUserData($username, $row['id'], $row['url'], true),
-						);
-					}
-					$result['aaData'] = $rows;
-				}
-			} else {
-				$oLC->setDBname($dbname);
-				$oLC->setMode($mode);
-				$oLC->setNamespaces($nspace);
-				$oLC->setLimit($limit);
-				$oLC->setOffset($offset);
-				$data = $oLC->fetchContribs();
-				/* order by timestamp desc */
-				$nbr_records = 0;
-				$result = array();
-				$res = array();
-				if ( !empty($data) && is_array($data) ) {
-					$result['iTotalRecords'] = intval($limit);
-					$result['iTotalDisplayRecords'] = intval($data['cnt']);
-					$result['sColumns'] = 'id,title,url,lastedit';
-					$rows = array();
-					if ( isset($data['data']) ) {
-						$loop = 1;
-						foreach ($data['data'] as $id => $row) {
-							list ($link, $diff, $hist, $contrib, $edit, $removed) = array_values($oLC->produceLine( $row ));
-							$rows[] = array(
-								$loop + $offset, // id
-								$link, // title 
-								$diff, // diff 
-								$hist, // history
-								$contrib, //user contribution (link to special page)
-								$edit
-							);
-							$loop++;
-						}
-					}
-					$result['aaData'] = $rows;
-				}
-			}
-		}
-		
-		wfProfileOut( __METHOD__ );
-		return Wikia::json_encode($result);
 	}
 	
 	/**
@@ -362,7 +264,7 @@ EOT
 	}
 	
 	/**
-	 * @brief: Returns data for jQuery.table plugin used by ajax call LookupUserPage::loadAjaxContribData()
+	 * @brief: Returns data for jQuery.table plugin used by ajax call LookupContribsAjax::axData()
 	 * 
 	 * @param string $userName name of a use
 	 * @param integer $wikiId id of a wiki
@@ -379,7 +281,6 @@ EOT
 		global $wgMemc;
 		
 		$cachedData = $wgMemc->get( LookupUserPage::getUserLookupMemcKey($userName, $wikiId) );
-		$cachedData = null;
 		
 		if( !empty($cachedData) ) {
 			if( $checkingBlocks === false ) {
@@ -398,16 +299,17 @@ EOT
 			}
 		} else {
 			if( $checkingBlocks === false ) {
-				$result = '<span class="user-groups-placeholder">';
+				$result = '<span class="user-groups-placeholder">'.
+							'<img src="/skins/common/images/ajax.gif" />'.
+							'<input type="hidden" class="name" value="'.$userName.'" />'.
+							'<input type="hidden" class="wikiId" value="'.$wikiId.'" />'.
+							'<input type="hidden" class="wikiUrl" value="'.$wikiUrl.'" />'.
+							'</span>';
 			} else {
-				$result = '<span class="user-blocked-placeholder">';
+				$result = '<span class="user-blocked-placeholder-'.$wikiId.'">'.
+							'<img src="/skins/common/images/ajax.gif" />'.
+							'</span>';
 			}
-			
-			$result .= '<img src="/skins/common/images/ajax.gif" />'.
-				'<input type="hidden" class="name" value="'.$userName.'" />'.
-				'<input type="hidden" class="wikiId" value="'.$wikiId.'" />'.
-				'<input type="hidden" class="wikiUrl" value="'.$wikiUrl.'" />'.
-				'</span>';
 			
 			wfProfileOut( __METHOD__ );
 			return $result;
@@ -430,37 +332,39 @@ EOT
 		$apiUrl = $wikiUrl.'api.php?action=query&list=users&ususers='.$userName.'&usprop=blockinfo|groups&format=php';
 		
 		$cachedData = $wgMemc->get( LookupUserPage::getUserLookupMemcKey($userName, $wikiId) );
-		$cachedData = null;
 		
 		if( !empty($cachedData) ) {
-			//$result = array('success' => true, 'data' => $cachedData);
-			$result = array('success' => true, 'data' => $cachedData, '$apiUrl' => $apiUrl);
+			$result = array('success' => true, 'data' => $cachedData);
 		} else {
-			/*
-			$req = HttpRequest::factory($apiUrl, array());
-			$req->execute();
-			$httpRequestResult = $req;
-			*/
-			$result = unserialize(file_get_contents($apiUrl));
+			$result = Http::get($apiUrl);
 			
-			if( isset($result['query']['users'][0]) ) {
-				$userData = $result['query']['users'][0];
+			if( $result !== false ) {
+				$result = unserialize($result);
 				
-				if( !isset($userData['groups']) ) {
-					$userData['groups'] = false;
+				if( isset($result['query']['users'][0]) ) {
+					$userData = $result['query']['users'][0];
+					
+					if( !isset($userData['groups']) ) {
+						$userData['groups'] = false;
+					} else {
+						$userData['groups'] = LookupUserPage::selectGroups($userData['groups']);
+					}
+					
+					if( true === LookupUserPage::isUserFounder($userName, $wikiId) ) {
+						$userData['groups'][] = wfMsg('lookupuser-founder');
+					}
+					
+					if( !isset($userData['blockedby']) ) {
+						$userData['blocked'] = false;
+					} else {
+						$userData['blocked'] = true;
+					}
+					
+					$result = array('success' => true, 'data' => $userData);
+					$wgMemc->set( LookupUserPage::getUserLookupMemcKey($userName, $wikiId), $userData, 3600 ); //1h
 				} else {
-					$userData['groups'] = LookupUserPage::selectGroups($userData['groups']);
+					$result = array('success' => false);
 				}
-				
-				if( !isset($userData['blockedby']) ) {
-					$userData['blocked'] = false;
-				} else {
-					$userData['blocked'] = true;
-				}
-				
-				//$result = array('success' => true, 'data' => $userData);
-				$result = array('success' => true, 'data' => $userData, '$apiUrl' => $apiUrl);
-				$wgMemc->set( LookupUserPage::getUserLookupMemcKey($userName, $wikiId), $userData, 3600 ); //1h
 			} else {
 				$result = array('success' => false);
 			}
@@ -500,5 +404,40 @@ EOT
 		
 		wfProfileOut( __METHOD__ );
 		return $userGroups;
+	}
+	
+	/**
+	 * @brief Returns true if a user is founder of a wiki
+	 * 
+	 * @param integer $userId user's id
+	 * @param integer $wikiId wiki's id
+	 * 
+	 * @return boolean
+	 * 
+	 * @author Andrzej 'nAndy' Łukaszewski
+	 */
+	public static function isUserFounder($userName, $wikiId) {
+		global $wgMemc;
+		
+		wfProfileIn( __METHOD__ );
+		
+		$memcKey = 'lookupUser'.'user'.'isUserFounder'.$userName.'on'.$wikiId;
+		$result = $cachedData = $wgMemc->get( $memcKey );
+		
+		if( $result !== true && $result !== false ) {
+			$result = false;
+			
+			$user = User::newFromName($userName);
+			$wiki = WikiFactory::getWikiById($wikiId);
+			
+			if( intval($wiki->city_founding_user) === intval($user->getId()) ) {
+				$result = true;
+			}
+			
+			$wgMemc->set( $memcKey, $result, 3600 ); //1h
+		}
+		
+		wfProfileOut( __METHOD__ );
+		return $result;
 	}
 }

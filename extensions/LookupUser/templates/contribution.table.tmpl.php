@@ -1,11 +1,13 @@
 <script type="text/javascript" charset="utf-8">
 $(document).ready(function() {
-	var baseurl = wgScript + "?action=ajax&rs=LookupUserPage::loadAjaxContribData";
+	var baseurl = wgScript + "?action=ajax&rs=LookupContribsAjax::axData&lookupUser=1";
 	var username = '<?=$username?>';
 	
 	if ( !username ) {
 		return;
 	}
+	
+	var ajaxRequests = [];
 	
 	var oTable = $('#lc-table').dataTable( {
 		oLanguage: {
@@ -102,56 +104,52 @@ $(document).ready(function() {
 						var userName = self.find('input.name').val();
 						
 						try {
-							$.ajax({
+							var ajaxRequest = $.ajax({
 								dataType: 'json', 
 								type: "POST", 
 								data: 'url=' + url + '&username=' + username + '&id=' + wikiId,
 								url: wgScript + "?action=ajax&rs=LookupUserPage::requestApiAboutUser", 
 								success: function(res) {
+									var blockedInfo = $('.user-blocked-placeholder-' + wikiId);
+									
 									if( res.success === true && typeof(res.data) !== 'undefined') {
 										self.hide();
 										
+										//user's group data
 										if( res.data.groups === false ) {
 											self.parent().append('-');
 										} else {
 											self.parent().append( res.data.groups.join(', ') );
 										}
+										
+										//user's block data
+										blockedInfo.hide();
+										switch(res.data.blocked) {
+											case true: blockedInfo.parent().append('Y'); break;
+											case false: blockedInfo.parent().append('N'); break;
+										}
+									} else {
+										self.hide();
+										self.parent().append('-');
+										
+										blockedInfo.hide();
+										blockedInfo.parent().append('-');
 									}
 								}
 							});
+							
+							ajaxRequests.push(ajaxRequest);
 						} catch(e) {
 							$().log('Exception');
 							$().log(e);
 						}
 					});
 					
-					$('.user-blocked-placeholder').each(function(){
-						var self = $(this);
-						var wikiId = self.find('input.wikiId').val();
-						var url = self.find('input.wikiUrl').val();
-						var userName = self.find('input.name').val();
-						
-						try {
-							$.ajax({
-								dataType: 'json', 
-								type: "POST", 
-								data: 'url=' + url + '&username=' + username + '&id=' + wikiId,
-								url: wgScript + "?action=ajax&rs=LookupUserPage::requestApiAboutUser", 
-								success: function(res) {
-									if( res.success === true && typeof(res.data) !== 'undefined') {
-										self.hide();
-										
-										switch(res.data.blocked) {
-											case true: self.parent().append('Y'); break;
-											case false: self.parent().append('N'); break;
-										}
-									}
-								}
-							});
-						} catch(e) {
-							$().log('Exception');
-							$().log(e);
+					$('.paginate_button').click(function(){
+						for(i in ajaxRequests) {
+							ajaxRequests[i].abort();
 						}
+						ajaxRequests = [];
 					});
 				}
 			});
@@ -188,3 +186,11 @@ $(document).ready(function() {
 		</tr>
 	</tfoot>
 </table>
+
+<ul>
+<?php if( $isGloballyBlocked ) { ?>
+	<li><?= wfMsg('lookupuser-user-blocked-globally') ?></li>
+<?php } else { ?>
+	<li><?= wfMsg('lookupuser-user-not-blocked-globally') ?></li>
+<?php }?>
+</ul>
