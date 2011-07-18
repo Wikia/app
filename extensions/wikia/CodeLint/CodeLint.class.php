@@ -34,6 +34,23 @@ abstract class CodeLint {
 	}
 
 	/**
+	 * Return an instance of given type of lint class
+	 *
+	 * @param string $mode type of lint class
+	 * @return CodeLint lint class instance
+	 */
+	public static function factory($mode) {
+		$className = 'CodeLint' . ucfirst($mode);
+
+		// fallback to default report format
+		if (!class_exists($className)) {
+			throw new Exception("{$className} doesn't exist!");
+		}
+
+		return new $className();
+	}
+
+	/**
 	 * Find files matching a pattern using PHP "glob" function and recursion
 	 *
 	 * @see http://www.redips.net/php/find-files-with-php/
@@ -95,7 +112,7 @@ abstract class CodeLint {
 	 * Simplify error report to match the generic format
 	 *
 	 * @param array $entry single entry from error report
-	 * @return array modified entry (it should contain 'error' and 'line' keys)
+	 * @return array modified entry (it should contain 'error' and 'line' keys and an optional 'isImportant' key)
 	 */
 	abstract public function internalFormatReportEntry($entry);
 
@@ -166,12 +183,30 @@ abstract class CodeLint {
 	}
 
 	/**
+	 * Check given list of files and return list of warnings
+	 *
+	 * @param string $fileNames files to be checked
+	 * @return array list of reported warnings
+	 */
+	public function checkFiles($fileNames) {
+		$results = array();
+
+		foreach($fileNames as $fileName) {
+			$results[] = $this->checkFile($fileName);
+		}
+
+		return $results;
+	}
+
+	/**
 	 * Check all files in a given directory recursively
 	 *
 	 * @param string $directoryName directory to be checked
 	 * @return array list of reported warnings
 	 */
 	public function checkDirectory($directoryName) {
+		global $wgCommandLineMode;
+
 		$files = $this->findFiles(rtrim($directoryName, '/'), $this->filePattern);
 		$results = array();
 
@@ -182,10 +217,32 @@ abstract class CodeLint {
 					continue;
 				}
 
-				echo "Linting {$fileName}...";
+				if (!empty($wgCommandLineMode)) {
+					echo "Linting {$fileName}...";
+				}
+
 				$results[] = $this->checkFile($fileName);
-				echo " [done]\n";
+
+				if (!empty($wgCommandLineMode)) {
+					echo " [done]\n";
+				}
 			}
+		}
+
+		return $results;
+	}
+
+	/**
+	 * Check given list of directories and return list of warnings
+	 *
+	 * @param string $directoryNames directories to be checked
+	 * @return array list of reported warnings
+	 */
+	public function checkDirectories($directoryNames) {
+		$results = array();
+
+		foreach($directoryNames as $directoryName) {
+			$results += $this->checkDirectory($directoryName);
 		}
 
 		return $results;

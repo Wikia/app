@@ -2,6 +2,7 @@
 /**
  * @addto maintenance
  * @author Maciej Brencz (Macbre) <macbre at wikia-inc.com>
+ * @see https://internal.wikia-inc.com/wiki/CodeLint
  */
 
 ini_set( "include_path", dirname(__FILE__)."/.." );
@@ -16,10 +17,10 @@ USAGE: php codelint.php --file|--dir [--help] [--mode] [--format] [--output]
 		Show this help information
 
 	--file
-		File to lint
+		File(s) to lint (you can provide multiple files separated by comma)
 
 	--dir
-		Directory to lint (subdirectories will be included)
+		Directory to lint (subdirectories will be included, you can provide multiple directories separated by comma)
 
 	--mode
 		Set working mode (can be either "js" or "css")
@@ -48,31 +49,28 @@ if (isset($options['help'])) {
 }
 
 // parse command line options
-$file = isset($options['file']) ? $options['file'] : false;
-$dir = isset($options['dir']) ? $options['dir'] : false;
+$files = isset($options['file']) ? explode(',', $options['file']) : false;
+$dirs = isset($options['dir']) ? explode(',', $options['dir']) : false;
 $mode = isset($options['mode']) ? $options['mode'] : 'js';
 $format = isset($options['format']) ? $options['format'] : 'text';
 $output = isset($options['output']) ? $options['output'] : false;
 
-
-switch($mode) {
-	case 'js':
-		$lint = new JsLint();
-		$pattern = '*.js';
-		break;
-
-	default:
-		echo "Unsupported mode provided\n\n";
-		printHelp();
-		die(1);
-		break;
+// create lint class
+try {
+	$lint = CodeLint::factory($mode);
+}
+catch (Exception $e) {
+	echo $e->getMessage() . "\n\n";
+	printHelp();
+	die(1);
 }
 
-if (!empty($file)) {
-	$results = array($lint->checkFile($file));
+// perform code linting
+if (!empty($files)) {
+	$results = $lint->checkFiles($files);
 }
-else if (!empty($dir)) {
-	$results = $lint->checkDirectory($dir);
+else if (!empty($dirs)) {
+	$results = $lint->checkDirectories($dirs);
 }
 else {
 	echo "Please provide either file name or directory to lint\n\n";
