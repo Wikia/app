@@ -55,7 +55,6 @@ class UserPathPredictionSpecialController extends WikiaSpecialPageController {
 
 		$paths = $this->model->getNodes( $this->wg->CityId, $articleId, $this->getVal( 'datespan' ), $this->getVal( 'count' ), $this->getVal( 'pathsNumber' ) );
 
-		
 		if ( count( $paths ) > 0 ) {
 			
 			foreach ( $paths as $nodes ) {
@@ -81,21 +80,23 @@ class UserPathPredictionSpecialController extends WikiaSpecialPageController {
 				$result[] = $path;
 				$path = array();
 			}
+			
+			$thumbnails = $this->sendRequest( 'UserPathPredictionService', 'getThumbnails', array( 'articleIds' => $articleIds, 'width' => 75 ) );
+			$thumbnails = $thumbnails->getVal( 'thumbnails' );
+			
+			foreach ( $thumbnails as $key => $thumbnail ) {
+				$thumbnail[0]['url'] = str_replace( "http://images.jolek.wikia-dev.com", "http://images2.wikia.nocookie.net", $thumbnail[0]['url'] );
+				$thumbnailsReplaced[$key] = $thumbnail;
+			
+			}
+			
+			$this->setVal( 'thumbnails', $thumbnailsReplaced );
+			
 		} else {
 			$result = array( "No Result" );
 		}
 		
 		$this->setVal( 'paths',  $result );
-		
-		$thumbnails = $this->sendRequest( 'UserPathPredictionService', 'getThumbnails', array( 'articleIds' => $articleIds, 'width' => 75 ) );
-		$thumbnails = $thumbnails->getVal('thumbnails');
-		
-		foreach ( $thumbnails as $key => $thumbnail ) {
-			$thumbnail[0]['url'] = str_replace("http://images.jolek.wikia-dev.com", "http://images2.wikia.nocookie.net", $thumbnail[0]['url']);
-			$thumbnailsReplaced[$key] = $thumbnail;
-		
-		}
-		$this->setVal( 'thumbnails', $thumbnailsReplaced );
 		
 		$this->wf->profileOut( __METHOD__ );
 	}
@@ -114,7 +115,7 @@ class UserPathPredictionSpecialController extends WikiaSpecialPageController {
 			$articleId = $this->getVal( 'article' );
 		}
 
-		$nodes = $this->model->getRelated($this->wg->CityId, $articleId, $this->getVal('datespan'));
+		$nodes = $this->model->getRelated($this->wg->CityId, $articleId, $this->getVal( 'datespan' ), $this->getVal( 'userHaveSeenNumber' ) );
 
 
 		if ( count( $nodes ) > 0 ) {
@@ -134,19 +135,23 @@ class UserPathPredictionSpecialController extends WikiaSpecialPageController {
 					$articleIds[] = $targetTitle->mArticleID;
 				}
 			}
+			
+			$thumbnails = $this->sendRequest( 'UserPathPredictionService', 'getThumbnails', array( 'articleIds' => $articleIds, 'width' => 75 ) );
+			$thumbnails = $thumbnails->getVal('thumbnails');
+	
+			foreach ( $thumbnails as $key => $thumbnail ) {
+				$thumbnail[0]['url'] = str_replace("http://images.jolek.wikia-dev.com", "http://images2.wikia.nocookie.net", $thumbnail[0]['url']);
+				$thumbnailsReplaced[$key] = $thumbnail;
+			
+			}
+			$this->setVal( 'thumbnails', $thumbnailsReplaced );
+			
 		} else {
 			$result = array( "No Result" );
 		}
-		$this->setVal( 'nodes',  $result );
-		$thumbnails = $this->sendRequest( 'UserPathPredictionService', 'getThumbnails', array( 'articleIds' => $articleIds, 'width' => 75 ) );
-		$thumbnails = $thumbnails->getVal('thumbnails');
-
-		foreach ( $thumbnails as $key => $thumbnail ) {
-			$thumbnail[0]['url'] = str_replace("http://images.jolek.wikia-dev.com", "http://images2.wikia.nocookie.net", $thumbnail[0]['url']);
-			$thumbnailsReplaced[$key] = $thumbnail;
 		
-		}
-		$this->setVal( 'thumbnails', $thumbnailsReplaced );
+		$this->setVal( 'nodes',  $result );
+
 		$this->wf->profileOut( __METHOD__ );
 	}
 
