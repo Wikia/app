@@ -333,7 +333,6 @@ class BodyModule extends Module {
 		else {
 			$railModuleList[1440] = array('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BOXAD'));
 		}
-		$railModuleList[1430] = array('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BUTTON'));
 		$railModuleList[1291] = array('Ad', 'Index', array('slotname' => 'MIDDLE_RIGHT_BOXAD'));
 		$railModuleList[1100] = array('Ad', 'Index', array('slotname' => 'LEFT_SKYSCRAPER_2'));
                 
@@ -347,8 +346,11 @@ class BodyModule extends Module {
                  * $railModuleList[1260] = array( 'Ad', 'Index', array( 'slotname' => 'GAMING_CALENDAR_RAIL' ) );
                  */
                 if ( !empty( $wgEnableGamingCalendar ) ) {
-                    $railModuleList[1260] = array( 'GamingCalendar', 'Rail', array( ) );
+			$railModuleList[1430] = array( 'GamingCalendarRail', 'Index', array( ) );
                 }
+		else {
+			$railModuleList[1430] = array('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BUTTON'));			
+		}
                     
 		wfRunHooks( 'GetRailModuleList', array( &$railModuleList ) );
 
