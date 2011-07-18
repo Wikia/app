@@ -655,6 +655,7 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 			$vals['isnew'] = $this->checkIsNew($is_archive);
 			# timestamp
 			$vals['timestamp'] = wfTimestamp( TS_DB, $oRevision->getTimestamp() );
+			$vals['date'] = gmdate( 'Y-m-d', wfTimestamp( TS_UNIX, $oRevision->getTimestamp() ) );
 			# size
 			$vals['size'] = intval($oRevision->getSize());
 			#words
