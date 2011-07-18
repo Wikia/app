@@ -57,11 +57,12 @@ class JsLint extends CodeLint {
 
 		if (isset($error['raw'])) {
 			switch($error['raw']) {
-				// ignore wgSomethingSomething JS globals
+				// ignore wgSomethingSomething global variables and wfFoo global functions
 				case "'{a}' was used before it was defined.":
 					$varName = $error['a'];
+					$varPrefix = substr($varName, 0, 2);
 
-					if ((substr($varName, 0, 2) == 'wg')) {
+					if (in_array($varPrefix, array('wg', 'wf'))) {
 						$remove = true;
 					}
 					break;
@@ -86,6 +87,8 @@ class JsLint extends CodeLint {
 				// 'd' was used before it was defined.
 				case "'{a}' was used before it was defined.":
 				case "Unexpected '++'.":
+				// allow for in loops
+				case "Bad for in variable '{a}'.":
 				// don't be so restrictive about whitespaces
 				case "Missing space between '{a}' and '{b}'.":
 				case "Unexpected space between '{a}' and '{b}'.":
@@ -134,7 +137,6 @@ class JsLint extends CodeLint {
 	protected function isImportantError($errorMsg) {
 		switch($errorMsg) {
 			case "Missing 'break' after 'case'.":
-			case "eval is evil.":
 			case "Empty block.":
 			case "'alert' was used before it was defined.":
 			case "'console' was used before it was defined.":
@@ -156,8 +158,12 @@ class JsLint extends CodeLint {
 			case "Don't make functions within a loop.":
 			// use encodeURIComponent instead
 			case "'escape' was used before it was defined.":
+			// enforce new when constructing things
+			case "Missing 'new'.":
 			// eval is evil !!!1111
+			case "eval is evil.":
 			case "The Function constructor is eval.":
+			case "Implied eval is evil. Pass a function instead of a string.":
 				$ret = true;
 				break;
 
