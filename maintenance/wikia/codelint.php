@@ -11,7 +11,7 @@ require_once( 'commandLine.inc' );
 function printHelp() {
 		echo <<<HELP
 Performs lint check on given file / directory
-USAGE: php codelint.php --file|--dir [--help] [--mode] [--format] [--output]
+USAGE: php codelint.php --file|--dir [--help] [--blacklist] [--mode] [--format] [--output]
 
 	--help
 		Show this help information
@@ -21,6 +21,9 @@ USAGE: php codelint.php --file|--dir [--help] [--mode] [--format] [--output]
 
 	--dir
 		Directory to lint (subdirectories will be included, you can provide multiple directories separated by comma)
+
+	--blacklist
+		Comma separated list of directories / files to skip when performing lint check
 
 	--mode
 		Set working mode (can be either "js" or "css")
@@ -41,7 +44,7 @@ if (!CodeLint::isNodeJsInstalled()) {
 
 $nodeJsVersion = CodeLint::getNodeJsVersion();
 
-//echo "Using nodejs {$nodeJsVersion}\n\n";
+echo "\nUsing nodejs {$nodeJsVersion}\n\n";
 
 // show help and quit
 if (isset($options['help'])) {
@@ -52,6 +55,7 @@ if (isset($options['help'])) {
 // parse command line options
 $files = isset($options['file']) ? explode(',', $options['file']) : false;
 $dirs = isset($options['dir']) ? explode(',', $options['dir']) : false;
+$blacklist = isset($options['blacklist']) ? explode(',', $options['blacklist']) : false;
 $mode = isset($options['mode']) ? $options['mode'] : 'js';
 $format = isset($options['format']) ? $options['format'] : 'text';
 $output = isset($options['output']) ? $options['output'] : false;
@@ -68,10 +72,10 @@ catch (Exception $e) {
 
 // perform code linting
 if (!empty($files)) {
-	$results = $lint->checkFiles($files);
+	$results = $lint->checkFiles($files, $blacklist);
 }
 else if (!empty($dirs)) {
-	$results = $lint->checkDirectories($dirs);
+	$results = $lint->checkDirectories($dirs, $blacklist);
 }
 else {
 	echo "Please provide either file name or directory to lint\n\n";
@@ -87,7 +91,7 @@ $report = $lint->formatReport($results, $format);
 // save it to file
 if (!empty($output)) {
 	file_put_contents($output, $report);
-	echo "Report saved to {$output}...\n\n";
+	echo "\nReport saved to {$output}\n\n";
 }
 else {
 	echo $report;
