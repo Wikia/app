@@ -50,30 +50,42 @@ var UserPathPrediction = {
 				'selectby': $( '#selectBy' ).val(),
 				'article': $( '#article' ).val(),
 				'datespan': $( '#dateSpan' ).val(),
+				'pathsNumber': $( '#howManyPaths' ).val(),
 				'count': $( '#nodeCount' ).val(),
 				'format': 'json'
 			},
 			function( data ) {
-				nodes = data.nodes;
+				paths = data.paths;
 				thumbnails = data.thumbnails;
 				
-				if ( data['nodes'] != "No Result" ) {
-					$( "#navigationArticles" ).html( "<ul></ul>" );
-					for ( var i = 0; i < nodes.length; i++ ) {
+				if ( data['paths'] != "No Result" ) {
+					$( "#navigationArticles" ).html("");
+					
+					for ( var i = 0; i < paths.length; i++ ) {
+					
+						$( "#navigationArticles" ).append( "<span class=\"pathHeader\">Path #" + (i+1) + "</span><ul id=\"path" + i + "\"></ul>" );	
+						path = paths[i];
 						
-						if ( thumbnails[nodes[i].targetTitle.mArticleID] ) {
-							$imgsrc = thumbnails[nodes[i].targetTitle.mArticleID][0]['url'];
-						} else {
-							$imgsrc = "http://dummyimage.com/100x67/000/bada55.gif&text=NoImage";
+						for (var j = 0; j < path.length; j++) {
+							
+							node = path[j];
+							
+							if ( thumbnails[node.targetTitle.mArticleID] ) {
+								$imgsrc = thumbnails[node.targetTitle.mArticleID][0]['url'];
+							} else {
+								$imgsrc = "http://dummyimage.com/100x67/000/bada55.gif&text=NoImage";
+							}
+							
+							$( "#navigationArticles > ul#path" + i ).append( '<li data-url="' +
+							node.targetURL + '"><div>'+ 
+							node.targetTitle.mTextform + '<br /><img height="50px" width="75px" src="' + 
+							$imgsrc + '"></a><span id="counts">' +
+							
+							node.count + '</span></div></li>');
 						}
-						
-						$( "#navigationArticles > ul" ).append( '<li data-url="' +
-						nodes[i].targetURL + '"><div>'+ 
-						nodes[i].targetTitle.mTextform + '<br /><img height="50px" width="75px" src="' + 
-						$imgsrc + '"></a><span id="counts">' +
-						nodes[i].count + '</span></div></li>');
 					}
 				} else {
+					alert("as");
 					$( '#navigationArticles > ul' ).fadeOut( 'slow' );
 					$( '#navigationArticles' ).html('<span class="noresult">' + $( '#noresult' ).text() + "</span>").fadeIn( 'slow' );
 				}

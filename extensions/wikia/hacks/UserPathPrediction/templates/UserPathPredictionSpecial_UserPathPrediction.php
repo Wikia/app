@@ -1,20 +1,33 @@
 <section id="sectionUserPathPrediction">
 <nav>
 	<form id="wikiForm">
-		<label for="articleId"><?= wfMsg( 'userpathprediction-article' ); ?>:
-			<select id="selectBy">
-				<option value="byId"><?= wfMsg( 'userpathprediction-id' ); ?></option>
-				<option value="byTitle"><?= wfMsg( 'userpathprediction-title' ); ?></option>
-			</select>
-			<span id="articlePlace"><input id="article" type="number" value="" /></span>
-		</label>
-		<label for="nodeCount"><?= wfMsg( 'userpathprediction-nodecount' ); ?>:
-			<input id="nodeCount" type="number" value="10" />
-		</label>
-		<label for="dateSpan"><?= wfMsg( 'userpathprediction-last' ); ?>:
-			<input id="dateSpan" type="number" value="30" />
-		</label> <?= wfMsg( 'userpathprediction-days' ); ?>
+		<div id="commonOptions">
+			<label for="articleId"><?= wfMsg( 'userpathprediction-article' ); ?>:
+				<select id="selectBy">
+					<option value="byId"><?= wfMsg( 'userpathprediction-id' ); ?></option>
+					<option value="byTitle"><?= wfMsg( 'userpathprediction-title' ); ?></option>
+				</select>
+				<span id="articlePlace"><input id="article" type="number" value="" /></span>
+			</label>
+			<label for="dateSpan"><?= wfMsg( 'userpathprediction-last' ); ?>:
+				<input id="dateSpan" type="number" value="30" />
+			</label> <?= wfMsg( 'userpathprediction-days' ); ?>
+		</div>
+		<div id="pathsOptions">
+			<label for="howManyPaths"><?= wfMsg( 'userpathprediction-howManyPaths' ); ?>:
+				<input id="howManyPaths" type="number" value="3" />
+			</label>
+			<label for="nodeCount"><?= wfMsg( 'userpathprediction-nodecount' ); ?>:
+				<input id="nodeCount" type="number" value="10" />
+			</label>
+		</div>
+		<div id="userHaveSeenOptions">
+			<label for="userHaveSeenNumber"><?= wfMsg( 'userpathprediction-userHaveSeenNumber' ); ?>:
+				<input id="userHaveSeenNumber" type="number" value="3" />
+			</label>
+		</div>
 	<button type="submit" onclick="return UserPathPrediction.load()"><?= wfMsg( 'userpathprediction-show' ); ?></button>
+	
 	</form>
 </nav>
 
