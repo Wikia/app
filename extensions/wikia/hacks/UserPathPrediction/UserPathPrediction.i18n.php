@@ -19,8 +19,10 @@ $messages['en'] = array(
 	'userpathprediction-createdby' => "Created by",
 	'userpathprediction-noresult' => "No Results",
 	'userpathprediction-preview' => "Preview",
-	'userpathprediction-relatedPages' => "Related Pages",
-	'userpathprediction-possiblePath' => "Possible Path"
+	'userpathprediction-relatedPages' => "Users have been to",
+	'userpathprediction-possiblePath' => "Paths",
+	'userpathprediction-howManyPaths' => "Number of paths",
+	'userpathprediction-userHaveSeenNumber' => "Number of pages that user have seen"
 
 );
 
@@ -41,6 +43,8 @@ $messages['pl'] = array(
 	'userpathprediction-createdby' => "Stworzone przez",
 	'userpathprediction-noresult' => "Brak Wyników",
 	'userpathprediction-preview' => "Podgląd",
-	'userpathprediction-relatedPages' => "Powiązane strony",
-	'userpathprediction-possiblePath' => "Możliwa ścieżka"
+	'userpathprediction-relatedPages' => "Użytkownicy odwiedzili również",
+	'userpathprediction-possiblePath' => "Ścieżki",
+	'userpathprediction-howManyPaths' => "Liczba ścieżek",
+	'userpathprediction-userHaveSeenNumber' => "Ilość stron oglądanych przez użytkowników"
 );

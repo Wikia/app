@@ -40,6 +40,7 @@ class UserPathPredictionSpecialController extends WikiaSpecialPageController {
 		
 	public function getNodes() {
 		$this->wf->profileIn( __METHOD__ );
+		$path = array();
 		$result = array();
 		$articleIds = array();
 		$thumbnailsReplaced = array();
@@ -52,31 +53,39 @@ class UserPathPredictionSpecialController extends WikiaSpecialPageController {
 			$articleId = $this->getVal( 'article' );
 		}
 
-		$nodes = $this->model->getNodes($this->wg->CityId, $articleId, $this->getVal('datespan'), $this->getVal('count'));
+		$paths = $this->model->getNodes( $this->wg->CityId, $articleId, $this->getVal( 'datespan' ), $this->getVal( 'count' ), $this->getVal( 'pathsNumber' ) );
 
 		
-		if ( count( $nodes ) > 0 ) {
-			foreach ( $nodes as $node ) {
+		if ( count( $paths ) > 0 ) {
+			
+			foreach ( $paths as $nodes ) {
 				
-				$targetTitle = F::build( 'Title', array( $node->target_id ), 'newFromID' );
-				
-				if($targetTitle != NULL) {
-					$targetURL = $targetTitle->getLocalURL();
-					$result[] = array(
-						'cityid' => $node->city_id,
-						'targetTitle' => $targetTitle,
-						'targetURL' => $targetURL,
-						'count' => $node->count,
-						'updated' => $node->updated
-					);
-					$articleIds[] = $targetTitle->mArticleID;
+				foreach ( $nodes as $node ) {
+
+					$targetTitle = F::build( 'Title', array( $node->target_id ), 'newFromID' );
+					
+					if( $targetTitle != NULL ) {
+
+						$targetURL = $targetTitle->getLocalURL();
+						$path[] = array(
+							'cityid' => $node->city_id,
+							'targetTitle' => $targetTitle,
+							'targetURL' => $targetURL,
+							'count' => $node->count,
+							'updated' => $node->updated
+						);
+						
+						$articleIds[] = $targetTitle->mArticleID;
+					}
 				}
+				$result[] = $path;
+				$path = array();
 			}
 		} else {
 			$result = array( "No Result" );
 		}
 		
-		$this->setVal( 'nodes',  $result );
+		$this->setVal( 'paths',  $result );
 		
 		$thumbnails = $this->sendRequest( 'UserPathPredictionService', 'getThumbnails', array( 'articleIds' => $articleIds, 'width' => 75 ) );
 		$thumbnails = $thumbnails->getVal('thumbnails');

@@ -162,48 +162,66 @@ class UserPathPredictionModel {
 		$this->files = null;
 	}
 	
-	public function getNodes( $cityId, $articleId, $dateSpan = 30, $nodeCount = 10 ) {
+	public function getNodes( $cityId, $articleId, $dateSpan = 30, $nodeCount = 10 ,$pathsNumber = 3) {
 		$this->app->wf->profileIn(__METHOD__);
+		
 		$resultArray = array();
+		$onePath = array();
+		$dateString = "-" . $dateSpan . " day";
+		$date = date( "Ymd", strtotime( $dateString ) );
 		$dbr =$this->getDBConnection();
 		$prevTargetId;
 		$firstTargetId;
+		$where = array( 'city_id' => $cityId, 'referrer_id' => $articleId, 'updated > ' . $date);
 		
-		for ( $i = 0; $i < $nodeCount; $i++ ) {
-
-			$where = array( 'city_id' => $cityId, 'referrer_id' => $articleId );	
+		$related = $dbr->select( 'path_segments_archive', '*', $where , __METHOD__, array( "LIMIT" => $pathsNumber, "ORDER BY" => "count DESC" ));
+		
+		while ( $next = $dbr->fetchObject( $related ) ) {
+		
+			$onePath[] = $next;
+			$articleId = $next->target_id;
+			$prevTargetId = $next->referrer_id;
 			
-			if ( $i > 0 && !empty( $prevTargetId ) ) {
-				$where[] = 'target_id != ' . $prevTargetId ;
-			}
-			
-			$res = $dbr->select( 'path_segments_archive', '*', $where , __METHOD__, array( "LIMIT" => 1, "ORDER BY" => "count DESC" ));
-
-			if ( $row = $dbr->fetchObject( $res ) ) {
+			for ( $i = 0; $i < $nodeCount; $i++ ) {
 	
-				$articleId = $row->target_id;
-				$prevTargetId = $row->referrer_id;
+				$where = array( 'city_id' => $cityId, 'referrer_id' => $articleId, 'updated > ' . $date);
 				
-				if ( $i == 0 ) {
+				if ( $i > 0 && !empty( $prevTargetId ) ) {
+					$where[] = 'target_id != ' . $prevTargetId ;
+				}
+				
+				$res = $dbr->select( 'path_segments_archive', '*', $where , __METHOD__, array( "LIMIT" => 1, "ORDER BY" => "count DESC" ));
+	
+				if ( $row = $dbr->fetchObject( $res ) ) {
+		
+					$articleId = $row->target_id;
+					$prevTargetId = $row->referrer_id;
 					
-					$firstTargetId = $prevTargetId;
-					$resultArray[] = $row;
-					
-				} else {
-					
-					if ( $articleId == $firstTargetId  ) {
+					if ( $i == 0 ) {
 						
-						break;
+						$firstTargetId = $prevTargetId;
+						$onePath[] = $row;
 						
 					} else {
 						
-						$resultArray[] = $row;	
+						if ( $articleId == $firstTargetId  ) {
+							
+							break;
+							
+						} else {
+							
+							$onePath[] = $row;	
+							
+						}
 						
 					}
 					
 				}
-				
 			}
+			
+			$resultArray[] = $onePath;
+			$onePath = array();
+		
 		}
 		
 		$this->app->wf->profileOut(__METHOD__);
