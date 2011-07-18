@@ -60,53 +60,27 @@ abstract class CodeLint {
 	}
 
 	/**
-	 * Run jslint for a given file
+	 * Run given JS file using nodejs
 	 *
-	 * @param string $fileName file to run jslint for
-	 * @param array $params additional params to be passed to JS
-	 * @return string output from jslint
+	 * @param string $scriptName file to run
+	 * @param array $params parameters to pass to nodejs
+	 * @return string output from nodejs
 	 */
-	protected function runJsLint($fileName, $params = array()) {
-		$timeStart = microtime(true /* $get_as_float */);
+	protected function runUsingNodeJs($scriptName, $params = array()) {
+		$scriptName = escapeshellcmd($scriptName);
 
-		// generate path to "wrapper" script running jslint
-		$runScript = escapeshellcmd(dirname(__FILE__) . '/js/run-lint.js');
-
-		// generate path to jslint.js
-		$libDirectory = F::app()->getGlobal('IP') . '/lib';
-		$params['jslint'] = "{$libDirectory}/jslint/jslint.js";
-
-		// file to perform lint on
-		$params['file'] = $fileName;
-
-		// format additional params for JS script
+		// format parameters
 		$extraParams = '';
-
 		foreach($params as $key => $value) {
 			$extraParams .= " --{$key}=" . escapeshellcmd(trim($value));
 		}
 
-		$cmd = "node {$runScript}{$extraParams}";
+		$cmd = "node {$scriptName}{$extraParams}";
 		exec($cmd, $output, $retVal);
 
-		// concatenate script output
-		$output = implode("\n", $output);
+		wfDebug(__METHOD__ . ": {$cmd} returned #{$retVal} code\n");
 
-		$timeEnd = microtime(true /* $get_as_float */);
-
-		if ($retVal == 0 ) {
-			// success!
-			$res = json_decode($output, true /* $assoc */);
-
-			if (!empty($res)) {
-				$res['time'] = round($timeEnd - $timeStart, 4);
-			}
-		}
-		else {
-			throw new Exception($output);
-		}
-
-		return $res;
+		return $retVal == 0 ? implode("\n", $output) : null;
 	}
 
 	/**

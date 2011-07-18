@@ -47,6 +47,45 @@ class JsLint extends CodeLint {
 	}
 
 	/**
+	 * Run jslint for a given file
+	 *
+	 * @param string $fileName file to run jslint for
+	 * @param array $params additional params to be passed to JS
+	 * @return string output from jslint
+	 */
+	protected function runJsLint($fileName, $params = array()) {
+		$timeStart = microtime(true /* $get_as_float */);
+
+		// generate path to "wrapper" script running jslint
+		$runScript = dirname(__FILE__) . '/js/run-lint.js';
+
+		// generate path to jslint.js
+		$libDirectory = F::app()->getGlobal('IP') . '/lib';
+		$params['jslint'] = "{$libDirectory}/jslint/jslint.js";
+
+		// file to perform lint on
+		$params['file'] = $fileName;
+
+		$output = $this->runUsingNodeJs($runScript, $params);
+
+		$timeEnd = microtime(true /* $get_as_float */);
+
+		if (!is_null($output)) {
+			// decode JSON encoded response from run-jslint.js
+			$res = json_decode($output, true /* $assoc */);
+
+			if (!empty($res)) {
+				$res['time'] = round($timeEnd - $timeStart, 4);
+			}
+		}
+		else {
+			throw new Exception($output);
+		}
+
+		return $res;
+	}
+
+	/**
 	 * Filter out message we don't really want in the report
 	 *
 	 * @param array $error error entry reported by jslint
