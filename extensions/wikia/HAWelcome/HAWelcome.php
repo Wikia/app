@@ -320,7 +320,7 @@ class HAWelcomeJob extends Job {
 						if ( empty( $user ) && !empty( $backupUser ) ) {
 							$user = $backupUser;
 						} else {
-							$user = self::WELCOMEUSER;
+							$user = User::newFromName( self::WELCOMEUSER )->getId();
 						}
 
 						$this->mSysop = User::newFromId( $user );
