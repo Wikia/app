@@ -101,6 +101,25 @@ abstract class CodeLint {
 	}
 
 	/**
+	 * Check whether given directory / name matches any blacklist entry
+	 *
+	 * @param string $entry name to check against blacklist entries
+	 * @param array $blacklist blacklist entries
+	 * @return boolean is entry blacklisted
+	 */
+	protected function isBlacklisted($entry, $blacklist) {
+		if (!empty($blacklist) && is_array($blacklist)) {
+			foreach($blacklist as $item) {
+				if (strpos($entry, $item) !== false) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	/**
 	 * Filter out message we don't really want in the report
 	 *
 	 * @param array $error error entry reported by jslint
@@ -186,13 +205,16 @@ abstract class CodeLint {
 	 * Check given list of files and return list of warnings
 	 *
 	 * @param string $fileNames files to be checked
+	 * @param array $blacklist list of patterns to match against directories
 	 * @return array list of reported warnings
 	 */
-	public function checkFiles($fileNames) {
+	public function checkFiles($fileNames, $blacklist = array()) {
 		$results = array();
 
 		foreach($fileNames as $fileName) {
-			$results[] = $this->checkFile($fileName);
+			if (!$this->isBlacklisted($fileName, $blacklist)) {
+				$results[] = $this->checkFile($fileName);
+			}
 		}
 
 		return $results;
@@ -202,18 +224,26 @@ abstract class CodeLint {
 	 * Check all files in a given directory recursively
 	 *
 	 * @param string $directoryName directory to be checked
+	 * @param array $blacklist list of patterns to match against files in directory / subdirectories
 	 * @return array list of reported warnings
 	 */
-	public function checkDirectory($directoryName) {
+	public function checkDirectory($directoryName, $blacklist = array()) {
 		global $wgCommandLineMode;
 
 		$files = $this->findFiles(rtrim($directoryName, '/'), $this->filePattern);
 		$results = array();
 
+		// blacklist minified versions
+		$blacklist[] = '.min.';
+		$blacklist[] = '-min.';
+
 		if (!empty($files)) {
 			foreach($files as $fileName) {
-				// skip minified versions
-				if (strpos($fileName, '.min.') !== false || strpos($fileName, '-min.') !== false) {
+				// skip blacklisted ones
+				if ($this->isBlacklisted($fileName, $blacklist)) {
+					if (!empty($wgCommandLineMode)) {
+						echo "Linting {$fileName}... [skipped]\n";
+					}
 					continue;
 				}
 
@@ -236,13 +266,16 @@ abstract class CodeLint {
 	 * Check given list of directories and return list of warnings
 	 *
 	 * @param string $directoryNames directories to be checked
+	 * @param array $blacklist list of patterns to match against directories
 	 * @return array list of reported warnings
 	 */
-	public function checkDirectories($directoryNames) {
+	public function checkDirectories($directoryNames, $blacklist = array()) {
 		$results = array();
 
 		foreach($directoryNames as $directoryName) {
-			$results += $this->checkDirectory($directoryName);
+			if (!$this->isBlacklisted($directoryName, $blacklist)) {
+				$results += $this->checkDirectory($directoryName, $blacklist);
+			}
 		}
 
 		return $results;
