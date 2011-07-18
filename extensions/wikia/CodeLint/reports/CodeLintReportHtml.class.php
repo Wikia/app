@@ -28,10 +28,13 @@ class CodeLintReportHtml extends CodeLintReport {
 			$totalTime += $fileEntry['time'];
 		}
 
-		$results['generationDate'] = date('r');
-		$results['totalTime'] = $totalTime;
+		$stats = array(
+			'generationDate' => date('r'),
+			'totalTime' => $totalTime,
+		);
 
 		$tmpl->set('results', $results);
+		$tmpl->set('stats', $stats);
 		return $tmpl->render('reportHtml');
 	}
 }

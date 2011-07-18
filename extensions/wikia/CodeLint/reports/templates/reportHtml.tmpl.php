@@ -10,6 +10,11 @@
 			font-size: 12px;
 		}
 
+		a {
+			color: #1f75Fe;
+			font-weight: normal;
+		}
+
 		.report {
 			background: #f9f9f9;
 			border-collapse: collapse;
@@ -24,7 +29,6 @@
 		.report th {
 			background: #eaeaea;
 			color: #555;
-			font-weight: normal;
 			line-height: 2em;
 			text-align: left;
 		}
@@ -71,7 +75,7 @@
 </head>
 <body>
 	<table class="report" width="100%">
-		<caption>Code lint report</caption>
+		<caption>Code lint report for <?= count($results) ?> file(s)</caption>
 		<colgroup>
 			<col width="25">
 			<col width="*">
@@ -129,6 +133,6 @@
 		</tbody>
 	</table>
 
-	<address>Generated on <?= $results['generationDate'] ?> in <?= $results['totalTime'] ?> s</address>
+	<address>Generated on <?= $stats['generationDate'] ?> in <?= $stats['totalTime'] ?> s</address>
 </body>
 </html>
