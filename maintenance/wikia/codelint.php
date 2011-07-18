@@ -35,7 +35,8 @@ HELP;
 }
 
 if (!CodeLint::isNodeJsInstalled()) {
-	die('You need to have nodejs installed in order to use this tool!');
+	echo "You need to have nodejs installed in order to use this tool!\n\n";
+	die(1);
 }
 
 $nodeJsVersion = CodeLint::getNodeJsVersion();
