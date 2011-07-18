@@ -33,8 +33,11 @@ class JsLint extends CodeLint {
 			'jQuery',
 			'GlobalTriggers',
 			'Liftium',
+			'Mediawiki',
+			'mwCustomEditButtons',
 			'Observable',
 			'RTE',
+			'showComboAjaxForPlaceHolder',
 			'skin',
 			'stylepath',
 			'Timer',
@@ -79,6 +82,10 @@ class JsLint extends CodeLint {
 				case "Mixed spaces and tabs.":
 				// ignore (function(){...})()
 				case "Move the invocation into the parens that contain the function.":
+				// ignore strings defined in multiple lines
+				case "This is an ES5 feature.":
+				// oh, come on :)
+				case "Unexpected '>>'.":
 					$remove = true;
 					break;
 			}
@@ -141,6 +148,9 @@ class JsLint extends CodeLint {
 			case "Use the object literal notation {}.":
 			// Trailing Comma Of Death
 			case "Unexpected ','.":
+			case "Don't make functions within a loop.":
+			// use encodeURIComponent instead
+			case "'escape' was used before it was defined.":
 				$ret = true;
 				break;
 
