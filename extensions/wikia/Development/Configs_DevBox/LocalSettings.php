@@ -150,10 +150,3 @@ $wgStylePath = $devBoxImageServer . '/skins';
 $wgExtensionsPath = $devBoxImageServer . '/extensions';
 $wgCdnStylePath = $devBoxImageServer; // paths for images requested from CSS/SASS
 $wgDevBoxImageServerOverride ="images.{$wgDevelEnvironmentName}.wikia-dev.com";
-
-$wgHooks['WatchArticleComplete'][] = 'addButton';
-
-function addButton() {
-	
-	var_dump("adfdsf");exit;
-}
