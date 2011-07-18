@@ -30,6 +30,7 @@ class LookupContribsAjax {
 		$loop		= $wgRequest->getVal('loop');
 		$order		= $wgRequest->getVal('order');
 		$numOrder	= $wgRequest->getVal('numOrder');
+		$lookupUser = intval($wgRequest->getVal('lookupUser'));
 
 		$result = array(
 			'sEcho' => intval($loop), 
@@ -58,19 +59,14 @@ class LookupContribsAjax {
 				if ( !empty($activity) ) {
 					$result['iTotalRecords'] = intval($limit); #( isset( $records['cnt'] ) ) ?  intval( $records['cnt'] ) : 0;
 					$result['iTotalDisplayRecords'] = intval($activity['cnt']);
-					$result['sColumns'] = 'id,dbname,title,url,lastedit,options';
-					$rows = array();					
-					foreach ( $activity['data'] as $row ) {
-						$rows[] = array(
-							$row['id'], // wiki Id
-							$row['dbname'], // wiki dbname
-							$row['title'], //wiki title
-							$row['url'], // wiki url 
-							$wgLang->timeanddate( wfTimestamp( TS_MW, $row['last_edit'] ), true ), //last edited
-							'' //options
-						);							
+					
+					if( 1 === $lookupUser ) {
+						$result['sColumns'] = 'id,title,url,lastedit,userrights,blocked';
+						$result['aaData'] = LookupContribsAjax::prepareLookupUserData($activity['data'], $username);
+					} else {
+						$result['sColumns'] = 'id,dbname,title,url,lastedit,options';
+						$result['aaData'] = LookupContribsAjax::prepareLookupContribsData($activity['data']);
 					}
-					$result['aaData'] = $rows;
 				}
 			} else {
 				$oLC->setDBname($dbname);
@@ -87,7 +83,7 @@ class LookupContribsAjax {
 					$result['iTotalRecords'] = intval($limit); #( isset( $records['cnt'] ) ) ?  intval( $records['cnt'] ) : 0;
 					$result['iTotalDisplayRecords'] = intval($data['cnt']);
 					$result['sColumns'] = 'id,title,diff,history,contribution,edit';
-					$rows = array();					
+					$rows = array();
 					if ( isset($data['data']) ) {
 						$loop = 1;
 						foreach ($data['data'] as $id => $row) {
@@ -103,12 +99,66 @@ class LookupContribsAjax {
 							$loop++;
 						}
 					}
-					$result['aaData'] = $rows;					
+					$result['aaData'] = $rows;
 				}
 			}
 		}
 		
 		wfProfileOut( __METHOD__ );			
 		return Wikia::json_encode($result); 
+	}
+	
+	/**
+	 * @brief Generates row data for user if ajax call was sent from Special:LookupContribs
+	 * 
+	 * @param array $activityData data retrieved from LookupContribsCore::checkUserActivity()
+	 * 
+	 * @return array
+	 * 
+	 * @author Andrzej 'nAndy' Łukaszewski
+	 */
+	public static function prepareLookupContribsData($activityData) {
+		global $wgLang;
+		
+		$rows = array();
+		foreach( $activityData as $row ) {
+			$rows[] = array(
+				$row['id'], // wiki Id
+				$row['dbname'], // wiki dbname
+				$row['title'], //wiki title
+				$row['url'], // wiki url 
+				$wgLang->timeanddate( wfTimestamp( TS_MW, $row['last_edit'] ), true ), //last edited
+				'' //options
+			);
+		}
+		
+		return $rows;
+	}
+	
+	/**
+	 * @brief Generates row data for user if ajax call was sent from Special:LookupUser
+	 * 
+	 * @param array $activityData data retrieved from LookupContribsCore::checkUserActivity()
+	 * 
+	 * @return array
+	 * 
+	 * @author Andrzej 'nAndy' Łukaszewski
+	 */
+	public static function prepareLookupUserData($activityData, $username) {
+		global $wgLang;
+		
+		$rows = array();
+		foreach( $activityData as $row ) {
+			$rows[] = array(
+				$row['id'], // wiki Id
+				$row['title'], //wiki title
+				$row['url'], // wiki url 
+				$wgLang->timeanddate( wfTimestamp( TS_MW, $row['last_edit'] ), true ), //last edited
+				LookupUserPage::getUserData($username, $row['id'], $row['url']),
+				LookupUserPage::getUserData($username, $row['id'], $row['url'], true),
+			);
+		}
+		
+		return $rows;
 	}
 }
