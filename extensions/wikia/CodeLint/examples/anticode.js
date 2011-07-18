@@ -31,3 +31,7 @@ var obj = new Object(),
 	}
 
 alert(collection);
+
+var a = new Function(),
+	b = setTimeout('foo', 100),
+	c = setInterval('foo', 500);

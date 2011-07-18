@@ -66,11 +66,6 @@ class JsLint extends CodeLint {
 					}
 					break;
 
-				// allow var in for loops
-				case "Move 'var' declarations to the top of the function.":
-					$remove = true;
-					break;
-
 				// ignore errors about missing semicolons after {} blocks
 				case "Expected '{a}' and instead saw '{b}'.":
 					$remove = ($error['a'] == ';') && (substr($error['evidence'], -1, 1) == '}');
@@ -84,8 +79,17 @@ class JsLint extends CodeLint {
 				case "Move the invocation into the parens that contain the function.":
 				// ignore strings defined in multiple lines
 				case "This is an ES5 feature.":
-				// oh, come on :)
-				case "Unexpected '>>'.":
+				// function() {foo()} -> foo();
+				case "Expected ';' and instead saw '}'.":
+				// allow var in for loops
+				case "Move 'var' declarations to the top of the function.":
+				// 'd' was used before it was defined.
+				case "'{a}' was used before it was defined.":
+				case "Unexpected '++'.":
+				// don't be so restrictive about whitespaces
+				case "Missing space between '{a}' and '{b}'.":
+				case "Unexpected space between '{a}' and '{b}'.":
+				case "Expected '{a}' at column {b}, not column {c}.":
 					$remove = true;
 					break;
 			}
@@ -134,7 +138,8 @@ class JsLint extends CodeLint {
 			case "Empty block.":
 			case "'alert' was used before it was defined.":
 			case "'console' was used before it was defined.":
-			case "Expected '{' and instead saw 'return'.":
+			// if blocks should be wrapped in {}
+			//case "Expected '{' and instead saw 'return'.":
 			// don't define functions within other functions
 			case "Function statements should not be placed in blocks. Use a function expression or move the statement to the top of the outer function.":
 			// unsafe UTF character (usually it's BOM)
@@ -151,6 +156,8 @@ class JsLint extends CodeLint {
 			case "Don't make functions within a loop.":
 			// use encodeURIComponent instead
 			case "'escape' was used before it was defined.":
+			// eval is evil !!!1111
+			case "The Function constructor is eval.":
 				$ret = true;
 				break;
 
