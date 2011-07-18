@@ -7,9 +7,6 @@
  * @author Maciej Brencz (Macbre) <macbre at wikia-inc.com>
  */
 
-// benchmark
-var time = +new Date();
-
 // require generic functions
 var print = require("sys").print,
 	parseArgs = require('./utils').parseArgs,
@@ -24,8 +21,6 @@ var OPTIONS = {
 	confusion: true,
 	// tolerate == and != operators
 	eqeq: true,
-	// tolerate ES5 syntax - allow multi-rows JS strings definitions
-	es5: true,
 	// tolerate unfiltered for in
 	forin: true,
 	// perform no white space indentation check
@@ -93,8 +88,7 @@ var result = {
 	info: {
 		jslint: jslint.edition,
 		nodejs: process.version
-	},
-	time: +new Date() - time
+	}
 };
 
 // return JSON-encoded result
