@@ -51,7 +51,7 @@ class SkinChooser {
 
 		$oldSkinNames = array();
 		foreach($validSkinNames as $skinKey => $skinVal) {
-			if (($skinKey == 'monaco' && !empty($wgOasis2010111)) || $skinKey == 'oasis' || ((in_array($skinKey, $wgSkipSkins) || in_array($skinKey, $wgSkipOldSkins)) && !($skinKey == $mSkin))) {
+			if ( $skinKey == 'oasis' || ((in_array($skinKey, $wgSkipSkins) || in_array($skinKey, $wgSkipOldSkins)) && !($skinKey == $mSkin))) {
 				continue;
 			}
 			$oldSkinNames[$skinKey] = $skinVal;
@@ -172,7 +172,7 @@ class SkinChooser {
 	public static function onGetSkin($user) {
 		global $wgCookiePrefix, $wgCookieExpiration, $wgCookiePath, $wgCookieDomain, $wgCookieSecure, $wgDefaultSkin, $wgDefaultTheme;
 		global $wgVisitorSkin, $wgVisitorTheme, $wgOldDefaultSkin, $wgSkinTheme, $wgOut, $wgForceSkin, $wgRequest, $wgHomePageSkin, $wgTitle;
-		global $wgAdminSkin, $wgSkipSkins, $wgArticle, $wgRequest, $wgOasis2010111, $wgDevelEnvironment;
+		global $wgAdminSkin, $wgSkipSkins, $wgArticle, $wgRequest, $wgDevelEnvironment;
 		$isOasisPublicBeta = $wgDefaultSkin == 'oasis';
 		
 		wfProfileIn(__METHOD__);
@@ -295,10 +295,6 @@ class SkinChooser {
 				$userSkin = isset($adminSkinArray[0]) ? $adminSkinArray[0] : null;
 				$userTheme = isset($adminSkinArray[1]) ? $adminSkinArray[1] : null;
 			}
-			// RT:71650 no one gets monaco after 11-10-2010.  'en' gets this on 11-03-2010 (remove wgOasis2010111 after 11-10-2010)
-			if (!empty($wgOasis2010111) && $userSkin == 'monaco') {
-				$userSkin = 'oasis';
-			}
 
 		}
 		wfProfileOut(__METHOD__.'::GetSkinLogic');
@@ -308,37 +304,10 @@ class SkinChooser {
 
 		$useskin = $wgRequest->getVal('useskin', $userSkin);
 		$elems = explode('-', $useskin);
-		$allowMonacoSelection = empty($wgOasis2010111) || ($user->isLoggedIn() && (in_array('staff', $user->getEffectiveGroups()) || in_array('helpers', $user->getEffectiveGroups()) ) );
-		$userSkin = ( array_key_exists(0, $elems) ) ? (($elems[0] == 'monaco' || (empty($wgEnableAnswers) && $elems[0] == 'answers')) ? ($allowMonacoSelection ? 'monaco' : 'oasis') : $elems[0]) : null;
+		$userSkin = ( array_key_exists(0, $elems) ) ? ( (empty($wgEnableAnswers) && $elems[0] == 'answers') ? 'oasis' : $elems[0]) : null;
 		$userTheme = ( array_key_exists(1, $elems) ) ? $elems[1] : $userTheme;
 		$userTheme = $wgRequest->getVal('usetheme', $userTheme);
-
-
-		if(empty($userTheme) && strpos($userSkin, 'quartz-') === 0) {
-			$userSkin = 'quartz';
-			$userTheme = '';
-		}
-
-		if($userSkin == 'monacoold') {
-			global $wgUseMonaco2;
-			$wgUseMonaco2 = null;
-			$userSkin = 'monaco';
-		}
-		if($userSkin == 'monaconew') {
-			global $wgUseMonaco2;
-			$wgUseMonaco2 = true;
-			$userSkin = 'monaco';
-		}
-		//fix for RT#20005 - Marooned
-		if ($userSkin == 'answers' && empty($wgEnableAnswers)) {
-			$userSkin = 'monaco';
-		}
-		
-		// RT#97655
-		if($userSkin == 'monaco' && !$allowMonacoSelection) {
-			$userSkin = 'oasis';			
-		}
-		
+	
 		//Fix RT#133364 and makes crazy mobile users get the correct one
 		if( $userSkin == 'smartphone' ){
 			$userSkin = 'wikiaphone';
@@ -364,7 +333,7 @@ class SkinChooser {
 			$user->mSkin->themename = $userTheme;
 
 			# force default theme on monaco and oasis when there is no admin setting
-			if(($normalizedSkinName == 'monaco' || $normalizedSkinName == 'oasis') && (empty($wgAdminSkin) && $isOasisPublicBeta) ) {
+			if( $normalizedSkinName == 'oasis' && (empty($wgAdminSkin) && $isOasisPublicBeta) ) {
 				$user->mSkin->themename = $wgDefaultTheme;
 			}
 
