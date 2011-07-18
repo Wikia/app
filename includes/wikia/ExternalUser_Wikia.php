@@ -232,17 +232,22 @@ class ExternalUser_Wikia extends ExternalUser {
 		wfDebug( __METHOD__ . ": update local user table: $id \n" );
 		$dbw = wfGetDB( DB_MASTER );
 
-		$where = array();
-		foreach ( ( array )$this->mRow as $field => $value ) {
-			$where[ $field ] = $value;
+		if ( $id != $this->getId() ) {
+			return false;
 		}
 
-		$dbw->replace(
-			'user',
-			array_keys( (array)$this->mRow ),
-			$where,
-			__METHOD__
-		);
+		$data = array();
+		foreach ( ( array )$this->mRow as $field => $value ) {
+			$data[ $field ] = $value;
+		}
+
+		$row = $dbw->selectRow( 'user', array( 'user_name' ), array( 'user_id' => $this->getId() ), __METHOD__ );
+
+		if ( empty( $row ) ) {
+			$dbw->insert( 'user', $data, __METHOD__, array('IGNORE') );
+		} else {
+			$dbw->update( 'user', $data, array( 'user_id' => $this->getId() ), __METHOD__ );
+		}
 
 		wfProfileOut( __METHOD__ );
 	}
