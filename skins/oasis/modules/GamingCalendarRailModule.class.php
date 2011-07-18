@@ -2,11 +2,11 @@
 /**
  * SSW Gaming Calendar (rail module)
  */
-class GamingCalendarModule extends Module {
+class GamingCalendarRailModule extends Module {
     
     public $contents;
     
-    public function executeRail() {
+    public function executeIndex() {
         wfProfileIn( __METHOD__ );
         // load assets
         $extPath = F::app()->wg->extensionsPath;
