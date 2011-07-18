@@ -6,7 +6,7 @@
  */
 class HuluVideoPanelSpecialPageController extends WikiaSpecialPageController {
 	
-	private static $PARTNER_ID = 'CSWidget';
+	private static $PARTNER_ID = 'Wikia';
 
 	public function __construct() {
 		parent::__construct('HuluVideoPanel', '', false);

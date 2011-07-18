@@ -1,7 +1,7 @@
 <?php
 class HuluVideoPanelModule extends Module {
 	
-	var $partnerId = 'CSWidget';
+	var $partnerId = 'Wikia';
 	var $wgHuluVideoPanelShow;
 	var $wgHuluVideoPanelAttributes;
 	
