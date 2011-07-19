@@ -30,7 +30,7 @@ class CreateNewWikiModule extends Module {
 
 	var $app;
 
-	const DAILY_USER_LIMIT = 5;
+	const DAILY_USER_LIMIT = 2;
 
 	public function __construct($app) {
 		$this->app = $app;
