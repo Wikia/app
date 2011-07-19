@@ -195,6 +195,7 @@ $wgAutoloadClasses['ArticleInterlangModule'] = $IP.'/skins/oasis/modules/Article
 $wgAutoloadClasses['PagesOnWikiModule'] = $IP.'/skins/oasis/modules/PagesOnWikiModule.class.php';
 $wgAutoloadClasses['EditPageModule'] = $IP.'/skins/oasis/modules/EditPageModule.class.php';
 $wgAutoloadClasses['HuluVideoPanelModule'] = $IP.'/skins/oasis/modules/HuluVideoPanelModule.class.php';
+$wgAutoloadClasses['GamingCalendarRailModule'] = $IP.'/skins/oasis/modules/GamingCalendarRailModule.class.php';
 
 $wgAutoloadClasses['UploadPhotosModule'] = $IP.'/skins/oasis/modules/UploadPhotosModule.class.php';
 $wgAutoloadClasses['ThemeSettings'] = $IP.'/extensions/wikia/ThemeDesigner/ThemeSettings.class.php';
