@@ -1,5 +1,5 @@
 .WikiaPage {
-	background: $color-page;
+	/*background: $color-page;*/
 	border: 1px solid $color-page-border;
 	margin: -59px auto -39px;
 	padding-top: 59px;
@@ -8,6 +8,18 @@
 	z-index: 1;
 	>h1:first-child {
 		display: none;
+	}
+	.WikiaPageBackground {
+		@include opacity($page-opacity);
+		background: $color-page;
+		height: 100%;
+		left: 0;
+		position: absolute;
+		top: 0;
+		width: 100%;
+	}
+	.WikiaPageContentWrapper {
+		position: relative;
 	}
 }
 

@@ -24,6 +24,9 @@
 		z-index: 1;
 	}
 	.shadow-mask {
+		@if $page-opacity < 100 {
+			display: none;
+		}
 		@include opacity(75);
 		background: $color-page;
 		z-index: 2;

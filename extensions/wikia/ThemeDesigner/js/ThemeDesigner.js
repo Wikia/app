@@ -134,6 +134,17 @@ var ThemeDesigner = {
 		$("#fix-background").change(function() {
 			ThemeDesigner.set("background-fixed", $(this).attr("checked") ? "true" : "false");
 		});
+		
+		var currentVal = ThemeDesigner.settings["page-opacity"];
+		var base = 50;
+		$("#OpacitySlider").slider({
+			value: ((currentVal - base) / base) * 100,
+			stop: function(e, ui) {
+				var val = ui.value;
+				var wikiaNormalized = base + Math.round((val/100) * base);
+				ThemeDesigner.set("page-opacity", wikiaNormalized);
+			}
+		});
 	},
 
 	wordmarkTabInit: function() {
@@ -381,7 +392,7 @@ var ThemeDesigner = {
 			reloadCSS = true;
 		}
 
-		if(setting == "wordmark-font-size" || setting == "wordmark-text" || setting == "wordmark-type" || setting == "background-align") {
+		if(setting == "wordmark-font-size" || setting == "wordmark-text" || setting == "wordmark-type" || setting == "background-align" || setting == "page-opacity") {
 			updateSkinPreview = true;
 		}
 
@@ -637,6 +648,9 @@ var ThemeDesigner = {
 						.html('')
 						.append('<img src="' + ThemeDesigner.settings["wordmark-image-url"] + '">');
 			}
+			
+			$("#PreviewFrame").contents().find('#WikiaPageBackground').css("opacity", ThemeDesigner.settings["page-opacity"]/100);
+			ThemeDesigner.settings["page-opacity"] < 100 ? $("#PreviewFrame").contents().find("#WikiHeader .shadow-mask").hide() : $("#PreviewFrame").contents().find("#WikiHeader .shadow-mask").show();
 		}
 	},
 
