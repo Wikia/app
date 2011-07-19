@@ -77,6 +77,9 @@ class ThemeSettings {
 			if(!isset($settings['background-fixed'])) {
 				$settings['background-fixed'] = false;
 			}
+			if(!isset($settings['page-opacity'])) {
+				$settings['page-opacity'] = 100;
+			}
 			
 			return $settings;
 		} else {

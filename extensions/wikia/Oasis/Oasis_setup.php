@@ -92,7 +92,8 @@ $wgOasisThemes = array(
 		"background-image" => $wgCdnStylePath ."/skins/oasis/images/themes/oasis.png",
 		"background-align" => "center",
 		"background-fixed" => "false",
-		"background-tiled" => "true"
+		"background-tiled" => "true",
+		"page-opacity" => "100"
 	),
 	'jade' => array(
 		"color-body" => "#003816",
@@ -103,7 +104,8 @@ $wgOasisThemes = array(
 		"background-image" => "",
 		"background-align" => "center",
 		"background-fixed" => "false",
-		"background-tiled" => "false"
+		"background-tiled" => "false",
+		"page-opacity" => "100"
 	),
 	'babygirl' => array(
 		"color-body" => "#381B29",
@@ -114,7 +116,8 @@ $wgOasisThemes = array(
 		"background-image" => $wgCdnStylePath ."/skins/oasis/images/themes/babygirl.jpg",
 		"background-align" => "center",
 		"background-fixed" => "false",
-		"background-tiled" => "false"
+		"background-tiled" => "false",
+		"page-opacity" => "100"
 	),
 	'carbon' => array(
 		"color-body" => "#1A1A1A",
@@ -124,7 +127,8 @@ $wgOasisThemes = array(
 		"color-header" => "#012E59",
 		"background-image" => $wgCdnStylePath ."/skins/oasis/images/themes/carbon.png",
 		"background-align" => "center",
-		"background-tiled" => "false"
+		"background-tiled" => "false",
+		"page-opacity" => "100"
 	),
 	'rockgarden' => array(
 		"color-body" => "#525833",
@@ -135,7 +139,8 @@ $wgOasisThemes = array(
 		"background-image" => $wgCdnStylePath ."/skins/oasis/images/themes/rockgarden.jpg",
 		"background-align" => "center",
 		"background-fixed" => "false",
-		"background-tiled" => "false"
+		"background-tiled" => "false",
+		"page-opacity" => "100"
 	),
 	'opulence' => array(
 		"color-body" => "#AD3479",
@@ -146,7 +151,8 @@ $wgOasisThemes = array(
 		"background-image" => $wgCdnStylePath ."/skins/oasis/images/themes/opulence.png",
 		"background-align" => "center",
 		"background-fixed" => "false",
-		"background-tiled" => "true"
+		"background-tiled" => "true",
+		"page-opacity" => "100"
 	),
 	'bluesteel' => array(
 		"color-body" => "#303641",
@@ -157,7 +163,8 @@ $wgOasisThemes = array(
 		"background-image" => $wgCdnStylePath ."/skins/oasis/images/themes/bluesteel.jpg",
 		"background-align" => "center",
 		"background-fixed" => "false",
-		"background-tiled" => "false"
+		"background-tiled" => "false",
+		"page-opacity" => "100"
 	),
 	'creamsicle' => array(
 		"color-body" => "#F8E9AE",
@@ -168,7 +175,8 @@ $wgOasisThemes = array(
 		"background-image" => $wgCdnStylePath ."/skins/oasis/images/themes/creamsicle.jpg",
 		"background-align" => "center",
 		"background-fixed" => "false",
-		"background-tiled" => "false"
+		"background-tiled" => "false",
+		"page-opacity" => "100"
 	),
 	'plated' => array(
 		"color-body" => "#060606",
@@ -179,7 +187,8 @@ $wgOasisThemes = array(
 		"background-image" => $wgCdnStylePath ."/skins/oasis/images/themes/plated.jpg",
 		"background-align" => "center",
 		"background-fixed" => "false",
-		"background-tiled" => "false"
+		"background-tiled" => "false",
+		"page-opacity" => "100"
 	),
 	'police' => array(
 		"color-body" => "#1A1A1A",
@@ -190,7 +199,8 @@ $wgOasisThemes = array(
 		"background-image" => $wgCdnStylePath ."/skins/oasis/images/themes/police.jpg",
 		"background-align" => "center",
 		"background-fixed" => "false",
-		"background-tiled" => "false"
+		"background-tiled" => "false",
+		"page-opacity" => "100"
 	),
 	'aliencrate' => array(
 		"color-body" => "#484534",
@@ -201,7 +211,8 @@ $wgOasisThemes = array(
 		"background-image" => $wgCdnStylePath ."/skins/oasis/images/themes/aliencrate.jpg",
 		"background-align" => "center",
 		"background-fixed" => "false",
-		"background-tiled" => "false"
+		"background-tiled" => "false",
+		"page-opacity" => "100"
 	),
 );
 
