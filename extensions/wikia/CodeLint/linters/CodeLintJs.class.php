@@ -57,7 +57,7 @@ class CodeLintJs extends CodeLint {
 		$timeStart = microtime(true /* $get_as_float */);
 
 		// generate path to "wrapper" script running jslint
-		$runScript = dirname(__FILE__) . '/js/run-lint.js';
+		$runScript = dirname(__FILE__) . '/../js/run-lint.js';
 
 		// generate path to jslint.js
 		$libDirectory = F::app()->getGlobal('IP') . '/lib';
