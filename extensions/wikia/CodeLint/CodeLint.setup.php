@@ -33,4 +33,5 @@ $app->registerClass('CodeLint', $dir . '/CodeLint.class.php');
 $app->registerClass('CodeLintJs', $dir . '/CodeLintJs.class.php');
 $app->registerClass('CodeLintReport', $dir . '/CodeLintReport.class.php');
 $app->registerClass('CodeLintReportHtml', $dir . '/reports/CodeLintReportHtml.class.php');
+$app->registerClass('CodeLintReportJson', $dir . '/reports/CodeLintReportJson.class.php');
 $app->registerClass('CodeLintReportText', $dir . '/reports/CodeLintReportText.class.php');
