@@ -11,7 +11,7 @@ $messages['en'] = array(
 	'userpathprediction-title' => "Title",
 	'userpathprediction-nodecount' => "Node Count",
 	'userpathprediction-last' => "Last",
-	'userpathprediction-days' => "Days",
+	'userpathprediction-days' => "days",
 	'userpathprediction-show' => "Show",
 	'userpathprediction-from' => "From",
 	'userpathprediction-to' => "To",
@@ -22,7 +22,8 @@ $messages['en'] = array(
 	'userpathprediction-relatedPages' => "Users have been to",
 	'userpathprediction-possiblePath' => "Paths",
 	'userpathprediction-howManyPaths' => "Number of paths",
-	'userpathprediction-userHaveSeenNumber' => "Number of pages that user have seen"
+	'userpathprediction-userHaveSeenNumber' => "Number of pages that user have seen",
+	'userpathprediction-minCount' => "Min. Count"
 
 );
 
@@ -35,7 +36,7 @@ $messages['pl'] = array(
 	'userpathprediction-title' => "Tytuł",
 	'userpathprediction-nodecount' => "Liczba węzłów",
 	'userpathprediction-last' => "Ostatnie",
-	'userpathprediction-days' => "Dni",
+	'userpathprediction-days' => "dni",
 	'userpathprediction-show' => "Pokaż",
 	'userpathprediction-from' => "Z",
 	'userpathprediction-to' => "Do",
@@ -46,5 +47,6 @@ $messages['pl'] = array(
 	'userpathprediction-relatedPages' => "Użytkownicy odwiedzili również",
 	'userpathprediction-possiblePath' => "Ścieżki",
 	'userpathprediction-howManyPaths' => "Liczba ścieżek",
-	'userpathprediction-userHaveSeenNumber' => "Ilość stron oglądanych przez użytkowników"
+	'userpathprediction-userHaveSeenNumber' => "Ilość stron oglądanych przez użytkowników",
+	'userpathprediction-minCount' => "min. kliknięć",
 );

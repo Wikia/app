@@ -12,6 +12,9 @@
 			<label for="dateSpan"><?= wfMsg( 'userpathprediction-last' ); ?>:
 				<input id="dateSpan" type="number" value="30" min="1"/>
 			</label> <?= wfMsg( 'userpathprediction-days' ); ?>
+			<label for="minCount"><?= wfMsg( 'userpathprediction-minCount' ); ?>:
+				<input id="minCount" type="number" value="10" min="1"/>
+			</label>
 		</div>
 		<div id="pathsOptions">
 			<label for="howManyPaths"><?= wfMsg( 'userpathprediction-howManyPaths' ); ?>:

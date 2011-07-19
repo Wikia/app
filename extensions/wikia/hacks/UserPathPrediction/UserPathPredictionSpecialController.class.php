@@ -53,7 +53,7 @@ class UserPathPredictionSpecialController extends WikiaSpecialPageController {
 			$articleId = $this->getVal( 'article' );
 		}
 
-		$paths = $this->model->getNodes( $this->wg->CityId, $articleId, $this->getVal( 'datespan' ), $this->getVal( 'count' ), $this->getVal( 'pathsNumber' ) );
+		$paths = $this->model->getNodes( $this->wg->CityId, $articleId, $this->getVal( 'datespan' ), $this->getVal( 'count' ), $this->getVal( 'pathsNumber' ), $this->getVal( 'minCount' ) );
 
 		if ( count( $paths ) > 0 ) {
 			
@@ -115,7 +115,7 @@ class UserPathPredictionSpecialController extends WikiaSpecialPageController {
 			$articleId = $this->getVal( 'article' );
 		}
 
-		$nodes = $this->model->getRelated($this->wg->CityId, $articleId, $this->getVal( 'datespan' ), $this->getVal( 'userHaveSeenNumber' ) );
+		$nodes = $this->model->getRelated($this->wg->CityId, $articleId, $this->getVal( 'datespan' ), $this->getVal( 'userHaveSeenNumber' ), $this->getVal( 'minCount' ) );
 
 
 		if ( count( $nodes ) > 0 ) {

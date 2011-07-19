@@ -162,7 +162,7 @@ class UserPathPredictionModel {
 		$this->files = null;
 	}
 	
-	public function getNodes( $cityId, $articleId, $dateSpan = 30, $nodeCount = 10 ,$pathsNumber = 3) {
+	public function getNodes( $cityId, $articleId, $dateSpan = 30, $nodeCount = 10 ,$pathsNumber = 3, $minCount = 1) {
 		$this->app->wf->profileIn(__METHOD__);
 		
 		$resultArray = array();
@@ -172,7 +172,7 @@ class UserPathPredictionModel {
 		$dbr =$this->getDBConnection();
 		$prevTargetId;
 		$firstTargetId;
-		$where = array( 'city_id' => $cityId, 'referrer_id' => $articleId, 'updated > ' . $date);
+		$where = array( 'city_id' => $cityId, 'referrer_id' => $articleId, 'updated > ' . $date, 'count >= ' . $minCount );
 		
 		$related = $dbr->select( 'path_segments_archive', '*', $where , __METHOD__, array( "LIMIT" => $pathsNumber, "ORDER BY" => "count DESC" ));
 		
@@ -184,7 +184,7 @@ class UserPathPredictionModel {
 			
 			for ( $i = 0; $i < ($nodeCount - 1); $i++ ) {
 	
-				$where = array( 'city_id' => $cityId, 'referrer_id' => $articleId, 'updated > ' . $date);
+				$where = array( 'city_id' => $cityId, 'referrer_id' => $articleId, 'updated > ' . $date, 'count >= ' . $minCount );
 				
 				if ( $i > 0 && !empty( $prevTargetId ) ) {
 					$where[] = 'target_id != ' . $prevTargetId ;
@@ -228,14 +228,14 @@ class UserPathPredictionModel {
 		return $resultArray;
 	}
 	
-	public function getRelated( $cityId, $articleId, $dateSpan = 30 ,$userHaveSeenNumber = 3 ) {
+	public function getRelated( $cityId, $articleId, $dateSpan = 30 ,$userHaveSeenNumber = 3 , $minCount = 1 ) {
 		$this->app->wf->profileIn(__METHOD__);
 		$resultArray = array();
 		$dateString = "-" . $dateSpan . " day";
 		$date = date( "Ymd", strtotime( $dateString ) );
 		$dbr =$this->getDBConnection();
 		
-		$where = array( 'city_id' => $cityId, 'referrer_id' => $articleId, 'updated > ' . $date );	
+		$where = array( 'city_id' => $cityId, 'referrer_id' => $articleId, 'updated > ' . $date, 'count >= ' . $minCount );	
 		
 		$res = $dbr->select( 'path_segments_archive', '*', $where , __METHOD__, array( "LIMIT" => $userHaveSeenNumber, "ORDER BY" => "count DESC" ));
 

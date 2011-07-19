@@ -37,7 +37,9 @@ var UserPathPrediction = {
 	load: function() {
 		UserPathPrediction.loadNodes();
 		UserPathPrediction.loadRelated();
-		$( '#showArticle' ).attr( 'src', '/wiki/' + $( '#article' ).val() );
+		if($( '#showArticle' ).attr( 'src') !== '/wiki/' + $( '#article' ).val()) {
+			$( '#showArticle' ).attr( 'src', '/wiki/' + $( '#article' ).val() );
+		}
 		return false;
 	},
 	
@@ -52,6 +54,7 @@ var UserPathPrediction = {
 				'datespan': $( '#dateSpan' ).val(),
 				'pathsNumber': $( '#howManyPaths' ).val(),
 				'count': $( '#nodeCount' ).val(),
+				'minCount': $( '#minCount' ).val(),
 				'format': 'json'
 			},
 			function( data ) {
@@ -86,8 +89,8 @@ var UserPathPrediction = {
 						}
 					}
 				} else {
-					$( '#navigationArticles' ).fadeOut( 'slow' );
-					$( '#navigationArticles' ).html('<span class="noresult">' + $( '#noresult' ).text() + "</span>").fadeIn( 'slow' );
+					$( '#navigationArticles > ul' ).show();
+					$( '#navigationArticles' ).html('<span class="noresult">' + $( '#noresult' ).text() + "</span>").show();
 				}
 			}
 
@@ -105,16 +108,16 @@ var UserPathPrediction = {
 				'article': $( '#article' ).val(),
 				'datespan': $( '#dateSpan' ).val(),
 				'userHaveSeenNumber': $( '#userHaveSeenNumber' ).val(),
+				'minCount': $( '#minCount' ).val(),
 				'format': 'json'
 			},
 			function( data ) {
 				nodes = data.nodes;
 				
 				if ( nodes != "No Result" ) {
-					$('#relatedArticles > ul ').fadeOut('slow');
-					$("#relatedArticles").html("<ul></ul>");
 					thumbnails = data.thumbnails;
-					
+					$("#relatedArticles").html( "<ul></ul>" );					
+
 					for ( var i = 0; i < nodes.length; i++ ) {
 						
 						if ( thumbnails[nodes[i].targetTitle.mArticleID] ) {
@@ -128,11 +131,9 @@ var UserPathPrediction = {
 						nodes[i].targetTitle.mTextform + '<br /><img height="50px" width="75px" src="' + 
 						$imgsrc + '"></span><span id="counts">' +
 						nodes[i].count + '</span></div></li>');
-					}
-					$('#relatedArticles > ul').fadeIn( 'slow' );
+					}	
 				} else {
-					$( '#relatedArticles > ul' ).fadeOut( 'slow' );
-					$( '#relatedArticles' ).html('<span class="noresult">' + $( '#noresult' ).text() + "</span>").fadeIn( 'slow' );
+					$( '#relatedArticles' ).hide().html( '<span class="noresult">' + $( '#noresult' ).text() + "</span>").show();
 				}
 			}
 
