@@ -4,7 +4,7 @@
  */
 class GamingCalendarRailModule extends Module {
     
-    public $contents;
+    public $moduleTitle;
     
     public function executeIndex() {
         wfProfileIn( __METHOD__ );
@@ -12,12 +12,7 @@ class GamingCalendarRailModule extends Module {
         $extPath = F::app()->wg->extensionsPath;
         F::app()->wg->out->addScript( "<script src=\"{$extPath}/wikia/GamingCalendar/js/GamingCalendar.js\"></script>" );
         F::app()->wg->out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/GamingCalendar/css/GamingCalendar.scss' ) );
-        /**
-         * Michał Roszka <michal@wikia-inc.com>
-         * 
-         * Replace the value below with some data getter call.
-         */
-        $this->contents = 'Sample contents.';
+	$this->moduleTitle = F::app()->wf->msgForContent( 'gamingcalendar-heading' );
         wfProfileOut( __METHOD__ );
     }
     
