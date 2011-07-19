@@ -61,7 +61,7 @@ class CreateWikiTest extends PHPUnit_Framework_TestCase {
 				if ( $created == 0 ) {
 					$city_id = $this->oCWiki->getWikiInfo('city_id');
 					$cmd = sprintf(
-						"SERVER_ID=%d %s %s/extensions/wikia/WikiFactory/Close/simpleclose.php -wiki_id %d --conf %s",
+						"SERVER_ID=%d %s %s/extensions/wikia/WikiFactory/Close/simpleclose.php --wiki_id=%d --conf %s",
 						$wgCityId,
 						"/usr/bin/php",
 						$this->mIP,
