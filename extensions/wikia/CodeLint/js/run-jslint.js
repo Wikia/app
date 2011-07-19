@@ -85,7 +85,7 @@ jslint(fileSrc, OPTIONS);
 var result = {
 	fileChecked: args.file,
 	errors: jslint.errors,
-	tool: "JSLint edition " + jslint.edition
+	tool: "JSLint edition " + jslint.edition  + ' (nodejs ' + process.version + ')'
 };
 
 // return JSON-encoded result
