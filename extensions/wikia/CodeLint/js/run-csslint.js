@@ -50,7 +50,7 @@ catch(ex) {
 	process.exit(1);
 }
 
-// be less restrictive in SASS mode
+// be less restrictive in SASS mode (experimental feature!)
 if (/.scss$/.test(args.file)) {
 	// don't use build-in "errors" rule
 	delete RULES.errors;
@@ -62,18 +62,45 @@ if (/.scss$/.test(args.file)) {
 		browsers: 'All',
 
 		init: function(parser, reporter) {
-			var rule = this;
+			var rule = this,
+				lastError = {},
+				lastCommentLine = 0;
 
 			parser.addListener('error', function(event) {
-				switch(event.message) {
-					// filter them out
-					case '@import not allowed here.':
-						break;
+				var ignoreError = false,
+					err = event.error;
 
-					// pass an error
-					default:
-						reporter.error(event.message, event.line, event.col, rule);
+				// grab SASS style comments (// foo)
+				if (err.message.indexOf("Unexpected token '/' at line") === 0) {
+					ignoreError = true;
+
+					if (lastError.line == err.line && (lastError.col + 1) == err.col) {
+						lastCommentLine = err.line;
+					}
 				}
+				// @import is heavily used in SASS
+				else if (err.message == '@import not allowed here.') {
+					ignoreError = true;
+				}
+				// Expected LBRACE at line 13, character 1.
+				// ignore this error if it comes straight after a line with a comment
+				else if (err.message.indexOf('Expected LBRACE at line') === 0) {
+					//if (err.col == 1 && (lastCommentLine + 1) == err.line) {
+						ignoreError = true;
+					//}
+				}
+				// ignore errors in SASS one-line comments
+				else if (err.line == lastCommentLine) {
+					ignoreError = true;
+				}
+
+				// pass an error
+				if (!ignoreError) {
+					reporter.error(event.message, event.line, event.col, rule);
+				}
+
+				// store recent error
+				lastError = err;
 			});
 		}
 	});
