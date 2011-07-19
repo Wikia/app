@@ -20,5 +20,6 @@ $app = F::app();
 $app->registerClass('GamingCalendarController', $dir . 'GamingCalendarController.class.php');
 $app->registerClass('GamingCalendar', $dir . 'GamingCalendar.class.php');
 $app->registerClass('GamingCalendarEntry', $dir . 'GamingCalendarEntry.class.php');
+$app->registerClass('GamingCalendarRailModule', $dir . 'GamingCalendarRailModule.class.php');
 
 $wgExtensionMessagesFiles['GamingCalendar'] = "$dir/GamingCalendar.i18n.php";
