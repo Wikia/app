@@ -22,6 +22,7 @@
  * @ingroup SpecialPage
  */
 class SMWAdmin extends SpecialPage {
+	
 	/**
 	 * Constructor
 	 */

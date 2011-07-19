@@ -149,7 +149,125 @@ class SFUtils {
 			SMWPropertyValue::registerProperty( $id, $typeid, $label, true );
 		}
 	}
+    /**
+	* Function to return the Property based on the xml passed from the PageSchema extension 
+	*/
+	public static function createPageSchemasObject( $objectName, $xmlForField, &$object ) {
+		$sfarray = array();
+		if ( $objectName == "FormInput" ) {
+			foreach ( $xmlForField->children() as $tag => $child ) {
+				if ( $tag == $objectName ) {
+					foreach ( $child->children() as $prop ) {
+						if($prop->getName() ==  'InputType'){
+							$sfarray[$prop->getName()] = (string)$prop;
+						}else{
+						//Remember these values  can be null also. While polulating in the page text, take care of that.
+							$sfarray[(string)$prop->attributes()->name] = (string)$prop;
+						}
+					}			
+				}
+			}
+			//Setting value specific to SF in 'sf' index. 
+			$object['sf'] = $sfarray;
+		}
+		return true;
+	}
 
+	/**
+	*/
+	public static function getPageList( $psSchemaObj, &$genPageList ) {
+		global $wgOut, $wgUser;
+		$template_all = $psSchemaObj->getTemplates();		
+		foreach ( $template_all as $template ) {
+			$title =  Title::makeTitleSafe( NS_TEMPLATE, $template->getName() );
+			$genPageList[] = $title;
+		}
+		$form_name = $psSchemaObj->getFormName();
+		if( $form_name == null ){
+			return true;
+		}
+		//$form = SFForm::create( $form_name, $form_templates );
+		$title = Title::makeTitleSafe( SF_NS_FORM, $form_name );
+		$genPageList[] = $title;
+		return true;
+	}
+	/**
+	*/
+	public static function generatePages( $psSchemaObj, $toGenPageList ) {
+		global $wgOut, $wgUser;
+		$template_all = $psSchemaObj->getTemplates();				
+		$form_templates = array();
+		$jobs = array();
+		foreach ( $template_all as $template ) {
+			$template_array = array();			
+			$template_array['name'] = $template->getName();
+			$template_array['category_name'] = $psSchemaObj->categoryName;
+			$field_all = $template->getFields();			
+			$field_count = 0; //counts the number of fields
+			$template_fields = array();	
+			foreach( $field_all as $fieldObj ) { //for each Field, retrieve smw properties and fill $prop_name , $prop_type 
+				$field_count++;																
+				$sf_array = $fieldObj->getObject('FormInput');//this returns an array with property values filled
+				$form_input_array = $sf_array['sf'];
+				$field_t = SFTemplateField::create( $fieldObj->getName(), $fieldObj->getLabel() );			
+				$smw_array = $fieldObj->getObject('Property');   //this returns an array with property values filled			
+				$prop_array = $smw_array['smw'];
+				$field_t->semantic_property = $prop_array['name'];			
+				$field_t->is_list = $fieldObj->isList();
+				$template_fields[] = $field_t;
+			}
+			$template_text = SFTemplateField::createTemplateText( $template->getName(), $template_fields, null, $psSchemaObj->categoryName, null, 	null, null );
+			$title =  Title::makeTitleSafe( NS_TEMPLATE, $template->getName() );
+			$key_title = PageSchemas::titleString( $title );
+			if( in_array($key_title, $toGenPageList )){
+				$params = array();
+				$params['user_id'] = $wgUser->getId();
+				$params['page_text'] = $template_text;		
+				$jobs[] = new PSCreatePageJob( $title, $params );
+				Job::batchInsert( $jobs );
+			}
+			//Creating Form Templates at this time
+			$form_template = SFTemplateInForm::create( $template->getName(), $template->getLabel(), $template->isMultiple() );
+			$form_templates[] = $form_template;
+		}		
+		$form_name = $psSchemaObj->getFormName();
+		if( $form_name == null ){
+			return true;
+		}
+		$form = SFForm::create( $form_name, $form_templates );		
+		$title = Title::makeTitleSafe( SF_NS_FORM, $form->form_name );
+		$key_title = PageSchemas::titleString( $title );
+		if( in_array($key_title, $toGenPageList )){
+		$full_text = $form->createMarkup();				
+			$params = array();
+			$params['user_id'] = $wgUser->getId();
+			$params['page_text'] = $full_text;		
+			$jobs[] = new PSCreatePageJob( $title, $params );
+			Job::batchInsert( $jobs );		
+		}
+		return true;
+	}
+	/**
+	*Thi Function parses the Field elements in the xml of the pages. Hooks for PageSchemas extension
+	*/
+	public static function parseFieldElements( $field_xml, &$text_object ) {
+		foreach ( $field_xml->children() as $tag => $child ) {
+				if ( $tag == "FormInput" ) {
+					$text = "";
+					$text = PageSchemas::tableMessageRowHTML( "paramAttr", "SemanticForms", (string)$tag );										
+					foreach ( $child->children() as $prop ) {				
+						if( $prop->getName() == 'InputType' ){
+							$text .= PageSchemas::tableMessageRowHTML("paramAttrMsg", $prop->getName(), $prop );
+						}else {
+							$prop_name = (string)$prop->attributes()->name;
+							$text .= PageSchemas::tableMessageRowHTML("paramAttrMsg", $prop_name, (string)$prop );
+						}
+					}
+					$text_object['sf']=$text;
+				}
+			}
+			return true;
+	}
 	public static function initProperties() {
 		global $sfgContLang;
 

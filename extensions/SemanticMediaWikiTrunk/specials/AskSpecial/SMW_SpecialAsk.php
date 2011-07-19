@@ -724,11 +724,9 @@ END;
 	 * @return string
 	 */
 	protected function showFormatOptions( $format, array $paramValues ) {
-		$text = '';
-
 		$printer = SMWQueryProcessor::getResultPrinter( $format, SMWQueryProcessor::SPECIAL_PAGE );
 
-		$params = method_exists( $printer, 'getParameters' ) ? $printer->getParameters() : array();
+		$params = method_exists( $printer, 'getValidatorParameters' ) ? $printer->getValidatorParameters() : array();
 
 		// Ignore the format parameter, as we got a special control in the GUI for it already.
 		unset( $params['format'] );
@@ -736,7 +734,6 @@ END;
 		$optionsHtml = array();
 
 		foreach ( $params as $param ) {
-			$param = $this->toValidatorParam( $param );
 			$currentValue = array_key_exists( $param->getName(), $paramValues ) ? $paramValues[$param->getName()] : false;
 
 			$optionsHtml[] =
@@ -766,60 +763,21 @@ END;
 			$rowHtml .= $option;
 			$i++;
 
-			if ( $i % 3 == 0 ) {
-				$resultHtml .= Html::rawElement(
-					'div',
-					array(
-						'style' => 'background: ' . ( $i % 6 == 0 ? 'white' : '#dddddd' ) . ';'
-					),
-					$rowHtml
-				);
-				$rowHtml = '';
-			}
+			$resultHtml .= Html::rawElement(
+				'div',
+				array(
+					'style' => 'background: ' . ( $i % 6 == 0 ? 'white' : '#dddddd' ) . ';'
+				),
+				$rowHtml
+			);
+			
+			$rowHtml = '';
 		}
 
 		return $resultHtml;
 	}
 
-	/**
-	 * Returns a Validator style Parameter definition.
-	 * SMW 1.5.x style definitions are converted.
-	 *
-	 * @since 1.6
-	 *
-	 * @param mixed $param
-	 *
-	 * @return Parameter
-	 */
-	protected function toValidatorParam( $param ) {
-		static $typeMap = array(
-			'int' => Parameter::TYPE_INTEGER
-		);
 
-		if ( !( $param instanceof Parameter ) ) {
-			if ( !array_key_exists( 'type', $param ) ) {
-				$param['type'] = 'string';
-			}
-
-			$paramClass = $param['type'] == 'enum-list' ? 'ListParameter' : 'Parameter';
-			$paramType = array_key_exists( $param['type'], $typeMap ) ? $typeMap[$param['type']] : Parameter::TYPE_STRING;
-
-			$parameter = new $paramClass( $param['name'], $paramType );
-
-			if ( array_key_exists( 'description', $param ) ) {
-				$parameter->setDescription( $param['description'] );
-			}
-
-			if ( array_key_exists( 'values', $param ) && is_array( $param['values'] ) ) {
-				$parameter->addCriteria( new CriterionInArray( $param['values'] ) );
-			}
-
-			return $parameter;
-		}
-		else {
-			return $param;
-		}
-	}
 
 	/**
 	 * Get the HTML for a single parameter input.

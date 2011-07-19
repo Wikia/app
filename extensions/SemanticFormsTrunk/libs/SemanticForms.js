@@ -833,6 +833,7 @@ jQuery(document).ready(function() {
 			var name= select[0].name;
 			var id = select[0].id;
 			var curval = select[0].options[0].value;
+			curval = curval.replace('"', '&quot;' );
 			var input = jQuery("<input id=\"" + id + "\" type=\"text\" name=\" " + name + " \" value=\"" + curval + "\">")
 				.insertAfter(select)
 				.attr("tabIndex", select.attr("tabIndex"))
