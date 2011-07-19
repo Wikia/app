@@ -27,7 +27,14 @@ class GamingCalendar {
 		$SECS_IN_ONE_DAY = 86400;
 		$MAX_RANGE_IN_SECS = 30*$SECS_IN_ONE_DAY;
 		
-		// validate 
+		// validate parameters
+		if (strlen($startDate) == 8) {	// assume format is YYYYMMDD
+			$startDate = gmmktime(0, 0, 0, substr($startDate, 4, 2), substr($startDate, 6, 2), substr($startDate, 0, 4));
+		}
+		if (strlen($endDate) == 8) {
+			$endDate = gmmktime(0, 0, 0, substr($endDate, 4, 2), substr($endDate, 6, 2), substr($endDate, 0, 4));			
+		}
+		
 		if ($endDate - $startDate > $MAX_RANGE_IN_SECS) {
 			$endDate = $startDate + $MAX_RANGE_IN_SECS;
 		}
