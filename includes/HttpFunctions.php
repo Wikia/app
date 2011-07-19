@@ -91,6 +91,7 @@ class Http {
 				} else {
 					$domain = $domainPart . '.' . $domain;
 				}
+				
 				if ( $wgConf->isLocalVHost( $domain ) ) {
 					return true;
 				}
@@ -229,7 +230,7 @@ class HttpRequest {
 	 * @return string
 	 */
 	public function proxySetup() {
-		global $wgHTTPProxy;
+		global $wgHTTPProxy, $wgDevelEnvironment;
 
 		if ( $this->proxy ) {
 			return;
@@ -237,8 +238,18 @@ class HttpRequest {
 		if ( Http::isLocalURL( $this->url ) ) {
 			$this->proxy = 'http://localhost:80/';
 		} elseif ( $wgHTTPProxy ) {
-			$this->proxy = $wgHTTPProxy ;
+			$this->proxy = $wgHTTPProxy;
 		} elseif ( getenv( "http_proxy" ) ) {
+			$this->proxy = getenv( "http_proxy" );
+		}
+		
+		if( $wgDevelEnvironment ) {
+//			small hack which helped me to connect with production api.php
+//			of different wikis using Http::get() 
+//			works with $this->proxy = $wgHTTPProxy too... 
+//			works as far as proxy isn't set to localhost 
+//			which happens when Http::isLocalURL returns true 
+//			-- Andrzej 'nAndy' Łukaszewski
 			$this->proxy = getenv( "http_proxy" );
 		}
 	}

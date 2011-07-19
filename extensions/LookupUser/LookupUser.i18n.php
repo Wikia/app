@@ -35,13 +35,14 @@ $messages['en'] = array(
 	'lookupuser-table-lastedited' => 'Last edited',
 	'lookupuser-table-contribs' => 'contribs',
 	'lookupuser-table-recordspager' => 'Showing \'\'\'$1\'\'\' to \'\'\'$2\'\'\' of \'\'\'$3\'\'\' records.',
+	'lookupuser-table-editcount' => 'Edits',
 	'lookupuser-table-userrights' => 'User rights',
 	'lookupuser-table-blocked' => 'Blocked',
 	'lookupuser-admin' => 'Admin',
 	'lookupuser-bureaucrat' => 'Bureaucrat',
 	'lookupuser-chatmoderator' => 'Chat moderator',
-	'lookupuser-user-blocked-globally' => 'This user <strong>is</strong> blocked globally.',
-	'lookupuser-user-not-blocked-globally' => 'This user <strong>is not</strong> blocked globally.',
+	'lookupuser-username-blocked-globally' => 'This username <strong>is</strong> blocked globally.',
+	'lookupuser-username-not-blocked-globally' => 'This username <strong>is not</strong> blocked globally.',
 	'lookupuser-founder' => 'Founder',
 );
 

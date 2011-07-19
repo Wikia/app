@@ -61,7 +61,7 @@ class LookupContribsAjax {
 					$result['iTotalDisplayRecords'] = intval($activity['cnt']);
 					
 					if( 1 === $lookupUser ) {
-						$result['sColumns'] = 'id,title,url,lastedit,userrights,blocked';
+						$result['sColumns'] = 'id,title,url,lastedit,edits,userrights,blocked';
 						$result['aaData'] = LookupContribsAjax::prepareLookupUserData($activity['data'], $username);
 					} else {
 						$result['sColumns'] = 'id,dbname,title,url,lastedit,options';
@@ -154,8 +154,9 @@ class LookupContribsAjax {
 				$row['title'], //wiki title
 				$row['url'], // wiki url 
 				$wgLang->timeanddate( wfTimestamp( TS_MW, $row['last_edit'] ), true ), //last edited
-				LookupUserPage::getUserData($username, $row['id'], $row['url']),
-				LookupUserPage::getUserData($username, $row['id'], $row['url'], true),
+				LookupUserPage::getUserData($username, $row['id'], $row['url'], 2), //edit count
+				LookupUserPage::getUserData($username, $row['id'], $row['url']), //user rights
+				LookupUserPage::getUserData($username, $row['id'], $row['url'], 1), //blocked
 			);
 		}
 		

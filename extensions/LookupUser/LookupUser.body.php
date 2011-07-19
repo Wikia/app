@@ -235,10 +235,14 @@ EOT
 			$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/LookupContribs/css/table.css?{$wgStyleVersion}");
 			$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgStylePath}/common/jquery/jquery.dataTables.min.js?{$wgStyleVersion}\"></script>\n");
 			
+			//checking and setting User::mBlockedGlobally if needed
+			//only for this instance of class User
+			UserBlock::blockCheck($user);
+			
 			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 			$oTmpl->set_vars(array(
 				'username' => $name,
-				'isGloballyBlocked' => $user->isBlockedGlobally(),
+				'isUsernameGloballyBlocked' => $user->isBlockedGlobally(),
 			));
 			$wgOut->addHTML( $oTmpl->execute('contribution.table') );
 			//End: Small Stuff Week
@@ -269,21 +273,22 @@ EOT
 	 * @param string $userName name of a use
 	 * @param integer $wikiId id of a wiki
 	 * @param string $wikiUrl url address of a wiki
-	 * @param boolean $checkingBlocks a flag which says if we're checking user groups or block information
+	 * @param boolean $checkingBlocks a flag which says if we're checking user groups or block/editcount information; defalut = false = groups if set to 2 it means editcount else it means block
 	 * 
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 * 
 	 * @return string
 	 */
-	public static function getUserData($userName, $wikiId, $wikiUrl, $checkingBlocks = false) {
+	public static function getUserData($userName, $wikiId, $wikiUrl, $placeholderWithWikiId = false) {
 		wfProfileIn( __METHOD__ );
 		
 		global $wgMemc;
 		
 		$cachedData = $wgMemc->get( LookupUserPage::getUserLookupMemcKey($userName, $wikiId) );
+		$cachedData = null;
 		
 		if( !empty($cachedData) ) {
-			if( $checkingBlocks === false ) {
+			if( $placeholderWithWikiId === false ) {
 				if( $cachedData['groups'] === false ) {
 					
 					wfProfileOut( __METHOD__ );
@@ -294,11 +299,17 @@ EOT
 					return implode(', ', $cachedData['groups']);
 				}
 			} else {
-				wfProfileOut( __METHOD__ );
-				return ( $cachedData['blocked'] === true ) ? 'Y' : 'N';
+				switch($placeholderWithWikiId) {
+					case 2: wfProfileOut( __METHOD__ );
+							return $cachedData['editcount'];
+							break;
+					default: wfProfileOut( __METHOD__ );
+							return ( $cachedData['blocked'] === true ) ? 'Y' : 'N';
+							break;
+				}
 			}
 		} else {
-			if( $checkingBlocks === false ) {
+			if( $placeholderWithWikiId === false ) {
 				$result = '<span class="user-groups-placeholder">'.
 							'<img src="/skins/common/images/ajax.gif" />'.
 							'<input type="hidden" class="name" value="'.$userName.'" />'.
@@ -306,9 +317,16 @@ EOT
 							'<input type="hidden" class="wikiUrl" value="'.$wikiUrl.'" />'.
 							'</span>';
 			} else {
-				$result = '<span class="user-blocked-placeholder-'.$wikiId.'">'.
+				switch($placeholderWithWikiId) {
+					case 2: $result = '<span class="user-edits-placeholder-'.$wikiId.'">'.
 							'<img src="/skins/common/images/ajax.gif" />'.
 							'</span>';
+							break;
+					default: $result = '<span class="user-blocked-placeholder-'.$wikiId.'">'.
+							'<img src="/skins/common/images/ajax.gif" />'.
+							'</span>';
+							break;
+				}
 			}
 			
 			wfProfileOut( __METHOD__ );
@@ -329,9 +347,10 @@ EOT
 		$userName = $wgRequest->getVal('username');
 		$wikiUrl = $wgRequest->getVal('url');
 		$wikiId = $wgRequest->getVal('id');
-		$apiUrl = $wikiUrl.'api.php?action=query&list=users&ususers='.$userName.'&usprop=blockinfo|groups&format=php';
+		$apiUrl = $wikiUrl.'api.php?action=query&list=users&ususers='.$userName.'&usprop=blockinfo|groups|editcount&format=php';
 		
 		$cachedData = $wgMemc->get( LookupUserPage::getUserLookupMemcKey($userName, $wikiId) );
+		$cachedData = null;
 		
 		if( !empty($cachedData) ) {
 			$result = array('success' => true, 'data' => $cachedData);
@@ -339,7 +358,7 @@ EOT
 			$result = Http::get($apiUrl);
 			
 			if( $result !== false ) {
-				$result = unserialize($result);
+				$result = @unserialize($result);
 				
 				if( isset($result['query']['users'][0]) ) {
 					$userData = $result['query']['users'][0];

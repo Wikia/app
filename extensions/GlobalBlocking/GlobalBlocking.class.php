@@ -91,6 +91,7 @@ class GlobalBlocking {
 	
 	static function getGlobalBlockingSlave() {
 		global $wgGlobalBlockingDatabase;
+		
 		return wfGetDB( DB_SLAVE, 'globalblocking', $wgGlobalBlockingDatabase );
 	}
 	

@@ -35,6 +35,7 @@ $(document).ready(function() {
 			{ sName: "title" },
 			{ sName: "url" },
 			{ sName: "lastedit" },
+			{ sName: "edits" },
 			{ sName: "userrights" },
 			{ sName: "blocked" }
 		],
@@ -54,7 +55,8 @@ $(document).ready(function() {
 			},
 			{ bVisible: true, aTargets: [3], bSortable: false },
 			{ bVisible: true, aTargets: [4], bSortable: false },
-			{ bVisible: true, aTargets: [5], bSortable: false }
+			{ bVisible: true, aTargets: [5], bSortable: false },
+			{ bVisible: true, aTargets: [6], bSortable: false }
 		],
 		bProcessing: true,
 		bServerSide: true,
@@ -110,7 +112,8 @@ $(document).ready(function() {
 								data: 'url=' + url + '&username=' + username + '&id=' + wikiId,
 								url: wgScript + "?action=ajax&rs=LookupUserPage::requestApiAboutUser", 
 								success: function(res) {
-									var blockedInfo = $('.user-blocked-placeholder-' + wikiId);
+									var blockedInfo = $('.user-blocked-placeholder-' + wikiId),
+										editcountInfo = $('.user-edits-placeholder-' + wikiId);
 									
 									if( res.success === true && typeof(res.data) !== 'undefined') {
 										self.hide();
@@ -128,6 +131,10 @@ $(document).ready(function() {
 											case true: blockedInfo.parent().append('Y'); break;
 											case false: blockedInfo.parent().append('N'); break;
 										}
+										
+										//user's editcount data
+										editcountInfo.hide();
+										editcountInfo.parent().append(res.data.editcount);
 									} else {
 										self.hide();
 										self.parent().append('-');
@@ -164,9 +171,10 @@ $(document).ready(function() {
 		<tr>
 			<th width="2%">#</th>
 			<th width="25%"><?= wfMsg('lookupuser-table-title') ?></th>
-			<th width="30%"><?= wfMsg('lookupuser-table-url') ?></th>
+			<th width="20%"><?= wfMsg('lookupuser-table-url') ?></th>
 			<th width="20%" style="white-space:nowrap"><?= wfMsg('lookupuser-table-lastedited') ?></th>
-			<th width="25%" style="white-space:nowrap"><?= wfMsg('lookupuser-table-userrights') ?></th>
+			<th width="15%" style="white-space:nowrap"><?= wfMsg('lookupuser-table-editcount') ?></th>
+			<th width="15%" style="white-space:nowrap"><?= wfMsg('lookupuser-table-userrights') ?></th>
 			<th width="3%" style="white-space:nowrap"><?= wfMsg('lookupuser-table-blocked') ?></th>
 		</tr>
 	</thead>
@@ -179,18 +187,19 @@ $(document).ready(function() {
 		<tr>
 			<th width="2%">#</th>
 			<th width="25%"><?= wfMsg('lookupuser-table-title') ?></th>
-			<th width="30%"><?= wfMsg('lookupuser-table-url') ?></th>
+			<th width="20%"><?= wfMsg('lookupuser-table-url') ?></th>
 			<th width="20%" style="white-space:nowrap"><?= wfMsg('lookupuser-table-lastedited') ?></th>
-			<th width="25%" style="white-space:nowrap"><?= wfMsg('lookupuser-table-userrights') ?></th>
+			<th width="15%" style="white-space:nowrap"><?= wfMsg('lookupuser-table-editcount') ?></th>
+			<th width="15%" style="white-space:nowrap"><?= wfMsg('lookupuser-table-userrights') ?></th>
 			<th width="3%" style="white-space:nowrap"><?= wfMsg('lookupuser-table-blocked') ?></th>
 		</tr>
 	</tfoot>
 </table>
 
 <ul>
-<?php if( $isGloballyBlocked ) { ?>
-	<li><?= wfMsg('lookupuser-user-blocked-globally') ?></li>
+<?php if( $isUsernameGloballyBlocked ) { ?>
+	<li><?= wfMsg('lookupuser-username-blocked-globally') ?></li>
 <?php } else { ?>
-	<li><?= wfMsg('lookupuser-user-not-blocked-globally') ?></li>
+	<li><?= wfMsg('lookupuser-username-not-blocked-globally') ?></li>
 <?php }?>
 </ul>
