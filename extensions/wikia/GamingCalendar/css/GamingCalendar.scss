@@ -1,0 +1,108 @@
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/gradient";
+
+section.GamingCalendarModule {
+
+    border: 1px solid $color-page-border;
+    margin-bottom: 10px;
+    padding: 0 0 8px 0;
+
+    h1 {
+        @include linear-gradient( false, top, #808285, 0, #434345, 100% );
+        color: lighten( $color-links, 30% );
+        font-weight: normal;
+        text-transform: uppercase;
+        font-size: 11px;
+        height: 22px;
+        line-height: 22px;
+        margin: 0 0 7px 0;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-size: 12px;
+        color: $color-text;
+        margin: 0 8px 0 0;
+    }
+
+    h3 {
+        font-weight: normal;
+        font-size: 12px;
+        color: $color-text;
+        margin: 0 8px 0 0;
+    }
+
+    p {
+        font-size: 11px;
+        color: lighten( $color-text, 30% );
+        margin: 0 8px 0 0;
+    }
+
+    div.gamingcalendar-module-calendar {
+        border: 1px solid $color-page-border;
+        width: 60px;
+        height: 60px;
+        text-align: center;
+        margin: 0 0 0 8px;
+        padding: 0;
+        overflow: hidden;
+        float: left;
+    }
+
+    div.gamingcalendar-module-calendar-month {
+        font-weight: bold;
+        font-size: 11px;
+        line-height: 18px;
+        @include linear-gradient( false, top, #808285, 0, #434345, 100% );
+        color: $color-page;
+        border-bottom: 1px solid $color-page-border;
+    }
+
+    div.gamingcalendar-module-calendar-day {
+        background: transparent url('/extensions/wikia/GamingCalendar/images/gamingcalendar-rail-day.png') no-repeat bottom center;
+        font-weight: bold;
+        font-size: 27px;
+        color: lighten( $color-links, 30% );
+        span {
+            display: block;
+            line-height: 41px;
+        }
+    }
+
+    img {
+        height: 60px;
+        width: 52px;
+        float: left;
+        margin: 0 11px 0 12px;
+    }
+
+    a.more {
+        clear: both;
+        display: block;
+        text-align: right;
+        font-size: 10px;
+        font-weight: bold;
+        margin: 0 8px 0 0;
+        color: $color-links;
+    }
+
+    @if lightness($color-page) < 50 {
+        h1 {
+            @include linear-gradient( false, top, #000000, 0, #333333, 100% );
+            color: $color-links;
+        }
+
+        p {
+            color: darken( $color-text, 30% );
+        }
+
+        div.gamingcalendar-module-calendar-month {
+            @include linear-gradient( false, top, #000000, 0, #333333, 100% );
+            color: $color-text;
+        }
+
+        div.gamingcalendar-module-calendar-day {
+            color: $color-links;
+        }
+    }
+}
