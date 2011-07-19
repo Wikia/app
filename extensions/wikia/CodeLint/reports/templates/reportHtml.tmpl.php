@@ -133,6 +133,6 @@
 		</tbody>
 	</table>
 
-	<address>Generated on <?= $stats['generationDate'] ?> in <?= $stats['totalTime'] ?> s</address>
+	<address>Generated on <?= $stats['generationDate'] ?> in <?= $stats['totalTime'] ?> s<?= !empty($stats['tool']) ? " using {$stats['tool']}": '' ?></address>
 </body>
 </html>

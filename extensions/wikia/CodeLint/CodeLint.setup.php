@@ -20,7 +20,7 @@ $wgExtensionCredits['other'][] = array(
 	'name' => 'CodeLint',
 	'version' => '1.0',
 	'author' => 'Maciej Brencz',
-	'description' => 'Provides interface for linting JS and CSS code',
+	'description' => 'Provides an interface for linting JS and CSS code',
 );
 
 $dir = dirname(__FILE__);
@@ -28,9 +28,14 @@ $dir = dirname(__FILE__);
 // WikiaApp
 $app = F::app();
 
-// classes
+// main class
 $app->registerClass('CodeLint', $dir . '/CodeLint.class.php');
+
+// linters
+$app->registerClass('CodeLintCss', $dir . '/linters/CodeLintCss.class.php');
 $app->registerClass('CodeLintJs', $dir . '/linters/CodeLintJs.class.php');
+
+// report formatters
 $app->registerClass('CodeLintReport', $dir . '/CodeLintReport.class.php');
 $app->registerClass('CodeLintReportHtml', $dir . '/reports/CodeLintReportHtml.class.php');
 $app->registerClass('CodeLintReportJson', $dir . '/reports/CodeLintReportJson.class.php');

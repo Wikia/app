@@ -33,6 +33,10 @@ class CodeLintReportHtml extends CodeLintReport {
 			'totalTime' => $totalTime,
 		);
 
+		if (!empty($results[0]['tool'])) {
+			$stats['tool'] = $results[0]['tool'];
+		}
+
 		$tmpl->set('results', $results);
 		$tmpl->set('stats', $stats);
 		return $tmpl->render('reportHtml');

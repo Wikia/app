@@ -42,10 +42,6 @@ if (!CodeLint::isNodeJsInstalled()) {
 	die(1);
 }
 
-$nodeJsVersion = CodeLint::getNodeJsVersion();
-
-echo "\nUsing nodejs {$nodeJsVersion}\n\n";
-
 // show help and quit
 if (isset($options['help'])) {
 	printHelp();
@@ -91,7 +87,7 @@ $report = $lint->formatReport($results, $format);
 // save it to file
 if (!empty($output)) {
 	file_put_contents($output, $report);
-	echo "\nReport saved to {$output}\n\n";
+	echo "\nReport saved in {$output}\n\n";
 }
 else {
 	echo $report;

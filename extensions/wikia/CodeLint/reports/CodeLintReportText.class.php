@@ -50,16 +50,24 @@ class CodeLintReportText extends CodeLintReport {
 					);
 				}
 			}
-			
+
 			$report .= "\n";
-			
+
 			$totalTime += $fileEntry['time'];
 		}
 
+		if (!empty($results[0]['tool'])) {
+			$tool = " using {$results[0]['tool']}";
+		}
+		else {
+			$tool = '';
+		}
+
 		$report .= $line;
-		$report .= sprintf("Generated on %s in %.4f s\n",
+		$report .= sprintf("Generated on %s in %.4f s%s\n",
 			date('r'),
-			$totalTime
+			$totalTime,
+			$tool
 		);
 		$report .= $line;
 

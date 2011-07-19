@@ -35,7 +35,7 @@ alert(collection);
 var a = new Function(),
 	b = setTimeout('foo', 100),
 	c = setInterval('foo', 500);
-	
+
 // @see http://www.ibm.com/developerworks/web/library/wa-memleak/
 document.write("Circular references between JavaScript and DOM!");
 function myFunction(element)
@@ -48,4 +48,10 @@ function myFunction(element)
 function Leak() {
 	//This code will leak
 	new myFunction(document.getElementById("myDiv"));
+}
+
+var fooObject = {bar: true};
+
+with(fooObject) {
+	bar++;
 }
