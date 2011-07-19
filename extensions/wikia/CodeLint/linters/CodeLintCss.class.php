@@ -81,14 +81,18 @@ class CodeLintCss extends CodeLint {
 	 */
 	protected function isImportantError($errorMsg) {
 		switch($errorMsg) {
-			case "Use of !important":
+			//case "Use of !important":
 			case "Rule is empty.":
+
+			// * html #foo (IE6 specific fix)
+			case"IE6 specific fix found.":
 				$ret = true;
 				break;
 
 			default:
 				$ret = false;
 		}
+
 
 		// Duplicate property 'XXX' found.
 		if (strpos($errorMsg, 'Duplicate property ') === 0) {
