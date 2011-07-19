@@ -22,24 +22,24 @@ var UserPathPrediction = {
 			UserPathPrediction.load();
 		};
 		
-		$( '#relatedArticles li' ).live('click', function() {		
+		$( '#relatedArticles > ul > li' ).live('click', function() {		
 			$( '#showArticle' ).attr( 'src', $(this).attr( 'data-url' ) );
 			$( '#articlePlace' ).html( '<input id="article" type="text" value="'+ $(this).find("#reletedItem").text() +'"/>' );
 			UserPathPrediction.load();
 		});
 		
-		$( '#navigationArticles li' ).live('click', function() {		
-			$( '#showArticle' ).attr( 'src', $(this).attr( 'data-url' ) );
+		$('#showArticle').load(function() {	
+			UserPathPrediction.stealRelatedFromIFrame();
 		});
 		
 	},
 
 	load: function() {
-		UserPathPrediction.loadNodes();
-		UserPathPrediction.loadRelated();
-		if($( '#showArticle' ).attr( 'src') !== '/wiki/' + $( '#article' ).val()) {
+		if( $( '#showArticle' ).attr( 'src') !== '/wiki/' + $( '#article' ).val() ) {
 			$( '#showArticle' ).attr( 'src', '/wiki/' + $( '#article' ).val() );
 		}
+		UserPathPrediction.loadNodes();
+		UserPathPrediction.loadRelated();
 		return false;
 	},
 	
@@ -131,14 +131,30 @@ var UserPathPrediction = {
 						nodes[i].targetTitle.mTextform + '<br /><img height="50px" width="75px" src="' + 
 						$imgsrc + '"></span><span id="counts">' +
 						nodes[i].count + '</span></div></li>');
-					}	
+					}
+					UserPathPrediction.stealRelatedFromIFrame();
 				} else {
 					$( '#relatedArticles' ).hide().html( '<span class="noresult">' + $( '#noresult' ).text() + "</span>").show();
 				}
+				
 			}
 
 		);
 		return false;
+	},
+	
+	stealRelatedFromIFrame: function() {
+		
+		var myFrame = $('#showArticle'),
+			stolenContent;
+		
+		$( "#relatedArticles" ).append("<div id=\"stolenPages\"></div>");
+
+		myFrame.ready(function(){
+			stolenContent = myFrame.contents().find('nav.RelatedPagesModule').html();
+			
+			$( '#stolenPages' ).html(stolenContent);
+		});
 	}
 	
 };

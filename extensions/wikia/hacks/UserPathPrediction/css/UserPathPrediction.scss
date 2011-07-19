@@ -50,7 +50,7 @@ footer {
 
 #relatedArticles {
   position: absolute;
-  height: 555px;
+  min-height: 555px;
   width: 19%;
   top: 30px;
   left: 80%;
@@ -172,6 +172,9 @@ footer {
   position: relative;
   padding: 1px;
   text-shadow: 0 0 20px #FFF;
-  left: 2%;
-  
+  left: 2%; 
+}
+
+#stolenPages {
+
 }

@@ -23,7 +23,8 @@ $messages['en'] = array(
 	'userpathprediction-possiblePath' => "Paths",
 	'userpathprediction-howManyPaths' => "Number of paths",
 	'userpathprediction-userHaveSeenNumber' => "Number of pages that user have seen",
-	'userpathprediction-minCount' => "Min. Count"
+	'userpathprediction-minCount' => "Min. Count",
+	'userpathprediction-stolenPages' => "Related Pages"
 
 );
 
@@ -49,4 +50,5 @@ $messages['pl'] = array(
 	'userpathprediction-howManyPaths' => "Liczba ścieżek",
 	'userpathprediction-userHaveSeenNumber' => "Ilość stron oglądanych przez użytkowników",
 	'userpathprediction-minCount' => "min. kliknięć",
+	'userpathprediction-stolenPages' => "Powiazane strony"
 );
