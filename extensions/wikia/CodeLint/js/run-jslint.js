@@ -1,8 +1,8 @@
 /**
- * JS script performing lint check over JS/CSS files. It should be run using nodejs.
+ * JS script performing lint check over JS files. It should be run using nodejs.
  *
  * Usage:
- *   nodejs run-lint.js --jslint=<absolute path to jslint.js> --file=<file to check>
+ *   nodejs run-jslint.js --jslint=<absolute path to jslint.js> --file=<file to check>
  *
  * @author Maciej Brencz (Macbre) <macbre at wikia-inc.com>
  */
@@ -48,7 +48,7 @@ var args = parseArgs(process.argv);
 
 // check arguments
 if (!args.jslint || !args.file) {
-	print("You need provide a path to jslint and file name to lint");
+	print("You need to provide a path to jslint and file name to lint\n");
 	process.exit(1);
 }
 
@@ -57,7 +57,7 @@ var jslint = require(args.jslint).JSLINT;
 
 // check the existance of jslint
 if (typeof jslint == 'undefined') {
-	print("Unable to import jslint");
+	print("Unable to import jslint\n");
 	process.exit(1);
 }
 
@@ -85,10 +85,7 @@ jslint(fileSrc, OPTIONS);
 var result = {
 	fileChecked: args.file,
 	errors: jslint.errors,
-	info: {
-		jslint: jslint.edition,
-		nodejs: process.version
-	}
+	tool: "JSLint edition " + jslint.edition
 };
 
 // return JSON-encoded result

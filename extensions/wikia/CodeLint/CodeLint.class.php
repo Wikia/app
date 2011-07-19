@@ -84,6 +84,8 @@ abstract class CodeLint {
 	 * @return string output from nodejs
 	 */
 	protected function runUsingNodeJs($scriptName, $params = array()) {
+		$timeStart = microtime(true /* $get_as_float */);
+
 		$scriptName = escapeshellcmd($scriptName);
 
 		// format parameters
@@ -94,10 +96,25 @@ abstract class CodeLint {
 
 		$cmd = "node {$scriptName}{$extraParams}";
 		exec($cmd, $output, $retVal);
+		$output = implode("\n", $output);
 
 		wfDebug(__METHOD__ . ": {$cmd} returned #{$retVal} code\n");
 
-		return $retVal == 0 ? implode("\n", $output) : null;
+		$timeEnd = microtime(true /* $get_as_float */);
+
+		if ($retVal == 0) {
+			// decode JSON encoded response from the script
+			$res = json_decode($output, true /* $assoc */);
+
+			if (!empty($res)) {
+				$res['time'] = round($timeEnd - $timeStart, 4);
+			}
+		}
+		else {
+			throw new Exception($output);
+		}
+
+		return $res;
 	}
 
 	/**
@@ -123,7 +140,7 @@ abstract class CodeLint {
 	 * Filter out message we don't really want in the report
 	 *
 	 * @param array $error error entry reported by jslint
-	 * @return boolean returns true if entry should be removed
+	 * @return boolean returns true if the entry should be kept
 	 */
 	abstract public function filterErrorsOut($error);
 
@@ -161,7 +178,7 @@ abstract class CodeLint {
 		$output = $this->internalCheckFile($fileName);
 
 		// cleanup the list of errors reported
-		if (isset($output['errors'])) {
+		if (!empty($output['errors'])) {
 			$output['errors'] = array_filter($output['errors'], array($this, 'filterErrorsOut'));
 			$output['errors'] = array_values($output['errors']);
 
@@ -196,6 +213,9 @@ abstract class CodeLint {
 
 				$output['errors'][] = $entry;
 			}
+		}
+		else {
+			$output['errorsCount'] = 0;
 		}
 
 		return $output;

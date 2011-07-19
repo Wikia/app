@@ -54,10 +54,8 @@ class CodeLintJs extends CodeLint {
 	 * @return string output from jslint
 	 */
 	protected function runJsLint($fileName, $params = array()) {
-		$timeStart = microtime(true /* $get_as_float */);
-
 		// generate path to "wrapper" script running jslint
-		$runScript = dirname(__FILE__) . '/../js/run-lint.js';
+		$runScript = dirname(__FILE__) . '/../js/run-jslint.js';
 
 		// generate path to jslint.js
 		$libDirectory = F::app()->getGlobal('IP') . '/lib';
@@ -68,28 +66,14 @@ class CodeLintJs extends CodeLint {
 
 		$output = $this->runUsingNodeJs($runScript, $params);
 
-		$timeEnd = microtime(true /* $get_as_float */);
-
-		if (!is_null($output)) {
-			// decode JSON encoded response from run-jslint.js
-			$res = json_decode($output, true /* $assoc */);
-
-			if (!empty($res)) {
-				$res['time'] = round($timeEnd - $timeStart, 4);
-			}
-		}
-		else {
-			throw new Exception($output);
-		}
-
-		return $res;
+		return $output;
 	}
 
 	/**
 	 * Filter out message we don't really want in the report
 	 *
 	 * @param array $error error entry reported by jslint
-	 * @return boolean returns true if entry should be removed
+	 * @return boolean returns true if the entry should be kept
 	 */
 	public function filterErrorsOut($error) {
 		$remove = is_null($error) || !isset($error['id']);
