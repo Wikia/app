@@ -58,9 +58,9 @@ class WikiaLabsSpecialController extends WikiaSpecialPageController {
 			}
 		}
 		
-		$this->isAdmin = false;
+		$isAdmin = false;
 		if( $this->user->isAllowed( 'wikialabsuser' ) ) {
-			$this->isAdmin = true;
+			$isAdmin = true;
 		}
 		
 		$isWikiaLabsAdmin = false;
@@ -75,7 +75,7 @@ class WikiaLabsSpecialController extends WikiaSpecialPageController {
 		$this->setVal('lang', $this->app->getGlobal( 'wgLang' ));
 		$this->setVal('wikilistUrl', $this->title->getFullUrl('method=wikislist'));
 		$this->setVal('wgExtensionsPath', $this->extensionsPath);
-		$this->setVal('isAdmin', $this->isAdmin);
+		$this->setVal('isAdmin', $isAdmin);
 		$this->setVal('isWikiaLabsAdmin', $isWikiaLabsAdmin);
 		
 		$wikialabs = new WikiaLabs();
