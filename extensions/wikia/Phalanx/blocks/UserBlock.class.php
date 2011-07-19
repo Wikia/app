@@ -11,6 +11,10 @@
  */
 
 class UserBlock {
+	/**
+	 * @desc blockCheck() will return false if user is blocked. The reason why it was 
+	 * written in such way is below when you look at method UserBlock::onUserCanSendEmail().
+	 */
 	public static function blockCheck(&$user) {
 		global $wgUser, $wgMemc;
 		wfProfileIn( __METHOD__ );
@@ -29,6 +33,12 @@ class UserBlock {
 			if ( !$cachedState['return'] && $isCurrentUser ) {
 				self::setUserData( $user, $cachedState['block'], $text, $user->isAnon(), $isCurrentUser );
 			}
+			
+			//added to make User::isBlockedGlobally() 
+			//work for this instance of User class
+			//-- Andrzej 'nAndy' Łukaszewski
+			$user->mBlockedGlobally = !$cachedState['return'];
+			
 			wfProfileOut( __METHOD__ );
 			return $cachedState['return'];
 		}
@@ -101,6 +111,11 @@ class UserBlock {
 		wfLoadExtensionMessages( 'Phalanx' );
 
 		$user->mBlockedby = $blockData['author_id'];
+		
+		//added to make User::isBlockedGlobally() 
+		//work for this instance of User class
+		//-- Andrzej 'nAndy' Łukaszewski
+		$user->mBlockedGlobally = true;
 
 		if ($blockData['reason']) {
 			// a reason was given
