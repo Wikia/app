@@ -4,6 +4,8 @@ class GamingCalendarEntry {
 	private $releaseDate;	// timestamp, specified at midnight UTC
 	private $gameTitle;
 	private $description;
+	private $imageSrc;
+	private $imageWidth;
 	private $systems;
 	private $moreInfoUrl;
 	private $preorderUrl;
@@ -26,6 +28,14 @@ class GamingCalendarEntry {
 	
 	public function getDescription() {
 		return $this->description;
+	}
+	
+	public function getImageSrc() {
+		return $this->imageSrc;
+	}
+	
+	public function getImageWidth() {
+		return $this->imageWidth;
 	}
 	
 	public function getMoreInfoUrl() {
@@ -52,6 +62,14 @@ class GamingCalendarEntry {
 		$this->description = $description;
 	}
 	
+	public function setImageSrc($url) {
+		$this->imageSrc = $url;
+	}
+	
+	public function setImageWidth($pixels) {
+		$this->imageWidth = $pixels;
+	}
+	
 	public function setMoreInfoUrl($url) {
 		$this->moreInfoUrl = $url;
 	}
@@ -66,6 +84,7 @@ class GamingCalendarEntry {
 		$elems['releaseDate'] = $this->releaseDate;
 		$elems['gameTitle'] = $this->gameTitle;
 		$elems['description'] = $this->description;
+		$elems['image'] = array('src'=>$this->imageSrc, 'width'=>$this->imageWidth);
 		$elems['systems'] = $this->systems;
 		$elems['moreInfoUrl'] = $this->moreInfoUrl;
 		$elems['preorderUrl'] = $this->preorderUrl;

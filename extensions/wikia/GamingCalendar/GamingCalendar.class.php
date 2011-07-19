@@ -11,6 +11,7 @@ class GamingCalendar {
 	private static $ENTRY_ATTRIBUTE_MARKER = '** ';
 	private static $ENTRY_SYSTEMS_MARKER = 'SYSTEMS:';
 	private static $ENTRY_DESCRIPTION_MARKER = 'DESCRIPTION:';
+	private static $ENTRY_IMAGE_MARKER = 'IMAGE:';
 	private static $ENTRY_MOREINFO_MARKER = 'MOREINFO:';
 	private static $ENTRY_PREORDER_MARKER = 'PREORDER:';
 	
@@ -85,6 +86,13 @@ class GamingCalendar {
 				}
 				elseif (startsWith($attrib, self::$ENTRY_DESCRIPTION_MARKER)) {
 					$entry->setDescription( trim(substr($attrib, strlen(self::$ENTRY_DESCRIPTION_MARKER))) );
+				}
+				elseif (startsWith($attrib, self::$ENTRY_IMAGE_MARKER)) {
+					$imageParts = explode('|', trim(substr($attrib, strlen(self::$ENTRY_IMAGE_MARKER))) );
+					$entry->setImageSrc($imageParts[0]);
+					if ($imageParts[1]) {
+						$entry->setImageWidth(str_replace('px', '', $imageParts[1]));
+					}
 				}
 				elseif (startsWith($attrib, self::$ENTRY_MOREINFO_MARKER)) {
 					$entry->setMoreInfoUrl( trim(substr($attrib, strlen(self::$ENTRY_MOREINFO_MARKER))) );
