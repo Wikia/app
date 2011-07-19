@@ -154,7 +154,7 @@ var AdminDashboard = {
 		loadListUsers: function() {
 			var sassUrl = $.getSassCommonURL('/extensions/wikia/Listusers/css/table.scss');
 			$.getResources([wgScriptPath + '/extensions/wikia/Listusers/js/jquery.dataTables.min.js'], function() {
-				AdminDashboard.contentload.loadSpecialPage('ListUsers');
+				AdminDashboard.contentload.loadSpecialPage('Listusers');
 			});
 		},
 		loadUserRights: function() {
