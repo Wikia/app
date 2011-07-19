@@ -146,8 +146,8 @@ class Language {
 		static $recursionLevel = 0;
 
 		// Protect against path traversal below
-		if ( !Language::isValidCode( $code ) 
-			|| strcspn( $code, "/\\\000" ) !== strlen( $code ) ) 
+		if ( !Language::isValidCode( $code )
+			|| strcspn( $code, "/\\\000" ) !== strlen( $code ) )
 		{
 			throw new MWException( "Invalid language code \"$code\"" );
 		}
@@ -182,7 +182,7 @@ class Language {
 	}
 
 	/**
-	 * Returns true if a language code string is of a valid form, whether or 
+	 * Returns true if a language code string is of a valid form, whether or
 	 * not it exists.
 	 */
 	public static function isValidCode( $code ) {
@@ -1966,14 +1966,7 @@ class Language {
 		}
 
 		if( !is_array( $rawEntry ) ) {
-			/** wikia change **/
-			global $wgWikiwygEnabled;
-			if( $wgWikiwygEnabled == true ) {
-				$rawEntry = array( true );
-			}
-			else {
-				error_log( "\"$rawEntry\" is not a valid magic thingie for \"$mw->mId\"" );
-			}
+			wfDebug( __METHOD__ . ": \"$rawEntry\" is not a valid magic thingie for \"$mw->mId\"" );
 		} else {
 			$mw->mCaseSensitive = $rawEntry[0];
 			$mw->mSynonyms = array_slice( $rawEntry, 1 );
@@ -2486,12 +2479,12 @@ class Language {
 	 */
 	static function getFileName( $prefix = 'Language', $code, $suffix = '.php' ) {
 		// Protect against path traversal
-		if ( !Language::isValidCode( $code ) 
-			|| strcspn( $code, "/\\\000" ) !== strlen( $code ) ) 
+		if ( !Language::isValidCode( $code )
+			|| strcspn( $code, "/\\\000" ) !== strlen( $code ) )
 		{
 			throw new MWException( "Invalid language code \"$code\"" );
 		}
-		
+
 		return $prefix . str_replace( '-', '_', ucfirst( $code ) ) . $suffix;
 	}
 
@@ -2516,14 +2509,14 @@ class Language {
 		global $IP;
 		return self::getFileName( "$IP/languages/messages/Messages", $code, '.php' );
 	}
-	
+
 	// wikia changes begin
 	static function getAdditionalMessagesFileName( $code ) {
 		global $IP;
 		return self::getFileName( "$IP/languages/messages/wikia/Messages", $code, '.php' );
 	}
 	// wikia changes end
-	
+
 	static function getClassFileName( $code ) {
 		global $IP;
 		return self::getFileName( "$IP/languages/classes/Language", $code, '.php' );
