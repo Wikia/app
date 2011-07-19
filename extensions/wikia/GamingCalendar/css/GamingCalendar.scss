@@ -1,7 +1,7 @@
 @import "../../../../skins/oasis/css/core/color";
 @import "../../../../skins/oasis/css/mixins/gradient";
 
-section.GamingCalendarModule {
+.GamingCalendarModule {
 
     border: 1px solid $color-page-border;
     margin-bottom: 10px;
@@ -105,4 +105,31 @@ section.GamingCalendarModule {
             color: $color-links;
         }
     }
+}
+
+.GamingCalendarItem {
+	.calendar {
+		// styles for the calendar illustration here
+		.month {
+			
+		}
+		.day {
+		
+			span {
+			
+			}
+		}
+	}
+	img {
+	
+	}
+	h2 {
+	
+	}
+	h3 {
+	
+	}
+	p {
+	
+	}
 }
