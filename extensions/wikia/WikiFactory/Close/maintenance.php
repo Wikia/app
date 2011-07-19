@@ -257,7 +257,7 @@ class CloseWikiMaintenance {
 					 * update search index
 					 */
 					$cmd = sprintf(
-						"curl %s -H \"Content-Type: text/xml\" --data-binary '<delete><query>wid:%d</query></delete>'",
+						"curl %s -H \"Content-Type: text/xml\" --data-binary '<delete><query>wid:%d</query></delete>' > /dev/null 2> /dev/null",
 						$wgSolrIndexer, $row->city_id
 					);
 					wfShellExec( $cmd, $retval );
