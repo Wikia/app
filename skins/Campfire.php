@@ -1,4 +1,12 @@
 <?php
+/*
+ * Campfire is a Wikia skin for the Amazon Kindle e-book reader
+ *
+ * still in beta/testing/flux
+ *
+ * @author Lucas 'TOR' Garczewski <tor@wikia-inc.com>
+ */
+
 if( !defined( 'MEDIAWIKI' ) )
 	die( -1 );
 
