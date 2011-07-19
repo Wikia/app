@@ -85,9 +85,9 @@ if (/.scss$/.test(args.file)) {
 				// Expected LBRACE at line 13, character 1.
 				// ignore this error if it comes straight after a line with a comment
 				else if (err.message.indexOf('Expected LBRACE at line') === 0) {
-					//if (err.col == 1 && (lastCommentLine + 1) == err.line) {
+					if (err.col == 1 && (lastCommentLine + 1) == err.line) {
 						ignoreError = true;
-					//}
+					}
 				}
 				// ignore errors in SASS one-line comments
 				else if (err.line == lastCommentLine) {
@@ -107,6 +107,31 @@ if (/.scss$/.test(args.file)) {
 
 	RULES.sass = true;
 }
+
+// catch IE6 specific fixes (* html #foo)
+csslint.addRule({
+	id: 'ie6',
+	name: 'Find IE6 specific fixes',
+	desc: 'Catch * html #foo selectors',
+	browsers: 'IE6',
+	regexp: /^\*\s*html/, // match "* html #foo"
+
+	init: function(parser, reporter) {
+		var rule = this;
+
+		parser.addListener('startrule', function(event) {
+			var selectors = event.selectors;
+
+			for (var s=0, len = selectors.length; s<len; s++) {
+				if (rule.regexp.test(selectors[s].text)) {
+					reporter.error('IE6 specific fix found.', selectors[s].line, selectors[s].col, rule);
+				}
+			}
+		});
+	}
+});
+
+RULES.ie6 = true;
 
 // lint it
 var errors = csslint.verify(fileSrc, RULES).messages;
