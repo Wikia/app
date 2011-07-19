@@ -68,7 +68,8 @@ class CreateWikiTest extends PHPUnit_Framework_TestCase {
 						$city_id,
 						$wgWikiaLocalSettingsPath
 					);
-					wfShellExec( $cmd );
+					$err = wfShellExec( $cmd, $retval );
+					$this->assertEquals( 0, $retval, "Drop Wiki failed for id: {$city_id}, language: {$lang} and type: {$type}, err: {$err}" );
 				}
 			}
 		}
