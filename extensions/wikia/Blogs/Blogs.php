@@ -48,7 +48,7 @@ $wgNamespacesWithSubpages[ NS_BLOG_LISTING_TALK ] = true;
  * @see SMW includes/SMW_GlobalFunctions.php::smwfInitNamespaces
  * FIXME generalize
  */
-if (in_array($wgLanguageCode, array('de', 'ru', 'es', 'no', 'nn'))) {
+if (in_array($wgLanguageCode, array('de', 'ru', 'es', 'fr', 'no', 'nn'))) {
 	// make en ns point (alias) to "main ns" - at this point themselves
 	foreach (array(500, 501, 502, 503) as $ns) {
 		$wgNamespaceAliases[$wgExtraNamespaces[$ns]] = $ns;
