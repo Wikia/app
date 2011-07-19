@@ -671,6 +671,13 @@ $messages['az'] = array(
 	'sf_createform_template' => 'Şablon:',
 );
 
+/** Bavarian (Boarisch)
+ * @author Mucalexx
+ */
+$messages['bar'] = array(
+	'formedit' => 'Mid Formular beorweiten',
+);
+
 /** Belarusian (Беларуская)
  * @author Тест
  */
@@ -4846,11 +4853,21 @@ $messages['mr'] = array(
  * @author Anakmalaysia
  */
 $messages['ms'] = array(
+	'createproperty' => 'Wujudkan sifat',
+	'sf_createproperty_linktoform' => 'Sifat ini akan dipautkan dengan laman-laman yang menggunakan borang ini:',
+	'sf_createproperty_allowedvalsinput' => 'Jika anda mahu sifat ini hanya dibenarkan mempunyai nilai-nilai tertentu, isikan senarai nilai yang dibenarkan, diikuti oleh tanda koma (jika sesuatu nilai ada tanda koma, gantinya dengan "\\,".):',
 	'sf_createproperty_proptype' => 'Jenis:',
+	'templates' => 'Templat',
 	'sf_createtemplate_deletefield' => 'Hapuskan',
+	'sf_createform_template' => 'Templat:',
 	'sf_createform_inputtypedefault' => '(tersedia)',
+	'sf_createform_formlabel' => 'Label borang:',
+	'sf_createform_add' => 'Tambahkan',
+	'sf_createcategory_defaultform' => 'Borang sediaan:',
 	'sf_formedit_createtitle' => 'Cipta $1: $2',
 	'sf_formedit_createtitlenotarget' => 'Cipta $1',
+	'right-viewedittab' => 'Melihat tab "Sunting" untuk laman yang boleh disunting dengan borang',
+	'right-editrestrictedfields' => 'Menyunting ruangan borang yang terhad',
 );
 
 /** Erzya (Эрзянь)
@@ -7143,6 +7160,7 @@ $messages['tt-cyrl'] = array(
 /** Ukrainian (Українська)
  * @author AS
  * @author Ahonc
+ * @author Microcell
  * @author Prima klasy4na
  * @author Тест
  */
@@ -7172,6 +7190,7 @@ $messages['uk'] = array(
 	'sf_createcategory_name' => 'Назва категорії:',
 	'sf_createcategory_defaultform' => 'Форма за умовчанням:',
 	'sf_createclass_listofvalues' => 'Список значень?',
+	'formedit' => 'Редагувати з допомогою форми',
 	'sf_formedit_createtitle' => 'Створити $1: $2',
 	'sf_formedit_remove' => 'Вилучити',
 	'sf_blank_error' => 'не може бути порожнім',

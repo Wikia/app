@@ -7,7 +7,6 @@
  * @file
  * @ingroup SF
  */
-if ( !defined( 'MEDIAWIKI' ) ) die();
 
 /**
  * @ingroup SFSpecialPages

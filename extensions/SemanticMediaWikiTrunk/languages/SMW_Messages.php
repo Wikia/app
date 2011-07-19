@@ -89,6 +89,8 @@ If the problem does not go away after some time, ask your site administrator to 
 	'smw-paramdesc-csv-sep'		=> 'The separator to use',
 	'smw-paramdesc-dsv-separator'	=> 'The separator to use',
 	'smw-paramdesc-dsv-filename'	=> 'The name for the DSV file',
+	'smw-smwdoc-description' => 'Shows a table of all parameters that can be used for the specified result format together with default values and descriptions.',
+	'smw-smwdoc-par-format'	=> 'The result format to display parameter documentation for.',
 
 	// Messages and strings for inline queries
 	'smw_iq_disabled'    => "Semantic queries have been disabled for this wiki.",
@@ -1021,6 +1023,14 @@ $messages['az'] = array(
 	'smw_printername_table' => 'Cədvəl',
 	'smw_printername_template' => 'Şablon',
 	'smw_result_results' => 'Nəticələr',
+);
+
+/** Bavarian (Boarisch)
+ * @author Mucalexx
+ */
+$messages['bar'] = array(
+	'smw_purge' => 'Neich loon',
+	'smw_browselink' => "D' Attributt åzoang",
 );
 
 /** Belarusian (Беларуская)
@@ -2042,6 +2052,8 @@ Falls sich das Problem nicht in angemessener Zeit von selbst erledigt, bitte dei
 	'smw-paramdesc-csv-sep' => 'Zu verwendendes Trennzeichen',
 	'smw-paramdesc-dsv-separator' => 'Zu verwendendes Trennzeichen',
 	'smw-paramdesc-dsv-filename' => 'Der Name für die DSV-Datei',
+	'smw-smwdoc-description' => 'Zeigt eine Übersicht aller Parameter mitsamt deren Standardwerten einschließlich ihrer Beschreibung, die im Zusammenhang mit dem angegebenen Ergebnisformat genutzt werden können.',
+	'smw-smwdoc-par-format' => 'Das Ergebnisformat zu dessen Parametern die Dokumentation angezeigt werden soll.',
 	'smw_iq_disabled' => 'Semantische Abfragen wurden in diesem Wiki deaktiviert.',
 	'smw_iq_moreresults' => '… weitere Ergebnisse',
 	'smw_nonright_importtype' => 'Das Element „$1“ kann nur für Seiten im Namensraum „$2“ verwendet werden.',
@@ -4999,6 +5011,8 @@ $messages['ia'] = array(
 	'smw-paramdesc-csv-sep' => 'Le separator a usar',
 	'smw-paramdesc-dsv-separator' => 'Le separator a usar',
 	'smw-paramdesc-dsv-filename' => 'Le nomine del file DSV',
+	'smw-smwdoc-description' => 'Presenta un tabella de tote le parametros que pote esser usate pro le formato de resultatos specificate, insimul con lor valores predefinite e lor descriptiones.',
+	'smw-smwdoc-par-format' => 'Le formato de resultatos pro le qual presentar le documentation de parametros.',
 	'smw_iq_disabled' => 'Le consultas semantic ha essite disactivate pro iste wiki.',
 	'smw_iq_moreresults' => '… ulterior resultatos',
 	'smw_nonright_importtype' => '$1 pote solmente esser usate pro paginas con le spatio de nomines "$2".',
@@ -6638,6 +6652,8 @@ $messages['mk'] = array(
 	'smw-paramdesc-csv-sep' => 'Кој разделник да се користи',
 	'smw-paramdesc-dsv-separator' => 'Кој разделник да се користи',
 	'smw-paramdesc-dsv-filename' => 'Име на DSV-податотеката',
+	'smw-smwdoc-description' => 'Прикажува табела на сите параметри што можат да се искористат за назначениот формат на резултати заедно со основните вредности и описи.',
+	'smw-smwdoc-par-format' => 'Форматот на резултатите за кој се прикажува параметарска документација.',
 	'smw_iq_disabled' => 'На ова вики се оневозможени семантички барања.',
 	'smw_iq_moreresults' => '… понатамошни резултати',
 	'smw_nonright_importtype' => '$1 може да се користи само за страници со именски простор „$2“.',
@@ -6984,6 +7000,7 @@ $messages['mr'] = array(
  * @author Anakmalaysia
  */
 $messages['ms'] = array(
+	'smw_printername_template' => 'Templat',
 	'types' => 'Jenis',
 	'smw_ask_defaultformat' => 'tersedia',
 	'smw_sbv_value' => 'Nilai:',
@@ -8467,6 +8484,8 @@ $messages['pt'] = array(
 	'smw-paramdesc-csv-sep' => 'O separador a usar',
 	'smw-paramdesc-dsv-separator' => 'O separador a usar',
 	'smw-paramdesc-dsv-filename' => 'O nome para o ficheiro DSV',
+	'smw-smwdoc-description' => 'Apresenta uma tabela de todos os parâmetros que podem ser usados para o formato de resultados especificado, com os respectivos valores por omissão e descrições',
+	'smw-smwdoc-par-format' => 'O formato de resultados para o qual será apresentada a documentação dos parâmetros.',
 	'smw_iq_disabled' => 'As consultas semânticas foram impossibilitadas nesta wiki.',
 	'smw_iq_moreresults' => '… mais resultados',
 	'smw_nonright_importtype' => '$1 só pode ser usado para páginas do espaço nominal “$2”.',

@@ -26,7 +26,11 @@ For a documentation of all features, see http://semantic-mediawiki.org
 * The declaration of Type:Record properties has changed. Instead of a list of
   datatypes, the declaration now requires a list of properties that are to be
   used for the fields of the record. The declaration is still done with the
-  property "has fields" as before.
+  property "has fields" as before. Properties must not be used more than once
+  in has_fields, or the order of values will be random.
+* Introduced pre-defined builtin properties for every datatype. For example,
+  the property String is always of type String and available on all (English)
+  wikis. This helps to keep some of the old Tpe:Record declarations valid.
 * Changed the way parameters in query printers are specified and handled
   using the Validator extension. This includes improvements to the parameter
   options in the Special:Ask GUI and better error reporting for ask queries. 
@@ -35,9 +39,13 @@ For a documentation of all features, see http://semantic-mediawiki.org
   all of its subclasses, and introducing new data item classes to handle data.
   The class SMWCompatibilityHelpers provides temporal help for extensions that
   still depend on the old format and APIs.
-* Fixed PostGres SQL issues with the installation and upgrade code.
+* Fixed PostgreSQL issues with the installation and upgrade code.
 * Added API module (smwinfo) via which statistics about the semantic data can
   be obtained.
+* Added second parameter to #info that allows chosing either the info or warning
+  icon.
+* Added #smwdoc parser hook that displays a table with parameter documentation for
+  a single specified result format.
 
 == SMW 1.5.6 ==
 

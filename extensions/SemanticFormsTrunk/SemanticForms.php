@@ -87,6 +87,13 @@ $wgHooks['ParserBeforeStrip'][] = 'SFUtils::cacheFormDefinition';
 $wgHooks['ParserFirstCallInit'][] = 'SFParserFunctions::registerFunctions';
 $wgHooks['MakeGlobalVariablesScript'][] = 'SFFormUtils::setGlobalJSVariables';
 
+//PSSchema Hooks
+$wgHooks['PageSchemasGetObject'][] = 'SFUtils::createPageSchemasObject' ; //Hook for  returning PageSchema(extension)  object from a given xml 
+$wgHooks['PageSchemasGeneratePages'][] = 'SFUtils::generatePages' ; //Hook for  creating Pages
+$wgHooks['PSParseFieldElements'][] = 'SFUtils::parseFieldElements' ; //Hook for  creating Pages
+$wgHooks['PageSchemasGetPageList'][] = 'SFUtils::getPageList' ; //Hook for  creating Pages
+
+
 $wgAPIModules['sfautocomplete'] = 'SFAutocompleteAPI';
 $wgAPIModules['sfautoedit'] = 'SFAutoeditAPI';
 

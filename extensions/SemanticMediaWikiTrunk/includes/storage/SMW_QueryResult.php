@@ -204,6 +204,8 @@ class SMWQueryResult {
 			$params[] = $printout->getSerialisation();
 		}
 		
+		$params['mainlabel'] = $this->mQuery->getMainLabel();
+		
 		if ( count( $this->mQuery->sortkeys ) > 0 ) {
 			$order = implode( ',', $this->mQuery->sortkeys );
 			$sort = implode( ',', array_keys( $this->mQuery->sortkeys ) );
@@ -400,16 +402,19 @@ class SMWResultArray {
 			break;
 			case SMWPrintRequest::PRINT_CATS:
 				// Always recompute cache here to ensure output format is respected.
-				self::$catCache = $this->mStore->getPropertyValues( $this->mResult, new SMWDIProperty( '_INST' ), $this->getRequestOptions( false ) );
+				self::$catCache = $this->mStore->getPropertyValues( $this->mResult,
+					new SMWDIProperty( '_INST' ), $this->getRequestOptions( false ) );
 				self::$catCacheObj = $this->mResult->getHash();
 				
 				$limit = $this->mPrintRequest->getParameter( 'limit' );
-				$this->mContent = ( $limit === false ) ? ( self::$catCache ) : array_slice( self::$catCache, 0, $limit );
+				$this->mContent = ( $limit === false ) ? ( self::$catCache ) :
+					array_slice( self::$catCache, 0, $limit );
 			break;
 			case SMWPrintRequest::PRINT_PROP:
 				$propertyValue = $this->mPrintRequest->getData();
 				if ( $propertyValue->isValid() ) {
-					$this->mContent = $this->mStore->getPropertyValues( $this->mResult, $propertyValue->getDataItem(), $this->getRequestOptions() );
+					$this->mContent = $this->mStore->getPropertyValues( $this->mResult,
+						$propertyValue->getDataItem(), $this->getRequestOptions() );
 				} else {
 					$this->mContent = array();
 				}
@@ -422,10 +427,12 @@ class SMWResultArray {
 					$pos = $this->mPrintRequest->getParameter( 'index' ) - 1;
 					$newcontent = array();
 
-					foreach ( $this->mContent as $listdv ) {
-						$dvs = $listdv->getDVs();
-						if ( ( array_key_exists( $pos, $dvs ) ) && ( $dvs[$pos] !== null ) ) {
-							$newcontent[] = $dvs[$pos];
+					foreach ( $this->mContent as $diContainer ) {
+						$recordValue = SMWDataValueFactory::newDataItemValue( $diContainer, $propertyValue->getDataItem() );
+						$dataItems = $recordValue->getDataItems();
+						if ( array_key_exists( $pos, $dataItems ) &&
+							( $dataItems[$pos] !== null ) ) {
+							$newcontent[] = $dataItems[$pos];
 						}
 					}
 
