@@ -140,7 +140,7 @@ var errors = csslint.verify(fileSrc, RULES).messages;
 var result = {
 	fileChecked: args.file,
 	errors: errors,
-	tool: "CSS Lint v" + csslint.version,
+	tool: "CSS Lint v" + csslint.version + ' (nodejs ' + process.version + ')',
 	inSassMode: !!RULES.sass
 };
 

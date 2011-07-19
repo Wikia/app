@@ -85,7 +85,7 @@ class CodeLintCss extends CodeLint {
 			case "Rule is empty.":
 
 			// * html #foo (IE6 specific fix)
-			case"IE6 specific fix found.":
+			case "IE6 specific fix found.":
 				$ret = true;
 				break;
 
