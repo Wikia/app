@@ -189,7 +189,7 @@ function runBackups( $from, $to, $full, $options ) {
 function getDirectory( $database, $hide = false ) {
 	global $wgDevelEnvironment;
 
-	$folder     = empty( $wgDevelEnvironment ) ?  "backup" : "tmp";
+	$folder     = empty( $wgDevelEnvironment ) ?  "raid" : "tmp";
 	$subfolder = $hide ? "dumps-hidden" : "dumps";
 	$database   = strtolower( $database );
 
