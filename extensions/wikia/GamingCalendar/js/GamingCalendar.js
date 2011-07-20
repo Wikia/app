@@ -100,7 +100,7 @@ var GamingCalendar = {
 	template = template.replace('%end%', weekdates[1] );
 
 	for ( var i = 0; i < week.length; i++  ) {
-		itemsHtml = itemsHtml + GamingCalendar.renderItem( week[i] );
+		itemsHtml = itemsHtml + '<li>' + GamingCalendar.renderItem( week[i] ) + '</li>';
 	}
 
 	template = template.replace( '%items%', itemsHtml );
