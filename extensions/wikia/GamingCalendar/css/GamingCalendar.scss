@@ -75,15 +75,21 @@ $gaming-calendar-gray-text: mix($color-text, $color-page, 75%);
         	display: block;
             font-weight: bold;
             font-size: 11px;
+            height: 18px;
             line-height: 18px;
         }
 
         .day {
-            background: transparent url('/extensions/wikia/GamingCalendar/images/gamingcalendar-rail-day.png') no-repeat bottom center;
+            background: url(/extensions/wikia/GamingCalendar/images/gaming-calendar-sprite.png);
+			@if lightness($color-page) < 50 {
+				background-position: 0 -42px;
+			}
             color: $color-links;
             display: block;
             font-weight: bold;
             font-size: 35px;
+            height: 42px;
+            line-height: 42px;
         }
     }
 
