@@ -6,13 +6,33 @@ var GamingCalendar = {
 
     init: function() {
 	$.get( '/wikia.php?controller=GamingCalendar&method=getEntries&format=json', function(data) {
-			// we pick "randomly" entry #0
-			data.entries[0][0].extended = true;
+                        // get the current cookieVal
+                        var cookieVal = GamingCalendar.getCookieVal();
+                        
+                        // 0 if not set
+                        if ( cookieVal == null ) {
+                            cookieVal = 0;
+                        // +1 othewise
+                        } else {
+                            cookieVal++;
+                        }
+                        
+                        // reset, if no such item
+                        if ( 'undefined' == typeof data.entries[cookieVal] ) {
+                            cookieVal = 0;
+                        }
+                        
+                        // store the cookieVal for future requests
+                        GamingCalendar.setCookieVal( cookieVal );
+                        
+                        // tell modal, which item to extend
+			data.entries[0][cookieVal].extended = true;
+                        
 			// store for future use
 			window.GamingCalendarData = data;
 
 			// grab the first item
-			item = data.entries[0][0];
+			item = data.entries[0][cookieVal];
 			
 			// generate HTML from template
 			var itemHTML = GamingCalendar.renderItem(item);
@@ -22,6 +42,29 @@ var GamingCalendar = {
         });
 		$('.GamingCalendarModule .more').click(GamingCalendar.showCalendar);        
 	},
+        
+    getCookieVal: function() {
+            var cookieStart = document.cookie.indexOf( 'wikiagc=' );
+            if ( cookieStart == -1 ) {
+                return null;
+            }
+            var valueStart = document.cookie.indexOf( '=', cookieStart ) + 1;
+            var valueEnd   = document.cookie.indexOf( ';', valueStart );
+            if ( valueEnd == -1 ) {
+                valueEnd = document.cookie.length;
+            }
+            var val = document.cookie.substring( valueStart, valueEnd );
+            if ( val != null ) {
+                return unescape( val );
+            }
+            return null;
+    },
+    
+    setCookieVal: function( value ) {
+        var expiration = new Date( new Date().getTime() + 3600000 ); // 1 hour
+        var str = 'wikiagc=' + escape( value ) + '; path=/ ; expires=' + expiration.toGMTString();
+        document.cookie = str;
+    },
     
     renderItem: function(item) {
     	var template = $('#GamingCalendarItemTemplate').html();
