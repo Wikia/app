@@ -51,8 +51,13 @@ class GamingCalendar {
 		$date = $adjustedDate;
 
 		for ( $i = 1; $i <= ( 7 * $weeks ); $i++ ) {
+			// initialize week
 			if ( empty( $entries[$week] ) ) {
-				$entries[$week] = array();
+				$entries[$week] = array( 0 => array(
+						$adjustedDate,
+						$adjustedDate + 7 * $oneDay,
+					),
+				);
 			}
 
 			$msgKey = self::getEntryKey( $date );
@@ -70,13 +75,6 @@ class GamingCalendar {
 
 			$date = $date + $oneDay;
 		}
-
-		$weekdata = array(
-			$adjustedDate,
-			$adjustedDate + 7 * $oneDay,
-		);
-
-		array_unshift( $entries, $weekdata );
 
 		$wgMemc->set( $memcKey, $entries, self::CACHE_EXPIRY );
 
