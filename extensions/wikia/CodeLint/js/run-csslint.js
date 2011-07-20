@@ -75,7 +75,6 @@ var errors = csslint.verify(fileSrc, RULESET).messages;
 
 // prepare output object
 var result = {
-	fileChecked: args.file,
 	errors: errors,
 	tool: "CSS Lint v" + csslint.version + ' (nodejs ' + process.version + ')',
 	inSassMode: !!RULESET.sass

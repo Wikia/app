@@ -218,6 +218,8 @@ abstract class CodeLint {
 			$output['errorsCount'] = 0;
 		}
 
+		$output['fileChecked'] = $fileName;
+
 		return $output;
 	}
 
