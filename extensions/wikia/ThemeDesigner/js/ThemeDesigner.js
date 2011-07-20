@@ -136,12 +136,12 @@ var ThemeDesigner = {
 		});
 		
 		var currentVal = ThemeDesigner.settings["page-opacity"];
-		var base = 50;
+		var base = 70;
 		$("#OpacitySlider").slider({
-			value: ((currentVal - base) / base) * 100,
+			value: 100 - (((currentVal - base) / base) * 100),
 			stop: function(e, ui) {
 				var val = ui.value;
-				var wikiaNormalized = base + Math.round((val/100) * base);
+				var wikiaNormalized = 100 - Math.round((val/100) * (100 - base));
 				ThemeDesigner.set("page-opacity", wikiaNormalized);
 			}
 		});

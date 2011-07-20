@@ -19,6 +19,7 @@ $messages['en'] = array(
 	'themedesigner-large' => 'Large',
 	'themedesigner-tile-background' => 'tile',
 	'themedesigner-fix-background' => 'fix',
+	'themedesigner-transparency' => 'transparency',
 	'themedesigner-tab-theme' => 'Theme',
 	'themedesigner-tab-customize' => 'Customize',
 	'themedesigner-tab-wordmark' => 'Wordmark',
