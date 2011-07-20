@@ -32,7 +32,7 @@
 			<li>
 				<h2><?= wfMsg('themedesigner-color') ?></h2>
 				<img src="<?= $wgBlankImgUrl ?>" class="color-page" id="swatch-color-page">
-				<h2>opacity</h2>
+				<h2><?= wfMsg('themedesigner-transparency') ?></h2>
 				<div id="OpacitySlider" class="WikiaSlider OpacitySlider"></div>
 			</li>
 		</ul>
