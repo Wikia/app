@@ -25,8 +25,8 @@ var GamingCalendar = {
                         // store the cookieVal for future requests
                         GamingCalendar.setCookieVal( cookieVal );
                         
-                        // tell modal, which item to extend
-			data.entries[0][cookieVal].extended = true;
+                        // tell modal, which item to expand
+			data.entries[0][cookieVal].expanded = true;
                         
 			// store for future use
 			window.GamingCalendarData = data;
@@ -35,7 +35,7 @@ var GamingCalendar = {
 			item = data.entries[0][cookieVal];
 			
 			// generate HTML from template
-			var itemHTML = GamingCalendar.renderItem(item);
+			var itemHTML = GamingCalendar.renderItem(item, false);
 			
 			// insert into module (after the h1)
 			$('.GamingCalendarModule h1').after(itemHTML);
@@ -66,16 +66,22 @@ var GamingCalendar = {
         document.cookie = str;
     },
     
-    renderItem: function(item) {
+    renderItem: function(item, expanded) {
     	var template = $('#GamingCalendarItemTemplate').html();
 
-        if ( item.subTitle ) {
-            template = template.replace('%gameSubTitle%', '<span class="game-subtitle">' + item.subTitle + '</span>');
+        if ( item.gameSubtitle ) {
+            template = template.replace('%gameSubTitle%', '<span class="game-subtitle">' + item.gameSubtitle + '</span>');
         } else {
             template = template.replace('%gameSubTitle%', '');
         }
         
-        template = template.replace('%gameTitle%', item.title);
+        if ( expanded ) {
+            template = template.replace('%expanded%', 'expanded');
+        } else {
+            template = template.replace('%expanded%', 'unselected');
+        }
+        
+        template = template.replace('%gameTitle%', item.gameTitle);
         template = template.replace('%description%', item.description);
     	template = template.replace('%imageSrc%', item.image.src);
     	template = template.replace('%moreInfoUrl%', item.moreInfoUrl);
@@ -100,7 +106,11 @@ var GamingCalendar = {
 	template = template.replace('%end%', weekdates[1] );
 
 	for ( var i = 0; i < week.length; i++  ) {
-		itemsHtml = itemsHtml + '<li>' + GamingCalendar.renderItem( week[i] ) + '</li>';
+                if ( week[i].expanded ) {
+                    itemsHtml = itemsHtml + '<li>' + GamingCalendar.renderItem( week[i], true ) + '</li>';
+                } else {
+                    itemsHtml = itemsHtml + '<li>' + GamingCalendar.renderItem( week[i], false ) + '</li>';
+                }
 	}
 
 	template = template.replace( '%items%', itemsHtml );
