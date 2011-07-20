@@ -25,6 +25,8 @@ class GamingCalendar {
 	 * @return array of arrays of GamingCalendarEntry
 	 */
 	public static function loadEntries($offset = 0, $weeks = 2) {
+		global $wgMemc;
+
 		$oneDay = 86400;
 
 		$entries = array();
