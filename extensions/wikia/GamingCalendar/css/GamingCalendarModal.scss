@@ -35,18 +35,26 @@ $gaming-calendar-hover: mix($color-page, #000, 90%);
 				font-weight: bold;
 			}
 		}
-		ul {
-			margin: 0 3px;
-			max-height: 420px;
-			overflow: hidden;
-		}
-		li {
-			border-top: 1px solid $color-page-border;
-			padding: 3px 0;
-			&:first-child {
-				border-top: 0;
-			}
-		}
+
+                .list {
+                    height: 400px;
+                    overflow: hidden;
+                    position: relative;
+
+                    ul {
+                            position: absolute;
+                            width: 284px;
+
+                            li {
+                                    border-top: 1px solid $color-page-border;
+                                    padding: 3px 0;
+                                    &:first-child {
+                                            border-top: 0;
+                                    }
+                            }
+                    }
+
+                }
 		
 	}
 
@@ -70,7 +78,6 @@ $gaming-calendar-hover: mix($color-page, #000, 90%);
 			.calendar {
 				border: 0;
 				height: auto;
-				position: absolute;
 				.month {
 					background: transparent;
 					color: $color-links;
