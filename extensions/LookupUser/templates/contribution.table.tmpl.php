@@ -9,7 +9,7 @@ $(document).ready(function() {
 	
 	var ajaxRequests = [];
 	
-	var oTable = $('#lc-table').dataTable( {
+	var oTable = $('#lookupuser-table').dataTable( {
 		oLanguage: {
 			sLengthMenu: "<?=wfMsg('table_pager_limit', '_MENU_');?>",
 			sZeroRecords: "<?=wfMsg('table_pager_empty');?>",
@@ -54,7 +54,7 @@ $(document).ready(function() {
 				bSortable: false
 			},
 			{ bVisible: true, aTargets: [3], bSortable: false },
-			{ bVisible: true, aTargets: [4], bSortable: false },
+			{ bVisible: true, aTargets: [4], bSortable: true },
 			{ bVisible: true, aTargets: [5], bSortable: false },
 			{ bVisible: true, aTargets: [6], bSortable: false }
 		],
@@ -128,7 +128,12 @@ $(document).ready(function() {
 										//user's block data
 										blockedInfo.hide();
 										switch(res.data.blocked) {
-											case true: blockedInfo.parent().append('Y'); break;
+											case true: var blockedInfoTd = blockedInfo.parent();
+													   blockedInfoTd.append('Y');
+													   blockedInfoTd.parent().find('td').each(function(){
+													   		$(this).addClass('red-background');
+													   });
+													   break;
 											case false: blockedInfo.parent().append('N'); break;
 										}
 										
@@ -166,7 +171,7 @@ $(document).ready(function() {
 </script>
 
 <input id="lu_name" type="hidden" value="<?= $username; ?>" />
-<table cellpadding="0" cellspacing="0" border="0" class="TablePager" id="lc-table">
+<table cellpadding="0" cellspacing="0" border="0" class="TablePager" id="lookupuser-table">
 	<thead>
 		<tr>
 			<th width="2%">#</th>
