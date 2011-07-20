@@ -24,7 +24,7 @@ class GamingCalendar {
 	public static function loadEntries($offset = 0, $weeks = 2) {
 		$oneDay = 86400;
 
-		$entries = array( 0 => array() );
+		$entries = array();
 		$week = 0;		
 
 		// determine the start of the current week
@@ -38,6 +38,10 @@ class GamingCalendar {
 		$date = $startDate + $offset * 7 * $oneDay;
 
 		for ( $i = 1; $i <= ( 7 * $weeks ); $i++ ) {
+			if ( empty( $entries[$week] ) ) {
+				$entries[$week] = array();
+			}
+
 			$msgKey = self::getEntryKey( $date );
 			$msg = wfMsgForContent($msgKey);
 			if (!wfEmptyMsg($msgKey, $msg)) {
@@ -49,7 +53,6 @@ class GamingCalendar {
 
 			if ( $i % 7 == 0 ) {
 				$week++;
-				$entries[$week] = array();
 			}
 
 			$date = $date + $oneDay;

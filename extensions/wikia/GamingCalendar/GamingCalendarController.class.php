@@ -23,6 +23,5 @@ class GamingCalendarController extends WikiaController {
          * styling the modal window for Gaming Calendar without hardcoding HTML anywhere.
          */
         public function getModalLayout() {
-            // do nothing (which means: automatically call the proper template and render it's contents).
         }
   }
