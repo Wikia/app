@@ -3,6 +3,7 @@
 class GamingCalendarEntry {
 	private $releaseDate;	// timestamp, specified at midnight UTC
 	private $gameTitle;
+	private $gameSubtitle;
 	private $description;
 	private $imageSrc;
 	private $imageWidth;
@@ -16,6 +17,10 @@ class GamingCalendarEntry {
 	
 	public function getGameTitle() {
 		return $this->gameTitle;
+	}
+	
+	public function getGameSubtitle() {
+		return $this->gameSubtitle;
 	}
 	
 	public function getReleaseDate() {
@@ -54,6 +59,10 @@ class GamingCalendarEntry {
 		$this->gameTitle = $title;
 	}
 	
+	public function setGameSubtitle($subtitle) {
+		$this->gameSubtitle = $subtitle;
+	}
+	
 	public function setSystems($systems) {
 		$this->systems = $systems;
 	}
@@ -83,6 +92,7 @@ class GamingCalendarEntry {
 		
 		$elems['releaseDate'] = $this->releaseDate;
 		$elems['gameTitle'] = $this->gameTitle;
+		$elems['gameSubtitle'] = $this->gameSubtitle;
 		$elems['description'] = $this->description;
 		$elems['image'] = array('src'=>$this->imageSrc, 'width'=>$this->imageWidth);
 		$elems['systems'] = $this->systems;

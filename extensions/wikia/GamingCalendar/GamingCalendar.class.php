@@ -43,7 +43,7 @@ class GamingCalendar {
 		$adjustedDate = $thisWeekStart + $offset * 7 * $oneDay;
 
 		$memcKey = wfMemcKey( self::CACHE_KEY, $adjustedDate, $weeks ); 
-//		$entries = $wgMemc->get( $memcKey );
+		//$entries = $wgMemc->get( $memcKey );
 		if ( !empty( $entries ) ) {
 			return $entries;
 		}
@@ -113,6 +113,11 @@ class GamingCalendar {
 				// init new entry
 				$entry = new GamingCalendarEntry($releaseDate);
 				$entry->setGameTitle( trim( substr($line, strlen(self::$ENTRY_TITLE_MARKER)) ) );
+				$titleParts = explode('|', trim(substr($line, strlen(self::$ENTRY_TITLE_MARKER))) );
+				$entry->setGameTitle($titleParts[0]);
+				if (sizeof($titleParts) > 1) {
+					$entry->setGameSubtitle($titleParts[1]);
+				}
 			}
 			elseif (startsWith($line, self::$ENTRY_ATTRIBUTE_MARKER)) {
 				$attrib = trim( substr($line, strlen(self::$ENTRY_ATTRIBUTE_MARKER)) );
@@ -125,7 +130,7 @@ class GamingCalendar {
 				elseif (startsWith($attrib, self::$ENTRY_IMAGE_MARKER)) {
 					$imageParts = explode('|', trim(substr($attrib, strlen(self::$ENTRY_IMAGE_MARKER))) );
 					$entry->setImageSrc($imageParts[0]);
-					if ($imageParts[1]) {
+					if (sizeof($imageParts) > 1) {
 						$entry->setImageWidth(str_replace('px', '', $imageParts[1]));
 					}
 				}
