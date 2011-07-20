@@ -60,7 +60,6 @@ var UserPathPrediction = {
 			function( data ) {
 				paths = data.paths;
 				
-				
 				if ( paths != "No Result" ) {
 					$( "#navigationArticles" ).html("");
 					thumbnails = data.thumbnails;
@@ -77,7 +76,7 @@ var UserPathPrediction = {
 							if ( thumbnails[node.targetTitle.mArticleID] ) {
 								$imgsrc = thumbnails[node.targetTitle.mArticleID][0]['url'];
 							} else {
-								$imgsrc = "http://dummyimage.com/100x67/000/bada55.gif&text=NoImage";
+								$imgsrc = "http://dummyimage.com/100x67/000/bada55.gif&text=" + node.targetTitle.mTextform;
 							}
 							
 							$( "#navigationArticles > ul#path" + i ).append( '<li data-url="' +
@@ -123,7 +122,7 @@ var UserPathPrediction = {
 						if ( thumbnails[nodes[i].targetTitle.mArticleID] ) {
 							$imgsrc = thumbnails[nodes[i].targetTitle.mArticleID][0]['url'];
 						} else {
-							$imgsrc = "http://dummyimage.com/75x50/000/bada55.gif&text=NoImage";
+							$imgsrc = "http://dummyimage.com/75x50/000/bada55.gif&text=" + nodes[i].targetTitle.mTextform;
 						}
 						
 						$( "#relatedArticles > ul" ).append( '<li data-url="' +
