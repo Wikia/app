@@ -109,6 +109,11 @@ class CodeLintCss extends CodeLint {
 			$ret = true;
 		}
 
+		// Unknown CSS property
+		if (strpos($errorMsg, 'Unknown property ') === 0) {
+			$ret = true;
+		}
+
 		return $ret;
 	}
 }
