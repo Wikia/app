@@ -295,7 +295,7 @@ var ScavengerHunt = {
 								}
 							}
 						);
-						b.attr('disabled', ok ? '' : 'disabled');
+						b.attr('disabled', ok ? false : 'disabled');
 					};
 					if ( inputs.length > 0 ) {
 						inputs.blur(inputsChange).keyup(inputsChange);
