@@ -34,3 +34,16 @@ table
 * html #bar {
  	border: none;
 }
+
+/* browser specific prefixes */
+#box {
+	-moz-box-shadow: 1px;
+	-webkit-box-shadow: 2px;
+	-moz-border-radius: 5px;
+	text-shadow: none;
+	textshadow: none;
+}
+
+#box:hover {
+	background-color: blue;
+}

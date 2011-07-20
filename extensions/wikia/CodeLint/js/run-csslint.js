@@ -9,11 +9,11 @@
 
 // require generic functions
 var print = require("sys").print,
-	parseArgs = require('./utils').parseArgs;
+parseArgs = require('./utils').parseArgs;
 
-// options for CSSLint
+// rules CSSLint should apply when linting
 // @see http://csslint.net/about.html
-var RULES = {
+var RULESET = {
 	'duplicate-properties': true,
 	'empty-rules': true,
 	'errors': true,
@@ -44,123 +44,47 @@ var fileSrc;
 
 try {
 	fileSrc = require("fs").readFileSync(args.file, "utf8");
-}
-catch(ex) {
+} catch(ex) {
 	print(ex.message);
 	process.exit(1);
 }
 
+// import our custom lint rules
+var extraRules = require('./csslint-rules').rules;
+
 // be less restrictive in SASS mode (experimental feature!)
 if (/.scss$/.test(args.file)) {
-	// don't use build-in "errors" rule
-	delete RULES.errors;
+	// use fake "errors" rule do override build-in "errors" handling
+	csslint.addRule(extraRules.errors);
 
-	csslint.addRule({
-		id: 'sass',
-		name: 'SASS specific checks',
-		desc: 'This rule looks for SASS specific syntax.',
-		browsers: 'All',
-
-		init: function(parser, reporter) {
-			var rule = this,
-				lastError = {},
-				lastCommentLine = 0;
-
-			parser.addListener('error', function(event) {
-				var ignoreError = false,
-					err = event.error;
-
-				// grab SASS style comments (// foo)
-				if (err.message.indexOf("Unexpected token '/' at line") === 0) {
-					ignoreError = true;
-
-					if (lastError.line == err.line && (lastError.col + 1) == err.col) {
-						lastCommentLine = err.line;
-					}
-				}
-				// @import is heavily used in SASS
-				else if (err.message == '@import not allowed here.') {
-					ignoreError = true;
-				}
-				// Expected LBRACE at line 13, character 1.
-				// ignore this error if it comes straight after a line with a comment
-				else if (err.message.indexOf('Expected LBRACE at line') === 0) {
-					if (err.col == 1 && (lastCommentLine + 1) == err.line) {
-						ignoreError = true;
-					}
-				}
-				// ignore errors in SASS one-line comments
-				else if (err.line == lastCommentLine) {
-					ignoreError = true;
-				}
-
-				// pass an error
-				if (!ignoreError) {
-					reporter.error(event.message, event.line, event.col, rule);
-				}
-
-				// store recent error
-				lastError = err;
-			});
-		}
-	});
-
-	RULES.sass = true;
+	// try to validate SASS files
+	csslint.addRule(extraRules.sass);
+	RULESET.sass = true;
 }
 
 // catch IE6 specific fixes (* html #foo)
-csslint.addRule({
-	id: 'ie6',
-	name: 'Find IE6 specific fixes',
-	desc: 'Catch * html #foo selectors',
-	browsers: 'IE6',
-	regexp: /^\*\s*html/, // match "* html #foo"
-
-	init: function(parser, reporter) {
-		var rule = this;
-
-		parser.addListener('startrule', function(event) {
-			var selectors = event.selectors;
-
-			for (var s=0, len = selectors.length; s<len; s++) {
-				if (rule.regexp.test(selectors[s].text)) {
-					reporter.error('IE6 specific fix found.', selectors[s].line, selectors[s].col, rule);
-				}
-			}
-		});
-	}
-});
-
-RULES.ie6 = true;
+csslint.addRule(extraRules.ie6);
+RULESET.ie6 = true;
 
 // check CSS properties for typos
-csslint.addRule({
-	id: 'checkProperties',
-	name: 'Check CSS properties',
-	desc: 'Check CSS properties for typos',
-	browsers: 'All',
-
-	init: function(parser, reporter) {
-		var rule = this;
-
-		parser.addListener('property', function(event) {
-			// TODO: validate event.property
-        });
-	}
-});
-
-//RULES.checkProperties = true;
+csslint.addRule(extraRules.checkProperties);
+RULESET.checkProperties = true;
 
 // lint it
-var errors = csslint.verify(fileSrc, RULES).messages;
+var errors = csslint.verify(fileSrc, RULESET).messages;
 
 // prepare output object
 var result = {
 	fileChecked: args.file,
 	errors: errors,
 	tool: "CSS Lint v" + csslint.version + ' (nodejs ' + process.version + ')',
-	inSassMode: !!RULES.sass
+	inSassMode: !!RULESET.sass
 };
+
+// inform about running in SASS mode
+if (result.inSassMode) {
+	result.tool += ' in SASS mode';
+}
 
 // return JSON-encoded result
 print(JSON.stringify(result));
