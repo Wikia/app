@@ -5,14 +5,14 @@ $(function() {
 var GamingCalendar = {
 
     init: function() {
-	$.get( '/wikia.php?controller=GamingCalendar&method=getEntries&format=json&startDate=1310947200&endDate=1311465600', function(data) {
+	$.get( '/wikia.php?controller=GamingCalendar&method=getEntries&format=json', function(data) {
 			// we pick "randomly" entry #0
-			data.entries[0].extended = true;
+			data.entries[0][0].extended = true;
 			// store for future use
 			window.GamingCalendarData = data;
-			
+
 			// grab the first item
-			item = data.entries[0];
+			item = data.entries[0][0];
 			
 			// generate HTML from template
 			var itemHTML = GamingCalendar.renderItem(item);

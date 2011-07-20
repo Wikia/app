@@ -8,10 +8,10 @@
 class GamingCalendarController extends WikiaController {
 	
 	public function getEntries() {
-		$startDate = $this->request->getVal('startDate', '');
-		$endDate = $this->request->getVal('endDate', '');
+		$offset = $this->request->getInt( 'offset', 0 );
+		$weeks = $this->request->getInt( 'weeks', 2 );
 		
-		$entries = GamingCalendar::loadEntries($startDate, $endDate);
+		$entries = GamingCalendar::loadEntries($offset, $weeks);
 
 		$this->response->setVal('entries', $entries);
 	}
