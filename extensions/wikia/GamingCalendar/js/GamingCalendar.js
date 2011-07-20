@@ -11,7 +11,7 @@ var GamingCalendar = {
                         
                         // 0 if not set
                         if ( cookieVal == null ) {
-                            cookieVal = 0;
+                            cookieVal = 1;
                         // +1 othewise
                         } else {
                             cookieVal++;
@@ -19,7 +19,7 @@ var GamingCalendar = {
                         
                         // reset, if no such item
                         if ( 'undefined' == typeof data.entries[cookieVal] ) {
-                            cookieVal = 0;
+                            cookieVal = 1;
                         }
                         
                         // store the cookieVal for future requests
@@ -89,6 +89,24 @@ var GamingCalendar = {
 
     	return template;
     },
+
+    renderWeek: function(week) {
+	var template = $('#GamingCalendarWeekTemplate').html();
+	var itemsHtml = '';
+
+	weekdates = week.shift();
+
+	template = template.replace('%start%', weekdates[0] );
+	template = template.replace('%end%', weekdates[1] );
+
+	for ( var i = 0; i < week.length; i++  ) {
+		itemsHtml = itemsHtml + GamingCalendar.renderItem( week[i] );
+	}
+
+	template = template.replace( '%items%', itemsHtml );
+
+	return template;
+    },
     
 	showCalendar: function(e) {
 		e.preventDefault();
@@ -103,12 +121,8 @@ var GamingCalendar = {
 				var weekNo = 1;
 				var weeks = window.GamingCalendarData['entries'];
 				for ( var i = 0; i < weeks.length; i++ ) {
-					var itemsHtml = '';
-					var items = weeks[i];
-					for ( var j = 0; j < items.length; j++  ) {
-						itemsHtml = itemsHtml + GamingCalendar.renderItem( items[j] );
-					}
-					html = html.replace( '%week' + weekNo + '%', itemsHtml );
+					var weekHtml = GamingCalendar.renderWeek( weeks[i] );
+					html = html.replace( '%week' + weekNo + '%', weekHtml );
 
 					weekNo++;
 				}

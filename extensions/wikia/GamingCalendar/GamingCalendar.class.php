@@ -71,6 +71,13 @@ class GamingCalendar {
 			$date = $date + $oneDay;
 		}
 
+		$weekdata = array(
+			$adjustedDate,
+			$adjustedDate + 7 * $oneDay,
+		);
+
+		$entries = array_unshift( $entries, $weekdata );
+
 		$wgMemc->set( $memcKey, $entries, self::CACHE_EXPIRY );
 
 		return $entries;

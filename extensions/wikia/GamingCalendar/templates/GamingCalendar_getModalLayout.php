@@ -7,17 +7,8 @@
 
 	<div class="weeks">
 		<ul>
-			<?php $i = 0; while ( $i < 2 ) { 
-				$i++; ?>
-			<li class="week">
-				<h1><span>This Week</span> July 14th - 21st</h1>
-				<div class="scroll-up"></div>
-				<ul>
-					%week<?= $i; ?>%
-				</ul>
-				<div class="scroll-down"></div>
-			</li>
-			<?php } ?>
+			%week1%
+			%week2%
 		</ul>
 	</div>
 

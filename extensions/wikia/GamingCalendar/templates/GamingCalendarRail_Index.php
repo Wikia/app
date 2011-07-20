@@ -20,4 +20,18 @@
 			</div>
 		</div>
     </script>
+
+   <script type="text/template" id="GamingCalendarWeekTemplate">
+		<li class="week">
+			<h1>
+				<span>%week-caption%</span>
+				%month% %start% - %end%
+			</h1>
+			<div class="scroll-up"></div>
+			<div class="list">
+				<ul>%items%</ul>
+			</div>
+			<div class="scroll-down"></div>
+		</li>
+   </script>
 </section>
