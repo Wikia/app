@@ -1,112 +1,128 @@
 @import "../../../../skins/oasis/css/core/color";
 @import "../../../../skins/oasis/css/mixins/gradient";
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+
+
+/* Colors */
+$gaming-calendar-month-gradient-bottom: darken(lighten($color-page, 100%), 10%);
+@if lightness($color-page) < 50 {
+	$gaming-calendar-month-gradient-bottom: lighten(darken($color-page, 100%), 15%);
+}
+
+$gaming-calendar-gray-text: mix($color-text, $color-page, 75%);
+
+
 
 .GamingCalendarModule {
 
-    border: 1px solid $color-page-border;
-    margin-bottom: 10px;
-    padding: 0 0 8px 0;
+	border: 1px solid $color-page-border;
+	margin-bottom: 10px;
+	padding: 0 0 8px 0;
 
-    h1 {
-        @include linear-gradient( false, top, #808285, 0, #434345, 100% );
-        color: lighten( $color-links, 30% );
-        font-weight: normal;
-        text-transform: uppercase;
-        font-size: 11px;
-        height: 22px;
-        line-height: 22px;
-        margin: 0 0 7px 0;
-    }
+	h1 {
+		@include linear-gradient( false, top, #808285, 0, #434345, 100% );
+		color: lighten( $color-links, 30% );
+		font-weight: normal;
+		text-transform: uppercase;
+		font-size: 11px;
+		height: 22px;
+		line-height: 22px;
+		margin: 0 0 7px 0;
+	}
 
-    h2 {
-        font-weight: bold;
-        font-size: 12px;
-        color: $color-text;
-        margin: 0 8px 0 0;
-    }
+	.more {
+		clear: both;
+		color: $color-links;
+		display: block;
+		font-size: 10px;
+		font-weight: bold;
+		margin: 0 8px 0 0;
+		text-align: right;
+		&:after {
+			content: " >";
+		}
+	}
+	
+	/* Specific styles and interactions for the modal version of GamingCalendarItems. */
+	.GamingCalendarItem {
+		.game-details {
+			display: none;
+		}
+	}
+	
+}
 
-    h3 {
-        font-weight: normal;
-        font-size: 12px;
-        color: $color-text;
-        margin: 0 8px 0 0;
-    }
-
-    p {
-        font-size: 11px;
-        color: lighten( $color-text, 30% );
-        margin: 0 8px 0 0;
-    }
-
+.GamingCalendarItem {
+	@include border-radius(3px);
+	@include clearfix;
+	line-height: normal;
+	padding: 8px;
+	
     .calendar {
         border: 1px solid $color-page-border;
-        width: 60px;
+        float: left;
         height: 60px;
-        text-align: center;
-        margin: 0 0 0 8px;
+        margin-right: 12px;
         padding: 0;
         overflow: hidden;
-        float: left;
+        text-align: center;
+        width: 60px;
 
         .month {
+            @include linear-gradient( false, top, $color-page, 0, $gaming-calendar-month-gradient-bottom, 100% );
+            border-bottom: 1px solid $color-page-border;
+        	display: block;
             font-weight: bold;
             font-size: 11px;
             line-height: 18px;
-            @include linear-gradient( false, top, #808285, 0, #434345, 100% );
-            color: $color-page;
-            border-bottom: 1px solid $color-page-border;
         }
 
         .day {
             background: transparent url('/extensions/wikia/GamingCalendar/images/gamingcalendar-rail-day.png') no-repeat bottom center;
+            color: $color-links;
+            display: block;
             font-weight: bold;
             font-size: 35px;
-            color: lighten( $color-links, 30% );
-
-            span {
-                display: block;
-                line-height: 41px;
-            }
         }
     }
 
-    img {
-        height: 60px;
-        width: 52px;
-        float: left;
-        margin: 0 11px 0 12px;
-    }
+	img {
+		height: 60px;
+		width: 52px;
+		float: left;
+		margin-right: 11px;
+	}
 
-    a.more {
-        clear: both;
-        display: block;
-        text-align: right;
-        font-size: 10px;
-        font-weight: bold;
-        margin: 0 8px 0 0;
-        color: $color-links;
-    }
+	.game-title {
+		display: block;
+		font-weight: bold;
+		font-size: 12px;
+	}
 
-    @if lightness($color-page) < 50 {
-        h1 {
-            @include linear-gradient( false, top, #000000, 0, #333333, 100% );
-            color: $color-links;
-        }
-
-        p {
-            color: darken( $color-text, 30% );
-        }
-
-        .calendar {
-
-            .month {
-                @include linear-gradient( false, top, #000000, 0, #333333, 100% );
-                color: $color-text;
-            }
-
-            .day {
-                color: $color-links;
-            }
-        }
-    }
+	.game-subtitle {
+		display: block;
+		font-size: 12px;
+		font-weight: normal;
+	}
+	
+	.game-systems {
+		color: $gaming-calendar-gray-text;
+		display: block;
+		font-size: 11px;
+	}
+	
+	.game-details {
+		clear: left;
+		text-align: right;
+		p {
+			color: $gaming-calendar-gray-text;
+			font-size: 11px;
+			padding: 10px 0;
+			text-align: left;
+		}
+		a {
+			font-size: 10px;	
+		}
+	}	
 }
