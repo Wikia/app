@@ -10,7 +10,6 @@
  * @author Inez Korczyński <inez@wikia-inc.com>
  * @author Bartek Łapiński <bartek@wikia-inc.com>
  * @author Lucas Garczewski (TOR) <tor@wikia-inc.com>
- * @author Sean Colombo <sean@wikia.com>
  * @copyright Copyright (c) 2008-2009, Wikia Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
@@ -21,8 +20,8 @@ if(!defined('MEDIAWIKI')) {
 
 $wgExtensionCredits['other'][] = array(
     'name' => 'LinkSuggest',
-    'author' => 'Inez Korczyński, Bartek Łapiński, Ciencia al Poder, Lucas Garczewski, Sean Colombo',
-    'version' => '1.53',
+    'author' => 'Inez Korczyński, Bartek Łapiński, Ciencia al Poder',
+    'version' => '1.52',
 );
 
 $wgExtensionMessagesFiles['LinkSuggest'] = dirname(__FILE__).'/'.'LinkSuggest.i18n.php';
@@ -57,7 +56,7 @@ function AddLinkSuggest($a, $b, $c, $d) {
 
 		$js = "{$wgExtensionsPath}/wikia/LinkSuggest/LinkSuggest.js?{$wgStyleVersion}";
 
-		// load YUI for Oasis - TODO: FIXME: why do we load YUI? It doesn't appear to be needed by this extension (if calling code needs it, that should load it).
+		// load YUI for Oasis
 		if (Wikia::isOasis()) {
 			$wgOut->addHTML('<script type="text/javascript">$(function() {$.loadYUI(function() {$.getScript('.Xml::encodeJsVar($js).')})})</script>');
 		}
@@ -98,12 +97,6 @@ function getLinkSuggest() {
 	// - this is how MediaWiki store article titles in database
 	$query = urldecode( trim( $wgRequest->getText('query') ) );
 	$query = str_replace(' ', '_', $query);
-
-	// Allow the calling-code to specify a namespace to search in (which at the moment, could be overridden by having prefixed text in the input field).
-	// NOTE: This extension does parse titles to try to find things in other namespaces, but that actually doesn't work in practice because jQuery
-	// Autocomplete will stop making requests after it finds 0 results.  So if you start to type "Category" and there is no page beginning
-	// with "Cate", it will not even make the call to LinkSuggest.
-	$namespace = $wgRequest->getVal('ns');
 
 	// explode passed query by ':' to get namespace and article title
 	$queryParts = explode(':', $query, 2);
