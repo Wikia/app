@@ -37,7 +37,7 @@ var OPTIONS = {
 	regexp: true,
 	// tolerate missing 'use strict' pragma
 	sloppy: true,
-	// tTolerate many var statements per function
+	// tolerate many var statements per function
 	vars: true,
 	// tolerate messy white space
 	white: true

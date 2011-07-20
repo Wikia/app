@@ -116,6 +116,8 @@ class CodeLintJs extends CodeLint {
 				case "Missing space between '{a}' and '{b}'.":
 				case "Unexpected space between '{a}' and '{b}'.":
 				case "Expected '{a}' at column {b}, not column {c}.":
+				// allow object['foo'] notation
+				case "['{a}'] is better written in dot notation.":
 					$remove = true;
 					break;
 			}
