@@ -69,7 +69,7 @@ var GamingCalendar = {
     renderItem: function(item) {
     	var template = $('#GamingCalendarItemTemplate').html();
 
-        var title = item.gameTitle.split(':');
+	var title = item.gameTitle.split(':');
     	template = template.replace('%gameTitle%', title[0]);
         if ( title[1] ) {
             template = template.replace('%gameSubTitle%', title[1]);
@@ -99,11 +99,23 @@ var GamingCalendar = {
 			$.getSassCommonURL('/extensions/wikia/GamingCalendar/css/GamingCalendarModal.scss'),
 			wgScriptPath + '/extensions/wikia/GamingCalendar/js/GamingCalendarModal.js'
 		], function() {
-
 			// Get markup
 			$.get('/wikia.php?controller=GamingCalendar&method=getModalLayout&format=html', function(html) {
+				var weekNo = 1;
+				var weeks = window.GamingCalendarData['entries'];
+				for ( var i = 0; i < weeks.length; i++ ) {
+					var itemsHtml = '';
+					var items = weeks[i];
+					for ( var j = 0; j < items.length; j++  ) {
+						itemsHtml = itemsHtml + GamingCalendar.renderItem( items[j] );
+					}
+					html = html.replace( '%week' + weekNo + '%', itemsHtml );
+
+					weekNo++;
+				}
 				$(html).makeModal({width: 710});
 			});
+
 		});
-    }    
+	}
 }
