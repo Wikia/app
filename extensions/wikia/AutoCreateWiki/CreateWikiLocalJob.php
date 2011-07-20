@@ -142,7 +142,8 @@ class CreateWikiLocalJob extends Job {
 
 		$params = array(
 			'title' => $this->mParams->sitename,
-			'url'	=> $this->mParams->url
+			'url'	=> $this->mParams->url,
+			'city_id' => $this->mParams->city_id
 		);
 		wfRunHooks( 'CreateWikiLocalJob-complete', array( $params ) );
 
