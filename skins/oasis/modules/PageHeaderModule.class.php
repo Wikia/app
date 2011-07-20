@@ -494,7 +494,26 @@ class PageHeaderModule extends Module {
 		}
 
 		// render edit dropdown / commments chicklet on history pages
-		if ($isHistory) {
+		if ( $isHistory ) {
+			//FB#1137 - re-add missing log and undelete links
+			$logPage = SpecialPage::getTitleFor( 'Log' );
+			$this->subtitle .= ' | ' . Wikia::link(
+				$logPage,
+				wfMsgHtml( 'viewpagelogs' ),
+				array(),
+				array( 'page' => $wgTitle->getPrefixedText() ),
+				array( 'known', 'noclasses' )
+			);
+				
+			$sk = new Skin();
+			$sk->setTitle($wgTitle);
+			
+			$undeleteLink = $sk->getUndeleteLink();
+			
+			if ( !empty( $undeleteLink ) ) {
+				$this->subtitle .= ' | ' . $undeleteLink;
+			}
+			
 			// dropdown actions
 			$this->dropdown = $this->getDropdownActions();
 
