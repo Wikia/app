@@ -4,7 +4,7 @@
     <a href="#" class="more">Open Calendar</a>
     
 	<script type="text/template" id="GamingCalendarItemTemplate">
-		<div class="GamingCalendarItem">
+		<div class="GamingCalendarItem %expanded%">
 		    <div class="calendar">
 		        <span class="month">%month%</span>
 		        <span class="day">%day%</span>
