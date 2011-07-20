@@ -40,7 +40,7 @@ var GamingCalendar = {
 			// insert into module (after the h1)
 			$('.GamingCalendarModule h1').after(itemHTML);
         });
-		$('.GamingCalendarModule .more').click(GamingCalendar.showCalendar);        
+		$('.GamingCalendarModule .more').click(GamingCalendar.showCalendar);
 	},
         
     getCookieVal: function() {
@@ -114,8 +114,41 @@ var GamingCalendar = {
 					weekNo++;
 				}
 				$(html).makeModal({width: 710});
+                                $('#GamingCalendar .scroll-up').click(GamingCalendar.scrollUp);
+                                $('#GamingCalendar .scroll-down').click(GamingCalendar.scrollDown);
 			});
-
 		});
-	}
+    },
+
+    scrollDown: function(e) {
+        e.preventDefault();
+        var wrapper = $(this).prev('div.list');
+        var obj = wrapper.children('ul')[0];
+        var top = $(obj).position().top;
+        var objHeight = $(obj).height();
+        var wrHeight = $(wrapper).height();
+        var scrollBy = 0;
+        
+        if (objHeight > wrHeight && objHeight + top > wrHeight) {
+            scrollBy = '-=' + Math.min( Math.abs(objHeight + top - wrHeight), 75 );
+            $(obj).animate({
+                top: scrollBy
+            }, 250);
+        }
+    },
+    
+    scrollUp: function(e) {
+        e.preventDefault();
+        var wrapper = $(this).next('div.list');
+        var obj = wrapper.children('ul')[0];
+        var top = $(obj).position().top;
+        var scrollBy = 0;
+        
+        if ( top < 0 ) {
+            scrollBy = '+=' + Math.min( Math.abs(top), 75 );
+            $(obj).animate({
+                top: scrollBy
+            }, 250);
+        }
+    }
 }
