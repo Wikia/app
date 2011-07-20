@@ -2733,7 +2733,7 @@ class User {
 		}
 		// wikia change end
 		
-		$dbw->update( 'user',
+		$dbw->update( `user`,
 			array( /* SET */
 				'user_name' => $this->mName,
 				'user_password' => $this->mPassword,
