@@ -13,30 +13,45 @@
  * @ingroup SF
  */
 class SFForm {
-	var $form_name;
-	var $templates;
+	var $mFormName = null;
+	var $mTemplates = null;
+	var $mPageNameFormula = null;
+	var $mCreateTitle = null;
+	var $mEditTitle = null;
 
-	static function create( $form_name, $templates ) {
+	static function create( $formName, $templates ) {
 		$form = new SFForm();
-		$form->form_name = ucfirst( str_replace( '_', ' ', $form_name ) );
-		$form->templates = $templates;
+		$form->mFormName = ucfirst( str_replace( '_', ' ', $formName ) );
+		$form->mTemplates = $templates;
 		return $form;
+	}
+
+	function setPageNameFormula( $pageNameFormula ) {
+		$this->mPageNameFormula = $pageNameFormula;
+	}
+
+	function setCreateTitle( $createTitle ) {
+		$this->mCreateTitle = $createTitle;
+	}
+
+	function setEditTitle( $editTitle ) {
+		$this->mEditTitle = $editTitle;
 	}
 
 	function creationHTML() {
 		$text = "";
-		foreach ( $this->templates as $i => $ft ) {
+		foreach ( $this->mTemplates as $i => $ft ) {
 			$text .= $ft->creationHTML( $i );
 		}
 		return $text;
 	}
 
 	function createMarkup() {
-		$title = Title::makeTitle( SF_NS_FORM, $this->form_name );
+		$title = Title::makeTitle( SF_NS_FORM, $this->mFormName );
 		$fs = SpecialPage::getPage( 'FormStart' );
 		$form_start_url = SFUtils::titleURLString( $fs->getTitle() ) . "/" . $title->getPartialURL();
-		$form_description = wfMsgForContent( 'sf_form_docu', $this->form_name, $form_start_url );
-		$form_input = "{{#forminput:form=" . $this->form_name . "}}\n";
+		$form_description = wfMsgForContent( 'sf_form_docu', $this->mFormName, $form_start_url );
+		$form_input = "{{#forminput:form=" . $this->mFormName . "}}\n";
 		$text = <<<END
 <noinclude>
 $form_description
@@ -44,10 +59,26 @@ $form_description
 
 $form_input
 </noinclude><includeonly>
+
+END;
+		if ( !empty( $this->mPageNameFormula ) || !empty( $this->mCreateTitle ) || !empty( $this->mEditTitle ) ) {
+			$text .= "{{{info";
+			if ( !empty( $this->mPageNameFormula ) ) {
+				$text .= "|page name=" . $this->mPageNameFormula;
+			}
+			if ( !empty( $this->mCreateTitle ) ) {
+				$text .= "|create title=" . $this->mCreateTitle;
+			}
+			if ( !empty( $this->mEditTitle ) ) {
+				$text .= "|edit title=" . $this->mEditTitle;
+			}
+			$text .= "}}}\n";
+		}
+		$text .= <<<END
 <div id="wikiPreview" style="display: none; padding-bottom: 25px; margin-bottom: 25px; border-bottom: 1px solid #AAAAAA;"></div>
 
 END;
-		foreach ( $this->templates as $template ) {
+		foreach ( $this->mTemplates as $template ) {
 			$text .= $template->createMarkup() . "\n";
 		}
 		$free_text_label = wfMsgForContent( 'sf_form_freetextlabel' );
