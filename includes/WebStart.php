@@ -133,7 +133,10 @@ if ( !defined( 'MW_NO_SETUP' ) ) {
 }
 
 if(is_object($wgRequest) && $wgRequest->wasPosted() && wfReadOnly()) {
-	if(strpos(strtolower($_SERVER['SCRIPT_URL']), 'datacenter') === false) {
+	if (
+		( strpos(strtolower($_SERVER['SCRIPT_URL']), 'datacenter') === false ) &&
+		( strpos(strtolower($_SERVER['SCRIPT_URL']), 'api.php') === false )
+	) {
 
 $js = <<<EOD
 <script type="text/javascript">
