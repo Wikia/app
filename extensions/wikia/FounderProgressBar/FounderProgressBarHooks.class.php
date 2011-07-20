@@ -171,6 +171,9 @@ class FounderProgressBarHooks {
 			$dbw->query ($sql);
 		}		
 		$dbw->commit();
+		$memKey = $app->wf->MemcKey('FounderLongTaskList');
+		$app->wg->Memc->delete($memKey);
+		
 	}
 	/**
 	 * This helper function checks to see if all tasks are completed.
