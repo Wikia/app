@@ -14,7 +14,10 @@ class GamingCalendar {
 	private static $ENTRY_IMAGE_MARKER = 'IMAGE:';
 	private static $ENTRY_MOREINFO_MARKER = 'MOREINFO:';
 	private static $ENTRY_PREORDER_MARKER = 'PREORDER:';
-	
+
+	const CACHE_KEY = 'gamingcal';
+	const CACHE_EXPIRY = 2700;
+
 	/**
 	 *
 	 * @param int $startDate Number of weeks to start at, relative to this week
@@ -29,13 +32,21 @@ class GamingCalendar {
 
 		// determine the start of the current week
 		if ( date( 'w' ) == 1 ) {
-			$startDate = time();
+			$thisWeekStart = time();
 		} else {
-			$startDate = strtotime( 'last Monday' );
+			$thisWeekStart = strtotime( 'last Monday' );
 		}
 
 		// adjust date if needed
-		$date = $startDate + $offset * 7 * $oneDay;
+		$adjustedDate = $thisWeekStart + $offset * 7 * $oneDay;
+
+		$memcKey = wfMemcKey( self::CACHE_KEY, $adjustedDate, $weeks ); 
+		$entries = $wgMemc->get( $memcKey );
+		if ( !empty( $entries ) ) {
+			return $entries;
+		}
+
+		$date = $adjustedDate;
 
 		for ( $i = 1; $i <= ( 7 * $weeks ); $i++ ) {
 			if ( empty( $entries[$week] ) ) {
@@ -57,6 +68,8 @@ class GamingCalendar {
 
 			$date = $date + $oneDay;
 		}
+
+		$wgMemc->set( $memcKey, $entries, self::CACHE_EXPIRY );
 
 		return $entries;
 	}
