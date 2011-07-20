@@ -69,14 +69,13 @@ var GamingCalendar = {
     renderItem: function(item) {
     	var template = $('#GamingCalendarItemTemplate').html();
 
-	var title = item.gameTitle.split(':');
-    	template = template.replace('%gameTitle%', title[0]);
-        if ( title[1] ) {
-            template = template.replace('%gameSubTitle%', title[1]);
+        if ( item.subTitle ) {
+            template = template.replace('%gameSubTitle%', '<span class="game-subtitle">' + item.subTitle + '</span>');
         } else {
             template = template.replace('%gameSubTitle%', '');
         }
-
+        
+        template = template.replace('%gameTitle%', item.title);
         template = template.replace('%description%', item.description);
     	template = template.replace('%imageSrc%', item.image.src);
     	template = template.replace('%moreInfoUrl%', item.moreInfoUrl);
@@ -116,6 +115,7 @@ var GamingCalendar = {
 				$(html).makeModal({width: 710});
                                 $('#GamingCalendar .scroll-up').click(GamingCalendar.scrollUp);
                                 $('#GamingCalendar .scroll-down').click(GamingCalendar.scrollDown);
+                                $('#GamingCalendar .GamingCalendarItem').click(GamingCalendar.expandOrCollapse);
 			});
 		});
     },
@@ -150,5 +150,9 @@ var GamingCalendar = {
                 top: scrollBy
             }, 250);
         }
+    },
+    
+    expandOrCollapse: function(e) {
+        
     }
 }
