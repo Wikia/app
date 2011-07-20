@@ -164,7 +164,8 @@ exports.rules = {
 		init: function(parser, reporter) {
 			var rule = this,
 				lastError = {},
-				lastCommentLine = 0;
+				lastCommentLine = 0,
+				cdnStylePathCommentRegExp = /;\s*\/\* \$wgCdnStylePath \*\/\s*$/;
 
 			parser.addListener('error', function(event) {
 				var ignoreError = false,
@@ -201,6 +202,19 @@ exports.rules = {
 
 				// store recent error
 				lastError = err;
+			});
+
+			// check existance of /* $wgCdnStylePath */ special comment
+			parser.addListener('property', function(event) {
+				var prop = event.property.text,
+					lineNo = event.property.line,
+					context = reporter.lines[lineNo-1];
+
+				if (prop === 'background' || prop === 'background-image') {
+					if (!cdnStylePathCommentRegExp.test(context)) {
+						reporter.error('Background image defined, but /* $wgCdnStylePath */ comment is missing', event.property.line, event.property.col, rule);
+					}
+				}
 			});
 		}
 	},

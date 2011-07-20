@@ -86,13 +86,15 @@ class CodeLintCss extends CodeLint {
 
 			// * html #foo (IE6 specific fix)
 			case "IE6 specific fix found.":
+
+			// enforce special comment is SASS files when defining background images
+			case "Background image defined, but /* \$wgCdnStylePath */ comment is missing":
 				$ret = true;
 				break;
 
 			default:
 				$ret = false;
 		}
-
 
 		// Duplicate property 'XXX' found.
 		if (strpos($errorMsg, 'Duplicate property ') === 0) {
