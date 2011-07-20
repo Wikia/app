@@ -53,11 +53,7 @@ class GamingCalendar {
 		for ( $i = 1; $i <= ( 7 * $weeks ); $i++ ) {
 			// initialize week
 			if ( empty( $entries[$week] ) ) {
-				$entries[$week] = array( 0 => array(
-						$adjustedDate,
-						$adjustedDate + 7 * $oneDay,
-					),
-				);
+				$entries[$week] = array( 0 => self::getWeekDescription( $date ) );
 			}
 
 			$msgKey = self::getEntryKey( $date );
@@ -88,6 +84,38 @@ class GamingCalendar {
 	 */
 	private static function getEntryKey($date) {
 		return self::$ENTRY_PREFIX . date(self::$ENTRY_DATE_FORMAT, $date);
+	}
+
+	private static function getWeekDescription( $start ) {
+		$end = $start + 7 * 86400;
+
+		$week = array();
+
+		$week['start'] = date( 'jS', $start );
+		$week['end'] = date( 'jS', $end );
+
+		$week['startmonth'] = date( 'F', $start );
+		$week['endmonth'] = date( 'F', $end );
+		if ( $week['startmonth'] == $week['endmonth'] ) {
+			$week['endmonth'] = '';
+		}
+
+		switch ( date( 'W', $start ) - date( 'W' ) ) {
+			case 0:
+				$week['caption'] = 'This Week';
+				break;
+			case 1:
+				$week['caption'] = 'Next Week';
+				break;
+			case -1:
+				$week['caption'] = 'Last Week';
+				break;
+			default:
+				$week['caption'] = '';
+				break;
+		}
+
+		return $week;
 	}
 	
 	/**

@@ -26,7 +26,7 @@
 		<li class="week">
 			<h1>
 				<span>%week-caption%</span>
-				%month% %start% - %end%
+				%startmonth% %start% - %endmonth% %end%
 			</h1>
 			<div class="scroll-up"></div>
 			<div class="list">
