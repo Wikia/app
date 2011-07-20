@@ -170,6 +170,7 @@ class FounderProgressBarHooks {
 			$sql = "INSERT IGNORE INTO founder_progress_bar_tasks SET wiki_id=$wiki_id, task_id=$task_id";
 			$dbw->query ($sql);
 		}		
+		$dbw->commit();
 	}
 	/**
 	 * This helper function checks to see if all tasks are completed.
