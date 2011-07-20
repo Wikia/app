@@ -17,37 +17,42 @@ class GamingCalendar {
 	
 	/**
 	 *
-	 * @param int $startDate Unix timestamp
-	 * @param int $endDate Unix timestamp
-	 * @return array of GamingCalendarEntry
+	 * @param int $startDate Number of weeks to start at, relative to this week
+	 * @param int $weeks Number of weeks to return
+	 * @return array of arrays of GamingCalendarEntry
 	 */
-	public static function loadEntries($startDate, $endDate) {
-		$entries = array();
-		
-		$SECS_IN_ONE_DAY = 86400;
-		$MAX_RANGE_IN_SECS = 30*$SECS_IN_ONE_DAY;
-		
-		// validate parameters
-		if (strlen($startDate) == 8) {	// assume format is YYYYMMDD
-			$startDate = gmmktime(0, 0, 0, substr($startDate, 4, 2), substr($startDate, 6, 2), substr($startDate, 0, 4));
-		}
-		if (strlen($endDate) == 8) {
-			$endDate = gmmktime(0, 0, 0, substr($endDate, 4, 2), substr($endDate, 6, 2), substr($endDate, 0, 4));			
-		}
-		
-		if ($endDate - $startDate > $MAX_RANGE_IN_SECS) {
-			$endDate = $startDate + $MAX_RANGE_IN_SECS;
+	public static function loadEntries($offset = 0, $weeks = 2) {
+		$oneDay = 86400;
+
+		$entries = array( 0 => array() );
+		$week = 0;		
+
+		// determine the start of the current week
+		if ( date( 'w' ) == 1 ) {
+			$startDate = time();
+		} else {
+			$startDate = strtotime( 'last Monday' );
 		}
 
-		for ($i=$startDate; $i<=$endDate; $i+=$SECS_IN_ONE_DAY) {
-			$msgKey = self::getEntryKey($i);
+		// adjust date if needed
+		$date = $startDate + $offset * 7 * $oneDay;
+
+		for ( $i = 1; $i <= ( 7 * $weeks ); $i++ ) {
+			$msgKey = self::getEntryKey( $date );
 			$msg = wfMsgForContent($msgKey);
 			if (!wfEmptyMsg($msgKey, $msg)) {
-				$newEntries = self::parseMessageForEntries($msg, $i);
-				if (sizeof($newEntries)) {
-					$entries = array_merge($entries, $newEntries);
+				$newEntries = self::parseMessageForEntries($msg, $date);
+				if (!empty($newEntries)) {
+					$entries[$week] = array_merge( $entries[$week], $newEntries );
 				}
 			}
+
+			if ( $i % 7 == 0 ) {
+				$week++;
+				$entries[$week] = array();
+			}
+
+			$date = $date + $oneDay;
 		}
 
 		return $entries;
