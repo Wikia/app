@@ -847,7 +847,7 @@ class LoginForm {
 	 * @private
 	 */
 	function mailPasswordInternal( $u, $throttle = true, $emailTitle = 'passwordremindertitle', $emailText = 'passwordremindertext' ) {
-		global $wgServer, $wgScript, $wgUser, $wgNewPasswordExpiry;
+		global $wgServer, $wgScript, $wgUser, $wgNewPasswordExpiry, $wgNoReplyAddress;
 
 		if ( $u->getEmail() == '' ) {
 			return new WikiError( wfMsg( 'noemail', $u->getName() ) );
@@ -862,6 +862,12 @@ class LoginForm {
 		$np = $u->randomPassword();
 		$u->setNewpassword( $np, $throttle );
 		$u->saveSettings();
+		/* Wikia change begin - @author: Uberfuzzy */
+		/* use noReply address (if available) */
+			$nr = null;
+		if( !empty($wgNoReplyAddress) ) {
+			$nr = new MailAddress($wgNoReplyAddress, 'No Reply');
+		}
 		/* Wikia change begin - @author: Marooned */
 		/* HTML e-mails functionality */
 		global $wgEnableRichEmails;
@@ -870,12 +876,12 @@ class LoginForm {
 			$userLanguage = $u->getOption( 'language' );
 			$m = wfMsgExt( $emailText, array( 'parsemag', 'language' => $userLanguage ), $ip, $u->getName(), $np,
 					$wgServer . $wgScript, round( $wgNewPasswordExpiry / 86400 ) );
-			$result = $u->sendMail( wfMsgExt( $emailTitle, array( 'parsemag', 'language' => $userLanguage ) ), $m, null, null, 'TemporaryPassword', $priority );
+			$result = $u->sendMail( wfMsgExt( $emailTitle, array( 'parsemag', 'language' => $userLanguage ) ), $m, null, $nr, 'TemporaryPassword', $priority );
 		}
 		else {
 			$wantHTML = $u->isAnon() || $u->getOption('htmlemails');
 			list($m, $mHTML) = wfMsgHTMLwithLanguage($emailText, $u->getOption('language'), array( 'parsemag' ), array($ip, $u->getName(), $np, $wgServer . $wgScript, round( $wgNewPasswordExpiry / 86400 )), $wantHTML);
-			$result = $u->sendMail( wfMsg( $emailTitle ), $m, null, null, 'TemporaryPassword', $mHTML, $priority );
+			$result = $u->sendMail( wfMsg( $emailTitle ), $m, null, $nr, 'TemporaryPassword', $mHTML, $priority );
 		}
 
 		return $result;
