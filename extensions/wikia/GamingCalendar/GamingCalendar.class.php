@@ -30,7 +30,7 @@ class GamingCalendar {
 		$oneDay = 86400;
 
 		$entries = array();
-		$week = 0;		
+		$week = 0;
 
 		// determine the start of the current week
 		if ( date( 'w' ) == 1 ) {
@@ -43,7 +43,7 @@ class GamingCalendar {
 		$adjustedDate = $thisWeekStart + $offset * 7 * $oneDay;
 
 		$memcKey = wfMemcKey( self::CACHE_KEY, $adjustedDate, $weeks ); 
-		$entries = $wgMemc->get( $memcKey );
+//		$entries = $wgMemc->get( $memcKey );
 		if ( !empty( $entries ) ) {
 			return $entries;
 		}
@@ -76,7 +76,7 @@ class GamingCalendar {
 			$adjustedDate + 7 * $oneDay,
 		);
 
-		$entries = array_unshift( $entries, $weekdata );
+		array_unshift( $entries, $weekdata );
 
 		$wgMemc->set( $memcKey, $entries, self::CACHE_EXPIRY );
 
