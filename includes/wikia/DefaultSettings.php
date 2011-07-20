@@ -714,7 +714,7 @@ $wgPreWikiFactoryValues = array();
  * @name wgEnableWatchlistNotificationTimeout
  * Toggles watchlist notification timeout hack
  */
-$wgEnableWatchlistNotificationTimeout = false;
+$wgEnableWatchlistNotificationTimeout = true;
 
 /**
  * @name wgWatchlistNotificationTimeout
