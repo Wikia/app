@@ -206,12 +206,12 @@ jQuery(document).ready(function() {
 		$preview_page = $wgRequest->getCheck( 'wpPreview' );
 		if ( $save_page || $preview_page ) {
 			// Validate form name
-			if ( $form->form_name == "" ) {
+			if ( $form->mFormName == "" ) {
 				$form_name_error_str = wfMsg( 'sf_blank_error' );
 			} else {
 				// Redirect to wiki interface
 				$wgOut->setArticleBodyOnly( true );
-				$title = Title::makeTitleSafe( SF_NS_FORM, $form->form_name );
+				$title = Title::makeTitleSafe( SF_NS_FORM, $form->mFormName );
 				$full_text = $form->createMarkup();
 				$text = SFUtils::printRedirectForm( $title, $full_text, "", $save_page, $preview_page, false, false, false, null, null );
 				$wgOut->addHTML( $text );

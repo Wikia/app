@@ -50,7 +50,7 @@ abstract class SMWQueryUI extends SpecialPage {
 	 * @todo: using processXXXBox() methods here goes against the general architecture.
 	 */
 	public function execute( $p ) {
-		global $wgOut, $wgRequest, $smwgQEnabled;
+		global $wgOut, $wgRequest, $smwgQEnabled, $wgFeedClasses;
 
 		$this->setHeaders();
 
@@ -83,11 +83,30 @@ abstract class SMWQueryUI extends SpecialPage {
 				// or no query has been set
 					$this->uiCore =  SMWQueryUIHelper::makeForInfoLink( $p );
 				}
+				// adding rss feed of results to the page head
+				if(($this->uiCore->getQueryString()!=='')
+						and ($this->isSyndicated())
+						and (method_exists($wgOut, 'addFeedlink')) //remove this line after MW 1.5 is no longer supported by SMW
+						and (array_key_exists('rss', $wgFeedClasses))){
+					$res=$this->uiCore->getResultObject();
+					$href=$res->getQueryLink()->getURl().'/format%3Drss/limit%3D'. $this->uiCore->getLimit();
+					$wgOut->addFeedLink('rss', $href);
+				}
+
 				$this->makepage( $p );
 			}
 		}
 
 		SMWOutputs::commitToOutputPage( $wgOut ); // make sure locally collected output data is pushed to the output!
+	}
+
+	/**
+	 * To enable/disable syndicated feeds of results to appear in the UI header
+	 * 
+	 * @return boolean
+	 */
+	public function isSyndicated(){
+		return true;
 	}
 
 	/**
@@ -613,7 +632,7 @@ EOT;
 		$optionsHtml = array();
 
 		foreach ( $params as $param ) {
-			$param = $this->toValidatorParam( $param );
+			$param = $this->tovalidatorParam($param);
 			$currentValue = array_key_exists( $param->getName(), $paramValues ) ? $paramValues[$param->getName()] : false;
 
 			$optionsHtml[] =
@@ -664,34 +683,34 @@ EOT;
 	 * @return Parameter
 	 */
 	private function toValidatorParam( $param ) {
-		static $typeMap = array(
-			'int' => Parameter::TYPE_INTEGER
-		);
+		 static $typeMap = array(
+				 'int' => Parameter::TYPE_INTEGER
+		 );
 
-		if ( !( $param instanceof Parameter ) ) {
-			if ( !array_key_exists( 'type', $param ) ) {
-				$param['type'] = 'string';
-			}
+		 if ( !( $param instanceof Parameter ) ) {
+				 if ( !array_key_exists( 'type', $param ) ) {
+						 $param['type'] = 'string';
+				 }
 
-			$paramClass = $param['type'] == 'enum-list' ?
-				'ListParameter' : 'Parameter';
-			$paramType = array_key_exists( $param['type'], $typeMap ) ?
-				$typeMap[$param['type']] : Parameter::TYPE_STRING;
+				 $paramClass = $param['type'] == 'enum-list' ?
+						 'ListParameter' : 'Parameter';
+				 $paramType = array_key_exists( $param['type'], $typeMap ) ?
+						 $typeMap[$param['type']] : Parameter::TYPE_STRING;
 
-			$parameter = new $paramClass( $param['name'], $paramType );
+				 $parameter = new $paramClass( $param['name'], $paramType );
 
-			if ( array_key_exists( 'description', $param ) ) {
-				$parameter->setDescription( $param['description'] );
-			}
+				 if ( array_key_exists( 'description', $param ) ) {
+						 $parameter->setDescription( $param['description'] );
+				 }
 
-			if ( array_key_exists( 'values', $param ) && is_array( $param['values'] ) ) {
-				$parameter->addCriteria( new CriterionInArray( $param['values'] ) );
-			}
+				 if ( array_key_exists( 'values', $param ) && is_array( $param['values'] ) ) {
+						 $parameter->addCriteria( new CriterionInArray( $param['values'] ) );
+				 }
 
-			return $parameter;
-		} else {
-			return $param;
-		}
+				 return $parameter;
+		 } else {
+				 return $param;
+		 }
 	}
 
 	/**
@@ -736,7 +755,6 @@ EOT;
 			$default_format = $defaultformat;
 		}
 
-		$result = '';
 		$printer = SMWQueryProcessor::getResultPrinter( $default_format, SMWQueryProcessor::SPECIAL_PAGE );
 		$url = $this->getTitle()->getLocalURL( "showformatoptions=' + this.value + '" );
 
@@ -746,7 +764,7 @@ EOT;
 			}
 		}
 
-		$result .= "\n<p>" . wfMsg( 'smw_ask_format_as' ) . "\n" .
+		$result = "\n<p>" . wfMsg( 'smw_ask_format_as' ) . "\n" .
 			'<select id="formatSelector" name="p[format]" onChange="JavaScript:updateOtherOptions(\'' . $url . '\')">' . "\n" .
 			'<option value="' . $default_format . '">' . $printer->getName() .
 			' (' . wfMsg( 'smw_ask_defaultformat' ) . ')</option>' . "\n";
