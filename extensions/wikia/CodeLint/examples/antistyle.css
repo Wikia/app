@@ -28,3 +28,9 @@ body#foo.test {
 
 table
 	border: solid 1px #000;
+	
+
+/* IE6 specific fix */
+* html #bar {
+ 	border: none;
+}

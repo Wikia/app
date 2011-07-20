@@ -133,6 +133,24 @@ csslint.addRule({
 
 RULES.ie6 = true;
 
+// check CSS properties for typos
+csslint.addRule({
+	id: 'checkProperties',
+	name: 'Check CSS properties',
+	desc: 'Check CSS properties for typos',
+	browsers: 'All',
+
+	init: function(parser, reporter) {
+		var rule = this;
+
+		parser.addListener('property', function(event) {
+			// TODO: validate event.property
+        });
+	}
+});
+
+//RULES.checkProperties = true;
+
 // lint it
 var errors = csslint.verify(fileSrc, RULES).messages;
 
@@ -146,5 +164,3 @@ var result = {
 
 // return JSON-encoded result
 print(JSON.stringify(result));
-
-//process.exit(1);
