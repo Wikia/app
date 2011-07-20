@@ -15,7 +15,7 @@ class GamingCalendarController extends WikiaController {
 
 		$this->response->setVal('entries', $entries );
 	}
-        
+
         /**
          * @author Michał Roszka <michal@wikia-inc.com>
          * 

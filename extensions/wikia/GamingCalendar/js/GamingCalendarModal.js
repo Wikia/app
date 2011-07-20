@@ -34,8 +34,13 @@ var GamingCalendarModal = {
 
 		weekdates = week.shift();
 
-		template = template.replace('%start%', weekdates[0] );
-		template = template.replace('%end%', weekdates[1] );
+		template = template.replace('%start%', weekdates['start'] );
+		template = template.replace('%end%', weekdates['end'] );
+
+		template = template.replace('%startmonth%', weekdates['startmonth'] );
+		template = template.replace('%endmonth%', weekdates['endmonth'] );
+		
+		template = template.replace('%week-caption%', weekdates['caption'] );
 
 		for ( var i = 0; i < week.length; i++  ) {
 			if ( week[i].expanded ) {
