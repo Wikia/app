@@ -11,8 +11,8 @@
 		    </div>
 			<img src="%imageSrc%" width="" height="" alt="" />
 			<span class="game-title">%gameTitle%</span>
-			<span class="game-subtitle">%gameSubTitle%</span>
-			<span class="game-systems">%systems%</span>
+			%gameSubTitle%
+                        <span class="game-systems">%systems%</span>
 			<div class="game-details">
 				<p>%description%</p>
 				<a href="%moreInfoUrl%" class="game-more-info">More info</a>
