@@ -55,7 +55,7 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 				}
 				$mailCategory .= (!empty($langCode) && $langCode == 'en' ? 'EN' : 'INT');
 				
-				if ($langCode == 'en' && empty( $wgEnableAnswers )) {
+				if (empty( $wgEnableAnswers )) {
 					$links = array(
 						'$WIKINAME' => $emailParams['$WIKIURL'],
 					);
