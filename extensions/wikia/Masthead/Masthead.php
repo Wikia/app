@@ -267,7 +267,7 @@ class Masthead {
 	public function getPurgeUrl( $thumb = "" ) {
 		global $wgBlogAvatarPath;
 		$url = $this->mUser->getOption( AVATAR_USER_OPTION_NAME );
-		
+
 		if( $url ) {
 			/**
 			 * if default avatar we glue with messaging.wikia.com
@@ -314,7 +314,7 @@ class Masthead {
 	 * @return string -- url to Avatar
 	 */
 	public function getThumbnail( $width, $inPurgeFormat = false, $avoidUpscaling = false ) {
-		if( $avoidUpscaling ) {
+		if( $avoidUpscaling && file_exists( $this->getFullPath() ) ) {
 			list( $imageWidth ) = getimagesize( $this->getFullPath() );
 
 			if( $width > $imageWidth ) {
@@ -511,7 +511,7 @@ class Masthead {
 			} else {
 				$this->mUser->setOption( AVATAR_USER_OPTION_NAME, "" );
 				$this->mUser->saveSettings();
-				
+
 				/* add log */
 				if( !empty($addLog) ) {
 					$this->__setLogType();
