@@ -24,29 +24,86 @@ The Wikia Team',
 It looks like $USERNAME has registered on your wiki! Why don\'t you drop by their <a href="$USERTALKPAGEURL">talkpage</a> to say hello?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- The Wikia Team</div>',
 	'founderemails-email-0-days-passed-subject' => 'Welcome to Wikia!',
-	'founderemails-email-0-days-passed-body' => 'Congratulations on creating $WIKINAME - you\'re now part of the Wikia community!
+	'founderemails-email-0-days-passed-body' => 'Nice to meet you $FOUNDERNAME,
 
--- The Wikia Team',
+Congratulations on creating $WIKINAME!
+
+Here are a few helpful tips to get you started:
+
+Add pages. A wiki is all about sharing information about your unique topic. Create pages by clicking on “Add a Page” and fill out more specific information about your topic.
+
+Add photos. Pages are always better when they have visuals! Add images to your pages and to your main page. You can click Add a Photo to add a photo, a photo gallery, or a slideshow.
+
+Customize your theme. Customize your wiki’s theme and wordmark to make your wiki stand out! Use the Theme Designer to add custom colors to your wiki and make it unique to your topic.
+
+We won’t leave you out in the cold. We’re here to help you make $WIKINAME successful every step of the way. Visit community.wikia.com for forums, advice and help, or to email us your questions!
+
+Happy wiki building! The Wikia Team
+
+___________________________________________
+
+To check out the latest happenings on Wikia, visit http://community.wikia.com
+Want to control which emails you receive? Go to: http://messaging.wikia.com/wiki/Special:Preferences.
+Click the following link to unsubscribe from all Wikia emails: $UNSUBSCRIBEURL',
 	'founderemails-email-0-days-passed-body-HTML' => 'Congratulations on creating <strong>$WIKINAME</strong> - you\'re now part of the Wikia community!<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- The Wikia Team</div>',
-	'founderemails-email-3-days-passed-subject' => 'Checking in',
-	'founderemails-email-3-days-passed-body' => 'Hey there $FOUNDERNAME,
+	'founderemails-email-3-days-passed-subject' => 'How\'s it going on your wiki',
+	'founderemails-email-3-days-passed-body' => 'Hi there $FOUNDERNAME,
 
-Now that you\'re a few days into your wiki, we thought you might want to check out a few other things you can do.
+We wanted to check in and see how things are going at $WIKINAME.
 
--- The Wikia Team',
+It\'s been 3 days since you started and we thought we\'d drop by to
+offer some more tips on building your wiki:
+
+Spruce up your main page. The main page is one of the first things
+people see when they visit $WIKINAME. Make a good first impression by
+writing a detailed summary of what your topic is about and adding a
+slideshow, gallery, or photo slider.
+  
+Add even more photos. One of the best ways to make your pages snap,
+crackle, and pop is to "add some photos".
+  
+Find inspiration. Don\'t be afraid to check out other wikis to see how
+they\'ve worked out their main page, articles pages and more. Here are
+some of our favorites: Muppet Wiki, Pop Tarts Wiki, Monster High Wiki.
+
+Need help figuring out how something works? We\'re always here for you!
+Come ask us for help and advice at community.wikia.com.
+
+Keep up the great work!
+The Wikia Team 
+
+
+To check out the latest happenings on Wikia, visit community.wikia.com
+Want to control which emails you receive? Go to your
+http://community.wikia.com/wiki/Special:Preferences',
 	'founderemails-email-3-days-passed-body-HTML' => 'Hey there $FOUNDERNAME,<br /><br />
 Now that you\'re a few days into your wiki, we thought you might want to check out a few other things you can do.<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- The Wikia Team</div>',
-	'founderemails-email-10-days-passed-subject' => 'How are things going on your wiki?',
-	'founderemails-email-10-days-passed-body' => 'Hey $FOUNDERNAME,
+	'founderemails-email-10-days-passed-subject' => 'Happy 10 day anniversary!',
+	'founderemails-email-10-days-passed-body' => 'How\'s it going $FOUNDERNAME?
 
-It\'s been a little while since you started a wiki on Wikia - we hope it\'s going great! We wanted to share a few final tidbits to help make your wiki more like home.
+Whoa, time flies!  It\'s already been 10 days since you started $WIKINAME.  
 
--- The Wikia Team',
-	'founderemails-email-10-days-passed-body-HTML' => 'Hey $FOUNDERNAME,<br /><br />
-It\'s been a little while since you started a wiki on Wikia - we hope it\'s going great! We wanted to share a few final tidbits to help make your wiki more like home.<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- The Wikia Team</div>',
+Get others involved in your project and show off all the awesome work you’ve been doing!  Here are some ways to spread the word:
+
+Didn\'t your mother tell you to Share? Use the Share button on your toolbar, article pages and photos to show them off to your friends and Followers on Facebook, Twitter or other popular sites.
+
+Harness the power of email.  Email others you know who are interested in your topic or interested in helping you, like a friend from school or a co-worker.  You can also email specific photos from your wiki using the email button.
+
+Join up with similar websites. Ask people on other forums or websites that are about your topic for help by posting in their forums or comments.  If possible, contact the administrator and see if they\'re interested in link-sharing — they\'ll put your wiki link on their website if you put their link on your wiki.
+
+You can also ask other Wikians to help out on your wiki by posting in the forums on community.wikia.com.  
+
+Keep up the good work!
+
+The Wikia Team
+
+___________________________________________
+
+To check out the latest happenings on Wikia, visit http://community.wikia.com
+Want to control which emails you receive? Go to: http://messaging.wikia.com/wiki/Special:Preferences.
+Click the following link to unsubscribe from all Wikia emails: $UNSUBSCRIBEURL',
 // first edit
 	'founderemails-email-page-edited-reg-user-first-edit-subject' => '$WIKINAME has a new edit!',
 	'founderemails-email-page-edited-reg-user-first-edit-body' => 'Hi $FOUNDERNAME,

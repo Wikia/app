@@ -119,7 +119,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 			$mailSubject = strtr(wfMsgExt($msgKeys['subject'], array('content')), $emailParams);
 			$mailBody = strtr(wfMsgExt($msgKeys['body'], array('content')), $emailParams);
 
-			if(!empty($langCode) && $langCode == 'en' && empty( $wgEnableAnswers )) { // FounderEmailv2.1
+			if(empty( $wgEnableAnswers )) { // FounderEmailv2.1
 				$links = array(
 					'$USERNAME' => $emailParams['$USERPAGEURL'],
 					'$PAGETITLE' => $emailParams['$PAGEURL'],
