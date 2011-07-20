@@ -13,7 +13,7 @@ class GamingCalendarController extends WikiaController {
 		
 		$entries = GamingCalendar::loadEntries($offset, $weeks);
 
-		$this->response->setVal('entries', $entries);
+		$this->response->setVal('entries', $entries );
 	}
         
         /**
@@ -22,6 +22,6 @@ class GamingCalendarController extends WikiaController {
          * This method is most likely to be removed. I created it so I can continue
          * styling the modal window for Gaming Calendar without hardcoding HTML anywhere.
          */
-        public function getModalLayout() {
-        }
-  }
+	public function getModalLayout() {
+	}
+}
