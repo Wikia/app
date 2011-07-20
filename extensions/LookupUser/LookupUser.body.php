@@ -233,6 +233,7 @@ EOT
 			
 			//Begin: Small Stuff Week - adding table from Special:LookupContribs --nAndy
 			$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/LookupContribs/css/table.css?{$wgStyleVersion}");
+			$wgOut->addExtensionStyle("{$wgExtensionsPath}/LookupUser/css/lookupuser.css?{$wgStyleVersion}");
 			$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgStylePath}/common/jquery/jquery.dataTables.min.js?{$wgStyleVersion}\"></script>\n");
 			
 			//checking and setting User::mBlockedGlobally if needed
