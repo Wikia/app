@@ -2723,16 +2723,7 @@ class User {
 		}
 		// wikia change end
 
-		// wikia change
-		global $wgExternalSharedDB, $wgSharedDB, $wgGlobalUserProperties;
-		if( isset( $wgSharedDB ) ) {
-			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
-		}
-		else {
-			$dbw = wfGetDB( DB_MASTER );
-		}
-		// wikia change end
-		
+		$dbw = wfGetDB( DB_MASTER );		
 		$dbw->update( '`user`',
 			array( /* SET */
 				'user_name' => $this->mName,
