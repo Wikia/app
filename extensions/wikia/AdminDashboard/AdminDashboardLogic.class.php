@@ -33,8 +33,12 @@ class AdminDashboardLogic {
 				"WikiActivity",
 				"WikiFactory", 
 				"WikiaLabs",
+				
+				//the following special pages respect the wiki theme, don't force colors there
 				"CreateTopList",
-				"EditTopList"
+				"EditTopList",
+				"UserPathPrediction",
+				"Version"
 			);
 			return (!in_array($title->getDBKey(), $exclusionList));
 		}
