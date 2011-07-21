@@ -7,6 +7,7 @@
 
 class PageHeaderModule extends Module {
 
+	var $wgDisableAnonymousEditing;
 	var $wgEnableWikiAnswers;
 	var $wgStylePath;
 

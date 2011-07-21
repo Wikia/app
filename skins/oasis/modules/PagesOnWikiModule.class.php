@@ -1,6 +1,7 @@
 <?php
 class PagesOnWikiModule extends Module {
 
+	var $wgDisableAnonymousEditing;
 	var $wgEnableWikiAnswers;
 	var $wgSitename;
 	var $total;
