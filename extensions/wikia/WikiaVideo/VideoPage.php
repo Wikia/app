@@ -44,8 +44,7 @@ class VideoPage extends Article {
 		$mData,
 		$mDataline;
 
-	function __construct(&$title){
-		wfLoadExtensionMessages('WikiaVideo');
+	function __construct(Title &$title){
 		parent::__construct($title);
 	}
 

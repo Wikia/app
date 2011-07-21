@@ -485,7 +485,9 @@ function WikiaVideoArticleFromTitle($title, $article) {
 			}
 
 			$newTitle = Title::newFromText($parts[0], $title->getNamespace());
-			$title = $newTitle;
+			if (!is_null($newTitle)) {
+				$title = $newTitle;
+			}
 		}
 
 		$article = new VideoPage($title);		
