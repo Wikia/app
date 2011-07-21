@@ -3,7 +3,7 @@
 		<div class="activity-name">
 			<?= $activity['task_label'] ?>
 		</div>
-		<img class="chevron" src="<?= $wgBlankImgUrl ?>">
+		<img class="chevron" src="<?= $wg->BlankImgUrl ?>">
 	</div>
 	<div class="description" style="<?= $index == 0 ? '' : 'display:none'?>">
 		<?= $activity['task_description'] ?>

@@ -109,7 +109,7 @@ class WikiaLabsSpecialController extends WikiaSpecialPageController {
 		
 		$projectId = intval($this->getVal('project_id'));
 		if( 0 >= $projectId ) {
-			$this->redirect('WikiaLabsSpecial', 'onWrongProjectId');
+			$this->forward('WikiaLabsSpecial', 'onWrongProjectId');
 			return true;
 		}
 		

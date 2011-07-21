@@ -26,7 +26,7 @@ class NewWikisController extends WikiaSpecialPageController {
 
 	public function index() {
 		// do redirect instead of direct call to set correct template path
-		$this->redirect( 'NewWikis', 'getAll' );
+		$this->forward( 'NewWikis', 'getAll' );
 	}
 
 	public function getActive() {

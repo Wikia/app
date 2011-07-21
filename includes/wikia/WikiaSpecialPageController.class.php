@@ -42,11 +42,22 @@ class WikiaSpecialPageController extends WikiaController {
 		return call_user_func_array( array( $this->specialPage, $method ), $args );
 	}
 
+	/* FIXME: I don't think is really used, remove it?
+	//  __get and __set are more useful pointing to the request/response object
 	public function __get( $propertyName ) {
-		return $this->specialPage->$propertyName;
-	}
+		if (property_exists($this->specialPage->$propertyName))
+			return $this->specialPage->$propertyName;
+		else 
+			return $this->request->getVal($propertyName);
+	} 
 
-	public function __set( $propertyName, $value ) {
-		$this->specialPage->$propertyName = $value;
+	// Allow magic setting of template variables so we don't have to do $this->response->setVal
+	public function __set($propertyName, $value) {
+		if (property_exists($this->specialPage->$propertyName)) {
+			$this->specialPage->$propertyName = $value;
+		} else {
+			$this->response->setVal( $propertyName, $value );
+		}
 	}
+	 */	
 }

@@ -45,13 +45,13 @@ abstract class WikiaBaseController {
 	abstract public function allowsExternalRequests();
 
 	/**
-	 * redirects flow to another controller/method
+	 * Forwards application flow to another controller/method
 	 *
 	 * @param string $controllerName
 	 * @param string $methodName
 	 * @param bool $resetResponse
 	 */
-	protected function redirect( $controllerName, $methodName, $resetResponse = true ) {
+	protected function forward( $controllerName, $methodName, $resetResponse = true ) {
 		if( $resetResponse ) {
 			$this->response->resetData();
 		}

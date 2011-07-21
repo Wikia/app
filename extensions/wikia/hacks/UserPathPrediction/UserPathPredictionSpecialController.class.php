@@ -26,7 +26,7 @@ class UserPathPredictionSpecialController extends WikiaSpecialPageController {
 		$this->wg->Out->setPageTitle( $this->wf->Msg( 'userpathprediction-special-header' ) );
 		$this->response->addAsset( 'extensions/wikia/hacks/UserPathPrediction/css/UserPathPrediction.scss' );
 		$this->response->addAsset( 'extensions/wikia/hacks/UserPathPrediction/js/UserPathPrediction.js' );
-		$this->redirect( 'UserPathPredictionSpecial', 'UserPathPrediction' );
+		$this->forward( 'UserPathPredictionSpecial', 'UserPathPrediction' );
 		$this->wf->profileOut( __METHOD__ );
 	}
 	

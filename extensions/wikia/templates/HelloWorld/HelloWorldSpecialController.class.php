@@ -36,7 +36,7 @@ class HelloWorldSpecialController extends WikiaSpecialPageController {
 		$this->response->addAsset( 'extensions/wikia/templates/HelloWorld/css/HelloWorld_Oasis.scss' );
 		$this->response->addAsset( 'extensions/wikia/templates/HelloWorld/js/HelloWorld.js' );
 
-		$this->redirect( 'HelloWorldSpecial', 'Hello' );
+		$this->forward( 'HelloWorldSpecial', 'Hello' );
 	}
 
 	/**

@@ -172,6 +172,11 @@ class WikiaView {
 		$this->buildTemplatePath( $this->response->getControllerName(), $this->response->getMethodName() );
 
 		$data = $this->response->getData();
+		// Export the app wg and wf helper objects into the template
+		// Note: never do this for Raw or Json formats due to major security issues there
+		$data['app'] = F::app();
+		$data['wg'] = F::app()->wg;
+		$data['wf'] = F::app()->wf;		
 
 		if( !empty( $data ) ) {
 			extract( $data );

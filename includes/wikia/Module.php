@@ -65,6 +65,26 @@ abstract class Module extends WikiaController {
 	public function getVal($key, $default = null) {
 		return isset($this->$key) ? $this->$key : $default;
 	}
+	
+	protected function setVal($propertyName, $value) {
+		if (property_exists($this, $propertyName)) {
+			$this->realResponse->setVal( $propertyName, $value );
+		} else {
+			$this->$propertyName = $value;
+		}
+	}	
+
+	// Magic setting of template variables so we don't have to do $this->response->setVal
+	// NOTE: This is the opposite behavior of the default Controller
+	// In a module, a public member variable goes to the template
+	// In a controller, a public member variable does NOT go to the template, it's a local var
+	public function __set($propertyName, $value) {
+		if (property_exists($this, $propertyName)) {
+			$this->realResponse->setVal( $propertyName, $value );
+		} else {
+			$this->$propertyName = $value;
+		}
+	}	
 
 	public static function setSkinTemplateObj(&$skinTemplate) {
 		self::$skinTemplateObj = $skinTemplate;

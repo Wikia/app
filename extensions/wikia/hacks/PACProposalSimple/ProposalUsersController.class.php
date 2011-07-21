@@ -11,7 +11,7 @@ class ProposalUsersController extends WikiaSpecialPageController  {
 	 * this method is a default entry point
 	 */
 	public function index() {
-		$this->redirect( 'ProposalUsers', 'get' );
+		$this->forward( 'ProposalUsers', 'get' );
 	}
 
 	public function get() {
