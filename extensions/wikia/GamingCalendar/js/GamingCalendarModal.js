@@ -91,8 +91,8 @@ var GamingCalendarModal = {
     
     expandOrCollapse: function(e) {
 	e.preventDefault();
-	$('#GamingCalendar').find('.GamingCalendarItem.selected').removeClass('selected').addClass('unselected');
-	$(this).removeClass('unselected').addClass('selected');
+	$('#GamingCalendar').find('.GamingCalendarItem.selected').slideUp('slow',function() { $(this).removeClass('selected').addClass('unselected').slideDown(); });
+	$(this).slideUp('slow', function() { $(this).removeClass('unselected').addClass('selected').slideDown(); });
     },
 
     forwardWeek: function(e) {
