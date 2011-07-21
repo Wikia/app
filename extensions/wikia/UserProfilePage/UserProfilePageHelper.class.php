@@ -5,9 +5,9 @@ class UserProfilePageHelper {
 	 * SkinTemplateOutputPageBeforeExec hook
 	 */
 	static public function onSkinTemplateOutputPageBeforeExec( $skin, $template ) {
-		global $wgRequest, $wgEnableUserProfilePagesExt, $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgUser, $wgUserProfilePagesNamespaces;
+		global $wgRequest, $wgEnableUserProfilePagesExt, $wgEnableUserProfilePagesV3, $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgUser, $wgUserProfilePagesNamespaces;
 		wfProfileIn(__METHOD__);
-
+		
 		//is the extension allowed to run for the current page?
 		if ( !UserProfilePage::isAllowed( $skin->mTitle ) ) {
 			$wgEnableUserProfilePagesExt = false;
@@ -69,11 +69,17 @@ class UserProfilePageHelper {
 				}
 			}
 		}
-
+		
+		if( empty($wgEnableUserProfilePagesV3) ) {
+		//controller of User Profile Page v3 includes its own css so if it's disabled,
+		//empty($wgEnableUserProfilePagesV3) === false, we include standard css
+			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL("skins/oasis/css/core/_UserPagesHeader.scss"));
+		}
+		
 		// load extension css and js
 		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL("extensions/wikia/UserProfilePage/css/UserProfilePage.scss"));
 		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/UserProfilePage/js/UserProfilePage.js?{$wgStyleVersion}\" ></script>\n" );
-
+		
 		wfProfileOut(__METHOD__);
 		return true;
 	}
