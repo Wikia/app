@@ -1,12 +1,14 @@
 <header id="WikiaPageHeader" class="WikiaPageHeader<?= (empty($revisions) && empty($categories)) ? ' separator' : '' ?>">
 	<? if ($isMainPage) { ?>
 		<?= wfRenderModule('CommentsLikes', 'Index', array('comments' => $comments, 'likes' => $likes)); ?>
-		<?php if( empty( $wgEnableWikiAnswers ) ): ?>
+		<?php if( empty( $wgEnableWikiAnswers ) ) {
+			$loginClass = empty($wgDisableAnonymousEditing) ? '' : ' require-login';
+		?>
 		<div class="mainpage-add-page">
-			<?= Wikia::specialPageLink('CreatePage', null, 'createpage', 'blank.gif', 'oasis-create-page', 'sprite new require-login'); ?>
-			<?= Wikia::specialPageLink('CreatePage', 'oasis-add-page', 'createpage require-login'); ?>
+			<?= Wikia::specialPageLink('CreatePage', null, 'createpage', 'blank.gif', 'oasis-create-page', 'sprite new' . $loginClass); ?>
+			<?= Wikia::specialPageLink('CreatePage', 'oasis-add-page', 'createpage' . $loginClass); ?>
 		</div>
-		<?php endif; ?>
+		<?php } ?>
 		<div class="tally mainpage-tally">
 			<?= wfMsgExt('oasis-total-articles-mainpage', array( 'parsemag' ), $total, 'fixedwidth' ) ?>
 		</div>
