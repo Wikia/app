@@ -29,7 +29,7 @@ public class ScavengerHuntTest extends BaseTest {
 	private static final String TARGET_PAGE_ONE = "Scavenger Test Page One";
 	private static final String TARGET_PAGE_TWO = "Scavenger test Page Two";
 	
-	private boolean isDataPrepared = true;
+	private boolean isDataPrepared = false;
 	private String createdGameName = null;
 	
 	@BeforeMethod(alwaysRun = true)
@@ -48,7 +48,6 @@ public class ScavengerHuntTest extends BaseTest {
 	
 	@AfterMethod(alwaysRun = true)
 	public void deleteArtifacts() throws Exception {
-		loginAsStaff();
 		session().open("wiki/Special:ScavengerHunt");
 		session().waitForPageToLoad(this.getTimeout());
 		
@@ -92,7 +91,7 @@ public class ScavengerHuntTest extends BaseTest {
 	 * Verify it is visible on the list of hunts
 	 * Verify it is disabled
 	 */
-	//@Test(groups={"CI"})
+	@Test(groups={"CI"})
 	public void testCreatingAHunt() throws Exception {
 		session().open("wiki/Special:ScavengerHunt");
 		session().waitForPageToLoad(this.getTimeout());
@@ -226,7 +225,7 @@ public class ScavengerHuntTest extends BaseTest {
 		
 		//Article (in-game page) #1
 		//Page title (article URL on any wiki) 
-		session().type("articleTitle[0]", this.webSite + "/" + TARGET_PAGE_ONE);
+		session().type("articleTitle[0]", (this.webSite + "/wiki/" + TARGET_PAGE_ONE.replace(" ", "_")).replace("//wiki", "/wiki"));
 		//Hunt item sprite coordinates 
 		//Element Position
 		session().type("spriteNotFoundX[0]", "400");
@@ -285,7 +284,7 @@ public class ScavengerHuntTest extends BaseTest {
 		//Article (in-game page) #2
 		session().click("addSection");
 		//Page title (article URL on any wiki) 
-		session().type("articleTitle[1]", this.webSite + "/" + TARGET_PAGE_TWO);
+		session().type("articleTitle[1]", (this.webSite + "/wiki/" + TARGET_PAGE_TWO.replace(" ", "_")).replace("//wiki", "/wiki"));
 		//Hunt item sprite coordinates 
 		//Element Position
 		session().type("spriteNotFoundX[1]", "400");
@@ -470,17 +469,19 @@ public class ScavengerHuntTest extends BaseTest {
 		assertTrue("Progress bar is missing", session().isElementPresent("//div[@id='scavenger-hunt-progress-bar']"));
 		
 		// quit game
-		session().click("//div[@id='scavenger-hunt-progress-bar']//div[@class='scavenger-progress-image' and 1]");
+		session().click("//div[@id='scavenger-hunt-progress-bar']/div[2]");
 		waitForElement("//section[@id='scavemger-hunt-quit-dialog']");
-		session().click("//a[@id='stay']");
+		session().click("//section[@id='scavemger-hunt-quit-dialog']//a[@id='stay']");
 		waitForElementNotPresent("//section[@id='scavemger-hunt-quit-dialog']");
-		session().click("//div[@id='scavenger-hunt-progress-bar']//div[@class='scavenger-progress-image' and 1]");
+		session().click("//div[@id='scavenger-hunt-progress-bar']/div[2]");
 		waitForElement("//section[@id='scavemger-hunt-quit-dialog']");
-		session().click("//a[@id='quit']");
+		session().click("//section[@id='scavemger-hunt-quit-dialog']//a[@id='quit']");
 		waitForElementNotPresent("//section[@id='scavemger-hunt-quit-dialog']");
 		assertFalse("Progress bar is present after quiting a game", session().isElementPresent("//div[@id='scavenger-hunt-progress-bar']"));
 		
 		// play the game again
+		session().open((this.webSite + "/wiki/" + LANDING_PAGE.replace(" ", "_")).replace("//wiki", "/wiki"));
+		session().waitForPageToLoad(this.getTimeout());
 		session().click("//input[@value='" + landingButton + "']");
 		waitForElement("//section[@id='scavengerClueModal']");
 		
@@ -488,7 +489,7 @@ public class ScavengerHuntTest extends BaseTest {
 		session().waitForPageToLoad(this.getTimeout());
 		
 		// first clue
-		session().click("//div[@id='scavenger-hunt-progress-bar']//div[@class='scavenger-progress-image' and 2]");
+		session().click("//div[@id='scavenger-hunt-progress-bar']/div[3]");
 		session().waitForPageToLoad(this.getTimeout());
 		assertTrue("First clue page is incorrect", session().getLocation().contains(TARGET_PAGE_ONE.replace(" ", "_")));
 		assertTrue("In game clue image is missing", session().isElementPresent("//div[@id='scavenger-ingame-image']"));
@@ -497,7 +498,7 @@ public class ScavengerHuntTest extends BaseTest {
 		waitForElementNotPresent("//div[@id='scavenger-ingame-image']");
 		
 		// second clue
-		session().click("//div[@id='scavenger-hunt-progress-bar']//div[@class='scavenger-progress-image' and 3]");
+		session().click("//div[@id='scavenger-hunt-progress-bar']/div[4]");
 		session().waitForPageToLoad(this.getTimeout());
 		assertTrue("First clue page is incorrect", session().getLocation().contains(TARGET_PAGE_TWO.replace(" ", "_")));
 		assertTrue("In game clue image is missing", session().isElementPresent("//div[@id='scavenger-ingame-image']"));
@@ -510,7 +511,10 @@ public class ScavengerHuntTest extends BaseTest {
 		session().type("name=answer", "answer");
 		session().type("name=name", "name");
 		session().type("name=email", "email@example.com");
-		session().click("//div[contains(@class, 'scavenger-clue-button')]");
+		session().focus("name=answer");
+		session().keyDown("name=answer", "w");
+		session().keyUp("name=answer", "w");
+		session().click("//section[@id='scavengerEntryFormModal']//input[@type='submit']");
 		
 		waitForElementNotPresent("//section[@id='scavengerEntryFormModal']");
 		waitForElement("//section[@id='scavengerGoodbyeModal']");
