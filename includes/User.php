@@ -2724,7 +2724,7 @@ class User {
 		// wikia change end
 
 		$dbw = wfGetDB( DB_MASTER );		
-		$dbw->update( '`user`',
+		$dbw->update( 'user',
 			array( /* SET */
 				'user_name' => $this->mName,
 				'user_password' => $this->mPassword,
