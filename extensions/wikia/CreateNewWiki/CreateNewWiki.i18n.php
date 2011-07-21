@@ -83,6 +83,7 @@ Upgrade through PayPal to get an ad-free wiki for only $4.95 per month!',
 	'cnw-error-wiki-limit' => 'Hi, you are limited to $1 wiki creation per day.  Wait 24 hours before creating another wiki.',
 	'cnw-error-blocked-header' => 'Account blocked',
 	'cnw-error-blocked' => 'You have been blocked by $1. The reason given was: $2. (Block ID for reference: $3)',
+	'cnw-error-torblock' => 'Creating wikis via the Tor Network is not allowed.',
 );
 
 /** Message documentation (Message documentation)
