@@ -14,6 +14,11 @@ class GamingCalendarController extends WikiaController {
 		$entries = GamingCalendar::loadEntries($offset, $weeks);
 
 		$this->response->setVal('entries', $entries );
+
+		$this->response->setCacheValidity( 3600, 3600,  array(
+			WikiaResponse::CACHE_TARGET_BROWSER,
+			WikiaResponse::CACHE_TARGET_BROWSER,
+		));
 	}
 
 	/**
