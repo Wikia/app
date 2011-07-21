@@ -282,7 +282,8 @@ AdConfig.DART.getMobileUrl = function(slotname, size, useIframe, adProvider) {
 		'src=' + src + ';' +
 		'sz=' + size + ';' +
 		'mtfInline=true;' +	// http://www.google.com/support/richmedia/bin/answer.py?hl=en&answer=182220
-		AdConfig.DART.getTileKV(slotname, adProvider);
+		AdConfig.DART.getTileKV(slotname, adProvider) +
+		'&u=' + AdConfig.DART.getUniqueId();
 
 	return url;
 }
@@ -602,5 +603,16 @@ AdConfig.DART.getTileKV = function (slotname, adProvider){
 
 	return '';
 };
+
+AdConfig.DART.getUniqueId = function () {
+	var wikia_beacon_id = AdConfig.cookie('wikia_beacon_id');
+	if (typeof wikia_beacon_id != 'undefined' && wikia_beacon_id) {
+//console.log('wikia_beacon_id: ' + wikia_beacon_id);
+		return wikia_beacon_id;
+	}
+
+//console.log('unique id not available');
+	return 'not_available';
+}
 
 AdConfig.init();
