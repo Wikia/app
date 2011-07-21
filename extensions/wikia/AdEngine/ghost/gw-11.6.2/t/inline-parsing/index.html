@@ -1,0 +1,163 @@
+<html> 
+<head >
+<title> Document-Right HTML Stream Parser Test</title> 
+<style type="text/css" > 
+.myclass { height: 10px; } 
+.foo-span { 
+	color: green; 
+}
+.forbidden { 
+color: red; 
+}
+
+#log .yui3-console-bd { 
+	font-size: 1.25em; 
+}
+</style> 
+<script type=text/javascript src="../../src/ghostwriter.js"></script> 
+<script src=../../src/htmlstreamparser.js></script> 
+<script src="../../lib/gw.min.js" ></script>
+<script charset="utf-8" src="http://yui.yahooapis.com/3.1.1/build/yui/yui-min.js"></script>
+<script type=text/javascript> 
+
+var scripttag= [
+	"pre-script text ... <br/>  <scr","ipt src=","'"
+	,"http://ec2-1.digital-fulcrum.com/?delay=1&amp;cache-control=no-cache;max-age=0s"
+	,"'",">","<","\/","script",">"
+	,"  Post-script text ... (non-IE only) <br/> <span "
+	," class=foo-span>this is text inside of the span and should be green</span>"
+	,"<div class=foo-div> Text is inside DIV#foo-div and is OK <br/> <span class=forbidden><script type=text/javascript>"
+	,"var  foo='This text is <b>NOT</b> okay <br/> ';document.write(foo);" 
+	,"scriptSleepOnload(", "'local-script'", ");"
+	,"<\/script></span><span> ... but this <b>is</b> okay</span>"
+	
+]
+,$log= (function($){ 
+	if(!($&&$.log)) 
+		return new Function(); 
+	return function(out){ $.log(out); }
+})(console)
+; 
+function throwChunks(){ 
+	for(var i in scripttag) 
+		document.write(scripttag[i]); 
+	$log("Wrote out \n'" + scripttag.join("") + "'");
+	
+}
+var testArray= []; 
+function scriptSleepOnload(u,h){ 
+	testArray.push(testArray.length); 	
+	document.write("<span class=forbidden> remote script completed ... " + u + "</span><br/> "); 
+}
+
+</script> 
+
+</head> 
+<body class="yui3-skin-sam"> 
+<h1> Unparsed output </h1> 
+<div id=parse-0>
+<script type=text/javascript> 
+throwChunks(); 
+</script> 
+</div> 
+<hr/> 
+<script type=text/javascript> 
+function tagChecker(tagName, tagAttributes){ 
+	return tagName != 'script'; 
+}
+document.write= document.writeln= (function($ok){
+	var 
+		 $d= document
+		,$realWrite= $d.$write= $d.write
+		,$tagStack= []
+		,$parser= new window['ghostwriter']['htmlstreamparser']({ 
+			'start': onStart, 
+			'chars': onChars,
+			'end': onEnd 
+		})
+		,$buffer= new Buffer($parser)
+	;
+	return writeHandler; 
+
+	function writeHandler(html){ 
+		$buffer.append(html); 
+		$parser.parse(html)
+		if($buffer.length) 
+			$d.$write($buffer.join(""));
+		$buffer.length= 0; 
+	}
+
+	function onStart(tag,attr,unary){ 
+		var ok= $ok(tag,attr);
+		if(!unary) 
+			$tagStack.push(ok); 
+		$buffer.flush(ok); 
+	}
+
+	function onChars(chars){ 
+		$buffer.flush( $tagStack.length < 1 || $tagStack[0] ); 
+	}
+
+	function onEnd(tag){
+		$buffer.flush( $tagStack.pop() ); 
+	}
+
+	function Buffer($parser){
+		var 
+		    buff= []
+		   ,parsing= ""
+		; 
+		buff.flush= flush;  
+		buff.append=  append; 
+		return buff; 
+
+		function flush(ok){ 
+			var  
+			     stillParsing= $parser.get()
+	   		    ,idx= stillParsing ? 
+			    	parsing.indexOf(stillParsing) : 
+				parsing.length 
+			;
+			if(ok)
+				buff.push( parsing.substr(0,idx) )
+			parsing= parsing.substr(idx); 
+		}
+
+		function append(htmlFragment){ 
+			parsing += htmlFragment
+		}
+	}
+})(tagChecker); 
+</script> 
+
+<h1> Parsed document.write output </h1> 
+<div id=parse-1>
+<script type=text/javascript> 
+throwChunks(); 
+</script> 
+</div> 
+
+<div id="log"></div>
+</body> 
+<script> 
+YUI({ logInclude: { TestRunner: true } })
+	.use("console", "test", tester); 
+function tester(Y){
+	window.Y= Y; 
+	var 
+		yc= new Y.Console({ style: 'block', newestOnTop: false, width: "95%", height: "800px" })
+	; 
+	yc.render("#log"); 
+	var test= new Y.Test.Case({ 
+		name: "inline chunked write handling",
+		"should run only twice": function(){ 
+			Y.ArrayAssert.itemsAreEqual([0,1], testArray); 
+		}
+	}); 
+	Y.Test.Runner.add(test); 
+	Y.Test.Runner.run(); 
+}
+
+
+</script>
+</html> 
