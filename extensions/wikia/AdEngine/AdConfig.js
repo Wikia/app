@@ -613,6 +613,6 @@ AdConfig.DART.getUniqueId = function () {
 
 //console.log('unique id not available');
 	return 'not_available';
-}
+};
 
 AdConfig.init();
