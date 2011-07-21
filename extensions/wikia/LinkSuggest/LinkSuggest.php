@@ -91,6 +91,15 @@ function getLinkSuggestImage() {
 	return $ar;
 }
 
+function wfLinkSuggestGetTextUpperBound( $text ) {
+	$len = mb_strlen($text);
+	if ($len == 0)
+		return false;
+	$lastChar = Wikia::ord(mb_substr($text,-1));
+	$lastChar = ($lastChar < 0x7FFFFFFF) ? Wikia::chr($lastChar + 1) : '';
+	return mb_substr($text,0,$len-1).$lastChar;
+}
+
 function getLinkSuggest() {
 	global $wgRequest, $wgContLang, $wgCityId, $wgExternalDatawareDB, $wgContentNamespaces;
 
@@ -137,7 +146,11 @@ function getLinkSuggest() {
 
 	$results = array();
 
-	$query = addslashes(mb_strtolower($query));
+	$query = mb_strtolower($query);
+	$queryUpper = wfLinkSuggestGetTextUpperBound($query);
+	$query = addslashes($query);
+	$queryUpper = addslashes($queryUpper);
+
 	$db = wfGetDB(DB_SLAVE, 'search');
 
 	$res = $db->select(
@@ -148,7 +161,9 @@ function getLinkSuggest() {
 			" qc_namespace = page_namespace ",
 			" page_is_redirect = 0 ",
 			" qc_type = 'Mostlinked' ",
-			" LOWER(qc_title) LIKE LOWER('{$query}%') ",
+			// faster replacement for: " LOWER(qc_title) LIKE LOWER('{$query}%') ",
+			" LOWER(qc_title) >= '{$query}' ",
+			" LOWER(qc_title) < '{$queryUpper}' ",
 			" qc_namespace IN (" . implode(',', $namespaces) . ")"
 		),
 		__METHOD__,
@@ -165,7 +180,9 @@ function getLinkSuggest() {
 		array( "page_namespace", "page_title" ),
 		array(
 			" page_wikia_id " => $wgCityId,
-			" page_title_lower LIKE '{$query}%' ",
+			// faster replacement for: " page_title_lower LIKE '{$query}%' ",
+			" page_title_lower >= '{$query}' ",
+			" page_title_lower < '{$queryUpper}' ",
 			" page_namespace IN (" . implode(',', $namespaces) . ")",
 			" page_status = 0 "
 		),
