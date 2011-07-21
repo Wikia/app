@@ -72,8 +72,9 @@ class FollowHelper {
 
 	 	global $wgEnableWatchlistNotificationTimeout, $wgWatchlistNotificationTimeout;
 
+		$now = wfTimestampNow();
 	  	if ( !empty($wgEnableWatchlistNotificationTimeout) && isset($wgWatchlistNotificationTimeout) ) { // not using !empty() to allow setting integer value 0
-			$blockTimeout = wfTimestamp(TS_MW,wfTimestamp(TS_UNIX,$timestamp) - intval($wgWatchlistNotificationTimeout) );
+			$blockTimeout = wfTimestamp(TS_MW,wfTimestamp(TS_UNIX,$now) - intval($wgWatchlistNotificationTimeout) );
 			$notificationTimeoutSql = "(wl_notificationtimestamp IS NULL OR wl_notificationtimestamp < '$blockTimeout')";
 		} else {
 			$notificationTimeoutSql = "wl_notificationtimestamp IS NULL";
@@ -104,8 +105,6 @@ class FollowHelper {
 			}
 		}
 
-
-		$now = wfTimestampNow();
 
 		foreach ($watchers as $key => $value) {
 			$enotif = new EmailNotification();
