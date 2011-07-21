@@ -30,7 +30,7 @@ class LookupContribsAjax {
 		$loop		= $wgRequest->getVal('loop');
 		$order		= $wgRequest->getVal('order');
 		$numOrder	= $wgRequest->getVal('numOrder');
-		$lookupUser = intval($wgRequest->getVal('lookupUser'));
+		$lookupUser = ( intval($wgRequest->getVal('lookupUser')) === 1 ? true : false );
 
 		$result = array(
 			'sEcho' => intval($loop), 
@@ -55,12 +55,12 @@ class LookupContribsAjax {
 			if ( empty($mode) ) {
 				$oLC->setLimit($limit);
 				$oLC->setOffset($offset);
-				$activity = $oLC->checkUserActivity();
+				$activity = $oLC->checkUserActivity($lookupUser);
 				if ( !empty($activity) ) {
 					$result['iTotalRecords'] = intval($limit); #( isset( $records['cnt'] ) ) ?  intval( $records['cnt'] ) : 0;
 					$result['iTotalDisplayRecords'] = intval($activity['cnt']);
 					
-					if( 1 === $lookupUser ) {
+					if( $lookupUser === true ) {
 						$result['sColumns'] = 'id,title,url,lastedit,edits,userrights,blocked';
 						$result['aaData'] = LookupContribsAjax::prepareLookupUserData($activity['data'], $username);
 					} else {
@@ -145,7 +145,7 @@ class LookupContribsAjax {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public static function prepareLookupUserData($activityData, $username) {
-		global $wgLang;
+		global $wgLang, $wgContLang;
 		
 		$rows = array();
 		foreach( $activityData as $row ) {
@@ -154,9 +154,9 @@ class LookupContribsAjax {
 				$row['title'], //wiki title
 				$row['url'], // wiki url 
 				$wgLang->timeanddate( wfTimestamp( TS_MW, $row['last_edit'] ), true ), //last edited
-				LookupUserPage::getUserData($username, $row['id'], $row['url'], 2), //edit count
+				$wgContLang->formatNum($row['editcount']),
 				LookupUserPage::getUserData($username, $row['id'], $row['url']), //user rights
-				LookupUserPage::getUserData($username, $row['id'], $row['url'], 1), //blocked
+				LookupUserPage::getUserData($username, $row['id'], $row['url'], true), //blocked
 			);
 		}
 		

@@ -54,7 +54,7 @@ $(document).ready(function() {
 				bSortable: false
 			},
 			{ bVisible: true, aTargets: [3], bSortable: false },
-			{ bVisible: true, aTargets: [4], bSortable: true },
+			{ bVisible: true, aTargets: [4], bSortable: false },
 			{ bVisible: true, aTargets: [5], bSortable: false },
 			{ bVisible: true, aTargets: [6], bSortable: false }
 		],
@@ -99,6 +99,14 @@ $(document).ready(function() {
 				success: function(json) {
 					fnCallback(json);
 					
+					//taking care of data from cache
+					$('.user-blocked').each(function(){
+						$(this).parent().parent().find('td').each(function(){
+							$(this).addClass('red-background');
+						});
+					});
+					
+					//changing placeholders with ajax loading gifs
 					$('.user-groups-placeholder').each(function(){
 						var self = $(this);
 						var wikiId = self.find('input.wikiId').val();
@@ -112,8 +120,7 @@ $(document).ready(function() {
 								data: 'url=' + url + '&username=' + username + '&id=' + wikiId,
 								url: wgScript + "?action=ajax&rs=LookupUserPage::requestApiAboutUser", 
 								success: function(res) {
-									var blockedInfo = $('.user-blocked-placeholder-' + wikiId),
-										editcountInfo = $('.user-edits-placeholder-' + wikiId);
+									var blockedInfo = $('.user-blocked-placeholder-' + wikiId);
 									
 									if( res.success === true && typeof(res.data) !== 'undefined') {
 										self.hide();
@@ -136,10 +143,6 @@ $(document).ready(function() {
 													   break;
 											case false: blockedInfo.parent().append('N'); break;
 										}
-										
-										//user's editcount data
-										editcountInfo.hide();
-										editcountInfo.parent().append(res.data.editcount);
 									} else {
 										self.hide();
 										self.parent().append('-');
