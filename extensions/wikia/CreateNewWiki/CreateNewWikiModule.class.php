@@ -143,6 +143,16 @@ class CreateNewWikiModule extends Module {
 			$this->statusHeader = $this->app->runFunction('wfMsg', 'cnw-error-general-heading');
 		} else {
 			$wgUser = $this->app->getGlobal('wgUser');
+
+			// check if user is blocked
+			if ( $wgUser->isBlocked() ) {
+				$this->status = 'error';
+				$this->statusMsg = $this->app->wf->msg( 'cnw-error-blocked', $wgUser->blockedBy(), $wgUser->blockedFor(), $wgUser->getBlockId() );
+				$this->statusHeader = $this->app->wf->msg( 'cnw-error-blocked-header' );
+				return;
+			}
+
+			// check if user created more wikis than we allow per day
 			$numWikis = $this->countCreatedWikis($wgUser->getId());
 			if($numWikis > self::DAILY_USER_LIMIT && !$wgUser->isAllowed( 'noratelimit' ) ) {
 				$this->status = 'wikilimit';
