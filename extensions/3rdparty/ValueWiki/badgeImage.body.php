@@ -66,8 +66,8 @@ class BadgeImage extends UnlistedSpecialPage {
 		try {
 			$flag	= "sl1c1";
 			$size 	= 20;
-			$font	= "/usr/share/fonts/dejavu-fonts/DejaVuSans-Bold.ttf";
-			$font2	= "/usr/share/fonts/dejavu-fonts/DejaVuSans.ttf";
+			$font	= "/usr/share/fonts/truetype/ttf-dejavu/DejaVuSans-Bold.ttf";
+			$font2	= "/usr/share/fonts/truetype/ttf-dejavu/DejaVuSans.ttf";
 			$directory	= substr($symbol, 1, 1);
 
 			if ($directory == FALSE) {
@@ -94,11 +94,11 @@ class BadgeImage extends UnlistedSpecialPage {
 
 			global $wgHTTPProxy;
 			$ch = curl_init();    // Starts the curl handler
-			curl_setopt($c, CURLOPT_URL, $url); // Sets the paypal address for curlcurl_setopt($c, CURLOPT_FAILONERROR, 1);
-			curl_setopt($c, CURLOPT_RETURNTRANSFER, 1); // Returns result to a variable instead of echoing
-			curl_setopt($c, CURLOPT_TIMEOUT, 3); // Sets a time limit for curl in seconds (do not set too low)
-			curl_setopt($c, CURLOPT_PROXY, $wgHTTPProxy); // set HTTP proxy
-			$info = curl_exec($c); // run the curl process (and return the result to $result
+			curl_setopt($ch, CURLOPT_URL, $url); // Sets the paypal address for curlcurl_setopt($c, CURLOPT_FAILONERROR, 1);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); // Returns result to a variable instead of echoing
+			curl_setopt($ch, CURLOPT_TIMEOUT, 3); // Sets a time limit for curl in seconds (do not set too low)
+			curl_setopt($ch, CURLOPT_PROXY, $wgHTTPProxy); // set HTTP proxy
+			$info = curl_exec($ch); // run the curl process (and return the result to $result
 			curl_close($ch);
 
 			$info		= str_ireplace('"', '', $info);
