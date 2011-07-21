@@ -19,7 +19,9 @@ class AdminDashboardLogic {
 			$exclusionList = array(
 				"Connect", 
 				"Contact",
+				"Contributions",
 				"CreateNewWiki",
+				"Following",
 				"LayoutBuilder", 
 				"PageLayoutBuilder", 
 				"Preferences", 
