@@ -92,6 +92,8 @@ ignored = welcome-enabled, welcome-user, welcome-bot
 Health Check
 file = SpecialHealthcheck/HealthCheck.i18n.php
 
+Hulu Video Panel
+
 Image Placeholder
 
 Image Serving
