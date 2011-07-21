@@ -96,8 +96,10 @@ function wfLinkSuggestGetTextUpperBound( $text ) {
 	if ($len == 0)
 		return false;
 	$lastChar = Wikia::ord(mb_substr($text,-1));
-	$lastChar = ($lastChar < 0x7FFFFFFF) ? Wikia::chr($lastChar + 1) : '';
-	return mb_substr($text,0,$len-1).$lastChar;
+	if ($lastChar >= 0x7FFFFFFF)
+		return wfLinkSuggestGetTextUpperBound( mb_substr($text,0,$len-1) );
+	// this should check for invalid utf8 code points, but don't care about it (super-rare case)
+	return mb_substr($text,0,$len-1) . Wikia::chr($lastChar + 1);
 }
 
 function getLinkSuggest() {
