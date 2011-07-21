@@ -175,13 +175,14 @@ class UserPagesHeaderModule extends Module {
 	public function executeIndex() {
 		wfProfileIn(__METHOD__);
 		
-		global $wgTitle, $wgEnableUserProfilePagesExt, $wgRequest, $wgUser, $wgOut;
+		global $wgTitle, $wgEnableUserProfilePagesExt, $wgEnableUserProfilePagesV3, $wgRequest, $wgUser, $wgOut;
 		
 		$namespace = $wgTitle->getNamespace();
 
 		// get user name to display in header
 		$this->userName = self::getUserName($wgTitle, BodyModule::getUserPagesNamespaces());
-		$this->isUserProfilePageExt = ( !empty( $wgEnableUserProfilePagesExt ) && UserProfilePage::isAllowed() );
+		$this->isUserProfilePageExt = ( !empty( $wgEnableUserProfilePagesExt ) && UserProfilePage::isAllowed() && empty($wgEnableUserProfilePagesV3) );
+		$this->isUserProfilePageV3Enabled = !empty($wgEnableUserProfilePagesV3);
 		
 		// render avatar (100x100)
 		$this->avatar = AvatarService::renderAvatar($this->userName, 100);

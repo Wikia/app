@@ -5,7 +5,7 @@
 	<img src="<?= $wgStylePath ?>/oasis/images/icon_fb_sync.png" class="popout"><?=wfMsg('fb-sync-button')?></a>
 <?php } ?>
 
-<?php if ( empty( $isUserProfilePageExt ) ) { ?>
+<?php if( empty($isUserProfilePageExt) && empty($isUserProfilePageV3Enabled) ) { //user profile page v1? ?>
 	<ul class="wikia-avatar<?= !empty($avatarMenu) ? ' wikia-avatar-menu' : '' ?>">
 		<li>
 			<a href="<?= htmlspecialchars($userPage) ?>" class="avatar-link"><?= $avatar ?></a>
@@ -56,16 +56,15 @@
 	<?php
 		}
 	?>
-<?php } else { ?>
+<?php } else if( !empty($isUserProfilePageV3Enabled) ) {?>
+	<!-- UPPv3 /BEGIN --> 
+	<?php echo F::app()->renderView( 'UserProfilePage', 'renderUserIdentityBox', array() ); ?> 
+	<!-- UPPv3 /END --> 
+<?php } else { //user profile page v2? ?>
 	<!-- UserProfilePage Extension /BEGIN -->
 	<?= wfRenderModule( 'UserProfilePage', 'Masthead', array( 'userName' => $userName, 'userPage' => $userPage, 'avatarMenu' => $avatarMenu, 'displayTitle' => $displaytitle, 'title' => $title, 'actionButton' => $actionButton, 'actionImage' => $actionImage, 'actionName' => $actionName, 'actionMenu' => $actionMenu, 'likes' => $likes, 'stats' => $stats ) ); ?>
 	<!-- UserProfilePage Extension /END -->
 <?php } // isUserProfilePageExt ?>
-
-
-
-
-
 
 	<div class="tabs-container">
 		<ul class="tabs">
