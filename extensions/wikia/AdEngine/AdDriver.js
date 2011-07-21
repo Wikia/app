@@ -276,6 +276,7 @@ AdDriver.canCallLiftium = function(slotname) {
 		case 'HOME_INVISIBLE_TOP':
 		case 'INVISIBLE_TOP':
 		case 'MIDDLE_RIGHT_BOXAD':
+		case 'MODAL_VERTICAL_BANNER':
 			return false;
 			break;
 	}
@@ -380,7 +381,6 @@ AdDriverDelayedLoader.callDART = function() {
 	AdDriver.incrementNumDARTCall(AdDriverDelayedLoader.currentAd.slotname);
 	AdDriver.setLastDARTCallNoAd(AdDriverDelayedLoader.currentAd.slotname, null);
 	var slot = document.getElementById(AdDriverDelayedLoader.currentAd.slotname);
-
 	ghostwriter(
 		slot,
 		{

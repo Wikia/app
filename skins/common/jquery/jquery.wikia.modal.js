@@ -225,6 +225,12 @@ $.fn.extend({
 		// BugId:7498
 		$(document.body).addClass('modalShown');
 
+		// call AdDriver if necessary
+		if (window.loadAd) {
+			AdDriverDelayedLoader.load();
+			window.loadAd = false;
+		}
+
 		return wrapper;
 	},
 

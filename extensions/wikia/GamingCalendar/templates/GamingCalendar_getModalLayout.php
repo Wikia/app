@@ -2,7 +2,9 @@
 	<h1>Game Calendar</h1>
 
 	<div class="ad">
-	
+		<div id="MODAL_VERTICAL_BANNER" class="wikia-ad noprint">
+			<?= AdEngine::getInstance()->getAd('MODAL_VERTICAL_BANNER', array('ghostwriter'=>true)); ?>
+		</div>
 	</div>
 
 	<div class="weeks">
