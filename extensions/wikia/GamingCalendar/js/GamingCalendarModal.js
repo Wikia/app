@@ -1,5 +1,6 @@
 var GamingCalendarModal = {
 	initialized: false,
+	modal: null,
 	
 	init: function() {
 		$().log('init');
