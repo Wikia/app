@@ -76,7 +76,7 @@ $.fn.extend({
 				headline.remove();
 			} else {
 				// no <h1> found - use title attribute (backward compatibility with Monaco)
-				headline = $('<h1>').html($(this).attr('title'));
+				headline = $('<h1>').html($(this).attr('title') || '');
 			}
 
 			// add headline
