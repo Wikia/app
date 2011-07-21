@@ -15,6 +15,7 @@
 		editarea: false,
 		editbox: false,
 		mode: false,
+		rightrail: false,
 
 		beforeInit: function() {
 			this.mode = this.editor.config.autoResizeMode;
@@ -29,6 +30,9 @@
 		},
 
 		initDom: function() {
+			// keep right rail within browser's viewport (BugId:7498)
+			this.rightrail = this.editor.getSpace('rail');
+
 			if (this.enabled) {
 				this.delayedResize();
 			}
@@ -65,6 +69,9 @@
 					this.editarea.css('minHeight', this.getHeightToFit(this.editarea));
 					break;
 			}
+
+			// set height of right rail (BugId:7498)
+			this.rightrail.height(this.getHeightToFit(this.rightrail));
 		}
 	});
 
