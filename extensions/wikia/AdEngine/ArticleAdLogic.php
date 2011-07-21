@@ -573,7 +573,7 @@ class ArticleAdLogic {
 	public static function isSearch() {
 		global $wgTitle;
 
-		return ((-1 == $wgTitle->getNamespace()) && ("Search" == SpecialPage::resolveAlias($wgTitle->getDBkey())));
+		return !empty($wgTitle) && -1 == $wgTitle->getNamespace() && "Search" == SpecialPage::resolveAlias($wgTitle->getDBkey());
 	}
 
 	public static function getPageType() {

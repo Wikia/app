@@ -30,27 +30,32 @@ class AdProviderAdDriver implements iAdProvider {
 				$extraClasses .= ' default-height';
 				break;
 		}
-		if (strpos($slotname, 'EXIT_STITIAL') === FALSE) {
+		if (strpos($slotname, 'EXIT_STITIAL') === FALSE && strpos($slotname, 'MODAL') === FALSE) {
 			$out .= '<div id="' . htmlspecialchars($slotname) . '" class="wikia-ad noprint'.$extraClasses.'">';
 		}
 
 		$out .= <<<EOT
 <script type="text/javascript">
 EOT;
-		if (strpos($slotname, 'EXIT_STITIAL') !== FALSE) {
+		if (strpos($slotname, 'MODAL') !== FALSE || strpos($slotname, 'EXIT_STITIAL') !== FALSE) {
 			$out .= <<<EOT
-	if (typeof(AdDriverDelayedLoader) != 'undefined') {
+	if (window.AdDriverDelayedLoader) {
 		if (AdDriverDelayedLoader.started && !AdDriverDelayedLoader.isRunning()) {
 			AdDriverDelayedLoader.reset();
-			var loadExitstitial = true;
+			var loadAd = true;
 		}
 		AdDriverDelayedLoader.appendItem(new AdDriverDelayedLoaderItem("$slotname", "{$slot['size']}", "DART"));
-		if (typeof loadExitstitial != 'undefined' && loadExitstitial) {
+EOT;
+			if (strpos($slotname, 'EXIT_STITIAL') !== FALSE) {
+				$out .= <<<EOT
+		if (window.loadAd) {
 			AdDriverDelayedLoader.load();
 		}
+EOT;
+			}
+			$out .= <<<EOT
 	}
 EOT;
-		
 		}
 		else {
 			$out .= <<<EOT
@@ -65,7 +70,7 @@ EOT;
 		$out .= <<<EOT
 </script>
 EOT;
-		if (strpos($slotname, 'EXIT_STITIAL') === FALSE) {
+		if (strpos($slotname, 'EXIT_STITIAL') === FALSE && strpos($slotname, 'MODAL') === FALSE) {
 			$out .= '</div>';
 		}
 

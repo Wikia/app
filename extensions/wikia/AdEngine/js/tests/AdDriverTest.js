@@ -39,6 +39,7 @@ test('isHighValueSlot', function() {
   ok( AdConfig.isHighValueSlot('HOME_TOP_LEADERBOARD'), 'HOME_TOP_LEADERBOARD' );
   ok( AdConfig.isHighValueSlot('HOME_TOP_RIGHT_BOXAD'), 'HOME_TOP_RIGHT_BOXAD' );
   ok( AdConfig.isHighValueSlot('MIDDLE_RIGHT_BOXAD'), 'MIDDLE_RIGHT_BOXAD' );
+  ok( AdConfig.isHighValueSlot('MODAL_VERTICAL_BANNER'), 'MODAL_VERTICAL_BANNER' );
   ok( AdConfig.isHighValueSlot('TOP_LEADERBOARD'), 'TOP_LEADERBOARD' );
   ok( AdConfig.isHighValueSlot('TOP_RIGHT_BOXAD'), 'TOP_RIGHT_BOXAD' );
   ok( AdConfig.isHighValueSlot('LEFT_SKYSCRAPER_2'), 'LEFT_SKYSCRAPER_2' );
@@ -334,6 +335,7 @@ test('getLocKV', function() {
   equal( AdConfig.DART.getLocKV('LEFT_SKYSCRAPER_2'), 'loc=middle;', 'LEFT_SKYSCRAPER_2' );
   equal( AdConfig.DART.getLocKV('LEFT_SKYSCRAPER_3'), 'loc=footer;', 'LEFT_SKYSCRAPER_3' );
   equal( AdConfig.DART.getLocKV('MIDDLE_RIGHT_BOXAD'), 'loc=middle;', 'MIDDLE_RIGHT_BOXAD' );
+  equal( AdConfig.DART.getLocKV('MODAL_VERTICAL_BANNER'), 'loc=modal;', 'MODAL_VERTICAL_BANNER' );
   equal( AdConfig.DART.getLocKV('PREFOOTER_LEFT_BOXAD'), 'loc=footer;', 'PREFOOTER_LEFT_BOXAD' );
   equal( AdConfig.DART.getLocKV('PREFOOTER_RIGHT_BOXAD'), 'loc=footer;', 'PREFOOTER_RIGHT_BOXAD' );
   equal( AdConfig.DART.getLocKV('TOP_LEADERBOARD'), 'loc=top;', 'TOP_LEADERBOARD' );
@@ -354,6 +356,7 @@ test('getDcoptKV', function() {
   equal( AdConfig.DART.getDcoptKV('LEFT_SKYSCRAPER_2'), '', 'LEFT_SKYSCRAPER_2' );
   equal( AdConfig.DART.getDcoptKV('LEFT_SKYSCRAPER_3'), '', 'LEFT_SKYSCRAPER_3' );
   equal( AdConfig.DART.getDcoptKV('MIDDLE_RIGHT_BOXAD'), '', 'MIDDLE_RIGHT_BOXAD' );
+  equal( AdConfig.DART.getDcoptKV('MODAL_VERTICAL_BANNER'), '', 'MODAL_VERTICAL_BANNER' );
   equal( AdConfig.DART.getDcoptKV('PREFOOTER_LEFT_BOXAD'), '', 'PREFOOTER_LEFT_BOXAD' );
   equal( AdConfig.DART.getDcoptKV('PREFOOTER_RIGHT_BOXAD'), '', 'PREFOOTER_RIGHT_BOXAD' );
   equal( AdConfig.DART.getDcoptKV('TOP_LEADERBOARD'), 'dcopt=ist;', 'TOP_LEADERBOARD' );

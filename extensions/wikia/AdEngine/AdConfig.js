@@ -46,6 +46,7 @@ AdConfig = {
 			case 'INVISIBLE_TOP':	// skin
 			case 'LEFT_SKYSCRAPER_2':
 			case 'MIDDLE_RIGHT_BOXAD':
+			case 'MODAL_VERTICAL_BANNER':
 			case 'TEST_HOME_TOP_RIGHT_BOXAD':
 			case 'TEST_TOP_RIGHT_BOXAD':
 			case 'TOP_LEADERBOARD':
@@ -144,7 +145,8 @@ AdConfig.DART = {
 	   '728x90': '728x90,468x60,980x130,980x65',
 	   '160x600': '160x600,120x600',
 	   '0x0': '1x1',
-	   '300x100': '300x100'
+	   '300x100': '300x100',
+	   '120x240': '120x240'
 	},
 
 	slotMap: {
@@ -177,6 +179,7 @@ AdConfig.DART = {
 	   'LEFT_SKYSCRAPER_2': {'tile': 3, 'loc': "middle"},
 	   'LEFT_SKYSCRAPER_3': {'tile': 6, 'loc': "footer"},
 	   'MIDDLE_RIGHT_BOXAD': {'tile': 1, 'loc': "middle"},
+	   'MODAL_VERTICAL_BANNER': {'tile':2, 'loc': "modal"},
 	   'PREFOOTER_BIG': {'tile': 5, 'loc': "footer"},
 	   'PREFOOTER_LEFT_BOXAD': {'tile': 5, 'loc': "footer"},
 	   'PREFOOTER_RIGHT_BOXAD': {'tile': 5, 'loc': "footer"},
