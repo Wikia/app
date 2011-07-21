@@ -59,7 +59,6 @@ class AssetsConfig {
 		} else {
 			$files[] = $path . '/ckeditor/ckeditor_source.js';
 			$files[] = $path . '/js/RTE.js';
-			$files[] = $path . '/js/jquery.editor.js';
 		}
 
 		return $files;
@@ -70,7 +69,11 @@ class AssetsConfig {
 	}
 	
 	public static function getRTEAssetsEPL($combine) {
-		return self::getRTEAssetsEx($combine,"extensions/wikia/EditPageReskin/RTE");
+		$files = self::getRTEAssetsEx($combine,"extensions/wikia/EditPageReskin/RTE");
+		if (!$combine) {
+			$files[] = 'extensions/wikia/EditPageReskin/RTE/js/jquery.editor.js';
+		}
+		return $files;
 	}
 
 	public static function getEPLAssets($combine) {
