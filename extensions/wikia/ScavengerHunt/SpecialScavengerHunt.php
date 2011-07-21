@@ -557,8 +557,8 @@ class ScavengerHuntGamesPager extends AlphabeticPager {
 
 	public function formatRow( $row ) {
 		$this->tpl->reset();
-		$gameId = (int)$game->getId();
 		$game = $this->games->newGameFromRow($row);
+		$gameId = (int)$game->getId();
 		$this->tpl->set_vars(array(
 			'toggleUrl' => $this->url . '/toggle/' . $gameId,
 			'editUrl' => $this->url . '/edit/' . $gameId,
