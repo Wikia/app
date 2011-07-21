@@ -6,7 +6,7 @@
 
 (function(window,$){
 
-	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable);
+	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable());
 
 	WE.plugins.tracker = $.createClass(WE.plugin,{
 
@@ -173,9 +173,10 @@
 					editButtonClickTimestamp = parseInt($.storage.get('unloadstamp'));
 
 				// time it took to load the editor fully (since the moment user clicked the "edit" button)
-				if (editButtonClickTimestamp) {
-					var loadTimeTotal = now - editButtonClickTimestamp;
+				var loadTimeTotal = editButtonClickTimestamp ? now - editButtonClickTimestamp : false;
 
+				// ignore higher times (caused by people closing their browsers while being on edit page)
+				if (loadTimeTotal !== false && loadTimeTotal < 60000 /* 60 sec */) {
 					this.editor.log('Editor loaded in ' + (loadTimeTotal / 1000) + ' s (after "edit" was clicked)');
 					this.trackEvent('editpage', 'loadTimeTotal', browserInfo, loadTimeTotal);
 				}
@@ -213,10 +214,8 @@
 
 
 		track: function(action, label, value) {
-			var args = [this.trackerRoot];
-			for (i=0; i < arguments.length; i++) {
-				args.push(arguments[i]);
-			}
+			// common tracking "prefix" + function arguments
+			var args = [this.trackerRoot].concat(Array.prototype.slice.call(arguments));
 
 			if (this.trackerFn) {
 				this.trackerFn.call(window, args.join('/'));
