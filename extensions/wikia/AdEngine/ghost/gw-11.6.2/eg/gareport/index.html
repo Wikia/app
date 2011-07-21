@@ -1,0 +1,75 @@
+<!doctype HTML> 
+<html> 
+<head >
+<title> Ghost Writer Google Monitoring Reports </title> 
+<style type="text/css">
+div.c{ clear: both; } 
+div.ad { margin: 1.0em; }
+</style> 
+
+</head> 
+<body style="width: 800px" >  
+<div id="log"></div>
+<div> 
+Ads load <span id=count>in 2s</span>
+</div> 
+<script> 
+window.START= new Date; 
+var 
+	 el= document.getElementById("count")
+	,left= 2
+var countdown= setInterval(function(){
+	el.innerHTML= 'in ' +  --left + 's';
+	if(left != 0) 
+		return 
+	clearInterval(countdown)
+	el.innerHTML = 'started @' + new Date()
+	ghostwriter.loadscripts()
+}, 1000)
+	
+</script>
+
+<div style="clear:both;" >
+<h1> 728x90-1 </h1> 
+<div style="min-height: 90px" class=ad id="test3" >
+ <script id=728x90-1 defersrc="../../t/ads/ad10.js" type="text/deferscript"></script> 
+</div> 
+</div>
+
+
+<div style="float:left; margin: 1.0em;clear:both">
+ <h1> 160x600 </h1> 
+ <div style="min-height: 600px; min-width: 160px;" class=ad id="test3" >
+  <script id=160x600-1 defersrc="../../t/ads/ad14.js" type="text/deferscript"></script> 
+ </div> 
+</div> 
+
+
+<h1> 300x250 #1 </h1> 
+<div class=ad id="test1" style="margin: 1.0em; min-height:250px; " >
+<script id=300x250-1 type=text/deferscript defersrc="http://optimized-by.rubiconproject.com/a/4462/5032/7102-15.js?cb=0.0888865060103794"></script> 
+</div> 
+
+<h1> 300x250 #2 </h1> 
+<div class=ad id="test2" style="margin: 1.0em; min-height:250px; "  >
+<script id=300x250-2 type="text/deferscript">
+document.write('<script src="http://tag.contextweb.com/TagPublish/getjs.aspx?action=VIEWAD&cwrun=200&cwadformat=300X250&cwpid=531674&cwwidth=300&cwheight=250&cwpnet=1&cwtagid=92368"><\/script>');
+</script> 
+</div> 
+</div> 
+<h1> 728x90 #2 </h1> 
+<div style="min-height: 90px" class=ad id="test3" >
+ <script id=728x90-2 defersrc="../../t/ads/ad13.js" type="text/deferscript"></script> 
+</div> 
+</div>
+
+
+<hr style="clear:both"/> 
+
+<!--
+<script src="../../src/ghostwriter.js"></script> <script src="../../src/loadhandlers.js"></script> <script src="../../src/domtree.js"></script> <script src="../../src/domelement.js"></script> <script src="../../src/htmlstreamparser.js"></script> <script src="../../src/scriptloader.js"></script> <script src="../../src/capabilities.js"></script> 
+-->
+<script src="../../lib/gw.min.js" ></script>
+<script src="../../ext/googleanalytics.js"></script> 
+</body> 
+</html> 
