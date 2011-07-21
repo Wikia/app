@@ -106,7 +106,16 @@ class LookupContribsCore {
 		return true;
 	}
 
-	public function checkUserActivity() {
+	/**
+	 * @brief Gets data for AJAX request for data to user contribution table
+	 * 
+	 * @param boolean $addEditCount added in 20.07.2011 during SSW is a flag; will add additional array element with user's edits on a wiki plus will sort whole array by this value
+	 * 
+	 * @author Bartek Lapinski <bartek@wikia.com>
+	 * @author Piotr Molski <moli@wikia.com>
+	 * @author Andrzej 'nAndy' Łukaszewski <nandy (at) wikia-inc.com> 
+	 */
+	public function checkUserActivity($addEditCount = false) {
 		global $wgMemc, $wgContLang, $wgStatsDB, $wgStatsDBEnabled;
 		wfProfileIn( __METHOD__ );
 		
@@ -114,7 +123,7 @@ class LookupContribsCore {
 			'data' => array(), 
 			'cnt' => 0
 		);
-
+		
 		$memkey = __METHOD__ . ":{$this->mUserId}:data:{$this->mLimit}:{$this->mOffset}";
 		$data = $wgMemc->get($memkey);
 		if ( ( !is_array ($data) || LOOKUPCONTRIBS_NO_CACHE ) && !empty($wgStatsDBEnabled) ) {
@@ -126,6 +135,7 @@ class LookupContribsCore {
 					'user_id'    => $this->mUserId,
 					'event_type' => array(1,2)
 				);
+				
 				/* number of records */
 				$oRow = $dbr->selectRow(
 					array ('events'),
@@ -135,8 +145,31 @@ class LookupContribsCore {
 				);
 				if ( is_object($oRow) ) {
 					$userActivity['cnt'] = $oRow->cnt;
-				}			
+				}
+				
+				if( $addEditCount === true ) {
+					$wikisIds = array();
+					$wikiEdits = $this->getEditCount($wikisIds);
 					
+					$where =  array (
+						'wiki_id'    => $wikisIds,
+						'user_id'    => $this->mUserId,
+						'event_type' => array(1,2)
+					);
+					
+					$options = array (
+						'GROUP BY' => 'wiki_id',
+						'ORDER BY' => ' FIELD(wiki_id,'.rtrim(implode(',', $wikisIds), ',').')'
+					);
+				} else {
+					$options = array (
+						'GROUP BY' => 'wiki_id',
+						'ORDER BY' => 'last_edit DESC',
+						'LIMIT'  => $this->mLimit * 2,
+						'OFFSET' => $this->mOffset
+					);
+				}
+				
 				/* rows */
 				$res = $dbr->select(
 					array ('events'),
@@ -146,12 +179,7 @@ class LookupContribsCore {
 					),
 					$where,
 					__METHOD__,
-					array (
-						'GROUP BY' => 'wiki_id',
-						'ORDER BY' => 'last_edit DESC',
-						'LIMIT'  => $this->mLimit * 2,
-						'OFFSET' => $this->mOffset
-					)
+					$options
 				);
 				
 				$loop = 0;
@@ -162,12 +190,17 @@ class LookupContribsCore {
 					/* exists */
 					if ( !empty($wData) && ( !empty($wData['active']) ) ) { 
 						$wData['last_edit'] = $row->last_edit;
+						
+						if( isset($wikiEdits[$row->wiki_id]->edits) ) {
+							$wData['editcount'] = $wikiEdits[$row->wiki_id]->edits;
+						}
+						
 						$userActivity['data'][] = $wData;
 					}
 					$loop++;
 				}
 				$dbr->freeResult($res);
-
+				
 				if (!LOOKUPCONTRIBS_NO_CACHE) $wgMemc->set( $memkey, $userActivity, 60*10 );
 			}
 		} else {
@@ -176,6 +209,48 @@ class LookupContribsCore {
 
 		wfProfileOut( __METHOD__ );
 		return $userActivity;
+	}
+	
+	/**
+	 * @brief Gets an array with wikis' ids and user's editcount on those wikis
+	 * 
+	 * @param array $wikisIds reference to a string variable which will be overwritten with an array of wikis' ids
+	 * 
+	 * @return array
+	 * 
+	 * @author Andrzej 'nAndy' Łukaszewski
+	 */
+	function getEditCount(&$wikisIds) {
+		global $wgStatsDB;
+		wfProfileIn( __METHOD__ );
+		
+		$dbr = wfGetDB(DB_SLAVE, 'stats', $wgStatsDB);
+		
+		$res = $dbr->select(
+			array('specials.events_local_users'),
+			array('wiki_id', 'edits'),
+			array('user_id' => $this->mUserId),
+			__METHOD__,
+			array(
+				'ORDER BY' => 'edits DESC',
+				'LIMIT'  => $this->mLimit,
+				'OFFSET' => $this->mOffset
+			)
+		);
+		
+		$wikiEdits = array();
+		$wikisIds = array();
+		while($row = $dbr->fetchObject($res)) {
+			if( !isset($wikiEdits[$row->wiki_id]) ) { 
+				$wikiEdits[$row->wiki_id] = $row;
+				$wikisIds[] = $row->wiki_id;
+			}
+		}
+		
+		$dbr->freeResult($res);
+		
+		wfProfileOut( __METHOD__ );
+		return $wikiEdits;
 	}
 	
 	/* array */

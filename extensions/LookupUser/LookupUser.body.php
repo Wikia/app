@@ -274,13 +274,13 @@ EOT
 	 * @param string $userName name of a use
 	 * @param integer $wikiId id of a wiki
 	 * @param string $wikiUrl url address of a wiki
-	 * @param boolean $checkingBlocks a flag which says if we're checking user groups or block/editcount information; defalut = false = groups if set to 2 it means editcount else it means block
+	 * @param boolean $checkingBlocks a flag which says if we're checking user groups or block information
 	 * 
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 * 
 	 * @return string
 	 */
-	public static function getUserData($userName, $wikiId, $wikiUrl, $placeholderWithWikiId = false) {
+	public static function getUserData($userName, $wikiId, $wikiUrl, $checkingBlocks = false) {
 		wfProfileIn( __METHOD__ );
 		
 		global $wgMemc;
@@ -289,7 +289,7 @@ EOT
 		$cachedData = null;
 		
 		if( !empty($cachedData) ) {
-			if( $placeholderWithWikiId === false ) {
+			if( $checkingBlocks === false ) {
 				if( $cachedData['groups'] === false ) {
 					
 					wfProfileOut( __METHOD__ );
@@ -300,17 +300,11 @@ EOT
 					return implode(', ', $cachedData['groups']);
 				}
 			} else {
-				switch($placeholderWithWikiId) {
-					case 2: wfProfileOut( __METHOD__ );
-							return $cachedData['editcount'];
-							break;
-					default: wfProfileOut( __METHOD__ );
-							return ( $cachedData['blocked'] === true ) ? 'Y' : 'N';
-							break;
-				}
+				wfProfileOut( __METHOD__ );
+				return ( $cachedData['blocked'] === true ) ? '<span class="user-blocked">Y</span>' : 'N';
 			}
 		} else {
-			if( $placeholderWithWikiId === false ) {
+			if( $checkingBlocks === false ) {
 				$result = '<span class="user-groups-placeholder">'.
 							'<img src="/skins/common/images/ajax.gif" />'.
 							'<input type="hidden" class="name" value="'.$userName.'" />'.
@@ -318,16 +312,9 @@ EOT
 							'<input type="hidden" class="wikiUrl" value="'.$wikiUrl.'" />'.
 							'</span>';
 			} else {
-				switch($placeholderWithWikiId) {
-					case 2: $result = '<span class="user-edits-placeholder-'.$wikiId.'">'.
+				$result = '<span class="user-blocked-placeholder-'.$wikiId.'">'.
 							'<img src="/skins/common/images/ajax.gif" />'.
 							'</span>';
-							break;
-					default: $result = '<span class="user-blocked-placeholder-'.$wikiId.'">'.
-							'<img src="/skins/common/images/ajax.gif" />'.
-							'</span>';
-							break;
-				}
 			}
 			
 			wfProfileOut( __METHOD__ );
