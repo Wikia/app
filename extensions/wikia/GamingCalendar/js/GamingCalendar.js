@@ -76,7 +76,7 @@ var GamingCalendar = {
 		}
 		
 		if ( expanded ) {
-			template = template.replace('%expanded%', 'expanded');
+			template = template.replace('%expanded%', 'selected');
 		} else {
 			template = template.replace('%expanded%', 'unselected');
 		}

@@ -28,11 +28,11 @@
 				<span>%week-caption%</span>
 				%startmonth% %start% - %endmonth% %end%
 			</h1>
-			<div class="scroll-up"></div>
+			<div class="scroll-up"><img src="<?= $wgBlankImgUrl ?>" height="0" width="0"></div>
 			<div class="list">
 				<ul>%items%</ul>
 			</div>
-			<div class="scroll-down"></div>
+			<div class="scroll-down"><img src="<?= $wgBlankImgUrl ?>" height="0" width="0"></div>
 		</li>
    </script>	
 </section>
