@@ -556,27 +556,9 @@ class SkinTemplate extends Skin {
 			$tpl->set( 'headscripts', $out->getScript() );
 		}
 
-		/**
-		 * Wikia change
-		 * @author Andrzej nAndy Łukaszewski
-		 */
-		global $wgOut, $wgEnableUserProfilePagesV3;
-		//end of Wikia change
-		
 		// original version by hansm
 		if( !wfRunHooks( 'SkinTemplateOutputPageBeforeExec', array( &$this, &$tpl ) ) ) {
 			wfDebug( __METHOD__ . ": Hook SkinTemplateOutputPageBeforeExec broke outputPage execution!\n" );
-		} else {
-			/**
-			 * Wikia change
-			 * @author Andrzej nAndy Łukaszewski
-			 */
-			if( empty($wgEnableUserProfilePagesV3) ) {
-			//controller of User Profile Page v3 includes its own css so if it's disabled,
-			//empty($wgEnableUserProfilePagesV3) === false, we include standard css
-				$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL("skins/oasis/css/core/_UserPagesHeader.scss"));
-			}
-			//end of Wikia change
 		}
 
 		// allow extensions adding stuff after the page content.
