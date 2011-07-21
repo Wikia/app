@@ -177,6 +177,12 @@ class UserPagesHeaderModule extends Module {
 		
 		global $wgTitle, $wgEnableUserProfilePagesExt, $wgEnableUserProfilePagesV3, $wgRequest, $wgUser, $wgOut;
 		
+		if( empty($wgEnableUserProfilePagesV3) ) {
+		//controller of User Profile Page v3 includes its own css so if it's disabled,
+		//empty($wgEnableUserProfilePagesV3) === false, we include standard css
+			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL("skins/oasis/css/core/_UserPagesHeader.scss"));
+		}
+		
 		$namespace = $wgTitle->getNamespace();
 
 		// get user name to display in header
