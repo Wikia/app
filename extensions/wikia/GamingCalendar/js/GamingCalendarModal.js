@@ -13,6 +13,7 @@ var GamingCalendarModal = {
 		$('#GamingCalendar')
 			.find('.scroll-up').live('click', GamingCalendarModal.scrollUp).end()
 			.find('.scroll-down').live('click', GamingCalendarModal.scrollDown).end()
+			.find('.forward-week').live('click', GamingCalendarModal.forwardWeek).end()
 			.find('.GamingCalendarItem').live('click', GamingCalendarModal.expandOrCollapse);
 		
 		// Set up the initial weeks
@@ -89,5 +90,27 @@ var GamingCalendarModal = {
     
     expandOrCollapse: function(e) {
         
+    },
+
+    forwardWeek: function(e) {
+        e.preventDefault();
+        var targetWeek = window.GamingCalendarData.displayedWeek + 2;
+        var offset = targetWeek - window.GamingCalendarData.thisWeek;
+
+        // check if data has been pulled in yet and request if needed
+        if ( typeof window.GamingCalendarData['entries'][targetWeek] == 'undefined' ) {
+		$.get( '/wikia.php?controller=GamingCalendar&method=getEntries&format=json&weeks=1&offset=' + offset, function(data) {
+			window.GamingCalendarData.entries[targetWeek] = data.entries[0];
+
+			var html = GamingCalendarModal.renderWeek( data.entries[0] );
+
+			var obj = $('#GamingCalendar .weeks ul');
+			obj.append( html );
+
+			obj.children().first().animate({
+				'margin-left': '-290'
+			}, 500);
+		});
+	}
     }
 };
