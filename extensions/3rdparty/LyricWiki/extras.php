@@ -44,6 +44,9 @@ function sandboxParse($wikiText)
 	// THIS DOES NOT WORK IN 1.7.1 AT ALL!!!!
 	if ( version_compare( $wgVersion, "1.11.1", '>=' ) )
 	{
+		/**
+		 * Wikia change - begin (@author: macbre)
+		 * Commented out due to BugId:6864
 		foreach ( $wgExtensionFunctions as $func )
 		{
 			$profName = __METHOD__.'-extensions-'.strval( $func );
@@ -51,6 +54,8 @@ function sandboxParse($wikiText)
 			call_user_func( $func );
 			wfProfileOut( $profName );
 		};
+		* Wikia change - end
+		*/
 
 		$myParserOptions->setRemoveComments(true);
 	}
@@ -86,5 +91,3 @@ function lw_simpleQuery($queryString){
 	}
 	return $retVal;
 } // end lw_simpleQuery()
-
-?>
