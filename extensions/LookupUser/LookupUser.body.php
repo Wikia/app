@@ -286,8 +286,6 @@ EOT
 		global $wgMemc;
 		
 		$cachedData = $wgMemc->get( LookupUserPage::getUserLookupMemcKey($userName, $wikiId) );
-		$cachedData = null;
-		
 		if( !empty($cachedData) ) {
 			if( $checkingBlocks === false ) {
 				if( $cachedData['groups'] === false ) {
@@ -338,8 +336,6 @@ EOT
 		$apiUrl = $wikiUrl.'api.php?action=query&list=users&ususers='.$userName.'&usprop=blockinfo|groups|editcount&format=php';
 		
 		$cachedData = $wgMemc->get( LookupUserPage::getUserLookupMemcKey($userName, $wikiId) );
-		$cachedData = null;
-		
 		if( !empty($cachedData) ) {
 			$result = array('success' => true, 'data' => $cachedData);
 		} else {

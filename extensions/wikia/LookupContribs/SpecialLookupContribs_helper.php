@@ -124,7 +124,12 @@ class LookupContribsCore {
 			'cnt' => 0
 		);
 		
-		$memkey = __METHOD__ . ":{$this->mUserId}:data:{$this->mLimit}:{$this->mOffset}";
+		if( $addEditCount === true ) {
+			$memkey = __METHOD__ . ":{$this->mUserId}:dataWithEditCount:{$this->mLimit}:{$this->mOffset}";
+		} else {
+			$memkey = __METHOD__ . ":{$this->mUserId}:data:{$this->mLimit}:{$this->mOffset}";
+		}
+		
 		$data = $wgMemc->get($memkey);
 		if ( ( !is_array ($data) || LOOKUPCONTRIBS_NO_CACHE ) && !empty($wgStatsDBEnabled) ) {
 			#---
