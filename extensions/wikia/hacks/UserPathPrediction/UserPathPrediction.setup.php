@@ -35,6 +35,7 @@ $app->wg->append(
  * classes
  */
 $app->wg->set( 'wgAutoloadClasses', "{$dir}/UserPathPredictionModel.class.php", 'UserPathPredictionModel' );
+$app->wg->set( 'wgAutoloadClasses', "{$dir}/SmarterGlobalTitle.class.php", 'SmarterGlobalTitle' );
 
 /**
  * services

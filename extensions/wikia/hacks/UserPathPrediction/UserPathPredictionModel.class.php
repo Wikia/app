@@ -36,7 +36,7 @@ class UserPathPredictionModel {
 		$this->createDir( self::RAW_DATA_PATH );
 		
 		$this->log( "Running \"{$cmd}\" ..." );
-		$commandOutput = shell_exec( $cmd );
+		//$commandOutput = shell_exec( $cmd );
 		$this->log( "Done, command output: {$commandOutput}." );
 		
 		$tmpFiles = scandir( self::RAW_DATA_PATH );
@@ -75,15 +75,14 @@ class UserPathPredictionModel {
 		$this->app->wf->profileOut(__METHOD__);
 	}
 	
-	public function storeAnalyzedData( $data ) {
+	public function storeAnalyzedData( &$data ) {
 		$this->app->wf->profileIn(__METHOD__);
-		
 		$dbw = $this->getDBConnection( DB_MASTER );
 		
 		foreach ( $data as $segment ) {
 			$sql = 'INSERT INTO `path_segments_archive` ' .
 				'(`city_id`, `referrer_id`, `target_id`, `count`, `updated`) ' .
-				'values (' . $dbw->addQuotes( $this->app->wg->CityId ) .
+				'values (' . $dbw->addQuotes( $segment->cityID ) .
 				', ' . $dbw->addQuotes( $segment->referrerID ) .
 				', ' . $dbw->addQuotes( $segment->targetID ) .
 				', ' . $dbw->addQuotes( $segment->counter ) . 
@@ -91,8 +90,7 @@ class UserPathPredictionModel {
 				'`count` = (`count` + ' . $dbw->addQuotes( $segment->counter ) . '), ' . 
 				'`updated` = CURDATE();';
 				
-			$this->log("Running SQL query: {$sql} ...");
-			
+			//$this->log("Running SQL query: {$sql} ...");
 			$result = $dbw->query( $sql, __METHOD__ );
 			
 			if ( $result === false ) {
@@ -108,7 +106,7 @@ class UserPathPredictionModel {
 		$this->log( "Committing DB transaction..." );
 		$dbw->commit();
 		$dbw->close();
-		$this->log( "Done." );
+		$this->log( "Committing done." );
 		
 		$this->app->wf->profileOut(__METHOD__);
 	}

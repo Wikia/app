@@ -9,9 +9,11 @@
 
 class UserPathPredictionService extends WikiaService {
 	private $model;
+	private $smarterGlobalTitle;
 	
 	public function init() {
 		$this->model = F::build( 'UserPathPredictionModel' );
+		$this->smarterGlobalTitle = F::build( 'SmarterGlobalTitle' );
 	}
 	
 	public function getWikis() {
@@ -26,124 +28,37 @@ class UserPathPredictionService extends WikiaService {
 	 * @responseParam string $dbName the wiki DB name from the entry
 	 * @responseParam array $parsedData the parsed data
 	 */
-	public function parseOneDotData(){
+	public function parseOneDotData() {
 		$this->app->wf->profileIn( __METHOD__ );
 		
-		$strData = $this->getVal( 'data' );
-		
-		if ( !$strData ) {
-			$this->app->wf->profileOut( __METHOD__ );
-			throw new UserPathPredictionNoDataToParseException();
-		}
-		
-		$skip = false;
-		$wholeLine = explode( "&", $strData );
-		$wikis = $this->model->getWikis();
-		$result = false;
-		$data = array();
-		
-		
-		
-		/**
-		 * @see extensions/wikia/WikiaStats/WikiaWebStats.php for OneDot data definition
-		 */
-		foreach( $wholeLine as $param ) {
-			$parameters = explode( '=', $param );
-			$value = $parameters[1];
-			
-			switch ( $parameters[0] ) {
-				//cityId
-				case "c":
-				//article ID
-				case "a" :
-				//User ID (if logged in)
-				case "u":
-					$data[$parameters[0]] = (int) $value;
-					break;
-				//Wiki DB name
-				case "x":
-				//referrer URL
-				case "r" :
-					$data[$parameters[0]] = $value;
-					break;
-				//event name from tracking
-				case "event":
-					//we take into consideration only pure pageviews, no events tracking requests
-					//this avoids duplicated data popping up and screw the stats
-					$skip = true;
-					break;
-				//article namespace
-				case "n":
-					//in OneDot NS_MAIN is "n=" (empty)
-					$namespace = (int) $value;
-					
-					if ( in_array( $namespace, $this->wg->UserPathPredictionExludeNamespaces ) ) {
-						$skip = true;
-					} else {
-						$data[$parameters[0]] = (int) $value;
-					}
-					
-					break;
-			}
-			
-			if ( $skip == true ) {
-				break;
-			}
-		}
-		
-		if (
-			!$skip &&
-			!empty( $data['x'] ) &&
-			!empty( $data['a'] ) &&
-			!empty( $data['r'] ) &&
-			!empty( $data['c'] ) &&
-			array_key_exists( $data['c'], $wikis )
-		) {
-			$wiki = $wikis[$data['c']];
-			$mainURL = $this->escapeURL( "http://{$wiki->domain}/" );
-			
-			if( $wiki->hasPrefix ) {
-				$mainURL = "{$mainURL}wiki/";
-			}
-			
-			if ( strpos( $data["r"], $mainURL ) === 0 ) {
-				$articleName = str_ireplace( $mainURL, '', $data["r"] );
-				
-				if( !empty( $articleName ) ) {
-					$data["r"] = $articleName;
-					$result = $data;
-				}
-			}
-		}
-		
+		$line = $this->getVal( 'data' );
+		$result = $this->internalParseOneDotData( $line );
 		$this->setVal( 'data', $result );
 		
 		$this->app->wf->profileOut( __METHOD__ );
 	}
 	
-	public function internalParseOneDotData( $line ) {
-
+	private function internalParseOneDotData( &$line ) {
+		$this->app->wf->profileIn( __METHOD__ );
 		
 		if ( !$line ) {
 			$this->app->wf->profileOut( __METHOD__ );
 			throw new UserPathPredictionNoDataToParseException();
 		}
-		
+
 		$skip = false;
 		$wholeLine = explode( "&", $line );
 		$wikis = $this->model->getWikis();
 		$result = false;
 		$data = array();
-		
-		
-		
+
 		/**
 		 * @see extensions/wikia/WikiaStats/WikiaWebStats.php for OneDot data definition
 		 */
 		foreach( $wholeLine as $param ) {
 			$parameters = explode( '=', $param );
 			$value = $parameters[1];
-			
+
 			switch ( $parameters[0] ) {
 				//cityId
 				case "c":
@@ -198,58 +113,63 @@ class UserPathPredictionService extends WikiaService {
 			if( $wiki->hasPrefix ) {
 				$mainURL = "{$mainURL}wiki/";
 			}
-			
+
 			if ( strpos( $data["r"], $mainURL ) === 0 ) {
 				$articleName = str_ireplace( $mainURL, '', $data["r"] );
-				
+
 				if( !empty( $articleName ) ) {
 					$data["r"] = $articleName;
 					$result = $data;
 				}
 			}
 		}
+
+		$this->app->wf->profileOut( __METHOD__ );
 		return $result;
 	}
 	
-	public function analyzeParsedData(){
+	public function analyzeParsedData() {
 		$this->app->wf->profileIn( __METHOD__ );
 		
 		$data = $this->getVal( 'data' );
+		$result = $this->internalAnalyzeParsedData( $data );
+		$this->setVal( 'data', $result );
+		
+		$this->app->wf->profileOut( __METHOD__ );
+	}
+	
+	private function internalAnalyzeParsedData( $data ){
+		$this->app->wf->profileIn( __METHOD__ );
+		
+		//$data = $this->getVal( 'data' );
 		$result = false;
 		
 		if ( !$data ) {
 			$this->app->wf->profileOut( __METHOD__ );
 			throw new UserPathPredictionNoDataToAnalyzeException();
 		}
+
+		if ( $title = SmarterGlobalTitle::smarterNewFromText( $data ) ) {
 		
-		$title = F::build( 'Title', array( $data[ 'r' ] ), 'newFromText' );
-		
-		if (
-			$title instanceof Title &&
-			$title->exists() &&
-			$title->getArticleID() != $data[ 'a' ] &&
-			!in_array( $title->getNamespace(), $this->wg->UserPathPredictionExludeNamespaces )
-		) {
-			$referrerID = $title->getArticleID();
-			$title = F::build( 'Title', array( $data[ 'a' ] ), 'newFromID' );
-			
 			if (
 				$title instanceof Title &&
 				$title->exists() &&
+				$title->getArticleID() != $data[ 'a' ] &&
 				!in_array( $title->getNamespace(), $this->wg->UserPathPredictionExludeNamespaces )
 			) {
+				$referrerID = $title->getArticleID();
 				$targetID = $data[ 'a' ];
 				
 				$result = new stdClass();
-				
+				$result->cityID = (int) $data[ 'c' ];
 				$result->referrerID = (int) $referrerID;
 				$result->targetID = (int) $targetID;
 			}
 		}
-		
-		$this->setVal( 'data', $result );
-		
+
+		//$this->setVal( 'data', $result );
 		$this->app->wf->profileOut( __METHOD__ );
+		return $result;
 	}
 	
 	/**
@@ -275,13 +195,12 @@ class UserPathPredictionService extends WikiaService {
 		
 		$this->log( "Fetching OneDot data from archive for {$strDate}..." );
 		
-		if( $this->model->retrieveDataFromArchive( $strDate, $backendParams ) ) {
+		if ( $this->model->retrieveDataFromArchive( $strDate, $backendParams ) ) {
 			$this->log( "Done." );
 			
-			$time_start = time();
 			while( ( $src = $this->model->fetchRawDataFilePath() ) !== false ) {
 				$fileHandle = fopen( $src, "r" );
-				$result = array();
+				$segments = array();
 				$lineCount = 0;
 				
 				$this->log( "Processing: {$src}..." );
@@ -290,25 +209,35 @@ class UserPathPredictionService extends WikiaService {
 					$lineCount++;
 					try {
 						$response = $this->internalParseOneDotData( fgets( $fileHandle ) );
-						//$response = $this->sendSelfRequest( 'parseOneDotData', array( 'data' => fgets( $fileHandle ) ) );	
+
+						if ( $response ) {
+							
+							$data = $this->internalAnalyzeParsedData( $response );
+									
+							if ( !empty( $data ) ) {
+								$key = "{$data->referrerID}_{$data->targetID}";
+								
+								if ( key_exists( $key, $segments ) ) {
+									$segments[$key]->counter += 1;
+								} else {
+									$data->counter = 1;
+									$segments[$key] = $data;
+								}
+								$segments[$key]->cityId = $data->cityID;
+							}
+						}
 					} catch ( UserPathPredictionNoDataToParseException $e ) {
 						$this->log( "No data to parse in {$src} at line {$lineCount}", UserPathPredictionLogService::LOG_TYPE_WARNING );
 						continue;
 					}
 					
-					$result = $response->getVal( 'data' );
-					
-					if ( !empty( $result ) ) {
-						$dbName = $result['x'];
-						$this->model->saveParsedData( $dbName, $result );
-					}
 				}
-				
+	
 				fclose( $fileHandle );
-				$this->log( "Done." );
+				$this->log( 'Found ' . count( $segments ) . ' valid segments.' );
+				$this->model->storeAnalyzedData( $segments );
+				$this->log( "Processing done." );
 			}
-			$time_end = time();
-			var_dump($time_end - $time_start);	exit;
 			$this->model->cleanRawDataFolder();
 		} else {
 			$exception = new UserPathPredictionNoDataException();
