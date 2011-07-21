@@ -70,16 +70,14 @@ class FollowHelper {
 		/* Wikia change begin - @author: wladek */
 		/* RT#55604: Add a timeout to the watchlist email block */
 
+	 	global $wgEnableWatchlistNotificationTimeout, $wgWatchlistNotificationTimeout;
 
-	/*
-	 	global $wgWatchlistNotificationTimeout;
-
-	  	if ( isset($wgWatchlistNotificationTimeout) ) { // not using !empty() to allow setting integer value 0
+	  	if ( !empty($wgEnableWatchlistNotificationTimeout) && isset($wgWatchlistNotificationTimeout) ) { // not using !empty() to allow setting integer value 0
 			$blockTimeout = wfTimestamp(TS_MW,wfTimestamp(TS_UNIX,$timestamp) - intval($wgWatchlistNotificationTimeout) );
-			$notificationTimeoutSql = "($notificationTimeoutSql OR wl_notificationtimestamp < '$blockTimeout')";
-		} */
-
-		$notificationTimeoutSql = "wl_notificationtimestamp IS NULL";
+			$notificationTimeoutSql = "(wl_notificationtimestamp IS NULL OR wl_notificationtimestamp < '$blockTimeout')";
+		} else {
+			$notificationTimeoutSql = "wl_notificationtimestamp IS NULL";
+		}
 
 		if($action == "blogpost") {
 			$notificationTimeoutSql = "1";
