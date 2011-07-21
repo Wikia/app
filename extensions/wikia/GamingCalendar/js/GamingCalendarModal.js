@@ -15,7 +15,7 @@ var GamingCalendarModal = {
 			.find('.scroll-up').live('click', GamingCalendarModal.scrollUp).end()
 			.find('.scroll-down').live('click', GamingCalendarModal.scrollDown).end()
 			.find('.forward-week').live('click', GamingCalendarModal.forwardWeek).end()
-			.find('.GamingCalendarItem').live('click', GamingCalendarModal.expandOrCollapse);
+			.find('.GamingCalendarItem.unselected').live('click', GamingCalendarModal.expandOrCollapse);
 		
 		// Set up the initial weeks
 		var weekNo = 1;
@@ -90,7 +90,9 @@ var GamingCalendarModal = {
     },
     
     expandOrCollapse: function(e) {
-        
+	e.preventDefault();
+	$('#GamingCalendar').find('.GamingCalendarItem.selected').removeClass('selected').addClass('unselected');
+	$(this).removeClass('unselected').addClass('selected');
     },
 
     forwardWeek: function(e) {
