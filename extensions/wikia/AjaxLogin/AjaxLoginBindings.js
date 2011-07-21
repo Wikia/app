@@ -82,7 +82,7 @@ function showComboAjaxForPlaceHolder(element, isPlaceholder, callback, showRegis
 	window.scrollTo(0,0);
 
 	// Load the needed i18n messages
-	$.getMessages('ComboAjaxLogin', function(){	
+	$.getMessages('ComboAjaxLogin', function(){
 		// Load the modal dialog box into the DOM
 		$().getModal(window.wgScript + '?action=ajax&rs=GetComboAjaxLogin&uselang=' + window.wgUserLanguage + "&returnto=" + wgPageName + "&returntoquery=" + wgPageQuery +'&cb=' + wgMWrevId + '-' + wgStyleVersion,  false, {
 			callback: function() {
@@ -202,6 +202,22 @@ $(function() {
 				}
 			});
 			return false;
+		});
+
+		//FB#8523
+		$('.require-login').click(function(e) {
+			$().log('login required for this action');
+			// element, isPlaceholder, callback, showRegisterTabFirst, showLoginRequiredMessage
+			if (showComboAjaxForPlaceHolder('', false, function() {
+				AjaxLogin.doSuccess = function() {
+					var href = $(e.target).attr('href');
+					if (href) {
+						window.location.href = href;
+					}
+				};
+			}, false, true)) {
+				e.preventDefault();
+			}
 		});
 	}
 });
