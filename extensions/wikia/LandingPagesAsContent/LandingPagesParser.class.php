@@ -70,7 +70,7 @@ class LandingPagesParser {
 	
 	public function onArticleSaveComplete( &$article, &$user, $text, $summary,
 		$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status,
-		$baseRevId, &$redirect ) {
+		$baseRevId, &$redirect = null ) {
  		$this->purgeCache( $article->getID() );
 		
 		return true;
