@@ -436,8 +436,6 @@ CKEDITOR.dialog.add( 'link', function( editor )
 
 					element.setAttribute('href',data.link);
 
-					// set content and class of link element
-					element.setText(data.text != '' ? data.text : data.link);
 					element.addClass('external');
 					element.removeClass('new');
 					break;
@@ -452,12 +450,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 						'wikitext': null
 					};
 
-					// set content of link element
 
-					// don't modify links containing HTML formatting (RT #37706)
-					if (element.getText() == element.getHtml()) {
-						element.setText(data.text != '' ? data.text : data.link);
-					}
 
 					if (data.text == '') {
 						type = 'internalSimple';
@@ -471,11 +464,16 @@ CKEDITOR.dialog.add( 'link', function( editor )
 					break;
 			}
 
+			// set content of link element
+			var linkContent = (data.text != '') ? data.text : data.link;
+			element.setHtml(linkContent);
+
 			$(element.$).setData(data);
 
 			// log updated meta data entry
 			RTE.log('updating link data');
-			RTE.log( [element, $(element.$).getData()] );
+			RTE.log([element, $(element.$).getData()]);
+			RTE.log(linkContent);
 
 			// regenerate numbers of external "autonumber" links
 			RTE.tools.renumberExternalLinks();

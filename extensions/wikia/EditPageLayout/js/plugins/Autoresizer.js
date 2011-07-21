@@ -38,7 +38,7 @@
 			}
 		},
 
-		editboxReady: function( editor, editbox ) {
+		editboxReady: function(editor, editbox) {
 			this.editbox = editbox;
 			this.delayedResize();
 		},
