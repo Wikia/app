@@ -87,7 +87,7 @@ class GamingCalendar {
 	}
 
 	private static function getWeekDescription( $start ) {
-		$end = $start + 7 * 86400;
+		$end = $start + 7 * 86400 - 1;
 
 		$week = array();
 
