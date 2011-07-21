@@ -152,6 +152,14 @@ class CreateNewWikiModule extends Module {
 				return;
 			}
 
+			// check if user is a tor node
+			if ( class_exists( 'TorBlock' ) && TorBlock::isExitNode() ) {
+				$this->status = 'error';
+				$this->statusMsg = $this->app->wf->msg( 'cnw-error-torblock' );
+				$this->statusHeader = $this->app->wf->msg( 'cnw-error-blocked-header' );
+				return;
+			}
+
 			// check if user created more wikis than we allow per day
 			$numWikis = $this->countCreatedWikis($wgUser->getId());
 			if($numWikis > self::DAILY_USER_LIMIT && !$wgUser->isAllowed( 'noratelimit' ) ) {
