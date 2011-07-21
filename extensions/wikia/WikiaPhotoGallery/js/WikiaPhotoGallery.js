@@ -2247,7 +2247,7 @@ var WikiaPhotoGallery = {
 		var colorInput = colorPickerPopup.find('input');
 
 		// set initial color for picker
-		var title = null;
+		var title = colorPickerTrigger.attr('title');
 		var color = '#000000';
 
 		if (typeof params[paramName] != 'undefined') {
@@ -2261,9 +2261,9 @@ var WikiaPhotoGallery = {
 				title = className;
 			}
 		}
-		else if(colorPickerTrigger.attr('title') != ''){//if there is default enforced by PHP
-			if(colorPickerTrigger.attr('title').indexOf('--') > 0) {
-				var tokens = colorPickerTrigger.attr('title').split('--');
+		else if(typeof title != 'undefined' && title != ''){//if there is default enforced by PHP
+			if(title.indexOf('--') > 0) {
+				var tokens = title.split('--');
 
 				switch(tokens[1]) {
 					case 'border':
@@ -2330,11 +2330,11 @@ var WikiaPhotoGallery = {
 		colorBoxes.unbind('.colorpicker').bind('click.colorpicker', {caller: this}, function(event) {
 			var value = null;
 			var param = null
-
-			if($(this).attr('title').indexOf('.') == 0) {
+			var title = $(this).attr('title');
+			if(typeof title != 'undefined' && title.indexOf('.') == 0) {
 				colorPickerTrigger.removeClass('transparent-color');
 				value = rgb2hex($(this).css('background-color'));
-				param = $(this).attr('title').substr(1);
+				param = title.substr(1);
 			}
 			else {
 				param = value = rgb2hex($(this).attr('value'));
@@ -2350,8 +2350,8 @@ var WikiaPhotoGallery = {
 			// update parameter value and picker
 			params[paramName] = param;
 			colorPickerTrigger.css('background-color', value);
-			colorPickerTrigger.attr('title', $(this).attr('title'));
-			colorInput.val($(this).attr('title'));
+			colorPickerTrigger.attr('title', title);
+			colorInput.val(title);
 
 			$(document.body).unbind('.colorPicker');
 			colorPickerPopup.hide();
@@ -2708,7 +2708,9 @@ var WikiaPhotoGallery = {
 
 							// update counter (n of X)
 							var counter = dialog.find('.wikia-slideshow-popout-counter');
-							counter.text( counter.attr('value').replace(/\$1/, 1 + data.currentSlideId) );
+							var val = counter.attr('value') || '';
+							
+							counter.text( val.replace(/\$1/, 1 + data.currentSlideId) );
 
 							// update carousel
 							carouselItems.each(function(i) {
