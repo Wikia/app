@@ -94,8 +94,8 @@ class GamingCalendar {
 		$week['start'] = date( 'jS', $start );
 		$week['end'] = date( 'jS', $end );
 
-		$week['startmonth'] = date( 'F', $start );
-		$week['endmonth'] = date( 'F', $end );
+		$week['startmonth'] = date( 'M', $start );
+		$week['endmonth'] = date( 'M', $end );
 		if ( $week['startmonth'] == $week['endmonth'] ) {
 			$week['endmonth'] = '';
 		}
@@ -106,9 +106,6 @@ class GamingCalendar {
 				break;
 			case 1:
 				$week['caption'] = 'Next Week';
-				break;
-			case -1:
-				$week['caption'] = 'Last Week';
 				break;
 			default:
 				$week['caption'] = '';
