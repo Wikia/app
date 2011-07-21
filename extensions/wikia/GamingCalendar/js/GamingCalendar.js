@@ -31,6 +31,9 @@ var GamingCalendar = {
 			// store for future use
 			window.GamingCalendarData = data;
 
+			window.GamingCalendarData.displayedWeek = 0;
+			window.GamingCalendarData.thisWeek = 0;
+
 			// grab the first item
 			item = data.entries[0][cookieVal];
 			
