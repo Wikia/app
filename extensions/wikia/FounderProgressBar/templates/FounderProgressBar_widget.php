@@ -16,7 +16,7 @@
 		<li class="task expanded">
 			<div class="task-label">
 				<?= wfMsg('founderprogressbar-list-task-label') ?>
-				<img class="chevron" src="<?= $wgBlankImgUrl ?>">
+				<img class="chevron" src="<?= $wg->BlankImgUrl ?>">
 			</div>
 			<div class="task-group">
 				<?= F::app()->getView( 'FounderProgressBar', 'widgetTaskGroup', array('taskList' => $activeTaskList, 'clickEvents' => $clickEvents ) ) ?>
@@ -25,7 +25,7 @@
 		<li class="task collapsed skipped">
 			<div class="task-label">
 				<?= wfMsg('founderprogressbar-list-skipped-task-label') ?> <span class="sub-label"><?= wfMsg('founderprogressbar-list-skipped-task-desc') ?></span>
-				<img class="chevron" src="<?= $wgBlankImgUrl ?>">
+				<img class="chevron" src="<?= $wg->BlankImgUrl ?>">
 			</div>
 			<div class="task-group" style="display:none">
 				<?= F::app()->getView( 'FounderProgressBar', 'widgetTaskGroup', array('taskList' => $skippedTaskList, 'clickEvents' => $clickEvents )) ?>
@@ -33,8 +33,8 @@
 		</li>
 		<li class="task collapsed bonus">
 			<div class="task-label">
-				<?= wfMsg('founderprogressbar-list-bonus-task-label') ?> <img class="lock" src="<?= $wgBlankImgUrl ?>" width="13" height="17"> <span class="sub-label"><?= wfMsg('founderprogressbar-list-bonus-task-desc') ?></span>
-				<img class="chevron" src="<?= $wgBlankImgUrl ?>">
+				<?= wfMsg('founderprogressbar-list-bonus-task-label') ?> <img class="lock" src="<?= $wg->BlankImgUrl ?>" width="13" height="17"> <span class="sub-label"><?= wfMsg('founderprogressbar-list-bonus-task-desc') ?></span>
+				<img class="chevron" src="<?= $wg->BlankImgUrl ?>">
 			</div>
 			<div class="task-group" style="display:none">
 				<?= F::app()->getView( 'FounderProgressBar', 'widgetTaskGroup', array('taskList' => $bonusTaskList, 'clickEvents' => $clickEvents )) ?>
@@ -61,7 +61,7 @@
 		<ul class="activities">
 			<? $index = 0; ?>
 			<? foreach($activityListPreview as $activity) { ?>
-				<?= F::app()->getView( 'FounderProgressBar', 'widgetActivityPreview', array('activity' => $activity, 'clickEvents' => $clickEvents, 'index' => $index, 'wgBlankImgUrl' => $wgBlankImgUrl )) ?>
+				<?= F::app()->getView( 'FounderProgressBar', 'widgetActivityPreview', array('activity' => $activity, 'clickEvents' => $clickEvents, 'index' => $index, 'wgBlankImgUrl' => $wg->BlankImgUrl )) ?>
 				<? $index++; ?>
 			<? } ?>
 		</ul>

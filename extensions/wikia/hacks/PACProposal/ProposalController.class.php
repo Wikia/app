@@ -10,7 +10,7 @@ class ProposalController extends WikiaSpecialPageController {
 	 * this is default method
 	 */
 	public function index() {
-		$this->redirect( 'Proposal', 'renderDashboard' );
+		$this->forward( 'Proposal', 'renderDashboard' );
 	}
 
 	public function renderDashboard() {

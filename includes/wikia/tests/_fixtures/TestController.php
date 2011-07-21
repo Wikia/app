@@ -22,7 +22,7 @@ class TestController extends WikiaController {
 		$this->getResponse()->setVal( 'content', true );
 		$this->getResponse()->setVal( 'controller', __CLASS__ );
 
-		$this->redirect( 'AnotherTest', 'hello', $resetResponse);
+		$this->forward( 'AnotherTest', 'hello', $resetResponse);
 	}
 
 }

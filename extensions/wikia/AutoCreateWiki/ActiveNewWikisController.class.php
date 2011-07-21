@@ -11,6 +11,6 @@ class ActiveNewWikisController extends WikiaSpecialPageController {
 	 * we can't register one controller for two special pages so we simply proxying everything
 	 */
 	public function index() {
-		$this->redirect( 'NewWikis', 'getActive' );
+		$this->forward( 'NewWikis', 'getActive' );
 	}
 }

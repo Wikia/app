@@ -27,7 +27,7 @@ class DummyExtensionSpecialPageController extends WikiaSpecialPageController {
 	 * this is default method, which in this example just redirects to helloWorld method
 	 */
 	public function index() {
-		$this->redirect( 'DummyExtensionSpecialPage', 'helloWorld' );
+		$this->forward( 'DummyExtensionSpecialPage', 'helloWorld' );
 	}
 
 	/**

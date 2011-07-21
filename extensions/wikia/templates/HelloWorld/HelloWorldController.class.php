@@ -17,7 +17,7 @@ class HelloWorldController extends WikiaController {
 	public function index() {
 		// This is how a variable is set that can be used in the template.
 		// It will be accessible as $html5logo in the template.
-		$this->setVal( 'html5logo', $this->wg->ExtensionsPath . '/wikia/templates/HelloWorld/images/html5logo.png');
+		$this->html5logo = $this->wg->ExtensionsPath . '/wikia/templates/HelloWorld/images/html5logo.png';
 	}
 
 }
