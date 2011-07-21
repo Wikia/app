@@ -101,6 +101,12 @@ var GamingCalendar = {
     
 	showCalendar: function(e) {
 		e.preventDefault();
+		// Check, whether the GamingCalendarModal has already been triggered once.
+		// We don't want the resources to be retrieved more than once.
+		if ( 'object' == typeof GamingCalendarModal && GamingCalendarModal.initialized ) {
+			GamingCalendarModal.modal.showModal();
+			return;
+		}
 		var date = new Date();
 		// Load CSS and JS
 		$.getResources([
@@ -109,7 +115,7 @@ var GamingCalendar = {
 		], function() {
 			// Get markup
 			$.get('/wikia.php?controller=GamingCalendar&method=getModalLayout&format=html', function(html) {
-				$(html).makeModal({width: 710});
+				GamingCalendarModal.modal = $(html).makeModal({width: 710, persistent: true});
 				GamingCalendarModal.init();
 			});
 		});
