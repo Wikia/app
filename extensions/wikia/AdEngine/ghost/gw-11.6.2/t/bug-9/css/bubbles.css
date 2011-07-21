@@ -1,0 +1,99 @@
+#gwm-bubbles .gwm-hover,
+#gwm-bubbles .gwm-hover span.gwm-bubble{
+	display: block !important; 
+}
+
+.gwm-details td{ 
+	padding: 5px; 
+	overflow:hidden; 
+	border-left: 1px solid black; 
+}
+.gwm-details { 
+	min-width: 450px; 
+	color: #333333; 
+	background: #ffc7a3; 
+	position:relative; 
+	top:8px; 
+	font-size: 11px; 
+	border: 2px solid #ff893b;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	padding-top:10px;
+	line-height: 1.0em;
+}
+.gwm-details a, 
+.gwm-details a:hover, 
+.gwm-details a:visited 
+{ 
+color: #333333;
+font-weight: normal; 
+}
+
+.gwm-details tr > td:first-child { 
+border-left: none;  
+}
+.gwm-details tr.header, 
+.gwm-details tr.summary { 
+	background: #ffc7a3; 
+	font-weight: bold; 
+}
+.gwm-details tr.header td { 
+	border-bottom: 1px solid black; 
+}
+.gwm-details tr.summary td { 
+	border-top: 1px solid black; 
+	text-align: right; 
+}
+.gwm-details tr.even { 
+	background: #ffdcc6; 
+}
+.gwm-details tr.odd{ 
+	background: #ffeadd; 
+}
+#gwm-bubbles .gwm-bubble{
+	position: absolute; 
+	z-index: 10022;
+}
+#gwm-bubbles .gwm-hover span.gwm-bubble { 
+	font-weight: bold; 
+	border-width: 2px !important; 
+}
+#gwm-bubbles .gwm-hover span.gwm-bubble { 
+	-moz-border-radius-bottomleft: 0 !important;
+	-moz-border-radius-bottomright: 0 !important;
+	border-bottom-width: 0 !important;  
+}
+#gwm-bubbles .gwm-bubble span.gwm-bubble { 
+	z-index: 10020;
+	text-align: center; 
+	text-decoration: none; 
+	padding: 0 10px;
+	white-space: nowrap;
+	color: black; 
+	cursor: pointer; 
+	background:#ffe0cd;
+	line-height: 20px; 
+	font-size: 12px; 
+	border: 1px solid #ff893b; 
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+}
+#gwm-bubbles span.gwm-arrow{ 
+border: 12px solid white; 
+border-width: 12px 12px 0px 12px;
+line-height: 0; 
+font-size: 0; 
+border-color: #ffe0cd transparent;
+display: inline-block; 
+position: relative; 
+top:20px; 
+z-index:10020;
+margin: 0 0 0 10px;
+
+height: 0; 
+}
+#gwm-bubbles .gwm-bubble span.gwm-arrow-up{ 
+	border-width: 0px 12px 12px 12px;
+	top:-12px; 
+z-index:10020;
+}
