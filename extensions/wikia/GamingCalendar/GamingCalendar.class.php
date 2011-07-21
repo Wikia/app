@@ -43,7 +43,7 @@ class GamingCalendar {
 		$adjustedDate = $thisWeekStart + $offset * 7 * $oneDay;
 
 		$memcKey = wfMemcKey( self::CACHE_KEY, $adjustedDate, $weeks ); 
-		//$entries = $wgMemc->get( $memcKey );
+		$entries = $wgMemc->get( $memcKey );
 		if ( !empty( $entries ) ) {
 			return $entries;
 		}
