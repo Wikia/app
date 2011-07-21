@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html> 
+<head >
+<title> GhostWriter Unit Test: Parallel Loading</title> 
+<style type="text/css" > 
+.yui3-skin-sam #log .yui3-separate-console {position:static; }
+</style> 
+<script charset="utf-8" src="http://yui.yahooapis.com/3.1.1/build/yui/yui-min.js"></script>
+<!--
+<script src="../../src/ghostwriter.js" ></script>
+<script src="../../src/loadhandlers.js" ></script>
+<script src="../../src/domtree.js" ></script>
+<script src="../../src/domelement.js" ></script>
+<script src="../../src/htmlstreamparser.js" ></script>
+<script src="../../src/scriptloader.js" ></script>
+<script src="../../src/capabilities.js" ></script>
+-->
+<script src="../../lib/gw.min.js" ></script>
+
+</head> 
+<body class="yui3-skin-sam"> 
+<h1> GhostWriter Unit Test: Parallel Loading</h1> 
+<div id=test-1></div> 
+<script type=text/deferscript> document.write( new Date() ) </script> 
+<div style="margin: 3.0em">
+<div id=p3-c></div>
+</div> 
+<div style="position: " id="log"></div>
+<script src=t0.js></script>
+<script> 
+YUI({ logInclude: { TestRunner: true } })
+	.use("console", "test", tester); 
+
+function tester(Y){
+	window.Y= Y; 
+	var 
+		yc= new Y.Console({ newestOnTop: false, width: "95%", height: "600px" })
+	; 
+	yc.render("#log"); 
+	test(); 
+}
+
+</script> 
+</body> 
+</html> 
