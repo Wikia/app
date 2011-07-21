@@ -32,6 +32,13 @@ if( !empty( $wgCityId ) ) {
 	$wgUpdates[ "mysql" ][] = array( "do_drop_table", "searchindex" );
 }
 
+# BugId: 8445 utf8 compatibility
+$wgUpdates[ "mysql" ][] = array( "do_drop_table", "page_stats" );
+$wgUpdates[ "mysql" ][] = array( "do_drop_table", "user_board" );
+$wgUpdates[ "mysql" ][] = array( "do_clean_math_table" );
+
+
+
 /**
  * @todo drop send_stats shared/send_queue
  */
@@ -83,8 +90,67 @@ function do_drop_table( $table ) {
 	if( $wgDatabase->tableExists( $table ) ) {
 		wfOut( "...dropping $table table... " );
 		$wgDatabase->query( "DROP TABLE {$table}" );
-        wfOut( "ok\n" );
+		wfOut( "ok\n" );
 	}
+}
+
+
+function is_valid_utf8_text( $text ) {
+	$converted = @iconv('utf8','utf8',$text);
+	return $text === $converted;
+}
+
+function do_clean_math_table() {
+	global $wgDatabase;
+	
+	$table = 'math';
+	$primaryKey = 'math_inputhash';
+	$fields = array('math_inputhash','math_outputhash','math_html','math_mathml');
+	
+	wfOut( "Checking {$table} table and removing rows with different encoding than utf8...\n" );
+	if ( $wgDatabase->tableExists( $table ) ) {
+		wfOut( "...scanning table..." );
+		// Read the whole table
+		$allFields = array_unique( array_merge( $fields, array( $primaryKey ) ) );
+		$res = $wgDatabase->select(
+			" `{$table}`",
+			$allFields,
+			'',
+			__METHOD__
+		);
+		// scan for all rows containing text which is not in utf8 encoding
+		$wrong = array();
+		while ($row = $wgDatabase->fetchRow($res)) {
+			foreach ($fields as $field)
+				if (!is_valid_utf8_text($row[$field])) {
+					$wrong[] = $row[$primaryKey];
+					break;
+				}
+		}
+		$wgDatabase->freeResult($res);
+		$count = count($wrong);
+		wfOut( "ok (found " . count($wrong) . " rows)\n" );
+		
+		// and finally remove all the malformed rows
+		if ($count > 0) {
+			wfOut( "...removing malformed rows..." );
+			$pos = 0;
+			$chunkSize = 500;
+			while ($pos < $count) {
+				$removing = array_slice($wrong,$pos,$chunkSize);
+				$res = $wgDatabase->delete(
+					$table,
+					array(
+						$primaryKey => $removing,
+					),
+					__METHOD__
+				);
+				$pos += $chunkSize;
+			}
+			wfOut( "ok\n" );
+		}
+	}
+	
 }
 
 /**
