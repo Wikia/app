@@ -32,7 +32,9 @@ class AdminDashboardLogic {
 				"UserLogin", 
 				"WikiActivity",
 				"WikiFactory", 
-				"WikiaLabs", 
+				"WikiaLabs",
+				"CreateTopList",
+				"EditTopList"
 			);
 			return (!in_array($title->getDBKey(), $exclusionList));
 		}
