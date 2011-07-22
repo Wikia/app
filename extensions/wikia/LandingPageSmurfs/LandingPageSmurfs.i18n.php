@@ -14,9 +14,9 @@ $messages['en'] = array(
 $messages['fr'] = array(
 	'landingpagesmurfs' => 'Les Schtroumpfs en 3D',
 	'landingpagesmurfs-enternow' => 'Valider',
-	'landingpagesmurfs-enternow-email-title' => 'Gagne 2 places pour aller voir Les Schtroumpfs en 3D- FR',
+	'landingpagesmurfs-enternow-email-title' => 'Gagne 2 places pour Les Schtroumpfs en 3D - FR',
 	'landingpagesmurfs-wikia-site-link' => '[http://www.smurfs.wikia.com Visite le Wiki Schtroumpf]',
-	'landingpagesmurfs-site-url' => 'http://www.lesschtroumpfs-lefilm.fr/',
+	'landingpagesmurfs-site-url' => 'http://www.facebook.com/Les.Schtroumpfs.LeFilm',
 	'landingpagesmurfs-facebook-url' => 'http://www.facebook.com/Les.Schtroumpfs.LeFilm',
 );
 
