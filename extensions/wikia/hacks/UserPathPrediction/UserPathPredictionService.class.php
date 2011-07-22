@@ -9,15 +9,9 @@
 
 class UserPathPredictionService extends WikiaService {
 	private $model;
-	private $smarterGlobalTitle;
 	
 	public function init() {
 		$this->model = F::build( 'UserPathPredictionModel' );
-		$this->smarterGlobalTitle = F::build( 'SmarterGlobalTitle' );
-	}
-	
-	public function getWikis() {
-		$this->setVal( 'wikis', $this->model->getWikis() );
 	}
 	
 	/**
@@ -29,13 +23,9 @@ class UserPathPredictionService extends WikiaService {
 	 * @responseParam array $parsedData the parsed data
 	 */
 	public function parseOneDotData() {
-		$this->app->wf->profileIn( __METHOD__ );
-		
 		$line = $this->getVal( 'data' );
 		$result = $this->internalParseOneDotData( $line );
 		$this->setVal( 'data', $result );
-		
-		$this->app->wf->profileOut( __METHOD__ );
 	}
 	
 	private function internalParseOneDotData( &$line ) {
@@ -49,7 +39,7 @@ class UserPathPredictionService extends WikiaService {
 		$skip = false;
 		$wholeLine = explode( "&", $line );
 		$wikis = $this->model->getWikis();
-		$result = false;
+		$result;
 		$data = array();
 
 		/**
@@ -117,9 +107,12 @@ class UserPathPredictionService extends WikiaService {
 			if ( strpos( $data["r"], $mainURL ) === 0 ) {
 				$articleName = str_ireplace( $mainURL, '', $data["r"] );
 
-				if( !empty( $articleName ) ) {
+				if ( !empty( $articleName ) ) {
 					$data["r"] = $articleName;
 					$result = $data;
+				} else {
+					$this->app->wf->profileOut( __METHOD__ );
+					throw new UserPathPredictionNoDataToParseException( 'Missing referrer article name' );
 				}
 			}
 		}
@@ -129,20 +122,14 @@ class UserPathPredictionService extends WikiaService {
 	}
 	
 	public function analyzeParsedData() {
-		$this->app->wf->profileIn( __METHOD__ );
-		
 		$data = $this->getVal( 'data' );
-		$result = $this->internalAnalyzeParsedData( $data );
-		$this->setVal( 'data', $result );
-		
-		$this->app->wf->profileOut( __METHOD__ );
+		$output = array();
+		$result = $this->internalAnalyzeParsedData( $data, $output );
+		$this->setVal( 'data', $output );
 	}
 	
-	private function internalAnalyzeParsedData( $data ){
+	private function internalAnalyzeParsedData( &$data, Array &$output ){
 		$this->app->wf->profileIn( __METHOD__ );
-		
-		//$data = $this->getVal( 'data' );
-		$result = false;
 		
 		if ( !$data ) {
 			$this->app->wf->profileOut( __METHOD__ );
@@ -150,7 +137,6 @@ class UserPathPredictionService extends WikiaService {
 		}
 
 		if ( $title = SmarterGlobalTitle::smarterNewFromText( $data ) ) {
-		
 			if (
 				$title instanceof Title &&
 				$title->exists() &&
@@ -160,16 +146,26 @@ class UserPathPredictionService extends WikiaService {
 				$referrerID = $title->getArticleID();
 				$targetID = $data[ 'a' ];
 				
-				$result = new stdClass();
-				$result->cityID = (int) $data[ 'c' ];
-				$result->referrerID = (int) $referrerID;
-				$result->targetID = (int) $targetID;
+				$key = "{$referrerID}_{$targetID}";
+				
+				if ( !key_exists( $key, $output ) ) {
+					$obj = new stdClass();
+					$obj->cityID = (int) $data[ 'c' ];
+					$obj->referrerID = (int) $referrerID;
+					$obj->targetID = (int) $targetID;
+					$obj->counter = 1;
+					
+					$output[$key] = $data;
+				} else {
+					$output[$key]->counter++;
+				}
+			} else {
+				$this->app->wf->profileOut( __METHOD__ );
+				throw new UserPathPredictionNoDataToAnalyzeException( 'Invalid title.' );
 			}
 		}
-
-		//$this->setVal( 'data', $result );
+		
 		$this->app->wf->profileOut( __METHOD__ );
-		return $result;
 	}
 	
 	/**
@@ -207,30 +203,20 @@ class UserPathPredictionService extends WikiaService {
 				
 				while( !feof( $fileHandle ) ) {
 					$lineCount++;
+					
 					try {
-						$response = $this->internalParseOneDotData( fgets( $fileHandle ) );
-
-						if ( $response ) {
-							
-							$data = $this->internalAnalyzeParsedData( $response );
-									
-							if ( !empty( $data ) ) {
-								$key = "{$data->referrerID}_{$data->targetID}";
-								
-								if ( key_exists( $key, $segments ) ) {
-									$segments[$key]->counter += 1;
-								} else {
-									$data->counter = 1;
-									$segments[$key] = $data;
-								}
-								$segments[$key]->cityId = $data->cityID;
-							}
-						}
+						$parseResult = $this->internalParseOneDotData( fgets( $fileHandle ) );
 					} catch ( UserPathPredictionNoDataToParseException $e ) {
-						$this->log( "No data to parse in {$src} at line {$lineCount}", UserPathPredictionLogService::LOG_TYPE_WARNING );
+						$this->log( "Parser error: {$e->getMessage()} ({$src} at line {$lineCount})", UserPathPredictionLogService::LOG_TYPE_WARNING );
 						continue;
 					}
 					
+					try{
+						$this->internalAnalyzeParsedData( $parseResult, $segments );
+					} catch ( UserPathPredictionNoDataToAnalyzeException $e ) {
+						$this->log( "Analyzer error: {$e->getMessage()} ({$src} at line {$lineCount})", UserPathPredictionLogService::LOG_TYPE_WARNING );
+						continue;
+					}
 				}
 	
 				fclose( $fileHandle );
@@ -248,66 +234,8 @@ class UserPathPredictionService extends WikiaService {
 			throw $exception;
 		}
 		
-		$this->app->wf->profileOut( __METHOD__ );
-	}
-	
-	/**
-	 * Analyzes the data extracted from OneDot archive for the local (current) wiki
-	 * and store the results in DB
-	 * 
-	 * @see UserPathPredictionService::extractOneDotData
-	 */
-	public function analyzeLocalData(){
-		$this->app->wf->profileIn( __METHOD__ );
-		$wikiID = $this->wg->CityId;
-		$dbName = strtolower( $this->wg->DBname );//need to make it small letters to match onedot records
-		$filePath = $this->model->getWikiParsedDataPath( $dbName );
-		
-		if ( file_exists( $filePath ) ) {
-			$fileHandle = fopen( $filePath , "r" );
-			$segments = array();
-			$lineCount = 0;
-			
-			$this->log( "Processing: {$filePath}..." );
-			
-			while( !feof( $fileHandle ) ) {
-				$lineCount++;
-				
-				try {
-					$data = $this->sendSelfRequest( 'analyzeParsedData', array( 'data' => unserialize( fgets( $fileHandle ) ) ) )->getVal( 'data' );
-				} catch ( UserPathPredictionNoDataToAnalyzeException $e ) {
-					$this->log( "No data to analyze in {$filePath} at line {$lineCount}", UserPathPredictionLogService::LOG_TYPE_WARNING );
-					continue;
-				}
-				
-				if ( !empty( $data ) ) {
-					$key = "{$data->referrerID}_{$data->targetID}";
-					
-					if ( key_exists( $key, $segments ) ) {
-						$segments[$key]->counter += 1;
-					} else {
-						$data->counter = 1;
-						$segments[$key] = $data;
-					}
-				}
-			}
-			
-			fclose( $fileHandle );
-			$this->log( 'Found ' . count( $segments ) . ' valid segments.' );
-			$this->model->storeAnalyzedData( $segments );
-		} else {
-			$this->log( 'No data found.', UserPathPredictionLogService::LOG_TYPE_WARNING );
-		}
-		
-		$this->app->wf->profileOut( __METHOD__ );
-	}
-	
-	public function cleanup(){
-		$this->app->wf->profileIn( __METHOD__ );
-		
 		$this->model->cleanParsedDataFolder();
 		$this->model->cleanRawDataFolder();
-		
 		$this->app->wf->profileOut( __METHOD__ );
 	}
 	
@@ -346,8 +274,8 @@ class UserPathPredictionService extends WikiaService {
 }
 
 class UserPathPredictionNoDataToParseException extends WikiaException{
-	function __construct() {
-		parent::__construct( 'No data to parse.' );
+	function __construct( $msg = null ) {
+		parent::__construct( ( !empty( $msg ) ) ? $msg : 'No data to parse.' );
 	}
 }
 
@@ -364,7 +292,7 @@ class UserPathPredictionNoDataException extends WikiaException{
 }
 
 class UserPathPredictionNoDataToAnalyzeException extends WikiaException{
-	function __construct() {
-		parent::__construct( 'No data to Analyze.' );
+	function __construct( $msg = null ) {
+		parent::__construct( ( !empty( $msg ) ) ? $msg : 'No data to Analyze.' );
 	}
 }
