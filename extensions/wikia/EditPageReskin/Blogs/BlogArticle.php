@@ -124,8 +124,12 @@ class BlogArticle extends Article {
 	 * @access public
 	 */
 	public function clearBlogListing() {
-		global $wgRequest, $wgMemc;
+		global $wgRequest, $wgMemc, $wgLang;
 
+		// Clear Oasis rail module
+		$mcKey = wfMemcKey( "OasisPopularBlogPosts", $wgLang->getCode() );
+		$wgMemc->delete($mcKey);
+		
 		$user = $this->mTitle->getPrefixedDBkey();
 		foreach( range(0, 5) as $page ) {
 			$wgMemc->delete( wfMemcKey( "blog", "listing", $user, $page ) );
