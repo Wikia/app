@@ -55,7 +55,11 @@ class ScavengerHunt {
 		return true;
 	}
 
-	public function getActiveGame(){
+	public function setGame( $game ){
+		$this->game = $game;
+	}
+
+	public function getActiveGame() {
 		if ( empty( $this->game ) ) {
 			$huntId = $this->getHuntId();
 			if ( empty( $huntId ) ) {
@@ -71,14 +75,18 @@ class ScavengerHunt {
 		return md5( session_id() + self::HASH_SALT );
 	}
 
-	protected function getHuntId(){
+	public function getHuntId() {
+		$huntKey = $this->getHuntIdKey();
+		return isset( $_COOKIE[ $huntKey ] ) ? $_COOKIE[ $huntKey ] : 0;
+	}
+
+	public function getHuntIdKey(){
 		$userName = ( F::app()->wg->user->isAnon() ) ? '' : str_replace( ' ', '_', F::app()->wg->user->getName() );
-		$huntId =  self::HUNT_ID . $userName;
-		return isset( $_COOKIE[ $huntId ] ) ? $_COOKIE[ $huntId ] : 0;
+		return self::HUNT_ID . $userName;
 	}
 
 	public function markItemAsFound( $articleTitle ){
-		$oTitle = Title::newFromText( $articleTitle );
+		$oTitle = F::build( 'Title', array( $articleTitle ), 'newFromText' );
 		$huntId = $this->getHuntId();
 		if ( $oTitle->exists() && !empty( $huntId ) ){
 			$games = WF::build('ScavengerHuntGames');
@@ -92,7 +100,7 @@ class ScavengerHunt {
 		return false;
 	}
 
-	protected function addItemToCache( $articleName, $wikiId ){
+	public function addItemToCache( $articleName, $wikiId ){
 
 		$game = $this->getActiveGame();
 
@@ -119,7 +127,7 @@ class ScavengerHunt {
 		return false;
 	}
 
-	public function getFoundIndexes(){
+	public function getFoundIndexes() {
 
 		$game = $this->getActiveGame();
 		if ( empty( $game ) ){
@@ -333,7 +341,7 @@ class ScavengerHunt {
 		return $return;
 	}
 
-	protected function saveDataToCache( $visitedArticlesId ) {
+	public function saveDataToCache( $visitedArticlesId ) {
 		$wgMemc = $this->app->getGlobal('wgMemc');
 		$value = array(
 				'gameId' => $this->getHuntId(),
