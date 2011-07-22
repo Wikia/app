@@ -33,6 +33,8 @@ class VideoPage extends Article {
 	const SCREENPLAY_STANDARD_BITRATE_ID = 461;	// 360
 	const SCREENPLAY_ENCODEFORMATCODE_JPEG = 9;
 	const SCREENPLAY_ENCODEFORMATCODE_MP4 = 20;
+
+	const VIDEO_GOOGLE_ANALYTICS_ACCOUNT_ID = 'UA-24709745-1';
 	
 	private static $SCREENPLAY_VENDOR_ID = 1893;
 	private static $SCREENPLAY_VIDEO_TYPE = '.mp4';
@@ -1718,13 +1720,21 @@ EOD;
 				$url = $this->getUrlToEmbed();
 				break;
 			case self::V_SCREENPLAY:
-				$player = '/extensions/wikia/JWPlayer/player.swf';
-				$swfobject = '/extensions/wikia/JWPlayer/swfobject.js';
+				$jwplayerdir = '/extensions/wikia/JWPlayer/';
+				$player = $jwplayerdir . 'player.swf';
+				$swfobject = $jwplayerdir . 'swfobject.js';
+				$jwplayerjs = $jwplayerdir . 'jwplayer.js';
 				$file = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid='.$this->mId.'&bitrateid='.$this->mData[0].'&vendorid='.self::$SCREENPLAY_VENDOR_ID.'&type='.self::$SCREENPLAY_VIDEO_TYPE;
 				$hdfile = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid='.$this->mId.'&bitrateid='.self::SCREENPLAY_HIGHDEF_BITRATE_ID.'&vendorid='.self::$SCREENPLAY_VENDOR_ID.'&type='.self::$SCREENPLAY_VIDEO_TYPE;
 				$image = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid='.$this->mId.'&bitrateid='.self::SCREENPLAY_LARGE_JPEG_BITRATE_ID.'&vendorid='.self::$SCREENPLAY_VENDOR_ID.'&type=.jpg';
 				
-				$flashvars = 'file='.urlencode($file).'&image='.urlencode($image).'&provider=video&type=video&stretching=fill';		//@todo add title, description variables
+				$plugins = array('gapro-1'=>array('accountid'=>self::VIDEO_GOOGLE_ANALYTICS_ACCOUNT_ID));
+				if ($this->mData[1]) {
+					$plugins['hd-1'] = array('file'=>$hdfile, 'state'=>'false');
+				}
+
+				// html embed code
+//				$flashvars = 'file='.urlencode($file).'&image='.urlencode($image).'&provider=video&type=video&stretching=fill';		//@todo add title, description variables
 //				$embed = '<object 
 //				    width="'.$width.'"
 //				    height="'.$height.'">
@@ -1744,10 +1754,43 @@ EOD;
 //				    />
 //				</object>';
 				//@todo add title, description variables
-				//
 				//@todo show object in Add Video flow. show swfobject in article mode
-				// swfobject
+				
 				$playerId = 'player-'.$this->mId;
+				
+				// jwplayer embed code
+				$embed .= '<div id="'.$playerId.'"></div>'
+					. '<script type="text/javascript" src="'.$jwplayerjs.'"></script>'
+					. ' <script type="text/javascript">'
+					. 'jwplayer("'.$playerId.'").setup({'
+					. '"flashplayer": "'.$player.'",'
+					. '"id": "'.$playerId.'",'
+					. '"width": "'.$width.'",'
+					. '"height": "'.$height.'",'
+					. '"file": "'.$file.'",'
+					. '"image": "'.$image.'",'
+					. '"provider": "video",'
+					. '"stretching": "fill",'
+					. '"controlbar.position": "bottom",';
+				$embed .= '"plugins": {';
+				$pluginTexts = array();
+				foreach ($plugins as $plugin=>$options) {
+					$pluginText = '"'.$plugin.'": {';
+					$pluginOptionTexts = array();
+					foreach ($options as $key=>$val) {
+						$pluginOptionTexts[] = '"'.$key.'": "'.$val.'"';
+					}
+					$pluginText .= implode(',', $pluginOptionTexts);
+					$pluginText .= '}';
+					$pluginTexts[] = $pluginText;
+				}
+				$embed .= implode(',', $pluginTexts)
+					. '}'	// end plugins
+					. '});'
+					. '</script>';
+				
+				/*
+				// swfobject code
 				$embed = '<div id="'.$playerId.'"></div>'
 					. '<script type="text/javascript" src="'.$swfobject.'"></script>'
 					. ' <script type="text/javascript">'
@@ -1760,13 +1803,17 @@ EOD;
 					. ' so.addVariable("type","video");'
 					. ' so.addVariable("provider","video");'
 					. ' so.addVariable("stretching", "fill");';
-				if ($this->mData[1]) {
-					$embed .= ' so.addVariable("plugins", "hd-1");'
-						. ' so.addVariable("hd.file", "'.urlencode($hdfile).'");'
-						. ' so.addVariable("hd.state", "false");';
+				if (sizeof($plugins)) {
+					$embed .= ' so.addVariable("plugins", "'.implode(',', array_keys($plugins)).'");';
+					foreach ($plugins as $plugin=>$options) {
+						foreach ($options as $key=>$val) {
+							$embed .= ' so.addVariable("'.$plugin.'.'.$key.'", "'.$val.'");';
+						}
+					}
 				}
 				$embed .= ' so.write("'.$playerId.'");'
 					. ' </script>';
+				*/
 
 				$code = 'custom';
 				break;
