@@ -133,7 +133,7 @@ EOT
 	function showInfo( $target, $emailUser = "" ) {
 		global $wgOut, $wgLang, $wgScript;
 		//Small Stuff Week - adding table from Special:LookupContribs --nAndy
-		global $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType, $wgStylePath;
+		global $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType, $wgStylePath, $wgEnableLookupContribsExt;
 		
 		/**
 		 * look for @ in username
@@ -232,20 +232,24 @@ EOT
 			$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-realname', $user->getRealName() ) );
 			
 			//Begin: Small Stuff Week - adding table from Special:LookupContribs --nAndy
-			$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/LookupContribs/css/table.css?{$wgStyleVersion}");
-			$wgOut->addExtensionStyle("{$wgExtensionsPath}/LookupUser/css/lookupuser.css?{$wgStyleVersion}");
-			$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgStylePath}/common/jquery/jquery.dataTables.min.js?{$wgStyleVersion}\"></script>\n");
+			if( !empty($wgEnableLookupContribsExt) ) {
+				$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/LookupContribs/css/table.css?{$wgStyleVersion}");
+				$wgOut->addExtensionStyle("{$wgExtensionsPath}/LookupUser/css/lookupuser.css?{$wgStyleVersion}");
+				$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgStylePath}/common/jquery/jquery.dataTables.min.js?{$wgStyleVersion}\"></script>\n");
 			
-			//checking and setting User::mBlockedGlobally if needed
-			//only for this instance of class User
-			UserBlock::blockCheck($user);
-			
-			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-			$oTmpl->set_vars(array(
-				'username' => $name,
-				'isUsernameGloballyBlocked' => $user->isBlockedGlobally(),
-			));
-			$wgOut->addHTML( $oTmpl->execute('contribution.table') );
+				//checking and setting User::mBlockedGlobally if needed
+				//only for this instance of class User
+				UserBlock::blockCheck($user);
+				
+				$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+				$oTmpl->set_vars(array(
+					'username' => $name,
+					'isUsernameGloballyBlocked' => $user->isBlockedGlobally(),
+				));
+				$wgOut->addHTML( $oTmpl->execute('contribution.table') );
+			} else {
+				$wgOut->addWikiText( '*' . wfMsg('lookupuser-table-cannot-be-displayed') );
+			}
 			//End: Small Stuff Week
 			
 			$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-registration', $registration ) );

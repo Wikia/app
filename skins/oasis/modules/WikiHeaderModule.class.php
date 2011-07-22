@@ -19,7 +19,10 @@ class WikiHeaderModule extends Module {
 
 	public function executeIndex() {
 		global $wgOut, $wgCityId, $wgUser, $wgMemc;
-
+		
+		//fb#1090
+		$this->isInternalWiki = empty($wgCityId);
+		
 		$themeSettings = new ThemeSettings();
 		$settings = $themeSettings->getSettings();
 

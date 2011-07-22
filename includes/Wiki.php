@@ -147,6 +147,12 @@ class MediaWiki {
 				$ret = $rev ? $rev->getTitle() : $ret;
 			}
 		}
+		
+		/* Wikia change begin - @author: nAndy */
+		/* Add hook to allow modification of page user is redirected to when title is not specified in URL */
+		wfRunHooks( 'AfterCheckInitialQueries', array( &$title, &$action, &$ret ) );
+		/* Wikia change end */
+		
 		return $ret;
 	}
 

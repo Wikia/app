@@ -1,0 +1,24 @@
+<?php 
+class WikiaInternalHooks {
+	private $app = null;
+	
+	public function __construct($app) {
+		$this->app = $app;
+	}
+	
+	public function onAfterCheckInitialQueries($title, $action, $ret) {
+		global $wgCityId, $wgUser;
+		
+		wfProfileIn(__METHOD__);
+		
+		if( !empty($wgCityId) && $wgUser->isAnon() ) {
+		//if internal wiki redirect -- do not show original title (file name for example) not logged in users fb#1090
+			$ret = null;
+		}
+		
+		wfProfileOut(__METHOD__);
+		
+		return true;
+	}
+}
+?>

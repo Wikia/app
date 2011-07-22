@@ -44,6 +44,7 @@ $messages['en'] = array(
 	'lookupuser-username-blocked-globally' => 'This username <strong>is</strong> blocked globally.',
 	'lookupuser-username-not-blocked-globally' => 'This username <strong>is not</strong> blocked globally.',
 	'lookupuser-founder' => 'Founder',
+	'lookupuser-table-cannot-be-displayed' => 'The contribution table cannot be displayed -- its extension seems to be disabled.',
 );
 
 /** Message documentation (Message documentation)
