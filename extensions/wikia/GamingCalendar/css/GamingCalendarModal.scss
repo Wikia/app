@@ -30,6 +30,43 @@ $gaming-calendar-week-header: mix($color-page, #000, 95%);
 $gaming-calendar-gray-text: mix($color-text, $color-page, 75%);
 
 #GamingCalendarWrapper {
+	background-image: url(/extensions/wikia/GamingCalendar/images/gaming-calendar-modal-sprite.png);
+	background-repeat: repeat-x;
+	background-position: 0 -172px;
+
+	>h1 {
+	    padding: 0 0 0 128px;
+	    background: transparent url(/extensions/wikia/GamingCalendar/images/gaming-calendar-modal-sprite.png);
+	    background-position: 20px -116px;
+	    background-repeat: no-repeat;
+	    text-shadow: $color-page-border 1px 1px 1px;
+	    @if lightness($color-page) < 50 {
+		    background-position: 20px -142px;
+		    text-shadow: $color-page-border 1px 1px 1px;
+	    }
+	    text-transform: uppercase;
+	    font-size: 19px;
+	    font-weight: bold;
+	    overflow: hidden;
+	    margin: 0 0 12px 0;
+	    height: 37px;
+	    line-height: 37px;
+	    position: relative;
+	    
+	    span {
+		display: block;
+		float: right;
+		font-size: 12px;
+		font-weight: normal;
+		margin: 0 12px 0 0;
+		text-transform: none;
+	    }
+	}
+
+	>button.close {
+	    margin: 8px 12px 0 0;
+	}
+
 	.weeks {
 		border: 1px solid $color-page-border;
 		height: 500px;
