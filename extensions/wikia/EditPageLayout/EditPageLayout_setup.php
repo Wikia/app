@@ -54,6 +54,7 @@ $app->registerHook('EditPageBeforeConflictDiff', 'EditPageLayoutHelper', 'onEdit
 $app->registerHook('EditPageGetDiffText', 'EditPageLayoutHelper', 'onEditPageGetDiffText');
 $app->registerHook('EditPageGetPreviewNote', 'EditPageLayoutHelper', 'onEditPageGetPreviewNote');
 $app->registerHook('GetPreferences', 'EditPageLayoutHelper', 'onGetPreferences');
+$app->registerHook('LogEventsListShowLogExtract', 'EditPageLayoutHelper', 'onLogEventsListShowLogExtract');
 
 // messages
 $app->registerExtensionMessageFile('EditPageLayout', $dir . '/EditPageLayout.i18n.php');
