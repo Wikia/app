@@ -14,6 +14,12 @@
 #LandingPageSmurfs {
 	height: 897px;
 	width: 1002px;
+	position: relative;
+
+	a {
+		position: absolute;
+		text-indent: -999999px;
+	}
 
 	&.LandingPageSmurfsEn {
 		background-image: url('/extensions/wikia/LandingPageSmurfs/images/en.jpg'); /* wgCdnStylePath */
@@ -21,10 +27,58 @@
 
 	&.LandingPageSmurfsFr {
 		background-image: url('/extensions/wikia/LandingPageSmurfs/images/fr.jpg'); /* wgCdnStylePath */
+		.smurfs-link-enter {
+			left: 403px;
+			top: 346px;
+			width: 197px;
+			height: 39px;
+		}
+		.smurfs-link-fb {
+			left: 482px;
+			top: 397px;
+			width: 39px;
+			height: 39px;
+		}
+		.smurfs-link-wiki {
+			left: 150px;
+			top: 449px;
+			width: 284px;
+			height: 29px;
+		}
+		.smurfs-link-trailer {
+			left: 102px;
+			top: 485px;
+			width: 254px;
+			height: 29px;
+		}
 	}
 
 	&.LandingPageSmurfsNl {
 		background-image: url('/extensions/wikia/LandingPageSmurfs/images/nl.jpg'); /* wgCdnStylePath */
+		.smurfs-link-enter {
+			left: 403px;
+			top: 368px;
+			width: 197px;
+			height: 39px;
+		}
+		.smurfs-link-fb {
+			left: 482px;
+			top: 417px;
+			width: 39px;
+			height: 39px;
+		}
+		.smurfs-link-wiki {
+			left: 175px;
+			top: 470px;
+			width: 289px;
+			height: 29px;
+		}
+		.smurfs-link-trailer {
+			left: 215px;
+			top: 509px;
+			width: 179px;
+			height: 29px;
+		}
 	}
 }
 
