@@ -31,15 +31,15 @@ class UserPathPredictionService extends WikiaService {
 	private function internalParseOneDotData( &$line ) {
 		$this->app->wf->profileIn( __METHOD__ );
 		
-		if ( !$line ) {
+		if ( empty( $line ) ) {
 			$this->app->wf->profileOut( __METHOD__ );
 			throw new UserPathPredictionNoDataToParseException();
 		}
-
+		
 		$skip = false;
 		$wholeLine = explode( "&", $line );
 		$wikis = $this->model->getWikis();
-		$result;
+		$result = false;
 		$data = array();
 
 		/**
@@ -88,7 +88,7 @@ class UserPathPredictionService extends WikiaService {
 				break;
 			}
 		}
-		
+
 		if (
 			!$skip &&
 			!empty( $data['x'] ) &&
@@ -116,7 +116,7 @@ class UserPathPredictionService extends WikiaService {
 				}
 			}
 		}
-
+		
 		$this->app->wf->profileOut( __METHOD__ );
 		return $result;
 	}
@@ -131,12 +131,12 @@ class UserPathPredictionService extends WikiaService {
 	private function internalAnalyzeParsedData( &$data, Array &$output ){
 		$this->app->wf->profileIn( __METHOD__ );
 		
-		if ( !$data ) {
+		if ( empty( $data ) ) {
 			$this->app->wf->profileOut( __METHOD__ );
 			throw new UserPathPredictionNoDataToAnalyzeException();
 		}
 
-		if ( $title = SmarterGlobalTitle::smarterNewFromText( $data ) ) {
+		if ( $title = SmarterGlobalTitle::smarterNewFromText( $data['r'], $data['c'], $data['x'] ) ) {
 			if (
 				$title instanceof Title &&
 				$title->exists() &&
@@ -155,7 +155,7 @@ class UserPathPredictionService extends WikiaService {
 					$obj->targetID = (int) $targetID;
 					$obj->counter = 1;
 					
-					$output[$key] = $data;
+					$output[$key] = $obj;
 				} else {
 					$output[$key]->counter++;
 				}
@@ -198,7 +198,7 @@ class UserPathPredictionService extends WikiaService {
 				$fileHandle = fopen( $src, "r" );
 				$segments = array();
 				$lineCount = 0;
-				
+				$parseResult = "";
 				$this->log( "Processing: {$src}..." );
 				
 				while( !feof( $fileHandle ) ) {

@@ -3,44 +3,41 @@
 class SmarterGlobalTitle extends GlobalTitle {
 
 	/**
-	 *  Create new Title from title of page
+	 *  static constructor, Create new Title from name of page
 	 */
-	//TODO: Make it compatabile with existing GlobalTitle
-	public static function smarterNewFromText( &$data ) {
-		global $wgMemc;
+	public static function smarterNewFromText( &$text, &$city_id, &$dbname = "" ) {
+		$app = WF::app();
+		$app->wf->profileIn( __METHOD__ );
+
 		$title = null;
-		$text = $data[ 'r' ];
-		$city_id = $data[ 'c' ];
-		$dbname = $data[ 'x' ];
+		$dbname = $dbname ? $dbname : WikiFactory::IDtoDB( $city_id );
 		
-		$memkey = sprintf( "GlobalTitle:%s:%d", $text, $city_id );
-		$res = $wgMemc->get( $memkey );
+		$memkey = sprintf( "SmarterGlobalTitle:%s:%d", $text, $city_id );
+		$row = $app->wg->Memc->get( $memkey );
 			
-		if ( empty($res) && WikiFactory::isPublic($city_id) ) {
-			$dbr = wfGetDB( DB_SLAVE, array(), ( $dbname ) ? $dbname : WikiFactory::IDtoDB($city_id) );
+		if ( empty( $row ) && WikiFactory::isPublic( $city_id ) ) {
+			$dbr = $app->wf->GetDB( DB_SLAVE, array(), $dbname );
 			$row = $dbr->selectRow( 'page',
 				array( 'page_id', 'page_namespace' ),
 				array( 'page_title' => $text ),
 				__METHOD__
 			);
 
-			if( empty( $row ) ) {
-				return false;
+			if ( empty( $row ) ) {
+				$app->wf->profileOut( __METHOD__ );
+				return $title;
 			}
 			
-			$res = array( 'id' => $row->page_id, 'namespace' => $row->page_namespace );
-			$wgMemc->set($memkey, $res, 60 * 60);
+			$app->wg->Memc->set( $memkey, $row, 60 * 60 );
 		}
 
-		if ( isset( $res['id'] ) && isset($res['namespace']) ) {
-			$title = GlobalTitle::newFromText( $data[ 'r' ], $res['namespace'], $city_id );
-		} else {
-			$title = NULL;
-		}
-
-			$title->mArticleID = $res['id'];
+		if ( !empty( $row->page_id ) && isset( $row->page_namespace ) ) {
+			$title = GlobalTitle::newFromText( $text, $row->page_namespace, $city_id );
+			$title->mArticleID = $row->page_id;
 			$title->mDbkeyform = str_replace( ' ', '_', $text );
-			
+		}
+		
+		$app->wf->profileOut( __METHOD__ );
 		return $title;
 	}
 }
