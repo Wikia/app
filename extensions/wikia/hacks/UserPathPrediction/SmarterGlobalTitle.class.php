@@ -28,7 +28,7 @@ class SmarterGlobalTitle extends GlobalTitle {
 				return $title;
 			}
 			
-			$app->wg->Memc->set( $memkey, $row, 60 * 60 );
+			$app->wg->Memc->set( $memkey, $row, 3600  );
 		}
 
 		if ( !empty( $row->page_id ) && isset( $row->page_namespace ) ) {
