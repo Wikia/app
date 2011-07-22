@@ -35,9 +35,9 @@ class UserPathPredictionModel {
 		
 		$this->createDir( self::RAW_DATA_PATH );
 		
-		$this->log( "Running \"{$cmd}\" ..." );
-		$commandOutput = shell_exec( $cmd );
-		$this->log( "Done, command output: {$commandOutput}." );
+		UserPathPredictionService::log( "Running \"{$cmd}\" ..." );
+		//$commandOutput = shell_exec( $cmd );
+		UserPathPredictionService::log( "Done, command output: {$commandOutput}." );
 		
 		$tmpFiles = scandir( self::RAW_DATA_PATH );
 		
@@ -70,7 +70,7 @@ class UserPathPredictionModel {
 		$this->app->wf->profileIn(__METHOD__);
 		$dbw = $this->getDBConnection( DB_MASTER );
 		$logSQL = true;
-		$this->log("Running SQL queries...");
+		UserPathPredictionService::log("Running SQL queries...");
 		
 		foreach ( $data as $segment ) {
 			$sql = 'INSERT INTO `path_segments_archive` ' .
@@ -84,7 +84,7 @@ class UserPathPredictionModel {
 				'`updated` = CURDATE();';
 			
 			if ( $logSQL ) {
-				$this->log( "Example query: {$sql}" );
+				UserPathPredictionService::log( "Example query: {$sql}" );
 				$logSQL = false;
 			}
 			
@@ -92,7 +92,7 @@ class UserPathPredictionModel {
 			
 			if ( $result === false ) {
 				$exception = new UserPathPredictionDBException( $dbw->lastError() );
-				$this->log( $exception->getMessage(), UserPathPredictionLogService::LOG_TYPE_ERROR );
+				UserPathPredictionService::log( $exception->getMessage(), UserPathPredictionService::LOG_TYPE_ERROR );
 				
 				$this->app->wf->profileOut(__METHOD__);
 				
@@ -100,10 +100,10 @@ class UserPathPredictionModel {
 			}
 		}
 		
-		$this->log( "Committing DB transaction..." );
+		UserPathPredictionService::log( "Committing DB transaction..." );
 		$dbw->commit();
 		$dbw->close();
-		$this->log( "Committing done." );
+		UserPathPredictionService::log( "Committing done." );
 		
 		$this->app->wf->profileOut(__METHOD__);
 	}
@@ -241,7 +241,7 @@ class UserPathPredictionModel {
 		return $resultArray;
 	}
 	
-	private function log( $msg, $type = UserPathPredictionLogService::LOG_TYPE_INFO ) {
+	private function log( $msg, $type = UserPathPredictionService::LOG_TYPE_INFO ) {
 		$this->app->sendRequest( 'UserPathPredictionLogService', 'log', array( 'msg' => $msg, 'type' => $type ) );
 	}
 	
@@ -255,7 +255,7 @@ class UserPathPredictionModel {
 			empty( $this->app->wg->UserPathPredictionDBpassword )
 		) {
 			$exception = new UserPathPredictionMissingDBSettingsException();
-			$this->log( $exception->getMessage(), UserPathPredictionLogService::LOG_TYPE_ERROR );
+			UserPathPredictionService::log( $exception->getMessage(), UserPathPredictionService::LOG_TYPE_ERROR );
 			
 			$this->app->wf->profileOut(__METHOD__);
 			
@@ -275,7 +275,7 @@ class UserPathPredictionModel {
 		$this->app->wf->profileIn(__METHOD__);
 		
 		if ( !is_dir( $folder ) ) {
-			$this->log( "Creating {$folder} ...");
+			UserPathPredictionService::log( "Creating {$folder} ...");
 			return mkdir( $folder, 0777, true );
 		}
 		
@@ -286,7 +286,7 @@ class UserPathPredictionModel {
 		$this->app->wf->profileIn(__METHOD__);
 		
 		if ( is_dir( $path ) ) {
-			$this->log( "Removing {$path} ...");	
+			UserPathPredictionService::log( "Removing {$path} ...");	
 			$objects = scandir( $path );
 			
 			foreach ( $objects as $object ) {

@@ -8,10 +8,20 @@
  */
 
 class UserPathPredictionService extends WikiaService {
+	
+	const LOG_TYPE_INFO = 'INFO';
+	const LOG_TYPE_WARNING = 'WARNING';
+	const LOG_TYPE_ERROR = 'ERROR';
 	private $model;
+	private $logPath;
+	private $initialized = false;
 	
 	public function init() {
 		$this->model = F::build( 'UserPathPredictionModel' );
+		if ( !$this->initialized ) {
+			$this->logPath = "/tmp/UserPathPrediction_" . date( 'Ymd' ) . ".log";
+			$this->initialized = true;
+		}
 	}
 	
 	/**
@@ -182,7 +192,7 @@ class UserPathPredictionService extends WikiaService {
 		
 		if ( empty( $strDate ) ) {
 			$exception = new UserPathPredictionTargetDateMissingException();
-			$this->log( $exception->getMessage(), UserPathPredictionLogService::LOG_TYPE_ERROR );
+			$this->log( $exception->getMessage(), self::LOG_TYPE_ERROR );
 			
 			$this->app->wf->profileOut( __METHOD__ );
 			
@@ -207,17 +217,15 @@ class UserPathPredictionService extends WikiaService {
 					try {
 						$parseResult = $this->internalParseOneDotData( fgets( $fileHandle ) );
 					} catch ( UserPathPredictionNoDataToParseException $e ) {
-						$this->log( "Parser error: {$e->getMessage()} ({$src} at line {$lineCount})", UserPathPredictionLogService::LOG_TYPE_WARNING );
+						$this->log( "Parser error: {$e->getMessage()} ({$src} at line {$lineCount})", self::LOG_TYPE_WARNING );
 						continue;
 					}
 					
-					if ( !empty( $parseResult ) ) {
-						try{
-							$this->internalAnalyzeParsedData( $parseResult, $segments );
-						} catch ( UserPathPredictionNoDataToAnalyzeException $e ) {
-							$this->log( "Analyzer error: {$e->getMessage()} ({$src} at line {$lineCount})", UserPathPredictionLogService::LOG_TYPE_WARNING );
-							continue;
-						}
+					try{
+						$this->internalAnalyzeParsedData( $parseResult, $segments );
+					} catch ( UserPathPredictionNoDataToAnalyzeException $e ) {
+						$this->log( "Analyzer error: {$e->getMessage()} ({$src} at line {$lineCount})", self::LOG_TYPE_WARNING );
+						continue;
 					}
 				}
 	
@@ -229,7 +237,7 @@ class UserPathPredictionService extends WikiaService {
 			$this->model->cleanRawDataFolder();
 		} else {
 			$exception = new UserPathPredictionNoDataException();
-			$this->log( "Failure: {$exception->getMessage()}", UserPathPredictionLogService::LOG_TYPE_ERROR );
+			$this->log( "Failure: {$exception->getMessage()}", self::LOG_TYPE_ERROR );
 			
 			$this->app->wf->profileOut( __METHOD__ );
 			
@@ -270,9 +278,20 @@ class UserPathPredictionService extends WikiaService {
 		return str_replace( ":", "%3A", $url );
 	}
 	
-	private function log( $msg, $type = UserPathPredictionLogService::LOG_TYPE_INFO ) {
-		$this->sendRequest( 'UserPathPredictionLogService', 'log', array( 'msg' => $msg, 'type' => $type ) );
+	public  function log( $msg, $type = self::LOG_TYPE_INFO ) {
+		
+		$this->app->wf->profileIn( __METHOD__ );
+		
+		if ( $this->app->wg->DevelEnvironment ) {
+			
+			if ( isset( $msg ) ) {
+				file_put_contents( $this->logPath, '[' . date("H:i:s") . "] {$type}: " . var_export( $msg, true ) . "\n", FILE_APPEND );
+			}
+		}
+		
+		$this->app->wf->profileOut( __METHOD__ );
 	}
+	
 }
 
 class UserPathPredictionNoDataToParseException extends WikiaException{
