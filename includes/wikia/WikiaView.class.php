@@ -174,7 +174,10 @@ class WikiaView {
 	}
 
 	protected function renderRaw() {
-		return '<pre>' . var_export( array( 'data' => $this->response->getData(), 'exception' => $this->response->getException() ), true ) . '</pre>';
+		if ($this->response->hasException()) {
+			return '<pre>' . print_r ($this->response->getException(), true) . '</pre>';
+		} 
+		return '<pre>' . var_export( $this->response->getData(), true ) . '</pre>';
 	}
 
 	protected function renderHtml() {
