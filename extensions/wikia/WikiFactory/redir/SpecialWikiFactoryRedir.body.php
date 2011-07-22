@@ -3,7 +3,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	echo "This is MediaWiki extension and cannot be used standalone.\n"; exit( 1 ) ; 
 }
 
-class WikiFactoryRedirPage extends SpecialPage {
+class WikiFactoryRedirPage extends UnlistedSpecialPage {
 	function  __construct() {
 		parent::__construct( "WikiFactory"  /*class*/, '' /*restriction*/);
 	}
