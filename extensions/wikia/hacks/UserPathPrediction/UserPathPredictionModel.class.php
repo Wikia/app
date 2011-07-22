@@ -69,6 +69,8 @@ class UserPathPredictionModel {
 	public function storeAnalyzedData( &$data ) {
 		$this->app->wf->profileIn(__METHOD__);
 		$dbw = $this->getDBConnection( DB_MASTER );
+		$logSQL = true;
+		$this->log("Running SQL queries...");
 		
 		foreach ( $data as $segment ) {
 			$sql = 'INSERT INTO `path_segments_archive` ' .
@@ -80,8 +82,12 @@ class UserPathPredictionModel {
 				', CURDATE() ) ON DUPLICATE KEY UPDATE ' .
 				'`count` = (`count` + ' . $dbw->addQuotes( $segment->counter ) . '), ' . 
 				'`updated` = CURDATE();';
-				
-			$this->log("Running SQL query: {$sql} ...");
+			
+			if ( $logSQL ) {
+				$this->log( "Example query: {$sql}" );
+				$logSQL = false;
+			}
+			
 			$result = $dbw->query( $sql, __METHOD__ );
 			
 			if ( $result === false ) {
