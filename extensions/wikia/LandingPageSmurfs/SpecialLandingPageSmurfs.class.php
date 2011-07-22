@@ -36,10 +36,21 @@ class SpecialLandingPageSmurfs extends UnlistedSpecialPage {
 				$langCode = 'en';
 		}
 
+		// email link
+		$emailAddress = 'foo@bar.net'; // TODO: change
+		$emailTitle = wfMsg('landingpagesmurfs-enternow-email-title');
+		$emailLink = 'mailto:' . rawurlencode($emailAddress) . '?subject=' . rawurlencode($emailTitle);
+
+		// render wiki link
+		$wikiLink = $this->app->wf->msgExt('landingpagesmurfs-wikia-site-link', array('parseinline'));
+		$wikiLink = str_replace('<a ', '<a class="smurfs-link-wiki" ', $wikiLink);
+
 		// render HTML
 		$template = new EasyTemplate(dirname(__FILE__).'/templates');
 		$template->set_vars(array(
+			'emailLink' => $emailLink,
 			'langCode' => $langCode,
+			'wikiLink' => $wikiLink,
 		));
 
 		$this->app->wg->Out->addHTML($template->render('main'));
