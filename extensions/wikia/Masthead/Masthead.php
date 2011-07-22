@@ -837,7 +837,7 @@ class Masthead {
 	}
 
 	public static function onGetPreferences($user, &$defaultPreferences) {
-		global $wgUser, $wgCityId, $wgEnableUploads, $wgUploadDirectory;
+		global $wgUser, $wgCityId, $wgEnableUploads, $wgUploadDirectory, $wgEnableUserProfilePagesV3;
 
 		$oAvatarObj = Masthead::newFromUser( $wgUser );
 		$aDefAvatars = $oAvatarObj->getDefaultAvatars();
@@ -868,11 +868,24 @@ class Masthead {
 			'sFieldName'       => AVATAR_UPLOAD_FIELD,
 			'bUploadsPossible' => $bUploadsPossible,
 		) );
+		
+		if( empty($wgEnableUserProfilePagesV3) ) {
+		//when User Profile Pages version 3 is enabled don't show here avatar upload
+			$html = wfHidden( 'MAX_FILE_SIZE', AVATAR_MAX_SIZE ); 
+			$html .= $oTmpl->execute('pref-avatar-form'); 
+		}
 
 		$defaultPreferencesTemp = array();
 
 		foreach($defaultPreferences as $k => $v) {
 			$defaultPreferencesTemp[$k] = $v;
+			if($k == 'showAds' && empty($wgEnableUserProfilePagesV3)) {
+				$defaultPreferencesTemp['avatarupload'] = array( 
+				'help' => $html, 
+				'label' => '&nbsp;', 
+				'type' => 'info', 
+				'section' => 'personal/avatarupload'); 
+			}
 		}
 
 		$defaultPreferences = $defaultPreferencesTemp;
