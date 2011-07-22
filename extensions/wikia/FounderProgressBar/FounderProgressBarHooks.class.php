@@ -37,11 +37,6 @@ class FounderProgressBarHooks {
 			if ($app->wg->EnableTopListsExt && $title->getNamespace() == NS_TOPLIST) {
 				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_TOPTENLIST_ADD));				
 			}				
-			// Category pages X
-			if ($title->getNamespace() == NS_CATEGORY) {			
-				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_CATEGORY_ADD_3));
-				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_CATEGORY_ADD_5));
-			}
 			// Bonus task: add page layout builder
 			if ($title->getNamespace() == NS_PLB_LAYOUT && self::bonusTaskEnabled(FT_BONUS_PAGELAYOUT_ADD) ) {
 				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_BONUS_PAGELAYOUT_ADD));
@@ -60,13 +55,20 @@ class FounderProgressBarHooks {
 			}
 			
 			// if main page
-			if (ArticleAdLogic::isMainPage()) {
+			if ($title->getArticleId() == Title::newMainPage()->getArticleId()) {
 				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_MAINPAGE_EDIT));				
 				
 				// Is there a better way to detect if there's a slider on the main page?
 				if (stripos($text, "slider") > 0) {
 					$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_MAINPAGE_ADDSLIDER));				
 				}
+			}
+			
+			// Add a page to a category: this var is set by the Parser
+			$categoryInserts = Wikia::getVar('categoryInserts');
+			if (!empty($categoryInserts)) {
+				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_CATEGORY_ADD_3));
+				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_CATEGORY_ADD_5));				
 			}
 			
 			// edit category page X
