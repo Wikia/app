@@ -26,7 +26,11 @@ var GamingCalendarModal = {
 			$('#GamingCalendarWrapper .weeks > ul').append(weekHtml);
 
 			weekNo++;
-		}		
+		}
+		
+		var today = new Date();
+		var months = new Array('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec');
+		$('#GamingCalendarWrapper > h1').append('<span>' + months[today.getMonth()] + ' ' + today.getDate() + ', ' + today.getFullYear() +'</span>');
 		$().log('finished init');
 	},
 
@@ -113,7 +117,7 @@ var GamingCalendarModal = {
 			obj.children().first().animate({
 				'margin-left': '-290'
 			}, 500);
-		});
+			});
+		}
 	}
-    }
 };
