@@ -41,7 +41,7 @@ function renderTabber( $paramstring, $params, $parser ){
 function buildTab($tab, $parser){
 	if( trim($tab) == '' ) return '';
 
-	$arr = split("=",$tab);
+	$arr = explode("=",$tab);
 	$tabName = array_shift( $arr );
 	$tabBody = $parser->recursiveTagParse( implode("=",$arr) );
 
