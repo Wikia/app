@@ -691,6 +691,13 @@ class LogEventsList {
 			$s = str_replace( '$1', $s, $wrap );
 		}
 
+		/* Wikia change begin - @author: Macbre */
+		/* hook can return false, if we don't want the message to be emitted (BugId:7093) */
+		if (!wfRunHooks('LogEventsListShowLogExtract', array(&$s, $types, $page, $user, $param))) {
+		 	return $pager->getNumRows();
+		}
+		/* Wikia change end */
+
 		// $out can be either an OutputPage object or a String-by-reference
 		if( $out instanceof OutputPage ){
 			$out->addHTML( $s );

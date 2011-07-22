@@ -15,8 +15,10 @@ class EditPageNotices implements IteratorAggregate {
 	public function add( $notice, $id = false ) {
 		if ($notice instanceof EditPageNotice) {
 			$this->notices[] = $notice;
+			$this->log(__METHOD__, $notice->getHtml());
 		} else {
 			$this->notices[] = WF::build('EditPageNotice',array($notice,$id));
+			$this->log(__METHOD__, $id);
 		}
 	}
 
@@ -74,4 +76,7 @@ class EditPageNotices implements IteratorAggregate {
 		return $obj;
 	}
 
+	private function log($method, $msg) {
+		F::app()->wf->debug("{$method}: {$msg}\n");
+	}
 }

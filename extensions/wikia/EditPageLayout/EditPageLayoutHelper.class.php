@@ -262,6 +262,34 @@ class EditPageLayoutHelper {
 		return true;
 	}
 
+	/**
+	 * Grab notices added by core via LogEventsList class
+	 *
+	 * @param $s String Notice to be emitted
+	 * @param $types String or Array
+	 * @param $page String The page title to show log entries for
+	 * @param $user String The user who made the log entries
+	 * @param $param Associative Array with the following additional options:
+	 * - lim Integer Limit of items to show, default is 50
+	 * - conds Array Extra conditions for the query (e.g. "log_action != 'revision'")
+	 * - showIfEmpty boolean Set to false if you don't want any output in case the loglist is empty
+	 *   if set to true (default), "No matching items in log" is displayed if loglist is empty
+	 * - msgKey Array If you want a nice box with a message, set this to the key of the message.
+	 *   First element is the message key, additional optional elements are parameters for the key
+	 *   that are processed with wgMsgExt and option 'parse'
+	 * - offset Set to overwrite offset parameter in $wgRequest
+	 *   set to '' to unset offset
+	 * - wrap String: Wrap the message in html (usually something like "<div ...>$1</div>").
+	 * @return boolean return false, so notice will not be emitted by core, but by EditPageLayout code
+	 */
+	function onLogEventsListShowLogExtract($s, $types, $page, $user, $param) {
+		if (!empty($this->editPage)) {
+			$this->editPage->addEditNotice($s, $param['msgKey'][0]);
+		}
+
+		return false;
+	}
+
 	static public function getAssets() {
 		return array(
 			// >> mediawiki editor core file

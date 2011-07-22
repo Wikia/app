@@ -210,10 +210,10 @@ class EditPageLayout extends EditPage {
 	/**
 	 * Add dismissable notice and prevent submit of the edit form
 	 */
-	public function addEditNotice($text) {
-		$this->mEditNotices->add($text);
+	public function addEditNotice($text, $id = false) {
+		$this->mEditNotices->add($text, $id);
 
-		wfDebug(__METHOD__ . ": \"{$text}\"\n");
+		$this->app->wf->debug(__METHOD__ . ": \"{$text}\"\n");
 	}
 
 	/**
