@@ -362,12 +362,17 @@ var ScavengerHunt = {
 						e.preventDefault();
 						w.closeModal();
 					});
-					//TODO: Facebook known issue: does not respect href param and shares current page
+					//TODO: Facebook known issue: does not respect href param and shares current page - hence we use our own button until it's fixed
 					if (typeof FB == 'object') {
-						var share = $('.scavenger-share-button');
-						if (share.exists()) {
-							FB.XFBML.parse(share.get(0));
-						}
+						$('.scavenger-share-button').show();
+						$('#fb-share-button').click(function(e) {
+							e.preventDefault();
+							FB.ui({method:'stream.share', u: $(this).attr('href')});
+						});
+//						var share = $('.scavenger-share-button');
+//						if (share.exists()) {
+//							FB.XFBML.parse(share.get(0));
+//						}
 					}
 				}
 			}
