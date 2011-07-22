@@ -99,7 +99,7 @@ class FounderProgressBarController extends WikiaController {
 				FT_MAINPAGE_EDIT => array("newMainPage"),
 				FT_PHOTO_ADD_10 => array("newFromText", "Upload", NS_SPECIAL),
 				FT_CATEGORY_ADD_3 => array("newFromText", "Browse", NS_CATEGORY),
-				FT_COMMCENTRAL_VISIT => "http://community.wikia.com/wiki/Community_Central",
+				FT_COMMCENTRAL_VISIT => "http://community.wikia.com/wiki/Admin_Central:Main_Page",
 				FT_WIKIACTIVITY_VISIT => array("newFromText", "WikiActivity", NS_SPECIAL),
 				FT_PROFILE_EDIT => array("newFromText", $this->wg->User->getName(), NS_USER),
 				FT_PHOTO_ADD_20 => array("newFromText", "Upload", NS_SPECIAL),
