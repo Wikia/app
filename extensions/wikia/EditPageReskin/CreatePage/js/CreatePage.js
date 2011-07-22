@@ -30,9 +30,15 @@ var CreatePage = {
 		}
 
 		e.preventDefault();
+
 		if( false === CreatePage.loading ) {
 			CreatePage.loading = true;
-			$.getJSON(wgScript + '?action=ajax&rs=wfCreatePageAjaxGetDialog', null, function(data) {
+
+			$.getJSON(wgScript, {
+				action: 'ajax',
+				rs: 'wfCreatePageAjaxGetDialog'
+			},
+			function(data) {
 				$.showModal(data.title, data.html, {
 					width: data.width,
 					id: 'CreatePageDialog',
