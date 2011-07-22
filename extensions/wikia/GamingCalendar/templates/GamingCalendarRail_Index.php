@@ -1,5 +1,5 @@
 <section class="GamingCalendarModule">
-    <h1><?= $moduleTitle ?></h1>
+    <h1><span><?= $moduleTitle ?></span></h1>
     
     <a href="#" class="more">Open Calendar</a>
     
