@@ -400,6 +400,57 @@ $messages['it'] = array(
 	'ringtone-matcher-by-song' => 'Invia la suoneria di %s sul tuo cellulare',
 );
 
+/** Korean
+ * @author Youree Jin
+ */
+$messages['ko'] = array(
+	'app-loading' => '로딩…',
+	'app-tab-search' => '찾기',
+	'app-tab-about' => '대해서',
+	'app-tab-browse' => 'A..Z',
+	'app-tab-sotd' => '오늘의 노래',
+
+	//  Networking / Connectivity Issues
+	'app-async-error-title' => '오류',
+	'app-async-error-message' => '연결에 잠시 문제가 생겼습니다. 다음에 다시 시도하여 주시기 바랍니다.',
+	'app-nonetwork-dialog-title' => '네트워크 연결이 안되어있습니다.',
+	'app-nonetwork-dialog-message' => '네트워크 연결이 감지되지 않았습니다.',
+
+	'app-nonetwork-dialog-close-button' => '예',
+
+	//  Search tab
+	'search-go' => '검색',
+	'search-hint-text' => '예 를 들면: \'John Lennon:Imagine\'',
+	'search-no-match-found' => '매치가 없습니다',
+	'search-no-match-found-query' => '%s 찾음',
+	'search-results-title' => '%s 찾으신 결과',
+
+	//  Login dialog
+	'login-label' => '로그인 LyricWiki',
+	'login-username-hint' => '아이디',
+	'login-password-hint' => '비밀번호',
+	'login-submit-button' => '로그인',
+
+	//  About tab
+	'about-heading' => 'LyricWiki',
+	'about-credits' => '%s 으로 부터',
+	'about-heading-tips' => '찾다',
+	'about-tips-0' => '예술가 이름을 타입 하기 시작 하시면 저절로 완성 될 것입니다.' ,
+	'about-tips-1' => '메인 화면에 있는 사진은 지금 아이튠 상위9위에 드는 노래들입니다.',
+	'about-heading-licensing' => '저작권',
+	'about-licensing-0' => '이 앱은 백프로 합법입니다. 저작료는 이미 지불 되었습니다.',
+	'about-heading-feedback' => '의견',
+	'about-feedback-0' => '말씀하실 것이 있으시면 이메일 주십시요: %s.',
+	'about-heading-rate' => '레벨을 매겨주세요',
+	'about-rate-0-android' => '만약 이 앱이 마음에 드시면, 앤드로이드 마켓이 숫자 5라고 매겨주세요.',
+	'about-rate-0-ios' => '만약 이 앱이 마음에 드시면, 애플 마켓이 숫자 5라고 매겨주세요.',
+
+	//  Lyrics window
+	'gracenote-takedown' => '죄송합니다. 아직 가사를 저작권상 표기할수 없습니다 (저희 노래의 1프로만 그런 경우가 있습니다) 다음주에 다시 확인하십시요.',
+	'lyrics-artist-byline' => '%s 으로 부터',
+	'ringtone-matcher-by-song' => '핸드폰에 %s 링톤을 보내세요',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
