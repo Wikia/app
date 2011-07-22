@@ -2,16 +2,7 @@
 require_once dirname(__FILE__) . '/../ScavengerHunt_setup.php';
 wfLoadAllExtensions();
 
-class ScavengerHuntTest extends PHPUnit_Framework_TestCase {
-
-	protected function setUp() {
-		$this->app = F::build( 'App' );
-	}
-
-	protected function tearDown() {
-		F::setInstance( 'App', $this->app );
-		F::reset( 'EasyTemplate' );
-	}
+class ScavengerHuntTest extends WikiaBaseTest {
 
 	public static function setUpBeforeClass() {
 		//ScavengerHuntSetup();
@@ -27,11 +18,14 @@ class ScavengerHuntTest extends PHPUnit_Framework_TestCase {
 
 	const LANDING_WIKI_ID = 411;
 	const LANDING_ARTICLE_NAME = 'this will be so mocked';
+	const WRONG_ARTICLE_NAME = 'this will be so mocked, noooot';
 	const LANDING_ARTICLE_ID = 666;
 	const MOCK_TEXT = 'Lorem ipsum';
 	const MOCK_URL = 'http://firefly.wikia.com/wiki/test';
 	const MOCK_GAME_ID = 1001;
 	const MOCK_INT = 666;
+	const MOCK_USER_NAME = 'crazyUserName with spaces and #$@';
+
 
 	public function appServiceCallback( $sGlobal ) {
 		switch ( $sGlobal ) {
@@ -93,41 +87,39 @@ class ScavengerHuntTest extends PHPUnit_Framework_TestCase {
 			'progressBarExitSprite' => $this->getFakeSprite(),
 			'progressBarHintLabel' => $this->getFakeSprite(),
 			'startPopupSprite' => $this->getFakeSprite(),
-			'finishPopupSprite' => $this->getFakeSprite()
+			'finishPopupSprite' => $this->getFakeSprite(),
+			'landingButtonX' => 1,
+			'landingButtonY' => 1
 		));
 
 		return $row;
 	}
 
-	public function testLoadingHunt() {
+	public function mockDatabaseResponse( $isEmpty = false) {
+
 		$app = WF::build('App');
 
-		$fakeRow = $this->getFakeRow();
-		$where = array(
-			'game_id' => self::MOCK_GAME_ID,
-		);
+		$fakeRow = ( $isEmpty ) ? array() : $this->getFakeRow();
 
-		$db = $this->getMock('DatabaseBase');
-		$db->expects($this->once())
-			->method('selectRow')
-			->with($this->anything(), $this->anything(), $this->equalTo($where), $this->anything(), $this->anything())
-			->will($this->returnValue($fakeRow));
+		$db = $this->getMock( 'DatabaseBase' );
+		$db->expects( $this->any() )
+			->method( 'selectRow' )
+			->will( $this->returnValue( $fakeRow ) );
 
-		$games = $this->getMock('ScavengerHuntGames', array('getDb'), array($app));
-		$games->expects($this->once())
-			->method('getDb')
-			->will($this->returnValue($db));
-//		$games->expects($this->never())
-//			->method('clearCache')
-//			->will($this->returnValue(null));
+		$games = $this->getMock( 'ScavengerHuntGames', array( 'getDb' ), array( $app ) );
+		$games->expects( $this->any() )
+			->method( 'getDb' )
+			->will( $this->returnValue( $db ) );
 
-		$game = $games->findById( self::MOCK_GAME_ID );
-		$this->assertNotEmpty($game);
+		$this->mockClass( 'ScavengerHuntGames', $games );
 
-		$this->assertEquals($fakeRow->game_id, $game->getId());
-		$this->assertEquals($fakeRow->wiki_id, $game->getWikiId());
-		$this->assertEquals($fakeRow->game_name, $game->getName());
-		$this->assertEquals($fakeRow->game_is_enabled, $game->isEnabled());
-		$this->assertEquals(unserialize($fakeRow->game_data), $game->getData());
+		return $games;
+	}
+
+	public function getFakeGame( $isEmpty = false ) {
+
+		$games = $this->mockDatabaseResponse( $isEmpty );
+
+		return $games->findById( self::MOCK_GAME_ID );
 	}
 }

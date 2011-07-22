@@ -59,34 +59,3 @@ F::addClassConstructor( 'ScavengerHuntGame', array( 'app' => $app, 'id' => 0 ) )
 
 // XXX: standard MW constructors - needed to be moved to global place
 F::addClassConstructor( 'Title', array(), 'newFromText' );
-
-//// Ajax dispatcher
-//$wgAjaxExportList[] = 'ScavengerHuntAjax';
-//function ScavengerHuntAjax() {
-//	global $wgUser, $wgRequest;
-//	$method = $wgRequest->getVal('method', false);
-//
-//	if (method_exists('ScavengerHuntAjax', $method)) {
-//		wfProfileIn(__METHOD__);
-//
-//		$data = ScavengerHuntAjax::$method();
-//
-//		if (is_array($data)) {
-//			// send array as JSON
-//			$json = Wikia::json_encode($data);
-//			$response = new AjaxResponse($json);
-//			$response->setContentType('application/json; charset=utf-8');
-//		} else {
-//			// send text as text/html
-//			$response = new AjaxResponse($data);
-//			$response->setContentType('text/html; charset=utf-8');
-//		}
-//
-//	} else {
-//		//TODO: add standard error message here
-//		$response = new AjaxResponse();
-//		$response->setContentType('text/html; charset=utf-8');
-//	}
-//	wfProfileOut(__METHOD__);
-//	return $response;
-//}
