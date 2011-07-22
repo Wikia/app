@@ -36,7 +36,7 @@ class UserPathPredictionModel {
 		$this->createDir( self::RAW_DATA_PATH );
 		
 		$this->log( "Running \"{$cmd}\" ..." );
-		//$commandOutput = shell_exec( $cmd );
+		$commandOutput = shell_exec( $cmd );
 		$this->log( "Done, command output: {$commandOutput}." );
 		
 		$tmpFiles = scandir( self::RAW_DATA_PATH );
@@ -66,15 +66,6 @@ class UserPathPredictionModel {
 		return false;
 	}
 	
-	public function saveParsedData( $dbName, $data ) {
-		$this->app->wf->profileIn(__METHOD__);
-		
-		$this->createDir( self::PARSED_DATA_PATH );
-		file_put_contents( $this->getWikiParsedDataPath( $dbName ) , serialize( $data ) . "\n", FILE_APPEND );
-		
-		$this->app->wf->profileOut(__METHOD__);
-	}
-	
 	public function storeAnalyzedData( &$data ) {
 		$this->app->wf->profileIn(__METHOD__);
 		$dbw = $this->getDBConnection( DB_MASTER );
@@ -90,7 +81,7 @@ class UserPathPredictionModel {
 				'`count` = (`count` + ' . $dbw->addQuotes( $segment->counter ) . '), ' . 
 				'`updated` = CURDATE();';
 				
-			//$this->log("Running SQL query: {$sql} ...");
+			$this->log("Running SQL query: {$sql} ...");
 			$result = $dbw->query( $sql, __METHOD__ );
 			
 			if ( $result === false ) {
