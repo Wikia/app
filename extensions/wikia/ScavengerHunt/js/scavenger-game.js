@@ -364,15 +364,22 @@ var ScavengerHunt = {
 					});
 					//TODO: Facebook known issue: does not respect href param and shares current page - hence we use our own button until it's fixed
 					if (typeof FB == 'object') {
-						$('.scavenger-share-button').show();
-						$('#fb-share-button').click(function(e) {
-							e.preventDefault();
-							FB.ui({method:'stream.share', u: $(this).attr('href')});
-						});
-//						var share = $('.scavenger-share-button');
-//						if (share.exists()) {
-//							FB.XFBML.parse(share.get(0));
-//						}
+						var share = $('.scavenger-share-button');
+						if (share.exists()) {
+							FB.XFBML.parse(share.get(0));
+							//give some time for parsing
+							setTimeout(function() {
+								var shareButton = $('.fb_button');
+								//remove buggy onclick
+								shareButton.get(0).onclick = null;
+								//attach proper onclick
+								shareButton.click(function(e) {
+									e.preventDefault();
+									var href = $(this).attr('href') || window.location.href;
+									FB.ui({method:'stream.share', u: href});
+								});
+							}, 500);
+						}
 					}
 				}
 			}

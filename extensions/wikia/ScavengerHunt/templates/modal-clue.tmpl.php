@@ -12,9 +12,7 @@
 if (!empty($shareUrl)) {
 ?>
 <div class="scavenger-share-button">
-	<a target="_blank" class="fb_button fb_button_small" id="fb-share-button" href="<?= $shareUrl ?>">
-		<span class="fb_button_text"><?= wfMsg('scavengerhunt-facebook-share') ?></span>
-	</a>
+	<fb:share-button href="<?= $shareUrl ?>" type="button_count"></fb:share-button>
 </div>
 <?php }
 if ( $hasSprite ) { ?>

@@ -175,14 +175,11 @@ $messages['en'] = array(
 	'scavengerhunt-editor-tip-goodbye-title' => 'This is the title of the final popup message from the Hunt.',
 	'scavengerhunt-editor-tip-goodbye-text' => 'This is the text of the final popup message from the Hunt.',
 	'scavengerhunt-editor-tip-clue-color' => 'Colors should have hexadecymal notation like #F00',
-	'scavengerhunt-editor-tip-entry-form-button-text' => 'This is the text for the button that appears on the dialog at the end of the hunt. ',
-
-	'scavengerhunt-facebook-share' => 'Share'
+	'scavengerhunt-editor-tip-entry-form-button-text' => 'This is the text for the button that appears on the dialog at the end of the hunt. '
 );
 /** Message documentation (Message documentation) */
 $messages['qqq'] = array(
 	'scavengerhunt-desc' => '{{desc}}',
-	'scavengerhunt-facebook-share' => 'Message on Facebook Share button - we are using our own markup to fix their bug - hence own message'
 );
 
 /** Afrikaans (Afrikaans)
