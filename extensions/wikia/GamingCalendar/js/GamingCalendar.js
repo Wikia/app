@@ -5,7 +5,7 @@ $(function() {
 var GamingCalendar = {
 
     init: function() {
-		$.get( '/wikia.php?controller=GamingCalendar&method=getEntries&format=json', function(data) {
+		$.get('/wikia.php?controller=GamingCalendar&method=getEntries&weeks=2&offset=0&format=json', function(data) {
 			// get the current cookieVal
 			var cookieVal = GamingCalendar.getCookieVal();
 			
@@ -18,7 +18,7 @@ var GamingCalendar = {
 			}
 			
 			// reset, if no such item
-			if ( 'undefined' == typeof data.entries[cookieVal] ) {
+			if ( 'undefined' == typeof data.entries[0][cookieVal] ) {
 				cookieVal = 1;
 			}
 			
@@ -65,7 +65,7 @@ var GamingCalendar = {
     
 	setCookieVal: function( value ) {
 		var expiration = new Date( new Date().getTime() + 3600000 ); // 1 hour
-		var str = 'wikiagc=' + escape( value ) + '; path=/ ; expires=' + expiration.toGMTString();
+		var str = 'wikiagc=' + escape( value ) + '; path=/ ; expires=' + expiration.toUTCString();
 		document.cookie = str;
 	},
     
