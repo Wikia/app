@@ -82,11 +82,18 @@ class AutoHubsPagesArticle extends Article {
 		$wgOut->setHTMLTitle( wfMsg('hub-header', $data['title']) ); // does not add a h1, this is done later
 		if (Wikia::isOasis()) {
 			$wgOut->addHTML(wfRenderModule('CorporateSite', 'TopHubWikis'));
+			$wgOut->addHTML(parent::view());
 		} else {
 			$wgOut->addHTML( $oTmpl->render("article") );
 		}
 	}
 
+	// Always return true even if we don't have article content otherwise Mediawiki throws a 404
+	// BugId: 8937 8942
+	public function hasViewableContent () {
+		return true;
+	}
+	
 	/**
 	 * static entry point for hook
 	 *
