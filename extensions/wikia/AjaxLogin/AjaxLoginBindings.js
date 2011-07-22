@@ -143,10 +143,6 @@ $(function() {
 	$('.ajaxLogin').click(openLogin);
 	$('.ajaxRegister').click(openRegister);
 
-	if ($('.ajaxLoginRequest').exists()) { // ref function in links
-		$('.ajaxLoginRequest').click(openLogin);
-		wpAjaxLoginParam = $('.ajaxLoginRequest').attr('ref');
-	}
 	if ( !window.wgIsLogin && window.wgComboAjaxLogin ) {
 		$(".wikiaPlaceholder .wikia-button").removeAttr("onclick");
 		$(".wikiaPlaceholder .wikia-button").click(function(e){
