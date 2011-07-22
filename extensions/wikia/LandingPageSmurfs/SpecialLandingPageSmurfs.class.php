@@ -37,7 +37,7 @@ class SpecialLandingPageSmurfs extends UnlistedSpecialPage {
 		}
 
 		// email link
-		$emailAddress = 'foo@bar.net'; // TODO: change
+		$emailAddress = 'alessandra@wikia-inc.com';
 		$emailTitle = $this->app->wf->msg('landingpagesmurfs-enternow-email-title');
 		$emailLink = 'mailto:' . rawurlencode($emailAddress) . '?subject=' . rawurlencode($emailTitle);
 
