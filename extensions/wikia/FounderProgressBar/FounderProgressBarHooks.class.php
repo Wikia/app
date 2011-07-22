@@ -21,8 +21,8 @@ class FounderProgressBarHooks {
 		$title = $article->getTitle();
 		
 		if ($flags & EDIT_NEW) {
-			// Tasks related to adding new pages X (do not count auto generated user pages)
-			if ($title->getNamespace() != NS_USER) {
+			// Tasks related to adding new pages X (do not count auto generated user pages or categories or files or ...)
+			if ($title->getNamespace() == NS_MAIN) {
 				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_PAGE_ADD_10));			
 				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_PAGE_ADD_20));			
 				if (self::bonusTaskEnabled(FT_BONUS_PAGE_ADD_5)) {
