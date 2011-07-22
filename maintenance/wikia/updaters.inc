@@ -36,6 +36,13 @@ if( !empty( $wgCityId ) ) {
 $wgUpdates[ "mysql" ][] = array( "do_drop_table", "page_stats" );
 $wgUpdates[ "mysql" ][] = array( "do_drop_table", "user_board" );
 $wgUpdates[ "mysql" ][] = array( "do_clean_math_table" );
+$wgUpdates[ "mysql" ][] = array( "do_drop_table", "user_points_monthly" );
+$wgUpdates[ "mysql" ][] = array( "do_drop_table", "user_points_weekly" );
+$wgUpdates[ "mysql" ][] = array( "do_drop_table", "user_gift" );
+$wgUpdates[ "mysql" ][] = array( "do_drop_table", "user_relationship_request" );
+$wgUpdates[ "mysql" ][] = array( "do_drop_table", "user_register_track" );
+$wgUpdates[ "mysql" ][] = array( "do_drop_table", "user_board" );
+$wgUpdates[ "mysql" ][] = array( "do_drop_table", "watchlist_old" );
 
 
 
