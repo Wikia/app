@@ -121,8 +121,8 @@ $base-z: 5;
 					float: left;
 					/* 115px visual height */
 					height: 95px;
-					padding-top: 20px;
-					width: 80px;
+					padding: 20px 3px 0;
+					width: 74px;
 					.set {
 						color: inherit;
 						text-decoration: none;
@@ -283,6 +283,7 @@ $base-z: 5;
 
 // Oasis overwrites
 .WikiaArticle {
+	@include box-shadow(1px, 1px, 1px, #f0f0f0);
 	background-color: #fff;
 	border-bottom: 1px solid #eee;
 	border-right: 1px solid #eee;
@@ -310,8 +311,10 @@ $base-z: 5;
 }
 
 .WikiaPage {
-	background-color: #fff;
 	color: #464646;
+	.WikiaPageBackground {
+		background-color: #fff;
+	}
 }
 
 /* Module overwrites */
