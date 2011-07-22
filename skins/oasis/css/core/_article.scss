@@ -280,6 +280,10 @@
 		padding: 0.2em;
 		float: right;
 		clear: right;
+		&[width="100%"] {	/* fb:8918 - 100% width support */
+			float: none;
+			margin-left: 0;
+		}
 	}
 
 	// /** categories **/
