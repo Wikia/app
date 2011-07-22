@@ -2100,46 +2100,27 @@ abstract class DatabaseBase {
 			return $this->mFakeSlaveLag;
 		}
 
-		// slave lag check by Artur, wikia change
-		global $wgUseNewLagCheck;
-		if( !empty( $wgUseNewLagCheck ) ) {
-			$res = $this->query( 'SELECT UNIX_TIMESTAMP(replicated_ping)-UNIX_TIMESTAMP(recorded_ping) AS lag_time, UNIX_TIMESTAMP()-UNIX_TIMESTAMP(recorded_ping) AS behind FROM replicationstatus.lagcheck WHERE recorded_ping = (SELECT MAX(recorded_ping) FROM replicationstatus.lagcheck) LIMIT 1' );
-			if( $row = $this->fetchObject( $res ) ) {
-				$this->freeResult( $res );
-				if( $row->behind < 30 ) {
-					return $row->behind;
-				}
-			}
+		/**
+		 * @begin of wikia change by eloy, copied from mediawiki trunk
+		 */
+
+		$res = $this->query( 'SHOW SLAVE STATUS', __METHOD__ );
+		if ( !$res ) {
+			return false;
+		}
+		$row = $res->fetchObject();
+		if ( !$row ) {
+			return false;
+		}
+		if ( strval( $row->Seconds_Behind_Master ) === '' ) {
+			return false;
+		} else {
+			return intval( $row->Seconds_Behind_Master );
 		}
 
-		$res = $this->query( 'SHOW PROCESSLIST', __METHOD__ );
-		# Find slave SQL thread
-		while ( $row = $this->fetchObject( $res ) ) {
-			/* This should work for most situations - when default db
-			 * for thread is not specified, it had no events executed,
-			 * and therefore it doesn't know yet how lagged it is.
-			 *
-			 * Relay log I/O thread does not select databases.
-			 */
-			if ( $row->User == 'system user' &&
-				$row->State != 'Waiting for master to send event' &&
-				$row->State != 'Connecting to master' &&
-				$row->State != 'Queueing master event to the relay log' &&
-				$row->State != 'Waiting for master update' &&
-				$row->State != 'Requesting binlog dump' &&
-				$row->State != 'Waiting to reconnect after a failed master event read' &&
-				$row->State != 'Reconnecting after a failed master event read' &&
-				$row->State != 'Registering slave on master'
-				) {
-				# This is it, return the time (except -ve)
-				if ( $row->Time > 0x7fffffff ) {
-					return false;
-				} else {
-					return $row->Time;
-				}
-			}
-		}
-		return false;
+		/**
+		 * @end of wikia change
+		 */
 	}
 
 	/**
