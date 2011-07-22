@@ -71,7 +71,7 @@ class PayflowAPI {
 		return $this;
 	}
 
-	public function setExpressCheckout( $returnUrl, $cancelUrl ) {
+	public function setExpressCheckout( $returnUrl, $cancelUrl, $extraParams = array() ) {
 		// not required
 		// $this->headers[] = "X-VPS-Request-ID: 1";
 
@@ -84,6 +84,34 @@ class PayflowAPI {
 		$nvpReqArr["RETURNURL"]   = $returnUrl;
 		$nvpReqArr["CANCELURL"]   = $cancelUrl;
 		$nvpReqArr["BA_DESC"]     = "Wikia+subscription";
+
+		if(!empty($extraParams['currency'])) {
+			$nvpReqArr["CURRENCY"] = $extraParams['currency'];
+		}
+
+		if(!empty($extraParams['items'])) {
+			$itemCount = 0;
+			$itemAmount = 0;
+			foreach($extraParams['items'] as $item) {
+				if(!empty($item['name']) && !empty($item['cost']) && !empty($item['qty'])) {
+					$itemCount++;
+					$nvpReqArr["L_NAME".$itemCount] = $item['name'];
+					if(!empty($item['desc'])) {
+						$nvpReqArr["L_DESC".$itemCount] = $item['desc'];
+					}
+					$nvpReqArr["L_COST".$itemCount] = $item['cost'];
+					$nvpReqArr["L_QTY".$itemCount] = $item['qty'];
+
+					$itemAmount += ( $item['cost'] * $item['qty'] );
+				}
+			}
+
+			if(!empty($itemAmount)) {
+				$amount = sprintf( "%01.2f", abs($itemAmount) );
+				$nvpReqArr["AMT"] = $amount;
+				$nvpReqArr["ITEMAMT"] = $amount;
+			}
+		}
 
 		return $this->resetHeaders()
 		            ->resetNvpReqArr()
@@ -273,10 +301,10 @@ class PayflowAPI {
 		if (null === $this->curl) {
 			$this->curl = new Curl();
 		}
-		
+
 		return $this->curl;
 	}
-	
+
 	public function setCurl(Curl $curl) {
 		$this->curl = $curl;
 		return $this;

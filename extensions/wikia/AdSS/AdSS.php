@@ -21,7 +21,6 @@ $wgExtensionAliasesFiles['AdSS'] = $dir . 'AdSS.alias.php';
 
 $wgAdSS_templatesDir = $dir . 'templates';
 
-$wgAutoloadClasses['AdSS_Controller'] = $dir . 'AdSS_Controller.php';
 $wgAutoloadClasses['AdSS_ManagerController'] = $dir . 'manager/AdSS_ManagerController.php';
 $wgAutoloadClasses['AdSS_ManagerAdListPager'] = $dir . 'manager/AdSS_ManagerAdListPager.php';
 $wgAutoloadClasses['AdSS_ManagerBillingPager'] = $dir . 'manager/AdSS_ManagerBillingPager.php';
@@ -40,13 +39,16 @@ $wgAutoloadClasses['AdSS_ManagerLoginForm'] = $dir . 'forms/AdSS_ManagerLoginFor
 $wgAutoloadClasses['AdSS_Publisher'] = $dir . 'AdSS_Publisher.php';
 $wgAutoloadClasses['AdSS_Util'] = $dir . 'AdSS_Util.php';
 $wgAutoloadClasses['IPNListener'] = $dir . 'paypal/IPNListener.php';
+// new, Nirvana-type controller
+$wgAutoloadClasses['AdSSSpecialController'] = $dir . 'AdSSSpecialController.class.php';
 
 $wgAvailableRights[] = 'adss-admin';
 $wgGroupPermissions['*']['adss-admin'] = false;
 $wgGroupPermissions['staff']['adss-admin'] = true;
 
-$wgSpecialPages['AdSS'] = 'AdSS_Controller';
-$wgSpecialPages['Sponsor'] = 'AdSS_Controller';
+// new, Nirvana-type special page
+$wgSpecialPages['AdSS'] = 'AdSSSpecialController';
+$wgSpecialPages['Sponsor'] = 'AdSSSpecialController';
 
 $wgHooks['PayPalInstantPaymentNotification'][] = 'IPNListener::notify';
 
@@ -76,8 +78,6 @@ if( empty( $wgAdSS_OnlyAdmin ) ) {
 	$wgAjaxExportList[] = 'AdSS_ManagerController::closeAdAjax';
 	$wgAjaxExportList[] = 'AdSS_ManagerController::editAdAjax';
 	$wgAjaxExportList[] = 'AdSS_ManagerController::getAdAjax';
-
-	$wgAjaxExportList[] = 'AdSS_Controller::upsellAjax';
 }
 
 $wgAdSS_DBname = 'adss';

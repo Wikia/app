@@ -192,4 +192,23 @@ class WikiaRequest {
 		return (bool) isset( $_COOKIE[ $key ] );
 	}
 
+	/*
+	 * Get data from $_SESSION
+	 * @param $key String Name of key in $_SESSION
+	 * @return mixed
+	 */
+	public function getSessionData( $key ) {
+		if( !isset( $_SESSION[$key] ) )
+			return null;
+		return $_SESSION[$key];
+	}
+
+	/**
+	 * Set session data
+	 * @param $key String Name of key in $_SESSION
+	 * @param $data mixed
+	 */
+	public function setSessionData( $key, $data ) {
+		$_SESSION[$key] = $data;
+	}
 }
