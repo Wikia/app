@@ -154,18 +154,23 @@ class FounderProgressBarController extends WikiaController {
 	/**
 	 * @desc Get the short list of available founder tasks
 	 * 
+	 * @requestParam list array of Founder tasks already gotten from getLongTaskList
 	 * @responseParam list array of Founder tasks that are not completed or skipped, max of 2
 	 */
 
 	public function getShortTaskList () {
 
-		// Long list is cached, and also generates some data we need as a side effect
-		// so just use it instead of writing a different query
-		$response = $this->sendSelfRequest("getLongTaskList");
-
-		$list = $response->getVal('list');
-		$data = $response->getVal('data');
-		
+		// Allow a list to be passed in, otherwise we will get a new one
+		if ($this->request->getCheck('list')) {
+			$longList = $this->getVal('list');
+			$list = $longList['list'];
+			$data = $longList['data'];
+		} else {
+			$response = $this->sendSelfRequest("getLongTaskList");
+			$list = $response->getVal('list');
+			$data = $response->getVal('data');
+		}
+				
 		$short_list = array();
 		// Grab the first two available items from the long list
 		foreach ($list as $id => $item) {
@@ -190,12 +195,13 @@ class FounderProgressBarController extends WikiaController {
 	/**
 	 * @desc Get all founder tasks with more details (available, completed, skipped)
 	 * 
+	 * @requestParam bool use_master true/false
 	 * @responseParam list array of Founder actions in the format:
 	 */
 	
 	public function getLongTaskList () {
 
-		// Defeat potential race conditions by connecting to master for reads, default to slave
+		// Try to defeat potential race conditions by connecting to master for reads, default to slave
 		$use_master = $this->request->getval("use_master", false);
 		$list = null;
 		$db_type = DB_SLAVE;
@@ -210,7 +216,6 @@ class FounderProgressBarController extends WikiaController {
 			$this->wf->ProfileIn(__METHOD__ . '::miss');
 			$list = array();
 
-			// get the next two available non-skipped, non-completed items
 			$dbr = $this->getDB($db_type);
 			$res = $dbr->select(
 				'founder_progress_bar_tasks',
@@ -230,7 +235,7 @@ class FounderProgressBarController extends WikiaController {
 			}
 			
 			if (!empty($list)) {
-				$this->getMCache()->set($memKey, $list, 24*60*60); // 1 day
+				$this->getMCache()->set($memKey, $list, 60*60); // 1 hour
 			}
 
 			$this->wf->ProfileOut(__METHOD__ . '::miss');
@@ -241,6 +246,43 @@ class FounderProgressBarController extends WikiaController {
 		$this->response->setVal("data", $data);
 	}
 
+	/**
+	 * @desc Get one founder tasks only
+	 * 
+	 * @requestParam int task_id The ID of the task completed
+	 * @requestParam bool use_master true/false
+	 * @responseParam list array of Founder actions in the format:
+	 */
+	
+	public function getSingleTask() {
+		
+		$task_id = $this->request->getVal("task_id");
+		$use_master = $this->request->getval("use_master", false);
+		$db_type = $use_master ? DB_MASTER : DB_SLAVE;
+
+		if ( $task_id ) {
+			$dbr = $this->getDB($db_type);
+			$res = $dbr->select(
+				'founder_progress_bar_tasks',
+				array('task_id', 'task_count', 'task_completed', 'task_skipped', 'task_timestamp'),
+				array('task_id' => $task_id, 'wiki_id' => $this->wg->CityId)
+				);
+
+			$row = $res->fetchRow();
+			$list[$task_id] = array (
+				"task_id" => $task_id,
+				"task_count" => $row['task_count'],
+				"task_completed" => $row['task_completed'],
+				"task_skipped" => $row['task_skipped'],
+				"task_timestamp" => $this->wf->TimeFormatAgo($row['task_timestamp']),
+				);
+			$this->setVal("list", $list);
+		} else {
+			$this->setVal('result', 'error');
+			$this->setVal('error', 'invalid task_id');	
+		}
+	}
+	
 	/**
 	 * @desc
 	 * @requestParam int task_id The ID of the task completed
@@ -304,9 +346,8 @@ class FounderProgressBarController extends WikiaController {
 			$this->openBonusTask();			
 		}
 		$dbw->commit();
-		// Task data was updated so clear task list from memcache
-		$memKey = $this->wf->MemcKey('FounderLongTaskList');
-		$this->getMCache()->delete($memKey);
+		// DB update was done, so force refresh of memcache data
+		$this->sendSelfRequest("getLongTaskList", array("use_master" => true));						
 		
 	}
 	
@@ -344,8 +385,7 @@ class FounderProgressBarController extends WikiaController {
 		// Do this before the memcache clear so that we load correct data into memcache if a bonus task is added
 		$this->openBonusTask();
 		// DB updated so clear memcache val
-		$memKey = $this->wf->MemcKey('FounderLongTaskList');
-		$this->getMCache()->delete($memKey);
+		$this->sendSelfRequest("getLongTaskList", array("use_master" => true));						
 		$this->setVal("result", "OK");
 	}
 	
@@ -355,8 +395,7 @@ class FounderProgressBarController extends WikiaController {
 	 */
 	public function isTaskComplete() {
 		$task_id = $this->getVal("task_id");
-		// Long list is cached so just use it instead of writing a different query
-		$response = $this->sendSelfRequest("getLongTaskList");
+		$response = $this->sendSelfRequest("getSingleTask");
 		$list = $response->getVal('list');
 		if (isset($list[$task_id])) {
 			$this->setVal('task_completed', $list[$task_id]['task_completed']);
@@ -370,8 +409,8 @@ class FounderProgressBarController extends WikiaController {
 		$this->response->addAsset( 'extensions/wikia/FounderProgressBar/js/FounderProgressBar.js' );
 		$this->response->setVal("wgBlankImgUrl", $wgBlankImgUrl);
 		
-		$activityListPreview = F::app()->sendRequest( 'FounderProgressBar', 'getShortTaskList', array())->getData();
 		$activityFull = F::app()->sendRequest('FounderProgressBar', 'getLongTaskList', array())->getData();
+		$activityListPreview = F::app()->sendRequest( 'FounderProgressBar', 'getShortTaskList', array('list' => $activityFull))->getData();
 		
 		$showCompletionMessage = false;
 		
@@ -488,6 +527,9 @@ class FounderProgressBarController extends WikiaController {
 			$method = array_shift($this->urls[$task_id]);
 			$params = $this->urls[$task_id];
 			$title = call_user_func_array("Title::$method", $params);
+			if ($method == "newMainPage") {
+				return $title->getFullUrl("action=edit");
+			}
 			return $title->getFullURL();
 		} else {
 			return $this->urls[$task_id];
