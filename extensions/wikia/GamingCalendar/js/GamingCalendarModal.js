@@ -127,6 +127,6 @@ var GamingCalendarModal = {
 			});
 		}
 
-		$.tracker.byStr( 'gamingCalendar/scroll/forward' );
+		$.tracker.byStr( 'gamingCalendar/scroll/forward/week' );
 	}
 };
