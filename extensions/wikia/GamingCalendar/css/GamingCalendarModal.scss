@@ -1,4 +1,6 @@
 @import '../../../../skins/oasis/css/core/color';
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/clearfix";
 
 /* Colors */
 $gaming-calendar-item: mix($color-page, #000, 95%);
@@ -145,6 +147,192 @@ $gaming-calendar-gray-text: mix($color-text, $color-page, 75%);
 				border-color: $color-links transparent transparent;		
 			}
 		}
+	}
+
+	.controls {
+	    font-weight: bold;
+	    font-size: 10px;
+	    width: 582px;
+	    margin: 10px 0;
+
+	    div {
+		height: 16px;
+		line-height: 16px;
+	    }
+
+	    .back {
+		float: left;
+	    }
+
+	    .forward {
+		float: right;
+	    }
+
+	    span {
+		    overflow: hidden;
+		    display: block;
+		    margin: -2px 0 0 0;
+		}
+
+	    .back-week {
+		@include border-radius(3px);
+		background-image: url(/extensions/wikia/GamingCalendar/images/gaming-calendar-modal-sprite.png);
+		font-size: 16px;
+		width: 26px;
+		background-position: 0px -20px;
+		@if lightness($color-page) < 50 {
+			background-position: 0px -60px;
+		}
+		text-align: center;
+		overflow: hidden;
+		float: left;
+
+		&:hover {
+		    background-position: 0px -40px;
+		    @if lightness($color-page) < 50 {
+			    background-position: 0px -100px;
+		    }
+		    cursor: pointer;
+		    &.disabled {
+			cursor: auto;
+		    }
+		}
+
+		&.disabled {
+		    background-position: 0px 0px;
+		    @if lightness($color-page) < 50 {
+			    background-position: 0px -40px;
+		    }
+		}
+	    }
+
+	    .back-month {
+		@include border-radius(3px);
+		background-image: url(/extensions/wikia/GamingCalendar/images/gaming-calendar-modal-sprite.png);
+		font-size: 16px;
+		width: 26px;
+		background-position: 0px -20px;
+		@if lightness($color-page) < 50 {
+			background-position: 0px -60px;
+		}
+		text-align: center;
+		overflow: hidden;
+		float: left;
+
+		&:hover {
+		    background-position: 0px -40px;
+		    @if lightness($color-page) < 50 {
+			    background-position: 0px -100px;
+		    }
+		    cursor: pointer;
+		    &.disabled {
+			cursor: auto;
+		    }
+		}
+
+		&.disabled {
+		    background-position: 0px 0px;
+		    @if lightness($color-page) < 50 {
+			    background-position: 0px -40px;
+		    }
+		}
+	    }
+
+	    .forward-week {
+		@include border-radius(3px);
+		background-image: url(/extensions/wikia/GamingCalendar/images/gaming-calendar-modal-sprite.png);
+		font-size: 16px;
+		width: 26px;
+		background-position: -94px -20px;
+		@if lightness($color-page) < 50 {
+			background-position: -94px -60px;
+		}
+		text-align: center;
+		overflow: hidden;
+		float: right;
+
+		&:hover {
+		    background-position: -94px -40px;
+		    @if lightness($color-page) < 50 {
+			    background-position: -94px -100px;
+		    }
+		    cursor: pointer;
+		    &.disabled {
+			cursor: auto;
+		    }
+		}
+
+		&.disabled {
+		    background-position: -94px 0px;
+		    @if lightness($color-page) < 50 {
+			    background-position: -94px -40px;
+		    }
+		}
+	    }
+
+	    .forward-month {
+		@include border-radius(3px);
+		background-image: url(/extensions/wikia/GamingCalendar/images/gaming-calendar-modal-sprite.png);
+		font-size: 16px;
+		width: 26px;
+		background-position: -94px -20px;
+		@if lightness($color-page) < 50 {
+			background-position: -94px -60px;
+		}
+		text-align: center;
+		overflow: hidden;
+		float: right;
+
+		&:hover {
+		    background-position: -94px -40px;
+		    @if lightness($color-page) < 50 {
+			    background-position: -94px -100px;
+		    }
+		    cursor: pointer;
+		    &.disabled {
+			cursor: auto;
+		    }
+		}
+
+		&.disabled {
+		    background-position: -94px 0px;
+		    @if lightness($color-page) < 50 {
+			    background-position: -94px -40px;
+		    }
+		}
+	    }
+
+	    .today {
+		@include border-radius(3px);
+		@include clearfix;
+		margin: auto;
+		background-image: url(/extensions/wikia/GamingCalendar/images/gaming-calendar-modal-sprite.png);
+		width: 50px;
+		background-position: -20px -20px;
+		@if lightness($color-page) < 50 {
+			background-position: -20px -60px;
+		}
+		text-align: center;
+		overflow: hidden;
+
+		&:hover {
+		    background-position: -20px -40px;
+		    @if lightness($color-page) < 50 {
+			    background-position: -20px -100px;
+		    }
+		    cursor: pointer;
+		    &.disabled {
+			cursor: auto;
+		    }
+		}
+
+		&.disabled {
+		    background-position: -20px 0px;
+		    @if lightness($color-page) < 50 {
+			    background-position: -20px -40px;
+		    }
+		}
+	    }
 	}
 
 

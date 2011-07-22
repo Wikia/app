@@ -14,14 +14,14 @@
 
 	<div class="controls">
 		<div class="back">
-			<div class="back-month"></div>
-			<div class="back-week"></div>
+		    <div class="back-week"><span>‹</span></div>
+		    <div class="back-month"><span>«</span></div>
 		</div>
-		<div class="today"></div>
 		<div class="forward">
-			<div class="forward-month"></div>		
-			<div class="forward-week"></div>
+			<div class="forward-week"><span>›</span></div>
+			<div class="forward-month"><span>»</span></div>
 		</div>
+		<div class="today">Today</div>
 	</div>
 
    <script type="text/template" id="GamingCalendarWeekTemplate">
