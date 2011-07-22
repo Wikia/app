@@ -124,18 +124,11 @@
 						cursor: pointer;
 					}
 				}
-				&.active .label {
-					color: #2070AD;
-					.chevron {
-						border-top: 5px solid transparent;
-						border-bottom: 5px solid #6aa8d1;
-						top: 7px;
-					}
-				}
 				.description {
 					background: white;
 					line-height: 23px;
 					padding: 10px;
+					position: relative;
 					.actions {
 						margin-top: 10px;
 						position: relative;
@@ -145,6 +138,28 @@
 							left: 0;
 							position: absolute;
 							top: 5px;
+						}
+					}
+				}
+				&.active {
+					.label {
+						@include linear-gradient(#dcdcdc, top, #f2f2f2, 55%, #dcdcdc, 100%);
+						color: #2070AD;
+						.chevron {
+							border-top: 5px solid transparent;
+							border-bottom: 5px solid #6aa8d1;
+							top: 7px;
+						}
+					}
+					.description {
+						&:before {
+							border: 9px solid transparent;
+							border-top: 7px solid #dcdcdc; 
+							content: "";
+							left: 35px;
+							position: absolute;
+							top: 0;
+							width: 0;
 						}
 					}
 				}
