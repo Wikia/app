@@ -31,6 +31,8 @@ var GamingCalendarModal = {
 		var today = new Date();
 		var months = new Array('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec');
 		$('#GamingCalendarWrapper > h1').append('<span>' + months[today.getMonth()] + ' ' + today.getDate() + ', ' + today.getFullYear() +'</span>');
+		$('#GamingCalendarWrapper .game-more-info').trackClick('gamingCalendar/moreinfo');
+		$('#GamingCalendarWrapper .game-pre-order').trackClick('gamingCalendar/preorder');
 		$().log('finished init');
 	},
 
@@ -76,6 +78,8 @@ var GamingCalendarModal = {
 				top: scrollBy
 			}, 250);
 		}
+
+		$.tracker.byStr( 'gamingCalendar/scroll/down' );
 	},
     
     scrollUp: function(e) {
@@ -91,12 +95,15 @@ var GamingCalendarModal = {
                 top: scrollBy
             }, 250);
         }
+
+		$.tracker.byStr( 'gamingCalendar/scroll/up' );
     },
     
     expandOrCollapse: function(e) {
 	e.preventDefault();
 	$('#GamingCalendar').find('.GamingCalendarItem.selected').slideUp('slow',function() { $(this).removeClass('selected').addClass('unselected').slideDown(); });
 	$(this).slideUp('slow', function() { $(this).removeClass('unselected').addClass('selected').slideDown(); });
+	$.tracker.byStr( 'gamingCalendar/brick/expand' );
     },
 
     forwardWeek: function(e) {
@@ -119,5 +126,7 @@ var GamingCalendarModal = {
 			}, 500);
 			});
 		}
+
+		$.tracker.byStr( 'gamingCalendar/scroll/forward' );
 	}
 };
