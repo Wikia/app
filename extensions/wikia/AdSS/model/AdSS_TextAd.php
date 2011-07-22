@@ -77,6 +77,7 @@ class AdSS_TextAd extends AdSS_Ad {
 					__METHOD__
 				    );
 		}
+		$dbw->commit();
 	}
 
 	function render( $tmpl ) {

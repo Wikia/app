@@ -51,14 +51,14 @@ class PaypalPaymentService extends Service {
 		return $this->paypalOptions;
 	}
 
-	public function fetchToken( $returnUrl, $cancelUrl ) {
+	public function fetchToken( $returnUrl, $cancelUrl, $extraParams = array() ) {
 		// save request in the DB
 		$dbw = wfGetDB( DB_MASTER, array(), $this->getPaypalDBName() );
 		$dbw->insert( 'pp_tokens', array( 'ppt_requested' => wfTimestampNow( TS_DB ) ), __METHOD__ );
 		$req_id = $dbw->insertId();
 
 		// make request to Payflow
-		$respArr = $this->getPayflowAPI()->setExpressCheckout( $returnUrl, $cancelUrl );
+		$respArr = $this->getPayflowAPI()->setExpressCheckout( $returnUrl, $cancelUrl, $extraParams );
 
 		// save response in the DB
 		$dbw->update( 'pp_tokens',

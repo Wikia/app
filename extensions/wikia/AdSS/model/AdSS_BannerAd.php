@@ -70,6 +70,7 @@ class AdSS_BannerAd extends AdSS_Ad {
 					__METHOD__
 				    );
 		}
+		$dbw->commit();
 		if( $this->tmpBannerPath ) {
 			move_uploaded_file( $this->tmpBannerPath, $this->getBannerPath() );
 			$this->tmpBannerPath = null;

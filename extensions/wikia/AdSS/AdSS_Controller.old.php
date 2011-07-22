@@ -189,12 +189,22 @@ class AdSS_Controller extends SpecialPage {
 			}
 		}
 
+		$ad = AdSS_AdFactory::createFromForm( $adForm );
 		$selfUrl = $this->getTitle()->getFullURL();
 		$returnUrl = $selfUrl . '/paypal/return';
 		$cancelUrl = $selfUrl . '/paypal/cancel';
+		$extraParams = array(
+		  'currency' => 'USD',
+		  'items' => array()
+		);
+		$extraParams['items'][] = array(
+		  'name' => wfMsg( 'adss-paypal-item-type-' . $ad->type . '-name' ),
+		  'cost' => $ad->price['price'],
+		  'qty' => 1
+		);
+
 		$pp = new PaypalPaymentService( $this->paypalOptions );
-		if( $pp->fetchToken( $returnUrl, $cancelUrl ) ) {
-			$ad = AdSS_AdFactory::createFromForm( $adForm );
+		if( $pp->fetchToken( $returnUrl, $cancelUrl, $extraParams ) ) {
 			$ad->pp_token = $pp->getToken();
 			$ad->save();
 			if( $ad->id > 0 ) {

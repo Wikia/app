@@ -16,11 +16,11 @@ $("#wpSpecialOfferYes").click( function(e) {
 	e.preventDefault();
 	$("#SpecialOfferButtons").hide();
 	$("#SpecialOfferThrobber").show();
-	$.post( wgScript, {
-		'action': 'ajax',
-		'rs': 'AdSS_Controller::upsellAjax',
-		'rsargs[0]': adId,
-		'rsargs[1]': token,
+	$.post(  window.wgScriptPath + "/index.php?title=Special:AdSS", {
+		'format': 'json',
+		'method': 'processUpsellRequest',
+		'id': adId,
+		'token': token,
 		}, function(response) {
 			$("#SpecialOfferThrobber").hide();
 			if( response.result == "success" ) {

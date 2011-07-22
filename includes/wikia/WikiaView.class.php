@@ -72,6 +72,15 @@ class WikiaView {
 	}
 
 	/**
+	 * set template by controller and method name
+	 * @param string $controllerName
+	 * @param string $methodName
+	 */
+	public function setTemplate( $controllerName, $methodName ) {
+		$this->buildTemplatePath($controllerName, $methodName, true);
+	}
+
+	/**
 	 * build template path for given controller and method name
 	 *
 	 * @param string $controllerName
@@ -82,7 +91,7 @@ class WikiaView {
 		if( ( $this->templatePath == null ) || $forceRebuild ) {
 			$app = F::app();
 			$autoloadClasses = $app->wg->AutoloadClasses;
-			
+
 			if (
 				(
 					$app->isService( $controllerName ) ||
@@ -104,7 +113,7 @@ class WikiaView {
 			if( empty( $autoloadClasses[$controllerClass] ) ) {
 				throw new WikiaException( "Invalid controller name: {$controllerName}" );
 			}
-			
+
 			$dirName = dirname( $autoloadClasses[$controllerClass] );
 			$templatePath = "{$dirName}/templates/{$controllerName}_{$methodName}.php";
 
@@ -155,7 +164,7 @@ class WikiaView {
 		}
 
 		$method = 'render' . ucfirst( $this->response->getFormat() );
-		
+
 		if( method_exists( $this, $method ) ) {
 			return $this->$method();
 		}
