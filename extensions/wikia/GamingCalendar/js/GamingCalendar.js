@@ -101,13 +101,18 @@ var GamingCalendar = {
     
 	showCalendar: function(e) {
 		e.preventDefault();
+		
+		$.tracker.byStr( 'gamingCalendar/calendar/open' );
+
 		// Check, whether the GamingCalendarModal has already been triggered once.
 		// We don't want the resources to be retrieved more than once.
 		if ( 'object' == typeof GamingCalendarModal && GamingCalendarModal.initialized ) {
 			GamingCalendarModal.modal.showModal();
 			return;
 		}
+
 		var date = new Date();
+
 		// Load CSS and JS
 		$.getResources([
 			$.getSassCommonURL('/extensions/wikia/GamingCalendar/css/GamingCalendarModal.scss'),

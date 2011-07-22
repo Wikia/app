@@ -15,8 +15,8 @@
                         <span class="game-systems">%systems%</span>
 			<div class="game-details">
 				<p>%description%</p>
-				<a href="%moreInfoUrl%" class="game-more-info">More info</a>
-				<a href="%preorderUrl%" class="game-pre-order">Pre-order now</a>
+				<a href="%moreInfoUrl%" class="game-more-info" target="_blank">More info</a>
+				<a href="%preorderUrl%" class="game-pre-order" target="_blank">Pre-order now</a>
 			</div>
 		</div>
     </script>
