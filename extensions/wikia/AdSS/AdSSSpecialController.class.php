@@ -54,12 +54,12 @@ class AdSSSpecialController extends WikiaSpecialPageController {
 
 		if( $sub[0] == 'paypal' && isset( $sub[1] ) ) {
 			$this->request->setVal( 'status', $sub[1] );
-			$this->redirect( 'AdSSSpecial', 'processPaypalReturn' );
+			$this->forward( 'AdSSSpecial', 'processPaypalReturn' );
 			return;
 		}
 
 		// default case, render form
-		$this->redirect( 'AdSSSpecial', 'displayForm' );
+		$this->forward( 'AdSSSpecial', 'displayForm' );
 	}
 
 	public function displayForm() {
