@@ -1,0 +1,33 @@
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/gradient";
+
+.WikiaPage {
+	border: none;
+}
+
+.WikiaArticle {
+	padding: 0;
+}
+
+#LandingPageSmurfs {
+	height: 897px;
+	width: 1002px;
+
+	&.LandingPageSmurfsEn {
+		background-image: url('/extensions/wikia/LandingPageSmurfs/images/en.jpg'); /* wgCdnStylePath */
+	}
+
+	&.LandingPageSmurfsFr {
+		background-image: url('/extensions/wikia/LandingPageSmurfs/images/fr.jpg'); /* wgCdnStylePath */
+	}
+
+	&.LandingPageSmurfsNl {
+		background-image: url('/extensions/wikia/LandingPageSmurfs/images/nl.jpg'); /* wgCdnStylePath */
+	}
+}
+
+#WikiaArticleBottomAd {
+	display: none;
+}
