@@ -26,7 +26,7 @@
 			<input type="hidden" id="user" value="<?= $user['id']; ?>" />
 		<? endif; ?>
 
-		<?php if( $isWikiStaff || $isCommunityWikiAndVSTF ): ?>
+		<?php if( $canRemoveAvatar ): ?>
 			<span id="userIdentityBoxDeleteAvatar">
 				<img src="<?= $wgBlankImgUrl ?>" class="sprite trash"><a href="<?= $deleteAvatarLink ?>"><?= wfMsg('user-identity-box-delete-avatar'); ?></a>
 			</span>

@@ -92,7 +92,7 @@ class UserProfilePageController extends WikiaController {
 		$this->setVal( 'deleteAvatarLink', F::build('SpecialPage', array('RemoveUserAvatar'), 'getTitleFor')->getFullUrl('av_user='.$userData['name']) );
 		$this->setVal( 'isUserPageOwner', ( ( $user->getId() == $sessionUser->getId() ) ? true : false ) );
 		$this->setVal( 'isWikiStaff', ( $sessionUser->isAllowed('staff') ? true : false ) );
-		$this->setVal( 'isCommunityWikiAndVSTF', ($this->app->wg->CityId === '177' && $sessionUser->isAllowed('vstf')) );
+		$this->setVal( 'canRemoveAvatar', $sessionUser->isAllowed('removeavatar') );
 		
 		$this->app->wg->Out->addScript('<script type="'.$this->app->wg->JsMimeType.' src="'.$this->app->wg->StylePath.'/common/jquery/jquery.aim.js?'.$this->app->wg->StyleVersion.'"></script>');
 		
