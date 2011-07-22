@@ -101,9 +101,7 @@
 // /** styling for Oasis blog listing box and rail module **/
 
 .WikiaBlogListingBox {
-	display: block !important;
-	line-height: 16px;
-	width: 282px;
+	padding: 16px 10px;
 
 	.wikia-button {	 // /** adding padding to make the button look wider **/
 		float: right;
@@ -114,95 +112,56 @@
 		}
 	}
 	.commentslikes {
-		bottom: 11px;
+		bottom: 20px;
 		position: absolute;
 		right: 0px;
 		a {
 			font-weight: normal;
 		}
 	}
-	ul {
-		margin: 15px 0 0;
-		h1 {
-			margin-bottom: 0 !important;
-		}
-		.WikiaBlogListingPost {
-			@include clearfix;
-			border-top: solid 1px $color-page-border;
-			list-style: none;
-			position: relative;
-			&:first-child {
-				border: none;
-			}
-			h1,
-			details span,
-			.author-details span {
-				padding-left: 10px;
-			}
-			h1 {
-				font-weight: bold;
-			}
-		}
-	}
-	img {
-		vertical-align: middle
-	}
-	h1 {
-		margin: {
-			left: 28px;
-			bottom: 0px;
-		}
-		padding-bottom: 0px;
-		a {
-			font-size: 12px;
-		}
-	}
-	h3 {
+	>h3 {
 		font-weight: bold;
 		font-size: 17px;
 		line-height: 17px;
 		margin-left: 0px;
 	}
 
-	.reload {
-		display: inline-block;
+	ul {
+		margin: 16px 0;
+	}
+	
+	.WikiaBlogListingPost {
+		border-top: 1px solid $color-page-border;
+		padding: 7px 0 24px 0;
 		position: relative;
-		top: -2px;
-	}
-
-	details,
-	.author-details {
-		img { // /** the avatar **/
-			float: left;
-			height: 25px;
-			margin: {
-				right: 1px;
-				top: -15px;
+		&:first-child {
+			border-top: none;
+		}
+		>h1 {
+			font-size: 14px;
+			line-height: 20px;
+			margin: 0 0 0 43px;
+			padding: 0;
+		}
+		.author-details {
+			font-size: 12px;
+			line-height: 18px;
+			>img {
+				height: 33px;
+				left: 0;
+				position: absolute;
+				top: 10px;
+				width: 33px;
 			}
-			width: 25px;
-		}
-		span { // /** the date **/
-			font-size: 10px;
-			a {
-				font-size: 10px;
-			}
-		}
-	}
-	blockquote {
-		@include clearfix;
-		overflow: hidden;
-		clear: both;
-		padding: {
-			top: 7px;
-			bottom: 19px;
-		}
-		.read-more {
-			a {
-				font-size: 11px;
+			>span {
+				margin-left: 43px;
 			}
 		}
-		p {
-			line-height: 21px;
+		>blockquote {
+			margin-top: 6px;
+			p {
+				margin-bottom: 10px;
+			}
 		}
 	}
 }

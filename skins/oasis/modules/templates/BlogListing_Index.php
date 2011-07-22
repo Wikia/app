@@ -38,10 +38,10 @@
 				if (substr($post['text'], -4) == '</p>') {
 					$post['text'] = substr($post['text'], 0, -4) . '<br>' . $readMoreLink . '</p>';
 				} else {
-					$post['text'] .=  '<br>' .$readMoreLink;
+					$post['text'] .=  '' .$readMoreLink;
 				}
 			} else {
-				$post['text'] .= '<br>';
+				$post['text'] .= '';
 			}
 
 			echo $post['text'];
@@ -54,7 +54,7 @@
 	</ul>
 	<?php  // only display more link for the bloglistingbox
 		if (strpos($blogListingClass, 'WikiaBlogListingBox') !== false) {
-			echo Wikia::linkTag($seeMoreUrl, wfMsg('oasis-more'), array('class' => 'more'));
+			echo XML::element('a', array( 'href'=> $seeMoreUrl, 'class' => 'more'), wfMsg('oasis-more'));
 		}
 		if (isset($pager)) {
 			echo "<div id='wk_blogs_loader2' style='float:right;'></div>";
