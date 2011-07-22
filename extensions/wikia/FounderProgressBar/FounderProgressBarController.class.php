@@ -343,7 +343,7 @@ class FounderProgressBarController extends WikiaController {
 			// Check to see if we got to 100% complete
 			FounderProgressBarHooks::allTasksComplete();
 			// Open bonus task if necessary
-			$this->openBonusTask();			
+			$this->setVal("bonus_tasks_unlocked", $this->openBonusTask());
 		}
 		$dbw->commit();
 		// DB update was done, so force refresh of memcache data
@@ -383,7 +383,7 @@ class FounderProgressBarController extends WikiaController {
 		$dbw->commit();
 		// Checks if everything is completed or skipped and possibly open up a bonus task
 		// Do this before the memcache clear so that we load correct data into memcache if a bonus task is added
-		$this->openBonusTask();
+		$this->setVal("bonus_tasks_unlocked", $this->openBonusTask());
 		// DB updated so clear memcache val
 		$this->sendSelfRequest("getLongTaskList", array("use_master" => true));						
 		$this->setVal("result", "OK");
@@ -544,7 +544,7 @@ class FounderProgressBarController extends WikiaController {
 
 		// If bonus tasks already exist in the task list, no need to continue
 		if (isset($list[$this->bonus_tasks[0]])) {
-			return;
+			return false;
 		}
 		
 		$total_tasks = count($list);
@@ -563,7 +563,9 @@ class FounderProgressBarController extends WikiaController {
 					$dbw->commit();
 				}
 			}
+			return true;
 		}
+		return false;
 	}
 	
 	/**
