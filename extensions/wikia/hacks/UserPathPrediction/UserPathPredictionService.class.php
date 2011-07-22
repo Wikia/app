@@ -211,11 +211,13 @@ class UserPathPredictionService extends WikiaService {
 						continue;
 					}
 					
-					try{
-						$this->internalAnalyzeParsedData( $parseResult, $segments );
-					} catch ( UserPathPredictionNoDataToAnalyzeException $e ) {
-						$this->log( "Analyzer error: {$e->getMessage()} ({$src} at line {$lineCount})", UserPathPredictionLogService::LOG_TYPE_WARNING );
-						continue;
+					if ( !empty( $parseResult ) ) {
+						try{
+							$this->internalAnalyzeParsedData( $parseResult, $segments );
+						} catch ( UserPathPredictionNoDataToAnalyzeException $e ) {
+							$this->log( "Analyzer error: {$e->getMessage()} ({$src} at line {$lineCount})", UserPathPredictionLogService::LOG_TYPE_WARNING );
+							continue;
+						}
 					}
 				}
 	
