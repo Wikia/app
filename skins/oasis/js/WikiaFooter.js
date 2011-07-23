@@ -22,6 +22,9 @@ WikiaFooterApp = {
 		if (toolbar.exists()) {
 			var windowObj = $(window);
 			var originalWidth = toolbar.width();
+			
+			var ie7 = typeof $.browser.msie != 'undefined' && typeof $.browser.version != 'undefined' && $.browser.version && $.browser.version.substring(0, $.browser.version.indexOf('.')) < 8;
+			var reflow = false;
 
 			//Scroll Detection
 			windowObj.resolvePosition = function() {
@@ -30,14 +33,25 @@ WikiaFooterApp = {
 				if(footer.offset()){
 					line = footer.offset().top + toolbar.outerHeight();
 				}
-
+				
 				if (scroll > line && footer.hasClass("float")) {
 					footer.removeClass("float");
 					windowObj.centerBar();
+					reflow = true;
 				} else if (scroll < line && !footer.hasClass("float")) {
 					footer.addClass("float");
 					windowObj.centerBar();
+					reflow = true;
 				}
+				
+				if (ie7 && reflow) {	//force reflow the page in IE7.  remove after IE7 is dead
+					reflow = false;
+					setTimeout(function() {
+						console.log('reflow');
+						$('#WikiaPage').attr('class', $('#WikiaPage').attr('class'));
+					}, 1);
+				}
+
 			};
 
 			windowObj.centerBar = function() {
