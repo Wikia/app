@@ -175,6 +175,7 @@
 	width: 698px;
 	z-index: 7;
 	>nav {
+		@include box-shadow(0, 3px, 6px, #e2e2e2);
 		background: white;
 		height: 20px;
 		padding: 9px 10px 10px 14px;
@@ -199,7 +200,7 @@
 	}
 	header {
 		@include linear-gradient(#f8f8f8, top, #fff, 0%, #f8f8f8, 25%, #f2f2f2, 100%);
-		padding: 0 40px 20px;
+		padding: 20px 40px;
 		h1 {
 			font-size: 16px;
 			font-weight: bold;
@@ -260,7 +261,7 @@
 			}
 			.task-group {
 				@include clearfix;
-				padding: 20px 0 0 31px;
+				padding: 20px 0 10px 31px;
 				background: white;
 			}
 		}
@@ -274,7 +275,7 @@
 			position: relative;
 			.activity-label {
 				color: #1075b5;
-				font-size: 14px;
+				font-size: 13px;
 				margin-bottom: 10px;
 			}
 			&.completed .activity-label,
@@ -308,14 +309,14 @@
 					position: relative;
 					p {
 						line-height: 23px;
-						padding: 0 10px 10px 10px;
+						padding: 0 10px 10px 15px;
 						position: relative;
 						z-index: 9;
 					}
 					h4 {
 						font-size: 13px;
 						font-weight: bold;
-						margin: 10px 10px 5px 10px;
+						margin: 10px 10px 5px 15px;
 					}
 					.actions {
 						background-color: #f3f3f3;
@@ -324,7 +325,7 @@
 						text-align: right;
 						z-index: 9;
 						.skip, .completed, .skipped {
-							left: 10px;
+							left: 15px;
 							position: absolute;
 							top: 10px;
 						}
