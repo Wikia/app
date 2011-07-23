@@ -110,7 +110,7 @@ var UADtracker = {
 		var cookieData = $.cookies.get( UADtracker.COOKIE_NAME );
 		
 		if ( cookieData !== "undefined" ){
-			return jQuery.parseJSON ( cookieData );
+			return JSON.parse( cookieData );
 		} else {
 			return false;
 		}

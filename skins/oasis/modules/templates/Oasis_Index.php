@@ -44,6 +44,11 @@
 		var wgNow = new Date();
 	/*]]>*/</script><?php
 		if(!$jsAtBottom) {
+		?>
+			<!--[if lt IE 8]>
+			<script src="<?= $wgStylePath ?>/common/json2.js"></script>
+			<![endif]-->
+		<?php
 			print $wikiaScriptLoader; // needed for jsLoader and for the async loading of CSS files.
 			print "\n\n\t<!-- Combined JS files (StaticChute) and head scripts -->\n";
 			print $jsFiles . "\n";
@@ -64,6 +69,11 @@
 
 <?php
 	if($jsAtBottom) {
+?>
+		<!--[if lt IE 8]>
+		<script src="<?= $wgStylePath ?>/common/json2.js"></script>
+		<![endif]-->
+<?php
 		print $wikiaScriptLoader; // needed for jsLoader and for the async loading of CSS files.
 		print "\n\n\t<!-- Combined JS files (StaticChute) and head scripts -->\n";
 		print $jsFiles . "\n";

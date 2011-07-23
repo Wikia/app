@@ -111,7 +111,7 @@ AdDriver.getNumCall = function(cookieName, slotname) {
 	try {
 		var numCallCookie = $.cookies.get(cookieName);
 		if (typeof(numCallCookie) != 'undefined' && numCallCookie) {
-			var slotnameObjs = $.parseJSON(numCallCookie);
+			var slotnameObjs = JSON.parse(numCallCookie);
 			for (var i = 0; i < slotnameObjs.length; i++) {
 				if (slotnameObjs[i].slotname == slotname) {
 					if (parseInt(slotnameObjs[i].ts) + window.wgAdDriverCookieLifetime*3600000 > window.wgNow.getTime()) {	// wgAdDriverCookieLifetime in hours, convert to msec
@@ -148,7 +148,7 @@ AdDriver.incrementNumCall = function(cookieName, slotname) {
 		var numCallCookie = $.cookies.get(cookieName);
 		if (typeof(numCallCookie) != 'undefined' && numCallCookie) {
 			// find slotname and increment count
-			var slotnameObjs = $.parseJSON(numCallCookie);
+			var slotnameObjs = JSON.parse(numCallCookie);
 			for (var i = 0; i < slotnameObjs.length; i++) {
 				if (slotnameObjs[i].slotname == slotname) {
 					slotnameInCookie = true;
@@ -184,7 +184,7 @@ AdDriver.isLastDARTCallNoAd = function(slotname) {
 	try {
 		var lastDARTCallNoAdCookie = $.cookies.get(AdDriver.cookieNameLastDARTCallNoAd);
 		if (typeof(lastDARTCallNoAdCookie) != 'undefined' && lastDARTCallNoAdCookie) {
-			var slotnameTimestamps = $.parseJSON(lastDARTCallNoAdCookie);
+			var slotnameTimestamps = JSON.parse(lastDARTCallNoAdCookie);
 			for (var i = 0; i < slotnameTimestamps.length; i++) {
 				if (slotnameTimestamps[i].slotname == slotname) {
 					if (parseInt(slotnameTimestamps[i].ts) + window.wgAdDriverCookieLifetime*3600000 > window.wgNow.getTime()) {	// wgAdDriverCookieLifetime in hours, convert to msec
@@ -211,7 +211,7 @@ AdDriver.setLastDARTCallNoAd = function(slotname, value) {
 	try {
 		var lastDARTCallNoAdCookie = $.cookies.get(AdDriver.cookieNameLastDARTCallNoAd);
 		if (typeof(lastDARTCallNoAdCookie) != 'undefined' && lastDARTCallNoAdCookie) {
-			var slotnameTimestamps = $.parseJSON(lastDARTCallNoAdCookie);
+			var slotnameTimestamps = JSON.parse(lastDARTCallNoAdCookie);
 			// look for slotname. If there is a new value, change the old value. If
 			// the new value is null, simply do not include slotname in updated cookie.
 			for (var i = 0; i < slotnameTimestamps.length; i++) {

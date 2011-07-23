@@ -227,7 +227,7 @@ var WikiBuilder = {
 				lang: lang
 			}, function(res) {
 				if(res) {
-					var json = $.parseJSON(res);
+					var json = JSON.parse(res);
 					var response = res['res'];
 					if(response) {
 						WikiBuilder.wikiNameError.html(response);
@@ -262,7 +262,7 @@ var WikiBuilder = {
 				type: ''
 			}, function(res) {
 				if(res) {
-					var json = $.parseJSON(res);
+					var json = JSON.parse(res);
 					var response = res['res'];
 					if(response) {
 						WikiBuilder.wikiDomainError.html(response);
@@ -346,7 +346,7 @@ var WikiBuilder = {
 	},
 	
 	saveState: function (data, callback) {
-		var c = $.parseJSON($.cookies.get('createnewwiki'));
+		var c = JSON.parse($.cookies.get('createnewwiki'));
 		if (!c) {
 			c = {};
 		}

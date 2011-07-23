@@ -190,7 +190,7 @@ var NodeRoomController = $.createClass(Observable,{
 			this.isInitialized = true;
 		} else {
 			// If this is a reconnect... go through the model that was given and selectively, only add ChatEntries that were not already in the collection of chats.
-			var jsonObj = $.parseJSON(message.data);
+			var jsonObj = JSON.parse(message.data);
 			var chatEntries = this.model.chats;
 			_.each(jsonObj.collections.chats.models, function(item, index){
 				var match = chatEntries.get(item.id);
@@ -267,7 +267,7 @@ var NodeRoomController = $.createClass(Observable,{
 	
 	onChatAdd: function(message) {
 		var newChatEntry;
-		var dataObj = $.parseJSON(message.data);
+		var dataObj = JSON.parse(message.data);
 
 		if(dataObj.attrs.isInlineAlert){
 			newChatEntry = new models.InlineAlert();
