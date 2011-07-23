@@ -208,6 +208,7 @@ class CreateWikiLocalJob extends Job {
 	 */
 	private function setWelcomeTalkPage() {
 		global $wgUser;
+		$saveUser = $wgUser;
 
 		Wikia::log( __METHOD__, "talk", "Setting welcome talk page on new wiki" );
 
@@ -259,6 +260,7 @@ class CreateWikiLocalJob extends Job {
 		else {
 			Wikia::log( __METHOD__, "error", "Can't take talk page for user " . $this->mFounder->getId() );
 		}
+		$wgUser = $saveUser;  // Restore user object after creating talk message
 		return true;
 	}
 
