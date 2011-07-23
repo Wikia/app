@@ -19,8 +19,8 @@ var formViewAction = "<?=$mTitle->getLocalURL(( $mLanguage != 'en' ) ? 'action=v
 formViewAction += ( createType ) ? '&type=' + createType : '';
 var msgError = "<?php echo addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 var defaultDomain = "<?php echo $defaultDomain ?>";
-var definedDomains = jQuery.parseJSON('<?php echo Wikia::json_encode($mDomains); ?>');
-var definedSitename = jQuery.parseJSON('<?php echo Wikia::json_encode($mSitenames); ?>');
+var definedDomains = JSON.parse('<?php echo Wikia::json_encode($mDomains); ?>');
+var definedSitename = JSON.parse('<?php echo Wikia::json_encode($mSitenames); ?>');
 /*]]>*/
 </script>
 <?php

@@ -80,7 +80,7 @@ var UploadPhotos = {
 	uploadCallback: {
 		onComplete: function(res) {
 			res = $("<div/>").html(res).text();
-			var json = $.evalJSON(res);
+			var json = JSON.parse(res);
 			if(json) {
 				if(json['status'] == 0) {	// 0 is success...
 					$.tracker.byStr('action/uploadphoto/upload');

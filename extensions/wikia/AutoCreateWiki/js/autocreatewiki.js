@@ -10,7 +10,7 @@ $(function () {
 
 ACWikiRequest.NameCallback = function( res ) {
 	if (res) {
-		var divData = jQuery.parseJSON(res);
+		var divData = JSON.parse(res);
 		var div = $("#" + divData["div-name"] );
 		var error = divData["div-error"];
 		var status = $("#" + divData["div-name"] + "-status");

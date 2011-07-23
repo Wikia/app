@@ -407,7 +407,7 @@ var ThemeDesigner = {
 	wordmarkUploadCallback : {
 		onComplete: function(response) {
 
-			var response = $.evalJSON(response);
+			var response = JSON.parse(response);
 
 			if(response.errors && response.errors.length > 0) {
 
@@ -446,7 +446,7 @@ var ThemeDesigner = {
 	backgroundImageUploadCallback : {
 		onComplete: function(response) {
 
-			var response = $.evalJSON(response);
+			var response = JSON.parse(response);
 			$().log(response);
 			if(response.errors && response.errors.length > 0) {
 

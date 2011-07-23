@@ -286,7 +286,7 @@ var STATUS_STATE_AWAY = 'away';
 		}
 
 		try{
-			process(this, typeof($) != 'undefined' ? $.parseJSON(data):JSON.parse(data) );
+			process(this, JSON.parse(data) );
 		} catch (e){
 			if (typeof console != 'undefined') {
 				console.log("Unable to parse message in mport. Data attempted to parse was: ");

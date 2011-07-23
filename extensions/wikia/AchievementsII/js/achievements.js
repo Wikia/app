@@ -151,7 +151,7 @@ var Achievements = {
 		var img = $(o).parent().prev().prev();
 
 		$.get(window.wgServer+wgScript+'?action=ajax&rs=AchAjax&method=resetBadge&type_id='+badge_type+'&lap='+badge_lap, function(response) {
-			var response = $.evalJSON(response);
+			var response = JSON.parse(response);
 			img.attr('src', response.output);
 			$("#body").removeClass("ajax");
 			inputs.attr('disabled', '');

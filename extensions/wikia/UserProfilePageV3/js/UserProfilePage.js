@@ -58,7 +58,7 @@ var UserProfilePage = {
 			}
 			
 		}).error(function(data) {
-			var response = $.parseJSON(data.responseText);
+			var response = JSON.parse(data.responseText);
 			alert( 'Error! '+response.exception.message );
 		});
 	},
@@ -174,7 +174,7 @@ var UserProfilePage = {
 			},
 			onComplete: function(response) {
 				try {
-					response = $.parseJSON(response);
+					response = JSON.parse(response);
 					
 					if( response.result.success === true ) {
 						var avatarImg = UserProfilePage.modal.find('.avatar');

@@ -17,7 +17,7 @@ var InterviewSpecialPage = {
 			$.getJSON( InterviewSpecialPage.ajaxEntryPoint, { method: 'addOrModifyQuestion', questionBody: questionBody, questionId: questionId }, function(data) {
 				InterviewSpecialPage.renderQuestionList(data);
 			}).error(function(data) {
-				var response = $.parseJSON(data.responseText);
+				var response = JSON.parse(data.responseText);
 				alert( 'Error! '+response.exception.message );
 			});
 		},

@@ -6,7 +6,7 @@ var Geo = {
 Geo.getGeoData = function () {
 	if (Geo.geoData == '') {
 		var jsonData = $.cookies.get(Geo.cookieName);
-		Geo.geoData = jQuery.parseJSON(jsonData);
+		Geo.geoData = JSON.parse(jsonData);
 	}
 	return Geo.geoData;
 }

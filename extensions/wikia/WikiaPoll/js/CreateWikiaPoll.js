@@ -71,7 +71,7 @@ var CreateWikiaPoll = {
 	},
 	
 	editExisting: function(placeholder) {
-		var pollData = $.parseJSON(unescape($(placeholder).data("rte-meta")))
+		var pollData = JSON.parse(unescape($(placeholder).data("rte-meta")));
 
 		// add hidden form element for pollId
 		$("#CreateWikiaPoll").find("form").append('<input type="hidden" name="pollId" value="' + pollData.pollId + '">');

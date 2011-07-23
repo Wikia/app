@@ -51,7 +51,7 @@ QuantcastSegments.setQuantcastData = function () {
 };
 
 QuantcastSegments.getQcsegAsDARTKeyValues = function () {
-	var segmentsCookie = $.parseJSON( $.cookies.get(QuantcastSegments.segCookieName) );
+	var segmentsCookie = JSON.parse( $.cookies.get(QuantcastSegments.segCookieName) );
 	var segs = '';
 	if (typeof(wgIntegrateQuantcastSegments) === 'undefined' || !wgIntegrateQuantcastSegments) {
 		return segs;
