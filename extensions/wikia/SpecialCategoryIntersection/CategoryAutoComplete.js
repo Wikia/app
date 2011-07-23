@@ -54,17 +54,25 @@ CategoryAutoComplete = {
 		$.loadJQueryAutocomplete(function() {
 			CategoryAutoComplete.searchFields.each(function(){
 				$(this).autocomplete({
-// TODO: Make this use the category namespace
-					serviceUrl: wgServer + wgScript + '?action=ajax&rs=getLinkSuggest&format=json&ns=' + CategoryAutoComplete.NS_CATEGORY,
-					onSelect: function(v, d) {
-						CategoryAutoComplete.track('suggest');
-						window.location.href = wgArticlePath.replace(/\$1/, encodeURIComponent(v.replace(/ /g, '_')));
-					},
+					//serviceUrl: wgServer + wgScript + '?action=ajax&rs=getLinkSuggest&format=json&ns=' + CategoryAutoComplete.NS_CATEGORY,
+					serviceUrl: wgServer + wgScriptPath + "/api.php" + '?action=opensearch',
+					// This would make the user go to the actual page... we don't want that here. We probably want to make the popup disappear though if it doesn't automatically.
+					/*onSelect: function(v, d) {
+						//CategoryAutoComplete.track('suggest');
+						//window.location.href = wgArticlePath.replace(/\$1/, encodeURIComponent(v.replace(/ /g, '_')));
+					},*/
 					appendTo: $(this).parent('.autoCompleteWrapper'),
 					deferRequestBy: 250,
 					maxHeight: 1000,
+					queryParamName: 'search',
 					selectedClass: 'selected',
-					width: '270px'
+					width: '270px',
+					fnPreprocessResults: function(response){
+						response.query = response[0];
+						response.suggestions = response[1];
+						response.data = response[1];
+						return response;
+					}
 				});
 			});
 		});
