@@ -49,7 +49,9 @@
       delimiter: null,
       selectedClass: 'selected',
       appendTo: 'body',
-      /* Wikia change */
+      /* Wikia changes */
+	 queryParamName: 'query',
+	 fnPreprocessResults: null,
      skipBadQueries: false
     };
     if (options) { $.extend(this.options, options); }
@@ -223,8 +225,12 @@
         this.suggest();
       } else if (!this.isBadQuery(q)) {
         me = this;
-        me.options.params.query = q;
-        $.get(this.serviceUrl, me.options.params, function(txt) { me.processResponse(txt); }, 'text');
+       
+		/* Wikia change - allow custom param name */
+		//me.options.params.query = q;
+		var requestParams = me.options.params;
+		requestParams[me.options.queryParamName] = q;
+        $.get(this.serviceUrl, requestParams, function(txt) { me.processResponse(txt); }, 'text');
       }
     },
 
@@ -276,6 +282,12 @@
       try {
         response = eval('(' + text + ')');
       } catch (err) { return; }
+	  
+	  /* Wikia change - allow function to preprocess result data into a format this plugin understands*/
+	  if(this.options.fnPreprocessResults != null){
+		response = this.options.fnPreprocessResults(response);
+	  }
+
       if (!$.isArray(response.data)) { response.data = []; }
       this.suggestions = response.suggestions;
       this.data = response.data;
