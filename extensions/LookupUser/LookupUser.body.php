@@ -86,22 +86,8 @@ class LookupUserPage extends SpecialPage {
 <input type="hidden" name="title" value="{$title}" />
 <table border="0">
 <tr>
-<td align="right">$username_label</td>
-<td align="left"><input type="text" size="50" name="target" value="$target" /></td>
-<td align="center"><input type="submit" value="$ok" /></td>
-</tr>
-</table>
-</form>
-EOT
-		);
-
-		$wgOut->addHTML( <<<EOT
-<form method="get" action="$action">
-<input type="hidden" name="title" value="{$title}" />
-<table border="0">
-<tr>
-<td align="right">$email_label</td>
-<td align="left"><input type="text" size="50" name="target" value="{$email}" /></td>
+<td align="right">{$email_label} or {$username_label}</td>
+<td align="left"><input type="text" size="30" name="target" value="$target" /></td>
 <td align="center"><input type="submit" value="$ok" /></td>
 </tr>
 </table>
@@ -212,8 +198,9 @@ EOT
 			$name = $user->getName();
 			if( $user->getEmail() ) {
 				$email = $user->getEmail();
+				$email_output = wfMsg( 'lookupuser-email', $email, $name );
 			} else {
-				$email = wfMsg( 'lookupuser-no-email' );
+				$email_output = wfMsg( 'lookupuser-no-email' );
 			}
 			if( $user->getRegistration() ) {
 				$registration = $wgLang->timeanddate( $user->getRegistration() );
@@ -227,9 +214,10 @@ EOT
 				) ) );
 			$wgOut->addWikiText( '*' . wfMsgForContent( 'lookupuser-toollinks', $name, urlencode($name) ) );
 			$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-id', $user->getId() ) );
-			$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-email', $email, $name ) );
+			$wgOut->addWikiText( '*' . $email_output );
 			$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-info-authenticated', $authenticated ) );
 			$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-realname', $user->getRealName() ) );
+			$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-registration', $registration ) );
 			
 			//Begin: Small Stuff Week - adding table from Special:LookupContribs --nAndy
 			if( !empty($wgEnableLookupContribsExt) ) {
@@ -252,7 +240,6 @@ EOT
 			}
 			//End: Small Stuff Week
 			
-			$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-registration', $registration ) );
 			$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-touched', $wgLang->timeanddate( $user->mTouched ) ) );
 			$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-useroptions' ) . '<br />' . $optionsString );
 		}
