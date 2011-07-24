@@ -72,11 +72,15 @@ class WikiaApiAjaxLogin extends ApiBase {
 					break;
 				case LoginForm :: WRONG_PASS :
 					$result['result'] = 'WrongPass';
+					$result['text'] = wfMsg('wrongpassword'); #set default normal message
 					$attemptedUser = User::newFromName( $Name );
-					if ( defined( 'CLOSED_ACCOUNT_FLAG' ) && !is_null( $attemptedUser ) && $attemptedUser->getRealName() == CLOSED_ACCOUNT_FLAG ) {
-						$result['text'] = wfMsg( 'edit-account-closed-flag' );
-					} else { 
-						$result['text'] = wfMsg('wrongpassword');
+					if ( !is_null( $attemptedUser ) ) {
+						$disOpt = $attemptedUser->getOption('disabled');
+						if( !empty($disOpt) ||
+							(defined( 'CLOSED_ACCOUNT_FLAG' ) && $attemptedUser->getRealName() == CLOSED_ACCOUNT_FLAG ) ){
+							#either closed account flag was present, override fail message
+							$result['text'] = wfMsg( 'edit-account-closed-flag' );
+						}
 					}
 					break;
 				case LoginForm :: EMPTY_PASS :
