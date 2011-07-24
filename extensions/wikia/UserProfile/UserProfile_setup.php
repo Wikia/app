@@ -36,7 +36,8 @@ function UserProfile_handler(&$skin, &$tpl) {
 		return true;
 	}
 	// abort if user has been disabled (v2, both need to be checked for a while)
-	if ( !empty( $user->getOption('disabled') ) ) {
+	$disabledOpt = $user->getOption('disabled');
+	if ( !empty( $disabledOpt ) ) {
 		wfProfileOut(__METHOD__);
 		return true;
 	}
