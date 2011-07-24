@@ -22,6 +22,7 @@ class EditAccount extends SpecialPage {
 	var $mUser = null;
 	var $mStatus = null;
 	var $mStatusMsg;
+	var $mStatusMsg2 = null;
 
 	/**
 	 * Constructor
@@ -61,21 +62,31 @@ class EditAccount extends SpecialPage {
 		}
 
 		$action = $wgRequest->getVal( 'wpAction' );
-		$userName = $wgRequest->getVal( 'wpUserName' );
-		$userName = str_replace("_", " ", trim($userName));
-		$userName = ucfirst( $userName ); # user names begin with a capital letter
+		#get name to work on. subpage is supported, but form submit name trumps
+		$userName = $wgRequest->getVal( 'wpUserName', $par );
 
-		// check if user name is an existing user
-		if ( User::isValidUserName( $userName ) ) {
-			$this->mUser = User::newFromName( $userName );
-			$id = $this->mUser->idFromName( $userName );
-			if ( empty( $id ) ) {
-				$this->mStatus = false;
-				$this->mStatusMsg = wfMsg( 'editaccount-nouser', $userName );
+		if( $userName !== null ) {
+			#got a name, clean it up
+			$userName = str_replace("_", " ", trim($userName));
+			$userName = ucfirst( $userName ); # user names begin with a capital letter
+
+			// check if user name is an existing user
+			if ( User::isValidUserName( $userName ) ) {
+				$this->mUser = User::newFromName( $userName );
+				$id = $this->mUser->idFromName( $userName );
+
+				if( empty($action) ) {
+					$action = 'displayuser';
+				}
+
+				if ( empty( $id ) ) {
+					$this->mStatus = false;
+					$this->mStatusMsg = wfMsg( 'editaccount-nouser', $userName );
+					$action = '';
+				}
+			} else {
 				$action = '';
 			}
-		} else {
-			$action = '';
 		}
 
 		switch( $action ) {
@@ -105,6 +116,10 @@ class EditAccount extends SpecialPage {
 				$this->mStatus = $this->clearUnsubscribe();
 				$template = 'displayuser';
 				break;
+			case 'cleardisable':
+				$this->mStatus = $this->clearDisable();
+				$template = 'displayuser';
+				break;
 			case 'displayuser':
 				$template = 'displayuser';
 				break;
@@ -118,6 +133,7 @@ class EditAccount extends SpecialPage {
 		$oTmpl->set_Vars( array(
 				'status'	=> $this->mStatus,
 				'statusMsg' => $this->mStatusMsg,
+				'statusMsg2' => $this->mStatusMsg2,
 				'user'	  => $userName,
 				'userEmail' => null,
 				'userRealName' => null,
@@ -126,6 +142,7 @@ class EditAccount extends SpecialPage {
 				'userId'  => null,
 				'userReg' => null,
 				'isUnsub' => null,
+				'isDisabled' => null,
 				'returnURL' => $this->getTitle()->getFullURL(),
 			) );
 
@@ -137,6 +154,7 @@ class EditAccount extends SpecialPage {
 					'userId'  => $this->mUser->getID(),
 					'userReg' => date( 'r', strtotime( $this->mUser->getRegistration() ) ),
 					'isUnsub' => $this->mUser->getOption('unsubscribed'),
+					'isDisabled' => $this->mUser->getOption('disabled'),
 				) );
 		}
 		
@@ -251,16 +269,13 @@ class EditAccount extends SpecialPage {
 			$this->mUser->setRealName( '' );
 		}
 
-		$outMsg = '';
-
 		// remove users avatar
-		if ( class_exists( Masthead ) ) {
+		if ( class_exists( 'Masthead' ) ) {
 			$avatar = Masthead::newFromUser( $this->mUser );
 			if ( !$avatar->isDefault() ) {
 				if( !$avatar->removeFile( false ) ) {
-					# dont quit here, since the avatar is a non-critical part of closing.
-					# temp fix: move this to i18n message after looking into ->removeFile
-					$outMsg = "Problem removing avatar. Use dedicated tool.\n";
+					# dont quit here, since the avatar is a non-critical part of closing, but flag for later
+					$this->mStatusMsg2 = wfMsgExt( 'editaccount-remove-avatar-fail' );
 				}
 			}
 		}
@@ -283,11 +298,11 @@ class EditAccount extends SpecialPage {
 			$log->addEntry( 'closeaccnt', $wgTitle, '', array( $this->mUser->getUserPage() ) );
 
 			// All clear!
-			$this->mStatusMsg = $outMsg . wfMsg( 'editaccount-success-close', $this->mUser->mName );
+			$this->mStatusMsg = wfMsg( 'editaccount-success-close', $this->mUser->mName );
 			return true;
 		} else {
 			// There were errors...inform the user about those
-			$this->mStatusMsg = $outMsg . wfMsg( 'editaccount-error-close', $this->mUser->mName );
+			$this->mStatusMsg = wfMsg( 'editaccount-error-close', $this->mUser->mName );
 			return false;
 		}
 	}
@@ -302,6 +317,20 @@ class EditAccount extends SpecialPage {
 		$this->mUser->saveSettings();
 
 		$this->mStatusMsg = wfMsg( 'editaccount-success-unsub', $this->mUser->mName );
+
+		return true;
+	}
+
+	/**
+	 * Clears the magic disabled bit
+	 *
+	 * @return Boolean: true
+	 */
+	function clearDisable() {
+		$this->mUser->setOption( 'disabled', null );
+		$this->mUser->saveSettings();
+
+		$this->mStatusMsg = wfMsg( 'editaccount-success-disable', $this->mUser->mName );
 
 		return true;
 	}
