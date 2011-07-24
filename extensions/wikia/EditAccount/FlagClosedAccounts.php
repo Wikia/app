@@ -27,7 +27,9 @@ $wgExtensionMessagesFiles['EditAccount'] = dirname( __FILE__ ) . '/SpecialEditAc
 function efFlagClosedAccounts( $id ) {
 	global $wgOut;
 
-	if ( User::whoIsReal( $id ) == CLOSED_ACCOUNT_FLAG ) {
+	$u = User::newFromId($id);
+	$disOpt = $u->getOption('disabled');
+	if ( !empty($disOpt) ) {
 		wfLoadExtensionMessages( 'EditAccount' );
 		$wgOut->addWikiMsg( 'edit-account-closed-flag' );
 	}
