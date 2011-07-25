@@ -5,7 +5,7 @@ $(function() {
 var GamingCalendar = {
 
     init: function() {
-		$.get('/wikia.php?controller=GamingCalendar&method=getEntries&weeks=2&offset=0&format=json', function(data) {
+		$.get('/wikia.php?controller=GamingCalendar&method=getEntries&weeks=3&offset=0&format=json', function(data) {
 			// get the current cookieVal
 			var cookieVal = GamingCalendar.getCookieVal();
 			
