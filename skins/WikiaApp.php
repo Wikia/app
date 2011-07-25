@@ -23,6 +23,7 @@ $wgAjaxWatch = false;
 //$wgHooks['MakeGlobalVariablesScript'][] = 'SkinWikiaApp::onMakeGlobalVariablesScript';
 //$wgHooks['SkinAfterContent'][] = 'SkinWikiaApp::onSkinAfterContent';
 $wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'SkinWikiaApp::onSkinTemplateOutputPageBeforeExec';
+$wgHooks['SkinGetHeadScripts'][] = 'SkinWikiaApp::onSkinGetHeadScripts';
 
 /**
  * @todo document
@@ -51,11 +52,15 @@ class SkinWikiaApp extends SkinTemplate {
 		}
 		
 		SkinTemplate::initPage( $out );
+		
 		$this->skinname  = 'wikiaapp';
 		$this->stylename = 'wikiaapp';
 		$this->themename = 'wikiaapp';
 		$this->template  = 'MonoBookTemplate';
+		
 		$wgUseSiteCss = false;
+		
+		$out->addMeta("viewport", "width=320");
 	}
 	
 	public static function onSkinTemplateOutputPageBeforeExec( &$obj, &$tpl ){
@@ -65,16 +70,19 @@ class SkinWikiaApp extends SkinTemplate {
 	}
 	
 	function setupSkinUserCss( OutputPage $out ){
-		global $wgRequest;
-		$out->addMeta("viewport", "width=320");
+		foreach ( AssetsManager::getInstance()->getGroupCommonURL( 'wikiaapp_css' ) as $src ) {
+			$out->addStyle( $src );
+		}
+	}
+	
+	public function onSkinGetHeadScripts(&$scripts) {
+		global $wgJsMimeType;
 		
-		//StaticChute minification breaks Zepto, cannot use a package
-		$out->addScriptFile( '../common/zepto/zepto-0.4.min.js' );
-		$out->addScriptFile( '../wikiaapp/main.min.js' );
+		foreach ( AssetsManager::getInstance()->getGroupCommonURL( 'wikiaapp_js' ) as $src ) {
+			$scripts .= "\n<script type=\"$wgJsMimeType\" src=\"{$src}\"></script>";
+		}
 		
-		$staticChute = new StaticChute( 'css' );
-		$staticChute->useLocalChuteUrl();
-		$out->addHTML( $staticChute->getChuteHtmlForPackage( 'wikiaapp_css' ) );
+		return true;
 	}
 
 	function printTopHtml() {}
