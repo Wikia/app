@@ -5,6 +5,8 @@
  */
 class ArticleComment {
 
+	const MOVE_USER = 'WikiaBot';
+
 	public
 		$mProps,	//blogs only
 		$mTitle,
@@ -733,12 +735,17 @@ class ArticleComment {
 	 * @static
 	 */
 	static private function moveComment( $oCommentTitle, &$oNewTitle, $reason = '' ) {
+		global $wgUser;
+
 		wfProfileIn( __METHOD__ );
 
 		if ( !is_object( $oCommentTitle ) ) {
 			wfProfileOut( __METHOD__ );
 			return array('invalid title');
 		}
+
+		$currentUser = $wgUser;
+		$wgUser = User::newFromName( self::MOVE_USER );
 
 		$parts = self::explode($oCommentTitle->getDBkey());
 		$commentTitleText = implode('/', $parts['partsOriginal']);
@@ -748,6 +755,8 @@ class ArticleComment {
 			MWNamespace::getTalk($oNewTitle->getNamespace()) );
 
 		$error = $oCommentTitle->moveTo( $newCommentTitle, false, $reason, false );
+
+		$wgUser = $currentUser;
 
 		wfProfileOut( __METHOD__ );
 		return $error;
@@ -831,7 +840,7 @@ class ArticleComment {
 					'lang'		=> '',
 					'cat'		=> '',
 					'selwikia'	=> $wgCityId,
-					'user'		=> $wgUser->getName()
+					'user'		=> self::MOVE_USER
 				);
 
 				for ( $i = $finish + 1; $i < count($comments); $i++ ) {
