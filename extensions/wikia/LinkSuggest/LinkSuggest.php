@@ -53,7 +53,6 @@ function AddLinkSuggest($a, $b, $c, $d) {
 
 	if($wgUser->getOption('disablelinksuggest') != true) {
 		$wgOut->addHTML('<div id="LS_imagePreview" style="visibility: hidden; position: absolute; z-index: 1001; width: 180px;" class="yui-ac-content"></div>');
-		$wgOut->addHTML('<div id="wpTextbox1_container" class="link-suggest-container"></div>');
 
 		$js = "{$wgExtensionsPath}/wikia/LinkSuggest/LinkSuggest.js?{$wgStyleVersion}";
 
