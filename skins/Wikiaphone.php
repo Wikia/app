@@ -22,6 +22,7 @@ $wgAjaxWatch = false;
 
 $wgHooks['MakeGlobalVariablesScript'][] = 'SkinWikiaphone::onMakeGlobalVariablesScript';
 $wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'SkinWikiaphone::onSkinTemplateOutputPageBeforeExec';
+$wgHooks['SkinGetHeadScripts'][] = 'SkinWikiaphone::onSkinGetHeadScripts';
 
 /**
  * @todo document
@@ -36,10 +37,14 @@ class SkinWikiaphone extends SkinTemplate {
 
 	function initPage( OutputPage $out ) {
 		global $wgHooks, $wgUseSiteCss;
+		
 		SkinTemplate::initPage( $out );
+		
 		$this->skinname  = 'wikiaphone';
 		$this->stylename = 'wikiaphone';
 		$this->template  = 'MonoBookTemplate';
+		
+		$out->addMeta("viewport", "width=320");
 	}
 
 	public static function onSkinTemplateOutputPageBeforeExec( &$obj, &$tpl ){
@@ -49,18 +54,19 @@ class SkinWikiaphone extends SkinTemplate {
 	}
 
 	function setupSkinUserCss( OutputPage $out ){
-		global $wgRequest;
-		$out->addMeta("viewport", "width=320");
-		$staticChuteCSS = new StaticChute('css');
-		$staticChuteCSS->useLocalChuteUrl();
-		$out->addStyle($staticChuteCSS->getChuteUrlForPackage('wikiaphone_css'));
-		$staticChuteJS = new StaticChute('js');
-		$staticChuteJS->useLocalChuteUrl();
-		$out->addScriptFile($staticChuteJS->getChuteUrlForPackage('wikiaphone_js'));
-		/*
-		$out->addScriptFile( '../common/jquery/jquery-1.5.min.js' );
-		$out->addScriptFile( '../wikiaphone/main.js' );
-		*/
+		foreach ( AssetsManager::getInstance()->getGroupCommonURL( 'wikiaphone_css' ) as $src ) {
+			$out->addStyle( $src );
+		}
+	}
+	
+	public function onSkinGetHeadScripts(&$scripts) {
+		global $wgJsMimeType;
+		
+		foreach ( AssetsManager::getInstance()->getGroupCommonURL( 'wikiaphone_js' ) as $src ) {
+			$scripts .= "\n<script type=\"$wgJsMimeType\" src=\"{$src}\"></script>";
+		}
+		
+		return true;
 	}
 
 	function printTopHtml() {
@@ -73,21 +79,20 @@ class SkinWikiaphone extends SkinTemplate {
 
 		echo AdEngine::getInstance()->getAd('MOBILE_TOP_LEADERBOARD');
 ?>
-			<div class="mobile-header">
-				<img src="<?= $wgBlankImgUrl ?>">
-				<form action="index.php?title=Special:Search" method="get">
-					<input type="text" name="search" placeholder="<?= wfMsg('Tooltip-search', $wgSitename) ?>" accesskey="f" size="13">
-					<input id="mobile-search-btn" type="image" src="<?= $wgBlankImgUrl ?>">
-				</form>
-				<?= Wikia::specialPageLink('Random', 'oasis-button-random-page', array('accesskey' => 'x', 'class' => 'wikia-button secondary', 'data-id' => 'randompage'), 'blank.gif', null, 'sprite random') ?>
-			</div>
-			<h1 class="mobile-wikiname">
-				<a href="<?= $this->mainPageURL ?>">
-				<?= $this->wordmarkText ?>
-				</a>
-			</h1>
+<div class="mobile-header">
+<img src="<?= $wgBlankImgUrl ?>">
+<form action="index.php?title=Special:Search" method="get">
+<input type="text" name="search" placeholder="<?= wfMsg('Tooltip-search', $wgSitename) ?>" accesskey="f" size="13">
+<input id="mobile-search-btn" type="image" src="<?= $wgBlankImgUrl ?>">
+</form>
+<?= Wikia::specialPageLink('Random', 'oasis-button-random-page', array('accesskey' => 'x', 'class' => 'wikia-button secondary', 'data-id' => 'randompage'), 'blank.gif', null, 'sprite random') ?>
+</div>
+<h1 class="mobile-wikiname">
+<a href="<?= $this->mainPageURL ?>">
+<?= $this->wordmarkText ?>
+</a>
+</h1>
 <?php
-
 	}
 
 	public static function onMakeGlobalVariablesScript( $vars ) {
@@ -96,33 +101,32 @@ class SkinWikiaphone extends SkinTemplate {
 		$vars['DevelEnvironment'] = $wgDevelEnvironment;
 		$vars['CategoryNamespaceMessage'] = $wgContLang->getNsText(NS_CATEGORY);
 		$vars['SpecialNamespaceMessage'] = $wgContLang->getNsText(NS_SPECIAL);
-
+		
 		return true;
 	}
 
 	protected function afterContentHook () {
 		global $wgCityId, $wgRightsUrl;
-
+		
 		$data = '';
-
+		
 		$data .= '<div id="mw-data-after-content"><div id="fullsite"><a href="#" class="fullsite" rel="nofollow">'.wfMsg('mobile-full-site').'</a> | '.$this->getCopyright().'</div>';
-
+		
 		$data .= '<script>var MobileSkinData = {showtext: "'.wfMsg("mobile-show").'", hidetext:"'.wfMsg("mobile-hide").'"};</script>';
-
+		
 		// load Google Analytics code
 		$data .= AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
-
+		
 		// onewiki GA
 		$data .= AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId));
-
+		
 		return $data;
 	}
-
+	
 	/**
-	 * empty stub for compatibility with MonoBook.php wikiaBox()
-	 */
+	* empty stub for compatibility with MonoBook.php wikiaBox()
+	*/
 	function wikiaBox() {
 		return;
 	}
-
 }
