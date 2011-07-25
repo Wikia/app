@@ -42,61 +42,17 @@ $wgNamespacesWithSubpages[ NS_BLOG_ARTICLE_TALK ] = true;
 $wgNamespacesWithSubpages[ NS_BLOG_LISTING ] = true;
 $wgNamespacesWithSubpages[ NS_BLOG_LISTING_TALK ] = true;
 
-/**
- * localized blog ns - proof of concept aka quick hack
- *
- * @see SMW includes/SMW_GlobalFunctions.php::smwfInitNamespaces
- * FIXME generalize
- */
-if (in_array($wgLanguageCode, array('de', 'ru', 'es', 'fr', 'no', 'nn'))) {
-	// make en ns point (alias) to "main ns" - at this point themselves
-	foreach (array(500, 501, 502, 503) as $ns) {
-		$wgNamespaceAliases[$wgExtraNamespaces[$ns]] = $ns;
-	}
+$dir = dirname( __FILE__ );
 
-	switch ($wgLanguageCode) {
-		case "de":
-			// translate "main ns" into de
-			$wgExtraNamespaces[500] = 'Benutzer_Blog';
-			$wgExtraNamespaces[501] = 'Benutzer_Blog_Kommentare';
-			$wgExtraNamespaces[502] = 'Blog';
-			$wgExtraNamespaces[503] = 'Blog_Diskussion';
-			// the end: de name is the "main ns", en is just an alias (redirect)
-			break;
-		case "ru":
-			$wgExtraNamespaces[500] = "Блог_участника";
-			$wgExtraNamespaces[501] = "Комментарий_блога_участника";
-			$wgExtraNamespaces[502] = "Блог";
-			$wgExtraNamespaces[503] = "Обсуждение_блога";
+$wgExtensionNamespacesFiles[ 'Blogs' ] = "{$dir}/Blogs.namespaces.php";
 
-			break;
-		case "es":
-			$wgExtraNamespaces[500] = 'Usuario_Blog';
-			$wgExtraNamespaces[501] = 'Usuario_Blog_Comentario';
-			$wgExtraNamespaces[502] = 'Blog';
-			$wgExtraNamespaces[503] = 'Blog_Discusión';
-
-			break;
-		case "no":
-		case "nn":
-			$wgExtraNamespaces[500] = 'Brukerblogg';
-			$wgExtraNamespaces[501] = 'Brukerbloggkommentar';
-			$wgExtraNamespaces[502] = 'Blogg';
-			$wgExtraNamespaces[503] = 'Bloggdiskusjon';
-
-			break;
-		case 'fr':
-			$wgExtraNamespaces[500] = 'Blog_utilisateur';
-			$wgExtraNamespaces[501] = 'Commentaire_blog_utilisateur';
-			break;
-	}
-}
+wfLoadExtensionNamespaces( 'Blogs', array( NS_TOPLIST, NS_BLOG_LISTING_TALK, NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK ) );
 
 /**
  * setup function
  */
-$wgAutoloadClasses[ "BlogArticle" ] = dirname(__FILE__) . '/BlogArticle.php';
-$wgAutoloadClasses[ "WikiaApiBlogs" ] = dirname(__FILE__) . "/api/WikiaApiBlogs.php";
+$wgAutoloadClasses[ "BlogArticle" ] = $dir . '/BlogArticle.php';
+$wgAutoloadClasses[ "WikiaApiBlogs" ] = $dir . "/api/WikiaApiBlogs.php";
 
 global $wgAPIModules;
 $wgAPIModules[ "blogs" ] = "WikiaApiBlogs";
@@ -106,8 +62,8 @@ $wgAPIModules[ "blogs" ] = "WikiaApiBlogs";
 /**
  * messages file
  */
-$wgExtensionMessagesFiles['Blogs'] = dirname(__FILE__) . '/Blogs.i18n.php';
-$wgExtensionAliasesFiles['Blogs'] = dirname(__FILE__) . '/Blogs.alias.php';
+$wgExtensionMessagesFiles['Blogs'] = $dir . '/Blogs.i18n.php';
+$wgExtensionAliasesFiles['Blogs'] = $dir . '/Blogs.alias.php';
 
 /**
  * permissions (eventually will be moved to CommonSettings.php)
