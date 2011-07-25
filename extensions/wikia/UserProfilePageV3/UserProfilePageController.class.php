@@ -922,4 +922,27 @@ class UserProfilePageController extends WikiaController {
 		$this->setVal('result', $result);
 	}
 	
+	public function getClosingModal() {
+		$this->app->wf->ProfileIn( __METHOD__ );
+		
+		$userId = $this->getVal('userId');
+		$user = $this->wg->User;
+		
+		if( !$user->isAnon() ) {
+			$this->setVal( 'body', (string) $this->sendSelfRequest('renderClosingModal', array('userId' => $userId)) );
+		} else {
+			throw new WikiaException( 'User not logged in' );
+		}
+		
+		$this->app->wf->ProfileOut( __METHOD__ );
+	}
+	
+	public function renderClosingModal() {
+		$this->app->wf->ProfileIn( __METHOD__ );
+		
+		//we want only the template for now...
+		
+		$this->app->wf->ProfileOut( __METHOD__ );
+	}
+	
 }

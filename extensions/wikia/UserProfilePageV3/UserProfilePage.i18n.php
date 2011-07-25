@@ -93,6 +93,12 @@ $messages['en'] = array(
 	
 	'user-identity-box-saving-error' => 'Saving user data failed - your data should be a plain text',
 	'user-identity-box-saving-internal-error' => 'Saving user data failed - internal error occured',
+	
+	'userprofilepage-closing-popup-header' => 'What would you like to do with changes?',
+	'userprofilepage-closing-popup-info' => 'There are unsaved changes in your profile. What would you like to do?',
+	'userprofilepage-closing-popup-discard-and-quit' => 'Discard changes and quit',
+	'userprofilepage-closing-popup-save-and-quit' => 'Save changes and quit',
+	'userprofilepage-closing-popup-cancel' => 'Cancel',
 );
 
 $messages['qqq'] = array(
