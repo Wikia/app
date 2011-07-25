@@ -130,3 +130,38 @@ $config['oasis_user_js'] = array(
 		'#function_AssetsConfig::getSiteJS'
 	)
 );
+
+//Wikiaphone CSS and JS
+$config['wikiaphone_css'] = array(
+	'type' => AssetsManager::TYPE_CSS,
+	'assets' => array(
+		'//skins/wikiaphone/main.css',
+		'//skins/wikiaphone/skin.css'
+	)
+);
+
+$config['wikiaphone_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'#group_oasis_jquery',
+		'//extensions/wikia/AdEngine/AdConfig.js',
+		'//skins/wikiaphone/main.js'
+	)
+);
+
+//WikiaApp JS and CSS
+$config['wikiaapp_css'] = array(
+	'type' => AssetsManager::TYPE_CSS,
+	'assets' => array(
+		'//skins/wikiaapp/main.css',
+		'//skins/wikiaapp/skin.css'
+	)
+);
+
+$config['wikiaapp_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//skins//common/zepto/zepto-0.6.js',
+		'//skins/wikiaapp/main.js'
+	)
+);
