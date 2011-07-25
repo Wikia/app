@@ -111,7 +111,7 @@ var CreateWikiaQuizArticle = {
 		});
 		CreateWikiaQuizArticle.track('/optioncount/' + optionCount);
 
-		if ($("#CreateWikiaQuizArticle").data('quizElementId')) {
+		if ($("#CreateWikiaQuizArticle").data('quizelementid')) {
 			// editing existing quizElement
 			$.get(wgScript + '?action=ajax&rs=WikiaQuizAjax&method=updateQuizArticle', $("#CreateWikiaQuizArticle").find("form").serialize(), function(data) {
 				if ($("#CreateWikiaQuizArticle").closest(".modalWrapper").exists()) { // in modal

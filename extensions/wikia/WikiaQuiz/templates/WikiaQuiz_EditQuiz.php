@@ -1,7 +1,7 @@
 <?php if (! isset($quiz)) {
 	echo wfRenderModule('Error', 'Index', array('Quiz does not exist'));
 } else { ?>
-<div class="CreateWikiaQuiz" id="CreateWikiaQuiz" data-quizId="<?=$quiz->getID()?>">
+<div class="CreateWikiaQuiz" id="CreateWikiaQuiz" data-quizid="<?=$quiz->getID()?>">
 
 	<h1><?= wfMsg('wikiaquiz-editquiz-headline') ?></h1>
 	
