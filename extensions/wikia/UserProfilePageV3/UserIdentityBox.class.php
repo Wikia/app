@@ -1,6 +1,16 @@
 <?php
 
 class UserIdentityBox {
+	/**
+	 * Used in User Profile Page extension; 
+	 * It's a kind of category of rows stored in page_wikia_props table 
+	 * -- it's a value of propname column;
+	 * If a data row from this table has this field set to 10 it means that
+	 * in props value you should get an unserialized array of wikis' ids.
+	 * 
+	 * @var integer
+	 */
+	const PAGE_WIKIA_PROPS_PROPNAME = 10;
 	
 	private $user = null;
 	private $app = null;
@@ -408,7 +418,7 @@ class UserIdentityBox {
 			$row = $dbHandler->selectRow(
 				array( 'page_wikia_props' ),
 				array( 'props' ),
-				array( 'page_id' => $this->user->getId() , 'propname' => 10 ),
+				array( 'page_id' => $this->user->getId() , 'propname' => self::PAGE_WIKIA_PROPS_PROPNAME ),
 				__METHOD__,
 				array()
 			);
