@@ -128,6 +128,12 @@
 			}
 		},
 
+		init: function() {
+			if (this.enabled) {
+				this.editor.fire('mainpagewidemodeinit');
+			}
+		},
+
 		adjustHeights: function() {
 			var toolbar = this.editor.getSpace('toolbar'),
 				rail = this.editor.getSpace('rail');

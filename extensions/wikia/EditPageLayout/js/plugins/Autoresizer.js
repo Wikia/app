@@ -16,6 +16,7 @@
 		editbox: false,
 		mode: false,
 		rightrail: false,
+		widemode: false,
 
 		beforeInit: function() {
 			this.mode = this.editor.config.autoResizeMode;
@@ -24,6 +25,9 @@
 				this.editor.on('mode',this.proxy(this.delayedResize));
 				this.editor.on('toolbarsRendered',this.proxy(this.delayedResize));
 				this.editor.on('sizeChanged',this.proxy(this.delayedResize));
+				this.editor.on('mainpagewidemodeinit', this.proxy(function() {
+					this.widemode = true;
+				}));
 			}
 
 			this.editarea = $('#EditPageEditor');
@@ -31,7 +35,9 @@
 
 		initDom: function() {
 			// keep right rail within browser's viewport (BugId:7498)
-			this.rightrail = this.editor.getSpace('rail');
+			if (this.widemode === false) {
+				this.rightrail = this.editor.getSpace('rail');
+			}
 
 			if (this.enabled) {
 				this.delayedResize();
@@ -71,7 +77,9 @@
 			}
 
 			// set height of right rail (BugId:7498)
-			this.rightrail.height(this.getHeightToFit(this.rightrail));
+			if (this.rightrail) {
+				this.rightrail.height(this.getHeightToFit(this.rightrail));
+			}
 		}
 	});
 
