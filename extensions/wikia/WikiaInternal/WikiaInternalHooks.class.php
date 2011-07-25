@@ -7,12 +7,12 @@ class WikiaInternalHooks {
 	}
 	
 	public function onAfterCheckInitialQueries($title, $action, $ret) {
-		global $wgCityId, $wgUser;
+		global $wgCityId, $wgUser, $wgIsPrivateWiki;
 		
 		wfProfileIn(__METHOD__);
 		
-		if( !empty($wgCityId) && $wgUser->isAnon() ) {
-		//if internal wiki redirect -- do not show original title (file name for example) not logged in users fb#1090
+		if( (empty($wgCityId) || $wgIsPrivateWiki) && $wgUser->isAnon() ) {
+		//if internal/private wiki redirect -- do not show original title (file name for example) not logged in users fb#1090
 			$ret = null;
 		}
 		

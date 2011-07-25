@@ -175,10 +175,12 @@ class UserPagesHeaderModule extends Module {
 	public function executeIndex() {
 		wfProfileIn(__METHOD__);
 		
-		global $wgTitle, $wgEnableUserProfilePagesExt, $wgEnableUserProfilePagesV3, $wgRequest, $wgUser, $wgOut, $wgCityId;
+		global $wgTitle, $wgEnableUserProfilePagesExt, $wgEnableUserProfilePagesV3, $wgRequest, $wgUser, $wgOut, $wgCityId, $wgIsPrivateWiki;
 		
 		//fb#1090
 		$this->isInternalWiki = empty($wgCityId);
+		$this->isUserAnon = $wgUser->isAnon();
+		$this->isPrivateWiki = $wgIsPrivateWiki;
 		
 		if( empty($wgEnableUserProfilePagesV3) ) {
 		//controller of User Profile Page v3 includes its own css so if it's disabled,
