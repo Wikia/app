@@ -45,7 +45,7 @@ var GamingCalendarModal = {
 		template = template.replace('%week-caption%', weekdates['caption'] );
 		
 		if ( 1 == week.length ) {
-		    itemsHtml = itemsHtml + '<li>Stay tuned!</li>';
+		    itemsHtml = itemsHtml + '<li class="no-entries">No entries.</li>';
 		} else {
 
 		    for ( var i = 1; i < week.length; i++  ) {
@@ -106,8 +106,9 @@ var GamingCalendarModal = {
     },
     
     renderPage: function(e, page) {
+	$().log('GamingCalendar: requested page: ' + page );
 	if ( e ) { e.preventDefault(); }
-	var targetWeek = window.GamingCalendarData.displayedWeek + page;
+	var targetWeek = page;
 	var offset = targetWeek;
 	var weeksToLoad = 2;
 	if ('object' == typeof window.GamingCalendarData['entries'][targetWeek]) {
@@ -118,7 +119,7 @@ var GamingCalendarModal = {
 	if ('object' == typeof window.GamingCalendarData['entries'][targetWeek + 1]) {
 		weeksToLoad--;
 	}
-
+	
 	if (0 < weeksToLoad) {
 		$.get('/wikia.php?controller=GamingCalendar&method=getEntries&format=json&weeks=' + weeksToLoad + '&offset=' + offset, function( data ) {
 			$(data.entries).each( function(index, value) {
@@ -138,17 +139,54 @@ var GamingCalendarModal = {
     },
 
 	bindEventHandlers: function(page) {
+		var today = new Date();
+		var thisWeek = new Date( Date.UTC( today.getFullYear(), today.getMonth(), today.getDate() - today.getDay() + 1, 0, 0, 0 ) );
+		var currentWeek = new Date( Date.UTC( thisWeek.getFullYear(), thisWeek.getMonth(), thisWeek.getDate() + ( 7 * page ), 0, 0, 0 ) );
+		var prevMonth = new Date( Date.UTC( currentWeek.getFullYear(), currentWeek.getMonth() - 1, 1, 0, 0, 0 ) );
+		var nextMonth = new Date( Date.UTC( currentWeek.getFullYear(), currentWeek.getMonth() + 1, 1, 0, 0, 0 ) );
+		var week = 7 * 24 * 3600 * 1000;
+		var pagesPrevMonth = Math.ceil( (currentWeek - prevMonth) / week );
+		var pagesNextMonth = Math.ceil( (nextMonth - currentWeek) / week );
 
-		// Bind event handlers
-		$('#GamingCalendar')
-			.find('.scroll-up').live('click', GamingCalendarModal.scrollUp).end()
-			.find('.scroll-down').live('click', GamingCalendarModal.scrollDown).end()
-			.find('.forward-week').live('click', function(event) { GamingCalendarModal.renderPage(event, page + 1); } ).end()
-			//.find('.forward-month').live('click', function(event) { GamingCalendarModal.renderPage(event, -4); } ).end()
-			.find('.back-week').live('click', function(event) { GamingCalendarModal.renderPage(event, page -1 ); } ).end()
-			//.find('.back-month').live('click', function(event) { GamingCalendarModal.renderPage(event, 4); } ).end()
-			.find('.today').live('click', function(event) { GamingCalendarModal.renderPage(event, 0); } ).end()
-			.find('.GamingCalendarItem.unselected').live('click', GamingCalendarModal.expandOrCollapse);
+		$('#GamingCalendar').find('.forward-week').unbind('click');
+		$('#GamingCalendar').find('.forward-week').removeClass('disabled');
+		$('#GamingCalendar').find('.forward-week').bind('click', function(event) { GamingCalendarModal.renderPage(event, page + 1); });
+		$('#GamingCalendar').find('.back-week').unbind('click');
+		$('#GamingCalendar').find('.back-week').removeClass('disabled');
+		$('#GamingCalendar').find('.back-week').bind('click', function(event) { GamingCalendarModal.renderPage(event, page - 1); });
+		$('#GamingCalendar').find('.forward-month').unbind('click');
+		$('#GamingCalendar').find('.forward-month').removeClass('disabled');
+		$('#GamingCalendar').find('.forward-month').bind('click', function(event) { GamingCalendarModal.renderPage( event, page + pagesNextMonth ); });
+		$('#GamingCalendar').find('.back-month').unbind('click');
+		$('#GamingCalendar').find('.back-month').removeClass('disabled');
+		$('#GamingCalendar').find('.back-month').bind('click', function(event) { GamingCalendarModal.renderPage( event, page - pagesPrevMonth ); });
+		$('#GamingCalendar').find('.scroll-up').unbind('click');
+		$('#GamingCalendar').find('.scroll-up').bind('click', GamingCalendarModal.scrollUp);
+		$('#GamingCalendar').find('.scroll-down').unbind('click');
+		$('#GamingCalendar').find('.scroll-down').bind('click', GamingCalendarModal.scrollDown);
+		$('#GamingCalendar').find('.GamingCalendarItem').unbind('click');
+		$('#GamingCalendar').find('.GamingCalendarItem.unselected').bind('click', GamingCalendarModal.expandOrCollapse);
+		$('#GamingCalendar').find('.today').unbind('click');
+
+		if (0 != page) {
+			$('#GamingCalendar').find('.today').bind('click', function(event) { GamingCalendarModal.renderPage( event, 0 ); } ).removeClass('disabled');
+		} else {
+			$('#GamingCalendar').find('.today').addClass('disabled');
+		}
+
+		if ( 0 < $('#GamingCalendar').find('.no-entries').length ) {
+			if ( 0 < page ) {
+				$('#GamingCalendar').find('.forward-month').addClass('disabled');
+				$('#GamingCalendar').find('.forward-month').unbind('click');
+				$('#GamingCalendar').find('.forward-week').addClass('disabled');
+				$('#GamingCalendar').find('.forward-week').unbind('click');
+			} else if ( 0 > page ) {
+				$('#GamingCalendar').find('.back-month').addClass('disabled');
+				$('#GamingCalendar').find('.back-month').unbind('click');
+				$('#GamingCalendar').find('.back-week').addClass('disabled');
+				$('#GamingCalendar').find('.back-week').unbind('click');
+			}
+		}
 
 		$.tracker.byStr( 'gamingCalendar/scroll/forward/week' );
 	}
