@@ -11,6 +11,7 @@ class BodyModule extends Module {
 	var $wgSuppressRail;
 	var $wgSuppressFooter;
 	var $wgSuppressArticleCategories;
+	var $wgInterlangOnTop;
 	var $wgEnableCorporatePageExt;
 	var $wgEnableWikiAnswers;
 	var $wgABTests;
