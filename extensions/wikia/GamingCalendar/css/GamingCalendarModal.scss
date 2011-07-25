@@ -201,7 +201,7 @@ $gaming-calendar-gray-text: mix($color-text, $color-page, 75%);
 		&.disabled {
 		    background-position: 0px 0px;
 		    @if lightness($color-page) < 50 {
-			    background-position: 0px -40px;
+			    background-position: 0px -60px;
 		    }
 		}
 	    }
