@@ -7,8 +7,11 @@ var UserProfilePage = {
 	questions: [],
 	currQuestionIndex: 0,
 	modal: null,
+	closingPopup: null,
 	userId: null,
 	wasDataChanged: false,
+	userData: null,
+	forceRedirect: false,
 	
 	init: function() {
 		UserProfilePage.userId = $('#user').val();
@@ -23,7 +26,7 @@ var UserProfilePage = {
 			UserProfilePage.renderLightbox('about');
 		});
 		
-		$('#userAvatarEdit').click(function() {
+		$('#userAvatarEdit').click(function(event) {
 			event.preventDefault();
 			UserProfilePage.renderLightbox('avatar');
 		});
@@ -66,6 +69,7 @@ var UserProfilePage = {
 	switchTab: function(tab) {
 		if( true === UserProfilePage.wasDataChanged ) {
 			UserProfilePage.saveUserData(false);
+			UserProfilePage.forceRedirect = true;
 			UserProfilePage.wasDataChanged = false;
 		}
 
@@ -73,12 +77,11 @@ var UserProfilePage = {
 		var tabs = tab.closest('ul');
 		tabs.children('li').each(function(){
 			$(this).removeClass('selected');
-		});		
+		});
 		tab.addClass('selected');
 		
 		// Show correct tab content
 		var tabName = tab.data('tab');
-		console.log(tab.data('tab'));
 		$('.tab-content > li').each(function() {
 			if( $(this).attr('class') === tabName ) {
 				$(this).css('display', 'block');
@@ -326,7 +329,7 @@ var UserProfilePage = {
 	
 	//updatePrevNextButtons
 	
-	saveUserData: function(doRedirect) {
+	saveUserData: function(doRedirect, modal) {
 		if( typeof(doRedirect) === 'undefined' ) {
 			var doRedirect = true;
 		}
@@ -344,8 +347,15 @@ var UserProfilePage = {
 					errorBox.empty();
 					errorBox.append( data.errorMsg );
 				} else {
+					UserProfilePage.userData = null;
+					
 					if( true === doRedirect ) {
-						UserProfilePage.closeModal(UserProfilePage.modal);
+						if( typeof(modal) !== 'undefined' ) {
+							UserProfilePage.closeModal(modal);
+						} else {
+							UserProfilePage.closeModal(UserProfilePage.modal);
+						}
+						
 						window.location = wgScript + '?title=' + wgPageName; // + '&action=purge';
 					}
 				}
@@ -354,24 +364,30 @@ var UserProfilePage = {
 	},
 	
 	getFormData: function() {
-		//array didn't want to go to php, so i changed it to an object --nAndy
-		var userData = {
-			name: null,
-			location: null,
-			occupation: null,
-			gender: null,
-			fbPage: null,
-			website: null,
-			twitter: null,
-			year: null,
-			month: null,
-			day: null
-		};
-		
-		for(i in userData) {
-			if( typeof($(document.userData[i]).val()) !== 'undefined' ) {
-				userData[i] = $(document.userData[i]).val();
+		if( UserProfilePage.userData === null ) {
+			$().log('userData from form');
+			//array didn't want to go to php, so i changed it to an object --nAndy
+			var userData = {
+				name: null,
+				location: null,
+				occupation: null,
+				gender: null,
+				fbPage: null,
+				website: null,
+				twitter: null,
+				year: null,
+				month: null,
+				day: null
+			};
+			
+			for(i in userData) {
+				if( typeof($(document.userData[i]).val()) !== 'undefined' ) {
+					userData[i] = $(document.userData[i]).val();
+				}
 			}
+		} else {
+			$().log('userData from instance property');
+			var userData = UserProfilePage.userData;
 		}
 		
 		return userData;
@@ -519,13 +535,46 @@ var UserProfilePage = {
 		if( typeof(modal.closeModal) === 'function' ) {
 			modal.closeModal();
 		} else {
-		//here we can implement checking the UserProfilePage.wasDataChanged property 
-		//and create new modal with three buttons (save changes, cance, don't save changes) or not 
+			if( UserProfilePage.wasDataChanged === true ) {
+				UserProfilePage.userData = UserProfilePage.getFormData();
+				UserProfilePage.displayClosingPopup();
+				UserProfilePage.modal.hideModal();
+				
+				return false;
+			}
 		}
 		
 		if( typeof(resetDataChangedFlag) === 'undefined' || resetDataChangedFlag === true ) {
 			//changing it for next lightbox openings
 			UserProfilePage.wasDataChanged = false;
 		}
+		
+		if( UserProfilePage.forceRedirect === true ) {
+			window.location = wgScript + '?title=' + wgPageName; // + '&action=purge';
+		}
+	},
+	
+	displayClosingPopup: function() {
+		$.postJSON( this.ajaxEntryPoint, { method: 'getClosingModal', userId: UserProfilePage.userId, rand: Math.floor(Math.random()*100001) }, function(data) {
+			UserProfilePage.closingPopup = $(data.body).makeModal({width: 450, showCloseButton: false, closeOnBlackoutClick: false});
+			
+			var modal = UserProfilePage.closingPopup;
+			var save = modal.find('.save');
+			save.click(function() {
+				UserProfilePage.saveUserData(true, modal);
+			});
+			
+			var quit = modal.find('.quit');
+			quit.click(function() {
+				UserProfilePage.modal.closeModal();
+				modal.closeModal();
+			});
+			
+			var cancel = modal.find('.cancel');
+			cancel.click(function() {
+				modal.closeModal();
+				UserProfilePage.modal.showModal();
+			});
+		});
 	}
 }
