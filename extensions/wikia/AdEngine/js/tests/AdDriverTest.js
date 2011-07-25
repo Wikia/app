@@ -17,8 +17,10 @@ test('isHighValueCountry', function() {
   ok( AdConfig.isHighValueCountry('GR'), 'GR' );
   ok( AdConfig.isHighValueCountry('HU'), 'HU' );
   ok( AdConfig.isHighValueCountry('IT'), 'IT' );
+  ok( AdConfig.isHighValueCountry('MX'), 'MX' );
   ok( AdConfig.isHighValueCountry('NL'), 'NL' );
   ok( AdConfig.isHighValueCountry('NO'), 'NO' );
+  ok( AdConfig.isHighValueCountry('PE'), 'PE' );
   ok( AdConfig.isHighValueCountry('RU'), 'RU' );
   ok( AdConfig.isHighValueCountry('SE'), 'SE' );
   ok( AdConfig.isHighValueCountry('UK'), 'UK' );
@@ -28,7 +30,6 @@ test('isHighValueCountry', function() {
   ok( !AdConfig.isHighValueCountry('BR'), 'BR' );
   ok( !AdConfig.isHighValueCountry('JP'), 'JP' );
   ok( !AdConfig.isHighValueCountry('KR'), 'KR' );
-  ok( !AdConfig.isHighValueCountry('MX'), 'MX' );
   ok( !AdConfig.isHighValueCountry(''), 'empty string' );
 });
 
