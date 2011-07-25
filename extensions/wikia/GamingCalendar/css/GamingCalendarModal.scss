@@ -310,7 +310,7 @@ $gaming-calendar-gray-text: mix($color-text, $color-page, 75%);
 		width: 50px;
 		background-position: -20px -20px;
 		@if lightness($color-page) < 50 {
-			background-position: -20px -60px;
+			background-position: -20px -80px;
 		}
 		text-align: center;
 		overflow: hidden;
@@ -329,7 +329,7 @@ $gaming-calendar-gray-text: mix($color-text, $color-page, 75%);
 		&.disabled {
 		    background-position: -20px 0px;
 		    @if lightness($color-page) < 50 {
-			    background-position: -20px -40px;
+			    background-position: -20px -60px;
 		    }
 		}
 	    }
