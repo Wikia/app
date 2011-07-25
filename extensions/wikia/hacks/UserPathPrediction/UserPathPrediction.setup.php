@@ -78,10 +78,9 @@ function efUserPathPredictionOnBeforePageDisplayAddButton( $article, $row ) {
 	$app = F::app();
 	
 	$title = $app->wg->title;
-	if( $app->wg->DevelEnvironment && !$title->isSpecialPage()) {
+	if( $app->wg->DevelEnvironment && !$title->isSpecialPage() && get_class( $app->wg->User->getSkin() ) == 'SkinOasis' ) {
 		$script = '<script>$("#WikiaPageHeader ul.commentslikes").append(\'<li><a href="/wiki/Special:UserPathPrediction/' . $title->getPrefixedUrl() . '" class="wikia-button secondary" >Show Path</a></li>\');</script>';
 		$app->wg->Out->addScript( $script );
-		
-	} 
+	}
 	return true;
 }
