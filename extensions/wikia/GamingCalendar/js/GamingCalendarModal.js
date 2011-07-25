@@ -3,6 +3,7 @@ var GamingCalendarModal = {
 	modal: null,
 	displayWeek: 0,
 	firstWeek: new Date( Date.UTC( 2011, 06, 18, 0, 0, 0 ) ),
+	lastWeek: null,
 	
 	init: function() {
 		$().log('init');
@@ -11,16 +12,14 @@ var GamingCalendarModal = {
 		} else {
 			GamingCalendarModal.initialized = true;
 		}
-		
-		// Set up the initial weeks
-		var weekNo = 1;
-		var weeks = window.GamingCalendarData['entries'];
-		for ( var i = 0; i < weeks.length; i++ ) {
-			var weekHtml = GamingCalendarModal.renderWeek( weeks[i] );
-			window.GamingCalendarData['entries'][i] = weekHtml;
-			window.GamingCalendarModal.renderPage( null, 0 );
-			weekNo++;
+
+		if (1 == window.GamingCalendarData['entries'][2].length) {
+			window.GamingCalendarModal.lastWeek = 1;
 		}
+		
+		var weeks = window.GamingCalendarData['entries'];
+
+		window.GamingCalendarModal.renderPage( null, 0 );
 		
 		
 		var today = new Date();
@@ -130,8 +129,16 @@ var GamingCalendarModal = {
 	}
 	
 	if (0 < weeksToLoad) {
-		$.get('/wikia.php?controller=GamingCalendar&method=getEntries&format=json&weeks=' + weeksToLoad + '&offset=' + offset, function( data ) {
+		$.get('/wikia.php?controller=GamingCalendar&method=getEntries&format=json&weeks='
+		+ weeksToLoad + '&offset=' + (offset + 1), function( data ) {
 			$(data.entries).each( function(index, value) {
+				if ( 1 == value.length && page > 0 ) {
+					window.GamingCalendarModal.lastWeek = offset + index - 1;
+					if (offset + index < page + 1) {
+						window.GamingCalendarModal.renderPage(e, page - 1);
+						return;
+					}
+				}
 				window.GamingCalendarData['entries'][offset + index] = value;
 			});
 			window.GamingCalendarModal.renderPage(e, page);
@@ -174,7 +181,7 @@ var GamingCalendarModal = {
 
 		var todayButton = calendarElement.find('.today');
 
-		todayElement.unbind('click');
+		todayButton.unbind('click');
 
 		if (0 != page) {
 			todayButton.bind('click', function(event) { GamingCalendarModal.renderPage( event, 0 ); } ).removeClass('disabled');
@@ -182,11 +189,9 @@ var GamingCalendarModal = {
 			todayButton.addClass('disabled');
 		}
 
-		if ( 0 < calendarElement.find('.no-entries').length ) {
-			if ( 0 < page ) {
-				calendarElement.find('.forward-month').addClass('disabled').unbind('click');
-				calendarElement.find('.forward-week').addClass('disabled').unbind('click');
-			}
+		if ( window.GamingCalendarModal.lastWeek && window.GamingCalendarModal.lastWeek < page + 2 ) {
+			calendarElement.find('.forward-month').addClass('disabled').unbind('click');
+			calendarElement.find('.forward-week').addClass('disabled').unbind('click');
 		}
 
 		if ( currentWeek.getTime() <= window.GamingCalendarModal.firstWeek.getTime() ) {
