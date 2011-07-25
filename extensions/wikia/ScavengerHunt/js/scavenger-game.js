@@ -366,19 +366,18 @@ var ScavengerHunt = {
 					if (typeof FB == 'object') {
 						var share = $('.scavenger-share-button');
 						if (share.exists()) {
-							FB.XFBML.parse(share.get(0));
-							//give some time for parsing
-							setTimeout(function() {
-								var shareButton = $('.fb_button');
-								//remove buggy onclick
-								shareButton.get(0).onclick = null;
-								//attach proper onclick
-								shareButton.click(function(e) {
-									e.preventDefault();
-									var href = $(this).attr('href') || window.location.href;
-									FB.ui({method:'stream.share', u: href});
+							FB.XFBML.parse(share.get(0),
+								function() {
+									var shareButton = $('.fb_button');
+									//remove buggy onclick
+									shareButton.get(0).onclick = null;
+									//attach proper onclick
+									shareButton.click(function(e) {
+										e.preventDefault();
+										var href = $(this).attr('href') || window.location.href;
+										FB.ui({method:'stream.share', u: href});
+									});
 								});
-							}, 500);
 						}
 					}
 				}
