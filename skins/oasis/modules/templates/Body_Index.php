@@ -47,6 +47,13 @@
 				echo wfRenderModule('WikiAnswers', 'QuestionBox');
 			}
 		?>
+
+		<?php 
+		if (!empty( $wgInterlangOnTop ) ) { 
+			wfRenderModule('ArticleInterlang');
+		}
+		?>
+
 		<article id="WikiaMainContent" class="WikiaMainContent">
 			<?php
 			
@@ -95,7 +102,11 @@
 			if (empty($wgSuppressArticleCategories)) {
 				echo wfRenderModule('ArticleCategories');
 			} ?>
-			<?= wfRenderModule('ArticleInterlang') ?>
+			<?php
+			if (empty( $wgInterlangOnTop ) ) {
+				 wfRenderModule('ArticleInterlang');
+			}
+			?>
 			
 			<?php if (!empty($afterContentHookText)) { ?>
 			<div id="WikiaArticleFooter" class="WikiaArticleFooter">
