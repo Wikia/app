@@ -47,13 +47,16 @@
 	<h1><?= $displaytitle != "" ? $title : htmlspecialchars($title) ?></h1>
 	<?= wfRenderModule('CommentsLikes', 'Index', array('likes' => $likes)); ?>
 
-
 	<?php
 		if (!empty($stats) && !empty($stats['edits'])) {
-			if( !$isInternalWiki ) {
+			if( !$isInternalWiki && !$isPrivateWiki ) {
 	?>
 				<span class="member-since"><?= wfMsg('oasis-member-since', $stats['date']) ?></span>
-			<?php } ?>
+			<?php } else { ?>
+				<?php if( !$isUserAnon ) { ?>
+					<span class="member-since"><?= wfMsg('oasis-member-since', $stats['date']) ?></span>
+				<?php } ?>
+			<?php }?>
 		<span class="member-edits"><?= wfMsgExt('oasis-edits-counter', array('parsemag'), $stats['edits']) ?></span>
 	<?php
 		}
