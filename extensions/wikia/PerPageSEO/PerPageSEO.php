@@ -7,8 +7,10 @@
  * a per-page list of definitions stored in two arrays. No magic here.
  *
  * The arrays should look like this:
- * $wgPPSEOCustomKeywords = array( 'PageTitle' => 'My new description' );
- * wgPPSEOCustomDescriptions = array( 'PageTitle' => 'my, new, keywords' );
+ * $wgPPSEOCustomKeywords = array( 'PageTitle' => 'my, new, keywords' );
+ * $wgPPSEOCustomDescriptions = array( 'PageTitle' => 'My new description' );
+ *
+ * See-also /extensions/wikia/ArticleMetaDescription for more general usage of Wikia description meta tags.
  *
  * @file
  * @ingroup Extensions
