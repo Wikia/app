@@ -47,13 +47,13 @@
 	<section class="preview">
 		<canvas id="FounderProgressBar" class="founder-progress-bar" height="95" width="95">
 		</canvas>
-		<div id="FounderProgressListClickArea" class="founder-progress-bar-click-area"></div>
+		<div id="FounderProgressListClickArea" class="founder-progress-bar-click-area" data-tracking="toggle/bar"></div>
 		<div class="numeric-progress">
 			<span class="score"><?= $progressData['completion_percent'] ?></span><span class="percentage">%</span>
 		</div>
 		<header>
 			<h1><?= wfMsg('founderprogressbar-progress-label') ?></h1>
-			<a href="#" class="list-toggle" id="FounderProgressListToggle">
+			<a href="#" class="list-toggle" id="FounderProgressListToggle" data-tracking="toggle/link">
 				<span class="see-full-list"><?= wfMsg('founderprogressbar-progress-see-full-list') ?></span>
 				<span class="hide-full-list"><?= wfMsg('founderprogressbar-progress-hide-full-list') ?></span>
 			</a>

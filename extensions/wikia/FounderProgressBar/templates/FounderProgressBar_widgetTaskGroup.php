@@ -17,12 +17,12 @@
 						<p><?= $taskList[$index]['task_description'] ?></p>
 						<div class="actions">
 							<? if(empty($taskList[$index]['task_locked']) && empty($taskList[$index]['task_completed']) && $taskList[$index]['task_skippable']) { ?>
-								<a href="#" class="skip"><?= wfMsg('founderprogressbar-skip-for-now') ?></a>
+								<a href="#" class="skip" data-tracking="list/skip/<?= $taskList[$index]['task_id'] ?>"><?= wfMsg('founderprogressbar-skip-for-now') ?></a>
 							<? } ?>
 							<? if(!empty($taskList[$index]['task_completed'])) { ?>
 								<span class="completed"><?= wfMsg('founderprogressbar-task-completed') ?></span>
 							<? } ?>
-							<a href="<?= $taskList[$index]['task_url'] ?>" class="wikia-button">
+							<a href="<?= $taskList[$index]['task_url'] ?>" class="wikia-button" data-tracking="list/cta/<?= $taskList[$index]['task_id'] ?>">
 								<?= wfMsg('founderprogressbar-task-call-to-action') ?>
 							</a>
 						</div>

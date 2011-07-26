@@ -12,7 +12,7 @@
 			<?php 
 				echo wfRenderModule('Footer','Toolbar');
 				if ($showAdminDashboardLink) {
-					echo "<li>" . Wikia::specialPageLink('AdminDashboard', 'admindashboard-toolbar-link') . "</li>";
+					echo "<li>" . Wikia::specialPageLink('AdminDashboard', 'admindashboard-toolbar-link', array('data-tracking' => 'admindashboard/toolbar/admin') ) . "</li>";
 				} 
 			?>
 		</ul>

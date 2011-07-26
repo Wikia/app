@@ -7,7 +7,7 @@
 				</header>
 				<ul class="controls">
 					<li class="control" data-tooltip="<?= wfMsg("admindashboard-control-theme-designer-tooltip") ?>">
-						<a href="<?= $urlThemeDesigner ?>" class="set">
+						<a href="<?= $urlThemeDesigner ?>" class="set" data-tracking="general/themedesigner">
 							<span class="representation">
 								<span class="icon themedesigner"></span>
 							</span>
@@ -15,7 +15,7 @@
 						</a>
 					</li>
 					<li class="control" data-tooltip="<?= wfMsg("admindashboard-control-recent-changes-tooltip") ?>" data-control="RecentChanges">
-						<a href="<?= $urlRecentChanges ?>" class="set">
+						<a href="<?= $urlRecentChanges ?>" class="set" data-tracking="general/recentchagnes">
 							<span class="representation">
 								<span class="icon recentchanges"></span>
 							</span>
@@ -23,7 +23,7 @@
 						</a>
 					</li>
 					<li class="control" data-tooltip="<?= wfMsg("admindashboard-control-top-navigation-tooltip") ?>">
-						<a href="<?= $urlTopNavigation ?>" class="set">
+						<a href="<?= $urlTopNavigation ?>" class="set" data-tracking="general/topnavigation">
 							<span class="representation">
 								<span class="icon topnavigation"></span>
 							</span>
@@ -31,7 +31,7 @@
 						</a>
 					</li>
 					<li class="control" data-tooltip="<?= wfMsg("admindashboard-control-wikia-labs-tooltip") ?>">
-						<a href="<?= $urlWikiaLabs ?>" class="set">
+						<a href="<?= $urlWikiaLabs ?>" class="set" data-tracking="general/wikialabs">
 							<span class="representation">
 								<span class="icon wikialabs"></span>
 							</span>
@@ -39,7 +39,7 @@
 						</a>
 					</li>
 					<li class="control" data-tooltip="<?= wfMsg("admindashboard-control-page-layout-builder-tooltip") ?>">
-						<a href="<?= $urlPageLayoutBuilder ?>" class="set">
+						<a href="<?= $urlPageLayoutBuilder ?>" class="set" data-tracking="general/pagelayoutbuilder">
 							<span class="representation">
 								<span class="icon pagelayoutbuilder"></span>
 							</span>
@@ -54,7 +54,7 @@
 				</header>
 				<ul class="controls">
 					<li class="control" data-tooltip="<?= wfMsg("admindashboard-control-user-list-tooltip") ?>" data-control="ListUsers">
-						<a href="<?= $urlListUsers ?>" class="set">
+						<a href="<?= $urlListUsers ?>" class="set" data-tracking="general/userlist">
 							<span class="representation">
 								<span class="icon userlist"></span>
 							</span>
@@ -62,7 +62,7 @@
 						</a>
 					</li>
 					<li class="control" data-tooltip="<?= wfMsg("admindashboard-control-user-rights-tooltip") ?>" data-control="UserRights">
-						<a href="<?= $urlUserRights ?>" class="set">
+						<a href="<?= $urlUserRights ?>" class="set" data-tracking="general/userrights">
 							<span class="representation">
 								<span class="icon userrights"></span>
 							</span>
@@ -70,7 +70,7 @@
 						</a>
 					</li>
 					<li class="control" data-tooltip="<?= wfMsg("admindashboard-control-community-corner-tooltip") ?>">
-						<a href="<?= $urlCommunityCorner ?>" class="set">
+						<a href="<?= $urlCommunityCorner ?>" class="set" data-tracking="general/communitycorner">
 							<span class="representation">
 								<span class="icon communitycorner"></span>
 							</span>
@@ -99,7 +99,7 @@
 				</header>
 				<ul class="controls">
 					<li class="control" data-tooltip="<?= wfMsg("admindashboard-control-categories-list-tooltip") ?>" data-control="Categories">
-						<a href="<?= $urlAllCategories ?>" class="set">
+						<a href="<?= $urlAllCategories ?>" class="set" data-tracking="general/categories">
 							<span class="representation">
 								<span class="icon categories"></span>
 							</span>
@@ -107,7 +107,7 @@
 						</a>
 					</li>
 					<li class="control" data-tooltip="<?= wfMsg("admindashboard-control-add-page-tooltip") ?>" data-modal="AddPage">
-						<a href="<?= $urlAddPage ?>" class="set">
+						<a href="<?= $urlAddPage ?>" class="set" data-tracking="general/addpage">
 							<span class="representation">
 								<span class="icon addpage"></span>
 							</span>
@@ -115,7 +115,7 @@
 						</a>
 					</li>
 					<li class="control" data-tooltip="<?= wfMsg("admindashboard-control-add-photo-tooltip") ?>" data-modal="AddPhoto">
-						<a href="<?= $urlAddPhoto ?>" class="set">
+						<a href="<?= $urlAddPhoto ?>" class="set" data-tracking="general/addphoto">
 							<span class="representation">
 								<span class="icon addphoto"></span>
 							</span>
@@ -123,7 +123,7 @@
 						</a>
 					</li>
 					<li class="control" data-tooltip="<?= wfMsg("admindashboard-control-add-blog-tooltip") ?>">
-						<a href="<?= $urlCreateBlogPage ?>" class="set">
+						<a href="<?= $urlCreateBlogPage ?>" class="set" data-tracking="general/createblog">
 							<span class="representation">
 								<span class="icon createblog"></span>
 							</span>
@@ -131,7 +131,7 @@
 						</a>
 					</li>
 					<li class="control" data-tooltip="<?= wfMsg("admindashboard-control-multiple-upload-tooltip") ?>" data-control="MultipleUpload">
-						<a href="<?= $urlMultipleUpload ?>" class="set">
+						<a href="<?= $urlMultipleUpload ?>" class="set" data-tracking="general/multipleupload">
 							<span class="representation">
 								<span class="icon multipleupload"></span>
 							</span>

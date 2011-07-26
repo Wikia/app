@@ -180,7 +180,38 @@ var AdminDashboard = {
 	}
 };
 
+var AdminDashboardTracking = {
+	init: function() {
+		$('#AdminDashboardHeader, #AdminDashboardTabs, #WikiaArticle').bind('click', function(e) {
+			var node = false;
+			var target = $(e.target);
+			if(target.is('a')) {
+				node = target;
+			} else {
+				node = target.closest('a');
+			}
+			
+			if(node) {
+				var tracking = node.data('tracking');
+				if(tracking) {
+					$.tracker.byStr('admindashboard/' + tracking);
+				}
+			}
+		});
+		
+		$('#AdminDashboardHeader nav a').bind('click', function(e) {
+			var target = $(e.target);
+			if(target.hasClass('text')) {
+				$.tracker.byStr('admindashboard/header/help');
+			} else {
+				$.tracker.byStr('admindashboard/header/exit');
+			}
+		});
+	}
+};
+
 $(function() {
 	AdminDashboard.init();
 	AdminDashboardChrome.init();
+	AdminDashboardTracking.init();
 });

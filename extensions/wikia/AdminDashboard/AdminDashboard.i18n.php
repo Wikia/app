@@ -13,6 +13,8 @@ $messages['en'] = array(
 	'admindashboard-header-help' => 'Need [http://www.community.wikia.com Help?]',
 	'admindashboard-header-exit' => '[[{{mediawiki:mainpage}}|Exit]]',
 	'admindashboard-toolbar-link' => 'Admin',
+	'admindashboard-tab-advanced' => 'Advanced',
+	'admindashboard-tab-general' => 'General',
 // Wiki Controls
 	'admindashboard-controls-wiki-header' => 'Wiki',
 	'admindashboard-control-theme-designer-label' => 'Theme Designer',

@@ -242,6 +242,8 @@ var initTracker = function() {
 			} else if (node.parent().hasClass('mytools')) {
 				// "My Tools" menu opened
 				$.tracker.byStr(fakeUrl + 'open');
+			} else if (node.data('tracking')) {
+				$.tracker.byStr(node.data('tracking'));
 			}
 		}
 	});
