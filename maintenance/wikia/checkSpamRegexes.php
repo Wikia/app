@@ -16,6 +16,7 @@ if ( !isset($title) ) {
 $dbr = wfGetDB(DB_SLAVE, 'cron', $wgExternalSharedDB);
 
 if ( !empty( $wikia ) ) {
+	echo "Checking $wikia  ...\n";
 	$oTitle = Title::makeTitle( NS_MEDIAWIKI, $title );
 	if ( is_object( $oTitle ) ) {
 		$oArticle = new Article( $oTitle );
@@ -57,8 +58,8 @@ if ( !empty( $wikia ) ) {
 	if ( !empty($wikis) ) {
 		foreach ( $wikis as $wiki ) {
 			$sCommand  = "SERVER_ID={$wiki['id']} php $IP/maintenance/wikia/checkSpamRegexes.php ";
-			$sCommand .= "--title " . $title . " ";
-			$sCommand .= "--wikia " . $wiki['name'] . " ";
+			$sCommand .= "--title=" . $title . " ";
+			$sCommand .= "--wikia=" . $wiki['name'] . " ";
 			$sCommand .= "--conf $wgWikiaLocalSettingsPath";
 
 			$log = wfShellExec( $sCommand, $retval );
