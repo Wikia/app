@@ -22,12 +22,11 @@ if ( !empty( $wikia ) ) {
 		$oArticle = new Article( $oTitle );
 		$content = $oArticle->getContent();
 		if ( is_object( $oArticle ) && !empty( $content ) ) {
-			echo "article = " . print_r( $oArticle, true );
 			echo "content = " . $oArticle->getContent() . " \n";
 			$regexes = SpamRegexBatch::buildSafeRegexes( $content );
 			echo "Found " . count($regexes) . " regexes \n";
 			$loop = 0;
-			foreach ($regex as $id => $regex) {
+			foreach ($regexes as $id => $regex) {
 				$m = array();
 				if (preg_match($regex, strtolower($title->getText()), $m)) {
 					echo "wikia: " . $wgDBName . " - ok ( $loop )\n";
