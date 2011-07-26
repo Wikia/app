@@ -20,6 +20,7 @@ $messages['en'] = array(
 	'founderprogressbar-list-bonus-task-desc' => "Complete the tasks list to unlock bonus tasks",
 	'founderprogressbar-task-call-to-action' => "Go to task",
 	'founderprogressbar-completion-message' => "Congratulations! You've done an amazing job and completed all of the tasks to 100%. Your wiki is well on its way to success, or even already there. Keep up the awesome work!",
+	'founderprogressbar-bonus-task-notice' => "Note: Each bonus task can be completed more than once. Complete as many as you need to get to 100%",
 	# Each task has a label(short description), action(button text) and long description.  Initial task list has 30 actions.
 	'founderprogressbar-page-add10-label' => 'Add $1 pages',
 	'founderprogressbar-page-add10-action' => 'Add a page',	

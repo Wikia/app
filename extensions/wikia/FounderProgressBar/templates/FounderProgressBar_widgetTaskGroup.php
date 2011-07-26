@@ -14,7 +14,12 @@
 				<div class="activity-description">
 					<div class="description">
 						<h4><?= $taskList[$index]['task_label'] ?></h4>
-						<p><?= $taskList[$index]['task_description'] ?></p>
+						<p>
+							<?= $taskList[$index]['task_description'] ?>
+							<? if(isset($taskList[$index]['task_is_bonus'])) { ?>
+								<em><?= wfMsg('founderprogressbar-bonus-task-notice') ?></em>
+							<? } ?>
+						</p>
 						<div class="actions">
 							<? if(empty($taskList[$index]['task_locked']) && empty($taskList[$index]['task_completed']) && $taskList[$index]['task_skippable']) { ?>
 								<a href="#" class="skip" data-tracking="list/skip/<?= $taskList[$index]['task_id'] ?>"><?= wfMsg('founderprogressbar-skip-for-now') ?></a>
