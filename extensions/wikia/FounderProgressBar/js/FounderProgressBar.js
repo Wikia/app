@@ -342,8 +342,31 @@ var FounderProgressBar = {
 		}, 13);
 	}
 };
+
+var FounderProgressBarTracking = {
+	init: function() {
+		$('#FounderProgressWidget, #FounderProgressList').live('click', function(e) {
+			var node = false;
+			var target = $(e.target);
+			if(target.is('a') || target.is('button') || target.hasClass('founder-progress-bar-click-area')) {
+				node = target;
+			} else {
+				node = target.closest('a');
+			}
+			
+			if(node) {
+				var tracking = node.data('tracking');
+				if(tracking) {
+					$.tracker.byStr('founderprogressbar/' + tracking);
+				}
+			}
+		});
+	}
+};
+
 $(function() {
 	FounderProgressList.init();
 	FounderProgressWidget.init();
 	FounderProgressBar.init();
+	FounderProgressBarTracking.init();
 });

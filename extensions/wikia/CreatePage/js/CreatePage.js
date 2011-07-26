@@ -29,7 +29,9 @@ var CreatePage = {
 			return;
 		}
 
-		e.preventDefault();
+		if (e) {
+			e.preventDefault();
+		}
 
 		if( false === CreatePage.loading ) {
 			CreatePage.loading = true;

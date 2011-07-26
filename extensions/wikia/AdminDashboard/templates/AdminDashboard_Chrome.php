@@ -1,6 +1,6 @@
 <header class="AdminDashboardHeader" id="AdminDashboardHeader">
 	<h1>
-		<a href="<?= $mainPageUrl ?>">
+		<a href="<?= $mainPageUrl ?>" data-tracking="header/wordmark">
 			<? if(empty($wordmarkUrl)) { ?>
 				<?= $wordmarkText ?>
 			<? } else { ?>
@@ -14,8 +14,8 @@
 	</nav>
 </header>
 <nav class="AdminDashboardTabs" id="AdminDashboardTabs">
-	<a href="<?= $adminDashboardUrlAdvanced ?>" class="tab <?= $tab == 'advanced' ? 'active' : '' ?>" data-section="advanced">Advanced</a>
-	<a href="<?= $adminDashboardUrlGeneral ?>" class="tab <?= $tab == 'general' ? 'active' : '' ?>" data-section="general">General</a>
+	<a href="<?= $adminDashboardUrlAdvanced ?>" class="tab <?= $tab == 'advanced' ? 'active' : '' ?>" data-section="advanced" data-tracking="header/advanced"><?= wfMsg('admindashboard-tab-advanced') ?></a>
+	<a href="<?= $adminDashboardUrlGeneral ?>" class="tab <?= $tab == 'general' ? 'active' : '' ?>" data-section="general" data-tracking="header/general"><?= wfMsg('admindashboard-tab-general') ?></a>
 </nav>
 <aside class="AdminDashboardRail" id="AdminDashboardRail" <?= $hideRail ? 'style="display:none"' : '' ?>>
 	<?= $founderProgressBar ?>

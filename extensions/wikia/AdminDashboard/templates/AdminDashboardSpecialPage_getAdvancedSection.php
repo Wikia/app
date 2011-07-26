@@ -18,7 +18,7 @@
 <?
 		foreach( $sortedPages as $desc => $specialpage ) {
 			list( $title, $restricted ) = $specialpage;
-			$link = $sk->linkKnown( $title , htmlspecialchars( $desc ) );
+			$link = $sk->linkKnown( $title , htmlspecialchars( $desc ), array('data-tracking' => 'advanced/'.str_replace(" ", "", $title->getText()) ));
 ?>
 				<li><?= $link ?></li>
 <?
