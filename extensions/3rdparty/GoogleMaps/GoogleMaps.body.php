@@ -562,6 +562,19 @@ JAVASCRIPT;
             global $wgUser, $wgVersion;
             $parsed = self::parseWikiText($pParser, $pLocalParser, preg_replace('/\r\n/', '<br />', $pCaption), $pParser->mTitle, $pParser->mOptions);
             $title = Title::newFromText($pTitle);
+
+			/* Wikia change begin - @author: macbre */
+			/* BugId:8524 */
+			// GoogleMaps extension allows user to provide title of the page to be included as
+			// a marker description. This check here is to prevent recursive parsing if the provided title
+			// is the same as the current page.
+			if ($title instanceof Title && $pLocalParser->mTitle instanceof Title) {
+				if ($title->getPrefixedText() === $pLocalParser->getTitle()->getPrefixedText()) {
+					$title = null;
+				}
+			}
+			/* Wikia change end */
+
             $revision = is_null($title) ? null :
                 Revision::newFromTitle($title);
             $parsedArticleText = is_null($revision) ? null :
