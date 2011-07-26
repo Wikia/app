@@ -60,13 +60,14 @@ if ( !empty( $wikia ) ) {
 		$content = $oArticle->getContent();
 		if ( is_object( $oArticle ) && !empty( $content ) ) {
 			echo "content = " . $oArticle->getContent() . " \n";
-			$content = stripLines( $content );
-			$regexes = buildRegexes( $content );
+			$lines = explode( "\n", $content );
+			$lines = stripLines( $lines );
+			$regexes = buildRegexes( $lines );
 			echo "Found " . count($regexes) . " regexes \n";
 			$loop = 0;
 			foreach ($regexes as $id => $regex) {
 				$m = array();
-				if (preg_match($regex, strtolower($title->getText()), $m)) {
+				if (preg_match($regex, strtolower($oTitle->getText()), $m)) {
 					echo "wikia: " . $wgDBName . " - ok ( $loop )\n";
 				}
 				$loop++;
