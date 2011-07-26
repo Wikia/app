@@ -66,18 +66,6 @@ $wgSessionMemCachedServers = array(
 	1 => "10.8.36.107:11000", # dev-memcached2
 );
 
-/**
- * definition of riak nodes for development environment
- */
-$wgRiakStorageNodes[ "storage-dev" ] = array(
-	"host" => "storage-dev",
-	"port" => "80",
-	"prefix" => "riak",
-	"proxy" => $wgHTTPProxy
-);
-$wgRiakDefaultNode = "storage-dev";
-$wgRiakSessionNode = "storage-dev";
-
 # NOTE: THIS MUST BE DONE _BEFORE_ CALLING WikiFactory::execute IF WIKIFACTORY IS BEING USED.
 include("$IP/extensions/wikia/Development/SpecialDevBoxPanel/Special_DevBoxPanel.php");
 
@@ -125,7 +113,6 @@ $wgShowExceptionDetails = true;
 $wgMemCachedDebug = true;
 $wgDebugLogFile = "/tmp/debug.log";
 $wgDefaultExternalStore = array( "DB://dev-archive");
-$wgUseImageResize   = false; // for thumbnails to work correctly
 
 // So that SASS will be generated locally.
 $wgCdnRootUrl = "";
