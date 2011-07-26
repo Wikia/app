@@ -9,11 +9,48 @@ if ( isset( $options['wikia'] ) ) $wikia = $options['wikia'];
 
 if ( !isset($title) ) {
 	echo "Invalid parameters \n";
-	echo "Use: --title REGEXLIST [--wikia DBNAME] \n";
+	echo "Use: --title REGEXLIST [--wikia WIKIID] \n";
 	exit(0);
 }
 
-$dbr = wfGetDB(DB_SLAVE, 'cron', $wgExternalSharedDB);
+function stripLines( $lines ) {
+	return array_filter( 
+		array_map( 'trim',
+			preg_replace( '/#.*$/', '',
+				$lines ) ) );
+}
+
+function buildRegexes( $lines, $batchSize=4096) {
+	global $useSpamRegexNoHttp;
+	# Make regex
+	# It's faster using the S modifier even though it will usually only be run once
+	//$regex = 'https?://+[a-z0-9_\-.]*(' . implode( '|', $lines ) . ')';
+	//return '/' . str_replace( '/', '\/', preg_replace('|\\\*/|', '/', $regex) ) . '/Si';
+	$regexes = array();
+	$regexStart = (!empty($useSpamRegexNoHttp)) ? '/(' : '/https?:\/\/+[a-z0-9_\-.]*(';
+	$regexEnd = ($batchSize > 0 ) ? ')/Si' : ')/i';
+	$build = false;
+	foreach( $lines as $line ) {
+		// FIXME: not very robust size check, but should work. :)
+		if( $build === false ) {
+			$build = $line;
+		} elseif( strlen( $build ) + strlen( $line ) > $batchSize ) {
+			$regexes[] = $regexStart .
+				str_replace( '/', '\/', preg_replace('|\\\*/|', '/', $build) ) .
+				$regexEnd;
+			$build = $line;
+		} else {
+			$build .= '|';
+			$build .= $line;
+		}
+	}
+	if( $build !== false ) {
+		$regexes[] = $regexStart .
+			str_replace( '/', '\/', preg_replace('|\\\*/|', '/', $build) ) .
+			$regexEnd;
+	}
+	return $regexes;
+}
 
 if ( !empty( $wikia ) ) {
 	echo "Checking $wikia  ...\n";
@@ -23,7 +60,8 @@ if ( !empty( $wikia ) ) {
 		$content = $oArticle->getContent();
 		if ( is_object( $oArticle ) && !empty( $content ) ) {
 			echo "content = " . $oArticle->getContent() . " \n";
-			$regexes = SpamRegexBatch::buildSafeRegexes( $content );
+			$content = stripLines( $content );
+			$regexes = buildRegexes( $content );
 			echo "Found " . count($regexes) . " regexes \n";
 			$loop = 0;
 			foreach ($regexes as $id => $regex) {
@@ -40,25 +78,27 @@ if ( !empty( $wikia ) ) {
 		echo "Page not found \n";
 	}
 } else {
+	$dbr = wfGetDB(DB_SLAVE, 'cron', wgExternalDatawareDB);
 	echo "read all Wikis \n";
-	$where = ( $wikia ) ? array('city_dbname' => $wikia ) : array('city_public' => 1);
+	$where = ( $wikia ) ? array('page_wikia_id' => $wikia ) : array();
+	$where['page_title_lower'] = mb_strtolower( $title );
 	$data = $dbr->select(
-		array('city_list'),
-		array('city_id', 'city_dbname'),
+		array('pages'),
+		array('page_wikia_id'),
 		$where,
 		__METHOD__
 	);
 	$pages = array();
 	while ($row = $dbr->fetchObject($data)) {
-		$wikis[] = array( 'id' => $row->city_id, 'name' => $row->city_dbname );
+		$wikis[] = $row->page_wikia_id ;
 	}
 	$dbr->FreeResult($data);
 
 	if ( !empty($wikis) ) {
 		foreach ( $wikis as $wiki ) {
-			$sCommand  = "SERVER_ID={$wiki['id']} php $IP/maintenance/wikia/checkSpamRegexes.php ";
+			$sCommand  = "SERVER_ID={$wiki} php $IP/maintenance/wikia/checkSpamRegexes.php ";
 			$sCommand .= "--title=" . $title . " ";
-			$sCommand .= "--wikia=" . $wiki['name'] . " ";
+			$sCommand .= "--wikia=" . $wiki . " ";
 			$sCommand .= "--conf $wgWikiaLocalSettingsPath";
 
 			$log = wfShellExec( $sCommand, $retval );
