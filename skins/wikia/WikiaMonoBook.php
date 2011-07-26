@@ -86,9 +86,13 @@ class WikiaSkinMonoBook extends SkinTemplate {
 
 	// load StaticChute before JS files from MW (wikibits, user and site JS) - BugId:960
 	public function onSkinGetHeadScripts(&$scripts) {
+		global $wgStylePath;
+		
 		$staticChute = new StaticChute('js');
 		$staticChute->useLocalChuteUrl();
-
+		
+		$scripts .= "\n<!--[if lt IE 8]><script src=\"". $wgStylePath ."/common/json2.js\"></script><![endif]-->";
+		
 		$scripts .= "\n" . $staticChute->getChuteHtmlForPackage('monobook_js');
 		return true;
 	}
