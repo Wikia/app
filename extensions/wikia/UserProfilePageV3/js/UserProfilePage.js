@@ -58,7 +58,7 @@ var UserProfilePage = {
 			
 		}).error(function(data) {
 			var response = JSON.parse(data.responseText);
-			alert( 'Error! ' + response.exception.message );
+			$.showModal('Error', response.exception.message);
 		});
 	},
 	
@@ -268,7 +268,8 @@ var UserProfilePage = {
 			UserProfilePage.renderCurrQuestion(nextButton, prevButton);
 		});
 		
-		UserProfilePage.questions = data.interviewQuestions;
+		//where data does come from?
+		//UserProfilePage.questions = data.interviewQuestions;
 		UserProfilePage.renderCurrQuestion(nextButton, prevButton);
 	},
 	
