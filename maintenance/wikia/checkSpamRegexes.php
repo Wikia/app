@@ -78,7 +78,7 @@ if ( !empty( $wikia ) ) {
 		echo "Page not found \n";
 	}
 } else {
-	$dbr = wfGetDB(DB_SLAVE, 'cron', wgExternalDatawareDB);
+	$dbr = wfGetDB(DB_SLAVE, 'cron', $wgExternalDatawareDB);
 	echo "read all Wikis \n";
 	$where = ( $wikia ) ? array('page_wikia_id' => $wikia ) : array();
 	$where['page_title_lower'] = mb_strtolower( $title );
