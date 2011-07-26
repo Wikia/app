@@ -109,11 +109,23 @@ var GamingCalendarModal = {
 	e.preventDefault();
 	$('#GamingCalendar').find('.GamingCalendarItem.selected').slideUp('slow',function() { $(this).removeClass('selected').addClass('unselected').slideDown().bind('click', GamingCalendarModal.expandOrCollapse ); });
 	$(this).slideUp('slow', function() { $(this).removeClass('unselected').addClass('selected').slideDown().unbind('click'); });
+	obj = $(this).parent().parent();
+	objTop = $(obj).position().top;
+
+	$().log($(obj).position().top + $(this).position().top);
+	$().log($(obj).position().top + $(this).position().top + $(this).height());
+
+	if ($(obj).position().top + $(this).position().top < 0) {
+		scrollBy = '+=' + Math.min( Math.abs($(obj).position().top), Math.abs( $(obj).position().top + $(this).position().top - 5 ) );
+		$(obj).animate({top: scrollBy}, 250);
+	} /*else if ($(obj).position().top + $(this).position().top + $(this).height() - $(obj).parent().height() > 0 ) {
+		scrollBy = '-=' + Math.min( Math.abs(obj.height() + obj.position().top - $(obj).parent().height()), Math.abs($(obj).position().top + $(this).position().top + $(this).height() - $(obj).parent().height() ) + 5 );
+		$(obj).animate({top: scrollBy}, 250);
+	}*/
 	$.tracker.byStr( 'gamingCalendar/brick/expand' );
     },
     
     renderPage: function(e, page) {
-    	
 	if (window.GamingCalendarModal.lastWeek && window.GamingCalendarModal.lastWeek < page + 1) {
 		window.GamingCalendarModal.renderPage(e, page - 1);
 		return;
