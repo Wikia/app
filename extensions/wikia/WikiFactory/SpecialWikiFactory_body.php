@@ -155,13 +155,16 @@ class WikiFactoryPage extends SpecialPage {
 			}
 			else {
 				/**
-				 * if $domain starts with db: it means that we want to search by
-				 * database name
+				 * if $domain starts with db: it means that we want to search by database
+				 * if $domain starts with id: it means that we want to search by city_id
 				 */
 				$cityid = null;
 				if( preg_match( "/^db\:/", $domain ) ) {
 					list( $prefix, $name ) = explode( ":", $domain, 2 );
 					$cityid = WikiFactory::DBtoID( strtolower( $name ) );
+				}
+				elseif( preg_match( "/^id\:/", $domain ) ) {
+					list( $prefix, $cityid ) = explode( ":", $domain, 2 );
 				}
 				else {
 					/**
