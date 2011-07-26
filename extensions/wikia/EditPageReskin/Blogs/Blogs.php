@@ -51,8 +51,8 @@ wfLoadExtensionNamespaces( 'Blogs', array( NS_BLOG_LISTING, NS_BLOG_LISTING_TALK
 /**
  * setup function
  */
-$wgAutoloadClasses[ "BlogArticle" ] = dirname(__FILE__) . '/BlogArticle.php';
-$wgAutoloadClasses[ "WikiaApiBlogs" ] = dirname(__FILE__) . "/api/WikiaApiBlogs.php";
+$wgAutoloadClasses[ "BlogArticle" ] = $dir . '/BlogArticle.php';
+$wgAutoloadClasses[ "WikiaApiBlogs" ] = $dir . "/api/WikiaApiBlogs.php";
 
 global $wgAPIModules;
 $wgAPIModules[ "blogs" ] = "WikiaApiBlogs";
@@ -62,8 +62,8 @@ $wgAPIModules[ "blogs" ] = "WikiaApiBlogs";
 /**
  * messages file
  */
-$wgExtensionMessagesFiles['Blogs'] = dirname(__FILE__) . '/Blogs.i18n.php';
-$wgExtensionAliasesFiles['Blogs'] = dirname(__FILE__) . '/Blogs.alias.php';
+$wgExtensionMessagesFiles['Blogs'] = $dir . '/Blogs.i18n.php';
+$wgExtensionAliasesFiles['Blogs'] = $dir . '/Blogs.alias.php';
 
 /**
  * permissions (eventually will be moved to CommonSettings.php)
@@ -106,11 +106,11 @@ $wgGroupPermissions['staff'][ 'blog-auto-follow' ] = true;
 $wgGroupPermissions['helper'][ 'blog-auto-follow' ] = false;
 
 // special pages
-$wgAutoloadClasses['CreateBlogListingPage'] = dirname(__FILE__) . '/SpecialCreateBlogListingPage.php';
+$wgAutoloadClasses['CreateBlogListingPage'] = $dir . '/SpecialCreateBlogListingPage.php';
 $wgSpecialPages['CreateBlogListingPage'] = 'CreateBlogListingPage';
 
-$wgAutoloadClasses['SpecialBlogPage'] = dirname(__FILE__) . '/SpecialBlogPage.php';
-$wgAutoloadClasses['CreateBlogPage'] = dirname(__FILE__) . '/SpecialCreateBlogPage.php';
+$wgAutoloadClasses['SpecialBlogPage'] = $dir . '/SpecialBlogPage.php';
+$wgAutoloadClasses['CreateBlogPage'] = $dir . '/SpecialCreateBlogPage.php';
 $wgSpecialPages['CreateBlogPage'] = 'CreateBlogPage';
 
 // initialize blogs special pages (BugId:7604)
