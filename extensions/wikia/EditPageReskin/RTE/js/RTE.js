@@ -71,6 +71,7 @@ window.RTE = {
 
 	// list of our RTE custom plugins (stored in js/plugins) to be loaded on editor init
 	plugins: [
+		'accesskey',
 		'comment',
 		'dialog',
 		'dragdrop',
