@@ -2,12 +2,13 @@
 /**
  * ArticleMetaDescription - adding meta-description tag containing snippet of the Article
  * 
- * It takes first paragraph of the article and put into <meta description="..." /> tag inside
- * page header section. All templates (infoboxes, tables etc.) are ignored by default. It's
- * possible to set predefined description for main page (configured in MediaWiki:Mainpage) by 
- * putting desired text into MediaWiki:Description message. 
+ * Puts the snippet from the ArticleService into <meta description="..." /> tag inside
+ * page header section. It's possible to set predefined description for main
+ * page (configured in MediaWiki:Mainpage) by putting desired text
+ * into the MediaWiki:Description message. 
  *
  * @author Adrian 'ADi' Wieczorek <adi@wikia.com>
+ * @author Sean Colombo <sean@wikia.com>
  *
  */
 
@@ -18,15 +19,16 @@ if(!defined('MEDIAWIKI')) {
 
 $wgExtensionCredits['other'][] = array(
     'name' => 'ArticleMetaDescription',
-    'version' => '1.0',
-    'author' => '[http://www.wikia.com/wiki/User:Adi3ek Adrian \'ADi\' Wieczorek]',
-    'description' => 'adding meta-description tag containing snippet of the Article'
+    'version' => '1.1',
+    'author' => '[http://www.wikia.com/wiki/User:Adi3ek Adrian \'ADi\' Wieczorek], [http://seancolombo.com Sean Colombo]',
+    'description' => 'adding meta-description tag containing snippet of the Article, provided by the ArticleService'
 );
 
 $wgHooks['OutputPageBeforeHTML'][] = 'wfArticleMetaDescription';
 
 function wfArticleMetaDescription(&$out, &$text) {
 	global $wgTitle;
+	wfProfileIn( __METHOD__ );
 		
 	$sMessage = null;
 	$sMainPage = wfMsgForContent('Mainpage');
@@ -43,37 +45,19 @@ function wfArticleMetaDescription(&$out, &$text) {
 	}
 	
 	if(($sMessage == null) || wfEmptyMsg("Description", $sMessage)) {
-		$tmp = preg_replace('/<table[^>]*>.*<\/table>/siU', '', $text);
-		$tmp = preg_replace('/<div[^>]*>.*<\/div>/siU', '', $tmp);
-		$tmp = preg_replace('/<style[^>]*>.*<\/style>/siU', '', $tmp);
-		$tmp = preg_replace('/<script[^>]*>.*<\/script>/siU', '', $tmp);
-		$tmp = preg_replace('/\n|\t/', ' ', $tmp);
-		$tmp = strip_tags($tmp, '<p>');
-	
-		$matches = null;
-		preg_match_all('/<p>(.*)<\/p>/siU', $tmp, $matches);
-		if(count($matches)) {
-			$paragraphs = $matches[1];
-			$description = "";
-			foreach($paragraphs as $paragraph) {
-				$paragraph = trim($paragraph);
-				if(!empty($paragraph)) {
-					$description = $paragraph;
-					break;
-				}
-			}
-		}		
-
-	}
-	else {
+		$DESC_LENGTH = 100;
+		$articleId = $wgTitle->getArticleID();
+		$articleService = new ArticleService( $articleId );
+		$description = $articleService->getTextSnippet( $DESC_LENGTH );
+	} else {
 		// MediaWiki:Description message found, use it
 		$description = $sMessage;
-
 	}
 	
 	if(!empty($description)) {
 		$out->addMeta('description', htmlspecialchars($description));
 	}
 
+	wfProfileOut( __METHOD__ );
 	return true;
 }
