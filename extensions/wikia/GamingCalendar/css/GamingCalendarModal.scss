@@ -75,13 +75,14 @@ $gaming-calendar-gray-text: mix($color-text, $color-page, 75%);
 		overflow: hidden;
 		width: 581px;
 		>ul {
-			width: 2000px;
+			position: relative;
 		}
 	}
-
 	.week {
+		position: absolute;
 		border-right: 1px solid $color-page-border;
-		float: left;
+		top: 0;
+		left: -290px;
 		height: 500px;
 		width: 290px;
 		h1 {

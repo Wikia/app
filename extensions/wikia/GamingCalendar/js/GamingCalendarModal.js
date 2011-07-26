@@ -2,8 +2,10 @@ var GamingCalendarModal = {
 	initialized: false,
 	modal: null,
 	displayWeek: 0,
-	firstWeek: new Date( Date.UTC( 2011, 06, 18, 0, 0, 0 ) ),
+	firstWeek: new Date( 2011, 06, 18, 0, 0, 0 ),
 	lastWeek: null,
+	thisWeek: null,
+	today: new Date(),
 	
 	init: function() {
 		$().log('init');
@@ -13,6 +15,13 @@ var GamingCalendarModal = {
 			GamingCalendarModal.initialized = true;
 		}
 
+		window.GamingCalendarModal.thisWeek = new Date(
+			window.GamingCalendarModal.today.getUTCFullYear(),
+			window.GamingCalendarModal.today.getUTCMonth(),
+			window.GamingCalendarModal.today.getUTCDate() - window.GamingCalendarModal.today.getUTCDay() + 1,
+			0, 0, 0
+		);
+
 		if (1 == window.GamingCalendarData['entries'][2].length) {
 			window.GamingCalendarModal.lastWeek = 1;
 		}
@@ -20,11 +29,9 @@ var GamingCalendarModal = {
 		var weeks = window.GamingCalendarData['entries'];
 
 		window.GamingCalendarModal.renderPage( null, 0 );
-		
-		
-		var today = new Date();
+
 		var months = new Array('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec');
-		$('#GamingCalendarWrapper > h1').append('<span>' + months[today.getMonth()] + ' ' + today.getDate() + ', ' + today.getFullYear() +'</span>');
+		$('#GamingCalendarWrapper > h1').append('<span>' + months[window.GamingCalendarModal.today.getUTCMonth()] + ' ' + window.GamingCalendarModal.today.getUTCDate() + ', ' + window.GamingCalendarModal.today.getUTCFullYear() +'</span>');
 		$('#GamingCalendarWrapper .game-more-info').trackClick('gamingCalendar/moreinfo');
 		$('#GamingCalendarWrapper .game-pre-order').trackClick('gamingCalendar/preorder');
 		$().log('finished init');
@@ -106,9 +113,13 @@ var GamingCalendarModal = {
     },
     
     renderPage: function(e, page) {
-    	var today = new Date();
-	var thisWeek = new Date( Date.UTC( today.getFullYear(),	today.getMonth(), today.getDate() - today.getDay() + 1, 0, 0, 0 ) );
-	var currentWeek = new Date( Date.UTC( thisWeek.getFullYear(), thisWeek.getMonth(), thisWeek.getDate() + ( 7 * page ), 0, 0, 0 ) );
+    	
+	if (window.GamingCalendarModal.lastWeek && window.GamingCalendarModal.lastWeek < page + 1) {
+		window.GamingCalendarModal.renderPage(e, page - 1);
+		return;
+	}
+    	var week = 7 * 24 * 3600 * 1000;
+	var currentWeek = new Date( window.GamingCalendarModal.thisWeek.getTime() + (week * page) );
 
 	if (currentWeek.getTime() < window.GamingCalendarModal.firstWeek.getTime()) {
 		window.GamingCalendarModal.renderPage(e, page + 1);
@@ -146,34 +157,75 @@ var GamingCalendarModal = {
 		});
 	}
 
-	var html = window.GamingCalendarModal.renderWeek(window.GamingCalendarData['entries'][targetWeek]) +
-			window.GamingCalendarModal.renderWeek(window.GamingCalendarData['entries'][targetWeek + 1]);
+	var html = new Array (
+		window.GamingCalendarModal.renderWeek(window.GamingCalendarData['entries'][targetWeek]),
+		window.GamingCalendarModal.renderWeek(window.GamingCalendarData['entries'][targetWeek + 1])
+	);
 
 	var obj = $('#GamingCalendar .weeks > ul');
-	obj.children('li').addClass('remove');
+	var chl = obj.children('li');
 
-	$().log(window.GamingCalendarModal.displayWeek + ', ' + page);
-
-	if (window.GamingCalendarModal.displayWeek > page) {
-		$(html).prependTo(obj).delay(100);
-		obj.children('li.new').animate({width: 290 }, 250, function() { obj.children('li.remove').remove(); });
+	if ( 0 == window.GamingCalendarModal.displayWeek && 0 == page ) {
+		$(chl.get(2)).html( html[0] );
+		$(chl.get(3)).html( html[1] );
+		$(chl.get(2)).css('left', 0);
+		$(chl.get(3)).css('left', 290);
+	} else if ( Math.abs(window.GamingCalendarModal.displayWeek - page) == 1 ) {
+		if (window.GamingCalendarModal.displayWeek < page) {
+			$(chl.get(4)).html( html[1] );
+			$(chl.get(4)).css('left', 580);
+			$(chl.get(2)).animate({left: '-=290'}, 250);
+			$(chl.get(3)).animate({left: '-=290'}, 250);
+			$(chl.get(4)).animate({left: '-=290'}, 250);
+			$(chl.get(0)).remove();
+			obj.append('<li class="week"></li>');
+		} else {
+			$(chl.get(1)).html( html[0] );
+			$(chl.get(1)).css('left', -290);
+			$(chl.get(1)).animate({left: '+=290'}, 250);
+			$(chl.get(2)).animate({left: '+=290'}, 250);
+			$(chl.get(3)).animate({left: '+=290'}, 250);
+			$(chl.get(5)).remove();
+			obj.prepend('<li class="week"></li>');
+		}
 	} else {
-		$(html).appendTo(obj);
-		obj.children('li.new').width(290).delay(100);
-		obj.children('li.remove').animate({width: 0, opacity: 0 }, 250, function() { obj.children('li.remove').remove(); });
+		if (window.GamingCalendarModal.displayWeek < page) {
+			$(chl.get(4)).html( html[0] );
+			$(chl.get(5)).html( html[1] );
+			$(chl.get(4)).css('left', 580);
+			$(chl.get(5)).css('left', 870);
+			$(chl.get(2)).animate({left: '-=290'}, 250);
+			$(chl.get(3)).animate({left: '-=290'}, 250);
+			$(chl.get(4)).animate({left: '-=290'}, 250);
+			$(chl.get(5)).animate({left: '-=290'}, 250);
+			$(chl.get(0)).remove();
+			$(chl.get(1)).remove();
+			obj.append('<li class="week"></li><li class="week"></li>');
+		} else {
+			$(chl.get(0)).html( html[0] );
+			$(chl.get(1)).html( html[1] );
+			$(chl.get(0)).css('left', -290);
+			$(chl.get(1)).css('left', -580);
+			$(chl.get(0)).animate({left: '-=290'}, 250);
+			$(chl.get(1)).animate({left: '-=290'}, 250);
+			$(chl.get(2)).animate({left: '-=290'}, 250);
+			$(chl.get(3)).animate({left: '-=290'}, 250);
+			$(chl.get(4)).remove();
+			$(chl.get(5)).remove();
+			obj.prepend('<li class="week"></li><li class="week"></li>');
+		}
 	}
+	
 	window.GamingCalendarModal.bindEventHandlers(page);
 	window.GamingCalendarModal.displayWeek = page;
 	return;
     },
 
 	bindEventHandlers: function(page) {
-		var today = new Date();
-		var thisWeek = new Date( Date.UTC( today.getFullYear(), today.getMonth(), today.getDate() - today.getDay() + 1, 0, 0, 0 ) );
-		var currentWeek = new Date( Date.UTC( thisWeek.getFullYear(), thisWeek.getMonth(), thisWeek.getDate() + ( 7 * page ), 0, 0, 0 ) );
-		var prevMonth = new Date( Date.UTC( currentWeek.getFullYear(), currentWeek.getMonth() - 1, 1, 0, 0, 0 ) );
-		var nextMonth = new Date( Date.UTC( currentWeek.getFullYear(), currentWeek.getMonth() + 1, 1, 0, 0, 0 ) );
 		var week = 7 * 24 * 3600 * 1000;
+		var currentWeek = new Date( window.GamingCalendarModal.thisWeek.getTime() + (week * page) );
+		var prevMonth = new Date( currentWeek.getFullYear(), currentWeek.getMonth() - 1, 1, 0, 0, 0 );
+		var nextMonth = new Date( currentWeek.getFullYear(), currentWeek.getMonth() + 1, 1, 0, 0, 0 );
 		var pagesPrevMonth = Math.ceil( (currentWeek - prevMonth) / week );
 		var pagesNextMonth = Math.ceil( (nextMonth - currentWeek) / week );
 
