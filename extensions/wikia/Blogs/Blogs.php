@@ -46,7 +46,7 @@ $dir = dirname( __FILE__ );
 
 $wgExtensionNamespacesFiles[ 'Blogs' ] = "{$dir}/Blogs.namespaces.php";
 
-wfLoadExtensionNamespaces( 'Blogs', array( NS_TOPLIST, NS_BLOG_LISTING_TALK, NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK ) );
+wfLoadExtensionNamespaces( 'Blogs', array( NS_BLOG_LISTING, NS_BLOG_LISTING_TALK, NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK ) );
 
 /**
  * setup function

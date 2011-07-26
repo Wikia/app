@@ -29,56 +29,24 @@ $wgExtraNamespaces[ NS_BLOG_ARTICLE_TALK ] = "User_blog_comment";
 $wgExtraNamespaces[ NS_BLOG_LISTING ] = "Blog";
 $wgExtraNamespaces[ NS_BLOG_LISTING_TALK ] = "Blog_talk";
 
+if( !empty( $wgEnableBlogsAsClassifieds ) ) {
+	// Gil's hack
+	$wgExtraNamespaces[ NS_BLOG_ARTICLE ] = "Classifieds";
+	$wgExtraNamespaces[ NS_BLOG_ARTICLE_TALK ] = "Classifieds_comment";
+	$wgExtraNamespaces[ NS_BLOG_LISTING ] = "Classifieds_list";
+	$wgExtraNamespaces[ NS_BLOG_LISTING_TALK ] = "Classifieds_list_talk";
+}
+
 $wgNamespacesWithSubpages[ NS_BLOG_ARTICLE ] = true;
 $wgNamespacesWithSubpages[ NS_BLOG_ARTICLE_TALK ] = true;
 $wgNamespacesWithSubpages[ NS_BLOG_LISTING ] = true;
 $wgNamespacesWithSubpages[ NS_BLOG_LISTING_TALK ] = true;
 
-/**
- * localized blog ns - proof of concept aka quick hack
- *
- * @see SMW includes/SMW_GlobalFunctions.php::smwfInitNamespaces
- * FIXME generalize
- */
-if (in_array($wgLanguageCode, array('de', 'ru', 'es', 'no', 'nn'))) {
-	// make en ns point (alias) to "main ns" - at this point themselves
-	foreach (array(500, 501, 502, 503) as $ns) {
-		$wgNamespaceAliases[$wgExtraNamespaces[$ns]] = $ns;
-	}
+$dir = dirname( __FILE__ );
 
-	switch ($wgLanguageCode) {
-		case "de":
-			// translate "main ns" into de
-			$wgExtraNamespaces[500] = 'Benutzer_Blog';
-			$wgExtraNamespaces[501] = 'Benutzer_Blog_Kommentare';
-			$wgExtraNamespaces[502] = 'Blog';
-			$wgExtraNamespaces[503] = 'Blog_Diskussion';
-			// the end: de name is the "main ns", en is just an alias (redirect)
-			break;
-		case "ru":
-			$wgExtraNamespaces[500] = "Блог_участника";
-			$wgExtraNamespaces[501] = "Комментарий_блога_участника";
-			$wgExtraNamespaces[502] = "Блог";
-			$wgExtraNamespaces[503] = "Обсуждение_блога";
+$wgExtensionNamespacesFiles[ 'Blogs' ] = "{$dir}/Blogs.namespaces.php";
 
-			break;
-		case "es":
-			$wgExtraNamespaces[500] = 'Usuario_Blog';
-			$wgExtraNamespaces[501] = 'Usuario_Blog_Comentario';
-			$wgExtraNamespaces[502] = 'Blog';
-			$wgExtraNamespaces[503] = 'Blog_Discusión';
-
-			break;
-		case "no":
-		case "nn":
-			$wgExtraNamespaces[500] = 'Brukerblogg';
-			$wgExtraNamespaces[501] = 'Brukerbloggkommentar';
-			$wgExtraNamespaces[502] = 'Blogg';
-			$wgExtraNamespaces[503] = 'Bloggdiskusjon';
-
-			break;
-	}
-}
+wfLoadExtensionNamespaces( 'Blogs', array( NS_BLOG_LISTING, NS_BLOG_LISTING_TALK, NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK ) );
 
 /**
  * setup function
