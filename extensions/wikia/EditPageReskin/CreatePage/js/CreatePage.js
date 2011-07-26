@@ -29,7 +29,10 @@ var CreatePage = {
 			return;
 		}
 
-		e.preventDefault();
+		// don't follow the link
+		if (e && e.preventDefault) {
+			e.preventDefault();
+		}
 
 		if( false === CreatePage.loading ) {
 			CreatePage.loading = true;

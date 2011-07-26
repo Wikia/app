@@ -29,7 +29,8 @@ var CreatePage = {
 			return;
 		}
 
-		if (e) {
+		// don't follow the link
+		if (e && e.preventDefault) {
 			e.preventDefault();
 		}
 
