@@ -256,7 +256,7 @@ class Chat {
 
 		$log->addEntry('rights',
 			$user->getUserPage(),
-			wfMsg('chat-kick-log-reason', "<em>$kicker</em>"),
+			wfMsg('chat-kick-log-reason', "$kicker"),
 			array(
 				implode(', ', $oldGroups),
 				implode(', ', $newGroups)
