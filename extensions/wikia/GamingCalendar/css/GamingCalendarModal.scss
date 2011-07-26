@@ -181,7 +181,7 @@ $gaming-calendar-gray-text: mix($color-text, $color-page, 75%);
 		width: 26px;
 		background-position: 0px -20px;
 		@if lightness($color-page) < 50 {
-			background-position: 0px -60px;
+			background-position: 0px -80px;
 		}
 		text-align: center;
 		overflow: hidden;
@@ -213,7 +213,7 @@ $gaming-calendar-gray-text: mix($color-text, $color-page, 75%);
 		width: 26px;
 		background-position: 0px -20px;
 		@if lightness($color-page) < 50 {
-			background-position: 0px -60px;
+			background-position: 0px -80px;
 		}
 		text-align: center;
 		overflow: hidden;
@@ -233,7 +233,7 @@ $gaming-calendar-gray-text: mix($color-text, $color-page, 75%);
 		&.disabled {
 		    background-position: 0px 0px;
 		    @if lightness($color-page) < 50 {
-			    background-position: 0px -40px;
+			    background-position: 0px -60px;
 		    }
 		}
 	    }
@@ -245,7 +245,7 @@ $gaming-calendar-gray-text: mix($color-text, $color-page, 75%);
 		width: 26px;
 		background-position: -94px -20px;
 		@if lightness($color-page) < 50 {
-			background-position: -94px -60px;
+			background-position: -94px -80px;
 		}
 		text-align: center;
 		overflow: hidden;
@@ -265,7 +265,7 @@ $gaming-calendar-gray-text: mix($color-text, $color-page, 75%);
 		&.disabled {
 		    background-position: -94px 0px;
 		    @if lightness($color-page) < 50 {
-			    background-position: -94px -40px;
+			    background-position: -94px -60px;
 		    }
 		}
 	    }
@@ -277,7 +277,7 @@ $gaming-calendar-gray-text: mix($color-text, $color-page, 75%);
 		width: 26px;
 		background-position: -94px -20px;
 		@if lightness($color-page) < 50 {
-			background-position: -94px -60px;
+			background-position: -94px -80px;
 		}
 		text-align: center;
 		overflow: hidden;
@@ -297,7 +297,7 @@ $gaming-calendar-gray-text: mix($color-text, $color-page, 75%);
 		&.disabled {
 		    background-position: -94px 0px;
 		    @if lightness($color-page) < 50 {
-			    background-position: -94px -40px;
+			    background-position: -94px -60px;
 		    }
 		}
 	    }
