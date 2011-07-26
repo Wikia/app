@@ -21,8 +21,10 @@ class AdminDashboardLogic {
 				"Contact",
 				"Contributions",
 				"CreateNewWiki",
+				"CreateTopList",
 				"Following",
 				"EditAccount",
+				"EditTopList",
 				"LayoutBuilder", 
 				"MovePage",
 				"PageLayoutBuilder", 
@@ -40,13 +42,10 @@ class AdminDashboardLogic {
 				"WikiFactoryReporter",
 				"WhereIsExtension",
 				"WikiaLabs",
-				'ScavengerHunt',
-				
-				//the following special pages respect the wiki theme, don't force colors there
-				"CreateTopList",
-				"EditTopList",
+				"WikiStats",
+				"ScavengerHunt",
 				"UserPathPrediction",
-				"Version"
+				"Version",
 			);
 			return (!in_array($title->getDBKey(), $exclusionList));
 		}
