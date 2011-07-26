@@ -143,7 +143,7 @@ class BodyModule extends Module {
 			$wgEnableWikiaCommentsExt, $wgExtraNamespaces, $wgExtraNamespacesLocal,
 			$wgEnableCorporatePageExt, $wgEnableSpotlightsV2_Rail,
 			$wgEnableUserProfilePagesExt, $wgABTests, $wgEnableWikiAnswers, $wgEnableWikiReviews,
-			$wgEnableBlogsAsClassifieds, $wgSalesTitles, $wgEnableHuluVideoPanel, $wgEnableGamingCalendar;
+			$wgEnableBlogsAsClassifieds, $wgSalesTitles, $wgEnableHuluVideoPanel, $wgEnableGamingCalendarExt;
 
 		if ($this->wgSuppressRail) {
 			return array();
@@ -346,7 +346,7 @@ class BodyModule extends Module {
                  * 
                  * $railModuleList[1260] = array( 'Ad', 'Index', array( 'slotname' => 'GAMING_CALENDAR_RAIL' ) );
                  */
-                if ( !empty( $wgEnableGamingCalendar ) ) {
+                if ( !empty( $wgEnableGamingCalendarExt ) ) {
 			$railModuleList[1430] = array( 'GamingCalendarRail', 'Index', array( ) );
                 }
 		else {
