@@ -196,6 +196,7 @@ packages :
 					// Wikia plugins and dialogs
 					'../js/RTE.js',
 					'../js/jquery.editor.js',
+					'../js/plugins/accesskey/plugin.js',
 					'../js/plugins/comment/plugin.js',
 					'../js/plugins/comment/dialogs/comment.js',
 					'../js/plugins/dialog/plugin.js',
