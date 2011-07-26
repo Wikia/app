@@ -367,6 +367,15 @@ class SpecialScavengerHunt extends SpecialPage {
 			$highlight
 		);
 
+		// no landing button position
+		$this->ifAnyEmpty(
+			$data,
+			array( 'landingButtonX', 'landingButtonY' ),
+			wfMsg( 'scavengerhunt-form-error-landing-button-position' ),
+			$errors,
+			$highlight
+		);
+
 		// no starting clue
 		$this->ifAnyEmpty(
 			$data,
@@ -417,12 +426,12 @@ class SpecialScavengerHunt extends SpecialPage {
 				( (int)$data[ $property ]['Y1'] >= (int)$data[ $property ]['Y2'] )) {
 				$errors[] = wfMsg( 'scavengerhunt-form-error-'.$property.'-sprite-empty' );
 				if ( (int)$data[ $property ]['X1'] >= (int)$data[ $property ]['X2'] ) {
-					$highlight[] = $property."X1";
-					$highlight[] = $property."X2";
+					$highlight[] = $property.'X1';
+					$highlight[] = $property.'X2';
 				}
 				if (  (int)$data[ $property ]['Y1'] >= (int)$data[ $property ]['Y2']  ) {
-					$highlight[] = $property."Y1";
-					$highlight[] = $property."Y2";
+					$highlight[] = $property.'Y1';
+					$highlight[] = $property.'Y2';
 				}
 			}
 		}
