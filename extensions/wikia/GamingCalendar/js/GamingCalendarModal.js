@@ -108,20 +108,30 @@ var GamingCalendarModal = {
     expandOrCollapse: function(e) {
 	e.preventDefault();
 	$('#GamingCalendar').find('.GamingCalendarItem.selected').slideUp('slow',function() { $(this).removeClass('selected').addClass('unselected').slideDown().bind('click', GamingCalendarModal.expandOrCollapse ); });
-	$(this).slideUp('slow', function() { $(this).removeClass('unselected').addClass('selected').slideDown().unbind('click'); });
-	obj = $(this).parent().parent();
-	objTop = $(obj).position().top;
+	$(this).slideUp('slow', function() { $(this).removeClass('unselected').addClass('selected').slideDown(
+		'slow', function() {
+			var obj = $(this).parent().parent();
+			var objTop = $(obj).position().top;
+			var objHeight = $(obj).height();
+			var thisTop = $(this).position().top;
+			var thisHeight = $(this).height();
+			var vpHeight = $(obj).parent().height();
 
-	$().log($(obj).position().top + $(this).position().top);
-	$().log($(obj).position().top + $(this).position().top + $(this).height());
-
-	if ($(obj).position().top + $(this).position().top < 0) {
-		scrollBy = '+=' + Math.min( Math.abs($(obj).position().top), Math.abs( $(obj).position().top + $(this).position().top - 5 ) );
-		$(obj).animate({top: scrollBy}, 250);
-	} /*else if ($(obj).position().top + $(this).position().top + $(this).height() - $(obj).parent().height() > 0 ) {
-		scrollBy = '-=' + Math.min( Math.abs(obj.height() + obj.position().top - $(obj).parent().height()), Math.abs($(obj).position().top + $(this).position().top + $(this).height() - $(obj).parent().height() ) + 5 );
-		$(obj).animate({top: scrollBy}, 250);
-	}*/
+			if (objTop + thisTop < 0) {
+				var scrollBy = '+=' + Math.min(
+					Math.abs(objTop),
+					Math.abs(objTop + thisTop) + 5
+				);
+				$(obj).animate({top: scrollBy}, 250);
+			} else if (objTop + thisTop + thisHeight - vpHeight > 0) {
+				var scrollBy = '-=' + Math.min(
+					Math.abs(objHeight + objTop - vpHeight),
+					Math.abs(objTop + thisTop + thisHeight - vpHeight) + 20
+				);
+				$(obj).animate({top: scrollBy}, 250);
+			}
+		}
+	).unbind('click'); });
 	$.tracker.byStr( 'gamingCalendar/brick/expand' );
     },
     
