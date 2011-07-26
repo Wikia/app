@@ -39,7 +39,7 @@ if ( !empty($wikis) ) {
 				echo "Found page: $title ({$row->page_id}) \n";
 				$oGTitle = GlobalTitle::newFromId( $row->page_id, $wiki['id'] );
 				if ( $oGTitle ) {
-					$text = $GTitle->getText();
+					$text = $oGTitle->getText();
 					$regexes = SpamRegexBatch::buildSafeRegexes( $text );
 					echo "Found " . count($regexes) . " regexes \n";
 					$loop = 0;
