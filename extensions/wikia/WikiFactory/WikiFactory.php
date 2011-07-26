@@ -401,6 +401,7 @@ class WikiFactory {
 				$city_id = self::DomainToId( $host );
 			}
 			else {
+				$host = preg_replace('/^(?:preview\.|verify\.)/i', '', $host);
 				$city_id = self::DomainToId( $host );
 			}
 		}
