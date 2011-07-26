@@ -9,6 +9,12 @@
 
 	<div class="weeks">
 		<ul>
+			<li class="week"></li>
+			<li class="week"></li>
+			<li class="week"></li>
+			<li class="week"></li>
+			<li class="week"></li>
+			<li class="week"></li>
 		</ul>
 	</div>
 
@@ -25,7 +31,6 @@
 	</div>
 
    <script type="text/template" id="GamingCalendarWeekTemplate">
-		<li class="week">
 			<h1>
 				<span>%week-caption%</span>
 				%startmonth% %start% - %endmonth% %end%
@@ -35,6 +40,5 @@
 				<ul>%items%</ul>
 			</div>
 			<div class="scroll-down"><img src="<?= $wgBlankImgUrl ?>" height="0" width="0"></div>
-		</li>
    </script>	
 </section>
