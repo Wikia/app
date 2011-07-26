@@ -72,6 +72,7 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 			'Upload' => true,
 			'CreateBlogPage' => true,
 			'MultipleUpload' => true,
+			'ScavengerHunt' => true
 		);
 
 		$wgMessageCache->loadAllMessages();

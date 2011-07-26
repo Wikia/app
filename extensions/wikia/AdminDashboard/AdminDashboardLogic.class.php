@@ -40,6 +40,7 @@ class AdminDashboardLogic {
 				"WikiFactoryReporter",
 				"WhereIsExtension",
 				"WikiaLabs",
+				'ScavengerHunt',
 				
 				//the following special pages respect the wiki theme, don't force colors there
 				"CreateTopList",
