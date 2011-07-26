@@ -253,6 +253,8 @@ class UserIdentityBox {
 		
 		if ( !$this->user->isAnon() ) {
 			$cachedData = $this->app->wg->Memc->get( $this->getMemcTopWikisId() );
+			$cachedData = null;
+			
 			if( !empty( $cachedData) ) {
 				$this->app->wf->ProfileOut(__METHOD__);
 				return $cachedData;
@@ -347,7 +349,8 @@ class UserIdentityBox {
 		foreach ( $wikis as $wikiId => $editCount ) {
 			if( !$this->isTopWikiHidden($wikiId) || ($wikiId == $this->app->wg->CityId) ) {
 				$wikiName = F::build('WikiFactory', array('wgSitename', $wikiId), 'getVarValueByName');
-				$wikiUrl = F::build('WikiFactory', array('wgServer', $wikiId), 'getVarValueByName');
+				$wikiUrl = F::build('GlobalTitle', array(wfMsgForContent('Mainpage'), NS_MAIN, $wikiId), 'newFromText')->getFullUrl();
+				
 				$wikis[$wikiId] = array( 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'editCount' => $editCount );
 			} else {
 				unset($wikis[$wikiId]);
