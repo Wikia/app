@@ -451,6 +451,7 @@ class FounderProgressBarController extends WikiaController {
 				$bonusTask["task_locked"] = 1;
 			}
 			$bonusTask["task_skippable"] = 0;
+			$bonusTask["task_is_bonus"] = 1;
 			
 			$bonusTaskList[] = $bonusTask;
 		}
