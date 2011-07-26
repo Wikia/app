@@ -1,7 +1,3 @@
-$(function() {
-	InterviewSpecialPage.init();
-});
-
 var InterviewSpecialPage = {
 		ajaxEntryPoint: '/wikia.php?controller=InterviewSpecialPage&format=json',
 
@@ -64,3 +60,7 @@ var InterviewSpecialPage = {
 		}
 
 	};
+
+$(function() {
+	InterviewSpecialPage.init();
+});

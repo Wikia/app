@@ -1,7 +1,3 @@
-$(function() {
-	UserProfilePage.init();
-});
-
 var UserProfilePage = {
 	ajaxEntryPoint: '/wikia.php?controller=UserProfilePage&format=json',
 	questions: [],
@@ -62,7 +58,7 @@ var UserProfilePage = {
 			
 		}).error(function(data) {
 			var response = JSON.parse(data.responseText);
-			alert( 'Error! '+response.exception.message );
+			alert( 'Error! ' + response.exception.message );
 		});
 	},
 	
@@ -123,8 +119,6 @@ var UserProfilePage = {
 		
 		if( file !== '' ) {
 			avatarForm.submit();
-		} else {
-			
 		}
 	},
 	
@@ -307,11 +301,11 @@ var UserProfilePage = {
 
 		if( question != null ) {
 			UserProfilePage.modal.find('#UPPLightboxCurrQuestionCaption').html(question.caption);
-			UserProfilePage.modal.find('#UPPLightboxCurrQuestionBody').html(question.body)
-			UserProfilePage.modal.find('#UPPLightboxCurrQuestionAnswerBody').val(question.answerBody)
+			UserProfilePage.modal.find('#UPPLightboxCurrQuestionBody').html(question.body);
+			UserProfilePage.modal.find('#UPPLightboxCurrQuestionAnswerBody').val(question.answerBody);
 
 			if(this.currQuestionIndex == 0) {
-				prevButton.attr('disabled', 'disabled')
+				prevButton.attr('disabled', 'disabled');
 				//nextButton.attr('disabled', '');
 			}
 			else {
@@ -331,7 +325,7 @@ var UserProfilePage = {
 	
 	saveUserData: function(doRedirect, modal) {
 		if( typeof(doRedirect) === 'undefined' ) {
-			var doRedirect = true;
+			doRedirect = true;
 		}
 		
 		var userData = UserProfilePage.getFormData();
@@ -380,7 +374,7 @@ var UserProfilePage = {
 				day: null
 			};
 			
-			for(i in userData) {
+			for(var i in userData) {
 				if( typeof($(document.userData[i]).val()) !== 'undefined' ) {
 					userData[i] = $(document.userData[i]).val();
 				}
@@ -399,7 +393,7 @@ var UserProfilePage = {
 			daysInMonth = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
 			selectedMonth = selectboxes.month.val();
 		
-		for(i = 1; i <= daysInMonth[selectedMonth - 1]; i++) {
+		for(var i = 1; i <= daysInMonth[selectedMonth - 1]; i++) {
 			options += '<option value="'+ i + '">' + i + '</option>';
 		}
 		options = '<option value="0">--</option>' + options;
@@ -421,7 +415,7 @@ var UserProfilePage = {
 					day: 'birthday_date'
 				};
 				
-				for(i in userData) {
+				for(var i in userData) {
 					if( typeof($(document.userData[i]).val()) !== 'undefined' ) {
 						var key = userData[i];
 						
@@ -578,3 +572,7 @@ var UserProfilePage = {
 		});
 	}
 }
+
+$(function() {
+	UserProfilePage.init();
+});
