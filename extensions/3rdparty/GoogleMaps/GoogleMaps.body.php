@@ -569,7 +569,7 @@ JAVASCRIPT;
 			// a marker description. This check here is to prevent recursive parsing if the provided title
 			// is the same as the current page.
 			if ($title instanceof Title && $pLocalParser->mTitle instanceof Title) {
-				if ($title->getPrefixedText() === $pLocalParser->getTitle()->getPrefixedText()) {
+				if ($title->equals($pLocalParser->getTitle())) {
 					$title = null;
 				}
 			}
