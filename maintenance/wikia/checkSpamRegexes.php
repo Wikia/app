@@ -25,7 +25,7 @@ $data = $dbr->select(
 );
 $pages = array();
 while ($row = $dbr->fetchObject($data)) {
-	$wikis[] = array( 'id' => $row->city_id, 'name' => 'city_dbname' );
+	$wikis[] = array( 'id' => $row->city_id, 'name' => $row->city_dbname );
 }
 $dbr->FreeResult($data);
 
