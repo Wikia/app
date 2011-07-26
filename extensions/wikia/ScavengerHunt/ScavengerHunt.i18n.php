@@ -81,6 +81,7 @@ $messages['en'] = array(
 	'scavengerhunt-form-error-no-landing-title' => 'Please enter the Landing page name (valid URL).',
 	'scavengerhunt-form-error-invalid-title' => 'The following page title was not found: "$1".',
 	'scavengerhunt-form-error-landing-button-text' => 'Please enter the Landing page button text.',
+	'scavengerhunt-form-error-landing-button-position' => 'Please enter the Landing page button position.',
 	'scavengerhunt-form-error-starting-clue' => 'Please fill in all fields in the starting clue section.',
 	'scavengerhunt-form-error-entry-form' => 'Please fill in all fields in the entry form section.',
 	'scavengerhunt-form-error-goodbye' => 'Please fill in all fields in goodbye popup section.',

@@ -64,11 +64,11 @@
 		<div class="short scavenger-formfield-simple scavenger-general">
 			<label>
 				<?= wfMsg('scavengerhunt-label-landing-button-x') ?>
-				<input type="text" name="landingButtonX" class="scavenger-image-offset  <?= in_array('landingButtonX', $highlight) ? 'sh-error' : '' ?>" value="<?= htmlspecialchars($landingButtonX) ?>">
+				<input type="text" name="landingButtonX" class="scavenger-image-offset <?= in_array('landingButtonX', $highlight) ? 'sh-error' : '' ?>" value="<?= htmlspecialchars($landingButtonX) ?>">
 			</label>
 			<label>
 				<?= wfMsg('scavengerhunt-label-landing-button-y') ?>
-				<input type="text" name="landingButtonY" class="scavenger-image-offset  <?= in_array('landingButtonY', $highlight) ? 'sh-error' : '' ?>" value="<?= htmlspecialchars($landingButtonY) ?>">
+				<input type="text" name="landingButtonY" class="scavenger-image-offset <?= in_array('landingButtonY', $highlight) ? 'sh-error' : '' ?>" value="<?= htmlspecialchars($landingButtonY) ?>">
 			</label>
 		</div>
 		<div>
@@ -101,7 +101,7 @@
 		</div>
 		<label>
 			<?= wfMsg('scavengerhunt-label-clue-color') ?>
-			<input type="text" name="clueColor" class="scavenger-image-offset  <?= in_array('clueColor', $highlight) ? 'sh-error' : '' ?>" value="<?= htmlspecialchars($clueColor) ?>">
+			<input type="text" name="clueColor" class="scavenger-image-offset <?= in_array('clueColor', $highlight) ? 'sh-error' : '' ?>" value="<?= htmlspecialchars($clueColor) ?>">
 		</label>
 		<label>
 			<?= wfMsg('scavengerhunt-label-clue-size') ?>
