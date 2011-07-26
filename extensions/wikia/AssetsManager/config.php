@@ -136,7 +136,14 @@ $config['wikiaphone_css'] = array(
 	'type' => AssetsManager::TYPE_CSS,
 	'assets' => array(
 		'//skins/wikiaphone/main.css',
-		'//skins/wikiaphone/skin.css'
+		'//skins/wikiaphone/skin.css',
+	)
+);
+
+$config['wikiaphone_site_css'] = array(
+	'type' => AssetsManager::TYPE_CSS,
+	'assets' => array(
+		'#function_SkinWikiaphone::getSiteCSS'
 	)
 );
 

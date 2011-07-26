@@ -10,9 +10,8 @@
 
 class AssetsConfig {
 
-	public static function getSiteCSS($combine) {
+	public static function getSiteCSS( $combine, $minify = null, $params = null, $skinname = 'oasis', $articleName = 'Wikia.css') {
 		$srcs = array();
-
 		global $wgSquidMaxage;
 		$siteargs = array(
 			'action' => 'raw',
@@ -24,34 +23,34 @@ class AssetsConfig {
 			'smaxage' => $wgSquidMaxage
 		) + $siteargs );
 		$siteargs['gen'] = 'css';
-		$siteargs['useskin'] = 'oasis';
-
-		$srcs[] = Title::newFromText('Wikia.css', NS_MEDIAWIKI)->getFullURL($query);
-		$srcs[] = Title::newFromText('-')->getFullURL(wfArrayToCGI($siteargs));
+		$siteargs['useskin'] = $skinname;
+		
+		$srcs[] = Title::newFromText( $articleName, NS_MEDIAWIKI)->getFullURL( $query );
+		$srcs[] = Title::newFromText( '-' )->getFullURL( wfArrayToCGI( $siteargs ) );
 
 		return $srcs;
 	}
 
-	public static function getSiteJS($combine) {
+	public static function getSiteJS( $combine ) {
 		return array(Title::newFromText('-')->getFullURL('action=raw&smaxage=0&gen=js&useskin=oasis'));
 	}
 
-	public static function getRTEAssetsEx($combine,$path) {
+	public static function getRTEAssetsEx( $combine, $path ) {
 		global $IP;
 
 		$files = array();
 
-		if($combine) {
-			$input = file_get_contents($IP . '/' . $path . '/ckeditor/ckeditor.wikia.pack');
-			$input = substr($input, strpos($input, 'files :') + 7);
-			$input = trim($input, " \n\t[]{}");
+		if( $combine ) {
+			$input = file_get_contents( $IP . '/' . $path . '/ckeditor/ckeditor.wikia.pack' );
+			$input = substr( $input, strpos($input, 'files :') + 7 );
+			$input = trim( $input, " \n\t[]{}" );
 
 			// CK core files
 			$files[] = $path . '/ckeditor/_source/core/ckeditor_base.js';
 
 			// get all *.js files
-			if (preg_match_all('%[^/]\'([^\']+).js%', $input, $matches, PREG_SET_ORDER)) {
-				foreach($matches as $match) {
+			if ( preg_match_all( '%[^/]\'([^\']+).js%', $input, $matches, PREG_SET_ORDER ) ) {
+				foreach( $matches as $match ) {
 					$name = $match[1] . '.js';
 					$files[] = $path . '/ckeditor/' . $name;
 				}
@@ -64,22 +63,22 @@ class AssetsConfig {
 		return $files;
 	}
 	
-	public static function getRTEAssets($combine) {
-		return self::getRTEAssetsEx($combine,"extensions/wikia/RTE");
+	public static function getRTEAssets( $combine ) {
+		return self::getRTEAssetsEx( $combine,"extensions/wikia/RTE" );
 	}
 	
 	public static function getRTEAssetsEPL($combine) {
-		$files = self::getRTEAssetsEx($combine,"extensions/wikia/EditPageReskin/RTE");
-		if (!$combine) {
+		$files = self::getRTEAssetsEx( $combine, "extensions/wikia/EditPageReskin/RTE" );
+		if ( !$combine ) {
 			$files[] = 'extensions/wikia/EditPageReskin/RTE/js/jquery.editor.js';
 		}
 		return $files;
 	}
 
-	public static function getEPLAssets($combine) {
+	public static function getEPLAssets( $combine ) {
 		global $IP;
 		$file = "$IP/extensions/wikia/EditPageLayout/assets-config.php";
-		if ( file_exists($file) ) {
+		if ( file_exists( $file ) ) {
 			include $file;
 			return $files;
 		}
@@ -93,13 +92,13 @@ class AssetsConfig {
 	 *
 	 * @author Inez Korczyński <korczynski@gmail.com>
  	 */
-	public function getGroupType($groupName) {
-		if(empty($this->mConfig)) {
-			include('config.php');
+	public function getGroupType( $groupName ) {
+		if( empty( $this->mConfig ) ) {
+			include( 'config.php' );
 			$this->mConfig = $config;
 		}
 
-		if(isset($this->mConfig[$groupName])) {
+		if( isset( $this->mConfig[$groupName] ) ) {
 			return $this->mConfig[$groupName]['type'];
 		} else {
 			return null;
@@ -111,13 +110,13 @@ class AssetsConfig {
 	 *
 	 * @author Inez Korczyński <korczynski@gmail.com>
  	 */
-	protected function getGroupAssets($groupName) {
-		if(empty($this->mConfig)) {
+	protected function getGroupAssets( $groupName ) {
+		if(empty( $this->mConfig ) ) {
 			include('config.php');
 			$this->mConfig = $config;
 		}
 
-		if(isset($this->mConfig[$groupName])) {
+		if(isset( $this->mConfig[$groupName] ) ) {
 			return $this->mConfig[$groupName]['assets'];
 		} else {
 			return array();
@@ -129,8 +128,8 @@ class AssetsConfig {
 	 *
 	 * @author Inez Korczyński <korczynski@gmail.com>
  	 */
-	public function resolve(/* string */ $groupName, /* boolean */ $combine = true, /* boolean */ $minify = true, /* array */ $params = array()) {
-		return $this->resolveItemsToAssets($this->getGroupAssets($groupName), $combine, $minify, $params);
+	public function resolve( /* string */ $groupName, /* boolean */ $combine = true, /* boolean */ $minify = true, /* array */ $params = array() ) {
+		return $this->resolveItemsToAssets( $this->getGroupAssets( $groupName ), $combine, $minify, $params );
 	}
 
 	/**
@@ -139,27 +138,27 @@ class AssetsConfig {
 	 *
 	 * @author Inez Korczyński <korczynski@gmail.com>
  	 */
-	private function resolveItemsToAssets(/* array */ $items, /* boolean */ $combine, /* boolean */ $minify, /* array */ $params) {
+	private function resolveItemsToAssets( /* array */ $items, /* boolean */ $combine, /* boolean */ $minify, /* array */ $params ) {
 
 		$assets = array();
 
-		foreach($items as $item) {
-			if(substr($item, 0, 2) == '//') {
+		foreach( $items as $item ) {
+			if( substr( $item, 0, 2 ) == '//' ) {
 
 				// filepath - most typical case
-				$assets[] = substr($item, 2);
+				$assets[] = substr( $item, 2 );
 
 			} else if(substr($item, 0, 7) == '#group_') {
 
 				// reference to another group
-				$assets = array_merge($assets, $this->resolve(substr($item, 7)));
+				$assets = array_merge( $assets, $this->resolve( substr( $item, 7 ) ) );
 
-			} else if(substr($item, 0, 10) == '#function_') {
+			} else if( substr ($item, 0, 10 ) == '#function_' ) {
 
 				// reference to a function that returns array of URIs
-				$assets = array_merge($assets, call_user_func(substr($item, 10), $combine, $minify, $params));
+				$assets = array_merge( $assets, call_user_func( substr( $item, 10 ), $combine, $minify, $params ) );
 
-			} else if(Http::isValidURI($item)) {
+			} else if( Http::isValidURI( $item ) ) {
 
 				// reference to remote file (http and https)
 				$assets[] = $item;

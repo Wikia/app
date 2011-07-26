@@ -54,8 +54,15 @@ class SkinWikiaphone extends SkinTemplate {
 	}
 
 	function setupSkinUserCss( OutputPage $out ){
+		global $wgDevelEnvironment;
 		foreach ( AssetsManager::getInstance()->getGroupCommonURL( 'wikiaphone_css' ) as $src ) {
 			$out->addStyle( $src );
+		}
+		
+		if ( $wgDevelEnvironment ) {
+			foreach ( AssetsManager::getInstance()->getGroupCommonURL( 'wikiaphone_site_css' ) as $src ) {
+				$out->addStyle( $src );
+			}
 		}
 	}
 	
@@ -104,7 +111,11 @@ class SkinWikiaphone extends SkinTemplate {
 		
 		return true;
 	}
-
+	
+	public static function getSiteCSS( $combine, $minify = null, $params = null, $skinname = 'oasis', $articleName = 'Wikia.css') {
+		return AssetsConfig::getSiteCSS( $combine, $minify, $params, 'wikiaphone', 'WikiaPhone.css' );
+	}
+	
 	protected function afterContentHook () {
 		global $wgCityId, $wgRightsUrl;
 		
