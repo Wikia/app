@@ -85,6 +85,7 @@
 	/* right rail adjustments */
 	&.editpage-sourcewidemode-on {
 		#EditPageRail {
+			height: 39px !important; /* bugid: 9207 */
 			position: absolute;
 			top: 0;
 			right: 0;
