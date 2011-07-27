@@ -3,7 +3,6 @@
 class  SkeleSkinWikiHeaderService extends WikiaService {
 	
 	public function index() {
-	
 		$themeSettings = F::build('ThemeSettings');
 		$settings = $themeSettings->getSettings();
 
@@ -12,7 +11,8 @@ class  SkeleSkinWikiHeaderService extends WikiaService {
 		$this->wordmarkType = $settings["wordmark-type"];
 		$this->wordmarkSize = $settings["wordmark-font-size"];
 		$this->wordmarkFont = $settings["wordmark-font"];
-
+		echo "aaaaa";
+		return false;
 	}
 
 }

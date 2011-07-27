@@ -156,14 +156,7 @@ $config['wikiaphone_js'] = array(
 	)
 );
 
-//SkeleSkin CSS and JS
-$config['skeleskin_css'] = array(
-	'type' => AssetsManager::TYPE_CSS,
-	'assets' => array(
-		'//skins/skeleskin/css/main.css'
-	)
-);
-
+//SkeleSkin JS
 $config['skeleskin_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
