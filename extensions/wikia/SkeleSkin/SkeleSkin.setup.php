@@ -12,21 +12,6 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $app = F::app();
 $dir = dirname( __FILE__ );
 
-
-$wgExtensionFunctions[] = 'wfSkeleSkinSetup';
-
-
-// TODO: why do we have this code here? It should be placed in ThemeDesigner
-function SkeleSkin_UploadVerification($destName, $tempPath, &$error) {
-	$destName = strtolower($destName);
-	if($destName == 'wiki-wordmark.png' || $destName == 'wiki-background') {
-		// BugId:983
-		$error = wfMsg('themedesigner-manual-upload-error');
-		return false;
-	}
-	return true;
-}
-
 /**
  * info
  */
@@ -34,7 +19,7 @@ $app->wg->append(
 	'wgExtensionCredits',
 	array(
 		"name" => "SkeleSkin",
-		"description" => "Skin for smartphones",
+		"description" => "Skin skeleton for smartphones",
 		"author" => array(
 			'Federico "Lox" Lucignano <federico(at)wikia-inc.com>',
 			'Jakub Olek <bukaj.kelo(at)gmail.com>'
@@ -50,10 +35,12 @@ $app->wg->append(
 /**
  * services
  */
-
+$app->wg->set( 'wgAutoloadClasses', "{$dir}/SkeleSkinService.class.php", 'SkeleSkinService' );
+$app->wg->set( 'wgAutoloadClasses', "{$dir}/SkeleSkinWikiHeaderService.class.php", 'SkeleSkinWikiHeaderService' );
 /**
  * controllers
  */
+
 
 /**
  * special pages

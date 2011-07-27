@@ -435,6 +435,7 @@ $wgSkipSkins = array(
 		'answers',
 		'vector',
 		'campfire',
+		'skeleskin'
 );
 /**
  * @name wgSkipOldSkins
@@ -855,4 +856,4 @@ $wgSpecialEditCountExludedUsernames = array(
 /**
  * List of mobile skins
  */
-$wgMobileSkins = array( 'wikiphone', 'wikiaapp' );
+$wgMobileSkins = array( 'wikiphone', 'wikiaapp', 'skeleskin' );

@@ -2,13 +2,11 @@
 if( !defined( 'MEDIAWIKI' ) )
 	die( -1 );
 
-class SkinSkele extends SkinTemplate {
+
+class SkinSkeleskin extends SkinTemplate {
 
 	function __construct() {
-		$this->skinname  = 'skeleskin';
-		$this->stylename = 'skeleskin';
-		$this->template  = 'SkeleSkinTemplate';
-		$this->themename = 'skeleskin';
+		parent::__construct();
 	}
 
 	function initPage( OutputPage $out ) {
@@ -17,24 +15,38 @@ class SkinSkele extends SkinTemplate {
 		$this->stylename = 'skeleskin';
 		$this->template  = 'SkeleSkinTemplate';
 		$this->themename = 'skeleskin';
-
+		
 		// register templates
 		global $wgWikiaTemplateDir;
 		$dir = dirname( __FILE__ ) . '/';
 		$wgWikiaTemplateDir['SharedTemplates'] = $dir.'skeleskin';
+		
+		foreach ( AssetsManager::getInstance()->getGroupCommonURL( 'skeleskin_css' ) as $src ) {
+			$out->addStyle( $src );
+		}
+
+		
 	}
 
-	function setupSkinUserCss( OutputPage $out ) {}
+
+	
+	public function onSkinGetHeadScripts(&$scripts) {
+		
+		foreach ( AssetsManager::getInstance()->getGroupCommonURL( 'skeleskin_js' ) as $src ) {
+			$scripts .= "\n<script src=\"{$src}\"></script>";
+		}
+		
+		return true;
+	}
+	
 }
 
 class SkeleSkinTemplate extends QuickTemplate {
 
 	function execute() {
-		Module::setSkinTemplateObj( $this );
-
-		$entryModuleName = Wikia::getVar( 'SkeleSkinEntryModuleName', 'Skeleskin' );
-
-		$response = F::app()->sendRequest( $entryModuleName, 'index', null, false );
+		global $wgOut;
+		
+		$response = F::app()->sendRequest( 'SkeleSkinService', 'index' );
 
 		$response->sendHeaders();
 		$response->render();

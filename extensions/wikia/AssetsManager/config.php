@@ -156,6 +156,21 @@ $config['wikiaphone_js'] = array(
 	)
 );
 
+//SkeleSkin CSS and JS
+$config['skeleskin_css'] = array(
+	'type' => AssetsManager::TYPE_CSS,
+	'assets' => array(
+		'//skins/skeleskin/css/main.css'
+	)
+);
+
+$config['skeleskin_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//skins//common/zepto/zepto-0.6.js'
+	)
+);
+
 //WikiaApp JS and CSS
 $config['wikiaapp_css'] = array(
 	'type' => AssetsManager::TYPE_CSS,
