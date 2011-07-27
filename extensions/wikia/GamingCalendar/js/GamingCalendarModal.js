@@ -254,13 +254,13 @@ var GamingCalendarModal = {
 		var calendarElement = $('#GamingCalendar');
 
 		calendarElement.find('.forward-week').unbind('click').removeClass('disabled');
-		calendarElement.find('.forward-week').bind('click', function(event) { GamingCalendarModal.renderPage(event, page + 1); });
+		calendarElement.find('.forward-week').bind('click', function(event) { GamingCalendarModal.renderPage(event, page + 1); $.tracker.byStr( 'gamingCalendar/scroll/forward/week' ); });
 		calendarElement.find('.back-week').unbind('click').removeClass('disabled');
-		calendarElement.find('.back-week').bind('click', function(event) { GamingCalendarModal.renderPage(event, page - 1); });
+		calendarElement.find('.back-week').bind('click', function(event) { GamingCalendarModal.renderPage(event, page - 1); $.tracker.byStr( 'gamingCalendar/scroll/backward/week' ); });
 		calendarElement.find('.forward-month').unbind('click').removeClass('disabled');
-		calendarElement.find('.forward-month').bind('click', function(event) { GamingCalendarModal.renderPage( event, page + pagesNextMonth ); });
+		calendarElement.find('.forward-month').bind('click', function(event) { GamingCalendarModal.renderPage( event, page + pagesNextMonth ); $.tracker.byStr( 'gamingCalendar/scroll/forward/month' ); });
 		calendarElement.find('.back-month').unbind('click').removeClass('disabled');
-		calendarElement.find('.back-month').bind('click', function(event) { GamingCalendarModal.renderPage( event, page - pagesPrevMonth ); });
+		calendarElement.find('.back-month').bind('click', function(event) { GamingCalendarModal.renderPage( event, page - pagesPrevMonth ); $.tracker.byStr( 'gamingCalendar/scroll/backward/month' ); });
 		calendarElement.find('.scroll-up').unbind('click').bind('click', GamingCalendarModal.scrollUp);
 		calendarElement.find('.scroll-down').unbind('click').bind('click', GamingCalendarModal.scrollDown);
 		calendarElement.find('.GamingCalendarItem').unbind('click');
@@ -271,7 +271,7 @@ var GamingCalendarModal = {
 		todayButton.unbind('click');
 
 		if (0 != page) {
-			todayButton.bind('click', function(event) { GamingCalendarModal.renderPage( event, 0 ); } ).removeClass('disabled');
+			todayButton.bind('click', function(event) { GamingCalendarModal.renderPage( event, 0 ); $.tracker.byStr( 'gamingCalendar/scroll/today' ); } ).removeClass('disabled');
 		} else {
 			todayButton.addClass('disabled');
 		}
@@ -287,7 +287,5 @@ var GamingCalendarModal = {
 			calendarElement.find('.back-week').addClass('disabled');
 			calendarElement.find('.back-week').unbind('click');
 		}
-
-		$.tracker.byStr( 'gamingCalendar/scroll/forward/week' );
 	}
 };
