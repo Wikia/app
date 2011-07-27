@@ -59,8 +59,8 @@ class UserRenameGlobalTask extends BatchTask {
 			wfRunHooks( $hookName, array( $dbw, $this->mParams['rename_user_id'], $this->mParams['rename_old_name'], $this->mParams['rename_new_name'], $this, &$tasks ) );
 
 			foreach( $tasks as $task ) {
-				$this->addLog( "Updating stats: {$task['table']}:{$task['username_column']}" );
-				$this->renameInTable( $dbw, $task['table'], $this->mParams['rename_user_id'], $this->mParams['rename_old_name'], $this->mParams['rename_new_name'], $task );
+				$process->addLog( "Updating stats: {$task['table']}:{$task['username_column']}" );
+				$process->renameInTable( $dbw, $task['table'], $this->mParams['rename_user_id'], $this->mParams['rename_old_name'], $this->mParams['rename_new_name'], $task );
 			}
 
 			$hookName = 'UserRename::AfterStats';
@@ -70,7 +70,7 @@ class UserRenameGlobalTask extends BatchTask {
 			$dbw->commit();
 			$process->addLog( 'Finished updating shared database: stats' );
 		}
-                
+
 		return true;
 	}
 
