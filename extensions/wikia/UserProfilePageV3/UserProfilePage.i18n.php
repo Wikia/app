@@ -40,7 +40,7 @@ $messages['en'] = array(
 	'user-identity-i-am' => '<span>I am</span> $1',
 	'user-identity-gamertags' => '<span>GAMERTAGS</span> ',
 	'user-identity-box-edits-since-joining' => 'Edits since joining this wiki',
-	'user-identity-box-edits' => '<span>$1</span>EDITS',
+	'user-identity-box-edits' => '<em>$1</em><span>EDITS</span>',
 	
 	'user-identity-box-group-blocked' => 'Blocked',
 	'user-identity-box-group-member' => 'Member',
