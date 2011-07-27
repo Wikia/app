@@ -64,7 +64,7 @@ class UserIdentityBox {
 		$data['topWikis'] = $this->getTopWikis();
 		
 		$iEdits = $this->user->getEditCount();
-		$data['edits'] = is_null($iEdits) ? 0 : $iEdits;
+		$data['edits'] = is_null($iEdits) ? 0 : intval($iEdits);
 		
 		$this->getUserGroup($data);
 		

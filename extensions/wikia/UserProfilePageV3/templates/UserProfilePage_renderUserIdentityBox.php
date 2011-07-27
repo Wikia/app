@@ -41,6 +41,8 @@
 							<?= wfMsg('user-identity-box-edits-since-joining') ?><br>
 							<?= $user['registration'] ?>
 						</span>
+					<? else: ?>
+						<?= wfMsg('user-identity-box-edits', array( '$1' => $user['edits'] ) ); ?>
 					<? endif; ?>
 				<? else: ?>
 					<?= wfMsg('user-identity-box-edits', array( '$1' => $user['edits'] ) ); ?>
