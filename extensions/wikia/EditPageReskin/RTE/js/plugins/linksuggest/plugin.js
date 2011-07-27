@@ -35,7 +35,6 @@ CKEDITOR.plugins.add('rte-linksuggest',
 		// get source mode textarea
 		var textarea = $(RTE.instance.textarea.$);
 		textarea.attr('id', 'RTEtextarea');
-		$('<div id="wpTextbox1_container" class="link-suggest-container"></div>').insertAfter(textarea);
 
 		window.LS_PrepareTextarea('RTEtextarea', this.dataSource);
 	}
