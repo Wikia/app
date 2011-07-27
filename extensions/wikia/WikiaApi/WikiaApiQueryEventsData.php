@@ -781,6 +781,10 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 	private function getDetailsInfo( $oRow ) {
 		$details = array();
 		
+		if ( empty($this->mContent) ) {
+			return $details;
+		}
+		
 		/* use SimpleHTMLDom extensions here ( include in lib/simplehtmldom ) */
 		$html = str_get_html( $this->mContent );
 		
