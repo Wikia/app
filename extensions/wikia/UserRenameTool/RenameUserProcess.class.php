@@ -837,7 +837,7 @@ class RenameUserProcess {
 	 * @param $newusername string New username
 	 * @param $extra array Extra options (currently: userid_column, username_column, conds)
 	 */
-	protected function renameInTable($dbw, $table, $uid, $oldusername, $newusername, $extra){
+	public function renameInTable($dbw, $table, $uid, $oldusername, $newusername, $extra){
 		wfProfileIn(__METHOD__);
 
 		$dbName = $dbw->getDBname();
