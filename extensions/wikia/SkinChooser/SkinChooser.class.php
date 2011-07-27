@@ -312,6 +312,11 @@ class SkinChooser {
 		if( $userSkin == 'smartphone' ){
 			$userSkin = 'wikiaphone';
 		}
+		
+		//SkeleSkin is a devbox-only experiment
+		if( $userSkin == 'skeleskin' && !$wgDevelEnvironment ){
+			$userSkin = 'wikiaphone';
+		}
 
 		$user->mSkin = &Skin::newFromKey($userSkin);
 
