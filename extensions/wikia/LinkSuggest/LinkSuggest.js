@@ -424,6 +424,7 @@ YAHOO.lang.extend(YAHOO.example.AutoCompleteTextArea, YAHOO.widget.AutoComplete,
 
 function LS_PrepareTextarea (textarea, oDS) {
 	$().log('init for ' + textarea, 'LinkSuggest');
+	$('<div id="wpTextbox1_container" class="link-suggest-container"></div><div id="LS_imagePreview" style="visibility: hidden; position: absolute; z-index: 1001; width: 180px;" class="yui-ac-content"></div>').insertAfter('#'+textarea);
 
 	var oAutoComp = new YAHOO.example.AutoCompleteTextArea(textarea, 'wpTextbox1_container', oDS);
 	oAutoComp.highlightClassName = oAutoComp.prehighlightClassName = 'navigation-hover';

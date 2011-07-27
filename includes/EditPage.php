@@ -328,7 +328,7 @@ class EditPage {
 
 		/* Wikia change begin - @author: Marcin, #BugId: 7845 */
 		global $wgEnableEditPageReskinExt;
-		if ( empty($wgEnableEditPageReskinExt) ) {
+		if ( empty($wgEnableEditPageReskinExt) || !wikia::isOasis() ) {
 			$wgOut->addScriptFile( 'edit.js' );
 		}
 		/* Wikia change end */

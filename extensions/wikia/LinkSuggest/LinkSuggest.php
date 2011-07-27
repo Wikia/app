@@ -52,7 +52,6 @@ function AddLinkSuggest($a, $b, $c, $d) {
 	global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgUser;
 
 	if($wgUser->getOption('disablelinksuggest') != true) {
-		$wgOut->addHTML('<div id="LS_imagePreview" style="visibility: hidden; position: absolute; z-index: 1001; width: 180px;" class="yui-ac-content"></div>');
 
 		$js = "{$wgExtensionsPath}/wikia/LinkSuggest/LinkSuggest.js?{$wgStyleVersion}";
 
