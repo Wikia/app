@@ -100,8 +100,6 @@ require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../DevBoxSettings.php' );
 # Overwrite some variables, load extensions, etc.
 # Former CustomSettings.php
 #
-$wgCookieDomain = ".wikia-dev.com";
-
 require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../CommonExtensions.php' );
 
 $wgArticlePath = "/wiki/$1";
