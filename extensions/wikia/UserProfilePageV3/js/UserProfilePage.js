@@ -34,7 +34,7 @@ var UserProfilePage = {
 		$.getResources([$.getSassCommonURL('/extensions/wikia/UserProfilePageV3/css/UserProfilePage_modal.scss')]);
 		
 		$.postJSON( this.ajaxEntryPoint, { method: 'getLightboxData', tab: tabName, userId: UserProfilePage.userId, rand: Math.floor(Math.random()*100001) }, function(data) {
-			UserProfilePage.modal = $(data.body).makeModal({width : 450, onClose: UserProfilePage.closeModal, closeOnBlackoutClick: UserProfilePage.closeModal});
+			UserProfilePage.modal = $(data.body).makeModal({width : 750, onClose: UserProfilePage.closeModal, closeOnBlackoutClick: UserProfilePage.closeModal});
 			var modal = UserProfilePage.modal;
 			
 			UserProfilePage.renderAvatarLightbox(modal);
@@ -225,9 +225,9 @@ var UserProfilePage = {
 			UserProfilePage.refillBDayDaySelectbox({month:monthSelectBox, day:daySelectBox});
 		});
 		
-		var favWikiHide = modal.find('.favwiki');
+		var favWikiHide = modal.find('.favorite-wikis .delete');
 		favWikiHide.click(function() {
-			UserProfilePage.hideFavWiki(this.className);
+			UserProfilePage.hideFavWiki($(this).closest('[data-wiki-id]').data('wiki-id'));
 		});
 		
 		var hiddenWikiRefresh = modal.find('.favwiki-refresh');
@@ -477,36 +477,32 @@ var UserProfilePage = {
 		}
 	},
 	
-	hideFavWiki: function(className) {
-		if( typeof(className) === 'string' ) {
-			var wikiId = className.lastIndexOf('favWikiId-');
-			
-			if( wikiId >= 0 ) {
-				wikiId = className.substr(wikiId + 10); //10 = length of 'favWikiId-'
-				$.postJSON( this.ajaxEntryPoint, { method: 'onHideWiki', userId: UserProfilePage.userId, wikiId: wikiId, cb: wgStyleVersion }, function(data) {
-					if( data.result.success === true ) {
-						$().log(data);
-					}
-				});
-			} else {
-				//failed to recive wikiId
-			}
+	hideFavWiki: function(wikiId) {
+		if( wikiId >= 0 ) {
+			UserProfilePage.modal.find('.favorite-wikis [data-wiki-id="' + wikiId + '"]').fadeOut();
+			$.postJSON( this.ajaxEntryPoint, { method: 'onHideWiki', userId: UserProfilePage.userId, wikiId: wikiId, cb: wgStyleVersion }, function(data) {
+				if( data.result.success === true ) {
+					$().log(data);
+				}
+			});
+		} else {
+			//failed to recive wikiId
 		}
 	},
 	
 	refreshFavWikis: function() {
 		$.postJSON( this.ajaxEntryPoint, {method: 'onRefreshFavWikis', userId: UserProfilePage.userId, cb: wgStyleVersion}, function(data) {
 			if( data.result.success === true ) {
-				var favWikisList = UserProfilePage.modal.find('.favWikis');
+				var favWikisList = UserProfilePage.modal.find('.favorite-wikis');
 				
 				for(i in data.result.wikis) {
 					favWikisList.append('<li>' + data.result.wikis[i].wikiName + '<a href="#" class="favwiki favWikiId-' + i + '">[x]</a></li>');
 				}
 				
 				//"re-binding"
-				var favWikiHide = UserProfilePage.modal.find('.favwiki');
+				var favWikiHide = UserProfilePage.modal.find('.favorite-wikis .delete');
 				favWikiHide.click(function() {
-					UserProfilePage.hideFavWiki(this.className);
+					UserProfilePage.hideFavWiki($(this).closest('[data-wiki-id]').data('wiki-id'));
 				});
 			}
 		});

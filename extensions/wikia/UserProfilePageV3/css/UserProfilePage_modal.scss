@@ -1,3 +1,5 @@
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/border-radius";
 @import "../../../../skins/oasis/css/mixins/clearfix";
 
 .UPPLightbox {
@@ -25,5 +27,24 @@
 		font-size: 14px;
 		padding: 3px;
 		width: 250px;
+	}
+	
+	.favorite-wikis {
+		@include clearfix;
+		-webkit-appearance: textfield;		
+		padding: 5px;
+		width: 250px;
+		li {
+			@include border-radius(5px);
+			background: mix($color-page, $color-text, 92%);
+			float: left;
+			font-size: 12px;
+			line-height: 20px;
+			margin: 3px;
+			padding: 0 3px;
+		}
+		.delete {
+			cursor: pointer;
+		}
 	}
 }
