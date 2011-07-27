@@ -231,7 +231,8 @@ var UserProfilePage = {
 		});
 		
 		var hiddenWikiRefresh = modal.find('.favwiki-refresh');
-		hiddenWikiRefresh.click(function() {
+		hiddenWikiRefresh.click(function(e) {
+			e.preventDefault();
 			$(this).hide();
 			UserProfilePage.refreshFavWikis();
 		});
@@ -479,7 +480,7 @@ var UserProfilePage = {
 	
 	hideFavWiki: function(wikiId) {
 		if( wikiId >= 0 ) {
-			UserProfilePage.modal.find('.favorite-wikis [data-wiki-id="' + wikiId + '"]').fadeOut();
+			UserProfilePage.modal.find('.favorite-wikis [data-wiki-id="' + wikiId + '"]').fadeOut('fast');
 			$.postJSON( this.ajaxEntryPoint, { method: 'onHideWiki', userId: UserProfilePage.userId, wikiId: wikiId, cb: wgStyleVersion }, function(data) {
 				if( data.result.success === true ) {
 					$().log(data);
@@ -496,7 +497,7 @@ var UserProfilePage = {
 				var favWikisList = UserProfilePage.modal.find('.favorite-wikis');
 				
 				for(i in data.result.wikis) {
-					favWikisList.append('<li>' + data.result.wikis[i].wikiName + '<a href="#" class="favwiki favWikiId-' + i + '">[x]</a></li>');
+					favWikisList.append('<li data-wiki-id="' + i + '">' + data.result.wikis[i].wikiName + ' <img src="' + wgBlankImgUrl + '" class="sprite-small delete"></li>');
 				}
 				
 				//"re-binding"

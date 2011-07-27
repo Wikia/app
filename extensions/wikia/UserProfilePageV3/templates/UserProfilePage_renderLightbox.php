@@ -128,7 +128,7 @@
 						</ul>
 					<? else: ?>
 						<a class="favwiki-refresh" href="#"><?= wfMsg('user-identity-box-about-fav-wikis-refresh'); ?></a>
-						<ul class="favWikis">
+						<ul class="favorite-wikis">
 						</ul>
 					<? endif; ?>
 				</div>
