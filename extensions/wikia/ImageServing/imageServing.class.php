@@ -9,7 +9,7 @@
 class ImageServing{
 	private $maxCount = 10;
 	private $minSize = 75;
-	private $queryLimit = 50; 
+	private $queryLimit = 50;
 	private $articles = array();
 	private $width;
 	private $proportion;
@@ -70,7 +70,7 @@ class ImageServing{
 			}
 
 			if( count( $articles ) < 1 ) {
-				wfProfileOut( __METHOD__ );				
+				wfProfileOut( __METHOD__ );
 				return $cache_return;
 			}
 
@@ -243,19 +243,24 @@ class ImageServing{
 	 *
 	 * @access public
 	 *
-	 * @param $name \string dbkey of image
+	 * @param $name \string dbkey of image or File object
 	 * @param $width \int
 	 * @param $height \int
 	 *
 	 * @return  \string url for image
 	 */
-	
-	public function getUrl( $name, $width = 0, $height = 0 ) {
-		$file_title = Title::newFromText( $name ,NS_FILE );
-		$img = wfFindFile( $file_title  );
 
-		if( $img == null ) {
-			return "";
+	public function getUrl( $name, $width = 0, $height = 0 ) {
+		if ($name instanceof File) {
+			$img = $name;
+		}
+		else {
+			$file_title = Title::newFromText( $name ,NS_FILE );
+			$img = wfFindFile( $file_title  );
+
+			if( $img == null ) {
+				return "";
+			}
 		}
 
 		return wfReplaceImageServer( $img->getThumbUrl( $this->getCut( $width, $height ) . "-" . $img->getName() ) );
