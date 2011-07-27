@@ -176,13 +176,13 @@ class UserIdentityBox {
 	}
 	
 	/**
-	 * Gets user group and additionaly sets other user's data (blocked, founder)
+	 * @brief Returns false if any of "important" fields is not empty -- then it means not to display zero states
 	 * 
 	 * @param array reference to user data array
 	 * 
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	private function checkIfDisplayZeroStates($data) {
+	public function checkIfDisplayZeroStates($data) {
 		$this->app->wf->ProfileIn( __METHOD__ );
 		
 		$result = true;
