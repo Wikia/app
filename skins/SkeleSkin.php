@@ -1,12 +1,19 @@
 <?php
+/**
+ * SkeleSkin is an experimental playground for new features, not a real skin
+ * 
+ * @author Jakub Olek <bukaj.kelo(at)gmail.com>
+ * @authore Federico "Lox" Lucignano <federico(at)wikia-inc.com>
+ */
 if( !defined( 'MEDIAWIKI' ) )
 	die( -1 );
 
-
 class SkinSkeleskin extends SkinTemplate {
+	private $app;
 
 	function __construct() {
 		parent::__construct();
+		$this->app = F::app();
 	}
 
 	function initPage( OutputPage $out ) {
@@ -16,22 +23,12 @@ class SkinSkeleskin extends SkinTemplate {
 		$this->template  = 'SkeleSkinTemplate';
 		$this->themename = 'skeleskin';
 		
-		// register templates
-		global $wgWikiaTemplateDir;
-		$dir = dirname( __FILE__ ) . '/';
-		$wgWikiaTemplateDir['SharedTemplates'] = $dir.'skeleskin';
+		$app->registerHook('SkinGetHeadScripts', 'SkinSkeleskin', 'onSkinGetHeadScripts');
 		
-		foreach ( AssetsManager::getInstance()->getGroupCommonURL( 'skeleskin_css' ) as $src ) {
-			$out->addStyle( $src );
-		}
-
-		
+		$out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'skins/skeleskin/css/main.scss' ) );
 	}
 
-
-	
 	public function onSkinGetHeadScripts(&$scripts) {
-		
 		foreach ( AssetsManager::getInstance()->getGroupCommonURL( 'skeleskin_js' ) as $src ) {
 			$scripts .= "\n<script src=\"{$src}\"></script>";
 		}
@@ -42,14 +39,9 @@ class SkinSkeleskin extends SkinTemplate {
 }
 
 class SkeleSkinTemplate extends QuickTemplate {
-
 	function execute() {
-		global $wgOut;
-		
 		$response = F::app()->sendRequest( 'SkeleSkinService', 'index' );
-
 		$response->sendHeaders();
 		$response->render();
 	}
-
 }
