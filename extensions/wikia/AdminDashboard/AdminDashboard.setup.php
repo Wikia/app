@@ -12,6 +12,7 @@ $app = F::app();
 $app->registerClass('AdminDashboardSpecialPageController', $dir . 'AdminDashboardSpecialPageController.class.php');
 $app->registerClass('AdminDashboardModule', $dir . 'AdminDashboardModule.class.php');
 $app->registerClass('AdminDashboardLogic', $dir . 'AdminDashboardLogic.class.php');
+$app->registerClass('QuickStatsController', $dir . 'QuickStatsController.class.php');
 
 // i18n mapping
 $wgExtensionMessagesFiles['AdminDashboard'] = $dir . 'AdminDashboard.i18n.php';

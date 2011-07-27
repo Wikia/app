@@ -5,7 +5,6 @@ class AdminDashboardModule extends Module {
 	var $wordmarkText;
 	var $wordmarkType;
 	var $wordmarkSize;
-	var $founderProgressBar;
 	var $adminDashboardUrlGeneral;
 	var $adminDashboardUrlAdvanced;
 	
@@ -34,8 +33,6 @@ class AdminDashboardModule extends Module {
 		if ($this->wordmarkType == 'graphic') {
 			$this->wordmarkUrl = wfReplaceImageServer($settings['wordmark-image-url'], SassUtil::getCacheBuster());
 		}
-
-		$this->founderProgressBar = (string)F::app()->sendRequest( 'FounderProgressBar', 'widget' );
 		
 		$this->adminDashboardUrlGeneral = Title::newFromText('AdminDashboard', NS_SPECIAL)->getFullURL().'?tab=general';
 		$this->adminDashboardUrlAdvanced = Title::newFromText('AdminDashboard', NS_SPECIAL)->getFullURL().'?tab=advanced';
