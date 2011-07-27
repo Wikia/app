@@ -11,8 +11,10 @@ $color-borders: #CECECE;
 @import "../../ThemeDesigner/css/ThemeTab";
 
 .WikiaPage {
-	@include linear-gradient(false, top, #01386e, 20%, #2185da, 70%, #fff, 100%);
 	border: none;
+	.WikiaPageBackground {
+		@include linear-gradient(false, top, #01386e, 20%, #2185da, 70%, #fff, 100%);
+	}
 }
 
 .CorporateFooter {

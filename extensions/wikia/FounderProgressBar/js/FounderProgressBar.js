@@ -5,6 +5,7 @@ var FounderProgressList = {
 		FounderProgressList.d = $('#FounderProgressList');
 		FounderProgressList.article = $('#WikiaArticle');
 		FounderProgressList.skippedTaskGroup = FounderProgressList.d.find('.tasks .task.skipped');
+		FounderProgressList.bonusTaskGroup = FounderProgressList.d.find('.tasks .task.bonus');
 		FounderProgressList.article.after(FounderProgressList.d);
 		FounderProgressList.allActivities = FounderProgressList.d.find('.activity');
 		FounderProgressList.seeFullList = $('#FounderProgressListToggle .see-full-list');
@@ -97,6 +98,9 @@ var FounderProgressList = {
 						FounderProgressWidget.getNextTask(activityInPreview);
 					});
 				}
+				if(res['bonus_tasks_unlocked']) {
+					FounderProgressList.showBonusActivities();
+				}
 			}
 		});
 	},
@@ -108,6 +112,10 @@ var FounderProgressList = {
 			FounderProgressList.expandTask(FounderProgressList.skippedTaskGroup);
 			activity.appendTo(FounderProgressList.skippedTaskGroup.find('ul:nth-child('+columnIndex+')')).hide().show(600);
 		});
+	},
+	showBonusActivities: function() {
+		FounderProgressList.bonusTaskGroup.find('.activity').removeClass('locked');
+		FounderProgressList.expandTask(FounderProgressList.bonusTaskGroup);
 	},
 	showActivity: function(e) {
 		clearTimeout(FounderProgressList.hoverHandle);
@@ -208,6 +216,9 @@ var FounderProgressWidget = {
 				FounderProgressList.moveToSkipped(activityInList);
 				if(res['result'] && res.result == 'OK') {
 					FounderProgressWidget.getNextTask(activity);
+				}
+				if(res['bonus_tasks_unlocked']) {
+					FounderProgressList.showBonusActivities();
 				}
 			});
 		});

@@ -313,6 +313,7 @@ $base-z: 5;
 .WikiaPage {
 	color: #464646;
 	.WikiaPageBackground {
+		@include opacity(100);
 		background-color: #fff;
 	}
 }
