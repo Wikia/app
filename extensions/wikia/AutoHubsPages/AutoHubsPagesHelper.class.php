@@ -13,23 +13,24 @@ class AutoHubsPagesHelper{
 	*/
 	static function isHubsPage(Title &$title){
 		global $wgHubsPages, $wgContLanguageCode;
-		wfProfileIn( __METHOD__ ); 
+		wfProfileIn( __METHOD__ );
 
 		if( empty($wgHubsPages[$wgContLanguageCode]) ) {
 			return false;
 		}
 
+		$dbKey = strtolower($title->getPrefixedDBkey());
 		foreach( $wgHubsPages[$wgContLanguageCode] as $key => $value ){
 			if(is_array($key)) {
 				$key = $key['name'];
 			}
 
-			if (strtolower($title->getUserCaseDBKey()) == strtolower($key)){
-				wfProfileOut( __METHOD__ ); 
+			if ($dbKey == strtolower($key)){
+				wfProfileOut( __METHOD__ );
 				return true;
 			}
 		}
-		wfProfileOut( __METHOD__ ); 
+		wfProfileOut( __METHOD__ );
 		return false;
 	}
 
@@ -41,12 +42,12 @@ class AutoHubsPagesHelper{
 	*/
 	static function setHubsFeedsVariable() {
 		global $wgRequest, $wgCityId, $wgMemc, $wgUser;
-		wfProfileIn( __METHOD__ ); 
+		wfProfileIn( __METHOD__ );
 
 		if( !$wgUser->isAllowed( 'corporatepagemanager' ) ) {
-			$result['response'] = 'error';										
+			$result['response'] = 'error';
 		} else {
-			$result = array( 'response'	=>	'ok' );			
+			$result = array( 'response'	=>	'ok' );
 			$tagname = $wgRequest->getVal( 'tag' );
 			$feedname = strtolower( $wgRequest->getVal( 'feed' ) );
 			$key = wfMemcKey( 'autohubs', $tagname, 'feeds_displayed' );
@@ -60,7 +61,7 @@ class AutoHubsPagesHelper{
 				$result['response'] = 'error';
 			} else {
 				$wgMemc->delete( $key );
-			}			
+			}
 		}
 		$json = Wikia::json_encode($result);
 		$response = new AjaxResponse( $json );
@@ -90,98 +91,98 @@ class AutoHubsPagesHelper{
 	*/
 	static function getHubsFeedsVariable( $tagname ) {
 		global $wgMemc, $wgCityId;
-		wfProfileIn( __METHOD__ ); 
+		wfProfileIn( __METHOD__ );
 		$key = wfMemcKey( 'autohubs', $tagname, 'feeds_displayed' );
 		$data = $wgMemc->get( $key );
 		if( !$data ) {
 			$feeds = unserialize( WikiFactory::getVarByName( 'wgWikiaAutoHubsFeedsDisplayed', $wgCityId )->cv_value );
 			if( !empty( $feeds[$tagname] ) && is_array( $feeds[$tagname] )) {
-				$tag = $feeds;				
+				$tag = $feeds;
 			} else {
 				$tag[$tagname] = self::getDefaultHubsFeeds();
-			}		
+			}
 			$wgMemc->set( $key, $tag );
 		} else {
 			$tag = $data;
 		}
 
-		wfProfileOut( __METHOD__ ); 
+		wfProfileOut( __METHOD__ );
 		return $tag;
 	}
-	
+
 	/*
 	* Author: Tomek Odrobny
 	* hook add to CorporatePage redirect
-	*/	
-	
+	*/
+
 	static function hideFeed() {
 		global $wgUser, $wgRequest, $wgLang;
 		$response = new AjaxResponse();
 		$result = array();
 		if( !$wgUser->isAllowed( 'corporatepagemanager' ) ) {
-			$result['response'] = 'error';		
+			$result['response'] = 'error';
 			$response->addText(json_encode( $result ));
-			return 	$response ;						
+			return 	$response ;
 		}
-		
-		$tag_id = (int) $wgRequest->getVal('tag_id', 0); 
-		$city_id = (int) $wgRequest->getVal('city_id', 0); 
+
+		$tag_id = (int) $wgRequest->getVal('tag_id', 0);
+		$city_id = (int) $wgRequest->getVal('city_id', 0);
 		$page_id = (int) $wgRequest->getVal('page_id', 0);
-		$dir = $wgRequest->getVal('dir', 'add');  
+		$dir = $wgRequest->getVal('dir', 'add');
 		$ws = new WikiaStatsAutoHubsConsumerDB(DB_MASTER);
 		$result = array();
 		if ($dir == 'add') {
 			if ( $wgRequest->getVal('type') == 'article') {
 				if ($ws->addExludeArticle($tag_id, $city_id, $page_id, $wgLang->getCode())) {
-					$result['response'] = 'ok';	
+					$result['response'] = 'ok';
 				}
 			}
-		
+
 			if ( $wgRequest->getVal('type') == 'blog') {
 				if ($ws->addExludeBlog($tag_id, $city_id, $page_id, $wgLang->getCode())) {
-					$result['response'] = 'ok';	
+					$result['response'] = 'ok';
 				}
 			}
-		
+
 			if ( $wgRequest->getVal('type') == 'city') {
 				if ($ws->addExludeWiki($tag_id, $city_id, $wgLang->getCode())) {
-					$result['response'] = 'ok';		
+					$result['response'] = 'ok';
 				}
 			}
 		} else {
-			$result['response'] = 'ok';	
+			$result['response'] = 'ok';
 			if ( $wgRequest->getVal('type') == 'article') {
 				$ws->removeExludeArticle($tag_id, $city_id, $page_id, $wgLang->getCode());
 			}
-		
+
 			if ( $wgRequest->getVal('type') == 'blog') {
 				$ws->removeExludeBlog($tag_id, $city_id, $page_id, $wgLang->getCode());
 			}
-		
+
 			if ( $wgRequest->getVal('type') == 'city') {
 				$ws->removeExludeWiki($tag_id, $city_id, $wgLang->getCode());
 			}
-		}	
+		}
 
-		$result['response'] = 'ishide';	
+		$result['response'] = 'ishide';
 		$response->addText(json_encode( $result ));
-		
-		return 	$response ;	
+
+		return 	$response ;
 	}
-	
+
 	/*
 	* Author: Tomek Odrobny
 	* hook add to CorporatePage redirect
-	*/	
+	*/
 	static function beforeRedirect(&$title){
 		return !self::isHubsPage($title);
 	}
-	
+
 	/*
 	* Author: Tomek Odrobny
 	* get hub tag id from title
 	*/
-	
+
 	static function getHubIdFromTitle($title){
 		global $wgHubsPages, $wgContLanguageCode;
 
@@ -201,14 +202,14 @@ class AutoHubsPagesHelper{
 
 	/*
 	* Author: Tomek Odrobny
-	* get lang for hub 
+	* get lang for hub
 	*/
-	
+
 	static function getLangForHub(Title &$title){
 		global $wgHubsPages, $wgContLanguageCode;
 		wfProfileIn( __METHOD__ );
 
-		if( is_array($wgHubsPages[$wgContLanguageCode][strtolower($title->getUserCaseDBKey())]) 
+		if( is_array($wgHubsPages[$wgContLanguageCode][strtolower($title->getUserCaseDBKey())])
 		&& isset($wgHubsPages[$wgContLanguageCode][strtolower($title->getUserCaseDBKey())]['langcode']) ) {
 			wfProfileOut( __METHOD__ );
 			return $wgHubsPages[$wgContLanguageCode][strtolower($title->getUserCaseDBKey())]['langcode'];
@@ -217,7 +218,7 @@ class AutoHubsPagesHelper{
 		return $wgContLanguageCode;
 
 	}
-	
+
 	/*
 	* Author: Bartek Lapinskl
 	* get normalised hub tag name from title
@@ -245,7 +246,7 @@ class AutoHubsPagesHelper{
 		global $wgHubsPages, $wgContLanguageCode;
 		wfProfileIn( __METHOD__ );
 
-		if( is_array($wgHubsPages[$wgContLanguageCode][strtolower($title->getUserCaseDBKey())]) 
+		if( is_array($wgHubsPages[$wgContLanguageCode][strtolower($title->getUserCaseDBKey())])
 		&& isset($wgHubsPages[$wgContLanguageCode][strtolower($title->getUserCaseDBKey())]['site']) ) {
 			wfProfileOut( __METHOD__ );
 			return $wgHubsPages[$wgContLanguageCode][strtolower($title->getUserCaseDBKey())]['site'];
@@ -258,11 +259,11 @@ class AutoHubsPagesHelper{
 	* Author: Tomasz Odrobny
 	* add slider msg to list of cached msg
 	*/
-	
+
 	static function beforeMsgCacheClear(&$list) {
 		global $wgHubsPages;
 		$values = array_values( $wgHubsPages );
-		
+
 		foreach ( $values as $key =>  $value) {
 			if(is_array($value)) {
 				$values[ $key ] = 'Hub-' . $value['name'] . $name['lengcode'] .'-slider';
@@ -270,7 +271,7 @@ class AutoHubsPagesHelper{
 				$values[ $key ] = 'Hub-' . $value . '-slider';
 			}
 		}
-		$list = array_merge( $list, $values ); 			
+		$list = array_merge( $list, $values );
 		return true;
 	}
 
