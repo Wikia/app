@@ -25,6 +25,7 @@ class VideoPage extends Article {
 	const K_VIDDLER = "hacouneo6n6o3nysn0em";
 	const V_GAMETRAILERS = 20;
 	const V_SCREENPLAY = 21;
+	const V_MOVIECLIPS = 22;
 	
 	const SCREENPLAY_MEDIUM_JPEG_BITRATE_ID = 267;	// 250x200
 	const SCREENPLAY_LARGE_JPEG_BITRATE_ID = 382;	// 480x360
@@ -896,6 +897,19 @@ EOD;
 				return true;
 			}
 		}
+		
+		$text = strpos( $fixed_url, "MOVIECLIPS.COM" );
+		if ( false !== $test ) { // MovieClips
+			$provider = self::V_MOVIECLIPS;
+			$url = trim($url, '/');
+			$parsed = explode( "/", $url );
+			if( is_array( $parsed ) ) {
+				$this->mProvider = $provider;
+				$this->mId = array_pop( $parsed );
+				$this->mData = array();
+				return true;
+			}
+		}
 
 		return false;
 	}
@@ -950,6 +964,9 @@ EOD;
 						$ratio = 480 / 270;
 					}
 				}
+				break;
+			case self::V_MOVIECLIPS:
+				$ratio = (560 / 304);
 				break;
 			default:
 				$ratio = 1;
@@ -1008,6 +1025,9 @@ EOD;
 						$ratio = "480 x 270";
 					}
 				}
+				break;
+			case self::V_MOVIECLIPS:
+				$ratio = "560 x 304";
 				break;
 			default:
 				$ratio = "300 x 300";
@@ -1109,6 +1129,9 @@ EOD;
 				//@todo verify if exists
 				$exists = true;
 				break;
+			case self::V_MOVIECLIPS:
+				//@todo verify if exists
+				$exists = true;
 			default:
 				break;
 		}
@@ -1157,6 +1180,8 @@ EOD;
 				return 'http://www.hulu.com';
 			case self::V_SCREENPLAY:
 				return 'http://www.screenplayinc.com';
+			case self::V_MOVIECLIPS:
+				return 'http://movieclips.com';
 			default:
 				return '';
 		}
@@ -1226,6 +1251,9 @@ EOD;
 			case self::V_SCREENPLAY:
 				$url = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid='.$id.'&bitrateid='.$mData[0].'&vendorid='.self::$SCREENPLAY_VENDOR_ID.'&type='.self::$SCREENPLAY_VIDEO_TYPE;
 				break;
+			case self::V_MOVIECLIPS:
+				$url = 'http://movieclips.com/' . $id . '/';
+				break;
 			default:
 				$url = '';
 				break;
@@ -1292,6 +1320,7 @@ EOD;
 				break;
 			case self::V_HULU:
 			case self::V_SCREENPLAY:
+			case self::V_MOVIECLIPS:
 				$metadata = $this->mProvider . ',' . $this->mId . ',' . implode(',', $this->mData);
 				break;
 			default:
@@ -1817,6 +1846,9 @@ EOD;
 
 				$code = 'custom';
 				break;
+			case self::V_MOVIECLIPS:
+				$url = 'http://movieclips.com/e/' . $this->mId . '/';
+				break;
 			default: break;
 		}
 		if( 'custom' != $code ) {
@@ -1877,6 +1909,9 @@ EOD;
 				break;
 			case self::V_SCREENPLAY:
 				$thumb = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid='.$this->mId.'&bitrateid='.self::SCREENPLAY_LARGE_JPEG_BITRATE_ID.'&vendorid='.self::$SCREENPLAY_VENDOR_ID.'&type=.jpg';
+				break;
+			case self::V_MOVIECLIPS:
+				//@todo http://cdn5.movieclips.com/dande-entertainment/t/the-last-play-at-shea-2010/0605981_20919_MC_Tx304.jpg
 				break;
 			default:
 				break;
@@ -1964,6 +1999,7 @@ $wgWikiaVideoProviders = array(
 		VideoPage::V_DAILYMOTION => 'dailymotion',
 		VideoPage::V_VIDDLER => 'viddler',
 		VideoPage::V_SCREENPLAY => 'Screenplay, Inc.',
+		VideoPage::V_MOVIECLIPS => 'MovieClips Inc.'
 		);
 
 class VideoHistoryList {
