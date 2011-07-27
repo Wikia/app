@@ -788,33 +788,35 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 		/* use SimpleHTMLDom extensions here ( include in lib/simplehtmldom ) */
 		$html = str_get_html( $this->mContent );
 		
-		$metricsTypes = $this->_get_metrics_types();
-			
-		foreach ( $metricsTypes as $id => $name ) {
-			$res = 0;
-			switch ( $id ) {
-				case 1: /* mainpage */
-					$res = $this->_is_main_page();
-					break;
-				case 2: /* gallery */
-					$gallery = count($html->find("gallery"));
-					$slider = count($html->find("gallery[type=slider]"));
-					$slideshow = count($html->find("gallery[type=slideshow]"));
-					$res = $gallery - $slider - $slideshow;
-					if ( $res < 0 ) $res = 0;
-					break;
-				case 3: /* slider */
-					$res = count($html->find("gallery[type=slider]"));
-					break;
-				case 4: /* slideshow */
-					$res = count($html->find("gallery[type=slideshow]"));
-					break;
-				default:
-					break;
-			}
-			
-			if ( $res > 0 ) {
-				$details[] = array( 'id' => $id, 'name' => $name, 'count' => $res );
+		if(is_object($html)){
+			$metricsTypes = $this->_get_metrics_types();
+				
+			foreach ( $metricsTypes as $id => $name ) {
+				$res = 0;
+				switch ( $id ) {
+					case 1: /* mainpage */
+						$res = $this->_is_main_page();
+						break;
+					case 2: /* gallery */
+						$gallery = count($html->find("gallery"));
+						$slider = count($html->find("gallery[type=slider]"));
+						$slideshow = count($html->find("gallery[type=slideshow]"));
+						$res = $gallery - $slider - $slideshow;
+						if ( $res < 0 ) $res = 0;
+						break;
+					case 3: /* slider */
+						$res = count($html->find("gallery[type=slider]"));
+						break;
+					case 4: /* slideshow */
+						$res = count($html->find("gallery[type=slideshow]"));
+						break;
+					default:
+						break;
+				}
+				
+				if ( $res > 0 ) {
+					$details[] = array( 'id' => $id, 'name' => $name, 'count' => $res );
+				}
 			}
 		}
 
