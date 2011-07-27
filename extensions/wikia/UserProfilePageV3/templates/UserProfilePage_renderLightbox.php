@@ -121,9 +121,9 @@
 
 					<? if( !empty($user['topWikis']) && is_array($user['topWikis']) ): ?>
 						<label><?= wfMsg('user-identity-box-about-fav-wikis'); ?></label>
-						<ul class="favWikis">
+						<ul class="favorite-wikis">
 						<? foreach($user['topWikis'] as $favWikiId => $wiki): ?>
-							<li><?= $wiki['wikiName']; ?><a class="favwiki favWikiId-<?= $favWikiId; ?>" href="#">[x]</a></li>
+							<li data-wiki-id="<?= $favWikiId; ?>"><?= $wiki['wikiName']; ?> <img src="<?= $wgBlankImgUrl ?>" class="sprite-small delete"></li>
 						<? endforeach; ?>
 						</ul>
 					<? else: ?>

@@ -153,6 +153,8 @@ class UserProfilePageController extends WikiaController {
 		$this->setVal( 'selectedTab', $selectedTab );
 		$this->setVal( 'isUserPageOwner', ( ( $userId == $sessionUser->getId() ) ? true : false ) );
 		
+		$this->setVal( 'wgBlankImgUrl', $this->wg->BlankImgUrl );
+		
 		$this->app->wf->ProfileOut( __METHOD__ );
 	}
 	
