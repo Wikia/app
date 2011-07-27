@@ -60,13 +60,7 @@ var ScavengerHunt = {
 	initGame: function(redirect) {
 		this.log('initGame begin');
 
-		//TODO: this is somehow broken. Need double check if data is valid and from current hunt.
-//		this.huntData = $.storage.get( this.LOCAL_CACHE_KEY );
 		var cacheTimestamp = this.huntData ? this.huntData.cacheTimestamp : 0;
-//		ScavengerHunt.setupHuntItemSprite();
-//		if ( this.setupProgressBarSprite() ) {
-//			this.showProgressBar();
-//		}
 		var data = {
 			cacheTimestamp: cacheTimestamp,
 			controller: 'ScavengerHunt',
@@ -84,10 +78,8 @@ var ScavengerHunt = {
 				//handle full response
 				if ( json.huntData ) {
 					ScavengerHunt.huntData = json.huntData;
-//					$.storage.set(ScavengerHunt.LOCAL_CACHE_KEY, json.huntData);
-
 					//game has been deleted
-					if ( ScavengerHunt.huntData.noGame == true ) {
+					if (ScavengerHunt.huntData.noGame == true) {
 						ScavengerHunt.resetHuntId();
 					} else {
 						//game has been completed
@@ -96,7 +88,6 @@ var ScavengerHunt = {
 						} else {
 
 							ScavengerHunt.track( 'game/hiddenImage/show/currentPage=' + wgPageName );
-							//TODO: update progress bar
 							ScavengerHunt.spritePrepared = false;
 							if (ScavengerHunt.setupProgressBarSprite()) {
 								ScavengerHunt.showProgressBar();
@@ -235,8 +226,6 @@ var ScavengerHunt = {
 							ScavengerHunt.track('start/modalClue/clickButton' + gameId);
 							ScavengerHunt.setCookieHuntId( gameId );
 							ScavengerHunt.track('start/modalClue/clickButton2');
-							//remove old data
-//							$.storage.flush( this.LOCAL_CACHE_KEY );
 							$.getJSON(
 								window.wgScriptPath + '/wikia.php',
 								{
@@ -375,7 +364,7 @@ var ScavengerHunt = {
 									shareButton.click(function(e) {
 										e.preventDefault();
 										var href = $(this).attr('href') || window.location.href;
-										FB.ui({method:'stream.share', u: href});
+										FB.ui({method:'stream.share', u: href, display: 'popup'});
 									});
 								});
 						}
@@ -385,7 +374,6 @@ var ScavengerHunt = {
 		);
 	},
 
-	//new functions - TODO: review functions above, remove if unused
 	showProgressBar: function(force) {
 		if (ScavengerHunt.progressBarVisible && !force) {
 			ScavengerHunt.log('ProgressBar visible, exiting...');
@@ -525,7 +513,6 @@ var ScavengerHunt = {
 						//handle full response
 						if (json.huntData) {
 							ScavengerHunt.huntData = json.huntData;
-							//$.storage.set(ScavengerHunt.LOCAL_CACHE_KEY, ScavengerHunt.huntData);
 
 							if (ScavengerHunt.huntData.completed) {
 								ScavengerHunt.showEntryForm();
@@ -579,7 +566,7 @@ var ScavengerHunt = {
 		var targetItem = $(this).data('name');
 		ScavengerHunt.log('onProgressBarItemClick invoked with target = ' + targetItem);
 		ScavengerHunt.track('progressBar/targetItem/click/targetItem=' + targetItem);
-		//TODO: using <a> in <div> for sprites is harder - let's stick to JS version for now
+		//using <a> in <div> for sprites is harder - let's stick to JS version for now
 		window.location.href = ScavengerHunt.huntData.articles[$(this).data('index')].articleTitle;
 	},
 
