@@ -6,6 +6,9 @@
  * @author Piotr Molski (moli) <moli@wikia.com>
  *
  */
+
+require( dirname(__FILE__). '/../../../lib/simplehtmldom/simple_html_dom.php' );
+
 class WikiaApiQueryEventsData extends ApiQueryBase {
 
 	const 
@@ -408,6 +411,7 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 		global $wgCityId, $wgUser, $wgTheSchwartzSecretToken;
 		wfProfileIn( __METHOD__ );
 
+		$mStartTime = $this->_get_microtime();
 		# extract request params
 		$this->mCityId = $wgCityId;
 		$this->params = $this->extractRequestParams(false);
@@ -476,19 +480,21 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 		
 		$vals = $this->extractRowInfo($oRow, $deleted);
 		
+		$details = array();
+		if ( $showDetails ) {
+			$details = $this->getDetailsInfo( $oRow );
+		}
+		
+		$mEndTime = $this->_get_microtime();
 		$pageInfo = array(
 			'id' => $oRow->page_id,
 			'title' => $oRow->page_title,
 			'namespace' => $oRow->page_namespace,
 			'lctitle' => mb_strtolower( $oRow->page_title ),
 			'latest' => intval($vals['page_latest']),
+			'parsed' => bcsub($mEndTime, $mStartTime, 4)
 		);
-		
-		$details = array();
-		if ( $showDetails ) {
-			$details = $this->getDetailsInfo( $oRow );
-		}
-		
+			
 		$this->getResult()->setIndexedTagName($vals, 'events');
 		$this->getResult()->addValue('query', 'page', $pageInfo);
 		$this->getResult()->addValue('query', 'revision', $vals);
@@ -775,6 +781,9 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 	private function getDetailsInfo( $oRow ) {
 		$details = array();
 		
+		/* use SimpleHTMLDom extensions here ( include in lib/simplehtmldom ) */
+		$html = str_get_html( $this->mContent );
+		
 		$metricsTypes = $this->_get_metrics_types();
 			
 		foreach ( $metricsTypes as $id => $name ) {
@@ -784,16 +793,17 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 					$res = $this->_is_main_page();
 					break;
 				case 2: /* gallery */
+					$gallery = count($html->find("gallery"));
+					$slider = count($html->find("gallery[type=slider]"));
+					$slideshow = count($html->find("gallery[type=slideshow]"));
+					$res = $gallery - $slider - $slideshow;
+					if ( $res < 0 ) $res = 0;
+					break;
 				case 3: /* slider */
+					$res = count($html->find("gallery[type=slider]"));
+					break;
 				case 4: /* slideshow */
-					$tags = $this->_get_magic_tags( $this->mContent, 'gallery' );
-					if ( $id == 2 ) {
-						$res = $this->_count_gallery( $tags ) ;
-					} elseif ( $id == 3 ) {
-						$res = $this->_count_gallery_slider( $tags );
-					} elseif ( $id == 4 ) {
-						$res = $this->_count_gallery_slideshow( $tags );
-					}
+					$res = count($html->find("gallery[type=slideshow]"));
 					break;
 				default:
 					break;
@@ -807,70 +817,14 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 		return $details;
 	}
 
+	private function _get_microtime() {
+		list($utime, $time) = explode(" ", microtime());
+		return ((float)$utime + (float)$time);
+	}
+    
 	private function _is_main_page() {
 		$is_main_page = $this->mTitle->getArticleId() == Title::newMainPage()->getArticleId() && $this->mTitle->getArticleId() != 0;
 		return intval($is_main_page);
-	}
-	
-	private function _get_magic_tags( $content, $tag ) {
-		
-		$regex = sprintf( self::REGEX, $tag  );
-	 
-		if ( !preg_match_all( $regex, $content, $matches, PREG_SET_ORDER | PREG_OFFSET_CAPTURE ) ) {
-			return array();
-		}
-	 
-		$tags = array();
-		foreach ($matches as $match) {
-			$tag_params = array();
-			if ( 
-				( !empty($match['parameters']) && !empty($match['parameters'][0]) ) && 
-				( preg_match_all( self::REGEX_PARAMS, $match['parameters'][0], $attribute_data, PREG_SET_ORDER ) )
-			) {
-				foreach ( $attribute_data as $attr )  {
-					$tag_params[ $attr['name'] ] = ( !empty($attr['value_quoted']) ) ? $attr['value_quoted'] : $attr['value_unquoted'];
-				}
-			}
-	 
-			$tags[] = array( 'name' => reset($match['tag']), 'params' => $tag_params, 'tag' => $match[0][0] );
-		}
-	 
-		return $tags;
-	}
-	
-	private function _count_gallery( $tags ) {
-		$count = 0;
-		if ( !empty( $tags ) ) {
-			foreach ( $tags as $tag ) {
-				if ( !empty( $tag['params'] ) && in_array( $tag['params']['type'], array( 'slider', 'slideshow' ) ) ) continue;
-				$count++;
-			}
-		}
-		return $count;
-	}
-	
-	private function _count_gallery_slider( $tags ) {
-		$count = 0;
-		if ( !empty( $tags ) ) {
-			foreach ( $tags as $tag ) {
-				if ( !empty( $tag['params'] ) && ( $tag['params']['type'] == 'slider' ) ) {
-					$count++;
-				}
-			}
-		}
-		return $count;
-	}
-	
-	private function _count_gallery_slideshow( $tags ) {
-		$count = 0;
-		if ( !empty( $tags ) ) {
-			foreach ( $tags as $tag ) {
-				if ( !empty( $tag['params'] ) && ( $tag['params']['type'] == 'slideshow' ) ) {
-					$count++;
-				}
-			}
-		}
-		return $count;
 	}
 	
 	public function getAllowedParams() {
