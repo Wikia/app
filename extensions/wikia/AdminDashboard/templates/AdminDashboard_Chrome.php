@@ -18,5 +18,6 @@
 	<a href="<?= $adminDashboardUrlGeneral ?>" class="tab <?= $tab == 'general' ? 'active' : '' ?>" data-section="general" data-tracking="header/general"><?= wfMsg('admindashboard-tab-general') ?></a>
 </nav>
 <aside class="AdminDashboardRail" id="AdminDashboardRail" <?= $hideRail ? 'style="display:none"' : '' ?>>
-	<?= $founderProgressBar ?>
+	<?= $app->renderView( 'FounderProgressBar', 'widget' ) ?>
+	<?= $app->renderView( 'QuickStats', 'getStats') ?>
 </aside>
