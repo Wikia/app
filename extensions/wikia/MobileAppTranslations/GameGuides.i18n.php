@@ -48,6 +48,29 @@ $messages['en'] = array(
 	'error-json-parse' => 'There was a problem with the data returned from our servers, sorry.\\nPlease try again.'
 );
 
+/** Korean **/
+$messages['ko'] = array(
+	'activityindicator-message' => '로딩...',
+	'window-wikis-title' => 'Wikia 게임 가이드',
+	'window-wikis-wikilist-header' => '우리의 탑 게임들',
+	'window-category-load-batch' => '더',
+	'window-article-button-close' => '끝',
+	'window-article-button-back' => '뒤',
+	'window-article-menu-search-label' => '찾기',
+	'window-article-menu-dashboard-label' => '도움말 목차',
+	'window-article-menu-cancel-label' => '취소',
+	'searchview-no-results' => '에 관한 결과물 없음 "%s"',
+	'searchview-button-back-list' => '다시 리스트로 돌아감',
+	'searchview-button-back-article' => '다시 글로 돌아감',
+	'searchbar-hint' => '찾기 %s...',
+	'alert-download-updated-wikis-message' => '이용 가능한 도움말 리스트는 업데이트 될것입니다.',
+	'alert-download-updated-wikis-button-ok' => '예',
+	'error-update-required' => '이 앱의 업데이트는 이용가능하며 꼭 필요합니다.',
+	'error-no-connection' => '인터넷 사용이 불가능합니다.\\n나중에 다시 시도하시기 바랍니다.',
+	'error-server' => '죄송합니다. 저희 서버에 문제가 생겼으니.\\n나중에 다시 시도하시기 바랍니다.',
+	'error-json-parse' => '죄송합니다. 저희 서버로 돌아오는 자료에 문제가 생겼으니.\\n나중에 다시 시도하시기 바랍니다.'
+);
+
 /** Breton (Brezhoneg)
  * @author Y-M D
  */
@@ -55,31 +78,75 @@ $messages['br'] = array(
 	'activityindicator-message' => 'O kargañ...',
 );
 
-/** German (Deutsch) */
+/** German (Deutsch)
+ * @author Tim Bartel
+ */
 $messages['de'] = array(
-	'activityindicator-message' => 'Lade...',
-	'error-update-required' => 'Für diese App ist ein Update verfügbar und benötigt.',
-	'error-no-connection' => 'Keine Internet-Verbindung vorhanden.\\n%s',
-	'error-server' => 'Unsere Server haben einen Fehler gemeldet, sorry.\\n%s',
-	'error-json-parse' => 'Es gab ein Problem mit den Daten von unseren Servern, sorry.\\n%s',
+	'activityindicator-message' => 'Lädt...',
+	'window-wikis-title' => 'Wikia Game Guides',
+	'window-wikis-wikilist-header' => 'Unsere beliebtesten Spiele',
+	'window-category-load-batch' => 'Weiter',
+	'window-article-button-close' => 'Schließen',
+	'window-article-button-back' => 'Zurück',
+	'window-article-menu-search-label' => 'Suche',
+	'window-article-menu-dashboard-label' => 'Inhalt',
+	'window-article-menu-cancel-label' => 'Abbrechen',
+	'searchview-no-results' => 'Keine Ergebnisse für "%s"',
+	'searchview-button-back-list' => 'Zurück zur Liste',
+	'searchview-button-back-article' => 'Zurück zum Artikel',
+	'searchbar-hint' => 'Suche %s...',
+	'alert-download-updated-wikis-message' => 'Die Liste der verfügbaren Guides wird aktualisiert.',
+	'alert-download-updated-wikis-button-ok' => 'Ok',
+	'error-update-required' => 'Für diese App ist ein Update vorhanden und benötigt.',
+	'error-no-connection' => 'Keine Internet-Verbindung.\\nVersuche es bitte noch einmal.',
+	'error-server' => 'Oh, unsere Server haben einen Fehler gemeldet.\\nVersuche es bitte noch einmal.',
+	'error-json-parse' => 'Mist. Es gab ein Problem mit den Daten von unseren Servern.\\nVersuche es bitte noch einmal.'
 );
 
 /** Spanish (Español) */
 $messages['es'] = array(
 	'activityindicator-message' => 'Cargando...',
-	'error-update-required' => 'Hay una actualización necesaria disponible para esta aplicación.\\n%s',
-	'error-no-connection' => 'Conexión a Intenet no disponible.\\n%s',
-	'error-server' => 'Nuestros servidores respondieron con un error, lo sentimos.\\n%s',
-	'error-json-parse' => 'Hubo un problema con los datos devueltos desde nuestros servidores, lo sentimos.\\n%s',
+	'window-wikis-title' => 'Guías de Wikia sobre Juegos',
+	'window-wikis-wikilist-header' => 'Nuestro top de juegos',
+	'window-category-load-batch' => 'Más',
+	'window-article-button-close' => 'Cerrar',
+	'window-article-button-back' => 'Volver',
+	'window-article-menu-search-label' => 'Buscar',
+	'window-article-menu-dashboard-label' => 'Contenidos de la guía',
+	'window-article-menu-cancel-label' => 'Cancelar',
+	'searchview-no-results' => 'No hay resultados para "%s"',
+	'searchview-button-back-list' => 'Volver a la lista',
+	'searchview-button-back-article' => 'Volver al artículo',
+	'searchbar-hint' => 'Buscar en %s...',
+	'alert-download-updated-wikis-message' => 'La lista de guías disponibles será actualizada.',
+	'alert-download-updated-wikis-button-ok' => 'Ok',
+	'error-update-required' => 'Está disponible una actualización necesaria para esta aplicación.',
+	'error-no-connection' => 'No hay ninguna conexión a internet disponible.\\nPor favor, inténtalo de nuevo.',
+	'error-server' => 'Nuestros servidores respondieron con un error, lo sentimos.\\nPor favor, inténtalo de nuevo.',
+	'error-json-parse' => 'Hubo un problema con la información devuelta por nuestros servidores, lo sentimos.\\nPor favor, inténtalo de nuevo.'
 );
 
 /** French (Français) */
 $messages['fr'] = array(
 	'activityindicator-message' => 'Chargement...',
-	'error-update-required' => "Une mise de l'application est disponible et nécessaire.\\n%s",
-	'error-no-connection' => 'Aucune connexion internet disponible.\\n%s',
-	'error-server' => 'Nos serveurs ont retourné une erreur, désolé.\\n%s',
-	'error-json-parse' => 'Une erreur est survenue avec les données retournées par nos serveurs, désolé.\\n%s',
+	'window-wikis-title' => 'Wikia — Guides de jeu',
+	'window-wikis-wikilist-header' => 'Nos jeux préférés',
+	'window-category-load-batch' => 'Plus',
+	'window-article-button-close' => 'Fermer',
+	'window-article-button-back' => 'Retour',
+	'window-article-menu-search-label' => 'Rechercher',
+	'window-article-menu-dashboard-label' => 'Contenu du guide',
+	'window-article-menu-cancel-label' => 'Annuler',
+	'searchview-no-results' => 'Aucun résultat pour « %s »',
+	'searchview-button-back-list' => 'Retour à la liste',
+	'searchview-button-back-article' => 'Retour à l’article',
+	'searchbar-hint' => 'Recherche de « %s »...',
+	'alert-download-updated-wikis-message' => 'La liste des guides disponibles va être mise à jour.',
+	'alert-download-updated-wikis-button-ok' => 'Ok',
+	'error-update-required' => 'Une mise à jour de l’application est disponible et nécessaire.',
+	'error-no-connection' => 'Aucune connexion Internet disponible.\\nVeuillez réessayer.',
+	'error-server' => 'Nos serveurs ont renvoyé une erreur, désolé.\\nVeuillez réessayer.',
+	'error-json-parse' => 'Une erreur est survenue avec les données retournées par nos serveurs, désolé.\\nVeuillez réessayer.'
 );
 
 /** Galician (Galego)
