@@ -411,7 +411,7 @@
 		// render "show diff" modal
 		renderChanges: function(extraData) {
 			var self = this;
-			this.renderDialog('Changes', {}, function(contentNode) {
+			this.renderDialog($.msg('editpagelayout-pageControls-changes'), {}, function(contentNode) {
 				self.getContent(function(content) {
 					extraData.content = content;
 					extraData.section = parseInt($.getUrlVar('section') || 0);
