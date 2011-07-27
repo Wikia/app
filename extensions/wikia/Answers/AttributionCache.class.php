@@ -334,7 +334,7 @@ class AttributionCache {
 	/**
 	 * hook: ArticleSaveComplete
 	 */
-	public static function purgeArticleContribs(&$article, &$user, $text, $summary, $minoredit, &$watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
+	public static function purgeArticleContribs(&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
 		if(count($status->errors) == 0) {
 			AttributionCache::getInstance()->purge($article->getTitle(), $user);
 		}
