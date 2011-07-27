@@ -271,6 +271,7 @@ class HAWelcomeJob extends Job {
 
 						$bots   = array();
 						$admins = array();
+						$staff  = array();
 						$res = $dbr->select(
 							array( "user_groups" ),
 							array( "ug_user, ug_group" ),
@@ -316,7 +317,7 @@ class HAWelcomeJob extends Job {
 							$user = $row->rev_user;
 							break;
 						}
-												
+
 						if ( empty( $user ) && !empty( $backupUser ) ) {
 							$user = $backupUser;
 						} else {
@@ -324,7 +325,7 @@ class HAWelcomeJob extends Job {
 						}
 
 						$this->mSysop = User::newFromId( $user );
-						$wgMemc->set( wfMemcKey( "last-sysop-id" ), $user, 86400 );	
+						$wgMemc->set( wfMemcKey( "last-sysop-id" ), $user, 86400 );
 					}
 				}
 				else {
@@ -546,7 +547,7 @@ class HAWelcomeJob extends Job {
 
 		$prefixedText = $this->title->getPrefixedText();
 
-		wfRunHooks( 'HAWelcomeGetPrefixText' , array( &$prefixedText, $this->title ) ); // 
+		wfRunHooks( 'HAWelcomeGetPrefixText' , array( &$prefixedText, $this->title ) ); //
 
 		return $prefixedText;
 	}
