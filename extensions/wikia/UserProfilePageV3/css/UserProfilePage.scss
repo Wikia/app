@@ -6,6 +6,16 @@
 
 $radius-user-profile-masthead: 5px;
 
+/*
+Probably temporary change just to display Masthead properly.
+Christian, define $color-gray-text in the right place, please.
+After svn up I got SASS error: 
+Sass commandline error: Syntax error: Undefined variable: "$color-gray-text".
+And that's why I added it here but I doubt if it should be here.
+ --nAndy
+*/
+$color-gray-text: #CCC;
+
 $color-user-profile-masthead-aka: #CCC;
 @if lightness($color-button-text) < 50 {
 	$color-user-profile-masthead-aka: #333;
