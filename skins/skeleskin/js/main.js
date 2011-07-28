@@ -1,4 +1,8 @@
-window.addEventListener( "load", function() {
-  setTimeout( function(){ window.scrollTo(0, 1); }, 0 );
-});
+var SkeleSkin = {
+	init: function(){
+		//slide up the addressbar on webkit mobile browsers for maximum reading area
+		if(window.scrollTo) window.scrollTo(0, 1);
+	}
+}
 
+$(document).ready(SkeleSkin.init);
