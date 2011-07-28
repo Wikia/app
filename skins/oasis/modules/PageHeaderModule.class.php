@@ -173,7 +173,7 @@ class PageHeaderModule extends Module {
 	 *    key: showSearchBox (default: false)
 	 */
 	public function executeIndex($params) {
-		global $wgTitle, $wgArticle, $wgOut, $wgUser, $wgContLang, $wgSupressPageTitle, $wgSupressPageSubtitle, $wgSuppressNamespacePrefix, $wgCityId, $wgABTests;
+		global $wgTitle, $wgEnableUserProfilePagesV3, $wgArticle, $wgOut, $wgUser, $wgContLang, $wgSupressPageTitle, $wgSupressPageSubtitle, $wgSuppressNamespacePrefix, $wgCityId, $wgABTests;
 		wfProfileIn(__METHOD__);
 
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();
@@ -203,6 +203,8 @@ class PageHeaderModule extends Module {
 			$this->displaytitle = true;
 		}
 
+		// perform namespace and special page check
+		
 		// use service to get data
 		$service = PageStatsService::newFromTitle( $wgTitle );
 
@@ -361,6 +363,11 @@ class PageHeaderModule extends Module {
 		// render subpage info
 		$this->pageSubject = $skin->subPageSubtitle();
 
+		if($wgEnableUserProfilePagesV3 && in_array($wgTitle->getNamespace(), BodyModule::getUserPagesNamespaces() )) {
+			$title = explode(':', $this->title);
+			$this->title = $title[1];
+		}
+		
 		// render MW subtitle (contains old revision data)
 		$this->subtitle = $wgOut->getSubtitle();
 
