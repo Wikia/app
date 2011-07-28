@@ -1086,11 +1086,11 @@ class MemCachedClientforWiki extends MWMemcached {
 	}
 	/* Wikia change begin - @author: garth */
 	public function delete( $key, $time = 0 ) {
-		global $wgSharedDB, $wgExternalSharedDB, $wgCityId;
+		global $wgSharedDB, $wgExternalSharedDB, $wgCityId, $wgDisableMemCachedReplication;
 
 		// handle uncyclo, staff/internal case
 		// @todo -- use configuration variable for that
-		if( !wfReadOnly( ) && !empty( $wgCityId ) ) {
+		if( !$wgDisableMemCachedReplication && !wfReadOnly( ) && !empty( $wgCityId ) ) {
 			$db = (empty( $wgSharedDB ) ) ? $wgExternalSharedDB : $wgSharedDB;
 			$dbw = wfGetDB( DB_MASTER, array(), $db );
 			$dbw->insert('memcached', array('memkey' => $key));

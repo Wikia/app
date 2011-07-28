@@ -846,7 +846,7 @@ $wgEnableOpenGraphMetaExt = true;
 /**
  * List of internal usernames that shouldn't be allowed in Special:EditCount, e.g. "Default", bots
  * Please use lowercase.
- * 
+ *
  * @see /extensions/wikia/EditCount/SpecialEditCount_body.php
  */
 $wgSpecialEditCountExludedUsernames = array(
@@ -857,3 +857,8 @@ $wgSpecialEditCountExludedUsernames = array(
  * List of mobile skins
  */
 $wgMobileSkins = array( 'wikiphone', 'wikiaapp', 'skeleskin' );
+
+/**
+ * variable for disabling memcached deleted key replication
+ */
+$wgDisableMemCachedReplication = false;
