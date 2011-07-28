@@ -321,13 +321,20 @@ class UserIdentityBox {
 	}
 	
 	/**
+	 * @brief Sets hidden wikis in memc
+	 */
+	private function setMemcHiddenWikis() {
+		$this->app->wg->Memc->set( $this->getMemcHiddenWikisId(), $this->hiddenWikis, 3*60*60);
+	}
+	
+	/**
 	 * @brief Clears hidden wikis: the field of this class, DB and memcached data
 	 */
 	private function clearHiddenTopWikis() {
 		$this->hiddenWikis = array();
 		$this->updateHiddenInDb( $this->app->wf->GetDB(DB_MASTER, array(), $this->app->wg->ExternalSharedDB), $this->hiddenWikis );
 		
-		$this->app->wg->Memc->delete($this->getMemcHiddenWikisId());
+		$this->setMemcHiddenWikis();
 		$this->app->wg->Memc->delete($this->getMemcTopWikisId());
 	}
 	
@@ -371,13 +378,13 @@ class UserIdentityBox {
 	private function getHiddenTopWikis() {
 		$this->app->wf->ProfileIn( __METHOD__ );
 		
-		if( empty($this->hiddenWikis) ) {
+		if( empty($this->hiddenWikis) && !is_array($this->hiddenWikis) ) {
 			$hiddenWikis = $this->app->wg->Memc->get( $this->getMemcHiddenWikisId() );
 			
-			if( empty($hiddenWikis) ) {
+			if( empty($hiddenWikis) && !is_array($this->hiddenWikis) ) {
 				$dbs = $this->app->wf->GetDB( DB_SLAVE, array(), $this->app->wg->ExternalSharedDB);
 				$this->hiddenWikis = $this->getHiddenFromDb( $dbs );
-				$this->app->wg->Memc->set( $this->getMemcHiddenWikisId(), $this->hiddenWikis, 3*60*60);
+				$this->setMemcHiddenWikis();
 			} else {
 				$this->hiddenWikis = $hiddenWikis;
 			}
