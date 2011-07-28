@@ -10,7 +10,6 @@
 	#diff {
 		@include bodytext;
 		background-color: #e6f0fb;
-		margin-right: -10px;
 		padding: 5px;
 	}
 
@@ -22,6 +21,7 @@
 			background-color: #fff;
 			color: #000;
 			height: 400px;
+			resize: none;
 		}
 	}
 }
