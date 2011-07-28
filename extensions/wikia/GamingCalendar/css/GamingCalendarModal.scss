@@ -94,6 +94,9 @@ $gaming-calendar-gray-text: mix($color-text, $color-page, 75%);
 				color: $color-links;
 				font-weight: bold;
 			}
+			sup {
+				vertical-align: super;
+			}
 		}
 
 		.list {
