@@ -5,10 +5,6 @@
 @import "../../../../skins/oasis/css/mixins/opacity";
 @import "../../../../skins/oasis/css/mixins/transform";
 #FounderProgressWidget {
-	>h1 {
-		color: #737373;
-		font-size: 16px;
-	}
 	.preview {
 		@include linear-gradient(white, top, #fff, 10%, #f5f5f5, 100%);
 		border: 1px solid #e8e8e8;

@@ -16,6 +16,7 @@ $app->registerClass('QuickStatsController', $dir . 'QuickStatsController.class.p
 
 // i18n mapping
 $wgExtensionMessagesFiles['AdminDashboard'] = $dir . 'AdminDashboard.i18n.php';
+$wgExtensionMessagesFiles['QuickStats'] = $dir . 'QuickStats.i18n.php';
 
 // special pages
 $app->registerSpecialPage('AdminDashboard', 'AdminDashboardSpecialPageController');
