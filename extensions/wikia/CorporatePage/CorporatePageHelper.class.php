@@ -152,7 +152,7 @@ class CorporatePageHelper{
 		global $wgMemc, $wgLang;
 
 		$lang = $wgLang->getCode();
-		$mcKey = wfMemcKey( "hp_msg_parser", strtolower( $msg ), $lang /* BugId: 4079 */, ($forContent ? 'content' : 'userlang'));
+		$mcKey = wfMemcKey( "hp_msg_parser", strtolower( $msg ), $lang /* BugId: 4079 */, ($forContent ? 'content' : 'userlang'), 1);
 		$out = $wgMemc->get( $mcKey );
 		if ( is_array( $out ) ){
 			return $out;
@@ -179,17 +179,32 @@ class CorporatePageHelper{
 					if ($descThumb){
 						$imageName = self::getImageName($matches[5]);
 						$thumbName = self::getImageName($matches[6]);
-						$out[] = array("desc" => $matches[4],"imagethumb" => $thumbName,"imagename" => $imageName, "title" => trim($matches[3]), 'href' => trim($matches[2]),'sub' => array());
+						$out[] = array(
+							"desc" => $matches[4],
+							'imagetitle' => $matches[5],
+							"imagethumb" => $thumbName,
+							"imagename" => $imageName,
+							"title" => trim($matches[3]),
+							'href' => trim($matches[2]),
+							'sub' => array()
+						);
 					} else {
 						$param = "";
 						if (!empty($matches[7])){
 							$param = $matches[7];
 							$rowImageName = $matches[6];
-						} else{
+						} else {
 							$rowImageName = $matches[4];
 						}
 						$imageName = self::getImageName($rowImageName);
-						$out[] = array("param" => $param,"imagename" => $imageName, "title" => trim($matches[3]), 'href' => trim($matches[2]),'sub' => array());
+						$out[] = array(
+							"param" => $param,
+							'imagetitle' => $rowImageName,
+							"imagename" => $imageName,
+							"title" => trim($matches[3]),
+							'href' => trim($matches[2]),
+							'sub' => array()
+						);
 					}
 				}
 			}

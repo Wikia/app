@@ -3,6 +3,13 @@
 ?>
 
 <section id="HomepageFeature">
+<?php
+	// we have an HTML of rendered slider (BugId:8478)
+	if (!empty($sliderHtml)) {
+		echo $sliderHtml;
+	}
+	else {
+?>
 	<section id="spotlight-slider" class="<?php echo $slider_class; echo $class_hub; ?>">
 	<ul>
 		<?php
@@ -28,8 +35,10 @@
 					endforeach;?>
 	</ul>
 	</section>
+<?php
+	}
+?>
 </section>
-
 
 
 <?php 

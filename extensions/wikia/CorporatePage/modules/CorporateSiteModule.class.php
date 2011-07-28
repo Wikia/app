@@ -160,7 +160,6 @@ class CorporateSiteModule extends Module {
 		$this->data['title'] = 'Popular Staff Blogs';
 		$this->wgStylePath = $wgStylePath;
 		$this->wgTitle = $wgTitle;
-
 	}
 
 	public function executeHotSpots () {
@@ -186,16 +185,38 @@ class CorporateSiteModule extends Module {
 	}
 
 	public function executeSlider() {
-		global $wgOut, $wgTitle, $wgStylePath;
+		global $wgOut, $wgTitle, $wgStylePath, $wgParser;
 		wfLoadExtensionMessages( 'CorporatePage' );
 
 		if (BodyModule::isHubPage()) {
 			$this->slider_class = "small";
 			$tag_name = AutoHubsPagesHelper::getHubNameFromTitle($wgTitle);
 			$this->slider = CorporatePageHelper::parseMsgImg( 'hub-' . $tag_name . '-slider', true );
+
+			// render slider's HTML using WikiaPhotoGallery (BugId:8478)
+			$slider = new WikiaPhotoGallery();
+			$slider->setParser($wgParser);
+			$slider->parseParams(array(
+				'type' => 'slider',
+				'orientation'=> 'right',
+			));
+
+			// add images
+			$sliderWikitext = '';
+
+			foreach($this->slider as $image) {
+				// ElmoControlRoom.jpg|Label|link=http://wikia.com|linktext=Link text
+				$sliderWikitext .= "{$image['imagetitle']}|{$image['title']}|link={$image['href']}|linktext={$image['desc']}\n";
+			}
+
+			// set the content and parse it
+			$slider->setText($sliderWikitext);
+			$slider->parse();
+
+			// render it
+			$this->sliderHtml = $slider->toHTML();
 		}
 		if (ArticleAdLogic::isMainPage()) {
-
 			$this->isMainPage = true;
 			$this->slider_class = "big";
 			$this->slider = CorporatePageHelper::parseMsgImg('corporatepage-slider',true);
@@ -205,4 +226,3 @@ class CorporateSiteModule extends Module {
 		}
 	}
 }
-?>
