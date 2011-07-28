@@ -86,6 +86,14 @@ $base-z: 5;
 	float: right;
 	margin: 20px 15px 0 0;
 	width: 275px;
+	h1 {
+		color: #737373;
+		font-size: 16px;
+		margin-bottom: 5px;
+	}
+	>section {
+		margin-bottom: 20px;
+	}
 }
 
 .AdminDashboard {
@@ -327,4 +335,41 @@ $base-z: 5;
 /* Upload overwrite */
 #wpUploadDescription {
 	width: 100%;
+}
+
+
+
+.QuickStatsWidget {
+	h1 {
+	}
+	/* make this reusable later */
+	/* ng -> not global */
+	.WikiaDataTable {
+		border: 1px solid #e8e8e8; /* ng */
+		border-collapse: collapse;
+		text-align: right;
+		width: 100%;
+		th, td {
+			padding: 10px 10px 10px 0;
+			&:first-child {
+				color: #6AA8D1;
+			}
+		}
+		thead {
+			th {
+				color: #2070AD;
+			}
+		}
+		tbody {
+			tr {
+				border-top: 1px solid #e8e8e8; /* ng */
+				&:first-child {
+					border-top: none;
+				}
+				td {
+
+				}
+			}
+		}
+	}
 }

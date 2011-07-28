@@ -10,7 +10,7 @@ class QuickStatsController extends WikiaController {
 		$this->getDailyPageViews( $stats, $cityID );
 		$this->getDailyEdits( $stats, $cityID );
 		$this->getDailyPhotos( $stats );
-		$this->stats = $stats;
+		$this->stats = array_reverse($stats);
 	}
 	
 	// This should probably be Unique Users but we don't have that stat
