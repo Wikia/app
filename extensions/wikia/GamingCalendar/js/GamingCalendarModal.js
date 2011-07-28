@@ -2,7 +2,7 @@ var GamingCalendarModal = {
 	initialized: false,
 	modal: null,
 	displayWeek: 0,
-	firstWeek: new Date( 2011, 06, 18, 0, 0, 0 ),
+	firstWeek: new Date( 2011, 05, 20, 0, 0, 0 ),
 	lastWeek: null,
 	thisWeek: null,
 	today: new Date(),
@@ -216,22 +216,22 @@ var GamingCalendarModal = {
 			$(chl.get(5)).html( html[1] );
 			$(chl.get(4)).css('left', 580);
 			$(chl.get(5)).css('left', 870);
-			$(chl.get(2)).animate({left: '-=290'}, 250);
-			$(chl.get(3)).animate({left: '-=290'}, 250);
-			$(chl.get(4)).animate({left: '-=290'}, 250);
-			$(chl.get(5)).animate({left: '-=290'}, 250);
+			$(chl.get(2)).animate({left: '-=580'}, 250);
+			$(chl.get(3)).animate({left: '-=580'}, 250);
+			$(chl.get(4)).animate({left: '-=580'}, 250);
+			$(chl.get(5)).animate({left: '-=580'}, 250);
 			$(chl.get(0)).remove();
 			$(chl.get(1)).remove();
 			obj.append('<li class="week"></li><li class="week"></li>');
 		} else {
 			$(chl.get(0)).html( html[0] );
 			$(chl.get(1)).html( html[1] );
-			$(chl.get(0)).css('left', -290);
-			$(chl.get(1)).css('left', -580);
-			$(chl.get(0)).animate({left: '-=290'}, 250);
-			$(chl.get(1)).animate({left: '-=290'}, 250);
-			$(chl.get(2)).animate({left: '-=290'}, 250);
-			$(chl.get(3)).animate({left: '-=290'}, 250);
+			$(chl.get(0)).css('left', -580);
+			$(chl.get(1)).css('left', -290);
+			$(chl.get(0)).animate({left: '+=580'}, 250);
+			$(chl.get(1)).animate({left: '+=580'}, 250);
+			$(chl.get(2)).animate({left: '+=580'}, 250);
+			$(chl.get(3)).animate({left: '+=580'}, 250);
 			$(chl.get(4)).remove();
 			$(chl.get(5)).remove();
 			obj.prepend('<li class="week"></li><li class="week"></li>');
