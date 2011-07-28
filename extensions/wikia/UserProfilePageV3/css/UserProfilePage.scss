@@ -218,3 +218,8 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 		top: 2px;
 	}
 }
+
+#actionButtonContainer {
+	width: 100%;
+	text-align: right;
+}

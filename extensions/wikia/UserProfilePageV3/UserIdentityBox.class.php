@@ -23,7 +23,7 @@ class UserIdentityBox {
 	 * @param User $user core user object
 	 * @param integer $topWikisLimit limit of top wikis
 	 */
-	public function __construct(WikiaApp $app, $user, $topWikisLimit) {
+	public function __construct(WikiaApp $app, User $user, $topWikisLimit) {
 		$this->app = $app;
 		$this->user = $user;
 		$this->topWikisLimit = $topWikisLimit;
@@ -287,18 +287,13 @@ class UserIdentityBox {
 			);
 			
 			$wikis = array();
-			if ( $this->app->wg->DevelEnvironment ) {
-			//DevBox test
-				$wikis = $this->getTestData();
-			} else {
-				while( $row = $dbs->fetchObject($res) ) {
-					$wikiId = $row->wiki_id;
-					$editCount = $row->edits;
-					$wikiName = F::build('WikiFactory', array('wgSitename', $wikiId), 'getVarValueByName');
-					$wikiUrl = F::build('WikiFactory', array('wgServer', $wikiId), 'getVarValueByName');
-					
-					$wikis[$wikiId] = array( 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'editCount' => $editCount );
-				}
+			while( $row = $dbs->fetchObject($res) ) {
+				$wikiId = $row->wiki_id;
+				$editCount = $row->edits;
+				$wikiName = F::build('WikiFactory', array('wgSitename', $wikiId), 'getVarValueByName');
+				$wikiUrl = F::build('WikiFactory', array('wgServer', $wikiId), 'getVarValueByName');
+				
+				$wikis[$wikiId] = array( 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'editCount' => $editCount );
 			}
 		}
 		
