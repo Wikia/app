@@ -7,7 +7,9 @@
 				<th><?= wfMsg('quickstats-header-views') ?></th>
 				<th><?= wfMsg('quickstats-header-edits') ?></th>
 				<th><?= wfMsg('quickstats-header-photos') ?></th>
+				<?php if(isset($totals['likes'])) { ?>
 				<th><?= wfMsg('quickstats-header-likes') ?></th>
+				<? } ?>
 			</tr>
 		</thead>
 		<tbody>
@@ -20,7 +22,9 @@
 					<td><?= $row['pageviews'] ?></td>
 					<td><?= $row['edits'] ?></td>
 					<td><?= $row['photos'] ?></td>
+					<?php if(isset($totals['likes'])) { ?>
 					<td><?= $row['likes'] ?></td>
+					<? } ?>
 				</tr>
 			<? } ?>
 				<tr>
@@ -28,7 +32,9 @@
 					<td><?= $totals['pageviews'] ?></td>
 					<td><?= $totals['edits'] ?></td>
 					<td><?= $totals['photos'] ?></td>
+					<?php if(isset($totals['likes'])) { ?>
 					<td><?= $totals['likes'] ?></td>
+					<? } ?>
 				</tr>			
 		</tbody>
 	</table>
