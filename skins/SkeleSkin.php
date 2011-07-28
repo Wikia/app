@@ -13,16 +13,16 @@ class SkinSkeleskin extends SkinTemplate {
 
 	function __construct() {
 		parent::__construct();
+		
+		$this->skinname  = 'skeleskin';
+		$this->stylename = 'skeleskin';
+		$this->template  = 'SkeleSkinTemplate';
+		$this->themename = 'skeleskin';
 		$this->app = F::app();
 	}
 
 	function initPage( OutputPage $out ) {
 		parent::initPage( $out );
-		$this->skinname  = 'skeleskin';
-		$this->stylename = 'skeleskin';
-		$this->template  = 'SkeleSkinTemplate';
-		$this->themename = 'skeleskin';
-		
 		$this->app->registerHook('SkinGetHeadScripts', 'SkinSkeleskin', 'onSkinGetHeadScripts');
 		
 		$out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'skins/skeleskin/css/main.scss' ) );
@@ -35,13 +35,22 @@ class SkinSkeleskin extends SkinTemplate {
 		
 		return true;
 	}
-	
 }
 
 class SkeleSkinTemplate extends QuickTemplate {
+	private $app;
+	
+	function __construct(){
+		parent::__construct();
+		$this->app = F::app();
+	}
+	
 	function execute() {
-		$response = F::app()->sendRequest( 'SkeleSkinService', 'index' );
+		$this->app->sendRequest( 'SkeleSkinService', 'setTemplateObject', array( 'templateObject' => $this ) );
+		
+		$response = $this->app->sendRequest( 'SkeleSkinService', 'index' );
 		$response->sendHeaders();
 		$response->render();
+		print_pre($this->app->wg->Skin);
 	}
 }
