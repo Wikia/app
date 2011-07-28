@@ -10,6 +10,8 @@ class QuickStatsController extends WikiaController {
 		$this->getDailyPageViews( $stats, $cityID );
 		$this->getDailyEdits( $stats, $cityID );
 		$this->getDailyPhotos( $stats );
+		$flag = $this->getDailyLikes($stats);
+		
 		// totals come in as the last element with a null date, so just pop it off and give it a keyval 
 		$stats['totals'] = array_pop($stats);
 		// Some of our stats can be empty, so insert zeros there
@@ -20,7 +22,7 @@ class QuickStatsController extends WikiaController {
 			if (!isset($stats[$date]['pageviews'])) $stats[$date]['pageviews'] = 0;
 			if (!isset($stats[$date]['edits'])) $stats[$date]['edits'] = 0;
 			if (!isset($stats[$date]['photos'])) $stats[$date]['photos'] = 0;
-			if (!isset($stats[$date]['likes'])) $stats[$date]['likes'] = 0;
+			if ($flag && !isset($stats[$date]['likes'])) $stats[$date]['likes'] = 0;
 		}
 		$this->totals = array_pop($stats);
 		$this->stats = array_reverse($stats);
@@ -102,8 +104,59 @@ class QuickStatsController extends WikiaController {
 		$this->wf->ProfileOut( __METHOD__ );		
 	}
 	
-	protected function getDailyLikes($cityID, $date) {
+	protected function getDailyLikes(Array &$stats) {
+		global $fbApiKey, $fbApiSecret, $fbAccessToken;
 		
+		$this->wf->ProfileIn( __METHOD__ );
+		
+		if(preg_match('/\/\/(\w*)\./',$this->wg->Server,$matches))
+			$domain = $this->getLikesDomain($matches[1]);
+		else
+			$domain = $this->getLikesDomain($this->wg->dbname);
+		
+		if(!$domain)
+			return FALSE;
+		
+		include('extensions/FBConnect/facebook-sdk/facebook.php');
+		
+		$facebook = new FacebookAPI(array('appId' => $fbApiKey, 'secret'=> $fbApiSecret));
+		
+		$url = 'https://graph.facebook.com/?domain='.$domain;
+		$response = json_decode(Http::get($url));
+		if (!$response)
+			return FALSE;
+
+		$since = strtotime("-7 day 00:00:00");
+		$until = strtotime("-0 day 00:00:00");
+		$url = 'https://graph.facebook.com/'.$response->id.'/insights/domain_widget_likes/day?access_token='.$fbAccessToken.'&since='.$since.'&until='.$until;
+		$response = json_decode(Http::get($url));
+		if(!$response)
+			return FALSE;
+		
+		$data = array_pop($response->data);
+		if(!isset($data->values))
+			return FALSE;
+
+		$stats['']['likes'] = 0;
+		foreach($data->values as $value) {
+			if (preg_match('/([\d\-]*)/', $value->end_time, $matches)) {
+				$day = $matches[1];
+				$stats[$day]['likes'] = $value->value;
+				$stats['']['likes'] += $value->value;
+			}
+		}
+		
+		$this->wf->ProfileOut( __METHOD__ );
+		
+		return TRUE;
 	}
 	
+	protected function getLikesDomain($subdomain) {
+		$invalid_subdomain = array('wowwiki','memory-alpha','ffxiclopedia','yoyowiki');
+		
+		if (strstr($this->wg->Server,'.wikia.com') || (strstr($this->wg->Server,'.wikia-dev.com') && !in_array($subdomain, $invalid_subdomain)))
+			return $subdomain.".wikia.com";
+		
+		return FALSE;
+	}
 }
