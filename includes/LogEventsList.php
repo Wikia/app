@@ -694,7 +694,7 @@ class LogEventsList {
 		/* Wikia change begin - @author: Macbre */
 		/* hook can return false, if we don't want the message to be emitted (BugId:7093) */
 		if (!wfRunHooks('LogEventsListShowLogExtract', array(&$s, $types, $page, $user, $param))) {
-		 	return $pager->getNumRows();
+			return $pager->getNumRows();
 		}
 		/* Wikia change end */
 
