@@ -26,6 +26,8 @@ var UserProfilePage = {
 			event.preventDefault();
 			UserProfilePage.renderLightbox('avatar');
 		});
+		
+		$('.masthead-info .wikis li').click(UserProfilePage.trackFavoriteWiki)
 	},
 	
 	renderLightbox: function(tabName) {
@@ -44,7 +46,7 @@ var UserProfilePage = {
 			var tab = modal.find('.tabs a');
 			tab.click(function(event) {
 				event.preventDefault();
-				UserProfilePage.trackClick(event);
+				UserProfilePage.trackLightbox(event);
 				UserProfilePage.switchTab($(this).closest('li'));
 			});
 			
@@ -515,7 +517,7 @@ var UserProfilePage = {
 		$.tracker.byStr('profile/' + url);
 	},
 	
-	trackClick: function(ev) {
+	trackLightbox: function(ev) {
 		var node = $(ev.target), attr = node.attr('id');
 		
 		if( attr === 'about') {
@@ -523,6 +525,10 @@ var UserProfilePage = {
 		} else if( attr === 'avatar' ) {
 			UserProfilePage.track('edit/lightbox/continue_2');
 		}
+	},
+	
+	trackFavoriteWiki: function(ev) {
+		UserProfilePage.track('top_wikis');
 	},
 	
 	closeModal: function(modal, resetDataChangedFlag) {
