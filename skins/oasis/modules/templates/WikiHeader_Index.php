@@ -13,7 +13,7 @@
 		<ul>
 
 <?php
-if(is_array($menuNodes) && isset($menuNodes[0]) && !$isInternalWiki ) {
+if( is_array($menuNodes) && isset($menuNodes[0]) && $showMenu) {
 	foreach($menuNodes[0]['children'] as $level0) {
 ?>
 			<li>
