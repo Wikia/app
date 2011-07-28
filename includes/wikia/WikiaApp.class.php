@@ -393,10 +393,10 @@ class WikiaApp {
 	}
 
 	/**
-	 * get view Object for given controller and method (previously wfRenderPartial)
+	 * get view Object for given controller and method, providing your own data (previously wfRenderPartial)
 	 * @param string $controllerName
 	 * @param string $method
-	 * @param array $data
+	 * @param object WikiaView
 	 */
 	public function getView( $controllerName, $method, Array $data = array() ) {
 		return F::build( 'WikiaView', array( $controllerName, $method, $data ), 'newFromControllerAndMethodName' );
@@ -404,14 +404,13 @@ class WikiaApp {
 
 	/**
 	 * Helper function to get output as HTML for controller and method (previously wfRenderModule)
-	 * @param string $name
-	 * @param string $action
+	 * @param string $controllerName
+	 * @param string $method
 	 * @param array $params
 	 * @return string
 	 */
-	public function renderView( $name, $action, Array $params = null ) {
-		$response = $this->sendRequest( $name, $action, $params, false );
-		return $response->toString();
+	public function renderView( $controllerName, $method, Array $params = null ) {
+		return $this->sendRequest( $controllerName, $method, $params, false )->toString();
 	}
 
 	/**
