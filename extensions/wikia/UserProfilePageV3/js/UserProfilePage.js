@@ -268,7 +268,7 @@ var UserProfilePage = {
 			UserProfilePage.renderCurrQuestion(nextButton, prevButton);
 		});
 		
-		//where data does come from?
+		//where does data come from?
 		//UserProfilePage.questions = data.interviewQuestions;
 		UserProfilePage.renderCurrQuestion(nextButton, prevButton);
 	},

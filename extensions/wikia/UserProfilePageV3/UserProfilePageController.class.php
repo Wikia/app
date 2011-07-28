@@ -155,9 +155,6 @@ class UserProfilePageController extends WikiaController {
 		
 		$this->setVal( 'wgBlankImgUrl', $this->wg->BlankImgUrl );
 		
-		//$this->setVal( 'facebookPrefsLink', Wikia::specialPageLink('Preferences', 'user-identity-box-fb-prefs'));
-		
-
 		$this->setVal( 'facebookPrefsLink', Skin::makeSpecialUrl('Preferences'));
 		
 		$this->app->wf->ProfileOut( __METHOD__ );
