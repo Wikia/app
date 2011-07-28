@@ -241,12 +241,21 @@ class ExternalUser_Wikia extends ExternalUser {
 			$data[ $field ] = $value;
 		}
 
-		$row = $dbw->selectRow( 'user', array( 'user_name' ), array( 'user_id' => $this->getId() ), __METHOD__ );
+		$row = $dbw->selectRow( 'user', array( '*' ), array( 'user_id' => $this->getId() ), __METHOD__ );
 
 		if ( empty( $row ) ) {
 			$dbw->insert( 'user', $data, __METHOD__, array('IGNORE') );
 		} else {
-			$dbw->update( 'user', $data, array( 'user_id' => $this->getId() ), __METHOD__ );
+			$need_update = false;
+			foreach ( $row as $field => $value ) {
+				if ( isset( $data[$field] ) && ( $data[$field] != $value ) )  {
+					$need_update = true;
+				}
+			}
+			
+			if ( $need_update ) { 
+				$dbw->update( 'user', $data, array( 'user_id' => $this->getId() ), __METHOD__ );
+			}
 		}
 
 		wfProfileOut( __METHOD__ );
