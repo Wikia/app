@@ -42,8 +42,8 @@ var WikiaPhotoGallery = {
 	RESULTS_SEARCH: 2,
 
 	// slider dimensions
-	GALLERY_SLIDER_WIDTH: 673,
-	GALLERY_SLIDER_HEIGHT: 410,
+	GALLERY_SLIDER_WIDTH: 660,
+	GALLERY_SLIDER_HEIGHT: 360,
 
 	// send AJAX request to extension's ajax dispatcher in MW
 	ajax: function(method, params, callback) {
@@ -189,7 +189,7 @@ var WikiaPhotoGallery = {
 				} else {
 					cancelButton.hide();
 				}
-				
+
 				selectImageButton.show();
 
 				this.setupUploadPage(params);
@@ -784,9 +784,11 @@ var WikiaPhotoGallery = {
 
 				$.AIM.submit(this /* form */, {
 					onComplete: function(response) {
+						var data = $.parseJSON(response);
+
 						self.log('response from upload: ' + response);
 						self.log( response );
-						var data = $.secureEvalJSON(response);
+						self.log( data );
 						self.log('upload done');
 
 						// tracking
@@ -796,17 +798,16 @@ var WikiaPhotoGallery = {
 						// hide loading indicator and unblock "Upload" button
 						$('#WikiaPhotoGalleryImageUploadButton').attr('disabled', false);
 						$('#WikiaPhotoGalleryUploadProgress').hide();
-						if ( ( data.success || data.conflict ) && self.isSlider() && ( data.size.width != self.GALLERY_SLIDER_WIDTH || data.size.height != self.GALLERY_SLIDER_HEIGHT ) ){
 
+						// check if uploaded image can be added to the slider
+						if ( self.isSlider() && ( data.success || data.conflict ) && (!data.isImageStrict) ){
 							self.log('Image size not valid!');
 
-								// clear upload form
-								$('#WikiaPhotoGalleryImageUpload').val('');
-								$('#WikiaPhotoGalleryImageUploadSizeError').css('display', 'block');
-								$('#WikiaPhotoGalleryImageUploadSize').css('display', 'none');
-
-						} else {
-
+							// clear upload form
+							$('#WikiaPhotoGalleryImageUpload').val('');
+							$('#WikiaPhotoGalleryImageUploadSizeError').css('display', 'block');
+							$('#WikiaPhotoGalleryImageUploadSize').css('display', 'none');
+					} else {
 							// are we editing gallery entry?
 							var imageId = self.editor.currentPageParams.imageId;
 
@@ -900,7 +901,7 @@ var WikiaPhotoGallery = {
 
 			target.addClass('accent selected');
 		};
-		
+
 		var unselectImage = function(ev) {
 			var target = $(ev.target);
 
@@ -2709,7 +2710,7 @@ var WikiaPhotoGallery = {
 							// update counter (n of X)
 							var counter = dialog.find('.wikia-slideshow-popout-counter');
 							var val = counter.attr('value') || '';
-							
+
 							counter.text( val.replace(/\$1/, 1 + data.currentSlideId) );
 
 							// update carousel

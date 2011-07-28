@@ -90,6 +90,7 @@ class WikiaPhotoGalleryUpload {
 						'url' => $thumbnail->url,
 						'width' => $thumbnail->width,
 					),
+					'isImageStrict' => !!WikiaPhotoGalleryHelper::isImageStrict($file),
 				);
 			} else {
 				// use regular MW upload
@@ -104,7 +105,7 @@ class WikiaPhotoGalleryUpload {
 				$result = $imageFile->upload( $imagePath, '' /* comment */, '' /* page text */);
 
 				self::log( __METHOD__, !empty( $result->ok ) ? 'upload successful' : 'upload failed' );
-				
+
 				$ret = array(
 					'success' => !empty( $result->ok ),
 					'name' => $imageName,
@@ -113,6 +114,11 @@ class WikiaPhotoGalleryUpload {
 					    'width' => ( !empty( $result->ok ) ) ? $imageFile->getWidth() : 0
 					),
 				);
+
+				// check if this image has correct dimensions to be placed in a slider (BugId:2787)
+				if (!empty($result->ok)) {
+					$ret['isImageStrict'] = !!WikiaPhotoGalleryHelper::isImageStrict($imageFile);
+				}
 			}
 		} else {
 			$reason = $nameValidation;
@@ -172,13 +178,13 @@ class WikiaPhotoGalleryUpload {
 				self::log(__METHOD__, 'filename provided is illegal!');
 			} else {
 				$res = self::uploadTempFileIntoMW($tempId, $newName);
-	
+
 				if ($res) {
 					self::log(__METHOD__, "conflicting photo uploaded as File:{$newName}");
 				}
-			}	
+			}
 		}
-		
+
 		wfProfileOut(__METHOD__);
 		return $res;
 	}
@@ -192,11 +198,11 @@ class WikiaPhotoGalleryUpload {
 		$upload = new UploadFromFile();
 		$upload->initializeFromRequest($wgRequest);
 		$permErrors = $upload->verifyPermissions( $wgUser );
-		
+
 		if ( $permErrors !== true ) {
 			return self::USER_PERMISSION_ERROR;
 		}
-		
+
 		$ret = $upload->verifyUpload();
 
 		// this hook is used by WikiaTitleBlackList extension
@@ -204,8 +210,8 @@ class WikiaPhotoGalleryUpload {
 			self::log(__METHOD__, 'Hook "WikiaMiniUpload:BeforeProcessing" broke processing the file');
 			wfProfileOut(__METHOD__);
 			return UploadBase::VERIFICATION_ERROR;
-		}		
-		
+		}
+
 		if(is_array($ret)) {
 			return $ret['status'];
 		} else {
@@ -282,7 +288,7 @@ class WikiaPhotoGalleryUpload {
 			case UploadBase::VERIFICATION_ERROR:
 				$ret = "File type verification error!" ;
 				break;
-			
+
 			case self::USER_PERMISSION_ERROR:
 				$ret = wfMsg( 'badaccess' );
 				break;
