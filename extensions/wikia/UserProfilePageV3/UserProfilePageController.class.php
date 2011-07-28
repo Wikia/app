@@ -419,7 +419,7 @@ class UserProfilePageController extends WikiaController {
 				break;
 				
 			default:
-				$error = wfMsg('user-identity-box-avatar-error-cantwrite');
+				$error = wfMsg('user-identity-box-avatar-error');
 		}
 	}
 	

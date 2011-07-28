@@ -91,6 +91,11 @@ $messages['en'] = array(
 	'user-identity-box-about-date-11' => 'November',
 	'user-identity-box-about-date-12' => 'December',
 	
+	'user-identity-box-avatar-error-nofile' => 'Error: No avatar file found to upload',
+	'user-identity-box-avatar-error-cantwrite' => 'Error: Could not write to temporary directory',
+	'user-identity-box-avatar-error-size' => 'Error: Avatar is too big ($1)',
+	'user-identity-box-avatar-error' => 'Error: There was internal error while saving avatar',
+	
 	'userprofilepage-lightbox-about-me-cancel' => "Cancel",
 	'userprofilepage-lightbox-about-me-save' => "Save, I'm Done",
 	

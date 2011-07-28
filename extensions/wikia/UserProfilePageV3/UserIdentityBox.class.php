@@ -95,12 +95,12 @@ class UserIdentityBox {
 		$changed = false;
 		$prefix = 'UserProfilePagesV3';
 		
-		foreach(array('location', 'occupation', 'birthday', 'gender', 'website', 'twitter', 'avatar', 'fbPage') as $option) {
+		foreach(array('location', 'occupation', 'birthday', 'gender', 'website', 'avatar', 'twitter', 'fbPage') as $option) {
 			if( isset($data->$option) ) {
 				$data->$option = str_replace('*', '&asterix;', $data->$option);
 				$data->$option = $this->app->wg->Parser->parse($data->$option, $this->user->getUserPage(), new ParserOptions($this->user))->getText();
 				$data->$option = str_replace('&amp;asterix;', '*', $data->$option);
-				$data->$option = strip_tags($data->$option);
+				$data->$option = trim( strip_tags($data->$option) );
 				
 				//if( in_array($option, array('gender', 'birthday')) ) { -- just an example how can it be used later
 				if( $option === 'gender' ) {

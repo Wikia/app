@@ -123,9 +123,7 @@ var UserProfilePage = {
 	},
 	
 	sampleAvatarChecked: function(img) {
-		UserProfilePage.clearBorders();
-		
-		UserProfilePage.modal.find('.avatar').hide();
+		UserProfilePage.modal.find('img.avatar').hide();
 		UserProfilePage.modal.find('.avatar-loader').show();
 		
 		var image = $(img),
@@ -144,19 +142,11 @@ var UserProfilePage = {
 				} else {
 					UserProfilePage.modal.find('.avatar-loader').hide();
 					
-					var avatarImg = UserProfilePage.modal.find('.avatar');
+					var avatarImg = UserProfilePage.modal.find('img.avatar');
 					avatarImg.attr('src', data.result.avatar);
 					avatarImg.show();
 				}
 			}
-		});
-	},
-	
-	clearBorders: function() {
-		var sampleAvatars = $('#UPPLightboxSampleAvatarsDiv li img');
-		sampleAvatars.each(function(i, val){
-			//later just class removing probably
-			$(val).css('border', 'none');
 		});
 	},
 	
@@ -166,7 +156,7 @@ var UserProfilePage = {
 		
 		$.AIM.submit(form, {
 			onStart: function() {
-				UserProfilePage.modal.find('.avatar').hide();
+				UserProfilePage.modal.find('img.avatar').hide();
 				UserProfilePage.modal.find('.avatar-loader').show();
 			},
 			onComplete: function(response) {
@@ -174,16 +164,16 @@ var UserProfilePage = {
 					response = JSON.parse(response);
 					
 					if( response.result.success === true ) {
-						var avatarImg = UserProfilePage.modal.find('.avatar');
+						var avatarImg = UserProfilePage.modal.find('img.avatar');
 						
 						UserProfilePage.modal.find('.avatar-loader').hide();
 						avatarImg.attr('src', response.result.avatar).show();
-						
-						UserProfilePage.clearBorders();
-						//later just class adding probably
-						avatarImg.css('border', '3px solid #008000');
 					} else {
-						$().log('Error.');
+						if( typeof(response.result.error) !== 'undefined' ) {
+							var errorBox = $(".UPPLightbox #errorBox").show().find('div');
+							errorBox.empty();
+							errorBox.append( response.result.error );
+						}
 					}
 					
 					if( typeof(form[0]) !== 'undefined' ) {
@@ -431,20 +421,16 @@ var UserProfilePage = {
 	},
 	
 	fbConnectAvatar: function() {
-		UserProfilePage.modal.find('.avatar').hide();
+		UserProfilePage.modal.find('img.avatar').hide();
 		UserProfilePage.modal.find('.avatar-loader').show();
 		
 		$.postJSON( this.ajaxEntryPoint, { method: 'onFacebookConnect', avatar: true, cb: wgStyleVersion }, function(data) {
 			if( data.result.success === true ) {
 				$('#facebookConnectAvatar').hide();
-				var avatarImg = UserProfilePage.modal.find('.avatar');
+				var avatarImg = UserProfilePage.modal.find('img.avatar');
 				
 				UserProfilePage.modal.find('.avatar-loader').hide();
 				avatarImg.attr('src', data.result.avatar).show();
-				
-				UserProfilePage.clearBorders();
-				//later just class adding probably
-				avatarImg.css('border', '3px solid #008000');
 			}
 		});
 	},
