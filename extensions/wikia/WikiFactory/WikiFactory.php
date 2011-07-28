@@ -915,15 +915,8 @@ class WikiFactory {
 			return false;
 		}
 
-		$dbr = ( $master ) ? self::db( DB_MASTER ) : self::db( DB_SLAVE );
-
-		$oRow = $dbr->selectRow(
-			array( "city_list" ),
-			array( "city_id", "city_dbname" ),
-			array( "city_dbname" => $city_dbname ),
-			__METHOD__
-		);
-
+		$oRow = self::getWikiByDB( $city_dbname, $master );
+		
 		return isset( $oRow->city_id ) ? $oRow->city_id : false;
 	}
 
@@ -948,14 +941,8 @@ class WikiFactory {
 			return false;
 		}
 
-		$dbr = ( $master ) ? self::db( DB_MASTER ) : self::db( DB_SLAVE );
-		$oRow = $dbr->selectRow(
-			array( "city_list" ),
-			array( "city_id", "city_dbname" ),
-			array( "city_id" => $city_id ),
-			__METHOD__
-		);
-
+		$oRow = self::getWikiByID( $city_id, $master );
+		
 		return isset( $oRow->city_dbname ) ? $oRow->city_dbname : false;
 	}
 
@@ -971,37 +958,100 @@ class WikiFactory {
 	 *
 	 * @return mixed: database row with wiki params
 	 */
-	static public function getWikiByID( $id ) {
+	static public function getWikiByID( $id, $master = false ) {
 
 		if( ! self::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return false;
 		}
 
-		/**
-		 * first from slave
-		 */
-		$dbr = self::db( DB_SLAVE );
-		$oRow = $dbr->selectRow(
-			array( "city_list" ),
-			array( "*" ),
-			array( "city_id" => $id ),
-			__METHOD__
-		);
+		$oMemc = wfGetCache( CACHE_MEMCACHED );
+		$memkey = self::getWikiaCacheKey( $id );
+		$cached = ( empty($master) ) ? $oMemc->get( $memkey ) : null;
+		if ( empty($cached) || !is_object( $cached ) ) {
+			/**
+			 * first from slave
+			 */
+			$dbr = self::db( DB_SLAVE );
+			$oRow = $dbr->selectRow(
+				array( "city_list" ),
+				array( "*" ),
+				array( "city_id" => $id ),
+				__METHOD__
+			);
 
-		if( isset( $oRow->city_id ) ) {
-			return $oRow;
+			if( !isset( $oRow->city_id ) ) {
+				/**
+				 * if not then from master
+				 */
+				$dbr = self::db( DB_MASTER );
+				$oRow = $dbr->selectRow(
+					array( "city_list" ),
+					array( "*" ),
+					array( "city_id" => $id ),
+					__METHOD__
+				);
+			}
+			$oMemc->set($memkey, $oRow, 60*60*24);
+		} else {
+			$oRow = $cached;
 		}
-		/**
-		 * if not then from master
-		 */
-		$dbr = self::db( DB_MASTER );
-		$oRow = $dbr->selectRow(
-			array( "city_list" ),
-			array( "*" ),
-			array( "city_id" => $id ),
-			__METHOD__
-		);
+		
+		return $oRow;
+	}
+
+
+	/**
+	 * getWikiByDB
+	 *
+	 * @access public
+	 * @author moli@wikia
+	 * @static
+	 *
+	 * @param string $city_dbname	name of database
+	 * @param boolean $master	use master or slave connection
+	 *
+	 * @return id in city_list
+	 */
+	static public function getWikiByDB( $city_dbname, $master = false ) {
+
+		if( ! self::isUsed() ) {
+			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
+			return false;
+		}
+
+		$oMemc = wfGetCache( CACHE_MEMCACHED );
+		$memkey = self::getWikiaDBCacheKey( $city_dbname );
+		$cached = ( empty($master) ) ? $oMemc->get( $memkey ) : null;
+		if ( empty($cached) || !is_object( $cached ) ) {
+			/**
+			 * first from slave
+			 */
+			$dbr = self::db( DB_SLAVE );
+			$oRow = $dbr->selectRow(
+				array( "city_list" ),
+				array( "*" ),
+				array( "city_dbname" => $city_dbname ),
+				__METHOD__
+			);
+
+			if( !isset( $oRow->city_id ) ) {
+				/**
+				 * if not then from master
+				 */
+				$dbr = self::db( DB_MASTER );
+				$oRow = $dbr->selectRow(
+					array( "city_list" ),
+					array( "*" ),
+					array( "city_dbname" => $city_dbname ),
+					__METHOD__
+				);
+			}
+			$oMemc->set($memkey, $oRow, 60*60*24);
+		} else {
+			$oRow = $cached;
+		}
+		
 		return $oRow;
 	}
 
@@ -1217,6 +1267,12 @@ class WikiFactory {
 		 * clear variables cache
 		 */
 		$wgMemc->delete( self::getVarsKey( $city_id ) );
+		
+		$city_dbname = self::IDtoDB( $city_id ) ;
+		$wgMemc->delete( self::getWikiaCacheKey( $city_id ) );
+		if ( !empty( $city_dbname ) ) {
+			$wgMemc->delete( self::getWikiaDBCacheKey( $city_dbname ) );
+		}
 
 		wfProfileOut( __METHOD__ );
 
@@ -1512,17 +1568,13 @@ class WikiFactory {
 
 		wfProfileIn( __METHOD__ );
 
-		$dbw = self::db( DB_MASTER );
-		$cityPublic = $dbw->selectField(
-			"city_list",
-			array('city_public'),
-			array( "city_id" => $city_id ),
-			__METHOD__
-		);
+		$oWikia = self::getWikiByID( $city_id );
+		
+		$city_public = ( isset( $oWikia->city_id ) ) ? $oWikia->city_public : 0;
 
 		wfProfileOut( __METHOD__ );
 
-		return intval($cityPublic);
+		return intval($city_public);
 	}
 
 	/**
@@ -2231,37 +2283,6 @@ class WikiFactory {
 	}
 
 	/**
-	 * getWikiByDB
-	 *
-	 * @access public
-	 * @author moli@wikia
-	 * @static
-	 *
-	 * @param string $city_dbname	name of database
-	 * @param boolean $master	use master or slave connection
-	 *
-	 * @return id in city_list
-	 */
-	static public function getWikiByDB( $city_dbname, $master = false ) {
-
-		if( ! self::isUsed() ) {
-			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
-			return false;
-		}
-
-		$dbr = ( $master ) ? self::db( DB_MASTER ) : self::db( DB_SLAVE );
-
-		$oRow = $dbr->selectRow(
-			array( "city_list" ),
-			array( "*" ),
-			array( "city_dbname" => $city_dbname ),
-			__METHOD__
-		);
-
-		return isset( $oRow->city_id ) ? $oRow : false;
-	}
-
-	/**
 	 * MultipleVarsToID
 	 *
 	 * Find city_id matching one or more name+val config variables
@@ -2568,4 +2589,39 @@ class WikiFactory {
 
 		return $aWikis;
 	}
+	
+	/**
+	 * getWikiaCacheKey
+	 *
+	 * get memcached key for Wiki ID
+	 *
+	 * @access public
+	 * @author moli@wikia
+	 * @static
+	 *
+	 * @param integer $city_id: wiki id in city list
+	 *
+	 * @return string - variables key for memcached
+	 */
+	static public function getWikiaCacheKey( $city_id ) {
+		return "wikifactory:wikia:v1:{$city_id}";
+	}
+	
+	/**
+	 * getWikiaDBCacheKey
+	 *
+	 * get memcached key for Wiki DB
+	 *
+	 * @access public
+	 * @author moli@wikia
+	 * @static
+	 *
+	 * @param String $city_dbname: wiki dbname in city list
+	 *
+	 * @return string - variables key for memcached
+	 */
+	static public function getWikiaDBCacheKey( $city_dbname ) {
+		return "wikifactory:wikia:db:v1:{$city_dbname}";
+	}
+	
 };
