@@ -23,12 +23,12 @@ class SkinSkeleskin extends SkinTemplate {
 		$this->template  = 'SkeleSkinTemplate';
 		$this->themename = 'skeleskin';
 		
-		$app->registerHook('SkinGetHeadScripts', 'SkinSkeleskin', 'onSkinGetHeadScripts');
+		$this->app->registerHook('SkinGetHeadScripts', 'SkinSkeleskin', 'onSkinGetHeadScripts');
 		
 		$out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'skins/skeleskin/css/main.scss' ) );
 	}
 
-	public function onSkinGetHeadScripts(&$scripts) {
+	public function onSkinGetHeadScripts( &$scripts ) {
 		foreach ( AssetsManager::getInstance()->getGroupCommonURL( 'skeleskin_js' ) as $src ) {
 			$scripts .= "\n<script src=\"{$src}\"></script>";
 		}
