@@ -12,7 +12,7 @@ var LatestQuestions = {
 	    html += "<h1 class='activity-heading'>"+wgLatestQuestionsHeader+"</h1>";
 	    html += "<ul>";
             for(var i=0; i<data.changeList.length; i++) {
-		html += "<li><img src='"+wgBlankImgUrl+"' class='sprite "+data.changeList[i].changeicon+"' height='20' width='20'><em>"+data.changeList[i].page_href+"</em><details>"+data.changeList[i].changemessage+"</details></li>";
+		html += "<li><img src='"+wgBlankImgUrl+"' class='sprite "+data.changeList[i].changeicon+"' height='20' width='20'><em>"+data.changeList[i].page_href+"</em><div class=\"edited-by\">"+data.changeList[i].changemessage+"</div></li>";
             }
 	    html += "</ul>";
 	    html += "<a href='/wiki/Special:WikiActivity' title='Special:WikiActivity' class='more'>"+wgOasisMoreMsg+"</a>";
