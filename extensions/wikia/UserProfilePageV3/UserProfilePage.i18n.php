@@ -107,6 +107,10 @@ $messages['en'] = array(
 	'userprofilepage-closing-popup-discard-and-quit' => 'Discard changes and quit',
 	'userprofilepage-closing-popup-save-and-quit' => 'Save changes and quit',
 	'userprofilepage-closing-popup-cancel' => 'Cancel',
+
+	'user-action-menu-edit' => 'Edit',
+	'user-action-menu-leave-message' => 'Leave message',
+	'user-action-menu-view-source' => 'View source',
 );
 
 $messages['qqq'] = array(

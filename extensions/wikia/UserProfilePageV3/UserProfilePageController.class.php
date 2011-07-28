@@ -102,6 +102,95 @@ class UserProfilePageController extends WikiaController {
 	}
 	
 	/**
+	 * @brief Renders new action button
+	 * 
+	 * @author Andrzej 'nAndy' Łukaszewski
+	 */
+	public function renderActionButton() {
+		$this->app->wf->ProfileIn( __METHOD__ );
+		
+		$namespace = $this->title->getNamespace();
+		$user = $this->getUserFromTitle($this->title);
+		$sessionUser = $this->wg->User;
+		$isWikiStaff = $sessionUser->isAllowed('staff');
+		$isUserPageOwner = $user->getId() == $this->wg->User->getId() ? true : false;
+		
+		$actionButton = null;
+		if( $namespace == NS_USER ) {
+			if( $isUserPageOwner ) {
+				$actionButton = $this->wf->RenderModule('MenuButton', 'Index', array(
+					'action' => array(
+						'href' => $this->title->getLocalUrl(array('action' => 'edit')),
+						'text' => $this->wf->Msg('user-action-menu-edit'),
+					),
+					'image' => MenuButtonModule::EDIT_ICON,
+					'name' => 'editprofile',
+				));
+			} else {
+				$title = F::build('Title', array($user->getName(), NS_USER_TALK), 'newFromText');
+				$actionButtonArray = array(
+					'action' => array(
+						'href' => $title->getLocalUrl(array('action' => 'edit', 'section' => 'new')),
+						'text' => $this->wf->Msg('user-action-menu-leave-message'),
+					),
+					'image' => MenuButtonModule::MESSAGE_ICON,
+					'name' => 'leavemessage',
+				);
+				
+				if( $isWikiStaff ) {
+				//but also admins probably so later change to checking rights -- can edit profile page?
+					$actionButtonArray['dropdown'] = array(
+						'editprofile' => array(
+							'href' => $this->title->getFullUrl(array('action' => 'edit')),
+							'text' => $this->wf->Msg('user-action-menu-edit'),
+						)
+					);
+				} else {
+					$actionButtonArray['dropdown'] = array(
+						'viewsource' => array(
+							'href' => $this->title->getFullUrl(array('action' => 'source')),
+							'text' => $this->wf->Msg('user-action-menu-view-source'),
+						)
+					);
+				}
+				
+				$actionButton = $this->wf->RenderModule('MenuButton', 'Index', $actionButtonArray);
+			}
+		} else if( $namespace == NS_USER_TALK ) {
+			$title = F::build('Title', array($user->getName(), NS_USER_TALK), 'newFromText');
+			if( $isUserPageOwner ) {
+				$actionButtonArray = array(
+					'action' => array(
+						'href' => $this->title->getLocalUrl(array('action' => 'edit')),
+						'text' => $this->wf->Msg('user-action-menu-edit'),
+					),
+					'image' => MenuButtonModule::EDIT_ICON,
+					'name' => 'editprofile',
+				);
+			} else {
+				$actionButtonArray = array(
+					'action' => array(
+						'href' => $title->getLocalUrl(array('action' => 'edit', 'section' => 'new')),
+						'text' => $this->wf->Msg('user-action-menu-leave-message'),
+					),
+					'image' => MenuButtonModule::MESSAGE_ICON,
+					'name' => 'leavemessage',
+					'dropdown' => array(
+						'edit' => array(
+							'href' => $this->title->getFullUrl(array('action' => 'edit')),
+							'text' => $this->wf->Msg('user-action-menu-edit'),
+						)
+					),
+				);
+			}
+			$actionButton = $this->wf->RenderModule('MenuButton', 'Index', $actionButtonArray);
+		}
+		$this->setVal('actionButton', $actionButton);
+		
+		$this->app->wf->ProfileOut( __METHOD__ );
+	}
+	
+	/**
 	 * @brief Gets lightbox data
 	 * 
 	 * @requestParam string $userId user's unique id

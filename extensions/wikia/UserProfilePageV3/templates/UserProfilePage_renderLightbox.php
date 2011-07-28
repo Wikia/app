@@ -129,7 +129,6 @@
 				</div>
 			</form>
 			
-			<input type="hidden" id="startDateYear" value="<?= $startYear; ?>">
 			<input type="hidden" id="startDateMonth" value="<?= $startMonth; ?>">
 			<input type="hidden" id="startDateDay" value="<?= $startDay; ?>">
 		</li>
