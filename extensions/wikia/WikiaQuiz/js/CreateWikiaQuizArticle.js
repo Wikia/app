@@ -74,7 +74,7 @@ var CreateWikiaQuizArticle = {
 	},
 	
 	editExisting: function(placeholder) {
-		var quizElementData = JSON.parse(unescape($(placeholder).data("rte-meta")));
+		var quizElementData = $(placeholder).getData();
 
 		// add hidden form element for quizElementId
 		$("#CreateWikiaQuizArticle").find("form").append('<input type="hidden" name="quizElementId" value="' + quizElementData.quizElementId + '">');
