@@ -103,7 +103,7 @@ border: none;
 .wf-variable-form textarea { width: 90%; height: 8em; }
 .wf-variable-form input.input-string { width: 90%; }
 
-.prompt { 
+.prompt {
 	color: #fe0000;
 	display: block;
 }
@@ -201,7 +201,7 @@ $Factory.Domain.CRUD = function(mode, domain, addparams) {
     	success: $Factory.Domain.Callback.success,
     	error: $Factory.Domain.Callback.failure,
     	timeout: 20000
-    });	
+    });
 }
 
 $Factory.Domain.Callback = {
@@ -216,12 +216,12 @@ $Factory.Domain.Callback = {
 				.append($("<a>[change]</a>").attr("id",  id + "change"))
 				.append($("<a>[remove]</a>").attr("id",  id + "remove"))
 				.append($("<a>[setmain]</a>").attr("id", id + "setmain"));
-			
+
             $Factory.Domain.listEvents(aDomains[i], i);
             $( "#wk-domain-ol" ).append(li);
         }
-        var info = $("<div></div>").html(sInfo); 
-        $( "#wk-domain-ol" ).append(info); 
+        var info = $("<div></div>").html(sInfo);
+        $( "#wk-domain-ol" ).append(info);
         $Factory.Busy(0);
     },
     failure: function( oResponse ) {
@@ -254,8 +254,8 @@ $Factory.Domain.change = function ( e, data ) {
     	.attr("value", this.domain)
     	.attr("size", 20)
     	.attr("maxlength", 255);
-    
-    
+
+
     var change = $("<input/>")
     	.attr('value', "Change")
     	.attr('type', "button")
@@ -263,7 +263,7 @@ $Factory.Domain.change = function ( e, data ) {
             var newdomain = $( "#wk-change-input" ).val();
             var params = "&newdomain="+newdomain;
             $Factory.Domain.CRUD("change", this.domain, params);
-			return false;			
+			return false;
 		}, this));
 
     var cancel = $("<input/>")
@@ -273,33 +273,33 @@ $Factory.Domain.change = function ( e, data ) {
 			$(e.target).closest("span").remove();
 			return false;
     	});
-        
+
     $("<span>New domain name: <span/>")
     	.attr("class","prompt")
 		.append(input)
 		.append(change)
 		.append(cancel)
-		.appendTo("#"+this.element);	
+		.appendTo("#"+this.element);
 	return false;
 };
 
 $Factory.Domain.confirm = function(question,element,callback) {
 	$('.prompt').remove();
-	var cancel = $("<a>[Cancel]<a/>").click(
+	var cancel = $("<a>[Cancel]</a>").click(
 			function(e) {
 				$(e.target).closest("span").remove();
 				return false;
-			}	
+			}
     );
 
-    var yes = $("<a>[Yes]<a/>").click(callback);
-    
+    var yes = $("<a>[Yes]</a>").click(callback);
+
     $("<span><span/>")
 		.html(question)
 		.attr("class","prompt")
 		.append(yes)
 		.append(cancel)
-		.appendTo("#"+element);	
+		.appendTo("#"+element);
 }
 
 $Factory.Domain.remove = function ( e, data ) {
@@ -310,7 +310,7 @@ $Factory.Domain.remove = function ( e, data ) {
 			function(e) {
 			    $Factory.Domain.CRUD("remove", this.domain, "");
 				return false;
-		}, this)	
+		}, this)
 	);
     return false;
 };
@@ -323,7 +323,7 @@ $Factory.Domain.setmain = function ( e, data ) {
 				function(e) {
 				    $Factory.Domain.CRUD("setmain", this.domain, "");
 					return false;
-			}, this)	
+			}, this)
 	);
 	return false;
 };
@@ -385,18 +385,18 @@ $Factory.Variable.submitChangeVariable = function ( e, data ) {
 // filter variable selector
 $Factory.Variable.filter = function ( e ) {
     $Factory.Busy(1);
-    
+
     // disable variable selector
     $("#wk-variable-select").attr('disabled', true);
 
     // read data from form
     var values = "";
-    values += "&defined=" + $("#wf-only-defined").attr("checked");
-    values += "&editable=" + $("#wf-only-editable").attr("checked");
+    values += "&defined=" + $("#wf-only-defined").prop("checked");
+    values += "&editable=" + $("#wf-only-editable").prop("checked");
     values += "&group=" + $("#wk-group-select").val();
     values += "&wiki=" + $Factory.city_id;
 	values += "&string=" + $( "#wfOnlyWithString" ).val();
-	
+
     $.ajax({
     	type:"POST",
     	dataType: "json",
@@ -434,7 +434,7 @@ $Factory.Variable.clear = function ( e ) {
 $Factory.Variable.post = function (form, mode) {
     if (form == null) {
         form = "wf-variable-form";
-   }   
+   }
 
    $Factory.Busy(1);
    var params = $("#" + form).serialize();
@@ -512,7 +512,7 @@ $Factory.Variable.close_submit = function (opt) {
 	submitField.type = "hidden";
 	submitField.name = "submit" + opt;
 	submitField.value = opt;
-	
+
 	oForm.append(submitField);
 	oForm.submit();
 };
@@ -527,7 +527,7 @@ $(function() {
 
 	$("#wk-variable-select").click( function(e) {
 		return $Factory.Variable.select(e, [ "wk-variable-select", 1]);
-	});	
+	});
 });
 
 /*]]>*/
