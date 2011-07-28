@@ -12,8 +12,6 @@
 		</thead>
 		<tbody>
 			<? 
-				$totals = $stats['totals'];
-				unset($stats['totals']);
   				foreach ($stats as $date => $row) { 
 					$dateObject = new DateTime($date);
 					$formattedDate = $dateObject->format(wfMsg('quickstats-date-format'));  ?>
@@ -25,6 +23,13 @@
 					<td><?= $row['likes'] ?></td>
 				</tr>
 			<? } ?>
+				<tr>
+					<td><?= wfMsg('quickstats-totals-label') ?></td>
+					<td><?= $totals['pageviews'] ?></td>
+					<td><?= $totals['edits'] ?></td>
+					<td><?= $totals['photos'] ?></td>
+					<td><?= $totals['likes'] ?></td>
+				</tr>			
 		</tbody>
 	</table>
 </section>

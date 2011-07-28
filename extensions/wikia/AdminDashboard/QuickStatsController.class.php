@@ -22,6 +22,7 @@ class QuickStatsController extends WikiaController {
 			if (!isset($stats[$date]['photos'])) $stats[$date]['photos'] = 0;
 			if (!isset($stats[$date]['likes'])) $stats[$date]['likes'] = 0;
 		}
+		$this->totals = array_pop($stats);
 		$this->stats = array_reverse($stats);
 	}
 	
