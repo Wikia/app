@@ -759,21 +759,26 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 	}
 	
 	private function _get_metrics_types() {
-		$metricsTypes = array();
-		
-		$dbr = 	wfGetDB( DB_SLAVE, array(), 'metrics' );
-		$oRes = $dbr->select(
-			array( 'event_type' ), 
-			array( 'type_id, type_name' ), 
-			array(), 
-			__METHOD__,
-			array( 'ORDER BY' => 'type_id') 
-		);
+		global $wgMemc;
 
-		while( $oRow = $dbr->fetchObject( $oRes ) ) {
-			$metricsTypes[ $oRow->type_id ] = $oRow->type_name;
+		$key = "metrics:types:v1";
+		$metricsTypes = $wgMemc->get( $key );	
+		if ( empty( $metricsTypes ) ) {
+			$dbr = 	wfGetDB( DB_SLAVE, array(), 'metrics' );
+			$oRes = $dbr->select(
+				array( 'event_type' ), 
+				array( 'type_id, type_name' ), 
+				array(), 
+				__METHOD__,
+				array( 'ORDER BY' => 'type_id') 
+			);
+			$metricsTypes = array();
+			while( $oRow = $dbr->fetchObject( $oRes ) ) {
+				$metricsTypes[ $oRow->type_id ] = $oRow->type_name;
+			}
+			$dbr->freeResult( $oRes );
+			$wgMemc->set( $key, $metricsTypes, 60*60 );
 		}
-		$dbr->freeResult( $oRes );
 		
 		return $metricsTypes;	
 	}
