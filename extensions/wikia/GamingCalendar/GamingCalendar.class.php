@@ -91,8 +91,8 @@ class GamingCalendar {
 
 		$week = array();
 
-		$week['start'] = date( 'j<s\u\p>S</s\u\p>', $start );
-		$week['end'] = date( 'j<s\u\p>S</s\u\p>', $end );
+		$week['start'] = date( 'j<\s\u\p>S</\s\u\p>', $start );
+		$week['end'] = date( 'j<\s\u\p>S</\s\u\p>', $end );
 
 		$week['startmonth'] = date( 'M', $start );
 		$week['endmonth'] = date( 'M', $end );
