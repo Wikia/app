@@ -169,6 +169,7 @@
 .WikiaArticle .WikiaBlogListingBox {
 		ul {
 			border: 1px solid $color-page-border;
+			list-style: none outside none;
 			padding: 0px 8px 8px;
 		}
 	}
@@ -176,29 +177,29 @@
 // /** styling for Create blog listing box special page **/
 
 .categoryCloudSection {
-border:1px solid lightgray;
-padding:15px;
+	border: 1px solid lightgray;
+	padding: 15px;
 }
 
 .wpCategoryTextarea {
-display:none;
+	display: none;
 }
 
 #wpCategoryInput,#wpCategoryButton {
-margin:4px 2px 0;
+	margin: 4px 2px 0;
 }
 
 wpCategoryInput {
-width:230px;
+	width: 230px;
 }
 
 .matches-info {
-color:#060;
-font-style:italic;
-margin-right:1em;
+	color: #060;
+	font-style: italic;
+	margin-right: 1em;
 }
 
 #blogPostForm div.formErrors {
-color:red;
-font-size:120%;
+	color: red;
+	font-size: 120%;
 }
