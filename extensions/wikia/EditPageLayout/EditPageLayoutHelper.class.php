@@ -283,7 +283,7 @@ class EditPageLayoutHelper {
 	 * @return boolean return false, so notice will not be emitted by core, but by EditPageLayout code
 	 */
 	function onLogEventsListShowLogExtract($s, $types, $page, $user, $param) {
-		if ($this->editPage instanceof EditPageLayout) {
+		if ( ($this->editPage instanceof EditPageLayout) && (!empty($s)) ) {
 			$this->editPage->addEditNotice($s, $param['msgKey'][0]);
 		}
 

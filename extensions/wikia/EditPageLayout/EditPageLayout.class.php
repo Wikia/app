@@ -580,11 +580,6 @@ class EditPageLayout extends EditPage {
 						   'showIfEmpty' => false,
 						   'msgKey' => array( 'recreate-moveddeleted-warn') )
 				);
-
-				if( $resultRowsNum > 0 ) {
-					$notice = F::build( 'EditPageNotice', array( 'html' => $out->getHTML(), 'messageId' => 'recreate-moveddeleted-warn' ) );
-					$this->mEditNotices->add( $notice, 'recreate-moveddeleted-warn' );
-				}
 			}
 
 			// check for empty message (BugId:6923)
