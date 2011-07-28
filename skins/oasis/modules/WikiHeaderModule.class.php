@@ -18,10 +18,11 @@ class WikiHeaderModule extends Module {
 	var $wordmarkFont;
 
 	public function executeIndex() {
-		global $wgOut, $wgCityId, $wgUser, $wgMemc;
+		global $wgOut, $wgCityId, $wgUser, $wgMemc, $wgIsPrivateWiki;
 		
 		//fb#1090
 		$this->isInternalWiki = empty($wgCityId);
+		$this->showMenu = !(($this->isInternalWiki || $wgIsPrivateWiki) && $wgUser->isAnon());
 		
 		$themeSettings = new ThemeSettings();
 		$settings = $themeSettings->getSettings();
