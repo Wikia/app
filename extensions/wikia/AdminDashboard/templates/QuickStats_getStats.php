@@ -11,15 +11,18 @@
 			</tr>
 		</thead>
 		<tbody>
-			<? foreach ($stats as $date => $row) { 
-				$dateObject = new DateTime($date);
-				$formattedDate = $dateObject->format(wfMsg('quickstats-date-format')); ?>
+			<? 
+				$totals = $stats['totals'];
+				unset($stats['totals']);
+  				foreach ($stats as $date => $row) { 
+					$dateObject = new DateTime($date);
+					$formattedDate = $dateObject->format(wfMsg('quickstats-date-format'));  ?>
 				<tr>
 					<td><?= $formattedDate ?></td>
 					<td><?= $row['pageviews'] ?></td>
 					<td><?= $row['edits'] ?></td>
-					<td>0</td>
-					<td>0</td>
+					<td><?= $row['photos'] ?></td>
+					<td><?= $row['likes'] ?></td>
 				</tr>
 			<? } ?>
 		</tbody>
