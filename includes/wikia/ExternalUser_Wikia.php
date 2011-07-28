@@ -31,8 +31,7 @@ class ExternalUser_Wikia extends ExternalUser {
 
 		wfDebug( __METHOD__ . ": init User from cond: " . wfArrayToString( $cond ) . " \n" );
 
-		$this->mDb = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
-
+		$this->mDb = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 		$row = $this->mDb->selectRow(
 			'`user`',
 			array( '*' ),
@@ -40,8 +39,19 @@ class ExternalUser_Wikia extends ExternalUser {
 			__METHOD__
 		);
 		if ( !$row ) {
-			return false;
+			$this->mDb = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+			$row = $this->mDb->selectRow(
+				'`user`',
+				array( '*' ),
+				$cond,
+				__METHOD__
+			);
 		}
+		
+		if ( !$row ) {
+			return false;			
+		}
+		
 		$this->mRow = $row;
 
 		return true;
