@@ -969,29 +969,15 @@ class WikiFactory {
 		$memkey = self::getWikiaCacheKey( $id );
 		$cached = ( empty($master) ) ? $oMemc->get( $memkey ) : null;
 		if ( empty($cached) || !is_object( $cached ) ) {
-			/**
-			 * first from slave
-			 */
-			$dbr = self::db( DB_SLAVE );
+
+			$dbr = self::db( ( $master ) ? DB_MASTER : DB_SLAVE );
 			$oRow = $dbr->selectRow(
 				array( "city_list" ),
 				array( "*" ),
 				array( "city_id" => $id ),
 				__METHOD__
 			);
-
-			if( !isset( $oRow->city_id ) ) {
-				/**
-				 * if not then from master
-				 */
-				$dbr = self::db( DB_MASTER );
-				$oRow = $dbr->selectRow(
-					array( "city_list" ),
-					array( "*" ),
-					array( "city_id" => $id ),
-					__METHOD__
-				);
-			}
+			
 			$oMemc->set($memkey, $oRow, 60*60*24);
 		} else {
 			$oRow = $cached;
@@ -1024,29 +1010,15 @@ class WikiFactory {
 		$memkey = self::getWikiaDBCacheKey( $city_dbname );
 		$cached = ( empty($master) ) ? $oMemc->get( $memkey ) : null;
 		if ( empty($cached) || !is_object( $cached ) ) {
-			/**
-			 * first from slave
-			 */
-			$dbr = self::db( DB_SLAVE );
+
+			$dbr = self::db( ( $master ) ? DB_MASTER : DB_SLAVE );
 			$oRow = $dbr->selectRow(
 				array( "city_list" ),
 				array( "*" ),
 				array( "city_dbname" => $city_dbname ),
 				__METHOD__
 			);
-
-			if( !isset( $oRow->city_id ) ) {
-				/**
-				 * if not then from master
-				 */
-				$dbr = self::db( DB_MASTER );
-				$oRow = $dbr->selectRow(
-					array( "city_list" ),
-					array( "*" ),
-					array( "city_dbname" => $city_dbname ),
-					__METHOD__
-				);
-			}
+			
 			$oMemc->set($memkey, $oRow, 60*60*24);
 		} else {
 			$oRow = $cached;
