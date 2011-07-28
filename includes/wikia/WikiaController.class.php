@@ -61,4 +61,12 @@ abstract class WikiaController extends WikiaBaseController {
 		}
 	}
 	
+	public function __get($propertyName) {
+		if (property_exists($this, $propertyName)) {
+			return $this->$propertyName;
+		} else {
+			return $this->response->getVal( $propertyName );
+		}
+	}
+	
 }
