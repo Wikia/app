@@ -515,8 +515,8 @@ class WikiaPhotoGallery extends ImageGallery {
 				// gallery: 185x185px placeholder
 				$width = $height = 185;
 			} elseif( $this->mType == self::WIKIA_PHOTO_SLIDER ){
-				$width = 640;
-				$height = WikiaPhotoGalleryHelper::STRICT_IMG_HEIGHT;
+				$width = WikiaPhotoGalleryHelper::SLIDER_MIN_IMG_WIDTH;
+				$height = WikiaPhotoGalleryHelper::SLIDER_MIN_IMG_HEIGHT;
 			} else {
 				// slideshow: use user specified size
 				$width = $this->mWidths;
@@ -547,7 +547,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				break;
 
 			case self::WIKIA_PHOTO_SLIDER:
-					$out = $this->renderSlider();
+				$out = $this->renderSlider();
 				break;
 		}
 
@@ -904,8 +904,6 @@ class WikiaPhotoGallery extends ImageGallery {
 
 		// "Add image to this gallery" button (this button is shown by JS only in Monaco)
 		if ($showAddButton) {
-			wfLoadExtensionMessages('WikiaPhotoGallery');
-
 			if ($perRow == 'dynamic') {
 				$html .= Xml::element('br');
 			}
@@ -1000,8 +998,6 @@ class WikiaPhotoGallery extends ImageGallery {
 			'class' => 'wikia-slideshow-images neutral',
 			'style' => "height: {$params['height']}px; width: {$params['width']}px",
 		));
-
-		wfLoadExtensionMessages('WikiaPhotoGallery');
 
 		$index = 0;
 		foreach ($this->mImages as $p => $pair) {
@@ -1202,21 +1198,28 @@ class WikiaPhotoGallery extends ImageGallery {
 		// adds script on first slider occurence on page
 		$tmpArr = array();
 		for ( $index = 0; $index <= $this->mData["id"]; $index++ ){
-
 			$tmpArr[] = $index;
 		}
 
+		// setup image serving for "big" images
+		$imagesDimensions = array(
+			'w' => WikiaPhotoGalleryHelper::SLIDER_MIN_IMG_WIDTH,
+			'h' => WikiaPhotoGalleryHelper::SLIDER_MIN_IMG_HEIGHT,
+		);
+		$imageServingForImages = new ImageServing(null, $imagesDimensions['w'] ,$imagesDimensions);
+
+		// setup image serving for navigation thumbnails
 		if ( $this->getParam('orientation') == 'right' ){
 			$sliderClass = 'vertical';
-			$thumbDimensions = array( "w" => 110, "h" => 60 );
+			$thumbDimensions = array( "w" => 110, "h" => 50 );
 		} else {
 			$sliderClass = 'horizontal';
 			$thumbDimensions = array( "w" => 90, "h" => 70 );
 		}
+		$imageServingForThumbs = new ImageServing(null, $thumbDimensions['w'] ,$thumbDimensions);
 
 		$out = array();
 		foreach ( $this->mImages as $p => $pair ) {
-
 			$nt = $pair[0];
 			$text = $pair[1];
 			$link = $pair[2];
@@ -1227,26 +1230,23 @@ class WikiaPhotoGallery extends ImageGallery {
 			$linkAttribs = $this->parseLink($nt->getLocalUrl(), $nt->getText(), $link);
 
 			wfRunHooks( 'BeforeGalleryFindFile', array( &$this, &$nt, &$time, &$descQuery ) );
+
 			$img = wfFindFile( $nt, $time );
-			if ( is_object($img) && ($nt->getNamespace() == NS_FILE) &&
-				$img->getHeight() == WikiaPhotoGalleryHelper::STRICT_IMG_HEIGHT &&
-				$img->getWidth() == WikiaPhotoGalleryHelper::STRICT_IMG_WIDTH
-			) {
+			if (is_object($img) && ($nt->getNamespace() == NS_FILE) && WikiaPhotoGalleryHelper::isImageStrict($img)) {
 				$pageId = $nt->getArticleID();
-				$imageServing = new ImageServing( array( $pageId ), $thumbDimensions['w'] ,$thumbDimensions );
-				$thumbUrl = wfReplaceImageServer(
-					$img->getThumbUrl(
-						$imageServing->getCut( $img->getWidth(), $img->getHeight() )."-".$img->getName()
-					)
-				);
-				$pictureURL = $img->getThumbnail($img->getWidth(), $img->getHeight())->url;
+
+				// generate cropped version of big image (fit within 660x360 box)
+				$imageUrl = $imageServingForImages->getUrl($img, $img->getWidth(), $img->getWidth());
+
+				// generate navigation thumbnails
+				$thumbUrl = $imageServingForThumbs->getUrl($img, $img->getWidth(), $img->getHeight());
 
 				$out[] = array(
-				    'imageUrl' => $pictureURL,
+				    'imageUrl' => $imageUrl,
 				    'imageTitle' => $text,
 				    'imageLink' => !empty($link) ? $linkAttribs['href'] : '',
 				    'imageDescription' => $linkText,
-				    'imageThumbnail' => $thumbUrl
+				    'imageThumbnail' => $thumbUrl,
 				);
 			}
 
@@ -1333,8 +1333,6 @@ class WikiaPhotoGallery extends ImageGallery {
 
 			if ($captionsPosition == 'within') $captionsBackgroundColor = $borderColor;
 		}
-
-		wfLoadExtensionMessages('WikiaPhotoGallery');
 
 		$attribs = array(
 			'data-feed-title' => wfMsg('wikiaPhotoGallery-lightbox-caption', $this->mData['feedTitle']),
@@ -1570,8 +1568,6 @@ class WikiaPhotoGallery extends ImageGallery {
 			'class' => 'wikia-slideshow-images neutral',
 			'style' => "height: {$params['height']}px; width: {$params['width']}px",
 		));
-
-		wfLoadExtensionMessages('WikiaPhotoGallery');
 
 		foreach ($this->mExternalImages as $index => $imageData) {
 			// Give extensions a chance to select the file revision for us

@@ -1,38 +1,37 @@
 <div class="WikiaPhotoGalleryPreview">
-	<div class="wikiaPhotoGallery-slider-body" id="wikiaPhotoGallery-slider-body-<?=$sliderId; ?>" style='display: none; overflow: hidden; width:673px; height: 410px;'>
-		<div class="<?=$sliderClass ?>" >
+	<div class="wikiaPhotoGallery-slider-body" id="wikiaPhotoGallery-slider-body-<?= $sliderId ?>" style="display: none">
+		<div class="<?= $sliderClass ?>" >
 			<ul>
 			<?php
-			foreach ( $images as $key => $val ) {
-				wfLoadExtensionMessages('WikiaPhotoGallery');
-				$msg = wfMsg( 'galery-slider-read-more' );
+			$readMore = wfMsg('galery-slider-read-more');
 
-				?><li class="wikiaPhotoGallery-slider-<?=$key; ?>" id="wikiaPhotoGallery-slider-<?=$sliderId; ?>-<?=$key; ?>"><?;
+			foreach ( $images as $key => $val ) {
+				?><li class="wikiaPhotoGallery-slider-<?=$key; ?>" id="wikiaPhotoGallery-slider-<?=$sliderId; ?>-<?= $key ?>"><?php
 					if ( !empty( $val['imageLink'] ) ){
 						echo "<a href='{$val['imageLink']}'>";
 					}?>
-					<img width='<?=WikiaPhotoGalleryHelper::STRICT_IMG_WIDTH; ?>' height='<?=WikiaPhotoGalleryHelper::STRICT_IMG_HEIGHT; ?>' src='<?=$val['imageUrl']?>' class='wikiaPhotoGallery-slider'>
-					<?
+					<img width='<?=WikiaPhotoGalleryHelper::SLIDER_MIN_IMG_WIDTH; ?>' height='<?=WikiaPhotoGalleryHelper::SLIDER_MIN_IMG_HEIGHT; ?>' src='<?=$val['imageUrl']?>' class='wikiaPhotoGallery-slider'>
+					<?php
 						if (!empty( $val['imageLink'] )){
 							echo '</a>';
 						}
 					?>
 					<div class="description-background"></div>
 					<div class="description">
-					<h2><?=$val['imageTitle']; ?></h2>
-					<p><?=$val['imageDescription']; ?></p>
-					<?
+					<h2><?= $val['imageTitle'] ?></h2>
+					<p><?= $val['imageDescription'] ?></p>
+					<?php
 						if (!empty( $val['imageLink'] )){ ?>
-							<a href='<?=$val['imageLink']; ?>' class='wikia-button secondary'>
-								<span><?=$msg; ?></span>
+							<a href='<?= $val['imageLink'] ?>' class='wikia-button secondary'>
+								<span><?= $readMore ?></span>
 							</a>
-						<? } ?>
+						<?php } ?>
 					</div>
 					<p class='nav'>
-						<img width='<?=$thumbDimensions['w']; ?>' height='<?=$thumbDimensions['h']; ?>' alt='' src='<?=$val['imageThumbnail']; ?>'>
+						<img width='<?= $thumbDimensions['w'] ?>' height='<?= $thumbDimensions['h'] ?>' src='<?= $val['imageThumbnail'] ?>'>
 					</p>
 				</li>
-			<? } ?>
+			<?php } ?>
 			</ul>
 		</div>
 	</div>

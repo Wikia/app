@@ -14,9 +14,9 @@ class WikiaPhotoGalleryHelper {
 	const thumbnailMaxWidth = 200;
 	const thumbnailMaxHeight = 200;
 
-	// dimensions for strict sized images
-	const STRICT_IMG_WIDTH = 673;
-	const STRICT_IMG_HEIGHT = 410;
+	// dimensions for the smallest slider image (BugId:2787)
+	const SLIDER_MIN_IMG_WIDTH = 660;
+	const SLIDER_MIN_IMG_HEIGHT = 360;
 
 	const STRICT_IMG_WIDTH_PREV = 320;
 	const STRICT_IMG_HEIGHT_PREV = 157;
@@ -228,7 +228,7 @@ class WikiaPhotoGalleryHelper {
 
 			//avoid division by zero
 			if(!$resizeRatio) $resizeRatio = 1;
-			
+
 			if(!$resizeRatio) $resizeRatio = 1;
 
 			$thumbParams = array(
@@ -618,8 +618,11 @@ class WikiaPhotoGalleryHelper {
 
 			if ( is_object( $img ) && ( $imageTitle->getNamespace() == NS_FILE ) ) {
 				// render thumbnail
-				$is = new ImageServing(null, self::STRICT_IMG_WIDTH_PREV, array('w' => self::STRICT_IMG_WIDTH_PREV, 'h' => self::STRICT_IMG_HEIGHT_PREV));
-				$image['thumbnailBg'] = $is->getUrl($image['name'],  $img->getWidth(),  $img->getHeight()); 
+				$is = new ImageServing(null, self::STRICT_IMG_WIDTH_PREV, array(
+					'w' => self::STRICT_IMG_WIDTH_PREV,
+					'h' => self::STRICT_IMG_HEIGHT_PREV)
+				);
+				$image['thumbnailBg'] = $is->getUrl($image['name'],  $img->getWidth(),  $img->getHeight());
 			} else {
 				$image[ 'pageTitle' ] = $imageTitle->getText();
 			}
@@ -967,7 +970,7 @@ class WikiaPhotoGalleryHelper {
 		wfProfileIn(__METHOD__);
 		$ret = array();
 
-		// get list of recenlty uploaded images
+		// get list of recently uploaded images
 		$uploadedImages = ImagesService::getRecentlyUploaded($limit);
 		if(is_array($uploadedImages)) {
 			foreach($uploadedImages as $image) {
@@ -989,19 +992,25 @@ class WikiaPhotoGalleryHelper {
 	}
 
 	/**
-	 * Check if image has width and height that fits slider
+	 * Check if image has width and height that fits the slider (can be bigger - BugId:2787)
+	 *
+	 * @param mixed $image this can be either image name, Title or File object
+	 * @return boolean does image fit the slider size requirements
 	 */
-	static public function isImageStrict( $image ){
-
-		$oImage = wfFindFile($image);
-		if ( !empty($oImage ) ){
-			$isStrict = (	( $oImage->getWidth() == self::STRICT_IMG_WIDTH ) &&
-					( $oImage->getHeight() == self::STRICT_IMG_HEIGHT ) );
-		} else {
-			$isStrict = false;
+	static public function isImageStrict($image){
+		if ($image instanceof File) {
+			$oImage = $image;
+		}
+		else {
+			// Title object or string was provided
+			$oImage = wfFindFile($image);
 		}
 
-		return $isStrict ? 1 : 0;
+		if (!empty($oImage)) {
+			$isStrict = ($oImage->getWidth() >= self::SLIDER_MIN_IMG_WIDTH) && ($oImage->getHeight() >= self::SLIDER_MIN_IMG_HEIGHT);
+		}
+
+		return !empty($isStrict) ? 1 : 0;
 	}
 
 	/**
