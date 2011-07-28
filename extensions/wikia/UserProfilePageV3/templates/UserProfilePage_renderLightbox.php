@@ -57,11 +57,7 @@
 					<p><?= wfMsg('user-identity-box-avatar-choose-avatar'); ?></p>
 					<ul id="UPPLightboxSampleAvatarsDiv">
 						<? foreach($defaultAvatars as $avatar): ?>
-							<? if( $avatarName === $avatar['name'] ): ?>
-								<li><img width="40" height="40" style="border: 3px solid #008000" src="<?= $avatar['url']; ?>" class="<?= $avatar['name']; ?>"></li>
-							<? else: ?>
-								<li><img width="40" height="40" src="<?= $avatar['url']; ?>" class="<?= $avatar['name']; ?>"></li>
-							<? endif; ?>
+							<li><img width="40" height="40" src="<?= $avatar['url']; ?>" class="<?= $avatar['name']; ?>"></li>
 						<? endforeach; ?>
 					</ul>
 				<? endif; ?>
