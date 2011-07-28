@@ -60,7 +60,9 @@ class UserProfilePageController extends WikiaController {
 		$this->app->wf->ProfileOut( __METHOD__ );
 
 		// suppress rail
-		$this->wg->SuppressRail = true;
+		if(!$this->wg->Title->isSubpage()) {
+			$this->wg->SuppressRail = true;
+		}
 	}
 	
 	/**
@@ -947,6 +949,19 @@ class UserProfilePageController extends WikiaController {
 		//we want only the template for now...
 		
 		$this->app->wf->ProfileOut( __METHOD__ );
+	}
+	
+		/**
+	 * @brief remove User:: from back link
+	 * 
+	 * @author Tomek Odrobny
+	 */
+		
+	public function onSkinSubPageSubtitleAfterTitle($title, &$ptext) {
+		if($title->isSubpage() && $title->getNamespace() == NS_USER) {
+			$ptext = $title->getText();	
+		}
+		return true;
 	}
 	
 }

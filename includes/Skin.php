@@ -1226,7 +1226,7 @@ CSS;
 
 		global $wgOut;
 		if( $wgOut->isArticle() && MWNamespace::hasSubpages( $this->mTitle->getNamespace() ) ) {
-			$ptext = $this->mTitle->getPrefixedText();
+			$ptext = $this->mTitle->getPrefixedText();			
 			if( preg_match( '/\//', $ptext ) ) {
 				$links = explode( '/', $ptext );
 				array_pop( $links );
@@ -1237,6 +1237,7 @@ CSS;
 					$growinglink .= $link;
 					$display .= $link;
 					$linkObj = Title::newFromText( $growinglink );
+					wfRunHooks( 'SkinSubPageSubtitleAfterTitle', array( $this->mTitle, &$display ) );
 					if( is_object( $linkObj ) && $linkObj->exists() ) {
 						$getlink = $this->link(
 							$linkObj,
@@ -1245,6 +1246,7 @@ CSS;
 							array(),
 							array( 'known', 'noclasses' )
 						);
+						
 						$c++;
 						if( $c > 1 ) {
 							$subpages .= wfMsgExt( 'pipe-separator', 'escapenoentities' );

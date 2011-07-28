@@ -29,6 +29,7 @@ $app->registerSpecialPage('Interview', 'InterviewSpecialPageController');
  * hooks
  */
 $app->registerHook('SkinTemplateOutputPageBeforeExec', 'UserProfilePageController', 'onSkinTemplateOutputPageBeforeExec');
+$app->registerHook('SkinSubPageSubtitleAfterTitle', 'UserProfilePageController', 'onSkinSubPageSubtitleAfterTitle');
 $app->registerHook('GetRailModuleSpecialPageList', 'InterviewSpecialPageController', 'onGetRailModuleSpecialPageList' );
 
 /**

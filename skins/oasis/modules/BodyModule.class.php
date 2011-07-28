@@ -92,13 +92,17 @@ class BodyModule extends Module {
 	public static function showUserPagesHeader() {
 		wfProfileIn(__METHOD__);
 
-		global $wgTitle;
+		global $wgTitle, $wgEnableUserProfilePagesV3;
 
 		// perform namespace and special page check
-		$ret = in_array($wgTitle->getNamespace(), self::getUserPagesNamespaces())
+		
+		$isUserPage = in_array($wgTitle->getNamespace(), self::getUserPagesNamespaces());
+
+		$ret =  ($isUserPage && empty($wgEnableUserProfilePagesV3))
+				|| ($isUserPage && !empty($wgEnableUserProfilePagesV3) && !$wgTitle->isSubpage())
 				|| $wgTitle->isSpecial( 'Following' )
 				|| $wgTitle->isSpecial( 'Contributions' )
-				|| (defined('NS_BLOG_LISTING') && $wgTitle->getNamespace() == NS_BLOG_LISTING);
+				|| (defined('NS_BLOG_LISTING') && $wgTitle->getNamespace() == NS_BLOG_LISTING) ;
 
 		wfProfileOut(__METHOD__);
 		return $ret;
@@ -143,7 +147,8 @@ class BodyModule extends Module {
 			$wgEnableWikiaCommentsExt, $wgExtraNamespaces, $wgExtraNamespacesLocal,
 			$wgEnableCorporatePageExt, $wgEnableSpotlightsV2_Rail,
 			$wgEnableUserProfilePagesExt, $wgABTests, $wgEnableWikiAnswers, $wgEnableWikiReviews,
-			$wgEnableBlogsAsClassifieds, $wgSalesTitles, $wgEnableHuluVideoPanel, $wgEnableGamingCalendarExt;
+			$wgEnableBlogsAsClassifieds, $wgSalesTitles, $wgEnableHuluVideoPanel, 
+			$wgEnableGamingCalendarExt, $wgEnableUserProfilePagesV3;
 
 		if ($this->wgSuppressRail) {
 			return array();
@@ -235,7 +240,8 @@ class BodyModule extends Module {
 		}
 
 		// Content, category and forum namespaces.  FB:1280 Added file,video,mw,template
-		if(	in_array($subjectNamespace, array (NS_CATEGORY, NS_CATEGORY_TALK, NS_FORUM, NS_PROJECT, NS_FILE, NS_VIDEO, NS_MEDIAWIKI, NS_TEMPLATE, NS_HELP)) ||
+		if(	(!empty($wgEnableUserProfilePagesV3) && $wgTitle->isSubpage() && $wgTitle->getNamespace() == NS_USER)  ||
+			in_array($subjectNamespace, array (NS_CATEGORY, NS_CATEGORY_TALK, NS_FORUM, NS_PROJECT, NS_FILE, NS_VIDEO, NS_MEDIAWIKI, NS_TEMPLATE, NS_HELP)) ||
 			in_array($subjectNamespace, $wgContentNamespaces) ||
 			array_key_exists( $subjectNamespace, $wgExtraNamespaces ) ) {
 			// add any content page related rail modules here
