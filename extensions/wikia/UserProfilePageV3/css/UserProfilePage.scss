@@ -16,11 +16,6 @@ $y-user-profile-masthead-links-icon: -17px;
 	$y-user-profile-masthead-links-icon: 0;
 }
 
-$color-user-profile-gray-text: #999;
-@if lightness($color-page) < 50 {
-	$color-user-profile-gray-text: #666;
-}
-
 $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%), 25%);
 
 /* Temporary - waiting for UI Styleguide team */
@@ -41,8 +36,15 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 		top: 0;
 		.avatar {
 			border: 4px solid $color-page;
+			display: block;
 			height: 140px;
 			width: 140px;
+		}
+		span {
+			display: none;
+		}
+		&:hover span {
+			display: block;
 		}
 	}
 	.masthead-info {
@@ -146,9 +148,9 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 			}
 		}
 		.zero {
-			color: $color-user-profile-gray-text;
+			color: $color-gray-text;
 			.icon {
-				background-color: $color-user-profile-gray-text;
+				background-color: $color-gray-text;
 			}
 		}
 	}	
@@ -156,7 +158,7 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 	.wikis {
 		margin-top: 13px;
 		span {
-			color: $color-user-profile-gray-text;
+			color: $color-gray-text;
 			float: left;
 			font-weight: bold;
 			margin-right: 10px;
@@ -188,7 +190,7 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 			}
 		}
 		span {
-			color: $color-user-profile-gray-text;
+			color: $color-gray-text;
 			font-size: 12px;
 			font-weight: bold;
 			text-transform: uppercase;
@@ -206,15 +208,3 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 		top: 2px;
 	}
 }
-
-#userIdentityBoxDeleteAvatar {
-	margin-top: 25px;
-	position: absolute;
-	right: 10px;
-	img {
-		position: relative;
-		top: 2px;
-	}
-}
-
-

@@ -28,6 +28,15 @@
 		padding: 3px;
 		width: 250px;
 	}
+
+	.tweet-at {
+		position: absolute;
+		margin: 5px 0 0 3px;
+	}
+	input[name="twitter"] {
+		padding-left: 15px;
+		width: 235px;
+	}
 	
 	.favorite-wikis {
 		@include clearfix;
@@ -41,10 +50,41 @@
 			font-size: 12px;
 			line-height: 20px;
 			margin: 3px;
-			padding: 0 3px;
+			padding: 0 5px;
+
+
+				max-width: 225px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			
+			&.join-more-wikis {
+				background: transparent;
+				border: 1px solid $color-page-border;
+				color: $color-gray-text;
+			}
 		}
 		.delete {
 			cursor: pointer;
 		}
+	}
+	.favorite-wikis-refresh {
+		position: absolute;
+		margin-left: 265px;
+		img {
+			background: url(/extensions/wikia/UserProfilePageV3/images/icon-return.png);
+			height: 12px;
+			left: 3px;
+			top: 3px;
+			width: 14px;		
+		}
+	}
+	
+	#facebookPage a {
+		display: block;
+		font-size: 11px;
+		line-height: 11px;
+		text-align: right;
+		width: 260px;
 	}
 }

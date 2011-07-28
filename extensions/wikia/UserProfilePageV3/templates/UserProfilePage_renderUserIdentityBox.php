@@ -1,19 +1,27 @@
 <section id="UserProfileMasthead" class="UserProfileMasthead" itemscope itemtype="http://schema.org/Person">
 	
 	<div class="masthead-avatar">
-	<? if( $isUserPageOwner || $isWikiStaff ): ?>
-		<a href="#" id="userAvatarEdit">
-	<? endif; ?>
-			<img src="<?= $user['avatar']; ?>" itemprop="image" height="150" width="150" class="avatar">
-	<? if( $isUserPageOwner || $isWikiStaff ): ?>
-		</a>
-	<? endif; ?>
+		<img src="<?= $user['avatar']; ?>" itemprop="image" height="150" width="150" class="avatar">
+
+		<? if( $isUserPageOwner || $isWikiStaff ): ?>
+			<span>
+				<img src="<?= $wgBlankImgUrl ?>" class="sprite edit-pencil"> <a href="#" id="userAvatarEdit"><?= wfMsg('user-identity-box-edit-avatar'); ?></a>
+			</span>
+		<? endif; ?>
+		<?php if( $canRemoveAvatar ): ?>
+			<span>
+				<img src="<?= $wgBlankImgUrl ?>" class="sprite trash"> <a href="<?= $deleteAvatarLink ?>"><?= wfMsg('user-identity-box-delete-avatar'); ?></a>
+			</span>
+		<?php endif; ?>
+	
 	</div>
 	
 	<div class="masthead-info">
 		<hgroup>
 			<h1 itemprop="name"><?= $user['name']; ?></h1>
-			<span class="group"><?= $user['group']; ?></span>
+			<? if( !empty($user['group']) ): ?>
+				<span class="group"><?= $user['group']; ?></span>
+			<? endif; ?>
 			<? if( !empty($user['realName']) ): ?>
 				<h2><?= wfMsg('user-identity-box-aka-label', array('$1' => $user['realName']) ); ?></h2>
 			<? endif; ?>
@@ -25,18 +33,12 @@
 			</span>
 			<input type="hidden" id="user" value="<?= $user['id']; ?>" />
 		<? endif; ?>
-
-		<?php if( $canRemoveAvatar ): ?>
-			<span id="userIdentityBoxDeleteAvatar">
-				<img src="<?= $wgBlankImgUrl ?>" class="sprite trash"><a href="<?= $deleteAvatarLink ?>"><?= wfMsg('user-identity-box-delete-avatar'); ?></a>
-			</span>
-		<?php endif; ?>
-
+		
 		<div>
 			<div class="tally">
 				<? if( !empty($user['registration']) ): ?>
 					<? if( !empty($user['edits']) ): ?>
-						<em><?= $user['edits'] ?></em>
+						<em><?= number_format($user['edits']) ?></em>
 						<span>
 							<?= wfMsg('user-identity-box-edits-since-joining') ?><br>
 							<?= $user['registration'] ?>
