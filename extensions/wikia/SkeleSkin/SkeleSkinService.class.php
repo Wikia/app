@@ -47,6 +47,6 @@ class SkeleSkinService extends WikiaService {
 		}
 		
 		$this->setVal( 'jsFiles', $jsFiles);
-		$this->setVal( 'body', $this->sendRequest( 'SkeleSkinBodyService', 'index', array( 'bodyText' => $this->templateObject->data['bodytext'] ))->render());
+		$this->setVal( 'body', $this->sendRequest( 'SkeleSkinBodyService', 'index', array( 'bodyText' => $this->templateObject->data['bodytext'] ))->toString());
 	}
 }
