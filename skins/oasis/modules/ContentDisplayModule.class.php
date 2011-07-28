@@ -38,18 +38,20 @@ class ContentDisplayModule extends Module {
 		// get the name of the user who uploaded the file
 		$userName = $file->getUser();
 
-		// render avatar and link to user page
-		$avatar = AvatarService::renderAvatar($userName, 16);
-		$link = AvatarService::renderLink($userName);
+		//check if this is not shared image (unable to get user), FB#9243
+		if (!is_null($userName)) {
+			// render avatar and link to user page
+			$avatar = AvatarService::renderAvatar($userName, 16);
+			$link = AvatarService::renderLink($userName);
 
-		$html = Xml::openElement('div', array('class' => 'picture-attribution')) .
-			$avatar .
-			wfMsgExt('oasis-content-picture-added-by', array( 'parsemag' ), $link, $userName ) .
-			Xml::closeElement('div');
+			$html = Xml::openElement('div', array('class' => 'picture-attribution')) .
+				$avatar .
+				wfMsgExt('oasis-content-picture-added-by', array( 'parsemag' ), $link, $userName ) .
+				Xml::closeElement('div');
 
-		// replace placeholder
-		$s = str_replace('<!-- picture-attribution -->', $html, $s);
-
+			// replace placeholder
+			$s = str_replace('<!-- picture-attribution -->', $html, $s);
+		}
 		#print_pre($html); print_pre(htmlspecialchars($s));
 
 		wfProfileOut(__METHOD__);
