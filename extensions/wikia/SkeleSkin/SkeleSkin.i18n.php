@@ -3,5 +3,5 @@
 $messages = array();
 
 $messages['en'] = array(
-	'SkeleSkin-home' => 'Home',
+	'skeleskin-page-header' => '$1'
 );
