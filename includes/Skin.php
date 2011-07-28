@@ -1237,7 +1237,7 @@ CSS;
 					$growinglink .= $link;
 					$display .= $link;
 					$linkObj = Title::newFromText( $growinglink );
-					wfRunHooks( 'SkinSubPageSubtitleAfterTitle', array( $this->mTitle, &$display ) );
+					wfRunHooks( 'SkinSubPageSubtitleAfterTitle', array( $linkObj, &$display ) );
 					if( is_object( $linkObj ) && $linkObj->exists() ) {
 						$getlink = $this->link(
 							$linkObj,
