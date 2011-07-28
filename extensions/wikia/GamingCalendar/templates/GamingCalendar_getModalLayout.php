@@ -33,7 +33,7 @@
    <script type="text/template" id="GamingCalendarWeekTemplate">
 			<h1>
 				<span>%week-caption%</span>
-				%startmonth% %start% - %endmonth% %end%
+				%startmonth% %start% &ndash; %endmonth% %end%
 			</h1>
 			<div class="scroll-up"><img src="<?= $wgBlankImgUrl ?>" height="0" width="0"></div>
 			<div class="list">
