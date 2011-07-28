@@ -177,10 +177,20 @@ class SkinChooser {
 		
 		wfProfileIn(__METHOD__);
 		
+		/*
+		 * This is needed by skeleskin project for development reasons and will be removed on completion
+		 * Please contact the Mobile Team for further information
+		 */
+		if( $wgRequest->getVal('useskin') == 'skeleskin' && $wgDevelEnvironment ) {
+			$user->mSkin = &Skin::newFromKey(  $wgRequest->getVal('useskin') );
+			wfProfileOut(__METHOD__);
+			return false;	
+		}
+		
 		/**
 		 * check headers sent by varnish, if X-Skin is send force skin
 		 * @author eloy, requested by artur
-		 */
+		 */	
 		if( function_exists( 'apache_request_headers' ) ) {
 			$headers = apache_request_headers();
 			if( isset( $headers[ "X-Skin" ] ) && in_array( $headers[ "X-Skin" ], array( "monobook", "oasis", "wikia", "wikiaphone", "wikiaapp" ) ) ) {
@@ -189,7 +199,7 @@ class SkinChooser {
 				return false;
 			}
 		}
-
+			
 		if(!($wgTitle instanceof Title) || in_array( self::getUserOption('skin'), $wgSkipSkins )) {
 			$user->mSkin = &Skin::newFromKey(isset($wgDefaultSkin) ? $wgDefaultSkin : 'monobook');
 			wfProfileOut(__METHOD__);

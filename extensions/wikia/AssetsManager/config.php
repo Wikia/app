@@ -160,7 +160,8 @@ $config['wikiaphone_js'] = array(
 $config['skeleskin_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//skins//common/zepto/zepto-0.6.js'
+		'//skins//common/zepto/zepto-0.6.js',
+		'//skins/skeleskin/js/main.js'
 	)
 );
 
