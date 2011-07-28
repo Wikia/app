@@ -611,10 +611,24 @@ AdConfig.DART.getTileKV = function (slotname, adProvider){
 };
 
 AdConfig.DART.getUniqueId = function () {
+	/* not available on the 1st pv, not useful for ads
 	var wikia_beacon_id = AdConfig.cookie('wikia_beacon_id');
 	if (typeof wikia_beacon_id != 'undefined' && wikia_beacon_id) {
 //console.log('wikia_beacon_id: ' + wikia_beacon_id);
 		return wikia_beacon_id;
+	}
+	*/
+
+	var wikia_mobile_id = AdConfig.cookie('wikia_mobile_id');
+	if (typeof wikia_mobile_id != 'undefined' && wikia_mobile_id) {
+//console.log('wikia_mobile_id: ' + wikia_mobile_id);
+		return wikia_mobile_id;
+	} else {
+		wikia_mobile_id = Math.round(Math.random() * 23456787654); // c&p from dart unique id method
+//console.log('new mobile_id: ' + wikia_mobile_id);
+		// 180 is c&p from wikia_beacon_id definition
+		AdConfig.cookie('wikia_mobile_id', wikia_mobile_id, {expires: 1000*60*60*24*180, path: wgCookiePath, domain: wgCookieDomain});
+		return wikia_mobile_id;
 	}
 
 //console.log('unique id not available');
