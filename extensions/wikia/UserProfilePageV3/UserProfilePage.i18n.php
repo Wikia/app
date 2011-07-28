@@ -20,6 +20,7 @@ $messages['en'] = array(
 	'userprofilepage-stuff-section-title' => 'Stuff',
 	
 	'user-identity-box-edit' => 'Edit',
+	'user-identity-box-edit-avatar' => 'Edit avatar',
 	'user-identity-box-delete-avatar' => 'Delete avatar',
 	'user-identity-box-avatar-upload-avatar' => 'Upload an avatar',
 	'user-identity-box-avatar-fb-import-avatar' => 'Import my avatar from Facebook',
@@ -68,12 +69,14 @@ $messages['en'] = array(
 	'user-identity-box-about-tweet' => 'Do you tweet?',
 	'user-identity-box-about-fav-wikis' => "What are your favorite wikis?",
 	'user-identity-box-about-fav-wikis-refresh' => 'Refresh',
+	'user-identity-box-join-more-wikis' => 'Join more wikis to see them here!',
 	
 	'user-identity-box-import-from-fb' => 'Import your information from Facebook',
 	'user-identity-box-connect-to-fb' => 'Connect with Facebook',
 	'user-identity-box-unsyc-fb' => 'Unsync with Facebook',
 	'user-identity-box-fb-page' => "What's your Facebook page?",
 	'user-identity-box-invalid-fb-id-error' => 'Invalid facebook id',
+	'user-identity-box-fb-prefs' => 'Feed Preferences',
 	
 	'user-identity-box-about-date-01' => 'January',
 	'user-identity-box-about-date-02' => 'February',

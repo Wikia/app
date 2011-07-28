@@ -29,7 +29,7 @@
 			<div>
 				<textarea id="UPPLightboxCurrQuestionAnswerBody"></textarea>
 			</div>
-			<br />
+			<br>
 			<button id="UPPLightboxInterviewCancelBtn"><?= wfMsg('userprofilepage-lightbox-interview-cancel'); ?></button>
 			<button id="UPPLightboxInterviewSaveBtn"><?= wfMsg('userprofilepage-lightbox-interview-save'); ?></button>
 		</li>
@@ -37,13 +37,13 @@
 		<li class="avatar">
 			<form id="usersAvatar" name="usersAvatar" method="post" enctype="multipart/form-data" action="/wikia.php?controller=UserProfilePage&method=onSubmitUsersAvatar&format=json&userId=<?= $userId; ?>">
 				<?= $avatar; ?>
-				<img src="/skins/common/images/ajax.gif" class="avatar-loader" style="display: none;" />
+				<img src="/skins/common/images/ajax.gif" class="avatar-loader" style="display: none;">
 				<? if($isUploadsPossible): ?>
 					<p><?= wfMsg('user-identity-box-avatar-upload-avatar'); ?></p>
 					<input type="hidden" name="UPPLightboxDefaultAvatar" id="UPPLightboxDefaultAvatar" value="" >
 					<input type="hidden" name="UPPLightboxFbAvatar" id="UPPLightboxFbAvatar" value="" >
 					<input type="hidden" name="MAX_FILE_SIZE" value="<?= $avatarMaxSize; ?>">
-					<input type="file" name="UPPLightboxAvatar" id="UPPLightboxAvatar" />
+					<input type="file" name="UPPLightboxAvatar" id="UPPLightboxAvatar">
 				<? endif; ?>
 				
 				<? if( $isUserPageOwner ): ?>
@@ -58,9 +58,9 @@
 					<ul id="UPPLightboxSampleAvatarsDiv">
 						<? foreach($defaultAvatars as $avatar): ?>
 							<? if( $avatarName === $avatar['name'] ): ?>
-								<li><img width="40" height="40" style="border: 3px solid #008000" src="<?= $avatar['url']; ?>" class="<?= $avatar['name']; ?>" /></li>
+								<li><img width="40" height="40" style="border: 3px solid #008000" src="<?= $avatar['url']; ?>" class="<?= $avatar['name']; ?>"></li>
 							<? else: ?>
-								<li><img width="40" height="40" src="<?= $avatar['url']; ?>" class="<?= $avatar['name']; ?>" /></li>
+								<li><img width="40" height="40" src="<?= $avatar['url']; ?>" class="<?= $avatar['name']; ?>"></li>
 							<? endif; ?>
 						<? endforeach; ?>
 					</ul>
@@ -73,10 +73,10 @@
 			<form id="userData" name="userData">
 				<div class="column">
 					<label><?= wfMsg('user-identity-box-about-name'); ?></label>
-					<input type="text" name="name" value="<?= $user['realName']; ?>" />
+					<input type="text" name="name" value="<?= $user['realName']; ?>">
 
 					<label><?= wfMsg('user-identity-box-about-location'); ?></label>
-					<input type="text" name="location" value="<?= $user['location']; ?>" />
+					<input type="text" name="location" value="<?= $user['location']; ?>">
 
 					<label><?= wfMsg('user-identity-box-about-birthday'); ?></label>
 					<select id="userBDayMonth" name="month">
@@ -95,10 +95,10 @@
 					</select>
 
 					<label><?= wfMsg('user-identity-box-about-occupation'); ?></label>
-					<input type="text" name="occupation" value="<?= $user['occupation']; ?>" />
+					<input type="text" name="occupation" value="<?= $user['occupation']; ?>">
 
 					<label><?= wfMsg('user-identity-box-about-gender'); ?></label>
-					<input type="text" name="gender" value="<?= $user['gender']; ?>" />
+					<input type="text" name="gender" value="<?= $user['gender']; ?>">
 				</div>
 
 				<div class="column">
@@ -109,34 +109,33 @@
 						</p>
 						<p id="facebookPage" <? if( empty($user['fbPage']) ): ?>style="display: none;"<? endif; ?>>
 							<label><?= wfMsg('user-identity-box-fb-page'); ?></label>
-							<input type="text" name="fbPage" value="<?= $user['fbPage']; ?>" />
+							<input type="text" name="fbPage" value="<?= $user['fbPage']; ?>"><br>
+							<a href="<?= $facebookPrefsLink ?>#prefsection-8"><?= wfMsg('user-identity-box-fb-prefs'); ?></a>
 						</p>
 					<? endif; ?>
 
 					<label><?= wfMsg('user-identity-box-about-website'); ?></label>
-					<input type="text" name="website" value="<?= $user['website']; ?>" />
+					<input type="text" name="website" value="<?= $user['website']; ?>">
 
 					<label><?= wfMsg('user-identity-box-about-tweet'); ?></label>
-					<input type="text" name="twitter" value="<?= $user['twitter']; ?>" />
+					<span class="tweet-at">@</span>
+					<input type="text" name="twitter" value="<?= $user['twitter']; ?>">
 
-					<? if( !empty($user['topWikis']) && is_array($user['topWikis']) ): ?>
-						<label><?= wfMsg('user-identity-box-about-fav-wikis'); ?></label>
-						<ul class="favorite-wikis">
-						<? foreach($user['topWikis'] as $favWikiId => $wiki): ?>
-							<li data-wiki-id="<?= $favWikiId; ?>"><?= $wiki['wikiName']; ?> <img src="<?= $wgBlankImgUrl ?>" class="sprite-small delete"></li>
-						<? endforeach; ?>
-						</ul>
-					<? else: ?>
-						<a class="favwiki-refresh" href="#"><?= wfMsg('user-identity-box-about-fav-wikis-refresh'); ?></a>
-						<ul class="favorite-wikis">
-						</ul>
-					<? endif; ?>
+					<label><?= wfMsg('user-identity-box-about-fav-wikis'); ?></label>
+					<a class="favorite-wikis-refresh wikia-chiclet-button" href="#"><img src="<?= $wgBlankImgUrl ?>"></a>
+					<ul class="favorite-wikis">
+					<? foreach($user['topWikis'] as $favWikiId => $wiki): ?>
+						<li data-wiki-id="<?= $favWikiId; ?>"><?= $wiki['wikiName']; ?> <img src="<?= $wgBlankImgUrl ?>" class="sprite-small delete"></li>
+					<? endforeach; ?>
+						<li class="join-more-wikis"><?= wfMsg('user-identity-box-join-more-wikis'); ?></li>
+					</ul>
+					
 				</div>
 			</form>
 			
-			<input type="hidden" id="startDateYear" value="<?= $startYear; ?>" />
-			<input type="hidden" id="startDateMonth" value="<?= $startMonth; ?>" />
-			<input type="hidden" id="startDateDay" value="<?= $startDay; ?>" />
+			<input type="hidden" id="startDateYear" value="<?= $startYear; ?>">
+			<input type="hidden" id="startDateMonth" value="<?= $startMonth; ?>">
+			<input type="hidden" id="startDateDay" value="<?= $startDay; ?>">
 		</li>
 	</ul>
 	
