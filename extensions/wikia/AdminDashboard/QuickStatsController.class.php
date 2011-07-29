@@ -108,11 +108,6 @@ class QuickStatsController extends WikiaController {
 		global $fbApiKey, $fbApiSecret, $fbAccessToken;
 		
 		$result = FALSE;
-		
-		// for testing
-		if($this->wg->DevelEnvironment)
-			return $result;
-		
 		$domain_id = Wikia::getFacebookDomainId();
 		if (!$domain_id)
 			return $result;
