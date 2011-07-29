@@ -94,28 +94,6 @@ function wfFounderEmailsInit() {
 	$wgDefaultUserOptions["founderemails-edits-$wgCityId"] = 1;
 	$wgDefaultUserOptions["founderemails-views-digest-$wgCityId"] = 1;
 	$wgDefaultUserOptions["founderemails-complete-digest-$wgCityId"] = 0;
-
-	/* for testing purposes only, TODO: remove when released & fully tested
-	global $wgRequest, $wgUser;
-	if ( $wgRequest->getCheck( 'founderEmailsTest' ) && ( $wgRequest->getVal( 'eventType' ) != null ) ) {
-		$eventType  = $wgRequest->getVal( 'eventType' );
-		if ( $eventType == 'daysPassed' ) {
-			$wikiData = array(
-				'title' => 'Precelki Wiki',
-				'url' => 'http://precelki.wikia.com'
-			);
-			FounderEmailsDaysPassedEvent::register( $wikiData, true );
-		}
-
-		if ( $eventType == 'register' ) {
-			$wikiData = array(
-				'title' => 'Precelki Wiki',
-				'url' => 'http://precelki.wikia.com'
-			);
-			FounderEmailsRegisterEvent::register( $wgUser );
-		}
-	}
-	 */
 }
 
 $dir = dirname(__FILE__).'/';
