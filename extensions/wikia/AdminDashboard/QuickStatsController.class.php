@@ -4,26 +4,31 @@ class QuickStatsController extends WikiaController {
 	
 	public function getStats() {
 
-		// fixme: refactor this into a service?
-		$cityID = $this->wg->CityId;
-		$stats = array();
-		$this->getDailyPageViews( $stats, $cityID );
-		$this->getDailyEdits( $stats, $cityID );
-		$this->getDailyPhotos( $stats );
-		$flag = $this->getDailyLikes($stats);
-		
-		// totals come in as the last element with a null date, so just pop it off and give it a keyval 
-		$stats['totals'] = array_pop($stats);
-		// Some of our stats can be empty, so insert zeros there
-		for ($i = -7 ; $i <= 0 ; $i ++) {
-			$date = date( 'Y-m-d', strtotime("$i day") );
-			if ($i == 0) $date = 'totals';  // last time around check the totals
-			if (!isset($stats[$date])) $stats[$date] = array();
-			if (!isset($stats[$date]['pageviews'])) $stats[$date]['pageviews'] = 0;
-			if (!isset($stats[$date]['edits'])) $stats[$date]['edits'] = 0;
-			if (!isset($stats[$date]['photos'])) $stats[$date]['photos'] = 0;
-			if ($flag && !isset($stats[$date]['likes'])) $stats[$date]['likes'] = 0;
-		}
+		// First check memcache for our stats
+		$memKey = $this->wf->MemcKey('QuickStats');
+		$stats = $this->wg->Memc->get($memKey);
+		if (!is_array($stats)) {
+			$cityID = $this->wg->CityId;
+			$stats = array();
+			$this->getDailyPageViews( $stats, $cityID );
+			$this->getDailyEdits( $stats, $cityID );
+			$this->getDailyPhotos( $stats );
+			$hasfbdata = $this->getDailyLikes($stats);
+
+			// totals come in from MySQL as the last element with a null date, so just pop it off and give it a keyval 
+			$stats['totals'] = array_pop($stats);
+			// Some of our stats can be empty, so insert zeros as defaults
+			for ($i = -7 ; $i <= 0 ; $i ++) {
+				$date = date( 'Y-m-d', strtotime("$i day") );
+				if ($i == 0) $date = 'totals';  // last time around check the totals
+				if (!isset($stats[$date])) $stats[$date] = array();
+				if (!isset($stats[$date]['pageviews'])) $stats[$date]['pageviews'] = 0;
+				if (!isset($stats[$date]['edits'])) $stats[$date]['edits'] = 0;
+				if (!isset($stats[$date]['photos'])) $stats[$date]['photos'] = 0;
+				if ($hasfbdata && !isset($stats[$date]['likes'])) $stats[$date]['likes'] = 0;
+			}
+			$this->wg->Memc->set($memKey, $stats, 60*60*12);  // Stats are daily, 12 hours lag seems reasonable
+		} 
 		$this->totals = array_pop($stats);
 		$this->stats = array_reverse($stats);
 	}
@@ -39,14 +44,24 @@ class QuickStatsController extends WikiaController {
 			$today = date( 'Ymd', strtotime('-1 day') );
 			$week = date( 'Ymd', strtotime('-7 day') );
 
-			$oRes = $db->select(
-				array( 'page_views' ),
-				array( "date_format(pv_use_date, '%Y-%m-%d') date", 'sum(pv_views) as cnt'  ),
-				array(  "pv_use_date between '$week' and '$today' ", 'pv_city_id' => $cityID ),
-				__METHOD__,
-				array('GROUP BY'	=> 'date WITH ROLLUP')
-			);
-			
+			// Just for testing 
+			if ($this->wg->DevelEnvironment) {
+				$oRes = $db->select(
+					array( 'page_views' ),
+					array( "date_format(pv_use_date, '%Y-%m-%d') date", 'sum(pv_views) as cnt'  ),
+					array(  "pv_use_date between '$week' and '$today' ", 'pv_city_id' => $cityID ),
+					__METHOD__,
+					array('GROUP BY'=> 'date WITH ROLLUP')
+				); 	
+			} else {
+				$oRes = $db->select(
+					array( 'google_analytics.pageviews' ),
+					array( "date_format(date, '%Y-%m-%d') date", 'sum(pageviews) as cnt'  ),
+					array(  "date between '$week' and '$today' ", 'city_id' => $cityID ),
+					__METHOD__,
+					array('GROUP BY'=> 'date WITH ROLLUP')
+				);
+			}
 			while ( $oRow = $db->fetchObject ( $oRes ) ) { 
 				$stats[ $oRow->date ]['pageviews'] = $oRow->cnt;
 			} 
