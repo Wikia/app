@@ -19,11 +19,8 @@ $.fn.extend({
 			$.extend(settings, options);
 		}
 
-		if (settings.id) {
-			var id = settings.id;
-		} else {
-			var id = $(this).attr('id') + 'Wrapper';
-		}
+		// modal wrapper ID
+		var id = settings.id || ($(this).attr('id') || '') + 'Wrapper';
 
 		//wrap with modal chrome
 		if (skin == "oasis") {
