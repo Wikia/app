@@ -129,10 +129,14 @@ class SFUtils {
 				// Something's wrong - exit
 				return $categories;
 			}
-			$conditions = "cl_from='$titlekey'";
+			$conditions['cl_from'] = $titlekey;
 		}
-		$res = $db->select( $db->tableName( 'categorylinks' ),
-			'distinct cl_to', $conditions, __METHOD__ );
+		$res = $db->select(
+			'categorylinks',
+			'DISTINCT cl_to',
+			$conditions,
+			__METHOD__
+		);
 		if ( $db->numRows( $res ) > 0 ) {
 			while ( $row = $db->fetchRow( $res ) ) {
 				$categories[] = $row[0];
@@ -195,7 +199,7 @@ class SFUtils {
 	*/
 	public static function generatePages( $psSchemaObj, $toGenPageList ) {
 		global $wgOut, $wgUser;
-		$template_all = $psSchemaObj->getTemplates();				
+		$template_all = $psSchemaObj->getTemplates();		
 		$form_templates = array();
 		$jobs = array();
 		foreach ( $template_all as $template ) {
@@ -209,11 +213,9 @@ class SFUtils {
 				$field_count++;																
 				$sf_array = $fieldObj->getObject('FormInput');//this returns an array with property values filled
 				$form_input_array = $sf_array['sf'];
-				$field_t = SFTemplateField::create( $fieldObj->getName(), $fieldObj->getLabel() );			
 				$smw_array = $fieldObj->getObject('Property');   //this returns an array with property values filled			
 				$prop_array = $smw_array['smw'];
-				$field_t->semantic_property = $prop_array['name'];			
-				$field_t->is_list = $fieldObj->isList();
+				$field_t = SFTemplateField::create( $fieldObj->getName(), $fieldObj->getLabel(), $prop_array['name'], $fieldObj->isList() ,$fieldObj->getDelimiter());
 				$template_fields[] = $field_t;
 			}
 			$template_text = SFTemplateField::createTemplateText( $template->getName(), $template_fields, null, $psSchemaObj->categoryName, null, 	null, null );
@@ -231,11 +233,15 @@ class SFUtils {
 			$form_templates[] = $form_template;
 		}		
 		$form_name = $psSchemaObj->getFormName();
+		$form_array = $psSchemaObj->getFormArray();		
 		if( $form_name == null ){
 			return true;
 		}
-		$form = SFForm::create( $form_name, $form_templates );		
-		$title = Title::makeTitleSafe( SF_NS_FORM, $form->form_name );
+		$form = SFForm::create( $form_name, $form_templates );
+		$form->setPageNameFormula( $form_array['PageNameFormula'] );
+		$form->setCreateTitle( $form_array['CreateTite'] );
+		$form->setEditTitle( $form_array['EditTitle'] );
+		$title = Title::makeTitleSafe( SF_NS_FORM, $form->getFormName() );
 		$key_title = PageSchemas::titleString( $title );
 		if( in_array($key_title, $toGenPageList )){
 		$full_text = $form->createMarkup();				
@@ -255,7 +261,7 @@ class SFUtils {
 				if ( $tag == "FormInput" ) {
 					$text = "";
 					$text = PageSchemas::tableMessageRowHTML( "paramAttr", "SemanticForms", (string)$tag );										
-					foreach ( $child->children() as $prop ) {				
+					foreach ( $child->children() as $prop ) {
 						if( $prop->getName() == 'InputType' ){
 							$text .= PageSchemas::tableMessageRowHTML("paramAttrMsg", $prop->getName(), $prop );
 						}else {

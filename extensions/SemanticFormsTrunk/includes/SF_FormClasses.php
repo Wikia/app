@@ -13,17 +13,21 @@
  * @ingroup SF
  */
 class SFForm {
-	var $mFormName = null;
-	var $mTemplates = null;
-	var $mPageNameFormula = null;
-	var $mCreateTitle = null;
-	var $mEditTitle = null;
+	private $mFormName;
+	private $mTemplates;
+	private $mPageNameFormula;
+	private $mCreateTitle;
+	private $mEditTitle;
 
 	static function create( $formName, $templates ) {
 		$form = new SFForm();
 		$form->mFormName = ucfirst( str_replace( '_', ' ', $formName ) );
 		$form->mTemplates = $templates;
 		return $form;
+	}
+
+	function getFormName() {
+		return $this->mFormName;
 	}
 
 	function setPageNameFormula( $pageNameFormula ) {
@@ -107,11 +111,11 @@ END;
  * @ingroup SF
  */
 class SFTemplateInForm {
-	var $template_name;
-	var $label;
-	var $allow_multiple;
-	var $max_allowed;
-	var $fields;
+	private $mTemplateName;
+	private $mLabel;
+	private $mAllowMultiple;
+	private $mMaxAllowed;
+	private $mFields;
 
 	/**
 	 * For a field name and its attached property name located in the
@@ -120,9 +124,7 @@ class SFTemplateInForm {
 	 */
 	function handlePropertySettingInTemplate( $fieldName, $propertyName, $isList, &$templateFields, $templateText ) {
 		global $wgContLang;
-		$templateField = SFTemplateField::create( $fieldName, $wgContLang->ucfirst( $fieldName ) );
-		$templateField->setSemanticProperty( $propertyName );
-		$templateField->is_list = $isList;
+		$templateField = SFTemplateField::create( $fieldName, $wgContLang->ucfirst( $fieldName ), $propertyName, $isList );
 		$cur_pos = stripos( $templateText, $fieldName );
 		$templateFields[$cur_pos] = $templateField;
 	}
@@ -143,7 +145,7 @@ class SFTemplateInForm {
 		// Some fields can be found more than once (especially if
 		// they're part of an "#if" statement), so they're only
 		// recorded the first time they're found.
-		$template_title = Title::makeTitleSafe( NS_TEMPLATE, $this->template_name );
+		$template_title = Title::makeTitleSafe( NS_TEMPLATE, $this->mTemplateName );
 		$template_article = null;
 		if ( isset( $template_title ) ) $template_article = new Article( $template_title );
 		if ( isset( $template_article ) ) {
@@ -233,36 +235,44 @@ class SFTemplateInForm {
 		return $templateFields;
 	}
 
-	static function create( $name, $label, $allow_multiple, $max_allowed = null ) {
+	static function create( $name, $label = null, $allowMultiple = null, $maxAllowed = null ) {
 		$tif = new SFTemplateInForm();
-		$tif->template_name = str_replace( '_', ' ', $name );
-		$tif->fields = array();
+		$tif->mTemplateName = str_replace( '_', ' ', $name );
+		$tif->mFields = array();
 		$fields = $tif->getAllFields();
 		$field_num = 0;
 		foreach ( $fields as $field ) {
-			$tif->fields[] = SFFormField::create( $field_num++, $field );
+			$tif->mFields[] = SFFormField::create( $field_num++, $field );
 		}
-		$tif->label = $label;
-		$tif->allow_multiple = $allow_multiple;
-		$tif->max_allowed = $max_allowed;
+		$tif->mLabel = $label;
+		$tif->mAllowMultiple = $allowMultiple;
+		$tif->mMaxAllowed = $maxAllowed;
 		return $tif;
 	}
 
+	function getTemplateName() {
+		return $this->mTemplateName;
+	}
+
+	function getFields() {
+		return $this->mFields;
+	}
+
 	function creationHTML( $template_num ) {
-		$checked_str = ( $this->allow_multiple ) ? "checked" : "";
+		$checked_str = ( $this->mAllowMultiple ) ? "checked" : "";
 		$template_str = wfMsg( 'sf_createform_template' );
 		$template_label_input = wfMsg( 'sf_createform_templatelabelinput' );
 		$allow_multiple_text = wfMsg( 'sf_createform_allowmultiple' );
 		$text = <<<END
-	<input type="hidden" name="template_$template_num" value="$this->template_name">
+	<input type="hidden" name="template_$template_num" value="$this->mTemplateName">
 	<div class="templateForm">
-	<h2>$template_str '$this->template_name'</h2>
-	<p>$template_label_input <input size=25 name="label_$template_num" value="$this->label"></p>
+	<h2>$template_str '$this->mTemplateName'</h2>
+	<p>$template_label_input <input size=25 name="label_$template_num" value="$this->mLabel"></p>
 	<p><input type="checkbox" name="allow_multiple_$template_num" $checked_str> $allow_multiple_text</p>
 	<hr>
 
 END;
-		foreach ( $this->fields as $field ) {
+		foreach ( $this->mFields as $field ) {
 			$text .= $field->creationHTML( $template_num );
 		}
 		$removeTemplateButton = Xml::element( 'input', array(
@@ -276,24 +286,23 @@ END;
 	}
 
 	function createMarkup() {
-		$text = "";
-		$text .= "{{{for template|" . $this->template_name;
-		if ( $this->allow_multiple ) {
+		$text = "{{{for template|" . $this->mTemplateName;
+		if ( $this->mAllowMultiple ) {
 			$text .= "|multiple";
 		}
-		if ( $this->label != '' ) {
-			$text .= "|label=" . $this->label;
+		if ( $this->mLabel != '' ) {
+			$text .= "|label=" . $this->mLabel;
 		}
 		$text .= "}}}\n";
 		// For now, HTML for templates differs for multiple-instance
 		// templates; this may change if handling of form definitions
 		// gets more sophisticated.
-		if ( ! $this->allow_multiple ) { $text .= "{| class=\"formtable\"\n"; }
-		foreach ( $this->fields as $i => $field ) {
-			$is_last_field = ( $i == count( $this->fields ) - 1 );
-			$text .= $field->createMarkup( $this->allow_multiple, $is_last_field );
+		if ( ! $this->mAllowMultiple ) { $text .= "{| class=\"formtable\"\n"; }
+		foreach ( $this->mFields as $i => $field ) {
+			$is_last_field = ( $i == count( $this->mFields ) - 1 );
+			$text .= $field->createMarkup( $this->mAllowMultiple, $is_last_field );
 		}
-		if ( ! $this->allow_multiple ) { $text .= "|}\n"; }
+		if ( ! $this->mAllowMultiple ) { $text .= "|}\n"; }
 		$text .= "{{{end template}}}\n";
 		return $text;
 	}

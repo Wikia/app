@@ -47,7 +47,7 @@ abstract class SMWQueryUI extends SpecialPage {
 	 * @global WebRequest $wgRequest
 	 * @global boolean $smwgQEnabled
 	 * @param string $p the sub-page string
-	 * @todo: using processXXXBox() methods here goes against the general architecture.
+	 * @todo: using processXXXBox() methods here goes against the general architecture. Move this to the UI implementation
 	 */
 	public function execute( $p ) {
 		global $wgOut, $wgRequest, $smwgQEnabled, $wgFeedClasses;
@@ -68,12 +68,12 @@ abstract class SMWQueryUI extends SpecialPage {
 							'format'  =>  $wgRequest->getVal( 'format' ),
 							'offset'  =>  $wgRequest->getVal( 'offset',  '0'  ),
 							'limit'   =>  $wgRequest->getVal( 'limit',   '20' ) ),
-							$this->processSortingFormBox( $wgRequest ),
+							$this->processPoSortFormBox( $wgRequest ),
 							$this->processFormatSelectBox( $wgRequest ) );
 					$this->uiCore =  SMWQueryUIHelper::makeForUI(
 							$this->processQueryFormBox( $wgRequest ),
 							$params,
-							$this->processPOFormBox( $wgRequest ),
+							array(),
 							false );
 					if ( $this->uiCore->getQueryString() != "" ) {
 						$this->uiCore->execute( $p );
@@ -84,16 +84,16 @@ abstract class SMWQueryUI extends SpecialPage {
 					$this->uiCore =  SMWQueryUIHelper::makeForInfoLink( $p );
 				}
 				// adding rss feed of results to the page head
-				if(($this->uiCore->getQueryString()!=='')
-						and ($this->isSyndicated())
-						and (method_exists($wgOut, 'addFeedlink')) //remove this line after MW 1.5 is no longer supported by SMW
-						and (array_key_exists('rss', $wgFeedClasses))){
-					$res=$this->uiCore->getResultObject();
-					$href=$res->getQueryLink()->getURl().'/format%3Drss/limit%3D'. $this->uiCore->getLimit();
-					$wgOut->addFeedLink('rss', $href);
+				if ( ( $this->uiCore->getQueryString() !== '' )
+						and ( $this->isSyndicated() )
+						and ( method_exists( $wgOut, 'addFeedlink' ) ) // remove this line after MW 1.5 is no longer supported by SMW
+						and ( array_key_exists( 'rss', $wgFeedClasses ) ) ) {
+					$res = $this->uiCore->getResultObject();
+					$href = $res->getQueryLink()->getURl() . '/format%3Drss/limit%3D' . $this->uiCore->getLimit();
+					$wgOut->addFeedLink( 'rss', $href );
 				}
 
-				$this->makepage( $p );
+				$this->makePage( $p );
 			}
 		}
 
@@ -102,10 +102,10 @@ abstract class SMWQueryUI extends SpecialPage {
 
 	/**
 	 * To enable/disable syndicated feeds of results to appear in the UI header
-	 * 
+	 *
 	 * @return boolean
 	 */
-	public function isSyndicated(){
+	public function isSyndicated() {
 		return true;
 	}
 
@@ -326,13 +326,12 @@ END;
 	 * complement processQueryFormBox() to decode data sent through these elements.
 	 * UI's may overload both to change form parameters.
 	 *
-	 * @param string $contents
 	 * @param string $errors
 	 * @return string
 	 */
-	protected function getQueryFormBox( $content, $errors = '' ) {
+	protected function getQueryFormBox( $errors = '' ) {
 		$result = '';
-		$result = Html::element( 'textarea', array( 'name' => 'q', 'id' => 'querybox', 'rows' => '6' ), $content );
+		$result = Html::element( 'textarea', array( 'name' => 'q', 'id' => 'querybox', 'rows' => '6' ), $this->uiCore->getQueryString() );
 		// TODO:enable/disable on checking for errors; perhaps show error messages right below the box
 		return $result;
 	}
@@ -349,6 +348,237 @@ END;
 		$query = '';
 		if ( $wgRequest->getCheck( 'q' ) ) $query = $wgRequest->getVal( 'q' );
 		return $query;
+	}
+
+	/**
+	 * Generates the forms elements(s) for choosing printouts and sorting
+	 * options. Use its complement processPoSortFormBox() to decode data
+	 * sent by these elements.
+	 *
+	 * @return string
+	 */
+	protected function getPoSortFormBox( $enableAutocomplete = SMWQueryUI::ENABLE_AUTO_SUGGEST ) {
+		global $smwgQSortingSupport, $wgRequest, $wgOut;
+
+		if ( !$smwgQSortingSupport ) return '';
+
+		$result = '';
+		$num_sort_values = 0;
+		// START: create form elements already submitted earlier via form
+		// attempting to load parameters from $wgRequest
+		$property_values = $wgRequest->getArray( 'property' );
+		$order_values = $wgRequest->getArray( 'order' );
+		$display_values = $wgRequest->getArray( 'display' );
+		if ( is_array( $property_values ) ) {
+			// removing empty values
+			foreach ( $property_values as $key => $property_value ) {
+				$property_values[$key] = trim( $property_value );
+				if ( $property_value == '' ) {
+					unset( $property_values[$key] );
+				}
+			}
+		} else {
+			/*
+			 * Printouts and sorting were set via another widget/form/source, so
+			 * create elements by fetching data from $uiCore. The exact ordering
+			 * of Ui elements might not be preserved, if the above block were to
+			 * be removed. This  is a bit of a hack, converting all strings to
+			 * lowercase to simplify searching procedure and using in_array.
+			 */
+
+			$po = explode( '?', $this->getPOStrings() );
+			reset( $po );
+			foreach ( $po as $key => $value ) {
+			 $po[$key] = strtolower( trim( $value ) );
+			  if ( $po[$key] == '' ) {
+				  unset ( $po[$key] );
+			  }
+			}
+
+			$params = $this->uiCore->getParameters();
+			if ( array_key_exists( 'sort', $params ) && array_key_exists( 'order', $params ) ) {
+				$property_values = explode( ',', strtolower( $params['sort'] ) );
+				$order_values = explode( ',', $params['order'] );
+				reset( $property_values );
+				reset( $order_values );
+			} else {
+				$order_values = array(); // do not even show one sort input here
+				$property_values = array();
+			}
+
+			 foreach ( $po as $po_key => $po_value ) {
+				 if ( !in_array( $po_value, $property_values ) ) {
+					 $property_values[] = $po_value;
+				 }
+			 }
+			 $display_values = array();
+			 reset( $property_values );
+			 foreach ( $property_values as $property_key => $property_value ) {
+				 if ( in_array( $property_value, $po ) ) {
+					 $display_values[$property_key] = "yes";
+				 }
+			 }
+		}
+		$num_sort_values = count( $property_values );
+		foreach ( $property_values as $i => $property_value ) {
+			$result .= Html::openElement( 'div', array( 'id' => "sort_div_$i" ) ) . 'Property ';  // TODO: add i18n
+			$result .= Html::input( 'property[' . $i . ']', $property_value, 'text', array( 'size' => '35' ) ) . "\n";
+			$result .= html::openElement( 'select', array( 'name' => "order[$i]" ) );
+			if ( !is_array( $order_values ) or !array_key_exists( $i, $order_values ) or $order_values[$i] == 'NONE' ) {
+				$result .= '<option selected value="NONE">' . 'No sorting' . "</option>\n"; // TODO: add i18n
+			} else {
+				$result .= '<option          value="NONE">' . 'No sorting' . "</option>\n"; // TODO: add i18n
+			}
+			if ( is_array( $order_values ) and array_key_exists( $i, $order_values ) and $order_values[$i] == 'ASC' ) {
+				$result .= '<option selected value="ASC">' . wfMsg( 'smw_ask_ascorder' ) . "</option>\n";
+			} else {
+				$result .= '<option          value="ASC">' . wfMsg( 'smw_ask_ascorder' ) . "</option>\n";
+			}
+			if ( is_array( $order_values ) and array_key_exists( $i, $order_values ) and $order_values[$i] == 'DESC' ) {
+				$result .= '<option selected value="DESC">' . wfMsg( 'smw_ask_descorder' ) . "</option>\n";
+			} else {
+				$result .= '<option          value="DESC">' . wfMsg( 'smw_ask_descorder' ) . "</option>\n";
+			}
+			$result .= "</select> \n";
+			if ( is_array( $display_values ) and array_key_exists( $i, $display_values ) ) {
+				$result .= '<input type="checkbox" checked name="display[' . $i . ']" value="yes">show in results' . "\n"; // TODO: add i18n
+			} else {
+				$result .= '<input type="checkbox"         name="display[' . $i . ']" value="yes">show in results' . "\n"; // TODO: add i18n
+			}
+			$result .= '[<a href="javascript:removePOInstance(\'sort_div_' . $i . '\')">' . wfMsg( 'delete' ) . '</a>]' . "\n";
+			$result .= "</div> \n";
+		}
+		// END: create form elements already submitted earlier via form
+
+		$result .=  '<div id="sorting_starter" style="display: none">' . 'Property' . // TODO: add i18n
+					' <input type="text" size="35" name="property_num" />' . "\n";
+		$result .= ' <select name="order_num">' . "\n";
+		$result .= '	<option value="NONE"> No Sorting </option>' . "\n"; // TODO add i18n
+		$result .= '	<option value="ASC">' . wfMsg( 'smw_ask_ascorder' ) . "</option>\n";
+		$result .= '	<option value="DESC">' . wfMsg( 'smw_ask_descorder' ) . "</option>\n</select>\n";
+		$result .= '<input type="checkbox" checked name="display_num" value="yes">show in results' . "\n"; // TODO: add i18n
+		$result .= "</div>\n";
+		$result .= '<div id="sorting_main"></div>' . "\n";
+		$result .= '<a href="javascript:addPOInstance(\'sorting_starter\', \'sorting_main\')">' . '[Add additional properties]' . '</a>' . "\n";
+
+		// Javascript code for handling adding and removing the "sort" inputs
+		$delete_msg = wfMsg( 'delete' );
+
+		$this->enableJQuery();
+		if ( $enableAutocomplete == SMWQueryUI::ENABLE_AUTO_SUGGEST ) {
+			$this->addAutocompletionJavascriptAndCSS();
+		}
+		$javascript_text = <<<EOT
+<script type="text/javascript">
+// code for handling adding and removing the "sort" inputs
+var num_elements = {$num_sort_values};
+
+function addPOInstance(starter_div_id, main_div_id) {
+	var starter_div = document.getElementById(starter_div_id);
+	var main_div = document.getElementById(main_div_id);
+
+	//Create the new instance
+	var new_div = starter_div.cloneNode(true);
+	var div_id = 'sort_div_' + num_elements;
+	new_div.className = 'multipleTemplate';
+	new_div.id = div_id;
+	new_div.style.display = 'block';
+
+	var children = new_div.getElementsByTagName('*');
+	var x;
+	for (x = 0; x < children.length; x++) {
+		if (children[x].name)
+			children[x].name = children[x].name.replace(/_num/, '[' + num_elements + ']');
+	}
+
+	//Create 'delete' link
+	var remove_button = document.createElement('span');
+	remove_button.innerHTML = '[<a href="javascript:removePOInstance(\'sort_div_' + num_elements + '\')">{$delete_msg}</a>]';
+	new_div.appendChild(remove_button);
+
+	//Add the new instance
+	main_div.appendChild(new_div);
+EOT;
+	if ( $enableAutocomplete == SMWQueryUI::ENABLE_AUTO_SUGGEST ) {
+		$javascript_text .= <<<EOT
+	//add autocomplete
+	jQuery('[name*="property"]').autocomplete({
+		minLength: 2,
+		source: function(request, response) {
+			url=wgScriptPath+'/api.php?action=opensearch&limit=10&namespace='+wgNamespaceIds['property']+'&format=jsonfm';
+
+			jQuery.getJSON(url, 'search='+request.term, function(data){
+				//remove the namespace prefix 'Property:' from returned data
+				for(i=0;i<data[1].length;i++) data[1][i]=data[1][i].substr(data[1][i].indexOf(':')+1);
+				response(data[1]);
+			});
+		}
+	});
+EOT;
+		}
+	$javascript_text .= <<<EOT
+	num_elements++;
+
+}
+
+function removePOInstance(div_id) {
+	var olddiv = document.getElementById(div_id);
+	var parent = olddiv.parentNode;
+	parent.removeChild(olddiv);
+}
+</script>
+
+EOT;
+
+		$wgOut->addScript( $javascript_text );
+		return $result;
+	}
+
+	/**
+	 * Decodes printouts and sorting - related form options generated by its
+	 * complement, getPoSortFormBox(). UIs may overload both to change form
+	 * parameters.
+	 *
+	 * @global boolean $smwgQSortingSupport
+	 * @param WebRequest $wgRequest
+	 * @return string
+	 */
+	protected function processPoSortFormBox( WebRequest $wgRequest ) {
+		global $smwgQSortingSupport;
+		if ( !$smwgQSortingSupport ) return array();
+
+		$params = array();
+		$order_values = $wgRequest->getArray( 'order' );
+		$property_values = $wgRequest->getArray( 'property' );
+		$po = array();
+		if ( is_array( $property_values ) ) {
+			$params['sort'] = '';
+			$params['order'] = '';
+			foreach ( $property_values as $key => $property_value ) {
+				$property_values[$key] = trim( $property_value );
+				if ( $property_value == '' ) {
+					unset( $property_values[$key] );
+				}
+				if ( is_array( $order_values ) and array_key_exists( $key, $order_values ) and $order_values[$key] != 'NONE' ) {
+					$params['sort'] .= ( $params['sort'] != '' ? ',':'' ) . $property_values[$key];
+					$params['order'] .= ( $params['order'] != '' ? ',':'' ) . $order_values[$key];
+				}
+			}
+			$display_values = $wgRequest->getArray( 'display' );
+			if ( is_array( $display_values ) ) {
+				foreach ( $display_values as $key => $value ) {
+					if ( $value == 'yes' and array_key_exists( $key, $property_values ) ) {
+						$po[] = '?' . trim( $property_values[$key] );
+					}
+
+				}
+			}
+		}
+
+		$params = array_merge( $params, $po );
+
+		return $params;
+
 	}
 
 	/**
@@ -495,11 +725,10 @@ EOT;
 	 * form elements. UIs may overload both to change the form parameter or the
 	 * html elements.
 	 *
-	 * @param string $content The content expected to appear in the box
 	 * @param boolean $enableAutocomplete If set to true, adds the relevant JS and CSS to the page
 	 * @return string The HTML code
 	 */
-	protected function getPOFormBox( $content, $enableAutocomplete = SMWQueryUI::ENABLE_AUTO_SUGGEST ) {
+	protected function getPOFormBox( $enableAutocomplete = SMWQueryUI::ENABLE_AUTO_SUGGEST ) {
 		global $wgOut;
 
 		if ( $enableAutocomplete ) {
@@ -543,7 +772,7 @@ EOT;
 
 		}
 
-		return Html::element( 'textarea', array( 'id' => 'add_property', 'name' => 'po', 'cols' => '20', 'rows' => '6' ), $content );
+		return Html::element( 'textarea', array( 'id' => 'add_property', 'name' => 'po', 'cols' => '20', 'rows' => '6' ), $this->getPOStrings() );
 	}
 
 	/**
@@ -624,15 +853,15 @@ EOT;
 	protected function showFormatOptions( $format, array $paramValues ) {
 		$printer = SMWQueryProcessor::getResultPrinter( $format, SMWQueryProcessor::SPECIAL_PAGE );
 
-		$params = method_exists( $printer, 'getParameters' ) ? $printer->getParameters() : array();
-
-		// Ignore the format parameter, as we got a special control in the GUI for it already.
-		unset( $params['format'] );
+		$params = method_exists( $printer, 'getValidatorParameters' ) ? $printer->getValidatorParameters() : array();
 
 		$optionsHtml = array();
 
 		foreach ( $params as $param ) {
-			$param = $this->tovalidatorParam($param);
+			// Ignore the format parameter, as we got a special control in the GUI for it already.
+			if ( $param->getName() == 'format' or  $param->getName() == 'limit' or  $param->getName() == 'offset' ) {
+				continue;
+			}
 			$currentValue = array_key_exists( $param->getName(), $paramValues ) ? $paramValues[$param->getName()] : false;
 
 			$optionsHtml[] =
@@ -672,45 +901,6 @@ EOT;
 		}
 
 		return $resultHtml;
-	}
-
-	/**
-	 * Returns a Validator style Parameter definition.
-	 * SMW 1.5.x style definitions are converted.
-	 *
-	 * @param mixed $param Parameter or array
-	 *
-	 * @return Parameter
-	 */
-	private function toValidatorParam( $param ) {
-		 static $typeMap = array(
-				 'int' => Parameter::TYPE_INTEGER
-		 );
-
-		 if ( !( $param instanceof Parameter ) ) {
-				 if ( !array_key_exists( 'type', $param ) ) {
-						 $param['type'] = 'string';
-				 }
-
-				 $paramClass = $param['type'] == 'enum-list' ?
-						 'ListParameter' : 'Parameter';
-				 $paramType = array_key_exists( $param['type'], $typeMap ) ?
-						 $typeMap[$param['type']] : Parameter::TYPE_STRING;
-
-				 $parameter = new $paramClass( $param['name'], $paramType );
-
-				 if ( array_key_exists( 'description', $param ) ) {
-						 $parameter->setDescription( $param['description'] );
-				 }
-
-				 if ( array_key_exists( 'values', $param ) && is_array( $param['values'] ) ) {
-						 $parameter->addCriteria( new CriterionInArray( $param['values'] ) );
-				 }
-
-				 return $parameter;
-		 } else {
-				 return $param;
-		 }
 	}
 
 	/**
@@ -1223,7 +1413,7 @@ class SMWQueryUIHelper {
 			$rawparams = SMWInfolink::decodeParameters( $p, true );
 			// calling setParams to fill in missing parameters
 			$this->setParams( $rawparams );
-			$rawparams = array_merge( $this->parameters, $rawparams );
+			$rawparams = $this->parameters;
 		}
 
 		SMWQueryProcessor::processFunctionParams( $rawparams, $this->queryString, $this->parameters, $this->printOuts );

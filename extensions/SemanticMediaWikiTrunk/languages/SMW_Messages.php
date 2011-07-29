@@ -234,10 +234,10 @@ It takes care that humans do not turn into websites.',
 	'smw_ask_embed_instr'	=> 'To embed this query inline into a wiki page use the code below.',
 
 	// Messages for Query Creator Special
-	'querycreator'          => 'Query Creator',
-	'smw_show_addnal_opts'  => 'Show additional options',
-	'smw_hide_addnal_opts'  => 'Hide additional options',
-	'smw_qc_query_help'     => 'Enter a query using the form below to select wiki pages based on 
+	'querycreator'             => 'Query Creator',
+	'smw_qc_show_addnal_opts'  => 'Show more options',
+	'smw_qc_hide_addnal_opts'  => 'Show less options',
+	'smw_qc_query_help'        => 'Enter a query using the form below. Select wiki pages based on
 Categories (<strong>[[{{ns:category}}:Actor]]</strong>), 
 Properties (<strong>[[Located in::Germany]]</strong>), 
 Names(<strong>[[Germany]]</strong>) and Namespaces (<strong>[[{{ns:help}}:+]]</strong>)',
@@ -3130,6 +3130,7 @@ Uutta ei käynnistetä.',
  * @author Peter17
  * @author PieRRoMaN
  * @author Pierre Matringe
+ * @author Seb35
  * @author Sherbrooke
  * @author Urhixidur
  * @author Verdy p
@@ -3191,6 +3192,7 @@ $messages['fr'] = array(
 	'smw-paramdesc-csv-sep' => 'Le séparateur à utiliser',
 	'smw-paramdesc-dsv-separator' => 'Le séparateur à utiliser',
 	'smw-paramdesc-dsv-filename' => 'Le nom du fichier DSV',
+	'smw-smwdoc-description' => 'Montre un tableau de tous les paramètres qui peuvent être utilisés pour un format de résultat spécifié ensemble avec des valeurs et des descriptions par défaut.',
 	'smw_iq_disabled' => 'Désolé. Les recherches dans les pages de ce wiki ne sont pas autorisées.',
 	'smw_iq_moreresults' => '&hellip; autres résultats',
 	'smw_nonright_importtype' => 'L’élément « $1 » ne peut être employé que pour des pages de l’espace de noms « $2 ».',
@@ -6474,6 +6476,8 @@ Et gët en RDF ugeluecht dee liicht duerchsicht ka ginn.',
 	'smw_ask_otheroptions' => 'Aner Optiounen',
 	'smw_ask_show_embed' => 'Agebonnene Code weisen',
 	'smw_ask_hide_embed' => 'Agebonnene Code verstoppen',
+	'smw_show_addnal_opts' => 'Zousätzlech Optioune weisen',
+	'smw_hide_addnal_opts' => 'Zousätzlech Optioune verstoppen',
 	'searchbyproperty' => 'No Eegeschafte sichen',
 	'smw_sbv_docu' => 'Sichen no alle Säiten déi eng bestëmmten Eegeschaft mat engem bestëmmte Wäert hunn.',
 	'smw_sbv_displayresult' => 'Eng Lëscht vun alle Säiten déi d\'Eegeschaft "$1" mam Wäert "$2" hunn',
@@ -8252,7 +8256,7 @@ J\'arzultà a peulo esse pa coma spetà.',
 	'smw_nodisjunctions' => "Le disgiunsion ant j'arceste a son pa apogià su sta wiki-sì e part ëd l'arcesta a l'é stàita sautà ($1).",
 	'smw_querytoolarge' => "Le condission ëd l'arcesta sì-sota a son pa stàite considerà an rason dla le restrission ëd la wiki ant la dimension o profondità dj'arceste: $1.",
 	'smw_notemplategiven' => 'Dà un valor për ël paràmetr "stamp" an manera che sto formà-sì d\'arcesta a travaja.',
-	'smw_db_sparqlqueryproblem' => "L'arzultà dl'anterogassion a peul pa esse otnùa dal database SPARQL. Sto eror a peul esse temporani o andiché n'eror ant 1.nntp.aioe.orgl software d1.nntp.aioe.orgl database.",
+	'smw_db_sparqlqueryproblem' => "L'arzultà dl'anterogassion a l'ha pa podù esse otnù da la base ëd dàit SPARQL. S'eror a peul esse temporani o andiché n'eror ant ël programa dla base ëd dàit.",
 	'smw_type_header' => 'Proprietà dël tipo "$1".',
 	'smw_typearticlecount' => "Mostré $1 {{PLURAL:$1|la proprietà|le proprietà}} ch'a deuvro sto tipo-sì.",
 	'smw_attribute_header' => 'Pàgine ch\'a deuvro la proprietà "$1".',
@@ -9592,9 +9596,11 @@ Ker je bilo le malo rezultatov, so prikazane strani s približnim ujemanjem.',
 	'smw_result_results' => 'Rezultati',
 	'smw_result_noresults' => 'Ni zadetkov.',
 	'smw_smwadmin_return' => 'Vrnitev na $1',
+	'smw_smwadmin_datarefresh' => 'Nadgraditev in popravilo podatkov',
 	'smw_smwadmin_datarefreshbutton' => 'Začni posodabljati podatke',
 	'smw_smwadmin_datarefreshstop' => 'Ustavi to posodobitev',
 	'smw_smwadmin_datarefreshstopconfirm' => 'Da, prepričan sem.',
+	'smw_smwadmin_mediazilla' => 'Hrošče lahko prijavite na <a href="https://bugzilla.wikimedia.org/">Bugzilli</a>.',
 	'smw_adminlinks_datastructure' => 'Zgradba podatkov',
 	'smw_adminlinks_displayingdata' => 'Prikaz podatkov',
 );

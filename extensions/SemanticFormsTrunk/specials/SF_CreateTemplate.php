@@ -167,9 +167,7 @@ END;
 					continue;
 				list ( $field_field, $id ) = $var_elements;
 				if ( $field_field == 'name' && $id != 'starter' ) {
-					$field = SFTemplateField::create( $val, $wgRequest->getVal( 'label_' . $id ) );
-					$field->semantic_property = $wgRequest->getVal( 'semantic_property_' . $id );
-					$field->is_list = $wgRequest->getCheck( 'is_list_' . $id );
+					$field = SFTemplateField::create( $val, $wgRequest->getVal( 'label_' . $id ), $wgRequest->getVal( 'semantic_property_' . $id ), $wgRequest->getCheck( 'is_list_' . $id ) );
 					$fields[] = $field;
 				}
 			}

@@ -14,10 +14,10 @@
 
 class SFFormPrinter {
 
-	var $mSemanticTypeHooks;
-	var $mInputTypeHooks;
-	var $standardInputsIncluded;
-	var $mPageTitle;
+	public $mSemanticTypeHooks;
+	public $mInputTypeHooks;
+	public $standardInputsIncluded;
+	public $mPageTitle;
 
 	public function __construct() {
 		// Initialize variables.
@@ -328,7 +328,7 @@ END;
 		//$userCanEditPage = ( $wgUser->isAllowed( 'edit' ) && $this->mPageTitle->userCan( 'edit' ) );
 		$permissionErrors = $this->mPageTitle->getUserPermissionsErrors( 'edit', $wgUser );
 		$userCanEditPage = count( $permissionErrors ) == 0;
-		wfRunHooks( 'sfUserCanEditPage', array( &$userCanEditPage ) );
+		wfRunHooks( 'sfUserCanEditPage', array( $this->mPageTitle, &$userCanEditPage ) );
 		$form_text = "";
 		if ( $userCanEditPage || $is_query ) {
 			$form_is_disabled = false;
@@ -420,7 +420,6 @@ END;
 		$all_instances_printed = false;
 		$strict_parsing = false;
 		for ( $section_num = 0; $section_num < count( $form_def_sections ); $section_num++ ) {
-			$tif = new SFTemplateInForm();
 			$start_position = 0;
 			$template_text = "";
 			// the append is there to ensure that the original
@@ -438,7 +437,7 @@ END;
 				if ( $tag_title == 'for template' ) {
 					$old_template_name = $template_name;
 					$template_name = trim( $tag_components[1] );
-					$tif->template_name = $template_name;
+					$tif = SFTemplateInForm::create( $template_name );
 					$query_template_name = str_replace( ' ', '_', $template_name );
 					$add_button_text = wfMsg( 'sf_formedit_addanother' );
 					// Also replace periods with underlines, since that's what
@@ -471,7 +470,7 @@ END;
 							$form_text .= "\t" . '<div class="multipleTemplateList">' . "\n";
 						}
 					}
-					$template_text .= "{{" . $tif->template_name;
+					$template_text .= "{{" . $template_name;
 					$all_fields = $tif->getAllFields();
 					// remove template tag
 					$section = substr_replace( $section, '', $brackets_loc, $brackets_end_loc + 3 - $brackets_loc );
@@ -483,7 +482,7 @@ END;
 					if ( $source_is_page || $form_is_partial ) {
 						// Replace underlines with spaces in template name, to allow for
 						// searching on either.
-						$search_template_str = str_replace( '_', ' ', $tif->template_name );
+						$search_template_str = str_replace( '_', ' ', $template_name );
 						$preg_match_template_str = str_replace(
 							array( '/', '(', ')' ),
 							array( '\/', '\(', '\)' ),
@@ -664,7 +663,7 @@ END;
 						} elseif ( $component == 'hidden' ) {
 							$is_hidden = true;
 						} elseif ( $component == 'restricted' ) {
-							$is_restricted = true;
+							$is_restricted = ( ! $wgUser || ! $wgUser->isAllowed( 'editrestrictedfields' ) );
 						} elseif ( $component == 'uploadable' ) {
 							$field_args['is_uploadable'] = true;
 						} elseif ( $component == 'list' ) {
@@ -766,6 +765,11 @@ END;
 									// Parse value, so default filename can include parser functions.
 									$default_filename = $wgParser->recursiveTagParse( $default_filename );
 									$field_args['default filename'] = $default_filename;
+								} elseif ( $sub_components[0] == 'restricted' ) {
+									$is_restricted = !array_intersect(
+											$wgUser->getEffectiveGroups(),
+											array_map( 'trim', explode( ',', $sub_components[1] ) )
+									);
 								}
 							}
 						}
@@ -993,8 +997,7 @@ END;
 						}
 						// disable this field if either the whole form is disabled, or
 						// it's a restricted field and user doesn't have sysop privileges
-						$is_disabled = ( $form_is_disabled ||
-							( $is_restricted && ( ! $wgUser || ! $wgUser->isAllowed( 'editrestrictedfields' ) ) ) );
+						$is_disabled = ( $form_is_disabled || $is_restricted );
 						// Create an SFFormField instance based on all the parameters
 						// in the form definition, and any information from the template
 						// definition (contained in the $all_fields parameter).
@@ -1008,8 +1011,9 @@ END;
 						// SFFormField object, not the SFTemplateField object it contains;
 						// it seemed like too much work, though, to create an
 						// SFFormField::setSemanticProperty() function just for this call
-						if ( $semantic_property != null )
-							 $form_field->template_field->setSemanticProperty( $semantic_property );
+						if ( $semantic_property != null ) {
+							$form_field->template_field->setSemanticProperty( $semantic_property );
+						}
 
 						// call hooks - unfortunately this has to be split into two
 						// separate calls, because of the different variable names in
@@ -1035,7 +1039,7 @@ END;
 								( $cur_value == '' || $cur_value == 'now' ) ) {
 							if ( $input_type == 'date' || $input_type == 'datetime' ||
 									$input_type == 'year' ||
-									( $input_type == '' && $form_field->template_field->property_type == '_dat' ) ) {
+									( $input_type == '' && $form_field->getTemplateField()->getPropertyType() == '_dat' ) ) {
 								// Get current time, for the time zone specified in the wiki.
 								global $wgLocaltimezone;
 								if ( isset( $wgLocaltimezone ) ) {
@@ -1095,7 +1099,7 @@ END;
 						// if this field is disabled, add a hidden field holding
 						// the value of this field, because disabled inputs for some
 						// reason don't submit their value
-						if ( $form_field->is_disabled ) {
+						if ( $form_field->isDisabled() ) {
 							if ( $field_name == 'free text' || $field_name == '<freetext>' ) {
 								$new_text .= SFFormUtils::hiddenFieldHTML( 'free_text', '!free_text!' );
 							} else {
@@ -1442,38 +1446,38 @@ END;
 	 * Create the HTML and Javascript to display this field within a form
 	 */
 	function formFieldHTML( $form_field, $cur_value ) {
-		// also get the actual field, with all the semantic information (type is
-		// SFTemplateField, instead of SFFormField)
-		$template_field = $form_field->template_field;
+		// Also get the actual field, with all the semantic information
+		// (type is SFTemplateField, instead of SFFormField)
+		$template_field = $form_field->getTemplateField();
 
-		if ( $form_field->is_hidden ) {
-			$text = SFFormUtils::hiddenFieldHTML( $form_field->input_name, $cur_value );
-		} elseif ( $form_field->input_type != '' &&
-							array_key_exists( $form_field->input_type, $this->mInputTypeHooks ) &&
-							$this->mInputTypeHooks[$form_field->input_type] != null ) {
+		if ( $form_field->isHidden() ) {
+			$text = SFFormUtils::hiddenFieldHTML( $form_field->getInputName(), $cur_value );
+		} elseif ( $form_field->getInputType() != '' &&
+							array_key_exists( $form_field->getInputType(), $this->mInputTypeHooks ) &&
+							$this->mInputTypeHooks[$form_field->getInputType()] != null ) {
 			$funcArgs = array();
 			$funcArgs[] = $cur_value;
-			$funcArgs[] = $form_field->input_name;
-			$funcArgs[] = $form_field->is_mandatory;
-			$funcArgs[] = $form_field->is_disabled;
+			$funcArgs[] = $form_field->getInputName();
+			$funcArgs[] = $form_field->isMandatory();
+			$funcArgs[] = $form_field->isDisabled();
 			// last argument to function should be a hash, merging the default
 			// values for this input type with all other properties set in
 			// the form definition, plus some semantic-related arguments
-			$hook_values = $this->mInputTypeHooks[$form_field->input_type];
+			$hook_values = $this->mInputTypeHooks[$form_field->getInputType()];
 			$other_args = $form_field->getArgumentsForInputCall( $hook_values[1] );
 			$funcArgs[] = $other_args;
 			$text = call_user_func_array( $hook_values[0], $funcArgs );
 		} else { // input type not defined in form
-			$property_type = $template_field->property_type;
-			$is_list = ( $form_field->is_list || $template_field->is_list );
+			$property_type = $template_field->getPropertyType();
+			$is_list = ( $form_field->isList() || $template_field->isList() );
 			if ( $property_type != '' &&
 				array_key_exists( $property_type, $this->mSemanticTypeHooks ) &&
 				isset( $this->mSemanticTypeHooks[$property_type][$is_list] ) ) {
 				$funcArgs = array();
 				$funcArgs[] = $cur_value;
-				$funcArgs[] = $form_field->input_name;
-				$funcArgs[] = $form_field->is_mandatory;
-				$funcArgs[] = $form_field->is_disabled;
+				$funcArgs[] = $form_field->getInputName();
+				$funcArgs[] = $form_field->isMandatory();
+				$funcArgs[] = $form_field->isDisabled();
 				$hook_values = $this->mSemanticTypeHooks[$property_type][$is_list];
 				$other_args = $form_field->getArgumentsForInputCall( $hook_values[1] );
 				$funcArgs[] = $other_args;
@@ -1481,12 +1485,12 @@ END;
 			} else { // anything else
 				$other_args = $form_field->getArgumentsForInputCall();
 				// special call to ensure that a list input is the right default size
-				if ( $form_field->is_list ) {
+				if ( $form_field->isList() ) {
 					if ( ! array_key_exists( 'size', $other_args ) ) {
 						$other_args['size'] = 100;
 					}
 				}
-				$text = SFTextInput::getHTML( $cur_value, $form_field->input_name, $form_field->is_mandatory, $form_field->is_disabled, $other_args );
+				$text = SFTextInput::getHTML( $cur_value, $form_field->getInputName(), $form_field->isMandatory(), $form_field->isDisabled(), $other_args );
 			}
 		}
 		return $text;

@@ -147,7 +147,7 @@ jQuery(document).ready(function() {
 		// Now cycle through the templates and fields, modifying each
 		// one per the query variables.
 		foreach ( $form_templates as $i => $ft ) {
-			foreach ( $ft->fields as $j => $field ) {
+			foreach ( $ft->getFields() as $j => $field ) {
 				// handle the change in indexing if a new template was
 				// inserted before the end, or one was deleted
 				$old_i = $i;
@@ -175,24 +175,24 @@ jQuery(document).ready(function() {
 					}
 
 					if ( $paramName == 'label' ) {
-						$field->template_field->label = $value;
+						$field->template_field->setLabel( $value );
 					} elseif ( $paramName == 'input type' ) {
 						$input_type = $wgRequest->getVal( "input_type_" . $old_i . "_" . $j );
 						if ( $input_type == 'hidden' ) {
-							$field->template_field->input_type = $input_type;
-							$field->is_hidden = true;
+							$field->template_field->setInputType( $input_type );
+							$field->setIsHidden( true );
 						} elseif ( substr( $input_type, 0, 1 ) == '.' ) {
 							// It's the default input type -
 							// don't do anything.
 						} else {
-							$field->template_field->input_type = $input_type;
+							$field->template_field->setInputType( $input_type );
 						}
 					} else {
 						if ( ! empty( $value ) ) {
 							if ( $value == 'on' ) {
 								$value = true;
 							}
-							$field->field_args[$paramName] = $value;
+							$field->setFieldArg( $paramName, $value );
 						}
 					}
 				}
@@ -206,12 +206,12 @@ jQuery(document).ready(function() {
 		$preview_page = $wgRequest->getCheck( 'wpPreview' );
 		if ( $save_page || $preview_page ) {
 			// Validate form name
-			if ( $form->mFormName == "" ) {
+			if ( $form->getFormName() == "" ) {
 				$form_name_error_str = wfMsg( 'sf_blank_error' );
 			} else {
 				// Redirect to wiki interface
 				$wgOut->setArticleBodyOnly( true );
-				$title = Title::makeTitleSafe( SF_NS_FORM, $form->mFormName );
+				$title = Title::makeTitleSafe( SF_NS_FORM, $form->getFormName() );
 				$full_text = $form->createMarkup();
 				$text = SFUtils::printRedirectForm( $title, $full_text, "", $save_page, $preview_page, false, false, false, null, null );
 				$wgOut->addHTML( $text );
@@ -243,7 +243,7 @@ jQuery(document).ready(function() {
 			$text .= $before_template_msg;
 			$select_body = "";
 			foreach ( $form_templates as $i => $ft ) {
-				$select_body .= "\t" . Xml::element( 'option', array( 'value' => $i ), $ft->template_name ) . "\n";
+				$select_body .= "\t" . Xml::element( 'option', array( 'value' => $i ), $ft->getTemplateName() ) . "\n";
 			}
 			$final_index = count( $form_templates );
 			$at_end_msg = wfMsg( 'sf_createform_atend' );
