@@ -1,18 +1,15 @@
 <?php
-
+/**
+ * SkeleSkin wiki header
+ * 
+ * @author Jakub Olek <bukaj.kelo(at)gmail.com>
+ * @authore Federico "Lox" Lucignano <federico(at)wikia-inc.com>
+ */
 class  SkeleSkinWikiHeaderService extends WikiaService {
-	
 	public function index() {
 		$themeSettings = F::build('ThemeSettings');
 		$settings = $themeSettings->getSettings();
 
-		$this->wordmarkText = $settings["wordmark-text"];
-		$this->setVal( 'wordmarkText', $settings["wordmark-text"] );
-		$this->wordmarkType = $settings["wordmark-type"];
-		$this->wordmarkSize = $settings["wordmark-font-size"];
-		$this->wordmarkFont = $settings["wordmark-font"];
-		echo "aaaaa";
-		return false;
+		$this->wikiName = ( !empty( $settings['wordmark-text'] ) ) ? $settings['wordmark-text'] : $this->wg->SiteName;
 	}
-
 }

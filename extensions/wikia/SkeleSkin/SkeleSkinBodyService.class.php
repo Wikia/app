@@ -1,4 +1,10 @@
 <?php
+/**
+ * SkeleSkin page body
+ * 
+ * @author Jakub Olek <bukaj.kelo(at)gmail.com>
+ * @authore Federico "Lox" Lucignano <federico(at)wikia-inc.com>
+ */
 class SkeleSkinBodyService extends WikiaService {
 	public function index() {
 		$bodyContent = $this->getVal( 'bodyText', '');
@@ -15,7 +21,7 @@ class SkeleSkinBodyService extends WikiaService {
 			$afterContentHookText = '';
 		}
 		
-		$this->headerText = $this->wg->Sitename;
+		$this->pageHeaderContent = $this->sendRequest( 'SkeleSkinPageHeaderService', 'index' )->toString();
 		$this->bodyContent = $bodyContent;
 		$this->afterBodyContent = $afterBodyHtml;
 		$this->afterContentHookText = $afterContentHookText;

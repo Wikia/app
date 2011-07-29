@@ -38,6 +38,7 @@ $app->wg->append(
 $app->wg->set( 'wgAutoloadClasses', "{$dir}/SkeleSkinService.class.php", 'SkeleSkinService' );
 $app->wg->set( 'wgAutoloadClasses', "{$dir}/SkeleSkinBodyService.class.php", 'SkeleSkinBodyService' );
 $app->wg->set( 'wgAutoloadClasses', "{$dir}/SkeleSkinWikiHeaderService.class.php", 'SkeleSkinWikiHeaderService' );
+$app->wg->set( 'wgAutoloadClasses', "{$dir}/SkeleSkinPageHeaderService.class.php", 'SkeleSkinPageHeaderService' );
 /**
  * controllers
  */
