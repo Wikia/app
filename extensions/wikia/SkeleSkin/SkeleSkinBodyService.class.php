@@ -3,7 +3,7 @@ class SkeleSkinBodyService extends WikiaService {
 	public function index() {
 		$bodyContent = $this->getVal( 'bodyText', '');
 		$afterBodyHtml = '';
-		$afterContentHookText = '';
+		$afterContentHookText;
 		
 		// this hook allows adding extra HTML just after <body> opening tag
 		// append your content to $html variable instead of echoing
@@ -12,12 +12,12 @@ class SkeleSkinBodyService extends WikiaService {
 
 		// this hook is needed for SMW's factbox
 		if ( !$this->wf->RunHooks('SkinAfterContent', array( &$afterContentHookText ) ) ) {
-			$this->afterContentHookText = '';
+			$afterContentHookText = '';
 		}
 		
-		$this->setVal( 'headerText', $this->wg->Sitename );
-		$this->setVal( 'bodyContent', $bodyContent );
-		$this->setVal( 'afterBodyContent', $afterBodyHtml );
-		$this->setVal( 'afterContentHookText', $afterContentHookText );
+		$this->headerText = $this->wg->Sitename;
+		$this->bodyContent = $bodyContent;
+		$this->afterBodyContent = $afterBodyHtml;
+		$this->afterContentHookText = $afterContentHookText;
 	}
 }
