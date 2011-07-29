@@ -18,14 +18,14 @@ class SkeleSkinService extends WikiaService {
 	 * @requestParam QuickTeamplate $templateObject
 	 */
 	public function setTemplateObject(){
-		$this->templateObject = $this->getVal( 'templateObject' );
+		$this->templateObject = $this->getVal('templateObject');
 	}
 	
 	public function index() {
 		$jsFiles = '';
 		$tmpOut = new OutputPage();
 		
-		$this->setVal( 'pagetitle', htmlspecialchars( $this->wg->Out->mPagetitle ) );
+		$this->pagetitle = htmlspecialchars( $this->wg->Out->mPagetitle );
 		
 		$tmpOut->styles = $this->wg->Out->styles;
 
@@ -36,8 +36,8 @@ class SkeleSkinService extends WikiaService {
 		}
 			
 		// render link tags
-		$this->setVal( 'csslinks', $tmpOut->buildCssLinks() );
-		$this->setVal( 'headlinks', $this->wg->Out->getHeadLinks());
+		$this->csslinks = $tmpOut->buildCssLinks();
+		$this->headlinks = $this->wg->Out->getHeadLinks();
 		
 		$srcs = AssetsManager::getInstance()->getGroupCommonURL('skeleskin_js');
 		//TODO: add scripts from $wgOut as needed
@@ -46,7 +46,7 @@ class SkeleSkinService extends WikiaService {
 			$jsFiles .= "<script type=\"{$this->wg->JsMimeType}\" src=\"$src\"></script>\n";
 		}
 		
-		$this->setVal( 'jsFiles', $jsFiles);
-		$this->setVal( 'body', $this->sendRequest( 'SkeleSkinBodyService', 'index', array( 'bodyText' => $this->templateObject->data['bodytext'] ))->toString());
+		$this->jsFiles = $jsFiles;
+		$this->body = $this->app->renderView( 'SkeleSkinBodyService', 'index', array( 'bodyText' => $this->templateObject->data['bodytext'] ));
 	}
 }
