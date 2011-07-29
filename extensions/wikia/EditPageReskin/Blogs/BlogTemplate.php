@@ -157,7 +157,7 @@ class BlogTemplateClass {
 			'pattern' 	=> '/^\d*$/',
 			'min'		=> '20081101000000'
 		),
-		
+
 		/*
 		 * limit for query date of blog creation
 		 * timestamp = integer date yyyymmddhhmmss
@@ -165,7 +165,7 @@ class BlogTemplateClass {
 		 * type: 	number,
 		 * default: 20081101000000
 		 */
-		
+
 		'create_timestamp' => array (
 			'type' 		=> 'number',
 			'default' 	=> '20081101000000',
@@ -256,7 +256,7 @@ class BlogTemplateClass {
 			'type' 		=> 'number',
 			'pattern' 	=> '/^\d*$/'
 		),
-		
+
 		'seemore' => array(
 			'type' => 'string',
 			'default' 	=> '',
@@ -594,8 +594,8 @@ class BlogTemplateClass {
 				self::__makeStringOption('style', self::$aBlogParams['style']['default']);
 			}
 		}
-		/* see more */ 
-		if ( !isset(self::$aOptions['seemore']) ) { 
+		/* see more */
+		if ( !isset(self::$aOptions['seemore']) ) {
 			self::__makeStringOption('seemore', Title::newFromText(wfMsg('blogs-recent-url'))->getFullURL());
 		}
     	wfProfileOut( __METHOD__ );
@@ -667,7 +667,7 @@ class BlogTemplateClass {
 			} else {
 				self::$aWhere[] = "rev_timestamp >= '".BLOGS_TIMESTAMP."'";
 			}
-			
+
 			if ( !empty (self::$aOptions['create_timestamp'])) {
 				self::$aHaving[] = "create_timestamp >= '".self::$aOptions['create_timestamp']."'";
 			}
@@ -700,11 +700,11 @@ class BlogTemplateClass {
 		} else {
     		$dbOption['OFFSET'] = intval(self::$aOptions['offset']['default']);
 		}
-		
+
 		if ( !empty(self::$aHaving) ) {
 			$dbOption['HAVING'] = implode(' AND ', self::$aHaving );
 		}
-		
+
     	wfProfileOut( __METHOD__ );
     	return $dbOption;
 	}
@@ -866,8 +866,11 @@ class BlogTemplateClass {
 		global $wgLang, $wgUser;
 		wfProfileIn( __METHOD__ );
 		$sResult = "";
+
+		$titleObj = Title::newFromId($iPage);
+
 		/* parse summary */
-		if ( (!empty($oRev)) && (!empty(self::$aOptions['summary'])) ) {
+		if ( (!empty($oRev)) && (!empty($titleObj)) && (!empty(self::$aOptions['summary'])) ) {
 			$sBlogText = $oRev->revText();
 			/* parse or not parse - this is a good question */
 			$localParser = new Parser();
@@ -897,7 +900,7 @@ class BlogTemplateClass {
 					}
 				}
 				/* parse truncated text */
-				$parserOutput = $localParser->parse($sBlogText, Title::newFromId($iPage), ParserOptions::newFromUser($wgUser));
+				$parserOutput = $localParser->parse($sBlogText, $titleObj, ParserOptions::newFromUser($wgUser));
 				/* replace unused HTML tags */
 				$sBlogText = preg_replace(self::$search, self::$replace, $parserOutput->getText());
 				/* skip HTML tags */
@@ -914,7 +917,7 @@ class BlogTemplateClass {
 				}
 			} else {
 				/* parse revision text */
-				$parserOutput = $localParser->parse($sBlogText, Title::newFromId($iPage), ParserOptions::newFromUser($wgUser));
+				$parserOutput = $localParser->parse($sBlogText, $titleObj, ParserOptions::newFromUser($wgUser));
 				$sResult = $parserOutput->getText();
 			}
 		}
@@ -942,7 +945,7 @@ class BlogTemplateClass {
 			__METHOD__,
 			self::__makeDBOrder()
 		);
-		
+
 		while ( $oRow = self::$dbr->fetchObject( $res ) ) {
 			if (class_exists('ArticleCommentList')) {
 				$oComments = ArticleCommentList::newFromText( $oRow->page_title, $oRow->page_namespace );
