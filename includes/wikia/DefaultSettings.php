@@ -785,7 +785,7 @@ $wgABTests = array();
  * default numbers of jobs done in ApiRunJob
  * @see extensions/wikia/WikiaApi/ApiRunJob.php
  */
-$wgApiRunJobsPerRequest = 50;
+$wgApiRunJobsPerRequest = 20;
 
 /**
  * default configuration for paypal payments
