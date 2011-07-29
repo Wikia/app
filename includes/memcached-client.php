@@ -1090,10 +1090,11 @@ class MemCachedClientforWiki extends MWMemcached {
 
 		// handle uncyclo, staff/internal case
 		// @todo -- use configuration variable for that
-		if( !$wgDisableMemCachedReplication && !wfReadOnly( ) && !empty( $wgCityId ) ) {
+		if( $wgDisableMemCachedReplication === false && !wfReadOnly( ) && !empty( $wgCityId ) ) {
 			$db = (empty( $wgSharedDB ) ) ? $wgExternalSharedDB : $wgSharedDB;
 			$dbw = wfGetDB( DB_MASTER, array(), $db );
 			$dbw->insert('memcached', array('memkey' => $key));
+			$dbw->commit(); // for ajax
 		}
 		return parent::delete($key, $time);
 	}
