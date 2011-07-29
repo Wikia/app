@@ -33,6 +33,10 @@ $messages['en'] = array(
 	'unsubscribe-working' => 'Unsubscribing $1 {{PLURAL:$1|account|accounts}} for $2',
 	'unsubscribe-working-problem' => 'problem loading user info for: $1',
 	'unsubscribe-working-done' => 'Complete.',
+
+	#preferences changes
+	'unsubscribe-preferences-toggle' => 'Unsubscribe from all emails from Wikia (deselect this to access the options below)',
+	'unsubscribe-preferences-notice' => 'Emails have been disabled for your account. Visit the User Profile tab to re-enable them.',
 );
 
 /** Breton (Brezhoneg)
