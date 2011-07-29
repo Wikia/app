@@ -19,6 +19,8 @@ $wgExtensionCredits['specialpage'][] = array(
 $wgExtensionMessagesFiles['AdSS'] = $dir . 'AdSS.i18n.php';
 $wgExtensionAliasesFiles['AdSS'] = $dir . 'AdSS.alias.php';
 
+F::build('JSMessages')->registerPackage('AdSS', array('adss-*'));
+
 $wgAdSS_templatesDir = $dir . 'templates';
 
 $wgAutoloadClasses['AdSS_ManagerController'] = $dir . 'manager/AdSS_ManagerController.php';

@@ -19,6 +19,7 @@ class AdSSSpecialController extends WikiaSpecialPageController {
 		$this->paypalOptions = $this->wg->PayflowProCredentials;
 		$this->paypalOptions['APIUrl'] = $this->wg->PayflowProAPIUrl;
 		$this->paypalOptions['HTTPProxy'] = $this->wg->HTTPProxy;
+		F::build('JSMessages')->enqueuePackage('AdSS', JSMessages::EXTERNAL);
 	}
 
 	public function index() {

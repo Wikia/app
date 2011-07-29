@@ -89,6 +89,133 @@ var AdSS = {
 
 	onClick: function(event) {
 		$.tracker.byStr( "adss/publisher/click/"+event.data.adId );
+	},
+
+	displayForm: function() {
+		$(function() {
+			// tracking code
+			$.tracker.byStr("adss/form/view");
+			if( $("#wpType").val() == "site-premium" ) {
+				$("#wpSelectSitePremium").parent().addClass("selected");
+				$("#wpWeight").val("4").attr("disabled", true);
+			}
+			else if( $("#wpType").val() == "site" ) {
+				$("#wpSelectSite").parent().addClass("selected");
+			}
+			else if( $("#wpType").val() == "hub" ) {
+				$("#wpSelectHub").parent().addClass("selected");
+			}
+			if( location.href.indexOf("#") == -1 ) {
+				location.href = location.href + "#form";
+			}
+		} );
+		$("#wpSelectSite").click( function() {
+			$(".SponsoredLinkDesc section").removeClass("selected");
+			$(this).parent().addClass("selected");
+			$("#wpType").val("site");
+			$("#wpWeight").val("1").removeAttr("disabled").parent().show();
+			$('.box .corner-right, .box .corner-left').show();
+			$('#wpSelectHub').parents('.box').find('.corner-left').hide()
+		} );
+		$("#wpSelectSitePremium").click( function() {
+			$(".SponsoredLinkDesc section").removeClass("selected");
+			$(this).parent().addClass("selected");
+			$("#wpType").val("site-premium");
+			$("#wpWeight").val("4").attr("disabled", true).parent().show();
+			$('.box .corner-right, .box .corner-left').show();
+		} );
+		$("#wpSelectHub").click( function() {
+			$(".SponsoredLinkDesc section").removeClass("selected");
+			$(this).parent().addClass("selected");
+			$("#wpType").val("hub");
+			$("#wpWeight").val("1").removeAttr("disabled").parent().show();
+			$('.box .corner-right, .box .corner-left').show();
+			$('#wpSelectSitePremium').parents('.box').find('.corner-left').hide()
+		} );
+		$("#adssLoginAction > a").click( function(e) {
+			e.preventDefault();
+			$("#adssLoginAction").hide();
+			$("#wpPassword").parent().show();
+		} );
+		$("#wpUrl").keyup( function() {
+			$("div.sponsormsg-preview > ul > li > a").attr( "href", "http://"+$("#wpUrl").val() );
+		} );
+		$("#wpText").keyup( function() {
+			$("div.sponsormsg-preview > ul > li > a").html( $("#wpText").val() );
+		} );
+		$("#wpDesc").keyup( function() {
+			$("div.sponsormsg-preview > ul > li > p").html( $("#wpDesc").val() );
+		} );
+
+		var tooltipNode;
+		$(".form-questionmark").mouseover(function() {
+			tooltipNode = $('<div id="sponsoredlink-tooltip">'+$(this).attr('data-tooltip')+'</div>')
+				.appendTo('.SponsoredLinkForm')
+				.css('top', $(this).offset().top-250-$("#sponsoredlink-tooltip").height()+'px')
+				.css('left', '81px');
+		}).mouseout(function(){
+			tooltipNode.remove();
+		});
+
+		var animationEnabled = false;
+		var modalHtml = '<div id="loading-modal"><h2>'+$.msg('adss-form-modal-title')+'</h2><div id="indicator"><div id="green-dot"></div></div></div>';
+		var dotSpeed = 300;
+		function dotMove(leftPosition) {
+			$('div#green-dot').fadeOut(dotSpeed, function() {
+				$(this).css('left', leftPosition+'px');
+				$('div#green-dot').fadeIn(dotSpeed, function() {
+					leftPosition = leftPosition + 24;
+					if (leftPosition == 249) leftPosition = 129;
+					dotMove(leftPosition);
+				});
+			});
+		}
+		$('.paypal-pay .wikia-button').click(function(event) {
+			$.ajax({
+				type: "POST",
+				dataType: "json",
+				url: window.wgScriptPath  + "/index.php?title=Special:AdSS&method=process&format=json",
+				data: 'wpUrl='+$('.SponsoredLinkForm #wpUrl').val()
+					+'&wpText='+$('.SponsoredLinkForm #wpText').val()
+					+'&wpDesc='+$('.SponsoredLinkForm #wpDesc').val()
+					+'&wpToken='+$('.SponsoredLinkForm #wpToken').val()
+					+'&wpType='+$('.SponsoredLinkForm #wpType').val()
+					+'&wpEmail='+$('.SponsoredLinkForm #wpEmail').val()
+					+'&wpWeight='+$('.SponsoredLinkForm #wpWeight').val(),
+				beforeSend: function(){
+					$.showModal(
+						'',
+						modalHtml,
+						{
+							id: 'paypalModal',
+							width: 434,
+							showCloseButton: false,
+							callback: function() {
+								$('#paypay-error').text();
+								if (!animationEnabled) {
+									animationEnabled = true;
+									dotMove(153);
+								}
+							}
+						}
+					)
+				},
+				success: function(data) {
+					if (data.status == 'error') {
+						for(property in data.form.errors) {
+							$('#paypay-error.error-'+property).text(data.form.errors[property]);
+						}
+						$('#paypalModal').closeModal();
+						$('#wpToken').val(data.formToken);
+						$.tracker.byStr("adss/form/view/errors");
+					}
+					else if (data.status == 'ok') {
+						window.location = data.paypalUrl;
+					}
+				}
+			});
+			event.preventDefault();
+		});
 	}
 }
 
