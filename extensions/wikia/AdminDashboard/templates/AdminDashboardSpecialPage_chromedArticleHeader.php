@@ -1,5 +1,5 @@
 <script>
-	AdminDashboardChrome.isCollapsed = <?= $isCollapsed ?>;
+	AdminDashboardChrome.isCollapsed = <?= $isCollapsed ? 'true' : 'false' ?>;
 </script>
 <div id="AdminDashboardDrawer" class="AdminDashboardDrawer">
 	<span class="arrow<?= ($isCollapsed ? '' : ' expanded') ?>"></span>
