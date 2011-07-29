@@ -147,12 +147,12 @@ class MediaWiki {
 				$ret = $rev ? $rev->getTitle() : $ret;
 			}
 		}
-		
+
 		/* Wikia change begin - @author: nAndy */
 		/* Add hook to allow modification of page user is redirected to when title is not specified in URL */
 		wfRunHooks( 'AfterCheckInitialQueries', array( &$title, &$action, &$ret ) );
 		/* Wikia change end */
-		
+
 		return $ret;
 	}
 
@@ -332,7 +332,8 @@ class MediaWiki {
 		}
 		// Namespace might change when using redirects
 		// Check for redirects ...
-		$file = ($title->getNamespace() == NS_FILE) ? $article->getFile() : null;
+		// ... and check that we still have ImagePage instance here (might be replaced by 'ArticleFromTitle' hook above) - bugId:9286 (ADi)
+		$file = (($title->getNamespace() == NS_FILE) && ($article instanceof ImagePage)) ? $article->getFile() : null;
 		if( ( $action == 'view' || $action == 'render' ) 	// ... for actions that show content
 			&& !$request->getVal( 'oldid' ) &&    // ... and are not old revisions
 			$request->getVal( 'redirect' ) != 'no' 	// ... unless explicitly told not to
