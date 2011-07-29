@@ -769,7 +769,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 								// have to use here a temporary element to 'redirect'
 								// the focus.
 								if ( evt.data.getTarget().equals( htmlElement ) )
-									focusGrabber.focus();
+									editor.focusGrabber && editor.focusGrabber.focus();
 							} );
 						}
 
