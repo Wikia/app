@@ -6,8 +6,8 @@
 	<section class="box">
 		<div class="ribbon"><h2><?= wfMsgHtml( 'adss-form-site-plan-header-ribbon' ); ?></h2></div>
 		<div class="ribbon-corner">
-			<div class="corner-left"></div>
-			<div class="corner-right"></div>
+			<div class="corner-left"><img class="chevron" src="<?=f::app()->getGlobal('wgBlankImgUrl'); ?>" /></div>
+			<div class="corner-right"><img class="chevron" src="<?=f::app()->getGlobal('wgBlankImgUrl'); ?>" /></div>
 		</div>
 		<h3><?php echo wfMsgHtml( 'adss-form-site-plan-header' ); ?></h3>
 		<div class="price"><?= AdSS_Util::formatPrice( $sitePricing ) ?></div>
@@ -18,8 +18,8 @@
 	<section class="box">
 		<div class="ribbon"><h2><?= wfMsgHtml( 'adss-form-site-premium-plan-header-ribbon' ); ?></h2></div>
 		<div class="ribbon-corner">
-			<div class="corner-left"></div>
-			<div class="corner-right"></div>
+			<div class="corner-left"><img class="chevron" src="<?=f::app()->getGlobal('wgBlankImgUrl'); ?>" /></div>
+			<div class="corner-right"><img class="chevron" src="<?=f::app()->getGlobal('wgBlankImgUrl'); ?>" /></div>
 		</div>
 		<h3><?php echo wfMsgHtml( 'adss-form-site-premium-plan-header' ); ?></h3>
 		<div class="price"><?= AdSS_Util::formatPrice( $sitePricing, 3 ) ?></div>
@@ -30,8 +30,8 @@
 	<section class="box">
 		<div class="ribbon"><h2><?= wfMsgHtml( 'adss-form-hub-plan-header-ribbon' ); ?></h2></div>
 		<div class="ribbon-corner">
-			<div class="corner-left"></div>
-			<div class="corner-right"></div>
+			<div class="corner-left"><img class="chevron" src="<?=f::app()->getGlobal('wgBlankImgUrl'); ?>" /></div>
+			<div class="corner-right"><img class="chevron" src="<?=f::app()->getGlobal('wgBlankImgUrl'); ?>" /></div>
 		</div>
 		<h3><?php echo wfMsgHtml( 'adss-form-hub-plan-header', $hubName ); ?></h3>
 		<div class="price"><?= AdSS_Util::formatPrice( $hubPricing ) ?></div>
