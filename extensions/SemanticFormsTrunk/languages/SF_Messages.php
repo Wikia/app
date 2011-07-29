@@ -2475,10 +2475,13 @@ $messages['frp'] = array(
 	'createclass' => 'Fâre una cllâsse',
 	'sf_createclass_allowedvalues' => 'Valors ôtorisâs :',
 	'sf_createclass_listofvalues' => 'Lista de valors ?',
+	'sf_createclass_nameinput' => 'Nom du formulèro :',
+	'sf_createclass_create' => 'Fâre',
 	'formstart' => 'Apondre una pâge avouéc un formulèro',
 	'sf_formstart_createoredit' => 'Fâre ou ben changiér',
 	'formedit' => 'Changiér avouéc un formulèro',
 	'sf_formedit_createtitle' => 'Fâre $1 : $2',
+	'sf_formedit_createtitlenotarget' => 'Fâre $1',
 	'sf_formcreate' => 'Fâre avouéc un formulèro',
 	'sf_viewform' => 'Vêre lo formulèro',
 	'sf_editsource' => 'Changiér la sôrsa',
@@ -4931,7 +4934,7 @@ $messages['nds'] = array(
  * @author Servien
  */
 $messages['nds-nl'] = array(
-	'sf_createform_add' => 'Toevoegen',
+	'sf_createform_add' => 'Derbie doon',
 );
 
 /** Dutch (Nederlands)
@@ -6443,6 +6446,7 @@ URL by malo byť v tvare „Special:RunQuery/<názov formulára>“',
  */
 $messages['sl'] = array(
 	'sf_createform_add' => 'Dodaj',
+	'formedit' => 'Uredi z obrazcem',
 );
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
@@ -6669,6 +6673,7 @@ $messages['stq'] = array(
  * @author M.M.S.
  * @author Najami
  * @author Per
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'semanticforms-desc' => 'Formulär för att lägga till och redigera semantisk data',
@@ -6702,7 +6707,7 @@ $messages['sv'] = array(
 	'forms' => 'Formulär',
 	'sf_forms_docu' => 'Följande formulär finns på wikin.',
 	'sf_forminputs_mandatory' => 'Obligatorisk',
-	'sf_forminputs_restricted' => 'Begränsat (endast administratörer kan ändra den)',
+	'sf_forminputs_restricted' => 'Endast administratörer kan ändra denna ingång',
 	'createform' => 'Skapa ett formulär',
 	'sf_createform_nameinput' => 'Formulärnamn',
 	'sf_createform_nameinputdesc' => '(standarden är att döpa formuläret efter mallen som det använder):',
@@ -6729,11 +6734,12 @@ $messages['sv'] = array(
 	'sf_createcategory_makesubcategory' => 'Gör detta till en underkategori av en annan kategori (valfritt):',
 	'createclass' => 'Skapa en klass',
 	'sf_createclass_docu' => 'Skriv in all data här för att skapa egenskaper, mallar, scheman och kategorier för en klass. För fler alternativ använd sidan $1 istället.',
-	'sf_createclass_allowedvalues' => 'Tillåtna värden',
-	'sf_createclass_listofvalues' => 'Lista över värden',
+	'sf_createclass_allowedvalues' => 'Tillåtna värden:',
+	'sf_createclass_listofvalues' => 'Lista över värden?',
 	'sf_createclass_leavefieldblank' => 'Om fältnamnet är det samma som namnet på egenskapen så kan du lämna det blankt.',
 	'sf_createclass_missingvalues' => 'Några obligatoriska fält blev inte ifyllda.',
 	'sf_createclass_success' => 'Egenskaper, mallar, formulär och kategorier kommer att skapas.',
+	'sf_createclass_create' => 'Skapa',
 	'formstart' => 'Lägg till sida genom ett formulär',
 	'sf_formstart_badform' => 'Fel: ingen formulärsida hittades på $1',
 	'sf_formstart_badtitle' => 'Fel: "$1" är inte en giltig titel på en sida.',
@@ -6743,9 +6749,10 @@ Om du inte skickas över till formuläret för att skapa sidan.',
 	'sf_formstart_noform_docu' => 'Skriv in namnet på sidan här, och välj vilket formulär du vill använda till att redigera den.
 Om sidan redan existerar, kommer du skickas över till formuläret för redigering av den sidan.
 Om du inte kommer skickas över till formuläret för att skapa sidan.',
-	'sf_formstart_createoredit' => 'Lägg till eller redigera',
+	'sf_formstart_createoredit' => 'Skapa eller redigera',
 	'formedit' => 'Redigera med formulär',
 	'sf_formedit_createtitle' => 'Lägg till $1: $2',
+	'sf_formedit_createtitlenotarget' => 'Skapa $1',
 	'sf_formedit_badurl' => 'Det här är sidan för att lägga till data. Du måste ange både ett formulärnamn och en målsida i URL-en; 
 det borde se ut som; "Special:FormEdit?form=<´formulärnamn>&target=<målsida>", eller som: "Special:FormEdit/<form name>/<target page>".',
 	'sf_formedit_altforms' => 'Du kan istället skapa sidan genom att använda ett av följande formulär:',
@@ -6758,6 +6765,8 @@ det borde se ut som; "Special:FormEdit?form=<´formulärnamn>&target=<målsida>"
 	'sf_formedit_remove' => 'Radera',
 	'sf_formedit_addanother' => 'Lägg till en annan',
 	'sf_formedit_none' => 'Ingen',
+	'sf_formedit_saveandcontinueediting' => 'Spara och fortsätt',
+	'sf_formedit_tooltip_saveandcontinueediting' => 'Spara data och fortsätt redigera',
 	'runquery' => 'Kör sökning',
 	'sf_runquery_title' => 'Kör sökning: $1',
 	'sf_runquery_additionalquery' => 'Ytterligare fråga',

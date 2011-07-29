@@ -21,6 +21,14 @@ class SFAutoeditAPI extends ApiBase {
 	private $mOptions;
 	private $mIsApiQuery = true;
 
+	/**
+	 * Handles autoedit Ajax call from #autoedit parser function and from save
+	 * and continue button.
+	 *
+	 * @param String $optionsString the options/data string
+	 * @param String $prefillFromExisting String set to 'true' to retain existing form values (unset by save and continue)
+	 * @return String
+	 */
 	static function handleAutoEdit( $optionsString = null, $prefillFromExisting = 'true' ) {
 
 		global $wgParser;
@@ -90,10 +98,20 @@ class SFAutoeditAPI extends ApiBase {
 		return $ret;
 	}
 
+	/**
+	 * Converts an options string into an options array and stores it
+	 * 
+	 * @param string $options
+	 * @return the options array
+	 */
 	function setOptionsString( $options ) {
 		return $this->parseDataFromQueryString( $this->mOptions, $options );
 	}
 
+	/**
+	 * Returns the options array
+	 * @return array
+	 */
 	function getOptions() {
 		return $this->mOptions;
 	}
@@ -196,6 +214,8 @@ END;
 	 * It will return true on success or an error message on failure.
 	 * The used form and target page will be available in mOptions after
 	 * execution of the method.
+	 *
+	 * This method also sets HTTP response headers according to the result.
 	 * 
 	 * @param bool $prefillFromExisting If this is set, existing values in the page will be used to prefill the form.
 	 * @return true or an error message
@@ -426,13 +446,7 @@ END;
 	 *
 	 * @param Array $data
 	 * @param String $queryString
-	 * @param Boolean $expand If this is set to true, field values will get
-	 *  urldecoded and expanded. This allows us to have parser functions
-	 *  skip handling by the MW parser on page creation (since they will be
-	 *  URL-encoded), and to instead have them handled by #autoedit.
-	 *  This can prevent cache issues, such as when dealing with the
-	 *  {{#time:}} parser function.
-	 * @return <type>
+	 * @return Array
 	 */
 	private function parseDataFromQueryString( &$data, $queryString ) {
 		$params = explode( '&', $queryString );

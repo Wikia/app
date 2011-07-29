@@ -354,18 +354,21 @@ class SMWSpecialBrowse extends SpecialPage {
 	 *
 	 * @param[in] $property SMWPropertyValue  The property of interest
 	 * @param[in] $incoming bool  If it is an incoming property
+	 * 
 	 * @return string  The label of the property
 	 */
 	private function getPropertyLabel( SMWPropertyValue $property, $incoming = false ) {
 		global $smwgBrowseShowInverse;
+		
 		if ( $incoming && $smwgBrowseShowInverse ) {
 			$oppositeprop = SMWPropertyValue::makeUserProperty( wfMsg( 'smw_inverse_label_property' ) );
-			$labelarray = &smwfGetStore()->getPropertyValues( $property->getWikiPageValue(), $oppositeprop );
+			$labelarray = &smwfGetStore()->getPropertyValues( $property->getDataItem()->getDiWikiPage(), $oppositeprop->getDataItem() );
 			$rv = ( count( $labelarray ) > 0 ) ? $labelarray[0]->getLongWikiText():
 			       wfMsg( 'smw_inverse_label_default', $property->getWikiValue() );
 		} else {
 			$rv = $property->getWikiValue();
 		}
+		
 		return $this->unbreak( $rv );
 	}
 

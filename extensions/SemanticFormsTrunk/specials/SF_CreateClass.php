@@ -84,9 +84,7 @@ END;
 				$is_list = $wgRequest->getCheck( "is_list_$i" );
 				// create an SFTemplateField based on these
 				// values, and add it to the $fields array
-				$field = SFTemplateField::create( $field_name, $field_name );
-				$field->semantic_property = $property_name;
-				$field->is_list = $is_list;
+				$field = SFTemplateField::create( $field_name, $field_name, $property_name, $is_list );
 				$fields[] = $field;
 
 				// create the property, and make a job for it

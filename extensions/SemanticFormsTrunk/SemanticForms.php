@@ -141,20 +141,6 @@ $wgAutoloadClasses['SFForm'] = $sfgIP . '/includes/SF_FormClasses.php';
 $wgAutoloadClasses['SFTemplateInForm'] = $sfgIP . '/includes/SF_FormClasses.php';
 $wgAutoloadClasses['SFFormField'] = $sfgIP . '/includes/SF_FormField.php';
 $wgAutoloadClasses['SFFormPrinter'] = $sfgIP . '/includes/SF_FormPrinter.php';
-$wgAutoloadClasses['SFTextInput'] = $sfgIP . '/includes/SF_FormInputs.php';
-$wgAutoloadClasses['SFTextAreaInput'] = $sfgIP . '/includes/SF_FormInputs.php';
-$wgAutoloadClasses['SFTextWithAutocompleteInput'] = $sfgIP . '/includes/SF_FormInputs.php';
-$wgAutoloadClasses['SFTextAreaWithAutocompleteInput'] = $sfgIP . '/includes/SF_FormInputs.php';
-$wgAutoloadClasses['SFCheckboxInput'] = $sfgIP . '/includes/SF_FormInputs.php';
-$wgAutoloadClasses['SFDateInput'] = $sfgIP . '/includes/SF_FormInputs.php';
-$wgAutoloadClasses['SFDateTimeInput'] = $sfgIP . '/includes/SF_FormInputs.php';
-$wgAutoloadClasses['SFDropdownInput'] = $sfgIP . '/includes/SF_FormInputs.php';
-$wgAutoloadClasses['SFRadioButtonInput'] = $sfgIP . '/includes/SF_FormInputs.php';
-$wgAutoloadClasses['SFListBoxInput'] = $sfgIP . '/includes/SF_FormInputs.php';
-$wgAutoloadClasses['SFCheckboxesInput'] = $sfgIP . '/includes/SF_FormInputs.php';
-$wgAutoloadClasses['SFComboBoxInput'] = $sfgIP . '/includes/SF_FormInputs.php';
-$wgAutoloadClasses['SFCategoryInput'] = $sfgIP . '/includes/SF_FormInputs.php';
-$wgAutoloadClasses['SFCategoriesInput'] = $sfgIP . '/includes/SF_FormInputs.php';
 $wgAutoloadClasses['SFFormUtils'] = $sfgIP . '/includes/SF_FormUtils.php';
 $wgAutoloadClasses['SFFormEditTab'] = $sfgIP . '/includes/SF_FormEditTab.php';
 $wgAutoloadClasses['SFFormEditPage'] = $sfgIP . '/includes/SF_FormEditPage.php';
@@ -163,6 +149,27 @@ $wgAutoloadClasses['SFFormLinker'] = $sfgIP . '/includes/SF_FormLinker.php';
 $wgAutoloadClasses['SFParserFunctions'] = $sfgIP . '/includes/SF_ParserFunctions.php';
 $wgAutoloadClasses['SFAutocompleteAPI'] = $sfgIP . '/includes/SF_AutocompleteAPI.php';
 $wgAutoloadClasses['SFAutoeditAPI'] = $sfgIP . '/includes/SF_AutoeditAPI.php';
+
+// FormInputs
+$wgAutoloadClasses['SFFormInput'] = $sfgIP . '/includes/forminputs/SF_FormInput.php';
+$wgAutoloadClasses['SFTextInput'] = $sfgIP . '/includes/forminputs/SF_TextInput.php';
+$wgAutoloadClasses['SFTextWithAutocompleteInput'] = $sfgIP . '/includes/forminputs/SF_TextWithAutocompleteInput.php';
+$wgAutoloadClasses['SFTextAreaInput'] = $sfgIP . '/includes/forminputs/SF_TextAreaInput.php';
+$wgAutoloadClasses['SFTextAreaWithAutocompleteInput'] = $sfgIP . '/includes/forminputs/SF_TextAreaWithAutocompleteInput.php';
+$wgAutoloadClasses['SFEnumInput'] = $sfgIP . '/includes/forminputs/SF_EnumInput.php';
+$wgAutoloadClasses['SFMultiEnumInput'] = $sfgIP . '/includes/forminputs/SF_MultiEnumInput.php';
+$wgAutoloadClasses['SFCheckboxInput'] = $sfgIP . '/includes/forminputs/SF_CheckboxInput.php';
+$wgAutoloadClasses['SFCheckboxesInput'] = $sfgIP . '/includes/forminputs/SF_CheckboxesInput.php';
+$wgAutoloadClasses['SFRadioButtonInput'] = $sfgIP . '/includes/forminputs/SF_RadioButtonInput.php';
+$wgAutoloadClasses['SFDropdownInput'] = $sfgIP . '/includes/forminputs/SF_DropdownInput.php';
+$wgAutoloadClasses['SFListBoxInput'] = $sfgIP . '/includes/forminputs/SF_ListBoxInput.php';
+$wgAutoloadClasses['SFComboBoxInput'] = $sfgIP . '/includes/forminputs/SF_ComboBoxInput.php';
+$wgAutoloadClasses['SFDateInput'] = $sfgIP . '/includes/forminputs/SF_DateInput.php';
+$wgAutoloadClasses['SFDateTimeInput'] = $sfgIP . '/includes/forminputs/SF_DateTimeInput.php';
+$wgAutoloadClasses['SFYearInput'] = $sfgIP . '/includes/forminputs/SF_YearInput.php';
+$wgAutoloadClasses['SFCategoryInput'] = $sfgIP . '/includes/forminputs/SF_CategoryInput.php';
+$wgAutoloadClasses['SFCategoriesInput'] = $sfgIP . '/includes/forminputs/SF_CategoriesInput.php';
+
 $wgJobClasses['createPage'] = 'SFCreatePageJob';
 $wgAutoloadClasses['SFCreatePageJob'] = $sfgIP . '/includes/SF_CreatePageJob.php';
 require_once( $sfgIP . '/languages/SF_Language.php' );
@@ -319,5 +326,3 @@ $wgPageProps['formdefinition'] = 'Definition of the semantic form used on the pa
 # ##
 $sfgShowOnSelect = array();
 $sfgAutocompleteValues = array();
-$sfgInitJSFunctions = array();
-$sfgValidationJSFunctions = array();
