@@ -327,7 +327,7 @@ class AutomaticWikiAdoptionHelper {
 		global $wgUser, $wgCityId, $wgScript, $wgSitename;
 		wfProfileIn(__METHOD__);
 
-		if (Wikia::isOasis() && !self::getDismissNotificationState($wgUser) && self::isAllowedToAdopt($wgCityId, $wgUser) == self::USER_ALLOWED) {
+		if (Wikia::isOasis() && (self::isAllowedToAdopt($wgCityId, $wgUser) == self::USER_ALLOWED)  && !self::getDismissNotificationState($wgUser)) {
 
 			NotificationsModule::addNotification(
 				wfMsg('wikiadoption-notification', 
