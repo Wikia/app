@@ -115,6 +115,9 @@ $gaming-calendar-gray-text: mix($color-text, $color-page, 75%);
 				&:first-child {
 					border-top: 0;
 				}
+				.game-more-info {
+					margin-right: 15px;
+				}
 			}
 		}		
 	}
