@@ -48,6 +48,7 @@ var AdminDashboardChrome = {
 var AdminDashboard = {
 	controls: {},
 	section: {},
+	externalComponents: {},
 	init: function() {
 		// precache
 		AdminDashboard.cc = $('#AdminDashboard');
@@ -104,7 +105,9 @@ var AdminDashboard = {
 			AdminDashboard.section.contentarea.html('Loading...');	//i18n this later
 			AdminDashboard.wikiaArticle.removeClass('AdminDashboardChromedArticle expanded');
 			$('.AdminDashboardDrawer, .AdminDashboardNavigation, .AdminDashboardArticleHeader').remove();
-			FounderProgressList.hideListModal();
+			if(typeof FounderProgressList != 'undefined') {
+				FounderProgressList.hideListModal();
+			}
 			AdminDashboardChrome.rail.show();
 		},
 		hideAllSections: function() {
