@@ -1916,4 +1916,28 @@ class Wikia {
 	static public function chr( $ord, $encoding = 'UTF-8' ) {
 		return mb_convert_encoding(pack("N",$ord),$encoding,'UCS-4BE');
 	}
+	
+	static public function getFacebookDomainId() {
+		global $wgServer, $fbAccessToken, $fbDomain;
+		
+		$result = FALSE;
+		if (!$fbAccessToken || !$fbDomain)
+			return $result;
+		
+		wfProfileIn(__METHOD__);
+		
+		if (preg_match('/\/\/(\w*)\./',$wgServer,$matches)) {
+			$domain = $matches[1].$fbDomain;
+		} else {
+			$domain = str_replace('http://', '', $wgServer);
+		}
+		$url = 'https://graph.facebook.com/?domain='.$domain;
+		$response = json_decode(Http::get($url));
+		if (isset($response->id))
+			$result = $response->id;
+		
+		wfProfileOut(__METHOD__);
+		
+		return $result;
+	}
 }

@@ -107,56 +107,39 @@ class QuickStatsController extends WikiaController {
 	protected function getDailyLikes(Array &$stats) {
 		global $fbApiKey, $fbApiSecret, $fbAccessToken;
 		
-		$this->wf->ProfileIn( __METHOD__ );
+		$result = FALSE;
 		
-		if(preg_match('/\/\/(\w*)\./',$this->wg->Server,$matches))
-			$domain = $this->getLikesDomain($matches[1]);
-		else
-			$domain = $this->getLikesDomain($this->wg->dbname);
+		// for testing
+		if($this->wg->DevelEnvironment)
+			return $result;
 		
-		if(!$domain)
-			return FALSE;
-		
-		include('extensions/FBConnect/facebook-sdk/facebook.php');
-		
-		$facebook = new FacebookAPI(array('appId' => $fbApiKey, 'secret'=> $fbApiSecret));
-		
-		$url = 'https://graph.facebook.com/?domain='.$domain;
-		$response = json_decode(Http::get($url));
-		if (!$response)
-			return FALSE;
+		$domain_id = Wikia::getFacebookDomainId();
+		if (!$domain_id)
+			return $result;
 
+		$this->wf->ProfileIn(__METHOD__);
+		
 		$since = strtotime("-7 day 00:00:00");
 		$until = strtotime("-0 day 00:00:00");
-		$url = 'https://graph.facebook.com/'.$response->id.'/insights/domain_widget_likes/day?access_token='.$fbAccessToken.'&since='.$since.'&until='.$until;
+		$url = 'https://graph.facebook.com/'.$domain_id.'/insights/domain_widget_likes/day?access_token='.$fbAccessToken.'&since='.$since.'&until='.$until;
 		$response = json_decode(Http::get($url));
-		if(!$response)
-			return FALSE;
 		
-		$data = array_pop($response->data);
-		if(!isset($data->values))
-			return FALSE;
-
-		$stats['']['likes'] = 0;
-		foreach($data->values as $value) {
-			if (preg_match('/([\d\-]*)/', $value->end_time, $matches)) {
-				$day = $matches[1];
-				$stats[$day]['likes'] = $value->value;
-				$stats['']['likes'] += $value->value;
+		if($response) {
+			$data = array_pop($response->data);
+			if(isset($data->values)) {
+				$stats['']['likes'] = 0;
+				foreach($data->values as $value) {
+					if (preg_match('/([\d\-]*)/', $value->end_time, $matches)) {
+						$day = $matches[1];
+						$stats[$day]['likes'] = $value->value;
+						$stats['']['likes'] += $value->value;
+					}
+				}
+				$result = TRUE;
 			}
 		}
+		$this->wf->ProfileOut(__METHOD__);
 		
-		$this->wf->ProfileOut( __METHOD__ );
-		
-		return TRUE;
-	}
-	
-	protected function getLikesDomain($subdomain) {
-		$invalid_subdomain = array('wowwiki','memory-alpha','ffxiclopedia','yoyowiki');
-		
-		if (strstr($this->wg->Server,'.wikia.com') || (strstr($this->wg->Server,'.wikia-dev.com') && !in_array($subdomain, $invalid_subdomain)))
-			return $subdomain.".wikia.com";
-		
-		return FALSE;
+		return $result;
 	}
 }
