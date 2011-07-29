@@ -242,16 +242,6 @@ class HttpRequest {
 		} elseif ( getenv( "http_proxy" ) ) {
 			$this->proxy = getenv( "http_proxy" );
 		}
-		
-		if( $wgDevelEnvironment ) {
-//			small hack which helped me to connect with production api.php
-//			of different wikis using Http::get() 
-//			works with $this->proxy = $wgHTTPProxy too... 
-//			works as far as proxy isn't set to localhost 
-//			which happens when Http::isLocalURL returns true 
-//			-- Andrzej 'nAndy' Łukaszewski
-			$this->proxy = getenv( "http_proxy" );
-		}
 	}
 
 	/**
