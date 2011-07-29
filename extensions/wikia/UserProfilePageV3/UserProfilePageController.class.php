@@ -112,20 +112,22 @@ class UserProfilePageController extends WikiaController {
 		$namespace = $this->title->getNamespace();
 		$user = $this->getUserFromTitle($this->title);
 		$sessionUser = $this->wg->User;
-		$isWikiStaff = $sessionUser->isAllowed('staff');
+		$canDelete = $sessionUser->isAllowed('staff');
+		$canProtect = $sessionUser->isAllowed('staff') || $sessionUser->isAllowed('protectsite');
 		$isUserPageOwner = $user->getId() == $this->wg->User->getId() ? true : false;
+		$canEdit = $sessionUser->isAllowed('edit');
+		$canEditProfile = $sessionUser->isAllowed('staff') || $isUserPageOwner;
 		
-		$actionButton = null;
-		if( $namespace == NS_USER ) {
+		if( defined('NS_USER') && $namespace == NS_USER ) {
 			if( $isUserPageOwner ) {
-				$actionButton = $this->wf->RenderModule('MenuButton', 'Index', array(
+				$actionButtonArray = array(
 					'action' => array(
 						'href' => $this->title->getLocalUrl(array('action' => 'edit')),
 						'text' => $this->wf->Msg('user-action-menu-edit'),
 					),
 					'image' => MenuButtonModule::EDIT_ICON,
 					'name' => 'editprofile',
-				));
+				);
 			} else {
 				$title = F::build('Title', array($user->getName(), NS_USER_TALK), 'newFromText');
 				$actionButtonArray = array(
@@ -137,8 +139,7 @@ class UserProfilePageController extends WikiaController {
 					'name' => 'leavemessage',
 				);
 				
-				if( $isWikiStaff ) {
-				//but also admins probably so later change to checking rights -- can edit profile page?
+				if( $canEditProfile ) {
 					$actionButtonArray['dropdown'] = array(
 						'editprofile' => array(
 							'href' => $this->title->getFullUrl(array('action' => 'edit')),
@@ -148,15 +149,13 @@ class UserProfilePageController extends WikiaController {
 				} else {
 					$actionButtonArray['dropdown'] = array(
 						'viewsource' => array(
-							'href' => $this->title->getFullUrl(array('action' => 'source')),
+							'href' => $this->title->getFullUrl(array('action' => 'viewsource')),
 							'text' => $this->wf->Msg('user-action-menu-view-source'),
 						)
 					);
 				}
-				
-				$actionButton = $this->wf->RenderModule('MenuButton', 'Index', $actionButtonArray);
 			}
-		} else if( $namespace == NS_USER_TALK ) {
+		} else if( defined('NS_USER_TALK') && $namespace == NS_USER_TALK ) {
 			$title = F::build('Title', array($user->getName(), NS_USER_TALK), 'newFromText');
 			if( $isUserPageOwner ) {
 				$actionButtonArray = array(
@@ -182,9 +181,56 @@ class UserProfilePageController extends WikiaController {
 						)
 					),
 				);
+				
+				if( $canEdit ) {
+					$actionButtonArray['dropdown']['viewsource'] = array(
+						'href' => $this->title->getFullUrl(array('action' => 'viewsource')),
+						'text' => $this->wf->Msg('user-action-menu-view-source'),
+					);
+				}
 			}
-			$actionButton = $this->wf->RenderModule('MenuButton', 'Index', $actionButtonArray);
+		} else if( defined('NS_BLOG_ARTICLE') && $namespace == NS_BLOG_ARTICLE && $isUserPageOwner ) {
+			global $wgCreateBlogPagePreload;
+			wfLoadExtensionMessages('Blogs');
+			
+			$actionButtonArray = array(
+				'action' => array(
+					'href' => F::build('SpecialPage', array('CreateBlogPage'), 'getTitleFor')->getLocalUrl( !empty($wgCreateBlogPagePreload) ? "preload=$wgCreateBlogPagePreload" : "" ),
+					'text' => wfMsg('blog-create-post-label'),
+				),
+				'image' => MenuButtonModule::BLOG_ICON,
+				'name' => 'createblogpost',
+			);
 		}
+		
+		if( defined('NS_USER') && defined('NS_USER_TALK') && in_array($namespace, array(NS_USER, NS_USER_TALK)) ) {
+			$renameUrl = F::build('SpecialPage', array('MovePage'), 'getTitleFor')->getLocalUrl().'/'.$this->title->__toString();
+			$actionButtonArray['dropdown']['rename'] = array(
+				'href' => $renameUrl,
+				'text' => $this->wf->Msg('user-action-menu-rename'),
+			);
+			
+			if( $canProtect && $namespace == NS_USER_TALK) {
+				$actionButtonArray['dropdown']['protect'] = array(
+					'href' => $this->title->getLocalUrl(array('action' => 'protect')),
+					'text' => $this->wf->Msg('user-action-menu-protect'),
+				);
+			}
+			
+			if( $canDelete ) {
+				$actionButtonArray['dropdown']['delete'] = array(
+					'href' => $this->title->getLocalUrl(array('action' => 'delete')),
+					'text' => $this->wf->Msg('user-action-menu-delete'),
+				);
+			}
+			
+			$actionButtonArray['dropdown']['history'] = array(
+				'href' => $this->title->getLocalUrl(array('action' => 'history')),
+				'text' => $this->wf->Msg('user-action-menu-history'),
+			);
+		}
+		
+		$actionButton = $this->wf->RenderModule('MenuButton', 'Index', $actionButtonArray);
 		$this->setVal('actionButton', $actionButton);
 		
 		$this->app->wf->ProfileOut( __METHOD__ );
