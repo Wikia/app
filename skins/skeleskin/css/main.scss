@@ -1,6 +1,41 @@
-html{
-	body{
-		background-color: #bada55;
-		color: #15C001;
+body{
+	background-color: #EDEDED;
+	color: #000000;
+}
+
+#WikiaMainContent{
+	div{
+		//temporary fix waiting for FB#9321
+		&.main-page-tag-rcs{
+			float: none !important;/* is an inline style, no other way to force that, sorry ;) */
+			clear: none !important;/* is an inline style, no other way to force that, sorry ;) */
+			width: auto !important;/* is an inline style, no other way to force that, sorry ;) */
+			position: static !important;/* is an inline style, no other way to force that, sorry ;) */
+		}
+		
+		&.main-page-tag-lcs{
+			float: none !important;/* is an inline style, no other way to force that, sorry ;) */
+			margin-right: auto !important;/* is an inline style, no other way to force that, sorry ;) */
+			width: auto !important;/* is an inline style, no other way to force that, sorry ;) */
+			position: static !important;/* is an inline style, no other way to force that, sorry ;) */
+			
+			&>div{
+				margin-right: auto !important;/* is an inline style, no other way to force that, sorry ;) */
+			}
+		}
+		
+		//temporary fix for slideshows
+		&.wikia-slideshow-wrapper{
+			width: auto !important;
+			
+			div.wikia-slideshow-images-wrapper {
+				ul {
+					&.wikia-slideshow-images {
+						width: auto !important;/* is an inline style, no other way to force that, sorry ;) */
+						height: auto !important;/* is an inline style, no other way to force that, sorry ;) */
+					}
+				}
+			}
+		}
 	}
 }
