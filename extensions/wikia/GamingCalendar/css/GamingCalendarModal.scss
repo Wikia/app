@@ -110,11 +110,8 @@ $gaming-calendar-gray-text: mix($color-text, $color-page, 75%);
 				width: 284px;
 			}		
 			li {
-				border-top: 1px solid $color-page-border;
+				border-bottom: 1px solid $color-page-border;
 				padding: 3px 0;
-				&:first-child {
-					border-top: 0;
-				}
 				.game-more-info {
 					margin-right: 15px;
 				}
