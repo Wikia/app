@@ -264,7 +264,7 @@ abstract class CodeLint {
 				// skip blacklisted ones
 				if ($this->isBlacklisted($fileName, $blacklist)) {
 					if (!empty($wgCommandLineMode)) {
-						echo "Linting {$fileName}... [\033[35;1mskipped\033[0m]\n";
+						echo "Linting {$fileName}... [\033[33mskipped\033[0m]\n";
 					}
 					continue;
 				}
@@ -274,12 +274,15 @@ abstract class CodeLint {
 				}
 
 				$result = $this->checkFile($fileName);
-				$errorsCount = $result['errorsCount'];
-
 				$results[$fileName] = $result;
 
 				if (!empty($wgCommandLineMode)) {
-					echo " [\033[32mdone - {$errorsCount} errors\033[0m]\n";
+					if ($result['errorsCount'] > 0) {
+						echo " [\033[35;1missues found: {$result['errorsCount']}\033[0m]\n";
+					}
+					else {
+						echo " [\033[32mdone\033[0m]\n";
+					}
 				}
 			}
 		}
