@@ -2,7 +2,7 @@
 	function shortenNumberDecorator($number) {
 		$number = intval($number);
 		$d = $number / 1000;
-		if ($d >= 1) {
+		if ($d >= 10) {
 			return round($d, 1).'K';
 		} else {
 			return $number;
@@ -25,12 +25,16 @@
 		</thead>
 		<tfoot>
 			<tr class="totals">
-				<td><?= wfMsg('quickstats-totals-label') ?></td>
+				<td>
+					<div class="pointer">
+						<?= wfMsg('quickstats-totals-label') ?>
+					</div>
+				</td>
 				<td><?= shortenNumberDecorator($totals['pageviews']) ?></td>
-				<td><?= $totals['edits'] ?></td>
-				<td><?= $totals['photos'] ?></td>
+				<td><?= shortenNumberDecorator($totals['edits']) ?></td>
+				<td><?= shortenNumberDecorator($totals['photos']) ?></td>
 				<?php if(isset($totals['likes'])) { ?>
-				<td><?= $totals['likes'] ?></td>
+				<td><?= shortenNumberDecorator($totals['likes']) ?></td>
 				<? } ?>
 			</tr>
 			<tr>
@@ -47,10 +51,10 @@
 				<tr>
 					<td><?= $formattedDate ?></td>
 					<td><?= shortenNumberDecorator($row['pageviews']) ?></td>
-					<td><?= $row['edits'] ?></td>
-					<td><?= $row['photos'] ?></td>
+					<td><?= shortenNumberDecorator($row['edits']) ?></td>
+					<td><?= shortenNumberDecorator($row['photos']) ?></td>
 					<?php if(isset($totals['likes'])) { ?>
-					<td><?= $row['likes'] ?></td>
+					<td><?= shortenNumberDecorator($row['likes']) ?></td>
 					<? } ?>
 				</tr>
 			<? } ?>

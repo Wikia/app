@@ -371,20 +371,25 @@ $base-z: 5;
 				font-size: 16px;
 				padding: 0 10px 0 0;
 				&:first-child {
-					background: #6AA8D1;
-					color: white;
-					font-size: 13px;
-					padding-left: 10px;
-					position: relative;
-					&:before {
-						border: 18px solid transparent;
-						border-left: 10px solid #6AA8D1;
-						content: "";
-						height: 0;
-						position: absolute;
-						right: -28px;
-						top: 0;
-						width: 0;
+					padding: 0;
+					.pointer {
+						background: #6AA8D1;
+						color: white;
+						font-size: 13px;
+						height: 26px;
+						margin-right: 10px;
+						padding: 10px 0 0 10px;
+						position: relative;
+						&:before {
+							border: 18px solid transparent;
+							border-left: 10px solid #6AA8D1;
+							content: "";
+							height: 0;
+							position: absolute;
+							right: -28px;
+							bottom: 0;
+							width: 0;
+						}
 					}
 				}
 			}
