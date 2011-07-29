@@ -124,8 +124,7 @@ class RandomWiki extends SpecialPage {
 
 		$wgRequest->response()->setcookie( self::COOKIE_NAME_TOKEN, $cookieValue, time() + ( 3600 * self::COOKIE_EXPIRY ) );
 
-		$wgServerRemote = WikiFactory::getVarByName( 'wgServer', $destinationID );
-		$url = unserialize( $wgServerRemote->cv_value );
+		$url = WikiFactory::getVarValueByName( 'wgServer', $destinationID );
 		
 		//FB#1033: avoid being sent to Special:WikiActivity when logged-in, see MyHomw::getInitialMainPage
 		if ( $wgUser->isLoggedIn() ) {

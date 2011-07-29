@@ -77,8 +77,8 @@ class Advertisement
 		$wiki = WikiFactory::getWikiByDB( $this->wiki_db );
 
 		if ( is_object( $wiki ) ) {
-			$remoteServer = unserialize( WikiFactory::getVarByName( 'wgServer', $wiki->city_id )->cv_value );
-			$remoteArticlePath = unserialize( WikiFactory::getVarByName( 'wgArticlePath', $wiki->city_id )->cv_value );
+			$remoteServer = WikiFactory::getVarValueByName( 'wgServer', $wiki->city_id );
+			$remoteArticlePath = WikiFactory::getVarValueByName( 'wgArticlePath', $wiki->city_id );
 
 			$url = $remoteServer . str_replace( '$1', $title, $remoteArticlePath );
 

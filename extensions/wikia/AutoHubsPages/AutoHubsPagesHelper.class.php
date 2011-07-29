@@ -95,7 +95,7 @@ class AutoHubsPagesHelper{
 		$key = wfMemcKey( 'autohubs', $tagname, 'feeds_displayed' );
 		$data = $wgMemc->get( $key );
 		if( !$data ) {
-			$feeds = unserialize( WikiFactory::getVarByName( 'wgWikiaAutoHubsFeedsDisplayed', $wgCityId )->cv_value );
+			$feeds = WikiFactory::getVarValueByName( 'wgWikiaAutoHubsFeedsDisplayed', $wgCityId );
 			if( !empty( $feeds[$tagname] ) && is_array( $feeds[$tagname] )) {
 				$tag = $feeds;
 			} else {
