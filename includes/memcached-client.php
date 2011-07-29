@@ -1093,7 +1093,7 @@ class MemCachedClientforWiki extends MWMemcached {
 		if( $wgDisableMemCachedReplication === false && !wfReadOnly( ) && !empty( $wgCityId ) ) {
 			$db = (empty( $wgSharedDB ) ) ? $wgExternalSharedDB : $wgSharedDB;
 			$dbw = wfGetDB( DB_MASTER, array(), $db );
-			$dbw->insert('memcached', array('memkey' => $key));
+			$dbw->insert('memcached', array('memkey' => $key), __METHOD__ );
 			$dbw->commit(); // for ajax
 		}
 		return parent::delete($key, $time);
