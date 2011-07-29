@@ -52,7 +52,7 @@
 				<?php echo wfMsgHtml( 'adss-form-url' ); ?>
 				<span class="form-questionmark" data-tooltip="<?= wfMsgHtml( 'adss-form-tooltip-clickurl' ); ?>"></span>
 			</label>
-			<div id="paypay-error" class="error error-wpUrl"></div>
+			<div class="paypal-error error error-wpUrl"></div>
 			<input type="text" name="wpUrl" id="wpUrl" value="<?php $adForm->output( 'wpUrl' ); ?>" />
 
 			<div>
@@ -60,14 +60,14 @@
 				<?php echo wfMsgHtml( 'adss-form-linktext' ); ?>
 				<span class="form-questionmark" data-tooltip="<?= wfMsgHtml( 'adss-form-tooltip-adtitle' ); ?>"></span>
 			</label>
-			<div id="paypay-error" class="error error-wpText"></div>
+			<div class="paypal-error error error-wpText"></div>
 			<input type="text" name="wpText" id="wpText" value="<?php $adForm->output( 'wpText' ); ?>" />
 
 			<label for="wpDesc">
 				<?php echo wfMsgHtml( 'adss-form-additionaltext' ); ?>
 				<span class="form-questionmark" data-tooltip="<?= wfMsgHtml( 'adss-form-tooltip-addesc' ); ?>"></span>
 			</label>
-			<div id="paypay-error" class="error error-wpDesc"></div>
+			<div class="paypal-error error error-wpDesc"></div>
 			<textarea name="wpDesc" id="wpDesc"><?php $adForm->output( 'wpDesc' ); ?></textarea>
 			</div>
 
@@ -75,12 +75,12 @@
 				<?php echo wfMsgHtml( 'adss-form-email' ); ?>
 				<span class="form-questionmark" data-tooltip="<?= wfMsgHtml( 'adss-form-tooltip-email' ); ?>"></span>
 			</label>
-			<div id="paypay-error" class="error error-wpEmail"></div>
+			<div class="paypal-error error error-wpEmail"></div>
 			<input type="text" name="wpEmail" id="wpEmail" value="<?php $adForm->output( 'wpEmail' ); ?>" />
 
 			<div>
 			<label for="wpWeight"><?php echo wfMsgHtml( 'adss-form-shares' ); ?></label>
-			<div id="paypay-error" class="error error-wpWeight"></div>
+			<div class="paypal-error error error-wpWeight"></div>
 			<select name="wpWeight" id="wpWeight">
 			  <?php for( $i=1; $i<=4; $i++): ?>
 			  <option<?php if( $adForm->get('wpWeight')==$i ) echo " selected"; ?>><?php echo $i;?></option>

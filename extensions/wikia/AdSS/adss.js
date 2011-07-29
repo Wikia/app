@@ -201,9 +201,10 @@ var AdSS = {
 					)
 				},
 				success: function(data) {
+					$('.paypal-error').text('');
 					if (data.status == 'error') {
 						for(property in data.form.errors) {
-							$('#paypay-error.error-'+property).text(data.form.errors[property]);
+							$('.paypal-error.error-'+property).text(data.form.errors[property]);
 						}
 						$('#paypalModal').closeModal();
 						$('#wpToken').val(data.formToken);
