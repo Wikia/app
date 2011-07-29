@@ -345,14 +345,17 @@ $base-z: 5;
 	/* make this reusable later */
 	/* ng -> not global */
 	.WikiaDataTable {
+		@include linear-gradient(#ebebeb, top, #fff, 40%, #ebebeb, 100%);
 		border: 1px solid #e8e8e8; /* ng */
 		border-collapse: collapse;
 		text-align: right;
 		width: 100%;
 		th, td {
-			padding: 10px 10px 10px 0;
+			padding: 5px 10px 5px 0;
 			&:first-child {
 				color: #6AA8D1;
+				padding-left: 10px;
+				text-align: left;
 			}
 		}
 		thead {
@@ -360,7 +363,39 @@ $base-z: 5;
 				color: #2070AD;
 			}
 		}
+		.totals {
+			td {
+				background: white;
+				color: #2070AD;
+				height: 36px;
+				font-size: 16px;
+				padding: 0 10px 0 0;
+				&:first-child {
+					background: #6AA8D1;
+					color: white;
+					font-size: 13px;
+					padding-left: 10px;
+					position: relative;
+					&:before {
+						border: 18px solid transparent;
+						border-left: 10px solid #6AA8D1;
+						content: "";
+						height: 0;
+						position: absolute;
+						right: -28px;
+						top: 0;
+						width: 0;
+					}
+				}
+			}
+		}
+		tfoot {
+			.supplemental-info {
+				text-align: right;
+			}
+		}
 		tbody {
+			
 			tr {
 				border-top: 1px solid #e8e8e8; /* ng */
 				&:first-child {
