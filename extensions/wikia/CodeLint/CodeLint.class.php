@@ -273,10 +273,13 @@ abstract class CodeLint {
 					echo "Linting {$fileName}...";
 				}
 
-				$results[] = $this->checkFile($fileName);
+				$result = $this->checkFile($fileName);
+				$errorsCount = $result['errorsCount'];
+
+				$results[] = $result;
 
 				if (!empty($wgCommandLineMode)) {
-					echo " [\033[32mdone\033[0m]\n";
+					echo " [\033[32mdone - {$errorsCount} errors\033[0m]\n";
 				}
 			}
 		}
