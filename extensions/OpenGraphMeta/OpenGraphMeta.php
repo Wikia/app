@@ -86,8 +86,11 @@ function efOpenGraphMetaPageHook( &$out, &$sk ) {
 	if ( isset($out->mDescription) ) // set by Description2 extension, install it if you want proper og:description support
 		$meta["og:description"] = $out->mDescription;
 	$meta["og:url"] = $title->getFullURL();
-	if ( $egFacebookAppId )
+	if ( $egFacebookAppId ) {
 		$meta["fb:app_id"] = $egFacebookAppId;
+		if ($page_id = Wikia::getFacebookDomainId())
+			$meta["fb:page_id"] = $page_id;
+	}
 	if ( $egFacebookAdmins )
 		$meta["fb:admins"] = $egFacebookAdmins;
 	
