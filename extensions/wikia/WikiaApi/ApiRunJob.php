@@ -97,6 +97,10 @@ class ApiRunJob extends ApiBase {
 					"error" => $job->error
 				);
 			}
+			else {
+				// there's no job in queue, finish loop, release request
+				break;
+			}
 		}
 
 		$result[ "left" ]  = $this->checkQueue();
