@@ -120,9 +120,9 @@ function SharedHelpHook(&$out, &$text) {
 		$sharedArticleKey = $wgSharedDB . ':sharedArticles:' . $wgHelpWikiId . ':' .
 			MWNamespace::getCanonicalName( $wgTitle->getNamespace() ) .  ':' . $wgTitle->getDBkey();
 		$sharedArticle = $wgMemc->get($sharedArticleKey);
-		$sharedServer = unserialize(WikiFactory::getVarByName('wgServer', $wgHelpWikiId)->cv_value);
-		$sharedScript = unserialize(WikiFactory::getVarByName('wgScript', $wgHelpWikiId)->cv_value);
-		$sharedArticlePath = unserialize(WikiFactory::getVarByName('wgArticlePath', $wgHelpWikiId)->cv_value);
+		$sharedServer = WikiFactory::getVarValueByName( 'wgServer', $wgHelpWikiId );
+		$sharedScript = WikiFactory::getVarValueByName( 'wgScript', $wgHelpWikiId );
+		$sharedArticlePath = WikiFactory::getVarValueByName( 'wgArticlePath', $wgHelpWikiId );
 
 		// get defaults
 		// in case anybody's curious: no, we can't use $wgScript cause that may be overridden locally :/
@@ -253,10 +253,10 @@ function SharedHelpHook(&$out, &$text) {
 			$content = preg_replace("|{$sharedServer}{$sharedArticlePathClean}(?!" . implode(")(?!", $skipNamespaces) . ")|", $localArticlePathClean, $content);
 
 			# replace help wiki project namespace with local project namespace
-			$sharedMetaNamespace = unserialize(WikiFactory::getVarByName('wgMetaNamespace', $wgHelpWikiId)->cv_value);
+			$sharedMetaNamespace = WikiFactory::getVarValueByName( 'wgMetaNamespace', $wgHelpWikiId );
 			if ( empty( $sharedMetaNamespace ) ) {
 				# use wgSitename if empty, per MW docs
-				$sharedMetaNamespace = unserialize(WikiFactory::getVarByName('wgSitename', $wgHelpWikiId)->cv_value);
+				$sharedMetaNamespace = WikiFactory::getVarValueByName( 'wgSitename', $wgHelpWikiId );
 				$sharedMetaNamespace = str_replace( ' ', '_', $sharedMetaNamespace );
 			}
 

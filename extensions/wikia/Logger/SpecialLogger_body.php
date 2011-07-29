@@ -170,7 +170,7 @@ class LoggerQueryPage {
 	function formatResult( $skin, $result ) {
 		$res = false;
 		
-		$wikia_url = unserialize(WikiFactory::getVarByName('wgServer', $result->city_id)->cv_value) ;
+		$wikia_url = WikiFactory::getVarValueByName( 'wgServer', $result->city_id );
 		if (empty($this->mShow)) {
 			$this->data[$result->city_id] = array(
 				'value' 		=> $result->value, 

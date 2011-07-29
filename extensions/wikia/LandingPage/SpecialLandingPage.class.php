@@ -17,8 +17,8 @@ class SpecialLandingPage extends UnlistedSpecialPage {
 
 		// redirect to www.wikia.com
 		if ( $wgCityId == 177 ) {
-			$destServer = unserialize(WikiFactory::getVarByName('wgServer', $this->destCityId)->cv_value);
-			$destArticlePath = unserialize(WikiFactory::getVarByName('wgArticlePath', $this->destCityId)->cv_value);
+			$destServer = WikiFactory::getVarValueByName( 'wgServer', $this->destCityId );
+			$destArticlePath = WikiFactory::getVarValueByName( 'wgArticlePath', $this->destCityId );
 
 			$wgOut->redirect( $destServer . str_replace( '$1', 'Special:LandingPage', $destArticlePath ) );
 			return;
