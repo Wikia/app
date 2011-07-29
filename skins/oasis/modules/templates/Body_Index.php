@@ -54,6 +54,13 @@
 		}
 		?>
 
+		<?php
+		if ( !empty($isUserProfilePageV3Enabled) && $headerModuleName == 'UserPagesHeader') {
+			//echo F::app()->renderView( 'UserProfilePage', 'renderUserIdentityBox', array() );
+			echo wfRenderModule($headerModuleName, $headerModuleAction, $headerModuleParams);
+		} 
+		?>
+
 		<article id="WikiaMainContent" class="WikiaMainContent">
 			<?php
 			
@@ -64,7 +71,11 @@
 				
 				// render UserPagesHeader or PageHeader or nothing...
 				if (empty($wgSuppressPageHeader) && $headerModuleName) {
-					echo wfRenderModule($headerModuleName, $headerModuleAction, $headerModuleParams);
+					if (!empty($isUserProfilePageV3Enabled) && $headerModuleName == 'UserPagesHeader') {
+						//skip
+					} else {
+						echo wfRenderModule($headerModuleName, $headerModuleAction, $headerModuleParams);
+					}
 				}
 			?>
 			<div id="WikiaArticle" class="WikiaArticle<?= $displayAdminDashboardChromedArticle ? ' AdminDashboardChromedArticle'.($adminDashboardCollapsed ? '' : ' expanded') : '' ?>">

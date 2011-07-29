@@ -61,7 +61,7 @@ class UserProfilePageController extends WikiaController {
 
 		// suppress rail
 		if(!$this->wg->Title->isSubpage()) {
-			$this->wg->SuppressRail = true;
+			//$this->wg->SuppressRail = true;
 		}
 	}
 	

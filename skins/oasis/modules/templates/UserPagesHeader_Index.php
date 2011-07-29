@@ -63,7 +63,7 @@
 	?>
 <?php } else if( !empty($isUserProfilePageV3Enabled) ) {?>
 	<!-- UPPv3 /BEGIN --> 
-	<?php echo F::app()->renderView( 'UserProfilePage', 'renderUserIdentityBox', array() ); ?> 
+	<?php echo F::app()->renderView( 'UserProfilePage', 'renderUserIdentityBox'); ?>
 	<!-- UPPv3 /END --> 
 <?php } else { //user profile page v2? ?>
 	<!-- UserProfilePage Extension /BEGIN -->
