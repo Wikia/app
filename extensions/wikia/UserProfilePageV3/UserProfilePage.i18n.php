@@ -111,6 +111,10 @@ $messages['en'] = array(
 	'user-action-menu-edit' => 'Edit',
 	'user-action-menu-leave-message' => 'Leave message',
 	'user-action-menu-view-source' => 'View source',
+	'user-action-menu-protect' => 'Protect',
+	'user-action-menu-rename' => 'Rename',
+	'user-action-menu-delete' => 'Delete',
+	'user-action-menu-history' => 'History',
 );
 
 $messages['qqq'] = array(
