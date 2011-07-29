@@ -13,6 +13,8 @@ abstract class ObjectMocker {
 	public function __construct( $object ) {
 		$this->object = $object;
 		$this->className = get_class($object);
+
+		self::$nextMockId++;
 	}
 
 	public function begin() {

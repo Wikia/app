@@ -115,7 +115,13 @@ class EditPageLayout extends EditPage {
 			$ret = self::AS_SUMMARY_NEEDED;
 		}
 		else {
+			// tell MW core to save the article
 			$ret = parent::internalAttemptSave($result, $bot);
+
+			// add a message returned by hook
+			if ($this->hookError !== '') {
+				$this->mEditNotices->add($this->hookError, 'HookError');
+			}
 		}
 
 		$this->lastSaveStatus = $ret;

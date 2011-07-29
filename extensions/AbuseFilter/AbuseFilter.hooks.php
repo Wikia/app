@@ -42,7 +42,13 @@ class AbuseFilterHooks {
 
 		if ( $filter_result !== true ) {
 			global $wgOut;
-			$wgOut->addHTML( $filter_result );
+
+			/* Wikia change begin - @author: macbre */
+			/* use EditPage::$hookError to return a message (BugId:7428) */
+			$error = $filter_result;
+			#$wgOut->addHTML( $filter_result ); // EditPage::$hookError will be shown to the user
+			/* Wikia change end */
+
 			$editor->showEditForm();
 			return false;
 		}
