@@ -16,7 +16,7 @@ class UserStatsService extends Service {
 	 * Get cache key for given entry
 	 */
 	private function getKey($entry) {
-		return wfMemcKey('services', 'userstats', $entry, $this->userId);
+		return wfMemcKey('services', 'user_stats', $entry, $this->userId);
 	}
 
 	/**
