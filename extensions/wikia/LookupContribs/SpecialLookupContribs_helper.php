@@ -135,8 +135,19 @@ class LookupContribsCore {
 			#---
 			$dbr = wfGetDB(DB_SLAVE, "stats", $wgStatsDB);
 			if (!is_null($dbr)) {
+				
+				//bugId:6196
+				$excludedWikis = $this->getExclusionList();
+				if( !empty($excludedWikis) && is_array($excludedWikis) ) {
+					$excludedIds = '(0, ';
+					$excludedIds .= rtrim(implode(', ', intval($excludedWikis)), ', ');
+					$excludedIds .= ')';
+				} else {
+					$excludedIds = '(0)';
+				}
+				
 				$where =  array (
-					'wiki_id > 0',
+					'wiki_id NOT IN '.$excludedIds,
 					'user_id'    => $this->mUserId,
 					'event_type' => array(1,2)
 				);
@@ -246,7 +257,8 @@ class LookupContribsCore {
 		$wikiEdits = array();
 		$wikisIds = array();
 		while($row = $dbr->fetchObject($res)) {
-			if( !isset($wikiEdits[$row->wiki_id]) ) { 
+			//second condition !in_array() added because of bugId:6196
+			if( !isset($wikiEdits[$row->wiki_id]) && !in_array($row->wiki_id, $this->getExclusionList()) ) { 
 				$wikiEdits[$row->wiki_id] = $row;
 				$wikisIds[] = $row->wiki_id;
 			}
@@ -264,17 +276,17 @@ class LookupContribsCore {
 		
 		wfProfileIn( __METHOD__ );
 		$result = array();
-
+		
 		/* grumble grumble _precautions_ cough */
 		if (!isset($wgLookupContribsExcluded) || (!is_array($wgLookupContribsExcluded)) || (empty($wgLookupContribsExcluded))  ) {
 			wfProfileOut( __METHOD__ );
 			return array();
 		}
-
-		foreach ($wgLookupContribsExcluded as $excluded) {
+		
+		foreach($wgLookupContribsExcluded as $excluded) {
 			$result[] = WikiFactory::DBtoID($excluded);
 		}
-
+		
 		wfProfileOut( __METHOD__ );
 		return $result ;
 	}
