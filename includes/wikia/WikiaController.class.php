@@ -47,26 +47,4 @@ abstract class WikiaController extends WikiaBaseController {
 		$this->getResponse()->setVal('methods', $help);
 		$this->getResponse()->getView()->setTemplatePath( dirname( __FILE__ ) .'/templates/Wikia_help.php' );
 	}
-	
-	// Magic setting of template variables so we don't have to do $this->response->setVal
-	// NOTE: This is the opposite behavior of the Oasis Module
-	// In a module, a public member variable goes to the template
-	// In a controller, a public member variable does NOT go to the template, it's a local var
-	
-	public function __set($propertyName, $value) {
-		if (property_exists($this, $propertyName)) {
-			$this->$propertyName = $value;
-		} else {
-			$this->response->setVal( $propertyName, $value );
-		}
-	}
-	
-	public function __get($propertyName) {
-		if (property_exists($this, $propertyName)) {
-			return $this->$propertyName;
-		} else {
-			return $this->response->getVal( $propertyName );
-		}
-	}
-	
 }
