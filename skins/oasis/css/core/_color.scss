@@ -17,6 +17,11 @@ $color-text: #3a3a3a;
 @if lightness($color-page) < 50 {
 	$color-text: #D5D4D4;
 }
+$color-gray-text: #999;
+@if lightness($color-page) < 50 {
+	$color-gray-text: #666;
+}
+
 
 // GlobalHeader
 $color-header-alt: mix($color-header, #000, 25%);

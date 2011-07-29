@@ -368,7 +368,7 @@ class BodyModule extends Module {
 
 
 	public function executeIndex() {
-		global $wgOut, $wgTitle, $wgSitename, $wgUser, $wgEnableBlog, $wgEnableCorporatePageExt, $wgEnableInfoBoxTest, $wgEnableWikiAnswers, $wgRequest, $wgMaximizeArticleAreaArticleIds, $wgEnableAdminDashboardExt;
+		global $wgOut, $wgTitle, $wgSitename, $wgUser, $wgEnableBlog, $wgEnableCorporatePageExt, $wgEnableInfoBoxTest, $wgEnableWikiAnswers, $wgRequest, $wgMaximizeArticleAreaArticleIds, $wgEnableAdminDashboardExt, $wgEnableUserProfilePagesV3;
 
 		// set up global vars
 		if (is_array($wgMaximizeArticleAreaArticleIds)
@@ -487,6 +487,9 @@ class BodyModule extends Module {
 			$this->displayAdminDashboard = false;
 			$this->displayAdminDashboardChromedArticle = false;
 		}
+		
+		$this->isUserProfilePageV3Enabled = !empty($wgEnableUserProfilePagesV3);
+
 	}
 }
 
