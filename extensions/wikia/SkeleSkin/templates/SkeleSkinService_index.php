@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="<?= $languageCode ;?>" dir="<?= $languageDirection ;?>">
+<html lang="<?= $languageCode ;?>" dir="<?= $languageDirection ;?>" manifest="<?= $appCacheManifestPath ;?>">
 	<head>
 		<title><?= htmlspecialchars( $pageTitle ) ;?></title>
 		<? if( !$showAllowRobotsMetaTag ): ?>

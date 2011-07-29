@@ -6,6 +6,8 @@
  * @authore Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
 class SkeleSkinService extends WikiaService {
+	const CACHE_MANIFEST_PATH = 'wikia.php?controller=SkeleSkinAppCacheController&method=serveManifest&format=html';
+	
 	static private $initialized = false;
 	
 	private $templateObject;
@@ -51,6 +53,7 @@ class SkeleSkinService extends WikiaService {
 			$jsFiles .= "<script type=\"{$this->wg->JsMimeType}\" src=\"$src\"></script>\n";
 		}
 		
+		$this->appCacheManifestPath = self::CACHE_MANIFEST_PATH;
 		$this->mimeType = $this->templateObject->data['mimetype'];
 		$this->charSet = $this->templateObject->data['charset'];
 		$this->showAllowRobotsMetaTag = !$this->wg->DevelEnvironment;

@@ -39,10 +39,11 @@ $app->wg->set( 'wgAutoloadClasses', "{$dir}/SkeleSkinService.class.php", 'SkeleS
 $app->wg->set( 'wgAutoloadClasses', "{$dir}/SkeleSkinBodyService.class.php", 'SkeleSkinBodyService' );
 $app->wg->set( 'wgAutoloadClasses', "{$dir}/SkeleSkinWikiHeaderService.class.php", 'SkeleSkinWikiHeaderService' );
 $app->wg->set( 'wgAutoloadClasses', "{$dir}/SkeleSkinPageHeaderService.class.php", 'SkeleSkinPageHeaderService' );
+
 /**
  * controllers
  */
-
+$app->wg->set( 'wgAutoloadClasses', "{$dir}/SkeleSkinAppCacheController.class.php", 'SkeleSkinAppCacheController' );
 
 /**
  * special pages
