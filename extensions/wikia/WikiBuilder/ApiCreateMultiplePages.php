@@ -5,7 +5,7 @@
  */
 
 class ApiCreateMultiplePages extends ApiBase {
-	protected $maxpages = 100;
+	protected $maxpages = 20;
 
 	public function __construct($main, $action) {
 		parent :: __construct($main, $action);
@@ -124,9 +124,9 @@ class ApiCreateMultiplePages extends ApiBase {
 		return $res;
 	}
 
-	public function mustBePosted() { 
-		return true;
-	}
+	public function mustBePosted() { return true; }
+
+	public function isWriteMode() { return true; }
 
 	public function getAllowedParams() {
 		return array (
