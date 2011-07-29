@@ -596,7 +596,7 @@ class UserPagesHeaderModule extends Module {
 	public function executeBlogListing() {
 		wfProfileIn(__METHOD__);
 
-		global $wgTitle, $wgCreateBlogPagePreload;
+		global $wgTitle, $wgCreateBlogPagePreload, $wgOut, $wgEnableUserProfilePagesV3;
 		// "Create blog post" button
 		$this->actionButton = array(
 				'href' => SpecialPage::getTitleFor('CreateBlogPage')->getLocalUrl( !empty($wgCreateBlogPagePreload) ? "preload=$wgCreateBlogPagePreload" : "" ),
@@ -604,6 +604,11 @@ class UserPagesHeaderModule extends Module {
 				);
 		$this->title = $wgTitle->getText();
 		$this->subtitle = wfMsg('create-blog-post-category');
+
+		// load CSS for .WikiaBlogListingHeader (BugId:9212)
+		if(empty($wgEnableUserProfilePagesV3)) {
+			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL("skins/oasis/css/core/_UserPagesHeader.scss"));
+		}
 
 		wfProfileOut(__METHOD__);
 	}
