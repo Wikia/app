@@ -50,10 +50,11 @@
 			background: mix($color-page, $color-text, 92%);
 			float: left;
 			font-size: 12px;
-			line-height: 20px;
+			line-height: normal;
 			margin: 3px;
 			max-width: 225px;
-			padding: 0 5px;
+			padding: 0 20px 0 5px;
+			position: relative;
 			&.join-more-wikis {
 				background: transparent;
 				border: 1px solid $color-page-border;
@@ -62,6 +63,7 @@
 		}
 		span {
 			display: inline-block;
+			line-height: 20px;
 			max-width: 200px;
 			overflow: hidden;
 			text-overflow: ellipsis;
@@ -69,6 +71,9 @@
 		}
 		.delete {
 			cursor: pointer;
+			position: absolute;
+			right: 3px;
+			top: 3px;
 		}
 	}
 	.favorite-wikis-refresh {

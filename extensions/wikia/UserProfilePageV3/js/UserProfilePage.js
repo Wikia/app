@@ -469,15 +469,25 @@ var UserProfilePage = {
 		if( wikiId >= 0 ) {
 			UserProfilePage.modal.find('.favorite-wikis [data-wiki-id="' + wikiId + '"]')
 				.fadeOut('fast', function() {
-					$(this).remove();
-					UserProfilePage.toggleJoinMoreWikis();	
+					$(this).remove();				
+					$.postJSON( UserProfilePage.ajaxEntryPoint, { method: 'onHideWiki', userId: UserProfilePage.userId, wikiId: wikiId, cb: wgStyleVersion }, function(data) {
+						if( data.result.success === true ) {
+							$().log(data);
+
+							// add the next wiki
+							$.each(data.result.wikis, function(index, value) {
+								$().log(index);
+								if(UserProfilePage.modal.find('.favorite-wikis [data-wiki-id="' + index + '"]').length == 0) {
+									//found the wiki to add. now do it.
+									$().log('adding');
+									UserProfilePage.modal.find('.join-more-wikis').before('<li data-wiki-id="' + index + '"><span>' + value.wikiName + '</span> <img src="' + wgBlankImgUrl + '" class="sprite-small delete"></li>');
+									
+								}
+							});
+							UserProfilePage.toggleJoinMoreWikis();
+						}
+					});
 				});
-				
-			$.postJSON( this.ajaxEntryPoint, { method: 'onHideWiki', userId: UserProfilePage.userId, wikiId: wikiId, cb: wgStyleVersion }, function(data) {
-				if( data.result.success === true ) {
-					$().log(data);
-				}
-			});
 		} else {
 			//failed to recive wikiId
 		}
@@ -502,9 +512,6 @@ var UserProfilePage = {
 	},
 	
 	toggleJoinMoreWikis: function() {
-		$().log('toggleJoinMoreWikis');
-		$().log(UserProfilePage.modal.find('.favorite-wikis').children().not('.join-more-wikis').length);
-		
 		var joinMoreWikis = UserProfilePage.modal.find('.join-more-wikis');
 		if (UserProfilePage.modal.find('.favorite-wikis').children().not('.join-more-wikis').length == 4) {
 			joinMoreWikis.hide();
