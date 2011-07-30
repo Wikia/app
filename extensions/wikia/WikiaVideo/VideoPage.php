@@ -1911,7 +1911,7 @@ EOD;
 				$thumb = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid='.$this->mId.'&bitrateid='.self::SCREENPLAY_LARGE_JPEG_BITRATE_ID.'&vendorid='.self::$SCREENPLAY_VENDOR_ID.'&type=.jpg';
 				break;
 			case self::V_MOVIECLIPS:
-				//@todo http://cdn5.movieclips.com/dande-entertainment/t/the-last-play-at-shea-2010/0605981_20919_MC_Tx304.jpg
+				$thumb = $this->mData[0];
 				break;
 			default:
 				break;

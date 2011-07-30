@@ -11,6 +11,8 @@
 $SCREENPLAY_FTP_HOST = 'ftp.screenplayinc.com';
 $SCREENPLAY_REMOTE_FILE = 'feed.zip';
 $SCREENPLAY_FEED_FILE = 'feed.xml';
+$MOVIECLIPS_VIDEOS_LISTING_FOR_MOVIE_URL = 'http://api.movieclips.com/v2/movies/$1/videos';
+$MOVIECLIPS_XMLNS = 'http://api.movieclips.com/schemas/2010';
 $TEMP_DIR = '/tmp';
 
 $optionsWithArgs = array( 'u', 'f', 'r', 'p' );
@@ -26,7 +28,7 @@ Usage: php importPartnerVideo.php [options...] <partner>
 
 Options:
   -u <user>         Username
-  -f <filename>     Import video from specified file instead of API
+  -f <filename>     Screenplay: Import video from specified file instead of API. MovieClips: file containing MC ID's to import.
   -r <remoteuser>   Remote username
   -p <password>     Remote password
   -d                Debug mode
@@ -70,6 +72,7 @@ else {
 $provider = strtolower($args[0]);
 switch ($provider) {
 	case VideoPage::V_SCREENPLAY:
+	case VideoPage::V_MOVIECLIPS:
 		break;
 	default:
 		die("unknown provider $provider. aborting.\n");		
@@ -193,6 +196,12 @@ function importFromPartner($provider, $file) {
 		case VideoPage::V_SCREENPLAY:
 			$numCreated = importFromScreenplay($file);
 			break;
+		case VideoPage::V_MOVIECLIPS:
+			$ids = getMovieClipIdsFromFileContents($file);
+			foreach ($ids as $id) {
+				$numCreated += importFromMovieClips($id);
+			}
+			break;
 		default:
 	}
 	
@@ -269,6 +278,87 @@ function importFromScreenplay($file) {
 	return $articlesCreated;
 }
 
+function importFromMovieClips($id) {
+	global $MOVIECLIPS_VIDEOS_LISTING_FOR_MOVIE_URL, $MOVIECLIPS_XMLNS;
+	global $wgHTTPProxy;
+	
+	$articlesCreated = 0;
+	
+	$url = str_replace('$1', $id, $MOVIECLIPS_VIDEOS_LISTING_FOR_MOVIE_URL);
+	$info = array();
+	print("Connecting to $url...\n");
+
+	$rssContent = Http::get($url);
+
+	$feed = new SimplePie();
+	$feed->set_raw_data($rssContent);
+	$feed->init();
+	if ($feed->error()) {
+		print("ERROR: {$feed->error()}");
+		return $articlesCreated;
+	}
+	
+	foreach ($feed->get_items() as $key=>$item) {
+		// video title
+		$clipData['videoTitle'] = $item->get_title();
+		
+		// id
+		$mcIds = $item->get_item_tags($MOVIECLIPS_XMLNS, 'id');
+		$clipData['mcId'] = $mcIds[0]['data'];
+		
+		// movie name
+		$objectIds = $item->get_item_tags($MOVIECLIPS_XMLNS, 'object_ids');
+		$clipData['movieName'] = $objectIds[0]['child'][$MOVIECLIPS_XMLNS]['freebase_mid'][0]['attribs']['']['name'];
+		$clipData['freebaseMid'] = $objectIds[0]['child'][$MOVIECLIPS_XMLNS]['freebase_mid'][0]['data'];
+		
+		//@todo description
+		
+		// thumbnails, movie year
+		if ($enclosure = $item->get_enclosure()) {
+			$thumbnails = (array) $enclosure->get_thumbnails();
+			$numThumbnails = sizeof($thumbnails);
+			if ($numThumbnails) {
+				if ($numThumbnails > 1) {
+					$clipData['thumbnail'] = $thumbnails[1];
+				}
+				else {
+					$clipData['thumbnail'] = $thumbnails[0];
+				}
+				
+				$thumbnailParts = explode('/', $clipData['thumbnail']);
+				array_pop($thumbnailParts);	// filename. throw away
+				$movieAndYear = array_pop($thumbnailParts);
+				$year = substr($movieAndYear, -4);
+				if (is_numeric($year)) {
+					$clipData['year'] = $year;
+				}
+			}
+		}
+
+		$articlesCreated += createVideoPageForPartnerVideo(VideoPage::V_MOVIECLIPS, $clipData, $msg);
+		if ($msg) {
+			print "ERROR: $msg\n";
+		}
+	}
+	
+	return $articlesCreated;
+}
+
+function getMovieClipIdsFromFileContents($file) {
+	$ids = array();
+	
+	$lines = explode("\n", $file);
+	
+	foreach ($lines as $line) {
+		$line = trim($line);
+		if ($line) {
+			$ids[] = $line;
+		}
+	}
+	
+	return $ids;
+}
+
 function generateNameForPartnerVideo($provider, array $data) {
 	$name = '';
 	
@@ -276,6 +366,9 @@ function generateNameForPartnerVideo($provider, array $data) {
 		case VideoPage::V_SCREENPLAY:
 			$description = ($data['description']) ? $data['description'] : "{$data['trailerType']} {$data['trailerVersion']} ({$data['eclipId']})";
 			$name = sprintf("%s (%s) - %s", $data['titleName'], $data['year'], $description);
+			break;
+		case VideoPage::V_MOVIECLIPS:
+			$name = sprintf("%s (%s) - %s", $data['movieName'], $data['year'], $data['videoTitle']);
 			break;
 		default:
 	}
@@ -293,6 +386,10 @@ function generateCategoriesForPartnerVideo($provider, array $data) {
 		case VideoPage::V_SCREENPLAY:
 			$categories[] = $data['titleName'] . ' (' . $data['year'] . ')';
 			$categories[] = $data['trailerVersion'];
+			break;
+		case VideoPage::V_MOVIECLIPS:
+			$categories[] = $data['movieName'] . ' (' . $data['year'] . ')';
+			$categories[] = 'freebasemid-' . (substr($data['freebaseMid'], 0, 3) == '/m/' ? substr($data['freebaseMid'], 3) : $data['freebaseMid']);	// since / is not valid in category name, remove preceding /m/
 			break;
 		default:
 			return array();
@@ -320,13 +417,17 @@ function createVideoPageForPartnerVideo($provider, array $data, &$msg) {
 			$doesHdExist = (int) !empty($data['hdMp4Url']);
 			$metadata = array($data['stdBitrateCode'], $doesHdExist);
 			break;
+		case VideoPage::V_MOVIECLIPS:
+			$id = $data['mcId'];
+			$metadata = array($data['thumbnail']);
+			break;
 		default:
 			$msg = "unsupported provider $provider";
 			return 0;
 	}
 
 	
-	$title = Title::makeTitleSafe(NS_VIDEO, $name);	
+	$title = Title::makeTitleSafe(NS_VIDEO, str_replace('#', '', $name));	// makeTitleSafe strips '#' and anything after. just leave # out
 	if(is_null($title)) {
 		$msg = "article title was null: clip id $id";
 		return 0;
@@ -348,7 +449,7 @@ function createVideoPageForPartnerVideo($provider, array $data, &$msg) {
 		$video->loadFromPars( $provider, $id, $metadata );
 		$video->setName( $name );
 		if ($debug) {
-			print "parsed partner clip id $id. name: $name. data: " . implode(',', $metadata) . ". categories: " . implode(',', $categories) . "\n";
+			print "parsed partner clip id $id. name: {$title->getText()}. data: " . implode(',', $metadata) . ". categories: " . implode(',', $categories) . "\n";
 		}
 		else {
 			$video->save($categoryStr);
