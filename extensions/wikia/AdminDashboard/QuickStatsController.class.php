@@ -152,4 +152,14 @@ class QuickStatsController extends WikiaController {
 		
 		return $result;
 	}
+	
+	public static function shortenNumberDecorator($number) {
+		$number = intval($number);
+		$d = $number / 1000;
+		if ($d >= 10) {
+			return wfMsg('quickstats-number-shortening', array(round($d, 1)));
+		} else {
+			return $number;
+		}
+	}
 }

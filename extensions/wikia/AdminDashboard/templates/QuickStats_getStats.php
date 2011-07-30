@@ -1,14 +1,3 @@
-<?
-	function shortenNumberDecorator($number) {
-		$number = intval($number);
-		$d = $number / 1000;
-		if ($d >= 10) {
-			return round($d, 1).'K';
-		} else {
-			return $number;
-		}
-	}
-?>
 <section id="QuickStatsWidget" class="QuickStatsWidget">
 	<h1><?= wfMsg('quickstats-header-label') ?></h1>
 	<table class="WikiaDataTable">
@@ -30,11 +19,11 @@
 						<?= wfMsg('quickstats-totals-label') ?>
 					</div>
 				</td>
-				<td><?= shortenNumberDecorator($totals['pageviews']) ?></td>
-				<td><?= shortenNumberDecorator($totals['edits']) ?></td>
-				<td><?= shortenNumberDecorator($totals['photos']) ?></td>
+				<td><?= QuickStatsController::shortenNumberDecorator($totals['pageviews']) ?></td>
+				<td><?= QuickStatsController::shortenNumberDecorator($totals['edits']) ?></td>
+				<td><?= QuickStatsController::shortenNumberDecorator($totals['photos']) ?></td>
 				<?php if(isset($totals['likes'])) { ?>
-				<td><?= shortenNumberDecorator($totals['likes']) ?></td>
+				<td><?= QuickStatsController::shortenNumberDecorator($totals['likes']) ?></td>
 				<? } ?>
 			</tr>
 			<tr>
@@ -50,11 +39,11 @@
 					$formattedDate = $dateObject->format(wfMsg('quickstats-date-format'));  ?>
 				<tr>
 					<td><?= $formattedDate ?></td>
-					<td><?= shortenNumberDecorator($row['pageviews']) ?></td>
-					<td><?= shortenNumberDecorator($row['edits']) ?></td>
-					<td><?= shortenNumberDecorator($row['photos']) ?></td>
+					<td><?= QuickStatsController::shortenNumberDecorator($row['pageviews']) ?></td>
+					<td><?= QuickStatsController::shortenNumberDecorator($row['edits']) ?></td>
+					<td><?= QuickStatsController::shortenNumberDecorator($row['photos']) ?></td>
 					<?php if(isset($totals['likes'])) { ?>
-					<td><?= shortenNumberDecorator($row['likes']) ?></td>
+					<td><?= QuickStatsController::shortenNumberDecorator($row['likes']) ?></td>
 					<? } ?>
 				</tr>
 			<? } ?>
