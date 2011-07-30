@@ -17,4 +17,5 @@ $messages['en'] = array(
 	'quickstats-date-format' => 'M d',	// follow this guide: http://php.net/manual/en/function.date.php
 	'quickstats-totals-label' => 'Totals',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|See more stats]]',
+	'quickstats-number-shortening' => '$1K',
 );
