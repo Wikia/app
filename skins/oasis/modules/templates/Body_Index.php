@@ -72,7 +72,7 @@
 				// render UserPagesHeader or PageHeader or nothing...
 				if (empty($wgSuppressPageHeader) && $headerModuleName) {
 					if (!empty($isUserProfilePageV3Enabled) && $headerModuleName == 'UserPagesHeader') {
-						//skip
+						echo F::app()->renderView( 'UserProfilePage', 'renderActionButton', array() );
 					} else {
 						echo wfRenderModule($headerModuleName, $headerModuleAction, $headerModuleParams);
 					}

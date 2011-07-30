@@ -99,7 +99,7 @@
 	<a name="EditPage"></a>
 	
 	<?php if( !empty($isUserProfilePageV3Enabled) ) {?>
-		<?php echo F::app()->renderView( 'UserProfilePage', 'renderActionButton', array() ); ?> 
+		<?php //echo F::app()->renderView( 'UserProfilePage', 'renderActionButton', array() ); ?> 
 	<?php }?>
 	
 <?php if ($fbData) {?>

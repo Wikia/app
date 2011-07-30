@@ -231,9 +231,8 @@ class BodyModule extends Module {
 				wfProfileOut(__METHOD__);
 				return $railModuleList;
 			}
-		}
-		else {
-			// search module appears on all pages except search results, where it is added to the body (by BodyModule)
+		} else if (!self::showUserPagesHeader()) {
+			// search module appears on all pages except search results and pages with the user page header, where it is added in another manner
 			$railModuleList = array (
 				1500 => array('Search', 'Index', null),
 			);
@@ -268,11 +267,11 @@ class BodyModule extends Module {
 
 			if($page_owner) {
 				if( !$page_owner->getOption('hidefollowedpages') ) {
-					$railModuleList[1200] = array('FollowedPages', 'Index', null);
+					$railModuleList[1101] = array('FollowedPages', 'Index', null);
 				}
 
 				if($wgEnableAchievementsExt && !(($wgUser->getId() == $page_owner->getId()) && $page_owner->getOption('hidepersonalachievements'))){
-					$railModuleList[1350] = array('Achievements', 'Index', null);
+					$railModuleList[1102] = array('Achievements', 'Index', null);
 				}
 			}
 		}

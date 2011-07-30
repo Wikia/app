@@ -2,16 +2,6 @@
 @import "../../../../skins/oasis/css/mixins/border-radius";
 @import "../../../../skins/oasis/css/mixins/clearfix";
 
-/*
-Probably temporary change just to display Masthead properly.
-Christian, define $color-gray-text in the right place, please.
-After svn up I got SASS error: 
-Sass commandline error: Syntax error: Undefined variable: "$color-gray-text".
-And that's why I added it here but I doubt if it should be here.
- --nAndy
-*/
-$color-gray-text: #CCC;
-
 .UPPLightbox {
 	
 	.tab-content li {
@@ -50,8 +40,10 @@ $color-gray-text: #CCC;
 	
 	.favorite-wikis {
 		@include clearfix;
-		-webkit-appearance: textfield;		
-		padding: 5px;
+		-webkit-appearance: textfield;
+		-moz-appearance: textfield;
+		border: 1px solid $color-page-border;
+		padding: 3px;
 		width: 250px;
 		li {
 			@include border-radius(5px);
@@ -60,19 +52,20 @@ $color-gray-text: #CCC;
 			font-size: 12px;
 			line-height: 20px;
 			margin: 3px;
+			max-width: 225px;
 			padding: 0 5px;
-
-
-				max-width: 225px;
-				overflow: hidden;
-				text-overflow: ellipsis;
-				white-space: nowrap;
-			
 			&.join-more-wikis {
 				background: transparent;
 				border: 1px solid $color-page-border;
 				color: $color-gray-text;
 			}
+		}
+		span {
+			display: inline-block;
+			max-width: 200px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
 		}
 		.delete {
 			cursor: pointer;

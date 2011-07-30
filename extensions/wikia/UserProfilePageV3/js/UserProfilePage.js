@@ -493,7 +493,7 @@ var UserProfilePage = {
 
 				// add items
 				for(i in data.result.wikis) {
-					favWikisList.prepend('<li data-wiki-id="' + i + '">' + data.result.wikis[i].wikiName + ' <img src="' + wgBlankImgUrl + '" class="sprite-small delete"></li>');
+					favWikisList.prepend('<li data-wiki-id="' + i + '"><span>' + data.result.wikis[i].wikiName + '</span> <img src="' + wgBlankImgUrl + '" class="sprite-small delete"></li>');
 				}
 		
 				UserProfilePage.toggleJoinMoreWikis();				

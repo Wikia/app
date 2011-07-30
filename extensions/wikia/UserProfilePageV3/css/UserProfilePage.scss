@@ -105,6 +105,7 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 			display: inline;
 			font-size: 32px;
 			font-weight: bold;
+			line-height: 38px;
 		}
 		.group {
 			@include border-radius(3px);
@@ -217,7 +218,11 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 	}
 }
 
-#actionButtonContainer {
-	width: 100%;
+.UserProfileActionButton {
+	padding: 10px 0;
 	text-align: right;
+}
+
+.WikiaRail {
+	padding-top: 10px;
 }

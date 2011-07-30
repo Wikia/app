@@ -69,10 +69,10 @@
 			<form id="userData" name="userData">
 				<div class="column">
 					<label><?= wfMsg('user-identity-box-about-name'); ?></label>
-					<input type="text" name="name" value="<?= $user['realName']; ?>">
+					<input type="text" name="name" value="<?= htmlentities($user['realName']); ?>">
 
 					<label><?= wfMsg('user-identity-box-about-location'); ?></label>
-					<input type="text" name="location" value="<?= $user['location']; ?>">
+					<input type="text" name="location" value="<?= htmlentities($user['location']); ?>">
 
 					<label><?= wfMsg('user-identity-box-about-birthday'); ?></label>
 					<select id="userBDayMonth" name="month">
@@ -91,10 +91,10 @@
 					</select>
 
 					<label><?= wfMsg('user-identity-box-about-occupation'); ?></label>
-					<input type="text" name="occupation" value="<?= $user['occupation']; ?>">
+					<input type="text" name="occupation" value="<?= htmlentities($user['occupation']); ?>">
 
 					<label><?= wfMsg('user-identity-box-about-gender'); ?></label>
-					<input type="text" name="gender" value="<?= $user['gender']; ?>">
+					<input type="text" name="gender" value="<?= htmlentities($user['gender']); ?>">
 				</div>
 
 				<div class="column">
@@ -111,17 +111,19 @@
 					<? endif; ?>
 
 					<label><?= wfMsg('user-identity-box-about-website'); ?></label>
-					<input type="text" name="website" value="<?= $user['website']; ?>">
+					<input type="text" name="website" value="<?= htmlentities($user['website']); ?>">
 
 					<label><?= wfMsg('user-identity-box-about-tweet'); ?></label>
 					<span class="tweet-at">@</span>
-					<input type="text" name="twitter" value="<?= $user['twitter']; ?>">
+					<input type="text" name="twitter" value="<?= htmlentities($user['twitter']); ?>">
 
 					<label><?= wfMsg('user-identity-box-about-fav-wikis'); ?></label>
 					<a class="favorite-wikis-refresh wikia-chiclet-button" href="#"><img src="<?= $wgBlankImgUrl ?>"></a>
 					<ul class="favorite-wikis">
 					<? foreach($user['topWikis'] as $favWikiId => $wiki): ?>
-						<li data-wiki-id="<?= $favWikiId; ?>"><?= $wiki['wikiName']; ?> <img src="<?= $wgBlankImgUrl ?>" class="sprite-small delete"></li>
+						<li data-wiki-id="<?= $favWikiId; ?>">
+							<span><?= $wiki['wikiName']; ?></span> <img src="<?= $wgBlankImgUrl ?>" class="sprite-small delete">
+							</li>
 					<? endforeach; ?>
 						<li class="join-more-wikis"><?= wfMsg('user-identity-box-join-more-wikis'); ?></li>
 					</ul>
