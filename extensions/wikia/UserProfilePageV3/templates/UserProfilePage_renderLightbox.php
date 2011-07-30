@@ -125,7 +125,7 @@
 							<span><?= $wiki['wikiName']; ?></span> <img src="<?= $wgBlankImgUrl ?>" class="sprite-small delete">
 							</li>
 					<? endforeach; ?>
-						<li class="join-more-wikis"><?= wfMsg('user-identity-box-join-more-wikis'); ?></li>
+						<li class="join-more-wikis"><span><?= wfMsg('user-identity-box-join-more-wikis'); ?></span></li>
 					</ul>
 					
 				</div>
