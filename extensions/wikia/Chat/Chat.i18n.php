@@ -15,6 +15,9 @@ $messages['en'] = array(
 	'chat-user-blocked' => '$1 has blocked $2.',
 	'chat-user-allow' => '$1 has allowed $2.',
 	'chat-user-was-kickbanned' => '$1 was kickbanned.',
+
+	'chat-user-permanently-disconnected' => 'You have been disconnected, check your Internet connection and refresh browser window',
+
 	'chat-inlinealert-a-made-b-chatmod' => "$1 has made <strong>$2</strong> a chat moderator.",
 	'chat-err-connected-from-another-browser' => 'You have connected from another browser. This connection will be closed.',
 	'chat-err-communicating-with-mediawiki' => 'Error communicating with MediaWiki server.',
@@ -29,6 +32,7 @@ $messages['en'] = array(
 	'chat-err-no-permission-to-add-chatmod' => "Error: You do not have permission to add the \"$1\" group to this user.",
 	'chat-userrightslog-a-made-b-chatmod' => "$1 promoted $2 to be a chat moderator on this wiki.",
 
+	
 	'chat-you-are-banned' => 'Permissions error.',
 	// TODO: link to list of admins
 	'chat-you-are-banned-text' => 'Sorry, you do not have permission to chat on this wiki.  If you think this was a mistake or would like to be reconsidered, please contact an administrator.',

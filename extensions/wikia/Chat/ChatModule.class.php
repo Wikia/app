@@ -2,6 +2,7 @@
 class ChatModule extends Module {
 
 	var $wgStylePath;
+	var $wgStyleVersion;
 	var $wgExtensionsPath;
 	var $wgBlankImgUrl;
 	var $globalVariablesScript;
@@ -45,7 +46,9 @@ class ChatModule extends Module {
 		// Find the chat for this wiki (or create it, if it isn't there yet).
 		$this->roomName = $this->roomTopic = "";
 		$this->roomId = NodeApiClient::getDefaultRoomId($this->roomName, $this->roomTopic);
-
+		$this->roomId = (int) $this->roomId;
+		$this->roomId = (int) $this->roomId;
+		
 		// Set the hostname of the node server that the page will connect to.
 		$this->nodePort = NodeApiClient::PORT;
 		if($wgDevelEnvironment){
@@ -75,9 +78,11 @@ class ChatModule extends Module {
 		if (in_array('chatmoderator', $userChangeableGroups['add'])) {
 			$this->bodyClasses .= ' can-give-chat-mod ';
 		}
-
+		
+		$this->app->registerHook('MakeGlobalVariablesScript', 'ChatModule', 'onMakeGlobalVariablesScript', array(), false, $this);
+		
 		$this->globalVariablesScript = Skin::makeGlobalVariablesScript(Module::getSkinTemplateObj()->data);
-
+	
 		//Theme Designer stuff
 		$themeSettings = new ThemeSettings();
 		$this->themeSettings = $themeSettings->getSettings();
@@ -87,5 +92,21 @@ class ChatModule extends Module {
 
 		wfProfileOut( __METHOD__ );
 	}
-
+	
+	/*
+	 * adding js variable
+	 */
+	
+	function onMakeGlobalVariablesScript($vars) {
+		$vars['roomId'] = $this->roomId;
+		$vars['wgChatMod'] = $this->isChatMod;
+		$vars['WIKIA_NODE_HOST'] = $this->nodeHostname;
+		$vars['WIKIA_NODE_PORT'] = $this->nodePort;
+		$vars['WEB_SOCKET_SWF_LOCATION'] = $this->wgExtensionsPath.'/wikia/Chat/swf/WebSocketMainInsecure.swf?'.$this->wgStyleVersion;
+		
+		$vars['pathToProfilePage'] = $this->pathToProfilePage;
+		$vars['pathToContribsPage'] = $this->pathToContribsPage;
+		$vars['wgAvatarUrl'] = $this->avatarUrl;
+		return true;
+	}
 }

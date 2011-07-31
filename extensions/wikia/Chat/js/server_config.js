@@ -36,6 +36,9 @@ exports.getKey_listOfRooms = function( cityId, type, users ){
 exports.getKey_nextRoomId = function(){ return "next.room.id"; }
 exports.getKeyPrefix_room = function(){ return "room"; }
 
+
+exports.getKey_UserCounts = function(){ return "UserCounts"; }
+
 exports.getKey_sessionData = function(key){ return "session_data:" + key; }
 
 exports.getKey_room = function(roomId){ return exports.getKeyPrefix_room() + ":" + roomId; }

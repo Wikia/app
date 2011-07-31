@@ -14,16 +14,8 @@
 	
 	<!-- JS -->
 	<?= $globalVariablesScript ?>
-	<script>
-		var roomId = <?= $roomId ?>;
-		var wgChatMod = <?= $isChatMod ?>;
-		var WIKIA_NODE_HOST = '<?= $nodeHostname ?>'; // used in controllers.js to set up the socket connection.
-		var WIKIA_NODE_PORT = '<?= $nodePort ?>';
-		var pathToProfilePage = '<?= $pathToProfilePage ?>'; 
-		var pathToContribsPage = '<?= $pathToContribsPage ?>';
-		var wgAvatarUrl = '<?= $avatarUrl ?>'; 
-		
-	</script>
+	<?php //TODO: use js var?>
+
 </head>
 <body class="<?= $bodyClasses ?>">
 
@@ -102,15 +94,16 @@
 	<script type='text/template' id='user-action-template'><li class="<%= actionName %>"><a href="#"><%= actionDesc %></a></li></script>
 	<?php //TODO: use AM ?>
 	<!-- Load these after the DOM is built -->
-	<script src="<?= $wgStylePath ?>/common/jquery/jquery-1.5.2.js"></script>
-	<script src="<?= $wgStylePath ?>/common/jquery/jquery.wikia.js"></script>
-	<script src="<?= $wgStylePath ?>/common/jquery/jquery.json-1.3.js"></script>
-	<script src="<?= $wgExtensionsPath ?>/wikia/JSMessages/js/JSMessages.js"></script>
-	<script src="<?= $wgExtensionsPath ?>/wikia/Chat/js/lib/underscore.js"></script>
-	<script src="<?= $wgExtensionsPath ?>/wikia/Chat/js/lib/backbone.js"></script>
-	<script src="<?= $wgExtensionsPath ?>/wikia/Chat/js/socket.io/socket.io.js"></script>
-	<script src="<?= $wgExtensionsPath ?>/wikia/Chat/js/models/models.js"></script>
-	<script src="<?= $wgExtensionsPath ?>/wikia/Chat/js/controllers/controllers.js"></script>
-	<script src="<?= $wgExtensionsPath ?>/wikia/Chat/js/views/views.js"></script>
+	<script src="<?= $wgExtensionsPath ?>/wikia/Chat/js/lib/socket.io.client.js?<?= $wgStyleVersion ?>"></script>
+	
+	<script src="<?= $wgExtensionsPath ?>/wikia/Chat/js/lib/jquery-1.5.1.js?<?= $wgStyleVersion ?>"></script>
+	<script src="<?= $wgStylePath ?>/common/jquery/jquery.wikia.js?<?= $wgStyleVersion ?>"></script>
+	<script src="<?= $wgStylePath ?>/common/jquery/jquery.json-1.3.js?<?= $wgStyleVersion ?>"></script>
+	<script src="<?= $wgExtensionsPath ?>/wikia/JSMessages/js/JSMessages.js?<?= $wgStyleVersion ?>"></script>
+	<script src="<?= $wgExtensionsPath ?>/wikia/Chat/js/lib/underscore.js?<?= $wgStyleVersion ?>"></script>
+	<script src="<?= $wgExtensionsPath ?>/wikia/Chat/js/lib/backbone.js?<?= $wgStyleVersion ?>"></script>
+	<script src="<?= $wgExtensionsPath ?>/wikia/Chat/js/models/models.js?<?= $wgStyleVersion ?>"></script>
+	<script src="<?= $wgExtensionsPath ?>/wikia/Chat/js/controllers/controllers.js?<?= $wgStyleVersion ?>"></script>
+	<script src="<?= $wgExtensionsPath ?>/wikia/Chat/js/views/views.js?<?= $wgStyleVersion ?>"></script>
 </body>
 </html>
