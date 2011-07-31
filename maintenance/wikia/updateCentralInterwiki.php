@@ -15,6 +15,9 @@ ini_set( "include_path", dirname(__FILE__)."/.." );
 include_once( "commandLine.inc" );
 include_once( "updateCentralInterwiki.inc" );
 
+// set a name for the script
+$wgUser = User::newFromName('Wikia');
+
 if ( isset( $options['help'] ) || isset( $options['h']) ) {
 die( "Produces an SQL file from Central\'s Interwiki_map article.\n
 		  Usage: php updateCentralInterwiki.php [--o='file'|--p] [--verbose] [--force]
