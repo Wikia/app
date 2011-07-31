@@ -1,6 +1,11 @@
 //
 //Controllers
 //
+if($.getUrlVar('nosockets', false) == 1) {
+	var globalTransports = [ 'htmlfile', 'xhr-polling', 'jsonp-polling'  ];
+} else {
+	var globalTransports = [ 'websocket', 'flashsocket', 'htmlfile', 'xhr-polling', 'jsonp-polling'  ];	
+}
 
 var NodeChatSocketWrapper = $.createClass(Observable,{
 	proxy: $.proxy,
@@ -10,29 +15,47 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 	isInitialized: false,
 	comingBackFromAway: false,	
 	roomId: false,
+	socket: false,
+	reConnectCount: 0,
 	constructor: function( roomId ) {
 		NodeChatSocketWrapper.superclass.constructor.apply(this,arguments);
-		NodeChatSocketWrapper.sessionData = null;
-		
+		NodeChatSocketWrapper.sessionData = null;		
 		this.roomId = roomId;
-		
-		this.socket = new io.Socket(WIKIA_NODE_HOST, {port: WIKIA_NODE_PORT, transports: ['websocket', 'htmlfile', 'xhr-multipart', 'xhr-polling', 'jsonp-polling'] });
-		
-		this.socket.on('message', this.proxy( this.onMsgReceived, this ) );		
-		this.socket.on('connect', this.proxy( this.onConnect, this ) );
-		//Try to reconnect if we get disconnected (and inform the user of what is going on).
-	    this.socket.on('disconnect', this.proxy( this.onDisconnect, this ) );
 	},
 	
 	send: function($msg) {
-		this.socket.send($msg)
+		$().log( $msg, 'message');
+		this.socket.emit('message', $msg);
+	},
+
+	baseconnect: function() {
+		io.transports = globalTransports ;
+		this.socket = io.connect('http://' + WIKIA_NODE_HOST + ':' + WIKIA_NODE_PORT, { 
+			'force new connection' : true,	
+			'try multiple transports': true,
+			'connect timeout': false
+		});
+		
+		this.socket.on('connect', this.proxy( this.onConnect, this ) );
+		this.socket.on('message', this.proxy( this.onMsgReceived, this ) );
+	    this.socket.on('disconnect', this.proxy( this.onDisconnect, this ) );
 	},
 	
 	connect: function() {
-		this.socket.connect();	
+		if(!this.socket) {
+			this.baseconnect();
+			this.connectTimeoutTimer = setTimeout($.proxy(function() {
+				$().log("timeout try without socket connection");
+				globalTransports = [ 'htmlfile', 'xhr-polling', 'jsonp-polling'  ];
+				if(this.connected == false) {
+					this.baseconnect();		
+				}
+			}, this), 6000 );
+		}
 	},
 	
 	onConnect: function() {
+		clearTimeout(this.connectTimeoutTimer);
         if(this.announceConnection){
 			$().log("Reconnected.");
 			this.announceConnection = false;
@@ -72,7 +95,7 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 			
 			var authInfo = new models.AuthInfo(authData);
 			$().log(authInfo)
-			this.socket.send(authInfo.xport());
+			this.send(authInfo.xport());
 
 			$().log("Sent auth info");
 		};
@@ -85,7 +108,15 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 		
     },
     
+    forceReconnect: function() {
+		NodeChatSocketWrapper.sessionData = null;
+		this.socket.disconnect();
+		this.socket = null;
+		this.connect();
+    },
+    
     onMsgReceived: function(message) {
+    	$().log(message);
     	switch(message.event) {
 			case 'auth':
 					// Server has requested that the client send its authentication data (Wikia session cookies).
@@ -95,11 +126,12 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 				this.autoReconnect = false;
 				break;
 			case 'forceReconnect':
-				NodeChatSocketWrapper.sessionData = null;
-				this.socket.disconnect();
+				this.forceReconnect();
 				break;
+			case 'initial':
+				this.reConnectCount = 0;
 			default:
-				this.fire( message.event, message )
+				this.fire( message.event, message );
 			break;
     	}
     },
@@ -110,10 +142,16 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
     
 	tryconnect: function (){
         if(!this.connected) {
-			$().log("Trying to re-connect to node-server.");
+			$().log("Trying to re-connect to node-server:" + this.reConnectCount);
             this.connect();
             clearTimeout(trying);
-            trying = setTimeout(this.proxy(this.tryconnect, this),30000);
+            this.reConnectCount++;
+            
+            if(this.reConnectCount == 15) {
+            	this.fire( "reConnectFail", {} );
+            } else {
+            	trying = setTimeout(this.proxy(this.tryconnect, this), 5000);	
+            }
         }
     }
 });	
@@ -162,6 +200,8 @@ var NodeRoomController = $.createClass(Observable,{
 		this.socket.bind('join',  $.proxy(this.onJoin, this));
 		this.socket.bind('initial',  $.proxy(this.onInitial, this));
 		this.socket.bind('chat:add',  $.proxy(this.onChatAdd, this));
+		
+		this.socket.bind('reConnectFail',  $.proxy(this.onReConnectFail, this));
 		this.socket.bind('part',  $.proxy(this.onPart, this));
 		
 		this.viewDiscussion = new NodeChatDiscussion({model: this.model, el: $('body'), roomId: roomId});
@@ -176,7 +216,12 @@ var NodeRoomController = $.createClass(Observable,{
 
 		this.viewDiscussion.getTextInput().focus();
 	}, 	
-
+	
+	onReConnectFail: function(message) {
+		var chatEntry = new models.InlineAlert({text: $.msg( 'chat-user-permanently-disconnected' ) });
+		this.model.chats.add(chatEntry);	
+	},
+	
 	onInitial: function(message) {
 		if(!this.isInitialized){
 			
@@ -188,6 +233,7 @@ var NodeRoomController = $.createClass(Observable,{
 			// On first connection, just update the entire model.
 			this.model.mport(message.data);
 			this.isInitialized = true;
+			$().log(this.isInitialized, "isInitialized");
 		} else {
 			// If this is a reconnect... go through the model that was given and selectively, only add ChatEntries that were not already in the collection of chats.
 			var jsonObj = JSON.parse(message.data);
@@ -706,7 +752,7 @@ var NodeChatController = $.createClass(NodeRoomController,{
 		
 		if( typeof( this.chats.privates[ room.get('roomId')  ] ) == 'undefined' ) {
 			this.baseOpenPrivateRoom(room, false);
-		} 
+		}
 		this.chats.privates[ room.get('roomId') ].init();
 	},
 	
