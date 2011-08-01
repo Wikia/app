@@ -75,9 +75,6 @@ class LinkCache {
 	public function isBadLink( $title ) {
 		global $wgMemc, $wgEnableFastLinkCache;
 		if ( array_key_exists( $title, $this->mBadLinks ) ) return true;
-		if ( $wgEnableFastLinkCache ) {
-			return $wgMemc->get(wfMemcKey("linkcache:bad:$title")) ? true : false;
-		}
 		return false;
 	}
 
@@ -107,18 +104,12 @@ class LinkCache {
 		$dbkey = $title->getPrefixedDbKey();
 		if ( !$this->isBadLink( $dbkey ) ) {
 			$this->mBadLinks[$dbkey] = 1;
-			if ( $wgEnableFastLinkCache ) {
-				$wgMemc->set(wfMemcKey("linkcache:bad:$dbkey"), 1, 3600);
-			}
 		}
 	}
 
 	public function clearBadLink( $title ) {
 		global $wgMemc, $wgEnableFastLinkCache;
 		unset( $this->mBadLinks[$title] );
-		if ( $wgEnableFastLinkCache ) {
-			$wgMemc->delete(wfMemcKey("linkcache:bad:$title"));
-		}
 	}
 
 	public function clearLink( $title ) {
@@ -136,7 +127,6 @@ class LinkCache {
 		if ( $wgEnableFastLinkCache ) {
 			$wgMemc->delete(wfMemcKey("linkcache:good:$dbkey"));
 			$wgMemc->delete(wfMemcKey("linkcache:fields:$dbkey"));
-			$wgMemc->delete(wfMemcKey("linkcache:bad:$dbkey"));
 		}
 	}
 
