@@ -10,27 +10,31 @@ $dir = dirname( __FILE__ );
  */
 $app->registerClass('UserProfilePage', $dir . '/UserProfilePage.class.php');
 $app->registerClass('UserIdentityBox', $dir . '/UserIdentityBox.class.php');
-$app->registerClass('Interview', $dir . '/Interview.class.php');
-$app->registerClass('InterviewQuestion', $dir . '/InterviewQuestion.class.php');
-$app->registerClass('ImageOperationsHelper', $dir . '/ImageOperationsHelper.class.php');
+//we'll implement interview later
+//$app->registerClass('Interview', $dir . '/Interview.class.php');
+//$app->registerClass('InterviewQuestion', $dir . '/InterviewQuestion.class.php');
+//$app->registerClass('ImageOperationsHelper', $dir . '/ImageOperationsHelper.class.php');
 
 /**
  * controllers
  */
 $app->registerClass('UserProfilePageController', $dir . '/UserProfilePageController.class.php');
-$app->registerClass('InterviewSpecialPageController', $dir . '/InterviewSpecialPageController.class.php');
+//we'll implement interview later
+//$app->registerClass('InterviewSpecialPageController', $dir . '/InterviewSpecialPageController.class.php');
 
 /**
  * special pages
  */
-$app->registerSpecialPage('Interview', 'InterviewSpecialPageController');
+//we'll implement interview later
+//$app->registerSpecialPage('Interview', 'InterviewSpecialPageController');
 
 /**
  * hooks
  */
 $app->registerHook('SkinTemplateOutputPageBeforeExec', 'UserProfilePageController', 'onSkinTemplateOutputPageBeforeExec');
 $app->registerHook('SkinSubPageSubtitleAfterTitle', 'UserProfilePageController', 'onSkinSubPageSubtitleAfterTitle');
-$app->registerHook('GetRailModuleSpecialPageList', 'InterviewSpecialPageController', 'onGetRailModuleSpecialPageList' );
+//we'll implement interview later
+//$app->registerHook('GetRailModuleSpecialPageList', 'InterviewSpecialPageController', 'onGetRailModuleSpecialPageList' );
 
 /**
  * messages
@@ -42,8 +46,9 @@ $app->registerExtensionMessageFile('UserProfilePageV3', $dir . '/UserProfilePage
 /**
  * DI setup
  */
-F::addClassConstructor( 'Interview', array( 'app' => $app ) );
-F::addClassConstructor( 'InterviewQuestion', array( 'app' => $app ) );
+//we'll implement interview later
+//F::addClassConstructor( 'Interview', array( 'app' => $app ) );
+//F::addClassConstructor( 'InterviewQuestion', array( 'app' => $app ) );
 F::addClassConstructor( 'UserProfilePage', array( 'app' => $app ) );
 F::addClassConstructor( 'UserProfilePageController', array( 'app' => $app ) );
 
