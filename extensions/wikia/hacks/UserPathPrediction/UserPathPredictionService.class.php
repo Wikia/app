@@ -295,8 +295,8 @@ class UserPathPredictionService extends WikiaService {
 }
 
 class UserPathPredictionNoDataToParseException extends WikiaException{
-	function __construct( $msg = null ) {
-		parent::__construct( ( !empty( $msg ) ) ? $msg : 'No data to parse.' );
+	function __construct( $msg = 'No data to parse.' ) {
+		parent::__construct( $msg );
 	}
 }
 
@@ -313,7 +313,7 @@ class UserPathPredictionNoDataException extends WikiaException{
 }
 
 class UserPathPredictionNoDataToAnalyzeException extends WikiaException{
-	function __construct( $msg = null ) {
-		parent::__construct( ( !empty( $msg ) ) ? $msg : 'No data to Analyze.' );
+	function __construct( $msg = 'No data to Analyze.' ) {
+		parent::__construct( $msg );
 	}
 }
