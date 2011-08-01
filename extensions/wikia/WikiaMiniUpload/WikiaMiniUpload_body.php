@@ -685,9 +685,7 @@ class WikiaMiniUpload {
 		}
 		$message = wfMsg( 'wmu-success' );
 
-		$update_default_caption = $wgRequest->getVal ( 'update_caption' );
-		file_put_contents('/tmp/file.log', print_r("udc = $update_default_caption \n", true), FILE_APPEND);
-		if ($update_default_caption == 'on') {
+		if ($wgRequest->getVal ( 'update_caption' ) == 'on') {
 			Wikia::setProps($title->getArticleID(), array('default_caption' => $caption));
 		}
 
