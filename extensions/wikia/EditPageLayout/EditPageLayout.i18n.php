@@ -67,7 +67,7 @@ $messages['en'] = array(
 	'longpagewarning-notice' => '',
 	'userinvalidcssjstitle-notice' => "'''Warning:''' There is no skin \"$1\". [More info]",
 	'semiprotectedpagewarning-notice' => "'''Note:''' This page has been locked so that only registered users can edit it. [More info]",
-	'protectedpagewarning-notice' => "'''Warning:''' This page has been locked so that only users with admin rights can edit it. [More info]",
+	'protectedpagewarning-notice' => "'''Warning:''' This page has been locked so that only users with certain privileges can edit it. [More info]",
 	'titleprotectedwarning-notice' => "'''Warning:''' This page has been locked so that only some users can create it. [More info]",
 	'recreate-moveddeleted-warn-notice' => "'''Note:''' You are recreating a page that was previously deleted. [More info]",
 
