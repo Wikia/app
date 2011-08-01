@@ -40,7 +40,7 @@ class ArticleService extends Service {
 			F::App()->wg->cityId
 		);
 
-		$cachedResult = self::MAX_CACHED_TEXT_LENGTH <= $length ? $oMemCache->get( $sKey ) : '';
+		$cachedResult = self::MAX_CACHED_TEXT_LENGTH >= $length ? $oMemCache->get( $sKey ) : '';
 		$content = empty( $cachedResult ) ? $this->mArticle->getContent() : $cachedResult;
 
 		if( !empty( $content ) || empty( $cachedResult ) ) {
