@@ -7,6 +7,7 @@ var GamingCalendarModal = {
 	thisWeek: null,
 	today: new Date(),
 	expandFlag: false,
+	renderPageFlag: false,
 	
 	init: function() {
 		$().log('init');
@@ -141,15 +142,21 @@ var GamingCalendarModal = {
     },
     
     renderPage: function(e, page) {
+	if ( window.GamingCalendarModal.renderPageFlag ) {
+		return;
+	}
 	// FB#9271
 	//if (window.GamingCalendarModal.lastWeek && window.GamingCalendarModal.lastWeek < page + 1) {
+	//	window.GamingCalendarModal.renderPageFlag = false;
 	//	window.GamingCalendarModal.renderPage(e, page - 1);
 	//	return;
 	//}
+	window.GamingCalendarModal.renderPageFlag = true;
     	var week = 7 * 24 * 3600 * 1000;
 	var currentWeek = new Date( window.GamingCalendarModal.thisWeek.getTime() + (week * page) );
 
 	if (currentWeek.getTime() < window.GamingCalendarModal.firstWeek.getTime()) {
+		window.GamingCalendarModal.renderPageFlag = false;
 		window.GamingCalendarModal.renderPage(e, page + 1);
 		return;
 	}
@@ -175,12 +182,14 @@ var GamingCalendarModal = {
 				//if ( 1 == value.length && page > 0 ) {
 				//	window.GamingCalendarModal.lastWeek = offset + index - 1;
 				//	if (offset + index < page + 1) {
+				//		window.GamingCalendarModal.renderPageFlag = false;
 				//		window.GamingCalendarModal.renderPage(e, page - 1);
 				//		return;
 				//	}
 				//}
 				window.GamingCalendarData['entries'][offset + index] = value;
 			});
+			window.GamingCalendarModal.renderPageFlag = false;
 			window.GamingCalendarModal.renderPage(e, page);
 			return;
 		});
@@ -247,6 +256,7 @@ var GamingCalendarModal = {
 	
 	window.GamingCalendarModal.bindEventHandlers(page);
 	window.GamingCalendarModal.displayWeek = page;
+	window.GamingCalendarModal.renderPageFlag = false;
 	return;
     },
 
