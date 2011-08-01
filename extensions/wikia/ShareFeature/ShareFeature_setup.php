@@ -163,9 +163,10 @@ function wfShareFeatureAjaxUpdateStats( ) {
 	global $wgUser, $wgExternalStatsDB, $wgRequest;
 
 	$id = $wgUser->getId();
-	$provider = $wgRequest->getVal( 'provider', false );
-
-	if ( ( !wfReadOnly() ) && ( $provider !== false ) ) {
+	//FB#9371 - sanitize parameter being injected in the SQL query
+	$provider = $wgRequest->getIntOrNull( 'provider' );
+	
+	if ( ( !wfReadOnly() ) && ( $provider !== null ) ) {
 		$dbw = wfGetDB(DB_MASTER, array(), $wgExternalStatsDB );
 
 		// MW insert wrapper doesn't handle that syntax
