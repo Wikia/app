@@ -6,13 +6,12 @@ var GamingCalendarModal = {
 	lastWeek: null,
 	thisWeek: null,
 	today: new Date(),
+	expandFlag: false,
 	
 	init: function() {
 		$().log('init');
 		if (GamingCalendarModal.initialized) {
 			return;
-		} else {
-			GamingCalendarModal.initialized = true;
 		}
 
 		window.GamingCalendarModal.thisWeek = new Date(
@@ -33,7 +32,8 @@ var GamingCalendarModal = {
 		var months = new Array('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec');
 		$('#GamingCalendarWrapper > h1').append('<span>' + months[window.GamingCalendarModal.today.getUTCMonth()] + ' ' + window.GamingCalendarModal.today.getUTCDate() + ', ' + window.GamingCalendarModal.today.getUTCFullYear() +'</span>');
 		$('#GamingCalendarWrapper .game-more-info').trackClick('gamingCalendar/moreinfo');
-		$('#GamingCalendarWrapper .game-pre-order').trackClick('gamingCalendar/preorder');
+		$('#GamingCalendarWrapper .game-prie-order').trackClick('gamingCalendar/preorder');
+		GamingCalendarModal.initialized = true;
 		$().log('finished init');
 	},
 
@@ -56,7 +56,7 @@ var GamingCalendarModal = {
 		} else {
 
 		    for ( var i = 1; i < week.length; i++  ) {
-			    if ( week[i].expanded ) {
+			    if ( week[i].expanded && ! GamingCalendarModal.initialized ) {
 				    itemsHtml = itemsHtml + '<li>' + GamingCalendar.renderItem( week[i], true ) + '</li>';
 			    } else {
 				    itemsHtml = itemsHtml + '<li>' + GamingCalendar.renderItem( week[i], false ) + '</li>';
@@ -107,6 +107,10 @@ var GamingCalendarModal = {
     
     expandOrCollapse: function(e) {
 	e.preventDefault();
+	if (window.GamingCalendarModal.expandFlag) {
+		return;
+	}
+	window.GamingCalendarModal.expandFlag = true;
 	$('#GamingCalendar').find('.GamingCalendarItem.selected').slideUp('slow',function() { $(this).removeClass('selected').addClass('unselected').slideDown().bind('click', GamingCalendarModal.expandOrCollapse ); });
 	$(this).slideUp('slow', function() { $(this).removeClass('unselected').addClass('selected').slideDown(
 		'slow', function() {
@@ -130,6 +134,7 @@ var GamingCalendarModal = {
 				);
 				$(obj).animate({top: scrollBy}, 250);
 			}
+			window.GamingCalendarModal.expandFlag = false;
 		}
 	).unbind('click'); });
 	$.tracker.byStr( 'gamingCalendar/brick/expand' );
