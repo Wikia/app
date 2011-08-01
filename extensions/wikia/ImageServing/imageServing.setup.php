@@ -9,10 +9,36 @@ $wgExtensionCredits['specialpage'][] = array(
 	'version' => '1.0.1',
 );
 
+
+$app = F::app();
 $dir = dirname(__FILE__) . '/';
+
 /*Auto loader setup */
-$wgAutoloadClasses['ImageServing']  = $dir . 'imageServing.class.php';
-$wgAutoloadClasses['ImageServingHelper']  = $dir . 'imageServingHelper.class.php';
+$app->registerClass('ImageServing', $dir . 'imageServing.class.php');
+$app->registerClass('ImageServingHelper', $dir . 'imageServingHelper.class.php');
+
+$app->registerClass('ImageServingDriverBase', $dir . 'drivers/ImageServingDriverBase.class.php');
+$app->registerClass('ImageServingDriverMainNS', $dir . 'drivers/ImageServingDriverMainNS.class.php');
+$app->registerClass('ImageServingDriverCategoryNS', $dir . 'drivers/ImageServingDriverCategoryNS.class.php');
+
+
+$app->registerClass('ImageServingDriverUserNS', $dir . 'drivers/ImageServingDriverUserNS.class.php');
+$app->registerClass('ImageServingDriverFileNS', $dir . 'drivers/ImageServingDriverFileNS.class.php');
+
+/* if city id null = internal/staff */
+
+if(!empty($wgCityId)) {
+	$app->registerClass('ImageServingController', $dir . 'ImageServingController.class.php');	
+}
+
+
+$wgImageServingDrivers = array( 
+	 NS_USER => 'ImageServingDriverUserNS',
+	 NS_FILE => 'ImageServingDriverFileNS',
+	 NS_CATEGORY => 'ImageServingDriverCategoryNS'
+);
+
+
 $wgHooks['LinksUpdateComplete'][] = 'ImageServingHelper::buildIndexOnPageEdit';
 /* parser hook */
 

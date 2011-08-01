@@ -5,7 +5,7 @@
  */
 
 class ImageServingHelper{
-	static private $hookOnOff = false; // parser hook are off 
+	static $hookOnOff = false; // parser hook are off 
 	
 	public static function buildIndexOnPageEdit( $self ) {
 		wfProfileIn(__METHOD__);
@@ -89,6 +89,29 @@ class ImageServingHelper{
 	private static function hookSwitch($onOff = true) {
 		self::$hookOnOff = $onOff;
 	}
+	
+	public static function isParsing() {
+		return self::$hookOnOff;
+	}
+	
+	/**
+	 * buildImages - helper function to help build list on images in parserHook
+	 * 
+	 * 
+	 * @param $files \type{\arrayof{\file}}
+	 * 
+	 * @return string
+	 **/
+	
+	public static function buildImages($files) {
+		$res = '';
+		foreach($files as $file) {
+			if( $file instanceof File ||  $file instanceof LocalFile ) {
+				$res .= " <image mw='".$file->getTitle()->getPartialURL()."' /> ";			
+			}
+		}
+		return $res;
+	}	
 
 	/**
 	 * bulidIndex - save image index in db

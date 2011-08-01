@@ -6,7 +6,7 @@
  * retriving thumbnails of those images which are scaled either by an aspect-ratio
  * or specific dimensions.
  */
-class ImageServing{
+class ImageServing {
 	private $maxCount = 10;
 	private $minSize = 75;
 	private $queryLimit = 50;
@@ -21,23 +21,34 @@ class ImageServing{
 	 * @param $articles \type{\arrayof{\int}} List of articles ids to get images
 	 * @param $width \int image width
 	 * @param $width \int
+	 * @param $proportionOrHight can by array with proportion(example: array("w" => 1, "h" => 1)) or just height in pixels (example: 100)  proportion will be 
+	 * calculated automatically 
 	 */
-	function __construct($articles = null, $width = 100, $proportion = array("w" => 1, "h" => 1), $db = null){
-
+	function __construct($articles = null, $width = 100, $proportionOrHeight = array("w" => 1, "h" => 1), $db = null){
+		if(!is_array($proportionOrHeight)) {
+			$height = (int) $proportionOrHeight;
+			$this->proportion = array("w" => $width, "h" => $height);
+		} else {
+			$this->proportion = $proportionOrHeight;
+		}
+		
+		$this->articles = array();
+		
 		if( is_array( $articles ) ) {
 			foreach($articles as $article){
-				$article_id = ( int ) $article;
-				$title = Title::newFromID( $article_id );
-				$this->articles[] = $article_id;
+				$articleId = ( int ) $article;
+				$this->articles[$articleId] = $articleId;
 			}
 		}
 
+		$this->app = F::app();
 		$this->width = $width;
-		$this->proportion = $proportion;
-		$this->deltaY = (round($proportion['w']/$proportion['h']) - 1)*0.1;
+		$this->memc =  $this->app->getGlobal( 'wgMemc' ); 
+		$this->imageServingDrivers = $this->app->getGlobal( 'wgImageServingDrivers' );
+		
+		$this->deltaY = (round($this->proportion['w']/$this->proportion['h']) - 1)*0.1;
 		$this->db = $db;
 	}
-
 	/**
 	 * getImages - get array with list of top images for all article passed into the constructor
 	 *
@@ -46,160 +57,99 @@ class ImageServing{
 	 * @access public
 	 *
 	 * @param $n \type{\arrayof{\int}} number of images to get for each article
-	 * @param $article_lp \int NOT USED
+	 * @param $driver \ImageServingDriver allow to force driver
 	 *
 	 * @return  \type{\arrayof{\topImage}}
 	 */
-	public function getImages( $n = 5, $article_lp = 0 ) {
+	public function getImages( $n = 5, $driver = null) {
 		global $wgMemc;
 
 		wfProfileIn( __METHOD__ );
-
-		$out = array();
 		$articles = $this->articles;
-
+		$out = array();
+		
 		if( !empty( $articles ) ) {
-			$cache_return = array();
-
-			foreach ( $articles as $key => $value ) {
-				$mcOut = $wgMemc->get( $this->_makeKey( $value, $n ), null );
-				if($mcOut != null) {
-					unset( $articles[ $key ] );
-					$cache_return[ $value ] = $mcOut;
-				}
-			}
-
-			if( count( $articles ) < 1 ) {
-				wfProfileOut( __METHOD__ );
-				return $cache_return;
-			}
-
 			if( $this->db == null ) {
 				$db = wfGetDB( DB_SLAVE, array() );
 			} else {
 				$db = $this->db;
 			}
 
-			$image_list = array();
-			$images_name = array();
-
+			$this->articlesByNS = array();
+			foreach($articles as $key => $value) {
+				$mcValue = $this->memc->get( $this->makeKey($key) , null );
+				if(!empty($mcValue)) {
+					unset($articles[$key]);
+					$this->addArticleToList($mcValue);
+				}
+			}			
+			
 			$res = $db->select(
-				array( 'page_wikia_props' ),
+				array( 'page' ),
 				array(
-					'page_id',
-					'props'
+					'page_namespace as ns',
+					'page_title as title',
+					'page_id as id'
 				),
 				array(
-					'page_id in(' . implode( ",", $articles ) . ')',
-					"propname = 'imageOrder' or propname =  0"
+					'page_id' =>  $articles
 				),
 				__METHOD__
 			);
-
-			/* build list of images to get info about it */
+			
 			while ($row =  $db->fetchRow( $res ) ) {
-				$props = unserialize( $row['props'] );
-				if ( is_array( $props ) && count( $props ) ) {
-					$count = 0;
-					foreach ( $props as $key => $value ) {
-						if ( !isset($image_list[$value][$row['page_id']]) ) {
-							$count++;
-							if ( $this->queryLimit == $count ) {
-								break;
-							}
-							if ( empty($image_list[$value]) ) {
-								$images_name[] = $value;
-							}
-							$image_list[$value][$row['page_id']] = $key;
-						}
+				$this->addArticleToList($row);
+			}
+
+			
+			if(empty($driver)) {
+				foreach($this->imageServingDrivers as $key => $value ){
+					if(!empty($this->articlesByNS[$key])) {
+						$driver = new $value($db, $this);
+						$driver->setArticlesList($this->articlesByNS[$key]);
+						unset($this->articlesByNS[$key]);			
+						$out = $out + $driver->execute($n);
 					}
 				}
+			
+				$driver = new ImageServingDriverMainNS($db, $this);
+				//rest of article in MAIN name spaces
+				foreach( $this->articlesByNS as $value ) {
+					$driver->setArticlesList( $value );	
+					$out = $out + $driver->execute($n);
+				}	
+			} else {
+				$driver = new $driver($db, $this);
+				//rest of article in MAIN name spaces
+				foreach( $this->articlesByNS as $value ) {
+					$driver->setArticlesList( $value );	
+					$out = $out + $driver->execute($n);
+				}				
 			}
-
-			if ( count( $image_list ) == 0 ) {
-				wfProfileOut( __METHOD__ );
-				return $cache_return;
-			}
-
-			# get image names from imagelinks table
-			$stime = time();
-			$db_out = array();
-			if ( !empty($images_name) ) {
-				foreach ( $images_name as $img_name ) {
-					$result = $db->select(
-						array( 'imagelinks' ),
-						array( 'il_from' ),
-						array(
-							'il_to' => $img_name
-						),
-						__METHOD__,
-						array ('LIMIT' => ($this->maxCount + 1))
-					);
-
-					# skip images which are too popular
-					if ($result->numRows() > $this->maxCount ) continue;
-					# check image table
-					$oRowImg = $db->selectRow(
-						array( 'image' ),
-						array( 'img_name', 'img_height', 'img_width', 'img_minor_mime' ),
-						array(
-							'img_name' => $img_name
-						),
-						__METHOD__
-					);
-
-					if ( empty ( $oRowImg ) ) {
-						continue;
-					}
-
-					if ( $oRowImg->img_height > $this->minSize && $oRowImg->img_width > $this->minSize ) {
-						if ( !in_array( $oRowImg->img_minor_mime, array( "svg+xml","svg") ) ) {
-							$db_out[ $oRowImg->img_name ] = array(
-								'cnt'            => $result->numRows(),
-								'il_to'          => $oRowImg->img_name,
-								'img_width'      => $oRowImg->img_width,
-								'img_height'     => $oRowImg->img_height,
-								'img_minor_mime' => $oRowImg->img_minor_mime
-							);
-						}
-					}
-				}
-			}
-
-			$etime = time();
-
-			if (count($db_out) == 0) {
-				wfProfileOut(__METHOD__);
-				return $cache_return;
-			}
-
-			foreach( $image_list as $key => $value  ) {
-				if( isset($db_out[ $key ]) ) {
-					foreach($value as $key2 => $value2) {
-						if (empty($out[$key2]) || count($out[$key2]) < $n) {
-							$out[$key2][] = array(
-								"name" => $key,
-								"url" => $this->getUrl($key, $db_out[$key]['img_width'], $db_out[$key]['img_height']));
-						}
-					}
-				}
-			}
-
-			foreach ($out as $key => $value) {
-				$wgMemc->set( $this->_makeKey( $key, $n ), $value, 60*60 );
-			}
-
-			wfProfileOut(__METHOD__);
-			return $out + $cache_return;
+		}
+		
+		if(!empty($out)) {
+			return $out;
 		}
 
 		wfProfileOut(__METHOD__);
-		return $out;
+		return array();
+	}
+	
+	private function addArticleToList($value) {
+		if( empty($this->articlesByNS[$value['ns']] )) {
+			$this->articlesByNS[$value['ns']]  = array();
+		}
+		$this->articlesByNS[$value['ns']][$value['id']] = $value; 
+	}
+	
+	private function makeKey( $key  ) {
+		return wfMemcKey("imageserving-article-details", $key);
 	}
 
 	/**
-	 *  fetches an array with thumbnails and titles for the supplied files
-	 *
+	 *  !!! deprecated !!! use getImages fetches an array with thumbnails and titles for the supplied files
+	 *  TODO: remove it image serving work also with FILE_NS we keep this function for backward compatibility 
 	 * @author Federico "Lox" Lucignano
 	 *
 	 * @param Array $fileNames a list of file names to fetch thumbnails for
@@ -208,32 +158,30 @@ class ImageServing{
 	public function getThumbnails( $fileNames = null ) {
 		wfProfileIn( __METHOD__ );
 
-		$ret = array();
-
+		$imagesIds = array();
 		if( !empty( $fileNames ) ) {
 			foreach ( $fileNames as $fileName ) {
 				if(!($fileName instanceof LocalFile)) {
 					$title = Title::newFromText( $fileName, NS_FILE );
 				} else {
 					$img = $fileName;
-				}
-
-				if( !empty($img) || $img = wfFindFile( $title ) ) {
-					$fileName = $img->getTitle()->getDBkey();
-					$issvg = false;
-					$mime = strtolower($img->getMimeType());
-					if( $mime == 'image/svg+xml' || $mime == 'image/svg' ) {
-						$issvg = true;
-					}
-
-					$ret[ $fileName ] =  array(
-						'name' => $img->getTitle()->getText(),
-						'url' => wfReplaceImageServer( $img->getThumbUrl( $this->getCut( $img->getWidth(), $img->getHeight(), "center", $issvg) . "-" . $img->getName().($issvg ? ".png":"") ) )
-					);
+					$title = $img->getTitle();
 				}
 			}
+			
+			$imagesIds[ $title->getArticleId() ] = $title->getDBkey();
+			$this->articles[ $title->getArticleId() ] = $title->getArticleId();
 		}
 
+		$out = $this->getImages(1);
+		
+		$ret = array();
+		foreach($imagesIds as $key => $value) {
+			if(!empty($out[$key]) && count($out[$key]) > 0) {
+				$ret[ $value ] = $out[$key][0];
+			}  		
+		}
+		
 		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
@@ -251,28 +199,29 @@ class ImageServing{
 	 */
 
 	public function getUrl( $name, $width = 0, $height = 0 ) {
+		//TODO: Create files local cache of IS
+		$file_title = Title::newFromText( $name ,NS_FILE );
+
+		$img = wfFindFile( $file_title  );
+
 		if ($name instanceof File) {
 			$img = $name;
 		}
 		else {
 			$file_title = Title::newFromText( $name ,NS_FILE );
 			$img = wfFindFile( $file_title  );
-
-			if( $img == null ) {
+			if( empty($img) ) {
 				return "";
 			}
 		}
-
-		return wfReplaceImageServer( $img->getThumbUrl( $this->getCut( $width, $height ) . "-" . $img->getName() ) );
-	}
-
-	/**
-	 * Generates a memcache key based on the supplied value
-	 *
-	 * @author Federico "Lox" Lucignano
-	 */
-	private function _makeKey( $key, $n = 1 ) {
-		return wfMemcKey("imageserving", $this->width, $n, $this->proportion["w"], $this->proportion["h"], $key);
+		
+		$issvg = false;
+		$mime = strtolower($img->getMimeType());
+		if( $mime == 'image/svg+xml' || $mime == 'image/svg' ) {
+			$issvg = true;
+		}
+					
+		return wfReplaceImageServer( $img->getThumbUrl( $this->getCut( $width, $height ) . "-" . $img->getName().($issvg ? ".png":"") ) );
 	}
 
 	/**
