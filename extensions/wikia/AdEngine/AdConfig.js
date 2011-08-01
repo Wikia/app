@@ -22,10 +22,8 @@ AdConfig = {
 			case 'GR': // Greece
 			case 'HU': // Hungary
 			case 'IT':
-			case 'MX':
 			case 'NL':
 			case 'NO': // Norway
-			case 'PE': // Peru
 			case 'RU': // Russia
 			case 'SE': // Sweden
 			case 'UK':
