@@ -32,6 +32,7 @@ class ImageServingTest extends SpecialPage {
 		if( $wgRequest->getVal("article","") != "")  {
 			$title = Title::newFromText($wgRequest->getVal("article"),NS_MAIN);
 			$test = new ImageServing(array($title->getArticleId()), $this->size, $this->prop);
+	
 			foreach ($test->getImages(20) as $key => $value){
 				$wgOut->addHTML( "<b>".$title->getText()."</b><br><br>");
 				foreach ($value as $value2) {
