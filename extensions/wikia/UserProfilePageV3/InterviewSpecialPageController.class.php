@@ -48,11 +48,16 @@ class InterviewSpecialPageController extends WikiaSpecialPageController {
 	 * @responseParam int $questionsNum numer of questions
 	 */
 	public function questionList() {
-		$this->setVal( 'questions', $this->interview->getQuestions() );
+		//we'll implement interviews later
+		//$this->setVal( 'questions', $this->interview->getQuestions() );
+		$this->setVal( 'questions', array() );
 
 		$this->setVal( 'isAddingAllowed', $this->interview->isAddingAllowed() );
 		$this->setVal( 'maxQuestionsNum', Interview::MAX_QUESTIONS );
-		$this->setVal( 'questionsNum', $this->interview->getQuestionsNum() );
+		
+		//we'll implement interviews later
+		//$this->setVal( 'questionsNum', $this->interview->getQuestionsNum() );
+		$this->setVal( 'questionsNum', 0);
 	}
 
 
@@ -100,7 +105,9 @@ class InterviewSpecialPageController extends WikiaSpecialPageController {
 
 
 	public function answersStats() {
-		$this->setVal( 'questions', $this->interview->getQuestions() );
+		//we'll implement interviews later
+		//$this->setVal( 'questions', $this->interview->getQuestions() );
+		$this->setVal( 'questions', array() );
 	}
 
 	private function populateQuestionListData() {
