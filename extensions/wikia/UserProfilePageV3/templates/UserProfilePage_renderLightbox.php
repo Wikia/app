@@ -69,10 +69,10 @@
 			<form id="userData" name="userData">
 				<div class="column">
 					<label><?= wfMsg('user-identity-box-about-name'); ?></label>
-					<input type="text" name="name" value="<?= htmlentities($user['realName']); ?>">
+					<input type="text" name="name" value="<?= htmlentities($user['realName'], ENT_COMPAT, 'UTF-8'); ?>">
 
 					<label><?= wfMsg('user-identity-box-about-location'); ?></label>
-					<input type="text" name="location" value="<?= htmlentities($user['location']); ?>">
+					<input type="text" name="location" value="<?= htmlentities($user['location'], ENT_COMPAT, 'UTF-8'); ?>">
 
 					<label><?= wfMsg('user-identity-box-about-birthday'); ?></label>
 					<select id="userBDayMonth" name="month">
@@ -91,10 +91,10 @@
 					</select>
 
 					<label><?= wfMsg('user-identity-box-about-occupation'); ?></label>
-					<input type="text" name="occupation" value="<?= htmlentities($user['occupation']); ?>">
+					<input type="text" name="occupation" value="<?= htmlentities($user['occupation'], ENT_COMPAT, 'UTF-8'); ?>">
 
 					<label><?= wfMsg('user-identity-box-about-gender'); ?></label>
-					<input type="text" name="gender" value="<?= htmlentities($user['gender']); ?>">
+					<input type="text" name="gender" value="<?= htmlentities($user['gender'], ENT_COMPAT, 'UTF-8'); ?>">
 				</div>
 
 				<div class="column">
@@ -111,11 +111,11 @@
 					<? endif; ?>
 
 					<label><?= wfMsg('user-identity-box-about-website'); ?></label>
-					<input type="text" name="website" value="<?= htmlentities($user['website']); ?>">
+					<input type="text" name="website" value="<?= htmlentities($user['website'], ENT_COMPAT, 'UTF-8'); ?>">
 
 					<label><?= wfMsg('user-identity-box-about-tweet'); ?></label>
 					<span class="tweet-at">@</span>
-					<input type="text" name="twitter" value="<?= htmlentities($user['twitter']); ?>">
+					<input type="text" name="twitter" value="<?= htmlentities($user['twitter'], ENT_COMPAT, 'UTF-8'); ?>">
 
 					<label><?= wfMsg('user-identity-box-about-fav-wikis'); ?></label>
 					<a class="favorite-wikis-refresh wikia-chiclet-button" href="#"><img src="<?= $wgBlankImgUrl ?>"></a>
