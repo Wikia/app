@@ -8,31 +8,7 @@ AdConfig = {
 
 	isHighValueCountry: function(country) {
 		country = country.toUpperCase();
-		switch (country) {
-			case 'AT': // Austria
-			case 'BE':
-			case 'CA':
-			case 'CH': // Switzerland
-			case 'DE':
-			case 'DK': // Denmark
-			case 'ES':
-			case 'FI': // Finland
-			case 'FR':
-			case 'GB': // United Kingdom
-			case 'GR': // Greece
-			case 'HU': // Hungary
-			case 'IT':
-			case 'NL':
-			case 'NO': // Norway
-			case 'RU': // Russia
-			case 'SE': // Sweden
-			case 'UK':
-			case 'US':
-				return true;
-				break;
-			default:
-				return false;
-		}
+		return $.inArray(country, window.wgHighValueCountries) != -1;
 	},
 
 	isHighValueSlot: function(slotname) {

@@ -12,7 +12,7 @@ $wgHooks['BeforePageDisplay'][] = 'adEngineAdditionalScripts';
 $wgHooks["MakeGlobalVariablesScript"][] = "wfAdEngineSetupJSVars";
 
 function wfAdEngineSetupJSVars($vars) {
-	global $wgRequest, $wgNoExternals, $wgEnableAdsInContent, $wgEnableOpenXSPC, $wgAdDriverCookieLifetime, $wgDartCustomKeyValues, $wgUser, $wgEnableWikiAnswers;
+	global $wgRequest, $wgNoExternals, $wgEnableAdsInContent, $wgEnableOpenXSPC, $wgAdDriverCookieLifetime, $wgHighValueCountries, $wgDartCustomKeyValues, $wgUser, $wgEnableWikiAnswers;
 
 	$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
 	$vars['wgNoExternals'] = $wgNoExternals;
@@ -25,6 +25,11 @@ function wfAdEngineSetupJSVars($vars) {
 
 	// AdDriver
 	$vars['wgAdDriverCookieLifetime'] = $wgAdDriverCookieLifetime;
+	$highValueCountries = WikiFactory::getVarValueByName('wgHighValueCountries', 177);	// community central
+	if (empty($highValueCountries)) {
+		$highValueCountries = $wgHighValueCountries;
+	}
+	$vars['wgHighValueCountries'] = $highValueCountries;
 
 	// ArticleAdLogic
 	$vars['adLogicPageType'] = ArticleAdLogic::getPageType();
