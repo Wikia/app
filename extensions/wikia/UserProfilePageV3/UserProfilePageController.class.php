@@ -1044,8 +1044,7 @@ class UserProfilePageController extends WikiaController {
 			$userIdentityBox = F::build('UserIdentityBox', array($this->app, $user, self::MAX_TOP_WIKIS));
 			$success = $userIdentityBox->hideWiki($wikiId);
 			
-			// Why is this returning the same 4 top wikis after one has been hidden??
-			$result = array( 'success' => $success, 'wikis' => $userIdentityBox->getTopWikis(true) );
+			$result = array( 'success' => $success, 'wikis' => $userIdentityBox->getTopWikis() );
 		}
 
 		$this->setVal('result', $result);
