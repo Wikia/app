@@ -1354,6 +1354,13 @@ function wfDBLightMode( $maxSleep ) {
 	return true;
 }
 
+function wfIsDBLightMode() {
+	global $wgExternalSharedDB;
+	
+	$dbLightMode = WikiFactory::getVarValueByName( 'wgDBLightMode', WikiFactory::DBToId( $wgExternalSharedDB ), true );
+	return (bool) $dbLightMode;
+}
+
 /**
  * return status code if the last failure was due to the database being read-only.
  *

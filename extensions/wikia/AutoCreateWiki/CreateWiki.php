@@ -32,7 +32,8 @@ class CreateWiki {
 	const ERROR_DATABASE_WIKI_FACTORY_TABLES_BROKEN    = 10;
 	const ERROR_DATABASE_WRITE_TO_CITY_DOMAINS_BROKEN  = 11;
 	const ERROR_USER_IN_ANON                           = 12;
-
+	const ERROR_READONLY                               = 13;
+	const ERROR_DBLIGHTMODE                            = 14;
 
 	const IMGROOT              = "/images/";
 	const IMAGEURL             = "http://images.wikia.com/";
@@ -185,6 +186,16 @@ class CreateWiki {
 
 		wfProfileIn( __METHOD__ );
 
+		if ( wfReadOnly() ) {
+			wfProfileOut( __METHOD__ );
+			return self::ERROR_READONLY;
+		}
+		
+		if ( wfIsDBLightMode() ) {
+			wfProfileOut( __METHOD__ );
+			return self::ERROR_DBLIGHTMODE;
+		}
+		
 		// check founder
 		if ( $this->mFounder->isAnon() ) {
 			wfProfileOut( __METHOD__ );
