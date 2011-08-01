@@ -71,7 +71,7 @@ $gaming-calendar-gray-text: mix($color-text, $color-page, 75%);
 
 	.weeks {
 		border: 1px solid $color-page-border;
-		height: 503px;
+		height: 509px;
 		overflow: hidden;
 		width: 580px;
 		>ul {
@@ -83,7 +83,7 @@ $gaming-calendar-gray-text: mix($color-text, $color-page, 75%);
 		border-right: 1px solid $color-page-border;
 		top: 0;
 		left: -290px;
-		height: 500px;
+		height: 506px;
 		width: 290px;
 		h1 {
 			background: $gaming-calendar-week-header;
@@ -115,6 +115,9 @@ $gaming-calendar-gray-text: mix($color-text, $color-page, 75%);
 				.game-more-info {
 					margin-right: 15px;
 				}
+				&:first-child {
+					padding-top: 0;
+				}
 			}
 		}		
 	}
@@ -124,7 +127,7 @@ $gaming-calendar-gray-text: mix($color-text, $color-page, 75%);
 		border: 1px solid $color-page-border;
 		cursor: pointer;
 		height: 20px;
-		margin: 0 3px;
+		margin: 0 3px 3px 3px;
 		text-align: center;
 		img {
 			border-color: transparent transparent $gaming-calendar-gray-text;
@@ -142,6 +145,7 @@ $gaming-calendar-gray-text: mix($color-text, $color-page, 75%);
 	}
 	.scroll-down {
 		@extend .scroll-up;
+		margin-top: 3px;
 		img {
 			border-color: $gaming-calendar-gray-text transparent transparent;
 			top: 3px;
