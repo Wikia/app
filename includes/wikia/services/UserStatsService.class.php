@@ -16,7 +16,7 @@ class UserStatsService extends Service {
 	 * Get cache key for given entry
 	 */
 	private function getKey($entry) {
-		return wfMemcKey('services', 'user_stats', $entry, $this->userId);
+		return wfMemcKey('services', 'userstats', $entry, $this->userId);
 	}
 
 	/**
@@ -46,7 +46,7 @@ class UserStatsService extends Service {
 		wfProfileIn(__METHOD__);
 
 		// update edit counts
-		$key = $this->getKey('stats3');
+		$key = $this->getKey('stats4');
 		$stats = $wgMemc->get($key);
 
 		if (!empty($stats)) {
@@ -75,7 +75,7 @@ class UserStatsService extends Service {
 		global $wgMemc;
 
 		// try to get cached data
-		$key = $this->getKey('stats3');
+		$key = $this->getKey('stats4');
 
 		$stats = $wgMemc->get($key);
 		if (empty($stats)) {
