@@ -128,10 +128,10 @@ var GamingCalendarModal = {
 					Math.abs(objTop + thisTop) + 5
 				);
 				$(obj).animate({top: scrollBy}, 250);
-			} else if (objTop + thisTop + thisHeight - vpHeight > 0) {
+			} else if (objTop + thisTop + thisHeight - vpHeight > -10) {
 				var scrollBy = '-=' + Math.min(
 					Math.abs(objHeight + objTop - vpHeight),
-					Math.abs(objTop + thisTop + thisHeight - vpHeight) + 20
+					Math.abs(objTop + thisTop + thisHeight - vpHeight) + 40
 				);
 				$(obj).animate({top: scrollBy}, 250);
 			}
