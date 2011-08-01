@@ -43,7 +43,8 @@ class UserProfilePageController extends WikiaController {
 		if( $user instanceof User ) {
 			$this->profilePage = F::build( 'UserProfilePage', array( 'user' =>  $user ) );
 			if( ( $namespace == NS_USER ) && !$isSubpage ) {
-				$this->setVal( 'questions', $this->profilePage->getInterviewQuestions( $wikiId, true ) );
+				//we'll implement interview section later
+				//$this->setVal( 'questions', $this->profilePage->getInterviewQuestions( $wikiId, true ) );
 				$this->setVal( 'stuffSectionBody', $pageBody );
 				$useOriginalBody = false;
 			}
@@ -254,7 +255,8 @@ class UserProfilePageController extends WikiaController {
 			$this->profilePage = F::build( 'UserProfilePage', array( 'user' =>  $user ) );
 
 			$this->setVal( 'body', (string) $this->sendSelfRequest( 'renderLightbox', array( 'tab' => $selectedTab, 'userId' => $userId ) ) );
-			$this->setVal( 'interviewQuestions', $this->profilePage->getInterviewQuestions( $wikiId, false, true ) );
+			//we'll implement interview section later
+			//$this->setVal( 'interviewQuestions', $this->profilePage->getInterviewQuestions( $wikiId, false, true ) );
 		} else {
 			throw new WikiaException( 'User not logged in' );
 		}
