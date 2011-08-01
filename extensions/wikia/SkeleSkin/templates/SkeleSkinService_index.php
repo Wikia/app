@@ -14,7 +14,24 @@
 		<?= $headLinks ;?>
 		<?= $cssLinks ;?>
 	</head>
-	<body>
+	<body onload="SkeleSkin.hideURLBar();">
+		<nav id="navigation">
+			<div id="closeNavigationContent">
+				<ul>
+					<li>one</li>
+					<li>two</li>
+					<li>three</li>
+				</ul>
+			</div>
+			<div id="openNavigationContent">
+				<ul>
+					<li>jeden</li>
+					<li>dwa </li>
+					<li>trzy</li>
+				</ul>
+			</div>
+			<div id="openToggle"><span id="arrow"></span></div>
+		</nav>
 		<?= $wikiHeaderContent ;?>
 		<?= $pageContent ;?>
 		<?= $jsFiles ;?>

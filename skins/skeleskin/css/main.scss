@@ -1,6 +1,17 @@
-body{
-	background-color: #EDEDED;
-	color: #000000;
+@import "mixins/border-radius";
+@import "mixins/transition";
+@import "mixins/box-shadow";
+
+html{
+  height: 100%;
+  width: 100%;
+	body{
+		background-color: #c3c3c3;
+		color: #222;
+		margin-top: 55px;
+		height: 100%;
+		width: 100%;
+	}
 }
 
 #WikiaMainContent{
@@ -38,4 +49,103 @@ body{
 			}
 		}
 	}
+}
+
+#navigation {
+  background-color: #d7d7d7;
+  color: #777;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  @include transition( "top", 0.3s, 0, 0 );
+  
+  &.top {
+    height: 50px;
+    width: 100%;
+    min-width: 100%;
+    @include transition( "height", 1s, 0, 0 );
+    &.open {
+      height: 200px;
+       @include border-radius-bottom();
+    }
+    
+    & li {
+      float: left;
+      margin: 5px;
+    }
+    
+    #openToggle {
+      position: absolute;
+      right: 0;
+      top: 0;
+      padding: 20px;
+      z-index: 9999;
+      
+      & #arrow {
+        font-size: 0;
+        line-height: 0;
+        width: 0;
+        display: block;
+      }
+    }
+  }
+  
+  &.side {
+    height: 101%;
+    width: 50px;
+    @include transition( "width", 1s, 0, 0 );
+    &.open {
+      width: 200px;
+      @include border-radius-right();
+    }
+    #openToggle {
+      position: absolute;
+      bottom: 0;
+      padding: 20px;
+      z-index: 9999;
+      #arrow {
+        font-size: 0;
+        line-height: 0;
+        width: 0;
+        display: block;
+      }
+    }
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .up {
+    border-bottom: 20px solid #77c;
+    border-left: 20px solid rgba(0,0,0,0);
+    border-right: 20px solid rgba(0,0,0,0);
+  }
+  
+  .down {
+    border-top: 20px solid #77c;
+    border-left: 20px solid rgba(0,0,0,0);
+    border-right: 20px solid rgba(0,0,0,0);
+  }
+  
+  .left {
+    border-top: 20px solid rgba(0,0,0,0);
+    border-right: 20px solid #77c;
+    border-bottom: 20px solid rgba(0,0,0,0);
+        @include box-shadow( 0, 3px, 10px, #bada55, true );
+  }
+  
+  .right {
+    border-top: 20px solid rgba(0,0,0,0);
+    border-left: 20px solid #77c;
+    border-bottom: 20px solid rgba(0,0,0,0);
+  }
+  
+}
+
+#openNavigationContent {
+  display: none;
 }
