@@ -41,9 +41,8 @@ class ArticleService extends Service {
 		);
 
 		$cachedResult = self::MAX_CACHED_TEXT_LENGTH >= $length ? $oMemCache->get( $sKey ) : '';
-		$content = empty( $cachedResult ) ? $this->mArticle->getContent() : $cachedResult;
-
-		if( !empty( $content ) || empty( $cachedResult ) ) {
+		if(empty($cachedResult)){
+			$content = $this->mArticle->getContent();
 			// Run hook to allow wikis to modify the content (ie: customize their snippets) before the stripping and length limitations are done.
 			wfRunHooks( 'ArticleService::getTextSnippet::beforeStripping', array( &$this->mArticle, &$content, $length ) );
 
@@ -107,6 +106,8 @@ class ArticleService extends Service {
 			} else {
 				wfDebug(__METHOD__ . ": requested string to long to be cached. Served without cache \n");
 			}
+		} else {
+			$content = $cachedResult;
 		}
 
 		$content = mb_substr( $content, 0, $length );
