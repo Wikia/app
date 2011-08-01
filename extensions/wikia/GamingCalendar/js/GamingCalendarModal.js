@@ -52,7 +52,7 @@ var GamingCalendarModal = {
 		template = template.replace('%week-caption%', weekdates['caption'] );
 		
 		if ( 1 == week.length ) {
-		    itemsHtml = itemsHtml + '<li class="no-entries">No entries.</li>';
+		    itemsHtml = itemsHtml + '<li class="no-entries">No Game Releases This Week<br />Check out our <a href="http://www.wikia.com/Gaming">Gaming Wikis</a>!</li>';
 		} else {
 
 		    for ( var i = 1; i < week.length; i++  ) {
@@ -136,10 +136,11 @@ var GamingCalendarModal = {
     },
     
     renderPage: function(e, page) {
-	if (window.GamingCalendarModal.lastWeek && window.GamingCalendarModal.lastWeek < page + 1) {
-		window.GamingCalendarModal.renderPage(e, page - 1);
-		return;
-	}
+	// FB#9271
+	//if (window.GamingCalendarModal.lastWeek && window.GamingCalendarModal.lastWeek < page + 1) {
+	//	window.GamingCalendarModal.renderPage(e, page - 1);
+	//	return;
+	//}
     	var week = 7 * 24 * 3600 * 1000;
 	var currentWeek = new Date( window.GamingCalendarModal.thisWeek.getTime() + (week * page) );
 
@@ -165,13 +166,14 @@ var GamingCalendarModal = {
 		$.get('/wikia.php?controller=GamingCalendar&method=getEntries&format=json&weeks='
 		+ weeksToLoad + '&offset=' + offset, function( data ) {
 			$(data.entries).each( function(index, value) {
-				if ( 1 == value.length && page > 0 ) {
-					window.GamingCalendarModal.lastWeek = offset + index - 1;
-					if (offset + index < page + 1) {
-						window.GamingCalendarModal.renderPage(e, page - 1);
-						return;
-					}
-				}
+				// FB#9271
+				//if ( 1 == value.length && page > 0 ) {
+				//	window.GamingCalendarModal.lastWeek = offset + index - 1;
+				//	if (offset + index < page + 1) {
+				//		window.GamingCalendarModal.renderPage(e, page - 1);
+				//		return;
+				//	}
+				//}
 				window.GamingCalendarData['entries'][offset + index] = value;
 			});
 			window.GamingCalendarModal.renderPage(e, page);
