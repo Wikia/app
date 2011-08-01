@@ -29,7 +29,7 @@ class WikiaStatsAutoHubsConsumer {
 	 * connect to statsdb and processing events table
 	 */
 	public function receiveFromEvents() {
-		global $wgStatsDB, $wgCityId, $wgMemc, $wgStatsDBEnabled;
+		global $wgStatsDB, $wgCityId, $wgMemc, $wgStatsDBEnabled, $wgSharedDB, $wgIP;
 		wfProfileIn( __METHOD__ );
 
 		if ( empty( $wgStatsDBEnabled ) ) {
@@ -146,7 +146,7 @@ class WikiaStatsAutoHubsConsumer {
 										}
 									}
 								} else {
-									$memkey = sprintf( "%s:user:%d", __METHOD__, $oRow->user_id );
+									$memkey = sprintf( "%s:%s:user:%d", __METHOD__, $wgSharedDB, $oRow->user_id );
 									$user = $wgMemc->get($memkey);
 									if ( empty($user) ) {
 										$groups = $oUser->getGroups();
@@ -157,6 +157,10 @@ class WikiaStatsAutoHubsConsumer {
 									}
 
 									if ( !isset($user['name']) ) {
+										continue;
+									}
+									
+									if ( $user['name'] == $wgIP || User::isIP( $user['name'] ) ) {
 										continue;
 									}
 
