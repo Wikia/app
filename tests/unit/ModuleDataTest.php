@@ -449,7 +449,7 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$wgTitle = Title::newFromText('User:WikiaBot');
 		$moduleData = Module::get('Body')->getData();
 		$railList = $moduleData['railModuleList'];
-		$this->assertEquals($railList[1200][0], 'FollowedPages');
+		$this->assertEquals($railList[1101][0], 'FollowedPages');
 
 		if (!empty($wgEnableUserProfilePagesExt)) {
 			$this->assertEquals($railList[1350][0], 'Achievements');
