@@ -862,3 +862,9 @@ $wgMobileSkins = array( 'wikiphone', 'wikiaapp', 'skeleskin' );
  * variable for disabling memcached deleted key replication
  */
 $wgDisableMemCachedReplication = false;
+
+/**
+ * variable for enabling Nirvana's per-skin template override
+ * @see includes/wikia/WikiaView.class.php
+ */
+$wgEnableSkinTemplateOverride = false;
