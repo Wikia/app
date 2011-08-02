@@ -42,6 +42,7 @@ class WikiaResponse {
 	private $contentType = null;
 	private $headers = array();
 	private $format = null;
+	private $skinName = null;
 	private $controllerName = null;
 	private $methodName = null;
 	protected $data = array();
@@ -79,6 +80,22 @@ class WikiaResponse {
 	public function setView( WikiaView $view ) {
 		$this->view = $view;
 		$this->view->setResponse( $this );
+	}
+	
+	/**
+	 * gets requested skin name
+	 * @return String
+	 */
+	public function getSkinName() {
+		return $this->skinName;
+	}
+
+	/**
+	 * sets requested skin name
+	 * @param String $name
+	 */
+	public function setSkinName( $name ) {
+		$this->skinName = $name;
 	}
 
 	/**

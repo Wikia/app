@@ -33,8 +33,15 @@ class WikiaView {
 		$response->setControllerName( $controllerName );
 		$response->setMethodName( $methodName );
 		$response->setData( $data );
+		$app = F::app();
+		
+		if ( $app->wg->EnableSkinTemplateOverride ) {
+			if ( $app->isSkinInitialized() ) {
+				$response->setSkinName( $app->wg->User->getSkin()->getSkinName() );
+			}
+		}
 
-		$view = new WikiaView;
+		$view = F::build( 'WikiaView' );
 		$view->setResponse( $response );
 
 		return $view;
@@ -116,14 +123,35 @@ class WikiaView {
 			}
 
 			$dirName = dirname( $autoloadClasses[$controllerClass] );
-			$templatePath = "{$dirName}/templates/{$controllerName}_{$methodName}.php";
+			$basePath = "{$dirName}/templates/{$controllerName}_{$methodName}";
+			$templatePath = null;
 
-			if( !file_exists( $templatePath ) && !$app->isService( $controllerName ) ) {
+			/**
+			 * per-skin template override (experimental)
+			 * @see $wgEnableSkinTemplateOverride
+			 */
+			$requestedSkinName = $this->response->getSkinName();
+	
+			if ( !empty( $requestedSkinName ) ) {
+				$skinSpecificPath = "{$basePath}_{$requestedSkinName}.php";
+
+				if ( file_exists( $skinSpecificPath ) ) {
+					$templatePath = $skinSpecificPath;
+				}
+			}
+			
+			if ( empty( $templatePath ) ) {
+				$templatePath = "{$basePath}.php";
+			}
+			
+			$templateExists = file_exists( $templatePath );
+
+			if( !$templateExists && !$app->isService( $controllerName ) ) {
 				$controllerName = $app->getControllerLegacyName($controllerName);
 				$templatePath = "{$dirName}/templates/{$controllerName}_{$methodName}.php";
 			}
 
-			if( !file_exists( $templatePath ) ) {
+			if( !$templateExists ) {
 				throw new WikiaException( "Template file not found: {$templatePath}" );
 			}
 
@@ -189,7 +217,7 @@ class WikiaView {
 		// Note: never do this for Raw or Json formats due to major security issues there
 		$data['app'] = F::app();
 		$data['wg'] = F::app()->wg;
-		$data['wf'] = F::app()->wf;		
+		$data['wf'] = F::app()->wf;
 
 		if( !empty( $data ) ) {
 			extract( $data );

@@ -35,12 +35,17 @@ class WikiaDispatcher {
 	 * @return WikiaResponse
 	 */
 	public function dispatch( WikiaApp $app, WikiaRequest $request ) {
-		$format = $request->getVal( 'format', WikiaResponse::FORMAT_HTML );
-		$response = F::build( 'WikiaResponse', array( 'format' => $format ) );
 		$autoloadClasses = $app->wg->AutoloadClasses;
+		$format = $request->getVal( 'format', WikiaResponse::FORMAT_HTML );
+		
+		$response = F::build( 'WikiaResponse', array( 'format' => $format ) );
+		
 		if (empty($autoloadClasses)) {
 			throw new WikiaException( "wgAutoloadClasses is empty, cannot dispatch Request" );
+		} elseif ( $app->wg->EnableSkinTemplateOverride && $app->isSkinInitialized() ) {
+			$response->setSkinName( $app->wg->User->getSkin()->getSkinName() );
 		}
+		
 		do {
 			$request->setDispatched(true);
 			
