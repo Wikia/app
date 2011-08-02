@@ -509,7 +509,7 @@ public class PageLayoutBuilderTest extends BaseTest {
 	}
 	
 	private void switchEditorMode(String mode) throws Exception {
-		if (isFCK() && !session().getEval("window.RTE.instance.mode").equals(mode)) {
+		if (isWysiwygEditor() && !session().getEval("window.RTE.instance.mode").equals(mode)) {
 			session().runScript("window.RTE.instance.switchMode('" + mode + "')");
 			session().waitForCondition("window.RTE.instance.mode == '" + mode + "'", "7500");
 		}
