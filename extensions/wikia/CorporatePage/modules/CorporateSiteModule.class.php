@@ -198,7 +198,7 @@ class CorporateSiteModule extends Module {
 			$slider->setParser($wgParser);
 			$slider->parseParams(array(
 				'type' => 'slider',
-				'orientation'=> 'right',
+				'orientation'=> 'bottom',
 			));
 
 			// add images
