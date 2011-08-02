@@ -34,8 +34,8 @@ Add pages to this list by clicking \"{{int:watch}}\" at the top of a page.",
 	'wikiafollowedpages-following' => 'Following',
 	'wikiafollowedpages-special-title-userbar' => 'Followed pages',
 
-	'tog-enotiffollowedpages' => 'E-mail me when a page I am following is changed',
-	'tog-enotiffollowedminoredits' => 'E-mail me for minor edits to pages I am following',
+	'tog-enotiffollowedpages' => 'Email me when a page I am following is changed',
+	'tog-enotiffollowedminoredits' => 'Email me for minor edits to pages I am following',
 
 	'prefs-wikiafollowedpages-prefs-advanced' => 'Advanced options',
 	'prefs-wikiafollowedpages-prefs-watchlist' => 'Watchlist only',
