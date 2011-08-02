@@ -53,7 +53,7 @@ class SkeleSkinService extends WikiaService {
 			$jsFiles .= "<script type=\"{$this->wg->JsMimeType}\" src=\"$src\"></script>\n";
 		}
 		
-		$this->appCacheManifestPath = self::CACHE_MANIFEST_PATH;
+		$this->appCacheManifestPath = ( $this->wg->DevelEnvironment && !$this->wg->Request->getBool( 'appcache' ) ) ? null : self::CACHE_MANIFEST_PATH . "&{$this->wg->StyleVersion}";
 		$this->mimeType = $this->templateObject->data['mimetype'];
 		$this->charSet = $this->templateObject->data['charset'];
 		$this->showAllowRobotsMetaTag = !$this->wg->DevelEnvironment;
