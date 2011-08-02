@@ -291,7 +291,7 @@ class UserIdentityBox {
 				$wikiId = $row->wiki_id;
 				$editCount = $row->edits;
 				$wikiName = F::build('WikiFactory', array('wgSitename', $wikiId), 'getVarValueByName');
-				$wikiUrl = F::build('WikiFactory', array('wgServer', $wikiId), 'getVarValueByName');
+				$wikiUrl = F::build('GlobalTitle', array(wfMsgForContent('Mainpage'), NS_MAIN, $wikiId), 'newFromText')->getFullUrl();
 				
 				$wikis[$wikiId] = array( 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'editCount' => $editCount );
 			}
