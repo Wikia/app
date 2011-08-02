@@ -831,7 +831,7 @@ class WikiFactory {
 
 		wfProfileIn( __METHOD__ );
 
-		$value = false;
+		$value = null;
 		/**
 		 * first read WF Cache for city_id -- maybe value is already stored
 		 * in memcached?
@@ -840,10 +840,10 @@ class WikiFactory {
 			$variables = $wgMemc->get( self::getVarsKey( $city_id ) );
 			$value = isset( $variables[ "data" ][ $cv_name ] )
 				? self::substVariables( $variables[ "data" ][ $cv_name ], $city_id )
-				: false;
+				: null;
 		}
 
-		if( !$value ) {
+		if( is_null( $value ) ) {
 			$variable = self::loadVariableFromDB( false, $cv_name, $city_id, $master );
 			$value = isset( $variable->cv_value )
 				? self::substVariables( unserialize( $variable->cv_value ), $city_id )
