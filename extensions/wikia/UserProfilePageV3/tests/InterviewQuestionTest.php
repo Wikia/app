@@ -1,11 +1,8 @@
 <?php
-//we'll implement interview later
-/*
 require_once dirname(__FILE__) . '/../UserProfilePage.setup.php';
 wfLoadAllExtensions();
-*/
+
 class InterviewQuestionTest extends WikiaBaseTest {
-	/*
 	const TEST_QUESTION_ID = 1;
 	const TEST_QUESTION_BODY = 'test question body';
 	const TEST_ANSWER_BODY = 'test answer body';
@@ -13,19 +10,18 @@ class InterviewQuestionTest extends WikiaBaseTest {
 
 	/**
 	 * @var InterviewQuestion
+	 * @todo rename object to question for example
 	 */
-	//protected $object;
+	protected $object;
 	
-	/*
 	protected function setUp() {
-		$this->object = $this->getMock( 'InterviewQuestion', array( 'getId', 'getDb' ), array(), '', false );
-
 		parent::setUp();
+		
+		$this->markTestIncomplete("We'll work on interview later");
+		$this->object = $this->getMock( 'InterviewQuestion', array( 'getId', 'getDb' ), array(), '', false );
 	}
-	*/
 
 	public function testIncrementingAnswersCount() {
-		/*
 		$dbMock = $this->getMock( 'DatabaseMysql', array( 'update', 'commit' ), array(), '', false );
 		$dbMock->expects( $this->once() )
 		  ->method( 'update' )
@@ -50,10 +46,8 @@ class InterviewQuestionTest extends WikiaBaseTest {
 		$this->object->incrAnswersCount();
 
 		$this->assertEquals( 1, $this->object->getAnswersCount() );
-		*/
 	}
 	
-	/*
 	public function testDecrementingAnswersCount() {
 		$dbMock = $this->getMock( 'DatabaseMysql', array( 'update', 'commit' ), array(), '', false );
 		$dbMock->expects( $this->once() )
@@ -98,5 +92,4 @@ class InterviewQuestionTest extends WikiaBaseTest {
 		$this->assertEquals( self::TEST_ANSWER_BODY, $array['answerBody'] );
 		$this->assertEquals( self::TEST_QUESTION_CAPTION, $array['caption'] );
 	}
-	*/
 }
