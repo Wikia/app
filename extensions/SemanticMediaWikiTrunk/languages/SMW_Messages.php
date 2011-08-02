@@ -2150,8 +2150,8 @@ Einige der vorhandenen Attribute könnten [[Special:UnusedProperties|verwaiste A
 	'smw_ask_hide_embed' => 'Eingebetteten Code ausblenden',
 	'smw_ask_embed_instr' => 'Um diese Abfrage in eine Wikiseite einzufügen, kann der unten angegebene Code verwendet werden.',
 	'querycreator' => 'Abfragenersteller',
-	'smw_show_addnal_opts' => 'Zusätzliche Optionen anzeigen',
-	'smw_hide_addnal_opts' => 'Zusätzliche Optionen ausblenden',
+	'smw_qc_show_addnal_opts' => 'Weitere Optionen anzeigen',
+	'smw_qc_hide_addnal_opts' => 'Weitere Optionen ausblenden',
 	'smw_qc_query_help' => 'Bitte eine Abfrage unter Verwendung des untenstehenden Formulars angeben, um Wikiseiten auf Basis von 
 Kategorien (<strong>z. B. [[:{{ns:category}}:Schauspieler]]</strong>),
 Attributen (<strong>[[:Liegt in::Deutschland]]</strong>),
@@ -6763,8 +6763,8 @@ $messages['mk'] = array(
 	'smw_ask_hide_embed' => 'Скриј вметнат код',
 	'smw_ask_embed_instr' => 'За да го вметнете ова барање во вики-страницата меѓу редови, употребете го кодот подолу.',
 	'querycreator' => 'Создавач на барања',
-	'smw_show_addnal_opts' => 'Прикажи дополнителни можности',
-	'smw_hide_addnal_opts' => 'Скриј дополнителни можности',
+	'smw_qc_show_addnal_opts' => 'Повеќе можности',
+	'smw_qc_hide_addnal_opts' => 'Помалку можности',
 	'smw_qc_query_help' => 'Внесете барање користејќи го образецот подолу за да одберете викистраници по 
 Категории (<strong>[[{{ns:category}}:Actor]]</strong>), 
 Својства (<strong>[[Located in::Germany]]</strong>),  
@@ -8591,8 +8591,8 @@ As propriedades que não têm uma página própria podem ser encontradas na [[Sp
 	'smw_ask_hide_embed' => 'Ocultar código de incorporação',
 	'smw_ask_embed_instr' => 'Para incorporar esta consulta numa página da wiki, use o código abaixo.',
 	'querycreator' => 'Criador de Consultas',
-	'smw_show_addnal_opts' => 'Mostrar opções adicionais',
-	'smw_hide_addnal_opts' => 'Esconder opções adicionais',
+	'smw_qc_show_addnal_opts' => 'Mostrar mais opções',
+	'smw_qc_hide_addnal_opts' => 'Mostrar menos opções',
 	'smw_qc_query_help' => 'Introduza uma consulta usando o formulário abaixo para seleccionar páginas da wiki com base em
 Categorias (<strong>[[Categoria:Actor]]</strong>),
 Propriedades (<strong>[[Localizada em::Angola]]</strong>), 
@@ -9564,8 +9564,6 @@ Lastnosti, ki še vedno nimajo strani se nahajajo na [[Special:WantedProperties|
 	'smw_ask_hide_embed' => 'Skrij besedilo za vstavljanje',
 	'smw_ask_embed_instr' => 'Za vstavljanje te poizvedbe na wiki stran uporabite sledeče besedilo.',
 	'querycreator' => 'Ustvarjalec poizvedbe',
-	'smw_show_addnal_opts' => 'Pokaži dodatne nastavitve',
-	'smw_hide_addnal_opts' => 'Skrij dodatne nastavitve',
 	'smw_qc_query_help' => 'Vnesite poizvedbo v spodnje okno, da izberite wikistrani, ki ustrezajo
 kategorijam (<strong>[[{{ns:category}}:Igralec]]</strong>),
 lastnostim (<strong>[[Located in::Nemčija]]</strong>),
