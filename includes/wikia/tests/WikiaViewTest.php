@@ -42,7 +42,7 @@ class WikiaViewTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( $format, $view->getResponse()->getFormat() );
 	}
 
-	public function buildingTemplatePathDataProvider() {
+	public function setTemplateDataProvider() {
 		return array(
 		 array( true, 'Test' ),
 		 array( true, 'Oasis' ), // tmp, while modules still exists
@@ -51,9 +51,9 @@ class WikiaViewTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @dataProvider buildingTemplatePathDataProvider
+	 * @dataProvider setTemplateDataProvider
 	 */
-	public function testBuildingTemplatePath( $classExists, $controllerName ) {
+	public function testSetTemplate( $classExists, $controllerName ) {
 		$appMock = $this->getMock( 'WikiaApp', array('ajax') );
 		$registryMock = $this->getMock( 'WikiaGlobalRegistry', array('get') );
 		$registryMock->expects( $this->any() )
@@ -67,7 +67,7 @@ class WikiaViewTest extends PHPUnit_Framework_TestCase {
 		if( !$classExists ) {
 			$this->setExpectedException( 'WikiaException' );
 		}
-		$this->object->buildTemplatePath( $controllerName, 'hello', true );
+		$this->object->setTemplate( $controllerName, 'hello' );
 
 		if( $classExists ) {
 			$this->assertEquals( (dirname( __FILE__ ) . '/_fixtures/templates/' . $controllerName . '_hello.php'), $this->object->getTemplatePath() );
@@ -77,7 +77,7 @@ class WikiaViewTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * @expectedException WikiaException
 	 */
-	public function testBuildingNonExistentTemplate() {
+	public function testSetNonExistentTemplate() {
 		$appMock = $this->getMock( 'WikiaApp', array( 'ajax' ) );
 		$registryMock = $this->getMock( 'WikiaGlobalRegistry', array('get') );
 		$registryMock->expects( $this->any() )
@@ -88,7 +88,7 @@ class WikiaViewTest extends PHPUnit_Framework_TestCase {
 
 		F::setInstance( 'App', $appMock );
 
-		$this->object->buildTemplatePath( 'Test', 'nonExistentMethod', true );
+		$this->object->setTemplate( 'Test', 'nonExistentMethod' );
 	}
 
 	/**
