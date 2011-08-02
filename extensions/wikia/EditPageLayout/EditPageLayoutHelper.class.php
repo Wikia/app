@@ -153,10 +153,14 @@ class EditPageLayoutHelper {
 			return true;
 		}
 
-		$editPage = $this->setupEditPage($this->app->getGlobal('wgArticle'));
+		$instance = $this->setupEditPage($this->app->getGlobal('wgArticle'));
 
-		// return false when in read-only mode
-		return !empty($editPage);
+		// $instance will be false in read-only mode (BugId:9460)
+		if (!empty($instance)) {
+			$editPage = $instance;
+		}
+
+		return true;
 	}
 
 	/**
