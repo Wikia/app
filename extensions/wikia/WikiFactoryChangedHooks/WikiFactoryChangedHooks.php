@@ -9,6 +9,7 @@
 $wgAutoloadClasses['WikiFactoryChangedHooks'] = dirname(__FILE__)."/WikiFactoryChangedHooks.class.php";
 
 // Alphabetical
+$wgHooks['WikiFactoryChanged'][] = 'WikiFactoryChangedHooks::achievements';
 $wgHooks['WikiFactoryChanged'][] = 'WikiFactoryChangedHooks::FounderProgressBar';
 $wgHooks['WikiFactoryChanged'][] = 'WikiFactoryChangedHooks::recipesTweaks';
 $wgHooks['WikiFactoryChanged'][] = 'WikiFactoryChangedHooks::onAbuseFilterEnabled';
