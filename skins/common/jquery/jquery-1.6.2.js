@@ -1293,7 +1293,9 @@ jQuery.support = (function() {
 		width: 0,
 		height: 0,
 		border: 0,
-		margin: 0
+		margin: 0,
+		// Set background to avoid IE crashes when removing (#9028)
+		background: "none"
 	};
 	if ( body ) {
 		jQuery.extend( testElementStyle, {
