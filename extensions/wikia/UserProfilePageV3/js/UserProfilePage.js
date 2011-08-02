@@ -27,7 +27,7 @@ var UserProfilePage = {
 			UserProfilePage.renderLightbox('avatar');
 		});
 		
-		$('.masthead-info .wikis li').click(UserProfilePage.trackFavoriteWiki)
+		$('.masthead-info .wikis li').click(UserProfilePage.trackFavoriteWiki)		
 	},
 	
 	renderLightbox: function(tabName) {
@@ -108,7 +108,7 @@ var UserProfilePage = {
 			e.preventDefault();
 		});
 		
-		var sampleAvatars = modal.find('#UPPLightboxSampleAvatarsDiv li img');
+		var sampleAvatars = modal.find('.sample-avatars img');
 		sampleAvatars.each(function(i, val){
 			$(val).click(function() {
 				UserProfilePage.sampleAvatarChecked(this);
@@ -232,6 +232,12 @@ var UserProfilePage = {
 		});
 		
 		UserProfilePage.toggleJoinMoreWikis();
+
+		// Make 'feed preferences' link open in a new page		
+		$('#facebookPage a').click(function(event) {
+			event.preventDefault();
+			window.open($(this).attr('href'));
+		});
 	},
 	
 	renderInterviewLightbox: function(modal) {

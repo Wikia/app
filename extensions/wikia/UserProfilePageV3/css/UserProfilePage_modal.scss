@@ -16,6 +16,14 @@
 		label:first-child {
 			margin-top: 0;
 		}
+		&.avatar {
+			font-size: 10px;
+			line-height: normal;
+			width: 150px;
+		}
+		&.avatar-options {
+			width: 540px;
+		}
 	}
 	
 	label {
@@ -94,5 +102,12 @@
 		line-height: 11px;
 		text-align: right;
 		width: 260px;
+	}
+	#facebookConnectAvatar label {
+		margin-top: 20px;
+	}
+	.sample-avatars li {
+		float: left;
+		margin-right: 10px;
 	}
 }
