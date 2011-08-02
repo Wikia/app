@@ -61,7 +61,6 @@ class UserIdentityBox {
 		$data['website'] = $this->user->getOption('website');
 		$data['twitter'] = $this->user->getOption('twitter');
 		$data['fbPage'] = $this->user->getOption('fbPage');
-		$data['topWikis'] = $this->getTopWikis();
 		
 		$iEdits = $this->user->getEditCount();
 		$data['edits'] = is_null($iEdits) ? 0 : intval($iEdits);
@@ -77,6 +76,13 @@ class UserIdentityBox {
 		}
 		
 		$data['showZeroStates'] = $this->checkIfDisplayZeroStates($data);
+		if( $data['showZeroStates'] === false ) {
+		//if any of other data is filled we're getting and showing fav wikis
+		//otherwise we show zero states -- bugId:9428
+			$data['topWikis'] = $this->getTopWikis();
+		} else {
+			$data['topWikis'] = array();
+		}
 		
 		$this->app->wf->ProfileOut( __METHOD__ );
 		return $data;
@@ -188,6 +194,7 @@ class UserIdentityBox {
 		$this->app->wf->ProfileIn( __METHOD__ );
 		
 		$result = true;
+		
 		$fieldsToCheck = array('location', 'occupation', 'birthday', 'gender', 'website', 'twitter', 'topWikis');
 		
 		foreach($data as $property => $value) {
@@ -291,7 +298,7 @@ class UserIdentityBox {
 				$wikiId = $row->wiki_id;
 				$editCount = $row->edits;
 				$wikiName = F::build('WikiFactory', array('wgSitename', $wikiId), 'getVarValueByName');
-				$wikiUrl = F::build('GlobalTitle', array(wfMsgForContent('Mainpage'), NS_MAIN, $wikiId), 'newFromText')->getFullUrl();
+				$wikiUrl = F::build('GlobalTitle', array($this->app->wf->MsgForContent('Mainpage'), NS_MAIN, $wikiId), 'newFromText')->getFullUrl();
 				
 				$wikis[$wikiId] = array( 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'editCount' => $editCount );
 			}

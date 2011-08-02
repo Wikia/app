@@ -102,7 +102,7 @@
 					<? endif; ?>
 				<? endif; ?>
 			</ul>
-
+			
 			<? if( !empty($user['topWikis']) && is_array($user['topWikis']) ): ?>
 			<ul class="wikis">
 				<span><?= wfMsg('user-identity-box-fav-wikis'); ?></span>
