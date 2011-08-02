@@ -4,8 +4,8 @@
 
 <section id="UserProfileMasthead" class="UserProfileMasthead" itemscope itemtype="http://schema.org/Person">
 	<div class="masthead-avatar">
-		<img src="<?= $user['avatar']; ?>" itemprop="image" height="150" width="150" class="avatar">
-
+		<img src="<?= $user['avatar']; ?>" itemprop="image" class="avatar">
+		
 		<? if( $isUserPageOwner || $isWikiStaff ): ?>
 			<span>
 				<img src="<?= $wgBlankImgUrl ?>" class="sprite edit-pencil"> <a href="#" id="userAvatarEdit"><?= wfMsg('user-identity-box-edit-avatar'); ?></a>
@@ -16,7 +16,6 @@
 				<img src="<?= $wgBlankImgUrl ?>" class="sprite trash"> <a href="<?= $deleteAvatarLink ?>"><?= wfMsg('user-identity-box-delete-avatar'); ?></a>
 			</span>
 		<?php endif; ?>
-	
 	</div>
 	
 	<div class="masthead-info">

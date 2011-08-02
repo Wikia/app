@@ -36,32 +36,36 @@
 		
 		<li class="avatar">
 			<form id="usersAvatar" name="usersAvatar" method="post" enctype="multipart/form-data" action="/wikia.php?controller=UserProfilePage&method=onSubmitUsersAvatar&format=json&userId=<?= $userId; ?>">
-				<?= $avatar; ?>
-				<img src="/skins/common/images/ajax.gif" class="avatar-loader" style="display: none;">
-				<? if($isUploadsPossible): ?>
-					<p><?= wfMsg('user-identity-box-avatar-upload-avatar'); ?></p>
-					<input type="hidden" name="UPPLightboxDefaultAvatar" id="UPPLightboxDefaultAvatar" value="" >
-					<input type="hidden" name="UPPLightboxFbAvatar" id="UPPLightboxFbAvatar" value="" >
-					<input type="hidden" name="MAX_FILE_SIZE" value="<?= $avatarMaxSize; ?>">
-					<input type="file" name="UPPLightboxAvatar" id="UPPLightboxAvatar">
-				<? endif; ?>
-				
-				<? if( $isUserPageOwner ): ?>
-					<p id="facebookConnectAvatar">
-						<?= wfMsg('user-identity-box-avatar-fb-import-avatar'); ?>
-						<?= $fbAvatarConnectButton; ?>
-					</p>
-				<? endif; ?>
-				
-				<? if( !empty($defaultAvatars) ): ?>
-					<p><?= wfMsg('user-identity-box-avatar-choose-avatar'); ?></p>
-					<ul id="UPPLightboxSampleAvatarsDiv">
-						<? foreach($defaultAvatars as $avatar): ?>
-							<li><img width="40" height="40" src="<?= $avatar['url']; ?>" class="<?= $avatar['name']; ?>"></li>
-						<? endforeach; ?>
-					</ul>
-				<? endif; ?>
-				
+				<div class="column avatar">
+					<?= $avatar; ?>
+					<img src="/skins/common/images/ajax.gif" class="avatar-loader" style="display: none;">
+					<p><?= wfMsg('user-identity-box-avatar-crop') ?></p>
+				</div>
+				<div class="column avatar-options">
+					<? if($isUploadsPossible): ?>
+						<label><?= wfMsg('user-identity-box-avatar-upload-avatar'); ?></label>
+						<input type="hidden" name="UPPLightboxDefaultAvatar" id="UPPLightboxDefaultAvatar" value="" >
+						<input type="hidden" name="UPPLightboxFbAvatar" id="UPPLightboxFbAvatar" value="" >
+						<input type="hidden" name="MAX_FILE_SIZE" value="<?= $avatarMaxSize; ?>">
+						<input type="file" name="UPPLightboxAvatar" id="UPPLightboxAvatar">
+					<? endif; ?>
+					
+					<? if( $isUserPageOwner ): ?>
+						<p id="facebookConnectAvatar">
+							<label><?= wfMsg('user-identity-box-avatar-fb-import-avatar'); ?></label>
+							<?= $fbAvatarConnectButton; ?>
+						</p>
+					<? endif; ?>
+					
+					<? if( !empty($defaultAvatars) ): ?>
+						<label><?= wfMsg('user-identity-box-avatar-choose-avatar'); ?></label>
+						<ul class="sample-avatars">
+							<? foreach($defaultAvatars as $avatar): ?>
+								<li><img width="40" height="40" src="<?= $avatar['url']; ?>" class="<?= $avatar['name']; ?>"></li>
+							<? endforeach; ?>
+						</ul>
+					<? endif; ?>
+				</div>			
 			</form>
 		</li>
 	
@@ -137,7 +141,7 @@
 	</ul>
 	
 	<div class="modalToolbar">
-		<button class="cancel">Cancel</button>
+		<button class="cancel secondary">Cancel</button>
 		<button class="save">Save, I'm Done</button>
 	</div>
 </div>
