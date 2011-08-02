@@ -178,7 +178,7 @@ class CreateNewWikiModule extends Module {
 					'<br>'.
 					$this->app->runFunction('wfMsg', 'cnw-error-general');
 				$this->statusHeader = $this->app->runFunction('wfMsg', 'cnw-error-general-heading');
-				error_log("Failed to create new wiki: $error_code");
+				trigger_error("Failed to create new wiki: $error_code", E_USER_ERROR);
 			} else {
 				$this->status = 'ok';
 				$this->siteName = $createWiki->getWikiInfo('sitename');
