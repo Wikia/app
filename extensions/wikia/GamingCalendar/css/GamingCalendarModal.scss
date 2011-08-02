@@ -75,7 +75,10 @@ $gaming-calendar-gray-text: mix($color-text, $color-page, 75%);
 		overflow: hidden;
 		width: 580px;
 		>ul {
+			width: 580px;
+			height: 509px;
 			position: relative;
+			overflow: hidden;
 		}
 	}
 	.week {
