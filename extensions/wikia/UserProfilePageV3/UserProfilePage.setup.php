@@ -58,8 +58,9 @@ F::addClassConstructor( 'UserProfilePageController', array( 'app' => $app ) );
 $UPPNamespaces = array();
 $UPPNamespaces[] = NS_USER;
 $UPPNamespaces[] = NS_USER_TALK;
-$UPPNamespaces[] = NS_BLOG_ARTICLE;
-//$UPPNamespaces[] = NS_BLOG_ARTICLE_TALK;
-//$UPPNamespaces[] = NS_BLOG_LISTING;
+
+if( defined('NS_BLOG_ARTICLE') ) {
+	$UPPNamespaces[] = NS_BLOG_ARTICLE;
+}
 
 $app->getLocalRegistry()->set( 'UserProfilePageNamespaces', $UPPNamespaces );
