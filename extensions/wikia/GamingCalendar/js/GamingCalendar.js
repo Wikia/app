@@ -72,28 +72,28 @@ var GamingCalendar = {
 		var template = $('#GamingCalendarItemTemplate').html();
 		
 		if ( item.gameSubtitle ) {
-			template = template.replace('%gameSubTitle%', '<span class="game-subtitle">' + item.gameSubtitle + '</span>');
+			template = template.replace('##gameSubTitle##', '<span class="game-subtitle">' + item.gameSubtitle + '</span>');
 		} else {
-			template = template.replace('%gameSubTitle%', '');
+			template = template.replace('##gameSubTitle##', '');
 		}
 		
 		if ( expanded ) {
-			template = template.replace('%expanded%', 'selected');
+			template = template.replace('##expanded##', 'selected');
 		} else {
-			template = template.replace('%expanded%', 'unselected');
+			template = template.replace('##expanded##', 'unselected');
 		}
 		
-		template = template.replace('%gameTitle%', item.gameTitle);
-		template = template.replace('%description%', item.description);
-		template = template.replace('%imageSrc%', item.image.src);
-		template = template.replace('%moreInfoUrl%', item.moreInfoUrl);
-		template = template.replace('%preorderUrl%', item.preorderUrl);
-		template = template.replace('%systems%', item.systems.join(', '));
+		template = template.replace('##gameTitle##', item.gameTitle);
+		template = template.replace('##description##', item.description);
+		template = template.replace('##imageSrc##', item.image.src);
+		template = template.replace('##moreInfoUrl##', item.moreInfoUrl);
+		template = template.replace('##preorderUrl##', item.preorderUrl);
+		template = template.replace('##systems##', item.systems.join(', '));
 		
 		var months = new Array('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec');
 		var date = new Date(item.releaseDate * 1000); // miliseconds!
-		template = template.replace('%month%', months[date.getUTCMonth()]);
-		template = template.replace('%day%', date.getUTCDate());
+		template = template.replace('##month##', months[date.getUTCMonth()]);
+		template = template.replace('##day##', date.getUTCDate());
 		
 		return template;
 	},
