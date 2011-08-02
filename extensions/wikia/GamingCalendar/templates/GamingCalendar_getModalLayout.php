@@ -1,4 +1,4 @@
-<section id="GamingCalendar">
+<div id="GamingCalendar">
 	<h1>Game Calendar</h1>
 
 	<div class="ad">
@@ -32,13 +32,13 @@
 
    <script type="text/template" id="GamingCalendarWeekTemplate">
 			<h1>
-				<span>%week-caption%</span>
-				%startmonth% %start% &ndash; %endmonth% %end%
+				<span>##week-caption##</span>
+				##startmonth## ##start## &ndash; ##endmonth## ##end##
 			</h1>
 			<div class="scroll-up"><img src="<?= $wgBlankImgUrl ?>" height="0" width="0"></div>
 			<div class="list">
-				<ul>%items%</ul>
+				<ul>##items##</ul>
 			</div>
 			<div class="scroll-down"><img src="<?= $wgBlankImgUrl ?>" height="0" width="0"></div>
-   </script>	
-</section>
+   </script>
+</div>

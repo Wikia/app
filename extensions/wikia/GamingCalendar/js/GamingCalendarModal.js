@@ -44,14 +44,14 @@ var GamingCalendarModal = {
 
 		weekdates = week[0];
 		
-		template = template.replace('%start%', weekdates['start'] );
-		template = template.replace('%end%', weekdates['end'] );
+		template = template.replace('##start##', weekdates['start'] );
+		template = template.replace('##end##', weekdates['end'] );
 
-		template = template.replace('%startmonth%', weekdates['startmonth'] );
-		template = template.replace('%endmonth%', weekdates['endmonth'] );
+		template = template.replace('##startmonth##', weekdates['startmonth'] );
+		template = template.replace('##endmonth##', weekdates['endmonth'] );
 		
-		template = template.replace('%week-caption%', weekdates['caption'] );
-		
+		template = template.replace('##week-caption##', weekdates['caption'] );
+
 		if ( 1 == week.length ) {
 		    itemsHtml = itemsHtml + '<li class="no-entries">No Game Releases This Week<br />Check out our <a href="http://www.wikia.com/Gaming">Gaming Wikis</a>!</li>';
 		} else {
@@ -65,7 +65,7 @@ var GamingCalendarModal = {
 		    }
 		}
 
-		template = template.replace( '%items%', itemsHtml );
+		template = template.replace( '##items##', itemsHtml );
 
 		return template;
     },
