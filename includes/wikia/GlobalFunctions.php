@@ -1346,7 +1346,7 @@ function wfDBLightMode( $maxSleep ) {
 
 	if ( !$maxSleep ) return false;
 
-	while ( WikiFactory::getVarValueByName( 'wgDBLightMode', WikiFactory::DBToId( $wgExternalSharedDB ), true ) ) {
+	while ( WikiFactory::getVarValueByName( 'wgDBLightMode', WikiFactory::DBToId( $wgExternalSharedDB ) ) ) {
 		Wikia::log( __METHOD__, "info", "All crons works in DBLightMode ( sleep $maxSleep ) ..." );
 		sleep($maxSleep);
 	}
@@ -1357,7 +1357,7 @@ function wfDBLightMode( $maxSleep ) {
 function wfIsDBLightMode() {
 	global $wgExternalSharedDB;
 	
-	$dbLightMode = WikiFactory::getVarValueByName( 'wgDBLightMode', WikiFactory::DBToId( $wgExternalSharedDB ), true );
+	$dbLightMode = WikiFactory::getVarValueByName( 'wgDBLightMode', WikiFactory::DBToId( $wgExternalSharedDB ) );
 	return (bool) $dbLightMode;
 }
 
