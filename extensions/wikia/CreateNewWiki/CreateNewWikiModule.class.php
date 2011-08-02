@@ -170,14 +170,15 @@ class CreateNewWikiModule extends Module {
 			}
 
 			$createWiki = F::build('CreateWiki', array($params['wikiName'], $params['wikiDomain'], $params['wikiLanguage'], $params['wikiCategory']));
-			$createWiki->create();
+			$error_code = $createWiki->create();
 			$this->cityId = $createWiki->getWikiInfo('city_id');
 			if(empty($this->cityId)) {
 				$this->status = 'backenderror';
-				$this->statusMsg = $this->app->runFunction('wfMsg', 'databaseerror').
+				$this->statusMsg = $this->app->runFunction('wfMsg', 'cnw-error-database', $error_code).
 					'<br>'.
 					$this->app->runFunction('wfMsg', 'cnw-error-general');
 				$this->statusHeader = $this->app->runFunction('wfMsg', 'cnw-error-general-heading');
+				error_log("Failed to create new wiki: $error_code");
 			} else {
 				$this->status = 'ok';
 				$this->siteName = $createWiki->getWikiInfo('sitename');
