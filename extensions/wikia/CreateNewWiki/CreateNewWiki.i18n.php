@@ -77,6 +77,7 @@ Upgrade through PayPal to get an ad-free wiki for only $4.95 per month!',
 	// error messages
 	'cnw-error-general' => 'Something went wrong while creating your wiki.  Please try again later.',
 	'cnw-error-general-heading' => 'Create New Wiki Error',
+	'cnw-error-database' => 'Database Error: $1',
 	'cnw-badword-header' => 'Whoa there',
 	'cnw-badword-msg' => 'Hi, please refrain from using these bad words or banned words in your Wiki Description: $1',
 	'cnw-error-wiki-limit-header' => 'Wiki limit reached',
