@@ -827,8 +827,6 @@ class WikiFactory {
 	 * @return mixed value for variable or null otherwise
 	 */
 	static public function getVarValueByName( $cv_name, $city_id, $master = false ) {
-		global $wgMemc;
-
 		wfProfileIn( __METHOD__ );
 
 		$value = null;
@@ -836,8 +834,9 @@ class WikiFactory {
 		 * first read WF Cache for city_id -- maybe value is already stored
 		 * in memcached?
 		 */
+		$oMemc = wfGetCache( CACHE_MEMCACHED );
 		if( !$master ) {
-			$variables = $wgMemc->get( self::getVarsKey( $city_id ) );
+			$variables = $oMemc->get( self::getVarsKey( $city_id ) );
 			$value = isset( $variables[ "data" ][ $cv_name ] )
 				? self::substVariables( $variables[ "data" ][ $cv_name ], $city_id )
 				: null;
