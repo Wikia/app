@@ -358,12 +358,31 @@ public class BaseTest {
 		return null;
 	}
 
-	protected boolean isFCK() throws Exception {
-		return session().getEval("typeof window.RTEInstanceId").equals("string");
+	/**
+	 * Check if the given edit page uses Visual Editor (in either visual or source mode!)
+	 */
+	protected boolean isWysiwygEditor() throws Exception {
+		return session().getEval("typeof window.CKEDITOR").equals("object");
 	}
 
-	protected void editArticle(String articleName, String content)
-			throws Exception {
+	/**
+	 * Change the current mode of Visual Editor.
+	 * 
+	 * "mode" can be either "wysiwyg" or "source"
+	 */
+	protected void switchWysiwygMode(String mode) throws Exception {
+		if (!session().getEval("window.RTE && window.RTE.instance.mode").equals(mode)) {
+			session().runScript("window.RTE.instance.switchMode('" + mode + "')");
+			session().waitForCondition("window.RTE.instance.mode == '" + mode + "'", this.getTimeout());
+		}
+	}
+
+	/**
+	 * Edit an article using given wikitext
+	 * 
+	 * Please note that an edit will happen using MW editor to speed things up
+	 */
+	protected void editArticle(String articleName, String content) throws Exception {
 		session().open("index.php?title=" + articleName + "&action=edit&useeditor=mediawiki");
 		session().waitForPageToLoad(this.getTimeout());
 		waitForElement("wpTextbox1");
@@ -371,14 +390,13 @@ public class BaseTest {
 		doSave();
 	}
 
+	/**
+	 * Save content of the edit page. This method should only be called when the browser is on the edit page.
+	 */
 	protected void doEdit(String content) throws Exception {
-		if (isFCK()) {
-			// RTE editor
-			// switch to source mode (if needed)
-			if (session().getEval("window.RTE.instance.mode").equals("wysiwyg")) {
-				session().runScript("window.RTE.instance.switchMode('source')");
-				session().waitForCondition("window.RTE.instance.mode == 'source'", this.getTimeout());
-			}
+		if (isWysiwygEditor()) {
+			// Visual Editor - switch to source mode (if needed)
+			this.switchWysiwygMode('source');
 			session().type("//td[@id='cke_contents_wpTextbox1']/textarea", content);
 		} else {
 			// regular editor
