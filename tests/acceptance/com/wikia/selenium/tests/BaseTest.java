@@ -366,6 +366,13 @@ public class BaseTest {
 	}
 
 	/**
+	 * Check if The Editor Reskin is enabled on the current edit page
+	 */
+	protected boolean isReskinEnabled() throws Exception {
+		return !session().getEval('typeof window.wgEditedTitle').equals('undefined');
+	}
+
+	/**
 	 * Change the current mode of Visual Editor.
 	 * 
 	 * "mode" can be either "wysiwyg" or "source"
