@@ -1759,7 +1759,7 @@ EOD;
 				
 				$plugins = array('gapro-1'=>array('accountid'=>self::VIDEO_GOOGLE_ANALYTICS_ACCOUNT_ID));
 				if ($this->mData[1]) {
-					$plugins['hd-1'] = array('file'=>$hdfile, 'state'=>'false');
+					$plugins['hd-1'] = array('file'=>urlencode($hdfile), 'state'=>'false');  // when player embedded in action=render page, the file URL is automatically linkified. prevent this behavior
 				}
 
 				// html embed code
@@ -1796,8 +1796,8 @@ EOD;
 					. '"id": "'.$playerId.'",'
 					. '"width": "'.$width.'",'
 					. '"height": "'.$height.'",'
-					. '"file": "'.$file.'",'
-					. '"image": "'.$image.'",'
+					. '"file": decodeURIComponent("'.urlencode($file).'"),'   // when player embedded in action=render page, the file URL is automatically linkified. prevent this behavior
+					. '"image": decodeURIComponent("'.urlencode($image).'"),' // when player embedded in action=render page, the image URL is automatically linkified. prevent this behavior
 					. '"provider": "video",'
 					. '"stretching": "fill",'
 					. '"controlbar.position": "bottom",';
@@ -1807,7 +1807,14 @@ EOD;
 					$pluginText = '"'.$plugin.'": {';
 					$pluginOptionTexts = array();
 					foreach ($options as $key=>$val) {
-						$pluginOptionTexts[] = '"'.$key.'": "'.$val.'"';
+						$text = '"'.$key.'": ';
+						if ($key == 'file') {
+							$text .= 'decodeURIComponent("'.$val.'")';  // when player embedded in action=render page, the file URL is automatically linkified. prevent this behavior
+						}
+						else {
+							$text .= '"'.$val.'"';
+						}
+						$pluginOptionTexts[] = $text;
 					}
 					$pluginText .= implode(',', $pluginOptionTexts);
 					$pluginText .= '}';
