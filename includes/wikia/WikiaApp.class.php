@@ -36,6 +36,13 @@ class WikiaApp {
 	 * @var AssetsConfig
 	 */
 	private $assetsConfig = null;
+	
+	/**
+	 * flag for Skin initializationn
+	 * @var Bool
+	 */
+	private $skinInitialized = null;
+	
 	/**
 	 * global MW variables helper accessor
 	 * @var WikiaGlobalRegistry
@@ -185,12 +192,38 @@ class WikiaApp {
 
 	/**
 	 * set global function wrapper
-	 * @param WikiaFunctionWrapper $functionWrapeper
+	 * @param WikiaFunctionWrapper $functionWrapper
 	 */
 	public function setFunctionWrapper(WikiaFunctionWrapper $functionWrapper) {
 		$this->wf = $functionWrapper;
 	}
-
+	
+	/**
+	 * forces skin initialization
+	 * @param bool $flag
+	 */
+	public function initSkin( $flag ) {
+		if ( $flag ) {
+			// initialize skin via stub user object created in WebStart->Setup.php
+			$flag = ( is_object( $this->wg->User ) && is_object( $this->wg->User->getSkin() ) );
+		}
+		
+		$this->skinInitialized = $flag;
+	}
+	
+	/**
+	 * returns the skin initialization status
+	 * @return bool
+	 */
+	public function isSkinInitialized() {
+		//if null then initSkin has not been called at all, it's a normal request and skin is initialized automatically
+		if ( $this->skinInitialized === null ) {
+			$this->skinInitialized = true;
+		}
+		
+		return $this->skinInitialized;
+	}
+	
 	/**
 	 * get dispatcher object
 	 * @return WikiaDispatcher
@@ -349,11 +382,11 @@ class WikiaApp {
 	public function sendRequest( $controllerName = null, $methodName = null, $params = array(), $internal = true ) {
 		$values = array();
 		
-		if( !empty( $controllerName ) ) {
+		if ( !empty( $controllerName ) ) {
 			$values['controller'] = $controllerName;
 		}
 		
-		if( !empty( $methodName ) ) {
+		if ( !empty( $methodName ) ) {
 			$values['method'] = $methodName;
 		}
 		
