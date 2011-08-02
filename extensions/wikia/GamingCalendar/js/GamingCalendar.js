@@ -34,8 +34,8 @@ var GamingCalendar = {
 			window.GamingCalendarData.thisWeek = 0;
 
 			// grab the first item
-			item = data.entries[0][cookieVal];
-			
+			var item = data.entries[0][cookieVal];
+
 			// generate HTML from template
 			var itemHTML = GamingCalendar.renderItem(item, false);
 			
