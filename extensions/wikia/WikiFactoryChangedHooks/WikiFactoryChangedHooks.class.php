@@ -8,6 +8,18 @@
 
 
 Class WikiFactoryChangedHooks {
+	static public function achievements( $cv_name, $city_id, $value ) {
+		wfProfileIn( __METHOD__ );
+
+		if ( $cv_name == 'wgEnableAchievementsExt' && $value == true ) {
+			$task = new EnableAchievementsTask( array( $city_id ) );
+			$task->submitForm();
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return true;
+	}
 	
 	/**
 	 * Hook handler - will install the datbase and messaging changes for recipes sites with RecipesTweaks.
