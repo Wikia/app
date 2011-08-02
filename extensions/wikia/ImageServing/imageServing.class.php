@@ -199,15 +199,11 @@ class ImageServing {
 	 */
 
 	public function getUrl( $name, $width = 0, $height = 0 ) {
-		//TODO: Create files local cache of IS
-		$file_title = Title::newFromText( $name ,NS_FILE );
-
-		$img = wfFindFile( $file_title  );
-
 		if ($name instanceof File) {
 			$img = $name;
 		}
 		else {
+			//TODO: Create files local cache of IS
 			$file_title = Title::newFromText( $name ,NS_FILE );
 			$img = wfFindFile( $file_title  );
 			if( empty($img) ) {
