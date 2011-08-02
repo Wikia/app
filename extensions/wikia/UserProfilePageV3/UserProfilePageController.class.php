@@ -32,6 +32,7 @@ class UserProfilePageController extends WikiaController {
 		$this->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/UserProfilePageV3/css/UserProfilePage.scss'));
 		
 		$user = $this->getVal( 'user' );
+		
 		$pageBody = $this->getVal( 'userPageBody' );
 		$wikiId = $this->getVal( 'wikiId' );
 		
@@ -39,7 +40,7 @@ class UserProfilePageController extends WikiaController {
 		$isSubpage = $this->title->isSubpage();
 
 		$useOriginalBody = true;
-
+		
 		if( $user instanceof User ) {
 			$this->profilePage = F::build( 'UserProfilePage', array( 'user' =>  $user ) );
 			if( ( $namespace == NS_USER ) && !$isSubpage ) {
@@ -54,16 +55,11 @@ class UserProfilePageController extends WikiaController {
 
 		if( $useOriginalBody ) {
 			$this->response->setBody( $pageBody );
-		} else {
-			$this->wg->Out->addScriptFile( $this->wg->ExtensionsPath . '/wikia/UserProfilePageV3/js/UserProfilePage.js' );
 		}
 		
+		$this->wg->Out->addScriptFile( $this->wg->ExtensionsPath . '/wikia/UserProfilePageV3/js/UserProfilePage.js' );
+		
 		$this->app->wf->ProfileOut( __METHOD__ );
-
-		// suppress rail
-		if(!$this->wg->Title->isSubpage()) {
-			//$this->wg->SuppressRail = true;
-		}
 	}
 	
 	/**
@@ -75,7 +71,7 @@ class UserProfilePageController extends WikiaController {
 	 */
 	public function renderUserIdentityBox() {
 		$this->app->wf->ProfileIn( __METHOD__ );
-
+		
 		// Website links icon shade
 		//$this->setVal( 'linkIconShade', ( SassUtil::isThemeDark('color-links') ) ? 'light' : 'dark');
 		//$this->setVal( 'linkIconShadeZeroState', ( SassUtil::isThemeDark() ) ? 'dark' : 'light');
@@ -119,6 +115,7 @@ class UserProfilePageController extends WikiaController {
 		$canEdit = $sessionUser->isAllowed('edit');
 		$canEditProfile = $sessionUser->isAllowed('staff') || $isUserPageOwner;
 		
+		$actionButtonArray = array();
 		if( defined('NS_USER') && $namespace == NS_USER ) {
 			if( $isUserPageOwner ) {
 				$actionButtonArray = array(
@@ -838,6 +835,8 @@ class UserProfilePageController extends WikiaController {
 	/**
 	 * @brief Get user object from given title
 	 * 
+	 * @param Title $title current title
+	 * 
 	 * @return User
 	 * 
 	 * @author ADi
@@ -850,24 +849,29 @@ class UserProfilePageController extends WikiaController {
 		if( in_array( $title->getNamespace(), $this->allowedNamespaces ) ) {
 			// get "owner" of this user / user talk / blog page
 			$parts = explode('/', $title->getText());
-		}
-		else if( ( $title->getNamespace() == NS_SPECIAL ) && ( $title->isSpecial( 'Following' ) || $title->isSpecial( 'Contributions' ) ) ) {
-			$target = $this->getVal( 'target' );
-			if ($target != '') {
+		} else if( $title->getNamespace() == NS_SPECIAL && ($title->isSpecial('Following') || $title->isSpecial('Contributions')) ) {
+			$target = $this->getVal('target');
+			if( !empty($target) ) {
 				// Special:Contributions?target=FooBar (RT #68323)
-				$parts = array( $target );
-			}
-			else {
+				$parts = array($target);
+			} else {
 				// get user this special page referrs to
-				$parts = explode( '/', $this->getVal( 'title', false ) );
+				$titleVal = $this->app->wg->Request->getVal('title', false);
+				$parts = explode('/', $titleVal);
 				
 				// remove special page name
-				array_shift( $parts );
+				array_shift($parts);
+			}
+			
+			if( $title->isSpecial('Following') && !isset($parts[0]) ) {
+			//following pages are rendered only for profile owners
+				return $this->app->wg->User;
 			}
 		}
 		
-		if( isset( $parts[0] ) && ( $parts[0] != '' ) ) {
-			$user = F::build('User', array(str_replace( '_', ' ', $parts[0] )), 'newFromName' );
+		if( isset($parts[0]) && ($parts[0] != '') ) {
+			$userName = str_replace('_', ' ', $parts[0]);
+			$user = F::build('User', array($userName), 'newFromName');
 		}
 		
 		$this->app->wf->ProfileOut( __METHOD__ );
@@ -892,7 +896,7 @@ class UserProfilePageController extends WikiaController {
 			  array(
 			    'user' => $user,
 			    'userPageBody' => $template->data['bodytext'],
-			    'wikiId' => $this->app->wg->CityId
+			    'wikiId' => $this->app->wg->CityId,
 			  ));
 
 			$template->data['bodytext'] = (string) $response;
@@ -1090,7 +1094,7 @@ class UserProfilePageController extends WikiaController {
 		$this->app->wf->ProfileOut( __METHOD__ );
 	}
 	
-		/**
+	/**
 	 * @brief remove User:: from back link
 	 * 
 	 * @author Tomek Odrobny
