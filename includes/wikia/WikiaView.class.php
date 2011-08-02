@@ -95,7 +95,7 @@ class WikiaView {
 	 * @param string $methodName
 	 * @param bool $forceRebuild
 	 */
-	public function buildTemplatePath( $controllerName, $methodName, $forceRebuild = false ) {
+	protected function buildTemplatePath( $controllerName, $methodName, $forceRebuild = false ) {
 		if( ( $this->templatePath == null ) || $forceRebuild ) {
 			$app = F::app();
 			$autoloadClasses = $app->wg->AutoloadClasses;
@@ -130,13 +130,15 @@ class WikiaView {
 			 * per-skin template override (experimental)
 			 * @see $wgEnableSkinTemplateOverride
 			 */
-			$requestedSkinName = $this->response->getSkinName();
+			if ( !empty( $this->response ) ) {
+				$requestedSkinName = $this->response->getSkinName();
+		
+				if ( !empty( $requestedSkinName ) ) {
+					$skinSpecificPath = "{$basePath}_{$requestedSkinName}.php";
 	
-			if ( !empty( $requestedSkinName ) ) {
-				$skinSpecificPath = "{$basePath}_{$requestedSkinName}.php";
-
-				if ( file_exists( $skinSpecificPath ) ) {
-					$templatePath = $skinSpecificPath;
+					if ( file_exists( $skinSpecificPath ) ) {
+						$templatePath = $skinSpecificPath;
+					}
 				}
 			}
 			
