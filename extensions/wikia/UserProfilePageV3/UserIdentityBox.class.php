@@ -46,9 +46,10 @@ class UserIdentityBox {
 		$this->app->wf->ProfileIn( __METHOD__ );
 		
 		$userName = $this->user->getName();
+		$userId = $this->user->getId();
 		
 		$data = array();
-		$data['id'] = $this->user->getId();
+		$data['id'] = $userId;
 		$data['avatar'] = F::build( 'AvatarService', array( $userName, 150 ), 'getAvatarUrl' );
 		$data['name'] = $userName;
 		$data['realName'] = $this->user->getRealName();
@@ -56,14 +57,18 @@ class UserIdentityBox {
 		$data['location'] = $this->user->getOption('location');
 		$data['occupation'] = $this->user->getOption('occupation');
 		$data['gender'] = $this->user->getOption('UserProfilePagesV3_gender');
-		$data['registration'] = $this->user->getRegistration();
 		$data['birthday'] = $this->user->getOption('UserProfilePagesV3_birthday');
 		$data['website'] = $this->user->getOption('website');
 		$data['twitter'] = $this->user->getOption('twitter');
 		$data['fbPage'] = $this->user->getOption('fbPage');
 		
-		$iEdits = $this->user->getEditCount();
+		$userStatsService = F::build('UserStatsService', array($userId));
+		$userStats = $userStatsService->getStats();
+		
+		$iEdits = $userStats['edits'];
 		$data['edits'] = is_null($iEdits) ? 0 : intval($iEdits);
+		
+		$data['registration'] = $userStats['date'];
 		
 		$this->getUserGroup($data);
 		
