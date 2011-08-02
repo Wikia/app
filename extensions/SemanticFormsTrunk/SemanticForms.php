@@ -36,7 +36,7 @@
 
 if ( !defined( 'MEDIAWIKI' ) ) die();
 
-define( 'SF_VERSION', '2.2' );
+define( 'SF_VERSION', '2.2.1' );
 
 $wgExtensionCredits[defined( 'SEMANTIC_EXTENSION_TYPE' ) ? 'semantic' : 'specialpage'][] = array(
 	'path' => __FILE__,
@@ -92,7 +92,9 @@ $wgHooks['PageSchemasGetObject'][] = 'SFUtils::createPageSchemasObject' ; //Hook
 $wgHooks['PageSchemasGeneratePages'][] = 'SFUtils::generatePages' ; //Hook for  creating Pages
 $wgHooks['PSParseFieldElements'][] = 'SFUtils::parseFieldElements' ; //Hook for  creating Pages
 $wgHooks['PageSchemasGetPageList'][] = 'SFUtils::getPageList' ; //Hook for  creating Pages
-
+$wgHooks['getHtmlTextForFieldInputs'][] = 'SFUtils::getHtmlTextForPS' ; //Hook for  retuning html text to PS schema
+$wgHooks['getXmlTextForFieldInputs'][] = 'SFUtils::getXMLTextForPS' ; //Hook for  retuning html text to PS schema
+$wgHooks['getFilledHtmlTextForFieldInputs'][] = 'SFUtils::getFilledHtmlTextForPS' ; //Hook for  retuning html text to PS schema
 
 $wgAPIModules['sfautocomplete'] = 'SFAutocompleteAPI';
 $wgAPIModules['sfautoedit'] = 'SFAutoeditAPI';
