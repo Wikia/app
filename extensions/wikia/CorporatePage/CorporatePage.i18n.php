@@ -17,5 +17,7 @@ $messages['en'] = array(
 	'corporatepage-homecontent-headline' => 'Get Started Today',
 	'corporatepage-homecontent-intro' => 'Create a wiki about your favorite topic and begin collaborating with people who love what you love.',
 	'corporatepage-homecontent-button' => 'Start a wiki now',
-	'corportaepage-sales-support-edit' => 'Edit this element >>'
+	'corportaepage-sales-support-edit' => 'Edit this element >>',
+	'corporatepage-top-user-header' => 'Top Editor this week on $1 Wikis',
+	'corporatepage-top-user-edits' => '$1 Edits',
 );

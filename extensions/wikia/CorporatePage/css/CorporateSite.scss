@@ -562,80 +562,37 @@
 
 
 #hub-top-contributors {
-	position: inherit !important; // /** @ todo remove important **/
 	clear: both;
 	h1 {
-		margin-bottom: 12px;
-	}
-
-	ul {
-		padding: 0;
-		li {
-			list-style-type: none;
-			margin: 15px 0;
-
-			img {
-				height: 30px;
-				width: 30px;
-				background-color: white;
-				padding: 2px;
-				margin: 0 10px 0 0;
-				border: 1px solid $color-page-border;
-				vertical-align: top;
-			}
-
-			span {
-				&.h2 {
-					display: inline-block;
-					font-size: 16px;
-					margin: 8px 10px 0 0;
-					vertical-align: top;
-				}
-			}
-
-			.userEditPoints {
-				background:#E0E0E0;
-				text-transform:uppercase;
-				display: inline-block;
-				text-align: center;
-				overflow: hidden;
-				color: #0A0A0A;
-				vertical-align: top;
-				margin-top: 5px;
-
-				span {
-					&.txt {
-						font-size: 10px;
-						border: {
-							color:#AAAAAA #AAAAAA #AAAAAA -moz-use-text-color;
-							style:solid solid solid none;
-							width: 1px 1px 1px 0;
-						}
-						background-color: #e0e0e0;
-						@include linear-gradient(false, top, #fbfbfb, 20%, #e0e0e0, 70%);
-						line-height:17px;
-						padding:1px 5px 2px;
-						display: inline-block;
-					}
-
-					&.userPoints {
-						@include linear-gradient(false, top, #fcf297, 20%, #f6dd5d, 70%);
-						border: 1px solid #0A0A0A;
-						display: inline-block;
-						font: {
-							weight: bold;
-							size: 10px;
-						}
-						padding: 1px 5px 2px;
-						line-height: 17px;
-
-					}
-				}
-			}
-		}
+		font-size: 17px;
+		line-height: 20px;
 	}
 	.toggleContainer {
 		margin-top: -8px;
+	}
+	ul {
+		li {
+			@include clearfix;
+			position: relative;
+			.avatar {
+				border: 1px solid $color-page-border;
+				float: left;
+				height: 33px;
+				margin-bottom: 16px;
+				width: 33px;
+			}
+			.editor-details {
+				float: left;
+				margin: 0 0 16px 10px;
+				.username {
+					font-size: 16px;
+				}
+				.edit-count {
+					font-size: 13px;
+					line-height: 20px;
+				}
+			}
+		}
 	}
 }
 
