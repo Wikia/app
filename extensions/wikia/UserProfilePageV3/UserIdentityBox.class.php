@@ -98,7 +98,7 @@ class UserIdentityBox {
 		//other data operations
 		$this->getUserGroup($data);
 		
-		$birthdate = $data['birthday'];
+		$birthdate = ( isset($data['birthday']) ? $data['birthday'] : '');
 		$birthdate = explode('-', $birthdate);
 		if( !empty($birthdate[0]) && !empty($birthdate[1]) ) {
 			$data['birthday'] = array('month' => $birthdate[0], 'day' => ltrim($birthdate[1], '0'));
