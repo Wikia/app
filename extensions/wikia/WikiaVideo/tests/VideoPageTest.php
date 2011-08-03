@@ -1,7 +1,7 @@
 <?php
 require_once dirname(__FILE__) . '/../VideoPage.php';
 
-class WikiaLabsTest extends PHPUnit_Framework_TestCase {
+class WikiaVideoTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * @dataProvider ratioProvider
