@@ -1611,17 +1611,20 @@ EOD;
 		$doc = new DOMDocument( '1.0', 'UTF-8' );
 		@$doc->loadXML( $file );
 
-		$mTrueID = trim( $doc->getElementsByTagNameNS('http://blip.tv/dtd/blip/1.0',"embedLookup")->item(0)->textContent );
-		$thumbnailUrl  = $doc->getElementsByTagNameNS('http://search.yahoo.com/mrss/',"thumbnail")->item(0);
-		$mType = $doc->getElementsByTagNameNS('http://blip.tv/dtd/blip/1.0',"embedUrl")->item(0);
+		$mTrueIDNode = $doc->getElementsByTagNameNS('http://blip.tv/dtd/blip/1.0',"embedLookup")->item(0);
+		$thumbnailUrlNode  = $doc->getElementsByTagNameNS('http://search.yahoo.com/mrss/',"thumbnail")->item(0);
+		$mTypeNode = $doc->getElementsByTagNameNS('http://blip.tv/dtd/blip/1.0',"embedUrl")->item(0);
 
-		if ( (empty($mType) || trim($mType->getAttribute("type")) !== "application/x-shockwave-flash") || (empty($mTrueID)) || (empty($thumbnailUrl)) )
+		if ( (empty($mTypeNode) || trim($mTypeNode->getAttribute("type")) !== "application/x-shockwave-flash") || empty($mTrueIDNode) || empty($thumbnailUrlNode))
 		{
 			return false;
 		}
 
-		$obj = array(	'mTrueID' => $mTrueID ,
-						'thumbnailUrl' => trim($thumbnailUrl->getAttribute("url")));
+		$obj = array(
+			'mTrueID' => trim($mTrueIDNode->textContent),
+			'thumbnailUrl' => trim($thumbnailUrlNode->getAttribute("url"))
+		);
+		
 		$wgMemc->set( $cacheKey, $obj,60*60*24 );
 		return $obj;
 	}
