@@ -92,7 +92,7 @@ public class BaseTest {
 	}
 	
 	protected boolean isLoggedIn() throws Exception {
-		return session().isElementPresent("link=Log out");
+		return session().getEval("window.wgUserName !== null").equals("true");
 	}
 
 	protected void login(String username, String password) throws Exception {
@@ -106,7 +106,7 @@ public class BaseTest {
 		} else {
 			waitForElement("//*[@id=\"pt-userpage\"]/a[text() = \"" + username + "\"]");
 		}
-
+		assertTrue(isLoggedIn()); 
 	}
 
 	protected void login() throws Exception {
@@ -132,10 +132,13 @@ public class BaseTest {
 	protected void logout() throws Exception {
 		session().open("index.php?useskin=oasis");
 		session().waitForPageToLoad(this.getTimeout());
-		session().click("link=Log out");
-		session().waitForPageToLoad(this.getTimeout());
-		assertTrue(session().isTextPresent("You have been logged out."));
-		assertTrue(session().isElementPresent("//a[@class='ajaxLogin']"));
+
+		if (isLoggedIn()) {
+			session().click("link=Log out");
+			session().waitForPageToLoad(this.getTimeout());
+			assertTrue(session().isTextPresent("You have been logged out."));
+			assertFalse(isLoggedIn());
+		}
 	}
 
 	protected void waitForAttributeNotEquals(String elementId, String value, int timeOut) throws Exception {
@@ -401,14 +404,14 @@ public class BaseTest {
 	/**
 	 * Save content of the edit page. This method should only be called when the browser is on the edit page.
 	 */
-	protected void doEdit(String content) throws Exception {
+	protected void doEdit(String wikitext) throws Exception {
 		if (isWysiwygEditor()) {
 			// Visual Editor - switch to source mode (if needed)
 			this.switchWysiwygMode("source");
-			session().type("//td[@id='cke_contents_wpTextbox1']/textarea", content);
+			session().runScript("window.RTE.instance.setData(\"" + wikitext.replace("\n", "\\n").replace("\"", "\\\"") + "\");");
 		} else {
 			// regular editor
-			session().type("wpTextbox1", content);
+			session().type("wpTextbox1", wikitext);
 		}
 	}
 
