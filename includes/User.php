@@ -2762,11 +2762,11 @@ class User {
 	/**
 	 * If only this user's username is known, and it exists, return the user ID.
 	 */
-	function idForName() {
+	function idForName( $fromMaster = false ) {
 		$s = trim( $this->getName() );
 		if ( $s === '' ) return 0;
 
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = ( $fromMaster ) ? wfGetDB( DB_MASTER ) : wfGetDB( DB_SLAVE );
 		$id = $dbr->selectField( 'user', 'user_id', array( 'user_name' => $s ), __METHOD__ );
 		if ( $id === false ) {
 			$id = 0;
