@@ -55,7 +55,7 @@ class EnableAchievementsTask extends BatchTask {
 		$this->addLog('Starting task.');
 
 		# command
-		$sCommand  = "SERVER_ID={$oWiki->city_id} php " . dirname( __FILE__ )  '/awardCreatorBadge.php';
+		$sCommand  = "SERVER_ID={$oWiki->city_id} php " . dirname( __FILE__ ) . '/awardCreatorBadge.php';
 		$sCommand .= "--u " . $username . " ";
 		$sCommand .= "--conf $wgWikiaLocalSettingsPath";
 
