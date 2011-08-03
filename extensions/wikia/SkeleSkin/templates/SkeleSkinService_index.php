@@ -18,15 +18,30 @@
 		<nav id="navigation">
 			<div id="closeNavigationContent">
 				<ul>
-					<li><img src="http://images.jolek.wikia-dev.com/__cb20080717214219/wowwiki/images/f/fa/IconSmall_Deathknight.gif"></li>
-					<li><img src="http://images.jolek.wikia-dev.com/__cb20050912092650/wowwiki/images/4/4a/IconSmall_Warrior.gif"></li>
-					<li><img src="http://images.jolek.wikia-dev.com/__cb20050912092529/wowwiki/images/7/77/IconSmall_Paladin.gif"></li>
+					<li id="search"><img src="/skins/skeleskin/images/icons/zoom.png"></li>
+					<li id="login"><img src="/skins/skeleskin/images/icons/user.png"></li>
+					<li id="refreshMe"><img src="/skins/skeleskin/images/icons/refresh.png"></li>
 					<li id="prevHeading"><img src="/skins/skeleskin/images/icons/object_11.png"></li>
 					<li id="nextHeading"><img src="/skins/skeleskin/images/icons/object_10.png"></li>
 				</ul>
 			</div>
 			<div id="openNavigationContent">
-				open
+				<ul>
+					<li id="search"><img src="/skins/skeleskin/images/icons/zoom.png"></li>
+					<li id="login"><img src="/skins/skeleskin/images/icons/user.png"></li>
+					<li id="refreshMe"><img src="/skins/skeleskin/images/icons/refresh.png"></li>
+					<li id="prevHeading"><img src="/skins/skeleskin/images/icons/object_11.png"></li>
+					<li id="nextHeading"><img src="/skins/skeleskin/images/icons/object_10.png"></li>
+				</ul>
+			</div>
+			<div id="loginForm" class="navForm">
+				<input type="text" placeholder="Login">
+				<input type="password" placeholder="Password">
+				<input type="submit">
+			</div>
+			<div id="searchForm" class="navForm">
+				<input type="search" placeholder="Search">
+				<input type="submit">
 			</div>
 			<div id="openToggle"><span id="arrow"></span></div>
 		</nav>

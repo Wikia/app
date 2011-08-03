@@ -1,6 +1,7 @@
 @import "mixins/border-radius";
 @import "mixins/transition";
 @import "mixins/box-shadow";
+$arrowcolor: white;
 
 html{
   height: 100%;
@@ -9,7 +10,7 @@ html{
   padding: 0;
   margin: 0;
 	body{
-		background-color: #c3c3c3;
+		background-color: #E9E9FF;
 		color: #222;
 		border: none;
     padding: 0;
@@ -17,7 +18,18 @@ html{
 	}
 }
 
+.navForm {
+  display: none;
+  position: inherit;
+  input {
+    height: 20px;
+  }
+}
+
 #WikiaMainContent{
+  //REALESE THE HELL: overflow used here for a demo reason the page now has static width what on mobile device is desiered
+  //shoudn't be done on production site as it is a workaround on to wide content
+  overflow: hidden;
 	div{
 		//temporary fix waiting for FB#9321
 		&.main-page-tag-rcs{
@@ -53,69 +65,80 @@ html{
 		}
 	}
 }
-
-#navigation {
-  background-color: #444;
-  color: #777;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 999;
-  @include transition( all, 0.5s, 0, 0 );
-  ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 5px 5px;
-    li {
-     margin: 2px;
-      img {
-        height: 32px;
-        width: 32px;
+html {
+  body {
+    #navigation {
+      background-color: #444;
+      color: #777;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 999;
+      @include transition( all, 0.5s, 0, 0 );
+      ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 5px 5px;
+        width: 100%;
+        li {
+         margin: 2px;
+          img {
+            height: 32px;
+            width: 32px;
+          }
+        }
+      } 
+      #openToggle {
+        -webkit-tap-highlight-color: rgba( 0,0,0,0 );
+        -webkit-focus-ring-color: rgba( 0,0,0,0 );
+      }
+      &.open {
+        #openNavigationContent {
+          display: block;
+        }
+        #closeNavigationContent {
+          display: none;
+        }
+      }
+      #openNavigationContent {
+        display: none;
+      }
+      #closeNavigationContent {
+        display: block;
       }
     }
-  } 
-  #openToggle {
-    -webkit-tap-highlight-color: rgba( 0,0,0,0 );
-    -webkit-focus-ring-color: rgba( 0,0,0,0 );
-  }
-  &.open {
-    #openNavigationContent {
-      display: block;
-    }
-    #closeNavigationContent {
-      display: none;
-    }
-  }
-  #openNavigationContent {
-    display: none;
-  }
-  #closeNavigationContent {
-    display: block;
   }
 }
 
-@media ( orientation: landscape ), ( min-width: 321px ) {
+@media ( min-width: 321px ),( orientation: landscape ) {
  html {
    body {
-      border-left: 50px solid #333;
+      border-left: 50px solid rgba(59,103,158,1);
       border-top: 5px solid #333;
       #navigation {
         width: 50px;
         height: 100%;
-        min-height: 200px;
-        background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(59,103,158,1)), color-stop(17%,rgba(32,124,202,1)), color-stop(80%,rgba(43,136,217,1)), color-stop(100%,rgba(125,185,232,1)));
+        background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(59,103,158,0.5)), color-stop(17%,rgba(32,124,202,1)), color-stop(80%,rgba(43,136,217,1)), color-stop(100%,rgba(125,185,232,0.9)));
         &.open {
+          height: 100%;
           width: 200px;
           @include border-radius-right();
           #openToggle #arrow {
             border-left: none;
             border-top: 20px solid rgba(0,0,0,0);
-            border-right: 20px solid #77c;
+            border-right: 20px solid $arrowcolor;
             border-bottom: 20px solid rgba(0,0,0,0);
           }
           &.ios {
             height: 268px;
             width: 200px;
+          }
+          .navForm {
+            top: 40%;
+            left: 50px;
+            input {
+              width: 120px;
+            }
           }
         }
         &.ios {
@@ -134,7 +157,7 @@ html{
             display: block;
             border-right: none;
             border-top: 20px solid rgba(0,0,0,0);
-            border-left: 20px solid #77c;
+            border-left: 20px solid $arrowcolor;
             border-bottom: 20px solid rgba(0,0,0,0);
           }
         }
@@ -143,24 +166,24 @@ html{
   }
 }
 
-@media ( orientation: portrait ), ( max-width: 320px ) {
+@media ( max-width: 320px ),( orientation: portrait ) {
   html {
     body {
-      border-left: 5px solid #333;
+      border-left: 5px solid rgba(59,103,158,1);
       padding: 55px 0 0 0;
       #navigation {
         width: 100%;
         height: 50px;
         opacity: 0.9;
-        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(59,103,158,1)), color-stop(17%,rgba(32,124,202,1)), color-stop(80%,rgba(43,136,217,1)), color-stop(100%,rgba(125,185,232,1)));
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(59,103,158,1)), color-stop(17%,rgba(32,124,202,1)), color-stop(80%,rgba(43,136,217,1)), color-stop(100%,rgba(125,185,232,0.9)));
         &.open {
           opacity: 1;
+          width: 100%;
           height: 200px;
           @include border-radius-bottom();
           #openToggle #arrow {
-
             border-top: none;
-            border-bottom: 20px solid #77c;
+            border-bottom: 20px solid $arrowcolor;
             border-left: 20px solid rgba(0,0,0,0);
             border-right: 20px solid rgba(0,0,0,0);
           }
@@ -172,6 +195,10 @@ html{
         &.ios {
           width: 320px;
           height: 50px;
+        }
+        .navForm {
+          top:60px;
+          left: 20px;
         }
         li {
           float: left;
@@ -190,7 +217,7 @@ html{
             width: 0;
             display: block;
             border-bottom: none;
-            border-top: 20px solid #77c;
+            border-top: 20px solid $arrowcolor;
             border-left: 20px solid rgba(0,0,0,0);
             border-right: 20px solid rgba(0,0,0,0);
           }
