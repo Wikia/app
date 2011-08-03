@@ -272,7 +272,7 @@ class WikiFactory {
 			array( "city_domain" => strtolower( $domain ) ),
 			__METHOD__
 		);
-		if( strtolower( $oRow->city_domain ) == strtolower( $domain ) ) {
+		if( !empty($oRow) && ( strtolower( $oRow->city_domain ) == strtolower( $domain ) ) ) {
 			/**
 			 * ... yes it exists
 			 */
@@ -915,7 +915,7 @@ class WikiFactory {
 		}
 
 		$oRow = self::getWikiByDB( $city_dbname, $master );
-		
+
 		return isset( $oRow->city_id ) ? $oRow->city_id : false;
 	}
 
@@ -941,7 +941,7 @@ class WikiFactory {
 		}
 
 		$oRow = self::getWikiByID( $city_id, $master );
-		
+
 		return isset( $oRow->city_dbname ) ? $oRow->city_dbname : false;
 	}
 
@@ -976,12 +976,12 @@ class WikiFactory {
 				array( "city_id" => $id ),
 				__METHOD__
 			);
-			
+
 			$oMemc->set($memkey, $oRow, 60*60*24);
 		} else {
 			$oRow = $cached;
 		}
-		
+
 		return $oRow;
 	}
 
@@ -1017,12 +1017,12 @@ class WikiFactory {
 				array( "city_dbname" => $city_dbname ),
 				__METHOD__
 			);
-			
+
 			$oMemc->set($memkey, $oRow, 60*60*24);
 		} else {
 			$oRow = $cached;
 		}
-		
+
 		return $oRow;
 	}
 
@@ -1238,7 +1238,7 @@ class WikiFactory {
 		 * clear variables cache
 		 */
 		$wgMemc->delete( self::getVarsKey( $city_id ) );
-		
+
 		$city_dbname = self::IDtoDB( $city_id ) ;
 		$wgMemc->delete( self::getWikiaCacheKey( $city_id ) );
 		if ( !empty( $city_dbname ) ) {
@@ -1540,7 +1540,7 @@ class WikiFactory {
 		wfProfileIn( __METHOD__ );
 
 		$oWikia = self::getWikiByID( $city_id );
-		
+
 		$city_public = ( isset( $oWikia->city_id ) ) ? $oWikia->city_public : 0;
 
 		wfProfileOut( __METHOD__ );
@@ -1847,11 +1847,12 @@ class WikiFactory {
 	 *
 	 * @param integer	$city_id	source Wiki ID
 	 * @param integer	$new_city_id	target Wiki ID
+	 * @param array $skip_domains List of domains to be skipped from the process
 	 *
 	 *
 	 * @return integer: city ID or null if not found
 	 */
-	static public function redirectDomains($city_id, $new_city_id) {
+	static public function redirectDomains($city_id, $new_city_id, $skip_domains = array()) {
 		global $wgExternalArchiveDB,$wgWikicitiesReadOnly;
 
 		if($wgWikicitiesReadOnly){
@@ -1865,11 +1866,20 @@ class WikiFactory {
 		$domains = self::getDomains( $city_id, true );
 
 		$dbw = self::db( DB_MASTER );
+
+		$where_cond = array(
+				"city_id" => $city_id
+		);
+
+		if(count($skip_domains) > 0) {
+			$where_cond[] = "city_domain NOT IN (" .$dbw->makeList( $skip_domains ) . ")";
+		}
+
 		$dbw->begin();
 		$db = $dbw->update(
 			self::table("city_domains"),
 			array( "city_id" => $new_city_id ),
-			array( "city_id" => $city_id ),
+			$where_cond,
 			__METHOD__ );
 		if ($db) {
 			$dbw->commit();
@@ -1885,16 +1895,18 @@ class WikiFactory {
 				 */
 				$dba = wfGetDB( DB_MASTER, array(), $wgExternalArchiveDB );
 				foreach ( $domains as $domain ) {
-					$dba->insert(
-						"city_domains",
-						array(
-							"city_id"         => $city_id,
-							"city_domain"     => $domain,
-							"city_new_id"     => $new_city_id,
-							"city_timestamp"  => wfTimestampNow()
-						),
-						__METHOD__
-					);
+					if( !in_array($domain, $skip_domains) ) {
+						$dba->insert(
+							"city_domains",
+							array(
+								"city_id"         => $city_id,
+								"city_domain"     => $domain,
+								"city_new_id"     => $new_city_id,
+								"city_timestamp"  => wfTimestampNow()
+							),
+							__METHOD__
+						);
+					}
 				}
 			}
 		}
@@ -2560,7 +2572,7 @@ class WikiFactory {
 
 		return $aWikis;
 	}
-	
+
 	/**
 	 * getWikiaCacheKey
 	 *
@@ -2577,7 +2589,7 @@ class WikiFactory {
 	static public function getWikiaCacheKey( $city_id ) {
 		return "wikifactory:wikia:v1:{$city_id}";
 	}
-	
+
 	/**
 	 * getWikiaDBCacheKey
 	 *
@@ -2594,5 +2606,5 @@ class WikiFactory {
 	static public function getWikiaDBCacheKey( $city_dbname ) {
 		return "wikifactory:wikia:db:v1:{$city_dbname}";
 	}
-	
+
 };
