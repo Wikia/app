@@ -287,11 +287,17 @@ class EditPageLayoutHelper {
 	 * @return boolean return false, so notice will not be emitted by core, but by EditPageLayout code
 	 */
 	function onLogEventsListShowLogExtract($s, $types, $page, $user, $param) {
-		if ( ($this->editPage instanceof EditPageLayout) && (!empty($s)) ) {
-			$this->editPage->addEditNotice($s, $param['msgKey'][0]);
+		if ($this->editPage instanceof EditPageLayout) {
+			if (!empty($s)) {
+				$this->editPage->addEditNotice($s, $param['msgKey'][0]);
+			}
+
+			// don't emit notices on the screen - they will be handled by addEditNotice()
+			return false;
 		}
 
-		return false;
+		// don't touch things outside the edit page (BugId:9379)
+		return true;
 	}
 
 	static public function getAssets() {
