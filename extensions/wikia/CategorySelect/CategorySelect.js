@@ -305,7 +305,7 @@ function toggleCodeView() {
 	} else {	//switch to visual code
 		$.tracker.byStr('editpage/visualviewCategory');
 
-		$.post(ajaxUrl, {rs: "CategorySelectAjaxParseCategories", rsargs: $('#csWikitext').attr('value') + ' '}, function(result){
+		$.post(ajaxUrl, {rs: "CategorySelectAjaxParseCategories", rsargs: [$('#csWikitext').attr('value') + ' ']}, function(result){
 			if (result.error !== undefined) {
 				$().log('AJAX result: error');
 				alert(result.error);

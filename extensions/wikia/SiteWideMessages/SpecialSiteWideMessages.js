@@ -11,7 +11,7 @@ $(document).ready(function(){
 function SWMAjaxDismiss(e) {
 	e.preventDefault();
 	var id = e.data.id;
-	var ajaxUrl = wgServer + wgScript + "?title=" + wgPageName + "&action=ajax&rs=SiteWideMessagesAjaxDismiss&rsargs=" + id;
+	var ajaxUrl = wgServer + wgScript + "?title=" + wgPageName + "&action=ajax&rs=SiteWideMessagesAjaxDismiss&rsargs[]=" + id;
 	var request = $.get(ajaxUrl,function(data){
 		$("#msg_"+id).remove();
 	});
