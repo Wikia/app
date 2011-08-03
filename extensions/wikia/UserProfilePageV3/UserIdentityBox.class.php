@@ -13,6 +13,7 @@ class UserIdentityBox {
 	const PAGE_WIKIA_PROPS_PROPNAME = 10;
 	const USER_PROPERTIES_PREFIX = 'UserProfilePagesV3_';
 	const USER_EDITED_MASTHEAD_PROPERTY = 'UserProfilePagesV3_mastheadEdited_';
+	const USER_FIRST_MASTHEAD_EDIT_DATE_PROPERTY = 'UserProfilePagesV3_mastheadEditDate_';
 	
 	private $user = null;
 	private $app = null;
@@ -70,7 +71,6 @@ class UserIdentityBox {
 		$wikiId = $this->app->wg->CityId;
 		$hasUserEditedMastheadBefore = $this->hasUserEditedMastheadBefore($wikiId);
 		
-		$data['realName'] = ($iEdits > 0 || $hasUserEditedMastheadBefore) ? $this->user->getRealName() : null;
 		$data['userPage'] = $this->user->getUserPage()->getFullURL();
 		
 		//data from user_properties table
@@ -82,6 +82,17 @@ class UserIdentityBox {
 			}
 		} else {
 			$this->getDefaultData($data);
+		}
+		
+		$firstMastheadEditDate = $this->user->getOption(self::USER_FIRST_MASTHEAD_EDIT_DATE_PROPERTY.$wikiId);
+		if( is_null($data['registration']) && !is_null($firstMastheadEditDate) ) {
+		//if user hasn't edited anything on this wiki before
+		//we're getting the first edit masthead date
+			$data['registration'] = $firstMastheadEditDate;
+		} else if( !is_null($data['registration']) && !is_null($firstMastheadEditDate) ) {
+		//if we've got both dates we're getting the lowest (the earliest)
+			$data['registration'] = (intval($data['registration']) < intval($firstMastheadEditDate)) ? $data['registration'] : $firstMastheadEditDate;
+			$data['registration'] = str_pad($data['registration'], 14, '20', STR_PAD_BOTH);
 		}
 		
 		//other data operations
@@ -102,22 +113,39 @@ class UserIdentityBox {
 	}
 	
 	/**
-	 * @brief Sets data for a particular wiki
+	 * @brief Gets global data from table user_properties
 	 * 
 	 * @param array $data reference to an array object
 	 * 
 	 * @return void
 	 */
 	private function getDefaultData(&$data) {
-		foreach(array('location', 'occupation', 'gender', 'birthday', 'website', 'twitter', 'fbPage') as $key) {
-			if( !in_array($key, array('gender', 'birthday')) ) {
-				$data[$key] = $this->user->getOption($key);
-			} else {
-				$data[$key] = $this->user->getOption(self::USER_PROPERTIES_PREFIX.$key);
-			}
-		}
+		$memcData = $this->app->wg->Memc->get($this->getMemcUserIdentityDataKey());
 		
-		$data['topWikis'] = $this->getTopWikis();
+		if( empty($memcData) ) {
+			foreach(array('location', 'occupation', 'gender', 'birthday', 'website', 'twitter', 'fbPage') as $key) {
+				if( !in_array($key, array('gender', 'birthday')) ) {
+					$data[$key] = $this->user->getOption($key);
+				} else {
+					$data[$key] = $this->user->getOption(self::USER_PROPERTIES_PREFIX.$key);
+				}
+			}
+			
+			$data['realName'] = $this->user->getRealName();
+			$data['topWikis'] = $this->getTopWikis();
+			$this->saveMemcUserIdentityData($data);
+		} else {
+			$data = array_merge($data, $memcData);
+		}
+	}
+	
+	/**
+	 * @brief Returns string with key to memcached; requires $this->user field being instance of User
+	 * 
+	 * @return string
+	 */
+	private function getMemcUserIdentityDataKey() {
+		return 'user-identity-box-data-'.$this->user->getID();
 	}
 	
 	/**
@@ -131,6 +159,8 @@ class UserIdentityBox {
 		foreach(array('location', 'occupation', 'gender', 'birthday', 'website', 'twitter', 'fbPage') as $key) {
 			$data[$key] = null;
 		}
+		
+		$data['realName'] = null;
 		$data['topWikis'] = array();
 	}
 	
@@ -165,8 +195,6 @@ class UserIdentityBox {
 					$this->user->setOption($option, $data->$option);
 				}
 				
-				file_put_contents('/tmp/upp.log', print_r(array('Sets '.$option), true), FILE_APPEND);
-				
 				$changed = true;
 			}
 		}
@@ -184,21 +212,70 @@ class UserIdentityBox {
 		$wikiId = $this->app->wg->CityId;
 		if( !$this->hasUserEditedMastheadBefore($wikiId) ) {
 			$this->user->setOption(self::USER_EDITED_MASTHEAD_PROPERTY.$wikiId, true);
+			$this->user->setOption(self::USER_FIRST_MASTHEAD_EDIT_DATE_PROPERTY.$wikiId, date('YmdHis'));
 			$changed = true;
-			
-			file_put_contents('/tmp/upp.log', print_r(array('Sets '.self::USER_EDITED_MASTHEAD_PROPERTY.$wikiId), true), FILE_APPEND);
 		}
 		
 		if( true === $changed ) {
 			$this->user->saveSettings();
-			file_put_contents('/tmp/upp.log', print_r(array('$this->user->saveSettings() fired!'), true), FILE_APPEND);
-			
+			$this->saveMemcUserIdentityData($data);
 			$this->app->wf->ProfileOut( __METHOD__ );
 			return true;
 		}
 		
 		$this->app->wf->ProfileOut( __METHOD__ );
 		return false;
+	}
+	
+	/**
+	 * @brief Filters given parameter and saves in memcached new array which is returned
+	 * 
+	 * @param object|array $data user identity box data 
+	 * 
+	 * @return array
+	 */
+	private function saveMemcUserIdentityData($data) {
+		foreach(array('location', 'occupation', 'gender', 'birthday', 'website', 'twitter', 'fbPage', 'realName', 'topWikis') as $property) {
+			if( is_object($data) && isset($data->$property) ) {
+				$memcData[$property] = $data->$property;
+			}
+			
+			if( is_array($data) && isset($data[$property]) ) {
+				$memcData[$property] = $data[$property];
+			}
+		}
+		
+		if( is_object($data) ) {
+			if( isset($data->month) && isset($data->day) ) {
+				$memcData['birthday'] = $data->month.'-'.$data->day;
+			}
+			
+			if( isset($data->birthday) ) {
+				$memcData['birthday'] = $data->birthday;
+			}
+		}
+		
+		if( is_array($data) ) {
+			if( isset($data['month']) && isset($data['day']) ) {
+				$memcData['birthday'] = $data['month'].'-'.$data['day'];
+			}
+			
+			if( isset($data['birthday']) ) {
+				$memcData['birthday'] = $data['birthday'];
+			}
+		}
+		
+		if( !isset($memcData['realName']) && is_object($data) && isset($data->name) ) {
+			$memcData['realName'] = $data->name;
+		}
+		
+		if( !isset($memcData['topWikis']) ) {
+			$memcData['topWikis'] = $this->getTopWikis();
+		}
+		
+		$this->app->wg->Memc->set($this->getMemcUserIdentityDataKey(), $memcData);
+		
+		return $memcData;
 	}
 	
 	/**
