@@ -95,7 +95,7 @@ class WikiaException extends MWException {
 		if ( isset( $wgRequest ) ) {
 			$url = $wgRequest->getFullRequestURL();
 		}
-		error_log("Exception from line $line of $file: $message ($url)");
+		trigger_error("Exception from line $line of $file: $message ($url)", E_USER_ERROR);
 		
 		//flush();   // bust the headers_sent check in MWException::report()
 		parent::report();
