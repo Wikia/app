@@ -151,6 +151,7 @@ class WikiaView {
 			if( !$templateExists && !$app->isService( $controllerName ) ) {
 				$controllerName = $app->getControllerLegacyName($controllerName);
 				$templatePath = "{$dirName}/templates/{$controllerName}_{$methodName}.php";
+				$templateExists = file_exists( $templatePath );
 			}
 
 			if( !$templateExists ) {
