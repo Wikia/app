@@ -4,7 +4,6 @@
 	 * Generate event emails and send them to a developer in a chosen language
 	 * Email types: user-registered, anon-edit, general-edit, first-edit, lot-happening, views-digest, complete-digest
 	 * Command = SERVER_ID=12345 php generate.php --email=me@wikia-inc.com --lang=de
-	 * Command(dev) = SERVER_ID=79860 php generate.php --conf=/usr/wikia/docroot/wiki.factory/LocalSettings.php --email=me@wikia-inc.com --lang=th
 	 */
 
 	ini_set( "include_path", dirname( __FILE__ ) . "/../../../maintenance/" );
