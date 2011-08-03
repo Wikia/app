@@ -18,7 +18,7 @@ class QuickStatsController extends WikiaController {
 			// totals come in from MySQL as the last element with a null date, so just pop it off and give it a keyval 
 			$stats['totals'] = array_pop($stats);
 			// Some of our stats can be empty, so insert zeros as defaults
-			for ($i = -7 ; $i <= 0 ; $i ++) {
+			for ($i = 1-count($stats) ; $i <= 0 ; $i ++) {
 				$date = date( 'Y-m-d', strtotime("$i day") );
 				if ($i == 0) $date = 'totals';  // last time around check the totals
 				if (!isset($stats[$date])) $stats[$date] = array();
