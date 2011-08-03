@@ -1,6 +1,6 @@
 <section id="hub-top-contributors"<?php echo $hidetopeditors ?> class="module">
 	<h1>
-		<?php echo wfMsg('hub-topusers-header', $data['title']) ?>
+		<?= wfMsg('corporatepage-top-user-header', $data['title']) ?>
 	</h1>
 	<?php
 		if( $data['is_manager'] ) {
@@ -16,16 +16,16 @@
 		}
 	?>
 
-	<p><?php echo wfMsg('hub-contributors-info') ?></p>
-
 	<ul>
 		<?php foreach( $data['topEditors'] as $value ): ?>
 		<li>
 			<?php if (isset($value['avatar'])) echo $value['avatar']; ?>
-			<span class="topuser-info h2"><a href="<?php echo empty($value['userpage']) ? '#':$value['userpage'] ?>"><?php echo $value['username'];	?></a></span>
-			<span class="userEditPoints clearfix"><nobr  class="txt"><?php
-				global $wgLang;
-				echo wfMsgExt('hub-topusers-editpoints', 'parsemag', $wgLang->formatNum( $value['all_count'] ) ) ?></nobr></span>
+			<div class="editor-details">
+				<a href="<?php echo empty($value['userpage']) ? '#':$value['userpage'] ?>" class="username h2"><?php echo $value['username'];	?></a>
+				<div class="edit-count">
+					<?= wfMsgExt('corporatepage-top-user-edits', 'parseinline', $wgLang->formatNum( $value['all_count'] ) ) ?>
+				</div>
+			</div>
 		</li>
 		<?php endforeach; ?>
 	</ul>

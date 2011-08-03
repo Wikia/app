@@ -41,6 +41,6 @@
 				<?php endforeach ;?>
 			</ul>
 
-  	</div><!-- END: #top-wikis-lists-box -->
+  		</div><!-- END: #top-wikis-lists-box -->
 
 	</section><!-- END: #hub-top-wikis -->
