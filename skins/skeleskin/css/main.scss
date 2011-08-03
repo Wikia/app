@@ -5,12 +5,15 @@
 html{
   height: 100%;
   width: 100%;
+  border: none;
+  padding: 0;
+  margin: 0;
 	body{
 		background-color: #c3c3c3;
 		color: #222;
-		height: 100%;
-		width: 100%;
-		padding: 0;
+		border: none;
+    padding: 0;
+    margin: 0;
 	}
 }
 
@@ -52,19 +55,24 @@ html{
 }
 
 #navigation {
-  background-color: #d7d7d7;
+  background-color: #444;
   color: #777;
   position: absolute;
   top: 0;
   left: 0;
   z-index: 999;
-  -webkit-box-shadow:  2px 2px 20px 2px black;
-  box-shadow: 2px 2px 20px 2px black;
-  @include transition( all, 0.3s, 0, 0 ); 
+  @include transition( all, 0.5s, 0, 0 );
   ul {
     list-style-type: none;
     padding: 0;
-    margin: 0;
+    margin: 5px 5px;
+    li {
+     margin: 2px;
+      img {
+        height: 32px;
+        width: 32px;
+      }
+    }
   } 
   #openToggle {
     -webkit-tap-highlight-color: rgba( 0,0,0,0 );
@@ -86,81 +94,106 @@ html{
   }
 }
 
-
-@media screen and ( orientation:portrait ) {
-  body {
-    margin: 55px 0 0 0;
-    #navigation {
-      width: 100%;
-      height: 50px;
-      opacity: 0.9;
-      &.open {
-        opacity: 1;
-        height: 200px;
-        @include border-radius-bottom();
-        #openToggle #arrow {
-          border-top: none;
-          border-bottom: 20px solid #77c;
-          border-left: 20px solid rgba(0,0,0,0);
-          border-right: 20px solid rgba(0,0,0,0);
+@media ( orientation: landscape ), ( min-width: 321px ) {
+ html {
+   body {
+      border-left: 50px solid #333;
+      border-top: 5px solid #333;
+      #navigation {
+        width: 50px;
+        height: 100%;
+        min-height: 200px;
+        background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(59,103,158,1)), color-stop(17%,rgba(32,124,202,1)), color-stop(80%,rgba(43,136,217,1)), color-stop(100%,rgba(125,185,232,1)));
+        &.open {
+          width: 200px;
+          @include border-radius-right();
+          #openToggle #arrow {
+            border-left: none;
+            border-top: 20px solid rgba(0,0,0,0);
+            border-right: 20px solid #77c;
+            border-bottom: 20px solid rgba(0,0,0,0);
+          }
+          &.ios {
+            height: 268px;
+            width: 200px;
+          }
         }
-      }
-      li {
-        float: left;
-        margin: 5px;
-      }
-      #openToggle {
-        position: absolute;
-        right: 0;
-        top: 0;
-        padding: 20px;
-        z-index: 9999;
-      
-        & #arrow {
-          font-size: 0;
-          line-height: 0;
-          width: 0;
-          display: block;
-          border-bottom: none;
-          border-top: 20px solid #77c;
-          border-left: 20px solid rgba(0,0,0,0);
-          border-right: 20px solid rgba(0,0,0,0);
+        &.ios {
+          height: 268px;
+          width: 50px;
+        }
+        #openToggle {
+          position: absolute;
+          bottom: 0;
+          padding: 20px;
+          z-index: 9999;
+          #arrow {
+            font-size: 0;
+            line-height: 0;
+            width: 0;
+            display: block;
+            border-right: none;
+            border-top: 20px solid rgba(0,0,0,0);
+            border-left: 20px solid #77c;
+            border-bottom: 20px solid rgba(0,0,0,0);
+          }
         }
       }
     }
   }
 }
 
-@media screen and ( orientation:landscape ) {
-  body {
-    margin: 0 0 0 55px;
-    #navigation {
-      width: 50px;
-      height: 100%;
-      &.open {
-        width: 200px;
-        @include border-radius-right();
-        #openToggle #arrow {
-          border-left: none;
-          border-top: 20px solid rgba(0,0,0,0);
-          border-right: 20px solid #77c;
-          border-bottom: 20px solid rgba(0,0,0,0);
+@media ( orientation: portrait ), ( max-width: 320px ) {
+  html {
+    body {
+      border-left: 5px solid #333;
+      padding: 55px 0 0 0;
+      #navigation {
+        width: 100%;
+        height: 50px;
+        opacity: 0.9;
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(59,103,158,1)), color-stop(17%,rgba(32,124,202,1)), color-stop(80%,rgba(43,136,217,1)), color-stop(100%,rgba(125,185,232,1)));
+        &.open {
+          opacity: 1;
+          height: 200px;
+          @include border-radius-bottom();
+          #openToggle #arrow {
+
+            border-top: none;
+            border-bottom: 20px solid #77c;
+            border-left: 20px solid rgba(0,0,0,0);
+            border-right: 20px solid rgba(0,0,0,0);
+          }
+          &.ios {
+            height: 200px;
+            width: 320px;
+          }
         }
-      }
-      #openToggle {
-        position: absolute;
-        bottom: 0;
-        padding: 20px;
-        z-index: 9999;
-        #arrow {
-          font-size: 0;
-          line-height: 0;
-          width: 0;
-          display: block;
-          border-right: none;
-          border-top: 20px solid rgba(0,0,0,0);
-          border-left: 20px solid #77c;
-          border-bottom: 20px solid rgba(0,0,0,0);
+        &.ios {
+          width: 320px;
+          height: 50px;
+        }
+        li {
+          float: left;
+          margin: 5px;
+        }
+        #openToggle {
+          position: absolute;
+          right: 0;
+          top: 0;
+          padding: 20px;
+          z-index: 9999;
+        
+          & #arrow {
+            font-size: 0;
+            line-height: 0;
+            width: 0;
+            display: block;
+            border-bottom: none;
+            border-top: 20px solid #77c;
+            border-left: 20px solid rgba(0,0,0,0);
+            border-right: 20px solid rgba(0,0,0,0);
+          }
         }
       }
     }

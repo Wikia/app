@@ -12,14 +12,41 @@ var SkeleSkin = {
 		window.onscroll = function() {
 	  		$( '#navigation' ).css( 'top', window.pageYOffset + 'px' );
 		};
-		
-		$( '#openToggle' ).bind( "tap", function( event ) {
+
+		$( '#openToggle' ).bind( "tap, click", function( event ) {
 			$('#navigation').toggleClass( 'open' );
 		});
+		
+		if($.os.ios) {
+			$( '#navigation' ).addClass( 'ios' );
+		}
+		
+		$( '#nextHeading' ).live( "tap, click", function( event ) {
+			$( 'h3' ).each( function( i, h3 ) {
+				offset = $(h3).offset().top - 55;
+				if ( offset > window.pageYOffset ) {
+					window.scrollTo( 0, offset + 1 );
+					$( '#navigation' ).css( 'top', window.pageYOffset + 'px' );
+
+					return false;
+				}
+			});
+      	});
+      	
+      	$( '#prevHeading' ).live( "tap, click", function( event ) {
+			$( 'h3' ).each( function( i, h3 ) {
+				offset = $(h3).offset().top - 55;
+				if( offset < window.pageYOffset ) {
+					window.scrollTo( 0, offset + 1 );
+					$( '#navigation' ).css( 'top', window.pageYOffset + 'px' );
+					return false;
+				}
+			});
+      	});
 	}
 }
 
-$(document).ready( function() {
-	SkeleSkin.init();
+$( document ).ready( function() {
 	SkeleSkin.hideURLBar();
+	SkeleSkin.init();
 });
