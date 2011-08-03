@@ -23,7 +23,7 @@ class SpecialCreateWikiaQuizArticle extends SpecialPage {
 			return;
 		}
 
-		$wgOut->addScript('<script src="'.$wgStylePath.'/common/jquery/jquery-ui-1.8.13.custom.js"></script>');
+		$wgOut->addScript('<script src="'.$wgStylePath.'/common/jquery/jquery-ui-1.8.14.custom.js"></script>');
 		$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/WikiaQuiz/js/CreateWikiaQuizArticle.js"></script>');
 
 		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/WikiaQuiz/css/WikiaQuizBuilder.scss'));

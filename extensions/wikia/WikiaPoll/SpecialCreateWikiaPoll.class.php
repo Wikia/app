@@ -23,7 +23,7 @@ class SpecialCreateWikiaPoll extends SpecialPage {
 			return;
 		}
 
-		$wgOut->addScript('<script src="'.$wgStylePath.'/common/jquery/jquery-ui-1.8.13.custom.js"></script>');
+		$wgOut->addScript('<script src="'.$wgStylePath.'/common/jquery/jquery-ui-1.8.14.custom.js"></script>');
 		$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/WikiaPoll/js/CreateWikiaPoll.js"></script>');
 
 		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/WikiaPoll/css/CreateWikiaPoll.scss'));
