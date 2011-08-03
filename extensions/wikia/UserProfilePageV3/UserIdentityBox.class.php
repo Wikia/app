@@ -11,6 +11,8 @@ class UserIdentityBox {
 	 * @var integer
 	 */
 	const PAGE_WIKIA_PROPS_PROPNAME = 10;
+	const USER_PROPERTIES_PREFIX = 'UserProfilePagesV3_';
+	const USER_EDITED_MASTHEAD_PROPERTY = 'UserProfilePagesV3_mastheadEdited_';
 	
 	private $user = null;
 	private $app = null;
@@ -38,38 +40,51 @@ class UserIdentityBox {
 	/**
 	 * Creates an array with user's data
 	 * 
+	 * @param boolean $isThisForEdit a flag which inform data is being recived for edit
+	 * 
 	 * @return array
 	 * 
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	public function setData() {
+	public function setData($isEdit = false) {
 		$this->app->wf->ProfileIn( __METHOD__ );
 		
 		$userName = $this->user->getName();
 		$userId = $this->user->getId();
 		
 		$data = array();
+		//this data is always the same -- on each wiki
 		$data['id'] = $userId;
-		$data['avatar'] = F::build( 'AvatarService', array( $userName, 150 ), 'getAvatarUrl' );
 		$data['name'] = $userName;
-		$data['realName'] = $this->user->getRealName();
-		$data['userPage'] = $this->user->getUserPage()->getFullURL();
-		$data['location'] = $this->user->getOption('location');
-		$data['occupation'] = $this->user->getOption('occupation');
-		$data['gender'] = $this->user->getOption('UserProfilePagesV3_gender');
-		$data['birthday'] = $this->user->getOption('UserProfilePagesV3_birthday');
-		$data['website'] = $this->user->getOption('website');
-		$data['twitter'] = $this->user->getOption('twitter');
-		$data['fbPage'] = $this->user->getOption('fbPage');
+		$data['avatar'] = F::build( 'AvatarService', array( $userName, 150 ), 'getAvatarUrl' );
 		
 		$userStatsService = F::build('UserStatsService', array($userId));
 		$userStats = $userStatsService->getStats();
 		
 		$iEdits = $userStats['edits'];
-		$data['edits'] = is_null($iEdits) ? 0 : intval($iEdits);
+		$iEdits = $data['edits'] = is_null($iEdits) ? 0 : intval($iEdits);
 		
+		//data depends on which wiki it is displayed
 		$data['registration'] = $userStats['date'];
 		
+		$wikiId = $this->app->wg->CityId;
+		$hasUserEditedMastheadBefore = $this->hasUserEditedMastheadBefore($wikiId);
+		
+		$data['realName'] = ($iEdits > 0 || $hasUserEditedMastheadBefore) ? $this->user->getRealName() : null;
+		$data['userPage'] = $this->user->getUserPage()->getFullURL();
+		
+		//data from user_properties table
+		if( !$hasUserEditedMastheadBefore ) {
+			if( $isEdit || $iEdits > 0 ) {
+				$this->getDefaultData($data);
+			} else {
+				$this->getEmptyData($data);
+			}
+		} else {
+			$this->getDefaultData($data);
+		}
+		
+		//other data operations
 		$this->getUserGroup($data);
 		
 		$birthdate = $data['birthday'];
@@ -81,16 +96,46 @@ class UserIdentityBox {
 		}
 		
 		$data['showZeroStates'] = $this->checkIfDisplayZeroStates($data);
-		if( $data['showZeroStates'] === false ) {
-		//if any of other data is filled we're getting and showing fav wikis
-		//otherwise we show zero states -- bugId:9428
-			$data['topWikis'] = $this->getTopWikis();
-		} else {
-			$data['topWikis'] = array();
-		}
 		
 		$this->app->wf->ProfileOut( __METHOD__ );
 		return $data;
+	}
+	
+	/**
+	 * @brief Sets data for a particular wiki
+	 * 
+	 * @param array $data reference to an array object
+	 * 
+	 * @return void
+	 */
+	private function getDefaultData(&$data) {
+		foreach(array('location', 'occupation', 'gender', 'birthday', 'website', 'twitter', 'fbPage') as $key) {
+			if( !in_array($key, array('gender', 'birthday')) ) {
+				$data[$key] = $this->user->getOption($key);
+			} else {
+				$data[$key] = $this->user->getOption(self::USER_PROPERTIES_PREFIX.$key);
+			}
+		}
+		
+		$data['topWikis'] = $this->getTopWikis();
+	}
+	
+	/**
+	 * @brief Sets empty data for a particular wiki
+	 * 
+	 * @param array $data reference to an array object
+	 * 
+	 * @return void
+	 */
+	private function getEmptyData(&$data) {
+		foreach(array('location', 'occupation', 'gender', 'birthday', 'website', 'twitter', 'fbPage') as $key) {
+			$data[$key] = null;
+		}
+		$data['topWikis'] = array();
+	}
+	
+	private function hasUserEditedMastheadBefore($wikiId) {
+		return $this->user->getOption(self::USER_EDITED_MASTHEAD_PROPERTY.$wikiId);
 	}
 	
 	/**
@@ -104,7 +149,7 @@ class UserIdentityBox {
 		$this->app->wf->ProfileIn( __METHOD__ );
 		
 		$changed = false;
-		$prefix = 'UserProfilePagesV3';
+		$wikiId = $this->app->wg->CityId;
 		
 		foreach(array('location', 'occupation', 'birthday', 'gender', 'website', 'avatar', 'twitter', 'fbPage') as $option) {
 			if( isset($data->$option) ) {
@@ -115,17 +160,19 @@ class UserIdentityBox {
 				
 				//if( in_array($option, array('gender', 'birthday')) ) { -- just an example how can it be used later
 				if( $option === 'gender' ) {
-					$this->user->setOption($prefix.'_'.$option, $data->$option);
+					$this->user->setOption(self::USER_PROPERTIES_PREFIX.$option, $data->$option);
 				} else {
 					$this->user->setOption($option, $data->$option);
 				}
+				
+				file_put_contents('/tmp/upp.log', print_r(array('Sets '.$option), true), FILE_APPEND);
 				
 				$changed = true;
 			}
 		}
 		
 		if( isset($data->month) && isset($data->day) ) {
-			$this->user->setOption($prefix.'_birthday', $data->month.'-'.$data->day);
+			$this->user->setOption(self::USER_PROPERTIES_PREFIX.'birthday', $data->month.'-'.$data->day);
 			$changed = true;
 		}
 		
@@ -134,8 +181,17 @@ class UserIdentityBox {
 			$changed = true;
 		}
 		
+		$wikiId = $this->app->wg->CityId;
+		if( !$this->hasUserEditedMastheadBefore($wikiId) ) {
+			$this->user->setOption(self::USER_EDITED_MASTHEAD_PROPERTY.$wikiId, true);
+			$changed = true;
+			
+			file_put_contents('/tmp/upp.log', print_r(array('Sets '.self::USER_EDITED_MASTHEAD_PROPERTY.$wikiId), true), FILE_APPEND);
+		}
+		
 		if( true === $changed ) {
 			$this->user->saveSettings();
+			file_put_contents('/tmp/upp.log', print_r(array('$this->user->saveSettings() fired!'), true), FILE_APPEND);
 			
 			$this->app->wf->ProfileOut( __METHOD__ );
 			return true;

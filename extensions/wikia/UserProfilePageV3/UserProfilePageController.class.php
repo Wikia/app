@@ -776,7 +776,7 @@ class UserProfilePageController extends WikiaController {
 		$user = F::build('User', array($userId), 'newFromId');
 		
 		$userIdentityBox = F::build('UserIdentityBox', array($this->app, $user, self::MAX_TOP_WIKIS));
-		$userData = $userIdentityBox->setData(self::MAX_TOP_WIKIS);
+		$userData = $userIdentityBox->setData(true);
 		
 		if( !is_null($userData['registration']) ) {
 			$userData['registration'] = $this->wg->Lang->date($userData['registration']);
