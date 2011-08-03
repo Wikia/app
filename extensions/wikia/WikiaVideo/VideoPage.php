@@ -26,7 +26,7 @@ class VideoPage extends Article {
 	const V_GAMETRAILERS = 20;
 	const V_SCREENPLAY = 21;
 	const V_MOVIECLIPS = 22;
-	
+
 	const SCREENPLAY_MEDIUM_JPEG_BITRATE_ID = 267;	// 250x200
 	const SCREENPLAY_LARGE_JPEG_BITRATE_ID = 382;	// 480x360
 	const SCREENPLAY_HIGHDEF_BITRATE_ID = 449;	// 720p
@@ -36,7 +36,7 @@ class VideoPage extends Article {
 	const SCREENPLAY_ENCODEFORMATCODE_MP4 = 20;
 
 	const VIDEO_GOOGLE_ANALYTICS_ACCOUNT_ID = 'UA-24709745-1';
-	
+
 	private static $SCREENPLAY_VENDOR_ID = 1893;
 	private static $SCREENPLAY_VIDEO_TYPE = '.mp4';
 
@@ -56,7 +56,7 @@ class VideoPage extends Article {
 		global $wgOut, $wgRequest;
 		$wgOut->setArticleBodyOnly(true);
 		// this article has no content. simulate a Video tag
-		// width, align and caption may be specified as params. let's 
+		// width, align and caption may be specified as params. let's
 		// overload the article title to have a quasi-query string
 		$params = array();
 
@@ -75,7 +75,7 @@ class VideoPage extends Article {
 				$params[] = $vars['caption'];
 			}
 		}
-		
+
 		$paramsStr = '';
 		if (sizeof($params)) {
 			$paramsStr = '|' . implode('|', $params);
@@ -83,7 +83,7 @@ class VideoPage extends Article {
 
 		$this->mContent = '[[' . $this->getTitle()->getFullText() . $paramsStr .']]';
 		$this->mContentLoaded = true;
-		
+
 		parent::view();
 	}
 
@@ -656,7 +656,7 @@ EOD;
 			if ( isset( $aData['v'] ) ){
 				$id = $aData['v'];
 			}
-			
+
 			if( empty( $id ) ){
 				$parsedUrl = parse_url( $url );
 
@@ -897,7 +897,7 @@ EOD;
 				return true;
 			}
 		}
-		
+
 		$text = strpos( $fixed_url, "MOVIECLIPS.COM" );
 		if ( false !== $test ) { // MovieClips
 			$provider = self::V_MOVIECLIPS;
@@ -1124,7 +1124,7 @@ EOD;
 				break;
 			case self::V_HULU:
 				$exists = $this->getHuluData() != false;
-				break;	
+				break;
 			case self::V_SCREENPLAY:
 				//@todo verify if exists
 				$exists = true;
@@ -1612,20 +1612,20 @@ EOD;
 		@$doc->loadXML( $file );
 
 		$mTrueID = trim( $doc->getElementsByTagNameNS('http://blip.tv/dtd/blip/1.0',"embedLookup")->item(0)->textContent );
-		$thumbnailUrl  = trim( $doc->getElementsByTagNameNS('http://search.yahoo.com/mrss/',"thumbnail")->item(0)->getAttribute("url"));
-		$mType = trim( $doc->getElementsByTagNameNS('http://blip.tv/dtd/blip/1.0',"embedUrl")->item(0)->getAttribute("type"));
+		$thumbnailUrl  = $doc->getElementsByTagNameNS('http://search.yahoo.com/mrss/',"thumbnail")->item(0);
+		$mType = $doc->getElementsByTagNameNS('http://blip.tv/dtd/blip/1.0',"embedUrl")->item(0);
 
-		if ( ($mType !== "application/x-shockwave-flash") || (empty($mTrueID)) || (empty($thumbnailUrl)) )
+		if ( (empty($mType) || trim($mType->getAttribute("type")) !== "application/x-shockwave-flash") || (empty($mTrueID)) || (empty($thumbnailUrl)) )
 		{
 			return false;
 		}
 
 		$obj = array(	'mTrueID' => $mTrueID ,
-						'thumbnailUrl' => $thumbnailUrl);
+						'thumbnailUrl' => trim($thumbnailUrl->getAttribute("url")));
 		$wgMemc->set( $cacheKey, $obj,60*60*24 );
 		return $obj;
 	}
-	
+
 	private function getHuluData() {
 		$huluData = array();
 		if (!empty($this->mData)) {
@@ -1651,13 +1651,13 @@ EOD;
 				$huluData['embedId'] = array_pop($embedUrlParts);
 				$huluData['thumbnailUrl'] = trim( $doc->getElementsByTagName('thumbnail_url')->item(0)->textContent );
 				$huluData['videoName'] = trim( $doc->getElementsByTagName('title')->item(0)->textContent );
-			}			
+			}
 		}
 		$this->mVideoName = $huluData['videoName'];
-		
-		return $huluData;		
+
+		return $huluData;
 	}
-	
+
 	public function getUrlToEmbed() {
 
 		// todo switch through providers, make an API call and return proper stuff
@@ -1756,7 +1756,7 @@ EOD;
 				$file = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid='.$this->mId.'&bitrateid='.$this->mData[0].'&vendorid='.self::$SCREENPLAY_VENDOR_ID.'&type='.self::$SCREENPLAY_VIDEO_TYPE;
 				$hdfile = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid='.$this->mId.'&bitrateid='.self::SCREENPLAY_HIGHDEF_BITRATE_ID.'&vendorid='.self::$SCREENPLAY_VENDOR_ID.'&type='.self::$SCREENPLAY_VIDEO_TYPE;
 				$image = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid='.$this->mId.'&bitrateid='.self::SCREENPLAY_LARGE_JPEG_BITRATE_ID.'&vendorid='.self::$SCREENPLAY_VENDOR_ID.'&type=.jpg';
-				
+
 				$plugins = array('gapro-1'=>array('accountid'=>self::VIDEO_GOOGLE_ANALYTICS_ACCOUNT_ID));
 				if ($this->mData[1]) {
 					$plugins['hd-1'] = array('file'=>urlencode($hdfile), 'state'=>'false');  // when player embedded in action=render page, the file URL is automatically linkified. prevent this behavior
@@ -1764,7 +1764,7 @@ EOD;
 
 				// html embed code
 //				$flashvars = 'file='.urlencode($file).'&image='.urlencode($image).'&provider=video&type=video&stretching=fill';		//@todo add title, description variables
-//				$embed = '<object 
+//				$embed = '<object
 //				    width="'.$width.'"
 //				    height="'.$height.'">
 //				    <param name="movie" value="'.$player.'">
@@ -1784,9 +1784,9 @@ EOD;
 //				</object>';
 				//@todo add title, description variables
 				//@todo show object in Add Video flow. show swfobject in article mode
-				
+
 				$playerId = 'player-'.$this->mId;
-				
+
 				// jwplayer embed code
 				$embed .= '<div id="'.$playerId.'"></div>'
 					. '<script type="text/javascript" src="'.$jwplayerjs.'"></script>'
@@ -1824,7 +1824,7 @@ EOD;
 					. '}'	// end plugins
 					. '});'
 					. '</script>';
-				
+
 				/*
 				// swfobject code
 				$embed = '<div id="'.$playerId.'"></div>'
@@ -1970,7 +1970,7 @@ EOD;
 		global $wgOut, $wgWikiaVideoProviders;
 		$data = array(
 			$this->mProvider,
-			$this->mId		    
+			$this->mId
 		);
 		$data = array_merge($data, $this->mData);
 		$data = implode( ",", $data ) ;
