@@ -237,7 +237,7 @@ There\'s a lot happening on your wiki today! Drop by $MYHOMEURL to see what\'s b
 	'founderemails-email-lot-happening-button' => 'See Activities',
 // New Founder email messages
 	'founderemails-email-footer-line1' => 'To check out the latest happenings on Wikia, visit <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
-	'founderemails-email-footer-line2' => 'Want to control which emails you receive? Go to your [{{fullurl:{{ns:special}}:Preferences}} Preferences]',
+	'founderemails-email-footer-line2' => 'Want to control which emails you receive? Go to your <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Preferences</a>',
 // day 0
 	'founderemails-email-0-day-heading' => 'Nice to meet you $FOUNDERNAME,',
 	'founderemails-email-0-day-congratulations' => 'Congratulations on creating $HDWIKINAME!',

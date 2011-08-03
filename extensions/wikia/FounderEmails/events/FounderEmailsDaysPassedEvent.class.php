@@ -44,7 +44,7 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 				wfLoadExtensionMessages( 'FounderEmails', $langCode );
 
 				$mailSubject = strtr(wfMsgExt('founderemails' . $wikiType . '-email-' . $activateDays . '-days-passed-subject', array('content')), $emailParams);
-				$mailBody = strtr(wfMsgExt('founderemails' . $wikiType . '-email-' . $activateDays . '-days-passed-body', array('content')), $emailParams);
+				$mailBody = strtr(wfMsgForContent('founderemails' . $wikiType . '-email-' . $activateDays . '-days-passed-body'), $emailParams);
 				$mailCategory = FounderEmailsEvent::CATEGORY_DEFAULT;
 				if($activateDays == 3) {
 					$mailCategory = FounderEmailsEvent::CATEGORY_3_DAY;
