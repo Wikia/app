@@ -369,7 +369,7 @@ public class BaseTest {
 	 * Check if The Editor Reskin is enabled on the current edit page
 	 */
 	protected boolean isReskinEnabled() throws Exception {
-		return !session().getEval('typeof window.wgEditedTitle').equals('undefined');
+		return !session().getEval("typeof window.wgEditedTitle").equals("undefined");
 	}
 
 	/**
@@ -403,7 +403,7 @@ public class BaseTest {
 	protected void doEdit(String content) throws Exception {
 		if (isWysiwygEditor()) {
 			// Visual Editor - switch to source mode (if needed)
-			this.switchWysiwygMode('source');
+			this.switchWysiwygMode("source");
 			session().type("//td[@id='cke_contents_wpTextbox1']/textarea", content);
 		} else {
 			// regular editor
