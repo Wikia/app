@@ -398,4 +398,18 @@
 
 }
 
+#contentSub {
+	font-size: 14px;
+	line-height: 16px;
+	padding: 10px;
+
+	.commentslikes {
+		display: inline;
+		font-size: 12px;
+		a:hover {
+			text-decoration: none;
+		}
+	}
+}
+
 @import "Comments";

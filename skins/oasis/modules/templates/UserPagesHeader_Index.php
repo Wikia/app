@@ -89,13 +89,7 @@
 		</ul>
 	</div>
 </div>
-<?php
-	if ($subtitle != '') {
-?>
-<div id="contentSub"><?= $subtitle ?></div>
-<?php
-	}
-?>
+
 	<a name="EditPage"></a>
 	
 <?php if ($fbData) {?>

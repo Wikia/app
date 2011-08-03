@@ -34,6 +34,8 @@ class BodyModule extends Module {
 	var $displayAdminDashboardChromedArticle;
 	var $isMainPage;
 
+	var $subtitle;
+
 	private static $onEditPage;
 	public static $CORPORATE_LANDING_PAGE_TITLE_METADATA;
 
@@ -489,7 +491,42 @@ class BodyModule extends Module {
 		
 		$this->isUserProfilePageV3Enabled = !empty($wgEnableUserProfilePagesV3);
 
+
+		$namespace = $wgTitle->getNamespace();
+		// extra logic for subpages (RT #74091)
+		if (!empty($this->subtitle)) {
+			switch($namespace) {
+				// for user subpages add link to theirs talk pages
+				case NS_USER:
+					$talkPage = $wgTitle->getTalkPage();
+	
+					// get number of revisions for talk page
+					$service = new PageStatsService($wgTitle->getArticleId());
+					$comments = $service->getCommentsCount();
+	
+					// render comments bubble
+					$bubble = wfRenderModule('CommentsLikes', 'Index', array('comments' => $comments, 'bubble' => true));
+	
+					$this->subtitle .= ' | ';
+					$this->subtitle .= $bubble;
+					$this->subtitle .= Wikia::link($talkPage);
+					break;
+	
+				case NS_USER_TALK:
+					$subjectPage = $wgTitle->getSubjectPage();
+	
+					$this->subtitle .= ' | ';
+					$this->subtitle .= Wikia::link($subjectPage);
+					break;
+			}
+		}
+
+
+
 	}
+	
+
+	
 }
 
 BodyModule::$CORPORATE_LANDING_PAGE_TITLE_METADATA =
