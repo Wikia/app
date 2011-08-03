@@ -658,6 +658,14 @@ class LoadBalancer {
 		if ( isset( $server['fakeMaster'] ) ) {
 			$db->setFakeMaster( true );
 		}
+
+		// Wikia - change begin - @author: wladek
+		// allow per-cluster setting for character encoding (only mysql supported)
+		if ( isset( $server['charset'] ) && $db->getType() == 'mysql' ) {
+			$db->query( "SET NAMES'{$server['charset']}';", __METHOD__ );
+		}
+		// Wikia - change end
+
 		return $db;
 	}
 
