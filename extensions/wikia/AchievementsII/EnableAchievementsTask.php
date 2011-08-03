@@ -18,7 +18,7 @@ class EnableAchievementsTask extends BatchTask {
 
 	/* constructor */
 	function __construct( $params = array() ) {
-        $this->mType = 'enableachivements';
+		$this->mType = 'enableachivements';
 		$this->mVisible = false; //we don't show form for this, it already exists
 		$this->mParams = $params;
 		$this->mTTL = 60 * 60 * 24; // 24 hours
@@ -82,4 +82,33 @@ class EnableAchievementsTask extends BatchTask {
 		return true ;
 	}
 
+	function submitForm() {
+		global $wgUser, $wgExternalSharedDB;
+
+		if ( empty($this->mParams) ) {
+			return false;
+		}
+
+		$sParams = serialize( $this->mParams );
+
+		$dbw = wfGetDB( DB_MASTER, null, $wgExternalSharedDB );
+		$dbw->insert(
+				"wikia_tasks",
+				array(
+					"task_user_id" => $wgUser->getID(),
+					"task_type" => $this->mType,
+					"task_priority" => 1,
+					"task_status" => 1,
+					"task_added" => wfTimestampNow(),
+					"task_started" => "",
+					"task_finished" => "",
+					"task_arguments" => $sParams
+				     )
+			    );
+
+		$task_id = $dbw->insertId() ;
+		$dbw->commit();
+		return $task_id ;
+
+	}
 }
