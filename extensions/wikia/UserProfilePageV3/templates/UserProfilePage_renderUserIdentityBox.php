@@ -39,7 +39,7 @@
 		<div>
 			<div class="tally">
 				<? if( !empty($user['registration']) ): ?>
-					<? if( !empty($user['edits']) ): ?>
+					<? if( !empty($user['edits']) || (empty($user['edits']) && !empty($user['registration'])) ): ?>
 						<em><?= number_format($user['edits']) ?></em>
 						<span>
 							<?= wfMsg('user-identity-box-edits-since-joining') ?><br>

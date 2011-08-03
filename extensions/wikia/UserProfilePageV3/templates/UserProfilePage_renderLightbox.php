@@ -1,6 +1,6 @@
 <div id="UPPLightbox" class="UPPLightbox">
 	<h1><?= wfMsg('userprofilepage-edit-modal-header'); ?></h1>
-
+	
 	<div id="errorBox">
 		<div id="wpError"></div>
 	</div>
@@ -15,7 +15,7 @@
 				</li>
 		<? } ?>
 	</ul>
-		
+	
 	<ul class="tab-content">
 		<li class="interview">
 			<div>
@@ -65,11 +65,11 @@
 							<? endforeach; ?>
 						</ul>
 					<? endif; ?>
-				</div>			
+				</div>
 			</form>
 		</li>
-	
-		<li class="about">			
+		
+		<li class="about">
 			<form id="userData" name="userData">
 				<div class="column">
 					<label><?= wfMsg('user-identity-box-about-name'); ?></label>
@@ -93,14 +93,14 @@
 							<? endfor; ?>
 						<? endif; ?>
 					</select>
-
+					
 					<label><?= wfMsg('user-identity-box-about-occupation'); ?></label>
 					<input type="text" name="occupation" value="<?= htmlentities($user['occupation'], ENT_COMPAT, 'UTF-8'); ?>">
-
+					
 					<label><?= wfMsg('user-identity-box-about-gender'); ?></label>
 					<input type="text" name="gender" value="<?= htmlentities($user['gender'], ENT_COMPAT, 'UTF-8'); ?>">
 				</div>
-
+				
 				<div class="column">
 					<? if( $isUserPageOwner ): ?>
 						<p id="facebookConnect" <? if( !empty($user['fbPage']) ): ?>style="display: none;"<? endif; ?>>
@@ -113,14 +113,14 @@
 							<a href="<?= $facebookPrefsLink ?>#prefsection-8"><?= wfMsg('user-identity-box-fb-prefs'); ?></a>
 						</p>
 					<? endif; ?>
-
+					
 					<label><?= wfMsg('user-identity-box-about-website'); ?></label>
 					<input type="text" name="website" value="<?= htmlentities($user['website'], ENT_COMPAT, 'UTF-8'); ?>">
-
+					
 					<label><?= wfMsg('user-identity-box-about-tweet'); ?></label>
 					<span class="tweet-at">@</span>
 					<input type="text" name="twitter" value="<?= htmlentities($user['twitter'], ENT_COMPAT, 'UTF-8'); ?>">
-
+					
 					<label><?= wfMsg('user-identity-box-about-fav-wikis'); ?></label>
 					<a class="favorite-wikis-refresh wikia-chiclet-button" href="#"><img src="<?= $wgBlankImgUrl ?>"></a>
 					<ul class="favorite-wikis">
