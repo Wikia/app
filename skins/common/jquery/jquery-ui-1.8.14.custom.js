@@ -1,5 +1,5 @@
 /*!
- * jQuery UI 1.8.13
+ * jQuery UI 1.8.14
  *
  * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
  * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -18,7 +18,7 @@ if ( $.ui.version ) {
 }
 
 $.extend( $.ui, {
-	version: "1.8.13",
+	version: "1.8.14",
 
 	keyCode: {
 		ALT: 18,
@@ -311,7 +311,7 @@ $.extend( $.ui, {
 
 })( jQuery );
 /*!
- * jQuery UI Widget 1.8.13
+ * jQuery UI Widget 1.8.14
  *
  * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
  * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -573,7 +573,7 @@ $.Widget.prototype = {
 
 })( jQuery );
 /*!
- * jQuery UI Mouse 1.8.13
+ * jQuery UI Mouse 1.8.14
  *
  * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
  * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -632,7 +632,7 @@ $.widget("ui.mouse", {
 
 		var self = this,
 			btnIsLeft = (event.which == 1),
-			elIsCancel = (typeof this.options.cancel == "string" ? $(event.target).parents().add(event.target).filter(this.options.cancel).length : false);
+			elIsCancel = (typeof this.options.cancel == "string" ? $(event.target).closest(this.options.cancel).length : false);
 		if (!btnIsLeft || elIsCancel || !this._mouseCapture(event)) {
 			return true;
 		}
@@ -733,7 +733,259 @@ $.widget("ui.mouse", {
 
 })(jQuery);
 /*
- * jQuery UI Draggable 1.8.13
+ * jQuery UI Position 1.8.14
+ *
+ * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
+ * Dual licensed under the MIT or GPL Version 2 licenses.
+ * http://jquery.org/license
+ *
+ * http://docs.jquery.com/UI/Position
+ */
+(function( $, undefined ) {
+
+$.ui = $.ui || {};
+
+var horizontalPositions = /left|center|right/,
+	verticalPositions = /top|center|bottom/,
+	center = "center",
+	_position = $.fn.position,
+	_offset = $.fn.offset;
+
+$.fn.position = function( options ) {
+	if ( !options || !options.of ) {
+		return _position.apply( this, arguments );
+	}
+
+	// make a copy, we don't want to modify arguments
+	options = $.extend( {}, options );
+
+	var target = $( options.of ),
+		targetElem = target[0],
+		collision = ( options.collision || "flip" ).split( " " ),
+		offset = options.offset ? options.offset.split( " " ) : [ 0, 0 ],
+		targetWidth,
+		targetHeight,
+		basePosition;
+
+	if ( targetElem.nodeType === 9 ) {
+		targetWidth = target.width();
+		targetHeight = target.height();
+		basePosition = { top: 0, left: 0 };
+	// TODO: use $.isWindow() in 1.9
+	} else if ( targetElem.setTimeout ) {
+		targetWidth = target.width();
+		targetHeight = target.height();
+		basePosition = { top: target.scrollTop(), left: target.scrollLeft() };
+	} else if ( targetElem.preventDefault ) {
+		// force left top to allow flipping
+		options.at = "left top";
+		targetWidth = targetHeight = 0;
+		basePosition = { top: options.of.pageY, left: options.of.pageX };
+	} else {
+		targetWidth = target.outerWidth();
+		targetHeight = target.outerHeight();
+		basePosition = target.offset();
+	}
+
+	// force my and at to have valid horizontal and veritcal positions
+	// if a value is missing or invalid, it will be converted to center 
+	$.each( [ "my", "at" ], function() {
+		var pos = ( options[this] || "" ).split( " " );
+		if ( pos.length === 1) {
+			pos = horizontalPositions.test( pos[0] ) ?
+				pos.concat( [center] ) :
+				verticalPositions.test( pos[0] ) ?
+					[ center ].concat( pos ) :
+					[ center, center ];
+		}
+		pos[ 0 ] = horizontalPositions.test( pos[0] ) ? pos[ 0 ] : center;
+		pos[ 1 ] = verticalPositions.test( pos[1] ) ? pos[ 1 ] : center;
+		options[ this ] = pos;
+	});
+
+	// normalize collision option
+	if ( collision.length === 1 ) {
+		collision[ 1 ] = collision[ 0 ];
+	}
+
+	// normalize offset option
+	offset[ 0 ] = parseInt( offset[0], 10 ) || 0;
+	if ( offset.length === 1 ) {
+		offset[ 1 ] = offset[ 0 ];
+	}
+	offset[ 1 ] = parseInt( offset[1], 10 ) || 0;
+
+	if ( options.at[0] === "right" ) {
+		basePosition.left += targetWidth;
+	} else if ( options.at[0] === center ) {
+		basePosition.left += targetWidth / 2;
+	}
+
+	if ( options.at[1] === "bottom" ) {
+		basePosition.top += targetHeight;
+	} else if ( options.at[1] === center ) {
+		basePosition.top += targetHeight / 2;
+	}
+
+	basePosition.left += offset[ 0 ];
+	basePosition.top += offset[ 1 ];
+
+	return this.each(function() {
+		var elem = $( this ),
+			elemWidth = elem.outerWidth(),
+			elemHeight = elem.outerHeight(),
+			marginLeft = parseInt( $.curCSS( this, "marginLeft", true ) ) || 0,
+			marginTop = parseInt( $.curCSS( this, "marginTop", true ) ) || 0,
+			collisionWidth = elemWidth + marginLeft +
+				( parseInt( $.curCSS( this, "marginRight", true ) ) || 0 ),
+			collisionHeight = elemHeight + marginTop +
+				( parseInt( $.curCSS( this, "marginBottom", true ) ) || 0 ),
+			position = $.extend( {}, basePosition ),
+			collisionPosition;
+
+		if ( options.my[0] === "right" ) {
+			position.left -= elemWidth;
+		} else if ( options.my[0] === center ) {
+			position.left -= elemWidth / 2;
+		}
+
+		if ( options.my[1] === "bottom" ) {
+			position.top -= elemHeight;
+		} else if ( options.my[1] === center ) {
+			position.top -= elemHeight / 2;
+		}
+
+		// prevent fractions (see #5280)
+		position.left = Math.round( position.left );
+		position.top = Math.round( position.top );
+
+		collisionPosition = {
+			left: position.left - marginLeft,
+			top: position.top - marginTop
+		};
+
+		$.each( [ "left", "top" ], function( i, dir ) {
+			if ( $.ui.position[ collision[i] ] ) {
+				$.ui.position[ collision[i] ][ dir ]( position, {
+					targetWidth: targetWidth,
+					targetHeight: targetHeight,
+					elemWidth: elemWidth,
+					elemHeight: elemHeight,
+					collisionPosition: collisionPosition,
+					collisionWidth: collisionWidth,
+					collisionHeight: collisionHeight,
+					offset: offset,
+					my: options.my,
+					at: options.at
+				});
+			}
+		});
+
+		if ( $.fn.bgiframe ) {
+			elem.bgiframe();
+		}
+		elem.offset( $.extend( position, { using: options.using } ) );
+	});
+};
+
+$.ui.position = {
+	fit: {
+		left: function( position, data ) {
+			var win = $( window ),
+				over = data.collisionPosition.left + data.collisionWidth - win.width() - win.scrollLeft();
+			position.left = over > 0 ? position.left - over : Math.max( position.left - data.collisionPosition.left, position.left );
+		},
+		top: function( position, data ) {
+			var win = $( window ),
+				over = data.collisionPosition.top + data.collisionHeight - win.height() - win.scrollTop();
+			position.top = over > 0 ? position.top - over : Math.max( position.top - data.collisionPosition.top, position.top );
+		}
+	},
+
+	flip: {
+		left: function( position, data ) {
+			if ( data.at[0] === center ) {
+				return;
+			}
+			var win = $( window ),
+				over = data.collisionPosition.left + data.collisionWidth - win.width() - win.scrollLeft(),
+				myOffset = data.my[ 0 ] === "left" ?
+					-data.elemWidth :
+					data.my[ 0 ] === "right" ?
+						data.elemWidth :
+						0,
+				atOffset = data.at[ 0 ] === "left" ?
+					data.targetWidth :
+					-data.targetWidth,
+				offset = -2 * data.offset[ 0 ];
+			position.left += data.collisionPosition.left < 0 ?
+				myOffset + atOffset + offset :
+				over > 0 ?
+					myOffset + atOffset + offset :
+					0;
+		},
+		top: function( position, data ) {
+			if ( data.at[1] === center ) {
+				return;
+			}
+			var win = $( window ),
+				over = data.collisionPosition.top + data.collisionHeight - win.height() - win.scrollTop(),
+				myOffset = data.my[ 1 ] === "top" ?
+					-data.elemHeight :
+					data.my[ 1 ] === "bottom" ?
+						data.elemHeight :
+						0,
+				atOffset = data.at[ 1 ] === "top" ?
+					data.targetHeight :
+					-data.targetHeight,
+				offset = -2 * data.offset[ 1 ];
+			position.top += data.collisionPosition.top < 0 ?
+				myOffset + atOffset + offset :
+				over > 0 ?
+					myOffset + atOffset + offset :
+					0;
+		}
+	}
+};
+
+// offset setter from jQuery 1.4
+if ( !$.offset.setOffset ) {
+	$.offset.setOffset = function( elem, options ) {
+		// set position first, in-case top/left are set even on static elem
+		if ( /static/.test( $.curCSS( elem, "position" ) ) ) {
+			elem.style.position = "relative";
+		}
+		var curElem   = $( elem ),
+			curOffset = curElem.offset(),
+			curTop    = parseInt( $.curCSS( elem, "top",  true ), 10 ) || 0,
+			curLeft   = parseInt( $.curCSS( elem, "left", true ), 10)  || 0,
+			props     = {
+				top:  (options.top  - curOffset.top)  + curTop,
+				left: (options.left - curOffset.left) + curLeft
+			};
+		
+		if ( 'using' in options ) {
+			options.using.call( elem, props );
+		} else {
+			curElem.css( props );
+		}
+	};
+
+	$.fn.offset = function( options ) {
+		var elem = this[ 0 ];
+		if ( !elem || !elem.ownerDocument ) { return null; }
+		if ( options ) { 
+			return this.each(function() {
+				$.offset.setOffset( this, options );
+			});
+		}
+		return _offset.call( this );
+	};
+}
+
+}( jQuery ));
+/*
+ * jQuery UI Draggable 1.8.14
  *
  * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
  * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -897,6 +1149,10 @@ $.widget("ui.draggable", $.ui.mouse, {
 
 		this.helper.addClass("ui-draggable-dragging");
 		this._mouseDrag(event, true); //Execute the drag once - this causes the helper not to be visible before getting its correct position
+		
+		//If the ddmanager is used for droppables, inform the manager that dragging has started (see #5003)
+		if ( $.ui.ddmanager ) $.ui.ddmanager.dragStart(this, event);
+		
 		return true;
 	},
 
@@ -962,6 +1218,9 @@ $.widget("ui.draggable", $.ui.mouse, {
 				this.parentNode.removeChild(this); 
 			}); //Remove frame helpers
 		}
+		
+		//If the ddmanager is used for droppables, inform the manager that dragging has stopped (see #5003)
+		if( $.ui.ddmanager ) $.ui.ddmanager.dragStop(this, event);
 		
 		return $.ui.mouse.prototype._mouseUp.call(this, event);
 	},
@@ -1089,8 +1348,8 @@ $.widget("ui.draggable", $.ui.mouse, {
 		var o = this.options;
 		if(o.containment == 'parent') o.containment = this.helper[0].parentNode;
 		if(o.containment == 'document' || o.containment == 'window') this.containment = [
-			(o.containment == 'document' ? 0 : $(window).scrollLeft()) - this.offset.relative.left - this.offset.parent.left,
-			(o.containment == 'document' ? 0 : $(window).scrollTop()) - this.offset.relative.top - this.offset.parent.top,
+			o.containment == 'document' ? 0 : $(window).scrollLeft() - this.offset.relative.left - this.offset.parent.left,
+			o.containment == 'document' ? 0 : $(window).scrollTop() - this.offset.relative.top - this.offset.parent.top,
 			(o.containment == 'document' ? 0 : $(window).scrollLeft()) + $(o.containment == 'document' ? document : window).width() - this.helperProportions.width - this.margins.left,
 			(o.containment == 'document' ? 0 : $(window).scrollTop()) + ($(o.containment == 'document' ? document : window).height() || document.body.parentNode.scrollHeight) - this.helperProportions.height - this.margins.top
 		];
@@ -1170,10 +1429,11 @@ $.widget("ui.draggable", $.ui.mouse, {
 			}
 
 			if(o.grid) {
-				var top = this.originalPageY + Math.round((pageY - this.originalPageY) / o.grid[1]) * o.grid[1];
+				//Check for grid elements set to 0 to prevent divide by 0 error causing invalid argument errors in IE (see ticket #6950)
+				var top = o.grid[1] ? this.originalPageY + Math.round((pageY - this.originalPageY) / o.grid[1]) * o.grid[1] : this.originalPageY;
 				pageY = containment ? (!(top - this.offset.click.top < containment[1] || top - this.offset.click.top > containment[3]) ? top : (!(top - this.offset.click.top < containment[1]) ? top - o.grid[1] : top + o.grid[1])) : top;
 
-				var left = this.originalPageX + Math.round((pageX - this.originalPageX) / o.grid[0]) * o.grid[0];
+				var left = o.grid[0] ? this.originalPageX + Math.round((pageX - this.originalPageX) / o.grid[0]) * o.grid[0] : this.originalPageX;
 				pageX = containment ? (!(left - this.offset.click.left < containment[0] || left - this.offset.click.left > containment[2]) ? left : (!(left - this.offset.click.left < containment[0]) ? left - o.grid[0] : left + o.grid[0])) : left;
 			}
 
@@ -1229,7 +1489,7 @@ $.widget("ui.draggable", $.ui.mouse, {
 });
 
 $.extend($.ui.draggable, {
-	version: "1.8.13"
+	version: "1.8.14"
 });
 
 $.ui.plugin.add("draggable", "connectToSortable", {
@@ -1548,7 +1808,7 @@ $.ui.plugin.add("draggable", "zIndex", {
 
 })(jQuery);
 /*
- * jQuery UI Droppable 1.8.13
+ * jQuery UI Droppable 1.8.14
  *
  * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
  * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -1696,7 +1956,7 @@ $.widget("ui.droppable", {
 });
 
 $.extend($.ui.droppable, {
-	version: "1.8.13"
+	version: "1.8.14"
 });
 
 $.ui.intersect = function(draggable, droppable, toleranceMode) {
@@ -1787,6 +2047,12 @@ $.ui.ddmanager = {
 		return dropped;
 
 	},
+	dragStart: function( draggable, event ) {
+		//Listen for scrolling so that if the dragging causes scrolling the position of the droppables can be recalculated (see #5003)
+		draggable.element.parentsUntil( "body" ).bind( "scroll.droppable", function() {
+			if( !draggable.options.refreshPositions ) $.ui.ddmanager.prepareOffsets( draggable, event );
+		});
+	},
 	drag: function(draggable, event) {
 
 		//If you have a highly dynamic page, you might try this option. It renders positions every time you move the mouse.
@@ -1828,12 +2094,17 @@ $.ui.ddmanager = {
 			}
 		});
 
+	},
+	dragStop: function( draggable, event ) {
+		draggable.element.parentsUntil( "body" ).unbind( "scroll.droppable" );
+		//Call prepareOffsets one final time since IE does not fire return scroll events when overflow was caused by drag (see #5003)
+		if( !draggable.options.refreshPositions ) $.ui.ddmanager.prepareOffsets( draggable, event );
 	}
 };
 
 })(jQuery);
 /*
- * jQuery UI Sortable 1.8.13
+ * jQuery UI Sortable 1.8.14
  *
  * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
  * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -2818,7 +3089,7 @@ $.widget("ui.sortable", $.ui.mouse, {
 
 		// We first have to update the dom position of the actual currentItem
 		// Note: don't do it if the current item is already removed (by a user), or it gets reappended (see #4088)
-		if(!this._noFinalSort && this.currentItem[0].parentNode) this.placeholder.before(this.currentItem);
+		if(!this._noFinalSort && this.currentItem.parent().length) this.placeholder.before(this.currentItem);
 		this._noFinalSort = null;
 
 		if(this.helper[0] == this.currentItem[0]) {
@@ -2905,12 +3176,624 @@ $.widget("ui.sortable", $.ui.mouse, {
 });
 
 $.extend($.ui.sortable, {
-	version: "1.8.13"
+	version: "1.8.14"
 });
 
 })(jQuery);
 /*
- * jQuery UI Slider 1.8.13
+ * jQuery UI Autocomplete 1.8.14
+ *
+ * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
+ * Dual licensed under the MIT or GPL Version 2 licenses.
+ * http://jquery.org/license
+ *
+ * http://docs.jquery.com/UI/Autocomplete
+ *
+ * Depends:
+ *	jquery.ui.core.js
+ *	jquery.ui.widget.js
+ *	jquery.ui.position.js
+ */
+(function( $, undefined ) {
+
+// used to prevent race conditions with remote data sources
+var requestIndex = 0;
+
+$.widget( "ui.autocomplete", {
+	options: {
+		appendTo: "body",
+		autoFocus: false,
+		delay: 300,
+		minLength: 1,
+		position: {
+			my: "left top",
+			at: "left bottom",
+			collision: "none"
+		},
+		source: null
+	},
+
+	pending: 0,
+
+	_create: function() {
+		var self = this,
+			doc = this.element[ 0 ].ownerDocument,
+			suppressKeyPress;
+
+		this.element
+			.addClass( "ui-autocomplete-input" )
+			.attr( "autocomplete", "off" )
+			// TODO verify these actually work as intended
+			.attr({
+				role: "textbox",
+				"aria-autocomplete": "list",
+				"aria-haspopup": "true"
+			})
+			.bind( "keydown.autocomplete", function( event ) {
+				if ( self.options.disabled || self.element.attr( "readonly" ) ) {
+					return;
+				}
+
+				suppressKeyPress = false;
+				var keyCode = $.ui.keyCode;
+				switch( event.keyCode ) {
+				case keyCode.PAGE_UP:
+					self._move( "previousPage", event );
+					break;
+				case keyCode.PAGE_DOWN:
+					self._move( "nextPage", event );
+					break;
+				case keyCode.UP:
+					self._move( "previous", event );
+					// prevent moving cursor to beginning of text field in some browsers
+					event.preventDefault();
+					break;
+				case keyCode.DOWN:
+					self._move( "next", event );
+					// prevent moving cursor to end of text field in some browsers
+					event.preventDefault();
+					break;
+				case keyCode.ENTER:
+				case keyCode.NUMPAD_ENTER:
+					// when menu is open and has focus
+					if ( self.menu.active ) {
+						// #6055 - Opera still allows the keypress to occur
+						// which causes forms to submit
+						suppressKeyPress = true;
+						event.preventDefault();
+					}
+					//passthrough - ENTER and TAB both select the current element
+				case keyCode.TAB:
+					if ( !self.menu.active ) {
+						return;
+					}
+					self.menu.select( event );
+					break;
+				case keyCode.ESCAPE:
+					self.element.val( self.term );
+					self.close( event );
+					break;
+				default:
+					// keypress is triggered before the input value is changed
+					clearTimeout( self.searching );
+					self.searching = setTimeout(function() {
+						// only search if the value has changed
+						if ( self.term != self.element.val() ) {
+							self.selectedItem = null;
+							self.search( null, event );
+						}
+					}, self.options.delay );
+					break;
+				}
+			})
+			.bind( "keypress.autocomplete", function( event ) {
+				if ( suppressKeyPress ) {
+					suppressKeyPress = false;
+					event.preventDefault();
+				}
+			})
+			.bind( "focus.autocomplete", function() {
+				if ( self.options.disabled ) {
+					return;
+				}
+
+				self.selectedItem = null;
+				self.previous = self.element.val();
+			})
+			.bind( "blur.autocomplete", function( event ) {
+				if ( self.options.disabled ) {
+					return;
+				}
+
+				clearTimeout( self.searching );
+				// clicks on the menu (or a button to trigger a search) will cause a blur event
+				self.closing = setTimeout(function() {
+					self.close( event );
+					self._change( event );
+				}, 150 );
+			});
+		this._initSource();
+		this.response = function() {
+			return self._response.apply( self, arguments );
+		};
+		this.menu = $( "<ul></ul>" )
+			.addClass( "ui-autocomplete" )
+			.appendTo( $( this.options.appendTo || "body", doc )[0] )
+			// prevent the close-on-blur in case of a "slow" click on the menu (long mousedown)
+			.mousedown(function( event ) {
+				// clicking on the scrollbar causes focus to shift to the body
+				// but we can't detect a mouseup or a click immediately afterward
+				// so we have to track the next mousedown and close the menu if
+				// the user clicks somewhere outside of the autocomplete
+				var menuElement = self.menu.element[ 0 ];
+				if ( !$( event.target ).closest( ".ui-menu-item" ).length ) {
+					setTimeout(function() {
+						$( document ).one( 'mousedown', function( event ) {
+							if ( event.target !== self.element[ 0 ] &&
+								event.target !== menuElement &&
+								!$.ui.contains( menuElement, event.target ) ) {
+								self.close();
+							}
+						});
+					}, 1 );
+				}
+
+				// use another timeout to make sure the blur-event-handler on the input was already triggered
+				setTimeout(function() {
+					clearTimeout( self.closing );
+				}, 13);
+			})
+			.menu({
+				focus: function( event, ui ) {
+					var item = ui.item.data( "item.autocomplete" );
+					if ( false !== self._trigger( "focus", event, { item: item } ) ) {
+						// use value to match what will end up in the input, if it was a key event
+						if ( /^key/.test(event.originalEvent.type) ) {
+							self.element.val( item.value );
+						}
+					}
+				},
+				selected: function( event, ui ) {
+					var item = ui.item.data( "item.autocomplete" ),
+						previous = self.previous;
+
+					// only trigger when focus was lost (click on menu)
+					if ( self.element[0] !== doc.activeElement ) {
+						self.element.focus();
+						self.previous = previous;
+						// #6109 - IE triggers two focus events and the second
+						// is asynchronous, so we need to reset the previous
+						// term synchronously and asynchronously :-(
+						setTimeout(function() {
+							self.previous = previous;
+							self.selectedItem = item;
+						}, 1);
+					}
+
+					if ( false !== self._trigger( "select", event, { item: item } ) ) {
+						self.element.val( item.value );
+					}
+					// reset the term after the select event
+					// this allows custom select handling to work properly
+					self.term = self.element.val();
+
+					self.close( event );
+					self.selectedItem = item;
+				},
+				blur: function( event, ui ) {
+					// don't set the value of the text field if it's already correct
+					// this prevents moving the cursor unnecessarily
+					if ( self.menu.element.is(":visible") &&
+						( self.element.val() !== self.term ) ) {
+						self.element.val( self.term );
+					}
+				}
+			})
+			.zIndex( this.element.zIndex() + 1 )
+			// workaround for jQuery bug #5781 http://dev.jquery.com/ticket/5781
+			.css({ top: 0, left: 0 })
+			.hide()
+			.data( "menu" );
+		if ( $.fn.bgiframe ) {
+			 this.menu.element.bgiframe();
+		}
+	},
+
+	destroy: function() {
+		this.element
+			.removeClass( "ui-autocomplete-input" )
+			.removeAttr( "autocomplete" )
+			.removeAttr( "role" )
+			.removeAttr( "aria-autocomplete" )
+			.removeAttr( "aria-haspopup" );
+		this.menu.element.remove();
+		$.Widget.prototype.destroy.call( this );
+	},
+
+	_setOption: function( key, value ) {
+		$.Widget.prototype._setOption.apply( this, arguments );
+		if ( key === "source" ) {
+			this._initSource();
+		}
+		if ( key === "appendTo" ) {
+			this.menu.element.appendTo( $( value || "body", this.element[0].ownerDocument )[0] )
+		}
+		if ( key === "disabled" && value && this.xhr ) {
+			this.xhr.abort();
+		}
+	},
+
+	_initSource: function() {
+		var self = this,
+			array,
+			url;
+		if ( $.isArray(this.options.source) ) {
+			array = this.options.source;
+			this.source = function( request, response ) {
+				response( $.ui.autocomplete.filter(array, request.term) );
+			};
+		} else if ( typeof this.options.source === "string" ) {
+			url = this.options.source;
+			this.source = function( request, response ) {
+				if ( self.xhr ) {
+					self.xhr.abort();
+				}
+				self.xhr = $.ajax({
+					url: url,
+					data: request,
+					dataType: "json",
+					autocompleteRequest: ++requestIndex,
+					success: function( data, status ) {
+						if ( this.autocompleteRequest === requestIndex ) {
+							response( data );
+						}
+					},
+					error: function() {
+						if ( this.autocompleteRequest === requestIndex ) {
+							response( [] );
+						}
+					}
+				});
+			};
+		} else {
+			this.source = this.options.source;
+		}
+	},
+
+	search: function( value, event ) {
+		value = value != null ? value : this.element.val();
+
+		// always save the actual value, not the one passed as an argument
+		this.term = this.element.val();
+
+		if ( value.length < this.options.minLength ) {
+			return this.close( event );
+		}
+
+		clearTimeout( this.closing );
+		if ( this._trigger( "search", event ) === false ) {
+			return;
+		}
+
+		return this._search( value );
+	},
+
+	_search: function( value ) {
+		this.pending++;
+		this.element.addClass( "ui-autocomplete-loading" );
+
+		this.source( { term: value }, this.response );
+	},
+
+	_response: function( content ) {
+		if ( !this.options.disabled && content && content.length ) {
+			content = this._normalize( content );
+			this._suggest( content );
+			this._trigger( "open" );
+		} else {
+			this.close();
+		}
+		this.pending--;
+		if ( !this.pending ) {
+			this.element.removeClass( "ui-autocomplete-loading" );
+		}
+	},
+
+	close: function( event ) {
+		clearTimeout( this.closing );
+		if ( this.menu.element.is(":visible") ) {
+			this.menu.element.hide();
+			this.menu.deactivate();
+			this._trigger( "close", event );
+		}
+	},
+	
+	_change: function( event ) {
+		if ( this.previous !== this.element.val() ) {
+			this._trigger( "change", event, { item: this.selectedItem } );
+		}
+	},
+
+	_normalize: function( items ) {
+		// assume all items have the right format when the first item is complete
+		if ( items.length && items[0].label && items[0].value ) {
+			return items;
+		}
+		return $.map( items, function(item) {
+			if ( typeof item === "string" ) {
+				return {
+					label: item,
+					value: item
+				};
+			}
+			return $.extend({
+				label: item.label || item.value,
+				value: item.value || item.label
+			}, item );
+		});
+	},
+
+	_suggest: function( items ) {
+		var ul = this.menu.element
+			.empty()
+			.zIndex( this.element.zIndex() + 1 );
+		this._renderMenu( ul, items );
+		// TODO refresh should check if the active item is still in the dom, removing the need for a manual deactivate
+		this.menu.deactivate();
+		this.menu.refresh();
+
+		// size and position menu
+		ul.show();
+		this._resizeMenu();
+		ul.position( $.extend({
+			of: this.element
+		}, this.options.position ));
+
+		if ( this.options.autoFocus ) {
+			this.menu.next( new $.Event("mouseover") );
+		}
+	},
+
+	_resizeMenu: function() {
+		var ul = this.menu.element;
+		ul.outerWidth( Math.max(
+			ul.width( "" ).outerWidth(),
+			this.element.outerWidth()
+		) );
+	},
+
+	_renderMenu: function( ul, items ) {
+		var self = this;
+		$.each( items, function( index, item ) {
+			self._renderItem( ul, item );
+		});
+	},
+
+	_renderItem: function( ul, item) {
+		return $( "<li></li>" )
+			.data( "item.autocomplete", item )
+			.append( $( "<a></a>" ).text( item.label ) )
+			.appendTo( ul );
+	},
+
+	_move: function( direction, event ) {
+		if ( !this.menu.element.is(":visible") ) {
+			this.search( null, event );
+			return;
+		}
+		if ( this.menu.first() && /^previous/.test(direction) ||
+				this.menu.last() && /^next/.test(direction) ) {
+			this.element.val( this.term );
+			this.menu.deactivate();
+			return;
+		}
+		this.menu[ direction ]( event );
+	},
+
+	widget: function() {
+		return this.menu.element;
+	}
+});
+
+$.extend( $.ui.autocomplete, {
+	escapeRegex: function( value ) {
+		return value.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+	},
+	filter: function(array, term) {
+		var matcher = new RegExp( $.ui.autocomplete.escapeRegex(term), "i" );
+		return $.grep( array, function(value) {
+			return matcher.test( value.label || value.value || value );
+		});
+	}
+});
+
+}( jQuery ));
+
+/*
+ * jQuery UI Menu (not officially released)
+ * 
+ * This widget isn't yet finished and the API is subject to change. We plan to finish
+ * it for the next release. You're welcome to give it a try anyway and give us feedback,
+ * as long as you're okay with migrating your code later on. We can help with that, too.
+ *
+ * Copyright 2010, AUTHORS.txt (http://jqueryui.com/about)
+ * Dual licensed under the MIT or GPL Version 2 licenses.
+ * http://jquery.org/license
+ *
+ * http://docs.jquery.com/UI/Menu
+ *
+ * Depends:
+ *	jquery.ui.core.js
+ *  jquery.ui.widget.js
+ */
+(function($) {
+
+$.widget("ui.menu", {
+	_create: function() {
+		var self = this;
+		this.element
+			.addClass("ui-menu ui-widget ui-widget-content ui-corner-all")
+			.attr({
+				role: "listbox",
+				"aria-activedescendant": "ui-active-menuitem"
+			})
+			.click(function( event ) {
+				if ( !$( event.target ).closest( ".ui-menu-item a" ).length ) {
+					return;
+				}
+				// temporary
+				event.preventDefault();
+				self.select( event );
+			});
+		this.refresh();
+	},
+	
+	refresh: function() {
+		var self = this;
+
+		// don't refresh list items that are already adapted
+		var items = this.element.children("li:not(.ui-menu-item):has(a)")
+			.addClass("ui-menu-item")
+			.attr("role", "menuitem");
+		
+		items.children("a")
+			.addClass("ui-corner-all")
+			.attr("tabindex", -1)
+			// mouseenter doesn't work with event delegation
+			.mouseenter(function( event ) {
+				self.activate( event, $(this).parent() );
+			})
+			.mouseleave(function() {
+				self.deactivate();
+			});
+	},
+
+	activate: function( event, item ) {
+		this.deactivate();
+		if (this.hasScroll()) {
+			var offset = item.offset().top - this.element.offset().top,
+				scroll = this.element.scrollTop(),
+				elementHeight = this.element.height();
+			if (offset < 0) {
+				this.element.scrollTop( scroll + offset);
+			} else if (offset >= elementHeight) {
+				this.element.scrollTop( scroll + offset - elementHeight + item.height());
+			}
+		}
+		this.active = item.eq(0)
+			.children("a")
+				.addClass("ui-state-hover")
+				.attr("id", "ui-active-menuitem")
+			.end();
+		this._trigger("focus", event, { item: item });
+	},
+
+	deactivate: function() {
+		if (!this.active) { return; }
+
+		this.active.children("a")
+			.removeClass("ui-state-hover")
+			.removeAttr("id");
+		this._trigger("blur");
+		this.active = null;
+	},
+
+	next: function(event) {
+		this.move("next", ".ui-menu-item:first", event);
+	},
+
+	previous: function(event) {
+		this.move("prev", ".ui-menu-item:last", event);
+	},
+
+	first: function() {
+		return this.active && !this.active.prevAll(".ui-menu-item").length;
+	},
+
+	last: function() {
+		return this.active && !this.active.nextAll(".ui-menu-item").length;
+	},
+
+	move: function(direction, edge, event) {
+		if (!this.active) {
+			this.activate(event, this.element.children(edge));
+			return;
+		}
+		var next = this.active[direction + "All"](".ui-menu-item").eq(0);
+		if (next.length) {
+			this.activate(event, next);
+		} else {
+			this.activate(event, this.element.children(edge));
+		}
+	},
+
+	// TODO merge with previousPage
+	nextPage: function(event) {
+		if (this.hasScroll()) {
+			// TODO merge with no-scroll-else
+			if (!this.active || this.last()) {
+				this.activate(event, this.element.children(".ui-menu-item:first"));
+				return;
+			}
+			var base = this.active.offset().top,
+				height = this.element.height(),
+				result = this.element.children(".ui-menu-item").filter(function() {
+					var close = $(this).offset().top - base - height + $(this).height();
+					// TODO improve approximation
+					return close < 10 && close > -10;
+				});
+
+			// TODO try to catch this earlier when scrollTop indicates the last page anyway
+			if (!result.length) {
+				result = this.element.children(".ui-menu-item:last");
+			}
+			this.activate(event, result);
+		} else {
+			this.activate(event, this.element.children(".ui-menu-item")
+				.filter(!this.active || this.last() ? ":first" : ":last"));
+		}
+	},
+
+	// TODO merge with nextPage
+	previousPage: function(event) {
+		if (this.hasScroll()) {
+			// TODO merge with no-scroll-else
+			if (!this.active || this.first()) {
+				this.activate(event, this.element.children(".ui-menu-item:last"));
+				return;
+			}
+
+			var base = this.active.offset().top,
+				height = this.element.height();
+				result = this.element.children(".ui-menu-item").filter(function() {
+					var close = $(this).offset().top - base + height - $(this).height();
+					// TODO improve approximation
+					return close < 10 && close > -10;
+				});
+
+			// TODO try to catch this earlier when scrollTop indicates the last page anyway
+			if (!result.length) {
+				result = this.element.children(".ui-menu-item:first");
+			}
+			this.activate(event, result);
+		} else {
+			this.activate(event, this.element.children(".ui-menu-item")
+				.filter(!this.active || this.first() ? ":last" : ":first"));
+		}
+	},
+
+	hasScroll: function() {
+		return this.element.height() < this.element[ $.fn.prop ? "prop" : "attr" ]("scrollHeight");
+	},
+
+	select: function( event ) {
+		this._trigger("selected", event, { item: this.active });
+	}
+});
+
+}(jQuery));
+/*
+ * jQuery UI Slider 1.8.14
  *
  * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
  * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -3571,12 +4454,12 @@ $.widget( "ui.slider", $.ui.mouse, {
 });
 
 $.extend( $.ui.slider, {
-	version: "1.8.13"
+	version: "1.8.14"
 });
 
 }(jQuery));
 /*
- * jQuery UI Tabs 1.8.13
+ * jQuery UI Tabs 1.8.14
  *
  * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
  * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -4275,7 +5158,7 @@ $.widget( "ui.tabs", {
 });
 
 $.extend( $.ui.tabs, {
-	version: "1.8.13"
+	version: "1.8.14"
 });
 
 /*
