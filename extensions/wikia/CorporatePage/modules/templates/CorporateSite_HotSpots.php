@@ -1,7 +1,7 @@
 	<section id="wikia-global-hot-spots" class="module" style="" <?= $hidehotspots ?>>
 		<h1><?php echo wfMsg('hub-hotspot-header', $data['title']) ?></h1>
 		<?php
-			if( $data['is_menager'] ) {
+			if( $data['is_manager'] ) {
 				if( isset($data['var_feeds']['hotspots']) ) {
 		?>
 		<span class="toggleContainer" id="hotspots">[<a class="toggleFeed" href="#"><?php echo wfMsg('hide') ?></a>]</span>
@@ -35,7 +35,7 @@
 					<span>
 						<span class="page-activity-wiki"><?php echo wfMsg('hub-hotspot-from') ?></span>
 							<a class="wikia-wiki-link" href="<?php echo $value['wikiurl'] ?>"><?php echo $value['wikiname'] ?></a>
-							<?php if( $data['is_menager']): ?>
+							<?php if( $data['is_manager']): ?>
 								<?php if( isset($value['hide'] )): ?>
 									<a class="wikia-page-link head-hide-link" href="/index.php?action=ajax&rs=AutoHubsPagesHelper::hideFeed&type=article&tag_id=<?php echo $data['tag_id'] ?>&city_id=<?php echo $value['city_id'] ?>&page_id=<?php echo $value['page_id'] ?>&dir=1" ><?php echo wfMsg('hub-show-feed'); ?></a>
 								<?php else: ?>

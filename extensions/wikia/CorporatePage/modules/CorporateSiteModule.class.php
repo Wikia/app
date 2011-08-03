@@ -10,7 +10,7 @@ class CorporateSiteModule extends Module {
 	var $slider_class;
 	var $data;
 
-	var $is_menager;  // fix this typo
+	var $is_manager;  // fix this typo
 
 	// fix these
 	var $hidehotspots;
@@ -42,7 +42,7 @@ class CorporateSiteModule extends Module {
 		$this->data['title'] = $wgTitle;
 		$this->data['topWikis1'] = $temp['value'];
 		$this->data['tag_id'] = $tag_id;
-		$this->data['is_menager'] = $isManager;
+		$this->data['is_manager'] = $isManager;
 	}
 
 	public function executeTopHubUsers() {
@@ -60,7 +60,7 @@ class CorporateSiteModule extends Module {
 		}
 		$this->data['title'] = $wgTitle;
 		$this->data['topEditors'] = $temp['value'];
-		$this->data['is_menager'] = $isManager;
+		$this->data['is_manager'] = $isManager;
 	}
 
 	public function executePopularHubPosts () {
@@ -79,7 +79,7 @@ class CorporateSiteModule extends Module {
 		}
 		$this->data['title'] = $wgTitle;
 //		$this->data['topBlogs'] = $temp['value'];
-		$this->data['is_menager'] = $isManager;
+		$this->data['is_manager'] = $isManager;
 
 		$this->wgStylePath = $wgStylePath;
 		$this->wgTitle = $wgTitle;
@@ -181,7 +181,7 @@ class CorporateSiteModule extends Module {
 		$this->data['title'] = $wgTitle;
 		$this->data['hotSpots'] = $temp['value'];
 		$this->data['tag_id'] = $tag_id;
-		$this->data['is_menager'] = $isManager;
+		$this->data['is_manager'] = $isManager;
 	}
 
 	public function executeSlider() {
