@@ -273,6 +273,13 @@ class UserIdentityBox {
 			$memcData['topWikis'] = $this->getTopWikis();
 		}
 		
+		//if any of properties isn't set then set it to null
+		foreach(array('location', 'occupation', 'gender', 'birthday', 'website', 'twitter', 'fbPage', 'realName', 'topWikis') as $property) {
+			if( !isset($memcData[$property]) ) {
+				$memcData[$property] = null;
+			}
+		}
+		
 		$this->app->wg->Memc->set($this->getMemcUserIdentityDataKey(), $memcData);
 		
 		return $memcData;
@@ -436,7 +443,8 @@ class UserIdentityBox {
 				$wikiId = $row->wiki_id;
 				$editCount = $row->edits;
 				$wikiName = F::build('WikiFactory', array('wgSitename', $wikiId), 'getVarValueByName');
-				$wikiUrl = F::build('GlobalTitle', array($this->app->wf->MsgForContent('Mainpage'), NS_MAIN, $wikiId), 'newFromText')->getFullUrl();
+				$wikiUrl = F::build('WikiFactory', array('wgServer', $wikiId), 'getVarValueByName'); 
+				//$wikiUrl = F::build('GlobalTitle', array($this->app->wf->MsgForContent('Mainpage'), NS_MAIN, $wikiId), 'newFromText')->getFullUrl();
 				
 				$wikis[$wikiId] = array( 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'editCount' => $editCount );
 			}
