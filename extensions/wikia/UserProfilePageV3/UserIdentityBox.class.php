@@ -407,7 +407,6 @@ class UserIdentityBox {
 		
 		if ( !$this->user->isAnon() ) {
 			$cachedData = $this->app->wg->Memc->get( $this->getMemcTopWikisId() );
-			$cachedData = null;
 			
 			if( !empty( $cachedData) ) {
 				$this->app->wf->ProfileOut(__METHOD__);
@@ -415,6 +414,7 @@ class UserIdentityBox {
 			}
 			
 			$where = array( 'user_id' => $this->user->getId() );
+			$where[] = 'edits > 0';
 			
 			if( true === $refreshHidden ) {
 				$this->clearHiddenTopWikis();
