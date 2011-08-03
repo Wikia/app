@@ -30,8 +30,8 @@ class VideoPage extends Article {
 	const SCREENPLAY_MEDIUM_JPEG_BITRATE_ID = 267;	// 250x200
 	const SCREENPLAY_LARGE_JPEG_BITRATE_ID = 382;	// 480x360
 	const SCREENPLAY_HIGHDEF_BITRATE_ID = 449;	// 720p
-	const SCREENPLAY_STANDARD_43_BITRATE_ID = 455;	// 360
-	const SCREENPLAY_STANDARD_BITRATE_ID = 461;	// 360
+	const SCREENPLAY_STANDARD_43_BITRATE_ID = 455;	// 360, 4:3
+	const SCREENPLAY_STANDARD_BITRATE_ID = 461;	// 360, 16:9
 	const SCREENPLAY_ENCODEFORMATCODE_JPEG = 9;
 	const SCREENPLAY_ENCODEFORMATCODE_MP4 = 20;
 
@@ -983,7 +983,7 @@ EOD;
 				$ratio = "400 x 350";
 				break;
 			case self::V_YOUTUBE:
-				$ratio = "425 x 355";
+				$ratio = "640 x 385";
 				break;
 			case self::V_SEVENLOAD:
 				$ratio = "500 x 408";
