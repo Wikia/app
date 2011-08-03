@@ -12,7 +12,6 @@ class UserPagesHeaderModule extends Module {
 
 	var $content_actions;
 	var $displaytitle;
-	var $subtitle;
 	var $title;
 
 	var $actionButton;
@@ -341,33 +340,6 @@ class UserPagesHeaderModule extends Module {
 			$this->stats = false;
 		}
 
-		// extra logic for subpages (RT #74091)
-		if (!empty($this->subtitle)) {
-			switch($namespace) {
-				// for user subpages add link to theirs talk pages
-				case NS_USER:
-					$talkPage = $wgTitle->getTalkPage();
-
-					// get number of revisions for talk page
-					$service = new PageStatsService($wgTitle->getArticleId());
-					$comments = $service->getCommentsCount();
-
-					// render comments bubble
-					$bubble = wfRenderModule('CommentsLikes', 'Index', array('comments' => $comments, 'bubble' => true));
-
-					$this->subtitle .= ' | ';
-					$this->subtitle .= $bubble;
-					$this->subtitle .= Wikia::link($talkPage);
-					break;
-
-				case NS_USER_TALK:
-					$subjectPage = $wgTitle->getSubjectPage();
-
-					$this->subtitle .= ' | ';
-					$this->subtitle .= Wikia::link($subjectPage);
-					break;
-			}
-		}
 
 
 
@@ -603,6 +575,7 @@ class UserPagesHeaderModule extends Module {
 				'text' => wfMsg('blog-create-post-label'),
 				);
 		$this->title = $wgTitle->getText();
+		//subtitle is no longer rendered in this module. this probably needs to be moved to body module.
 		$this->subtitle = wfMsg('create-blog-post-category');
 
 		// load CSS for .WikiaBlogListingHeader (BugId:9212)
