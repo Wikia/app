@@ -18,7 +18,9 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 }
 
 class CloseWikiPage extends SpecialPage {
-	
+
+	const CLOSED_WIKI_DOMAIN_PREFIX = 'old';
+
 	private
 		$mTitle,
 		$mWikis     	= array(),
@@ -259,6 +261,24 @@ class CloseWikiPage extends SpecialPage {
 		}
 	}
 
+	private function prefixMainDomain( $cityId ) {
+		$mainDomain = substr( WikiFactory::getVarValueByName("wgServer", $cityId), 7 );
+		if(!empty($mainDomain)) {
+			$index = null;
+			do {
+				$prefixedDomain = self::CLOSED_WIKI_DOMAIN_PREFIX . ( !empty($index) ? $index : '' ) . "." . $mainDomain;
+				$exists = WikiFactory::DomainToID( $prefixedDomain );
+				$index = is_null($index) ? 1 : ( $index + 1 );
+			} while( !empty($exists) );
+
+			WikiFactory::addDomain( $cityId, $prefixedDomain );
+			WikiFactory::setmainDomain( $cityId, $prefixedDomain );
+
+			return $prefixedDomain;
+		}
+		return null;
+	}
+
 	/**
 	 * close Wiki(s)
 	 * @access private
@@ -279,8 +299,13 @@ class CloseWikiPage extends SpecialPage {
 				if ( !empty($newWiki) ) {
 					Wikia::log( __METHOD__,  " ... and redirecting to: {$this->mRedirect} (id: {$newWiki})" );
 					$this->moveOldDomains( $wiki->city_id, $newWiki );
-					#-- set new city ID in city_domains
-					$isMoved = WikiFactory::redirectDomains( $wiki->city_id, $newWiki );
+
+					#-- add "old" prefix to main domain and set is as primary
+					$prefixedDomain = $this->prefixMainDomain( $wiki->city_id );
+					Wikia::log( __METHOD__,  " ... primary domain set to: {$prefixedDomain}" );
+
+					#-- set new city ID in city_domains (except for just created "old" domain)
+					$isMoved = WikiFactory::redirectDomains( $wiki->city_id, $newWiki, ( !empty( $prefixedDomain ) ? array( $prefixedDomain ) : array() ) );
 					#---
 					$message = wfMsgExt(
 						'closewiki-wiki-closed_redirect',
@@ -333,7 +358,7 @@ class CloseWikiPage extends SpecialPage {
 	 */
 	function isClosed($dbname) {
 		wfProfileIn( __METHOD__ );
-		
+
 		$res = false;
 		$cityId = WikiFactory::DBtoID($dbname, true);
 		if ( !empty($cityId) ) {
@@ -343,17 +368,17 @@ class CloseWikiPage extends SpecialPage {
 				$res = true;
 			}
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 		return $res;
 	}
-	
+
 	/*
 	 * show closed message
-	 */ 
+	 */
 	function showClosedMsg() {
 		global $wgOut, $wgStylePath, $wgStyleVersion, $wgExtensionsPath;
-		
+
 		wfProfileIn( __METHOD__ );
 		if ( $this->closedWiki === false ) {
 			wfProfileOut( __METHOD__ );
@@ -373,8 +398,8 @@ class CloseWikiPage extends SpecialPage {
 		$res = ( strlen($content = wfGetHTTP($dbDumpUrl)) == 0 ) ? false : true;
 		if ( ($this->closedWiki->city_flags > 0) && !($this->closedWiki->city_flags & WikiFactory::FLAG_CREATE_DB_DUMP) ) {
 			$res = -1;
-		} 
-		
+		}
+
 		$this->mTmpl->reset();
 		$this->mTmpl->set_vars( array(
 			"wgExtensionsPath" => $wgExtensionsPath,
@@ -388,7 +413,7 @@ class CloseWikiPage extends SpecialPage {
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
 		$wgOut->setArticleRelated( false );
 		$wgOut->addHtml($this->mTmpl->execute("close-info"));
-		
+
 		wfProfileOut( __METHOD__ );
 	}
 }
