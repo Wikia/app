@@ -307,8 +307,9 @@ public class BaseTest {
 		waitForElementNotVisible(elementId, this.getTimeout());
 	}
 
-	protected void clickAndWait(String location) {
+	protected void clickAndWait(String location) throws Exception {
 		session().click(location);
+		Thread.sleep(2); // fix for new selenium-server
 		session().waitForPageToLoad(this.getTimeout());
 	}
 
