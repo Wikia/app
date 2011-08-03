@@ -36,6 +36,7 @@ extAddBatchTask( dirname(__FILE__)."/Tasks/PageImporterTask.php", "pageimporter"
 extAddBatchTask( dirname(__FILE__)."/Tasks/SWMSendToGroupTask.php", "SWMSendToGroup", "SWMSendToGroupTask" );
 extAddBatchTask( dirname(__FILE__)."/Tasks/LocalMaintenanceTask.php", "local-maintenance", "LocalMaintenanceTask" );
 extAddBatchTask( dirname(__FILE__)."/Tasks/ClearMessageCacheTask.php", "clear-msg-cache", "ClearMessageCacheTask" );
+extAddBatchTask( dirname(__FILE__)."/../AchievementsII/EnableAchievementsTask.php", "enbl-ach", "EnableAchievementsTask" );
 
 /**
  * permissions

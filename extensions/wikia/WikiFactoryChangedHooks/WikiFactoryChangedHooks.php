@@ -10,7 +10,6 @@ $wgAutoloadClasses['WikiFactoryChangedHooks'] = dirname(__FILE__)."/WikiFactoryC
 
 // Alphabetical
 $wgHooks['WikiFactoryChanged'][] = 'WikiFactoryChangedHooks::achievements';
-extAddBatchTask( dirname(__FILE__)."/../AchievemensII/EnableAchievementsTask.php", "enbl-ach", "EnableAchievementsTask" );
 
 $wgHooks['WikiFactoryChanged'][] = 'WikiFactoryChangedHooks::FounderProgressBar';
 
