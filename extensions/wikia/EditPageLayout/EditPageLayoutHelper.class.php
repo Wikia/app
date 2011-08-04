@@ -300,6 +300,13 @@ class EditPageLayoutHelper {
 		return true;
 	}
 
+	function onSkinAfterBottomScripts($skin, &$text) {
+		if ($this->editPage instanceof EditPageLayout) {
+			$text .= Html::inlineScript("$('#wpSave').attr('disabled', true);");
+		}
+		return true;
+	}
+
 	static public function getAssets() {
 		return array(
 			// >> mediawiki editor core file
