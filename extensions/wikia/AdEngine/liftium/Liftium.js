@@ -1606,7 +1606,7 @@ Liftium.normalizeColor = function(input){
 
 
 Liftium.onLoadHandler = function () {
-	Liftium.trackEvent(["onload", Liftium.formatTrackTime(Liftium.debugTime(), 30)], "UA-17475676-7");
+	//Liftium.trackEvent(["onload", Liftium.formatTrackTime(Liftium.debugTime(), 30)], "UA-17475676-7");
 
 	Liftium.pageLoaded = true;
 	if ( Liftium.iframesLoaded()) {
@@ -2091,7 +2091,7 @@ Liftium.trackEvent = function(page, profile) {
 		p.utmac = profile;
 		Liftium.d("Tracking is using custom profile: " + profile, 7);
 	} else {
-		p.utmac = "UA-17475676-3";
+		p.utmac = "UA-17475676-10";
 	}
 
 	var url = "https:" == window.location.protocol ? "https://ssl." : "http://www.";
