@@ -108,7 +108,7 @@ function efLoadPhalanxLink( $id, $nt, &$links ) {
 		$links[] = $wgUser->getSkin()->makeKnownLinkObj(
 			GlobalTitle::newFromText('Phalanx', NS_SPECIAL, 177),
 			'PhalanxBlock',
-			wfArrayToCGI( array('type'=>'8', 'target'=>$nt->getText() ) )
+			wfArrayToCGI( array('type'=>'8', 'target'=>$nt->getText(), 'wpPhalanxCheckBlocker'=>$nt->getText() ) )
 		);
 	}
 	return true;
