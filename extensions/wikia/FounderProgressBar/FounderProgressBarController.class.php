@@ -528,10 +528,14 @@ class FounderProgressBarController extends WikiaController {
 			$method = array_shift($this->urls[$task_id]);
 			$params = $this->urls[$task_id];
 			$title = call_user_func_array("Title::$method", $params);
-			if ($method == "newMainPage") {
-				return $title->getFullUrl("action=edit");
+			if (is_object($title)) {
+				if ($method == "newMainPage") {
+					return $title->getFullURL("action=edit");
+				}
+				return $title->getFullURL();
+			} else {
+				return ""; 	// bad title -- throw exception?
 			}
-			return $title->getFullURL();
 		} else {
 			return $this->urls[$task_id];
 		}
