@@ -256,9 +256,14 @@
 				}
 			}
 			.task-group {
-				@include clearfix;
-				padding: 20px 0 10px 31px;
 				background: white;
+				padding: 20px 0 10px 31px;
+				*zoom: 1;	/* IE7 */
+				&:after {
+					clear: left;
+					content: "";
+					display: block;
+				}
 			}
 		}
 	}
