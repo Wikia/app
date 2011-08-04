@@ -11,14 +11,18 @@
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
 class WikiaView {
-
-	const ERROR_HEADER_NAME = 'X-Wikia-Error';
 	/**
 	 * Response object
 	 * @var WikiaResponse
 	 */
 	private $response = null;
 	private $templatePath = null;
+	
+	function __construct( WikiaResponse $response = null ) {
+		if ( !empty ( $response ) ) {
+			$this->setResponse( $response );
+		}
+	}
 
 	/**
 	 * factory method - create view object for given controller and method name
@@ -41,10 +45,7 @@ class WikiaView {
 			}
 		}
 
-		$view = F::build( 'WikiaView' );
-		$view->setResponse( $response );
-
-		return $view;
+		return $response->getView();
 	}
 
 	/**
@@ -162,20 +163,6 @@ class WikiaView {
 		}
 	}
 
-	/**
-	 * prepare response (called just before rendering starts)
-	 * @param WikiaResponse $response
-	 */
-	public function prepareResponse( WikiaResponse $response ) {
-		if( ( $response->getFormat() == WikiaResponse::FORMAT_JSON ) && $response->hasException() ) {
-			// set error header for JSON response (as requested for mobile apps)
-			$response->setHeader( self::ERROR_HEADER_NAME, $response->getException()->getMessage() );
-		}
-		if( ( $response->getFormat() == WikiaResponse::FORMAT_JSON ) && !$this->response->hasContentType() ) {
-			$this->response->setContentType( 'application/json; charset=utf-8' );
-		}
-	}
-
 	public function __toString() {
 		try {
 			return $this->render();
@@ -191,7 +178,7 @@ class WikiaView {
 	 * @return string
 	 */
 	public function render() {
-		if( $this->response == null ) {
+		if( empty( $this->response ) ) {
 			throw new WikiaException( "WikiaView: response object is null" );
 		}
 
