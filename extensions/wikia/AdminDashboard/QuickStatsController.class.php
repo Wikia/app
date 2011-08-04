@@ -21,7 +21,11 @@ class QuickStatsController extends WikiaController {
 				$date = date( 'Y-m-d', strtotime("$i day") );
 				if ($i == 0) $date = 'totals';  // last time around check the totals
 				if (!isset($stats[$date])) $stats[$date] = array();
-				if (!isset($stats[$date]['pageviews'])) $stats[$date]['pageviews'] = 0;
+				if (!isset($stats[$date]['pageviews'])) {
+					$stats[$date]['pageviews'] = 0;
+				} else {
+					$stats[$date]['pageviews'] *= 10;
+				}
 				if (!isset($stats[$date]['edits'])) $stats[$date]['edits'] = 0;
 				if (!isset($stats[$date]['photos'])) $stats[$date]['photos'] = 0;
 				if ($hasfbdata && !isset($stats[$date]['likes'])) $stats[$date]['likes'] = 0;
