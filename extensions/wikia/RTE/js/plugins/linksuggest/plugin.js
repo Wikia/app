@@ -35,9 +35,10 @@ CKEDITOR.plugins.add('rte-linksuggest',
 	initMediaWikiLinkSuggest: function(editor) {
 		if (typeof $.fn.linksuggest == 'function') {
 			editor.on('mode', function(ev) {
-				var textarea = $(editor.textarea.$);
-				textarea.attr('id', 'RTEtextarea');
-					$(textarea).css( 'font-family', 'monospace' ).linksuggest();
+				if (editor.mode == 'source') {
+					var textarea = $(editor.textarea.$);
+					textarea.attr('id', 'RTEtextarea').css( 'font-family', 'monospace' ).linksuggest();
+				}
 			});
 		}
 	}
