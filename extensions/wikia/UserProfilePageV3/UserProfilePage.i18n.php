@@ -18,6 +18,7 @@ $messages['en'] = array(
 	'userprofilepage-question-list-title' => '$1/$2 Questions',
 	'userprofilepage-interview-section-title' => 'User Interview',
 	'userprofilepage-stuff-section-title' => 'Stuff',
+	'userprofilepage-invalid-user' => 'Invalid user! You are not logged-in or do not have rights to process',
 	
 	'user-identity-box-edit' => 'Edit',
 	'user-identity-box-edit-avatar' => 'Edit avatar',
@@ -110,6 +111,7 @@ $messages['en'] = array(
 	'userprofilepage-closing-popup-cancel' => 'Cancel',
 
 	'user-action-menu-edit' => 'Edit',
+	'user-action-menu-edit-profile' => 'Edit profile',
 	'user-action-menu-leave-message' => 'Leave message',
 	'user-action-menu-view-source' => 'View source',
 	'user-action-menu-protect' => 'Protect',

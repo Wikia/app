@@ -81,6 +81,7 @@ class UserProfilePageController extends WikiaController {
 		$sessionUser = $this->wg->User;
 		$user = $this->getUserFromTitle($this->title);
 		$userIdentityBox = F::build('UserIdentityBox', array($this->app, $user, self::MAX_TOP_WIKIS));
+		$isUserPageOwner = ($user->getId() == $sessionUser->getId()) ? true : false;
 		$userData = $userIdentityBox->setData();
 		
 		if( !empty($userData['registration']) ) {
@@ -89,9 +90,10 @@ class UserProfilePageController extends WikiaController {
 		
 		$this->setVal( 'user', $userData );
 		$this->setVal( 'deleteAvatarLink', F::build('SpecialPage', array('RemoveUserAvatar'), 'getTitleFor')->getFullUrl('av_user='.$userData['name']) );
-		$this->setVal( 'isUserPageOwner', ( ( $user->getId() == $sessionUser->getId() ) ? true : false ) );
-		$this->setVal( 'isWikiStaff', ( $sessionUser->isAllowed('staff') ? true : false ) );
 		$this->setVal( 'canRemoveAvatar', $sessionUser->isAllowed('removeavatar') );
+		$this->setVal( 'isUserPageOwner', $isUserPageOwner );
+		$this->setVal( 'isWikiStaff', $sessionUser->isAllowed('staff') );
+		$this->setVal( 'canEditProfile', ($isUserPageOwner || $sessionUser->isAllowed('staff') || $sessionUser->isAllowed('editprofilev3')) );
 		
 		$this->app->wg->Out->addScript('<script type="'.$this->app->wg->JsMimeType.' src="'.$this->app->wg->StylePath.'/common/jquery/jquery.aim.js?'.$this->app->wg->StyleVersion.'"></script>');
 		
@@ -109,50 +111,21 @@ class UserProfilePageController extends WikiaController {
 		$namespace = $this->title->getNamespace();
 		$user = $this->getUserFromTitle($this->title);
 		$sessionUser = $this->wg->User;
-		$canDelete = $sessionUser->isAllowed('staff');
+		$canRename = $sessionUser->isAllowed('staff') || $sessionUser->isAllowed('renameprofilev3');
 		$canProtect = $sessionUser->isAllowed('staff') || $sessionUser->isAllowed('protectsite');
+		$canDelete = $sessionUser->isAllowed('staff');
 		$isUserPageOwner = $user->getId() == $this->wg->User->getId() ? true : false;
-		$canEdit = $sessionUser->isAllowed('edit');
-		$canEditProfile = $sessionUser->isAllowed('staff') || $isUserPageOwner;
 		
 		$actionButtonArray = array();
 		if( defined('NS_USER') && $namespace == NS_USER ) {
-			if( $isUserPageOwner ) {
-				$actionButtonArray = array(
-					'action' => array(
-						'href' => $this->title->getLocalUrl(array('action' => 'edit')),
-						'text' => $this->wf->Msg('user-action-menu-edit'),
-					),
-					'image' => MenuButtonModule::EDIT_ICON,
-					'name' => 'editprofile',
-				);
-			} else {
-				$title = F::build('Title', array($user->getName(), NS_USER_TALK), 'newFromText');
-				$actionButtonArray = array(
-					'action' => array(
-						'href' => $title->getLocalUrl(array('action' => 'edit', 'section' => 'new')),
-						'text' => $this->wf->Msg('user-action-menu-leave-message'),
-					),
-					'image' => MenuButtonModule::MESSAGE_ICON,
-					'name' => 'leavemessage',
-				);
-				
-				if( $canEditProfile ) {
-					$actionButtonArray['dropdown'] = array(
-						'editprofile' => array(
-							'href' => $this->title->getFullUrl(array('action' => 'edit')),
-							'text' => $this->wf->Msg('user-action-menu-edit'),
-						)
-					);
-				} else {
-					$actionButtonArray['dropdown'] = array(
-						'viewsource' => array(
-							'href' => $this->title->getFullUrl(array('action' => 'viewsource')),
-							'text' => $this->wf->Msg('user-action-menu-view-source'),
-						)
-					);
-				}
-			}
+			$actionButtonArray = array(
+				'action' => array(
+					'href' => $this->title->getLocalUrl(array('action' => 'edit')),
+					'text' => $this->wf->Msg('user-action-menu-edit-profile'),
+				),
+				'image' => MenuButtonModule::EDIT_ICON,
+				'name' => 'editprofile',
+			);
 		} else if( defined('NS_USER_TALK') && $namespace == NS_USER_TALK ) {
 			$title = F::build('Title', array($user->getName(), NS_USER_TALK), 'newFromText');
 			if( $isUserPageOwner ) {
@@ -179,13 +152,6 @@ class UserProfilePageController extends WikiaController {
 						)
 					),
 				);
-				
-				if( $canEdit ) {
-					$actionButtonArray['dropdown']['viewsource'] = array(
-						'href' => $this->title->getFullUrl(array('action' => 'viewsource')),
-						'text' => $this->wf->Msg('user-action-menu-view-source'),
-					);
-				}
 			}
 		} else if( defined('NS_BLOG_ARTICLE') && $namespace == NS_BLOG_ARTICLE && $isUserPageOwner ) {
 			global $wgCreateBlogPagePreload;
@@ -202,13 +168,15 @@ class UserProfilePageController extends WikiaController {
 		}
 		
 		if( defined('NS_USER') && defined('NS_USER_TALK') && in_array($namespace, array(NS_USER, NS_USER_TALK)) ) {
-			$renameUrl = F::build('SpecialPage', array('MovePage'), 'getTitleFor')->getLocalUrl().'/'.$this->title->__toString();
-			$actionButtonArray['dropdown']['rename'] = array(
-				'href' => $renameUrl,
-				'text' => $this->wf->Msg('user-action-menu-rename'),
-			);
+			if( $canRename ) {
+				$renameUrl = F::build('SpecialPage', array('MovePage'), 'getTitleFor')->getLocalUrl().'/'.$this->title->__toString();
+				$actionButtonArray['dropdown']['rename'] = array(
+					'href' => $renameUrl,
+					'text' => $this->wf->Msg('user-action-menu-rename'),
+				);
+			}
 			
-			if( $canProtect && $namespace == NS_USER_TALK) {
+			if( $canProtect ) {
 				$actionButtonArray['dropdown']['protect'] = array(
 					'href' => $this->title->getLocalUrl(array('action' => 'protect')),
 					'text' => $this->wf->Msg('user-action-menu-protect'),
@@ -246,16 +214,17 @@ class UserProfilePageController extends WikiaController {
 		$selectedTab = $this->getVal('tab');
 		$userId = $this->getVal('userId');
 		$wikiId = $this->wg->CityId;
-		$user = $this->wg->User;
+		$sessionUser = $this->wg->User;
+		$canEditProfile = ($sessionUser->isAllowed('staff') || $sessionUser->isAllowed('editprofilev3'));
 		
-		if( !$user->isAnon() ) {
-			$this->profilePage = F::build( 'UserProfilePage', array( 'user' =>  $user ) );
+		if( $sessionUser->isAnon() && !$canEditProfile ) {
+			throw new WikiaException( $this->wf->msg('userprofilepage-invalid-user') );
+		} else {
+			$this->profilePage = F::build( 'UserProfilePage', array('user' => $sessionUser) );
 
 			$this->setVal( 'body', (string) $this->sendSelfRequest( 'renderLightbox', array( 'tab' => $selectedTab, 'userId' => $userId ) ) );
 			//we'll implement interview section later
 			//$this->setVal( 'interviewQuestions', $this->profilePage->getInterviewQuestions( $wikiId, false, true ) );
-		} else {
-			throw new WikiaException( 'User not logged in' );
 		}
 		
 		$this->app->wf->ProfileOut( __METHOD__ );
