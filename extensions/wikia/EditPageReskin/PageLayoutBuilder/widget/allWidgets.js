@@ -269,9 +269,13 @@ $(function() {
 
 //* gallery *//
 PageLayoutBuilder.uploadGallery = function(element_id) {
-	WikiaPhotoGalleryView.loadEditorJS(function() {
-		PageLayoutBuilder.showGalleryForPLB(element_id);
-	});
+	if (typeof window.WikiaPhotoGalleryView == 'undefined') {
+		$.getScript('/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js', function() {	
+			WikiaPhotoGalleryView.loadEditorJS(function() {
+				PageLayoutBuilder.showGalleryForPLB(element_id);
+			});
+		});
+	}
 }
 
 PageLayoutBuilder.showGalleryForPLB = function(element_id) {
