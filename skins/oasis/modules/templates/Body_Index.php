@@ -15,7 +15,7 @@
 	<div id="WikiaPageBackground" class="WikiaPageBackground"></div>
 	<div class="WikiaPageContentWrapper">
 		<?= wfRenderModule('Notifications', 'Confirmation') ?>
-	
+
 		<?
 		if ($isMainPage) {
 			echo '<div class="WikiaMainPageBanner">';
@@ -34,23 +34,23 @@
 			echo '</div>';
 		}
 		?>
-		
-	
+
+
 		<?php
 			if (empty($wgSuppressWikiHeader)) {
 				echo wfRenderModule('WikiHeader');
 			}
 		?>
-	
+
 		<?php
 			if (!empty($wgEnableWikiAnswers)) {
 				echo wfRenderModule('WikiAnswers', 'QuestionBox');
 			}
 		?>
 
-		<?php 
-		if (!empty( $wgInterlangOnTop ) ) { 
-			wfRenderModule('ArticleInterlang');
+		<?php
+		if (!empty( $wgInterlangOnTop ) ) {
+			echo wfRenderModule('ArticleInterlang');
 		}
 		?>
 
@@ -58,17 +58,17 @@
 		if ( !empty($isUserProfilePageV3Enabled) && $headerModuleName == 'UserPagesHeader') {
 			//echo F::app()->renderView( 'UserProfilePage', 'renderUserIdentityBox', array() );
 			echo wfRenderModule($headerModuleName, $headerModuleAction, $headerModuleParams);
-		} 
+		}
 		?>
 
 		<article id="WikiaMainContent" class="WikiaMainContent">
 			<?php
-			
+
 				// Needs to be above page header so it can suppress page header
 				if ($displayAdminDashboard) {
 					echo wfRenderModule('AdminDashboard', 'Chrome');
-				}					
-				
+				}
+
 				// render UserPagesHeader or PageHeader or nothing...
 				if (empty($wgSuppressPageHeader) && $headerModuleName) {
 					if (!empty($isUserProfilePageV3Enabled) && $headerModuleName == 'UserPagesHeader') {
@@ -79,78 +79,78 @@
 				}
 			?>
 
-						
+
 			<?php if ($subtitle != '') { ?>
 				<div id="contentSub"><?= $subtitle ?></div>
 			<?php } ?>
-			
-			
+
+
 			<div id="WikiaArticle" class="WikiaArticle<?= $displayAdminDashboardChromedArticle ? ' AdminDashboardChromedArticle'.($adminDashboardCollapsed ? '' : ' expanded') : '' ?>">
 				<? if($displayAdminDashboardChromedArticle) { ?>
 					<?= (string)F::app()->sendRequest( 'AdminDashboardSpecialPage', 'chromedArticleHeader', array('headerText' => $wgTitle->getText() )) ?>
 				<? } ?>
 				<div class="home-top-right-ads">
-				<?php 
+				<?php
 					if (in_array('leaderboard', $wgABTests)) {
 						echo wfRenderModule('Ad', 'Index', array('slotname' => 'TEST_HOME_TOP_RIGHT_BOXAD'));
 					} else {
 						echo wfRenderModule('Ad', 'Index', array('slotname' => 'HOME_TOP_RIGHT_BOXAD'));
 					}
-	
+
 					echo wfRenderModule('Ad', 'Index', array('slotname' => 'HOME_TOP_RIGHT_BUTTON'));
 				?>
 				</div>
-	
-	
+
+
 				<?php
 				// for InfoBox-Testing
 				if ($wgEnableInfoBoxTest) {
 					echo wfRenderModule('ArticleInfoBox');
 				}
-	
+
 				if ($wgEnableCorporatePageExt) {
 					echo wfRenderModule('CorporateSite', 'Slider');
 				} ?>
-	
+
 				<?= $bodytext ?>
-	
+
 			</div>
-	
+
 			<?php
 			if (empty($wgSuppressArticleCategories)) {
 				echo wfRenderModule('ArticleCategories');
 			} ?>
 			<?php
 			if (empty( $wgInterlangOnTop ) ) {
-				 wfRenderModule('ArticleInterlang');
+				 echo wfRenderModule('ArticleInterlang');
 			}
 			?>
-			
+
 			<?php if (!empty($afterContentHookText)) { ?>
 			<div id="WikiaArticleFooter" class="WikiaArticleFooter">
 				<?= $afterContentHookText ?>
 			</div>
 			<?php } ?>
-	
+
 			<div id="WikiaArticleBottomAd" class="noprint">
 				<?= wfRenderModule('Ad', 'Index', array('slotname' => 'PREFOOTER_LEFT_BOXAD')) ?>
 				<?= wfRenderModule('Ad', 'Index', array('slotname' => 'PREFOOTER_RIGHT_BOXAD')) ?>
 			</div>
-	
+
 	<?php
 		if ($displayComments) {
 			echo wfRenderModule('ArticleComments');
 		}
 	?>
-	
+
 		</article><!-- WikiaMainContent -->
-	
+
 	<?php
 		if (count($railModuleList) > 0) {
 			echo wfRenderModule('Rail', 'Index', array('railModuleList' => $railModuleList));
 		}
 	?>
-	
+
 		<?= empty($wgSuppressFooter) ? wfRenderModule('Footer') : '' ?>
 		<?= wfRenderModule('CorporateFooter') ?>
 	</div>
