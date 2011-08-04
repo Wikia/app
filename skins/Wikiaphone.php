@@ -54,15 +54,8 @@ class SkinWikiaphone extends SkinTemplate {
 	}
 
 	function setupSkinUserCss( OutputPage $out ){
-		global $wgEnableWikiaphoneCustomCSS;
 		foreach ( AssetsManager::getInstance()->getGroupCommonURL( 'wikiaphone_css' ) as $src ) {
 			$out->addStyle( $src );
-		}
-		
-		if ( $wgEnableWikiaphoneCustomCSS ) {
-			foreach ( AssetsManager::getInstance()->getGroupCommonURL( 'wikiaphone_site_css' ) as $src ) {
-				$out->addStyle( $src );
-			}
 		}
 	}
 	
@@ -110,10 +103,6 @@ class SkinWikiaphone extends SkinTemplate {
 		$vars['SpecialNamespaceMessage'] = $wgContLang->getNsText(NS_SPECIAL);
 		
 		return true;
-	}
-	
-	public static function getSiteCSS( $combine, $minify = null, $params = null, $skinname = 'oasis', $articleName = 'Wikia.css') {
-		return AssetsConfig::getSiteCSS( $combine, $minify, $params, 'wikiaphone', 'WikiaPhone.css' );
 	}
 	
 	protected function afterContentHook () {
