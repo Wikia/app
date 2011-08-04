@@ -7,7 +7,7 @@ import static org.testng.AssertJUnit.assertTrue;
 
 public class ActivityWidgetTest extends BaseTest {
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI", "verified"})
 	public void testEnsureDeprecatedNavigationMenuItemsRedirectToWikiaActivity() throws Exception {
 		session().open("index.php?title=Special:ActivityFeed");
 		session().waitForPageToLoad(this.getTimeout());

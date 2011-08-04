@@ -6,12 +6,12 @@ import static org.testng.AssertJUnit.assertTrue;
 import org.testng.annotations.Test;
 
 public class AchievementsOasisTest extends BaseTest {
-	@Test(groups="CI")
+	@Test(groups={"CI", "verified"})
 	public void testEnsureAchievementsWidgetIsPresentOnUserProfilePage() throws Exception {
 		loginAsRegular();
 
 		// got to user profile page  
-		session().open("/wiki/User:" + getTestConfig().getString("ci.user.regular.username"));
+		session().open("wiki/User:" + getTestConfig().getString("ci.user.regular.username"));
 		session().waitForPageToLoad(this.getTimeout());
 
 		// check for elements
