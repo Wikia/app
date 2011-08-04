@@ -2,9 +2,11 @@ CKEDITOR.plugins.add('rte-modeswitch',
 {
 	sourceButton: false,
 	messages: {},
+	saveButton: false,
 
 	init: function(editor) {
 		this.messages = editor.lang.modeSwitch;
+		this.saveButton = $('#wpSave');
 
 		this.addCommands(editor);
 
@@ -37,6 +39,7 @@ CKEDITOR.plugins.add('rte-modeswitch',
 	},
 
 	modeSwitch: function(ev) {
+		this.saveButton.attr('disabled', true);
 		var editor = ev.editor,
 			content = editor.getData();
 
@@ -116,6 +119,7 @@ CKEDITOR.plugins.add('rte-modeswitch',
 	},
 	
 	mode: function(ev) {
+		this.saveButton.removeAttr('disabled');
 		RTE.log('mode "' + ev.editor.mode + '" is loaded');
 	},
 
