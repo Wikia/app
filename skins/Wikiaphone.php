@@ -54,12 +54,12 @@ class SkinWikiaphone extends SkinTemplate {
 	}
 
 	function setupSkinUserCss( OutputPage $out ){
-		global $wgDevelEnvironment;
+		global $wgEnableWikiaphoneCustomCSS;
 		foreach ( AssetsManager::getInstance()->getGroupCommonURL( 'wikiaphone_css' ) as $src ) {
 			$out->addStyle( $src );
 		}
 		
-		if ( $wgDevelEnvironment ) {
+		if ( $wgEnableWikiaphoneCustomCSS ) {
 			foreach ( AssetsManager::getInstance()->getGroupCommonURL( 'wikiaphone_site_css' ) as $src ) {
 				$out->addStyle( $src );
 			}
