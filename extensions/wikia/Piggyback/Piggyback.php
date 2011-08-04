@@ -31,6 +31,10 @@ $wgSpecialPageGroups['Piggyback'] = 'users';
 $wgLogRestrictions['piggyback'] = 'piggyback';
 $wgLogTypes[] = 'piggyback';
 
+//permissions
+$wgAvailableRights[] = 'piggyback';
+$wgGroupPermissions['util']['piggyback'] = true;
+
 /*
  * event for logout (back to parent user)
  */
