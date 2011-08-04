@@ -197,6 +197,8 @@ $wgAutoloadClasses['EditPageModule'] = $IP.'/skins/oasis/modules/EditPageModule.
 $wgAutoloadClasses['HuluVideoPanelModule'] = $IP.'/skins/oasis/modules/HuluVideoPanelModule.class.php';
 
 $wgAutoloadClasses['UploadPhotosModule'] = $IP.'/skins/oasis/modules/UploadPhotosModule.class.php';
+$wgAutoloadClasses['WikiaTempFilesUpload'] = $IP.'/includes/wikia/WikiaTempFilesUpload.class.php';
+
 $wgAutoloadClasses['ThemeSettings'] = $IP.'/extensions/wikia/ThemeDesigner/ThemeSettings.class.php';
 
 $wgAutoloadClasses['ErrorModule'] = $IP.'/skins/oasis/modules/ErrorModule.class.php';

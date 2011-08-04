@@ -13,7 +13,8 @@ class WikiaPhotoGalleryAjax {
 		$tempId = $wgRequest->getInt('tempId');
 
 		// ovewrite provided image with uploaded one
-		$resolved = WikiaPhotoGalleryUpload::conflictOverwrite($imageName, $tempId);
+		$uploadHelper = new WikiaPhotoGalleryUpload();
+		$resolved = $uploadHelper->conflictOverwrite($imageName, $tempId);
 
 		$res = array(
 			'resolved' => $resolved,
@@ -34,7 +35,8 @@ class WikiaPhotoGalleryAjax {
 		$tempId = $wgRequest->getInt('tempId');
 
 		// try to resolve the conflict
-		if (WikiaPhotoGalleryUpload::conflictRename($newName, $tempId)) {
+		$uploadHelper = new WikiaPhotoGalleryUpload();
+		if ($uploadHelper->conflictRename($newName, $tempId)) {
 			$res = array(
 				'resolved' => true,
 			);
@@ -255,7 +257,8 @@ class WikiaPhotoGalleryAjax {
 		wfDebug(__METHOD__ . "\n");
 
 		// handle upload and security checks
-		$result = WikiaPhotoGalleryUpload::uploadImage();
+		$uploadHelper = new WikiaPhotoGalleryUpload();
+		$result = $uploadHelper->uploadImage();
 
 		wfProfileOut(__METHOD__);
 
