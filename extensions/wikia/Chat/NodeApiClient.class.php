@@ -12,7 +12,7 @@ class NodeApiClient {
 	// Internal requests use diff hostnames than requests from the browsers.
 	const HOST_PRODUCTION = "chatserver.wikia-dev.com";
 	const HOST_DEV = "chat.wikia-dev.com";
-	const API_HOST_AND_PORT_PRODUCTION = "chat-s1:8001";
+	const API_HOST_AND_PORT_PRODUCTION = "chatserver.wikia.com:8001";
 	const API_HOST_AND_PORT_DEV = "chat.wikia-dev.com:8001";
 	
 	const HOST_PRODUCTION_FROM_CLIENT = "chatserver.wikia.com";
@@ -118,7 +118,7 @@ class NodeApiClient {
 				$data['chatters'][] = array('username' => $usersInRoomData[$index]);
 			}
 
-			$wgMemc->set($memKey, $data, 30); // only cache for a short time... needs to be pretty fresh (this might even be too long).
+			$wgMemc->set($memKey, $data, 120); // only cache for a short time... needs to be pretty fresh (this might even be too long).
 		}
 		
 		// Allow calling code to find the total number of users in the room (by reference).
@@ -136,7 +136,7 @@ class NodeApiClient {
 		wfProfileIn( __METHOD__ );
 		
 		$requestUrl = "http://" . NodeApiClient::getHostAndPort() . "/api?" . http_build_query($params);
-		$response = Http::get( $requestUrl );
+		$response = Http::get( $requestUrl, 'default', array('noProxy' => true) );
 		if($response === false){
 			$response = "";
 		}
