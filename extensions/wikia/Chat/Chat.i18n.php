@@ -58,6 +58,16 @@ $messages['en'] = array(
 	'chat-user-manu-private-allow' => 'Allow Private Messages',
 	'chat-user-manu-private-close' => 'Close Private Room',
 	'chat-private-headline' => 'Private chat with $1',
+
+	//rights/groups
+	'right-chatmoderator' => 'Can kick/ban users from [[Help:Chat|Chat]]',
+	'group-chatmoderator' => 'Chat Moderators',
+	'group-chatmoderator-member' => 'Chat Moderator',
+	'grouppage-chatmoderator' => 'w:c:community:Help:Chat',
+
+	'group-bannedfromchat' => 'BannedFromChat',
+	'group-bannedfromchat-member' => 'BannedFromChat',
+	'grouppage-bannedfromchat' => 'w:c:community:Help:Chat',
 );
 
 /** Message documentation (Message documentation)
