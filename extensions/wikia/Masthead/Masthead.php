@@ -596,7 +596,6 @@ class Masthead {
 	public function uploadFile($request, $input = AVATAR_UPLOAD_FIELD, &$errorMsg='') {
 		global $wgTmpDirectory;
 		wfProfileIn(__METHOD__);
-
 		$this->__setLogType();
 
 		if( !isset( $wgTmpDirectory ) || !is_dir( $wgTmpDirectory ) ) {
@@ -610,6 +609,7 @@ class Masthead {
 			wfProfileOut(__METHOD__);
 			return $errorNo;
 		}
+
 		$iFileSize = $request->getFileSize( $input );
 
 		if( empty( $iFileSize ) ) {
@@ -620,11 +620,12 @@ class Masthead {
 			wfProfileOut(__METHOD__);
 			return UPLOAD_ERR_NO_FILE;
 		}
-
+	
 		$sTmpFile = $wgTmpDirectory.'/'.substr(sha1(uniqid($this->mUser->getID())), 0, 16);
 //		Wikia::log( __METHOD__, 'tmp', "Temp file set to {$sTmpFile}" );
 		$sTmp = $request->getFileTempname($input);
 //		Wikia::log( __METHOD__, 'path', "Path to uploaded file is {$sTmp}" );
+
 
 		if( move_uploaded_file( $sTmp, $sTmpFile )  ) {
 			$errorNo = $this->postProcessImageInternal($sTmpFile, $errorNo, $errorMsg);
@@ -689,38 +690,43 @@ class Masthead {
 		$addedAvatars = array();
 		$sFilePath = $this->getFullPath();
 
-		/**
-		 * calculate new image size - should be 100 x 100
-		 */
-		$iImgW = AVATAR_DEFAULT_WIDTH;
-		$iImgH = AVATAR_DEFAULT_HEIGHT;
-		/* WIDTH > HEIGHT */
-		if ( $aOrigSize['width'] > $aOrigSize['height'] ) {
-			$iImgH = $iImgW * ( $aOrigSize['height'] / $aOrigSize['width'] );
+		global $wgEnableUserProfilePagesV3;
+		if( empty($wgEnableUserProfilePagesV3) ) {
+			/**
+			 * calculate new image size - should be 100 x 100
+			 */
+			$iImgW = AVATAR_DEFAULT_WIDTH;
+			$iImgH = AVATAR_DEFAULT_HEIGHT;
+			/* WIDTH > HEIGHT */
+			if ( $aOrigSize['width'] > $aOrigSize['height'] ) {
+				$iImgH = $iImgW * ( $aOrigSize['height'] / $aOrigSize['width'] );
+			}
+			/* HEIGHT > WIDTH */
+			if ( $aOrigSize['width'] < $aOrigSize['height'] ) {
+				$iImgW = $iImgH * ( $aOrigSize['width'] / $aOrigSize['height'] );
+			}
+		
+			/* empty image with thumb size on white background */
+			$oImg = @imagecreatetruecolor($iImgW, $iImgH);
+			$white = imagecolorallocate($oImg, 255, 255, 255);
+			imagefill($oImg, 0, 0, $white);
+		
+			imagecopyresampled(
+				$oImg,
+				$oImgOrig,
+				floor ( ( AVATAR_DEFAULT_WIDTH - $iImgW ) / 2 ) /*dx*/,
+				floor ( ( AVATAR_DEFAULT_HEIGHT - $iImgH ) / 2 ) /*dy*/,
+				0 /*sx*/,
+				0 /*sy*/,
+				$iImgW /*dw*/,
+				$iImgH /*dh*/,
+				$aOrigSize['width']/*sw*/,
+				$aOrigSize['height']/*sh*/
+			);
+		} else {
+			$ioh = new ImageOperationsHelper(UserProfilePageController::AVATAR_DEFAULT_SIZE, UserProfilePageController::AVATAR_DEFAULT_SIZE);
+			$oImg = $ioh->postProcess(  $oImgOrig, $aOrigSize );
 		}
-		/* HEIGHT > WIDTH */
-		if ( $aOrigSize['width'] < $aOrigSize['height'] ) {
-			$iImgW = $iImgH * ( $aOrigSize['width'] / $aOrigSize['height'] );
-		}
-
-		/* empty image with thumb size on white background */
-		$oImg = @imagecreatetruecolor($iImgW, $iImgH);
-		$white = imagecolorallocate($oImg, 255, 255, 255);
-		imagefill($oImg, 0, 0, $white);
-
-		imagecopyresampled(
-			$oImg,
-			$oImgOrig,
-			floor ( ( AVATAR_DEFAULT_WIDTH - $iImgW ) / 2 ) /*dx*/,
-			floor ( ( AVATAR_DEFAULT_HEIGHT - $iImgH ) / 2 ) /*dy*/,
-			0 /*sx*/,
-			0 /*sy*/,
-			$iImgW /*dw*/,
-			$iImgH /*dh*/,
-			$aOrigSize['width']/*sw*/,
-			$aOrigSize['height']/*sh*/
-		);
-
 		/**
 		 * save to new file ... but create folder for it first
 		 */
@@ -811,19 +817,7 @@ class Masthead {
 					$result = false;
 				} else {
 					$sUrl = $oAvatarObj->getLocalPath();
-
-					// Purge the avatar URL and the proportions commonly used in Oasis.
-					global $wgUseSquid;
-					if ( $wgUseSquid ) {
-						// FIXME: is there a way to know what sizes will be used w/o hardcoding them here?
-						$urls = array(
-							$oAvatarObj->getPurgeUrl(),
-							$oAvatarObj->getThumbnailPurgeUrl(20), # user-links & history dropdown
-							$oAvatarObj->getThumbnailPurgeUrl(50), # article-comments
-							$oAvatarObj->getThumbnailPurgeUrl(100) # user-profile
-						);
-						SquidUpdate::purge($urls);
-					}
+					$oAvatarObj->purgeUrl();
 				}
 			}
 
@@ -835,7 +829,24 @@ class Masthead {
 
 		return $result;
 	}
+	
+	function purgeUrl() {
+		// Purge the avatar URL and the proportions commonly used in Oasis.
+		global $wgUseSquid;
+		if ( $wgUseSquid ) {
+			// FIXME: is there a way to know what sizes will be used w/o hardcoding them here?
+			$urls = array(
+				$this->getPurgeUrl(),
+				$this->getThumbnailPurgeUrl(20), # user-links & history dropdown
+				$this->getThumbnailPurgeUrl(50), # article-comments
+				$this->getThumbnailPurgeUrl(100), # user-profile
+				$this->getThumbnailPurgeUrl(200) # user-profile
+			);
 
+			SquidUpdate::purge($urls);
+		}		
+	}
+	
 	public static function onGetPreferences($user, &$defaultPreferences) {
 		global $wgUser, $wgCityId, $wgEnableUploads, $wgUploadDirectory, $wgEnableUserProfilePagesV3;
 

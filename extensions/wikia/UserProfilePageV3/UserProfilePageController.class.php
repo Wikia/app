@@ -325,7 +325,7 @@ class UserProfilePageController extends WikiaController {
 				$status = 'ok';
 			}
 		}
-		
+
 		if( $isAllowed && is_null($userData) ) {
 			$errorMsg = $this->wf->msg('user-identity-box-saving-error');
 		}
@@ -383,7 +383,7 @@ class UserProfilePageController extends WikiaController {
 			if( $userData->avatar === false || !$userIdentityBox->saveUserData($userData) ) {
 				$result = array('success' => false, 'error' => $errorMsg);
 			} else {
-				$result = array('success' => true, 'avatar' => F::build('AvatarService', array($user, self::AVATAR_DEFAULT_SIZE, false, true), 'getAvatarUrl'));
+				$result = array('success' => true, 'avatar' => $this->purgeOldAvatars($user)  . '?cb=' . date('U') );
 			}
 		}
 		
@@ -407,13 +407,14 @@ class UserProfilePageController extends WikiaController {
 		$this->app->wf->ProfileIn( __METHOD__ );
 		
 		$userId = $user->getID();
-		$localPath = F::build('ImageOperationsHelper', array($this->app))->getLocalPath($userId);
+		$localPath = $this->getLocalPath($user);
 		
 		$errorNo = $this->uploadByUrl(
 			$url, 
 			array(
 				'userId' => $userId,
 				'username' => $user->getName(),
+				'user'	=> $user,
 				'localPath' => $localPath,
 			),
 			$errorMsg 
@@ -450,12 +451,14 @@ class UserProfilePageController extends WikiaController {
 			$avatarUploadFiled = 'UPPLightboxAvatar';
 			$fileName = $this->app->wg->request->getFileName($avatarUploadFiled);
 			$userId = $user->getID();
-			$localPath = F::build('ImageOperationsHelper', array($this->app))->getLocalPath($userId);
+			
+			$localPath = $this->getLocalPath($user);
 			
 			$errorNo = $this->uploadFile(
 				$this->app->wg->request, array(
 					'userId' => $userId,
 					'username' => $user->getName(),
+					'user' => $user,
 					'localPath' => $localPath,
 				), 
 				$avatarUploadFiled, 
@@ -465,8 +468,8 @@ class UserProfilePageController extends WikiaController {
 			if ( $errorNo != UPLOAD_ERR_OK ) {
 				$this->validateUpload($errorNo, $status, $errorMsg);
 			} else {
-				$this->purgeOldAvatars($user);
 				
+				$url = $this->purgeOldAvatars($user);
 				$userIdentityBox = F::build('UserIdentityBox', array($this->app, $user, self::MAX_TOP_WIKIS));
 				$userData->avatar = $localPath;
 				
@@ -474,7 +477,7 @@ class UserProfilePageController extends WikiaController {
 					$errorMsg = $this->wf->msg('userprofilepage-interview-save-internal-error');
 					$result = array('success' => false, 'error' => $errorMsg);
 				} else {
-					$result = array('success' => true, 'avatar' => F::build( 'AvatarService', array($user->getName(), self::AVATAR_DEFAULT_SIZE ), 'getAvatarUrl'));
+					$result = array('success' => true, 'avatar' => $url . '?cb=' . date('U') );
 				}
 			}
 		} else {
@@ -532,66 +535,27 @@ class UserProfilePageController extends WikiaController {
 	 * @param User $user user object
 	 */
 	private function purgeOldAvatars($user) {
-		if ( $this->app->wg->UseSquid ) {
-			// FIXME: is there a way to know what sizes will be used w/o hardcoding them here?
-			$avatarUrl = $user->getOption('avatar');
-			$urls = array(
-				$this->getPurgeUrl($avatarUrl, ''),
-				$this->getThumbnailPurgeUrl($avatarUrl, 20), # user-links & history dropdown
-				$this->getThumbnailPurgeUrl($avatarUrl, 50), # article-comments
-				$this->getThumbnailPurgeUrl($avatarUrl, 100), # user-profile
-				$this->getThumbnailPurgeUrl($avatarUrl, 150), # user-profile v3
-			);
-			F::build('SquidUpdate', array($urls), 'purge');
+		// FIXME: is there a way to know what sizes will be used w/o hardcoding them here?
+		if(class_exists('Masthead')) {
+			$oAvatarObj = F::build('Masthead', array( $user ), 'newFromUser');
+			$oAvatarObj->purgeUrl(); 	
+			return $oAvatarObj->getPurgeUrl();		
 		}
 	}
 	
 	/**
-	 * @brief the basic URL (without image server rewriting, cachebuster, etc.) of the avatar. This can be sent to squid to purge it.
-	 *
-	 * @param string $url an url for user's avatar; got from User::getOption('avatar')
-	 * @param string $thumb if defined will be added as part of base path; default empty string ""
-	 *
-	 * @return string
-	 */
-	private function getPurgeUrl($url, $thumb = '') {
-		if($url) {
-			//if default avatar we glue with messaging.wikia.com
-			//if uploaded avatar we glue with common avatar path
-			if( strpos( $url, '/' ) !== false ) {
-				//uploaded file, we are adding common/avatars path
-				$url = $this->app->wg->BlogAvatarPath.rtrim($thumb, '/').$url;
-			} else {
-				//default avatar, path from messaging.wikia.com
-				$hash = F::build('FileRepo', array($url, 2), 'getHashPathForLevel');
-				$url = $this->defaultAvatarPath.$thumb.$hash.$url;
-			}
-		} else {
-			$defaults = $this->getDefaultAvatars( trim( $thumb,  "/" ) . "/" );
-			$url = array_shift( $defaults );
-		}
-		
-		return $url;
-	}
-	
-	/**
-	 * @brief Get the URL in a generic form (ie: images.wikia.com) to be used for purging thumbnails.
-	 *
-	 * @param string $avatarUrl an url for user's avatar; got from User::getOption('avatar')
-	 * @param integer $width the width of the thumbnail (height will be same propotion to width as in unscaled image)
+	 * @brief get Local Path to avatar
 	 * 
-	 * @return string url to avatar on the purgable hostname
-	 * 
-	 * @author Sean Colombo
-	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	private function getThumbnailPurgeUrl($avatarUrl, $width) {
-		$url = $this->getPurgeUrl( $avatarUrl, '/thumb/' );
 		
-		$file = array_pop( explode( "/", $url ) );
-		return sprintf( "%s/%dpx-%s", $url, $width, $file );
+	private function getLocalPath($user) {
+		if(class_exists('Masthead')) {
+			$oAvatarObj = F::build('Masthead', array( $user ), 'newFromUser');
+			return $oAvatarObj->getLocalPath(); 			
+		}	
+		return '';
 	}
-	
+
 	/**
 	 * @brief Saves the file on the server
 	 * 
@@ -607,35 +571,21 @@ class UserProfilePageController extends WikiaController {
 	private function uploadFile($request, $userData, $input, &$errorMsg='') {
 		$this->app->wf->ProfileIn(__METHOD__);
 		
-		$wgTmpDirectory = $this->app->wg->TmpDirectory;
-		
-		if( !isset( $wgTmpDirectory ) || !is_dir( $wgTmpDirectory ) ) {
-			$wgTmpDirectory = '/tmp';
-		}
-		
 		$errorNo = $this->wg->request->getUploadError( $input );
+
 		if ( $errorNo != UPLOAD_ERR_OK ) {
 			$this->app->wf->ProfileOut(__METHOD__);
 			return $errorNo;
 		}
-		$iFileSize = $request->getFileSize( $input );
 		
-		if( empty( $iFileSize ) ) {
-			/**
-			 * file size = 0
-			 */
-			$this->app->wf->ProfileOut(__METHOD__);
-			return UPLOAD_ERR_NO_FILE;
-		}
-		
-		$sTmpFile = $wgTmpDirectory.'/'.substr(sha1(uniqid($userData['userId'])), 0, 16);
-		$sTmp = $request->getFileTempname($input);
-		
-		if( move_uploaded_file( $sTmp, $sTmpFile )  ) {
-			$errorNo = F::build('ImageOperationsHelper', array($this->app, self::AVATAR_DEFAULT_SIZE, self::AVATAR_DEFAULT_SIZE))->postProcessImageInternal($sTmpFile, $userData, $errorNo, $errorMsg);
-			//$errorNo = $this->postProcessImageInternal($sTmpFile, $userData, $errorNo, $errorMsg);
+		$errorMsg = "";
+	
+		if(class_exists('Masthead')) {
+			$oAvatarObj = F::build('Masthead', array( $userData['user'] ), 'newFromUser');
+			$errorNo = $oAvatarObj->uploadFile( $this->wg->request, 'UPPLightboxAvatar', $errorMsg );
+	
 		} else {
-			$errorNo = UPLOAD_ERR_CANT_WRITE;
+			$errorNo = UPLOAD_ERR_EXTENSION;
 		}
 		
 		$this->app->wf->ProfileOut(__METHOD__);
@@ -655,25 +605,16 @@ class UserProfilePageController extends WikiaController {
 	 */
 	public function uploadByUrl($url, $userData, &$errorMsg='') {
 		$this->app->wf->ProfileIn(__METHOD__);
-		
 		//start by presuming there is no error
 		$errorNo = UPLOAD_ERR_OK;
-		$wgTmpDirectory = $this->app->wg->TmpDirectory;
-		
-		if( !isset($wgTmpDirectory) || !is_dir($wgTmpDirectory) ) {
-			$wgTmpDirectory = '/tmp';
+					
+		if(class_exists('Masthead')) {
+			$oAvatarObj = F::build('Masthead', array( $userData['user'] ), 'newFromUser');
+			$errorNo = $oAvatarObj->uploadByUrl( $url );
+	
+		} else {
+			$errorNo = UPLOAD_ERR_EXTENSION;
 		}
-		
-		//pull the image from the URL and save it to a temporary file
-		$sTmpFile = $wgTmpDirectory.'/'.substr(sha1(uniqid($userData['userId'])), 0, 16);
-		
-		$imgContent = F::build('Http', array($url), 'get');
-		if( !file_put_contents($sTmpFile, $imgContent) ) {
-			$this->app->wf->ProfileOut( __METHOD__ );
-			return UPLOAD_ERR_CANT_WRITE;
-		}
-		//$errorNo = $this->postProcessImageInternal($sTmpFile, $userData, $errorNo, $errorMsg);
-		$errorNo = F::build('ImageOperationsHelper', array($this->app, self::AVATAR_DEFAULT_SIZE, self::AVATAR_DEFAULT_SIZE))->postProcessImageInternal($sTmpFile, $userData, $errorNo, $errorMsg);
 		
 		$this->app->wf->ProfileOut(__METHOD__);
 		return $errorNo;

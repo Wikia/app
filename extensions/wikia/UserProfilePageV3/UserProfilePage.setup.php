@@ -13,7 +13,7 @@ $app->registerClass('UserIdentityBox', $dir . '/UserIdentityBox.class.php');
 //we'll implement interview later
 //$app->registerClass('Interview', $dir . '/Interview.class.php');
 //$app->registerClass('InterviewQuestion', $dir . '/InterviewQuestion.class.php');
-//$app->registerClass('ImageOperationsHelper', $dir . '/ImageOperationsHelper.class.php');
+$app->registerClass('ImageOperationsHelper', $dir . '/ImageOperationsHelper.class.php');
 
 /**
  * controllers
