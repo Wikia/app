@@ -10,6 +10,7 @@
  * @author Inez Korczyński <korczynski at gmail dot com>
  * @author Bartek Łapiński <bartek at wikia-inc dot com>
  * @author Łukasz Garczewski (TOR) <tor at wikia-inc dot com>
+ * @author Maciej Brencz <macbre@wikia-inc.com>
  * @author Jesús Martínez Novo <martineznovo at gmail dot com>
  * @author Jack Phoenix <jack@countervandalism.net>
  * @copyright Copyright © 2008-2009, Wikia Inc.
@@ -27,7 +28,7 @@ $wgExtensionCredits['other'][] = array(
 	'name' => 'LinkSuggest',
 	'version' => '1.6',
 	'author' => array(
-		'Inez Korczyński', 'Bartek Łapiński', 'Łukasz Garczewski',
+		'Inez Korczyński', 'Bartek Łapiński', 'Łukasz Garczewski', 'Maciej Brencz',
 		'Jesús Martínez Novo', 'Jack Phoenix'
 	),
 	'descriptionmsg' => 'linksuggest-desc',
@@ -126,7 +127,7 @@ function getLinkSuggestImage() {
  */
 
 function getLinkSuggest() {
-	global $wgRequest, $wgContLang;
+	global $wgRequest, $wgContLang, $wgContentNamespaces;
 
 	// trim passed query and replace spaces by underscores
 	// - this is how MediaWiki stores article titles in database
@@ -157,47 +158,46 @@ function getLinkSuggest() {
 		}
 	}
 
-	$results = array();
-
-	if( empty( $namespace ) ) {
-		// default namespace to search in
-		$namespace = NS_MAIN;
+	// comma separated list of namespaces to search in
+	if ( empty( $namespace ) ) {
+		// search only within content namespaces - default behaviour
+		$namespaces = implode( ',', $wgContentNamespaces );
+	} else {
+		// search only within a namespace from query
+		$namespaces = $namespace;
 	}
 
-	// get localized namespace name
-	$namespaceName = $wgContLang->getNsText( $namespace );
-	// and prepare it for later use...
-	$namespacePrefix = ( !empty( $namespaceName ) ) ? $namespaceName . ':' : '';
+	$results = array();
 
 	$dbr = wfGetDB( DB_SLAVE );
 	$query = $dbr->strencode( mb_strtolower( $query ) );
 
 	$res = $dbr->select(
 		array( 'querycache', 'page' ),
-		'qc_title',
+		array( 'qc_namespace', 'qc_title' ),
 		array(
 			'qc_title = page_title',
 			'qc_namespace = page_namespace',
 			'page_is_redirect = 0',
 			'qc_type' => 'Mostlinked',
-			"LOWER(qc_title) LIKE LOWER('{$query}%')",
-			'qc_namespace' => $namespace
+			"LOWER(qc_title) LIKE '{$query}%'",
+			"qc_namespace IN ({$namespaces})"
 		),
 		__METHOD__,
 		array( 'ORDER BY' => 'qc_value DESC', 'LIMIT' => 10 )
 	);
 
 	foreach( $res as $row ) {
-		$results[] = str_replace( '_', ' ', $namespacePrefix . $row->qc_title );
+		$results[] = wfLinkSuggestFormatTitle( $row->qc_namespace, $row->qc_title );
 	}
 
 	$res = $dbr->select(
 		'page',
-		'page_title',
+		array( 'page_namespace', 'page_title' ),
 		array(
 			"LOWER(page_title) LIKE '{$query}%'",
 			'page_is_redirect' => 0,
-			'page_namespace' => $namespace
+			"page_namespace IN ({$namespaces})"
 		),
 		__METHOD__,
 		array(
@@ -207,7 +207,7 @@ function getLinkSuggest() {
 	);
 
 	foreach( $res as $row ) {
-		$results[] = str_replace( '_', ' ', $namespacePrefix . $row->page_title );
+		$results[] = wfLinkSuggestFormatTitle( $row->page_namespace, $row->page_title );
 	}
 
 	$results = array_unique( $results );
@@ -235,3 +235,17 @@ function getLinkSuggest() {
 	return $ar;
 }
 
+/**
+ * Returns formatted title based on given namespace and title
+ *
+ * @param $namespace integer page namespace ID
+ * @param $title string page title
+ * @return string formatted title (prefixed with namespace)
+ */
+function wfLinkSuggestFormatTitle( $namespace, $title ) {
+	if ( $namespace != NS_MAIN ) {
+		$title = MWNamespace::getCanonicalName( $namespace ) . ':' . $title;
+	}
+
+	return str_replace( '_', ' ', $title );
+}
