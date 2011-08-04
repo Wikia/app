@@ -63,6 +63,11 @@ $wgSpecialPageGroups['SponsorshipDashboard']	= 'wikia';
 
 $wgAjaxExportList[] = 'SponsorshipDashboardAjax';
 
+// permissions
+$wgAvailableRights[] = 'wikimetrics';
+$wgGroupPermissions['*']['wikimetrics'] = false;
+$wgGroupPermissions['staff']['wikimetrics'] = true;
+
 function SponsorshipDashboardAjax() {
 	global $wgRequest;
 	$method = $wgRequest->getVal('method', false);
