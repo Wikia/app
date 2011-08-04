@@ -32,7 +32,7 @@ if ($(window).width() < 1010) {
 	return;
 }
 
-	if (!AIC2.checkStartStopPosition()) return;
+	if (!AIC2.checkStartStopPosition()) { return; }
 
 	if (AIC2.startPosition + AIC2.magicNumber < AIC2.stopPosition) {
 		Liftium.d("AIC2: page long enough", 7);
@@ -93,8 +93,8 @@ AIC2.checkStartStopPosition = function() {
 };
 
 AIC2.isAlmostEqual = function(a, b) {
-	if (a == b) return true;
-	if (b - 3 < a && a < b + 3) return true;
+	if (a == b) { return true; }
+	if (b - 3 < a && a < b + 3) { return true; }
 	
 	return false;
 };
@@ -105,7 +105,7 @@ AIC2.onScroll = function() {
 	if (($(window).scrollTop() > AIC2.startPosition) && ($(window).scrollTop() < AIC2.stopPosition)) {
 		if (!AIC2.visible) {
 			Liftium.d("AIC2.showAd", 5);
-			if (!AIC2.checkStartStopPosition()) return;
+			if (!AIC2.checkStartStopPosition()) { return; }
 			//if (!AIC2.checkFooterAd()) {
 				if ($('#INCONTENT_BOXAD_1').hasClass('wikia-ad') == false) {
 					LiftiumOptions.placement = "INCONTENT_BOXAD_1";
