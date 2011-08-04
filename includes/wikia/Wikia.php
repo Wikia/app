@@ -1917,6 +1917,16 @@ class Wikia {
 		return mb_convert_encoding(pack("N",$ord),$encoding,'UCS-4BE');
 	}
 	
+	/**
+	 * This function uses the facebook api to get the open graph id for this domain
+	 * 
+	 * @global type $wgServer
+	 * @global type $fbAccessToken
+	 * @global type $fbDomain
+	 * @global type $wgMemc
+	 * @return int 
+	 */
+	
 	static public function getFacebookDomainId() {
 		global $wgServer, $fbAccessToken, $fbDomain, $wgMemc;
 		
