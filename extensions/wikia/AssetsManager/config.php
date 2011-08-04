@@ -67,7 +67,6 @@ $config['oasis_shared_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'#group_oasis_jquery',
-		'//skins/oasis/js/ipad.js',
 		'//skins/common/wikibits.js',
 		'//skins/common/mwsuggest.js',
 		'//skins/oasis/js/tracker.js',
@@ -108,7 +107,8 @@ $config['oasis_shared_js'] = array(
 		'//extensions/wikia/JSMessages/js/JSMessages.js', // TODO: maybe move to jquery.wikia.js
 		'//skins/oasis/js/GlobalModal.js',
 		'//skins/oasis/js/FirefoxFindFix.js',
-		'//extensions/wikia/GlobalNotification/GlobalNotification.js'
+		'//extensions/wikia/GlobalNotification/GlobalNotification.js',
+		'//skins/oasis/js/isIPad.js'
 	)
 );
 
