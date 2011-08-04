@@ -20,7 +20,6 @@ class WikiaLabsProjectTest extends WikiaBaseTest {
 	protected $object = null;
 	protected $dbMock = null;
 	protected $cacheMock = null;
-	protected $appMock = null;
 
 	protected function setUp() {
 		parent::setUp();
