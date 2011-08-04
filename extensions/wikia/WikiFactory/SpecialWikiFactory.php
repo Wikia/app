@@ -47,7 +47,7 @@ require_once( $dir . '/Tags/WikiFactoryTagsQuery.php' );
  * permissions
  */
 $wgAvailableRights[] = 'wikifactory';
-$wgGroupPermissions['staff']['wikifactory'] = true;
+$wgGroupPermissions['util']['wikifactory'] = true;
 $wgGroupPermissions['wikifactory']['wikifactory'] = true;
 
 extAddSpecialPage( dirname(__FILE__) . '/SpecialWikiFactory_body.php', 'WikiFactory', 'WikiFactoryPage' );
