@@ -67,7 +67,7 @@ $config['oasis_shared_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'#group_oasis_jquery',
-		//'//skins/oasis/js/ipad.js',
+		'//skins/oasis/js/ipad.js',
 		'//skins/common/wikibits.js',
 		'//skins/common/mwsuggest.js',
 		'//skins/oasis/js/tracker.js',

@@ -1,23 +1,47 @@
 iPadImprovements = {
+	
+	WikiaMainContentWidth: 800,
+	
+	handleZoom: function() {
+		if( Orientation.getOrientation() == "portrait" ) {
+			$("meta[name=viewport]").attr('content', 'width=device-width');
+			WikiaMainContentWidth = $( '#WikiaMainContent' ).width();
+			$( '#WikiaMainContent' ).width( Orientation.getWidth() - 50 );
+			
+			$( '#WikiaRail' ).hide();
+		} else {
+			$("meta[name=viewport]").attr('content', 'width=device-width');
+			$( '#WikiaMainContent' ).width( WikiaMainContentWidth );
+			$( '#WikiaRail' ).show();
+		}
+	},
+	
 	init: function() {
-		if (  ) {
+		if ( true ) {
 			if( navigator.platform.indexOf("iPad") != -1 ) {
+				//load orientation plugin and handle orientation
+				$.getScript( '/skins/common/generic/orientation.js', function() {
+					iPadImprovements.handleZoom();
+					Orientation.bindEventListener( iPadImprovements.handleZoom );
+				});
 				
-				//handle zoom and scroll to #WikiaMainContent
-				$("meta[name=viewport]").attr('content', 'width=device-width, height=device-height, initial-scale=1.0, maximum-scale=4.0, min-scale=1.2');
+				//handle  scroll to #WikiaMainContent
 				wikiaMainContentOffset = $('#WikiaMainContent' ).offset();
 				window.scrollTo( wikiaMainContentOffset.left , wikiaMainContentOffset.top );
-				
-				//Iterates through global nav and add links to subnav and move spotlights into right position
-				$( "#WikiaHeader #GlobalNavigation > li" ).each( function( i ) {
-					hub = $(this).find( 'a' ).first().text();
-					$( this ).find( '#SPOTLIGHT_GLOBALNAV_' + (++i) ).remove();
-					$( this ).find( '.subnav' ).prepend( '<li><a href="http://www.wikia.com/' + hub + '">Top ' + hub + ' Wikis</a><ul class="catnav"><li id="SPOTLIGHT_GLOBALNAV_' + i + '" class="SPOTLIGHT_GLOBALNAV"></li></ul></li>' );
-				});
-	
+
+				//global nav fix first click opens nav second goes to hub
 				$( "#WikiaHeader #GlobalNavigation > li > a" ).live( 'click', function( event ) {
-					event.preventDefault();
-					$( this ).next().toggleClass( 'show' );
+					if ( !$( this ).next().hasClass( 'show' ) ) {
+						event.preventDefault();
+						$( this ).next().addClass( 'show' );
+					}
+				});
+				
+				$('#WikiHeader nav > ul > li > a').live('click', function() {
+					if ( $( this ).next( '.subnav' ).css( 'display' ) != 'block' ) {
+						event.preventDefault();
+						$( this ).next().css( 'display', 'block' );
+					}
 				});
 			}
 		}
