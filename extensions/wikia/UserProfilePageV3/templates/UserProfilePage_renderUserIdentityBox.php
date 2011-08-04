@@ -6,7 +6,7 @@
 	<div class="masthead-avatar">
 		<img src="<?= $user['avatar']; ?>" itemprop="image" class="avatar">
 		
-		<? if( $isUserPageOwner || $isWikiStaff ): ?>
+		<? if( $canEditProfile ): ?>
 			<span>
 				<img src="<?= $wgBlankImgUrl ?>" class="sprite edit-pencil"> <a href="#" id="userAvatarEdit"><?= wfMsg('user-identity-box-edit-avatar'); ?></a>
 			</span>
@@ -29,7 +29,7 @@
 			<? endif; ?>
 		</hgroup>
 
-		<? if( $isUserPageOwner || $isWikiStaff ): ?>
+		<? if( $canEditProfile ): ?>
 			<span id="userIdentityBoxEdit">
 				<img src="<?= $wgBlankImgUrl ?>" class="sprite edit-pencil"><a href="#"><?= wfMsg('user-identity-box-edit'); ?></a>
 			</span>
