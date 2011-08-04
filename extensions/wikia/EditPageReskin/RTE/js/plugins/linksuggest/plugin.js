@@ -35,17 +35,13 @@ CKEDITOR.plugins.add('rte-linksuggest',
 	initMediaWikiLinkSuggest: function(editor) {
 		if (typeof $.fn.linksuggest == 'function') {
 			editor.on('mode', function(ev) {
-				// only run init when in source mode
-				if (editor.mode != 'source') {
-					return;
+				if (editor.mode == 'source') {
+					var textarea = $(editor.textarea.$);
+					textarea
+						.attr('id', 'RTEtextarea')
+						.css( 'font-family', 'monospace' )
+						.linksuggest();
 				}
-
-				// get source mode textarea
-				var textarea = $(editor.textarea.$);
-				textarea.
-					attr('id', 'RTEtextarea').
-					css( 'font-family', 'monospace' ).
-					linksuggest();
 			});
 		}
 	}
