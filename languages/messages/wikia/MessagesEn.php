@@ -373,14 +373,22 @@ Your account has been created. Don't forget to change your {{SITENAME}} [[Specia
 'editnologintext' => 'You must be a registered user and  <span class="plainlinks">[{{fullurl:Special:UserLogin|$1}} logged in]</span> to edit a page.',
 'editnotallowed' => 'You do not have permission to edit pages',
 
-# janitors & helpers
-'group-janitor' => 'Janitors',
-'grouproup-janitor-member' => 'Janitor',
-'grouppage-janitor' => 'w:Janitor policy and guidelines',
-'group-helper' => 'Helpers',
-'group-helper-member' => 'Helper',
-'grouppage-helper' => 'w:Wikia Helper Group',
-'grouppage-staff' => 'w:Wikia_Staff',
+# wikia groups
+'group-vstf' => 'VSTF',
+'grouproup-vstf-member' => 'VSTF',
+'grouppage-vstf' => 'wikia:Help:SpamTaskForce',
+
+'group-helper' => 'Wikia Helpers',
+'group-helper-member' => 'Wikia Helper',
+'grouppage-helper' => 'wikia:Help:Helper_Group',
+
+'group-staff' => 'Wikia Staff',
+'group-staff-member' => 'Wikia Staff',
+'grouppage-staff' => 'wikia:Community_Central:Staff',
+
+'group-util' => 'Wikia Utilities',
+'group-util-member' => 'Wikia Utilities',
+'grouppage-util' => 'wikia:Community_Central:Staff',
 
 # V2 navlinks
 'navlinks' => '
