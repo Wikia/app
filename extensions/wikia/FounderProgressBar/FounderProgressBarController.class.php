@@ -225,6 +225,7 @@ class FounderProgressBarController extends WikiaController {
 			
 			while($row = $dbr->fetchObject($res)) {
 				$task_id = $row->task_id;
+				if ($task_id == 1000) continue;  // Make sure the "completion" task does not show up as a task
 				$list[$task_id] = array (
 					"task_id" => $task_id,
 					"task_count" => $row->task_count,

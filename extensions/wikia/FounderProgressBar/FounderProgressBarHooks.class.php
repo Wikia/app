@@ -184,16 +184,18 @@ class FounderProgressBarHooks {
 	 */
 	public static function allTasksComplete() {
 		$app = F::app();
-		$memKey = $app->wf->MemcKey('FounderTasksComplete');
+		$memKey = $app->wf->MemcKey('FounderTasksCompleted');
 		$task_complete = $app->wg->Memc->get($memKey);
 		if (empty($task_complete)) {
-			$response = $app->sendRequest('FounderProgressBar',"getLongTaskList", array("use_master" => true));
-			$list = $response->getVal('list');
+			$response = $app->sendRequest('FounderProgressBar',"isTaskComplete", array("task_id" => "1000"));
+			$completed = $response->getVal('task_completed', 0);
 			// Completion task set, and once set it can never be undone
-			if (isset($list[FT_COMPLETION])) {
+			if ($completed) {
 				$app->wg->Memc->set($memKey, true, 86400*30 );
 				return true;				
 			}
+			// Tasks are not complete, so we need to count how many we have completed to see if we are done
+			$response = $app->sendRequest('FounderProgressBar',"getLongTaskList", array("use_master" => true));			
 			$data = $response->getVal('data');
 			// Completion task NOT set but all other tasks are complete, so set it.  
 			// TODO: display some kind of YAY YOU DID IT! message here
