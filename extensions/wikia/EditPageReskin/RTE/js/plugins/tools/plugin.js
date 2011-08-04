@@ -336,18 +336,12 @@ window.RTE.tools = {
 
 	// makes the element and its children unselectable
 	// @see http://www.highdots.com/forums/javascript/making-image-unselectable-ff-292462.html
-	unselectable: function(elem) {
-		return;
-		/**
-		$(elem).each(function(i) {
-			var CKelem = new CKEDITOR.dom.element(this);
-			CKelem.unselectable();
-		});
-		**/
-	}
+	// TODO: remove as it's no longer needed
+	unselectable: function(elem) {}
 }
 
 // helper class for highlighting given parts of editor's HTML
+// TODO: move to a separate file (plugin maybe?)
 CKEDITOR.nodeRunner = function() {
 	// "Beep, Beep"
 };
