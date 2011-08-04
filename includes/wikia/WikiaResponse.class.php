@@ -11,6 +11,10 @@
  * @author Federico "Lox" Lucignano <wojtek(at)wikia-inc.com>
  */
 class WikiaResponse {
+	/**
+	 * headers
+	 */
+	const ERROR_HEADER_NAME = 'X-Wikia-Error';
 	
 	/**
 	 * Response codes
@@ -54,7 +58,7 @@ class WikiaResponse {
 	 */
 	public function __construct( $format ) {
 		$this->setFormat( $format );
-		$this->setView( F::build( 'WikiaView' ) );
+		$this->setView( F::build( 'WikiaView', array( $this ) ) );
 	}
 
 	/**
@@ -334,13 +338,20 @@ class WikiaResponse {
 	}
 
 	public function sendHeaders() {
-		$this->view->prepareResponse($this);
+		if( ( $this->getFormat() == WikiaResponse::FORMAT_JSON ) && $this->hasException() ) {
+			// set error header for JSON response (as requested for mobile apps)
+			$this->setHeader( self::ERROR_HEADER_NAME, $this->getException()->getMessage() );
+		}
 
-		foreach( $this->getHeaders() as $header ) {
+		if( ( $this->getFormat() == WikiaResponse::FORMAT_JSON ) && !$this->hasContentType() ) {
+			$this->setContentType( 'application/json; charset=utf-8' );
+		}
+
+		foreach ( $this->getHeaders() as $header ) {
 			$this->sendHeader( ( $header['name'] . ': ' . $header['value'] ), $header['replace']);
 		}
 
-		if(!empty($this->code)) {
+		if ( !empty( $this->code ) ) {
 			$msg = '';
 			
 			//standard HTTP response codes get automatically described by PHP and those descriptions shouldn't be overridden, ever
@@ -357,7 +368,7 @@ class WikiaResponse {
 			$this->sendHeader( "HTTP/1.1 {$this->code}{$msg}", false );
 		}
 
-		if(!empty($this->contentType)) {
+		if ( !empty( $this->contentType ) ) {
 			$this->sendHeader( "Content-Type: " . $this->contentType, true );
 		}
 
