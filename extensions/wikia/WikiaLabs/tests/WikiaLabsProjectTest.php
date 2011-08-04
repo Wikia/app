@@ -208,6 +208,8 @@ class WikiaLabsProjectTest extends WikiaBaseTest {
 		  ->method( 'updateCachedEnables' )
 		  ->with( $this->equalTo( self::TEST_WIKI_ID ), $this->equalTo( true ) );
 
+		$this->object->setName( self::TEST_PROJECT_NAME );
+
 		$this->dbMock->expects($this->once())
 		  ->method('insert')
 		  ->with(
@@ -215,6 +217,7 @@ class WikiaLabsProjectTest extends WikiaBaseTest {
 		    $this->equalTo( array( 'wlpwli_wlpr_id' => self::TEST_PROJECT_ID, 'wlpwli_wiki_id' => self::TEST_WIKI_ID )),
 		    $this->anything() );
 
+		$this->setUpWikiApiMock( self::TEST_PROJECT_ID );
 		$this->setUpMock();
 
 		$this->object->setEnabled( self::TEST_WIKI_ID );
@@ -230,6 +233,8 @@ class WikiaLabsProjectTest extends WikiaBaseTest {
 		  ->method( 'updateCachedEnables' )
 		  ->with( $this->equalTo( self::TEST_WIKI_ID ), $this->equalTo( false ) );
 
+		$this->object->setName( self::TEST_PROJECT_NAME );
+
 		$this->dbMock->expects($this->once())
 		  ->method('delete')
 		  ->with(
@@ -237,6 +242,7 @@ class WikiaLabsProjectTest extends WikiaBaseTest {
 		    $this->equalTo( array( 'wlpwli_wlpr_id' => self::TEST_PROJECT_ID, 'wlpwli_wiki_id' => self::TEST_WIKI_ID )),
 		    $this->anything() );
 
+		$this->setUpWikiApiMock( self::TEST_PROJECT_ID );
 		$this->setUpMock();
 
 			$this->object->setDisabled( self::TEST_WIKI_ID );
