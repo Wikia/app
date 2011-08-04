@@ -9,8 +9,10 @@ class SkeleSkinAppCacheController extends WikiaController {
 	const MANIFEST_VARNISH_CACHE_TIME = 86400;//24h
 	
 	public function serveManifest(){
-		$this->response->setContentType( self::CONTENT_TYPE );
-		$this->response->setCacheValidity( self::MANIFEST_VARNISH_CACHE_TIME, self::MANIFEST_VARNISH_CACHE_TIME, array( WikiaResponse::CACHE_TARGET_VARNISH ) );
+		if ( $this->response->getFormat() == WikiaResponse::FORMAT_HTML ) {
+			$this->response->setContentType( self::CONTENT_TYPE );
+			$this->response->setCacheValidity( self::MANIFEST_VARNISH_CACHE_TIME, self::MANIFEST_VARNISH_CACHE_TIME, array( WikiaResponse::CACHE_TARGET_VARNISH ) );
+		}
 		
 		$files = AssetsManager::getInstance()->getGroupCommonURL('skeleskin_js');
 		
