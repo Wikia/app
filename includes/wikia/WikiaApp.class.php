@@ -453,4 +453,14 @@ class WikiaApp {
 	public static function ajax() {
 		return F::app()->sendRequest( null, null, null, false );
 	}
+	
+	/**
+	 * commit any open transactions, only if writes were done on connection and if it's a POST request
+	 */
+	public function commit(){
+		if ( $this->wg->Request->wasPosted() ) {
+			$factory = $this->wf->GetLBFactory();
+			$factory->commitMasterChanges();  // commits only if writes were done on connection
+		}
+	}
 }
