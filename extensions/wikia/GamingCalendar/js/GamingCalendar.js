@@ -87,7 +87,7 @@ var GamingCalendar = {
 		template = template.replace('##description##', item.description);
 		template = template.replace('##imageSrc##', item.image.src);
 		template = template.replace('##moreInfoUrl##', item.moreInfoUrl);
-		template = template.replace('##preorderUrl##', item.preorderUrl);
+		template = template.replace('##preorderLink##', item.preorderUrl ? '<a href="'+item.preorderUrl+'" class="game-pre-order" target="_blank">Pre-order now</a>' : '');
 		template = template.replace('##systems##', item.systems.join(', '));
 		
 		var months = new Array('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec');

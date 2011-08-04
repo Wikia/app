@@ -16,7 +16,7 @@
 			<div class="game-details">
 				<p>##description##</p>
 				<a href="##moreInfoUrl##" class="game-more-info" target="_blank">More info</a>
-				<a href="##preorderUrl##" class="game-pre-order" target="_blank">Pre-order now</a>
+				##preorderLink##
 			</div>
 		</div>
     </script>
