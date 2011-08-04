@@ -132,15 +132,7 @@ $config['oasis_user_js'] = array(
 	)
 );
 
-//Wikiaphone CSS and JS
-$config['wikiaphone_css'] = array(
-	'type' => AssetsManager::TYPE_CSS,
-	'assets' => array(
-		'//skins/wikiaphone/main.css',
-		'//skins/wikiaphone/skin.css',
-	)
-);
-
+//Wikiaphone JS
 $config['wikiaphone_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(

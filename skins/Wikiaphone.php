@@ -54,9 +54,8 @@ class SkinWikiaphone extends SkinTemplate {
 	}
 
 	function setupSkinUserCss( OutputPage $out ){
-		foreach ( AssetsManager::getInstance()->getGroupCommonURL( 'wikiaphone_css' ) as $src ) {
-			$out->addStyle( $src );
-		}
+		$out->addStyle( AssetsManager::getInstance()->getSassCommonURL( "/skins/wikiaphone/main.scss") );
+		$out->addStyle( AssetsManager::getInstance()->getSassCommonURL( "/skins/wikiaphone/skin.scss") );
 	}
 	
 	public function onSkinGetHeadScripts(&$scripts) {
