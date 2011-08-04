@@ -44,6 +44,9 @@
 			// Wikia change (bugid:5667) - end
 
 			$('#wpDiff').bind('click', this.proxy(this.onDiff));
+			//enable publish button after init editor
+
+			this.editor.on('editorReady', this.proxy(this.onEditorReady));
 
 			// remove placeholder text when user submits the form without providing the summary
 			$('#editform').bind('submit', this.proxy(this.onSave));
@@ -112,6 +115,13 @@
 		onDiff: function() {
 			this.renderChanges({});
 			this.editor.track(this.editor.getTrackerInitialMode(), 'pageControls', 'diff', this.editor.getTrackerMode());
+		},
+
+		//enable publish button after init editor only for mediawiki editor
+		onEditorReady: function() {
+			if(!this.editor.ck) {
+				$('#wpSave').removeAttr('disabled');
+			}
 		},
 
 		// handle "Save" button
