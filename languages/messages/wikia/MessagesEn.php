@@ -390,15 +390,6 @@ Your account has been created. Don't forget to change your {{SITENAME}} [[Specia
 'group-util-member' => 'Wikia Utilities',
 'grouppage-util' => 'wikia:Community_Central:Staff',
 
-# V2 navlinks
-'navlinks' => '
-* 1
-** mainpage|Home
-** Forum:Index|forum
-** Special:Randompage|randompage
-** Special:Createpage|createpage
-',
-
 # AjaxLogin
 'ajaxLogin1' => 'To complete your log in, you must enter a new password.  This will take you away from this edit page and you may lose your current edit.',
 'ajaxLogin2' => 'Are you sure? You may lose your edits if you leave this page now.',
