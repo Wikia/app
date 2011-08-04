@@ -100,36 +100,6 @@ LiftiumDART.getUrl = function(slotname, size, network_options, iframe) {
 	}
 	Liftium.d("Dart URL2= " + url2, 4);
 	return url2;
-
-	// Hack for dart sizes 
-        if (LiftiumDART.sizeconfig[size]){
-                size = LiftiumDART.sizeconfig[size];
-        }
-	var url = 'http://' +
-		LiftiumDART.getSubdomain() +
-		'.doubleclick.net/' + 
-		LiftiumDART.getAdType(iframe) + '/' +
-		LiftiumDART.getDARTSite(Liftium.getPageVar('Hub')) + '/' +
-		LiftiumDART.getZone1(Liftium.getPageVar('wgDBname')) + '/' +
-		LiftiumDART.getZone2() + ';' +
-		LiftiumDART.getAllDartKeyvalues(slotname) + 
-		LiftiumDART.getResolution() + 
-		LiftiumDART.getPrefooterStatus() + 
-		LiftiumDART.getTitle() +
-		"lang=" + Liftium.getPageVar('cont_lang', 'unknown') + ";" + 
-		LiftiumDART.getQuantcastSegmentKV() +
-		LiftiumDART.getImpressionCount(slotname) + 
-		LiftiumDART.getDcoptKV(slotname) +
-                'mtfIFPath=/extensions/wikia/AdEngine/;' +  // http://www.google.com/support/richmedia/bin/answer.py?hl=en&answer=117857, http://www.google.com/support/richmedia/bin/answer.py?hl=en&answer=117427
-		"src=liftium;" +
-		"sz=" + size + ';' +
-		"mtfInline=true;" +	// http://www.google.com/support/richmedia/bin/answer.py?hl=en&answer=182220
-		LiftiumDART.getTileKV(slotname) +
-
-		"ord=" + LiftiumDART.random;
-
-	Liftium.d("Dart URL = " + url, 4);
-	return url;
 };
 
 LiftiumDART.getSubdomain = function() {
