@@ -8,6 +8,7 @@ var UserProfilePage = {
 	wasDataChanged: false,
 	userData: null,
 	forceRedirect: false,
+	isLightboxGenerating: false,
 	
 	init: function() {
 		UserProfilePage.userId = $('#user').val();
@@ -27,41 +28,49 @@ var UserProfilePage = {
 			UserProfilePage.renderLightbox('avatar');
 		});
 		
-		$('.masthead-info .wikis li').click(UserProfilePage.trackFavoriteWiki)		
+		$('.masthead-info .wikis li').click(UserProfilePage.trackFavoriteWiki);
 	},
 	
 	renderLightbox: function(tabName) {
-		UserProfilePage.track('edit/personal_data');
-		
-		$.getResources([$.getSassCommonURL('/extensions/wikia/UserProfilePageV3/css/UserProfilePage_modal.scss')]);
-		
-		$.postJSON( this.ajaxEntryPoint, { method: 'getLightboxData', tab: tabName, userId: UserProfilePage.userId, rand: Math.floor(Math.random()*100001) }, function(data) {
-			UserProfilePage.modal = $(data.body).makeModal({width : 750, onClose: UserProfilePage.closeModal, closeOnBlackoutClick: UserProfilePage.closeModal});
-			var modal = UserProfilePage.modal;
+		if( UserProfilePage.isLightboxGenerating === false ) {
+		//if lightbox is generating we don't want to let user open second one
+			UserProfilePage.isLightboxGenerating = true;
 			
-			UserProfilePage.renderAvatarLightbox(modal);
-			UserProfilePage.renderAboutMeLightbox(modal);
-			//UserProfilePage.renderInterviewLightbox(modal);
+			UserProfilePage.track('edit/personal_data');
 			
-			var tab = modal.find('.tabs a');
-			tab.click(function(event) {
-				event.preventDefault();
-				UserProfilePage.trackLightbox(event);
-				UserProfilePage.switchTab($(this).closest('li'));
+			$.getResources([$.getSassCommonURL('/extensions/wikia/UserProfilePageV3/css/UserProfilePage_modal.scss')]);
+			
+			$.postJSON( this.ajaxEntryPoint, { method: 'getLightboxData', tab: tabName, userId: UserProfilePage.userId, rand: Math.floor(Math.random()*100001) }, function(data) {
+				UserProfilePage.modal = $(data.body).makeModal({width : 750, onClose: UserProfilePage.closeModal, closeOnBlackoutClick: UserProfilePage.closeModal});
+				var modal = UserProfilePage.modal;
+				
+				UserProfilePage.renderAvatarLightbox(modal);
+				UserProfilePage.renderAboutMeLightbox(modal);
+				//UserProfilePage.renderInterviewLightbox(modal);
+				
+				var tab = modal.find('.tabs a');
+				tab.click(function(event) {
+					event.preventDefault();
+					UserProfilePage.trackLightbox(event);
+					UserProfilePage.switchTab($(this).closest('li'));
+				});
+				
+				// Synthesize a click on the tab to hide/show the right panels
+				$('[data-tab=' + tabName + '] a').click();
+				
+				if(typeof FB != 'undefined'){
+					// parse FBXML login button
+					FB.XFBML.parse();
+				}
+				
+				UserProfilePage.isLightboxGenerating = false;
+			}).error(function(data) {
+				var response = JSON.parse(data.responseText);
+				$.showModal('Error', response.exception.message);
+				
+				UserProfilePage.isLightboxGenerating = false;
 			});
-			
-			// Synthesize a click on the tab to hide/show the right panels
-			$('[data-tab=' + tabName + '] a').click();
-			
-			if(typeof FB != 'undefined'){
-				// parse FBXML login button
-				FB.XFBML.parse();
-			}
-			
-		}).error(function(data) {
-			var response = JSON.parse(data.responseText);
-			$.showModal('Error', response.exception.message);
-		});
+		}
 	},
 	
 	switchTab: function(tab) {
