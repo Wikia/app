@@ -19,7 +19,7 @@ class WikiaLabsProject {
 	protected $status = 0;
 
 	public function __construct( WikiaApp $app, $id = 0) {
-		$this->app = $app;
+		$this->setApp( $app );
 		if( !empty($id) ) {
 			$this->load( $id );
 		}
@@ -61,6 +61,10 @@ class WikiaLabsProject {
 
 	public function getId() {
 		return $this->id;
+	}
+
+	public function setApp(WikiaApp $app) {
+		$this->app = $app;
 	}
 
 	public function getName() {
@@ -115,10 +119,10 @@ class WikiaLabsProject {
 	public function setActivationsNum($value) {
 		$this->activationsNum = $value;
 	}
-	
+
 	public function getActivationsNumFormated() {
 		$wgLang = $this->app->getGlobal('wgLang');
-		
+
 		return $wgLang->formatNum($this->activationsNum);
 	}
 
@@ -317,30 +321,30 @@ class WikiaLabsProject {
 			);
 			$this->id = $db->insertId();
 		}
-		
+
 		$users = $this->app->getGlobal('wgWikiaBotUsers');
-		$api = new WikiAPIClient();
-	
-			
+		$api = F::build('WikiAPIClient');
+
+
 		$url = self::EXTERNAL_DATA_URL;
 		// devbox override
 		$wgDevelEnvironment = $this->app->getGlobal('wgDevelEnvironment');
-		
+
 		if (!empty($wgDevelEnvironment)) {
 			$url = str_replace('wikia.com', $this->app->getGlobal('wgDevelEnvironmentName').'.wikia-dev.com',$url);
 		}
-		
+
 		$api->setExternalDataUrl($url);
-		
+
 		$api->login($users['staff']['username'], $users['staff']['password']);
-		
-		
+
+
 		$data = $this->getData();
-		
+
 		$api->edit('MediaWiki:'.'wikialabs-projects-name-'.$this->getId(), $this->getName());
 		empty($data['description']) or $api->edit('MediaWiki:'.'wikialabs-projects-description-'.$this->getId(), $data['description']);
 		empty($data['warning']) or $api->edit('MediaWiki:'.'wikialabs-projects-warning-'.$this->getId(), $data['warning']);
-		
+
 		$db->commit();
 		$this->setDataToCache( $fields );
 	}
@@ -443,8 +447,8 @@ class WikiaLabsProject {
 			$this->update();
 		}
 	}
-	
-	
+
+
 	public function getTextFor($msg) {
 		$data = $this->getData();
 		$data['name'] = $this->getName();
@@ -456,8 +460,8 @@ class WikiaLabsProject {
 		} else {
 			return wfMsg($msgFull);
 		}
-	} 
-	
+	}
+
 	protected function getCachedRatingByUser( $userId ) {
 		$ratings = $this->getCachedRatings();
 		return ( !empty($ratings[$this->getId()][$userId]) ? $ratings[$this->getId()][$userId] : false );

@@ -2,7 +2,7 @@
 require_once dirname(__FILE__) . '/../WikiaLabs.setup.php';
 wfLoadAllExtensions();
 
-class WikiaLabsProjectTest extends PHPUnit_Framework_TestCase {
+class WikiaLabsProjectTest extends WikiaBaseTest {
 	const TEST_PROJECT_ID = 111;
 	const TEST_PROJECT_NAME = 'Test Project';
 	const TEST_PROJECT_DESC = 'Hello World!';
@@ -10,6 +10,8 @@ class WikiaLabsProjectTest extends PHPUnit_Framework_TestCase {
 	const TEST_EXTENSION = 'HelloWorldExtension';
 	const TEST_USER_ID1 = 1;
 	const TEST_USER_ID2 = 2;
+	const TEST_USERNAME = 'TestUser';
+	const TEST_PASSWORD = 'TestPasswd';
 
 	/**
 	 * WikiaLabsProject object
@@ -18,14 +20,19 @@ class WikiaLabsProjectTest extends PHPUnit_Framework_TestCase {
 	protected $object = null;
 	protected $dbMock = null;
 	protected $cacheMock = null;
+	protected $appMock = null;
 
 	protected function setUp() {
+		parent::setUp();
+
 		$this->object = $this->getMock( 'WikiaLabsProject', array( 'getCache', 'getDb', 'getId', 'incrActivationsNum', 'decrActivationsNum', 'updateCachedEnables', 'updateCachedRating', 'setRating' ), array( F::build( 'App' ) ) );
 		$this->dbMock = $this->getMock( 'DatabaseMysql' );
 		$this->cacheMock = $this->getMock( 'MemCachedClientforWiki', array(), array(), '', false );
 	}
 
 	protected function tearDown() {
+		parent::tearDown();
+
 		F::unsetInstance('WikiaLabsProject');
 	}
 
@@ -36,13 +43,41 @@ class WikiaLabsProjectTest extends PHPUnit_Framework_TestCase {
 		$this->object->expects($this->any())
 		  ->method( 'getDb' )
 		  ->will( $this->returnValue( $this->dbMock) );
+
+		$this->object->setApp( F::app() );
 	}
 
+	protected function setUpWikiApiMock( $projectId ) {
+		$botUsers = array(
+			'staff' => array(
+				'username' => self::TEST_USERNAME,
+				'password' => self::TEST_PASSWORD
+			)
+		);
+
+		$wikiApiMock = $this->getMock( 'WikiAPIClient', array( 'setExternalDataUrl', 'login', 'edit' ), array(), '', false );
+		$wikiApiMock->expects( $this->once() )
+		  ->method( 'setExternalDataUrl' )
+		  ->with( $this->equalTo( WikiaLabsProject::EXTERNAL_DATA_URL ));
+		$wikiApiMock->expects( $this->once() )
+		  ->method( 'login' )
+		  ->with( $this->equalTo( $botUsers['staff']['username'] ), $this->equalTo( $botUsers['staff']['password'] ) );
+		$wikiApiMock->expects( $this->once() )
+		  ->method( 'edit' )
+		  ->with( $this->equalTo( 'MediaWiki:'.'wikialabs-projects-name-'.$projectId), $this->equalTo( self::TEST_PROJECT_NAME ) );
+
+		$this->mockGlobalVariable( 'wgWikiaBotUsers', $botUsers );
+		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
+
+		$this->mockClass( 'WikiAPIClient', $wikiApiMock );
+		$this->mockApp();
+	}
 
 	public function testCreatingNewProject() {
+		$projectId = 0;
 		$this->object->expects($this->any())
 		  ->method( 'getId' )
-		  ->will( $this->returnValue(0) );
+		  ->will( $this->returnValue($projectId) );
 
 		$this->dbMock->expects($this->once())
 		  ->method('insert');
@@ -50,6 +85,7 @@ class WikiaLabsProjectTest extends PHPUnit_Framework_TestCase {
 		$this->dbMock->expects($this->once())
 		  ->method('insertId');
 
+		$this->setUpWikiApiMock($projectId);
 		$this->setUpMock();
 
 		$testData = array( 'foo' => true, 'bar' => 1, 'desc' => self::TEST_PROJECT_DESC );
@@ -78,13 +114,15 @@ class WikiaLabsProjectTest extends PHPUnit_Framework_TestCase {
 
 
 	public function testUpdatingExistingProject() {
+		$projectId = self::TEST_PROJECT_ID;
 		$this->object->expects($this->any())
 		  ->method( 'getId' )
-		  ->will( $this->returnValue( self::TEST_PROJECT_ID ) );
+		  ->will( $this->returnValue( $projectId ) );
 
 		$this->dbMock->expects($this->once())
 		  ->method('update');
 
+		$this->setUpWikiApiMock( $projectId );
 		$this->setUpMock();
 
 		$testData = array( 'foo' => true, 'bar' => 1, 'desc' => self::TEST_PROJECT_DESC );
