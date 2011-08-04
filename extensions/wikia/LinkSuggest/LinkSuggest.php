@@ -11,6 +11,7 @@
  * @author Bartek Łapiński <bartek@wikia-inc.com>
  * @author Lucas Garczewski (TOR) <tor@wikia-inc.com>
  * @author Sean Colombo <sean@wikia.com>
+ * @author Maciej Brencz <macbre@wikia-inc.com>
  * @copyright Copyright (c) 2008-2009, Wikia Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
@@ -21,7 +22,7 @@ if(!defined('MEDIAWIKI')) {
 
 $wgExtensionCredits['other'][] = array(
     'name' => 'LinkSuggest',
-    'author' => 'Inez Korczyński, Bartek Łapiński, Ciencia al Poder, Lucas Garczewski, Sean Colombo',
+    'author' => 'Inez Korczyński, Bartek Łapiński, Ciencia al Poder, Lucas Garczewski, Sean Colombo, Maciej Brencz',
     'version' => '1.53',
 );
 
