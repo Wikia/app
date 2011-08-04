@@ -5,7 +5,7 @@ class QuickStatsController extends WikiaController {
 	public function getStats() {
 
 		// First check memcache for our stats
-		$memKey = $this->wf->MemcKey('QuickStats');
+		$memKey = $this->wf->MemcKey('quick_stats');
 		$stats = $this->wg->Memc->get($memKey);
 		if (!is_array($stats)) {
 			$cityID = $this->wg->CityId;
@@ -16,9 +16,8 @@ class QuickStatsController extends WikiaController {
 			$hasfbdata = $this->getDailyLikes($stats);
 
 			// totals come in from MySQL as the last element with a null date, so just pop it off and give it a keyval 
-			$stats['totals'] = array_pop($stats);
 			// Some of our stats can be empty, so insert zeros as defaults
-			for ($i = 1-count($stats) ; $i <= 0 ; $i ++) {
+			for ($i = -7 ; $i <= 0 ; $i ++) {
 				$date = date( 'Y-m-d', strtotime("$i day") );
 				if ($i == 0) $date = 'totals';  // last time around check the totals
 				if (!isset($stats[$date])) $stats[$date] = array();
@@ -29,8 +28,10 @@ class QuickStatsController extends WikiaController {
 			}
 			$this->wg->Memc->set($memKey, $stats, 60*60*12);  // Stats are daily, 12 hours lag seems reasonable
 		} 
-		$this->totals = array_pop($stats);
-		$this->stats = array_reverse($stats);
+		$this->totals = $stats['totals'];
+		unset($stats['totals']);
+		krsort($stats);
+		$this->stats = $stats;
 	}
 	
 	// This should probably be Unique Users but we don't have that stat
@@ -62,8 +63,12 @@ class QuickStatsController extends WikiaController {
 					array('GROUP BY'=> 'date WITH ROLLUP')
 				);
 			}
-			while ( $oRow = $db->fetchObject ( $oRes ) ) { 
-				$stats[ $oRow->date ]['pageviews'] = $oRow->cnt;
+			while ( $oRow = $db->fetchObject ( $oRes ) ) {
+				if (!$oRow->date) { // rollup row
+					$stats['totals']['pageviews'] = $oRow->cnt; 
+				} else {  
+					$stats[ $oRow->date ]['pageviews'] = $oRow->cnt;
+				}
 			} 
 		}
 			
@@ -89,7 +94,11 @@ class QuickStatsController extends WikiaController {
 				array( 'GROUP BY' => 'date WITH ROLLUP' )
 			);
 			while ( $oRow = $db->fetchObject ( $oRes ) ) { 
-				$stats[ $oRow->date ]['edits'] = $oRow->cnt;
+				if (!$oRow->date) { // rollup row
+					$stats['totals']['edits'] = $oRow->cnt; 
+				} else {  
+					$stats[ $oRow->date ]['edits'] = $oRow->cnt;
+				}
 			} 
 		}
 		
@@ -113,7 +122,11 @@ class QuickStatsController extends WikiaController {
 			array( 'GROUP BY' => 'date WITH ROLLUP')
 		);
 		while ( $oRow = $db->fetchObject ( $oRes ) ) { 
-			$stats[ $oRow->date ]['photos'] = $oRow->cnt;
+			if (!$oRow->date) { // rollup row
+				$stats['totals']['photos'] = $oRow->cnt; 
+			} else {  
+				$stats[ $oRow->date ]['photos'] = $oRow->cnt;
+			}
 		} 
 		
 		$this->wf->ProfileOut( __METHOD__ );		
@@ -137,12 +150,12 @@ class QuickStatsController extends WikiaController {
 		if($response) {
 			$data = array_pop($response->data);
 			if(isset($data->values)) {
-				$stats['']['likes'] = 0;
+				$stats['totals']['likes'] = 0;
 				foreach($data->values as $value) {
 					if (preg_match('/([\d\-]*)/', $value->end_time, $matches)) {
 						$day = $matches[1];
 						$stats[$day]['likes'] = $value->value;
-						$stats['']['likes'] += $value->value;
+						$stats['totals']['likes'] += $value->value;
 					}
 				}
 				$result = TRUE;
