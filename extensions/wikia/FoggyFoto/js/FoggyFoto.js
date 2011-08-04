@@ -25,8 +25,10 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 		this.context = null;
 
 		// URLs of the images
-		this.frontImageSrc = 'http://images4.wikia.nocookie.net/__cb20110304030006/lyricwiki/images/b/b7/Deadmau5_-_It_Sounds_Like.jpg'; // this shows up immediately
-		this.backImageSrc = "http://images1.wikia.nocookie.net/__cb20110606201926/lyricwiki/images/3/39/Deadmau5_-_Project_56.jpg"; // this is the one that's obscured
+		//this.frontImageSrc = 'http://images4.wikia.nocookie.net/__cb20110304030006/lyricwiki/images/b/b7/Deadmau5_-_It_Sounds_Like.jpg'; // this shows up immediately
+		this.frontImageSrc = 'http://sean.wikia-dev.com/extensions/wikia/FoggyFoto/front.png'; // this shows up immediately
+		//this.backImageSrc = "http://images1.wikia.nocookie.net/__cb20110606201926/lyricwiki/images/3/39/Deadmau5_-_Project_56.jpg"; // this is the one that's obscured
+		this.backImageSrc = "http://images1.wikia.nocookie.net/__cb20100113214904/glee/images/3/3f/Kurtmercedes.jpg"; // this is the one that's obscured
 		this.frontImage = null;
 		this.backImage = null;
 
