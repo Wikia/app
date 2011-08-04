@@ -261,13 +261,61 @@ var GamingCalendarModal = {
     },
 
 	bindEventHandlers: function(page) {
-		var week = 7 * 24 * 3600 * 1000;
-		var currentWeek = new Date( window.GamingCalendarModal.thisWeek.getTime() + (week * page) );
-		var prevMonth = new Date( currentWeek.getFullYear(), currentWeek.getMonth() - 1, 1, 0, 0, 0 );
-		var nextMonth = new Date( currentWeek.getFullYear(), currentWeek.getMonth() + 1, 1, 0, 0, 0 );
-		var pagesPrevMonth = Math.ceil( (currentWeek - prevMonth) / week );
-		var pagesNextMonth = Math.ceil( (nextMonth - currentWeek) / week );
-
+		var day = 24 * 3600 * 1000;
+		var week = 7 * day;
+		var _today = new Date( GamingCalendarModal.today.getTime() + ( GamingCalendarModal.today.getTimezoneOffset() * 60 * 1000 ) );
+		// This Monday
+		_today = new Date(
+			_today.getUTCFullYear(),
+			_today.getUTCMonth(),
+			_today.getUTCDate() - _today.getUTCDay() + 1,
+			0, 0, 0
+		);
+		// Next month
+		var nextMonth = new Date(
+			_today.getFullYear(),
+			_today.getMonth() + 1,
+			1, 0, 0, 0
+		);
+		var nextMonthWeeks = Math.floor(
+			( nextMonth.getTime() - _today.getTime() - ( ( _today.getTimezoneOffset() - nextMonth.getTimezoneOffset() ) * 60 * 1000 ) ) / week
+		);
+		// Or the month after the next month
+		if ( 2 > nextMonthWeeks ) {
+			nextMonth = new Date(
+				_today.getFullYear(),
+				_today.getMonth() + 2,
+				1, 0, 0, 0
+			);
+			nextMonthWeeks = Math.floor(
+				( nextMonth.getTime() - _today.getTime() - ( ( _today.getTimezoneOffset() - nextMonth.getTimezoneOffset() ) * 60 * 1000 ) ) / week
+			);
+		}
+		// This month
+		var thisMonth = new Date(
+			_today.getFullYear(),
+			_today.getMonth(),
+			1, 0, 0, 0
+		);
+		var thisMonthWeeks = Math.ceil(
+			( _today.getTime() - thisMonth.getTime() - ( ( _today.getTimezoneOffset() - thisMonth.getTimezoneOffset() ) * 60 * 1000 ) ) / week
+		);
+		var thisMonthDays = Math.ceil(
+			( _today.getTime() - thisMonth.getTime() - ( ( _today.getTimezoneOffset() - thisMonth.getTimezoneOffset() ) * 60 * 1000 ) ) / day
+		);
+		if ( 0 < thisMonthWeeks  ) {
+			var previousMonth = thisMonth;
+			var previousMonthWeeks = thisMonthWeeks;
+		} else {
+			var previousMonth = new Date(
+				_today.getFullYear(),
+				_today.getMonth() - 1,
+				1, 0, 0, 0
+			);
+			var previousMonthWeeks = Math.ceil(
+				( _today.getTime() - previousMonth.getTime() - ( ( _today.getTimezoneOffset() - previousMonth.getTimezoneOffset() ) * 60 * 1000 ) ) /  week
+			);
+		}
 		var calendarElement = $('#GamingCalendar');
 
 		calendarElement.find('.forward-week').unbind('click').removeClass('disabled');
@@ -275,9 +323,9 @@ var GamingCalendarModal = {
 		calendarElement.find('.back-week').unbind('click').removeClass('disabled');
 		calendarElement.find('.back-week').bind('click', function(event) { GamingCalendarModal.renderPage(event, page - 1); $.tracker.byStr( 'gamingCalendar/scroll/backward/week' ); });
 		calendarElement.find('.forward-month').unbind('click').removeClass('disabled');
-		calendarElement.find('.forward-month').bind('click', function(event) { GamingCalendarModal.renderPage( event, page + pagesNextMonth ); $.tracker.byStr( 'gamingCalendar/scroll/forward/month' ); });
+		calendarElement.find('.forward-month').bind('click', function(event) { GamingCalendarModal.renderPage( event, page + nextMonthWeeks ); $.tracker.byStr( 'gamingCalendar/scroll/forward/month' ); });
 		calendarElement.find('.back-month').unbind('click').removeClass('disabled');
-		calendarElement.find('.back-month').bind('click', function(event) { GamingCalendarModal.renderPage( event, page - pagesPrevMonth ); $.tracker.byStr( 'gamingCalendar/scroll/backward/month' ); });
+		calendarElement.find('.back-month').bind('click', function(event) { GamingCalendarModal.renderPage( event, page - previousMonthWeeks ); $.tracker.byStr( 'gamingCalendar/scroll/backward/month' ); });
 		calendarElement.find('.scroll-up').unbind('click').bind('click', GamingCalendarModal.scrollUp);
 		calendarElement.find('.scroll-down').unbind('click').bind('click', GamingCalendarModal.scrollDown);
 		calendarElement.find('.GamingCalendarItem').unbind('click');
@@ -298,7 +346,7 @@ var GamingCalendarModal = {
 			calendarElement.find('.forward-week').addClass('disabled').unbind('click');
 		}
 
-		if ( currentWeek.getTime() <= window.GamingCalendarModal.firstWeek.getTime() ) {
+		if ( _today.getTime() <= window.GamingCalendarModal.firstWeek.getTime() ) {
 			calendarElement.find('.back-month').addClass('disabled');
 			calendarElement.find('.back-month').unbind('click');
 			calendarElement.find('.back-week').addClass('disabled');
