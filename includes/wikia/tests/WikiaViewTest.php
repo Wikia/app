@@ -107,4 +107,39 @@ class WikiaViewTest extends PHPUnit_Framework_TestCase {
 		$this->object->setResponse( $response );
 		$this->object->render();
 	}
+
+	public function testRenderingFormatsDataProvider() {
+		$responseValueName = 'result';
+		$responseValueData = array( 1, 2, 3 );
+		
+		return array(
+			array( WikiaResponse::FORMAT_RAW, $responseValueName, $responseValueData, '<pre>' . var_export( array( $responseValueName => $responseValueData ), true ) .'</pre>' ),
+			array( WikiaResponse::FORMAT_JSON, $responseValueName, $responseValueData, json_encode( array( $responseValueName => $responseValueData ) ) ),
+			array( WikiaResponse::FORMAT_HTML, $responseValueName, $responseValueData, implode( '-', $responseValueData ) ),
+		);
+	}
+
+	/**
+	 * @dataProvider testRenderingFormatsDataProvider
+	 */
+	public function testRenderingFormats($format, $responseValueName, $responseValueData,$expectedResult) {
+		$response = F::build( 'WikiaResponse', array( $format ) );
+		$response->setVal( $responseValueName, $responseValueData );
+		$this->object->setResponse( $response );
+		
+		if ( $format == WikiaResponse::FORMAT_HTML ) {
+			$appMock = $this->getMock( 'WikiaApp', array('ajax') );
+			$registryMock = $this->getMock( 'WikiaGlobalRegistry', array('get') );
+			$registryMock->expects( $this->any() )
+				->method( 'get' )
+				->with( $this->equalTo( 'wgAutoloadClasses' ) )
+				->will( $this->returnValue( array( 'Test' . 'Controller' => dirname( __FILE__  ) . '/_fixtures/TestController.php' ) ) );
+			$appMock->setGlobalRegistry($registryMock);
+	
+			F::setInstance( 'App', $appMock );
+			$this->object->setTemplate( 'Test', 'formatHTML' );
+		}
+		
+		$this->assertEquals( $expectedResult, $this->object->render() );
+	}
 }
