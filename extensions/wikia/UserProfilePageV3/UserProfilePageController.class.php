@@ -632,6 +632,7 @@ class UserProfilePageController extends WikiaController {
 		
 		$this->setVal( 'defaultAvatars', $this->getDefaultAvatars() );
 		$this->setVal( 'isUploadsPossible', $this->wg->EnableUploads && $this->wg->User->isAllowed( 'upload' ) && is_writeable( $this->wg->UploadDirectory ) );
+		
 		$this->setVal( 'avatarName', $user->getOption('avatar') );
 		$this->setVal( 'userId', $userId );
 		$this->setVal( 'avatarMaxSize', self::AVATAR_MAX_SIZE );

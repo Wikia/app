@@ -24,7 +24,10 @@ class ImageOperationsHelper {
 	public function postProcess( $oImgOrig, $aOrigSize  ) {
 		$this->app->wf->ProfileIn(__METHOD__);
 		//resizes if needed
-		if( $aOrigSize['width'] > $this->defaultWidth ) {
+		if( $aOrigSize['width'] > $this->defaultWidth && $aOrigSize['height'] > $this->defaultHeight ) {
+			//bugId:7527
+			//we don't want to resize anything we wont to crop only
+		} else if( $aOrigSize['width'] > $this->defaultWidth ) {
 			$oImgOrig = $this->resize($oImgOrig, $aOrigSize['width'], $aOrigSize['height']);
 		} else if( $aOrigSize['height'] > $this->defaultHeight ) {
 			$oImgOrig = $this->resize($oImgOrig, $aOrigSize['width'], $aOrigSize['height']);
@@ -33,14 +36,15 @@ class ImageOperationsHelper {
 		//calculating destination start point
 		$iDestX = 0;
 		$iDestY = 0;
-		if( $aOrigSize['width'] >= $this->defaultWidth ) {
+		if( ($aOrigSize['width'] > $this->defaultWidth && $aOrigSize['height'] > $this->defaultHeight) ||
+		 ($aOrigSize['width'] < $this->defaultWidth && $aOrigSize['height'] < $this->defaultHeight) ) {
+		//center the image vertically and horizontally
+			$iDestX = ($this->defaultWidth/2) - floor($aOrigSize['width']/2);
+			$iDestY = floor($this->defaultHeight/2) - floor($aOrigSize['height']/2);
+		} else if( $aOrigSize['width'] >= $this->defaultWidth ) {
 			$iDestY = floor($this->defaultHeight/2) - floor($aOrigSize['height']/2);
 		} else if( $aOrigSize['height'] >= $this->defaultHeight ) {
 			$iDestX = ($this->defaultWidth/2) - floor($aOrigSize['width']/2);
-		} else {
-			//center the image vertically and horizontally
-			$iDestX = ($this->defaultWidth/2) - floor($aOrigSize['width']/2);
-			$iDestY = floor($this->defaultHeight/2) - floor($aOrigSize['height']/2);
 		}
 		
 		//empty image with thumb size on red background
@@ -64,19 +68,18 @@ class ImageOperationsHelper {
 	}
 	
 	/**
-	 *
+	 * @brief Resizes the image and put white borders to fit default size
 	 */
-	private function resize($oImgOrig, &$width, &$height) {
+	protected function resize($oImgOrig, &$width, &$height) {
 		$this->app->wf->ProfileIn(__METHOD__);
 		
 		$iImgW = $this->defaultWidth;
 		$iImgH = $this->defaultHeight;
 		
-		//WIDTH > HEIGHT
 		if ( $width > $height ) {
 			$iImgH = $iImgW * ( $height / $width );
 		}
-		//HEIGHT > WIDTH
+		
 		if ( $width < $height ) {
 			$iImgW = $iImgH * ( $width / $height );
 		}
