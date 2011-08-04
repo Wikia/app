@@ -10,10 +10,7 @@ $app->initSkin( (bool) $app->wg->Request->getVal( "skin", false ) );
 $response = $app->sendRequest( null, null, null, false );
 
 // commit any open transactions just in case the controller forgot to
-if ($app->wg->Request->wasPosted()) {
-	$factory = wfGetLBFactory();
-	$factory->commitMasterChanges();  // commits only if writes were done on connection
-}
+$app->commit();
 
 $response->sendHeaders();
 $response->render();
