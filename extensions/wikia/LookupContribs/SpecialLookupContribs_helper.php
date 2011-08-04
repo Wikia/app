@@ -139,9 +139,7 @@ class LookupContribsCore {
 				//bugId:6196
 				$excludedWikis = $this->getExclusionList();
 				if( !empty($excludedWikis) && is_array($excludedWikis) ) {
-					$excludedIds = '(0, ';
-					$excludedIds .= rtrim(implode(', ', intval($excludedWikis)), ', ');
-					$excludedIds .= ')';
+					$excludedIds = '('.implode(', ', $excludedWikis).')';
 				} else {
 					$excludedIds = '(0)';
 				}
@@ -283,8 +281,9 @@ class LookupContribsCore {
 			return array();
 		}
 		
+		$result[] = 0;
 		foreach($wgLookupContribsExcluded as $excluded) {
-			$result[] = WikiFactory::DBtoID($excluded);
+			$result[] = intval(WikiFactory::DBtoID($excluded));
 		}
 		
 		wfProfileOut( __METHOD__ );
