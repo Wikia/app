@@ -158,10 +158,10 @@ function getLinkSuggest() {
 		}
 	}
 
-	// comma separated list of namespaces to search in
+	// list of namespaces to search in
 	if ( empty( $namespace ) ) {
 		// search only within content namespaces - default behaviour
-		$namespaces = implode( ',', $wgContentNamespaces );
+		$namespaces = $wgContentNamespaces;
 	} else {
 		// search only within a namespace from query
 		$namespaces = $namespace;
@@ -181,7 +181,7 @@ function getLinkSuggest() {
 			'page_is_redirect = 0',
 			'qc_type' => 'Mostlinked',
 			"LOWER(qc_title) LIKE '{$query}%'",
-			"qc_namespace IN ({$namespaces})"
+			'qc_namespace' => $namespaces
 		),
 		__METHOD__,
 		array( 'ORDER BY' => 'qc_value DESC', 'LIMIT' => 10 )
@@ -197,7 +197,7 @@ function getLinkSuggest() {
 		array(
 			"LOWER(page_title) LIKE '{$query}%'",
 			'page_is_redirect' => 0,
-			"page_namespace IN ({$namespaces})"
+			'page_namespace' => $namespaces
 		),
 		__METHOD__,
 		array(
