@@ -92,7 +92,7 @@ class SassUtil {
 	/**
 	 * Get normalized color value (RT #74057)
 	 */
-	private static function sanitizeColor($color) {
+	public static function sanitizeColor($color) {
 		$color = trim(strtolower($color));
 		return $color;
 	}

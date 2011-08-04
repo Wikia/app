@@ -60,6 +60,7 @@ class AdminDashboardModule extends Module {
 
 		$themeSettings = new ThemeSettings();
 		$settings = $themeSettings->getSettings();
+		$oasisSettings["color-body"] = SassUtil::sanitizeColor($settings["color-body"]);
 		$oasisSettings["background-image"] = wfReplaceImageServer($settings['background-image'], SassUtil::getCacheBuster());
 		$oasisSettings["background-align"] = $settings["background-align"];
 		$oasisSettings["background-tiled"] = $settings["background-tiled"];
