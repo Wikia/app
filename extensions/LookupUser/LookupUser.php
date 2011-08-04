@@ -37,7 +37,7 @@ $wgSpecialPageGroups['LookupUser'] = 'users';
 
 // New user right, required to use the special page
 $wgAvailableRights[] = 'lookupuser';
-$wgGroupPermissions['staff']['lookupuser'] = true;
+$wgGroupPermissions['util']['lookupuser'] = true;
 
 //small stuff week --nAndy
 global $wgAjaxExportList;
