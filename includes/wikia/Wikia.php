@@ -1918,24 +1918,30 @@ class Wikia {
 	}
 	
 	static public function getFacebookDomainId() {
-		global $wgServer, $fbAccessToken, $fbDomain;
+		global $wgServer, $fbAccessToken, $fbDomain, $wgMemc;
 		
-		$result = FALSE;
 		if (!$fbAccessToken || !$fbDomain)
-			return $result;
-		
+			return false;
+
 		wfProfileIn(__METHOD__);
-		
-		if (preg_match('/\/\/(\w*)\./',$wgServer,$matches)) {
-			$domain = $matches[1].$fbDomain;
-		} else {
-			$domain = str_replace('http://', '', $wgServer);
+		$memckey = wfMemcKey('fbDomainId');
+		$result = $wgMemc->get($memckey);
+		if (is_null($result)) {
+			if (preg_match('/\/\/(\w*)\./',$wgServer,$matches)) {
+				$domain = $matches[1].$fbDomain;
+			} else {
+				$domain = str_replace('http://', '', $wgServer);
+			}
+			$url = 'https://graph.facebook.com/?domain='.$domain;
+			$response = json_decode(Http::get($url));
+			if (isset($response->id)) {
+				$result = $response->id;
+			} else {
+				$result = 0;  // If facebook tells us nothing, don't keep trying, just give up until cache expires
+			}
+			$wgMemc->set($memckey, $result, 60*60*24*7);  // 1 week
+			
 		}
-		$url = 'https://graph.facebook.com/?domain='.$domain;
-		$response = json_decode(Http::get($url));
-		if (isset($response->id))
-			$result = $response->id;
-		
 		wfProfileOut(__METHOD__);
 		
 		return $result;
