@@ -4,6 +4,7 @@
 
 input {
   height: 30px !important; //no other way to change that as it is inline style
+  font-size: 15pt;
 }
 
 #AjaxLoginConnectMarketing div {
@@ -17,21 +18,40 @@ input {
 }
 
 #userRegisterAjax {
-  display: block;
-  #wpName2{
-    position: relative;
-    left: -14px;
+  #wpName2, #wpEmail, #uselang, #wpBirthYear {
+  position: absolute !important;
+  left: 35px !important; 
   }
-  #wpPassword2 {
-    position: relative;
-    left: -60px;
+  #wpBirthMonth {
+  position: absolute !important;
+  left: 120px !important;
   }
-  #wpCaptchaWord {
-    position: relative;
-    top: -60px;
+  #wpBirthDay {
+  position: absolute !important;
+  left: 205px !important;
   }
-  .captchadesc {
-    position: relative;
-    top: -60px;
+  .captcha {
+    img {
+      position: relative;
+      left: 20px;
+    }
+    #wpCaptchaWord,.captchadesc {
+      position: relative;
+      top:- 60px;
+    }
+  }
+}
+
+#lightbox {
+
+}
+
+#WikiaPage {
+  width: 100% !important;
+}
+#WikiaHeader {
+  width: 100%;
+  .banner-corner-left, .banner-corner-right {
+    display: none;
   }
 }
