@@ -138,17 +138,15 @@ class LookupContribsCore {
 				
 				//bugId:6196
 				$excludedWikis = $this->getExclusionList();
-				if( !empty($excludedWikis) && is_array($excludedWikis) ) {
-					$excludedIds = '('.implode(', ', $excludedWikis).')';
-				} else {
-					$excludedIds = '(0)';
-				}
 				
 				$where =  array (
-					'wiki_id NOT IN '.$excludedIds,
 					'user_id'    => $this->mUserId,
 					'event_type' => array(1,2)
 				);
+				
+				if( !empty($excludedWikis) && is_array($excludedWikis) ) {
+					$where[] = 'wiki_id NOT IN ('.$dbr->makeList($excludedWikis).')';
+				}
 				
 				/* number of records */
 				$oRow = $dbr->selectRow(
