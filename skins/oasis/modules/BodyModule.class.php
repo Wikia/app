@@ -233,11 +233,12 @@ class BodyModule extends Module {
 				wfProfileOut(__METHOD__);
 				return $railModuleList;
 			}
-		} else if (!self::showUserPagesHeader()) {
-			// search module appears on all pages except search results and pages with the user page header, where it is added in another manner
+		} else if (!($wgEnableUserProfilePagesV3 && self::showUserPagesHeader()) ) {
+			// ProfilePagesV3 renders its own search box.
+			// If this page is not a page with the UserPagesHeader on version 3, show search (majority case)
 			$railModuleList = array (
 				1500 => array('Search', 'Index', null),
-			);
+			);		
 		}
 
 		// Content, category and forum namespaces.  FB:1280 Added file,video,mw,template
