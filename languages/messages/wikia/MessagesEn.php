@@ -86,78 +86,9 @@ $messages = array_merge( $messages , array(
 'corporatepage-pages-added' => 'pages created in the last hour',
 'corporatepage-edits-made' => 'edits made today',
 'corporatepage-words-added' => 'words added in the last week',
-# Default for monaco skin
-'monaco_skins' => 'Monaco',
-'monaco-sapphire' => 'Sapphire',
-'monaco-jade' => 'Jade',
-'monaco-ruby' => 'Ruby',
-'monaco-slate' => 'Slate',
-'monaco-smoke' => 'Smoke',
-'monaco-beach' => 'Beach',
-'monaco-brick' => 'Brick',
-'monaco-gaming' => 'Gaming',
-'monaco-sky' => 'Sky',
-'monaco-spring' => 'Spring',
-'monaco-forest' => 'Forest',
-'monaco-moonlight' => 'Moonlight',
-'monaco-obsession' => 'Obsession',
-'monaco-carbon' => 'Carbon',
-'monaco-custom' => 'Custom',
-'monaco-edit-this-menu' => 'Edit this menu',
-'monaco-articles-on' => '<span class="article_count dark_text_1">$1</span> {{PLURAL:$1|page|pages}} on this wiki<br />',
-'monaco-welcome-back' => 'Welcome back, <b>$1</b><br />',
-'monaco-widgets' => 'Widgets',
-'monaco-latest' => 'Latest Activity',
-'monaco-latest-item' => '$1 by $2',
-'monaco-whos-online' => 'Who\'s Online',
-'monaco-request-wiki-ad-text' => '',
+
+# Defaults for monaco skin
 'seemoredotdotdot' => 'See more...',
-
-'monaco-category-list' => '*w:Category:Hubs|more wikis
-**w:Gaming|Gaming
-**w:Entertainment|Entertainment
-**w:Sci-Fi|Science Fiction
-**w:Big_wikis|Biggest wikis
-**w:Hobbies|Hobbies
-**w:Technology|Technology',
-
-'monaco-footer-links' => '*Hubs
-**w:Entertainment|Entertainment
-**w:Gaming|Gaming
-**w:Sports|Sports
-**w:Toys|Toys
-**w:Big_wikis|Biggest wikis
-**w:Hubs|see all...
-*Featured
-**http://cocktails.wikia.com|Cocktails
-**http://recipes.wikia.com|Recipes
-**http://green.wikia.com|Green
-**http://help.wikia.com/wiki/Help:Video_demos|Help Videos
-
-*Wikia is hiring
-**w:Hiring|General hiring',
-
-'monaco-footer-wikia-links' => '*http://www.wikia.com/wiki/About_Wikia|About Wikia
-*http://www.wikia.com/wiki/Contact_us|Contact Wikia
-*http://www.wikia.com/wiki/Terms_of_use|Terms
-*http://www.mediawiki.org/|MediaWiki
-*http://www.gnu.org/copyleft/fdl.html|GFDL
-*http://www.wikia.com/wiki/Advertising|Advertise on Wikia
-*http://www.wikia.com/wiki/Terms_of_use#Collection_of_personal_information|<b>Privacy</b>',
-
-'monaco-related-communities' => '*w:Entertainment|Entertainment|TV shows, movies, cartoons and comics.
-*w:Gaming|Gaming|Get your game on with Wikia\'s video game wikis.
-*w:Sci-Fi|Science Fiction|Explore the world of the future.
-*w:Big_wikis|Biggest Wikis|See Wikia\'s biggest wikis.
-*w:Hubs|See all...',
-
-'monaco-related-communities-2' => '*w:c:ssb|Super Smash Bros|Check out the Brawl
-*w:c:aoc|Age of Conan Wiki|Age of Conan
-*w:c:wow|WoWWiki|World of Warcraft
-*w:c:gta|Grand Theft Wiki|Grand Theft Auto 4
-*w:c:guildwars|GuildWiki|Guild Wars
-*w:c:yugioh|Yu-Gi-Oh!
-*w:c:Runescape|Runescape',
 
 'monaco-sidebar' => '*mainpage|{{SITENAME}}
 *mainpage|Top Content
@@ -172,20 +103,8 @@ $messages = array_merge( $messages , array(
 *#category1#
 *#category2#',
 
-'monaco-toolbox' => '* upload-url|Upload image
-* specialpages-url|specialpages
-* helppage|help
-* recentchanges-url|recentchanges
-* randompage-url|randompage
-* whatlinkshere|whatlinkshere',
-
-#dynamic links
-'dynamic-links-write-article' => 'Create a new page',
-'dynamic-links-add-image' => 'Upload a new image',
-'dynamic-links-write-blog' => 'Write a Blog',
-'dynamic-links-blog-listing' => 'New Blog Listing',
-
-'specialpages-url' => 'Special:Specialpages',
+# predefined urls-via-message (for menus)
+'specialpages-url' => 'Special:SpecialPages',
 'upload-url' => 'Special:Upload',
 
 # Widget
