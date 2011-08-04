@@ -42,9 +42,13 @@ extAddBatchTask( dirname(__FILE__)."/../AchievementsII/EnableAchievementsTask.ph
  * permissions
  */
 $wgAvailableRights[] = 'taskmanager';
-$wgAvailableRights[] = 'taskmanager-action';
+$wgGroupPermissions['vstf']['taskmanager'] = true;
+$wgGroupPermissions['helper']['taskmanager'] = true;
 $wgGroupPermissions['staff']['taskmanager'] = true;
-$wgGroupPermissions['staff']['taskmanager-action'] = true;
+
+$wgAvailableRights[] = 'taskmanager-action';
+$wgGroupPermissions['util']['taskmanager'] = true;
+$wgGroupPermissions['util']['taskmanager-action'] = true;
 
 /**
  * message file
