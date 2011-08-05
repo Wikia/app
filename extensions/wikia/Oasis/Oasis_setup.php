@@ -39,6 +39,7 @@ function wfOasisSetup() {
 
 	// confirmations
 	$wgHooks['ArticleDeleteComplete'][] = 'NotificationsModule::addPageDeletedConfirmation';
+	$wgHooks['ArticleSaveComplete'][] = 'NotificationsModule::addSaveConfirmation';
 	$wgHooks['ArticleUndelete'][] = 'NotificationsModule::addPageUndeletedConfirmation';
 	$wgHooks['SkinTemplatePageBeforeUserMsg'][] = 'NotificationsModule::addFacebookConnectConfirmation';
 	$wgHooks['SpecialMovepageAfterMove'][] = 'NotificationsModule::addPageMovedConfirmation';
@@ -46,16 +47,15 @@ function wfOasisSetup() {
 	$wgHooks['UserLogoutComplete'][] = 'NotificationsModule::addLogOutConfirmation';
 
 	// notifications
-	$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'NotificationsModule::addMessageNotification';
-	$wgHooks['SiteWideMessagesNotification'][] = 'NotificationsModule::addSiteWideMessageNotification';
 	$wgHooks['AchievementsNotification'][] = 'NotificationsModule::addBadgeNotification';
-	$wgHooks['EditSimilar::showMessage'][] = 'NotificationsModule::addEditSimilarNotification';
 	$wgHooks['CommunityMessages::showMessage'][] = 'NotificationsModule::addCommunityMessagesNotification';
-
+	$wgHooks['EditSimilar::showMessage'][] = 'NotificationsModule::addEditSimilarNotification';
+	$wgHooks['SiteWideMessagesNotification'][] = 'NotificationsModule::addSiteWideMessageNotification';
+	$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'NotificationsModule::addMessageNotification';
+	
+	// misc
 	$wgHooks['UploadVerification'][] = 'Oasis_UploadVerification';
-
 	$wgHooks['ArticleViewHeader'][]  = 'UserPagesHeaderModule::saveFacebookConnectProfile';
-
 	$wgHooks['ArticlePurge'][] = 'ArticleService::onArticlePurge';
 
 	// support "noexternals" URL param
