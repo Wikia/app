@@ -18,6 +18,10 @@ class AdminDashboardModule extends Module {
 		$this->tab = $wgRequest->getVal("tab", "");
 		if(empty($this->tab) && $isAdminDashboard) {
 			$this->tab = 'general';
+		} else if(!empty(AdminDashboardLogic::$generalApps[$wgTitle->getDBKey()])) {
+			$this->tab = 'general';
+		} else if(empty($this->tab)) {
+			$this->tab = 'advanced';
 		}
 
 		$this->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/AdminDashboard/css/AdminDashboard.scss', null, $this->getAlternateOasisSetting()));

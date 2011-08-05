@@ -59,21 +59,6 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 			$this->displayRestrictionError();
 			return false; // skip rendering
 		}
-		
-		$excludedPages = array(
-			'ThemeDesigner' => true,
-			'Recentchanges' => true,
-			'WikiaLabs' => true,
-			'PageLayoutBuilder' => true,
-			'Listusers' => true,
-			'UserRights' => true,
-			'Categories' => true,
-			'CreatePage' => true,
-			'Upload' => true,
-			'CreateBlogPage' => true,
-			'MultipleUpload' => true,
-			'ScavengerHunt' => true
-		);
 
 		$wgMessageCache->loadAllMessages();
 	
@@ -88,7 +73,7 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 		/** Put them into a sortable array */
 		$groups = array();
 		foreach ( $pages as $pagename => $page ) {
-			if ( !isset($excludedPages[$pagename]) && $page->isListed() ) {
+			if ( !isset(AdminDashboardLogic::$generalApps[$pagename]) && $page->isListed() ) {
 				$group = SpecialPage::getGroup( $page );
 				if( !isset($groups[$group]) ) {
 					$groups[$group] = array();
