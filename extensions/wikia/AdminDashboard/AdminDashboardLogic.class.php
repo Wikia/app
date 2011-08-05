@@ -29,6 +29,7 @@ class AdminDashboardLogic {
 				"LayoutBuilder", 
 				"MovePage",
 				"NewFiles",
+				"Our404Handler",
 				"PageLayoutBuilder", 
 				"Phalanx",
 				"PhalanxStats",
