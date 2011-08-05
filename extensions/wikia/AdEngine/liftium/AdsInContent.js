@@ -15,7 +15,7 @@ AIC2.init = function() {
 	AIC2.called = true;
 
 	if (Math.floor(Math.random()*20) == 7) {
-		Liftium.trackEvent(Liftium.buildTrackUrl(['AIC2', 'test']));
+		Liftium.trackEvent(Liftium.buildTrackUrl(['AIC2', 'test']), 'UA-17475676-11');
 		_gaq.push(['liftium._setAccount', 'UA-17475676-11']);
 		_gaq.push(['liftium._setSampleRate', '100']);
 		_gaq.push(['liftium._trackPageview', '/999/' + Liftium.buildTrackUrl(['AIC2', 'test'])]);
