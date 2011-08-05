@@ -537,6 +537,15 @@ function VET_show( e, gallery, box, align, thumb, size, caption ) {
 			visible: false,
 			zIndex: 900
 		});
+
+		// use display: block/none for YUI panels (BugId:8825)
+		VET_panel.showEvent.subscribe(function() {
+			YAHOO.util.Dom.setStyle(this.element, "display", "block");
+		});
+		VET_panel.hideEvent.subscribe(function() {
+			YAHOO.util.Dom.setStyle(this.element, "display", "none");
+		});
+
 		VET_panel.render();
 		VET_panel.show();
 		if(VET_refid != null && VET_wysiwygStart == 2) {
