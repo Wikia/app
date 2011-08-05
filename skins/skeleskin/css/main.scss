@@ -31,19 +31,18 @@ html{
   //shoudn't be done on production site as it is a workaround on to wide content
   overflow: hidden;
 	div{
-		//temporary fix waiting for FB#9321
 		&.main-page-tag-rcs{
-			float: none !important;/* is an inline style, no other way to force that, sorry ;) */
-			clear: none !important;/* is an inline style, no other way to force that, sorry ;) */
-			width: auto !important;/* is an inline style, no other way to force that, sorry ;) */
-			position: static !important;/* is an inline style, no other way to force that, sorry ;) */
+			float: none;
+			clear: none;
+			width: auto;
+			position: static;
 		}
 		
 		&.main-page-tag-lcs{
-			float: none !important;/* is an inline style, no other way to force that, sorry ;) */
+			float: none;
+			width: auto;
+			position: static;
 			margin-right: auto !important;/* is an inline style, no other way to force that, sorry ;) */
-			width: auto !important;/* is an inline style, no other way to force that, sorry ;) */
-			position: static !important;/* is an inline style, no other way to force that, sorry ;) */
 			
 			&>div{
 				margin-right: auto !important;/* is an inline style, no other way to force that, sorry ;) */

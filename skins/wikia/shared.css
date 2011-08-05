@@ -410,3 +410,21 @@ div.gallerybox div.thumb {
 .video-add-wrapper {
 	line-height: 250px;
 }
+
+div.main-page-tag-rcs {
+	position: relative;
+	width: 300px;
+	float: right;
+	clear: right;
+}
+
+div.main-page-tag-lcs-collapsed {
+	overflow: hidden;
+	height: 1%; 
+}
+
+div.main-page-tag-lcs-exploded {
+	float: left;
+	width: 100%;
+	position: relative;
+}

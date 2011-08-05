@@ -61,12 +61,12 @@ div.magnify,
 }
 
 #bodyContent > div.main-page-tag-lcs{
-	float: none !important;
-	margin-right: 0 !important;
+	float: none;
+	margin-right: 0 !important;/* is an inline style, no other way to force that, sorry ;) */
 }
 
 #bodyContent > div.main-page-tag-lcs > div {
-	margin-right: 0 !important;
+	margin-right: 0 !important;/* is an inline style, no other way to force that, sorry ;) */
 }
 
 #column-content .mobile-wikiname {
