@@ -1,4 +1,4 @@
-.modalWrapper {
+#AjaxLoginBoxWrapper {
   top: 12px !important; //no other way to change that as it is inline style
 }
 
@@ -43,10 +43,37 @@ input {
 }
 
 #lightbox {
-  width: 90% !important;
-  height: 90%;
+  width: 97% !important;
+  height: 96% !important;
+  .modalContent {
+    height: 91% !important;
+    div {
+      height: 100% !important;
+      #lightbox-image {
+        height: 95% !important;
+        div {
+          height: 100% !important;     
+        }
+      }
+    }
+  }
+  button.close {
+    margin: 20px;
+  }
 }
 
+.wikia-slideshow-popout-prev-next {
+  display: block !important;
+}
+.wikia-slideshow-popout-images-wrapper {
+  margin: 0 auto !important;
+}
+.wikia-slideshow-popout-add-image {
+  display: none !important;
+}
+.wikia-slideshow-popout-caption-wrapper {
+  height: 20px !important;
+}
 #WikiaPage {
   width: 100%;
   #WikiaMainContent {
@@ -62,10 +89,32 @@ input {
 }
 
 @media ( orientation: landscape ) {
+  #lightbox {
+    height: 93% !important;
+    .modalContent {
+      height: 85% !important;
+    }
+  }
 
+  .wikia-slideshow-popout {
+    height: 95% !important;
+    width: 95% !important;
+      #wikia-slideshow-popout-images-wrapper {
+      width: 90% !important;
+      height: 42% !important;
+    }
+  }
 }
 
 @media ( orientation: portrait ) {
+  .wikia-slideshow-popout {
+    left: 10px !important;
+    margin-left: 0 !important;
+    width: 688px !important;
+    #wikia-slideshow-popout-images-wrapper {
+      width: 90% !important;
+    }
 
+  }
 }
 
