@@ -20,6 +20,7 @@ class AdminDashboardLogic {
 				"Connect", 
 				"Contact",
 				"Contributions",
+				"CreatePage",
 				"CreateNewWiki",
 				"CreateTopList",
 				"Following",
