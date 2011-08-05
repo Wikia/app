@@ -27,6 +27,7 @@ class AdminDashboardLogic {
 				"EditAccount",
 				"EditTopList",
 				"LayoutBuilder",
+				"Leaderboard",
 				"LookupContribs",
 				"LookupUser",
 				"MovePage",
