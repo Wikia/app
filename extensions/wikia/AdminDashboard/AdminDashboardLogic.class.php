@@ -28,6 +28,7 @@ class AdminDashboardLogic {
 				"EditTopList",
 				"LayoutBuilder", 
 				"MovePage",
+				"NewFiles",
 				"PageLayoutBuilder", 
 				"Phalanx",
 				"PhalanxStats",
