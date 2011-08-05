@@ -222,6 +222,7 @@
 /* info line */
 .RTEPlaceholderPreviewIntro {
 	border-bottom: solid 1px #aaa;
+	color: #000;
 	cursor: default;
 	font-style: italic;
 	padding: 3px 0;
@@ -229,6 +230,7 @@
 
 /* preview area */
 .RTEPlaceholderPreviewCode {
+	color: #000;
 	cursor: default;
 	min-height: 75px;
 	max-height: 350px;
