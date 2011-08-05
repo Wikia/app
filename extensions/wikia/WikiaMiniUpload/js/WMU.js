@@ -546,7 +546,7 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 			document.body.appendChild(element);
 		}
 
-		// @see http://developer.yahoo.com/yui/docs/YAHOO.widget.Overlay.html
+		// @see http://developer.yahoo.com/yui/container/panel/#config
 		WMU_panel = new YAHOO.widget.Panel('WMU_div', {
 			modal: true,
 			constraintoviewport: true,
@@ -556,6 +556,15 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 			visible: false,
 			zIndex: 900
 		});
+
+		// use display: block/none for YUI panels (BugId:8825)
+		WMU_panel.showEvent.subscribe(function() {
+			YAHOO.util.Dom.setStyle(this.element, "display", "block");
+		});
+		WMU_panel.hideEvent.subscribe(function() {
+			YAHOO.util.Dom.setStyle(this.element, "display", "none");
+		});
+
 		WMU_panel.render();
 		WMU_panel.show();
 		WMU_panel.center();

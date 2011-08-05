@@ -225,6 +225,9 @@ $.fn.extend({
 			window.loadAd = false;
 		}
 
+		// BugId:7498
+		$(document.body).addClass('modalShown');
+
 		return wrapper;
 	},
 

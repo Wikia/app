@@ -51,11 +51,6 @@
 	width: 100%;
 }
 
-/* always show body's scrollbars when modal is shown (BugId:7498) */
-body.modalShown {
-	overflow: visible;
-}
-
 // modify "YUI" extensions (VET / WMU)
 yui-overlay, .yui-panel-container {
 	position: absolute;
