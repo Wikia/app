@@ -219,6 +219,11 @@ class UserIdentityBox {
 		if( true === $changed ) {
 			$this->user->saveSettings();
 			$this->saveMemcUserIdentityData($data);
+			
+			// Log
+			$log = WF::build( 'LogPage', array( 'usermasthead' ) );
+			$log->addEntry( '', Title::newFromText($this->user->getName(), NS_USER), wfMsg('usermasthead-log-message'), array() );  
+			
 			$this->app->wf->ProfileOut( __METHOD__ );
 			return true;
 		}

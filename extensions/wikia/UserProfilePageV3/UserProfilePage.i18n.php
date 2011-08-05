@@ -29,7 +29,6 @@ $messages['en'] = array(
 	'user-identity-box-avatar-save' => "Save, I'm Done",
 	'user-identity-box-avatar-cancel' => 'Cancel',
 	'user-identity-box-avatar-anon-user-error' => 'You have to log-in before you change anything',
-	'user-identity-box-avatar-crop' => 'Avatar will be cropped to 150 x 150 pixels',
 	
 	'user-identity-box-aka-label' => '<span>aka</span> $1',
 	'user-identity-box-my-twitter' => '<a href="https://twitter.com/#!/$1">My Twitter</a>',
@@ -118,6 +117,10 @@ $messages['en'] = array(
 	'user-action-menu-rename' => 'Rename',
 	'user-action-menu-delete' => 'Delete',
 	'user-action-menu-history' => 'History',
+	
+	'usermasthead-log' => 'User Masthead',
+	'usermasthead-log-message' => 'added profile information',
+	'usermasthead-log-alt' => 'Logs of user masthead edits',
 );
 
 $messages['qqq'] = array(
