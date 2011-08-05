@@ -81,7 +81,7 @@ class UserProfilePageController extends WikiaController {
 		$sessionUser = $this->wg->User;
 		$user = $this->getUserFromTitle($this->title);
 		$userIdentityBox = F::build('UserIdentityBox', array($this->app, $user, self::MAX_TOP_WIKIS));
-		$isUserPageOwner = (!$user->isAnon() && $user->getID == $sessionUser->getId()) ? true : false;
+		$isUserPageOwner = (!$user->isAnon() && $user->getId() == $sessionUser->getId()) ? true : false;
 		$userData = $userIdentityBox->setData();
 		
 		if( !empty($userData['registration']) ) {
@@ -116,7 +116,7 @@ class UserProfilePageController extends WikiaController {
 		$canRename = $sessionUser->isAllowed('staff') || $sessionUser->isAllowed('renameprofilev3');
 		$canProtect = $sessionUser->isAllowed('staff') || $sessionUser->isAllowed('protectsite');
 		$canDelete = $sessionUser->isAllowed('staff');
-		$isUserPageOwner = (!$user->isAnon() && $user->getID == $sessionUser->getId()) ? true : false;
+		$isUserPageOwner = (!$user->isAnon() && $user->getId() == $sessionUser->getId()) ? true : false;
 		
 		$actionButtonArray = array();
 		if( defined('NS_USER') && $namespace == NS_USER ) {
@@ -307,7 +307,7 @@ class UserProfilePageController extends WikiaController {
 		$this->app->wf->ProfileIn( __METHOD__ );
 		
 		$user = F::build('User', array($this->getVal('userId')), 'newFromId');
-		$isAllowed = ( $this->app->wg->User->isAllowed('staff') || intval($user->getID()) === intval($this->app->wg->User->getID()) );
+		$isAllowed = ( $this->app->wg->User->isAllowed('staff') || intval($user->getId()) === intval($this->app->wg->User->getId()) );
 		$userData = json_decode($this->getVal('data'));
 		
 		$status = 'error';
@@ -357,7 +357,7 @@ class UserProfilePageController extends WikiaController {
 			$user = F::build('User', array($userId), 'newFromId');
 		}
 		
-		$isAllowed = ( $this->app->wg->User->isAllowed('staff') || intval($user->getID()) === intval($this->app->wg->User->getID()) );
+		$isAllowed = ( $this->app->wg->User->isAllowed('staff') || intval($user->getId()) === intval($this->app->wg->User->getId()) );
 		
 		if( is_null($data) ) {
 			$data = json_decode($this->getVal('data'));
@@ -408,7 +408,7 @@ class UserProfilePageController extends WikiaController {
 	private function saveFacebookAvatar(User $user, $url, &$errorMsg) {
 		$this->app->wf->ProfileIn( __METHOD__ );
 		
-		$userId = $user->getID();
+		$userId = $user->getId();
 		$localPath = $this->getLocalPath($user);
 		
 		$errorNo = $this->uploadByUrl(
@@ -452,7 +452,7 @@ class UserProfilePageController extends WikiaController {
 		if( !$user->isAnon() && $this->request->wasPosted() ) {
 			$avatarUploadFiled = 'UPPLightboxAvatar';
 			$fileName = $this->app->wg->request->getFileName($avatarUploadFiled);
-			$userId = $user->getID();
+			$userId = $user->getId();
 			
 			$localPath = $this->getLocalPath($user);
 			
@@ -852,7 +852,7 @@ class UserProfilePageController extends WikiaController {
 					
 					$data->source = 'facebook';
 					$data->file = $userFbData['pic_big'];
-					$this->saveUsersAvatar($user->getID(), $data);
+					$this->saveUsersAvatar($user->getId(), $data);
 					
 					$this->app->wf->ProfileOut( __METHOD__ );
 					return true;
@@ -955,7 +955,7 @@ class UserProfilePageController extends WikiaController {
 		$wikiId = intval( $this->getVal('wikiId') );
 		
 		$user = F::build('User', array($userId), 'newFromId');
-		$isAllowed = ( $this->app->wg->User->isAllowed('staff') || intval($user->getID()) === intval($this->app->wg->User->getID()) );
+		$isAllowed = ( $this->app->wg->User->isAllowed('staff') || intval($user->getId()) === intval($this->app->wg->User->getId()) );
 		
 		if( $isAllowed && $wikiId > 0 ) {
 			$userIdentityBox = F::build('UserIdentityBox', array($this->app, $user, self::MAX_TOP_WIKIS));
