@@ -43,15 +43,29 @@ input {
 }
 
 #lightbox {
-
+  width: 90% !important;
+  height: 90%;
 }
 
 #WikiaPage {
-  width: 100% !important;
+  width: 100%;
+  #WikiaMainContent {
+   width: 704px;
+  }
 }
+
 #WikiaHeader {
   width: 100%;
   .banner-corner-left, .banner-corner-right {
     display: none;
   }
 }
+
+@media ( orientation: landscape ) {
+
+}
+
+@media ( orientation: portrait ) {
+
+}
+
