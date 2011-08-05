@@ -199,7 +199,8 @@ class TopList extends TopListBase {
 		$can =  $user->isAllowed( "toplists-{$action}-item" );
 	
 		if ( !$can && in_array( $action, array( 'edit', 'delete' ) ) ) {
-			$can = ( $this->getAuthor( $forceReload )->getId() === $user->getId() );
+			$author = $this->getAuthor( $forceReload );
+			$can = ( $author instanceof User && $author->getId() === $user->getId() );
 		}
 		
 		return $can;
