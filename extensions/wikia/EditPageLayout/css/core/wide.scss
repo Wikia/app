@@ -117,7 +117,7 @@
 	$page-controls-wide-width: 640px;
 	&.editpage-sourcewidemode-on {
 		.cke_toolbar_source {
-			width: $width-outside - $page-controls-wide-width - 75;
+			width: $width-outside - $page-controls-wide-width - 70;
 		}
 		#EditPageRail {
 			width: auto;

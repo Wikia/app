@@ -21,8 +21,8 @@
 		mediawikiToolbarRendered: function( editor, el ) {
 			this.html = this.editor.element.find('.mw-editTools').html();
 			if (this.html) {
-				var link = $('<a class="edittools-button" href="#" />');
-				link.text(this.editor.msg(this.LINK_CAPTION_MESSAGE))
+				var link = $('<span class="cke_toolbar_expand" />');
+				link.html('<a class="expand" href="#" style="display: inline;"><label>' + this.editor.msg(this.LINK_CAPTION_MESSAGE) + '</label><span>+</span></a>');
 				link.click(this.proxy(this.showEdittools));
 				$(el).append(link);
 			}
