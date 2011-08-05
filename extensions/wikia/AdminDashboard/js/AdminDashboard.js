@@ -89,6 +89,7 @@ var AdminDashboard = {
 			e.preventDefault();
 			// load content
 			AdminDashboard.ui.resetAll();
+			AdminDashboard.ui.selectTab(AdminDashboard.generalTab);
 			AdminDashboard.ui.showSection('contentarea');
 			AdminDashboard.contentload['load'+control]();
 		}

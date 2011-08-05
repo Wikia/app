@@ -5,7 +5,23 @@
  */
 
 class AdminDashboardLogic {
-	
+
+	public static $generalApps = array(
+		'Categories' => true,
+		'CreateBlogPage' => true,
+		'CreatePage' => true,
+		'Listusers' => true,
+		'ListUsers' => true,
+		'MultipleUpload' => true,
+		'PageLayoutBuilder' => true,
+		'Recentchanges' => true,
+		'RecentChanges' => true,
+		'ThemeDesigner' => true,
+		'Upload' => true,
+		'UserRights' => true,
+		'WikiaLabs' => true,
+	);
+
 	/**
 	 * @brief Helper function which determines whether to display the Admin Dashboard Chrome in the Oasis Skin
 	 * @param type $title Title of page we are on
