@@ -89,8 +89,7 @@ class MultiDeleteTask extends BatchTask {
 					'admin' => $this->mAdmin
 					));
 
-		$dbw = wfGetDB( DB_MASTER );
-		$dbw->selectDB( 'wikicities' );
+		$dbw = WikiFactory::db(DB_MASTER);
 
 		$dbw->insert( 'wikia_tasks', array(
 					'task_user_id' => $wgUser->getID(),

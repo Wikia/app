@@ -170,9 +170,7 @@ class CloseWikiTask extends BatchTask {
      */
     static function checkWiki( $name )
     {
-
-        $dbr = wfGetDB( DB_MASTER );
-        $dbr->selectDB( "wikicities" );
+		$dbr = WikiFactory::db(DB_MASTER);
         $oRow = $dbr->selectRow(
             array( "city_list", "city_domains" ),
             array( "city_public", "city_list.city_id"),

@@ -132,8 +132,7 @@ class ImageImporterTask extends BatchTask {
 		/*	populate the list of the image grabber scripts
 			and supply it to the form
 		*/
-		$dbr = wfGetDB( DB_MASTER );
-		$dbr->selectDB( "wikicities" );
+		$dbr = WikiFactory::db(DB_MASTER);
 		$res = $dbr->select (
 				"wikia_tasks",
 				array ("task_id", "task_arguments") ,
