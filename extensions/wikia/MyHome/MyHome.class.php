@@ -192,7 +192,7 @@ class MyHome {
 		$wgTitle = Title::newMainPage();
 
 		// do not redirect for skins different then Oasis or logged-in requests driven by RandomWiki (FB#1033)
-		if(get_class($wgUser->getSkin()) != 'SkinOasis' || ( $wgUser->isLoggedIn() && $wgRequest->getInt( 'randomWiki' ) == 1 ) ) {
+		if(get_class($wgUser->getSkin()) != 'SkinOasis' || ( $wgUser->isLoggedIn() && $wgRequest->getVal( 'redirect' ) == 'no' ) ) {
 			wfProfileOut(__METHOD__);
 			return true;
 		}

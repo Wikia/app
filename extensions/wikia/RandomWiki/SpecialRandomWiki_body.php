@@ -128,7 +128,7 @@ class RandomWiki extends SpecialPage {
 		
 		//FB#1033: avoid being sent to Special:WikiActivity when logged-in, see MyHomw::getInitialMainPage
 		if ( $wgUser->isLoggedIn() ) {
-			$url .= '?randomWiki=1';
+			$url .= '?redirect=no';
 		}
 
 		// Redirect the user to a randomly-chosen wiki
