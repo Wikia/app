@@ -2465,32 +2465,38 @@ class Article {
 
 				# Insert a null revision
 				$nullRevision = Revision::newNullRevision( $dbw, $id, $editComment, true );
-				$nullRevId = $nullRevision->insertOn( $dbw );
-
-				$latest = $this->getLatest();
-				# Update page record
-				$dbw->update( 'page',
-					array( /* SET */
-						'page_touched' => $dbw->timestamp(),
-						'page_restrictions' => '',
-						'page_latest' => $nullRevId
-					), array( /* WHERE */
-						'page_id' => $id
-					), 'Article::protect'
-				);
-
-				wfRunHooks( 'NewRevisionFromEditComplete', array( $this, $nullRevision, $latest, $wgUser ) );
-				wfRunHooks( 'ArticleProtectComplete', array( &$this, &$wgUser, $limit, $reason ) );
-
-				# Update the protection log
-				$log = new LogPage( 'protect' );
-				if ( $protect ) {
-					$params = array( $protect_description, $cascade ? 'cascade' : '' );
-					$log->addEntry( $modified ? 'modify' : 'protect', $this->mTitle, trim( $reason ), $params );
+				
+				if( $nullRevision instanceof Revision ) {
+					$nullRevId = $nullRevision->insertOn( $dbw );
+					
+					$latest = $this->getLatest();
+					# Update page record
+					$dbw->update( 'page',
+						array( /* SET */
+							'page_touched' => $dbw->timestamp(),
+							'page_restrictions' => '',
+							'page_latest' => $nullRevId
+						), array( /* WHERE */
+							'page_id' => $id
+						), 'Article::protect'
+					);
+					
+					wfRunHooks( 'NewRevisionFromEditComplete', array( $this, $nullRevision, $latest, $wgUser ) );
+					wfRunHooks( 'ArticleProtectComplete', array( &$this, &$wgUser, $limit, $reason ) );
+					
+					# Update the protection log
+					$log = new LogPage( 'protect' );
+					if ( $protect ) {
+						$params = array( $protect_description, $cascade ? 'cascade' : '' );
+						$log->addEntry( $modified ? 'modify' : 'protect', $this->mTitle, trim( $reason ), $params );
+					} else {
+						$log->addEntry( 'unprotect', $this->mTitle, $reason );
+					}
 				} else {
-					$log->addEntry( 'unprotect', $this->mTitle, $reason );
+					wfDebug( "updateRestrictions failed: page supposed to be protected does not exist anymore (ID: $id) \n" );
+					return false;
 				}
-
+				
 			} # End hook
 		} # End "changed" check
 

@@ -943,7 +943,7 @@ class Revision {
 	 */
 	public static function newNullRevision( $dbw, $pageId, $summary, $minor ) {
 		wfProfileIn( __METHOD__ );
-
+		
 		$current = $dbw->selectRow(
 			array( 'page', 'revision' ),
 			array( 'page_latest', 'rev_text_id', 'rev_len' ),
