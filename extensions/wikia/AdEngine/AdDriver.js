@@ -277,6 +277,7 @@ AdDriver.canCallLiftium = function(slotname) {
 		case 'INVISIBLE_TOP':
 		case 'MIDDLE_RIGHT_BOXAD':
 		case 'MODAL_VERTICAL_BANNER':
+		case 'TOP_BUTTON':
 			return false;
 			break;
 	}

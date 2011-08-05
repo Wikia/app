@@ -22,6 +22,21 @@
 #CORP_TOP_LEADERBOARD.default-height, #HOME_TOP_LEADERBOARD.default-height, #TOP_LEADERBOARD.default-height {
 	height: 90px;
 }
+.WikiaTopAds {
+	height: 100px;
+}
+.WikiaTopAds #CORP_TOP_LEADERBOARD, .WikiaTopAds #HOME_TOP_LEADERBOARD, .WikiaTopAds #TOP_LEADERBOARD {
+	left: 10px;
+	padding: 0;
+	position: absolute;
+	top: 10px;
+}
+.WikiaTopAds #TOP_BUTTON {	
+	padding: 0;
+	position: absolute;
+	right: 10px;
+	top: 10px;
+}
 
 /** Skyscrapers **/
 #LEFT_SKYSCRAPER_2 {
