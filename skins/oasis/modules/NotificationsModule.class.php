@@ -293,14 +293,14 @@ class NotificationsModule extends Module {
 				case 1:
 					$id = FBConnectDB::getFacebookIDs($wgUser, DB_MASTER);
 					if (count($id) > 0) {
-						
+
 						global $wgEnableFacebookSync;
 						if ($wgEnableFacebookSync == true) {
 							$userURL = AvatarService::getUrl($wgUser->mName);
-							self::addConfirmation(wfMsg('fbconnect-connect-msg-sync-profile', $preferencesUrl, $userURL));	
+							self::addConfirmation(wfMsg('fbconnect-connect-msg-sync-profile', $preferencesUrl, $userURL));
 						}
 						else {
-							self::addConfirmation(wfMsg('fbconnect-connect-msg', $preferencesUrl));	
+							self::addConfirmation(wfMsg('fbconnect-connect-msg', $preferencesUrl));
 						}
 					}
 					break;
@@ -313,6 +313,20 @@ class NotificationsModule extends Module {
 					}
 					break;
 			}
+		}
+
+		wfProfileOut(__METHOD__);
+		return true;
+	}
+
+	/**
+	 * Handle confirmations about edit being saved
+	 */
+	public static function addSaveConfirmation() {
+		wfProfileIn(__METHOD__);
+
+		if (Wikia::isOasis()) {
+			self::addConfirmation(wfMsg('oasis-edit-saved'));
 		}
 
 		wfProfileOut(__METHOD__);
@@ -414,5 +428,4 @@ class NotificationsModule extends Module {
 		wfProfileOut(__METHOD__);
 		return true;
 	}
-
 }

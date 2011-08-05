@@ -74,6 +74,7 @@ $messages['en'] = array(
 	'oasis-notification-youhavenewmessages' => 'You have $1.',
 	'oasis-member-since' => 'Member since $1',
 	'oasis-edits-counter' => '$1 <sup>{{PLURAL:$1|edit|edits}} made</sup>',
+	'oasis-edit-saved' => 'Your edit has been saved!',
 
 	# Toolbar customize
 	'oasis-toolbar-edit-title' => 'Customize Toolbar',
@@ -91,7 +92,7 @@ $messages['en'] = array(
 	'oasis-toolbar-not-enabled-here' => 'This tool is not available on this wiki.',
 	'oasis-toolbar-more' => 'more&hellip;',
 	'oasis-toolbar-customize' => 'Customize',
-        'oasis-toolbar-devinfo' => 'Developer Info', // BugId:5497
+	'oasis-toolbar-devinfo' => 'Developer Info', // BugId:5497
 
 	'oasis-comments-header' => '$1 {{PLURAL:$1|comment|comments}}',
 	'oasis-comments-showing-most-recent' => 'Showing $1 most recent',
