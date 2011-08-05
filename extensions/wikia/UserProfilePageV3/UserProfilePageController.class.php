@@ -81,7 +81,7 @@ class UserProfilePageController extends WikiaController {
 		$sessionUser = $this->wg->User;
 		$user = $this->getUserFromTitle($this->title);
 		$userIdentityBox = F::build('UserIdentityBox', array($this->app, $user, self::MAX_TOP_WIKIS));
-		$isUserPageOwner = ($user->getId() == $sessionUser->getId()) ? true : false;
+		$isUserPageOwner = (!$user->isAnon() && $user->getID == $sessionUser->getId()) ? true : false;
 		$userData = $userIdentityBox->setData();
 		
 		if( !empty($userData['registration']) ) {
@@ -116,7 +116,7 @@ class UserProfilePageController extends WikiaController {
 		$canRename = $sessionUser->isAllowed('staff') || $sessionUser->isAllowed('renameprofilev3');
 		$canProtect = $sessionUser->isAllowed('staff') || $sessionUser->isAllowed('protectsite');
 		$canDelete = $sessionUser->isAllowed('staff');
-		$isUserPageOwner = $user->getId() == $this->wg->User->getId() ? true : false;
+		$isUserPageOwner = (!$user->isAnon() && $user->getID == $sessionUser->getId()) ? true : false;
 		
 		$actionButtonArray = array();
 		if( defined('NS_USER') && $namespace == NS_USER ) {

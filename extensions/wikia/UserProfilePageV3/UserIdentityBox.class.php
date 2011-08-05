@@ -52,61 +52,68 @@ class UserIdentityBox {
 		
 		$userName = $this->user->getName();
 		$userId = $this->user->getId();
-		
 		$data = array();
+		
 		//this data is always the same -- on each wiki
 		$data['id'] = $userId;
 		$data['name'] = $userName;
 		$data['avatar'] = F::build( 'AvatarService', array( $userName, 150 ), 'getAvatarUrl' );
 		
-		$userStatsService = F::build('UserStatsService', array($userId));
-		$userStats = $userStatsService->getStats();
-		
-		$iEdits = $userStats['edits'];
-		$iEdits = $data['edits'] = is_null($iEdits) ? 0 : intval($iEdits);
-		
-		//data depends on which wiki it is displayed
-		$data['registration'] = $userStats['date'];
-		
-		$wikiId = $this->app->wg->CityId;
-		$hasUserEditedMastheadBefore = $this->hasUserEditedMastheadBefore($wikiId);
-		
-		$data['userPage'] = $this->user->getUserPage()->getFullURL();
-		
-		//data from user_properties table
-		if( !$hasUserEditedMastheadBefore ) {
-			if( $isEdit || $iEdits > 0 ) {
-				$this->getDefaultData($data);
+		if( $this->user->isAnon() ) {
+		//if user doesn't exist
+			$this->getEmptyData($data);
+			$data['edits'] = 0;
+			$data['showZeroStates'] = $this->checkIfDisplayZeroStates($data);
+		} else {
+			$userStatsService = F::build('UserStatsService', array($userId));
+			$userStats = $userStatsService->getStats();
+			
+			$iEdits = $userStats['edits'];
+			$iEdits = $data['edits'] = is_null($iEdits) ? 0 : intval($iEdits);
+			
+			//data depends on which wiki it is displayed
+			$data['registration'] = $userStats['date'];
+			
+			$wikiId = $this->app->wg->CityId;
+			$hasUserEditedMastheadBefore = $this->hasUserEditedMastheadBefore($wikiId);
+			
+			$data['userPage'] = $this->user->getUserPage()->getFullURL();
+			
+			//data from user_properties table
+			if( !$hasUserEditedMastheadBefore ) {
+				if( $isEdit || $iEdits > 0 ) {
+					$this->getDefaultData($data);
+				} else {
+					$this->getEmptyData($data);
+				}
 			} else {
-				$this->getEmptyData($data);
+				$this->getDefaultData($data);
 			}
-		} else {
-			$this->getDefaultData($data);
+			
+			$firstMastheadEditDate = $this->user->getOption(self::USER_FIRST_MASTHEAD_EDIT_DATE_PROPERTY.$wikiId);
+			if( is_null($data['registration']) && !is_null($firstMastheadEditDate) ) {
+			//if user hasn't edited anything on this wiki before
+			//we're getting the first edit masthead date
+				$data['registration'] = $firstMastheadEditDate;
+			} else if( !is_null($data['registration']) && !is_null($firstMastheadEditDate) ) {
+			//if we've got both dates we're getting the lowest (the earliest)
+				$data['registration'] = (intval($data['registration']) < intval($firstMastheadEditDate)) ? $data['registration'] : $firstMastheadEditDate;
+				$data['registration'] = str_pad($data['registration'], 14, '20', STR_PAD_BOTH);
+			}
+			
+			//other data operations
+			$this->getUserGroup($data);
+			
+			$birthdate = ( isset($data['birthday']) ? $data['birthday'] : '');
+			$birthdate = explode('-', $birthdate);
+			if( !empty($birthdate[0]) && !empty($birthdate[1]) ) {
+				$data['birthday'] = array('month' => $birthdate[0], 'day' => ltrim($birthdate[1], '0'));
+			} else {
+				$data['birthday'] = '';
+			}
+			
+			$data['showZeroStates'] = $this->checkIfDisplayZeroStates($data);
 		}
-		
-		$firstMastheadEditDate = $this->user->getOption(self::USER_FIRST_MASTHEAD_EDIT_DATE_PROPERTY.$wikiId);
-		if( is_null($data['registration']) && !is_null($firstMastheadEditDate) ) {
-		//if user hasn't edited anything on this wiki before
-		//we're getting the first edit masthead date
-			$data['registration'] = $firstMastheadEditDate;
-		} else if( !is_null($data['registration']) && !is_null($firstMastheadEditDate) ) {
-		//if we've got both dates we're getting the lowest (the earliest)
-			$data['registration'] = (intval($data['registration']) < intval($firstMastheadEditDate)) ? $data['registration'] : $firstMastheadEditDate;
-			$data['registration'] = str_pad($data['registration'], 14, '20', STR_PAD_BOTH);
-		}
-		
-		//other data operations
-		$this->getUserGroup($data);
-		
-		$birthdate = ( isset($data['birthday']) ? $data['birthday'] : '');
-		$birthdate = explode('-', $birthdate);
-		if( !empty($birthdate[0]) && !empty($birthdate[1]) ) {
-			$data['birthday'] = array('month' => $birthdate[0], 'day' => ltrim($birthdate[1], '0'));
-		} else {
-			$data['birthday'] = '';
-		}
-		
-		$data['showZeroStates'] = $this->checkIfDisplayZeroStates($data);
 		
 		$this->app->wf->ProfileOut( __METHOD__ );
 		return $data;
