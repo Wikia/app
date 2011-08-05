@@ -80,7 +80,7 @@
 			?>
 
 
-			<?php if ($subtitle != '') { ?>
+			<?php if ($subtitle != '' && $headerModuleName == 'UserPagesHeader' ) { ?>
 				<div id="contentSub"><?= $subtitle ?></div>
 			<?php } ?>
 
