@@ -478,6 +478,11 @@ function WikiaVideoArticleFromTitle($title, $article) {
 			$wgEnableParserCache = false;
 			$vars = array();
 			parse_str($parts[1], $vars);
+			if (get_magic_quotes_gpc()) {
+				foreach ($vars as &$var) {
+					$var = stripslashes($var);	
+				}
+			}
 
 			$allVars = array_merge($wgRequest->getValues(), $vars);
 			foreach ($allVars as $key=>$val) {
