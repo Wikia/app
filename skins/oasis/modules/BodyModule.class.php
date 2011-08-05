@@ -15,6 +15,7 @@ class BodyModule extends Module {
 	var $wgEnableCorporatePageExt;
 	var $wgEnableWikiAnswers;
 	var $wgABTests;
+	var $wgEnableTopButton;
 
 	// skin vars
 	var $content;

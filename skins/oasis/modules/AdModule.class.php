@@ -18,6 +18,7 @@ class AdModule extends Module {
 			if (BodyModule::isHubPage()) {
 				self::$config['CORP_TOP_LEADERBOARD'] = true;
 				self::$config['CORP_TOP_RIGHT_BOXAD'] = true;
+				self::$config['TOP_BUTTON'] = true;
 				// wlee: we can serve Skins and Footer Ads out of TOP_LEADERBOARD, using option dcopt=ist, Don't need INVISIBLE_* slots
 				//self::$config['INVISIBLE_1'] = true;
 				//self::$config['INVISIBLE_2'] = true;
@@ -41,6 +42,7 @@ class AdModule extends Module {
 				self::$config['TEST_HOME_TOP_RIGHT_BOXAD'] = true;
 			}
 			self::$config['HOME_TOP_RIGHT_BUTTON'] = true;
+			self::$config['TOP_BUTTON'] = true;
 		} else {
 			if(in_array($namespace, $wgContentNamespaces)) {
 				// content page
@@ -56,14 +58,17 @@ class AdModule extends Module {
 				self::$config['PREFOOTER_RIGHT_BOXAD'] = true;
 				self::$config['INVISIBLE_TOP'] = true;
 				self::$config['TOP_RIGHT_BUTTON'] = true;
+				self::$config['TOP_BUTTON'] = true;
 			} else if($namespace == NS_FILE) {
 				// file/image page
 				self::$config['TOP_LEADERBOARD'] = true;
+				self::$config['TOP_BUTTON'] = true;
 			} else if($namespace == NS_SPECIAL && $wgTitle->isSpecial('Search')) {
 				// search results page
 				self::$config['TOP_LEADERBOARD'] = true;
 				self::$config['TOP_RIGHT_BOXAD'] = true;
 				self::$config['TEST_TOP_RIGHT_BOXAD'] = true;
+				self::$config['TOP_BUTTON'] = true;
 			} else if($namespace == NS_CATEGORY) {
 				// category page
 				self::$config['TOP_LEADERBOARD'] = true;
@@ -73,6 +78,7 @@ class AdModule extends Module {
 				self::$config['LEFT_SKYSCRAPER_2'] = true;
 				self::$config['PREFOOTER_LEFT_BOXAD'] = true;
 				self::$config['PREFOOTER_RIGHT_BOXAD'] = true;
+				self::$config['TOP_BUTTON'] = true;
 			} else if( BodyModule::isBlogPost() ) {
 				self::$config['TOP_RIGHT_BOXAD'] = true;
 				self::$config['TEST_TOP_RIGHT_BOXAD'] = true;

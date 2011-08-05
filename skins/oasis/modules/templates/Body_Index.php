@@ -20,6 +20,9 @@
 		if ($isMainPage) {
 			echo '<div class="WikiaMainPageBanner">';
 		}
+		if ($wgEnableTopButton) {
+			echo '<div class="WikiaTopAds">';
+		}
 		if ($wgEnableCorporatePageExt) {
 			echo wfRenderModule('Ad', 'Index', array('slotname' => 'CORP_TOP_LEADERBOARD'));
 		} else {
@@ -29,6 +32,10 @@
 				echo wfRenderModule('Ad', 'Index', array('slotname' => 'TOP_LEADERBOARD'));
 				echo wfRenderModule('Ad', 'Index', array('slotname' => 'HOME_TOP_LEADERBOARD'));
 			}
+		}
+		if ($wgEnableTopButton) {
+			echo wfRenderModule('Ad', 'Index', array('slotname' => 'TOP_BUTTON'));
+			echo '</div>';
 		}
 		if ($isMainPage) {
 			echo '</div>';

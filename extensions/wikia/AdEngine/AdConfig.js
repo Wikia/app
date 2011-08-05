@@ -25,6 +25,7 @@ AdConfig = {
 			case 'MODAL_VERTICAL_BANNER':
 			case 'TEST_HOME_TOP_RIGHT_BOXAD':
 			case 'TEST_TOP_RIGHT_BOXAD':
+			case 'TOP_BUTTON':
 			case 'TOP_LEADERBOARD':
 			case 'TOP_RIGHT_BOXAD':
 				return true;
@@ -122,7 +123,8 @@ AdConfig.DART = {
 	   '160x600': '160x600,120x600',
 	   '0x0': '1x1',
 	   '300x100': '300x100',
-	   '120x240': '120x240'
+	   '120x240': '120x240',
+	   '242x90': '242x90'
 	},
 
 	slotMap: {
@@ -138,6 +140,7 @@ AdConfig.DART = {
 	   'HOME_LEFT_SKYSCRAPER_2': {'tile':3, 'loc': "middle"},
 	   'HOME_TOP_LEADERBOARD': {'tile': 2, 'loc': "top", 'dcopt': "ist"},
 	   'HOME_TOP_RIGHT_BOXAD': {'tile': 1, 'loc': "top"},
+	   'HOME_TOP_RIGHT_BUTTON': {'tile': 3, 'loc': "top"},
 	   'INCONTENT_BOXAD_1': {'tile':4, 'loc': "middle"},
 	   'INCONTENT_BOXAD_2': {'tile':5, 'loc': "middle"},
 	   'INCONTENT_BOXAD_3': {'tile':6, 'loc': "middle"},
@@ -159,11 +162,11 @@ AdConfig.DART = {
 	   'PREFOOTER_BIG': {'tile': 5, 'loc': "footer"},
 	   'PREFOOTER_LEFT_BOXAD': {'tile': 5, 'loc': "footer"},
 	   'PREFOOTER_RIGHT_BOXAD': {'tile': 5, 'loc': "footer"},
+	   'TOP_BUTTON': {'tile': 3, 'loc': 'top'},
 	   'TOP_LEADERBOARD': {'tile': 2, 'loc': "top", 'dcopt': "ist"},
 	   'TOP_RIGHT_BOXAD': {'tile': 1, 'loc': "top"}, 
 	   'TEST_HOME_TOP_RIGHT_BOXAD': {'tile': 1, 'loc': "top"}, 
 	   'TEST_TOP_RIGHT_BOXAD': {'tile': 1, 'loc': "top"},
-	   'HOME_TOP_RIGHT_BUTTON': {'tile': 3, 'loc': "top"},
 	   'TOP_RIGHT_BUTTON': {'tile': 3, 'loc': "top"}
 	}
 };
