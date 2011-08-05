@@ -2,7 +2,7 @@
 	<?php echo F::app()->renderView( 'Search', 'Index'); ?> 
 </div>
 
-<section id="UserProfileMasthead" class="UserProfileMasthead" itemscope itemtype="http://schema.org/Person">
+<section id="UserProfileMasthead" class="UserProfileMasthead <?= $zeroStateCssClass ?>" itemscope itemtype="http://schema.org/Person">
 	<div class="masthead-avatar">
 		<img src="<?= $user['avatar']; ?>" itemprop="image" class="avatar">
 		

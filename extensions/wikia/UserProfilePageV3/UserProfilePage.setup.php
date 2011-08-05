@@ -64,3 +64,7 @@ if( defined('NS_BLOG_ARTICLE') ) {
 }
 
 $app->getLocalRegistry()->set( 'UserProfilePageNamespaces', $UPPNamespaces );
+
+$wgLogTypes[] = 'usermasthead';
+$wgLogHeaders['usermasthead'] = 'usermasthead-log-alt';
+$wgLogNames['usermasthead'] = 'usermasthead-log';

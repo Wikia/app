@@ -39,7 +39,6 @@
 				<div class="column avatar">
 					<?= $avatar; ?>
 					<img src="/skins/common/images/ajax.gif" class="avatar-loader" style="display: none;">
-					<p><?= wfMsg('user-identity-box-avatar-crop') ?></p>
 				</div>
 				<div class="column avatar-options">
 					<? if($isUploadsPossible): ?>
