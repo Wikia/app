@@ -59,7 +59,7 @@ var Mediawiki = {
 	// http://www.mediawiki.org/wiki/Manual:$wgCookiePrefix
 	cookiePrefix	: null,
 
-	 // if using http://www.mediawiki.org/wiki/Manual:$wgCookieHttpOnly
+	// if using http://www.mediawiki.org/wiki/Manual:$wgCookieHttpOnly
 	cookiePrefixApi	: "jsapi",
 
 	// cookies used by the login

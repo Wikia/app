@@ -15,9 +15,6 @@
 			text-align:center;
 			background-color:#333;
 		}
-		#gameImage{ /* TODO: REMOVE */
-			-webkit-mask-image: url(<?= $backImageSrc ?>) 50;
-		}
 		#gameBoard{
 			width: <?= $boardWidth ?>;
 			height: <?= $boardHeight ?>;
@@ -33,11 +30,11 @@
 			position: absolute;
 			width: <?= $tileWidth ?>;
 			height: <?= $tileHeight ?>;
-			-webkit-transition: opacity 1s ease-in-out;
-			-moz-transition: opacity 1s ease-in-out;
-			-o-transition: opacity 1s ease-in-out;
-			-ms-transition: opacity 1s ease-in-out;
-			transition: opacity 1s ease-in-out;
+			-webkit-transition: opacity .75s ease-in-out;
+			-moz-transition: opacity .75s ease-in-out;
+			-o-transition: opacity .75s ease-in-out;
+			-ms-transition: opacity .75s ease-in-out;
+			transition: opacity .75s ease-in-out;
 		}
 		#gameBoard a:hover{
 			background-color:#00f;
@@ -65,9 +62,13 @@
 	</style>
 	
 	<!-- TODO: Serve from our own servers using AssetsManager -->
+	<script>
+		wgScriptPath = '<?= $wgScriptPath; ?>';
+	</script>
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+	<script type="text/javascript" src="<?= $mwJsApiUrl ?>"></script>
   </head>
-  <body onload="initGame()">
+  <body>
     <script src="<?= $gameJs ?>"></script>
 	<div id='gameBoard'>
 		<?php
