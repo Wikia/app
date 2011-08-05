@@ -21,8 +21,8 @@ class ImageServing {
 	 * @param $articles \type{\arrayof{\int}} List of articles ids to get images
 	 * @param $width \int image width
 	 * @param $width \int
-	 * @param $proportionOrHight can by array with proportion(example: array("w" => 1, "h" => 1)) or just height in pixels (example: 100)  proportion will be 
-	 * calculated automatically 
+	 * @param $proportionOrHight can by array with proportion(example: array("w" => 1, "h" => 1)) or just height in pixels (example: 100)  proportion will be
+	 * calculated automatically
 	 */
 	function __construct($articles = null, $width = 100, $proportionOrHeight = array("w" => 1, "h" => 1), $db = null){
 		if(!is_array($proportionOrHeight)) {
@@ -31,9 +31,9 @@ class ImageServing {
 		} else {
 			$this->proportion = $proportionOrHeight;
 		}
-		
+
 		$this->articles = array();
-		
+
 		if( is_array( $articles ) ) {
 			foreach($articles as $article){
 				$articleId = ( int ) $article;
@@ -43,9 +43,9 @@ class ImageServing {
 
 		$this->app = F::app();
 		$this->width = $width;
-		$this->memc =  $this->app->getGlobal( 'wgMemc' ); 
+		$this->memc =  $this->app->getGlobal( 'wgMemc' );
 		$this->imageServingDrivers = $this->app->getGlobal( 'wgImageServingDrivers' );
-		
+
 		$this->deltaY = (round($this->proportion['w']/$this->proportion['h']) - 1)*0.1;
 		$this->db = $db;
 	}
@@ -67,7 +67,7 @@ class ImageServing {
 		wfProfileIn( __METHOD__ );
 		$articles = $this->articles;
 		$out = array();
-		
+
 		if( !empty( $articles ) ) {
 			if( $this->db == null ) {
 				$db = wfGetDB( DB_SLAVE, array() );
@@ -82,8 +82,8 @@ class ImageServing {
 					unset($articles[$key]);
 					$this->addArticleToList($mcValue);
 				}
-			}			
-			
+			}
+
 			$res = $db->select(
 				array( 'page' ),
 				array(
@@ -96,38 +96,38 @@ class ImageServing {
 				),
 				__METHOD__
 			);
-			
+
 			while ($row =  $db->fetchRow( $res ) ) {
 				$this->addArticleToList($row);
 			}
 
-			
+
 			if(empty($driver)) {
 				foreach($this->imageServingDrivers as $key => $value ){
 					if(!empty($this->articlesByNS[$key])) {
 						$driver = new $value($db, $this);
 						$driver->setArticlesList($this->articlesByNS[$key]);
-						unset($this->articlesByNS[$key]);			
+						unset($this->articlesByNS[$key]);
 						$out = $out + $driver->execute($n);
 					}
 				}
-			
+
 				$driver = new ImageServingDriverMainNS($db, $this);
 				//rest of article in MAIN name spaces
 				foreach( $this->articlesByNS as $value ) {
-					$driver->setArticlesList( $value );	
+					$driver->setArticlesList( $value );
 					$out = $out + $driver->execute($n);
-				}	
+				}
 			} else {
 				$driver = new $driver($db, $this);
 				//rest of article in MAIN name spaces
 				foreach( $this->articlesByNS as $value ) {
-					$driver->setArticlesList( $value );	
+					$driver->setArticlesList( $value );
 					$out = $out + $driver->execute($n);
-				}				
+				}
 			}
 		}
-		
+
 		if(!empty($out)) {
 			return $out;
 		}
@@ -135,21 +135,21 @@ class ImageServing {
 		wfProfileOut(__METHOD__);
 		return array();
 	}
-	
+
 	private function addArticleToList($value) {
 		if( empty($this->articlesByNS[$value['ns']] )) {
 			$this->articlesByNS[$value['ns']]  = array();
 		}
-		$this->articlesByNS[$value['ns']][$value['id']] = $value; 
+		$this->articlesByNS[$value['ns']][$value['id']] = $value;
 	}
-	
+
 	private function makeKey( $key  ) {
 		return wfMemcKey("imageserving-article-details", $key);
 	}
 
 	/**
 	 *  !!! deprecated !!! use getImages fetches an array with thumbnails and titles for the supplied files
-	 *  TODO: remove it image serving work also with FILE_NS we keep this function for backward compatibility 
+	 *  TODO: remove it image serving work also with FILE_NS we keep this function for backward compatibility
 	 * @author Federico "Lox" Lucignano
 	 *
 	 * @param Array $fileNames a list of file names to fetch thumbnails for
@@ -168,20 +168,20 @@ class ImageServing {
 					$title = $img->getTitle();
 				}
 			}
-			
+
 			$imagesIds[ $title->getArticleId() ] = $title->getDBkey();
 			$this->articles[ $title->getArticleId() ] = $title->getArticleId();
 		}
 
 		$out = $this->getImages(1);
-		
+
 		$ret = array();
 		foreach($imagesIds as $key => $value) {
 			if(!empty($out[$key]) && count($out[$key]) > 0) {
 				$ret[ $value ] = $out[$key][0];
-			}  		
+			}
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
@@ -210,13 +210,13 @@ class ImageServing {
 				return "";
 			}
 		}
-		
+
 		$issvg = false;
 		$mime = strtolower($img->getMimeType());
 		if( $mime == 'image/svg+xml' || $mime == 'image/svg' ) {
 			$issvg = true;
 		}
-					
+
 		return wfReplaceImageServer( $img->getThumbUrl( $this->getCut( $width, $height ) . "-" . $img->getName().($issvg ? ".png":"") ) );
 	}
 

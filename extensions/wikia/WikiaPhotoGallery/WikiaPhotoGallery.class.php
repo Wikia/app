@@ -1189,16 +1189,10 @@ class WikiaPhotoGallery extends ImageGallery {
 	private function renderSlider() {
 		wfProfileIn(__METHOD__);
 
-		// do not render empty sliderss
+		// do not render empty sliders
 		if (empty($this->mImages)) {
 			wfProfileOut(__METHOD__);
 			return '';
-		}
-
-		// adds script on first slider occurence on page
-		$tmpArr = array();
-		for ( $index = 0; $index <= $this->mData["id"]; $index++ ){
-			$tmpArr[] = $index;
 		}
 
 		// setup image serving for "big" images
@@ -1236,7 +1230,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				$pageId = $nt->getArticleID();
 
 				// generate cropped version of big image (fit within 660x360 box)
-				$imageUrl = $imageServingForImages->getUrl($img, $img->getWidth(), $img->getWidth());
+				$imageUrl = $imageServingForImages->getUrl($img, $img->getWidth(), $img->getHeight());
 
 				// generate navigation thumbnails
 				$thumbUrl = $imageServingForThumbs->getUrl($img, $img->getWidth(), $img->getHeight());
@@ -1256,7 +1250,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		}
 
 		$html = '';
-		//check if we have something to show (images might not match required sizes
+		//check if we have something to show (images might not match required sizes)
 		if ( count( $out ) ) {
 			$template = new EasyTemplate(dirname(__FILE__) . '/templates');
 			$template->set_vars(array(
