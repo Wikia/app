@@ -44,7 +44,7 @@ class FoggyFotoController extends WikiaController {
 	 * instead of canvas.
 	 */
 	public function getMasked(){
-		global $wgOut, $wgExtensionsPath, $wgStyleVersion;
+		global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgScriptPath;
 		wfProfileIn( __METHOD__ );
 
 		wfLoadExtensionMessages( 'FoggyFoto' );
@@ -60,6 +60,8 @@ class FoggyFotoController extends WikiaController {
 		$this->backImageSrc = 'http://images1.wikia.nocookie.net/__cb20100113214904/glee/images/3/3f/Kurtmercedes.jpg'; // this is the one that's obscured
 
 		$this->gameJs = $wgExtensionsPath."/wikia/FoggyFoto/js/FoggyFotoByDivs.js?$wgStyleVersion";
+		$this->mwJsApiUrl = $wgExtensionsPath."/wikia/JavascriptAPI/Mediawiki.js?$wgStyleVersion";
+		$this->wgScriptPath = $wgScriptPath;
 
 		wfProfileOut( __METHOD__ );
 	} // end getMasked()
