@@ -45,15 +45,22 @@ class WikiaApiImageServing extends ApiBase {
 				$Id = $title->getArticleID();
 			}
 
+			$imageUrl = null;
 			$imageServing = new ImageServing( array( $Id ) );
 			foreach ( $imageServing->getImages( 1 ) as $key => $value ){
 				$imgTitle = Title::newFromText( $value[0]['name'], NS_FILE );
 				$imgFile = wfFindFile($imgTitle);
-				$imageUrl = wfReplaceImageServer( $imgFile->getFullUrl(), $wgCacheBuster );
+				if(!empty($imgFile)){
+					$imageUrl = wfReplaceImageServer( $imgFile->getFullUrl(), $wgCacheBuster );
+				}
 			}
 
 			$result = $this->getResult();
-			$result->addValue( 'image', $this->getModuleName(), $imageUrl );
+			if(empty($imageUrl)){
+				$result->addValue( 'image', "error", "No good, representiative image was found for this page." ); // TODO: i18n
+			} else {
+				$result->addValue( 'image', $this->getModuleName(), $imageUrl );
+			}
 		}
 		wfProfileOut(__METHOD__);
 	}
