@@ -94,8 +94,8 @@ The adopting user of #WIKINAME will now have bureaucrat and admin status.  Don't
 The Wikia Team<br /><br />
 
 You can <a href=\"$3\">unsubscribe</a> from changes to this list.",
-	'tog-adoptionmails' => 'E-mail me if $1 will become available for other users to adopt',
-	'wikiadoption-pref-label' => 'Changing these preferences will only affect e-mails from $1.',
+	'tog-adoptionmails' => 'Email me if $1 will become available for other users to adopt',
+	'wikiadoption-pref-label' => 'Changing these preferences will only affect emails from $1.',
 	'wikiadoption-welcome-header' => 'Congratulations! You\'ve adopted {{SITENAME}}!',
 	'wikiadoption-welcome-body' => "You're now a bureaucrat on this wiki. With your new status you now have access to all the tools that will help you manage {{SITENAME}}.
 <br /><br />
