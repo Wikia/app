@@ -1,7 +1,9 @@
 @import "../../../../skins/oasis/css/mixins/border-radius";
 @import "../../../../skins/oasis/css/mixins/box-shadow";
 @import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/forms";
 @import "../../../../skins/oasis/css/mixins/gradient";
+@import "../../../../skins/oasis/css/mixins/menus";
 @import "../../../../skins/oasis/css/mixins/opacity";
 @import "../../../../skins/oasis/css/mixins/transition";
 @import "../../../../skins/oasis/css/core/layout";
@@ -9,6 +11,7 @@
 @import "../../../../skins/oasis/css/core/body";
 @import "../../../../skins/oasis/css/core/buttons";
 @import "../../../../skins/oasis/css/core/tablepager";
+@import "../../../../skins/oasis/css/core/Search";
 @import "../../Listusers/css/table";
 
 
@@ -93,6 +96,9 @@ $base-z: 5;
 	}
 	>section {
 		margin-bottom: 20px;
+	}
+	.WikiaSearch input[type=text] {
+		width: 267px;
 	}
 }
 
