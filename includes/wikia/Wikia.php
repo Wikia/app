@@ -1178,7 +1178,7 @@ class Wikia {
 		# rt#66961: rights change email sent to !emailconfirmed users
 		if( !$user->isEmailConfirmed() ) {
 			#if your not confirmed, no email for you, so dont bother adding to On* lists
-			return false; #i said no, so stop here
+			return true; #i said no, so stop here
 		}
 
 		# FB: 1085 Don't send notif to myself on user rights change
