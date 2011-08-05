@@ -14,6 +14,14 @@ AIC2.init = function() {
 	Liftium.d("AIC2: init", 5);
 	AIC2.called = true;
 
+	if (Math.floor(Math.random()*20) == 7) {
+		Liftium.trackEvent(Liftium.buildTrackUrl(['AIC2', 'test']));
+		_gaq.push(['liftium._setAccount', 'UA-17475676-11']);
+		_gaq.push(['liftium._setSampleRate', '100']);
+		_gaq.push(['liftium._trackPageview', '/999/' + Liftium.buildTrackUrl(['AIC2', 'test'])]);
+		_gaq.push(['liftium._trackEvent', 'AIC2', 'test']);
+	}
+
 	if ($("#WikiaMainContent").width() != AIC2.WMCbaseWidth) {
 		AIC2.marginLeft = AIC2.marginLeft + parseInt( ($("#WikiaMainContent").width() - AIC2.baseWidth) / 2 );
 		Liftium.d("AIC2: non standard width, new marginLeft set to " + AIC2.marginLeft, 5);
