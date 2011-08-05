@@ -28,6 +28,7 @@ class AdminDashboardLogic {
 				"EditTopList",
 				"LayoutBuilder",
 				"LookupContribs",
+				"LookupUser",
 				"MovePage",
 				"MultiLookup",
 				"NewFiles",
