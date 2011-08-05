@@ -795,7 +795,7 @@ class WikiaPhotoGalleryHelper {
 		$slideshow['images'] = $slideshow['imagesShown'];
 
 		// go through the list of images and calculate width and height of slideshow
-		foreach($slideshow['images'] as &$image) {
+		foreach ( $slideshow['images'] as &$image ) {
 			$imageTitle = Title::newFromText($image['name'], NS_FILE);
 
 			// "broken" image - skip
@@ -805,6 +805,12 @@ class WikiaPhotoGalleryHelper {
 
 			// get image dimensions
 			$imageFile = wfFindFile($imageTitle);
+
+			//FB#9648 wfFindFile returns false if the image file is missing
+			if ( empty( $imageFile ) ) {
+				continue;
+			}
+
 			$imageWidth = $imageFile->getWidth();
 			$imageHeight = $imageFile->getHeight();
 
