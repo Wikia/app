@@ -22,16 +22,7 @@ class SpecialSearchDigest extends SpecialPage {
 				$csv = $pager->getBody();
 
 				$wgOut->setArticleBodyOnly( true );
-
-				header("Content-Description: File Transfer");
-
-				//Use the switch-generated Content-Type
-				header("Content-Type: text/plain");
-				header("Content-Disposition: attachment; filename=\"search-digest.csv\"");
-
-				//Force the download
-				header("Content-Transfer-Encoding: utf-8");
-				header("Content-Length: ".strlen($csv));
+				$this->setDownloadHeaders( $csv );
 
 				$wgOut->addHTML( $csv );
 
@@ -40,20 +31,34 @@ class SpecialSearchDigest extends SpecialPage {
 				$pager = new SearchDigestPager();
 
 				$downloadUrl = Title::newFromText( $this->mName . '/' . self::MODE_CSV, NS_SPECIAL )->getLocalUrl();
-				$wgOut->addHTML( Xml::element( 
-						'a',
-						array(
-							'href' => $downloadUrl,
-							'class' => 'wikia-button'
-						),
-						wfMsg( 'searchdigest-download-csv' )
-					)
-				);
 
 				$html = $pager->getNavigationBar() . $pager->getBody() . $pager->getNavigationBar();
 
+				$html .= Xml::openElement( 'nav' );
+				$html .= Xml::element(
+					'a',    
+					array(  
+						'href' => $downloadUrl,
+						'class' => 'wikia-button'
+					     ),      
+					wfMsg( 'searchdigest-download-csv' )
+				);
+				$html .= Xml::closeElement( 'nav' );
+
 				$wgOut->addHTML( $html );
 		}
+	}
+
+	private function setDownloadHeaders( $output ) {
+		header("Content-Description: File Transfer");
+
+		//Use the switch-generated Content-Type
+		header("Content-Type: text/plain");
+		header("Content-Disposition: attachment; filename=\"search-digest.csv\"");
+
+		//Force the download
+		header("Content-Transfer-Encoding: utf-8");
+		header("Content-Length: " . strlen($output) );
 	}
 }
 
