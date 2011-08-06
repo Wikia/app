@@ -1,4 +1,4 @@
- <?php
+<?php
  
  /**
   * SearchDigest
@@ -15,15 +15,11 @@
  // Extension credits
  $wgExtensionCredits['other'][] = array(
 		 'name' => 'SearchDigest',
-		 'version' => '1.0',
 		 'author' => array( '[http://community.wikia.com/wiki/User:TOR Lucas \'TOR\' Garczewski]' ),
 		 'descriptionmsg' => 'searchdigest-desc',
 		 );
 
 $dir = dirname(__FILE__);
-
-// Interface code
-require_once("$dir/SearchDigest.php");
 
 // autoloaded classes
 $wgAutoloadClasses['SpecialSearchDigest'] = "$dir/SearchDigest.class.php";
@@ -33,3 +29,32 @@ $wgExtensionMessagesFiles['SearchDigest'] = $dir.'/SearchDigest.i18n.php';
 
 // register special page
 $wgSpecialPages['SearchDigest'] = 'SpecialSearchDigest';
+
+$wgHooks['SpecialSearchNogomatch'] = 'efSearchDigestRecordMiss';
+
+function efSerachDigestRecordMiss( $title ) {
+	global $wgEnableScribeReport;
+
+	if ( empty( $wgEnableScribeReport ) ) {
+		return true;
+	}
+
+	$params = array(
+		"sd_wiki" => $wgCityId,
+		"sd_query" => $title->getText(),
+	);
+
+	// use scribe
+	try {
+		$message = array(
+			'method' => 'searchmiss',
+			'params' => $params
+		);
+		$data = Wikia::json_encode( $message );
+		WScribeClient::singleton('trigger')->send($data);
+	}
+	catch( TException $e ) {
+		Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
+	}
+
+}
