@@ -3,7 +3,7 @@
 		<div id="AdminDashboardGeneral" style="display:<?= $tab == 'general' ? 'block' : 'none'?>">
 			<section class="control-section wiki">
 				<header>
-					<h1><?= wfMsg("admindashboard-controls-wiki-header") ?></h1><span class="tooltip"></span>
+					<h1><?= wfMsg("admindashboard-controls-wiki-header") ?></h1><span class="dashboard-tooltip"></span>
 				</header>
 				<ul class="controls">
 					<li class="control" data-tooltip="<?= wfMsg("admindashboard-control-theme-designer-tooltip") ?>">
@@ -50,7 +50,7 @@
 			</section>
 			<section class="control-section community">
 				<header>
-					<h1><?= wfMsg("admindashboard-controls-community-header") ?></h1><span class="tooltip"></span>
+					<h1><?= wfMsg("admindashboard-controls-community-header") ?></h1><span class="dashboard-tooltip"></span>
 				</header>
 				<ul class="controls">
 					<li class="control" data-tooltip="<?= wfMsg("admindashboard-control-user-list-tooltip") ?>" data-control="ListUsers">
@@ -95,7 +95,7 @@
 			</section>
 			<section class="control-section content">
 				<header>
-					<h1><?= wfMsg("admindashboard-controls-content-header") ?></h1><span class="tooltip"></span>
+					<h1><?= wfMsg("admindashboard-controls-content-header") ?></h1><span class="dashboard-tooltip"></span>
 				</header>
 				<ul class="controls">
 					<li class="control" data-tooltip="<?= wfMsg("admindashboard-control-categories-list-tooltip") ?>" data-control="Categories">

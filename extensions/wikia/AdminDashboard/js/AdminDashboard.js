@@ -77,7 +77,7 @@ var AdminDashboard = {
 		// events
 		AdminDashboard.allControls.hover(function() {
 			var el = $(this);
-			AdminDashboard.tooltip = $(this).closest('.control-section').find('header .tooltip');
+			AdminDashboard.tooltip = $(this).closest('.control-section').find('header .dashboard-tooltip');
 			AdminDashboard.tooltip.text(el.data('tooltip'));
 		}, function() {
 			AdminDashboard.tooltip.text('');
