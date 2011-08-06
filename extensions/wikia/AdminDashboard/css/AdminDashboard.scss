@@ -249,6 +249,10 @@ $base-z: 5;
 			border-left: 1px solid transparent;
 			border-right: 4px solid #72a6cf;
 		}
+		&.atf {
+			bottom: auto;
+			top: 100px;
+		}
 	}
 }
 

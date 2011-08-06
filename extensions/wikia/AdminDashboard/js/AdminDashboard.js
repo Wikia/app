@@ -5,6 +5,14 @@ var AdminDashboardChrome = {
 		AdminDashboardChrome.wikiaArticle = $('#WikiaArticle');
 		AdminDashboardChrome.arrow = $('#AdminDashboardDrawer .arrow');
 		AdminDashboardChrome.drawer.click(AdminDashboardChrome.toggleDrawer);
+		AdminDashboardChrome.initArrow();
+	},
+	initArrow: function() {
+		// add arrow 100px from the top if current arrow is below the fold
+		if (AdminDashboardChrome.arrow.length && AdminDashboardChrome.arrow.offset().top > ($(window).height() - 200)) {
+			AdminDashboardChrome.drawer.append('<span class="arrow atf"></span>');
+			AdminDashboardChrome.arrow = $('#AdminDashboardDrawer .arrow');
+		}
 	},
 	collapseDrawer: function() {
 		AdminDashboardChrome.arrow.removeClass('expanded');
@@ -153,6 +161,7 @@ var AdminDashboard = {
 				if(callback && typeof callback == 'function') {
 					callback();
 				}
+				AdminDashboardChrome.initArrow();
 			});
 		},
 		loadListUsers: function() {
