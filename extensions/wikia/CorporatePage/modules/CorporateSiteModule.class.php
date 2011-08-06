@@ -188,7 +188,7 @@ class CorporateSiteModule extends Module {
 	}
 
 	public function executeSlider() {
-		global $wgOut, $wgTitle, $wgUser, $wgParser;
+		global $wgOut, $wgTitle, $wgParser;
 		wfLoadExtensionMessages( 'CorporatePage' );
 
 		if (BodyModule::isHubPage()) {
@@ -199,7 +199,7 @@ class CorporateSiteModule extends Module {
 			// render slider's HTML using WikiaPhotoGallery (BugId:8478)
 			$slider = new WikiaPhotoGallery();
 			$slider->setParser($wgParser);
-			$wgParser->startExternalParse($wgTitle, ParserOptions::newFromUser($wgUser), Parser::OT_HTML);
+			$wgParser->startExternalParse($wgTitle, new ParserOptions(), Parser::OT_HTML);
 			$slider->parseParams(array(
 				'type' => 'slider',
 				'orientation'=> 'bottom',
