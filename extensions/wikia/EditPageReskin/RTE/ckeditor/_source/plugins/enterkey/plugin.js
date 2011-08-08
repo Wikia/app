@@ -222,6 +222,10 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 				// Wikia - mark paragraphs added in wysiwyg mode
 				newBlock.setAttribute('data-rte-new-node', true);
+				/* Wikia change begin - @author: Marcin, #BugId: 1036 */
+				newBlock.removeAttribute('data-rte-fromparser');
+				newBlock.removeAttribute('data-rte-empty-lines-before');
+				/* Wikia change end */
 
 				if ( !newBlock.getParent() )
 					range.insertNode( newBlock );

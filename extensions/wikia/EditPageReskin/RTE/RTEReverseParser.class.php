@@ -678,9 +678,10 @@ class RTEReverseParser {
 		// handle paragraphs outside tables only (RT #56402)
 		else if (self::isNewNode($node) && self::isChildOf($node, 'body')) {
 			// previous element is paragraph
-			if (self::previousSiblingIs($node, 'p') && !self::isNewNode($node->previousSibling)) {
-				$out = "\n{$out}";
-			}
+			//if-statement commented, because pressing enter results sometimes a double white lines (bugid: 1036)
+			//if (self::previousSiblingIs($node, 'p') && !self::isNewNode($node->previousSibling)) {
+			//	$out = "\n{$out}";
+			//}
 
 			// next element is (not pasted) paragraph
 			if (self::nextSiblingIs($node, 'p') && self::isNewNode($node->nextSibling)) {
