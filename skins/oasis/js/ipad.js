@@ -3,6 +3,16 @@ $(document).ready(function() {
 });
 
 iPadImprovements = {
+	
+	removeDelayOnNavs: function() {
+		if ( typeof WikiHeader == "object" && typeof HoverMenu == "object") {
+			WikiHeader.settings.mouseoutDelay = 0;
+			WikiHeader.settings.mouseoverDelay = 0;	
+			HoverMenu.settings.mouseoutDelay = 0;
+			HoverMenu.settings.mouseoverDelay = 0;	
+		};
+	},
+	
 	handleOrientation: function() {
 		if ( Orientation.getOrientation() == 'portrait' ) {
 			$("meta[name=viewport]").attr( 'content', 'width=1024, initial-scale=1.09, minimum-scale=0.75, maximum-scale=3.0' );
@@ -12,30 +22,34 @@ iPadImprovements = {
 	},
 	
 	init: function() {
+		
 		//onload add proper viewport
 		iPadImprovements.handleOrientation();
+		Orientation.bindEventListener( iPadImprovements.handleOrientation );
 		
 		//onload scroll to main content
 		wikiaMainContent = $('#WikiaMainContent').offset();
 		window.scrollTo( 0, wikiaMainContent.top );
-		
+
 		//global nav fix: first click opens nav, second redirects to a hub
 		$( "#WikiaHeader #GlobalNavigation > li > a" ).live( 'click', function( event ) {
 			if ( !$( this ).next().hasClass( 'show' ) ) {
-				event.preventDefault();
 				$( this ).next().addClass( 'show' );
-			}
+				event.preventDefault();
+			};
 		});
-		
-		//wikia nav fix: first click opens nav, second redirects to a desired page
+
+		//wiki nav fix: first click opens nav, second redirects to a desired page
 		$('#WikiHeader nav > ul > li > a').live('click', function() {
 			subnav = $( this ).next( 'ul.subnav' );
 			if ( $( subnav ).length ) {
 				if ( $( subnav ).css( 'display' ) != 'block' ) {
-					event.preventDefault();
 					$( subnav ).css( 'display', 'block' );
-				}
-			}
+					event.preventDefault();
+				};
+			};
 		});
+		
+		iPadImprovements.removeDelayOnNavs();
 	}
-}
+};
