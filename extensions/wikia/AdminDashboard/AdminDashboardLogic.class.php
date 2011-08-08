@@ -42,6 +42,7 @@ class AdminDashboardLogic {
 				"Following",
 				"EditAccount",
 				"EditTopList",
+				"HuluVideoPanel",
 				"LayoutBuilder",
 				"Leaderboard",
 				"LookupContribs",
