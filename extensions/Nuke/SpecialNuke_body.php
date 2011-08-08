@@ -74,7 +74,6 @@ class SpecialNuke extends SpecialPage {
 		$wgOut->addWikiMsg( 'nuke-list', $username );
 
 		$nuke = $this->getTitle();
-		$submit = Xml::submitButton( wfMsg( 'nuke-submit-delete' ) );
 
 		$wgOut->addHTML(
 			Xml::openElement( 'form', array(
@@ -85,7 +84,7 @@ class SpecialNuke extends SpecialPage {
 			Xml::inputLabel(
 				wfMsg( 'deletecomment' ), 'wpReason', 'wpReason', 60, $reason
 			) . '<br /><br />' .
-			Xml::submitButton( wfMsg( 'nuke-submit-delete' ) )
+			Xml::submitButton( wfMsg( 'nuke-submit-delete' ), array('class'=>'delete-button') )
 		);
 
 		$wgOut->addHTML( '<ul>' );
@@ -111,7 +110,7 @@ class SpecialNuke extends SpecialPage {
 		}
 		$wgOut->addHTML(
 			"</ul>\n" .
-			Xml::submitButton( wfMsg( 'nuke-submit-delete' ) ) .
+			Xml::submitButton( wfMsg( 'nuke-submit-delete' ), array('class'=>'delete-button') ) .
 			"</form>"
 		);
 	}
