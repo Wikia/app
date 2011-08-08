@@ -31,7 +31,7 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 		$this->response->setVal('urlRecentChanges', Title::newFromText('RecentChanges', NS_SPECIAL)->getFullURL());
 		$this->response->setVal('urlTopNavigation', Title::newFromText('Wiki-navigation', NS_MEDIAWIKI)->getFullURL('action=edit'));
 		$this->response->setVal('urlWikiaLabs', Title::newFromText('WikiaLabs', NS_SPECIAL)->getFullURL());
-		$this->response->setVal('urlPageLayoutBuilder', Title::newFromText('PageLayoutBuilder', NS_SPECIAL)->getFullURL());
+		$this->response->setVal('urlPageLayoutBuilder', Title::newFromText('PageLayoutBuilder', NS_SPECIAL)->getFullURL('action=list'));
 		
 		$this->response->setVal('urlListUsers', Title::newFromText('ListUsers', NS_SPECIAL)->getFullURL());
 		$this->response->setVal('urlUserRights', Title::newFromText('UserRights', NS_SPECIAL)->getFullURL());
@@ -46,6 +46,9 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 		// special:specialpages
 		$advancedSection = (string)F::app()->sendRequest( 'AdminDashboardSpecialPage', 'getAdvancedSection', array());
 		$this->response->setVal('advancedSection', $advancedSection);
+		
+		// icon display logic
+		$this->displayPageLayoutBuilder = !empty(F::app()->wg->EnablePageLayoutBuilder);
 	}
 	
 	/**
