@@ -87,7 +87,7 @@ class SDFilter {
 	function getTimePeriodValues() {
 		$possible_dates = array();
 		$property_value = $this->escaped_property;
-		$dbr = $this>getDB( DB_SLAVE );
+		$dbr = $this->getDB( DB_SLAVE );
 		if ( $this->time_period == wfMsg( 'sd_filter_month' ) ) {
 			$fields = "YEAR(value_xsd), MONTH(value_xsd)";
 		} else {
