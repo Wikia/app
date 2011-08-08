@@ -21,7 +21,7 @@ if ( !function_exists( 'wfFounderEmailsInit' ) ) {
 FounderEmails::getInstance()->processEvents( 'daysPassed', true );
 
 // Process events for any users that want the daily views digest
-//FounderEmails::getInstance()->processEvents( 'viewsDigest', true);
+FounderEmails::getInstance()->processEvents( 'viewsDigest', true);
 
 // Process events for any users that want the complete digest
 FounderEmails::getInstance()->processEvents( 'completeDigest', true);
