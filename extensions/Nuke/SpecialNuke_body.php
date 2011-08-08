@@ -74,6 +74,8 @@ class SpecialNuke extends SpecialPage {
 		$wgOut->addWikiMsg( 'nuke-list', $username );
 
 		$nuke = $this->getTitle();
+		$submit = Xml::submitButton( wfMsg( 'nuke-submit-delete' ), array('class'=>'delete-button') );
+		$invert = Xml::input( null, false, wfMsg( 'nuke-invert' ), array('class'=>'invert-button', 'type'=>'button') );
 
 		$wgOut->addHTML(
 			Xml::openElement( 'form', array(
@@ -84,7 +86,7 @@ class SpecialNuke extends SpecialPage {
 			Xml::inputLabel(
 				wfMsg( 'deletecomment' ), 'wpReason', 'wpReason', 60, $reason
 			) . '<br /><br />' .
-			Xml::submitButton( wfMsg( 'nuke-submit-delete' ), array('class'=>'delete-button') )
+			$submit . ' ' . $invert
 		);
 
 		$wgOut->addHTML( '<ul>' );
@@ -110,8 +112,17 @@ class SpecialNuke extends SpecialPage {
 		}
 		$wgOut->addHTML(
 			"</ul>\n" .
-			Xml::submitButton( wfMsg( 'nuke-submit-delete' ), array('class'=>'delete-button') ) .
+			$submit . ' ' . $invert . 
 			"</form>"
+		);
+		$wgOut->addHTML(
+			"<script type=\"text/javascript\">\n" .
+			"$('input.invert-button').click( function () {
+				$( 'li > input[name=\"pages[]\"]' ).each( function () {
+					$( this ).prop( 'checked', !$( this ).prop( 'checked' ) );
+				} )
+			} )\n" .
+			"</script>"
 		);
 	}
 

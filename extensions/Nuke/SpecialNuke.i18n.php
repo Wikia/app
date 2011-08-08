@@ -21,6 +21,7 @@ put in a comment and hit the button to delete them.",
 Input the username or IP to get a list of pages to delete.',
 	'nuke-submit-user'   => 'Go',
 	'nuke-submit-delete' => 'Delete selected',
+	'nuke-invert'        => 'Invert',
 	'right-nuke'         => 'Mass delete pages',
 );
 
