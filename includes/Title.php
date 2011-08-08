@@ -3570,10 +3570,6 @@ class Title {
 	 * @return \type{\bool} TRUE or FALSE
 	 */
 	public function isAlwaysKnown() {
-		global $wgEnableCategoryBlueLinks, $wgWikiaEnableAutoPageCreateExt;
-		if ($wgEnableCategoryBlueLinks && $this->mNamespace == NS_CATEGORY){
-			return true;
-		}
 		if( $this->mInterwiki != '' ) {
 			return true;  // any interwiki link might be viewable, for all we know
 		}
