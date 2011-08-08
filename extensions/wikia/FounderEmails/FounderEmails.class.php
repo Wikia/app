@@ -183,7 +183,6 @@ class FounderEmails {
 				'type' => 'toggle',
 				'label-message' => array('founderemails-pref-views-digest', $wgSitename),
 				'section' => 'personal/wikiemail',
-				'disabled' => $disableEmailPrefs,
 			);
 			$defaultPreferences["founderemails-complete-digest-$wgCityId"] = array(
 				'type' => 'toggle',

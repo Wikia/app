@@ -92,7 +92,7 @@ function wfFounderEmailsInit() {
 	// $wgDefaultUserOptions["founderemailsenabled"] = 1;  // Old preference not used any more
 	$wgDefaultUserOptions["founderemails-joins-$wgCityId"] = 1;
 	$wgDefaultUserOptions["founderemails-edits-$wgCityId"] = 1;
-	$wgDefaultUserOptions["founderemails-views-digest-$wgCityId"] = 1;
+	$wgDefaultUserOptions["founderemails-views-digest-$wgCityId"] = 0;
 	$wgDefaultUserOptions["founderemails-complete-digest-$wgCityId"] = 0;
 }
 
