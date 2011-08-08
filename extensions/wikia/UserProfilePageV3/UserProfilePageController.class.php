@@ -320,7 +320,7 @@ class UserProfilePageController extends WikiaController {
 		$this->app->wf->ProfileIn( __METHOD__ );
 		
 		$user = F::build('User', array($this->getVal('userId')), 'newFromId');
-		$isAllowed = ( $this->app->wg->User->isAllowed('staff') || intval($user->getId()) ∑=== intval($this->app->wg->User->getId()) );
+		$isAllowed = ( $this->app->wg->User->isAllowed('staff') || intval($user->getId()) === intval($this->app->wg->User->getId()) );
 		$userData = json_decode($this->getVal('data'));
 		
 		$status = 'error';
