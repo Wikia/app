@@ -21,6 +21,7 @@ $messages['en'] = array(
 	'userprofilepage-invalid-user' => 'Invalid user! You are not logged-in or do not have rights to process',
 	
 	'user-identity-box-edit' => 'Edit',
+	'user-identity-box-wikia-contributor' => 'A Wikia contributor',
 	'user-identity-box-edit-avatar' => 'Edit avatar',
 	'user-identity-box-delete-avatar' => 'Delete avatar',
 	'user-identity-box-avatar-upload-avatar' => 'Upload an avatar',

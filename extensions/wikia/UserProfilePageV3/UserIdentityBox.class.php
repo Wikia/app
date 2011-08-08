@@ -52,6 +52,7 @@ class UserIdentityBox {
 		
 		$userName = $this->user->getName();
 		$userId = $this->user->getId();
+		
 		$data = array();
 		
 		//this data is always the same -- on each wiki
@@ -64,6 +65,7 @@ class UserIdentityBox {
 			$this->getEmptyData($data);
 			$data['edits'] = 0;
 			$data['showZeroStates'] = $this->checkIfDisplayZeroStates($data);
+			$data['name'] = $this->app->wf->Msg('user-identity-box-wikia-contributor').' ('.$userName.')';
 		} else {
 			$userStatsService = F::build('UserStatsService', array($userId));
 			$userStats = $userStatsService->getStats();
@@ -98,7 +100,6 @@ class UserIdentityBox {
 			} else if( !is_null($data['registration']) && !is_null($firstMastheadEditDate) ) {
 			//if we've got both dates we're getting the lowest (the earliest)
 				$data['registration'] = (intval($data['registration']) < intval($firstMastheadEditDate)) ? $data['registration'] : $firstMastheadEditDate;
-				$data['registration'] = str_pad($data['registration'], 14, '20', STR_PAD_BOTH);
 			}
 			
 			//other data operations
@@ -139,7 +140,8 @@ class UserIdentityBox {
 			}
 			
 			$data['realName'] = $this->user->getRealName();
-			$data['topWikis'] = $this->getTopWikis();
+			$data['topWikis'] = $this->sortTopWikis($this->getTopWikis());
+			
 			$this->saveMemcUserIdentityData($data);
 		} else {
 			$data = array_merge($data, $memcData);
@@ -220,6 +222,7 @@ class UserIdentityBox {
 		if( !$this->hasUserEditedMastheadBefore($wikiId) ) {
 			$this->user->setOption(self::USER_EDITED_MASTHEAD_PROPERTY.$wikiId, true);
 			$this->user->setOption(self::USER_FIRST_MASTHEAD_EDIT_DATE_PROPERTY.$wikiId, date('YmdHis'));
+			$this->addTopWiki($wikiId);
 			$changed = true;
 		}
 		
@@ -229,7 +232,7 @@ class UserIdentityBox {
 			
 			// Log
 			$log = WF::build( 'LogPage', array( 'usermasthead' ) );
-			$log->addEntry( '', Title::newFromText($this->user->getName(), NS_USER), wfMsg('usermasthead-log-message'), array() );  
+			$log->addEntry( '', Title::newFromText($this->user->getName(), NS_USER), $this->app->wf->Msg('usermasthead-log-message'), array() );  
 			
 			$this->app->wf->ProfileOut( __METHOD__ );
 			return true;
@@ -407,7 +410,7 @@ class UserIdentityBox {
 	}
 	
 	/**
-	 * @brief Gets top edited wikis for a user; code from UPP2
+	 * @brief Gets top edited wikis for a user
 	 * 
 	 * @param Boolean $refreshHidden a flag which says to clear hidden wikis, by default equals false
 	 * 
@@ -415,51 +418,56 @@ class UserIdentityBox {
 	 */
 	public function getTopWikis($refreshHidden = false) {
 		$this->app->wf->ProfileIn( __METHOD__ );
-		$wikis = false;
+		$wikis = array();
 		
-		if ( !$this->user->isAnon() ) {
-			$cachedData = $this->app->wg->Memc->get( $this->getMemcTopWikisId() );
+		if( !$this->user->isAnon() ) {
+			$memcData = $this->app->wg->Memc->get( $this->getMemcTopWikisId() );
 			
-			if( !empty( $cachedData) ) {
+			if( !empty( $memcData) ) {
 				$this->app->wf->ProfileOut(__METHOD__);
-				return $cachedData;
+				return $memcData;
 			}
 			
-			$where = array( 'user_id' => $this->user->getId() );
-			$where[] = 'edits > 0';
-			
-			if( true === $refreshHidden ) {
-				$this->clearHiddenTopWikis();
+			if( $this->app->wg->DevelEnvironment ) { 
+			//devboxes uses the same database as production
+			//to avoid strange behavior we set test data on devboxes
+				$wikis = $this->getTestData();
 			} else {
-				$hiddenTopWikis = $this->getHiddenTopWikis();
+				$where = array( 'user_id' => $this->user->getId() );
+				$where[] = 'edits > 0';
 				
-				if( count($hiddenTopWikis) ) {
-					$where[] = 'wiki_id NOT IN ('.join(',', $hiddenTopWikis).')';
+				if( true === $refreshHidden ) {
+					$this->clearHiddenTopWikis();
+				} else {
+					$hiddenTopWikis = $this->getHiddenTopWikis();
+					
+					if( count($hiddenTopWikis) ) {
+						$where[] = 'wiki_id NOT IN ('.join(',', $hiddenTopWikis).')';
+					}
 				}
-			}
-			
-			$dbs = $this->app->wf->GetDB(DB_SLAVE, array(), $this->app->wg->StatsDB);
-			$res = $dbs->select(
-				array( 'specials.events_local_users' ),
-				array( 'wiki_id', 'edits' ),
-				$where,
-				__METHOD__,
-				array(
-					'ORDER BY' => 'edits DESC',
-					'LIMIT' => $this->topWikisLimit
-				)
-			);
-			
-			$wikis = array();
-			while( $row = $dbs->fetchObject($res) ) {
-				$wikiId = $row->wiki_id;
-				$editCount = $row->edits;
-				$wikiName = F::build('WikiFactory', array('wgSitename', $wikiId), 'getVarValueByName');
-				$wikiUrl = F::build('WikiFactory', array('wgServer', $wikiId), 'getVarValueByName');
-				$wikiUrl = $wikiUrl . '?redirect=no';
-				//$wikiUrl = F::build('GlobalTitle', array($this->app->wf->MsgForContent('Mainpage'), NS_MAIN, $wikiId), 'newFromText')->getFullUrl();
 				
-				$wikis[$wikiId] = array( 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'editCount' => $editCount );
+				$dbs = $this->app->wf->GetDB(DB_SLAVE, array(), $this->app->wg->StatsDB);
+				$res = $dbs->select(
+					array( 'specials.events_local_users' ),
+					array( 'wiki_id', 'edits' ),
+					$where,
+					__METHOD__,
+					array(
+						'ORDER BY' => 'edits DESC',
+						'LIMIT' => $this->topWikisLimit
+					)
+				);
+				
+				$wikis = array();
+				while( $row = $dbs->fetchObject($res) ) {
+					$wikiId = $row->wiki_id;
+					$editCount = $row->edits;
+					$wikiName = F::build('WikiFactory', array('wgSitename', $wikiId), 'getVarValueByName');
+					$wikiUrl = F::build('WikiFactory', array('wgServer', $wikiId), 'getVarValueByName');
+					$wikiUrl = $wikiUrl.'?redirect=no';
+					
+					$wikis[$wikiId] = array( 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'edits' => $editCount );
+				}
 			}
 		}
 		
@@ -470,10 +478,56 @@ class UserIdentityBox {
 	}
 	
 	/**
+	 * @brief Sorts top (fav) wikis by edits and cuts if there are more than default amount of top wikis
+	 * 
+	 * @param array $topWikis
+	 * 
+	 * @return array
+	 */
+	protected function sortTopWikis($topWikis) {
+		if( empty($topWikis) ) {
+			$editcounts = array();
+			
+			foreach($topWikis as $key => $row) {
+				if( isset($row['edits']) ) {
+					$editcounts[$key] = $row['edits'];
+				}
+			}
+			
+			if( !empty($editcounts) ) array_multisort($editcounts, SORT_DESC, $topWikis);
+			
+			return array_slice($topWikis, 0, $this->topWikisLimit);
+		}
+		
+		return $topWikis;
+	}
+	
+	/**
+	 * @brief Adds to memchached top wikis new wiki
+	 * 
+	 * @param integer $wikiId wiki id
+	 * 
+	 * @return void
+	 */
+	public function addTopWiki($wikiId) {
+		if( intval($wikiId) > 0 && !$this->isTopWikiHidden($wikiId) ) {
+			$memcData = $this->app->wg->Memc->get( $this->getMemcTopWikisId() );
+			
+			$wikiName = F::build('WikiFactory', array('wgSitename', $wikiId), 'getVarValueByName');
+			$wikiUrl = F::build('WikiFactory', array('wgServer', $wikiId), 'getVarValueByName');
+			$wikiUrl = $wikiUrl.'?redirect=no';
+			
+			$memcData[$wikiId] = array('wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'edits' => 1);
+			
+			$memcData = $this->app->wg->Memc->set( $this->getMemcTopWikisId(), $memcData );
+		}
+	}
+	
+	/**
 	 * @brief Gets memcache id for top wikis
 	 */
 	private function getMemcTopWikisId() {
-		return 'UserProfilePageHelper'.'topWikis'.$this->user->getId().$this->topWikisLimit;
+		return 'user-identity-box-data-top-wikis'.$this->user->getID().$this->topWikisLimit;
 	}
 	
 	/**
@@ -510,18 +564,19 @@ class UserIdentityBox {
 		$this->app->wf->ProfileIn( __METHOD__ );
 		
 		$wikis = array(
-			831 => 60,
+			1890 => 5,
 			4036 => 35,
 			177 => 12,
-			1890 => 5
+			831 => 60,
 		); //test data
 		
-		foreach ( $wikis as $wikiId => $editCount ) {
+		foreach( $wikis as $wikiId => $editCount ) {
 			if( !$this->isTopWikiHidden($wikiId) || ($wikiId == $this->app->wg->CityId) ) {
 				$wikiName = F::build('WikiFactory', array('wgSitename', $wikiId), 'getVarValueByName');
-				$wikiUrl = F::build('GlobalTitle', array(wfMsgForContent('Mainpage'), NS_MAIN, $wikiId), 'newFromText')->getFullUrl();
+				$wikiUrl = F::build('WikiFactory', array('wgServer', $wikiId), 'getVarValueByName');
+				$wikiUrl = $wikiUrl.'?redirect=no';
 				
-				$wikis[$wikiId] = array( 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'editCount' => $editCount );
+				$wikis[$wikiId] = array( 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'edits' => $editCount );
 			} else {
 				unset($wikis[$wikiId]);
 			}
