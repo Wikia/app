@@ -66,7 +66,7 @@ class WikiaPhotoGalleryUpload extends WikiaTempFilesUpload{
 					'height' => $height,
 					'width' => $width,
 				));
-
+		
 				// split uploaded file name into name + extension (foo-bar.png => foo-bar + png)
 				list($fileName, $extensionsName) = UploadBase::splitExtensions($imageName);
 				$extensionName = !empty($extensionsName) ? end($extensionsName) : '';

@@ -307,7 +307,7 @@ class UserProfilePageController extends WikiaController {
 		$this->app->wf->ProfileIn( __METHOD__ );
 		
 		$user = F::build('User', array($this->getVal('userId')), 'newFromId');
-		$isAllowed = ( $this->app->wg->User->isAllowed('staff') || intval($user->getId()) === intval($this->app->wg->User->getId()) );
+		$isAllowed = ( $this->app->wg->User->isAllowed('staff') || intval($user->getId()) ∑=== intval($this->app->wg->User->getId()) );
 		$userData = json_decode($this->getVal('data'));
 		
 		$status = 'error';
@@ -335,6 +335,15 @@ class UserProfilePageController extends WikiaController {
 		$this->setVal('status', $status);
 		if( $status === 'error' ) {
 			$this->setVal('errorMsg', $errorMsg);
+			return true;
+		}
+		
+		if(!empty($userData->avatarData)) {
+			$status = $this->saveUsersAvatar($user->getID(), $userData->avatarData);
+			if($status !== true) {
+				$this->setVal('errorMsg', $errorMsg);
+				return true; 
+			}
 		}
 		
 		$this->app->wf->ProfileOut( __METHOD__ );
@@ -374,7 +383,8 @@ class UserProfilePageController extends WikiaController {
 					$userData->avatar = $data->file;
 					break;
 				case 'facebook':
-					$userData->avatar = $this->saveFacebookAvatar($user, $data->file, $errorMsg);
+				case 'uploaded':
+					$userData->avatar = $this->saveAvatarFromUrl($user, $data->file, $errorMsg);
 					break;
 				default:
 					$result = array('success' => false, 'error' => $errorMsg);
@@ -383,14 +393,13 @@ class UserProfilePageController extends WikiaController {
 			}
 			
 			if( $userData->avatar === false || !$userIdentityBox->saveUserData($userData) ) {
-				$result = array('success' => false, 'error' => $errorMsg);
+				return $errorMsg;
 			} else {
-				$result = array('success' => true, 'avatar' => $this->purgeOldAvatars($user)  . '?cb=' . date('U') );
+				return true;
 			}
 		}
-		
-		$this->setVal('result', $result);
-		
+
+		return true;
 		$this->app->wf->ProfileOut( __METHOD__ );
 	}
 	
@@ -405,7 +414,7 @@ class UserProfilePageController extends WikiaController {
 	 * 
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	private function saveFacebookAvatar(User $user, $url, &$errorMsg) {
+	private function saveAvatarFromUrl(User $user, $url, &$errorMsg) {
 		$this->app->wf->ProfileIn( __METHOD__ );
 		
 		$userId = $user->getId();
@@ -437,7 +446,7 @@ class UserProfilePageController extends WikiaController {
 	}
 	
 	/**
-	 * @brief Submits avatar form
+	 * @brief Submits avatar form and genarate url for preview
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
@@ -451,11 +460,55 @@ class UserProfilePageController extends WikiaController {
 		
 		if( !$user->isAnon() && $this->request->wasPosted() ) {
 			$avatarUploadFiled = 'UPPLightboxAvatar';
-			$fileName = $this->app->wg->request->getFileName($avatarUploadFiled);
+			
+			$fileuploader = new WikiaPhotoGalleryUpload();
+		
+			$tempName = $fileuploader->tempFileName($this->wg->User);
+
+			$title = Title::makeTitle(NS_FILE, $tempName);
+			$localRepo = RepoGroup::singleton()->getLocalRepo();
+
+			$ioh = F::build('ImageOperationsHelper' );
+			$fileName = $this->app->wg->request->getFileTempName($avatarUploadFiled);
+			$ioh->postProcessFile($fileName);
+			
+			$file = new FakeLocalFile($title, $localRepo);				
+			$file->upload( $fileName , '', '' );
+
+			// store uploaded image in GarbageCollector (image will be removed if not used)
+			$tempId = $fileuploader->tempFileStoreInfo($tempName);
+
+			// generate thumbnail (to fit 200x200 box) of temporary file
+			$width = min(WikiaPhotoGalleryHelper::thumbnailMaxWidth, $file->width);
+			$height = min(WikiaPhotoGalleryHelper::thumbnailMaxHeight, $file->height);
+
+			$thumbnail = $file->transform(array(
+				'height' => $height,
+				'width' => $width,
+			));
+			
+			if( false === $this->response->hasContentType() ) {
+				$this->response->setContentType('text/html; charset=utf-8');
+			}
+			
+			$result = array('success' => true, 'avatar' => $thumbnail->url . '?cb=' . date('U') );
+			$this->setVal('result', $result);
+			
+			$this->app->wf->ProfileOut( __METHOD__ );
+			return;
+		}
+		
+		$result = array('success' => false, 'error' => $errorMsg);
+		$this->setVal('result', $result);
+		return ;
+
+		
 			$userId = $user->getId();
 			
 			$localPath = $this->getLocalPath($user);
 			
+			
+		/*	
 			$errorNo = $this->uploadFile(
 				$this->app->wg->request, array(
 					'userId' => $userId,
@@ -484,16 +537,13 @@ class UserProfilePageController extends WikiaController {
 			}
 		} else {
 			$errorMsg = $this->wf->msg('user-identity-box-avatar-anon-user-error');
-			$result = array('success' => false, 'error' => $errorMsg);
+			
 		}
 		
-		$this->setVal('result', $result);
 		
-		if( false === $this->response->hasContentType() ) {
-			$this->response->setContentType('text/html; charset=utf-8');
-		}
 		
-		$this->app->wf->ProfileOut( __METHOD__ );
+
+		*/
 	}
 	
 	/**
@@ -818,6 +868,39 @@ class UserProfilePageController extends WikiaController {
 		$this->app->wf->ProfileOut( __METHOD__ );
 		return true;
 	}
+
+	/**
+	 * 
+	 * @brief create preview for avatar from FB
+	 * 
+	 * @author Tomasz Odrobny
+	 */
+	 
+	public function onFacebookConnectAvatar() {					
+		$user = $this->app->wg->User;
+		
+		$result = array('success' => false, 'error' => $this->wf->Msg('userprofilepage-interview-save-internal-error'));
+		$this->setVal('result', $result);
+		
+		if( !$user->isAnon() ) {
+			$fbConnectAPI  = F::build('FBConnectAPI');
+			$fbUserId = $fbConnectAPI->user();
+		
+			$userFbData = $fbConnectAPI->getUserInfo(
+				$fbUserId,
+				array('pic_big') 
+			);
+			
+			$data->source = 'facebook';
+			$data->file = $userFbData['pic_big'];		
+			$result = array('success' => true, 'avatar' => $data->file . '?cb=' . date('U') );
+			$this->setVal('result', $result);
+		}	
+		
+		
+		$this->app->wf->ProfileOut( __METHOD__ );
+		return true;
+	}
 	
 	/**
 	 * @brief Gets facebook user data from database or tries to connect via FB API and get those data then returns it as a JSON data
@@ -833,7 +916,6 @@ class UserProfilePageController extends WikiaController {
 		$result = array('success' => false);
 		
 		if( !$user->isAnon() ) {
-			$avatar = (bool) $this->getVal('avatar');
 			$fb_ids = F::build('FBConnectDB', array($user), 'getFacebookIDs');
 			$fbConnectAPI  = F::build('FBConnectAPI');
 			
@@ -843,28 +925,12 @@ class UserProfilePageController extends WikiaController {
 				$fbUserId = $fbConnectAPI->user();
 			}
 			
-			if( $fbUserId > 0 ) {
-				if( $avatar === true ) {
-					$userFbData = $fbConnectAPI->getUserInfo(
-						$fbUserId,
-						array('pic_big') 
-					);
-					
-					$data->source = 'facebook';
-					$data->file = $userFbData['pic_big'];
-					$this->saveUsersAvatar($user->getId(), $data);
-					
-					$this->app->wf->ProfileOut( __METHOD__ );
-					return true;
-					
-				} else {
-					$userFbData = $fbConnectAPI->getUserInfo(
-						$fbUserId,
-						array('name, current_location, hometown_location, work_history, profile_url, sex, birthday_date, pic_big, website')
-					);
-					$userFbData = $this->cleanFbData($userFbData);
-				}
-				
+			if( $fbUserId > 0 ) {	
+				$userFbData = $fbConnectAPI->getUserInfo(
+					$fbUserId,
+					array('name, current_location, hometown_location, work_history, profile_url, sex, birthday_date, pic_big, website')
+				);
+				$userFbData = $this->cleanFbData($userFbData);
 				$result = array('success' => true, 'fbUser' => $userFbData);
 			} else {
 				$result = array('success' => false, 'error' => $this->app->wf->Msg('user-identity-box-invalid-fb-id-error'));
