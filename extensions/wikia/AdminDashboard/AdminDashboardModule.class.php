@@ -18,7 +18,7 @@ class AdminDashboardModule extends Module {
 		$this->tab = $wgRequest->getVal("tab", "");
 		if(empty($this->tab) && $isAdminDashboard) {
 			$this->tab = 'general';
-		} else if(!empty(AdminDashboardLogic::$generalApps[$wgTitle->getDBKey()])) {
+		} else if(AdminDashboardLogic::isGeneralApp($wgTitle->getDBKey())) {
 			$this->tab = 'general';
 		} else if(empty($this->tab)) {
 			$this->tab = 'advanced';
