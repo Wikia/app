@@ -10,9 +10,11 @@ var UserProfilePage = {
 	userData: null,
 	forceRedirect: false,
 	isLightboxGenerating: false,
+	reloadUrl: false,
 	
 	init: function() {
 		UserProfilePage.userId = $('#user').val();
+		UserProfilePage.reloadUrl = $('#reloadUrl').val();
 		
 		$('#UPPAnswerQuestions').click(function(event) {
 			event.preventDefault();
@@ -109,7 +111,13 @@ var UserProfilePage = {
 		modal.find('.modalToolbar .save').unbind('click').click(function(e) {
 			UserProfilePage.track('edit/lightbox/save_personal_data');
 			UserProfilePage.closeModal(modal);
-			window.location = wgScript + '?title=' + wgPageName; //+ '&action=purge';
+			
+			if( UserProfilePage.reloadUrl !== false ) {
+				window.location = UserProfilePage.reloadUrl;
+			} else {
+				window.location = wgScript + '?title=' + wgPageName; //+ '&action=purge';
+			}
+			
 			e.preventDefault();
 		});
 		
@@ -286,7 +294,12 @@ var UserProfilePage = {
 					errorBox.append( data.errorMsg );
 				} else {
 					UserProfilePage.closeModal(UserProfilePage.modal);
-					window.location = wgScript + '?title=' + wgPageName; //+ '&action=purge'; 
+					
+					if( UserProfilePage.reloadUrl !== false ) {
+						window.location = UserProfilePage.reloadUrl;
+					} else {
+						window.location = wgScript + '?title=' + wgPageName; //+ '&action=purge';
+					} 
 				}
 			}
 		});
@@ -350,7 +363,11 @@ var UserProfilePage = {
 							UserProfilePage.closeModal(UserProfilePage.modal);
 						}
 						
-						window.location = wgScript + '?title=' + wgPageName; // + '&action=purge';
+						if( UserProfilePage.reloadUrl !== false ) {
+							window.location = UserProfilePage.reloadUrl;
+						} else {
+							window.location = wgScript + '?title=' + wgPageName; //+ '&action=purge';
+						}
 					}
 				}
 			}
@@ -563,7 +580,11 @@ var UserProfilePage = {
 		}
 		
 		if( UserProfilePage.forceRedirect === true ) {
-			window.location = wgScript + '?title=' + wgPageName; // + '&action=purge';
+			if( UserProfilePage.reloadUrl !== false ) {
+				window.location = UserProfilePage.reloadUrl;
+			} else {
+				window.location = wgScript + '?title=' + wgPageName; //+ '&action=purge';
+			}
 		}
 	},
 	

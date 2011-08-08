@@ -133,14 +133,11 @@
 					
 				</div>
 			</form>
-			
-			<input type="hidden" id="startDateMonth" value="<?= $startMonth; ?>">
-			<input type="hidden" id="startDateDay" value="<?= $startDay; ?>">
 		</li>
 	</ul>
 	
 	<div class="modalToolbar">
-		<button class="cancel secondary">Cancel</button>
-		<button class="save">Save, I'm Done</button>
+		<button class="cancel secondary"><?= wfMsg('user-identity-box-avatar-cancel'); ?></button>
+		<button class="save"><?= wfMsg('user-identity-box-avatar-save'); ?></button>
 	</div>
 </div>

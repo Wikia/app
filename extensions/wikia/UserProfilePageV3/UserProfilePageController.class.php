@@ -16,6 +16,9 @@ class UserProfilePageController extends WikiaController {
 		$this->app = $app;
 		$this->allowedNamespaces = $app->getLocalRegistry()->get( 'UserProfilePageNamespaces' );
 		$this->title = $app->wg->Title;
+		
+		// CSS
+		$this->app->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/UserProfilePageV3/css/UserProfilePage.scss'));
 	}
 
 	/**
@@ -27,9 +30,6 @@ class UserProfilePageController extends WikiaController {
 	 */
 	public function index() {
 		$this->app->wf->ProfileIn( __METHOD__ );
-		
-		// CSS
-		$this->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/UserProfilePageV3/css/UserProfilePage.scss'));
 		
 		$user = $this->getVal( 'user' );
 		
@@ -80,6 +80,11 @@ class UserProfilePageController extends WikiaController {
 		
 		$sessionUser = $this->wg->User;
 		$user = $this->getUserFromTitle($this->title);
+		
+		if( is_null($user) ) {
+			$user = $this->app->wg->User;
+		}
+		
 		$userIdentityBox = F::build('UserIdentityBox', array($this->app, $user, self::MAX_TOP_WIKIS));
 		$isUserPageOwner = (!$user->isAnon() && $user->getId() == $sessionUser->getId()) ? true : false;
 		$userData = $userIdentityBox->setData();
@@ -97,6 +102,9 @@ class UserProfilePageController extends WikiaController {
 		$this->setVal( 'isWikiStaff', $sessionUser->isAllowed('staff') );
 		$this->setVal( 'canEditProfile', ($isUserPageOwner || $sessionUser->isAllowed('staff') || $sessionUser->isAllowed('editprofilev3')) );
 		
+		$title = F::build('Title', array($this->app->wg->Request->getVal('title', $this->wg->Title->getText())), 'newFromText');
+		$this->setVal( 'reloadUrl', htmlentities($title->getFullUrl(), ENT_COMPAT, 'UTF-8') );
+		
 		$this->app->wg->Out->addScript('<script type="'.$this->app->wg->JsMimeType.' src="'.$this->app->wg->StylePath.'/common/jquery/jquery.aim.js?'.$this->app->wg->StyleVersion.'"></script>');
 		
 		$this->app->wf->ProfileOut( __METHOD__ );
@@ -112,6 +120,11 @@ class UserProfilePageController extends WikiaController {
 		
 		$namespace = $this->title->getNamespace();
 		$user = $this->getUserFromTitle($this->title);
+		
+		if( is_null($user) ) {
+			$user = $this->app->wg->User;
+		}
+		
 		$sessionUser = $this->wg->User;
 		$canRename = $sessionUser->isAllowed('staff') || $sessionUser->isAllowed('renameprofilev3');
 		$canProtect = $sessionUser->isAllowed('staff') || $sessionUser->isAllowed('protectsite');
