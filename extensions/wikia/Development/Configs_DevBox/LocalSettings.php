@@ -115,9 +115,6 @@ $wgMemCachedDebug = true;
 $wgDebugLogFile = "/tmp/debug.log";
 $wgDefaultExternalStore = array( "DB://dev-archive");
 
-// So that SASS will be generated locally.
-$wgCdnRootUrl = "";
-
 // OpenXSPC
 $wgEnableOpenXSPC = true;
 
@@ -136,3 +133,6 @@ $wgStylePath = $devBoxImageServer . '/skins';
 $wgExtensionsPath = $devBoxImageServer . '/extensions';
 $wgCdnStylePath = $devBoxImageServer; // paths for images requested from CSS/SASS
 $wgDevBoxImageServerOverride ="images.{$wgDevelEnvironmentName}.wikia-dev.com";
+
+// fetch SASS files from devboxes (BugId:8545)
+$wgCdnRootUrl = $devBoxImageServer;
