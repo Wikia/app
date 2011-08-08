@@ -311,6 +311,24 @@ class FounderProgressBarTest extends PHPUnit_Framework_TestCase {
 				'total_tasks' => 2,
 				'completion_percent' => 100,
 			);
+			
+			for($task_id = 10; $task_id <= 60; $task_id+=10) {
+				$input17[$task_id] = array(
+					'task_id' => "$task_id",
+					'task_count' => '0',
+					'task_completed' => '0',
+					'task_skipped' => '1',
+				);
+			}
+			$input17[510] = $fetch_obj8;
+			$input17[510]['task_completed'] = '10';
+			$input17[510]['task_count'] = '5';
+			$exp_data17 = array(
+				'tasks_completed' => 10,
+				'tasks_skipped' => 6,
+				'total_tasks' => 6,
+				'completion_percent' => 100,
+			);
 
 			return array(
 						array($input1, $fetch_obj4, $exp_data1),	// all tasks: completed/uncompleted, regular/skipped/bonus
@@ -328,6 +346,7 @@ class FounderProgressBarTest extends PHPUnit_Framework_TestCase {
 						array($input14, $fetch_obj6, $exp_data14),	// 1 regular (completed) + 2 bonus (completed/uncompleted)
 						array($input15, $fetch_obj9, $exp_data15),	// 1 regular (uncompleted) + 1 skipped (uncompleted) + 1 bonus [2nd round] (uncompleted)
 						array($input16, $fetch_obj9, $exp_data16),	// 1 regular (uncompleted) + 1 skipped (uncompleted) + 2 bonus [2nd round] (completed/uncompleted)
+						array($input17, $input17[510], $exp_data17),	// 6 skipped + 1 bonus [10nd round] (uncompleted)
 					);
 		}
 		
@@ -440,7 +459,7 @@ class FounderProgressBarTest extends PHPUnit_Framework_TestCase {
 							'exp_result' => 'OK',
 							'extra_task' => $extra_task,
 						);
-			$case9['extra_task']['task_completed'] = '1';
+			$case9['extra_task'][510]['task_completed'] = '1';
 			
 			$case10 = array(
 							'task_id' => '510',
@@ -448,7 +467,7 @@ class FounderProgressBarTest extends PHPUnit_Framework_TestCase {
 							'exp_result' => 'task_completed',
 							'extra_task' => $extra_task,
 						);
-			$case10['extra_task']['task_completed'] = '1';
+			$case10['extra_task'][510]['task_completed'] = '1';
 			
 			return array(
 						array($case1),	// invalid task_id - task id not found
