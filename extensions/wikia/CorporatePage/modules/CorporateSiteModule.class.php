@@ -194,7 +194,8 @@ class CorporateSiteModule extends Module {
 		if (BodyModule::isHubPage()) {
 			$this->slider_class = "small";
 			$tag_name = AutoHubsPagesHelper::getHubNameFromTitle($wgTitle);
-			$this->slider = CorporatePageHelper::parseMsgImg( 'hub-' . $tag_name . '-slider', true );
+			// Beware: the true/false at the end is important, it actually changes the return format slightly
+			$this->slider = CorporatePageHelper::parseMsgImg( 'hub-' . $tag_name . '-slider', false );
 
 			// render slider's HTML using WikiaPhotoGallery (BugId:8478)
 			$slider = new WikiaPhotoGallery();
@@ -210,7 +211,9 @@ class CorporateSiteModule extends Module {
 
 			foreach($this->slider as $image) {
 				// ElmoControlRoom.jpg|Label|link=http://wikia.com|linktext=Link text
-				$sliderWikitext .= "{$image['imagetitle']}|{$image['title']}|link={$image['href']}|linktext={$image['desc']}\n";
+				// if parsgMsgImg thumbnail param above is used (and right now it is not)
+				// then the first field needs to change to $image['imagetitle']
+				$sliderWikitext .= "{$image['param']}|{$image['title']}|link={$image['href']}|linktext={$image['desc']}\n";
 			}
 
 			// set the content and parse it
