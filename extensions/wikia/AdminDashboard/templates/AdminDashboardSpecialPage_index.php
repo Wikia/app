@@ -38,14 +38,16 @@
 							<?= wfMsg("admindashboard-control-wikia-labs-label") ?>
 						</a>
 					</li>
-					<li class="control" data-tooltip="<?= wfMsg("admindashboard-control-page-layout-builder-tooltip") ?>">
-						<a href="<?= $urlPageLayoutBuilder ?>" class="set" data-tracking="general/pagelayoutbuilder">
-							<span class="representation">
-								<span class="icon pagelayoutbuilder"></span>
-							</span>
-							<?= wfMsg("admindashboard-control-page-layout-builder-label") ?>
-						</a>
-					</li>
+					<? if ($displayPageLayoutBuilder) { ?>
+						<li class="control" data-tooltip="<?= wfMsg("admindashboard-control-page-layout-builder-tooltip") ?>">
+							<a href="<?= $urlPageLayoutBuilder ?>" class="set" data-tracking="general/pagelayoutbuilder">
+								<span class="representation">
+									<span class="icon pagelayoutbuilder"></span>
+								</span>
+								<?= wfMsg("admindashboard-control-page-layout-builder-label") ?>
+							</a>
+						</li>
+					<? } ?>
 				</ul>
 			</section>
 			<section class="control-section community">
