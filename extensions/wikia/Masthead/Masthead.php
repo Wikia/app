@@ -724,7 +724,7 @@ class Masthead {
 				$aOrigSize['height']/*sh*/
 			);
 		} else {
-			$ioh = new ImageOperationsHelper(UserProfilePageController::AVATAR_DEFAULT_SIZE, UserProfilePageController::AVATAR_DEFAULT_SIZE);
+			$ioh = new ImageOperationsHelper();
 			$oImg = $ioh->postProcess(  $oImgOrig, $aOrigSize );
 		}
 		/**

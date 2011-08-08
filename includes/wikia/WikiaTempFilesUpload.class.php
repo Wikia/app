@@ -9,7 +9,7 @@ class WikiaTempFilesUpload {
 	/**
 	 * Upload given file into MW
 	 */
-	protected function uploadIntoMW($imagePath, $imageName) {
+	public function uploadIntoMW($imagePath, $imageName) {
 		wfProfileIn(__METHOD__);
 
 		$this->log(__METHOD__, "uploading '{$imagePath}' as File:{$imageName}");
@@ -29,7 +29,7 @@ class WikiaTempFilesUpload {
 	/**
 	 * Upload given temporary file (by ID) into MW
 	 */
-	protected function uploadTempFileIntoMW($tempId, $imageName) {
+	public function uploadTempFileIntoMW($tempId, $imageName) {
 		wfProfileIn(__METHOD__);
 
 		$res = false;
@@ -54,20 +54,20 @@ class WikiaTempFilesUpload {
 	/**
 	 * Check if given image name is used on this wiki
 	 */
-	protected function imageExists($name) {
+	public function imageExists($name) {
 		$title = Title::makeTitleSafe(NS_IMAGE, $name);
 
 		return !empty($title) && $title->exists();
 	}
 
-	protected function tempFileName($user) {
+	public function tempFileName($user) {
 		return 'Temp_file_'. $user->getID(). '_' . time();
 	}
 
 	/**
 	 * Store info in the db to enable the script to pick it up later during the day (via an automated cleaning routine)
 	 */
-	protected function tempFileStoreInfo( $filename ) {
+	public function tempFileStoreInfo( $filename ) {
 		global $wgExternalSharedDB, $wgCityId;
 		wfProfileIn(__METHOD__);
 
@@ -99,7 +99,7 @@ class WikiaTempFilesUpload {
 	/**
 	 * Remove the data about given file from the garbage collector
 	 */
-	protected function tempFileClearInfo($id) {
+	public function tempFileClearInfo($id) {
 		global $wgExternalSharedDB;
 		wfProfileIn(__METHOD__);
 
@@ -130,7 +130,7 @@ class WikiaTempFilesUpload {
 	/**
 	 * Get temp image path by providing it's ID
 	 */
-	protected function tempFileGetPath($id) {
+	public function tempFileGetPath($id) {
 		global $wgExternalSharedDB, $wgCityId;
 		wfProfileIn(__METHOD__);
 
@@ -147,7 +147,7 @@ class WikiaTempFilesUpload {
 		return $path;
 	}
 
-	protected function log($method, $msg) {
+	public function log($method, $msg) {
 		wfDebug("{$method}: {$msg}\n");
 	}
 }

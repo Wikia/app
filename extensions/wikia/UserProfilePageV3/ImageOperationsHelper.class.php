@@ -11,14 +11,58 @@ class ImageOperationsHelper {
 	 * 
 	 * @return ImageOperationsHelper
 	 */
-	public function __construct($width = null, $height = null) {
+	public function __construct($width = UserProfilePageController::AVATAR_DEFAULT_SIZE, $height = UserProfilePageController::AVATAR_DEFAULT_SIZE) {
 		$this->app = F::app();
-		if( !is_null($width) && !is_null($height) ) {
-			$this->defaultWidth = $width;
-			$this->defaultHeight = $height;
+		$this->defaultWidth = $width;
+		$this->defaultHeight = $height;
+		return $this;
+	}
+	
+	/* this function is c&p from masthead will be remove in future */
+	
+	public function postProcessFile( $sTmpFile  ) {
+		$aImgInfo = getimagesize($sTmpFile);
+
+		/**
+		 * check if mimetype is allowed
+		 */
+		$aAllowMime = array( 'image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png', 'image/jpg' );
+		if (!in_array($aImgInfo['mime'], $aAllowMime)) {
+			global $wgLang;
+
+			// This seems to be the most appropriate error message to describe that the image type is invalid.
+			// Available error codes; http://php.net/manual/en/features.file-upload.errors.php
+			$errorNo = UPLOAD_ERR_EXTENSION;
+			$errorMsg = wfMsg('blog-avatar-error-type', $aImgInfo['mime'], $wgLang->listToText( $aAllowMime ) );
+
+//				Wikia::log( __METHOD__, 'mime', $errorMsg);
+			wfProfileOut(__METHOD__);
+			return $errorNo;
+		}
+
+		switch ($aImgInfo['mime']) {
+			case 'image/gif':
+				$oImgOrig = @imagecreatefromgif($sTmpFile);
+				break;
+			case 'image/pjpeg':
+			case 'image/jpeg':
+			case 'image/jpg':
+				$oImgOrig = @imagecreatefromjpeg($sTmpFile);
+				break;
+			case 'image/x-png':
+			case 'image/png':
+				$oImgOrig = @imagecreatefrompng($sTmpFile);
+				break;
+		}
+		$aOrigSize = array('width' => $aImgInfo[0], 'height' => $aImgInfo[1]);
+		
+		$oImg = $this->postProcess($oImgOrig,$aOrigSize);
+		
+		if( !imagepng( $oImg, $sTmpFile ) ) {
+			return UPLOAD_ERR_CANT_WRITE;
 		}
 		
-		return $this;
+		return UPLOAD_ERR_OK;
 	}
 	
 	public function postProcess( $oImgOrig, $aOrigSize  ) {

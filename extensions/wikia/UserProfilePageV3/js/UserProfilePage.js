@@ -3,6 +3,7 @@ var UserProfilePage = {
 	questions: [],
 	currQuestionIndex: 0,
 	modal: null,
+	newAvatar: false,
 	closingPopup: null,
 	userId: null,
 	wasDataChanged: false,
@@ -35,7 +36,7 @@ var UserProfilePage = {
 		if( UserProfilePage.isLightboxGenerating === false ) {
 		//if lightbox is generating we don't want to let user open second one
 			UserProfilePage.isLightboxGenerating = true;
-			
+			UserProfilePage.newAvatar = false;
 			UserProfilePage.track('edit/personal_data');
 			
 			$.getResources([$.getSassCommonURL('/extensions/wikia/UserProfilePageV3/css/UserProfilePage_modal.scss')]);
@@ -137,28 +138,13 @@ var UserProfilePage = {
 		UserProfilePage.modal.find('img.avatar').hide();
 		UserProfilePage.modal.find('.avatar-loader').show();
 		
-		var image = $(img),
-			userData = {file: image.attr('class'), source: 'sample'};
+		var image = $(img);
+		UserProfilePage.newAvatar = {file: image.attr('class'), source: 'sample', userId: UserProfilePage.userId };
 		
-		$.ajax({
-			type: 'POST',
-			url: this.ajaxEntryPoint+'&method=saveUsersAvatar',
-			dataType: 'json',
-			data: 'userId=' + UserProfilePage.userId + '&data=' + $.toJSON(userData),
-			success: function(data) {
-				if( data.success === false ) {
-					var errorBox = $(".UPPLightbox #errorBox").show().find('div');
-					errorBox.empty();
-					errorBox.append( data.errorMsg );
-				} else {
-					UserProfilePage.modal.find('.avatar-loader').hide();
-					
-					var avatarImg = UserProfilePage.modal.find('img.avatar');
-					avatarImg.attr('src', data.result.avatar);
-					avatarImg.show();
-				}
-			}
-		});
+		var avatarImg = UserProfilePage.modal.find('img.avatar');
+		avatarImg.attr('src', image.attr('src'));
+		UserProfilePage.modal.find('.avatar-loader').hide();
+		avatarImg.show();
 	},
 	
 	saveAvatarAIM: function(form) {
@@ -179,6 +165,8 @@ var UserProfilePage = {
 						
 						UserProfilePage.modal.find('.avatar-loader').hide();
 						avatarImg.attr('src', response.result.avatar).show();
+						UserProfilePage.newAvatar = { file: response.result.avatar , source: 'uploaded', userId: UserProfilePage.userId };
+						
 					} else {
 						if( typeof(response.result.error) !== 'undefined' ) {
 							var errorBox = $(".UPPLightbox #errorBox").show().find('div');
@@ -338,6 +326,10 @@ var UserProfilePage = {
 		
 		var userData = UserProfilePage.getFormData();
 		
+		if(UserProfilePage.newAvatar) {
+			userData.avatarData = UserProfilePage.newAvatar;
+		}
+		
 		$.ajax({
 			type: 'POST',
 			url: this.ajaxEntryPoint+'&method=saveUserData',
@@ -440,12 +432,11 @@ var UserProfilePage = {
 	fbConnectAvatar: function() {
 		UserProfilePage.modal.find('img.avatar').hide();
 		UserProfilePage.modal.find('.avatar-loader').show();
-		
-		$.postJSON( this.ajaxEntryPoint, { method: 'onFacebookConnect', avatar: true, cb: wgStyleVersion }, function(data) {
+		alert("dsdds");
+		$.postJSON( this.ajaxEntryPoint, { method: 'onFacebookConnectAvatar', avatar: true, cb: wgStyleVersion }, function(data) {
 			if( data.result.success === true ) {
 				$('#facebookConnectAvatar').hide();
 				var avatarImg = UserProfilePage.modal.find('img.avatar');
-				
 				UserProfilePage.modal.find('.avatar-loader').hide();
 				avatarImg.attr('src', data.result.avatar).show();
 			}
