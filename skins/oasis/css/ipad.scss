@@ -1,9 +1,13 @@
+//The worst CSS code I've seen and its mine ... Jakub Olek
+//all the importants are used as I have to override inline styles for IPad
+//yes, I am ashamed...
+
 #AjaxLoginBoxWrapper {
-  top: 12px !important; //no other way to change that as it is inline style
+  top: 12px !important;
 }
 
 input {
-  height: 30px !important; //no other way to change that as it is inline style
+  height: 30px !important;
   font-size: 15pt;
 }
 
@@ -68,12 +72,7 @@ input {
 .wikia-slideshow-popout-images-wrapper {
   margin: 0 auto !important;
 }
-.wikia-slideshow-popout-add-image {
-  display: none !important;
-}
-.wikia-slideshow-popout-caption-wrapper {
-  height: 20px !important;
-}
+
 #WikiaPage {
   width: 100%;
   #WikiaMainContent {
@@ -96,7 +95,7 @@ input {
     }
   }
 
-  .wikia-slideshow-popout {
+  .modalWrapper.wikia-slideshow-popout {
     height: 95% !important;
     width: 95% !important;
       #wikia-slideshow-popout-images-wrapper {
@@ -107,7 +106,7 @@ input {
 }
 
 @media ( orientation: portrait ) {
-  .wikia-slideshow-popout {
+  .modalWrapper.wikia-slideshow-popout {
     left: 10px !important;
     margin-left: 0 !important;
     width: 688px !important;

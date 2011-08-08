@@ -784,7 +784,7 @@ jQuery.getResources = function(resources, callback) {
 //Extension to jQuery.support to detect browsers/platforms that don't support
 //CSS directive position:fixed
 if(jQuery.support){
-	jQuery.support.positionFixed = !( navigator.platform in {'iPad':'', 'iPhone':'', 'iPod':''} || (navigator.userAgent.match(/android/i) != null));
+	jQuery.support.fileUpload = jQuery.support.keyboardShortcut = jQuery.support.positionFixed = !( navigator.platform in {'iPad':'', 'iPhone':'', 'iPod':''} || (navigator.userAgent.match(/android/i) != null));
 }
 
 //Simple JavaScript Templating
