@@ -25,7 +25,7 @@ function wfAdEngineSetupJSVars($vars) {
 
 	// AdDriver
 	$vars['wgAdDriverCookieLifetime'] = $wgAdDriverCookieLifetime;
-	$highValueCountries = WikiFactory::getVarValueByName('wgHighValueCountries', 177);	// community central
+	//$highValueCountries = WikiFactory::getVarValueByName('wgHighValueCountries', 177);	// community central
 	if (empty($highValueCountries)) {
 		$highValueCountries = $wgHighValueCountries;
 	}

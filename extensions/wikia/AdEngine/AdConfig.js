@@ -8,7 +8,7 @@ AdConfig = {
 
 	isHighValueCountry: function(country) {
 		country = country.toUpperCase();
-		return $.inArray(country, window.wgHighValueCountries) != -1;
+		return country in window.wgHighValueCountries && window.wgHighValueCountries[country];
 	},
 
 	isHighValueSlot: function(slotname) {
