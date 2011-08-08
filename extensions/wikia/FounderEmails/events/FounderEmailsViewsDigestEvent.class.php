@@ -22,16 +22,16 @@ class FounderEmailsViewsDigestEvent extends FounderEmailsEvent {
 	 * @param array $events Events is empty for this type
 	 */
 	public function process ( Array $events ) {
-		global $wgSharedDB, $wgCityId, $wgTitle;
+		global $wgSharedDB, $wgExternalSharedDB, $wgCityId, $wgTitle;
 		wfProfileIn( __METHOD__ );
 		$founderEmailObj = FounderEmails::getInstance();
 
-		$cWikiId = ( $wgSharedDB ) ? WikiFactory::DBtoID( $wgSharedDB ) : $wgCityId;
+		$cWikiId = ( $wgSharedDB ) ? WikiFactory::DBtoID( $wgExternalSharedDB ) : $wgCityId;
 		$wgTitle = Title::newMainPage();
 		// Get list of founders with digest mode turned on
 		$cityList = $founderEmailObj->getFoundersWithPreference('founderemails-views-digest');
 		
-		// Gather daily page view stats for each wiki requesting views digest		
+		// Gather daily page view stats for each wiki requesting views digest
 		foreach ($cityList as $cityID) {
 			
 			$foundingUser = $founderEmailObj->getWikiFounder($cityID);
@@ -64,12 +64,12 @@ class FounderEmailsViewsDigestEvent extends FounderEmailsEvent {
 				$founderEmailObj->notifyFounder( $this, $mailSubject, $mailBody, $mailBodyHTML, $cityID, $mailCategory );
 			}
 		}
-		wfProfileOut( __METHOD__ );		
+		wfProfileOut( __METHOD__ );
 	}
 
 	/*  Not used by DailyDigest event
 	public static function register ( ) {
-		
+
 	}
 	 */
 }

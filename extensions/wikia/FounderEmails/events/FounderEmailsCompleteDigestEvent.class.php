@@ -18,13 +18,13 @@ class FounderEmailsCompleteDigestEvent extends FounderEmailsEvent {
 	 * @param array $events 
 	 */
 	public function process ( Array $events ) {
-		global $wgSharedDB, $wgCityId, $wgTitle;		
+		global $wgSharedDB, $wgExternalSharedDB, $wgCityId, $wgTitle;
 		wfProfileIn( __METHOD__ );
 
-		$cWikiId = ( $wgSharedDB ) ? WikiFactory::DBtoID( $wgSharedDB ) : $wgCityId;
+		$cWikiId = ( $wgSharedDB ) ? WikiFactory::DBtoID( $wgExternalSharedDB ) : $wgCityId;
 		$wgTitle = Title::newMainPage();
 		$founderEmailObj = FounderEmails::getInstance();
-		// Get list of founders with digest mode turned on (defined in FounderEmailsEvent		
+		// Get list of founders with digest mode turned on (defined in FounderEmailsEvent
 		$cityList = $founderEmailObj->getFoundersWithPreference('founderemails-complete-digest');
 
 		foreach ($cityList as $cityID) {
@@ -66,12 +66,12 @@ class FounderEmailsCompleteDigestEvent extends FounderEmailsEvent {
 			}
 		}
 
-		wfProfileOut( __METHOD__ );		
+		wfProfileOut( __METHOD__ );
 	}
 
 	/*  Not used by DailyDigest event
 	public static function register ( ) {
-		
+
 	}
 	 */
 }
