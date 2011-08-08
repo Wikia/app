@@ -100,7 +100,7 @@ class GamingCalendar {
 			$week['endmonth'] = '';
 		}
 
-		switch ( date( 'W', $start ) - date( 'W' ) ) {
+		switch ( date( 'YW', $start ) - date( 'YW' ) ) {
 			case 0:
 				$week['caption'] = 'This Week';
 				break;
