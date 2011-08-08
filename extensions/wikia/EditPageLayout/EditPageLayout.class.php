@@ -128,6 +128,12 @@ class EditPageLayout extends EditPage {
 
 		wfDebug(__METHOD__ . ": returned #{$ret}\n");
 
+		// fire a custom hook when an edit from the edit page is successful (BugId:1317)
+		if (in_array($ret, array(self::AS_SUCCESS_UPDATE, self::AS_SUCCESS_NEW_ARTICLE, self::AS_OK, self::AS_END))) {
+			wfDebug(__METHOD__ . ": successful save\n");
+			$this->app->wf->RunHooks('EditPageSuccessfulSave', array($this, $ret));
+		}
+
 		return $ret;
 	}
 

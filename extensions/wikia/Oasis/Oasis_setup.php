@@ -39,8 +39,8 @@ function wfOasisSetup() {
 
 	// confirmations
 	$wgHooks['ArticleDeleteComplete'][] = 'NotificationsModule::addPageDeletedConfirmation';
-	$wgHooks['ArticleSaveComplete'][] = 'NotificationsModule::addSaveConfirmation';
 	$wgHooks['ArticleUndelete'][] = 'NotificationsModule::addPageUndeletedConfirmation';
+	$wgHooks['EditPageSuccessfulSave'][] = 'NotificationsModule::addSaveConfirmation';
 	$wgHooks['SkinTemplatePageBeforeUserMsg'][] = 'NotificationsModule::addFacebookConnectConfirmation';
 	$wgHooks['SpecialMovepageAfterMove'][] = 'NotificationsModule::addPageMovedConfirmation';
 	$wgHooks['SpecialPreferencesOnRender'][] = 'NotificationsModule::addPreferencesConfirmation';

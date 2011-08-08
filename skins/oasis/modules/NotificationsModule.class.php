@@ -322,10 +322,12 @@ class NotificationsModule extends Module {
 	/**
 	 * Handle confirmations about edit being saved
 	 */
-	public static function addSaveConfirmation() {
+	public static function addSaveConfirmation($editPage, $code) {
+		global $wgUser;
 		wfProfileIn(__METHOD__);
 
-		if (Wikia::isOasis()) {
+		// as for now only add it for logged-in (BugId:1317)
+		if (Wikia::isOasis() && $wgUser->isLoggedIn()) {
 			self::addConfirmation(wfMsg('oasis-edit-saved'));
 		}
 
