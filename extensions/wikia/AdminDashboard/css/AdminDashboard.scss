@@ -104,6 +104,10 @@ $base-z: 5;
 
 .AdminDashboard {
 	position: relative;
+	ul, ol {
+		margin: 0;
+		list-style: none;
+	}
 	.admin-dashboard-content {
 		
 		.control-section {
@@ -310,10 +314,6 @@ $base-z: 5;
 	position: relative;
 	width: $admin-dashboard-content-width;
 	z-index: $base-z;
-	ul, ol {
-		margin: 0;
-		list-style: none;
-	}
 	&.AdminDashboardChromedArticle {
 		/*@include transition-shorthand(width 200ms ease-in);*/
 		padding: 0 12px 0 5px;
