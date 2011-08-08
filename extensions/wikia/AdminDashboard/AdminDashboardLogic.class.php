@@ -5,22 +5,25 @@
  */
 
 class AdminDashboardLogic {
-
-	public static $generalApps = array(
-		'Categories' => true,
-		'CreateBlogPage' => true,
-		'CreatePage' => true,
-		'Listusers' => true,
-		'ListUsers' => true,
-		'MultipleUpload' => true,
-		'PageLayoutBuilder' => true,
-		'Recentchanges' => true,
-		'RecentChanges' => true,
-		'ThemeDesigner' => true,
-		'Upload' => true,
-		'UserRights' => true,
-		'WikiaLabs' => true,
-	);
+	
+	public static function isGeneralApp($appName) {
+		$generalApps = array(
+			'Categories' => true,
+			'CreateBlogPage' => true,
+			'CreatePage' => true,
+			'Listusers' => true,
+			'ListUsers' => true,
+			'MultipleUpload' => true,
+			'PageLayoutBuilder' => true,
+			'Recentchanges' => true,
+			'RecentChanges' => true,
+			'ThemeDesigner' => true,
+			'Upload' => true,
+			'UserRights' => true,
+			'WikiaLabs' => true,
+		);
+		return !empty($generalApps[$appName]);
+	}
 
 	/**
 	 * @brief Helper function which determines whether to display the Admin Dashboard Chrome in the Oasis Skin

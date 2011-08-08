@@ -76,7 +76,7 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 		/** Put them into a sortable array */
 		$groups = array();
 		foreach ( $pages as $pagename => $page ) {
-			if ( !isset(AdminDashboardLogic::$generalApps[$pagename]) && $page->isListed() ) {
+			if ( !AdminDashboardLogic::isGeneralApp($pagename) && $page->isListed() ) {
 				$group = SpecialPage::getGroup( $page );
 				if( !isset($groups[$group]) ) {
 					$groups[$group] = array();
@@ -115,7 +115,8 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 			$headerText = SpecialPage::getTitleFor($page)->getText();
 		}
 		$this->response->setVal('headerText', $headerText);
-		$this->response->setVal('backLink', Title::newFromText('AdminDashboard', NS_SPECIAL)->getFullURL());
+		$tab = AdminDashboardLogic::isGeneralApp($headerText) ? 'general' : 'advanced';
+		$this->response->setVal('backLink', Title::newFromText('AdminDashboard', NS_SPECIAL)->getFullURL('tab='.$tab));
 		
 		$state = F::app()->sendRequest( 'AdminDashboardSpecialPage', 'getDrawerState', array())->getData();
 		$this->response->setVal('isCollapsed', $state['state'] == 'true');
