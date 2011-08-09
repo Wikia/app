@@ -62,6 +62,14 @@ class PageHeaderModule extends Module {
 		// action button
 		#print_pre($this->content_actions);
 
+		// handle protected pages (they should have viewsource link and lock icon) - BugId:9494
+		if (isset($this->content_actions['viewsource']) && !$wgTitle->isProtected()) {
+			// force login to edit page that is not protected
+			$this->content_actions['edit'] = $this->content_actions['viewsource'];
+			$this->content_actions['edit']['text'] = wfMsg('edit');
+			unset($this->content_actions['viewsource']);
+		}
+
 		// PvX's rate (RT #76386)
 		if (isset($this->content_actions['rate'])) {
 			$this->action = $this->content_actions['rate'];
@@ -93,6 +101,8 @@ class PageHeaderModule extends Module {
 			$this->actionImage = MenuButtonModule::LOCK_ICON;
 			$this->actionName = 'source';
 		}
+
+		#print_pre($this->action); print_pre($this->actionImage); print_pre($this->actionName);
 	}
 
 	/**
@@ -204,7 +214,7 @@ class PageHeaderModule extends Module {
 		}
 
 		// perform namespace and special page check
-		
+
 		// use service to get data
 		$service = PageStatsService::newFromTitle( $wgTitle );
 
@@ -367,7 +377,7 @@ class PageHeaderModule extends Module {
 			$title = explode(':', $this->title);
 			$this->title = $title[1];
 		}
-		
+
 		// render MW subtitle (contains old revision data)
 		$this->subtitle = $wgOut->getSubtitle();
 
@@ -427,6 +437,9 @@ class PageHeaderModule extends Module {
 			$pipe = wfMsg('pipe-separator');
 			$this->pageSubtitle = implode(" {$pipe} ", $subtitle);
 		}
+
+		// force AjaxLogin popup for "Add a page" button (moved from the template)
+		$this->loginClass = !empty($this->wgDisableAnonymousEditing) ? ' require-login' : '';
 
 		wfProfileOut(__METHOD__);
 	}
@@ -512,16 +525,16 @@ class PageHeaderModule extends Module {
 				array( 'page' => $wgTitle->getPrefixedText() ),
 				array( 'known', 'noclasses' )
 			);
-				
+
 			$sk = new Skin();
 			$sk->setTitle($wgTitle);
-			
+
 			$undeleteLink = $sk->getUndeleteLink();
-			
+
 			if ( !empty( $undeleteLink ) ) {
 				$this->subtitle .= ' | ' . $undeleteLink;
 			}
-			
+
 			// dropdown actions
 			$this->dropdown = $this->getDropdownActions();
 

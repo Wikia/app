@@ -34,9 +34,6 @@ class MenuButtonModule extends Module {
 
 		wfProfileIn(__METHOD__);
 
-		$this->loginURL = $this->createLoginURL();
-		$this->loginToEditURL = $this->createLoginURL("action=edit");
-
 		if (isset($data['action'])) {
 			$this->action = $data['action'];
 		}
@@ -50,9 +47,6 @@ class MenuButtonModule extends Module {
 		}
 
 		$this->actionAccessKey = MenuButtonModule::accessKey($this->actionName);
-
-		// prompt for login to edit?
-		$this->promptLogin = ( !$wgTitle->userCan( 'edit' ) && $wgUser->isAnon() );
 
 		// default CSS class
 		$this->class = 'wikia-button';
@@ -101,14 +95,7 @@ class MenuButtonModule extends Module {
 				'width' => $width,
 			));
 
-			// show lock icon before the link
-			if ($data['image'] == self::LOCK_ICON) {
-				$this->iconBefore = $image;
-			}
-			else {
-				$this->icon = $image;
-			}
-
+			$this->icon = $image;
 		}
 
 		if (!empty($data['dropdown'])) {
@@ -127,7 +114,18 @@ class MenuButtonModule extends Module {
 			$this->class = 'wikia-menu-button';
 		}
 
-		#print_pre($this);
+		// prompt for login to edit?
+		$promptLogin = !$wgTitle->userCan( 'edit' ) && $wgUser->isAnon();
+
+		// modify URLs (BugId:9494)
+		if ($promptLogin && $this->actionName != 'source' /* don't modify "view source" links - BugId:9494 */) {
+			$signUpTitle = SpecialPage::getTitleFor('SignUp');
+			$loginUrl = $this->createLoginURL(!empty($this->dropdown) ? 'action=edit' : '');
+
+			$this->action['href'] = $signUpTitle->getLocalUrl($loginUrl);
+			$this->class .= ' loginToEditProtectedPage';
+		}
+
 		wfProfileOut(__METHOD__);
 	}
 
