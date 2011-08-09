@@ -128,6 +128,7 @@ $messages['en'] = array(
 *portal-url|Community
 **blogs-recent-url|blogs-recent-url-text
 **forum-url|Forum', // @todo FIXME: give this an extension specific key prefix.
+	'oasis-edit-this-menu' => 'Edit this menu',
 
 	# Related to ImageSEO RT#55755
 	'imageseo-featured-on' => 'Featured on:', // @todo FIXME: give this an extension specific key prefix.
