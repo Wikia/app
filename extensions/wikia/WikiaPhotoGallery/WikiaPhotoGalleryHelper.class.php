@@ -16,7 +16,7 @@ class WikiaPhotoGalleryHelper {
 
 	// dimensions for the smallest slider image (BugId:2787)
 	const SLIDER_MIN_IMG_WIDTH = 660;
-	const SLIDER_MIN_IMG_HEIGHT = 354;  // BugId:9678 image thumbnailer does not always land on 360px since we only scale by width
+	const SLIDER_MIN_IMG_HEIGHT = 360;
 
 	const STRICT_IMG_WIDTH_PREV = 320;
 	const STRICT_IMG_HEIGHT_PREV = 157;

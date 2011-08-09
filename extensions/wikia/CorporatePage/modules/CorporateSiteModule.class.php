@@ -211,9 +211,9 @@ class CorporateSiteModule extends Module {
 
 			foreach($this->slider as $image) {
 				// ElmoControlRoom.jpg|Label|link=http://wikia.com|linktext=Link text
-				// if parsgMsgImg thumbnail param above is used (and right now it is not)
-				// then the first field needs to change to $image['imagetitle']
-				$sliderWikitext .= "{$image['param']}|{$image['title']}|link={$image['href']}|linktext={$image['desc']}\n";
+				// if parsgMsgImg thumbnail 2nd param=true (and right now it is not) then the return vals move around
+				// $sliderWikitext .= "{$image['imagetitle']}|{$image['title']}|link={$image['href']}|linktext={$image['desc']}\n";
+				$sliderWikitext .= "{$image['param']}|{$image['title']}|link={$image['href']}|linktext={$image['imagetitle']}\n";
 			}
 
 			// set the content and parse it
