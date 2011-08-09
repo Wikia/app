@@ -5,7 +5,7 @@
  * @author Jakub Olek <bukaj.kelo(at)gmail.com>
  * @authore Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
-class SkeleSkinService extends WikiaService {
+class WikiaMobileService extends WikiaService {
 	const CACHE_MANIFEST_PATH = 'wikia.php?controller=SkeleSkinAppCacheController&method=serveManifest&format=html';
 	
 	static private $initialized = false;

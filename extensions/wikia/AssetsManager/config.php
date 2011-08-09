@@ -146,9 +146,19 @@ $config['wikiaphone_js'] = array(
 $config['skeleskin_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//skins//common/zepto/zepto-0.6.js',
-		'//skins/common/generic/orientation.js',
+		'//skins/common/zepto/zepto-0.6.js',
+		'//skins/common/zepto/orientation.js',
 		'//skins/skeleskin/js/main.js'
+	)
+);
+
+//WikiaMobile JS
+$config['wikiamobile_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//skins/common/zepto/zepto-0.6.js',
+		'//skins/common/zepto/orientation.js',
+		'//skins/wikiamobile/js/main.js'
 	)
 );
 

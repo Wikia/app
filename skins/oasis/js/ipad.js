@@ -21,7 +21,7 @@ iPadImprovements = {
 		wikiaMainContent = $('#WikiaMainContent').offset();
 		window.scrollTo( 0, wikiaMainContent.top );
 
-		//global nav fix: first click opens nav, second redirects to a hub
+		//global nav fix: first click opens nav,  second redirects to a hub
 		$( "#WikiaHeader #GlobalNavigation > li > a" ).live( 'click', function( event ) {
 			if ( !$( this ).next().hasClass( 'show' ) ) {
 				$( this ).next().addClass( 'show' );
