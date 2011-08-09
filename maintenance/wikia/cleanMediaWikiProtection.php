@@ -25,6 +25,7 @@ if ( isset( $options['help'] ) ) {
 echo "\nCleaning protections for SERVER_ID={$_ENV['SERVER_ID']}...\n";
 $dbr = wfGetDB( DB_MASTER );
 $query =  'DELETE FROM page_restrictions WHERE pr_page IN ( SELECT page_id FROM page WHERE page_namespace = ' . NS_MEDIAWIKI . ' )';
+wfWaitForSlaves( 5 );
 $oRes = $dbr->query( $query );
 
 // Exit with status 1 on error.
