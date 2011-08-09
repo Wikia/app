@@ -64,7 +64,7 @@ $messages['en'] = array(
 	
 	'user-identity-box-about-name' => 'What\'s your name?',
 	'user-identity-box-about-location' => 'Where do you live?',
-	'user-identity-box-about-birthday' => 'What\'s your birthday?',
+	'user-identity-box-about-birthday' => 'When is your birthday?',
 	'user-identity-box-about-occupation' => 'What\'s your occupation?',
 	'user-identity-box-about-gender' => 'What gender are you?',
 	'user-identity-box-about-website' => 'What\'s your personal website?',
