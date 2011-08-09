@@ -1,5 +1,7 @@
 <?php 
 class ImageOperationsHelper {
+	const UPLOAD_ERR_RESOLUTION = 101;
+	
 	private $app = null;
 	private $defaultWidth = null;
 	private $defaultHeight = null;
@@ -18,23 +20,24 @@ class ImageOperationsHelper {
 		return $this;
 	}
 	
+	public function getAllowedMime() {
+		return array( 'image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png', 'image/jpg' );	
+	}
+	 
 	/* this function is c&p from masthead will be remove in future */
 	
 	public function postProcessFile( $sTmpFile  ) {
 		$aImgInfo = getimagesize($sTmpFile);
-
 		/**
 		 * check if mimetype is allowed
 		 */
-		$aAllowMime = array( 'image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png', 'image/jpg' );
+		$aAllowMime = self::getAllowedMime();
 		if (!in_array($aImgInfo['mime'], $aAllowMime)) {
 			global $wgLang;
 
 			// This seems to be the most appropriate error message to describe that the image type is invalid.
 			// Available error codes; http://php.net/manual/en/features.file-upload.errors.php
-			$errorNo = UPLOAD_ERR_EXTENSION;
-			$errorMsg = wfMsg('blog-avatar-error-type', $aImgInfo['mime'], $wgLang->listToText( $aAllowMime ) );
-
+			return UPLOAD_ERR_EXTENSION;
 //				Wikia::log( __METHOD__, 'mime', $errorMsg);
 			wfProfileOut(__METHOD__);
 			return $errorNo;
@@ -58,11 +61,15 @@ class ImageOperationsHelper {
 		
 		$oImg = $this->postProcess($oImgOrig,$aOrigSize);
 		
+		if($oImg === self::UPLOAD_ERR_RESOLUTION) {
+			return self::UPLOAD_ERR_RESOLUTION;
+		}
+		
 		if( !imagepng( $oImg, $sTmpFile ) ) {
 			return UPLOAD_ERR_CANT_WRITE;
 		}
 		
-		return UPLOAD_ERR_OK;
+		return true;
 	}
 	
 	public function postProcess( $oImgOrig, $aOrigSize  ) {
@@ -70,6 +77,10 @@ class ImageOperationsHelper {
 		
 		$widthBeforeResizing = $aOrigSize['width'];
 		$heightBeforeResizing = $aOrigSize['height'];
+		
+		if($widthBeforeResizing > 2000 && $heightBeforeResizing > 2000) {
+			return self::UPLOAD_ERR_RESOLUTION;
+		}
 		
 		//resizes if needed
 		if( $widthBeforeResizing > $this->defaultWidth && $heightBeforeResizing > $this->defaultHeight ) {

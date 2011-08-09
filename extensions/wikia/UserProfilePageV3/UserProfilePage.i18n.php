@@ -19,7 +19,8 @@ $messages['en'] = array(
 	'userprofilepage-interview-section-title' => 'User Interview',
 	'userprofilepage-stuff-section-title' => 'Stuff',
 	'userprofilepage-invalid-user' => 'Invalid user! You are not logged-in or do not have rights to process',
-	
+	'userprofilepage-avatar-error-type' => 'Invalid MIME type. Allowed: $1',
+	'userprofilepage-avatar-error-resolution' => 'Maximum resolution of avatar is 2000x2000',
 	'user-identity-box-edit' => 'Edit',
 	'user-identity-box-wikia-contributor' => 'A Wikia Contributor',
 	'user-identity-box-edit-avatar' => 'Edit avatar',
@@ -95,7 +96,7 @@ $messages['en'] = array(
 	
 	'user-identity-box-avatar-error-nofile' => 'Error: No avatar file found to upload',
 	'user-identity-box-avatar-error-cantwrite' => 'Error: Could not write to temporary directory',
-	'user-identity-box-avatar-error-size' => 'Error: Avatar is too big ($1)',
+	'user-identity-box-avatar-error-size' => 'Error: Avatar file is too big (max.$1KB)',
 	'user-identity-box-avatar-error' => 'Error: There was internal error while saving avatar',
 	
 	'userprofilepage-lightbox-about-me-cancel' => "Cancel",

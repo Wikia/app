@@ -436,8 +436,6 @@ class UserProfilePageController extends WikiaController {
 		);
 		
 		if ( $errorNo != UPLOAD_ERR_OK ) {
-			$this->validateUpload($errorNo, $status, $errorMsg);
-			
 			$this->app->wf->ProfileOut( __METHOD__ );
 			return false;
 		} else {
@@ -457,6 +455,8 @@ class UserProfilePageController extends WikiaController {
 	public function onSubmitUsersAvatar() {
 		$this->app->wf->ProfileIn( __METHOD__ );
 		
+		$this->response->setContentType('text/html; charset=utf-8');
+		
 		$user = F::build('User', array($this->getVal('userId')), 'newFromId');
 		
 		$errorMsg = $this->wf->msg('userprofilepage-interview-save-internal-error');
@@ -464,14 +464,24 @@ class UserProfilePageController extends WikiaController {
 		
 		if( !$user->isAnon() && $this->request->wasPosted() ) {
 			$avatarUploadFiled = 'UPPLightboxAvatar';
-			
-			$fileName = $this->app->wg->request->getFileTempName($avatarUploadFiled);
-			
-			$thumbnail = $this->storeInTempImage($fileName);
-			
-			if( false === $this->response->hasContentType() ) {
-				$this->response->setContentType('text/html; charset=utf-8');
+			$uploadError = $this->app->wg->request->getUploadError($avatarUploadFiled);
+
+			if( $uploadError != 0) {
+				$thumbnail =  $uploadError;	
+			} else {
+				$fileName = $this->app->wg->request->getFileTempName($avatarUploadFiled);
+				$fileuploader = new WikiaTempFilesUpload();
+				
+				$thumbnail = $this->storeInTempImage($fileName, $fileuploader);
 			}
+			
+			if(is_int($thumbnail)) {
+				$result = array('success' => false, 'error' => $this->validateUpload($thumbnail));
+				$this->setVal('result', $result);
+				return ;
+			}
+			
+			$this->setVal('result', $result);
 			
 			$result = array('success' => true, 'avatar' => $thumbnail->url . '?cb=' . date('U') );
 			$this->setVal('result', $result);
@@ -484,23 +494,27 @@ class UserProfilePageController extends WikiaController {
 		$this->setVal('result', $result);
 		return ;
 	}
-	
-	protected function storeInTempImage($fileName){
-		$fileuploader = new WikiaTempFilesUpload();
-		
+
+	protected function storeInTempImage($fileName, $fileuploader){
+		if(filesize($fileName) > self::AVATAR_MAX_SIZE ) {
+			return UPLOAD_ERR_FORM_SIZE;
+		}
+					
 		$tempName = $fileuploader->tempFileName($this->wg->User); 
 		$title = Title::makeTitle(NS_FILE, $tempName);
 		$localRepo = RepoGroup::singleton()->getLocalRepo();
 
 		$ioh = F::build('ImageOperationsHelper' );
-		$ioh->postProcessFile($fileName);
+		
+		
+		$out = $ioh->postProcessFile($fileName);
+		if($out !== true) {
+			return $out;
+		}
 		
 		$file = new FakeLocalFile($title, $localRepo);				
 		$file->upload( $fileName , '', '' );
-
-		// store uploaded image in GarbageCollector (image will be removed if not used)
-		$tempId = $fileuploader->tempFileStoreInfo($tempName);
-
+		
 		// generate thumbnail (to fit 200x200 box) of temporary file
 		$width = min(WikiaPhotoGalleryHelper::thumbnailMaxWidth, $file->width);
 		$height = min(WikiaPhotoGalleryHelper::thumbnailMaxHeight, $file->height);
@@ -520,32 +534,30 @@ class UserProfilePageController extends WikiaController {
 	 * 
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	private function validateUpload($errorNo, &$status, &$errorMsg) {
+	private function validateUpload($errorNo ) {
 		switch( $errorNo ) {
 			case UPLOAD_ERR_NO_FILE:
-				$status = 'error';
-				$errorMsg = $this->wf->msg('user-identity-box-avatar-error-nofile');
+				return $this->wf->msg('user-identity-box-avatar-error-nofile');
 				break;
 				
 			case UPLOAD_ERR_CANT_WRITE:
-				$status = 'error';
-				$errorMsg = $this->wf->msg('user-identity-box-avatar-error-cantwrite');
+				return $this->wf->msg('user-identity-box-avatar-error-cantwrite');
 				break;
 				
 			case UPLOAD_ERR_FORM_SIZE:
-				$status = 'error';
-				$errorMsg = $this->wf->msg('user-identity-box-avatar-error-size', (int)(self::AVATAR_MAX_SIZE/1024));
+				return $this->wf->msg('user-identity-box-avatar-error-size', (int)(self::AVATAR_MAX_SIZE/1024));
 				break;
-				
-			case UPLOAD_ERR_EXTENSION:
-				$status = 'error';
+			case UPLOAD_ERR_EXTENSION;
+				return wfMsg('userprofilepage-avatar-error-type', $this->wg->Lang->listToText( ImageOperationsHelper::getAllowedMime() ) );
 				break;
-				
+			case ImageOperationsHelper::UPLOAD_ERR_RESOLUTION:
+				return $this->wf->msg('userprofilepage-avatar-error-resolution');
+				break;
 			default:
-				$error = wfMsg('user-identity-box-avatar-error');
+				return  wfMsg('user-identity-box-avatar-error');
 		}
 	}
-
+	
 	/**
 	 * @brief get Local Path to avatar
 	 * 
@@ -869,7 +881,8 @@ class UserProfilePageController extends WikiaController {
 			$tmpFile = '';
 			$oAvatarObj->uploadByUrlToTempFile($data->file, $tmpFile);
 			
-			$thumbnail = $this->storeInTempImage($tmpFile);
+			$fileuploader = new WikiaTempFilesUpload();
+			$thumbnail = $this->storeInTempImage($fileName, $fileuploader);
 			
 			$result = array('success' => true, 'avatar' => $thumbnail->url . '?cb=' . date('U') );
 			$this->setVal('result', $result);

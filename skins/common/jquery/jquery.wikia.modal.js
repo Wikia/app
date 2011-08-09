@@ -161,6 +161,7 @@ $.fn.extend({
 					} else {
 						wrapper.closeModal();
 					}
+					return false;
 				}
 			})
 			.bind("resize.modal", function() {
