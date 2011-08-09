@@ -561,6 +561,20 @@ class Masthead {
 	 * @return Integer -- error code of operation
 	 */
 	public function uploadByUrl($url){
+		$sTmpFile = '';
+		
+		$errorNo = $this->uploadByUrlToTempFile($url, $sTmpFile);
+		
+		if( $errorNo == UPLOAD_ERR_OK ) {
+			$errorNo = $this->postProcessImageInternal($sTmpFile, $errorNo);			
+		}
+
+		wfProfileOut(__METHOD__);
+		return $errorNo;
+	} // end uploadByUrl()
+	
+	
+	public function uploadByUrlToTempFile($url, &$sTmpFile){
 		global $wgTmpDirectory;
 		wfProfileIn(__METHOD__);
 
@@ -577,12 +591,8 @@ class Masthead {
 			wfProfileOut( __METHOD__ );
 			return UPLOAD_ERR_CANT_WRITE;
 		}
-		$errorNo = $this->postProcessImageInternal($sTmpFile, $errorNo);
-
-		wfProfileOut(__METHOD__);
-		return $errorNo;
-	} // end uploadByUrl()
-
+	}
+	
 	/**
 	 * uploadFile -- save file when is in proper format, do resize and
 	 * other stuffs

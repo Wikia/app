@@ -101,7 +101,7 @@ class AvatarService extends Service {
 				return $avatarUrl;
 			}
 			
-			$avatarUrl = Masthead::newFromUser($user)->getThumbnail($avatarSize, true, $avoidUpscaling);
+			$avatarUrl = Masthead::newFromUser($user)->getThumbnail($avatarSize, true, $avoidUpscaling).'?cb='.$user->getOption('avatar_rev', 0);
 			
 			$avatarsCache[$key] = $avatarUrl;
 		}

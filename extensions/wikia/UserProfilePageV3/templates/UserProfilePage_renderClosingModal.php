@@ -1,4 +1,4 @@
-<div id="UPPLightbox" class="UPPLightbox">
+<div id="UPPLightboxClose" class="UPPLightbox">
 	<h1><?= wfMsg('userprofilepage-closing-popup-header'); ?></h1>
 	
 	<ul class="tab-content">

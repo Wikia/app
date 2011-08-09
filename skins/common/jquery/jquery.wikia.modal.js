@@ -20,7 +20,8 @@ $.fn.extend({
 		}
 
 		// modal wrapper ID
-		var id = settings.id || ($(this).attr('id') || '') + 'Wrapper';
+		var ts = Math.round((new Date()).getTime() / 1000);
+		var id = settings.id || ($(this).attr('id') || ts) + 'Wrapper';
 
 		//wrap with modal chrome
 		if (skin == "oasis") {
@@ -50,18 +51,9 @@ $.fn.extend({
 			var zIndex = parseInt(settings.zIndex);
 		}
 		else {
-			var zIndex = 0;
-
-			$("body").children('.blackout').
-				// for Monaco
-				add($('#positioned_elements').children('.blackout')).
-				each(function() {
-					zIndex = Math.max(zIndex, parseInt($(this).css('zIndex')));
-				});
-
-			zIndex = Math.max(20000001, zIndex + 1); //close to the highest possible z-index value
+			var zIndex = 2000000001 + ($('body').children('.blackout').length) * 2 ;
 		}
-
+		
 		// needed here for getModalTopOffset()
 		wrapper.data('settings', settings);
 
@@ -154,12 +146,12 @@ $.fn.extend({
 		});
 
 		$(window)
-			.bind("keypress.modal", function(event) {
+			.bind("keypress.modal" + id, function(event) {
 				if (event.keyCode == 27) {
-					if (onClose) {
+					if (typeof settings.onClose == 'function') {
 						// let extension decide what to do
 						// close can be prevented by onClose() returning false
-						if (onClose({keypress:1}) == false) {
+						if (settings.onClose({keypress:1}) == false) {
 							return;
 						}
 					}
@@ -192,10 +184,10 @@ $.fn.extend({
 					return;
 				}
 
-				if (onClose) {
+				if (typeof settings.onClose == 'function') {
 					// let extension decide what to do
 					// close can be prevented by onClose() returning false
-					if (onClose({click:1}) == false) {
+					if (settings.onClose({click:1}) == false) {
 						return;
 					}
 				}
@@ -233,7 +225,7 @@ $.fn.extend({
 
 
 	closeModal: function() {
-		$(window).unbind(".modal");
+		$(window).unbind(".modal" + this.attr('id'));
 		this.animate({
 			top: this.offset()["top"] + 100,
 			opacity: 0
@@ -278,8 +270,7 @@ $.fn.extend({
 		var wrapper = this.closest(".modalWrapper");
 
 		// let's have it dynamically generated, so every newly created modal will be on the top
-		var zIndex = ($('#positioned_elements').children('.blackout').length+1) * 2000000001;
-
+		var zIndex = 2000000001 + ($('body').children('.blackout').length) * 2 ;
 		// show associated blackout
 		var blackout = $(this).data('blackout');
 		blackout

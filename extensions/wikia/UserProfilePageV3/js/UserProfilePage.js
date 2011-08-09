@@ -77,11 +77,11 @@ var UserProfilePage = {
 	},
 	
 	switchTab: function(tab) {
-		if( true === UserProfilePage.wasDataChanged ) {
+	/*	if( true === UserProfilePage.wasDataChanged ) {
 			UserProfilePage.saveUserData(false);
 			UserProfilePage.forceRedirect = true;
 			UserProfilePage.wasDataChanged = false;
-		}
+		} */
 
 		// Move 'selected' class to the right tab
 		var tabs = tab.closest('ul');
@@ -148,6 +148,7 @@ var UserProfilePage = {
 		
 		var image = $(img);
 		UserProfilePage.newAvatar = {file: image.attr('class'), source: 'sample', userId: UserProfilePage.userId };
+		UserProfilePage.wasDataChanged = true;
 		
 		var avatarImg = UserProfilePage.modal.find('img.avatar');
 		avatarImg.attr('src', image.attr('src'));
@@ -174,6 +175,7 @@ var UserProfilePage = {
 						UserProfilePage.modal.find('.avatar-loader').hide();
 						avatarImg.attr('src', response.result.avatar).show();
 						UserProfilePage.newAvatar = { file: response.result.avatar , source: 'uploaded', userId: UserProfilePage.userId };
+						UserProfilePage.wasDataChanged = true;
 						
 					} else {
 						if( typeof(response.result.error) !== 'undefined' ) {
@@ -232,9 +234,12 @@ var UserProfilePage = {
 		});
 		
 		var formFields = modal.find('input[type="text"], select');
-		formFields.change(function() {
+		var change = function() {
 			UserProfilePage.wasDataChanged = true;
-		});
+		}
+		
+		formFields.change(change);
+		formFields.keypress(change);
 		
 		UserProfilePage.toggleJoinMoreWikis();
 
@@ -449,13 +454,14 @@ var UserProfilePage = {
 	fbConnectAvatar: function() {
 		UserProfilePage.modal.find('img.avatar').hide();
 		UserProfilePage.modal.find('.avatar-loader').show();
-		alert("dsdds");
 		$.postJSON( this.ajaxEntryPoint, { method: 'onFacebookConnectAvatar', avatar: true, cb: wgStyleVersion }, function(data) {
 			if( data.result.success === true ) {
 				$('#facebookConnectAvatar').hide();
 				var avatarImg = UserProfilePage.modal.find('img.avatar');
 				UserProfilePage.modal.find('.avatar-loader').hide();
 				avatarImg.attr('src', data.result.avatar).show();
+				UserProfilePage.wasDataChanged = true;
+				UserProfilePage.newAvatar = {file: data.result.avatar, source: 'facebook', userId: UserProfilePage.userId };
 			}
 		});
 	},
@@ -561,15 +567,16 @@ var UserProfilePage = {
 		UserProfilePage.track('top_wikis');
 	},
 	
-	closeModal: function(modal, resetDataChangedFlag) {
+	closeModal: function(modal, resetDataChangedFlag) {		
 		if( typeof(modal.closeModal) === 'function' ) {
 			modal.closeModal();
 		} else {
 			if( UserProfilePage.wasDataChanged === true ) {
 				UserProfilePage.userData = UserProfilePage.getFormData();
-				UserProfilePage.displayClosingPopup();
-				UserProfilePage.modal.hideModal();
 				
+				setTimeout(function() {
+					UserProfilePage.displayClosingPopup();
+				}, 50 );
 				return false;
 			}
 		}
@@ -589,7 +596,8 @@ var UserProfilePage = {
 	},
 	
 	displayClosingPopup: function() {
-		$.postJSON( this.ajaxEntryPoint, { method: 'getClosingModal', userId: UserProfilePage.userId, rand: Math.floor(Math.random()*100001) }, function(data) {
+		$.getJSON( this.ajaxEntryPoint, { method: 'getClosingModal', userId: UserProfilePage.userId, rand: Math.floor(Math.random()*100001) }, function(data) {
+	
 			UserProfilePage.closingPopup = $(data.body).makeModal({width: 450, showCloseButton: false, closeOnBlackoutClick: false});
 			
 			var modal = UserProfilePage.closingPopup;
@@ -607,7 +615,6 @@ var UserProfilePage = {
 			var cancel = modal.find('.cancel');
 			cancel.click(function() {
 				modal.closeModal();
-				UserProfilePage.modal.showModal();
 			});
 		});
 	}
