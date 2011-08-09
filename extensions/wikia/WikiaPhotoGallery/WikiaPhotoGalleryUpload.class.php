@@ -221,34 +221,4 @@ class WikiaPhotoGalleryUpload extends WikiaTempFilesUpload{
 		wfProfileOut(__METHOD__);
 		return $ret;
 	}
-	
-	/**
-	 * Perform image name check
-	 */
-	protected function checkImageName( $imageName, $uploadFieldName = self::DEFAULT_FILE_FIELD_NAME ) {
-		global $wgRequest, $wgUser;
-
-		$upload = new UploadFromFile();
-		$upload->initializeFromRequest($wgRequest);
-		$permErrors = $upload->verifyPermissions( $wgUser );
-
-		if ( $permErrors !== true ) {
-			return self::USER_PERMISSION_ERROR;
-		}
-
-		$ret = $upload->verifyUpload();
-
-		// this hook is used by WikiaTitleBlackList extension
-		if(!wfRunHooks('WikiaMiniUpload:BeforeProcessing', array($imageName))) {
-			$this->log(__METHOD__, 'Hook "WikiaMiniUpload:BeforeProcessing" broke processing the file');
-			wfProfileOut(__METHOD__);
-			return UploadBase::VERIFICATION_ERROR;
-		}
-
-		if(is_array($ret)) {
-			return $ret['status'];
-		} else {
-			return $ret;
-		}
-	}
 }

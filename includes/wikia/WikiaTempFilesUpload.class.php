@@ -146,7 +146,37 @@ class WikiaTempFilesUpload {
 		wfProfileOut(__METHOD__);
 		return $path;
 	}
+	
+	/**
+	 * Perform image name check
+	 */
+	public function checkImageName( $imageName, $uploadFieldName ) {
+		global $wgRequest, $wgUser;
 
+		$upload = new UploadFromFile();
+		$upload->initializeFromRequest($wgRequest);
+		$permErrors = $upload->verifyPermissions( $wgUser );
+
+		if ( $permErrors !== true ) {
+			return self::USER_PERMISSION_ERROR;
+		}
+
+		$ret = $upload->verifyUpload();
+
+		// this hook is used by WikiaTitleBlackList extension
+		if(!wfRunHooks('WikiaMiniUpload:BeforeProcessing', array($imageName))) {
+			$this->log(__METHOD__, 'Hook "WikiaMiniUpload:BeforeProcessing" broke processing the file');
+			wfProfileOut(__METHOD__);
+			return UploadBase::VERIFICATION_ERROR;
+		}
+
+		if(is_array($ret)) {
+			return $ret['status'];
+		} else {
+			return $ret;
+		}
+	}
+	
 	public function log($method, $msg) {
 		wfDebug("{$method}: {$msg}\n");
 	}

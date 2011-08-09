@@ -168,18 +168,19 @@ var UserProfilePage = {
 			onComplete: function(response) {
 				try {
 					response = JSON.parse(response);
-					
-					if( response.result.success === true ) {
-						var avatarImg = UserProfilePage.modal.find('img.avatar');
-						
+					var errorBox = $(".UPPLightbox #errorBox").show().find('div');
+					var avatarImg = UserProfilePage.modal.find('img.avatar');
+					if( response.result.success === true ) {						
 						UserProfilePage.modal.find('.avatar-loader').hide();
 						avatarImg.attr('src', response.result.avatar).show();
 						UserProfilePage.newAvatar = { file: response.result.avatar , source: 'uploaded', userId: UserProfilePage.userId };
 						UserProfilePage.wasDataChanged = true;
-						
+						errorBox.hide();
 					} else {
 						if( typeof(response.result.error) !== 'undefined' ) {
-							var errorBox = $(".UPPLightbox #errorBox").show().find('div');
+							UserProfilePage.modal.find('.avatar-loader').hide();
+							avatarImg.show();
+							errorBox.show();
 							errorBox.empty();
 							errorBox.append( response.result.error );
 						}
