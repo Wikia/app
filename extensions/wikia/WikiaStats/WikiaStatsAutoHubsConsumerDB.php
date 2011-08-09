@@ -511,6 +511,8 @@ class WikiaStatsAutoHubsConsumerDB {
 
 		// get avatars for the users
 		foreach( $out as $key => $val ) {
+			$u = User::newFromId( $val['user_id'] );
+			$out[$key]['username'] = $u->getName();
 			$userWiki = $this->getUserWiki($val['user_id']);
 			if ( $userWiki !== false ) {
 				list ( $wikiUrl, $pageUrl ) = array_values($userWiki);
@@ -520,7 +522,7 @@ class WikiaStatsAutoHubsConsumerDB {
 				$out[$key]['userpage'] = $pageUrl;
 			}
 		}
-
+		
 		$out = array("value" => $out, "age" => time());
 		$wgMemc->set( $mcKey, $out,60*60 );
 		wfProfileOut( __METHOD__ );
