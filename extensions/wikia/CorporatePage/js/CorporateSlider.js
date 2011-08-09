@@ -25,7 +25,6 @@ $(function() {
 });
 
 $(window).load(function() {
-	//setTimeout(sliderImages_load, 300);
 	spotlightSlider_setup(blockArticle);
 });
 
@@ -128,7 +127,7 @@ function spotlightSlider_setup() {
 	if (wgIsMainpage == true) {
 		size = 943;
 	}
-	
+
 	//move spotlights
 	$(".spotlight-slider-image").each(function() {
 		$(this).css("left", parseInt($(this).css("left")) - (size * random));
@@ -167,7 +166,7 @@ function spotlightSlider_scroll(nav) {
 	//hide description
 	$("#spotlight-slider .description").clearQueue().hide();
 	//scroll
-		
+
 	$("#spotlight-slider .spotlight-slider-image").animate({
 		left: "-=" + scroll_by
 	}, function() {
@@ -186,24 +185,6 @@ function wikiaSearch_setup() {
 			$(this).attr("value", placeholder).addClass("placeholder");
 		}
 	}).blur();
-}
-
-function sliderImages_load() {
-return true;
-  if (( typeof feature_image_1 == "undefined" ) || ( typeof  feature_image_2 == "undefined" ) || ( typeof  feature_image_3 == "undefined" )) {
-	  return true;
-  }
-
-  var imgTag_pt1 = '<img src="';
-  var imgTag_pt2 = '" class="spotlight-slider small">';
-  if (wgIsMainpage) {
-      imgTag_pt2 = '" class="spotlight-slider big">';
-  }
-
-  $('li#spotlight-slider-1 > a').html(imgTag_pt1 + feature_image_1 + imgTag_pt2);
-  $('li#spotlight-slider-2 > a').html(imgTag_pt1 + feature_image_2 + imgTag_pt2);
-  $('li#spotlight-slider-3 > a').html(imgTag_pt1 + feature_image_3 + imgTag_pt2);
-
 }
 
 function initHideLinks() {
