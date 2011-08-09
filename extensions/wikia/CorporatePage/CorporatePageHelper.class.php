@@ -154,7 +154,7 @@ class CorporatePageHelper{
 		$lang = $wgLang->getCode();
 		$mcKey = wfMemcKey( "hp_msg_parser", strtolower( $msg ), $lang /* BugId: 4079 */, ($forContent ? 'content' : 'userlang'), 1);
 		$out = $wgMemc->get( $mcKey );
-		if ( is_array( $out ) ){
+		if ( is_array( $out ) && !empty( $out ) ){
 			return $out;
 		}
 
