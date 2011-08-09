@@ -29,6 +29,10 @@ class EditPageNotice {
 		return (string)$this->messageId;
 	}
 
+	public function getHash() {
+		return ( !empty($this->messageId) ? md5($this->messageId) : md5($this->getSummary()) );
+	}
+
 	public function getHtml() {
 		return (string)$this->html;
 	}

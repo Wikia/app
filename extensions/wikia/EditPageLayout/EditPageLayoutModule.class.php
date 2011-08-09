@@ -59,7 +59,7 @@ class EditPageLayoutModule extends Module {
 				$app->wg->Out->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$src}\"></script>");
 			}
 		}
-		
+
 		// render WikiLogo
 		$wikiHeaderData = Module::get('WikiHeader')->getData();
 

@@ -60,7 +60,7 @@ class EditPageNotices implements IteratorAggregate {
 		foreach ($this->notices as $notice) {
 			$noticeSummary = $notice->getSummary();
 			if (!empty($noticeSummary))
-				$summary[] = $noticeSummary;
+				$summary[$notice->getHash()] = $noticeSummary;
 		}
 		return $summary;
 	}
