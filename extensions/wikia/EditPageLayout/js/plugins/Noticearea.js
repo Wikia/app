@@ -36,7 +36,54 @@
 
 		update: function() {
 			this.visible = (this.getCount() > 0);
+			if( this.visible && this.wasNoticeAlreadyShown( this.ul.find('li').attr('data-hash') ) ) {
+				this.visible = false;
+				this.notificationsLinkSplotch.fadeOut('fast');
+			}
 			this.el[ this.visible ? 'show' : 'hide' ]();
+		},
+		
+		wasNoticeAlreadyShown: function(noticeHash) {
+			this.updateNoticeareaStatus();
+			var noticeKey = wgTitle+'-'+noticeHash;
+			var noticeareaStatus = $.storage.get('WE-Noticearea-status');
+			var result = false;
+			if( noticeareaStatus != null ) {
+				$.each(noticeareaStatus, function(index, value) {
+					if(index == noticeKey) {
+						result = true;
+					}
+				});
+			}
+			return result;
+		},
+
+		markNoticeAsShown: function(noticeHash) {
+			var date = new Date();
+			var notice = { hash: noticeHash, ts: (date.getTime()/1000) }
+			var noticeKey = wgTitle+'-'+notice.hash;
+			var noticeareaStatus = $.storage.get('WE-Noticearea-status');
+			if(noticeareaStatus == null) {
+				noticeareaStatus = {};
+			}
+			noticeareaStatus[noticeKey] = notice.ts;
+			$.storage.set('WE-Noticearea-status', noticeareaStatus);
+		},
+
+		updateNoticeareaStatus: function() {
+			var noticeareaStatus = $.storage.get('WE-Noticearea-status');
+			if( noticeareaStatus != null ) {
+				var date = new Date();
+				var currentTs = date.getTime()/1000;
+				var statusTTL = 86400; // keep status for 24h
+				var noticeareaStatusUpdated = {};
+				$.each(noticeareaStatus, function(index, value) {
+					if( currentTs < (value + statusTTL) ) {
+						noticeareaStatusUpdated[index] = value;
+					}
+				});
+				$.storage.set('WE-Noticearea-status', noticeareaStatusUpdated);
+			}
 		},
 
 		areaClicked: function(ev) {
@@ -69,6 +116,8 @@
 			if (hideSplotch === true) {
 				this.notificationsLinkSplotch.fadeOut('slow');
 			}
+
+			this.markNoticeAsShown( this.el.find('li').attr('data-hash') );
 		},
 
 		add: function( message, type, html ) {

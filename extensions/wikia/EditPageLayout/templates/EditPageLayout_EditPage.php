@@ -56,9 +56,9 @@
 								<span class="splotch"><?= count($notices) ?></span>
 								<ul>
 <?php
-	foreach ($notices as $notice) {
+	foreach ($notices as $hash => $notice) {
 ?>
-									<li><?= $notice ?></li>
+									<li data-hash="<?= $hash ?>"><?= $notice ?></li>
 <?php
 	}
 ?>
