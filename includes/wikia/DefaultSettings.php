@@ -437,7 +437,8 @@ $wgSkipSkins = array(
 		'answers',
 		'vector',
 		'campfire',
-		'skeleskin'
+		'skeleskin',
+		'wikiamobile'
 );
 /**
  * @name wgSkipOldSkins
@@ -858,7 +859,7 @@ $wgSpecialEditCountExludedUsernames = array(
 /**
  * List of mobile skins
  */
-$wgMobileSkins = array( 'wikiphone', 'wikiaapp', 'skeleskin' );
+$wgMobileSkins = array( 'wikiphone', 'wikiaapp', 'skeleskin', 'wikiamobile' );
 
 /**
  * variable for disabling memcached deleted key replication

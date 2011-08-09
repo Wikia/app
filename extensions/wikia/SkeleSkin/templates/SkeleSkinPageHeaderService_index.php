@@ -1,1 +1,0 @@
-<header id="WikiaMainContentHeader"><h1><?= $wf->MsgExt( 'skeleskin-page-header-title', array( 'parseinline' ), $pageTitle ); ?></h1></header>
