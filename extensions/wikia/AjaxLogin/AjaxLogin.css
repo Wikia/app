@@ -133,6 +133,10 @@
 	width:250px;
 }
 
+.wpAjaxLoginInput #uselang, .wpAjaxLoginInput input, #wpBirthDateTD .select-container {
+	display: block;
+}
+
 .wpAjaxRegisterTable
 {
 	width: 680px;

@@ -85,34 +85,39 @@ if(( $this->data['messagetype'] == 'error' ) && (strlen($this->data['message'] )
 		</colgroup>
 		<tr>
 			<td class="wpAjaxLoginInput" id="wpNameTD">
-				<label tabindex="0" for='wpName2'><?php $this->msg('yourname') ?></label><span>&nbsp;<img alt="status" src="<?php print $wgBlankImgUrl; ?>"/></span><br />
-				<input type='text'  name="wpName" id="wpName2"	value="<?php $this->text('name') ?>" size='20' tabindex="1" />
+				<label tabindex="0" for='wpName2'><?php $this->msg('yourname') ?>
+					<span>&nbsp;<img alt="status" src="<?php print $wgBlankImgUrl; ?>"/></span>
+					<input type='text'  name="wpName" id="wpName2"	value="<?php $this->text('name') ?>" size='20' tabindex="1" />
+				</label>
 			</td>
 			<td class="wpAjaxLoginInput" id="wpPasswordTD">
-				<label tabindex="0" for='wpPassword2'><?php $this->msg('yourpassword') ?></label><span>&nbsp;<img alt="status" src="<?php print $wgBlankImgUrl; ?>"/></span>
-				<input type='password'  name="wpPassword" id="wpPassword2" value="" size='20' tabindex="3" />
+				<label tabindex="0" for='wpPassword2'><?php $this->msg('yourpassword') ?>
+					<span>&nbsp;<img alt="status" src="<?php print $wgBlankImgUrl; ?>"/></span>
+					<input type='password'  name="wpPassword" id="wpPassword2" value="" size='20' tabindex="3" />
+				</label>
 			</td>
 		</tr>
 		<tr class="wpAjaxLoginPreLine" >
 			<td class="wpAjaxLoginInput" id="wpEmailTD">
 				<?php if( $this->data['useemail'] ) { ?>
-					<label tabindex="0" for='wpEmail'><?php $this->msg('signup-mail') ?></label>
-					<span><a id="wpEmailInfo" href="#"><?php $this->msg( 'signup-moreinfo' ) ?></a>&nbsp;<img alt="status" src="<?php print $wgBlankImgUrl; ?>"/></span>
-					<input type='text'  name="wpEmail" id="wpEmail" value="<?php $this->text('email') ?>" size='20' tabindex="2"  />
+					<label tabindex="0" for='wpEmail'><?php $this->msg('signup-mail') ?>
+						<span><a id="wpEmailInfo" href="#"><?php $this->msg( 'signup-moreinfo' ) ?></a>&nbsp;<img alt="status" src="<?php print $wgBlankImgUrl; ?>"/></span>
+						<input type='text'  name="wpEmail" id="wpEmail" value="<?php $this->text('email') ?>" size='20' tabindex="2"  />
+					</label>
 				<?php } ?>
 			</td>
 			<td class="wpAjaxLoginInput" id="wpRetypeTD">
-				<label for='wpRetype' tabindex="0"><?php $this->msg('yourpasswordagain') ?></label><span>&nbsp;<img alt="status" src="<?php print $wgBlankImgUrl; ?>"/></span>
-				<input type='password' name="wpRetype" id="wpRetype" tabindex="4" value="" size='20' />
+				<label for='wpRetype' tabindex="0"><?php $this->msg('yourpasswordagain') ?>
+					<span>&nbsp;<img alt="status" src="<?php print $wgBlankImgUrl; ?>"/></span>
+					<input type='password' name="wpRetype" id="wpRetype" tabindex="4" value="" size='20' />
+				</label>
 			</td>
 		</tr>
 
 		<tr class="wpAjaxLoginLine">
 			<td class="wpAjaxLoginInput">
-				<label for='uselang'><?php $this->msg('yourlanguage') ?></label><span>&nbsp;</span><br />
-				<span class="select-container">
+				<label for='uselang'><?php $this->msg('yourlanguage') ?></label><span>&nbsp;</span>
 					<select style="height:22px;" name="uselang" id="uselang" tabindex="5" >
-				</span>
 <?php
 	global $wgLanguageCode;
 
@@ -174,7 +179,7 @@ if(( $this->data['messagetype'] == 'error' ) && (strlen($this->data['message'] )
 		<?php if ( !empty( $this->data['coppa'] ) ) { ?>
 			<td class="wpAjaxLoginInput wpAjaxLoginData" id="wpBirthDateTD">
 				<label for='wpBirthYear'><?php $this->msg('yourbirthdate') ?></label>
-				<span><a id="wpBirthDateInfo" href="#"><?php $this->msg( 'signup-moreinfo' ) ?></a>&nbsp;<img alt="status" src="<?php print $wgBlankImgUrl; ?>"/></span><br />
+				<span><a id="wpBirthDateInfo" href="#"><?php $this->msg( 'signup-moreinfo' ) ?></a>&nbsp;<img alt="status" src="<?php print $wgBlankImgUrl; ?>"/></span>
 				<span class="select-container">
 					<select name="wpBirthYear" id="wpBirthYear" tabindex="6">
 						<option value="-1"><?php $this->msg('userlogin-choose-year') ?></option>
