@@ -33,6 +33,7 @@ $app->registerClass('UserProfilePageController', $dir . '/UserProfilePageControl
  */
 $app->registerHook('SkinTemplateOutputPageBeforeExec', 'UserProfilePageController', 'onSkinTemplateOutputPageBeforeExec');
 $app->registerHook('SkinSubPageSubtitleAfterTitle', 'UserProfilePageController', 'onSkinSubPageSubtitleAfterTitle');
+$app->registerHook('ArticleSaveComplete', 'UserProfilePageController', 'onArticleSaveComplete');
 //we'll implement interview later
 //$app->registerHook('GetRailModuleSpecialPageList', 'InterviewSpecialPageController', 'onGetRailModuleSpecialPageList' );
 

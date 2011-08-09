@@ -859,7 +859,7 @@ class UserProfilePageController extends WikiaController {
 	 * @author Tomasz Odrobny
 	 */
 	 
-	public function onFacebookConnectAvatar() {					
+	public function onFacebookConnectAvatar() {
 		$user = $this->app->wg->User;
 		
 		$result = array('success' => false, 'error' => $this->wf->Msg('userprofilepage-interview-save-internal-error'));
@@ -1074,6 +1074,25 @@ class UserProfilePageController extends WikiaController {
 		if($title->getNamespace() == NS_USER) {
 			$ptext = $title->getText();	
 		}
+		return true;
+	}
+	
+	/**
+	 * @brief adds wiki id to cache and fav wikis instantly
+	 * 
+	 * @author Andrzej 'nAndy' Łukaszewski
+	 */
+		
+	public function onArticleSaveComplete(&$article, &$user, $text, $summary, $minoredit, 
+	$watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId, &$redirect) {
+		$wikiId = intval( $this->app->wg->CityId );
+		
+		if( $user instanceof User && $wikiId > 0 ) {
+			$userIdentityBox = F::build('UserIdentityBox', array($this->app, $user, self::MAX_TOP_WIKIS));
+			
+			$userIdentityBox->addTopWiki($wikiId);
+		}
+		
 		return true;
 	}
 	
