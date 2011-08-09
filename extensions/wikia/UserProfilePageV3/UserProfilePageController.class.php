@@ -31,14 +31,14 @@ class UserProfilePageController extends WikiaController {
 	public function index() {
 		$this->app->wf->ProfileIn( __METHOD__ );
 		
-		$user = $this->getVal( 'user' );
+		$user = $this->getVal('user');
 		
 		$pageBody = $this->getVal( 'userPageBody' );
 		$wikiId = $this->getVal( 'wikiId' );
 		
 		$namespace = $this->title->getNamespace();
 		$isSubpage = $this->title->isSubpage();
-
+		
 		$useOriginalBody = true;
 		
 		if( $user instanceof User ) {
@@ -81,10 +81,6 @@ class UserProfilePageController extends WikiaController {
 		$sessionUser = $this->wg->User;
 		$user = $this->getUserFromTitle($this->title);
 		
-		if( is_null($user) ) {
-			$user = $this->app->wg->User;
-		}
-		
 		$userIdentityBox = F::build('UserIdentityBox', array($this->app, $user, self::MAX_TOP_WIKIS));
 		$isUserPageOwner = (!$user->isAnon() && $user->getId() == $sessionUser->getId()) ? true : false;
 		$userData = $userIdentityBox->setData();
@@ -120,10 +116,6 @@ class UserProfilePageController extends WikiaController {
 		
 		$namespace = $this->title->getNamespace();
 		$user = $this->getUserFromTitle($this->title);
-		
-		if( is_null($user) ) {
-			$user = $this->app->wg->User;
-		}
 		
 		$sessionUser = $this->wg->User;
 		$canRename = $sessionUser->isAllowed('staff') || $sessionUser->isAllowed('renameprofilev3');
@@ -816,6 +808,7 @@ class UserProfilePageController extends WikiaController {
 	 * @return User
 	 * 
 	 * @author ADi
+	 * @author nAndy
 	 */
 	private function getUserFromTitle( Title $title ) {
 		$this->app->wf->ProfileIn( __METHOD__ );
@@ -848,6 +841,21 @@ class UserProfilePageController extends WikiaController {
 		if( isset($parts[0]) && ($parts[0] != '') ) {
 			$userName = str_replace('_', ' ', $parts[0]);
 			$user = F::build('User', array($userName), 'newFromName');
+		}
+		
+		if( !($user instanceof User) && !empty($userName) ) {
+		//it should work only for title=User:AAA.BBB.CCC.DDD where AAA.BBB.CCC.DDD is an IP address
+		//in previous user profile pages when IP was passed it returned false which leads to load
+		//"default" oasis data to Masthead; here it couldn't be done because of new User Identity Box
+			$user = F::build('User');
+			$user->mName = $userName;
+			$user->mFrom = 'name';
+		}
+		
+		if( !($user instanceof User) && empty($userName) ) {
+		//this is in case Blog:Recent_posts or Special:Contribution will be called
+		//then in title there is no username and "default" user instance is $wgUser
+			$user = $this->app->wg->User;
 		}
 		
 		$this->app->wf->ProfileOut( __METHOD__ );
