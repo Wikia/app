@@ -85,7 +85,7 @@ if(( $this->data['messagetype'] == 'error' ) && (strlen($this->data['message'] )
 		</colgroup>
 		<tr>
 			<td class="wpAjaxLoginInput" id="wpNameTD">
-				<label tabindex="0" for='wpName2'><?php $this->msg('yourname') ?></label><span>&nbsp;<img alt="status" src="<?php print $wgBlankImgUrl; ?>"/></span>
+				<label tabindex="0" for='wpName2'><?php $this->msg('yourname') ?></label><span>&nbsp;<img alt="status" src="<?php print $wgBlankImgUrl; ?>"/></span><br />
 				<input type='text'  name="wpName" id="wpName2"	value="<?php $this->text('name') ?>" size='20' tabindex="1" />
 			</td>
 			<td class="wpAjaxLoginInput" id="wpPasswordTD">
@@ -109,7 +109,7 @@ if(( $this->data['messagetype'] == 'error' ) && (strlen($this->data['message'] )
 
 		<tr class="wpAjaxLoginLine">
 			<td class="wpAjaxLoginInput">
-				<label for='uselang'><?php $this->msg('yourlanguage') ?></label><span>&nbsp;</span>
+				<label for='uselang'><?php $this->msg('yourlanguage') ?></label><span>&nbsp;</span><br />
 				<span class="select-container">
 					<select style="height:22px;" name="uselang" id="uselang" tabindex="5" >
 				</span>
@@ -174,7 +174,7 @@ if(( $this->data['messagetype'] == 'error' ) && (strlen($this->data['message'] )
 		<?php if ( !empty( $this->data['coppa'] ) ) { ?>
 			<td class="wpAjaxLoginInput wpAjaxLoginData" id="wpBirthDateTD">
 				<label for='wpBirthYear'><?php $this->msg('yourbirthdate') ?></label>
-				<span><a id="wpBirthDateInfo" href="#"><?php $this->msg( 'signup-moreinfo' ) ?></a>&nbsp;<img alt="status" src="<?php print $wgBlankImgUrl; ?>"/></span>
+				<span><a id="wpBirthDateInfo" href="#"><?php $this->msg( 'signup-moreinfo' ) ?></a>&nbsp;<img alt="status" src="<?php print $wgBlankImgUrl; ?>"/></span><br />
 				<span class="select-container">
 					<select name="wpBirthYear" id="wpBirthYear" tabindex="6">
 						<option value="-1"><?php $this->msg('userlogin-choose-year') ?></option>
