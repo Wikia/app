@@ -1,11 +1,5 @@
-//KISSmetrics
-var _kmq = _kmq || [];
-function _kms(u){
-	setTimeout(function(){
-		var s = document.createElement('script'); var f = document.getElementsByTagName('script')[0]; s.type = 'text/javascript'; s.async = true;
-		s.src = u; f.parentNode.insertBefore(s, f);
-	}, 1);
-}
+//mixpanel
+var mpq=[];
 
 var MobileSkin = {
 	uacct: "UA-2871474-1",
@@ -25,18 +19,21 @@ var MobileSkin = {
 		_gaq.push(['_trackPageview', str]);
 	},
 	
-	initKISSmetrics: function(){
-		if(!DevelEnvironment){
-			if(wgUserName && wgUserName != null){
-				_kmq.push(['identify', wgUserName]);
-			}
-			
-			_kms('//i.kissmetrics.com/i.js');
-			_kms('//doug1izaerwt3.cloudfront.net/75c26d2ec025f6ed12c4c2445579713061eea5e3.1.js');
-		}
-	},
-	
 	initTracking: function(){
+		//mixpanel
+		if(wgUserName && wgUserName != null){ 
+ 			mpq.name_tag(wgUserName); 
+ 		}
+ 		
+ 		//mixpanel
+ 		mpq.register({
+ 			'user type': (wgIsLogin == true) ? 'logged in' : 'anon',
+ 			'user language': wgUserLanguage,
+ 			'hub': cityShort,
+ 			'wiki': wgDBname,
+ 			'visiting mainpage': wgIsMainpage
+ 		});
+ 		
 		MobileSkin.trackEvent(MobileSkin.username + '/view', true);
 		
 		$('#mobile-search-btn').bind('click', function(event){
@@ -61,24 +58,49 @@ var MobileSkin = {
 		});
 	},
 	
+	initMixpanel: function(){
+		if(!DevelEnvironment){
+			mpq.push(["init","f64b56c48325a31a1a442e31b98cf2c1"]);
+			var b,a,e,d,c;
+			b = document.createElement("script");
+			b.type = "text/javascript";
+			b.async = true;
+			b.src = (document.location.protocol === "https:" ? "https:" : "http:") + "//api.mixpanel.com/site_media/js/api/mixpanel.js";
+			a = document.getElementsByTagName("script")[0];
+			a.parentNode.insertBefore(b, a);
+			e = function(f){
+				return function(){
+					mpq.push([f].concat(Array.prototype.slice.call(arguments,0)))
+				}
+			};
+			
+			d = ["track", "track_links", "track_forms", "register", "register_once", "identify", "name_tag", "set_config"];
+			
+			for(c = 0; c < d.length; c++){
+				mpq[d[c]] = e(d[c]);
+			}
+		}
+	},
+	
 	trackClick: function(eventName){
 		MobileSkin.trackEvent(MobileSkin.username + '/click/' + eventName, true);
 		
-		//KISSmetrics
-		_kmq.push(['record', 'Clicked', {'Source': eventName}]);
+		//mixpanel
+		mpq.track('click', {'source': eventName});
 	},
 	
 	trackEvent: function(eventName, indirectCall) {
 		indirectCall = indirectCall || false;
 		
 		MobileSkin.track('/1_mobile/' + eventName);
+		
 		if(wgPrivateTracker) {
 			MobileSkin.track('/1_mobile/' + wgDB + '/' + eventName);
 		}
 		
-		//KISSmetrics
+		//mixpanel
 		if(!indirectCall){
-			_kmq.push(['record', 'Event fired', {'Name': eventName}]);
+			mpg.track('event fired', {'name': eventName});
 		}
 	},
 	
@@ -110,6 +132,7 @@ var MobileSkin = {
 		
 		$("#fullsite .fullsite").click(function(e){
 			e.preventDefault();
+			MobileSkin.trackClick('fullsite');
 			document.cookie = 'mobilefullsite=true';
 			location.reload();
 		});
@@ -130,8 +153,8 @@ var MobileSkin = {
 	}
 };
 
-//KISSmetrics
-MobileSkin.initKISSmetrics();
+//mixpanel
+MobileSkin.initMixpanel();
 
 $(document).ready(function(){
 	MobileSkin.init();
