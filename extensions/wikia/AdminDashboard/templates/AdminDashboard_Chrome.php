@@ -6,6 +6,8 @@
 			<? } else { ?>
 				<img src="<?= $wordmarkUrl ?>" alt="<?= $wordmarkText ?>" height="48">
 			<? } ?>
+		</a>
+		<a href="<?= $adminDashboardUrlGeneral ?>" data-tracking="header/admindashboard">
 			<?= wfMsg("admindashboard-header") ?>
 		</a>
 	</h1>
