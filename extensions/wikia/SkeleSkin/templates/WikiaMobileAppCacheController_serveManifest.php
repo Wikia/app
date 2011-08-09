@@ -1,5 +1,5 @@
 CACHE MANIFEST
-#Skin: skeleskin
+#Skin: wikiamobile
 #cb<?= $cacheVersion ;?>
 
 

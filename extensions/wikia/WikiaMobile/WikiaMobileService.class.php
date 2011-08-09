@@ -1,12 +1,12 @@
 <?php
 /**
- * SkeleSkin page
+ * WikiaMobile page
  * 
  * @author Jakub Olek <bukaj.kelo(at)gmail.com>
  * @authore Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
-class SkeleSkinService extends WikiaService {
-	const CACHE_MANIFEST_PATH = 'wikia.php?controller=SkeleSkinAppCacheController&method=serveManifest&format=html';
+class WikiaMobileService extends WikiaService {
+	const CACHE_MANIFEST_PATH = 'wikia.php?controller=WikiaMobileAppCacheController&method=serveManifest&format=html';
 	
 	static private $initialized = false;
 	
@@ -16,7 +16,7 @@ class SkeleSkinService extends WikiaService {
 		if ( !self::$initialized ) {
 			F::setInstance( __CLASS__, $this );
 			self::$initialized = true;
-			$this->wf->LoadExtensionMessages( 'SkeleSkin' );
+			$this->wf->LoadExtensionMessages( 'WikiaMobile' );
 		}
 	}
 	
@@ -43,10 +43,10 @@ class SkeleSkinService extends WikiaService {
 		}
 		
 		//force skin main CSS file to be the first so it will be always overridden by other files
-		$cssFiles .= "<link rel=\"stylesheet\" href=\"" . AssetsManager::getInstance()->getSassCommonURL( 'skins/skeleskin/css/main.scss' ) . "\"/>";
+		$cssFiles .= "<link rel=\"stylesheet\" href=\"" . AssetsManager::getInstance()->getSassCommonURL( 'skins/wikiamobile/css/main.scss' ) . "\"/>";
 		$cssFiles .= $tmpOut->buildCssLinks();
 		
-		$srcs = AssetsManager::getInstance()->getGroupCommonURL('skeleskin_js');
+		$srcs = AssetsManager::getInstance()->getGroupCommonURL('wikiamobile_js');
 		//TODO: add scripts from $wgOut as needed
 
 		foreach ( $srcs as $src ) {
@@ -62,8 +62,9 @@ class SkeleSkinService extends WikiaService {
 		$this->headLinks = $this->wg->Out->getHeadLinks();
 		$this->languageCode = $this->templateObject->data['lang'];
 		$this->languageDirection = $this->templateObject->data['dir'];
-		$this->wikiHeaderContent = $this->sendRequest( 'SkeleSkinWikiHeaderService', 'index' )->toString();
-		$this->pageContent = $this->sendRequest( 'SkeleSkinBodyService', 'index', array( 'bodyText' => $this->templateObject->data['bodytext'] ))->toString();
+		$this->wikiaNavigation = $this->sendRequest( 'WikiaMobileNavigationService', 'index' )->toString();
+		$this->wikiHeaderContent = $this->sendRequest( 'WikiaMobileWikiHeaderService', 'index' )->toString();
+		$this->pageContent = $this->sendRequest( 'WikiaMobileBodyService', 'index', array( 'bodyText' => $this->templateObject->data['bodytext'] ))->toString();
 		$this->jsFiles = $jsFiles;
 	}
 }

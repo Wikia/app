@@ -193,6 +193,12 @@ class SkinChooser {
 			wfProfileOut(__METHOD__);
 			return false;	
 		}
+
+		if( $wgRequest->getVal('useskin') == 'wikiamobile' && $wgDevelEnvironment ) {
+			$user->mSkin = &Skin::newFromKey(  $wgRequest->getVal('useskin') );
+			wfProfileOut(__METHOD__);
+			return false;	
+		}
 		
 		/**
 		 * check headers sent by varnish, if X-Skin is send force skin
@@ -332,6 +338,11 @@ class SkinChooser {
 		
 		//SkeleSkin is a devbox-only experiment
 		if( $userSkin == 'skeleskin' && !$wgDevelEnvironment ){
+			$userSkin = 'wikiaphone';
+		}
+		
+		//WikiaMobile is a devbox-only for now
+		if( $userSkin == 'wikiamobile' && !$wgDevelEnvironment ){
 			$userSkin = 'wikiaphone';
 		}
 

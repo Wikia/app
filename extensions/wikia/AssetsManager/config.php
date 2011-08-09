@@ -156,7 +156,7 @@ $config['skeleskin_js'] = array(
 $config['wikiamobile_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//skins/common/zepto/zepto-0.6.js',
+		'//skins/common/zepto/zepto-0.7.js',
 		'//skins/common/zepto/orientation.js',
 		'//skins/wikiamobile/js/main.js'
 	)
