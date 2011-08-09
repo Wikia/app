@@ -207,7 +207,7 @@ var AdminDashboardTracking = {
 			if(node) {
 				var tracking = node.data('tracking');
 				if(tracking) {
-					$.tracker.byStr('admindashboard/' + tracking);
+					AdminDashboardTracking.track('admindashboard/' + tracking);
 				}
 			}
 		});
@@ -215,11 +215,15 @@ var AdminDashboardTracking = {
 		$('#AdminDashboardHeader nav a').bind('click', function(e) {
 			var target = $(e.target);
 			if(target.hasClass('text')) {
-				$.tracker.byStr('admindashboard/header/help');
+				AdminDashboardTracking.track('admindashboard/header/help');
 			} else {
-				$.tracker.byStr('admindashboard/header/exit');
+				AdminDashboardTracking.track('admindashboard/header/exit');
 			}
 		});
+	},
+	track: function(str) {
+		$().log(str);
+		Liftium.trackEvent(str, 'UA-2871474-1');
 	}
 };
 
