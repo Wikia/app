@@ -65,7 +65,8 @@ class UserIdentityBox {
 			$this->getEmptyData($data);
 			$data['edits'] = 0;
 			$data['showZeroStates'] = $this->checkIfDisplayZeroStates($data);
-			$data['name'] = $this->app->wf->Msg('user-identity-box-wikia-contributor').' ('.$userName.')';
+			$data['name'] = $this->app->wf->Msg('user-identity-box-wikia-contributor');
+			$data['realName'] = $userName;
 		} else {
 			$userStatsService = F::build('UserStatsService', array($userId));
 			$userStats = $userStatsService->getStats();
