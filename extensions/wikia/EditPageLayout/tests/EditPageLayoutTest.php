@@ -111,13 +111,18 @@ class EditPageLayoutTest extends PHPUnit_Framework_TestCase {
 		$title = WF::build('Title', array('NewArticle'), 'newFromText');
 		$editPage = $this->editPageFactory($title);
 
-		$editPage->addEditNotice('<div>foo bar</div>');
-		$editPage->addEditNotice('<div>second notice</div>');
+		$testNotice1Body = '<div>1st notice</div>';
+		$testNotice1Key = 'TESTKEY1';
+		$testNotice2Body = '<div>2nd notice</div>';
+		$testNotice2Key = 'TESTKEY2';
+
+		$editPage->addEditNotice($testNotice1Body, $testNotice1Key);
+		$editPage->addEditNotice($testNotice2Body, $testNotice2Key);
 
 		$this->assertEquals(array(
-			'foo bar',
-			'second notice'
+			md5($testNotice1Key) => '1st notice',
+			md5($testNotice2Key) => '2nd notice'
 		), $editPage->getNotices());
-		$this->assertEquals('<div>foo bar</div><div>second notice</div>', $editPage->getNoticesHtml());
+		$this->assertEquals($testNotice1Body.$testNotice2Body, $editPage->getNoticesHtml());
 	}
 }
