@@ -14,11 +14,11 @@ class UserIdentityBox {
 	const USER_PROPERTIES_PREFIX = 'UserProfilePagesV3_';
 	const USER_EDITED_MASTHEAD_PROPERTY = 'UserProfilePagesV3_mastheadEdited_';
 	const USER_FIRST_MASTHEAD_EDIT_DATE_PROPERTY = 'UserProfilePagesV3_mastheadEditDate_';
+	const USER_MASTHEAD_EDITS_WIKIS = 'UserProfilePagesV3_mastheadEditsWikis_';
 	
 	private $user = null;
 	private $app = null;
 	private $title = null;
-	private $hiddenWikis = null;
 	private $topWikisLimit = 5;
 	
 	/**
@@ -86,6 +86,12 @@ class UserIdentityBox {
 			if( !$hasUserEditedMastheadBefore ) {
 				if( $isEdit || $iEdits > 0 ) {
 					$this->getDefaultData($data);
+					
+					if( $isEdit && $iEdits <= 0 ) {
+					//if this is edit of masthead and user
+					//doesn't have edits on this wiki add it to fav
+						$this->addTopWiki($wikiId);
+					}
 				} else {
 					$this->getEmptyData($data);
 				}
@@ -93,7 +99,7 @@ class UserIdentityBox {
 				$this->getDefaultData($data);
 			}
 			
-			$firstMastheadEditDate = $this->user->getOption(self::USER_FIRST_MASTHEAD_EDIT_DATE_PROPERTY.$wikiId);
+			$firstMastheadEditDate = $this->user->getOption(self::USER_FIRST_MASTHEAD_EDIT_DATE_PROPERTY.$wikiId.'_'.$userId);
 			if( is_null($data['registration']) && !is_null($firstMastheadEditDate) ) {
 			//if user hasn't edited anything on this wiki before
 			//we're getting the first edit masthead date
@@ -116,6 +122,10 @@ class UserIdentityBox {
 			
 			$data['showZeroStates'] = $this->checkIfDisplayZeroStates($data);
 		}
+		
+		file_put_contents('/tmp/nandy.log', print_r(array(
+			'setData::$data' => $data,
+		), true), FILE_APPEND);
 		
 		$this->app->wf->ProfileOut( __METHOD__ );
 		return $data;
@@ -141,11 +151,11 @@ class UserIdentityBox {
 			}
 			
 			$data['realName'] = $this->user->getRealName();
-			$data['topWikis'] = $this->sortTopWikis($this->getTopWikis());
+			$data['topWikis'] = $this->getTopWikisFromDb();
 			
 			$this->saveMemcUserIdentityData($data);
 		} else {
-			$data = array_merge($data, $memcData);
+			$data = array_merge_recursive($data, $memcData);
 		}
 	}
 	
@@ -155,7 +165,7 @@ class UserIdentityBox {
 	 * @return string
 	 */
 	private function getMemcUserIdentityDataKey() {
-		return 'user-identity-box-data-'.$this->user->getID();
+		return 'user-identity-box-data-'.$this->user->getId();
 	}
 	
 	/**
@@ -223,7 +233,6 @@ class UserIdentityBox {
 		if( !$this->hasUserEditedMastheadBefore($wikiId) ) {
 			$this->user->setOption(self::USER_EDITED_MASTHEAD_PROPERTY.$wikiId, true);
 			$this->user->setOption(self::USER_FIRST_MASTHEAD_EDIT_DATE_PROPERTY.$wikiId, date('YmdHis'));
-			$this->addTopWiki($wikiId);
 			$changed = true;
 		}
 		
@@ -283,10 +292,6 @@ class UserIdentityBox {
 		
 		if( !isset($memcData['realName']) && is_object($data) && isset($data->name) ) {
 			$memcData['realName'] = $data->name;
-		}
-		
-		if( !isset($memcData['topWikis']) ) {
-			$memcData['topWikis'] = $this->getTopWikis();
 		}
 		
 		//if any of properties isn't set then set it to null
@@ -411,71 +416,84 @@ class UserIdentityBox {
 	}
 	
 	/**
-	 * @brief Gets top edited wikis for a user
-	 * 
-	 * @param Boolean $refreshHidden a flag which says to clear hidden wikis, by default equals false
-	 * 
-	 * @author Andrzej 'nAndy' Łukaszewski
+	 * @brief Gets top wikis from DB for devboxes from method UserIdentityBox::getTestData()
 	 */
-	public function getTopWikis($refreshHidden = false) {
+	public function getTopWikisFromDb($limit = null) {
 		$this->app->wf->ProfileIn( __METHOD__ );
-		$wikis = array();
 		
-		if( !$this->user->isAnon() ) {
-			$memcData = $this->app->wg->Memc->get( $this->getMemcTopWikisId() );
+		if( is_null($limit) ) {
+			$limit = $this->topWikisLimit;
+		}
+		
+		if( $this->app->wg->DevelEnvironment ) {
+		//devboxes uses the same database as production
+		//to avoid strange behavior we set test data on devboxes
+			$wikis = $this->getTestData($limit);
+		} else {
+			$where = array( 'user_id' => $this->user->getId() );
+			$where[] = 'edits > 0';
 			
-			if( !empty( $memcData) ) {
-				$this->app->wf->ProfileOut(__METHOD__);
-				return $memcData;
+			$hiddenTopWikis = $this->getHiddenTopWikis();
+			if( count($hiddenTopWikis) ) {
+				$where[] = 'wiki_id NOT IN ('.join(',', $hiddenTopWikis).')';
 			}
 			
-			if( $this->app->wg->DevelEnvironment ) { 
-			//devboxes uses the same database as production
-			//to avoid strange behavior we set test data on devboxes
-				$wikis = $this->getTestData();
-			} else {
-				$where = array( 'user_id' => $this->user->getId() );
-				$where[] = 'edits > 0';
+			$dbs = $this->app->wf->GetDB(DB_SLAVE, array(), $this->app->wg->StatsDB);
+			$res = $dbs->select(
+				array( 'specials.events_local_users' ),
+				array( 'wiki_id', 'edits' ),
+				$where,
+				__METHOD__,
+				array(
+					'ORDER BY' => 'edits DESC',
+					'LIMIT' => $limit
+				)
+			);
+			
+			$wikis = array();
+			while( $row = $dbs->fetchObject($res) ) {
+				$wikiId = $row->wiki_id;
+				$editCount = $row->edits;
+				$wikiName = F::build('WikiFactory', array('wgSitename', $wikiId), 'getVarValueByName');
+				$wikiUrl = F::build('WikiFactory', array('wgServer', $wikiId), 'getVarValueByName');
+				$wikiUrl = $wikiUrl.'?redirect=no';
 				
-				if( true === $refreshHidden ) {
-					$this->clearHiddenTopWikis();
-				} else {
-					$hiddenTopWikis = $this->getHiddenTopWikis();
-					
-					if( count($hiddenTopWikis) ) {
-						$where[] = 'wiki_id NOT IN ('.join(',', $hiddenTopWikis).')';
-					}
-				}
-				
-				$dbs = $this->app->wf->GetDB(DB_SLAVE, array(), $this->app->wg->StatsDB);
-				$res = $dbs->select(
-					array( 'specials.events_local_users' ),
-					array( 'wiki_id', 'edits' ),
-					$where,
-					__METHOD__,
-					array(
-						'ORDER BY' => 'edits DESC',
-						'LIMIT' => $this->topWikisLimit
-					)
-				);
-				
-				$wikis = array();
-				while( $row = $dbs->fetchObject($res) ) {
-					$wikiId = $row->wiki_id;
-					$editCount = $row->edits;
-					$wikiName = F::build('WikiFactory', array('wgSitename', $wikiId), 'getVarValueByName');
-					$wikiUrl = F::build('WikiFactory', array('wgServer', $wikiId), 'getVarValueByName');
-					$wikiUrl = $wikiUrl.'?redirect=no';
-					
-					$wikis[$wikiId] = array( 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'edits' => $editCount );
-				}
+				$wikis[$wikiId] = array('wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'edits' => $editCount);
 			}
 		}
 		
-		$this->app->wg->Memc->set( $this->getMemcTopWikisId(), $wikis, 10800 ); // 3h
-		
 		$this->app->wf->ProfileOut( __METHOD__ );
 		return $wikis;
+	}
+	
+	/**
+	 * @brief Gets top wiki from memc filters them and returns
+	 */
+	public function getTopWikis($refreshHidden = false) {
+		$this->app->wf->ProfileIn( __METHOD__ );
+		
+		if( $refreshHidden === true ) {
+			$this->clearHiddenTopWikis();
+		}
+		
+		$memcData = $this->app->wg->Memc->get($this->getMemcUserIdentityDataKey());
+		$wikis = empty($memcData['topWikis']) ? array() : $memcData['topWikis'];
+		
+		foreach($wikis as $wikiId => $wiki) {
+			if( $this->isTopWikiHidden($wikiId) ) {
+				unset($wikis[$wikiId]);
+			}
+		}
+		
+		//doesn't seem right on devbox -- need to check on preview
+//		$favWikisAmount = count($wikis);
+//		if( $favWikisAmount < $this->topWikisLimit ) {
+//			$limit = $this->topWikisLimit - $favWikisAmount;
+//			$wikis = array_merge_recursive($wikis, $this->getTopWikisFromDb($limit));
+//		}
+		
+		$this->app->wf->ProfileOut( __METHOD__ );
+		return $this->sortTopWikis($wikis);
 	}
 	
 	/**
@@ -497,7 +515,7 @@ class UserIdentityBox {
 			
 			if( !empty($editcounts) ) array_multisort($editcounts, SORT_DESC, $topWikis);
 			
-			return array_slice($topWikis, 0, $this->topWikisLimit);
+			return array_slice($topWikis, 0, $this->topWikisLimit, true);
 		}
 		
 		return $topWikis;
@@ -512,48 +530,58 @@ class UserIdentityBox {
 	 */
 	public function addTopWiki($wikiId) {
 		if( intval($wikiId) > 0 && !$this->isTopWikiHidden($wikiId) ) {
-			$memcData = $this->app->wg->Memc->get( $this->getMemcTopWikisId() );
+			$memcData = $this->app->wg->Memc->get($this->getMemcUserIdentityDataKey());
+			$memcData['topWikis'] = empty($memcData['topWikis']) ? array() : $memcData['topWikis'];
 			
 			$wikiName = F::build('WikiFactory', array('wgSitename', $wikiId), 'getVarValueByName');
 			$wikiUrl = F::build('WikiFactory', array('wgServer', $wikiId), 'getVarValueByName');
 			$wikiUrl = $wikiUrl.'?redirect=no';
 			
-			$memcData[$wikiId] = array('wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'edits' => 1);
+			//adding new wiki to topWikis in cache
+			$memcData['topWikis'][$wikiId] = array('wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'edits' => 1);
 			
-			$memcData = $this->app->wg->Memc->set( $this->getMemcTopWikisId(), $memcData );
+			//getting array of masthead edits wikis
+			$mastheadEditsWikis = $this->user->getOption(self::USER_MASTHEAD_EDITS_WIKIS);
+			$mastheadEditsWikis = empty($mastheadEditsWikis) ? array() : unserialize($mastheadEditsWikis);
+			
+			if( is_array($mastheadEditsWikis) ) {
+				if( !in_array($wikiId, $mastheadEditsWikis) ) {
+					$mastheadEditsWikis[] = $wikiId;
+					$mastheadEditsWikis = serialize($mastheadEditsWikis);
+					
+					//saving data to db
+					$this->user->setOption(self::USER_MASTHEAD_EDITS_WIKIS, $mastheadEditsWikis);
+					$this->user->saveSettings();
+					
+					//updating mastheadEditsWikis in cache
+					$memcData['mastheadEditsWikis'] = $mastheadEditsWikis;
+				}
+			}
+			
+			//saving cache
+			$this->app->wg->Memc->set( $this->getMemcUserIdentityDataKey(), $memcData );
 		}
-	}
-	
-	/**
-	 * @brief Gets memcache id for top wikis
-	 */
-	private function getMemcTopWikisId() {
-		return 'user-identity-box-data-top-wikis'.$this->user->getID().$this->topWikisLimit;
 	}
 	
 	/**
 	 * @brief Gets memcache id for hidden wikis
 	 */
 	private function getMemcHiddenWikisId() {
-		return 'UserProfilePageHelper'.'hiddenWikis'.$this->user->getId();
-	}
-	
-	/**
-	 * @brief Sets hidden wikis in memc
-	 */
-	private function setMemcHiddenWikis() {
-		$this->app->wg->Memc->set( $this->getMemcHiddenWikisId(), $this->hiddenWikis, 3*60*60);
+		return 'user-identity-box-data-top-hidden-wikis-'.$this->user->getId();
 	}
 	
 	/**
 	 * @brief Clears hidden wikis: the field of this class, DB and memcached data
 	 */
 	private function clearHiddenTopWikis() {
-		$this->hiddenWikis = array();
-		$this->updateHiddenInDb( $this->app->wf->GetDB(DB_MASTER, array(), $this->app->wg->ExternalSharedDB), $this->hiddenWikis );
+		$hiddenWikis = array();
+		$this->updateHiddenInDb( $this->app->wf->GetDB(DB_MASTER, array(), $this->app->wg->ExternalSharedDB), $hiddenWikis );
+		$this->app->wg->Memc->set($this->getMemcHiddenWikisId(), $hiddenWikis);
 		
-		$this->setMemcHiddenWikis();
-		$this->app->wg->Memc->delete($this->getMemcTopWikisId());
+		//resets top wikis
+		$memcData = $this->app->wg->Memc->get($this->getMemcUserIdentityDataKey());
+		$memcData['topWikis'] = $this->getTopWikisFromDb();
+		$this->saveMemcUserIdentityData($memcData);
 	}
 	
 	/**
@@ -561,7 +589,7 @@ class UserIdentityBox {
 	 * 
 	 * @return array
 	 */
-	private function getTestData() {
+	private function getTestData($limit) {
 		$this->app->wf->ProfileIn( __METHOD__ );
 		
 		$wikis = array(
@@ -569,10 +597,12 @@ class UserIdentityBox {
 			4036 => 35,
 			177 => 12,
 			831 => 60,
+			5687 => 3,
+			509 => 20,
 		); //test data
 		
 		foreach( $wikis as $wikiId => $editCount ) {
-			if( !$this->isTopWikiHidden($wikiId) || ($wikiId == $this->app->wg->CityId) ) {
+			if( !$this->isTopWikiHidden($wikiId) && ($wikiId != $this->app->wg->CityId) ) {
 				$wikiName = F::build('WikiFactory', array('wgSitename', $wikiId), 'getVarValueByName');
 				$wikiUrl = F::build('WikiFactory', array('wgServer', $wikiId), 'getVarValueByName');
 				$wikiUrl = $wikiUrl.'?redirect=no';
@@ -584,11 +614,11 @@ class UserIdentityBox {
 		}
 		
 		$this->app->wf->ProfileOut( __METHOD__ );
-		return $wikis;
+		return array_slice($wikis, 0, $limit, true);
 	}
 	
 	/**
-	 * @brief gets hidden top wikis; code from UPP2
+	 * @brief Gets hidden top wikis
 	 * 
 	 * @return array
 	 * 
@@ -597,20 +627,16 @@ class UserIdentityBox {
 	private function getHiddenTopWikis() {
 		$this->app->wf->ProfileIn( __METHOD__ );
 		
-		if( empty($this->hiddenWikis) && !is_array($this->hiddenWikis) ) {
-			$hiddenWikis = $this->app->wg->Memc->get( $this->getMemcHiddenWikisId() );
-			
-			if( empty($hiddenWikis) && !is_array($this->hiddenWikis) ) {
-				$dbs = $this->app->wf->GetDB( DB_SLAVE, array(), $this->app->wg->ExternalSharedDB);
-				$this->hiddenWikis = $this->getHiddenFromDb( $dbs );
-				$this->setMemcHiddenWikis();
-			} else {
-				$this->hiddenWikis = $hiddenWikis;
-			}
+		$hiddenWikis = $this->app->wg->Memc->get( $this->getMemcHiddenWikisId() );
+		
+		if( empty($hiddenWikis) ) {
+			$dbs = $this->app->wf->GetDB( DB_SLAVE, array(), $this->app->wg->ExternalSharedDB);
+			$hiddenWikis = $this->getHiddenFromDb($dbs);
+			$this->app->wg->Memc->set($this->getMemcHiddenWikisId(), $hiddenWikis);
 		}
 		
 		$this->app->wf->ProfileOut( __METHOD__ );
-		return $this->hiddenWikis;
+		return $hiddenWikis;
 	}
 	
 	/**
@@ -624,11 +650,14 @@ class UserIdentityBox {
 		$this->app->wf->ProfileIn( __METHOD__ );
 		
 		if( !$this->isTopWikiHidden($wikiId) ) {
-			$this->hiddenWikis[] = $wikiId;
-			$this->updateHiddenInDb( $this->app->wf->GetDB(DB_MASTER, array(), $this->app->wg->ExternalSharedDB), $this->hiddenWikis );
+			$hiddenWikis = $this->getHiddenTopWikis();
+			$hiddenWikis[] = $wikiId;
+			$this->updateHiddenInDb($this->app->wf->GetDB(DB_MASTER, array(), $this->app->wg->ExternalSharedDB), $hiddenWikis);
+			$this->app->wg->Memc->set($this->getMemcHiddenWikisId(), $hiddenWikis);
 			
-			$this->app->wg->Memc->set( $this->getMemcHiddenWikisId(), $this->hiddenWikis, 3*60*60 );
-			$this->app->wg->Memc->delete( $this->getMemcTopWikisId() );
+			$memcData = $this->app->wg->Memc->get($this->getMemcUserIdentityDataKey());
+			$memcData['topWikis'] = empty($memcData['topWikis']) ? array() : $memcData['topWikis'];
+			$this->saveMemcUserIdentityData($memcData);
 		}
 		
 		$this->app->wf->ProfileOut( __METHOD__ );
