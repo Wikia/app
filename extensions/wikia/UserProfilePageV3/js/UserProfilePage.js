@@ -499,14 +499,19 @@ var UserProfilePage = {
 		if( wikiId >= 0 ) {
 			UserProfilePage.modal.find('.favorite-wikis [data-wiki-id="' + wikiId + '"]')
 				.fadeOut('fast', function() {
-					$(this).remove();
+					$(this).remove();				
 					$.postJSON( UserProfilePage.ajaxEntryPoint, { method: 'onHideWiki', userId: UserProfilePage.userId, wikiId: wikiId, cb: wgStyleVersion }, function(data) {
 						if( data.result.success === true ) {
+							$().log(data);
+
 							// add the next wiki
 							$.each(data.result.wikis, function(index, value) {
+								$().log(index);
 								if(UserProfilePage.modal.find('.favorite-wikis [data-wiki-id="' + index + '"]').length == 0) {
 									//found the wiki to add. now do it.
+									$().log('adding');
 									UserProfilePage.modal.find('.join-more-wikis').before('<li data-wiki-id="' + index + '"><span>' + value.wikiName + '</span> <img src="' + wgBlankImgUrl + '" class="sprite-small delete"></li>');
+									
 								}
 							});
 							UserProfilePage.toggleJoinMoreWikis();
@@ -569,11 +574,12 @@ var UserProfilePage = {
 		} else {
 			if( UserProfilePage.wasDataChanged === true ) {
 				UserProfilePage.userData = UserProfilePage.getFormData();
-				
-				setTimeout(function() {
-					UserProfilePage.displayClosingPopup();
-				}, 50 );
-				return false;
+				if( $('#UPPLightboxCloseWrapper').length == 0 ) {
+					setTimeout(function() {
+						UserProfilePage.displayClosingPopup();
+					}, 50 );	
+				}
+				return false
 			}
 		}
 		
