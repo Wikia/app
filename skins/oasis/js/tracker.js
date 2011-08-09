@@ -44,6 +44,7 @@ var initTracker = function() {
 				// wikis
 				else {
 					$.tracker.byStr(fakeUrl + 'wiki');
+					$.tracker.byStr('spotlights/globalheader/' + node.closest('.SPOTLIGHT_GLOBALNAV').attr('id'));
 				}
 			}
 			// top-level links
@@ -615,5 +616,22 @@ var initTracker = function() {
 		if ($.storage) {
 			$.storage.set('unloadstamp', +new Date() /* leave + for casting to UNIX timestamp */);
 		}
+	});
+	
+	var spotlightTrack = function(e, part) {
+		var el = $(e.target);
+		if(el.is('a') || el.is('img')) {
+			$.tracker.byStr('spotlights/' + part + '/' + cityShort);
+		}
+	};
+	
+	// spotlights rail
+	$('#SPOTLIGHT_RAIL').bind('click', function(e) {
+		spotlightTrack(e, 'rail');
+	});
+	
+	// spotlights footer
+	$('#SPOTLIGHT_FOOTER').bind('click', function(e) {
+		spotlightTrack(e, 'footer');
 	});
 }
