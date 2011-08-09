@@ -4,20 +4,11 @@ $(document).ready(function() {
 
 iPadImprovements = {
 	
-	removeDelayOnNavs: function() {
-		if ( typeof WikiHeader == "object" && typeof HoverMenu == "object") {
-			WikiHeader.settings.mouseoutDelay = 0;
-			WikiHeader.settings.mouseoverDelay = 0;	
-			HoverMenu.settings.mouseoutDelay = 0;
-			HoverMenu.settings.mouseoverDelay = 0;	
-		};
-	},
-	
 	handleOrientation: function() {
 		if ( Orientation.getOrientation() == 'portrait' ) {
-			$("meta[name=viewport]").attr( 'content', 'width=1024, initial-scale=1.09, minimum-scale=0.75, maximum-scale=3.0' );
+			$("meta[name=viewport]").attr( 'content', 'width=1024, initial-scale=1.09, minimum-scale=0.75, maximum-scale=2.5' );
 		} else {
-			$("meta[name=viewport]").attr( 'content', 'width=1024, initial-scale=1.0, minimum-scale=1.0, maximum-scale=3.0' );
+			$("meta[name=viewport]").attr( 'content', 'width=1024, initial-scale=1.0, minimum-scale=1.0, maximum-scale=2.5' );
 		}
 	},
 	
@@ -25,7 +16,6 @@ iPadImprovements = {
 		
 		//onload add proper viewport
 		iPadImprovements.handleOrientation();
-		Orientation.bindEventListener( iPadImprovements.handleOrientation );
 		
 		//onload scroll to main content
 		wikiaMainContent = $('#WikiaMainContent').offset();
@@ -49,7 +39,5 @@ iPadImprovements = {
 				};
 			};
 		});
-		
-		iPadImprovements.removeDelayOnNavs();
 	}
 };
