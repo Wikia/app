@@ -46,6 +46,7 @@ class AdminDashboardLogic {
 				"EditAccount",
 				"EditTopList",
 				"HuluVideoPanel",
+				"LandingPageSmurfs",
 				"LayoutBuilder",
 				"LayoutBuilderForm",
 				"Leaderboard",
@@ -62,6 +63,7 @@ class AdminDashboardLogic {
 				"ScavengerHunt",
 				"Search",
 				"Signup",
+				"SiteWideMessages",
 				"TaskManager",
 				"ThemeDesigner",
 				"ThemeDesignerPreview",
@@ -74,7 +76,6 @@ class AdminDashboardLogic {
 				"WikiFactoryReporter",
 				"WikiaLabs",
 				"WikiStats",
-				"LandingPageSmurfs",
 			);
 			return (!in_array($title->getDBKey(), $exclusionList));
 		}
