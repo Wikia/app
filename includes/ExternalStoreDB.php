@@ -81,6 +81,27 @@ class ExternalStoreDB {
 	}
 
 	/**
+	 * Get the list of tables to scan for the blob contents
+	 * required for (BugId: 9797)
+	 *
+	 * @author Władysław Bodzek
+	 *
+	 * @param $db DatabaseBase
+	 * @return array: tabels names
+	 */
+	function getReadTables( &$db ) {
+		$extraTables = $db->getLBInfo( 'extra blob tables' );
+		if ( empty( $extraTables ) ) {
+			$extraTables = array();
+		} else {
+			$extraTables = explode( ';', $extraTables );
+		}
+		$extraTables = (array)$extraTables;
+		array_unshift( $extraTables, $this->getTable( $db ) );
+		return $extraTables;
+	}
+
+	/**
 	 * Fetch data from given URL
 	 * @param $url String: an url of the form DB://cluster/id or DB://cluster/id/itemid for concatened storage.
 	 */
@@ -123,12 +144,26 @@ class ExternalStoreDB {
 		wfDebug( "ExternalStoreDB::fetchBlob cache miss on $cacheID\n" );
 
 		$dbr =& $this->getSlave( $cluster );
-		$ret = $dbr->selectField( $this->getTable( $dbr ), 'blob_text', array( 'blob_id' => $id ) );
+		// Wikia -- change begin -- @author: wladek
+		// search multiple tables for blob contents (BugId: 9797)
+		$ret = false;
+		$tables = $this->getReadTables( $dbr );
+		foreach ($tables as $table) {
+			$ret = $dbr->selectField( $table, 'blob_text', array( 'blob_id' => $id ) );
+			if ( $ret !== false ) break;
+		}
+		// Wikia -- change end
 		if ( $ret === false ) {
 			wfDebugLog( 'ExternalStoreDB', "ExternalStoreDB::fetchBlob master fallback on $cacheID\n" );
 			// Try the master
 			$dbw =& $this->getMaster( $cluster );
-			$ret = $dbw->selectField( $this->getTable( $dbw ), 'blob_text', array( 'blob_id' => $id ) );
+			// Wikia -- change begin -- @author: wladek
+			// search multiple tables for blob contents (BugId: 9797)
+			foreach ($tables as $table ) {
+				$ret = $dbw->selectField( $table, 'blob_text', array( 'blob_id' => $id ) );
+				if ( $ret !== false ) break;
+			}
+			// Wikia -- change end
 			if( $ret === false) {
 				wfDebugLog( 'ExternalStoreDB', "ExternalStoreDB::fetchBlob master failed to find $cacheID\n" );
 			}
