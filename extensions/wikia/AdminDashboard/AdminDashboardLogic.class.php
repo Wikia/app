@@ -47,6 +47,7 @@ class AdminDashboardLogic {
 				"EditTopList",
 				"HuluVideoPanel",
 				"LayoutBuilder",
+				"LayoutBuilderForm",
 				"Leaderboard",
 				"LookupContribs",
 				"LookupUser",
