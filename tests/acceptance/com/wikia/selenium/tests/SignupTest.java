@@ -8,13 +8,13 @@ import static org.testng.AssertJUnit.assertTrue;
 
 public class SignupTest extends BaseTest {
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI", "verified"})
 	public void testLogin() throws Exception {
-		session().open("index.php?title=Special:Signup&type=login");
+		openAndWait("index.php?title=Special:Signup&type=login");
+		waitForElement("wpName2Ajax");
 		session().type("wpName2Ajax", getTestConfig().getString("ci.user.wikiabot.username"));
 		session().type("wpPassword2Ajax", getTestConfig().getString("ci.user.wikiabot.password"));
-		session().click("wpLoginattempt");
-		session().waitForPageToLoad(this.getTimeout());
+		clickAndWait("wpLoginattempt");
 
 		if(isOasis()) {
 			waitForElement("//ul[@id='AccountNavigation']/li/a[contains(., '" + getTestConfig().getString("ci.user.wikiabot.username") + "')]");
@@ -23,27 +23,28 @@ public class SignupTest extends BaseTest {
 		}
 	}
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI", "verified"})
 	public void testReLoginPart1() throws Exception {
 		login();
 		logout();
 	}
 
-	@Test(groups={"CI"},dependsOnMethods={"testReLoginPart1"})
+	@Test(groups={"CI", "verified"},dependsOnMethods={"testReLoginPart1"})
 	public void testReLoginPart2() throws Exception {
 		loginAsStaff();
 		logout();
 	}
 
-	@Test(groups={"CI"},dependsOnMethods={"testReLoginPart2"})
+	@Test(groups={"CI", "verified"},dependsOnMethods={"testReLoginPart2"})
 	public void testReLoginPart3() throws Exception {
 		loginAsSysop();
 		logout();
 	}
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI", "verified"})
 	public void testMailNewPassword() throws Exception {
-		session().open("index.php?title=Special:Signup&type=login");
+		openAndWait("index.php?title=Special:Signup&type=login");
+		waitForElement("wpName2Ajax");
 		session().type("wpName2Ajax", getTestConfig().getString("ci.user.wikiabot.username"));
 		session().click("wpMailmypassword");
 		waitForElementVisible("wpError");
@@ -51,10 +52,9 @@ public class SignupTest extends BaseTest {
 				|| session().isTextPresent("A password reminder has already been sent"));
 	}
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI", "verified"})
 	public void testSignupWrongPassword() throws Exception {
-		session().open("index.php?title=Special:Signup&type=signup");
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("index.php?title=Special:Signup&type=signup");
 
 		String username = getTestConfig().getString("ci.user.wikiabot.username") + Long.toString((new Date()).getTime());
 		String captchaWord = getWordFromCaptchaId(session().getValue("wpCaptchaId"));

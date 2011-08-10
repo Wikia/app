@@ -15,12 +15,12 @@ public class SiteWideMessagesTest extends BaseTest {
 		return msg + ' ' + Integer.toString(generator.nextInt(65536));
 	}
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI", "verified"})
 	public void testSendMessageToOneUser() throws Exception {
 		uniqMessage = uniqId("Selenium test message");
 		
 		loginAsStaff();
-		session().open("index.php/Special:SiteWideMessages");
+		openAndWait("index.php/Special:SiteWideMessages");
 		
 		// Set mode "to selected user" and other properties
 		session().click("mSendModeUsersU");
@@ -38,24 +38,24 @@ public class SiteWideMessagesTest extends BaseTest {
 		assertTrue(session().isTextPresent("The message has been sent."));
 	}
 	
-	@Test(groups={"CI"},dependsOnMethods={"testSendMessageToOneUser"})
+	@Test(groups={"CI", "verified"},dependsOnMethods={"testSendMessageToOneUser"})
 	public void testReceiveMessageSentToOneUser() throws Exception {
-	    loginAsRegular();
-	    
-	    try {
-	        session().open("index.php/User_talk:" + getTestConfig().getString("ci.user.regular.username") + "?redirect=no");
-	    } catch (SeleniumException se) {
-            // 404
-	    }
-	    session().waitForPageToLoad(this.getTimeout());
-	    
-	    assertTrue(session().isElementPresent("//div[contains(@id,'msg_')]/p[contains(text(),'" + uniqMessage + "')]"));
-	    try {
-	        session().click("//div[contains(@id,'msg_')]/a");
-	    } catch (SeleniumException se) {
-            // 404
-	    }
-	    waitForElementNotPresent("//div[contains(@id,'msg_')]/p[contains(text(),'" + uniqMessage + "')]");
+		loginAsRegular();
+		
+		try {
+			openAndWait("index.php/User_talk:" + getTestConfig().getString("ci.user.regular.username") + "?redirect=no");
+		} catch (SeleniumException se) {
+			// 404
+		}
+		session().waitForPageToLoad(this.getTimeout());
+
+		assertTrue(session().isElementPresent("//div[contains(@id,'msg_')]/p[contains(text(),'" + uniqMessage + "')]"));
+		try {
+			session().click("//div[contains(@id,'msg_')]/a");
+		} catch (SeleniumException se) {
+			// 404
+		}
+		waitForElementNotPresent("//div[contains(@id,'msg_')]/p[contains(text(),'" + uniqMessage + "')]");
 	}
 }
 

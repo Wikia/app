@@ -7,24 +7,21 @@ import static org.testng.AssertJUnit.assertTrue;
 
 public class SiteProtectTest extends BaseTest {
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI", "verified"})
 	public void testProtectSite() throws Exception {
 		// Protect the site
 		loginAsStaff();
-		session().open("index.php?title=Special:Protectsite");
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("index.php?title=Special:Protectsite");
 		waitForElement("//input[@name='createpage']");
 		session().click("//input[@name='createpage' and @value='1']");
 		session().click("//input[@name='edit' and @value='1']");
 		session().type("timeout", "5 minutes");
 		session().type("comment", "Wikia automated test");
-		session().click("protect");
-		session().waitForPageToLoad(this.getTimeout());
+		clickAndWait("protect");
 		logout();
 
 		// Verify
-		session().open("index.php?title=WikiaAutomatedTest&action=edit");
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("index.php?title=WikiaAutomatedTest&action=edit");
 		if(isOasis()){
 			assertTrue(session().isTextPresent("You do not have permission to edit this page, for the following reason"));
 		} else {
@@ -33,19 +30,16 @@ public class SiteProtectTest extends BaseTest {
 		assertTrue(session().isTextPresent("You do not have permission to edit this page"));
 	}
 
-	@Test(groups={"CI"},dependsOnMethods="testProtectSite", alwaysRun=true)
+	@Test(groups={"CI", "verified"},dependsOnMethods="testProtectSite", alwaysRun=true)
 	public void testUnprotectSite() throws Exception {
 		// Unprotect the site
 		loginAsStaff();
-		session().open("index.php?title=Special:Protectsite");
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("index.php?title=Special:Protectsite");
 		session().type("ucomment", "end of test");
-		session().click("unprotect");
-		session().waitForPageToLoad(this.getTimeout());
+		clickAndWait("unprotect");
 		logout();
 		// Verify
-		session().open("index.php?title=WikiaAutomatedTest&action=edit");
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("index.php?title=WikiaAutomatedTest&action=edit");
 		if(isOasis()){
 			assertEquals("Editing: WikiaAutomatedTest", session().getText("//article/div[@id='WikiaPageHeader']/h1"));
 		} else {
