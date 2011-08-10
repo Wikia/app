@@ -120,9 +120,12 @@
 		//enable publish button after init editor only for mediawiki editor
 		onStateChange: function(editor, state) {
 			var states = editor.states;
-				if (states.IDLE == state) {
-					$('#wpSave').removeAttr('disabled');
-				}
+			if (states.IDLE == state) {
+				$('#wpSave').removeAttr('disabled');
+			}
+			else if ( (states.LOADING_SOURCE == state) || (states.LOADING_VISUAL == state) ) {
+				$('#wpSave').attr('disabled', true); 
+			}
 		},
 
 		// handle "Save" button
