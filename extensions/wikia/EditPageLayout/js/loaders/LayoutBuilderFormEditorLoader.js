@@ -21,6 +21,7 @@
 			var data = this.getData();
 			var e = window.editorInstance = window.WikiaEditor.create(data.plugins,data.config);
 			this.element.data('wikiaeditor',e);
+			$('#wpSave').removeAttr('disabled');
 		}
 	});
 	
