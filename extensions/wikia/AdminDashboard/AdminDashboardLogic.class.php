@@ -42,6 +42,7 @@ class AdminDashboardLogic {
 				"CreatePage",
 				"CreateNewWiki",
 				"CreateTopList",
+				"CloseWiki",
 				"Following",
 				"EditAccount",
 				"EditTopList",
