@@ -35,10 +35,13 @@ else {
 		</a>
 
 		<span class="thumbcaption">
-			<span class="thumbcaption-metadata"><?= wfMsg('oasis-latest-photos-by', $url['image_filename_short'], $url['user_href'], $url['date']) ?></span>
+			<?= wfMsg('oasis-latest-photos-by'); ?> <?= $url["user_href"] ?><br/>
+			<?= $url["date"] ?><br/>
+
 			<?php
-		if (count($url["links"]) >= 1) { ?>
-			<span class="thumbcaption-posted-in"><?= wfMsg('oasis-latest-photos-posted-in', implode(', ', $url["links"] )) ?></span>
+		if (count($url["links"]) >= 1) {?>
+			<?= wfMsg('oasis-latest-photos-posted-in'); ?>
+			<?= implode(',&nbsp;', $url["links"] ); ?>
 		<?php
 		}
 			?>
