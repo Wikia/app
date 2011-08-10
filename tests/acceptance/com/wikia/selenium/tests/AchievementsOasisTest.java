@@ -15,9 +15,8 @@ public class AchievementsOasisTest extends BaseTest {
 		// edit a page (to have some achievements
 		editArticle(testPage, "Lorem ipsum");
 		
-		// got to user profile page  
-		session().open("wiki/User:" + getTestConfig().getString("ci.user.regular.username"));
-		session().waitForPageToLoad(this.getTimeout());
+		// got to user profile page
+		openAndWait("wiki/User:" + getTestConfig().getString("ci.user.regular.username"));
 
 		// check for elements
 		assertTrue(session().isElementPresent("//div[contains(@class,'AchievementsModule')]"));

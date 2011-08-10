@@ -1,8 +1,8 @@
 package com.wikia.selenium.tests;
 
-import static com.thoughtworks.selenium.grid.tools.ThreadSafeSeleniumSessionStorage.closeSeleniumSession;
-import static com.thoughtworks.selenium.grid.tools.ThreadSafeSeleniumSessionStorage.session;
-import static com.thoughtworks.selenium.grid.tools.ThreadSafeSeleniumSessionStorage.startSeleniumSession;
+import com.thoughtworks.selenium.DefaultSelenium;
+import com.thoughtworks.selenium.Selenium;
+
 import static org.testng.AssertJUnit.assertFalse;
 import static org.testng.AssertJUnit.assertTrue;
 import static org.testng.AssertJUnit.assertEquals;
@@ -42,6 +42,39 @@ public class BaseTest {
 	protected String noCloseAfterFail;
 	private XMLConfiguration testConfig;
 
+	/**
+	 * Thread local Selenium driver instance so that we can run in multi-threaded mode.
+	 */
+	private static ThreadLocal<Selenium> threadLocalSelenium = new ThreadLocal<Selenium>();
+
+	public static void startSeleniumSession(String seleniumHost, int seleniumPort, String browser, String webSite) {
+		threadLocalSelenium.set(new DefaultSelenium(seleniumHost, seleniumPort, browser, webSite));
+		if (browser.toLowerCase().contains("chrome")) {
+			// Google Chrome has to be run with this switch otherwise cross-domain tests
+			// and file upload tests don't work
+			session().start("commandLineFlags=--disable-web-security");
+		} else {
+			session().start();
+		}
+	}
+
+	public static void closeSeleniumSession() throws Exception {
+		if (null != session()) {
+			session().stop();
+			resetSession();
+		}
+	}
+
+	public static Selenium session() {
+		return threadLocalSelenium.get();
+	}
+
+
+	public static void resetSession() {
+		threadLocalSelenium.set(null);
+	}
+	
+	
 	public XMLConfiguration getTestConfig() throws Exception{
 		if (null == this.testConfig) {
 			File file = new File(System.getenv("TESTSCONFIG"));
@@ -65,6 +98,7 @@ public class BaseTest {
 		startSeleniumSession(seleniumHost, seleniumPort, browser, webSite);
 		session().setTimeout(timeout);
 		session().setSpeed("1000");
+		session().open("/");
 
 	}
 
@@ -99,8 +133,7 @@ public class BaseTest {
 		session().open("index.php?title=Special:Signup");
 		session().type("wpName2Ajax", username);
 		session().type("wpPassword2Ajax", password);
-		session().click("wpLoginattempt");
-		session().waitForPageToLoad(this.getTimeout());
+		clickAndWait("wpLoginattempt");
 		if(isOasis()) {
 			waitForElement("//ul[@id='AccountNavigation']/li/a[contains(@href, '" + username + "')]");
 		} else {
@@ -134,8 +167,7 @@ public class BaseTest {
 		session().waitForPageToLoad(this.getTimeout());
 
 		if (isLoggedIn()) {
-			session().click("link=Log out");
-			session().waitForPageToLoad(this.getTimeout());
+			clickAndWait("link=Log out");
 			assertTrue(session().isTextPresent("You have been logged out."));
 			assertFalse(isLoggedIn());
 		}
@@ -311,9 +343,21 @@ public class BaseTest {
 	}
 
 	protected void clickAndWait(String location) throws Exception {
+		session().getEval("window.wikiaSeleniumUniqueKey = Math.random();");
 		session().click(location);
-		Thread.sleep(2); // fix for new selenium-server
-		session().waitForPageToLoad(this.getTimeout());
+		session().waitForCondition("typeof window != 'undefined' && typeof window.wikiaSeleniumUniqueKey == 'undefined'", this.getTimeout());
+		session().waitForCondition("(document.readyState == 'complete') && (typeof document.body != 'undefined')", this.getTimeout());
+		session().getEval("setTimeout(function() {window.wikiaSeleniumUniqueKey = Math.random()}, 10)");
+		session().waitForCondition("typeof window.wikiaSeleniumUniqueKey != 'undefined'", this.getTimeout());
+	}
+
+	protected void openAndWait(String url) throws Exception {
+		session().getEval("window.wikiaSeleniumUniqueKey = Math.random();");
+		session().open(url);
+		session().waitForCondition("typeof window != 'undefined' && typeof window.wikiaSeleniumUniqueKey == 'undefined'", this.getTimeout());
+		session().waitForCondition("(document.readyState == 'complete') && (typeof document.body != 'undefined')", this.getTimeout());
+		session().getEval("setTimeout(function() {window.wikiaSeleniumUniqueKey = Math.random()}, 10)");
+		session().waitForCondition("typeof window.wikiaSeleniumUniqueKey != 'undefined'", this.getTimeout());
 	}
 
 	protected String md5(InputStream is) throws NoSuchAlgorithmException,
@@ -416,12 +460,10 @@ public class BaseTest {
 	}
 
 	protected void doSave() throws Exception {
-		session().click("wpSave");
-		session().waitForPageToLoad(this.getTimeout());
+		clickAndWait("wpSave");
 	}
 
-	protected void deleteArticle(String articleName, String reasonGroup,
-			String reason) throws Exception {
+	protected void deleteArticle(String articleName, String reasonGroup, String reason) throws Exception {
 		session().open("index.php?title=" + articleName);
 		session().waitForPageToLoad(this.getTimeout());
 		doDelete(reasonGroup, reason);
@@ -429,16 +471,14 @@ public class BaseTest {
 
 	protected void doDelete(String reasonGroup, String reason) throws Exception {
 		if (isOasis()) {
-			session().click("//a[@data-id='delete']");
+			clickAndWait("//a[@data-id='delete']");
 		} else {
-			session().click("ca-delete");
+			clickAndWait("ca-delete");
 		}
-		session().waitForPageToLoad(this.getTimeout());
 		session().select("wpDeleteReasonList", reasonGroup);
 		session().type("wpReason", reason);
 		session().uncheck("wpWatch");
-		session().click("wpConfirmB");
-		session().waitForPageToLoad(this.getTimeout());
+		clickAndWait("wpConfirmB");
 	}
 
 	/**
@@ -454,17 +494,15 @@ public class BaseTest {
 			xpath = "ca-delete";
 		}
 		if(session().isElementPresent(xpath)){
-			session().click(xpath);
-			session().waitForPageToLoad(this.getTimeout());
+			clickAndWait(xpath);
 			session().select("wpDeleteReasonList", "label=regexp:.*"+reasonGroup);
 			session().type("wpReason", reason);
 			session().uncheck("wpWatch");
 			if (session().isElementPresent("wpConfirmB")) {
-				session().click("wpConfirmB");
+				clickAndWait("wpConfirmB");
 			} else {
-				session().click("mw-filedelete-submit");
+				clickAndWait("mw-filedelete-submit");
 			}
-			session().waitForPageToLoad(this.getTimeout());
 		}
 	}
 
@@ -516,8 +554,7 @@ public class BaseTest {
 				session().select("wpDeleteReasonList", "label=regexp:.*Author request");
 				session().type("wpReason", "Wikia automated test");
 				session().uncheck("wpWatch");
-				session().click("wpConfirmB");
-				session().waitForPageToLoad(this.getTimeout());
+				clickAndWait("wpConfirmB");
 			}
 			return;
 		}
@@ -543,8 +580,7 @@ public class BaseTest {
 	}
 
 	protected void uploadImage(String imageUrl, String destinationFilename) throws Exception {
-		session().open("index.php?title=Special:Upload");
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("index.php?title=Special:Upload");
 		session().attachFile("wpUploadFile", imageUrl);
 		session().type("wpDestFile", destinationFilename);
 		session().type("wpUploadDescription", "WikiaBot automated test.");

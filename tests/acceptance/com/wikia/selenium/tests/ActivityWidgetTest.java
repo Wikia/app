@@ -10,21 +10,17 @@ public class ActivityWidgetTest extends BaseTest {
 	@Test(groups={"CI", "verified"})
 	public void testEnsureDeprecatedNavigationMenuItemsRedirectToWikiaActivity() throws Exception {
 		session().open("index.php?title=Special:ActivityFeed");
-		session().waitForPageToLoad(this.getTimeout());
 		assertTrue(session().getLocation().contains("wiki/Special:WikiActivity"));
 		
-		session().open("index.php?title=Special:MyHome");
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("index.php?title=Special:MyHome");
 		assertTrue(session().getLocation().contains("wiki/Special:WikiActivity"));
 
 		login();
 
-		session().open("index.php?title=Special:ActivityFeed");
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("index.php?title=Special:ActivityFeed");
 		assertTrue(session().getLocation().contains("wiki/Special:WikiActivity"));
 		
-		session().open("index.php?title=Special:MyHome");
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("index.php?title=Special:MyHome");
 		assertTrue(session().getLocation().contains("wiki/Special:WikiActivity"));
 	}
 }

@@ -5,7 +5,7 @@ import static com.thoughtworks.selenium.grid.tools.ThreadSafeSeleniumSessionStor
 import static org.testng.AssertJUnit.assertTrue;
 
 public class AjaxLoginTest extends BaseTest {
-	@Test(groups={"CI"})
+	@Test(groups={"CI", "verified"})
 	public void testAjaxLogin() throws Exception {
 		session().open("index.php");
 		session().click("//a[@class='ajaxLogin']");
@@ -14,8 +14,7 @@ public class AjaxLoginTest extends BaseTest {
 		waitForElement("userajaxloginform");
 		session().type("wpName2Ajax", getTestConfig().getString("ci.user.wikiabot.username"));
 		session().type("wpPassword2Ajax", getTestConfig().getString("ci.user.wikiabot.password"));
-		session().click("wpLoginattempt");
-		session().waitForPageToLoad(this.getTimeout());
+		clickAndWait("wpLoginattempt");
 		if(isOasis()) {
 			assertTrue(session().isElementPresent("//ul[@id='AccountNavigation']/li/a[contains(., '" + getTestConfig().getString("ci.user.wikiabot.username") + "')]"));
 		} else {
@@ -23,7 +22,7 @@ public class AjaxLoginTest extends BaseTest {
 		}
 	}
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI", "verified"})
 	public void testAjaxLoginMailNewPassword() throws Exception {
 		session().open("index.php");
 		session().click("//a[@class='ajaxLogin']");
@@ -38,7 +37,7 @@ public class AjaxLoginTest extends BaseTest {
 		waitForElement("wpGoLogin");
 	}
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI", "verified"})
 	public void testAjaxLoginNewAccount() throws Exception {
 		session().open("index.php");
 		session().click("//a[@class='ajaxLogin']");
