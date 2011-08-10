@@ -193,13 +193,14 @@ class SqlParser {
 			"(?<autoincrement>auto_increment)",
 			"default (?<default>'(?<defaultv>[^']*)'|(?<defaulte>null|current_timestamp))",
 			"comment '(?<comment>[^']*)'",
-			"character set (?<charset>[^\s]+)",
-			"collate (?<collation>[^\s]+)",
+			"character set (?<charset>[^\s]*[^\s,])",
+			"collate (?<collation>[^\s]*[^\s,])",
 			"on update (?<onupdate>'(?<onupdatev>[^']*)'|(?<onupdatee>null|current_timestamp))",
 		);
 		$pattern = "/^\s+`(?<name>[^`]+)`\s(?<type>[^\s]+)"
 			."(\s+(".implode("|",$options)."))*,?\$/i";
 		if (preg_match($pattern,$line,$matches)) {
+var_dump($matches);
 			$field = new stdclass;
 			foreach ($defaults as $k => $v)
 				$field->$k = $v;
