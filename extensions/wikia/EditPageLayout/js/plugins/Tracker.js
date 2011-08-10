@@ -141,6 +141,14 @@
 
 				case states.SAVING:
 					this.track('save');
+
+					// track time spent on the edit page (BugId:2948)
+					if (window.wgNow) {
+						var timeSpent = Math.round((new Date() - wgNow) / 1000),
+							browserName = this.getBrowserInfo().name;
+
+						this.trackEvent('editpage', 'editTime', browserName, timeSpent);
+					}
 					break;
 
 				case states.LOADING_SOURCE:
