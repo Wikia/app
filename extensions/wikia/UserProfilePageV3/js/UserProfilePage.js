@@ -600,7 +600,7 @@ var UserProfilePage = {
 	displayClosingPopup: function() {
 		$.getJSON( this.ajaxEntryPoint, { method: 'getClosingModal', userId: UserProfilePage.userId, rand: Math.floor(Math.random()*100001) }, function(data) {
 	
-			UserProfilePage.closingPopup = $(data.body).makeModal({width: 450, showCloseButton: false, closeOnBlackoutClick: false});
+			UserProfilePage.closingPopup = $(data.body).makeModal({width: 500, showCloseButton: false, closeOnBlackoutClick: false});
 			
 			var modal = UserProfilePage.closingPopup;
 			var save = modal.find('.save');
