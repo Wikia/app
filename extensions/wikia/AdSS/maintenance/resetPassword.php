@@ -23,7 +23,7 @@ if( isset( $options['uid'] ) ) {
 		$user->save();
 
 		$to = new MailAddress( $user->email );
-		$from = new MailAddress( $wgPasswordSender );
+		$from = new MailAddress( $wgAdSSPasswordSender );
 		$subject = '[AdSS] Your new password';
 		$url = SpecialPage::getTitleFor( 'AdSS/manager' )->getFullURL();
 		$body = "Hi,

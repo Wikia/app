@@ -199,3 +199,5 @@ if( !isset( $wgAdSS_pricingLevel ) || !isset( $wgAdSS_pricingConf[$wgAdSS_pricin
 }
 
 $wgAdSSBillingThreshold = 50;
+
+$wgAdSSPasswordSender = 'sponsoredlinks@wikia-inc.com';
