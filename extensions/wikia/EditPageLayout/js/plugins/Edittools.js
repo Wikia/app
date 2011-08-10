@@ -8,7 +8,7 @@
 	 */
 	WE.plugins.edittools = $.createClass(WE.plugin,{
 
-		LINK_CAPTION_MESSAGE: 'edittools-caption',
+		LINK_CAPTION_MESSAGE: 'editpagelayout-more',
 		DIALOG_TITLE_MESSAGE: 'edittools-dialog-title',
 
 		modal: false,
@@ -22,7 +22,7 @@
 			this.html = this.editor.element.find('.mw-editTools').html();
 			if (this.html) {
 				var link = $('<span class="cke_toolbar_expand" />');
-				link.html('<a class="expand" href="#" style="display: inline;"><label>' + this.editor.msg(this.LINK_CAPTION_MESSAGE) + '</label><span>+</span></a>');
+				link.html('<a class="expand" href="#" style="display: inline;"><label>' + $.msg(this.LINK_CAPTION_MESSAGE) + '</label><span>+</span></a>');
 				link.click(this.proxy(this.showEdittools));
 				$(el).append(link);
 			}
