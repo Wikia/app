@@ -882,7 +882,7 @@ class UserProfilePageController extends WikiaController {
 			$oAvatarObj->uploadByUrlToTempFile($data->file, $tmpFile);
 			
 			$fileuploader = new WikiaTempFilesUpload();
-			$thumbnail = $this->storeInTempImage($fileName, $fileuploader);
+			$thumbnail = $this->storeInTempImage($tmpFile, $fileuploader);
 			
 			$result = array('success' => true, 'avatar' => $thumbnail->url . '?cb=' . date('U') );
 			$this->setVal('result', $result);
@@ -985,7 +985,7 @@ class UserProfilePageController extends WikiaController {
 	 * 
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	private function extractFbFirstField($fbData, $field = null) {
+	private function extractFbFirstField($fbData, $field = null) {		
 		if( is_null($field) ) {
 			return '';
 		}
@@ -993,8 +993,8 @@ class UserProfilePageController extends WikiaController {
 		if( !empty($fbData[$field]) && is_string($fbData[$field]) ) {
 			return $fbData[$field];
 		}
-		
-		if( !empty($fbData[0][$field]) ) {
+
+		if( !empty($fbData[0]) && !empty($fbData[0][$field]) ) {
 			return $fbData[0][$field];
 		}
 		

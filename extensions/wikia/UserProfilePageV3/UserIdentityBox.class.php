@@ -153,7 +153,7 @@ class UserIdentityBox {
 	 * @return string
 	 */
 	private function getMemcUserIdentityDataKey() {
-		return 'user-identity-box-data0-'.$this->user->getId();
+		return wfSharedMemcKey('user-identity-box-data0-'.$this->user->getId());
 	}
 
 	/**
@@ -163,7 +163,7 @@ class UserIdentityBox {
 	 */
 	
 	private function getMemcMastheadEditsWikisKey() {
-		return 'user-identity-box-data-masthead-edits0'.$this->user->getId();
+		return wfSharedMemcKey('user-identity-box-data-masthead-edits0'.$this->user->getId());
 	}
 	
 	
@@ -585,7 +585,7 @@ class UserIdentityBox {
 	 * @brief Gets memcache id for hidden wikis
 	 */
 	private function getMemcHiddenWikisId() {
-		return 'user-identity-box-data-top-hidden-wikis-'.$this->user->getId();
+		return wfSharedMemcKey('user-identity-box-data-top-hidden-wikis-'.$this->user->getId());
 	}
 	
 	/**
