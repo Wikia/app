@@ -14,27 +14,31 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 	}
 	
 	protected function getArticleProbs($articles, $limit) {
-		$res = $this->db->select(
-			array( 'page_wikia_props' ),
-			array(
-				'page_id',
-				'props'
-			),
-			array(
-				'page_id in(' . implode( ",", $articles ) . ')',
-				"propname = 'imageOrder' or propname =  0"
-			),
-			__METHOD__
-		);
+		$out = array();		
+		if ( !empty ( $articles ) && is_array( $articles) ) {
+			$res = $this->db->select(
+				array( 'page_wikia_props' ),
+				array(
+					'page_id',
+					'props'
+				),
+				array(
+					'page_id in(' . implode( ",", $articles ) . ')',
+					"propname = 0"
+				),
+				__METHOD__
+			);
 
-		$out = array();
-		/* build list of images to get info about it */
-		while ($row =  $this->db->fetchRow( $res ) ) {
-			$props = unserialize( $row['props'] );
-			if ( is_array( $props ) ) {
-				$out[$row['page_id']] = array_slice($props, 0, $limit);
+
+			/* build list of images to get info about it */
+			while ($row =  $this->db->fetchRow( $res ) ) {
+				$props = unserialize( $row['props'] );
+				if ( is_array( $props ) ) {
+					$out[$row['page_id']] = array_slice($props, 0, $limit);
+				}
 			}
 		}
+		
 		return $out;
 	}
 	
