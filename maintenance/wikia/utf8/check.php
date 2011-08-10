@@ -16,6 +16,7 @@
 ini_set( "include_path", dirname(__FILE__)."/../../../maintenance/" );
 
 $optionsWithArgs = array(
+	'cluster',
 	'database',
 );
 
@@ -41,8 +42,12 @@ class Utf8DbConvert {
 		$this->short = isset($options['short']);
 		$this->verbose = isset($options['verbose']);
 		$this->databaseName = isset($options['database']) ? $options['database'] : $wgDBname;
+		$this->clusterName = isset($options['cluster']) ? $options['cluster'] : $this->databaseName;
 		
-		$this->db = wfGetDb(DB_SLAVE,array(),$this->databaseName);
+		$this->db = wfGetDb(DB_SLAVE,array(),$this->clusterName);
+		if ( !$this->db->selectDB($this->databaseName) ) {
+			$this->db = false;
+		}
 		$this->walker = new DatabaseWalker_UsingShow($this->db);
 		
 		$this->script = new SqlScript();
@@ -128,7 +133,9 @@ class Utf8DbConvert {
 							if ($this->verbose) {
 								$badColumns[$columnName][] = $text;
 							} else {
-								$badColumns[$columnName][] = 1;
+								if ( !isset($badColumns[$columnName]) )
+									$badColumns[$columnName] = array( 0 => 0 );
+								$badColumns[$columnName][0]++;
 							}
 						}
 					}
@@ -150,7 +157,7 @@ class Utf8DbConvert {
 				}
 			} else {
 				foreach ($badColumns as $columnName => $badList) {
-					echo "-- {$this->databaseName}.{$tableName}.{$columnName} (" . count($badList) . ")\n";
+					echo "-- {$this->databaseName}.{$tableName}.{$columnName} (" . $badList[0] . ")\n";
 				}
 			}
 		}
