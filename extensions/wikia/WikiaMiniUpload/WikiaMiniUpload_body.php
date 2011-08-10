@@ -217,7 +217,7 @@ class WikiaMiniUpload {
 			$props['mwname'] = $itemId;
 			$props['default_caption'] = !empty($file) ? Wikia::getProps($file->getTitle()->getArticleID(), 'default_caption') : '';
 		} else if($sourceId == 1) {
-                    require_once($IP.'/extensions/3rdparty/ImportFreeImages/phpFlickr-2.2.0/phpFlickr.php');
+                    require_once($IP.'/lib/phpFlickr/phpFlickr.php');
                     $flickrAPI = new phpFlickr('bac0bd138f5d0819982149f67c0ca734');
                     $proxyArr = explode(':', $wgHTTPProxy);
                     $flickrAPI->setProxy($proxyArr[0], $proxyArr[1]);
