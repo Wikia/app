@@ -84,10 +84,6 @@ class UserProfilePageController extends WikiaController {
 		$userIdentityBox = F::build('UserIdentityBox', array($this->app, $user, self::MAX_TOP_WIKIS));
 		$isUserPageOwner = (!$user->isAnon() && $user->getId() == $sessionUser->getId()) ? true : false;
 		$userData = $userIdentityBox->setData();
-
-		if( !empty($userData['registration']) ) {
-			$userData['registration'] = $this->wg->Lang->date($userData['registration']);
-		}
 		
 		$this->setVal( 'zeroStateCssClass', ($userData['showZeroStates']) ? 'zero-state' : '');
 		

@@ -94,6 +94,7 @@ class UserIdentityBox {
 			}
 			
 			$firstMastheadEditDate = $this->user->getOption(self::USER_FIRST_MASTHEAD_EDIT_DATE_PROPERTY.$wikiId);
+			
 			if( is_null($data['registration']) && !is_null($firstMastheadEditDate) ) {
 			//if user hasn't edited anything on this wiki before
 			//we're getting the first edit masthead date
@@ -102,6 +103,13 @@ class UserIdentityBox {
 			//if we've got both dates we're getting the lowest (the earliest)
 				$data['registration'] = (intval($data['registration']) < intval($firstMastheadEditDate)) ? $data['registration'] : $firstMastheadEditDate;
 			}
+			
+			//internationalization
+			if( !empty($userData['registration']) ) {
+				$userData['registration'] = $this->app->wg->Lang->date($userData['registration']);
+			}
+			
+			$data['edits'] = $this->app->wg->Lang->formatNum($data['edits']);
 			
 			//other data operations
 			$this->getUserGroup($data);
