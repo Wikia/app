@@ -8,31 +8,27 @@ import org.testng.annotations.Test;
 public class SpecialPreferencesTest extends BaseTest {
 
 	private void loadPage() throws Exception {
-		session().open("wiki/Special:Preferences");
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("wiki/Special:Preferences");
 		assertTrue(session().getLocation().contains("wiki/Special:Preferences"));
+		waitForElement("//input[@name='wpskin']");
 	}
 
-	@Test(groups={"oasis", "CI"})
+	@Test(groups={"CI", "verified"})
 	public void testEnsureRegisteredUserCanChangeSkin() throws Exception {
 		loginAsRegular();
 
 		loadPage();
-		assertTrue(session().isElementPresent("//legend[.='Site Layouts']"));
 		session().click("//input[@value='oasis']");
-		session().click("//input[@id='prefcontrol']");
-		session().waitForPageToLoad(this.getTimeout());
-		assertTrue(session().isElementPresent("//body[contains(@class, 'skin-oasis')]"));
+		clickAndWait("//input[@id='prefcontrol']");
+		waitForElement("//body[contains(@class, 'skin-oasis')]");
 
 		loadPage();
 		session().click("//input[@value='monobook']");
-		session().click("//input[@id='prefcontrol']");
-		session().waitForPageToLoad(this.getTimeout());
-		assertTrue(session().isElementPresent("//body[contains(@class, 'skin-monobook')]"));
+		clickAndWait("//input[@id='prefcontrol']");
+		waitForElement("//body[contains(@class, 'skin-monobook')]");
 
 		loadPage();
 		session().click("//input[@value='oasis']");
-		session().click("//input[@id='prefcontrol']");
-		session().waitForPageToLoad(this.getTimeout());
+		clickAndWait("//input[@id='prefcontrol']");
 	}
 }
