@@ -178,10 +178,10 @@ class UserIdentityBox {
 	 */
 	private function getEmptyData(&$data) {
 		foreach(array('location', 'occupation', 'gender', 'birthday', 'website', 'twitter', 'fbPage') as $key) {
-			$data[$key] = null;
+			$data[$key] = "";
 		}
 		
-		$data['realName'] = null;
+		$data['realName'] = "";
 		$data['topWikis'] = array();
 	}
 	
@@ -555,8 +555,11 @@ class UserIdentityBox {
 		$memcData['topWikis'][] = $wiki; 		
 		$this->storeEditsWikis($wikiId, $wiki );
 		$memcData['topWikis'] = $this->sortTopWikis($memcData['topWikis'] );
-		//saving cache
-		$this->app->wg->Memc->set( $this->getMemcUserIdentityDataKey(), $memcData );
+		
+		//saving cache only if there is other data than topWikis
+		if( count($memcData) > 1 ) {
+			$this->app->wg->Memc->set( $this->getMemcUserIdentityDataKey(), $memcData );	
+		}
 	}
 	
 	private function storeEditsWikis($wikiId, $wiki) {
