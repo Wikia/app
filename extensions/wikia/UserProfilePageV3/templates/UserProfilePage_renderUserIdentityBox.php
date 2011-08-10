@@ -47,10 +47,10 @@
 							<?= $user['registration'] ?>
 						</span>
 					<? else: ?>
-						<?= wfMsg('user-identity-box-edits', array( '$1' => number_format($user['edits']) ) ); ?>
+						<?= wfMsg('user-identity-box-edits', array( '$1' => $user['edits'] ) ); ?>
 					<? endif; ?>
 				<? else: ?>
-					<?= wfMsg('user-identity-box-edits', array( '$1' => number_format($user['edits']) ) ); ?>
+					<?= wfMsg('user-identity-box-edits', array( '$1' => $user['edits'] ) ); ?>
 				<? endif; ?>
 			</div>
 
