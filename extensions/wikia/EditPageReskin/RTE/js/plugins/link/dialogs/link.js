@@ -210,6 +210,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 		title : editor.lang.link.title,
 		minWidth : 500,
 		minHeight : 185,
+		doNotCheckForChanged: true /* link dialog no longer warns on close (r25573 refactored) */,
 		contents : [
 			{
 				id : 'internal',
