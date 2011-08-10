@@ -7,7 +7,7 @@ import static org.testng.AssertJUnit.assertTrue;
 
 public class WikiActivityTest extends BaseTest {
 
-	@Test(groups={"oasis","CI"})
+	@Test(groups={"CI", "verified"})
 	public void testEnsuresThatWikiActivityButtonLeadsToProperSpecialPage() throws Exception {
 		login();
 
@@ -15,8 +15,7 @@ public class WikiActivityTest extends BaseTest {
 		assertTrue(session().isElementPresent("//a[@data-id='wikiactivity']"));
 
 		// and click it
-		session().click("//a[@data-id='wikiactivity']");
-		session().waitForPageToLoad(this.getTimeout());
+		clickAndWait("//a[@data-id='wikiactivity']");
 
 		// check what page you land on
 		assertTrue(session().getLocation().contains("/wiki/Special:WikiActivity"));
@@ -25,9 +24,9 @@ public class WikiActivityTest extends BaseTest {
 		assertTrue(session().isElementPresent("myhome-activityfeed"));
 	}
 
-	@Test(groups={"oasis","CI"})
+	@Test(groups={"CI", "verified"})
 	public void testEnsuresThatActivityFeedModuleIsPresentOnAnArticlePage() throws Exception {
-		session().open("index.php?title=Special:Random");
+		openAndWait("index.php?title=Special:Random");
 
 		// check that there are items in the Recent Wiki Activity module.
 		assertTrue(session().isElementPresent("//section[contains(@class,'WikiaActivityModule')]/ul/li"));

@@ -11,10 +11,9 @@ import static org.testng.AssertJUnit.assertEquals;
 import java.util.List;
 
 public class WhatIsMyIpTest extends BaseTest {
-	@Test(groups={"oasis", "CI"})
+	@Test(groups={"CI", "verified"})
 	public void testAssertThatInfrastructureIPsAreNotPresented() throws Exception {
-		session().open("index.php?title=Special:WhatIsMyIP");
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("index.php?title=Special:WhatIsMyIP");
 
 		// check what page you land on
 		assertTrue(session().getLocation().contains("index.php?title=Special:WhatIsMyIP"));
