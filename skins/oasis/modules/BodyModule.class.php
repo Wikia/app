@@ -483,10 +483,6 @@ class BodyModule extends Module {
 			$this->wgSuppressWikiHeader = true;
 			$this->displayAdminDashboard = true;
 			$this->displayAdminDashboardChromedArticle = ($wgTitle->getText() != Title::newFromText("AdminDashboard", NS_SPECIAL)->getText());
-			if($this->displayAdminDashboardChromedArticle) {
-				$state = F::app()->sendRequest( 'AdminDashboardSpecialPage', 'getDrawerState', array())->getData();
-				$this->adminDashboardCollapsed = $state['state'] == 'true';
-			}
 		} else {
 			$this->displayAdminDashboard = false;
 			$this->displayAdminDashboardChromedArticle = false;

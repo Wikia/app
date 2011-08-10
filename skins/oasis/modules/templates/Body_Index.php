@@ -98,7 +98,7 @@
 			<?php } ?>
 
 
-			<div id="WikiaArticle" class="WikiaArticle<?= $displayAdminDashboardChromedArticle ? ' AdminDashboardChromedArticle'.($adminDashboardCollapsed ? '' : ' expanded') : '' ?>">
+			<div id="WikiaArticle" class="WikiaArticle<?= $displayAdminDashboardChromedArticle ? ' AdminDashboardChromedArticle' : '' ?>">
 				<? if($displayAdminDashboardChromedArticle) { ?>
 					<?= (string)F::app()->sendRequest( 'AdminDashboardSpecialPage', 'chromedArticleHeader', array('headerText' => $wgTitle->getText() )) ?>
 				<? } ?>
