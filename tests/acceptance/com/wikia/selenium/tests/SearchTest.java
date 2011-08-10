@@ -9,37 +9,35 @@ import java.util.UUID;
 
 public class SearchTest extends BaseTest {
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI", "verified"})
 	public void testEnsureThatWhenThereAreNoSearchResultProperMessageIsDisplayed() throws Exception {
-		session().open("/");
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("/");
 
 		String searchTerm = "randomSearchTerm" + UUID.randomUUID().toString().replace("-","");
 
 		if (isOasis()) {
+			waitForElement("//form[@id='WikiaSearch']//input[@type='text']");
 			session().type("//form[@id='WikiaSearch']//input[@type='text']", searchTerm);
-			session().click("//form[@id='WikiaSearch']//button");
+			clickAndWait("//form[@id='WikiaSearch']//button");
 		}
 		else {
+			waitForElement("search_field");
 			session().type("search_field", searchTerm);
-			session().click("search-button");
+			clickAndWait("search-button");
 		}
 
-		session().waitForPageToLoad(this.getTimeout());
-		assertTrue(session().isTextPresent("There were no results matching the query."));
+		waitForTextPresent("There were no results matching the query.");
 	}
 	
-	@Test(groups={"CI"})
+	@Test(groups={"CI", "verified"})
 	public void testEnsureThatWhenUserSearchesForExactPageTitleTheSearchedPageIsDisplayed() throws Exception {
-		session().open("/");
+		openAndWait("/");
+		waitForElement("//input[@name='search']");
 		session().type("//input[@name='search']", "main page");
-		session().click("//form[@id='WikiaSearch']/input[3]");
-		session().waitForPageToLoad(this.getTimeout());
-		
+		clickAndWait("//form[@id='WikiaSearch']/input[3]");
+
 		// check what page you land on
 		assertTrue(session().getLocation().contains("wiki/Main_Page"));
-		System.out.println(session().getText("//header[@id='WikiaPageHeader']/h1"));
-		System.out.println(session().getEval("window.wgSitename"));
 		assertTrue(session().getText("//header[@id='WikiaPageHeader']/h1").equals("Main Page")
 			|| session().getText("//header[@id='WikiaPageHeader']/h1").equals(session().getEval("window.wgSitename"))
 		);

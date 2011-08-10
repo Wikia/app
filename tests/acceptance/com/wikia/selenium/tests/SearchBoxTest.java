@@ -9,13 +9,13 @@ import org.testng.annotations.Test;
 public class SearchBoxTest extends BaseTest {
 
 	private void randomPage() throws Exception {
-		session().open("index.php?title=Special:Random");
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("index.php?title=Special:Random");
 	}
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI", "verified"})
 	public void testSearchSuggest() throws Exception {
 		randomPage();
+		session().waitForCondition("typeof window.wgTitle != 'undefined'", this.getTimeout());
 		String title = session().getEval("window.wgTitle");
 
 		// search box
@@ -23,10 +23,10 @@ public class SearchBoxTest extends BaseTest {
 
 		// TODO: try to force autosuggest to appear
 		session().runScript("window.jQuery('#WikiaSearch').find('input').eq(0).focus().val(window.wgTitle)");
-		//Thread.sleep(4000);
 
 		// submit search box
 		clickAndWait("//form[@id='WikiaSearch']//button");
+		session().waitForCondition("typeof window.wgTitle != 'undefined'", this.getTimeout());
 
 		// check page title
 		session().getEval("window.wgTitle").equals(title);
