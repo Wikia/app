@@ -114,6 +114,7 @@ public class BaseTest {
 	}
 
 	protected boolean isOasis() throws Exception {
+		session().waitForCondition("typeof window != 'undefined' && typeof window.skin != 'undefined'", this.getTimeout());
 		return session().getEval("window.skin").equals("oasis");
 	}
 
@@ -163,12 +164,11 @@ public class BaseTest {
 	}
 
 	protected void logout() throws Exception {
-		session().open("index.php?useskin=oasis");
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("index.php?useskin=oasis");
 
 		if (isLoggedIn()) {
 			clickAndWait("link=Log out");
-			assertTrue(session().isTextPresent("You have been logged out."));
+			waitForTextPresent("You have been logged out.");
 			assertFalse(isLoggedIn());
 		}
 	}
@@ -347,7 +347,7 @@ public class BaseTest {
 		session().click(location);
 		session().waitForCondition("typeof window != 'undefined' && typeof window.wikiaSeleniumUniqueKey == 'undefined'", this.getTimeout());
 		session().waitForCondition("(document.readyState == 'complete') && (typeof document.body != 'undefined')", this.getTimeout());
-		session().getEval("setTimeout(function() {window.wikiaSeleniumUniqueKey = Math.random()}, 10)");
+		session().getEval("setTimeout(function() {window.wikiaSeleniumUniqueKey = Math.random()}, 100)");
 		session().waitForCondition("typeof window.wikiaSeleniumUniqueKey != 'undefined'", this.getTimeout());
 	}
 
@@ -356,7 +356,7 @@ public class BaseTest {
 		session().open(url);
 		session().waitForCondition("typeof window != 'undefined' && typeof window.wikiaSeleniumUniqueKey == 'undefined'", this.getTimeout());
 		session().waitForCondition("(document.readyState == 'complete') && (typeof document.body != 'undefined')", this.getTimeout());
-		session().getEval("setTimeout(function() {window.wikiaSeleniumUniqueKey = Math.random()}, 10)");
+		session().getEval("setTimeout(function() {window.wikiaSeleniumUniqueKey = Math.random()}, 100)");
 		session().waitForCondition("typeof window.wikiaSeleniumUniqueKey != 'undefined'", this.getTimeout());
 	}
 
@@ -438,8 +438,7 @@ public class BaseTest {
 	 * Please note that an edit will happen using MW editor to speed things up
 	 */
 	protected void editArticle(String articleName, String content) throws Exception {
-		session().open("index.php?title=" + articleName + "&action=edit&useeditor=mediawiki");
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("index.php?title=" + articleName + "&action=edit&useeditor=mediawiki");
 		waitForElement("wpTextbox1");
 		doEdit(content);
 		doSave();
@@ -464,8 +463,7 @@ public class BaseTest {
 	}
 
 	protected void deleteArticle(String articleName, String reasonGroup, String reason) throws Exception {
-		session().open("index.php?title=" + articleName);
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("index.php?title=" + articleName);
 		doDelete(reasonGroup, reason);
 	}
 
@@ -475,7 +473,8 @@ public class BaseTest {
 		} else {
 			clickAndWait("ca-delete");
 		}
-		session().select("wpDeleteReasonList", reasonGroup);
+		waitForElement("//select[@id='wpDeleteReasonList']");
+		session().select("//select[@id='wpDeleteReasonList']", reasonGroup);
 		session().type("wpReason", reason);
 		session().uncheck("wpWatch");
 		clickAndWait("wpConfirmB");
@@ -507,8 +506,7 @@ public class BaseTest {
 	}
 
 	protected void undeleteArticle(String articleName, String reason) throws Exception {
-		session().open("index.php?title=Special:Undelete/" + articleName);
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("index.php?title=Special:Undelete/" + articleName);
 
 		session().type("wpComment", reason);
 
@@ -516,8 +514,7 @@ public class BaseTest {
 	}
 
 	protected void moveArticle(String oldName, String newName, String reason) throws Exception {
-		session().open("index.php?title=Special:MovePage/" + oldName);
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("index.php?title=Special:MovePage/" + oldName);
 
 		session().type("wpNewTitle", newName);
 		session().type("wpReason", reason);
@@ -538,8 +535,7 @@ public class BaseTest {
 	//set summary as '' to use default MW message
 	protected void undoLastEdit(String articleName, String summary) throws Exception {
 		//go to history page
-		session().open("index.php?action=history&title=" + articleName);
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("index.php?action=history&title=" + articleName);
 		try {
 			//go to undo page
 			String href = session().getAttribute("//ul[@id='pagehistory']/li[1]/span[@class='mw-history-undo']/a@href");
@@ -549,8 +545,7 @@ public class BaseTest {
 			//no 'undo' link - check if there is only one revision.. if so, then 'undo' means 'delete'
 			if (Integer.parseInt(session().getEval("window.document.getElementById('pagehistory').getElementsByTagName('li').length;")) == 1) {
 				//can't use deleteArticle() - it's working only for regular skins (with navbar)
-				session().open("index.php?action=delete&title=" + articleName);
-				session().waitForPageToLoad(this.getTimeout());
+				openAndWait("index.php?action=delete&title=" + articleName);
 				session().select("wpDeleteReasonList", "label=regexp:.*Author request");
 				session().type("wpReason", "Wikia automated test");
 				session().uncheck("wpWatch");

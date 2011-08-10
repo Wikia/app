@@ -11,7 +11,7 @@ import org.testng.annotations.Test;
  * Prototype of crusecontrol and javascript unit testing, using browser as javascript environment
  */
 public class WikiaEditorJavaScriptTest extends JavaScriptTest {
-	@Test(groups={"CI", "JavaScript"})
+	@Test(groups={"CI", "JavaScript", "verified"})
 	public void testDummyTest() throws Exception {
 		runJavaScriptTest("extensions/wikia/EditPageLayout/js/tests/WikiaEditorTest.js");
 	}

@@ -7,12 +7,10 @@ import static org.testng.AssertJUnit.assertFalse;
 
 public class WikiaLogoTest extends BaseTest {
 
-	@Test(groups={"oasis","envProduction", "CI"})
+	@Test(groups={"envProduction", "CI", "verified"})
 	public void testEnsureThatWikiaLogoLeadsToSpecialLandingPage() throws Exception {
-		session().open("/");
-		session().waitForPageToLoad(this.getTimeout());
-		session().click("//li[@class='WikiaLogo']/a");
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("/");
+		clickAndWait("//li[@class='WikiaLogo']/a");
 		assertFalse(session().getLocation().contains("http://www.wikia.com/Special:LandingPage"));
 		assertTrue(session().getLocation().contains("http://www.wikia.com/Wikia"));
 		assertFalse(session().isElementPresent("//section[@class='LandingPage']"));

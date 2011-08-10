@@ -10,11 +10,10 @@ import static org.testng.AssertJUnit.*;
 
 public class WikiaPollTest extends BaseTest {
 
-	@Test(groups={"oasis"})
+	@Test(groups={"CI", "verified"})
 	public void testSpecialCreatePoll() throws Exception {
 		loginAsStaff();
-		session().open("index.php?title=Special:CreatePoll");
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("index.php?title=Special:CreatePoll");
 
 		// type some stuff
 		String pollname = "thisismyreallongpollname" + new Date().toString();
@@ -28,17 +27,15 @@ public class WikiaPollTest extends BaseTest {
 		waitForElement("//div[@id='CreateWikiaPoll']/form/ul/li[" + newNumberOfFields + "]");
 
 		// click save
-		session().click("//div[@class='toolbar']/input[@class='create']");
-		session().waitForPageToLoad(this.getTimeout());
+		clickAndWait("//div[@class='toolbar']/input[@class='create']");
 		
 		// check for poll that can be voted on with at least one option to select
-		assertTrue(session().isElementPresent("//section[@class='WikiaPoll']/form/ul[@class='vote']/li[1]/label/input"));
+		waitForElement("//section[@class='WikiaPoll']/form/ul[@class='vote']/li[1]//input[@type='radio']");
 
 		// cast vote
 		session().click("//section[@class='WikiaPoll']/form/ul[@class='vote']/li[1]/label/input");
 		session().click("//section[@class='WikiaPoll']/form/details/input");
 		waitForElement("//section[@class='WikiaPoll']/form/ul[@class='results']");
-				
 
 		// clean up
 		doDelete("label=regexp:^.*Author request", "Clean up after test");
