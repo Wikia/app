@@ -16,6 +16,7 @@
 ini_set( "include_path", dirname(__FILE__)."/../../../maintenance/" );
 
 $optionsWithArgs = array(
+	'cluster',
 	'database',
 );
 
@@ -41,8 +42,12 @@ class Utf8DbConvert {
 		$this->short = isset($options['short']);
 		$this->verbose = isset($options['verbose']);
 		$this->databaseName = isset($options['database']) ? $options['database'] : $wgDBname;
-		
-		$this->db = wfGetDb(DB_SLAVE,array(),$this->databaseName);
+                $this->clusterName = isset($options['cluster']) ? $options['cluster'] : $this->databaseName;
+
+                $this->db = wfGetDb(DB_SLAVE,array(),$this->clusterName);
+                if ( !$this->db->selectDB($this->databaseName) ) {
+                        $this->db = false;
+                }
 		$this->walker = new DatabaseWalker_UsingShow($this->db);
 		
 		$this->script = new SqlScript();
@@ -87,10 +92,23 @@ class Utf8DbConvert {
 	protected function checkData() {
 		foreach ($this->list as $table) {
 			$tableName = $table->TABLE_NAME;
-			list($charset) = explode('_',strtolower($table->TABLE_COLLATION));
-			if ($charset == 'utf8') {
-				echo "-- {$this->databaseName}.{$tableName}\n";
+			$tableCollation = $table->TABLE_COLLATION;
+			list($charset) = explode('_',strtolower($tableCollation));
+			if ($charset != 'latin1') {
+				echo "-- [T ] {$this->databaseName}.{$tableName} ({$tableCollation})\n";
 			}
+                        $columns = $this->walker->getFieldsFor($tableName);
+                        foreach ($columns as $column) {
+				if ( !isset($column->COLLATION_NAME) )
+					continue;
+				$columnName = $column->COLUMN_NAME;
+				$columnCollation = $column->COLLATION_NAME;
+				list($charset) = explode('_',strtolower($columnCollation));
+				if ($charset != 'latin1') {
+					echo "-- [ C] {$this->databaseName}.{$tableName}.{$columnName} ({$collationName})\n";
+				}
+                        }
+
 		}
 	}
 
