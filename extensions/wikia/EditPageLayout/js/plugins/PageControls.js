@@ -122,7 +122,6 @@
 			var states = editor.states;
 				if (states.IDLE == state) {
 					$('#wpSave').removeAttr('disabled');
-					$().log('================================ states.IDLE');
 				}
 		},
 
