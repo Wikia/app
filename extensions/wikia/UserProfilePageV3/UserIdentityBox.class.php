@@ -105,8 +105,8 @@ class UserIdentityBox {
 			}
 			
 			//internationalization
-			if( !empty($userData['registration']) ) {
-				$userData['registration'] = $this->app->wg->Lang->date($userData['registration']);
+			if( !empty($data['registration']) ) {
+				$data['registration'] = $this->app->wg->Lang->date($data['registration']);
 			}
 			
 			$data['edits'] = $this->app->wg->Lang->formatNum($data['edits']);
@@ -139,6 +139,7 @@ class UserIdentityBox {
 	 */
 	private function getDefaultData(&$data) {
 		$memcData = $this->app->wg->Memc->get($this->getMemcUserIdentityDataKey());
+		
 		if( empty($memcData) ) {
 			foreach(array('location', 'occupation', 'gender', 'birthday', 'website', 'twitter', 'fbPage') as $key) {
 				if( !in_array($key, array('gender', 'birthday')) ) {
