@@ -465,7 +465,7 @@ class WikiaMiniUpload {
 						$file_mwname = new FakeLocalFile(Title::newFromText($mwname, 6), RepoGroup::singleton()->getLocalRepo());
 
 						if(!empty($extraId)) {
-							require_once($IP.'/extensions/3rdparty/ImportFreeImages/phpFlickr-2.2.0/phpFlickr.php');
+							require_once($IP.'/lib/phpFlickr/phpFlickr.php');
 							$flickrAPI = new phpFlickr('bac0bd138f5d0819982149f67c0ca734');
 							$proxyArr = explode(':', $wgHTTPProxy);
                                                         $flickrAPI->setProxy($proxyArr[0], $proxyArr[1]);
@@ -535,7 +535,7 @@ class WikiaMiniUpload {
 					$file = new LocalFile($title, RepoGroup::singleton()->getLocalRepo());
 
 					if(!empty($extraId)) {
-						require_once($IP.'/extensions/3rdparty/ImportFreeImages/phpFlickr-2.2.0/phpFlickr.php');
+						require_once($IP.'/lib/phpFlickr/phpFlickr.php');
 						$flickrAPI = new phpFlickr('bac0bd138f5d0819982149f67c0ca734');
 
                                                 $proxyArr = explode(':', $wgHTTPProxy);
@@ -605,7 +605,7 @@ class WikiaMiniUpload {
 			$transl_i_t = '\[\[' . $ns_img . ':' . $placeholder_msg . '[^\]]*\]\]';
 
 			$success = false;
-			
+
 			preg_match_all( '/' . $transl_v_t . '|' . $transl_i_t . '/si', $text, $matches, PREG_OFFSET_CAPTURE );
 			if( is_array( $matches ) && $box < count($matches[0]) ) {
 				$our_gallery = $matches[0][$box][0];
