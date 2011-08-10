@@ -478,10 +478,12 @@ class UserIdentityBox {
 		
 		$wikis = array_merge( $this->getTopWikisFromDb(), $this->getEditsWikis());
 		
+		$keys = array();
 		foreach($wikis as $key => $wiki) {
-			if( $this->isTopWikiHidden($wiki['id']) ) {
+			if( $this->isTopWikiHidden($wiki['id']) || in_array($key, $keys) ) {
 				unset($wikis[$key]);
 			}
+			$keys[] = $key;
 		}
 		
 		//doesn't seem right on devbox -- need to check on preview
@@ -563,8 +565,9 @@ class UserIdentityBox {
 		if( !is_array($mastheadEditsWikis) ) {
 			$mastheadEditsWikis = array();
 		}	
+
 		if(count($mastheadEditsWikis) < 20) {
-			$mastheadEditsWikis[$wikiId] = $wiki;
+			$mastheadEditsWikis[$wikiId] = $wiki;			
 		}
 
 		$this->app->wg->Memc->set( $this->getMemcMastheadEditsWikisKey(), $mastheadEditsWikis);
@@ -639,7 +642,7 @@ class UserIdentityBox {
 		
 		$hiddenWikis = $this->app->wg->Memc->get( $this->getMemcHiddenWikisId() );
 		
-		if( empty($hiddenWikis) ) {
+		if( empty($hiddenWikis) && !is_array($hiddenWikis) ) {
 			$dbs = $this->app->wf->GetDB( DB_SLAVE, array(), $this->app->wg->ExternalSharedDB);
 			$hiddenWikis = $this->getHiddenFromDb($dbs);
 			$this->app->wg->Memc->set($this->getMemcHiddenWikisId(), $hiddenWikis);
