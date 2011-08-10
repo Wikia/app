@@ -8,19 +8,17 @@ import org.testng.annotations.Test;
 
 public class ToolbarTest extends BaseTest {
 
-	@Test(groups="CI")
+	@Test(groups={"CI", "verified"})
 	public void testEnsuresThatToolbarIsNotPresentForAnonymousUsers() throws Exception {
-		session().open("/");
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("/");
 		assertTrue(session().isElementPresent("WikiaFooter"));
 		assertFalse(session().isElementPresent("//div[contains(@class, 'toolbar')]"));
 	}
 
-	@Test(groups="CI")
+	@Test(groups={"CI", "verified"})
 	public void testEnsuresThatToolbarIsPresentForSignedInUsers() throws Exception {
 		login();
-		session().open("/");
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("/");
 		assertTrue(session().isElementPresent("WikiaFooter"));
 		assertTrue(session().isElementPresent("//div[contains(@class, 'toolbar')]"));
 	}

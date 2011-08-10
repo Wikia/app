@@ -131,7 +131,8 @@ public class BaseTest {
 	}
 
 	protected void login(String username, String password) throws Exception {
-		session().open("index.php?title=Special:Signup");
+		openAndWait("index.php?title=Special:Signup");
+		waitForElement("wpName2Ajax");
 		session().type("wpName2Ajax", username);
 		session().type("wpPassword2Ajax", password);
 		clickAndWait("wpLoginattempt");
@@ -539,7 +540,7 @@ public class BaseTest {
 		try {
 			//go to undo page
 			String href = session().getAttribute("//ul[@id='pagehistory']/li[1]/span[@class='mw-history-undo']/a@href");
-			session().open(href);
+			openAndWait(href);
 		}
 		catch (SeleniumException e) {
 			//no 'undo' link - check if there is only one revision.. if so, then 'undo' means 'delete'

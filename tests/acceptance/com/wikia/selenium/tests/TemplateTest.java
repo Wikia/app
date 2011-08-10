@@ -12,10 +12,10 @@ import java.util.UUID;
 
 public class TemplateTest extends BaseTest {
 
-	@Test(groups="CI")
+	@Test(groups={"CI", "verified"})
 	public void testEnsureImportantElementsOfExistentTemplatePageExist() throws Exception {
 		login();
-		session().open("index.php?title=Template:Infobox");
+		openAndWait("index.php?title=Template:Infobox");
 
 		// check what page you land on
 		assertTrue(session().getLocation().contains("index.php?title=Template:Infobox"));
@@ -31,14 +31,14 @@ public class TemplateTest extends BaseTest {
 		assertTrue(session().isElementPresent("//div[@id='WikiaRail']"));
 	}
 
-	@Test(groups="CI")
+	@Test(groups={"CI", "verified"})
 	public void testEnsureImportantElementsOfExistentTemplateTalkPageExist() throws Exception {
 		login();
 		try {
-			session().open("index.php?title=Template_talk:Infobox");
+			openAndWait("index.php?title=Template_talk:Infobox");
 		} catch (SeleniumException se) {
 			editArticle("Template_talk:Infobox", "talk template");
-			session().open("index.php?title=Template_talk:Infobox");
+			openAndWait("index.php?title=Template_talk:Infobox");
 		}
 		assertTrue(session().getLocation().contains("index.php?title=Template_talk:Infobox"));
 		
@@ -57,14 +57,14 @@ public class TemplateTest extends BaseTest {
 		assertTrue(session().isElementPresent("//div[@id='WikiaRail']"));
 	}
 
-	@Test(groups="CI")
+	@Test(groups={"CI", "verified"})
 	public void testEnsureNonExistantTemplatePageContainsProperElements() throws Exception {
 
 		login();
 		String templateName = "NonExistentTemplateName" + UUID.randomUUID().toString().substring(0, 7);
 		String url = "index.php?title=Template:" + templateName;
 		try {
-			session().open(url);
+			openAndWait(url);
 		} catch (SeleniumException se) {
 			assertTrue(se.getMessage().contains("Response_Code = 404"));
 		}

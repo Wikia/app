@@ -7,9 +7,9 @@ import static org.testng.AssertJUnit.assertEquals;
 
 public class SpecialVersionTest extends BaseTest {
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI", "verified"})
 	public void testEnsureSpecialVersionPageDisplaysMediaWikiAndWikiaVersion() throws Throwable {
-		session().open("index.php?title=Special:Version");
+		openAndWait("index.php?title=Special:Version");
 
 		assertTrue(session().getLocation().contains("index.php?title=Special:Version"));
 		assertEquals(session().getText("//header[@id='WikiaPageHeader']/h1"), "Version");
