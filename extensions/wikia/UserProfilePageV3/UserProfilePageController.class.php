@@ -704,9 +704,6 @@ class UserProfilePageController extends WikiaController {
 		$userIdentityBox = F::build('UserIdentityBox', array($this->app, $user, self::MAX_TOP_WIKIS));
 		$userData = $userIdentityBox->setData(true);
 		
-		if( !is_null($userData['registration']) ) {
-			$userData['registration'] = $this->wg->Lang->date($userData['registration']);
-		}
 		$this->setVal('user', $userData);
 		$this->setVal('months', $this->getMonths());
 		$this->setVal( 'fbConnectButton', '<fb:login-button perms="user_about_me,user_birthday,user_location,user_work_history,user_website" onlogin="UserProfilePage.fbConnect();">'.$this->app->wf->Msg('user-identity-box-connect-to-fb').'</fb:login-button>' );
