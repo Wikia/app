@@ -157,9 +157,9 @@ class AdSS_User {
 	}
 
 	function sendWelcomeMessage( $password ) {
-		global $wgPasswordSender, $wgAdSSBillingThreshold;
+		global $wgAdSSPasswordSender, $wgAdSSBillingThreshold;
 		$to = new MailAddress( $this->email );
-		$from = new MailAddress( $wgPasswordSender );
+		$from = new MailAddress( $wgAdSSPasswordSender );
 		$subject = wfMsg( 'adss-welcome-subject' );
 		$url = SpecialPage::getTitleFor( 'AdSS/manager' )->getFullURL();
 		$body = wfMsg( 'adss-welcome-body', $url, $this->email, $password, $wgAdSSBillingThreshold );
