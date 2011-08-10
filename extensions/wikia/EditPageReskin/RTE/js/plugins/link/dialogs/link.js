@@ -345,12 +345,6 @@ CKEDITOR.dialog.add( 'link', function( editor )
 
 			// setup editor fields
 			setupDialog.apply( this, [editor, element] );
-
-			// tracking
-			var self = this;
-
-			// setup dialog tracking code (close / cancel)
-			this.setupTracking('link');
 		},
 
 		// create new link / update link' meta data

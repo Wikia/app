@@ -61,9 +61,6 @@ CKEDITOR.dialog.add('rte-comment', function(editor)
 			wikitext = data.wikitext.replace(/^<!--\s+/, '').replace(/\s+-->$/, '');
 
 			this.setValueOf('comment', 'content', wikitext);
-
-			// setup dialog tracking code (don't report clicks on OK)
-			this.setupTracking('comment', {ok: false});
 		}
 	};
 });

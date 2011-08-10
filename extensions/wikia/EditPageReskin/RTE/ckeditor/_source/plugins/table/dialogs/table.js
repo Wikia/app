@@ -113,11 +113,6 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				// they get reflected into the Advanced tab.
 				widthInput && widthInput.onChange();
 				heightInput && heightInput.onChange();
-
-				// Wikia - start
-				// setup dialog tracking code (close / cancel)
-				this.setupTracking('table');
-				// Wikia - end
 			},
 			onOk : function()
 			{
