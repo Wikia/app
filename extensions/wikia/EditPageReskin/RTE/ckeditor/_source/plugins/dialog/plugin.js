@@ -307,7 +307,13 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 
 		this.on( 'cancel', function( evt )
 			{
-				if( this._.name == 'link' ) return false;
+				// Wikia change - begin
+				// don't show an alert about dialog changes when close is clicked (r25573 refactored)
+				if (this.definition.doNotCheckForChanged) {
+					return;
+				}
+				// Wikia change - end
+
 				iterContents( function( item )
 					{
 						if ( item.isChanged() )
