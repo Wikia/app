@@ -1,5 +1,8 @@
 //variables:
 $arrowcolor: grey;
+$openMenuLength: 500px;
+$menuBackgroundColor: #555;
+$menuSecondColor: #333;
 
 html {
   border: none;
@@ -9,19 +12,20 @@ html {
     background-color: #EEE;
     color: #222;
     margin: 0;
-    padding-top: 55px;
-    -webkit-transition: all 0.3s;
+    h1 {
+      border-bottom: 1px solid grey;
+    }
     #navigation {
       width: 100%;
-      height: 50px;
-      background-color: #444;
+      background-color: $menuBackgroundColor;
+      background: -webkit-linear-gradient(top, rgba(45,45,45,1) 0%,rgba(55,55,55,1) 100%);
+      background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(85,85,85,1)), color-stop(100%,rgba(95,95,95,1)));
+      -webkit-box-shadow: 0 0 10px black;
       color: #777;
-      position: absolute;
-      top: 0;
-      left: 0;
-      -webkit-transition: all 0.3s;
+      -webkit-tap-highlight-color: rgba( 0,0,0,0 );
+      -webkit-focus-ring-color: rgba( 0,0,0,0 );
       #navigationWordMark {
-        margin: 5px 2px;
+        margin: 1px;
         height: 46px;
       }
       #openNavigationContent {
@@ -32,8 +36,7 @@ html {
           height: 50px;
       }
       &.open {
-        width: 100%;
-        height: 400px;
+        padding-bottom: 5px;
         #openToggle #arrow {
           border-top: none;
           border-bottom: 8px solid $arrowcolor;
@@ -46,16 +49,63 @@ html {
         }
         #openNavigationContent {
           display: block;
+          div.navigationTab {
+            display: none;
+            background-color: $menuSecondColor;
+            width: 100%;
+            clear:both;
+            padding: 15px 0;
+            &.openTab {
+              display: block;
+            }
+            input {
+              margin: 5px;
+              border-radius: 4px;
+              height: 25px;
+            }
+          }
+          #menuTab {
+            ul {
+              list-style-type: none;
+              margin: 0 auto;
+              padding: 0;
+              width: 100%;
+              li {
+                width: 100%;
+                padding: 10px 0;
+                border-bottom: 1px solid #DDD;
+                font-size: 1.3em;
+              }
+            }
+          }
+          #searchTab {
+            input[type='search'] {
+              width: 65%;
+            }
+            input[type='submit'] {
+              width: 25%;
+            }
+          }
+          #exploreTab {
+
+          }
+          #loginTab {
+            form {
+              text-align: center;
+              input {
+                width: 95%;
+              }
+            }
+          }
         }
       }
       #openToggle {
         position: absolute;
         right: 0;
         top: 0;
-        padding: 20px;
+        padding: 18px;
         z-index: 9999;
-        -webkit-tap-highlight-color: rgba( 0,0,0,0 );
-        -webkit-focus-ring-color: rgba( 0,0,0,0 );
+        border-left: 1px solid rgba(130,130,130,0.6);
         #arrow {
           font-size: 0;
           line-height: 0;
@@ -74,15 +124,17 @@ html {
         padding: 0;
         li {
           display: inline;
-          padding: 15px;
+          padding: 5px 7px 10px 7px;
+          margin: 0 5px;
           &.openMenu {
-            background-color: #555;
+            background-color: $menuSecondColor;
+            color: white;
           }
         }
       }
-    }
-    &.open {
-      padding-top: 410px;
+      ::-webkit-input-placeholder {
+        color: grey;
+      }
     }
   }
 }
@@ -91,6 +143,43 @@ html {
   //REALESE THE HELL: overflow used here for a demo reason the page now has static width what on mobile device is desiered
   //shoudn't be done on production site as it is a workaround on to wide content
   overflow: hidden;
+  table#toc {
+    width: 100%;
+    margin: 0 auto;
+    #toctitle {
+      border: 1px solid grey;
+      background-color: $menuBackgroundColor;
+      background: -webkit-linear-gradient(top, rgba(200,200,200,1) 0%,rgba(230,230,230,1) 100%);
+      background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(200,200,200,1)), color-stop(100%,rgba(230,230,230,1)));
+    }
+    ul {
+      display: none;
+      width: 100%;
+      list-style: none;
+      padding: 0;
+      &.visible {
+        display: block;
+      }
+      li {
+        width: 90%;
+        margin: 0 auto;
+        padding: 10px;
+        border: 1px solid grey;
+      }
+    }
+
+  }
+  .infobox, table.darktable:nth-of-type(1) {
+    border: 1px solid grey;
+    margin: 0 auto;
+    background-color: #DDD;
+    width: 95% !important;
+    float: none !important;
+    -webkit-box-shadow: 0 0 5px grey;
+    tr:nth-of-type(1) {
+      background-color: #EEE;
+    }
+  }
   div{
     &.main-page-tag-rcs{
       float: none;
@@ -124,4 +213,13 @@ html {
       }
     }
   }
+}
+
+
+@media ( min-width: 321px ),( orientation: landscape ) {
+
+}
+
+@media ( max-width: 320px ),( orientation: portrait ) {
+
 }
