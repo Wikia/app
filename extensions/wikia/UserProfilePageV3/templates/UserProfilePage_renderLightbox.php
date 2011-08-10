@@ -123,8 +123,8 @@
 					<label><?= wfMsg('user-identity-box-about-fav-wikis'); ?></label>
 					<a class="favorite-wikis-refresh wikia-chiclet-button" href="#"><img src="<?= $wgBlankImgUrl ?>"></a>
 					<ul class="favorite-wikis">
-					<? foreach($user['topWikis'] as $favWikiId => $wiki): ?>
-						<li data-wiki-id="<?= $favWikiId; ?>">
+					<? foreach($user['topWikis'] as $key => $wiki): ?>
+						<li data-wiki-id="<?= $wiki['id']; ?>">
 							<span><?= $wiki['wikiName']; ?></span> <img src="<?= $wgBlankImgUrl ?>" class="sprite-small delete">
 							</li>
 					<? endforeach; ?>

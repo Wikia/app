@@ -86,12 +86,6 @@ class UserIdentityBox {
 			if( !$hasUserEditedMastheadBefore ) {
 				if( $isEdit || $iEdits > 0 ) {
 					$this->getDefaultData($data);
-					
-					if( $isEdit && $iEdits <= 0 ) {
-					//if this is edit of masthead and user
-					//doesn't have edits on this wiki add it to fav
-						$this->addTopWiki($wikiId);
-					}
 				} else {
 					$this->getEmptyData($data);
 				}
@@ -123,10 +117,7 @@ class UserIdentityBox {
 			$data['showZeroStates'] = $this->checkIfDisplayZeroStates($data);
 		}
 		
-		file_put_contents('/tmp/nandy.log', print_r(array(
-			'setData::$data' => $data,
-		), true), FILE_APPEND);
-		
+
 		$this->app->wf->ProfileOut( __METHOD__ );
 		return $data;
 	}
@@ -140,7 +131,6 @@ class UserIdentityBox {
 	 */
 	private function getDefaultData(&$data) {
 		$memcData = $this->app->wg->Memc->get($this->getMemcUserIdentityDataKey());
-		
 		if( empty($memcData) ) {
 			foreach(array('location', 'occupation', 'gender', 'birthday', 'website', 'twitter', 'fbPage') as $key) {
 				if( !in_array($key, array('gender', 'birthday')) ) {
@@ -151,12 +141,12 @@ class UserIdentityBox {
 			}
 			
 			$data['realName'] = $this->user->getRealName();
-			$data['topWikis'] = $this->getTopWikisFromDb();
 			
 			$this->saveMemcUserIdentityData($data);
 		} else {
 			$data = array_merge_recursive($data, $memcData);
 		}
+		$data['topWikis'] = $this->getTopWikis();
 	}
 	
 	/**
@@ -165,8 +155,19 @@ class UserIdentityBox {
 	 * @return string
 	 */
 	private function getMemcUserIdentityDataKey() {
-		return 'user-identity-box-data-'.$this->user->getId();
+		return 'user-identity-box-data0-'.$this->user->getId();
 	}
+
+	/**
+	 * @brief Returns string with key to memcached; requires $this->user field being instance of User
+	 * 
+	 * @return string
+	 */
+	
+	private function getMemcMastheadEditsWikisKey() {
+		return 'user-identity-box-data-masthead-edits0'.$this->user->getId();
+	}
+	
 	
 	/**
 	 * @brief Sets empty data for a particular wiki
@@ -233,6 +234,8 @@ class UserIdentityBox {
 		if( !$this->hasUserEditedMastheadBefore($wikiId) ) {
 			$this->user->setOption(self::USER_EDITED_MASTHEAD_PROPERTY.$wikiId, true);
 			$this->user->setOption(self::USER_FIRST_MASTHEAD_EDIT_DATE_PROPERTY.$wikiId, date('YmdHis'));
+
+			$this->addTopWiki($wikiId);
 			$changed = true;
 		}
 		
@@ -295,14 +298,13 @@ class UserIdentityBox {
 		}
 		
 		//if any of properties isn't set then set it to null
-		foreach(array('location', 'occupation', 'gender', 'birthday', 'website', 'twitter', 'fbPage', 'realName', 'topWikis') as $property) {
+		foreach(array('location', 'occupation', 'gender', 'birthday', 'website', 'twitter', 'fbPage', 'realName') as $property) {
 			if( !isset($memcData[$property]) ) {
 				$memcData[$property] = null;
 			}
 		}
-		
 		$this->app->wg->Memc->set($this->getMemcUserIdentityDataKey(), $memcData);
-		
+				
 		return $memcData;
 	}
 	
@@ -458,7 +460,7 @@ class UserIdentityBox {
 				$wikiUrl = F::build('WikiFactory', array('wgServer', $wikiId), 'getVarValueByName');
 				$wikiUrl = $wikiUrl.'?redirect=no';
 				
-				$wikis[$wikiId] = array('wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'edits' => $editCount);
+				$wikis[$wikiId] = array( 'id' => $wikiId, 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'edits' => $editCount);
 			}
 		}
 		
@@ -476,14 +478,16 @@ class UserIdentityBox {
 			$this->clearHiddenTopWikis();
 		}
 		
-		$memcData = $this->app->wg->Memc->get($this->getMemcUserIdentityDataKey());
-		$wikis = empty($memcData['topWikis']) ? array() : $memcData['topWikis'];
+		$wikis = array_merge( $this->getTopWikisFromDb(), $this->getEditsWikis());
+		
+		
 		
 		foreach($wikis as $wikiId => $wiki) {
-			if( $this->isTopWikiHidden($wikiId) ) {
-				unset($wikis[$wikiId]);
+			if( $this->isTopWikiHidden($wiki['id']) ) {
+				unset($wikis[$key]);
 			}
 		}
+
 		
 		//doesn't seem right on devbox -- need to check on preview
 //		$favWikisAmount = count($wikis);
@@ -504,12 +508,14 @@ class UserIdentityBox {
 	 * @return array
 	 */
 	protected function sortTopWikis($topWikis) {
-		if( empty($topWikis) ) {
+		if( !empty($topWikis) ) {
 			$editcounts = array();
 			
 			foreach($topWikis as $key => $row) {
 				if( isset($row['edits']) ) {
 					$editcounts[$key] = $row['edits'];
+				} else {
+					unset($topWikis[$key]);
 				}
 			}
 			
@@ -529,38 +535,47 @@ class UserIdentityBox {
 	 * @return void
 	 */
 	public function addTopWiki($wikiId) {
-		if( intval($wikiId) > 0 && !$this->isTopWikiHidden($wikiId) ) {
-			$memcData = $this->app->wg->Memc->get($this->getMemcUserIdentityDataKey());
-			$memcData['topWikis'] = empty($memcData['topWikis']) ? array() : $memcData['topWikis'];
-			
-			$wikiName = F::build('WikiFactory', array('wgSitename', $wikiId), 'getVarValueByName');
-			$wikiUrl = F::build('WikiFactory', array('wgServer', $wikiId), 'getVarValueByName');
-			$wikiUrl = $wikiUrl.'?redirect=no';
-			
-			//adding new wiki to topWikis in cache
-			$memcData['topWikis'][$wikiId] = array('wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'edits' => 1);
-			
-			//getting array of masthead edits wikis
-			$mastheadEditsWikis = $this->user->getOption(self::USER_MASTHEAD_EDITS_WIKIS);
-			$mastheadEditsWikis = empty($mastheadEditsWikis) ? array() : unserialize($mastheadEditsWikis);
-			
-			if( is_array($mastheadEditsWikis) ) {
-				if( !in_array($wikiId, $mastheadEditsWikis) ) {
-					$mastheadEditsWikis[] = $wikiId;
-					$mastheadEditsWikis = serialize($mastheadEditsWikis);
-					
-					//saving data to db
-					$this->user->setOption(self::USER_MASTHEAD_EDITS_WIKIS, $mastheadEditsWikis);
-					$this->user->saveSettings();
-					
-					//updating mastheadEditsWikis in cache
-					$memcData['mastheadEditsWikis'] = $mastheadEditsWikis;
-				}
-			}
-			
-			//saving cache
-			$this->app->wg->Memc->set( $this->getMemcUserIdentityDataKey(), $memcData );
+		$memcData = $this->app->wg->Memc->get($this->getMemcUserIdentityDataKey());
+		$memcData['topWikis'] = empty($memcData['topWikis']) ? array() : $memcData['topWikis'];
+		
+		if(empty($memcData['topWikis'])) {
+			$memcData['topWikis'] = $this->getTopWikis();
 		}
+		
+		$wikiName = F::build('WikiFactory', array('wgSitename', $wikiId), 'getVarValueByName');
+		$wikiUrl = F::build('WikiFactory', array('wgServer', $wikiId), 'getVarValueByName');
+		$wikiUrl = $wikiUrl.'?redirect=no';
+		
+		$userStatsService = F::build('UserStatsService', array($this->app->wg->User->getId()) );
+		$userStats = $userStatsService->getStats();
+		
+		//adding new wiki to topWikis in cache
+		$wiki = array('id' => $wikiId, 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'edits' => $userStats['edits'] + 1);
+	
+		$memcData['topWikis'][] = $wiki; 		
+		$this->storeEditsWikis($wikiId, $wiki );
+		$memcData['topWikis'] = $this->sortTopWikis($memcData['topWikis'] );
+		//saving cache
+		$this->app->wg->Memc->set( $this->getMemcUserIdentityDataKey(), $memcData );
+	}
+	
+	private function storeEditsWikis($wikiId, $wiki) {
+		//getting array of masthead edits wikis
+		$mastheadEditsWikis = $this->app->wg->Memc->get( $this->getMemcMastheadEditsWikisKey(), array());
+		if( !is_array($mastheadEditsWikis) ) {
+			$mastheadEditsWikis = array();
+		}	
+			
+		$mastheadEditsWikis[$wikiId] = $wiki;
+		$this->app->wg->Memc->set( $this->getMemcMastheadEditsWikisKey(), $mastheadEditsWikis);
+
+		return $mastheadEditsWikis;
+	}
+	
+	private function getEditsWikis() {
+		$mastheadEditsWikis = $this->app->wg->Memc->get( $this->getMemcMastheadEditsWikisKey(), null);
+		$mastheadEditsWikis = is_array($mastheadEditsWikis) ? $mastheadEditsWikis: array();
+		return $mastheadEditsWikis;
 	}
 	
 	/**
@@ -607,7 +622,7 @@ class UserIdentityBox {
 				$wikiUrl = F::build('WikiFactory', array('wgServer', $wikiId), 'getVarValueByName');
 				$wikiUrl = $wikiUrl.'?redirect=no';
 				
-				$wikis[$wikiId] = array( 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'edits' => $editCount );
+				$wikis[$wikiId] = array( 'id' => $wikiId, 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'edits' => $editCount );
 			} else {
 				unset($wikis[$wikiId]);
 			}

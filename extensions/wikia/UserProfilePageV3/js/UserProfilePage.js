@@ -226,7 +226,7 @@ var UserProfilePage = {
 		});
 
 		$('.favorite-wikis .delete').live('click', function() {
-			UserProfilePage.hideFavWiki($(this).closest('[data-wiki-id]').data('wiki-id'));
+			UserProfilePage.hideFavWiki($(this).closest('li').data('wiki-id'));
 		});
 		
 		modal.find('.favorite-wikis-refresh').click(function(event) {
@@ -506,11 +506,11 @@ var UserProfilePage = {
 
 							// add the next wiki
 							$.each(data.result.wikis, function(index, value) {
-								$().log(index);
-								if(UserProfilePage.modal.find('.favorite-wikis [data-wiki-id="' + index + '"]').length == 0) {
+								$().log(value.id);
+								if(UserProfilePage.modal.find('.favorite-wikis [data-wiki-id="' + value.id + '"]').length == 0) {
 									//found the wiki to add. now do it.
 									$().log('adding');
-									UserProfilePage.modal.find('.join-more-wikis').before('<li data-wiki-id="' + index + '"><span>' + value.wikiName + '</span> <img src="' + wgBlankImgUrl + '" class="sprite-small delete"></li>');
+									UserProfilePage.modal.find('.join-more-wikis').before('<li data-wiki-id="' + value.id + '"><span>' + value.wikiName + '</span> <img src="' + wgBlankImgUrl + '" class="sprite-small delete"></li>');
 									
 								}
 							});
@@ -533,7 +533,7 @@ var UserProfilePage = {
 
 				// add items
 				for(i in data.result.wikis) {
-					favWikisList.prepend('<li data-wiki-id="' + i + '"><span>' + data.result.wikis[i].wikiName + '</span> <img src="' + wgBlankImgUrl + '" class="sprite-small delete"></li>');
+					favWikisList.prepend('<li data-wiki-id="' + data.result.wikis[i].id  + '"><span>' + data.result.wikis[i].wikiName + '</span> <img src="' + wgBlankImgUrl + '" class="sprite-small delete"></li>');
 				}
 		
 				UserProfilePage.toggleJoinMoreWikis();				
