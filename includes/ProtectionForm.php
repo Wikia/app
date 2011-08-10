@@ -59,7 +59,7 @@ class ProtectionForm {
 		$this->mArticle = $article;
 		$this->mTitle = $article->mTitle;
 		$this->mApplicableTypes = $this->mTitle->getRestrictionTypes();
-		
+
 		// Check if the form should be disabled.
 		// If it is, the form will be available in read-only to show levels.
 		$this->mPermErrors = $this->mTitle->getUserPermissionsErrors('protect',$wgUser);
@@ -67,15 +67,15 @@ class ProtectionForm {
 		$this->disabledAttrib = $this->disabled
 			? array( 'disabled' => 'disabled' )
 			: array();
-		
+
 		$this->loadData();
 	}
-	
+
 	// Loads the current state of protection into the object.
 	function loadData() {
 		global $wgRequest, $wgUser;
 		global $wgRestrictionLevels;
-		
+
 		$this->mCascade = $this->mTitle->areRestrictionsCascading();
 
 		$this->mReason = $wgRequest->getText( 'mwProtect-reason' );
@@ -85,7 +85,7 @@ class ProtectionForm {
 		foreach( $this->mApplicableTypes as $action ) {
 			// Fixme: this form currently requires individual selections,
 			// but the db allows multiples separated by commas.
-			
+
 			// Pull the actual restriction from the DB
 			$this->mRestrictions[$action] = implode( '', $this->mTitle->getRestrictions( $action ) );
 
@@ -487,8 +487,13 @@ class ProtectionForm {
 		}
 
 		if ( !$this->disabled ) {
-			$out .= Xml::closeElement( 'form' ) .
-				$this->buildCleanupScript();
+			$out .= Xml::closeElement( 'form' );
+
+			/* Wikia change begin - @author: Macbre */
+			/* Add a script to $wgOut instead of emiting it directly to HTML (BugId:7178) */
+			global $wgHooks;
+			$wgHooks['SkinAfterBottomScripts'][] = array($this, 'onSkinAfterBottomScripts');
+			/* Wikia change end */
 		}
 
 		return $out;
@@ -546,10 +551,13 @@ class ProtectionForm {
 	}
 
 	function buildScript() {
-		global $wgStylePath, $wgStyleVersion;
-		return Xml::tags( 'script', array(
-			'type' => 'text/javascript',
-			'src' => $wgStylePath . "/common/protect.js?$wgStyleVersion.1" ), '' );
+		/* Wikia change begin - @author: Macbre */
+		/* Add a script to $wgOut instead of emiting it directly to HTML (BugId:7178) */
+		global $wgOut;
+		$wgOut->addScriptFile('protect.js');
+
+		return '';
+		/* Wikia change end */
 	}
 
 	function buildCleanupScript() {
@@ -573,6 +581,14 @@ class ProtectionForm {
 		$script .= "ProtectionForm.init($encOptions)";
 		return Xml::tags( 'script', array( 'type' => 'text/javascript' ), $script );
 	}
+
+	/* Wikia change begin - @author: Macbre */
+	/* Add a script to $wgOut instead of emiting it directly to HTML (BugId:7178) */
+	function onSkinAfterBottomScripts($skin, &$bottomScriptText) {
+		$bottomScriptText .= $this->buildCleanupScript();
+		return true;
+	}
+	/* Wikia change end */
 
 	/**
 	 * @param OutputPage $out
