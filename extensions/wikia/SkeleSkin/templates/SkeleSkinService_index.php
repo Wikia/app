@@ -15,7 +15,18 @@
 		<?= $cssLinks ;?>
 	</head>
 	<body>
-		<?= $wikiaNavigation ;?>
+		<nav id="navigation">
+			<div id="openNavigationContent">
+				<ul id="navigationMenu">
+					<li class="openMenu">Menu</li>
+					<li>Explore</li>
+					<li>Search</li>
+					<li>Login</li>
+				</ul>
+		
+			</div>
+			<div id="openToggle"><span id="arrow"></span></div>
+		</nav>
 		<?= $wikiHeaderContent ;?>
 		<?= $pageContent ;?>
 		<?= $jsFiles ;?>
