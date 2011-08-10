@@ -93,7 +93,7 @@ class UserIdentityBox {
 				$this->getDefaultData($data);
 			}
 			
-			$firstMastheadEditDate = $this->user->getOption(self::USER_FIRST_MASTHEAD_EDIT_DATE_PROPERTY.$wikiId.'_'.$userId);
+			$firstMastheadEditDate = $this->user->getOption(self::USER_FIRST_MASTHEAD_EDIT_DATE_PROPERTY.$wikiId);
 			if( is_null($data['registration']) && !is_null($firstMastheadEditDate) ) {
 			//if user hasn't edited anything on this wiki before
 			//we're getting the first edit masthead date
@@ -478,14 +478,11 @@ class UserIdentityBox {
 		
 		$wikis = array_merge( $this->getTopWikisFromDb(), $this->getEditsWikis());
 		
-		
-		
-		foreach($wikis as $wikiId => $wiki) {
+		foreach($wikis as $key => $wiki) {
 			if( $this->isTopWikiHidden($wiki['id']) ) {
 				unset($wikis[$key]);
 			}
 		}
-
 		
 		//doesn't seem right on devbox -- need to check on preview
 //		$favWikisAmount = count($wikis);
@@ -566,8 +563,8 @@ class UserIdentityBox {
 		if( !is_array($mastheadEditsWikis) ) {
 			$mastheadEditsWikis = array();
 		}	
-		if(count($mastheadEditsWikis[$wikiId]) < 20) {
-			$mastheadEditsWikis[$wikiId] = $wiki;			
+		if(count($mastheadEditsWikis) < 20) {
+			$mastheadEditsWikis[$wikiId] = $wiki;
 		}
 
 		$this->app->wg->Memc->set( $this->getMemcMastheadEditsWikisKey(), $mastheadEditsWikis);
