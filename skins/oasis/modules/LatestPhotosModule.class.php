@@ -84,15 +84,17 @@ class LatestPhotosModule extends Module {
 		$thumb_url = array_pop($thumb_url);
 		$thumb_url = $thumb_url['url'];
 		$userName = $file->user_text;
+		$fileTitle = $file->getTitle();
 
 		$retval = array (
-			"file_url" => $element['url'],
-			"image_url" => $file->getUrl(),
-			"thumb_url" => $thumb_url,
-			"image_filename" => $file->getTitle()->getFullText(),
-			"user_href" => Wikia::link(Title::newFromText($userName, NS_USER), $userName),
-			"links" => $this->getLinkedFiles($file->name),
-			"date" => wfTimeFormatAgo($file->timestamp));
+			'file_url' => $element['url'],
+			'image_url' => $file->getUrl(),
+			'thumb_url' => $thumb_url,
+			'image_filename' => $fileTitle->getFullText(),
+			'image_filename_short' => $fileTitle->getText(),
+			'user_href' => Wikia::link(Title::newFromText($userName, NS_USER), $userName),
+			'links' => $this->getLinkedFiles($file->name),
+			'date' => wfTimeFormatAgo($file->timestamp));
 		return $retval;
 	}
 
