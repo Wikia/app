@@ -10,7 +10,7 @@ var MobileSkin = {
 	b: null,
 	
 	initMixpanel: function(){
-		//if(!DevelEnvironment){
+		if(!DevelEnvironment){
 			mpq.push(["init","f64b56c48325a31a1a442e31b98cf2c1"]);
 			var b,a,e,d,c;
 			b = document.createElement("script");
@@ -30,7 +30,7 @@ var MobileSkin = {
 			for(c = 0; c < d.length; c++){
 				mpq[d[c]] = e(d[c]);
 			}
-		//}
+		}
 	},
 	
 	track: function(category, action, label, intVal) {
@@ -50,8 +50,6 @@ var MobileSkin = {
 			paramsArray.push(intVal);
 			paramsObject.number = intVal;
 		}
-		
-		if(console && console.log) console.log('Tracking: ' + paramsArray.join(', '));
 		
 		//GA
 		_gaq.push(paramsArray);
@@ -74,19 +72,21 @@ var MobileSkin = {
 		_gaq.push(['_setCustomVar', 5, 'visiting mainpage', wgIsMainpage, 3]);
 		
 		//mixpanel
-		if(wgUserName && wgUserName != null){ 
+		if(mpq.name_tag && wgUserName && wgUserName != null){ 
  			mpq.name_tag(wgUserName); 
  		}
  		
  		//mixpanel
- 		mpq.register({
- 			'user type': MobileSkin.userType,
- 			'user language': wgUserLanguage,
- 			'hub': cityShort,
- 			'wiki': wgDBname,
- 			'visiting mainpage': wgIsMainpage,
- 			'skin': skin
- 		});
+ 		if(mpq.register){
+ 			mpq.register({
+	 			'user type': MobileSkin.userType,
+	 			'user language': wgUserLanguage,
+	 			'hub': cityShort,
+	 			'wiki': wgDBname,
+	 			'visiting mainpage': wgIsMainpage,
+	 			'skin': skin
+	 		});
+ 		}
  		
 		MobileSkin.track('pageview', 'view', wgPageName);
 		
