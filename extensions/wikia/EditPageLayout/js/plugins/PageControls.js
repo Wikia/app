@@ -46,7 +46,7 @@
 			$('#wpDiff').bind('click', this.proxy(this.onDiff));
 			//enable publish button after init editor
 
-			this.editor.on('editorReady', this.proxy(this.onEditorReady));
+			this.editor.on('state', this.proxy(this.onStateChange));
 
 			// remove placeholder text when user submits the form without providing the summary
 			$('#editform').bind('submit', this.proxy(this.onSave));
@@ -118,10 +118,12 @@
 		},
 
 		//enable publish button after init editor only for mediawiki editor
-		onEditorReady: function() {
-			if(!this.editor.ck) {
-				$('#wpSave').removeAttr('disabled');
-			}
+		onStateChange: function(editor, state) {
+			var states = editor.states;
+				if (states.IDLE == state) {
+					$('#wpSave').removeAttr('disabled');
+					$().log('================================ states.IDLE');
+				}
 		},
 
 		// handle "Save" button
