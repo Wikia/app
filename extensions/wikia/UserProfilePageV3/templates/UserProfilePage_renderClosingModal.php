@@ -8,8 +8,8 @@
 	</ul>
 	
 	<div class="modalToolbar">
-		<button class="quit"><?= wfMsg('userprofilepage-closing-popup-discard-and-quit'); ?></button>
 		<button class="save"><?= wfMsg('userprofilepage-closing-popup-save-and-quit'); ?></button>
-		<button class="cancel"><?= wfMsg('userprofilepage-closing-popup-cancel'); ?></button>
+		<button class="quit secondary"><?= wfMsg('userprofilepage-closing-popup-discard-and-quit'); ?></button>
+		<button class="cancel secondary"><?= wfMsg('userprofilepage-closing-popup-cancel'); ?></button>
 	</div>
 </div>
