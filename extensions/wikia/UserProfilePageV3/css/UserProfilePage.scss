@@ -26,6 +26,28 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 
 .WikiaUserPagesHeader {
 	@include linear-gradient(null, top, $color-page, 0%, $color-user-profile-gradient-bottom, 100%); 
+	&.WikiaBlogPostHeader, &.WikiaBlogListingHeader {
+		background: transparent;
+		padding: 0 10px 6px;
+		position: relative;
+		
+		// Largely copied from _UserPagesHeader.scss
+		h1 {
+			display: inline;
+			font-size: 24px;
+			margin: 0 10px 0 0;
+			small {
+				font-size: 12px;
+			}
+		}
+
+		.wikia-button,
+		.wikia-menu-button {
+			float: right;
+			margin-left: 10px;
+			z-index: 1;
+		}
+	}
 }
 
 .UserProfileMastheadSearch {

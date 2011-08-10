@@ -62,7 +62,7 @@
 		?>
 
 		<?php
-		if ( !empty($isUserProfilePageV3Enabled) && $headerModuleName == 'UserPagesHeader') {
+		if ( !empty($isUserProfilePageV3Enabled) && $headerModuleName == 'UserPagesHeader' && ($headerModuleAction != 'BlogPost' && $headerModuleAction != 'BlogListing') ) {
 			//echo F::app()->renderView( 'UserProfilePage', 'renderUserIdentityBox', array() );
 			echo wfRenderModule($headerModuleName, $headerModuleAction, $headerModuleParams);
 		}
@@ -79,7 +79,13 @@
 				// render UserPagesHeader or PageHeader or nothing...
 				if (empty($wgSuppressPageHeader) && $headerModuleName) {
 					if (!empty($isUserProfilePageV3Enabled) && $headerModuleName == 'UserPagesHeader') {
-						echo F::app()->renderView( 'UserProfilePage', 'renderActionButton', array() );
+						if ($headerModuleAction == 'BlogPost' || $headerModuleAction == 'BlogListing') {
+							// Show blog post header
+							echo F::app()->renderView( $headerModuleName, $headerModuleAction, $headerModuleParams ); 
+						} else {
+							// Show just the edit button
+							echo F::app()->renderView( 'UserProfilePage', 'renderActionButton', array() );
+						}
 					} else {
 						echo wfRenderModule($headerModuleName, $headerModuleAction, $headerModuleParams);
 					}

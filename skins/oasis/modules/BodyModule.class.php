@@ -105,7 +105,8 @@ class BodyModule extends Module {
 				|| ($isUserPage && !empty($wgEnableUserProfilePagesV3) && !$wgTitle->isSubpage())
 				|| $wgTitle->isSpecial( 'Following' )
 				|| $wgTitle->isSpecial( 'Contributions' )
-				|| (defined('NS_BLOG_LISTING') && $wgTitle->getNamespace() == NS_BLOG_LISTING) ;
+				|| (defined('NS_BLOG_LISTING') && $wgTitle->getNamespace() == NS_BLOG_LISTING)
+				|| (defined('NS_BLOG_ARTICLE') && $wgTitle->getNamespace() == NS_BLOG_ARTICLE);
 
 		wfProfileOut(__METHOD__);
 		return $ret;
