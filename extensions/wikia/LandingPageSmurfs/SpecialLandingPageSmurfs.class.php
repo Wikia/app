@@ -26,8 +26,7 @@ class SpecialLandingPageSmurfs extends UnlistedSpecialPage {
 
 		switch($langCode) {
 			case 'en':
-			case 'nl':
-			case 'fr':
+			case 'no':
 				// don't change the language
 				break;
 
