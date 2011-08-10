@@ -117,9 +117,6 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 		$this->response->setVal('headerText', $headerText);
 		$tab = AdminDashboardLogic::isGeneralApp($headerText) ? 'general' : 'advanced';
 		$this->response->setVal('backLink', Title::newFromText('AdminDashboard', NS_SPECIAL)->getFullURL('tab='.$tab));
-		
-		$state = F::app()->sendRequest( 'AdminDashboardSpecialPage', 'getDrawerState', array())->getData();
-		$this->response->setVal('isCollapsed', $state['state'] == 'true');
 	}
 	
 	/**
@@ -180,13 +177,4 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 		
 	}
 		
-	public function saveDrawerState() {
-		$_SESSION['admindashboard-state'] = $this->request->getVal('state');
-	}
-	
-	public function getDrawerState() {
-		$state = isset($_SESSION['admindashboard-state']) ? $_SESSION['admindashboard-state'] : 'true';
-		$this->response->setVal('state', $state);
-	}
-
 }

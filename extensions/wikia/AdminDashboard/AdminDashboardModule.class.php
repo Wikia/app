@@ -42,9 +42,6 @@ class AdminDashboardModule extends Module {
 		$this->adminDashboardUrlAdvanced = Title::newFromText('AdminDashboard', NS_SPECIAL)->getFullURL().'?tab=advanced';
 		
 		$this->mainPageUrl = Title::newMainPage()->getLocalURL();
-		
-		$state = F::app()->sendRequest( 'AdminDashboardSpecialPage', 'getDrawerState', array())->getData();
-		$this->hideRail = ($state['state'] != 'true') && !$isAdminDashboard;
 	}
 	
 	/**

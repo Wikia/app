@@ -230,36 +230,6 @@ $base-z: 5;
 	padding: 10px;
 }
 
-.AdminDashboardDrawer {
-	background: #eaeaea;
-	border-left: 1px solid #cacaca;
-	bottom: 0;
-	cursor: pointer;
-	position: absolute;
-	right: 0;
-	top: 72px;
-	width: 7px;
-	.arrow {
-		border: 4px solid transparent;
-		border-left: 4px solid #72a6cf;
-		bottom: 50%;
-		content: "";
-		display: block;
-		left: 2px;
-		position: absolute;
-		width: 0;
-		&.expanded {
-			left: 1px;
-			border-left: 1px solid transparent;
-			border-right: 4px solid #72a6cf;
-		}
-		&.atf {
-			bottom: auto;
-			top: 100px;
-		}
-	}
-}
-
 .AdminDashboardGeneralHeader {
 	@include box-shadow(0, 2px, 2px, #ddd);
 	@include linear-gradient(#ebebeb, top, #fff, 40%, #ebebeb, 100%);
