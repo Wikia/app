@@ -25,7 +25,7 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 
 
 .WikiaUserPagesHeader {
-	@include linear-gradient(null, top, $color-page, 0%, $color-user-profile-gradient-bottom, 100%); 
+	@include linear-gradient($color-user-profile-gradient-bottom, top, $color-page, 0%, $color-user-profile-gradient-bottom, 100%); 
 	&.WikiaBlogPostHeader, &.WikiaBlogListingHeader {
 		background: transparent;
 		padding: 0 10px 6px;
@@ -119,7 +119,7 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 		hgroup {
 			@include border-radius-nw($radius-user-profile-masthead);
 			@include border-radius-ne($radius-user-profile-masthead);
-			@include linear-gradient(null, top, $color-button-highlight, 0%, $color-buttons, 100%);
+			@include linear-gradient($color-buttons, top, $color-button-highlight, 0%, $color-buttons, 100%);
 			color: $color-button-text;
 			height: 62px;
 			overflow: hidden;

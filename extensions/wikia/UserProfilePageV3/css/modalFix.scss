@@ -5,7 +5,7 @@
  */
 
 #UPPLightboxWrapper {
-	@include linear-gradient(null, top, $color-page, 0%, $color-user-profile-gradient-bottom, 35%); 
+	@include linear-gradient($color-user-profile-gradient-bottom, top, $color-page, 0%, $color-user-profile-gradient-bottom, 35%); 
 	.modalContent {
 		margin: 0 0 20px 0;
 	}	
