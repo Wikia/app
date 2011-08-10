@@ -141,8 +141,6 @@ class UserIdentityBox {
 			}
 			
 			$data['realName'] = $this->user->getRealName();
-			
-			$this->saveMemcUserIdentityData($data);
 		} else {
 			$data = array_merge_recursive($data, $memcData);
 		}
@@ -568,8 +566,10 @@ class UserIdentityBox {
 		if( !is_array($mastheadEditsWikis) ) {
 			$mastheadEditsWikis = array();
 		}	
-			
-		$mastheadEditsWikis[$wikiId] = $wiki;
+		if(count($mastheadEditsWikis[$wikiId]) < 20) {
+			$mastheadEditsWikis[$wikiId] = $wiki;			
+		}
+
 		$this->app->wg->Memc->set( $this->getMemcMastheadEditsWikisKey(), $mastheadEditsWikis);
 
 		return $mastheadEditsWikis;
@@ -595,11 +595,6 @@ class UserIdentityBox {
 		$hiddenWikis = array();
 		$this->updateHiddenInDb( $this->app->wf->GetDB(DB_MASTER, array(), $this->app->wg->ExternalSharedDB), $hiddenWikis );
 		$this->app->wg->Memc->set($this->getMemcHiddenWikisId(), $hiddenWikis);
-		
-		//resets top wikis
-		$memcData = $this->app->wg->Memc->get($this->getMemcUserIdentityDataKey());
-		$memcData['topWikis'] = $this->getTopWikisFromDb();
-		$this->saveMemcUserIdentityData($memcData);
 	}
 	
 	/**
