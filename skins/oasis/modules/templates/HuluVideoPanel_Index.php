@@ -11,14 +11,6 @@ if (is_array($wgHuluVideoPanelAttributes)) {
 ></div>
 <div id="huluPlayer" class="huluPlayer" PlayerMode="fixed" PlayerScale="1.10" style="position: absolute;"><!-- inline style is necessary. hulu js tries to overwrite it if not included --></div>
 
-<script type="text/javascript">
-	wgAfterContentAndJS.push(function() {
-		var fileref=document.createElement('script');
-		fileref.type = "text/javascript";
-		fileref.id = "HULU_VP_JS";
-		fileref.src = "http://player.hulu.com/videopanel/js/huluVideoPanel.js?partner=<?= $partnerId ?>";
-		document.getElementsByTagName("head")[0].appendChild(fileref);	
-	});
-</script>
+<script type="text/javascript" id="HULU_VP_JS" src="http://player.hulu.com/videopanel/js/huluVideoPanel.js?partner=<?= $partnerId ?>"></script>
 
 </section>
