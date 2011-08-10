@@ -23,8 +23,8 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 					'props'
 				),
 				array(
-					'page_id in(' . implode( ",", $articles ) . ')',
-					"propname = 0"
+					'page_id' => $articles,
+					'propname' => 0
 				),
 				__METHOD__
 			);
