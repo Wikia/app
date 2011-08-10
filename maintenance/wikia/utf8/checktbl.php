@@ -105,7 +105,7 @@ class Utf8DbConvert {
 				$columnCollation = $column->COLLATION_NAME;
 				list($charset) = explode('_',strtolower($columnCollation));
 				if ($charset != 'latin1') {
-					echo "-- [ C] {$this->databaseName}.{$tableName}.{$columnName} ({$collationName})\n";
+					echo "-- [ C] {$this->databaseName}.{$tableName}.{$columnName} ({$columnCollation})\n";
 				}
                         }
 
