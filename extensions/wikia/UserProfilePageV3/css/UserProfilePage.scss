@@ -144,6 +144,7 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 		h2 {
 			font-size: 21px;
 			font-weight: lighter;
+			margin: 0;
 			span {
 				color: $color-user-profile-masthead-aka;
 			}
