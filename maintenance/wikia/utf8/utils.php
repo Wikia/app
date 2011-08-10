@@ -200,7 +200,6 @@ class SqlParser {
 		$pattern = "/^\s+`(?<name>[^`]+)`\s(?<type>[^\s]+)"
 			."(\s+(".implode("|",$options)."))*,?\$/i";
 		if (preg_match($pattern,$line,$matches)) {
-var_dump($matches);
 			$field = new stdclass;
 			foreach ($defaults as $k => $v)
 				$field->$k = $v;
