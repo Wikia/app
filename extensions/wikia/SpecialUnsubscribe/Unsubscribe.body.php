@@ -111,8 +111,11 @@ class UnsubscribePage extends UnlistedSpecialPage {
 
 		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 
+		// use backticks in db name here.  $gExternalSharedDB is always on clusterA but access to the user table 
+		// will then try to switch back to wikicities_c2.user which does not exist on clusterA.
+		// @see Database::tableName for reference
 		$oRes = $dbr->select(
-			"user",
+			"`user`",
 			array("user_id", "user_name"),
 			array( "user_email" => $email ),
 			__METHOD__
