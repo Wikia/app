@@ -13,7 +13,6 @@ var SkeleSkin = {
 			$('#navigation').addClass( 'open' );
 		}
 		
-		
 		window.onscroll = function() {
 	  		$( '#navigation' ).css( 'top', window.pageYOffset + 'px' );
 		};
