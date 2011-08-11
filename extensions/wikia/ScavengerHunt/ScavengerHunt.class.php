@@ -25,6 +25,7 @@ class ScavengerHunt {
 	const CACHE_TTL = 604800;
 //	const HUNTER_ID = 'ScavengerHunterId';
 	const HUNT_ID = 'ScavengerHuntInProgress';
+	const VISITED_ART_KEY = 'visitedArticleIdentifiers';
 
 	protected $parser = null;
 	protected $parserOptions = null;
@@ -112,8 +113,8 @@ class ScavengerHunt {
 
 		if ( in_array( $articleIdentifier, $aAllGameArticles ) ){
 			$aFoundArticles = $this->getDataFromCache();
-			$aFoundArticles = isset( $aFoundArticles['visitedArticleIdentifiers'] )
-				? $aFoundArticles['visitedArticleIdentifiers']
+			$aFoundArticles = isset( $aFoundArticles[ self::VISITED_ART_KEY ] )
+				? $aFoundArticles[ self::VISITED_ART_KEY ]
 				: array();
 
 			if ( !is_array( $aFoundArticles ) ){
@@ -136,14 +137,15 @@ class ScavengerHunt {
 		$aAllGameArticles = $game->getArticleIdentifier();
 		$aFoundArticles = $this->getDataFromCache();
 
-		$aFoundArticles = isset( $aFoundArticles['visitedArticleIdentifiers'] )
-			? $aFoundArticles['visitedArticleIdentifiers']
+		$aFoundArticles = isset( $aFoundArticles[ self::VISITED_ART_KEY ] )
+			? $aFoundArticles[ self::VISITED_ART_KEY ]
 			: array();
 
 		if ( !is_array( $aFoundArticles ) ){
 			$aFoundArticles = array();
 		}
 		$aResuls = array();
+
 		foreach( $aAllGameArticles as $key => $gameArticleIdentifier ){
 			if ( in_array( $gameArticleIdentifier, $aFoundArticles ) ){
 				array_push( $aResuls, $key );
@@ -326,7 +328,7 @@ class ScavengerHunt {
 		return wfSharedMemcKey( 'ScavengerHuntUserProgress', $userId );
 	}
 
-	protected function getDataFromCache() {
+	public function getDataFromCache() {
 		$wgMemc = $this->app->getGlobal('wgMemc');
 		$memcData = $wgMemc->get( $this->getCacheKey() );
 		$return = false;
@@ -345,7 +347,7 @@ class ScavengerHunt {
 		$wgMemc = $this->app->getGlobal('wgMemc');
 		$value = array(
 				'gameId' => $this->getHuntId(),
-				'visitedArticleIdentifiers' => $visitedArticlesId,
+				self::VISITED_ART_KEY => $visitedArticlesId,
 			);
 		$wgMemc->set(
 			$this->getCacheKey(),
