@@ -47,7 +47,7 @@ class FBPush_OnLargeEdit extends FBConnectPushEvent {
 	
 		if ( is_null( $revision ) ) {
 			// nothing's changed, quit early
-			wfProfilOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 	
