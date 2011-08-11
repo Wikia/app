@@ -541,13 +541,6 @@ class UserIdentityBox {
 	 * @return void
 	 */
 	public function addTopWiki($wikiId) {
-		$memcData = $this->app->wg->Memc->get($this->getMemcUserIdentityDataKey());
-		$memcData['topWikis'] = empty($memcData['topWikis']) ? array() : $memcData['topWikis'];
-		
-		if(empty($memcData['topWikis'])) {
-			$memcData['topWikis'] = $this->getTopWikis();
-		}
-		
 		$wikiName = F::build('WikiFactory', array('wgSitename', $wikiId), 'getVarValueByName');
 		$wikiUrl = F::build('WikiFactory', array('wgServer', $wikiId), 'getVarValueByName');
 		$wikiUrl = $wikiUrl.'?redirect=no';
@@ -557,15 +550,7 @@ class UserIdentityBox {
 		
 		//adding new wiki to topWikis in cache
 		$wiki = array('id' => $wikiId, 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'edits' => $userStats['edits'] + 1);
-	
-		$memcData['topWikis'][] = $wiki; 		
 		$this->storeEditsWikis($wikiId, $wiki );
-		$memcData['topWikis'] = $this->sortTopWikis($memcData['topWikis'] );
-		
-		//saving cache only if there is other data than topWikis
-		if( count($memcData) > 1 ) {
-			$this->app->wg->Memc->set( $this->getMemcUserIdentityDataKey(), $memcData );	
-		}
 	}
 	
 	private function storeEditsWikis($wikiId, $wiki) {
