@@ -33,9 +33,9 @@ $messages['en'] = array(
 	'user-identity-box-avatar-anon-user-error' => 'You have to log-in before you change anything',
 	
 	'user-identity-box-aka-label' => '<span>aka</span> $1',
-	'user-identity-box-my-twitter' => '<a href="https://twitter.com/#!/$1">My Twitter</a>',
-	'user-identity-box-my-website' => '<a href="$1">My Website</a>',
-	'user-identity-box-my-fb-page' => '<a href="$1">My Facebook</a>',
+	'user-identity-box-my-twitter' => '<a href="https://twitter.com/#!/$1" rel="nofollow">My Twitter</a>',
+	'user-identity-box-my-website' => '<a href="$1" rel="nofollow">My Website</a>',
+	'user-identity-box-my-fb-page' => '<a href="$1" rel="nofollow">My Facebook</a>',
 	'user-identity-box-fav-wikis' => 'My favorite wikis',
 	'user-identity-box-location' => '<span>I live in</span> $1',
 	'user-identity-box-was-born-on' => '<span>I was born on</span> $1 $2',

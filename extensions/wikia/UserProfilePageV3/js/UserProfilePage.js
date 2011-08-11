@@ -7,7 +7,6 @@ var UserProfilePage = {
 	closingPopup: null,
 	userId: null,
 	wasDataChanged: false,
-	userData: null,
 	forceRedirect: false,
 	isLightboxGenerating: false,
 	reloadUrl: false,
@@ -168,21 +167,18 @@ var UserProfilePage = {
 			onComplete: function(response) {
 				try {
 					response = JSON.parse(response);
-					var errorBox = $(".UPPLightbox #errorBox").show().find('div');
 					var avatarImg = UserProfilePage.modal.find('img.avatar');
 					if( response.result.success === true ) {						
 						UserProfilePage.modal.find('.avatar-loader').hide();
 						avatarImg.attr('src', response.result.avatar).show();
 						UserProfilePage.newAvatar = { file: response.result.avatar , source: 'uploaded', userId: UserProfilePage.userId };
 						UserProfilePage.wasDataChanged = true;
-						errorBox.hide();
+						GlobalNotification.hide();
 					} else {
 						if( typeof(response.result.error) !== 'undefined' ) {
 							UserProfilePage.modal.find('.avatar-loader').hide();
 							avatarImg.show();
-							errorBox.show();
-							errorBox.empty();
-							errorBox.append( response.result.error );
+							GlobalNotification.notify(response.result.error);
 						}
 					}
 					
@@ -295,9 +291,7 @@ var UserProfilePage = {
 			data: "answers="+$.toJSON(this.questions),
 			success: function(data) {
 				if( data.status == "error" ) {
-					var errorBox = $(".UPPLightbox #errorBox").show().find('div');
-					errorBox.empty();
-					errorBox.append( data.errorMsg );
+					GlobalNotification.notify(data.errorMsg);
 				} else {
 					UserProfilePage.closeModal(UserProfilePage.modal);
 					
@@ -356,9 +350,7 @@ var UserProfilePage = {
 			data: 'userId=' + UserProfilePage.userId + '&data=' + $.toJSON(userData),
 			success: function(data) {
 				if( data.status == "error" ) {
-					var errorBox = $(".UPPLightbox #errorBox").show().find('div');
-					errorBox.empty();
-					errorBox.append( data.errorMsg );
+					GlobalNotification.notify(data.errorMsg);
 				} else {
 					UserProfilePage.userData = null;
 					
@@ -381,32 +373,26 @@ var UserProfilePage = {
 	},
 	
 	getFormData: function() {
-		if( UserProfilePage.userData === null ) {
-			$().log('userData from form');
-			//array didn't want to go to php, so i changed it to an object --nAndy
-			var userData = {
-				name: null,
-				location: null,
-				occupation: null,
-				gender: null,
-				fbPage: null,
-				website: null,
-				twitter: null,
-				year: null,
-				month: null,
-				day: null
-			};
-			
-			for(var i in userData) {
-				if( typeof($(document.userData[i]).val()) !== 'undefined' ) {
-					userData[i] = $(document.userData[i]).val();
-				}
-			}
-		} else {
-			$().log('userData from instance property');
-			var userData = UserProfilePage.userData;
-		}
+
+		var userData = {
+			name: null,
+			location: null,
+			occupation: null,
+			gender: null,
+			fbPage: null,
+			website: null,
+			twitter: null,
+			year: null,
+			month: null,
+			day: null
+		};
 		
+		for(var i in userData) {
+			if( typeof($(document.userData[i]).val()) !== 'undefined' ) {
+				userData[i] = $(document.userData[i]).val();
+			}
+		}
+
 		return userData;
 	},
 	
@@ -573,7 +559,6 @@ var UserProfilePage = {
 			modal.closeModal();
 		} else {
 			if( UserProfilePage.wasDataChanged === true ) {
-				UserProfilePage.userData = UserProfilePage.getFormData();
 				if( $('#UPPLightboxCloseWrapper').length == 0 ) {
 					setTimeout(function() {
 						UserProfilePage.displayClosingPopup();
