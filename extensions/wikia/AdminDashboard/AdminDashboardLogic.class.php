@@ -60,7 +60,7 @@ class AdminDashboardLogic {
 				"PageLayoutBuilder",
 				"Phalanx",
 				"PhalanxStats",
-				"Preferences", 
+				"Preferences",
 				"ScavengerHunt",
 				"Search",
 				"Signup",

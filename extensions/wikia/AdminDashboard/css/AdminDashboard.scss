@@ -6,23 +6,24 @@
 @import "../../../../skins/oasis/css/mixins/menus";
 @import "../../../../skins/oasis/css/mixins/opacity";
 @import "../../../../skins/oasis/css/mixins/transition";
+@import "../../../../skins/oasis/css/mixins/wordmark";
 @import "../../../../skins/oasis/css/core/layout";
 @import "../../../../skins/oasis/css/core/color";
 @import "../../../../skins/oasis/css/core/body";
 @import "../../../../skins/oasis/css/core/buttons";
-@import "../../../../skins/oasis/css/core/tablepager";
 @import "../../../../skins/oasis/css/core/Search";
+@import "../../../../skins/oasis/css/core/tablepager";
+@import "../../../../skins/oasis/css/core/WikiHeader";
 @import "../../Listusers/css/table";
 
 
 
 $admin-dashboard-content-width: 690px;
-$admin-dashboard-header-height: 48px;
+$admin-dashboard-header-height: 40px;
 $base-z: 5;
 
 .AdminDashboardHeader {
-	@include linear-gradient(#bbd6e8, top, #cde2f0, 20%, #bbd6e8, 70%, #9db9cd, 100%);
-	position: relative;
+	background-color: #b4d0e6;
 	border-bottom: 1px solid #b6c1c9;
 	border-top: 1px solid #c8d4dd;
 	height: $admin-dashboard-header-height;
@@ -30,7 +31,7 @@ $base-z: 5;
 	position: relative;
 	h1 {
 		font-size: 20px;
-		line-height: 48px;
+		line-height: 40px;
 		margin: 0;
 		vertical-align: middle;
 		img {
@@ -38,7 +39,7 @@ $base-z: 5;
 			margin-right: 20px;
 		}
 		a {
-			color: black;
+			color: #1f70af;
 			text-decoration: none;
 		}
 	}
@@ -96,9 +97,6 @@ $base-z: 5;
 	}
 	>section {
 		margin-bottom: 20px;
-	}
-	.WikiaSearch input[type=text] {
-		width: 267px;
 	}
 }
 
@@ -276,7 +274,7 @@ $base-z: 5;
 // Oasis overwrites
 .WikiaArticle {
 	@include box-shadow(1px, 1px, 1px, #f0f0f0);
-	background-color: #fff;
+	background-color: white;
 	border-bottom: 1px solid #eee;
 	border-right: 1px solid #eee;
 	float: left;
@@ -301,8 +299,33 @@ $base-z: 5;
 .WikiaPage {
 	color: #464646;
 	.WikiaPageBackground {
-		@include opacity(100);
-		background-color: #fff;
+		background-color: white;
+	}
+}
+
+.WikiHeader {
+	margin-bottom: 10px;
+	padding-bottom: 0;
+	.shadow-mask {
+		display: none;
+	}
+	>nav {
+		bottom: 0;
+	}
+	>.buttons {
+		bottom: auto;
+		top: 15px;
+	}
+	.WikiaSearch {
+		bottom: 0;
+		position: absolute;
+		right: 10px;
+		input[type=text] {
+			width: 250px;
+		}
+	}
+	h1:before {
+		display: none;
 	}
 }
 

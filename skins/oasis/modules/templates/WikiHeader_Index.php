@@ -67,5 +67,6 @@ if( is_array($menuNodes) && isset($menuNodes[0]) && $showMenu) {
 		<?= Wikia::specialPageLink('Watchlist', 'watchlist', array('accesskey' => 'l')) ?>
 		<?= Wikia::specialPageLink('RecentChanges', 'recentchanges', array('accesskey' => 'r')) ?>
 	</div>
+	<?= $displaySearch ? wfRenderModule('Search') : '' ?>
 	<img class="shadow-mask" src="<?= $wgBlankImgUrl ?>" width="0" height="0">
 </header>
