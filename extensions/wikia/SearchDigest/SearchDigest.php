@@ -32,7 +32,7 @@ $wgSpecialPages['SearchDigest'] = 'SpecialSearchDigest';
 
 $wgHooks['SpecialSearchNogomatch'] = 'efSearchDigestRecordMiss';
 
-function efSerachDigestRecordMiss( $title ) {
+function efSearchDigestRecordMiss( $title ) {
 	global $wgEnableScribeReport, $wgCityId;
 
 	if ( empty( $wgEnableScribeReport ) ) {
