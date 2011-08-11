@@ -789,7 +789,7 @@ class SiteWideMessages extends SpecialPage {
 		//step 3 of 3: add undismissed messages sent to *this* user (on *all* wikis or *this* wiki)
 		$dbResult = $DB->Query (
 			  'SELECT msg_wiki_id, msg_id AS id, msg_text AS text, msg_expire AS expire, msg_lang AS lang, msg_status AS status'
-			. ' FROM ' . MSG_TEXT_DB
+			. ' FROM ' . MSG_TEXT_DB . ' USE INDEX(removed_mode_expire_date)'
 			. ' LEFT JOIN ' . MSG_STATUS_DB . ' USING (msg_id)'
 			. ' WHERE msg_mode = ' . MSG_MODE_SELECTED
 			. ' AND msg_recipient_id = ' . $DB->AddQuotes($user->GetID())
