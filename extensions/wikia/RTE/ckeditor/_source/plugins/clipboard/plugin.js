@@ -135,6 +135,14 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 				var body = this.document.getBody();
 
+				// Wikia change - begin
+				// fire custom event when paste is triggered via keyboard shortcut
+				if (body.fire('beforepasteonkey')) {
+					event.cancel();
+					return;
+				}
+				// Wikia change - begin
+
 				// Simulate 'beforepaste' event for all none-IEs.
 				if ( !CKEDITOR.env.ie && body.fire( 'beforepaste' ) )
 					event.cancel();
@@ -329,7 +337,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 						setTimeout( function()
 						{
 							// Open default paste dialog.
-							editor.openDialog( 'paste' );
+							// Wikia change - BugId:7605
+							editor.openDialog( editor.config.forcePasteAsPlainText ? 'pastetext' : 'paste' );
 						}, 0 );
 					});
 

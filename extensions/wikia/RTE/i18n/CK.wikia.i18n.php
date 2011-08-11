@@ -95,6 +95,8 @@ $messages['en'] = array(
 	'rte-ck-poll-confirmDelete' => 'Are you sure you wish to remove the poll from this page?',
 	'rte-ck-poll-confirmDeleteTitle' => 'Remove this poll?',
 	'rte-ck-spellchecker-moreSuggestions' => 'More suggestions',
+	'rte-ck-pasteText-title' => 'Paste your text',
+	'rte-ck-clipboard-pasteMsg' => 'For security reasons, the editor cannot access your paste directly. Please paste in the below box using keyboard shortcuts (Ctrl/Cmd+V) and hit \'OK\'.<br><br>Note: your text will be stripped of formatting to avoid creating complex wikitext.',
 );
 
 /** Message documentation (Message documentation)
