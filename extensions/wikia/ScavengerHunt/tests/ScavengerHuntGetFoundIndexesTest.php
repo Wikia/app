@@ -16,7 +16,8 @@ class ScavengerHuntGetFoundIndexesTest extends ScavengerHuntTest {
 			array( true, array( 0 => self::MOCK_TEXT ), array( self::WRONG_ARTICLE_NAME ), array() ),
 			array( true, array( 0 => self::MOCK_TEXT ), array(), array() ),
 			array( true, array(), array( self::MOCK_TEXT ), array() ),
-			array( true, array(), array(), array() )
+			array( true, array(), array(), array() ),
+			array( true, array( 0 => self::MOCK_TEXT, 1 => self::WRONG_ARTICLE_NAME ), array( self::WRONG_ARTICLE_NAME ), array(), true ),
 		);
 	}
 	
@@ -24,7 +25,7 @@ class ScavengerHuntGetFoundIndexesTest extends ScavengerHuntTest {
 	 * @dataProvider conditions
 	 */
 
-	public function testGetFoundIndexes( $gameExists, $articlesList, $foundList, $expectedResult ) {
+	public function testGetFoundIndexes( $gameExists, $articlesList, $foundList, $expectedResult, $brokenCache = false ) {
 		
 		// mocking game object
 		$articlesIdentifiers = array();
@@ -58,7 +59,7 @@ class ScavengerHuntGetFoundIndexesTest extends ScavengerHuntTest {
 				$this->returnValue(
 					array(
 						'gameId' => $scavengerHunt->getHuntId(),
-						ScavengerHunt::VISITED_ART_KEY => $cachedIdentifiers
+						ScavengerHunt::VISITED_ART_KEY => $brokenCache ? 'broken' : $cachedIdentifiers
 					)
 				)
 			);
