@@ -174,6 +174,9 @@ and we will send you the password to your email address on file.
 
 --
 Wikia Team',
+	'adss-more-information' => 'More Information',
+	'adss-email-us' => 'Email us at [mailto:sponsoredlinks@wikia-inc.com sponsoredlinks@wikia-inc.com] if you need more information.',
+	'adss-faq' => 'Frequently Asked Questions',
 );
 
 /** Message documentation (Message documentation)
