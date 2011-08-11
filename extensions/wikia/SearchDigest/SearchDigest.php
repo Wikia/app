@@ -33,9 +33,13 @@ $wgSpecialPages['SearchDigest'] = 'SpecialSearchDigest';
 $wgHooks['SpecialSearchNogomatch'] = 'efSearchDigestRecordMiss';
 
 function efSerachDigestRecordMiss( $title ) {
-	global $wgEnableScribeReport;
+	global $wgEnableScribeReport, $wgCityId;
 
 	if ( empty( $wgEnableScribeReport ) ) {
+		return true;
+	}
+	
+	if ( !is_object( $title ) ) {
 		return true;
 	}
 
