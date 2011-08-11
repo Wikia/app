@@ -130,6 +130,7 @@ function WikiaVideo_init() {
 	}
 	$wgAutoloadClasses['VideoPage'] = dirname(__FILE__). '/VideoPage.php';
 	$wgAutoloadClasses['VideoPageArchive'] = dirname(__FILE__). '/VideoPage.php';
+	$wgAutoloadClasses['PartnerVideoHelper'] = dirname(__FILE__). '/PartnerVideoHelper.php';
 }
 
 function WikiaVideo_initParserHook(&$parser) {
