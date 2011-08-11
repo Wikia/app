@@ -89,7 +89,7 @@ class WikiaTitleBlackList
 		return $this->spamList;
 	}
 	
-	public function errorHandler( $code, $text ) {
+	static public function errorHandler( $code, $text ) {
 		global $wgDBname;
 		error_log ( "MOLI: " . __METHOD__ . " ( $wgDBname ): $text, code: $code \n" );
 	}
