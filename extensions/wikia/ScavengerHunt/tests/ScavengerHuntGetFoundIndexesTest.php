@@ -26,7 +26,6 @@ class ScavengerHuntGetFoundIndexesTest extends ScavengerHuntTest {
 
 	public function testGetFoundIndexes( $gameExists, $articlesList, $foundList, $expectedResult ) {
 		
-
 		// mocking game object
 		$articlesIdentifiers = array();
 		foreach( $articlesList as $art ) {
