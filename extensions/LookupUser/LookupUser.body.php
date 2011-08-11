@@ -324,7 +324,7 @@ EOT
 		$userName = $wgRequest->getVal('username');
 		$wikiUrl = $wgRequest->getVal('url');
 		$wikiId = $wgRequest->getVal('id');
-		$apiUrl = $wikiUrl.'api.php?action=query&list=users&ususers='.$userName.'&usprop=blockinfo|groups|editcount&format=php';
+		$apiUrl = $wikiUrl.'api.php?action=query&list=users&ususers=' . urlencode( $userName ) .'&usprop=blockinfo|groups|editcount&format=php';
 		
 		$cachedData = $wgMemc->get( LookupUserPage::getUserLookupMemcKey($userName, $wikiId) );
 		if( !empty($cachedData) ) {
