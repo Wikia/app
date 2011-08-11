@@ -495,14 +495,8 @@ class UserIdentityBox {
 			$ids[] = (int) $wiki['id'];
 		}
 		
-		//doesn't seem right on devbox -- need to check on preview
-//		$favWikisAmount = count($wikis);
-//		if( $favWikisAmount < $this->topWikisLimit ) {
-//			$limit = $this->topWikisLimit - $favWikisAmount;
-//			$wikis = array_merge_recursive($wikis, $this->getTopWikisFromDb($limit));
-//		}
-		
 		$this->app->wf->ProfileOut( __METHOD__ );
+		
 		return $this->sortTopWikis($wikis);
 	}
 	
@@ -514,6 +508,8 @@ class UserIdentityBox {
 	 * @return array
 	 */
 	protected function sortTopWikis($topWikis) {
+		$this->app->wf->ProfileIn( __METHOD__ );
+		
 		if( !empty($topWikis) ) {
 			$editcounts = array();
 			
@@ -530,6 +526,7 @@ class UserIdentityBox {
 			return array_slice($topWikis, 0, $this->topWikisLimit, true);
 		}
 		
+		$this->app->wf->ProfileOut( __METHOD__ );
 		return $topWikis;
 	}
 	
@@ -541,6 +538,8 @@ class UserIdentityBox {
 	 * @return void
 	 */
 	public function addTopWiki($wikiId) {
+		$this->app->wf->ProfileIn( __METHOD__ );
+		
 		$wikiName = F::build('WikiFactory', array('wgSitename', $wikiId), 'getVarValueByName');
 		$wikiUrl = F::build('WikiFactory', array('wgServer', $wikiId), 'getVarValueByName');
 		$wikiUrl = $wikiUrl.'?redirect=no';
@@ -551,9 +550,13 @@ class UserIdentityBox {
 		//adding new wiki to topWikis in cache
 		$wiki = array('id' => $wikiId, 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'edits' => $userStats['edits'] + 1);
 		$this->storeEditsWikis($wikiId, $wiki );
+		
+		$this->app->wf->ProfileOut( __METHOD__ );
 	}
 	
 	private function storeEditsWikis($wikiId, $wiki) {
+		$this->app->wf->ProfileIn( __METHOD__ );
+		
 		//getting array of masthead edits wikis
 		$mastheadEditsWikis = $this->app->wg->Memc->get( $this->getMemcMastheadEditsWikisKey(), array());
 		if( !is_array($mastheadEditsWikis) ) {
@@ -561,17 +564,22 @@ class UserIdentityBox {
 		}	
 
 		if(count($mastheadEditsWikis) < 20) {
-			$mastheadEditsWikis[$wikiId] = $wiki;			
+			$mastheadEditsWikis[$wikiId] = $wiki;
 		}
 
 		$this->app->wg->Memc->set( $this->getMemcMastheadEditsWikisKey(), $mastheadEditsWikis);
-
+		
+		$this->app->wf->ProfileOut( __METHOD__ );
 		return $mastheadEditsWikis;
 	}
 	
 	private function getEditsWikis() {
+		$this->app->wf->ProfileIn( __METHOD__ );
+		
 		$mastheadEditsWikis = $this->app->wg->Memc->get( $this->getMemcMastheadEditsWikisKey(), null);
 		$mastheadEditsWikis = is_array($mastheadEditsWikis) ? $mastheadEditsWikis: array();
+		
+		$this->app->wf->ProfileOut( __METHOD__ );
 		return $mastheadEditsWikis;
 	}
 	
@@ -586,9 +594,13 @@ class UserIdentityBox {
 	 * @brief Clears hidden wikis: the field of this class, DB and memcached data
 	 */
 	private function clearHiddenTopWikis() {
+		$this->app->wf->ProfileIn( __METHOD__ );
+		
 		$hiddenWikis = array();
 		$this->updateHiddenInDb( $this->app->wf->GetDB(DB_MASTER, array(), $this->app->wg->ExternalSharedDB), $hiddenWikis );
 		$this->app->wg->Memc->set($this->getMemcHiddenWikisId(), $hiddenWikis);
+		
+		$this->app->wf->ProfileOut( __METHOD__ );
 	}
 	
 	/**

@@ -226,7 +226,7 @@ var UserProfilePage = {
 		});
 		
 		modal.find('.favorite-wikis-refresh').click(function(event) {
-			event.preventDefault();			
+			event.preventDefault();
 			UserProfilePage.refreshFavWikis()
 		});
 		
@@ -518,11 +518,13 @@ var UserProfilePage = {
 				favWikisList.children().not('.join-more-wikis').remove();
 
 				// add items
+				var favWikis = '';
 				for(i in data.result.wikis) {
-					favWikisList.prepend('<li data-wiki-id="' + data.result.wikis[i].id  + '"><span>' + data.result.wikis[i].wikiName + '</span> <img src="' + wgBlankImgUrl + '" class="sprite-small delete"></li>');
+					favWikis += '<li data-wiki-id="' + data.result.wikis[i].id  + '"><span>' + data.result.wikis[i].wikiName + '</span> <img src="' + wgBlankImgUrl + '" class="sprite-small delete"></li>';
 				}
+				favWikisList.prepend(favWikis);
 		
-				UserProfilePage.toggleJoinMoreWikis();				
+				UserProfilePage.toggleJoinMoreWikis();
 			}
 		});
 	},
