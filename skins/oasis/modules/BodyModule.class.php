@@ -481,7 +481,6 @@ class BodyModule extends Module {
 		if (!empty($wgEnableAdminDashboardExt) && AdminDashboardLogic::displayAdminDashboard($this->app, $wgTitle)) {
 			$this->headerModuleName = null;
 			$this->wgSuppressAds = true;
-			$this->wgSuppressWikiHeader = true;
 			$this->displayAdminDashboard = true;
 			$this->displayAdminDashboardChromedArticle = ($wgTitle->getText() != Title::newFromText("AdminDashboard", NS_SPECIAL)->getText());
 		} else {

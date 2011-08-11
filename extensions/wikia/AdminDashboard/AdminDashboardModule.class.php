@@ -27,21 +27,9 @@ class AdminDashboardModule extends Module {
 		$this->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/AdminDashboard/css/AdminDashboard.scss', null, $this->getAlternateOasisSetting()));
 		$this->wg->Out->addScriptFile($this->wg->ExtensionsPath . '/wikia/AdminDashboard/js/AdminDashboard.js');
 		
-		$themeSettings = new ThemeSettings();
-		$settings = $themeSettings->getSettings();
-
-		$this->wordmarkText = $settings['wordmark-text'];
-		$this->wordmarkType = $settings['wordmark-type'];
-		$this->wordmarkSize = $settings['wordmark-font-size'];
-
-		if ($this->wordmarkType == 'graphic') {
-			$this->wordmarkUrl = wfReplaceImageServer($settings['wordmark-image-url'], SassUtil::getCacheBuster());
-		}
-		
 		$this->adminDashboardUrlGeneral = Title::newFromText('AdminDashboard', NS_SPECIAL)->getFullURL().'?tab=general';
 		$this->adminDashboardUrlAdvanced = Title::newFromText('AdminDashboard', NS_SPECIAL)->getFullURL().'?tab=advanced';
 		
-		$this->mainPageUrl = Title::newMainPage()->getLocalURL();
 	}
 	
 	/**

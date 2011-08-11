@@ -18,7 +18,7 @@ class WikiHeaderModule extends Module {
 	var $wordmarkFont;
 
 	public function executeIndex() {
-		global $wgOut, $wgCityId, $wgUser, $wgMemc, $wgIsPrivateWiki;
+		global $wgOut, $wgCityId, $wgUser, $wgMemc, $wgIsPrivateWiki, $wgEnableAdminDashboardExt, $wgTitle;
 		
 		//fb#1090
 		$this->isInternalWiki = empty($wgCityId);
@@ -48,6 +48,8 @@ class WikiHeaderModule extends Module {
 
 		$service = new NavigationService();
 		$this->menuNodes = $service->parseMessage('Wiki-navigation', array(4, 7), 60*60*3 /* 3 hours */, true);
+		
+		$this->displaySearch = !empty($wgEnableAdminDashboardExt) && AdminDashboardLogic::displayAdminDashboard(F::app(), $wgTitle);
 	}
 
 }
