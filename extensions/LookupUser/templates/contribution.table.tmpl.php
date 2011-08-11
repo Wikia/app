@@ -1,7 +1,7 @@
 <script type="text/javascript" charset="utf-8">
 $(document).ready(function() {
 	var baseurl = wgScript + "?action=ajax&rs=LookupContribsAjax::axData&lookupUser=1";
-	var username = '<?=$username?>';
+	var username = '<?= urlencode( $username ) ?>';
 	
 	if ( !username ) {
 		return;
@@ -45,7 +45,7 @@ $(document).ready(function() {
 			{
 				fnRender: function ( oObj ) {
 					var row = '<span class="lc-row"><a href="' + oObj.aData[2] + '">' + oObj.aData[2] + '</a></span>';
-					row += '&nbsp;(<a href="' + oObj.aData[2] + 'index.php?title=Special:Contributions/' + encodeURIComponent(username) + '">';
+					row += '&nbsp;(<a href="' + oObj.aData[2] + 'index.php?title=Special:Contributions/' + username + '">';
 					row += '<?=wfMsg('lookupuser-table-contribs')?>';
 					row += '</a>)</span>';
 					return row;
