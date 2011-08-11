@@ -271,5 +271,10 @@ class WikiaTitleBlackList {
 	public function getSettings() { return $this->settings; }
 	public function getSpamList() { return $this->spamList; }
 	public function getRegexes()  { return $this->regexes; }
+	
+	static function errorHandler( $code, $text ) {
+		global $wgDBname;
+		error_log ( "MOLI: " . __METHOD__ . " ( $wgDBname ): $text, code: $code \n" );
+	}
 }
 ?>
