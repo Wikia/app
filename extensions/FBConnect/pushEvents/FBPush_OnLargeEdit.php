@@ -44,14 +44,22 @@ class FBPush_OnLargeEdit extends FBConnectPushEvent {
 	public static function articleCountWordDiff(&$article,&$user,$newText, $summary,$flag, $fake1, $fake2, &$flags, $revision, &$status, $baseRevId){
 		global $wgContentNamespaces, $wgSitename;
 		wfProfileIn(__METHOD__);
-		
+	
+		if ( is_null( $revision ) ) {
+			// nothing's changed, quit early
+			wfProfilOut( __METHOD__ );
+			return true;
+		}
+	
 		if( !in_array($article->getTitle()->getNamespace(), $wgContentNamespaces) ) {
+			wfProfileOut( __METHOD__ );
 			return true;	
 		}
 
 		// do not push reverts
 		$baseRevision = Revision::newFromId( $baseRevId );
 		if ( $baseRevision && $revision->getTextId() == $baseRevision->getTextId() ) {
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 		
