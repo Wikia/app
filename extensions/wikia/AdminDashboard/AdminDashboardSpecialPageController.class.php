@@ -115,8 +115,6 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 			$headerText = SpecialPage::getTitleFor($page)->getText();
 		}
 		$this->response->setVal('headerText', $headerText);
-		$tab = AdminDashboardLogic::isGeneralApp($headerText) ? 'general' : 'advanced';
-		$this->response->setVal('backLink', Title::newFromText('AdminDashboard', NS_SPECIAL)->getFullURL('tab='.$tab));
 	}
 	
 	/**

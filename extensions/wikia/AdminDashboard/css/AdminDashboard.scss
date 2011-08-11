@@ -60,7 +60,9 @@ $base-z: 5;
 	right: $width-outside - $admin-dashboard-content-width - 1px;
 	top: $admin-dashboard-header-height - $nav-height - 10px;
 	z-index: $base-z - 	1;
-
+	&.expanded {
+		right: 10px;
+	}
 	.tab {
 		@include border-radius-ne(5px);
 		@include border-radius-nw(5px);
@@ -243,31 +245,10 @@ $base-z: 5;
 		margin: 0 30px 0 20px;
 	}
 	&.AdminDashboardArticleHeader {
+		border-top: 0;
 		font-size: 12px;
 		font-style: italic;
 		margin: 0 -12px 7px -5px;
-	}
-}
-
-.AdminDashboardNavigation {
-	height: 20px;
-	padding: 10px;
-	p {
-		margin: 0;
-	}
-	a {
-		padding-left: 5px;
-		&:before {
-			border: 6px solid transparent;
-			border-right: 6px solid #c5c5c5;
-			content: "";
-			display: block;
-			float: left;
-			left: -5px;
-			position: relative;
-			top: 5px;
-			width: 0;
-		}
 	}
 }
 
@@ -283,12 +264,9 @@ $base-z: 5;
 	width: $admin-dashboard-content-width;
 	z-index: $base-z;
 	&.AdminDashboardChromedArticle {
-		/*@include transition-shorthand(width 200ms ease-in);*/
-		padding: 0 12px 0 5px;
-		width: $admin-dashboard-content-width - 17px;
-	}
-	&.expanded {
+		@include box-shadow(0, 0, 0, $color-body);
 		float: none;
+		padding: 0 12px 0 5px;
 		width: 982px;
 	}
 	fieldset {

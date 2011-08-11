@@ -13,10 +13,10 @@ class AdminDashboardModule extends Module {
 		global $wgRequest, $wgTitle;
 		
 		$adminDashboardTitle = Title::newFromText('AdminDashboard', NS_SPECIAL);
-		$isAdminDashboard = $wgTitle->getText() == $adminDashboardTitle->getText();
+		$this->isAdminDashboard = $wgTitle->getText() == $adminDashboardTitle->getText();
 		
 		$this->tab = $wgRequest->getVal("tab", "");
-		if(empty($this->tab) && $isAdminDashboard) {
+		if(empty($this->tab) && $this->isAdminDashboard) {
 			$this->tab = 'general';
 		} else if(AdminDashboardLogic::isGeneralApp($wgTitle->getDBKey())) {
 			$this->tab = 'general';
