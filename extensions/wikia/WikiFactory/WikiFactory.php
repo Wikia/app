@@ -1237,6 +1237,7 @@ class WikiFactory {
 		/**
 		 * clear variables cache
 		 */
+		$wgMemc->delete( "WikiFactory::getCategory:" . $city_id ); //ugly cat clearing (fb#9937)
 		$wgMemc->delete( self::getVarsKey( $city_id ) );
 
 		$city_dbname = self::IDtoDB( $city_id ) ;
