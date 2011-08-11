@@ -13,7 +13,9 @@ $(function() {
 			}
 
 			if ( MailEnabled ) {
-				$(this).attr('disabled', false);
+				if ($(this).attr('id').indexOf('mw-input-founderemails-') < 0) {
+					$(this).attr('disabled', false);
+				}
 			} else {
 				$(this).attr('disabled', true );
 			}
