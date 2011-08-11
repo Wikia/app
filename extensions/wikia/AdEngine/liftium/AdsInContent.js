@@ -1,5 +1,6 @@
 // AdsInContent2 a.k.a. AIC2
 var AIC2 = {
+	fingerprint     : 'a',
 	called          : false,
 	startPosition   : 0,
 	stopPosition    : 0,
@@ -43,12 +44,27 @@ if ($(window).width() < 1010) {
 			$(window).bind("resize.AIC2", AIC2.onScroll);
 		//}
 
-	if (Math.floor(Math.random() * 20) == 7) {
-		Liftium.trackEvent(Liftium.buildTrackUrl(['AIC2', 'test']), 'UA-17475676-11');
+	if (!Liftium.e(Liftium.debugLevel) || Math.floor(Math.random() * 10) == 7) {
+		Liftium.trackEvent(Liftium.buildTrackUrl(['AIC2', 'test1']), 'UA-17475676-11');
 		_gaq.push(['liftium._setAccount', 'UA-17475676-11']);
 		_gaq.push(['liftium._setSampleRate', '100']);
-		_gaq.push(['liftium._trackPageview', '/999/' + Liftium.buildTrackUrl(['AIC2', 'test'])]);
-		_gaq.push(['liftium._trackEvent', 'AIC2', 'test']);
+
+		var slot = '300x250_INCONTENT_BOXAD_' + Math.floor(Math.random() * 3);
+		var hub = Liftium.getPageVar("Hub", "unknown");
+		var lang = Liftium.langForTracking(Liftium.getPageVar("cont_lang", "unknown"));
+		var db = Liftium.dbnameForTracking(Liftium.getPageVar("wgDBname", "unknown"));
+		var geo = Liftium.geoForTracking(Liftium.getCountry());
+
+		_gaq.push(['liftium._trackEvent',  slot, 'hub',  hub]);
+		_gaq.push(['liftium._trackEvent',  slot, 'lang', lang]);
+		_gaq.push(['liftium._trackEvent',  slot, 'db',   db]);
+		_gaq.push(['liftium._trackEvent',  slot, 'geo',  geo]);
+		_gaq.push(['liftium._trackEvent', 'hub',  hub,   slot]);
+		_gaq.push(['liftium._trackEvent', 'lang', lang,  slot]);
+		_gaq.push(['liftium._trackEvent', 'db',   db,    slot]);
+		_gaq.push(['liftium._trackEvent', 'geo',  geo,   slot]);
+
+		_gaq.push(['liftium._trackPageview', '/999/' + Liftium.buildTrackUrl(['AIC2', 'test2'])]);
 	}
 
 	} else {
