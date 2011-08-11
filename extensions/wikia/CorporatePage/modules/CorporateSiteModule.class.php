@@ -211,9 +211,11 @@ class CorporateSiteModule extends Module {
 
 			foreach($this->slider as $image) {
 				// ElmoControlRoom.jpg|Label|link=http://wikia.com|linktext=Link text
-				// if parsgMsgImg thumbnail 2nd param=true (and right now it is not) then the return vals move around
-				// $sliderWikitext .= "{$image['imagetitle']}|{$image['title']}|link={$image['href']}|linktext={$image['desc']}\n";
-				$sliderWikitext .= "{$image['param']}|{$image['title']}|link={$image['href']}|linktext={$image['imagetitle']}\n";
+				// if parsgMsgImg has a thumbnail or the 2nd param=true (and right now it is not) then the return vals move around
+				if (isset($image['param']))  // no thumbnail in msg
+					$sliderWikitext .= "{$image['param']}|{$image['title']}|link={$image['href']}|linktext={$image['imagetitle']}\n";
+				else // has thumbnail in msg
+					$sliderWikitext .= "{$image['imagetitle']}|{$image['title']}|link={$image['href']}|linktext={$image['desc']}\n";
 			}
 
 			// set the content and parse it
