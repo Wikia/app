@@ -487,12 +487,12 @@ class UserIdentityBox {
 		
 		$wikis = array_merge( $this->getTopWikisFromDb(), $this->getEditsWikis());
 		
-		$keys = array();
+		$ids = array();
 		foreach($wikis as $key => $wiki) {
-			if( $this->isTopWikiHidden($wiki['id']) || in_array($key, $keys) ) {
+			if( $this->isTopWikiHidden($wiki['id']) || in_array((int) $wiki['id'], $ids) ) {
 				unset($wikis[$key]);
 			}
-			$keys[] = $key;
+			$ids[] = (int) $wiki['id'];
 		}
 		
 		//doesn't seem right on devbox -- need to check on preview
