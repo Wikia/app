@@ -2,7 +2,7 @@
 <!-- DISTRIBUTION TABLE -->
 <script type="text/javascript" charset="utf-8">
 function lcShowDetails(dbname, mode) {
-	var username = '<?=$username?>';
+	var username = '<?= urlencode( $username ) ?>';
 	var action = '<?=$action?>';
 	//var sel_mode = '#lc-mode-' + dbname;
 	//var mode = ( $(sel_mode).exists() ) ? $(sel_mode).val() : '';
@@ -16,7 +16,7 @@ function lcShowDetails(dbname, mode) {
 
 $(document).ready(function() {
 	var baseurl = wgScript + "?action=ajax&rs=LookupContribsAjax::axData";
-	var username = '<?=$username?>';
+	var username = '<?= urlencode( $username ) ?>';
 				
 	if ( !username ) {
 		return;
@@ -58,7 +58,7 @@ $(document).ready(function() {
 			{
 				"fnRender": function ( oObj ) {
 					var row = '<span class="lc-row"><a href="' + oObj.aData[3] + '">' + oObj.aData[3] + '</a></span>';
-					row += '&nbsp;(<a href="' + oObj.aData[3] + 'index.php?title=Special:Contributions/' + encodeURIComponent(username) + '">';
+					row += '&nbsp;(<a href="' + oObj.aData[3] + 'index.php?title=Special:Contributions/' + username + '">';
 					row += '<?=wfMsg('lookupcontribscontribs')?>';
 					row += '</a>)</span>';
 					return row;
