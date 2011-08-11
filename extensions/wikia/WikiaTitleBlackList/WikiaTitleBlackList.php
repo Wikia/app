@@ -272,9 +272,25 @@ class WikiaTitleBlackList {
 	public function getSpamList() { return $this->spamList; }
 	public function getRegexes()  { return $this->regexes; }
 	
-	static function errorHandler( $code, $text ) {
+	static function errorHandler( $errno, $errstr, $errfile, $errline ) {
 		global $wgDBname;
-		error_log ( "MOLI: " . __METHOD__ . " ( $wgDBname ): $text, code: $code \n" );
+
+		switch ($errno) {
+			case E_WARNING:
+			case E_USER_WARNING:
+				$error = "Warning";
+				break;
+			case E_ERROR:
+			case E_USER_ERROR:
+				$error = "Fatal Error";
+				break;
+			default:
+				$error = "";
+		}
+			
+		if ( $error ) {
+			error_log(sprintf("MOLI: PHP %s (%s):  %s in %s on line %d", $error, $wgDBname, $errstr, $errfile, $errline));
+		}
 	}
 }
 ?>
