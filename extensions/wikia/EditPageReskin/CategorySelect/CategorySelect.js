@@ -77,8 +77,8 @@ function deleteCategory(e) {
 }
 
 function modifyCategory(e) {
-	var catId = e.parentNode.getAttribute('catId');
-	defaultSortkey = categories[catId].sortkey != '' ? categories[catId].sortkey : (csDefaultSort != '' ? csDefaultSort : wgTitle);
+	var catId = e.parentNode.getAttribute('catId'),
+		defaultSortkey = categories[catId].sortkey != '' ? categories[catId].sortkey : (csDefaultSort != '' ? csDefaultSort : wgTitle);
 
 	var category = categories[catId].category;
 	var sortkey = defaultSortkey;
@@ -611,3 +611,8 @@ initCatSelectForEdit = function() {
 		$('#csMainContainer').show();
 	});
 }
+
+// BugId:2823
+$(window).bind('editTitleUpdated', function(ev, title) {
+	window.csDefaultSort = title;
+});
