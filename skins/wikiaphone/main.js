@@ -2,7 +2,11 @@
 var mpq=[];
 
 var MobileSkin = {
-	uacct: "UA-2871474-1",
+	GA: {
+		accountID: "UA-2871474-1",
+		samplingRate: '10',
+		userName: (wgUserName == null) ? 'anon' : 'user'
+	},
 	userType: (wgIsLogin == true) ? 'logged in' : 'anon',
 	ct: {},
 	c: null,
@@ -61,15 +65,22 @@ var MobileSkin = {
 	init: function(){
 		//analytics
 		//GA
-		_gaq.push(['_setSampleRate', '10']);
-		_gaq.push(['_setAccount', MobileSkin.uacct]);
+		_gaq.push(
+			['_setSampleRate', MobileSkin.GA.samplingRate],
+			['_setAccount', MobileSkin.GA.accountID],
+			//custom vars, max 5 allowed
+			['_setCustomVar', 1, 'user type', MobileSkin.userType, 2],
+			['_setCustomVar', 2, 'skin', skin, 3],
+			['_setCustomVar', 3, 'hub', cityShort, 3],
+			['_setCustomVar', 4, 'wiki', wgDBname, 3],
+			['_setCustomVar', 5, 'visiting mainpage', wgIsMainpage.toString(), 3],
+			['_trackPageview', '/1_mobile/' + MobileSkin.GA.userName + '/view']
+		);
 		
-		//GA, max 5 allowed
-		_gaq.push(['_setCustomVar', 1, 'user type', MobileSkin.userType, 2]);
-		_gaq.push(['_setCustomVar', 2, 'skin', skin, 3]);
-		_gaq.push(['_setCustomVar', 3, 'hub', cityShort, 3]);
-		_gaq.push(['_setCustomVar', 4, 'wiki', wgDBname, 3]);
-		_gaq.push(['_setCustomVar', 5, 'visiting mainpage', wgIsMainpage, 3]);
+		//GA
+		if(wgPrivateTracker) {
+			_gaq.push(['_trackPageview', '/1_mobile/' + wgDB + '/' + MobileSkin.GA.userName + '/view']);
+		}
 		
 		//mixpanel
 		if(mpq.name_tag && wgUserName && wgUserName != null){ 
@@ -84,7 +95,8 @@ var MobileSkin = {
 	 			'hub': cityShort,
 	 			'wiki': wgDBname,
 	 			'visiting mainpage': wgIsMainpage,
-	 			'skin': skin
+	 			'skin': skin,
+	 			'user agent': navigator.userAgent
 	 		});
  		}
  		
