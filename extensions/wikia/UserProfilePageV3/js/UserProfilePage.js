@@ -424,16 +424,20 @@ var UserProfilePage = {
 					day: 'birthday_date'
 				};
 				
+				var changed = false;
 				for(var i in userData) {
 					if( typeof($(document.userData[i]).val()) !== 'undefined' ) {
 						var key = userData[i];
 						
 						UserProfilePage.fillFieldsWithFbData(i, key, data.result.fbUser);
+						changed = true;
 					}
 				}
 				
 				$('#facebookConnect').hide();
 				$('#facebookPage').show();
+				
+				if( changed === true ) UserProfilePage.wasDataChanged = true;
 			}
 		});
 	},
@@ -477,7 +481,8 @@ var UserProfilePage = {
 			
 			UserProfilePage.refillBDayDaySelectbox({month:monthSelectBox, day:daySelectBox});
 			
-			daySelectBox.val(dateArray[1]);
+			var dayNo = ( dateArray[1].charAt(0) === '0' ) ? dateArray[1].charAt(1) : dateArray[1];
+			daySelectBox.val(dayNo);
 		}
 	},
 	
