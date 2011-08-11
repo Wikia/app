@@ -40,6 +40,14 @@
 	</section>
 </section>
 
+<section>
+	<h3><?= wfMsgHtml('adss-more-information') ?></h3>
+	<ul>
+		<li><?= wfMsgWikiHtml('adss-email-us') ?></li>
+		<li><a href="http://images2.wikia.nocookie.net/wikiaglobal/images/e/e4/Sponsored_Links_FAQ_.pdf"><?= wfMsgHtml('adss-faq') ?></a></li>
+	</ul>
+</section>
+
 <section class="SponsoredLinkForm">
 	<form method="post" enctype="multipart/form-data" action="<?php echo $action; ?>">
 		<input name="wpToken" id="wpToken" type="hidden" value="<?php echo $token; ?>" />
