@@ -14,7 +14,7 @@
 							<?= wfMsg("admindashboard-control-theme-designer-label") ?>
 						</a>
 					</li>
-					<li class="control" data-tooltip="<?= wfMsg("admindashboard-control-recent-changes-tooltip") ?>" data-control="RecentChanges">
+					<li class="control" data-tooltip="<?= wfMsg("admindashboard-control-recent-changes-tooltip") ?>">
 						<a href="<?= $urlRecentChanges ?>" class="set" data-tracking="general/recentchagnes">
 							<span class="representation">
 								<span class="icon recentchanges"></span>
@@ -55,7 +55,7 @@
 					<h1><?= wfMsg("admindashboard-controls-community-header") ?></h1><span class="dashboard-tooltip"></span>
 				</header>
 				<ul class="controls">
-					<li class="control" data-tooltip="<?= wfMsg("admindashboard-control-user-list-tooltip") ?>" data-control="ListUsers">
+					<li class="control" data-tooltip="<?= wfMsg("admindashboard-control-user-list-tooltip") ?>">
 						<a href="<?= $urlListUsers ?>" class="set" data-tracking="general/userlist">
 							<span class="representation">
 								<span class="icon userlist"></span>
@@ -63,7 +63,7 @@
 							<?= wfMsg("admindashboard-control-user-list-label") ?>
 						</a>
 					</li>
-					<li class="control" data-tooltip="<?= wfMsg("admindashboard-control-user-rights-tooltip") ?>" data-control="UserRights">
+					<li class="control" data-tooltip="<?= wfMsg("admindashboard-control-user-rights-tooltip") ?>">
 						<a href="<?= $urlUserRights ?>" class="set" data-tracking="general/userrights">
 							<span class="representation">
 								<span class="icon userrights"></span>
@@ -100,7 +100,7 @@
 					<h1><?= wfMsg("admindashboard-controls-content-header") ?></h1><span class="dashboard-tooltip"></span>
 				</header>
 				<ul class="controls">
-					<li class="control" data-tooltip="<?= wfMsg("admindashboard-control-categories-list-tooltip") ?>" data-control="Categories">
+					<li class="control" data-tooltip="<?= wfMsg("admindashboard-control-categories-list-tooltip") ?>">
 						<a href="<?= $urlAllCategories ?>" class="set" data-tracking="general/categories">
 							<span class="representation">
 								<span class="icon categories"></span>
@@ -132,7 +132,7 @@
 							<?= wfMsg("admindashboard-control-add-blog-label") ?>
 						</a>
 					</li>
-					<li class="control" data-tooltip="<?= wfMsg("admindashboard-control-multiple-upload-tooltip") ?>" data-control="MultipleUpload">
+					<li class="control" data-tooltip="<?= wfMsg("admindashboard-control-multiple-upload-tooltip") ?>">
 						<a href="<?= $urlMultipleUpload ?>" class="set" data-tracking="general/multipleupload">
 							<span class="representation">
 								<span class="icon multipleupload"></span>

@@ -37,15 +37,6 @@ var AdminDashboard = {
 		});
 	},
 	handleControlClick: function(e) {
-		var control = $(this).data('control');
-		if(control) {
-			e.preventDefault();
-			// load content
-			AdminDashboard.ui.resetAll();
-			AdminDashboard.ui.selectTab(AdminDashboard.generalTab);
-			AdminDashboard.ui.showSection('contentarea');
-			AdminDashboard.contentload['load'+control]();
-		}
 		var modal = $(this).data('modal');
 		if (modal) {
 			e.preventDefault();
@@ -76,52 +67,6 @@ var AdminDashboard = {
 		},
 		selectTab: function(tab) {
 			$(tab).addClass('active');
-		}
-	},
-	contentload: {
-		loadSpecialPage: function(page, callback) {
-			$.post(wgScriptPath + '/wikia.php', {
-				controller: 'AdminDashboardSpecialPage',
-				method: 'chromedArticleHeader',
-				page: page,
-				headerText: ''
-			}, function(html) {
-				AdminDashboard.wikiaArticle.addClass('AdminDashboardChromedArticle');
-				AdminDashboard.wikiaArticle.prepend(html);
-				AdminDashboard.wikiaArticle.find('.AdminDashboardNavigation a').click(function(e) {
-					e.preventDefault();
-					AdminDashboard.ui.resetAll();
-					AdminDashboard.ui.selectTab(AdminDashboard.generalTab);
-					AdminDashboard.ui.showSection('general');
-				});
-			});
-			AdminDashboard.section.contentarea.load(wgScriptPath + '/wikia.php', {
-				controller: 'AdminDashboardSpecialPage',
-				method: 'GetSpecialPage',
-				page: page
-			}, function(response){
-				if(callback && typeof callback == 'function') {
-					callback();
-				}
-			});
-		},
-		loadListUsers: function() {
-			var sassUrl = $.getSassCommonURL('/extensions/wikia/Listusers/css/table.scss');
-			$.getResources([wgScriptPath + '/extensions/wikia/Listusers/js/jquery.dataTables.min.js'], function() {
-				AdminDashboard.contentload.loadSpecialPage('Listusers');
-			});
-		},
-		loadUserRights: function() {
-			AdminDashboard.contentload.loadSpecialPage('UserRightsPage');
-		},
-		loadCategories: function() {
-			AdminDashboard.contentload.loadSpecialPage('Categories');
-		},
-		loadMultipleUpload: function() {
-			AdminDashboard.contentload.loadSpecialPage('MultipleUpload');
-		},
-		loadRecentChanges: function() {
-			AdminDashboard.contentload.loadSpecialPage('Recentchanges');
 		}
 	},
 	modalLoad: {
