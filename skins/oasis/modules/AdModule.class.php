@@ -91,7 +91,7 @@ class AdModule extends Module {
 
 	public $ad;
 
-	public function executeIndex($params) {
+	public function executeIndex(array $params) {
 
 		if(self::$config === null) {
 			$this->configure();
@@ -101,7 +101,7 @@ class AdModule extends Module {
 
 		if(isset(self::$config[$this->slotname])) {
 			if (AdEngine::getInstance()->getProviderNameForSlotname($this->slotname) == 'AdDriver') {
-				$this->ad = AdEngine::getInstance()->getAd($this->slotname);
+				$this->ad = AdEngine::getInstance()->getAd($this->slotname, $params);
 			}
 			else {
 				if (in_array($this->slotname, self::$slotsUseGetAd)) {

@@ -34,6 +34,7 @@ class BodyModule extends Module {
 	var $displayAdminDashboard;
 	var $displayAdminDashboardChromedArticle;
 	var $isMainPage;
+	var $topAdExtraClasses;
 
 	var $subtitle;
 
@@ -372,7 +373,7 @@ class BodyModule extends Module {
 
 
 	public function executeIndex() {
-		global $wgOut, $wgTitle, $wgSitename, $wgUser, $wgEnableBlog, $wgEnableCorporatePageExt, $wgEnableInfoBoxTest, $wgEnableWikiAnswers, $wgRequest, $wgMaximizeArticleAreaArticleIds, $wgEnableAdminDashboardExt, $wgEnableUserProfilePagesV3;
+		global $wgOut, $wgTitle, $wgSitename, $wgUser, $wgEnableBlog, $wgEnableCorporatePageExt, $wgEnableInfoBoxTest, $wgEnableWikiAnswers, $wgRequest, $wgMaximizeArticleAreaArticleIds, $wgEnableAdminDashboardExt, $wgEnableUserProfilePagesV3, $wgEnableTopButton, $wgTopButtonPosition;
 
 		// set up global vars
 		if (is_array($wgMaximizeArticleAreaArticleIds)
@@ -520,7 +521,17 @@ class BodyModule extends Module {
 			}
 		}
 
-
+		if ($wgEnableTopButton) {
+			if (strtolower($wgTopButtonPosition) == 'right') {
+				$this->topAdExtraClasses = array('CORP_TOP_LEADERBOARD'=>'WikiaTopAdLeft', 'HOME_TOP_LEADERBOARD'=>'WikiaTopAdLeft', 'TOP_LEADERBOARD'=>'WikiaTopAdLeft', 'TOP_BUTTON'=>'WikiaTopAdRight');
+			}
+			else {
+				$this->topAdExtraClasses = array('CORP_TOP_LEADERBOARD'=>'WikiaTopAdRight', 'HOME_TOP_LEADERBOARD'=>'WikiaTopAdRight', 'TOP_LEADERBOARD'=>'WikiaTopAdRight', 'TOP_BUTTON'=>'WikiaTopAdLeft');				
+			}
+		}
+		else {
+			$this->topAdExtraClasses = array('CORP_TOP_LEADERBOARD'=>'', 'HOME_TOP_LEADERBOARD'=>'', 'TOP_LEADERBOARD'=>'', 'TOP_BUTTON'=>'');
+		}
 
 	}
 	

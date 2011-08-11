@@ -30,6 +30,12 @@ class AdProviderAdDriver implements iAdProvider {
 				$extraClasses .= ' default-height';
 				break;
 		}
+		if (is_array($params)) {
+			if (!empty($params['extraClasses']) && is_array($params['extraClasses'])) {
+				$extraClasses .= ' ' . implode(' ', $params['extraClasses']);
+			}
+		}
+		
 		if (strpos($slotname, 'EXIT_STITIAL') === FALSE && strpos($slotname, 'MODAL') === FALSE) {
 			$out .= '<div id="' . htmlspecialchars($slotname) . '" class="wikia-ad noprint'.$extraClasses.'">';
 		}
