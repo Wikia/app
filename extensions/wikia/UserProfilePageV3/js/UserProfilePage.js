@@ -477,12 +477,14 @@ var UserProfilePage = {
 			var monthSelectBox = $('#userBDayMonth'),
 				daySelectBox = $('#userBDayDay');
 			
-			monthSelectBox.val(dateArray[0]);
+			if( typeof(dateArray[0]) !== 'undefined' ) {
+				monthSelectBox.val(dateArray[0]);
+			}
 			
-			UserProfilePage.refillBDayDaySelectbox({month:monthSelectBox, day:daySelectBox});
-			
-			var dayNo = ( dateArray[1].charAt(0) === '0' ) ? dateArray[1].charAt(1) : dateArray[1];
-			daySelectBox.val(dayNo);
+			if( typeof(dateArray[1]) !== 'undefined' ) {
+				UserProfilePage.refillBDayDaySelectbox({month:monthSelectBox, day:daySelectBox});
+				daySelectBox.val( parseInt(dateArray[1], 10) );
+			}
 		}
 	},
 	
@@ -493,14 +495,10 @@ var UserProfilePage = {
 					$(this).remove();				
 					$.postJSON( UserProfilePage.ajaxEntryPoint, { method: 'onHideWiki', userId: UserProfilePage.userId, wikiId: wikiId, cb: wgStyleVersion }, function(data) {
 						if( data.result.success === true ) {
-							$().log(data);
-
 							// add the next wiki
 							$.each(data.result.wikis, function(index, value) {
-								$().log(value.id);
 								if(UserProfilePage.modal.find('.favorite-wikis [data-wiki-id="' + value.id + '"]').length == 0) {
 									//found the wiki to add. now do it.
-									$().log('adding');
 									UserProfilePage.modal.find('.join-more-wikis').before('<li data-wiki-id="' + value.id + '"><span>' + value.wikiName + '</span> <img src="' + wgBlankImgUrl + '" class="sprite-small delete"></li>');
 									
 								}
