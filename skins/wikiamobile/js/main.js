@@ -8,17 +8,24 @@ var WikiaMobile = {
 	},
 	
 	wrapArticles: function() {
-		
+		// $( '#WikiaMainContent > h2' ).each( function() {
+			// var element = $(this).next(),
+			// collection = new Array();
+// 			
+			// while( !( $( element ).is( 'h2' ) ) || $( element ) != 'undefined'  ) {
+// 				
+				// collection.push(element);
+				// velement = $(element).next();
+			// }
+// 			
+			// alert(collection);
+		// });
 	},
 
 	init: function() {
 		$( '#openToggle' ).bind( "tap, click", function() {
 			$( '#navigation').toggleClass( 'open' );
 		});
-		
-		if($.os.ios) {
-			$( '#navigation' ).addClass( 'ios' );
-		};
 
 		$( '#navigationMenu > li' ).bind( "tap, click", function() {
 			if ( !( $( this ).hasClass( 'openMenu' ) ) ) {
@@ -32,13 +39,11 @@ var WikiaMobile = {
 			}
 		});
 		
+		$( '#toctitle' ).append( '<span class=\"arrow\"></span>' );
+		
 		$( '#toctitle' ).bind( 'tap, click', function() {
 			$( 'table#toc ul' ).toggleClass( 'visible' );
-		});
-		
-		$( 'table#toc li' ).bind( 'tap, click', function( event ) {
-			$( this ).children( 'a' ).trigger( 'click' );
-			event.stopPropagation();
+			$( '#toctitle' ).toggleClass( 'open' );
 		});
 	}
 }
