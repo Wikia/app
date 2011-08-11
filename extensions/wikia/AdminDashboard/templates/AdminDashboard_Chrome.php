@@ -5,11 +5,13 @@
 		</a>
 	</h1>
 </header>
-<nav class="AdminDashboardTabs" id="AdminDashboardTabs">
+<nav class="AdminDashboardTabs<?= $isAdminDashboard ? '' : ' expanded' ?>" id="AdminDashboardTabs">
 	<a href="<?= $adminDashboardUrlAdvanced ?>" class="tab <?= $tab == 'advanced' ? 'active' : '' ?>" data-section="advanced" data-tracking="header/advanced"><?= wfMsg('admindashboard-tab-advanced') ?></a>
 	<a href="<?= $adminDashboardUrlGeneral ?>" class="tab <?= $tab == 'general' ? 'active' : '' ?>" data-section="general" data-tracking="header/general"><?= wfMsg('admindashboard-tab-general') ?></a>
 </nav>
-<aside class="AdminDashboardRail" id="AdminDashboardRail">
-	<?= $wg->EnableFounderProgressBarExt ? $app->renderView( 'FounderProgressBar', 'widget' ) : '' ?>
-	<?= $app->renderView( 'QuickStats', 'getStats') ?>
-</aside>
+<? if($isAdminDashboard) { ?>
+	<aside class="AdminDashboardRail" id="AdminDashboardRail">
+		<?= $wg->EnableFounderProgressBarExt ? $app->renderView( 'FounderProgressBar', 'widget' ) : '' ?>
+		<?= $app->renderView( 'QuickStats', 'getStats') ?>
+	</aside>
+<? } ?>
