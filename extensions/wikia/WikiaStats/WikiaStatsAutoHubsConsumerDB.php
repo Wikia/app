@@ -468,7 +468,7 @@ class WikiaStatsAutoHubsConsumerDB {
 		global $wgMemc;
 
 		wfProfileIn( __METHOD__ );
-		$mcKey = wfSharedMemcKey( "auto_hubs", "users", $tag_id, $lang, $limit );
+		$mcKey = wfSharedMemcKey( "auto_hubs", "users", $tag_id, $lang, $limit, __METHOD__ );
 		if( !$force_reload ) {
 			$out = $wgMemc->get($mcKey);
 			if( !empty($out) ) {
@@ -509,11 +509,11 @@ class WikiaStatsAutoHubsConsumerDB {
 			}
 		}
 
-		// get avatars for the users
+		// get avatars and fix usernames for the users
 		foreach( $out as $key => $val ) {
 			$u = User::newFromId( $val['user_id'] );
 			$out[$key]['username'] = $u->getName();
-			$userWiki = $this->getUserWiki($val['user_id']);
+			$userWiki = $this->getUserWiki( $val['user_id'] );
 			if ( $userWiki !== false ) {
 				list ( $wikiUrl, $pageUrl ) = array_values($userWiki);
 				$avatar = Masthead::newFromUserId( $val['user_id'] );
