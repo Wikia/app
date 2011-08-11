@@ -236,6 +236,7 @@ AdConfig.DART.getUrl = function(slotname, size, useIframe, adProvider) {
 		AdConfig.DART.getCustomKeyValues() +
 		AdConfig.DART.getArticleKV() +
 		AdConfig.DART.getDomainKV(window.location.hostname) +
+		AdConfig.DART.getHostnamePrefix(window.location.hostname) +
 		'pos=' + slotname + ';' +
 		AdConfig.DART.getTitle() +
 		AdConfig.DART.getLanguage() +
@@ -278,6 +279,7 @@ AdConfig.DART.getMobileUrl = function(slotname, size, useIframe, adProvider) {
 		AdConfig.DART.getCustomKeyValues() +
 		AdConfig.DART.getArticleKV() +
 		AdConfig.DART.getDomainKV(window.location.hostname) +
+		AdConfig.DART.getHostnamePrefix(window.location.hostname) +
 		'pos=' + slotname + ';' +
 		AdConfig.DART.getTitle() +
 		AdConfig.DART.getLanguage() +
@@ -456,6 +458,16 @@ AdConfig.DART.getDomainKV = function (hostname){
 	}
 
 };
+
+AdConfig.DART.getHostnamePrefix = function (hostname) {
+	lhost = hostname.toLowerCase();
+	pieces = lhost.split('.');
+	if (pieces.length) {
+		return 'hostpre=' + pieces[0] + ';';
+	}
+	
+	return '';
+}
 
 AdConfig.DART.getTitle = function(){
 	if (typeof wgPageName != 'undefined' && wgPageName) {
