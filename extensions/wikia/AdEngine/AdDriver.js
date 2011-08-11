@@ -77,6 +77,11 @@ AdDriver.getAdProviderForSpecialCase = function(slotname) {
 
 AdDriver.isHighValue = function(slotname) {
 	if (AdConfig.isHighValueSlot(slotname)) {
+		// FogBugz 9915: temporarily override country setting for TOP_BUTTON
+		if (slotname == 'TOP_BUTTON') {
+			return true;
+		}
+
 		if (AdConfig.geo) {
 			return AdConfig.isHighValueCountry(AdConfig.geo.country);
 		}
