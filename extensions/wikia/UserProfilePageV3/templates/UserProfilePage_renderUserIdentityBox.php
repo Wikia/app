@@ -57,7 +57,7 @@
 			<ul class="links">
 				<? if( !empty($user['twitter']) ): ?>
 					<li>
-						<a href="<?= $user['twitter'] ?>">
+						<a href="<?= $user['twitter'] ?>" rel="nofollow">
 							<img src="<?= $wgBlankImgUrl ?>" class="twitter icon">
 						</a>
 						<?= wfMsg('user-identity-box-my-twitter', array( '$1' => $user['twitter'] )); ?>
@@ -73,7 +73,7 @@
 				
 				<? if( !empty($user['website']) ): ?>
 					<li>
-						<a href="<?= $user['website'] ?>">
+						<a href="<?= $user['website'] ?>" rel="nofollow">
 							<img src="<?= $wgBlankImgUrl ?>" class="website icon">
 						</a>
 						<?= wfMsg('user-identity-box-my-website', array( '$1' => $user['website'] )); ?>
@@ -89,7 +89,7 @@
 				
 				<? if( !empty($user['fbPage']) ): ?>
 					<li>
-						<a href="<?= $user['fbPage'] ?>">
+						<a href="<?= $user['fbPage'] ?>" rel="nofollow">
 							<img src="<?= $wgBlankImgUrl ?>" class="facebook icon">
 						</a>
 						<?= wfMsg('user-identity-box-my-fb-page', array( '$1' => $user['fbPage'] )); ?>
