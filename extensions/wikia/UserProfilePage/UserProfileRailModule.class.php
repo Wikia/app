@@ -31,7 +31,19 @@ class UserProfileRailModule extends Module {
 			$this->userIsOwner = $userProfilePage->userIsOwner();
 			$this->userName =  $user->getName();
 			$title = Title::newFromText($this->userName, NS_USER);
-			$this->userPageUrl = $title->getLocalUrl( '' /* query */, 'en' /* lang variant to make NS_USER work */ );
+
+			$this->userPageUrl = $title->getLocalUrl();
+			if ( $wgLanguageCode != 'en' ) {
+				// adjust namespace to canonical value to prevent broken links
+				// replace this if there is a way to getLocalUrl with canonical NS :/
+				$this->userPageUrl = preg_replace(
+					'/' . preg_quote( urlencode( $title->getNsText() ) ) . '/',
+					urlencode( MWNamespace::getCanonicalName( NS_USER ) ),
+					$this->userPageUrl,
+					1 // this prevents problems when user name contains canonical NS text
+				);
+			}
+
 			$this->maxEdits = 0;
 			$this->currentWikiId = $wgCityId;
 
