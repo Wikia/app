@@ -24,17 +24,17 @@
 			echo '<div class="WikiaTopAds">';
 		}
 		if ($wgEnableCorporatePageExt) {
-			echo wfRenderModule('Ad', 'Index', array('slotname' => 'CORP_TOP_LEADERBOARD'));
+			echo wfRenderModule('Ad', 'Index', array('slotname' => 'CORP_TOP_LEADERBOARD', 'extraClasses' => array($topAdExtraClasses['CORP_TOP_LEADERBOARD'])));
 		} else {
 			if (in_array('leaderboard', $wgABTests)) {
 				// no leaderboard ads
 			} else {
-				echo wfRenderModule('Ad', 'Index', array('slotname' => 'TOP_LEADERBOARD'));
-				echo wfRenderModule('Ad', 'Index', array('slotname' => 'HOME_TOP_LEADERBOARD'));
+				echo wfRenderModule('Ad', 'Index', array('slotname' => 'TOP_LEADERBOARD', 'extraClasses' => array($topAdExtraClasses['TOP_LEADERBOARD'])));
+				echo wfRenderModule('Ad', 'Index', array('slotname' => 'HOME_TOP_LEADERBOARD', 'extraClasses' => array($topAdExtraClasses['HOME_TOP_LEADERBOARD'])));
 			}
 		}
 		if ($wgEnableTopButton) {
-			echo wfRenderModule('Ad', 'Index', array('slotname' => 'TOP_BUTTON'));
+			echo wfRenderModule('Ad', 'Index', array('slotname' => 'TOP_BUTTON', 'extraClasses' => array($topAdExtraClasses['TOP_BUTTON'])));
 			echo '</div>';
 		}
 		if ($isMainPage) {
