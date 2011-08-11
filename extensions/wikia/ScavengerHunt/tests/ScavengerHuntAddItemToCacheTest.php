@@ -8,6 +8,7 @@ class ScavengerHuntAddItemToCacheTest extends ScavengerHuntTest {
 	public function conditions(){
 
 		return array(
+			array( false, array( ), array( self::MOCK_TEXT ), false ),
 			array( false, array( self::WRONG_ARTICLE_NAME ), array( self::MOCK_TEXT ), false ),
 			array( true, array( self::WRONG_ARTICLE_NAME ), array( self::MOCK_TEXT ), true ),
 			array( true, array( self::MOCK_TEXT ), array( self::WRONG_ARTICLE_NAME ), true ),
