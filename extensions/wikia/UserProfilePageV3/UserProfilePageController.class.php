@@ -912,7 +912,7 @@ class UserProfilePageController extends WikiaController {
 			if( $fbUserId > 0 ) {	
 				$userFbData = $fbConnectAPI->getUserInfo(
 					$fbUserId,
-					array('name, current_location, hometown_location, work_history, profile_url, sex, birthday_date, pic_big, website')
+					array('first_name, current_location, hometown_location, work_history, profile_url, sex, birthday_date, pic_big, website')
 				);
 				$userFbData = $this->cleanFbData($userFbData);
 				$result = array('success' => true, 'fbUser' => $userFbData);
@@ -963,6 +963,11 @@ class UserProfilePageController extends WikiaController {
 			$this->extractFbFirstField($fbData['hometown_location'], 'city');
 		} else {
 			unset($fbData['hometown_location']);
+		}
+		
+		if( !empty($fbData['first_name']) ) {
+			$fbData['name'] = $fbData['first_name'];
+			unset($fbData['first_name']);
 		}
 		
 		return $fbData;
