@@ -124,7 +124,7 @@
 				$('#wpSave').removeAttr('disabled');
 			}
 			else if ( (states.LOADING_SOURCE == state) || (states.LOADING_VISUAL == state) ) {
-				$('#wpSave').attr('disabled', true); 
+				$('#wpSave').attr('disabled', true);
 			}
 		},
 
@@ -200,6 +200,9 @@
 			}
 
 			window.wgEditedTitle = prefix + window.wgEditedTitle;
+
+			// BugId:2823
+			$(window).trigger('editTitleUpdated', [window.wgEditedTitle]);
 
 			if (window.wgEditedTitle.substring(0, 30) == window.wgEditedTitle) {
 				var shortText = $.htmlentities(window.wgEditedTitle);
