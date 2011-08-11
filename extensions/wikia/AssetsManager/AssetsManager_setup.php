@@ -21,9 +21,8 @@ function AssetsManagerEntryPoint() {
 
 	$dir = dirname(__FILE__).'/';
 
-	// Temporary log
-	global $wgRequest;
-	error_log("Temp log - #1 - AssetsManagerEntryPoint: " . $wgRequest->getFullRequestURL());
+	// Temporary logging
+	// error_log("Temp log - #1 - AssetsManagerEntryPoint: " . $wgRequest->getFullRequestURL());
 
 	$wgAutoloadClasses['AssetsManagerBaseBuilder'] = $dir.'builders/AssetsManagerBaseBuilder.class.php';
 	$wgAutoloadClasses['AssetsManagerOneBuilder'] = $dir.'builders/AssetsManagerOneBuilder.class.php';
