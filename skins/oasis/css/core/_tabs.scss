@@ -7,6 +7,7 @@
 		margin: 0 1px;
 		padding: 0;
 		position: relative;
+		list-style: none;
 		a {
 			@include border-radius-nw(5px);
 			@include border-radius-ne(5px);

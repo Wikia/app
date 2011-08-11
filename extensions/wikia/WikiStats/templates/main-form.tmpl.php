@@ -16,10 +16,8 @@ if ( $userIsSpecial ) {
 }
 ?>
 <div id="ws-addinfo" class="ws-addinfo"></div>
-<div id="ws-tabs" class="wikia-tabs">
-	<ul id="ws_action_tabs">
+<ul id="ws_action_tabs" class="tabs">
 <? foreach ( $tabs as $id => $values ) : ?>		
-		<li id="ws_tab_<?=$id?>" class="<?= ($id == $mAction) ? 'selected' : ''?>"><a rel="nofollow" href="<?=$values['url']?>"><?=$values['text']?></a></li>
+	<li id="ws_tab_<?=$id?>" class="<?= ($id == $mAction) ? 'selected' : ''?>"><a rel="nofollow" href="<?=$values['url']?>"><?=$values['text']?></a></li>
 <? endforeach ?>
-	</ul>
-</div>
+</ul>
