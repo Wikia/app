@@ -4,6 +4,21 @@
 module('AdConfig');
 
 test('isHighValueCountry', function() {
+  window.wgHighValueCountries = [];
+  window.wgHighValueCountries['CA'] = 1;
+  window.wgHighValueCountries['DE'] = 1;
+  window.wgHighValueCountries['DK'] = 1;
+  window.wgHighValueCountries['ES'] = 1;
+  window.wgHighValueCountries['FI'] = 1;
+  window.wgHighValueCountries['FR'] = 1;
+  window.wgHighValueCountries['GB'] = 1;
+  window.wgHighValueCountries['IT'] = 1;
+  window.wgHighValueCountries['NL'] = 1;
+  window.wgHighValueCountries['NO'] = 1;
+  window.wgHighValueCountries['SE'] = 1;
+  window.wgHighValueCountries['UK'] = 1;
+  window.wgHighValueCountries['US'] = 1;
+  
 	// commented-out tests may pass in production, but not dev
 //  ok( AdConfig.isHighValueCountry('AT'), 'AT' );
 //  ok( AdConfig.isHighValueCountry('BE'), 'BE' );
@@ -265,6 +280,11 @@ test('getDomainKV', function() {
   equal( AdConfig.DART.getDomainKV('www.bbc.co.uk'), 'dmn=bbccouk;', 'www.bbc.co.uk' );
 });
 
+test('getHostnamePrefix', function() {
+  equal( AdConfig.DART.getHostnamePrefix('fallout.wikia.com'), 'hostpre=fallout;', 'fallout.wikia.com' );
+  equal( AdConfig.DART.getHostnamePrefix('externaltest.fallout.wikia.com'), 'hostpre=externaltest;', 'externaltest.fallout.wikia.com' );
+});
+
 test('getTitle', function() {
   window.wgPageName = 'Muppet_Wiki';
   equal( AdConfig.DART.getTitle(), 'wpage='+encodeURIComponent(window.wgPageName)+';', window.wgPageName );
@@ -408,6 +428,7 @@ test('getUrl', function() {
   + window.wgDartCustomKeyValues
   + ';artid=37414;'
   + AdConfig.DART.getDomainKV(window.location.hostname)
+  + AdConfig.DART.getHostnamePrefix(window.location.hostname)
   + 'pos=TOP_LEADERBOARD;wpage='
   + encodeURIComponent(window.wgPageName)
   + ';lang=en;'
@@ -434,6 +455,7 @@ test('getUrl', function() {
   var expectedResult = 'http://ad-emea.doubleclick.net/adi/wka.life/_healthyrecipes/home;s0=life;s1=_healthyrecipes;s2=home;'
   + 'artid=1461;'
   + AdConfig.DART.getDomainKV(window.location.hostname)
+  + AdConfig.DART.getHostnamePrefix(window.location.hostname)
   + 'pos=HOME_TOP_RIGHT_BOXAD;wpage='
   + encodeURIComponent(window.wgPageName)
   + ';lang=en;'
@@ -461,6 +483,7 @@ test('getUrl', function() {
   + window.wgDartCustomKeyValues
   + ';artid=119514;'
   + AdConfig.DART.getDomainKV(window.location.hostname)
+  + AdConfig.DART.getHostnamePrefix(window.location.hostname)
   + 'pos=LEFT_SKYSCRAPER_2;wpage='
   + encodeURIComponent(window.wgPageName)
   + ';lang=en;'
