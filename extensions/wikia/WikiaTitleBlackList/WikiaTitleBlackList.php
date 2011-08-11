@@ -171,6 +171,11 @@ function wfBlackListTitleParse($title) {
 	
 	if (!empty($aBlackListRegexes) && is_array($aBlackListRegexes)) {
 		wfDebug( "Checking text against " . count( $aBlackListRegexes ) . " regexes: " . implode( ', ', $aBlackListRegexes ) . "\n" );
+		
+		$html_errors = ini_get( 'html_errors' );
+		ini_set( 'html_errors', '0' );
+		set_error_handler( array( 'WikiaTitleBlackList', 'errorHandler' ) );
+				
 		foreach ($aBlackListRegexes as $id => $regex) {
 			$m = array();
 			if (preg_match($regex, strtolower($title->getText()), $m)) {
@@ -186,6 +191,9 @@ function wfBlackListTitleParse($title) {
 				break;
 			}
 		}
+		
+		restore_error_handler();
+		ini_set( 'html_errors', $html_errors );		
 	}
 
 	if ($retVal) {
