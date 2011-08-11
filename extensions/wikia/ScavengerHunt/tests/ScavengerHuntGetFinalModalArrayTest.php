@@ -11,8 +11,7 @@ class ScavengerHuntGetFinalModalArrayTest extends ScavengerHuntTest {
 			array( false, array( 0, 1 ), array( 0, 1 ), false ),
 			array( false, array( 0, 1 ), array( 1 ), false ),
 			array( true, array( 0, 1 ), array( 0, 1 ), true ),
-			array( true, array( 0, 1 ), array( 1 ), false ),
-			array( true, array( 0, 1 ), array( 1 ), true )
+			array( true, array( 0, 1 ), array( 1 ), false )
 		);
 	}
 	
@@ -28,7 +27,7 @@ class ScavengerHuntGetFinalModalArrayTest extends ScavengerHuntTest {
 		$mockedGame
 			->expects( $this->any() )
 			->method( 'getArticles' )
-			->will( $this->onConsecutiveCalls( array(), $articles ) );
+			->will( $this->onConsecutiveCalls( array( new ScavengerHuntGameArticle(), new ScavengerHuntGameArticle() ), $articles ) );
 
 		$this->mockClass( 'ScavengerHuntGame', $mockedGame );
 

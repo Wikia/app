@@ -10,35 +10,26 @@ class ScavengerHuntAddItemToCacheTest extends ScavengerHuntTest {
 		return array(
 			array( false, array( ), array( self::MOCK_TEXT ), false ),
 			array( false, array( self::WRONG_ARTICLE_NAME ), array( self::MOCK_TEXT ), false ),
-			array( true, array( self::WRONG_ARTICLE_NAME ), array( self::MOCK_TEXT ), true ),
+			array( false, array( self::MOCK_TEXT, self::MOCK_TEXT ), array(), false ),
 			array( true, array( self::MOCK_TEXT ), array( self::WRONG_ARTICLE_NAME ), true ),
 			array( true, array( self::MOCK_TEXT ), array(), true ),
 			array( true, array( self::MOCK_TEXT ), array( self::MOCK_TEXT, self::WRONG_ARTICLE_NAME ), true ),
-			array( false, array( self::MOCK_TEXT, self::MOCK_TEXT ), array(), false )
+			array( true, array( self::WRONG_ARTICLE_NAME ), array( self::MOCK_TEXT ), false ),
+			array( true, array( self::MOCK_TEXT ), array( self::MOCK_TEXT, self::WRONG_ARTICLE_NAME ), true, true )
 		);
 	}
-	
+
 	/**
 	 * @dataProvider conditions
 	 */
 
-	public function testAddItemToCache( $articleExist, $articlesList, $cachedList, $expectedResult ) {
-		
-		$scavengerHunt = $this->getMock('ScavengerHunt', array( 'getDataFromCache' ) );
-		$game = $this->getFakeGame();
-		$scavengerHunt->setGame( $articleExist ? $game : null );
+	public function testAddItemToCache( $articleExist, $articlesList, $cachedList, $expectedResult, $brokenCache = false ) {
 
+		// Game
 		$articlesIdentifiers = array();
 		foreach( $articlesList as $art ) {
-			$articlesIdentifiers[] = $game->makeIdentifier( self::LANDING_WIKI_ID, $art );
+			$articlesIdentifiers[] = ScavengerHuntGame::makeIdentifier( self::LANDING_WIKI_ID, $art );
 		}
-
-		$cachedIdentifiers = array();
-		foreach( $cachedList as $art ) {
-			$cachedIdentifiers[] = $game->makeIdentifier( self::LANDING_WIKI_ID, $art );
-		}
-
-		$scavengerHunt->saveDataToCache( $cachedIdentifiers );
 
 		$mockedGame = $this->getMock( 'ScavengerHuntGame', array('getArticleIdentifier'), array( $this->app ) );
 		$mockedGame
@@ -46,6 +37,31 @@ class ScavengerHuntAddItemToCacheTest extends ScavengerHuntTest {
 			->method( 'getArticleIdentifier' )
 			->will(  $this->returnValue( $articlesIdentifiers ) );
 
+		$this->mockClass( 'ScavengerHuntGame', $mockedGame );
+		$game = $this->getFakeGame();		
+
+		// Hunt
+		$scavengerHunt = $this->getMock('ScavengerHunt', array( 'getDataFromCache' ) );
+		$scavengerHunt->setGame( $articleExist ? $game : null );
+		$cachedIdentifiers = array();
+		foreach( $cachedList as $art ) {
+			$cachedIdentifiers[] = ScavengerHuntGame::makeIdentifier( self::LANDING_WIKI_ID, $art );
+		}
+
+		$scavengerHunt->saveDataToCache( $cachedIdentifiers );
+		$scavengerHunt
+			->expects( $this->any() )
+			->method( 'getDataFromCache' )
+			->will(
+				$this->returnValue(
+					array(
+						'gameId' => $scavengerHunt->getHuntId(),
+						ScavengerHunt::VISITED_ART_KEY => $brokenCache ? 'broken' : $cachedIdentifiers
+					)
+				)
+			);
+
+		// User
 		$mockedUser = $this->getMock( 'User', array('isAnon') );
 		$mockedUser
 			->expects( $this->any() )
@@ -58,6 +74,7 @@ class ScavengerHuntAddItemToCacheTest extends ScavengerHuntTest {
 
 		$result = $scavengerHunt->addItemToCache( self::MOCK_TEXT, self::LANDING_WIKI_ID );
 		$scavengerHunt->resetCache();
+
 		$this->assertEquals( empty( $result ), empty( $expectedResult ) );
 	}
 }
