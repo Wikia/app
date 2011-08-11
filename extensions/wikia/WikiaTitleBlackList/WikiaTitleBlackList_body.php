@@ -89,6 +89,10 @@ class WikiaTitleBlackList
 		return $this->spamList;
 	}
 	
+	public function errorHandler( $code, $text ) {
+		global $wgDBname;
+		error_log ( "MOLI: " . __METHOD__ . " ( $wgDBname ): $text, code: $code \n" );
+	}
 }
 
 function wfBlackListTitleParse(&$title, $blacklist)
@@ -100,30 +104,32 @@ function wfBlackListTitleParse(&$title, $blacklist)
 	    return $retVal;
     }
     #---
-	if (!empty($blacklist) && is_array($blacklist))
-	{
+	if (!empty($blacklist) && is_array($blacklist)) {
 		wfDebug( "Checking text against " . count( $blacklist ) . " regexes: " . implode( ', ', $blacklist ) . "\n" );
-		foreach ($blacklist as $id => $regex) 
-		{
+
+		$html_errors = ini_get( 'html_errors' );
+		ini_set( 'html_errors', '0' );
+		set_error_handler( array( 'WikiaTitleBlackList', 'errorHandler' ) );
+
+		foreach ($blacklist as $id => $regex) {
 			$m = array();
-			if (preg_match($regex, strtolower($title->getText()), $m)) 
-			{
+			if (preg_match($regex, strtolower($title->getText()), $m)) {
 				wfDebug( "Match!\n" );
 				SpamRegexBatch::spamPage( $m[0], $title );
 				$retVal = true;
 				break;
 			}
-			if (preg_match($regex, strtolower($title->getFullText()), $m))
-			{
-					wfDebug( "Match!\n" );
-					SpamRegexBatch::spamPage( $m[0], $title );
-					$retVal = true;
-					break;
+			if (preg_match($regex, strtolower($title->getFullText()), $m)) {
+				wfDebug( "Match!\n" );
+				SpamRegexBatch::spamPage( $m[0], $title );
+				$retVal = true;
+				break;
 			}
 		}
+		
+		restore_error_handler();
+		ini_set( 'html_errors', $html_errors );		
 	}
 	
 	return $retVal;
 }
-
-?>
