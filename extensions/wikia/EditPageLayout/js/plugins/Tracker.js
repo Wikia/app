@@ -135,10 +135,12 @@
 			var states = editor.states;
 
 			switch (state) {
+				// editor loading is done / mode is switched
 				case states.IDLE:
 					this.reportLoadTime();
 					break;
 
+				// page is being saved
 				case states.SAVING:
 					this.track('save');
 
@@ -151,10 +153,12 @@
 					}
 					break;
 
+				// switch to source mode
 				case states.LOADING_SOURCE:
 					this.track(this.getTrackerInitialMode(), 'modeSwitch', 'visual2source');
 					break;
 
+				// switch to wysiwyg mode
 				case states.LOADING_VISUAL:
 					this.track(this.getTrackerInitialMode(), 'modeSwitch', 'source2visual');
 					break;

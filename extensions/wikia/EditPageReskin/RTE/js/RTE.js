@@ -269,6 +269,12 @@ window.RTE = {
 		if (formatDropdown) {
 			formatDropdown.createPanel(editor);
 		}
+
+		// send custom event "submit" when edit page is being saved (BugId:2947)
+		var editform = $(editor.element.$.form);
+		editform.bind('submit', $.proxy(function() {
+			editor.fire('submit', {form: editform}, editor);
+		}, this));
 	},
 
 	// reposition #RTEStuff div
@@ -297,8 +303,6 @@ window.RTE = {
 				replace(' data-rte-instance="' + RTE.instanceId + '"', '').
 				// remove <div> added by Firebug
 				replace(/<div firebug[^>]+>[^<]+<\/div>/g, '');
-
-			//$().log(ev.data, 'RTE.filterHtml');
 		}
 	},
 

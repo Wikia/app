@@ -55,6 +55,7 @@
 			setTimeout(function(){ self.copyFromToolbar(); },1000);
 			this.editor.fire('mediawikiToolbarRendered',this.editor,$(this.toolbarNode));
 			this.editor.log('loading source mode toolbar');
+			this.setupTracking();
 		},
 
 		afterRender: function() {
@@ -63,7 +64,7 @@
 				scope: this
 			});
 			this.modeChanged();
-			this.setupTracking();
+
 		},
 
 		modeChanged: function() {
@@ -78,16 +79,15 @@
 		},
 
 		setupTracking: function() {
-			var buttons = this.el.children('img'),
-				self = this;
+			var buttons = this.el.children('img');
 
-			buttons.bind('click', function(ev) {
-				var buttonId = $(this).attr('id');
-				self.track(buttonId);
-			});
+			buttons.bind('click', $.proxy(function(ev) {
+				var buttonId = $(ev.target).attr('id');
+				this.trackButton(buttonId);
+			}, this));
 		},
 
-		track: function(buttonId) {
+		trackButton: function(buttonId) {
 			// track clicks on #mw-editbutton-bold as "bold"
 			var buttonName = buttonId.split('-').pop();
 
