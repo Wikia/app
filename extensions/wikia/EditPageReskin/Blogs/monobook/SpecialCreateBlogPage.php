@@ -38,8 +38,10 @@ class CreateBlogPage extends SpecialBlogPage {
 			$wgOut->readOnlyPage();
 			return;
 		}
-
-		$this->mTitle = Title::makeTitle( NS_SPECIAL, 'CreateBlogPage' );
+		
+		//nAndy: bugId:9804
+		$pageId = intval($wgRequest->getVal('pageId'));
+		$this->mTitle = ($pageId > 0) ? Title::newFromId($pageId) : Title::makeTitle( NS_SPECIAL, 'CreateBlogPage' );
 
 		// force CategorySelect initialisation if available
 		if(function_exists('CategorySelectInitializeHooks') && ($wgUser->getOption('disablecategoryselect', false) == false)) {
@@ -48,7 +50,7 @@ class CreateBlogPage extends SpecialBlogPage {
 			CategorySelectInit(true);
 			CategorySelectInitializeHooks(null, null, $this->mTitle, null, null, null);
 		}
-
+		
 		$wgOut->setPageTitle( wfMsg("create-blog-post-title") );
 
 		if($wgRequest->wasPosted()) {
@@ -84,7 +86,16 @@ class CreateBlogPage extends SpecialBlogPage {
 						$text = $preloadArticle->getContent();
 					}
 				}
-
+				
+				//nAndy: bugId:9804
+				if( $pageId > 0 && empty($preload) ) {
+					$preloadTitle = Title::newFromId($pageId);
+					if( !is_null($preloadTitle) ) {
+						$preloadArticle = new Article($preloadTitle);
+						$text = $preloadArticle->getContent();
+					}
+				}
+				
 				$this->createEditPage( $text );
 			}
 			$this->renderForm();
