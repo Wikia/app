@@ -191,6 +191,7 @@ class SqlParser {
 			"(?<null>null)",
 			"(?<notnull>not null)",
 			"(?<autoincrement>auto_increment)",
+			"(?<binary>binary)",
 			"default (?<default>'(?<defaultv>[^']*)'|(?<defaulte>null|current_timestamp))",
 			"comment '(?<comment>[^']*)'",
 			"character set (?<charset>[^\s]*[^\s,])",
