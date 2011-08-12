@@ -871,3 +871,10 @@ $wgDisableMemCachedReplication = false;
  * @see includes/wikia/WikiaView.class.php
  */
 $wgEnableSkinTemplateOverride = false;
+
+/**
+ * variable for enabling Nirvana's API entrypoint wikia.php,
+ * requests will be served with a 503 status code if this is false or not set
+ * @see wikia.php
+ */
+$wgEnableNirvanaAPI = true;
