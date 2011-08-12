@@ -12,7 +12,7 @@ class NodeApiClient {
 	// Internal requests use diff hostnames than requests from the browsers.
 	const HOST_PRODUCTION = "chatserver.wikia-dev.com";
 	const HOST_DEV = "chat.wikia-dev.com";
-	const API_HOST_AND_PORT_PRODUCTION = "chatserver.wikia.com:8001";
+	const API_HOST_AND_PORT_PRODUCTION = "chat.wikia-prod:8001";
 	const API_HOST_AND_PORT_DEV = "chat.wikia-dev.com:8001";
 	
 	const HOST_PRODUCTION_FROM_CLIENT = "chatserver.wikia.com";
