@@ -132,10 +132,10 @@ class CreateNewWikiModule extends Module {
 		$params = $wgRequest->getArray('data');
 
 		if ( empty($params) ||
-			empty($params['wikiName']) ||
-			empty($params['wikiDomain']) ||
-			empty($params['wikiLanguage']) ||
-			empty($params['wikiCategory']) )
+			empty($params['wikiaName']) ||
+			empty($params['wikiaDomain']) ||
+			empty($params['wikiaLanguage']) ||
+			empty($params['wikiaCategory']) )
 		{
 			// do nothing
 			$this->status = 'error';
@@ -169,7 +169,7 @@ class CreateNewWikiModule extends Module {
 				return;
 			}
 
-			$createWiki = F::build('CreateWiki', array($params['wikiName'], $params['wikiDomain'], $params['wikiLanguage'], $params['wikiCategory']));
+			$createWiki = F::build('CreateWiki', array($params['wikiaName'], $params['wikiaDomain'], $params['wikiaLanguage'], $params['wikiaCategory']));
 			$error_code = $createWiki->create();
 			$this->cityId = $createWiki->getWikiInfo('city_id');
 			if(empty($this->cityId)) {
@@ -178,7 +178,7 @@ class CreateNewWikiModule extends Module {
 					'<br>'.
 					$this->app->runFunction('wfMsg', 'cnw-error-general');
 				$this->statusHeader = $this->app->runFunction('wfMsg', 'cnw-error-general-heading');
-				trigger_error("Failed to create new wiki: $error_code " . $params['wikiName'] . " " . $params['wikiLanguage'], E_USER_WARNING);
+				trigger_error("Failed to create new wiki: $error_code " . $params['wikiaName'] . " " . $params['wikiaLanguage'], E_USER_WARNING);
 			} else {
 				$this->status = 'ok';
 				$this->siteName = $createWiki->getWikiInfo('sitename');
