@@ -131,6 +131,14 @@ class CreateNewWikiModule extends Module {
 
 		$params = $wgRequest->getArray('data');
 
+		if ( !empty($params) && 
+			!empty($params['wikiName']) &&
+			!empty($params['wikiDomain']) )
+		{
+			// log if called with old params
+			trigger_error("CreateWiki called with old params." . $params['wikiName'] . " " . $params['wikiDomain'], E_USER_WARNING);
+		}
+
 		if ( empty($params) ||
 			empty($params['wikiaName']) ||
 			empty($params['wikiaDomain']) ||
