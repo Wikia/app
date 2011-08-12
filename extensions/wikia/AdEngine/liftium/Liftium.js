@@ -41,7 +41,8 @@ var Liftium = {
 	maxLoadDelay : LiftiumOptions.maxLoadDelay || 2500,
 	isCalledAfterOnload : LiftiumOptions.isCalledAfterOnload || 0,
 	hasMoreCalls : LiftiumOptions.hasMoreCalls || 0,
-	slotnames	: []
+	slotnames	: [],
+	fingerprint	: 'a'
 };
 
 
@@ -698,7 +699,7 @@ Liftium.getContainingDivId = function(element){
 Liftium.getCookieDomain = function () {
 	var domain = document.domain;
 
-	var d = domain.match(/wikia(-dev)?\.com$/);
+	var d = domain.match(/(?:wikia(?:-dev)?\.com|wowwiki\.com|wiki\.ffxiclopedia\.org|memory-alpha\.org|websitewiki\.de|yoyowiki\.org|marveldatabase\.com)$/);
 	if (!Liftium.e(d)) {
 		domain = d[0];
 	} else {
