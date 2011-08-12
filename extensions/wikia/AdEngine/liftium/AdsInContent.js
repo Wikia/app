@@ -1,6 +1,6 @@
 // AdsInContent2 a.k.a. AIC2
 var AIC2 = {
-	fingerprint     : 'a',
+	fingerprint     : 'b',
 	called          : false,
 	startPosition   : 0,
 	stopPosition    : 0,
@@ -55,14 +55,12 @@ if ($(window).width() < 1010) {
 		var db = Liftium.dbnameForTracking(Liftium.getPageVar("wgDBname", "unknown"));
 		var geo = Liftium.geoForTracking(Liftium.getCountry());
 
-		_gaq.push(['liftium._trackEvent',  slot, 'hub',  hub]);
-		_gaq.push(['liftium._trackEvent',  slot, 'lang', lang]);
-		_gaq.push(['liftium._trackEvent',  slot, 'db',   db]);
-		_gaq.push(['liftium._trackEvent',  slot, 'geo',  geo]);
-		_gaq.push(['liftium._trackEvent', 'hub',  hub,   slot]);
-		_gaq.push(['liftium._trackEvent', 'lang', lang,  slot]);
-		_gaq.push(['liftium._trackEvent', 'db',   db,    slot]);
-		_gaq.push(['liftium._trackEvent', 'geo',  geo,   slot]);
+		_gaq.push(['liftium._trackEvent', 'slot', 'slot-' + slot,  hub + '/' + lang + '/' + db + '/' + geo]);
+
+		_gaq.push(['liftium._trackEvent',  slot,  'hub-'  + hub,  'lang-' + lang]);
+		_gaq.push(['liftium._trackEvent',  slot,  'lang-' + lang, 'geo-' + geo]);
+		_gaq.push(['liftium._trackEvent',  slot,  'db-'   + db,   'geo-' + geo]);
+		_gaq.push(['liftium._trackEvent',  slot,  'geo-'  + geo]);
 
 		_gaq.push(['liftium._trackPageview', '/999/' + Liftium.buildTrackUrl(['AIC2', 'test2'])]);
 	}
