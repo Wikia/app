@@ -644,6 +644,12 @@ class RTEReverseParser {
 			return '';
 		}
 
+		// handle "raw" HTML paragraphs within wikitext (BugId:3359)
+		if (self::wasHtml($node) && !$node->hasAttribute('data-rte-attribs')) {
+			wfProfileOut(__METHOD__);
+			return "<p>{$textContent}</p>";
+		}
+
 		// handle paragraphs alignment and indentation
 		// (ignore when paragraph is empty)
 		if ($node->hasAttribute('style') && (trim($textContent) != '')) {
@@ -667,7 +673,13 @@ class RTEReverseParser {
 			}
 		}
 
-		$out = "{$textContent}\n";
+		if (self::nextSiblingIs($node,'p') && self::wasHtml($node->nextSibling) && !$node->nextSibling->hasAttribute('data-rte-line-start')) {
+			// support foo<p>bar</p> (BugId:3559)
+			$out = $textContent;
+		}
+		else {
+			$out = "{$textContent}\n";
+		}
 
 		// if next paragraph has been pasted into CK add extra newline
 		if (self::nextSiblingIs($node, 'p') && self::isPasted($node->nextSibling)) {
@@ -677,12 +689,6 @@ class RTEReverseParser {
 		// this node was added in CK
 		// handle paragraphs outside tables only (RT #56402)
 		else if (self::isNewNode($node) && self::isChildOf($node, 'body')) {
-			// previous element is paragraph
-			//if-statement commented, because pressing enter results sometimes a double white lines (bugid: 1036)
-			//if (self::previousSiblingIs($node, 'p') && !self::isNewNode($node->previousSibling)) {
-			//	$out = "\n{$out}";
-			//}
-
 			// next element is (not pasted) paragraph
 			if (self::nextSiblingIs($node, 'p') && self::isNewNode($node->nextSibling)) {
 				$out = "{$out}\n";

@@ -193,11 +193,11 @@ public class RTETest extends BaseTest {
 				"<div>\n\n\n123\n</div>",
 				"<div>\n<ul>\n<li>foo</li></ul>\n</div>",
 				"<div>\n\n<ul>\n<li>foo</li></ul>\n</div>",
-				"<div>\n\n\n<ul>\n<li>foo</li></ul></div>",
+				"<div>\n\n\n<ul>\n<li>foo</li></ul>\n</div>",
 				"<div>one\n\ntwo\n\nthree</div>",
 				"<div>1\n\n2\n\n3\n\n4\n\n5\n\n6</div>",
 				"<div>one\n\ntwo\n\n----\n\nthree\n\nfour</div>",
-				"<div>\n\n<h2>foo</h2>\n\n{|\n|bar\n|}\n\n</div>",
+				"<div>\n\n<h2>foo</h2>\n\n{|\n|bar\n|}\n</div>",
 				"<div><div><span>foo</span></div>\n<!-- bar -->\n</div>",
 				"<div><div><span>foo</span></div>\n\n<!-- bar -->\n</div>",
 				"<p style=\"text-align:right\">123</p>\n\n\n\n456",
@@ -207,6 +207,11 @@ public class RTETest extends BaseTest {
 				"<p style=\"text-indent:4em\">foo</p>",
 				"<p style=\"text-align: center; height: 3em;\">&#160;</p>",
 				"<p style=\"text-align: center; height: 3em;\">123&#160;456</p>",
+				"foo<p>bar</p>",
+				"foo\n<p>bar</p>",
+				"foo\n\n<p>bar</p>",
+				"foo\n\n\n<p>bar</p>",
+				"<p>foo</p><p>bar</p>",
 				"foo\n\n<!--123  -->\n\nbar",
 				"abc\n\n\n<!--123\n456  \n789 \n-->",
 				"{|\n!  foo\n|-\n|  bar\n|}",
@@ -243,15 +248,6 @@ public class RTETest extends BaseTest {
 		};
 	}
 
-	// switch current mode
-	private void switchMode(String mode) throws Exception {
-		session().click("//a[contains(@class,'cke_button_source')]");
-		waitForElement("//body[contains(@class,'rte_" + mode + "')]");
-
-		// additional check for foo.qa wikis on devbox
-		assertEquals(mode, session().getEval("window.RTE.instance.mode"));
-	}
-
 	@DataProvider(parallel = false, name="wikiTextsProvider")
 	public Iterator<Object[]> wikiTextsProvider() throws Exception {
 		String[] wikiTexts = RTETest.createWikitexts();
@@ -275,17 +271,19 @@ public class RTETest extends BaseTest {
 		// open RTE editor in source mode
 		session().open("index.php?title=RTE_test_page&action=edit&useeditor=source");
 		session().waitForPageToLoad(this.getTimeout());
-		waitForElement("//a[contains(@class,'cke_button_source')]");
-		
+
+		// wait for RTE to be fully loaded
+		session().waitForCondition("window.CKEDITOR && window.CKEDITOR.status == 'basic_ready'", this.getTimeout());
+
 		for(String wikitext : wikiTexts) {
 			// set text in source mode
 			session().runScript("window.RTE.instance.setData(\"" + wikitext.replace("\n", "\\n").replace("\"", "\\\"") + "\");");
 
 			// go to wysiwyg mode
-			this.switchMode("wysiwyg");
+			this.switchWysiwygMode("wysiwyg");
 
 			// go back to source mode
-			this.switchMode("source");
+			this.switchWysiwygMode("source");
 
 			assertEquals(wikitext, session().getEval("window.RTE.instance.getData();").replace("\r", ""));
 		}
