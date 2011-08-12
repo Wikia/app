@@ -6,6 +6,7 @@
 			'plb-editor-edit',
 			'plb-editor-rte-caption',
 			'plb-editor-overlay-edit',
+			'plb-editor-read-only-selection-info',
 			'plb-parser-image-size-not-int',
 			'plb-parser-image-size-too-big',
 			'plb-editor-toolbar-caption',
