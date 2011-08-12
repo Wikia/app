@@ -818,11 +818,13 @@
 				var commandName = element.ckcommand;
 				// auto state by ck command
 				if (!this.stateProxiedCommands[commandName]) {
-					var command = this.editor.ck.getCommand(commandName),
-						self = this;
-					command.on('state',function(){
-						self.proxyCommandState(commandName);
-					});
+					var command = this.editor.ck.getCommand(commandName);
+
+					if (command) {
+						command.on('state', $.proxy(function() {
+							this.proxyCommandState(commandName);
+						}, this));
+					}
 					this.stateProxiedCommands[commandName] = [];
 				}
 				this.stateProxiedCommands[commandName].push(data.id);
