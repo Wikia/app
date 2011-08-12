@@ -1,6 +1,6 @@
 <section id="hub-top-contributors"<?php echo $hidetopeditors ?> class="module">
 	<h1>
-		<?= wfMsg('corporatepage-top-user-header', $data['title']) ?>
+		<?= wfMsg('hub-topusers-header', $data['title']) ?>
 	</h1>
 	<?php
 		if( $data['is_manager'] ) {
@@ -23,7 +23,7 @@
 			<div class="editor-details">
 				<a href="<?php echo empty($value['userpage']) ? '#':$value['userpage'] ?>" class="username h2"><?php echo $value['username'];	?></a>
 				<div class="edit-count">
-					<?= wfMsgExt('corporatepage-top-user-edits', 'parseinline', $wgLang->formatNum( $value['all_count'] ) ) ?>
+					<?= wfMsgExt('hub-topusers-editpoints-nonformatted', 'parseinline', $wgLang->formatNum( $value['all_count'] ) ) ?>
 				</div>
 			</div>
 		</li>
