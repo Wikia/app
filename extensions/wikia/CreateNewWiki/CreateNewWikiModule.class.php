@@ -136,7 +136,7 @@ class CreateNewWikiModule extends Module {
 			!empty($params['wikiDomain']) )
 		{
 			// log if called with old params
-			trigger_error("CreateWiki called with old params." . $params['wikiName'] . " " . $params['wikiDomain'], E_USER_WARNING);
+			trigger_error("CreateWiki called with old params." . $params['wikiName'] . " " . $params['wikiDomain'] . " " . wfGetIP(), E_USER_WARNING);
 		}
 
 		if ( empty($params) ||
@@ -186,7 +186,7 @@ class CreateNewWikiModule extends Module {
 					'<br>'.
 					$this->app->runFunction('wfMsg', 'cnw-error-general');
 				$this->statusHeader = $this->app->runFunction('wfMsg', 'cnw-error-general-heading');
-				trigger_error("Failed to create new wiki: $error_code " . $params['wikiaName'] . " " . $params['wikiaLanguage'], E_USER_WARNING);
+				trigger_error("Failed to create new wiki: $error_code " . $params['wikiaName'] . " " . $params['wikiaLanguage'] . " " . wfGetIP(), E_USER_WARNING);
 			} else {
 				$this->status = 'ok';
 				$this->siteName = $createWiki->getWikiInfo('sitename');
