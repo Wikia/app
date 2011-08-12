@@ -117,7 +117,7 @@ class UserProfilePageController extends WikiaController {
 		$canRename = $sessionUser->isAllowed('staff') || $sessionUser->isAllowed('renameprofilev3');
 		$canProtect = $sessionUser->isAllowed('staff') || $sessionUser->isAllowed('protectsite');
 		$canDelete = $sessionUser->isAllowed('staff');
-		$isUserPageOwner = (!$user->isAnon() && $user->getId() == $sessionUser->getId()) ? true : false;
+		$isUserPageOwner = ($user instanceof User && !$user->isAnon() && $user->getId() == $sessionUser->getId()) ? true : false;
 		
 		$actionButtonArray = array();
 		if( defined('NS_USER') && $namespace == NS_USER ) {
