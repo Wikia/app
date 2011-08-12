@@ -368,7 +368,7 @@ class WikiaApiLyricwiki extends ApiBase {
 			// Special case: if there was no lyrics tag found, attempt to parse the returned wikitext to look for a tracklisting.
 			if( (!$lyricsTagFound) && (0<preg_match("/\[\[.*\]\]/", getVal($result, 'lyrics'))) ){
 				// The result wasn't lyrics, but was some other page which appears to contain a tracklisting. Pass off processing to handle that.
-				rest_printListing($result['artist'].":".$result['song'], $result['lyrics'], $fmt);
+				$this->rest_printListing($result['artist'].":".$result['song'], $result['lyrics'], $fmt);
 			} else {
 				switch($fmt){
 				case "text":
@@ -461,9 +461,9 @@ class WikiaApiLyricwiki extends ApiBase {
 									print Xml::openElement( 'ul' );
 										foreach($val as $innerVal){
 											print Xml::openElement( 'li' );
-											
+
 											// TODO: IF keyName == "searchResults", MAKE THESE INTO LINKS TO WIKI PAGES INSTEAD OF JUST PLAINTEXT.
-											
+
 											print $innerVal;
 											print Xml::closeElement( 'li' );
 										}
@@ -515,7 +515,7 @@ class WikiaApiLyricwiki extends ApiBase {
 	 * @param wikiText - the wikitext for the article with the title 'pageTitle'
 	 * @param fmt - the output-format (defaults to HTML)
 	 */
-	function rest_printListing($pageTitle, $wikiText, $fmt=""){
+	public function rest_printListing($pageTitle, $wikiText, $fmt=""){
 		wfProfileIn( __METHOD__ );
 
 		// Instead of parseDiscographies() (which is tailored for individual artists) just use regexes to get all links on the page (in order).
@@ -551,6 +551,7 @@ class WikiaApiLyricwiki extends ApiBase {
 						'href' => $this->root.$this->linkEncode( $pageTitle )
 					)
 				);
+				print Xml::closeElement( 'h3' );
 				print utf8_decode( htmlspecialchars( $pageTitle, ENT_QUOTES, "UTF-8" ) );
 				print Xml::closeElement( 'a' );
 				print Xml::openElement( 'ul' );
@@ -564,6 +565,7 @@ class WikiaApiLyricwiki extends ApiBase {
 						print utf8_decode( htmlspecialchars( $destPageTitle, ENT_QUOTES, "UTF-8" ) );
 						print Xml::closeElement( 'a' );
 						print Xml::closeElement( 'li' );
+						print "\n";
 					}
 				print Xml::closeElement( 'ul' );
 				break;
@@ -756,7 +758,7 @@ class WikiaApiLyricwiki extends ApiBase {
 	////
 	// prints out any result in JSON format.
 	////
-	function writeRealJSON(&$result) {
+	function writeRealJSON($result) {
 		header('Content-type: text/javascript; charset=UTF-8');
 
 		// TODO: Use this once we are on PHP 5.3 or greater.
