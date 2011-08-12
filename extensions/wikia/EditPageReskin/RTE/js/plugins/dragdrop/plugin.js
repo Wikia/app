@@ -15,8 +15,6 @@ CKEDITOR.plugins.add('rte-dragdrop',
 
 			RTE.log('dropped element:');
 			RTE.log(droppedElement);
-			
-			RTE.instance.fire('droppedElements',droppedElement);
 
 			RTE.instance.fire('droppedElements',droppedElement);
 
@@ -45,12 +43,12 @@ CKEDITOR.plugins.add('rte-dragdrop',
 	},
 
 	onDrag: function(ev) {
-		
-		//hack for ie problem with scroll (for ie scroll bar is element ?) 
+
+		//hack for ie problem with scroll (for ie scroll bar is element ?)
 		if(typeof(ev.target.tagName) == 'undefined') {
 			return true;
 		}
-		
+
 		// create undo point (RT #36064)
 		RTE.instance.fire('saveSnapshot');
 		RTE.log('drag&drop: undo point');
@@ -127,7 +125,10 @@ CKEDITOR.plugins.add('rte-dragdrop',
 					target.removeAttr('data-rte-dragged');
 
 					// remove selection box
-					ev.preventDefault();
+					// apply only for IE, causes problems with selections in Fx and Chrome (BugId:1035)
+					if (CKEDITOR.env.ie) {
+						ev.preventDefault();
+					}
 				}).
 
 				// prevent resize box - RT #33853
