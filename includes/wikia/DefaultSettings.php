@@ -458,7 +458,7 @@ $wgSkipOldSkins = array(
  * release number is used for building links
  */
 $HeadURL = explode('/', '$HeadURL$');
-$wgReleaseNumber = ($HeadURL[4] === "trunk" ) ? "trunk" : $HeadURL[5];
+$wgReleaseNumber = (!isset($HeadURL[4]) || $HeadURL[4] === "trunk" ) ? "trunk" : $HeadURL[5];
 
 /**
  * @name $wgBiggestCategoriesBlacklist
