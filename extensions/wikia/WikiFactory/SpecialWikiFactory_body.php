@@ -84,11 +84,15 @@ class WikiFactoryPage extends SpecialPage {
 			$oAWCMetrics = new WikiMetrics();
 			$oAWCMetrics->show( $subpage );
 		}
-		elseif ( $subpage === "short.stats" ) {
-			$wgOut->addHTML( $this->shortStats() );
+		elseif ( strpos( $subpage, "short.stats" ) === 0 ) {
+			$subpageOptions = explode( '/', $subpage );
+			$lang = isset( $subpageOptions[1] ) ? $subpageOptions[1] : null;
+			$wgOut->addHTML( $this->shortStats( $lang ) );
 		}
-		elseif ( $subpage === "long.stats" ) {
-			$wgOut->addHTML( $this->longStats() );
+		elseif ( strpos( $subpage, "long.stats" ) === 0 ) {
+			$subpageOptions = explode( '/', $subpage );
+			$lang = isset( $subpageOptions[1] ) ? $subpageOptions[1] : null;
+			$wgOut->addHTML( $this->longStats( $lang ) );
 		}
 		elseif ( strtolower($subpage) === "add.variable" ) {
 			$varOverrides = array();
@@ -756,20 +760,26 @@ class WikiFactoryPage extends SpecialPage {
 		}
 	}
 
-	private function shortStats() {
-		return $this->doStats(90);
+	private function shortStats( $lang = null ) {
+		return $this->doStats( 90, $lang );
 	}
-	private function longStats() {
-		return $this->doStats();
+	private function longStats( $lang = null ) {
+		return $this->doStats( null, $lang );
 	}
 
-	private function doStats($days=null) {
+	private function doStats( $days = null, $lang = null ) {
+		global $wgOut;
 
 		$where = null;
 		if( !empty($days) ) {
 			$ymd = gmdate('Y-m-d', strtotime("{$days} days ago"));
 			$where = array("city_created > '{$ymd}'");
 		}
+
+		if ( !empty( $lang ) ) {
+			$where['city_lang'] = $lang;
+		}
+
 		$dbr = WikiFactory::db( DB_SLAVE );
 		$res = $dbr->select(
 			array( "city_list" ),
@@ -804,6 +814,8 @@ class WikiFactoryPage extends SpecialPage {
 			}
 		}
 		$dbr->freeResult( $res );
+
+		$wgOut->setPageTitle( strtoupper( $lang ) . ' Wikis created daily' );
 
 		$Tmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$Tmpl->set( "stats", $stats );
