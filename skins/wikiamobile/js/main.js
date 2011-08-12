@@ -8,18 +8,25 @@ var WikiaMobile = {
 	},
 	
 	wrapArticles: function() {
-		// $( '#WikiaMainContent > h2' ).each( function() {
-			// var element = $(this).next(),
-			// collection = new Array();
-// 			
-			// while( !( $( element ).is( 'h2' ) ) || $( element ) != 'undefined'  ) {
-// 				
-				// collection.push(element);
-				// velement = $(element).next();
-			// }
-// 			
-			// alert(collection);
-		// });
+		var content = $( '#WikiaMainContent' ).contents(),
+		mainContent = '',
+		firstH2 = true;
+		for( var i = 0; i < content.length; i++ ) {
+			var element = content[i];
+			if ( element.nodeName === 'H2' ) {
+				if( firstH2 ) {
+					mainContent += element.outerHTML + '<section class=\"articleSection\">';
+				} else {
+					mainContent += '</section>' + element.outerHTML + '<section class=\"articleSection\">';
+				}
+				firstH2 = false;
+			} else {
+				mainContent += (!element.outerHTML)?element.textContent:element.outerHTML;
+			}
+		};
+		mainContent += '</section>';
+		document.getElementById('WikiaMainContent').innerHTML = mainContent;
+
 	},
 
 	init: function() {
@@ -40,10 +47,20 @@ var WikiaMobile = {
 		});
 		
 		$( '#toctitle' ).append( '<span class=\"arrow\"></span>' );
+		$( '#WikiaMainContent > h2' ).append( '<span class=\"arrow\"></span>' );
 		
 		$( '#toctitle' ).bind( 'tap, click', function() {
 			$( 'table#toc ul' ).toggleClass( 'visible' );
 			$( '#toctitle' ).toggleClass( 'open' );
+		});
+		
+		$( '#WikiaMainContent > h2' ).bind( "tap, click", function() {
+			$(this).toggleClass('open').next().toggleClass('open');
+			
+		});
+		
+		$( '#showAll' ).bind( "tap, click", function() {
+			$( '.articleSection' ).toggleClass('open');
 		});
 	}
 }
