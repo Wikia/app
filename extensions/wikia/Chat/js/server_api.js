@@ -88,7 +88,7 @@ function api_getDefaultRoomId(cityId, defaultRoomName, defaultRoomTopic, extraDa
 	var roomName = "";
 	var roomTopic = "";
 	
-	users = typeof(users) == 'undefined' ? []:users.split(',');	 
+	users = typeof(users) == 'undefined' ? []:users.split(',');
 	
 	var keyForListOfRooms = config.getKey_listOfRooms(cityId, type, users);
 	

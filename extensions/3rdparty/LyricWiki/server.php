@@ -2,9 +2,10 @@
 ////
 // Author: Sean Colombo
 // Date: 20060715
-// Last modified: 20090103 (actually pretty frequently, and this generally doesn't get updated... see SVN for reliable date)
+// Last modified: 20110810 (actually pretty frequently, and this generally doesn't get updated... see SVN for reliable date).
 //
-// The LyricWiki SOAP web service implementation.
+// The LyricWiki SOAP web service implementation (also has the functions which power the internals
+// of the REST API which are wrapped by code in /extensions/wikia/WikiaApi/WikiaApiLyricwiki.php
 //
 // TODO: For the Kompoz lyrics, make it add special Kompoz data - update: 20080716... what ended up happening with Kompoz?  They still around & using LyricWiki?.
 // TODO: When a user adds a song, make sure it is automatically merged into the artist page (User:Janitor makes this not too big of a deal since he finds orphans and adds them to the artist's Other Songs section).
@@ -13,6 +14,14 @@
 // - When implementing a new method, make sure to check the global $SHUT_DOWN_API.
 // - Before writing anything to the database, remember to check wfReadOnly().
 // - See Special_Soapfailures.php for SQL to create the tables needed for logging inside of here.
+//
+// GENERAL WISHES FOR IMPROVEMENT IN NEXT API:
+// - Better versioning.  This may be best to do using the Accept header (look into that again). There also needs to be a graceful way to keep the code separate for the different versions and handle deprecation, etc.
+// - API Keys so that we can contact developers using old versions to ask them to update & so we can contact devs if they're accidentally doing too many requests, etc.
+// - Some standard way of enabling & displaying debug output for every function and return-format (would be optimal to keep this standard with MediaWiki API and other Wikia APIs (eg: Nirvana)).
+// - Indicate failures with extra fields, (or in REST: with status-codes), rather than hardcoded stuff like "Not Found" for the lyrics.
+// - A good unit-test suite from the start so that we can add edge-cases as we find them so that we never have the same bug-report more than once (we do a good job of no regressions right now... but mostly because we're avoiding sweeping changes... the API would be much more agile if it could make sweeping changes safely).
+// - TODO: Tracklisting format which isn't tied to a master artist or album.  This is needed for parsing list pages, etc. It will require a different structure for song-names since they will have the artist in them.  Should name it differently to avoid confusion (eg: "song" is current, this would be "pageTitle" or "fullTitle" or something - just keep in mind to avoid confusion related to namespaces when naming this return value... eg: 'fullPageTitle' would be wrong since "Gracenote:" wouldn't go in there).
 ////
 
 include_once 'extras.php'; // for lw_simpleQuery to start
@@ -203,8 +212,8 @@ if(!$funcsOnly){
 			'song' => array('name' => 'song', 'type' => 'xsd:string'),
 			'nominatedBy' => array('name' => 'nominatedBy', 'type' => 'xsd:string'),
 			'reason' => array('name' => 'reason', 'type' => 'xsd:string'),
-# TODO: Add the image into the results for getSotd
-#			'image' => array('name' => 'image', 'type' => 'xsd:string'),
+# TODO: Add the image into the results for getSotd - use ImageServing extension
+#			'imgUrl' => array('name' => 'imgUrl', 'type' => 'xsd:string'),
 			'lyrics' => array('name' => 'lyrics', 'type' => 'xsd:string')
 		)
 	);
@@ -218,7 +227,7 @@ if(!$funcsOnly){
 		array(array('ref'=>'SOAP-ENC:arrayType','wsdl:arrayType'=>'AlbumData[]')),
 		'tns:AlbumData'
 	);
-	$server->wsdl->addComplexType(
+	$server->wsdl->addComplexType( // TODO: Make this data structure be the same as what is returned by getAlbum
 		'AlbumData',
 		'complexType',
 		'struct',
@@ -228,10 +237,12 @@ if(!$funcsOnly){
 			'album' => array('name' => 'album', 'type' => 'xsd:string'),
 			'year' => array('name' => 'year', 'type' => 'xsd:int'),
 			'amazonLink' => array('name' => 'amazonLink', 'type' => 'xsd:string'),
+			'imgUrl' => array('name' => 'imgUrl', 'type' => 'xsd:string'),
+			'url' => array('name' => 'url', 'type' => 'xsd:string'),
 			'songs' => array('name' => 'songs', 'type' => 'tns:ArrayOfstring')
 		)
 	);
-	
+
 	$server->wsdl->addComplexType(
 		'TopSongsArray',
 		'complexType',
@@ -345,12 +356,18 @@ if(!$funcsOnly){
 
 	$server->register('getAlbum',
 		array('artist' => 'xsd:string', 'album' => 'xsd:string', 'year' => 'xsd:int'),
-		array('artist' => 'xsd:string', 'album' => 'xsd:string', 'year' => 'xsd:int', 'amazonLink' => 'xsd:string', 'songs' => 'tns:ArrayOfstring'),
+		array(	'artist' => 'xsd:string', // TODO: Should this return AlbumData or not? Right now it seems it shouldn't since it has 'artist' as a sibling to the 'album', but that seems sloppy to have them be able to get out of sync. Is there a good way to keep them in-sync?
+				'album' => 'xsd:string',
+				'year' => 'xsd:int',
+				'amazonLink' => 'xsd:string',
+				'imgUrl' => 'xsd:string',
+				'url' => 'xsd:string',
+				'songs' => 'tns:ArrayOfstring'),
 		$ns,
 		"$action#getAlbum",
 		'rpc',
 		'encoded',
-		'Gets the track listing and amazon link for an album'
+		'Gets the track listing, album cover, and amazon link for an album'
 	);
 
 	$server->register('getHometown',
@@ -683,14 +700,19 @@ function getSOTD(){
  * @params doHyphens is a bool which will be true initially and indicates that the function should try to remove hyphens.  Recursive calls might not do this.
  * @param ns the namespace to use when looking for songs. Will always try the main namespace first, but recursive calls might fall back to NS_GRACENOTE if matches aren't found in the main namespace.
  * @param isOuterRequest is a bool which represents if this is the actual request from the SOAP or REST APIs.  It will be set to false by all recursive calls.
+ * @param lyricsTagFound is a bool which is modified by reference and will indicate whether a lyrics tag (or equivalent formatting including an {{instrumental}} template) of any kind was found to indicate that the resulting wikitext is most likely lyrics.
+ * @param allowFullLyrics is a bool which is the default for whether the lyrics need to be truncated. For direct calls this should always be left to 'false' for legal reasons... however, there are currently hacks which want the full text of a page so they can post-process the wikitext.
  */
 function getSongResult($artist, $song){ return getSong($artist,$song); } // Alias. (think it was needed for Flash or one of the SOAP libraries)
-function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterRequest=true, $debug=false){
+function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterRequest=true, $debug=false, &$lyricsTagFound=false, $allowFullLyrics = false){
+	wfProfileIn( __METHOD__ );
+
 	wfDebug("LWSOAP: inside " . __METHOD__ . "\n");
 	if($isOuterRequest){
 		$id = requestStarted(__METHOD__, "$artist|$song");
 	}
 
+	$lyricsTagFound = false;
 	$debugSuffix = "_debug";
 	$artist = rawurldecode($artist);
 	$song = rawurldecode($song);
@@ -912,13 +934,20 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 					if(0<preg_match("/\{\{instrumental\}\}/si", $content, $matches)){
 						$content = $instrumental;
 					}
+
+					$lyricsTagFound = true;
 				} else if(0<preg_match("/(\n [^\n]*)+/si", $content, $matches)){
 					$content = $matches[0]; // Grabs lyrics if they use the space-at-the-beginning-of-the-line format.
 					$content = str_replace("\n ", "\n", $content);
+					$lyricsTagFound = true;
 				} else if(0<preg_match("/\{\{instrumental\}\}/si", $content, $matches)){
 					$content = $instrumental;
+					$lyricsTagFound = true;
 				} else if(strlen(trim($content)) > 0){
+					$lyricsTagFound = false;
 					// TODO: Log the page which didn't parse here for purposes of fixing poorly formatted pages.
+
+					// NOTE: at the moment, getAlbum() depends on this result still being wikitext and parses it. This dependency will be removed when the code is refactored so that the fuzzy title-matching is not in THIS function.
 				}
 				$content = trim($content);
 				$url = $urlRoot.$nsString.str_replace("%3A", ":", urlencode($finalName)); // %3A as ":" is for readability.
@@ -993,8 +1022,6 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 					lw_soapStats_logHit($resultFound);
 				}
 
-				$allowFullLyrics = false;
-
 				// SWC 20101209 - Now we allow our own apps to get full lyrics, but the request has to be cryptographically signed so that others can't do the same thing.
 				// NOTE: The value of the fullApiAuth param for the request must be the md5 hash of the concatenation of wgFullLyricWikiApiToken, the artist, and the song.
 				$fullApiAuth = $wgRequest->getVal("fullApiAuth");
@@ -1068,6 +1095,8 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 		$retVal['isOnTakedownList'] = ($retVal['isOnTakedownList'] ? "1" : "0"); // turn it into a string
 		requestFinished($id);
 	}
+	
+	wfProfileOut( __METHOD__ );
 	return $retVal;
 } // end getSong()
 
@@ -1158,7 +1187,12 @@ function getArtist($artist){
 
 ////
 // Given the wikitext from an artist page, parse out the discographies and return them
-// as an array of albums.
+// as an array of albums where each value is an associative array of album-data.
+// eg:
+// $albums = array(
+//				array('album' => 'Dark Side Of The Moon', 'year' => 1973),
+//				array('album' => 'Test', 'year' => 2010) // actual array will have more keys than just {album,year}
+//			);
 //
 // This has been extracted from the getArtist function so that it can be tested on its own
 // by runTests.php
@@ -1365,34 +1399,74 @@ function lw_getTracksFromWikiText($artist, $albumNames, $listing){
  * Given an artist, album-name, and year, attempts to return a matching album data (including track-listing).
  *
  * @param artist
- * @param albumName
- * @param year
- * @return an array whose keys are 'artist', 'album' (the album name), 'year', 'amazonLink', and 'songs' which is
+ * @param album - album name (not including the year)
+ * @param year - year the album was published
+ * @return an array whose keys are 'artist', 'album' (the album name), 'year', 'amazonLink', 'imgUrl', and 'songs' which is
  * itself an array of the page-titles (as strings) of all of the songs on the album (in the order that they appear
- * on the album).
+ * on the album). The image returned will be the album cover or other appropriate image (such as the image of the artist) if
+ * a suitable match can be found.  If no suitable match can be found, an empty string will be returned.
+ * 
+ * TODO: Right now there are no guarantees about image dimensions. Should we make this method promise to only return square images
+ * and use ImageServing/ImageService to do that even for the Artist images (which are the fallback)?
  */
-function getAlbum($artist, $albumName, $year){
+function getAlbum($artist, $album, $year){
+	wfProfileIn( __METHOD__ );
+	global $amazonRoot;
 	$id = requestStarted(__METHOD__, "$artist");
-	$link = "http://www.amazon.com/exec/obidos/redirect?link_code=ur2&tag=motiveforcell-20&camp=1789&creative=9325&path=http%3A%2F%2Fwww.amazon.com%2Fgp%2Fproduct%2FB0009X777W%2Fsr%3D8-1%2Fqid%3D1147400297%2Fref%3Dpd_bbs_1%3F%255Fencoding%3DUTF8";
-	$songs = array('Run Away', 'Right Here', 'Paper Jesus', 'Schizophrenic Conversations',
-					'Falling', 'Cross To Bear', 'Devil', 'Please', 'Everything Changes',
-					'Take This', 'King Of All Excuses', 'Reply');
 
-	// TODO: ADD ALBUM-ART IMG INTO RESULT ONCE THERE IS A SERVICE TO GET IT.
-	// TODO: ADD ALBUM-ART IMG INTO RESULT ONCE THERE IS A SERVICE TO GET IT.
+	// Set up the default return value
+	$link = $amazonRoot . urlencode("$artist $album");
+	$retVal = array('artist' => 'Staind',
+					'album' => $album,
+					'year' => $year,
+					'amazonLink' => $link,
+					'imgUrl' => '', // TODO: Should we use the default album cover here or not?
+					'url' => '', // TODO: Link to the LyricWiki page
+					'songs' => array());
 
-	$retVal = array('artist' => 'Staind', 'album' => 'Chapter V', 'year' => 2005, 'amazonLink' => $link, 'songs' => $songs);
+	// TODO: ADD ALBUM-ART IMG INTO RESULT ONCE THERE IS A SERVICE TO GET IT (use the ImageService... for albums we won't even need the LyricWiki hooks for fallback to artist to start with since many, many album pages have images).
+	// TODO: ADD ALBUM-ART IMG INTO RESULT ONCE THERE IS A SERVICE TO GET IT (use the ImageService... for albums we won't even need the LyricWiki hooks for fallback to artist to start with since many, many album pages have images).
 
 	GLOBAL $SHUT_DOWN_API;
 	if(!$SHUT_DOWN_API){
-	
-	
-	
-		// TODO: IMPLEMENT
-		// TODO: IMPLEMENT
-	}
+		// TODO: For now, we use the horrible hack of calling getSong(), then parsing the result... once the title-finding code is extracted better (that's already been done on the Vostro computer, we just need to merge that change back in and TEST the damn thing... NEEEEEEED UNIT TESTSSS!!!1!one!! FIXME!)
+		$doHyphens=true; $ns=NS_MAIN; $isOuterRequest=true; $debug=false; $lyricsTagFound=false; // defaults
+		$GIMME_FULL_WIKITEXT = true; // don't allow the default lyrics-truncation to happen... we need the full article
+		$songResult = getSong($artist, "$album ($year)", $doHyphens, $ns, $isOuterRequest, $debug, $lyricsTagFound, $GIMME_FULL_WIKITEXT); // TODO: SWITCH TO LINE BELOW... JUST TRYING TO ENABLE DEBUG.
+
+		$retVal['artist'] = $songResult['artist'];
+
+		// If the title was fixed (due to capitalization, redirects, etc.), use the final version
+		$matches = array();
+		$finalAlbum = $songResult['song'];
+		if(0 < preg_match("/^(.*) \(([0-9]{4})\)$/i", $finalAlbum, $matches)){
+			$album = $matches[1];
+			$year = $matches[2];
+			$retVal['album'] = $album;
+			$retVal['year'] = $year;
+			$retVal['amazonLink'] = $amazonRoot . urlencode("$artist $album");
+			$finalName = $retVal['artist'].":".$retVal['album']." (".$retVal['year'].")";
+		} else {
+			$finalName = $songResult['artist'].":".$songResult['song'];
+		}
+		$finalName = str_replace(" ", "_", $finalName);
+
+		// TODO: Link to the LyricWiki page
+		$ns = $songResult['page_namespace'];
+		$GRACENOTE_NS_STRING = "Gracenote"; // FIXME: Is there a more programmatic way to get this string?
+		$nsString = ($ns == NS_GRACENOTE ? $GRACENOTE_NS_STRING.":" : ""); // TODO: is there a better way to get this?
+		$urlRoot = "http://lyrics.wikia.com/"; // may differ from default URL, should contain a slash after it. - TODO: This is also defined in getSong()... refactor it to be global or make it a member function of a class.
+		$url = $urlRoot.$nsString.str_replace("%3A", ":", urlencode($finalName)); // %3A as ":" is for readability.
+		$retVal['url'] = $url;
+
+		$content = $songResult['lyrics']; // getSong is used as a temporary hack (until the refactoring) to get the full wikitext of the article.
+		if(0 < preg_match_all("/\[\[(.*?)(\||\]\])/is", $content, $matches)){
+			$retVal['songs'] = $matches[1];
+		}
+ 	}
 
 	requestFinished($id);
+	wfProfileOut( __METHOD__ );
 	return $retVal;
 } // end getAlbum(...)
 
