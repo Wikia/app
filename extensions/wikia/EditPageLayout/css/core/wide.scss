@@ -74,11 +74,17 @@
 				border-right-color: $color-epl-module-header;
 			}
 		}
+		.rail-auto-height {
+			display: none;
+		}
 	}
 
 	&.editpage-sourcewidemode-off {
 		#EditPageEditor {
 			padding-right: 7px;
+		}
+		.rail-auto-height {
+			display: block;
 		}
 	}
 
