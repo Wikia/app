@@ -34,7 +34,7 @@ class BodyModule extends Module {
 	var $displayAdminDashboard;
 	var $displayAdminDashboardChromedArticle;
 	var $isMainPage;
-	var $topAdExtraClasses;
+	var $topAdsExtraClasses;
 
 	var $subtitle;
 
@@ -522,14 +522,14 @@ class BodyModule extends Module {
 
 		if ($wgEnableTopButton) {
 			if (strtolower($wgTopButtonPosition) == 'right') {
-				$this->topAdExtraClasses = array('CORP_TOP_LEADERBOARD'=>'WikiaTopAdLeft', 'HOME_TOP_LEADERBOARD'=>'WikiaTopAdLeft', 'TOP_LEADERBOARD'=>'WikiaTopAdLeft', 'TOP_BUTTON'=>'WikiaTopAdRight');
+				$this->topAdsExtraClasses = ' WikiaTopButtonRight';
 			}
 			else {
-				$this->topAdExtraClasses = array('CORP_TOP_LEADERBOARD'=>'WikiaTopAdRight', 'HOME_TOP_LEADERBOARD'=>'WikiaTopAdRight', 'TOP_LEADERBOARD'=>'WikiaTopAdRight', 'TOP_BUTTON'=>'WikiaTopAdLeft');				
+				$this->topAdsExtraClasses = ' WikiaTopButtonLeft';
 			}
 		}
 		else {
-			$this->topAdExtraClasses = array('CORP_TOP_LEADERBOARD'=>'', 'HOME_TOP_LEADERBOARD'=>'', 'TOP_LEADERBOARD'=>'', 'TOP_BUTTON'=>'');
+			$this->topAdsExtraClasses = '';
 		}
 
 	}

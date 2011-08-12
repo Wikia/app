@@ -23,19 +23,29 @@
 	height: 90px;
 }
 .WikiaTopAds {
-	height: 100px;
-}
-#CORP_TOP_LEADERBOARD.WikiaTopAdLeft, #HOME_TOP_LEADERBOARD.WikiaTopAdLeft, #TOP_BUTTON.WikiaTopAdLeft, #TOP_LEADERBOARD.WikiaTopAdLeft {
-	left: 10px;
-	padding: 0;
-	position: absolute;
-	top: 10px;
-}
-#CORP_TOP_LEADERBOARD.WikiaTopAdRight, #HOME_TOP_LEADERBOARD.WikiaTopAdRight, #TOP_BUTTON.WikiaTopAdRight, #TOP_LEADERBOARD.WikiaTopAdRight {
-	padding: 0;
-	position: absolute;
-	right: 10px;
-	top: 10px;
+	position: relative;
+	&.WikiaTopButtonLeft {
+		#CORP_TOP_LEADERBOARD, #HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD {
+			float: right;
+			margin: 0 10px 0 10px;
+			padding: 0;
+		}
+		#TOP_BUTTON {
+			margin: 10px 0 0 10px;
+			padding: 0;
+		}
+	}
+	&.WikiaTopButtonRight {
+		#CORP_TOP_LEADERBOARD, #HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD {
+			float: left;
+			margin: 0 10px 0 10px;
+			padding: 0;
+		}
+		#TOP_BUTTON {
+			margin: 10px 10px 0 0;
+			padding: 0;
+		}
+	}
 }
 
 /** Skyscrapers **/
