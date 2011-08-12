@@ -1,10 +1,6 @@
-<h2>
-	Wikis created daily:
-</h2>
-<?php if($days) {
-	print "last {$days} days<br/>\n";
-}
-?>
+<?php if($days) { ?>
+	<p>last <?= $days ?> days</p>
+<?php } ?>
 <table class="wikitable">
 	<tr>
 		<th>date</th>
