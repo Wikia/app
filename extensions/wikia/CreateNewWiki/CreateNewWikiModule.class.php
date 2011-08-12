@@ -136,7 +136,8 @@ class CreateNewWikiModule extends Module {
 			!empty($params['wikiDomain']) )
 		{
 			// log if called with old params
-			trigger_error("CreateWiki called with old params." . $params['wikiName'] . " " . $params['wikiDomain'] . " " . wfGetIP(), E_USER_WARNING);
+			$wgUser = $this->app->getGlobal('wgUser');
+			trigger_error("CreateWiki called with old params." . $params['wikiName'] . " " . $params['wikiDomain'] . " " . wfGetIP() . " " . $wgUser->getName() . " " . $wgUser->getId(), E_USER_WARNING);
 		}
 
 		if ( empty($params) ||
