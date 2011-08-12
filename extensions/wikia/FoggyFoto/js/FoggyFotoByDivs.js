@@ -92,7 +92,11 @@ console.log("FINAL URL: " + imageUrl);
 
 
 	// Now that an image is set up, enable the click-handling.
-	$('#gameBoard div').click(function(){
+	var eventName = 'mousedown';
+	if ("ontouchstart" in document.documentElement){
+		eventName = 'touchstart'; // for touchscreen devices
+	}
+	$('#gameBoard div').bind(eventName, function(){
 		$(this).addClass('transparent'); // uses CSS3 transitions
 	});
 });
