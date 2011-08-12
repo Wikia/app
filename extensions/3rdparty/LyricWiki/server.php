@@ -731,12 +731,18 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 	}
 
 	// If this is explicitly a request for a Gracenote page, change the namespace and continue on.
-	$GRACENOTE_NS_STRING = "Gracenote"; // FIXME: Is there a more programmatic way to get this string?
+	$GRACENOTE_NS_STRING = "Gracenote"; // TODO: FIXME: Is there a more programmatic way to get this string?
+	$LW_NS_STRING = "LyricWiki"; // TODO: FIXME: There MUST be a more programattic way to get this :P
 	if($artist == $GRACENOTE_NS_STRING){
 		$artist = $song; // the name will automatically get split up if we stuff the whole thing into the artist variable.
 		$song = "";
 		$ns = NS_GRACENOTE;
 		print (!$debug?"":"Gracenote page was explicitly requested. Now looking for \"$artist\" in the Gracenote namespace.");
+	} else if($artist == $LW_NS_STRING){
+		$artist = $song;
+		$song = "";
+		$ns = NS_PROJECT;
+		print (!$debug?"":"LyricWiki page was explicitly requested. Now looking for \"$artist\" in the LyricWiki namespace.");
 	}
 
 	$origArtist = $artist; // for logging the failed requests, record the original name before we start messing with it
@@ -754,6 +760,7 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 	$defaultLyrics = "Not found";
 	$defaultUrl = "http://lyrics.wikia.com";
 	$nsString = ($ns == NS_GRACENOTE ? $GRACENOTE_NS_STRING.":" : "");
+	$nsString = ($ns == NS_PROJECT ? $LW_NS_STRING.":" : "");
 	$urlRoot = "http://lyrics.wikia.com/"; // may differ from default URL, should contain a slash after it.
 	$instrumental = "Instrumental";
 	$DENIED_NOTICE = "Unfortunately, due to licensing restrictions from some of the major music publishers we can no longer return lyrics through the LyricWiki API (where this application gets some or all of its lyrics).\n";
@@ -786,14 +793,17 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 		global $wgRequest;
 		$lowerSong = strtolower($song);
 		$lowerArtist = strtolower($artist);
-		if((($artist=="") || ($song=="") || (0 < preg_match("/^\?+$/", $artist))) && (strpos("$artist$song", ":") === false)){
+		if((($artist=="") || ($song=="") || (0 < preg_match("/^\?+$/", $artist))) && (strpos("$artist$song", ":") === false) && ($ns != NS_PROJECT)){
 			// NOTE: For now we leave the 'defaultLyrics' message for players that handle this explicitly as not being a match.
+			print (!$debug?"":"Title doesn't appear to be a valid song title. Artist: \"$artist\" Song: \"$song\"\n");
 		} else if(($song == "unknown") || ((($lowerArtist == "unknown") || ($lowerArtist == "artist")) && ($lowerSong == "unknown")) || (0<preg_match("/^Track [0-9]+$/i", $song)) || (strtolower($song) == "favicon.png")){
 			// If the song is "unkown" (all lowercase) this is usually just a default failure.  If they are looking for a song named "Unknown", and they use the caps, it will get through (unless the band name also happens to be "Unknown")
+			print (!$debug?"":"Found title which is a commonly-passed-in error title (usually bad metadata on song files).\n");
 
 			// NOTE: For now we leave the 'defaultLyrics' message for players that handle this explicitly as not being a match.
 		} else if(in_array($lowerArtist, $nonArtists)){
 			// These are "artists" which are very commonly accuring non-artists.  IE: Baby Einstein is a collection of classical music, Apple Inc. is just apple's (video?) podcasts
+			print (!$debug?"":"Found a 'non-artist' which is often a radio station, podcast, etc..\n");
 			// NOTE: For now we leave the 'defaultLyrics' message for players that handle this explicitly as not being a match.
 		} else {
 			// TODO: SHOULDN'T MOST OF THE REWRITES BELOW BE IN lw_getTitle() INSTEAD OF HERE??
@@ -1454,7 +1464,9 @@ function getAlbum($artist, $album, $year){
 		// TODO: Link to the LyricWiki page
 		$ns = $songResult['page_namespace'];
 		$GRACENOTE_NS_STRING = "Gracenote"; // FIXME: Is there a more programmatic way to get this string?
+		$LW_NS_STRING = "LyricWiki";
 		$nsString = ($ns == NS_GRACENOTE ? $GRACENOTE_NS_STRING.":" : ""); // TODO: is there a better way to get this?
+		$nsString = ($ns == NS_PROJECT ? $LW_NS_STRING.":" : ""); // TODO: is there a better way to get this?
 		$urlRoot = "http://lyrics.wikia.com/"; // may differ from default URL, should contain a slash after it. - TODO: This is also defined in getSong()... refactor it to be global or make it a member function of a class.
 		$url = $urlRoot.$nsString.str_replace("%3A", ":", urlencode($finalName)); // %3A as ":" is for readability.
 		$retVal['url'] = $url;
