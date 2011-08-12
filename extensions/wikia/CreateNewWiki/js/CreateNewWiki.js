@@ -406,10 +406,10 @@ var WikiBuilder = {
 				actionName: 'CreateWiki',
 				outputType: 'data',
 				data: {
-					wikiName: WikiBuilder.wikiName.val(),
-					wikiDomain: WikiBuilder.wikiDomain.val(),
-					wikiLanguage: WikiBuilder.wikiLanguage.find('option:selected').val(),
-					wikiCategory: WikiBuilder.wikiCategory.find('option:selected').val()
+					wikiaName: WikiBuilder.wikiName.val(),
+					wikiaDomain: WikiBuilder.wikiDomain.val(),
+					wikiaLanguage: WikiBuilder.wikiLanguage.find('option:selected').val(),
+					wikiaCategory: WikiBuilder.wikiCategory.find('option:selected').val()
 				}
 			},
 			function(res) {
