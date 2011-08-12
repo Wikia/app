@@ -18,7 +18,7 @@ class UserProfileRailModule extends Module {
 	private $maxTopWikis = 5;
 
 	public function executeTopWikis() {
-		global $wgCityId;
+		global $wgCityId, $wgLanguageCode;
 		wfProfileIn( __METHOD__ );
 
 		$userProfilePage = UserProfilePage::getInstance();
