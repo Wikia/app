@@ -200,7 +200,7 @@ class TaskManagerExecutor {
 			/**
 			 * then get first from top sorted by priority and timestamp
 			 */
-			$oTask = $dbr->selectRow( "wikia_tasks", "*", $aCondition, __METHOD__, array( "ORDER BY" => "task_id") );
+			$oTask = $dbr->selectRow( "wikia_tasks", "*", $aCondition, __METHOD__, array( "ORDER BY" => "task_priority desc, task_id") );
 		}
 		catch( DBConnectionError $e ) {
 			$this->log( "Connection error: " . $e->getMessage() );
