@@ -292,6 +292,9 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 					if ( !lastElement )
 						lastElement = clone;
 				}
+				else {
+					this.fire('readOnlySelection');
+				}
 			}
 
 			if ( lastElement )

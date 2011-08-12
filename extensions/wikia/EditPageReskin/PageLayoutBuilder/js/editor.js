@@ -271,7 +271,12 @@
 			this.instance.on('droppedElements', $.proxy(this.onRTEDroppedElements,this));
 			this.instance.on('selectionChange', $.proxy(this.onRTESelectionChange,this));
 			this.instance.on('droppedElements', $.proxy(this.onRTEDroppedElements,this));
+			this.instance.on('readOnlySelection', $.proxy(this.onRTEReadOnlySelection,this));
 			this.fire('ready',this);
+		},
+
+		onRTEReadOnlySelection: function() {
+			$.showModal( '', PageLayoutBuilder.Lang["plb-editor-read-only-selection-info"], { width: 500, showCloseButton: true } );
 		},
 
 		onRTEWysiwygModeReady: function () {

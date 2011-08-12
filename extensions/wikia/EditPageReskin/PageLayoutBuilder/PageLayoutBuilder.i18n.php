@@ -122,6 +122,7 @@ $messages['en'] = array (
 	'plb-editor-overlay-edit' => 'edit',
 	'plb-editor-enter-caption' => 'Enter form question.',
 	'plb-editor-left-sidebar-tutorial' => '<b>Welcome to the Layout Builder!</b><br /><br />To start adding items, click the <em>Add item</em> button above and choose the desired type.<br /><br />As you add items here, new questions are added to the creation process for the page.',
+	'plb-editor-read-only-selection-info' => 'Please ensure your cursor is not placed within an existing layout element',
 
 	'plb-widget-name-plb_input' => 'Input Box',
 	'plb-widget-name-plb_mlinput' => 'Paragraph',
