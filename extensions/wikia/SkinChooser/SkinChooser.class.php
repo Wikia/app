@@ -3,7 +3,7 @@
 class SkinChooser {
 
 	public static function onGetPreferences($user, &$defaultPreferences) {
-		global $wgEnableAnswers, $wgForceSkin, $wgAdminSkin, $wgDefaultSkin, $wgDefaultSkin, $wgSkinPreviewPage, $wgOasis2010111, $wgSkipSkins, $wgSkipOldSkins;
+		global $wgEnableAnswers, $wgForceSkin, $wgAdminSkin, $wgDefaultSkin, $wgDefaultSkin, $wgSkinPreviewPage, $wgSkipSkins, $wgSkipOldSkins;
 
 		// hide default MediaWiki skin fieldset
 		unset($defaultPreferences['skin']);		
