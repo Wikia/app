@@ -35,7 +35,7 @@ class RebuildLocalisationCacheTask extends BatchTask {
 		$out = wfShellExec(
 			'pdsh -g all_web -f5 \'SERVER_ID=4036 php '
 			. '/usr/wikia/source/wiki/maintenance/rebuildLocalisationCache.php '
-			. '--force --conf /usr/wikia/conf/current/wiki.factory/LocalSettings.php'
+			. '--force --conf /usr/wikia/conf/current/wiki.factory/LocalSettings.php\''
 		);
 		$this->log( $out );
 		$this->log( 'RebuildLocalisationCacheTask completed.' );
