@@ -82,7 +82,12 @@ AdDriver.isHighValue = function(slotname) {
 			return true;
 		}
 
-		if (AdConfig.geo) {
+		// FogBugz 9953: Liftium.geo may have country data when AdConfig.geo does not
+		// Read from Liftium.geo first
+		if (Liftium.geo) {
+			return AdConfig.isHighValueCountry(Liftium.geo.country);
+		}
+		else if (AdConfig.geo) {
 			return AdConfig.isHighValueCountry(AdConfig.geo.country);
 		}
 		else {
