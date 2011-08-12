@@ -38,6 +38,10 @@ define( "TASK_FINISHED_UNDO", 5 );     #--- task finished but undone later
  *
  */
 abstract class BatchTask {
+	
+	const PRIORITY_LOW = 1;
+	const PRIORITY_NORMAL = 10;
+	const PRIORITY_HIGH = 100;
 
 	public static $mStatuses = array(
 		TASK_WAITING           => "Waiting",
@@ -392,7 +396,7 @@ abstract class BatchTask {
 	 *
 	 * @return integer: id of added task or null
 	 */
-	public function createTask( $params, $status = TASK_WAITING ) {
+	public function createTask( $params, $status = TASK_WAITING, $priority = self::PRIORITY_LOW ) {
 		global $wgUser, $wgExternalSharedDB, $wgWikicitiesReadOnly;
 
 		wfProfileIn( __METHOD__ );
@@ -403,7 +407,7 @@ abstract class BatchTask {
 				array(
 				   "task_user_id" => $wgUser->getID(),
 				   "task_type" => $this->getType(),
-				   "task_priority" => 1,
+				   "task_priority" => intval($priority),
 				   "task_status" => $status,
 				   "task_added" => wfTimestampNow(),
 				   "task_started" => "",
