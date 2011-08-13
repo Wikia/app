@@ -35,6 +35,9 @@ $messages['en'] = array(
 	'admindashboard-control-group-rights-tooltip' => 'Group rights needs a tooltip.  Add me.',
 	'admindashboard-control-invite-label' => 'Invite',
 	'admindashboard-control-invite-tooltip' => 'Invite needs a tooltip.  Add me.',
+	'admindashboard-control-help-label' => 'Help',
+	'admindashboard-control-help-tooltip' => 'Find Help.',
+	'admindashboard-control-help-url' => 'http://www.community.wikia.com',
 // Content Controls
 	'admindashboard-controls-content-header' => 'Content',
 	'admindashboard-control-community-corner-label' => 'Community Corner',

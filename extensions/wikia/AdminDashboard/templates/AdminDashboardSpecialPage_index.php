@@ -79,6 +79,14 @@
 							<?= wfMsg("admindashboard-control-community-corner-label") ?>
 						</a>
 					</li>
+					<li class="control" data-tooltip="<?= wfMsg("admindashboard-control-help-tooltip") ?>">
+						<a href="<?= wfMsg('admindashboard-control-help-url') ?>" class="set" data-tracking="general/help">
+							<span class="representation">
+								<span class="icon help"></span>
+							</span>
+							<?= wfMsg("admindashboard-control-help-label") ?>
+						</a>
+					</li>
 					<!--
 					<li class="control" data-tooltip="<?= wfMsg("admindashboard-control-group-rights-tooltip") ?>">
 						<div class="representation">
