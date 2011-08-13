@@ -13,7 +13,7 @@ class ContactForm extends SpecialPage {
 
 	function  __construct() {
 		parent::__construct( "Contact" , '' /*restriction*/);
-		wfLoadExtensionMessages("ContactForm");
+		wfLoadExtensionMessages("ContactForm2");
 	}
 
 	function execute( $par ) {
@@ -22,7 +22,7 @@ class ContactForm extends SpecialPage {
 		global $wgUser;
 
 		//$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/SpecialContact/SpecialContact.css?{$wgStyleVersion}");
-		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/SpecialContact/SpecialContact.scss'));
+		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/SpecialContact2/SpecialContact.scss'));
 		$this->mName = null;
 		$this->mRealName = null;
 		$this->mWhichWiki = null;
