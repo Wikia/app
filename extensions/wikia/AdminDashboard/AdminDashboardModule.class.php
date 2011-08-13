@@ -36,7 +36,7 @@ class AdminDashboardModule extends Module {
 	 *	Copied and modified from SassUtil's getOasisSettings.  Load default oasis settings.
 	 */
 	private function getAlternateOasisSetting() {
-		global $wgOasisThemes, $wgUser, $wgAdminSkin, $wgRequest, $wgOasisThemeSettings, $wgContLang, $wgABTests;
+		global $wgOasisThemes, $wgUser, $wgAdminSkin, $wgRequest, $wgOasisThemeSettings, $wgContLang, $wgABTests, $wgRequest;
 		wfProfileIn(__METHOD__);
 
 		// Load the 5 deafult colors by theme here (eg: in case the wiki has an override but the user doesn't have overrides).
@@ -50,6 +50,16 @@ class AdminDashboardModule extends Module {
 		$themeSettings = new ThemeSettings();
 		$settings = $themeSettings->getSettings();
 		$oasisSettings["color-body"] = SassUtil::sanitizeColor($settings["color-body"]);
+		
+		$useTheme = $wgRequest->getVal('use_theme', 0);	// use_theme=1, oasis otherwise
+		if(!empty($useTheme)) {
+			$oasisSettings["use-theme"] = "true";
+			$oasisSettings["color-page"] = SassUtil::sanitizeColor($settings["color-page"]);
+			$oasisSettings["color-buttons"] = SassUtil::sanitizeColor($settings["color-buttons"]);
+			$oasisSettings["color-links"] = SassUtil::sanitizeColor($settings["color-links"]);
+			$oasisSettings["color-header"] = SassUtil::sanitizeColor($settings["color-header"]);
+		}
+		
 		$oasisSettings["background-image"] = wfReplaceImageServer($settings['background-image'], SassUtil::getCacheBuster());
 		$oasisSettings["background-align"] = $settings["background-align"];
 		$oasisSettings["background-tiled"] = $settings["background-tiled"];
