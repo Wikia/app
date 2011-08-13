@@ -1,3 +1,4 @@
+/** IMPLEMENTATION USING CANVAS **/
 
 if (typeof FoggyFoto === 'undefined') {
 	FoggyFoto = {};
@@ -323,7 +324,7 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 			if(self.debug){
 				console.log(msg);
 			}
-		}
+		};
 	};
 	
 	/**
