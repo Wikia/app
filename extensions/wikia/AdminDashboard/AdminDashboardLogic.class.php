@@ -39,6 +39,7 @@ class AdminDashboardLogic {
 				"Connect", 
 				"Contact",
 				"Contributions",
+				"CreateBlogPage",
 				"CreatePage",
 				"CreateNewWiki",
 				"CreateTopList",
