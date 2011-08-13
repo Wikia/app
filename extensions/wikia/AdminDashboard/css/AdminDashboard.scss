@@ -23,7 +23,52 @@ $admin-dashboard-header-height: 40px;
 $base-z: 5;
 
 /* colors */
+$color-admin-page: white;
+$color-admin-text: #464646;
+$color-admin-tab-inactive: #dfdfdf;
+$color-admin-tab-active: white;
+$color-admin-rail-header: #737373;
+$color-admin-rail-border: #e8e8e8;
+$color-admin-header-highlight: #fff;
+$color-admin-header-shadow: #ebebeb;
+$color-admin-header-text: #2070AD;
+$color-admin-header-text-alternate: #6AA8D1;
+$color-admin-header-box-shadow: #ddd;
+$color-admin-content-highlight: #fff;
+$color-admin-content-shadow: #f5f5f5;
+$color-admin-icon-highlight: #fff;
+$color-admin-icon-shadow: #f0f0f0;
+$color-admin-icon-border: #cfcfd0;
+$color-admin-icon-hover-highlight: #f5f5f5;
+$color-admin-icon-hover-shadow: #e4e4e4;
+$color-admin-icon-active-highlight: #e2e2e2;
+$color-admin-article-border: #eee;
+$color-admin-article-box-shadow: #f0f0f0;
 
+$use-theme: get_command_line_param("use-theme", false);
+@if $use-theme {
+	$color-admin-page: $color-page;
+	$color-admin-text: $color-text;
+	$color-admin-tab-inactive: $color-module-shadow;
+	$color-admin-tab-active: $color-module-highlight;
+	$color-admin-rail-header: $color-text;
+	$color-admin-rail-border: $color-page-border;
+	$color-admin-header-highlight: $color-module-highlight;
+	$color-admin-header-shadow: $color-module-shadow;
+	$color-admin-header-text: $color-links;
+	$color-admin-header-text-alternate: lighten($color-links, 20%);
+	$color-admin-header-box-shadow: darken($color-module-shadow, 6%);
+	$color-admin-content-highlight: $color-module-highlight;
+	$color-admin-content-shadow: $color-module-shadow;
+	$color-admin-icon-highlight: $color-module-highlight;
+	$color-admin-icon-shadow: $color-module-shadow;
+	$color-admin-icon-border: $color-page-border;
+	$color-admin-icon-hover-highlight: darken($color-module-highlight, 6%);
+	$color-admin-icon-hover-shadow: darken($color-module-shadow, 6%);
+	$color-admin-icon-active-highlight: darken($color-admin-icon-hover-highlight, 6%);
+	$color-admin-article-border: $color-page-border;
+	$color-admin-article-box-shadow: $color-admin-icon-shadow;
+}
 
 .AdminDashboardHeader {
 	background-color: #b4d0e6;
@@ -69,9 +114,9 @@ $base-z: 5;
 	.tab {
 		@include border-radius-ne(5px);
 		@include border-radius-nw(5px);
-		@include box-shadow(0, 0, 10px, #9db9cd, false, 0);
-		background: #dfdfdf;
-		color: #464646;
+		@include box-shadow(0, 0, 10px, #9db9cd, false, 0);	/* static color shading */
+		background: $color-admin-tab-inactive;
+		color: $color-admin-text;
 		display: block;
 		float: left;
 		font-size: 12px;
@@ -82,7 +127,7 @@ $base-z: 5;
 		position: relative;
 		text-decoration: none;
 		&.active {
-			background: white;
+			background: $color-admin-tab-active;
 			top: 0px;
 		}
 		&:hover {
@@ -96,7 +141,7 @@ $base-z: 5;
 	margin: 20px 15px 0 0;
 	width: 275px;
 	h1 {
-		color: #737373;
+		color: $color-admin-rail-header;
 		font-size: 16px;
 		margin-bottom: 5px;
 	}
@@ -115,15 +160,15 @@ $base-z: 5;
 		
 		.control-section {
 			header {
-				@include linear-gradient(#ebebeb, top, #fff, 40%, #ebebeb, 100%);
-				border-bottom: 1px solid #ebebeb;
-				border-top: 1px solid #ebebeb;
+				@include linear-gradient($color-admin-header-shadow, top, $color-admin-header-highlight, 40%, $color-admin-header-shadow, 100%);
+				border-bottom: 1px solid $color-admin-header-shadow;
+				border-top: 1px solid $color-admin-header-shadow;
 				font-size: 12px;
 				font-style: italic;
 				height: 25px;
 				padding-top: 5px;
 				h1 {
-					color: #2070AD;
+					color: $color-admin-header-text;
 					float: left;
 					font-size: 16px;
 					font-style: normal;
@@ -131,7 +176,7 @@ $base-z: 5;
 				}
 			}
 			.controls {
-				@include linear-gradient(#f5f5f5, top, #fff, 10%, #f5f5f5, 100%);
+				@include linear-gradient($color-admin-content-shadow, top, $color-admin-content-highlight, 10%, $color-admin-content-shadow, 100%);
 				font-size: 11px;
 				line-height: 13px;
 				padding: 0 15px;
@@ -150,8 +195,8 @@ $base-z: 5;
 					}
 					.representation {
 						@include border-radius(7px);
-						@include linear-gradient(#fafafa, top, #fff, 33%, #fafafa, 66%, #f0f0f0, 100%);
-						border: 1px solid #cfcfd0;
+						@include linear-gradient(darken($color-admin-icon-highlight, 2%), top, $color-admin-icon-highlight, 40%, $color-admin-icon-shadow, 100%);
+						border: 1px solid $color-admin-icon-border;
 						display: block;
 						height: 50px;
 						margin: 0px auto 5px;
@@ -209,13 +254,13 @@ $base-z: 5;
 					}
 					&:hover {
 						.representation {
-							@include linear-gradient(#e4e4e4, top, #f5f5f5, 33%, #ededed, 66%, #e4e4e4, 100%);
+							@include linear-gradient($color-admin-icon-hover-shadow, top, $color-admin-icon-hover-highlight, 40%, $color-admin-icon-hover-shadow, 100%);
 						}
 					}
 					&:active {
 						.representation {
-							background: #e2e2e2;
-							@include box-shadow(-5px, 5px, 5px, #cacaca, true, 0);
+							background: $color-admin-icon-active-highlight;
+							@include box-shadow(-5px, 5px, 5px, darken($color-admin-icon-active-highlight, 10%), true, 0);
 						}
 					}
 				}
@@ -237,14 +282,14 @@ $base-z: 5;
 }
 
 .AdminDashboardGeneralHeader {
-	@include box-shadow(0, 2px, 2px, #ddd);
-	@include linear-gradient(#ebebeb, top, #fff, 40%, #ebebeb, 100%);
-	border-bottom: 1px solid #ebebeb;
-	border-top: 1px solid #ebebeb;
+	@include box-shadow(0, 2px, 2px, $color-admin-header-box-shadow);
+	@include linear-gradient($color-admin-header-shadow, top, $color-admin-header-highlight, 40%, $color-admin-header-shadow, 100%);
+	border-bottom: 1px solid $color-admin-header-shadow;
+	border-top: 1px solid $color-admin-header-shadow;
 	height: 25px;
 	padding-top: 5px;
 	h1 {
-		color: #2070AD;
+		color: $color-admin-header-text;
 		float: left;
 		font-size: 16px;
 		font-style: normal;
@@ -260,10 +305,10 @@ $base-z: 5;
 
 // Oasis overwrites
 .WikiaArticle {
-	@include box-shadow(1px, 1px, 1px, #f0f0f0);
-	background-color: white;
-	border-bottom: 1px solid #eee;
-	border-right: 1px solid #eee;
+	@include box-shadow(1px, 1px, 1px, $color-admin-article-box-shadow);
+	background-color: $color-admin-page;
+	border-bottom: 1px solid $color-admin-article-border;
+	border-right: 1px solid $color-admin-article-border;
 	float: left;
 	padding: 20px 0 0 0;
 	position: relative;
@@ -281,9 +326,9 @@ $base-z: 5;
 }
 
 .WikiaPage {
-	color: #464646;
+	color: $color-admin-text;
 	.WikiaPageBackground {
-		background-color: white;
+		background-color: $color-admin-page;
 	}
 }
 
@@ -330,28 +375,28 @@ $base-z: 5;
 	/* make this reusable later */
 	/* ng -> not global */
 	.WikiaDataTable {
-		@include linear-gradient(#f5f5f5, top, #fff, 40%, #ebebeb, 100%);	/* ng */
-		border: 1px solid #e8e8e8; /* ng */
+		@include linear-gradient($color-admin-header-shadow, top, $color-admin-header-highlight, 40%, $color-admin-header-shadow, 100%);	/* ng */
+		border: 1px solid $color-admin-rail-border; /* ng */
 		th, td {
 			&:first-child {
-				color: #6AA8D1;	/* ng */
+				color: $color-admin-header-text-alternate;	/* ng */
 			}
 		}
 		thead {
 			th {
-				color: #2070AD;	/* ng */
+				color: $color-admin-header-text;	/* ng */
 			}
 		}
 		.totals {
 			td {
-				background: white; /* ng */
-				color: #2070AD;	/* ng */
+				background: $color-admin-page; /* ng */
+				color: $color-admin-header-text;	/* ng */
 				&:first-child {
 					.pointer {
-						background: #6AA8D1;	/* ng */
-						color: white;	/* ng */
+						background: $color-admin-header-text-alternate;	/* ng */
+						color: $color-admin-page;	/* ng */
 						&:before {
-							border-left: 10px solid #6AA8D1;	/* ng */
+							border-left: 10px solid $color-admin-header-text-alternate;	/* ng */
 						}
 					}
 				}
@@ -359,7 +404,7 @@ $base-z: 5;
 		}
 		tbody {
 			tr {
-				border-top: 1px solid #e8e8e8; /* ng */
+				border-top: 1px solid $color-admin-rail-border; /* ng */
 			}
 		}
 	}
