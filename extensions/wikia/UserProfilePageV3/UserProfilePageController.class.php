@@ -367,9 +367,6 @@ class UserProfilePageController extends WikiaController {
 			$user = F::build('User', array($userId), 'newFromId');
 		}
 		
-		$user->setOption('avatar_rev', date('U') );
-		$user->saveSettings();
-		
 		$isAllowed = ( $this->app->wg->User->isAllowed('staff') || intval($user->getId()) === intval($this->app->wg->User->getId()) );
 		
 		if( is_null($data) ) {
@@ -385,18 +382,20 @@ class UserProfilePageController extends WikiaController {
 			switch($data->source) {
 				case 'sample':
 					$user->setOption('avatar', $data->file );
-					$user->setOption('avatar_rev', date('U') );
-					$user->saveSettings();
 					break;
 				case 'facebook':
 				case 'uploaded':
-					$userData->avatar = $this->saveAvatarFromUrl($user, $data->file, $errorMsg);
+					$avatar = $this->saveAvatarFromUrl($user, $data->file, $errorMsg);
+					$user->setOption('avatar', $avatar );
 					break;
 				default:
 					$result = array('success' => false, 'error' => $errorMsg);
 					$errorMsg = $this->wf->msg('userprofilepage-interview-save-internal-error');
 					break;
 			}
+			
+			$user->setOption('avatar_rev', date('U') );
+			$user->saveSettings();
 		}
 
 		return true;
@@ -418,7 +417,7 @@ class UserProfilePageController extends WikiaController {
 		$this->app->wf->ProfileIn( __METHOD__ );
 		
 		$userId = $user->getId();
-		$localPath = $this->getLocalPath($user);
+
 		
 		$errorNo = $this->uploadByUrl(
 			$url, 
@@ -431,6 +430,8 @@ class UserProfilePageController extends WikiaController {
 			$errorMsg 
 		);
 		
+		$localPath = $this->getLocalPath($user);
+
 		if ( $errorNo != UPLOAD_ERR_OK ) {
 			$this->app->wf->ProfileOut( __METHOD__ );
 			return false;
