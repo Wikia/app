@@ -120,6 +120,7 @@ $messages['en'] = array(
 	'user-action-menu-delete' => 'Delete',
 	'user-action-menu-history' => 'History',
 	
+	// Logging messages are temporarily not used
 	'usermasthead-log' => 'User Masthead',
 	'usermasthead-log-message' => 'added profile information',
 	'usermasthead-log-alt' => 'Logs of user masthead edits',
