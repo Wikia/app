@@ -1,6 +1,6 @@
 <header class="AdminDashboardHeader" id="AdminDashboardHeader">
 	<h1>
-		<a href="<?= $adminDashboardUrlGeneral ?>" data-tracking="header/admindashboard">
+		<a href="<?= $adminDashboardUrl ?>" data-tracking="header/admindashboard">
 			<?= wfMsg("admindashboard-header") ?>
 		</a>
 	</h1>
