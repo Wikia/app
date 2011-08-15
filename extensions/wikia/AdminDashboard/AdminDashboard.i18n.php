@@ -55,4 +55,3 @@ $messages['en'] = array(
 // Chrome
 	'admindashboard-back-to-dashboard' => 'Back to Dashboard'
 );
-
