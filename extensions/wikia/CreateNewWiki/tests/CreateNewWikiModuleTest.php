@@ -25,10 +25,10 @@ class CreateNewWikiModuleTest extends PHPUnit_Framework_TestCase {
 		$siteName = 'asdfasdf';
 		$mainPageUrl = 'muppet.wikia.com/wiki/Main_page';
 
-		$requestParams = array("wikiName" => $wikiName,
-			"wikiDomain" => $wikiDomain,
-			"wikiLanguage" => $wikiLanguage,
-			"wikiCategory" => $wikiCategory);
+		$requestParams = array("wikiaName" => $wikiName,
+			"wikiaDomain" => $wikiDomain,
+			"wikiaLanguage" => $wikiLanguage,
+			"wikiaCategory" => $wikiCategory);
 
 		$wgRequest = $this->getMock('WebRequest');
 		$wgRequest->expects($this->once())
@@ -44,7 +44,7 @@ class CreateNewWikiModuleTest extends PHPUnit_Framework_TestCase {
 			->method('getGlobal')
 			->will($this->onConsecutiveCalls($wgRequest, $wgDevelDomains, $wgUser));
 
-		$createWiki = $this->getMock('CreateWiki', array(), array(), '', false);
+		$createWiki = $this->getMock('CreateWiki', array('create', 'getWikiInfo'), array(), '', false);
 		$createWiki->expects($this->once())
 			->method('create');
 		$createWiki->expects($this->exactly(2))
