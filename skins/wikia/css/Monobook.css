@@ -141,7 +141,7 @@ body.rtl #column-google {
 
 /* macbre: standard button CSS */
 .button {
-	background: #3366cc;    
+	background: #3366cc;
 	border:4px double #FFFFFF;
 	color: #fff;
 	cursor:pointer;
@@ -251,7 +251,7 @@ body.rtl #column-google {
 
 /* LeanMonaco code */
 body.ajax * {
-	cursor: wait !important;	
+	cursor: wait !important;
 }
 
 /* Spotlights */
@@ -268,3 +268,7 @@ body.ajax * {
 	display: none;
 }
 
+/* FB#10042 - Article content can overlap with comments in monobook */
+#mw-data-after-content {
+    clear: both;
+}
