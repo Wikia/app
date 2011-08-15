@@ -250,9 +250,11 @@ class UserIdentityBox {
 			$this->user->saveSettings();
 			$this->saveMemcUserIdentityData($data);
 			
-			// Log
+			// Log			
+			/* Temporarily surpressing RecentChanges logging
 			$log = WF::build( 'LogPage', array( 'usermasthead' ) );
 			$log->addEntry( '', Title::newFromText($this->user->getName(), NS_USER), $this->app->wf->Msg('usermasthead-log-message'), array() );  
+			*/
 			
 			$this->app->wf->ProfileOut( __METHOD__ );
 			return true;
