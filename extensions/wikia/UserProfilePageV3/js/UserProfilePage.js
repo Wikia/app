@@ -53,7 +53,6 @@ var UserProfilePage = {
 				var tab = modal.find('.tabs a');
 				tab.click(function(event) {
 					event.preventDefault();
-					UserProfilePage.trackLightbox(event);
 					UserProfilePage.switchTab($(this).closest('li'));
 				});
 				
@@ -97,7 +96,9 @@ var UserProfilePage = {
 			} else {
 				$(this).css('display', 'none');
 			}
-		});		
+		});
+
+		UserProfilePage.track('edit/lightbox/' + tabName + '_tab');		
 	},
 	
 	renderAvatarLightbox: function(modal) {
@@ -123,6 +124,7 @@ var UserProfilePage = {
 		modal.find('.modalToolbar .cancel').unbind('click').click(function(e) {
 			UserProfilePage.closeModal(modal);
 			e.preventDefault();
+			UserProfilePage.track('edit/lightbox/cancel');
 		});
 		
 		var sampleAvatars = modal.find('.sample-avatars img');
@@ -207,6 +209,7 @@ var UserProfilePage = {
 		
 		modal.find('.modalToolbar .cancel').unbind('click').click(function() {
 			UserProfilePage.closeModal(modal);
+			UserProfilePage.track('edit/lightbox/cancel');
 		});
 		
 		var fbUnsyncButton = modal.find('#facebookUnsync');
@@ -256,6 +259,7 @@ var UserProfilePage = {
 		
 		modal.find('.modalToolbar .cancel').unbind('click').click(function() {
 			UserProfilePage.closeModal(modal);
+			UserProfilePage.track('edit/lightbox/cancel');
 		});
 		
 		var nextButton = modal.find('#UPPLightboxNextQuestionBtn');
@@ -544,17 +548,7 @@ var UserProfilePage = {
 	track: function(url) {
 		$.tracker.byStr('profile/' + url);
 	},
-	
-	trackLightbox: function(ev) {
-		var node = $(ev.target), attr = node.attr('id');
 		
-		if( attr === 'about') {
-			UserProfilePage.track('edit/lightbox/continue_1');
-		} else if( attr === 'avatar' ) {
-			UserProfilePage.track('edit/lightbox/continue_2');
-		}
-	},
-	
 	trackFavoriteWiki: function(ev) {
 		UserProfilePage.track('top_wikis');
 	},
