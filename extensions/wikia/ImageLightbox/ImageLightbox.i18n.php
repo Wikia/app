@@ -1,5 +1,7 @@
 <?php
+
 $messages = array();
+
 $messages['en'] = array(
 	'lightbox_details_tooltip' => 'View photo details',
 	'lightbox-forum' => 'Forum',
@@ -23,6 +25,12 @@ $1
 	'lightbox-share-email-ok-content' => '{{PLURAL:$1|Email has|Emails have}} been sent.',
 	'lightbox-share-email-error-caption' => 'Error',
 	'lightbox-share-email-error-content' => "Error sending {{PLURAL:$1|email|emails}}.\nDetails: $2",
-	'lightbox-share-email-error-login' => 'To send emails you need to login', 
-	'lightbox-share-email-error-noaddress' => 'No addresses have been specified'
+	'lightbox-share-email-error-login' => 'To send emails you need to login',
+	'lightbox-share-email-error-noaddress' => 'No addresses have been specified.'
+);
+
+$messages['en'] = array(
+	'lightbox-share-description' => 'Parameters:
+* $1 is the current page,
+* $2 is the site name.',
 );
