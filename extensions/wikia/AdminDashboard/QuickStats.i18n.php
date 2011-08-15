@@ -19,3 +19,7 @@ $messages['en'] = array(
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|See more stats]]',
 	'quickstats-number-shortening' => '$1K',
 );
+
+$messages['qqq'] = array(
+	'quickstats-date-format' => 'Follow this guide: http://php.net/manual/en/function.date.php.',
+);
