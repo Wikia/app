@@ -333,6 +333,7 @@ $use-theme: get_command_line_param("use-theme", false);
 }
 
 .WikiHeader {
+	height: 75px;
 	margin-bottom: 10px;
 	padding-bottom: 0;
 	.shadow-mask {
@@ -355,6 +356,10 @@ $use-theme: get_command_line_param("use-theme", false);
 	}
 	h1:before {
 		display: none;
+	}
+	.wordmark {
+		bottom: 0;
+		position: absolute;
 	}
 }
 
