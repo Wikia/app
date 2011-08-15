@@ -29,7 +29,7 @@ $1
 	'lightbox-share-email-error-noaddress' => 'No addresses have been specified.'
 );
 
-$messages['en'] = array(
+$messages['qqq'] = array(
 	'lightbox-share-description' => 'Parameters:
 * $1 is the current page,
 * $2 is the site name.',
