@@ -3,11 +3,21 @@ file = AchievementsII/i18n/AchievementsII.i18n.php
 
 Ad SS
 
+Admin Dashboard
+
+Admin Dashboard - Quick Stats
+file = AdminDashboard/QuickStats.i18n.php
+
 Combo Ajax Login
 file = AjaxLogin/ComboAjaxLogin.i18n.php
 descmsg = comboajaxlogin-desc
 
 Ajax Poll
+
+Answers
+
+# Disabled. Duplicate key with Answers extension.
+#Answers Namespace
 
 Article Comments
 
@@ -47,8 +57,6 @@ Community Messages
 
 Content Feeds
 
-Admin Dashboard
-
 #Commented out 2010-02-01 -- tor
 #Dropping in favour of CreatePage (below)
 #Create A Page
@@ -66,9 +74,7 @@ Edit Account
 file = EditAccount/SpecialEditAccount.i18n.php
 
 Edit Page Layout
-ignored = anoneditwarning-notice
-
-Ez API
+ignored = anoneditwarning-notice, longpagewarning-notice
 
 Follow
 aliasfile = Follow/Follow.alias.php
@@ -93,6 +99,8 @@ Health Check
 file = SpecialHealthcheck/HealthCheck.i18n.php
 
 Hulu Video Panel
+
+Image Lightbox
 
 Image Placeholder
 
@@ -188,6 +196,7 @@ file = RelatedVideo/i18n/RelatedVideo.i18n.php
 
 RTE - Base
 file = RTE/i18n/RTE.i18n.php
+ignored = editor-template-list
 
 RTE - CK Wikia
 file = RTE/i18n/CK.wikia.i18n.php
@@ -284,9 +293,6 @@ descmsg = wikia-watchsubpages-desc
 
 Where Is Extension
 file = WhereIsExtension/SpecialWhereIsExtension.i18n.php
-
-Wikia Game Guides
-ignored = wikiagameguides-tab-more-content, wikiagameguides-contents
 
 Wikia Irc Gateway
 ignored = ircgate-channellist
