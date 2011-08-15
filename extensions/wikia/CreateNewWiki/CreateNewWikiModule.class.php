@@ -171,7 +171,7 @@ class CreateNewWikiModule extends Module {
 
 			// check if user created more wikis than we allow per day
 			$numWikis = $this->countCreatedWikis($wgUser->getId());
-			if($numWikis > self::DAILY_USER_LIMIT && $wgUser->isPingLimitable() ) {
+			if($numWikis >= self::DAILY_USER_LIMIT && $wgUser->isPingLimitable() ) {
 				$this->status = 'wikilimit';
 				$this->statusMsg = $this->app->runFunction('wfMsg', 'cnw-error-wiki-limit', self::DAILY_USER_LIMIT);
 				$this->statusHeader = $this->app->runFunction('wfMsg', 'cnw-error-wiki-limit-header');
