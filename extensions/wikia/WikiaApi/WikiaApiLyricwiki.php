@@ -551,9 +551,9 @@ class WikiaApiLyricwiki extends ApiBase {
 						'href' => $this->root.$this->linkEncode( $pageTitle )
 					)
 				);
-				print Xml::closeElement( 'h3' );
 				print utf8_decode( htmlspecialchars( $pageTitle, ENT_QUOTES, "UTF-8" ) );
 				print Xml::closeElement( 'a' );
+				print Xml::closeElement( 'h3' );
 				print Xml::openElement( 'ul' );
 					foreach($links as $destPageTitle){
 						print Xml::openElement( 'li' );
