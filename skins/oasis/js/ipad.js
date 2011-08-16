@@ -4,18 +4,18 @@ $(document).ready(function() {
 
 iPadImprovements = {
 	
-	handleOrientation: function() {
+	setViewPort: function() {
 		if ( Orientation.getOrientation() == 'portrait' ) {
-			$("meta[name=viewport]").attr( 'content', 'width=1024, initial-scale=1.09, minimum-scale=0.75, maximum-scale=2.5' );
+			$("meta[name=viewport]").attr( 'content', 'width=1024, initial-scale=1.09, maximum-scale=2.5' );
 		} else {
-			$("meta[name=viewport]").attr( 'content', 'width=1024, initial-scale=1.0, minimum-scale=1.0, maximum-scale=2.5' );
+			$("meta[name=viewport]").attr( 'content', 'width=1024, initial-scale=1.0, maximum-scale=2.5' );
 		}
 	},
 	
 	init: function() {
 		
 		//onload add proper viewport
-		iPadImprovements.handleOrientation();
+		iPadImprovements.setViewPort();
 		
 		//onload scroll to main content
 		wikiaMainContent = $('#WikiaMainContent').offset();
