@@ -28,6 +28,7 @@ var UserProfilePage = {
 		$('#userAvatarEdit').click(function(event) {
 			event.preventDefault();
 			UserProfilePage.renderLightbox('avatar');
+			UserProfilePage.track('edit/avatar');
 		});
 		
 		$('.masthead-info .wikis li').click(UserProfilePage.trackFavoriteWiki);
