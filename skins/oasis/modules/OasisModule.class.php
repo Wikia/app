@@ -52,9 +52,10 @@ class OasisModule extends Module {
 		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgCityId, $wgAllInOne, $wgContLang, $wgJsMimeType, $wgEnableEditPageReskinExt, $wgEnableAdminDashboardExt, $wgDevelEnvironment;
 
 		$this->showAllowRobotsMetaTag = !$this->wgDevelEnvironment;
-		
+
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();
 
+		// TODO: move to CreateNewWiki extension - this code should use a hook
 		$wikiWelcome = $wgRequest->getVal('wiki-welcome');
 		if(!empty($wikiWelcome)) {
 			global $wgExtensionsPath;
@@ -192,7 +193,7 @@ class OasisModule extends Module {
 		if ( !empty($wgEnableEditPageReskinExt) ) {
 			$this->mainsassfile = 'skins/oasis/css/oasis-epl.scss';
 		}
-		
+
 		if (!empty($wgEnableAdminDashboardExt) && AdminDashboardLogic::displayAdminDashboard($this->app, $wgTitle)) {
 			$this->displayAdminDashboard = true;
 		} else {
