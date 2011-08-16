@@ -20,6 +20,7 @@ class AdminDashboardLogic {
 			'ThemeDesigner' => true,
 			'Upload' => true,
 			'UserRights' => true,
+			'Userrights' => true,
 			'WikiaLabs' => true,
 		);
 		return !empty($generalApps[$appName]);
