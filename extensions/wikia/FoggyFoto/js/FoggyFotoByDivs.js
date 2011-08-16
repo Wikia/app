@@ -76,14 +76,20 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 				'action': 'query',
 				'list': 'categorymembers',
 				'cmlimit': 1000,
+				'cmnamespace': 0, // only main namespace.  sub-categories would create confusing results
 				'cmtitle': categoryTitle
 			};
 			Mediawiki.apiCall(apiParams, function(data){
 				if(data.error){
 					self.mwError(data.error);
 				} else {
-					self.log("Got categories: ");
-					self.log(data);
+					if(self.debug){
+						self.log("Got category members: ");
+						//for(var cnt=0; cnt < data.query.categorymembers.length; cnt++){
+						//	self.log("Title: " + data.query.categorymembers[cnt].title);
+						//}
+					}
+
 					if(data.query.categorymembers){
 						// Randomly get a page from the category (and its associated image) until we find a page which has an image.
 						var imageUrl = "";
@@ -162,10 +168,6 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 				var index = Math.floor(Math.random() * pageTitles.length);
 				var pageTitle = pageTitles[index].title;
 				self.log("Page: " + pageTitle);
-				
-				// TODO: Skip category-pages because that won't create a good title-match in the results.
-				// TODO: Skip category-pages because that won't create a good title-match in the results.
-				
 
 				var imageApiParams = {
 					'action': 'imageserving',
