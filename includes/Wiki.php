@@ -504,6 +504,15 @@ class MediaWiki {
 			$action = 'nosuchaction';
 		}
 
+		/* Wikia change begin - @author: macbre */
+		/* fallback selected actions to "view" (BugId:9964) */
+		global $wgDisabledActionsWithViewFallback;
+		if ( in_array( $action, $wgDisabledActionsWithViewFallback ) ) {
+			$action = 'view';
+			$request->setVal('action', $action);
+		}
+		/* Wikia change end */
+
 		# Workaround for bug #20966: inability of IE to provide an action dependent
 		# on which submit button is clicked.
 		if ( $action === 'historysubmit' ) {
