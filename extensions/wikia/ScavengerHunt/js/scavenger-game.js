@@ -225,7 +225,6 @@ var ScavengerHunt = {
 							e.preventDefault();
 							ScavengerHunt.track('start/modalClue/clickButton' + gameId);
 							ScavengerHunt.setCookieHuntId( gameId );
-							ScavengerHunt.track('start/modalClue/clickButton2');
 							$.getJSON(
 								window.wgScriptPath + '/wikia.php',
 								{
