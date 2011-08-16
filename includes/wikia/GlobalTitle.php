@@ -43,7 +43,7 @@ class GlobalTitle extends Title {
 		$title->mText = $filteredText;
 		$title->mDbkeyform = str_replace( ' ', '_', $filteredText );
 		$title->mUrlform = wfUrlencode( $title->mDbkeyform );
-		$title->mTextform = $title->mDbkeyform;
+		$title->mTextform = str_replace( '_', ' ', $title->mText );
 		$title->mNamespace = $namespace;
 		$title->mCityId = $city_id;
 
