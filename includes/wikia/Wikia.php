@@ -82,7 +82,7 @@ class WikiaAssets {
 	}
 
 	public static function combined() {
-		global $wgRequest, $wgStylePath, $wgStyleVersion;
+		global $wgRequest, $wgStylePath, $wgStyleVersion, $wgUseSiteJs;
 
 		$type = $wgRequest->getVal('type');
 
@@ -185,8 +185,10 @@ class WikiaAssets {
 				}
 			}
 
-			// -
-			$references[] = Skin::makeUrl('-', "action=raw&gen=js&useskin=$skinName");
+			// per-site JS
+			if (!empty($wgUseSiteJs)) {
+				$references[] = Skin::makeUrl('-', "action=raw&gen=js&useskin=$skinName");
+			}
 
 			$out = '';
 			foreach($references as $reference) {
@@ -1523,11 +1525,11 @@ class Wikia {
 	 */
 	static public function ignoreUser( $user, $byEmail = false ) {
 		global $wgStatsDB, $wgStatsDBEnabled;
-	
+
 		if ( empty( $wgStatsDBEnabled ) ) {
 			return true;
 		}
-		
+
 		if ( ( $user instanceof User ) && ( 0 === strpos( $user->getName(), 'WikiaTestAccount' ) ) ) {
 			$dbw = wfGetDB( DB_MASTER, array(), $wgStatsDB );
 
@@ -1703,10 +1705,10 @@ class Wikia {
 		}
 		return $result;
 	}
-	
+
 	static public function allowNotifyOnPageChange ( /* User */ $editor, /* Title */ $title ) {
 		global $wgWikiaBotUsers;
-		
+
 		$allow = true;
 		if ( !empty( $wgWikiaBotUsers ) ) {
 			foreach ( $wgWikiaBotUsers as $type => $user ) {
@@ -1716,7 +1718,7 @@ class Wikia {
 				}
 			}
 		}
-		
+
 		return $allow;
 	}
 
@@ -1825,13 +1827,13 @@ class Wikia {
 		$linker = self::getLinker();
 		return $linker->link($target, $text, $customAttribs, $query, $options);
 	}
-	
-	
-	
+
+
+
 	/**
 	 * recentChangesSave -- hook
 	 * Send information to the backend script, when new record was added to the recentchanges table
-	 * 
+	 *
 	 * @static
 	 * @access public
 	 *
@@ -1842,20 +1844,20 @@ class Wikia {
 	 */
 	static public function recentChangesSave( $oRC ) {
 		global $wgCityId, $wgDBname, $wgEnableScribeReport;
-		
+
 		if ( empty( $wgEnableScribeReport ) ) {
 			return true;
 		}
-		
+
 		if ( !is_object( $oRC ) ) {
 			return true;
 		}
-		
+
 		$rc_ip = $oRC->getAttribute( 'rc_ip' );
 		if ( is_null( $rc_ip ) ) {
 			return true;
 		}
-		
+
 		$params = array(
 			'dbname'	=> $wgDBname,
 			'wiki_id'	=> $wgCityId,
@@ -1873,10 +1875,10 @@ class Wikia {
 		catch( TException $e ) {
 			Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
 		}
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * ord
 	 * Returns the character id using the approriate encoding
@@ -1895,10 +1897,10 @@ class Wikia {
 		$char = mb_convert_encoding($char,'UCS-4BE',$encoding);
 		if ($char == '')
 			return false;
-		
+
 		return reset(unpack("N",$char));
 	}
-	
+
 	/**
 	 * chr
 	 * Returns the character using the approriate encoding
@@ -1916,20 +1918,20 @@ class Wikia {
 	static public function chr( $ord, $encoding = 'UTF-8' ) {
 		return mb_convert_encoding(pack("N",$ord),$encoding,'UCS-4BE');
 	}
-	
+
 	/**
 	 * This function uses the facebook api to get the open graph id for this domain
-	 * 
+	 *
 	 * @global type $wgServer
 	 * @global type $fbAccessToken
 	 * @global type $fbDomain
 	 * @global type $wgMemc
-	 * @return int 
+	 * @return int
 	 */
-	
+
 	static public function getFacebookDomainId() {
 		global $wgServer, $fbAccessToken, $fbDomain, $wgMemc;
-		
+
 		if (!$fbAccessToken || !$fbDomain)
 			return false;
 
@@ -1950,10 +1952,10 @@ class Wikia {
 				$result = 0;  // If facebook tells us nothing, don't keep trying, just give up until cache expires
 			}
 			$wgMemc->set($memckey, $result, 60*60*24*7);  // 1 week
-			
+
 		}
 		wfProfileOut(__METHOD__);
-		
+
 		return $result;
 	}
 }
