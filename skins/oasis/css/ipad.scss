@@ -1,9 +1,10 @@
-//The worst CSS code I've seen and its mine ... Jakub Olek
+//The worst CSS code I've seen and its ... mine, Jakub Olek
 //all the importants are used as I have to override inline styles for IPad
 //yes, I am ashamed...
 
-#AjaxLoginBoxWrapper {
-  top: 12px !important;
+#labelFor_wpRemember2Ajax {
+  position: relative;
+  top: -9px;
 }
 
 input {
@@ -12,58 +13,51 @@ input {
 }
 
 #AjaxLoginConnectMarketing div {
-  h1:nth-of-type(2) {
+  h1:nth-of-type(2), ul {
     display: none;
   }
-  ul {
-    display: none;
-  }
-
 }
 
 #userRegisterAjax {
   #wpName2, #wpEmail, #uselang, #wpBirthYear {
-  position: absolute !important;
-  left: 35px !important; 
+    position: absolute !important;
+    left: 35px !important; 
   }
   #wpBirthMonth {
-  position: absolute !important;
-  left: 120px !important;
+    position: absolute !important;
+    left: 120px !important;
   }
   #wpBirthDay {
-  position: absolute !important;
-  left: 205px !important;
+    position: absolute !important;
+    left: 205px !important;
+  }
+  .mw-input label {
+    position: relative;
+    top: -9px;
+  }
+  .wpAjaxLoginInput {
+    padding-bottom: 10px;
   }
   .captcha {
     img {
       position: relative;
       left: 20px;
     }
-    #wpCaptchaWord,.captchadesc {
+    #wpCaptchaWord, .captchadesc {
       position: relative;
-      top:- 60px;
+      top: -60px;
     }
   }
 }
 
 #lightbox {
-  width: 97% !important;
-  height: 96% !important;
-  .modalContent {
-    height: 91% !important;
-    div {
-      height: 100% !important;
-      #lightbox-image {
-        height: 95% !important;
-        div {
-          height: 100% !important;     
-        }
-      }
-    }
-  }
-  button.close {
-    margin: 20px;
-  }
+  margin-left: 0 !important;
+  left: 1% !important;
+}
+
+#WikiaMainContent {
+  //extend wikia main content to full available width with wikia-rail, itll take whole page if there is not wikia-rail
+  min-width: 68%;
 }
 
 .wikia-slideshow-popout-prev-next {
@@ -71,16 +65,13 @@ input {
 }
 .wikia-slideshow-popout-images-wrapper {
   margin: 0 auto !important;
+  width: 90% !important;
+}
+.wikia-slideshow-popout-caption-wrapper {
+  height: 45px;
 }
 
-#WikiaPage {
-  width: 100%;
-  #WikiaMainContent {
-   width: 704px;
-  }
-}
-
-#WikiaHeader {
+#WikiaHeader, #WikiaPage {
   width: 100%;
   .banner-corner-left, .banner-corner-right {
     display: none;
@@ -88,19 +79,14 @@ input {
 }
 
 @media ( orientation: landscape ) {
-  #lightbox {
-    height: 93% !important;
-    .modalContent {
-      height: 85% !important;
-    }
-  }
-
   .modalWrapper.wikia-slideshow-popout {
-    height: 95% !important;
+    height: 97% !important;
     width: 95% !important;
-      #wikia-slideshow-popout-images-wrapper {
-      width: 90% !important;
-      height: 42% !important;
+    .wikia-slideshow-popout-images-wrapper {
+      height: 340px !important;
+    }
+    .wikia-slideshow-popout-prev-next {
+      top: 130px !important;
     }
   }
 }
@@ -109,11 +95,13 @@ input {
   .modalWrapper.wikia-slideshow-popout {
     left: 10px !important;
     margin-left: 0 !important;
-    width: 688px !important;
+    width: 90%!important;
     #wikia-slideshow-popout-images-wrapper {
-      width: 90% !important;
+      height: 700px !important;
     }
-
+    .wikia-slideshow-popout-prev-next {
+      top: 350px !important;
+    }
   }
 }
 
