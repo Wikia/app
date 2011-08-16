@@ -7,17 +7,20 @@
   top: -9px;
 }
 
+//make bigger inputs for finger
 input {
   height: 30px !important;
   font-size: 15pt;
 }
 
+//hide facbook description
 #AjaxLoginConnectMarketing div {
   h1:nth-of-type(2), ul {
     display: none;
   }
 }
 
+//fixes for register form
 #userRegisterAjax {
   #wpName2, #wpEmail, #uselang, #wpBirthYear {
     position: absolute !important;
@@ -50,32 +53,37 @@ input {
   }
 }
 
+//position lightbox 
 #lightbox {
   margin-left: 0 !important;
   left: 1% !important;
 }
 
+//extend wikia main content to full available width with wikia-rail, itll take whole page if there is no wikia-rail
 #WikiaMainContent {
-  //extend wikia main content to full available width with wikia-rail, itll take whole page if there is not wikia-rail
   min-width: 68%;
 }
 
-.wikia-slideshow-popout-prev-next {
-  display: block !important;
-}
-.wikia-slideshow-popout-images-wrapper {
-  margin: 0 auto !important;
-  width: 90% !important;
-}
-.wikia-slideshow-popout-caption-wrapper {
-  height: 45px;
-}
-
+// make page 100% wide 
 #WikiaHeader, #WikiaPage {
   width: 100%;
   .banner-corner-left, .banner-corner-right {
     display: none;
   }
+}
+
+//all below is about fixing slideshow and gallery
+.wikia-slideshow-popout-prev-next {
+  display: block !important;
+}
+
+.wikia-slideshow-popout-images-wrapper {
+  margin: 0 auto !important;
+  width: 90% !important;
+}
+
+.wikia-slideshow-popout-caption-wrapper {
+  height: 45px;
 }
 
 @media ( orientation: landscape ) {
