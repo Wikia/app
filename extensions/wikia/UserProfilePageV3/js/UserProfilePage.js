@@ -29,7 +29,6 @@ var UserProfilePage = {
 			event.preventDefault();
 			UserProfilePage.renderLightbox('avatar');
 			UserProfilePage.track('edit/avatar');
-			//test
 		});
 		
 		$('.masthead-info .wikis li').click(UserProfilePage.trackFavoriteWiki);
