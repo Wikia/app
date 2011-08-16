@@ -23,8 +23,8 @@ public class TemplateTest extends BaseTest {
 		assertEquals(session().getText("//header[@id='WikiaPageHeader']/h2"), "Template page");
 
 		// menu buttons
-		assertTrue(session().isElementPresent("//header[@id='WikiaPageHeader']//a[@data-id='move' and @accesskey='m']"));
-		assertTrue(session().isElementPresent("//header[@id='WikiaPageHeader']//a[@data-id='edit' and @accesskey='e']"));
+		assertTrue(session().isElementPresent("//header[@id='WikiaPageHeader']//a[@data-id='move']"));
+		assertTrue(session().isElementPresent("//header[@id='WikiaPageHeader']//a[@data-id='edit']"));
 		assertTrue(session().isElementPresent("//header[@id='WikiaPageHeader']//a[@data-id='history']"));
 		
 		// Wikia Rail
@@ -49,8 +49,8 @@ public class TemplateTest extends BaseTest {
 		assertEquals(session().getText("//header[@id='WikiaPageHeader']/h2/a"), "Back to template");
 
 		// menu buttons
-		assertTrue(session().isElementPresent("//header[@id='WikiaPageHeader']//a[@data-id='addtopic' and @accesskey='a']"));
-		assertTrue(session().isElementPresent("//header[@id='WikiaPageHeader']//a[@data-id='edit' and @accesskey='e']"));
+		assertTrue(session().isElementPresent("//header[@id='WikiaPageHeader']//a[@data-id='addtopic']"));
+		assertTrue(session().isElementPresent("//header[@id='WikiaPageHeader']//a[@data-id='edit']"));
 		assertTrue(session().isElementPresent("//header[@id='WikiaPageHeader']//a[@data-id='history']"));
 		
 		// Wikia Rail

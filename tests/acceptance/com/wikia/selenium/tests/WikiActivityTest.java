@@ -29,7 +29,7 @@ public class WikiActivityTest extends BaseTest {
 		openAndWait("index.php?title=Special:Random");
 
 		// check that there are items in the Recent Wiki Activity module.
-		assertTrue(session().isElementPresent("//section[contains(@class,'WikiaActivityModule')]/ul/li"));
+		waitForElement("//section[contains(@class,'WikiaActivityModule')]/ul/li");
 
 		// check presence of link to ActivityFeed for anons
 		assertTrue(session().isElementPresent("//section[contains(@class,'WikiaActivityModule')]/a[@class='more']"));
