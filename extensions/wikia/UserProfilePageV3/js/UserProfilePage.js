@@ -564,6 +564,8 @@ var UserProfilePage = {
 					}, 50 );	
 				}
 				return false
+			} else {
+				UserProfilePage.track('edit/lightbox/exit');
 			}
 		}
 		
