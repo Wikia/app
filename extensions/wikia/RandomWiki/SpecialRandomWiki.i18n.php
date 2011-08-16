@@ -258,10 +258,11 @@ $messages['pt-br'] = array(
 
 /** Russian (Русский)
  * @author Eleferen
+ * @author Kuzura
  */
 $messages['ru'] = array(
 	'randomwiki-desc' => 'Позволяет пользователям просматривать случайные вики',
-	'randomwiki' => 'Случайные Wiki',
+	'randomwiki' => 'Случайная вики',
 );
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)

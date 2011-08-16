@@ -177,7 +177,7 @@ $messages['pms'] = array(
 	'stafflog-blockmsg' => "$1 $2 a l'ha provà a bloché l'utent ëd l'echip $3 an sla wiki $4. Rason: $5",
 	'stafflog-piggybackloginmsg' => "$1 Conession mùltipla - l'utent $2 a l'é intrà com $3",
 	'stafflog-piggybacklogoutmsg' => "$1 Conession mùltipla - l'utent $2 a l'é surtì dal cont $3",
-	'right-stafflog' => 'A peul vëdde lë stafflog',
+	'right-stafflog' => "A peul vëdde l'argistr ëd l'echip d'aministrassion",
 );
 
 /** Portuguese (Português)

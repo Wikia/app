@@ -1606,7 +1606,8 @@ $messages['ja'] = array(
 	'myhome-hot-spots-feed-empty' => "このウィキはあなたの参加者を待っています。'''[[Special:CreatePage|編集に参加]]'''してみませんか？",
 	'myhome-hot-spots-newest' => 'このウィキの新しいページ',
 	'myhome-hot-spots-brandnew' => "このウィキはまだできたばかりのようです。あなたも'''[[Special:CreatePage|編集に参加]]'''してみませんか？",
-	'tog-myhomedisableredirect' => '"My Home" へのリダイレクトを無効にする。',
+	'tog-myhomedisableredirect' => 'ウィキアクティビティへのリダイレクトを無効にする。',
+	'prefs-myhome' => 'ウィキアクティビティ',
 	'myhome-feed-newpage' => '新しいページ',
 	'myhome-feed-edit' => '編集',
 	'myhome-feed-move' => 'ページの移動',
@@ -1641,7 +1642,7 @@ $messages['ja'] = array(
 	'myhome-user-contributions-empty' => '各ページにある"{{int:editthispage}}"をクリックして記述を追加することで、あなたもこのウィキに参加できます。だれでも、記述の変更・情報の追加や誤りの修正ができます。ウィキはコミュニティによって作られ、編集ボタンをクリックするとあなたもその一員となります。',
 	'myhome-hot-spots-number-of-editors' => 'editors',
 	'myhome-log-in' => "<center>My Home を利用するにはログインする必要があります。<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} このページを閲覧するためにログインしてください！]'''</big></center>",
-	'myhome-switch-to-monaco' => 'My Home は Monaco スキンでのみ利用できます。もし My Home を閲覧したいのであれば、[[Special:Preferences|スキンの設定を変更]]してください。',
+	'myhome-switch-to-monaco' => 'ウィキアクティビティはウィキアのスキンでのみ利用できます。ウィキアクティビティを閲覧したいのであれば、[[Special:Preferences|スキンの設定を変更]]してください。',
 	'myhome-namespace-blog' => 'Blog',
 	'myhome-community-corner-header' => 'コミュニティメッセージ',
 	'oasis-myhome-community-corner-edit' => 'メッセージを編集 &gt;',
@@ -1691,20 +1692,26 @@ $messages['ku-latn'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
+	'myhome' => 'Meng Haaptsäit',
 	'myhome-watchlist-feed' => 'Iwwerwaachungslëscht',
 	'myhome-hot-spots-newest' => 'Nei Säiten op der Wiki',
+	'prefs-myhome' => 'Meng Haaptsäit',
 	'myhome-feed-newpage' => 'nei Säit',
 	'myhome-feed-edit' => 'änneren',
 	'myhome-feed-move' => 'Säit geréckelt',
 	'myhome-feed-talkpage' => 'Diskussiounssäit',
 	'myhome-feed-delete' => 'geläscht',
+	'myhome-feed-comment-by' => 'Bemierkung vum $1',
 	'myhome-feed-article-comment-created-by' => 'nei Bemierkung vum $1',
 	'myhome-feed-by' => 'vum $1',
+	'myhome-feed-diff-alt' => 'den Ënnerscheed op dëser Säit weisen',
 	'myhome-feed-new-page-details' => 'Nei Säit',
 	'myhome-feed-summary-details' => 'Resumé',
+	'myhome-feed-section-edit-details' => 'Den Abschnitt änneren',
 	'myhome-feed-new-blog-comment-details' => 'Bemierkung',
 	'myhome-feed-new-article-comment-details' => 'Bemierkung',
 	'myhome-feed-redirect-details' => 'Viruleedung',
+	'tooltip-pt-myhome' => 'Op meng Haaptsäit goen',
 );
 
 /** Macedonian (Македонски)
@@ -2255,7 +2262,7 @@ $messages['pl'] = array(
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Dodana kategoria|Dodane kategorie}}',
 	'myhome-hot-spots-number-of-editors' => 'edytorów',
 	'myhome-log-in' => "<center>Funkcjonalność Twojej strony domowej dostępna jest wyłącznie gdy jesteś zalogowany.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Zaloguj się aby zobaczyć tę stronę!]'''</big></center>",
-	'myhome-switch-to-monaco' => "Funkcjonalność Twojej strony domowej dostępna jest wyłącznie jeśli używasz skórki Monako.
+	'myhome-switch-to-monaco' => "Funkcjonalność WikiActivity dostępna jest wyłącznie jeśli używasz skórki Wikia.
 Jeśli chcesz widzieć „Moja strona domowa” zmień '''[[Special:Preferences|w preferencjach]]''' używaną skórkę.",
 	'myhome-default-view-checkbox' => 'Niech zakładka $1 będzie moją domyślną',
 	'myhome-default-view-success' => 'Zmiana została zapisana',
@@ -2562,8 +2569,25 @@ Se você é o fundador ou um administrador desta wiki, pode mudar esta mensagem 
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'myhome' => 'Pàgena meje',
+	'prefs-myhome' => 'Pàgena meje',
+	'myhome-feed-newpage' => 'pàgena nova',
+	'myhome-feed-edit' => 'cange',
+	'myhome-feed-move' => 'pàgena spustate',
+	'myhome-feed-talkpage' => "Pàgene de le 'ngazzaminde",
+	'myhome-feed-blogcomment' => "commende d'u blog",
+	'myhome-feed-delete' => 'scangellate',
+	'myhome-feed-created-by' => 'ccrejate da $1',
+	'myhome-feed-added-by' => 'mise da $1',
+	'myhome-feed-edited-by' => 'cangiate da $1',
+	'myhome-feed-posted-by' => 'postate da $1',
+	'myhome-feed-comment-by' => 'commende de $1',
+	'myhome-feed-deleted-by' => 'scangellate da $1',
+	'myhome-feed-moved-by' => 'spustate da $1',
 	'myhome-feed-article-comment-edited-by' => 'commende cangiate da $1',
 	'myhome-feed-by' => 'da $1',
+	'myhome-feed-new-page-details' => 'Pàgena nova',
+	'myhome-feed-summary-details' => 'Riepileghe',
 	'myhome-feed-new-blog-comment-details' => 'Commende',
 	'myhome-feed-new-article-comment-details' => 'Commende',
 );
@@ -2571,6 +2595,7 @@ $messages['roa-tara'] = array(
 /** Russian (Русский)
  * @author Eleferen
  * @author G0rn
+ * @author Kuzura
  * @author Lockal
  * @author Prima klasy4na
  * @author Александр Сигачёв
@@ -2589,7 +2614,8 @@ $messages['ru'] = array(
 	'myhome-hot-spots-feed-empty' => "Эта вики ждёт от вас участия! Нажмите на ссылку '''[[Special:CreatePage|Новая страница]]''' и начните писать!",
 	'myhome-hot-spots-newest' => 'Новые страницы на вики',
 	'myhome-hot-spots-brandnew' => "Это совершенно новая вики. Нажмите на ссылку '''[[Special:CreatePage|Новая страница]]''' и начните писать!",
-	'tog-myhomedisableredirect' => 'Отключить перенаправление на страницу «Личный кабинет»',
+	'tog-myhomedisableredirect' => 'Отключить перенаправление на страницу Вики-деятельности',
+	'prefs-myhome' => 'Личный кабинет',
 	'myhome-feed-newpage' => 'новая страница',
 	'myhome-feed-edit' => 'правка',
 	'myhome-feed-move' => 'перемещение страницы',
@@ -2624,7 +2650,8 @@ $messages['ru'] = array(
 	'myhome-user-contributions-empty' => 'Вы можете принять участие в редактировании вики, если нажмёте ссылку «{{int:editthispage}}» на любой странице. Любой может делать изменения, добавлять информацию и исправлять ошибки. Вики создана сообществом участников, и вы станете частью этого сообщества, единожды нажав на ссылку редактирования. Попробуйте сами!',
 	'myhome-hot-spots-number-of-editors' => 'правки',
 	'myhome-log-in' => "<center>Функционал «Личный кабинет» будет доступен, только если вы представитесь системе.<br /><br /><big>'''[{{fullurl:Special:UserLogin|$1}} Для просмотра этой страницы необходимо представиться системе!]'''</big></center>",
-	'myhome-switch-to-monaco' => "Функционал «Личный кабинет» доступен только при использовании оформления «Monaco». Если вы желаете видеть этот функционал, то откройте '''[[Special:Preferences|ваши настройки]]''' и измените стиль оформления.",
+	'myhome-switch-to-monaco' => "Страница вики-деятельности доступна только при использовании оболочки Викия.
+Если вы хотите увидеть личный кабинет, пожалуйста, посетите страницу '''[[Special:Preferences|личных настроек]]''' и измените оболочку.",
 	'myhome-namespace-blog' => 'Блог',
 	'myhome-community-corner-header' => 'Сообщения сообщества',
 	'oasis-myhome-community-corner-edit' => 'править сообщение &gt;',
@@ -3045,10 +3072,12 @@ $messages['tr'] = array(
 );
 
 /** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+ * @author Ajdar
  * @author Ильнар
  */
 $messages['tt-cyrl'] = array(
 	'myhome' => 'Минем сәхифә',
+	'wikiactivity' => 'Вики-эшчәнлек',
 	'myhome-watchlist-feed' => 'Күзәтү исемлеге',
 	'myhome-user-contributions-feed' => 'Кертем',
 	'myhome-feed-newpage' => 'яңа бит',

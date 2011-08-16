@@ -83,6 +83,7 @@ $messages['bg'] = array(
 	'dump-database' => 'Дъмпове на базата данни',
 	'dump-database-curr-pages' => 'Текущи страници',
 	'dump-database-full-pages-info' => '(Предупреждение: файлът може да е много голям)',
+	'dump-database-request' => 'Заявка за актуализация',
 	'dump-database-request-submit' => 'Изпращане на заявка',
 );
 

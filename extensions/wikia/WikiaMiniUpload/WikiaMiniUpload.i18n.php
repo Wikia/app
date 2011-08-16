@@ -379,6 +379,7 @@ $messages['bjn'] = array(
  */
 $messages['br'] = array(
 	'wmu-upload-image' => 'Enporzhiañ ur skeudenn',
+	'wmu-title' => 'Enporzhiañ ur skeudenn',
 	'wmu-upload' => 'Enporzhiañ',
 	'wmu-notlogged' => "Kevreit pe krouit ur gont evit enporzhiañ skeudennoù adal hoc'h urzhiataeer",
 	'wmu-find' => 'Klask',
@@ -627,10 +628,12 @@ $messages['cy'] = array(
 );
 
 /** German (Deutsch)
+ * @author Inkowik
  * @author LWChris
  */
 $messages['de'] = array(
 	'wmu-upload-image' => 'Bild hochladen',
+	'wmu-title' => 'Foto hochladen',
 	'wmu-upload' => 'Hochladen',
 	'wmu-notlogged' => 'Melde dich an oder registriere dich, um Bilder von deinem Rechner hochzuladen',
 	'wmu-find' => 'Suchen',
@@ -787,6 +790,7 @@ $messages['eo'] = array(
  */
 $messages['es'] = array(
 	'wmu-upload-image' => 'Subir una imagen',
+	'wmu-title' => 'Subir imagen',
 	'wmu-upload' => 'Subir',
 	'wmu-notlogged' => 'Identifícate o regístrate para subir imágenes desde tu ordenador',
 	'wmu-find' => 'Encontrar',
@@ -936,6 +940,7 @@ $messages['fi'] = array(
  */
 $messages['fr'] = array(
 	'wmu-upload-image' => 'Téléverser une image',
+	'wmu-title' => 'Importer une photo',
 	'wmu-upload' => 'Importer',
 	'wmu-notlogged' => 'Connectez-vous ou créez-vous un compte pour importer des images depuis votre ordinateur',
 	'wmu-find' => 'Rechercher',
@@ -962,7 +967,7 @@ $messages['fr'] = array(
 	'wmu-caption' => 'Légende',
 	'wmu-link' => 'Lien',
 	'wmu-optional' => '(optionnel)',
-	'wmu-insert2' => 'Insérer le fichier',
+	'wmu-insert2' => 'Ajouter la photo',
 	'wmu-prev' => '8 précédentes',
 	'wmu-next' => '8 suivantes',
 	'wmu-flickr2' => 'Images de Flickr ($1 {{PLURAL:$1|résultat|résultats}})',
@@ -1012,6 +1017,7 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'wmu-upload-image' => 'Cargar unha foto',
+	'wmu-title' => 'Cargar unha foto',
 	'wmu-upload' => 'Cargar',
 	'wmu-notlogged' => 'Acceda ao sistema ou rexístrese para cargar imaxes do seu ordenador',
 	'wmu-find' => 'Atopar',
@@ -1209,6 +1215,7 @@ $messages['hu'] = array(
  */
 $messages['ia'] = array(
 	'wmu-upload-image' => 'Incargar imagine',
+	'wmu-title' => 'Incargar photo',
 	'wmu-upload' => 'Incargamento',
 	'wmu-notlogged' => 'Aperi un session o crea un conto pro incargar imagines ex tu computator',
 	'wmu-find' => 'Recerca',
@@ -1281,6 +1288,7 @@ $messages['ia'] = array(
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
  * @author Irwangatot
  * @author Kenrick95
  */
@@ -1327,7 +1335,7 @@ $messages['id'] = array(
 	'wmu-warn3' => 'Anda perlu menentukan nama berkas terlebih dahulu!',
 	'wmu-imagelink' => '<b>Baru!</b> Tambah gambar',
 	'wmu-imagebutton' => 'Tambah gambar',
-	'wmu-license-cc' => 'dilisensikan dibawah Creative Commons Attribution-Share Alike 3,0',
+	'wmu-license-cc' => 'dilisensikan di bawah Creative Commons Attribution-Share Alike 3,0',
 	'wmu-bad-extension' => 'Anda mencoba untuk meng-unggah jenis file yang tidak diperbolehkan. Silakan coba lagi.',
 	'wmu-filetype-missing' => 'Unggahan ini hilang nama extensi berkasnya',
 	'wmu-filetype-incorrect' => 'Unggahan ini memiliki extensi berkas yang salah',
@@ -1348,6 +1356,13 @@ $messages['id'] = array(
 	'wmu-no-preview' => 'Anda tidak dapat menambahkan gambar dalam artikel dengan modus pratayang',
 	'wmu-no-protect' => 'Halaman ini dilindungi, Anda tidak dapat menambahkan gambar',
 	'wmu-no-rights' => 'Anda tidak diperbolehkan menambahkan gambar ke halaman ini',
+);
+
+/** Ingush (ГІалгІай Ğalğaj)
+ * @author Sapral Mikail
+ */
+$messages['inh'] = array(
+	'wmu-gallery' => 'Суртанче',
 );
 
 /** Italian (Italiano) */
@@ -1528,6 +1543,7 @@ $messages['lv'] = array(
  */
 $messages['mk'] = array(
 	'wmu-upload-image' => 'Подигни слика',
+	'wmu-title' => 'Подигни слика',
 	'wmu-upload' => 'Подигање',
 	'wmu-notlogged' => 'Најавете се или регистрирајте сметка за да можете да подигате слики од вашиот сметач',
 	'wmu-find' => 'Пребарување',
@@ -1604,6 +1620,7 @@ $messages['mk'] = array(
  */
 $messages['ms'] = array(
 	'wmu-upload-image' => 'Muat Naik Gambar',
+	'wmu-title' => 'Muat Naik Gambar',
 	'wmu-upload' => 'Muat naik',
 	'wmu-notlogged' => 'Log masuk atau berdaftar untuk memuat naik gambar dari komputer anda',
 	'wmu-find' => 'Cari',
@@ -1670,7 +1687,7 @@ $messages['ms'] = array(
 	'wmu-no-rights' => 'Anda tidak dibenarkan membubuh gambar ke dalam laman ini',
 	'wmu-more-options' => 'Lagi pilihan',
 	'wmu-fewer-options' => 'Kurang pilihan',
-	'wmu-replace-default-caption' => 'gantikan kapsyen tersedia',
+	'wmu-replace-default-caption' => 'ganti kapsyen tersedia',
 	'wmu-appearance-in-article' => 'Penampilan dalam Rencana',
 	'wmu-alignment' => 'Penjajaran',
 );
@@ -1722,6 +1739,7 @@ $messages['nb'] = array(
  */
 $messages['nl'] = array(
 	'wmu-upload-image' => 'Afbeelding uploaden',
+	'wmu-title' => 'Afbeelding uploaden',
 	'wmu-upload' => 'Uploaden',
 	'wmu-notlogged' => 'Meld u aan of registreer een gebruiker om afbeeldingen te uploaden',
 	'wmu-find' => 'Zoeken',
@@ -1827,6 +1845,7 @@ Klik hieronder om meer afbeeldingen aan de galerij toe te voegen.',
  */
 $messages['no'] = array(
 	'wmu-upload-image' => 'Last opp bilde',
+	'wmu-title' => 'Last opp bilde',
 	'wmu-upload' => 'Last opp',
 	'wmu-notlogged' => 'Logg inn eller registrer deg for å laste opp bilder fra datamaskinen',
 	'wmu-find' => 'Finn',
@@ -2025,6 +2044,7 @@ $messages['ps'] = array(
  */
 $messages['pt'] = array(
 	'wmu-upload-image' => 'Enviar Imagem',
+	'wmu-title' => 'Colocar Fotografia',
 	'wmu-upload' => 'Enviar',
 	'wmu-notlogged' => 'Autentique-se ou registe-se para enviar imagens do seu computador',
 	'wmu-find' => 'Procurar',
@@ -2176,11 +2196,13 @@ $messages['pt-br'] = array(
 
 /** Russian (Русский)
  * @author DCamer
+ * @author Kuzura
  * @author Lockal
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
 	'wmu-upload-image' => 'Загрузка изображений',
+	'wmu-title' => 'Загрузить изображение',
 	'wmu-upload' => 'Загрузить',
 	'wmu-notlogged' => 'Представьтесь системе или зарегистрируйтесь, чтобы загружать изображения со своего компьютера',
 	'wmu-find' => 'Поиск',
@@ -2576,7 +2598,7 @@ $messages['zh-hans'] = array(
 	'wmu-insert' => '插入',
 	'wmu-details-inf' => '<h1>文件细节</h1>给这个文件指定一个名字。使它得到一些描述。',
 	'wmu-name' => '名称',
-	'wmu-license' => '授权',
+	'wmu-license' => '授权协议',
 	'wmu-details-inf2' => '<h1>文章选项</h1>选择这个文件在您的文章之内的样子。',
 	'wmu-size' => '尺寸',
 	'wmu-thumbnail' => '缩略图',

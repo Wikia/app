@@ -212,9 +212,12 @@ $messages['ja'] = array(
 	'category-exhibition-alphabetical' => 'アルファベット順',
 	'category-exhibition-mostvisited' => '閲覧の多い順',
 	'category-exhibition-recentedits' => '更新順',
+	'category-exhibition-page-header' => 'カテゴリ「$1」にあるページ',
 	'category-exhibition-subcategories-header' => '下位カテゴリ',
+	'category-exhibition-media-header' => 'カテゴリ「$1」にあるメディア',
 	'category-exhibition-blogs-header' => 'ブログ記事',
 	'category-exhibition-display-old' => 'カテゴリ一覧表示',
+	'category-exhibition-display-new' => 'カテゴリ展覧表示',
 );
 
 /** Luxembourgish (Lëtzebuergesch) */
@@ -302,15 +305,20 @@ $messages['no'] = array(
 	'category-exhibition-display-new' => 'Visning av kategoriutstilling',
 );
 
-/** Polish (Polski) */
+/** Polish (Polski)
+ * @author Sovq
+ */
 $messages['pl'] = array(
 	'category-exhibition-sorttype' => 'Sposób sortowania',
 	'category-exhibition-alphabetical' => 'Alfabetycznie',
 	'category-exhibition-mostvisited' => 'Najczęściej odwiedzane',
+	'category-exhibition-recentedits' => 'Ostatnio edytowane',
 	'category-exhibition-page-header' => 'Strony w kategorii „$1”',
 	'category-exhibition-subcategories-header' => 'Podkategorie',
 	'category-exhibition-media-header' => 'Pliki w kategorii „$1”',
 	'category-exhibition-blogs-header' => 'Wpisy w blogach',
+	'category-exhibition-display-old' => 'Widok - lista',
+	'category-exhibition-display-new' => 'Widok - galeria',
 );
 
 /** Portuguese (Português) */
@@ -356,12 +364,20 @@ $messages['ro'] = array(
 	'category-exhibition-blogs-header' => 'Postări pe blog',
 );
 
-/** Russian (Русский) */
+/** Russian (Русский)
+ * @author Kuzura
+ */
 $messages['ru'] = array(
 	'category-exhibition-sorttype' => 'Тип сортировки:',
+	'category-exhibition-alphabetical' => 'В алфавитном порядке',
+	'category-exhibition-mostvisited' => 'Самые посещаемые',
+	'category-exhibition-recentedits' => 'Недавно отредактированные',
 	'category-exhibition-page-header' => 'Страниц в категории «$1»',
 	'category-exhibition-subcategories-header' => 'Подкатегории',
+	'category-exhibition-media-header' => 'Файлы в категории "$1"',
 	'category-exhibition-blogs-header' => 'Сообщения блога',
+	'category-exhibition-display-old' => 'Просмотр категории списком',
+	'category-exhibition-display-new' => 'Просмотр категории-выставки',
 );
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)

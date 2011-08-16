@@ -26,6 +26,13 @@ $messages['af'] = array(
 	'sitemap-desc' => 'Genereer "sitemaps" vir die wiki',
 );
 
+/** Arabic (العربية)
+ * @author Malhargan
+ */
+$messages['ar'] = array(
+	'sitemap-desc' => 'توليد خرائط مواقع ليكي على الطاير',
+);
+
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */

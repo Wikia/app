@@ -191,7 +191,7 @@ $messages['br'] = array(
 	'editaccount-log-entry-pass' => 'en deus kemmet ger tremen ar gont $2',
 	'editaccount-log-entry-realname' => 'en deus kemmet anv gwir ar gont $2',
 	'editaccount-log-entry-close' => 'en deus diweredekaet ar gont $2',
-	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Diweredekaet eo bet ar gont.</div>',
+	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Diweredekaet eo bet ar gont-mañ en un doare hollek gant Wikia.</div>',
 	'right-editaccount' => 'Kemmañ penndibaboù implijerien all',
 );
 
@@ -252,6 +252,7 @@ $messages['cs'] = array(
 );
 
 /** German (Deutsch)
+ * @author Jan Luca
  * @author LWChris
  * @author The Evil IP address
  */
@@ -296,7 +297,7 @@ $messages['de'] = array(
 	'editaccount-log-entry-pass' => 'änderte das Passwort von Benutzer $2',
 	'editaccount-log-entry-realname' => 'änderte den tatsächlichen Namen von Benutzer $2',
 	'editaccount-log-entry-close' => 'deaktivierte das Konto $2',
-	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Dieses Benutzerkonto wurde deaktiviert.</div>',
+	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Dieses Benutzerkonto wurde global von Wikia deaktiviert.</div>',
 	'right-editaccount' => 'Bearbeite andere Benutzereinstellungen',
 );
 
@@ -385,7 +386,7 @@ $messages['es'] = array(
 	'editaccount-log-entry-pass' => 'Se ha cambiado la contraseña del usuario $2',
 	'editaccount-log-entry-realname' => 'Se ha cambiado el nombre real del usuario $2',
 	'editaccount-log-entry-close' => 'inhabilitado cuenta $2',
-	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Esta cuenta ha sido inhabilitada.</div>',
+	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Esta cuenta ha sido deshabilitada globalmente en Wikia.</div>',
 	'right-editaccount' => 'Editar las preferencias de otros usuarios',
 );
 
@@ -489,7 +490,7 @@ $messages['fr'] = array(
 	'editaccount-log-entry-pass' => 'a modifié le mot de passe du compte $2',
 	'editaccount-log-entry-realname' => 'a modifié le nom complet du compte $2',
 	'editaccount-log-entry-close' => 'a désactivé le compte $2§',
-	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Ce compte a été désactivé.</div>',
+	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Ce compte a été désactivé globalement par Wikia.</div>',
 	'right-editaccount' => "Modifier les préférences d'autres utilisateurs",
 );
 
@@ -629,7 +630,7 @@ $messages['ia'] = array(
 	'editaccount-log-entry-pass' => 'cambiava le contrasigno del usator $2',
 	'editaccount-log-entry-realname' => 'cambiava le nomine real del usator $2',
 	'editaccount-log-entry-close' => 'disactivava le conto $2',
-	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Iste conto ha essite disactivate.</div>',
+	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Iste conto ha essite disactivate globalmente per Wikia.</div>',
 	'right-editaccount' => 'Modificar le preferentias de altere usatores',
 );
 
@@ -748,7 +749,7 @@ $messages['lb'] = array(
 	'editaccount-nouser' => 'De Kont "$1" gëtt et net!',
 	'editaccount-log' => 'Logbuch vun de Benotzerkonten',
 	'editaccount-log-entry-realname' => 'huet de richtegen Numm vum Benotzer $2 geännert',
-	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Dëse Benotzerkont gouf desaktivéiert.</div>',
+	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Dëse Benotzerkont gouf global desaktivéiert.</div>',
 	'right-editaccount' => 'Aner Benotzerastellungen änneren',
 );
 
@@ -796,7 +797,7 @@ $messages['mk'] = array(
 	'editaccount-log-entry-pass' => 'променета лозинката на корисникот $2',
 	'editaccount-log-entry-realname' => 'променето вистинското име на корисникот $2',
 	'editaccount-log-entry-close' => 'оневозможена сметка $2',
-	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Оваа сметка е оневозможена.</div>',
+	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Оваа сметка е глобално оневозможена од Викија.</div>',
 	'right-editaccount' => 'Уредување на нагодувања на други корисници',
 );
 
@@ -818,7 +819,7 @@ $messages['ms'] = array(
 	'editaccount-label-pass' => 'Tetapkan kata laluan baru',
 	'editaccount-label-realname' => 'Tetapkan nama sebenar baru',
 	'editaccount-label-clearunsub' => 'Langganan dihentikan',
-	'editaccount-submit-email' => 'Simpan alamat e-emel',
+	'editaccount-submit-email' => 'Simpan alamat e-mel',
 	'editaccount-submit-pass' => 'Simpan kata laluan',
 	'editaccount-submit-realname' => 'Simpan nama sebenar',
 	'editaccount-submit-clearunsub' => 'Padamkan penghentian melanggan',
@@ -844,12 +845,13 @@ $messages['ms'] = array(
 	'editaccount-log-entry-pass' => 'mengubah kata laluan pengguna $2',
 	'editaccount-log-entry-realname' => 'mengubah nama sebenar pengguna $2',
 	'editaccount-log-entry-close' => 'mematikan akaun $2',
-	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Akaun ini telah dimatikan.</div>',
+	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Akaun ini telah dimatikan secara global oleh Wikia.</div>',
 	'right-editaccount' => 'Sunting keutamaan pengguna lain',
 );
 
 /** Dutch (Nederlands)
  * @author Siebrand
+ * @author Tjcool007
  */
 $messages['nl'] = array(
 	'editaccount' => 'Gebruiker bewerken',
@@ -902,7 +904,7 @@ Probeer het opnieuw of neem contact op met het Tech Team.',
 	'editaccount-log-entry-pass' => 'heeft het wachtwoord voor gebruiker $2 aangepast',
 	'editaccount-log-entry-realname' => 'heeft de echte naam voor gebruiker $2 aangepast',
 	'editaccount-log-entry-close' => 'heeft gebruiker $2 uitgeschakeld',
-	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Deze gebruiker is uitgeschakeld.</div>',
+	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Deze gebruiker is globaal uitgeschakeld door Wikia.</div>',
 	'right-editaccount' => 'Voorkeuren van gebruikers bewerken',
 );
 
@@ -944,6 +946,7 @@ $messages['no'] = array(
 	'editaccount-submit-pass' => 'Lagre passord',
 	'editaccount-submit-realname' => 'Lagre virkelig navn',
 	'editaccount-submit-clearunsub' => 'Tøm avslutt abonnement',
+	'editaccount-submit-cleardisable' => 'Fjern deaktiveringsflagget',
 	'editaccount-submit-close' => 'Lukk konto',
 	'editaccount-usage-close' => 'Du kan også deaktivere en brukerkonto ved å tilfeldiggjøre passordet og fjerne e-postadressen. Legg merke til at denne dataen går tapt og ikke vil kunne gjenopprettes.',
 	'editaccount-warning-close' => '<b>Forsiktig!</b> Du er i ferd med å permanent deaktivere kontoen til bruker <b>$1</b>. Dette kan ikke gjenopprettes. Er du sikker på at det er det du vil gjøre?',
@@ -953,6 +956,7 @@ $messages['no'] = array(
 	'editaccount-success-pass' => 'Endret passord for konto $1.',
 	'editaccount-success-realname' => 'Endret virkelig navn for konto $1.',
 	'editaccount-success-unsub' => 'Fjernet avslutt abonnement-delen for kontoen $1.',
+	'editaccount-success-disable' => 'Fjernet den deaktiverte delen for kontoen $1.',
 	'editaccount-success-close' => 'Deaktiverte konto $1.',
 	'editaccount-error-email' => 'E-post ble ikke endret. Prøv igjen eller kontakt Tech Team.',
 	'editaccount-error-pass' => 'Passord ble ikke endret. Prøv igjen eller kontakt Tech Team.',
@@ -960,13 +964,14 @@ $messages['no'] = array(
 	'editaccount-error-close' => 'Et problem oppsto under lukking av kontoen. Prøv igjen eller kontakt Tech Team.',
 	'editaccount-invalid-email' => '«$1» er ikke en gyldig e-postadresse!',
 	'editaccount-nouser' => 'Kontoen «$1» finnes ikke!',
+	'editaccount-remove-avatar-fail' => 'Problem med automatisk fjerning av avatar.',
 	'editaccount-log' => 'Brukerkontologg',
 	'editaccount-log-header' => 'Denne siden lister opp endringer gjort på brukerinnstillinger av Wikia Staff.',
 	'editaccount-log-entry-email' => 'endret e-post for bruker $2',
 	'editaccount-log-entry-pass' => 'endret passord for bruker $2',
 	'editaccount-log-entry-realname' => 'endret virkelig navn for bruker $2',
 	'editaccount-log-entry-close' => 'deaktiverte konto $2',
-	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Denne kontoen har blitt deaktivert.</div>',
+	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Denne kontoen har blitt deaktivert globalt av Wikia.</div>',
 	'right-editaccount' => 'Rediger andre brukeres innstillinger',
 );
 
@@ -1105,7 +1110,7 @@ $messages['pt'] = array(
 	'editaccount-log-entry-pass' => 'alterou a palavra-chave do utilizador $2',
 	'editaccount-log-entry-realname' => 'alterou o nome verdadeiro do utilizador $2',
 	'editaccount-log-entry-close' => 'desactivou a conta $2',
-	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Esta conta foi desactivada.</div>',
+	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Esta conta foi globalmente desactivada pela Wikia.</div>',
 	'right-editaccount' => 'Editar as preferências de outros utilizadores',
 );
 
@@ -1171,6 +1176,7 @@ $messages['ro'] = array(
 
 /** Russian (Русский)
  * @author Eleferen
+ * @author Kuzura
  * @author Lockal
  * @author Александр Сигачёв
  */
@@ -1188,9 +1194,11 @@ $messages['ru'] = array(
 	'editaccount-label-email' => 'Установка нового адреса эл. почты',
 	'editaccount-label-pass' => 'Установка нового пароля',
 	'editaccount-label-realname' => 'Установка нового настоящего имени',
+	'editaccount-label-clearunsub' => 'Отписаться',
 	'editaccount-submit-email' => 'Сохранить адрес эл. почты',
 	'editaccount-submit-pass' => 'Сохранить пароль',
 	'editaccount-submit-realname' => 'Сохранить настоящее имя',
+	'editaccount-submit-clearunsub' => 'Снять отказ от подписки',
 	'editaccount-submit-close' => 'Закрыть учётную запись',
 	'editaccount-usage-close' => 'Вы также можете приостановить действие учётной записи, заменив её пароль и удалив адрес электронной почты. Обратите внимание, что эти данные будет невозможно восстановить.',
 	'editaccount-warning-close' => '<b>Внимание!</b> Вы собираетесь навсегда отключить учётную запись пользователя <b>$1</b>. Это действие не может быть отменено. Вы уверены, что хотите сделать именно это?',
@@ -1199,6 +1207,7 @@ $messages['ru'] = array(
 	'editaccount-success-email-blank' => 'Адрес электронной почты учётной записи $1 успешно удалён.',
 	'editaccount-success-pass' => 'Пароль для учётной записи $1 успешно изменён.',
 	'editaccount-success-realname' => 'Настоящее имя для учётной записи $1 успешно изменено.',
+	'editaccount-success-unsub' => 'Успешно удалена блокировка подписки для учётной записи $1.',
 	'editaccount-success-close' => 'Учётная запись $1 успешно отключена.',
 	'editaccount-error-email' => 'Адрес эл. почты не был изменён. Попробуйте ещё раз или свяжитесь с технической командой.',
 	'editaccount-error-pass' => 'Пароль не был изменён. Попробуйте ещё раз или свяжитесь с технической командой.',
@@ -1212,11 +1221,11 @@ $messages['ru'] = array(
 	'editaccount-log-entry-pass' => 'изменил пароль участника $2',
 	'editaccount-log-entry-realname' => 'изменил настоящее имя участника $2',
 	'editaccount-log-entry-close' => 'отключил учётную запись $2',
-	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Эта учётная запись была отключена.</div>',
+	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Эта учётная запись была отключена на всей Викия.</div>',
 	'right-editaccount' => 'Редактировать настройки других участников',
 );
 
-/** Yakut (Саха тыла)
+/** Sakha (Саха тыла)
  * @author HalanTul
  */
 $messages['sah'] = array(
@@ -1461,9 +1470,50 @@ $messages['uk'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author Minh Nguyen
+ * @author Xiao Qiao
  */
 $messages['vi'] = array(
 	'editaccount' => 'Sửa đổi tài khoản',
+	'editaccount-desc' => 'Cho phép nhân viên quản lý thông tin tài khoản người dùng',
+	'editaccount-title' => 'Đặc biệt:EditAccount',
+	'editaccount-frame-manage' => 'Sửa đổi tài khoản',
+	'editaccount-frame-usage' => 'Lưu ý',
+	'editaccount-label-select' => 'Chọn một tài khoản người dùng',
+	'editaccount-submit-account' => 'Quản lý tài khoản',
+	'editaccount-frame-account' => 'Sửa đổi tài khoản người dùng: $1',
+	'editaccount-frame-close' => 'Vô hiệu hóa tài khoản người dùng: $1',
+	'editaccount-label-email' => 'Thiết lập địa chỉ e-mail mới',
+	'editaccount-label-pass' => 'Thiết lập mật khẩu mới',
+	'editaccount-label-realname' => 'Cung cấp tên thật',
+	'editaccount-label-clearunsub' => 'Hủy đăng ký',
+	'editaccount-submit-email' => 'Lưu địa chỉ e-mail',
+	'editaccount-submit-pass' => 'Lưu mật khẩu',
+	'editaccount-submit-realname' => 'Lưu tên thật',
+	'editaccount-submit-clearunsub' => 'Xoá bỏ đăng ký',
+	'editaccount-submit-close' => 'Đóng tài khoản',
+	'editaccount-usage-close' => 'Bạn cũng có thể vô hiệu hóa một tài khoản người dùng bằng cách xáo trộn mật khẩu và loại bỏ các địa chỉ e-mail. Lưu ý rằng dữ liệu này bị mất và sẽ không được khôi phục.',
+	'editaccount-warning-close' => '<b>Thận trọng!</b> Bạn đang định vô hiệu hóa vĩnh viễn tài khoản của người dùng <b>$1</b>. Điều này không thể quay trở lại được. Bạn có chắc chắn đó là những gì bạn muốn làm?',
+	'editaccount-status' => 'Thông điệp trạng thái',
+	'editaccount-success-email' => 'Thay đổi thành công địa chỉ e-mail cho tài khoản $1 đến $2 .',
+	'editaccount-success-email-blank' => 'Thành công gỡ bỏ địa chỉ thư điện tử cho tài khoản $1.',
+	'editaccount-success-pass' => 'Thay đổi thành công mật khẩu cho tài khoản $1 .',
+	'editaccount-success-realname' => 'Thay đổi thành công tên thật cho tài khoản $1 .',
+	'editaccount-success-unsub' => 'Thành công hủy bỏ nhỏ đăng ký cho tài khoản $1 .',
+	'editaccount-success-close' => 'Thành công vô hiệu hóa tài khoản $1 .',
+	'editaccount-error-email' => 'E-mail không được thay đổi. Thử lại hoặc liên hệ với đội ngũ công nghệ cao.',
+	'editaccount-error-pass' => 'Mật khẩu không được thay đổi. Thử lại hoặc liên hệ với đội ngũ công nghệ cao.',
+	'editaccount-error-realname' => 'Tên thật không thay đổi. Thử lại hoặc liên hệ với đội ngũ công nghệ cao.',
+	'editaccount-error-close' => 'Một vấn đề xảy ra khi đóng tài khoản. Thử lại hoặc liên hệ với đội ngũ công nghệ cao.',
+	'editaccount-invalid-email' => '"$1" không phải là một địa chỉ thư điện tử hợp lệ!',
+	'editaccount-nouser' => 'Tài khoản "$1" không tồn tại!',
+	'editaccount-log' => 'Nhật trình Tài khoản người dùng',
+	'editaccount-log-header' => 'Trang này liệt kê những thay đổi thông tin người dùng được thực hiện bởi Nhân viên Wikia',
+	'editaccount-log-entry-email' => 'thư điện tử đã thay đổi cho người dùng $2',
+	'editaccount-log-entry-pass' => 'đã thay đổi mật khẩu cho người dùng $2',
+	'editaccount-log-entry-realname' => 'đã thay đổi tên thật cho người dùng $2',
+	'editaccount-log-entry-close' => 'vô hiệu hóa tài khoản $2',
+	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Tài khoản này đã bị vô hiệu hoá trên toàn cầu bởi Wikia.</div>',
+	'right-editaccount' => 'Sửa đổi thông tin người dùng khác',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

@@ -1081,6 +1081,7 @@ $messages['ia'] = array(
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
  * @author Irwangatot
  * @author Kenrick95
  */
@@ -1114,7 +1115,7 @@ $messages['id'] = array(
 	'vet-warn3' => 'Harap berikan nama video yang ingin anda menambahkan',
 	'vet-imagelink' => '<b>Baru!</b> Sisipkan Video',
 	'vet-imagebutton' => 'Sisipkan Video',
-	'vet-license-cc' => 'dilisensikan dibawah Creative Commons Attribution-Share Alike 3,0',
+	'vet-license-cc' => 'dilisensikan di bawah Creative Commons Attribution-Share Alike 3,0',
 	'vet-name-incorrect' => 'Nama video ini berisi karakter tidak sah',
 	'vet-show-message' => 'tampilkan pesan',
 	'vet-hide-message' => 'sembunyikan pesan',
@@ -1141,9 +1142,18 @@ $messages['id'] = array(
 	'vet-protected' => 'Video ini dilindungi',
 );
 
-/** Igbo (Igbo) */
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
 $messages['ig'] = array(
-	'vet-find-btn' => 'Chöwá',
+	'vet-find-btn' => 'Chọwa',
+);
+
+/** Ingush (ГІалгІай Ğalğaj)
+ * @author Sapral Mikail
+ */
+$messages['inh'] = array(
+	'vet-gallery' => 'Суртанче',
 );
 
 /** Italian (Italiano)
@@ -1411,7 +1421,7 @@ $messages['mk'] = array(
 	'vet-non-existing' => 'Наведената видеоснимка не постои',
 	'vet-main-info' => '<i>Внесете ја полната URL-адреса од едно од поддржаните мрежни места</i>',
 	'vet-page-success' => 'Видеостраницата е успешно подновена. Може да треба да ја исчистите видеостраницата за да можете да ги видите промените.',
-	'vet-add-button' => 'Додај видеоснимка',
+	'vet-add-button' => 'Додај видео',
 	'vet-added-from-gallery' => 'видеоснимката е додадена од видеогалеријата',
 	'vet-see-all' => 'сè',
 	'vet-bad-search' => 'Грешка при вчитувањето на бараното.',
@@ -1687,7 +1697,7 @@ $messages['no'] = array(
 	'vet-imagebutton' => 'Sett inn videoer',
 	'vet-license-cc' => 'Lisensiert under Creative Commons Navngivelse-Del på samme vilkår 3.0',
 	'vet-name-incorrect' => 'Dette videonavnet inneholder ugyldige tegn',
-	'vet-description' => 'Skriv inn hele nettadressen fra noen av de støttede nettstedene. Se',
+	'vet-description' => 'Skriv inn hele nettadressen fra et av de støttede nettstedene. Se',
 	'vet-uploadtext' => "'''Dette skjemaet gjør at du raskt kan laste opp og vise filer i artikler.'''
 
 ''Se også [[Special:Log/upload|opplastingsloggen]] og en [[Special:ImageList|liste over alle opplastede filer]].''",
@@ -1697,7 +1707,7 @@ $messages['no'] = array(
 	'vet-show-license-msg' => 'vis lisenstekst',
 	'vet-max-thumb' => 'maks størrelse for miniatyrbilde overskredet, går tilbake til opprinnelig størrelse',
 	'vet-notallowed' => 'Du kan ikke sette inn videoer på denne wikien',
-	'vet-title' => 'Legg en video til artikkelen din',
+	'vet-title' => 'Legg til en video i artikkelen din',
 	'vet-supported' => 'Støttede videosteder:',
 	'vet-preview' => '<i>Denne forhåndsvisningen er ikke i riktig skala</i>',
 	'vet-bad-url' => 'Den oppgitte URL-en er ugyldig',
@@ -1807,6 +1817,7 @@ Podaj nazwę tego filmu. Może to być np. opis jego zawartości.',
 	'vet-imagebutton' => 'Wstaw filmy',
 	'vet-license-cc' => 'Udostępniane na licencji Creative Commons Uznanie autorstwa – Na tych samych warunkach 3.0',
 	'vet-name-incorrect' => 'Nazwa filmu zawiera niedozwolone znaki',
+	'vet-description' => 'Wprowadź pełny adres URL jednej z obsługiwanych witryn. Zobacz',
 	'vet-uploadtext' => "'''Ten formularz umożliwia szybkie przesyłanie i zamieszczanie plików w artykułach.'''
 
 ''Zobacz również [[Special:Log/upload|rejestr przesyłania]] oraz [[Special:ImageList|spis wszystkich przesłanych plików]].''",
@@ -1821,11 +1832,11 @@ Podaj nazwę tego filmu. Może to być np. opis jego zawartości.',
 	'vet-preview' => '<i>Podgląd nie został wyskalowany</i>',
 	'vet-bad-url' => 'Podany adres URL jest nieprawidłowy',
 	'vet-non-existing' => 'Podany film nie istnieje',
-	'vet-main-info' => '<i>Wyszukaj filmy lub wpisz pełny adres URL jednej ze wspieranych stron</i>',
+	'vet-main-info' => '<i>Wpisz pełny adres URL jednej z obsługiwanych witryn</i>',
 	'vet-page-success' => 'Strona filmu została zaktualizowana. Być może trzeba będzie odświeżyć stronę, aby zobaczyć zmianę.',
 	'vet-add-button' => 'Dodaj film',
 	'vet-added-from-gallery' => 'dodano film z galerii',
-	'vet-see-all' => 'pokaż wszystko',
+	'vet-see-all' => 'wszystko',
 	'vet-bad-search' => 'Błąd podczas ładowania zapytania.',
 	'vet-no-preview' => 'Nie możesz w trybie podglądu dodać filmu z artykułu.',
 	'vet-single-success' => 'Film został pomyślnie dodany do artykułu.',
@@ -2111,6 +2122,7 @@ $messages['ro'] = array(
 
 /** Russian (Русский)
  * @author Eleferen
+ * @author Kuzura
  * @author Lockal
  * @author Александр Сигачёв
  */
@@ -2120,7 +2132,7 @@ $messages['ru'] = array(
 	'vet-find' => 'Найти видео',
 	'vet-thiswiki' => 'Эта вики',
 	'vet-flickr' => 'Flickr',
-	'vet-upload-btn' => 'Перейти',
+	'vet-upload-btn' => 'Далее',
 	'vet-find-btn' => 'Найти',
 	'vet-flickr-inf' => 'Найдите свободные изображения с подходящей лицензией на Flickr и импортируйте их в свою вики.',
 	'vet-conflict-inf' => '<h1>К сожалению, видео с таким именем уже существует.</h1>Что вы хотите сделать с <b>$1</b>?',
@@ -2159,6 +2171,7 @@ $messages['ru'] = array(
 	'vet-imagebutton' => 'Вставить видео',
 	'vet-license-cc' => 'Лицензировано на условиях Creative Commons Attribution-Share Alike 3.0',
 	'vet-name-incorrect' => 'Это название видео содержит недопустимые символы',
+	'vet-description' => 'Введите полный URL любого из поддерживаемых сайтов. Смотреть',
 	'vet-uploadtext' => "'''Эта форма позволяет быстро загружать и отображать файлы в статьях.'''
 
 ''См. также [[Special:Log/upload|журнал загрузок]] и [[Special:ImageList|список всех загруженных файлов]].''",
@@ -2173,11 +2186,11 @@ $messages['ru'] = array(
 	'vet-preview' => '<i>Данный предварительный просмотр не в масштабе</i>',
 	'vet-bad-url' => 'Предоставленный URL является недействительным',
 	'vet-non-existing' => 'Предоставленного видео не существует',
-	'vet-main-info' => '<i>Найдите видео или введите полный URL с одного из поддерживаемых сайтов</i>',
+	'vet-main-info' => '<i>Введите полный URL любой из поддерживаемых сайтов</i>',
 	'vet-page-success' => 'Страница видео была успешно обновлена. Возможно, вам придется сбросить кэш страницы, чтобы увидеть изменения.',
 	'vet-add-button' => 'Добавить видео',
 	'vet-added-from-gallery' => 'видео добавлено из видеогалереи',
-	'vet-see-all' => 'показать все',
+	'vet-see-all' => 'всё',
 	'vet-bad-search' => 'Ошибка при загрузке поискового запроса.',
 	'vet-no-preview' => 'Вы не можете добавить видео из статьи в режиме предпросмотра',
 	'vet-single-success' => 'Видео было успешно размещено в этой статье',
@@ -2468,10 +2481,11 @@ $messages['yi'] = array(
 
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Hydra
+ * @author Xiaomingyan
  */
 $messages['zh-hans'] = array(
 	'vet-thiswiki' => '这个维基',
-	'vet-upload-btn' => '去',
+	'vet-upload-btn' => '下一步',
 	'vet-find-btn' => '寻找',
 	'vet-name' => '名',
 	'vet-size' => '大小',

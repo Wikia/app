@@ -157,11 +157,13 @@ $messages['ang'] = array(
 );
 
 /** Arabic (العربية)
+ * @author Malhargan
  * @author Meno25
  * @author Mido
  * @author OsamaK
  */
 $messages['ar'] = array(
+	'userrenametool' => 'تغيير اسم المستخدم',
 	'renameuser' => 'إعادة تسمية مستخدم',
 	'userrenametool-desc' => "يضيف [[Special:Renameuser|صفحة خاصة]] لإعادة تسمية مستخدم (يحتاج إلى صلاحية ''renameuser'')",
 	'userrenametool-old' => 'اسم المستخدم الحالي:',
@@ -3243,7 +3245,7 @@ $messages['rue'] = array(
 	'right-renameuser' => 'Переменованя хоснователїв',
 );
 
-/** Yakut (Саха тыла)
+/** Sakha (Саха тыла)
  * @author HalanTul
  */
 $messages['sah'] = array(
@@ -3364,9 +3366,11 @@ $messages['sk'] = array(
 $messages['sl'] = array(
 	'userrenametool' => 'Spreminjanje uporabniškega imena',
 	'renameuser' => 'Preimenovanje uporabnika',
+	'userrenametool-desc' => "Doda [[Special:UserRenameTool|posebno stran]] za preimenovanje uporabnika (potrebna je pravica ''renameuser'') in obdela vse sorodne podatke",
 	'userrenametool-old' => 'Trenutno uporabniško ime:',
 	'userrenametool-new' => 'Novo uporabniško ime:',
 	'userrenametool-reason' => 'Razlog za preimenovanje:',
+	'userrenametool-reserve' => 'Blokiraj staro uporabniško ime pred nadaljnjo uporabo',
 	'userrenametool-warnings' => 'Opozorila:',
 	'userrenametool-confirm' => 'Da, preimenuj uporabnika',
 	'userrenametool-submit' => 'Spremeni uporabniško ime',
@@ -3374,6 +3378,14 @@ $messages['sl'] = array(
 	'userrenametool-errorexists' => 'Uporabnik »<nowiki>$1</nowiki>« že obstaja.',
 	'userrenametool-errorinvalid' => '»<nowiki>$1</nowiki>« ni veljavno uporabniško ime.',
 	'userrenametool-errorinvalidnew' => '»<nowiki>$1</nowiki>« ni veljavno novo uporabniško ime.',
+	'userrenametool-errorblocked' => 'Uporabnika <nowiki>$1</nowiki> je blokiral <nowiki>$2</nowiki> za $3.',
+	'userrenametool-errorlocked' => 'Uporabnik <nowiki>$1</nowiki> je zaklenjen.',
+	'userrenametool-errorbot' => 'Uporabnik <nowiki>$1</nowiki> je bot.',
+	'userrenametool-warn-table-missing' => 'Tabela »<nowiki>$2</nowiki>« v zbirki podatkov »<nowiki>$1</nowiki>« ne obstaja.',
+	'userrenametool-info-wiki-finished' => '$1 je preimenoval(-a) $2 v $3 dne $4.
+Razlog: »$5«.',
+	'userrenametool-info-wiki-finished-problems' => '$1 je preimenoval(-a) $2 v $3 dne $4 z napakami.
+Razlog: »$5«.',
 	'userrenametool-success' => 'Uporabnik »$1« je preimenovan v »$2«.',
 	'userrenametool-confirm-intro' => 'Ali to res želite storiti?',
 	'userrenametool-confirm-yes' => 'Da',
@@ -3381,6 +3393,7 @@ $messages['sl'] = array(
 	'userrenametool-page-moved' => 'Stran $1 je bila prestavljena na $2.',
 	'userrenametool-page-unmoved' => 'Strani $1 ni mogoče prestaviti na $2.',
 	'userrenametool-logpage' => 'Dnevnik preimenovanj uporabnikov',
+	'userrenametool-logpagetext' => 'Prikazan je dnevnik sprememb uporabniških imen.',
 	'userrenametool-logentry' => 'preimenoval(-a) $1 v »$2«',
 	'userrenametool-log' => '$1 {{PLURAL:$1|urejanje|urejanji|urejanja|urejanj}}.
 Razlog: $2',
@@ -3751,7 +3764,7 @@ Pababatiran ka sa pamamagitan ng e-liham kapag nabuo na ito.',
 	'right-renameuser' => 'Muling pangalanan ang mga tagagamit',
 );
 
-/** Tonga (lea faka-Tonga) */
+/** Tongan (lea faka-Tonga) */
 $messages['to'] = array(
 	'renameuser' => 'Liliu hingoa ʻo e ʻetita',
 	'userrenametool-old' => 'Hingoa motuʻa ʻo e ʻetita:',

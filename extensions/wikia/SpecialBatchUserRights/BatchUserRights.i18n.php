@@ -84,6 +84,7 @@ Zbývající část stránky bude možné spustit tak, že lze snadno zobrazit, 
 
 /** German (Deutsch)
  * @author LWChris
+ * @author SVG
  * @author The Evil IP address
  */
 $messages['de'] = array(
@@ -95,7 +96,7 @@ Aus Sicherheitsgründen ist die Liste der hinzufügbaren Gruppen in der Erweiter
 Bitte wende dich an einen Systemadministrator, falls du andere Gruppen für das Hinzufügen benötigst.',
 	'batchuserrights-single-progress-update' => '{{PLURAL:$1|Gruppe|Gruppen}} <strong>$2</strong> hinzugefügt.',
 	'batchuserrights-add-groups' => '{{PLURAL:$1|Ein Benutzer|$1 Benutzer}} wird {{PLURAL:$2|der folgenden Gruppe|den folgenden Gruppen}} hinzugefügt: <strong>$3</strong>',
-	'batchuserrights-userload-error' => "Konnte den Benutzer „'''$1''“ nicht laden.",
+	'batchuserrights-userload-error' => "Konnte den Benutzer „'''$1'''“ nicht laden.",
 	'batchuserrights-no-groups' => 'Du hast keine Gruppen ausgewählt.
 Dies wird nichts verändern.
 Der Rest der Seite wird nur geladen, sodass du einfach sehen kannst ob einer der Benutzer nicht geladen werden konnte.',
@@ -356,6 +357,7 @@ $messages['ru'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'batchuserrights-single-progress-update' => 'Lade till {{PLURAL:$1|grupp|grupperna}} till <strong>$2</strong>.',
 	'batchuserrights-userload-error' => "Kunde inte läsa in användaren \"'''\$1'''\".",
 );
 

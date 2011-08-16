@@ -308,9 +308,13 @@ $messages['ro'] = array(
 	'contentfeeds-firstfewarticles-tag-title' => 'Titlu',
 );
 
-/** Russian (Русский) */
+/** Russian (Русский)
+ * @author Kuzura
+ */
 $messages['ru'] = array(
+	'contentfeeds-firstfewarticles-tag-header' => 'Создайте ваши первые несколько страниц!',
 	'contentfeeds-firstfewarticles-tag-title' => 'Заголовок',
+	'contentfeeds-firstfewarticles-tag-next' => 'Далее',
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Ошибка: Требуется заголовок страницы',
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Ошибка: Требуется тело страницы',
 );

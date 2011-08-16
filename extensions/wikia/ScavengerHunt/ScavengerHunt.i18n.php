@@ -183,6 +183,11 @@ $messages['qqq'] = array(
 	'scavengerhunt-desc' => '{{desc}}',
 );
 
+/** Message documentation (Message documentation) */
+$messages['qqq'] = array(
+	'scavengerhunt-desc' => '{{desc}}',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
@@ -385,6 +390,7 @@ $messages['es'] = array(
 	'scavengerhunt-game-has-been-enabled' => 'El juego seleccionado ha sido habilitado.',
 	'scavengerhunt-game-has-been-disabled' => 'El juego seleccionado ha sido deshabilitado.',
 	'scavengerhunt-game-has-not-been-saved' => 'El juego Scavenger Hunt no ha sido guardado.',
+	'scavengerhunt-edit-token-mismatch' => 'Token inválido. Inténtalo nuevamente.',
 	'scavengerhunt-entry-form-name' => 'Tu nombre:',
 	'scavengerhunt-entry-form-email' => 'Tu dirección de correo electrónico:',
 	'scavengerhunt-entry-form-submit' => 'Enviar entrada',
@@ -467,6 +473,37 @@ $messages['fr'] = array(
 	'scavengerhunt-entry-form-name' => 'Votre nom :',
 	'scavengerhunt-entry-form-email' => 'Votre adresse de courriel :',
 	'scavengerhunt-entry-form-submit' => 'Soumettre l’entrée',
+);
+
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'scavengerhunt-list-header-name' => 'Nome do xogo',
+	'scavengerhunt-list-header-is-enabled' => 'Activado?',
+	'scavengerhunt-list-header-actions' => 'Accións',
+	'scavengerhunt-list-enabled' => 'Activado',
+	'scavengerhunt-list-disabled' => 'Desactivado',
+	'scavengerhunt-list-edit' => 'editar',
+	'scavengerhunt-label-dialog-check' => '(mostrar o diálogo)',
+	'scavengerhunt-label-image-check' => '(mostrar a imaxe)',
+	'scavengerhunt-label-general' => 'Xeral',
+	'scavengerhunt-label-name' => 'Nome:',
+	'scavengerhunt-label-article-hidden-image' => 'Imaxe agochada:',
+	'scavengerhunt-label-entry-form' => 'Formulario de inscrición',
+	'scavengerhunt-button-add' => 'Engadir un xogo',
+	'scavengerhunt-button-save' => 'Gardar',
+	'scavengerhunt-button-disable' => 'Desactivar',
+	'scavengerhunt-button-enable' => 'Activar',
+	'scavengerhunt-button-delete' => 'Borrar',
+	'scavengerhunt-button-export' => 'Exportar a CSV',
+	'scavengerhunt-form-error' => 'Corrixa os seguintes erros:',
+	'scavengerhunt-form-error-no-landing-title' => 'Introduza o título da páxina inicial.',
+	'scavengerhunt-form-error-invalid-title' => 'O título da seguinte páxina non se atopou: "$1".',
+	'scavengerhunt-form-error-landing-button-text' => 'Introduza o texto do botón de inicio.',
+	'scavengerhunt-entry-form-name' => 'O seu nome:',
+	'scavengerhunt-entry-form-email' => 'O seu enderezo de correo electrónico:',
+	'scavengerhunt-entry-form-submit' => 'Enviar a entrada',
 );
 
 /** Hungarian (Magyar)
@@ -575,10 +612,20 @@ $messages['ku-latn'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
+	'scavengerhunt-list-header-name' => 'Numm vum Spill',
+	'scavengerhunt-list-header-actions' => 'Aktiounen',
+	'scavengerhunt-list-edit' => 'änneren',
+	'scavengerhunt-label-dialog-check' => '(visuellen Editeur weisen - pre-alpha, fonctionnéiert nach net)',
+	'scavengerhunt-label-image-check' => '(Bild weisen)',
 	'scavengerhunt-label-name' => 'Numm:',
+	'scavengerhunt-label-article-hidden-image' => 'Verstopptent Bild:',
+	'scavengerhunt-button-add' => 'E Spill derbäisetzen',
 	'scavengerhunt-button-save' => 'Späicheren',
 	'scavengerhunt-button-delete' => 'Läschen',
+	'scavengerhunt-button-export' => 'Als CSV exportéieren',
+	'scavengerhunt-form-error' => 'Verbessert w.e.g. dës Feeler:',
 	'scavengerhunt-entry-form-name' => 'Ären Numm:',
+	'scavengerhunt-entry-form-email' => 'Är Mailadress:',
 );
 
 /** Macedonian (Македонски)
@@ -718,6 +765,7 @@ $messages['ms'] = array(
 );
 
 /** Dutch (Nederlands)
+ * @author SPQRobin
  * @author Siebrand
  */
 $messages['nl'] = array(
@@ -729,7 +777,7 @@ $messages['nl'] = array(
 	'scavengerhunt-list-enabled' => 'Ingeschakeld',
 	'scavengerhunt-list-disabled' => 'Uitgeschakeld',
 	'scavengerhunt-list-edit' => 'bewerken',
-	'scavengerhunt-label-dialog-check' => '(dialoog weergeven)',
+	'scavengerhunt-label-dialog-check' => '(visuele editor weergeven - pre-alpha, werkt nog niet)',
 	'scavengerhunt-label-image-check' => '(afbeelding weergeven)',
 	'scavengerhunt-label-general' => 'Algemeen',
 	'scavengerhunt-label-name' => 'Naam:',
@@ -783,6 +831,8 @@ $messages['nl'] = array(
 	'scavengerhunt-entry-form-name' => 'Uw naam:',
 	'scavengerhunt-entry-form-email' => 'Uw e-mailadres:',
 	'scavengerhunt-entry-form-submit' => 'Inschrijvingsformulier opslaan',
+	'scavengerhunt-quit-game-button-cancel' => 'Annuleren',
+	'scavengerhunt-label-entry-form-username' => 'Gebruikersnaam',
 );
 
 /** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
@@ -799,26 +849,29 @@ $messages['nl-informal'] = array(
 $messages['no'] = array(
 	'scavengerhunt-desc' => 'Tillater opprettelse av et skattejakt-spill på en wiki',
 	'scavengerhunt' => 'Grensesnitt for Skattejakt',
+	'scavengerhunt-common-modal-title' => 'Skattejakt',
 	'scavengerhunt-list-header-name' => 'Spillnavn',
-	'scavengerhunt-list-header-is-enabled' => 'Aktivert?',
+	'scavengerhunt-list-header-is-enabled' => 'Aktivert? (klikk for å skifte)',
 	'scavengerhunt-list-header-actions' => 'Handlinger',
 	'scavengerhunt-list-enabled' => 'Aktivert',
 	'scavengerhunt-list-disabled' => 'Deaktivert',
 	'scavengerhunt-list-edit' => 'rediger',
-	'scavengerhunt-label-dialog-check' => '(vis dialog)',
+	'scavengerhunt-label-dialog-check' => '(vis visuell redaktør – pre-alfa, fungerer ikke ennå)',
 	'scavengerhunt-label-image-check' => '(vis bilde)',
 	'scavengerhunt-label-general' => 'Generelt',
 	'scavengerhunt-label-name' => 'Navn:',
-	'scavengerhunt-label-landing-title' => 'Navn på destinasjonsside (artikkeltittel på denne wikien):',
+	'scavengerhunt-label-landing-title' => 'Navn på destinasjonsside (URL til artikkel på en hvilken som helst wiki):',
 	'scavengerhunt-label-landing-button-text' => 'Tekst for knapp på destinasjonsside:',
+	'scavengerhunt-label-landing-button-x' => 'X-posisjon for destinasjonsside-knappen:',
+	'scavengerhunt-label-landing-button-y' => 'Y-posisjon for destinasjonsside-knappen:',
 	'scavengerhunt-label-starting-clue' => 'Startsledetråd-popup',
 	'scavengerhunt-label-starting-clue-title' => 'Popup-tittel:',
-	'scavengerhunt-label-starting-clue-text' => 'Popup-tekst: <i>(tekst i &lt;div&gt; vil ha lenkefarge)</i>',
+	'scavengerhunt-label-starting-clue-text' => 'Popup-tekst:',
 	'scavengerhunt-label-starting-clue-image' => 'Popup-bilde (URL-adresse):',
 	'scavengerhunt-label-starting-clue-button-text' => 'Tekst på popup-knapp:',
 	'scavengerhunt-label-starting-clue-button-target' => 'Mål for popup-knapp (URL-adresse):',
-	'scavengerhunt-label-article' => 'Side i spillet',
-	'scavengerhunt-label-article-title' => 'Sidetittel (artikkeltittel på denne wikien):',
+	'scavengerhunt-label-article' => 'Artikkel (side i spillet)',
+	'scavengerhunt-label-article-title' => 'Sidetittel (URL til artikkel på en hvilken som helst wiki):',
 	'scavengerhunt-label-article-hidden-image' => 'Skjult bilde:',
 	'scavengerhunt-label-article-clue-title' => 'Tittel for popup-ledetråd:',
 	'scavengerhunt-label-article-clue-text' => 'Tekst for popup-ledetråd:',
@@ -830,6 +883,7 @@ $messages['no'] = array(
 	'scavengerhunt-label-entry-form-text' => 'Popup-tekst:',
 	'scavengerhunt-label-entry-form-image' => 'Popup-bilde (URL-adresse):',
 	'scavengerhunt-label-entry-form-question' => 'Popup-spørsmål:',
+	'scavengerhunt-label-entry-form-button-text' => 'Knapptekst:',
 	'scavengerhunt-label-goodbye' => 'Farvel-popup',
 	'scavengerhunt-label-goodbye-title' => 'Popup-tittel:',
 	'scavengerhunt-label-goodbye-text' => 'Popup-melding:',
@@ -840,16 +894,34 @@ $messages['no'] = array(
 	'scavengerhunt-button-enable' => 'Aktiver',
 	'scavengerhunt-button-delete' => 'Slett',
 	'scavengerhunt-button-export' => 'Eksporter til CSV',
+	'scavengerhunt-button-add-section' => 'Legg til et nytt trinn i jakten',
+	'scavengerhunt-button-remove-section' => 'Fjern dette trinnet',
 	'scavengerhunt-form-error' => 'Vennligst korriger følgende feil:',
-	'scavengerhunt-form-error-no-landing-title' => 'Vennligst oppgi tittelen på startsiden.',
+	'scavengerhunt-form-error-no-landing-title' => 'Vennligst oppgi navnet på destinasjonssiden (gyldig URL).',
 	'scavengerhunt-form-error-invalid-title' => 'Følgende sidetittel ble ikke funnet: «$1».',
-	'scavengerhunt-form-error-landing-button-text' => 'Vennligst oppgi teksten på startknappen.',
+	'scavengerhunt-form-error-landing-button-text' => 'Vennligst oppgi tekst til knappen på destinasjonssiden.',
+	'scavengerhunt-form-error-landing-button-position' => 'Vennligst oppgi posisjonen til knappen på destinasjonssiden.',
 	'scavengerhunt-form-error-starting-clue' => 'Vennligst fyll ut alle feltene i seksjonen for startsledetråden.',
 	'scavengerhunt-form-error-entry-form' => 'Vennligst fyll ut alle feltene i påmeldingsskjemaet.',
 	'scavengerhunt-form-error-goodbye' => 'Vennligst fyll ut alle feltene i seksjonen for farvel-popup.',
 	'scavengerhunt-form-error-no-article-title' => 'Vennligst oppgi alle artikkeltitler.',
+	'scavengerhunt-form-error-duplicated-article-title' => 'Trinn i jakten kan ikke ha like titler',
 	'scavengerhunt-form-error-article-hidden-image' => 'Vennligst oppgi alle adresser for skjulte bilder.',
 	'scavengerhunt-form-error-article-clue' => 'Vennligst fyll ut all informasjom om artikkelledetråder.',
+	'scavengerhunt-form-error-clue' => 'Vennligst fyll inn all informasjon om artikkelens gratulasjonsmelding.',
+	'scavengerhunt-form-error-progressBarHintLabel-sprite-empty' => 'Vennligst velg en gyldig størrelse for spriten for ledetrådsetiketten.',
+	'scavengerhunt-form-error-startPopupSprite-sprite-empty' => 'Størrelsen på startpopup-spriten er ugyldig',
+	'scavengerhunt-form-error-finishPopupSprite-sprite-empty' => 'Størrelsen på sluttpopup-spriten er ugyldig',
+	'scavengerhunt-form-error-progressBarBackgroundSprite-sprite-empty' => 'Størrelsen på fremdriftslinje-spriten er ugyldig',
+	'scavengerhunt-form-error-progressBarExitSprite-sprite-empty' => 'Fremdriftslinjens avsluttningsknapp-sprite har en ugyldig størrelse.',
+	'scavengerhunt-form-error-article-spriteNotFound-sprite-empty' => 'Vennligst velg en gyldig størrelse for skattejaktens gjenstandssprite',
+	'scavengerhunt-form-error-article-spriteInProgressBar-sprite-empty' => 'Vennligst velg en gyldig størrelse for skattejaktens sprite for fremdriftslinje-gjenstand',
+	'scavengerhunt-form-error-article-spriteInProgressBarHover-sprite-empty' => 'Vennligst velg en gyldig størrelse for skattejaktens sprite for fremdriftslinje-gjenstand musepekeren holdes over',
+	'scavengerhunt-form-error-no-sprite-image' => 'Vennligst oppgi den fullstendige banen til bildefilen',
+	'scavengerhunt-form-error-article-spriteInProgressBarNotFound-sprite-empty' => 'Vennligst velg en gyldig størrelse for skattejaktens sprite for ikke-funnet fremdriftslinje-gjenstand',
+	'scavengerhunt-form-error-no-articles' => 'Jakten må ha minst én ledetråd/artikkel.',
+	'scavengerhunt-form-error-invalid-url' => 'Vennligst oppgi en gyldig URL.',
+	'scavengerhunt-form-error-clueColor' => 'Vennligst oppgi en gyldig farge i #XXX-format',
 	'scavengerhunt-game-has-been-created' => 'Nytt Skattejakt-spill har blitt opprettet.',
 	'scavengerhunt-game-has-been-saved' => 'Skattejakt-spillet har blitt lagret.',
 	'scavengerhunt-game-has-been-enabled' => 'Valgte Skattejakt-spill har blitt aktivert.',
@@ -859,6 +931,65 @@ $messages['no'] = array(
 	'scavengerhunt-entry-form-name' => 'Ditt navn:',
 	'scavengerhunt-entry-form-email' => 'Din e-postadresse:',
 	'scavengerhunt-entry-form-submit' => 'Send inn oppføring',
+	'scavengerhunt-label-sprite-img' => 'Bane for bildesprite',
+	'scavengerhunt-label-sprite-X' => 'Posisjon for element',
+	'scavengerhunt-label-sprite-X1' => 'Sprite øverst til venstre',
+	'scavengerhunt-label-sprite-X2' => 'Sprite nederst til høyre',
+	'scavengerhunt-game-has-been-deleted' => 'Jaktspillet har blitt slettet',
+	'scavengerhunt-game-more-to-go' => 'Kun # igjen.',
+	'scavengerhunt-label-progress-bar' => 'Fremdriftslinje',
+	'scavengerhunt-quit-game-content' => 'Er du sikker på at du vil avslutte skattejakten?',
+	'scavengerhunt-switch-game-content' => 'Vil du avslutte den nåværende skattejakten og starte denne nye?',
+	'scavengerhunt-quit-game-button-quit' => 'Avslutt',
+	'scavengerhunt-quit-game-button-cancel' => 'Avbryt',
+	'scavengerhunt-quit-game-button-stay' => 'Fortsett å spille',
+	'scavengerhunt-label-progressBarHintLabel' => 'Koordinator for ledetrådsetikett',
+	'scavengerhunt-label-entry-form-email' => 'Bruker-e-post',
+	'scavengerhunt-label-entry-form-username' => 'Brukernavn',
+	'scavengerhunt-label-progressBarBackgroundSprite' => 'Bakgrunnssprite for fremdriftslinje',
+	'scavengerhunt-label-progressBarExitSprite' => 'Spritekoordinater for avsluttningsknapp',
+	'scavengerhunt-label-startPopupSprite' => 'Koordinater for popup-bildesprite',
+	'scavengerhunt-label-spriteNotFound' => 'Spritekoordinator for jaktgjenstand',
+	'scavengerhunt-label-spriteInProgressBar' => 'Koordinater for sprite for fremdriftslinje-gjenstand',
+	'scavengerhunt-label-spriteInProgressBarHover' => 'Koordinater for sprite når musepekeren holdes over fremdriftslinje-gjenstand',
+	'scavengerhunt-label-spriteInProgressBarNotFound' => 'Gjenstand for fremdriftslinje ikke funnet',
+	'scavengerhunt-label-finishPopupSprite' => 'Koordinater for popup-bildesprite',
+	'scavengerhunt-label-clue-color' => 'Skriftfarge',
+	'scavengerhunt-label-clue-size' => 'Skriftstørrelse',
+	'scavengerhunt-label-clue-font' => 'Skriftdekorasjoner',
+	'scavengerhunt-label-article-congrats' => 'Gratulasjonsmelding',
+	'scavengerhunt-editor-tip-name' => 'Dette er navnet som vises i listen over alle jakter.',
+	'scavengerhunt-editor-tip-landing-title' => 'Dette er siden brukerne går til for å begynne jakten.',
+	'scavengerhunt-editor-tip-landing-button-text' => 'Dette er tekstetiketten på «start»-knappen (f.eks., «Trykk her for å starte jakten!»)',
+	'scavengerhunt-editor-tip-sprite-img' => 'Dette er lenken til spritefilen som inneholder alle jaktens bilder. For å unngå å avdekke bildet for andre wiki-brukere, last den opp på en ekstern URL.',
+	'scavengerhunt-editor-tip-progressBarBackgroundSprite' => 'Bruk disse koordinatene for å indikere: <br />
+(1) hvor spritefilen skal posisjoneres<br />
+(2) hvilke del av spritefilen som er det aktive bildeelementet.',
+	'scavengerhunt-editor-tip-progressBarExitSprite' => 'MERK: Alle koordinator er relative til referansepunktet i det nedre høyre hjørnet av siden',
+	'scavengerhunt-editor-tip-progressBarHintLabel' => '&nbsp;',
+	'scavengerhunt-editor-tip-starting-clue-title' => 'Dette er tittelen på den modale dialogboksen som setter jakten i gang.',
+	'scavengerhunt-editor-tip-starting-clue-text' => 'Dette er teksten som orienterer spilleren og begynner jakten.',
+	'scavengerhunt-editor-tip-starting-clue-button-text' => 'Denne teksten er etiketten på knappen som tar brukeren til siden med den første gjenstanden.',
+	'scavengerhunt-editor-tip-starting-clue-button-target' => 'Dette er adressen til siden med den første gjenstanden.',
+	'scavengerhunt-editor-tip-startPopupSprite' => 'Hvis et bilde er ønsket i dialogboksen for den første ledetråden, vennligst oppgi koordinatene her.',
+	'scavengerhunt-editor-tip-articleTitle' => 'Dette er siden med den neste gjenstanden.',
+	'scavengerhunt-editor-tip-spriteNotFound' => 'Denne seksjonen definerer bilde som skal vises som ledetråden.',
+	'scavengerhunt-editor-tip-spriteInProgressBar' => 'Denne seksjonen definerer ikonet som skal vises i fremdriftslinjen når gjenstanden har blitt funnet.',
+	'scavengerhunt-editor-tip-spriteInProgressBarHover' => 'Denne seksjonen definerer ikonet som skal vises i fremdriftslinjen når man holder musepekeren over.',
+	'scavengerhunt-editor-tip-spriteInProgressBarNotFound' => 'Denne seksjonen definerer ikonet som vises i fremdriftslinjen når gjenstanden ennå ikke er funnet.',
+	'scavengerhunt-editor-tip-article-clue-text' => '&nbsp;',
+	'scavengerhunt-editor-tip-article-congrats' => '&nbsp;',
+	'scavengerhunt-editor-tip-article-title' => 'Dette er siden med den neste gjenstanden.',
+	'scavengerhunt-editor-tip-entry-form-title' => 'Dette er tittelen på popup-dialogboksen som vises på slutten av jakten.',
+	'scavengerhunt-editor-tip-entry-form-text' => 'Dette er teksten i popup-dialogboksen som vises på slutten av jakten.',
+	'scavengerhunt-editor-tip-entry-form-question' => 'Hvis du vil vise et fritt tekstfelt hvor brukerne besvarer et spørsmål eller skriver en kommentar, vennligst oppgi teksten her. Hvis du ikke ønsker dette feltet, la det stå tomt.',
+	'scavengerhunt-editor-tip-entry-form-email' => 'Dette er teksten som instruerer brukeren til å oppgi e-postadressen sin. N.B. Dette feltet er valgfritt; hvis det blir stående blankt vil ikke feltet vises for brukeren.',
+	'scavengerhunt-editor-tip-entry-form-username' => 'Dette er teksten som instruerer brukeren til å oppgi brukernavn. N.B. Dette feltet er valgfritt; hvis det blir stående blankt vil ikke feltet vises for brukeren.',
+	'scavengerhunt-editor-tip-finishPopupSprite' => 'Hvis du vil vise et bilde i den siste popup-meldingen, definer det her.',
+	'scavengerhunt-editor-tip-goodbye-title' => 'Dette er tittelen på den siste popup-meldingen fra jakten.',
+	'scavengerhunt-editor-tip-goodbye-text' => 'Dette er teksten for den siste popup-melding fra jakten.',
+	'scavengerhunt-editor-tip-clue-color' => 'Farger bør oppgis med et heksadesimal som #F00',
+	'scavengerhunt-editor-tip-entry-form-button-text' => 'Dette er teksten på knappen som vises i dialogboksen på slutten av jakten.',
 );
 
 /** Pashto (پښتو)
@@ -974,6 +1105,24 @@ $messages['sr-ec'] = array(
 	'scavengerhunt-button-delete' => 'Обриши',
 );
 
+/** Swedish (Svenska)
+ * @author WikiPhoenix
+ */
+$messages['sv'] = array(
+	'scavengerhunt-list-header-name' => 'Spelnamn',
+	'scavengerhunt-list-header-is-enabled' => 'Aktiverat?',
+	'scavengerhunt-label-name' => 'Namn:',
+	'scavengerhunt-button-add' => 'Lägg till ett spel',
+	'scavengerhunt-button-save' => 'Spara',
+	'scavengerhunt-button-disable' => 'Inaktivera',
+	'scavengerhunt-button-enable' => 'Aktivera',
+	'scavengerhunt-button-delete' => 'Radera',
+	'scavengerhunt-button-export' => 'Exportera till CSV',
+	'scavengerhunt-form-error' => 'Vänligen rätta följande fel:',
+	'scavengerhunt-entry-form-name' => 'Ditt namn:',
+	'scavengerhunt-entry-form-email' => 'Din e-postadress:',
+);
+
 /** Telugu (తెలుగు)
  * @author Veeven
  */
@@ -981,7 +1130,7 @@ $messages['te'] = array(
 	'scavengerhunt-list-header-name' => 'ఆట పేరు',
 	'scavengerhunt-list-header-actions' => 'చర్యలు',
 	'scavengerhunt-label-name' => 'పేరు:',
-	'scavengerhunt-label-article-title' => 'పుట శీర్షిక (ఈ వికీ లోని వ్యాసపు శీర్షిక):',
+	'scavengerhunt-label-article-title' => 'పుట శీర్షిక (ఏ వికీ నుండైనా వ్యాసపు శీర్షిక):',
 	'scavengerhunt-button-save' => 'భద్రపరచు',
 	'scavengerhunt-button-delete' => 'తొలగించు',
 	'scavengerhunt-entry-form-name' => 'మీ పేరు:',
@@ -1068,3 +1217,4 @@ $messages['zh-hans'] = array(
 	'scavengerhunt-entry-form-name' => '您的名字：',
 	'scavengerhunt-entry-form-email' => '您的电子邮件地址：',
 );
+

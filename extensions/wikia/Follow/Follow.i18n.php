@@ -260,7 +260,8 @@ $messages['bg'] = array(
 	'wikiafollowedpages-special-heading-mediawiki' => 'МедияУики страници ($1)',
 	'wikiafollowedpages-special-heading-media' => 'Снимки и видео ($1)',
 	'wikiafollowedpages-special-blog-by' => 'от $1',
-	'wikiafollowedpages-userpage-heading' => 'Страниците, които следя',
+	'wikiafollowedpages-userpage-heading' => 'Следени страници',
+	'wikiafollowedpages-userpage-hide-tooltip' => 'Скриване на публичния списък със следени страници',
 	'wikiafollowedpages-userpage-more' => 'Повече',
 	'wikiafollowedpages-userpage-hide' => 'скриване',
 );
@@ -611,6 +612,7 @@ $messages['el'] = array(
  * @author Bola
  * @author Crazymadlover
  * @author Danke7
+ * @author Mor
  * @author Sanbec
  * @author VegaDark
  */
@@ -635,7 +637,7 @@ Agregar páginas a esta lista haciendo click en "{{int:watch}}" arriba de una p�
 	'wikiafollowedpages-special-showall' => 'Mostrar todo >',
 	'wikiafollowedpages-special-showmore' => 'Mostrar más',
 	'wikiafollowedpages-special-title' => 'Páginas seguidas',
-	'wikiafollowedpages-special-delete-tooltip' => 'remover esta página',
+	'wikiafollowedpages-special-delete-tooltip' => 'Quitar esta página',
 	'wikiafollowedpages-special-hidden' => 'Este usuario ha elegido ocultar {{GENDER:$1|su|su|su}} lista de páginas seguidas a la vista del público.',
 	'wikiafollowedpages-special-hidden-unhide' => 'Dejar de ocultar esta lista.',
 	'wikiafollowedpages-special-blog-by' => 'por $1',
@@ -1260,8 +1262,15 @@ $messages['ig'] = array(
 	'wikiafollowedpages-special-heading-user' => "Ihü ọ'bànifé ($1)",
 	'wikiafollowedpages-special-namespace' => '(ihü $1)',
 	'wikiafollowedpages-special-blog-by' => 'shí $1',
-	'wikiafollowedpages-userpage-more' => 'Nà nké ozór',
+	'wikiafollowedpages-userpage-more' => 'Ọzȯ kwa',
 	'wikiafollowedpages-userpage-hide' => 'zofù',
+);
+
+/** Ingush (ГІалгІай Ğalğaj)
+ * @author Sapral Mikail
+ */
+$messages['inh'] = array(
+	'wikiafollowedpages-special-heading-category' => '($1) цатегаш',
 );
 
 /** Japanese (日本語)
@@ -1385,6 +1394,7 @@ $messages['lb'] = array(
 	'wikiafollowedpages-masthead' => 'Iwwerwaachte Säiten',
 	'wikiafollowedpages-special-title-userbar' => 'Iwwerwaachte Säiten',
 	'prefs-wikiafollowedpages-prefs-advanced' => 'Erweidert Optiounen',
+	'prefs-wikiafollowedpages-prefs-watchlist' => 'Nëmmen Iwwerwaachungslëscht',
 	'follow-categoryadd-summary' => "Säit gouf bäi d'Kategorie derbäigesat",
 	'wikiafollowedpages-userpage-heading' => 'Säiten, déi ech iwwerwaachen',
 	'wikiafollowedpages-userpage-more' => 'Méi',
@@ -1924,7 +1934,9 @@ Vennligst kom på besøk og rediger ofte...
 </p>',
 );
 
-/** Polish (Polski) */
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
 $messages['pl'] = array(
 	'wikiafollowedpages-special-heading-category' => 'Kategorie ($1)',
 	'wikiafollowedpages-special-heading-article' => 'Artykuły ($1)',
@@ -1935,8 +1947,8 @@ $messages['pl'] = array(
 	'wikiafollowedpages-special-heading-templates' => 'Szablony ($1)',
 	'wikiafollowedpages-special-heading-mediawiki' => 'Strony MediaWiki ($1)',
 	'wikiafollowedpages-special-heading-media' => 'Grafiki i filmy ($1)',
-	'wikiafollowedpages-special-empty' => 'Lista stron obserwowanych przez tego użytkownika jest pusta.
-Dodaj strony do tej listy klikając "{{int:watch}}" na górze strony.',
+	'wikiafollowedpages-special-empty' => 'Twoja lista stron obserwowanych jest pusta.
+Dodaj strony do listy klikając „{{int:watch}}“ na górze strony.',
 	'wikiafollowedpages-special-anon' => 'Proszę, [[Special:Signup|zaloguj się]] żeby stworzyć lub przeglądać swoją listę obserwowanych stron.',
 	'oasis-wikiafollowedpages-special-seeall' => 'Pokaż wszystkie >',
 	'wikiafollowedpages-special-seeall' => 'Pokaż wszystkie >',
@@ -2335,10 +2347,12 @@ $messages['ro'] = array(
 /** Russian (Русский)
  * @author Eleferen
  * @author G0rn
+ * @author Kuzura
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
 	'follow-desc' => 'Улучшения для функциональности списка наблюдения',
+	'prefs-basic' => 'Основные параметры',
 	'wikiafollowedpages-special-heading-category' => 'Категории ($1)',
 	'wikiafollowedpages-special-heading-article' => 'Статьи ($1)',
 	'wikiafollowedpages-special-heading-blogs' => 'Блоги и сообщения ($1)',
@@ -2349,8 +2363,8 @@ $messages['ru'] = array(
 	'wikiafollowedpages-special-heading-mediawiki' => 'Страницы MediaWiki ($1)',
 	'wikiafollowedpages-special-heading-media' => 'Изображения и видео ($1)',
 	'wikiafollowedpages-special-namespace' => '($1 cтраница)',
-	'wikiafollowedpages-special-empty' => 'Список отслеживаемых этим пользователем статей пуст.
-Для добавления страниц в этот список нажмите «{{int:watch}}» наверху этой страницы.',
+	'wikiafollowedpages-special-empty' => 'Ваш список отслеживаемых страинц пуст.
+Добавьте страницы в список, нажав "{{int:watch}}" наверху страницы.',
 	'wikiafollowedpages-special-anon' => 'Пожалуйста, [[Special:Signup|представьтесь]] для создания или просмотра своего списка отслеживаемых страниц.',
 	'oasis-wikiafollowedpages-special-seeall' => 'Показать все >',
 	'wikiafollowedpages-special-seeall' => 'Показать все >',
@@ -2366,6 +2380,8 @@ $messages['ru'] = array(
 	'wikiafollowedpages-special-title-userbar' => 'Отслеживаемые страницы',
 	'tog-enotiffollowedpages' => 'Уведомлять по эл. почте об изменениях страниц, которые я отслеживаю',
 	'tog-enotiffollowedminoredits' => 'Уведомлять меня по эл. почте о малых правках в страницах, которые я отслеживаю',
+	'prefs-wikiafollowedpages-prefs-advanced' => 'Дополнительные параметры',
+	'prefs-wikiafollowedpages-prefs-watchlist' => 'Отслеживаемые страницы только',
 	'tog-hidefollowedpages' => 'Спрятать мой список отслеживаемых страниц от публичного просмотра',
 	'follow-categoryadd-summary' => 'Страница добавлена в категорию',
 	'follow-bloglisting-summary' => 'Блог опубликован на странице блога',

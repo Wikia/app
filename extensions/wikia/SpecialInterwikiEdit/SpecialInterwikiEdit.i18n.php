@@ -228,6 +228,7 @@ $messages['it'] = array(
  * @author Tommy6
  */
 $messages['ja'] = array(
+	'interwikiedit' => 'インターウィキの編集',
 	'iwedit-title' => 'インターウィキの編集',
 	'iwedit-language-interwikis' => '言語間インターウィキのみ',
 	'iwedit-all-interwikis' => '全てのインターウィキ',
@@ -387,9 +388,11 @@ $messages['pt-br'] = array(
 );
 
 /** Russian (Русский)
+ * @author Kuzura
  * @author Lockal
  */
 $messages['ru'] = array(
+	'interwikiedit' => 'Редактор интервики ссылок',
 	'iwedit-title' => 'Редактор интервики',
 	'iwedit-language-interwikis' => 'только языковые интервики',
 	'iwedit-all-interwikis' => 'все интервики',

@@ -206,12 +206,14 @@ $messages['cy'] = array(
 );
 
 /** German (Deutsch)
+ * @author Inkowik
  * @author LWChris
  */
 $messages['de'] = array(
 	'wikiavideo-reverted' => 'Das Video $1 wurde erfolgreich zurückgesetzt. Zurück zu $2.',
 	'wikiavideo-unreverted' => 'Du hast keine Berechtigung, $1 rückgängig zu machen.',
 	'wikiavideo-added' => 'Video $1 hinzugefügt',
+	'wikiavideo-updated' => 'Video [[$1]] aktualisiert',
 	'wikiavideo-back' => 'zurück',
 	'wikiavideo-create' => 'Video hinzufügen',
 	'wikiavideo-replace' => 'Ersetze Video',
@@ -222,6 +224,7 @@ $messages['de'] = array(
 	'wikiavideo-not-supported' => 'Dieses Skin unterstützt kein Einfügen von Videos in Galerien vom Ansichtsmodus aus.',
 	'wikiavideo-deleted-old' => "Die Version von '''[$1 $2]''' vom $4, $3 wurde gelöscht.",
 	'wikiavideo-intro-old' => "Du löschst die Version von '''[$1 $5]''' vom [$4 $3, $2].",
+	'wikiavideo-details' => '$1 ($2 Pixel, Anbieter: <a href="$3" class="external" target="_blank">$4</a>)',
 );
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)
@@ -246,11 +249,13 @@ $messages['de-formal'] = array(
 /** Spanish (Español)
  * @author Bola
  * @author Translationista
+ * @author VegaDark
  */
 $messages['es'] = array(
 	'wikiavideo-reverted' => 'El vídeo $1 fue revertido satisfactoriamente. Vuelve a $2.',
 	'wikiavideo-unreverted' => 'No tienes permisos para revertir $1.',
 	'wikiavideo-added' => 'añadido vídeo $1',
+	'wikiavideo-updated' => 'vídeo actualizado [[$1]]',
 	'wikiavideo-back' => 'volver',
 	'wikiavideo-create' => 'Añadir Vídeo',
 	'wikiavideo-replace' => 'Reemplazar Vídeo',
@@ -261,6 +266,7 @@ $messages['es'] = array(
 	'wikiavideo-not-supported' => 'Esta piel no soporta insertar vídeos desde este modo de vista en las galerías.',
 	'wikiavideo-deleted-old' => "La versión de '''[$1 $2]''' así como de $4, $3 ha sido borrada.",
 	'wikiavideo-intro-old' => "Estás borrando la versión de '''[$1 $5]''' así como la de [$4 $3, $2].",
+	'wikiavideo-details' => '$1 ($2 píxeles, proveedor: <a href="$3" class="external" target="_blank">$4</a>)',
 );
 
 /** Basque (Euskara)
@@ -301,6 +307,7 @@ $messages['fr'] = array(
 	'wikiavideo-reverted' => 'La vidéo $1 a été révoquée avec succès. Revenir à $2.',
 	'wikiavideo-unreverted' => "Vous n'avez pas la permission de révoquer $1.",
 	'wikiavideo-added' => 'a ajouté la vidéo $1',
+	'wikiavideo-updated' => 'mise à jour vidéo [[$1]]',
 	'wikiavideo-back' => 'revenir',
 	'wikiavideo-create' => 'Ajouter une vidéo',
 	'wikiavideo-replace' => 'Remplacer la vidéo',
@@ -311,6 +318,7 @@ $messages['fr'] = array(
 	'wikiavideo-not-supported' => "Cet habillage ne supporte pas l'insertion de vidéos dans des galeries depuis le mode vue.",
 	'wikiavideo-deleted-old' => "La version de '''[$1 $2]''' du $3 à $4 a été supprimée.",
 	'wikiavideo-intro-old' => "Vous êtes en train de supprimer la version de '''[$1 $5]''' en date du [$4 $2 à $3].",
+	'wikiavideo-details' => '$1 ($2 pixels, hébergeur : <a href="$3" class="external" target="_blank">$4</a>)',
 );
 
 /** Galician (Galego)
@@ -381,6 +389,7 @@ $messages['ia'] = array(
 	'wikiavideo-reverted' => 'Le video $1 ha essite revertite con successo. Retorna a $2.',
 	'wikiavideo-unreverted' => 'Tu non ha le permission de reverter $1.',
 	'wikiavideo-added' => 'addeva le video $1',
+	'wikiavideo-updated' => 'actualisava le video [[$1]]',
 	'wikiavideo-back' => 'retornar',
 	'wikiavideo-create' => 'Adder video',
 	'wikiavideo-replace' => 'Reimplaciar video',
@@ -391,6 +400,7 @@ $messages['ia'] = array(
 	'wikiavideo-not-supported' => 'Iste apparentia non supporta le insertion de videos in galerias ex le modo de visualisation.',
 	'wikiavideo-deleted-old' => "Le version de '''[$1 $2]''' del $3 a $4 ha essite delite.",
 	'wikiavideo-intro-old' => "Tu es al puncto de deler le version de '''[$1 $5]''' del [$4 $3 a $2].",
+	'wikiavideo-details' => '$1 ($2 pixels, fornitor: <a href="$3" class="external" target="_blank">$4</a>)',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -511,6 +521,7 @@ $messages['mk'] = array(
 	'wikiavideo-reverted' => 'Видеоснимката $1 е успешно вратена. Вратете се на $2.',
 	'wikiavideo-unreverted' => 'Немате дозвола да ја вратите видеоснимката $1.',
 	'wikiavideo-added' => 'додадена видеоснимката $1',
+	'wikiavideo-updated' => 'Сменето ведео [[$1]]',
 	'wikiavideo-back' => 'назад',
 	'wikiavideo-create' => 'Додај видеоснимка',
 	'wikiavideo-replace' => 'Замени видеоснимка',
@@ -521,6 +532,7 @@ $messages['mk'] = array(
 	'wikiavideo-not-supported' => 'Овој изглед не поддржува вметнување видеоснимки од прегледниот режим во галерии.',
 	'wikiavideo-deleted-old' => "Верзијата на '''[$1 $2]''' од $4, $3 е избришана.",
 	'wikiavideo-intro-old' => "Ја бришете верзијата на '''[$1 $5]''' од [$4 $3, $2].",
+	'wikiavideo-details' => '$1 ($2 пиксели, добавувач: <a href="$3" class="external" target="_blank">$4</a>)',
 );
 
 /** Malay (Bahasa Melayu)
@@ -530,6 +542,7 @@ $messages['ms'] = array(
 	'wikiavideo-reverted' => 'Video $1 berjaya dikembalikan ke asal. Kembali ke $2.',
 	'wikiavideo-unreverted' => 'Anda tidak dibenarkan mengembalikan $1 ke asal.',
 	'wikiavideo-added' => 'menambahkan video $1',
+	'wikiavideo-updated' => 'mengemas kini video [[$1]]',
 	'wikiavideo-back' => 'kembali',
 	'wikiavideo-create' => 'Tambahkan Video',
 	'wikiavideo-replace' => 'Tukar Video',
@@ -540,6 +553,7 @@ $messages['ms'] = array(
 	'wikiavideo-not-supported' => 'Kulit ini tidak menyokong penyisipan video daripada mod papar ke dalam galeri.',
 	'wikiavideo-deleted-old' => "Versi '''[$1 $2]''' pada $4, $3 telah dihapuskan.",
 	'wikiavideo-intro-old' => "Anda akan menghapuskan versi '''[$1 $5]''' pada [$4 $3, $2].",
+	'wikiavideo-details' => '$1 ($2 piksel, pembekal: <a href="$3" class="external" target="_blank">$4</a>)',
 );
 
 /** Burmese (မြန်မာဘာသာ)
@@ -585,6 +599,7 @@ $messages['no'] = array(
 	'wikiavideo-reverted' => 'Videoen $1 ble tilbakestilt. Gå tilbake til $2.',
 	'wikiavideo-unreverted' => 'Du har ikke tillatelse til å tilbakestille $1.',
 	'wikiavideo-added' => 'la til video $1',
+	'wikiavideo-updated' => 'oppdaterte videoen [[$1]]',
 	'wikiavideo-back' => 'tilbake',
 	'wikiavideo-create' => 'Legg til video',
 	'wikiavideo-replace' => 'Erstatt video',
@@ -595,6 +610,7 @@ $messages['no'] = array(
 	'wikiavideo-not-supported' => 'Dette utseendet støtter ikke innsetting av videoer i gallerier fra visningsmodus.',
 	'wikiavideo-deleted-old' => "Versjonen av '''[$1 $2]''' fra $4, $3 har blitt slettet.",
 	'wikiavideo-intro-old' => "Du sletter versjonen av '''[$1 $5]''' fra [$4 $3, $2].",
+	'wikiavideo-details' => '$1 ($2 piksler, levert av: <a href="$3" class="external" target="_blank">$4</a>)',
 );
 
 /** Punjabi (ਪੰਜਾਬੀ)
@@ -677,6 +693,7 @@ $messages['pt'] = array(
 	'wikiavideo-reverted' => 'O vídeo $1 foi revertido com sucesso. Voltar a $2.',
 	'wikiavideo-unreverted' => 'Não tem as permissões para reverter $1.',
 	'wikiavideo-added' => 'adicionou o vídeo $1',
+	'wikiavideo-updated' => 'actualizou o vídeo [[$1]]',
 	'wikiavideo-back' => 'voltar',
 	'wikiavideo-create' => 'Adicionar Vídeo',
 	'wikiavideo-replace' => 'Substituir Vídeo',
@@ -687,6 +704,7 @@ $messages['pt'] = array(
 	'wikiavideo-not-supported' => 'Este tema não permite inserir vídeos nas galerias a partir o modo de visionamento.',
 	'wikiavideo-deleted-old' => "A versão do vídeo '''[$1 $2]''' de $4, às $3 foi eliminada.",
 	'wikiavideo-intro-old' => "Está a eliminar a versão do vídeo '''[$1 $5]''' de [$4 $3, às $2].",
+	'wikiavideo-details' => '$1 ($2 pixels, fornecedor: <a href="$3" class="external" target="_blank">$4</a>)',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -721,6 +739,7 @@ $messages['ro'] = array(
 
 /** Russian (Русский)
  * @author Eleferen
+ * @author Kuzura
  * @author Lockal
  * @author Александр Сигачёв
  */
@@ -728,6 +747,7 @@ $messages['ru'] = array(
 	'wikiavideo-reverted' => 'Видео $1 было успешно возвращено. Вернуться на $2.',
 	'wikiavideo-unreverted' => 'У вас недостаточно прав для отката $1.',
 	'wikiavideo-added' => 'добавил видео $1',
+	'wikiavideo-updated' => 'обновлено видео [[$1]]',
 	'wikiavideo-back' => 'назад',
 	'wikiavideo-create' => 'Добавить видео',
 	'wikiavideo-replace' => 'Заменить видео',
@@ -738,6 +758,7 @@ $messages['ru'] = array(
 	'wikiavideo-not-supported' => 'Эта тема оформления не поддерживает вставку видео в галерею в режиме просмотра.',
 	'wikiavideo-deleted-old' => "Версия '''[$1 $2]''' от $4 $3 была удалена.",
 	'wikiavideo-intro-old' => "Вы удаляете версию '''[$1 $5]''' от [$4 $3, $2].",
+	'wikiavideo-details' => '$1 ($2 пикселей, провайдер: <a href="$3" class="external" target="_blank">$4</a>)',
 );
 
 /** Sinhala (සිංහල)

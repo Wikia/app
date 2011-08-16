@@ -34,7 +34,6 @@ $messages['en'] = array(
  */
 $messages['qqq'] = array(
 	'rte-edgecase-redirect' => '{{Identical|Redirect}}',
-	'editor-template-list' => 'This should not be translated, it is meant to be adjusted per wiki',
 );
 
 /** Afrikaans (Afrikaans)
@@ -310,6 +309,18 @@ $messages['ja'] = array(
 	'rte-no-js-fallback' => 'JavaScript をオフにした状態ではリッチテキストエディタを利用できません。ブラウザの設定で JavaScript を有効にするか[[Special:Preferences|個人設定]]で旧式のメディアウィキエディタに切り替えてください。',
 	'rte-edgecase-info-title' => 'ソースモードである必要があります',
 	'rte-edgecase-info' => '記事に含まれるコードが複雑なため、リッチテキストモードによる編集は無効にされています。',
+	'rte-edgecase-comment' => 'HTML コメント',
+	'rte-edgecase-triplecurls' => 'テンプレートのパラメータ',
+	'rte-edgecase-nowysiwyg' => '"no WYSIWYG" コマンド',
+	'rte-edgecase-template-with-link' => 'パラメータにリンクが指定されているテンプレート',
+	'rte-edgecase-syntax' => '許可されていない構文',
+	'rte-edgecase-image-with-link' => 'キャプションにリンクを含む画像',
+	'rte-edgecase-redirect' => 'リダイレクト',
+	'rte-edgecase-templateintable' => '内部にテンプレート呼び出しを含むテーブル',
+	'rte-edgecase-unclosed-tags' => '閉じられていない HTML タグ',
+	'enablerichtexteditor' => 'リッチテキストエディタを有効にする',
+	'rte-enablerichtexteditormessage' => 'リッチテキストエディタを有効にしました',
+	'prefs-rte' => 'リッチテキストエディタ',
 );
 
 /** Colognian (Ripoarisch)
@@ -535,6 +546,7 @@ $messages['pt-br'] = array(
 
 /** Russian (Русский)
  * @author Eleferen
+ * @author Kuzura
  * @author Lockal
  * @author Ytsukeng Fyvaprol
  * @author Александр Сигачёв
@@ -557,6 +569,7 @@ $messages['ru'] = array(
 	'enablerichtexteditor' => 'Включить улучшенный редактор текста',
 	'rte-enablerichtexteditormessage' => 'Улучшенный редактор текста включен!',
 	'rte-first-run-notice' => 'Мы сделали несколько улучшений в редактор. Чтобы узнать больше, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news посетите страницу] с описанием изменений.',
+	'prefs-rte' => 'Визуальный текстовый редактор (RTE)',
 );
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)

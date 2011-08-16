@@ -189,10 +189,11 @@ $messages['ca'] = array(
 /** German (Deutsch)
  * @author Kghbln
  * @author LWChris
+ * @author SVG
  * @author The Evil IP address
  */
 $messages['de'] = array(
-	'textregex' => 'Text RegEx',
+	'textregex' => 'Text Regex',
 	'textregex-desc' => '[[Special:textregex/XXXX|Filtere]] ungewollte Phrasen, basierend auf regulären Ausdrücken, aus geänderten Seiten aus',
 	'textregex-page-title' => 'Liste von unerwünschten Ausdrücken',
 	'textregex-error-unblocking' => 'Fehler bei Entsperrung ($1).
@@ -236,6 +237,7 @@ Versuchen Sie es noch einmal.',
 /** Spanish (Español)
  * @author Crazymadlover
  * @author Locos epraix
+ * @author Mor
  * @author Pertile
  */
 $messages['es'] = array(
@@ -247,11 +249,11 @@ Por favor intente nuevamente.',
 	'textregex-currently-blocked' => "'''Frases actualmente bloqueadas:'''",
 	'textregex_nocurrently-blocked' => 'No se encontraron frases bloqueada',
 	'textregex-addedby-user' => 'agregado por $1 en $2',
-	'textregex-remove-url' => '[{{SERVER}}$1&id=$2 remover]',
+	'textregex-remove-url' => '[{{SERVER}}$1&id=$2 quitar]',
 	'textregex-stats-url' => '[{{SERVER}}$1&id=$2 estadísticas]',
 	'textregex-unblock-succ' => 'Desbloqueo exitoso',
 	'textregex-block-succ' => 'Bloqueo exitoso',
-	'textregex-unblock-message' => "Frase '''$1''' ha sido removido de las expresiones indeseadas.",
+	'textregex-unblock-message' => "La frase '''$1''' ha sido eliminada de las expresiones indeseadas.",
 	'textregex-block-message' => "Frase '''$1''' ha sido agregado a las expresiones indeseadas.",
 	'textregex-regex-block' => 'Frase a bloquear:',
 	'textregex-submit-regex' => 'Agregar frase',

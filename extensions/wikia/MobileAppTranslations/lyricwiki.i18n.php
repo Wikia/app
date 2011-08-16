@@ -182,6 +182,7 @@ $messages['de'] = array(
 	'about-feedback-0' => 'Möchtest du uns etwas zur App sagen? Schick eine E-Mail: %s',
 	'about-heading-rate' => 'Bitte bewerte die App!',
 	'about-rate-0-android' => 'Wenn du diese App magst, gib ihr bitte 5 Sterne im Android Market!',
+	'about-rate-0-ios' => 'Wenn du diese App magst, gib ihr bitte 5 Sterne im Android Market!',
 	'gracenote-takedown' => 'Mist! Leider sind wir im Moment nicht berechtigt, dir den gesamten Songtext für dieses Lied anzuzeigen (das trifft auf weniger als 1% unserer Songs zu). Bitte versuch es nächste Woche noch einmal.',
 	'lyrics-artist-byline' => 'von %s',
 	'ringtone-matcher-by-song' => 'Hol dir %s als Klingelton auf dein Handy',
@@ -221,6 +222,7 @@ $messages['es'] = array(
 	'about-feedback-0' => '¿Quiere darnos su opinión acerca de la aplicación? Envíenos un email: %s',
 	'about-heading-rate' => '¡Por favor, valore esta aplicación!',
 	'about-rate-0-android' => 'Si le gusta esta aplicación, por favor ¡dale 5 estrellas en el Android Market!',
+	'about-rate-0-ios' => '¡Si te gusta esta aplicación, por favor valórala con 5 estrellas en la Tienda de Aplicaciones!',
 	'gracenote-takedown' => '¡Qué mala suerte! En este momento no tenemos permiso para mostrar la letra completa de esta canción (esto sucede en menos del 1% de nuestras canciones). Por favor, inténtelo de nuevo la próxima semana.',
 	'lyrics-artist-byline' => 'por %s',
 	'ringtone-matcher-by-song' => 'Enviar tono %s a su teléfono.',
@@ -260,6 +262,7 @@ $messages['fi'] = array(
 
 /** French (Français)
  * @author Verdy p
+ * @author Wyz
  */
 $messages['fr'] = array(
 	'app-loading' => 'Chargement...',
@@ -292,6 +295,7 @@ $messages['fr'] = array(
 	'about-feedback-0' => "Vous souhaitez nous dire quelque chose à propos de l'application ? Envoyez-nous un e-mail : %s",
 	'about-heading-rate' => "Évaluez l'application SVP !",
 	'about-rate-0-android' => "Si vous aimez cette application, veuillez la noter 5 étoiles sur l’''Android Market'' !",
+	'about-rate-0-ios' => 'Si vous aimez cette application alors veuillez lui donner 5 étoiles sur l’App Store !',
 	'gracenote-takedown' => "Désolé ! Nous n'avons pas les droits pour afficher les paroles complètes pour cette chanson actuellement (cela n'arrive que pour moins d'1% de nos chansons). Veuillez réessayer la semaine prochaine.",
 	'lyrics-artist-byline' => 'par %s',
 	'ringtone-matcher-by-song' => 'Envoyer la sonnerie %s sur votre mobile',
@@ -363,9 +367,17 @@ $messages['ia'] = array(
 	'about-feedback-0' => 'Vole dicer nos qualcosa a proposito del application? Invia un e-mail a: %s',
 	'about-heading-rate' => 'Evaluta le application per favor!',
 	'about-rate-0-android' => 'Si iste application te place, per favor evaluta lo con 5 stellas in Android Market!',
+	'about-rate-0-ios' => 'Si iste application te place, per favor evaluta lo con 5 stellas in App Store!',
 	'gracenote-takedown' => 'Guai! Nos non ha le licentia pro monstrar le texto complete de iste cantion al momento (isto eveni pro minus de 1% de nostre cantiones). Per favor proba lo de novo le proxime septimana.',
 	'lyrics-artist-byline' => 'per %s',
 	'ringtone-matcher-by-song' => 'Inviar le tono de appello %s a tu telephono',
+);
+
+/** Ingush (ГІалгІай Ğalğaj)
+ * @author Sapral Mikail
+ */
+$messages['inh'] = array(
+	'app-tab-browse' => 'А...I',
 );
 
 /** Italian (Italiano) */
@@ -400,7 +412,7 @@ $messages['it'] = array(
 	'ringtone-matcher-by-song' => 'Invia la suoneria di %s sul tuo cellulare',
 );
 
-/** Korean
+/** Korean (한국어)
  * @author Youree Jin
  */
 $messages['ko'] = array(
@@ -409,33 +421,24 @@ $messages['ko'] = array(
 	'app-tab-about' => '대해서',
 	'app-tab-browse' => 'A..Z',
 	'app-tab-sotd' => '오늘의 노래',
-
-	//  Networking / Connectivity Issues
 	'app-async-error-title' => '오류',
 	'app-async-error-message' => '연결에 잠시 문제가 생겼습니다. 다음에 다시 시도하여 주시기 바랍니다.',
 	'app-nonetwork-dialog-title' => '네트워크 연결이 안되어있습니다.',
 	'app-nonetwork-dialog-message' => '네트워크 연결이 감지되지 않았습니다.',
-
 	'app-nonetwork-dialog-close-button' => '예',
-
-	//  Search tab
 	'search-go' => '검색',
-	'search-hint-text' => '예 를 들면: \'John Lennon:Imagine\'',
+	'search-hint-text' => "예 를 들면: 'John Lennon:Imagine'",
 	'search-no-match-found' => '매치가 없습니다',
 	'search-no-match-found-query' => '%s 찾음',
 	'search-results-title' => '%s 찾으신 결과',
-
-	//  Login dialog
 	'login-label' => '로그인 LyricWiki',
 	'login-username-hint' => '아이디',
 	'login-password-hint' => '비밀번호',
 	'login-submit-button' => '로그인',
-
-	//  About tab
 	'about-heading' => 'LyricWiki',
 	'about-credits' => '%s 으로 부터',
 	'about-heading-tips' => '찾다',
-	'about-tips-0' => '예술가 이름을 타입 하기 시작 하시면 저절로 완성 될 것입니다.' ,
+	'about-tips-0' => '예술가 이름을 타입 하기 시작 하시면 저절로 완성 될 것입니다.',
 	'about-tips-1' => '메인 화면에 있는 사진은 지금 아이튠 상위9위에 드는 노래들입니다.',
 	'about-heading-licensing' => '저작권',
 	'about-licensing-0' => '이 앱은 백프로 합법입니다. 저작료는 이미 지불 되었습니다.',
@@ -444,8 +447,6 @@ $messages['ko'] = array(
 	'about-heading-rate' => '레벨을 매겨주세요',
 	'about-rate-0-android' => '만약 이 앱이 마음에 드시면, 앤드로이드 마켓이 숫자 5라고 매겨주세요.',
 	'about-rate-0-ios' => '만약 이 앱이 마음에 드시면, 애플 마켓이 숫자 5라고 매겨주세요.',
-
-	//  Lyrics window
 	'gracenote-takedown' => '죄송합니다. 아직 가사를 저작권상 표기할수 없습니다 (저희 노래의 1프로만 그런 경우가 있습니다) 다음주에 다시 확인하십시요.',
 	'lyrics-artist-byline' => '%s 으로 부터',
 	'ringtone-matcher-by-song' => '핸드폰에 %s 링톤을 보내세요',
@@ -455,7 +456,13 @@ $messages['ko'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
+	'app-tab-search' => 'Sichen',
+	'app-tab-about' => 'Iwwer',
+	'app-async-error-title' => 'Ups',
 	'app-nonetwork-dialog-close-button' => 'OK',
+	'search-go' => 'Lass!',
+	'login-username-hint' => 'Benotzernumm',
+	'login-password-hint' => 'Passwuert',
 );
 
 /** Macedonian (Македонски)
@@ -492,6 +499,7 @@ $messages['mk'] = array(
 	'about-feedback-0' => 'Сакате да ни кажете нешто во врска со програмот? Пишете на адресата %s',
 	'about-heading-rate' => 'Оценете го програмот!',
 	'about-rate-0-android' => 'Ако ви се допаѓа програмов, тогаш дајте му 5 ѕвездички на Пазарот на Android!',
+	'about-rate-0-ios' => 'Ако ви се допаѓа програмов, тогаш дајте му 5 ѕвездички на Пазарот на Apple!',
 	'gracenote-takedown' => 'Ау! Нажалост, во моментов немаме дозвола да го прикажуваме целиот текст на песнава (вакви се помалку од 1% нашите песни). Обидете се повторно за една недела.',
 	'lyrics-artist-byline' => 'од %s',
 	'ringtone-matcher-by-song' => 'Испрати го ѕвоното %s на мојот мобилен',
@@ -531,6 +539,7 @@ $messages['ms'] = array(
 	'about-feedback-0' => 'Ada apa untuk beritahu kami tentang aplikasi kami? E-mel kepada kami: %s',
 	'about-heading-rate' => 'Tolong nilai aplikasi ini!',
 	'about-rate-0-android' => 'Jika anda suka aplikasi ini, sila berikan 5 bintang di Android Market ^_^',
+	'about-rate-0-ios' => 'Jika anda suka aplikasi ini, sila berikan 5 bintang di Android Market!',
 	'gracenote-takedown' => 'Maaf! Kami tidak mendapat lesen untuk memaparkan lirik lagu ini selengkapnya buat masa ini (begitulah keadaannya bagi tak lebih 1% lagu dalam simpanan kami). Sila cuba lagi minggu depan.',
 	'lyrics-artist-byline' => 'oleh %s',
 	'ringtone-matcher-by-song' => 'Hantar Nada Dering %s Kepada Telefon Bimbit Anda',
@@ -620,6 +629,7 @@ $messages['no'] = array(
 	'about-feedback-0' => 'Har du tilbakemelding på appen som du vil dele med oss? Email meg: %s',
 	'about-heading-rate' => 'Vennligst gi appen karakter!',
 	'about-rate-0-android' => 'Hvis du liker denne appen, vennligst gi den 5 stjerner på Android-markedet!',
+	'about-rate-0-ios' => 'Hvis du liker denne appen, vennligst gi den fem stjerner i App Store!',
 	'gracenote-takedown' => 'Doh! Dessverre er vi for øyeblikket ikke lisensert til å vise full tekst for denne sangen (dette skjer med mindre enn 1% av våre sanger). Vennligst prøv igjen neste uke.',
 	'lyrics-artist-byline' => 'Av %s',
 	'ringtone-matcher-by-song' => 'Send %s Ringetone til din mobil',
@@ -691,7 +701,8 @@ $messages['sv'] = array(
 	'about-heading-feedback' => 'Feedback',
 	'about-feedback-0' => 'Vill du berätta något om vår app? Maila mig: %s',
 	'about-heading-rate' => 'Betygsätt vår app!',
-	'about-rate-0-android' => 'Om du gillar vår app, snälla ge den 5 stjärnor på Android Market!',
+	'about-rate-0-android' => 'Om du gillar denna app, ge den fem stjärnor på Android Market!',
+	'about-rate-0-ios' => 'Om du gillar denna app, ge den fem stjärnor på App Store!',
 	'gracenote-takedown' => 'Åh nej! Tyvärr är vi inte licenserade för att visa hela sångtexten för denna sång för tillfället (inträffar för färre än 1% av våra sånger). Vänligen försök igen nästa vecka.',
 	'lyrics-artist-byline' => 'av %s',
 	'ringtone-matcher-by-song' => 'Skicka %s Rington till din Mobil.',

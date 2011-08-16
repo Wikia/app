@@ -139,6 +139,13 @@ $messages['ia'] = array(
 	'browser-loading-message' => 'Cargamento…',
 );
 
+/** Ingush (ГІалгІай Ğalğaj)
+ * @author Sapral Mikail
+ */
+$messages['inh'] = array(
+	'tab-discover-no-network-dialog-close-button' => 'ХӀаа',
+);
+
 /** Italian (Italiano) */
 $messages['it'] = array(
 	'main-tab-discover' => 'Scopri',
@@ -246,6 +253,22 @@ $messages['pt'] = array(
 	'tab-discover-no-network-dialog-close-button' => 'OK',
 	'tab-search-loading-message' => 'A pesquisar...',
 	'browser-loading-message' => 'A carregar…',
+);
+
+/** Russian (Русский)
+ * @author Kuzura
+ */
+$messages['ru'] = array(
+	'main-tab-discover' => 'Открыть',
+	'main-tab-personal' => 'Моя Викия',
+	'main-tab-search' => 'Поиск',
+	'main-tab-offline' => 'Offline',
+	'tab-discover-loading-message' => 'Загрузка...',
+	'tab-discover-no-network-dialog-title' => 'Сеть недоступна',
+	'tab-discover-no-network-dialog-message' => 'Сетевое соединение не обнаружено',
+	'tab-discover-no-network-dialog-close-button' => 'OK',
+	'tab-search-loading-message' => 'Поиск...',
+	'browser-loading-message' => 'Загрузка...',
 );
 
 /** Telugu (తెలుగు)

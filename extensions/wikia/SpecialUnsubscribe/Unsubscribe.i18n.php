@@ -170,6 +170,8 @@ Per favor seque le ligamine ab tu e-mail.',
 	'unsubscribe-working' => 'Cancella subscription de $1 {{PLURAL:$1|conto|contos}} pro $2',
 	'unsubscribe-working-problem' => 'problema de cargamento del information de usator pro: $1',
 	'unsubscribe-working-done' => 'Complete.',
+	'unsubscribe-preferences-toggle' => 'Cancellar subscription a tote le e-mail de Wikia (dismarca isto pro acceder al optiones hic infra)',
+	'unsubscribe-preferences-notice' => 'Le invio de e-mail ha essite disactivate pro tu conto. Visita le scheda "Profilo de usator" pro reactivar lo.',
 );
 
 /** Colognian (Ripoarisch)
@@ -288,6 +290,8 @@ $messages['no'] = array(
 	'unsubscribe-working' => 'Avbryter abonnement for $1 {{PLURAL:$1|konto|kontoer}} for $2',
 	'unsubscribe-working-problem' => 'problem med å laste brukerinformasjon for: $1',
 	'unsubscribe-working-done' => 'Fullført.',
+	'unsubscribe-preferences-toggle' => 'Avslutt abonnementet på all e-post fra Wikia (sjekk av denne for å få tilgang til alternativene under)',
+	'unsubscribe-preferences-notice' => 'E-post har blitt deaktivert for kontoen din. Besøk Brukerprofil-fanen for å aktivere dem igjen.',
 );
 
 /** Pashto (پښتو)
@@ -380,7 +384,7 @@ $messages['sv'] = array(
 	'unsubscribe-confirm-legend' => 'Bekräfta',
 	'unsubscribe-confirm-text' => 'Avsluta prenumerationer för alla konton med <code>$1</code>?',
 	'unsubscribe-confirm-button' => 'Ja, jag är säker',
-	'unsubscribe-working' => 'Avslutar prenumerationen $1 {{PLURAL:$1|konto|konton}} för $2',
+	'unsubscribe-working' => 'Avslutar prenumerationen för $1 {{PLURAL:$1|konto|konton}} för $2',
 	'unsubscribe-working-problem' => 'problem med att läsa användarinformationen för: $1',
 	'unsubscribe-working-done' => 'Slutfört.',
 );
@@ -416,6 +420,25 @@ $messages['tl'] = array(
  */
 $messages['uk'] = array(
 	'unsubscribe-confirm-button' => 'Так, я впевнений',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Xiao Qiao
+ */
+$messages['vi'] = array(
+	'unsubscribe' => 'Hủy đăng ký',
+	'unsubscribe-badaccess' => 'Xin lỗi, trang này không thể sử dụng trực tiếp. Xin vui lòng theo các liên kết từ thư điện tử của bạn.',
+	'unsubscribe-badtoken' => 'Xin lỗi, đã có một vấn đề với mã thông báo bảo mật.',
+	'unsubscribe-bademail' => 'Xin lỗi, đã có một vấn đề với thư điện tử.',
+	'unsubscribe-badtime' => 'Xin lỗi, liên kết đã hết hạn. Xin vui lòng sử dụng một liên kết ít hơn 7 ngày.',
+	'unsubscribe-nousers' => 'Không có người dùng nào được tìm thấy với địa chỉ e-mail đó.',
+	'unsubscribe-noconfusers' => 'Không có người dùng được tìm thấy là đã xác nhận thấy với địa chỉ e-mail đó.',
+	'unsubscribe-confirm-legend' => 'Xác nhận',
+	'unsubscribe-confirm-text' => 'Hủy đăng ký tất cả tài khoản với <code>$1</code>?',
+	'unsubscribe-confirm-button' => 'Vâng, tôi chắc',
+	'unsubscribe-working' => 'Hủy đăng ký $1 {{PLURAL:$1|tài khoản|tài khoản}} cho $2',
+	'unsubscribe-working-problem' => 'vấn đề kết nối thông tin người sử dụng cho: $1',
+	'unsubscribe-working-done' => 'Hoàn thành.',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

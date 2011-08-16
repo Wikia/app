@@ -101,16 +101,18 @@ $messages['br'] = array(
  * @author Diebuche
  * @author George Animal
  * @author LWChris
+ * @author SVG
  */
 $messages['de'] = array(
 	'cloakcheck' => 'Prüfung der Anspruchsberechtigung auf einen IRC Cloak',
 	'cloakcheck-desc' => 'Stellt eine ganzheitliche Schnittstelle zur Verfügung, die der Prüfung der Voraussetzungen für einen IRC Cloak dient',
+	'right-cloakcheck' => 'Kann Informationen zum IRC Cloak anderer Benutzer überprüfen',
 	'cloakcheck-form-username' => 'Benutzername:',
 	'cloakcheck-form-check' => 'Benutzernamen überprüfen',
-	'cloakcheck-form-check-self' => 'IRC-Mantel-Berechtigung überprüfen',
+	'cloakcheck-form-check-self' => 'IRC-Cloak-Berechtigung überprüfen',
 	'cloakcheck-process-empty' => 'Bitte einen Benutzernamen angeben.',
 	'cloakcheck-process-notexist' => 'Benutzername existiert nicht.',
-	'cloakcheck-process-username' => 'Benutzername:$1',
+	'cloakcheck-process-username' => 'Benutzername: $1',
 	'cloakcheck-process-accountage-yes' => 'Konto ist alt genug.',
 	'cloakcheck-process-accountage-no' => 'Konto ist zu neu.',
 	'cloakcheck-process-emailconf-yes' => 'E-Mail-Adresse bestätigt.',
@@ -122,10 +124,12 @@ $messages['de'] = array(
 /** Spanish (Español)
  * @author Absay
  * @author Locos epraix
+ * @author VegaDark
  */
 $messages['es'] = array(
 	'cloakcheck' => 'Verificador de elegibilidad de cloak de IRC',
 	'cloakcheck-desc' => 'Proporciona una interfaz todo-en-uno y verifica los requisitos para una cloak de IRC',
+	'right-cloakcheck' => 'Puede comprobar la información relacionada al cloak de IRC de otros usuarios',
 	'cloakcheck-form-username' => 'Nombre de usuario:',
 	'cloakcheck-form-check' => 'Verificar el nombre de usuario',
 	'cloakcheck-form-check-self' => 'Verificar elegibilidad de cloak de IRC',
@@ -169,17 +173,19 @@ $messages['fi'] = array(
 
 /** French (Français)
  * @author Peter17
+ * @author Wyz
  */
 $messages['fr'] = array(
-	'cloakcheck' => 'Vérification de l’éligibilité au masquage IRC',
-	'cloakcheck-desc' => 'Fournit une interface intégrée pour vérifier les exigences pour un masquage IRC',
+	'cloakcheck' => 'Vérification de l’éligibilité au cloak IRC',
+	'cloakcheck-desc' => 'Fournit une interface intégrée pour vérifier les prérequis nécessaires pour un cloak IRC',
+	'right-cloakcheck' => 'peut vérifier les informations en rapport avec le cloak IRC pour d’autres utilisateurs',
 	'cloakcheck-form-username' => 'Nom d’utilisateur :',
 	'cloakcheck-form-check' => 'Vérifier le nom d’utilisateur',
-	'cloakcheck-form-check-self' => 'Vérifier l’éligibilité au masquage IRC',
+	'cloakcheck-form-check-self' => 'Vérifier l’éligibilité au cloak IRC',
 	'cloakcheck-process-empty' => "Le nom d'utilisateur ne doit pas être vide.",
 	'cloakcheck-process-notexist' => 'Le nom d’utilisateur n’existe pas.',
 	'cloakcheck-process-username' => 'Nom d’utilisateur : $1',
-	'cloakcheck-process-accountage-yes' => 'Le compte est suffisamment vieux.',
+	'cloakcheck-process-accountage-yes' => 'Le compte est suffisamment ancien.',
 	'cloakcheck-process-accountage-no' => 'Le compte est trop récent.',
 	'cloakcheck-process-emailconf-yes' => 'L’adresse électronique a été confirmée.',
 	'cloakcheck-process-emailconf-no' => 'L’adresse électronique n’a pas été confirmée.',
@@ -226,6 +232,7 @@ $messages['hu'] = array(
 $messages['ia'] = array(
 	'cloakcheck' => 'Verification de eligibilitate pro camouflage IRC',
 	'cloakcheck-desc' => 'Forni un interfacie unificate pro verificar le requisitos pro un camouflage in IRC',
+	'right-cloakcheck' => 'pote inspectar le information super le mascara IRC ("cloak") de altere usatores',
 	'cloakcheck-form-username' => 'Nomine de usator:',
 	'cloakcheck-form-check' => 'Verificar nomine de usator',
 	'cloakcheck-form-check-self' => 'Verificar eligibilitate pro camouflage IRC',
@@ -247,10 +254,13 @@ $messages['it'] = array(
 	'cloakcheck-process-emailconf-yes' => 'Indirizzo e-mail confermato.',
 );
 
-/** Japanese (日本語) */
+/** Japanese (日本語)
+ * @author Tommy6
+ */
 $messages['ja'] = array(
 	'cloakcheck' => 'IRCクローク付与適格性検査',
 	'cloakcheck-desc' => 'IRCクロークの付与に必要な要件を満たしているかどうかの検査を一括して行うインタフェースを提供する',
+	'right-cloakcheck' => '他の利用者の IRC クロークに関する情報の閲覧',
 	'cloakcheck-form-username' => '利用者名：',
 	'cloakcheck-form-check' => '利用者名をチェック',
 	'cloakcheck-form-check-self' => 'IRCクロークの付与適格性をチェックする',
@@ -289,6 +299,7 @@ $messages['lb'] = array(
 $messages['mk'] = array(
 	'cloakcheck' => 'Проверка на подобност за IRC-маска',
 	'cloakcheck-desc' => 'Дава сеопфатен посредник за проверка на задоволување на условите за IRC-маска',
+	'right-cloakcheck' => 'може да проверува информации за други корисници што се однесуваат на прикривање од IRC',
 	'cloakcheck-form-username' => 'Корисничко име:',
 	'cloakcheck-form-check' => 'Проверка на корисничко име',
 	'cloakcheck-form-check-self' => 'Проверка на подобност за IRC-маска',
@@ -322,6 +333,7 @@ $messages['ml'] = array(
 $messages['ms'] = array(
 	'cloakcheck' => 'Semak kelayakan samaran IRC',
 	'cloakcheck-desc' => 'Menyediakan antara muka semua dalam satu untuk mengesahkan keperluan menerima samaran IRC',
+	'right-cloakcheck' => 'boleh menyemak maklumat berkaitan samaran IRC pada pengguna lain',
 	'cloakcheck-form-username' => 'Nama pengguna:',
 	'cloakcheck-form-check' => 'Semak nama pengguna',
 	'cloakcheck-form-check-self' => 'Semak kelayakan menerima samaran IRC',
@@ -342,6 +354,7 @@ $messages['ms'] = array(
 $messages['nl'] = array(
 	'cloakcheck' => 'Controle in aanmerking komen voor IRC cloak',
 	'cloakcheck-desc' => 'Biedt een interface voor het controleren op de voorwaarden voor een IRC-cloak',
+	'right-cloakcheck' => 'kan IRC-cloak en gerelateerde gegevens van andere gebruikers bekijken',
 	'cloakcheck-form-username' => 'Gebruikersnaam:',
 	'cloakcheck-form-check' => 'Gebruikersnaam controleren',
 	'cloakcheck-form-check-self' => 'Controleren of ik in aanmerking kom voor een IRC-cloak',
@@ -358,10 +371,12 @@ $messages['nl'] = array(
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
+ * @author Nghtwlkr
  */
 $messages['no'] = array(
 	'cloakcheck' => 'Valgbarhetssjekk for IRC-kappe',
 	'cloakcheck-desc' => 'Gir et alt-i-ett grensesnitt for å verifisere krav til en IRC-kappe',
+	'right-cloakcheck' => 'kan sjekke IRC-cloak-relatert informasjon for andre brukere',
 	'cloakcheck-form-username' => 'Brukernavn:',
 	'cloakcheck-form-check' => 'Sjekk brukernavn',
 	'cloakcheck-form-check-self' => 'Sjekk valgbarhet for IRC-kappe',
@@ -421,18 +436,19 @@ $messages['ps'] = array(
  * @author Waldir
  */
 $messages['pt'] = array(
-	'cloakcheck' => 'Verificação de eligibilidade para um cloak IRC',
-	'cloakcheck-desc' => 'Fornece uma interface única para verificação dos requisitos de um cloak IRC',
+	'cloakcheck' => 'Verificação de eligibilidade para mascarar o IP no IRC',
+	'cloakcheck-desc' => 'Fornece uma interface única de verificação dos requisitos para mascarar o IP no IRC',
+	'right-cloakcheck' => 'pode verificar informações sobre outros utilizadores relacionadas com a máscara do IP no IRC',
 	'cloakcheck-form-username' => 'Nome de utilizador:',
 	'cloakcheck-form-check' => 'Verificar nome de utilizador',
-	'cloakcheck-form-check-self' => 'Verificar a eligibilidade para um cloak IRC',
+	'cloakcheck-form-check-self' => 'Verificar a eligibilidade para mascarar o IP no IRC',
 	'cloakcheck-process-empty' => 'O nome do utilizador não pode estar vazio.',
 	'cloakcheck-process-notexist' => 'O nome de utilizador não existe.',
 	'cloakcheck-process-username' => 'Nome de utilizador: $1',
 	'cloakcheck-process-accountage-yes' => 'A conta é suficientemente antiga.',
 	'cloakcheck-process-accountage-no' => 'A conta é demasiado recente.',
-	'cloakcheck-process-emailconf-yes' => 'Endereço e-mail confirmado.',
-	'cloakcheck-process-emailconf-no' => 'Endereço e-mail não confirmado.',
+	'cloakcheck-process-emailconf-yes' => 'O endereço de correio electrónico foi confirmado.',
+	'cloakcheck-process-emailconf-no' => 'O endereço de correio electrónico não foi confirmado.',
 	'cloakcheck-process-edits-yes' => 'O utilizador tem edições suficientes.',
 	'cloakcheck-process-edits-no' => 'O utilizador não tem edições suficientes.',
 );
@@ -475,10 +491,12 @@ $messages['ro'] = array(
 
 /** Russian (Русский)
  * @author Eleferen
+ * @author Kuzura
  */
 $messages['ru'] = array(
 	'cloakcheck-form-username' => 'Имя участника:',
 	'cloakcheck-form-check' => 'Проверить имя пользователя',
+	'cloakcheck-process-empty' => 'Поле с именем участника не должно быть пустым',
 	'cloakcheck-process-notexist' => 'Участника с таким именем не существует.',
 	'cloakcheck-process-username' => 'Имя участника: $1',
 	'cloakcheck-process-accountage-yes' => 'Учетная запись достаточно старая.',
@@ -531,6 +549,14 @@ $messages['ta'] = array(
 	'cloakcheck-form-check' => 'பயனர் பெயரை சரிபார்க்கவும்',
 	'cloakcheck-process-username' => 'பயனர் பெயர்: $1',
 	'cloakcheck-process-accountage-no' => 'கணக்கு மிகவும் புதியது.',
+);
+
+/** Telugu (తెలుగు)
+ * @author Praveen Illa
+ */
+$messages['te'] = array(
+	'cloakcheck-form-username' => 'వాడుకరిపేరు:',
+	'cloakcheck-process-username' => 'వాడుకరిపేరు: $1',
 );
 
 /** Tagalog (Tagalog)

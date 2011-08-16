@@ -346,6 +346,13 @@ $messages['tl'] = array(
 	'wikiawidget' => 'Mga widyet ng Wikia',
 );
 
+/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+ * @author Ильнар
+ */
+$messages['tt-cyrl'] = array(
+	'wikiawidget' => 'Wikia виджетлвры',
+);
+
 /** Ukrainian (Українська)
  * @author Ast
  */

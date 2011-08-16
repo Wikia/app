@@ -685,6 +685,7 @@ $messages['br'] = array(
 	'wikifactory-label-masstags' => 'TikedennoùA-vras',
 	'wikifactory-label-findtags' => 'KlaskTikedennoù',
 	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
+	'wikifactory-label-compare' => 'Keñveriañ',
 	'right-wikifactory' => 'Kemmañ arventennoù diabarzh ar wikioù',
 	'wikifactory-domain-edit' => "Kemmañ ar chomlec'h URL-mañ",
 	'wikifactory-domain-remove' => 'Tennañ an URL-mañ eus ar wiki',
@@ -701,6 +702,7 @@ $messages['br'] = array(
 	'closewiki-images-url' => 'Diell ar skeudennoù : $1',
 	'closewiki-unknown' => 'Dianav',
 	'closewiki-return' => 'Distreiñ da $1',
+	'wikifactory-button-save' => "Enrollañ ar c'hemmoù",
 	'awc-metrics-wikis' => 'Diskouez ar Wikioù',
 	'awc-metrics-select' => 'Diskouez ar Wikioù :',
 	'awc-metrics-by-language' => 'dre yezh :',
@@ -1052,7 +1054,9 @@ $messages['da'] = array(
 );
 
 /** German (Deutsch)
+ * @author ChrisiPK
  * @author Claudia Hattitten
+ * @author Inkowik
  * @author Kghbln
  * @author LWChris
  * @author McDutchie
@@ -1067,7 +1071,7 @@ $messages['de'] = array(
 	'wikifactory' => 'Wiki Factory-Konfigurator',
 	'closewiki' => 'Wiki schließen',
 	'wf_city_url' => 'Adresse',
-	'wf_city_id' => 'id',
+	'wf_city_id' => 'ID',
 	'wf_city_title' => 'Titel',
 	'wf_city_created' => 'Erstellt',
 	'wf_city_founding_user' => 'Gründer',
@@ -1109,6 +1113,8 @@ $messages['de'] = array(
 	'closewiki-images-url' => 'Bilderarchiv: $1',
 	'closewiki-unknown' => 'Unbekannt',
 	'closewiki-return' => 'Zurück zu $1',
+	'wikifactory-button-saveparse' => 'Auswerten &amp; Änderungen speichern',
+	'wikifactory-button-save' => 'Änderungen speichern',
 	'awc-metrics-wikis' => 'Wikis anzeigen',
 	'awc-metrics-select' => 'Wikis anzeigen:',
 	'awc-metrics-by-language' => 'nach Sprache:',
@@ -1289,6 +1295,8 @@ $messages['es'] = array(
 	'closewiki-images-url' => 'Archivo de imagen: $1',
 	'closewiki-unknown' => 'Desconocido',
 	'closewiki-return' => 'Volver a $1',
+	'wikifactory-button-saveparse' => 'Analizar y guardar los cambios',
+	'wikifactory-button-save' => 'Guardar cambios',
 	'awc-metrics-wikis' => 'Mostrar Wikis',
 	'awc-metrics-select' => 'Mostrar Wikis:',
 	'awc-metrics-by-language' => 'por idioma:',
@@ -1537,6 +1545,8 @@ $messages['fr'] = array(
 	'closewiki-images-url' => 'Archive des images : $1',
 	'closewiki-unknown' => 'Inconnu',
 	'closewiki-return' => 'Revenir à $1',
+	'wikifactory-button-saveparse' => 'Parser et enregistrer les modifications',
+	'wikifactory-button-save' => 'Enregistrer les modifications',
 	'awc-metrics-wikis' => 'Afficher les wikis',
 	'awc-metrics-select' => 'Affichage des wikis :',
 	'awc-metrics-by-language' => 'par langue :',
@@ -1660,6 +1670,7 @@ $messages['gl'] = array(
 	'closewiki-images-url' => 'Arquivo de imaxes: $1',
 	'closewiki-unknown' => 'Descoñecido',
 	'closewiki-return' => 'Volver a $1',
+	'wikifactory-button-save' => 'Gardar os cambios',
 	'awc-metrics-wikis' => 'Mostrar os wikis',
 	'awc-metrics-select' => 'Mostrar os wikis:',
 	'awc-metrics-by-language' => 'por lingua:',
@@ -1934,6 +1945,8 @@ $messages['ia'] = array(
 	'closewiki-images-url' => 'Archivo de imagines: $1',
 	'closewiki-unknown' => 'Incognite',
 	'closewiki-return' => 'Retornar a $1',
+	'wikifactory-button-saveparse' => 'Processar &amp; Salveguardar modificationes',
+	'wikifactory-button-save' => 'Salveguardar modificationes',
 	'awc-metrics-wikis' => 'Monstrar wikis',
 	'awc-metrics-select' => 'Monstrar wikis:',
 	'awc-metrics-by-language' => 'per lingua:',
@@ -2540,6 +2553,8 @@ $messages['mk'] = array(
 	'closewiki-images-url' => 'Архив на сликите: $1',
 	'closewiki-unknown' => 'Непознато',
 	'closewiki-return' => 'Назад кон $1',
+	'wikifactory-button-saveparse' => 'Парсирај и зачувај промени',
+	'wikifactory-button-save' => 'Зачувај промени',
 	'awc-metrics-wikis' => 'Прикажи викија',
 	'awc-metrics-select' => 'Прикажи викија:',
 	'awc-metrics-by-language' => 'по јазик:',
@@ -2687,6 +2702,8 @@ $messages['ms'] = array(
 	'closewiki-images-url' => 'Gambar arkib: $1',
 	'closewiki-unknown' => 'Tidak diketahui',
 	'closewiki-return' => 'Kembali ke $1',
+	'wikifactory-button-saveparse' => 'Hurai &amp; Simpan perubahan',
+	'wikifactory-button-save' => 'Simpan perubahan',
 	'awc-metrics-wikis' => 'Paparkan Wiki',
 	'awc-metrics-select' => 'Paparkan Wiki:',
 	'awc-metrics-by-language' => 'mengikut bahasa:',
@@ -2810,6 +2827,7 @@ $messages['mzn'] = array(
 /** Dutch (Nederlands)
  * @author McDutchie
  * @author Siebrand
+ * @author Tjcool007
  */
 $messages['nl'] = array(
 	'wikifactorypagetitle' => 'Instellingenbeheer Wiki Factory',
@@ -2858,6 +2876,7 @@ $messages['nl'] = array(
 	'closewiki-images-url' => 'Afbeeldingenarchief: $1',
 	'closewiki-unknown' => 'Onbekend',
 	'closewiki-return' => 'Terug naar $1',
+	'wikifactory-button-save' => 'Wijzigingen opslaan',
 	'awc-metrics-wikis' => "Wiki's weergeven",
 	'awc-metrics-select' => "Wiki's weergeven:",
 	'awc-metrics-by-language' => 'op taal:',
@@ -2999,6 +3018,8 @@ $messages['no'] = array(
 	'closewiki-images-url' => 'Billedarkiv: $1',
 	'closewiki-unknown' => 'Ukjent',
 	'closewiki-return' => 'Tilbake til $1',
+	'wikifactory-button-saveparse' => 'Analyser &amp; lagre endringer',
+	'wikifactory-button-save' => 'Lagre endringer',
 	'awc-metrics-wikis' => 'Vis wikier',
 	'awc-metrics-select' => 'Vis wikier:',
 	'awc-metrics-by-language' => 'etter språk:',
@@ -3161,6 +3182,7 @@ $messages['pl'] = array(
 	'wikifactory-label-masstags' => 'Masowe znaczniki',
 	'wikifactory-label-findtags' => 'Znajdź znaczniki',
 	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
+	'wikifactory-label-compare' => 'Porównaj',
 	'right-wikifactory' => 'Zmień ustawienia wewnętrzne dla tej wiki',
 	'wikifactory-domain-edit' => 'edytuj ten adres URL',
 	'wikifactory-domain-remove' => 'usuń ten adres URL z wiki',
@@ -3177,6 +3199,8 @@ $messages['pl'] = array(
 	'closewiki-images-url' => 'Archiwum obrazu: $1',
 	'closewiki-unknown' => 'Nieznany',
 	'closewiki-return' => 'Powrót do $1',
+	'wikifactory-button-saveparse' => 'Przetwórz i zapisz zmiany',
+	'wikifactory-button-save' => 'Zapisz zmiany',
 	'awc-metrics-wikis' => 'Wyświetlaj wiki',
 	'awc-metrics-select' => 'Pokaż wiki:',
 	'awc-metrics-by-language' => 'w języku:',
@@ -3230,10 +3254,11 @@ $messages['pl'] = array(
 	'awc-metrics-close-listed' => 'Zamknij wszystkie wymienione',
 	'awc-metrics-close-checked' => 'Zamknij zaznaczone',
 	'awc-metrics-exact-match' => 'dokładne dopasowanie',
+	'awc-metrics-recordspager' => "Pokazano od '''$1''' do '''$2''' z '''$3''' rekordów",
 	'closed-wiki' => 'Zamknięte wiki',
 	'closed-wiki-info' => 'Ta wiki została zamknięta',
 	'disabled-wiki-info' => 'Ta wiki została wyłączona',
-	'closed-wiki-dump-exists' => 'Kliknij [$1 tutaj], jeśli chcesz pobrać zawartość',
+	'closed-wiki-dump-exists' => 'Kliknij [$1 tutaj], jeśli chcesz pobrać zawartość.<br />(Jeśli wiki została niedawno zamknięta, może upłynąć jakiś czas zanim pliki zostaną wygenerowane)',
 	'closed-wiki-dump-noexists' => 'Ta wiki została zamknięta. Zrzut bazy danych będzie dostępny w ciągu 24 godzin. Prosimy spróbować ponownie.',
 	'closed-wiki-create-wiki' => 'Utwórz nową wiki',
 	'closed-wiki-policy' => 'Zobacz politykę Wikii zamykania wiki',
@@ -3491,6 +3516,8 @@ $messages['pt'] = array(
 	'closewiki-images-url' => 'Arquivo de ficheiros: $1',
 	'closewiki-unknown' => 'Desconhecido',
 	'closewiki-return' => 'Voltar a $1',
+	'wikifactory-button-saveparse' => 'Analisar e Gravar alterações',
+	'wikifactory-button-save' => 'Gravar alterações',
 	'awc-metrics-wikis' => 'Apresentar Wikis',
 	'awc-metrics-select' => 'Mostrar Wikis:',
 	'awc-metrics-by-language' => 'por língua:',
@@ -4074,6 +4101,7 @@ $messages['sv'] = array(
 	'closewiki-images-url' => 'Bildarkiv: $1',
 	'closewiki-unknown' => 'Okänd',
 	'closewiki-return' => 'Tillbaka till $1',
+	'wikifactory-button-save' => 'Spara ändringar',
 	'awc-metrics-wikis' => 'Visa Wikis',
 	'awc-metrics-select' => 'Visa Wikis:',
 	'awc-metrics-by-language' => 'efter språk:',
@@ -4326,9 +4354,13 @@ $messages['tl'] = array(
 );
 
 /** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+ * @author Ajdar
  * @author Ильнар
  */
 $messages['tt-cyrl'] = array(
+	'wikifactorypagetitle' => 'Wiki Factory конфигураторы',
+	'wikifactory' => 'Wiki Factory конфигураторы',
+	'closewiki' => 'Викине ябу',
 	'wf_city_url' => 'Адрес',
 	'wf_city_id' => 'id',
 	'wf_city_title' => 'Исеме',
@@ -4340,6 +4372,7 @@ $messages['tt-cyrl'] = array(
 	'wf_cc_name' => 'Төркем',
 	'wikifactory_removevariable' => 'Барлык вики-мәгълүматны кэштан бетерергә',
 	'wikifactory_removeconfirm' => 'Барлык вики-мәгълүмат кэштан бетерелде!',
+	'wikifactory-label-info' => 'Мәгълүмат',
 	'wikifactory-label-variables' => 'Үзгәрешлеләр',
 	'wikifactory-label-variables2' => 'Барлык',
 	'wikifactory-label-hubs' => 'Хаблар',
@@ -4347,10 +4380,17 @@ $messages['tt-cyrl'] = array(
 	'wikifactory-label-return' => 'Исемлеккә кайту',
 	'wikifactory-label-clog' => 'Үзгәртүләр көндәлеге',
 	'wikifactory-label-actions' => 'Хәрәкәт',
+	'wikifactory-label-google' => 'Google кораллары',
 	'wikifactory-label-close' => 'Ябу',
 	'wikifactory-label-tags' => 'Теглар',
+	'wikifactory-label-tags2' => 'Теглар',
+	'wikifactory-label-masstags' => 'Күпле теглар',
+	'wikifactory-label-findtags' => 'Теглар эзләү',
 	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
+	'wikifactory-label-compare' => 'Чагыштыр',
 	'right-wikifactory' => 'Викиның эчке көйләнмәләрен үзгәртергә',
+	'wikifactory-domain-edit' => 'Бу URL-ны үзгәртергә',
+	'wikifactory-domain-remove' => "викидан бу URL'ны бетерү",
 	'closewiki-check-and-confirm' => 'Викины карарга һәм башкарырга',
 	'closewiki-redirect-to' => 'Күчерелмәсе',
 	'closewiki-message' => '$1 доменлы исеме',
@@ -4363,6 +4403,7 @@ $messages['tt-cyrl'] = array(
 	'closewiki-images-url' => 'Рәсемнәр архив: $1',
 	'closewiki-unknown' => 'Билгесез',
 	'closewiki-return' => '$1 битенә кайту',
+	'wikifactory-button-save' => 'Кертелгән үзгәртүләр',
 	'awc-metrics-wikis' => 'Викиларны күрсәтү',
 	'awc-metrics-select' => 'Викиларны күрсәтү:',
 	'awc-metrics-by-language' => 'телләр буенча:',
@@ -4385,7 +4426,11 @@ $messages['tt-cyrl'] = array(
 	'awc-metrics-by-domains' => 'һәм домен үз эченә ала:',
 	'awc-metrics-not-found' => 'Викилар табылмады',
 	'awc-metrics-nbr-result' => 'Результатлар:',
+	'awc-metrics-created-between' => '$1 (ЕЕЕЕ/АА/КК) һәм $2 (ЕЕЕЕ/АА/КК) арасында ясалган',
+	'awc-metrics-articles' => 'Мәкаләләр',
 	'awc-metrics-edits' => 'Үзгәртүләр',
+	'awc-metrics-images' => 'Рәсемнәр',
+	'awc-metrics-close' => 'Ябу',
 );
 
 /** Ukrainian (Українська)

@@ -153,3 +153,314 @@ $messages['en'] = array(
 	'answers-obsession' => 'Obsession',
 	'answers-custom' => 'Custom',
 );
+
+/** Afrikaans (Afrikaans) */
+$messages['af'] = array(
+	'research_this' => 'Vors dit na',
+);
+
+/** Breton (Brezhoneg) */
+$messages['br'] = array(
+	'research_this' => 'Klask-se',
+);
+
+/** German (Deutsch) */
+$messages['de'] = array(
+	'research_this' => 'Das hier recherchieren',
+);
+
+/** Greek (Ελληνικά) */
+$messages['el'] = array(
+	'research_this' => 'Αναζητήστε αυτό',
+);
+
+/** Spanish (Español) */
+$messages['es'] = array(
+	'research_this' => 'Investigar esto',
+);
+
+/** Finnish (Suomi) */
+$messages['fi'] = array(
+	'research_this' => 'Tutki tätä',
+);
+
+/** French (Français) */
+$messages['fr'] = array(
+	'research_this' => 'Rechercher ceci',
+);
+
+/** Galician (Galego) */
+$messages['gl'] = array(
+	'research_this' => 'Pescudar isto',
+);
+
+/** Hungarian (Magyar) */
+$messages['hu'] = array(
+	'research_this' => 'Kutatás ez után',
+);
+
+/** Interlingua (Interlingua) */
+$messages['ia'] = array(
+	'research_this' => 'Recercar isto',
+);
+
+/** Japanese (日本語) */
+$messages['ja'] = array(
+	'research_this' => 'この質問について調べる',
+);
+
+/** Luxembourgish (Lëtzebuergesch) */
+$messages['lb'] = array(
+	'research_this' => 'Dëst nosichen',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'answer_title' => 'Одговори',
+	'answered_by' => 'Одговорено од',
+	'unregistered' => 'Нерегистрирани',
+	'anonymous_edit_points' => '$1 {{PLURAL:$1|помошник|помошници}}',
+	'ask_a_question' => 'Постави прашање...',
+	'ask_a_question-widget' => 'Постави прашање...',
+	'in_category' => '...во категоријата',
+	'ask_button' => 'Прашај',
+	'research_this' => 'Истражи го ова',
+	'toolbox_anon_message' => '<i>„Викиодговори ги користи уникатните карактеристики на викито за да оформи најдобри одговори на прашањата.“</i><br /><br /> <b>Џими Велс</b><br /> основач на Википедија и Викиодговори',
+	'next_page' => 'След &raquo;',
+	'prev_page' => '&laquo; Прет',
+	'see_all' => 'Сите',
+	'you_can' => 'Можете да:',
+	'answers_widget_admin_note' => '<b>Администратори:</b> Ако сакате да станете администратор на <a href="http://answers.wikia.com?uselang=mk" target="_blank">Викиодговори</a>, <a href="http://answers.wikia.com/wiki/Wikianswers:Become_an_admin?uselang=mk" target="_blank">стиснете тука</a>.',
+	'answers_widget_user_note' => 'Можете ли да ни помогнете со тоа што ќе станете <a href="http://answers.wikia.com/wiki/Wikianswers:Sign_up_for_a_category?uselang=mk" target="_blank">уредник на категории</a> на <a href="http://answers.wikia.com?uselang=mk" target="_blank">Викиодговори</a>?',
+	'answers_widget_anon_note' => '<a href="http://answers.wikia.com?uselang=mk" target="_blank">Викиодговори</a> е вики за прашања и одговори каде одговорите се подобруваат во вики-стил.',
+	'answers_widget_no_questions' => '<a href="http://answers.wikia.com?uselang=mk" target="_blank">Викиодговори</a> е мрежно место кајшто можете да поставувате прашања и да давата ваши одговори. Се стремиме да дадеме најдобар одговор на било кое прашање. <a href="http://answers.wikia.com/wiki/Special:Search?uselang=mk" target="_blank">Најдете</a> <a href="http://answers.wikia.com/wiki/Category:Un-answered_questions?uselang=mk">неодговорени</a> прашања и одговорете ги. Ова е вики - бидете смели!',
+	'answers_widget_no_questions_askabout' => '<br /><br />Започнете со постаување на прашање во врска со „{{PAGENAME}}“',
+	'reword_this' => '<a href="$1" $2>Преформулирајте го прашањево</a>',
+	'no_related_answered_questions' => 'Сè уште нема поврзани прашања. Погледајте <a href="http://answers.wikia.com/wiki/Special:Randomincategory/answered_questions?uselang=mk">случајно одговорено прашање</a>, или пак поставете ново!<br />
+	<div class="createbox" align="center">
+	<p></p><form name="createbox" action="/index.php" method="get" class="createboxForm">
+	<input name="action" value="create" type="hidden">
+	<input name="prefix" value="Special:CreateQuestionPage/" type="hidden">
+	<input name="editintro" value="" type="hidden">
+	<input class="createboxInput" name="title" value="" size="50" type="text">
+	<input name="create" class="createboxButton" value="Внесете го прашањето и стиснете тука" type="submit"></form></div>',
+	'auto_friend_request_body' => 'Сакаш да ме додадеш за пријател?',
+);
+
+/** Dutch (Nederlands)
+ * @author SPQRobin
+ * @author Siebrand
+ */
+$messages['nl'] = array(
+	'answer_title' => 'Antwoord',
+	'answered_by' => 'Beantwoord door',
+	'unregistered' => 'Niet-geregistreerd',
+	'anonymous_edit_points' => '$1 {{PLURAL:$1|hulpje|hulpjes}}',
+	'edit_points' => '{{PLURAL:$1|bewerkingspunt|bewerkingspuntent}}',
+	'ask_a_question' => 'Stel een vraag...',
+	'ask_a_question-widget' => 'Stel een vraag...',
+	'in_category' => '...in categorie',
+	'ask_button' => 'Vragen',
+	'ask_thanks' => 'Bedankt voor uw vraag!',
+	'question_asked_by' => 'Vraag gesteld door',
+	'question_asked_by_a_wikia_user' => 'Vraag gesteld door een Wikia-gebruiker',
+	'new_question_comment' => 'nieuwe vraag',
+	'answer_this_question' => 'Deze vraag beantwoorden:',
+	'research_this' => 'Opzoeken',
+	'answered_category' => 'Beantwoorde vragen',
+	'no_questions_found' => 'Geen vragen gevonden',
+	'width' => 'Breedte',
+	'rephrase' => 'Deze vraag herformuleren',
+	'you_can' => 'U kunt:',
+	'answer_this' => '<a href="$1">Deze vraag beantwoorden</a>, zelfs als u niet het hele antwoord weet',
+	'research_this_on_wikipedia' => '<a href="$1">Deze vraag onderzoeken</a> op Wikipedia',
+	'receive_email' => '<a href="$1" $2>Een e-mail ontvangen</a> wanneer deze vraag wordt beantwoordt',
+	'categorize_help' => 'Eén categorie per regel',
+	'anwb-step1-headline' => 'Waar gaat uw wiki over?',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['no'] = array(
+	'answer_title' => 'Svar',
+	'answered_by' => 'Besvart av',
+	'unregistered' => 'Uregistrert',
+	'anonymous_edit_points' => '$1 {{PLURAL:$1|hjelper|hjelpere}}',
+	'edit_points' => '{{PLURAL:$1|redigeringspoeng|redigeringspoeng}}',
+	'ask_a_question' => 'Still et spørsmål...',
+	'ask_a_question-widget' => 'Still et spørsmål...',
+	'in_category' => '... i kategorien',
+	'ask_button' => 'Spør',
+	'ask_thanks' => 'Takk for det fantastiske spørsmålet!',
+	'question_asked_by' => 'Spørsmål stilt av',
+	'question_asked_by_a_wikia_user' => 'Spørsmål stilt av en Wikia-bruker',
+	'new_question_comment' => 'nytt spørsmål',
+	'answers_toolbox' => 'Verktøykasse for WikiSvar',
+	'improve_this_answer' => 'Forbedre dette svaret',
+	'answer_this_question' => 'Besvar dette spørsmålet:',
+	'notify_improved' => 'Send meg en e-post når forbedret',
+	'research_this' => 'Gransk dette',
+	'notify_answered' => 'Send meg en e-post når besvart',
+	'recent_asked_questions' => 'Siste stilte spørsmål',
+	'recent_answered_questions' => 'Siste besvarte spørsmål',
+	'recent_edited_questions' => 'Siste redigerte spørsmål',
+	'unanswered_category' => 'Ubesvarte spørsmål',
+	'answered_category' => 'Besvarte spørsmål',
+	'related_questions' => 'Relaterte spørsmål',
+	'related_answered_questions' => 'Relaterte besvarte spørsmål',
+	'recent_unanswered_questions' => 'Siste ubesvarte spørsmål',
+	'popular_categories' => 'Populære kategorier',
+	'createaccount-captcha' => 'Vennligst skriv inn ordene under',
+	'inline-register-title' => 'Varsle meg når spørsmålet mitt er besvart!',
+	'inline-welcome' => 'Velkommen til WikiSvar',
+	'skip_this' => 'Hopp over dette',
+	'see_all_changes' => 'Se alle endringer',
+	'toolbox_anon_message' => '<i>«WikiSvar utnytter den unike wiki-karakteristikken til å forme de beste svarene til ethvert spørsmål.»</i><br /><br /> <b>Jimmy Wales</b><br /> grunnleggeren av Wikipedia og WikiSvar',
+	'no_questions_found' => 'Ingen spørsmål funnet',
+	'widget_settings' => 'Spørsmålsinnstillinger',
+	'style_settings' => 'Stilinnstillinger',
+	'get_widget_title' => 'Legg spørsmål til siden din',
+	'background_color' => 'Bakgrunnsfarge',
+	'widget_category' => 'Spørsmålstyper',
+	'category' => 'Kategorinavn',
+	'custom_category' => 'Egendefinert kategori',
+	'number_of_items' => 'Antall elementer å vise',
+	'width' => 'Bredde',
+	'next_page' => 'Neste &raquo;',
+	'prev_page' => '&laquo; Forrige',
+	'see_all' => 'Se alle',
+	'get_code' => 'Hent kode',
+	'link_color' => 'Farge på spørsmålslenke',
+	'widget_order' => 'Rekkefølge på spørsmål',
+	'widget_ask_box' => 'Inkludér spørreboks',
+	'question_redirected_help_page' => 'Hvorfor ble spørsmålet mitt omdirigert hit',
+	'twitter_hashtag' => 'wikianswers',
+	'twitter_ask' => 'Spør på Twitter',
+	'facebook_ask' => 'Spør på Facebook',
+	'facebook_send_request' => 'Send direkte til venner',
+	'ask_friends' => 'Be vennene dine om hjelp til å svare:',
+	'facebook_send_request_content' => 'Kan du hjelpe til med å besvare dette? $1',
+	'facebook_signed_in' => 'Du er logget inn med Facebook Connect',
+	'ads_by_google' => 'Annonser fra Google',
+	'magic_answer_headline' => 'Besvarer dette spørsmålet ditt?',
+	'magic_answer_yes' => 'Ja, bruk dette som utgangspunkt',
+	'magic_answer_no' => 'Nei, ikke bruk dette',
+	'magic_answer_credit' => 'Levert av Yahoo Answers',
+	'rephrase' => 'Omformuler dette spørsmålet',
+	'rephrase_this' => '<a href="$1" $2>Omformuler spørsmålet</a>',
+	'question_not_answered' => 'Dette spørsmålet har ikke blitt besvart',
+	'you_can' => 'Du kan:',
+	'answer_this' => '<a href="$1">Besvar dette spørsmålet</a>, selv om du ikke vet hele svaret',
+	'research_this_on_wikipedia' => '<a href="$1">Undersøk dette spørsmålet</a> på Wikipedia',
+	'receive_email' => '<a href="$1" $2>Motta en e-post</a> når dette spørsmålet er besvart',
+	'ask_friends_on_twitter' => 'Spør venner på <a href="$1" $2>Twitter</a>',
+	'quick_action_panel' => 'Hurtighandlingspanel',
+	'categorize' => 'Kategorisér',
+	'categorize_help' => 'Én kategori per linje',
+	'answers_widget_admin_note' => '<b>Administratorer:</b> Hvis du ønsker å bli en administrator på <a href="http://answers.wikia.com" target="_blank">WikiSvar</a>, <a href="http://answers.wikia.com/wiki/Wikianswers:Become_an_admin" target="_blank">klikk her</a>.',
+	'answers_widget_user_note' => 'Kan du hjelpe til ved å bli en <a href="http://answers.wikia.com/wiki/Wikianswers:Sign_up_for_a_category" target="_blank">kategoriredaktør</a> på <a href="http://answers.wikia.com" target="_blank">WikiSvar</a>?',
+	'answers_widget_anon_note' => '<a href="http://answers.wikia.com" target="_blank">WikiSvar</a> er en spør-og-svar-wiki hvor svarene forbedres på wiki-vis.',
+	'answers-category-count-answered' => 'Denne kategorien inneholder $1 besvarte spørsmål.',
+	'answers-category-count-unanswered' => 'Denne kategorien inneholder $1 ubesvarte spørsmål.',
+	'answers_widget_no_questions' => '<a href="http://answers.wikia.com" target="_blank">WikiSvar</a> er en side hvor du kan stille spørsmål og bidra med svar. Vi tar sikte på å ha det beste svaret på ethvert spørsmål. <a href="http://answers.wikia.com/wiki/Special:Search" target="_blank">Finn</a> og besvar <a href="http://answers.wikia.com/wiki/Kategori:Ubesvarte_spørsmål">ubesvarte</a> spørsmål. Det er en wiki – så vær modig!',
+	'answers_widget_no_questions_askabout' => '<br /><br />Kom i gang ved å stille spørsmål om «{{PAGENAME}}»',
+	'reword_this' => '<a href="$1" $2>Omformuler dette spørsmålet</a>',
+	'no_related_answered_questions' => 'Det er ingen relaterte spørsmål ennå. Få et <a href="http://answers.wikia.com/wiki/Special:Randomincategory/answered_questions">tilfeldig besvart spørsmål istedenfor</a>, eller still et nytt!<br />
+<div class="createbox" align="center">
+<p></p><form name="createbox" action="/index.php" method="get" class="createboxForm">
+<input name="action" value="create" type="hidden">
+<input name="prefix" value="Special:CreateQuestionPage/" type="hidden">
+<input name="editintro" value="" type="hidden">
+<input class="createboxInput" name="title" value="" size="50" type="text">
+<input name="create" class="createboxButton" value="Skriv spørsmålet ditt og trykk her" type="submit"></form></div>',
+	'auto_friend_request_body' => 'Vil du legge meg til som venn?',
+	'tog-hidefromattribution' => 'Skjul avataren og navnet mitt fra henvisningslisten',
+	'q' => '<!-- -->',
+	'a' => 'Svar:',
+	'?' => '?',
+	'answering_tips' => '<h3>Tips for besvaring:</h3> Når du bidrar med et svar, forsøk å være så presis som mulig. Hvis du får informasjon fra en annen kilde, slik som Wikia, legg til en lenke til denne i teksten. Og takk for ditt bidrag til {{SITENAME}}!',
+	'header_questionmark_pre' => '&nbsp;',
+	'header_questionmark_post' => '?',
+	'plus_x_more_helpers' => '... pluss $1 andre hjelpere',
+	'anwb-step1-headline' => 'Hva handler wikien din om?',
+	'anwb-step1-text' => 'WikiSvar-siden din trenger et <strong>slagord</strong>.<br /><br />Slagordet ditt vil hjelpe folk å finne siden gjennom søkemotorer, så prøv å være tydelig på hva siden handler om.',
+	'anwb-step1-example' => 'Svar på alle dine spørsmål om proffbryting!',
+	'anwb-choose-logo' => 'Velg en logo',
+	'anwb-step2-text' => 'Neste steg er å velge en logo for {{SITENAME}}. Det er best å laste opp et bilde som du synes representerer din Svar-side.<br />Du kan hoppe over dette trinnet hvis du ikke vil gjøre det akkurat nå.<br /><br />',
+	'anwb-step2-example' => 'Dette ville vært en god logo for en svarside om skateboarding.',
+	'anwb-fp-headline' => 'Still noen spørsmål!',
+	'anwb-fp-text' => 'Svar-siden din bør starte opp med noen spørsmål!<br /><br />Legg til en liste med spørsmål, og så oppgi svarene selv. Det er viktig å ha litt nyttig informasjon på siden, slik at folk kan finne den og spørre og svare på enda flere spørsmål.',
+	'anwb-fp-example' => '<strong>Eksempel</strong><br /><br />Til en svarside om dyrestell:<br /><br /><ul><li>Bør jeg kjøpe kattesand?</li><li>Hva er den beste hunderasen?</li><li>Hva er den beste måten å trene en katt på?</li><li></ul><br /><br />For en svarside om helse:<br /><br /><ul><li>Hva er de helsemessige fordelene ved trening?</li><li>Hvordan kan jeg finne en god doktor i mitt område?</li><li>Hvordan kan jeg enkelt gå ned i vekt?</li></ul>',
+	'nwb-thatisall-headline' => 'Det var det – du er ferdig!',
+	'anwb-thatisall-text' => 'Det var det – du er klar til å komme i gang!<br /><br />Nå er det på tide å begynne å skrive noen spørsmål og svar, slik at siden din lettere kan bli funnet av søkemotorer.<br /><br />Listen over spørsmål lagt til i det siste steget har blitt lagt til spørsmålssiden din. Gå og besvar spørsmålene, og start ditt eget svar-fellesskap!',
+	'anwb-logo-preview' => 'Her er en forhåndsvisning av logoen din',
+	'anwb-save-tagline' => 'Lagre slagord',
+	'badWords' => 'faen',
+	'qa-toolbox-button' => 'Besvar et tilfeldig spørsmål',
+	'qa-toolbox-share' => 'Del',
+	'qa-toolbox-tools' => 'Avanserte verktøy»',
+	'qa-toolbox-protect' => 'Beskytt dette spørsmålet',
+	'qa-toolbox-delete' => 'Slett dette spørsmålet',
+	'qa-toolbox-history' => 'Tidligere versjoner av denne siden',
+	'qa-featured-sites' => '-',
+	'answers_skins' => 'Svar',
+	'answers-bluebell' => 'Blåklokke',
+	'answers-leaf' => 'Blad',
+	'answers-carnation' => 'Nellik',
+	'answers-sky' => 'Himmel',
+	'answers-spring' => 'Vår',
+	'answers-forest' => 'Skog',
+	'answers-moonlight' => 'Måneskinn',
+	'answers-carbon' => 'Karbon',
+	'answers-obsession' => 'Besettelse',
+	'answers-custom' => 'Egendefinert',
+);
+
+/** Occitan (Occitan) */
+$messages['oc'] = array(
+	'research_this' => 'Recercar aquò',
+);
+
+/** Polish (Polski) */
+$messages['pl'] = array(
+	'research_this' => 'Wyszukaj',
+);
+
+/** Piedmontese (Piemontèis) */
+$messages['pms'] = array(
+	'research_this' => 'Sërché sòn',
+);
+
+/** Portuguese (Português) */
+$messages['pt'] = array(
+	'research_this' => 'Investigar isto',
+);
+
+/** Brazilian Portuguese (Português do Brasil) */
+$messages['pt-br'] = array(
+	'research_this' => 'Pesquisar isto',
+);
+
+/** Tarandíne (Tarandíne) */
+$messages['roa-tara'] = array(
+	'research_this' => 'Cerche quiste',
+);
+
+/** Russian (Русский) */
+$messages['ru'] = array(
+	'research_this' => 'Исследовать',
+);
+
+/** Tagalog (Tagalog) */
+$messages['tl'] = array(
+	'research_this' => 'Saliksikin ito',
+);
+
+/** Ukrainian (Українська) */
+$messages['uk'] = array(
+	'research_this' => 'Дослідити',
+);
+

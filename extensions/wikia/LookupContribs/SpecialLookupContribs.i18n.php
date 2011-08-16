@@ -248,7 +248,7 @@ Bitte überprüfe den angegebenen Benutzernamen auf mögliche Tippfehler.</p>',
 	'lookupcontribslog' => 'Logbücher',
 	'lookupcontribshist' => 'Versionen',
 	'lookupcontribsdiff' => 'Unterschied',
-	'right-lookupcontribs' => 'Globale Beiarbeitungen des Benutzer anzeigen',
+	'right-lookupcontribs' => 'Globale Bearbeitungen des Benutzer anzeigen',
 	'lookupcontribsshowpages' => 'Alle Seiten ($1 Namensräume)',
 	'lookupcontribscontent' => 'Inhalt',
 	'lookupcontribscontribtitleforuser' => 'Bearbeitungen für Benutzer:',
@@ -555,6 +555,13 @@ $messages['id'] = array(
 	'lookupcontribsnext' => 'selanjutnya',
 	'lookupcontribsdiff' => 'beda',
 	'lookupcontribscontent' => 'isi',
+);
+
+/** Ingush (ГІалгІай Ğalğaj)
+ * @author Sapral Mikail
+ */
+$messages['inh'] = array(
+	'lookupcontribswiki' => 'ВIикIи',
 );
 
 /** Italian (Italiano) */

@@ -380,6 +380,13 @@ $messages['ia'] = array(
 	'right-multilookup' => 'Cercar information super usatores in multiple wikis',
 );
 
+/** Ingush (ГІалгІай Ğalğaj)
+ * @author Sapral Mikail
+ */
+$messages['inh'] = array(
+	'multilookupwiki' => 'ВIикIи',
+);
+
 /** Italian (Italiano) */
 $messages['it'] = array(
 	'multilookupgo' => 'Vai',
@@ -847,6 +854,13 @@ $messages['tl'] = array(
 	'multilookuplastedithdr' => 'Huling pagbago',
 	'multilookuprecordspager' => "Ipinapakita ang '''$1''' hanggang '''$2''' ng '''$3''' mga rekord.",
 	'right-multilookup' => 'Kabatirang panghanap sa mga tagagamit na nasa maramihang mga wiki',
+);
+
+/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'multilookupwiki' => 'Вики',
 );
 
 /** Ukrainian (Українська)

@@ -170,6 +170,7 @@ Zkuste to znova nebo [[Special:Contact|nás kontaktujte]].',
 /** German (Deutsch)
  * @author Diebuche
  * @author LWChris
+ * @author SVG
  * @author The Evil IP address
  */
 $messages['de'] = array(
@@ -196,16 +197,18 @@ $messages['de'] = array(
 Sobald du fertig bist, kannst du dich einfach über einen Facebook-Button einloggen.',
 	'comboajaxlogin-post-not-understood' => 'Es gab einen Fehler beim Aufbau dieses Formulars.
 Bitte versuche es erneut oder [[Special:Contact|melde es]].',
-	'comboajaxlogin-readonlytext' => '<h2>Sorry!</h2>
+	'comboajaxlogin-readonlytext' => '<h2>Entschuldige!</h2>
 <p>Du kannst momentan kein Benutzerkonto erstellen - wir sollten in Kürze wieder erreichbar sein. Sieh nach was los ist:<br /><em>$1</em></p>
 <p>Bitte schau bei <a href="http://twitter.com/wikia">Twitter</a> oder <a href="http://facebook.com/wikia">Facebook</a> für weitere Informationen. 
 <br />
  (Wenn du bereits ein Benutzerkonto hast, kannst du dich <a href="#">einloggen</a> wie sonst auch, wirst aber nichts bearbeiten können.)</p>',
+	'comboajaxlogin-ajaxerror' => 'Wikia reagiert nicht. Bitte überprüfe deine Netzwerkverbindung.',
 );
 
 /** Spanish (Español)
  * @author Absay
  * @author Crazymadlover
+ * @author VegaDark
  */
 $messages['es'] = array(
 	'comboajaxlogin-desc' => 'Cuadro dinámico que permite a los usuarios iniciar sesión,recordar contraseñas y registrar usuarios',
@@ -236,6 +239,7 @@ Por favor intenta de nuevo o [[Special:Contact|reporta esto]].',
 <p>No puedes crear una cuenta por el momento. Estaremos disponible nuevamente en breve. Esto es lo que está ocurriendo:<br /><em>$1</em></p>
 <p>Por favor revisa en <a href="http://twitter.com/wikia">Twitter</a> o en <a herf="http://facebook.com/wikia">Facebook</a> para más información.<br />
 (Si ya tienes una cuenta, puedes <a href="#">iniciar sesión</a> de forma normal, pero no serás capaz de editar.)</p>',
+	'comboajaxlogin-ajaxerror' => 'Wikia no responde. Por favor, comprueba tu conexión.',
 );
 
 /** Finnish (Suomi)
@@ -249,23 +253,24 @@ $messages['fi'] = array(
  * @author Crochet.david
  * @author IAlex
  * @author Peter17
+ * @author Wyz
  */
 $messages['fr'] = array(
 	'comboajaxlogin-desc' => "Boîte de dynamique qui permettent aux utilisateurs de se connecter, se rappeler de leur mot de passe et d'enregistrer des utilisateurs",
 	'comboajaxlogin-createlog' => 'Se connecter ou créer un compte',
 	'comboajaxlogin-actionmsg' => "Vous devez d'abord vous connecter ou créer un compte avant d'effectuer cette action",
 	'comboajaxlogin-actionmsg-protected' => 'Pour modifier cette page protégée, vous devez d’abord vous connecter ou créer un compte.',
-	'comboajaxlogin-connectmarketing' => "<h1>Connectez vos comptes</h1>
+	'comboajaxlogin-connectmarketing' => '<h1>Reliez vos comptes</h1>
 <ul>
-<li>Garde votre nom d'utilisateur courant, l'historique, les modifications... Rien ne change sauf la façon dont vous vous connectez</li>
-<li>Partage votre activité sur Wikia avec vos amis sur Facebook</li>
-<li>Contrôle complet de ce qui est publié</li>
-</ul>",
+<li>Conservez vos nom d’utilisateur, historique et modifications actuels... rien ne change, sauf votre manière de vous connecter</li>
+<li>Partagez votre activité sur Wikia avec vos amis sur Facebook</li>
+<li>Contrôlez parfaitement ce qui est publié</li>
+</ul>',
 	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Se connecter avec Facebook Connect</h1>',
-	'comboajaxlogin-connectmarketing-oasis' => '<h1>Connectez votre compte Wikia à Facebook</h1>
+	'comboajaxlogin-connectmarketing-oasis' => '<h1>Reliez votre compte Wikia à Facebook</h1>
 <ul>
-<li>Conservez vos nom d’utilisateur, historique et modifications actuels... rien ne change sauf votre manière de vous connecter</li>
-<li>Partagez votre activité sur Wikia avec vos amis de Facebook, en contrôlant complètement ce qui est publié</li>
+<li>Conservez vos nom d’utilisateur, historique et modifications actuels... rien ne change, sauf votre manière de vous connecter</li>
+<li>Partagez votre activité sur Wikia avec vos amis sur Facebook, en contrôlant complètement ce qui est publié</li>
 <li>Contrôlez parfaitement ce qui est publié</li>
 </ul>',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Retour',
@@ -280,6 +285,7 @@ Veuillez essayer à nouveau ou [[Special:Contact|le signaler]].',
 <p>Veuillez consulter <a href="http://twitter.com/wikia">Twitter</a> ou <a href="http://facebook.com/wikia">Facebook</a> pour plus d’informations.
 <br />
 (Si vous avez déjà un compte, vous pouvez <a href="#">vous identifier</a> comme d’habitude, mais vous ne pourrez rien modifier.)</p>',
+	'comboajaxlogin-ajaxerror' => 'Wikia ne répond pas. Veuillez vérifier votre connexion réseau.',
 );
 
 /** Galician (Galego)
@@ -356,6 +362,7 @@ Per favor tenta lo de novo o [[Special:Contact|reporta isto]].',
 <p>Reguarda <a href="http://twitter.com/wikia">Twitter</a> o <a href="http://facebook.com/wikia">Facebook</a> pro plus informationes.
 <br />
 (Si tu ha jam un conto, tu pote <a href="#">aperir session</a> como sempre, ma tu non potera modificar.)</p>',
+	'comboajaxlogin-ajaxerror' => 'Wikia non responde. Per favor verifica tu connexion al rete.',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -402,6 +409,7 @@ $messages['ja'] = array(
 <p>現在、以下の理由によりアカウントを作成できなくなっています。<br /><em>$1</em></p>
 <p>さらに詳しい情報については <a href="http://twitter.com/wikia">Twitter</a> や <a href="http://facebook.com/wikia">Facebook</a> をご覧ください。<br />
 （既にアカウントをお持ちであれば、通常通り<a href="#">ログイン</a>はできますが、編集はできません。）</p>',
+	'comboajaxlogin-ajaxerror' => 'ウィキアからの応答がありません。ネットワーク接続を確認してください。',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -446,6 +454,7 @@ $messages['mk'] = array(
 <p>За повеќе информации, погледајте на <a href="http://twitter.com/wikia">Twitter</a> или <a href="http://facebook.com/wikia">Facebook</a>.
 <br />
 (Ако веќе имате сметка, тогаш ќе можете да се <a href="#">најавите</a> како секогаш, но нема да можете да уредувате.)</p>',
+	'comboajaxlogin-ajaxerror' => 'Викија не реагира. Проверете си ја мрежната врска.',
 );
 
 /** Malay (Bahasa Melayu)
@@ -480,6 +489,7 @@ Sila cuba lagi atau [[Special:Contact|laporkannya kepada kami]].',
 <p>Sila rujuk <a href="http://twitter.com/wikia">Twitter</a> atau <a href="http://facebook.com/wikia">Facebook</a> untuk maklumat lanjut.
 <br />
 (Jika anda sudah ada akaun, anda boleh <a href="#">log masuk</a> seperti biasa, tetapi anda tidak boleh menyunting buat masa ini.)</p>',
+	'comboajaxlogin-ajaxerror' => 'Wikia tidak bertindak balas. Sila periksa sambungan rangkaian anda.',
 );
 
 /** Dutch (Nederlands)
@@ -514,6 +524,7 @@ Probeer het nog een keer of [[Special:Contact|rapporteer dit]].',
 <p>Kijk op <a href="http://twitter.com/wikia">Twitter</a> of <a href="http://facebook.com/wikia">Facebook</a> voor meer informatie.
 <br />
 Als u al een gebruiker hebt, kunt u <a href="#">aanmelden</a> zoals altijd, maar bewerken is op het moment niet mogelijk.</p>',
+	'comboajaxlogin-ajaxerror' => 'Wikia reageert niet. Controleer uw netwerkverbinding.',
 );
 
 /** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
@@ -575,6 +586,7 @@ Vennligst prøv igjen eller [[Special:Contact|rapporter dette]].',
 <p>Vennligst sjekk ut <a href="http://twitter.com/wikia">Twitter</a> eller <a href="http://facebook.com/wikia">Facebook</a> for mer informasjon.
 <br />
 (Hvis du allerede har en konto, kan du <a href="#">logge inn</a> som vanlig, men du vil ikke kunne redigere.)</p>',
+	'comboajaxlogin-ajaxerror' => 'Wikia svarer ikke. Kontroller nettverkstilkoblingen.',
 );
 
 /** Polish (Polski) */
@@ -683,6 +695,7 @@ Tente novamente ou [[Special:Contact|reporte este erro]], por favor.',
 <p>Para mais informações, verifique o <a href="http://twitter.com/wikia">Twitter</a> ou o <a href="http://facebook.com/wikia">Facebook</a>, por favor.
 <br />
 (Se já tem uma conta, pode <a href="#">autenticar-se</a> normalmente, mas não poderá editar.)</p>',
+	'comboajaxlogin-ajaxerror' => 'A Wikia não está a responder. Verifique a sua ligação de rede, por favor.',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -732,6 +745,7 @@ $messages['ro'] = array(
 /** Russian (Русский)
  * @author Eleferen
  * @author G0rn
+ * @author Kuzura
  * @author MaxSem
  * @author Александр Сигачёв
  */
@@ -764,6 +778,7 @@ $messages['ru'] = array(
 <p>Подробности можно посмотреть в <a href="http://twitter.com/wikia">Twitter</a> или <a href="http://facebook.com/wikia">Facebook</a>.
 <br />
 (Если у вас уже есть учётная запись, вы можете <a href="#">войти</a> как обычно, но вы не сможете редактировать.)</p>',
+	'comboajaxlogin-ajaxerror' => 'Викия не отвечает. Пожалуйста, проверьте подключение к сети.',
 );
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
