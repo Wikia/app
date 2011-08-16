@@ -103,6 +103,62 @@ $messages['az'] = array(
 	'article-comments-next-page' => 'Növbəti',
 );
 
+/** Bavarian (Boarisch)
+ * @author Mucalexx
+ */
+$messages['bar'] = array(
+	'article-comments-anonymous' => 'Anónymer Benutzer',
+	'article-comments-comments' => 'Kómmentar ($1)',
+	'article-comments-post' => 'An Kómmentar obgeem',
+	'article-comments-cancel' => 'Obbrechen',
+	'article-comments-delete' => 'leschen',
+	'article-comments-edit' => 'werkeln',
+	'article-comments-history' => 'Versiónen',
+	'article-comments-error' => 'Da Kómmentar hod néd gspeicherd wern kenner',
+	'article-comments-undeleted-comment' => 'Kómmentar zum Blog-Beitrog $1 is wiaderhergstöd worn.',
+	'article-comments-rc-comment' => 'Artiké Kómmentar ([[$1]])',
+	'article-comments-rc-comments' => 'Artiké Kómmentare ([[$1]])',
+	'article-comments-fblogin' => 'Bittscheh <a href="$1" rel="nofollow">eihloggen und mid Facebook vabinden</a>, um an Kómmentar in dém Wiki z\' schreim!',
+	'article-comments-fbconnect' => 'Bittscheh <a href="$1">dés Kontó mid Facebook vaknypfm</a>, um an Kómmentar obzgeem',
+	'article-comments-rc-blog-comment' => 'Blog-Kómmentar ([[$1]])',
+	'article-comments-rc-blog-comments' => 'Blog-Kómmentare ([[$1]])',
+	'article-comments-login' => 'Zum Kómmentirn <a href="$1">åmöden</a>.',
+	'article-comments-toc-item' => 'Kómmentare',
+	'article-comments-comment-cannot-add' => 'Du kåst an Kómmentar zum Artiké dazuadoah.',
+	'article-comments-reply' => 'Åntworten',
+	'article-comments-show-all' => 'Olle Kómmentare zoang',
+	'article-comments-prev-page' => 'Vurherige',
+	'article-comments-next-page' => 'Naxde',
+	'article-comments-page-spacer' => '&#160...&#160',
+	'article-comments-delete-reason' => 'Da ywergordnate Artiké / ywergordnate Kómmentar is gleschd worn.',
+	'article-comments-empty-comment' => 'A laarer Kómmentar is néd méglé. <a href="$1">Sóid man léschen?</a>',
+	'enotif_subject_article_comment' => '$PAGEEDITOR hod "$PAGETITLE" auf {{SITENAME}} kómmentird.',
+	'enotif_body_article_comment' => 'Servas $WATCHINGUSERNAME,
+
+$PAGEEDITOR hod an Kómmentar zua "$PAGETITLE" obgeem.
+
+Um an Kómmentar-Thread åzschauh, fóig \'m untensteeherden Link:
+$PAGETITLE_URL
+
+Bittscheh kumm vorbei und dua vü midorweiden.
+
+Wikia',
+	'enotif_body_article_comment-HTML' => '<p>Servas $WATCHINGUSERNAME,
+<br /><br />
+$PAGEEDITOR hod an Kómmentar zua "$PAGETITLE" obgeem.
+<br /><br />
+Um an Kómmentar-Thread åzschauh, fóig dém Link do: <a href="$PAGETITLE_URL">$PAGETITLE</a>
+<br /><br />
+Bittscheh kumm vorbei und dua vü werkeln ...
+<br /><br />
+Wikia
+<br /><hr />
+<ul>
+<li>Wüst da åschauh, wöche E-Mails du dahoiden host? <a href="{{fullurl:Special:Preferences}}">Stö deine Eihstöungen eih<a>.</li>
+</ul>
+</p>',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  */
@@ -300,6 +356,7 @@ $messages['eo'] = array(
 );
 
 /** Spanish (Español)
+ * @author DJ Nietzsche
  * @author VegaDark
  */
 $messages['es'] = array(
@@ -321,6 +378,7 @@ $messages['es'] = array(
 	'article-comments-login' => '<a href="$1">Identifícate</a> para dejar un comentario',
 	'article-comments-toc-item' => 'Comentarios',
 	'article-comments-comment-cannot-add' => 'No puedes añadir comentarios aquí',
+	'article-comments-vote' => 'Votar',
 	'article-comments-reply' => 'Responder',
 	'article-comments-show-all' => 'Mostrar todos los comentarios',
 	'article-comments-prev-page' => 'Anterior',
@@ -442,7 +500,8 @@ $messages['fr'] = array(
 	'article-comments-rc-blog-comments' => 'Commentaires de blog ([[$1]])',
 	'article-comments-login' => 'Veuillez vous <a href="$1">connecter</a> pour laisser un commentaire sur ce wiki.',
 	'article-comments-toc-item' => 'Commentaires',
-	'article-comments-comment-cannot-add' => 'Vous ne pouvez pas ajouter un commentaire à cette page.',
+	'article-comments-comment-cannot-add' => 'Vous ne pouvez pas ajouter de commentaire à cette page.',
+	'article-comments-vote' => 'Intéressant',
 	'article-comments-reply' => 'Répondre',
 	'article-comments-show-all' => 'Afficher tous les commentaires',
 	'article-comments-prev-page' => 'Préc',
@@ -578,6 +637,7 @@ $messages['ia'] = array(
 	'article-comments-login' => 'Per favor <a href="$1">aperi session</a> pro publicar un commento in iste wiki.',
 	'article-comments-toc-item' => 'Commentos',
 	'article-comments-comment-cannot-add' => 'Tu non pote adjunger un commento a iste articulo.',
+	'article-comments-vote' => 'Votar positivemente',
 	'article-comments-reply' => 'Responder',
 	'article-comments-show-all' => 'Monstrar tote le commentos',
 	'article-comments-prev-page' => 'Previe',
@@ -639,6 +699,7 @@ $messages['ja'] = array(
 	'article-comments-anonymous' => '匿名利用者',
 	'article-comments-comments' => 'コメント ($1)',
 	'article-comments-post' => 'コメントを投稿',
+	'article-comments-cancel' => '中止',
 	'article-comments-delete' => '削除',
 	'article-comments-edit' => '編集',
 	'article-comments-history' => '履歴',
@@ -736,6 +797,7 @@ $messages['lb'] = array(
 	'article-comments-anonymous' => 'Anonyme Benotzer',
 	'article-comments-comments' => 'Bemierkungen ($1)',
 	'article-comments-post' => 'Bemierkung derbäisetzen',
+	'article-comments-cancel' => 'Ofbriechen',
 	'article-comments-delete' => 'läschen',
 	'article-comments-edit' => 'änneren',
 	'article-comments-history' => 'Historique',
@@ -745,6 +807,7 @@ $messages['lb'] = array(
 	'article-comments-rc-comments' => 'Bemierkunge vum Artikel ([[$1]])',
 	'article-comments-fblogin' => '<a href="$1">Loggt Iech an a verbannt mat Facebook</a> fir eng Bemierkung op dëser Wiki ze schreiwen!',
 	'article-comments-toc-item' => 'Bemierkungen',
+	'article-comments-comment-cannot-add' => 'Dir däerft keng Bemierkung bäi den Artikel derbäisetzen.',
 	'article-comments-reply' => 'Äntwerten',
 	'article-comments-show-all' => 'All Bemierkunge weisen',
 	'article-comments-prev-page' => 'Vireg',
@@ -1017,6 +1080,7 @@ $messages['no'] = array(
 	'article-comments-login' => 'Vennligst <a href="$1">logg inn</a> for å kommentere på denne wikien.',
 	'article-comments-toc-item' => 'Kommentarer',
 	'article-comments-comment-cannot-add' => 'Du kan ikke legge en kommentar til artikkelen.',
+	'article-comments-vote' => 'Stem opp',
 	'article-comments-reply' => 'Svar',
 	'article-comments-show-all' => 'Vis alle kommentarer',
 	'article-comments-prev-page' => 'Forrige',
@@ -1051,16 +1115,60 @@ Wikia
 </p>',
 );
 
-/** Polish (Polski) */
+/** Polish (Polski)
+ * @author Sovq
+ */
 $messages['pl'] = array(
 	'article-comments-anonymous' => 'Anonimowy użytkownik',
 	'article-comments-comments' => 'Komentarze ($1)',
 	'article-comments-post' => 'Wyślij komentarz',
+	'article-comments-cancel' => 'Anuluj',
 	'article-comments-delete' => 'usuń',
 	'article-comments-edit' => 'edytuj',
 	'article-comments-history' => 'historia',
+	'article-comments-error' => 'Komentarz nie mógł zostać zapisany.',
 	'article-comments-undeleted-comment' => 'Usunięcie komentarza na stronie $1 blogu.',
+	'article-comments-rc-comment' => 'Komentarz  ([[$1]])',
+	'article-comments-rc-comments' => 'Komentarze ([[$1]])',
+	'article-comments-fblogin' => '<a href="$1" rel="nofollow">Zaloguj się i połącz przez Facebook</a> aby zostawić komentarz na tej wiki',
+	'article-comments-fbconnect' => '<a href="$1">Połącz to konto z Facebookiem</a> aby dodać komentarz',
+	'article-comments-rc-blog-comment' => 'Komentarz ([[$1]])',
+	'article-comments-rc-blog-comments' => 'Komentarze ([[$1]])',
 	'article-comments-login' => '<a href="$1">Zaloguj się</a>, aby komentować',
+	'article-comments-toc-item' => 'Komentarze',
+	'article-comments-comment-cannot-add' => 'Nie możesz dodać komentarza do tego artykułu',
+	'article-comments-reply' => 'Odpowiedz',
+	'article-comments-show-all' => 'Pokaż wszystkie komentarze',
+	'article-comments-prev-page' => 'Poprzednia',
+	'article-comments-next-page' => 'Następna',
+	'article-comments-page-spacer' => '&#160...&#160',
+	'article-comments-delete-reason' => 'Główny artykuł / komentarz został usunięty',
+	'article-comments-empty-comment' => "Nie możesz zapisać pustego komentarza <a href='$1'>Usunąć?</a>",
+	'enotif_subject_article_comment' => '$PAGEEDITOR skomentował "$PAGETITLE" na {{SITENAME}}',
+	'enotif_body_article_comment' => 'Drogi $WATCHINGUSERNAME,
+
+$PAGEEDITOR dodał komentarz na "$PAGETITLE". 
+
+Aby zobaczyć komentarz, wejdź na:
+$PAGETITLE_URL 
+
+Sprawdź i edytuj...
+
+Wikia',
+	'enotif_body_article_comment-HTML' => '<p>Drogi $WATCHINGUSERNAME,
+<br /><br />
+$PAGEEDITOR dodał komentarz na "$PAGETITLE". 
+<br /><br />
+Aby zobaczyć komentarz, wejdź na: <a href="$PAGETITLE_URL">$PAGETITLE</a>  
+<br /><br />
+Sprawdź i edytuj...
+<br /><br />
+Wikia
+<br /><hr />
+<ul>
+<li>Chcesz zmienić ustawiania otrzymywanych e-maili? <a href="{{fullurl:Special:Preferences}}">Zmień ustawienia<a>.</li>
+</ul>
+</p>',
 );
 
 /** Pashto (پښتو)
@@ -1141,6 +1249,7 @@ $messages['pt-br'] = array(
 	'article-comments-anonymous' => 'Usuário anônimo',
 	'article-comments-comments' => 'Comentários ($1)',
 	'article-comments-post' => 'Postar comentário',
+	'article-comments-cancel' => 'Cancelar',
 	'article-comments-delete' => 'apagar',
 	'article-comments-edit' => 'editar',
 	'article-comments-history' => 'histórico',
@@ -1213,6 +1322,37 @@ $messages['roa-tara'] = array(
 	'article-comments-reply' => 'Respunne',
 );
 
+/** Russian (Русский)
+ * @author Kuzura
+ */
+$messages['ru'] = array(
+	'article-comments-anonymous' => 'Анонимный участник',
+	'article-comments-comments' => 'Комментарии ($1)',
+	'article-comments-post' => 'Оставить комментарий',
+	'article-comments-cancel' => 'Отменить',
+	'article-comments-delete' => 'удалить',
+	'article-comments-edit' => 'править',
+	'article-comments-history' => 'история',
+	'article-comments-error' => 'Комментарий не может быть сохранён',
+	'article-comments-undeleted-comment' => 'Восстановить комментарий на странице блога $1',
+	'article-comments-rc-comment' => 'Комментарий к статье ([[$1]])',
+	'article-comments-rc-comments' => 'Комментарии к статье ([[$1]])',
+	'article-comments-fblogin' => 'Пожалуйста <a href="$1" rel="nofollow">войдите в систему и войдите на Facebook</a>, чтобы оставлять комментарии на этой вики!',
+	'article-comments-fbconnect' => 'Пожалуйста, <a href="$1">подключите свою учётную запись к Facebook</a>, чтобы комментировать!',
+	'article-comments-rc-blog-comment' => 'Комментарий к блогу ([[$1]])',
+	'article-comments-rc-blog-comments' => 'Комментарии к блогу ([[$1]])',
+	'article-comments-login' => 'Пожалуйста, <a href="$1">войдите в систему</a>, чтобы оставлять комментарии на этой вики',
+	'article-comments-toc-item' => 'Комментарии',
+	'article-comments-comment-cannot-add' => 'Вы не можете добавить комментарий к этой статье',
+	'article-comments-reply' => 'Ответить',
+	'article-comments-show-all' => 'Показать все комментарии',
+	'article-comments-prev-page' => 'Пред.',
+	'article-comments-next-page' => 'След.',
+	'article-comments-delete-reason' => 'Родительская статьи / родительский комментарий был удален',
+	'article-comments-empty-comment' => "Вы не можете добавить пустой комментарий. <a href='$1'>Удалить его?</a>",
+	'enotif_subject_article_comment' => '$PAGEEDITOR прокомментировал "$ PAGETITLE" на {{SITENAME}}',
+);
+
 /** Sinhala (සිංහල)
  * @author පසිඳු කාවින්ද
  */
@@ -1279,12 +1419,16 @@ Wikia
 );
 
 /** Telugu (తెలుగు)
+ * @author Praveen Illa
  * @author Veeven
  */
 $messages['te'] = array(
 	'article-comments-anonymous' => 'అజ్ఞాత వాడుకరి',
 	'article-comments-comments' => 'వ్యాఖ్యలు ($1)',
+	'article-comments-post' => 'వ్యాఖ్యానించండి',
+	'article-comments-cancel' => 'రద్దుచేయి',
 	'article-comments-delete' => 'తొలగించు',
+	'article-comments-edit' => 'సవరించు',
 	'article-comments-history' => 'చరిత్ర',
 	'article-comments-rc-blog-comments' => 'బ్లాగు వ్యాఖ్యలు ([[$1]])',
 	'article-comments-toc-item' => 'వ్యాఖ్యలు',
@@ -1366,6 +1510,31 @@ $messages['tr'] = array(
 	'article-comments-show-all' => 'Tüm yanıtları göster',
 	'article-comments-prev-page' => 'Önceki',
 	'article-comments-next-page' => 'Sonraki',
+);
+
+/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'article-comments-delete' => 'бетерү',
+	'article-comments-edit' => 'үзгәртү',
+	'article-comments-history' => 'тарих',
+	'article-comments-prev-page' => 'Алдагы',
+	'article-comments-next-page' => 'Киләсе',
+	'enotif_body_article_comment-HTML' => '<p>Кадерле $WATCHINGUSERNAME,
+<br /><br />
+$PAGEEDITOR made a comment on "$PAGETITLE".
+<br /><br />
+To see the comment thread, follow this link: <a href="$PAGETITLE_URL">$PAGETITLE</a> 
+<br /><br />
+Please visit and edit often...
+<br /><br />
+Wikia
+<br /><hr />
+<ul>
+<li>Want to control which emails you receive? <a href="{{fullurl:Special:Preferences}}">Update your Preferences<a>.</li>
+</ul>
+</p>',
 );
 
 /** Vietnamese (Tiếng Việt)

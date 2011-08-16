@@ -21,6 +21,7 @@ $messages['qqq'] = array(
 
 /** Breton (Brezhoneg)
  * @author Fulup
+ * @author Y-M D
  */
 $messages['br'] = array(
 	'wikipayment-desc' => 'Aotren a ra paeañ dre wiki evit diweredekaat ar bruderezh.',
@@ -28,6 +29,7 @@ $messages['br'] = array(
 	'wikipayment-paypal-error' => 'Fazi paeañ PayPal (kod : $1)',
 	'wikipayment-paypal-return-ok' => 'Paeet ervat dre PayPal',
 	'wikipayment-paypal-return-cancel' => 'Paeamant dre PayPal nullet',
+	'wikipayment-paypal-profile-name' => 'Wiki paet',
 );
 
 /** Czech (Česky)

@@ -13,6 +13,13 @@ $messages['qqq'] = array(
 	'signup' => 'The Special:Userlogin/signup page is displayed if a user chooses login, but is not signed up for the wiki.',
 );
 
+/** Arabic (العربية)
+ * @author Malhargan
+ */
+$messages['ar'] = array(
+	'signup' => 'إنشاء حساب',
+);
+
 /** Bengali (বাংলা)
  * @author Usarker
  */
@@ -94,6 +101,14 @@ $messages['ia'] = array(
 $messages['it'] = array(
 	'signup-desc' => "Aggiunge l'alias [[{{#Special:Signup}}]] per [[{{#Special:UserLogin}}/signup]]",
 	'signup' => 'Registrati',
+);
+
+/** Japanese (日本語)
+ * @author Tommy6
+ */
+$messages['ja'] = array(
+	'signup-desc' => '[[{{#Special:UserLogin}}/signup]] へのエイリアス [[{{#Special:Signup}}]] を追加する',
+	'signup' => 'Signup',
 );
 
 /** Macedonian (Македонски) */

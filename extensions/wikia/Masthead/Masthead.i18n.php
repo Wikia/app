@@ -38,9 +38,6 @@ Please remember, avatars are global - removing a user's avatar removes it across
  * @author Umherirrender
  */
 $messages['qqq'] = array(
-	'blog-avatar-error-type' => 'Parameters:
-* $1 is the provided invalid MIME type
-* $2 is a comma separated list of allowed MIME types.',
 	'right-removeavatar' => '{{doc-right|removeavatar}}',
 );
 
@@ -101,7 +98,6 @@ Diwallit, hollek eo an avataroù. Lemel avatar un implijer en deus un efed war W
 	'blog-avatar-error-nofile' => 'Dibabit ur restr war ho pladenn galet.',
 	'blog-avatar-error-size' => "Re vras eo ar restr enporzhiet. Ar ment aotreet a zo eus $1 Ko d'ar muiañ.",
 	'blog-avatar-error-cantwrite' => 'Dibosupl eo enrollañ ar restr.',
-	'blog-avatar-error-type' => 'Seurt MIME direizh. Pourchaset : $1 - Aotreet : $2',
 	'blog-avatar-changed-log' => 'en deus ouzhpennet pe kemmet e avatar',
 	'blog-avatar-removed-log' => 'En deus dilamet avatarioù $1',
 	'blog-avatar-save-info' => 'Ma fell deoc\'h enrollañ an avatar <a href="#prefcontrol">kit e traoñ ar bajenn-mañ</a> ha klikit war ar bouton "Enrollañ ar penndibaboù".',
@@ -140,7 +136,6 @@ Pamatujte, avatary jsou globální - odstranění proběhne na celé Wikii.',
 	'blog-avatar-error-nofile' => 'Prosím vyberte soubor z počítače',
 	'blog-avatar-error-size' => 'Importovaný soubor je příliš velký, povolená velikost je $1 KB.',
 	'blog-avatar-error-cantwrite' => 'Nelze uložit soubor',
-	'blog-avatar-error-type' => 'Neplatný typ MIME. Poskytnuto: $1 - Povoleno: $2',
 	'blog-avatar-changed-log' => 'Přidán nebo změněn avatar',
 	'blog-avatar-removed-log' => 'Odstraněn avatar uživatele $1',
 	'blog-avatar-save-info' => 'Pro uložení změn <a href="#prefcontrol">sjeďte dolů</a> a stiskněte tlačítko "{{int:saveprefs}}"',
@@ -170,7 +165,6 @@ $messages['de'] = array(
 	'blog-avatar-error-nofile' => 'Bitte wähle eine Datei von deiner Platte.',
 	'blog-avatar-error-size' => 'Die Datei ist zu groß! Sie sollte nicht größer als $1 KB sein.',
 	'blog-avatar-error-cantwrite' => 'Fehler aufgetreten: Kann Datei nicht auf Medium speichern.',
-	'blog-avatar-error-type' => 'Ungültiger MIME-Typ. $1 hochgeladen, erlaubt sind jedoch nur $2.',
 	'blog-avatar-changed-log' => 'hat einen Avatar hinzugefügt oder geändert',
 	'blog-avatar-removed-log' => 'Entfernte den Avatar von $1',
 	'blog-avatar-save-info' => 'Um Änderungen zu speichern, gehe <a href="#prefcontrol">zum Ende der Seite</a> und wähle „{{int:saveprefs}}“.',
@@ -191,6 +185,7 @@ $messages['de-formal'] = array(
 
 /** Spanish (Español)
  * @author Crazymadlover
+ * @author Mor
  */
 $messages['es'] = array(
 	'blog-avatar-removeavatar' => 'Borrar avatar',
@@ -198,7 +193,7 @@ $messages['es'] = array(
 	'blog-avatar-edit' => 'Cambiar',
 	'blog-avatar-delete' => 'Borrar',
 	'prefs-avatarupload' => 'Avatar',
-	'blog-avatar-choose-avatar' => 'Elije un nuevo avatar',
+	'blog-avatar-choose-avatar' => 'Elige un nuevo avatar',
 	'blog-avatar-upload-avatar' => 'Subir un nuevo avatar',
 	'blog-avatar-nouser' => '¡No se puede encontrar este usuario!',
 	'blog-avatar-cannot-remove' => '¡No se pueden borrar los avatares del usuario seleccionado!',
@@ -209,15 +204,14 @@ Por favor, recuerda que los avatares son globales - borrando el avatar de un usu
 	'blog-avatar-error-nofile' => 'Por favor, elija un archivo para almacenar.',
 	'blog-avatar-error-size' => 'El archivo subido es demasiado grande, el tamaño máximo permitido es de $1 KB.',
 	'blog-avatar-error-cantwrite' => 'Ha ocurrido un error y no puedes almacenar el archivo.',
-	'blog-avatar-error-type' => 'Tipo MIME no válido. Proporcionado: $1 - Permitido: $2',
 	'blog-avatar-changed-log' => '(Avatar añadido o cambiado)',
-	'blog-avatar-removed-log' => 'Removido avatares de $1',
+	'blog-avatar-removed-log' => 'Quitados avatares de $1',
 	'blog-avatar-save-info' => 'Si quieres guardar los cambios <a href="#prefcontrol">ve al final</a> y presiona el botón de "Guardar"',
 	'masthead-edits-since' => 'ediciones desde el',
 	'useravatar-log' => 'Registro de avatares de usuario',
 	'blog-avatar-alt' => 'Registros de adiciones o remociones de avatar de usuario',
 	'removeuseravatar' => 'Borrar avatar de usuario',
-	'right-removeavatar' => 'Remover avatares de usuario',
+	'right-removeavatar' => 'Quitar los avatares de usuario',
 );
 
 /** Persian (فارسی) */
@@ -279,7 +273,6 @@ Attention, les avatars sont globaux. Retirer l’avatar d’un utilisateur prend
 	'blog-avatar-error-nofile' => 'Choisissez un fichier sur votre disque dur.',
 	'blog-avatar-error-size' => 'Le fichier téléversé est trop gros, la taille maximale autorisée est de $1 Kio.',
 	'blog-avatar-error-cantwrite' => 'Une erreur s’est produite ; impossible d’enregistrer le fichier.',
-	'blog-avatar-error-type' => 'Type MIME invalide. Fourni : $1 - Autorisés : $2',
 	'blog-avatar-changed-log' => 'a ajouté ou modifié son avatar',
 	'blog-avatar-removed-log' => 'A retiré l’avatar de $1',
 	'blog-avatar-save-info' => 'Pour enregistrer l’avatar <a href="#prefcontrol">allez au bas de cette page</a> et cliquez sur le bouton « {{int:saveprefs}} ».',
@@ -311,7 +304,6 @@ Lembre que os avatares son globais, é dicir, a eliminación do avatar dun usuar
 	'blog-avatar-error-nofile' => 'Escolla un ficheiro do disco',
 	'blog-avatar-error-size' => 'O ficheiro cargado é grande de máis. O tamaño máximo para os ficheiros é de $1KB.',
 	'blog-avatar-error-cantwrite' => 'Non se pode gardar o ficheiro',
-	'blog-avatar-error-type' => 'Tipo MIME inválido. Proporcionado: $1. Permitidos: $2',
 	'blog-avatar-changed-log' => 'Engadiu ou cambiou o avatar',
 	'blog-avatar-removed-log' => 'Eliminou o avatar de $1',
 	'blog-avatar-save-info' => 'Se quere gardar os cambios <a href="#prefcontrol">vaia ao final</a> e prema sobre o botón "{{int:saveprefs}}"',
@@ -338,7 +330,6 @@ $messages['hu'] = array(
 	'blog-avatar-error-nofile' => 'Válassz egy fájlt a számítógépről',
 	'blog-avatar-error-size' => 'A feltöltött fájl túl nagy, az engedélyezett méret legfeljebb $1 Kb.',
 	'blog-avatar-error-cantwrite' => 'Nem sikerült menteni a fájlt',
-	'blog-avatar-error-type' => 'Érvénytelen MIME-típus. Megadott: $1, engedélyezett: $2',
 	'blog-avatar-removed-log' => 'Eltávolította $1 avatárját',
 	'removeuseravatar' => 'Felhasználó avatárjának eltávolítása',
 	'right-removeavatar' => 'felhasználók avatárjának eltávolítása',
@@ -387,7 +378,6 @@ Per favor memora que le avatares es global; remover le avatar de un usator lo re
 	'blog-avatar-error-nofile' => 'Per favor selige un file del disco',
 	'blog-avatar-error-size' => 'Le file incargate es troppo grande; le maximo permittite es $1 KB.',
 	'blog-avatar-error-cantwrite' => 'Impossibile salveguardar le file',
-	'blog-avatar-error-type' => 'Typo MIME invalide. Fornite: $1 - Permittite: $2',
 	'blog-avatar-changed-log' => 'addeva o cambiava su avatar',
 	'blog-avatar-removed-log' => 'Removeva le avatares de $1',
 	'blog-avatar-save-info' => 'Pro salveguardar le modificationes, <a href="#prefcontrol">va al basso</a> e preme e button "{{int:saveprefs}}"',
@@ -464,7 +454,6 @@ $messages['ja'] = array(
 	'blog-avatar-error-nofile' => 'ディスクからファイルを探してください。',
 	'blog-avatar-error-size' => 'アップロードされたファイルが大きすぎます。アップロードできるのは $1 KB までです。',
 	'blog-avatar-error-cantwrite' => 'ファイルをディスクに書き込めません。',
-	'blog-avatar-error-type' => 'MIMEタイプが不適切です。 指定されたMIMEタイプ: $1 - 許可されているMIMEタイプ: $2',
 	'blog-avatar-changed-log' => 'アバターが追加・変更されました',
 	'blog-avatar-removed-log' => '$1 のアバターを削除しました',
 	'blog-avatar-save-info' => 'ここで行った変更は<a href="#prefcontrol">設定を保存</a>しないと反映されません。',
@@ -506,7 +495,6 @@ $messages['mk'] = array(
 	'blog-avatar-error-nofile' => 'Одберете податотека од дискот',
 	'blog-avatar-error-size' => 'Подигнатата податотека е преголема. Дозволено е до $1 КБ.',
 	'blog-avatar-error-cantwrite' => 'Не можам да ја зачувам податотеката',
-	'blog-avatar-error-type' => 'Неважечки MIME-тип. Наведено: $1 - Дозволено: $2',
 	'blog-avatar-changed-log' => 'Додаден или изменет аватар',
 	'blog-avatar-removed-log' => 'Отстранети аватарите на $1',
 	'blog-avatar-save-info' => 'Ако сакате да ги зачувате промените, <a href="#prefcontrol">одете најдолу</a> и притиснете на копчето „{{int:saveprefs}}“',
@@ -545,7 +533,6 @@ Tolong ingat, avatar itu global - apabila ia digugurkan, ia digugurkan dari selu
 	'blog-avatar-error-nofile' => 'Sila pilih fail dari komputer anda',
 	'blog-avatar-error-size' => 'Fail yang dimuat naik itu terlalu besar, melebihi had $1 KB.',
 	'blog-avatar-error-cantwrite' => 'Fail tidak dapat disimpan',
-	'blog-avatar-error-type' => 'Jenis MIME tidak sah. Diberikan: $1 - Dibenarkan: $2',
 	'blog-avatar-changed-log' => 'Avatar disisipkan atau ditukar',
 	'blog-avatar-removed-log' => 'Avatar $1 digugurkan',
 	'blog-avatar-save-info' => 'Jika anda ingin menyimpan perubahan, <a href="#prefcontrol">pergi ke bawah</a> dan tekan butang "{{int:saveprefs}}"',
@@ -580,7 +567,6 @@ Avatars voor een gebruiker worden in alle Wikia verwijderd.',
 	'blog-avatar-error-size' => 'Het geüploade bestand is te groot.
 De maximale toegestane grootte is $1 KB.',
 	'blog-avatar-error-cantwrite' => 'Kan bestand niet opslaan',
-	'blog-avatar-error-type' => 'Ongeldig MIME-type. Opgegeven: $1 en toegestaan zijn: $2',
 	'blog-avatar-changed-log' => 'Avatar gewijzigd of toegevoegd',
 	'blog-avatar-removed-log' => 'heeft de avatars van $1 verwijderd',
 	'blog-avatar-save-info' => 'Als u de wijzigingen wilt opslaan, klik dan <a href="#prefcontrol">go to bottom</a> op de knop "{{int:saveprefs}}"',
@@ -627,7 +613,6 @@ Vennligst husk at avatarer er globale - å fjerne en brukers avatar fjerner den 
 	'blog-avatar-error-nofile' => 'Vennligst velg en fil fra harddisken',
 	'blog-avatar-error-size' => 'Opplastet fil er for stor, tillatt størrelse er opp til $1 KB.',
 	'blog-avatar-error-cantwrite' => 'Kunne ikke lagre filen',
-	'blog-avatar-error-type' => 'Ugyldig MIME-type. Oppgitt: $1 - Tillatt: $2',
 	'blog-avatar-changed-log' => 'La til eller endret avatar',
 	'blog-avatar-removed-log' => 'Fjernet $1s avatarer',
 	'blog-avatar-save-info' => 'Hvis du vil lagre endringene <a href="#prefcontrol">gå til bunnen</a> og trykk på "{{int:saveprefs}}"-knappen',
@@ -682,7 +667,6 @@ Për piasì, ch'as visa che j'avatar a son globaj - an gavand n'avatar ëd n'ute
 	'blog-avatar-error-nofile' => "Për piasì, ch'a serna n'archiv da sò disch",
 	'blog-avatar-error-size' => "L'archivi carià a l'é tròp gròss, la dimension përmëttùa a l'é fin a $1 KB.",
 	'blog-avatar-error-cantwrite' => "L'archivi as peul pa salvesse",
-	'blog-avatar-error-type' => 'Sòrt MIME pa bon. Anserì: $1 - Përmëttù: $2',
 	'blog-avatar-changed-log' => 'Avatar giontà o cangià',
 	'blog-avatar-removed-log' => 'Avatar ëd $1 gavà',
 	'blog-avatar-save-info' => 'S\'it veule salvé ij cambi <a href="#prefcontrol">va al fond</a> e sgnaca ël boton "{{int:saveprefs}}"',
@@ -724,7 +708,6 @@ Lembre-se, por favor, que os avatares são globais - removendo-o aqui remove-o d
 	'blog-avatar-error-nofile' => 'Escolha um ficheiro do disco, por favor',
 	'blog-avatar-error-size' => 'O ficheiro é demasiado grande; o tamanho máximo é $1 KB.',
 	'blog-avatar-error-cantwrite' => 'Não foi possível gravar o ficheiro',
-	'blog-avatar-error-type' => 'Tipo MIME inválido. Fornecido: $1 - Permitidos: $2',
 	'blog-avatar-changed-log' => 'Adicionou ou alterou avatar',
 	'blog-avatar-removed-log' => 'Removeu os avatares de $1',
 	'blog-avatar-save-info' => 'Para gravar as alterações <a href="#prefcontrol">vá ao fundo da página</a> e clique o botão "{{int:saveprefs}}"',
@@ -757,7 +740,6 @@ Lembre-se, por favor, que os avatares são globais - removendo-o aqui remove-o d
 	'blog-avatar-error-nofile' => 'Escolha um arquivo do disco, por favor',
 	'blog-avatar-error-size' => 'O arquivo é demasiado grande; o tamanho máximo é $1 KB.',
 	'blog-avatar-error-cantwrite' => 'Não foi possível salvar o arquivo',
-	'blog-avatar-error-type' => 'Tipo MIME inválido. Fornecido: $1 - Permitidos: $2',
 	'blog-avatar-changed-log' => 'Adicionou ou alterou avatar',
 	'blog-avatar-removed-log' => 'Removeu os avatares de $1',
 	'blog-avatar-save-info' => 'Para salvar as alterações <a href="#prefcontrol">vá ao final da página</a> e clique no botão "{{int:saveprefs}}"',
@@ -791,7 +773,6 @@ $messages['ru'] = array(
 	'blog-avatar-error-nofile' => 'Пожалуйста, укажите файл на диске',
 	'blog-avatar-error-size' => 'Загруженный файл слишком велик, размер не должен превышать $1 КБ.',
 	'blog-avatar-error-cantwrite' => 'Не удаётся сохранить файл',
-	'blog-avatar-error-type' => 'Неверный MIME-тип. Указано: $1 — Допустимо: $2',
 	'blog-avatar-changed-log' => 'добавил или изменил аватару',
 	'blog-avatar-removed-log' => 'Удалённые аватары $1',
 	'blog-avatar-save-info' => 'Если хотите сохранить изменения, <a href="#prefcontrol">перейдите вниз</a> и нажмите на кнопку «{{int:saveprefs}}»',

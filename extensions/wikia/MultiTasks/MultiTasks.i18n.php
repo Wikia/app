@@ -651,6 +651,7 @@ $messages['eo'] = array(
  * @author Bola
  * @author Crazymadlover
  * @author Locos epraix
+ * @author Mor
  * @author Pertile
  * @author Peter17
  */
@@ -659,7 +660,7 @@ $messages['es'] = array(
 	'multiwikiedit' => 'Editar bloque de páginas',
 	'multiwikiedit_button' => 'EDITAR',
 	'multiwikiedit_confirm' => 'CONFIRMAR',
-	'multiwikiedit_help' => 'Edita un grupo de páginas. Puedes editar las páginas incluidas en la caja de texto. Elije el usuario que se mostrará en los registros de borrado. Los archivos subidos deben contener el nombre del a página y el motivo opcional, separado por un caracter "|" en cada línea.',
+	'multiwikiedit_help' => 'Edita un grupo de páginas. Puedes editar las páginas incluidas en la caja de texto. Elige el usuario que se mostrará en los registros de borrado. Los archivos subidos deben contener el nombre de la página y el motivo opcional, separado por un caracter "|" en cada línea.',
 	'multiwikiedit_caption' => 'Lista de páginas',
 	'multiwikiedit_title' => 'Edición Multi Wiki',
 	'multiwikiedit_as' => 'Ejecutar el script como',
@@ -1232,9 +1233,11 @@ $messages['id'] = array(
 	'multiwikirecords' => '$1 wiki ditemukan',
 );
 
-/** Igbo (Igbo) */
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
 $messages['ig'] = array(
-	'multidelete_button' => 'Gbakashia',
+	'multidelete_button' => 'Kàcha',
 );
 
 /** Italian (Italiano) */

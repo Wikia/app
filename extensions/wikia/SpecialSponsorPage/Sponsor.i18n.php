@@ -300,8 +300,8 @@ $messages['ia'] = array(
  */
 $messages['ig'] = array(
 	'sponsor-price-45yr' => '$45 na afọr nílé',
-	'sponsorpage-edit' => 'Rüwa',
-	'sponsorpage-save' => 'Donyéré',
+	'sponsorpage-edit' => 'Mèzi',
+	'sponsorpage-save' => 'Domá',
 );
 
 /** Colognian (Ripoarisch)
@@ -647,6 +647,13 @@ $messages['tl'] = array(
 	'sponsor-price-5mo' => '$5 bawat buwan',
 	'sponsorpage-edit' => 'Baguhin',
 	'sponsorpage-save' => 'Sagipin',
+);
+
+/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'sponsorpage-edit' => 'Үзгәртү',
 );
 
 /** Ukrainian (Українська)

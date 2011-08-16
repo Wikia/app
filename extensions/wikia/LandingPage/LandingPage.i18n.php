@@ -25,6 +25,18 @@ $messages['en'] = array(
 			* http://poptarts.wikia.com|Pop Tarts Wikii|landingpage-wikis-en.png",
 );
 
+/** Arabic (العربية)
+ * @author Malhargan
+ */
+$messages['ar'] = array(
+	'landingpage' => 'مرحبا بك في Wikia',
+	'landingpage-start-exploring' => 'أنت مستعد لبدء الاستكشاف؟',
+	'landingpage-start-exploring-text' => 'البحث عن موضوعات مفضلة لك أو تصفح بعض المفضلة لدى المجتمع أدناه.',
+	'landingpage-readfaq' => 'هل لديك أسئلة؟ قراءة الأسئلة الشائعة &gt;',
+	'landingpage-text' => 'في Wikia يمكنك <strong>الاتصال بالأشخاص</strong> الذين نشاطركم <strong>المشاعر والمصالح</strong>. العثور على المجموعة الخاصة بك، وتقديم تعليقات وتعديلات، حتى <strong>بدء تشغيل موقع الويب الخاص بك</strong> والمجتمع.',
+	'landingpage-buttons-learn-more' => 'معرفة المزيد &gt;',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  */
@@ -316,11 +328,15 @@ $messages['pt-br'] = array(
 
 /** Russian (Русский)
  * @author Eleferen
+ * @author Kuzura
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
 	'landingpage' => 'Добро пожаловать в Викиа',
+	'landingpage-start-exploring' => 'Готовы начать изучение?',
+	'landingpage-start-exploring-text' => 'Поищите ваши любимые темы или просмотрите то, что популярно среди участников.',
 	'landingpage-readfaq' => 'Есть вопросы? Прочтите наш FAQ &gt;',
+	'landingpage-text' => 'На Викия вы можете <strong>общаться с людьми</strong>, которые разделяют ваши <strong>увлечения и интересы</strong>. Найдите свою группу, оставьте комментарий и правки или <strong> создайте свой веб-сайт</strong> и сообщество.',
 	'landingpage-buttons-learn-more' => 'Подробнее &gt;',
 );
 

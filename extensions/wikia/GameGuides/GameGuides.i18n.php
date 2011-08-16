@@ -117,10 +117,11 @@ $messages['no'] = array(
 );
 
 /** Piedmontese (Piemontèis)
+ * @author Borichèt
  * @author Dragonòt
  */
 $messages['pms'] = array(
-	'wikiagameguides-desc' => "Mòduj për l'app mobile Wikia Games Guides",
+	'wikiagameguides-desc' => "Mòdoj ëd l'aplicassion mòbil Wikia Games Guides",
 );
 
 /** Portuguese (Português)
@@ -135,6 +136,13 @@ $messages['pt'] = array(
  */
 $messages['pt-br'] = array(
 	'wikiagameguides-desc' => 'Módulos de aplicações móveis dos Guias de Jogos da Wikia',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'wikiagameguides-desc' => "Module de l'applicazione mobile Wikia Game Guides",
 );
 
 /** Russian (Русский)

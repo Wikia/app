@@ -214,6 +214,50 @@ Skrivit amañ rannskrid kentañ ho pennad.
 Skrivit amañ eil rannskrid ho pennad.',
 );
 
+/** Catalan (Català)
+ * @author BroOk
+ */
+$messages['ca'] = array(
+	'createpage-desc' => "Permet crear una pàgina nova utilitzant l'editor WYSIWYG de Wikia",
+	'createpage-sp-title' => 'Crea una pàgina nova',
+	'createpage_title' => 'Crea una pàgina nova',
+	'createpage_title_caption' => 'Títol:',
+	'createpage_enter_text' => 'Text:',
+	'createpage_empty_title_error' => 'Títol requerit',
+	'createpage_empty_article_body_error' => 'Text de la pàgina requerit',
+	'createpage_invalid_title_error' => 'Títol no vàlid',
+	'createpage_article_already_exists' => 'Ja existeix una pàgina amb aquest nom.
+Si us plau, tria un nom diferent.',
+	'createpage_spam' => "Ho sentim, l'edició no s'ha pogut guardar",
+	'createpage_cant_edit' => "No s'ha pogut realitzar l'edició",
+	'createpage-dialog-title' => 'Crea una pàgina nova',
+	'createpage-dialog-message1' => 'Visca, has creat una pàgina nova!',
+	'createpage-dialog-message2' => 'Què vols que et digui?',
+	'createpage-dialog-choose' => 'Trieu un disseny de pàgina:',
+	'createpage-dialog-format' => 'Disseny estàndard',
+	'createpage-dialog-blank' => 'Pàgina en blanc',
+	'createpage-error-empty-title' => 'Si us plau, escriu un títol per la pàgina',
+	'createpage-error-invalid-title' => 'Ho sentim, el títol de la pàgina no és vàlid!
+Si us plau, utilitzeu un títol diferent.',
+	'createpage-error-article-exists' => 'Ja existeix una pàgina amb aquest títol.
+Pots anar a <a href="$1">$2</a>, o canviar el nom de la pàgina',
+	'createpage-error-article-spam' => "Ho sentim, el títol de pàgina ha estat rebutjat pel nostre filtre d'spam.
+Si us plau, utilitzeu un títol diferent.",
+	'createpage-error-article-blocked' => 'Ho sentim, no pots crear aquesta pàgina en aquest moment.',
+	'tog-createpagedefaultblank' => "Utilitzeu la pàgina en blanc per defecte per a la creació d'una nova pàgina",
+	'tog-createpagepopupdisabled' => 'Desactivat la creació de pàgina pop-up',
+	'newpagelayout' => '[[File:Placeholder|right|300px]]
+Escriu el primer paràgraf de la pàgina aquí.
+
+== Encapçalament ==
+
+Escriu la primera secció de la pàgina aquí.
+
+== Encapçalament ==
+
+Escriu la segona secció de la pàgina aquí.',
+);
+
 /** German (Deutsch)
  * @author LWChris
  * @author The Evil IP address
@@ -1333,7 +1377,7 @@ $messages['ru'] = array(
 Напишите здесь вторую секцию вашей статьи.',
 );
 
-/** Yakut (Саха тыла)
+/** Sakha (Саха тыла)
  * @author HalanTul
  */
 $messages['sah'] = array(
@@ -1525,6 +1569,14 @@ Isulat ang unang sekyon ng artikulo mo rito.
 ==Ulo ng seksyon==
 
 Isulat ang pangalawang ulo ng sekyon mo rito.',
+);
+
+/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'createpage-sp-title' => 'Яңа мәкалә язу',
+	'createpage_title' => 'Яңа мәкалә язу',
 );
 
 /** Ukrainian (Українська)

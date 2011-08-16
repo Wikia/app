@@ -295,6 +295,15 @@ $messages['ro'] = array(
 	'loggernoresult' => 'Niciun rezultat găsit',
 );
 
+/** Russian (Русский)
+ * @author Kuzura
+ */
+$messages['ru'] = array(
+	'loggerrecords' => '$1 записей',
+	'loggergo' => 'Показать',
+	'loggernoresult' => 'Ничего не найдено',
+);
+
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Rancher
  */

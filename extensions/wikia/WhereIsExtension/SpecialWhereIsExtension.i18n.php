@@ -322,9 +322,11 @@ $messages['id'] = array(
 	'whereisextension-search-type-full' => 'Seperti',
 );
 
-/** Igbo (Igbo) */
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
 $messages['ig'] = array(
-	'whereisextension-submit' => 'Chöwá',
+	'whereisextension-submit' => 'Chọwa',
 );
 
 /** Italian (Italiano) */

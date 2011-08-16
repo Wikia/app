@@ -206,13 +206,74 @@ $messages['an'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Malhargan
  * @author OsamaK
  */
 $messages['ar'] = array(
+	'sitewidemessages' => 'موقع الرسائل على نطاق واسع',
+	'swm-page-title-editor' => 'موقع الرسائل على نطاق واسع:: محرر',
+	'swm-page-title-preview' => 'موقع الرسائل على نطاق واسع:: معاينة',
+	'swm-page-title-send' => 'موقع الرسائل على نطاق واسع:: إرسال',
+	'swm-page-title-sent' => 'موقع الرسائل على نطاق واسع:: المرسلة',
+	'swm-page-title-dismiss' => 'موقع الرسائل على نطاق واسع:: استبعاد',
+	'swm-page-title-list' => 'موقع الرسائل على نطاق واسع:: قائمة',
+	'swm-label-preview' => 'معاينة',
+	'swm-label-edit' => 'تحرير',
+	'swm-label-remove' => 'إزالة',
+	'swm-label-sent' => 'إرسال',
+	'swm-label-list' => 'قائمة',
+	'swm-label-recipient' => 'المستلمين',
+	'swm-label-recipient-wikis' => 'الويكي',
+	'swm-label-recipient-users' => 'المستخدمين',
+	'swm-label-expiration' => 'وقت انتهاء الصلاحية',
+	'swm-label-mode-wikis-all' => 'كل الويكي',
+	'swm-label-mode-wikis-hub' => 'المحور المحدد',
+	'swm-label-mode-wikis-cluster' => 'المجموعة المختارة',
+	'swm-label-mode-wikis-wiki' => 'مختارة ويكي',
+	'swm-label-mode-users-all' => 'كل المستخدمين',
+	'swm-label-mode-users-active' => 'مستخدمون نشطون',
+	'swm-label-mode-users-group' => 'المستخدمين الذين ينتمون إلى مجموعة',
+	'swm-label-mode-users-group-hint' => '<i>اختيار مجموعة من القائمة المنسدلة أو اكتب اسم باليد إلى القائمة المنسدلة الاختياره.</i>',
+	'swm-label-mode-users-user' => 'المستخدم المحدد',
+	'swm-label-mode-users-user-hint' => '<i>يتجاهل هذا الخيار التحديد في مجموعة "الويكي".</i>',
+	'swm-label-content' => 'المحتوى',
+	'swm-label-comment' => 'التعليق',
+	'swm-label-dismissed' => 'رفضت',
+	'swm-label-language' => 'اللغة',
+	'swm-button-lang-checkall' => '[راجع الجميع]',
+	'swm-button-lang-checknone' => '[بلا مراجعة]',
+	'swm-taskmanager-hint' => '<i>لاحظ أن بعض الخيارات أكثر استهلاكا للوقت ، وستنتظر في شريط المهام.</i>',
+	'swm-button-preview' => '[معاينة]',
+	'swm-button-send' => '[أرسل]',
+	'swm-button-save' => '[حفظ]',
+	'swm-button-new' => '[جديد]',
+	'swm-msg-sent-ok' => '<h3>تم إرسال الرسالة.</h3>',
+	'swm-msg-sent-err' => '<h3>لم يتم إرسال الرسالة.</h3>راجع سجل الأخطاء للمزيد من المعلومات.',
+	'swm-msg-remove' => 'هل أنت متأكد من أنك تريد إزالة هذه الرسالة؟ هذا أمر لا يمكن التراجع عنه!',
+	'swm-days' => 'ابدأ، ساعة أو ساعات، يوم أو أيام',
+	'swm-expire-info' => 'هذه الرسالة سوف تنتهي في SAR4 .',
+	'swm-link-dismiss' => 'استبعاد هذه الرسالة',
+	'swm-dismiss-content' => '<p>تم استبعاد الرسالة.</p><p>%s</p>',
+	'swm-list-no-messages' => 'لا توجد رسائل.',
+	'swm-list-table-id' => 'المعرّف',
+	'swm-list-table-sender' => 'المرسل',
+	'swm-list-table-wiki' => 'ويكي',
+	'swm-list-table-recipient' => 'المستلم',
+	'swm-list-table-group' => 'المجموعة',
+	'swm-list-table-expire' => 'انتهاء صلاحية',
+	'swm-list-table-date' => 'تاريخ الإرسال',
+	'swm-list-table-removed' => 'أُزِيل',
+	'swm-list-table-content' => 'المحتوى',
+	'swm-list-table-tools' => 'أدوات',
 	'swm-list-table-lang' => 'اللغات',
 	'swm-yes' => 'نعم',
 	'swm-no' => 'لا',
 	'swm-error-no-such-wiki' => 'لا توجد ويكي كهذه!',
+	'swm-error-no-such-user' => 'المستخدم المحدد غير موجود.',
+	'swm-error-empty-message' => 'أدخل محتوى الرسالة.',
+	'swm-error-long-message' => 'رسائل تقتصر على 500 حرف.',
+	'swm-error-empty-group' => 'أدخل اسم المجموعة.',
+	'swm-lang-other' => 'جميع اللغات المتبقية',
 );
 
 /** Azerbaijani (Azərbaycanca)
@@ -521,6 +582,7 @@ $messages['cy'] = array(
 
 /** German (Deutsch)
  * @author LWChris
+ * @author Laximilian scoken
  * @author The Evil IP address
  */
 $messages['de'] = array(
@@ -542,6 +604,7 @@ $messages['de'] = array(
 	'swm-label-expiration' => 'Verfallsdatum',
 	'swm-label-mode-wikis-all' => 'Alle Wikis',
 	'swm-label-mode-wikis-hub' => 'Ausgewählter Hub',
+	'swm-label-mode-wikis-cluster' => 'Ausgewählter Benutzer',
 	'swm-label-mode-wikis-wiki' => 'Ausgewähltes Wiki',
 	'swm-label-mode-users-all' => 'Alle Benutzer',
 	'swm-label-mode-users-active' => 'Aktive Benutzer',
@@ -640,8 +703,10 @@ $messages['el'] = array(
  * @author Bola
  * @author Crazymadlover
  * @author McDutchie
+ * @author Mor
  * @author Peter17
  * @author Translationista
+ * @author VegaDark
  */
 $messages['es'] = array(
 	'sitewidemessages' => 'Mensajes de amplia difusión',
@@ -662,11 +727,12 @@ $messages['es'] = array(
 	'swm-label-expiration' => 'Tiempo de expiración',
 	'swm-label-mode-wikis-all' => 'Todos los wikis',
 	'swm-label-mode-wikis-hub' => 'Categoría (Hub) seleccionado',
+	'swm-label-mode-wikis-cluster' => 'Grupo seleccionado',
 	'swm-label-mode-wikis-wiki' => 'Wiki seleccionado',
 	'swm-label-mode-users-all' => 'Todos los usuarios',
 	'swm-label-mode-users-active' => 'Usuarios activos',
 	'swm-label-mode-users-group' => 'Usuarios pertenecientes al grupo',
-	'swm-label-mode-users-group-hint' => '<i>Elije un grupo del menú desplegable o escriba el nombre a mano para sobrescribir la selección del menú desplegable.</i>',
+	'swm-label-mode-users-group-hint' => '<i>Elija un grupo del menú desplegable o escriba el nombre a mano para sobrescribir la selección del menú desplegable.</i>',
 	'swm-label-mode-users-user' => 'Usuario seleccionado',
 	'swm-label-mode-users-user-hint' => '<i>esta opción ignora selección en "Wikis" de grupo.</i>',
 	'swm-label-content' => 'Contenido',
@@ -682,7 +748,7 @@ $messages['es'] = array(
 	'swm-button-new' => '[ Nuevo ]',
 	'swm-msg-sent-ok' => '<h3>El mensaje ha sido enviado.</h3>',
 	'swm-msg-sent-err' => '<h3>El mensaje No ha sido enviado.</h3>Ver registro de errores para mayor información.',
-	'swm-msg-remove' => 'Estás seguro de querer remover este mensaje? Esto no puede ser deshecho!',
+	'swm-msg-remove' => '¿Estás seguro de que quieres quitar este mensaje? ¡Esto no se puede deshacer!',
 	'swm-days' => 'nunca,hora,horas,día,días',
 	'swm-expire-info' => 'Este mensaje expirará en $1.',
 	'swm-link-dismiss' => 'descartar este mensaje',
@@ -799,6 +865,7 @@ $messages['fi'] = array(
  * @author Crochet.david
  * @author IAlex
  * @author Verdy p
+ * @author Wyz
  */
 $messages['fr'] = array(
 	'sitewidemessages' => 'Messages à travers le site',
@@ -819,6 +886,7 @@ $messages['fr'] = array(
 	'swm-label-expiration' => 'Durée d’expiration',
 	'swm-label-mode-wikis-all' => 'Tous les wikis',
 	'swm-label-mode-wikis-hub' => 'Hub sélectionné',
+	'swm-label-mode-wikis-cluster' => 'Cluster sélectionné',
 	'swm-label-mode-wikis-wiki' => 'Wiki sélectionné',
 	'swm-label-mode-users-all' => 'Tous les utilisateurs',
 	'swm-label-mode-users-active' => 'Utilisateurs actifs',
@@ -1008,6 +1076,7 @@ $messages['ia'] = array(
 	'swm-label-expiration' => 'Tempore de expiration',
 	'swm-label-mode-wikis-all' => 'Tote le wikis',
 	'swm-label-mode-wikis-hub' => 'Hub seligite',
+	'swm-label-mode-wikis-cluster' => 'Gruppo seligite',
 	'swm-label-mode-wikis-wiki' => 'Wiki seligite',
 	'swm-label-mode-users-all' => 'Tote le usatores',
 	'swm-label-mode-users-active' => 'Usatores active',
@@ -1097,9 +1166,21 @@ $messages['id'] = array(
 	'swm-list-table-wiki' => 'Wiki',
 );
 
-/** Igbo (Igbo) */
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
 $messages['ig'] = array(
-	'swm-button-save' => '[ Donyéré ]',
+	'swm-button-save' => '[ Domá ]',
+);
+
+/** Ingush (ГІалгІай Ğalğaj)
+ * @author Sapral Mikail
+ */
+$messages['inh'] = array(
+	'swm-list-table-group' => 'Тоаб',
+	'swm-list-table-lang' => 'Метташ',
+	'swm-yes' => 'XIаа',
+	'swm-no' => 'A',
 );
 
 /** Italian (Italiano)
@@ -1257,6 +1338,7 @@ $messages['mk'] = array(
 	'swm-label-expiration' => 'Истекува',
 	'swm-label-mode-wikis-all' => 'Сите викија',
 	'swm-label-mode-wikis-hub' => 'Избрано собиралиште',
+	'swm-label-mode-wikis-cluster' => 'Избран грст',
 	'swm-label-mode-wikis-wiki' => 'Избрано вики',
 	'swm-label-mode-users-all' => 'Сите корисници',
 	'swm-label-mode-users-active' => 'Активни корисници',
@@ -1336,6 +1418,7 @@ $messages['ms'] = array(
 	'swm-label-expiration' => 'Waktu luput',
 	'swm-label-mode-wikis-all' => 'Semua wiki',
 	'swm-label-mode-wikis-hub' => 'Hab terpilih',
+	'swm-label-mode-wikis-cluster' => 'Gugusan terpilih',
 	'swm-label-mode-wikis-wiki' => 'Wiki terpilih',
 	'swm-label-mode-users-all' => 'Semua pengguna',
 	'swm-label-mode-users-active' => 'Pengguna aktif',
@@ -1528,6 +1611,7 @@ $messages['no'] = array(
 	'swm-label-expiration' => 'Utløpstid',
 	'swm-label-mode-wikis-all' => 'Alle wikier',
 	'swm-label-mode-wikis-hub' => 'Valgt hub',
+	'swm-label-mode-wikis-cluster' => 'Valgt klynge',
 	'swm-label-mode-wikis-wiki' => 'Valgte wikier',
 	'swm-label-mode-users-all' => 'Alle brukere',
 	'swm-label-mode-users-active' => 'Aktive brukere',
@@ -1728,7 +1812,8 @@ $messages['pt'] = array(
 	'swm-label-recipient-users' => 'Utilizadores',
 	'swm-label-expiration' => 'Prazo de expiração',
 	'swm-label-mode-wikis-all' => 'Todas as wikis',
-	'swm-label-mode-wikis-hub' => 'Hub seleccionado',
+	'swm-label-mode-wikis-hub' => 'Portal seleccionado',
+	'swm-label-mode-wikis-cluster' => 'Conjunto de wikis seleccionado',
 	'swm-label-mode-wikis-wiki' => 'Wiki seleccionada',
 	'swm-label-mode-users-all' => 'Todos os utilizadores',
 	'swm-label-mode-users-active' => 'Utilizadores activos',
@@ -2284,6 +2369,7 @@ $messages['yi'] = array(
 
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Hydra
+ * @author Xiaomingyan
  */
 $messages['zh-hans'] = array(
 	'swm-label-sent' => '已发送',
@@ -2297,6 +2383,7 @@ $messages['zh-hans'] = array(
 	'swm-list-table-sender' => '发送者',
 	'swm-list-table-wiki' => '维基',
 	'swm-list-table-recipient' => '受信者',
+	'swm-list-table-group' => '用户组',
 	'swm-yes' => '是',
 	'swm-no' => '不是',
 	'swm-error-no-such-wiki' => '没有这个维基！',

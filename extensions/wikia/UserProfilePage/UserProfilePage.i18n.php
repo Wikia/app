@@ -447,6 +447,75 @@ $messages['bs'] = array(
 	'recipes-template-user-affiliation-hint' => 'Naklonost',
 );
 
+/** Catalan (Català)
+ * @author BroOk
+ */
+$messages['ca'] = array(
+	'userprofilepage-desc' => "Proporciona una pàgina de l'usuari que és divertit i fàcil d'actualitzar",
+	'userprofilepage-edit-avatar-label' => "Edita l'imatge",
+	'userprofilepage-users-notes-title' => 'Sobre mi',
+	'userprofilepage-about-section-title' => 'La meva entrevista $1',
+	'userprofilepage-edit-button' => 'Modifica',
+	'userprofilepage-about-article-title' => 'Sobre',
+	'userprofilepage-about-empty-section' => 'Aquesta secció està buida. Feu clic a {{int:userprofilepage-edit-button}} per afegir-hi algunes coses!',
+	'userprofilepage-edit-permision-denied' => 'Editar els permisos denegat',
+	'userprofilepage-edit-permision-denied-info' => "No tens els permisos per editar la pàgina d'usuari o subpàgina d'algú",
+	'userprofilepage-empty-my-about-me-section' => '<div style="font-size: 20px">A tothom en aquest wiki li agradaria saber més sobre tu!</div><a href="$1">Edita aquesta secció</a> per afegir més coses sobre tu i parlar-nos de les coses que t\'agraden.',
+	'userprofilepage-empty-somebodys-about-me-section' => '<div style="font-size: 20px">$1 no té cap informació encara.</div>En comptes d\'això pots <a href="$2"> deixar-li un missatge</a>',
+	'userprofilepage-user-doesnt-exists' => "L'usuari $1 no existeix a Wikia. Fes una ullada a l'[[Special:WikiActivity|Activitat al Wiki]] per veure qui està actiu en aquest wiki.",
+	'userprofilepage-user-anon' => "Aquest usuari no s'ha registrat a Wikia encara. [[Special:Signup|Registra't]] per a registrar un compte i editar pàgines de reclam, guanyar medalles i l'apreci dels teus companys editors!",
+	'userprofilepage-leave-message' => 'Deixa un missatge',
+	'userprofilepage-edits-since' => 'Edicions des que es va unir a aquest wiki<br />$1',
+	'userprofilepage-user-last-action-edit' => '$1 ha editat la pàgina <a href="$2">$3</a>',
+	'userprofilepage-user-last-action-new' => '$1 ha creat <a href="$2">$3</a>',
+	'userprofilepage-user-last-action-delete' => '$1 ha esborrat la pàgina <a href="$2">$3</a>',
+	'userprofilepage-user-group-sysop' => 'Administrador',
+	'userprofilepage-user-group-staff' => 'Membre Staff',
+	'userprofilepage-user-group-bot' => 'Bot',
+	'userprofilepage-user-group-bureaucrat' => 'Buròcrata',
+	'userprofilepage-user-group-helper' => 'Helper',
+	'userprofilepage-user-group-vstf' => 'VSTF',
+	'userprofilepage-user-group-sysop-tooltip' => 'Aquest usuari és un Administrador en aquest wiki',
+	'userprofilepage-user-group-staff-tooltip' => 'Aquest usuari és un Membre del Wikia Staff',
+	'userprofilepage-user-group-bot-tooltip' => 'Aquest usuari és un Bot',
+	'userprofilepage-user-group-bureaucrat-tooltip' => 'Aquest usuari és un Buròcrata en aquest wiki',
+	'userprofilepage-user-group-helper-tooltip' => 'Aquest usuari és un Helper',
+	'userprofilepage-user-group-vstf-tooltip' => 'Aquest usuari és un membre del Spam Task Force',
+	'userprofilepage-top-wikis-title' => 'Top wikis de $1',
+	'userprofilepage-top-wikis-edit-count' => "Nombre d'Edicions",
+	'userprofilepage-top-wikis-hidden-see-more' => 'Has amagat {{PLURAL:$1|$1 wiki|$1 wikis}}',
+	'userprofilepage-top-wikis-unhide-label' => 'mostrar',
+	'userprofilepage-top-wikis-hide-label' => 'amagar',
+	'userprofilepage-top-wikis-locked-label' => 'El wiki actual no es pot amagar',
+	'userprofilepage-recent-activity-title' => 'Activitat recent de $1',
+	'userprofilepage-activity-edit' => 'Ha editat la pàgina $1',
+	'userprofilepage-activity-new' => 'Ha creat $1',
+	'userprofilepage-activity-comment' => 'Ha comentat a $1',
+	'userprofilepage-activity-image' => 'Ha pujat una imatge a $1',
+	'userprofilepage-activity-video' => 'Ha pujat un vídeo a $!',
+	'userprofilepage-activity-delete' => 'Ha eliminat la pàgina $1',
+	'userprofilepage-activity-talk' => 'Han deixat un missatge a la pàgina de discussió de $1',
+	'userprofilepage-recent-activity-default' => "$1 s'ha unit a Wikia",
+	'userprofilepage-top-recent-activity-see-more' => 'Veure-ho tot &gt;',
+	'userprofilepage-top-pages-title' => 'Top de $1 a les Pàgines de $2',
+	'userprofilepage-top-page-unhide-label' => 'mostrar',
+	'userprofilepage-top-pages-hidden-see-more' => 'Has amagat {{PLURAL:$1|$1 pàgina|$1 pàgines}}',
+	'userprofilepage-top-pages-default' => 'No tens cap de les pàgines top encara. Per què no mires algunes <a href="$1">pàgines a l\'atzar</a> en el wiki?',
+	'recipes-template-user-description-label' => 'Descripció',
+	'recipes-template-user-description-hint' => "Informació breu sobre l'usuari",
+	'recipes-template-user-birthdate-label' => 'Data de naixement',
+	'recipes-template-user-birthdate-hint' => 'Data de naixement (en qualsevol format)',
+	'recipes-template-user-species-label' => 'Espècies',
+	'recipes-template-user-species-hint' => 'Espècies',
+	'recipes-template-user-abilities-label' => 'Habilitats',
+	'recipes-template-user-abilities-hint' => 'Habilitats',
+	'recipes-template-user-gender-label' => 'Gènere',
+	'recipes-template-user-gender-hint' => 'Gènere',
+	'recipes-template-user-affiliation-label' => 'Afiliació',
+	'recipes-template-user-affiliation-hint' => 'Afiliació',
+	'right-editprofile' => "Editar els perfils d'altres usuaris",
+);
+
 /** Chechen (Нохчийн)
  * @author Sasan700
  */
@@ -881,6 +950,17 @@ $messages['ia'] = array(
 	'right-editprofile' => 'Modificar le profilos de altere usatores',
 );
 
+/** Japanese (日本語)
+ * @author Tommy6
+ */
+$messages['ja'] = array(
+	'userprofilepage-top-wikis-title' => '$1 の編集回数の多いウィキ',
+	'userprofilepage-top-wikis-edit-count' => '編集回数',
+	'userprofilepage-top-wikis-unhide-label' => '表示',
+	'userprofilepage-top-wikis-hide-label' => '非表示',
+	'userprofilepage-recent-activity-title' => '$1 の最近の活動',
+);
+
 /** Kurdish (Latin) (Kurdî (Latin))
  * @author George Animal
  */
@@ -1099,6 +1179,7 @@ $messages['ne'] = array(
 );
 
 /** Dutch (Nederlands)
+ * @author MarkvA
  * @author Siebrand
  */
 $messages['nl'] = array(
@@ -1132,7 +1213,7 @@ $messages['nl'] = array(
 	'userprofilepage-user-group-bureaucrat-tooltip' => 'Deze gebruiker is bureaucraat op deze wiki',
 	'userprofilepage-user-group-helper-tooltip' => 'Deze gebruiker is een hulpje op deze wiki',
 	'userprofilepage-user-group-vstf-tooltip' => 'Deze gebruiker is lid van de Anti-spamgroep',
-	'userprofilepage-top-wikis-title' => "Topwiki'a van $1",
+	'userprofilepage-top-wikis-title' => "Topwiki's van $1",
 	'userprofilepage-top-wikis-edit-count' => 'Aantal bewerkingen',
 	'userprofilepage-top-wikis-hidden-see-more' => "U hebt $1 verborgen {{PLURAL:$1|wiki|wiki's}}",
 	'userprofilepage-top-wikis-unhide-label' => 'weergeven',
@@ -1354,6 +1435,7 @@ $messages['ro'] = array(
  * @author Byulent
  * @author DCamer
  * @author KorneySan
+ * @author Kuzura
  */
 $messages['ru'] = array(
 	'userprofilepage-desc' => 'Предоставляет пользователю страницу, которую легко и весело обновить',
@@ -1418,6 +1500,7 @@ $messages['ru'] = array(
 	'recipes-template-user-gender-hint' => 'Пол',
 	'recipes-template-user-affiliation-label' => 'Принадлежность',
 	'recipes-template-user-affiliation-hint' => 'Принадлежность',
+	'right-editprofile' => 'Править личные страницы других участников',
 );
 
 /** Tachelhit (Tašlḥiyt) */
@@ -1648,22 +1731,24 @@ $messages['uk'] = array(
  * @author XiaoQiaoGrace
  */
 $messages['vi'] = array(
+	'userprofilepage-leave-message' => 'Để lại tin nhắn',
 	'userprofilepage-user-group-sysop' => 'Bảo quản viên',
 	'userprofilepage-user-group-staff' => 'Nhân viên Wikia',
 	'userprofilepage-user-group-bot' => 'robot',
 	'userprofilepage-user-group-bureaucrat' => 'Hành chính viên',
-	'userprofilepage-user-group-helper' => 'Thành viên trợ giúp',
+	'userprofilepage-user-group-helper' => 'Hỗ trợ viên',
 	'userprofilepage-user-group-vstf' => 'Đội tình nguyện chống phá hoại',
 	'userprofilepage-user-group-sysop-tooltip' => 'Người dùng này là Bảo quản viên tại {{SITENAME}}',
 	'userprofilepage-user-group-staff-tooltip' => 'Người dùng này là nhân viên Wikia',
 	'userprofilepage-user-group-bot-tooltip' => 'Người dùng này là một Robot',
 	'userprofilepage-user-group-bureaucrat-tooltip' => 'Người dùng này là Hành chính viên tại {{SITENAME}}',
-	'userprofilepage-user-group-helper-tooltip' => 'Người dùng này là thành viên trợ giúp',
+	'userprofilepage-user-group-helper-tooltip' => 'Người dùng này là một Hỗ trợ viên',
 	'userprofilepage-user-group-vstf-tooltip' => 'Người dùng này là thành viên đội tình nguyện chống phá hoại',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Hydra
+ * @author Xiaomingyan
  */
 $messages['zh-hans'] = array(
 	'userprofilepage-users-notes-title' => '关于我',
@@ -1672,5 +1757,6 @@ $messages['zh-hans'] = array(
 	'userprofilepage-user-group-bot' => '机器人',
 	'userprofilepage-user-group-sysop-tooltip' => '这个用户是这个维基的管理员',
 	'userprofilepage-user-group-bot-tooltip' => '这个用户是一个机器人',
+	'recipes-template-user-description-label' => '说明',
 );
 

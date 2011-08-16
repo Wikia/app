@@ -132,9 +132,11 @@ $messages['it'] = array(
 	'tog-disablelinksuggest' => 'Non mostrare link suggeriti',
 );
 
-/** Japanese (日本語) */
+/** Japanese (日本語)
+ * @author Tommy6
+ */
 $messages['ja'] = array(
-	'tog-disablelinksuggest' => '編集時のリンク補完を使わない',
+	'tog-disablelinksuggest' => 'ソースモードでの編集時のリンク補完を使わない',
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -218,7 +220,7 @@ $messages['oc'] = array(
  * @author Sp5uhe
  */
 $messages['pl'] = array(
-	'tog-disablelinksuggest' => 'Nie pokazuj sugerowanych linków',
+	'tog-disablelinksuggest' => 'Nie pokazuj sugerowanych linków w trybie źródła',
 );
 
 /** Piedmontese (Piemontèis)
@@ -256,9 +258,11 @@ $messages['roa-tara'] = array(
 	'tog-disablelinksuggest' => "No fà vedè 'u collegamende suggerite jndr'à 'u mode Sorgende",
 );
 
-/** Russian (Русский) */
+/** Russian (Русский)
+ * @author Kuzura
+ */
 $messages['ru'] = array(
-	'tog-disablelinksuggest' => 'Не показывать предложения ссылок',
+	'tog-disablelinksuggest' => 'Не показывать предложения ссылок в режиме Исходного кода',
 );
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
@@ -309,7 +313,7 @@ $messages['tr'] = array(
  * @author Ильнар
  */
 $messages['tt-cyrl'] = array(
-	'tog-disablelinksuggest' => 'Сылтамаларны күрсәтмәскә',
+	'tog-disablelinksuggest' => 'Сылтамаларның тәкъдимнәрен күрсәтмәү',
 );
 
 /** Ukrainian (Українська) */

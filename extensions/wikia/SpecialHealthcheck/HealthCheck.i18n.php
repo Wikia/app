@@ -20,6 +20,13 @@ $messages['ast'] = array(
 	'healthcheck-desc' => "Una [[Special:HealthCheck|páxina especial]] pa comprobar l'estáu del sirvidor",
 );
 
+/** Bavarian (Boarisch)
+ * @author Mucalexx
+ */
+$messages['bar'] = array(
+	'healthcheck-desc' => '[[Special:HealthCheck|Speziaalseiten]] zur Priaffung vom Serverstaatus',
+);
+
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author Jim-by
  */

@@ -83,7 +83,11 @@ $messages['bg'] = array(
  * @author Y-M D
  */
 $messages['br'] = array(
+	'contact' => 'Mont e darempred gant Wikia',
+	'specialcontact-wikia' => 'Mont e darempred gant Wikia',
+	'specialcontact-pagetitle' => 'Mont e darempred gant Wikia',
 	'specialcontact-username' => 'Anv implijer',
+	'specialcontact-wikiname' => 'Peseurt wiki',
 	'specialcontact-realname' => "Hoc'h anv",
 	'specialcontact-yourmail' => "Chomlec'h postel",
 	'specialcontact-problem' => 'Danvez',
@@ -358,6 +362,47 @@ Si tu prefere usar e-mail normal o ha annexos, tu pote contactar nos a [mailto:c
 	'specialcontact-mailsubcc' => 'Copia del message de contacto con Wikia',
 	'specialcontact-ccheader' => 'Isto es un copia de tu message que esseva inviate al personal de supporto de Wikia',
 	'specialcontact-submitcomplete' => 'Gratias pro contactar Wikia.',
+);
+
+/** Ingush (ГІалгІай Ğalğaj)
+ * @author Sapral Mikail
+ */
+$messages['inh'] = array(
+	'specialcontact-wikiname' => 'Мала ВIикIи',
+);
+
+/** Japanese (日本語)
+ * @author Tommy6
+ */
+$messages['ja'] = array(
+	'contact' => 'ウィキアに連絡する',
+	'specialcontact-wikia' => 'ウィキアに連絡する',
+	'specialcontact-pagetitle' => 'ウィキアに連絡する',
+	'specialcontact-intro' => 'このフォームから[[w:project:Staff|ウィキアのスタッフ]]に連絡できます。このウィキの管理者は[[Special:ListAdmins|管理者の一覧]]から探せます。
+
+ウィキアに問題を報告するにはどうすればいいのかについては[[w:project:Report_a_problem|問題の報告についてのヘルプ]]で詳しく解説しています。また、[[w:Forum:Index|ウィキアのコミュニティフォーラム]]でサポートを求めることもできます。
+
+普段利用しているメーラーを使いたい、あるいはファイルを添付したいときは、[mailto:community@wikia.com community@wikia.com] にメールを送信してください。',
+	'specialcontact-username' => '利用者名',
+	'specialcontact-wikiname' => 'ウィキ',
+	'specialcontact-realname' => 'あなたの氏名',
+	'specialcontact-yourmail' => '電子メールアドレス',
+	'specialcontact-problem' => '件名',
+	'specialcontact-problemdesc' => '本文',
+	'specialcontact-mail' => '送信',
+	'specialcontact-filledin' => 'この情報はアカウントの設定をもとに入力されています',
+	'specialcontact-ccme' => '自分宛に控えを送信する',
+	'specialcontact-ccdisabled' => '無効: この機能を利用するには有効な電子メールアドレスを登録する必要があります',
+	'specialcontact-notyou' => '身に覚えのない利用者名ですか？',
+	'specialcontact-captchainfo' => '画像に表示されている文字を入力してください',
+	'specialcontact-captchatitle' => '画像認証',
+	'specialcontact-formtitle' => 'ウィキアのスタッフに連絡する',
+	'specialcontact-nomessage' => '本文を入力してください',
+	'specialcontact-captchafail' => '認証コードが間違っているか入力されていません',
+	'specialcontact-mailsub' => 'ウィキアの連絡用メール',
+	'specialcontact-mailsubcc' => 'ウィキアへの連絡メールの控え',
+	'specialcontact-ccheader' => 'この電子メールはあなたがウィキアのサポートに送信した連絡メッセージの控えです',
+	'specialcontact-submitcomplete' => 'ウィキアへご連絡いただきありがとうございます。',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -654,6 +699,40 @@ $messages['ro'] = array(
 	'specialcontact-nomessage' => 'Vă rugăm completaţi mesajul',
 );
 
+/** Russian (Русский)
+ * @author Kuzura
+ */
+$messages['ru'] = array(
+	'contact' => 'Связаться с Викия',
+	'specialcontact-wikia' => 'Связаться с Викия',
+	'specialcontact-pagetitle' => 'Связаться с Викия',
+	'specialcontact-intro' => 'Вы можете связаться с [[w:project:Staff|сотрудниками Викияи]], используя эту форму. Администраторов этой вики можно найти на [[Special:ListAdmins|этой странице]].
+
+Дополнительную информацию о том, как именно сообщить о проблемах на Викия можно найти [[w:project:Report_a_problem|здесь]], или обратиться на [[w:Forum:Index|Форум Центральной вики]] за поддержкой других участников.
+
+Если вы предпочитаете общение посредством электронной почты, то вы можете связаться с нами по e-mail:  [mailto:community@wikia.com community@wikia.com].',
+	'specialcontact-username' => 'Имя участника',
+	'specialcontact-wikiname' => 'Название вики',
+	'specialcontact-realname' => 'Ваше настоящее имя',
+	'specialcontact-yourmail' => 'Адрес эл. почты',
+	'specialcontact-problem' => 'Тема',
+	'specialcontact-problemdesc' => 'Текст сообщения',
+	'specialcontact-mail' => 'Отправить',
+	'specialcontact-filledin' => 'Эта информация была заполнена из настроек вашей учётной записи',
+	'specialcontact-ccme' => 'Отправить мне копию этого сообщения',
+	'specialcontact-ccdisabled' => 'Отключено: пожалуйста, подтвердите ваш адрес эл. почты, чтобы использовать эту функцию',
+	'specialcontact-notyou' => 'Это не вы?',
+	'specialcontact-captchainfo' => 'Пожалуйста, введите текст, изображённый на картинке.',
+	'specialcontact-captchatitle' => 'Слова размыты',
+	'specialcontact-formtitle' => 'Обратитесь в службу поддержки Викия',
+	'specialcontact-nomessage' => 'Пожалуйста, заполните сообщение',
+	'specialcontact-captchafail' => 'Код подтверждения неверен или отсутствует.',
+	'specialcontact-mailsub' => 'Эл. почта Викия',
+	'specialcontact-mailsubcc' => 'Копировать адрес эл. почты Викия',
+	'specialcontact-ccheader' => 'Это копия сообщения, которое было отправлено в службу поддержки Викия',
+	'specialcontact-submitcomplete' => 'Благодарим Вас за письмо к Викия.',
+);
+
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Rancher
  */
@@ -721,6 +800,13 @@ Kung mas nais mong gamitin ang pangkaraniwang e-liham o maglagay ng mga kalakip,
 	'specialcontact-mailsubcc' => 'Kopya ng Pangpakikipag-ugnyang Liham ng Wikia',
 	'specialcontact-ccheader' => 'Isa itong kopya ng mensahe mong ipinadala sa Pangsuporta ng Wikia',
 	'specialcontact-submitcomplete' => 'Salamat sa pakikipag-ugnayan mo sa Wikia.',
+);
+
+/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'specialcontact-username' => 'Кулланучы исеме',
 );
 
 /** Vietnamese (Tiếng Việt)

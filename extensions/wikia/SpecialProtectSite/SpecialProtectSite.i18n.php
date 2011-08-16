@@ -690,6 +690,7 @@ $messages['ro'] = array(
 );
 
 /** Russian (Русский)
+ * @author Kuzura
  * @author Lockal
  * @author Александр Сигачёв
  */
@@ -715,6 +716,7 @@ $messages['ru'] = array(
 	'protectsite-until' => 'Защищено до:',
 	'protectsite-protect' => 'Защитить',
 	'protectsite-unprotect' => 'Снять защиту',
+	'protectsite-nologs' => 'не записывать в журнал',
 );
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
@@ -741,6 +743,7 @@ $messages['sr-ec'] = array(
 
 /** Swedish (Svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'protectsite' => 'Skydda sida',
@@ -751,7 +754,7 @@ $messages['sv'] = array(
 	'protectsite-allowusersysop' => 'Registrerade användare och administratörer',
 	'protectsite-allowsysop' => 'Endast administratörer',
 	'protectsite-createaccount' => 'Tillåt skapande av nya konton av',
-	'protectsite-createpage' => 'Tillåta skapande av sidor av',
+	'protectsite-createpage' => 'Tillåt skapande av sidor av',
 	'protectsite-edit' => 'Tillåt redigering av sidor av',
 	'protectsite-move' => 'Tillåt flyttning av sidor av',
 	'protectsite-upload' => 'Tillåt filuppladdningar av',

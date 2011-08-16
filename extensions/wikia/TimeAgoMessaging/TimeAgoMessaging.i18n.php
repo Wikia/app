@@ -303,6 +303,16 @@ $messages['uk'] = array(
 	'timeago-second' => 'хвилину тому',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Xiao Qiao
+ */
+$messages['vi'] = array(
+	'timeago-day' => '{{PLURAL:$1|1 ngày|$1 ngày}} trước',
+	'timeago-hour' => '{{PLURAL:$1|1 giờ|$1 giờ}} trước',
+	'timeago-minute' => '{{PLURAL:$1|1 phút|$1 phút}} trước',
+	'timeago-second' => '1 phút trước',
+);
+
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Hydra
  */

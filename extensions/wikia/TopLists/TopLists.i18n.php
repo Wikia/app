@@ -126,16 +126,68 @@ $messages['qqq'] = array(
 );
 
 /** Arabic (العربية)
+ * @author Imksa
  * @author OsamaK
  */
 $messages['ar'] = array(
+	'toplists-desc' => 'أكبر 10 قوائم',
+	'right-toplists-create-edit-list' => 'إنشاء وتحرير صفحات قائمة أفضل 10',
+	'right-toplists-create-item' => 'إنشاء وإضافة عناصر إلى صفحة قائمة أفضل 10',
+	'right-toplists-edit-item' => 'تحرير العناصر الموجودة في صفحة قائمة أفضل 10',
+	'right-toplists-delete-item' => 'حذف العناصر من صفحة قائمة أفضل 10',
+	'createtoplist' => 'إنشاء قائمة جديدة  بأفضل 10',
+	'edittoplist' => 'تحرير قائمة أفضل 10',
+	'toplists-category' => 'أكبر 10 قوائم',
+	'toplists-error-invalid-title' => 'النص المعطى غير صحيح.',
+	'toplists-error-invalid-picture' => 'الصورة المحددة غير صالحة.',
+	'toplists-error-title-exists' => 'هذه الصفحة موجودة بالفعل. يمكنك الذهاب إلى <a href="<span class=" notranslate"="">$2 "الهدف =" _blank ">$1</a> أو قم بتوفير اسم مختلف.',
+	'toplists-error-title-spam' => 'النص يحتوي على بعض الكلمات المعرفة كدعاية.',
+	'toplists-error-article-blocked' => 'عذراً غير مسموح لك إنشاء صفحة بهذا الاسم.',
+	'toplists-error-article-not-exists' => '" $1 "غير موجود. هل تريد <a href="<span class="notranslate">$ 2 "الهدف =" _blank "> إنشائه</a> ؟',
+	'toplists-error-picture-not-exists' => '" $1 "غير موجود. هل تريد <a href="<span class="notranslate">$ 2 "الهدف =" _blank "> إنشائه</a> ؟',
+	'toplists-error-duplicated-entry' => 'لا يمكنك استخدام نفس الاسم أكثر من مرة.',
+	'toplists-error-empty-item-name' => 'لا يمكن أن يكون اسم عنصر القائمة فارغة.',
+	'toplists-item-cannot-delete' => 'فشل في حذف هذا البند.',
+	'toplists-error-image-already-exists' => 'صورة مع نفس الاسم موجود مسبقا.',
+	'toplists-error-add-item-anon' => 'ولا يسمح للمستخدمين المجهولين إضافة عناصر إلى القوائم. الرجاء <a class="ajaxLogin" id="login" href="<span class="notranslate">$ 1 "> الدخول</a> أو <a class="ajaxLogin" id="signup" href="<span class="notranslate">$ 2 "> تسجيل حساب جديد</a> .',
+	'toplists-error-add-item-permission' => 'خطأ في إذن الوصول: الحساب الخاص بك لم يتم منح الحق في إنشاء عناصر جديدة.',
+	'toplists-error-add-item-list-not-exists' => '"$1" لا توجد في قائمة أعلى 10',
+	'toplists-error-backslash-not-allowed' => 'حرف "/" غير مسموح به في عنوان قائمة أعلى 10',
+	'toplists-upload-error-unknown' => 'حدث خطأ أثناء معالجة طلب التحميل. يرجى المحاولة مرة أخرى.',
+	'toplists-editor-title-label' => 'اسم القائمة',
+	'toplists-editor-title-placeholder' => 'أدخل اسما للقائمة',
+	'toplists-editor-related-article-label' => 'الصفحة ذات الصلة <small>(اختياري، لكن حدد صورة)</small>',
+	'toplists-editor-related-article-placeholder' => 'أدخل اسم الصفحة الحالية',
 	'toplists-editor-image-browser-tooltip' => 'أضف صورة',
 	'toplists-editor-remove-item-tooltip' => 'أزل العنصر',
+	'toplists-editor-drag-item-tooltip' => 'اسحب لتغيير الطلب',
+	'toplists-editor-add-item-label' => 'أضف عنصرًا جديدًا',
+	'toplists-editor-add-item-tooltip' => 'إضافة عنصر جديد إلى القائمة',
 	'toplists-create-button' => 'أنشئ قائمة',
 	'toplists-update-button' => 'احفظ القائمة',
 	'toplists-cancel-button' => 'ألغِ',
+	'toplists-items-nochange' => 'لا يوجد تغيير في العناصر',
+	'toplits-image-browser-no-picture-selected' => 'ليست هناك صورة مختارة',
+	'toplits-image-browser-clear-picture' => 'صورة واضحة',
+	'toplits-image-browser-selected-picture' => 'المحدد حاليا:$1',
 	'toplists-image-browser-upload-btn' => 'اختر',
+	'toplists-image-browser-upload-label' => 'تحميل الخاصة بك',
+	'toplists-list-creation-summary' => 'إنشاء قائمة ، $1',
+	'toplists-list-update-summary' => 'تحديث قائمة،$1',
+	'toplists-item-creation-summary' => 'إنشاء قائمة عناصر',
+	'toplists-item-update-summary' => 'تحديث قائمة عناصر',
+	'toplists-item-remove-summary' => 'تمت إزالة البند من القائمة',
+	'toplists-item-restored' => 'تم استعادة عنصر',
+	'toplists-list-related-to' => 'المتعلقة بما يلي :',
+	'toplists-list-created-by' => 'بواسطة [[مستخدم : $1 | $1 ]]',
+	'toplists-list-vote-up' => 'التصويت حتى',
 	'toplists-list-add-item-label' => 'أضف عنصرًا',
+	'toplists-list-add-item-name-label' => 'الحفاظ على القائمة مستمرة...',
+	'toplists-list-item-voted' => 'صوت',
+	'toplists-createpage-dialog-label' => 'قائمة أكبر 10',
+	'toplists-email-subject' => 'لقد تم تغيير قائمة أعلى 10',
+	'toplists-create-heading' => '<em>جديدة!</em> إنشاء أفضل عشرة خاصة بك',
+	'toplists-create-button-msg' => 'إنشاء قائمة',
 );
 
 /** Azerbaijani (Azərbaycanca)
@@ -611,7 +663,7 @@ Vous pouvez <a href="$4">vous désinscrire</a> des modifications de cette liste.
  */
 $messages['gl'] = array(
 	'toplists-desc' => 'Os 10 mellores',
-	'toplists-editor-title-label' => 'Nome de lista',
+	'toplists-editor-title-label' => 'Nome da lista',
 	'toplists-editor-related-article-label' => 'Páxina relacionada <small>(opcional, pero selecciona unha imaxe)</small>',
 	'toplists-editor-related-article-placeholder' => 'Introduza un nome de páxina existente',
 	'toplists-editor-image-browser-tooltip' => 'Engadir unha imaxe',
@@ -787,6 +839,92 @@ Tu pote <a href="$4">cancellar le subscription</a> al cambios in iste lista.',
  */
 $messages['it'] = array(
 	'toplists-create-button-msg' => 'Crea una lista',
+);
+
+/** Japanese (日本語)
+ * @author Tommy6
+ */
+$messages['ja'] = array(
+	'toplists-desc' => '投票リスト',
+	'right-toplists-create-edit-list' => '投票リストページの作成および編集',
+	'right-toplists-create-item' => '投票リストページでの項目の作成および追加',
+	'right-toplists-edit-item' => '投票リストページで項目を編集する',
+	'right-toplists-delete-item' => '投票リストページから項目を削除する',
+	'createtoplist' => '新しい投票リストを作成する',
+	'edittoplist' => '投票リストを編集する',
+	'toplists-category' => '投票リスト',
+	'toplists-error-invalid-title' => '入力されたテキストが適切ではありません。',
+	'toplists-error-invalid-picture' => '選択した画像が適切ではありません。',
+	'toplists-error-title-exists' => 'このページは既に存在します。<a href="$2" target="_blank">$1</a> を編集するか、他の名称を入力してください。',
+	'toplists-error-title-spam' => 'スパムの可能性があると判断されたテキストが含まれています。',
+	'toplists-error-article-blocked' => 'この名称のページは作成できません。',
+	'toplists-error-article-not-exists' => '「$1」は存在しません。<a href="$2" target="_blank">作成</a>しますか？',
+	'toplists-error-picture-not-exists' => '「$1」は存在しません。<a href="$2" target="_blank">アップロード</a>しますか？',
+	'toplists-error-duplicated-entry' => '名称を重複させることはできません。',
+	'toplists-error-empty-item-name' => '項目名は空欄にできません。',
+	'toplists-item-cannot-delete' => '項目の削除に失敗しました。',
+	'toplists-error-image-already-exists' => '同名の画像が既にあります。',
+	'toplists-error-add-item-anon' => '未登録利用者はリストへ項目を追加できません。<a class="ajaxLogin" id="login" href="$1">ログイン</a>するか<a class="ajaxLogin" id="signup" href="$2">アカウントを作成</a>してください。',
+	'toplists-error-add-item-permission' => '権限エラー: 新しい項目を作成する権限がありません。',
+	'toplists-error-add-item-list-not-exists' => '投票リスト「$1」は存在しません。',
+	'toplists-error-backslash-not-allowed' => '"/" は使用できません。',
+	'toplists-upload-error-unknown' => 'アップロード処理中にエラーが発生しました。もう一度お試しください。',
+	'toplists-editor-title-label' => 'リスト名',
+	'toplists-editor-title-placeholder' => 'リスト名を入力',
+	'toplists-editor-related-article-label' => '関連ページ<small>（オプション）</small>',
+	'toplists-editor-related-article-placeholder' => '既にあるページの名称を入力',
+	'toplists-editor-image-browser-tooltip' => '画像を追加',
+	'toplists-editor-remove-item-tooltip' => '項目を削除',
+	'toplists-editor-drag-item-tooltip' => 'ドラッグして順番を変更',
+	'toplists-editor-add-item-label' => '新しい項目を追加',
+	'toplists-editor-add-item-tooltip' => '新しい項目をリストに追加',
+	'toplists-create-button' => 'リストを作成',
+	'toplists-update-button' => 'リストを保存',
+	'toplists-cancel-button' => '中止',
+	'toplists-items-removed' => '$1項目を削除',
+	'toplists-items-created' => '$1項目を作成',
+	'toplists-items-updated' => '$1項目を編集',
+	'toplists-items-nochange' => '項目への変更無し',
+	'toplits-image-browser-no-picture-selected' => '画像は選択されていません',
+	'toplits-image-browser-clear-picture' => '画像を外す',
+	'toplits-image-browser-selected-picture' => '現在選択している画像: $1',
+	'toplists-image-browser-upload-btn' => '選択',
+	'toplists-image-browser-upload-label' => '画像をアップロード',
+	'toplists-list-creation-summary' => 'リストを作成「$1」',
+	'toplists-list-update-summary' => 'リストを編集「$1」',
+	'toplists-item-creation-summary' => 'リストの項目を作成',
+	'toplists-item-update-summary' => 'リストの項目を編集',
+	'toplists-item-remove-summary' => 'リストから項目を復帰',
+	'toplists-item-restored' => '項目を復帰',
+	'toplists-list-related-to' => '関連ページ:',
+	'toplists-list-votes-num' => '$1<br />票',
+	'toplists-list-created-by' => 'by [[User:$1|$1]]',
+	'toplists-list-vote-up' => '投票する',
+	'toplists-list-hotitem-count' => '$2 票中 $1 票',
+	'toplists-list-add-item-label' => '項目を追加',
+	'toplists-list-add-item-name-label' => '項目名を入力',
+	'toplists-list-item-voted' => '投票済',
+	'toplists-createpage-dialog-label' => '投票リスト',
+	'toplists-email-subject' => '投票リストが変更されました',
+	'toplists-email-body' => 'リスト「<a href="$1">$2</a>」が変更されました。
+
+ $3
+
+以下で変更点を確認できます。
+
+$1
+
+- Wikia
+
+通知についての設定の変更は <a href="$4">$4</a> で行えます。',
+	'toplists-seconds' => '$1秒',
+	'toplists-minutes' => '$1分',
+	'toplists-hours' => '$1時間',
+	'toplists-days' => '$1日',
+	'toplists-weeks' => '$1週間',
+	'toplists-msg-fb-OnRateArticle-short' => 'さんが $WIKINAME の投票リストで投票しました。',
+	'toplists-create-heading' => '新しいリストを作成する',
+	'toplists-create-button-msg' => 'リストを作成',
 );
 
 /** Colognian (Ripoarisch)
@@ -1151,7 +1289,7 @@ $messages['no'] = array(
 	'toplists-item-creation-summary' => 'Oppretter et listeelement',
 	'toplists-item-update-summary' => 'Oppdaterer et listeelement',
 	'toplists-item-remove-summary' => 'Element fjernet fra listen',
-	'toplists-item-restored' => 'Element gjennopprettet',
+	'toplists-item-restored' => 'Element gjenopprettet',
 	'toplists-list-related-to' => 'Relatert til:',
 	'toplists-list-votes-num' => '{{PLURAL:$1|1<br/>stemme|$1<br/>stemmer}}',
 	'toplists-list-created-by' => 'av [[User:$1|$1]]',

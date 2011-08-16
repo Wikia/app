@@ -227,6 +227,7 @@ $messages['an'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Imksa
  * @author OsamaK
  */
 $messages['ar'] = array(
@@ -276,6 +277,7 @@ $messages['ar'] = array(
 	'create-blog-listing-sortby' => 'رتب حسب',
 	'create-blog-listing-sortby-date' => 'الأحدث',
 	'create-blog-listing-sortby-author' => 'المؤلف',
+	'create-blog-listing-sortby-comments' => 'عدد التعليقات',
 	'create-blog-listing-output-as-box' => 'ينشئ رمزا للنسخ و اللصق',
 	'create-blog-listing-output-as-page' => 'إنشاء صفحة القائمة كصفحة جديدة',
 	'create-blog-listing-tag-format-not-recognized-on-page' => 'علامة قائمة المدونة لم يتم التعرف إليها في الصفحة',
@@ -286,7 +288,7 @@ $messages['ar'] = array(
 	'blog-emptyparam' => 'اسم التطبيق لا يمكن أن يكون فارغا',
 	'blog-defaulttitle' => 'مدونات',
 	'blog-continuereading' => 'مواصلة القراءة &raquo;',
-	'blog-readfullpost' => 'قراءة كامل المعلقة',
+	'blog-readfullpost' => 'اقرأ المزيد',
 	'blog-olderposts' => 'معلقات أقدم',
 	'blog-newerposts' => 'معلقات أجدد',
 	'blog-nbrcomments' => '{{PLURAL:$1|تعليق واحد|$1 تعليقات}}',
@@ -339,6 +341,8 @@ $messages['ar'] = array(
 	'blogs-recent-url-text' => 'أحدث معلقات المدونة',
 	'blog-desc' => 'مقالات المدونة',
 	'blog-movepage-badtitle' => 'عنوان مدونة غير صالح',
+	'blog-comment-sending' => 'جاري الإرسال...',
+	'blog-by' => '$1 بواسطة $2',
 );
 
 /** Assamese (অসমীয়া)
@@ -577,9 +581,15 @@ Gallout a reer krouiñ pajennadoù rollañ blogoù evit rummadoù evel "Barack O
 );
 
 /** Catalan (Català)
+ * @author BroOk
  * @author SMP
  */
 $messages['ca'] = array(
+	'createblogpage' => 'Crear un bloc',
+	'createbloglistingpage' => 'Crear una llista de blocs',
+	'create-blog-spam' => 'Sembla spam',
+	'create-blog-cant-edit' => "No s'ha pogut realitzar l'edició",
+	'create-blog-post-category' => 'Publicacions al bloc',
 	'right-blog-comments-toggle' => 'Activar comentaris en articles del bloc',
 	'right-blog-comments-delete' => 'Esborrar comentaris en articles de bloc',
 	'right-blog-articles-move' => 'Moure articles del bloc',
@@ -1736,9 +1746,16 @@ Buat blog daftar halaman untuk kategori seperti "Barack Obama", "Penggemar Fiksi
  * @author Ukabia
  */
 $messages['ig'] = array(
-	'blog-comment-delete' => 'gbakashia',
+	'blog-comment-delete' => 'kàcha',
 	'blog-comment-hide' => 'zofù',
-	'blog-comment-edit' => 'orü',
+	'blog-comment-edit' => 'mèzi',
+);
+
+/** Ingush (ГІалгІай Ğalğaj)
+ * @author Sapral Mikail
+ */
+$messages['inh'] = array(
+	'blog-comment-history' => 'искар',
 );
 
 /** Italian (Italiano)
@@ -1970,6 +1987,7 @@ $messages['lb'] = array(
 	'create-blog-spam' => 'Gesäit aus wéi Spam',
 	'create-blog-empty-title-error' => 'Titel obligatoresch',
 	'create-blog-invalid-title-error' => 'Net valabelen Titel',
+	'create-blog-no-login' => 'Net ageloggt',
 	'create-blog-categories-textinput' => 'Eng Kategorie derbäisetzen',
 	'create-blog-save' => 'Säit späicheren',
 	'create-blog-listing-preview' => 'Kucken ouni ofzespäicheren',
@@ -1985,6 +2003,7 @@ $messages['lb'] = array(
 	'blog-edited' => 'geännert',
 	'blog-page' => 'Blog',
 	'blog-comments' => 'Bemierkungen',
+	'blog-comments-dsc' => "Neist fir d'éischt",
 	'blog-comments-anonymous' => 'Anonyme Benotzer',
 	'blog-comment-delete' => 'läschen',
 	'blog-comment-hide' => 'verstoppen',
@@ -3146,6 +3165,7 @@ $messages['ro'] = array(
 /** Russian (Русский)
  * @author Eleferen
  * @author G0rn
+ * @author Kuzura
  * @author Lockal
  * @author Александр Сигачёв
  */
@@ -3261,6 +3281,7 @@ $messages['ru'] = array(
 	'blog-desc' => 'Статьи блога',
 	'blog-movepage-badtitle' => 'Неверное название записи в блоге.',
 	'blog-comment-sending' => 'Отправка…',
+	'blog-by' => '$1 от $2',
 );
 
 /** Slovenian (Slovenščina)
@@ -3545,6 +3566,7 @@ $messages['ta'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Praveen Illa
  * @author Ravichandra
  * @author Veeven
  */
@@ -3566,7 +3588,7 @@ $messages['te'] = array(
 	'create-blog-listing-preview' => 'మునుజూపు',
 	'create-blog-listing-sortby-author' => 'రచయిత',
 	'blog-defaulttitle' => 'బ్లాగులు',
-	'blog-readfullpost' => 'మొత్తం టపా చదవండి',
+	'blog-readfullpost' => 'మరింత చదవండి',
 	'blog-olderposts' => 'పాత టపాలు',
 	'blog-newerposts' => 'కొత్త టపాలు',
 	'blog-nbrcomments' => '{{PLURAL:$1|ఒక వ్యాఖ్య|$1 వ్యాఖ్యలు}}',
@@ -3581,6 +3603,7 @@ $messages['te'] = array(
 	'blog-comment-post' => 'వ్యాఖ్యానించండి',
 	'blog-comments' => 'వ్యాఖ్యలు',
 	'blog-rc-comments' => 'బ్లాగు వ్యాఖ్యలు',
+	'blog-voting-label' => 'వోటింగు',
 	'blog-comments-login' => 'వ్యాఖ్యానించడానికి <a href="$1" rel="nofollow">ప్రవేశించండి</a>',
 	'blog-comments-dsc' => 'కొత్తవి ముందు',
 	'blog-comments-asc' => 'కొత్తవి చివర',

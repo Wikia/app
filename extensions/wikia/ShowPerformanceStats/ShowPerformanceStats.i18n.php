@@ -220,6 +220,13 @@ $messages['pt-br'] = array(
 	'performancestat-cpu' => 'CPU: $1s',
 );
 
+/** Russian (Русский)
+ * @author Kuzura
+ */
+$messages['ru'] = array(
+	'performancestat-total' => 'Итого: $1s',
+);
+
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Rancher
  */

@@ -256,6 +256,15 @@ $messages['pt-br'] = array(
 	'exitstitial-button' => 'Ignore este anúncio',
 );
 
+/** Russian (Русский)
+ * @author Kuzura
+ */
+$messages['ru'] = array(
+	'interstitial-skip-ad' => 'Пропустить эту рекламу',
+	'exitstitial-register' => '<a href="#" class="register">Зарегистрироваться</a> или <a href="#" class="login">войти</a>, чтобы пропустить рекламу.',
+	'exitstitial-button' => 'Пропустить эту рекламу',
+);
+
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Rancher
  */

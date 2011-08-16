@@ -170,7 +170,7 @@ $messages['el'] = array(
 $messages['es'] = array(
 	'our404handler' => 'Error 404: ¡Página no encontrada!',
 	'our404handler-oops' => 'Este no es el tipo de páginas que estás buscando. Sal de aquí, por favor.',
-	'message404' => "'''Por alguna razón la página por la que preguntaste no existe.'''
+	'message404' => "'''Lo sentimos mucho, pero por alguna razón la página que buscas no existe.'''
 
 El artículo '''$1''' no pudo ser encontrado.
 
@@ -621,6 +621,13 @@ O artigo '''$1''' não pode ser encontrado.
 * Você pode tentar o artigo [[[$2]]]
 * Você pode usar o mecanismo de pesquisa na caixa a esquerda da página
 * Ir até a página principal do sítio, clique na ligação: [{{SERVER}} {{SITENAME}}]",
+);
+
+/** Romansh (Rumantsch)
+ * @author Kazu89
+ */
+$messages['rm'] = array(
+	'our404handler' => 'Errur 404: Pagina betg chattada!',
 );
 
 /** Russian (Русский)

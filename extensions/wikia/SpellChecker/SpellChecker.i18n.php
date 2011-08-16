@@ -174,6 +174,13 @@ $messages['ia'] = array(
 	'spellchecker-info-spellcheck-suggestions' => 'Suggestiones de orthographia pro "$1": $2',
 );
 
+/** Ingush (ГІалгІай Ğalğaj)
+ * @author Sapral Mikail
+ */
+$messages['inh'] = array(
+	'spellchecker-info-spellcheck-languages' => 'Мотт',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -309,8 +316,12 @@ $messages['pt-br'] = array(
 
 /** Russian (Русский)
  * @author DCamer
+ * @author Kuzura
  */
 $messages['ru'] = array(
+	'spellchecker-desc' => 'РНР модуль создаёт интерфейс для проверки орфографии',
+	'enablespellchecker' => 'Включить проверку орфографии в визуальном режиме',
+	'spellchecker-info' => 'Информация о модуле проверки орфографии',
 	'spellchecker-info-languages' => 'Доступные языки ($1)',
 	'spellchecker-info-provider' => 'Поставщик',
 	'spellchecker-info-dictionaries' => 'Доступные словари',

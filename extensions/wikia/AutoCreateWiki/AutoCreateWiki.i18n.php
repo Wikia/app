@@ -871,6 +871,7 @@ Teamo de Wikia
 /** Spanish (Español)
  * @author Bola
  * @author Crazymadlover
+ * @author DJ Nietzsche
  * @author Locos epraix
  * @author Pertile
  * @author Peter17
@@ -883,7 +884,7 @@ $messages['es'] = array(
 	'autocreatewiki-page-title-default' => 'Crear un nuevo wiki',
 	'autocreatewiki-page-title-answers' => 'Crear un nuevo sitio de Respuestas',
 	'createwiki' => 'Solicita un nuevo wiki',
-	'autocreatewiki-chooseone' => 'Elije una',
+	'autocreatewiki-chooseone' => 'Elige una',
 	'autocreatewiki-required' => '$1 = requerido',
 	'autocreatewiki-web-address' => 'Dirección Web',
 	'autocreatewiki-category-select' => 'Selecciona una',
@@ -987,13 +988,13 @@ Equipo Comunitario de Wikia
 	'autocreatewiki-welcometalk' => "== ¡Bienvenidos! ==
 <div style=\"font-size:120%; line-height:1.2em;\">Hola \$1 -- nos encanta que '''\$4''' sea parte de la comunidad Wikia!
 
-Ahora tienes un sitio web entero que completar con informaciónm fotos y videos relacionados con tu tema favorito, pero de momento, sólo encontrarás páginas en blanco mirándote fijamente. Tenebroso ¿no? En adelante descubrirás algunas formas de comenzar.
+Ahora tienes un sitio web entero que completar con información, fotos y videos relacionados con tu tema favorito, pero de momento, sólo encontrarás páginas en blanco mirándote fijamente. Tenebroso ¿no? En adelante descubrirás algunas formas de comenzar.
 
 * '''Escribe tu tema''' en la página principal. Esta es tu oportunidad para explicar a tus lectores de qué se trata el asunto. Escribe tanto como quieras. Tu descripción puede contener vínculos a todas las páginas importantes de tu sitio.
 
 * '''Haz nuevas páginas''' -- Para empezar, una o dos oraciones son más que suficientes. ¡No permitas que la página en blanco se quede mirándote! Una wiki consiste en añadir y cambiar cosas con el tiempo. También puedes subir fotos y videos para completar la página y hacerla más interesante.
 
-¡No te detengas! A las personas les gusta visitar wikis que tengan mucho contenido para leer y mirar. Así que sigue añadiendo cosas para atraer a leectores y editores. Hay mucho por hacer, pero no te amilanes. Hoy es apenas tu primer día y tienes mucho tiempo por delante. Cada wiki empieza de la misma manera: un poquito cada vez, comenzando por las primeras páginas hasta que se convierte en un grandísimo y movidísimo sitio.
+¡No te detengas! A las personas les gusta visitar wikis que tengan mucho contenido para leer y mirar. Así que sigue añadiendo cosas para atraer a lectores y editores. Hay mucho por hacer, pero no te amilanes. Hoy es apenas tu primer día y tienes mucho tiempo por delante. Cada wiki empieza de la misma manera: un poquito cada vez, comenzando por las primeras páginas hasta que se convierte en un grandísimo y movidísimo sitio.
 
 Si tienes algunas dudas, envíanos un correo electrónico a través de nuestro [[Special:Contact|formulario de contacto]]. ¡Que te diviertas!
 
@@ -1906,6 +1907,15 @@ $messages['ig'] = array(
 	'autocreatewiki-category-label' => 'Ébéonọr:',
 	'newwikis' => 'Wiki ne ohụru',
 	'autocreatewiki-subname-answers' => 'Nza okwu',
+);
+
+/** Ingush (ГІалгІай Ğalğaj)
+ * @author Sapral Mikail
+ */
+$messages['inh'] = array(
+	'autocreatewiki-category-label' => 'Цатег:',
+	'newwikis' => 'Керда ВIикIаш',
+	'autocreatewiki-subname-answers' => 'Жопдалараш',
 );
 
 /** Italian (Italiano)
@@ -3076,9 +3086,9 @@ $messages['pl'] = array(
 	'autocreatewiki-bad-name' => 'Nazwa nie może zawierać znaków specjalnych (np. $ lub @) i musi być jednym słowem zapisanym małymi literami bez odstępów.',
 	'autocreatewiki-invalid-wikiname' => 'Nazwa nie może zawierać znaków specjalnych (np. $ lub @) i nie może być pusta',
 	'autocreatewiki-violate-policy' => 'Nazwa wiki zawiera słowo, które narusza naszą politykę nazewnictwa',
-	'autocreatewiki-name-taken' => 'Wiki o tej nazwie już istnieje. Zapraszamy do przyłączenia się do nas na <a href="http://$1.wikia.com">http://$1.wikia.com</a>',
-	'autocreatewiki-name-too-short' => 'Ta nazwa jest zbyt krótka. Należy wybrać nazwę o co najmniej 3 znakach.',
-	'autocreatewiki-name-too-long' => 'Ta nazwa jest zbyt długa. Należy wybrać nazwę o maksymalnie 50 znakach.',
+	'autocreatewiki-name-taken' => 'Wiki pod tym adresem już istnieje. Zapraszamy do rozpoczęcia edytowania na <a href="http://$1.wikia.com">http://$1.wikia.com</a> lub wybrania innego adresu',
+	'autocreatewiki-name-too-short' => 'Ten adres jest zbyt krótki. Należy wybrać adres o co najmniej 3 znakach.',
+	'autocreatewiki-name-too-long' => 'Ten adres jest zbyt długi. Należy wybrać adres o maksymalnie 50 znakach.',
 	'autocreatewiki-similar-wikis' => 'Poniżej znajdują się wiki dotyczące tego tematu. Proponujemy edycję jednej z nich.',
 	'autocreatewiki-invalid-username' => 'Ta nazwa użytkownika jest nieprawidłowa.',
 	'autocreatewiki-busy-username' => 'Ta nazwa użytkownika jest już wykorzystana.',
@@ -3724,6 +3734,7 @@ $messages['roa-tara'] = array(
 /** Russian (Русский)
  * @author DCamer
  * @author Grigol
+ * @author Kuzura
  * @author Lockal
  * @author Александр Сигачёв
  */
@@ -3770,8 +3781,8 @@ $messages['ru'] = array(
 	'autocreatewiki-bad-name' => 'Название не может содержать специальные символы (например, $ или @) и должно быть представлено одним словом, написанным строчными буквами без пробелов.',
 	'autocreatewiki-invalid-wikiname' => 'Название не может содержать специальные символы (например, $ или @) и не может быть пустым',
 	'autocreatewiki-violate-policy' => 'Это название вики содержит слова, которые нарушают наши правила именования',
-	'autocreatewiki-name-taken' => 'Вики с таким названием уже существует. Вы можете присоединиться к проекту <a href="http://$1.wikia.com">http://$1.wikia.com</a>',
-	'autocreatewiki-name-too-short' => 'Это название слишком коротко. Пожалуйста, выберите название длиной не менее 3 символов.',
+	'autocreatewiki-name-taken' => 'Вики с таким URL уже существует. Вы можете присоединиться к проекту <a href="http://$1.wikia.com">http://$1.wikia.com</a> или выбрать другой адрес.',
+	'autocreatewiki-name-too-short' => 'Это название слишком короткое. Пожалуйста, выберите название длиной не менее 3 символов.',
 	'autocreatewiki-name-too-long' => 'Это название слишком длинное. Пожалуйста, выберите название длиной не более 50 символов.',
 	'autocreatewiki-similar-wikis' => 'Ниже приведены уже существующие вики по этой теме. Мы предлагаем редактировать одну из них.',
 	'autocreatewiki-invalid-username' => 'Недопустимое имя участника.',
@@ -3951,6 +3962,7 @@ $messages['sv'] = array(
 	'autocreatewiki' => 'Skapa en ny wiki',
 	'autocreatewiki-desc' => 'Create wiki in WikiFactory by user requests',
 	'autocreatewiki-page-title-default' => 'Skapa en ny wiki',
+	'autocreatewiki-page-title-answers' => 'Skapa en ny Svar-sida',
 	'createwiki' => 'Skapa en ny wiki',
 	'autocreatewiki-chooseone' => 'Välj en',
 	'autocreatewiki-required' => '$1 = krävs',
@@ -3966,6 +3978,7 @@ $messages['sv'] = array(
 	'autocreatewiki-error' => 'fel',
 	'autocreatewiki-haveaccount-question' => 'Har du redan ett konto hos Wikia?',
 	'autocreatewiki-success-title-default' => 'Din wiki har skapats!',
+	'autocreatewiki-success-title-answers' => 'Din Svar-sida har skapats!',
 	'autocreatewiki-success-subtitle' => 'Du kan nu börja arbeta med din wiki genom att besöka:',
 	'autocreatewiki-success-has-been-created' => 'har skapats!',
 	'autocreatewiki-success-get-started' => 'Kom igång',
@@ -4114,6 +4127,7 @@ $messages['ta'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Praveen Illa
  * @author Veeven
  */
 $messages['te'] = array(
@@ -4121,6 +4135,7 @@ $messages['te'] = array(
 	'autocreatewiki-birthdate' => 'పుట్టిన రోజు:',
 	'autocreatewiki-category-other' => 'ఇతర',
 	'autocreatewiki-congratulation' => 'అభినందనలు!',
+	'autocreatewiki-subname-answers' => 'జవాబులు',
 );
 
 /** Tagalog (Tagalog)
@@ -4232,6 +4247,37 @@ $messages['tr'] = array(
 	'autocreatewiki-errordefault' => 'İşlem tamamlanmadı...',
 	'autocreatewiki-step1' => 'Görsel dizini oluşturuluyor ...',
 	'autocreatewiki-step2' => 'Veri tabanı oluşturuluyor...',
+);
+
+/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'autocreatewiki' => 'Яңа вики ясау',
+	'autocreatewiki-desc' => 'Катнашучылар соравы буенча Вики-фабрикада вики ясау',
+	'autocreatewiki-page-title-default' => 'Яңа вики ясау',
+	'autocreatewiki-page-title-answers' => 'Яңа җаваплар сайты ясау',
+	'createwiki' => 'Яңа вики ясау',
+	'autocreatewiki-chooseone' => 'Исемлектән сайлау',
+	'autocreatewiki-required' => '$1 - мәҗбүри',
+	'autocreatewiki-web-address' => 'Веб-адрес:',
+	'autocreatewiki-category-select' => 'Сайлагыз',
+	'autocreatewiki-language-top' => '$1 иң күп кулланылган телләр',
+	'autocreatewiki-language-all' => 'Барлык телләр',
+	'autocreatewiki-birthdate' => 'Туган көн:',
+	'autocreatewiki-remember' => 'Мине истә калдыру',
+	'autocreatewiki-create-account' => 'Яңа кулланучы теркәү',
+	'autocreatewiki-done' => 'Эшләнде',
+	'autocreatewiki-error' => 'Хата',
+	'autocreatewiki-haveaccount-question' => 'Сезнең Викиядә хисап язмасы бармы?',
+	'autocreatewiki-success-title-default' => 'Сезнең вики ясалган!',
+	'autocreatewiki-success-title-answers' => 'Сезнең җаваплар сайты эшләнгән!',
+	'autocreatewiki-success-has-been-created' => 'ясалган!',
+	'autocreatewiki-success-get-started' => 'Эшне башлау',
+	'autocreatewiki-category-label' => 'Төркем:',
+	'autocreatewiki-category-other' => 'Башка',
+	'autocreatewiki-log-title' => 'Сезнең вики ясала',
+	'newwikis' => 'Яңа викилар',
 );
 
 /** Ukrainian (Українська)

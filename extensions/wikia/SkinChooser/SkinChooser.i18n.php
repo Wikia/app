@@ -13,6 +13,15 @@ $messages['en'] = array(
 	'site-layout' => 'Site Layouts',
 );
 
+/** Arabic (العربية)
+ * @author Malhargan
+ */
+$messages['ar'] = array(
+	'skinchooser-desc' => 'يسمح للمستخدمين باختيار skins في التفضيلات الخاصة بهم',
+	'new-look' => 'شكل جديدة للويكي',
+	'site-layout' => 'موقع تخطيطات',
+);
+
 /** Breton (Brezhoneg)
  * @author Y-M D
  */
@@ -178,6 +187,13 @@ $messages['pt-br'] = array(
 	'skinchooser-customcss' => 'Para compositor de temas visuais, selecione a opção de personalização no menu acima e coloque o CSS de personalização em [[MediaWiki:Monaco.css]].',
 	'new-look' => 'Novo Visual da Wikia',
 	'site-layout' => 'Composições do Site',
+);
+
+/** Russian (Русский)
+ * @author Kuzura
+ */
+$messages['ru'] = array(
+	'skinchooser-desc' => 'Позволяет участникам выбирать оболочки в личных настройках',
 );
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)

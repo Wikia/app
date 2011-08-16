@@ -176,6 +176,7 @@ $messages['gl'] = array(
 	'feed-title-leaderboard' => 'Taboleiro de logros',
 	'all-blog-posts' => 'todas as categorías',
 	'feed-title-blogcomments' => 'Comentario sobre $1',
+	'feed-title-recentchanges' => 'Cambios recentes',
 );
 
 /** Hungarian (Magyar)
@@ -434,11 +435,24 @@ $messages['pt-br'] = array(
 
 /** Russian (Русский)
  * @author Eleferen
+ * @author Kuzura
  */
 $messages['ru'] = array(
+	'partner-feed-achievements-leaderboard' => 'Лидеры по наградам на вики',
+	'partner-feed-earned-badges' => 'Недавно заработанные значки на конкретной вики',
+	'partner-feed-recent-blog-posts' => 'Последние записи в блоге, связанные с рекламой',
+	'partner-feed-latest-images' => 'Галерея из последних изображений, которые были загружены на вики',
+	'partner-feed-recent-blog-comments' => 'Последние комментарии, связанные с указанным блогом.',
+	'partner-feed-recent-changes' => 'Свежие правки',
+	'error-no-article' => 'Ошибка: нет "статьи" с такими параметрами',
 	'feed-title-blogposts' => 'Последние записи в блоге',
 	'feed-title-recent-badges' => 'Последние значки',
 	'feed-title-recent-images' => 'Последние изображения',
+	'feed-title-leaderboard' => 'Лидеры по наградам',
+	'all-blog-posts' => 'все категории',
+	'blog-posts-from-listing' => 'из списка: $1',
+	'feed-title-blogcomments' => 'Комментарии к $1',
+	'feed-title-recentchanges' => 'Свежие правки',
 );
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)

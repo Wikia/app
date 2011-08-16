@@ -178,6 +178,7 @@ $messages['br'] = array(
 	'phalanx-label-type' => 'Seurt',
 	'phalanx-label-lang' => 'Yezh :',
 	'phalanx-test-submit' => 'Amprouiñ',
+	'phalanx-display-row-blocks' => 'stankadennoù : $1',
 	'phalanx-link-unblock' => 'distankañ',
 	'phalanx-link-modify' => 'kemmañ',
 	'phalanx-link-stats' => 'stadegoù',
@@ -195,9 +196,10 @@ $messages['br'] = array(
  * @author DaSch
  * @author George Animal
  * @author LWChris
+ * @author SVG
  */
 $messages['de'] = array(
-	'phalanx-desc' => 'Phalanx ist ein integrierter Spam-Verteidigung-Mechanismus',
+	'phalanx-desc' => 'Phalanx ist ein integrierter Spam-Verteidigungs-Mechanismus',
 	'phalanx' => 'Phalanx',
 	'phalanx-title' => 'Phalanx - Integrierter Spam-Verteidigungs-Mechanismus',
 	'phalanx-type-content' => 'Seiteninhalt',
@@ -235,7 +237,7 @@ Ein Klick auf "{{int:phalanx-add-block}}" speichert deine Änderungen!',
 	'phalanx-test-submit' => 'Test',
 	'phalanx-test-results-legend' => 'Testergebnisse',
 	'phalanx-display-row-blocks' => 'Sperren: $1',
-	'phalanx-display-row-created' => "erstellt von ''$1''' um $2",
+	'phalanx-display-row-created' => "erstellt von '''$1''' um $2",
 	'phalanx-link-unblock' => 'entsperren',
 	'phalanx-link-modify' => 'ändern',
 	'phalanx-link-stats' => 'Statistiken',
@@ -301,6 +303,7 @@ Bitte [[Special:Contact|kontaktiere Wikia]] im Falle eines Versehens!<br />Als S
 );
 
 /** Spanish (Español)
+ * @author Mor
  * @author VegaDark
  */
 $messages['es'] = array(
@@ -349,7 +352,7 @@ $messages['es'] = array(
 	'phalanx-reset-form' => 'Resetear formulario',
 	'phalanx-legend-input' => 'Crear o modificar filtro',
 	'phalanx-legend-listing' => 'Filtros aplicados actualmente',
-	'phalanx-unblock-message' => 'El ID de bloqueo #$1 fue removido satisfactoriamente.',
+	'phalanx-unblock-message' => 'El ID de bloqueo #$1 fue eliminado satisfactoriamente.',
 	'phalanx-help-type-content' => 'Este filtro evita que una edición sea guardada, si su contenido concuerda con alguna frase bloqueada.',
 	'phalanx-help-type-summary' => 'Este filtro evita que una edición sea guardada, si el resumen de edición concuerda con alguna frase bloqueada.',
 	'phalanx-help-type-title' => 'Este filtro evita que una página sea creada, si el título concuerda con alguna frase bloqueada.
@@ -428,7 +431,7 @@ Jos tämä on mielestäsi virhe, ole hyvä ja [[Special:Contact|ota yhteyttä Wi
 $messages['fr'] = array(
 	'phalanx-desc' => 'Phalanx est un mécanisme de défense contre les courriers indésirables intégré',
 	'phalanx' => 'Phalanx',
-	'phalanx-title' => 'Phalanx - Mécanisme de défense contre les courriers indésirables intégré',
+	'phalanx-title' => 'Phalanx - Mécanisme intégré de défense contre les courriers indésirables',
 	'phalanx-type-content' => 'contenu de la page',
 	'phalanx-type-summary' => 'résumé de la page',
 	'phalanx-type-title' => 'titre de la page',
@@ -444,7 +447,7 @@ $messages['fr'] = array(
 	'phalanx-label-type' => 'Type :',
 	'phalanx-label-lang' => 'Langue :',
 	'phalanx-view-type' => 'Type de blocage...',
-	'phalanx-view-blocker' => 'Rechercher par texte de filtre:',
+	'phalanx-view-blocker' => 'Rechercher par filtrage de texte :',
 	'phalanx-view-blocks' => 'Filtres de recherche',
 	'phalanx-view-id' => 'Filtrer par ID :',
 	'phalanx-view-id-submit' => 'Filtrer',
@@ -1549,6 +1552,14 @@ Mangyaring lumikha ng kahaliling pangalan ng tagagamit o [[Special:Contact|makip
 	'phalanx-stats-table-wiki-name' => 'Pangalan ng Wiki',
 	'phalanx-stats-table-wiki-url' => 'URL ng Wiki',
 	'phalanx-stats-table-wiki-last-edited' => 'Huling binago',
+);
+
+/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'phalanx-stats-table-text' => 'Текст',
+	'phalanx-stats-table-wiki-name' => 'Wiki исеме',
 );
 
 /** Ukrainian (Українська)

@@ -21,6 +21,15 @@ $messages['af'] = array(
 	'wikiasearch-search-wikia' => 'Deursoek Wikia',
 );
 
+/** Arabic (العربية)
+ * @author Malhargan
+ */
+$messages['ar'] = array(
+	'wikiasearch-titles-only' => 'البحث فقط في عناوين الصفحات',
+	'wikiasearch-system-error-msg' => 'بسبب خطأ في النظام ، لا يمكن إكمال البحث',
+	'wikiasearch-search-wikia' => 'بحث ويكي',
+);
+
 /** Azerbaijani (Azərbaycanca)
  * @author Sortilegus
  */
@@ -243,10 +252,10 @@ $messages['id'] = array(
  * @author Ukabia
  */
 $messages['ig'] = array(
-	'wikiasearch-titles-only' => 'Chöwá na ime ishi ihü nani',
-	'wikiasearch-system-error-msg' => 'Màkà nsigbú na orunotu, ihe nchowá gi enwéghìkì mecha',
-	'wikiasearch-search-this-wiki' => 'Chöwá na nánì Mpkurụ Wikia',
-	'wikiasearch-search-wikia' => 'Chöwá na imé Wikia',
+	'wikiasearch-titles-only' => 'Chọwa na ime ishi ihü nani',
+	'wikiasearch-system-error-msg' => 'Màkà nsigbú na nsónùsòrò, ihe nchowá gi enwéghìkì mecha',
+	'wikiasearch-search-this-wiki' => 'Chọwa na nánì Mpkurụ Wikia',
+	'wikiasearch-search-wikia' => 'Chọwa na imé Wikia',
 );
 
 /** Italian (Italiano)
@@ -388,6 +397,13 @@ $messages['oc'] = array(
 	'wikiasearch-search-wikia' => 'Cercar dins Wikia',
 );
 
+/** Oriya (ଓଡ଼ିଆ)
+ * @author Psubhashish
+ */
+$messages['or'] = array(
+	'wikiasearch-search-this-wiki' => 'କେବଳ ଉଇକିଆ ସେଣ୍ଟ୍ରାଲରେ  ଖୋଜିବେ',
+);
+
 /** Polish (Polski)
  * @author Sp5uhe
  */
@@ -404,7 +420,7 @@ $messages['pl'] = array(
  * @author Dragonòt
  */
 $messages['pms'] = array(
-	'search-desc' => "Motor d'arserca ëd Cross-Wikia ch'a dòvra ël backend Solr",
+	'search-desc' => "Motor d'arserca a travers le Wikia ch'a deuvra Solr",
 	'wikiasearch-titles-only' => 'Sërché mach ant ij tìtoj dle pàgine',
 	'wikiasearch-system-error-msg' => "Për n'eror dël sistema, soa arserca a peul pa esse completà",
 	'wikiasearch-search-this-wiki' => 'Serca Mach an Wikia Sentral',

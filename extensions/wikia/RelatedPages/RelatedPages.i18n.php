@@ -133,6 +133,14 @@ $messages['it'] = array(
 	'wikiarelatedpages-heading' => 'Per saperne di più',
 );
 
+/** Japanese (日本語)
+ * @author Tommy6
+ */
+$messages['ja'] = array(
+	'wikiarelatedpages-desc' => 'ページに関連ページのリストを追加する',
+	'wikiarelatedpages-heading' => 'さらに読む',
+);
+
 /** Korean (한국어) */
 $messages['ko'] = array(
 	'wikiarelatedpages-desc' => '문서 하단에 관련 문서 링크를 추가합니다.',

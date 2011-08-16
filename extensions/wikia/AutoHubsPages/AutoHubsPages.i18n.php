@@ -44,7 +44,7 @@ $messages['qqq'] = array(
 * $1 is the number of comments.',
 	'hub-topusers-editpoints' => 'Parameters:
 * $1 is the number of edit points.',
-    	'hub-topusers-editpoints-nonformatted' => 'Parameters:
+	'hub-topusers-editpoints-nonformatted' => 'Parameters:
 * $1 is the number of edit points.',
 	'hub-editors' => 'Parameters:
 * $1 is the number of editors.',
@@ -91,7 +91,7 @@ $messages['br'] = array(
 	'hub-blog-continue' => "Kenderc'hel da lenn",
 	'hub-blog-showarticle' => 'Gwelet ar bajenn',
 	'hub-topusers-editpoints' => '<span class="userPoints">$1</span><span class="txt">{{PLURAL:$1|poent|poent}} kemmañ</span>',
-    	'hub-topusers-editpoints-nonformatted' => '$1 {{PLURAL:$1|poent|poent}} kemmañ',
+	'hub-topusers-editpoints-nonformatted' => '$1 {{PLURAL:$1|poent|poent}} kemmañ',
 	'hub-hotspot-from' => 'eus',
 	'hub-hide-feed' => 'Kuzhat al lanvad',
 	'hub-show-feed' => 'Diskouez al lanvad',
@@ -210,7 +210,7 @@ $messages['fr'] = array(
 	'unhide' => 'Afficher',
 	'hub-blog-header' => 'Principaux messages de $1',
 	'hub-hotspot-header' => 'Pages les plus actives',
-	'hub-topusers-header' => 'Principaux utilisateurs de $1',
+	'hub-topusers-header' => 'Principaux utilisateurs de « $1 »',
 	'hub-featured' => 'Principaux wikis de $1',
 	'hub-header' => 'Wikis de $1',
 	'hub-hotspot-info' => 'Ces pages sont les plus actives cette semaine, triées par nombre d’auteurs.',
@@ -295,7 +295,7 @@ $messages['ku-latn'] = array(
  */
 $messages['lb'] = array(
 	'unhide' => 'Nees weisen',
-	'hub-topusers-header' => 'Top $1-Benotzer',
+	'hub-topusers-header' => 'Top Editeur dës Woch op $1 Wiki',
 	'hub-featured' => 'Top $1 Wikien',
 	'hub-header' => '$1 Wikien',
 	'hub-blog-comments' => '{{PLURAL:$1|eng Bemierkung|$1 Bemierkungen}}',
@@ -393,7 +393,7 @@ $messages['no'] = array(
 	'unhide' => 'Vis',
 	'hub-blog-header' => 'Topp $1 poster',
 	'hub-hotspot-header' => 'Hot Spots',
-	'hub-topusers-header' => 'Topp $1 brukere',
+	'hub-topusers-header' => 'Toppredaktører denne uken på $1-wikier',
 	'hub-featured' => 'Topp $1 wikier',
 	'hub-header' => '$ wikier',
 	'hub-hotspot-info' => 'Dette er de heteste sidene denne uken, rangert etter flest redaktører.',

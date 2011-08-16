@@ -434,7 +434,7 @@ $messages['mn'] = array(
  */
 $messages['ms'] = array(
 	'wva-success' => 'Laman video $1 berjaya dibuka.',
-	'wva-success-replaced' => 'Laman video $1 berjaya digantikan.',
+	'wva-success-replaced' => 'Laman video $1 berjaya diganti.',
 	'wva-failure' => 'Sila nyatakan parameter yang sah.',
 	'wva-name' => 'Isikan nama:',
 	'wva-url' => 'Isikan URL:',

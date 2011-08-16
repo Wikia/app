@@ -27,8 +27,10 @@ $messages['af'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Malhargan
  */
 $messages['ar'] = array(
+	'sharefeature-desc' => 'يسمح للمستخدمين بإنشاء ارتباطات إلى صفحات من مواقع شعبية',
 	'sf-link' => 'شارك هذه المقالة',
 	'sf-link-popup' => 'شارك هذه المقالة',
 	'sf-link-tooltip' => 'شارك هذه المقالة مع أصدقائك',

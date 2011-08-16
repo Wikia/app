@@ -245,6 +245,7 @@ Zde napište druhou sekci. Nezapomeňte stránku kategorizovat!',
  * @author Claudia Hattitten
  * @author George Animal
  * @author LWChris
+ * @author SVG
  */
 $messages['de'] = array(
 	'wikibuilder-desc' => '[[Special:WikiBuilder|Assistent zur Wiki-Erstellung]]',

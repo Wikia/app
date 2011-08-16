@@ -142,11 +142,19 @@ $messages['no'] = array(
 	'categorygalleries-desc' => 'Viser et sidegalleri på kategorisider',
 );
 
+/** Polish (Polski)
+ * @author Sovq
+ */
+$messages['pl'] = array(
+	'categorygalleries-desc' => 'Wyświetla galerię artykułów na stornach kategorii',
+);
+
 /** Piedmontese (Piemontèis)
+ * @author Borichèt
  * @author Dragonòt
  */
 $messages['pms'] = array(
-	'categorygalleries-desc' => 'A mosta na galerìa ëd pagine ansima a le pagine ëd categorìe',
+	'categorygalleries-desc' => 'A smon na galarìa ëd pàgine ansima a le pàgine ëd categorìa',
 );
 
 /** Pashto (پښتو)
@@ -175,6 +183,13 @@ $messages['pt-br'] = array(
  */
 $messages['roa-tara'] = array(
 	'categorygalleries-desc' => "Face vedè 'na pàgene de gallerie sus a le pàggene de le categorije",
+);
+
+/** Russian (Русский)
+ * @author Kuzura
+ */
+$messages['ru'] = array(
+	'categorygalleries-desc' => 'Показывает галерею страниц на странице категории',
 );
 
 /** Swedish (Svenska)

@@ -113,10 +113,13 @@ $messages['bg'] = array(
  * @author Y-M D
  */
 $messages['br'] = array(
+	'wikiapoll-people-voted' => '{{PLURAL:$1|$1 den en|$1 den o}} deus votet',
 	'wikiapoll-question' => '$1 ?',
 	'wikiapoll-thanks-for-vote' => 'Trugarez !',
 	'wikiapoll-vote' => 'Votiñ !',
 	'wikiapoll-votes' => '({{PLURAL:$1|$1 vouezh|$1 mouezh}})',
+	'wikiapoll-createpoll-headline' => 'Krouiñ ur sontadeg',
+	'wikiapoll-editpoll-headline' => 'Kemmañ ar sontadeg',
 	'wikiapoll-question-label' => 'Goulenn',
 	'wikiapoll-addnewitem-label' => 'Ouzhpennañ un elfenn nevez',
 	'wikiapoll-cancel-label' => 'Nullañ',
@@ -406,6 +409,24 @@ $messages['no'] = array(
 	'wikiapoll-publish-label' => 'Publiser',
 	'wikiapoll-error-duplicate' => 'En avstemning med det navnet eksisterer allerede.',
 	'wikiapoll-error-invalid-title' => 'Spørsmålsteksten er ugyldig.',
+);
+
+/** Polish (Polski)
+ * @author Sovq
+ */
+$messages['pl'] = array(
+	'wikiapoll-desc' => 'Pozwala łatwo tworzyć i zarządzać sondami',
+	'wikiapoll-question' => '$1?',
+	'wikiapoll-thanks-for-vote' => 'Dzięki!',
+	'wikiapoll-vote' => 'Głosuj!',
+	'wikiapoll-createpoll-headline' => 'Utwórz sondę',
+	'wikiapoll-editpoll-headline' => 'Edytuj sondę',
+	'wikiapoll-question-label' => 'Pytanie',
+	'wikiapoll-addnewitem-label' => 'Dodaj nowy element',
+	'wikiapoll-cancel-label' => 'Anuluj',
+	'wikiapoll-publish-label' => 'Publikuj',
+	'wikiapoll-error-duplicate' => 'Sonda o tej nazwie już istnieje.',
+	'wikiapoll-error-invalid-title' => 'Tekst pytania jest nieprawidłowy.',
 );
 
 /** Pashto (پښتو)

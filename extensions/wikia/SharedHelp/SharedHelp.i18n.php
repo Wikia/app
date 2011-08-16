@@ -22,6 +22,13 @@ $messages['qqq'] = array(
 	'sharedhelp-desc' => '{{desc}}',
 );
 
+/** Arabic (العربية)
+ * @author Malhargan
+ */
+$messages['ar'] = array(
+	'sharedhelp-autotalkcreate-summary' => 'إنشاء صفحة نقاش تلقائيا',
+);
+
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
