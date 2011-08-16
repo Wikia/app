@@ -148,7 +148,7 @@ var initTracker = function() {
 	});
 
 	// user page header
-	$('#WikiaUserPagesHeader').click(function(ev) {
+	$('.UserProfileActionButton').click(function(ev) {
 		var fakeUrl = 'action/';
 		var node = $(ev.target);
 

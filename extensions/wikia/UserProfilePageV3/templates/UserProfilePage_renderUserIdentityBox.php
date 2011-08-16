@@ -56,7 +56,7 @@
 
 			<ul class="links">
 				<? if( !empty($user['twitter']) ): ?>
-					<li>
+					<li class="twitter">
 						<a href="<?= $user['twitter'] ?>" rel="nofollow">
 							<img src="<?= $wgBlankImgUrl ?>" class="twitter icon">
 						</a>
@@ -72,7 +72,7 @@
 				<? endif; ?>
 				
 				<? if( !empty($user['website']) ): ?>
-					<li>
+					<li class="website">
 						<a href="<?= $user['website'] ?>" rel="nofollow">
 							<img src="<?= $wgBlankImgUrl ?>" class="website icon">
 						</a>
@@ -88,7 +88,7 @@
 				<? endif; ?>
 				
 				<? if( !empty($user['fbPage']) ): ?>
-					<li>
+					<li class="facebook">
 						<a href="<?= $user['fbPage'] ?>" rel="nofollow">
 							<img src="<?= $wgBlankImgUrl ?>" class="facebook icon">
 						</a>
