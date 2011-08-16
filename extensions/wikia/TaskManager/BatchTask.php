@@ -172,7 +172,7 @@ abstract class BatchTask {
             __METHOD__
         );
 
-        $sClass = $wgWikiaBatchTasks[ $oTask->task_type ];
+        $sClass = isset($wgWikiaBatchTasks[ $oTask->task_type ]) ? $wgWikiaBatchTasks[ $oTask->task_type ] : null;
         if ( is_subclass_of( $sClass, "BatchTask" )) {
             $oObject = new $sClass();
             $oObject->setID( $oTask->task_id );
