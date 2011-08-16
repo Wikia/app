@@ -316,7 +316,7 @@ class SiteWideMessages extends SpecialPage {
 			$tmpWikiName = $mWikiName;
 		}
 		if ($tmpWikiName) {
-			$wikiDomains = array('', '.wikia.com', '.sjc.wikia-inc.com');
+			$wikiDomains = array('', '.wikia.com');
 			foreach($wikiDomains as $wikiDomain) {
 				if(!is_null($mWikiId = WikiFactory::DomainToID($tmpWikiName . $wikiDomain))) {
 					break;
