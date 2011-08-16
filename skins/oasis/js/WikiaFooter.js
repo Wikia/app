@@ -47,7 +47,6 @@ WikiaFooterApp = {
 				if (ie7 && reflow) {	//force reflow the page in IE7.  remove after IE7 is dead
 					reflow = false;
 					setTimeout(function() {
-						console.log('reflow');
 						$('#WikiaPage').attr('class', $('#WikiaPage').attr('class'));
 					}, 1);
 				}
