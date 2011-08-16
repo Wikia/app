@@ -18,7 +18,21 @@
 		#gameBoard{
 			width: <?= $boardWidth ?>;
 			height: <?= $boardHeight ?>;
-			background: url(<?= $backImageSrc ?>) no-repeat;
+/*			background: url(<?= $backImageSrc ?>) no-repeat; TODO: REMOVE */
+		}
+		#bgWrapper{
+			position:absolute;
+			top: 0;
+			left: 0;
+			width: <?= $boardWidth ?>;
+			height: <?= $boardHeight ?>;
+			margin: 0;
+			padding: 0;
+			overflow:hidden;
+			z-index: 10; /* hide it in the back */
+		}
+		#bgPic{
+			position:absolute;
 		}
 		#gameBoard *{
 			-webkit-tap-highlight-color: rgba( 0,0,0,0 );
@@ -28,6 +42,8 @@
 			margin: 0;
 			padding: 0;
 			position: absolute;
+		}
+		#gameBoard .tile{
 			width: <?= $tileWidth ?>;
 			height: <?= $tileHeight ?>;
 			-webkit-transition: opacity .75s ease-in-out;
@@ -35,6 +51,8 @@
 			-o-transition: opacity .75s ease-in-out;
 			-ms-transition: opacity .75s ease-in-out;
 			transition: opacity .75s ease-in-out;
+			
+			z-index: 20; /* show up on top of the background image */
 		}
 		#gameBoard a:hover{
 			background-color:#00f;
@@ -70,11 +88,14 @@
   </head>
   <body>
     <script src="<?= $gameJs ?>"></script>
+	<div id='bgWrapper'>
+		<div id='bgPic'></div>
+	</div>
 	<div id='gameBoard'>
 		<?php
 			for($row = 0;  $row < $numRows; $row++){
 				for($col = 0; $col < $numCols; $col++){
-					print "<div id='sprite_{$row}_{$col}'></div>";
+					print "<div class='tile' id='sprite_{$row}_{$col}'></div>";
 				}
 				print "<br/>\n";
 			}
