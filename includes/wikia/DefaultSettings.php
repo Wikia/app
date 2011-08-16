@@ -878,3 +878,8 @@ $wgEnableSkinTemplateOverride = false;
  * @see wikia.php
  */
 $wgEnableNirvanaAPI = true;
+
+/**
+ * Array of disabled article actions which will fallback to "view" action (BugId:9964)
+ */
+$wgDisabledActionsWithViewFallback = array();
