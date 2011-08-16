@@ -20,7 +20,7 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 	 */
 	FoggyFoto.FlipBoard = function(){
 		var self = this;
-		this.debug = false; // whether to log a whole bunch of info to console.log
+		this.debug = true; // whether to log a whole bunch of info to console.log
 
 		// URLs of the images
 		this.frontImageSrc = 'http://sean.wikia-dev.com/extensions/wikia/FoggyFoto/front.png'; // this shows up immediately
@@ -28,6 +28,7 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 		this.frontImage = null;
 		this.backImage = null;
 
+		// Dimensions of the entire FlipBoard (images will be scaled & cropped to fit this exactly without any distortion to the aspect ratio).
 		this.width = 480;
 		this.height = 320;
 
@@ -41,15 +42,7 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 		this._tileHeight = 0;
 
 		this.isBackShowing = [[]]; // matrix of binary values for whether the back tile is showing at a given coordinate
-		
-		
-		
-		
-		
-		
-		
-		
-		
+
 		/**
 		 * After setting the dimensions of the flip board, this should be called once to set up the isBackShowing matrix
 		 * to the right size.
@@ -58,12 +51,7 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 		 *
 		 * Takes in a callback function which will be called after both of the images are loaded.
 		 */
-	/*
 		this.init = function(callback){
-		
-		
-		
-		
 			// Calculate the size of the tiles in pixels.
 			self._tileWidth = (self.width / self.numCols);
 			self._tileHeight = (self.height / self.numRows);
@@ -79,78 +67,90 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 				}
 			}
 
-			// Load the images before continuing.
-			self.frontImage = new Image();
-			self.frontImage.src = self.frontImageSrc;
-			self.frontImage.onload = function(){
-				self.backImage = new Image();
-				self.backImage.src = self.backImageSrc;
-				self.backImage.onload = function(){
-					// Attach event-handling.
-					var eventName = 'mousedown';
-					if ("ontouchstart" in document.documentElement){
-						eventName = 'touchstart'; // event has a different name on touchscreen devices
-					}
-					$('#gameBoard div').bind(eventName, function(){
-						$(this).addClass('transparent'); // uses CSS3 transitions
-					});
+			// TODO: Indicate on-screen that we're loading a game.
+			// TODO: Indicate on-screen that we're loading a game.
 
-					// We're done loading things, call the callback.
-					if(typeof callback == "function"){
-						callback();
-					}
-				};
+			// Pull a selection of pages in the category (using the API).
+			var categoryTitle = 'Category:Characters';
+			var apiParams = {
+				'action': 'query',
+				'list': 'categorymembers',
+				'cmlimit': 1000,
+				'cmtitle': categoryTitle
 			};
-		
-		
-		
-		// TODO: Indicate on-screen that we're loading a game.
+			Mediawiki.apiCall(apiParams, function(data){
+				if(data.error){
+					self.mwError(data.error);
+				} else {
+					self.log("Got categories: ");
+					self.log(data);
+					if(data.query.categorymembers){
+						// Randomly get a page from the category (and its associated image) until we find a page which has an image.
+						var imageUrl = "";
+						self.getImageFromPages(data.query.categorymembers, function(imageUrl){
+							self.log("FINAL URL: " + imageUrl);
 
-		// TODO: Find the category to use.
+							// Set the image as the back-image (hidden image) for the game.
+							if(imageUrl != ""){
+								// Load the back image fully before attaching clickhandlers
+								self.backImageSrc = imageUrl;
+								self.backImage = new Image();
+								self.backImage.src = self.backImageSrc;
+								self.backImage.onload = function(){
+									// Calculate the scaling factor and use that to set the background to the correct size.
+									var scalingFactor = self._getScalingFactor(self.backImage);
+									var backOffsetX = Math.floor( Math.abs(self.backImage.width - (self.width / scalingFactor)) / 2 );
+									var backOffsetY = Math.floor( Math.abs(self.backImage.height - (self.height / scalingFactor)) / 2 );
+									var scaledBackOffsetX = Math.floor( backOffsetX * scalingFactor );
+									var scaledBackOffsetY = Math.floor( backOffsetY * scalingFactor );
+									self.log("backImage Scaling Factor: " + scalingFactor);
+									self.log("backImage W: " + self.backImage.width);
+									self.log("backImage H: " + self.backImage.height);
+									self.log("backOffsetX: " + backOffsetX);
+									self.log("backOffsetY: " + backOffsetY);
+									self.log("scaledBackOffsetX: " + backOffsetX);
+									self.log("scaledBackOffsetY: " + backOffsetY);
 
-		// Pull a selection of pages in the category (using the API).
-		var categoryTitle = 'Category:Characters';
-		var apiParams = {
-			'action': 'query',
-			'list': 'categorymembers',
-			'cmlimit': 1000,
-			'cmtitle': categoryTitle
-		};
-		Mediawiki.apiCall(apiParams, function(data){
-			if(data.error){
-				mwError(data.error);
-			} else {
-				console.log("Got categories: ");
-				console.log(data);
-				if(data.query.categorymembers){
-					// Randomly get a page from the category (and its associated image) until we find a page which has an image.
-					var imageUrl = "";
-					getImageFromPages(data.query.categorymembers, function(imageUrl){
-						// Set the image as the background for the game.
-console.log("FINAL URL: " + imageUrl);
-						if(imageUrl != ""){
-							$('#gameBoard').css('background-image', 'url('+imageUrl+')');
-						} else {
+									// Set the new image as the back (hidden) image.
+									$('#bgPic').css('background-image', 'url('+imageUrl+')');
+									$('#bgPic').css('width', self.backImage.width+'px');
+									$('#bgPic').css('height', self.backImage.height+'px');
 
-							// TODO: Surface the error to the user that something is wrong and we couldn't make a game out of this category.
-							// TODO: Surface the error to the user that something is wrong and we couldn't make a game out of this category.
+									// Scale and center the image as needed.
+									$('#bgPic').css('-webkit-transform-origin', 'top left');
+									$('#bgPic').css('-webkit-transform', 'scale('+scalingFactor+', '+scalingFactor+')');
+									$('#bgPic').css('left', '-'+scaledBackOffsetX+'px');
+									$('#bgPic').css('top', '-'+scaledBackOffsetY+'px');
 
-						}
-					});
+									// Attach event-handling.
+									var eventName = 'mousedown';
+									if ("ontouchstart" in document.documentElement){
+										eventName = 'touchstart'; // event has a different name on touchscreen devices
+									}
+									$('#gameBoard div').bind(eventName, function(){
+										$(this).addClass('transparent'); // uses CSS3 transitions
+									});
+
+									// TODO: REMOVE THE GAME-LOADING OVERLAY/STATE
+									// TODO: REMOVE THE GAME-LOADING OVERLAY/STATE
+
+									// We're done loading things, call the callback.
+									if(typeof callback == "function"){
+										callback();
+									}
+								};
+							} else {
+
+								// TODO: Surface the error to the user that something is wrong and we couldn't make a game out of this category.
+								// TODO: Surface the error to the user that something is wrong and we couldn't make a game out of this category.
+
+							}
+						});
+					}
 				}
-			}
-		}, mwError);
+			}, self.mwError);
 
 		};
-	*/
-		
-		
-		
-		
-		
-		
-		
-		
 
 		/**
 		 * Given an array of pages, gets a representative image url of one of the pages (chosen randomly)
@@ -161,7 +161,11 @@ console.log("FINAL URL: " + imageUrl);
 			if(pageTitles.length > 0){
 				var index = Math.floor(Math.random() * pageTitles.length);
 				var pageTitle = pageTitles[index].title;
-				console.log("Page: " + pageTitle);
+				self.log("Page: " + pageTitle);
+				
+				// TODO: Skip category-pages because that won't create a good title-match in the results.
+				// TODO: Skip category-pages because that won't create a good title-match in the results.
+				
 
 				var imageApiParams = {
 					'action': 'imageserving',
@@ -169,26 +173,26 @@ console.log("FINAL URL: " + imageUrl);
 				};
 				Mediawiki.apiCall(imageApiParams, function(data){
 					if(data.error){
-						mwError(data.error);
+						self.mwError(data.error);
 					} else if(typeof data.image.imageserving != "undefined"){
-						console.log("Image: " + data.image.imageserving);
+						self.log("Image: " + data.image.imageserving);
 						imageUrl = data.image.imageserving;
 						
 						// If we got a match, pass the imageUrl into the success callback.
 						if((typeof successCallback == "function") && (typeof imageUrl != "undefined")){
 							successCallback( imageUrl );
 						} else {
-							console.log("Callback was not a function: ");
-							console.log(successCallback);
+							self.log("Callback was not a function: ");
+							self.log(successCallback);
 						}
 					}
 
 					// Didn't get a match, call the function again.
 					if(typeof imageUrl == "undefined"){
 						pageTitles.splice(index, 1); // remove the item just looked at
-						getImageFromPages(pageTitles, successCallback);
+						self.getImageFromPages(pageTitles, successCallback);
 					}
-				}, mwError);
+				}, self.mwError);
 				
 			}
 
@@ -198,6 +202,38 @@ console.log("FINAL URL: " + imageUrl);
 
 		
 		
+		/**
+		 * Given an image, returns the appropriate scaling factor using our algorithm for scaling described at the top
+		 * of this class. Both the width and the height of the image should be scaled by the same factor to avoid
+		 * distortion (maintain the same aspect ratio).
+		 */
+		this._getScalingFactor = function(imgObject){
+		//	self.log("_getScalingFactor()");
+
+			var scalingFactor = 1;
+
+			var imgW = imgObject.width;
+			var imgH = imgObject.height;
+			var imgAspectRatio = (imgW / imgH);
+		//	self.log("\tIMAGE WIDTH:  " + imgW);
+		//	self.log("\tIMAGE HEIGHT: " + imgW);
+		//	self.log("\tASPECT RATIO: " + imgAspectRatio);
+
+			var boardAspectRatio = (self.width / self.height);
+		//	self.log("\tSCREEN WIDTH:  " + self.width);
+		//	self.log("\tSCREEN HEIGHT: " + self.height);
+		//	self.log("\tASPECT RATIO: " + boardAspectRatio);
+			if(imgAspectRatio > boardAspectRatio){
+				// Scale the height to fit the screen exactly (width may overflow a bit so that the left & right get cropped off a bit).
+				scalingFactor = (self.height / imgH);
+			} else {
+				// Scale the width to fit the screen exactly (height may overflow a bit so top & bottom would get cropped off a bit).
+				scalingFactor = (self.width / imgW);
+			}
+
+		//	self.log("\t= SCALING FACTOR: " + scalingFactor);
+			return scalingFactor;
+		};
 
 		/**
 		 * Toggles the display of the tile at the given row and column.
@@ -256,10 +292,8 @@ console.log("FINAL URL: " + imageUrl);
 		};
 		
 		this.mwError = function(e){
-			if(self.debug){
-				console.log("MediaWiki API error: ");
-				console.log(e); // note: .code and .info are provided.
-			}
+			self.log("MediaWiki API error: ");
+			self.log(e); // note: .code and .info are provided.
 		};
 	};
 	
@@ -283,14 +317,10 @@ console.log("FINAL URL: " + imageUrl);
 
 
 
-
-
-
 $(document).ready(function(){
-	//console.log("Started...");
+	console.log("Started...");
 	var flipBoard = new FoggyFoto.FlipBoard();
 	flipBoard.init(function(){
 		flipBoard.logState();
-		flipBoard.drawBoard();
 	});
 });

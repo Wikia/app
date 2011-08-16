@@ -152,10 +152,6 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 			// Display the unaltered image first.
 			
 			// Draw the front image at the top-left of the canvas... scaled & centered as needed.
-//				var fsf = self._getScalingFactor(frontImage); // scaling factor for the front image (Front Scaling Factor == fsf)
-//				var frontOffsetX = ( Math.abs((frontImage.width * fsf) - self.canvas.width) / 2 );
-//				var frontOffsetY = ( Math.abs((frontImage.height * fsf) - self.canvas.height) / 2 );
-//				self._drawImage(frontImage, frontOffsetX, frontOffsetY, (frontImage.width * fsf), (frontImage.height * fsf), 0, 0, self.canvas.width, self.canvas.height);
 			self._drawImageAutoScaled(self.frontImage, 0, 0, self.canvas.width, self.canvas.height, 0, 0, self.canvas.width, self.canvas.height);
 
 			// Display the back-image only in spots that are flipped.
@@ -221,7 +217,7 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 
 			self._drawImage(imageObject, scaledX, scaledY, scaledSourceWidth, scaledSourceHeight, destX, destY, destWidth, destHeight);
 		};
-		
+
 		/**
 		 * Wrapper around context.drawImage() just for the sake of easily being able to debug all of the variables passed to it.
 		 */
