@@ -32,6 +32,7 @@ var UserProfilePage = {
 		});
 		
 		$('.masthead-info .wikis li').click(UserProfilePage.trackFavoriteWiki);
+		$('#UserProfileMasthead .links li').click(UserProfilePage.trackLinkedSites);
 	},
 	
 	renderLightbox: function(tabName) {
@@ -227,13 +228,11 @@ var UserProfilePage = {
 
 		$('.favorite-wikis .delete').live('click', function() {
 			UserProfilePage.hideFavWiki($(this).closest('li').data('wiki-id'));
-			UserProfilePage.track('edit/lightbox/top_wiki_hide');		
 		});
 		
 		modal.find('.favorite-wikis-refresh').click(function(event) {
 			event.preventDefault();
 			UserProfilePage.refreshFavWikis()
-			UserProfilePage.track('edit/lightbox/top_wiki_refresh');		
 		});
 		
 		var formFields = modal.find('input[type="text"], select');
@@ -250,7 +249,6 @@ var UserProfilePage = {
 		$('#facebookPage a').click(function(event) {
 			event.preventDefault();
 			window.open($(this).attr('href'));
-			UserProfilePage.track('edit/lightbox/feed_preferences');
 		});
 	},
 	
@@ -555,6 +553,10 @@ var UserProfilePage = {
 		
 	trackFavoriteWiki: function(ev) {
 		UserProfilePage.track('top_wikis');
+	},
+
+	trackLinkedSites: function(event) {
+		UserProfilePage.track(event.currentTarget.className);
 	},
 	
 	closeModal: function(modal, resetDataChangedFlag) {		
