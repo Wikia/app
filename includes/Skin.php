@@ -521,7 +521,14 @@ class Skin extends Linker {
 	 * @return string
 	 */
 	public function generateUserJs( $skinName = null ) {
-		global $wgStylePath;
+		global $wgStylePath, $wgUseSiteJs;
+		
+		/* Wikia change begin - @author: macbre */
+		/* Don't return generated JS when per-site JS is disabled (BugId:9961) */
+		if (empty($wgUseSiteJs)) {
+			return '/* generated javascript is disabled */';
+		}
+		/* Wikia change end */
 
 		wfProfileIn( __METHOD__ );
 		if( !$skinName ) {
