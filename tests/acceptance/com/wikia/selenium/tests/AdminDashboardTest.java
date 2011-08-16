@@ -166,6 +166,68 @@ public class AdminDashboardTest extends BaseTest {
 		assertFalse(session().getText("//*[@id='AdminDashboardGeneral']/section/header/span").matches("^[\\s\\S][\\s\\S]*$"));
 		session().mouseOver("//*[@id='AdminDashboardGeneral']/section/ul/li[2]/a");
 		assertTrue(session().getText("//*[@id='AdminDashboardGeneral']/section/header/span").matches("^[\\s\\S][\\s\\S]*$"));
+
+		// control center - special page from general tab & Admin Dashboard Header
+		session().click("link=General");
+		assertTrue(session().isVisible("//*[@id='AdminDashboardGeneral']"));
+		assertFalse(session().isVisible("//*[@id='AdminDashboardAdvanced']"));
+
+		session().click("css=span.icon.userrights");
+		session().waitForPageToLoad(this.getTimeout());
+		assertTrue(session().isVisible("link=Random Page"));
+		assertTrue(session().isVisible("link=Wiki Activity"));
+		assertTrue(session().isVisible("//form[@id='WikiaSearch']/input"));
+		assertTrue(session().isVisible("//*[@id='AdminDashboardHeader']"));
+		assertTrue(session().isVisible("//*[@id='AdminDashboardTabs']"));
+		assertTrue(session().isVisible("//*[@id='WikiaArticle']"));
+		assertFalse(session().isElementPresent("//*[@id='AdminDashboardRail']"));
+		assertFalse(session().isElementPresent("//*[@id='FounderProgressList']"));
+		assertFalse(session().isElementPresent("//*[@id='AdminDashboardGeneral']"));
+		assertFalse(session().isElementPresent("//*[@id='AdminDashboardAdvanced']"));
+
+		session().click("link=Admin Dashboard");
+		session().waitForPageToLoad(this.getTimeout());
+		assertTrue(session().isVisible("link=Random Page"));
+		assertTrue(session().isVisible("link=Wiki Activity"));
+		assertTrue(session().isVisible("//form[@id='WikiaSearch']/input"));
+		assertTrue(session().isVisible("//*[@id='AdminDashboardHeader']"));
+		assertTrue(session().isVisible("//*[@id='AdminDashboardTabs']"));
+		assertTrue(session().isVisible("//*[@id='WikiaArticle']"));
+		assertTrue(session().isVisible("//*[@id='AdminDashboardRail']"));
+		assertFalse(session().isVisible("//*[@id='FounderProgressList']"));
+		assertTrue(session().isVisible("//*[@id='AdminDashboardGeneral']"));
+		assertFalse(session().isVisible("//*[@id='AdminDashboardAdvanced']"));
+
+		// control center - special page from advanced tab & Admin Dashboard Header
+		session().click("link=Advanced");
+		assertFalse(session().isVisible("//*[@id='AdminDashboardGeneral']"));
+		assertTrue(session().isVisible("//*[@id='AdminDashboardAdvanced']"));
+
+		session().click("link=All pages");
+		session().waitForPageToLoad(this.getTimeout());
+		assertTrue(session().isVisible("link=Random Page"));
+		assertTrue(session().isVisible("link=Wiki Activity"));
+		assertTrue(session().isVisible("//form[@id='WikiaSearch']/input"));
+		assertTrue(session().isVisible("//*[@id='AdminDashboardHeader']"));
+		assertTrue(session().isVisible("//*[@id='AdminDashboardTabs']"));
+		assertTrue(session().isVisible("//*[@id='WikiaArticle']"));
+		assertFalse(session().isElementPresent("//*[@id='AdminDashboardRail']"));
+		assertFalse(session().isElementPresent("//*[@id='FounderProgressList']"));
+		assertFalse(session().isElementPresent("//*[@id='AdminDashboardGeneral']"));
+		assertFalse(session().isElementPresent("//*[@id='AdminDashboardAdvanced']"));
+
+		session().click("link=Admin Dashboard");
+		session().waitForPageToLoad(this.getTimeout());
+		assertTrue(session().isVisible("link=Random Page"));
+		assertTrue(session().isVisible("link=Wiki Activity"));
+		assertTrue(session().isVisible("//form[@id='WikiaSearch']/input"));
+		assertTrue(session().isVisible("//*[@id='AdminDashboardHeader']"));
+		assertTrue(session().isVisible("//*[@id='AdminDashboardTabs']"));
+		assertTrue(session().isVisible("//*[@id='WikiaArticle']"));
+		assertTrue(session().isVisible("//*[@id='AdminDashboardRail']"));
+		assertFalse(session().isVisible("//*[@id='FounderProgressList']"));	
+		assertFalse(session().isVisible("//*[@id='AdminDashboardGeneral']"));
+		assertTrue(session().isVisible("//*[@id='AdminDashboardAdvanced']"));
 	}
 
 }
