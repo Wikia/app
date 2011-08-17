@@ -1473,12 +1473,16 @@ function getAlbum($artist, $album, $year){
 
 		$content = $songResult['lyrics']; // getSong is used as a temporary hack (until the refactoring) to get the full wikitext of the article.
 		if(0 < preg_match_all("/#[^\n]*\[\[(.*?)(\||\]\])/is", $content, $matches)){
-			$songName = $matches[1];
-			// Remove the artist name from the front of the link if it belongs to the same artist (to be consistent with getArtist()).
-			if(startsWith($songName, $songResult['artist'].":")){
-				$songName = substr($songName, strlen($songResult['artist'].":"));
+			$fullNames = $matches[1];
+			$songNames = array();
+			foreach($fullNames as $songName){
+				// Remove the artist name from the front of the link if it belongs to the same artist (to be consistent with getArtist()).
+				if(startsWith($songName, $songResult['artist'].":")){
+					$songName = substr($songName, strlen($songResult['artist'].":"));
+				}
+				$songNames[] = $songName;
 			}
-			$retVal['songs'] = $songName;
+			$retVal['songs'] = $songNames;
 		}
  	}
 
