@@ -91,7 +91,7 @@ class Http {
 				} else {
 					$domain = $domainPart . '.' . $domain;
 				}
-				
+
 				if ( $wgConf->isLocalVHost( $domain ) ) {
 					return true;
 				}
@@ -473,9 +473,38 @@ class HttpRequest {
 	 * @returns string
 	 */
 	public function getFinalUrl() {
-		$location = $this->getResponseHeader("Location");
-		if ( $location ) {
-			return $location;
+		$headers = $this->getResponseHeaders();
+
+		//return full url (fix for incorrect but handled relative location)
+		if ( isset( $headers[ 'location' ] ) ) {
+			$locations = $headers[ 'location' ];
+			$domain = '';
+			$foundRelativeURI = false;
+			$countLocations = count($locations);
+
+			for ( $i = $countLocations - 1; $i >= 0; $i-- ) {
+				$url = parse_url( $locations[ $i ] );
+
+				if ( isset($url[ 'host' ]) ) {
+					$domain = $url[ 'scheme' ] . '://' . $url[ 'host' ];
+					break;	//found correct URI (with host)
+				} else {
+					$foundRelativeURI = true;
+				}
+			}
+
+			if ( $foundRelativeURI ) {
+				if ( $domain ) {
+					return $domain . $locations[ $countLocations - 1 ];
+				} else {
+					$url = parse_url( $this->url );
+					if ( isset($url[ 'host' ]) ) {
+						return $url[ 'scheme' ] . '://' . $url[ 'host' ] . $locations[ $countLocations - 1 ];
+					}
+				}
+			} else {
+				return $locations[ $countLocations - 1 ];
+			}
 		}
 
 		return $this->url;
