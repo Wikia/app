@@ -1,12 +1,12 @@
 <?php
 
-// inc
+include( '../../commandLine.inc' );
 
 $dbr = wfGetDB( DB_SLAVE );
 
 $dbw = wfGetDB( DB_MASTER );
 
-$res = $dbr->select( 'video', '*' );
+$res = $dbr->select( 'video', '*', array( 'video_type' => 'youtube' ) );
 
 while ( $row = $dbr->fetchObject( $res ) ) {
 	$urlRaw = explode( '&', $row->video_url );
@@ -15,11 +15,14 @@ while ( $row = $dbr->fetchObject( $res ) ) {
 	if ( strpos( $urlClean, '/v/' ) ) {
 		// TYPE 1
 		$videoID = preg_replace( '|http://.*youtube\.com/v/|', '', $urlClean );
-	} elseif ( strpos( $urlClean, 'http://youtube.com/watch?v=' ) ) {
-		$videoID = preg_replace( '|http://.*youtube\.com/watch?v=|', '', $urlClean );
+	} elseif ( preg_match( '|http://.*youtube\.com/watch\?v=|', $urlClean ) ) {
+		$videoID = preg_replace( '|http://.*youtube\.com/watch\?v=|', '', $urlClean );
 	}
 
-	echo $videoID . "\n";
+	if ( empty( $videoID ) ) {
+		echo 'ARGH! ' . $row->video_name . "\n";
+		continue;
+	}
 
 	$input['img_name'] = ':' . $row->video_name;
 	$input['img_size'] = 300;
@@ -35,4 +38,9 @@ while ( $row = $dbr->fetchObject( $res ) ) {
 	$input['img_major_mime'] = 'video';
 	$input['img_minor_mime'] = 'swf';
 	$input['img_sha1'] = '';
+
+	wfWaitForSlaves( 5 );
+	$dbw->insert( 'image', $input, 'fixNYCVideo', 'IGNORE' );
+
+	echo "Inserted video: " . $input['img_name'] . "\n";
 }
