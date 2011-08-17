@@ -532,14 +532,17 @@ class WikiaApiLyricwiki extends ApiBase {
 				break;
 			case "json":
 			case "realjson":
-				$this->writeRealJSON(array($pageTitle => $links));
+				$this->writeRealJSON(array(
+							'listingPage' => $pageTitle,
+							'pageTitles' => $links)
+						);
 				break;
 			case "xml":
 				header('Content-Type: application/xml', true);
 				print "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 				print "<listing listingPage=\"".htmlspecialchars($pageTitle)."\">\n";
 				foreach($links as $destPageTitle){
-					print "\t<pageTitle>$destPageTitle</pageTitle>\n";
+					print "\t<pageTitle>$destPageTitle</pageTitle>\n"; // NOTE that these are full titles unlike in a normal discography where the Artist is implied by its parent elements.
 				}
 				print "</listing>\n";
 				break;
