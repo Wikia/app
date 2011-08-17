@@ -23,8 +23,8 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 		this.debug = true; // whether to log a whole bunch of info to console.log
 
 		// URLs of the images
-		this.frontImageSrc = 'http://sean.wikia-dev.com/extensions/wikia/FoggyFoto/front.png'; // this shows up immediately
-		this.backImageSrc = "http://images1.wikia.nocookie.net/__cb20100113214904/glee/images/3/3f/Kurtmercedes.jpg"; // this is the one that's obscured
+		this.frontImageSrc = ''; // this shows up immediately
+		this.backImageSrc = ''; // this is the one that's obscured
 		this.frontImage = null;
 		this.backImage = null;
 
@@ -94,8 +94,6 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 						// Randomly get a page from the category (and its associated image) until we find a page which has an image.
 						var imageUrl = "";
 						self.getImageFromPages(data.query.categorymembers, function(imageUrl){
-							self.log("FINAL URL: " + imageUrl);
-
 							// Set the image as the back-image (hidden image) for the game.
 							if(imageUrl != ""){
 								// Load the back image fully before attaching clickhandlers
@@ -133,7 +131,7 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 									if ("ontouchstart" in document.documentElement){
 										eventName = 'touchstart'; // event has a different name on touchscreen devices
 									}
-									$('#gameBoard div').bind(eventName, function(){
+									$('#gameBoard .tile').bind(eventName, function(){
 										$(this).addClass('transparent'); // uses CSS3 transitions
 									});
 
@@ -210,21 +208,19 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 		 * distortion (maintain the same aspect ratio).
 		 */
 		this._getScalingFactor = function(imgObject){
-		//	self.log("_getScalingFactor()");
-
 			var scalingFactor = 1;
 
 			var imgW = imgObject.width;
 			var imgH = imgObject.height;
 			var imgAspectRatio = (imgW / imgH);
-		//	self.log("\tIMAGE WIDTH:  " + imgW);
-		//	self.log("\tIMAGE HEIGHT: " + imgW);
-		//	self.log("\tASPECT RATIO: " + imgAspectRatio);
-
 			var boardAspectRatio = (self.width / self.height);
-		//	self.log("\tSCREEN WIDTH:  " + self.width);
-		//	self.log("\tSCREEN HEIGHT: " + self.height);
-		//	self.log("\tASPECT RATIO: " + boardAspectRatio);
+			//self.log("\tIMAGE WIDTH:  " + imgW);
+			//self.log("\tIMAGE HEIGHT: " + imgW);
+			//self.log("\tASPECT RATIO: " + imgAspectRatio);
+			//self.log("\tSCREEN WIDTH:  " + self.width);
+			//self.log("\tSCREEN HEIGHT: " + self.height);
+			//self.log("\tASPECT RATIO: " + boardAspectRatio);
+
 			if(imgAspectRatio > boardAspectRatio){
 				// Scale the height to fit the screen exactly (width may overflow a bit so that the left & right get cropped off a bit).
 				scalingFactor = (self.height / imgH);
@@ -233,7 +229,7 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 				scalingFactor = (self.width / imgW);
 			}
 
-		//	self.log("\t= SCALING FACTOR: " + scalingFactor);
+			//self.log("\t= SCALING FACTOR: " + scalingFactor);
 			return scalingFactor;
 		};
 
@@ -318,9 +314,9 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 }
 
 
-
+// Once the page is loaded, start the game.
 $(document).ready(function(){
-	console.log("Started...");
+	console.log("Starting FoggyFoto game...");
 	var flipBoard = new FoggyFoto.FlipBoard();
 	flipBoard.init(function(){
 		flipBoard.logState();

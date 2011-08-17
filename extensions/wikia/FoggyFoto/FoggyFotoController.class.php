@@ -24,7 +24,7 @@ class FoggyFotoController extends WikiaController {
 	 *
 	 * @param $subpage Mixed: string if any subpage provided, else null
 	 */
-	public function getMain() {
+	public function getCanvas() {
 		global $wgOut, $wgExtensionsPath, $wgStyleVersion;
 		wfProfileIn( __METHOD__ );
 	
@@ -36,14 +36,14 @@ class FoggyFotoController extends WikiaController {
 		$this->gameJs = $wgExtensionsPath."/wikia/FoggyFoto/js/FoggyFoto.js?$wgStyleVersion";
 
 		wfProfileOut( __METHOD__ );
-	} // end getMain()
-	
+	} // end getCanvas()
+
 	/**
-	 * Since the canvas approach was slow on mobile devices, this method was
-	 * created to return a quick experimental version which uses CSS3 masking
+	 * Since the canvas approach was very slow on mobile devices, this method was
+	 * created to return a quick experimental version which uses just HTML and CSS
 	 * instead of canvas.
 	 */
-	public function getMasked(){
+	 public function getDivs(){
 		global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgScriptPath;
 		wfProfileIn( __METHOD__ );
 
@@ -57,13 +57,14 @@ class FoggyFotoController extends WikiaController {
 		$this->tileHeight = ($this->boardHeight / $this->numRows);
 
 		$this->frontImageSrc = 'http://sean.wikia-dev.com/extensions/wikia/FoggyFoto/front.png'; // this shows up immediately
-		$this->backImageSrc = 'http://images1.wikia.nocookie.net/__cb20100113214904/glee/images/3/3f/Kurtmercedes.jpg'; // this is the one that's obscured
+		$this->backImageSrc = ''; // this is the one that's obscured
+		$this->photosPerGame = 10;
 
 		$this->gameJs = $wgExtensionsPath."/wikia/FoggyFoto/js/FoggyFotoByDivs.js?$wgStyleVersion";
 		$this->mwJsApiUrl = $wgExtensionsPath."/wikia/JavascriptAPI/Mediawiki.js?$wgStyleVersion";
 		$this->wgScriptPath = $wgScriptPath;
 
 		wfProfileOut( __METHOD__ );
-	} // end getMasked()
+	} // end getDivs()
 
 } // end class SpecialFoggyFoto
