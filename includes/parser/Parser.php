@@ -3595,6 +3595,10 @@ class Parser
 			return wfMsg('scarytranscludefailed', $url);
 		}
 
+		if ( wfReadOnly() ) {
+			return wfReadOnlyReason();
+		}
+		
 		$dbw = wfGetDB(DB_MASTER);
 		$dbw->replace('transcache', array('tc_url'), array(
 			'tc_url' => $url,
