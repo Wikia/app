@@ -21,6 +21,16 @@
 			echo '<link rel="stylesheet" href="'.$src.'">';
 		}
 
+		// Add the wiki and user-specific overrides last.  This is a special case in Oasis because the modules run
+		// later than normal extensions and therefore add themselves later than the wiki/user specific CSS is
+		// normally added.
+		// See Skin::setupUserCss()
+		if (!empty($wgOasisLastCssScripts)) {
+			foreach($wgOasisLastCssScripts as $src) {
+				echo '<link rel="stylesheet" href="'.$src.'">';
+			}
+		}
+
 		// RT #68514: load global user CSS (and other page specific CSS added via "SkinTemplateSetupPageCss" hook)
 		if ($pagecss != '') {
 	?>
