@@ -1,10 +1,31 @@
 var WikiaMobile = {
+	
 	hideURLBar: function() {
 		if ( $.os.android || $.os.ios || $.os.webos ) {
 				//slide up the addressbar on webkit mobile browsers for maximum reading area
 				//setTimeout is necessary to make it work on ios...
 				setTimeout( function() { window.scrollTo( 0, 1 ) }, 100 );
 		}
+	},
+	showAdAtBottom: function() {
+		setTimeout( function() {
+			$( '#adWrapper' ).css( { 'opacity': '1', 'position': 'static' } );
+		}, 1000);
+	}
+	handleAds: function() {
+		
+		$( window ).one( 'scroll', function() {
+			$( '#adWrapper' ).css( 'opacity', '0' );
+			WikiaMobile.showAdAtBottom();
+		} );
+		
+		setTimeout( function() {
+			$( '#adWrapper' ).css( 'opacity', '0' );
+			WikiaMobile.showAdAtBottom();
+		}, 10000);
+		
+		
+
 	},
 	
 	wrapArticles: function() {
@@ -68,5 +89,6 @@ var WikiaMobile = {
 $( document ).ready( function() {
 	WikiaMobile.hideURLBar();
 	WikiaMobile.wrapArticles();
+	WikiaMobile.handleAds()
 	WikiaMobile.init();
 });
