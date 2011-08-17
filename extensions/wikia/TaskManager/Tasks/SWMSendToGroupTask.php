@@ -729,7 +729,7 @@ class SWMSendToGroupTask extends BatchTask {
 			$dbResult = $dbr->select(
 				array('`specials`.`events_local_users`'),
 				array('user_id', 'wiki_id'),
-				array('wiki_id IN (' . implode(',', array_keys($wikisDB)) . ')', "(lu_singlegroup = '$groupName' OR lu_allgroups LIKE '%$groupName;%')"),
+				array('wiki_id IN (' . implode(',', array_keys($wikisDB)) . ')', "(single_group = '$groupName' OR all_groups LIKE '%$groupName;%')"),
 				__METHOD__,
 				array('GROUP BY' => 'user_id')
 			);
