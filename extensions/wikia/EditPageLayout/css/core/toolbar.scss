@@ -69,12 +69,16 @@
 			padding: 0 5px 0 0;
 		}
 		> .right {
-			float: right;
 			clear: right;
+			float: right;
+			height: 42px;
 			width: 220px;
 			> span {
 				display: inline-block;
 			}
+		}
+		.cke_license {
+			line-height: 12px;
 		}
 	}
 
