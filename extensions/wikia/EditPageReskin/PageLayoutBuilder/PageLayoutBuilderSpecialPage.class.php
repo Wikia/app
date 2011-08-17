@@ -211,8 +211,12 @@ class SpecialPageLayoutBuilder extends SpecialCustomEditPage {
 			case EditPage::AS_SUCCESS_UPDATE:
 			case EditPage::AS_SUCCESS_NEW_ARTICLE:
 				$addData = array(
-					'desc' => substr($this->getField(self::FIELD_DESCRIPTION),0,255)
+					'desc' => $this->getField(self::FIELD_DESCRIPTION)
 				);
+				/* Wikia change begin - @author: Marcin, #BugId: 9472 */
+					//removed substring function in line
+					//'desc' => substr($this->getField(self::FIELD_DESCRIPTION),0,255)
+				/* Wikia change end */
 
 				$article = $this->getEditedArticle();
 				$articleId = $article->getID();
