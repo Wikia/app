@@ -79,16 +79,13 @@ class WikiaPollHooks {
 				$sassUrl = AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/WikiaPoll/css/WikiaPoll.scss');
 				$css = '<link rel="stylesheet" type="text/css" href="' . htmlspecialchars($sassUrl) . ' " />';
 
-				$js = "<!-- Wikia Polls -->
-		<script type=\"$wgJsMimeType\">
-		wgAfterContentAndJS.push(function() {
-			$.getScript(wgExtensionsPath + '/wikia/WikiaPoll/js/WikiaPoll.js', function() {
-				WikiaPoll.init();
-			});
-		});
-		</script>";
+				$jsFile = F::build('JSSnippets')->addToStack(
+					array('/extensions/wikia/WikiaPoll/js/WikiaPoll.js'),
+					array(),
+					'WikiaPoll.init'
+				);
 			}
-			return str_replace("\n", ' ', "{$css} {$poll->renderEmbedded()} {$js}");
+			return str_replace("\n", ' ', "{$css} {$poll->renderEmbedded()} {$jsFile}");
 		}
 		
 		wfProfileOut(__METHOD__);
