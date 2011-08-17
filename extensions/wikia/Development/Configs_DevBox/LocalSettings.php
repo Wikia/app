@@ -136,3 +136,7 @@ $wgDevBoxImageServerOverride ="images.{$wgDevelEnvironmentName}.wikia-dev.com";
 
 // fetch SASS files from devboxes (BugId:8545)
 $wgCdnRootUrl = $devBoxImageServer;
+
+// fetch GoogleMaps resources from devboxes
+$wgGoogleMapsUrlPath = $wgExtensionsPath . '/3rdparty/GoogleMaps';
+
