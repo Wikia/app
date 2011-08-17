@@ -47,6 +47,7 @@ class OasisModule extends Module {
 	var $wgEnableCorporatePageExt;
 	var $wgStylePath;
 	var $wgDevelEnvironment;
+	var $wgOasisLastCssScripts;
 
 	public function executeIndex($params) {
 		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgCityId, $wgAllInOne, $wgContLang, $wgJsMimeType, $wgEnableEditPageReskinExt, $wgEnableAdminDashboardExt, $wgDevelEnvironment;
@@ -89,17 +90,6 @@ class OasisModule extends Module {
 		}
 
 		$this->setupStaticChute();
-
-		// Add the wiki and user-specific overrides last.  This is a special case in Oasis because the modules run
-		// later than normal extensions and therefore add themselves later than the wiki/user specific CSS is
-		// normally added.
-		// See Skin::setupUserCss()
-		global $wgOasisLastCssScripts;
-		if(!empty($wgOasisLastCssScripts)){
-			foreach($wgOasisLastCssScripts as $cssScript){
-				$wgOut->addStyle( $cssScript );
-			}
-		}
 
 		// Remove the media="print CSS from the normal array and add it to another so that it can be loaded asynchronously at the bottom of the page.
 		$this->printStyles = array();
