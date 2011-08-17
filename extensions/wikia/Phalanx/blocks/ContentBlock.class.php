@@ -36,6 +36,7 @@ class ContentBlock {
 					$wgOut->setArticleRelated( false );
 					$wgOut->addHTML( '<div id="spamprotected_summary">' );
 					$wgOut->addWikiMsg( 'spamprotectiontext' );
+					$wgOut->addHTML( '<p>( Call #3 )</p>' );
 					$wgOut->addWikiMsg( 'spamprotectionmatch', "<nowiki>{$result['msg']}</nowiki>" );
 					$wgOut->addWikiMsg( 'phalanx-content-spam-summary' );
 

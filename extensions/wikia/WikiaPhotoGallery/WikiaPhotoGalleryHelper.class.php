@@ -1149,7 +1149,7 @@ class WikiaPhotoGalleryHelper {
 					Article::onArticleEdit($wgTitle);
 					$result['info'] = 'ok';
 				} elseif ( $retval == EditPage::AS_SPAM_ERROR ) {
-					$result['error'] = wfMsg('spamprotectiontext');
+					$result['error'] = wfMsg('spamprotectiontext') . '<p>( Call #4 )</p>';
 				} else {
 					$result['error'] = wfMsg('wikiaPhotoGallery-edit-abort');
 				}
