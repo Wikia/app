@@ -1478,7 +1478,7 @@ function getAlbum($artist, $album, $year){
 			if(startsWith($songName, $songResult['artist'].":")){
 				$songName = substr($songName, strlen($songResult['artist'].":"));
 			}
-			$retVal['songs'] = 
+			$retVal['songs'] = $songName;
 		}
  	}
 
