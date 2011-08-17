@@ -56,7 +56,7 @@ class FoggyFotoController extends WikiaController {
 		$this->tileWidth = ($this->boardWidth / $this->numCols);
 		$this->tileHeight = ($this->boardHeight / $this->numRows);
 
-		$this->frontImageSrc = 'http://sean.wikia-dev.com/extensions/wikia/FoggyFoto/front.png'; // this shows up immediately
+		$this->frontImageSrc = 'http://sean.wikia-dev.com/extensions/wikia/FoggyFoto/glee_front.png'; // this shows up immediately
 		$this->backImageSrc = ''; // this is the one that's obscured
 		$this->photosPerGame = 10;
 
