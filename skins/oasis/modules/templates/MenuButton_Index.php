@@ -9,28 +9,34 @@
 		// render edit button with dropdown
 		else {
 ?>
-<ul class="<?= $class ?>">
-	<li>
-		<a <?= !empty($actionAccessKey) ? "accesskey=\"{$actionAccessKey}\"" : '' ?> href="<?= empty($action['href']) ? '' : htmlspecialchars($action['href']) ?>" data-id="<?= $actionName ?>"><?= $icon ?> <?= htmlspecialchars($action['text']) ?></a>
+<nav class="<?= $class ?>" <?= empty($id) ? '' : 'id="'.$id.'"'?>>
+	<a <?= !empty($actionAccessKey) ? "accesskey=\"{$actionAccessKey}\"" : '' ?> href="<?= empty($action['href']) ? '' : htmlspecialchars($action['href']) ?>" data-id="<?= $actionName ?>" <?= empty($action['id']) ? '' : 'id="'.$action['id'].'"'?>>
+		<?= $icon ?> <?= htmlspecialchars($action['text']) ?>
+	</a>
+	<span class="drop">
 		<img src="<?= $wgBlankImgUrl ?>" class="chevron">
-		<ul>
+	</span>
+	<ul>
 <?php
-			foreach($dropdown as $key => $item) {
-				// render accesskeys
-				if (isset($item['accesskey'])) {
-					$accesskey = ' accesskey="' . $item['accesskey'] . '"';
-				}
-				else {
-					$accesskey = '';
-				}
-?>
-			<li><a href="<?= htmlspecialchars($item['href']) ?>"<?= $accesskey ?> data-id="<?= $key ?>"><?= htmlspecialchars($item['text']) ?></a></li>
-<?php
+		foreach($dropdown as $key => $item) {
+			// render accesskeys
+			if (isset($item['accesskey'])) {
+				$accesskey = ' accesskey="' . $item['accesskey'] . '"';
+			}
+			else {
+				$accesskey = '';
 			}
 ?>
-		</ul>
-	</li>
-</ul>
+		<li>
+			<a href="<?= htmlspecialchars($item['href']) ?>"<?= $accesskey ?> data-id="<?= $key ?>" <?= empty($item['id']) ? '' : 'id="'.$item['id'].'"' ?>>
+				<?= htmlspecialchars($item['text']) ?>
+			</a>
+		</li>
+<?php
+		}
+?>
+	</ul>
+</nav>
 <?php
 		}
 	}

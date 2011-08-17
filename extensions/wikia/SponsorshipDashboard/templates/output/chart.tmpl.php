@@ -5,16 +5,19 @@
 	<?= isset( $description ) ? $description : '' ?>
 </div>
 <div class="sponsorship-dashboard-actions">
-	<ul class="wikia-menu-button">
-		<li>
-			<a href="#" data-id="edit"><?= wfMsg('sponsorship-dashboard-download') ?></a>
-			<img src="<?=F::app()->wf->blankImgUrl(); ?>" class="chevron">
-			<ul style="min-width: 117px; ">
-				<li><a href="#" id="sponsorshipDashboardDownloadChart" ><?= wfMsg('sponsorship-dashboard-download-chart') ?></a></li>
-				<li><a href="<?=$path ?>" id="sponsorshipDashboardDownloadCSV" ><?= wfMsg('sponsorship-dashboard-download-csv') ?></a></li>
-			</ul>
-		</li>
-	</ul>
+	<?
+		$dropdown = array(
+			array("href" => "#", "text" => wfMsg('sponsorship-dashboard-download-chart')), 
+			array("href" => $path, "text" => wfMsg('sponsorship-dashboard-download-csv'))
+		); 
+	?>
+	<?= wfRenderModule('MenuButton', 
+			'Index', 
+			array(
+				'action' => array("href" => "#", "text" => wfMsg('sponsorship-dashboard-download')), 
+				'dropdown' => $dropdown
+			)
+		) ?>
 </div>
 <div class="sponsorship-dashboard-panel">
 	<div class="sponsorship-dashboard-panel-body">

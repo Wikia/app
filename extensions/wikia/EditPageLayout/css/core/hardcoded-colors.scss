@@ -7,25 +7,34 @@
 			border-color: #006CB0;
 			color: #fff;
 
-			&:hover {
-				@include linear-gradient(#082860, top, #1D88CB, 35%, #005F9C, 65%);
+			&:hover, &:active {
+				@include linear-gradient(#006CB0, top, #2094DD, 35%, #006CB0, 65%);
 			}
-
-			&:active {
-				@include linear-gradient(#006CB0, top, #005F9C, 35%, #1D88CB, 65%);
+			>a, .drop {
+				&:hover {
+					@include linear-gradient(#082860, top, #1D88CB, 35%, #005F9C, 65%);
+				}
+	
+				&:active {
+					@include linear-gradient(#006CB0, top, #005F9C, 35%, #1D88CB, 65%);
+				}
 			}
 
 			&.secondary {
 				@include linear-gradient(#F2F2F2, top, #fff, 35%, #F2F2F2, 65%);
 				border-color: #D9D9D9;
 				color: #3A3A3A;
-
-				&:hover {
-					@include linear-gradient(#e8e8e8, top, #f5f5f5, 35%, #e8e8e8, 65%);
+				&:hover, &:active {
+					@include linear-gradient(#F2F2F2, top, #fff, 35%, #F2F2F2, 65%);
 				}
-
-				&:active {
-					@include linear-gradient(#e8e8e8, top, #e8e8e8, 35%, #f5f5f5, 65%);
+				>a, .drop {
+					&:hover {
+						@include linear-gradient(#e8e8e8, top, #f5f5f5, 35%, #e8e8e8, 65%);
+					}
+	
+					&:active {
+						@include linear-gradient(#e8e8e8, top, #e8e8e8, 35%, #f5f5f5, 65%);
+					}
 				}
 
 				ul {

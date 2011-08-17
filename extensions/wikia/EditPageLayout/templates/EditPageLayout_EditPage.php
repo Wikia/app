@@ -148,17 +148,22 @@
 	 			break;
 	 		case 'preview':
 ?>
-								<ul class="wikia-menu-button secondary <?=$buttonClasses?>">
-									<li>
-										<a id="wpPreview" accesskey="<?=wfMsg('accesskey-preview');?>"><?= wfMsg('preview') ?></a>
-										<img src="<?= $wgBlankImgUrl ?>" class="chevron">
-									</li>
-									<ul>
-										<li>
-											<a id="wpDiff" accesskey="<?=wfMsg('accesskey-diff');?>"><?= wfMsg('showdiff') ?></a>
-										</li>
-									</ul>
-								</ul>
+								<?php
+									$dropdown = array(array(
+										"id" => "wpDiff",
+										"accesskey" => wfMsg('accesskey-diff'),
+										"text" => wfMsg('showdiff')
+									));
+								?>
+								<?= wfRenderModule('MenuButton', 
+										'Index', 
+										array(
+											'action' => array("href" => "#", "text" => wfMsg('preview'), "id" => "wpPreview"), 
+											'class' => 'secondary '.$buttonClasses,
+											'dropdown' => $dropdown
+										)
+									) ?>
+
 <?php
 	 			break;
 	 		default:

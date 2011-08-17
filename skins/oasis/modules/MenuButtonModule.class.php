@@ -125,6 +125,15 @@ class MenuButtonModule extends Module {
 			$this->action['href'] = $signUpTitle->getLocalUrl($loginUrl);
 			$this->class .= ' loginToEditProtectedPage';
 		}
+		
+		if(!empty($data['class'])) {
+			$this->class .= ' '.$data['class'];
+		}
+		
+		$this->id = "";
+		if(!empty($data['id'])) {
+			$this->id = $data['id'];
+		}
 
 		wfProfileOut(__METHOD__);
 	}
