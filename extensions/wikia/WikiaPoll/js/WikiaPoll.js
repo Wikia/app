@@ -131,8 +131,4 @@ var WikiaPoll = {
 			});
 		}
 	}
-}
-
-$(function() {
-	WikiaPoll.init();
-});
+};

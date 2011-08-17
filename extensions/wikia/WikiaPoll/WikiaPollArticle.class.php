@@ -21,8 +21,6 @@ class WikiaPollArticle extends Article {
 		global $wgOut, $wgTitle, $wgJsMimeType, $wgExtensionsPath;
 		wfProfileIn(__METHOD__);
 
-		wfLoadExtensionMessages('WikiaPoll');
-
 		// let MW handle basic stuff
 		parent::view();
 
@@ -38,10 +36,15 @@ class WikiaPollArticle extends Article {
 
 		// add CSS/JS
 		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/WikiaPoll/css/WikiaPoll.scss'));
-		$wgOut->addScript("<script type=\"$wgJsMimeType\" src=\"$wgExtensionsPath/wikia/WikiaPoll/js/WikiaPoll.js\"></script>");
+		$jsFile = F::build('JSSnippets')->addToStack(
+			array('/extensions/wikia/WikiaPoll/js/WikiaPoll.js'),
+			array(),
+			'WikiaPoll.init'
+		);
 
 		// render poll page
 		$wgOut->clearHTML();
+		$wgOut->addHTML($jsFile);
 		$wgOut->addHTML($this->mPoll->render());
 
 		wfProfileOut(__METHOD__);
