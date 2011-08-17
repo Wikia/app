@@ -116,6 +116,7 @@ class TitleBlock {
 		$wgOut->setArticleRelated( false );
 
 		$wgOut->addWikiMsg( 'spamprotectiontext' );
+		$wgOut->addHTML( '<p>( Call #9 )</p>' );
 		if ( $match )
 			$wgOut->addWikiMsg( 'spamprotectionmatch', "<nowiki>{$match}</nowiki>" );
 

@@ -278,7 +278,7 @@ function CategorySelectAjaxSaveCategories($articleId, $categories) {
 					$result['html'] = $cats;
 				} elseif ( $retval == EditPage::AS_SPAM_ERROR ) {
 					$dbw->rollback();
-					$result['error'] = wfMsg('spamprotectiontext');
+					$result['error'] = wfMsg('spamprotectiontext') . '<p>( Call #6 )</p>';
 				} else {
 					$dbw->rollback();
 					$result['error'] = wfMsg('categoryselect-edit-abort');

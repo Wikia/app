@@ -25,6 +25,7 @@ class SpamRegexHooks {
 					$wgOut->setArticleRelated( false );
 					$wgOut->addHTML( '<div id="spamprotected_summary">' );
 					$wgOut->addWikiMsg( 'spamprotectiontext' );
+					$wgOut->addHTML( '<p>( Call #2 )</p>' );
 					$wgOut->addWikiMsg( 'spamprotectionmatch', "<nowiki>{$s_matches[0]}</nowiki>" );
 					$wgOut->addWikiMsg( 'spamregex-summary' );
 					$wgOut->returnToMain( false, $editpage->mTitle );

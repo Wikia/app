@@ -2166,6 +2166,7 @@ INPUTS
 
 		$wgOut->addHTML( '<div id="spamprotected">' );
 		$wgOut->addWikiMsg( 'spamprotectiontext' );
+		$wgOut->addHTML( '<p>( Call #1 )</p>' );
 		if ( $match )
 			$wgOut->addWikiMsg( 'spamprotectionmatch', wfEscapeWikiText( $match ) );
 		$wgOut->addHTML( '</div>' );
