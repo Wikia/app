@@ -23,7 +23,7 @@ public class CreateNewWikiTest extends BaseTest {
 	
 	private static String getWikiName() {
 		if (null == wikiName) {
-			wikiName = "testwiki" + Long.toString(Math.abs(new Random().nextLong()), 36).toLowerCase();
+			wikiName = "testwiki" + Long.toString(Math.abs(new Random().nextLong()), 36).toLowerCase() + "t";
 		}
 
 		return wikiName;
@@ -31,7 +31,11 @@ public class CreateNewWikiTest extends BaseTest {
 
 	@BeforeMethod(alwaysRun=true)
 	public void enforceMainWebsite() throws Exception {
-		enforceWebsite("http://www.wikia.com");
+		if (this.webSite.contains("preview")) {
+			enforceWebsite("http://preview.www.wikia.com");
+		} else {
+			enforceWebsite("http://www.wikia.com");
+		}
 	}
 
 	public void enforceWebsite(String website) throws Exception {
@@ -49,11 +53,11 @@ public class CreateNewWikiTest extends BaseTest {
 		return languageList.iterator();
 	}
 	
-	@Test(groups="envProduction",dataProvider="wikiLanguages")
+	@Test(groups={"envProduction", "verified"},dataProvider="wikiLanguages")
 	public void testCreateWikiComprehensive(String language) throws Exception {
 		loginAsStaff();
 		
-		session().open("/wiki/Special:CreateNewWiki?uselang=" + language);
+		openAndWait("/wiki/Special:CreateNewWiki?uselang=" + language);
 		waitForElement("//input[@name='wiki-name']");
 		session().type("//input[@name='wiki-name']", getWikiName());
 		session().type("//input[@name='wiki-domain']", getWikiName());
@@ -78,19 +82,17 @@ public class CreateNewWikiTest extends BaseTest {
 		enforceWebsite(url);
 		
 		editArticle("A new article", "Lorem ipsum dolor sit amet");
-		session().open("index.php?title=A_new_article");
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("index.php?title=A_new_article");
 		assertTrue(session().isTextPresent("Lorem ipsum dolor sit amet"));
 		editArticle("A new article", "consectetur adipiscing elit");
-		session().open("index.php?title=A_new_article");
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("index.php?title=A_new_article");
 		assertFalse(session().isTextPresent("Lorem ipsum dolor sit amet"));
 		assertTrue(session().isTextPresent("consectetur adipiscing elit"));
 		
 		testedLanguages.add(language);
 	}
 	
-	@Test(groups="envProduction",dependsOnMethods={"testCreateWikiComprehensive"},alwaysRun=true)
+	@Test(groups={"envProduction", "verified"},dependsOnMethods={"testCreateWikiComprehensive"},alwaysRun=true)
 	public void testDeleteComprehensive() throws Exception {
 		loginAsStaff();
 		
@@ -101,7 +103,7 @@ public class CreateNewWikiTest extends BaseTest {
 		wikiName = null;
 	}
 
-	@Test(groups="envProduction")
+	@Test(groups={"envProduction", "verified"},dependsOnMethods={"testDeleteComprehensive"})
 	public void testCreateWikiAsLoggedOutUser() throws Exception {
 		session().open("/wiki/Special:CreateNewWiki");
 		waitForElement("//input[@name='wiki-name']");
@@ -126,7 +128,7 @@ public class CreateNewWikiTest extends BaseTest {
 		waitForElementVisible("WikiWelcome", this.getTimeout());
 	}
 	
-	@Test(groups="envProduction",dependsOnMethods={"testCreateWikiAsLoggedOutUser"},alwaysRun=true)
+	@Test(groups={"envProduction", "verified"},dependsOnMethods={"testCreateWikiAsLoggedOutUser"},alwaysRun=true)
 	public void testDeleteCreateWikiAsLoggedOutUser() throws Exception {
 		loginAsStaff();
 		
@@ -135,9 +137,9 @@ public class CreateNewWikiTest extends BaseTest {
 		wikiName = null;
 	}
 	
-	@Test(groups="envProduction")
+	@Test(groups={"envProduction", "verified"},dependsOnMethods={"testDeleteCreateWikiAsLoggedOutUser"})
 	public void testCreateWikiAsNewUser() throws Exception {
-		session().open("/wiki/Special:CreateNewWiki");
+		openAndWait("/wiki/Special:CreateNewWiki");
 		waitForElement("//input[@name='wiki-name']");
 		session().type("//input[@name='wiki-name']", getWikiName());
 		session().type("//input[@name='wiki-domain']", getWikiName());
@@ -171,7 +173,7 @@ public class CreateNewWikiTest extends BaseTest {
 		waitForElementVisible("WikiWelcome", this.getTimeout());
 	}
 	
-	@Test(groups="envProduction",dependsOnMethods={"testCreateWikiAsNewUser"},alwaysRun=true)
+	@Test(groups={"envProduction", "verified"},dependsOnMethods={"testCreateWikiAsNewUser"},alwaysRun=true)
 	public void testDeleteCreateWikiAsNewUser() throws Exception {
 		loginAsStaff();
 		
@@ -182,12 +184,10 @@ public class CreateNewWikiTest extends BaseTest {
 	
 	public void deleteWiki(String language) throws Exception {
 		closeNotifications();
-		session().open("http://community.wikia.com/wiki/Special:WikiFactory");
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("http://community.wikia.com/wiki/Special:WikiFactory");
 
 		session().type("citydomain", (language.equals("en") ? "" : language + ".") + getWikiName() + ".wikia.com");
 		clickAndWait("//form[@id='WikiFactoryDomainSelector']/div/ul/li/button");
-		session().waitForPageToLoad(this.getTimeout());
 		waitForElementVisible("link=Close", this.getTimeout());
 		
 		if (session().isElementPresent("link=Close")) {
