@@ -53,16 +53,16 @@ var colorSelectorRegistry = Array();
 var EditorsMarker = Class.create();
 EditorsMarker.prototype = {
     initialize: function(point, emap, title, icon) {
-                  this.gmarker = new GMarker(point, { 'draggable':true, 'title': title ? title : '', 'icon':icon });
-                  this.gmarker.emarker = this;
-                  this.container = document.createElement("span");
-                  this.container.appendChild(document.createTextNode(emap.round(this.gmarker.getPoint().lat())+', '+emap.round(this.gmarker.getPoint().lng())));
-                  this.container.appendChild(document.createElement("br"));
-                  this.emap = emap;
-                  this.tabs = new Array();
-                  var this_marker = this;
-                  GEvent.addListener(this.gmarker, 'dragend', function() { this_marker.updateLocation() } );
-                },
+		this.gmarker = new GMarker(point, { 'draggable':true, 'title': title ? title : '', 'icon':icon });
+		this.gmarker.emarker = this;
+		this.container = document.createElement("span");
+		this.container.appendChild(document.createTextNode(emap.round(this.gmarker.getPoint().lat())+', '+emap.round(this.gmarker.getPoint().lng())));
+		this.container.appendChild(document.createElement("br"));
+		this.emap = emap;
+		this.tabs = new Array();
+		var this_marker = this;
+		GEvent.addListener(this.gmarker, 'dragend', function() { this_marker.updateLocation() } );
+	},
 
     getIcon: function() {
 	       return this.gmarker.getIcon();
@@ -170,8 +170,8 @@ EditorsMarker.prototype = {
         return this.gmarker.show();
     },
 
-// Called at the end of a drag. We recalculate the
-// path's distance and draw new Polyline segments.
+	// Called at the end of a drag. We recalculate the
+	// path's distance and draw new Polyline segments.
     updateLocation: function() {
       if( this.path ) {
         this.path.redraw();
@@ -181,7 +181,7 @@ EditorsMarker.prototype = {
       this.emap.dumpPaths();
     },
 
-                    // we need this logic in a couple places, so might as well put it here.
+	// we need this logic in a couple places, so might as well put it here.
     getBalloonFooter: function() {
       var message = '';
       message += '<a href="javascript:void(0)" onclick="emap.updateActiveMarker()">'+_['gm-save-point']+'</a>'+
@@ -573,9 +573,9 @@ EditorsMap.prototype = {
 	var this_emap = this;
 
 	// Now make the API components and attach to the appropriate places.
-	this.gmap = new GMap2(this.map_div, { 'googleBarOptions': 
+	this.gmap = new GMap2(this.map_div, { 'googleBarOptions':
                 { 'showOnLoad': options.localsearch,
-                'onGenerateMarkerHtmlCallback': function(marker, info, result) { 
+                'onGenerateMarkerHtmlCallback': function(marker, info, result) {
                 var result_div = document.createElement("div");
                 result_div.innerHTML = this_emap.generateResultText(result);
                 this_emap.active_result_marker = marker;
@@ -681,7 +681,7 @@ getKmlNode: function() {
 
     getControlPanelNode: function() {
           /* of course, at some point, DOM methods are more pain than they're worth.
-           That's when innerHTML comes to the rescue. */ 
+           That's when innerHTML comes to the rescue. */
           var control_panel_div = document.createElement("div");
 		  control_panel_div.style.fontSize = "10px";
           var text_sep = '&nbsp;&nbsp;&nbsp;'+
@@ -755,7 +755,7 @@ getKmlNode: function() {
                     if (attrs.height)
                       this.setMapHeight(attrs.height);
                     if (attrs.lat && attrs.lon)
-                      this.gmap.setCenter(new GLatLng(parseFloat(attrs.lat), 
+                      this.gmap.setCenter(new GLatLng(parseFloat(attrs.lat),
                               parseFloat(attrs.lon)), attrs.zoom ? parseInt(attrs.zoom) : undefined);
                     if (attrs.world)
                       this.setWorld(attrs.world, attrs.type);
