@@ -40,7 +40,7 @@ function wfOasisSetup() {
 	// confirmations
 	$wgHooks['ArticleDeleteComplete'][] = 'NotificationsModule::addPageDeletedConfirmation';
 	$wgHooks['ArticleUndelete'][] = 'NotificationsModule::addPageUndeletedConfirmation';
-	$wgHooks['EditPageSuccessfulSave'][] = 'NotificationsModule::addSaveConfirmation';
+	#$wgHooks['EditPageSuccessfulSave'][] = 'NotificationsModule::addSaveConfirmation'; // BugId:10129
 	$wgHooks['SkinTemplatePageBeforeUserMsg'][] = 'NotificationsModule::addFacebookConnectConfirmation';
 	$wgHooks['SpecialMovepageAfterMove'][] = 'NotificationsModule::addPageMovedConfirmation';
 	$wgHooks['SpecialPreferencesOnRender'][] = 'NotificationsModule::addPreferencesConfirmation';
@@ -52,7 +52,7 @@ function wfOasisSetup() {
 	$wgHooks['EditSimilar::showMessage'][] = 'NotificationsModule::addEditSimilarNotification';
 	$wgHooks['SiteWideMessagesNotification'][] = 'NotificationsModule::addSiteWideMessageNotification';
 	$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'NotificationsModule::addMessageNotification';
-	
+
 	// misc
 	$wgHooks['UploadVerification'][] = 'Oasis_UploadVerification';
 	$wgHooks['ArticleViewHeader'][]  = 'UserPagesHeaderModule::saveFacebookConnectProfile';
@@ -229,9 +229,9 @@ function moduleProxy() {
 
 	$params = json_decode($wgRequest->getVal('moduleParams'), true);
 	$params ['format'] = $outputType;
-	
+
 	$response = F::app()->sendRequest( $wgRequest->getVal('moduleName'), $wgRequest->getVal('actionName', 'Index'), $params, false );
-	
+
 	$callback = $wgRequest->getVal('callback');
 	if($callback && ($outputType == 'json')) {
 		$text = Xml::escapeJsString($callback) . '(' . $response->toString() . ')';
