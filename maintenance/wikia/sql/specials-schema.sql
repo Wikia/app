@@ -32,3 +32,30 @@ CREATE TABLE `multilookup` (
   PRIMARY KEY (ml_city_id, ml_ip),
   KEY `multilookup_ts_inx` (ml_ip, ml_ts)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `events_local_users` (
+  `wiki_id` int(8) unsigned NOT NULL,
+  `user_id` int(10) unsigned NOT NULL,
+  `user_name` varchar(255) NOT NULL DEFAULT '',
+  `last_ip` int(10) unsigned NOT NULL DEFAULT '0',
+  `edits` int(11) unsigned NOT NULL DEFAULT '0',
+  `editdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `last_revision` int(11) NOT NULL DEFAULT '0',
+  `cnt_groups` smallint(4) NOT NULL DEFAULT '0',
+  `single_group` char(25) NOT NULL DEFAULT '',
+  `all_groups` mediumtext NOT NULL,
+  `user_is_blocked` tinyint(1) DEFAULT '0',
+  `user_is_closed` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`wiki_id`,`user_id`,`user_name`),
+  KEY `user_name` (`user_name`),
+  KEY `user_id` (`user_id`,`user_name`),
+  KEY `user_edits` (`user_id`,`edits`,`wiki_id`),
+  KEY `wiki_sgroup` (`wiki_id`,`single_group`),
+  KEY `wiki_allgroup` (`wiki_id`,`all_groups`(200)),
+  KEY `editdate_wiki` (`editdate`,`wiki_id`,`user_id`),
+  KEY `wiki_user_name_edits` (`wiki_id`,`user_name`,`user_id`,`edits`),
+  KEY `wiki_editdate_user_edits` (`wiki_id`,`editdate`,`user_id`,`edits`),
+  KEY `wiki_edits_by_user` (`wiki_id`,`edits`,`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
