@@ -174,11 +174,17 @@ class GoogleMaps {
 //<![CDATA[
 ';
 
-	$output .= <<<JAVASCRIPT
-		var GME_SMALL_ICON;
-		var editors_options = {
-			'container':'toolbar', 'textbox':'wpTextbox1', 'toggle':'google_maps_toggle_link',
+		$output .= <<<JAVASCRIPT
+	var GME_SMALL_ICON;
+
 JAVASCRIPT;
+
+		// format options
+		$options = array_merge(array(
+			'container' => 'toolbar',
+			'textbox' => 'wpTextbox1',
+			'toggle' => 'google_maps_toggle_link',
+		), $o);
 
         if ($o['icondir'] && is_dir($o['icondir'])) {
             $labels = array();
@@ -189,47 +195,36 @@ JAVASCRIPT;
                     }
                 }
             }
-            $o['iconlabels'] = implode(",", $labels);
+            $options['iconlabels'] = implode(",", $labels);
         }
-	// add all of the map settings to the editors_options JS variable
-	foreach( array_keys( $o ) as $key ) {
-		if( is_numeric( $o[$key] ) ) {
-			$output .= "'{$key}':{$o[$key]}, ";
-		} elseif( $o[$key] ) {
-			$output .= "'{$key}':'{$o[$key]}', ";
-		}
+
+		// output the 'rtl' setting
+		$isRTLString = $this->mLanguage->isRTL() ? 'true' : 'false';
+		$options['rtl'] = $isRTLString;
+
+		// add JSON encoded options
+		$optionsEncoded = json_encode($options);
+		$output .= "var editors_options = {$optionsEncoded};";
+
+		// output the base utility JS (addLoadEvent function, etc.)
+		$output .= $this->getEssentialJS( );
+
+		// output the messages as the '_' variable
+		$output .= $this->getMessageJS( );
+
+		// output the paths supported setting
+		$output .= "var GME_PATHS_SUPPORTED = " . ( $this->mEnablePaths ? "true" : "false" ) . "; ";
+
+		// output the function to add the google map link to the editors toolbar
+		$output .= <<<JAVASCRIPT
+
+    function loadGoogleMapsJavascript() {
+			importScriptURI('http://maps.google.com/maps?file=api&v={$o['api']}&key={$this->mApiKey}&hl={$this->mLanguageCode}&async=2&callback=initEditorsMap');
 	}
 
-	// output the 'rtl' setting
-	$isRTLString = $this->mLanguage->isRTL() ? 'true' : 'false';
-	$output .= " 'rtl':{$isRTLString} };";
-
-	// output the base utility JS (addLoadEvent function, etc.)
-	$output .= $this->getEssentialJS( );
-
-	// output the messages as the '_' variable
-	$output .= $this->getMessageJS( );
-
-	// output the paths supported setting
-	$output .= "var GME_PATHS_SUPPORTED = " . ( $this->mEnablePaths ? "true" : "false" ) . "; ";
-
-	// output the function to add the google map link to the editors toolbar
-	$output .= <<<JAVASCRIPT
-
-	function addScript(script) {
-            var js = document.createElement("script");
-            js.setAttribute('src', script);
-            js.setAttribute('type', '{$this->mJsMimeType}');
-            //document.getElementsByTagName("head")[0].appendChild(js);
-            document.body.appendChild(js);
-	}
-
-        function loadGoogleMapsJavascript() {
-                        addScript('http://maps.google.com/maps?file=api&v={$o['api']}&key={$this->mApiKey}&hl={$this->mLanguageCode}&async=2&callback=initEditorsMap');
-        }
 	function loadEditorsMapJavascript() {
-			addScript('{$this->mUrlPath}/color_select.js?v={$extensionVersion}');
-			addScript('{$this->mUrlPath}/EditorsMap.js?v={$extensionVersion}');
+			importScriptURI('{$this->mUrlPath}/color_select.js?v={$extensionVersion}');
+			importScriptURI('{$this->mUrlPath}/EditorsMap.js?v={$extensionVersion}');
 
 			window.setTimeout(tryLoadingEditorsMap, 100);
 	}
@@ -242,63 +237,64 @@ JAVASCRIPT;
             }
 	}
 
-        function initEditorsMap() {
-                GME_SMALL_ICON = new GIcon();
-                GME_SMALL_ICON.image = "http://labs.google.com/ridefinder/images/mm_20_yellow.png";
-                GME_SMALL_ICON.shadow	= "http://labs.google.com/ridefinder/images/mm_20_shadow.png";
-                GME_SMALL_ICON.iconSize =	new	GSize(12, 20);
-                GME_SMALL_ICON.shadowSize	= new GSize(22,	20);
-                GME_SMALL_ICON.iconAnchor	= new GPoint(6,	20);
-                GME_SMALL_ICON.infoWindowAnchor =	new	GPoint(5, 1);
+	function initEditorsMap() {
+            GME_SMALL_ICON = new GIcon();
+            GME_SMALL_ICON.image = "http://labs.google.com/ridefinder/images/mm_20_yellow.png";
+            GME_SMALL_ICON.shadow	= "http://labs.google.com/ridefinder/images/mm_20_shadow.png";
+            GME_SMALL_ICON.iconSize =	new	GSize(12, 20);
+            GME_SMALL_ICON.shadowSize	= new GSize(22,	20);
+            GME_SMALL_ICON.iconAnchor	= new GPoint(6,	20);
+            GME_SMALL_ICON.infoWindowAnchor =	new	GPoint(5, 1);
 
-                emap = new EditorsMap(editors_options);
-        }
+            emap = new EditorsMap(editors_options);
+    }
 
 	function insertGoogleMapLinks() {
-		var image = document.createElement("img");
-		image.id = 'mw-editbutton-googlemaps';
-		image.width = 23;
-		image.height = 22;
-		image.src = '{$this->mUrlPath}/images/button_map_open.gif?v={$extensionVersion}';
-		image.border = 0;
-		image.alt = _['gm-make-map'];
-		image.title = _['gm-make-map'];
-		image.style.cursor = "pointer";
-		image.onclick = function() {
-			if( typeof(EditorsMap) == "undefined" ) {
-                            loadEditorsMapJavascript();
-			} else {
-				emap.toggleGoogleMap();
+		window.mwEditButtons && window.mwEditButtons.push({
+			imageId: 'mw-editbutton-googlemaps',
+			imageFile: '{$this->mUrlPath}/images/button_map_open.gif?v={$extensionVersion}',
+			speedTip: _['gm-make-map'],
+			onclick: function() {
+				// use proper place to insert editor's wrapper
+				var containerId = this.parentNode && this.parentNode.id;
+				if (containerId) {
+					window.editors_options.container = containerId;
+				}
+
+				if( typeof EditorsMap == "undefined" ) {
+					loadEditorsMapJavascript();
+				} else {
+					emap.toggleGoogleMap();
+				}
+				if( this.buttonOn ) {
+					this.src = this.src.replace(/_close/,"_open");
+					this.alt = _['gm-make-map'];
+					this.title = _['gm-make-map'];
+					this.buttonOn = false;
+				} else {
+					this.src = this.src.replace(/_open/,"_close");
+					this.alt = _['gm-hide-map'];
+					this.title = _['gm-hide-map'];
+					this.buttonOn = true;
+				}
+				return false;
 			}
-			if( this.buttonOn ) {
-				this.src = this.src.replace(/_close/,"_open");
-				this.alt = _['gm-make-map'];
-				this.title = _['gm-make-map'];
-				this.buttonOn = false;
-			} else {
-				this.src = this.src.replace(/_open/,"_close");
-				this.alt = _['gm-hide-map'];
-				this.title = _['gm-hide-map'];
-				this.buttonOn = true;
-			}
-			return false;
-		};
-		var tb = document.getElementById('toolbar');
-		if(tb != null) tb.appendChild(image);
+		});
 	}
+
 	window.unload = function() { GUnload() };
 
-	 addLoadEvent(insertGoogleMapLinks);
-	 //]]>
-	 </script>
+	insertGoogleMapLinks();
+//]]>
+</script>
 JAVASCRIPT;
 
-	// add the output string as HTML to the wgOut object
-	global $wgOut;
-	$wgOut->addHTML( $output );
+		// add the output string as HTML to the wgOut object
+		global $wgOut;
+		$wgOut->addHTML( $output );
 
-	// return true so other hooks can execute
-	return true;
+		// return true so other hooks can execute
+		return true;
 	}
 
 	/**
