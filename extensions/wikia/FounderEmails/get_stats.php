@@ -2,7 +2,7 @@
 
 	/*
 	 * Get click tracking data from our system (wikia_mailer.mail table) and display them in csv format
-	 * Command = SERVER_ID=12345 php generate.php --category=[founder/all] --days=[1/../n] --source=[wikia/sendgrid] --username=username --password=password
+	 * Usage: php get_stats.php --category=[founder/all] --days=[1/../n] --source=[wikia/sendgrid] --username=username --password=password
 	 */
 	 Class EmailStats {
 		
@@ -188,7 +188,7 @@ SQL;
 	
 	$categories = array('founder','all');
 	$sources = array('wikia','sendgrid');
-	$command = 'Format: SERVER_ID=12345 php generate.php --category=[founder/all] --days=[1/../n] --source=[wikia/sendgrid] --username=username --password=password';
+	$command = 'Usage: php get_stats.php --category=[founder/all] --days=[1/../n] --source=[wikia/sendgrid] --username=username --password=password';
 	
 	 // get options
 	$long_opts = array("category:","days:","source:","username:","password:");
