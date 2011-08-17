@@ -5,19 +5,17 @@ wfLoadAllExtensions();
 /**
  * @group Infrastructure
  */
-class SponsorshipDashboardReportTest extends PHPUnit_Framework_TestCase {
-
-	private $app;
+class SponsorshipDashboardReportTest extends WikiaBaseTest {
 
 	protected function setUp() {
+		parent::setUp();
 		global $wgTitle;
 		$wgTitle = Title::newMainPage();
-		$this->app = WF::build( 'App' );
 	}
 
 	protected function tearDown() {
-		WF::setInstance( 'App', $this->app );
 		WF::reset( 'EasyTemplate' );
+		parent::tearDown();
 	}
 
 	public function useSubpage() {
@@ -113,6 +111,11 @@ class SponsorshipDashboardReportTest extends PHPUnit_Framework_TestCase {
 		$return = $oFormatter->getHTML();
 		$this->assertEmpty( $return );
 
+		$mockedFormatter = $this->getMock('SponsorshipDashboardOutputCSV', array('beforePrint'));
+		$mockedFormatter->expects($this->any())
+		                ->method('beforePrint')
+		                ->will($this->returnValue(null));
+		$this->mockClass('SponsorshipDashboardOutputCSV', $mockedFormatter);
 		$oFormatter = SponsorshipDashboardOutputCSV::newFromReport( $oReport );
 		$return = $oFormatter->getHTML();
 		$this->assertEmpty( $return );
@@ -156,6 +159,11 @@ class SponsorshipDashboardReportTest extends PHPUnit_Framework_TestCase {
 		$return = $oFormatter->getHTML();
 		$this->assertNotEmpty( $return );
 
+		$mockedFormatter = $this->getMock('SponsorshipDashboardOutputCSV', array('beforePrint'));
+		$mockedFormatter->expects($this->once())
+		                ->method('beforePrint')
+		                ->will($this->returnValue(null));
+		$this->mockClass('SponsorshipDashboardOutputCSV', $mockedFormatter);
 		$oFormatter = SponsorshipDashboardOutputCSV::newFromReport( $oReport );
 		$return = $oFormatter->getHTML();
 		$this->assertNotEmpty( $return );
@@ -222,6 +230,11 @@ class SponsorshipDashboardReportTest extends PHPUnit_Framework_TestCase {
 		$return = $oFormatter->getHTML();
 		$this->assertNotEmpty( $return );
 
+		$mockedFormatter = $this->getMock('SponsorshipDashboardOutputCSV', array('beforePrint'));
+		$mockedFormatter->expects($this->once())
+		                ->method('beforePrint')
+		                ->will($this->returnValue(null));
+		$this->mockClass('SponsorshipDashboardOutputCSV', $mockedFormatter);
 		$oFormatter = SponsorshipDashboardOutputCSV::newFromReport( $oReport );
 		$return = $oFormatter->getHTML();
 		$this->assertNotEmpty( $return );

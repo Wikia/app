@@ -17,7 +17,8 @@ class SponsorshipDashboardOutputCSV extends SponsorshipDashboardOutputTable {
 	protected $actualDate;
 
 	static function newFromReport( $oReport ){
-		$obj = new self;
+		// get_class here will return self::$__CLASS__
+		$obj = F::build( get_class() );
 		$obj->set( $oReport );
 		return $obj;
 	}
