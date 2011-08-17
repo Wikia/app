@@ -95,17 +95,35 @@ This list-based button is used in the page header for edit/history/delete action
 	padding: 0;
 	position: relative;
 	text-align: left;
+	&:hover {
+		@include linear-gradient($color-buttons, top, $color-button-highlight, 35%, $color-buttons, 65%);	/* fb:5020 - default hover overwrite, look below */
+	}
 	a:hover {
 		text-decoration: none;
 	}
-	>li {
-		float: left; /*IE7 don't take out*/
-		>a, >span {
-			border-right: 1px solid mix($color-button-text, $color-buttons, 40%);
-			color: $color-button-text;
-			display: inline-block;
-			padding: 0 8px 0 5px;
+	/* fb:5020 - highlight individual elements of menu button separately */
+	>a, .drop {
+		display: inline-block;
+		&:hover {
+			@include linear-gradient(darken($color-buttons, 4%), top, darken($color-button-highlight, 4%), 35%, darken($color-buttons, 4%), 65%);
 		}
+		&:active {
+			@include linear-gradient(false, top, darken($color-buttons, 4%), 35%, darken($color-button-highlight, 4%), 65%);
+			color: $color-button-text;
+		}
+	}
+	>a {
+		@include border-radius-nw(4px);
+		@include border-radius-sw(4px);
+		border-right: 1px solid mix($color-button-text, $color-buttons, 40%);
+		color: $color-button-text;
+		padding: 0 8px 0 5px;
+	}
+	.drop {
+		@include border-radius-ne(4px);
+		@include border-radius-se(4px);
+		margin-left: -3px;
+		padding-left: 5px;
 	}
 	ul {
 		background: $color-page;
@@ -158,18 +176,28 @@ This list-based button used for all additional actions
 .wikia-menu-button {
 	&.secondary {
 		border: 1px solid $color-page-border;
-			*display: inline;
-			list-style: none;
-			margin: 0;
-			position: relative;
-			text-align: left;
+		*display: inline;
+		list-style: none;
+		margin: 0;
+		position: relative;
+		text-align: left;
+		&:hover {
+			@include linear-gradient($color-secondary-button, top, $color-secondary-button-highlight, 35%, $color-secondary-button, 65%);
+		}
+		>a, 
+		.drop,
 		>li>a {
-			border-right: 1px solid mix($color-text, $color-page-border, 0%);
 			color: $color-text;
-			display: inline;
-			margin-right: 4px;
-			padding-right: 4px;
-			position: relative;
+			margin-top: -2px;
+			&:hover {
+				@include linear-gradient(darken($color-secondary-button, 4%), top, darken($color-secondary-button-highlight, 4%), 35%, darken($color-secondary-button, 4%), 65%);
+			}
+			&:active {
+				@include linear-gradient($color-secondary-button, top, darken($color-secondary-button, 4%), 35%, darken($color-secondary-button-highlight, 4%), 65%);
+			}
+		}
+		>a {
+			border-right: 1px solid mix($color-text, $color-page-border, 0%);
 		}
 		ul {
 			background: $color-page;
@@ -207,6 +235,7 @@ This list-based button used for all additional actions
 		}
 	}
 }
+
 
 /*****************************
 Wikia Chiclet Button
