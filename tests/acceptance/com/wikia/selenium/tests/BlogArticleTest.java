@@ -17,41 +17,42 @@ import org.testng.annotations.Test;
  */
 public class BlogArticleTest extends BaseTest {
 
-	String title = new String();
+	String title = null;
+	
+	private String getTitle() {
+		if (null == this.title) {
+			String date  = (new Date()).toString();
+			this.title = "Test Blog Article no. " + date + " test";
+		}
+		
+		return this.title;
+	}
 
-	@Test(groups={"CI", "envProduction"})
+	@Test(groups={"CI", "envProduction", "verified"})
 	public void testEnsureLoggedInUserCanCreateBlogPosts() throws Exception {
-		// random article title
-		String date  = (new Date()).toString();
-		title = "Test Blog Article no. " + date;
-
 		login();
-		session().open("index.php?title=Special:CreateBlogPage");
-		session().waitForPageToLoad( this.getTimeout() );
+		openAndWait("index.php?title=Special:CreateBlogPage");
 
-		session().type( "blogPostTitle", title );
+		session().type( "blogPostTitle", this.getTitle() );
 
 		// create test article
 		doEdit( ( "blogtest by bot " + new Date()).toString() );
-		session().click("wpPreview");
-		session().waitForPageToLoad( this.getTimeout() );
-		session().click("wpSave");
-		session().waitForPageToLoad( this.getTimeout() );
+		clickAndWait("wpPreview");
+		clickAndWait("wpSave");
 		
-		assertEquals(title, session().getText("//div[@id='WikiaUserPagesHeader']/h1"));
+		assertEquals(this.getTitle(), session().getText("//div[@id='WikiaUserPagesHeader']/h1"));
 
 		logout();
 	}
 	
-	@Test(groups={"CI", "envProduction"},dependsOnMethods={"testEnsureLoggedInUserCanCreateBlogPosts"})
+	@Test(groups={"CI", "envProduction", "verified"},dependsOnMethods={"testEnsureLoggedInUserCanCreateBlogPosts"})
 	public void testEnsureUserCanPostCommentsOnBlogPosts() throws Exception {
 		loginAsRegular();
-		session().open( "index.php?title=User_blog:" + getTestConfig().getString("ci.user.wikiabot.username") + "/" + title.replace( " ", "_" ) );
-		session().waitForPageToLoad( this.getTimeout() );
+		openAndWait( "index.php?title=User_blog:" + getTestConfig().getString("ci.user.wikiabot.username") + "/" + this.getTitle().replace( " ", "_" ) );
 		assertTrue( session().isTextPresent( "blogtest by bot" ) );
 
 		String date  = (new Date()).toString();
-		String comment = "comment test by bot " + date;
+		String comment = "comment test by bot " + date + " test";
 		
 		session().type("article-comm", comment);
 		session().click("//input[@id='article-comm-submit']");
