@@ -385,6 +385,11 @@ HTML
 				case 'source':
 					self::setInitMode('source');
 					break;
+
+				case 'wysiwyg':
+				case 'visual':
+					self::setInitMode('wysiwyg');
+					break;
 			}
 		}
 
