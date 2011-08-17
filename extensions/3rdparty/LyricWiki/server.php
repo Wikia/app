@@ -1472,7 +1472,7 @@ function getAlbum($artist, $album, $year){
 		$retVal['url'] = $url;
 
 		$content = $songResult['lyrics']; // getSong is used as a temporary hack (until the refactoring) to get the full wikitext of the article.
-		if(0 < preg_match_all("/\[\[(.*?)(\||\]\])/is", $content, $matches)){
+		if(0 < preg_match_all("/#[^\n]*\[\[(.*?)(\||\]\])/is", $content, $matches)){
 			$retVal['songs'] = $matches[1];
 		}
  	}
