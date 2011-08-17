@@ -219,34 +219,34 @@ JAVASCRIPT;
 		$output .= <<<JAVASCRIPT
 
     function loadGoogleMapsJavascript() {
-			importScriptURI('http://maps.google.com/maps?file=api&v={$o['api']}&key={$this->mApiKey}&hl={$this->mLanguageCode}&async=2&callback=initEditorsMap');
+		importScriptURI('http://maps.google.com/maps?file=api&v={$o['api']}&key={$this->mApiKey}&hl={$this->mLanguageCode}&async=2&callback=initEditorsMap');
 	}
 
 	function loadEditorsMapJavascript() {
-			importScriptURI('{$this->mUrlPath}/color_select.js?v={$extensionVersion}');
-			importScriptURI('{$this->mUrlPath}/EditorsMap.js?v={$extensionVersion}');
-
-			window.setTimeout(tryLoadingEditorsMap, 100);
+		importScriptURI('{$this->mUrlPath}/color_select.js?v={$extensionVersion}');
+		importScriptURI('{$this->mUrlPath}/EditorsMap.js?v={$extensionVersion}');
+		
+		window.setTimeout(tryLoadingEditorsMap, 100);
 	}
 
 	function tryLoadingEditorsMap() {
-            if (typeof(EditorsMap) != "undefined") {
-                loadGoogleMapsJavascript();
-            } else {
-                window.setTimeout(tryLoadingEditorsMap, 100);
-            }
+		if (typeof(EditorsMap) != "undefined") {
+			loadGoogleMapsJavascript();
+		} else {
+			window.setTimeout(tryLoadingEditorsMap, 100);
+		}
 	}
 
 	function initEditorsMap() {
-            GME_SMALL_ICON = new GIcon();
-            GME_SMALL_ICON.image = "http://labs.google.com/ridefinder/images/mm_20_yellow.png";
-            GME_SMALL_ICON.shadow	= "http://labs.google.com/ridefinder/images/mm_20_shadow.png";
-            GME_SMALL_ICON.iconSize =	new	GSize(12, 20);
-            GME_SMALL_ICON.shadowSize	= new GSize(22,	20);
-            GME_SMALL_ICON.iconAnchor	= new GPoint(6,	20);
-            GME_SMALL_ICON.infoWindowAnchor =	new	GPoint(5, 1);
+        GME_SMALL_ICON = new GIcon();
+        GME_SMALL_ICON.image = "http://labs.google.com/ridefinder/images/mm_20_yellow.png";
+        GME_SMALL_ICON.shadow	= "http://labs.google.com/ridefinder/images/mm_20_shadow.png";
+        GME_SMALL_ICON.iconSize =	new	GSize(12, 20);
+        GME_SMALL_ICON.shadowSize	= new GSize(22,	20);
+        GME_SMALL_ICON.iconAnchor	= new GPoint(6,	20);
+        GME_SMALL_ICON.infoWindowAnchor =	new	GPoint(5, 1);
 
-            emap = new EditorsMap(editors_options);
+        emap = new EditorsMap(editors_options);
     }
 
 	function insertGoogleMapLinks() {
@@ -254,7 +254,7 @@ JAVASCRIPT;
 			imageId: 'mw-editbutton-googlemaps',
 			imageFile: '{$this->mUrlPath}/images/button_map_open.gif?v={$extensionVersion}',
 			speedTip: _['gm-make-map'],
-			onclick: function() {
+			onclick: function(ev) {
 				// use proper place to insert editor's wrapper
 				var containerId = this.parentNode && this.parentNode.id;
 				if (containerId) {
@@ -277,7 +277,11 @@ JAVASCRIPT;
 					this.title = _['gm-hide-map'];
 					this.buttonOn = true;
 				}
-				return false;
+
+				ev.preventDefault();
+
+				// fix for reskinned editor
+				\$(window).trigger('resize');
 			}
 		});
 	}
