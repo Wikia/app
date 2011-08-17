@@ -482,6 +482,11 @@ class BodyModule extends Module {
 			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/modules/SpecialUpload.scss'));
 		}
 
+		// load CSS for Special:Allpages
+		if (!empty($wgTitle) && $wgTitle->isSpecial('Allpages')) {
+			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/modules/SpecialAllpages.scss'));
+		}
+
 		// Display Control Center Header on certain special pages
 		if (!empty($wgEnableAdminDashboardExt) && AdminDashboardLogic::displayAdminDashboard($this->app, $wgTitle)) {
 			$this->headerModuleName = null;
