@@ -32,6 +32,7 @@ $color-tab: desaturate($color-menu-highlight, 20%);
 /* New styling */
 .WikiaUserPagesHeader, #UPPLightboxWrapper {
 	.tabs {
+		border-bottom: 1px solid $color-page;
 		padding-left: 15px;
 		li {
 			a {
