@@ -3,119 +3,120 @@
 //yes, I am ashamed...
 
 #labelFor_wpRemember2Ajax {
-  position: relative;
-  top: -9px;
+	position: relative;
+	top: -9px;
 }
 
 //make bigger inputs for finger
 input {
-  height: 30px !important;
-  font-size: 15pt;
+	height: 30px !important;
+	font-size: 15pt;
 }
 
 //hide facbook description
 #AjaxLoginConnectMarketing div {
-  h1:nth-of-type(2), ul {
-    display: none;
-  }
+	h1:nth-of-type(2), ul {
+		display: none;
+	}
 }
 
 //fixes for register form
+#wpName2, #wpEmail, #uselang, #wpBirthYear {
+	position: absolute !important;
+	left: 35px !important; 
+}
+#wpBirthMonth {
+	position: absolute !important;
+	left: 120px !important;
+}
+#wpBirthDay {
+	position: absolute !important;
+	left: 205px !important;
+}
+
 #userRegisterAjax {
-  #wpName2, #wpEmail, #uselang, #wpBirthYear {
-    position: absolute !important;
-    left: 35px !important; 
-  }
-  #wpBirthMonth {
-    position: absolute !important;
-    left: 120px !important;
-  }
-  #wpBirthDay {
-    position: absolute !important;
-    left: 205px !important;
-  }
-  .mw-input label {
-    position: relative;
-    top: -9px;
-  }
-  .wpAjaxLoginInput {
-    padding-bottom: 10px;
-  }
-  .captcha {
-    img {
-      position: relative;
-      left: 20px;
-    }
-    #wpCaptchaWord, .captchadesc {
-      position: relative;
-      top: -60px;
-    }
-  }
+	.mw-input label {
+		position: relative;
+		top: -9px;
+	}
+	.wpAjaxLoginInput {
+		padding-bottom: 10px;
+	}
+	.captcha {
+		img {
+			position: relative;
+			left: 20px;
+		}
+		#wpCaptchaWord, .captchadesc {
+			position: relative;
+			top: -60px;
+		}
+	}
 }
 
 //position lightbox 
 #lightbox {
-  margin-left: 0 !important;
-  left: 1% !important;
+	margin-left: 0 !important;
+	left: 1% !important;
 }
 
 //extend wikia main content to full available width with wikia-rail, itll take whole page if there is no wikia-rail
 #WikiaMainContent {
-  min-width: 68%;
+	min-width: 68%;
 }
 .WikiaPageContentWrapper {
-  width: 100% !important;
+	width: 100% !important;
 }
 .WikiaPageBackground {
-  width: 100% !important;
+	width: 100% !important;
 }
 
 // make page 100% wide 
 #WikiaHeader, #WikiaPage {
-  width: 100%;
-  .banner-corner-left, .banner-corner-right {
-    display: none;
-  }
+	width: 100%;
+	.banner-corner-left, .banner-corner-right {
+		display: none;
+	}
 }
 
 //all below is about fixing slideshow and gallery
 .wikia-slideshow-popout-prev-next {
-  display: block !important;
+	display: block !important;
 }
 
 .wikia-slideshow-popout-images-wrapper {
-  margin: 0 auto !important;
-  width: 90% !important;
+	margin: 0 auto !important;
+	width: 90% !important;
 }
 
 .wikia-slideshow-popout-caption-wrapper {
-  height: 45px;
+	height: 45px;
 }
 
 @media ( orientation: landscape ) {
-  .modalWrapper.wikia-slideshow-popout {
-    height: 97% !important;
-    width: 95% !important;
-    .wikia-slideshow-popout-images-wrapper {
-      height: 340px !important;
-    }
-    .wikia-slideshow-popout-prev-next {
-      top: 130px !important;
-    }
-  }
+	.modalWrapper.wikia-slideshow-popout {
+		height: 97% !important;
+		width: 95% !important;
+		.wikia-slideshow-popout-images-wrapper {
+			height: 340px !important;
+		}
+		.wikia-slideshow-popout-prev-next {
+			top: 130px !important;
+		}
+	}
 }
 
 @media ( orientation: portrait ) {
-  .modalWrapper.wikia-slideshow-popout {
-    left: 10px !important;
-    margin-left: 0 !important;
-    width: 90%!important;
-    #wikia-slideshow-popout-images-wrapper {
-      height: 700px !important;
-    }
-    .wikia-slideshow-popout-prev-next {
-      top: 350px !important;
-    }
-  }
+	.modalWrapper.wikia-slideshow-popout {
+		left: 10px !important;
+		margin-left: 0 !important;
+		width: 90%!important;
+		#wikia-slideshow-popout-images-wrapper {
+			height: 700px !important;
+		}
+		.wikia-slideshow-popout-prev-next {
+			top: 350px !important;
+		}
+	}
 }
 
