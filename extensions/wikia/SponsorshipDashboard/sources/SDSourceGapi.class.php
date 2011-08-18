@@ -205,11 +205,10 @@ class SponsorshipDashboardSourceGapi extends SponsorshipDashboardSource {
 
 				if( count( $this->GAPImetrics ) > 0 ) {
 					$results = $this->getGapiResults();
-
 					$all = array();
 					$titles = array();
 					reset( $results );
-					unset ( $results[ key( $results ) ] );
+					// unset ( $results[ key( $results ) ] );
 
 					$this->calculateResults( $results );
 					$this->saveDataToCache();
