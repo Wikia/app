@@ -30,7 +30,7 @@ $wgExtensionMessagesFiles['SearchDigest'] = $dir.'/SearchDigest.i18n.php';
 // register special page
 $wgSpecialPages['SearchDigest'] = 'SpecialSearchDigest';
 
-$wgHooks['SpecialSearchNogomatch'] = 'efSearchDigestRecordMiss';
+$wgHooks['SpecialSearchNogomatch'][] = 'efSearchDigestRecordMiss';
 
 function efSearchDigestRecordMiss( $title ) {
 	global $wgEnableScribeReport, $wgCityId;
