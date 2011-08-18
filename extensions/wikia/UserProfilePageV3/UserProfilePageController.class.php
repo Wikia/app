@@ -619,11 +619,11 @@ class UserProfilePageController extends WikiaController {
 		//start by presuming there is no error
 		$errorNo = UPLOAD_ERR_OK;
 		$user = $userData['user']; 
-		if(class_exists('Masthead')) {
+		if( class_exists('Masthead') ) {
 			$oAvatarObj = F::build('Masthead', array( $user), 'newFromUser');
 			$oAvatarObj->purgeUrl();
-			$localPath = $this->getLocalPath( $user);	
-			$errorNo = $oAvatarObj->uploadByUrl( $url );			
+			$localPath = $this->getLocalPath($user);
+			$errorNo = $oAvatarObj->uploadByUrl($url);
 			$userIdentityBox = F::build('UserIdentityBox', array($this->app, $user, self::MAX_TOP_WIKIS));
 			$userData = $userIdentityBox->setData();
 			$userData['avatar'] = $localPath;
