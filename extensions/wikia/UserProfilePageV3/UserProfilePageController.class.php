@@ -91,8 +91,7 @@ class UserProfilePageController extends WikiaController {
 		$this->setVal( 'deleteAvatarLink', F::build('SpecialPage', array('RemoveUserAvatar'), 'getTitleFor')->getFullUrl('av_user='.$userData['name']) );
 		$this->setVal( 'canRemoveAvatar', $sessionUser->isAllowed('removeavatar') );
 		$this->setVal( 'isUserPageOwner', $isUserPageOwner );
-		$this->setVal( 'isWikiStaff', $sessionUser->isAllowed('staff') );
-		$this->setVal( 'canEditProfile', ($isUserPageOwner || $sessionUser->isAllowed('staff') || $sessionUser->isAllowed('editprofilev3')) );
+		$this->setVal( 'canEditProfile', ($isUserPageOwner || $sessionUser->isAllowed('editprofilev3')) );
 		
 		$title = F::build('Title', array($this->app->wg->Request->getVal('title', $this->wg->Title->getText())), 'newFromText');
 		$this->setVal( 'reloadUrl', htmlentities($title->getFullUrl(), ENT_COMPAT, 'UTF-8') );
@@ -114,9 +113,9 @@ class UserProfilePageController extends WikiaController {
 		$user = $this->getUserFromTitle($this->title);
 		
 		$sessionUser = $this->wg->User;
-		$canRename = $sessionUser->isAllowed('staff') || $sessionUser->isAllowed('renameprofilev3');
-		$canProtect = $sessionUser->isAllowed('staff') || $sessionUser->isAllowed('protectsite');
-		$canDelete = $sessionUser->isAllowed('staff');
+		$canRename = $sessionUser->isAllowed('renameprofilev3');
+		$canProtect = $sessionUser->isAllowed('protect');
+		$canDelete = $sessionUser->isAllowed('deleteprofilev3');
 		$isUserPageOwner = ($user instanceof User && !$user->isAnon() && $user->getId() == $sessionUser->getId()) ? true : false;
 		
 		$actionButtonArray = array();
@@ -218,7 +217,7 @@ class UserProfilePageController extends WikiaController {
 		$userId = $this->getVal('userId');
 		$wikiId = $this->wg->CityId;
 		$sessionUser = $this->wg->User;
-		$canEditProfile = ($sessionUser->isAllowed('staff') || $sessionUser->isAllowed('editprofilev3'));
+		$canEditProfile = $sessionUser->isAllowed('editprofilev3');
 		
 		if( $sessionUser->isAnon() && !$canEditProfile ) {
 			throw new WikiaException( $this->wf->msg('userprofilepage-invalid-user') );
@@ -308,7 +307,7 @@ class UserProfilePageController extends WikiaController {
 		$this->app->wf->ProfileIn( __METHOD__ );
 		
 		$user = F::build('User', array($this->getVal('userId')), 'newFromId');
-		$isAllowed = ( $this->app->wg->User->isAllowed('staff') || intval($user->getId()) === intval($this->app->wg->User->getId()) );
+		$isAllowed = ( $this->app->wg->User->isAllowed('editprofilev3') || intval($user->getId()) === intval($this->app->wg->User->getId()) );
 		$userData = json_decode($this->getVal('data'));
 		
 		$status = 'error';
@@ -367,7 +366,7 @@ class UserProfilePageController extends WikiaController {
 			$user = F::build('User', array($userId), 'newFromId');
 		}
 		
-		$isAllowed = ( $this->app->wg->User->isAllowed('staff') || intval($user->getId()) === intval($this->app->wg->User->getId()) );
+		$isAllowed = ( $this->app->wg->User->isAllowed('editprofilev3') || intval($user->getId()) === intval($this->app->wg->User->getId()) );
 		
 		if( is_null($data) ) {
 			$data = json_decode($this->getVal('data'));
@@ -1010,7 +1009,7 @@ class UserProfilePageController extends WikiaController {
 		$wikiId = intval( $this->getVal('wikiId') );
 		
 		$user = F::build('User', array($userId), 'newFromId');
-		$isAllowed = ( $this->app->wg->User->isAllowed('staff') || intval($user->getId()) === intval($this->app->wg->User->getId()) );
+		$isAllowed = ( $this->app->wg->User->isAllowed('editprofilev3') || intval($user->getId()) === intval($this->app->wg->User->getId()) );
 		
 		if( $isAllowed && $wikiId > 0 ) {
 			$userIdentityBox = F::build('UserIdentityBox', array($this->app, $user, self::MAX_TOP_WIKIS));
