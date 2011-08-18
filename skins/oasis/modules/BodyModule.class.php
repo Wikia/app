@@ -105,9 +105,7 @@ class BodyModule extends Module {
 		$ret =  ($isUserPage && empty($wgEnableUserProfilePagesV3))
 				|| ($isUserPage && !empty($wgEnableUserProfilePagesV3) && !$wgTitle->isSubpage())
 				|| $wgTitle->isSpecial( 'Following' )
-				|| $wgTitle->isSpecial( 'Contributions' )
-				|| (defined('NS_BLOG_LISTING') && $wgTitle->getNamespace() == NS_BLOG_LISTING)
-				|| (defined('NS_BLOG_ARTICLE') && $wgTitle->getNamespace() == NS_BLOG_ARTICLE);
+				|| $wgTitle->isSpecial( 'Contributions' );
 
 		wfProfileOut(__METHOD__);
 		return $ret;
