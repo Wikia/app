@@ -18,37 +18,35 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 	 * 
 	 */
 	public function index() {
-		F::app()->wg->Out->setPageTitle(wfMsg('admindashboard-title'));
-		if (!F::app()->wg->User->isAllowed( 'admindashboard' )) {
+		$this->wg->Out->setPageTitle(wfMsg('admindashboard-title'));
+		if (!$this->wg->User->isAllowed( 'admindashboard' )) {
 			$this->displayRestrictionError();
 			return false;  // skip rendering
 		}
-		global $wgRequest;
-		$this->response->setVal('tab', $wgRequest->getVal('tab', 'general'));
+		$this->tab = $this->getVal('tab', 'general');
 		
 		// links
-		$this->response->setVal('urlThemeDesigner', Title::newFromText('ThemeDesigner', NS_SPECIAL)->getFullURL());
-		$this->response->setVal('urlRecentChanges', Title::newFromText('RecentChanges', NS_SPECIAL)->getFullURL());
-		$this->response->setVal('urlTopNavigation', Title::newFromText('Wiki-navigation', NS_MEDIAWIKI)->getFullURL('action=edit'));
-		$this->response->setVal('urlWikiaLabs', Title::newFromText('WikiaLabs', NS_SPECIAL)->getFullURL());
-		$this->response->setVal('urlPageLayoutBuilder', Title::newFromText('PageLayoutBuilder', NS_SPECIAL)->getFullURL('action=list'));
+		$this->urlThemeDesigner = Title::newFromText('ThemeDesigner', NS_SPECIAL)->getFullURL();
+		$this->urlRecentChanges = Title::newFromText('RecentChanges', NS_SPECIAL)->getFullURL();
+		$this->urlTopNavigation = Title::newFromText('Wiki-navigation', NS_MEDIAWIKI)->getFullURL('action=edit');
+		$this->urlWikiaLabs = Title::newFromText('WikiaLabs', NS_SPECIAL)->getFullURL();
+		$this->urlPageLayoutBuilder = Title::newFromText('PageLayoutBuilder', NS_SPECIAL)->getFullURL('action=list');
 		
-		$this->response->setVal('urlListUsers', Title::newFromText('ListUsers', NS_SPECIAL)->getFullURL());
-		$this->response->setVal('urlUserRights', Title::newFromText('UserRights', NS_SPECIAL)->getFullURL());
+		$this->urlListUsers = Title::newFromText('ListUsers', NS_SPECIAL)->getFullURL();
+		$this->urlUserRights = Title::newFromText('UserRights', NS_SPECIAL)->getFullURL();
 		
-		$this->response->setVal('urlCommunityCorner', Title::newFromText('Community-corner', NS_MEDIAWIKI)->getFullURL('action=edit'));
-		$this->response->setVal('urlAllCategories', Title::newFromText('Categories', NS_SPECIAL)->getFullURL());
-		$this->response->setVal('urlAddPage', Title::newFromText('CreatePage', NS_SPECIAL)->getFullURL());
-		$this->response->setVal('urlAddPhoto', Title::newFromText('Upload', NS_SPECIAL)->getFullURL());
-		$this->response->setVal('urlCreateBlogPage', Title::newFromText('CreateBlogPage', NS_SPECIAL)->getFullURL());
-		$this->response->setVal('urlMultipleUpload', Title::newFromText('MultipleUpload', NS_SPECIAL)->getFullURL());
+		$this->urlCommunityCorner = Title::newFromText('Community-corner', NS_MEDIAWIKI)->getFullURL('action=edit');
+		$this->urlAllCategories = Title::newFromText('Categories', NS_SPECIAL)->getFullURL();
+		$this->urlAddPage = Title::newFromText('CreatePage', NS_SPECIAL)->getFullURL();
+		$this->urlAddPhoto = Title::newFromText('Upload', NS_SPECIAL)->getFullURL();
+		$this->urlCreateBlogPage = Title::newFromText('CreateBlogPage', NS_SPECIAL)->getFullURL();
+		$this->urlMultipleUpload = Title::newFromText('MultipleUpload', NS_SPECIAL)->getFullURL();
 		
 		// special:specialpages
-		$advancedSection = (string)F::app()->sendRequest( 'AdminDashboardSpecialPage', 'getAdvancedSection', array());
-		$this->response->setVal('advancedSection', $advancedSection);
+		$this->advancedSection = (string)$this->app->sendRequest( 'AdminDashboardSpecialPage', 'getAdvancedSection', array());
 		
 		// icon display logic
-		$this->displayPageLayoutBuilder = !empty(F::app()->wg->EnablePageLayoutBuilder);
+		$this->displayPageLayoutBuilder = !empty($this->wg->EnablePageLayoutBuilder);
 	}
 	
 	/**
@@ -56,17 +54,15 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 	 *
 	 */
 	public function getAdvancedSection() {
-		global $wgOut, $wgUser, $wgMessageCache, $wgSortSpecialPages, $wgSpecialPagesRequiredLogin;
 		
-		if (!F::app()->wg->User->isAllowed( 'admindashboard' )) {
+		if (!$this->wg->User->isAllowed( 'admindashboard' )) {
 			$this->displayRestrictionError();
 			return false; // skip rendering
 		}
 
-		$wgMessageCache->loadAllMessages();
-	
-		$sk = $wgUser->getSkin();
-		
+		$this->wg->MessageCache->loadAllMessages();	
+		$this->sk = $this->wg->User->getSkin();
+
 		$pages = SpecialPage::getUsablePages();
 	
 		if( count( $pages ) == 0 ) {
@@ -86,7 +82,7 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 		}
 	
 		/** Sort */
-		if ( $wgSortSpecialPages ) {
+		if ( $this->wg->SortSpecialPages ) {
 			foreach( $groups as $group => $sortedPages ) {
 				ksort( $groups[$group] );
 			}
@@ -98,23 +94,21 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 			unset( $groups['other'] );
 			$groups['other'] = $other;
 		}
-
-		$this->setVal('sk', $sk);
-		$this->setVal('groups', $groups);
+		$this->groups = $groups;		
 	}
 	
 	public function chromedArticleHeader() {
-		if (!F::app()->wg->User->isAllowed( 'admindashboard' )) {
+		if (!$this->wg->User->isAllowed( 'admindashboard' )) {
 			$this->displayRestrictionError();
 			return false; // skip rendering
 		}
-		$page = $this->request->getVal('page', '');
+		$page = $this->getVal('page', '');
 		if(empty($page)) {
-			$headerText = $this->request->getVal('headerText', '');
+			$headerText = $this->getVal('headerText', '');
 		} else {
 			$headerText = SpecialPage::getTitleFor($page)->getText();
 		}
-		$this->response->setVal('headerText', $headerText);
+		$this->headerText = $headerText;
 	}
 	
 	/**
@@ -128,13 +122,13 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 	 */
 	
 	public function GetSpecialPage () {
-		if (!F::app()->wg->User->isAllowed( 'admindashboard' )) {
+		if (!$this->wg->User->isAllowed( 'admindashboard' )) {
 			$this->displayRestrictionError();
 			return false; // skip rendering
 		}
 
 		// Construct title object from request params
-		$pageName = $this->request->getVal("page");
+		$pageName = $this->getVal("page");
 		$title = SpecialPage::getTitleFor($pageName);
 		
 		// Save global variables and initialize context for special page
@@ -164,14 +158,11 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 
 		// TODO: check retval of special page call?
 		
-		$output = $wgOut->getHTML();
+		$this->output = $wgOut->getHTML();
 		
 		// Restore global variables
 		$wgTitle = $oldTitle;
 		$wgOut = $oldOut;
-		
-		//print_pre($wgOut->getHTML());
-		$this->response->setVal("output", $output);
 		
 	}
 		
