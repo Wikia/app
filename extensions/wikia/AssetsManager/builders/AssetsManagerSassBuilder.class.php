@@ -26,7 +26,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 	}
 
 	private function sassProcessing() {
-		global $IP, $wgSassExacutable;
+		global $IP, $wgSassExecutable;
 
 		$tempDir = sys_get_temp_dir();
 		//replace \ to / is needed because escapeshellcmd() replace \ into spaces (?!!)
@@ -34,7 +34,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 		$tempDir = str_replace('\\', '/', $tempDir);
 		$params = urldecode(http_build_query($this->mParams, '', ' '));
 
-		$cmd = "{$wgSassExacutable} {$IP}/{$this->mOid} {$tempOutFile} --cache-location {$tempDir} --style compact -r {$IP}/extensions/wikia/SASS/wikia_sass.rb {$params}";
+		$cmd = "{$wgSassExecutable} {$IP}/{$this->mOid} {$tempOutFile} --cache-location {$tempDir} --style compact -r {$IP}/extensions/wikia/SASS/wikia_sass.rb {$params}";
 		$escapedCmd = escapeshellcmd($cmd) . " 2>&1";
 
 		$sassResult = shell_exec($escapedCmd);
