@@ -27,6 +27,7 @@
 			return $csv;
 		}
 		
+		// get data from mail table in wikia_mailer database
 		protected function get_stats_wikia() {
 			global $wgExternalDatawareDB;
 						
@@ -57,6 +58,7 @@ SQL;
 			return $csv;
 		}
 		
+		// get data from sendgrid
 		protected function get_stats_sendgrid() {
 			$base_url = 'https://sendgrid.com/api/stats.get.xml?api_user='.$this->username.'&api_key='.$this->password;
 			
@@ -190,27 +192,29 @@ SQL;
 	$sources = array('wikia','sendgrid');
 	$command = 'Usage: php get_stats.php --category=[founder/all] --days=[1/../n] --source=[wikia/sendgrid] --username=username --password=password';
 	
-	 // get options
-	$long_opts = array("category:","days:","source:","username:","password:");
-	$params = getopt("c:d:s:u:p:", $long_opts);
-	
-	if (in_array('--help', $argv))
+	if (isset($options['help']))
 		die("$command\n");
 
-	if (array_key_exists('category', $params) && !in_array($params['category'], $categories))
+	if (array_key_exists('category', $options) && !in_array($options['category'], $categories))
 		die("Invalid category. $command\n");
 
-	if (array_key_exists('days', $params) && !is_numeric($params['days']))
+	if (array_key_exists('days', $options) && !is_numeric($options['days']))
 		die("Invalid time period. $command\n");
 
-	if (array_key_exists('source', $params) && !in_array($params['source'], $sources))
+	if (array_key_exists('source', $options) && !in_array($options['source'], $sources))
 		die("Invalid source. $command\n");
 	
-	if (array_key_exists('source', $params) && $params['source']!='wikia' && !(array_key_exists('username', $params) && array_key_exists('password', $params)))
+	if (array_key_exists('source', $options) && $options['source']!='wikia' && !(array_key_exists('username', $options) && array_key_exists('password', $options)))
 		die("Invalid format. $command\n");
 
-	$stats = new EmailStats($params);
-	$csv = $stats->get_stats();
+	$mc_key = wfMemcKey("stats_emails_$options[category]_$options[source]_$options[days]");
+	$csv = $wgMemc->get($mc_key);
+	if (!$csv) {
+		$stats = new EmailStats($options);
+		$csv = $stats->get_stats();
+		$wgMemc->set($mc_key, $csv, 24*3600);
+	}
+	
 	echo $csv."\n";
 
 ?>
