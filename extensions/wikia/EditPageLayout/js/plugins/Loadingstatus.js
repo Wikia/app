@@ -24,6 +24,9 @@
 			this.el = this.editor.getSpace('loading-status');
 			this.textEl = this.el.find('.loading-text');
 
+			// overlay just an edit area (BugId:6349)
+			this.editor.getSpace('editarea').append(this.el);
+
 			this.set('loading');
 		},
 

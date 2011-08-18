@@ -1362,7 +1362,7 @@ HTML
 		}
 
 		// wikia change begin
-		wfRunHooks ('EditForm:BeforeDisplayingTextbox', array (&$this, &$hidden) ) ;
+		wfRunHooks ('EditForm:BeforeDisplayingTextbox', array (&$this, &$hidden /* TODO: remove? */) ) ;
 		// wikia change end
 
 		$wgOut->addHTML( $this->editFormTextBeforeContent );
@@ -1378,7 +1378,7 @@ HTML
 		}
 
 		// wikia change begin
-		wfRunHooks ('EditForm:AfterDisplayingTextbox', array (&$this, &$hidden) ) ;
+		wfRunHooks ('EditForm:AfterDisplayingTextbox', array (&$this, &$hidden /* TODO: remove? */) ) ;
 
 		$rows = $wgUser->getIntOption( 'rows' );
 		$cols = $wgUser->getIntOption( 'cols' );

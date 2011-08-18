@@ -307,6 +307,30 @@ class EditPageLayoutHelper {
 		return true;
 	}
 
+	/**
+	 * Modify HTML before edit page textarea
+	 *
+	 * @param $editPage EditPage edit page instance
+	 * @param $hidden boolean not used
+	 * @return boolean return true
+	 */
+	function onBeforeDisplayingTextbox(&$editPage, &$hidden) {
+		$this->out->addHtml('<div class="editpage-editarea" data-space-type="editarea">');
+		return true;
+	}
+
+	/**
+	 * Modify HTML after edit page textarea
+	 *
+	 * @param $editPage EditPage edit page instance
+	 * @param $hidden boolean not used
+	 * @return boolean return true
+	 */
+	function onAfterDisplayingTextbox(&$editPage, &$hidden) {
+		$this->out->addHtml('</div>');
+		return true;
+	}
+
 	static public function getAssets() {
 		return array(
 			// >> mediawiki editor core file
