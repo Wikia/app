@@ -11,7 +11,8 @@
  *
  */
 
-
+$wgAvailableRights[] = 'mailerlog';
+$wgGroupPermissions['staff']['mailerlog'] = true;
 $wgSpecialPages[ "MailerLog" ] = "SpecialMailerLog";
 	
 class SpecialMailerLog extends UnlistedSpecialPage {
@@ -247,7 +248,7 @@ class SpecialMailerLog extends UnlistedSpecialPage {
 											 $wgRequest->getVal('filter_dst', null));
 
 		// Force a few values depending on who the viewer is
-		if( !$wgUser->isAllowed( "staff" ) ) {
+		if( !$wgUser->isAllowed( "mailerlog" ) ) {
 			$filter_dst = $wgUser->getEmail();
 			$forced_dst = true;
 		}
