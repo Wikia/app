@@ -61,4 +61,5 @@ function efSearchDigestRecordMiss( $title ) {
 		Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
 	}
 
+	return true;
 }
