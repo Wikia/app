@@ -79,6 +79,7 @@ class AdminDashboardLogic {
 				"WikiFactoryReporter",
 				"WikiaLabs",
 				"WikiStats",
+				"AdSS",
 			);
 			return (!in_array($title->getDBKey(), $exclusionList));
 		}
