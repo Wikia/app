@@ -384,11 +384,6 @@ include_once( "$IP/extensions/wikia/AssetsManager/AssetsManager_setup.php" );
 include_once( "$IP/extensions/wikia/JSSnippets/JSSnippets_setup.php" );
 
 /**
- * onedot is switched off for while
- */
-include_once( "$IP/extensions/wikia/MostVisitedPages/SpecialMostVisitedPages.php" );
-
-/**
  * @name $wgSkipSkins
  *
  * NOTE: a few wikis may have local override for this var,
