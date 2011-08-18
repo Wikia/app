@@ -408,8 +408,6 @@ class MessageCache {
 		}
 
 		$parserMemc->delete( wfMemcKey( 'navlinks' ) );
-		$parserMemc->delete( wfMemcKey( 'MonacoData' ) );
-		$parserMemc->delete( wfMemcKey( 'MonacoDataOld' ) );
 		$parserMemc->delete( wfMemcKey( 'Wiki-navigation', NavigationService::version ) );
 
 		// Set the JavaScript variable which is used by AJAX request to make data caching possible - Inez
