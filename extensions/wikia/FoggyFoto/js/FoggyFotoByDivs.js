@@ -53,6 +53,8 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 		this._PHOTOS_PER_GAME = 10;
 		this._PERCENT_DEDUCTION_REVEAL = 10; // reduces the remaining pointsThisRound by this percentage when a tile is revealed
 		this._PERCENT_DEDUCTION_WRONG_GUESS = 50;
+		this._MAX_SECONDS_PER_ROUND = 20; // this is how many seconds the user would have, not counting tile-reveals and guesses.
+		this._UPDATE_INTERVAL_MILLIS = 250; // will set a timeout which will update the score-bar each time this many miliseconds have happened. A lower number means more updates (smoother drop in points, but probably will slow down performance).
 
 		/**
 		 * After setting the dimensions of the flip board, this should be called once to set up the _isBackShowing matrix
@@ -112,12 +114,6 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 								self.backImage = new Image();
 								self.backImage.src = self.backImageSrc;
 								self.backImage.onload = function(){
-									// A new round has started, initialize the round.
-									self._pointsThisRound = self._MAX_POINTS_PER_ROUND;
-									self._currPhoto++;
-				// TODO: UPDATE PROGRESS PORTION OF HUD.
-				// TODO: UPDATE PROGRESS PORTION OF HUD.
-
 									// Calculate the scaling factor and use that to set the background to the correct size.
 									var scalingFactor = self._getScalingFactor(self.backImage);
 									var backOffsetX = Math.floor( Math.abs(self.backImage.width - (self.width / scalingFactor)) / 2 );
@@ -143,6 +139,12 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 									$('#bgPic').css('left', '-'+scaledBackOffsetX+'px');
 									$('#bgPic').css('top', '-'+scaledBackOffsetY+'px');
 
+									// A new round has started, initialize the round & start the timer.
+									self._pointsThisRound = self._MAX_POINTS_PER_ROUND;
+									self._currPhoto++;
+									self.updateHud_progress();
+									self._startRoundTimer();
+
 									// Attach event-handling.
 									var eventName = 'mousedown';
 									if ("ontouchstart" in document.documentElement){
@@ -152,7 +154,7 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 
 									// TODO: REMOVE THE GAME-LOADING OVERLAY/STATE
 									// TODO: REMOVE THE GAME-LOADING OVERLAY/STATE
-
+									
 									// We're done loading things, call the callback.
 									if(typeof callback == "function"){
 										callback();
@@ -342,6 +344,36 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 			var progressMsg = $.msg('foggyfoto-progress-numbers', self._currPhoto, self._PHOTOS_PER_GAME);
 			$($('#hud div.progress span').get(0)).html( progressMsg );
 		};
+
+		/**
+		 * To start the timer for a round, call this function.
+		 */
+		this._startRoundTimer = function(){
+			setTimeout(self._roundTimerTick, self._UPDATE_INTERVAL_MILLIS);
+		};
+
+		/**
+		 * Every self._UPDATE_INTERVAL_MILLIS milliseconds, this tick function will be called, its
+		 * function is to remove score from the scorebar (proportionate for the time elapsed) and
+		 * then determine if the round has ended.
+		 */
+		this._roundTimerTick = function(){
+			// TODO: Time has passed, take that off of the score bar
+			var pointDeduction = (self._MAX_POINTS_PER_ROUND / ((self._MAX_SECONDS_PER_ROUND*1000) / self._UPDATE_INTERVAL_MILLIS));
+			self._pointsThisRound = Math.max(0, (self._pointsThisRound - pointDeduction));
+			self.updateScoreBar();
+
+			// If the round is out of time/points, end the round... otherwise queue up the next game-clock tick.
+			if(self._pointsThisRound <= 0){
+			
+				// TODO: END THE ROUND
+				// TODO: END THE ROUND
+			
+			} else {
+				// If the round is continuing, start the timeout again for the next tick.
+				setTimeout(self._roundTimerTick, self._UPDATE_INTERVAL_MILLIS);
+			}
+		}
 
 		/**
 		 * Dumps a human-readable output to the console indicating which tiles are showing.
