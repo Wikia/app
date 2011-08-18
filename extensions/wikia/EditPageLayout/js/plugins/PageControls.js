@@ -195,12 +195,12 @@
 
 			var prefix = '';
 
-			if(wgEditedTitleNS.length > 0) {
+			if(wgEditedTitleNS !== '') {
 				prefix = wgEditedTitleNS + ':';
 			}
 
-			if(wgEditedTitlePrefix.length > 0) {
-				prefix = prefix + wgEditedTitlePrefix + ':';
+			if(wgEditedTitlePrefix !== '') {
+				prefix += wgEditedTitlePrefix;
 			}
 
 			window.wgEditedTitle = prefix + window.wgEditedTitle;
