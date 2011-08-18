@@ -3,7 +3,7 @@
 		<title>Simple game with HTML5 Canvas</title>
 		<meta name="viewport" content = "width=device-width, initial-scale = 1, minimum-scale = 1, maximum-scale = 1, user-scalable = no" />
 		
-	<!-- TODO: MOVE TO A SEPARATE FILE SO THE DEVICE CAN CACHE IT. -->
+	<!-- TODO: MOVE TO A SEPARATE FILE SO THE DEVICE CAN CACHE IT?  At least move the parts that don't depend on variables. -->
 		<style>
 <?php
 	$SCORE_BAR_WIDTH = "10";
@@ -75,7 +75,7 @@
 				padding: 0 2px 0 2px;
 
 /*
-	This makes the actual score-bar semi-transparent too. Would have to take it out of the wrapper to fix that.
+	This makes the actual score-bar semi-transparent too. Would have to take it out of the wrapper & make it a sibling to fix that... which we'll have to do since we don't know what color the background images or watermarks will be.
 	background-color:#ccc;
 	opacity:0.4;filter:alpha(opacity=40);
 */
@@ -89,8 +89,7 @@
 				margin: 0;
 				padding: 0;
 				width: <?= $SCORE_BAR_WIDTH ?>px;
-/* TODO: Start at 100% and make sure we can change this programatically based on the score. */
-height: 100%;
+				height: 100%;
 
 				z-index:24;
 			}
@@ -142,6 +141,8 @@ left: 20px;
 
 		<script>
 			wgScriptPath = '<?= $wgScriptPath; ?>';
+			boardWidth = <?= $boardWidth ?>;
+			boardHeight = <?= $boardHeight ?>;
 		</script>
 <!-- TODO: Serve from our own servers using AssetsManager -->
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
