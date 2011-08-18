@@ -203,34 +203,35 @@ class UserIdentityBox {
 		$this->app->wf->ProfileIn( __METHOD__ );
 		
 		$changed = false;
-		$wikiId = $this->app->wg->CityId;
 		
-		foreach(array('location', 'occupation', 'birthday', 'gender', 'website', 'avatar', 'twitter', 'fbPage') as $option) {
-			if( isset($data->$option) ) {
-				$data->$option = str_replace('*', '&asterix;', $data->$option);
-				$data->$option = $this->app->wg->Parser->parse($data->$option, $this->user->getUserPage(), new ParserOptions($this->user))->getText();
-				$data->$option = str_replace('&amp;asterix;', '*', $data->$option);
-				$data->$option = trim( strip_tags($data->$option) );
-				
-				//if( in_array($option, array('gender', 'birthday')) ) { -- just an example how can it be used later
-				if( $option === 'gender' ) {
-					$this->user->setOption(self::USER_PROPERTIES_PREFIX.$option, $data->$option);
-				} else {
-					$this->user->setOption($option, $data->$option);
+		if( is_object($data) ) {
+			foreach(array('location', 'occupation', 'birthday', 'gender', 'website', 'avatar', 'twitter', 'fbPage') as $option) {
+				if( isset($data->$option) ) {
+					$data->$option = str_replace('*', '&asterix;', $data->$option);
+					$data->$option = $this->app->wg->Parser->parse($data->$option, $this->user->getUserPage(), new ParserOptions($this->user))->getText();
+					$data->$option = str_replace('&amp;asterix;', '*', $data->$option);
+					$data->$option = trim( strip_tags($data->$option) );
+					
+					//if( in_array($option, array('gender', 'birthday')) ) { -- just an example how can it be used later
+					if( $option === 'gender' ) {
+						$this->user->setOption(self::USER_PROPERTIES_PREFIX.$option, $data->$option);
+					} else {
+						$this->user->setOption($option, $data->$option);
+					}
+					
+					$changed = true;
 				}
-				
+			}
+			
+			if( isset($data->month) && isset($data->day) ) {
+				$this->user->setOption(self::USER_PROPERTIES_PREFIX.'birthday', $data->month.'-'.$data->day);
 				$changed = true;
 			}
-		}
-		
-		if( isset($data->month) && isset($data->day) ) {
-			$this->user->setOption(self::USER_PROPERTIES_PREFIX.'birthday', $data->month.'-'.$data->day);
-			$changed = true;
-		}
-		
-		if( isset($data->name) ) {
-			$this->user->setRealName($data->name);
-			$changed = true;
+			
+			if( isset($data->name) ) {
+				$this->user->setRealName($data->name);
+				$changed = true;
+			}
 		}
 		
 		$wikiId = $this->app->wg->CityId;
@@ -245,12 +246,6 @@ class UserIdentityBox {
 		if( true === $changed ) {
 			$this->user->saveSettings();
 			$this->saveMemcUserIdentityData($data);
-			
-			// Log			
-			/* Temporarily surpressing RecentChanges logging
-			$log = WF::build( 'LogPage', array( 'usermasthead' ) );
-			$log->addEntry( '', Title::newFromText($this->user->getName(), NS_USER), $this->app->wf->Msg('usermasthead-log-message'), array() );  
-			*/
 			
 			$this->app->wf->ProfileOut( __METHOD__ );
 			return true;
