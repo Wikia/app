@@ -470,6 +470,10 @@ class HttpRequest {
 
 	/**
 	 * Returns the final URL after all redirections.
+	 *
+	 * Relative values of the "Location" header are incorrect as stated in RFC, however they do happen and modern browsers support them.
+	 * This function loops backwards through all locations in order to build the proper absolute URI - Marooned at wikia-inc.com
+	 *
 	 * @returns string
 	 */
 	public function getFinalUrl() {
