@@ -14,6 +14,7 @@
 			'plb-editor-toolbar-static',
 			'plb-editor-preview-desc',
 			'plb-property-editor-value-required',
+			'plb-editor-saving-as-draft',
 		);
 
 		/**

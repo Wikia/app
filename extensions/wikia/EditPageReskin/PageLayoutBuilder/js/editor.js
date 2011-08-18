@@ -1911,6 +1911,11 @@
 				$('#wpPreviewForm',this.editor.element).click(this.proxy(function(e) {
 					this.editor.controls.renderPreview({'type' : 'form'});
 				}));
+
+				// use a different message when saving draft (BugId:7123)
+				$('#wpSaveDraft').click(function(ev) {
+					window.wgSavingMessage = PageLayoutBuilder.Lang['plb-editor-saving-as-draft'];
+				});
 			}
 
 		});

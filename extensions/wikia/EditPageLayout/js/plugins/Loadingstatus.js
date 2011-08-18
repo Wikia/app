@@ -70,6 +70,12 @@
 
 			if (this.state) {
 				var text = this.editor.msg(this.MESSAGE_PREFIX + state);
+
+				// allow edit pages to override message shown to the user when saving the page (BugId:7123)
+				if (state === 'saving' && window.wgSavingMessage) {
+					text = window.wgSavingMessage;
+				}
+
 				this.textEl.text(text);
 
 				this.el.show();
