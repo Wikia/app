@@ -88,7 +88,7 @@
         <pathelement path="${basedir}" />
     </path>
 
-    <taskdef resource="testngtasks" classpath="${basedir}/lib/testng-5.10-jdk15.jar" />
+    <taskdef resource="testngtasks" classpath="${basedir}/lib/testng-6.1.1.jar" />
 
     <target name="compile" description="compile the source ">
         <mkdir dir="${build.bin}" />
