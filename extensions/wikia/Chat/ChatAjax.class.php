@@ -67,7 +67,7 @@ class ChatAjax {
 			'isLoggedIn' => $user->isLoggedIn(),
 			'isChatMod' => $user->isAllowed( 'chatmoderator' ),
 			'isCanGiveChatMode' => $isCanGiveChatMode, 
-			'isStaff' => $user->isAllowed( 'staff' ),
+			'isStaff' => $user->isAllowed( 'chatstaff' ),
 			'cookie' => $data['cookie'],
 			'username' => $user->getName(),
 			'avatarSrc' => AvatarService::getAvatarUrl($user->getName(), self::CHAT_AVATAR_DIMENSION),
