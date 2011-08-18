@@ -1070,7 +1070,7 @@ class UserProfilePageController extends WikiaController {
 	 */
 		
 	public function onSkinSubPageSubtitleAfterTitle($title, &$ptext) {
-		if($title->getNamespace() == NS_USER) {
+		if( !empty($title) && $title->getNamespace() == NS_USER) {
 			$ptext = $title->getText();	
 		}
 		return true;
