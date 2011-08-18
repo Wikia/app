@@ -38,7 +38,6 @@
 			this.visible = (this.getCount() > 0);
 			if( this.visible && this.wasNoticeAlreadyShown( this.ul.find('li').attr('data-hash') ) ) {
 				this.visible = false;
-				this.notificationsLinkSplotch.fadeOut('fast');
 			}
 			this.el[ this.visible ? 'show' : 'hide' ]();
 		},
