@@ -53,6 +53,8 @@ $app->registerHook('AlternateEditPageClass', 'EditPageLayoutHelper', 'onAlternat
 $app->registerHook('EditPageBeforeConflictDiff', 'EditPageLayoutHelper', 'onEditPageBeforeConflictDiff');
 $app->registerHook('EditPageGetDiffText', 'EditPageLayoutHelper', 'onEditPageGetDiffText');
 $app->registerHook('EditPageGetPreviewNote', 'EditPageLayoutHelper', 'onEditPageGetPreviewNote');
+$app->registerHook('EditForm:AfterDisplayingTextbox', 'EditPageLayoutHelper', 'onAfterDisplayingTextbox');
+$app->registerHook('EditForm:BeforeDisplayingTextbox', 'EditPageLayoutHelper', 'onBeforeDisplayingTextbox');
 $app->registerHook('GetPreferences', 'EditPageLayoutHelper', 'onGetPreferences');
 $app->registerHook('LogEventsListShowLogExtract', 'EditPageLayoutHelper', 'onLogEventsListShowLogExtract');
 $app->registerHook('SkinAfterBottomScripts', 'EditPageLayoutHelper', 'onSkinAfterBottomScripts');
