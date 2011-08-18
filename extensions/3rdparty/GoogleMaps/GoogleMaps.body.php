@@ -137,12 +137,11 @@ class GoogleMaps {
 	 * script (messages, settings, JS includes, etc.).  Most of the actual
 	 * interactive editing code is in the EditorsMap.js file.
 	 *
-	 * @param $pForm EditPage - the EditPage object for the current article
-	 *   being edited.
+	 * @param &$toolbarHtml String - toolbar HTML
 	 *
 	 * @return boolean - true if successful
 	 **/
-	function editForm ( $pForm ) {
+	function editForm ( &$toolbarHtml ) {
 
 		$this->mLanguageCode = $this->mLanguage->getCode();
 
@@ -218,14 +217,15 @@ JAVASCRIPT;
 		// output the function to add the google map link to the editors toolbar
 		$output .= <<<JAVASCRIPT
 
-    function loadGoogleMapsJavascript() {
+
+	function loadGoogleMapsJavascript() {
 		importScriptURI('http://maps.google.com/maps?file=api&v={$o['api']}&key={$this->mApiKey}&hl={$this->mLanguageCode}&async=2&callback=initEditorsMap');
 	}
 
 	function loadEditorsMapJavascript() {
 		importScriptURI('{$this->mUrlPath}/color_select.js?v={$extensionVersion}');
 		importScriptURI('{$this->mUrlPath}/EditorsMap.js?v={$extensionVersion}');
-		
+
 		window.setTimeout(tryLoadingEditorsMap, 100);
 	}
 
@@ -238,16 +238,16 @@ JAVASCRIPT;
 	}
 
 	function initEditorsMap() {
-        GME_SMALL_ICON = new GIcon();
-        GME_SMALL_ICON.image = "http://labs.google.com/ridefinder/images/mm_20_yellow.png";
-        GME_SMALL_ICON.shadow	= "http://labs.google.com/ridefinder/images/mm_20_shadow.png";
-        GME_SMALL_ICON.iconSize =	new	GSize(12, 20);
-        GME_SMALL_ICON.shadowSize	= new GSize(22,	20);
-        GME_SMALL_ICON.iconAnchor	= new GPoint(6,	20);
-        GME_SMALL_ICON.infoWindowAnchor =	new	GPoint(5, 1);
+		GME_SMALL_ICON = new GIcon();
+		GME_SMALL_ICON.image = "http://labs.google.com/ridefinder/images/mm_20_yellow.png";
+		GME_SMALL_ICON.shadow = "http://labs.google.com/ridefinder/images/mm_20_shadow.png";
+		GME_SMALL_ICON.iconSize = new GSize(12, 20);
+		GME_SMALL_ICON.shadowSize = new GSize(22, 20);
+		GME_SMALL_ICON.iconAnchor = new GPoint(6, 20);
+		GME_SMALL_ICON.infoWindowAnchor = new GPoint(5, 1);
 
-        emap = new EditorsMap(editors_options);
-    }
+		window.emap = new EditorsMap(editors_options);
+	}
 
 	function insertGoogleMapLinks() {
 		window.mwEditButtons && window.mwEditButtons.push({
@@ -293,9 +293,8 @@ JAVASCRIPT;
 </script>
 JAVASCRIPT;
 
-		// add the output string as HTML to the wgOut object
-		global $wgOut;
-		$wgOut->addHTML( $output );
+		// add the output string after the edit toolbar (BugId:5449)
+		$toolbarHtml .= $output;
 
 		// return true so other hooks can execute
 		return true;
