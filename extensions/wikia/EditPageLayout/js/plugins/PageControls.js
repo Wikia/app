@@ -106,15 +106,19 @@
 		},
 
 		// handle "Preview" button
-		onPreview: function() {
+		onPreview: function(ev) {
 			this.renderPreview({});
 			this.editor.track(this.editor.getTrackerInitialMode(), 'pageControls', 'preview', this.editor.getTrackerMode());
+
+			ev.preventDefault();
 		},
 
 		// handle "Show changes" button
-		onDiff: function() {
+		onDiff: function(ev) {
 			this.renderChanges({});
 			this.editor.track(this.editor.getTrackerInitialMode(), 'pageControls', 'diff', this.editor.getTrackerMode());
+
+			ev.preventDefault();
 		},
 
 		//enable publish button after init editor only for mediawiki editor
