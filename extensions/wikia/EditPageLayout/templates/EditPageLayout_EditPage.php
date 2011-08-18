@@ -90,12 +90,16 @@
 							?>
 
 							<!-- edit form content -->
-							<?= $bodytext ?>
-							<div class="editpage-loading-indicator" data-space-type="loading-status" style="display:none">
-								<div class="loading-background"></div>
-								<div class="loading-message">
-									<span class="loading-throbber">&nbsp;</span>
-									<span class="loading-text">&nbsp;</span>
+							<div class="editpage-editarea" data-space-type="editarea">
+								<?= $bodytext ?>
+
+								<!-- loading indicator overlay -->
+								<div class="editpage-loading-indicator" data-space-type="loading-status" style="display:none">
+									<div class="loading-background"></div>
+									<div class="loading-message">
+										<span class="loading-throbber">&nbsp;</span>
+										<span class="loading-text">&nbsp;</span>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -155,10 +159,10 @@
 										"text" => wfMsg('showdiff')
 									));
 								?>
-								<?= wfRenderModule('MenuButton', 
-										'Index', 
+								<?= wfRenderModule('MenuButton',
+										'Index',
 										array(
-											'action' => array("href" => "#", "text" => wfMsg('preview'), "id" => "wpPreview"), 
+											'action' => array("href" => "#", "text" => wfMsg('preview'), "id" => "wpPreview"),
 											'class' => 'secondary '.$buttonClasses,
 											'dropdown' => $dropdown
 										)

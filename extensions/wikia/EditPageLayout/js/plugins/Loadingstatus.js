@@ -22,6 +22,8 @@
 
 		init: function() {
 			this.el = this.editor.getSpace('loading-status');
+			this.textEl = this.el.find('.loading-text');
+
 			this.set('loading');
 		},
 
@@ -61,12 +63,12 @@
 
 		set: function( state ) {
 			this.state = state;
-
-			this.editor.log('loading-status: ',state);
+			this.editor.log('loading-status: ', state);
 
 			if (this.state) {
 				var text = this.editor.msg(this.MESSAGE_PREFIX + state);
-				this.el.find('.loading-text').text(text);
+				this.textEl.text(text);
+
 				this.el.show();
 			} else {
 				this.el.hide();
