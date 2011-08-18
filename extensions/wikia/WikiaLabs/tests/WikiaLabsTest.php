@@ -247,17 +247,9 @@ class WikiaLabsTest extends PHPUnit_Framework_TestCase {
 
 		$app = $this->getMock( 'WikiaApp', array( 'runFunction' ) );
 		if( !empty( $projectId ) ) {
-			$app->expects( $this->exactly(2) )
+			$app->expects( $this->once() )
 			    ->method( 'runFunction' );
 			/*
-			$app->expects( $this->once() )
-			    ->method( 'runFunction' )
-			    ->with(
-			        $this->equalTo( 'wgRunHooks' ),
-			        $this->equalTo( 'WikiFactoryChanged' ),
-			        $this->equalTo( array( $extension, self::TEST_CITY_ID, !empty($onOff) ) )
-			      );
-
 			$app->expects( $this->once() )
 			    ->method( 'runFunction' )
 			    ->with(
