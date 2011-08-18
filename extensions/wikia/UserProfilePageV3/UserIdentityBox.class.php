@@ -83,12 +83,8 @@ class UserIdentityBox {
 			$data['userPage'] = $this->user->getUserPage()->getFullURL();
 			
 			//data from user_properties table
-			if( !$hasUserEditedMastheadBefore ) {
-				if( $isEdit || $iEdits > 0 ) {
-					$this->getDefaultData($data);
-				} else {
-					$this->getEmptyData($data);
-				}
+			if( !$hasUserEditedMastheadBefore && !$isEdit ) {
+				$this->getEmptyData($data);
 			} else {
 				$this->getDefaultData($data);
 			}
