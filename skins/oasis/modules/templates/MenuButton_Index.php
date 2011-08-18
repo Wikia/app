@@ -26,9 +26,11 @@
 			else {
 				$accesskey = '';
 			}
+
+			$href = isset($item['href']) ? htmlspecialchars($item['href']) : '#';
 ?>
 		<li>
-			<a href="<?= htmlspecialchars($item['href']) ?>"<?= $accesskey ?> data-id="<?= $key ?>" <?= empty($item['id']) ? '' : 'id="'.$item['id'].'"' ?>>
+			<a href="<?= $href ?>"<?= $accesskey ?> data-id="<?= $key ?>" <?= empty($item['id']) ? '' : 'id="'.$item['id'].'"' ?>>
 				<?= htmlspecialchars($item['text']) ?>
 			</a>
 		</li>
