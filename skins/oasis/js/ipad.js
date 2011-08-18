@@ -18,6 +18,7 @@ iPadImprovements = {
 	},
 	
 	init: function() {
+		
 		//onload add proper viewport
 		iPadImprovements.setViewPort();
 		
