@@ -13,6 +13,7 @@ html {
     background-color: #EEE;
     color: #222;
     margin: 0;
+    //images
     .thumb {
       width: 95%;
       margin: 3px auto;
@@ -25,6 +26,10 @@ html {
         text-align: center;
         margin: 4px auto;
       }
+      img {
+          width: 90%;
+          height: auto;
+      }
       .thumbcaption {
         border-top: 1px dashed grey;
       }
@@ -32,6 +37,7 @@ html {
     h1 {
       border-bottom: 1px solid grey;
     }
+    //navigation
     #navigation {
       width: 100%;
       background-color: $menuBackgroundColor;
@@ -39,7 +45,6 @@ html {
       background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(85,85,85,1)), color-stop(100%,rgba(95,95,95,1)));
       -webkit-box-shadow: 0 0 10px black;
       color: #777;
-
       -webkit-tap-highlight-color: rgba( 0,0,0,0 );
       -webkit-focus-ring-color: rgba( 0,0,0,0 );
       #navigationWordMark {
@@ -136,6 +141,7 @@ html {
         color: grey;
       }
     }
+    
     .arrow {
       font-size: 0;
       line-height: 0;
@@ -146,6 +152,7 @@ html {
       border-left: 8px solid rgba(0,0,0,0);
       border-right: 8px solid rgba(0,0,0,0);
     }
+    //Footer
     #wikiaFooter {
       width: 100%;
       height: 200px;
@@ -161,25 +168,35 @@ html {
         list-style: none;
         padding: 5px;
         margin: 2px;
+        width: 90%;
         li {
+          width: 30%;
           display: inline;
           padding: 5px;
           margin: 0;
         }
       }
+      //ads
       #adPlace {
         width: 100%;
         height: 50px;
         #adWrapper {
+        	opacity: 1;
           width: 100%;
           height: 50px;
-          position: absolute;
-          bottom: 0;
           background-color: red;
           color: white;
           -webkit-transition: all 0.5s;
-        }
+		   &.up {
+          	position: absolute;
+          	bottom: 0;
+          	&.hidden {
+          		opacity: 0;
+          		bottom: -200px;
+          	}
+          }
       }
+    }
     }
   }
 }
@@ -188,6 +205,8 @@ html {
   //REALESE THE HELL: overflow used here for a demo reason the page now has static width what on mobile device is desiered
   //shoudn't be done on production site as it is a workaround on to wide content
   overflow: hidden;
+  padding-bottom: 20px;
+  margin: 2px;
   & > h2 {
       width: 100%;
       padding: 5px;
@@ -216,52 +235,8 @@ html {
     }
   }
   table#toc {
-    width: 100%;
-    margin: 0 auto;
-    #toctitle {
-      border-bottom: 1px solid grey;
-      &.open{
-        .arrow {
-          border-top: none;
-          border-bottom: 8px solid $arrowcolor;
-          border-left: 8px solid rgba(0,0,0,0);
-          border-right: 8px solid rgba(0,0,0,0);
-        }
-      }
-    .arrow {
-      position: relative;
-      right: 30px;
-      bottom: 35px;
-      float: right;
-    }
-    }
-    ul {
-      display: none;
-      width: 100%;
-      list-style: none;
-      padding: 0;
-      &.visible {
-        display: block;
-      }
-      li {
-        a {
-          display:block;
-          width: 100%;
-          height: 100%;
-          padding: 10px 0;
-        }
-        width: 90%;
-        margin: 0 auto;
-        border: 1px solid #DDD;
-        &:first-child {
-          -webkit-border-radius: 6px 6px 0 0;
-        }
-        &:last-child {
-          -webkit-border-radius: 0 0 6px 6px;
-        }
-      }
-    }
-
+    display: none;
+    //TODO: get rid of TOC
   }
   .infobox {
     border: 1px solid grey;

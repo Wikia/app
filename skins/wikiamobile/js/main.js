@@ -4,28 +4,29 @@ var WikiaMobile = {
 		if ( $.os.android || $.os.ios || $.os.webos ) {
 				//slide up the addressbar on webkit mobile browsers for maximum reading area
 				//setTimeout is necessary to make it work on ios...
-				setTimeout( function() { window.scrollTo( 0, 1 ) }, 100 );
+				  setTimeout( function() { 
+				  	if (!pageYOffset) window.scrollTo( 0, 1 );
+				  	}, 100 );
 		}
 	},
-	showAdAtBottom: function() {
+	
+	moveAd: function() {
+		$( '#adWrapper' ).addClass( 'hidden' );
 		setTimeout( function() {
-			$( '#adWrapper' ).css( { 'opacity': '1', 'position': 'static' } );
-		}, 1000);
-	}
+			$( '#adWrapper' ).removeClass( 'hidden up' );
+		}, 600);
+	},
+	
 	handleAds: function() {
+		var hideOnTimeout = setTimeout( function() {
+			$( window ).unbind( 'touchend' );
+			WikiaMobile.moveAd();
+		}, 15000 );
 		
-		$( window ).one( 'scroll', function() {
-			$( '#adWrapper' ).css( 'opacity', '0' );
-			WikiaMobile.showAdAtBottom();
-		} );
-		
-		setTimeout( function() {
-			$( '#adWrapper' ).css( 'opacity', '0' );
-			WikiaMobile.showAdAtBottom();
-		}, 10000);
-		
-		
-
+		$( document.body ).one( 'touchend', function() {
+			if( hideOnTimeout ) clearTimeout( hideOnTimeout );
+			WikiaMobile.moveAd();
+		});
 	},
 	
 	wrapArticles: function() {
@@ -51,11 +52,11 @@ var WikiaMobile = {
 	},
 
 	init: function() {
-		$( '#openToggle' ).bind( "tap, click", function() {
+		$( document.body ).delegate( '#openToggle', "tap", function() {
 			$( '#navigation').toggleClass( 'open' );
 		});
 
-		$( '#navigationMenu > li' ).bind( "tap, click", function() {
+		$( document.body ).delegate( '#navigationMenu > li', 'tap', function() {
 			if ( !( $( this ).hasClass( 'openMenu' ) ) ) {
 				
 				$( '#navigationMenu > li' ).removeClass( 'openMenu' );
@@ -67,20 +68,14 @@ var WikiaMobile = {
 			}
 		});
 		
-		$( '#toctitle' ).append( '<span class=\"arrow\"></span>' );
 		$( '#WikiaMainContent > h2' ).append( '<span class=\"arrow\"></span>' );
 		
-		$( '#toctitle' ).bind( 'tap, click', function() {
-			$( 'table#toc ul' ).toggleClass( 'visible' );
-			$( '#toctitle' ).toggleClass( 'open' );
-		});
-		
-		$( '#WikiaMainContent > h2' ).bind( "tap, click", function() {
+		$( document.body ).delegate( '#WikiaMainContent > h2', 'tap', function() {
 			$(this).toggleClass('open').next().toggleClass('open');
 			
 		});
 		
-		$( '#showAll' ).bind( "tap, click", function() {
+		$( document.body ).delegate( '#showAll', 'tap', function() {
 			$( '.articleSection' ).toggleClass('open');
 		});
 	}
@@ -89,6 +84,6 @@ var WikiaMobile = {
 $( document ).ready( function() {
 	WikiaMobile.hideURLBar();
 	WikiaMobile.wrapArticles();
-	WikiaMobile.handleAds()
+	WikiaMobile.handleAds();
 	WikiaMobile.init();
 });
