@@ -12,10 +12,22 @@ class DatabaseMysql extends DatabaseBase {
 	}
 
 	/*private*/ function doQuery( $sql ) {
+		$this->installErrorHandler();
 		if( $this->bufferResults() ) {
 			$ret = mysql_query( $sql, $this->mConn );
 		} else {
 			$ret = mysql_unbuffered_query( $sql, $this->mConn );
+		}
+		$phpError = $this->restoreErrorHandler();
+
+		if ( $ret === false ) {
+			global $wgDBname;
+			$error = $this->lastError();
+			if ( !$error ) {
+				$error = $phpError;
+			}
+			error_log( sprintf("SQL (%s): %d: %s", $wgDBname, $this->lastErrno(), $error) );
+			error_log( "SQL: invalid query: $sql" );
 		}
 		return $ret;
 	}
