@@ -80,9 +80,11 @@
 
 .csEditMode  #csItemsContainerDiv{
 	max-height: 100px;
-    overflow-y: auto;
-    width: $width-epl-module-input + 6;
-    ul {
-    	width: $width-epl-module-input - 10;
-    }
+	* max-height: none;
+	overflow-y: auto;
+	* overflow-y: none;
+	width: $width-epl-module-input + 6;
+	ul {
+		width: $width-epl-module-input - 10;
+	}
 }
