@@ -18,12 +18,6 @@ CKEDITOR.themes.add( 'wikia', (function()
 			if ( elementMode == CKEDITOR.ELEMENT_MODE_REPLACE )
 				element.hide();
 
-			// Get the HTML for the predefined spaces.
-			// TODO: move to EditPageLayout code (?)
-//			var toolbarElements		= editor.fire( 'themeSpace', { space : 'toolbar', html : '', elements: [] } ).elements;
-//			var railElements		= editor.fire( 'themeSpace', { space : 'rail', html : '', elements: [] } ).elements;
-//			var tabsElements		= editor.fire( 'themeSpace', { space : 'tabs', html : '', elements: [] } ).elements;
-
 			var contentsHtml	= editor.fire( 'themeSpace', { space : 'contents', html : '', elements: [] } ).html;
 
 			var height	= contentsHtml && editor.config.height;
@@ -47,9 +41,6 @@ CKEDITOR.themes.add( 'wikia', (function()
 				style += "width: " + width + ";";
 			}
 
-//			var hasRail = (railElements.length != 0);
-//			var hasTabs = (tabsElements.length != 0);
-
 			var container = CKEDITOR.dom.element.createFromHtml( [
 				'<div' +
 					' id="cke_', name, '"' +
@@ -68,36 +59,6 @@ CKEDITOR.themes.add( 'wikia', (function()
 						'</div>' +
 					'</div>' +
 				'</div>' ].join( '' ) );
-
-
-			/*
-			var addToContainer = function(id,elements) {
-				var element = CKEDITOR.document.getById(id);
-				for(var i = 0; i < elements.length; i++) {
-					element && element.append( elements[i] );
-				}
-			}
-
-			addToContainer('EditPageToolbar', toolbarElements);
-
-			if(hasRail) {
-				addToContainer('EditPageRail', railElements);
-			}
-			*/
-
-			/*
-			// make tabs & toolbar area unselectable
-			if (hasTabs) {
-				// tabs & toolbar
-				addToContainer('EditPageTabs', tabsElements);
-				//container.getChild([0, 0, 0]).unselectable();
-				//container.getChild([0, 0, 1, 0, 0, 0]).unselectable();
-			}
-			else {
-				// just toolbar
-				//container.getChild([0, 0, 0, 0, 0, 0]).unselectable();
-			}
-			*/
 
 			if ( elementMode == CKEDITOR.ELEMENT_MODE_REPLACE )
 				container.insertAfter( element );
