@@ -30,13 +30,13 @@ class GoogleAnalyticsSamplingController extends WikiaController {
 		} else {
 			$iDate = date('Ymd', $date );
 		}
+
 		$iSample = 100;
 		foreach( $this->getSamplingHistory() as $sampling ){
 			if ( $iDate > $sampling[ self::TIME ] ){
 				$iSample = $sampling[ self::SAMPLING_RATE ];
 			}
 		}
-		$iSample = 100;
 		$this->setVal( self::SAMPLING_RATE, $iSample );
 	}
 }
