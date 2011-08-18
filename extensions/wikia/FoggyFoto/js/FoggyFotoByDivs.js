@@ -322,10 +322,25 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 				fgg = Math.floor( ((255*(percent*2))/100) ); // in english: the bottom half of the bar should go from 255 green to 0 green between 50% and 0%.
 				fgr = 255;
 			}
-			self.log("SCORE-FOR-ROUND PERCENT: " + Math.floor(percent) + "% ... COLOR: rgb(" + fgr + ", " + fgg + ", " + fgb + ")");
+			//self.log("SCORE-FOR-ROUND PERCENT: " + Math.floor(percent) + "% ... COLOR: rgb(" + fgr + ", " + fgg + ", " + fgb + ")");
 
 			// Update the size & color of the bar.
 			$('#scoreBar').height(barHeight).css('background-color', 'rgb('+fgr+', '+fgg+', '+fgb+')');
+		};
+
+		/**
+		 * Updates the total score earned so far for the game (this is self._totalPoints which does not include self._pointsThisRound until the round is finished).
+		 */
+		this.updateHud_score = function(){
+			$($('#hud div.score span').get(0)).html( self._totalPoints );
+		};
+
+		/**
+		 * Updates the "PHOTOS: X / Y" part of the hud where X is self._currPhoto and Y is self._PHOTOS_PER_GAME.
+		 */
+		this.updateHud_progress = function(){
+			var progressMsg = $.msg('foggyfoto-progress-numbers', self._currPhoto, self._PHOTOS_PER_GAME);
+			$($('#hud div.progress span').get(0)).html( progressMsg );
 		};
 
 		/**
@@ -382,5 +397,7 @@ $(document).ready(function(){
 	var flipBoard = new FoggyFoto.FlipBoard();
 	flipBoard.init(function(){
 		flipBoard.logState();
+		flipBoard.updateHud_score();
+		flipBoard.updateHud_progress();
 	});
 });

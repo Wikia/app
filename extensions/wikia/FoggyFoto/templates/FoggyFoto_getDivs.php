@@ -103,18 +103,21 @@
 				z-index:22; /* below the scoreBarWrapper but above the frontImage */
 			}
 			#hud{
-				position:absolute;
 				bottom: 0;
 				width:100%;
 				text-align:left;
-/* Twice the width of the prog-bar? */
-left: 20px;
+				left: <?= ($SCORE_BAR_WIDTH * 2) ?>px;
 
 				height:1em;
 				padding-bottom:0.25em;
-				color:white;
 
 				z-index:25;
+			}
+			#hud div{
+				color:white;
+				position:static;
+				float:left;
+				width:30%
 			}
 			#hud span{
 				margin-left:2px;
@@ -146,7 +149,9 @@ left: 20px;
 		</script>
 <!-- TODO: Serve from our own servers using AssetsManager -->
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
-		<script type="text/javascript" src="<?= $mwJsApiUrl ?>"></script>
+		<?= $globalVariablesScript ?>
+		<script src="<?= $jsMessagesUrl ?>"></script>
+		<script src="<?= $mwJsApiUrl ?>"></script>
 	</head>
 	<body>
 		<script src="<?= $gameJs ?>"></script>
@@ -159,11 +164,13 @@ left: 20px;
 		<div id='gameBoard'>
 			<div id='hudBg'></div>
 			<div id='hud'>
-				<?= wfMsg('foggyfoto-score', 0) ?>
+					<div class='score'>
+						<?= wfMsg('foggyfoto-score', 0) ?>
+					</div>
 
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<?= wfMsg('foggyfoto-progress', wfMsg('foggyfoto-progress-numbers', 0, $photosPerGame)) ?>
-
+					<div class='progress'>
+						<?= wfMsg('foggyfoto-progress', wfMsg('foggyfoto-progress-numbers', 0, $photosPerGame)) ?>
+					</div>
 			</div>
 <?php
 				for($row = 0;  $row < $numRows; $row++){

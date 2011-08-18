@@ -21,3 +21,8 @@ $app = F::app();
 
 $app->registerClass('FoggyFotoController', $dir . 'FoggyFotoController.class.php');
 $app->registerExtensionMessageFile('FoggyFoto', $dir . 'FoggyFoto.i18n.php');
+
+// register messages package for JS
+F::build('JSMessages')->registerPackage('FoggyFoto', array(
+	'foggyfoto-progress-numbers',
+));

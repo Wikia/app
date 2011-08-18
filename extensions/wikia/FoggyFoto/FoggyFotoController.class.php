@@ -60,9 +60,16 @@ class FoggyFotoController extends WikiaController {
 		$this->backImageSrc = ''; // this is the one that's obscured
 		$this->photosPerGame = 10;
 
-		$this->gameJs = $wgExtensionsPath."/wikia/FoggyFoto/js/FoggyFotoByDivs.js?$wgStyleVersion";
+		$this->jsMessagesUrl = $wgExtensionsPath."/wikia/JSMessages/js/JSMessages.js?$wgStyleVersion";
+
 		$this->mwJsApiUrl = $wgExtensionsPath."/wikia/JavascriptAPI/Mediawiki.js?$wgStyleVersion";
+		$this->gameJs = $wgExtensionsPath."/wikia/FoggyFoto/js/FoggyFotoByDivs.js?$wgStyleVersion";
 		$this->wgScriptPath = $wgScriptPath;
+
+		$vars = array();
+		F::build('JSMessages')->enqueuePackage('FoggyFoto', JSMessages::INLINE);
+		F::build('JSMessages')->onMakeGlobalVariablesScript(&$vars);
+ 		$this->globalVariablesScript = Skin::makeVariablesScript( $vars );
 
 		wfProfileOut( __METHOD__ );
 	} // end getDivs()
