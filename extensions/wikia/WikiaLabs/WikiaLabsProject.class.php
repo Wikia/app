@@ -206,7 +206,7 @@ class WikiaLabsProject {
 
 	public function isEnabled( $wikiId ) {
 		$cachedEnables = $this->getCachedEnables();
-		if( !empty( $cachedEnables[$wikiId] ) ) {
+		if( $cachedEnables && array_key_exists( $wikiId, $cachedEnables ) ) {
 			return $cachedEnables[$wikiId];
 		}
 

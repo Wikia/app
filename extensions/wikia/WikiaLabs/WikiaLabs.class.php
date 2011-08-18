@@ -333,7 +333,6 @@ MSG;
                     : F::app()->wf->msgForContent( 'wikialabs-log-disabled-extension', $wikiaLabsProject->getName() );
                 $log->addEntry( 'wikialabs', SpecialPage::getTitleFor( 'WikiaLabs'), $logMsg, array() );
                 
-		$this->app->runFunction( 'wfRunHooks', 'WikiFactoryChanged', array( $wikiaLabsProject->getExtension() , $city_id, !empty($onoff) ) );
 		return $this->app->runFunction( 'WikiFactory::setVarByName',  $wikiaLabsProject->getExtension(), $city_id, !empty($onoff), "WikiaLabs" );
 	}
 
