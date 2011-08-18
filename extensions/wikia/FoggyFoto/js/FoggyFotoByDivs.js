@@ -21,6 +21,7 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 	FoggyFoto.FlipBoard = function(){
 		var self = this;
 		this.debug = true; // whether to log a whole bunch of info to console.log
+		this._REVEALED_CLASS_NAME = 'transparent'; // the class that will be on tiles which are revealed.
 
 		// URLs of the images
 		this.frontImageSrc = ''; // this shows up immediately
@@ -29,8 +30,8 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 		this.backImage = null;
 
 		// Dimensions of the entire FlipBoard (images will be scaled & cropped to fit this exactly without any distortion to the aspect ratio).
-		this.width = 480;
-		this.height = 320;
+		this.width = boardWidth;//480;
+		this.height = boardHeight;//320;
 
 		// Dimensions for the number of tiles
 		this.numRows = 4;
@@ -41,10 +42,20 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 		this._tileWidth = 0;
 		this._tileHeight = 0;
 
-		this.isBackShowing = [[]]; // matrix of binary values for whether the back tile is showing at a given coordinate
+		// Actual game-state and related constants.
+		this._isBackShowing = [[]]; // matrix of binary values for whether the back tile is showing at a given coordinate
+		this._totalPoints = 0;
+		this._pointsThisRound = 0;
+		this._currPhoto = 0; // will go up to "1" (makes more sense to non-geeks) when the first image is loaded.
+
+		// Constants for game-configuration
+		this._MAX_POINTS_PER_ROUND = 1000;
+		this._PHOTOS_PER_GAME = 10;
+		this._PERCENT_DEDUCTION_REVEAL = 10; // reduces the remaining pointsThisRound by this percentage when a tile is revealed
+		this._PERCENT_DEDUCTION_WRONG_GUESS = 50;
 
 		/**
-		 * After setting the dimensions of the flip board, this should be called once to set up the isBackShowing matrix
+		 * After setting the dimensions of the flip board, this should be called once to set up the _isBackShowing matrix
 		 * to the right size.
 		 *
 		 * Calculates the _tileWidth and _tileHeight values, sets up clickhandling, loads the front and back images.
@@ -59,11 +70,11 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 			// Initialize the matrix of what is revealed.
 			for(var row=0; row < self.numRows; row++){
 				for(var col=0; col < self.numCols; col++){
-					if(!self.isBackShowing[row]){
-						self.isBackShowing[row] = [];
+					if(!self._isBackShowing[row]){
+						self._isBackShowing[row] = [];
 					}
 
-					self.isBackShowing[row][col] = 0; // back is completely obscured by default
+					self._isBackShowing[row][col] = 0; // back is completely obscured by default
 				}
 			}
 
@@ -101,6 +112,12 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 								self.backImage = new Image();
 								self.backImage.src = self.backImageSrc;
 								self.backImage.onload = function(){
+									// A new round has started, initialize the round.
+									self._pointsThisRound = self._MAX_POINTS_PER_ROUND;
+									self._currPhoto++;
+				// TODO: UPDATE PROGRESS PORTION OF HUD.
+				// TODO: UPDATE PROGRESS PORTION OF HUD.
+
 									// Calculate the scaling factor and use that to set the background to the correct size.
 									var scalingFactor = self._getScalingFactor(self.backImage);
 									var backOffsetX = Math.floor( Math.abs(self.backImage.width - (self.width / scalingFactor)) / 2 );
@@ -131,9 +148,7 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 									if ("ontouchstart" in document.documentElement){
 										eventName = 'touchstart'; // event has a different name on touchscreen devices
 									}
-									$('#gameBoard .tile').bind(eventName, function(){
-										$(this).addClass('transparent'); // uses CSS3 transitions
-									});
+									$('#gameBoard .tile').bind(eventName, self.tileClicked);
 
 									// TODO: REMOVE THE GAME-LOADING OVERLAY/STATE
 									// TODO: REMOVE THE GAME-LOADING OVERLAY/STATE
@@ -154,6 +169,34 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 				}
 			}, self.mwError);
 
+		};
+		
+		/**
+		 * Click-handler for each tile. Is fired on mousedown on desktop and touchstart where supported.
+		 * This will reveal the tile and deduct the appropriate cost from the score-bar on the left.
+		 */
+		this.tileClicked = function(){
+			// If the tile is already revealed, don't charge the user points or play a sound, etc.
+			if(! ($(this).hasClass( self._REVEALED_CLASS_NAME ))){
+				// Update the score-bar, taking into account the cost of this tile.
+				self._pointsThisRound = (self._pointsThisRound - ((self._PERCENT_DEDUCTION_REVEAL/100) * self._pointsThisRound) );
+				self.updateScoreBar();
+
+				$(this).addClass( self._REVEALED_CLASS_NAME ); // uses CSS3 transitions
+
+// TODO: FIXME: REFACTORINGS:
+// TODO: We probably want to remove the _isBackShowing array and use the DOM and _REVEALED_CLASS_NAME as the storage of the state (better as a Single Point of Truth).
+// TODO: We probably want to remove the _isBackShowing array and use the DOM and _REVEALED_CLASS_NAME as the storage of the state (better as a Single Point of Truth).
+
+// TODO: Re-write show(), hide(), and flip() to use dom-state instead.  show() should basically be the code that's in the guts of this function (including score-penalizing, audio, etc.).
+// TODO: Re-write show(), hide(), and flip() to use dom-state instead.  show() should basically be the code that's in the guts of this function (including score-penalizing, audio, etc.).
+			}
+		};
+
+		/**
+		 * When the user guessed a wrong answer, this function is called to deduct points, mark
+		 */
+		this.gotWrongAnswer = function(){
 		};
 
 		/**
@@ -198,9 +241,6 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 
 			return imageUrl;
 		}; // end getImageFromPages()
-
-
-		
 		
 		/**
 		 * Given an image, returns the appropriate scaling factor using our algorithm for scaling described at the top
@@ -237,9 +277,9 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 		 * Toggles the display of the tile at the given row and column.
 		 */
 		this.flip = function(row, col){
-			if(typeof self.isBackShowing[row] != "undefined"){
-				if(typeof self.isBackShowing[row][col] != "undefined"){
-					self.isBackShowing[row][col] = (self.isBackShowing[row][col] === 0 ? 1 : 0);
+			if(typeof self._isBackShowing[row] != "undefined"){
+				if(typeof self._isBackShowing[row][col] != "undefined"){
+					self._isBackShowing[row][col] = (self._isBackShowing[row][col] === 0 ? 1 : 0);
 				}
 			}
 		};		
@@ -248,9 +288,9 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 		 * Assure that the tile at the given row and column is showing the back image.
 		 */
 		this.show = function(row, col){
-			if(typeof self.isBackShowing[row] != "undefined"){
-				if(typeof self.isBackShowing[row][col] != "undefined"){
-					self.isBackShowing[row][col] = 1;
+			if(typeof self._isBackShowing[row] != "undefined"){
+				if(typeof self._isBackShowing[row][col] != "undefined"){
+					self._isBackShowing[row][col] = 1;
 				}
 			}
 		};
@@ -259,11 +299,33 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 		 * Assure that the tile at the given row and column is hiding the back image (ie: make the front show there).
 		 */
 		this.hide = function(row, col){
-			if(typeof self.isBackShowing[row] != "undefined"){
-				if(typeof self.isBackShowing[row][col] != "undefined"){
-					self.isBackShowing[row][col] = 0;
+			if(typeof self._isBackShowing[row] != "undefined"){
+				if(typeof self._isBackShowing[row][col] != "undefined"){
+					self._isBackShowing[row][col] = 0;
 				}
 			}
+		};
+		
+		/**
+		 * Updates the display of the score-bar to match the _pointsThisRound.
+		 */
+		this.updateScoreBar = function(){
+			var percent = ((self._pointsThisRound * 100)/ self._MAX_POINTS_PER_ROUND);
+			var barHeight = Math.floor(percent * self.height / 100);
+			
+			// Will fade the colors from green to yellow to red as we go from full points, approaching no points.
+			var fgb=0;
+			if(percent > 50){
+				fgg = 255;
+				fgr = Math.floor( 255-((255*((percent-50)*2))/100) ); // in english: the top half of the bar should go from 0 red to 255 red between 100% and 50%.
+			} else {
+				fgg = Math.floor( ((255*(percent*2))/100) ); // in english: the bottom half of the bar should go from 255 green to 0 green between 50% and 0%.
+				fgr = 255;
+			}
+			self.log("SCORE-FOR-ROUND PERCENT: " + Math.floor(percent) + "% ... COLOR: rgb(" + fgr + ", " + fgg + ", " + fgb + ")");
+
+			// Update the size & color of the bar.
+			$('#scoreBar').height(barHeight).css('background-color', 'rgb('+fgr+', '+fgg+', '+fgb+')');
 		};
 
 		/**
@@ -273,7 +335,7 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 			for(var row=0; row < self.numRows; row++){
 				var rowStr = "";
 				for(var col=0; col < self.numCols; col++){
-					rowStr += "" + self.isBackShowing[row][col] + " ";
+					rowStr += "" + self._isBackShowing[row][col] + " ";
 				}
 				self.log(rowStr + "\n");
 			}
