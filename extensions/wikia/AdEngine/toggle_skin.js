@@ -97,11 +97,22 @@ var displayToggleSkin = function(){
 		},
 
 		initCreatives: function() {
-			ToggleSkin.settings.creativeButtons = ToggleSkin.settings.interstitial + ToggleSkin.settings.creativeButtons;
+			// for DFP impression counting, put interstitial macro only on default skin 
 			if (ToggleSkin.settings.creativeSkin0) ToggleSkin.settings.creativeSkins.push(ToggleSkin.settings.interstitial+ToggleSkin.settings.creativeSkin0);
-			if (ToggleSkin.settings.creativeSkin1) ToggleSkin.settings.creativeSkins.push(ToggleSkin.settings.interstitial+ToggleSkin.settings.creativeSkin1);
-			if (ToggleSkin.settings.creativeSkin2) ToggleSkin.settings.creativeSkins.push(ToggleSkin.settings.interstitial+ToggleSkin.settings.creativeSkin2);
-			if (ToggleSkin.settings.creativeSkin3) ToggleSkin.settings.creativeSkins.push(ToggleSkin.settings.interstitial+ToggleSkin.settings.creativeSkin3);
+			if (ToggleSkin.settings.creativeSkin1) ToggleSkin.settings.creativeSkins.push(ToggleSkin.settings.creativeSkin1);
+			if (ToggleSkin.settings.creativeSkin2) ToggleSkin.settings.creativeSkins.push(ToggleSkin.settings.creativeSkin2);
+			if (ToggleSkin.settings.creativeSkin3) ToggleSkin.settings.creativeSkins.push(ToggleSkin.settings.creativeSkin3);
+		},
+
+		getClickTrackerUrl: function() {
+			var creativeButtonParts = ToggleSkin.settings.creativeButtons.split('/');
+			var filename = creativeButtonParts.pop();
+			if (filename.indexOf('.') != -1) { // trim extension
+				filename = filename.substr(0, filename.lastIndexOf('.'));
+			}
+			var advertiserId = creativeButtonParts.pop();
+			var trackerStr = 'toggle_skin/' + advertiserId + '/' + filename;
+			return trackerStr;
 		},
 
 		switchSkin: function (num) {
@@ -148,6 +159,7 @@ var displayToggleSkin = function(){
 
 				var num = $(this).index("#ad-skin ul li");
 				ToggleSkin.switchSkin(num);
+				$.tracker.byStr( ToggleSkin.getClickTrackerUrl() + '/' + num );
 			});
 
 			ToggleSkin.switchSkin(0);
