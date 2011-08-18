@@ -101,8 +101,8 @@ class ImageOperationsHelper {
 			//center the image horizontally
 				$iDestX = ($this->defaultWidth/2) - floor($aOrigSize['width']/2);
 			} else {
-			//center the image vertically
-				$iDestY = floor($this->defaultHeight/2) - floor($aOrigSize['height']/2);
+			//cut from the top of the image
+				$iDestY = 0;
 			}
 		} else if( $aOrigSize['width'] == $this->defaultWidth ) {
 		//width of re-sized image is equal to default (height not not necessarily)

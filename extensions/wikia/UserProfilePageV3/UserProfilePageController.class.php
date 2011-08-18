@@ -417,21 +417,20 @@ class UserProfilePageController extends WikiaController {
 		$this->app->wf->ProfileIn( __METHOD__ );
 		
 		$userId = $user->getId();
-
 		
 		$errorNo = $this->uploadByUrl(
 			$url, 
 			array(
 				'userId' => $userId,
 				'username' => $user->getName(),
-				'user'	=> $user,
-				'localPath' => $localPath,
+				'user' => $user,
+				'localPath' => '',
 			),
 			$errorMsg 
 		);
 		
 		$localPath = $this->getLocalPath($user);
-
+		
 		if ( $errorNo != UPLOAD_ERR_OK ) {
 			$this->app->wf->ProfileOut( __METHOD__ );
 			return false;
