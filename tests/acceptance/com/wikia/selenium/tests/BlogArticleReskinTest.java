@@ -119,7 +119,7 @@ public class BlogArticleReskinTest extends EditPageBaseTest {
 		doDelete("Author request", "Cleanup after BlogArticle test");
 	}
 
-	@Test(groups={"oasis", "CI", "reskin"})
+	@Test(groups={"CI", "envProduction", "reskin"})
 	public void testEnsureCreateBlogPageIsNotAvailableForAnons() throws Exception {
 		session().open("index.php?action=edit&useeditor=wysiwyg&title=Special:CreateBlogPage");
 		session().waitForPageToLoad(this.getTimeout());
