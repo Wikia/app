@@ -12,6 +12,11 @@ $namespaces['en'] = array(
 	NS_BLOG_LISTING_TALK => 'Blog_talk'
 );
 
+$namespaces['fr'] = array(
+        NS_BLOG_ARTICLE => 'Blog_utilisateur',
+        NS_BLOG_ARTICLE_TALK => 'Commentaire_blog_utilisateur'
+);
+
 $namespaces['de'] = array(
 	NS_BLOG_ARTICLE => 'Benutzer_Blog',
 	NS_BLOG_ARTICLE_TALK => 'Benutzer_Blog_Kommentare',
