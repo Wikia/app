@@ -130,7 +130,7 @@ class ImageServing {
 
 		wfProfileOut(__METHOD__);
 
-		return empty($out) ? array() : $out;
+		return $out;
 	}
 
 	private function addArticleToList($value) {
