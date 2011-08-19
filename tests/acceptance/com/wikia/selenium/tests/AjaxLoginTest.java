@@ -7,7 +7,8 @@ import static org.testng.AssertJUnit.assertTrue;
 public class AjaxLoginTest extends BaseTest {
 	@Test(groups={"CI", "verified"})
 	public void testAjaxLogin() throws Exception {
-		session().open("index.php");
+		openAndWait("index.php");
+		waitForElement("//a[@class='ajaxLogin']");
 		session().click("//a[@class='ajaxLogin']");
 		waitForElement("wpGoLogin");
 		session().click("wpGoLogin");
@@ -24,7 +25,8 @@ public class AjaxLoginTest extends BaseTest {
 
 	@Test(groups={"CI", "verified"})
 	public void testAjaxLoginMailNewPassword() throws Exception {
-		session().open("index.php");
+		openAndWait("index.php");
+		waitForElement("//a[@class='ajaxLogin']");
 		session().click("//a[@class='ajaxLogin']");
 		waitForElement("wpGoLogin");
 		session().click("wpGoLogin");
@@ -39,7 +41,8 @@ public class AjaxLoginTest extends BaseTest {
 
 	@Test(groups={"CI", "verified"})
 	public void testAjaxLoginNewAccount() throws Exception {
-		session().open("index.php");
+		openAndWait("index.php");
+		waitForElement("//a[@class='ajaxLogin']");
 		session().click("//a[@class='ajaxLogin']");
 		waitForElement("wpGoRegister");
 		session().click("wpGoRegister");

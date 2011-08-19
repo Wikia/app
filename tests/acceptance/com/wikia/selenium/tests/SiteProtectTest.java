@@ -15,8 +15,8 @@ public class SiteProtectTest extends BaseTest {
 		waitForElement("//input[@name='createpage']");
 		session().click("//input[@name='createpage' and @value='1']");
 		session().click("//input[@name='edit' and @value='1']");
-		session().type("timeout", "5 minutes");
-		session().type("comment", "Wikia automated test");
+		session().type("//input[@name='timeout']", "5 minutes");
+		session().type("//input[@name='comment']", "Wikia automated test");
 		clickAndWait("protect");
 		logout();
 
@@ -35,7 +35,8 @@ public class SiteProtectTest extends BaseTest {
 		// Unprotect the site
 		loginAsStaff();
 		openAndWait("index.php?title=Special:Protectsite");
-		session().type("ucomment", "end of test");
+		waitForElement("//input[@name='ucomment']");
+		session().type("//input[@name='ucomment']", "end of test");
 		clickAndWait("unprotect");
 		logout();
 		// Verify
