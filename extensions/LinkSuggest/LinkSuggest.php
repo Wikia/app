@@ -246,7 +246,7 @@ function wfLinkSuggestFormatTitle( $namespace, $title ) {
 	global $wgContLang;
 
 	if ( $namespace != NS_MAIN ) {
-		$title = $wgContLang->getFormattedNsText($namespace) . ':' . $title;
+		$title = $wgContLang->getNsText($namespace) . ':' . $title;
 	}
 
 	return str_replace( '_', ' ', $title );
