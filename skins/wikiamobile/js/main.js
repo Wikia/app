@@ -37,7 +37,7 @@ var WikiaMobile = {
 			var element = content[i];
 			if ( element.nodeName === 'H2' ) {
 				if( firstH2 ) {
-					mainContent += element.outerHTML + '<section class=\"articleSection\">';
+					mainContent += '<button id="showAll" class="collapsed">Show All</button>' + element.outerHTML + '<section class=\"articleSection\">';
 				} else {
 					mainContent += '</section>' + element.outerHTML + '<section class=\"articleSection\">';
 				}
@@ -75,8 +75,18 @@ var WikiaMobile = {
 			
 		});
 		
-		$( document.body ).delegate( '#showAll', 'tap', function() {
-			$( '.articleSection' ).toggleClass('open');
+		$( document.body ).delegate( '#showAll', 'click', function() {
+			var showAll = $( '#showAll' ),
+				articleSection = $( '.articleSection' );
+				
+			if ( showAll.hasClass( 'collapsed' ) ) {
+				articleSection.addClass( 'open' );
+				showAll.text( 'Hide All' );
+			} else {
+				articleSection.removeClass( 'open' );
+				showAll.text( 'Show All' );
+			};
+			showAll.toggleClass( 'collapsed' );
 		});
 	}
 }
