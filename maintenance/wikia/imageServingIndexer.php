@@ -36,7 +36,7 @@ if ((!empty($options['do'])) && $options['do'] == 1 ) {
 	foreach ($pages as $value) {
 		$qArticle = Article::newFromID(trim($value));
 		$wgTitle = $qArticle->getTitle(); //title for parser  
-		imageServingHelper::buildAndGetIndex( $qArticle, true );
+		ImageServingHelper::buildAndGetIndex( $qArticle, true );
 		unset($qArticle);
 	}
 	exit;
@@ -65,7 +65,7 @@ if (empty($options['do']) || $options['do'] != 1) {
 	echo "Indexing one count pages\n";
 	
 	while ($row = $db->fetchRow($res)) {
-		imageServingHelper::bulidIndex($row['il_from'], array( $row['il_to'] ));
+		ImageServingHelper::bulidIndex($row['il_from'], array( $row['il_to'] ));
 	}            
 	
 	echo "Indexing more then one count pages\n";
