@@ -240,11 +240,13 @@ function getLinkSuggest() {
  *
  * @param $namespace integer page namespace ID
  * @param $title string page title
- * @return string formatted title (prefixed with namespace)
+ * @return string formatted title (prefixed with localised namespace)
  */
 function wfLinkSuggestFormatTitle( $namespace, $title ) {
+	global $wgContLang;
+
 	if ( $namespace != NS_MAIN ) {
-		$title = MWNamespace::getCanonicalName( $namespace ) . ':' . $title;
+		$title = $wgContLang->getFormattedNsText($namespace) . ':' . $title;
 	}
 
 	return str_replace( '_', ' ', $title );
