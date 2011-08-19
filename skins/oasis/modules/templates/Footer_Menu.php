@@ -6,14 +6,12 @@
 </li>
 <?php     break; ?>
 <?php case 'follow': ?>
-<li class="overflow">
-	<a accesskey="w" id="<?= $item['link-id']; ?>" href="<?= $item['href']; ?>" data-name="<?= $item['tracker-name']; ?>"><?= $item['caption']; ?></a>
-</li>
+<li class="overflow" id="<?= $item['link-id']; ?>"><span data-name="<?= $item['tracker-name']; ?>"><?= $item['caption']; ?></span><a href="#" id="follow-accesskey" accesskey="w"></a></li>
 <?php     break; ?>
 <?php case 'menu': ?>
 <li class="mytools menu">
 	<span class="arrow-icon-ctr"><span class="arrow-icon arrow-icon-single"></span></span>
-	<a href="#"><?= $item['caption']; ?></a>
+	<span><?= $item['caption']; ?></span>
 	<ul id="my-tools-menu" class="tools-menu">
 		<?= wfRenderModule( 'Footer', 'Menu', array( 'format' => 'html', 'items' => $item['items'] ) ); ?>
 	</ul>
@@ -21,13 +19,13 @@
 <?php     break; ?>
 <?php case 'link': ?>
 <li class="overflow">
-	<a href="<?= $item['href']; ?>" data-name="<?= $item['tracker-name']; ?>"><?= $item['caption']; ?></a>
+	<span data-href="<?= $item['href']; ?>" data-name="<?= $item['tracker-name']; ?>"><?= $item['caption']; ?></span>
 </li>
 <?php     break; ?>
 <?php case 'customize': ?>
 <li>
 	<img height="16" width="16" class="gear-icon" src="<?= $wgBlankImgUrl; ?>">
-	<a class="tools-customize" href="#" data-name="customize"><?= wfMsg( 'oasis-toolbar-customize' ); ?></a>
+	<span class="tools-customize" href="#" data-name="customize"><?= wfMsg( 'oasis-toolbar-customize' ); ?></span>
 </li>
 <?php     break; ?>
 <?php case 'devinfo': /* Temporary, BugId:5497; TODO: call getPerformanceStats in DevInfoUserCommand.php rather than here */ ?>

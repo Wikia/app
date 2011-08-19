@@ -60,11 +60,12 @@
 				img {
 					margin: 0 6px 0 1px;
 				}
-				>a {
-					color: $color-header-text;
-				}
 				>span {
-					color: mix($color-header-text,gray,50%);
+					color: $color-header-text;
+					cursor: pointer;
+					&:hover {
+						text-decoration: underline;
+					}
 				}
 			}
 			img {
