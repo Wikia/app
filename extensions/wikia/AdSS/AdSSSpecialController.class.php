@@ -77,13 +77,13 @@ class AdSSSpecialController extends WikiaSpecialPageController {
 		// @todo EasyTemplate needed for Ad rendering, refactor it
 		$this->setVal( 'ad', $ad->render( F::build('EasyTemplate', array( $this->wg->AdSS_templatesDir ) ) ) );
 		$this->setVal( 'action', $this->getTitle()->getLocalUrl() );
-		if( $this->wg->User->isAllowed( 'adss-admin' ) ) {
-			$this->setVal( 'login', $this->wf->MsgHtml( 'adss-button-buy-now' ) );
-			$this->setVal( 'isAdmin', true );
-		} else {
+		//if( $this->wg->User->isAllowed( 'adss-admin' ) ) {
+		//	$this->setVal( 'login', $this->wf->MsgHtml( 'adss-button-buy-now' ) );
+		//	$this->setVal( 'isAdmin', true );
+		//} else {
 			$this->setVal( 'login', $this->wf->MsgHtml( 'adss-button-login-buy' ) );
 			$this->setVal( 'isAdmin', false );
-		}
+		//}
 		$this->setVal( 'submit', $this->wf->MsgHtml( 'adss-button-pay-paypal' ) );
 		$this->setVal( 'token', AdSS_Util::getToken() );
 		$this->setVal( 'pagePricing', AdSS_Util::getPagePricing() );

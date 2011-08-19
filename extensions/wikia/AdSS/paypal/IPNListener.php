@@ -12,6 +12,15 @@ class IPNListener {
 				if( $user && ( $user->pp_payerId == $payerId ) ) {
 					$user->baid = null;
 					$user->save();
+
+					if($user->getBillingBalance() < 0) {
+						// close all (active) ads right now
+						$user->closeAds();
+					}
+
+					// remove non-active (unaccepted) ads when BA is canceled
+					$user->deleteUnacceptedAds();
+
 				}
 			}
 		}

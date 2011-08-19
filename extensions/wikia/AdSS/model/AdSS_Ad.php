@@ -132,6 +132,16 @@ abstract class AdSS_Ad {
 		$this->save();
 	}
 
+	function delete() {
+		global $wgAdSS_DBname;
+
+		$adc = new AdSS_AdChange( $this );
+		$adc->delete();
+
+		$dbw = wfGetDB( DB_MASTER, array(), $wgAdSS_DBname );
+		$dbw->delete( 'ads', array( 'ad_id' => $this->id ), __METHOD__ );
+	}
+
 	function close() {
 		$this->closed = wfTimestampNow( TS_DB );
 		$this->save();

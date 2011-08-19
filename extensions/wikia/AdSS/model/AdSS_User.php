@@ -199,9 +199,23 @@ class AdSS_User {
 		$dbr = wfGetDB( DB_SLAVE, array(), $wgAdSS_DBname );
 		$res = $dbr->select( 'ads', '*', array( 'ad_user_id' => $this->id ), __METHOD__ );
 		foreach( $res as $row ) {
-			$ads[] = AdSS_AdFactory::newFromRow( $row );
+			$ads[] = AdSS_AdFactory::createFromRow( $row );
 		}
 		return $ads;
+	}
+
+	function closeAds() {
+		foreach($this->getAds() as $ad) {
+			$ad->close();
+		}
+	}
+
+	function deleteUnacceptedAds() {
+		foreach($this->getAds() as $ad) {
+			if($ad->expires == null) {
+				$ad->delete();
+			}
+		}
 	}
 
 	function getBillingBalance() {
