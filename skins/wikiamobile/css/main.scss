@@ -201,6 +201,11 @@ html {
   }
 }
 
+#showAll{
+	width: 100px;
+	height: 40px;
+}
+
 #WikiaMainContent{
   //REALESE THE HELL: overflow used here for a demo reason the page now has static width what on mobile device is desiered
   //shoudn't be done on production site as it is a workaround on to wide content
