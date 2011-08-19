@@ -52,6 +52,17 @@ class MediaWiki {
 	function performRequestForTitle( &$title, &$article, &$output, &$user, $request ) {
 		wfProfileIn( __METHOD__ );
 
+		// Wikia change - begin (disabling namespaces)
+		/*global $wgWikiaDisabledNamespaces;
+		if(!empty($wgWikiaDisabledNamespaces) && in_array($title->getNamespace(), $wgWikiaDisabledNamespaces)) {
+				global $wgOut;
+				$wgOut->setRobotPolicy( 'noindex,nofollow' );
+				$wgOut->setStatusCode( 404 );
+				$wgOut->showErrorPage( 'namespacedisabled', 'namespacedisabledtext' );
+				return;
+		}*/
+		// Wikia end
+
 		$output->setTitle( $title );
 
 		wfRunHooks( 'BeforeInitialize', array( &$title, &$article, &$output, &$user, $request, $this ) );
