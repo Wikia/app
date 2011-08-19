@@ -39,6 +39,7 @@
 			#bgPic{
 				position:absolute;
 			}
+			
 			#gameBoard, #gameBoard *{
 				-webkit-tap-highlight-color: rgba( 0,0,0,0 );
 				-webkit-focus-ring-color: rgba( 0,0,0,0 );
@@ -64,6 +65,61 @@
 				width: 100%;
 				height: <?= $tileHeight ?>px;
 			}
+			
+/** ANSWER DRAWER - IN PROGRESS *****************************************************************************************************/
+			#answerDrawerWrapper{
+				position:static;
+				float:right;
+				right:0px;
+				height: 100%;
+width:<?= (48 + 150) ?>px;
+			}
+			#answerDrawer{
+				top: 50%;
+/* Determine a height for the drawer and then make the margin-top half of that. */
+margin-top: -100px;
+height: 200px;
+width:<?= (48 + 150) ?>px;
+			}
+			#answerButton{
+				top:50%;
+margin-top:-24px;
+width:48px;
+height:48px;
+				z-index:30;
+			}
+			#answerListWrapper{
+				height:100%;
+width:<?= (150 + 24) ?>px;
+margin-left:24px; /* half the width of the answer button for the desired overlap effect */
+/*display:none; TODO: START AT DISPLAY:NONE AND HAVE THE JS TOGGLE THAT AND SOME OF THE WIDTHS/OFFSETS */
+
+				z-index:29; /* below the question mark, but above everything else */
+			}
+			#answerListWrapper *{
+				position:static;
+			}
+			#answerListWrapper ul{
+				list-style-type:none;
+				height:100%;
+			}
+			#answerListWrapper ul li{
+				height:25%;
+				opacity:0.8;filter:alpha(opacity=80);
+				background-color:#adff2f;
+				border-bottom:1px solid black;
+			}
+			#answerListWrapper ul li.first{
+				border-top-left-radius: 15px;
+			}
+			#answerListWrapper ul li.last{
+				border-bottom:0px solid black;
+				border-bottom-left-radius: 15px;
+			}
+/** ANSWER DRAWER - IN PROGRESS *****************************************************************************************************/
+			
+			
+			
 			#scoreBarWrapper{
 				position:absolute;
 				left:0;
@@ -162,6 +218,23 @@
 			<div id='bgPic'></div>
 		</div>
 		<div id='gameBoard'>
+			<!-- ANSWER DRAWER - IN PROGRESS --------------------------------------------------------------------------------------------------->
+			<div id='answerDrawerWrapper'>
+				<div id='answerDrawer'>
+					<div id='answerButton'>
+						<img src='<?= $answerButtonSrc ?>'/>
+					</div>
+					<div id='answerListWrapper'>
+						<ul>
+							<li class='first'>First</li>
+							<li>Second</li>
+							<li>Third</li>
+							<li class='last'>Fourth</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<!-- ANSWER DRAWER - IN PROGRESS --------------------------------------------------------------------------------------------------->
 			<div id='hudBg'></div>
 			<div id='hud'>
 					<div class='score'>
