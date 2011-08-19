@@ -94,7 +94,7 @@ $config['oasis_shared_js'] = array(
 		'//extensions/wikia/AdEngine/AdEngine.js',
 		'//extensions/wikia/AdEngine/AdProviderOpenX.js',
 		'//extensions/wikia/AdEngine/LazyLoadAds.js',
-		'//extensions/wikia/AdEngine/ghost/gw-11.6.2/lib/gw.min.js',
+		'//extensions/wikia/AdEngine/ghost/gw-2010.10.11/lib/gw.js',
 		'//extensions/wikia/Geo/geo.js',
 		'//extensions/wikia/QuantcastSegments/qcs.js',
 		'//extensions/wikia/ApertureAudience/Aperture.js',
