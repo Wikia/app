@@ -332,6 +332,11 @@ class RTEReverseParser {
 				$out = '';
 				break;
 
+			// spans are used for styling pieces of content
+			case 'span':
+				$out = $this->handleSpan($node, $textContent);
+				break;
+
 			// rest of tags
 			default:
 				$out = $textContent;
@@ -1411,6 +1416,24 @@ class RTEReverseParser {
 		$out = $data['wikitext'];
 
 		wfProfileOut(__METHOD__);
+
+		return $out;
+	}
+
+	/**
+	 * Handle <span> nodes
+	 *
+	 * @see http://www.mediawiki.org/wiki/Images
+	 */
+	private function handleSpan($node, $textContent) {
+		// if tag contains style attribute, preserve full HTML (BugId:7098)
+		if ($node->hasAttribute('style')) {
+			$attrs = self::getAttributesStr($node);
+			$out = "<{$node->nodeName}{$attrs}>{$textContent}</{$node->nodeName}>";
+		}
+		else {
+			$out = $textContent;
+		}
 
 		return $out;
 	}
