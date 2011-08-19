@@ -110,6 +110,7 @@
 				background-color:#adff2f;
 				border-bottom:1px solid #cdff5f;
 				line-height: <?= floor($answerDrawerHeight / $NUM_ANSWER_CHOICES) ?>px;
+				cursor:pointer;
 			}
 			#answerListWrapper ul li.first{
 				border-top-left-radius: 15px;
@@ -225,10 +226,10 @@
 					</div>
 					<div id='answerListWrapper'>
 						<ul>
-							<li class='first'>?</li>
-							<li>?</li>
-							<li>?</li>
-							<li class='last'>?</li>
+							<li class='first'></li>
+							<li></li>
+							<li></li>
+							<li class='last'></li>
 						</ul>
 					</div>
 				</div>
