@@ -7,6 +7,7 @@
 		<style>
 <?php
 	$SCORE_BAR_WIDTH = "10";
+	$NUM_ANSWER_CHOICES = 4;
 ?>
 			html {
 				margin:0px;
@@ -66,33 +67,32 @@
 				height: <?= $tileHeight ?>px;
 			}
 			
-/** ANSWER DRAWER - IN PROGRESS *****************************************************************************************************/
+		/** ANSWER DRAWER - BEGIN **/
 			#answerDrawerWrapper{
 				position:static;
 				float:right;
 				right:0px;
 				height: 100%;
-width:<?= (48 + 150) ?>px;
+				width:<?= $answerButtonWidth ?>px;
 			}
 			#answerDrawer{
 				top: 50%;
-/* Determine a height for the drawer and then make the margin-top half of that. */
-margin-top: -100px;
-height: 200px;
-width:<?= (48 + 150) ?>px;
+				margin-top: -<?= floor($answerDrawerHeight / 2) ?>px;
+				height: <?= $answerDrawerHeight ?>px;
 			}
 			#answerButton{
 				top:50%;
-margin-top:-24px;
-width:48px;
-height:48px;
+				margin-top:-<?= floor($answerButtonWidth/2) ?>px;
+				width:<?= $answerButtonWidth ?>px;
+				height:<?= $answerButtonWidth ?>px;
 				z-index:30;
 			}
 			#answerListWrapper{
 				height:100%;
-width:<?= (150 + 24) ?>px;
-margin-left:24px; /* half the width of the answer button for the desired overlap effect */
-/*display:none; TODO: START AT DISPLAY:NONE AND HAVE THE JS TOGGLE THAT AND SOME OF THE WIDTHS/OFFSETS */
+				width:<?= ($answerDrawerWidth + floor($answerButtonWidth/2)) ?>px;
+				margin-left:<?= floor($answerButtonWidth/2) ?>px;
+
+				display:none; /* Starts hidden and is toggled by the answer-button */
 
 				z-index:29; /* below the question mark, but above everything else */
 			}
@@ -106,19 +106,19 @@ margin-left:24px; /* half the width of the answer button for the desired overlap
 			#answerListWrapper ul li{
 				height:25%;
 				opacity:0.8;filter:alpha(opacity=80);
+				color:#215B68;
 				background-color:#adff2f;
-				border-bottom:1px solid black;
+				border-bottom:1px solid #cdff5f;
+				line-height: <?= floor($answerDrawerHeight / $NUM_ANSWER_CHOICES) ?>px;
 			}
 			#answerListWrapper ul li.first{
 				border-top-left-radius: 15px;
 			}
 			#answerListWrapper ul li.last{
-				border-bottom:0px solid black;
+				border-bottom:0px;
 				border-bottom-left-radius: 15px;
 			}
-/** ANSWER DRAWER - IN PROGRESS *****************************************************************************************************/
-			
-			
+		/** ANSWER DRAWER - END **/
 			
 			#scoreBarWrapper{
 				position:absolute;
@@ -218,7 +218,6 @@ margin-left:24px; /* half the width of the answer button for the desired overlap
 			<div id='bgPic'></div>
 		</div>
 		<div id='gameBoard'>
-			<!-- ANSWER DRAWER - IN PROGRESS --------------------------------------------------------------------------------------------------->
 			<div id='answerDrawerWrapper'>
 				<div id='answerDrawer'>
 					<div id='answerButton'>
@@ -226,15 +225,14 @@ margin-left:24px; /* half the width of the answer button for the desired overlap
 					</div>
 					<div id='answerListWrapper'>
 						<ul>
-							<li class='first'>First</li>
-							<li>Second</li>
-							<li>Third</li>
-							<li class='last'>Fourth</li>
+							<li class='first'>?</li>
+							<li>?</li>
+							<li>?</li>
+							<li class='last'>?</li>
 						</ul>
 					</div>
 				</div>
 			</div>
-			<!-- ANSWER DRAWER - IN PROGRESS --------------------------------------------------------------------------------------------------->
 			<div id='hudBg'></div>
 			<div id='hud'>
 					<div class='score'>
