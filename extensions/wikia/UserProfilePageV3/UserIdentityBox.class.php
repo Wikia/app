@@ -22,6 +22,16 @@ class UserIdentityBox {
 	private $topWikisLimit = 5;
 	
 	/**
+	 * Used to compare user rights in UserIdentityBox::sortUserGroups()
+	 * @var array
+	 */
+	protected $groupsRank = array(
+		'sysop' => 3,
+		'staff' => 2,
+		'chatmoderator' => 1,
+	);
+	
+	/**
 	 * @param WikiaApp $app wikia appliacation object
 	 * @param User $user core user object
 	 * @param integer $topWikisLimit limit of top wikis
@@ -377,6 +387,36 @@ class UserIdentityBox {
 	}
 	
 	/**
+	 * @brief Sorts user's groups as we want :>
+	 * 
+	 * @desc Use this method in usort() to get "the most important" right in our scale. Our rank
+	 * is defined as protected field $groupsRank. The most important has the highest value.
+	 * 
+	 * @param string $group1 first user's group right to compare
+	 * @param string $group2 second user's group right to compare
+	 * 
+	 * @return int
+	 * 
+	 * @author Andrzej 'nAndy' Łukaszewski
+	 */
+	protected function sortUserGroups($group1, $group2) {
+		$this->app->wf->ProfileIn( __METHOD__ );
+		
+		$result = 0; //means equal here
+		
+		if( !isset($this->groupsRank[$group1]) && isset($this->groupsRank[$group2]) ) {
+			$result = 1;
+		} else if( isset($this->groupsRank[$group1]) && !isset($this->groupsRank[$group2]) ) {
+			$result = -1;
+		} else if ( isset($this->groupsRank[$group1]) && isset($this->groupsRank[$group2]) ) {
+			$result = ($this->groupsRank[$group1] < $this->groupsRank[$group2]) ? 1 : -1;
+		}
+		
+		$this->app->wf->ProfileOut( __METHOD__ );
+		return $result;
+	}
+	
+	/**
 	 * @brief Gets string with user most important group
 	 * 
 	 * @return string | false
@@ -385,36 +425,18 @@ class UserIdentityBox {
 	 */
 	private function getUserGroups() {
 		$this->app->wf->ProfileIn( __METHOD__ );
-		$userGroup = '';
 		
 		$userGroups = $this->user->getEffectiveGroups();
-		foreach($userGroups as $group) {
-			//most important -- admin
-			if( $group == 'sysop') {
-				$userGroup = 'sysop';
-				break;
-			}
-			
-			//less important
-			if( $group == 'staff') {
-				$userGroup = 'staff';
-				break;
-			}
-			
-			if( $group == 'chatmoderator') {
-				$userGroup = 'chatmoderator';
-				break;
-			}
+		usort($userGroups, array($this, 'sortUserGroups'));
+		
+		if( isset($userGroups[0]) && in_array($userGroups[0], array_keys($this->groupsRank)) ) {
+			$this->app->wf->ProfileOut( __METHOD__ );
+			return $userGroups[0];
 		}
 		
-		if( empty($userGroup) ) {
+		$this->app->wf->ProfileOut( __METHOD__ );
 		//just a member
-			$this->app->wf->ProfileOut( __METHOD__ );
-			return false;
-		} else {
-			$this->app->wf->ProfileOut( __METHOD__ );
-			return $userGroup;
-		}
+		return false;
 	}
 	
 	/**
