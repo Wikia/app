@@ -65,6 +65,7 @@ class WikiaMobileService extends WikiaService {
 		$this->wikiaNavigation = $this->sendRequest( 'WikiaMobileNavigationService', 'index' )->toString();
 		$this->wikiHeaderContent = $this->sendRequest( 'WikiaMobileWikiHeaderService', 'index' )->toString();
 		$this->pageContent = $this->sendRequest( 'WikiaMobileBodyService', 'index', array( 'bodyText' => $this->templateObject->data['bodytext'] ))->toString();
+		$this->leftPaneContent = $this->sendRequest( 'WikiaMobileLeftPaneService', 'index' )->toString();
 		$this->wikiaFooter = $this->sendRequest( 'WikiaMobileFooterService', 'index')->toString();
 		$this->jsFiles = $jsFiles;
 	}

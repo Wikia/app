@@ -52,7 +52,7 @@ var WikiaMobile = {
 	},
 
 	init: function() {
-		$( document.body ).delegate( '#openToggle', "tap", function() {
+		$( document.body ).delegate( '#openToggle', 'tap', function() {
 			$( '#navigation').toggleClass( 'open' );
 		});
 
@@ -87,6 +87,16 @@ var WikiaMobile = {
 				showAll.text( 'Show All' );
 			};
 			showAll.toggleClass( 'collapsed' );
+		});
+		
+		$( '#WikiaPage' ).bind( 'swipeLeft', function() {
+			$( '#wikiaFooter, #navigation, #WikiaPage' ).css( 'display', 'none' );
+			$( '#leftPane' ).css( { 'display': 'block', 'opacity': '1' } );
+		});
+		
+		$( '#leftPane' ).bind( 'swipeRight', function() {
+			$( '#wikiaFooter, #navigation, #WikiaPage' ).css( 'display', 'block'  );
+			$( '#leftPane' ).css( { 'display': 'none', 'opacity': '0' } );
 		});
 	}
 }
