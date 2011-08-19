@@ -241,10 +241,8 @@ class UserProfilePageController extends WikiaController {
 		$isBlocked = !$sessionUser->isAllowed('edit');
 		//checking if user is blocked globally
 		$isBlocked = empty($isBlocked) ? $sessionUser->getBlockId() : $isBlocked;
-		//if he's blocked he can't edit anything
-		$canEditProfile = empty($isBlocked) ? $canEditProfile : false;
 		
-		if( $sessionUser->isAnon() || !$canEditProfile ) {
+		if( ($sessionUser->isAnon() && !$canEditProfile) || $isBlocked ) {
 			throw new WikiaException( $this->wf->msg('userprofilepage-invalid-user') );
 		} else {
 			$this->profilePage = F::build( 'UserProfilePage', array('user' => $sessionUser) );
