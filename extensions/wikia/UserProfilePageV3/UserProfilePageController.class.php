@@ -72,10 +72,6 @@ class UserProfilePageController extends WikiaController {
 	public function renderUserIdentityBox() {
 		$this->app->wf->ProfileIn( __METHOD__ );
 		
-		// Website links icon shade
-		//$this->setVal( 'linkIconShade', ( SassUtil::isThemeDark('color-links') ) ? 'light' : 'dark');
-		//$this->setVal( 'linkIconShadeZeroState', ( SassUtil::isThemeDark() ) ? 'dark' : 'light');
-		
 		$this->setVal( 'wgBlankImgUrl', $this->wg->BlankImgUrl );
 		
 		$sessionUser = $this->wg->User;
@@ -83,6 +79,19 @@ class UserProfilePageController extends WikiaController {
 		
 		$userIdentityBox = F::build('UserIdentityBox', array($this->app, $user, self::MAX_TOP_WIKIS));
 		$isUserPageOwner = (!$user->isAnon() && $user->getId() == $sessionUser->getId()) ? true : false;
+		
+		if( $isUserPageOwner ) {
+//		this is a small trick to remove some 
+//		probably cache/session lag. before, i used
+//		phalanx to block my user globally. but just 
+//		after i blocked him the session user object
+//		still returned false when i called on it getBlockedStatus()
+//		in the same time user object retrived from title 
+//		returned id of user block. after more or less an hour
+//		both instances of User object returned me id of user block
+//		when i called getBlockedStatus() on them
+			$sessionUser = $user;
+		}
 		$userData = $userIdentityBox->setData();
 		
 		$this->setVal( 'zeroStateCssClass', ($userData['showZeroStates']) ? 'zero-state' : '');
@@ -91,7 +100,13 @@ class UserProfilePageController extends WikiaController {
 		$this->setVal( 'deleteAvatarLink', F::build('SpecialPage', array('RemoveUserAvatar'), 'getTitleFor')->getFullUrl('av_user='.$userData['name']) );
 		$this->setVal( 'canRemoveAvatar', $sessionUser->isAllowed('removeavatar') );
 		$this->setVal( 'isUserPageOwner', $isUserPageOwner );
-		$this->setVal( 'canEditProfile', ($isUserPageOwner || $sessionUser->isAllowed('editprofilev3')) );
+		$canEditProfile = $isUserPageOwner || $sessionUser->isAllowed('editprofilev3');
+		//if user is blocked locally (can't edit anything) he can't edit masthead too
+		$canEditProfile = $sessionUser->isAllowed('edit') ? $canEditProfile : false;
+		//if user is blocked globally he can't edit
+		$blockId = $sessionUser->getBlockId();
+		$canEditProfile = empty($blockId) ? $canEditProfile : false;
+		$this->setVal( 'canEditProfile', $canEditProfile );
 		
 		$title = F::build('Title', array($this->app->wg->Request->getVal('title', $this->wg->Title->getText())), 'newFromText');
 		$this->setVal( 'reloadUrl', htmlentities($title->getFullUrl(), ENT_COMPAT, 'UTF-8') );
@@ -209,6 +224,9 @@ class UserProfilePageController extends WikiaController {
 	 * 
 	 * @requestParam string $userId user's unique id
 	 * @requestParam string $tab current tab
+	 * 
+	 * @author ADi
+	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public function getLightboxData() {
 		$this->app->wf->ProfileIn( __METHOD__ );
@@ -219,7 +237,14 @@ class UserProfilePageController extends WikiaController {
 		$sessionUser = $this->wg->User;
 		$canEditProfile = $sessionUser->isAllowed('editprofilev3');
 		
-		if( $sessionUser->isAnon() && !$canEditProfile ) {
+		//checking if user is blocked locally
+		$isBlocked = !$sessionUser->isAllowed('edit');
+		//checking if user is blocked globally
+		$isBlocked = empty($isBlocked) ? $sessionUser->getBlockId() : $isBlocked;
+		//if he's blocked he can't edit anything
+		$canEditProfile = empty($isBlocked) ? $canEditProfile : false;
+		
+		if( $sessionUser->isAnon() || !$canEditProfile ) {
 			throw new WikiaException( $this->wf->msg('userprofilepage-invalid-user') );
 		} else {
 			$this->profilePage = F::build( 'UserProfilePage', array('user' => $sessionUser) );
