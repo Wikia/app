@@ -826,7 +826,7 @@ class Parser
 				# RTE (Rich Text Editor) - begin
 				# @author: Inez Korczyński
 				if(!empty($wgRTEParserEnabled)) {
-					# Throw an RTE edgacase if there is RTR marker (\x7f) in row attributes
+					# Throw an RTE edgacase if there is RTE marker (\x7f) in row attributes
 					if(strpos($attributes, "\x7f") !== false) {
 						RTE::$edgeCases[] = 'COMPLEX.05';
 					}
@@ -3510,7 +3510,7 @@ class Parser
 		$text = $skip = false;
 		$finalTitle = $title;
 		$deps = array();
-		
+
 		// Loop to fetch the article, with up to 1 redirect
 		for ( $i = 0; $i < 2 && is_object( $title ); $i++ ) {
 			# Give extensions a chance to select the revision instead
@@ -3598,7 +3598,7 @@ class Parser
 		if ( wfReadOnly() ) {
 			return wfReadOnlyReason();
 		}
-		
+
 		$dbw = wfGetDB(DB_MASTER);
 		$dbw->replace('transcache', array('tc_url'), array(
 			'tc_url' => $url,

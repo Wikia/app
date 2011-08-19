@@ -1343,7 +1343,13 @@ class RTEReverseParser {
 					$addRowDelimiter = true;
 				}
 
+				// delimiter is needed when <tr> has attributes provided
 				if ($attributes != '') {
+					$addRowDelimiter = true;
+				}
+
+				// preserve row delimiter from wikitext
+				if (self::getEmptyLinesBefore($node)) {
 					$addRowDelimiter = true;
 				}
 

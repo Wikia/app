@@ -18,6 +18,7 @@ public class RTETest extends BaseTest {
 
 	static public String[] createWikitexts() {
 		return new String[] {
+				// lines
 				"",
 				"\n1a",
 				"\n\n1b",
@@ -47,6 +48,7 @@ public class RTETest extends BaseTest {
 				"1   \nc",
 				"1    \nd",
 				"1 b\n3 4\n\n5 6\n\n\ny 8",
+				// lists
 				"#1\n#2\n#3",
 				"*1\n*2\n*3",
 				"#1\n##2\n##3\n###4",
@@ -78,6 +80,7 @@ public class RTETest extends BaseTest {
 				"1\n\n#2\n#3\n\nb",
 				"\n1\n\n#2\n\n\n#3\n\nc",
 				"\n1\n\n#2\n\n\n*5\n\n\n#3\n\nd",
+				// headlines
 				"=1=\n= 1=\n=1 =\n= 1 =\n=  1  =\n==1==\n== 1==\n==1 ==\n== 1 ==\n==  1  ==\n===1===\n=== 1===\n===1 ===\n=== 1 ===\n===  1  ===\n====1====\n==== 1====\n====1 ====\n==== 1 ====\n====  1  ====\n=====1=====\n===== 1=====\n=====1 =====\n===== 1 =====\n=====  1  =====\n======1======\n====== 1======\n======1 ======\n====== 1 ======\n======  1  ======",
 				"* 1a\n* 2\n*  3\n*     10\n*      11\n*      12\n*  4\n*   5\n*   6\n*    7\n*    8\n*     9",
 				"# 1b\n# 2\n#  3\n#     10\n#      11\n#      12\n#  4\n#   5\n#   6\n#    7\n#    8\n#     9",
@@ -89,6 +92,7 @@ public class RTETest extends BaseTest {
 				"\n\n\n\n\n\n=1f=",
 				"\n\n\n\n\n\n\n=1g=",
 				"\n\n\n\n=1=\na\nb\n\n\n=2=\n\na\n\nb\n==     3     ==\n*a\n*b\n#c\n#d\n1\n*1\n\n1\n=== 4===\n=5 =\n=== 6 ===\n1 2 3 4\n a\n2\n\n3\n\n\n\n\n\n a",
+				// tables
 				"{|\n|123\n|}",
 				"\n{|\n|123\n|}",
 				"\n\n{|\n|123\n|}",
@@ -116,6 +120,13 @@ public class RTETest extends BaseTest {
 				"foo\n\n{|\n|bar\n|}\n\n\nfoo",
 				"*foo\n{|\n|bar\n|}\n foo",
 				"=foo=\n{|\n|bar\n|}\n\nfoo",
+				"{| class=\"foo\"\n|-\n|\n|\n|}\n\n{| class=\"bar\"\n|\n|\n|}\n\n{| class=\"foo\"\n|-\n|\n|\n|}",
+				"{|\n|-\n|\n|\n|}",
+				"{|\n|\n|\n|}",
+				"{|\n|-\n|\n|\n|}",
+				"{|\n|-\n!\n!\n|-\n|\n|\n|}",
+				"{|\n!\n!\n|-\n|\n|\n|}",
+				// links
 				"123 [[bar]] 456",
 				"abc [[foo|bar]] def",
 				"[[:Category:foo]] 123",
@@ -139,6 +150,7 @@ public class RTETest extends BaseTest {
 				"[[Bart|<span style=\"color:#1A2BBB\">foo</span>]]",
 				"<span style=\"font-family: 'comic sans ms'; color:#666\">foo</span>",
 				"''i'' '''b''' - '''''bi'' b''' - '''''bi''' i''",
+				// templates
 				"{{123}}",
 				"inline template {{123}}",
 				"* {{123}} {{abc}}\n*{{456}}\n**{{789}}\n# {{123}} {{abc}}\n#{{456}}\n##{{789}}\n: {{123}} {{abc}}\n:{{456}}\n::{{789}}\n\n\n::*: {{foo}}\n:::# {{bar}}",
@@ -158,6 +170,7 @@ public class RTETest extends BaseTest {
 				"::*:#foo\n:::# bar",
 				":One\n:* Two\n:**Three",
 				";ReverseParser rox\n;*foo\n;*bar",
+				// categories
 				"\n[[Category:a]]\n[[Category:b]] [[Category:c]] [[Category:d]] [[Category:e]]\n\n* [[Category:f]]\n**  [[Category:g]]h\n*** i[[Category:j]]\n{|\n|[[Category:1]]\n|  [[Category:2]]\n|-\n|a[[Category:3]]\n|a\n[[Category:4]]b\n|}\n [[Category:5]] abc",
 				"__TOC__\n\n{{PAGENAME}}\n\n__NOTOC__",
 				":: __TOC__\n\n{|\n|\n\n {{PAGENAME}}\n| __NOTOC__\n|}",
@@ -171,13 +184,16 @@ public class RTETest extends BaseTest {
 				"<te&st>a&b&c</te<&>st> &amp; &nbsp; &lt; &gt; : &#58; &#123; - 123 &#x5f;",
 				"<noinclude>&#91;brackets&#93;&nbsp;&amp;&nbsp;non-breaking&nbsp;spaces</noinclude>\n\n<noinclude>[brackets] & non-breaking spaces</noinclude>",
 				"« foo",
+				// utf magic
 				"ÀàĄąÒòỪừỲỳŹź",
 				"(義) (誠) (涅 ネム) foo",
 				"foo ? ;-) bar",
 				"bar „foo“ ;)",
+				// HTML entities
 				"[[&]]\n\n[[&amp;]]\n\n[[foo & bar]]es\n\n[[Flip & Flap]]\n\n[[Flip & Flap|and &amp; entity]]\n\n[[Flip &amp; Entity]]\n\nfoo & bar\n\nfoo &amp; entity\n\n[[foo|&amp;]]\n\n[[foo|Caption with &amp; entity]]",
 				"[[/foo]]\n\n[[/foo/]]\n\n[[/foo bar]]\n\n[[/foo bar/]]",
 				"[[RTE_test_page/foo|foo]]\n\n[[/foo/]]\n\n[[RTE_test_page/foo|bar]]\n\n[[RTE_test_page/foo]]",
+				// div
 				"\n<div>123</div>\n\n<div>456</div>\n\n\n<div>789</div>",
 				"<div>123</div>\n\n<div>456</div>\n\n\n\n<div>\n\n\n789</div>",
 				"<div>\n\n{|\n|123\n|}\n</div>",
@@ -200,6 +216,7 @@ public class RTETest extends BaseTest {
 				"<div>\n\n<h2>foo</h2>\n\n{|\n|bar\n|}\n</div>",
 				"<div><div><span>foo</span></div>\n<!-- bar -->\n</div>",
 				"<div><div><span>foo</span></div>\n\n<!-- bar -->\n</div>",
+				// aligned paragraphs
 				"<p style=\"text-align:right\">123</p>\n\n\n\n456",
 				"<p style=\"text-align:right;\">123</p>\n\n\n\n456",
 				"<p style=\"text-align: center; margin-left:40px;font-size: 150%;\">foo</p>",
@@ -227,6 +244,7 @@ public class RTETest extends BaseTest {
 				"<div><span>foo</span>\n{|\n|bar\n|}\n</div>",
 				"<div><span>foo</span>\n\n{|\n|bar\n|}\n</div>",
 				"123\n----\n456\n\n789\n\n----\n\nabc",
+				// tables
 				"{|\n|foo [[bar]]\n|foo '''bar'''\n|}",
 				"{|\n| foo &rarr; bar\n| 123 &nbsp; 456\n|-\n| abc &mdash;\n| def &nbsp;\n|}",
 				"{|\n|\n----\nfoo\n|\n\n----\nfoo\n|}",
