@@ -2,21 +2,30 @@
 /**
  * WikiaBaseTest class - part of Wikia UnitTest Fraework - W(U)TF
  * @author ADi
+ * @author Owen
+ * Usage:
+ *		$this->mockGlobalVariable( 'wgCityId', '12345' );
+ *		$this->mockGlobalFunction( 'getDB', $dbMock );
+ *      // If you do not call this helper, $app is a real App object
+ *		$this->mockApp();  
+ *      // Now $this->app in a test case is the mock App object
  *
  */
 class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 
 	protected $app = null;
+	protected $appOrig = null;
 	protected $appMock = null;
 	protected $mockedClasses = array();
 
 	protected function setUp() {
 		$this->app = F::app();
+		$this->appOrig = F::app();
 		$this->appMock = new WikiaAppMock( $this );
 	}
 
 	protected function tearDown() {
-		F::setInstance('App', $this->app);
+		F::setInstance('App', $this->appOrig);
 		$this->unsetClassInstances();
 	}
 
@@ -39,8 +48,10 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		$this->appMock->mockGlobalFunction( $functionName, $returnValue, $callsNum, $inputParams );
 	}
 
+	// After calling this, any reference to $this->app in a test now uses the mocked object
 	protected function mockApp() {
 		$this->appMock->init();
+		$this->app = F::app(); 
 	}
 
 	private function unsetClassInstances() {
