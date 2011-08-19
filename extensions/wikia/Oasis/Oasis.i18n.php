@@ -96,7 +96,7 @@ $messages['en'] = array(
 
 	'oasis-comments-header' => '$1 {{PLURAL:$1|comment|comments}}',
 	'oasis-comments-showing-most-recent' => 'Showing $1 most recent',
-	'oasis-comments-anonymous-prompt' => 'Anonymous User<br /> <a href="#">Log in?</a>',
+	'oasis-comments-anonymous-prompt' => 'Anonymous User<br /> <a href="#" class="ajaxLogin">Log in?</a>',
 	'oasis-comments-show-all' => 'Show all',
 	'oasis-comments-added-by' => '$1 by $2',
 	'oasis-random-wiki' => 'Random Wiki',
@@ -292,7 +292,7 @@ $messages['az'] = array(
 	'oasis-interlang-languages' => 'Dillər:',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author Jim-by
  */
 $messages['be-tarask'] = array(
@@ -414,7 +414,7 @@ $messages['br'] = array(
 	'oasis-toolbar-devinfo' => 'Titouroù evit an diorroerien',
 	'oasis-comments-header' => '$1 {{PLURAL:$1|evezhiadenn|evezhiadenn}}',
 	'oasis-comments-showing-most-recent' => 'O tiskouez an $1 diwezhañ',
-	'oasis-comments-anonymous-prompt' => 'Implijer dianav<br /> <a href="#">Kevreañ ?</a>',
+	'oasis-comments-anonymous-prompt' => 'Implijer dianav<br /> <a href="#" class="ajaxLogin">Kevreañ ?</a>',
 	'oasis-comments-show-all' => 'Diskouez pep tra',
 	'oasis-comments-added-by' => '$1 gant $2',
 	'oasis-random-wiki' => 'Ur wiki dre zegouezh',
@@ -560,7 +560,7 @@ $messages['cs'] = array(
 	'oasis-toolbar-customize' => 'Přizpůsobit',
 	'oasis-comments-header' => '$1 {{PLURAL:$1|komentář|komentáře|komentářů}}',
 	'oasis-comments-showing-most-recent' => 'Zobrazeno $1 nejnovějších',
-	'oasis-comments-anonymous-prompt' => 'Anonymní uživatel<br /> <a href="#">Přihlásit se?</a>',
+	'oasis-comments-anonymous-prompt' => 'Anonymní uživatel<br /> <a href="#" class="ajaxLogin">Přihlásit se?</a>',
 	'oasis-comments-show-all' => 'Zobrazit vše',
 	'oasis-comments-added-by' => '$1 od $2',
 	'oasis-random-wiki' => 'Náhodná Wiki',
@@ -689,7 +689,7 @@ $messages['de'] = array(
 	'oasis-toolbar-devinfo' => 'Entwickler-Info',
 	'oasis-comments-header' => '$1 {{PLURAL:$1|Kommentar|Kommentare}}',
 	'oasis-comments-showing-most-recent' => 'Zeige letzte $1',
-	'oasis-comments-anonymous-prompt' => 'Anonymer Benutzer<br /> <a href="#">Anmelden?</a>',
+	'oasis-comments-anonymous-prompt' => 'Anonymer Benutzer<br /> <a href="#" class="ajaxLogin">Anmelden?</a>',
 	'oasis-comments-show-all' => 'Alle anzeigen',
 	'oasis-comments-added-by' => '$1 von $2',
 	'oasis-random-wiki' => 'Zufälliges Wiki',
@@ -834,7 +834,7 @@ $messages['es'] = array(
 	'oasis-toolbar-devinfo' => 'Información para los desarrolladores',
 	'oasis-comments-header' => '$1 {{PLURAL:$1|comentario|comentarios}}',
 	'oasis-comments-showing-most-recent' => 'Mostrando $1 más reciente',
-	'oasis-comments-anonymous-prompt' => 'Usuario anónimo<br /> <a href="#">¿Registrado?</a>',
+	'oasis-comments-anonymous-prompt' => 'Usuario anónimo<br /> <a href="#" class="ajaxLogin">¿Registrado?</a>',
 	'oasis-comments-show-all' => 'Mostrar todo',
 	'oasis-comments-added-by' => '$1 por $2',
 	'oasis-random-wiki' => 'Wiki Aleatoria',
@@ -965,7 +965,7 @@ $messages['fa'] = array(
 	'oasis-toolbar-customize' => 'سفارشی‌کردن',
 	'oasis-comments-header' => '$1 {{PLURAL:$1|نظر|نظرات}}',
 	'oasis-comments-showing-most-recent' => 'نمایش آخرین $1 تا',
-	'oasis-comments-anonymous-prompt' => 'کاربر مهمان <br /> <a href="#">ورود به سامانه؟</a>',
+	'oasis-comments-anonymous-prompt' => 'کاربر مهمان <br /> <a href="#" class="ajaxLogin">ورود به سامانه؟</a>',
 	'oasis-comments-show-all' => 'نمایش همه',
 	'oasis-comments-added-by' => '$1 توسط $2',
 	'oasis-random-wiki' => 'ویکی تصادفی',
@@ -1116,7 +1116,7 @@ $messages['fr'] = array(
 	'oasis-toolbar-devinfo' => 'Infos pour les développeurs',
 	'oasis-comments-header' => '$1 commentaire{{PLURAL:$1||s}}',
 	'oasis-comments-showing-most-recent' => 'Affichage {{PLURAL:$1|du plus récent|des $1 plus récents}}',
-	'oasis-comments-anonymous-prompt' => 'Utilisateur anonyme<br /> <a href="#">Se connecter ?</a>',
+	'oasis-comments-anonymous-prompt' => 'Utilisateur anonyme<br /> <a href="#" class="ajaxLogin">Se connecter ?</a>',
 	'oasis-comments-show-all' => 'Tout afficher',
 	'oasis-comments-added-by' => '$1 par $2',
 	'oasis-random-wiki' => 'Un wiki au hasard',
@@ -1246,7 +1246,7 @@ $messages['gl'] = array(
 	'oasis-toolbar-devinfo' => 'Información para os desenvolvedores',
 	'oasis-comments-header' => '$1 {{PLURAL:$1|comentario|comentarios}}',
 	'oasis-comments-showing-most-recent' => 'Mostrando os $1 máis recentes',
-	'oasis-comments-anonymous-prompt' => 'Usuario anónimo<br /> <a href="#">Quere acceder ao sistema?</a>',
+	'oasis-comments-anonymous-prompt' => 'Usuario anónimo<br /> <a href="#" class="ajaxLogin">Quere acceder ao sistema?</a>',
 	'oasis-comments-show-all' => 'Mostrar todo',
 	'oasis-comments-added-by' => '$1 por $2',
 	'oasis-random-wiki' => 'Wiki ao chou',
@@ -1372,7 +1372,7 @@ $messages['he'] = array(
 	'oasis-toolbar-customize' => 'התאמה אישית',
 	'oasis-comments-header' => '{{PLURAL:$1|הערה|הערות}}',
 	'oasis-comments-showing-most-recent' => 'מציג $1 אחרונים',
-	'oasis-comments-anonymous-prompt' => 'משתמש אלמוני<br /> <a href="#">להתחבר?</a>',
+	'oasis-comments-anonymous-prompt' => 'משתמש אלמוני<br /> <a href="#" class="ajaxLogin">להתחבר?</a>',
 	'oasis-comments-show-all' => 'הצג הכל',
 	'oasis-comments-added-by' => '$1 על ידי $2',
 	'oasis-random-wiki' => 'ויקי אקראית',
@@ -1560,7 +1560,7 @@ $messages['ia'] = array(
 	'oasis-toolbar-devinfo' => 'Information pro disveloppatores',
 	'oasis-comments-header' => '$1 {{PLURAL:$1|commento|commentos}}',
 	'oasis-comments-showing-most-recent' => 'Lista del $1 plus recentes',
-	'oasis-comments-anonymous-prompt' => 'Usator anonyme<br /> <a href="#">Aperir session?</a>',
+	'oasis-comments-anonymous-prompt' => 'Usator anonyme<br /> <a href="#" class="ajaxLogin">Aperir session?</a>',
 	'oasis-comments-show-all' => 'Monstrar totes',
 	'oasis-comments-added-by' => '$1 per $2',
 	'oasis-random-wiki' => 'Wiki aleatori',
@@ -1685,7 +1685,7 @@ $messages['ja'] = array(
 	'oasis-toolbar-customize' => '設定',
 	'oasis-comments-header' => 'コメント（$1 件）',
 	'oasis-comments-showing-most-recent' => '最新の $1 件を表示しています',
-	'oasis-comments-anonymous-prompt' => '未登録利用者<br /><a href="#">ログイン</a>',
+	'oasis-comments-anonymous-prompt' => '未登録利用者<br /><a href="#" class="ajaxLogin">ログイン</a>',
 	'oasis-comments-show-all' => '全て表示',
 	'oasis-comments-added-by' => '$1 by $2',
 	'oasis-random-wiki' => 'おまかせウィキ',
@@ -1843,7 +1843,7 @@ $messages['lt'] = array(
 	'oasis-toolbar-customize' => 'Tinkinti',
 	'oasis-comments-header' => '$1 {{PLURAL:$1|komentaras|komentarai|komentarų}}',
 	'oasis-comments-showing-most-recent' => 'Rodyti $1 naujausių',
-	'oasis-comments-anonymous-prompt' => 'Anoniminis vartotojas<br /> <a href="#">Norite prisijungti?</a>',
+	'oasis-comments-anonymous-prompt' => 'Anoniminis vartotojas<br /> <a href="#" class="ajaxLogin">Norite prisijungti?</a>',
 	'oasis-comments-show-all' => 'Rodyti visus',
 	'oasis-comments-added-by' => '$1 $2',
 	'oasis-random-wiki' => 'Atsitiktinis Wiki',
@@ -1967,7 +1967,7 @@ $messages['mk'] = array(
 	'oasis-toolbar-devinfo' => 'Инфо за развивачите',
 	'oasis-comments-header' => '$1 {{PLURAL:$1|коментар|коментари}}',
 	'oasis-comments-showing-most-recent' => 'Прикажувам {{PLURAL:$1|$1 најнов|$1 најнови}}',
-	'oasis-comments-anonymous-prompt' => 'Анонимен корисник<br /> <a href="#">Најава?</a>',
+	'oasis-comments-anonymous-prompt' => 'Анонимен корисник<br /> <a href="#" class="ajaxLogin">Најава?</a>',
 	'oasis-comments-show-all' => 'Прикажи сè',
 	'oasis-comments-added-by' => '$1 од $2',
 	'oasis-random-wiki' => 'Случајно вики',
@@ -2153,7 +2153,7 @@ $messages['ms'] = array(
 	'oasis-toolbar-devinfo' => 'Maklumat Pembangun',
 	'oasis-comments-header' => '$1 ulasan',
 	'oasis-comments-showing-most-recent' => 'Tunjukkan $1 yang terbaru',
-	'oasis-comments-anonymous-prompt' => 'Pengguna Tanpa Nama<br /> <a href="#">Log masuk?</a>',
+	'oasis-comments-anonymous-prompt' => 'Pengguna Tanpa Nama<br /> <a href="#" class="ajaxLogin">Log masuk?</a>',
 	'oasis-comments-show-all' => 'Paparkan semua',
 	'oasis-comments-added-by' => '$1 daripada $2',
 	'oasis-random-wiki' => 'Wiki Rawak',
@@ -2303,7 +2303,7 @@ Scroll naar beneden om door te gaan met bewerken.',
 	'oasis-toolbar-devinfo' => 'Informatie voor ontwikkelaars',
 	'oasis-comments-header' => '{{PLURAL:$1|opmerking|opmerkingen}}',
 	'oasis-comments-showing-most-recent' => 'De $1 meest recente worden weergegeven',
-	'oasis-comments-anonymous-prompt' => 'Anonieme gebruiker<br /><a href="#">Aanmelden?</a>',
+	'oasis-comments-anonymous-prompt' => 'Anonieme gebruiker<br /><a href="#" class="ajaxLogin">Aanmelden?</a>',
 	'oasis-comments-show-all' => 'Allemaal weergeven',
 	'oasis-comments-added-by' => '$1 door $2',
 	'oasis-random-wiki' => 'Willekeurige wiki',
@@ -2343,7 +2343,7 @@ Scroll naar beneden om door te gaan met bewerken.',
 	'corporatelandingpage-trivia-description' => 'Toets uw triviakennis en win een prijzenpakket van Wikia!',
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel) (Nederlands (informeel))
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
@@ -2358,7 +2358,7 @@ $messages['nl-informal'] = array(
 	'corporatelandingpage-trivia-description' => 'Toets je triviakennis en win een prijzenpakket van Wikia!',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian (bokmål) (Norsk (bokmål))
  * @author Audun
  */
 $messages['no'] = array(
@@ -2450,7 +2450,7 @@ $messages['no'] = array(
 	'oasis-toolbar-devinfo' => 'Utviklerinfo',
 	'oasis-comments-header' => '$1 {{PLURAL:$1|kommentar|kommentarer}}',
 	'oasis-comments-showing-most-recent' => 'Viser de $1 siste',
-	'oasis-comments-anonymous-prompt' => 'Anonym bruker<br /> <a href="#">Logg inn?</a>',
+	'oasis-comments-anonymous-prompt' => 'Anonym bruker<br /> <a href="#" class="ajaxLogin">Logg inn?</a>',
 	'oasis-comments-show-all' => 'Vis alle',
 	'oasis-comments-added-by' => '$1 av $2',
 	'oasis-random-wiki' => 'Tilfeldig wiki',
@@ -2580,7 +2580,7 @@ $messages['pl'] = array(
 	'oasis-toolbar-customize' => 'Dostosuj',
 	'oasis-comments-header' => '$1 {{PLURAL:$1|komentarz|komentarze|komentarzy}}',
 	'oasis-comments-showing-most-recent' => 'Wyświetlono $1 {{PLURAL:$1|najnowszą|najnowsze|najnowszych}}',
-	'oasis-comments-anonymous-prompt' => 'Użytkownik anonimowy<br /> <a href="#">Chcesz się zalogować?</a>',
+	'oasis-comments-anonymous-prompt' => 'Użytkownik anonimowy<br /> <a href="#" class="ajaxLogin">Chcesz się zalogować?</a>',
 	'oasis-comments-show-all' => 'Pokaż wszystkie',
 	'oasis-comments-added-by' => '$1 przez $2',
 	'oasis-random-wiki' => 'Losowa wiki',
@@ -2739,7 +2739,7 @@ $messages['pt'] = array(
 	'oasis-toolbar-devinfo' => 'Informação para Programadores',
 	'oasis-comments-header' => '$1 {{PLURAL:$1|comentário|comentários}}',
 	'oasis-comments-showing-most-recent' => 'A mostrar os $1 mais recentes',
-	'oasis-comments-anonymous-prompt' => 'Utilizador Anónimo<br /> <a href="#">Entrar?</a>',
+	'oasis-comments-anonymous-prompt' => 'Utilizador Anónimo<br /> <a href="#" class="ajaxLogin">Entrar?</a>',
 	'oasis-comments-show-all' => 'Mostrar todos',
 	'oasis-comments-added-by' => '$1 por $2',
 	'oasis-random-wiki' => 'Wiki Aleatória',
@@ -2870,7 +2870,7 @@ $messages['pt-br'] = array(
 	'oasis-toolbar-customize' => 'Personalizar',
 	'oasis-comments-header' => '$1 {{PLURAL:$1|comentário|comentários}}',
 	'oasis-comments-showing-most-recent' => 'Mostrando {{PLURAL:$1|o comentário mais recente|os $1 comentários mais recentes}}',
-	'oasis-comments-anonymous-prompt' => 'Usuário anônimo<br /> <a href="#">Conectar-se?</a>',
+	'oasis-comments-anonymous-prompt' => 'Usuário anônimo<br /> <a href="#" class="ajaxLogin">Conectar-se?</a>',
 	'oasis-comments-show-all' => 'Mostrar tudo',
 	'oasis-comments-added-by' => '$1 por $2',
 	'oasis-random-wiki' => 'Wiki aleatória',
@@ -2994,7 +2994,7 @@ $messages['ru'] = array(
 	'oasis-toolbar-devinfo' => 'Сведения для разработчиков',
 	'oasis-comments-header' => '{{PLURAL:$1|комментарий|комментария|комментариев}}',
 	'oasis-comments-showing-most-recent' => 'Показаны $1 последних изменения',
-	'oasis-comments-anonymous-prompt' => 'Анонимный участник<br /> <a href="#">Войти?</a>',
+	'oasis-comments-anonymous-prompt' => 'Анонимный участник<br /> <a href="#" class="ajaxLogin">Войти?</a>',
 	'oasis-comments-show-all' => 'Показать все',
 	'oasis-comments-added-by' => '$1 от $2',
 	'oasis-random-wiki' => 'Случайная вики',
@@ -3031,7 +3031,7 @@ $messages['ru'] = array(
 	'oasis-related-categories' => 'Связанные категории',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -3205,7 +3205,7 @@ $messages['sv'] = array(
 	'oasis-toolbar-edit-save' => 'Spara',
 	'oasis-toolbar-edit-cancel' => 'Avbryt',
 	'oasis-toolbar-devinfo' => 'Utvecklarinfo',
-	'oasis-comments-anonymous-prompt' => 'Anonym användare<br /> <a href="#">Logga in?</a>',
+	'oasis-comments-anonymous-prompt' => 'Anonym användare<br /> <a href="#" class="ajaxLogin">Logga in?</a>',
 	'oasis-comments-show-all' => 'Visa alla',
 	'oasis-comments-added-by' => '$1 av $2',
 	'oasis-random-wiki' => 'Slumpartad wiki',
@@ -3362,7 +3362,7 @@ $messages['uk'] = array(
 	'oasis-toolbar-edit-save' => 'Зберегти',
 	'oasis-toolbar-edit-cancel' => 'Скасувати',
 	'oasis-comments-header' => '$1 {{PLURAL:$1|коментар|коментарі|коментарів}}',
-	'oasis-comments-anonymous-prompt' => 'Анонімний користувач<br /> <a href="#">Увійти в систему?</a>',
+	'oasis-comments-anonymous-prompt' => 'Анонімний користувач<br /> <a href="#" class="ajaxLogin">Увійти в систему?</a>',
 	'oasis-comments-show-all' => 'Показати всі',
 	'oasis-random-wiki' => 'Випадкова вікі',
 	'oasis-add-photo' => 'Додати фотографію',
@@ -3469,7 +3469,7 @@ $messages['vi'] = array(
 	'oasis-toolbar-devinfo' => 'Thông tin Thành viên phát triển wiki.',
 	'oasis-comments-header' => '$1 {{PLURAL:$1|bình luận|bình luận}}',
 	'oasis-comments-showing-most-recent' => 'Hiển thị $1 gần đây nhất',
-	'oasis-comments-anonymous-prompt' => 'Thành viên vô danh<br /> <a href="#">Đăng nhập?</a>',
+	'oasis-comments-anonymous-prompt' => 'Thành viên vô danh<br /> <a href="#" class="ajaxLogin">Đăng nhập?</a>',
 	'oasis-comments-show-all' => 'Hiển thị tất cả',
 	'oasis-comments-added-by' => '$1 bởi $2',
 	'oasis-random-wiki' => 'Wiki ngẫu nhiên',
@@ -3507,7 +3507,7 @@ $messages['vi'] = array(
 	'oasis-related-categories' => 'Thể loại liên quan',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (中文(简体))
  * @author Hydra
  */
 $messages['zh-hans'] = array(
@@ -3531,7 +3531,7 @@ $messages['zh-hans'] = array(
 	'oasis-upload-photos-fewer-options' => '更少选择',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (中文(繁體))
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(
@@ -3603,7 +3603,7 @@ $messages['zh-hant'] = array(
 	'oasis-interlang-languages' => '其他語言',
 );
 
-/** Chinese (Hong Kong) (‪中文(香港)‬)
+/** Chinese (Hong Kong) (中文(香港))
  * @author Ffaarr
  */
 $messages['zh-hk'] = array(
@@ -3680,7 +3680,7 @@ $messages['zh-hk'] = array(
 	'oasis-interlang-languages' => '其他語言',
 );
 
-/** Chinese (Taiwan) (‪中文(台灣)‬)
+/** Chinese (Taiwan) (中文(台灣))
  * @author Ffaarr
  * @author Mark85296341
  */
