@@ -15,8 +15,8 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 
 	protected $app = null;
 	protected $appOrig = null;
-	protected $appMock = null;
-	protected $mockedClasses = array();
+	private $appMock = null;
+	private $mockedClasses = array();
 
 	protected function setUp() {
 		$this->app = F::app();
