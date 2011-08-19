@@ -60,6 +60,9 @@ class FoggyFotoController extends WikiaController {
 		$this->frontImageSrc = $wgExtensionsPath.'/wikia/FoggyFoto/glee_front.png'; // this shows up immediately
 		$this->backImageSrc = ''; // this is the one that's obscured... will be figured out in JS using the API.
 		$this->answerButtonSrc = $wgExtensionsPath.'/wikia/FoggyFoto/answer-button.png';
+		$this->answerButtonWidth = 48;
+		$this->answerDrawerWidth = 150;
+		$this->answerDrawerHeight = 200;
 
 		$this->wgScriptPath = $wgScriptPath;
 		$this->mwJsApiUrl = $wgExtensionsPath."/wikia/JavascriptAPI/Mediawiki.js?$wgStyleVersion";

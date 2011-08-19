@@ -44,6 +44,8 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 
 		// Actual game-state and related constants.
 		this._isBackShowing = [[]]; // matrix of binary values for whether the back tile is showing at a given coordinate
+		this._allPagesInCategory = []; // used as the pool from which to choose possible answers
+		this._currentAnswer = ""; // the CORRECT answer to the current round
 		this._totalPoints = 0;
 		this._pointsThisRound = 0;
 		this._currPhoto = 0; // will go up to "1" (makes more sense to non-geeks) when the first image is loaded.
@@ -96,17 +98,17 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 				if(data.error){
 					self.mwError(data.error);
 				} else {
-					if(self.debug){
-						self.log("Got category members: ");
-						//for(var cnt=0; cnt < data.query.categorymembers.length; cnt++){
-						//	self.log("Title: " + data.query.categorymembers[cnt].title);
-						//}
-					}
+					self.log("Got category members ("+ data.query.categorymembers.length+" pages).");
 
 					if(data.query.categorymembers){
+						self._allPagesInCategory = [];
+						for(var cnt=0; cnt < data.query.categorymembers.length; cnt++){
+							self._allPagesInCategory.push( data.query.categorymembers[cnt].title );
+						}
+
 						// Randomly get a page from the category (and its associated image) until we find a page which has an image.
 						var imageUrl = "";
-						self.getImageFromPages(data.query.categorymembers, function(imageUrl){
+						self.getImageFromPages(self._allPagesInCategory, function(imageUrl){
 							// Set the image as the back-image (hidden image) for the game.
 							if(imageUrl != ""){
 								// Load the back image fully before attaching clickhandlers
@@ -140,6 +142,8 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 									$('#bgPic').css('top', '-'+scaledBackOffsetY+'px');
 
 									// A new round has started, initialize the round & start the timer.
+							// TODO: WRAP ALL OF THIS INIT IN AN _initNewRound() FUNCTION
+									self._setUpPossibleAnswers();
 									self._pointsThisRound = self._MAX_POINTS_PER_ROUND;
 									self._currPhoto++;
 									self.updateHud_progress();
@@ -151,6 +155,7 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 										eventName = 'touchstart'; // event has a different name on touchscreen devices
 									}
 									$('#gameBoard .tile').bind(eventName, self.tileClicked);
+									$('#answerButton').click(self._toggleAnswerDrawer);
 
 									// TODO: REMOVE THE GAME-LOADING OVERLAY/STATE
 									// TODO: REMOVE THE GAME-LOADING OVERLAY/STATE
@@ -209,7 +214,7 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 			var imageUrl;
 			if(pageTitles.length > 0){
 				var index = Math.floor(Math.random() * pageTitles.length);
-				var pageTitle = pageTitles[index].title;
+				var pageTitle = pageTitles[index];
 				self.log("Page: " + pageTitle);
 
 				var imageApiParams = {
@@ -219,12 +224,13 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 				Mediawiki.apiCall(imageApiParams, function(data){
 					if(data.error){
 						self.mwError(data.error);
-					} else if(typeof data.image.imageserving != "undefined"){
+					} else if(typeof data.image != "undefined" && typeof data.image.imageserving != "undefined"){
 						self.log("Image: " + data.image.imageserving);
 						imageUrl = data.image.imageserving;
 						
 						// If we got a match, pass the imageUrl into the success callback.
 						if((typeof successCallback == "function") && (typeof imageUrl != "undefined")){
+							self._currentAnswer = pageTitle;
 							successCallback( imageUrl );
 						} else {
 							self.log("Callback was not a function: ");
@@ -373,8 +379,69 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 				// If the round is continuing, start the timeout again for the next tick.
 				setTimeout(self._roundTimerTick, self._UPDATE_INTERVAL_MILLIS);
 			}
-		}
+		};
 
+		/** ANSWER RELATED FUNCTIONS - BEGIN ****************************************************************************/
+		/**
+		 * Show or answer drawer if it's not showing and hide it if it is showing.
+		 */
+		this._toggleAnswerDrawer = function(){
+			if( $('#answerListWrapper').css('display') == 'none' ){
+				self._showAnswerDrawer();
+			} else {
+				self._hideAnswerDrawer();
+			}
+		};
+
+		/**
+		 * Shows the possible answer choices (the 'answer-drawer' on the right side of the board).
+		 */
+		this._showAnswerDrawer = function(){
+			$('#answerListWrapper').show();
+
+			//var halfButtonWidth = ($('#answerListWrapper').css('margin-left').replace("px", "")); // does the offset by the actual margin-left.
+			var halfButtonWidth = Math.floor($('#answerButton').width() / 2);
+			$('#answerDrawerWrapper').width($('#answerListWrapper').width() + halfButtonWidth);
+		};
+
+		/**
+		 * Hides the answer drawer so that the user has to click the answer-button again if they want to see it.
+		 */
+		this._hideAnswerDrawer = function(){
+			$('#answerListWrapper').hide();
+			$('#answerDrawerWrapper').width( $('#answerButton').width() );
+		};
+		
+		/**
+		 * Uses the correct current answer and the pool of all pages in the category to set up a randomly-ordered collection of
+		 * three wrong answers and the correct answer in the answer drawer.
+		 */
+		this._setUpPossibleAnswers = function(){
+			var NUM_SLOTS = 4;
+			var correctIndex = Math.floor(Math.random() * NUM_SLOTS);
+			var usedPages = [ self._currentAnswer ]; // so that we never have the same answer appear more than once.
+
+			var currIndex = 0;
+			$('#answerListWrapper ul li').each(function(){
+				if(currIndex == correctIndex){
+					$(this).html( self._currentAnswer );
+				} else {
+					// Keep looking for another possible answer until we find one that isn't in the list already.
+					do{
+						var randIndex = Math.floor(Math.random() * self._allPagesInCategory.length);
+						var possibleChoice = self._allPagesInCategory[ randIndex ];
+					} while($.inArray( possibleChoice, usedPages ) != -1);
+
+					// Record this answer as taken so it doesn't show up in any of the later choices
+					usedPages.push( possibleChoice );
+
+					$(this).html( possibleChoice );
+				}
+				currIndex++;
+			});
+		};
+		/** ANSWER RELATED FUNCTIONS - END ****************************************************************************/
+		
 		/**
 		 * Dumps a human-readable output to the console indicating which tiles are showing.
 		 */
@@ -431,5 +498,8 @@ $(document).ready(function(){
 		flipBoard.logState();
 		flipBoard.updateHud_score();
 		flipBoard.updateHud_progress();
+		
+		// TODO: REMOVE ... just to make it easier to test the drawer
+		flipBoard._showAnswerDrawer();
 	});
 });
