@@ -4,6 +4,17 @@ class EditPageNotices implements IteratorAggregate {
 
 	protected $notices = array();
 
+	// don't show notifications of the following types
+	protected $blacklist = array(
+		// BugId:7966
+		'usercssyoucanpreview',
+		'userjsyoucanpreview',
+	);
+
+	private function isBlacklisted($id) {
+		return in_array($id, $this->blacklist);
+	}
+
 	public function clear() {
 		$this->notices = array();
 	}
@@ -13,12 +24,16 @@ class EditPageNotices implements IteratorAggregate {
 	}
 
 	public function add( $notice, $id = false ) {
-		if ($notice instanceof EditPageNotice) {
+		if (!($notice instanceof EditPageNotice)) {
+			$notice = WF::build('EditPageNotice',array($notice,$id));
+		}
+
+		if ($this->isBlacklisted($notice->getMessageId())) {
+			$this->log(__METHOD__ . ' - blacklisted', $notice->getMessageId());
+		}
+		else {
 			$this->notices[] = $notice;
-			$this->log(__METHOD__, $notice->getHtml());
-		} else {
-			$this->notices[] = WF::build('EditPageNotice',array($notice,$id));
-			$this->log(__METHOD__, $id);
+			$this->log(__METHOD__ . ' - added', $notice->getHtml());
 		}
 	}
 
