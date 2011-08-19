@@ -55,6 +55,7 @@ public class SignupTest extends BaseTest {
 	@Test(groups={"CI", "verified"})
 	public void testSignupWrongPassword() throws Exception {
 		openAndWait("index.php?title=Special:Signup&type=signup");
+		waitForElement("wpCaptchaId");
 
 		String username = getTestConfig().getString("ci.user.wikiabot.username") + Long.toString((new Date()).getTime());
 		String captchaWord = getWordFromCaptchaId(session().getValue("wpCaptchaId"));
