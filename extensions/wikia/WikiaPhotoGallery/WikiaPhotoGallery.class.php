@@ -1631,7 +1631,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		$html .= Xml::openElement('div', array('class' => 'wikia-slideshow-toolbar clearfix', 'style' => 'display: none'));
 
 		// Pop-out icon, "X of X" counter
-		$counterValue = wfMsg('wikiaPhotoGallery-slideshow-view-number', '$1', $i);
+		$counterValue = wfMsg('wikiaPhotoGallery-slideshow-view-number', '$1', $index);
 
 		$html .= Xml::openElement('div', array('style' => 'float: left'));
 			$html .= Xml::element('img',
