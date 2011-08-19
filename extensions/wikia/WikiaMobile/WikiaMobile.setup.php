@@ -42,6 +42,7 @@ $app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobilePageHeaderService.class.p
 $app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileNavigationService.class.php", 'WikiaMobileNavigationService' );
 $app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileFooterService.class.php", 'WikiaMobileFooterService' );
 $app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileAdService.class.php", 'WikiaMobileAdService' );
+$app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileLeftPaneService.class.php", 'WikiaMobileLeftPaneService' );
 
 /**
  * controllers

@@ -1,6 +1,6 @@
 <?php
 /**
- * WikiaMobile Footer
+ * WikiaMobile Ads Service
  * 
  * @author Jakub Olek <bukaj.kelo(at)gmail.com>
  */
