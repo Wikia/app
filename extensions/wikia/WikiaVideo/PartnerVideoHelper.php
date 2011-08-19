@@ -2,6 +2,16 @@
 
 class PartnerVideoHelper {
 
+	protected static $instance;
+
+	public static function getInstance() {
+		if (!self::$instance) {
+			self::$instance = new PartnerVideoHelper();
+		}
+
+		return self::$instance;
+	}
+
 	public static function downloadScreenplayFeed() {
 		global $SCREENPLAY_FTP_HOST, $SCREENPLAY_REMOTE_FILE, $SCREENPLAY_FEED_FILE, $TEMP_DIR;
 		global $remoteUser, $remotePassword, $wgHTTPProxy;
@@ -82,7 +92,7 @@ class PartnerVideoHelper {
 		return 'Zip File Function error: unknown';
 	}
 
-	public static function importFromPartner($provider, $file) {
+	public function importFromPartner($provider, $file) {
 		$numCreated = 0;
 
 		switch ($provider) {
@@ -92,7 +102,7 @@ class PartnerVideoHelper {
 			case VideoPage::V_MOVIECLIPS:
 				$ids = self::getMovieClipIdsFromFileContents($file);
 				foreach ($ids as $id) {
-					$numCreated += self::importFromMovieClips($id);
+					$numCreated += $this->importFromMovieClips($id);
 				}
 				break;
 			default:
@@ -171,7 +181,7 @@ class PartnerVideoHelper {
 		return $articlesCreated;
 	}
 
-	public static function importFromMovieClips($id) {
+	public function importFromMovieClips($id) {
 		global $MOVIECLIPS_VIDEOS_LISTING_FOR_MOVIE_URL, $MOVIECLIPS_XMLNS;
 		global $wgHTTPProxy;
 
@@ -182,6 +192,10 @@ class PartnerVideoHelper {
 		print("Connecting to $url...\n");
 
 		$rssContent = Http::get($url);
+		if (!$rssContent) {
+			print("ERROR: problem downloading content!\n");
+			return 0;
+		}
 
 		$feed = new SimplePie();
 		$feed->set_raw_data($rssContent);
@@ -341,7 +355,7 @@ class PartnerVideoHelper {
 			$categoryStr .= '[[' . $category->getTitle()->getFullText() . ']]';
 		}
 
-		$video = F::build('VideoPage', array($title));
+		$video = F::build('VideoPage', array(&$title));
 		if ($video instanceof VideoPage) {
 			$video->loadFromPars( $provider, $id, $metadata );
 			$video->setName( $name );
