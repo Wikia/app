@@ -201,6 +201,19 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 		};
 
 		/**
+		 * Click-handler for when the player clicks to guess on an answer.
+		 */
+		this.answerClicked = function(){
+			var guessed = $(this).html();
+			
+			if(guessed == self._currentAnswer){
+				self.log("CORRECT!");
+			} else {
+				self.log("wrong");
+			}
+		};
+
+		/**
 		 * When the user guessed a wrong answer, this function is called to deduct points, mark
 		 */
 		this.gotWrongAnswer = function(){
@@ -411,10 +424,12 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 			$('#answerListWrapper').hide();
 			$('#answerDrawerWrapper').width( $('#answerButton').width() );
 		};
-		
+
 		/**
 		 * Uses the correct current answer and the pool of all pages in the category to set up a randomly-ordered collection of
 		 * three wrong answers and the correct answer in the answer drawer.
+		 *
+		 * After the answers are set up, attaches a click handler to them (full clicks, not just mousedown/touchstart).
 		 */
 		this._setUpPossibleAnswers = function(){
 			var NUM_SLOTS = 4;
@@ -438,10 +453,10 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 					$(this).html( possibleChoice );
 				}
 				currIndex++;
-			});
+			}).click(self.answerClicked);
 		};
 		/** ANSWER RELATED FUNCTIONS - END ****************************************************************************/
-		
+
 		/**
 		 * Dumps a human-readable output to the console indicating which tiles are showing.
 		 */
@@ -498,8 +513,5 @@ $(document).ready(function(){
 		flipBoard.logState();
 		flipBoard.updateHud_score();
 		flipBoard.updateHud_progress();
-		
-		// TODO: REMOVE ... just to make it easier to test the drawer
-		flipBoard._showAnswerDrawer();
 	});
 });
