@@ -103,6 +103,6 @@ else {
 	}
 }
 
-PartnerVideoHelper::importFromPartner($provider, $file);
+PartnerVideoHelper::getInstance()->importFromPartner($provider, $file);
 
 // END OF MAIN
