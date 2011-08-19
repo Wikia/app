@@ -72,7 +72,7 @@ class ChatRailModule extends Module {
 				$stats = $userStatsService->getStats();
 
 				// edit count
-				$chatters[$i]['editCount'] = (int) $wgContLang->formatNum($stats['edits']);
+				$chatters[$i]['editCount'] = $wgContLang->formatNum((int) $stats['edits']);
 				
 				// member since
 				$chatters[$i]['showSince'] = $chatters[$i]['editCount'] != 0;
