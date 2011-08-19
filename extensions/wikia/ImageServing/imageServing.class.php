@@ -128,12 +128,9 @@ class ImageServing {
 			}
 		}
 
-		if(!empty($out)) {
-			return $out;
-		}
-
 		wfProfileOut(__METHOD__);
-		return array();
+
+		return empty($out) ? array() : $out;
 	}
 
 	private function addArticleToList($value) {
