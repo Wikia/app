@@ -66,9 +66,9 @@ class CorporateFooterModule extends Module {
 		$nodes = array();
 
 		if(!isset($catId) || null == ($lines = getMessageAsArray($message_key.'-'.$catId))) {
-			wfDebugLog('monaco', $message_key.'-'.$catId . ' - seems to be empty');
+			wfDebugLog('oasis', $message_key.'-'.$catId . ' - seems to be empty');
 			if(null == ($lines = getMessageAsArray($message_key))) {
-				wfDebugLog('monaco', $message_key . ' - seems to be empty');
+				wfDebugLog('oasis', $message_key . ' - seems to be empty');
 				wfProfileOut( __METHOD__ );
 				return $nodes;
 			}
