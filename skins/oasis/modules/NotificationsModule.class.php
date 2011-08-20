@@ -215,7 +215,7 @@ class NotificationsModule extends Module {
 			self::addConfirmation(wfMsgExt('oasis-confirmation-page-deleted', array('parseinline'), $pageName));
 
 			// redirect to main page
-			$wgOut->redirect(Title::newMainPage()->getFullUrl());
+			$wgOut->redirect(Title::newMainPage()->getFullUrl( array( 'cb' => rand( 1, 1000 ) ) ));
 		}
 
 		wfProfileOut(__METHOD__);
