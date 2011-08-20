@@ -133,6 +133,7 @@ class PartnerVideoHelper {
 				$clipData['trailerType'] = $clip->getElementsByTagName('TrailerType')->item(0)->textContent;
 				$clipData['trailerVersion'] = $clip->getElementsByTagName('TrailerVersion')->item(0)->textContent;
 				$clipData['description'] = $clip->getElementsByTagName('Description')->item(0)->textContent;
+				$clipData['duration'] = $clip->getElementsByTagName('RunTime')->item(0)->textContent;
 
 				$encodes = $clip->getElementsByTagName('Encode');
 				$numEncodes = $encodes->length;
@@ -218,9 +219,7 @@ class PartnerVideoHelper {
 			$clipData['movieName'] = $objectIds[0]['child'][$MOVIECLIPS_XMLNS]['freebase_mid'][0]['attribs']['']['name'];
 			$clipData['freebaseMid'] = $objectIds[0]['child'][$MOVIECLIPS_XMLNS]['freebase_mid'][0]['data'];
 
-			//@todo description
-
-			// thumbnails, movie year
+			// description, thumbnails, movie year, duration
 			if ($enclosure = $item->get_enclosure()) {
 				$thumbnails = (array) $enclosure->get_thumbnails();
 				$numThumbnails = sizeof($thumbnails);
@@ -240,6 +239,14 @@ class PartnerVideoHelper {
 						$clipData['year'] = $year;
 					}
 				}
+				
+				// remove the title from the description
+				$description = strip_tags( html_entity_decode( $item->get_description() ) );
+				$description = str_replace("{$clipData['movieName']} ({$clipData['year']}) - ", '', $description);
+				// description may have commas, need to escape these before video metadata is imploded by comma
+				$clipData['description'] = str_replace(',', '&#44;',  $description);	
+				
+				$clipData['duration'] = $enclosure->get_duration();
 			}
 
 			$articlesCreated += $this->createVideoPageForPartnerVideo(VideoPage::V_MOVIECLIPS, $clipData, $msg);
@@ -326,11 +333,11 @@ class PartnerVideoHelper {
 				}
 
 				$doesHdExist = (int) !empty($data['hdMp4Url']);
-				$metadata = array($data['stdBitrateCode'], $doesHdExist);
+				$metadata = array($data['stdBitrateCode'], $doesHdExist, $data['duration']);
 				break;
 			case VideoPage::V_MOVIECLIPS:
 				$id = $data['mcId'];
-				$metadata = array($data['thumbnail']);
+				$metadata = array($data['thumbnail'], $data['duration'], $data['description']);
 				break;
 			default:
 				$msg = "unsupported provider $provider";
