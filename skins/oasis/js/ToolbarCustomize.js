@@ -258,7 +258,7 @@
 			importStylesheetURI($.getSassCommonURL("skins/oasis/css/core/_ToolbarCustomize.scss"));
 
 			$.bulkLoad(['autocomplete','jquery-ui','modal',{
-				type: "POST",
+				type: "GET",
 				url: wgScript + "?action=ajax&rs=moduleProxy&moduleName=Footer&actionName=ToolbarConfiguration&outputType=data",
 				success: $.proxy(this.onDataLoaded,this),
 				dataType: 'json'
