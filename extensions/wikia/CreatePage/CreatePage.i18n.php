@@ -349,6 +349,7 @@ $messages['el'] = array(
 
 /** Spanish (Español)
  * @author Crazymadlover
+ * @author Mor
  * @author Translationista
  */
 $messages['es'] = array(
@@ -371,7 +372,7 @@ $messages['es'] = array(
 	'createpage-dialog-blank' => 'Página en blanco',
 	'createpage-error-empty-title' => 'Por favor, escribe un título para tu artículo',
 	'createpage-error-invalid-title' => 'Lo sentimos, el título del artículo no era válido. Por favor, usa un título diferente.',
-	'createpage-error-article-exists' => 'YA existe un artículo con ese título. Puedes ir a <a href="$1">$2</a> o cambiar el nombre de tu página',
+	'createpage-error-article-exists' => 'Ya existe un artículo con ese título. Puedes ir a <a href="$1">$2</a> o cambiar el nombre de tu página',
 	'createpage-error-article-spam' => 'Lo sentimos, el título del artículo fue rechazado por nuestro filtro de contenido no deseado. Por favor, usa un título diferente.',
 	'createpage-error-article-blocked' => 'Lo sentimos, no puedes crear ese artículo en este momento.',
 	'tog-createpagedefaultblank' => 'Usa una página en blanco de manera predeterminada para la traducción de nuevas páginas.',
@@ -385,7 +386,7 @@ Escribe aquí la primera sección de tu artículo.
 
 ==Encabezado de sección==
 
-EScribe aquí la segunda sección de tu artículo.',
+Escribe aquí la segunda sección de tu artículo.',
 );
 
 /** Basque (Euskara)

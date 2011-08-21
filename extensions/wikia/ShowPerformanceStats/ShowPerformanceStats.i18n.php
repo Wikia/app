@@ -247,6 +247,13 @@ $messages['sv'] = array(
 	'performancestat-cpu' => 'CPU: $1s',
 );
 
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'performancestat-total' => 'మొత్తం: $1s',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */

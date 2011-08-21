@@ -3617,6 +3617,7 @@ $messages['te'] = array(
 	'blog-refresh-label' => 'తాజాకరించు',
 	'blog-userblog' => '$1 యొక్క బ్లాగు',
 	'blogs-comment-hidden' => 'వ్యాఖ్య దాచబడినది.',
+	'blog-desc' => 'బ్లాగు వ్యాసాలు',
 );
 
 /** Tetum (Tetun)

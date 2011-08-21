@@ -879,6 +879,8 @@ $messages['fr'] = array(
 	'rte-ck-poll-confirmDelete' => 'Êtes-vous sûr(e) de vouloir retirer le sondage de la page ?',
 	'rte-ck-poll-confirmDeleteTitle' => 'Retirer ce sondage ?',
 	'rte-ck-spellchecker-moreSuggestions' => 'Plus de suggestions',
+	'rte-ck-pasteText-title' => 'Collez votre texte',
+	'rte-ck-clipboard-pasteMsg' => 'Pour des raisons de sécurité, l’éditeur ne peut pas coller directement votre texte. Veuillez le coller dans la zone ci-dessous en utilisant les raccourcis clavier (Ctrl/Cmd+V) et appuyez sur « Ok »..<br /><br />Note : votre texte sera dépouillé de tout formatage pour éviter de créer du wikitexte complexe.',
 );
 
 /** Galician (Galego)
@@ -1356,6 +1358,8 @@ $messages['mk'] = array(
 	'rte-ck-poll-confirmDelete' => 'Дали сте сигурни дека сакате да ја анкетата од страницава?',
 	'rte-ck-poll-confirmDeleteTitle' => 'Да ја отстранам анкетава?',
 	'rte-ck-spellchecker-moreSuggestions' => 'Повеќе предлози',
+	'rte-ck-pasteText-title' => 'Ископирајте го текстот',
+	'rte-ck-clipboard-pasteMsg' => 'Од безбедносни причини, уредникот не може директно да дојде до она што го ископиравте. Копирањето направете го во полето подолу користејќи тастатурни кратенки (Ctrl/Cmd+V) и стиснете на „ОК“.<br /><br />Напомена: форматирањето на вашиот текст ќе биде отстрането за да се избегне добивање на сложен викитекст.',
 );
 
 /** Malayalam (മലയാളം)
@@ -1498,6 +1502,8 @@ $messages['ms'] = array(
 	'rte-ck-poll-confirmDelete' => 'Adakah anda benar-benar ingin menggugurkan tinjauan ini dari laman ini?',
 	'rte-ck-poll-confirmDeleteTitle' => 'Gugurkan tinjauan ini?',
 	'rte-ck-spellchecker-moreSuggestions' => 'Cadangan lain',
+	'rte-ck-pasteText-title' => 'Tampalkan teks anda',
+	'rte-ck-clipboard-pasteMsg' => "Atas sebab-sebab keselamatan, editor tidak boleh mengakses tampalan anda secara langsung. Sila tampalkan dalam ruangan di bawah dengan menggunakan kekunci pintas (Ctrl/Cmd+V), kemudian klik 'OK'.<br /><br />Perhatian: teks anda akan ditanggalkan pemformatannya untuk mengelakkan terhasilnya teks wiki yang rumit.",
 );
 
 /** Mazanderani (مازِرونی)
@@ -1597,6 +1603,8 @@ $messages['nl'] = array(
 	'rte-ck-poll-confirmDelete' => 'Weet u zeker dat u de peiling van deze pagina wilt verwijderen?',
 	'rte-ck-poll-confirmDeleteTitle' => 'Deze peiling verwijderen?',
 	'rte-ck-spellchecker-moreSuggestions' => 'Meer suggesties',
+	'rte-ck-pasteText-title' => 'Plak uw tekst',
+	'rte-ck-clipboard-pasteMsg' => 'Om veiligheidsredenen kan de tekstverwerker uw klembord niet direct raadplegen. Plak de tekst in het onderstaande venster via uw snelkoppeling (Ctrl/Cmd+V) en klik op "OK".<br /><br />Let op: Uit uw tekst wordt de opmaak verwijderd om te voorkomen dat er complexe wikitekst nodig is.',
 );
 
 /** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
@@ -2383,13 +2391,17 @@ $messages['te'] = array(
 	'rte-ck-hoverPreview-delete' => 'తొలగించు',
 	'rte-ck-link-external-linkText' => 'లంకె పాఠ్యం',
 	'rte-ck-link-external-tab' => 'బయటి లంకె',
+	'rte-ck-link-internal-pageName' => 'పుట పేరు',
 	'rte-ck-link-internal-tab' => 'అంతర్గత లంకె',
+	'rte-ck-link-status-external' => 'బయటి లంకె',
 	'rte-ck-media-delete' => 'తొలగించు',
+	'rte-ck-signature-label' => 'సంతకం',
 	'rte-ck-templateDropDown-label' => 'మూస',
 	'rte-ck-templateEditor-dialog-magicWords' => 'మాయా పదాలు',
 	'rte-ck-templateEditor-editor-parameters' => 'పరామితులు',
 	'rte-ck-templateEditor-editor-previewButton' => 'మునుజూపు',
 	'rte-ck-templateEditor-editor-previewTitle' => 'మునుజూపు',
+	'rte-ck-spellchecker-moreSuggestions' => 'మరిన్ని సూచనలు',
 );
 
 /** Tetum (Tetun)

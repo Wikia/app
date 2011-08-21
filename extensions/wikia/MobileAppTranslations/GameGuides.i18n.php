@@ -417,3 +417,11 @@ $messages['sv'] = array(
 	'error-json-parse' => 'Det uppstod tyvärr ett problem med datan som returneras från våra servrar.\\nVar god försök igen.',
 );
 
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'window-article-menu-cancel-label' => 'రద్దుచేయి',
+	'alert-download-updated-wikis-button-ok' => 'సరే',
+);
+

@@ -29,11 +29,20 @@ $1
 	'lightbox-share-email-error-noaddress' => 'No addresses have been specified.'
 );
 
-/** Message documentation (Message documentation) */
+/** Message documentation (Message documentation)
+ * @author Siebrand
+ */
 $messages['qqq'] = array(
 	'lightbox-share-description' => 'Parameters:
 * $1 is the current page,
 * $2 is the site name.',
+	'lightbox-share-email-subject' => 'Parameters:
+* $1 is a username.',
+	'lightbox-share-email-body' => 'Parameters:
+* $1 is a link to the suggested image.',
+	'lightbox-share-email-error-content' => 'Parameters:
+* $1 is the numer of sent e-mails
+* $2 is are the error details.',
 );
 
 /** French (Français)
@@ -71,7 +80,87 @@ Détails : $2',
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
+	'lightbox_details_tooltip' => 'Подробности за сликата',
+	'lightbox-forum' => 'Форум',
+	'lightbox-standard-link' => 'Стандардна врска',
+	'lightbox-blog-link' => 'Блоговска врска',
+	'lightbox-send' => 'Испрати',
+	'lightbox-share-description' => 'Слика во $1 на $2',
+	'lightbox-share-email-subject' => '$1 ви испрати слика на Викија',
+	'lightbox-share-email-body' => 'Здраво,
+
+Некој сака да ви покаже слика на Викија. Погледајте ја:
+
+$1
+
+- Екипата на Викија',
+	'lightbox-share-button-email' => 'По е-пошта',
 	'lightbox-share-button-www' => 'Сподели',
+	'lightbox-share-button-embed' => 'Вметни',
+	'lightbox-share-email-label' => 'Испратете ја сликава на пријател',
+	'lightbox-share-email-ok-caption' => 'Потврда',
+	'lightbox-share-email-ok-content' => '{{PLURAL:$1|Пораката е испратена.|Пораките се испратени}}.',
+	'lightbox-share-email-error-caption' => 'Грешка',
+	'lightbox-share-email-error-content' => 'Грешка при испраќањето на {{PLURAL:$1|пораката|пораките}}.
+Поподробно: $2',
+	'lightbox-share-email-error-login' => 'Треба да се најавите за да испраќате е-пошта',
+	'lightbox-share-email-error-noaddress' => 'Немате наведено адреси.',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'lightbox-forum' => 'Forum',
+	'lightbox-send' => 'Hantar',
+	'lightbox-share-description' => 'Gambar di $1 di $2',
+	'lightbox-share-email-subject' => '$1 telah menghantar gambar kepada anda di Wikia',
+	'lightbox-share-email-body' => 'Hai,
+
+Ada orang yang hendak menunjukkan gambar kepada anda di Wikia. Mari kita lihat:
+
+$1
+
+- Pasukan Wikia',
+	'lightbox-share-button-email' => 'E-mel',
+	'lightbox-share-button-www' => 'Kongsi',
+	'lightbox-share-button-embed' => 'Benamkan',
+	'lightbox-share-email-ok-caption' => 'Pengesahan',
+	'lightbox-share-email-ok-content' => '{{PLURAL:$1|E-mel|Beberapa e-mel}} telah dihantar.',
+	'lightbox-share-email-error-caption' => 'Ralat',
+	'lightbox-share-email-error-content' => 'Ralat ketika menghantar {{PLURAL:$1|e-mel|emel-emel}}.
+Butiran: $2',
+);
+
+/** Dutch (Nederlands)
+ * @author Siebrand
+ */
+$messages['nl'] = array(
+	'lightbox_details_tooltip' => 'Bestandsgegevens bekijken',
+	'lightbox-forum' => 'Forum',
+	'lightbox-standard-link' => 'Standaardverwijzing',
+	'lightbox-blog-link' => 'Blogverwijzing',
+	'lightbox-send' => 'Verzenden',
+	'lightbox-share-description' => 'Afbeelding in $1 op $2',
+	'lightbox-share-email-subject' => '$1 heeft u een afbeelding gezonden op Wikia',
+	'lightbox-share-email-body' => 'Hallo,
+
+Iemand wilde u een afbeelding laten zien op Wikia. Ga maar kijken!
+
+$1
+
+- Het Wikia-team',
+	'lightbox-share-button-email' => 'E-mailen',
+	'lightbox-share-button-www' => 'Delen',
+	'lightbox-share-button-embed' => 'Invoegen',
+	'lightbox-share-email-label' => 'Deze afbeelding naar een vriend e-mailen',
+	'lightbox-share-email-ok-caption' => 'Bevestiging',
+	'lightbox-share-email-ok-content' => 'Er {{PLURAL:$1|is $1 e-mail|zijn $1 e-mails}} verzonden.',
+	'lightbox-share-email-error-caption' => 'Fout',
+	'lightbox-share-email-error-content' => 'Er is een fout opgetreden tijdens het verzenden van de {{PLURAL:$1|e-mail|e-mails}}.
+Details: $2',
+	'lightbox-share-email-error-login' => 'U moet aanmelden om e-mail te kunnen verzenden',
+	'lightbox-share-email-error-noaddress' => 'Er zijn geen adressen opgegeven.',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)

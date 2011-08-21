@@ -685,7 +685,9 @@ $messages['nl'] = array(
 	'wikialabs-list-wikias-list-wrong-project-id' => 'Onjuist project-ID. De lijst kan niet worden weergegeven.',
 	'wikialabs-graduates-tile' => 'Succesvolle projecten',
 	'wikialabs-staff-info' => 'alleen zichtbaar voor Wikiamedewerkers',
+	'wikialabs-staff-items' => 'Labitem bewerken',
 	'wikialabs-staff-empty-project' => 'Selecteer een project...',
+	'wikialabs-staff-add' => 'Labitem toevoegen',
 	'wikialabs' => 'Wikia Laboratorium',
 	'wikialabs-feedback-submit' => 'Opslaan',
 	'wikialabs-feedback-title' => 'Terugkoppeling',
@@ -921,5 +923,45 @@ $messages['ru'] = array(
 	'wikialabs-feedback-validator-notification-ok' => 'Ваш отзыв был отправлен. Спасибо!',
 	'wikialabs-log-enabled-extension' => '$1 подключено',
 	'wikialabs-log-disabled-extension' => '$1 отключено',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'wikialabs-add-project-name' => 'పేరు',
+	'wikialabs-add-project-description' => 'వివరణ',
+	'wikialabs-add-project-add-save' => 'భద్రపరచు',
+	'wikialabs-add-project-add-cancel' => 'రద్దుచేయి',
+	'wikialabs-list-project-warning-cancel' => 'రద్దుచేయి',
+);
+
+/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'wikialabs-add-project-name' => 'Исем',
+	'wikialabs-add-project-description' => 'Тасвирлама',
+	'wikialabs-add-project-link' => 'Проектка сылтама (мисал:Special:WikiaLabs)',
+	'wikialabs-add-project-add-image' => 'Рәсем өстәргә',
+	'wikialabs-add-project-add-image-info' => '150x100 labs өчен <br />80x80 чыгарылыш өчен',
+	'wikialabs-add-project-title' => 'Өстәү/проектны үзгәртү (ID:$1)',
+	'wikialabs-add-project-project' => 'Проект',
+	'wikialabs-list-project-warning-cancel' => 'Баш тарту',
+	'wikialabs-list-project-currently-active-on-wikis' => '$1 {{PLURAL:$1|викида|викияләрдә}} эшли',
+	'wikialabs-list-wikias-list-title' => 'Wikia Labs - викилар исемлеге',
+	'wikialabs-list-wikias-list-back-to-wikialab' => "Wikia Labs'ка кайтырга",
+	'wikialabs-list-wikias-list-wrong-project-id' => 'Проектның хаталы ID. Исемлек чыгарыла алмый',
+	'wikialabs-graduates-tile' => 'Wikia Labs чыгарылышлары',
+	'wikialabs-feedback-category' => 'Сез нәрсә әйтергә телисез?',
+	'wikialabs-category-choose-one' => 'Исемлектән сайлагыз...',
+	'wikialabs-love-this-project' => 'Миңа бу киңәйтелмә ошый',
+	'wikialabs-hate-this-project' => 'Миңа бу киңәйтелмә ошамый',
+	'wikialabs-problem-with-project' => 'Минем бу киңәйтелмә белән проблем бар',
+	'wikialabs-an-idea-for-project' => 'Миндә бу киңәйтелмә өчен яңа фикер бар',
+	'wikialabs-feedback-validator-spam-attempt' => 'Зинһар өчен, киләсе  чакырылыш җибәрелер алдыннан 60 секунд көтегез',
+	'wikialabs-feedback-validator-notification-ok' => 'Сезнең фикер җибәрелде. Рәхмәт!',
+	'wikialabs-log-enabled-extension' => '$1 кушылды',
+	'wikialabs-log-disabled-extension' => '$1 аерылды',
 );
 

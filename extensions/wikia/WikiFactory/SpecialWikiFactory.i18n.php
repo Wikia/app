@@ -2876,6 +2876,7 @@ $messages['nl'] = array(
 	'closewiki-images-url' => 'Afbeeldingenarchief: $1',
 	'closewiki-unknown' => 'Onbekend',
 	'closewiki-return' => 'Terug naar $1',
+	'wikifactory-button-saveparse' => 'Verwerken en wijzigingen opslaan',
 	'wikifactory-button-save' => 'Wijzigingen opslaan',
 	'awc-metrics-wikis' => "Wiki's weergeven",
 	'awc-metrics-select' => "Wiki's weergeven:",

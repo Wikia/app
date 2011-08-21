@@ -101,6 +101,53 @@ $messages['es'] = array(
 	'admindashboard-back-to-dashboard' => 'Regresar al Panel',
 );
 
+/** French (Français)
+ * @author Wyz
+ */
+$messages['fr'] = array(
+	'admindashboard-title' => '{{SITENAME}} — Tableau de bord',
+	'admindashboard-header' => 'Tableau de bord administrateur',
+	'admindashboard-toolbar-link' => 'Administration',
+	'admindashboard-tab-advanced' => 'Avancé',
+	'admindashboard-tab-general' => 'Général',
+	'admindashboard-controls-wiki-header' => 'Wiki',
+	'admindashboard-control-theme-designer-label' => 'Concepteur de thème',
+	'admindashboard-control-theme-designer-tooltip' => 'Le concepteur de thème vous permet de personnaliser les couleurs, l’arrière-plan de votre wiki et plus.',
+	'admindashboard-control-recent-changes-label' => 'Modifications récentes',
+	'admindashboard-control-recent-changes-tooltip' => 'Les Modifications récentes affichent toutes les modifications effectuées sur votre wiki sur un seul historique.',
+	'admindashboard-control-top-navigation-label' => 'Navigation supérieure',
+	'admindashboard-control-top-navigation-tooltip' => 'La Navigation supérieure vous permet de personnaliser le menu de navigation en haut de votre wiki.',
+	'admindashboard-control-wikia-labs-label' => 'Wikia Labs',
+	'admindashboard-control-wikia-labs-tooltip' => "Wikia Labs vous permet d'être le premier à essayer de nouvelles fonctionnalités beta sur votre wiki.",
+	'admindashboard-control-page-layout-builder-label' => 'Générateur de mise en page',
+	'admindashboard-control-page-layout-builder-tooltip' => 'Le Générateur de mise en page vous permet de créer des gabarits de page que les utilisateurs peuvent sélectionner et utiliser pour créer de nouvelles pages.',
+	'admindashboard-controls-community-header' => 'Communauté',
+	'admindashboard-control-user-list-label' => 'Liste des utilisateurs',
+	'admindashboard-control-user-list-tooltip' => 'Afficher la liste complète des utilisateurs qui ont participé sur votre wiki.',
+	'admindashboard-control-user-rights-label' => 'Droits utilisateur',
+	'admindashboard-control-user-rights-tooltip' => 'Ajouter et retirer des droits et permissions de groupe pour les utilisateurs de votre wiki.',
+	'admindashboard-control-group-rights-label' => 'Droits groupe',
+	'admindashboard-control-group-rights-tooltip' => 'Aperçu des droits pour les différents groupes utilisateur.',
+	'admindashboard-control-invite-label' => 'Inviter',
+	'admindashboard-control-invite-tooltip' => "Inviter d'autres personnes à utiliser ce wiki.",
+	'admindashboard-control-help-label' => 'Aide',
+	'admindashboard-control-help-tooltip' => 'Trouver de l’aide.',
+	'admindashboard-controls-content-header' => 'Contenu',
+	'admindashboard-control-community-corner-label' => 'Coin de la communauté',
+	'admindashboard-control-community-corner-tooltip' => 'Modifier la partie Coin de la communauté de votre wiki et notifier les utilisateurs.',
+	'admindashboard-control-categories-list-label' => 'Toutes les catégories',
+	'admindashboard-control-categories-list-tooltip' => 'Afficher toutes les catégories qui figurent actuellement sur votre wiki.',
+	'admindashboard-control-add-page-label' => 'Ajouter une page',
+	'admindashboard-control-add-page-tooltip' => 'Ajouter une nouvelle page à votre wiki.',
+	'admindashboard-control-add-photo-label' => 'Ajouter une image',
+	'admindashboard-control-add-photo-tooltip' => 'Ajouter de nouvelles images à votre wiki.',
+	'admindashboard-control-add-blog-label' => 'Ajouter un billet de blog',
+	'admindashboard-control-add-blog-tooltip' => 'Ajouter un billet de blog à votre wiki.',
+	'admindashboard-control-multiple-upload-label' => 'Ajouter plusieurs images',
+	'admindashboard-control-multiple-upload-tooltip' => "Importer plus d’une image à la fois avec l’outil d'importation d’importation d’images multiples.",
+	'admindashboard-back-to-dashboard' => 'Retour au tableau de bord',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -127,9 +174,9 @@ $messages['mk'] = array(
 	'admindashboard-control-user-rights-label' => 'Кориснички права',
 	'admindashboard-control-user-rights-tooltip' => 'Додајте или отстранете права и дозволи за групи на корисниците на вашето вики.',
 	'admindashboard-control-group-rights-label' => 'Права на групи',
-	'admindashboard-control-group-rights-tooltip' => 'На правата на групите им треба опис. Додајте го.',
+	'admindashboard-control-group-rights-tooltip' => 'Преглед на правата на различни кориснички групи.',
 	'admindashboard-control-invite-label' => 'Покани',
-	'admindashboard-control-invite-tooltip' => 'На поканувањето му треба опис. Додајте го.',
+	'admindashboard-control-invite-tooltip' => 'Поканете други луѓе на викито.',
 	'admindashboard-control-help-label' => 'Помош',
 	'admindashboard-control-help-tooltip' => 'Побарајте помош за некој проблем.',
 	'admindashboard-control-help-url' => 'http://community.wikia.com/wiki/Community_Central?uselang=mk',
@@ -138,7 +185,62 @@ $messages['mk'] = array(
 	'admindashboard-control-community-corner-tooltip' => 'Во делот на викито наречен „Катче на заедницата“ се ставаат соопштенија за корисниците.',
 	'admindashboard-control-categories-list-label' => 'Сите категории',
 	'admindashboard-control-categories-list-tooltip' => 'Преглед на сите тековни категории на викито.',
+	'admindashboard-control-add-page-label' => 'Додај страница',
+	'admindashboard-control-add-page-tooltip' => 'Додајте нова страница на викито.',
+	'admindashboard-control-add-photo-label' => 'Додај слика',
+	'admindashboard-control-add-photo-tooltip' => 'Додајте нови слики на викито.',
+	'admindashboard-control-add-blog-label' => 'Додај блоговски запис',
+	'admindashboard-control-add-blog-tooltip' => 'Додајте блоговски запис на викито.',
+	'admindashboard-control-multiple-upload-label' => 'Додај повеќе слики наеднаш',
+	'admindashboard-control-multiple-upload-tooltip' => 'Додајте повеќе слики наеднаш со алатката за повеќекратно подигање на слики.',
 	'admindashboard-back-to-dashboard' => 'Назад на Таблата',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'admindashboard-title' => 'Papan Pemuka {{SITENAME}}',
+	'admindashboard-header' => 'Papan Pemuka Pentadbir',
+	'admindashboard-toolbar-link' => 'Pentadbir',
+	'admindashboard-tab-advanced' => 'Lanjutan',
+	'admindashboard-tab-general' => 'Umum',
+	'admindashboard-controls-wiki-header' => 'Wiki',
+	'admindashboard-control-theme-designer-label' => 'Pereka Tema',
+	'admindashboard-control-theme-designer-tooltip' => 'Pereka Tema membolehkan anda mengubah suai warna, latar belakang, dsb. di wiki anda.',
+	'admindashboard-control-recent-changes-label' => 'Perubahan Terkini',
+	'admindashboard-control-recent-changes-tooltip' => 'Perubahan Terkini memaparkan segala perubahan yang dilakukan pada wiki anda dalam satu garis masa tertentu.',
+	'admindashboard-control-top-navigation-label' => 'Pandu Arah Atas',
+	'admindashboard-control-top-navigation-tooltip' => 'Pandu Arah Atas membolehkan anda menyesuaikan menu pandu arah di atas wiki anda.',
+	'admindashboard-control-wikia-labs-label' => 'Wikia Labs',
+	'admindashboard-control-wikia-labs-tooltip' => 'Wikia Labs membolehkan anda menjadi yang pertama untuk mencuba ciri-ciri beta baru di wiki anda.',
+	'admindashboard-control-page-layout-builder-label' => 'Pembina Tataletak Laman',
+	'admindashboard-control-page-layout-builder-tooltip' => 'Pembina Tataletak Laman membolehkan anda mencipta rangka untuk dipilih dan digunakan oleh pengguna untuk membuat laman baru.',
+	'admindashboard-controls-community-header' => 'Komuniti',
+	'admindashboard-control-user-list-label' => 'Senarai Pengguna',
+	'admindashboard-control-user-list-tooltip' => 'Lihat senarai penuh pengguna yang mengambil bahagian di wiki anda.',
+	'admindashboard-control-user-rights-label' => 'Hak Pengguna',
+	'admindashboard-control-user-rights-tooltip' => 'Tambahkan atau gugurkan hak dan keizinan kumpulan untuk para pengguna di wiki anda.',
+	'admindashboard-control-group-rights-label' => 'Hak Kumpulan',
+	'admindashboard-control-group-rights-tooltip' => 'Gambaran keseluruhan hak untuk kumpulan pengguna yang berbeza.',
+	'admindashboard-control-invite-label' => 'Jemput',
+	'admindashboard-control-invite-tooltip' => 'Jemput orang lain untuk menggunakan wiki ini.',
+	'admindashboard-control-help-label' => 'Bantuan',
+	'admindashboard-control-help-tooltip' => 'Dapatkan Bantuan.',
+	'admindashboard-controls-content-header' => 'Kandungan',
+	'admindashboard-control-community-corner-label' => 'Sudut Komuniti',
+	'admindashboard-control-community-corner-tooltip' => 'Sunting bahagian Sudut Komuniti wiki anda dan maklumkan pengguna.',
+	'admindashboard-control-categories-list-label' => 'Semua Kategori',
+	'admindashboard-control-categories-list-tooltip' => 'Lihat semua kategori yang tersenarai dalam wiki anda sekarang.',
+	'admindashboard-control-add-page-label' => 'Tambah Laman',
+	'admindashboard-control-add-page-tooltip' => 'Tambahkan laman baru pada wiki anda.',
+	'admindashboard-control-add-photo-label' => 'Tambah Gambar',
+	'admindashboard-control-add-photo-tooltip' => 'Tambahkan gambar baru pada wiki anda.',
+	'admindashboard-control-add-blog-label' => 'Tambah Catatan Blog',
+	'admindashboard-control-add-blog-tooltip' => 'Tambahkan catatan blog pada wiki anda.',
+	'admindashboard-control-multiple-upload-label' => 'Tambah Berbilang Gambar',
+	'admindashboard-control-multiple-upload-tooltip' => 'Muat naik lebih daripada satu gambar sekali dengan alat muat naik berbilang gambar.',
+	'admindashboard-back-to-dashboard' => 'Kembali ke Papan Pemuka',
 );
 
 /** Dutch (Nederlands)
@@ -235,5 +337,58 @@ $messages['no'] = array(
 	'admindashboard-control-multiple-upload-label' => 'Legg til flere bilder',
 	'admindashboard-control-multiple-upload-tooltip' => 'Last opp mer enn ett bilde av gangen med verktøyet for opplasting av flere bilder.',
 	'admindashboard-back-to-dashboard' => 'Tilbake til dashbordet',
+);
+
+/** Polish (Polski)
+ * @author Cloudissimo
+ */
+$messages['pl'] = array(
+	'admindashboard-title' => 'Panel {{SITENAME}}',
+	'admindashboard-header' => 'Panel Administratora',
+	'admindashboard-tab-advanced' => 'Zaawansowane',
+	'admindashboard-tab-general' => 'Ogólne',
+	'admindashboard-control-theme-designer-label' => 'Kreator motywu',
+	'admindashboard-control-theme-designer-tooltip' => 'Kreator motywu pozwala dostosować kolorystykę wiki, tło i więcej.',
+	'admindashboard-control-recent-changes-label' => 'Ostatnie zmiany',
+	'admindashboard-control-recent-changes-tooltip' => 'Ostatnie zmiany wyświetlają wszystkie edycje dokonane na Twojej wiki w pewnym odstępie czasu.',
+	'admindashboard-control-top-navigation-label' => 'Główna nawigacja',
+	'admindashboard-control-top-navigation-tooltip' => 'Główna nawigacja pozwala dostosować menu na górze Twojej wiki.',
+	'admindashboard-control-wikia-labs-tooltip' => 'Wikia Labs pozwala przetestować beta funkcje na Twojej wiki jako jeden z pierwszych.',
+	'admindashboard-control-page-layout-builder-label' => 'Kreator kompozycji strony',
+	'admindashboard-control-page-layout-builder-tooltip' => 'Kreator kompozycji strony pozwala stworzyć szablonowy układ stron dla użytkowników tworzących nowy artykuł.',
+	'admindashboard-controls-community-header' => 'Społeczność',
+	'admindashboard-control-user-list-label' => 'Lista użytkowników',
+	'admindashboard-control-user-list-tooltip' => 'Pokazuje listę użytkowników, którzy uczestniczą na twojej wiki.',
+	'admindashboard-control-user-rights-label' => 'Uprawnienia użytkowników',
+	'admindashboard-control-user-rights-tooltip' => 'Zarządza grupami i uprawnieniami użytkowników na Twojej wiki.',
+	'admindashboard-control-group-rights-label' => 'Uprawnienia grup',
+	'admindashboard-control-group-rights-tooltip' => 'Przegląd uprawnień dla różnych grup użytkowników.',
+	'admindashboard-control-invite-label' => 'Zaproś',
+	'admindashboard-control-invite-tooltip' => 'Zaproś innych do korzystania z tej wiki.',
+	'admindashboard-control-help-label' => 'Pomoc',
+	'admindashboard-control-help-tooltip' => 'Uzyskaj pomoc.',
+	'admindashboard-controls-content-header' => 'Zawartość',
+	'admindashboard-control-community-corner-label' => 'Zakątek społeczności',
+	'admindashboard-control-community-corner-tooltip' => 'Edytuj Zakątek społeczności Twojej wiki i powiadom użytkowników.',
+	'admindashboard-control-categories-list-label' => 'Wszystkie kategorie',
+	'admindashboard-control-categories-list-tooltip' => 'Wyświetla wszystkie kategorie użyte na Twojej wiki.',
+	'admindashboard-control-add-page-label' => 'Dodaj stronę',
+	'admindashboard-control-add-page-tooltip' => 'Dodaj nową stronę do swojej wiki.',
+	'admindashboard-control-add-photo-label' => 'Dodaj grafikę',
+	'admindashboard-control-add-photo-tooltip' => 'Dodaje nowe grafiki do Twojej wiki.',
+	'admindashboard-control-add-blog-label' => 'Dodaj wpis do pamiętnika',
+	'admindashboard-control-add-blog-tooltip' => 'Dodaje wpisy do pamiętnika na Twojej wiki.',
+	'admindashboard-control-multiple-upload-label' => 'Dodaj wiele grafik',
+	'admindashboard-control-multiple-upload-tooltip' => 'Przesyła więcej niż jedną grafikę za pomocą narzędzia wielokrotnego przesyłu.',
+	'admindashboard-back-to-dashboard' => 'Powrót do panelu',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'admindashboard-controls-wiki-header' => 'వికీ',
+	'admindashboard-control-help-label' => 'సహాయం',
+	'admindashboard-control-categories-list-label' => 'అన్ని వర్గాలు',
 );
 

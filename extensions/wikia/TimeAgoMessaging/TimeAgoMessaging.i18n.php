@@ -281,6 +281,16 @@ $messages['sv'] = array(
 	'timeago-second' => 'en minut sedan',
 );
 
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'timeago-day' => '{{PLURAL:$1|ఒక రోజు|$1 రోజుల}} క్రితం',
+	'timeago-hour' => '{{PLURAL:$1|ఒక గంట|$1 గంటల}} క్రితం',
+	'timeago-minute' => '{{PLURAL:$1|ఒక నిమిషం|$1 నిమిషాల}} క్రితం',
+	'timeago-second' => 'ఒక నిమిషం క్రితం',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */

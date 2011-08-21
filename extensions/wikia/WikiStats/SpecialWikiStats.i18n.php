@@ -6329,6 +6329,7 @@ $messages['te'] = array(
 	'wikistats_trend_where_text' => 'ఎక్కడ:',
 	'wikistats_trend_all_wikia_text' => 'అన్ని వికీలు',
 	'wikistats_xls_cancel' => 'రద్దుచేయి',
+	'wikistats_language_stats' => 'భాషా గణాంకాలు',
 	'wikistats_main_statistics_legend' => 'ప్రధాన గణాంకాలు',
 	'wikistats_other_statistics_legend' => 'ఇతర గణాంకాలు',
 	'wikistats_search_text' => 'వెతుకు:',
@@ -6336,6 +6337,7 @@ $messages['te'] = array(
 	'wikistats_blog_comment' => 'బ్లాగు వ్యాఖ్యలు',
 	'wikistats_photo_new' => 'కొత్త ఫొటోలు',
 	'wikistats_video_new' => 'కొత్త వీడియోలు',
+	'wikistats_userns' => 'వాడుకరి',
 	'wikistats_restricted_page' => 'నియంత్రిత పుట.<br />
 వికియా గణాంకాలను చూడడానికి మీరు ప్రవేశించివుండాలి.
 దయచేసి [[Special:UserLogin|ప్రవేశించండి]] లేదా మీకు ఇప్పటికే ఖాతా లేకపోతే ఒక కొత్త ఖాతాని సృష్టించుకోండి.',

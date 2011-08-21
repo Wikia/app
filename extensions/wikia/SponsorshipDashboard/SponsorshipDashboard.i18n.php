@@ -3133,6 +3133,10 @@ $messages['ta'] = array(
  */
 $messages['te'] = array(
 	'sponsorship-dashboard-serie-content-article' => 'పుటలు',
+	'sponsorship-dashboard-serie-namespace-Special' => 'ప్రత్యేక పుటలు',
+	'sponsorship-dashboard-serie-namespace-Talk' => 'చర్చా పుటలు',
+	'sponsorship-dashboard-serie-namespace-User' => 'వాడుకరి పుటలు',
+	'sponsorship-dashboard-serie-namespace-Help' => 'సహాయపు పుటలు',
 	'sponsorship-dashboard-report-activity' => 'కలాపం',
 	'sponsorship-dashboard-report-participation' => 'పాల్గోలు',
 	'sponsorship-dashboard-report-interests' => 'ఆసక్తులు',
@@ -3142,6 +3146,15 @@ $messages['te'] = array(
 	'sponsorship-dashboard-day' => 'రోజు',
 	'sponsorship-dashboard-month' => 'నెల',
 	'sponsorship-dashboard-year' => 'సంవత్సరం',
+	'sponsorship-dashboard-tab-ViewUsers' => 'వాడుకరులు',
+	'sponsorship-dashboard-users-name' => 'పేరు',
+	'sponsorship-dashboard-report-description' => 'వివరణ',
+	'sponsorship-dashboard-report-title' => 'శీర్షిక',
+	'sponsorship-dashboard-save' => 'భద్రపరచు',
+	'sponsorship-dashboard-source-serie-name' => 'పేరు',
+	'sponsorship-dashboard-source-query' => 'ఎంపికలు',
+	'sponsorship-dashboard-other-options' => 'ఇతర ఎంపికలు',
+	'sponsorship-dashboard-table-collumn-date' => 'తేదీ',
 );
 
 /** Tagalog (Tagalog)

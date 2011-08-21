@@ -1332,6 +1332,64 @@ $messages['no'] = array(
 	'right-editprofile' => 'Rediger profilen til andre brukere',
 );
 
+/** Polish (Polski)
+ * @author Cloudissimo
+ */
+$messages['pl'] = array(
+	'userprofilepage-desc' => 'Zapewnia stronę użytkownika, która jest przyjemna i prosta do aktualizowania',
+	'userprofilepage-edit-avatar-label' => 'Edytuj portret',
+	'userprofilepage-users-notes-title' => 'O mnie',
+	'userprofilepage-edit-button' => 'Edytuj',
+	'userprofilepage-about-empty-section' => 'Ta sekcja jest pusta. Kliknij {{int:userprofilepage-edit-button}} żeby coś tu dodać!',
+	'userprofilepage-edit-permision-denied' => 'Odmowa uprawnień do edycji',
+	'userprofilepage-edit-permision-denied-info' => 'Nie masz uprawnień do edycji czyjeś strony lub podstrony użytkownika',
+	'userprofilepage-empty-my-about-me-section' => '<div style="font-size: 20px">Wszyscy na tej wiki chcieliby dowiedzieć się o Tobie czegoś więcej!!</div><a href="$1">Edytuj tę sekcję</a>żeby dodać więcej na swój temat i opowiedzieć nam o tym co kochasz.',
+	'userprofilepage-empty-somebodys-about-me-section' => '<div style="font-size: 20px">$1 nie dodał jeszcze żadnych informacji.</div>Możesz <a href="$2">za to zostawić mu wiadomość.</a>',
+	'userprofilepage-user-doesnt-exists' => 'Użytkownik $1 nie istnieje na Wikii. Sprawdź stronę [[Special:WikiActivity|Wiki Activity]] żeby zobaczyć kto jest tutaj aktywny.',
+	'userprofilepage-user-anon' => 'Ten użytkownik jeszcze nie zarejestrował się na Wikii. [[Special:Signup|Zarejestruj się]]  żeby założyć konto i zdobywać punkty za edycję, odznaki i uznanie ze strony innych użytkowników!',
+	'userprofilepage-leave-message' => 'Zostaw wiadomość',
+	'userprofilepage-edits-since' => 'Liczba edycji od czasu dołączenia do tej wiki<br />$1',
+	'userprofilepage-user-last-action-edit' => '$1 dokonał edycji strony <a href="$2">$3</a>',
+	'userprofilepage-user-last-action-new' => '$1 utworzył <a href="$2">$3</a>',
+	'userprofilepage-user-last-action-delete' => '$1 usunął stronę <a href="$2">$3</a>',
+	'userprofilepage-user-group-sysop' => 'Administrator',
+	'userprofilepage-user-group-staff' => 'Członek zespołu',
+	'userprofilepage-user-group-bureaucrat' => 'Biurokrata',
+	'userprofilepage-user-group-helper' => 'Pomocnik',
+	'userprofilepage-user-group-sysop-tooltip' => 'Ten użytkownik jest administratorem tej wiki',
+	'userprofilepage-user-group-staff-tooltip' => 'Ten użytkownik jest członkiem zespołu Wikia',
+	'userprofilepage-user-group-bot-tooltip' => 'Ten użytkownik jest botem',
+	'userprofilepage-user-group-bureaucrat-tooltip' => 'Ten użytkownik jest biurokratą na tej wiki',
+	'userprofilepage-user-group-helper-tooltip' => 'Ten użytkownik jest pomocnikiem',
+	'userprofilepage-user-group-vstf-tooltip' => 'Ten użytkownik jest członkiem Spam Task Force',
+	'userprofilepage-top-wikis-title' => 'Główne wiki $1',
+	'userprofilepage-top-wikis-edit-count' => 'Liczba edycji',
+	'userprofilepage-top-wikis-unhide-label' => 'odkryj',
+	'userprofilepage-top-wikis-hide-label' => 'ukryj',
+	'userprofilepage-top-wikis-locked-label' => 'Obecna wiki nie może zostać ukryta',
+	'userprofilepage-recent-activity-title' => 'Ostatnia aktywność $1',
+	'userprofilepage-activity-edit' => 'edytowanie strony $1',
+	'userprofilepage-activity-new' => 'utworzenie strony $1',
+	'userprofilepage-activity-comment' => 'komentarz w $1',
+	'userprofilepage-activity-image' => 'dodanie grafiki do $1',
+	'userprofilepage-activity-video' => 'dodanie filmu do $1',
+	'userprofilepage-activity-delete' => 'usunięcie strony $1',
+	'userprofilepage-activity-talk' => 'zostawienie wiadomości na stronie dyskusji $1',
+	'userprofilepage-recent-activity-default' => '$1 dołączył do Wikii',
+	'userprofilepage-top-recent-activity-see-more' => 'Zobacz pełną &gt;',
+	'userprofilepage-top-page-unhide-label' => 'odkryj',
+	'userprofilepage-top-pages-default' => 'Nie masz jeszcze żadnych topowych stron. Czemu nie sprawdzisz <a href="$1">losowych stron</a> na tej wiki?',
+	'recipes-template-user-description-label' => 'Opis',
+	'recipes-template-user-description-hint' => 'Krótka informacja o użytkowniku',
+	'recipes-template-user-birthdate-label' => 'Data urodzenia',
+	'recipes-template-user-birthdate-hint' => 'Data urodzin (dowolny format)',
+	'recipes-template-user-abilities-label' => 'Umiejętności',
+	'recipes-template-user-abilities-hint' => 'Umiejętności',
+	'recipes-template-user-gender-label' => 'Płeć',
+	'recipes-template-user-gender-hint' => 'Płeć',
+	'right-editprofile' => 'Edytuj profile innych użytkowników',
+);
+
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
@@ -1744,6 +1802,11 @@ $messages['vi'] = array(
 	'userprofilepage-user-group-bureaucrat-tooltip' => 'Người dùng này là Hành chính viên tại {{SITENAME}}',
 	'userprofilepage-user-group-helper-tooltip' => 'Người dùng này là một Hỗ trợ viên',
 	'userprofilepage-user-group-vstf-tooltip' => 'Người dùng này là thành viên đội tình nguyện chống phá hoại',
+	'userprofilepage-top-wikis-edit-count' => 'Số lần sửa đổi',
+	'userprofilepage-recent-activity-title' => 'Hoạt động gần đây của $1',
+	'userprofilepage-activity-edit' => 'sửa đổi trang $1',
+	'userprofilepage-activity-new' => 'tạo $1',
+	'userprofilepage-recent-activity-default' => '$1 đã tham gia Wikia',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

@@ -902,7 +902,9 @@ $messages['mk'] = array(
 	'themedesigner-small' => 'Мал',
 	'themedesigner-medium' => 'Среден',
 	'themedesigner-large' => 'Голем',
-	'themedesigner-tile-background' => 'позадина на поле',
+	'themedesigner-tile-background' => 'поле',
+	'themedesigner-fix-background' => 'поправи',
+	'themedesigner-transparency' => 'проѕирност',
 	'themedesigner-tab-theme' => 'Изглед',
 	'themedesigner-tab-customize' => 'Прилагоди',
 	'themedesigner-tab-wordmark' => 'Жиг',
@@ -962,7 +964,8 @@ $messages['ms'] = array(
 	'themedesigner-small' => 'Kecil',
 	'themedesigner-medium' => 'Sederhana',
 	'themedesigner-large' => 'Besar',
-	'themedesigner-tile-background' => 'latar belakang berjubin',
+	'themedesigner-tile-background' => 'jubin',
+	'themedesigner-transparency' => 'transparensi',
 	'themedesigner-tab-theme' => 'Tema',
 	'themedesigner-tab-customize' => 'Ubah suai',
 	'themedesigner-tab-wordmark' => 'Tanda kata',
@@ -1047,7 +1050,9 @@ $messages['nl'] = array(
 	'themedesigner-small' => 'Klein',
 	'themedesigner-medium' => 'Gemiddeld',
 	'themedesigner-large' => 'Groot',
-	'themedesigner-tile-background' => 'naast elkaar',
+	'themedesigner-tile-background' => 'tegel',
+	'themedesigner-fix-background' => 'gefixeerd',
+	'themedesigner-transparency' => 'transparantie',
 	'themedesigner-tab-theme' => 'Vormgeving',
 	'themedesigner-tab-customize' => 'Aanpassen',
 	'themedesigner-tab-wordmark' => 'Woordmerk',
@@ -1532,11 +1537,15 @@ $messages['sv'] = array(
 	'themedesugber-uknown-error' => 'Ett fel har uppstått, tyvärr kunde vi inte identifiera det, försök igen',
 );
 
-/** Telugu (తెలుగు) */
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
 $messages['te'] = array(
+	'themedesigner-page' => 'పుట',
 	'themedesigner-color' => 'రంగు',
 	'themedesigner-buttons' => 'బొత్తాలు',
 	'themedesigner-links' => 'లంకెలు',
+	'themedesigner-transparency' => 'పారదర్శకత',
 	'themedesigner-tab-theme' => 'అలంకారం',
 	'themedesigner-button-cancel' => 'రద్దుచేయి',
 	'themedesigner-pick-a-color' => 'ఒక రంగుని ఎంచుకోండి',

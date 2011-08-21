@@ -62,11 +62,14 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Siebrand
  * @author The Evil IP address
  * @author Umherirrender
  */
 $messages['qqq'] = array(
 	'editaccount-desc' => '{{desc}}',
+	'editaccount-success-disable' => 'Parameters:
+* $1 is a username.',
 	'right-editaccount' => '{{doc-right|editaccount}}',
 );
 
@@ -468,6 +471,7 @@ $messages['fr'] = array(
 	'editaccount-submit-pass' => 'Sauvegarder le mot de passe',
 	'editaccount-submit-realname' => 'Sauvegarder le nom complet',
 	'editaccount-submit-clearunsub' => 'Effacer le désabonnement',
+	'editaccount-submit-cleardisable' => 'Retirer le flag « désactivé »',
 	'editaccount-submit-close' => 'Clore le compte',
 	'editaccount-usage-close' => 'Vous pouvez également désactiver un compte utilisateur en cryptant son mot de passe et en supprimant son adresse électronique. Veuillez notez que les données seront perdues et ne seront pas récupérables.',
 	'editaccount-warning-close' => '<b>Attention !</b> Vous êtes sur le point de désactiver le compte utilisateur <b>$1</b> de manière permanente. Ceci ne peut pas être défait. Êtes-vous certain de vouloir effectuer cette opération ?',
@@ -477,6 +481,7 @@ $messages['fr'] = array(
 	'editaccount-success-pass' => 'Le mot de passe du compte $1 a été modifié avec succès.',
 	'editaccount-success-realname' => 'Le nom complet du compte $1 a été modifié avec succès.',
 	'editaccount-success-unsub' => 'L’information de désabonnement a été retirée avec succès pour le compte $1.',
+	'editaccount-success-disable' => 'Flag « désactivé » retiré avec succès pour le compte $1.',
 	'editaccount-success-close' => 'Le compte $1 a été désactivé avec succès.',
 	'editaccount-error-email' => "L'adresse électronique n'a pas été modifiée. Essayez de nouveau ou contactez l'équipe technique.",
 	'editaccount-error-pass' => "Le mot de passe n'a pas été modifié. Essayez de nouveau ou contactez l'équipe technique.",
@@ -484,6 +489,7 @@ $messages['fr'] = array(
 	'editaccount-error-close' => "Un problème est survenu lors de la fermeture du compte. Veuillez ré-essayer ou contacter l'équipe technique.",
 	'editaccount-invalid-email' => "« $1 » n'est pas une adresse électronique valide !",
 	'editaccount-nouser' => "Le compte « $1 » n'existe pas !",
+	'editaccount-remove-avatar-fail' => 'Problème à l’auto-suppression de l’avatar.',
 	'editaccount-log' => 'Journal des comptes utilisateurs',
 	'editaccount-log-header' => 'Cette page liste les modifications faîtes au préférences utilisateur par le staff de Wikia.',
 	'editaccount-log-entry-email' => "a modifié l'adresse électronique de l'utilisateur $2",
@@ -775,6 +781,7 @@ $messages['mk'] = array(
 	'editaccount-submit-pass' => 'Зачувај лозинка',
 	'editaccount-submit-realname' => 'Зачувај вистинско име',
 	'editaccount-submit-clearunsub' => 'Исчисти откажани',
+	'editaccount-submit-cleardisable' => 'Исчисти оневозмож. знаме',
 	'editaccount-submit-close' => 'Затвори сметка',
 	'editaccount-usage-close' => 'Можете да оневозможите корисничка сметка со тоа што ќе ја претворите лозинката во нечитлива и ќе ја отстраните е-поштенската адреса. Имајте на ум дека овие податоци ќе се изгубат и нема да можат да се вратат.',
 	'editaccount-warning-close' => '<b>Внимание!</b> На пат сте засекогаш да ја оневозможите сметката на корисникот <b>$1</b>. Оваа постапка не може да се врати. Дали сте сигурни дека сакате да го направите ова?',
@@ -784,6 +791,7 @@ $messages['mk'] = array(
 	'editaccount-success-pass' => 'Лозинката за сметката $1 е успешно променета.',
 	'editaccount-success-realname' => 'Вистинското име за сметката $1 е успешно променето.',
 	'editaccount-success-unsub' => 'Успешно ги отстранивте откажаните претплати на сметката $1.',
+	'editaccount-success-disable' => 'Успешно го отстранивте оневозможениот дел од сметката $1.',
 	'editaccount-success-close' => 'Сметката $1 е успешно оневозможена.',
 	'editaccount-error-email' => 'Е-поштата не е променета. Обидете се повторно или контактирајте ја Екипата за техничка поддршка',
 	'editaccount-error-pass' => 'Лозинката не е променета. Обидете се повторно или контактирајте ја Екипата за техничка поддршка.',
@@ -791,6 +799,7 @@ $messages['mk'] = array(
 	'editaccount-error-close' => 'Се појави проблем при затворањето на сметката. Обидете се повторно или контактирајте ја Екипата за техничка поддршка',
 	'editaccount-invalid-email' => '„$1“ не е важечка е-поштенска адреса!',
 	'editaccount-nouser' => 'Сметката „$1“ не поостои',
+	'editaccount-remove-avatar-fail' => 'Проблем при автоотстранување на аватарот.',
 	'editaccount-log' => 'Дневник на кориснички сметки',
 	'editaccount-log-header' => 'Оваа страница ги прикажува промените во нагодувањата на корисниците направени од персоналот на Викија',
 	'editaccount-log-entry-email' => 'променета е-поштата на корисникот $2',
@@ -874,6 +883,7 @@ Laat de gebruiker bij deze wiki aanmelden met een nieuw wachtwoord om problemen 
 	'editaccount-submit-pass' => 'Wachtwoord opslaan',
 	'editaccount-submit-realname' => 'Echte naam opslaan',
 	'editaccount-submit-clearunsub' => 'Uitschrijven leegmaken',
+	'editaccount-submit-cleardisable' => 'Gebruiker weer vrijgeven',
 	'editaccount-submit-close' => 'Gebruiker afsluiten',
 	'editaccount-usage-close' => 'U kunt een gebruiker ook uitschakelen door een onbekend wachtwoord in te stellen en het e-mailadres te verwijderen.
 De huidige gegevens gaan dan verloren en zijn niet te herstellen.',
@@ -887,6 +897,7 @@ Weet u zeker dat u dit wilt doen?',
 	'editaccount-success-pass' => 'Het wachtwoord voor gebruiker $1 is gewijzigd.',
 	'editaccount-success-realname' => 'De echte naam voor gebruiker $1 is gewijzigd.',
 	'editaccount-success-unsub' => 'De gebruiker $1 is niet langer uitgeschreven.',
+	'editaccount-success-disable' => 'De gebruiker $1 is weer vrijgegeven.',
 	'editaccount-success-close' => 'De gebruiker $1 is uitgeschakeld.',
 	'editaccount-error-email' => 'Het e-mailadres is niet gewijzigd.
 Probeer het opnieuw of neem contact op het met Tech Team.',
@@ -898,6 +909,7 @@ Probeer het opnieuw of neem contact op met het Tech Team.',
 Probeer het opnieuw of neem contact op met het Tech Team.',
 	'editaccount-invalid-email' => '"$1" is geen geldig e-mailadres.',
 	'editaccount-nouser' => 'De gebruiker "$1" bestaat niet.',
+	'editaccount-remove-avatar-fail' => 'Er is een probleem opgetreden tijdens het automatisch verwijderen van de avatar.',
 	'editaccount-log' => 'Logboek gebruikers',
 	'editaccount-log-header' => 'Op deze pagina staan wijzigingen in gebruikersvoorkeuren die door stafleden van Wikia zijn gemaakt.',
 	'editaccount-log-entry-email' => 'heeft het e-mailadres voor gebruiker $2 aangepast',

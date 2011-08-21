@@ -130,6 +130,8 @@ $messages['fr'] = array(
 	'unsubscribe-working' => 'Désabonnement de $1 {{PLURAL:$1|compte|comptes}} pour $2',
 	'unsubscribe-working-problem' => 'problème au chargement des informations de l’utilisateur : $1',
 	'unsubscribe-working-done' => 'Terminé.',
+	'unsubscribe-preferences-toggle' => 'Se désabonner de tous les courriels de Wikia (décochez ceci pour accéder aux options ci-dessous)',
+	'unsubscribe-preferences-notice' => 'Les courriels ont été désactivés pour votre compte. Aller sur l’onglet de profil utilisateur pour les réactiver.',
 );
 
 /** Galician (Galego)
@@ -219,6 +221,8 @@ $messages['mk'] = array(
 	'unsubscribe-working' => 'Отпис од $1 {{PLURAL:$1|сметка|сметки}} за $2',
 	'unsubscribe-working-problem' => 'проблем при вчитувањето на корисничките податоци за: $1',
 	'unsubscribe-working-done' => 'Готово.',
+	'unsubscribe-preferences-toggle' => 'Откажи претплата на е-пошта од Викија (отшиклирајте го ова за да дојдете до можностите подолу)',
+	'unsubscribe-preferences-notice' => 'Пораките по е-пошта се оневозможени за вашата сметка. Појдете на јазичето „Кориснички профил“ за да ги овозможите повторно.',
 );
 
 /** Malay (Bahasa Melayu)
@@ -238,6 +242,8 @@ $messages['ms'] = array(
 	'unsubscribe-working' => 'Berhenti melanggan $1 akaun untuk $2',
 	'unsubscribe-working-problem' => 'masalah memuatkan info pengguna: $1',
 	'unsubscribe-working-done' => 'Selesai.',
+	'unsubscribe-preferences-toggle' => 'Berhenti melanggan semua e-mel dari Wikia (nyahpilih ini untuk mengakses pilihan di bawah)',
+	'unsubscribe-preferences-notice' => 'E-mel telah dimatikan untuk akaun anda. Pergi ke tab Profil Pengguna untuk menghidupkannya semula.',
 );
 
 /** Burmese (မြန်မာဘာသာ)

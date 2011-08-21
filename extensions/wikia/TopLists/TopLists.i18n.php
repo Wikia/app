@@ -1000,7 +1000,7 @@ $messages['mk'] = array(
 	'toplists-list-related-to' => 'Поврзано со:',
 	'toplists-list-votes-num' => '{{PLURAL:$1|1<br/ >глас|$1<br/ >гласа}}',
 	'toplists-list-created-by' => 'од [[User:$1|$1]]',
-	'toplists-list-vote-up' => 'Глас нагоре',
+	'toplists-list-vote-up' => 'Гласај „за“',
 	'toplists-list-hotitem-count' => '$1 {{PLURAL:$1|глас|гласа}} in $2',
 	'toplists-list-add-item-label' => 'Додај ставка',
 	'toplists-list-add-item-name-label' => 'Продолжете го списокот...',
@@ -1755,6 +1755,18 @@ Du kan <a href="$4">avbryta prenumerationen</a> från förändringslistan när d
 	'toplists-msg-fb-OnRateArticle-short' => 'har röstat på Topp 10 listan på $WIKINAME!',
 	'toplists-create-heading' => '<em>Nyhet!</em> Skapa Din Egen Topp Tio',
 	'toplists-create-button-msg' => 'Skapa en lista',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'toplists-cancel-button' => 'రద్దుచేయి',
+	'toplists-seconds' => '$1 {{PLURAL:$1|క్షణం|క్షణాలు}}',
+	'toplists-minutes' => '$1 {{PLURAL:$1|నిమిషం|నిమిషాలు}}',
+	'toplists-hours' => '$1 {{PLURAL:$1|గంట|గంటలు}}',
+	'toplists-days' => '$1 {{PLURAL:$1|రోజు|రోజులు}}',
+	'toplists-weeks' => '$1 {{PLURAL: $1|వారం|వారాలు}}',
 );
 
 /** Tagalog (Tagalog)

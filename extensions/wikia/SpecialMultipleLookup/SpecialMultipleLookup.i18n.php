@@ -823,7 +823,10 @@ $messages['sw'] = array(
  */
 $messages['te'] = array(
 	'multilookupgo' => 'వెళ్ళు',
+	'multilookupwiki' => 'వికీ',
 	'multilookupdetails' => 'వివరాలను చూడండి',
+	'multilookupwikititle' => 'శీర్షిక',
+	'multilookupwikioptions' => 'ఎంపికలు',
 );
 
 /** Tagalog (Tagalog)

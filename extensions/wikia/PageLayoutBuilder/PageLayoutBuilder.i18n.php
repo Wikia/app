@@ -2751,6 +2751,21 @@ $messages['sv'] = array(
 	'plb-editor-preview' => 'Förhandsgranska',
 );
 
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'plb-special-form-summary' => 'సారాంశం:',
+	'plb-form-title' => 'శీర్షిక:',
+	'plb-form-desc' => 'వివరణ:',
+	'plb-list-desc' => 'వివరణ',
+	'plb-parser-default-instructions' => 'సూచనలు',
+	'plb-property-editor-width' => 'వెడల్పు',
+	'plb-property-editor-save' => 'భద్రపరచు',
+	'plb-property-editor-cancel' => 'రద్దుచేయి',
+	'plb-copy-submit-link' => 'భద్రపరుచు',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */

@@ -823,6 +823,13 @@ Försök igen eller [[Special:Contact|anmäl det här]].',
 (Om du redan har ett konto kan du <a href="#">logga in</a> som vanligt, men du kommer inte kunna redigera.)</p>',
 );
 
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'comboajaxlogin-connectmarketing-back' => '&laquo; వెనుకకు',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
