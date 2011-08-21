@@ -338,7 +338,7 @@ The Wikia Team',
 	'founderemails-email-complete-digest-content2' => 'Happy editors make happy wikis. Make sure to thank your editors and check in with them from time to time.',
 	'founderemails-email-complete-digest-content-heading3' => '$1 {{PLURAL:$1|person|people}} joined your wiki.',
 	'founderemails-email-complete-digest-content3' => 'Welcome new people to your wiki with a talk page message.
-<br><br>
+<br /><br />
 You can always head over to wiki activity to view all of the exiting changes being made on $WIKINAME. Check in often, as the founder your community looks to you to help guide and run the wiki.',
 	'founderemails-email-complete-digest-signature' => 'The Wikia Team',
 	'founderemails-email-complete-digest-button' => 'Go to wiki activity',
