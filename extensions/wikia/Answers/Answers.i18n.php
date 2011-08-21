@@ -94,7 +94,7 @@ $messages['en'] = array(
 	'answers-category-count-answered' => 'This category contains $1 answered questions.',
 	'answers-category-count-unanswered' => 'This category contains $1 unanswered questions.',
 	'answers_widget_no_questions' => '<a href="http://answers.wikia.com" target="_blank">Wikianswers</a> is a site where you can ask questions and contribute answers. We\'re aiming to create the best answer to any question. <a href="http://answers.wikia.com/wiki/Special:Search" target="_blank">Find</a> and answer <a href="http://answers.wikia.com/wiki/Category:Un-answered_questions">unanswered</a> questions. It\'s a wiki - so be bold!',
-	'answers_widget_no_questions_askabout' => '<br><br>Get started by asking a question about "{{PAGENAME}}"',
+	'answers_widget_no_questions_askabout' => '<br /><br />Get started by asking a question about "{{PAGENAME}}"',
 	'reword_this' => '<a href="$1" $2>Reword this question</a> ',
 	'no_related_answered_questions' => 'There are no related questions yet. Get a <a href="http://answers.wikia.com/wiki/Special:Randomincategory/answered_questions">random answered question instead</a>, or ask a new one!<br />
 	<div class="createbox" align="center">
