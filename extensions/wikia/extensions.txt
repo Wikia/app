@@ -4,9 +4,11 @@ file = AchievementsII/i18n/AchievementsII.i18n.php
 Ad SS
 
 Admin Dashboard
+optional = admindashboard-control-help-url
 
 Admin Dashboard - Quick Stats
 file = AdminDashboard/QuickStats.i18n.php
+optional = quickstats-date-format
 
 Combo Ajax Login
 file = AjaxLogin/ComboAjaxLogin.i18n.php
@@ -15,6 +17,8 @@ descmsg = comboajaxlogin-desc
 Ajax Poll
 
 Answers
+optional = q, ?, header_questionmark_post
+ignored = header_questionmark_pre, badWords, qa-featured-sites
 
 # Disabled. Duplicate key with Answers extension.
 #Answers Namespace
@@ -50,10 +54,13 @@ Category Galleries
 Category Select
 
 Chat
+optional = grouppage-bannedfromchat, grouppage-bannedfromchat, grouppage-chatmoderator
 
 Cloak Check
 
 Community Messages
+
+Confirm Email Prompt
 
 Content Feeds
 
@@ -76,12 +83,17 @@ file = EditAccount/SpecialEditAccount.i18n.php
 Edit Page Layout
 ignored = anoneditwarning-notice, longpagewarning-notice
 
+Foggy Foto
+optional = foggyfoto-progress-numbers
+
 Follow
 aliasfile = Follow/Follow.alias.php
 
 Founder Emails
+ignored = founderemails-email-footer-line3
 
 Founder Progress Bar
+optional = founderprogressbar-commcentral-visit-url
 
 Game Guides
 
@@ -202,7 +214,7 @@ RTE - CK Wikia
 file = RTE/i18n/CK.wikia.i18n.php
 
 Scavenger Hunt
-ignored = scavengerhunt-form-error-name
+ignored = scavengerhunt-form-error-name, scavengerhunt-editor-tip-article-congrats, scavengerhunt-editor-tip-progressBarHintLabel, scavengerhunt-editor-tip-article-clue-text
 
 Scribe
 file = Scribe/SpecialScribeEvents.i18n.php
