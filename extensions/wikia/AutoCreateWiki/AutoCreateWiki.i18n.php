@@ -4131,10 +4131,15 @@ $messages['ta'] = array(
  * @author Veeven
  */
 $messages['te'] = array(
+	'autocreatewiki-web-address' => 'జాల చిరునామా:',
 	'autocreatewiki-language-all' => 'అన్ని భాషలు',
 	'autocreatewiki-birthdate' => 'పుట్టిన రోజు:',
+	'autocreatewiki-title-template' => '$1 వికీ',
+	'autocreatewiki-category-label' => 'వర్గం:',
 	'autocreatewiki-category-other' => 'ఇతర',
 	'autocreatewiki-congratulation' => 'అభినందనలు!',
+	'autocreatewiki-welcometalk-log' => 'స్వాగత సందేశం',
+	'newwikis' => 'కొత్త వికీలు',
 	'autocreatewiki-subname-answers' => 'జవాబులు',
 );
 

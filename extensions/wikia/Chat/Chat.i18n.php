@@ -346,6 +346,7 @@ $messages['fr'] = array(
 	'chat-user-blocked' => '$1 a bloqué $2.',
 	'chat-user-allow' => '$1 a autorisé $2.',
 	'chat-user-was-kickbanned' => '$1 a été banni.',
+	'chat-user-permanently-disconnected' => 'Vous avez été déconnecté, vérifiez votre connexion Internet et rafraîchissez la fenêtre du navigateur',
 	'chat-inlinealert-a-made-b-chatmod' => '$1 a promu <strong>$2</strong> au rang de modérateur du tchat.',
 	'chat-err-connected-from-another-browser' => 'Vous vous êtes connecté depuis un autre navigateur. Cette connexion va être fermée.',
 	'chat-err-communicating-with-mediawiki' => 'Une erreur est survenue lors de la communication avec le serveur MediaWiki.',
@@ -367,7 +368,7 @@ $messages['fr'] = array(
 	'chat-join-the-chat' => 'Rejoindre la discussion',
 	'chat-edit-count' => '$1 contributions',
 	'chat-member-since' => 'Membre depuis $1',
-	'chat-great-youre-logged-in' => 'Super ! Vous êtes connecté(e).',
+	'chat-great-youre-logged-in' => 'Super ! Vous êtes connecté.',
 	'chat-user-manu-profile' => 'Profil utilisateur',
 	'chat-user-manu-contribs' => 'Contributions',
 	'chat-user-manu-private' => 'Message privé',
@@ -377,6 +378,12 @@ $messages['fr'] = array(
 	'chat-user-manu-private-allow' => 'Autoriser les messages privés',
 	'chat-user-manu-private-close' => 'Fermer la discussion privée',
 	'chat-private-headline' => 'Discussion privée avec $1',
+	'right-chatmoderator' => 'Peut bannir des utilisateurs du [[Help:Chat|tchat]]',
+	'group-chatmoderator' => 'Modérateurs du chat',
+	'group-chatmoderator-member' => 'modérateur du tchat',
+	'grouppage-chatmoderator' => 'w:c:aide:Aide:Tchat',
+	'group-bannedfromchat' => 'Bannis du tchat',
+	'group-bannedfromchat-member' => 'banni du tchat',
 );
 
 /** Galician (Galego)
@@ -528,6 +535,13 @@ $messages['ja'] = array(
 	'chat-private-headline' => '$1 とのプライベートチャット',
 );
 
+/** کھوار (کھوار)
+ * @author Rachitrali
+ */
+$messages['khw'] = array(
+	'chat-desc' => '[[Special:Chat|لایو چیٹنگ]]',
+);
+
 /** Korean (한국어)
  * @author Infinity
  */
@@ -577,6 +591,7 @@ $messages['mk'] = array(
 	'chat-user-blocked' => '$1 го блокираше корисникот $2.',
 	'chat-user-allow' => '$1 го прими корисникот $2.',
 	'chat-user-was-kickbanned' => 'Корисникот $1 е исфрлен и пристапот му е забранет.',
+	'chat-user-permanently-disconnected' => 'Исклучени сте. Проверете си ја врската со интернет и превчитајте го прелистувачот.',
 	'chat-inlinealert-a-made-b-chatmod' => '$1 го/ја назначи <strong>$2</strong> за модератор на разговорите.',
 	'chat-err-connected-from-another-browser' => 'Се поврзавте од друг прелистувач. Оваа врска ќе се затвори.',
 	'chat-err-communicating-with-mediawiki' => 'Грешка при општењето со опслужувачот на МедијаВики.',
@@ -609,6 +624,12 @@ $messages['mk'] = array(
 	'chat-user-manu-private-allow' => 'Дозволи приватни пораки',
 	'chat-user-manu-private-close' => 'Затвори приватна соба',
 	'chat-private-headline' => 'Приватен разговор со $1',
+	'right-chatmoderator' => 'Може да исфрла/забранува корисници од [[Help:Chat|Разговор]]',
+	'group-chatmoderator' => 'Модератори на разговорот',
+	'group-chatmoderator-member' => 'Модератор на разговорот',
+	'grouppage-chatmoderator' => 'w:c:community:Help:Chat',
+	'group-bannedfromchat' => 'ЗабранетиОдРазговор',
+	'group-bannedfromchat-member' => 'ЗабранетиОдРазговор',
 );
 
 /** Malayalam (മലയാളം)
@@ -631,6 +652,7 @@ $messages['ms'] = array(
 	'chat-user-blocked' => '$1 telah menyekat $2 .',
 	'chat-user-allow' => '$1 telah membenarkan $2 .',
 	'chat-user-was-kickbanned' => '$1 diusir keluar.',
+	'chat-user-permanently-disconnected' => 'Sambungan anda terputus; sila periksa sambungan Internet anda dan muat semula tetingkap pelayar',
 	'chat-inlinealert-a-made-b-chatmod' => '$1 telah menjadikan <strong>$2</strong> seorang moderator sembang.',
 	'chat-err-connected-from-another-browser' => 'Anda telah bersambung dari pelayar lain. Sambungan ini akan ditutup.',
 	'chat-err-communicating-with-mediawiki' => 'Ralat ketika berhubung dengan pelayan MediaWiki.',
@@ -664,6 +686,12 @@ Sila hubungi mereka untuk penjelasan lanjut.',
 	'chat-user-manu-private-allow' => 'Benarkan Pesanan Peribadi',
 	'chat-user-manu-private-close' => 'Tutup Bilik Peribadi',
 	'chat-private-headline' => 'Sembang peribadi dengan $1',
+	'right-chatmoderator' => 'Boleh mengusir/melarang pengguna daripada [[Help:Chat|bersembang]]',
+	'group-chatmoderator' => 'Penyelia Sembang',
+	'group-chatmoderator-member' => 'Penyelia Sembang',
+	'grouppage-chatmoderator' => 'w:c:community:Help:Chat',
+	'group-bannedfromchat' => 'DilarangBersembang',
+	'group-bannedfromchat-member' => 'DilarangBersembang',
 );
 
 /** Dutch (Nederlands)
@@ -681,6 +709,7 @@ $messages['nl'] = array(
 	'chat-user-blocked' => '$1 heeft $2 geblokkeerd.',
 	'chat-user-allow' => '$1 heeft $2 gedeblokkeerd.',
 	'chat-user-was-kickbanned' => '$1 is uit het kanaal geschopt en verbannen.',
+	'chat-user-permanently-disconnected' => 'U hebt niet langer een verbinding. Controleer uw internetverbinding en ververs de inhoud van uw webbrowser.',
 	'chat-inlinealert-a-made-b-chatmod' => '$1 heeft <strong>$2</strong> chatmoderator gemaakt.',
 	'chat-err-connected-from-another-browser' => 'U bent verbonden via een andere browser. Deze verbinding wordt nu gesloten.',
 	'chat-err-communicating-with-mediawiki' => 'Er is een fout opgetreden in de verbinding met de MediaWiki-server.',
@@ -713,6 +742,11 @@ Neem alstublieft contact op met deze gebruiker voor meer informatie.',
 	'chat-user-manu-private-allow' => 'Privéberichten toestaan.',
 	'chat-user-manu-private-close' => 'Privéruimte sluiten',
 	'chat-private-headline' => 'Privechat met $1',
+	'right-chatmoderator' => 'Kan gebruikers verwijderen en verbannen uit de [[Help:Chat|Chat]]',
+	'group-chatmoderator' => 'Chatmoderatoren',
+	'group-chatmoderator-member' => 'Chatmoderator',
+	'group-bannedfromchat' => 'Verbannen uit chat',
+	'group-bannedfromchat-member' => 'Verbannen uit chat',
 );
 
 /** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
@@ -994,6 +1028,13 @@ $messages['sv'] = array(
 	'chat-join-the-chat' => 'Delta i chatten',
 	'chat-edit-count' => '$1 redigeringar',
 	'chat-member-since' => 'Medlem sedan $1',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'chat-member-since' => '$1 నుండి సభ్యులు',
 );
 
 /** Thai (ไทย)

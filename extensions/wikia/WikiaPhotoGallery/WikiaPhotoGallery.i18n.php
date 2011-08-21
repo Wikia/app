@@ -1318,6 +1318,7 @@ $messages['eo'] = array(
  * @author Crazymadlover
  * @author Diego Grez
  * @author Drini
+ * @author Mor
  * @author Translationista
  * @author VegaDark
  */
@@ -1492,8 +1493,8 @@ Describe esta imagen.",
 	'wikiaPhotoGallery-photooptions-linkurl' => 'Enlazar a (pegar nombre de página o URL)',
 	'wikiaPhotoGallery-photooptions-description' => 'Detalles de imagen.',
 	'wikiaPhotoGallery-search-tooltip' => 'Buscar imágenes en esta wiki',
-	'wikiaPhotoGallery-upload-image-size-error' => 'Dimensiones incorrectas. Las imágenes deben ser 673px por 410px.',
-	'wikiaPhotoGallery-upload-image-size' => 'Las imágenes deben ser 673 px por 410 px.',
+	'wikiaPhotoGallery-upload-image-size-error' => 'Tamaño de la imagen incorrecto. Las imágenes deben ser de 660 por 360px o mayores.',
+	'wikiaPhotoGallery-upload-image-size' => 'Las imágenes deben ser de 660 px por 360 px o mayores.',
 	'wikiaPhotoGallery-not-displayed' => 'No mostrado',
 	'galery-slider-read-more' => 'Leer más >',
 );
@@ -3086,7 +3087,7 @@ $messages['mk'] = array(
 	'wikiaPhotoGallery-slideshow-view-number' => '$1 од $2',
 	'wikiaPhotoGallery-slideshow-view-startslideshow' => 'Пушти подв. галерија',
 	'wikiaPhotoGallery-slideshow-view-stopslideshow' => 'Запри подв. галерија',
-	'wikiaPhotoGallery-slideshow-view-details-tooltip' => 'Преглед на податоци за сликата',
+	'wikiaPhotoGallery-slideshow-view-details-tooltip' => 'Подробности за сликата',
 	'wikiaPhotoGallery-slideshow-view-link-overlay' => 'Оди на $1',
 	'wikiaPhotoGallery-choice-title' => 'Додај подвижна или обична галерија',
 	'wikiaPhotoGallery-choice-intro' => 'Дали сакате да направите подвижна или обична галерија?',
@@ -3132,8 +3133,8 @@ $messages['mk'] = array(
 	'wikiaPhotoGallery-photooptions-linkurl' => 'Врска до (тука ископирајте назив или URL).',
 	'wikiaPhotoGallery-photooptions-description' => 'Податоци за сликата.',
 	'wikiaPhotoGallery-search-tooltip' => 'Пребарај слики на ова вики',
-	'wikiaPhotoGallery-upload-image-size-error' => 'Погрешна големина на сликата. Сликите мора да бидат со големина од 673 × 410 пиксели.',
-	'wikiaPhotoGallery-upload-image-size' => 'Сликите мора да бидат со големина од 673 × 410 пиксели.',
+	'wikiaPhotoGallery-upload-image-size-error' => 'Погрешна големина. Сликите мора да бидат со големина од барем 660 × 360 пиксели.',
+	'wikiaPhotoGallery-upload-image-size' => 'Сликите мора да бидат со големина од барем 660 × 360 пиксели.',
 	'wikiaPhotoGallery-not-displayed' => 'Неприкажано',
 	'galery-slider-read-more' => 'Прочитајте повеќе >',
 );
@@ -3311,8 +3312,8 @@ Sebagai alternatif, anda juga boleh mengklik "$2" untuk melihat laman ini dalam 
 	'wikiaPhotoGallery-photooptions-linkurl' => 'Pautan ke (tampalkan nama laman atau URL).',
 	'wikiaPhotoGallery-photooptions-description' => 'Butiran gambar.',
 	'wikiaPhotoGallery-search-tooltip' => 'Cari gambar di wiki ini',
-	'wikiaPhotoGallery-upload-image-size-error' => 'Saiz gambar salah. Gambar harus bersaiz 673px darab 410px.',
-	'wikiaPhotoGallery-upload-image-size' => 'Gambar haruslah bersaiz 673 px kali 410 px.',
+	'wikiaPhotoGallery-upload-image-size-error' => 'Saiz gambar salah. Gambar harus bersaiz 660px kali 360px ke atas.',
+	'wikiaPhotoGallery-upload-image-size' => 'Gambar haruslah bersaiz 660 px kali 360 px ke atas.',
 	'wikiaPhotoGallery-not-displayed' => 'Tidak dipaparkan',
 	'galery-slider-read-more' => 'Baca lebih lanjut>',
 );
@@ -3508,8 +3509,8 @@ Als dit bestand wordt aangeklikt, ga dan naar de aangegeven pagina.",
 	'wikiaPhotoGallery-photooptions-linkurl' => 'Verwijzen naar (plak de paginanaam of de URL).',
 	'wikiaPhotoGallery-photooptions-description' => 'Afbeeldingsgegevens',
 	'wikiaPhotoGallery-search-tooltip' => 'Afbeeldingen op deze wiki zoeken',
-	'wikiaPhotoGallery-upload-image-size-error' => 'Onjuiste afbeeldingsafmetingen. Afbeeldingen moeten 673x410 pixels zijn.',
-	'wikiaPhotoGallery-upload-image-size' => 'Afbeeldingen moeten 673x410 pixels zijn.',
+	'wikiaPhotoGallery-upload-image-size-error' => 'Onjuiste afbeeldingsafmetingen. Afbeeldingen moeten 660x360 pixels zijn.',
+	'wikiaPhotoGallery-upload-image-size' => 'Afbeeldingen moeten 660x360 pixels zijn.',
 	'wikiaPhotoGallery-not-displayed' => 'Niet weergegeven',
 	'galery-slider-read-more' => 'Meer lezen >',
 );
@@ -4431,6 +4432,7 @@ O que pretende fazer?',
 );
 
 /** Romanian (Română)
+ * @author Minisarm
  * @author Stelistcristi
  */
 $messages['ro'] = array(
@@ -4454,7 +4456,7 @@ $messages['ro'] = array(
 	'wikiaPhotoGallery-upload-selectbutton' => 'Selectează',
 	'wikiaPhotoGallery-photooptions-linkurl' => 'Legătură către (lipeşte numele paginii sau adresa).',
 	'wikiaPhotoGallery-photooptions-description' => 'Detalii imagine.',
-	'wikiaPhotoGallery-upload-image-size' => 'Imaginile trebuie să fie de 673x410 pixeli.',
+	'wikiaPhotoGallery-upload-image-size' => 'Imaginile trebuie să fie de 660 pe 360 de pixeli sau mai mari.',
 	'wikiaPhotoGallery-not-displayed' => 'Neafişată',
 );
 

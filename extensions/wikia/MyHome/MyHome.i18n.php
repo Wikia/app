@@ -2919,8 +2919,11 @@ $messages['ta'] = array(
  * @author Veeven
  */
 $messages['te'] = array(
+	'myhome-feed-newpage' => 'కొత్త పుట',
 	'myhome-feed-edit' => 'మార్చు',
 	'myhome-feed-talkpage' => 'చర్చా పేజీ',
+	'myhome-feed-categorization' => 'వర్గీకరణ',
+	'myhome-feed-new-page-details' => 'కొత్త పుట',
 	'myhome-feed-summary-details' => 'సారాంశం',
 	'myhome-feed-new-blog-comment-details' => 'వ్యాఖ్య',
 	'myhome-feed-new-article-comment-details' => 'వ్యాఖ్య',

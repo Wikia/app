@@ -88,6 +88,7 @@ Upgrade through PayPal to get an ad-free wiki for only $4.95 per month!',
 );
 
 /** Message documentation (Message documentation)
+ * @author Siebrand
  * @author Wyz
  */
 $messages['qqq'] = array(
@@ -144,6 +145,10 @@ Be carefull to keep it short as there are 3 successive balloon tips to display i
 	'cnw-welcome-help' => 'Message to Community central with embedded anchor. (leave blank if community does not exist)',
 	'cnw-error-general' => 'Generic error message to alert users that something went wrong while creating wiki',
 	'cnw-error-general-heading' => 'Heading for generic error in modal dialog',
+	'cnw-error-blocked' => 'Parameters:
+* $1 is a username
+* $2 is a block reason
+* $3 is a block ID',
 );
 
 /** Afrikaans (Afrikaans)
@@ -525,10 +530,14 @@ Mettez à niveau via Paypal pour obtenir un wiki sans publicité pour seulement 
 	'cnw-welcome-help' => 'Trouvez des réponses, conseils et plus sur sur <a href="http://community.wikia.com">Community Central</a>.',
 	'cnw-error-general' => 'Quelque chose s’est mal passé lors de la création de votre wiki. Veuillez réessayer plus tard.',
 	'cnw-error-general-heading' => 'Erreur lors de la création d’un nouveau wiki',
+	'cnw-error-database' => 'Erreur de base de données : $1',
 	'cnw-badword-header' => 'Eh Oh',
 	'cnw-badword-msg' => 'Bonjour, veuillez éviter d’utiliser des mots grossiers ou interdits dans la description de votre wiki : $1',
 	'cnw-error-wiki-limit-header' => 'Limite de wikis atteinte',
 	'cnw-error-wiki-limit' => 'Bonjour, vous êtes limité à la création de $1 wikis par jour. Attendez 24 heures avant de créer un autre wiki.',
+	'cnw-error-blocked-header' => 'Compte bloqué',
+	'cnw-error-blocked' => 'Vous avez été bloqué par $1. La raison invoquée était : $2. (ID de blocage pour référence : $3)',
+	'cnw-error-torblock' => "Créer des wikis via le réseau Tor n'est pas autorisé.",
 );
 
 /** Galician (Galego)
@@ -954,10 +963,14 @@ $messages['mk'] = array(
 	'cnw-welcome-help' => 'Одговори на прашања, совети и друго ќе добиете на <a href="http://community.wikia.com">Центарот на заедницата</a>.',
 	'cnw-error-general' => 'Нешто тргна наопаку при создавањето на вашето вики. Обидете се подоцна.',
 	'cnw-error-general-heading' => 'Грешка при создавање на ново вики',
+	'cnw-error-database' => 'Грешка во базата: $1',
 	'cnw-badword-header' => 'Предупредување',
 	'cnw-badword-msg' => 'Здраво. Ве молиме да се воздржите од употреба на непристојни зборови или забранетите зборови наведени во описот на викито: $1',
 	'cnw-error-wiki-limit-header' => 'Границата на создадени викија е достигната',
 	'cnw-error-wiki-limit' => 'Здраво. Можете да создавате само по $1 вики дневно. Почекајте 24 часа, па потоа создајте друго.',
+	'cnw-error-blocked-header' => 'Сметката е блокирана',
+	'cnw-error-blocked' => 'Блокирани сте од $1. Понудената причина гласи: $2. (назнака или навод на блокирањето: $3)',
+	'cnw-error-torblock' => 'Не е дозволено создавање на викија преку Tor-мрежа.',
 );
 
 /** Malayalam (മലയാളം)
@@ -1053,10 +1066,12 @@ Naik taraf wiki anda kepada wiki tanpa iklan dengan membayar $4.95 (USD) sebulan
 	'cnw-welcome-help' => 'Cari jawapan, nasihat, dan banyak lagi di <a href="http://community.wikia.com">Community Central</a>.',
 	'cnw-error-general' => 'Kami menghadapi masalah ketika memproseskan penciptaan wiki anda. Sila cuba lagi lain kali.',
 	'cnw-error-general-heading' => 'Ralat Penciptaan Wiki Baru',
+	'cnw-error-database' => 'Ralat pangkalan data: $1',
 	'cnw-badword-header' => 'Nanti kejap',
 	'cnw-badword-msg' => 'Hai, sila hindari penggunaan kata-kata kesat/terlarang dalam Penerangan Wiki anda: $1',
 	'cnw-error-wiki-limit-header' => 'Had wiki dicapai',
 	'cnw-error-wiki-limit' => 'Maaf, anda tidak boleh membuka lebih daripada $1 wiki sehari. Tunggi 24 jam sebelum membuka satu lagi wiki.',
+	'cnw-error-blocked-header' => 'Akaun disekat',
 );
 
 /** Dutch (Nederlands)
@@ -1122,10 +1137,14 @@ Schaf uw upgrade aan via PayPal. Geen advertenties voor maar $4,95 per maand!",
 	'cnw-welcome-help' => 'Antwoorden, advies en meer op <a href="http://community.wikia.com">Community Central</a>.',
 	'cnw-error-general' => 'Er is iets misgegaan tijdens het aanmaken van uw wiki. Probeer het later opnieuw.',
 	'cnw-error-general-heading' => 'Fout bij het aanmaken van een nieuwe wiki',
+	'cnw-error-database' => 'Databasefout: $1',
 	'cnw-badword-header' => 'Pas op!',
 	'cnw-badword-msg' => 'Hallo. Probeer u te onthouden van het gebruiken van ongewenste woorden in uw wikibeschrijving: $1',
 	'cnw-error-wiki-limit-header' => 'De wikilimiet is bereikt',
 	'cnw-error-wiki-limit' => "Hallo. U mag maximaal $1 wiki's per dag aanmaken. Wacht 24 uur om een nieuwe wiki aan te kunnen maken.",
+	'cnw-error-blocked-header' => 'Gebruiker geblokkeerd',
+	'cnw-error-blocked' => 'U bent geblokkeerd door $1. De reden die gegeven is: $2. (Blokkadenummer voor referentie: $3)',
+	'cnw-error-torblock' => "Wiki's aanmaken via het Tor Network is niet toegestaan.",
 );
 
 /** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
@@ -1616,14 +1635,15 @@ $messages['te'] = array(
 	'cnw-login-prompt' => 'ఇప్పటికే మీకు ఖాతా ఉందా?',
 	'cnw-call-to-login' => 'ఇక్కడ ప్రవేశించండి',
 	'cnw-auth-headline' => 'వికీని మొదలుపెట్టడం',
-	'cnw-desc-tip1' => 'చిట్కా 1',
+	'cnw-desc-headline' => 'మీ వికీ దేని గురించి?',
+	'cnw-desc-tip1' => 'చిట్కా',
 	'cnw-desc-tip1-creative' => 'మీ వికీ దేని గురించో ప్రజలకు చెప్పండి',
 	'cnw-desc-tip2' => 'చిట్కా 2',
 	'cnw-desc-tip2-creative' => 'వివరాలను చేర్చడం మర్చిపోకండి',
 	'cnw-desc-tip3' => 'చిట్కా 3',
 	'cnw-desc-tip3-creative' => 'తోడ్పడమని ప్రజలని ఆహ్వానించండి',
 	'cnw-desc-choose' => 'వర్గాన్ని ఎంచుకోండి',
-	'cnw-desc-default-lang' => 'మీ వికీ ఆంగ్లంలో ఉంటుంది',
+	'cnw-desc-default-lang' => 'మీ వికీ $1 లో ఉంటుంది',
 	'cnw-desc-change-lang' => 'మార్చండి',
 	'cnw-desc-lang' => 'భాష',
 );

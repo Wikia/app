@@ -4104,6 +4104,13 @@ $messages['ka'] = array(
 	'achievements-profile-title-oasis' => 'მიღწევების <br /> ქულები',
 );
 
+/** کھوار (کھوار)
+ * @author Rachitrali
+ */
+$messages['khw'] = array(
+	'achievements-gold' => 'سوروم',
+);
+
 /** Khmer (ភាសាខ្មែរ)
  * @author T-Rithy
  */
@@ -8036,7 +8043,9 @@ $messages['te'] = array(
 	'achievements-silver' => 'రజతం',
 	'achievements-bronze' => 'కాంస్యం',
 	'achievements-profile-title-no' => '$1 యొక్క బాడ్జీలు',
+	'achievements-viewless' => 'మూసివేయి',
 	'achievements-enable-track' => 'చేతనమైంది',
+	'achievements-about-title' => 'ఈ పుట గురించి...',
 	'achievements-community-platinum-edit' => 'సవరించు',
 	'achievements-community-platinum-save' => 'భద్రపరుచు',
 	'achievements-community-platinum-cancel' => 'రద్దుచేయి',

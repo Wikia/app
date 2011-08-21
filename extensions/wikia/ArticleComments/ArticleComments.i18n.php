@@ -491,16 +491,16 @@ $messages['fr'] = array(
 	'article-comments-edit' => 'modifier',
 	'article-comments-history' => 'historique',
 	'article-comments-error' => 'Le commentaire n’a pas pu être enregistré',
-	'article-comments-undeleted-comment' => "Commentaire de l'article de blog $1 restauré",
-	'article-comments-rc-comment' => 'Commentaire de page ([[$1]])',
-	'article-comments-rc-comments' => 'Commentaires de page ([[$1]])',
+	'article-comments-undeleted-comment' => 'Commentaire pour la page de blog $1 restauré',
+	'article-comments-rc-comment' => 'Commentaire d’article ([[$1]])',
+	'article-comments-rc-comments' => 'Commentaires d’article ([[$1]])',
 	'article-comments-fblogin' => 'Veuillez <a href="$1">vous connecter et relier Facebook</a> pour poster un commentaire sur ce wiki !',
 	'article-comments-fbconnect' => 'Veuillez <a href="$1">relier ce compte avec Facebook</a> pour commenter !',
 	'article-comments-rc-blog-comment' => 'Commentaire de blog ([[$1]])',
 	'article-comments-rc-blog-comments' => 'Commentaires de blog ([[$1]])',
 	'article-comments-login' => 'Veuillez vous <a href="$1">connecter</a> pour laisser un commentaire sur ce wiki.',
 	'article-comments-toc-item' => 'Commentaires',
-	'article-comments-comment-cannot-add' => 'Vous ne pouvez pas ajouter de commentaire à cette page.',
+	'article-comments-comment-cannot-add' => 'Vous ne pouvez pas ajouter de commentaire à cet article.',
 	'article-comments-vote' => 'Intéressant',
 	'article-comments-reply' => 'Répondre',
 	'article-comments-show-all' => 'Afficher tous les commentaires',
@@ -512,28 +512,27 @@ $messages['fr'] = array(
 	'enotif_subject_article_comment' => '$PAGEEDITOR a commenté « $PAGETITLE » sur {{SITENAME}}',
 	'enotif_body_article_comment' => '$WATCHINGUSERNAME,
 
-$PAGEEDITOR a laissé un commentaire sur « $PAGETITLE ». 
+Un nouveau commentaire à été laissé sur « $PAGETITLE » sur {{SITENAME}}. Utilisez ce lien pour voir tous les commentaires : $PAGETITLE_URL#article-comments
 
-Pour voir le fil de commentaire, cliquez sur le lien ci-dessous :
-$PAGETITLE_URL 
+— L’équipe Wikia
 
-Merci de revenir et de contribuer régulièrement...
-
-Wikia',
+___________________________________________
+* Pour voir les derniers évènements sur Wikia, rendez-vous sur http://communaute.wikia.com
+* Vous souhaitez contrôler les courriels que vous recevez ? Rendez-vous sur : {{fullurl:{{ns:special}}:Preferences}}.
+* Cliquez sur le lien suivant pour vous désabonner de tous les courriels de Wikia : $UNSUBSCRIBEURL',
 	'enotif_body_article_comment-HTML' => '<p>$WATCHINGUSERNAME,
 <br /><br />
-$PAGEEDITOR a laissé un commentaire sur « $PAGETITLE ». 
+Un nouveau commentaire à été laissé sur « $PAGETITLE » sur {{SITENAME}}. Utilisez ce lien pour voir tous les commentaires : <a href="$PAGETITLE_URL#article-comments">$PAGETITLE</a>
 <br /><br />
-Pour voir le fil de commentaire, cliquez sur le lien suivant : <a href="$PAGETITLE_URL">$PAGETITLE</a>  
-<br /><br />
-Merci de revenir et de contribuer régulièrement...
-<br /><br />
-Wikia
-<hr />
+- L’équipe Wikia</p>
+<br /><hr />
+<p>
 <ul>
-<li>Vous souhaitez définir les courriels que vous désirez recevoir ? <a href="{{fullurl:Special:Preferences}}">Mettez à jour vos préférences<a>.</li>
+<li><a href="http://communaute.wikia.com">Venez voir les derniers évènements sur Wikia !</a></li>
+<li>Vous souhaitez contrôler les courriels que vous recevez ? Rendez-vous sur vos <a href="{{fullurl:{{ns:special}}:Preferences}}">préférences</a></li>
 </ul>
-</p>',
+</p>
+<div style="font-size: 70%;margin-top: 25px;text-align: center;">Cliquez <a href="$UNSUBSCRIBEURL">ici</a> pour vous désabonner de tous les courriels de Wikia.</div>',
 );
 
 /** Galician (Galego)
@@ -860,6 +859,7 @@ $messages['mk'] = array(
 	'article-comments-login' => '<a href="$1">Најавете се</a> за да коментирате на ова вики.',
 	'article-comments-toc-item' => 'Коментари',
 	'article-comments-comment-cannot-add' => 'Не можете да додавате комнтари во статијата.',
+	'article-comments-vote' => 'Гласај „За“',
 	'article-comments-reply' => 'Одговори',
 	'article-comments-show-all' => 'Сите коментари',
 	'article-comments-prev-page' => 'Претходна',
@@ -936,6 +936,7 @@ $messages['ms'] = array(
 	'article-comments-login' => 'Sila <a href="$1">log masuk</a> untuk mengirim ulasan di wiki ini.',
 	'article-comments-toc-item' => 'Ulasan',
 	'article-comments-comment-cannot-add' => 'Anda tidak boleh mengirim ulasan kepada rencana ini.',
+	'article-comments-vote' => 'Undi setuju',
 	'article-comments-reply' => 'Balas',
 	'article-comments-show-all' => 'Tunjukkan semua ulasan',
 	'article-comments-prev-page' => 'Sebelumnya',
@@ -1002,6 +1003,7 @@ $messages['nl'] = array(
 	'article-comments-login' => '<a href="$1">Meld u aan</a> om een opmerking in deze wiki te kunnen plaatsen.',
 	'article-comments-toc-item' => 'Opmerkingen',
 	'article-comments-comment-cannot-add' => 'U kunt geen opmerkingen bij de pagina plaatsen.',
+	'article-comments-vote' => 'Positief beoordelen',
 	'article-comments-reply' => 'Antwoorden',
 	'article-comments-show-all' => 'Alle opmerkingen weergeven',
 	'article-comments-prev-page' => 'Vorige',

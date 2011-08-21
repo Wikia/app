@@ -213,6 +213,8 @@ $messages['no'] = array(
  * @author Cloudissimo
  */
 $messages['pl'] = array(
+	'interstitial-skip-ad' => 'Pomiń tę reklamę',
+	'exitstitial-register' => '<a href="#" class="register">Zarejestruj się</a> lub <a href="#" class="login">zaloguj</a> żeby pomijać reklamy.',
 	'exitstitial-button' => 'Pomiń reklamę',
 );
 

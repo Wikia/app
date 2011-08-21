@@ -1299,6 +1299,7 @@ $messages['te'] = array(
 	'lookupcontribsgo' => 'వెళ్ళు',
 	'lookupcontribswiki' => 'వికీ',
 	'lookupcontribswikititle' => 'శీర్షిక',
+	'lookupcontribswikioptions' => 'ఎంపికలు',
 	'lookupcontribsshowpages' => 'అన్ని పేజీలు ($1 పేరుబరి)',
 );
 

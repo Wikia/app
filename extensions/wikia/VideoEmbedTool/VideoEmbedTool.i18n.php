@@ -2362,7 +2362,7 @@ $messages['sw'] = array(
  * @author Veeven
  */
 $messages['te'] = array(
-	'vet-upload-btn' => 'వెళ్ళు',
+	'vet-upload-btn' => 'తర్వాతి',
 	'vet-find-btn' => 'వెతుకు',
 	'vet-name' => 'పేరు',
 	'vet-size' => 'పరిమాణం',

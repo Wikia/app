@@ -1501,8 +1501,11 @@ Din wiki har adopterats! Detta innebär att någon annan har erbjudit sig att bi
 	'wikiadoption-welcome-header' => 'Gratulerar! Du har adopterat {{SITENAME}}!',
 );
 
-/** Telugu (తెలుగు) */
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
 $messages['te'] = array(
+	'wikiadoption-adopt-inquiry' => 'ఇంకా తెలుసుకోండి!',
 	'wikiadoption-know-more-header' => 'మరింత తెలుసుకోవాలనుకుంటున్నారా?',
 );
 

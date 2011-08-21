@@ -405,9 +405,12 @@ $messages['sv'] = array(
 	'category-exhibition-display-old' => 'Kategori-listvyn',
 );
 
-/** Telugu (తెలుగు) */
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
 $messages['te'] = array(
 	'category-exhibition-subcategories-header' => 'ఉపవర్గాలు',
+	'category-exhibition-blogs-header' => 'బ్లాగు టపాలు',
 );
 
 /** Tagalog (Tagalog)

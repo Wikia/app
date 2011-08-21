@@ -189,6 +189,7 @@ $messages['de'] = array(
 );
 
 /** Spanish (Español)
+ * @author Fitoschido
  * @author VegaDark
  */
 $messages['es'] = array(
@@ -210,7 +211,7 @@ $messages['es'] = array(
 	'login-label' => 'Entrar en LyricWiki',
 	'login-username-hint' => 'Nombre de usuario',
 	'login-password-hint' => 'Contraseña',
-	'login-submit-button' => 'Entrar',
+	'login-submit-button' => 'Iniciar sesión',
 	'about-heading' => 'LyricWiki',
 	'about-credits' => 'por %s',
 	'about-heading-tips' => 'Buscando',
@@ -580,6 +581,7 @@ $messages['nl'] = array(
 	'about-feedback-0' => 'Wilt u iets vertellen over het programma? E-mail naar %s',
 	'about-heading-rate' => 'Waardeer het programma alstublieft!',
 	'about-rate-0-android' => 'Als u dit programma leuk vindt, geef het dan alstublieft vijf sterren in de Android Market!',
+	'about-rate-0-ios' => 'Geeft deze app 5 sterren in de App Store als die u bevalt!',
 	'gracenote-takedown' => 'Helaas mogen we de volledige tekst van dit liedje niet weergeven. Dit is het geval voor minder dan 1% van onze liedjes. Probeer het volgende week nog een keer.',
 	'lyrics-artist-byline' => 'door %s',
 	'ringtone-matcher-by-song' => 'De ringtone %s naar uw telefoon sturen',

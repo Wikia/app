@@ -210,10 +210,10 @@ $messages['fr'] = array(
 	'unhide' => 'Afficher',
 	'hub-blog-header' => 'Principaux messages de $1',
 	'hub-hotspot-header' => 'Pages les plus actives',
-	'hub-topusers-header' => 'Principaux utilisateurs de « $1 »',
-	'hub-featured' => 'Principaux wikis de $1',
+	'hub-topusers-header' => 'Principaux contributeurs cette semaine de « $1 »',
+	'hub-featured' => 'Principaux wikis de « $1 »',
 	'hub-header' => 'Wikis de $1',
-	'hub-hotspot-info' => 'Ces pages sont les plus actives cette semaine, triées par nombre d’auteurs.',
+	'hub-hotspot-info' => 'Ces pages sont les plus actives cette semaine, classées par le nombre de contributeurs.',
 	'hub-blog-comments' => '{{PLURAL:$1|un commentaire|$1 commentaires}}',
 	'hub-blog-continue' => 'Continuer la lecture',
 	'hub-blog-showarticle' => 'Afficher la page',
@@ -223,7 +223,7 @@ $messages['fr'] = array(
 	'hub-hide-feed' => 'Masquer le flux',
 	'hub-show-feed' => 'Afficher le flux',
 	'hub-contributors-info' => 'Ces utilisateurs sont les plus actifs cette semaine, classés par nombre de modifications.',
-	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|auteur|auteurs}}</span>',
+	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|contributeur|contributeurs}}</span>',
 );
 
 /** Galician (Galego)
@@ -314,7 +314,7 @@ $messages['mk'] = array(
 	'unhide' => 'Прикажи',
 	'hub-blog-header' => 'Најкотирани $1 објави',
 	'hub-hotspot-header' => 'Најактивни места',
-	'hub-topusers-header' => 'Најкотирани $1 корисници',
+	'hub-topusers-header' => 'Најкотиран уредник за наделава на $1 викија',
 	'hub-featured' => 'Најкотирани $1 викија',
 	'hub-header' => 'Викија на $1',
 	'hub-hotspot-info' => 'Ова се најактивните страници неделава, рангирани по број на уредници.',
@@ -346,7 +346,7 @@ $messages['ms'] = array(
 	'unhide' => 'Dedahkan',
 	'hub-blog-header' => 'Kiriman $1 Teratas',
 	'hub-hotspot-header' => 'Hotspot',
-	'hub-topusers-header' => 'Pengguna $1 Teratas',
+	'hub-topusers-header' => 'Pengguna Terunggul di Wiki $1 minggu ini',
 	'hub-featured' => 'Wiki $1 teratas',
 	'hub-header' => 'Wiki $1',
 	'hub-hotspot-info' => 'Inilah laman-laman yang terhangat pada minggu ini, disusun mengikut jumlah penyunting terbanyak.',
@@ -370,9 +370,9 @@ $messages['nl'] = array(
 	'unhide' => 'Weergeven',
 	'hub-blog-header' => 'Topberichten van $1',
 	'hub-hotspot-header' => "Populaire pagina's",
-	'hub-topusers-header' => 'Topgebruikers van $1',
+	'hub-topusers-header' => "Topgebruikers van $1-wiki's in deze week",
 	'hub-featured' => "Topwiki's over $1",
-	'hub-header' => 'Wikia van $1',
+	'hub-header' => "$1 wiki's",
 	'hub-hotspot-info' => "Dit zijn de meer populaire pagina's van deze week, gesorteerd op aantal gebruikers met bewerkingen.",
 	'hub-blog-comments' => '$1 {{PLURAL:$1|opmerking|opmerkingen}}',
 	'hub-blog-continue' => 'Meer lezen',
@@ -554,6 +554,14 @@ $messages['ta'] = array(
 	'hub-header' => '$1 விக்கிகள்',
 	'hub-blog-continue' => 'படிப்பதைத் தொடரவும்',
 	'hub-blog-showarticle' => 'பக்கத்தைக் காட்டவும்',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'hub-header' => '$1 వికీలు',
+	'hub-blog-showarticle' => 'పుటను చూపించు',
 );
 
 /** Ukrainian (Українська)

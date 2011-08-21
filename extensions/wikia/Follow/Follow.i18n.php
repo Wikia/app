@@ -795,7 +795,7 @@ Ajoutez des pages à cette liste en cliquant sur « {{int:watch}} » en bas d’
 	'wikiafollowedpages-special-title-userbar' => 'Pages suivies',
 	'tog-enotiffollowedpages' => 'M’avertir par courriel lorsqu’une page de ma liste de suivi est modifiée',
 	'tog-enotiffollowedminoredits' => 'M’avertir par courriel lorsque des modifications mineures sont effectuées sur des pages que je suis',
-	'prefs-wikiafollowedpages-prefs-advanced' => 'Préférences avancées',
+	'prefs-wikiafollowedpages-prefs-advanced' => 'Options avancées',
 	'prefs-wikiafollowedpages-prefs-watchlist' => 'Liste de suivi uniquement',
 	'tog-hidefollowedpages' => 'Rendre privée ma liste de suivi',
 	'follow-categoryadd-summary' => 'Page ajoutée à la catégorie',
@@ -807,69 +807,71 @@ Ajoutez des pages à cette liste en cliquant sur « {{int:watch}} » en bas d’
 	'wikiafollowedpages-userpage-empty' => 'La liste de pages suivies de cet utilisateur est vide.
 Ajoutez des pages à cette liste en cliquant sur « {{int:watch}} » en bas d’une page.',
 	'enotif_subject_categoryadd' => 'La page $PAGETITLE de {{SITENAME}} a été ajoutée à $CATEGORYNAME par $PAGEEDITOR',
-	'enotif_body_categoryadd' => 'Bonjour $WATCHINGUSERNAME,
+	'enotif_body_categoryadd' => '$WATCHINGUSERNAME,
 
 Une page a été ajoutée à une catégorie que vous suivez sur {{SITENAME}}.
 
-Voyez « $PAGETITLE_URL » pour la nouvelle page.
+Consultez « $PAGETITLE_URL » pour la nouvelle page.
 
-Merci de visiter ce site et de le modifier fréquemment...
+Merci de visiter ce site et de le modifier régulièrement...
 
-{{SITENAME}}
+— L’équipe Wikia
 
 ___________________________________________
-* Jetez un œil à nos wikis vedettes ! http://www.wikia.com
-
-* Vous voulez contrôler l’envoi des courriers électroniques ?
-Allez sur : {{fullurl:{{ns:special}}:Preferences}}.',
+* Pour voir les derniers évènements sur Wikia, rendez-vous sur http://communaute.wikia.com
+* Vous souhaitez contrôler les courriels que vous recevez ? Rendez-vous sur : {{fullurl:{{ns:special}}:Preferences}}.
+* Cliquez sur le lien suivant pour vous désabonner de tous les courriels de Wikia : $UNSUBSCRIBEURL',
 	'enotif_body_categoryadd-html' => '<p>
-Bonjour $WATCHINGUSERNAME,
+$WATCHINGUSERNAME,
 <br /><br />
 Une page a été ajoutée à une catégorie que vous suivez sur {{SITENAME}}.
 <br /><br />
-Voyez <a href="$PAGETITLE_URL">$PAGETITLE</a> pour la nouvelle page.
+Consultez <a href="$PAGETITLE_URL">$PAGETITLE</a> pour la nouvelle page.
 <br /><br />
-Merci de visiter ce site et de le modifier fréquemment...
+Merci de visiter ce site et de le modifier régulièrement...
 <br /><br />
-{{SITENAME}}
+L’équipe Wikia</p>
 <br /><hr />
+<p>
 <ul>
-<li><a href="http://www.wikia.com">Jetez un œil à nos wikis vedettes !</a></li>
-<li>Vous voulez contrôler l’envoi des courriers électroniques ? Allez sur <a href="{{fullurl:{{ns:special}}:Preferences}}">vos préférences utilisateur</a></li>
+<li><a href="http://communaute.wikia.com">Venez voir les derniers évènements sur Wikia !</a></li>
+<li>Vous souhaitez contrôler les courriels que vous recevez ? Rendez-vous sur vos <a href="{{fullurl:{{ns:special}}:Preferences}}">préférences</a></li>
 </ul>
-</p>',
-	'enotif_subject_blogpost' => 'La page $PAGETITLE de {{SITENAME}} a été postée sur $BLOGLISTINGNAME par $PAGEEDITOR',
-	'enotif_body_blogpost' => 'Bonjour $WATCHINGUSERNAME,
+</p>
+<div style="font-size: 70%;margin-top: 25px;text-align: center;">Cliquez <a href="$UNSUBSCRIBEURL">ici</a> pour vous désabonner de tous les courriels de Wikia.</div>',
+	'enotif_subject_blogpost' => 'Un nouveau billet de blog, $PAGETITLE, a été ajouté dans $BLOGLISTING sur {{SITENAME}} par $PAGEEDITOR',
+	'enotif_body_blogpost' => '$WATCHINGUSERNAME,
 
 Une modification a été apportée à l’une des pages de liste de blogs que vous suivez sur {{SITENAME}}.
 
-Voyez « $PAGETITLE_URL » pour ce nouveau post.
+Consultez « $PAGETITLE_URL » pour ce nouveau billet.
 
-Merci de visiter ce site et de le modifier fréquemment...
+Merci de visiter ce site et de le modifier régulièrement...
 
-{{SITENAME}}
+— L’équipe Wikia
 
 ___________________________________________
-* Jetez un œil à nos wikis vedettes ! http://www.wikia.com
-
-* Vous voulez contrôler l’envoi des courriers électroniques ?
-Allez sur : {{fullurl:{{ns:special}}:Preferences}}.',
+* Pour voir les derniers évènements sur Wikia, rendez-vous sur http://communaute.wikia.com
+* Vous souhaitez contrôler les courriels que vous recevez ? Rendez-vous sur : {{fullurl:{{ns:special}}:Preferences}}.
+* Cliquez sur le lien suivant pour vous désabonner de tous les courriels de Wikia : $UNSUBSCRIBEURL',
 	'enotif_body_blogpost-HTML' => '<p>
-Bonjour $WATCHINGUSERNAME,
+$WATCHINGUSERNAME,
 <br /><br />
 Une modification a été apportée à l’une des pages de liste de blogs que vous suivez sur {{SITENAME}}.
 <br /><br />
-Voyez <a href="$PAGETITLE_URL">$PAGETITLE</a> pour ce nouveau post.
+Consultez <a href="$PAGETITLE_URL">$PAGETITLE</a> pour ce nouveau billet.
 <br /><br />
-Merci de visiter ce site et de le modifier fréquemment...
+Merci de visiter ce site et de le modifier régulièrement...
 <br /><br />
-{{SITENAME}}
+— L’équipe Wikia</p>
 <br /><hr />
+<p>
 <ul>
-<li><a href="http://www.wikia.com">Jetez un œil à nos wikis vedettes !</a></li>
-<li>Vous voulez contrôler l’envoi des courriers électroniques ? Allez sur <a href="{{fullurl:{{ns:special}}:Preferences}}">vos préférences utilisateur</a></li>
+<li><a href="http://communaute.wikia.com">Venez voir les derniers évènements sur Wikia !</a></li>
+<li>Vous souhaitez contrôler les courriels que vous recevez ? Rendez-vous sur vos <a href="{{fullurl:{{ns:special}}:Preferences}}">préférences</a></li>
 </ul>
-</p>',
+</p>
+<div style="font-size: 70%;margin-top: 25px;text-align: center;">Cliquez <a href="$UNSUBSCRIBEURL">ici</a> pour vous désabonner de tous les courriels de Wikia.</div>',
 );
 
 /** Galician (Galego)
@@ -2621,6 +2623,7 @@ $messages['te'] = array(
 	'wikiafollowedpages-special-heading-mediawiki' => 'మీడియావికీ పుటలు ($1)',
 	'wikiafollowedpages-special-namespace' => '($1 పుట)',
 	'wikiafollowedpages-special-showall' => 'అన్నిటినీ చూపించు >',
+	'prefs-wikiafollowedpages-prefs-advanced' => 'ఉన్నత ఎంపికలు',
 	'wikiafollowedpages-userpage-hide' => 'దాచు',
 );
 

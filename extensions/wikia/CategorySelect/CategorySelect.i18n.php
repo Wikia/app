@@ -833,6 +833,7 @@ $messages['sw'] = array(
  * @author Veeven
  */
 $messages['te'] = array(
+	'categoryselect-infobox-caption' => 'వర్గాల ఎంపికలు',
 	'categoryselect-addcategory-button' => 'వర్గాన్ని చేర్చండి',
 	'categoryselect-addcategory-edit' => 'ఒక వర్గాన్ని చేర్చండి',
 	'categoryselect-button-save' => 'భద్రపరచు',

@@ -76,6 +76,7 @@ $messages['de'] = array(
 );
 
 /** Spanish (Español)
+ * @author Fitoschido
  * @author VegaDark
  */
 $messages['es'] = array(
@@ -86,7 +87,7 @@ $messages['es'] = array(
 	'tab-discover-loading-message' => 'Cargando...',
 	'tab-discover-no-network-dialog-title' => 'Red no disponible',
 	'tab-discover-no-network-dialog-message' => 'No hay conexión de red detectada',
-	'tab-discover-no-network-dialog-close-button' => 'Ok',
+	'tab-discover-no-network-dialog-close-button' => 'Aceptar',
 	'tab-search-loading-message' => 'Buscando...',
 	'browser-loading-message' => 'Cargando...',
 );

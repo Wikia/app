@@ -471,6 +471,15 @@ $messages['sv'] = array(
 	'all-blog-posts' => 'alla kategorier',
 );
 
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'partner-feed-recent-changes' => 'ఇటీవలి మార్పులు',
+	'all-blog-posts' => 'అన్ని వర్గాలు',
+	'feed-title-recentchanges' => 'ఇటీవలి మార్పులు',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
