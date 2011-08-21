@@ -126,6 +126,11 @@ class ImageServing {
 					$out = $out + $driver->execute($n);
 				}
 			}
+			
+			if(empty($out)){
+				// TODO: Hook for finding fallback images.
+				// TODO: Hook for finding fallback images.
+			}
 		}
 
 		wfProfileOut(__METHOD__);
@@ -218,7 +223,7 @@ class ImageServing {
 	}
 
 	/**
-	 * getUrl - generate cut frame for  Thumb
+	 * getUrl - generate cut frame for Thumb
 	 *
 	 * @param $width \int
 	 * @param $height \int
