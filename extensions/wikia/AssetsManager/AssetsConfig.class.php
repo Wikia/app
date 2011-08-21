@@ -24,7 +24,7 @@ class AssetsConfig {
 		) + $siteargs );
 		$siteargs['gen'] = 'css';
 		$siteargs['useskin'] = $skinname;
-		
+
 		$srcs[] = Title::newFromText( $articleName, NS_MEDIAWIKI)->getFullURL( $query );
 		$srcs[] = Title::newFromText( '-' )->getFullURL( wfArrayToCGI( $siteargs ) );
 
@@ -62,11 +62,11 @@ class AssetsConfig {
 
 		return $files;
 	}
-	
+
 	public static function getRTEAssets( $combine ) {
 		return self::getRTEAssetsEx( $combine,"extensions/wikia/RTE" );
 	}
-	
+
 	public static function getRTEAssetsEPL($combine) {
 		$files = self::getRTEAssetsEx( $combine, "extensions/wikia/EditPageReskin/RTE" );
 		if ( !$combine ) {
