@@ -75,7 +75,7 @@ $messages['en'] = array(
 	'scavengerhunt-button-export' => 'Export to CSV',
 	'scavengerhunt-button-add-section' => 'Add another step in the Hunt',
 	'scavengerhunt-button-remove-section' => 'Remove this step',
-	
+
 	'scavengerhunt-form-error' => 'Please correct the following errors:',
 	'scavengerhunt-form-error-name' => 'Please enter the hunt name',
 	'scavengerhunt-form-error-no-landing-title' => 'Please enter the Landing page name (valid URL).',
