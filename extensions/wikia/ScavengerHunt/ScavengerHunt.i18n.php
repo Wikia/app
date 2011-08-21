@@ -149,8 +149,8 @@ $messages['en'] = array(
 	'scavengerhunt-editor-tip-landing-title' => 'This is the page where users go to begin the Hunt.',
 	'scavengerhunt-editor-tip-landing-button-text' => 'This is the text label on the \'start\' button (e.g., "Click here to start hunting!")',
 	'scavengerhunt-editor-tip-sprite-img' => 'This is the link to the sprite file containing all the Hunt\'s images. To avoid disclosing the image to wiki users, post it to an external URL.',
-	'scavengerhunt-editor-tip-progressBarBackgroundSprite' => 'Use these coordinates to indicate: <br>
-(1) where to position the sprite file<br>
+	'scavengerhunt-editor-tip-progressBarBackgroundSprite' => 'Use these coordinates to indicate: <br />
+(1) where to position the sprite file<br />
 (2) which portion of the sprite file is the active image element.',
 	'scavengerhunt-editor-tip-progressBarExitSprite' => 'NOTE: all coordinates are relative to the reference point in the lower-right corner of the page',
 	'scavengerhunt-editor-tip-progressBarHintLabel' => '',
