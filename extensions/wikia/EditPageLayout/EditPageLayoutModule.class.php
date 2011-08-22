@@ -142,6 +142,7 @@ class EditPageLayoutModule extends Module {
 			wfDebug(__METHOD__ . ": edit form disabled because read-only mode is on\n");
 		}
 
+		$this->hideTitle = $editPage->hideTitle;
 		$app->wf->ProfileOut(__METHOD__);
 	}
 }

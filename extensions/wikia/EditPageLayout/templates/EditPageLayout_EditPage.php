@@ -23,7 +23,7 @@
 			</h2>
 			<!-- edited page title -->
 			<h1>
-				<a href="<?= htmlspecialchars($title->getLocalUrl()) ?>" title="<?= htmlspecialchars($titleText) ?>"><?= $titleShortText ?></a>
+				<a href="<?= htmlspecialchars($title->getLocalUrl()) ?>" class="<?= $hideTitle ? 'DummyPrefixedText' : '' ?>" title="<?= htmlspecialchars($titleText) ?>"><?= $titleShortText ?></a>
 			</h1>
 			<!-- pencil icon -->
 			<a id="EditPageTitle" title="<?= wfMsg('editpagelayout-edit-title') ?>">
