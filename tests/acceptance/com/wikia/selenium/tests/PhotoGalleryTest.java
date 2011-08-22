@@ -13,18 +13,25 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 public class PhotoGalleryTest extends BaseTest {
-	private static final String testArticleName = "WikiaPhotoGalleryTest";
-	private static final String protectedArticleName = "ProtectedArticle";
-	private static final String protectedImageName = "ProtectedImage.gif";
+	private static final String TEST_ARTICLE_TITLE_PREFIX = "WikiaPhotoGalleryTest ";
+	
+	private String testArticleTitle = null;
+	
+	private String getTestArticleTitle() {
+		if (null == this.testArticleTitle) {
+			this.testArticleTitle = TEST_ARTICLE_TITLE_PREFIX + (new Date()).toString();
+		}
+		
+		return this.testArticleTitle;
+	}
 
 	// let's create an article on which view mode tests will be performed
 	private void prepareTestArticle() throws Exception {
 		uploadImage();
-		editArticle(PhotoGalleryTest.testArticleName, (new Date()).toString() + " Wikia automated test for PhotoGallery\n\n===Gallery===\n\n<gallery>\nchopin10-hp.gif\n</gallery>\n\n===Slideshow===\n\n<gallery type=\"slideshow\">\nchopin10-hp.gif|'''Caption'''\n</gallery>");
-		session().waitForPageToLoad(this.getTimeout());
+		editArticle(getTestArticleTitle(), (new Date()).toString() + " Wikia automated test for PhotoGallery\n\n===Gallery===\n\n<gallery>\nchopin10-hp.gif\n</gallery>\n\n===Slideshow===\n\n<gallery type=\"slideshow\">\nchopin10-hp.gif|'''Caption'''\n</gallery>");
 	}
 
-	@Test(groups={"CI","envProduction","noIE"})
+	@Test(groups={"CI","verified","envProduction","fileUpload"})
 	public void testSlideshowPopOut() throws Exception {
 		loginAsStaff();
 		prepareTestArticle();
@@ -53,7 +60,7 @@ public class PhotoGalleryTest extends BaseTest {
 		assertFalse(session().isElementPresent("//div[@class='wikia-slideshow-popout-images-wrapper']"));
 	}
 
-	@Test(groups={"CI","envProduction","noIE"})
+	@Test(groups={"CI","verified","envProduction","fileUpload"})
 	public void testSlideshowInViewMode() throws Exception {
 		loginAsStaff();
 		prepareTestArticle();
@@ -81,8 +88,7 @@ public class PhotoGalleryTest extends BaseTest {
 		waitForElementVisible("//div[@id='WikiaPhotoGallerySlideshowEditorPreview']");
 
 		// let's save this slideshow
-		session().click("//a[@id='WikiaPhotoGalleryEditorSave']");
-		session().waitForPageToLoad(this.getTimeout());
+		clickAndWait("//a[@id='WikiaPhotoGalleryEditorSave']");
 
 		// verify edit from view mode
 		assertTrue(session().isElementPresent("//div[@class='wikia-slideshow clearfix floatright']"));
@@ -91,7 +97,7 @@ public class PhotoGalleryTest extends BaseTest {
 		assertTrue(session().isElementPresent("//div[@class='wikia-slideshow clearfix floatright']/div/div/ul/li/span[@class='wikia-slideshow-link-overlay']"));
 	}
 
-	@Test(groups={"CI","envProduction","noIE"})
+	@Test(groups={"CI","verified","envProduction","fileUpload"})
 	public void testGalleryInViewMode() throws Exception {
 		loginAsStaff();
 		prepareTestArticle();
@@ -116,8 +122,7 @@ public class PhotoGalleryTest extends BaseTest {
 		waitForElementVisible("//div[@id='WikiaPhotoGalleryEditorPreview']");
 
 		// let's save this gallery
-		session().click("//a[@id='WikiaPhotoGalleryEditorSave']");
-		session().waitForPageToLoad(this.getTimeout());
+		clickAndWait("//a[@id='WikiaPhotoGalleryEditorSave']");
 
 		// verify edit from view mode
 		assertTrue(session().isElementPresent("//span[@class='wikia-gallery-item']"));
@@ -126,23 +131,22 @@ public class PhotoGalleryTest extends BaseTest {
 		assertTrue(session().isElementPresent("//span[2 and @class='wikia-gallery-item']//img[contains(@title,'Test link')]"));
 	}
 
-	@Test(groups={"CI","envProduction","noIE"})
+	@Test(groups={"CI","verified","envProduction","fileUpload"})
 	public void testImageUpload() throws Exception {
 		loginAsStaff();
 
 		// go to edit page
-		session().open("index.php?title=" + PhotoGalleryTest.testArticleName + "&action=edit&useeditor=mediawiki");
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("index.php?title=" + this.getTestArticleTitle() + "&action=edit&useeditor=mediawiki");
 
 		// clear wikitext
 		waitForElement("wpTextbox1");
 		session().type("wpTextbox1", "");
 
 		// check if button in toolbar exists
-		assertTrue(session().isElementPresent("//img[@id='mw-editbutton-wpg']"));
+		assertTrue(session().isElementPresent("//a[contains(@class, 'RTEGalleryButton')]"));
 
 		// open slideshow editor
-		session().click("//img[@id='mw-editbutton-wpg']");
+		session().click("//a[contains(@class, 'RTEGalleryButton')]");
 		waitForElement("//section[@id='WikiaPhotoGalleryEditor']", this.getTimeout());
 
 		// let's use gallery flow
@@ -190,34 +194,30 @@ public class PhotoGalleryTest extends BaseTest {
 
 	//this test requires an image to be added to an article and indexed,
 	//so that it can be found; because indexing takes a lot time
-	//test has been disabled for the moment
-	//@Test(groups={"CI","envProduction"})
-	@Test(groups={"broken","noIE"})
+	//test has been disabled
+	////@Test(groups={"CI","envProduction"})
+	/*
+	@Test(groups={"broken","fileUpload"})
 	public void testImageSearch() throws Exception {
 		loginAsStaff();
 		
 		// prepare test data
 		uploadImage(DEFAULT_UPLOAD_IMAGE_URL, protectedImageName);
-		session().open("index.php?title=File:" + protectedImageName + "&action=protect");
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("index.php?title=File:" + protectedImageName + "&action=protect");
 		session().select("mwProtect-level-edit", "label=Administrators only");
 		session().type("mwProtect-reason", "Test");
 		session().uncheck("mwProtectWatch");
-		session().click("mw-Protect-submit");
-		session().waitForPageToLoad(this.getTimeout());
+		clickAndWait("mw-Protect-submit");
 
 		editArticle(protectedArticleName, "[[File:" + protectedImageName + "|thumb]]");
-		session().open("index.php?title=" + protectedArticleName + "&action=protect");
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("index.php?title=" + protectedArticleName + "&action=protect");
 		session().select("mwProtect-level-edit", "label=Administrators only");
 		session().type("mwProtect-reason", "Test");
 		session().uncheck("mwProtectWatch");
-		session().click("mw-Protect-submit");
-		session().waitForPageToLoad(this.getTimeout());
+		clickAndWait("mw-Protect-submit");
 
 		// go to edit page
-		session().open("index.php?title=" + PhotoGalleryTest.testArticleName + "&action=edit&useeditor=mediawiki");
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("index.php?title=" + this.getTestArticleTitle() + "&action=edit&useeditor=mediawiki");
 
 		// clear wikitext
 		waitForElement("wpTextbox1");
@@ -258,8 +258,7 @@ public class PhotoGalleryTest extends BaseTest {
 		session().click("//a[@id='WikiaPhotoGalleryEditorSave']");
 
 		// let's save edit page
-		session().click("wpSave");
-		session().waitForPageToLoad(this.getTimeout());
+		clickAndWait("wpSave");
 
 		// verify edit from view mode
 		assertTrue(session().isElementPresent("//span[@class='wikia-gallery-item']"));
@@ -267,14 +266,14 @@ public class PhotoGalleryTest extends BaseTest {
 		// check for image added from view mode
 		assertTrue(session().isElementPresent("//span[@class='wikia-gallery-item']//img[contains(@title,'Image search test')]"));
 	}
+	*/
 
-	@Test(groups={"CI","envProduction","noIE"})
+	@Test(groups={"CI","verified","envProduction","fileUpload"})
 	public void testEditInRTE() throws Exception {
 		loginAsStaff();
 
 		// go to edit page (RTE, but start in source mode)
-		session().open("index.php?title=" + PhotoGalleryTest.testArticleName + "&action=edit&useeditor=source");
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("index.php?title=" + this.getTestArticleTitle() + "&action=edit&useeditor=source");
 
 		// clear wikitext
 		session().runScript("window.RTE.instance.setData('');");
@@ -284,14 +283,14 @@ public class PhotoGalleryTest extends BaseTest {
 		session().waitForCondition("window.RTE.instance.mode == 'wysiwyg'", this.getTimeout());
 
 		// check if button in toolbar exists
-		assertTrue(session().isElementPresent("//a[contains(@class, 'RTEGalleryButton')]"));
+		assertTrue(session().isElementPresent("//a[contains(@class, 'RTESlideshowButton')]"));
 
 		// invoke dialog
-		session().click("//a[contains(@class, 'RTEGalleryButton')]");
+		session().click("//a[contains(@class, 'RTESlideshowButton')]");
 		waitForElement("//section[@id='WikiaPhotoGalleryEditor']", this.getTimeout());
 
 		// let's use slideshow flow
-		session().click("//section[@id='WikiaPhotoGalleryEditor']//a[@type='2']");
+		//session().click("//section[@id='WikiaPhotoGalleryEditor']//a[@type='2']");
 		assertFalse(session().isVisible("WikiaPhotoGallerySearchResults"));
 		session().click("WikiaPhotoGallerySlideshowAddImage");
 		waitForElementVisible("WikiaPhotoGallerySearchResults");
@@ -324,13 +323,12 @@ public class PhotoGalleryTest extends BaseTest {
 	}
 
 	//@author Marooned
-	@Test(groups={"CI","envProduction","noIE"})
+	@Test(groups={"CI","verified","envProduction","fileUpload"})
 	public void testFeedGallery() throws Exception {
 		loginAsStaff();
 
 		// go to edit page (RTE, but start in source mode)
-		session().open("index.php?title=" + PhotoGalleryTest.testArticleName + "&action=edit&useeditor=source");
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("index.php?title=" + this.getTestArticleTitle() + "&action=edit&useeditor=source");
 
 		// clear wikitext
 		session().runScript("window.RTE.instance.setData('');");
@@ -351,8 +349,8 @@ public class PhotoGalleryTest extends BaseTest {
 		waitForElementVisible("WikiaPhotoGalleryEditorPreview");
 
 		//add feed link (little cheating here - fill readonly field and then click on checbox to invoke preview - so we don't have to fire up onblur event for the field)
-		session().type("WikiaPhotoGalleryFeedUrl", "http://feeds.feedburner.com/bingimages");
 		session().click("WikiaPhotoGalleryFeedInUse");
+		session().type("WikiaPhotoGalleryFeedUrl", "http://feeds.feedburner.com/bingimages");
 		//wait for filling up wrapper
 		waitForElementVisible("//div[@id='WikiaPhotoGalleryEditorPreview']/*");
 
@@ -360,8 +358,7 @@ public class PhotoGalleryTest extends BaseTest {
 		session().click("//a[@id='WikiaPhotoGalleryEditorSave']");
 
 		//save the article
-		session().click("wpSave");
-		session().waitForPageToLoad(this.getTimeout());
+		clickAndWait("wpSave");
 
 		// verify edit from view mode
 		assertTrue(session().isElementPresent("//div[contains(@class, 'wikia-gallery')]"));
@@ -371,13 +368,12 @@ public class PhotoGalleryTest extends BaseTest {
 	}
 
 	//@author Marooned
-	@Test(groups={"CI","envProduction","noIE"})
+	@Test(groups={"CI","verified","envProduction","fileUpload"})
 	public void testFeedSlideshow() throws Exception {
 		loginAsStaff();
 
 		// go to edit page (RTE, but start in source mode)
-		session().open("index.php?title=" + PhotoGalleryTest.testArticleName + "&action=edit&useeditor=source");
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("index.php?title=" + this.getTestArticleTitle() + "&action=edit&useeditor=source");
 
 		// clear wikitext
 		session().runScript("window.RTE.instance.setData('');");
@@ -387,14 +383,14 @@ public class PhotoGalleryTest extends BaseTest {
 		session().waitForCondition("window.RTE.instance.mode == 'wysiwyg'", this.getTimeout());
 
 		// check if button in toolbar exists
-		assertTrue(session().isElementPresent("//a[contains(@class, 'RTEGalleryButton')]"));
+		assertTrue(session().isElementPresent("//a[contains(@class, 'RTESlideshowButton')]"));
 
 		// invoke dialog
-		session().click("//a[contains(@class, 'RTEGalleryButton')]");
+		session().click("//a[contains(@class, 'RTESlideshowButton')]");
 		waitForElement("//section[@id='WikiaPhotoGalleryEditor']", this.getTimeout());
 
 		// let's use slideshow flow
-		session().click("//section[@id='WikiaPhotoGalleryEditor']//a[@type='2']");
+		//session().click("//section[@id='WikiaPhotoGalleryEditor']//a[@type='2']");
 		waitForElementVisible("WikiaPhotoGallerySlideshowEditorPreview");
 
 		//add feed link (little cheating here - fill readonly field and then click on checbox to invoke preview - so we don't have to fire up onblur event for the field)
@@ -407,8 +403,7 @@ public class PhotoGalleryTest extends BaseTest {
 		session().click("//a[@id='WikiaPhotoGalleryEditorSave']");
 
 		//save the article
-		session().click("wpSave");
-		session().waitForPageToLoad(this.getTimeout());
+		clickAndWait("wpSave");
 
 		// verify edit from view mode
 		assertTrue(session().isElementPresent("//div[contains(@class, 'wikia-slideshow')]"));
