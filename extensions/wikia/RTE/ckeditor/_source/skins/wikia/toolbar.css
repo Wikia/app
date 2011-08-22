@@ -594,13 +594,18 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 #editform #mw-toolbar {
 	display: block !important;
 	left: 12px;
-	position: absolute;
+	position: relative;
 	top: 12px;
 	visibility: hidden;
 }
 
 .rte_source #editform #mw-toolbar {
 	visibility: visible;
+}
+
+/* fix positioning of Google Maps editor (BugId:5449) */
+#mother_div {
+	margin-bottom: 20px;
 }
 
 /* remove white borders between buckets in source mode */
