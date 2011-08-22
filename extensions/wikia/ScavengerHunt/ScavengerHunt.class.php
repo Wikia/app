@@ -228,7 +228,7 @@ class ScavengerHunt {
 		if ( empty( $articleId ) ){
 			return -1;
 		}
-		
+
 		$game = $this->getActiveGame();
 		if ( empty( $game ) ){
 			return -1;
@@ -434,7 +434,7 @@ class ScavengerHunt {
 	protected function getCache() {
 		return WF::build('App')->getGlobal('wgMemc');
 	}
-	
+
 	protected function getMemcKey( $arguments = null ) {
 		$args = func_get_args();
 		array_unshift($args, 'wfMemcKey');
@@ -552,4 +552,25 @@ class ScavengerHunt {
 //			return generateFullInfo();
 //		}
 //	}
+
+	public function onOpenGraphMetaBeforeCustomFields($articleId, &$titleImage, &$titleDescription) {
+		global $wgCityId;
+		$games = F::build( 'ScavengerHuntGames' );
+		//TODO: add caching in findAllEnabled
+		$localGames = $games->findAllEnabled();
+		if (!empty($localGames)) {
+			$game = $localGames[0];	//get 1st one
+			if ($wgCityId == $game->getLandingArticleWikiId()) {
+				$title = Title::newFromID($articleId);
+				if ($title && $title->getFullURL() == $game->getLandingTitle()) {
+					//TODO: add fields to Special:ScavengerHunt for image & description
+					//TODO: add 2 methods to Game class
+					//$titleImage = $game->getLandingImage();
+					//$titleDescription = $game->getLandingDescription();
+					$titleDescription = 'dupa';
+				}
+			}
+		}
+		return true;
+	}
 }

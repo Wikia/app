@@ -51,6 +51,7 @@ $wgSpecialPages['ScavengerHunt'] = 'SpecialScavengerHunt';
 // hooks
 $app->registerHook('MakeGlobalVariablesScript', 'ScavengerHunt', 'onMakeGlobalVariablesScript' );
 $app->registerHook('BeforePageDisplay', 'ScavengerHunt', 'onBeforePageDisplay' );
+$app->registerHook('OpenGraphMeta:beforeCustomFields', 'ScavengerHunt', 'onOpenGraphMetaBeforeCustomFields' );
 
 // constuctors
 F::addClassConstructor( 'ScavengerHuntGames', array( 'app' => $app ) );
