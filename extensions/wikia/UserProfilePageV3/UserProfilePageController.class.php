@@ -807,6 +807,8 @@ class UserProfilePageController extends WikiaController {
 			$parts = explode('/', $title->getText());
 		} else if( $title->getNamespace() == NS_SPECIAL && ($title->isSpecial('Following') || $title->isSpecial('Contributions')) ) {
 			$target = $this->getVal('target');
+			$target = ( empty($target) ) ? $this->app->wg->Request->getVal('target') : $target;
+			
 			if( !empty($target) ) {
 				// Special:Contributions?target=FooBar (RT #68323)
 				$parts = array($target);
