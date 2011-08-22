@@ -35,6 +35,7 @@ class SpecialCustomEditPage extends SpecialPage {
 	protected $titleNS = null;
 	protected $fullScreen = true;
 	protected $editNoticesStack = array();
+	protected $hideTitle = false;
 
 	public function __construct( $name = '', $restriction = '', $listed = true, $function = false, $file = 'default', $includable = false ) {
 		parent::__construct( $name, $restriction, $listed, $function, $file, $includable );
@@ -202,6 +203,7 @@ class SpecialCustomEditPage extends SpecialPage {
 
 			// don't show recreation warning (FIXME, I'am an ugly hack)
 			$defaultTitle->mPrefixedText = 'DummyPrefixedText';
+			$this->hideTitle = true;
 		}
 
 		return $defaultTitle;
@@ -287,6 +289,9 @@ class SpecialCustomEditPage extends SpecialPage {
 
 		$helper->addJsVariable('wgEditedTitlePrefix', $editPage->titlePrefix = $this->getTitlePrefix());
 
+		if ($this->mode == self::MODE_NEW_SETUP) {
+			$helper->addJsVariable('wgEditPageIsNewArticle', true);
+		}
 		return $editPage;
 	}
 
@@ -326,6 +331,7 @@ class SpecialCustomEditPage extends SpecialPage {
 		// (try to) create instance of custom EditPage class
 		$this->mEditPage = $this->initializeEditPage();
 
+		$this->mEditPage->hideTitle = $this->hideTitle;
 		if (empty($this->mEditPage)) {
 			return;
 		}

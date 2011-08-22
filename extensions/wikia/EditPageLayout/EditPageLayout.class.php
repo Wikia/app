@@ -61,6 +61,9 @@ class EditPageLayout extends EditPage {
 	// edit page preloads
 	protected $mEditPagePreloads = array();
 
+	//hide title on special CreateBlogPage
+	public $hideTitle = false;
+
 	function __construct(Article $article) {
 		$this->app = F::build('App');
 		$this->out = $this->app->wg->Out;
@@ -291,7 +294,6 @@ class EditPageLayout extends EditPage {
 		}
 
 		parent::showEditForm($formCallback);
-
 		$this->app->wf->ProfileOut(__METHOD__);
 	}
 
