@@ -26,9 +26,10 @@ $sleep = isset($options['sleep']) ? $options['sleep'] : '';
 $sloop = isset($options['sloop']) ? $options['sloop'] : '';
 $scribe = isset($options['scribe']) ? $options['scribe'] : '';
 $dateRun = isset($options['date']) ? $options['date'] : '';
+$usedb = isset($options['usedb']) ? $options['usedb'] : '';
 #echo print_r($options, true);
 
-function runArchiveStats($city_id, $serverName, $dateRun) {
+function runArchiveStats($city_id, $serverName, $dateRun, $usedb) {
 	global $IP, $wgWikiaLocalSettingsPath;
 #	global $wgMaxShellMemory, $wgMaxShellTime;
 	
@@ -36,7 +37,7 @@ function runArchiveStats($city_id, $serverName, $dateRun) {
 	$script_path = $_SERVER['PHP_SELF'];
 #	$wgMaxShellMemory = $wgMaxShellMemory * 10;
 #	$wgMaxShellTime = $wgMaxShellTime * 10;
-	$path = "SERVER_ID={$city_id} php {$script_path} --events=1 --conf {$wgWikiaLocalSettingsPath} --serverName=$serverName --sleep=$sleep --sloop=$sloop --date=$dateRun";
+	$path = "SERVER_ID={$city_id} php {$script_path} --events=1 --conf {$wgWikiaLocalSettingsPath} --serverName=$serverName --sleep=$sleep --sloop=$sloop --date=$dateRun" . ( $usedb ) ? " --usedb=Y " : "";
 	#echo $path . " \n";
 	$return = wfShellExec( $path );
 	echo $return;
@@ -135,6 +136,24 @@ function callEditHook($page_id, $rev_id, $page_ns, $user_id, $serverName) {
 	$oArticle = $oUser = $oRevision = $status = $res = null;
 }
 
+function insertScribeEvents( $city_id, $page_id, $rev_id, $city_server, $event) {
+	global $wgStatsDB;
+	$dbw = wfGetDB( DB_MASTER, array(), $wgStatsDB );
+
+	$insertData = array(
+		'ev_id' => $event,
+		'city_id' => $city_id,
+		'page_id' => $page_id, 
+		'rev_id' => $rev_id,
+		'log_id' => 0,
+		'city_server' => $city_server,
+		'priority' => 0,
+		'beacon_id' => ''
+	);
+
+	$dbw->insert( 'scribe_events', $insertData, __METHOD__, 'IGNORE' );	
+}
+
 if ( $help ) {
 	echo <<<TEXT
 Usage:
@@ -145,6 +164,7 @@ Usage:
     --wikia=S      : Run script for Wikia (city_dbname)
     --sleep=X      : Sleep time in seconds - number of seconds after the execution of sloop=Y tasks
     --sloop=Y      : How many tasks the script should run to to sleep X seconds
+    --usedb=Y	   : Use database insert instead of scribe pipe
     --date=YYYYMM  : Run for YYYYMM date
 TEXT;
 	exit(0);
@@ -173,11 +193,12 @@ elseif ( $events ) {
 		array( 'page_id, page_namespace, rev_id, rev_user' ), 
 		$where, 
 		'archiveStatsData',
-		array( 'ORDER BY' => 'rev_id') 
+		array( 'ORDER BY' => 'page_id, rev_id') 
 	);
 
 	if ( $oRes ) {
 		$count = $dbr->numRows( $oRes );
+		$pages = array();
 		echo "$count records found \n";
 		if ( $count ) {
 			while( $oRow = $dbr->fetchObject( $oRes ) ) {
@@ -186,8 +207,16 @@ elseif ( $events ) {
 					echo ("$loop. sleep: " . $sleep . " " . bytes(memory_get_usage(true)) . " \n");
 					sleep($sleep);
 				}
-				#callScribeProducer($oRow->page_id, $oRow->page_namespace, $oRow->rev_id, $oRow->rev_user);
-				callEditHook($oRow->page_id, $oRow->rev_id, $oRow->page_namespace, $oRow->rev_user, $serverName);
+				$event = 1;
+				if ( !isset( $pages[ $oRow->page_id ] ) ) {
+					$event = 2; $pages[ $oRow->page_id ] = 1;
+				}
+				if ( $usedb ) {
+					insertScribeEvents( $wgCityId, $oRow->page_id, $oRow->rev_id, $serverName, $event);
+				} else {
+					#callScribeProducer($oRow->page_id, $oRow->page_namespace, $oRow->rev_id, $oRow->rev_user);
+					callEditHook($oRow->page_id, $oRow->rev_id, $oRow->page_namespace, $oRow->rev_user, $serverName);
+				}
 				$loop++;
 			}
 			$dbr->freeResult( $oRes );
@@ -220,7 +249,7 @@ else {
 	$res = $dbr->select( 'city_list', array( '*' ), $where, 'archiveStatsData' );
 	while( $row = $dbr->fetchObject( $res ) ) {
 		$serverName = WikiFactory::getVarValueByName( "wgServer", $row->city_id );
-		runArchiveStats($row->city_id, $serverName, $dateRun);
+		runArchiveStats($row->city_id, $serverName, $dateRun, $usedb);
 	}
 	$dbr->freeResult( $res );
 	$end = time();
