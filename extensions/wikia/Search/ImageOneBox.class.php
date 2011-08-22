@@ -111,7 +111,7 @@ class ImageOneBox {
 	 */
 	public function getImagesFromResultSet ( SearchResultSet $resultSet ) {
 		wfProfileIn(__METHOD__);
-		
+
 		$pages = array();
 		while( $result = $resultSet->next() ) {
 			$titleText = $result->mTitle->mTextform;
@@ -165,6 +165,10 @@ class ImageOneBox {
 			$data = array('titles' => array());
 
 			$img = $info['image'];
+
+			if (empty($img)) {
+				continue;
+			}
 
 			if( empty($info['url']) ) {
 				$thumb = $img->transform( array( 'width' => 100, 'height' => 100) );
