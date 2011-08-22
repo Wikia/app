@@ -63,9 +63,11 @@ class FoggyFotoController extends WikiaController {
 		$this->answerButtonWidth = 48;
 		$this->answerDrawerWidth = 150;
 		$this->answerDrawerHeight = 250;
+		$this->continueButtonSrc = $wgExtensionsPath.'/wikia/FoggyFoto/continue-button.png';
 
 		$this->wgScriptPath = $wgScriptPath;
 		$this->mwJsApiUrl = $wgExtensionsPath."/wikia/JavascriptAPI/Mediawiki.js?$wgStyleVersion";
+		$this->gameJs_FlipBoard = $wgExtensionsPath."/wikia/FoggyFoto/js/FoggyFoto_FlipBoard.js?$wgStyleVersion";
 		$this->gameJs = $wgExtensionsPath."/wikia/FoggyFoto/js/FoggyFotoByDivs.js?$wgStyleVersion";
 		$this->jsMessagesUrl = $wgExtensionsPath."/wikia/JSMessages/js/JSMessages.js?$wgStyleVersion";
 
