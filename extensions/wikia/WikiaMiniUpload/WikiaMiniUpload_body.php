@@ -458,7 +458,7 @@ class WikiaMiniUpload {
 
 						if( $permErrors || $permErrorsUpload || $permErrorsCreate ) {
 							header('X-screen-type: error');
-							return 'This image is protected';
+							return wfMsg( 'wmu-file-protected' );
 						}
 
 						$file_name = new LocalFile($title, RepoGroup::singleton()->getLocalRepo());
@@ -486,13 +486,19 @@ class WikiaMiniUpload {
 						$this->tempFileClearInfo( $tempid );
 						$newFile = false;
 					} else if($type == 'existing') {
-						header('X-screen-type: existing');
-						$file = wfFindFile(Title::newFromText($name, 6));
-						$props = array();
-						$props['file'] = $file;
-						$props['mwname'] = $name;
-						$props['default_caption'] = Wikia::getProps($file->getTitle()->getArticleID(), 'default_caption');
-						return $this->detailsPage($props);
+						$file = wfFindFile( Title::newFromText( $name, 6 ) );
+						
+						if ( !empty( $file ) ) {
+							header('X-screen-type: existing');
+							$props = array();
+							$props['file'] = $file;
+							$props['mwname'] = $name;
+							$props['default_caption'] = Wikia::getProps($file->getTitle()->getArticleID(), 'default_caption');
+							return $this->detailsPage($props);
+						} else {
+							header('X-screen-type: error');
+							return wfMsg( 'wmu-file-error' );
+						}
 					} else {
 						header('X-screen-type: conflict');
 						$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
@@ -528,7 +534,7 @@ class WikiaMiniUpload {
 
 					if( $permErrors || $permErrorsUpload || $permErrorsCreate ) {
 						header('X-screen-type: error');
-						return 'This image is protected';
+						wfMsg( 'wmu-file-protected' );
 					}
 
 					$temp_file = new LocalFile(Title::newFromText($mwname, 6), RepoGroup::singleton()->getLocalRepo());

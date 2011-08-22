@@ -74,6 +74,8 @@ $messages['en'] = array(
 	'wmu-replace-default-caption' => 'replace default caption',
 	'wmu-appearance-in-article' => 'Appearance on Page',
 	'wmu-alignment' => 'Alignment',
+	'wmu-file-protected' => 'This image is protected',
+	'wmu-file-error' => 'There was an error with the upload process, sorry. Please try again.'
 );
 
 /** Message documentation (Message documentation)
