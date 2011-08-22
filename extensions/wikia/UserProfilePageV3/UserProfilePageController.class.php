@@ -36,14 +36,19 @@ class UserProfilePageController extends WikiaController {
 		$pageBody = $this->getVal( 'userPageBody' );
 		$wikiId = $this->getVal( 'wikiId' );
 		
-		$namespace = $this->title->getNamespace();
-		$isSubpage = $this->title->isSubpage();
+		if( $this->title instanceof Title ) {
+			$namespace = $this->title->getNamespace();
+			$isSubpage = $this->title->isSubpage();
+		} else {
+			$namespace = $this->app->wg->NamespaceNumber;
+			$isSubpage = false;
+		}
 		
 		$useOriginalBody = true;
 		
 		if( $user instanceof User ) {
 			$this->profilePage = F::build( 'UserProfilePage', array( 'user' =>  $user ) );
-			if( ( $namespace == NS_USER ) && !$isSubpage ) {
+			if( $namespace == NS_USER && !$isSubpage ) {
 				//we'll implement interview section later
 				//$this->setVal( 'questions', $this->profilePage->getInterviewQuestions( $wikiId, true ) );
 				$this->setVal( 'stuffSectionBody', $pageBody );
@@ -108,8 +113,11 @@ class UserProfilePageController extends WikiaController {
 		$canEditProfile = empty($blockId) ? $canEditProfile : false;
 		$this->setVal( 'canEditProfile', $canEditProfile );
 		
-		$title = F::build('Title', array($this->app->wg->Request->getVal('title', $this->wg->Title->getText())), 'newFromText');
-		$this->setVal( 'reloadUrl', htmlentities($title->getFullUrl(), ENT_COMPAT, 'UTF-8') );
+		if( !empty($this->title) ) {
+			$this->setVal( 'reloadUrl', htmlentities($this->title->getFullUrl(), ENT_COMPAT, 'UTF-8') );
+		} else {
+			$this->setVal( 'reloadUrl', '' );
+		}
 		
 		$this->app->wg->Out->addScript('<script type="'.$this->app->wg->JsMimeType.' src="'.$this->app->wg->StylePath.'/common/jquery/jquery.aim.js?'.$this->app->wg->StyleVersion.'"></script>');
 		
@@ -514,33 +522,35 @@ class UserProfilePageController extends WikiaController {
 	}
 
 	protected function storeInTempImage($fileName, $fileuploader){
+		$this->app->wf->ProfileIn( __METHOD__ );
+		
 		if(filesize($fileName) > self::AVATAR_MAX_SIZE ) {
 			return UPLOAD_ERR_FORM_SIZE;
 		}
-					
+		
 		$tempName = $fileuploader->tempFileName($this->wg->User); 
 		$title = Title::makeTitle(NS_FILE, $tempName);
 		$localRepo = RepoGroup::singleton()->getLocalRepo();
-
-		$ioh = F::build('ImageOperationsHelper' );
 		
+		$ioh = F::build('ImageOperationsHelper' );
 		
 		$out = $ioh->postProcessFile($fileName);
 		if($out !== true) {
 			return $out;
 		}
 		
-		$file = new FakeLocalFile($title, $localRepo);				
+		$file = new FakeLocalFile($title, $localRepo);
 		$file->upload( $fileName , '', '' );
 		
-		// generate thumbnail (to fit 200x200 box) of temporary file
-		$width = min(WikiaPhotoGalleryHelper::thumbnailMaxWidth, $file->width);
-		$height = min(WikiaPhotoGalleryHelper::thumbnailMaxHeight, $file->height);
-
+		$width = min(self::AVATAR_DEFAULT_SIZE, $file->width);
+		$height = min(self::AVATAR_DEFAULT_SIZE, $file->height);
+		
 		$thumbnail = $file->transform(array(
 			'height' => $height,
 			'width' => $width,
 		));
+		
+		$this->app->wf->ProfileOut( __METHOD__ );
 		return $thumbnail;
 	}
 	/**

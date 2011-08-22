@@ -15,6 +15,10 @@ var UserProfilePage = {
 		UserProfilePage.userId = $('#user').val();
 		UserProfilePage.reloadUrl = $('#reloadUrl').val();
 		
+		if( UserProfilePage.reloadUrl == '' || UserProfilePage.reloadUrl === false ) {
+			UserProfilePage.reloadUrl = wgScript + '?title=' + wgPageName; //+ '&action=purge';
+		}
+		
 		$('#UPPAnswerQuestions').click(function(event) {
 			event.preventDefault();
 			UserProfilePage.renderLightbox('interview');
@@ -115,11 +119,7 @@ var UserProfilePage = {
 			UserProfilePage.track('edit/lightbox/save_personal_data');
 			UserProfilePage.closeModal(modal);
 			
-			if( UserProfilePage.reloadUrl !== false ) {
-				window.location = UserProfilePage.reloadUrl;
-			} else {
-				window.location = wgScript + '?title=' + wgPageName; //+ '&action=purge';
-			}
+			window.location = UserProfilePage.reloadUrl;
 			
 			e.preventDefault();
 		});
@@ -248,7 +248,7 @@ var UserProfilePage = {
 		
 		UserProfilePage.toggleJoinMoreWikis();
 
-		// Make 'feed preferences' link open in a new page		
+		// Make 'feed preferences' link open in a new page
 		$('#facebookPage a').click(function(event) {
 			event.preventDefault();
 			window.open($(this).attr('href'));
@@ -305,11 +305,7 @@ var UserProfilePage = {
 				} else {
 					UserProfilePage.closeModal(UserProfilePage.modal);
 					
-					if( UserProfilePage.reloadUrl !== false ) {
-						window.location = UserProfilePage.reloadUrl;
-					} else {
-						window.location = wgScript + '?title=' + wgPageName; //+ '&action=purge';
-					} 
+					window.location = UserProfilePage.reloadUrl;
 				}
 			}
 		});
@@ -371,11 +367,7 @@ var UserProfilePage = {
 							UserProfilePage.closeModal(UserProfilePage.modal);
 						}
 						
-						if( UserProfilePage.reloadUrl !== false ) {
-							window.location = UserProfilePage.reloadUrl;
-						} else {
-							window.location = wgScript + '?title=' + wgPageName; //+ '&action=purge';
-						}
+						window.location = UserProfilePage.reloadUrl;
 					}
 				}
 			}
@@ -585,11 +577,7 @@ var UserProfilePage = {
 		}
 		
 		if( UserProfilePage.forceRedirect === true ) {
-			if( UserProfilePage.reloadUrl !== false ) {
-				window.location = UserProfilePage.reloadUrl;
-			} else {
-				window.location = wgScript + '?title=' + wgPageName; //+ '&action=purge';
-			}
+			window.location = UserProfilePage.reloadUrl;
 		}
 	},
 	
