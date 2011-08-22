@@ -5,14 +5,141 @@ $menuBackgroundColor: #555;
 $menuSecondColor: #333;
 $footerBackground: #CCF;
 
+//navigation
+#navigation {
+  width: 100%;
+  background-color: $menuBackgroundColor;
+  background: -webkit-linear-gradient( top, rgba( 45, 45, 45, 1 ) 0%, rgba( 55, 55, 55, 1 ) 100% );
+  background: -webkit-gradient( linear, left top, left bottom, color-stop( 0%, rgba( 85, 85, 85, 1 ) ), color-stop( 100%, rgba( 95, 95, 95, 1) ) );
+  -webkit-box-shadow: 0 0 10px black;
+  color: #777;
+  -webkit-tap-highlight-color: rgba( 0,0,0,0 );
+  -webkit-focus-ring-color: rgba( 0,0,0,0 );
+  
+  #navigationWordMark {
+    margin: 1px;
+    height: 46px;
+  }
+  
+  #openNavigationContent {
+    display: none;
+  }
+  
+  &.open {
+    padding-bottom: 5px;
+    
+    .arrow {
+      border-top: none;
+      border-bottom: 8px solid $arrowcolor;
+      border-left: 8px solid rgba( 0, 0, 0, 0 );
+      border-right: 8px solid rgba( 0, 0, 0, 0 );
+    }
+    
+    #openNavigationContent {
+      display: block;
+      
+      div.navigationTab {
+        display: none;
+        background-color: $menuSecondColor;
+        width: 100%;
+        clear: both;
+        padding: 15px 0;
+        
+        &.openTab {
+          display: block;
+        }
+        
+        input {
+          margin: 5px;
+          -webkit-border-radius: 4px;
+          height: 25px;
+        }
+      }
+      
+      #menuTab {
+        ul {
+          list-style-type: none;
+          margin: 0 auto;
+          padding: 0;
+          width: 100%;
+          
+          li {
+            width: 100%;
+            padding: 10px 0;
+            border-bottom: 1px solid #DDD;
+            font-size: 1.3em;
+          }
+        }
+      }
+      
+      #searchTab {
+        input[type='search'] {
+          width: 65%;
+        }
+        
+        input[type='submit'] {
+          width: 25%;
+        }
+      }
+      
+      #exploreTab {
+
+      }
+      
+      #loginTab {
+        form {
+          text-align: center;
+          
+          input {
+            width: 95%;
+          }
+        }
+      }
+    }
+  }
+  
+  #openToggle {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 18px;
+    z-index: 9999;
+    border-left: 1px solid rgba( 130, 130, 130, 0.6 );
+  }
+  
+  #navigationMenu {
+    list-style-type: none;
+    float: left;
+    margin: 0 auto;
+    padding: 0;
+    
+    li {
+      display: inline;
+      padding: 5px 7px 10px 7px;
+      margin: 0 5px;
+      
+      &.openMenu {
+        background-color: $menuSecondColor;
+        color: white;
+      }
+    }
+  }
+  
+  ::-webkit-input-placeholder {
+    color: grey;
+  }
+}
+
 html {
   border: none;
   padding: 0;
   margin: 0;
+  
   body {
     background-color: #EEE;
     color: #222;
     margin: 0;
+    
     //images
     .thumb {
       width: 95%;
@@ -21,125 +148,24 @@ html {
       border: 1px solid grey;
       -webkit-border-radius: 6px;
       -webkit-box-shadow: 0 0 10px grey;
+      
       .thumbinner {
         width: 100% !important;
         text-align: center;
         margin: 4px auto;
       }
+      
       img {
           width: 90%;
           height: auto;
       }
+      
       .thumbcaption {
         border-top: 1px dashed grey;
       }
     }
     h1 {
       border-bottom: 1px solid grey;
-    }
-    //navigation
-    #navigation {
-      width: 100%;
-      background-color: $menuBackgroundColor;
-      background: -webkit-linear-gradient(top, rgba(45,45,45,1) 0%,rgba(55,55,55,1) 100%);
-      background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(85,85,85,1)), color-stop(100%,rgba(95,95,95,1)));
-      -webkit-box-shadow: 0 0 10px black;
-      color: #777;
-      -webkit-tap-highlight-color: rgba( 0,0,0,0 );
-      -webkit-focus-ring-color: rgba( 0,0,0,0 );
-      #navigationWordMark {
-        margin: 1px;
-        height: 46px;
-      }
-      #openNavigationContent {
-        display: none;
-      }
-      &.open {
-        padding-bottom: 5px;
-        .arrow {
-          border-top: none;
-          border-bottom: 8px solid $arrowcolor;
-          border-left: 8px solid rgba(0,0,0,0);
-          border-right: 8px solid rgba(0,0,0,0);
-        }
-        #openNavigationContent {
-          display: block;
-          div.navigationTab {
-            display: none;
-            background-color: $menuSecondColor;
-            width: 100%;
-            clear:both;
-            padding: 15px 0;
-            &.openTab {
-              display: block;
-            }
-            input {
-              margin: 5px;
-              -webkit-border-radius: 4px;
-              height: 25px;
-            }
-          }
-          #menuTab {
-            ul {
-              list-style-type: none;
-              margin: 0 auto;
-              padding: 0;
-              width: 100%;
-              li {
-                width: 100%;
-                padding: 10px 0;
-                border-bottom: 1px solid #DDD;
-                font-size: 1.3em;
-              }
-            }
-          }
-          #searchTab {
-            input[type='search'] {
-              width: 65%;
-            }
-            input[type='submit'] {
-              width: 25%;
-            }
-          }
-          #exploreTab {
-
-          }
-          #loginTab {
-            form {
-              text-align: center;
-              input {
-                width: 95%;
-              }
-            }
-          }
-        }
-      }
-      #openToggle {
-        position: absolute;
-        right: 0;
-        top: 0;
-        padding: 18px;
-        z-index: 9999;
-        border-left: 1px solid rgba(130,130,130,0.6);
-      }
-      #navigationMenu {
-        list-style-type: none;
-        float: left;
-        margin: 0 auto;
-        padding: 0;
-        li {
-          display: inline;
-          padding: 5px 7px 10px 7px;
-          margin: 0 5px;
-          &.openMenu {
-            background-color: $menuSecondColor;
-            color: white;
-          }
-        }
-      }
-      ::-webkit-input-placeholder {
-        color: grey;
-      }
     }
     
     .arrow {
@@ -149,54 +175,62 @@ html {
       display: block;
       border-bottom: none;
       border-top: 8px solid $arrowcolor;
-      border-left: 8px solid rgba(0,0,0,0);
-      border-right: 8px solid rgba(0,0,0,0);
+      border-left: 8px solid rgba( 0, 0, 0, 0 );
+      border-right: 8px solid rgba( 0, 0, 0, 0 );
     }
-    //Footer
-    #wikiaFooter {
-      width: 100%;
-      height: 200px;
-      background-color: $footerBackground;
-      -webkit-box-shadow: inset 0 10px 20px #333;
-      text-align: center;
-      #wikiaLogo {
-        margin-top: 20px;
-        height: 40px;
-        width: auto;
-      }
-      ul {
-        list-style: none;
-        padding: 5px;
-        margin: 2px;
-        width: 90%;
-        li {
-          width: 30%;
-          display: inline;
-          padding: 5px;
-          margin: 0;
-        }
-      }
-      //ads
-      #adPlace {
-        width: 100%;
-        height: 50px;
-        #adWrapper {
-        	opacity: 1;
-          width: 100%;
-          height: 50px;
-          background-color: red;
-          color: white;
-          -webkit-transition: all 0.5s;
-		   &.up {
-          	position: absolute;
-          	bottom: 0;
-          	&.hidden {
-          		opacity: 0;
-          		bottom: -200px;
-          	}
-          }
-      }
+  }
+}
+
+//Footer
+#wikiaFooter {
+  width: 100%;
+  height: 200px;
+  background-color: $footerBackground;
+  -webkit-box-shadow: inset 0 10px 20px #333;
+  text-align: center;
+  
+  #wikiaLogo {
+    margin-top: 20px;
+    height: 40px;
+    width: auto;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 5px;
+    margin: 2px;
+    width: 90%;
+    
+    li {
+      width: 30%;
+      display: inline;
+      padding: 5px;
+      margin: 0;
     }
+  }
+}
+
+//ads
+#adPlace {
+  width: 100%;
+  height: 50px;
+  
+  #adWrapper {
+    opacity: 1;
+    width: 100%;
+    height: 50px;
+    background-color: red;
+    color: white;
+    -webkit-transition: all 0.5s;
+    
+    &.up {
+      position: absolute;
+      bottom: 0;
+      
+      &.hidden {
+        opacity: 0;
+        bottom: -200px;
+      }
     }
   }
 }
@@ -225,10 +259,12 @@ html {
   overflow: hidden;
   padding-bottom: 20px;
   margin: 2px;
+  
   & > h2 {
       width: 100%;
       padding: 5px;
       border-bottom: 1px solid grey;
+      
       &.open{
         .arrow {
           border-top: none;
@@ -237,25 +273,30 @@ html {
           border-right: 8px solid rgba(0,0,0,0);
         }
       }
+      
       .arrow {
         position: relative;
         right: 30px;
         float: right;
       }
   }
+  
   .editsection {
     display: none;
   }
+  
   .articleSection {
     display: none;
     &.open {
       display: block;
     }
   }
+  
   table#toc {
     display: none;
     //TODO: get rid of TOC
   }
+  
   .infobox {
     border: 1px solid grey;
     margin: 0 auto;
@@ -263,6 +304,7 @@ html {
     width: 95% !important;
     float: none !important;
     -webkit-box-shadow: 0 0 5px grey;
+    
     tr:nth-of-type(n+3) td b {
       background-color: #AAA;
       display: block;
@@ -303,7 +345,6 @@ html {
     }
   }
 }
-
 
 @media ( min-width: 321px ),( orientation: landscape ) {
 
