@@ -37,7 +37,8 @@ function runArchiveStats($city_id, $serverName, $dateRun, $usedb) {
 	$script_path = $_SERVER['PHP_SELF'];
 #	$wgMaxShellMemory = $wgMaxShellMemory * 10;
 #	$wgMaxShellTime = $wgMaxShellTime * 10;
-	$path = "SERVER_ID={$city_id} php {$script_path} --events=1 --conf {$wgWikiaLocalSettingsPath} --serverName=$serverName --sleep=$sleep --sloop=$sloop --date=$dateRun" . ( $usedb ) ? " --usedb=Y " : "";
+	$usedb_cmd = ( $usedb ) ? " --usedb=Y " : "";
+	$path = "SERVER_ID={$city_id} php {$script_path} --events=1 --conf {$wgWikiaLocalSettingsPath} --serverName=$serverName --sleep=$sleep --sloop=$sloop --date=$dateRun" . $usedb_cmd;
 	#echo $path . " \n";
 	$return = wfShellExec( $path );
 	echo $return;
