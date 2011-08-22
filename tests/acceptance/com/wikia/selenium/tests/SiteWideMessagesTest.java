@@ -30,10 +30,12 @@ public class SiteWideMessagesTest extends BaseTest {
 		
 		// Check preview
 		clickAndWait("fPreview");
+		waitForElement("//div[@id='WikiTextPreview']/p");
 		assertTrue(uniqMessage.equals(session().getText("//div[@id='WikiTextPreview']/p")));
 		
 		// Send the message
 		clickAndWait("fSend");
+		waitForElement("//div[@id='PaneSent']//fieldset//p");
 		
 		assertTrue(session().isTextPresent("The message has been sent."));
 	}

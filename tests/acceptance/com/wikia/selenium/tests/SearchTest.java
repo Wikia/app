@@ -31,15 +31,17 @@ public class SearchTest extends BaseTest {
 	
 	@Test(groups={"CI", "verified"})
 	public void testEnsureThatWhenUserSearchesForExactPageTitleTheSearchedPageIsDisplayed() throws Exception {
+		openAndWait("wiki/Special:Random");
+		
+		String pageName = session().getText("//header[@id='WikiaPageHeader']/h1");
+		
 		openAndWait("/");
 		waitForElement("//input[@name='search']");
-		session().type("//input[@name='search']", "main page");
+		session().type("//input[@name='search']", pageName);
 		clickAndWait("//form[@id='WikiaSearch']/input[3]");
 
 		// check what page you land on
-		assertTrue(session().getLocation().contains("wiki/Main_Page"));
-		assertTrue(session().getText("//header[@id='WikiaPageHeader']/h1").equals("Main Page")
-			|| session().getText("//header[@id='WikiaPageHeader']/h1").equals(session().getEval("window.wgSitename"))
-		);
+		assertTrue(session().getLocation().contains("wiki/" + pageName.replace(" ", "_")));
+		assertTrue(session().getText("//header[@id='WikiaPageHeader']/h1").equals(pageName));
 	}
 }
