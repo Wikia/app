@@ -37,6 +37,6 @@ $(document).ready(function(){
 	console.log("Starting FoggyFoto game...");
 	var flipBoard = new FoggyFoto.FlipBoard();
 	flipBoard.init(function(){
-		flipBoard.logState();
+		console.log("Game has started!");
 	});
 });
