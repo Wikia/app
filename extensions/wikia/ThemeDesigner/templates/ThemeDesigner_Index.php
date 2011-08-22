@@ -29,7 +29,7 @@
 	<script src="<?= $wgStylePath ?>/common/jquery/jquery-1.6.2.js"></script>
 	<script src="<?= $wgStylePath ?>/common/jquery/jquery.wikia.js"></script>
 	<script src="<?= $wgStylePath ?>/common/jquery/jquery.wikia.tracker.js"></script>
-	<script src="<?= $wgStylePath ?>/common/jquery/jquery.json-1.3.js"></script>
+	<script src="<?= $wgStylePath ?>/common/jquery/jquery.json-2.2.js"></script>
 	<script src="<?= $wgExtensionsPath ?>/wikia/ThemeDesigner/js/jquery-ui-1.8.14.custom.min.js"></script>
 	<script src="<?= $wgExtensionsPath ?>/wikia/ThemeDesigner/js/ThemeDesigner.js"></script>
 	<script src="<?= $wgExtensionsPath ?>/wikia/ThemeDesigner/js/aim.js"></script>

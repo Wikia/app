@@ -95,7 +95,7 @@ class StaticChute {
 			'common/yui_extra/tools-min.js',
 
 			'common/jquery/jquery-1.6.2.js',
-			'common/jquery/jquery.json-1.3.js',
+			'common/jquery/jquery.json-2.2.js',
 			'common/jquery/jquery.cookies.2.1.0.js',
 			'common/jquery/jquery.dump.js',
 			'common/jquery/jquery.getcss.js',
@@ -126,7 +126,7 @@ class StaticChute {
 		// The jquery files we need in every JS package of Oasis.
 		$this->config['oasis_jquery'] = array(
 			"common/jquery/jquery-1.6.2.js",
-			"common/jquery/jquery.json-1.3.js",
+			"common/jquery/jquery.json-2.2.js",
 			'common/jquery/jquery.getcss.js',
 			"common/jquery/jquery.wikia.js",
 			"common/jquery/jquery.cookies.2.1.0.js", // needed by geo.js
