@@ -218,7 +218,7 @@
 				attr('href', wgArticlePath.replace('$1', window.wgEditedTitle)).
 				attr('title', $.htmlentities(window.wgEditedTitle)).
 				html(shortText);
-				$('#EditPageHeader .DummyPrefixedText').show();
+				$('#EditPageHeader .hiddenTitle').show();
 		},
 
 		// return true if any of the required fields has no value
