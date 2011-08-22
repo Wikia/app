@@ -2,11 +2,11 @@ var WikiaMobile = {
 	
 	hideURLBar: function() {
 		if ( $.os.android || $.os.ios || $.os.webos ) {
-				//slide up the addressbar on webkit mobile browsers for maximum reading area
-				//setTimeout is necessary to make it work on ios...
-				  setTimeout( function() { 
-				  	if (!pageYOffset) window.scrollTo( 0, 1 );
-				  	}, 100 );
+		//slide up the addressbar on webkit mobile browsers for maximum reading area
+		//setTimeout is necessary to make it work on ios...
+		  setTimeout( function() { 
+		  	if (!pageYOffset) window.scrollTo( 0, 1 );
+		  	}, 100 );
 		}
 	},
 	
@@ -31,12 +31,14 @@ var WikiaMobile = {
 	
 	wrapArticles: function() {
 		var content = $( '#WikiaMainContent' ).contents(),
-		mainContent = '',
-		firstH2 = true;
+			mainContent = '',
+			firstH2 = true;
+		//Im using here plain javascript as Zepto.js does not provide me with real contents method
+		//I end up creating simple contents method that returns JS Object instead of Zepto ones	
 		for( var i = 0; i < content.length; i++ ) {
 			var element = content[i];
 			if ( element.nodeName === 'H2' ) {
-				if( firstH2 ) {
+				if ( firstH2 ) {
 					mainContent += '<button id="showAll" class="collapsed">Show All</button>' + element.outerHTML + '<section class=\"articleSection\">';
 				} else {
 					mainContent += '</section>' + element.outerHTML + '<section class=\"articleSection\">';
@@ -52,6 +54,7 @@ var WikiaMobile = {
 	},
 
 	init: function() {
+		//Im using delegate on document.body as it's been proved to be the fastest option
 		$( document.body ).delegate( '#openToggle', 'tap', function() {
 			$( '#navigation').toggleClass( 'open' );
 		});
@@ -89,12 +92,12 @@ var WikiaMobile = {
 			showAll.toggleClass( 'collapsed' );
 		});
 		
-		$( '#WikiaPage' ).bind( 'swipeLeft', function() {
+		$( document.body ).delegate( '#WikiaPage', 'swipeLeft', function() {
 			$( '#wikiaFooter, #navigation, #WikiaPage' ).css( 'display', 'none' );
 			$( '#leftPane' ).css( { 'display': 'block', 'opacity': '1' } );
 		});
 		
-		$( '#leftPane' ).bind( 'swipeRight', function() {
+		$( document.body ).delegate( '#leftPane', 'swipeRight', function() {
 			$( '#wikiaFooter, #navigation, #WikiaPage' ).css( 'display', 'block'  );
 			$( '#leftPane' ).css( { 'display': 'none', 'opacity': '0' } );
 		});
