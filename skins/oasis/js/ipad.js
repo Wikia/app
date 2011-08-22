@@ -31,19 +31,22 @@ iPadImprovements = {
 			var next = $( this ).next();
 			if ( next.hasClass( 'subnav' ) && !next.hasClass( 'show' ) ) {
 				event.preventDefault();
-				next.addClass( 'show' );
-
 			};
 		});
 
 		//wiki nav fix: first click opens nav, second redirects to a desired page
 		$( '#WikiHeader' ).delegate( 'nav > ul > li > a', 'click', function() {
 			subnav = $( this ).next( 'ul.subnav' );
-			if ( subnav.length ) {
-				if ( subnav.css( 'display' ) != 'block' ) {
-					event.preventDefault();
-					subnav.css( 'display', 'block' );
-				};
+			if ( subnav.length && subnav.css( 'display' ) != 'block') {
+				event.preventDefault();
+			};
+		});
+		
+		//user menu fix:
+		$( '#AccountNavigation' ).delegate( 'a', 'click', function( event ) {
+			var next = $( this ).next();
+			if ( next.hasClass( 'subnav' ) && !next.hasClass( 'show' ) ) {
+				event.preventDefault();
 			};
 		});
 	}
