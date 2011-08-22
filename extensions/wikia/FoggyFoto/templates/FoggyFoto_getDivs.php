@@ -80,12 +80,15 @@
 				margin-top: -<?= floor($answerDrawerHeight / 2) ?>px;
 				height: <?= $answerDrawerHeight ?>px;
 			}
-			#answerButton{
+			#answerButton, #continueButton{
 				top:50%;
 				margin-top:-<?= floor($answerButtonWidth/2) ?>px;
 				width:<?= $answerButtonWidth ?>px;
 				height:<?= $answerButtonWidth ?>px;
 				z-index:30;
+			}
+			#continueButton{
+				display:none;
 			}
 			#answerListWrapper{
 				height:100%;
@@ -111,6 +114,9 @@
 				border-bottom:1px solid #cdff5f;
 				line-height: <?= floor($answerDrawerHeight / $NUM_ANSWER_CHOICES) ?>px;
 				cursor:pointer;
+			}
+			#answerListWrapper ul li.incorrect{
+				background-color:#ff8080;
 			}
 			#answerListWrapper ul li.first{
 				border-top-left-radius: 15px;
@@ -211,6 +217,7 @@
 		<script src="<?= $mwJsApiUrl ?>"></script>
 	</head>
 	<body>
+		<script src="<?= $gameJs_FlipBoard ?>"></script>
 		<script src="<?= $gameJs ?>"></script>
 		<div id='scoreBarWrapper'>
 			<div id='scoreBar'></div>
@@ -223,6 +230,9 @@
 				<div id='answerDrawer'>
 					<div id='answerButton'>
 						<img src='<?= $answerButtonSrc ?>'/>
+					</div>
+					<div id='continueButton'>
+						<img src='<?= $continueButtonSrc ?>'/>
 					</div>
 					<div id='answerListWrapper'>
 						<ul>
