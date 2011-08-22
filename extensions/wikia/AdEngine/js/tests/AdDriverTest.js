@@ -5,19 +5,19 @@ module('AdConfig');
 
 test('isHighValueCountry', function() {
   window.wgHighValueCountries = [];
-  window.wgHighValueCountries['CA'] = 1;
-  window.wgHighValueCountries['DE'] = 1;
-  window.wgHighValueCountries['DK'] = 1;
-  window.wgHighValueCountries['ES'] = 1;
-  window.wgHighValueCountries['FI'] = 1;
-  window.wgHighValueCountries['FR'] = 1;
-  window.wgHighValueCountries['GB'] = 1;
-  window.wgHighValueCountries['IT'] = 1;
-  window.wgHighValueCountries['NL'] = 1;
-  window.wgHighValueCountries['NO'] = 1;
-  window.wgHighValueCountries['SE'] = 1;
-  window.wgHighValueCountries['UK'] = 1;
-  window.wgHighValueCountries['US'] = 1;
+  window.wgHighValueCountries['CA'] = 3;
+  window.wgHighValueCountries['DE'] = 3;
+  window.wgHighValueCountries['DK'] = 3;
+  window.wgHighValueCountries['ES'] = 3;
+  window.wgHighValueCountries['FI'] = 3;
+  window.wgHighValueCountries['FR'] = 3;
+  window.wgHighValueCountries['GB'] = 3;
+  window.wgHighValueCountries['IT'] = 3;
+  window.wgHighValueCountries['NL'] = 3;
+  window.wgHighValueCountries['NO'] = 6;
+  window.wgHighValueCountries['SE'] = 3;
+  window.wgHighValueCountries['UK'] = 3;
+  window.wgHighValueCountries['US'] = 3;
   
 	// commented-out tests may pass in production, but not dev
 //  ok( AdConfig.isHighValueCountry('AT'), 'AT' );
