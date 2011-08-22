@@ -274,17 +274,22 @@ class UserIdentityBox {
 	 * @return string empty string if text was blocked; given text otherwise
 	 */
 	private function doPhalanxFilter($text) {
+		$this->app->wf->ProfileIn( __METHOD__ );
+		
 		if( !empty($this->app->wg->EnablePhalanxExt) && !empty($text) ) {
 			$filters = Phalanx::getFromFilter(Phalanx::TYPE_CONTENT);
 			
 			foreach($filters as $filter) {
 				$result = Phalanx::isBlocked($text, $filter);
 				if( $result['blocked'] ) {
+					
+					$this->app->wf->ProfileOut( __METHOD__ );
 					return '';
 				}
 			}
 		}
 		
+		$this->app->wf->ProfileOut( __METHOD__ );
 		return $text;
 	}
 	
