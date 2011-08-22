@@ -206,17 +206,28 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 		this.answerClicked = function(){
 			var guessed = $(this).html();
 			
+			// TODO: If the click was on an incorrect answer that was already guessed, the click should be ignored.
+			// TODO: If the click was on an incorrect answer that was already guessed, the click should be ignored.
+			
 			if(guessed == self._currentAnswer){
-				self.log("CORRECT!");
+				self._gotRightAnswer(this);
 			} else {
-				self.log("wrong");
+				self._gotWrongAnswer(this);
 			}
+		};
+		
+		/**
+		 * When the user guessed a correct answer, this function is called to show that on-screen, play the appropriate sound,
+		 * and alter the game-flow to prepare to go to the next round.
+		 */
+		this._gotRightAnswer = function(){
 		};
 
 		/**
-		 * When the user guessed a wrong answer, this function is called to deduct points, mark
+		 * When the user guessed a wrong answer, this function is called to deduct points, mark the answer as wrong
+		 * and no-longer selectable, play a sound, etc.
 		 */
-		this.gotWrongAnswer = function(){
+		this._gotWrongAnswer = function(){
 		};
 
 		/**

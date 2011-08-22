@@ -62,7 +62,7 @@ class FoggyFotoController extends WikiaController {
 		$this->answerButtonSrc = $wgExtensionsPath.'/wikia/FoggyFoto/answer-button.png';
 		$this->answerButtonWidth = 48;
 		$this->answerDrawerWidth = 150;
-		$this->answerDrawerHeight = 200;
+		$this->answerDrawerHeight = 250;
 
 		$this->wgScriptPath = $wgScriptPath;
 		$this->mwJsApiUrl = $wgExtensionsPath."/wikia/JavascriptAPI/Mediawiki.js?$wgStyleVersion";
