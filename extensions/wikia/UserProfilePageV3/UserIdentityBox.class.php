@@ -40,12 +40,11 @@ class UserIdentityBox {
 		$this->app = $app;
 		$this->user = $user;
 		$this->topWikisLimit = $topWikisLimit;
-		
-		if( is_null($this->app->wg->Title) ) {
-			$this->app->wg->Title = $this->user->getUserPage();
-		}
-		
 		$this->title = $this->app->wg->Title;
+		
+		if( is_null($this->title) ) {
+			$this->title = $this->user->getUserPage();
+		}
 	}
 	
 	/**
