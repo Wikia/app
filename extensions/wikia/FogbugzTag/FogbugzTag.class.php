@@ -15,24 +15,33 @@ class FogbugzTag
 	public function __construct(){}
 	
 	private static $mWikitextIdx;
+	//private static $frame;
 
 	public function onFogbugzTagInit( Parser $parser ) {
+		//$this->frame = new PPFrame();
 		$parser->setHook( 'fogbugz_tck', 'FogbugzTag::renderTag' );
 		return true;
 	}
-	public function renderTag( $input, $params ) {
+	public function renderTag( $input, $params, Parser $parser, PPFrame $frame) {
+		//$this->frame = $frame;
 		global $wgRTEParserEnabled, $wgHTTPProxy, $wgFogbugzAPIConfig,
 			$wgCaptchaDirectory, $wgCaptchaDirectoryLevels, $wgStylePath;
 
 		if ( !isset( $params['id'] ) ) {
 			return '';
 		}
-		//TODO: XML::element
-		$output = '<span class="fogbugz_tck" data-id="'.$params['id'].'"><img src="'.$wgStylePath.'/common/images/ajax.gif"></span>';								   
+		
+		$output = Xml::openElement('span', array('class' => 'fogbugz_tck', 'data-id' => $parser->recursiveTagParse($params['id'], $frame)));
+		//$output .= $input;
+		$output .= Xml::openElement('img', array('src' => $wgStylePath.'/common/images/ajax.gif'));
+		$output .= Xml::closeElement('span');
+									   
 		$data = array(
 				'wikitext' => RTEData::get('wikitext', self::$mWikitextIdx),
 				'placeholder' => 1
 		);
+		//$dataIdx = RTEData::put('data', $data);
+		//$output = RTEData::addIdxToTag($dataIdx, $output);
 		$output .= F::build( 'JSSnippets' )->addToStack( array( '/extensions/wikia/FogbugzTag/js/FogbugzTag.js' ) );
 		return $output;
 	}
@@ -95,11 +104,9 @@ class FogbugzTag
 		
 		for ($i = 0; $i < $index; $i++) {
 			$mainList[] = new FogbugzContainer($ticketsArray[$i]);
-			//TODO: remove static calls
 			$mainList[$i]->addChildren( $ticketsArray );
-			
-			FogbugzContainer::prioritySort($mainList[$i]);
-			FogbugzContainer::prepareHtml($mainList[$i],$res, $i);
+			$mainList[$i]->prioritySort();
+			$mainList[$i]->prepareHtml($res, $i);
 		}
 		
 		$tmpParser = new Parser();
@@ -110,6 +117,7 @@ class FogbugzTag
 		//return $res;
 		
 		//TODO: create templating system
+		
 		for ($i = 0; $i < count($res); $i++) {
 			$fullInfo = implode("", $res[$i]);
 			$parsedResults[$i] = $tmpParser->parse($fullInfo , $wgTitle, $tmpParserOptions)->getText();
