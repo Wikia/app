@@ -336,7 +336,7 @@ $.store.serializers = {
 			encoders.push( "json" );
 			decoders.push( "json" );
 		},
-		// macbre: use interface provided by "jquery.json-1.3.js"
+		// macbre: use interface provided by jQuery JSON plugin
 		encode: $.toJSON,
 		decode: $.secureEvalJSON
 	}
