@@ -214,8 +214,15 @@ function SiteWideMessagesDiff($oTitle, $uMessages) {
 /**
  * Add messages above the editor on UserTalk page so the user with empty UTP would see their message when clicking on UTP link
  *
+ * TODO: remove this method once edit page reskin is enabled site-wide
  */
 function SiteWideMessagesArticleEditor($editPage) {
+	// don't show SWM messages on edit page (BugId:7095)
+	global $wgEnableEditPageReskinExt;
+	if (!empty($wgEnableEditPageReskinExt)) {
+		return true;
+	}
+
 	global $wgOut, $wgTitle, $wgUser;
 	if ($wgTitle->getNamespace() == NS_USER_TALK &&                      //user talk page?
 		$wgUser->getName() == $wgTitle->getPartialURL() &&               //*my* user talk page?
@@ -236,7 +243,7 @@ function SiteWideMessagesAjaxDismiss($msgId) {
 }
 
 /**
- * Show notication (in Oasis)
+ * Show notification (in Oasis)
  *
  * @author macbre
  */
