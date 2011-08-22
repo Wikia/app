@@ -12,11 +12,22 @@ var AdDriver = {
 	cookieNameNumAllCall: 'adDriverNumAllCall',
 	cookieNameNumDARTCall: 'adDriverNumDARTCall',
 	cookieNameLastDARTCallNoAd: 'adDriverLastDARTCallNoAd',
+	country: '',
 	debug: false,
 	minNumDARTCall: 3,
 	paramLiftiumTag: 'liftium_tag',
 	standardLeaderboardMinHeight: 90,
 	standardLeaderboardMaxHeight: 95,
+
+	getMinNumDARTCall: function(country) {
+		country = country.toUpperCase();
+		if (country in window.wgHighValueCountries) {
+			return window.wgHighValueCountries[country];
+		}
+		else {
+			return AdDriver.minNumDARTCall;
+		}
+	},
 
 	init: function() {
 		window.adDriverLastDARTCallNoAds = new Array();
@@ -85,10 +96,14 @@ AdDriver.isHighValue = function(slotname) {
 		// FogBugz 9953: Liftium.geo may have country data when AdConfig.geo does not
 		// Read from Liftium.geo first
 		if (Liftium.geo) {
-			return AdConfig.isHighValueCountry(Liftium.geo.country);
+			AdDriver.country = Liftium.geo.country;
 		}
 		else if (AdConfig.geo) {
-			return AdConfig.isHighValueCountry(AdConfig.geo.country);
+			AdDriver.country = AdConfig.geo.country;
+		}
+
+		if (AdDriver.country) {
+			return AdConfig.isHighValueCountry(AdDriver.country);
 		}
 		else {
 			Liftium.trackEvent(Liftium.buildTrackUrl(["error", "no_geo"]));
@@ -330,7 +345,7 @@ AdDriver.getAdProvider = function(slotname, size, defaultAdProvider) {
 	}
 
 	if (AdDriver.isHighValue(slotname)) {
-		if (AdDriver.getNumDARTCall(slotname) < AdDriver.minNumDARTCall || !AdDriver.isLastDARTCallNoAd(slotname)) {
+		if (AdDriver.getNumDARTCall(slotname) < AdDriver.getMinNumDARTCall(AdDriver.country) || !AdDriver.isLastDARTCallNoAd(slotname)) {
 			return AdDriver.adProviderDart;
 		}
 	}
