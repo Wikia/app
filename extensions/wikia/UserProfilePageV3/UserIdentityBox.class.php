@@ -220,6 +220,8 @@ class UserIdentityBox {
 					$data->$option = $this->app->wg->Parser->parse($data->$option, $this->user->getUserPage(), new ParserOptions($this->user))->getText();
 					$data->$option = str_replace('&amp;asterix;', '*', $data->$option);
 					$data->$option = trim( strip_tags($data->$option) );
+					//phalanx filtering; bugId:10233
+					$data->$option = $this->doPhalanxFilter($data->$option);
 					
 					//if( in_array($option, array('gender', 'birthday')) ) { -- just an example how can it be used later
 					if( $option === 'gender' ) {
@@ -262,6 +264,28 @@ class UserIdentityBox {
 		
 		$this->app->wf->ProfileOut( __METHOD__ );
 		return false;
+	}
+	
+	/**
+	 * @brief Uses Phalanx to filter spam texts
+	 * 
+	 * @param string $text the text to be filtered
+	 * 
+	 * @return string empty string if text was blocked; given text otherwise
+	 */
+	private function doPhalanxFilter($text) {
+		if( !empty($this->app->wg->EnablePhalanxExt) && !empty($text) ) {
+			$filters = Phalanx::getFromFilter(Phalanx::TYPE_CONTENT);
+			
+			foreach($filters as $filter) {
+				$result = Phalanx::isBlocked($text, $filter);
+				if( $result['blocked'] ) {
+					return '';
+				}
+			}
+		}
+		
+		return $text;
 	}
 	
 	/**
