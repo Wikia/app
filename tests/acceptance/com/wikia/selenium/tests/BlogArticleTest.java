@@ -28,7 +28,7 @@ public class BlogArticleTest extends BaseTest {
 		return this.title;
 	}
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "verified", "deprecated"})
 	public void testEnsureLoggedInUserCanCreateBlogPosts() throws Exception {
 		login();
 		openAndWait("index.php?title=Special:CreateBlogPage");
@@ -45,7 +45,7 @@ public class BlogArticleTest extends BaseTest {
 		logout();
 	}
 	
-	@Test(groups={"CI", "verified"},dependsOnMethods={"testEnsureLoggedInUserCanCreateBlogPosts"})
+	@Test(groups={"CI", "verified", "deprecated"},dependsOnMethods={"testEnsureLoggedInUserCanCreateBlogPosts"})
 	public void testEnsureUserCanPostCommentsOnBlogPosts() throws Exception {
 		loginAsRegular();
 		openAndWait( "index.php?title=User_blog:" + getTestConfig().getString("ci.user.wikiabot.username") + "/" + this.getTitle().replace( " ", "_" ) );
