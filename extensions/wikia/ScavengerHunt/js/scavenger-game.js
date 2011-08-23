@@ -91,6 +91,7 @@ var ScavengerHunt = {
 							ScavengerHunt.spritePrepared = false;
 							if (ScavengerHunt.setupProgressBarSprite()) {
 								ScavengerHunt.showProgressBar();
+								ScavengerHunt.addProgressBarEvents();
 								ScavengerHunt.setupHuntItemSprite();
 							}
 						}
@@ -415,16 +416,11 @@ var ScavengerHunt = {
 		}
 	},
 
-	showClueText: function(html) {
-		var clueField = $('#scavenger-progress-clue-area');
-		clearTimeout(ScavengerHunt.clueTimeout);
-		ScavengerHunt.clueTimeout = null;
-		clueField
-			.html(html)
+	addProgressBarEvents: function() {
+		$('#scavenger-progress-clue-area')
 			.css({
-				'line-height': clueField.height() + 'px',
-				'font-size': ScavengerHunt.huntData.clueSize,
 				'color': ScavengerHunt.huntData.clueColor,
+				'font-size': ScavengerHunt.huntData.clueSize,
 				'font-weight': ScavengerHunt.huntData.clueFont})
 			.bind('mouseover', function(e) {
 				clearTimeout(ScavengerHunt.clueTimeout);
@@ -435,7 +431,12 @@ var ScavengerHunt = {
 					ScavengerHunt.clueTimeout = setTimeout(ScavengerHunt.hideClueText, 200);
 				}
 			})
-			.show();
+			.append($('<span id="scavenger-progress-clue-area-inner">'));
+	},
+
+	showClueText: function(html) {
+		$('#scavenger-progress-clue-area-inner').html(html);
+		$('#scavenger-progress-clue-area').css('display', 'table');
 	},
 
 	hideClueText: function () {
