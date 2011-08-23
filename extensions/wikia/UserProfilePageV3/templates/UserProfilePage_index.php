@@ -1,3 +1,3 @@
 <div id="UPPStuffBox">
-	<p><?= $stuffSectionBody ?></p>
+	<?= $stuffSectionBody ?>
 </div>
