@@ -53,13 +53,22 @@
 			#gameBoard .tile{
 				width: <?= $tileWidth ?>px;
 				height: <?= $tileHeight ?>px;
+
+				z-index: 20; /* show up on top of the background image */
+			}
+			.opacityTransition{
 				-webkit-transition: opacity .75s ease-in-out;
 				-moz-transition: opacity .75s ease-in-out;
 				-o-transition: opacity .75s ease-in-out;
 				-ms-transition: opacity .75s ease-in-out;
 				transition: opacity .75s ease-in-out;
-				
-				z-index: 20; /* show up on top of the background image */
+			}
+			.noTransition{
+				-webkit-transition: none;
+				-moz-transition: none;
+				-o-transition: none;
+				-ms-transition: none;
+				transition: none;
 			}
 			#gameBoard a:hover{
 				background-color:#00f;
@@ -287,7 +296,7 @@
 <?php
 				for($row = 0;  $row < $numRows; $row++){
 					for($col = 0; $col < $numCols; $col++){
-						print "\t\t\t<div class='tile' id='sprite_{$row}_{$col}'></div>\n";
+						print "\t\t\t<div class='tile opacityTransition' id='sprite_{$row}_{$col}'></div>\n";
 					}
 					print "\t\t\t<br/>\n";
 				}

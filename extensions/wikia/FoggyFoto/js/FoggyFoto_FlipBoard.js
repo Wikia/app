@@ -23,6 +23,8 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 		this.debug = true; // whether to log a whole bunch of info to console.log
 		this._REVEALED_CLASS_NAME = 'transparent'; // the class that will be on tiles which are revealed.
 		this._INCORRECT_CLASS_NAME = 'incorrect'; // class on li's that were incorrect guesses.
+		this._TRANSITION_CLASS_NAME = 'opacityTransition'; // class that applies the CSS transition to opacity so that clicking a tile reveals it slowly (but so that we can remove the transition if we need to instantly flip all tiles).
+		this._NO_TRANSITION_CLASS_NAME = 'noTransition'; // removing a transition class is not enough, we need to also apply a class which explicitly has no transitions.
 
 		// URLs of the images
 		this.frontImageSrc = ''; // this shows up immediately
@@ -45,6 +47,7 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 
 		// Actual game-state and related constants.
 		this._allPagesInCategory = []; // used as the pool from which to choose possible answers
+		this._usedAnswers = []; // to prevent re-using the same photo multiple times in the same game
 		this._currentAnswer = ""; // the CORRECT answer to the current round
 		this._totalPoints = 0;
 		this._pointsThisRound = 0;
@@ -76,6 +79,7 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 
 			// Pull a selection of pages in the category (using the API).
 			var categoryTitle = 'Category:Characters';
+			//var categoryTitle = 'Category:Albums_released_in_1984';
 			var apiParams = {
 				'action': 'query',
 				'list': 'categorymembers',
@@ -87,7 +91,7 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 				if(data.error){
 					self.mwError(data.error);
 				} else {
-					self.log("Got category members ("+ data.query.categorymembers.length+" pages).");
+					self.log("Got category members ("+ data.query.categorymembers.length+" pages) for category '"+categoryTitle+"'.");
 
 					if(data.query.categorymembers){
 						self._allPagesInCategory = [];
@@ -128,12 +132,16 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 			} else {
 
 				// Put all of the front-tiles back so that the next round's picture will be loaded behind them.
-				$('#gameBoard .tile').removeClass('transparent');
+				// The class-name dancing is required by the way transitions work... it lets us make all the tiles opaque immediately so that the background image doesn't appear before they are solid.
+				$('#gameBoard .tile').removeClass( self._TRANSITION_CLASS_NAME ).addClass( self._NO_TRANSITION_CLASS_NAME );
+				$('#gameBoard .tile').removeClass( self._REVEALED_CLASS_NAME );
+				$('#gameBoard .tile').addClass( self._TRANSITION_CLASS_NAME );
+				$('#gameBoard .tile').removeClass( self._NO_TRANSITION_CLASS_NAME );
+
 				$('#continueButton').add('.continueText').hide(); // clean up potentially left-over elements from previous rounds
-	// TODO: BUG: That fade takes longer than the bg image takes to load... we have to figure out a way to either make the transition instant when being RE-applied, or to wait until the transition is done.
-	// TODO: BUG: That fade takes longer than the bg image takes to load... we have to figure out a way to either make the transition instant when being RE-applied, or to wait until the transition is done.
 
 				// TODO: NICE-TO-HAVE: Track all of the pages used as questions to prevent the same photo from being used twice in the same game.
+				//self._usedAnswers
 				// TODO: NICE-TO-HAVE: Track all of the pages used as questions to prevent the same photo from being used twice in the same game.
 
 				// Randomly get a page from the category (and its associated image) until we find a page which has an image.
@@ -364,7 +372,7 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 			if(self._pointsThisRound <= 0){
 				self._roundIsOver = true;
 				self._hideAnswerDrawer();
-				
+
 				// Show the user that the time is up & let them continue to the next round.
 				$('#continueButton').add('#timeUpText').show();
 			} else if(!self._roundIsOver){
@@ -473,7 +481,7 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 			self._hideAnswerDrawer();
 			
 			// Reveal all tiles.
-			$('#gameBoard .tile').addClass('transparent');
+			$('#gameBoard .tile').addClass( self._REVEALED_CLASS_NAME );
 
 			// Show "CORRECT!" message and icon (as a clickable area that will load the next round).
 			$('#answerButton').hide();

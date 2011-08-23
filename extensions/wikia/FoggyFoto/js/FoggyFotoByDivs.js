@@ -24,8 +24,34 @@ if (typeof FoggyFoto === 'undefined') {
 		};	
 	};
 }
-if (typeof FoggyFoto.Game === 'undefined') {
 
+
+
+if (typeof FoggyFoto.GameConfigs === 'undefined') {
+	/**
+	 * This class stores a configuration for a single game type. For example, to play the game on TrueBlood with
+	 * category Characters, you would have one GameConfig object, but to play on Glee with category Characters or
+	 * TrueBlood with category Episodes would be another.
+	 */
+	FoggyFoto.GameConfigs = function(){
+		var self = this;
+		this.debug = true; // whether to log a whole bunch of info to console.log
+	
+		this._wikiDomain = "lyrics.wikia.com";
+		//this._category = "Category:
+	
+	
+		
+		/**
+		 * Simple wrapper for console.log to allow us to turn on/off debugging for this
+		 * whole class at once.
+		 */
+		this.log = function(msg){
+			if(self.debug){
+				console.log(msg);
+			}
+		};	
+	};	
 }
 
 
