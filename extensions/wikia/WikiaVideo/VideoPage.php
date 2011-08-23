@@ -1758,7 +1758,8 @@ EOD;
 				$jwplayerjs = $jwplayerdir . 'jwplayer.js';
 				$file = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid='.$this->mId.'&bitrateid='.$this->mData[0].'&vendorid='.self::$SCREENPLAY_VENDOR_ID.'&type='.self::$SCREENPLAY_VIDEO_TYPE;
 				$hdfile = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid='.$this->mId.'&bitrateid='.self::SCREENPLAY_HIGHDEF_BITRATE_ID.'&vendorid='.self::$SCREENPLAY_VENDOR_ID.'&type='.self::$SCREENPLAY_VIDEO_TYPE;
-				$image = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid='.$this->mId.'&bitrateid='.self::SCREENPLAY_LARGE_JPEG_BITRATE_ID.'&vendorid='.self::$SCREENPLAY_VENDOR_ID.'&type=.jpg';
+				$jpegBitrateId = !empty($this->mData[3]) ? $this->mData[3] : self::SCREENPLAY_MEDIUM_JPEG_BITRATE_ID;
+				$image = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid='.$this->mId.'&bitrateid='. $jpegBitrateId .'&vendorid='.self::$SCREENPLAY_VENDOR_ID.'&type=.jpg';
 
 				$plugins = array('gapro-1'=>array('accountid'=>self::VIDEO_GOOGLE_ANALYTICS_ACCOUNT_ID));
 				if ($this->mData[1]) {
@@ -1918,7 +1919,11 @@ EOD;
 				$thumb = $huluData['thumbnailUrl'];
 				break;
 			case self::V_SCREENPLAY:
-				$thumb = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid='.$this->mId.'&bitrateid='.self::SCREENPLAY_LARGE_JPEG_BITRATE_ID.'&vendorid='.self::$SCREENPLAY_VENDOR_ID.'&type=.jpg';
+				$bitrateId = self::SCREENPLAY_MEDIUM_JPEG_BITRATE_ID;
+				if (!empty($this->mData[3])) {
+					$bitrateId = $this->mData[3];
+				}
+				$thumb = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid='.$this->mId.'&bitrateid='.$bitrateId.'&vendorid='.self::$SCREENPLAY_VENDOR_ID.'&type=.jpg';
 				break;
 			case self::V_MOVIECLIPS:
 				$thumb = $this->mData[0];
