@@ -4,23 +4,7 @@ $(document).ready(function() {
 
 iPadImprovements = {
 	
-	setViewPort: function() {
-		var content = 'width=1024, initial-scale=1.0';
-
-		if ( window.orientation == 0  || window.orientation == 180 ) {
-			if( sassParams.hd ) {
-				content = 'width=1024, initial-scale=0.87';
-			} else {
-				content = 'width=1024, initial-scale=1.09';
-			}
-		}
-		$( 'meta[name=viewport]' ).attr( 'content', content );
-	},
-	
 	init: function() {
-		
-		//onload add proper viewport
-		iPadImprovements.setViewPort();
 		
 		//onload scroll to main content
 		wikiaMainContent = $( '#WikiaMainContent' ).offset();
