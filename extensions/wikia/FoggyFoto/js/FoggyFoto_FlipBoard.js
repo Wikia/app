@@ -130,26 +130,8 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 									$('#bgPic').css('left', '-'+scaledBackOffsetX+'px');
 									$('#bgPic').css('top', '-'+scaledBackOffsetY+'px');
 
-									// A new round has started, initialize the round & start the timer.
-							// TODO: WRAP ALL OF THIS INIT IN AN _initNewRound() FUNCTION
-									self._setUpPossibleAnswers();
-									self._pointsThisRound = self._MAX_POINTS_PER_ROUND;
-									self._currPhoto++;
-									self.updateHud_progress();
-									self.updateHud_score();
-									self._startRoundTimer();
-									$('#answerButton').show();
-									$('#continueButton').hide();
-
-									// Attach event-handling.
-									var eventName = 'mousedown';
-									if ("ontouchstart" in document.documentElement){
-										eventName = 'touchstart'; // event has a different name on touchscreen devices
-									}
-									$('#gameBoard .tile').bind(eventName, self.tileClicked);
-									$('#answerButton').click(self._toggleAnswerDrawer);
-									$('#continueButton').click(self._startNextRound);
-							// TODO: WRAP ALL OF THIS INIT IN AN _initNewRound() FUNCTION
+									// A new round has started, initialize the round variables & start the timer.
+									self._kickOffRoundTimer();
 
 									// TODO: REMOVE THE GAME-LOADING OVERLAY/STATE
 									// TODO: REMOVE THE GAME-LOADING OVERLAY/STATE
@@ -173,6 +155,47 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 		};
 
 		/**
+		 * Once the user has chosen to go to the next round, this will load up the next image and initialize that round.
+		 */
+		this._loadNextRound = function(){
+			// Put all of the front-tiles back so that the next round's picture will be loaded behind them.
+			$('#gameBoard .tile').removeClass('transparent');
+
+			// TODO: Make the call for the next round to load its image from the existing categories that were already pulled.
+
+			// Re-initialize all the variables for the round, click-handlers, etc.
+			self._kickOffRoundTimer();
+		};
+		
+		/**
+		 * Once an image has been loaded for a round of the game, this sets all of the variables to good starting states for the round,
+		 * returns the UI elements to how they should be, and attaches the appropriate event handlers.
+		 */
+		this._kickOffRoundTimer = function(){
+			$('#continueButton').add('#continueText').hide(); // clean up potentially left-over elements from previous rounds
+
+			self._roundIsOver = false;
+			self._pointsThisRound = self._MAX_POINTS_PER_ROUND;
+			self._setUpPossibleAnswers();
+			self._currPhoto++;
+			self.updateHud_progress();
+			self.updateHud_score();
+
+			self._startRoundTimer();
+			$('#answerButton').show();
+
+			// TODO: Some of this only needs to be done once rather than on every round (doesn't hurt to have it here though).
+			// Attach event-handling.
+			var eventName = 'mousedown';
+			if ("ontouchstart" in document.documentElement){
+				eventName = 'touchstart'; // event has a different name on touchscreen devices
+			}
+			$('#gameBoard .tile').bind(eventName, self.tileClicked);
+			$('#answerButton').click(self._toggleAnswerDrawer);
+			$('#continueButton').add('#continueText').click(self._loadNextRound);
+		};
+
+		/**
 		 * Click-handler for each tile. Is fired on mousedown on desktop and touchstart where supported.
 		 * This will reveal the tile and deduct the appropriate cost from the score-bar on the left.
 		 */
@@ -188,21 +211,6 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 
 				$(this).addClass( self._REVEALED_CLASS_NAME ); // uses CSS3 transitions
 			}
-		};
-
-		/**
-		 * Once the user has chosen to go to the next round, this will load up the next image and initialize that round.
-		 */
-		this._startNextRound = function(){
-			// Put all of the front-tiles back so that the next round's picture will be loaded behind them.
-			$('#gameBoard .tile').removeClass('transparent');
-
-			// TODO: Make the call for the next round to load its image from the existing categories that were already pulled.
-			
-			// TODO: Make sure to call the _initRound() function (that doesn't exist yet).
-
-			// TODO: Make sure the clickhandling is returned to its correct states by initRound()
-
 		};
 
 		/**
@@ -448,7 +456,7 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 			
 // TODO: Show "CORRECT!" message and icon (as a clickable area that will load the next round).
 			$('#answerButton').hide();
-			$('#continueButton').show();
+			$('#continueButton').add('#continueText').show();
 
 		};
 
@@ -484,7 +492,7 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 			self.log(e); // note: .code and .info are provided.
 		};
 	};
-	
+
 	/**
 	 * Currently just a wrapper for the row and column coordinates of a tile.  The coordinates are
 	 * relative to the tiles not to pixels.  For example, if we had a FlipBoard with 6 columns and

@@ -13,6 +13,7 @@ $messages['en'] = array(
 	'foggyfoto-score' => 'Score: <span>$1</span>',
 	'foggyfoto-progress' => 'Photos: <span>$1</span>',
 	'foggyfoto-progress-numbers' => '$1/$2',
+	'foggyfoto-continue' => 'CORRECT!',
 );
 
 /** Message documentation (Message documentation) */
