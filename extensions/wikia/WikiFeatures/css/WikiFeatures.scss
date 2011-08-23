@@ -1,6 +1,86 @@
+@import "../../../../skins/oasis/css/mixins/bodytext";
 @import "../../../../skins/oasis/css/mixins/border-radius";
-@import "../../../../skins/oasis/css/mixins/gradient";
 @import "../../../../skins/oasis/css/mixins/box-shadow";
 @import "../../../../skins/oasis/css/mixins/clearfix";
-@import "../../../../skins/oasis/css/mixins/bodytext";
+@import "../../../../skins/oasis/css/mixins/gradient";
+@import "../../../../skins/oasis/css/mixins/transition";
 @import "../../../../skins/oasis/css/core/color";
+
+.WikiFeatures {
+	padding: 10px;
+	.features {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		.feature {
+			@include clearfix;
+			.details {
+				margin: 0 0 0 165px;
+			}
+			.actions {
+				width: 180px;
+				.slider {
+					@include border-radius(4px);
+					@include box-shadow(0, 2px, 5px, #999, true);
+					background-color: #eeeded;
+					border: 1px solid #a6a6a6;
+					cursor: pointer;
+					display: block;
+					height: 26px;
+					position: relative;
+					width: 107px;
+					.texton {
+						margin-left: 18px;
+						position: absolute;
+						top: 2px;
+						color: #FFFFFF;
+						font-weight: bold;
+						display: none;
+						&.on {
+							display: block;
+						}
+					}
+					.textoff {
+						margin-left: 49px;
+						position: absolute;
+						top: 2px;
+						color: #000;
+						font-weight: bold;
+						&.on {
+							display: none;
+						}
+					}
+					.button {
+						@include border-radius(4px);
+						@include linear-gradient(#fafafa, top, #fff, 35%, #F2F2F2, 65%);
+						@include transition-shorthand(left 400ms);
+						border: 1px solid #a6a6a6;
+						display: block;
+						height: 26px;
+						left: -1px;
+						padding: 0;
+						position: absolute;
+						top: -1px;
+						width: 42px;
+						z-index: 1;
+						&.on {
+							left: 65px;
+						}
+					}
+					&.on {
+						@include linear-gradient(#477c0f, top, #477c0f, 0%, #85cd38, 100%);
+						.texton {
+							display: block;
+						}
+						.textoff {
+							display: none;
+						}
+						.button {
+							left: 65px;
+						}
+					}
+				}
+			}
+		}
+	}
+}

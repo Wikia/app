@@ -18,7 +18,8 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 	}
 	
 	public function index() {
-		
+		$this->response->addAsset('extensions/wikia/WikiFeatures/css/WikiFeatures.scss');
+		//$this->wg->Out->addScriptFile($this->wg->ExtensionsPath . '/wikia/WikiFeatures/js/WikiFeatures.js');
 	}
 
 	// TODO: flag this as an internal dispatch function only
