@@ -436,7 +436,7 @@ Manager.prototype.onClientMessage = function (id, packet) {
 
 Manager.prototype.onClientDisconnect = function (id, reason) {
   for (var name in this.namespaces) {
-    if (this.roomClients[id][name]) {
+    if(this.roomClients[id] && this.roomClients[id][name] ) {
       this.namespaces[name].handleDisconnect(id, reason);
     }
   }
