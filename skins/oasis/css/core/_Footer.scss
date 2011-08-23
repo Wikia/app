@@ -116,6 +116,13 @@
 			display: block;
 			padding: 5px;
 		}
+		[data-href] {
+			color: $color-links;
+			cursor: pointer;
+			&:hover {
+				text-decoration: underline;
+			}
+		}
 	}
 	header {
 		@include clearfix;
