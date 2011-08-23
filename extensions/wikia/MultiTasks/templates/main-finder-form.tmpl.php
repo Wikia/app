@@ -3,7 +3,7 @@
 <form method="get" action="<?=$action?>">
 <fieldset>
 <legend><?=wfMsg('multiwikifindpagenames')?></legend>
-<?=wfMsg('multiwikienterpagename')?> <input name="target" value="<?=htmlspecialchars($mPage)?>"/>&#160;&#160;
+<?=wfMsg('multiwikienterpagename')?> <input name="target" value="<?=htmlspecialchars($mPage)?>" size="40">&#160;&#160;
 <input type="submit" value="<?=wfMsg('qbfind')?>">
 </fieldset>
 </form>
