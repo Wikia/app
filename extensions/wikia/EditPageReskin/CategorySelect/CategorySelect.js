@@ -5,6 +5,7 @@ var ajaxUrl = wgServer + wgScript + '?action=ajax';
 var csType = 'edit';
 var csMaxTextLength = 20;
 var csDraggingEvent = false;
+var csMode = 'wysiwyg';
 
 // macbre: generic tracking for CategorySelect (refs RT #68550)
 function csTrack(fakeUrl) {
@@ -343,33 +344,31 @@ function toggleCodeView() {
 		$('#csWikitext').attr('value', generateWikitextForCategories());
 		$('#csItemsContainer').hide();
 		$('#csHintContainer').hide();
-		$('#csCategoryInput').hide();
+		$('#csCategoryInput').prop('disabled', true);
 		$('#csSwitchView').html(csVisualView);
 		$('#csWikitextContainer').show();
 		$('#wpCategorySelectWikitext').attr('value', '');	//remove JSON - this will inform PHP to use wikitext instead
 		$('#wpCategorySelectSourceType').attr('value', 'wiki');	//inform PHP what source it should use
+
+		window.csMode = 'source';
 	} else {	//switch to visual code
 		$.tracker.byStr('editpage/visualviewCategory');
 
 		$.post(ajaxUrl, {rs: "CategorySelectAjaxParseCategories", rsargs: [$('#csWikitext').attr('value') + ' ']}, function(result){
-			if (result.error !== undefined) {
-				$().log('AJAX result: error');
+			if (typeof result.error !== 'undefined') {
 				alert(result.error);
-			} else if (result.categories !== undefined) {
-				$().log('AJAX result: OK');
-				//delete old categories [HTML items]
-				var items = $('#csItemsContainer').find('a');
-				for (var i=items.length-1; i>=0; i--) {
-					if (items.get(i).getAttribute('catId') !== null) {
-						items.get(i).parentNode.removeChild(items.get(i));
-					}
-				}
+			} else if (typeof result.categories !== 'undefined') {
+				// delete old categories [HTML items]
+				$('#csItemsContainer .CSitem[catid]').remove();
 
 				initializeCategories(result['categories']);
 				$('#csSwitchView').html(csCodeView);
 				$('#csWikitextContainer').hide();
 				$('#csItemsContainer').show();
+				$('#csCategoryInput').prop('disabled', false);
 			}
+
+			window.csMode = 'wysiwyg';
 		}, "json");
 	}
 }
@@ -427,7 +426,7 @@ function inputKeyPress(e) {
 			csTrack('enterCategoryEmpty');
 			$('#csCategoryInput').blur();
 			inputBlur();
-		} 
+		}
 	}
 	if(e.keyCode == 27) {
 		csTrack('escapeCategory');
@@ -497,7 +496,7 @@ function initAutoComplete() {
 		oAutoComp.queryDelay = 0;
 		oAutoComp.highlightClassName = 'CSsuggestHover';
 		//fix for some ff problem
-		oAutoComp._selectText = function() {}; 
+		oAutoComp._selectText = function() {};
 		oAutoComp.queryMatchContains = true;
 		oAutoComp.itemSelectEvent.subscribe(submitAutoComplete);
 		oAutoComp.containerCollapseEvent.subscribe(collapseAutoComplete);

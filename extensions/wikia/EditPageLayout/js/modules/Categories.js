@@ -24,6 +24,8 @@
 			if (introText) {
 				this.el.append($('<div>').addClass('info-text').text(introText));
 			}
+
+			this.editor.on('mode', this.proxy(this.onModeChanged));
 		},
 
 		afterAttach: function() {
@@ -54,8 +56,13 @@
 
 		track: function(ev, param) {
 			this.editor.track(this.editor.getTrackerMode(), 'categories', ev, param);
-		}
+		},
 
+		onModeChanged: function() {
+			if (this.editor.mode /* editor mode */ != window.csMode /* CategorySelect module mode */) {
+				window.toggleCodeView();
+			}
+		}
 	});
 
 	WE.modules.ToolbarCategories = $.createClass(WE.modules.ButtonsList,{
