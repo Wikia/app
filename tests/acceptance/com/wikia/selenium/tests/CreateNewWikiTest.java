@@ -73,6 +73,7 @@ public class CreateNewWikiTest extends BaseTest {
 			clickAndWait("//li[@id='UpgradeWiki']/nav/input[@class='next']");
 		} else {*/
 		clickAndWait("//li[@id='ThemeWiki']/nav/input[@class='next']");
+		waitForElement("WikiWelcome", this.getTimeout());
 		waitForElementVisible("WikiWelcome", this.getTimeout());
 		
 		String url = "http://" + (language.equals("en") ? "" : language + ".") + getWikiName() + ".wikia.com";
@@ -125,6 +126,7 @@ public class CreateNewWikiTest extends BaseTest {
 		waitForElementVisible("UpgradeWiki", this.getTimeout());
 		clickAndWait("//li[@id='UpgradeWiki']/nav/input[@class='next']");
 		*/
+		waitForElement("WikiWelcome", this.getTimeout());
 		waitForElementVisible("WikiWelcome", this.getTimeout());
 	}
 	
@@ -157,7 +159,7 @@ public class CreateNewWikiTest extends BaseTest {
 		session().select("wpBirthYear", "1900");
 		session().select("wpBirthMonth", "1");
 		session().select("wpBirthDay", "1");
-		session().type("wpCaptchaWord", captchaWord);
+		session().type("//input[@id='wpCaptchaWord']", captchaWord);
 		
 		session().click("//li[@id='Auth']/nav/input[@class='signup']");
 		
@@ -170,6 +172,7 @@ public class CreateNewWikiTest extends BaseTest {
 		waitForElementVisible("UpgradeWiki", this.getTimeout());
 		clickAndWait("//li[@id='UpgradeWiki']/nav/input[@class='next']");
 		*/
+		waitForElement("WikiWelcome", this.getTimeout());
 		waitForElementVisible("WikiWelcome", this.getTimeout());
 	}
 	
