@@ -54,7 +54,8 @@ class MediaWiki {
 
 		$output->setTitle( $title );
 
-		// Wikia change - begin (disabling namespaces)
+		// Wikia change - begin
+		// disabling namespaces - BugId:9980
 		global $wgWikiaDisabledNamespaces;
 		if(!empty($wgWikiaDisabledNamespaces) && in_array($title->getNamespace(), $wgWikiaDisabledNamespaces)) {
 				$output->setRobotPolicy( 'noindex,nofollow' );
