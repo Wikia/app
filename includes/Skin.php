@@ -522,7 +522,7 @@ class Skin extends Linker {
 	 */
 	public function generateUserJs( $skinName = null ) {
 		global $wgStylePath, $wgUseSiteJs;
-		
+
 		/* Wikia change begin - @author: macbre */
 		/* Don't return generated JS when per-site JS is disabled (BugId:9961) */
 		if (empty($wgUseSiteJs)) {
@@ -707,7 +707,7 @@ CSS;
 				}
 
 				$userCSStitle = Title::newFromText($userCSS);
-				if ($userCSStitle->exists()) {
+				if (!empty($userCSStitle) && $userCSStitle->exists()) {
 					$rev = Revision::newFromTitle($userCSStitle, $userCSStitle->getLatestRevID());
 					if (!empty($rev) && $rev->getText() != '') {
 						$userCSSurl = self::makeUrl($userCSS, 'action=raw&ctype=text/css');
@@ -1233,7 +1233,7 @@ CSS;
 
 		global $wgOut;
 		if( $wgOut->isArticle() && MWNamespace::hasSubpages( $this->mTitle->getNamespace() ) ) {
-			$ptext = $this->mTitle->getPrefixedText();			
+			$ptext = $this->mTitle->getPrefixedText();
 			if( preg_match( '/\//', $ptext ) ) {
 				$links = explode( '/', $ptext );
 				array_pop( $links );
@@ -1253,7 +1253,7 @@ CSS;
 							array(),
 							array( 'known', 'noclasses' )
 						);
-						
+
 						$c++;
 						if( $c > 1 ) {
 							$subpages .= wfMsgExt( 'pipe-separator', 'escapenoentities' );
