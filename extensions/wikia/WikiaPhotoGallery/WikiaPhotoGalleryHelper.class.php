@@ -417,6 +417,10 @@ class WikiaPhotoGalleryHelper {
 				$imageTitle = (!empty($imageTitlesCache[$index])) ? $imageTitlesCache[$index] : Title::newFromText($image['name'], NS_FILE);
 				$fileObject = (!empty($fileObjectsCache[$index])) ? $fileObjectsCache[$index] : wfFindFile($imageTitle);
 
+				if (empty($imageTitle)) {
+					continue;
+				}
+
 				$image['height'] = $height;
 				$image['width'] = $thumbSize;
 
@@ -559,7 +563,11 @@ class WikiaPhotoGalleryHelper {
 				$imageTitle = Title::newFromText($image['name'], NS_FILE);
 				$img = wfFindFile($imageTitle);
 
-				if ( is_object( $img ) && ( $imageTitle->getNamespace() == NS_FILE ) ) {
+				if (empty($imageTitle) || empty($img)) {
+					continue;
+				}
+
+				if ($imageTitle->getNamespace() == NS_FILE) {
 					// render thumbnail
 					$dimensions = self::getThumbnailDimensions($img, $maxWidth, $maxHeight, $crop);
 					$image['thumbnailBg'] = self::getThumbnailUrl($imageTitle, $dimensions['width'], $dimensions['height']);
