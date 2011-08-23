@@ -279,10 +279,20 @@ class PartnerVideoHelper {
 		switch ($provider) {
 			case VideoPage::V_SCREENPLAY:
 				$description = ($data['description']) ? $data['description'] : "{$data['trailerType']} {$data['trailerVersion']} ({$data['eclipId']})";
-				$name = sprintf("%s (%s) - %s", $data['titleName'], $data['year'], $description);
+				if (strpos($data['titleName'], "({$data['year']})") === false) {
+					$name = sprintf("%s (%s) - %s", $data['titleName'], $data['year'], $description);					
+				}
+				else {
+					$name = sprintf("%s - %s", $data['titleName'], $description);										
+				}
 				break;
 			case VideoPage::V_MOVIECLIPS:
-				$name = sprintf("%s (%s) - %s", $data['movieName'], $data['year'], $data['videoTitle']);
+				if (strpos($data['titleName'], "({$data['year']})") === false) {
+					$name = sprintf("%s (%s) - %s", $data['movieName'], $data['year'], $data['videoTitle']);
+				}
+				else {
+					$name = sprintf("%s - %s", $data['movieName'], $data['videoTitle']);
+				}
 				break;
 			default:
 		}
@@ -298,11 +308,21 @@ class PartnerVideoHelper {
 
 		switch ($provider) {
 			case VideoPage::V_SCREENPLAY:
-				$categories[] = $data['titleName'] . ' (' . $data['year'] . ')';
+				if (strpos($data['titleName'], "({$data['year']})") === false) {
+					$categories[] = $data['titleName'] . ' (' . $data['year'] . ')';					
+				}
+				else {
+					$categories[] = $data['titleName'];					
+				}
 				$categories[] = $data['trailerVersion'];
 				break;
 			case VideoPage::V_MOVIECLIPS:
-				$categories[] = $data['movieName'] . ' (' . $data['year'] . ')';
+				if (strpos($data['titleName'], "({$data['year']})") === false) {
+					$categories[] = $data['movieName'] . ' (' . $data['year'] . ')';					
+				}
+				else {
+					$categories[] = $data['movieName'];										
+				}
 				$categories[] = 'freebasemid-' . (substr($data['freebaseMid'], 0, 3) == '/m/' ? substr($data['freebaseMid'], 3) : $data['freebaseMid']);	// since / is not valid in category name, remove preceding /m/
 				break;
 			default:
