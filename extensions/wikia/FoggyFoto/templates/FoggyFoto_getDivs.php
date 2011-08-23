@@ -8,6 +8,7 @@
 <?php
 	$SCORE_BAR_WIDTH = "10";
 	$NUM_ANSWER_CHOICES = 4;
+	$CONTINUE_FONT_SIZE_PX = 24;
 ?>
 			html {
 				margin:0px;
@@ -85,10 +86,32 @@
 				margin-top:-<?= floor($answerButtonWidth/2) ?>px;
 				width:<?= $answerButtonWidth ?>px;
 				height:<?= $answerButtonWidth ?>px;
+				cursor:pointer;
 				z-index:30;
 			}
 			#continueButton{
+				background-color:#333;
+				opacity:0.7;filter:alpha(opacity=70);
 				display:none;
+			}
+			#continueText{
+				top:50%;
+				margin-top:-<?= floor($answerButtonWidth/2) ?>px;
+				font-size:<?= $CONTINUE_FONT_SIZE_PX ?>px;
+				padding:<?= floor(($answerButtonWidth - $CONTINUE_FONT_SIZE_PX) / 2) ?>px;
+				height:<?= $CONTINUE_FONT_SIZE_PX ?>px;
+				line-height:<?= $CONTINUE_FONT_SIZE_PX ?>px;
+				right: 0px; /* start to the left of the continue button */
+				cursor:pointer;
+				
+				color:#fff;
+				background-color:#333;
+				opacity:0.7;filter:alpha(opacity=70);
+				border-top-left-radius: 15px;
+				border-bottom-left-radius: 15px;
+				
+				display:none;
+				z-index:30;
 			}
 			#answerListWrapper{
 				height:100%;
@@ -230,6 +253,9 @@
 				<div id='answerDrawer'>
 					<div id='answerButton'>
 						<img src='<?= $answerButtonSrc ?>'/>
+					</div>
+					<div id='continueText'>
+						<?= wfMsg('foggyfoto-continue') ?>
 					</div>
 					<div id='continueButton'>
 						<img src='<?= $continueButtonSrc ?>'/>
