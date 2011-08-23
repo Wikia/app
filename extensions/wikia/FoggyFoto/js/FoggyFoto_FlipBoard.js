@@ -95,59 +95,8 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 							self._allPagesInCategory.push( data.query.categorymembers[cnt].title );
 						}
 
-						// Randomly get a page from the category (and its associated image) until we find a page which has an image.
-						var imageUrl = "";
-						self.getImageFromPages(self._allPagesInCategory, function(imageUrl){
-							// Set the image as the back-image (hidden image) for the game.
-							if(imageUrl != ""){
-								// Load the back image fully before attaching clickhandlers
-								self.backImageSrc = imageUrl;
-								self.backImage = new Image();
-								self.backImage.src = self.backImageSrc;
-								self.backImage.onload = function(){
-									// Calculate the scaling factor and use that to set the background to the correct size.
-									var scalingFactor = self._getScalingFactor(self.backImage);
-									var backOffsetX = Math.floor( Math.abs(self.backImage.width - (self.width / scalingFactor)) / 2 );
-									var backOffsetY = Math.floor( Math.abs(self.backImage.height - (self.height / scalingFactor)) / 2 );
-									var scaledBackOffsetX = Math.floor( backOffsetX * scalingFactor );
-									var scaledBackOffsetY = Math.floor( backOffsetY * scalingFactor );
-									self.log("backImage Scaling Factor: " + scalingFactor);
-									self.log("backImage W: " + self.backImage.width);
-									self.log("backImage H: " + self.backImage.height);
-									self.log("backOffsetX: " + backOffsetX);
-									self.log("backOffsetY: " + backOffsetY);
-									self.log("scaledBackOffsetX: " + backOffsetX);
-									self.log("scaledBackOffsetY: " + backOffsetY);
-
-									// Set the new image as the back (hidden) image.
-									$('#bgPic').css('background-image', 'url('+imageUrl+')');
-									$('#bgPic').css('width', self.backImage.width+'px');
-									$('#bgPic').css('height', self.backImage.height+'px');
-
-									// Scale and center the image as needed.
-									$('#bgPic').css('-webkit-transform-origin', 'top left');
-									$('#bgPic').css('-webkit-transform', 'scale('+scalingFactor+', '+scalingFactor+')');
-									$('#bgPic').css('left', '-'+scaledBackOffsetX+'px');
-									$('#bgPic').css('top', '-'+scaledBackOffsetY+'px');
-
-									// A new round has started, initialize the round variables & start the timer.
-									self._kickOffRoundTimer();
-
-									// TODO: REMOVE THE GAME-LOADING OVERLAY/STATE
-									// TODO: REMOVE THE GAME-LOADING OVERLAY/STATE
-									
-									// We're done loading things, call the callback.
-									if(typeof callback == "function"){
-										callback();
-									}
-								};
-							} else {
-
-								// TODO: Surface the error to the user that something is wrong and we couldn't make a game out of this category.
-								// TODO: Surface the error to the user that something is wrong and we couldn't make a game out of this category.
-
-							}
-						});
+						// Now that we have categories, this will use the data to load the first round and start it up (then call the callback).
+						self._loadNextRound(callback);
 					}
 				}
 			}, self.mwError);
@@ -157,14 +106,66 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 		/**
 		 * Once the user has chosen to go to the next round, this will load up the next image and initialize that round.
 		 */
-		this._loadNextRound = function(){
+		this._loadNextRound = function(callback){
 			// Put all of the front-tiles back so that the next round's picture will be loaded behind them.
 			$('#gameBoard .tile').removeClass('transparent');
+			
+			// TODO: NICE-TO-HAVE: Track all of the pages used as questions to prevent the same photo from being used twice in the same game.
+			// TODO: NICE-TO-HAVE: Track all of the pages used as questions to prevent the same photo from being used twice in the same game.
 
-			// TODO: Make the call for the next round to load its image from the existing categories that were already pulled.
+			// Randomly get a page from the category (and its associated image) until we find a page which has an image.
+			var imageUrl = "";
+			self.getImageFromPages(self._allPagesInCategory, function(imageUrl){
+				// Set the image as the back-image (hidden image) for the game.
+				if(imageUrl != ""){
+					// Load the back image fully before attaching clickhandlers
+					self.backImageSrc = imageUrl;
+					self.backImage = new Image();
+					self.backImage.src = self.backImageSrc;
+					self.backImage.onload = function(){
+						// Calculate the scaling factor and use that to set the background to the correct size.
+						var scalingFactor = self._getScalingFactor(self.backImage);
+						var backOffsetX = Math.floor( Math.abs(self.backImage.width - (self.width / scalingFactor)) / 2 );
+						var backOffsetY = Math.floor( Math.abs(self.backImage.height - (self.height / scalingFactor)) / 2 );
+						var scaledBackOffsetX = Math.floor( backOffsetX * scalingFactor );
+						var scaledBackOffsetY = Math.floor( backOffsetY * scalingFactor );
+						self.log("backImage Scaling Factor: " + scalingFactor);
+						self.log("backImage W: " + self.backImage.width);
+						self.log("backImage H: " + self.backImage.height);
+						self.log("backOffsetX: " + backOffsetX);
+						self.log("backOffsetY: " + backOffsetY);
+						self.log("scaledBackOffsetX: " + backOffsetX);
+						self.log("scaledBackOffsetY: " + backOffsetY);
 
-			// Re-initialize all the variables for the round, click-handlers, etc.
-			self._kickOffRoundTimer();
+						// Set the new image as the back (hidden) image.
+						$('#bgPic').css('background-image', 'url('+imageUrl+')');
+						$('#bgPic').css('width', self.backImage.width+'px');
+						$('#bgPic').css('height', self.backImage.height+'px');
+
+						// Scale and center the image as needed.
+						$('#bgPic').css('-webkit-transform-origin', 'top left');
+						$('#bgPic').css('-webkit-transform', 'scale('+scalingFactor+', '+scalingFactor+')');
+						$('#bgPic').css('left', '-'+scaledBackOffsetX+'px');
+						$('#bgPic').css('top', '-'+scaledBackOffsetY+'px');
+
+						// A new round has started, initialize the round variables & start the timer.
+						self._kickOffRoundTimer();
+
+						// TODO: REMOVE THE GAME-LOADING OVERLAY/STATE
+						// TODO: REMOVE THE GAME-LOADING OVERLAY/STATE
+						
+						// We're done loading things, call the callback.
+						if(typeof callback == "function"){
+							callback();
+						}
+					};
+				} else {
+
+					// TODO: Surface the error to the user that something is wrong and we couldn't make a game out of this category.
+					// TODO: Surface the error to the user that something is wrong and we couldn't make a game out of this category.
+
+				}
+			});
 		};
 		
 		/**
