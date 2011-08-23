@@ -6,10 +6,10 @@
 	 }?>
 	<div id="openNavigationContent">
 		<ul id="navigationMenu">
-			<li class="openMenu">Menu</li>
-			<li>Explore</li>
-			<li>Search</li>
-			<li>Login</li>
+			<li class="openMenu"><?= $wf->MsgExt( 'wikiamobile-menu', array( 'parseinline' ) ); ?></li>
+			<li><?= $wf->MsgExt( 'wikiamobile-explore', array( 'parseinline' ) ); ?></li>
+			<li><?= $wf->MsgExt( 'wikiamobile-search', array( 'parseinline' ) ); ?></li>
+			<li><?= $wf->MsgExt( 'wikiamobile-login', array( 'parseinline' ) ); ?></li>
 		</ul>
 		<div id="menuTab" class="openTab navigationTab">
 			<ul>
@@ -23,8 +23,12 @@
 			Explore Wikia World!
 		</div>
 		<div id="searchTab" class="navigationTab">
-			<form id="searchForm" action="#">
-				<input type="search" placeholder="<?= $wf->MsgExt( 'wikiamobile-search', array( 'parseinline' ) ); ?>..." required="required" />
+			<form id="searchForm" action="index.php?useskin=wikiamobile" method="post">
+				<input type="search" name="search" placeholder="<?= $wf->MsgExt( 'wikiamobile-search', array( 'parseinline' ) ); ?>..." required="required" />
+				<select id="searchScope" name="scope">
+					<option value="wiki"><?= $wf->MsgExt( 'wikiamobile-search-wiki', array( 'parseinline' ) ); ?></option>
+					<option value="wikia"><?= $wf->MsgExt( 'wikiamobile-search-wikia', array( 'parseinline' ) ); ?></option>
+				</select>
 				<input type="submit" value="<?= $wf->MsgExt( 'wikiamobile-search', array( 'parseinline' ) ); ?>" />
 			</form>
 		</div>

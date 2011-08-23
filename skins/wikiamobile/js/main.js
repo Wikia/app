@@ -54,12 +54,22 @@ var WikiaMobile = {
 	},
 
 	init: function() {
-		//Im using delegate on document.body as it's been proved to be the fastest option
-		$( document.body ).delegate( '#openToggle', 'tap', function() {
+		//I'm using delegate on document.body as it's been proved to be the fastest option
+		$( document.body ).delegate( '#openToggle', 'tap, click', function() {
 			$( '#navigation').toggleClass( 'open' );
 		});
-
-		$( document.body ).delegate( '#navigationMenu > li', 'tap', function() {
+		
+		$( document.body ).delegate( '#searchScope', 'change', function() {
+			console.log('change');
+			if ( $( '#searchScope' ).val() == 'wiki' ) {
+				$( '#searchForm' ).attr( 'action', 'index.php?useskin=wikiamobile');
+			} else {
+				$( '#searchForm' ).attr( 'action', 'http://community.wikia.com/wiki/index.php?useskin=wikiamobile' );
+			}
+			console.log($( '#searchForm' ).attr( 'action'));
+		})
+		
+		$( document.body ).delegate( '#navigationMenu > li', 'tap, click', function() {
 			if ( !( $( this ).hasClass( 'openMenu' ) ) ) {
 				
 				$( '#navigationMenu > li' ).removeClass( 'openMenu' );
@@ -73,12 +83,12 @@ var WikiaMobile = {
 		
 		$( '#WikiaMainContent > h2' ).append( '<span class=\"arrow\"></span>' );
 		
-		$( document.body ).delegate( '#WikiaMainContent > h2', 'tap', function() {
+		$( document.body ).delegate( '#WikiaMainContent > h2', 'tap, click', function() {
 			$(this).toggleClass('open').next().toggleClass('open');
 			
 		});
-		
-		$( document.body ).delegate( '#showAll', 'click', function() {
+
+		$( document.body ).delegate( '#showAll', 'click, click', function() {
 			var showAll = $( '#showAll' ),
 				articleSection = $( '.articleSection' );
 				
