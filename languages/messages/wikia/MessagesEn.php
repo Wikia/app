@@ -952,7 +952,7 @@ Text should be placed on this page if you wish to explain usage, style and polic
 'fb-sync-permissionerror' => 'Please grant Wikia access to Facebook in order to sync your profile.',
 'fb-sync-success-message' => 'Your profile has been synced with Facebook.',
 
-			
+
 
 #unsubscribe email
 'unsubscribe-email' => 'If you no longer want to receive email from Wikia you can unsubscribe here: $1',
@@ -1061,4 +1061,8 @@ Text should be placed on this page if you wish to explain usage, style and polic
 'prefs-editing-experience' => 'Editing experience',
 'prefs-monobook-layout' => 'Monobook layout only',
 'prefs-editarea-size' => 'Size of editing window (Monobook layout only)',
+
+# disabled namespaces (BugId:9980)
+'namespacedisabled' => 'Namespace disabled',
+'namespacedisabledtext' => 'This namespace has been disabled.',
 ));
