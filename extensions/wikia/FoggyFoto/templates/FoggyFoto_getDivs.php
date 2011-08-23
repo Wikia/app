@@ -94,7 +94,7 @@
 				opacity:0.7;filter:alpha(opacity=70);
 				display:none;
 			}
-			#continueText{
+			#answerDrawer div.continueText{
 				top:50%;
 				margin-top:-<?= floor($answerButtonWidth/2) ?>px;
 				font-size:<?= $CONTINUE_FONT_SIZE_PX ?>px;
@@ -103,6 +103,7 @@
 				line-height:<?= $CONTINUE_FONT_SIZE_PX ?>px;
 				right: 0px; /* start to the left of the continue button */
 				cursor:pointer;
+				white-space:nowrap;
 				
 				color:#fff;
 				background-color:#333;
@@ -254,8 +255,11 @@
 					<div id='answerButton'>
 						<img src='<?= $answerButtonSrc ?>'/>
 					</div>
-					<div id='continueText'>
-						<?= wfMsg('foggyfoto-continue') ?>
+					<div class='continueText' id='correctText'>
+						<?= wfMsg('foggyfoto-continue-correct') ?>
+					</div>
+					<div class='continueText' id='timeUpText'>
+						<?= wfMsg('foggyfoto-continue-timeup') ?>
 					</div>
 					<div id='continueButton'>
 						<img src='<?= $continueButtonSrc ?>'/>

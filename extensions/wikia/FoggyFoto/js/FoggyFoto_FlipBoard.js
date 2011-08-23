@@ -97,6 +97,15 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 
 						// Now that we have categories, this will use the data to load the first round and start it up (then call the callback).
 						self._loadNextRound(callback);
+
+						// Attach event-handling. Since we re-use the same UI, we only set up these handlers once, rather than every round.
+						var eventName = 'mousedown';
+						if ("ontouchstart" in document.documentElement){
+							eventName = 'touchstart'; // event has a different name on touchscreen devices
+						}
+						$('#gameBoard .tile').bind(eventName, self.tileClicked);
+						$('#answerButton').click(self._toggleAnswerDrawer);
+						$('#continueButton').add('.continueText').click(self._loadNextRound);
 					}
 				}
 			}, self.mwError);
@@ -107,65 +116,80 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 		 * Once the user has chosen to go to the next round, this will load up the next image and initialize that round.
 		 */
 		this._loadNextRound = function(callback){
-			// Put all of the front-tiles back so that the next round's picture will be loaded behind them.
-			$('#gameBoard .tile').removeClass('transparent');
-			
-			// TODO: NICE-TO-HAVE: Track all of the pages used as questions to prevent the same photo from being used twice in the same game.
-			// TODO: NICE-TO-HAVE: Track all of the pages used as questions to prevent the same photo from being used twice in the same game.
+			self.log("\t._loadNextRound()...");
 
-			// Randomly get a page from the category (and its associated image) until we find a page which has an image.
-			var imageUrl = "";
-			self.getImageFromPages(self._allPagesInCategory, function(imageUrl){
-				// Set the image as the back-image (hidden image) for the game.
-				if(imageUrl != ""){
-					// Load the back image fully before attaching clickhandlers
-					self.backImageSrc = imageUrl;
-					self.backImage = new Image();
-					self.backImage.src = self.backImageSrc;
-					self.backImage.onload = function(){
-						// Calculate the scaling factor and use that to set the background to the correct size.
-						var scalingFactor = self._getScalingFactor(self.backImage);
-						var backOffsetX = Math.floor( Math.abs(self.backImage.width - (self.width / scalingFactor)) / 2 );
-						var backOffsetY = Math.floor( Math.abs(self.backImage.height - (self.height / scalingFactor)) / 2 );
-						var scaledBackOffsetX = Math.floor( backOffsetX * scalingFactor );
-						var scaledBackOffsetY = Math.floor( backOffsetY * scalingFactor );
-						self.log("backImage Scaling Factor: " + scalingFactor);
-						self.log("backImage W: " + self.backImage.width);
-						self.log("backImage H: " + self.backImage.height);
-						self.log("backOffsetX: " + backOffsetX);
-						self.log("backOffsetY: " + backOffsetY);
-						self.log("scaledBackOffsetX: " + backOffsetX);
-						self.log("scaledBackOffsetY: " + backOffsetY);
+			// Detect if there is another round or if we've hit end-game.
+			if(self._currPhoto >= self._PHOTOS_PER_GAME){
+				self.log("Tried to load next round, but the game is over.  Will go to end-game screen.");
 
-						// Set the new image as the back (hidden) image.
-						$('#bgPic').css('background-image', 'url('+imageUrl+')');
-						$('#bgPic').css('width', self.backImage.width+'px');
-						$('#bgPic').css('height', self.backImage.height+'px');
+// TODO: END-GAME SCREEN
+				$('body').html('TODO: END-GAME SCREEN');
+// TODO: END-GAME SCREEN
+			} else {
 
-						// Scale and center the image as needed.
-						$('#bgPic').css('-webkit-transform-origin', 'top left');
-						$('#bgPic').css('-webkit-transform', 'scale('+scalingFactor+', '+scalingFactor+')');
-						$('#bgPic').css('left', '-'+scaledBackOffsetX+'px');
-						$('#bgPic').css('top', '-'+scaledBackOffsetY+'px');
+				// Put all of the front-tiles back so that the next round's picture will be loaded behind them.
+				$('#gameBoard .tile').removeClass('transparent');
+				$('#continueButton').add('.continueText').hide(); // clean up potentially left-over elements from previous rounds
+	// TODO: BUG: That fade takes longer than the bg image takes to load... we have to figure out a way to either make the transition instant when being RE-applied, or to wait until the transition is done.
+	// TODO: BUG: That fade takes longer than the bg image takes to load... we have to figure out a way to either make the transition instant when being RE-applied, or to wait until the transition is done.
 
-						// A new round has started, initialize the round variables & start the timer.
-						self._kickOffRoundTimer();
+				// TODO: NICE-TO-HAVE: Track all of the pages used as questions to prevent the same photo from being used twice in the same game.
+				// TODO: NICE-TO-HAVE: Track all of the pages used as questions to prevent the same photo from being used twice in the same game.
 
-						// TODO: REMOVE THE GAME-LOADING OVERLAY/STATE
-						// TODO: REMOVE THE GAME-LOADING OVERLAY/STATE
-						
-						// We're done loading things, call the callback.
-						if(typeof callback == "function"){
-							callback();
-						}
-					};
-				} else {
+				// Randomly get a page from the category (and its associated image) until we find a page which has an image.
+				var imageUrl = "";
+				self.getImageFromPages(self._allPagesInCategory, function(imageUrl){
+					// Set the image as the back-image (hidden image) for the game.
+					if(imageUrl != ""){
+						// Load the back image fully before attaching clickhandlers
+						self.backImageSrc = imageUrl;
+						self.backImage = new Image();
+						self.backImage.src = self.backImageSrc;
+						self.backImage.onload = function(){
+							// Calculate the scaling factor and use that to set the background to the correct size.
+							var scalingFactor = self._getScalingFactor(self.backImage);
+							var backOffsetX = Math.floor( Math.abs(self.backImage.width - (self.width / scalingFactor)) / 2 );
+							var backOffsetY = Math.floor( Math.abs(self.backImage.height - (self.height / scalingFactor)) / 2 );
+							var scaledBackOffsetX = Math.floor( backOffsetX * scalingFactor );
+							var scaledBackOffsetY = Math.floor( backOffsetY * scalingFactor );
+							self.log("backImage Scaling Factor: " + scalingFactor);
+							self.log("backImage W: " + self.backImage.width);
+							self.log("backImage H: " + self.backImage.height);
+							self.log("backOffsetX: " + backOffsetX);
+							self.log("backOffsetY: " + backOffsetY);
+							self.log("scaledBackOffsetX: " + backOffsetX);
+							self.log("scaledBackOffsetY: " + backOffsetY);
 
-					// TODO: Surface the error to the user that something is wrong and we couldn't make a game out of this category.
-					// TODO: Surface the error to the user that something is wrong and we couldn't make a game out of this category.
+							// Set the new image as the back (hidden) image.
+							$('#bgPic').css('background-image', 'url('+imageUrl+')');
+							$('#bgPic').css('width', self.backImage.width+'px');
+							$('#bgPic').css('height', self.backImage.height+'px');
 
-				}
-			});
+							// Scale and center the image as needed.
+							$('#bgPic').css('-webkit-transform-origin', 'top left');
+							$('#bgPic').css('-webkit-transform', 'scale('+scalingFactor+', '+scalingFactor+')');
+							$('#bgPic').css('left', '-'+scaledBackOffsetX+'px');
+							$('#bgPic').css('top', '-'+scaledBackOffsetY+'px');
+
+							// A new round has started, initialize the round variables & start the timer.
+							self._kickOffRoundTimer();
+
+							// TODO: REMOVE THE GAME-LOADING OVERLAY/STATE
+							// TODO: REMOVE THE GAME-LOADING OVERLAY/STATE
+							
+							// We're done loading things, call the callback.
+							if(typeof callback == "function"){
+								callback();
+							}
+						};
+					} else {
+
+						// TODO: Surface the error to the user that something is wrong and we couldn't make a game out of this category.
+						// TODO: Surface the error to the user that something is wrong and we couldn't make a game out of this category.
+
+					}
+				});
+			}
 		};
 		
 		/**
@@ -173,7 +197,7 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 		 * returns the UI elements to how they should be, and attaches the appropriate event handlers.
 		 */
 		this._kickOffRoundTimer = function(){
-			$('#continueButton').add('#continueText').hide(); // clean up potentially left-over elements from previous rounds
+			self.log("\t._kickOffRoundTimer()...");
 
 			self._roundIsOver = false;
 			self._pointsThisRound = self._MAX_POINTS_PER_ROUND;
@@ -184,16 +208,6 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 
 			self._startRoundTimer();
 			$('#answerButton').show();
-
-			// TODO: Some of this only needs to be done once rather than on every round (doesn't hurt to have it here though).
-			// Attach event-handling.
-			var eventName = 'mousedown';
-			if ("ontouchstart" in document.documentElement){
-				eventName = 'touchstart'; // event has a different name on touchscreen devices
-			}
-			$('#gameBoard .tile').bind(eventName, self.tileClicked);
-			$('#answerButton').click(self._toggleAnswerDrawer);
-			$('#continueButton').add('#continueText').click(self._loadNextRound);
 		};
 
 		/**
@@ -201,16 +215,18 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 		 * This will reveal the tile and deduct the appropriate cost from the score-bar on the left.
 		 */
 		this.tileClicked = function(){
-			// If the tile is already revealed, don't charge the user points or play a sound, etc.
-			if(! ($(this).hasClass( self._REVEALED_CLASS_NAME ))){
-				// Update the score-bar, taking into account the cost of this tile.
-				self._pointsThisRound = (self._pointsThisRound - ((self._PERCENT_DEDUCTION_REVEAL/100) * self._pointsThisRound) );
-				self.updateScoreBar();
+			if(!self._roundIsOver){
+				// If the tile is already revealed, don't charge the user points or play a sound, etc.
+				if(! ($(this).hasClass( self._REVEALED_CLASS_NAME ))){
+					// Update the score-bar, taking into account the cost of this tile.
+					self._pointsThisRound = (self._pointsThisRound - ((self._PERCENT_DEDUCTION_REVEAL/100) * self._pointsThisRound) );
+					self.updateScoreBar();
 
-				// TODO: Play sound - tile clicked
-				// TODO: Play sound - tile clicked
+					// TODO: Play sound - tile clicked
+					// TODO: Play sound - tile clicked
 
-				$(this).addClass( self._REVEALED_CLASS_NAME ); // uses CSS3 transitions
+					$(this).addClass( self._REVEALED_CLASS_NAME ); // uses CSS3 transitions
+				}
 			}
 		};
 
@@ -346,10 +362,11 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 
 			// If the round is out of time/points, end the round... otherwise queue up the next game-clock tick.
 			if(self._pointsThisRound <= 0){
-			
-				// TODO: END THE ROUND & SHOW THE USER THAT
-				// TODO: END THE ROUND & SHOW THE USER THAT
-			
+				self._roundIsOver = true;
+				self._hideAnswerDrawer();
+				
+				// Show the user that the time is up & let them continue to the next round.
+				$('#continueButton').add('#timeUpText').show();
 			} else if(!self._roundIsOver){
 				// If the round is continuing, start the timeout again for the next tick.
 				setTimeout(self._roundTimerTick, self._UPDATE_INTERVAL_MILLIS);
@@ -361,6 +378,8 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 		 * Show or answer drawer if it's not showing and hide it if it is showing.
 		 */
 		this._toggleAnswerDrawer = function(){
+			self.log("\t._toggleAnswerDrawer()");
+
 			if( $('#answerListWrapper').css('display') == 'none' ){
 				self._showAnswerDrawer();
 			} else {
@@ -398,8 +417,9 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 			var correctIndex = Math.floor(Math.random() * NUM_SLOTS);
 			var usedPages = [ self._currentAnswer ]; // so that we never have the same answer appear more than once.
 
+			// Remove any state of the answers being incorrect (from previous rounds, for example).
 			var currIndex = 0;
-			$('#answerListWrapper ul li').each(function(){
+			$('#answerListWrapper ul li').removeClass( self._INCORRECT_CLASS_NAME ).each(function(){
 				if(currIndex == correctIndex){
 					$(this).html( self._currentAnswer );
 				} else {
@@ -454,11 +474,10 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 			
 			// Reveal all tiles.
 			$('#gameBoard .tile').addClass('transparent');
-			
-// TODO: Show "CORRECT!" message and icon (as a clickable area that will load the next round).
-			$('#answerButton').hide();
-			$('#continueButton').add('#continueText').show();
 
+			// Show "CORRECT!" message and icon (as a clickable area that will load the next round).
+			$('#answerButton').hide();
+			$('#continueButton').add('#correctText').show();
 		};
 
 		/**
