@@ -74,11 +74,15 @@ $footerBackground: #CCF;
       
       #searchTab {
         input[type='search'] {
-          width: 65%;
+          width: 50%;
+        }
+        
+        select {
+          width: 20%;
         }
         
         input[type='submit'] {
-          width: 25%;
+          width: 20%;
         }
       }
       
@@ -344,6 +348,28 @@ html {
       }
     }
   }
+  .searchresults, .search-types {
+    ul {
+      padding: 3px;
+      
+      li {
+        border: 1px solid #e3e3e3;
+        border-radius: 6px;
+        margin: 5px 3px;
+        padding: 3px;
+        -webkit-box-shadow: 0 0 8px #e4e4e4;
+        
+        a {
+          display: block;
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+//most places don't need list-style-type
+ul {
+  list-style-type: none;
 }
 
 @media ( min-width: 321px ),( orientation: landscape ) {

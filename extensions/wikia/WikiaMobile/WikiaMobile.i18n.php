@@ -10,9 +10,13 @@ $messages = array();
 $messages['en'] = array(
 	'wikiamobile-page-header-title' => '$1',
 	'wikiamobile-search' => 'Search',
+	'wikiamobile-search-wiki' => 'Wiki',
+	'wikiamobile-search-wikia' => 'Wikia',
 	'wikiamobile-login' => 'Login',
 	'wikiamobile-password' => 'Password',
-	'wikiamobile-login-submit' => 'Login'
+	'wikiamobile-login-submit' => 'Login',
+	'wikiamobile-menu' => 'Menu',
+	'wikiamobile-explore' => 'Explore'
 );
 
 $messages['pl'] = array(
