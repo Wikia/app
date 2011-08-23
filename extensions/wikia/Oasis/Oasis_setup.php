@@ -30,6 +30,7 @@ function wfOasisSetup() {
 		$wgHooks['EditPage::showEditForm:initial'][] = 'PageHeaderModule::modifyEditPage';
 	}
 	$wgHooks['FileDeleteComplete'][] = 'LatestPhotosModule::onImageDelete';
+	$wgHooks['MakeHeadline'][] = 'ContentDisplayModule::onMakeHeadline';
 	$wgHooks['MakeThumbLink2'][] = 'ContentDisplayModule::renderPictureAttribution';
 	$wgHooks['MessageCacheReplace'][] = 'LatestPhotosModule::onMessageCacheReplace';
 	$wgHooks['Parser::showEditLink'][] = 'ContentDisplayModule::onShowEditLink';

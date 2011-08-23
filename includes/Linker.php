@@ -1508,6 +1508,11 @@ class Linker {
 		if ( $legacyAnchor !== false ) {
 			$ret = "<a{$nofollow} id=\"$legacyAnchor\"></a>$ret";
 		}
+
+		/* Wikia change begin - @author: Macbre */
+		wfRunHooks( 'MakeHeadline', array( $this, $level, $attribs, $anchor, $text, $link, $legacyAnchor, &$ret ) );
+		/* Wikia change end */
+
 		return $ret;
 	}
 
@@ -1639,7 +1644,7 @@ class Linker {
 			$outText .= '</ul>';
 		}
 
-		/* Wikia change begin - @author: Macnre */
+		/* Wikia change begin - @author: Macbre */
 		/* #22760: Shorten edit page 'transcluded pages' list using JS */
 		wfRunHooks('LinkerFormatTemplates', array(&$this, &$templates, &$outText));
 		/* Wikia change end */

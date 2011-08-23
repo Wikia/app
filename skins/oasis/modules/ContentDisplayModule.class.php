@@ -28,7 +28,7 @@ class ContentDisplayModule extends Module {
 			wfProfileOut(__METHOD__);
 			return true;
 		}
-		
+
 		// BugId: 3734 Remove picture attribution for thumbnails 99px wide and under
 		if ( $outerWidth < 100 + 2 ) {
 			wfProfileOut(__METHOD__);
@@ -73,50 +73,68 @@ class ContentDisplayModule extends Module {
 		return true;
 	}
 
+	/**
+	 * Modify edit section link markup (for Oasis only)
+	 */
 	public static function onDoEditSectionLink( $skin, $title, $section, $tooltip, $result, $lang = false ) {
 		global $wgBlankImgUrl, $wgUser;
 		wfProfileIn(__METHOD__);
 
+		// modify Oasis only (BugId:8444)
+		if (!$skin instanceof SkinOasis) {
+			wfProfileOut(__METHOD__);
+			return true;
+		}
+
 		$result = ''; // reset result first
 
-		$url = $title->getFullUrl( array( 'action' => 'edit', 'section' => $section ) );
+		$editUrl = $title->getLocalUrl( array( 'action' => 'edit', 'section' => $section ) );
 
 		$class = 'editsection';
 
 		// RT#84733 - prompt to login if the user is an anon and can't edit right now (protected pages and wgDisableAnonEditing wikis).
-		$extraClass = "";
 		if ( !$title->userCan('edit') && $wgUser->isAnon() ) {
 			$class .= " loginToEditProtectedPage";
 		}
 
 		$result .= Xml::openElement( 'span', array( 'class' => $class ) );
-
-		$result .= Xml::openElement( 'a', array( 'href' => $url ) );
-		$result .= Xml::element(
-			'img',
-			array(
-				'src' => $wgBlankImgUrl,
-				'class' => 'sprite edit-pencil',
-				'alt' => wfMsg( 'oasis-section-edit-alt', $tooltip )
-			)
-		);
+		$result .= Xml::openElement( 'a', array(
+			'href' => $editUrl,
+			'title' => wfMsg( 'oasis-section-edit-alt', $tooltip ),
+		));
+		$result .= Xml::element( 'img',	array(
+			'src' => $wgBlankImgUrl,
+			'class' => 'sprite edit-pencil',
+		));
+		$result .= wfMsg( 'oasis-section-edit' );
 		$result .= Xml::closeElement( 'a' );
-
-		$result .= Xml::element( 'a', array( 'href' => $url ), wfMsg( 'oasis-section-edit' ) );
-
 		$result .= Xml::closeElement( 'span' );
 
 		wfProfileOut(__METHOD__);
 		return true;
 	}
 
-	public function executeIndex() {
-		$this->bodytext = preg_replace(
-			'#<span class="editsection(.*)</span>\s?<span(.*)</span>\s?</h#',
-			'<span$2</span><span class="editsection$1</span></h',
-			$this->bodytext
-		);
+	/**
+	 * Modify section headline markup (for Oasis only)
+	 */
+	public function onMakeHeadline( $skin, $level, $attribs, $anchor, $text, $link, $legacyAnchor, $ret ) {
+		wfProfileIn(__METHOD__);
 
+		// modify Oasis only (BugId:8444)
+		if (!$skin instanceof SkinOasis) {
+			wfProfileOut(__METHOD__);
+			return true;
+		}
+
+		$ret = "<h$level$attribs"
+			. "<span class=\"mw-headline\" id=\"$anchor\">$text</span>"
+			. $link
+			. "</h$level>";
+
+		wfProfileOut(__METHOD__);
+		return true;
 	}
+
+	public function executeIndex() {}
 
 }
