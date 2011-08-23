@@ -134,6 +134,7 @@ class PartnerVideoHelper {
 				$clipData['trailerVersion'] = $clip->getElementsByTagName('TrailerVersion')->item(0)->textContent;
 				$clipData['description'] = $clip->getElementsByTagName('Description')->item(0)->textContent;
 				$clipData['duration'] = $clip->getElementsByTagName('RunTime')->item(0)->textContent;
+				$clipData['jpegBitrateCode'] = VideoPage::SCREENPLAY_MEDIUM_JPEG_BITRATE_ID;
 
 				$encodes = $clip->getElementsByTagName('Encode');
 				$numEncodes = $encodes->length;
@@ -145,12 +146,10 @@ class PartnerVideoHelper {
 					switch ($formatCode) {
 						case VideoPage::SCREENPLAY_ENCODEFORMATCODE_JPEG:
 							switch ($bitrateCode) {
-								case VideoPage::SCREENPLAY_MEDIUM_JPEG_BITRATE_ID:
-									$clipData['medJpegUrl'] = $url;
-									break;
 								case VideoPage::SCREENPLAY_LARGE_JPEG_BITRATE_ID:
-									$clipData['lrgJpegUrl'] = $url;
+									$clipData['jpegBitrateCode'] = VideoPage::SCREENPLAY_LARGE_JPEG_BITRATE_ID;
 									break;
+								case VideoPage::SCREENPLAY_MEDIUM_JPEG_BITRATE_ID:
 								default:
 							}
 							break;
@@ -353,7 +352,7 @@ class PartnerVideoHelper {
 				}
 
 				$doesHdExist = (int) !empty($data['hdMp4Url']);
-				$metadata = array($data['stdBitrateCode'], $doesHdExist, $data['duration']);
+				$metadata = array($data['stdBitrateCode'], $doesHdExist, $data['duration'], $data['jpegBitrateCode']);
 				break;
 			case VideoPage::V_MOVIECLIPS:
 				$id = $data['mcId'];
