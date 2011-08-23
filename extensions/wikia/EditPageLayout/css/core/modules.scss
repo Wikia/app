@@ -138,6 +138,11 @@
 		.info-text {
 			padding: 0 5px 5px;
 		}
+		// source mode
+		textarea {
+			@include epl-textfield;
+			resize: none;
+		}
 	}
 
 	// license module
