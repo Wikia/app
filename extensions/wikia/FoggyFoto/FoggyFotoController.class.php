@@ -44,7 +44,7 @@ class FoggyFotoController extends WikiaController {
 	 * instead of canvas.
 	 */
 	 public function getDivs(){
-		global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgScriptPath;
+		global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgScriptPath, $wgRequest;
 		wfProfileIn( __METHOD__ );
 
 		wfLoadExtensionMessages( 'FoggyFoto' );
@@ -70,6 +70,7 @@ class FoggyFotoController extends WikiaController {
 		$this->gameJs_FlipBoard = $wgExtensionsPath."/wikia/FoggyFoto/js/FoggyFoto_FlipBoard.js?$wgStyleVersion";
 		$this->gameJs = $wgExtensionsPath."/wikia/FoggyFoto/js/FoggyFotoByDivs.js?$wgStyleVersion";
 		$this->jsMessagesUrl = $wgExtensionsPath."/wikia/JSMessages/js/JSMessages.js?$wgStyleVersion";
+		$this->category = $wgRequest->getVal('category', '');
 
 		$vars = array();
 		F::build('JSMessages')->enqueuePackage('FoggyFoto', JSMessages::INLINE);

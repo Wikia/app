@@ -50,7 +50,7 @@ if (typeof FoggyFoto.GameConfigs === 'undefined') {
 		configs.push( new FoggyFoto.GameConfigs("trueblood.wikia.com", "Category:Characters", "") );
 		configs.push( new FoggyFoto.GameConfigs("gameofthrones.wikia.com", "Category:Characters", "") );
 		configs.push( new FoggyFoto.GameConfigs("glee.wikia.com", "Category:Characters", "") );
-		configs.push( new FoggyFoto.GameConfigs("lyrics.wikia.com", "Category:Albums released in 1984", "") );
+		configs.push( new FoggyFoto.GameConfigs("lyrics.wikia.com", "Category:Album", "") );
 		configs.push( new FoggyFoto.GameConfigs("muppet.wikia.com", "Category:Characters", "") );
 		configs.push( new FoggyFoto.GameConfigs("ben10.wikia.com", "Category:Episodes", "") );
 		configs.push( new FoggyFoto.GameConfigs("trueblood.wikia.com", "Category:Episodes", "") );
