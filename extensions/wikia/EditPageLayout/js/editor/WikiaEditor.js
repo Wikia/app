@@ -586,7 +586,7 @@
 			this.editor.getEditorElement = this.proxy(this.getEditorElement);
 
 			this.editor.fire('editorReady',this.editor);
-			this.editor.setMode(this.editor.mode,true);
+			this.editor.setMode(this.editor.mode,true /* forceEvents */);
 			this.editor.setState(this.editor.states.IDLE);
 
 			var self = this,
