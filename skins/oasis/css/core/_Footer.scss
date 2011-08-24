@@ -60,7 +60,10 @@
 				img {
 					margin: 0 6px 0 1px;
 				}
-				>span {
+				>span{
+					color: mix($color-text, $color-page);
+				}
+				>span[data-href], &.mytools>span, .tools-customize{
 					color: $color-header-text;
 					cursor: pointer;
 					&:hover {
