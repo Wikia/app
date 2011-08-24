@@ -135,13 +135,16 @@
 
 	// categories module
 	.module_categories {
-		.info-text {
-			padding: 0 5px 5px;
+		> .module_content {
+			padding-bottom: 10px;
 		}
 		// source mode
 		textarea {
-			@include epl-textfield;
+			@include epl-editorarea;
+			border: solid 1px #cacaca;
+			margin-top: 4px;
 			resize: none;
+			width: 250px;
 		}
 	}
 

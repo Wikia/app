@@ -48,9 +48,6 @@
 .csEditMode #csItemsContainer .CSitem {
 	border: none;
 	background: none;
-	height: 25px;
-    border: none;
-    margin-right: 3px;
     white-space: normal !important;
 }
 
@@ -58,11 +55,6 @@
     text-align: center;
     font-size: 11px;
     width: 38px;
-}
-
-.csEditMode #csItemsContainer .CSitem span{
-	display: inline-block;
-	margin-top: 5px;
 }
 
 .csEditMode #csCategoryInput {
