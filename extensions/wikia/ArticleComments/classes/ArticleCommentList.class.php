@@ -778,7 +778,6 @@ class ArticleCommentList {
 						array_push( $users, $text );
 					}
 
-					wfLoadExtensionMessages('ArticleComments');
 					$cntChanges = wfMsgExt( 'nchanges', array( 'parsemag', 'escape' ), $wgLang->formatNum( $cnt ) );
 					$title = Title::newFromText($parts['title']);
 					$namespace = $title->getNamespace();
@@ -916,11 +915,9 @@ class ArticleCommentList {
 		$title = Title::newFromText($rcTitle, $rcNamespace);
 
 		if (MWNamespace::isTalk($rcNamespace) && ArticleComment::isTitleComment($title)) {
-			wfLoadExtensionMessages('ArticleComments');
 			$parts = ArticleComment::explode($rcTitle);
 
-			$title = Title::newFromText($parts['title'], $rcNamespace);
-			$title = Title::newFromText($title->getText(), MWNamespace::getSubject($rcNamespace));
+			$titleMainArticle = Title::newFromText($parts['title'], MWNamespace::getSubject($rcNamespace));
 
 			if ((defined('NS_BLOG_ARTICLE') && $rcNamespace == NS_BLOG_ARTICLE) ||
 				defined('NS_BLOG_ARTICLE_TALK') && $rcNamespace == NS_BLOG_ARTICLE_TALK ) {
@@ -928,8 +925,8 @@ class ArticleCommentList {
 			} else {
 				$messageKey = 'article-comments-rc-comment';
 		}
-
-			$articlelink = wfMsgExt($messageKey, array('parseinline'), str_replace('_', ' ', $title->getPrefixedText()));
+			$articleId = $title->getArticleId();
+			$articlelink = wfMsgExt($messageKey, array('parseinline'), $title->getFullURL("permalink=$articleId#comm-$articleId"),  $titleMainArticle->getText());
 		}
 		return true;
 	}
