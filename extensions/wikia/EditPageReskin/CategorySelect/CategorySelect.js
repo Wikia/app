@@ -1,5 +1,5 @@
 var oAutoComp;
-var categories;
+var categories = [];
 var fixCategoryRegexp = new RegExp('\\[\\[(?:' + csCategoryNamespaces + '):([^\\]]+)]]', 'i');
 var ajaxUrl = wgServer + wgScript + '?action=ajax';
 var csType = 'edit';
@@ -343,7 +343,7 @@ function toggleCodeView() {
 		$('#csWikitext').attr('value', generateWikitextForCategories());
 		$('#csItemsContainerDiv').hide();
 		$('#csHintContainer').hide();
-		$('#csCategoryInput').prop('disabled', true);
+		$('#csCategoryInput').prop('disabled', true).removeAttr('placeholder');
 		$('#csSwitchView').html(csVisualView);
 		$('#csWikitextContainer').show();
 		$('#wpCategorySelectWikitext').attr('value', '');	//remove JSON - this will inform PHP to use wikitext instead
@@ -364,7 +364,7 @@ function toggleCodeView() {
 				$('#csSwitchView').html(csCodeView);
 				$('#csWikitextContainer').hide();
 				$('#csItemsContainerDiv').show();
-				$('#csCategoryInput').prop('disabled', false);
+				$('#csCategoryInput').prop('disabled', false).attr('placeholder', $('#csCategoryInput').attr('data-placeholder'));
 			}
 
 			window.csMode = 'wysiwyg';
