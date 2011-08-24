@@ -428,11 +428,11 @@ function CategorySelectImportFormData($editPage, $request) {
 function CategorySelectDiffArticle($editPage, $newtext) {
 	global $wgCategorySelectCategoriesInWikitext;
 	//add categories only for whole article editing
-	
+
 	if ($editPage->section == '' && isset($wgCategorySelectCategoriesInWikitext)) {
 		$newtext .= $wgCategorySelectCategoriesInWikitext;
 	}
-	
+
 	return true;
 }
 
@@ -443,7 +443,7 @@ function CategorySelectDiffArticle($editPage, $newtext) {
  */
 function CategorySelectBeforeDiffArticle($editPage, $newtext, $oldtext, $newtitle, $oldtitle) {
 	CategorySelectReplaceContent($editPage, $oldtext);
-	
+
 	return true;
 }
 
@@ -547,7 +547,7 @@ function CategorySelectGenerateHTMLforEditRaw($categories, $text = '') {
 
 				</ul>
 			</div>
-			<div id="csWikitextContainer"><textarea id="csWikitext" name="csWikitext">' . $categories . '</textarea></div>
+			<div id="csWikitextContainer"><textarea id="csWikitext" name="csWikitext" rows="4">' . $categories . '</textarea></div>
 			<div class="clearfix"></div>
 		</div>';
 
