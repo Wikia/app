@@ -31,6 +31,7 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 		this.backImageSrc = ''; // this is the one that's obscured
 		this.frontImage = null;
 		this.backImage = null;
+		this._category = null;
 
 		// Dimensions of the entire FlipBoard (images will be scaled & cropped to fit this exactly without any distortion to the aspect ratio).
 		this.width = boardWidth;//480;
@@ -78,23 +79,22 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 			// TODO: Indicate on-screen that we're loading a game.
 
 			// Pull a selection of pages in the category (using the API).
-			var categoryTitle = 'Category:Characters';
-			//var categoryTitle = 'Category:Albums_released_in_1984';
+			self._category = 'Category:Characters'; // just a decent default
 			if(foggyFotoCategory){
-				categoryTitle = foggyFotoCategory; // can be provided in the URL with "&category=Category:Example";
+				self._category = foggyFotoCategory; // can be provided in the URL with "&category=Category:Example";
 			}
 			var apiParams = {
 				'action': 'query',
 				'list': 'categorymembers',
 				'cmlimit': 1000,
 				'cmnamespace': 0, // only main namespace.  sub-categories would create confusing results
-				'cmtitle': categoryTitle
+				'cmtitle': self._category
 			};
 			Mediawiki.apiCall(apiParams, function(data){
 				if(data.error){
 					self.mwError(data.error);
 				} else {
-					self.log("Got category members ("+ data.query.categorymembers.length+" pages) for category '"+categoryTitle+"'.");
+					self.log("Got category members ("+ data.query.categorymembers.length+" pages) for category '" + self._category + "'.");
 
 					if(data.query.categorymembers){
 						self._allPagesInCategory = [];
