@@ -456,7 +456,7 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 		 * Click-handler for when the player clicks to guess on an answer.
 		 */
 		this.answerClicked = function(){
-			var guessed = $(this).html();
+			var guessed = $(this).text(); // the .text() (rather than .html()) decodes HTML entities
 			
 			// Only process the clicks if the round is still active.
 			if(!self._roundIsOver){
