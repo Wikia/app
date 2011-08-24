@@ -496,7 +496,7 @@ function answerCategoryOtherSection(&$catView, &$r){
 		$r .= "<td style=\"width: 50%; vertical-align: top\">\n";
 		$r .= "<div id=\"mw-pages\">\n";
 		$r .= "<h2>" . Answer::getSpecialCategory("answered") . "</h2>";
-		$r .= wfMsg( 'answers-category-count-answered', count($catView->answers['answered_questions'] ) );
+		$r .= wfMsgExt( 'answers-category-count-answered', array('parsemag'), count($catView->answers['answered_questions'] ) );
 		$r .= "<ul>\n";
 		foreach($catView->answers["answered_questions"] as $q){
 			$r.= "<li>$q</li>\n";
@@ -513,7 +513,7 @@ function answerCategoryOtherSection(&$catView, &$r){
 		$r .= "<td style=\"width: 50%; vertical-align: top\">\n";
 		$r .= "<div id=\"mw-pages\">\n";
 		$r .= "<h2>" . str_replace("-","",Answer::getSpecialCategory("unanswered")) . "</h2>";
-		$r .= wfMsg( 'answers-category-count-unanswered', count( $catView->answers['unanswered_questions'] ) );
+		$r .= wfMsgExt( 'answers-category-count-unanswered', array('parsemag'), count( $catView->answers['unanswered_questions'] ) );
 		$r .= "<ul>\n";
 		foreach($catView->answers["unanswered_questions"] as $q){
 			$r.= "<li>$q</li>\n";
