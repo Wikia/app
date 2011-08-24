@@ -298,7 +298,7 @@
 <?php
 				for($row = 0;  $row < $numRows; $row++){
 					for($col = 0; $col < $numCols; $col++){
-						print "\t\t\t<div class='tile opacityTransition' id='sprite_{$row}_{$col}'></div>\n";
+						print "\t\t\t<div class='tile' id='sprite_{$row}_{$col}'></div>\n";
 					}
 					print "\t\t\t<br/>\n";
 				}

@@ -136,10 +136,8 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 
 				// Put all of the front-tiles back so that the next round's picture will be loaded behind them.
 				// The class-name dancing is required by the way transitions work... it lets us make all the tiles opaque immediately so that the background image doesn't appear before they are solid.
-				$('#gameBoard .tile').removeClass( self._TRANSITION_CLASS_NAME ).addClass( self._NO_TRANSITION_CLASS_NAME );
+				$('#gameBoard .tile').removeClass( self._TRANSITION_CLASS_NAME ).addClass( self._NO_TRANSITION_CLASS_NAME ); // remove transition and don't re-apply until bg image is fully applied.
 				$('#gameBoard .tile').removeClass( self._REVEALED_CLASS_NAME );
-				$('#gameBoard .tile').addClass( self._TRANSITION_CLASS_NAME );
-				$('#gameBoard .tile').removeClass( self._NO_TRANSITION_CLASS_NAME );
 
 				$('#continueButton').add('.continueText').hide(); // clean up potentially left-over elements from previous rounds
 
@@ -177,6 +175,10 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 							$('#bgPic').css('-webkit-transform', 'scale('+scalingFactor+', '+scalingFactor+')');
 							$('#bgPic').css('left', '-'+scaledBackOffsetX+'px');
 							$('#bgPic').css('top', '-'+scaledBackOffsetY+'px');
+
+							// Re-activate the transitions now that the background image is fully-loaded.
+							$('#gameBoard .tile').addClass( self._TRANSITION_CLASS_NAME );
+							$('#gameBoard .tile').removeClass( self._NO_TRANSITION_CLASS_NAME );
 
 							// A new round has started, initialize the round variables & start the timer.
 							self._kickOffRoundTimer();
