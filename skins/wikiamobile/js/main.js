@@ -45,9 +45,8 @@ var WikiaMobile = {
 					mainContent += '</section>' + element.outerHTML + '<section class=\"articleSection\">';
 				}
 				firstH2 = false;
-			} else if (element.nodeName === 'OBJECT' ) {
+			} else if ( element.nodeName === 'OBJECT' ) {
 				mainContent += '<a href="'+ element.data +'">Video #'+ video++ +'</a>';
-				console.log(element);
 			} else {
 				mainContent += (!element.outerHTML)?element.textContent:element.outerHTML;
 			}
@@ -58,6 +57,7 @@ var WikiaMobile = {
 	},
 
 	init: function() {
+		
 		//I'm using delegate on document.body as it's been proved to be the fastest option
 		$( document.body ).delegate( '#openToggle', 'tap click', function() {
 			$( '#navigation').toggleClass( 'open' );
