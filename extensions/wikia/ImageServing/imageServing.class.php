@@ -101,7 +101,6 @@ class ImageServing {
 				$this->addArticleToList($row);
 			}
 
-
 			if(empty($driver)) {
 				foreach($this->imageServingDrivers as $key => $value ){
 					if(!empty($this->articlesByNS[$key])) {
@@ -128,8 +127,8 @@ class ImageServing {
 			}
 			
 			if(empty($out)){
-				// TODO: Hook for finding fallback images.
-				// TODO: Hook for finding fallback images.
+				// Hook for finding fallback images if there were no matches. - NOTE: should this fallback any time (count($out) < $n)? Seems like overkill.
+				wfRunHooks( 'ImageServing::fallbackOnNoResults', array( &$this, $n, &$out ) );
 			}
 		}
 
@@ -138,6 +137,17 @@ class ImageServing {
 		return $out;
 	}
 
+	/**
+	 * Adds the article data (from a db row) to the internal mapping of articlesByNS.
+	 *
+	 * The resulting data is an associative array whose keys are namespaces and whose values
+	 * are associative arrays whose keys are article-ids and whose values are associative arrays
+	 * of the data which is the same namespace (in key 'ns'), the same article-id (in key 'id'), and 
+	 * the page_title (in key 'title').
+	 *
+	 * @TODO: Please refactor this... it's a really weird/confusing datastructure.
+	 * @TODO: Is there any reason to store the whole article data instead of just the title at the end?
+	 */
 	private function addArticleToList($value) {
 		if( empty($this->articlesByNS[$value['ns']] )) {
 			$this->articlesByNS[$value['ns']]  = array();
