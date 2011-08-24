@@ -8,17 +8,38 @@
 
 .WikiFeatures {
 	padding: 10px;
+	>h2 {
+		border-bottom: 1px solid $color-page-border;
+		font-size: 28px;
+		padding-bottom: 5px;
+	}
 	.features {
 		margin: 0;
 		padding: 0;
 		list-style: none;
 		.feature {
 			@include clearfix;
+			border-top: 1px solid $color-page-border;
+			padding: 30px 0 30px 0;
+			h3 {
+				border-bottom: 1px solid $color-page-border;
+				font-size: 20px;
+				margin: 0;
+				padding: 0 0 5px 0;
+			}
+			&:first-child {
+				border-top: 0;
+			}
+			.representation {
+				border: 1px solid $color-page-border;
+				float: left;
+			}
 			.details {
-				margin: 0 0 0 165px;
+				margin: 0 190px 0 165px;
 			}
 			.actions {
-				width: 180px;
+				float: right;
+				width: 110px;
 				.slider {
 					@include border-radius(4px);
 					@include box-shadow(0, 2px, 5px, #999, true);
@@ -52,7 +73,7 @@
 					}
 					.button {
 						@include border-radius(4px);
-						@include linear-gradient(#fafafa, top, #fff, 35%, #F2F2F2, 65%);
+						@include linear-gradient(#f2f2f2, top, #F2F2F2, 35%, #D8D8D8, 65%);
 						@include transition-shorthand(left 400ms);
 						border: 1px solid #a6a6a6;
 						display: block;
