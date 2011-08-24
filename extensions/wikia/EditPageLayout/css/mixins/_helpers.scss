@@ -20,21 +20,28 @@
 	font-style: italic;
 	line-height: 23px;
 	width: $width-epl-module-input;
-	
+
 	&::-webkit-input-placeholder {
 		font-style: italic;
 		color: $color-epl-text-color;
 	}
-	
+
 	&:-moz-placeholder {
 		font-style: italic;
 		color: $color-epl-text-color;
 	}
-	
+
 	&.placeholder {
 		font-style: italic;
 		color: $color-epl-text-color;
 	}
+}
+
+// styling for edit area and category select source mode
+@mixin epl-editorarea {
+	font-family: Consolas, "Eupheima UCAS", Ayuthaya, Menlo, monospace;
+	font-size: 13.5px;
+	width: 100%;
 }
 
 // copied from Chat.scss

@@ -3,7 +3,7 @@ var categories;
 var fixCategoryRegexp = new RegExp('\\[\\[(?:' + csCategoryNamespaces + '):([^\\]]+)]]', 'i');
 var ajaxUrl = wgServer + wgScript + '?action=ajax';
 var csType = 'edit';
-var csMaxTextLength = 20;
+var csMaxTextLength = 28;
 var csDraggingEvent = false;
 var csMode = 'wysiwyg';
 
@@ -257,7 +257,6 @@ function addCategoryBase(category, params, index) {
 	if(csType == 'module') {
 		$("#csItemsContainer").append( elementA );
 		$('#csItemsContainerDiv').scrollTop(100*100);
-		$(elementA).append($("<span class='listmark' >&middot;</span>"));
 	} else {
 		$(elementA).insertBefore( $('#csCategoryInput') );
 	}
@@ -342,7 +341,7 @@ function toggleCodeView() {
 		$.tracker.byStr('editpage/codeviewCategory');
 
 		$('#csWikitext').attr('value', generateWikitextForCategories());
-		$('#csItemsContainer').hide();
+		$('#csItemsContainerDiv').hide();
 		$('#csHintContainer').hide();
 		$('#csCategoryInput').prop('disabled', true);
 		$('#csSwitchView').html(csVisualView);
@@ -364,7 +363,7 @@ function toggleCodeView() {
 				initializeCategories(result['categories']);
 				$('#csSwitchView').html(csCodeView);
 				$('#csWikitextContainer').hide();
-				$('#csItemsContainer').show();
+				$('#csItemsContainerDiv').show();
 				$('#csCategoryInput').prop('disabled', false);
 			}
 

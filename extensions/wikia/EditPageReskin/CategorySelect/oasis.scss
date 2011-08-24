@@ -5,30 +5,58 @@
 @import "../../EditPageLayout/css/mixins/constants";
 @import "../../EditPageLayout/css/mixins/helpers";
 
+/* edit mode - CategorySelect module */
 #csMainContainer.csEditMode {
+	padding: 0 2px;
 	#csSuggestContainer {
+		top: 0px;
+		width: $width-epl-module-input;
 		.yui-ac-content {
 			border-top: medium none !important; /* used to override yui with !important */
 			border-bottom: solid 1px $color-epl-inputs-borders !important;
 			border-left: solid 1px $color-epl-inputs-borders !important;
 			border-right: solid 1px $color-epl-inputs-borders !important;
+			width: $width-epl-module-input + 4 !important;
 		}
 		#csHintContainer {
-		width: $width-epl-module-input - 4;
-		border-top: medium none;
-		border-bottom: solid 1px $color-epl-inputs-borders;
-		border-left: solid 1px $color-epl-inputs-borders;
-		border-right: solid 1px $color-epl-inputs-borders;
-		z-index: 999;
+			width: $width-epl-module-input - 4;
+			border-top: medium none;
+			border-bottom: solid 1px $color-epl-inputs-borders;
+			border-left: solid 1px $color-epl-inputs-borders;
+			border-right: solid 1px $color-epl-inputs-borders;
+			z-index: 999;
+		}
+	}
+	#csItemsContainerDiv {
+		background: #fff;
+		border: solid 1px #cacaca;
+		margin-top: 4px;
+		max-height: 22px * 4;
+		overflow-y: auto;
+		padding: 4px;
+		width: 246px;
+		*max-height: none;
+		*overflow-y: none;
+		ul {
+			margin: 0;
+		}
+		.CSitem {
+			clear: both;
+			line-height: 22px;
+			margin: 0;
+			&:hover {
+				background-color: #cce5ff;
+			}
 		}
 	}
 	#csCategoryInput {
 		@include epl-textfield;
-		line-height: 16px;
-		width: $width-epl-module-input;
+		background: #fff;
 		border: solid 1px $color-epl-inputs-borders;
-		font-style: normal;
 		color: black;
+		font-style: normal;
+		line-height: 16px;
+		width: 250px;
 
 		&::-webkit-input-placeholder {
 			font-style: italic;
@@ -47,10 +75,6 @@
 	}
 }
 
-.csEditMode #csItemsContainer .CSitem:hover {
-	background: #cce5ff;
-}
-
 /* Oasis fixes */
 .csViewMode #csButtonsContainer {
 	background-color: mix($color-buttons, $color-page, 5%);
@@ -66,25 +90,4 @@
 #csSuggestContainer {
 	@include yui-suggest;
 	width: 250px;
-}
-
-.csEditMode #csSuggestContainer  .yui-ac-content {
-    width: $width-epl-module-input + 4 !important;
-}
-
-
-.csEditMode #csSuggestContainer {
-	top: 0px;
-    width: $width-epl-module-input;
-}
-
-.csEditMode  #csItemsContainerDiv{
-	max-height: 100px;
-	* max-height: none;
-	overflow-y: auto;
-	* overflow-y: none;
-	width: $width-epl-module-input + 6;
-	ul {
-		width: $width-epl-module-input - 10;
-	}
 }
