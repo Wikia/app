@@ -21,7 +21,7 @@ $wgExtensionCredits['other'][] = array(
 $dir = dirname( __FILE__ );
 $wgExtensionMessagesFiles['ImageServing_LyricWiki'] = $dir . '/ImageServing_LyricWiki.i18n.php';
 
-$wgHooks['ImageServing::fallbackOnNoResults'] = 'lw_ImageServingFallback';
+$wgHooks['ImageServing::fallbackOnNoResults'][] = 'lw_ImageServingFallback';
 
 /**
  * This is called by ImageServing if no representative image is found for a page.
