@@ -63,7 +63,7 @@
 				>span{
 					color: mix($color-text, $color-page);
 				}
-				>span[data-href], &.mytools>span, .tools-customize{
+				>span[data-href], &.mytools>span, .tools-customize, &#ca-watch>span{
 					color: $color-header-text;
 					cursor: pointer;
 					&:hover {
