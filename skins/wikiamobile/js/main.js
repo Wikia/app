@@ -59,8 +59,12 @@ var WikiaMobile = {
 	init: function() {
 		
 		//I'm using delegate on document.body as it's been proved to be the fastest option
-		$( document.body ).delegate( '#openToggle', 'tap click', function() {
+		$( document.body ).delegate( '#openToggle', 'click', function() {
 			$( '#navigation').toggleClass( 'open' );
+		});
+		
+		$( document.body ).delegate( '#article-comments-counter-header', 'click', function() {
+			$( '#article-comments').toggleClass( 'open' );
 		});
 		
 		$( document.body ).delegate( '#searchScope', 'change', function() {
@@ -71,7 +75,7 @@ var WikiaMobile = {
 			}
 		})
 		
-		$( document.body ).delegate( '#navigationMenu > li', 'tap click', function() {
+		$( document.body ).delegate( '#navigationMenu > li', 'click', function() {
 			if ( !( $( this ).hasClass( 'openMenu' ) ) ) {
 				
 				$( '#navigationMenu > li' ).removeClass( 'openMenu' );
@@ -85,12 +89,12 @@ var WikiaMobile = {
 		
 		$( '#WikiaMainContent > h2' ).append( '<span class=\"arrow\"></span>' );
 		
-		$( document.body ).delegate( '#WikiaMainContent > h2', 'tap click', function() {
+		$( document.body ).delegate( '#WikiaMainContent > h2', 'click', function() {
 			$(this).toggleClass('open').next().toggleClass('open');
 			
 		});
 
-		$( document.body ).delegate( '#showAll', 'tap click', function() {
+		$( document.body ).delegate( '#showAll', 'click', function() {
 			var showAll = $( '#showAll' ),
 				articleSection = $( '.articleSection' );
 				
