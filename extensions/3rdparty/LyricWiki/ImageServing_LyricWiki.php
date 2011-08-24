@@ -30,28 +30,74 @@ $wgHooks['ImageServing::fallbackOnNoResults'][] = 'lw_ImageServingFallback';
  * If this is an artist page, there is no good fallback, so 'out' will be returned unmodified.
  */
 function lw_ImageServingFallback(&$imageServing, $n, &$out){
-	
-	// TODO: Make this work for Gracenote pages too? (they don't have their own images and would have to fall back to the NS_MAIN pages with the same titles).
+	wfProfileIn( __METHOD__ );
 
-	$gnArticles = $imageServing->articlesByNS[ NS_GRACENOTE ];
-	if(!empty($gnArticles)){
+	// For Gracenote pages (since they don't have their own images), fall back to the NS_MAIN pages with the same titles.
+	$articleTitlesToTry = array();
+	if(isset($imageServing->articlesByNS[NS_GRACENOTE])){
+		$gnArticles = $imageServing->articlesByNS[ NS_GRACENOTE ];
 		foreach($gnArticles as $gnArticleId => $gnArticleData){
 			$title = $gnArticleData['title'];
-			
-print "TRYING TO FIND FALLBACK IMAGE FOR GRACENOTE PAGE: \"$title\"<br/>\n";
+
+			// Just pass the page title in directly. By not passing the Gracenote namespace in, we'll get the main-namespace equivalent.
+			$articleTitlesToTry[] = $title;
 		}
 	}
 
-	$articles = $imageServing->articlesByNS[ NS_MAIN ];
-	if(!empty($articles)){
+	// For main namespace pages, fall back from song to album to artist.
+	if(isset($imageServing->articlesByNS[NS_MAIN])){
+		$articles = $imageServing->articlesByNS[ NS_MAIN ];
 		foreach($articles as $articleId => $articleData){
 			$title = $articleData['title'];
 			
-print "TRYING TO FIND FALLBACK IMAGE FOR PAGE: \"$title\"<br/>\n";
+			// If the title is an album, fall back to the artist... if the title is a song, fall back to the album.
+			$matches = array();
+			if(0 < preg_match("/^(.*?):.*[ _]\([0-9]{4}\)$/", $title, $matches)){
+				$articleTitlesToTry[] = $matches[1];
+			} else {
+			
+				// TODO: Fall back to the album if there is one in the wikiText (which would automatically fall back to the artist if the album doesn't have a pic).
+				// TODO: Fall back to the album if there is one in the wikiText (which would automatically fall back to the artist if the album doesn't have a pic).
+				
+				// Fall back to the artist if no album could be found in the wikiText.
+				// TODO: if we have the wikitext already & the artist can be found in there, use that instead of a regex on the title (it is more likely to be accurate since the artist name may have colons in it).
+				// TODO: if we have the wikitext already & the artist can be found in there, use that instead of a regex on the title (it is more likely to be accurate since the artist name may have colons in it).
+				if(0 < preg_match("/^(.*?):/", $title, $matches)){
+			 		$articleTitlesToTry[] = $matches[1];
+				}
+			}
+			
 		}
 	}
-	
-exit;
 
+	// If we found some reasonable fallback-pages above, pass those into ImageServing.
+	if(count($articleTitlesToTry) > 0){
+		$articleIds = array();
+		foreach($articleTitlesToTry as $titleStr){
+			$title = Title::newFromText( $titleStr );
+			if(is_object($title)){
+				$articleId = $title->getArticleID();
+				$article = Article::newFromID( $articleId );
+				if(is_object($article)){
+					// Automatically follow redirects.
+					if($article->isRedirect()){
+						$title = $article->followRedirect();
+						$articleId = $title->getArticleID();
+					}
+					
+					// The title str could be converted into an article-id, so add it to the array to be processed.
+					$articleIds[] = $articleId;
+				}
+			}
+		}
+
+		// Some of the titles were real pages, use ImageServing to get the results and store them (by reference) in '$out'.
+		if(count($articleIds) > 0){
+			$imageServing = new ImageServing( $articleIds );
+			$out = $imageServing->getImages( $n );
+		}
+	}
+
+	wfProfileOut( __METHOD__ );
 	return true; // because this is a hook
 } // end lw_ImageServingFallback()
