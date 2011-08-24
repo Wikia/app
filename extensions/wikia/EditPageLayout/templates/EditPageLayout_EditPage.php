@@ -45,13 +45,18 @@
 					<div id="EditPageToolbar" class="editpage-toolbar" data-space-type="toolbar"></div>
 					<div id="EditPageEditorWrapper" data-space-type="editor">
 						<div id="EditPageEditor" class="editpage-content">
-
-							<!-- notifications -->
+							<!-- basic support for users with JS disabled -->
 							<noscript><style>
 								.edit-page-notices {
 									display: block;
 								}
+
+								#EditPageCallbackFields {
+									display: block !important;
+								}
 							</style></noscript>
+
+							<!-- notifications -->
 							<div class="editpage-notices" data-space-type="notices-short">
 								<span class="splotch"><?= count($notices) ?></span>
 								<ul>
