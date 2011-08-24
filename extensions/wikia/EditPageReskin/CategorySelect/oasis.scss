@@ -57,21 +57,6 @@
 		font-style: normal;
 		line-height: 16px;
 		width: 250px;
-
-		&::-webkit-input-placeholder {
-			font-style: italic;
-			color: $color-epl-text-color;
-		}
-
-		&:-moz-placeholder {
-			font-style: italic;
-			color: $color-epl-text-color;
-		}
-
-		&.placeholder {
-			font-style: italic;
-			color: $color-epl-text-color;
-		}
 	}
 }
 
