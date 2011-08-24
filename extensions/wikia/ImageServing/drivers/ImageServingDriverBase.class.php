@@ -99,7 +99,7 @@ abstract class ImageServingDriverBase {
 		$out = array(); 
 		$articlesRest = array(); 
 		foreach ( $articles as $value ) {
-		//	$mcOut = $this->memc->get( $this->makeKey( $value ), null );
+			$mcOut = $this->memc->get( $this->makeKey( $value ), null );
 			if(!empty($mcOut)) {
 				$out[ $value ] = $mcOut;
 			} else {
