@@ -297,7 +297,7 @@ class Phalanx {
 					$result['msg'] = $blockData['text'];    //original case
 				}
 			} else {
-				if (strpos($text, $blockText) !== false) {
+				if ( !empty($blockText) && strpos($text, $blockText) !== false) {
 					if ($writeStats) {
 						self::addStats($blockData['id'], $blockData['type']);
 					}
