@@ -242,6 +242,7 @@
 			wgScriptPath = '<?= $wgScriptPath; ?>';
 			boardWidth = <?= $boardWidth ?>;
 			boardHeight = <?= $boardHeight ?>;
+			foggyFotoCategory = <?= $category ?>;
 		</script>
 <!-- TODO: Serve from our own servers using AssetsManager -->
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>

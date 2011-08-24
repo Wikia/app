@@ -80,6 +80,9 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 			// Pull a selection of pages in the category (using the API).
 			var categoryTitle = 'Category:Characters';
 			//var categoryTitle = 'Category:Albums_released_in_1984';
+			if(foggyFotoCategory){
+				categoryTitle = foggyFotoCategory; // can be provided in the URL with "&category=Category:Example";
+			}
 			var apiParams = {
 				'action': 'query',
 				'list': 'categorymembers',
