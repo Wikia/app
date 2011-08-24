@@ -14,11 +14,12 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 	}
 	
 	public function init() {
-		$this->response->addAsset('extensions/wikia/WikiFeatures/js/WikiFeatures.js');
+		
 	}
 	
 	public function index() {
 		$this->response->addAsset('extensions/wikia/WikiFeatures/css/WikiFeatures.scss');
+		$this->response->addAsset('extensions/wikia/WikiFeatures/js/WikiFeatures.js');
 		//$this->wg->Out->addScriptFile($this->wg->ExtensionsPath . '/wikia/WikiFeatures/js/WikiFeatures.js');
 	}
 
