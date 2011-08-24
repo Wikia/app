@@ -146,6 +146,7 @@
 				background-color:#adff2f;
 				border-bottom:1px solid #cdff5f;
 				line-height: <?= floor($answerDrawerHeight / $NUM_ANSWER_CHOICES) ?>px;
+				overflow:hidden;
 				cursor:pointer;
 			}
 			#answerListWrapper ul li.incorrect{
