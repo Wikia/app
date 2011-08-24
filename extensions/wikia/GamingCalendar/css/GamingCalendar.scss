@@ -19,6 +19,7 @@ $gaming-calendar-gray-text: mix($color-text, $color-page, 75%);
 	border: 1px solid $color-page-border;
 	margin-bottom: 10px;
 	padding: 0 0 8px 0;
+	cursor: pointer;
 
 	h1 {
 		background: transparent url(/extensions/wikia/GamingCalendar/images/gaming-calendar-sprite.png);

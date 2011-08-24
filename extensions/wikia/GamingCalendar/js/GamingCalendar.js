@@ -42,7 +42,7 @@ var GamingCalendar = {
 			// insert into module (after the h1)
 			$('.GamingCalendarModule h1').after(itemHTML);
         });
-		$('.GamingCalendarModule .more').click(GamingCalendar.showCalendar);
+		$('.GamingCalendarModule').click(GamingCalendar.showCalendar);
 	},
         
 	getCookieVal: function() {
