@@ -8,6 +8,7 @@ $footerBackground: #CCF;
 //navigation
 #navigation {
   width: 100%;
+  min-height: 50px;
   background-color: $menuBackgroundColor;
   background: -webkit-linear-gradient( top, rgba( 45, 45, 45, 1 ) 0%, rgba( 55, 55, 55, 1 ) 100% );
   background: -webkit-gradient( linear, left top, left bottom, color-stop( 0%, rgba( 85, 85, 85, 1 ) ), color-stop( 100%, rgba( 95, 95, 95, 1) ) );
@@ -17,8 +18,8 @@ $footerBackground: #CCF;
   -webkit-focus-ring-color: rgba( 0,0,0,0 );
   
   #navigationWordMark {
-    margin: 1px;
-    height: 46px;
+    height: 50px;
+    display: block;
   }
   
   #openNavigationContent {
@@ -309,6 +310,7 @@ html {
   
   .infobox {
     border: 1px solid grey;
+    border-radius: 6px;
     margin: 0 auto;
     background-color: #DDD;
     width: 95% !important;
