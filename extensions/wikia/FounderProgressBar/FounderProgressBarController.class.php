@@ -508,7 +508,7 @@ class FounderProgressBarController extends WikiaController {
 		if (substr($messageStr, -1) == '%') {
 			$number = $this->counters[$task_id];
 			$messageStr = "founderprogressbar-". str_replace('%', $number, $messageStr) . "-" . $type;  // Chop off the %
-			return wfMsg($messageStr, $number);
+			return wfMsgExt($messageStr, array('parsemag'), $number);
 		} 
 		// Default case
 		$messageStr = "founderprogressbar-". $messageStr . "-" . $type;			
