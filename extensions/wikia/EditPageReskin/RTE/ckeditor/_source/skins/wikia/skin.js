@@ -17,7 +17,7 @@ CKEDITOR.skins.add( 'wikia', (function()
 	return {
 		preload		: preload,
 		editor		: { css : [ $.getSassCommonURL('/extensions/wikia/EditPageReskin/RTE/ckeditor/_source/skins/wikia/editor.scss') ] },
-		dialog		: { css : [ 'dialog.css' ] },
+		dialog		: { /* css : [ 'dialog.css' ] - loaded in editor.scss (BugId:7843) */ },
 		templates	: { css : [ 'templates.css' ] },
 		margins		: [ 0, 0, 0, 0 ],
 		init : function( editor )
