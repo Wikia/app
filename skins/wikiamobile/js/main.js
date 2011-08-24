@@ -44,6 +44,9 @@ var WikiaMobile = {
 					mainContent += '</section>' + element.outerHTML + '<section class=\"articleSection\">';
 				}
 				firstH2 = false;
+			} else if (element.nodeName === 'OBJECT' ) {
+				mainContent += '<a href="'+ element.data +'">Video</a>';
+				console.log(element);
 			} else {
 				mainContent += (!element.outerHTML)?element.textContent:element.outerHTML;
 			}
@@ -55,21 +58,19 @@ var WikiaMobile = {
 
 	init: function() {
 		//I'm using delegate on document.body as it's been proved to be the fastest option
-		$( document.body ).delegate( '#openToggle', 'tap, click', function() {
+		$( document.body ).delegate( '#openToggle', 'click tap', function() {
 			$( '#navigation').toggleClass( 'open' );
 		});
 		
 		$( document.body ).delegate( '#searchScope', 'change', function() {
-			console.log('change');
 			if ( $( '#searchScope' ).val() == 'wiki' ) {
 				$( '#searchForm' ).attr( 'action', 'index.php?useskin=wikiamobile');
 			} else {
 				$( '#searchForm' ).attr( 'action', 'http://community.wikia.com/wiki/index.php?useskin=wikiamobile' );
 			}
-			console.log($( '#searchForm' ).attr( 'action'));
 		})
 		
-		$( document.body ).delegate( '#navigationMenu > li', 'tap, click', function() {
+		$( document.body ).delegate( '#navigationMenu > li', 'click tap', function() {
 			if ( !( $( this ).hasClass( 'openMenu' ) ) ) {
 				
 				$( '#navigationMenu > li' ).removeClass( 'openMenu' );
@@ -83,12 +84,12 @@ var WikiaMobile = {
 		
 		$( '#WikiaMainContent > h2' ).append( '<span class=\"arrow\"></span>' );
 		
-		$( document.body ).delegate( '#WikiaMainContent > h2', 'tap, click', function() {
+		$( document.body ).delegate( '#WikiaMainContent > h2', 'click tap', function() {
 			$(this).toggleClass('open').next().toggleClass('open');
 			
 		});
 
-		$( document.body ).delegate( '#showAll', 'click, click', function() {
+		$( document.body ).delegate( '#showAll', 'click tap', function() {
 			var showAll = $( '#showAll' ),
 				articleSection = $( '.articleSection' );
 				
@@ -101,14 +102,17 @@ var WikiaMobile = {
 			};
 			showAll.toggleClass( 'collapsed' );
 		});
-		
+		var position;
 		$( document.body ).delegate( '#WikiaPage', 'swipeLeft', function() {
+			position = pageYOffset;
 			$( '#wikiaFooter, #navigation, #WikiaPage' ).css( 'display', 'none' );
 			$( '#leftPane' ).css( { 'display': 'block', 'opacity': '1' } );
 		});
 		
 		$( document.body ).delegate( '#leftPane', 'swipeRight', function() {
 			$( '#wikiaFooter, #navigation, #WikiaPage' ).css( 'display', 'block'  );
+			window.scrollTo( 0, position );
+			position = 1;
 			$( '#leftPane' ).css( { 'display': 'none', 'opacity': '0' } );
 		});
 	}
