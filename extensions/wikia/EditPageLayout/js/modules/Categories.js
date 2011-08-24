@@ -24,8 +24,6 @@
 			if (introText) {
 				this.el.append($('<div>').addClass('info-text').text(introText));
 			}
-
-			this.editor.on('mode', this.proxy(this.onModeChanged));
 		},
 
 		afterAttach: function() {
@@ -45,10 +43,19 @@
 
 			// save
 			this.editor.on('state', this.proxy(this.onStateChange));
+
+			// switch module mode when switching editing mode (BugId:10257)
+			this.editor.on('mode', this.proxy(this.onModeChanged));
+
+			// start in source mode when using MW editor (useeditor=mediawiki)
+			if (this.editor.mode === 'source') {
+				this.onModeChanged();
+			}
 		},
 
 		onStateChange: function(editor, state) {
 			if (state == editor.states.SAVING) {
+				// track number of categories when saving the article
 				var categoriesCount = this.el.find('.CSitem').length;
 				this.track('saveNumber', categoriesCount);
 			}
