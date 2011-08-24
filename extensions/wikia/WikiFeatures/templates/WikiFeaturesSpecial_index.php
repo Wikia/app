@@ -64,6 +64,17 @@
 					<span class="texton">On</span>
 					<span class="loading"></span>
 				</span>
+				<button class="secondary feedback">
+					<img height="10" width="10" src="<?= $wg->ExtensionsPath ?>/wikia/WikiFeatures/images/star-inactive.png">
+					<?php echo wfMsg('wikifeatures-feedback'); ?>
+				</button>
+				<span class="rating" >
+					<img class="active" src="<?= $wg->BlankImgUrl ?>"/>
+					<img class="active" src="<?= $wg->BlankImgUrl ?>"/>
+					<img class="active" src="<?= $wg->BlankImgUrl ?>"/>
+					<img class="active" src="<?= $wg->BlankImgUrl ?>"/>
+					<img src="<?= $wg->BlankImgUrl ?>"/>
+				</span>
 			</div>
 			<div class="details">
 				<h3>

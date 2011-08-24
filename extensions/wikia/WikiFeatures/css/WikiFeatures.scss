@@ -101,6 +101,27 @@
 						}
 					}
 				}
+				.feedback {
+					margin-top: 5px;
+					>img {
+						position: relative;
+						top: -1px;
+					}
+				}
+				.rating {
+					display: block;
+					margin-top: 5px;
+					@include clearfix;
+					>img {
+						background-image: url('/extensions/wikia/WikiFeatures/images/star-inactive.png');
+						height: 16px;
+						float: left;
+						width: 16px;
+						&.active {
+							background-image: url('/extensions/wikia/WikiFeatures/images/star-active.png');
+						}
+					}
+				}
 			}
 		}
 	}
