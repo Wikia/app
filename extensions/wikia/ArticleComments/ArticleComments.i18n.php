@@ -308,7 +308,7 @@ Wikia
 </p>',
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
+/** German (formal address) (Deutsch (Sie-Form))
  * @author Claudia Hattitten
  */
 $messages['de-formal'] = array(
@@ -825,7 +825,7 @@ $messages['lt'] = array(
 	'article-comments-edit' => 'redaguoti',
 	'article-comments-history' => 'istorija',
 	'article-comments-error' => 'Komentaras negali būti išsaugotas',
-	'article-comments-rc-blog-comment' => "Blog'o komentaras (<span class="plainlinks">[$1 $2]</span>)",
+	'article-comments-rc-blog-comment' => 'Blog\'o komentaras (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => "Blog'o komentarai ([[$1]])",
 	'article-comments-login' => 'Prašome <a href="$1">prisijungti</a> kad galėtumėte rašyti šioje wiki.',
 	'article-comments-toc-item' => 'Komentarai',
@@ -1038,7 +1038,7 @@ Wikia
 </p>',
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel) (Nederlands (informeel))
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
@@ -1060,7 +1060,7 @@ Wikia
 </p>',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian (bokmål) (Norsk (bokmål))
  * @author Audun
  */
 $messages['no'] = array(
@@ -1556,7 +1556,7 @@ $messages['vi'] = array(
 	'article-comments-next-page' => 'Tiếp theo',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (中文(简体))
  * @author Hydra
  */
 $messages['zh-hans'] = array(
