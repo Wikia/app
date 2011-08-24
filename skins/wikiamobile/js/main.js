@@ -32,7 +32,8 @@ var WikiaMobile = {
 	wrapArticles: function() {
 		var content = $( '#WikiaMainContent' ).contents(),
 			mainContent = '',
-			firstH2 = true;
+			firstH2 = true,
+			video = 1;
 		//Im using here plain javascript as Zepto.js does not provide me with real contents method
 		//I end up creating simple contents method that returns JS Object instead of Zepto ones	
 		for( var i = 0; i < content.length; i++ ) {
@@ -45,7 +46,7 @@ var WikiaMobile = {
 				}
 				firstH2 = false;
 			} else if (element.nodeName === 'OBJECT' ) {
-				mainContent += '<a href="'+ element.data +'">Video</a>';
+				mainContent += '<a href="'+ element.data +'">Video #'+ video++ +'</a>';
 				console.log(element);
 			} else {
 				mainContent += (!element.outerHTML)?element.textContent:element.outerHTML;
@@ -58,7 +59,7 @@ var WikiaMobile = {
 
 	init: function() {
 		//I'm using delegate on document.body as it's been proved to be the fastest option
-		$( document.body ).delegate( '#openToggle', 'click tap', function() {
+		$( document.body ).delegate( '#openToggle', 'tap click', function() {
 			$( '#navigation').toggleClass( 'open' );
 		});
 		
@@ -70,7 +71,7 @@ var WikiaMobile = {
 			}
 		})
 		
-		$( document.body ).delegate( '#navigationMenu > li', 'click tap', function() {
+		$( document.body ).delegate( '#navigationMenu > li', 'tap click', function() {
 			if ( !( $( this ).hasClass( 'openMenu' ) ) ) {
 				
 				$( '#navigationMenu > li' ).removeClass( 'openMenu' );
@@ -84,12 +85,12 @@ var WikiaMobile = {
 		
 		$( '#WikiaMainContent > h2' ).append( '<span class=\"arrow\"></span>' );
 		
-		$( document.body ).delegate( '#WikiaMainContent > h2', 'click tap', function() {
+		$( document.body ).delegate( '#WikiaMainContent > h2', 'tap click', function() {
 			$(this).toggleClass('open').next().toggleClass('open');
 			
 		});
 
-		$( document.body ).delegate( '#showAll', 'click tap', function() {
+		$( document.body ).delegate( '#showAll', 'tap click', function() {
 			var showAll = $( '#showAll' ),
 				articleSection = $( '.articleSection' );
 				

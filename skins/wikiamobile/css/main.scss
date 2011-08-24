@@ -37,16 +37,21 @@ $footerBackground: #CCF;
     
     #openNavigationContent {
       display: block;
-      
+
       div.navigationTab {
-        display: none;
+        position: relative;
         background-color: $menuSecondColor;
         width: 100%;
+        height: 0;
+        overflow: hidden;
+        opacity: 0;
         clear: both;
-        padding: 15px 0;
-        
+        -webkit-transition: opacity 0.4s ease;
+
         &.openTab {
-          display: block;
+          height: auto;
+          opacity: 1;
+          padding: 15px 0;
         }
         
         input {
@@ -121,9 +126,10 @@ $footerBackground: #CCF;
       display: inline;
       padding: 5px 7px 10px 7px;
       margin: 0 5px;
-      
+
       &.openMenu {
         background-color: $menuSecondColor;
+        padding: 5px 7px 2px 7px;
         color: white;
       }
     }
