@@ -2,7 +2,7 @@
 	<?php if( $wordmarkType == "graphic" ) {
 		echo "<img id='navigationWordMark' src='{$wordmarkUrl}'>";
 	 } else { 
-		echo "<span id='navigationWordMark'>{$wikiName}</span>";
+		echo "<div id='navigationWordMark'>{$wikiName}</div>";
 	 }?>
 	<div id="openNavigationContent">
 		<ul id="navigationMenu">

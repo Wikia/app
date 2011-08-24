@@ -19,7 +19,6 @@ $footerBackground: #CCF;
   
   #navigationWordMark {
     height: 50px;
-    display: block;
   }
   
   #openNavigationContent {
@@ -145,6 +144,7 @@ html {
   border: none;
   padding: 0;
   margin: 0;
+  cursor: pointer;
   
   body {
     background-color: #EEE;
@@ -169,10 +169,6 @@ html {
       img {
           width: 90%;
           height: auto;
-      }
-      
-      .thumbcaption {
-        border-top: 1px dashed grey;
       }
     }
     h1 {
@@ -264,6 +260,20 @@ html {
 	opacity: 0;
 }
 
+#article-comments {
+  display: none;
+  
+  &.open {
+    display: block;
+  }
+}
+
+#WikiaArticleComments {
+  .controls {
+    display: none;
+  }
+}
+
 #WikiaMainContent{
   //REALESE THE HELL: overflow used here for a demo reason the page now has static width what on mobile device is desiered
   //shoudn't be done on production site as it is a workaround on to wide content
@@ -271,7 +281,21 @@ html {
   padding-bottom: 20px;
   margin: 2px;
   
-  & > h2 {
+  a {
+    padding: 3px;
+    display: inline-block;
+    background-color: rgba( 0, 200, 255, 0.1 );
+    color: black;
+    text-decoration: none;
+    border-radius: 4px;
+    border: 1px solid rgba( 100, 255, 255 , 0.5 );
+  }
+  a:visited {
+    border: 1px solid rgba( 100, 255, 0 , 0.5 );
+    background-color: rgba( 20, 200, 0, 0.1 );
+  }
+  
+  & > h2, #article-comments-counter-header {
       width: 100%;
       padding: 5px;
       border-bottom: 1px solid grey;
@@ -280,8 +304,8 @@ html {
         .arrow {
           border-top: none;
           border-bottom: 8px solid $arrowcolor;
-          border-left: 8px solid rgba(0,0,0,0);
-          border-right: 8px solid rgba(0,0,0,0);
+          border-left: 8px solid rgba( 0, 0, 0, 0 );
+          border-right: 8px solid rgba( 0, 0, 0, 0 );
         }
       }
       
@@ -298,6 +322,7 @@ html {
   
   .articleSection {
     display: none;
+    
     &.open {
       display: block;
     }
