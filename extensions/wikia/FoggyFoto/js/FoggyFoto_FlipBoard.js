@@ -140,10 +140,6 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 
 				$('#continueButton').add('.continueText').hide(); // clean up potentially left-over elements from previous rounds
 
-				// TODO: NICE-TO-HAVE: Track all of the pages used as questions to prevent the same photo from being used twice in the same game.
-				//self._usedAnswers
-				// TODO: NICE-TO-HAVE: Track all of the pages used as questions to prevent the same photo from being used twice in the same game.
-
 				// Randomly get a page from the category (and its associated image) until we find a page which has an image.
 				var imageUrl = "";
 				self.getImageFromPages(self._allPagesInCategory, function(imageUrl){
@@ -249,34 +245,41 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 				var pageTitle = pageTitles[index];
 				self.log("Page: " + pageTitle);
 
-				var imageApiParams = {
-					'action': 'imageserving',
-					'wisTitle': pageTitle
-				};
-				Mediawiki.apiCall(imageApiParams, function(data){
-					if(data.error){
-						self.mwError(data.error);
-					} else if(typeof data.image != "undefined" && typeof data.image.imageserving != "undefined"){
-						self.log("Image: " + data.image.imageserving);
-						imageUrl = data.image.imageserving;
-						
-						// If we got a match, pass the imageUrl into the success callback.
-						if((typeof successCallback == "function") && (typeof imageUrl != "undefined")){
-							self._currentAnswer = pageTitle;
-							successCallback( imageUrl );
-						} else {
-							self.log("Callback was not a function: ");
-							self.log(successCallback);
+				// Skip this pageTitle if it was already used for a round in this game.
+				if($.inArray( pageTitle, self._usedAnswers ) != -1){
+					pageTitles.splice(index, 1); // remove the item just looked at
+					self.getImageFromPages(pageTitles, successCallback);
+				} else {
+					// Given a possible page-title, try to fetch an image from the ImageServing API for it.
+					var imageApiParams = {
+						'action': 'imageserving',
+						'wisTitle': pageTitle
+					};
+					Mediawiki.apiCall(imageApiParams, function(data){
+						if(data.error){
+							self.mwError(data.error);
+						} else if(typeof data.image != "undefined" && typeof data.image.imageserving != "undefined"){
+							self.log("Image: " + data.image.imageserving);
+							imageUrl = data.image.imageserving;
+							
+							// If we got a match, pass the imageUrl into the success callback.
+							if((typeof successCallback == "function") && (typeof imageUrl != "undefined")){
+								self._currentAnswer = pageTitle;
+								self._usedAnswers.push( pageTitle );
+								successCallback( imageUrl );
+							} else {
+								self.log("Callback was not a function: ");
+								self.log(successCallback);
+							}
 						}
-					}
 
-					// Didn't get a match, call the function again.
-					if(typeof imageUrl == "undefined"){
-						pageTitles.splice(index, 1); // remove the item just looked at
-						self.getImageFromPages(pageTitles, successCallback);
-					}
-				}, self.mwError);
-				
+						// Didn't get a match, call the function again.
+						if(typeof imageUrl == "undefined"){
+							pageTitles.splice(index, 1); // remove the item just looked at
+							self.getImageFromPages(pageTitles, successCallback);
+						}
+					}, self.mwError);
+				}
 			}
 
 			return imageUrl;
