@@ -1,12 +1,12 @@
 /** IMPLEMENTATION USING CANVAS **/
 
-if (typeof FoggyFoto === 'undefined') {
-	FoggyFoto = {};
+if (typeof PhotoPop === 'undefined') {
+	PhotoPop = {};
 }
 
-if (typeof FoggyFoto.FlipBoard === 'undefined') {
+if (typeof PhotoPop.FlipBoard === 'undefined') {
 	/**
-	 * FlipBoard is a class which is used in FoggyFoto to hold a "front" image and a "back" (obscured) image
+	 * FlipBoard is a class which is used in PhotoPop to hold a "front" image and a "back" (obscured) image
 	 * which is conceptually broken up into a number of tiles.  Each tile can individually be transitioned/revealed
 	 * to show the back-image.
 	 *
@@ -18,7 +18,7 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 	 * - If the image aspect ratio is less than or equal to the screen aspect ratio, scale the width of the image to
 	 *   fit, then center the image horizontally (cropping some off both sides as needed).
 	 */
-	FoggyFoto.FlipBoard = function(){
+	PhotoPop.FlipBoard = function(){
 		var self = this;
 		this.debug = false; // whether to log a whole bunch of info to console.log
 
@@ -27,7 +27,7 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 
 		// URLs of the images
 		//this.frontImageSrc = 'http://images4.wikia.nocookie.net/__cb20110304030006/lyricwiki/images/b/b7/Deadmau5_-_It_Sounds_Like.jpg'; // this shows up immediately
-		this.frontImageSrc = 'http://sean.wikia-dev.com/extensions/wikia/FoggyFoto/front.png'; // this shows up immediately
+		this.frontImageSrc = 'http://sean.wikia-dev.com/extensions/wikia/PhotoPop/front.png'; // this shows up immediately
 		//this.backImageSrc = "http://images1.wikia.nocookie.net/__cb20110606201926/lyricwiki/images/3/39/Deadmau5_-_Project_56.jpg"; // this is the one that's obscured
 		this.backImageSrc = "http://images1.wikia.nocookie.net/__cb20100113214904/glee/images/3/3f/Kurtmercedes.jpg"; // this is the one that's obscured
 		this.frontImage = null;
@@ -56,7 +56,7 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 		 * Takes in a callback function which will be called after both of the images are loaded.
 		 */
 		this.init = function(callback){
-			self.canvas = document.getElementById("foggyCanvas");
+			self.canvas = document.getElementById("photoPopCanvas");
 			if( self.canvas.getContext ){
 				self.context = self.canvas.getContext("2d");
 			}
@@ -286,7 +286,7 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 		 * Cross-platform trickery courtesy of:
 		 * http://answers.oreilly.com/topic/1929-how-to-use-the-canvas-and-draw-elements-in-html5/
 		 *
-		 * @return a FoggyFoto.FlipBoard.Tile (which is just a wrapper for the coordinates)
+		 * @return a PhotoPop.FlipBoard.Tile (which is just a wrapper for the coordinates)
 		 */
 		this._getTileByClick = function(e){
 			var x;
@@ -305,7 +305,7 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 			x -= self.canvas.offsetLeft;
 			y -= self.canvas.offsetTop;
 			
-			var tile = new FoggyFoto.FlipBoard.Tile();
+			var tile = new PhotoPop.FlipBoard.Tile();
 			tile.row = Math.floor(y / self._tileWidth);
 			tile.col = Math.floor(x / self._tileHeight);
 
@@ -335,7 +335,7 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 	 * belong to the tile, but rather are calculated at display-time given the location of the tile and
 	 * whether the front image or back image is supposed to be displayed).
 	 */
-	FoggyFoto.FlipBoard.Tile = function(){
+	PhotoPop.FlipBoard.Tile = function(){
 		this.row = -1;
 		this.col = -1;
 	};
@@ -352,7 +352,7 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 function initGame()
 {
 	//console.log("Started...");
-	var flipBoard = new FoggyFoto.FlipBoard();
+	var flipBoard = new PhotoPop.FlipBoard();
 	flipBoard.init(function(){
 		/*flipBoard.show(0,0);
 		//flipBoard.show(0,1);

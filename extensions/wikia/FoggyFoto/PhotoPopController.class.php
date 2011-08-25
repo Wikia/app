@@ -17,7 +17,7 @@ if ( !defined( 'MEDIAWIKI' ) ) die();
  *
  * @ingroup SpecialPage
  */
-class FoggyFotoController extends WikiaController {
+class PhotoPopController extends WikiaController {
 
 /**
 	 * Manage forms to be shown according to posted data.
@@ -28,12 +28,12 @@ class FoggyFotoController extends WikiaController {
 		global $wgOut, $wgExtensionsPath, $wgStyleVersion;
 		wfProfileIn( __METHOD__ );
 	
-		wfLoadExtensionMessages( 'FoggyFoto' );
+		wfLoadExtensionMessages( 'PhotoPop' );
 
 		$this->canvasWidth = $this->getVal('width', 480);
 		$this->canvasHeight = $this->getVal('height', 320);
 
-		$this->gameJs = $wgExtensionsPath."/wikia/FoggyFoto/js/FoggyFoto.js?$wgStyleVersion";
+		$this->gameJs = $wgExtensionsPath."/wikia/PhotoPop/js/PhotoPop.js?$wgStyleVersion";
 
 		wfProfileOut( __METHOD__ );
 	} // end getCanvas()
@@ -47,7 +47,7 @@ class FoggyFotoController extends WikiaController {
 		global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgScriptPath, $wgRequest;
 		wfProfileIn( __METHOD__ );
 
-		wfLoadExtensionMessages( 'FoggyFoto' );
+		wfLoadExtensionMessages( 'PhotoPop' );
 
 		$this->boardWidth = $this->getVal('width', 480);
 		$this->boardHeight = $this->getVal('height', 320);
@@ -57,27 +57,27 @@ class FoggyFotoController extends WikiaController {
 		$this->tileHeight = ($this->boardHeight / $this->numRows);
 		$this->photosPerGame = 10;
 
-		$this->frontImageSrc = $wgExtensionsPath.'/wikia/FoggyFoto/glee_front.png'; // this shows up immediately
+		$this->frontImageSrc = $wgExtensionsPath.'/wikia/PhotoPop/glee_front.png'; // this shows up immediately
 		$this->backImageSrc = ''; // this is the one that's obscured... will be figured out in JS using the API.
-		$this->answerButtonSrc = $wgExtensionsPath.'/wikia/FoggyFoto/answer-button.png';
+		$this->answerButtonSrc = $wgExtensionsPath.'/wikia/PhotoPop/answer-button.png';
 		$this->answerButtonWidth = 48;
 		$this->answerDrawerWidth = 150;
 		$this->answerDrawerHeight = 250;
-		$this->continueButtonSrc = $wgExtensionsPath.'/wikia/FoggyFoto/continue-button.png';
+		$this->continueButtonSrc = $wgExtensionsPath.'/wikia/PhotoPop/continue-button.png';
 
 		$this->wgScriptPath = $wgScriptPath;
 		$this->mwJsApiUrl = $wgExtensionsPath."/wikia/JavascriptAPI/Mediawiki.js?$wgStyleVersion";
-		$this->gameJs_FlipBoard = $wgExtensionsPath."/wikia/FoggyFoto/js/FoggyFoto_FlipBoard.js?$wgStyleVersion";
-		$this->gameJs = $wgExtensionsPath."/wikia/FoggyFoto/js/FoggyFotoByDivs.js?$wgStyleVersion";
+		$this->gameJs_FlipBoard = $wgExtensionsPath."/wikia/PhotoPop/js/PhotoPop_FlipBoard.js?$wgStyleVersion";
+		$this->gameJs = $wgExtensionsPath."/wikia/PhotoPop/js/PhotoPopByDivs.js?$wgStyleVersion";
 		$this->jsMessagesUrl = $wgExtensionsPath."/wikia/JSMessages/js/JSMessages.js?$wgStyleVersion";
 		$this->category = $wgRequest->getVal('category', '');
 
 		$vars = array();
-		F::build('JSMessages')->enqueuePackage('FoggyFoto', JSMessages::INLINE);
+		F::build('JSMessages')->enqueuePackage('PhotoPop', JSMessages::INLINE);
 		F::build('JSMessages')->onMakeGlobalVariablesScript(&$vars);
  		$this->globalVariablesScript = Skin::makeVariablesScript( $vars );
 
 		wfProfileOut( __METHOD__ );
 	} // end getDivs()
 
-} // end class SpecialFoggyFoto
+} // end class SpecialPhotoPop

@@ -26,7 +26,7 @@
 	</style>
   </head>
   <body onload="initGame()">
-    <canvas id='foggyCanvas' width="<?= $canvasWidth ?>" height="<?= $canvasHeight ?>"></canvas>
+    <canvas id='photoPopCanvas' width="<?= $canvasWidth ?>" height="<?= $canvasHeight ?>"></canvas>
     <script src="<?= $gameJs ?>"></script>
   </body>
 </html>
