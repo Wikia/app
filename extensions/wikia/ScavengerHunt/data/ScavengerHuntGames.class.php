@@ -262,22 +262,29 @@ class ScavengerHuntGames {
 			return;
 		}
 		$titles = array();
-		if ( !empty( $oldGame ) ) {
-			$titles[] = $oldGame->getLandingTitle();
-		}
-		if ( !empty( $newGame ) )  {
-			$titles[] = $newGame->getLandingTitle();
-		}
-
-		foreach( $titles as $title ){
-			$url = $title;
-			if ( strpos( $title, '?' ) === false ){
-				$url.= '?action=purge';
-			} else {
-				$url.= '&action=purge';
+		
+		foreach( array( $oldGame, $newGame ) as $game ){
+			if ( !empty( $game ) ) {
+				$this->purgeURL( $url );
+				foreach( $oldGame->getArticleURLs() as $url ){
+					$this->purgeURL( $oldGame->getLandingTitle() );
+				}
 			}
+		};
+	}
+
+	protected function purgeURL( $url ){
+		if ( empty( $url ) ){
+			return false;
+		}
+		$url = $title;
+		if ( strpos( $title, '?' ) === false ){
+			$url.= '?action=purge';
+		} else {
+			$url.= '&action=purge';
 		}
 		Http::post( $url );
+		return true;
 	}
 
 	protected function clearIndexCache() {
