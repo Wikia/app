@@ -9,7 +9,7 @@ WikiaFooterApp = {
 		var footer = $("#WikiaFooter");
 		var toolbar = footer.children(".toolbar");
 		var mobileSwitchLink = $('#mobileSwitch');
-				
+		
 		if(mobileSwitchLink.exists()){
 			mobileSwitchLink.live('click', function(e){
 				e.preventDefault();
@@ -73,18 +73,7 @@ WikiaFooterApp = {
 				windowObj.scroll(windowObj.resolvePosition);
 				windowObj.resize(windowObj.centerBar);
 			}
-
-			// Make link-styled spans behave as links
-			// Anchor tags are avoided due to floating browser status bars
-			$('#WikiaFooter [data-href]').live('click', function(event) {
-				window.location = $(this).data('href');
-			});
-			// Make accesskey work by triggering click on prior element (see ajaxwatch.js)
-			$('#follow-accesskey').click(function(event) {
-				event.preventDefault();
-				$(this).prev().click();
-			}); 
-	
+			
 			WikiaFooterApp.toolbar = new ToolbarCustomize.Toolbar( footer.find('.tools') );
 		}
 	}
