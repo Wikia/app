@@ -20,10 +20,9 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 	public function index() {
 		$this->response->addAsset('extensions/wikia/WikiFeatures/css/WikiFeatures.scss');
 		$this->response->addAsset('extensions/wikia/WikiFeatures/js/WikiFeatures.js');
-		//$this->wg->Out->addScriptFile($this->wg->ExtensionsPath . '/wikia/WikiFeatures/js/WikiFeatures.js');
 		
-		$this->normal = WikiFeaturesHelper::getInstance()->getFeatureNormal();
-		$this->labs = WikiFeaturesHelper::getInstance()->getFeatureLabs();
+		$this->features = WikiFeaturesHelper::getInstance()->getFeatureNormal();
+		$this->labsFeatures = WikiFeaturesHelper::getInstance()->getFeatureLabs();
 	}
 
 	/**
