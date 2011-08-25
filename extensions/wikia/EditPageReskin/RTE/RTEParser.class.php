@@ -168,27 +168,26 @@ class RTEParser extends Parser {
 			return $ret;
 		}
 
-		// get image params
-		$params = self::$imageParams;
+		// get and merge image parameters returned by Parser::makeImage
+		$params = array_merge(self::$imageParams['frame'], self::$imageParams['handler']);
+
+		// cleanup
+		if (isset($params['title'])) {
+			unset($params['title']);
+		}
 
 		// generate image data
 		$data = array(
 			'type' => 'image',
 			'wikitext' => RTEData::get('wikitext', $wikitextIdx),
 			'title' => $title->getDBkey(),
-			'params' => array_merge($params['frame'], $params['handler']),
 		);
-
-		// params cleanup
-		if (isset($data['params']['title'])) {
-			unset($data['params']['title']);
-		}
 
 		// try to resolve internal links in image caption (RT #90616)
 		if (RTEData::resolveLinksInMediaCaption($data['wikitext'])) {
 			// now resolve link markers in caption parsed to HTML
 			if (!empty($holders)) {
-				$holders->replace($data['params']['caption']);
+				$holders->replace($params['caption']);
 			}
 
 			RTE::log(__METHOD__ . ': resolved internal link');
@@ -200,17 +199,17 @@ class RTEParser extends Parser {
 		}
 
 		// small fix: set value of thumbnail entry
-		if (isset($data['params']['thumbnail'])) {
-			$data['params']['thumbnail'] = true;
+		if (isset($params['thumbnail'])) {
+			$params['thumbnail'] = true;
 		}
 
 		// keep caption only for thumbs and framed images
-		if (!isset($data['params']['thumbnail']) && !isset($data['params']['framed'])) {
-			$data['params']['caption'] = '';
+		if (!isset($params['thumbnail']) && !isset($params['framed'])) {
+			$params['caption'] = '';
 		}
 
 		// get "unparsed" caption from original wikitext and store parsed one as 'captionParsed'
-		if ($data['params']['caption'] != '') {
+		if ($params['caption'] != '') {
 			$wikitext = trim($data['wikitext'], '[]');
 			$wikitextParts = explode('|', $wikitext);
 
@@ -219,9 +218,23 @@ class RTEParser extends Parser {
 			$originalCaption = htmlspecialchars_decode($originalCaption);
 
 			// keep parsed caption and store its wikitext
-			$data['params']['captionParsed'] = $data['params']['caption'];
-			$data['params']['caption'] = $originalCaption;
+			$params['captionParsed'] = $params['caption'];
+			$params['caption'] = $originalCaption;
 		}
+
+		// pass link image parameter (BugId:6506)
+		// this can be either link-title (internal links) or link-url (external links)
+		if (isset($params['link-title']) && $params['link-title'] instanceof Title) {
+			$params['link'] = $params['link-title']->getPrefixedText();
+			unset($params['link-title']);
+		}
+		else if (isset($params['link-url'])) {
+			$params['link'] = $params['link-url'];
+			unset($params['link-url']);
+		}
+
+		// parameters are cleaned up - store them in image's meta data
+		$data['params'] = $params;
 
 		RTE::log(__METHOD__, $data);
 
