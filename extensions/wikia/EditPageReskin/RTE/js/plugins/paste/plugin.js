@@ -60,19 +60,19 @@ CKEDITOR.plugins.add('rte-paste',
 			editor.dataProcessor.htmlFilter.addRules({
 				elements: {
 					// remove meta tag with characters encoding info
-		            meta: function(element) {
-		            	return false;
-		            }
-		      	},
+					meta: function(element) {
+						return false;
+					}
+				},
 
-		      	attributes: {
-		      		// remove style attributes added by WebKit browsers
-		      		style: function(value, element) {
-		      			if (value.indexOf('border-top-width: 0px; border-right-width: 0px;') === 0) {
-		      				return false;
-		      			}
-		      		}
-		      	}
+				attributes: {
+					// remove style attributes added by WebKit browsers
+					style: function(value, element) {
+						if (value.indexOf('border-top-width: 0px; border-right-width: 0px;') === 0) {
+							return false;
+						}
+					}
+				}
 			});
 		}
 	},
