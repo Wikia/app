@@ -43,8 +43,8 @@ class WikiaSpecialPageController extends WikiaController {
 		return call_user_func_array( array( $this->specialPage, $method ), $args );
 	}
 
-	// Override WikiaBaseController magic getter and setter because this is a wrapper for a SpecialPage object
-	// Check special page properties first, then Controller properties, then request properties
+	// Override WikiaController magic getter and setter because this is a wrapper for a SpecialPage object
+	// Checks special page properties first, then Controller properties, then request properties
 	public function __get( $propertyName ) {
 		if (property_exists($this->specialPage, $propertyName))
 			return $this->specialPage->$propertyName;

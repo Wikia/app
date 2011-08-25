@@ -7,7 +7,7 @@
  *
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
-abstract class WikiaService extends WikiaBaseController {
+abstract class WikiaService extends WikiaDispatchableObject {
 	final public function allowsExternalRequests(){
 		return false;
 	}

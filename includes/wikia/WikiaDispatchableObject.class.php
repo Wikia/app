@@ -1,13 +1,15 @@
 <?php
 
 /**
- * Nirvana Framework - Component class
+ * Nirvana Framework - Dispatchable Object class
+ * This class adds Request / Response vars and a sendRequest method to WikiaObject
  *
  * @ingroup nirvana
  *
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
+ * @author Owen Davis <owen(at)wikia-inc.com>
  */
-abstract class WikiaBaseController {
+abstract class WikiaDispatchableObject extends WikiaObject {
 	/**
 	 * request object
 	 * @var WikiaRequest
@@ -20,24 +22,6 @@ abstract class WikiaBaseController {
 	 */
 	protected $response = null;
 	
-	/**
-	 * application object
-	 * @var WikiaApp
-	 */
-	protected $app = null;
-	
-	/**
-	 * global registry object
-	 * @var WikiaGlobalRegistry
-	 */
-	protected $wg = null;
-	
-	/**
-	 * function wrapper object
-	 * @var WikiaFunctionWrapper
-	 */
-	protected $wf = null;
-
 	/**
 	 * wether the class accepts external requests
 	 * @return boolean
@@ -111,7 +95,7 @@ abstract class WikiaBaseController {
 	}
 
 	/**
-	 * init function for controller, called just before method
+	 * init function for controller, called just before sendRequest method dispatching
 	 */
 	public function init() {}
 
@@ -145,26 +129,6 @@ abstract class WikiaBaseController {
 	 */
 	public function getResponse() {
 		return $this->response;
-	}
-
-	/**
-	 * get application
-	 * @return WikiaApp
-	 */
-	public function getApp() {
-		return $this->app;
-	}
-
-	/**
-	 * set application
-	 * @param WikiaApp $app
-	 */
-	public function setApp( WikiaApp $app ) {
-		$this->app = $app;
-
-		// setting helpers
-		$this->wg = $app->wg;
-		$this->wf = $app->wf;
 	}
 	
 	// Magic setting of template variables so we don't have to do $this->response->setVal
