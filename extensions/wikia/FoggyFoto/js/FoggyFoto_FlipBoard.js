@@ -25,6 +25,7 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 		this._INCORRECT_CLASS_NAME = 'incorrect'; // class on li's that were incorrect guesses.
 		this._TRANSITION_CLASS_NAME = 'opacityTransition'; // class that applies the CSS transition to opacity so that clicking a tile reveals it slowly (but so that we can remove the transition if we need to instantly flip all tiles).
 		this._NO_TRANSITION_CLASS_NAME = 'noTransition'; // removing a transition class is not enough, we need to also apply a class which explicitly has no transitions.
+		this.sounds = new FoggyFoto.SoundManager();
 
 		// URLs of the images
 		this.frontImageSrc = ''; // this shows up immediately
@@ -124,6 +125,11 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 		 */
 		this._loadNextRound = function(callback){
 			self.log("\t._loadNextRound()...");
+			
+			// Stop the sounds from the previous round which might still be going.
+			self.sounds.pause( 'right' );
+			self.sounds.pause( 'wrong' );
+			self.sounds.pause( 'timeUp' );
 
 			// Detect if there is another round or if we've hit end-game.
 			if(self._currPhoto >= self._PHOTOS_PER_GAME){
@@ -231,8 +237,8 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 					self._pointsThisRound = (self._pointsThisRound - ((self._PERCENT_DEDUCTION_REVEAL/100) * self._pointsThisRound) );
 					self.updateScoreBar();
 
-					// TODO: Play sound - tile clicked
-					// TODO: Play sound - tile clicked
+					// Play sound - tile clicked
+					self.sounds.play( 'click' );
 
 					$(this).addClass( self._REVEALED_CLASS_NAME ); // uses CSS3 transitions
 				}
@@ -381,6 +387,10 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 				self._roundIsOver = true;
 				self._hideAnswerDrawer();
 
+				// Stop the countdown and play the "timeUp" sound.
+				self.sounds.pause( 'timeLow' );
+				self.sounds.play( 'timeUp' );
+
 				// Show the user that the time is up & let them continue to the next round.
 				$('#continueButton').add('#timeUpText').show();
 			} else if(!self._roundIsOver){
@@ -482,8 +492,8 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 			self._totalPoints = Math.round(self._totalPoints + self._pointsThisRound);
 			self.updateHud_score();
 
-			// TODO: Play sound.
-			// TODO: Play sound.
+			// Play sound.
+			self.sounds.play( 'right' );
 			
 			// Collapse answer-drawer.
 			self._hideAnswerDrawer();
@@ -504,8 +514,8 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 			// Make the answer highlighted as incorrect & not clickable anymore.
 			$(liObj).addClass( self._INCORRECT_CLASS_NAME );
 
-			// TODO: Play sound
-			// TODO: Play sound
+			// Play sound.
+			self.sounds.play( 'wrong' );
 
 			// Deduct points for answering incorrectly.
 			self._pointsThisRound = (self._pointsThisRound - ((self._PERCENT_DEDUCTION_WRONG_GUESS/100) * self._pointsThisRound) );
@@ -519,6 +529,12 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 		 */
 		this.log = function(msg){
 			if(self.debug){
+				if (typeof console == "undefined") {
+					window.console = {
+						log: function () {}
+					};
+				}
+
 				console.log(msg);
 			}
 		};
