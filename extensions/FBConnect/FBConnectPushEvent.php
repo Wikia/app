@@ -368,9 +368,9 @@ class FBConnectPushEvent {
 	*/
 
 	static public function addDisplayStat($fbuser_id, $time, $class){
-		global $wgUser, $wgCityId;
+		global $wgUser, $wgCityId, $wgStatsDB;
 		$class = str_replace('FBPush_', '', $class);
-		$dbs = wfGetDB( DB_MASTER, array());//, $wgStatsDB);
+		$dbs = wfGetDB( DB_MASTER, array(), $wgStatsDB);
 		$dbs->begin();
 		$dbs->insert('fbconnect_event_show',
 			array(
