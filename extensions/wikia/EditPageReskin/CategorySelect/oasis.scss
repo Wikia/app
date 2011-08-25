@@ -31,12 +31,10 @@
 		background: #fff;
 		border: solid 1px #cacaca;
 		margin-top: 4px;
-		max-height: 22px * 4;
-		overflow-y: auto;
+		height: 22px * 4;
+		overflow: auto;
 		padding: 4px;
 		width: 246px;
-		*max-height: none;
-		*overflow-y: none;
 		ul {
 			margin: 0;
 		}
