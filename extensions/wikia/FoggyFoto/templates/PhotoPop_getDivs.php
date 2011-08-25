@@ -243,7 +243,7 @@
 			wgScriptPath = '<?= $wgScriptPath; ?>';
 			boardWidth = <?= $boardWidth ?>;
 			boardHeight = <?= $boardHeight ?>;
-			foggyFotoCategory = '<?= $category ?>';
+			photoPopCategory = '<?= $category ?>';
 		</script>
 <!-- TODO: Serve from our own servers using AssetsManager -->
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
@@ -267,10 +267,10 @@
 						<img src='<?= $answerButtonSrc ?>'/>
 					</div>
 					<div class='continueText' id='correctText'>
-						<?= wfMsg('foggyfoto-continue-correct') ?>
+						<?= wfMsg('photopop-continue-correct') ?>
 					</div>
 					<div class='continueText' id='timeUpText'>
-						<?= wfMsg('foggyfoto-continue-timeup') ?>
+						<?= wfMsg('photopop-continue-timeup') ?>
 					</div>
 					<div id='continueButton'>
 						<img src='<?= $continueButtonSrc ?>'/>
@@ -288,11 +288,11 @@
 			<div id='hudBg'></div>
 			<div id='hud'>
 					<div class='score'>
-						<?= wfMsg('foggyfoto-score', 0) ?>
+						<?= wfMsg('photopop-score', 0) ?>
 					</div>
 
 					<div class='progress'>
-						<?= wfMsg('foggyfoto-progress', wfMsg('foggyfoto-progress-numbers', 0, $photosPerGame)) ?>
+						<?= wfMsg('photopop-progress', wfMsg('photopop-progress-numbers', 0, $photosPerGame)) ?>
 					</div>
 			</div>
 <?php

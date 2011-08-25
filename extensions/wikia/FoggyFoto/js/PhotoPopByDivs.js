@@ -1,17 +1,16 @@
 /** IMPLEMENTATION USING HTML/CSS (DIVS FOR TILES) **/
 
-if (typeof FoggyFoto === 'undefined') {
+if (typeof PhotoPop === 'undefined') {
 	/**
-	 * This class controls the flow of the entire FoggyFoto game.  The actual gameplay is inside of 
-	 * the FoggyFoto.FlipBoard class.
+	 * This class controls the flow of the entire PhotoPop game.  The actual gameplay is inside of 
+	 * the PhotoPop.FlipBoard class.
 	 */
-	FoggyFoto = function(){
+	PhotoPop = function(){
 		var self = this;
 		this.debug = true; // whether to log a whole bunch of info to console.log
-	
-	
-	
-	
+
+
+		
 		
 		/**
 		 * Simple wrapper for console.log to allow us to turn on/off debugging for this
@@ -27,13 +26,13 @@ if (typeof FoggyFoto === 'undefined') {
 
 
 
-if (typeof FoggyFoto.GameConfigs === 'undefined') {
+if (typeof PhotoPop.GameConfigs === 'undefined') {
 	/**
 	 * This class stores a configuration for a single game type. For example, to play the game on TrueBlood with
 	 * category Characters, you would have one GameConfig object, but to play on Glee with category Characters or
 	 * TrueBlood with category Episodes would be another.
 	 */
-	FoggyFoto.GameConfigs = function(wikiDomain, category, iconSrc){
+	PhotoPop.GameConfigs = function(wikiDomain, category, iconSrc){
 		var self = this;
 		this._wikiDomain = wikiDomain; // eg: "lyrics.wikia.com"
 		this._category = category; // eg: "Category:Albums released in 1984";
@@ -43,38 +42,38 @@ if (typeof FoggyFoto.GameConfigs === 'undefined') {
 	/**
 	 * Loads all possible game configurations to present the player with a choice for which to play.
 	 */
-	FoggyFoto.getConfigs = function(){
+	PhotoPop.getConfigs = function(){
 		var configs = [];
 
 		// Hard-coded games. Eventually this will just be a fallback in case the MediaWiki message containing the data doesn't load.
-		configs.push( new FoggyFoto.GameConfigs("trueblood.wikia.com", "Category:Characters", "") );
-		configs.push( new FoggyFoto.GameConfigs("glee.wikia.com", "Category:Characters", "") );
-		configs.push( new FoggyFoto.GameConfigs("lyrics.wikia.com", "Category:Album", "") );
-		configs.push( new FoggyFoto.GameConfigs("muppet.wikia.com", "Category:The_Muppets_Characters", "") );
-		configs.push( new FoggyFoto.GameConfigs("dexter.wikia.com", "Category:Characters", "") );
-		configs.push( new FoggyFoto.GameConfigs("futurama.wikia.com", "Category:Characters", "") );
-		//configs.push( new FoggyFoto.GameConfigs("gameofthrones.wikia.com", "Category:Characters", "") );
-		//configs.push( new FoggyFoto.GameConfigs("ben10.wikia.com", "Category:Episodes", "") );
+		configs.push( new PhotoPop.GameConfigs("trueblood.wikia.com", "Category:Characters", "") );
+		configs.push( new PhotoPop.GameConfigs("glee.wikia.com", "Category:Characters", "") );
+		configs.push( new PhotoPop.GameConfigs("lyrics.wikia.com", "Category:Album", "") );
+		configs.push( new PhotoPop.GameConfigs("muppet.wikia.com", "Category:The_Muppets_Characters", "") );
+		configs.push( new PhotoPop.GameConfigs("dexter.wikia.com", "Category:Characters", "") );
+		configs.push( new PhotoPop.GameConfigs("futurama.wikia.com", "Category:Characters", "") );
+		//configs.push( new PhotoPop.GameConfigs("gameofthrones.wikia.com", "Category:Characters", "") );
+		//configs.push( new PhotoPop.GameConfigs("ben10.wikia.com", "Category:Episodes", "") );
 
 		return configs;
 	};
 }
 
-if (typeof FoggyFoto.SoundManager === 'undefined') {
+if (typeof PhotoPop.SoundManager === 'undefined') {
 	/**
-	 * Class for managing the sounds in FoggyFoto.  Audio is pretty striaghtforward in HTML5... this class
+	 * Class for managing the sounds in PhotoPop.  Audio is pretty striaghtforward in HTML5... this class
 	 * mainly helps by handling loading.
 	 */
-	FoggyFoto.SoundManager = function(){
+	PhotoPop.SoundManager = function(){
 		var self = this;
 		this.debug = true;
 
 		this.soundFiles = {
-			'click': '/extensions/wikia/FoggyFoto/audio/FingerPlop4.wav',
-			'right': '/extensions/wikia/FoggyFoto/audio/Human-Applause-MediumCrowd03.wav',
-			'wrong': '/extensions/wikia/FoggyFoto/audio/tubePop.wav',
-			'timeLow': '/extensions/wikia/FoggyFoto/audio/CountdowntoBlastOff.wav',
-			'timeUp': '/extensions/wikia/FoggyFoto/audio/Sad-Trombone.wav',
+			'click': '/extensions/wikia/PhotoPop/audio/FingerPlop4.wav',
+			'right': '/extensions/wikia/PhotoPop/audio/Human-Applause-MediumCrowd03.wav',
+			'wrong': '/extensions/wikia/PhotoPop/audio/tubePop.wav',
+			'timeLow': '/extensions/wikia/PhotoPop/audio/CountdowntoBlastOff.wav',
+			'timeUp': '/extensions/wikia/PhotoPop/audio/Sad-Trombone.wav',
 		};
 		
 		// Caches actual Audio objects.
@@ -125,11 +124,10 @@ if (typeof FoggyFoto.SoundManager === 'undefined') {
 }
 
 
-
 // Once the page is loaded, start the game.
 $(document).ready(function(){
-	console.log("Starting FoggyFoto game...");
-	var flipBoard = new FoggyFoto.FlipBoard();
+	console.log("Starting PhotoPop game...");
+	var flipBoard = new PhotoPop.FlipBoard();
 	flipBoard.init(function(){
 		console.log("Game has started!");
 	});

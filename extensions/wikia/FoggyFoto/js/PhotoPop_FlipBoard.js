@@ -1,12 +1,12 @@
 /** IMPLEMENTATION USING HTML/CSS (DIVS FOR TILES) **/
 
-if (typeof FoggyFoto === 'undefined') {
-	FoggyFoto = {};
+if (typeof PhotoPop === 'undefined') {
+	PhotoPop = {};
 }
 
-if (typeof FoggyFoto.FlipBoard === 'undefined') {
+if (typeof PhotoPop.FlipBoard === 'undefined') {
 	/**
-	 * FlipBoard is a class which is used in FoggyFoto to hold a "front" image and a "back" (obscured) image
+	 * FlipBoard is a class which is used in PhotoPop to hold a "front" image and a "back" (obscured) image
 	 * which is conceptually broken up into a number of tiles.  Each tile can individually be transitioned/revealed
 	 * to show the back-image.
 	 *
@@ -18,14 +18,14 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 	 * - If the image aspect ratio is less than or equal to the screen aspect ratio, scale the width of the image to
 	 *   fit, then center the image horizontally (cropping some off both sides as needed).
 	 */
-	FoggyFoto.FlipBoard = function(){
+	PhotoPop.FlipBoard = function(){
 		var self = this;
 		this.debug = true; // whether to log a whole bunch of info to console.log
 		this._REVEALED_CLASS_NAME = 'transparent'; // the class that will be on tiles which are revealed.
 		this._INCORRECT_CLASS_NAME = 'incorrect'; // class on li's that were incorrect guesses.
 		this._TRANSITION_CLASS_NAME = 'opacityTransition'; // class that applies the CSS transition to opacity so that clicking a tile reveals it slowly (but so that we can remove the transition if we need to instantly flip all tiles).
 		this._NO_TRANSITION_CLASS_NAME = 'noTransition'; // removing a transition class is not enough, we need to also apply a class which explicitly has no transitions.
-		this.sounds = new FoggyFoto.SoundManager();
+		this.sounds = new PhotoPop.SoundManager();
 
 		// URLs of the images
 		this.frontImageSrc = ''; // this shows up immediately
@@ -82,8 +82,8 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 
 			// Pull a selection of pages in the category (using the API).
 			self._category = 'Category:Characters'; // just a decent default
-			if(foggyFotoCategory){
-				self._category = foggyFotoCategory; // can be provided in the URL with "&category=Category:Example";
+			if(photoPopCategory){
+				self._category = photoPopCategory; // can be provided in the URL with "&category=Category:Example";
 			}
 			var apiParams = {
 				'action': 'query',
@@ -362,7 +362,7 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 		 * Updates the "PHOTOS: X / Y" part of the hud where X is self._currPhoto and Y is self._PHOTOS_PER_GAME.
 		 */
 		this.updateHud_progress = function(){
-			var progressMsg = $.msg('foggyfoto-progress-numbers', self._currPhoto, self._PHOTOS_PER_GAME);
+			var progressMsg = $.msg('photopop-progress-numbers', self._currPhoto, self._PHOTOS_PER_GAME);
 			$($('#hud div.progress span').get(0)).html( progressMsg );
 		};
 
@@ -570,7 +570,7 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 	 * belong to the tile, but rather are calculated at display-time given the location of the tile and
 	 * whether the front image or back image is supposed to be displayed).
 	 */
-	FoggyFoto.FlipBoard.Tile = function(){
+	PhotoPop.FlipBoard.Tile = function(){
 		this.row = -1;
 		this.col = -1;
 	};
