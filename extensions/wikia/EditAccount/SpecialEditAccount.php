@@ -39,7 +39,7 @@ $wgLogActions['editaccnt/mailchange'] = 'editaccount-log-entry-email';
 $wgLogActions['editaccnt/passchange'] = 'editaccount-log-entry-pass';
 $wgLogActions['editaccnt/realnamechange'] = 'editaccount-log-entry-realname';
 $wgLogActions['editaccnt/closeaccnt'] = 'editaccount-log-entry-close';
-$wgLogRestrictions['editaccnt'] = 'staff';
+$wgLogRestrictions['editaccnt'] = 'editaccount';
 
 // Set up the new special page
 $dir = dirname( __FILE__ ) . '/';
