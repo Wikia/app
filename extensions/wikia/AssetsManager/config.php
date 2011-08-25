@@ -108,7 +108,7 @@ $config['oasis_shared_js'] = array(
 		'//skins/oasis/js/GlobalModal.js',
 		'//skins/oasis/js/FirefoxFindFix.js',
 		'//extensions/wikia/GlobalNotification/GlobalNotification.js',
-		'//skins/oasis/js/isIPad.js'
+		'//skins/oasis/js/isTouchScreen.js'
 	)
 );
 

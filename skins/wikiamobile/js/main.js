@@ -120,6 +120,12 @@ var WikiaMobile = {
 			position = 1;
 			$( '#leftPane' ).css( { 'display': 'none', 'opacity': '0' } );
 		});
+		
+		//test to see if padding make it easier to click links
+		if($('meta')[8].content === "WoWWiki") {
+			console.log('bottonifying!');
+			$('a').addClass('buttonify');
+		}
 	}
 }
 
