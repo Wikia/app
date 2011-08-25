@@ -93,6 +93,8 @@ class PartnerVideoHelper {
 	}
 
 	public function importFromPartner($provider, $file) {
+		global $parseOnly;
+		
 		$numCreated = 0;
 
 		switch ($provider) {
@@ -108,17 +110,19 @@ class PartnerVideoHelper {
 			default:
 		}
 
-		print "Created $numCreated articles!\n\n";
+		!$parseOnly && print "Created $numCreated articles!\n\n";
 	}
 
 	public function importFromScreenplay($file) {
+		global $parseOnly;
+		
 		$articlesCreated = 0;
 
 		$doc = new DOMDocument( '1.0', 'UTF-8' );
 		@$doc->loadXML( $file );
 		$titles = $doc->getElementsByTagName('Title');
 		$numTitles = $titles->length;
-		print("Found $numTitles titles...\n");
+		!$parseOnly && print("Found $numTitles titles...\n");
 		for ($i=0; $i<$numTitles; $i++) {
 			$title = $titles->item($i);
 			$titleName = $title->getElementsByTagName('TitleName')->item(0)->textContent;
@@ -131,7 +135,9 @@ class PartnerVideoHelper {
 				$clip = $clips->item($j);
 				$clipData['eclipId'] = $clip->getElementsByTagName('EclipId')->item(0)->textContent;
 				$clipData['trailerType'] = $clip->getElementsByTagName('TrailerType')->item(0)->textContent;
+				if (strtolower($clipData['trailerType']) == 'not set') unset($clipData['trailerType']);
 				$clipData['trailerVersion'] = $clip->getElementsByTagName('TrailerVersion')->item(0)->textContent;
+				if (strtolower($clipData['trailerVersion']) == 'not set') unset($clipData['trailerVersion']);
 				$clipData['description'] = $clip->getElementsByTagName('Description')->item(0)->textContent;
 				$clipData['duration'] = $clip->getElementsByTagName('RunTime')->item(0)->textContent;
 				$clipData['jpegBitrateCode'] = VideoPage::SCREENPLAY_MEDIUM_JPEG_BITRATE_ID;
@@ -277,21 +283,15 @@ class PartnerVideoHelper {
 
 		switch ($provider) {
 			case VideoPage::V_SCREENPLAY:
-				$description = ($data['description']) ? $data['description'] : "{$data['trailerType']} {$data['trailerVersion']} ({$data['eclipId']})";
-				if (strpos($data['titleName'], "({$data['year']})") === false) {
-					$name = sprintf("%s (%s) - %s", $data['titleName'], $data['year'], $description);					
-				}
-				else {
-					$name = sprintf("%s - %s", $data['titleName'], $description);										
-				}
+				$altDescription = '';
+				$altDescription .= !empty($data['trailerType']) ? $data['trailerType'] . ' ' : '';
+				$altDescription .= !empty($data['trailerVersion']) ? $data['trailerVersion'] . ' ' : '';
+				$altDescription .= "({$data['eclipId']})";
+				$description = ($data['description']) ? $data['description'] : $altDescription;
+				$name = sprintf("%s - %s", self::generateTitleNameForPartnerVideo($provider, $data), $description);										
 				break;
 			case VideoPage::V_MOVIECLIPS:
-				if (strpos($data['titleName'], "({$data['year']})") === false) {
-					$name = sprintf("%s (%s) - %s", $data['movieName'], $data['year'], $data['videoTitle']);
-				}
-				else {
-					$name = sprintf("%s - %s", $data['movieName'], $data['videoTitle']);
-				}
+				$name = sprintf("%s - %s", self::generateTitleNameForPartnerVideo($provider, $data), $data['videoTitle']);
 				break;
 			default:
 		}
@@ -307,21 +307,13 @@ class PartnerVideoHelper {
 
 		switch ($provider) {
 			case VideoPage::V_SCREENPLAY:
-				if (strpos($data['titleName'], "({$data['year']})") === false) {
-					$categories[] = $data['titleName'] . ' (' . $data['year'] . ')';					
+				$categories[] = self::generateTitleNameForPartnerVideo($provider, $data);	
+				if (!empty($data['trailerVersion'])) {
+					$categories[] = $data['trailerVersion'];
 				}
-				else {
-					$categories[] = $data['titleName'];					
-				}
-				$categories[] = $data['trailerVersion'];
 				break;
 			case VideoPage::V_MOVIECLIPS:
-				if (strpos($data['titleName'], "({$data['year']})") === false) {
-					$categories[] = $data['movieName'] . ' (' . $data['year'] . ')';					
-				}
-				else {
-					$categories[] = $data['movieName'];										
-				}
+				$categories[] = self::generateTitleNameForPartnerVideo($provider, $data);					
 				$categories[] = 'freebasemid-' . (substr($data['freebaseMid'], 0, 3) == '/m/' ? substr($data['freebaseMid'], 3) : $data['freebaseMid']);	// since / is not valid in category name, remove preceding /m/
 				break;
 			default:
@@ -331,15 +323,59 @@ class PartnerVideoHelper {
 		return $categories;
 	}
 	
+	public static function generateTitleNameForPartnerVideo($provider, array $data) {
+		$name = '';
+		
+		switch ($provider) {
+			case VideoPage::V_SCREENPLAY:
+				if (strpos($data['titleName'], "({$data['year']})") === false) {
+					$name = $data['titleName'] . ' (' . $data['year'] . ')';					
+				}
+				else {
+					$name = $data['titleName'];					
+				}
+				break;
+			case VideoPage::V_MOVIECLIPS:
+				if (strpos($data['titleName'], "({$data['year']})") === false) {
+					$name = $data['movieName'] . ' (' . $data['year'] . ')';					
+				}
+				else {
+					$name = $data['movieName'];										
+				}
+				break;
+			default:
+		}
+		
+		return $name;		
+	}
+	
 	protected function makeTitleSafe($name) {
 		return Title::makeTitleSafe(NS_VIDEO, str_replace('#', '', $name));    // makeTitleSafe strips '#' and anything after. just leave # out
 	}		
+	
+	protected static function sanitizeDataForPartnerVideo($provider, &$data) {
+		switch ($provider) {
+			case VideoPage::V_SCREENPLAY:
+				$data['titleName'] = str_replace('  ', ' ', str_replace('/', ' ', $data['titleName']) );
+				if (!empty($data['description'])) {
+					$data['description'] = str_replace('  ', ' ', str_replace('/', ' ', $data['description']) );					
+				}
+				break;
+			case VideoPage::V_MOVIECLIPS:
+				$data['movieName'] = str_replace('  ', ' ', str_replace('/', ' ', $data['movieName']) );
+				break;
+			default:
+		}
+	}
 
 	public function createVideoPageForPartnerVideo($provider, array $data, &$msg) {
-		global $debug;
+		global $debug, $parseOnly, $filename;
 
 		$id = null;
 		$metadata = null;	
+		
+		self::sanitizeDataForPartnerVideo($provider, $data);
+		
 		$name = self::generateNameForPartnerVideo($provider, $data);
 
 		switch ($provider) {
@@ -369,7 +405,7 @@ class PartnerVideoHelper {
 			$msg = "article title was null: clip id $id";
 			return 0;
 		}
-		if(!$debug && $title->exists()) {
+		if(!$debug && !$parseOnly && $title->exists()) {
 			$msg = "article named $name already exists: clip id $id";
 			return 0;
 		}	
@@ -385,7 +421,10 @@ class PartnerVideoHelper {
 		if ($video instanceof VideoPage) {
 			$video->loadFromPars( $provider, $id, $metadata );
 			$video->setName( $name );
-			if ($debug) {
+			if ($parseOnly) {
+				printf("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n", basename($filename), $id, $data['titleName'], $data['year'], $title->getText(), self::generateTitleNameForPartnerVideo($provider, $data), $provider==VideoPage::V_SCREENPLAY ? $metadata[2] : $metadata[1], implode(',', $metadata), implode(',', $categories));
+			}
+			elseif ($debug) {
 				print "parsed partner clip id $id. name: {$title->getText()}. data: " . implode(',', $metadata) . ". categories: " . implode(',', $categories) . "\n";
 			}
 			else {
