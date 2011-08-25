@@ -219,7 +219,7 @@ window.RTE = {
 		RTE.config.extraPlugins = extraPlugins.join(',');
 	},
 
-	// final setup
+	// final setup of editor's instance
 	onEditorReady: function(ev) {
 		var editor = ev.editor;
 
@@ -273,6 +273,15 @@ window.RTE = {
 		editform.bind('submit', $.proxy(function() {
 			editor.fire('submit', {form: editform}, editor);
 		}, this));
+
+		// remove data-rte-instance attribute when sending HTML to backend
+		editor.dataProcessor.htmlFilter.addRules({
+			attributes: {
+				'data-rte-instance': function(value, element) {
+					return false;
+				}
+			}
+		});
 	},
 
 	// reposition #RTEStuff div
@@ -298,11 +307,8 @@ window.RTE = {
 	// @see http://docs.cksource.com/CKEditor_3.x/Developers_Guide/Data_Processor#HTML_Parser_Filters
 	filterHtml: function(ev) {
 		if (ev.editor.mode == 'wysiwyg') {
-			ev.data.dataValue = ev.data.dataValue.
-				// remove "data-rte-instance" attributes
-				replace(' data-rte-instance="' + RTE.instanceId + '"', '').
-				// remove <div> added by Firebug
-				replace(/<div firebug[^>]+>[^<]+<\/div>/g, '');
+			// remove <div> added by Firebug
+			ev.data.dataValue = ev.data.dataValue.replace(/<div firebug[^>]+>[^<]+<\/div>/g, '');
 		}
 	},
 
