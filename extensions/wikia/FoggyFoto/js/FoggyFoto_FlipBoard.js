@@ -55,6 +55,7 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 		this._pointsThisRound = 0;
 		this._currPhoto = 0; // will go up to "1" (makes more sense to non-geeks) when the first image is loaded.
 		this._roundIsOver = false; // after a correct answer is chosen, the timer should be stopped.
+		this._timeIsLow = false; // whether or not the time is low for the current round (helps us avoid playing the 'timeIsLow' sound repeatedly).
 
 		// Constants for game-configuration
 		this._MAX_POINTS_PER_ROUND = 1000;
@@ -215,6 +216,7 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 			self.log("\t._kickOffRoundTimer()...");
 
 			self._roundIsOver = false;
+			self._timeIsLow = false;
 			self._pointsThisRound = self._MAX_POINTS_PER_ROUND;
 			self._setUpPossibleAnswers();
 			self._currPhoto++;
@@ -383,7 +385,7 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 			self.updateScoreBar();
 
 			// If the round is out of time/points, end the round... otherwise queue up the next game-clock tick.
-			if(self._pointsThisRound <= 0){
+			if((self._pointsThisRound <= 0) && (!self._roundIsOver)){
 				self._roundIsOver = true;
 				self._hideAnswerDrawer();
 
@@ -394,6 +396,16 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 				// Show the user that the time is up & let them continue to the next round.
 				$('#continueButton').add('#timeUpText').show();
 			} else if(!self._roundIsOver){
+				// If the user is low on time, play timeLow sound to increase suspense.
+				if(!self._timeIsLow){
+					var percent = ((self._pointsThisRound * 100)/ self._MAX_POINTS_PER_ROUND);
+					var PERCENT_FOR_TIME_IS_LOW = 25;
+					if(percent < PERCENT_FOR_TIME_IS_LOW){
+						self.sounds.play( 'timeLow' );
+						self._timeIsLow = true;
+					}
+				}
+
 				// If the round is continuing, start the timeout again for the next tick.
 				setTimeout(self._roundTimerTick, self._UPDATE_INTERVAL_MILLIS);
 			}
@@ -493,8 +505,9 @@ if (typeof FoggyFoto.FlipBoard === 'undefined') {
 			self.updateHud_score();
 
 			// Play sound.
+			self.sounds.pause( 'timeLow' );
 			self.sounds.play( 'right' );
-			
+
 			// Collapse answer-drawer.
 			self._hideAnswerDrawer();
 			
