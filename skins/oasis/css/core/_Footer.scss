@@ -60,15 +60,11 @@
 				img {
 					margin: 0 6px 0 1px;
 				}
-				>span{
-					color: mix($color-text, $color-page);
-				}
-				>span[data-href], &.mytools>span, .tools-customize, &#ca-unwatch>span, &#ca-watch>span{
+				>a {
 					color: $color-header-text;
-					cursor: pointer;
-					&:hover {
-						text-decoration: underline;
-					}
+				}
+				>span {
+					color: mix($color-header-text,gray,50%);
 				}
 			}
 			img {
@@ -118,13 +114,6 @@
 			color: mix($color-text, $color-page);
 			display: block;
 			padding: 5px;
-		}
-		[data-href] {
-			color: $color-links;
-			cursor: pointer;
-			&:hover {
-				text-decoration: underline;
-			}
 		}
 	}
 	header {
