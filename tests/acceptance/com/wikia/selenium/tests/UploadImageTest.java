@@ -11,7 +11,7 @@ import static org.testng.AssertJUnit.assertTrue;
 public class UploadImageTest extends BaseTest {
 	private String uploadFileUrl = "http://images.wikia.com/wikiaglobal/images/b/bc/Wiki.png";
 
-	@Test(groups={"CI", "noIE"})
+	@Test(groups={"CI", "verified", "envProduction", "fileUpload"})
 	public void testNormalUploadImage() throws Exception {
 		// keep file extensions consistent (uploaded image can be either PNG or JPG)
 		String fileNameExtenstion = uploadFileUrl.substring(uploadFileUrl.length() - 3, uploadFileUrl.length());
@@ -19,8 +19,16 @@ public class UploadImageTest extends BaseTest {
 
 		loginAsStaff();
 
-		session().open("index.php?title=Special:Upload");
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("index.php?title=Special:Upload");
+		waitForElement("wpUploadFile");
+
+		// bug - hidden fields
+		assertTrue("Form field should not be hidden", session().isVisible("wpUploadFile"));
+		assertTrue("Form field should not be hidden", session().isVisible("wpDestFile"));
+		assertTrue("Form field should not be hidden", session().isVisible("wpUploadDescription"));
+		assertTrue("Form field should not be hidden", session().isVisible("wpWatchthis"));
+		assertTrue("Form field should not be hidden", session().isVisible("wpIgnoreWarning"));
+
 		session().attachFile("wpUploadFile", uploadFileUrl);
 		session().type("wpDestFile", destinationFileName);
 		session().type("wpUploadDescription", "WikiaBot automated test.");
@@ -41,19 +49,23 @@ public class UploadImageTest extends BaseTest {
 		logout();
 	}
 
-	@Test(groups={"CI", "noIE"},dependsOnMethods="testNormalUploadImage")
+	@Test(groups={"CI", "verified", "envProduction", "fileUpload"},dependsOnMethods="testNormalUploadImage")
 	public void testDeleteUploadedImage() throws Exception {
 		// keep file extensions consistent (uploaded image can be either PNG or JPG)
 		String fileNameExtenstion = uploadFileUrl.substring(uploadFileUrl.length() - 3, uploadFileUrl.length());
 		String destinationFileName = uploadFileUrl.substring(uploadFileUrl.lastIndexOf("/") + 1);
 
 		loginAsStaff();
-		session().open("index.php?title=File:" + destinationFileName);
-		session().waitForPageToLoad(this.getTimeout());
-		clickAndWait("//a[@data-id='delete']");
+		openAndWait("index.php?title=File:" + destinationFileName);
+		if (session().isElementPresent("link=delete all")) {
+			clickAndWait("link=delete all");
+		} else {
+			clickAndWait("//a[@data-id='delete']");
+		}
+		waitForElement("wpReason");
 		session().type("wpReason", "this was for test");
 		session().uncheck("wpWatch");
 		clickAndWait("mw-filedelete-submit");
-		assertTrue(session().isTextPresent("\"File:" + destinationFileName + "\" has been deleted."));
+		waitForTextPresent("has been deleted");
 	}
 }
