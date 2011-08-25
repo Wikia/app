@@ -359,7 +359,7 @@ CKEDITOR.plugins.add('rte-media',
 			case 'image-gallery':
 				type = 'photoGallery';
 				break;
-				
+
 			case 'poll':
 				type = 'poll';
 				break;
@@ -442,7 +442,6 @@ RTE.mediaEditor = {
 		// render an image and replace old one
 		RTE.tools.parseRTE(wikitext, function(html) {
 			var newMedia = $(html).children('img');
-
 
 			// replace old one with new one
 			newMedia.insertAfter(media);
