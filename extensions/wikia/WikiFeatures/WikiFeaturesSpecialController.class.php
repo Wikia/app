@@ -23,15 +23,14 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 		//$this->wg->Out->addScriptFile($this->wg->ExtensionsPath . '/wikia/WikiFeatures/js/WikiFeatures.js');
 	}
 
-	// TODO: flag this as an internal dispatch function only
 	/**
-	 * @desc set option for specified feature
+	 * @desc enable/disable feature
 	 * @requestParam string enabled [true/false/0/1]
 	 * @requestParam string feature	(extension variable)
 	 * @responseParam string result [OK/error]
 	 * @responseParam string error (error message)
 	 */
-	public function setOption() {
+	public function toggleFeature() {
 		$enabled = $this->getVal('enabled', null);
 		$feature = $this->getVal('feature', null);
 		
@@ -49,7 +48,6 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 			return;
 		}
 		
-		// Full message string contains enabled/disabled string
 		$logMsg = "set extension option: $feature = $enabled.";
 		$log = WF::build( 'LogPage', array( 'wikifeatures' ) );
 		$log->addEntry( 'wikifeatures', SpecialPage::getTitleFor( 'WikiFeatures'), $logMsg, array() );
