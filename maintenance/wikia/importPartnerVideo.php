@@ -32,6 +32,7 @@ Options:
   -r <remoteuser>   Remote username
   -p <password>     Remote password
   -d                Debug mode
+  -o                Parse mode (does not create articles)
   
 Args:
   provider          Partner to import video from. Int defined in VideoPage.php
@@ -47,6 +48,7 @@ $filename = isset( $options['f'] ) ? $options['f'] : null;
 $remoteUser = isset( $options['r'] ) ? $options['r'] : null;
 $remotePassword = isset( $options['p'] ) ? $options['p'] : null;
 $debug = isset($options['d']);
+$parseOnly = isset($options['o']);
 
 // INPUT VALIDATION
 
@@ -80,7 +82,7 @@ switch ($provider) {
 
 // BEGIN MAIN
 
-print("Starting import for provider $provider ({$wgWikiaVideoProviders[$provider]})...\n");
+!$parseOnly && print("Starting import for provider $provider ({$wgWikiaVideoProviders[$provider]})...\n");
 
 // open file
 $file = '';
