@@ -43,6 +43,10 @@
  * TODO:
  * * i18n of the messages
  * * More convenience wrappers
+ * * Create some regression tests
+ * * Clean up the whitespace to be uniform
+ * * After regression tests are made, see if the code can be refactored to look more like OO JS (check to see if Mediawiki is already defined, define the function inside of Mediawiki's {}).
+ * * Refactor this to be MediaWiki instead of Mediawiki (make an alias so already-existing calling-code will still work).
  *
  */
 
