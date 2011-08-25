@@ -22,8 +22,6 @@ window.RTE = {
 		disableDragDrop: false,
 		disableObjectResizing: true,
 		entities: false,
-		forcePasteAsPlainText: CKEDITOR.env.webkit, // BugId:7605
-		forcePasteInDialog: CKEDITOR.env.webkit, // BugId:7605
 		format_tags: 'p;h2;h3;h4;h5;pre',
 		height: 400, // default height when "auto resizing" is not applied
 		language: window.wgUserLanguage,
@@ -296,6 +294,8 @@ window.RTE = {
 	},
 
 	// filter HTML returned by CKEditor
+	// TODO: implement using htmlFilter
+	// @see http://docs.cksource.com/CKEditor_3.x/Developers_Guide/Data_Processor#HTML_Parser_Filters
 	filterHtml: function(ev) {
 		if (ev.editor.mode == 'wysiwyg') {
 			ev.data.dataValue = ev.data.dataValue.
