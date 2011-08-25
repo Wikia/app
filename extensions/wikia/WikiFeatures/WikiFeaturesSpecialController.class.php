@@ -22,9 +22,8 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 		$this->response->addAsset('extensions/wikia/WikiFeatures/js/WikiFeatures.js');
 		//$this->wg->Out->addScriptFile($this->wg->ExtensionsPath . '/wikia/WikiFeatures/js/WikiFeatures.js');
 		
-		$wikifeatures = new WikiFeatures();
-		$this->normal = $wikifeatures->getFeatureNormal();
-		$this->labs = $wikifeatures->getFeatureLabs();
+		$this->normal = WikiFeaturesHelper::getInstance()->getFeatureNormal();
+		$this->labs = WikiFeaturesHelper::getInstance()->getFeatureLabs();
 	}
 
 	/**
@@ -60,8 +59,7 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 		WikiFactory::setVarByName($feature, $this->wg->CityId, $enabled, "WikiFeatures");
 		
 		// clear cache for active wikis
-		$wikifeatures = new WikiFeatures();
-		$this->wg->Memc->delete($wikifeatures->getMemcKeyNumActiveWikis($feature));
+		$this->wg->Memc->delete(WikiFeaturesHelper::getInstance()->getMemcKeyNumActiveWikis($feature));
 			
 		$this->setVal('result', 'OK');
 	}

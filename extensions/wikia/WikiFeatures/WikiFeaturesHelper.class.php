@@ -1,12 +1,12 @@
 <?php
 
 /**
- * Wiki Features Model
+ * Wiki Features Helper
  * @author Hyun
  * @author Owen
  * @author Saipetch
  */
-class WikiFeatures extends WikiaModel {
+class WikiFeaturesHelper extends WikiaModel {
 	
 	/**
 	 * @desc get a list of regular features
@@ -77,7 +77,7 @@ class WikiFeatures extends WikiaModel {
 		
 		$this->wf->ProfileOut( __METHOD__ );
 		
-		return $num;
+		return intval($num);
 	}
 	
 	/**
