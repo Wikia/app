@@ -79,7 +79,7 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 	
 	private function getDetailsCount() {
 		wfProfileIn( __METHOD__ );
-		$this->mLogid = 0;
+		$this->mDetails = false;
 		if ( isset($this->params['details']) ) {
 			$this->mDetails = (bool)$this->params['details'];
 		}
