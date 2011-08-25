@@ -9,6 +9,7 @@ $dir = dirname(__FILE__) . '/';
 $app = F::app();
 //classes
 $app->registerClass('WikiFeaturesSpecialController', $dir . 'WikiFeaturesSpecialController.class.php');
+$app->registerClass('WikiFeatures', $dir . 'WikiFeatures.class.php');
 
 // i18n mapping
 $wgExtensionMessagesFiles['WikiFeatures'] = $dir . 'WikiFeatures.i18n.php';
