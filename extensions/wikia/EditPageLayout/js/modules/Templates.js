@@ -105,6 +105,11 @@
 				scope: this
 			});
 			this.modeChanged();
+
+			// hide "Make new layout" link when rendering for Special:LayoutBuilder (BugId:6722)
+			if (window.wgCanonicalSpecialPageName === 'PageLayoutBuilder') {
+				this.el.find('.tmpl_makelayout').hide();
+			}
 		},
 
 		openTemplatesShowcase: function() {
