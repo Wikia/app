@@ -97,6 +97,10 @@ function WMU_loadDetails() {
 			if(FCK.wysiwygData[WMU_refid].caption) {
 				$G('ImageUploadCaption').value = FCK.wysiwygData[WMU_refid].caption;
 			}
+
+			if(FCK.wysiwygData[WMU_refid].link) {
+				$G('ImageUploadLink').value = FCK.wysiwygData[WMU_refid].link;
+			}
 		}
 	}
 
@@ -1019,6 +1023,12 @@ function WMU_insertImage(e, type) {
 		params.push('slider=' + $('#ImageUploadWidthCheckbox').val());
 	}
 
+	// support links (BugId:6506)
+	var link = $G('ImageUploadLink').value;
+	if (link != '') {
+		params.push( 'link=' + link );
+	}
+
 	if( -1 != WMU_gallery ) {
 		params.push( 'gallery=' + WMU_gallery );
 		params.push( 'box=' + WMU_box_in_article() );
@@ -1097,6 +1107,11 @@ function WMU_insertImage(e, type) {
 						}
 						options.caption = $G('ImageUploadCaption').value;
 
+						// handle links (BugId:6506)
+						if (!options.thumb) {
+							options.link = $G('ImageUploadLink').value;
+						}
+
 						// macbre: CK support
 						if (typeof window.WMU_RTEImage != 'undefined') {
 							var image = window.WMU_RTEImage;
@@ -1116,7 +1131,6 @@ function WMU_insertImage(e, type) {
 						}
 						else  if(WMU_refid != -1) {
 							if( -2 == WMU_gallery) { // updating image placeholder
-//								console.dir( );
 								FCK.ProtectImageAdd(wikitag, options, WMU_refid);
 							} else { // updating edited image
 								FCK.ProtectImageUpdate(WMU_refid, wikitag, options);

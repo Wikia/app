@@ -487,7 +487,7 @@ class WikiaMiniUpload {
 						$newFile = false;
 					} else if($type == 'existing') {
 						$file = wfFindFile( Title::newFromText( $name, 6 ) );
-						
+
 						if ( !empty( $file ) ) {
 							header('X-screen-type: existing');
 							$props = array();
@@ -677,7 +677,7 @@ class WikiaMiniUpload {
 					$tag .= '|'.$width;
 				}
 			}
-			if( $link != '' ) {
+			if( $link != '' && $size == 'full' ) {
 				$tag .= '|link=' . $link;
 			}
 			if($caption != '') {
