@@ -16,4 +16,6 @@ Play around a little - you can always turn off the tools you do not want.",
 	'wikifeatures-labs-creative' => "Wikia Labs is where you will find some ideas we are playing with.
 We know they still have their kinks, and we would love to receive your feedback on the good, the bad, and the downright quirky behavior of these products.",
 	'wikifeatures-feedback' => 'Give feedback',
+	'wikifeatures-error-permission' => 'Sorry, you do not have permission to display this page.',
+	'wikifeatures-error-invalid-parameter' => 'Invalid parameter. Please try again.',
 );
