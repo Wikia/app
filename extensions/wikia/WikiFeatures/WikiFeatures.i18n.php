@@ -20,6 +20,7 @@ We know they still have their kinks, and we would love to receive your feedback 
 	'wikifeatures-error-invalid-parameter' => 'Invalid parameter. Please try again.',
 	'wikifeatures-toggle-active' => 'On',
 	'wikifeatures-toggle-inactive' => 'Off',
+	'wikifeatures-active-on' => 'Active on $1 wikis',
 	// feature message list
 	'wikifeatures-feature-heading-wgEnableTopListsExt' => 'Top 10 Lists',
 	'wikifeatures-feature-description-wgEnableTopListsExt' => 'Top 10 Lists allow anyone on your wiki to create a votable list. They are a good way to get your junior editors to interact with the wiki. Create a new list at Special:CreateTopList',

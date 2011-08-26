@@ -5,6 +5,11 @@ var WikiFeatures = {
 			var el = $(this).closest('.slider');
 			el.toggleClass('on');
 		});
+		$('#WikiFeatures .feedback').click(function(e) {
+			e.preventDefault();
+			var feature = $(this).closest('.feature');
+			
+		});
 	}
 };
 

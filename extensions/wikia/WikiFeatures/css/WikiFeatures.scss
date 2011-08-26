@@ -74,7 +74,7 @@
 					.button {
 						@include border-radius(4px);
 						@include linear-gradient(#f2f2f2, top, #F2F2F2, 35%, #D8D8D8, 65%);
-						@include transition-shorthand(left 400ms);
+						@include transition-shorthand(left 200ms);
 						border: 1px solid #a6a6a6;
 						display: block;
 						height: 26px;
