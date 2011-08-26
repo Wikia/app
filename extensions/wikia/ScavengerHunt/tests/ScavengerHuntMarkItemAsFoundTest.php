@@ -24,8 +24,7 @@ class ScavengerHuntMarkItemsAsFoundTest extends ScavengerHuntTest {
 	 * @dataProvider conditions
 	 */
 
-	public function testMarkItemsAsFound( $exists, $huntId, $emtpyresponse ) {
-
+	public function testMarkItemsAsFound( $exists, $huntId, $emptyresponse ) {
 		$mockedTitle = $this->getMock( 'Title', array('exists') );
 		$mockedTitle
 			->expects( $this->any() )
@@ -33,11 +32,11 @@ class ScavengerHuntMarkItemsAsFoundTest extends ScavengerHuntTest {
 			->will(  $this->returnValue( $exists ) );
 		
 		$this->mockClass( 'Title', $mockedTitle );
-		$this->mockDatabaseResponse( $emtpyresponse );
+		$this->mockDatabaseResponse( $emptyresponse );
 
 		// starting conditions
 		$scavengerHunt = $this->getMock('ScavengerHunt', array( 'addItemToCache' ) );
-		if ( $exists && !empty( $huntId ) && !$emtpyresponse ){
+		if ( $exists && !empty( $huntId ) ) {
 			$scavengerHunt
 				->expects( $this->once() )
 				->method( 'addItemToCache' )
