@@ -2143,12 +2143,12 @@ Liftium.trackQcseg = function() {
 	c = Liftium.cookie("qcseg");
 	Liftium.d("Quantcast cookie: " + c, 5);
 	if (Liftium.e(c)) {
-		Liftium.trackEvent(Liftium.buildTrackUrl(["quantcast", "none"]), "UA-17475676-9");
+		//Liftium.trackEvent(Liftium.buildTrackUrl(["quantcast", "none"]), "UA-17475676-9");
 		return;
 	}
 
 	if ((c.search(/"[DT]"/) != -1) && (c.search(/"[0-9]{4}"/) == -1)) {
-		Liftium.trackEvent(Liftium.buildTrackUrl(["quantcast", "segments", "DT_only"]), "UA-17475676-9");
+		//Liftium.trackEvent(Liftium.buildTrackUrl(["quantcast", "segments", "DT_only"]), "UA-17475676-9");
 		return;
 	}
 
@@ -2156,7 +2156,7 @@ Liftium.trackQcseg = function() {
 		qcseg = eval("(" + c + ")");
 		Liftium.d("Quantcast cookie parsed:", 7, qcseg);
 		if (Liftium.e(qcseg.segments)) {
-			Liftium.trackEvent(Liftium.buildTrackUrl(["quantcast", "empty"]), "UA-17475676-9");
+			//Liftium.trackEvent(Liftium.buildTrackUrl(["quantcast", "empty"]), "UA-17475676-9");
 			return;
 		}
 
@@ -2165,11 +2165,11 @@ Liftium.trackQcseg = function() {
 			if (typeof qcseg.segments[i] != "object") continue;
 
 			if (Liftium.e(qcseg.segments[i])) {
-				Liftium.trackEvent(Liftium.buildTrackUrl(["quantcast", "segments", "empty"]), "UA-17475676-9");
+				//Liftium.trackEvent(Liftium.buildTrackUrl(["quantcast", "segments", "empty"]), "UA-17475676-9");
 				continue;
 			}
 			if (Liftium.e(qcseg.segments[i].id)) {
-				Liftium.trackEvent(Liftium.buildTrackUrl(["quantcast", "segments", "broken"]), "UA-17475676-9");
+				//Liftium.trackEvent(Liftium.buildTrackUrl(["quantcast", "segments", "broken"]), "UA-17475676-9");
 				Liftium.trackEvent(Liftium.buildTrackUrl(["quantcast", "segments", "broken", c]));
 				continue;
 			}
@@ -2180,12 +2180,12 @@ Liftium.trackQcseg = function() {
 		}
 
 		if (empty) {
-			Liftium.trackEvent(Liftium.buildTrackUrl(["quantcast", "empty"]), "UA-17475676-9");
+			//Liftium.trackEvent(Liftium.buildTrackUrl(["quantcast", "empty"]), "UA-17475676-9");
 			return;
 		}
 	} catch (e) {
 		Liftium.d("Quantcast cookie parse error:", 7, e);
-		Liftium.trackEvent(Liftium.buildTrackUrl(["quantcast", "broken"]), "UA-17475676-9");
+		Liftium.trackEvent(Liftium.buildTrackUrl(["quantcast", "broken"]));
 		return;
 	}
 };
