@@ -94,16 +94,9 @@
 	<script type='text/template' id='user-action-template'><li class="<%= actionName %>"><a href="#"><%= actionDesc %></a></li></script>
 	<?php //TODO: use AM ?>
 	<!-- Load these after the DOM is built -->
-	<script src="<?= $wgExtensionsPath ?>/wikia/Chat/js/lib/socket.io.client.js?<?= $wgStyleVersion ?>"></script>
-
-	<script src="<?= $wgExtensionsPath ?>/wikia/Chat/js/lib/jquery-1.5.1.js?<?= $wgStyleVersion ?>"></script>
-	<script src="<?= $wgStylePath ?>/common/jquery/jquery.wikia.js?<?= $wgStyleVersion ?>"></script>
-	<script src="<?= $wgStylePath ?>/common/jquery/jquery.json-2.2.js?<?= $wgStyleVersion ?>"></script>
-	<script src="<?= $wgExtensionsPath ?>/wikia/JSMessages/js/JSMessages.js?<?= $wgStyleVersion ?>"></script>
-	<script src="<?= $wgExtensionsPath ?>/wikia/Chat/js/lib/underscore.js?<?= $wgStyleVersion ?>"></script>
-	<script src="<?= $wgExtensionsPath ?>/wikia/Chat/js/lib/backbone.js?<?= $wgStyleVersion ?>"></script>
-	<script src="<?= $wgExtensionsPath ?>/wikia/Chat/js/models/models.js?<?= $wgStyleVersion ?>"></script>
-	<script src="<?= $wgExtensionsPath ?>/wikia/Chat/js/controllers/controllers.js?<?= $wgStyleVersion ?>"></script>
-	<script src="<?= $wgExtensionsPath ?>/wikia/Chat/js/views/views.js?<?= $wgStyleVersion ?>"></script>
+	<?php $srcs = F::build('AssetsManager',array(),'getInstance')->getGroupCommonURL('chat_js'); ?>
+	<?php foreach($srcs as $src): ?>
+		<script src="<?php echo $src ?>"></script>
+	<?php endforeach;?>
 </body>
 </html>

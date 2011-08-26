@@ -179,3 +179,17 @@ $config['wikiaapp_js'] = array(
 		'//skins/wikiaapp/main.js'
 	)
 );
+
+$config['chat_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'#group_oasis_jquery',
+		'//extensions/wikia/Chat/js/lib/socket.io.client.js',
+		'//extensions/wikia/JSMessages/js/JSMessages.js',
+		'//extensions/wikia/Chat/js/lib/underscore.js',
+		'//extensions/wikia/Chat/js/lib/backbone.js',
+		'//extensions/wikia/Chat/js/models/models.js',
+		'//extensions/wikia/Chat/js/controllers/controllers.js',
+		'//extensions/wikia/Chat/js/views/views.js',
+	)
+);
