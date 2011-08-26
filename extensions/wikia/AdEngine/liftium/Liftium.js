@@ -703,7 +703,7 @@ Liftium.getCookieDomain = function () {
 	if (!Liftium.e(d)) {
 		domain = d[0];
 	} else {
-		Liftium.trackEvent(["cookie_domain", domain]);
+		Liftium.trackEvent(Liftium.buildTrackUrl(["cookie_domain", domain]));
 	}
 
 	Liftium.d("cookie domain is " + domain, 7);
