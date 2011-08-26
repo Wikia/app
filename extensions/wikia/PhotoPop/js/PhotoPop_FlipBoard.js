@@ -64,6 +64,7 @@ if (typeof PhotoPop.FlipBoard === 'undefined') {
 		this._PERCENT_DEDUCTION_WRONG_GUESS = 50;
 		this._MAX_SECONDS_PER_ROUND = 20; // this is how many seconds the user would have, not counting tile-reveals and guesses.
 		this._UPDATE_INTERVAL_MILLIS = 250; // will set a timeout which will update the score-bar each time this many miliseconds have happened. A lower number means more updates (smoother drop in points, but probably will slow down performance).
+		this._TIME_UP_NOTIFICATION_DURATION_MILLIS = 1250;
 
 		/**
 		 * After setting the dimensions of the flip board, this should be called once to set up the game.
@@ -114,7 +115,7 @@ if (typeof PhotoPop.FlipBoard === 'undefined') {
 						}
 						$('#gameBoard .tile').bind(eventName, self.tileClicked);
 						$('.answerButton').click(self._toggleAnswerDrawer);
-						$('#continueButton').add('.continueText').click(self._loadNextRound);
+						$('#continueButton').add('#continueText').click(self._loadNextRound);
 					}
 				}
 			}, self.mwError);
@@ -146,7 +147,7 @@ if (typeof PhotoPop.FlipBoard === 'undefined') {
 				$('#gameBoard .tile').removeClass( self._TRANSITION_CLASS_NAME ).addClass( self._NO_TRANSITION_CLASS_NAME ); // remove transition and don't re-apply until bg image is fully applied.
 				$('#gameBoard .tile').removeClass( self._REVEALED_CLASS_NAME );
 
-				$('#continueButton').add('.continueText').hide(); // clean up potentially left-over elements from previous rounds
+				$('#continueButton').add('#continueText').hide(); // clean up potentially left-over elements from previous rounds
 
 				// Randomly get a page from the category (and its associated image) until we find a page which has an image.
 				var imageUrl = "";
@@ -386,16 +387,7 @@ if (typeof PhotoPop.FlipBoard === 'undefined') {
 
 			// If the round is out of time/points, end the round... otherwise queue up the next game-clock tick.
 			if((self._pointsThisRound <= 0) && (!self._roundIsOver)){
-				self._roundIsOver = true;
-				self._hideAnswerDrawer();
-				$('#answerListFalseEdge').hide();
-
-				// Stop the countdown and play the "timeUp" sound.
-				self.sounds.pause( 'timeLow' );
-				self.sounds.play( 'timeUp' );
-
-				// Show the user that the time is up & let them continue to the next round.
-				$('#continueButton').add('#timeUpText').show();
+				self._timeIsUp();
 			} else if(!self._roundIsOver){
 				// If the user is low on time, play timeLow sound to increase suspense.
 				if(!self._timeIsLow){
@@ -411,6 +403,43 @@ if (typeof PhotoPop.FlipBoard === 'undefined') {
 				setTimeout(self._roundTimerTick, self._UPDATE_INTERVAL_MILLIS);
 			}
 		};
+		
+		/**
+		 * Should be called when the user has run out of time (aka: self._pointsThisRound <= 0). This will
+		 * cause the image to be revealed and a brief message saying "Time up!" to appear. After this message is done,
+		 * the screen will move to showing the correct answer with a continue-button.
+		 */
+		this._timeIsUp = function(){
+			self._roundIsOver = true;
+			self._hideAnswerDrawer();
+			$('#answerButton_toOpen').add('#answerListFalseEdge').hide();
+
+			// Stop the countdown and play the "timeUp" sound.
+			self.sounds.pause( 'timeLow' );
+			self.sounds.play( 'timeUp' );
+
+			// Show the user that the time is up & let them continue to the next round.
+			$('#timeUpText').show();
+			
+			// Reveal all tiles.
+			$('#gameBoard .tile').addClass( self._REVEALED_CLASS_NAME );
+
+			// After some time has passed, show the correct answer and the continue-button.
+			setTimeout(self._continueAfterTimeIsUp, self._TIME_UP_NOTIFICATION_DURATION_MILLIS);
+		};
+		
+		/**
+		 * After the time-up notification has been up for a little while, this callback will remove the
+		 * message and then show what the correct answer was, next to the continue button.
+		 */
+		this._continueAfterTimeIsUp = function(){
+			$('#timeUpText').hide();
+
+			// put the 'correct' text into the area
+			$('#continueText').html( self._currentAnswer );
+
+			$('#continueButton').add('#continueText').show();
+		};
 
 		/** ANSWER RELATED FUNCTIONS - BEGIN ****************************************************************************/
 		/**
@@ -423,7 +452,6 @@ if (typeof PhotoPop.FlipBoard === 'undefined') {
 				self._showAnswerDrawer();
 			} else {
 				self._hideAnswerDrawer();
-				
 			}
 		};
 
@@ -526,7 +554,8 @@ if (typeof PhotoPop.FlipBoard === 'undefined') {
 
 			// Show "CORRECT!" message and icon (as a clickable area that will load the next round).
 			$('.answerButton').add('#answerListFalseEdge').hide(); // hides both versions of the answer button (and the fake edge effect)
-			$('#continueButton').add('#correctText').show();
+			$('#continueText').html( $.msg('photopop-continue-correct') ); // put the 'correct' text into the area
+			$('#continueButton').add('#continueText').show();
 		};
 
 		/**
