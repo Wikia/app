@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -852,6 +852,14 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			{
 				// Establish initial searching start position.
 				finder.searchRange = getSearchRange();
+
+				// Fill in the find field with selected text.
+				var selectedText = this.getParentEditor().getSelection().getSelectedText(),
+					patternFieldId = ( startupPage == 'find' ? 'txtFindFind' : 'txtFindReplace' );
+
+				var field = this.getContentElement( startupPage, patternFieldId );
+				field.setValue( selectedText );
+				field.select();
 
 				this.selectPage( startupPage );
 

@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -166,6 +166,8 @@ CKEDITOR.ui.richCombo = CKEDITOR.tools.createClass(
 					ev.preventDefault();
 				});
 
+			var focusFn = CKEDITOR.tools.addFunction( function() { instance.onfocus && instance.onfocus(); } );
+
 			// For clean up
 			instance.keyDownFn = keyDownFn;
 
@@ -202,13 +204,9 @@ CKEDITOR.ui.richCombo = CKEDITOR.tools.createClass(
 
 			output.push(
 					' onkeydown="CKEDITOR.tools.callFunction( ', keyDownFn, ', event, this );"' +
-			// Wikia change - begin
-			// rte reskin experiment - instead of this:
-					' onclick="CKEDITOR.tools.callFunction(', clickFn, ', this); return false;">' +
-			// do:
-			//		' onclick="return false;"' +
-			//		' onmousedown="CKEDITOR.tools.callFunction(', clickFn, ', this); return false;">' +
-			// Wikia change - end
+					' onfocus="return CKEDITOR.tools.callFunction(', focusFn, ', event);" ' +
+					( CKEDITOR.env.ie ? 'onclick="return false;" onmouseup' : 'onclick' ) +         // #188
+						'="CKEDITOR.tools.callFunction(', clickFn, ', this); return false;">' +
 						'<span>' +
 							'<span id="' + id + '_text" class="cke_text cke_inline_label">' + this.label + '</span>' +
 						'</span>' +
@@ -292,7 +290,6 @@ CKEDITOR.ui.richCombo = CKEDITOR.tools.createClass(
 			panel.onEscape = function()
 				{
 					panel.hide();
-					me.document.getById( 'cke_' + me.id ).getFirst().getNext().focus();
 				};
 
 			list.onClick = function( value, marked )
@@ -314,7 +311,7 @@ CKEDITOR.ui.richCombo = CKEDITOR.tools.createClass(
 					else
 						me.setValue( '' );
 
-					panel.hide();
+					panel.hide( false );
 				};
 
 			this._.panel = panel;
