@@ -90,7 +90,7 @@
 				margin-top: -<?= floor($answerDrawerHeight / 2) ?>px;
 				height: <?= $answerDrawerHeight ?>px;
 			}
-			#answerButton, #continueButton{
+			#answerButton_toOpen, #answerButton_toClose, #continueButton{
 				top:50%;
 				margin-top:-<?= floor($answerButtonWidth/2) ?>px;
 				width:<?= $answerButtonWidth ?>px;
@@ -98,16 +98,21 @@
 				cursor:pointer;
 				z-index:30;
 			}
+			#answerButton_toClose{ /* start closed... will toggle when needed */
+				display:none;
+			}
 			#continueButton{
-				background-color:#333;
-				opacity:0.7;filter:alpha(opacity=70);
 				display:none;
 			}
 			#answerDrawer div.continueText{
 				top:50%;
-				margin-top:-<?= floor($answerButtonWidth/2) ?>px;
 				font-size:<?= $CONTINUE_FONT_SIZE_PX ?>px;
+
+				margin-top:-<?= floor($answerButtonWidth/2) ?>px;
 				padding:<?= floor(($answerButtonWidth - $CONTINUE_FONT_SIZE_PX) / 2) ?>px;
+				padding-right:<?= floor(($answerButtonWidth - $CONTINUE_FONT_SIZE_PX) / 2) + floor($answerButtonWidth / 2) ?>px; /* make space for the background to cover half of the continue button */
+				margin-right:-<?= floor($answerButtonWidth / 2); ?>px; /* make the background attach to the left hand side of the button */
+
 				height:<?= $CONTINUE_FONT_SIZE_PX ?>px;
 				line-height:<?= $CONTINUE_FONT_SIZE_PX ?>px;
 				right: 0px; /* start to the left of the continue button */
@@ -115,8 +120,7 @@
 				white-space:nowrap;
 				
 				color:#fff;
-				background-color:#333;
-				opacity:0.7;filter:alpha(opacity=70);
+				background-color:rgba(51,51,51,0.7);
 				border-top-left-radius: 15px;
 				border-bottom-left-radius: 15px;
 				
@@ -129,6 +133,20 @@
 				margin-left:<?= floor($answerButtonWidth/2) ?>px;
 
 				display:none; /* Starts hidden and is toggled by the answer-button */
+
+				z-index:29; /* below the question mark, but above everything else */
+			}
+			#answerListFalseEdge{ /* We added this edge late in the game, so just fake the edge of the Wrapper */
+				height:100%;
+				width:<?= floor($answerButtonWidth / 2) ?>px;
+				margin-right:-<?= $answerButtonWidth ?>px;
+				right:0px;
+				border-top-left-radius: 15px;
+				border-bottom-left-radius: 15px;
+
+				opacity:0.8;filter:alpha(opacity=80);
+				color:#215B68;
+				background-color:#adff2f;
 
 				z-index:29; /* below the question mark, but above everything else */
 			}
@@ -151,6 +169,7 @@
 			}
 			#answerListWrapper ul li.incorrect{
 				background-color:#ff8080;
+				color:white;
 			}
 			#answerListWrapper ul li.first{
 				border-top-left-radius: 15px;
@@ -171,11 +190,7 @@
 				border-right: 1px solid black;
 				padding: 0 2px 0 2px;
 
-/*
-	This makes the actual score-bar semi-transparent too. Would have to take it out of the wrapper & make it a sibling to fix that... which we'll have to do since we don't know what color the background images or watermarks will be.
-	background-color:#ccc;
-	opacity:0.4;filter:alpha(opacity=40);
-*/
+				background-color: rgba(204, 204, 204, 0.4);
 
 				z-index:23;
 			}
@@ -263,8 +278,11 @@
 		<div id='gameBoard'>
 			<div id='answerDrawerWrapper'>
 				<div id='answerDrawer'>
-					<div id='answerButton'>
-						<img src='<?= $answerButtonSrc ?>'/>
+					<div class='answerButton' id='answerButton_toOpen'>
+						<img src='<?= $answerButtonSrc_toOpen ?>'/>
+					</div>
+					<div class='answerButton' id='answerButton_toClose'>
+						<img src='<?= $answerButtonSrc_toClose ?>'/>
 					</div>
 					<div class='continueText' id='correctText'>
 						<?= wfMsg('photopop-continue-correct') ?>
@@ -274,6 +292,9 @@
 					</div>
 					<div id='continueButton'>
 						<img src='<?= $continueButtonSrc ?>'/>
+					</div>
+					<div id='answerListFalseEdge'>
+						<!-- This is just for effect -->
 					</div>
 					<div id='answerListWrapper'>
 						<ul>

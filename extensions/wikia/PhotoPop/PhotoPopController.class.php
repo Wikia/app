@@ -59,7 +59,8 @@ class PhotoPopController extends WikiaController {
 
 		$this->frontImageSrc = $wgExtensionsPath.'/wikia/PhotoPop/glee_front.png'; // this shows up immediately
 		$this->backImageSrc = ''; // this is the one that's obscured... will be figured out in JS using the API.
-		$this->answerButtonSrc = $wgExtensionsPath.'/wikia/PhotoPop/answer-button.png';
+		$this->answerButtonSrc_toOpen = $wgExtensionsPath.'/wikia/PhotoPop/answer-button-to-open.png';
+		$this->answerButtonSrc_toClose = $wgExtensionsPath.'/wikia/PhotoPop/answer-button-to-close.png';
 		$this->answerButtonWidth = 48;
 		$this->answerDrawerWidth = 150;
 		$this->answerDrawerHeight = 250;
