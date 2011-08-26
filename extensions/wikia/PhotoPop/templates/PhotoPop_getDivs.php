@@ -9,6 +9,7 @@
 	$SCORE_BAR_WIDTH = "10";
 	$NUM_ANSWER_CHOICES = 4;
 	$CONTINUE_FONT_SIZE_PX = 24;
+	$TIME_UP_FONT_SIZE_PX = ($CONTINUE_FONT_SIZE_PX * 2);
 ?>
 			html {
 				margin:0px;
@@ -104,28 +105,49 @@
 			#continueButton{
 				display:none;
 			}
-			#answerDrawer div.continueText{
+			#continueText, #timeUpText{
 				top:50%;
+				white-space:nowrap;
+				color:#fff;
+
+				display:none;
+				z-index:30;
+			}
+			#continueText{
+				background-color:rgba(51,51,51,0.7);
 				font-size:<?= $CONTINUE_FONT_SIZE_PX ?>px;
+				height:<?= $CONTINUE_FONT_SIZE_PX ?>px;
+				line-height:<?= $CONTINUE_FONT_SIZE_PX ?>px;
+				right: 0px; /* start to the left of the continue button */
 
 				margin-top:-<?= floor($answerButtonWidth/2) ?>px;
 				padding:<?= floor(($answerButtonWidth - $CONTINUE_FONT_SIZE_PX) / 2) ?>px;
 				padding-right:<?= floor(($answerButtonWidth - $CONTINUE_FONT_SIZE_PX) / 2) + floor($answerButtonWidth / 2) ?>px; /* make space for the background to cover half of the continue button */
 				margin-right:-<?= floor($answerButtonWidth / 2); ?>px; /* make the background attach to the left hand side of the button */
-
-				height:<?= $CONTINUE_FONT_SIZE_PX ?>px;
-				line-height:<?= $CONTINUE_FONT_SIZE_PX ?>px;
-				right: 0px; /* start to the left of the continue button */
-				cursor:pointer;
-				white-space:nowrap;
 				
-				color:#fff;
-				background-color:rgba(51,51,51,0.7);
+				cursor:pointer;
 				border-top-left-radius: 15px;
 				border-bottom-left-radius: 15px;
-				
-				display:none;
-				z-index:30;
+			}
+			#timeUpText{
+				left:0px;
+				width:100%;
+				text-align:center;
+				height:<?= $TIME_UP_FONT_SIZE_PX ?>px;
+				margin-top:-<?= $TIME_UP_FONT_SIZE_PX ?>px;
+			}
+			#timeUpText .timeUpTextInner{
+				background-color:rgba(51,51,51,0.7);
+				font-size:<?= $TIME_UP_FONT_SIZE_PX ?>px;
+				line-height:<?= $TIME_UP_FONT_SIZE_PX ?>px;
+				padding:<?= floor($TIME_UP_FONT_SIZE_PX / 2) ?>px;
+				display:inline-block;
+				position:static;
+
+				margin-left:auto;
+				margin-right:auto;
+
+				border-radius: 15px;
 			}
 			#answerListWrapper{
 				height:100%;
@@ -168,8 +190,20 @@
 				cursor:pointer;
 			}
 			#answerListWrapper ul li.incorrect{
-				background-color:#ff8080;
 				color:white;
+				/* GRADIENT BACKGROUND */<?php /* Props to http://ie.microsoft.com/testdrive/graphics/cssgradientbackgroundmaker/default.html */ ?>
+					/* IE10 */ 
+					background-image: -ms-linear-gradient(top, #B60000 32%, #D72828 47%, #B60000 83%);
+					/* Mozilla Firefox */ 
+					background-image: -moz-linear-gradient(top, #B60000 32%, #D72828 47%, #B60000 83%);
+					/* Opera */ 
+					background-image: -o-linear-gradient(top, #B60000 32%, #D72828 47%, #B60000 83%);
+					/* Webkit (Safari/Chrome 10) */ 
+					background-image: -webkit-gradient(linear, left top, left bottom, color-stop(.32, #B60000), color-stop(.47, #D72828), color-stop(.83, #B60000));
+					/* Webkit (Chrome 11+) */ 
+					background-image: -webkit-linear-gradient(top, #B60000 32%, #D72828 47%, #B60000 83%);
+					/* Proposed W3C Markup */ 
+					background-image: linear-gradient(top, #B60000 32%, #D72828 47%, #B60000 83%);
 			}
 			#answerListWrapper ul li.first{
 				border-top-left-radius: 15px;
@@ -276,6 +310,11 @@
 			<div id='bgPic'></div>
 		</div>
 		<div id='gameBoard'>
+			<div id='timeUpText'>
+				<div class='timeUpTextInner'>
+					<?= wfMsg('photopop-continue-timeup') ?>
+				</div>
+			</div>
 			<div id='answerDrawerWrapper'>
 				<div id='answerDrawer'>
 					<div class='answerButton' id='answerButton_toOpen'>
@@ -284,15 +323,14 @@
 					<div class='answerButton' id='answerButton_toClose'>
 						<img src='<?= $answerButtonSrc_toClose ?>'/>
 					</div>
-					<div class='continueText' id='correctText'>
+			<!-- TODO: REFACTOR: BEGIN - These shouldn't be in the answer drawer -->
+					<div id='continueText'>
 						<?= wfMsg('photopop-continue-correct') ?>
-					</div>
-					<div class='continueText' id='timeUpText'>
-						<?= wfMsg('photopop-continue-timeup') ?>
 					</div>
 					<div id='continueButton'>
 						<img src='<?= $continueButtonSrc ?>'/>
 					</div>
+			<!-- TODO: REFACTOR: END - These shouldn't be in the answer drawer -->
 					<div id='answerListFalseEdge'>
 						<!-- This is just for effect -->
 					</div>

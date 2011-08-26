@@ -13,8 +13,8 @@ $messages['en'] = array(
 	'photopop-score' => 'Score: <span>$1</span>',
 	'photopop-progress' => 'Photos: <span>$1</span>',
 	'photopop-progress-numbers' => '$1/$2',
-	'photopop-continue-correct' => 'CORRECT!',
-	'photopop-continue-timeup' => 'TIME IS UP!',
+	'photopop-continue-correct' => 'correct!',
+	'photopop-continue-timeup' => 'time\'s up!',
 );
 
 /** Message documentation (Message documentation) */

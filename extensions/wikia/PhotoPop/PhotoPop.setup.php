@@ -27,4 +27,5 @@ $app->registerExtensionMessageFile('PhotoPop', $dir . 'PhotoPop.i18n.php');
 // register messages package for JS
 F::build('JSMessages')->registerPackage('PhotoPop', array(
 	'photopop-progress-numbers',
+	'photopop-continue-correct',
 ));
