@@ -131,6 +131,7 @@ class UserPagesHeaderModule extends Module {
 				$tabs[] = array(
 						'link' => Wikia::link(SpecialPage::getTitleFor('Following'), wfMsg('wikiafollowedpages-following')),
 						'selected' => ($wgTitle->isSpecial( 'Following' )),
+						'data-id' => 'following',
 						);
 			}
 

@@ -38,6 +38,9 @@ var UserProfilePage = {
 		
 		$('.masthead-info .wikis li').click(UserProfilePage.trackFavoriteWiki);
 		$('#UserProfileMasthead .links li').click(UserProfilePage.trackLinkedSites);
+		
+		$('#WikiaUserPagesHeader .tabs-container').click(UserProfilePage.trackNavTabs);
+
 	},
 	
 	renderLightbox: function(tabName) {
@@ -545,6 +548,25 @@ var UserProfilePage = {
 	
 	track: function(url) {
 		$.tracker.byStr('profile/' + url);
+	},
+	
+	trackNavTabs: function(ev) {
+		var node = $(ev.target);
+		if (node.is('img')) {
+			node = node.parent();
+		}
+		var id = node.parent().data('id');
+		if(id == "talk") {
+			UserProfilePage.track('talk_tab');
+		} else if(id == "profile") {
+			UserProfilePage.track('profile_tab');
+		} else if(id == "contribs") {
+			UserProfilePage.track('contribs_tab');
+		} else if(id == "blog") {
+			UserProfilePage.track('blog_tab');
+		} else if(id == "following") {
+			UserProfilePage.track('following_tab');		
+		}
 	},
 		
 	trackFavoriteWiki: function(ev) {
