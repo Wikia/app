@@ -27,7 +27,7 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 
 	/**
 	 * @desc enable/disable feature
-	 * @requestParam string enabled [true/false/0/1]
+	 * @requestParam string enabled [true/false]
 	 * @requestParam string feature	(extension variable)
 	 * @responseParam string result [OK/error]
 	 * @responseParam string error (error message)
@@ -44,18 +44,21 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 		}
 
 		// validate feature
-		if (is_null($enabled) || !$feature || !isset($this->wg->{str_replace('wg', '', $feature)})) {
+		if (($enabled != 'true' && $enabled != 'false') || !$feature || !isset($this->wg->{str_replace('wg', '', $feature)})) {
 			$this->setVal('result', 'error');
 			$this->setVal('error', $this->wf->Msg('wikifeatures-error-invalid-parameter'));
 			return;
 		}
 		
-		$logMsg = "set extension option: $feature = $enabled.";
-		$log = WF::build( 'LogPage', array( 'wikifeatures' ) );
-		$log->addEntry( 'wikifeatures', SpecialPage::getTitleFor( 'WikiFeatures'), $logMsg, array() );
+		$enabled = ($enabled=='true');
 		
-		$enabled = (bool) $enabled;
+		$logMsg = "set extension option: $feature = ".var_export($enabled, TRUE);
+		$log = WF::build( 'LogPage', array( 'wikifeatures' ) );
+		$log->addEntry( 'wikifeatures', SpecialPage::getTitleFor('WikiFeatures'), $logMsg, array() );
 		WikiFactory::setVarByName($feature, $this->wg->CityId, $enabled, "WikiFeatures");
+		
+		if ($feature == 'wgEnableTopListsExt')
+			WikiFactory::setVarByName('wgShowTopListsInCreatePage', $this->wg->CityId, $enabled, "WikiFeatures");
 		
 		// clear cache for active wikis
 		$this->wg->Memc->delete(WikiFeaturesHelper::getInstance()->getMemcKeyNumActiveWikis($feature));
