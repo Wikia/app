@@ -113,7 +113,7 @@ if (typeof PhotoPop.FlipBoard === 'undefined') {
 							eventName = 'touchstart'; // event has a different name on touchscreen devices
 						}
 						$('#gameBoard .tile').bind(eventName, self.tileClicked);
-						$('#answerButton').click(self._toggleAnswerDrawer);
+						$('.answerButton').click(self._toggleAnswerDrawer);
 						$('#continueButton').add('.continueText').click(self._loadNextRound);
 					}
 				}
@@ -224,7 +224,7 @@ if (typeof PhotoPop.FlipBoard === 'undefined') {
 			self.updateHud_score();
 
 			self._startRoundTimer();
-			$('#answerButton').show();
+			$('#answerButton_toOpen').add('#answerListFalseEdge').show();
 		};
 
 		/**
@@ -388,6 +388,7 @@ if (typeof PhotoPop.FlipBoard === 'undefined') {
 			if((self._pointsThisRound <= 0) && (!self._roundIsOver)){
 				self._roundIsOver = true;
 				self._hideAnswerDrawer();
+				$('#answerListFalseEdge').hide();
 
 				// Stop the countdown and play the "timeUp" sound.
 				self.sounds.pause( 'timeLow' );
@@ -422,6 +423,7 @@ if (typeof PhotoPop.FlipBoard === 'undefined') {
 				self._showAnswerDrawer();
 			} else {
 				self._hideAnswerDrawer();
+				
 			}
 		};
 
@@ -432,8 +434,12 @@ if (typeof PhotoPop.FlipBoard === 'undefined') {
 			$('#answerListWrapper').show();
 
 			//var halfButtonWidth = ($('#answerListWrapper').css('margin-left').replace("px", "")); // does the offset by the actual margin-left.
-			var halfButtonWidth = Math.floor($('#answerButton').width() / 2);
+			var halfButtonWidth = Math.floor($('.answerButton').width() / 2);
 			$('#answerDrawerWrapper').width($('#answerListWrapper').width() + halfButtonWidth);
+
+			// Flip which button is showing.
+			$('#answerButton_toOpen').add('#answerListFalseEdge').hide();
+			$('#answerButton_toClose').show();
 		};
 
 		/**
@@ -441,7 +447,11 @@ if (typeof PhotoPop.FlipBoard === 'undefined') {
 		 */
 		this._hideAnswerDrawer = function(){
 			$('#answerListWrapper').hide();
-			$('#answerDrawerWrapper').width( $('#answerButton').width() );
+			$('#answerDrawerWrapper').width( $('.answerButton').width() );
+
+			// Flip which button is showing.
+			$('#answerButton_toOpen').add('#answerListFalseEdge').show();
+			$('#answerButton_toClose').hide();
 		};
 
 		/**
@@ -515,7 +525,7 @@ if (typeof PhotoPop.FlipBoard === 'undefined') {
 			$('#gameBoard .tile').addClass( self._REVEALED_CLASS_NAME );
 
 			// Show "CORRECT!" message and icon (as a clickable area that will load the next round).
-			$('#answerButton').hide();
+			$('.answerButton').add('#answerListFalseEdge').hide(); // hides both versions of the answer button (and the fake edge effect)
 			$('#continueButton').add('#correctText').show();
 		};
 
