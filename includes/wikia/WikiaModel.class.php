@@ -14,15 +14,6 @@
 abstract class WikiaModel extends WikiaObject {
 
 	/* Handy helper functions for getting a database connection */
-	protected static $instance = NULL;
-	
-	public static function getInstance() {
-		if (self::$instance === NULL) {
-			$class = get_called_class();
-			self::$instance = new $class();
-		}
-		return self::$instance;
-	}
 	
 	public function getDB( $db_type = DB_SLAVE ) {
 	   return $this->wf->GetDB( $db_type );
