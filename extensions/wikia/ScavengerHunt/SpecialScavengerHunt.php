@@ -403,6 +403,15 @@ class SpecialScavengerHunt extends SpecialPage {
 			$highlight
 		);
 
+		// error facebook data incompleat
+		$this->ifAnyEmpty(
+			$data,
+			array( 'facebookImg', 'facebookDescription' ),
+			wfMsg( 'scavengerhunt-form-error-facebook-empty' ),
+			$errors,
+			$highlight
+		);
+
 		// no goodbye form incompleat
 		$this->ifAnyEmpty(
 			$data,

@@ -4,6 +4,7 @@ class ScavengerHuntGames {
 	const GAMES_TABLE_NAME = "scavenger_hunt_games";
 
 	protected $app = null;
+	protected $gamesFound = array();
 
 	public function __construct( WikiaApp $app ) {
 		$this->app = $app;
@@ -30,7 +31,7 @@ class ScavengerHuntGames {
 		return $game;
 	}
 
-	public function findById( $id, $readWrite = false, $where = array() ) {
+	public function findById( $id, $readWrite = false, $where = array(), $raw = false ) {
 		$db = null;
 		$options = array();
 		if ($readWrite === true) {
@@ -57,57 +58,74 @@ class ScavengerHuntGames {
 			return false;
 		}
 
+		if ( $raw ) return $row;
+		
 		$game = $this->newGameFromRow($row);
 
 		return $game;
 	}
 
-	public function findEnabledById( $id, $readWrite = false, $where = array() ) {
-		return $this->findById($id, $readWrite, array_merge(array(
-			'game_is_enabled' => 1,
-		)));
-	}
-
-	public function findHereById( $id, $readWrite = false, $where = array() ) {
-		return $this->findById($id, $readWrite, array_merge(array(
-			'wiki_id' => $this->getCurrentWikiId(),
-		)));
-	}
-
-	public function findHereEnabledById( $id, $readWrite = false, $where = array() ) {
-		return $this->findEnabledById($id, $readWrite, array_merge(array(
-			'wiki_id' => $this->getCurrentWikiId(),
-		)));
-	}
-
-	public function findAllByWikiId( $wikiId, $where = array() ) {
-		$where = array_merge($where, array(
-			'wiki_id' => (int)$wikiId,
-		));
-
-		$db = $this->getDb();
-		$set = $db->select(
-			array( self::GAMES_TABLE_NAME ),
-			array( 'game_id', 'wiki_id', 'game_name', 'game_is_enabled', 'game_data' ),
-			$where,
-			__METHOD__
-		);
-
-		$games = array();
-		while( $row = $set->fetchObject( $set ) ) {
-			$games[] = $this->newGameFromRow($row);
+	public function findEnabledById( $id, $readWrite = false ) {
+		$key = wfSharedMemcKey( 'ScavengerHuntGameIndex', $id, ( $readWrite ? 1 : 0 ) );
+		$row = $this->getCache()->get( $key );
+		if ( empty( $row ) ){
+			$row = $this->findById(
+				$id,
+				$readWrite,
+				array_merge( array( 'game_is_enabled' => 1 ) ),
+				true
+			);
+			self::log( 'performance', __METHOD__ );
+			$this->getCache()->set( $key, serialize( $row ), self::CACHE_TTL );
+		} else {
+			self::log( 'performance(cached)', __METHOD__ );
+			$row = unserialize( $row );
 		}
 
-		return $games;
+		return $this->newGameFromRow( $row );
 	}
 
-	public function findAllEnabledByWikiId( $wikiId ) {
-		return $this->findAllByWikiId($wikiId, array(
-			'game_is_enabled' => 1,
-		));
-	}
+//	public function findHereById( $id, $readWrite = false, $where = array() ) {
+//		return $this->findById($id, $readWrite, array_merge(array(
+//			'wiki_id' => $this->getCurrentWikiId(),
+//		)));
+//	}
+
+//	public function findHereEnabledById( $id, $readWrite = false, $where = array() ) {
+//		return $this->findEnabledById($id, $readWrite, array_merge(array(
+//			'wiki_id' => $this->getCurrentWikiId(),
+//		)));
+//	}
+
+//	public function findAllByWikiId( $wikiId, $where = array() ) {
+//		$where = array_merge($where, array(
+//			'wiki_id' => (int)$wikiId,
+//		));
+//
+//		$db = $this->getDb();
+//		$set = $db->select(
+//			array( self::GAMES_TABLE_NAME ),
+//			array( 'game_id', 'wiki_id', 'game_name', 'game_is_enabled', 'game_data' ),
+//			$where,
+//			__METHOD__
+//		);
+//
+//		$games = array();
+//		while( $row = $set->fetchObject( $set ) ) {
+//			$games[] = $this->newGameFromRow($row);
+//		}
+//
+//		return $games;
+//	}
+//
+//	public function findAllEnabledByWikiId( $wikiId ) {
+//		return $this->findAllByWikiId($wikiId, array(
+//			'game_is_enabled' => 1,
+//		));
+//	}
 
 	public function findAll( $where = array() ) {
+		self::log( 'performance', __METHOD__ );
 		$db = $this->getDb();
 		$set = $db->select(
 			array( self::GAMES_TABLE_NAME ),
@@ -124,7 +142,8 @@ class ScavengerHuntGames {
 		return $games;
 	}
 
-	public function findAllEnabled( ) {
+	protected function findAllEnabled( ) {
+		self::log('performance', __METHOD__);
 		return $this->findAll( array(
 			'game_is_enabled' => 1,
 		));
@@ -164,7 +183,6 @@ class ScavengerHuntGames {
 	}
 
 	public function save( ScavengerHuntGame $game ) {
-
 		$data = $game->getData();
 		foreach ($data['articles'] as $k => $v)
 			$data['articles'][$k] = $v->getAll();
@@ -198,7 +216,6 @@ class ScavengerHuntGames {
 		$db->commit();
 
 		$this->clearCache($oldGame, $game);
-
 		return true;
 	}
 
@@ -219,11 +236,10 @@ class ScavengerHuntGames {
 		return true;
 	}
 
-
 	const CACHE_TTL = 3600;
 
 	protected function getIndexMemcKey() {
-		return $this->app->runFunction('wfMemcKey', __CLASS__, 'index');
+		return wfSharedMemcKey( 'ScavengerHuntIndexer2' );
 	}
 
 	protected function getTitleDbKey( $text ) {
@@ -231,32 +247,65 @@ class ScavengerHuntGames {
 		return $title ? $title->getPrefixedDBkey() : false;
 	}
 
-	public function getIndexCache() {
-		$data = $this->getCache()->get($this->getIndexMemcKey());
-		if (!is_array($data)) {
-			$games = $this->findAllEnabled();
-			$data = array();
-			foreach ($games as $game) {
-				$gameId = $game->getId();
-				$title = $this->getTitleDbKey($game->getLandingTitle());
-				if (!empty($title)) {
-					$data[$title]['start'][] = $gameId;
-				}
-				$articles = $game->getArticles();
-				foreach ($articles as $article) {
-					$title = $this->getTitleDbKey($article->getTitle());
-					if (!empty($title)) {
-						$data[$title]['article'][] = $gameId;
-					}
+
+	public function isPagePartOfAnyHunt( $cityId, $articleName ) {
+		$identifier = ScavengerHunt::makeIdentifier( $cityId, $articleName );
+		$indexCache = $this->getIndexCache();
+		$found = false;
+
+		if ( is_array( $indexCache ) ){
+			foreach( $indexCache as $index ){
+				if ( $index['landingPage'] == $identifier ) {
+					return true;
 				}
 			}
-			$this->getCache()->set($this->getIndexMemcKey(), $data, self::CACHE_TTL);
+		} else {
+			return false;
 		}
-		return $data;
+	}
+
+	protected function makeIdentifier( $cityId, $articleName ){
+		return ScavengerHunt::makeIdentifier( $cityId, $articleName );
+	}
+
+	public function getJSParamsForCurrent(){
+		$cityId = $this->app->wg->cityId;
+		$articleName = $this->app->wg->title->getPartialURL();
+		if ( !$this->isPagePartOfAnyHunt( $cityId, $articleName ) ){
+			return false;
+		}
+		$key = wfSharedMemcKey( 'ScavengerHuntIndexer', $cityId, md5( $articleName ) );
+		$value = $this->getCache()->get( $key );
+		if ( empty( $value )){
+			self::log('performance', __METHOD__);
+			$enabledGames = $this->getEnabledGames();
+			$value = array();
+			foreach( $enabledGames as $game ){
+				$template = WF::build('EasyTemplate', array(dirname( __FILE__ ) . '/../templates/'));
+				$template->set_vars(array(
+					'game' => $game
+				));
+				if ( $game->getLandingArticleName() == $articleName ){
+					$value['wgScavengerHuntStart'][] = (int)$game->getId();
+					$value['wgScavengerHuntStartMsg'][] = $game->getLandingButtonText();
+					$value['wgScavengerHuntStartPosition'][] = array( 'X' => $game->getLandingButtonX(), 'Y' => $game->getLandingButtonY() );
+					$value['wgScavengerHuntStartClueTitle'][] = $game->getStartingClueTitle();
+					$value['wgScavengerHuntSpriteImg'][] = $game->getSpriteImg();
+					$value['wgScavengerHuntSprite'][] = ScavengerHunt::formatSpriteForJS( array('sprite' => $game->getStartPopupSprite() ), 'sprite' );
+					$value['wgScavengerHuntStartClueHtml'][] = $template->render('modal-starting');
+				}
+			}
+			$value['wgCookieDomain'] = $this->app->wg->cookieDomain;
+			$this->getCache()->set( $key, $value, self::CACHE_TTL );
+		} else {
+			self::log('performance(cache)', __METHOD__);
+		}
+		return $value;
 	}
 
 	protected function clearCache( $oldGame, $newGame ) {
 		$this->clearIndexCache();
+		
 		if ( (!$oldGame || !$oldGame->isEnabled()) && (!$newGame || !$newGame->isEnabled()) ) {
 			// no squid purges required - game not enabled
 			return;
@@ -265,6 +314,24 @@ class ScavengerHuntGames {
 		
 		foreach( array( $oldGame, $newGame ) as $game ){
 			if ( !empty( $game ) ) {
+				$this	->getCache()
+					->delete( wfSharedMemcKey(
+						'ScavengerHuntIndexer',
+						$game->getLandingArticleWikiId(),
+						md5( $game->getLandingArticleName() )
+					));
+				$this	->getCache()
+					->delete( wfSharedMemcKey(
+						'ScavengerHuntGameIndex',
+						$game->getLandingArticleWikiId(),
+						0
+					));
+				$this	->getCache()
+					->delete( wfSharedMemcKey(
+						'ScavengerHuntGameIndex',
+						$game->getLandingArticleWikiId(),
+						1
+					));
 				$this->purgeURL( $url );
 				foreach( $oldGame->getArticleURLs() as $url ){
 					$this->purgeURL( $oldGame->getLandingTitle() );
@@ -291,8 +358,50 @@ class ScavengerHuntGames {
 		$this->getCache()->delete($this->getIndexMemcKey());
 	}
 
-	public function getTitleTriggers( Title $title ) {
-		$data = $this->getIndexCache();
-		return (array)@$data[$title->getPrefixedDBkey()];
+	public function getEnabledGames() {
+		if ( empty( $this->gamesFound ) ) $this->gamesFound = $this->findAllEnabled();
+		return $this->gamesFound;
+	}
+
+	public function getIndexCache() {
+		$data = $this->getCache()->get( $this->getIndexMemcKey() );
+		if (!is_array($data)) {
+			self::log('performance', __METHOD__ );
+			$enabledGames = $this->getEnabledGames();
+			$data = array();
+			foreach ( $enabledGames as $game ) {
+				$data[ $game->getId() ] = array(
+					'articles'		=> $game->getArticleIdentifier(),
+					'landingPage'		=> $game->getLandingPageIdentifier(),
+					'facebookImg'		=> $game->getFacebookImg(),
+					'facebookDescription'	=> $game->getFacebookDescription()
+				);
+			}
+			$this->getCache()->set($this->getIndexMemcKey(), $data, self::CACHE_TTL);
+
+		} else {
+			self::log('performance(cache)', __METHOD__ );
+		}
+		return $data;
+	}
+
+	public function getOpenGraphMetaElements(){
+		$identifier = $this->makeIdentifier(
+			$this->app->wg->cityId,
+			$this->app->wg->title->getPartialURL()
+		);
+		$enabledGames = $this->getIndexCache();
+		foreach( $enabledGames as $gameShortenedData ){
+			if ( $gameShortenedData['landingPage'] == $identifier ) {
+				return $gameShortenedData;
+			}
+		}
+		return false;
+	}
+
+	static public function log( $text, $method ){
+		if ( F::app()->getGlobal('wgDevelEnvironment') ){
+			Wikia::log( 'ScavengerHunt', $method, $text );
+		}
 	}
 }

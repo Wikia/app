@@ -109,7 +109,7 @@ class ScavengerHunt {
 			return array();
 		}
 		$aAllGameArticles = $game->getArticleIdentifier();
-		$articleIdentifier = $game->makeIdentifier( $wikiId, $articleName );
+		$articleIdentifier = $this->makeIdentifier( $wikiId, $articleName );
 
 		if ( in_array( $articleIdentifier, $aAllGameArticles ) ){
 			$aFoundArticles = $this->getDataFromCache();
@@ -249,7 +249,7 @@ class ScavengerHunt {
 		return -1;
 	}
 
-	private function formatSpriteForJS( $data, $key = false ){
+	public function formatSpriteForJS( $data, $key = false ){
 		if ( !empty( $key ) ){
 			if ( isset( $data[$key] ) ){
 				$source = $data[$key];
@@ -285,31 +285,13 @@ class ScavengerHunt {
 	public function onMakeGlobalVariablesScript( &$vars ) {
 		wfProfileIn(__METHOD__);
 
-		$out = $this->app->wg->out;
 		$games = F::build( 'ScavengerHuntGames' );
-		$title = $this->app->wg->title;
-		$cityId = $this->app->wg->cityId;
-		$articleName = $title->getPartialURL();
-
-		$localGames = $games->findAllEnabled();
-		if( !empty( $localGames ) ){
-			foreach( $localGames as $game ){
-
-				$template = WF::build('EasyTemplate', array(dirname( __FILE__ ) . '/templates/'));
-				$template->set_vars(array(
-					'game' => $game
-				));
-				if ( $game->getLandingArticleName() == $articleName ){
-					$vars['wgScavengerHuntStart'][] = (int)$game->getId();
-					$vars['wgScavengerHuntStartMsg'][] = $game->getLandingButtonText();
-					$vars['wgScavengerHuntStartPosition'][] = array( 'X' => $game->getLandingButtonX(), 'Y' => $game->getLandingButtonY() );
-					$vars['wgScavengerHuntStartClueTitle'][] = $game->getStartingClueTitle();
-					$vars['wgScavengerHuntSpriteImg'][] = $game->getSpriteImg();
-					$vars['wgScavengerHuntSprite'][] = $this->formatSpriteForJS( array('sprite' => $game->getStartPopupSprite() ), 'sprite' );
-					$vars['wgScavengerHuntStartClueHtml'][] = $template->render('modal-starting');
-				}
+		
+		$params = $games->getJSParamsForCurrent();
+		if( !empty( $params ) ){
+			foreach( $params as $key => $param ){
+				$vars[$key] = $param;
 			}
-			$vars['wgCookieDomain'] = $this->app->wg->cookieDomain;
 		}
 
 		wfProfileOut(__METHOD__);
@@ -325,7 +307,7 @@ class ScavengerHunt {
 			return false;
 		}
 		$userId = F::app()->wg->user->getId();
-		return wfSharedMemcKey( 'ScavengerHuntUserProgress', $userId );
+		return wfSharedMemcKey( 'ScavengerHuntUserProgress', $userId, wfGetBeaconId() );
 	}
 
 	public function getDataFromCache() {
@@ -339,7 +321,6 @@ class ScavengerHunt {
 			}
 			$return = $memcData;
 		}
-
 		return $return;
 	}
 
@@ -354,7 +335,6 @@ class ScavengerHunt {
 			$value,
 			self::CACHE_TTL
 		);
-
 		return $value;
 	}
 
@@ -448,7 +428,6 @@ class ScavengerHunt {
 			$this->parserOptions = WF::build('ParserOptions');
 			$this->fakeTitle = WF::build('FakeTitle', array(''));
 		}
-
 		return $this->parser->parse($text, $this->fakeTitle, $this->parserOptions, false)->getText();
 	}
 
@@ -463,55 +442,7 @@ class ScavengerHunt {
 		}
 		return $parsed;
 	}
-//
-//	protected function getStyleForImageOffset( $offset ) {
-//		return sprintf("left: %dpx; top: %dpx;",
-//			intval(@$offset['left']), intval(@$offset['top']));
-//	}
-//
-//	public function getStartingClueHtml( ScavengerHuntGame $game ) {
-//		// build entry form html
-//		$template = WF::build('EasyTemplate', array(dirname( __FILE__ ) . '/templates/'));
-//		$template->set_vars(array(
-//			'text' => $this->parseCached( $game->getStartingClueText() ),
-//			'buttonText' => $game->getStartingClueButtonText(),
-//			'buttonTarget' => $game->getStartingClueButtonTarget(),
-//			'imageSrc' => $game->getStartingClueImage(),
-//			'imageOffset' => $game->getStartingClueImageOffset(),
-//		));
-//		return $template->render('modal-clue');
-//	}
-//
-//	//TODO: candidate for FB#5854
-//	public function getClueHtml( ScavengerHuntGameArticle $article ) {
-//		return 'TODO: get clue message';
-///*
-//		// build entry form html
-//		$template = WF::build('EasyTemplate', array(dirname( __FILE__ ) . '/templates/'));
-//		$template->set_vars(array(
-//			'text' => $this->parseCached( $article->getClueText() ),
-//			'buttonText' => $article->getClueButtonText(),
-//			'buttonTarget' => $article->getClueButtonTarget(),
-//			'imageSrc' => $article->getClueImage(),
-//			'imageOffset' => $article->getClueImageOffset(),
-//		));
-//		return $template->render('modal-clue');
-//*/
-//	}
-//
-//	public function getEntryFormHtml( ScavengerHuntGame $game ) {
-//		// build entry form html
-//		$template = WF::build('EasyTemplate', array(dirname( __FILE__ ) . '/templates/'));
-//		$template->set_vars(array(
-//			'title' => $game->getEntryFormTitle(),
-//			'text' => $this->parseCached( $game->getEntryFormText() ),
-//			'question' => $this->parseCached( $game->getEntryFormQuestion() ),
-//			'imageSrc' => $game->getEntryFormImage(),
-//			'imageOffset' => $game->getEntryFormImageOffset(),
-//		));
-//		return $template->render('modal-form');
-//	}
-//
+
 	public function getGoodbyeHtml( ScavengerHuntGame $game ) {
 		// build entry form html
 		$template = WF::build('EasyTemplate', array(dirname( __FILE__ ) . '/templates/'));
@@ -524,52 +455,22 @@ class ScavengerHunt {
 		));
 		return $template->render('modal-clue');
 	}
-//
-//	public function updateVisitedIds( ScavengerHuntGame $game, &$visitedIds ) {
-//		$articleIds = $game->getArticleIds();
-//		$visitedIds = array_unique( array_map( 'intval', $visitedIds ) );
-//		$visitedIds = array_intersect( $articleIds, $visitedIds );
-//		sort($visitedIds);
-//		return count($articleIds) == count($visitedIds);
-//	}
-//
-//
-//	protected function getTriggersFor( $title, $games = null ) {
-//		if ( !$title || !$title->getArticleID() ) {
-//			return false;
-//		}
-//		if ( empty($games) ) {
-//			$games = WF::build('ScavengerHuntGames');
-//		}
-//		$triggers = $games->getTitleTriggers($title);
-//		return $triggers ? $triggers : false;
-//	}
 
-//	public function generateInfo( $hash ){
-//		if ( $this->isVersionValid( $hash ) ){
-//			return $hash;
-//		} else {
-//			return generateFullInfo();
-//		}
-//	}
+	public function makeIdentifier( $cityId, $articleName ){
+		return ( $cityId.'|'.urldecode( $articleName ) );
+	}
 
-	public function onOpenGraphMetaBeforeCustomFields($articleId, &$titleImage, &$titleDescription) {
+	public function onOpenGraphMetaBeforeCustomFields( $articleId, &$titleImage, &$titleDescription) {
 		global $wgCityId;
 		$games = F::build( 'ScavengerHuntGames' );
-		//TODO: add caching in findAllEnabled
-		$localGames = $games->findAllEnabled();
-		if (!empty($localGames)) {
-			$game = $localGames[0];	//get 1st one
-			if ($wgCityId == $game->getLandingArticleWikiId()) {
-				$title = Title::newFromID($articleId);
-				if ($title && $title->getFullURL() == $game->getLandingTitle()) {
-					//TODO: add fields to Special:ScavengerHunt for image & description
-					//TODO: add 2 methods to Game class
-					//$titleImage = $game->getLandingImage();
-					//$titleDescription = $game->getLandingDescription();
-					$titleDescription = 'dupa';
-				}
-			}
+		$elements = $games->getOpenGraphMetaElements();
+		if (
+			!empty( $elements ) &&
+			isset( $elements['facebookImg'] ) &&
+			isset( $elements['facebookDescription'] )
+		) {
+			if ( !empty( $elements['facebookImg'] ) ) $titleImage = $elements['facebookImg'];
+			if ( !empty( $elements['facebookDescription'] ) ) $titleDescription = $elements['facebookDescription'];
 		}
 		return true;
 	}

@@ -47,6 +47,8 @@ class ScavengerHuntGame {
 	protected $clueColor = '#FFF';
 	protected $clueSize = '13px';
 	protected $clueFont = 'bold';
+	protected $facebookImg = '';
+	protected $facebookDescription = '';
 
 	protected $startPopupSprite = array();
 	protected $finishPopupSprite = array();
@@ -79,8 +81,12 @@ class ScavengerHuntGame {
 
 	public function resetLandingParams( $landingTitle ) {
 		$aExplodedURL = F::build( 'GlobalTitle', array( $landingTitle ), 'explodeURL' );
-		$this->landingArticleWikiaId = $aExplodedURL['wikiId'];
+		$this->landingArticleWikiId = $aExplodedURL['wikiId'];
 		$this->landingArticleName = $aExplodedURL['articleName'];
+	}
+
+	public function getLandingParams() {
+		return F::build( 'GlobalTitle', array( $this->landingTitle ), 'explodeURL' );
 	}
 
 //	public function getStartingClueImageOffset() {
@@ -132,6 +138,8 @@ class ScavengerHuntGame {
 	public function setGoodbyeImageTopOffset( $goodbyeImageTopOffset ) { $this->goodbyeImageTopOffset = $goodbyeImageTopOffset; }
 	public function setGoodbyeImageLeftOffset( $goodbyeImageLeftOffset ) { $this->goodbyeImageLeftOffset = $goodbyeImageLeftOffset; }
 	public function setSpriteImg( $image ) { $this->spriteImg = $image; }
+	public function setFacebookImg( $image ) { $this->facebookImg = $image; }
+	public function setFacebookDescription( $description ) { $this->facebookDescription = $description; }
 	
 	public function getId() { return $this->id; }
 	public function getWikiId() { return $this->wikiId; }
@@ -170,6 +178,13 @@ class ScavengerHuntGame {
 	public function getClueSize(){ return $this->clueSize; }
 	public function getClueFont(){ return $this->clueFont; }
 	public function getFinishPopupSprite(){ return $this->finishPopupSprite; }
+	public function getFacebookImg() { return $this->facebookImg; }
+	public function getFacebookDescription() { return $this->facebookDescription; }
+
+	public function getFacebookImgTitle(){
+		$titleImage = Title::newFromText( $this->facebookImg, NS_FILE );
+		return $titleImage->exists() ? $titleImage : null;
+	}
 
 	protected function getDataProperties() {
 
@@ -177,7 +192,8 @@ class ScavengerHuntGame {
 	}
 
 	public function getDataNonArrayProperties(){
-		return array ( 'clueColor', 'clueFont', 'clueSize', 'name', 'hash', 'landingTitle', 'landingArticleName', 'landingArticleWikiId', 'landingButtonText', 'landingButtonX', 'landingButtonY', 'startingClueTitle',
+		return array ( 'clueColor', 'clueFont', 'clueSize', 'name', 'hash', 'landingTitle', 'landingArticleName', 'landingArticleWikiId', 
+			'landingButtonText', 'landingButtonX', 'landingButtonY', 'startingClueTitle', 'facebookImg', 'facebookDescription',
 			'startingClueText', 'startingClueButtonText', 'startingClueButtonTarget', 'entryFormTitle', 'entryFormText', 'entryFormButtonText',
 			'entryFormQuestion', 'goodbyeTitle', 'goodbyeText', 'goodbyeImage', 'spriteImg', 'entryFormEmail', 'entryFormUsername' );
 	}
@@ -212,18 +228,19 @@ class ScavengerHuntGame {
 			if (array_key_exists($varName, $data))
 				$this->$varName = $data[$varName];
 		// special cases
-		if ( array_key_exists('landingTitle', $data) )
+		if ( isset( $data['landingTitle'] ) )
 			$this->setLandingTitle($data['landingTitle']);
 	}
 
 	protected function getAllProperties() {
-		return array( 'id', 'wikiId', 'isEnabled', 'name', 'hash',
-			'clueColor', 'clueFont', 'clueSize', 'landingTitle', 'landingArticleName', 'landingButtonText', 'startingClueTitle',
-			'startingClueText', // 'startingClueImage', 'startingClueImageTopOffset', 'startingClueImageLeftOffset',
-			'startingClueButtonText', 'startingClueButtonTarget', 'articles', 'entryFormTitle', 'entryFormText', 'entryFormButtonText', 'landingButtonX', 'landingButtonY',
-			'entryFormImage', 'entryFormQuestion', //'entryFormImageTopOffset', 'entryFormImageLeftOffset',
-			'goodbyeTitle', 'goodbyeText', 'goodbyeImage', // 'goodbyeImageTopOffset', 'goodbyeImageLeftOffset',
-			'spriteImg', 'startPopupSprite', 'finishPopupSprite', 'progressBarBackgroundSprite', 'progressBarExitSprite', 'progressBarHintLabel', 'entryFormEmail', 'entryFormUsername' );
+		return array( 'id', 'wikiId', 'isEnabled', 'name', 'hash', 'startingClueTitle',
+			'clueColor', 'clueFont', 'clueSize', 'landingTitle', 'landingArticleName', 'landingArticleWikiId', 'landingButtonText',
+			'startingClueText', 'startingClueButtonText', 'startingClueButtonTarget', 'articles',
+			'entryFormTitle', 'entryFormText', 'entryFormButtonText', 'landingButtonX', 'landingButtonY',
+			'entryFormImage', 'entryFormQuestion', 	'goodbyeTitle', 'goodbyeText', 'goodbyeImage', 
+			'spriteImg', 'startPopupSprite', 'finishPopupSprite', 'progressBarBackgroundSprite',
+			'progressBarExitSprite', 'progressBarHintLabel', 'entryFormEmail', 'entryFormUsername',
+			'facebookImg', 'facebookDescription');
 	}
 
 	public function getAll() {
@@ -247,12 +264,7 @@ class ScavengerHuntGame {
 			$this->landingButtonY = (int)$data['landingButtonY'];
 		}
 
-		if (
-			array_key_exists('landingTitle', $data) && (
-				!array_key_exists('landingArticleName', $data) ||
-				!array_key_exists('landingArticleWikiId', $data)
-			)
-		){
+		if ( isset( $data['landingTitle'] ) ) {
 			$this->setLandingTitle($data['landingTitle']);
 		}
 
@@ -308,20 +320,31 @@ class ScavengerHuntGame {
 		return $articleNames;
 	}
 
-	public function makeIdentifier( $wikiId, $articleName ){
-		return ( $wikiId.'|'.urldecode( $articleName ) );
+	public function getLandingPageIdentifier() {
+		return	ScavengerHunt::makeIdentifier(
+				$this->getLandingArticleWikiId(),
+				urldecode( $this->getLandingArticleName() )
+			);
 	}
 
 	public function getArticleIdentifier() {
-		$articleNames = array();
+		$articleIdentifiers = array();
 		foreach ( $this->articles as $article ) {
 			$articleIdentifiers[] =
-				$this->makeIdentifier(
+				ScavengerHunt::makeIdentifier(
 					$article->getWikiId(),
 					$article->getArticleName()
 				);
 		}
 		return $articleIdentifiers;
+	}
+
+	public function getArticleURLs(){
+		$articleURL = array();
+		foreach ( $this->articles as $article ) {
+			$articleURL[] = $article->getTitle();
+		}
+		return $articleURL;
 	}
 
 	protected function getEntries() {

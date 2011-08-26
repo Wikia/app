@@ -103,6 +103,7 @@ $messages['en'] = array(
 	'scavengerhunt-form-error-no-articles' => 'Hunt must have at least one clue/article.',
 	'scavengerhunt-form-error-invalid-url' => 'Please provide a valid URL.',
 	'scavengerhunt-form-error-clueColor' => 'Please provide a valid color in #XXX notation',
+
 	'scavengerhunt-game-has-been-created' => 'New Scavenger Hunt game has been created.',
 	'scavengerhunt-game-has-been-saved' => 'Scavenger Hunt game has been saved.',
 	'scavengerhunt-game-has-been-enabled' => 'Selected Scavenger Hunt game has been enabled.',
@@ -144,6 +145,7 @@ $messages['en'] = array(
 	'scavengerhunt-label-clue-size' => 'Font size',
 	'scavengerhunt-label-clue-font' => 'Font decorations',
 	'scavengerhunt-label-article-congrats' => 'Congratulations message',
+	'scavengerhunt-label-facebook' => 'Facebook sharing',
 
 	'scavengerhunt-editor-tip-name' => 'This is the name that appears in the list of all Hunts.',
 	'scavengerhunt-editor-tip-landing-title' => 'This is the page where users go to begin the Hunt.',
@@ -176,7 +178,13 @@ $messages['en'] = array(
 	'scavengerhunt-editor-tip-goodbye-title' => 'This is the title of the final popup message from the Hunt.',
 	'scavengerhunt-editor-tip-goodbye-text' => 'This is the text of the final popup message from the Hunt.',
 	'scavengerhunt-editor-tip-clue-color' => 'Colors should have hexadecymal notation like #F00',
-	'scavengerhunt-editor-tip-entry-form-button-text' => 'This is the text for the button that appears on the dialog at the end of the hunt. '
+	'scavengerhunt-editor-tip-entry-form-button-text' => 'This is the text for the button that appears on the dialog at the end of the hunt. ',
+	'scavengerhunt-editor-tip-facebook-image' => 'MediaWiki style image path on Landing page\'s wiki. Example: \'Some_image_example.png\'',
+	'scavengerhunt-editor-tip-facebook-description' => 'Text that will be displeyed in shareing message',
+	'scavengerhunt-facebook-image' => 'Facebook sharing image',
+	'scavengerhunt-facebook-description' => 'Facebook sharing text',
+	
+
 );
 /** Message documentation (Message documentation) */
 $messages['qqq'] = array(
