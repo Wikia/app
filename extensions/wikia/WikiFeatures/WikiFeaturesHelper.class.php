@@ -7,7 +7,17 @@
  * @author Saipetch
  */
 class WikiFeaturesHelper extends WikiaModel {
+
+	protected static $instance = NULL;
 	
+	public static function getInstance() {
+		if (self::$instance === NULL) {
+			$class = __CLASS__;
+			self::$instance = new $class();
+		}
+		return self::$instance;
+	}
+
 	/**
 	 * @desc get a list of regular features
 	 * @return array $list 
