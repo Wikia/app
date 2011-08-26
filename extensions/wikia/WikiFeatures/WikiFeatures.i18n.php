@@ -18,8 +18,8 @@ We know they still have their kinks, and we would love to receive your feedback 
 	'wikifeatures-feedback' => 'Give feedback',
 	'wikifeatures-error-permission' => 'Sorry, you do not have permission to display this page.',
 	'wikifeatures-error-invalid-parameter' => 'Invalid parameter. Please try again.',
-	'wikifeatures-toggle-active' => 'On',
-	'wikifeatures-toggle-inactive' => 'Off',
+	'wikifeatures-toggle-active' => 'Enabled',
+	'wikifeatures-toggle-inactive' => 'Disabled',
 	'wikifeatures-active-on' => 'Active on $1 wikis',
 	// feature message list
 	'wikifeatures-feature-heading-wgEnableTopListsExt' => 'Top 10 Lists',
