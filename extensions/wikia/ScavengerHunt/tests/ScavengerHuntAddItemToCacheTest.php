@@ -28,7 +28,7 @@ class ScavengerHuntAddItemToCacheTest extends ScavengerHuntTest {
 		// Game
 		$articlesIdentifiers = array();
 		foreach( $articlesList as $art ) {
-			$articlesIdentifiers[] = ScavengerHuntGame::makeIdentifier( self::LANDING_WIKI_ID, $art );
+			$articlesIdentifiers[] = ScavengerHunt::makeIdentifier( self::LANDING_WIKI_ID, $art );
 		}
 
 		$mockedGame = $this->getMock( 'ScavengerHuntGame', array('getArticleIdentifier'), array( $this->app ) );
@@ -45,7 +45,7 @@ class ScavengerHuntAddItemToCacheTest extends ScavengerHuntTest {
 		$scavengerHunt->setGame( $articleExist ? $game : null );
 		$cachedIdentifiers = array();
 		foreach( $cachedList as $art ) {
-			$cachedIdentifiers[] = ScavengerHuntGame::makeIdentifier( self::LANDING_WIKI_ID, $art );
+			$cachedIdentifiers[] = ScavengerHunt::makeIdentifier( self::LANDING_WIKI_ID, $art );
 		}
 
 		$scavengerHunt->saveDataToCache( $cachedIdentifiers );

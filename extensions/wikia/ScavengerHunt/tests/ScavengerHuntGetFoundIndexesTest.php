@@ -49,7 +49,7 @@ class ScavengerHuntGetFoundIndexesTest extends ScavengerHuntTest {
 
 		$cachedIdentifiers = array();
 		foreach( $foundList as $art ) {
-			$cachedIdentifiers[] = $game->makeIdentifier( self::LANDING_WIKI_ID, $art );
+			$cachedIdentifiers[] = ScavengerHunt::makeIdentifier( self::LANDING_WIKI_ID, $art );
 		}
 
 		$scavengerHunt
