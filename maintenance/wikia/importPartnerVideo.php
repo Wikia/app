@@ -6,15 +6,6 @@
 ////// Author: William Lee (wlee@wikia-inc.com)  //////
 ///////////////////////////////////////////////////////
 
-// CONFIG
-
-$SCREENPLAY_FTP_HOST = 'ftp.screenplayinc.com';
-$SCREENPLAY_REMOTE_FILE = 'feed.zip';
-$SCREENPLAY_FEED_FILE = 'feed.xml';
-$MOVIECLIPS_VIDEOS_LISTING_FOR_MOVIE_URL = 'http://api.movieclips.com/v2/movies/$1/videos';
-$MOVIECLIPS_XMLNS = 'http://api.movieclips.com/schemas/2010';
-$TEMP_DIR = '/tmp';
-
 $optionsWithArgs = array( 'u', 'f', 'r', 'p' );
 
 ini_set( "include_path", dirname(__FILE__)."/.." );

@@ -2,6 +2,13 @@
 
 class PartnerVideoHelper {
 
+	private static $SCREENPLAY_FTP_HOST = 'ftp.screenplayinc.com';
+	private static $SCREENPLAY_REMOTE_FILE = 'feed.zip';
+	private static $SCREENPLAY_FEED_FILE = 'feed.xml';
+	private static $MOVIECLIPS_VIDEOS_LISTING_FOR_MOVIE_URL = 'http://api.movieclips.com/v2/movies/$1/videos';
+	private static $MOVIECLIPS_XMLNS = 'http://api.movieclips.com/schemas/2010';
+	private static $TEMP_DIR = '/tmp';
+
 	protected static $instance;
 
 	public static function getInstance() {
@@ -13,44 +20,43 @@ class PartnerVideoHelper {
 	}
 
 	public static function downloadScreenplayFeed() {
-		global $SCREENPLAY_FTP_HOST, $SCREENPLAY_REMOTE_FILE, $SCREENPLAY_FEED_FILE, $TEMP_DIR;
 		global $remoteUser, $remotePassword, $wgHTTPProxy;
 		// Screenplay uses a zipped xml file. Retrieve from
 		// ftp server, unzip, and open.
 
-		print("Connecting to $SCREENPLAY_FTP_HOST as $remoteUser...\n");
+		print("Connecting to " . self::$SCREENPLAY_FTP_HOST . " as $remoteUser...\n");
 
 		// must use cURL because of the http proxy
 		$curl = curl_init();
 		curl_setopt($curl, CURLOPT_PROXY, $wgHTTPProxy);
-		curl_setopt($curl, CURLOPT_URL, "ftp://$remoteUser:$remotePassword@$SCREENPLAY_FTP_HOST/$SCREENPLAY_REMOTE_FILE");
+		curl_setopt($curl, CURLOPT_URL, "ftp://$remoteUser:$remotePassword@".self::$SCREENPLAY_FTP_HOST."/".self::$SCREENPLAY_REMOTE_FILE);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($curl, CURLOPT_BINARYTRANSFER, true);
-		$localFile = $TEMP_DIR . '/screenplay.' . date("Ymd") . '.zip';
+		$localFile = self::$TEMP_DIR . '/screenplay.' . date("Ymd") . '.zip';
 		$result = curl_exec($curl);	
 		curl_close($curl);
 		file_put_contents($localFile, $result);	// wlee: this uses memory less efficiently than
 							// CURLOPT_FILE. However, in my testing,
 							// CURLOPT_FILE saved incomplete files!
-		if (!$result) die("Couldn't connect to $SCREENPLAY_FTP_HOST\n");
+		if (!$result) die("Couldn't connect to " . self::$SCREENPLAY_FTP_HOST . "\n");
 		unset($result);
 
-		print("Downloaded $SCREENPLAY_REMOTE_FILE to $localFile...\n");
+		print("Downloaded " . self::$SCREENPLAY_REMOTE_FILE . " to $localFile...\n");
 
 		// unzip	
 		$feedFile = '';	
 		$zip = new ZipArchive;
 		if ($zip->open($localFile) === true) {
-			$zip->extractTo($TEMP_DIR);
+			$zip->extractTo(self::$TEMP_DIR);
 			$zip->close();
-			$feedFile = file_get_contents($TEMP_DIR.'/'.$SCREENPLAY_FEED_FILE);
+			$feedFile = file_get_contents(self::$TEMP_DIR.'/'.self::$SCREENPLAY_FEED_FILE);
 		}
 		else {
 			die(self::zipFileErrMsg($zip)."\n");
 		}
 
 		if (!$feedFile) {
-			die("could not open or read $SCREENPLAY_FEED_FILE in $localFile\n");
+			die("could not open or read " . self::$SCREENPLAY_FEED_FILE . " in $localFile\n");
 		}
 
 		return $feedFile;	
@@ -188,16 +194,16 @@ class PartnerVideoHelper {
 	}
 
 	public function importFromMovieClips($id) {
-		global $MOVIECLIPS_VIDEOS_LISTING_FOR_MOVIE_URL, $MOVIECLIPS_XMLNS;
 		global $wgHTTPProxy, $parseOnly;
 
 		$articlesCreated = 0;
 
-		$url = str_replace('$1', $id, $MOVIECLIPS_VIDEOS_LISTING_FOR_MOVIE_URL);
+		$url = str_replace('$1', $id, self::$MOVIECLIPS_VIDEOS_LISTING_FOR_MOVIE_URL);
 		$info = array();
 		!$parseOnly && print("Connecting to $url...\n");
 
-		$rssContent = Http::get($url);
+		$rssContent = $this->getUrlContent($url);
+		
 		if (!$rssContent) {
 			print("ERROR: problem downloading content!\n");
 			return 0;
@@ -216,13 +222,13 @@ class PartnerVideoHelper {
 			$clipData['clipTitle'] = html_entity_decode( $item->get_title() );
 
 			// id
-			$mcIds = $item->get_item_tags($MOVIECLIPS_XMLNS, 'id');
+			$mcIds = $item->get_item_tags(self::$MOVIECLIPS_XMLNS, 'id');
 			$clipData['mcId'] = $mcIds[0]['data'];
 
 			// movie name
-			$objectIds = $item->get_item_tags($MOVIECLIPS_XMLNS, 'object_ids');
-			$clipData['titleName'] = html_entity_decode( $objectIds[0]['child'][$MOVIECLIPS_XMLNS]['imdb_id'][0]['attribs']['']['name'] );
-			$clipData['freebaseMid'] = $objectIds[0]['child'][$MOVIECLIPS_XMLNS]['freebase_mid'][0]['data'];
+			$objectIds = $item->get_item_tags(self::$MOVIECLIPS_XMLNS, 'object_ids');
+			$clipData['titleName'] = html_entity_decode( $objectIds[0]['child'][self::$MOVIECLIPS_XMLNS]['imdb_id'][0]['attribs']['']['name'] );
+			$clipData['freebaseMid'] = $objectIds[0]['child'][self::$MOVIECLIPS_XMLNS]['freebase_mid'][0]['data'];
 
 			// description, thumbnails, movie year, duration
 			if ($enclosure = $item->get_enclosure()) {
@@ -263,6 +269,10 @@ class PartnerVideoHelper {
 		return $articlesCreated;
 	}
 
+	protected function getUrlContent($url) {
+		return Http::get($url);
+	}
+	
 	public static function getMovieClipIdsFromFileContents($file) {
 		$ids = array();
 
