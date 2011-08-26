@@ -1987,7 +1987,7 @@ EOD;
 		$purl = $this->getProviderUrl();
 		$ratio = $this->getTextRatio();
 		$link = '<a href="' . $url . '">' . $this->mTitle->getText() . '</a>';
-		$s = '<div id="VideoPageInfo">' . wfMsg( 'wikiavideo-details', $link, $ratio, $purl, $provider ) . '</div>';
+		$s = '<div id="VideoPageInfo">' . wfMsgExt( 'wikiavideo-details', array( 'parsemag' ), $link, $ratio, $purl, $provider ) . '</div>';
 		$wgOut->addHTML( $s );
 	}
 }

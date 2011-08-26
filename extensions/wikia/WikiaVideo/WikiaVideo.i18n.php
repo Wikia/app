@@ -16,7 +16,7 @@ $messages['en'] = array(
 	'wikiavideo-not-supported' => 'This skin does not support inserting videos from the view mode into galleries.',
 	'wikiavideo-deleted-old' => "The version of '''[$1 $2]''' as of $4, $3 has been deleted.",
 	'wikiavideo-intro-old' => "You are deleting the version of '''[$1 $5]''' as of [$4 $3, $2].",
-	'wikiavideo-details' => '$1 ($2 pixels, provider: <a href="$3" class="external" target="_blank">$4</a>)',
+	'wikiavideo-details' => '$1 ($2 {{PLURAL:$2|pixel|pixels}}, provider: <a href="$3" class="external" target="_blank">$4</a>)',
 );
 
 /** Message documentation (Message documentation)
