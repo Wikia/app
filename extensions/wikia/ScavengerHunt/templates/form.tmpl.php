@@ -317,7 +317,29 @@
 			)
 		); ?>
 	</div>
-
+	<div class="short scavenger-formfield-simple scavenger-general">
+		<h2><?= wfMsg('scavengerhunt-label-facebook')?></h2>
+		<div>
+			<div class="scavengerhunt-editor-tips">
+				<?= wfMsg('scavengerhunt-editor-tip-facebook-image')?>
+			</div>
+			<label>
+				<?= wfMsg('scavengerhunt-facebook-image') ?>
+				<br>
+				<input type="text" id="facebookImg" name="facebookImg" class="<?= in_array('facebookImg', $highlight) ? 'sh-error' : '' ?>"  value="<?= isset( $facebookImg ) ? htmlspecialchars( $facebookImg ) : '' ?>">
+			</label>
+		</div>
+		<div>
+			<div class="scavengerhunt-editor-tips">
+				<?= wfMsg('scavengerhunt-editor-tip-facebook-description')?>
+			</div>
+			<label>
+				<?= wfMsg('scavengerhunt-facebook-description') ?>
+				<br>
+				<textarea name="facebookDescription" class="<?= in_array('facebookDescription', $highlight) ? 'sh-error' : '' ?>" ><?= isset( $facebookDescription ) ? htmlspecialchars( $facebookDescription ) : '' ?></textarea>
+			</label>
+		</div>
+	</div>
 	<div class="buttons">
 		<input type="submit" name="save" value="<?= wfMsg('scavengerhunt-button-save') ?>">
 		<?php

@@ -30,7 +30,7 @@ class ScavengerHuntGetFoundIndexesTest extends ScavengerHuntTest {
 		// mocking game object
 		$articlesIdentifiers = array();
 		foreach( $articlesList as $art ) {
-			$articlesIdentifiers[] = ScavengerHuntGame::makeIdentifier( self::LANDING_WIKI_ID, $art );
+			$articlesIdentifiers[] = ScavengerHunt::makeIdentifier( self::LANDING_WIKI_ID, $art );
 		}
 
 		$mockedGame = $this->getMock( 'ScavengerHuntGame', array('getArticleIdentifier'), array( $this->app ) );

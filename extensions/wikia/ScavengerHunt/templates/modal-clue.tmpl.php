@@ -12,7 +12,7 @@
 if (!empty($shareUrl)) {
 ?>
 <div class="scavenger-share-button">
-	<fb:share-button href="<?= $shareUrl ?>" type="button_count"></fb:share-button>
+	<fb:like layout="button_count" width="50" colorscheme="light" ref="content_page" href="<?= $shareUrl ?>" class=" fb_edge_widget_with_comment fb_iframe_widget"></fb:like>
 </div>
 <?php }
 if ( $hasSprite ) { ?>
