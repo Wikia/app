@@ -820,6 +820,14 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 						$res = count( $oHtmlDom->find("gallery[type=slideshow]") );
 					}
 					break;
+				case 5: /* mainpage tag */	
+					if ( !empty( $oHtmlDom ) ) {
+						$left_column = count( $oHtmlDom->find("mainpage-leftcolumn-start") );
+						$end_column = count( $oHtmlDom->find("mainpage-endcolumn") );
+						$right_column = count( $oHtmlDom->find("mainpage-rightcolumn-start") );
+						$res = $left_column + $end_column + $right_column;
+					}
+					break;
 				default:
 					break;
 			}
