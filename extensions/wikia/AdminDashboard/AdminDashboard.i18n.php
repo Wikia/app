@@ -291,7 +291,7 @@ $messages['nl'] = array(
 	'admindashboard-back-to-dashboard' => 'Terug naar het Dashboard',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian (bokmål) (Norsk (bokmål))
  * @author Audun
  */
 $messages['no'] = array(

@@ -160,26 +160,28 @@ $use-theme: get_command_line_param("use-theme", false);
 		
 		.control-section {
 			header {
+				@include clearfix;
 				@include linear-gradient($color-admin-header-shadow, top, $color-admin-header-highlight, 40%, $color-admin-header-shadow, 100%);
 				border-bottom: 1px solid $color-admin-header-shadow;
 				border-top: 1px solid $color-admin-header-shadow;
 				font-size: 12px;
 				font-style: italic;
-				height: 25px;
-				padding-top: 5px;
+				padding: 5px 20px 0;
+				position: absolute;
+				width: $admin-dashboard-content-width - 40px;
 				h1 {
 					color: $color-admin-header-text;
 					float: left;
 					font-size: 16px;
 					font-style: normal;
-					margin: 0 30px 0 20px;
+					margin: 0 30px 0 0;
 				}
 			}
 			.controls {
 				@include linear-gradient($color-admin-content-shadow, top, $color-admin-content-highlight, 10%, $color-admin-content-shadow, 100%);
 				font-size: 11px;
 				line-height: 13px;
-				padding: 0 15px;
+				padding: 3.2em 15px 0;	/* note: keep top padding relative to font size, change this if font-size changes for two-line control description */
 				text-align: center;
 				@include clearfix;
 				.control {
