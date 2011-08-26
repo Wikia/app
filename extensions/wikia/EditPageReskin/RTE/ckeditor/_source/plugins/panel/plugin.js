@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -380,11 +380,12 @@ CKEDITOR.ui.panel.block = CKEDITOR.tools.createClass(
 					return false;
 
 				case 'click' :
+				case 'mouseup' :
 					index = this._.focusIndex;
 					link = index >= 0 && this.element.getElementsByTag( 'a' ).getItem( index );
 
 					if ( link )
-						link.$.click ? link.$.click() : link.$.onclick();
+						link.$[ keyAction ] ? link.$[ keyAction ]() : link.$[ 'on' + keyAction ]();
 
 					return false;
 			}

@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -414,6 +414,13 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 							} );
 							/**/
 						});
+
+					// Dismiss the (wrong) 'beforepaste' event fired on context menu open. (#7953)
+					body.on( 'contextmenu', function()
+					{
+						depressBeforeEvent = 1;
+						setTimeout( function() { depressBeforeEvent = 0; }, 10 );
+					});
 
 					body.on( 'beforecut', function() { !depressBeforeEvent && fixCut( editor ); } );
 					body.on( 'mouseup', function(){ setTimeout( function(){ setToolbarStates.call( editor ); }, 0 ); }, editor );

@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -106,7 +106,16 @@ if ( !CKEDITOR.env )
 
 				return domain != hostname &&
 					domain != ( '[' + hostname + ']' );	// IPv6 IP support (#5434)
-			}
+			},
+
+			/**
+			 * Indicates that page is running under an encrypted connection.
+			 * @returns {Boolean} "true" if the page has an encrypted connection.
+			 * @example
+			 * if ( CKEDITOR.env.secure )
+			 *     alert( "I'm in SSL!" );
+			 */
+			secure : location.protocol == 'https:'
 		};
 
 		/**

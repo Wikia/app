@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -158,11 +158,17 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				 4 : close of tag;
 				 */
 
-				// Opening tag
-				if ( ( part = parts[ 1 ] ) )
+				part = ( parts[ 1 ] || parts[ 3 ] || '' ).toLowerCase();
+				// Unrecognized tags should be delivered as a simple text (#7860).
+				if ( part && !bbcodeMap[ part ] )
 				{
-					part = part.toLowerCase();
+					this.onText( parts[ 0 ] );
+					continue;
+				}
 
+				// Opening tag
+				if ( parts[ 1 ] )
+				{
 					var tagName = bbcodeMap[ part ],
 							attribs = {},
 							styles = {},
@@ -201,7 +207,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 					this.onTagOpen( tagName, attribs, CKEDITOR.dtd.$empty[ tagName ] );
 				}
 				// Closing tag
-				else if ( ( part = parts[ 3 ] ) )
+				else if ( parts[ 3 ] )
 					this.onTagClose( bbcodeMap[ part ] );
 			}
 
@@ -872,8 +878,9 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 			  editor.dataProcessor.writer = BBCodeWriter;
 
-			  editor.on( 'editingBlockReady', function ()
+			  editor.on( 'beforeSetMode', function( evt )
 			  {
+				  evt.removeListener();
 				  var wysiwyg = editor._.modes[ 'wysiwyg' ];
 				  wysiwyg.loadData = CKEDITOR.tools.override( wysiwyg.loadData, function( org )
 				  {
