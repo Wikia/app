@@ -1,10 +1,10 @@
-<li class="feature">
+<li class="feature" data-name="<?= $feature['name'] ?>">
 	<img class="representation" height="100" width="150" src="<?= $wg->ExtensionsPath ?>/wikia/WikiFeatures/images/<?= $feature['name'] ?>.png" >
 	<div class="actions">
 		<span class="slider<?= $feature['enabled'] ? ' on' : '' ?>">
 			<span class="button"></span>
-			<span class="textoff">Off</span>
-			<span class="texton">On</span>
+			<span class="textoff"><?= wfMsg('wikifeatures-toggle-inactive') ?></span>
+			<span class="texton"><?= wfMsg('wikifeatures-toggle-active') ?></span>
 			<span class="loading"></span>
 		</span>
 		<? if (isset($feature['rating'])) { ?>
@@ -15,7 +15,7 @@
 			<div class="rating" >
 				<? $rating = $feature['rating']; ?>
 				<? for ($i = 0; $i < 5; $i++, $rating--) { ?>
-					<img <?= $rating > 0 ? 'class="active"' : '' ?> src="<?= $wg->BlankImgUrl ?>"/>
+					<img <?= $rating > 0 ? 'class="active"' : '' ?> src="<?= $wg->BlankImgUrl ?>">
 				<? } ?>
 			</div>
 			<div class="active-on">

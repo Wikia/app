@@ -63,7 +63,7 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 		// clear cache for active wikis
 		$this->wg->Memc->delete(WikiFeaturesHelper::getInstance()->getMemcKeyNumActiveWikis($feature));
 			
-		$this->setVal('result', 'OK');
+		$this->setVal('result', 'ok');
 	}
 	
 }
