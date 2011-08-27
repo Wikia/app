@@ -55,6 +55,7 @@ if (typeof PhotoPop.FlipBoard === 'undefined') {
 		this._pointsThisRound = 0;
 		this._currPhoto = 0; // will go up to "1" (makes more sense to non-geeks) when the first image is loaded.
 		this._roundIsOver = false; // after a correct answer is chosen, the timer should be stopped.
+		this._waitingForInput = false; // will be true only while the level is set up and waiting for the first click (so the timer has not begun yet).
 		this._timeIsLow = false; // whether or not the time is low for the current round (helps us avoid playing the 'timeIsLow' sound repeatedly).
 
 		// Constants for game-configuration
@@ -224,7 +225,7 @@ if (typeof PhotoPop.FlipBoard === 'undefined') {
 			self.updateHud_progress();
 			self.updateHud_score();
 
-			self._startRoundTimer();
+			self._roundIsReady();
 			$('#answerButton_toOpen').add('#answerListFalseEdge').show();
 		};
 
@@ -234,6 +235,10 @@ if (typeof PhotoPop.FlipBoard === 'undefined') {
 		 */
 		this.tileClicked = function(){
 			if(!self._roundIsOver){
+				if(self._waitingForInput){
+					self._startRoundTimer();
+				}
+			
 				// If the tile is already revealed, don't charge the user points or play a sound, etc.
 				if(! ($(this).hasClass( self._REVEALED_CLASS_NAME ))){
 					// Update the score-bar, taking into account the cost of this tile.
@@ -368,9 +373,18 @@ if (typeof PhotoPop.FlipBoard === 'undefined') {
 		};
 
 		/**
+		 * If the round is entirely loaded and clickhandlers are set, call this function to show that the
+		 * round is ready and is waiting for its first input (at which point the timer can be started).
+		 */
+		this._roundIsReady = function(){
+			self._waitingForInput = true;
+		};
+
+		/**
 		 * To start the timer for a round, call this function.
 		 */
 		this._startRoundTimer = function(){
+			self._waitingForInput = false;
 			setTimeout(self._roundTimerTick, self._UPDATE_INTERVAL_MILLIS);
 		};
 
@@ -447,6 +461,10 @@ if (typeof PhotoPop.FlipBoard === 'undefined') {
 		 */
 		this._toggleAnswerDrawer = function(){
 			self.log("\t._toggleAnswerDrawer()");
+			
+			if(self._waitingForInput){
+				self._startRoundTimer();
+			}
 
 			if( $('#answerListWrapper').css('display') == 'none' ){
 				self._showAnswerDrawer();
