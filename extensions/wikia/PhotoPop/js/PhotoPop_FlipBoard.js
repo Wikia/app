@@ -378,6 +378,7 @@ if (typeof PhotoPop.FlipBoard === 'undefined') {
 		 */
 		this._roundIsReady = function(){
 			self._waitingForInput = true;
+			self.updateHud_score();
 		};
 
 		/**
