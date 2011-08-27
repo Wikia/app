@@ -91,7 +91,7 @@
 				margin-top: -<?= floor($answerDrawerHeight / 2) ?>px;
 				height: <?= $answerDrawerHeight ?>px;
 			}
-			#answerButton_toOpen, #answerButton_toClose, #continueButton{
+			#answerButton_toOpen, #answerButton_toClose{
 				top:50%;
 				margin-top:-<?= floor($answerButtonWidth/2) ?>px;
 				width:<?= $answerButtonWidth ?>px;
@@ -99,10 +99,18 @@
 				cursor:pointer;
 				z-index:30;
 			}
-			#answerButton_toClose{ /* start closed... will toggle when needed */
+			#continueButton{
+				top:50%;
+				margin-top:-<?= floor($continueButtonWidth/2) ?>px;
+				width:<?= $continueButtonWidth ?>px;
+				height:<?= $continueButtonWidth ?>px;
+				cursor:pointer;
+				z-index:30;
+
+				right:0px;
 				display:none;
 			}
-			#continueButton{
+			#answerButton_toClose{ /* start closed... will toggle when needed */
 				display:none;
 			}
 			#continueText, #timeUpText{
@@ -118,12 +126,12 @@
 				font-size:<?= $CONTINUE_FONT_SIZE_PX ?>px;
 				height:<?= $CONTINUE_FONT_SIZE_PX ?>px;
 				line-height:<?= $CONTINUE_FONT_SIZE_PX ?>px;
-				right: 0px; /* start to the left of the continue button */
+				right: <?= $continueButtonWidth ?>px; /* start to the left of the continue button */
 
-				margin-top:-<?= floor($answerButtonWidth/2) ?>px;
-				padding:<?= floor(($answerButtonWidth - $CONTINUE_FONT_SIZE_PX) / 2) ?>px;
-				padding-right:<?= floor(($answerButtonWidth - $CONTINUE_FONT_SIZE_PX) / 2) + floor($answerButtonWidth / 2) ?>px; /* make space for the background to cover half of the continue button */
-				margin-right:-<?= floor($answerButtonWidth / 2); ?>px; /* make the background attach to the left hand side of the button */
+				margin-top:-<?= floor($continueButtonWidth/2) ?>px;
+				padding:<?= floor(($continueButtonWidth - $CONTINUE_FONT_SIZE_PX) / 2) ?>px;
+				padding-right:<?= floor(($continueButtonWidth - $CONTINUE_FONT_SIZE_PX) / 2) + floor($continueButtonWidth / 2) ?>px; /* make space for the background to cover half of the continue button */
+				margin-right:-<?= floor($continueButtonWidth / 2); ?>px; /* make the background attach to the left hand side of the button */
 				
 				cursor:pointer;
 				border-top-left-radius: 15px;
@@ -184,7 +192,7 @@
 				opacity:0.8;filter:alpha(opacity=80);
 				color:#215B68;
 				background-color:#adff2f;
-				border-bottom:1px solid #cdff5f;
+				border-bottom:1px solid #fff;
 				line-height: <?= floor($answerDrawerHeight / $NUM_ANSWER_CHOICES) ?>px;
 				overflow:hidden;
 				cursor:pointer;
@@ -315,6 +323,12 @@
 					<?= wfMsg('photopop-continue-timeup') ?>
 				</div>
 			</div>
+			<div id='continueText'>
+				<?= wfMsg('photopop-continue-correct') ?>
+			</div>
+			<div id='continueButton'>
+				<img src='<?= $continueButtonSrc ?>'/>
+			</div>
 			<div id='answerDrawerWrapper'>
 				<div id='answerDrawer'>
 					<div class='answerButton' id='answerButton_toOpen'>
@@ -323,14 +337,6 @@
 					<div class='answerButton' id='answerButton_toClose'>
 						<img src='<?= $answerButtonSrc_toClose ?>'/>
 					</div>
-			<!-- TODO: REFACTOR: BEGIN - These shouldn't be in the answer drawer -->
-					<div id='continueText'>
-						<?= wfMsg('photopop-continue-correct') ?>
-					</div>
-					<div id='continueButton'>
-						<img src='<?= $continueButtonSrc ?>'/>
-					</div>
-			<!-- TODO: REFACTOR: END - These shouldn't be in the answer drawer -->
 					<div id='answerListFalseEdge'>
 						<!-- This is just for effect -->
 					</div>
