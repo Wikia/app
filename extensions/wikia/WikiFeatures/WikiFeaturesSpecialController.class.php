@@ -18,6 +18,10 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 	}
 	
 	public function index() {
+		if (!$this->wg->User->isAllowed( 'wikifeatures' )) {
+			$this->displayRestrictionError();
+			return false;  // skip rendering
+		}
 		$this->response->addAsset('extensions/wikia/WikiFeatures/css/WikiFeatures.scss');
 		$this->response->addAsset('extensions/wikia/WikiFeatures/js/WikiFeatures.js');
 		
@@ -33,6 +37,11 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string error (error message)
 	 */
 	public function toggleFeature() {
+		if (!$this->wg->User->isAllowed( 'wikifeatures' )) {
+			$this->displayRestrictionError();
+			return false;  // skip rendering
+		}
+	
 		$enabled = $this->getVal('enabled', null);
 		$feature = $this->getVal('feature', null);
 		

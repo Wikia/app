@@ -12,7 +12,7 @@
 				<img height="10" width="10" src="<?= $wg->ExtensionsPath ?>/wikia/WikiFeatures/images/star-inactive.png">
 				<?php echo wfMsg('wikifeatures-feedback'); ?>
 			</button>
-			<div class="rating" >
+			<div class="star-rating" >
 				<? $rating = $feature['rating']; ?>
 				<? for ($i = 0; $i < 5; $i++, $rating--) { ?>
 					<img <?= $rating > 0 ? 'class="active"' : '' ?> src="<?= $wg->BlankImgUrl ?>">

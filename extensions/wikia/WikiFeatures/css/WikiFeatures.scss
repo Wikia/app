@@ -108,21 +108,66 @@
 						top: -1px;
 					}
 				}
-				.rating {
-					display: block;
+				.star-rating {
 					margin-top: 5px;
 					@include clearfix;
-					>img {
-						background-image: url('/extensions/wikia/WikiFeatures/images/star-inactive.png');
-						height: 16px;
-						float: left;
-						width: 16px;
-						&.active {
-							background-image: url('/extensions/wikia/WikiFeatures/images/star-active.png');
-						}
-					}
 				}
 			}
+		}
+	}
+}
+
+.FeedbackDialog {
+	display: none;
+	.feature-highlight {
+		float: right;
+		margin-left: 30px;
+		text-align: center;
+		width: 302px;
+		h2 {
+			font-size: 14px;
+			font-weight: bold;
+		}
+		img {
+			border: 1px solid black;
+			width: 300px;
+		}
+	}
+
+	label {
+		display: block;
+		font-weight: bold;
+		margin-top: 5px;
+	}
+	
+	textarea {
+		height: 10em;
+		width: 660px;
+	}
+	
+	input[type=submit] {
+		float: right;
+	}
+	
+	.comment-character-count {
+		display: block;
+		text-align: right;
+	}
+}
+
+.modalWrapper .FeedbackDialog {
+	display: block;
+}
+
+.star-rating {
+	@include clearfix;
+	>img {
+		background-image: url('/extensions/wikia/WikiFeatures/images/star-inactive.png');
+		height: 16px;
+		float: left;
+		width: 16px;
+		&.active {
+			background-image: url('/extensions/wikia/WikiFeatures/images/star-active.png');
 		}
 	}
 }
