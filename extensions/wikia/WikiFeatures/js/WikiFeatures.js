@@ -1,6 +1,7 @@
 var WikiFeatures = {
 	lockedFeatures: {},
 	init: function() {
+		WikiFeatures.feedbackDialogPrototype = $('.FeedbackDialog');
 		WikiFeatures.sliders = $('#WikiFeatures .slider');
 		WikiFeatures.sliders.find('.button').click(function(e) {
 			var feature = $(this).closest('.feature');
@@ -18,7 +19,16 @@ var WikiFeatures = {
 		$('#WikiFeatures .feedback').click(function(e) {
 			e.preventDefault();
 			var feature = $(this).closest('.feature');
-			
+			var image = feature.find('.representation');
+			var heading = feature.find('.details h3');
+			var modal = WikiFeatures.feedbackDialogPrototype.clone();
+			modal.find('.feature-highlight h2').text(heading.text());
+			modal.find('.feature-highlight img').attr('src', image.attr('src'));
+			modal.makeModal({width:670});
+			modal.find('form').submit(function(e) {
+				e.preventDefault();
+				$().log('form submitted');
+			});
 		});
 	},
 	toggleFeature: function(featureName, enable) {
