@@ -224,6 +224,7 @@ if (typeof PhotoPop.FlipBoard === 'undefined') {
 			self._currPhoto++;
 			self.updateHud_progress();
 			self.updateHud_score();
+			self.updateScoreBar();
 
 			self._roundIsReady();
 			$('#answerButton_toOpen').add('#answerListFalseEdge').show();
@@ -378,7 +379,6 @@ if (typeof PhotoPop.FlipBoard === 'undefined') {
 		 */
 		this._roundIsReady = function(){
 			self._waitingForInput = true;
-			self.updateHud_score();
 		};
 
 		/**
