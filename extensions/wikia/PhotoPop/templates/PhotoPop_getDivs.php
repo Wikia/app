@@ -10,6 +10,10 @@
 	$NUM_ANSWER_CHOICES = 4;
 	$CONTINUE_FONT_SIZE_PX = 24;
 	$TIME_UP_FONT_SIZE_PX = ($CONTINUE_FONT_SIZE_PX * 2);
+	
+	// TODO: If design has a sec, it would be nice to have them take a look over it and see what we can clean up.
+
+	// TODO: Figure out how to get as much of this CSS out of the PHP and into an external file (so it can be cached).
 ?>
 			html {
 				margin:0px;
@@ -280,6 +284,43 @@
 			.transparent{
 				opacity: 0;
 			}
+			
+		/** END-GAME SCREEN-OVERLAY - BEGIN **/
+			#endGameWrapper{
+/*
+display:none;
+*/
+				width:100%;
+				height:100%;
+				background-color: rgba(0, 0, 0, 0.5);
+				z-index:50; /* overlays all previous elements when shown */
+			}
+			#endGameWrapper #highScore{
+
+			}
+			#endGameWrapper #summaryWrapper{
+			
+			}
+			#endGameWrapper #summaryWrapper #endGameSummary{
+			}
+			#endGameWrapper #summaryWrapper #endGameSummary .headingText{
+			}
+			#endGameWrapper #summaryWrapper #endGameSummary .summaryText{
+			}
+			#playAgain, #goHome, #goToHighScores{
+				margin-bottom: -<?= floor($endGameButtonSize/2) ?>px;
+			}
+			#playAgain{
+				
+			}
+			#goHome{
+				
+			}
+			#goToHighScores{
+				
+			}
+		/** END-GAME SCREEN-OVERLAY - END **/
+			
 <?php
 				// Create the CSS rules to position the tiles and sprite the frontImage over them.
 				for($row = 0;  $row < $numRows; $row++){
@@ -318,6 +359,24 @@
 			<div id='bgPic'></div>
 		</div>
 		<div id='gameBoard'>
+			<div id='endGameWrapper'>
+				<div id='highScore'>
+					<!-- Current high score will be filled in here by JSMessaging at the end of the game -->
+				</div>
+				<div id='summaryWrapper'>
+					<div id='endGameSummary'>
+						<div class='headingText'>
+							<?= wfMsg('') /* TODO: FILL IN THE i18n MESSAGE */ ?>
+						</div>
+						<div class='summaryText'>
+							<!-- Summary will be filled in here by JSMessaging at the end of the game -->
+						</div>
+					</div>
+					<a href='<?= /* TODO: Create this in the Controller class */ ?>'><img class='playAgain' src='<?= $endGame_playAgainSrc ?>'/></a>
+					<a href='<?= /* TODO: Create this in the Controller class */ ?>'><img class='goHome' src='<?= $endGame_goHomeSrc ?>'/></a>
+					<a href='<?= /* TODO: Create this in the Controller class */ ?>'><img class='goToHighScores' src='<?= $endGame_goToHighScoresSrc ?>'/></a>
+				</div>
+			</div>
 			<div id='timeUpText'>
 				<div class='timeUpTextInner'>
 					<?= wfMsg('photopop-continue-timeup') ?>

@@ -137,10 +137,7 @@ if (typeof PhotoPop.FlipBoard === 'undefined') {
 			// Detect if there is another round or if we've hit end-game.
 			if(self._currPhoto >= self._PHOTOS_PER_GAME){
 				self.log("Tried to load next round, but the game is over.  Will go to end-game screen.");
-
-// TODO: END-GAME SCREEN
-				$('body').html('TODO: END-GAME SCREEN');
-// TODO: END-GAME SCREEN
+				self._showEndGameScreen();
 			} else {
 
 				// Put all of the front-tiles back so that the next round's picture will be loaded behind them.
@@ -593,6 +590,23 @@ if (typeof PhotoPop.FlipBoard === 'undefined') {
 			self.updateScoreBar();
 		};
 		/** ANSWER RELATED FUNCTIONS - END ****************************************************************************/
+		
+		/**
+		 * Once all rounds have finished, shows an end-game screen providing a summary of how the player did
+		 * and giving them a couple of options for what to do next.
+		 *
+		 * TODO: In v2, make a good Facebook Share feature!
+		 */
+		this._showEndGameScreen = function(){
+			// Make the end-game overlay visible (it will be fairly blank to start).
+			$('#endGameWrapper').show();
+			
+			// TODO: Fill the high score box $('#highScore').
+			// TODO: Fill the high score box $('#highScore').
+			
+			// TODO: Fill the summary with the i18n messages in $('#endGameSummary .summaryText').
+			// TODO: Fill the summary with the i18n messages in $('#endGameSummary .summaryText').
+		};
 
 		/**
 		 * Simple wrapper for console.log to allow us to turn on/off debugging for this

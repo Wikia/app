@@ -66,6 +66,10 @@ class PhotoPopController extends WikiaController {
 		$this->answerDrawerWidth = 150;
 		$this->answerDrawerHeight = 250;
 		$this->continueButtonSrc = $wgExtensionsPath.'/wikia/PhotoPop/continue-button.png';
+		$this->endGameButtonSize = 48; // TODO: MAKE SURE THIS IS RIGHT!  IT'S JUST A GUESS NOW... I DON'T HAVE THE ASSETS W/ME AT THE MOMENT
+		$this->endGame_playAgainSrc = "";
+		$this->endGame_goHomeSrc = "";
+		$this->endGame_goToHighScoresSrc = "";
 
 		$this->wgScriptPath = $wgScriptPath;
 		$this->mwJsApiUrl = $wgExtensionsPath."/wikia/JavascriptAPI/Mediawiki.js?$wgStyleVersion";
