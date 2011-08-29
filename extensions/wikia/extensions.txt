@@ -83,9 +83,6 @@ file = EditAccount/SpecialEditAccount.i18n.php
 Edit Page Layout
 ignored = anoneditwarning-notice, longpagewarning-notice
 
-Foggy Foto
-optional = foggyfoto-progress-numbers
-
 Follow
 aliasfile = Follow/Follow.alias.php
 
@@ -192,6 +189,9 @@ Partner Feed
 
 Phalanx
 ignored = phalanx-expire-durations
+
+Photo Pop
+optional = foggyfoto-progress-numbers
 
 Piggyback
 
