@@ -52,6 +52,7 @@ if (typeof PhotoPop.GameConfigs === 'undefined') {
 		configs.push( new PhotoPop.GameConfigs("muppet.wikia.com", "Category:The_Muppets_Characters", "") );
 		configs.push( new PhotoPop.GameConfigs("dexter.wikia.com", "Category:Characters", "") );
 		configs.push( new PhotoPop.GameConfigs("futurama.wikia.com", "Category:Characters", "") );
+		configs.push( new PhotoPop.GameConfigs("twilight.wikia.com", "Category:Characters", "") );
 		//configs.push( new PhotoPop.GameConfigs("gameofthrones.wikia.com", "Category:Characters", "") );
 		//configs.push( new PhotoPop.GameConfigs("ben10.wikia.com", "Category:Episodes", "") );
 

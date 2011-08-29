@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>Simple game with HTML5 Canvas</title>
+		<title><?= wfMsg('photopop-title-tag', $wgSitename, $categoryReadable) ?></title>
 		<meta name="viewport" content = "width=device-width, initial-scale = 1, minimum-scale = 1, maximum-scale = 1, user-scalable = no" />
 		
 	<!-- TODO: MOVE TO A SEPARATE FILE SO THE DEVICE CAN CACHE IT?  At least move the parts that don't depend on variables. -->
