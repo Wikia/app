@@ -25,9 +25,12 @@
 			this.textEl = this.el.find('.loading-text');
 
 			// overlay just an edit area (BugId:6349)
-			this.editor.getSpace('editarea').append(this.el);
+			var editarea = this.editor.getSpace('editarea');
 
-			this.set('loading');
+			if (editarea) {
+				editarea.append(this.el);
+				this.set('loading');
+			}
 		},
 
 		extraStateChanged: function( editor, name, state ) {
