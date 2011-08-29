@@ -140,6 +140,10 @@ window.RTE = {
 		// DTD rules for <dt> use $inline elements which should not be modified (BugId:1304)
 		CKEDITOR.dtd.dt = $.extend({}, CKEDITOR.dtd.dt, {ul:1, ol:1});
 
+		// allow placeholders in UL/OL lists (BugId:10481)
+		CKEDITOR.dtd.ol = $.extend({}, CKEDITOR.dtd.ol, {img:1});
+		CKEDITOR.dtd.ul = $.extend({}, CKEDITOR.dtd.ul, {img:1});
+
 		// set startup mode
 		RTE.config.startupMode = mode;
 

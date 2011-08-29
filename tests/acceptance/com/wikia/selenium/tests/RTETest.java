@@ -161,6 +161,8 @@ public class RTETest extends BaseTest {
 				"foo<br />bar<b style=\"color: #f55;\">foo</b> '''bar'''",
 				"<strike>123</strike>\n\n456",
 				"\n<ul>\n<li>foo</li>\n<li>foo</li><li>foo</li>\n</ul>\n\n123\n\n\n<ul><li>foo</li></ul>",
+				"<ol><staff /></ol>",
+				"<ul><staff /></ul>",
 				"123<br />456\n\n123\n<br />\n456\n\n123<br />\n456\n\n123\n<br />456",
 				":  123\n;456\n\n: 789\n\n\n\n;foo\n\n\n:abc\n;def",
 				":1\n::2\n:::3\n::::4\nabc\n\n::d",
