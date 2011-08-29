@@ -15,6 +15,7 @@ class UserIdentityBox {
 	const USER_EDITED_MASTHEAD_PROPERTY = 'UserProfilePagesV3_mastheadEdited_';
 	const USER_FIRST_MASTHEAD_EDIT_DATE_PROPERTY = 'UserProfilePagesV3_mastheadEditDate_';
 	const USER_MASTHEAD_EDITS_WIKIS = 'UserProfilePagesV3_mastheadEditsWikis_';
+	const USER_EVER_EDITED_MASTHEAD = 'UserProfilePagesV3_mastheadEditedEver';
 	
 	private $user = null;
 	private $app = null;
@@ -87,15 +88,16 @@ class UserIdentityBox {
 			$data['registration'] = $userStats['date'];
 			
 			$wikiId = $this->app->wg->CityId;
-			$hasUserEditedMastheadBefore = $this->hasUserEditedMastheadBefore($wikiId);
+			$hasUserEverEditedMastheadBefore = $this->hasUserEverEditedMasthead();
+			$hasUserEditedMastheadBeforeOnThisWiki = $this->hasUserEditedMastheadBefore($wikiId);
 			
 			$data['userPage'] = $this->user->getUserPage()->getFullURL();
 			
 			//data from user_properties table
-			if( !$hasUserEditedMastheadBefore && !$isEdit ) {
-				$this->getEmptyData($data);
-			} else {
+			if( $hasUserEditedMastheadBeforeOnThisWiki || ($iEdits > 0 && $hasUserEverEditedMastheadBefore) || $isEdit ) {
 				$this->getDefaultData($data);
+			} else {
+				$this->getEmptyData($data);
 			}
 			
 			$firstMastheadEditDate = $this->user->getOption(self::USER_FIRST_MASTHEAD_EDIT_DATE_PROPERTY.$wikiId);
@@ -197,6 +199,10 @@ class UserIdentityBox {
 		$data['topWikis'] = array();
 	}
 	
+	private function hasUserEverEditedMasthead() {
+		return $this->user->getOption(self::USER_EVER_EDITED_MASTHEAD);
+	}
+	
 	private function hasUserEditedMastheadBefore($wikiId) {
 		return $this->user->getOption(self::USER_EDITED_MASTHEAD_PROPERTY.$wikiId);
 	}
@@ -255,6 +261,8 @@ class UserIdentityBox {
 		}
 		
 		if( true === $changed ) {
+			$this->user->setOption(self::USER_EVER_EDITED_MASTHEAD, true);
+			
 			$this->user->saveSettings();
 			$this->saveMemcUserIdentityData($data);
 			
