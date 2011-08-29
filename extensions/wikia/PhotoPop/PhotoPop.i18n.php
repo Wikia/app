@@ -15,6 +15,10 @@ $messages['en'] = array(
 	'photopop-progress-numbers' => '$1/$2',
 	'photopop-continue-correct' => 'correct!',
 	'photopop-continue-timeup' => 'time\'s up!',
+	'photopop-finished-heading' => 'finished!',
+	'photopop-endgame-highscore-summary' => 'highscore: $1',
+	'photopop-endgame-completion-summary' => 'you got $1 out of $2 correct.',
+	'photopop-endgame-score-summary' => 'score: $1',
 );
 
 /** Message documentation (Message documentation) */

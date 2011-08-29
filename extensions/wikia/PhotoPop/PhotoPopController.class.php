@@ -66,10 +66,18 @@ class PhotoPopController extends WikiaController {
 		$this->answerDrawerWidth = 150;
 		$this->answerDrawerHeight = 250;
 		$this->continueButtonSrc = $wgExtensionsPath.'/wikia/PhotoPop/continue-button.png';
+
+		// Settings for the end-game screen.
+		$this->endGame_overlayWidth = 300;
+		$this->endGame_overlayHeight = 150; // this is the height of just the green portion, not counting the high-score flag on top
+		$this->endGame_highScoreHeight = 24;
 		$this->endGameButtonSize = 48; // TODO: MAKE SURE THIS IS RIGHT!  IT'S JUST A GUESS NOW... I DON'T HAVE THE ASSETS W/ME AT THE MOMENT
-		$this->endGame_playAgainSrc = "";
-		$this->endGame_goHomeSrc = "";
-		$this->endGame_goToHighScoresSrc = "";
+		$this->endGame_playAgainSrc = $wgExtensionsPath.'/wikia/PhotoPop/continue-button.png';
+		$this->endGame_goHomeSrc = $wgExtensionsPath.'/wikia/PhotoPop/continue-button.png';
+		$this->endGame_goToHighScoresSrc = $wgExtensionsPath.'/wikia/PhotoPop/continue-button.png';
+// TODO: BUILD THE URL FOR GOING TO THE HOMESCREEN!!!!!
+		$this->url_goHome = "http://lyrics.wikia.com/wikia.php?controller=PhotoPop";
+// TODO: BUILD THE URL FOR GOING TO THE HOMESCREEN!!!!!
 
 		$this->wgScriptPath = $wgScriptPath;
 		$this->mwJsApiUrl = $wgExtensionsPath."/wikia/JavascriptAPI/Mediawiki.js?$wgStyleVersion";

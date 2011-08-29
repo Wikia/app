@@ -10,8 +10,9 @@
 	$NUM_ANSWER_CHOICES = 4;
 	$CONTINUE_FONT_SIZE_PX = 24;
 	$TIME_UP_FONT_SIZE_PX = ($CONTINUE_FONT_SIZE_PX * 2);
+	$END_GAME_BORDER_RADIUS = 15;
 	
-	// TODO: If design has a sec, it would be nice to have them take a look over it and see what we can clean up.
+	// TODO: If front-end team has a sec, it would be nice to have them take a look over it and see what we can clean up.
 
 	// TODO: Figure out how to get as much of this CSS out of the PHP and into an external file (so it can be cached).
 ?>
@@ -286,8 +287,8 @@
 			}
 			
 		/** END-GAME SCREEN-OVERLAY - BEGIN **/
-			#endGameWrapper{
-/*
+			#endGameOuterWrapper{
+/* TODO: PUT THIS BACK IN AND LET THE GAME REVEAL IT WHEN THE TIME IS RIGHT
 display:none;
 */
 				width:100%;
@@ -295,29 +296,74 @@ display:none;
 				background-color: rgba(0, 0, 0, 0.5);
 				z-index:50; /* overlays all previous elements when shown */
 			}
-			#endGameWrapper #highScore{
+			#endGameInnerWrapper{
+				position:relative;
+				top:50%;
+				margin-top:-<?= (floor($endGame_overlayHeight/2) + $endGame_highScoreHeight) ?>px;
+				left:50%;
+				margin-left:-<?= floor($endGame_overlayWidth/2) ?>px;
+				width:<?= $endGame_overlayWidth ?>px;
+				height:<?= $endGame_overlayHeight + $endGame_highScoreHeight ?>px;
+			}
+			
+			#endGameInnerWrapper #highScore{
+				color:white;
+				background-color:#043C6F;
+				display:inline-block;
+				height:<?= $endGame_highScoreHeight ?>px;
+				line-height:<?= $endGame_highScoreHeight ?>px;
+				font-weight:normal;
+				padding:0 10px 0 10px;
+font-size:14px;
+				border: 1px solid #156290;
+				border-top-left-radius:5px;
+				border-top-right-radius:5px;
+				right:<?= $END_GAME_BORDER_RADIUS ?>px;
+			}
+			
+			#endGameInnerWrapper #summaryWrapper{
+				margin-top:<?= $endGame_highScoreHeight ?>px;
+				height:<?= $endGame_overlayHeight ?>px;
+				width:<?= $endGame_overlayWidth ?>px;
+				width:100%;
+				color:white;
+				background-color: #89c440;
+				border-radius:<?= $END_GAME_BORDER_RADIUS ?>px;
+			}
+			#endGameInnerWrapper #summaryWrapper #endGameSummary{
+				width:<?= $endGame_overlayWidth ?>px;
+				height:<?= $endGame_overlayHeight ?>px;
+
 
 			}
-			#endGameWrapper #summaryWrapper{
-			
+			#endGameInnerWrapper #summaryWrapper #endGameSummary *{
+				position:static;
 			}
-			#endGameWrapper #summaryWrapper #endGameSummary{
-			}
-			#endGameWrapper #summaryWrapper #endGameSummary .headingText{
-			}
-			#endGameWrapper #summaryWrapper #endGameSummary .summaryText{
-			}
-			#playAgain, #goHome, #goToHighScores{
+				#endGameInnerWrapper #summaryWrapper #endGameSummary .headingText{
+					width:100%;
+					text-align:center;
+					color:#00396d;
+					padding:10px;
+					font-size:2.5em;
+				}
+				#endGameInnerWrapper #summaryWrapper #endGameSummary .summaryTextWrapper{
+					width:100%;
+				}
+			#playAgain, #goHome, #goToHighScores, #summaryWrapper a:hover{
+				width:<?= $endGameButtonSize ?>px;
+				height:<?= $endGameButtonSize ?>px;
+				bottom:0px;
 				margin-bottom: -<?= floor($endGameButtonSize/2) ?>px;
 			}
 			#playAgain{
-				
+left:<?= $END_GAME_BORDER_RADIUS ?>px;
 			}
 			#goHome{
-				
+left:50%;
+margin-left:-<?= floor($endGameButtonSize/2) ?>px;
 			}
 			#goToHighScores{
-				
+right:<?= $END_GAME_BORDER_RADIUS ?>px;
 			}
 		/** END-GAME SCREEN-OVERLAY - END **/
 			
@@ -359,22 +405,37 @@ display:none;
 			<div id='bgPic'></div>
 		</div>
 		<div id='gameBoard'>
-			<div id='endGameWrapper'>
-				<div id='highScore'>
-					<!-- Current high score will be filled in here by JSMessaging at the end of the game -->
-				</div>
-				<div id='summaryWrapper'>
-					<div id='endGameSummary'>
-						<div class='headingText'>
-							<?= wfMsg('') /* TODO: FILL IN THE i18n MESSAGE */ ?>
-						</div>
-						<div class='summaryText'>
-							<!-- Summary will be filled in here by JSMessaging at the end of the game -->
-						</div>
+			<div id='endGameOuterWrapper'>
+				<div id='endGameInnerWrapper'>
+					<div id='highScore'>
+						<!-- Current high score will be filled in here by JSMessaging at the end of the game -->
+<!-- TODO: MAKE THIS REAL, USING JSMessaging ... just here for now so that we can see if the design is right -->
+<?= wfMsg('photopop-endgame-highscore-summary', number_format(38231)) ?>
+<!-- TODO: MAKE THIS REAL, USING JSMessaging ... just here for now so that we can see if the design is right -->
 					</div>
-					<a href='<?= /* TODO: Create this in the Controller class */ ?>'><img class='playAgain' src='<?= $endGame_playAgainSrc ?>'/></a>
-					<a href='<?= /* TODO: Create this in the Controller class */ ?>'><img class='goHome' src='<?= $endGame_goHomeSrc ?>'/></a>
-					<a href='<?= /* TODO: Create this in the Controller class */ ?>'><img class='goToHighScores' src='<?= $endGame_goToHighScoresSrc ?>'/></a>
+					<div id='summaryWrapper'>
+						<div id='endGameSummary'>
+							<div class='headingText'>
+								<?= wfMsg('photopop-finished-heading') ?>
+							</div>
+							<div class='summaryTextWrapper'>
+								<!-- Summary will be filled in here by JSMessaging at the end of the game -->
+								<div class='summaryText_completion'>
+<!-- TODO: MAKE THIS REAL, USING JSMessaging ... just here for now so that we can see if the design is right -->
+<?= wfMsg('photopop-endgame-completion-summary', 'x', 'y') ?>
+<!-- TODO: MAKE THIS REAL, USING JSMessaging ... just here for now so that we can see if the design is right -->
+								</div>
+								<div class='summaryText_score'>
+<!-- TODO: MAKE THIS REAL, USING JSMessaging ... just here for now so that we can see if the design is right -->
+<?= wfMsg('photopop-endgame-score-summary', number_format(1337)) ?>
+<!-- TODO: MAKE THIS REAL, USING JSMessaging ... just here for now so that we can see if the design is right -->
+								</div>
+							</div>
+						</div>
+						<a id='playAgain' href='javascript:location.reload(true)'><img src='<?= $endGame_playAgainSrc ?>'/></a>
+						<a id='goHome' href='<?= $url_goHome ?>'><img src='<?= $endGame_goHomeSrc ?>'/></a>
+						<a id='goToHighScores' href='<?php /* TODO: EMIT AN EVENT FOR THE TITANIUM WRAPPER TO CATCH */ ?>'><img src='<?= $endGame_goToHighScoresSrc ?>'/></a>
+					</div>
 				</div>
 			</div>
 			<div id='timeUpText'>
