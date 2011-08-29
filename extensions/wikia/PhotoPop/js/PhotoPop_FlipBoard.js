@@ -52,6 +52,7 @@ if (typeof PhotoPop.FlipBoard === 'undefined') {
 		this._usedAnswers = []; // to prevent re-using the same photo multiple times in the same game
 		this._currentAnswer = ""; // the CORRECT answer to the current round
 		this._totalPoints = 0;
+		this._numCorrect = 0;
 		this._pointsThisRound = 0;
 		this._currPhoto = 0; // will go up to "1" (makes more sense to non-geeks) when the first image is loaded.
 		this._roundIsOver = false; // after a correct answer is chosen, the timer should be stopped.
@@ -554,6 +555,9 @@ if (typeof PhotoPop.FlipBoard === 'undefined') {
 			// Stops the timer from counting down & the clickhandler from listening for answers, etc.
 			self._roundIsOver = true;
 
+			// Record this as a correct answer (for the stats at the end of the game).
+			self._numCorrect++;
+
 			// Move the points from the round-score to the total score.
 			self._totalPoints = Math.round(self._totalPoints + self._pointsThisRound);
 			self.updateHud_score();
@@ -603,12 +607,10 @@ if (typeof PhotoPop.FlipBoard === 'undefined') {
 			
 			// TODO: Fill the high score box $('#highScore')... this may require some funky communication with Titanium.
 			// TODO: Fill the high score box $('#highScore')... this may require some funky communication with Titanium.
-			
-			// TODO: Fill the summary with the i18n messages in $('#endGameSummary .summaryText_completion').
-			// TODO: Fill the summary with the i18n messages in $('#endGameSummary .summaryText_completion').
-			
-			// TODO: Fill the summary with the i18n messages in $('#endGameSummary .summaryText_score').
-			// TODO: Fill the summary with the i18n messages in $('#endGameSummary .summaryText_score').
+
+			// Fill the summary fields with the i18n messages and the results of the game.
+			$('#endGameSummary .summaryText_completion').html( $.msg('photopop-endgame-completion-summary', self._numCorrect, self._PHOTOS_PER_GAME) );
+			$('#endGameSummary .summaryText_score').html( $.msg('photopop-endgame-score-summary', self._totalPoints) );
 		};
 
 		/**

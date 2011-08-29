@@ -19,10 +19,12 @@ if ( !defined( 'MEDIAWIKI' ) ) die();
  */
 class PhotoPopController extends WikiaController {
 
-/**
-	 * Manage forms to be shown according to posted data.
+	/**
+	 * Endpoing for the Canvas demo-version of the game.
 	 *
-	 * @param $subpage Mixed: string if any subpage provided, else null
+	 * WARNING: This demo showed that the game was just way too slow on actual mobile
+	 * devices, so it was rewritten in normal HTML 5 without canvas.  This version should
+	 * not be used for anything except the tech-demo that it is.
 	 */
 	public function getCanvas() {
 		global $wgOut, $wgExtensionsPath, $wgStyleVersion;
@@ -33,17 +35,29 @@ class PhotoPopController extends WikiaController {
 		$this->canvasWidth = $this->getVal('width', 480);
 		$this->canvasHeight = $this->getVal('height', 320);
 
-		$this->gameJs = $wgExtensionsPath."/wikia/PhotoPop/js/PhotoPop.js?$wgStyleVersion";
+		$this->gameJs = $wgExtensionsPath."/wikia/PhotoPop/js/PhotoPop_canvasDemo.js?$wgStyleVersion";
 
 		wfProfileOut( __METHOD__ );
 	} // end getCanvas()
+	
+	/**
+	 * Shows a screen which lets the player choose from a number of configured games.  Each game
+	 * will be served from the wiki on which the game is played regardless of where this selector screen is shown.
+	 */
+	public function selectorScreen(){
+		
+
+		// TODO: IMPLEMENT
+		// TODO: IMPLEMENT
+		
+	} // end selectorScreen()
 
 	/**
 	 * Since the canvas approach was very slow on mobile devices, this method was
 	 * created to return a quick experimental version which uses just HTML and CSS
 	 * instead of canvas.
 	 */
-	 public function getDivs(){
+	 public function playGame(){
 		global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgScriptPath, $wgRequest, $wgSitename;
 		wfProfileIn( __METHOD__ );
 
@@ -101,6 +115,6 @@ class PhotoPopController extends WikiaController {
  		$this->globalVariablesScript = Skin::makeVariablesScript( $vars );
 
 		wfProfileOut( __METHOD__ );
-	} // end getDivs()
+	} // end playGame()
 
 } // end class SpecialPhotoPop
