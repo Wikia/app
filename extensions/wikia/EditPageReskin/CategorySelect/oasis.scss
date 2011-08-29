@@ -35,6 +35,7 @@
 		overflow: auto;
 		padding: 4px;
 		width: 246px;
+		*position: relative; // IE7
 		ul {
 			margin: 0;
 		}
@@ -55,6 +56,10 @@
 		font-style: normal;
 		line-height: 16px;
 		width: 250px;
+
+		&[disabled] {
+			background: #d4d4d4;
+		}
 	}
 }
 
