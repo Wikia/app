@@ -354,6 +354,7 @@ font-size:14px;
 				height:<?= $endGameButtonSize ?>px;
 				bottom:0px;
 				margin-bottom: -<?= floor($endGameButtonSize/2) ?>px;
+				background-color:transparent; /* so the link hover doesn't show up */
 			}
 			#playAgain{
 left:<?= $END_GAME_BORDER_RADIUS ?>px;
