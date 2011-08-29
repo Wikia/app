@@ -23,21 +23,21 @@ Follow the links below to learn more about how to use Wikia, make changes to you
 	'specialcontact-secheader-onwiki' => "Questions about this wiki",
 		'specialcontact-seclink-content-issue' => "Issue with the wiki’s content",
 		'specialcontact-seclink-user-conflict' => "Problem with another user?",
-		'specialcontact-seclink-adoption' => "I want admin rights here.",
+		'specialcontact-seclink-adoption' => "I want admin rights here",
 		
 	'specialcontact-secheader-account' => "Account changes",
-		'specialcontact-seclink-account-issue' => "Can't access my account.",
-		'specialcontact-seclink-close-account' => "Disable my account.",
-		'specialcontact-seclink-rename-account' => "Rename my account.",
-		'specialcontact-seclink-blocked' => "My account is blocked.",
+		'specialcontact-seclink-account-issue' => "Can't access my account",
+		'specialcontact-seclink-close-account' => "Disable my account",
+		'specialcontact-seclink-rename-account' => "Rename my account",
+		'specialcontact-seclink-blocked' => "My account is blocked",
 		
 	'specialcontact-secheader-editing' => "Participating on Wikia",
 		'specialcontact-seclink-using-wikia' => "How do I use Wikia?",
-		'specialcontact-seclink-feedback' => "I want to offer some feedback.",
-		'specialcontact-seclink-bug' => "I think I found a bug.",
-		'specialcontact-seclink-bad-ad' => "I see a broken or inappropriate ad.",
+		'specialcontact-seclink-feedback' => "I want to offer some feedback",
+		'specialcontact-seclink-bug' => "I think I found a bug",
+		'specialcontact-seclink-bad-ad' => "I see a broken or inappropriate ad",
 
-	'specialcontact-secheader-setting' => "Change this wiki's",
+	'specialcontact-secheader-setting' => "Changes to this wiki",
 		'specialcontact-seclink-wiki-name-change' => "Sitename or URL",
 		'specialcontact-seclink-design' => "Design",
 		'specialcontact-seclink-features' => "Add or remove Features",
@@ -129,14 +129,16 @@ Thanks in advance and happy editing!",
 Thanks again for the report and for using Wikia.
 
 Happy editing!",
-	'specialcontact-intro-bad-ad' => "We are sorry to hear you encountered a bad advertisement on Wikia. If you could provide further details below we will share them with our advertising manager, who will review the ad and may be able to remove it from the system. Thank you.
+	'specialcontact-intro-bad-ad' => "We are sorry to hear you encountered a bad advertisement on Wikia. If you could provide further details below we will share them with our advertising manager, who will review the ad and may be able to remove it from the system. 
 
-Happy editing!",
+Be sure to tell us what wiki you're on, what ad you saw, and why it was a problem. It would also help if you could include a screenshot and the URL of the ad. Instructions for finding the URL of an ad are listed here: http://help.wikia.com/wiki/Help:Bad_advertisements
+
+Thank you and happy editing!",
 
 	'specialcontact-intro-wiki-name-change' => "If you are an admin here, you can request to change your [[Help:Title for the wiki|sitename]] or [[Help:Domain name|URL]] by filing out the form below. Please double check the spelling, and be sure of your correction, as we will not honor multiple requests. If you are not an admin here, here contact your local admins with your request [[Special:ListAdmins|here]].
 
 Happy editing!",
-	'specialcontact-intro-design' => "A wiki's design can be updated by any [[Help:Admin|local admin]] on your wiki by using the [[Help:Theme_designer|Theme designer]]. If you are not an admin and wish to help with your wiki's design, first contact your [[Special:ListAdmins|local admins]].
+	'specialcontact-intro-design' => "A wiki's design can be updated by any local admin on your wiki by using the [[Help:Theme_designer|Theme designer]]. If you are not an admin and wish to help with your wiki's design, first contact your [[Special:ListAdmins|local admins]].
 
 If you would like help with creating a more customized design, you can submit a request to the Wikia Content team [[w:Community_Central:Content_Team/Requests|here]]. Please read through the guidelines before submitting a request there. 
 
