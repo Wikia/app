@@ -44,7 +44,7 @@ class PhotoPopController extends WikiaController {
 	 * instead of canvas.
 	 */
 	 public function getDivs(){
-		global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgScriptPath, $wgRequest;
+		global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgScriptPath, $wgRequest, $wgSitename;
 		wfProfileIn( __METHOD__ );
 
 		wfLoadExtensionMessages( 'PhotoPop' );
@@ -85,6 +85,15 @@ class PhotoPopController extends WikiaController {
 		$this->gameJs = $wgExtensionsPath."/wikia/PhotoPop/js/PhotoPopByDivs.js?$wgStyleVersion";
 		$this->jsMessagesUrl = $wgExtensionsPath."/wikia/JSMessages/js/JSMessages.js?$wgStyleVersion";
 		$this->category = $wgRequest->getVal('category', '');
+		
+		// For <title> tag.  Site name and name of category (without the prefix).
+		$this->wgSitename = $wgSitename;
+		$catTitle = Title::newFromText($this->category);
+		if(is_object($catTitle)){
+			$this->categoryReadable = $catTitle->getText();
+		} else {
+			$this->categoryReadable = $this->category;
+		}
 
 		$vars = array();
 		F::build('JSMessages')->enqueuePackage('PhotoPop', JSMessages::INLINE);
