@@ -20,9 +20,15 @@ if ( !defined( 'MEDIAWIKI' ) ) die();
 class PhotoPopController extends WikiaController {
 
 	/**
+	 * Like all WikiaController subclasses, this is called before any time that other endpoints are triggered.
+	 */
+	public function init(){
+	} // end init()
+
+	/**
 	 * Endpoing for the Canvas demo-version of the game.
 	 *
-	 * WARNING: This demo showed that the game was just way too slow on actual mobile
+	 * @WARNING: This demo showed that the game was just way too slow on actual mobile
 	 * devices, so it was rewritten in normal HTML 5 without canvas.  This version should
 	 * not be used for anything except the tech-demo that it is.
 	 */
@@ -58,7 +64,7 @@ class PhotoPopController extends WikiaController {
 	 * instead of canvas.
 	 */
 	 public function playGame(){
-		global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgScriptPath, $wgRequest, $wgSitename;
+		global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgRequest;
 		wfProfileIn( __METHOD__ );
 
 		wfLoadExtensionMessages( 'PhotoPop' );
@@ -93,15 +99,13 @@ class PhotoPopController extends WikiaController {
 		$this->url_goHome = "http://lyrics.wikia.com/wikia.php?controller=PhotoPop";
 // TODO: BUILD THE URL FOR GOING TO THE HOMESCREEN!!!!!
 
-		$this->wgScriptPath = $wgScriptPath;
 		$this->mwJsApiUrl = $wgExtensionsPath."/wikia/JavascriptAPI/Mediawiki.js?$wgStyleVersion";
 		$this->gameJs_FlipBoard = $wgExtensionsPath."/wikia/PhotoPop/js/PhotoPop_FlipBoard.js?$wgStyleVersion";
-		$this->gameJs = $wgExtensionsPath."/wikia/PhotoPop/js/PhotoPopByDivs.js?$wgStyleVersion";
+		$this->gameJs = $wgExtensionsPath."/wikia/PhotoPop/js/PhotoPop.js?$wgStyleVersion";
 		$this->jsMessagesUrl = $wgExtensionsPath."/wikia/JSMessages/js/JSMessages.js?$wgStyleVersion";
 		$this->category = $wgRequest->getVal('category', '');
 		
 		// For <title> tag.  Site name and name of category (without the prefix).
-		$this->wgSitename = $wgSitename;
 		$catTitle = Title::newFromText($this->category);
 		if(is_object($catTitle)){
 			$this->categoryReadable = $catTitle->getText();

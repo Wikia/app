@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title><?= wfMsg('photopop-title-tag', $wgSitename, $categoryReadable) ?></title>
+		<title><?= wfMsg('photopop-title-tag', $wg->Sitename, $categoryReadable) ?></title>
 		<meta name="viewport" content = "width=device-width, initial-scale = 1, minimum-scale = 1, maximum-scale = 1, user-scalable = no" />
 		
 	<!-- TODO: MOVE TO A SEPARATE FILE SO THE DEVICE CAN CACHE IT?  At least move the parts that don't depend on variables. -->
@@ -390,12 +390,12 @@
 		</style>
 
 		<script>
-			wgScriptPath = '<?= $wgScriptPath; ?>';
+			wgScriptPath = '<?= $wg->ScriptPath; ?>';
 			boardWidth = <?= $boardWidth ?>;
 			boardHeight = <?= $boardHeight ?>;
 			photoPopCategory = '<?= $category ?>';
 		</script>
-<!-- TODO: Serve from our own servers using AssetsManager -->
+<!-- TODO: Serve from our own servers using AssetsManager or convert to using jQuery Mobile (should help for the selector-screen) -->
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
 		<?= $globalVariablesScript ?>
 		<script src="<?= $jsMessagesUrl ?>"></script>
