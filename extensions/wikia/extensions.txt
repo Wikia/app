@@ -191,7 +191,7 @@ Phalanx
 ignored = phalanx-expire-durations
 
 Photo Pop
-optional = foggyfoto-progress-numbers
+optional = photopop-progress-numbers
 
 Piggyback
 
