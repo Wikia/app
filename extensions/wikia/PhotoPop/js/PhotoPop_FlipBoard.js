@@ -599,13 +599,16 @@ if (typeof PhotoPop.FlipBoard === 'undefined') {
 		 */
 		this._showEndGameScreen = function(){
 			// Make the end-game overlay visible (it will be fairly blank to start).
-			$('#endGameWrapper').show();
+			$('#endGameOuterWrapper').show();
 			
-			// TODO: Fill the high score box $('#highScore').
-			// TODO: Fill the high score box $('#highScore').
+			// TODO: Fill the high score box $('#highScore')... this may require some funky communication with Titanium.
+			// TODO: Fill the high score box $('#highScore')... this may require some funky communication with Titanium.
 			
-			// TODO: Fill the summary with the i18n messages in $('#endGameSummary .summaryText').
-			// TODO: Fill the summary with the i18n messages in $('#endGameSummary .summaryText').
+			// TODO: Fill the summary with the i18n messages in $('#endGameSummary .summaryText_completion').
+			// TODO: Fill the summary with the i18n messages in $('#endGameSummary .summaryText_completion').
+			
+			// TODO: Fill the summary with the i18n messages in $('#endGameSummary .summaryText_score').
+			// TODO: Fill the summary with the i18n messages in $('#endGameSummary .summaryText_score').
 		};
 
 		/**

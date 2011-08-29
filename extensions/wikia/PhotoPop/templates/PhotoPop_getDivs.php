@@ -288,9 +288,8 @@
 			
 		/** END-GAME SCREEN-OVERLAY - BEGIN **/
 			#endGameOuterWrapper{
-/* TODO: PUT THIS BACK IN AND LET THE GAME REVEAL IT WHEN THE TIME IS RIGHT
-display:none;
-*/
+				display:none;
+
 				width:100%;
 				height:100%;
 				background-color: rgba(0, 0, 0, 0.5);
@@ -314,11 +313,11 @@ display:none;
 				line-height:<?= $endGame_highScoreHeight ?>px;
 				font-weight:normal;
 				padding:0 10px 0 10px;
-font-size:14px;
 				border: 1px solid #156290;
 				border-top-left-radius:5px;
 				border-top-right-radius:5px;
 				right:<?= $END_GAME_BORDER_RADIUS ?>px;
+				font-size:14px;
 			}
 			
 			#endGameInnerWrapper #summaryWrapper{
@@ -349,6 +348,12 @@ font-size:14px;
 				#endGameInnerWrapper #summaryWrapper #endGameSummary .summaryTextWrapper{
 					width:100%;
 				}
+				#endGameSummary .summaryTextWrapper .summaryText_completion{
+				}
+				#endGameSummary .summaryTextWrapper .summaryText_score{
+					margin-top:10px;
+					font-size:1.25em;
+				}
 			#playAgain, #goHome, #goToHighScores, #summaryWrapper a:hover{
 				width:<?= $endGameButtonSize ?>px;
 				height:<?= $endGameButtonSize ?>px;
@@ -357,14 +362,14 @@ font-size:14px;
 				background-color:transparent; /* so the link hover doesn't show up */
 			}
 			#playAgain{
-left:<?= $END_GAME_BORDER_RADIUS ?>px;
+				left:<?= $END_GAME_BORDER_RADIUS ?>px;
 			}
 			#goHome{
-left:50%;
-margin-left:-<?= floor($endGameButtonSize/2) ?>px;
+				left:50%;
+				margin-left:-<?= floor($endGameButtonSize/2) ?>px;
 			}
 			#goToHighScores{
-right:<?= $END_GAME_BORDER_RADIUS ?>px;
+				right:<?= $END_GAME_BORDER_RADIUS ?>px;
 			}
 		/** END-GAME SCREEN-OVERLAY - END **/
 			
