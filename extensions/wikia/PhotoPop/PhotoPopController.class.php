@@ -24,34 +24,22 @@ class PhotoPopController extends WikiaController {
 	 */
 	public function init(){
 	} // end init()
-
+	
 	/**
-	 * Endpoing for the Canvas demo-version of the game.
-	 *
-	 * @WARNING: This demo showed that the game was just way too slow on actual mobile
-	 * devices, so it was rewritten in normal HTML 5 without canvas.  This version should
-	 * not be used for anything except the tech-demo that it is.
+	 * Endpoint for the first screen that the player will see.  Essentially serves as a menu.
 	 */
-	public function getCanvas() {
-		global $wgOut, $wgExtensionsPath, $wgStyleVersion;
-		wfProfileIn( __METHOD__ );
+	public function homeScreen(){
 	
-		wfLoadExtensionMessages( 'PhotoPop' );
-
-		$this->canvasWidth = $this->getVal('width', 480);
-		$this->canvasHeight = $this->getVal('height', 320);
-
-		$this->gameJs = $wgExtensionsPath."/wikia/PhotoPop/js/PhotoPop_canvasDemo.js?$wgStyleVersion";
-
-		wfProfileOut( __METHOD__ );
-	} // end getCanvas()
+		// TODO: IMPLEMENT
+		// TODO: IMPLEMENT
 	
+	} // end homeScreen()
+
 	/**
 	 * Shows a screen which lets the player choose from a number of configured games.  Each game
 	 * will be served from the wiki on which the game is played regardless of where this selector screen is shown.
 	 */
 	public function selectorScreen(){
-		
 
 		// TODO: IMPLEMENT
 		// TODO: IMPLEMENT
@@ -64,7 +52,7 @@ class PhotoPopController extends WikiaController {
 	 * instead of canvas.
 	 */
 	 public function playGame(){
-		global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgRequest;
+		global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgRequest, $wgScriptPath;
 		wfProfileIn( __METHOD__ );
 
 		wfLoadExtensionMessages( 'PhotoPop' );
@@ -95,9 +83,7 @@ class PhotoPopController extends WikiaController {
 		$this->endGame_playAgainSrc = $wgExtensionsPath.'/wikia/PhotoPop/end_replay.png';
 		$this->endGame_goHomeSrc = $wgExtensionsPath.'/wikia/PhotoPop/end_home.png';
 		$this->endGame_goToHighScoresSrc = $wgExtensionsPath.'/wikia/PhotoPop/end_scores.png';
-// TODO: BUILD THE URL FOR GOING TO THE HOMESCREEN!!!!!
-		$this->url_goHome = "http://lyrics.wikia.com/wikia.php?controller=PhotoPop";
-// TODO: BUILD THE URL FOR GOING TO THE HOMESCREEN!!!!!
+		$this->url_goHome = "$wgScriptPath/wikia.php?controller=PhotoPop&method=homeScreen";
 
 		$this->mwJsApiUrl = $wgExtensionsPath."/wikia/JavascriptAPI/Mediawiki.js?$wgStyleVersion";
 		$this->gameJs_FlipBoard = $wgExtensionsPath."/wikia/PhotoPop/js/PhotoPop_FlipBoard.js?$wgStyleVersion";
@@ -120,5 +106,26 @@ class PhotoPopController extends WikiaController {
 
 		wfProfileOut( __METHOD__ );
 	} // end playGame()
+	
+	/**
+	 * Endpoint for the Canvas demo-version of the game.
+	 *
+	 * @WARNING: This demo showed that the game was just way too slow on actual mobile
+	 * devices, so it was rewritten in normal HTML 5 without canvas.  This version should
+	 * not be used for anything except the tech-demo that it is.
+	 */
+	public function getCanvas() {
+		global $wgOut, $wgExtensionsPath, $wgStyleVersion;
+		wfProfileIn( __METHOD__ );
+	
+		wfLoadExtensionMessages( 'PhotoPop' );
+
+		$this->canvasWidth = $this->getVal('width', 480);
+		$this->canvasHeight = $this->getVal('height', 320);
+
+		$this->gameJs = $wgExtensionsPath."/wikia/PhotoPop/js/PhotoPop_canvasDemo.js?$wgStyleVersion";
+
+		wfProfileOut( __METHOD__ );
+	} // end getCanvas()
 
 } // end class SpecialPhotoPop

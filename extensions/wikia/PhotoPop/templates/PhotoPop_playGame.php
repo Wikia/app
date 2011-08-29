@@ -427,14 +427,8 @@
 							<div class='summaryTextWrapper'>
 								<!-- Summary will be filled in here by JSMessaging at the end of the game -->
 								<div class='summaryText_completion'>
-<!-- TODO: MAKE THIS REAL, USING JSMessaging ... just here for now so that we can see if the design is right -->
-<?= wfMsg('photopop-endgame-completion-summary', 'x', 'y') ?>
-<!-- TODO: MAKE THIS REAL, USING JSMessaging ... just here for now so that we can see if the design is right -->
 								</div>
 								<div class='summaryText_score'>
-<!-- TODO: MAKE THIS REAL, USING JSMessaging ... just here for now so that we can see if the design is right -->
-<?= wfMsg('photopop-endgame-score-summary', number_format(1337)) ?>
-<!-- TODO: MAKE THIS REAL, USING JSMessaging ... just here for now so that we can see if the design is right -->
 								</div>
 							</div>
 						</div>
