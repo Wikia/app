@@ -296,7 +296,7 @@
 
 			// Find a tool
 			this.w.find('.search').placeholder();
-			this.w.find('.search').autocomplete({
+			this.w.find('.search').pluginAutocomplete({
 				lookup: this.getAutocompleteData(),
 				onSelect: $.proxy(this.addItemFromSearch,this),
 				selectedClass: 'selected',

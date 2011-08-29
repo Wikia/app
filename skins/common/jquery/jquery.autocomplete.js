@@ -15,7 +15,10 @@
       return new Autocomplete(this, options);
     });
   };
-
+  
+  // BugId: 10153 fix required after jquery-ui update in r40266.
+  $.fn.pluginAutocomplete = $.fn.autocomplete;
+  
   var reEscape = new RegExp('(\\' + ['/', '.', '*', '+', '?', '|', '(', ')', '[', ']', '{', '}', '\\'].join('|\\') + ')', 'g');
 
   var fnFormatResult = function(value, data, currentValue) {
