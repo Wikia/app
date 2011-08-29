@@ -26,36 +26,41 @@
 	</ul>
 </section>
 <div id="FeedbackDialog" class="FeedbackDialog">
-	<h1>Feedback</h1>
+	<h1><?= wfMsg('wikifeatures-feedback-heading') ?></h1>
 
 	<div class="feature-highlight">
-		<h2>Wikia Editor Redesign</h2>
+		<h2></h2>
 		<img src="<?= $wg->BlankImgUrl ?>">
 	</div>
 
 	<form>
-		<p>We love getting feedback on features that are in WikiaLabs.  If you have an idea for how we can improve this feature, or if you have discovered a bug, please add a comment below and the people working on this feature will get your message.</p>
-		<label>Your rating:</label>
-		<div class="star-rating" >
-			<? for ($i = 0; $i < 5; $i++) { ?>
-				<img src="<?= $wg->BlankImgUrl ?>">
-			<? } ?>
+		<p><?= wfMsg('wikifeatures-feedback-description') ?></p>
+		
+		<div class="input-group">
+			<label><?= wfMsg('wikifeatures-feedback-rating-label') ?>:</label>
+			<span class="star-rating" >
+				<? for ($i = 0; $i < 5; $i++) { ?>
+					<img src="<?= $wg->BlankImgUrl ?>">
+				<? } ?>
+			</span>
+			<input type="hidden" name="rating" value="0">
 		</div>
-		<input type="hidden" name="rating" value="0">
 		
-		<label>What's this about?</label>
-		<select name="feedback">
-			<option value="">Select box</option>
-		</select>
+		<div class="input-group">
+			<label><?= wfMsg('wikifeatures-feedback-type-label') ?></label>
+			<select name="feedback">
+				<option value="">Select box</option>
+			</select>
+		</div>
 		
-		<div style="clear:both"></div>
-		
-		<label for="comment">Comment:</label>
-		<textarea name="comment"></textarea>
-		
-		<span class="comment-character-count">0/1000</span>
+		<div class="comment-group">
+			<label for="comment"><?= wfMsg('wikifeatures-feedback-comment-label') ?>:</label>
+			<textarea name="comment"></textarea>
+			<span class="comment-character-count">0</span>/1000
+		</div>
 		
 		<input type="submit" value="Submit">
+		<span class="error-msg invalid"></span>
 	</form>
 
 	

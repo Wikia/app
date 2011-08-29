@@ -25,9 +25,49 @@ var WikiFeatures = {
 			modal.find('.feature-highlight h2').text(heading.text());
 			modal.find('.feature-highlight img').attr('src', image.attr('src'));
 			modal.makeModal({width:670});
+			var ratingInput = modal.find('input[name=rating]');
+			var rating = -1;
+			var stars = modal.find('.star-rating img');
+			var commentLabel = modal.find('.comment-group label');
+			var comment = modal.find('textarea[name=comment]');
+			var commentCounter = modal.find('.comment-character-count');
+			
+			stars.hover(function(e) {
+				var el = $(this);
+				el.addClass('active').prevAll().addClass('active');
+				el.nextAll().removeClass('active');
+			}, function(e) {
+				for(i = 0; i < stars.length; i++) {
+					if(i <= rating) {
+						$(stars[i]).addClass('active');
+					} else {
+						$(stars[i]).removeClass('active');
+					}
+				}
+			}).click(function(e) {
+				rating = stars.index(this);
+			});
+			
 			modal.find('form').submit(function(e) {
 				e.preventDefault();
+				ratingInput.val(rating);
+				// post somewhere
 				$().log('form submitted');
+				modal.find('.error-msg').text('this is an error/debug message: ' + rating).show().delay(4000).fadeOut(1000);
+			});
+			
+			comment.bind('keypress keydown keyup paste cut', function(e) {
+				setTimeout(function() {
+					var chars = comment.val().length;
+					commentCounter.text(chars);
+					if( chars >= 1000 ) {
+						comment.addClass('invalid');
+						commentLabel.addClass('invalid');
+					} else {
+						comment.removeClass('invalid');
+						commentLabel.removeClass('invalid');
+					}
+				}, 50);
 			});
 		});
 	},

@@ -135,23 +135,53 @@
 	}
 
 	label {
-		display: block;
 		font-weight: bold;
-		margin-top: 5px;
 	}
 	
+	.star-rating {
+		img {
+			float: none;
+			margin-left: 5px;
+			position: relative;
+			top: 3px;
+			&:hover {
+				cursor: pointer;
+			}
+		}
+	}
+	
+	.input-group {
+		margin-top: 10px;
+	}
+	
+	.comment-group {
+		clear: both;
+		text-align: right;
+		label {
+			clear: both;
+			float: left;
+		}
+	}
+
 	textarea {
 		height: 10em;
 		width: 660px;
+		&.invalid {
+			border: 1px solid #f00;
+			&:focus {
+				@include box-shadow(0px, 0px, 6px, #f00);
+			}
+		}
 	}
 	
-	input[type=submit] {
+	input[type=submit], 
+	.error-msg {
 		float: right;
+		margin-left: 20px
 	}
 	
-	.comment-character-count {
-		display: block;
-		text-align: right;
+	.invalid {
+		color: #f00;
 	}
 }
 
