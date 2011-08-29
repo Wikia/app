@@ -164,6 +164,7 @@ Liftium.buildChain = function(slotname) {
 	if (Liftium.chain[slotname].length === 0){
 		Liftium.reportError("Error building chain for " + slotname + ".  No matching tags?");
 		Liftium.trackEvent(Liftium.buildTrackUrl(["error", "no_matching_tags", slotname]));
+		Liftium.trackEvent2(Liftium.buildTrackUrl(["error", "no_matching_tags", slotname]));
 		return false;
 	}
 
@@ -704,6 +705,7 @@ Liftium.getCookieDomain = function () {
 		domain = d[0];
 	} else {
 		Liftium.trackEvent(Liftium.buildTrackUrl(["cookie_domain", domain]));
+		Liftium.trackEvent2(Liftium.buildTrackUrl(["cookie_domain", domain]));
 	}
 
 	Liftium.d("cookie domain is " + domain, 7);
@@ -868,9 +870,12 @@ Liftium.getNextTag = function(slotname){
 		Liftium.d("Liftium.maxHopTime=" + Liftium.maxHopTime, 5);
 		Liftium.d("Hop Time of " + Liftium.maxHopTime + " exceeded, it's " + diff + " now. Using the always_fill for " + slotname, 2);
 		Liftium.trackEvent(Liftium.buildTrackUrl(["error", "timeout", "loc", slotname]));
+		Liftium.trackEvent2(Liftium.buildTrackUrl(["error", "timeout", "loc", slotname]));
 		var sec = diff / 1000;
 		Liftium.trackEvent(Liftium.buildTrackUrl(["error", "timeout", "sec", sec.toFixed(1)]));
+		Liftium.trackEvent2(Liftium.buildTrackUrl(["error", "timeout", "sec", sec.toFixed(1)]));
 		Liftium.trackEvent(Liftium.buildTrackUrl(["error", "timeout", "tag", Liftium.chain[slotname][current].tag_id]));
+		Liftium.trackEvent2(Liftium.buildTrackUrl(["error", "timeout", "tag", Liftium.chain[slotname][current].tag_id]));
 		Liftium.slotTimeouts++;
 		
 		// Return the always_fill
@@ -895,6 +900,7 @@ Liftium.getNextTag = function(slotname){
 	// Rut roh.
 	Liftium.reportError("No more tags left in the chain - " + slotname + " Last ad in the chain marked as always fill but actually hopped? :" + Liftium.print_r(Liftium.chain[slotname][Liftium.chain[slotname].length-1]), "chain");
 	Liftium.trackEvent(Liftium.buildTrackUrl(["error", "last_hopped", slotname]));
+	Liftium.trackEvent2(Liftium.buildTrackUrl(["error", "last_hopped", slotname]));
 	// Return a PSA. Note: Do NOT insert the garaunteed fill here. 
 	// If it happens to hop due to a misconfiguration, you'll create a 
 	// never ending loop. Or so I've been told. ;)
@@ -1168,6 +1174,7 @@ Liftium.iframeHop = function(iframeUrl){
 	if (Liftium.in_array(iframeUrl, Liftium.hopRegister)) {
 		Liftium.d("Hop from " + iframeUrl + " already registered. Bailing out.", 1);
 		Liftium.trackEvent(Liftium.buildTrackUrl(["error", "last_hopped_2"]));
+		Liftium.trackEvent2(Liftium.buildTrackUrl(["error", "last_hopped_2"]));
 		Liftium.reportError("Hop from " + iframeUrl + " already registered.");
 		return;
 	}
@@ -1320,6 +1327,7 @@ Liftium.init = function () {
 
 
 	Liftium.trackEvent(Liftium.buildTrackUrl(["init"]), "UA-17475676-4");
+	Liftium.trackEvent2(Liftium.buildTrackUrl(["init"]), "UA-17475676-15");
 
 	Liftium.trackQcseg();
 
@@ -1565,6 +1573,7 @@ Liftium.markLastAdAsRejected = function (slotname){
 	if (typeof i == "undefined") {
 		Liftium.d("No chain for " + slotname + " found. Bailing out.", 1);
 		Liftium.trackEvent(Liftium.buildTrackUrl(["error", "no_chain", slotname]));
+		Liftium.trackEvent2(Liftium.buildTrackUrl(["error", "no_chain", slotname]));
 		return;
 	}
 
@@ -1619,6 +1628,7 @@ Liftium.onLoadHandler = function () {
 	} else {
 		Liftium.d("Gave up waiting for ads to load, sending beacon now");
 		Liftium.trackEvent(Liftium.buildTrackUrl(["error", "gave_up_waiting_for_ads"]));
+		Liftium.trackEvent2(Liftium.buildTrackUrl(["error", "gave_up_waiting_for_ads"]));
 		Liftium.sendBeacon();
 	}
 };
@@ -1936,6 +1946,7 @@ Liftium.sendBeacon = function (){
 
 	// Track the beacons with GA
 	Liftium.trackEvent(Liftium.buildTrackUrl(["beacon"]), "UA-17475676-5");
+	Liftium.trackEvent2(Liftium.buildTrackUrl(["beacon"]), "UA-17475676-14");
 
 	// Call the unit tests
 	if (window.LiftiumTest && typeof window.LiftiumTest.afterBeacon == "function"){
@@ -2101,6 +2112,25 @@ Liftium.trackEvent = function(page, profile) {
 	Liftium.beaconCall(url, false);
 };
 
+Liftium.trackEvent2 = function(page, profile) {
+	if (typeof page == "object") {
+		page = page.join("/");
+	}
+	Liftium.d("Track event (2): " + page, 1);
+
+	page = '/' + LiftiumOptions.pubid + '/' + page;
+
+	if (typeof profile != "undefined") {
+		Liftium.d("Tracking (2) is using custom profile: " + profile, 7);
+	} else {
+		profile = "UA-17475676-12";
+	}
+
+	_gaq.push(['liftium._setAccount', profile]);
+	_gaq.push(['liftium._setSampleRate', '100']);
+	_gaq.push(['liftium._trackPageview', page]);
+};
+
 Liftium.buildTrackUrl = function(data) {
 	return data.join("/") + "/" +
 		[
@@ -2171,10 +2201,12 @@ Liftium.trackQcseg = function() {
 			if (Liftium.e(qcseg.segments[i].id)) {
 				//Liftium.trackEvent(Liftium.buildTrackUrl(["quantcast", "segments", "broken"]), "UA-17475676-9");
 				Liftium.trackEvent(Liftium.buildTrackUrl(["quantcast", "segments", "broken", c]));
+				Liftium.trackEvent2(Liftium.buildTrackUrl(["quantcast", "segments", "broken", c]));
 				continue;
 			}
 			Liftium.d("Quantcast segment: " + qcseg.segments[i].id, 5);
 			Liftium.trackEvent(Liftium.buildTrackUrl(["quantcast", "segments", qcseg.segments[i].id]), "UA-17475676-9");
+			Liftium.trackEvent2(Liftium.buildTrackUrl(["quantcast", "segments", qcseg.segments[i].id]), "UA-17475676-13");
 
 			empty = false;
 		}
@@ -2186,6 +2218,7 @@ Liftium.trackQcseg = function() {
 	} catch (e) {
 		Liftium.d("Quantcast cookie parse error:", 7, e);
 		Liftium.trackEvent(Liftium.buildTrackUrl(["quantcast", "broken"]));
+		Liftium.trackEvent2(Liftium.buildTrackUrl(["quantcast", "broken"]));
 		return;
 	}
 };
