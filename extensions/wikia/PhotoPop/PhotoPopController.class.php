@@ -29,8 +29,8 @@ class PhotoPopController extends WikiaController {
 		wfProfileIn(__METHOD__);
 
 		wfLoadExtensionMessages( 'PhotoPop' );
-		$this->BG_IMAGE = "$wgExtensionsPath/wikia/PhotoPop/main_bg.png";
-		$this->PHOTOPOP_LOGO = "$wgExtensionsPath/wikia/PhotoPop/photopop_logo.png";
+		$this->BG_IMAGE = "$wgExtensionsPath/wikia/PhotoPop/images/main_bg.png";
+		$this->PHOTOPOP_LOGO = "$wgExtensionsPath/wikia/PhotoPop/images/photopop_logo.png";
 
 		wfProfileOut(__METHOD__);
 	} // end init()
@@ -90,7 +90,7 @@ class PhotoPopController extends WikiaController {
 			<script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
 			<script src="http://code.jquery.com/mobile/1.0b2/jquery.mobile-1.0b2.min.js"></script>
 			
-			<link rel="stylesheet" href="{$wgExtensionsPath}/wikia/PhotoPop/jquery.mobile.scrollview.css" />
+			<link rel="stylesheet" href="{$wgExtensionsPath}/wikia/PhotoPop/css/jquery.mobile.scrollview.css" />
 			<script src="{$wgExtensionsPath}/wikia/PhotoPop/js/jquery.easing.1.3.js"></script>
 			<script src="{$wgExtensionsPath}/wikia/PhotoPop/js/jquery.mobile.scrollview.js"></script>
 			<script src="{$wgExtensionsPath}/wikia/PhotoPop/js/scrollview.js"></script>
@@ -135,25 +135,25 @@ JQUERY_INCLUDE;
 		$this->photosPerGame = 10;
 
 // TODO: FIGURE OUT HOW TO DO THIS BETTER.  Use URL params? Have it in a predictable image name on each wiki?
-		$this->frontImageSrc = $wgExtensionsPath.'/wikia/PhotoPop/watermark_glee.png'; // this shows up immediately
+		$this->frontImageSrc = $wgExtensionsPath.'/wikia/PhotoPop/watermarks/glee.png'; // this shows up immediately
 
 		$this->backImageSrc = ''; // this is the one that's obscured... will be figured out in JS using the API.
-		$this->answerButtonSrc_toOpen = $wgExtensionsPath.'/wikia/PhotoPop/answer-button-to-open.png';
-		$this->answerButtonSrc_toClose = $wgExtensionsPath.'/wikia/PhotoPop/answer-button-to-close.png';
+		$this->answerButtonSrc_toOpen = $wgExtensionsPath.'/wikia/PhotoPop/images/answer-button-to-open.png';
+		$this->answerButtonSrc_toClose = $wgExtensionsPath.'/wikia/PhotoPop/images/answer-button-to-close.png';
 		$this->answerButtonWidth = 40;
 		$this->continueButtonWidth = 48;
 		$this->answerDrawerWidth = 150;
 		$this->answerDrawerHeight = 250;
-		$this->continueButtonSrc = $wgExtensionsPath.'/wikia/PhotoPop/continue-button.png';
+		$this->continueButtonSrc = $wgExtensionsPath.'/wikia/PhotoPop/images/continue-button.png';
 
 		// Settings for the end-game screen.
 		$this->endGame_overlayWidth = 300;
 		$this->endGame_overlayHeight = 150; // this is the height of just the green portion, not counting the high-score flag on top
 		$this->endGame_highScoreHeight = 24;
 		$this->endGameButtonSize = 54;
-		$this->endGame_playAgainSrc = $wgExtensionsPath.'/wikia/PhotoPop/end_replay.png';
-		$this->endGame_goHomeSrc = $wgExtensionsPath.'/wikia/PhotoPop/end_home.png';
-		$this->endGame_goToHighScoresSrc = $wgExtensionsPath.'/wikia/PhotoPop/end_scores.png';
+		$this->endGame_playAgainSrc = $wgExtensionsPath.'/wikia/PhotoPop/images/end_replay.png';
+		$this->endGame_goHomeSrc = $wgExtensionsPath.'/wikia/PhotoPop/images/end_home.png';
+		$this->endGame_goToHighScoresSrc = $wgExtensionsPath.'/wikia/PhotoPop/images/end_scores.png';
 		$this->url_goHome = "$wgScriptPath/wikia.php?controller=PhotoPop&method=homeScreen";
 
 		$this->mwJsApiUrl = $wgExtensionsPath."/wikia/JavascriptAPI/Mediawiki.js?$wgStyleVersion";
