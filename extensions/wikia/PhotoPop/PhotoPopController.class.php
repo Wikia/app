@@ -18,21 +18,28 @@ if ( !defined( 'MEDIAWIKI' ) ) die();
  * @ingroup SpecialPage
  */
 class PhotoPopController extends WikiaController {
+	var $DEFAULT_WIDTH = 480;
+	var $DEFAULT_HEIGHT = 320;
 
 	/**
 	 * Like all WikiaController subclasses, this is called before any time that other endpoints are triggered.
 	 */
 	public function init(){
+		wfLoadExtensionMessages( 'PhotoPop' );
 	} // end init()
-	
+
 	/**
 	 * Endpoint for the first screen that the player will see.  Essentially serves as a menu.
 	 */
 	public function homeScreen(){
-	
+		wfProfileIn( __METHOD__ );
+		$this->boardWidth = $this->getVal('width', $this->DEFAULT_WIDTH);
+		$this->boardHeight = $this->getVal('height', $this->DEFAULT_HEIGHT);
+
 		// TODO: IMPLEMENT
+		
 		// TODO: IMPLEMENT
-	
+
 	} // end homeScreen()
 
 	/**
@@ -40,10 +47,11 @@ class PhotoPopController extends WikiaController {
 	 * will be served from the wiki on which the game is played regardless of where this selector screen is shown.
 	 */
 	public function selectorScreen(){
+		$this->boardWidth = $this->getVal('width', $this->DEFAULT_WIDTH);
+		$this->boardHeight = $this->getVal('height', $this->DEFAULT_HEIGHT);
+		// TODO: IMPLEMENT
+		// TODO: IMPLEMENT
 
-		// TODO: IMPLEMENT
-		// TODO: IMPLEMENT
-		
 	} // end selectorScreen()
 
 	/**
@@ -55,17 +63,18 @@ class PhotoPopController extends WikiaController {
 		global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgRequest, $wgScriptPath;
 		wfProfileIn( __METHOD__ );
 
-		wfLoadExtensionMessages( 'PhotoPop' );
-
-		$this->boardWidth = $this->getVal('width', 480);
-		$this->boardHeight = $this->getVal('height', 320);
+		$this->boardWidth = $this->getVal('width', $this->DEFAULT_WIDTH);
+		$this->boardHeight = $this->getVal('height', $this->DEFAULT_HEIGHT);
 		$this->numRows = 4;
 		$this->numCols = 6;
-		$this->tileWidth = ($this->boardWidth / $this->numCols);
-		$this->tileHeight = ($this->boardHeight / $this->numRows);
+		$this->tileWidth = ceil($this->boardWidth / $this->numCols); // the tiles at the very bottom and right of the board may be slightly too large. their extra pixels will just fall outside of the visible board and not be seen.
+		$this->tileHeight = ceil($this->boardHeight / $this->numRows);
+
 		$this->photosPerGame = 10;
 
-		$this->frontImageSrc = $wgExtensionsPath.'/wikia/PhotoPop/glee_front.png'; // this shows up immediately
+// TODO: FIGURE OUT HOW TO DO THIS BETTER.  Use URL params? Have it in a predictable image name on each wiki?
+		$this->frontImageSrc = $wgExtensionsPath.'/wikia/PhotoPop/watermark_glee.png'; // this shows up immediately
+
 		$this->backImageSrc = ''; // this is the one that's obscured... will be figured out in JS using the API.
 		$this->answerButtonSrc_toOpen = $wgExtensionsPath.'/wikia/PhotoPop/answer-button-to-open.png';
 		$this->answerButtonSrc_toClose = $wgExtensionsPath.'/wikia/PhotoPop/answer-button-to-close.png';
@@ -90,7 +99,7 @@ class PhotoPopController extends WikiaController {
 		$this->gameJs = $wgExtensionsPath."/wikia/PhotoPop/js/PhotoPop.js?$wgStyleVersion";
 		$this->jsMessagesUrl = $wgExtensionsPath."/wikia/JSMessages/js/JSMessages.js?$wgStyleVersion";
 		$this->category = $wgRequest->getVal('category', '');
-		
+
 		// For <title> tag.  Site name and name of category (without the prefix).
 		$catTitle = Title::newFromText($this->category);
 		if(is_object($catTitle)){
@@ -117,8 +126,6 @@ class PhotoPopController extends WikiaController {
 	public function getCanvas() {
 		global $wgOut, $wgExtensionsPath, $wgStyleVersion;
 		wfProfileIn( __METHOD__ );
-	
-		wfLoadExtensionMessages( 'PhotoPop' );
 
 		$this->canvasWidth = $this->getVal('width', 480);
 		$this->canvasHeight = $this->getVal('height', 320);

@@ -77,8 +77,8 @@ if (typeof PhotoPop.FlipBoard === 'undefined') {
 		 */
 		this.init = function(callback){
 			// Calculate the size of the tiles in pixels.
-			self._tileWidth = (self.width / self.numCols);
-			self._tileHeight = (self.height / self.numRows);
+			self._tileWidth = Math.ceil(self.width / self.numCols);
+			self._tileHeight = Math.ceil(self.height / self.numRows);
 
 			// TODO: Indicate on-screen that we're loading a game.
 			// TODO: Indicate on-screen that we're loading a game.
@@ -157,6 +157,10 @@ if (typeof PhotoPop.FlipBoard === 'undefined') {
 						self.backImageSrc = imageUrl;
 						self.backImage = new Image();
 						self.backImage.src = self.backImageSrc;
+						self.backImage.onerror = function(){
+// TODO: Handle this better... make it fall back to another answer & image
+self.log("ERROR LOADING COVERED IMAGE");
+						}
 						self.backImage.onload = function(){
 							// Calculate the scaling factor and use that to set the background to the correct size.
 							var scalingFactor = self._getScalingFactor(self.backImage);

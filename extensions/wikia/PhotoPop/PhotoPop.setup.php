@@ -28,4 +28,6 @@ $app->registerExtensionMessageFile('PhotoPop', $dir . 'PhotoPop.i18n.php');
 F::build('JSMessages')->registerPackage('PhotoPop', array(
 	'photopop-progress-numbers',
 	'photopop-continue-correct',
+	'photopop-endgame-completion-summary',
+	'photopop-endgame-score-summary',
 ));
