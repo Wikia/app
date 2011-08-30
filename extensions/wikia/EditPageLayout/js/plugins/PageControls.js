@@ -57,7 +57,7 @@
 			this.titleNode = $('#EditPageHeader > h1');
 
 			// show "Edit title" button and attach handler for it (when we have custom fields attached to this edit form)
-			if ($('#EditPageHiddenFields').children().exists()) {
+			if ($('#EditPageHiddenFields input[type="text"]').exists()) {
 				$('#EditPageTitle').
 					// show it only when hovering over #EditPageHeader
 					addClass('enabled').
