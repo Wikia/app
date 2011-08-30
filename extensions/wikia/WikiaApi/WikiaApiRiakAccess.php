@@ -56,7 +56,7 @@ class WikiaApiRiakAccess extends ApiBase {
 		ini_set( "max_execution_time", 0 );
 
 		$params = $this->extractRequestParams();
-		if( !$wgUser->isAllowed( "riaktester" ) ) { // change to 'runjob' later
+		if( !$wgUser->isAllowed( "runjob" ) ) { // change to 'runjob' later
 			$this->dieUsageMsg( array( "cantaccess" ) );
 		}
 
