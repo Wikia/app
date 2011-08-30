@@ -25,9 +25,12 @@ class PhotoPopController extends WikiaController {
 	 * Like all WikiaController subclasses, this is called before any time that other endpoints are triggered.
 	 */
 	public function init(){
+		global $wgExtensionsPath;
 		wfProfileIn(__METHOD__);
 
 		wfLoadExtensionMessages( 'PhotoPop' );
+		$this->BG_IMAGE = "$wgExtensionsPath/wikia/PhotoPop/main_bg.png";
+		$this->PHOTOPOP_LOGO = "$wgExtensionsPath/wikia/PhotoPop/photopop_logo.png";
 
 		wfProfileOut(__METHOD__);
 	} // end init()
@@ -67,13 +70,15 @@ class PhotoPopController extends WikiaController {
 			new PhotoPopGameConfig("Muppet Wiki", "Category:The_Muppets_Characters", "muppet", "$iconDir/thumb_muppet.png", "$watermarkDir/muppet.png"),
 			new PhotoPopGameConfig("Dexter Wiki", "Category:Characters", "dexter", "$iconDir/thumb_dexter.png", "$watermarkDir/dexter.png"),
 			new PhotoPopGameConfig("Futurama", "Category:Characters", "futurama", "$iconDir/thumb_futurama.png", "$watermarkDir/futurama.png"),
-			new PhotoPopGameConfig("Twilight Saga", "Category:Characters", "twilightsaga", "$iconDir/thumb_twilight.png", "$watermarkDir/twilight.png")
+			new PhotoPopGameConfig("Twilight Saga", "Category:Twilight_characters", "twilightsaga", "$iconDir/thumb_twilight.png", "$watermarkDir/twilight.png")
 		);
 		$this->numItems = count($this->games);
-
 		$this->iconWidth = 120;
 		$this->iconHeight = 120;
-		$this->iconSrc = $wgExtensionsPath.'/wikia/PhotoPop/zz_photopop%20assets/Selector%20Drawer/thumb_trueblood.png';
+
+		$this->buttonWidth = 40;
+		$this->buttonHeight = 40;
+		$this->buttonSrc = "$wgExtensionsPath/wikia/PhotoPop/";
 
 		// TODO: PERFORMANCE TASKS
 			// TODO: Make local copies of the remote files (less DNS lookups & lets us combine them).
