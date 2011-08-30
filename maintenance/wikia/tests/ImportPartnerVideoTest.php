@@ -39,22 +39,22 @@ class ImportPartnerVideoTest extends PHPUnit_Framework_TestCase {
 		$mock->importFromScreenplay($screenplayXml);
 	}
 	
+	/**
+	 *
+	 * @dataProvider validFileBlacklistedContents
+	 */
+	public function testImportFromScreenplayValidFileBlacklistedContent($testXmlFile) {
+		// test case: one title, one clip
+		$screenplayXml = file_get_contents(dirname(__FILE__) . '/' . $testXmlFile);
+		$mock = $this->getMock('PartnerVideoHelper', array('createVideoPageForPartnerVideo'));
+		$mock->expects($this->never())
+			->method('createVideoPageForPartnerVideo');
+		$result = $mock->importFromScreenplay($screenplayXml);
+		$this->assertEquals(0, $result);
+	}
+	
 	public function validFileContents() {
 		return array(
-			array('screenplay1.xml',
-				array(
-					'titleName' => 'Harry Potter & The Sorcerer\'s Stone',
-					'year' => '2001',
-					'duration' => '33',
-					'eclipId' => 'e15402',
-				        'jpegBitrateCode' => '382',
-					'trailerType' => 'Home Video',
-					'trailerVersion' => 'Trailer',
-					'description' => 'Trailer',
-					'stdBitrateCode' => '455',
-					'stdMp4Url' => 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid=e15402&bitrateid=455&vendorid=1893&type=.mp4'		    
-				)
-			),
 			array('screenplay2.xml',
 				array(
 					'titleName' => 'Harry Potter And The Order Of The Phoenix',
@@ -100,6 +100,25 @@ class ImportPartnerVideoTest extends PHPUnit_Framework_TestCase {
 				)
 			)
 		);
+	}
+	
+	public function validFileBlacklistedContents() {
+		return array(
+			array('screenplay1.xml',
+				array(
+					'titleName' => 'Harry Potter & The Sorcerer\'s Stone',
+					'year' => '2001',
+					'duration' => '33',
+					'eclipId' => 'e15402',
+				        'jpegBitrateCode' => '382',
+					'trailerType' => 'Home Video',
+					'trailerVersion' => 'Trailer',
+					'description' => 'Trailer',
+					'stdBitrateCode' => '455',
+					'stdMp4Url' => 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid=e15402&bitrateid=455&vendorid=1893&type=.mp4'		    
+				)
+			)
+		);		
 	}
 		
 	protected function setUp() {
