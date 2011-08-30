@@ -64,11 +64,11 @@
 				z-index: 20; /* show up on top of the background image */
 			}
 			.opacityTransition{
-				-webkit-transition: opacity .75s ease-in-out;
-				-moz-transition: opacity .75s ease-in-out;
-				-o-transition: opacity .75s ease-in-out;
-				-ms-transition: opacity .75s ease-in-out;
-				transition: opacity .75s ease-in-out;
+				-webkit-transition: opacity .33s ease-in-out;
+				-moz-transition: opacity .33s ease-in-out;
+				-o-transition: opacity .33s ease-in-out;
+				-ms-transition: opacity .33s ease-in-out;
+				transition: opacity .33s ease-in-out;
 			}
 			.noTransition{
 				-webkit-transition: none;
