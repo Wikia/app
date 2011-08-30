@@ -49,7 +49,9 @@
 		<div class="input-group">
 			<label><?= wfMsg('wikifeatures-feedback-type-label') ?></label>
 			<select name="feedback">
-				<option value="">Select box</option>
+			<?php foreach (WikiFeaturesHelper::$feedbackCategories as $i => $cat) {
+				echo "<option value=\"$i\">{$wf->Msg($cat['msg'])}</option>";
+			} ?>
 			</select>
 		</div>
 		

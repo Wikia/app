@@ -74,5 +74,65 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 			
 		$this->setVal('result', 'ok');
 	}
+
+/**
+ * Save a fogbugz ticket
+ * @requestParam type $rating
+ * @requestParam type $category
+ * @requestParam type $message
+ * @responseParam string result [OK/error]
+ * @responseParam string error (error message)
+ */
+	
+	public function saveFeedback() {
+		
+		$user = $this->wg->User;
+		$feature = $this->getVal('feature');
+		$rating = $this->getVal('rating', 0);
+		$category = $this->getVal('category');
+		$message = $this->getVal('message');
+	
+		if( !$user->isAllowed( 'wikifeatures' ) ) {
+			$this->result = 'error';
+			$this->error = $this->wf->Msg('wikifeatures-error-permission');
+		}
+		
+		// TODO: validate feature_id
+		if ( !array_key_exists($feature, WikiFeaturesHelper::$feedbackAreaIDs) ) {
+			$this->result = 'error';
+			$this->error = $this->wf->Msg('wikifeatures-error-invalid-parameter', 'feature');
+		}
+		
+		if ( !array_key_exists($category, WikiFeaturesHelper::$feedbackCategories) ) {
+			$this->result = 'error';
+			$this->error = $this->wf->Msg('wikifeatures-error-invalid-parameter', 'category');
+		}
+		
+		// Rating is optional, 0 is the default if not entered
+		if ( $rating != 0 && ( $rating < 1 || $rating > 5) ) {
+			$this->result = 'error';
+			$this->error = $this->wf->Msg('wikifeatures-error-invalid-parameter', 'rating');
+		} else {
+			// save rating not implemented yet
+			// $project->updateRating( $user->getId(), $rating );
+		}
+
+		if ( !$message || strlen($message) < 10 || strlen($message) > 1000 ) {
+			$this->result = 'error';
+			$this->error = $this->wf->Msg('wikifeatures-error-invalid-parameter', 'message');
+		}
+								
+		if( WikiFeaturesHelper::getInstance()->isSpam($user->getName(), $feature) ) {
+			$this->result = 'error';
+			$this->error = $this->wf->Msg('wikifeatures-error-spam-attempt');
+		}
+
+		// Passed validations, actually do something useful
+		if( is_null($this->error) ) {
+			$this->result = 'ok';
+			$bugzdata = WikiFeaturesHelper::getInstance()->saveFeedbackInFogbugz( $feature, $user->getEmail(), $user->getName(), $message, $category );
+			$this->caseId = $bugzdata['caseId'];
+		}
+	}
 	
 }
