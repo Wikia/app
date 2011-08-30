@@ -51,7 +51,7 @@ var ScavengerHunt = {
 						.val( wgScavengerHuntStartMsg[index] )
 						.click( ScavengerHunt.onStartClick )
 					)
-				.prependTo( '#WikiaArticle' );
+				.appendTo( '#WikiaArticle' );
 			}
 		)
 	},
