@@ -3,8 +3,39 @@
 		<title><?= wfMsg('photopop-title-tag-selectorscreen') ?></title>
 		<meta name="viewport" content = "width=device-width, initial-scale = 1, minimum-scale = 1, maximum-scale = 1, user-scalable = no" />
 		<style><?php
-	$PADDING_AROUND_ICONS = 15;
-?>
+		
+		$PADDING_AROUND_ICONS = 15;
+
+		?>
+		html {
+			margin:0px;
+			padding:0px;
+		}
+		body {
+			margin:0px;
+			padding:0px;
+			background-color:#00396D;
+		}
+		#wrapper{
+			width: <?= $boardWidth ?>px;
+			height: <?= $boardHeight ?>px;
+			overflow:hidden;
+			background: #00396D url(<?= $BG_IMAGE ?>);
+			position:absolute;
+			left:0px;
+			top:0px;
+		}
+		#photopop_logo{
+			text-align:center;
+			width:100%;
+		}
+		#sliderWrapper{
+			height: <?= $iconHeight + ($PADDING_AROUND_ICONS * 2) ?>px;
+			position:absolute;
+			bottom:0px;
+		}
+		
+		
 		.ui-content.ui-scrollview-clip {
 			padding: 0;
 		}
@@ -16,31 +47,19 @@
 			margin: 0;
 		}
 		.gameIcon {
-			width: <?= $iconWidth + ($PADDING_AROUND_ICONS * 2) ?>px;
-			height: <?= $iconHeight + ($PADDING_AROUND_ICONS * 2) ?>px;
+			width: <?= $iconWidth ?>px;
+			height: <?= $iconHeight ?>px;
 			padding: <?= $PADDING_AROUND_ICONS ?>px;
 			text-align: center;
+			margin:0px;
 		}
 		.gameIcon img{
 			box-shadow:10px 10px 20px #000;
 			-webkit-box-shadow:10px 10px 20px #000;
 			-moz-box-shadow: 10px 10px 20px #000;
 		}
-		.ui-scrollview-clip .ui-scrollview-clip .gameIcon {
-			background-color: #3CF;
-		}
-		.ui-scrollview-clip .ui-scrollview-clip .ui-scrollview-clip .gameIcon {
-			background-color: #F39;
-		}
-		.ui-scrollview-clip .ui-scrollview-clip .ui-scrollview-clip .ui-scrollview-clip .gameIcon {
-			background-color: #0F6;
-		}
-		.ui-scrollview-clip .ui-scrollview-clip .ui-scrollview-clip .ui-scrollview-clip .ui-scrollview-clip .gameIcon {
-			background-color: #FF6;
-		}
 		.sliderContent {
-			border: solid 1px black;
-			background-color: #999;
+			background-color:transparent;
 			overflow: hidden;
 			width: <?= $boardWidth ?>px;
 			height: <?= $iconHeight + ($PADDING_AROUND_ICONS * 2) ?>px;
@@ -58,6 +77,9 @@
 	</head>
 	<body>
 		<div id='wrapper'>
+			<div id='photopop_logo'>
+				<img src='<?= $PHOTOPOP_LOGO ?>'/>
+			</div>
 			<div id='sliderWrapper'>
 				<div class='sliderContent' data-scroll='x'>
 					<?php

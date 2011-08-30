@@ -22,6 +22,7 @@ $dir = dirname(__FILE__) . '/';
 $app = F::app();
 
 $app->registerClass('PhotoPopController', $dir . 'PhotoPopController.class.php');
+$app->registerClass('PhotoPopGameConfig', $dir . 'PhotoPopGameConfig.class.php');
 $app->registerExtensionMessageFile('PhotoPop', $dir . 'PhotoPop.i18n.php');
 
 // register messages package for JS
