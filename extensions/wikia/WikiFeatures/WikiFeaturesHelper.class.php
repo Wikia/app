@@ -54,7 +54,7 @@ class WikiFeaturesHelper extends WikiaModel {
 	 */
 	public function getFeatureNormal() {
 		$list = array();
-		if (is_array($this->wg->WikiFeatures['normal'])) {
+		if (isset($this->wg->WikiFeatures['normal']) && is_array($this->wg->WikiFeatures['normal'])) {
 			foreach ($this->wg->WikiFeatures['normal'] as $feature) {
 				$list[] = array(
 					'name' => $feature, 
@@ -71,7 +71,7 @@ class WikiFeaturesHelper extends WikiaModel {
 	 */
 	public function getFeatureLabs() {
 		$list = array();
-		if (is_array($this->wg->WikiFeatures['labs'])) {
+		if (isset($this->wg->WikiFeatures['labs']) && is_array($this->wg->WikiFeatures['labs'])) {
 			foreach ($this->wg->WikiFeatures['labs'] as $feature) {
 				$list[] = array(
 					'name' => $feature, 
