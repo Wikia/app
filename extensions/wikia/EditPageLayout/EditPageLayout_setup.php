@@ -76,6 +76,7 @@ F::build('JSMessages')->registerPackage('EditPageLayout', array(
 	'editpagelayout-loadingStates-*',
 	'editpagelayout-modules-*',
 	'wikia-editor-*',
+	'plb-special-form-cat-info',
 ));
 
 // Ajax dispatcher

@@ -95,8 +95,8 @@
 
 	window.wgEditorExtraButtons['CategoriesButton'] = {
 		type: 'modulebutton',
-		label: 'categories',
-		title: 'Categories',
+		label: $.msg('wikia-editor-modules-categories-title'),
+		title: $.msg('wikia-editor-modules-categories-title'),
 		module: 'RailCategories',
 		autorenderpanel: true
 	};

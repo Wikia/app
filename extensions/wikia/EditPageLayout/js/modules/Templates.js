@@ -164,8 +164,8 @@
 
 	window.wgEditorExtraButtons['TemplatesButton'] = {
 		type: 'modulebutton',
-		label: 'templates',
-		title: 'Templates',
+		label: $.msg('wikia-editor-modules-templates-title'),
+		title: $.msg('wikia-editor-modules-templates-title'),
 		module: 'RailTemplates'
 	};
 
