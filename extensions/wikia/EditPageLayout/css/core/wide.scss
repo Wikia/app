@@ -135,11 +135,12 @@
 					width: $page-controls-wide-width;
 				}
 
-				// minor edit
+				// checkboxes
 				label {
+					left: 285px;
 					position: absolute;
+					text-align: left;
 					top: 10px;
-					right: 285px;
 				}
 				// summary box
 				textarea {
@@ -163,6 +164,18 @@
 					right: 140px;
 				}
 			}
+		}
+	}
+}
+
+/* CreateBlogPost specific fixes (BugId:9852) */
+.page-Special_CreateBlogPage .editpage-sourcewidemode.mode-source {
+	 #EditPageRail .module_page_controls {
+		.wpIsCommentingEnabled {
+			top: 2px;
+		}
+		.wpMinoredit {
+			top: 18px;
 		}
 	}
 }
