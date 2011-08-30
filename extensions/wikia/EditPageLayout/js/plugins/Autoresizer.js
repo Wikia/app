@@ -14,6 +14,7 @@
 
 		editarea: false,
 		editbox: false,
+		editboxParentPadding: 0,
 		mode: false,
 		rightrail: false,
 		widemode: false,
@@ -46,6 +47,12 @@
 
 		editboxReady: function(editor, editbox) {
 			this.editbox = editbox;
+
+			var editboxParent = editbox.parent();
+			if (editboxParent) {
+				this.editboxParentPadding = editboxParent.outerHeight() - editboxParent.height();
+			}
+
 			this.delayedResize();
 		},
 
@@ -57,6 +64,9 @@
 		getHeightToFit: function(node) {
 			var topOffset = node.offset().top,
 				viewportHeight = $(window).height();
+
+			// add padding from textarea wrapper on permission error pages (BugId:10562)
+			topOffset += this.editboxParentPadding;
 
 			return viewportHeight - topOffset;
 		},
