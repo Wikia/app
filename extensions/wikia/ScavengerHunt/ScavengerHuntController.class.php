@@ -95,4 +95,28 @@ class ScavengerHuntController extends WikiaController {
 			)
 		);
 	}
+
+	public function getGameCacheValue() {
+		$app = WF::build( 'App' );
+		$factory = WF::build( 'ScavengerHuntGames' );
+		$gameId =  $this->getVal( 'gameId', '' );
+		$readWrite =  $this->getVal( 'readwrite', 0 );
+		$key = wfSharedMemcKey( 'ScavengerHuntGameIndex', $gameId, ( $readWrite ? 1 : 0 ) );
+
+		$this->setVal(
+			'key', $key
+		);
+		$this->setVal(
+			'response', unserialize( $factory->getCache()->get( $key ) )
+		);
+	}
+
+	public function getCurrentUserGameData(){
+		$helper = F::build( 'ScavengerHunt' );
+		$this->setVal( 'key', $helper->getCacheKey() );
+		$wgMemc = $this->app->getGlobal('wgMemc');
+		$memcData = $wgMemc->get( $helper->getCacheKey() );
+		$this->setVal( 'val', $memcData );
+	}
+
 }
