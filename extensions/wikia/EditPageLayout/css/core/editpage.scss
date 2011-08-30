@@ -28,12 +28,12 @@
 	background-color: #fff;
 	border-left: solid 1px #eae8e9;
 	border-right: solid 1px #efefef;
-	margin-top: 3px;
 
 	// source mode tweak
 	textarea {
 		@include epl-editorarea;
 		border: 0;
+		margin: 0;
 		padding: 0;
 	}
 }
