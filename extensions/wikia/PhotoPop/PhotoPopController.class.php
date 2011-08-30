@@ -25,7 +25,11 @@ class PhotoPopController extends WikiaController {
 	 * Like all WikiaController subclasses, this is called before any time that other endpoints are triggered.
 	 */
 	public function init(){
+		wfProfileIn(__METHOD__);
+
 		wfLoadExtensionMessages( 'PhotoPop' );
+
+		wfProfileOut(__METHOD__);
 	} // end init()
 
 	/**
@@ -37,9 +41,9 @@ class PhotoPopController extends WikiaController {
 		$this->boardHeight = $this->getVal('height', $this->DEFAULT_HEIGHT);
 
 		// TODO: IMPLEMENT
-		
 		// TODO: IMPLEMENT
 
+		wfProfileOut(__METHOD__);
 	} // end homeScreen()
 
 	/**
@@ -47,12 +51,49 @@ class PhotoPopController extends WikiaController {
 	 * will be served from the wiki on which the game is played regardless of where this selector screen is shown.
 	 */
 	public function selectorScreen(){
+		global $wgExtensionsPath;
+		wfProfileIn(__METHOD__);
+
 		$this->boardWidth = $this->getVal('width', $this->DEFAULT_WIDTH);
 		$this->boardHeight = $this->getVal('height', $this->DEFAULT_HEIGHT);
+		
+		$this->iconSrc = $wgExtensionsPath.'/wikia/PhotoPop/zz_photopop%20assets/Selector%20Drawer/thumb_trueblood.png';
+
+		// TODO: Make local copies of these.
+		$this->jQueryMobile = <<<JQUERY_INCLUDE
+			<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0b2/jquery.mobile-1.0b2.min.css" />
+			<script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
+			<script src="http://code.jquery.com/mobile/1.0b2/jquery.mobile-1.0b2.min.js"></script>
+			
+			<link rel="stylesheet" href="{$wgExtensionsPath}/wikia/PhotoPop/jquery.mobile.scrollview.css" />
+			<script src="{$wgExtensionsPath}/wikia/PhotoPop/js/jquery.easing.1.3.js"></script>
+			<script src="{$wgExtensionsPath}/wikia/PhotoPop/js/jquery.mobile.scrollview.js"></script>
+			<script src="{$wgExtensionsPath}/wikia/PhotoPop/js/scrollview.js"></script>
+JQUERY_INCLUDE;
+
+
 		// TODO: IMPLEMENT
 		// TODO: IMPLEMENT
 
+		wfProfileOut(__METHOD__);
 	} // end selectorScreen()
+
+	/**
+	 * Shows the tutorial screen which will start off as just a static page showing a brief tutorial (won't be a single image though because
+	 * of resizing-issues... we'll have to actually construct a board).
+	 */
+	public function tutorialScreen(){
+		wfProfileIn(__METHOD__);
+		
+		$this->boardWidth = $this->getVal('width', $this->DEFAULT_WIDTH);
+		$this->boardHeight = $this->getVal('height', $this->DEFAULT_HEIGHT);
+		
+		// TODO: IMPLEMENT
+		// TODO: IMPLEMENT
+		
+		
+		wfProfileOut(__METHOD__);
+	} // end tutorialScreen()
 
 	/**
 	 * Since the canvas approach was very slow on mobile devices, this method was
