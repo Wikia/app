@@ -2,7 +2,7 @@
 	<head>
 		<title><?= wfMsg('photopop-title-tag', $wg->Sitename, $categoryReadable) ?></title>
 		<meta name="viewport" content = "width=device-width, initial-scale = 1, minimum-scale = 1, maximum-scale = 1, user-scalable = no" />
-		
+
 	<!-- TODO: MOVE TO A SEPARATE FILE SO THE DEVICE CAN CACHE IT?  At least move the parts that don't depend on variables. -->
 		<style>
 <?php
@@ -11,10 +11,10 @@
 	$CONTINUE_FONT_SIZE_PX = 24;
 	$TIME_UP_FONT_SIZE_PX = ($CONTINUE_FONT_SIZE_PX * 2);
 	$END_GAME_BORDER_RADIUS = 15;
-	
-	// TODO: If front-end team has a sec, it would be nice to have them take a look over it and see what we can clean up.
 
-	// TODO: Figure out how to get as much of this CSS out of the PHP and into an external file (so it can be cached).
+	// TODO: REFACTOR: If front-end team has a sec, it would be nice to have them take a look over it and see what we can clean up.
+
+	// TODO: REFACTOR: Figure out how to get as much of this CSS out of the PHP and into an external file (so it can be cached).
 ?>
 			html {
 				margin:0px;
@@ -32,6 +32,7 @@
 			#gameBoard{
 				width: <?= $boardWidth ?>px;
 				height: <?= $boardHeight ?>px;
+				overflow:hidden;
 			}
 			#bgWrapper{
 				position:absolute;
@@ -382,7 +383,7 @@
 						print "\t\t\t#sprite_{$row}_{$col}{"; // intentionally no trailing linebreak here
 						print "top: {$top}px; ";
 						print "left: {$left}px; ";
-						print "background: transparent url({$frontImageSrc}) -{$left}px -{$top}px; ";
+						print "background: #6495ed url({$frontImageSrc}) -{$left}px -{$top}px; ";
 						print "}\n";
 					}
 				}
