@@ -30,5 +30,6 @@ body {
 
 // wrapper for edit area
 .editpage-editarea {
+	margin-bottom: -3px; // solves Chrome specific issue (BugId:10562)
 	position: relative;
 }

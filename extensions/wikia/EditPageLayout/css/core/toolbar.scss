@@ -92,8 +92,24 @@
 		width: 1px;
 	}
 
-	.cke_toolbar_source {
+	> .cke_toolbar_source {
 		color: #000;
 		padding: 8px 6px 4px;
+		.cke_toolbar_expand {
+			display: inline-block;
+			margin: 0 0 2px 10px;
+			.expand {
+				position: relative;
+				right: 0;
+				top: 0;
+			}
+		}
+		.edittools-button {
+			color: #006CB0;
+			text-decoration: none;
+			font-size: 10px;
+			margin-left: 5px;
+			white-space: nowrap;
+		}
 	}
 }
