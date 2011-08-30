@@ -169,7 +169,7 @@
 				'labs' => array('wgEnableChat'),
 			);
 			$exp4 = array (
-				array ('name' => 'wgEnableChat', 'enabled' => true, 'rating' => 0, 'active' => 500),
+				array ('name' => 'wgEnableChat', 'enabled' => true, 'active' => 500),
 			);
 			$cache_value4 = '500';
 			$wiki_features5 = array_merge($wiki_features3, $wiki_features4);

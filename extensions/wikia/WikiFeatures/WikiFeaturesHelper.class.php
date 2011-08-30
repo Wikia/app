@@ -76,7 +76,6 @@ class WikiFeaturesHelper extends WikiaModel {
 				$list[] = array(
 					'name' => $feature, 
 					'enabled' => $this->app->getGlobal($feature), 
-					'rating' => $this->getRating($feature), 
 					'active' => $this->getNumActiveWikis($feature),
 				);
 			}
@@ -127,12 +126,6 @@ class WikiFeaturesHelper extends WikiaModel {
 	 */
 	public function getMemcKeyNumActiveWikis($feature) {
 		return $this->wf->SharedMemcKey('wikifeatures', 'active_wikis', $feature);
-	}
-	
-	protected function getRating($feature) {
-		$rating = 0;
-		
-		return $rating;
 	}
 	
 	/**
