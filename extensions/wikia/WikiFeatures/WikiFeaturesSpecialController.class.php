@@ -72,7 +72,6 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 
 /**
  * Save a fogbugz ticket
- * @requestParam type $rating
  * @requestParam type $category
  * @requestParam type $message
  * @responseParam string result [OK/error]
@@ -83,7 +82,6 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 		
 		$user = $this->wg->User;
 		$feature = $this->getVal('feature');
-		$rating = $this->getVal('rating', 0);
 		$category = $this->getVal('category');
 		$message = $this->getVal('message');
 	
@@ -103,15 +101,6 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 			$this->error = $this->wf->Msg('wikifeatures-error-invalid-parameter', 'category');
 		}
 		
-		// Rating is optional, 0 is the default if not entered
-		if ( $rating != 0 && ( $rating < 1 || $rating > 5) ) {
-			$this->result = 'error';
-			$this->error = $this->wf->Msg('wikifeatures-error-invalid-parameter', 'rating');
-		} else {
-			// save rating not implemented yet
-			// $project->updateRating( $user->getId(), $rating );
-		}
-
 		if ( !$message || strlen($message) < 10 || strlen($message) > 1000 ) {
 			$this->result = 'error';
 			$this->error = $this->wf->Msg('wikifeatures-error-invalid-parameter', 'message');
