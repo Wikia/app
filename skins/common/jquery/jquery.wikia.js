@@ -819,6 +819,45 @@ $.tmpl = function tmpl(str, data) {
 	return data ? fn(data) : fn;
 };
 
+jQuery.nirvana = {};
+
+/**
+ * Helper to send ajax request to nirvana controller
+ *
+ * @author TomekO
+ */
+
+jQuery.nirvana.sendRequest = function( attr ) {
+	var type = (typeof attr.type == 'undefined') ?  'POST':attr.type.toUpperCase();
+	var format = (typeof attr.format == 'undefined') ?  'json':attr.format.toLowerCase();
+	var data = (typeof attr.data == 'undefined') ? {}:attr.data;
+	var callback = (typeof attr.callback == 'undefined') ? function(){}:attr.callback;
+	
+	if((typeof attr.controller == 'undefined') || (typeof attr.method == 'undefined')) {
+		throw "controller and method are required";
+	}
+	
+	if( !(format === 'json' || format === 'html') ) {
+		throw "Only Json and Html format are allowed";
+	}
+	
+	var data = $.extend( data, {
+		controller: attr.controller,
+		method: attr.method,
+		format: format
+	});	
+	
+	$().log(data, 'request to nirvana');
+	
+	$.ajax({
+		  url: '/wikia.php',
+		  dataType: format,
+		  type: type,
+		  data: data,
+		  success: callback
+	});
+}
+
 //beacon_id cookie
 $(function() {
 	if ( window.beacon_id ) {
