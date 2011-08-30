@@ -37,16 +37,6 @@
 		<p><?= wfMsg('wikifeatures-feedback-description') ?></p>
 		
 		<div class="input-group">
-			<label><?= wfMsg('wikifeatures-feedback-rating-label') ?>:</label>
-			<span class="star-rating" >
-				<? for ($i = 0; $i < 5; $i++) { ?>
-					<img src="<?= $wg->BlankImgUrl ?>">
-				<? } ?>
-			</span>
-			<input type="hidden" name="rating" value="0">
-		</div>
-		
-		<div class="input-group">
 			<label><?= wfMsg('wikifeatures-feedback-type-label') ?></label>
 			<select name="feedback">
 			<?php foreach (WikiFeaturesHelper::$feedbackCategories as $i => $cat) {

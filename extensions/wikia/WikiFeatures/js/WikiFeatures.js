@@ -25,28 +25,10 @@ var WikiFeatures = {
 			modal.find('.feature-highlight h2').text(heading.text());
 			modal.find('.feature-highlight img').attr('src', image.attr('src'));
 			modal.makeModal({width:670});
-			var ratingInput = modal.find('input[name=rating]');
-			var rating = -1;
-			var stars = modal.find('.star-rating img');
+
 			var commentLabel = modal.find('.comment-group label');
 			var comment = modal.find('textarea[name=comment]');
 			var commentCounter = modal.find('.comment-character-count');
-			
-			stars.hover(function(e) {
-				var el = $(this);
-				el.addClass('active').prevAll().addClass('active');
-				el.nextAll().removeClass('active');
-			}, function(e) {
-				for(i = 0; i < stars.length; i++) {
-					if(i <= rating) {
-						$(stars[i]).addClass('active');
-					} else {
-						$(stars[i]).removeClass('active');
-					}
-				}
-			}).click(function(e) {
-				rating = stars.index(this);
-			});
 			
 			modal.find('form').submit(function(e) {
 				e.preventDefault();

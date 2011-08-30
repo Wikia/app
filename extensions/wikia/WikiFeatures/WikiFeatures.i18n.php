@@ -29,7 +29,6 @@ We know they still have their kinks, and we would love to receive your feedback 
 	'wikifeatures-an-idea-for-project' => 'I have an idea for this project',
 	'wikifeatures-feedback-heading' => 'Feedback',
 	'wikifeatures-feedback-description' => 'We love getting feedback on features that are in WikiaLabs.  If you have an idea for how we can improve this feature, or if you have discovered a bug, please add a comment below and the people working on this feature will get your message.',
-	'wikifeatures-feedback-rating-label' => 'Your rating',
 	'wikifeatures-feedback-type-label' => 'What\'s this about?',
 	'wikifeatures-feedback-comment-label' => 'Comment',
 	// feature message list
