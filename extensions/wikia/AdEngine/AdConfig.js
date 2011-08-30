@@ -8,7 +8,12 @@ AdConfig = {
 
 	isHighValueCountry: function(country) {
 		country = country.toUpperCase();
-		return country in window.wgHighValueCountries && window.wgHighValueCountries[country];
+		if (window.wgHighValueCountries) {
+			return country in window.wgHighValueCountries && window.wgHighValueCountries[country];			
+		}
+		else {
+			$().log('WARNING: wgHighValueCountries is null');
+		}
 	},
 
 	isHighValueSlot: function(slotname) {
