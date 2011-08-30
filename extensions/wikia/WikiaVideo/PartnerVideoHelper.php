@@ -8,6 +8,8 @@ class PartnerVideoHelper {
 	private static $MOVIECLIPS_VIDEOS_LISTING_FOR_MOVIE_URL = 'http://api.movieclips.com/v2/movies/$1/videos';
 	private static $MOVIECLIPS_XMLNS = 'http://api.movieclips.com/schemas/2010';
 	private static $TEMP_DIR = '/tmp';
+	
+	private static $CLIP_TYPE_BLACKLIST = array( VideoPage::V_SCREENPLAY => array('trailerType'=>'Home Video', 'trailerVersion'=>'Trailer') );
 
 	protected static $instance;
 
@@ -120,7 +122,7 @@ class PartnerVideoHelper {
 	}
 
 	public function importFromScreenplay($file) {
-		global $parseOnly;
+		global $parseOnly, $debug;
 		
 		$articlesCreated = 0;
 
@@ -183,7 +185,14 @@ class PartnerVideoHelper {
 				}
 
 				$msg = '';
-				$articlesCreated += $this->createVideoPageForPartnerVideo(VideoPage::V_SCREENPLAY, $clipData, $msg);
+				if ($this->isClipTypeBlacklisted(VideoPage::V_SCREENPLAY, $clipData)) {
+					if ($debug) {
+						print "Skipping {$clipData['titleName']} ({$clipData['year']}) - {$clipData['description']}. On clip type blacklist\n";
+					}
+				}
+				else {
+					$articlesCreated += $this->createVideoPageForPartnerVideo(VideoPage::V_SCREENPLAY, $clipData, $msg);
+				}
 				if ($msg) {
 					print "ERROR: $msg\n";
 				}
@@ -267,6 +276,21 @@ class PartnerVideoHelper {
 		}
 
 		return $articlesCreated;
+	}
+	
+	protected function isClipTypeBlacklisted($provider, array $clipData) {
+		// assume that a clip with properties that match exactly undesired
+		// values should not be imported. This assumption will have to
+		// change if we consider values that fall into a range, such as
+		// duration < MIN_VALUE
+		if (is_array(self::$CLIP_TYPE_BLACKLIST[$provider])) {
+			$arrayIntersect = array_intersect(self::$CLIP_TYPE_BLACKLIST[$provider], $clipData);
+			if ($arrayIntersect == self::$CLIP_TYPE_BLACKLIST[$provider]) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 
 	protected function getUrlContent($url) {
