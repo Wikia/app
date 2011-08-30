@@ -24,7 +24,7 @@ var WikiaMobile = {
 		}, 15000 );
 		
 		$( document.body ).one( 'touchend', function() {
-			if( hideOnTimeout ) clearTimeout( hideOnTimeout );
+			if ( hideOnTimeout ) clearTimeout( hideOnTimeout );
 			WikiaMobile.moveAd();
 		});
 	},

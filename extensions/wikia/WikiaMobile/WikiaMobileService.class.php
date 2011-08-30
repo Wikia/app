@@ -48,11 +48,12 @@ class WikiaMobileService extends WikiaService {
 		
 		$srcs = AssetsManager::getInstance()->getGroupCommonURL('wikiamobile_js');
 		//TODO: add scripts from $wgOut as needed
-
 		foreach ( $srcs as $src ) {
 			$jsFiles .= "<script type=\"{$this->wg->JsMimeType}\" src=\"$src\"></script>\n";
 		}
-		
+		//TODO: make it load on hook
+		$src = 'extensions/wikia/JSSnippets/js/JSSnippets.js';
+		$jsFiles .=  Html::inlineScript("if (JSSnippetsStack.length) $.getScript('{$src}');");
 		$this->appCacheManifestPath = ( $this->wg->DevelEnvironment && !$this->wg->Request->getBool( 'appcache' ) ) ? null : self::CACHE_MANIFEST_PATH . "&{$this->wg->StyleVersion}";
 		$this->mimeType = $this->templateObject->data['mimetype'];
 		$this->charSet = $this->templateObject->data['charset'];

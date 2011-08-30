@@ -1194,12 +1194,13 @@ class WikiaPhotoGallery extends ImageGallery {
 			wfProfileOut(__METHOD__);
 			return '';
 		}
-
+		
 		// setup image serving for "big" images
 		$imagesDimensions = array(
 			'w' => WikiaPhotoGalleryHelper::SLIDER_MIN_IMG_WIDTH,
 			'h' => WikiaPhotoGalleryHelper::SLIDER_MIN_IMG_HEIGHT,
 		);
+
 		$imageServingForImages = new ImageServing(null, $imagesDimensions['w'] ,$imagesDimensions);
 
 		// setup image serving for navigation thumbnails
@@ -1231,9 +1232,8 @@ class WikiaPhotoGallery extends ImageGallery {
 
 				// generate cropped version of big image (fit within 660x360 box)
 				// BugId:9678 image thumbnailer does not always land on 360px height since we scale on width
-				// so this also scales image UP if it is too small (stretched is better than blank)				
+				// so this also scales image UP if it is too small (stretched is better than blank)
 				$imageUrl = $imageServingForImages->getUrl($img, WikiaPhotoGalleryHelper::SLIDER_MIN_IMG_WIDTH, WikiaPhotoGalleryHelper::SLIDER_MIN_IMG_HEIGHT);
-
 				// generate navigation thumbnails
 				$thumbUrl = $imageServingForThumbs->getUrl($img, $img->getWidth(), $img->getHeight());
 
@@ -1252,6 +1252,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		}
 
 		$html = '';
+		
 		//check if we have something to show (images might not match required sizes)
 		if ( count( $out ) ) {
 			$template = new EasyTemplate(dirname(__FILE__) . '/templates');
