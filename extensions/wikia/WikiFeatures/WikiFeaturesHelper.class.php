@@ -9,6 +9,36 @@
 class WikiFeaturesHelper extends WikiaModel {
 
 	protected static $instance = NULL;
+	protected $fogbugzService = NULL;
+	
+	const FOGBUGZ_PROJECT_ID = 24;  // This is the "Product Feedback" Project ID in Fogbugz
+	const FOGBUGZ_CASE_TITLE = 'WikiFeatures Feedback - Project: ';
+	const FOGBUGZ_CASE_TAG = 'WikiFeaturesFeedback';
+	const FEEDBACK_FREQUENCY = 60;
+	
+	/**
+	 * @var array with feedback categories and its title and priority
+	 */
+
+	public static $feedbackCategories = array(
+		0 => array('title' => null, 'msg' => 'wikifeatures-category-choose-one'),
+		1 => array('title' => 'Love', 'msg' => 'wikifeatures-love-this-project'),
+		2 => array('title' => 'Hate', 'msg' => 'wikifeatures-hate-this-project'),
+		3 => array('title' => 'Problem', 'msg' => 'wikifeatures-problem-with-project'),
+		4 => array('title' => 'Idea', 'msg' => 'wikifeatures-an-idea-for-project'),
+	);
+	
+	public static $feedbackAreaIDs = array (
+		'wgEnableAjaxPollExt' => 280,			// Polls
+		'wgEnableTopListsExt' => 199,			// Top 10 Lists
+		'wgEnableAchievementsExt' => 247,		// Achievements
+		'wgEnablePageLayoutBuilder' => 198,		// Page Layout Builder
+		'wgEnableBlogArticles' => 281,			// Blogs
+		'wgEnableArticleCommentsExt' => 200,	// Article Comments
+		'wgEnableCategoryExhibitionExt' => 201,	// Category Exhibition
+		'wgEnableChat' => 258,					// Chat
+		'wgEnableEditPageReskinExt' => 254,		// Editor Redesign (new RTE)		
+	);
 	
 	public static function getInstance() {
 		if (self::$instance === NULL) {
@@ -104,5 +134,69 @@ class WikiFeaturesHelper extends WikiaModel {
 		
 		return $rating;
 	}
+	
+	/**
+	 * @brief checks if this is not a spam attempt
+	 * 
+	 * @param string $userName name retrived from user object
+	 * @param string $feature name of wikifeatures variable
+	 * 
+	 * @return true | Array array when an error occurs
+	 */
+	public function isSpam($userName, $feature) {
+
+		// it didn't work without urlencode($userName) maybe because of multibyte signs
+		$memcKey = $this->wf->MemcKey('wikifeatures', urlencode($userName), $feature, 'spamCheckTime' );
+		$result = $this->wg->Memc->get($memcKey);
+		
+		if( empty($result) ) {
+			$this->wg->Memc->set($memcKey, true, self::FEEDBACK_FREQUENCY);
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	
+	public function getFogbugzService() {
+		if( $this->fogbugzService == null ) {
+			$this->fogbugzService = WF::build( 
+					'FogbugzService', array( 
+						$this->wg->fogbugzAPIConfig['apiUrl'], 
+						$this->wg->fogbugzAPIConfig['username'], 
+						$this->wg->fogbugzAPIConfig['password'], 
+						$this->app->getGlobal( 'wgHTTPProxy' ) 
+					) 
+				);
+		}
+		return $this->fogbugzService;
+	}
+	
+		
+	/**
+	 * Helper that actually saves feedback in fogbugz
+	 * 
+	 * @param string $feature name of the feature
+	 * @param string $message feedback message
+	 * @param string $userEmail user's e-mail address
+	 * @param string $userName user's name
+	 * @param integer $feedbackCat feedback category which is defined above in $feedbackCategories property (equals piority in FogBugz: 4-7)
+	 */
+	public function saveFeedbackInFogbugz( $feature, $userEmail, $userName, $message, $category, $priority = 5 ) {
+
+		$areaId = self::$feedbackAreaIDs[$feature];
+		$title = self::FOGBUGZ_CASE_TITLE . $feature .' - '.self::$feedbackCategories[$category]['title'];
+		
+		$message = <<<MSG
+User name: $userName
+Wiki name: {$this->app->getGlobal('wgSitename')}
+Wiki address: {$this->app->getGlobal('wgServer')}
+Feature: $feature
+
+$message
+MSG;
+		
+		return $this->getFogbugzService()->logon()->createCase( $areaId, $title, $priority, $message, array( self::FOGBUGZ_CASE_TAG ), $userEmail, self::FOGBUGZ_PROJECT_ID );
+	}	
 	
 }
