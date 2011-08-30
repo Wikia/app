@@ -56,10 +56,30 @@ class PhotoPopController extends WikiaController {
 
 		$this->boardWidth = $this->getVal('width', $this->DEFAULT_WIDTH);
 		$this->boardHeight = $this->getVal('height', $this->DEFAULT_HEIGHT);
-		
+
+		// Configuration for the different available games.
+		$iconDir = "$wgExtensionsPath/wikia/PhotoPop/gameicons";
+		$watermarkDir = "$wgExtensionsPath/wikia/PhotoPop/watermarks";
+		$this->games = array(
+			new PhotoPopGameConfig("True Blood", "Category:Characters", "trueblood", "$iconDir/thumb_trueblood.png", "$watermarkDir/trueblood.png"),
+			new PhotoPopGameConfig("Glee Wiki", "Category:Characters", "glee", "$iconDir/thumb_glee.png", "$watermarkDir/glee.png"),
+			new PhotoPopGameConfig("LyricWiki", "Category:Album", "lyrics", "$iconDir/thumb_lyrics.png", "$watermarkDir/lyrics.png"),
+			new PhotoPopGameConfig("Muppet Wiki", "Category:The_Muppets_Characters", "muppet", "$iconDir/thumb_muppet.png", "$watermarkDir/muppet.png"),
+			new PhotoPopGameConfig("Dexter Wiki", "Category:Characters", "dexter", "$iconDir/thumb_dexter.png", "$watermarkDir/dexter.png"),
+			new PhotoPopGameConfig("Futurama", "Category:Characters", "futurama", "$iconDir/thumb_futurama.png", "$watermarkDir/futurama.png"),
+			new PhotoPopGameConfig("Twilight Saga", "Category:Characters", "twilightsaga", "$iconDir/thumb_twilight.png", "$watermarkDir/twilight.png")
+		);
+		$this->numItems = count($this->games);
+
+		$this->iconWidth = 120;
+		$this->iconHeight = 120;
 		$this->iconSrc = $wgExtensionsPath.'/wikia/PhotoPop/zz_photopop%20assets/Selector%20Drawer/thumb_trueblood.png';
 
-		// TODO: Make local copies of these.
+		// TODO: PERFORMANCE TASKS
+			// TODO: Make local copies of the remote files (less DNS lookups & lets us combine them).
+			// TODO: Combine as many of these files as possible (but keep them below 25k)
+			// TODO: Make a cache-manifest to cache the files (since some are already too big) then combine into just ONE js file.
+		// TODO: PERFORMANCE TASKS
 		$this->jQueryMobile = <<<JQUERY_INCLUDE
 			<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0b2/jquery.mobile-1.0b2.min.css" />
 			<script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
@@ -70,10 +90,6 @@ class PhotoPopController extends WikiaController {
 			<script src="{$wgExtensionsPath}/wikia/PhotoPop/js/jquery.mobile.scrollview.js"></script>
 			<script src="{$wgExtensionsPath}/wikia/PhotoPop/js/scrollview.js"></script>
 JQUERY_INCLUDE;
-
-
-		// TODO: IMPLEMENT
-		// TODO: IMPLEMENT
 
 		wfProfileOut(__METHOD__);
 	} // end selectorScreen()

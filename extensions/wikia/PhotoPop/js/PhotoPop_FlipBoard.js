@@ -632,7 +632,7 @@ self.log("ERROR LOADING COVERED IMAGE");
 				console.log(msg);
 			}
 		};
-		
+
 		this.mwError = function(e){
 			self.log("MediaWiki API error: ");
 			self.log(e); // note: .code and .info are provided.
