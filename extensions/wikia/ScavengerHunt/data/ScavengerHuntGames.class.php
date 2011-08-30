@@ -323,13 +323,13 @@ class ScavengerHuntGames {
 				$this	->getCache()
 					->delete( wfSharedMemcKey(
 						'ScavengerHuntGameIndex',
-						$game->getLandingArticleWikiId(),
+						$game->getId(),
 						0
 					));
 				$this	->getCache()
 					->delete( wfSharedMemcKey(
 						'ScavengerHuntGameIndex',
-						$game->getLandingArticleWikiId(),
+						$game->getId(),
 						1
 					));
 				$this->purgeURL( $url );

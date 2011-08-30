@@ -301,7 +301,7 @@ class ScavengerHunt {
 	/*
 	 * Cache function
 	 */
-	protected function getCacheKey() {
+	public function getCacheKey() {
 		$huntId = $this->getHuntId();
 		if ( empty( $huntId ) ){
 			return false;
