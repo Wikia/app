@@ -37,11 +37,6 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string error (error message)
 	 */
 	public function toggleFeature() {
-		if (!$this->wg->User->isAllowed( 'wikifeatures' )) {
-			$this->displayRestrictionError();
-			return false;  // skip rendering
-		}
-	
 		$enabled = $this->getVal('enabled', null);
 		$feature = $this->getVal('feature', null);
 		
