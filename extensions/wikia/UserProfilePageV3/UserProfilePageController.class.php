@@ -80,7 +80,9 @@ class UserProfilePageController extends WikiaController {
 		$this->setVal( 'wgBlankImgUrl', $this->wg->BlankImgUrl );
 		
 		$sessionUser = $this->wg->User;
-		$user = $this->getUserFromTitle($this->title);
+		
+		$this->setRequest( new WikiaRequest($this->app->wg->Request->getValues()) );
+		$user = $this->getUserFromTitle();
 		
 		$userIdentityBox = F::build('UserIdentityBox', array($this->app, $user, self::MAX_TOP_WIKIS));
 		$isUserPageOwner = (!$user->isAnon() && $user->getId() == $sessionUser->getId()) ? true : false;
@@ -133,7 +135,9 @@ class UserProfilePageController extends WikiaController {
 		$this->app->wf->ProfileIn( __METHOD__ );
 		
 		$namespace = $this->title->getNamespace();
-		$user = $this->getUserFromTitle($this->title);
+		
+		$this->setRequest( new WikiaRequest($this->app->wg->Request->getValues()) );
+		$user = $this->getUserFromTitle();
 		
 		$sessionUser = $this->wg->User;
 		$canRename = $sessionUser->isAllowed('renameprofilev3');
@@ -790,22 +794,33 @@ class UserProfilePageController extends WikiaController {
 	/**
 	 * @brief Get user object from given title
 	 * 
-	 * @param Title $title current title
+	 * @desc getUserFromTitle() is sometimes called in hooks therefore I added returnUser flag and when
+	 * it is set to true getUserFromTitle() will assign $this->user variable with a user object
+	 * 
+	 * @requestParam Title $title title object
+	 * @requestParam Boolean $returnUser a flag set to true or false
 	 * 
 	 * @return User
 	 * 
 	 * @author ADi
 	 * @author nAndy
 	 */
-	private function getUserFromTitle( Title $title ) {
+	public function getUserFromTitle() {
 		$this->app->wf->ProfileIn( __METHOD__ );
+		
+		$title = $this->getVal('title');
+		$returnUserInData = (boolean) $this->getVal('returnUser');
+		
+		if( !empty($title) && is_string($title) && strpos($title, ':') !== false ) {
+			$title = F::build('Title', array($title), 'newFromText');
+		}
 		
 		$user = null;
 		
-		if( in_array( $title->getNamespace(), $this->allowedNamespaces ) ) {
+		if( $title instanceof Title && in_array( $title->getNamespace(), $this->allowedNamespaces ) ) {
 			// get "owner" of this user / user talk / blog page
 			$parts = explode('/', $title->getText());
-		} else if( $title->getNamespace() == NS_SPECIAL && ($title->isSpecial('Following') || $title->isSpecial('Contributions')) ) {
+		} else if( $title instanceof Title && $title->getNamespace() == NS_SPECIAL && ($title->isSpecial('Following') || $title->isSpecial('Contributions')) ) {
 			$target = $this->getVal('target');
 			$target = ( empty($target) ) ? $this->app->wg->Request->getVal('target') : $target;
 			
@@ -827,7 +842,7 @@ class UserProfilePageController extends WikiaController {
 			}
 		}
 		
-		if( isset($parts[0]) && ($parts[0] != '') ) {
+		if( !empty($parts[0]) ) {
 			$userName = str_replace('_', ' ', $parts[0]);
 			$user = F::build('User', array($userName), 'newFromName');
 		}
@@ -847,6 +862,10 @@ class UserProfilePageController extends WikiaController {
 			$user = $this->app->wg->User;
 		}
 		
+		if( $returnUserInData ) {
+			$this->user = $user;
+		}
+		
 		$this->app->wf->ProfileOut( __METHOD__ );
 		return $user;
 	}
@@ -860,7 +879,7 @@ class UserProfilePageController extends WikiaController {
 		$this->setRequest( new WikiaRequest( $this->app->wg->Request->getValues() ) );
 		
 		$title = $this->app->wg->Title;
-		$user = $this->getUserFromTitle( $title );
+		$user = $this->getUserFromTitle();
 		
 		if( $user instanceof User ) {
 			$response = $this->app->sendRequest(
