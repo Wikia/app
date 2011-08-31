@@ -47,10 +47,18 @@
 							<?= $user['registration'] ?>
 						</span>
 					<? else: ?>
-						<?= wfMsg('user-identity-box-edits', array( '$1' => $user['edits'] ) ); ?>
-					<? endif; ?>
+						<?php if( $user['edits'] >= 0 ): ?>
+							<?= wfMsg('user-identity-box-edits', array( '$1' => $user['edits'] ) ); ?>
+						<?php else: ?>
+							<br />
+						<?php endif; ?>
+					<?php endif; ?>
 				<? else: ?>
-					<?= wfMsg('user-identity-box-edits', array( '$1' => $user['edits'] ) ); ?>
+					<?php if( $user['edits'] >= 0 ): ?>
+						<?= wfMsg('user-identity-box-edits', array( '$1' => $user['edits'] ) ); ?>
+					<?php else: ?>
+						<br />
+					<?php endif; ?>
 				<? endif; ?>
 			</div>
 
