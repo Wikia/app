@@ -199,6 +199,7 @@ $messages['fr'] = array(
 $messages['gl'] = array(
 	'cloakcheck' => 'Comprobación da elixibilidade do enmascaramento do IRC',
 	'cloakcheck-desc' => 'Proporciona unha interface integrada para comprobar os requirimentos do enmascaramento do IRC',
+	'right-cloakcheck' => 'pode comprobar a información relacionada co enmascaramento do IRC noutros usuarios',
 	'cloakcheck-form-username' => 'Nome de usuario:',
 	'cloakcheck-form-check' => 'Comprobar o nome de usuario',
 	'cloakcheck-form-check-self' => 'Comprobar a elixibilidade do enmascaramento do IRC',
@@ -275,7 +276,7 @@ $messages['ja'] = array(
 	'cloakcheck-process-edits-no' => '編集回数が不足しています。',
 );
 
-/** Kurdish (Latin) (Kurdî (Latin))
+/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(

@@ -39,7 +39,7 @@ $messages['af'] = array(
 $messages['ast'] = array(
 	'mostvisitedpages' => 'Páxines más vistes',
 	'mostvisitedpagessearchtext' => 'Nome del artículu:',
-	'mostvisitedpagessearchbtn' => 'busca',
+	'mostvisitedpagessearchbtn' => 'guetar',
 	'mostvisitedpageslatest' => 'nos caberos $1 minutos',
 	'mostvisitedpageslatestlink' => 'Ver les caberes páxines vistes',
 	'mostvisitedpagesalllink' => 'Ver les páxines más vistes',
@@ -295,7 +295,7 @@ $messages['kn'] = array(
 	'mostvisitedpagesalllink' => 'ಅತ್ಯಂತ ಹೆಚ್ಚು ಭೇಟಿಕೊಟ್ಟ ಪುಟಗಳನ್ನು ನೋಡಿ',
 );
 
-/** Kurdish (Latin) (Kurdî (Latin))
+/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(

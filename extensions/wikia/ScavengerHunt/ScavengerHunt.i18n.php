@@ -269,21 +269,22 @@ $messages['br'] = array(
 /** German (Deutsch)
  * @author George Animal
  * @author LWChris
+ * @author Tiin
  */
 $messages['de'] = array(
 	'scavengerhunt-desc' => 'Ermöglicht das Erstellen einer Schnitzeljagd in einem Wiki',
 	'scavengerhunt' => 'Schnitzeljagd Schnittstelle',
 	'scavengerhunt-list-header-name' => 'Spielname',
-	'scavengerhunt-list-header-is-enabled' => 'Aktiviert?',
+	'scavengerhunt-list-header-is-enabled' => 'Aktiviert? (zum Umschalten anklicken)',
 	'scavengerhunt-list-header-actions' => 'Aktionen',
 	'scavengerhunt-list-enabled' => 'Aktiviert',
 	'scavengerhunt-list-disabled' => 'Deaktiviert',
 	'scavengerhunt-list-edit' => 'bearbeiten',
-	'scavengerhunt-label-dialog-check' => '(Dialog anzeigen)',
+	'scavengerhunt-label-dialog-check' => '(Visuellen Editor anzeigen - Pre-Alpha, noch nicht funktionsfähig)',
 	'scavengerhunt-label-image-check' => '(Bild anzeigen)',
 	'scavengerhunt-label-general' => 'Allgemein',
 	'scavengerhunt-label-name' => 'Name:',
-	'scavengerhunt-label-landing-title' => 'Name der Zielseite (Titel des Artikels in diesem Wiki):',
+	'scavengerhunt-label-landing-title' => 'Name der Zielseite (URL des Artikels in beliebigem Wiki):',
 	'scavengerhunt-label-landing-button-text' => 'Schaltflächentext der Zielseite:',
 	'scavengerhunt-label-starting-clue' => 'Start-Hinweispopup',
 	'scavengerhunt-label-starting-clue-title' => 'Popup Titel:',
@@ -315,9 +316,9 @@ $messages['de'] = array(
 	'scavengerhunt-button-delete' => 'Löschen',
 	'scavengerhunt-button-export' => 'Nach CSV exportieren',
 	'scavengerhunt-form-error' => 'Bitte korrigiere die folgenden Fehler:',
-	'scavengerhunt-form-error-no-landing-title' => 'Bitte gib den Titel der Startseite ein.',
+	'scavengerhunt-form-error-no-landing-title' => 'Bitte gib den Namen der Zielseite ein (gültige URL).',
 	'scavengerhunt-form-error-invalid-title' => 'Die folgende Seite wurde nicht gefunden: "$1".',
-	'scavengerhunt-form-error-landing-button-text' => 'Bitte gib den Start-Schaltflächentext ein.',
+	'scavengerhunt-form-error-landing-button-text' => 'Bitte gib den Schaltflächentext der Zielseite ein.',
 	'scavengerhunt-form-error-starting-clue' => 'Bitte fülle alle Felder im Abschnitt Start-Hinweis aus.',
 	'scavengerhunt-form-error-entry-form' => 'Bitte fülle alle Felder im Abschnitt Eingabeformular aus.',
 	'scavengerhunt-form-error-goodbye' => 'Bitte fülle alle Felder im Abschnitt Goodbye-Popup aus.',
@@ -333,6 +334,14 @@ $messages['de'] = array(
 	'scavengerhunt-entry-form-name' => 'Dein Name:',
 	'scavengerhunt-entry-form-email' => 'Deine E-Mail-Adresse:',
 	'scavengerhunt-entry-form-submit' => 'Eingabe absenden',
+);
+
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
+ * @author Tiin
+ */
+$messages['de-formal'] = array(
+	'scavengerhunt-form-error-no-landing-title' => 'Bitte geben Sie den Namen der Zielseite ein (gültige URL).',
+	'scavengerhunt-form-error-landing-button-text' => 'Bitte geben Sie den Schaltflächentext der Zielseite ein.',
 );
 
 /** Spanish (Español)
@@ -603,7 +612,7 @@ $messages['ia'] = array(
 	'scavengerhunt-entry-form-submit' => 'Submitter entrata',
 );
 
-/** Kurdish (Latin) (Kurdî (Latin))
+/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -833,10 +842,13 @@ $messages['ms'] = array(
 	'scavengerhunt-button-enable' => 'Hidupkan',
 	'scavengerhunt-button-delete' => 'Hapuskan',
 	'scavengerhunt-button-export' => 'Eksport ke CSV',
+	'scavengerhunt-button-add-section' => 'Tambahkan satu lagi langkah dalam Pemburuan',
+	'scavengerhunt-button-remove-section' => 'Buang langkah ini',
 	'scavengerhunt-form-error' => 'Sila betulkan kesilapan berikut:',
 	'scavengerhunt-form-error-no-landing-title' => 'Sila berikan tajuk laman Pendaratan (URL yang sah).',
 	'scavengerhunt-form-error-invalid-title' => 'Tajuk laman berikut tidak dijumpai: "$1".',
 	'scavengerhunt-form-error-landing-button-text' => 'Sila isikan teks butang laman Pendaratan.',
+	'scavengerhunt-form-error-landing-button-position' => 'Sila masukkan kedudukan butang laman Pendaratan.',
 	'scavengerhunt-form-error-starting-clue' => 'Sila isikan semua ruangan dalam bahagian bayangan permulaan.',
 	'scavengerhunt-form-error-entry-form' => 'Sila isikan semua ruangan dalam bahagian borang kemasukan.',
 	'scavengerhunt-form-error-goodbye' => 'Sila isikan semua ruangan dalam bahagian tetimbul selamat jalan.',
@@ -852,6 +864,8 @@ $messages['ms'] = array(
 	'scavengerhunt-entry-form-name' => 'Nama anda:',
 	'scavengerhunt-entry-form-email' => 'Alamat e-mel anda:',
 	'scavengerhunt-entry-form-submit' => 'Hantar penyertaan',
+	'scavengerhunt-game-more-to-go' => 'Tinggal # lagi saja.',
+	'scavengerhunt-label-progress-bar' => 'Bar kemajuan',
 	'scavengerhunt-quit-game-button-quit' => 'Keluar',
 	'scavengerhunt-quit-game-button-cancel' => 'Batalkan',
 	'scavengerhunt-quit-game-button-stay' => 'Teruskan Bermain',
@@ -861,6 +875,7 @@ $messages['ms'] = array(
 	'scavengerhunt-label-clue-color' => 'Warna huruf',
 	'scavengerhunt-label-clue-size' => 'Saiz huruf',
 	'scavengerhunt-label-clue-font' => 'Hiasan huruf',
+	'scavengerhunt-label-article-congrats' => 'Surat tahniah',
 );
 
 /** Dutch (Nederlands)
@@ -979,6 +994,7 @@ $messages['nl'] = array(
 	'scavengerhunt-label-clue-size' => 'Lettergrootte',
 	'scavengerhunt-label-clue-font' => 'Lettertypedecoraties',
 	'scavengerhunt-label-article-congrats' => 'Gefeliciteerdbericht',
+	'scavengerhunt-label-facebook' => 'Delen via Facebook',
 	'scavengerhunt-editor-tip-name' => 'Dit is de naam die wordt weergegeven in de lijst met alle speurtochten.',
 	'scavengerhunt-editor-tip-landing-title' => 'Dit is de pagina waar gebruikers heengaan om met een speurtocht te beginnen.',
 	'scavengerhunt-editor-tip-landing-button-text' => 'Dit is het tekstlabel voor de knop "Start", bijvoorbeeld "Klik hier om te beginnen!".',
@@ -1000,6 +1016,8 @@ $messages['nl'] = array(
 	'scavengerhunt-editor-tip-article-title' => 'Dit is de locatie van de pagina met het volgende item.',
 	'scavengerhunt-editor-tip-entry-form-title' => 'Dit is titel voor het popupvenster dat verschijnt aan het van de speurtocht.',
 	'scavengerhunt-editor-tip-entry-form-text' => 'Dit is tekst voor het popupvenster dat verschijnt aan het van de speurtocht.',
+	'scavengerhunt-facebook-image' => 'Afbeelding voor delen via Facebook',
+	'scavengerhunt-facebook-description' => 'Tekst voor delen via Facebook',
 );
 
 /** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)

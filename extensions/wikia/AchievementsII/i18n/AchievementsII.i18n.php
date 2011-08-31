@@ -3018,7 +3018,7 @@ sur la page de discussion de quelqu’un d'autre !",
 	'achievements-badge-desc-pounce' => 'pour avoir fait des modifications sur 100 pages dans l’heure suivant la création de la page !',
 	'achievements-badge-desc-caffeinated' => 'pour avoir fait 100 modifications sur des pages en un seul jour !',
 	'achievements-badge-desc-luckyedit' => 'pour avoir fait la modification chanceuse n°$1 sur le wiki !',
-	'achievements-userprofile-title-no' => 'Badges gagnés de $1',
+	'achievements-userprofile-title-no' => 'Badges gagnés par $1',
 	'achievements-userprofile-title' => '{{PLURAL:$2|Badge|Badges}} gagnés par $1 ($2)',
 	'achievements-userprofile-no-badges-owner' => 'Jetez un œil à la liste ci-dessous pour voir les badges que vous pouvez gagner sur ce wiki !',
 	'achievements-userprofile-no-badges-visitor' => 'Cet utilisateur n’a pas encore gagné de badge.',
@@ -4429,7 +4429,7 @@ op sing Klaafsigg jedonn ze han!',
 	'achievements-userprofile-no-badges-visitor' => 'Dä Metmaacher hät noch kein Afzeische verdeent.',
 );
 
-/** Kurdish (Latin) (Kurdî (Latin))
+/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -4499,7 +4499,7 @@ $messages['lb'] = array(
 	'achievements-community-platinum-enabled' => 'aktivéiert',
 	'achievements-community-platinum-edit' => 'änneren',
 	'achievements-community-platinum-save' => 'späicheren',
-	'achievements-community-platinum-cancel' => 'Ofbriechen',
+	'achievements-community-platinum-cancel' => 'ffbriechen',
 	'achievements-community-platinum-sponsored-badge-click-tooltip' => 'Klickt fir méi Informatiounen',
 	'achievements-badge-name-edit-0' => 'Maacht den Ënnerscheed',
 	'achievements-badge-name-edit-1' => 'Just den Ufank',
@@ -7369,8 +7369,12 @@ $messages['roa-tara'] = array(
 	'achievements-leaderboard-rank-label' => 'Posizione',
 	'achievements-leaderboard-member-label' => 'Membre',
 	'achievements-leaderboard-points-label' => 'Punde',
+	'achievements-send' => "Reggistre l'immaggine",
+	'achievements-save' => 'Reggistre le cangiaminde',
+	'achievements-customize' => "Personalizze l'immaggine",
 	'achievements-enable-track' => 'abbilitate',
 	'achievements-special-saved' => 'Cnagiaminde reggistrate.',
+	'achievements-about-title' => "'Mbormaziune sus a sta pàgene...",
 	'platinum' => 'Platine',
 	'achievements-community-platinum-how-to-earn' => 'Cumme guadagnà:',
 	'achievements-community-platinum-awarded-for-example' => 'p.e. "pe fa..."',
@@ -7386,6 +7390,7 @@ $messages['roa-tara'] = array(
 	'achievements-badge-name-category-0' => "Fà 'na connessione",
 	'achievements-badge-name-category-2' => 'Esploratore',
 	'achievements-badge-name-category-3' => 'Guide Turisteche',
+	'achievements-badge-name-category-4' => 'Navigatore',
 	'achievements-badge-name-blogpost-0' => 'Quacchecose da dicere',
 	'achievements-badge-name-blogpost-1' => 'Cinghe Cose da dicere',
 	'achievements-badge-name-blogcomment-0' => 'Opinioniste',
@@ -7394,6 +7399,8 @@ $messages['roa-tara'] = array(
 	'achievements-badge-name-love-2' => 'Devote',
 	'achievements-badge-name-love-3' => 'Dedicate',
 	'achievements-badge-name-sharing-4' => 'Evangeliste',
+	'achievements-badge-name-welcome' => "Bovègne jndr'à Uicchi",
+	'achievements-badge-name-introduction' => "'Ndroduzione",
 );
 
 /** Russian (Русский)
@@ -7880,7 +7887,7 @@ Försök med en annan!',
 	'achievements-community-platinum-save' => 'spara',
 	'achievements-community-platinum-cancel' => 'avbryt',
 	'achievements-community-platinum-sponsored-label' => 'Sponsrade utmärkelser',
-	'achievements-community-platinum-sponsored-hover-content-label' => 'Bild <small>(minsta storlek: 270px x 100px)</small>:',
+	'achievements-community-platinum-sponsored-hover-content-label' => 'Hovringsbild <small>(minsta storlek: 270px x 100px)</small>:',
 	'achievements-community-platinum-sponsored-badge-click-tooltip' => 'Klicka för mer information',
 	'achievements-badge-name-edit-0' => 'Att göra skillnad',
 	'achievements-badge-name-edit-1' => 'Bara början',
@@ -7969,6 +7976,7 @@ på någon annans diskussionssida!',
 	'achievements-badge-your-desc-blogcomment' => 'för att skriva en kommentar på {{PLURAL:$1|ett blogginlägg|$1 olika blogginlägg}}!',
 	'achievements-badge-your-desc-love' => 'för att bidra till wikin varje dag i {{PLURAL:$1|en dag|$1 dagar}}!',
 	'achievements-badge-your-desc-welcome' => 'för att gå med i wikin!',
+	'achievements-badge-your-desc-introduction' => 'för att lägga till din egen användarsida!',
 	'achievements-badge-your-desc-sayhi' => 'för att lämna ett meddelande på någon annans diskussionssida!',
 	'achievements-badge-your-desc-creator' => 'för att skapa wikin!',
 	'achievements-badge-your-desc-caffeinated' => 'för att göra 100 redigeringar på en enda dag!',
@@ -8356,7 +8364,7 @@ Lütfen bir başkasını deneyin.',
 	'achievements-badge-desc-creator' => 'wiki oluşturduğun için!',
 );
 
-/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+/** Татарча (Татарча)
  * @author Ajdar
  * @author Рашат Якупов
  */
@@ -8382,7 +8390,7 @@ $messages['tt-cyrl'] = array(
 	'achievements-bronze-points' => '10<br />балл',
 	'achievements-you-must' => 'Бу тамганы алыр өчен, сезгә $1 кирәк',
 	'leaderboard-button' => 'Казанышлар буенча лидерлар',
-	'achievements-masthead-points' => '$1 <small>{{PLURAL:$1|балл|баллар}}</small>',
+	'achievements-masthead-points' => '$1 <small>{{PLURAL:$1|балл|балл}}</small>',
 	'achievements-profile-title-no' => '$1 катнашучысының тамгалары',
 	'achievements-no-badges' => 'Бу викида яулап алырга мөмкин булган тамгалар исемлеген карагыз!',
 	'achievements-track-name-edit' => 'Трекны үзгәртү',
@@ -8404,7 +8412,7 @@ $messages['tt-cyrl'] = array(
 	'achievements-ranked' => 'Бу викида #$1 дәрәҗәсе',
 	'achievements-viewall' => 'Барысын да карау',
 	'achievements-viewless' => 'Ябу',
-	'achievements-profile-title-oasis' => 'казанышларның <br /> баллары',
+	'achievements-profile-title-oasis' => 'казанышларның <br /> баллы',
 	'achievements-ranked-oasis' => '$1 бу вики-сайтта [[Special:Leaderboard|#$2 урында]]',
 	'achievements-viewall-oasis' => 'Барысын да карау',
 	'achievements-toggle-hide' => 'Минем кулланучы битемдә тамгаларны, баллар санын һәм минем дәрәҗәне күрсәтмәскә',
@@ -8424,7 +8432,7 @@ $messages['tt-cyrl'] = array(
 	'achievements-leaderboard-rank-label' => 'Дәрәҗә',
 	'achievements-leaderboard-member-label' => 'Катнашучы',
 	'achievements-leaderboard-points-label' => 'Баллар',
-	'achievements-leaderboard-points' => '$1 {{PLURAL:$1|балл|баллар}}',
+	'achievements-leaderboard-points' => '$1 {{PLURAL:$1|балл|балл}}',
 	'achievements-leaderboard-most-recently-earned-label' => 'Яңа казанышлар',
 	'achievements-send' => 'Рәсемне саклау',
 	'achievements-save' => 'Үзгәртүләрне саклау',
@@ -8453,9 +8461,25 @@ $messages['tt-cyrl'] = array(
 Уңышлар!",
 	'achievements-edit-plus-category-track-name' => '$1 трек үзгәртелгән',
 	'achievements-create-edit-plus-category-title' => 'Яңа трек ясау',
+	'achievements-create-edit-plus-category-content' => 'Сез ике төрле төркем өчен ике трек ясап, катнашучылар арасында бәйгеләр оештыра аласыз!
+Мәсәлән, Татарлар һәм Башкортлар, авыллар һәм шәһәрләр арасында. Шулай ук, Былтыр атнасын яки корал атнасын үткәрергә мөмкин.
+
+Яңа трек ясар өчен, астагы юлда төркем исемен языгыз. Стандарт треклар бу очракта үзгәрмәячәкләр;
+Сез ирекле рәвештә үзгәртерлек аерым трек ясаячаксыз. 
+
+Яңа трек ясагач та, яңа тамгалар сулдагы исемлектә стандарт тамгалар белән бергә булачаклар.
+Яңа трек тамгаларының исемнәрен һәм рәсемнәрен көйләгез!
+
+Яңа трек көйләнмәләрен тәмамлагач, яңа трекны кушыр өчен, "{{int:achievements-enable-track}}" дигән урында әләм куегыз, ә аннары "{{int:achievements-save}}" төймәсенә басыгыз.
+Боларны эшләгәч тә, катнашучылар яңа трек төркемендәге мәкаләләрне үзгәрткән өчен яңа тамгалар алачаклар.
+Сез трекны теләсә кайсы вакытта сүндерә аласыз.
+Ул төркем тамгаларын үзгәрткән катнашучылар яулап алган тамгаларын югалтмаячаклар, тамга аларда гел булачак.
+
+Яңа треклар сезнең Викидә төрле бүлекләрнең үсеше өчен ярдәм итәчәк.
+Уңышлар!',
 	'achievements-create-edit-plus-category' => 'Трек ясау',
 	'platinum' => 'Платина',
-	'achievements-community-platinum-awarded-email-subject' => 'Сез яңа платинала тамга алдыгыз!',
+	'achievements-community-platinum-awarded-email-subject' => 'Сез яңа платиналы тамга алдыгыз!',
 	'achievements-community-platinum-awarded-email-body-text' => 'Котлыйбыз $1!
 
 Сез $4 ($3) сайтында «$2» платиналы тамгасы белән бүләкләндегез!
@@ -8483,14 +8507,40 @@ $5',
 	'achievements-community-platinum-cancel' => 'Кире кагу',
 	'achievements-community-platinum-sponsored-label' => 'Реклама казанышлары',
 	'achievements-community-platinum-sponsored-badge-click-tooltip' => 'Өстәмә мәгълүмат өчен чирттерегез',
+	'achievements-badge-name-edit-0' => 'Үзгәртүләр кертх',
+	'achievements-badge-name-edit-1' => 'Бу әле башы гына',
+	'achievements-badge-name-edit-2' => 'Төзәтмә кую',
 	'achievements-badge-name-edit-3' => "Wiki'ның дусты",
 	'achievements-badge-name-edit-4' => 'Хезмәттәш',
 	'achievements-badge-name-edit-5' => 'Wiki төзүчесе',
 	'achievements-badge-name-edit-6' => 'Wiki лидеры',
 	'achievements-badge-name-edit-7' => 'Wiki эксперты',
+	'achievements-badge-name-picture-0' => 'Оста фотограф',
+	'achievements-badge-name-picture-1' => 'Папарацци',
+	'achievements-badge-name-picture-2' => 'Бизәлеш остасы',
+	'achievements-badge-name-picture-3' => 'Җыючы',
+	'achievements-badge-name-picture-4' => 'Сәнгать сөюче',
 	'achievements-badge-name-picture-5' => 'Декоратор',
 	'achievements-badge-name-picture-6' => 'Дизайнер',
+	'achievements-badge-name-picture-7' => 'Ярдәмче',
+	'achievements-badge-name-category-0' => 'Элемтә тудыручы',
+	'achievements-badge-name-category-1' => 'Яңартучы',
+	'achievements-badge-name-category-2' => 'Тикшеренүче',
+	'achievements-badge-name-category-3' => 'Өйрәтүче',
+	'achievements-badge-name-category-4' => 'Оста',
+	'achievements-badge-name-category-5' => 'Мөгаллим',
+	'achievements-badge-name-category-6' => 'Акыл иясе',
+	'achievements-badge-name-blogpost-0' => 'Ни дә булса әйтергә',
+	'achievements-badge-name-blogpost-2' => 'Әңгәмә',
+	'achievements-badge-name-blogpost-3' => 'Сүз остасы',
+	'achievements-badge-name-blogpost-4' => 'Фикер иясе',
+	'achievements-badge-name-blogcomment-0' => 'Акын',
+	'achievements-badge-name-blogcomment-1' => 'Тагын бер фикер',
+	'achievements-badge-name-love-6' => 'Вики батыры!',
 	'achievements-badge-name-welcome' => 'Викига рәхим итегез',
+	'achievements-badge-your-desc-welcome' => 'викигә кушылган өчен!',
+	'achievements-badge-your-desc-sayhi' => 'кемнең-дә булса бәхәс битендә язма калдырган өчен!',
+	'achievements-badge-your-desc-creator' => 'вики ясаган өчен!',
 	'achievements-badge-desc-creator' => 'вики ясаган өчен!',
 );
 
@@ -8570,6 +8620,7 @@ Hãy thử những ảnh khác!',
 
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Hydra
+ * @author Hzy980512
  * @author Map it
  */
 $messages['zh-hans'] = array(
@@ -8581,8 +8632,8 @@ $messages['zh-hans'] = array(
 请尝试另一个文件！',
 	'achievements-upload-not-allowed' => '管理员可以更改点击[[Special:AchievementsCustomize|自定义成就]]页面的名称和实现徽章的照片。',
 	'achievements-non-existing-category' => '指定的类别不存在。',
-	'achievements-no-stub-category' => '请不要创建存根的轨道。',
-	'right-platinum' => '创建和编辑铂徽章',
+	'achievements-no-stub-category' => '请不要创建小作品的轨道。',
+	'right-platinum' => '创建和编辑白金徽章',
 	'right-sponsored-achievements' => '管理赞助的成就',
 	'achievements-platinum' => '铂',
 	'achievements-gold' => '金',
@@ -8771,12 +8822,28 @@ $5",
 
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Dream
+ * @author Lauhenry
  */
 $messages['zh-hant'] = array(
+	'achievements-platinum' => '白金',
+	'achievements-gold' => '金',
+	'achievements-silver' => '銀',
+	'achievements-bronze' => '銅',
+	'achievements-gold-points' => '100<br />分',
+	'achievements-silver-points' => '50<br />分',
+	'achievements-bronze-points' => '10<br />分',
 	'achievements-viewall-oasis' => '看全部',
 	'leaderboard-intro-hide' => '隱藏',
 	'achievements-title' => '成就',
 	'leaderboard-title' => '排行榜',
+	'achievements-leaderboard-points-label' => '積分',
+	'achievements-leaderboard-points' => '{{PLURAL:$1|分|分}}',
+	'achievements-about-title' => '關於本頁 ...',
+	'platinum' => '白金',
+	'achievements-community-platinum-edit' => '編輯',
+	'achievements-community-platinum-save' => '儲存',
+	'achievements-community-platinum-cancel' => '取消',
+	'achievements-community-platinum-sponsored-badge-click-tooltip' => '點擊查看詳情',
 	'achievements-badge-to-get-welcome' => '加入這個wiki',
 );
 

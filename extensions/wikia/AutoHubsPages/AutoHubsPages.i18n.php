@@ -233,7 +233,7 @@ $messages['gl'] = array(
 	'unhide' => 'Mostrar',
 	'hub-blog-header' => 'Mensaxes máis populares de $1',
 	'hub-hotspot-header' => 'Páxinas máis populares',
-	'hub-topusers-header' => 'Os usuarios máis populares de $1',
+	'hub-topusers-header' => 'Os usuarios máis activos esta semana nos wikis $1',
 	'hub-featured' => 'Os wikis máis populares de $1',
 	'hub-header' => 'Wikis de $1',
 	'hub-hotspot-info' => 'Estas son as páxinas máis populares desta semana, clasificadas polo número de editores.',
@@ -282,7 +282,7 @@ $messages['ia'] = array(
 	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|redactor|redactores}}</span>',
 );
 
-/** Kurdish (Latin) (Kurdî (Latin))
+/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -499,10 +499,26 @@ $messages['ro'] = array(
 
 /** Russian (Русский)
  * @author Eleferen
+ * @author Kuzura
  */
 $messages['ru'] = array(
 	'unhide' => 'Показать',
-	'hub-blog-comments' => '{{PLURAL:$1|один комментарий|$1 комментария|$1 комментариев}}',
+	'hub-blog-header' => 'Топ $1 сообщений',
+	'hub-hotspot-header' => 'Горячие точки',
+	'hub-topusers-header' => 'Топ редакторов этой недели на $1 Викия',
+	'hub-featured' => 'Топ $1 викий',
+	'hub-header' => '$1 викии',
+	'hub-hotspot-info' => 'Это горячие страницы этой недели, распределённые по количеству правок.',
+	'hub-blog-comments' => '{{PLURAL:$1|комментарий|комментария|комментариев}}',
+	'hub-blog-continue' => 'Продолжить чтение',
+	'hub-blog-showarticle' => 'Показать страницу',
+	'hub-topusers-editpoints' => '<span class="userPoints">$1</span><span class="txt">{{PLURAL:$1|очко|очка|очков}} правок</span>',
+	'hub-topusers-editpoints-nonformatted' => '$1 {{PLURAL:$1|очко|очков|очков}} правок',
+	'hub-hotspot-from' => 'от',
+	'hub-hide-feed' => 'Скрыть канал',
+	'hub-show-feed' => 'Показать канал',
+	'hub-contributors-info' => 'Это лучшие участники этой недели, распределённые по количеству правок.',
+	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|правка|правки|правок}}</span>',
 );
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
@@ -531,7 +547,7 @@ $messages['sv'] = array(
 	'unhide' => 'Ta fram',
 	'hub-blog-header' => 'Topp $1 inlägg',
 	'hub-hotspot-header' => 'Hot spots',
-	'hub-topusers-header' => 'Topp $1 användare',
+	'hub-topusers-header' => 'Toppredaktör den här veckan på $1 wikis',
 	'hub-featured' => 'Topp $1 wikis',
 	'hub-header' => '$1 Wikis',
 	'hub-hotspot-info' => 'Dessa är de hetaste sidorna den här veckan, rankas av flesta redaktörer.',

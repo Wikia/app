@@ -143,7 +143,7 @@ $messages['ja'] = array(
 入力に間違いがないか確認してください。',
 );
 
-/** Kurdish (Latin) (Kurdî (Latin))
+/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(

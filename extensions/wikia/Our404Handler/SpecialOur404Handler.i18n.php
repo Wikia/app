@@ -388,7 +388,7 @@ $messages['ksh'] = array(
 	'our404handler-oops' => 'Dat sin nit de Sigge, woh De noh aam looere bes. Nemm andere!',
 );
 
-/** Kurdish (Latin) (Kurdî (Latin))
+/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -730,7 +730,7 @@ Hindi matagpuan ang artikulong '''$1'''.
 * Upang makapunta sa pangunahing pahina ng sityong ito, pindutin ang kawing na: [{{SERVER}} {{SITENAME}}]",
 );
 
-/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+/** Татарча (Татарча)
  * @author Ильнар
  */
 $messages['tt-cyrl'] = array(

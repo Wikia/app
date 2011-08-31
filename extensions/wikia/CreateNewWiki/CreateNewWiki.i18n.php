@@ -297,6 +297,7 @@ Hizivait dre PayPal evit kaout ur wiki nevez ouzhpenn evit $4.95 ar miz nemetken
  * @author Claudia Hattitten
  * @author George Animal
  * @author LWChris
+ * @author Tiin
  */
 $messages['de'] = array(
 	'createnewwiki-desc' => '[[Special:CreateNewWiki|Assistent zum Erstellen eines Wikis]]',
@@ -358,10 +359,21 @@ Upgrade mit PayPal um ein werbefreies Wiki für nur $4,95 pro Monat zu bekommen!
 	'cnw-welcome-help' => 'Finde Antworten, Ratschläge und mehr auf <a href="http://community.wikia.com">Community Central</a>.',
 	'cnw-error-general' => 'Bei der Erstellung deines Wikis ist etwas schief gelaufen. Bitte versuche es später erneut.',
 	'cnw-error-general-heading' => 'Neues Wiki Erstellen Fehler',
+	'cnw-error-database' => 'Datenbank-Fehler: $1',
 	'cnw-badword-header' => 'Ganz ruhig',
 	'cnw-badword-msg' => 'Hallo, bitte verwende keines der folgenden Schimpfwörter oder unerlaubten Begriffe in deiner Wiki-Beschreibung: $1',
 	'cnw-error-wiki-limit-header' => 'Wiki Limit erreicht',
 	'cnw-error-wiki-limit' => 'Hallo, du darfst nur {{PLURAL:$1|ein Wiki|$1 Wikis}} am Tag gründen. Warte 24 Stunden bevor du ein weiteres Wiki gründest.',
+	'cnw-error-blocked-header' => 'Konto gesperrt',
+	'cnw-error-blocked' => 'Du wurdest von $1 gesperrt. Die Begründung lautet: $2. (Block-ID zu Referenzzwecken: $3)',
+	'cnw-error-torblock' => 'Das Erstellen von Wikis über das Tor-Netzwerk ist nicht erlaubt.',
+);
+
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
+ * @author Tiin
+ */
+$messages['de-formal'] = array(
+	'cnw-error-blocked' => 'Sie wurden von $1 gesperrt. Die Begründung lautet: $2. (Block-ID zu Referenzzwecken: $3)',
 );
 
 /** Spanish (Español)
@@ -863,7 +875,7 @@ $messages['ko'] = array(
 	'cnw-login' => '로그인',
 );
 
-/** Kurdish (Latin) (Kurdî (Latin))
+/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -916,7 +928,7 @@ $messages['mk'] = array(
 	'cnw-name-wiki-domain-label' => 'Дајте му адреса на викито',
 	'cnw-name-wiki-submit-error' => 'Упс! Ќе треба да ги пополните обете горенаведени полиња за да продолжите.',
 	'cnw-login' => 'Најава',
-	'cnw-signup' => 'Создај сметка',
+	'cnw-signup' => 'Направи сметка',
 	'cnw-signup-prompt' => 'Ви треба сметка?',
 	'cnw-call-to-signup' => 'Регистрирајте се тука',
 	'cnw-login-prompt' => 'Веќе имате сметка?',
@@ -1072,6 +1084,8 @@ Naik taraf wiki anda kepada wiki tanpa iklan dengan membayar $4.95 (USD) sebulan
 	'cnw-error-wiki-limit-header' => 'Had wiki dicapai',
 	'cnw-error-wiki-limit' => 'Maaf, anda tidak boleh membuka lebih daripada $1 wiki sehari. Tunggi 24 jam sebelum membuka satu lagi wiki.',
 	'cnw-error-blocked-header' => 'Akaun disekat',
+	'cnw-error-blocked' => 'Anda telah disekat oleh $1. Sebab yang diberikan ialah: $2. (ID sekatan untuk rujukan: $3)',
+	'cnw-error-torblock' => 'Pembentukan wiki melalui Tor Network tidak dibenarkan.',
 );
 
 /** Dutch (Nederlands)
@@ -1513,10 +1527,14 @@ $messages['ru'] = array(
 	'cnw-welcome-help' => 'Найти ответы, советы и многое другое на <a href="http://community.wikia.com">Центральной вики</a>.',
 	'cnw-error-general' => 'Что-то пошло не так при создании вики. Пожалуйста, повторите попытку позже.',
 	'cnw-error-general-heading' => 'Ошибка при создании новой вики',
+	'cnw-error-database' => 'Ошибка базы данных: $1',
 	'cnw-badword-header' => 'Эй там',
 	'cnw-badword-msg' => 'Пожалуйста, воздержитесь от использования плохих или запрещенных слов в описании вики: $1',
 	'cnw-error-wiki-limit-header' => 'Лимит создания вики',
 	'cnw-error-wiki-limit' => 'Вы достигли ограничения $1 на создание викий в день. Подождите 24 часа, прежде чем создавать другую вики.',
+	'cnw-error-blocked-header' => 'Учётная запись заблокирована',
+	'cnw-error-blocked' => 'Вы были заблокированы $1. Причиной было: $2. (Для справки: $3)',
+	'cnw-error-torblock' => 'Создание вики через сеть Tor не допускается.',
 );
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
@@ -1711,7 +1729,7 @@ Magpataas ng antas sa pamamagitan ng PayPal upang makakuha ng wiking walang anun
 	'cnw-welcome-help' => 'Maghanap ng mga sagot, mga payo, at marami pa sa <a href="http://community.wikia.com">Lunduyan ng Pamayanan</a>.',
 );
 
-/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+/** Татарча (Татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(

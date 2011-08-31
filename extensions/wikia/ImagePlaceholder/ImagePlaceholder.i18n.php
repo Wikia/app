@@ -218,7 +218,7 @@ $messages['ksh'] = array(
 	'imgplc-notinhistory' => 'Belder kammer nit em Zosammehang vun de verjange Versione dobei donn',
 );
 
-/** Kurdish (Latin) (Kurdî (Latin))
+/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(

@@ -1423,9 +1423,26 @@ $messages['eu'] = array(
 
 /** Persian (فارسی)
  * @author Ebraminio
+ * @author Mjbmr
  */
 $messages['fa'] = array(
+	'wf_city_founding_user' => 'بنیان‌گذار',
+	'wf_city_founding_email' => 'پست الکترونیکی بنیان‌گذار',
+	'wf_city_public' => 'وضعیت',
+	'wf_city_lang' => 'زبان',
+	'wf_cc_name' => 'رده',
 	'wikifactory-label-actions' => 'عملکردها',
+	'closewiki-unknown' => 'ناشناخته',
+	'wikifactory-button-saveparse' => 'تجزیه و ذخیره تغییرات',
+	'wikifactory-button-save' => 'ذخیرهٔ تغییرات',
+	'awc-metrics-category' => 'و رده:',
+	'awc-metrics-all-languages' => 'همه زبان‌ها',
+	'awc-metrics-not-found' => 'هیچ ویکی یافت نشد',
+	'awc-metrics-nbr-result' => 'نتایج:',
+	'awc-metrics-articles' => 'مقاله‌ها',
+	'awc-metrics-edits' => 'ویرایش‌ها',
+	'awc-metrics-db-size' => 'حجم بانک اطلاعاتی',
+	'closed-wiki' => 'ویکی بسته شده',
 );
 
 /** Finnish (Suomi)
@@ -1653,6 +1670,7 @@ $messages['gl'] = array(
 	'wikifactory-label-masstags' => 'Etiquetas masivas',
 	'wikifactory-label-findtags' => 'Atopar etiquetas',
 	'wikifactory-label-ezsharedupload' => 'Carga compartida EZ',
+	'wikifactory-label-eznamespace' => 'Espazo de nomes EZ',
 	'wikifactory-label-compare' => 'Comparar',
 	'right-wikifactory' => 'Cambiar a configuración interna dos wikis',
 	'wikifactory-domain-edit' => 'editar este enderezo URL',
@@ -1670,6 +1688,7 @@ $messages['gl'] = array(
 	'closewiki-images-url' => 'Arquivo de imaxes: $1',
 	'closewiki-unknown' => 'Descoñecido',
 	'closewiki-return' => 'Volver a $1',
+	'wikifactory-button-saveparse' => 'Analizar e gardar os cambios',
 	'wikifactory-button-save' => 'Gardar os cambios',
 	'awc-metrics-wikis' => 'Mostrar os wikis',
 	'awc-metrics-select' => 'Mostrar os wikis:',
@@ -4354,7 +4373,7 @@ $messages['tl'] = array(
 	'closed-reason' => 'Dahilan:',
 );
 
-/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+/** Татарча (Татарча)
  * @author Ajdar
  * @author Ильнар
  */

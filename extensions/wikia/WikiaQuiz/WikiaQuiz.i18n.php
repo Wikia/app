@@ -243,6 +243,17 @@ $messages['es'] = array(
 	'wikiaquiz-facebook-creative' => 'Ven a jugar $1 en {{SITENAME}}',
 );
 
+/** Persian (فارسی)
+ * @author Mjbmr
+ */
+$messages['fa'] = array(
+	'wikiaquiz-game-start-button' => 'شروع بازی',
+	'wikiaquiz-game-cadence-1' => 'برو!',
+	'wikiaquiz-game-question-label' => 'سؤال',
+	'wikiaquiz-game-next-button' => 'سؤال بعدی',
+	'wikiaquiz-game-finish-button' => 'پایان',
+);
+
 /** French (Français)
  * @author Cmarget
  * @author Crochet.david
@@ -475,7 +486,7 @@ $messages['ko'] = array(
 	'wikiaquiz-facebook-creative' => '{{SITENAME}}에서 $1 퀴즈를 진행해보세요.',
 );
 
-/** Kurdish (Latin) (Kurdî (Latin))
+/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(

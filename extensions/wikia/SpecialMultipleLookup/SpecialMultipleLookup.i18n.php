@@ -420,7 +420,7 @@ $messages['ja'] = array(
 	'right-multilookup' => '複数ウィキにおけるユーザの情報を閲覧',
 );
 
-/** Kurdish (Latin) (Kurdî (Latin))
+/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -737,6 +737,7 @@ $messages['ro'] = array(
 );
 
 /** Russian (Русский)
+ * @author Kuzura
  * @author Lockal
  * @author Александр Сигачёв
  */
@@ -761,6 +762,8 @@ $messages['ru'] = array(
 	'multilookupwikiurl' => 'URL',
 	'multilookupwikititle' => 'Заголовок',
 	'multilookupwikioptions' => 'Параметры',
+	'multilookuplastedithdr' => 'Последняя правка',
+	'multilookuprecordspager' => "Показано от '''$1''' до '''$2''' из '''$3''' записей.",
 	'right-multilookup' => 'просмотр сведений об участниках в нескольких вики',
 );
 
@@ -859,7 +862,7 @@ $messages['tl'] = array(
 	'right-multilookup' => 'Kabatirang panghanap sa mga tagagamit na nasa maramihang mga wiki',
 );
 
-/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+/** Татарча (Татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(

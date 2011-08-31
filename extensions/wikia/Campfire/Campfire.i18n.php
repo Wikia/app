@@ -112,3 +112,10 @@ $messages['ru'] = array(
 	'campfire-licensed-under' => 'Под лицензией $1',
 );
 
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Lauhenry
+ */
+$messages['zh-hant'] = array(
+	'campfire-page-header' => '$1從$2',
+);
+

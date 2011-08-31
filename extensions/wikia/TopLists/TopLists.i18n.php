@@ -478,11 +478,16 @@ Puedes <a href="$4">cancelar</a>  tu subscripción de los cambios a la lista.',
 	'toplists-create-button-msg' => 'Crear una lista',
 );
 
-/** Persian (فارسی) */
+/** Persian (فارسی)
+ * @author Mjbmr
+ */
 $messages['fa'] = array(
 	'toplists-editor-title-label' => 'نام فهرست',
 	'toplists-editor-remove-item-tooltip' => 'حذف مورد',
+	'toplists-create-button' => 'ایجاد فهرست',
+	'toplists-update-button' => 'ذخیره فهرست',
 	'toplists-cancel-button' => 'لغو',
+	'toplists-image-browser-upload-btn' => 'انتخاب',
 );
 
 /** Finnish (Suomi)
@@ -934,7 +939,7 @@ $messages['ksh'] = array(
 	'toplists-desc' => 'Leßte met de bövverste Zehn.',
 );
 
-/** Kurdish (Latin) (Kurdî (Latin))
+/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -953,7 +958,7 @@ $messages['mk'] = array(
 	'right-toplists-delete-item' => 'Избриши ставки на страницата „10 најкотирани“',
 	'createtoplist' => 'Создај нов список на 10 предводници',
 	'edittoplist' => 'Уреди список на 10 предводници',
-	'toplists-category' => 'Списоци на 10 најкотирани',
+	'toplists-category' => 'Списоци на 10 предводници',
 	'toplists-error-invalid-title' => 'Дадениот текст е неважечки',
 	'toplists-error-invalid-picture' => 'Одбраната слика не е важечка',
 	'toplists-error-title-exists' => 'Статијава веќе постои. Можете да појдете на <a href="$2" target="_blank">$1</a> или да дадете друго име',
@@ -1129,14 +1134,14 @@ $messages['my'] = array(
  * @author Siebrand
  */
 $messages['nl'] = array(
-	'toplists-desc' => 'Top 10 lijsten',
+	'toplists-desc' => 'Top 10-lijsten',
 	'right-toplists-create-edit-list' => 'Top 10 lijsten aanmaken en bewerken',
 	'right-toplists-create-item' => 'Items aanmaken en toevoegen aan Top 10 lijsten',
 	'right-toplists-edit-item' => 'Items in een Top 10-lijstpagina bewerken',
 	'right-toplists-delete-item' => 'Items uit een Top 10-lijstpagina verwijderen',
 	'createtoplist' => 'Nieuwe Top 10 lijst aanmaken',
 	'edittoplist' => 'Top 10 lijst beweken',
-	'toplists-category' => 'Top 10 lijsten',
+	'toplists-category' => 'Top 10-lijsten',
 	'toplists-error-invalid-title' => 'De opgegeven tekst wordt niet opgeslagen.',
 	'toplists-error-invalid-picture' => 'De geselecteerde afbeelding is niet geldig.',
 	'toplists-error-title-exists' => 'Deze pagina bestaat al. U kunt naar <a href="$2" target="_blank">$1</a> gaan of een andere naam opgeven.',
@@ -1188,7 +1193,7 @@ $messages['nl'] = array(
 	'toplists-list-add-item-label' => 'Item toevoegen',
 	'toplists-list-add-item-name-label' => 'Houd de lijst gaande...',
 	'toplists-list-item-voted' => 'Gestemd',
-	'toplists-createpage-dialog-label' => 'Top 10 lijst',
+	'toplists-createpage-dialog-label' => 'Top 10-lijst',
 	'toplists-email-subject' => 'Er is een Top 10 lijst gewijzigd',
 	'toplists-email-body' => 'De hartelijke groeten van Wikia!
 

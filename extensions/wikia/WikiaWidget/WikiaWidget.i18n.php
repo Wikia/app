@@ -346,7 +346,7 @@ $messages['tl'] = array(
 	'wikiawidget' => 'Mga widyet ng Wikia',
 );
 
-/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+/** Татарча (Татарча)
  * @author Ильнар
  */
 $messages['tt-cyrl'] = array(

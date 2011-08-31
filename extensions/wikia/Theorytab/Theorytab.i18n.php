@@ -180,7 +180,7 @@ $messages['ksh'] = array(
 	'theorytab-parent-title' => 'De Sigg drövver',
 );
 
-/** Kurdish (Latin) (Kurdî (Latin))
+/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(

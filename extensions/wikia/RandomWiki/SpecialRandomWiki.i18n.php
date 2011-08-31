@@ -295,7 +295,7 @@ $messages['tl'] = array(
 	'randomwiki' => 'Alinmang Wiki',
 );
 
-/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+/** Татарча (Татарча)
  * @author Zahidulla
  * @author Ильнар
  */

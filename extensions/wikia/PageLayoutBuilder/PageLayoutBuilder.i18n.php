@@ -1268,7 +1268,7 @@ $messages['ia'] = array(
 	'plb-copy-submit-link' => 'Salveguardar',
 );
 
-/** Kurdish (Latin) (Kurdî (Latin))
+/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(

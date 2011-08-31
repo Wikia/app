@@ -178,12 +178,12 @@ $messages['br'] = array(
 	'editaccount-status' => 'Kemenadenn statud',
 	'editaccount-success-email' => 'Kemmet eo bet ar postel evit ar gont $1 da $2.',
 	'editaccount-success-email-blank' => "Dilamet mat eo bet chomlec'h postel ar gont $1.",
-	'editaccount-success-pass' => 'Kemmet eo bet ger tremen ar gont $1.',
+	'editaccount-success-pass' => 'Kemmet eo bet ger-tremen ar gont $1.',
 	'editaccount-success-realname' => 'Kemmet eo bet anv gwir ar gont $1.',
 	'editaccount-success-unsub' => 'Tennet kuit eo bet an titour digoumanantiñ evit ar gont $1.',
 	'editaccount-success-close' => 'Diweredekaet eo bet ar gont $1.',
 	'editaccount-error-email' => "N'eo ket bet kemmet ar chomlec'h postel. Klaskit adarre pe kit a darempred gant ar skipailh teknikel.",
-	'editaccount-error-pass' => "N'eo ket bet kemmet ar ger tremen. Klaskit adarre pe kit a darempred gant ar skipailh teknikel.",
+	'editaccount-error-pass' => "N'eo ket bet kemmet ar ger-tremen. Klaskit adarre pe kit a darempred gant ar skipailh teknikel.",
 	'editaccount-error-realname' => "N'eo ket bet kemmet an anv gwir. Klaskit adarre pe kit a darempred gant ar skipailh teknikel.",
 	'editaccount-error-close' => 'Ur gudenn a zo bet pa vezer o serriñ ar gont. Klaskit adarre pe kit a darempred gant ar skipailh teknikel.',
 	'editaccount-invalid-email' => 'N\'eo ket "$1" ur chomlec\'h postel reizh !',
@@ -191,7 +191,7 @@ $messages['br'] = array(
 	'editaccount-log' => "Marilh ar c'hontoù implijer",
 	'editaccount-log-header' => "Rollet e vez er pajenn-mañ ar c'hemmoù graet gant staff Wikia er penndibaboù implijer.",
 	'editaccount-log-entry-email' => "en deus kemmet chmolec'h postel an implijer $2",
-	'editaccount-log-entry-pass' => 'en deus kemmet ger tremen ar gont $2',
+	'editaccount-log-entry-pass' => 'en deus kemmet ger-tremen ar gont $2',
 	'editaccount-log-entry-realname' => 'en deus kemmet anv gwir ar gont $2',
 	'editaccount-log-entry-close' => 'en deus diweredekaet ar gont $2',
 	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Diweredekaet eo bet ar gont-mañ en un doare hollek gant Wikia.</div>',
@@ -258,6 +258,7 @@ $messages['cs'] = array(
  * @author Jan Luca
  * @author LWChris
  * @author The Evil IP address
+ * @author Tiin
  */
 $messages['de'] = array(
 	'editaccount' => 'Konto bearbeiten',
@@ -294,6 +295,7 @@ $messages['de'] = array(
 	'editaccount-error-close' => 'Beim Schließen des Kontos trat ein Fehler auf. Versuche es erneut oder kontaktiere das Tech Team.',
 	'editaccount-invalid-email' => '„$1“ ist keine gültige E-Mail-Adresse!',
 	'editaccount-nouser' => 'Konto „$1“ existiert nicht!',
+	'editaccount-remove-avatar-fail' => 'Problem beim automatischen Entfernen des Avatars.',
 	'editaccount-log' => 'Benutzerkonten-Logbuch',
 	'editaccount-log-header' => 'Diese Seite listet Änderungen von Benutzereinstellungen durch das Wikia Personal.',
 	'editaccount-log-entry-email' => 'änderte die E-Mail-Adresse von Benutzer $2',
@@ -832,6 +834,7 @@ $messages['ms'] = array(
 	'editaccount-submit-pass' => 'Simpan kata laluan',
 	'editaccount-submit-realname' => 'Simpan nama sebenar',
 	'editaccount-submit-clearunsub' => 'Padamkan penghentian melanggan',
+	'editaccount-submit-cleardisable' => 'Bersihkan bendera matikan',
 	'editaccount-submit-close' => 'Tutup akaun',
 	'editaccount-usage-close' => 'Anda juga boleh mematikan akaun pengguna dengan mengarau kata laluannya serta menggugurkan alamat e-melnya. Ingat, data ini akan hilang dan tidak boleh dipulihkan.',
 	'editaccount-warning-close' => '<b>Perhatian!</b> Anda akan mematikan akaun pengguna <b>$1</b> buat selamanya. Tindakan ini tidak boleh diterbalikkan. Adakah anda pasti mahu berbuat demikian?',
@@ -841,6 +844,7 @@ $messages['ms'] = array(
 	'editaccount-success-pass' => 'Kata laluan akaun $1 berjaya diubah.',
 	'editaccount-success-realname' => 'Nama sebenar pemegang akaun $1 berjaya diubah.',
 	'editaccount-success-unsub' => 'Butiran nyahlanggan akaun $1 berjaya digugurkan.',
+	'editaccount-success-disable' => 'Butiran termati akaun $1 berjaya digugurkan.',
 	'editaccount-success-close' => 'Akaun $1 berjaya dimatikan.',
 	'editaccount-error-email' => 'E-mel tidak diubah. Cuba lagi atau hubungi Pasukan Teknikal (Tech Team).',
 	'editaccount-error-pass' => 'Kata laluan tidak diubah. Cuba lagi atau hubungi Pasukan Teknikal (Tech Team).',
@@ -848,6 +852,7 @@ $messages['ms'] = array(
 	'editaccount-error-close' => 'Ada masalah dalam cubaan menutup akaun. Cuba lagi atau hubungi Pasukan Teknikal (Tech Team).',
 	'editaccount-invalid-email' => '"$1" bukan alamat e-mel yang sah!',
 	'editaccount-nouser' => 'Akaun "$1" tidak wujud!',
+	'editaccount-remove-avatar-fail' => 'Masalah ketika membuang avatar secara automatik.',
 	'editaccount-log' => 'Log akaun pengguna',
 	'editaccount-log-header' => 'Laman ini menyenaraikan perubahan yang dilakukan oleh Kakitangan Wikia pada keutamaan pengguna.',
 	'editaccount-log-entry-email' => 'mengubah e-mel pengguna $2',
@@ -1227,6 +1232,7 @@ $messages['ru'] = array(
 	'editaccount-error-close' => 'Возникла проблема при закрытии учётной записи. Попробуйте ещё раз или свяжитесь с технической командой.',
 	'editaccount-invalid-email' => '«$1» не является допустимым адресом электронной почты!',
 	'editaccount-nouser' => 'Учётная запись «$1» не существует!',
+	'editaccount-remove-avatar-fail' => 'Проблема с перезагрузкой аватара',
 	'editaccount-log' => 'Журнал учётных записей',
 	'editaccount-log-header' => 'На этой странице показаны изменения настроек участника, выполненные сотрудниками Викии',
 	'editaccount-log-entry-email' => 'изменил адрес эл. почты участника $2',
@@ -1530,9 +1536,13 @@ $messages['vi'] = array(
 
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Hydra
+ * @author Hzy980512
  */
 $messages['zh-hans'] = array(
+	'editaccount' => '编辑账户',
+	'editaccount-frame-manage' => '编辑账户',
 	'editaccount-frame-usage' => '注意',
+	'editaccount-usage' => '用户数据被每个Wiki分别储存。当您修改密码或电子邮箱时，只会在修改的Wiki上生效。请直接使用新密码登入该Wiki，以避免缓存问题。',
 	'editaccount-label-select' => '选择一个用户',
 	'editaccount-submit-account' => '管理用户',
 	'editaccount-submit-email' => '保存电子邮件地址',

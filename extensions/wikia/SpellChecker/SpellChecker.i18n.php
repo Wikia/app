@@ -334,11 +334,19 @@ $messages['ru'] = array(
 
 /** Swedish (Svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'enablespellchecker' => 'Aktivera stavningskontroll i visuellt läge',
+	'spellchecker-info' => 'Information om stavningskontroll',
+	'spellchecker-info-languages' => 'Tillgängliga språk ($1)',
+	'spellchecker-info-provider' => 'Leverantör',
+	'spellchecker-info-dictionaries' => 'Tillgängliga ordlistor',
+	'spellchecker-info-spellcheck-text' => 'Text som ska kontrolleras',
 	'spellchecker-info-spellcheck-languages' => 'Språk',
 	'spellchecker-info-spellcheck-submit' => 'Kontrollera stavning',
 	'spellchecker-info-spellcheck-is-correct' => 'Ordet "$1" är korrekt stavat',
+	'spellchecker-info-spellcheck-suggestions' => 'Stavningsförslag för "$1": $2',
 );
 
 /** Telugu (తెలుగు)

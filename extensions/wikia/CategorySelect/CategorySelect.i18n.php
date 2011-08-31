@@ -811,7 +811,9 @@ $messages['sv'] = array(
 	'categoryselect-visual-view' => 'Visuell vy',
 	'categoryselect-infobox-caption' => 'Kategori-alternativ',
 	'categoryselect-infobox-category' => 'Ge namnet på kategorin:',
+	'categoryselect-infobox-sortkey' => 'Alfabetisera denna artikel på kategorin "$1" under namnet:',
 	'categoryselect-addcategory-button' => 'Lägg till kategori',
+	'categoryselect-addcategory-edit' => 'Lägg till en kategori',
 	'categoryselect-suggest-hint' => 'Tryck Enter när du är klar',
 	'categoryselect-edit-summary' => 'Lägg till kategorier',
 	'categoryselect-empty-name' => 'Ange kategorinamn (del innan |)',
@@ -820,6 +822,7 @@ $messages['sv'] = array(
 	'categoryselect-error-not-exist' => 'Artikel [id=$1] finns inte.',
 	'categoryselect-error-user-rights' => 'Fel om användarrättigheter.',
 	'categoryselect-error-db-locked' => 'Databasen är låst.',
+	'tog-disablecategoryselect' => 'Inaktivera kategoritaggning',
 );
 
 /** Swahili (Kiswahili) */
@@ -874,7 +877,7 @@ $messages['tr'] = array(
 	'categoryselect-button-cancel' => 'İptal',
 );
 
-/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+/** Татарча (Татарча)
  * @author Zahidulla
  */
 $messages['tt-cyrl'] = array(

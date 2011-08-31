@@ -956,6 +956,7 @@ $messages['gl'] = array(
 	'swm-label-expiration' => 'Tempo de caducidade',
 	'swm-label-mode-wikis-all' => 'Todos os wikis',
 	'swm-label-mode-wikis-hub' => 'Centro de actividade seleccionado',
+	'swm-label-mode-wikis-cluster' => 'Clúster seleccionado',
 	'swm-label-mode-wikis-wiki' => 'Wiki seleccionado',
 	'swm-label-mode-users-all' => 'Todos os usuarios',
 	'swm-label-mode-users-active' => 'Usuarios activos',
@@ -1273,7 +1274,7 @@ $messages['ksh'] = array(
 	'swm-button-new' => '[ Neu ]',
 );
 
-/** Kurdish (Latin) (Kurdî (Latin))
+/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -2254,7 +2255,7 @@ $messages['tl'] = array(
 	'swm-lang-other' => 'lahat ng natitirang mga wika',
 );
 
-/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+/** Татарча (Татарча)
  * @author Ильнар
  */
 $messages['tt-cyrl'] = array(

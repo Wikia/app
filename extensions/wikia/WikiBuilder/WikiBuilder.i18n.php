@@ -616,7 +616,7 @@ Scribe hic le prime section de tu pagina. Memora de includer ligamines a altere 
 Scribe hic le secunde section de tu pagina. Non oblida de adder un categoria pro adjutar le gente a trovar le pagina.',
 );
 
-/** Kurdish (Latin) (Kurdî (Latin))
+/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(

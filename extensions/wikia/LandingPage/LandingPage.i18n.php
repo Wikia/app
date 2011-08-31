@@ -382,3 +382,12 @@ $messages['zh-hans'] = array(
 	'landingpage-buttons-learn-more' => '了解更多 &gt;',
 );
 
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Lauhenry
+ */
+$messages['zh-hant'] = array(
+	'landingpage' => '歡迎光臨Wikia',
+	'landingpage-readfaq' => '有問題？閱讀我們的常見問題&gt;',
+	'landingpage-buttons-learn-more' => '了解更多 &gt;',
+);
+

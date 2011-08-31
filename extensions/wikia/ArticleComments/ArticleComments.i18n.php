@@ -308,7 +308,7 @@ Wikia
 </p>',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author Claudia Hattitten
  */
 $messages['de-formal'] = array(
@@ -557,6 +557,7 @@ $messages['gl'] = array(
 	'article-comments-login' => '<a href="$1">Acceda ao sistema</a> para publicar un comentario neste wiki.',
 	'article-comments-toc-item' => 'Comentarios',
 	'article-comments-comment-cannot-add' => 'Non pode engadir un comentario ao artigo.',
+	'article-comments-vote' => 'Votar positivamente',
 	'article-comments-reply' => 'Responder',
 	'article-comments-show-all' => 'Mostrar todos os comentarios',
 	'article-comments-prev-page' => 'Anterior',
@@ -780,7 +781,7 @@ $messages['ksh'] = array(
 	'enotif_subject_article_comment' => '$PAGEEDITOR hädd_en Aanmärkong zoh "$PAGETITLE" op {{SITENAME}} jemaat.',
 );
 
-/** Kurdish (Latin) (Kurdî (Latin))
+/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -1038,7 +1039,7 @@ Wikia
 </p>',
 );
 
-/** Nederlands (informeel) (Nederlands (informeel))
+/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
@@ -1060,7 +1061,7 @@ Wikia
 </p>',
 );
 
-/** Norwegian (bokmål) (Norsk (bokmål))
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
 $messages['no'] = array(
@@ -1346,6 +1347,7 @@ $messages['ru'] = array(
 	'article-comments-login' => 'Пожалуйста, <a href="$1">войдите в систему</a>, чтобы оставлять комментарии на этой вики',
 	'article-comments-toc-item' => 'Комментарии',
 	'article-comments-comment-cannot-add' => 'Вы не можете добавить комментарий к этой статье',
+	'article-comments-vote' => 'Голосовать за',
 	'article-comments-reply' => 'Ответить',
 	'article-comments-show-all' => 'Показать все комментарии',
 	'article-comments-prev-page' => 'Пред.',
@@ -1386,6 +1388,7 @@ $messages['sv'] = array(
 	'article-comments-login' => 'Var god <a href="$1">logga in</a> för att posta en kommentar på den här wikin.',
 	'article-comments-toc-item' => 'Kommentarer',
 	'article-comments-comment-cannot-add' => 'Du kan inte lägga till en kommentar till artikeln.',
+	'article-comments-vote' => 'Rösta upp',
 	'article-comments-reply' => 'Svara',
 	'article-comments-show-all' => 'Visa alla kommentarer',
 	'article-comments-prev-page' => 'Föreg',
@@ -1514,7 +1517,7 @@ $messages['tr'] = array(
 	'article-comments-next-page' => 'Sonraki',
 );
 
-/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+/** Татарча (Татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
@@ -1556,7 +1559,7 @@ $messages['vi'] = array(
 	'article-comments-next-page' => 'Tiếp theo',
 );
 
-/** Simplified Chinese (中文(简体))
+/** Simplified Chinese (‪中文(简体)‬)
  * @author Hydra
  */
 $messages['zh-hans'] = array(

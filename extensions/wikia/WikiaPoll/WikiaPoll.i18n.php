@@ -413,12 +413,15 @@ $messages['no'] = array(
 
 /** Polish (Polski)
  * @author Sovq
+ * @author Woytecr
  */
 $messages['pl'] = array(
 	'wikiapoll-desc' => 'Pozwala łatwo tworzyć i zarządzać sondami',
+	'wikiapoll-people-voted' => '{{PLURAL:$1|Zagłosowała $1 osoba|Zagłosowało $1 osób}}',
 	'wikiapoll-question' => '$1?',
 	'wikiapoll-thanks-for-vote' => 'Dzięki!',
 	'wikiapoll-vote' => 'Głosuj!',
+	'wikiapoll-votes' => '{{PLURAL:$1|$1 głos|$1 głosów}}',
 	'wikiapoll-createpoll-headline' => 'Utwórz sondę',
 	'wikiapoll-editpoll-headline' => 'Edytuj sondę',
 	'wikiapoll-question-label' => 'Pytanie',

@@ -56,6 +56,68 @@ $messages['en'] = array(
 	'admindashboard-back-to-dashboard' => 'Back to Dashboard'
 );
 
+/** Azerbaijani (Azərbaycanca)
+ * @author Melikov Memmed
+ */
+$messages['az'] = array(
+	'admindashboard-control-recent-changes-label' => 'Təzə dəyişikliklər',
+	'admindashboard-control-user-list-label' => 'İstifadəçi siyahısı',
+	'admindashboard-control-invite-label' => 'Dəvət et',
+	'admindashboard-control-invite-tooltip' => 'Digərlərini bu vikidən istifadə etməyə dəvət et',
+	'admindashboard-control-help-tooltip' => 'Kömək tap.',
+	'admindashboard-control-add-page-tooltip' => 'Öz vikinə yeni səhifə əlavə et',
+	'admindashboard-control-add-photo-label' => 'Şəkil əlavə et',
+	'admindashboard-control-add-photo-tooltip' => 'Öz vikinə yeni şəkil əlavə et',
+	'admindashboard-control-multiple-upload-label' => 'Çox sayda şəkil əlavə et',
+);
+
+/** German (Deutsch)
+ * @author LWChris
+ */
+$messages['de'] = array(
+	'admindashboard-title' => '{{SITENAME}} Übersicht',
+	'admindashboard-header' => 'Admin-Übersicht',
+	'admindashboard-toolbar-link' => 'Admin',
+	'admindashboard-tab-advanced' => 'Erweitert',
+	'admindashboard-tab-general' => 'Allgemein',
+	'admindashboard-controls-wiki-header' => 'Wiki',
+	'admindashboard-control-theme-designer-label' => 'Theme-Designer',
+	'admindashboard-control-theme-designer-tooltip' => 'Theme-Designer ermöglicht es dir, Farben, Hintergründe und vieles mehr an deinem Wiki anzupassen.',
+	'admindashboard-control-recent-changes-label' => 'Letzte Änderungen',
+	'admindashboard-control-recent-changes-tooltip' => 'Letzte Änderungen zeigt alle Änderungen an deinem Wiki in einer einzigen Zeitleiste.',
+	'admindashboard-control-top-navigation-label' => 'Obere Navigation',
+	'admindashboard-control-top-navigation-tooltip' => 'Obere Navigation erlaubt dir das Navigationsmenü oben in deinem Wiki anzupassen.',
+	'admindashboard-control-wikia-labs-label' => 'Wikia Labs',
+	'admindashboard-control-wikia-labs-tooltip' => 'Mit Wikia Labs kannst neue Beta-Funktionen vorab in deinem Wiki ausprobieren.',
+	'admindashboard-control-page-layout-builder-label' => 'Seiten-Layout-Ersteller',
+	'admindashboard-control-page-layout-builder-tooltip' => 'Seiten-Layout-Ersteller erlaubt dir Seiten-Entwürfe zu erstellen, die Benutzer beim Erstellen neuer Seiten wählen und verwenden können.',
+	'admindashboard-controls-community-header' => 'Gemeinschaft',
+	'admindashboard-control-user-list-label' => 'Benutzerliste',
+	'admindashboard-control-user-list-tooltip' => 'Zeigt eine vollständige Liste der Benutzer, die an deinem Wiki mitgewirkt haben an.',
+	'admindashboard-control-user-rights-label' => 'Benutzerrechte',
+	'admindashboard-control-user-rights-tooltip' => 'Verleihe und entziehe Gruppenrechte und Berechtigungen für Benutzer deines Wikis.',
+	'admindashboard-control-group-rights-label' => 'Gruppenrechte',
+	'admindashboard-control-group-rights-tooltip' => 'Übersicht über die Rechte für die verschiedenen Benutzergruppen.',
+	'admindashboard-control-invite-label' => 'Einladen',
+	'admindashboard-control-invite-tooltip' => 'Lade andere Personen ein dieses Wiki zu verwenden.',
+	'admindashboard-control-help-label' => 'Hilfe',
+	'admindashboard-control-help-tooltip' => 'Hilfe finden.',
+	'admindashboard-controls-content-header' => 'Inhalt',
+	'admindashboard-control-community-corner-label' => 'Gemeinschafts-Ecke',
+	'admindashboard-control-community-corner-tooltip' => 'Bearbeite den Abschnitt Gemeinschafts-Ecke deines Wikis und benachrichtige deine Benutzer.',
+	'admindashboard-control-categories-list-label' => 'Alle Kategorien',
+	'admindashboard-control-categories-list-tooltip' => 'Sieh alle Kategorien, die derzeit in deinem Wiki aufgelistet werden an.',
+	'admindashboard-control-add-page-label' => 'Eine Seite hinzufügen',
+	'admindashboard-control-add-page-tooltip' => 'Füge eine neue Seite zu deinem Wiki hinzu.',
+	'admindashboard-control-add-photo-label' => 'Ein Foto hinzufügen',
+	'admindashboard-control-add-photo-tooltip' => 'Füge ein neues Foto zu deinem Wiki hinzu.',
+	'admindashboard-control-add-blog-label' => 'Einen Blog-Beitrag hinzufügen',
+	'admindashboard-control-add-blog-tooltip' => 'Füge einen neuen Blog-Beitrag zu deinem Wiki hinzu.',
+	'admindashboard-control-multiple-upload-label' => 'Mehrere Fotos hinzufügen',
+	'admindashboard-control-multiple-upload-tooltip' => 'Lade mehr als ein Foto gleichzeitig hoch mit dem Mehrere Fotos hochladen Tool.',
+	'admindashboard-back-to-dashboard' => 'Zurück zur Übersicht',
+);
+
 /** Spanish (Español)
  * @author DJ Nietzsche
  */
@@ -146,6 +208,44 @@ $messages['fr'] = array(
 	'admindashboard-control-multiple-upload-label' => 'Ajouter plusieurs images',
 	'admindashboard-control-multiple-upload-tooltip' => "Importer plus d’une image à la fois avec l’outil d'importation d’importation d’images multiples.",
 	'admindashboard-back-to-dashboard' => 'Retour au tableau de bord',
+);
+
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'admindashboard-toolbar-link' => 'Administración',
+	'admindashboard-tab-advanced' => 'Avanzado',
+	'admindashboard-tab-general' => 'Xeral',
+	'admindashboard-controls-wiki-header' => 'Wiki',
+	'admindashboard-control-theme-designer-label' => 'Deseñador de temas visuais',
+	'admindashboard-control-recent-changes-label' => 'Cambios recentes',
+	'admindashboard-control-top-navigation-label' => 'Navegación superior',
+	'admindashboard-control-page-layout-builder-label' => 'Xerador de deseños de páxinas',
+	'admindashboard-controls-community-header' => 'Comunidade',
+	'admindashboard-control-user-list-label' => 'Lista de usuarios',
+	'admindashboard-control-user-rights-label' => 'Dereitos de usuario',
+	'admindashboard-control-invite-label' => 'Convidar',
+	'admindashboard-control-help-label' => 'Axuda',
+	'admindashboard-controls-content-header' => 'Contido',
+	'admindashboard-control-community-corner-label' => 'Portal da comunidade',
+	'admindashboard-control-categories-list-label' => 'Todas as categorías',
+	'admindashboard-control-add-page-label' => 'Engadir unha páxina',
+	'admindashboard-control-add-photo-label' => 'Engadir unha foto',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'admindashboard-control-user-list-label' => 'Benotzerlëscht',
+	'admindashboard-control-invite-label' => 'Invitéieren',
+	'admindashboard-control-help-label' => 'Hëllef',
+	'admindashboard-controls-content-header' => 'Inhalt',
+	'admindashboard-control-categories-list-label' => 'All Kategorien',
+	'admindashboard-control-add-page-label' => 'Eng Säit derbäisetzen',
+	'admindashboard-control-add-photo-label' => 'Eng Foto derbäisetzen',
+	'admindashboard-control-multiple-upload-label' => 'Méi Fotoen derbäisetzen',
 );
 
 /** Macedonian (Македонски)
@@ -291,7 +391,7 @@ $messages['nl'] = array(
 	'admindashboard-back-to-dashboard' => 'Terug naar het Dashboard',
 );
 
-/** Norwegian (bokmål) (Norsk (bokmål))
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
 $messages['no'] = array(
@@ -381,6 +481,96 @@ $messages['pl'] = array(
 	'admindashboard-control-multiple-upload-label' => 'Dodaj wiele grafik',
 	'admindashboard-control-multiple-upload-tooltip' => 'Przesyła więcej niż jedną grafikę za pomocą narzędzia wielokrotnego przesyłu.',
 	'admindashboard-back-to-dashboard' => 'Powrót do panelu',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Aristóbulo
+ */
+$messages['pt-br'] = array(
+	'admindashboard-title' => 'Painel de Administração da {{SITENAME}}',
+	'admindashboard-header' => 'Painel de administração',
+	'admindashboard-toolbar-link' => 'Administração',
+	'admindashboard-tab-advanced' => 'Avançado',
+	'admindashboard-tab-general' => 'Geral',
+	'admindashboard-controls-wiki-header' => 'Wiki',
+	'admindashboard-control-theme-designer-label' => 'Compositor de Temas Visuais',
+	'admindashboard-control-theme-designer-tooltip' => 'O Desenhador de Temas Visuais te permite personalizar as cores da wiki, o fundo e muito mais.',
+	'admindashboard-control-recent-changes-label' => 'Mudanças recentes',
+	'admindashboard-control-recent-changes-tooltip' => 'As Mudanças Recentes exibem todas as alterações feitas na sua wiki em um certo período de tempo.',
+	'admindashboard-control-top-navigation-label' => 'Navegação Superior',
+	'admindashboard-control-top-navigation-tooltip' => 'A Navegação Superior te permite personalizar o menu de navegação na parte superior da sua wiki.',
+	'admindashboard-control-wikia-labs-label' => 'Laboratórios da Wikia',
+	'admindashboard-control-wikia-labs-tooltip' => 'A ferramenta Laboratórios da Wikia te permitirá ser o primeiro em provar novas características beta em sua wiki.',
+	'admindashboard-control-page-layout-builder-label' => 'Criador de designs',
+	'admindashboard-control-page-layout-builder-tooltip' => 'O Criador de designs te permite criar esquemas de páginas que os usuários possam escolher e utilizar para criar páginas novas.',
+	'admindashboard-controls-community-header' => 'Comunidade',
+	'admindashboard-control-user-list-label' => 'Lista de Usuários',
+	'admindashboard-control-user-list-tooltip' => 'Ver uma lista completa dos usuários que estejam participando de sua wiki.',
+	'admindashboard-control-user-rights-label' => 'Direitos de Usuário',
+	'admindashboard-control-user-rights-tooltip' => 'Adicionar e remover os direitos de grupos e permissões para usuários em sua wiki.',
+	'admindashboard-control-group-rights-label' => 'Direitos de Grupo',
+	'admindashboard-control-group-rights-tooltip' => 'Visão geral dos direitos para os grupos de usuários diferentes.',
+	'admindashboard-control-invite-label' => 'Convidar',
+	'admindashboard-control-invite-tooltip' => 'Convidar outras pessoas para usar esta wiki.',
+	'admindashboard-control-help-label' => 'Ajuda',
+	'admindashboard-control-help-tooltip' => 'Encontrar Ajuda',
+	'admindashboard-controls-content-header' => 'Conteúdo',
+	'admindashboard-control-community-corner-label' => 'Portal Comunitário',
+	'admindashboard-control-community-corner-tooltip' => 'Edita o Portal Comunitário de sua wiki e notifica aos usuários.',
+	'admindashboard-control-categories-list-label' => 'Todas as Categorias',
+	'admindashboard-control-categories-list-tooltip' => 'Ver todas as categorias atualmente listadas na sua wiki.',
+	'admindashboard-control-add-page-label' => 'Adicionar uma página',
+	'admindashboard-control-add-page-tooltip' => 'Adicionar uma nova página para a sua wiki.',
+	'admindashboard-control-add-photo-label' => 'Adicionar uma Foto',
+	'admindashboard-control-add-photo-tooltip' => 'Adicionar novas imagens para a sua wiki.',
+	'admindashboard-control-add-blog-label' => 'Adicionar uma postagem de Blog',
+	'admindashboard-control-add-blog-tooltip' => 'Adicionar uma postagem de Blog para sua wiki.',
+	'admindashboard-control-multiple-upload-label' => 'Adicionar várias imagens',
+);
+
+/** Russian (Русский)
+ * @author Kuzura
+ */
+$messages['ru'] = array(
+	'admindashboard-title' => 'Кабинет администратора {{SITENAME}}',
+	'admindashboard-header' => 'Кабинет администратора',
+	'admindashboard-toolbar-link' => 'Администратор',
+	'admindashboard-tab-advanced' => 'Расширенный',
+	'admindashboard-tab-general' => 'Общие',
+	'admindashboard-controls-wiki-header' => 'Вики',
+	'admindashboard-control-theme-designer-label' => 'Конструктор тем',
+	'admindashboard-control-theme-designer-tooltip' => 'Конструктор тем позволяет настроить цвета вики, фоновое изображение и др.',
+	'admindashboard-control-recent-changes-label' => 'Свежие правки',
+	'admindashboard-control-recent-changes-tooltip' => 'На странице Свежих правок отображаются все изменения, сделанные на вики за последнее время',
+	'admindashboard-control-top-navigation-label' => 'Меню навигации',
+	'admindashboard-control-top-navigation-tooltip' => 'Это позволяет настроить меню навигации, которое расположено в верхней части вики',
+	'admindashboard-control-wikia-labs-label' => 'Wikia Labs',
+	'admindashboard-control-wikia-labs-tooltip' => 'Wikia Labs позволяет вам быть подключить/отключить новые расширения Викия.',
+	'admindashboard-control-page-layout-builder-label' => 'Страница создания макетов',
+	'admindashboard-control-page-layout-builder-tooltip' => 'Мастер создания макетов позволяет вам создавать макеты страниц. Участники смогут использовать их при создании новых страниц вики.',
+	'admindashboard-controls-community-header' => 'Сообщество',
+	'admindashboard-control-user-list-label' => 'Список участников',
+	'admindashboard-control-user-list-tooltip' => 'Просмотрите полный список участников, которые вносили правки в вашу вики.',
+	'admindashboard-control-user-rights-label' => 'Права участников',
+	'admindashboard-control-user-rights-tooltip' => 'Позволяет давать и снимать права с других участников вики.',
+	'admindashboard-control-invite-label' => 'Пригласить',
+	'admindashboard-control-invite-tooltip' => 'Пригласить других людей редактировать эту вики.',
+	'admindashboard-control-help-label' => 'Помощь',
+	'admindashboard-control-help-tooltip' => 'Найти помощь.',
+	'admindashboard-controls-content-header' => 'Содержимое Вики',
+	'admindashboard-control-community-corner-label' => 'Уголок сообщества',
+	'admindashboard-control-community-corner-tooltip' => 'Изменить текст в Уголке сообщества, чтобы уведомить участников.',
+	'admindashboard-control-categories-list-label' => 'Все категории',
+	'admindashboard-control-categories-list-tooltip' => 'Просмотреть все категории, которые существуют на вики в настоящий момент.',
+	'admindashboard-control-add-page-label' => 'Добавить страницу',
+	'admindashboard-control-add-page-tooltip' => 'Добавить новую страницу на вики.',
+	'admindashboard-control-add-photo-label' => 'Добавить фото',
+	'admindashboard-control-add-photo-tooltip' => 'Добавить новые изображения на вики.',
+	'admindashboard-control-add-blog-label' => 'Добавить сообщение в блоге',
+	'admindashboard-control-add-blog-tooltip' => 'Добавить новое сообщение в блоге на вики.',
+	'admindashboard-control-multiple-upload-label' => 'Добавить несколько фотографий',
+	'admindashboard-control-multiple-upload-tooltip' => 'Загрузить несколько изображений одновременно с помощью специального инструмента.',
+	'admindashboard-back-to-dashboard' => 'Вернуться в Кабинет',
 );
 
 /** Telugu (తెలుగు)

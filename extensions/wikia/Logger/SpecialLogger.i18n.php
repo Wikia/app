@@ -167,7 +167,7 @@ $messages['ksh'] = array(
 	'loggernoresult' => 'Nix jefonge',
 );
 
-/** Kurdish (Latin) (Kurdî (Latin))
+/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(

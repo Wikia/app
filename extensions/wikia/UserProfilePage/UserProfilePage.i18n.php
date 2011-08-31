@@ -699,14 +699,20 @@ $messages['es'] = array(
 
 /** Persian (فارسی)
  * @author BlueDevil
+ * @author Mjbmr
  */
 $messages['fa'] = array(
 	'userprofilepage-users-notes-title' => 'دربارهٔ من',
+	'userprofilepage-edit-button' => 'ویرایش',
+	'userprofilepage-about-article-title' => 'درباره',
 	'userprofilepage-user-group-sysop' => 'مدیر',
 	'userprofilepage-user-group-bot' => 'ربات',
 	'userprofilepage-user-group-bureaucrat' => 'دیوان‌سالار',
 	'userprofilepage-user-group-helper' => 'یاور',
 	'userprofilepage-activity-new' => '$1 را ایجاد کرد',
+	'recipes-template-user-birthdate-label' => 'تاریخ تولد',
+	'recipes-template-user-gender-label' => 'جنسیت',
+	'recipes-template-user-gender-hint' => 'جنسیت',
 );
 
 /** Finnish (Suomi)
@@ -961,7 +967,7 @@ $messages['ja'] = array(
 	'userprofilepage-recent-activity-title' => '$1 の最近の活動',
 );
 
-/** Kurdish (Latin) (Kurdî (Latin))
+/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -1004,6 +1010,60 @@ $messages['lb'] = array(
 	'recipes-template-user-birthdate-label' => 'Gebuertsdatum',
 	'recipes-template-user-gender-label' => 'Geschlecht',
 	'recipes-template-user-gender-hint' => 'Geschlecht',
+);
+
+/** Lithuanian (Lietuvių)
+ * @author Vpovilaitis
+ */
+$messages['lt'] = array(
+	'userprofilepage-desc' => 'Leidžia kurti vartotojui puslapį, kuris yra įdomus ir lengvai atnaujinamas',
+	'userprofilepage-edit-avatar-label' => 'Redaguoti nuotrauką',
+	'userprofilepage-users-notes-title' => 'Apie mane',
+	'userprofilepage-about-section-title' => 'Mano $1 interviu',
+	'userprofilepage-edit-button' => 'Redaguoti',
+	'userprofilepage-about-article-title' => 'Apie',
+	'userprofilepage-about-empty-section' => 'Šis skyrius yra tuščias. Spustelėkite {{int:userprofilepage-edit-button}}, norėdami jį papildyti!',
+	'userprofilepage-edit-permision-denied' => 'Neturite redagavimo teisės',
+	'userprofilepage-edit-permision-denied-info' => 'Jūs neturite leidimo redaguoti kito naudotojo puslapio arba jo detalaus puslapio',
+	'userprofilepage-empty-my-about-me-section' => '<div style="font-size: 20px"> Visi šioje wiki, norėtų sužinoti daugiau apie jus! </div><a href="$1"> Redaguoti šį skyrių</a> pridėti daugiau informacijos apie save ir mums papasakokite apie ką jūs norite.',
+	'userprofilepage-empty-somebodys-about-me-section' => '<div style="font-size: 20px">$1 nebuvo papildytas jokia informacija dar.</div>Jūs galite <a href="$2"> palikti žinutę</a> jam',
+	'userprofilepage-user-doesnt-exists' => 'Vartotojas $1 neegzistuoja Wikia. Patikrinkite [[Special:WikiActivity|Wiki aktyvumą]] ir suraskite aktyvius šioje wiki.',
+	'userprofilepage-leave-message' => 'Palikite žinutę',
+	'userprofilepage-edits-since' => 'Redagavimų skaičius nuo įstojimo šioje wiki <br /> $1',
+	'userprofilepage-user-last-action-edit' => '$1 redagavo <a href="$2">$3</a> puslapį',
+	'userprofilepage-user-last-action-new' => '$1 sukūrėte <a href="$2">$3</a>',
+	'userprofilepage-user-last-action-delete' => '$1 panaikinote <a href="$2">$3</a> puslapį',
+	'userprofilepage-user-group-sysop' => 'Administratorius',
+	'userprofilepage-user-group-staff' => 'Personalo narys',
+	'userprofilepage-user-group-bot' => 'Botas',
+	'userprofilepage-user-group-bureaucrat' => 'Biurokratas',
+	'userprofilepage-user-group-helper' => 'Pagalbininkas',
+	'userprofilepage-user-group-vstf' => 'VSTF',
+	'userprofilepage-user-group-sysop-tooltip' => 'Šis vartotojas šios wiki administratorius',
+	'userprofilepage-user-group-staff-tooltip' => 'Šis vartotojas yra Wikia personalo nario',
+	'userprofilepage-user-group-bot-tooltip' => 'Šis naudotojas yra botas',
+	'userprofilepage-user-group-bureaucrat-tooltip' => 'Šis vartotojas šios wiki Biurokratas',
+	'userprofilepage-user-group-helper-tooltip' => 'Šis vartotojas yra pagalbininkas',
+	'userprofilepage-user-group-vstf-tooltip' => 'Šis vartotojas Spam darbo grupės narys',
+	'userprofilepage-top-wikis-title' => '$1 didžiausia wiki',
+	'userprofilepage-top-wikis-edit-count' => 'Keitimų skaičius',
+	'userprofilepage-top-wikis-hidden-see-more' => 'Jūs turite paslėptas {{PLURAL:$1| $1 wiki | $1 wiki}}',
+	'userprofilepage-top-wikis-unhide-label' => 'Nebeslėpti',
+	'userprofilepage-top-wikis-hide-label' => 'paslėpti',
+	'userprofilepage-top-wikis-locked-label' => 'Wiki gali būti paslėptas',
+	'userprofilepage-recent-activity-title' => '$1 naujausia veiklą',
+	'userprofilepage-activity-edit' => 'redagavo $1 puslapių',
+	'userprofilepage-activity-new' => 'sukūrė $1',
+	'userprofilepage-activity-comment' => 'komentavo $1',
+	'userprofilepage-activity-image' => 'įkėlė vaizdą į $1',
+	'userprofilepage-activity-video' => 'įkėlė video į $1',
+	'userprofilepage-activity-delete' => 'panaikino  $1 puslapį',
+	'userprofilepage-activity-talk' => 'paliko komentarą  $1 aptarimo puslapyje',
+	'userprofilepage-recent-activity-default' => '$1 prisijungė prie Wikia',
+	'userprofilepage-top-recent-activity-see-more' => 'Žiūrėti visus &gt;',
+	'userprofilepage-top-pages-title' => '$1 daugiausia $2 puslapių',
+	'userprofilepage-top-page-unhide-label' => 'Nebeslėpti',
+	'userprofilepage-top-pages-hidden-see-more' => 'Jūs turite {{PLURAL:$1| $1 paslėptą puslapį| $1 paslėptų puslapių| $1 paslėptus puslapius}}',
 );
 
 /** Macedonian (Македонски)
@@ -1663,12 +1723,12 @@ $messages['sv'] = array(
 	'userprofilepage-top-wikis-hide-label' => 'göm',
 	'userprofilepage-top-wikis-locked-label' => 'Den nuvarande wikin kan inte döljas',
 	'userprofilepage-recent-activity-title' => '$1s senaste aktivitet',
-	'userprofilepage-activity-edit' => 'redigerade $1 sidan',
+	'userprofilepage-activity-edit' => 'redigerade sidan $1',
 	'userprofilepage-activity-new' => 'skapade $1',
 	'userprofilepage-activity-comment' => 'kommenterade på $1',
 	'userprofilepage-activity-image' => 'laddade upp en bild till $1',
 	'userprofilepage-activity-video' => 'laddade upp en video till $1',
-	'userprofilepage-activity-delete' => 'raderade $1 sidan',
+	'userprofilepage-activity-delete' => 'raderade sidan $1',
 	'userprofilepage-activity-talk' => 'lämnade ett meddelande på $1s diskussionssida',
 	'userprofilepage-recent-activity-default' => '$1 har gått med i Wikia',
 	'userprofilepage-top-recent-activity-see-more' => 'Se alla &gt;',

@@ -582,11 +582,17 @@ Hvis du foretrekker å benytte deg av vanlig e-post eller har vedlegg, kan du ko
 
 /** Polish (Polski)
  * @author Cloudissimo
+ * @author Woytecr
  */
 $messages['pl'] = array(
 	'contact' => 'Kontakt z Wikią',
 	'specialcontact-wikia' => 'Kontakt z Wikią',
 	'specialcontact-pagetitle' => 'Kontakt z Wikią',
+	'specialcontact-intro' => 'Możesz skontaktować się z [[w:project:Staff|Ekipą Wikia]] korzystając z tego formularza. Lista administratorów znajduje się na [[Special:ListAdmins|tej stronie]].
+
+	Dodatkowe informacje na temat raportowania problemów do Wikia można znaleźć [[w:project:Report_a_problem|tutaj]], lub na [[w:Forum:Index|Forum społeczności Wikia]].
+
+Jeżeli wolisz skorzystać ze zwykłego sposobu kontaktu e-mail lub posiadasz załączniki do wysłania, możesz skontaktować się bezpośrednio na adres [mailto:community@wikia.com community@wikia.com].',
 	'specialcontact-username' => 'Nazwa użytkownika',
 	'specialcontact-wikiname' => 'Wiki',
 	'specialcontact-realname' => 'Twoje imię',
@@ -599,8 +605,11 @@ $messages['pl'] = array(
 	'specialcontact-ccdisabled' => 'Zablokowane: Proszę potwierdź swój adres e-mail, żeby móc korzystać z tej funkcji',
 	'specialcontact-notyou' => 'Nie ty?',
 	'specialcontact-captchainfo' => 'Przepisz słowo z obrazka.',
+	'specialcontact-captchatitle' => 'Nieczytelne słowo',
 	'specialcontact-formtitle' => 'Skontaktuj się z Zespołem Wikii',
 	'specialcontact-nomessage' => 'Prosimy o wpisanie tekstu wiadomości',
+	'specialcontact-captchafail' => 'Niepoprawny lub nie wpisany kod potwierdzający.',
+	'specialcontact-mailsub' => 'Kontakt e-mail z Wikią',
 	'specialcontact-mailsubcc' => 'Kopia Twojej wiadomości do Wikii',
 	'specialcontact-ccheader' => 'To jest kopia Twojej wiadomości, która została przesłana do Zespołu Wikii',
 	'specialcontact-submitcomplete' => 'Dziękujemy za skontaktowanie się z Wikią.',
@@ -802,7 +811,7 @@ Kung mas nais mong gamitin ang pangkaraniwang e-liham o maglagay ng mga kalakip,
 	'specialcontact-submitcomplete' => 'Salamat sa pakikipag-ugnayan mo sa Wikia.',
 );
 
-/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+/** Татарча (Татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(

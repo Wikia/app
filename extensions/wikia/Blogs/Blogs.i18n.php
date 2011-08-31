@@ -1966,7 +1966,7 @@ $messages['ksh'] = array(
 	'blug-cut-sign' => '&nbsp;…',
 );
 
-/** Kurdish (Latin) (Kurdî (Latin))
+/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -2609,6 +2609,7 @@ $messages['pfl'] = array(
 
 /** Polish (Polski)
  * @author Sp5uhe
+ * @author Woytecr
  */
 $messages['pl'] = array(
 	'createblogpage' => 'Utwórz pamiętnik',
@@ -2651,6 +2652,8 @@ Możesz stworzyć listę dla konkretnej kategorii, np. "Barack Obama", "Gry Komp
 	'create-blog-listing-blog-post-categories-title' => 'Znajdź wpisy z tych kategorii',
 	'create-blog-listing-page-categories-title' => 'Dodaj tą listę do tych kategorii',
 	'create-blog-listing-matches' => 'Wyniki',
+	'create-blog-listing-matches-calculate' => 'Oblicz',
+	'create-blog-listing-matches-recalculate' => 'Oblicz ponownie',
 	'create-blog-listing-matches-info' => 'znaleziono {{PLURAL:$1|pasujący blog|pasujące blogi}}',
 	'create-blog-listing-sortby' => 'Sortuj według',
 	'create-blog-listing-sortby-date' => 'Najnowsze',
@@ -2719,6 +2722,7 @@ Możesz stworzyć listę dla konkretnej kategorii, np. "Barack Obama", "Gry Komp
 	'blog-desc' => 'Artykuły na blogu',
 	'blog-movepage-badtitle' => 'Nieprawidłowy tytuł wpisu.',
 	'blog-comment-sending' => 'Wysyłanie...',
+	'blog-by' => '$1 przez $2',
 );
 
 /** Piedmontese (Piemontèis)

@@ -632,6 +632,7 @@ $messages['cy'] = array(
 /** German (Deutsch)
  * @author Inkowik
  * @author LWChris
+ * @author Tiin
  */
 $messages['de'] = array(
 	'wmu-upload-image' => 'Bild hochladen',
@@ -705,10 +706,13 @@ $messages['de'] = array(
 	'wmu-replace-default-caption' => 'Standard-Bildunterschrift ersetzen',
 	'wmu-appearance-in-article' => 'Aussehen im Artikel',
 	'wmu-alignment' => 'Ausrichtung',
+	'wmu-file-protected' => 'Dieses Bild ist geschützt',
+	'wmu-file-error' => 'Es gab einen Fehler während des Hochladens. Bitte versuche es erneut.',
 );
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author LWChris
+ * @author Tiin
  */
 $messages['de-formal'] = array(
 	'wmu-upload' => 'Hochladen',
@@ -774,6 +778,7 @@ $messages['de-formal'] = array(
 	'wmu-no-preview' => 'Sie können aus dem Vorschaumodus kein Bild hinzufügen',
 	'wmu-no-protect' => 'Diese Seite ist geschützt, Sie können ihr kein Bild hinzufügen',
 	'wmu-no-rights' => 'Sie sind nicht berechtigt Bilder auf dieser Seite hinzuzufügen',
+	'wmu-file-error' => 'Es gab einen Fehler während des Hochladens. Bitte versuchen Sie es erneut.',
 );
 
 /** Esperanto (Esperanto)
@@ -894,10 +899,14 @@ $messages['eu'] = array(
 
 /** Persian (فارسی)
  * @author Ebraminio
+ * @author Mjbmr
  */
 $messages['fa'] = array(
 	'wmu-upload' => 'بارگذاری',
+	'wmu-thiswiki' => 'این ویکی',
+	'wmu-flickr' => 'فلیکر',
 	'wmu-upload-btn' => 'بارگذاری',
+	'wmu-gallery' => 'نگارخانه',
 	'wmu-added-from-plc' => 'افزودن پروندۀ جدید توسط مکان نگه‏دار تصویر',
 );
 
@@ -942,7 +951,7 @@ $messages['fi'] = array(
  */
 $messages['fr'] = array(
 	'wmu-upload-image' => 'Téléverser une image',
-	'wmu-title' => 'Importer une photo',
+	'wmu-title' => 'Importer une image',
 	'wmu-upload' => 'Importer',
 	'wmu-notlogged' => 'Connectez-vous ou créez-vous un compte pour importer des images depuis votre ordinateur',
 	'wmu-find' => 'Rechercher',
@@ -1012,6 +1021,8 @@ $messages['fr'] = array(
 	'wmu-replace-default-caption' => 'remplacer légende par défaut',
 	'wmu-appearance-in-article' => "Apparition dans l'article",
 	'wmu-alignment' => 'Alignement',
+	'wmu-file-protected' => 'Cette image est protégée',
+	'wmu-file-error' => 'Une erreur est survenue lors de l’importation. Veuillez réessayer.',
 );
 
 /** Galician (Galego)
@@ -1089,6 +1100,8 @@ $messages['gl'] = array(
 	'wmu-replace-default-caption' => 'substituír o pé de foto por defecto',
 	'wmu-appearance-in-article' => 'Aspecto na páxina',
 	'wmu-alignment' => 'Aliñamento',
+	'wmu-file-protected' => 'Esta imaxe está protexida',
+	'wmu-file-error' => 'Houbo un erro durante o proceso de carga. Inténteo de novo.',
 );
 
 /** Hebrew (עברית)
@@ -1473,7 +1486,7 @@ $messages['ko'] = array(
 	'wmu-added-from-plc' => '플레이스홀더를 통해 삽입된 그림',
 );
 
-/** Kurdish (Latin) (Kurdî (Latin))
+/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -1615,6 +1628,8 @@ $messages['mk'] = array(
 	'wmu-replace-default-caption' => 'замени зададен опис',
 	'wmu-appearance-in-article' => 'Изглед во статија',
 	'wmu-alignment' => 'Порамнување',
+	'wmu-file-protected' => 'Оваа слика е заштитена',
+	'wmu-file-error' => 'Се појави грешка при подигањето. Обидете се повторно.',
 );
 
 /** Malay (Bahasa Melayu)
@@ -1692,6 +1707,8 @@ $messages['ms'] = array(
 	'wmu-replace-default-caption' => 'ganti kapsyen tersedia',
 	'wmu-appearance-in-article' => 'Penampilan dalam Rencana',
 	'wmu-alignment' => 'Penjajaran',
+	'wmu-file-protected' => 'Imej ini dilindungi.',
+	'wmu-file-error' => 'Maaf, berlakunya ralat ketika proses muat naik. Sila cuba lagi.',
 );
 
 /** Maltese (Malti)
@@ -1815,6 +1832,8 @@ U kunt er geen afbeeldingen aan toevoegen.',
 	'wmu-replace-default-caption' => 'standaardbijschrift vervangen',
 	'wmu-appearance-in-article' => 'Weergave in pagina',
 	'wmu-alignment' => 'Uitlijning',
+	'wmu-file-protected' => 'Deze afbeelding is beveiligd.',
+	'wmu-file-error' => 'Er is een fout opgetreden tijdens het uploadproces. Probeer het opnieuw.',
 );
 
 /** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
@@ -1917,6 +1936,8 @@ $messages['no'] = array(
 	'wmu-replace-default-caption' => 'erstatt standard bildetekst',
 	'wmu-appearance-in-article' => 'Utseende i artikkel',
 	'wmu-alignment' => 'Justering',
+	'wmu-file-protected' => 'Dette bildet er beskyttet',
+	'wmu-file-error' => 'Det oppstod en feil under opplastingsprossessen, vi beklager. Vennligst prøv igjen.',
 );
 
 /** Deitsch (Deitsch)
@@ -2274,6 +2295,8 @@ $messages['ru'] = array(
 	'wmu-replace-default-caption' => 'заменить стандартный заголовок',
 	'wmu-appearance-in-article' => 'Внешний вид в статье',
 	'wmu-alignment' => 'Выравнивание',
+	'wmu-file-protected' => 'Это изображение защищено',
+	'wmu-file-error' => 'Произошла ошибка в процессе загрузки, извините. Пожалуйста, попробуйте снова.',
 );
 
 /** Slovenian (Slovenščina)
@@ -2355,9 +2378,11 @@ $messages['sr-ec'] = array(
 
 /** Swedish (Svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'wmu-upload-image' => 'Ladda upp bild',
+	'wmu-title' => 'Ladda upp foto',
 	'wmu-upload' => 'Ladda upp',
 	'wmu-notlogged' => 'Logga in eller registrera dig för att ladda upp bilder från din dator',
 	'wmu-find' => 'Hitta',
@@ -2390,7 +2415,7 @@ $messages['sv'] = array(
 	'wmu-flickr2' => 'Flickr bilder ($1 {{PLURAL:$1|resultat|resultat}})',
 	'wmu-insert3' => 'Infoga den här bilden',
 	'wmu-recent-inf' => 'Nyligen uppladdade bilder',
-	'wmu-thiswiki2' => 'Denna wikins bilder ($1 {{PLURAL:$1|resultat|resultat}})',
+	'wmu-thiswiki2' => 'Bilder på denna wiki ($1 {{PLURAL:$1|resultat|resultat}})',
 	'wmu-success' => '<h1>Succé</h1>Dina bilder har lagts till.',
 	'wmu-success-placeholder' => '<h1>Succé</h1>',
 	'wmu-return' => 'Återgå till redigering',
@@ -2418,7 +2443,7 @@ $messages['sv'] = array(
 	'wmu-uploaddisabled' => 'Filuppladdning är inaktiverat på den här wikin',
 	'wmu-gallery-success' => 'Du har lagt till en bild till ett nytt galleri. Klicka nedan för att lägga till fler bilder eller infoga galleriet',
 	'wmu-gallery-btn1' => 'Lägg till en annan bild',
-	'wmu-gallery-btn2' => 'Sätt in galleri i sidan',
+	'wmu-gallery-btn2' => 'Infoga galleri på sidan',
 	'wmu-no-preview' => 'Du kan inte lägga till bilder från sidan i förhandsgranskning',
 	'wmu-no-protect' => 'Denna sida är skyddad, du kan inte lägga till bilder till den',
 	'wmu-no-rights' => 'Du får inte lägga till bilder till denna sida',
@@ -2427,6 +2452,8 @@ $messages['sv'] = array(
 	'wmu-replace-default-caption' => 'ersätt standard-bildtexter',
 	'wmu-appearance-in-article' => 'Utseende i Artikel',
 	'wmu-alignment' => 'Uppställning',
+	'wmu-file-protected' => 'Denna bild är skyddad',
+	'wmu-file-error' => 'Tyvärr, det uppstod ett fel med uppladdningsprocessen. Var god försök igen.',
 );
 
 /** Swahili (Kiswahili)
