@@ -4,6 +4,7 @@
 @import "../../../../skins/oasis/css/mixins/clearfix";
 @import "../../../../skins/oasis/css/mixins/box-shadow";
 @import "../../../../skins/oasis/css/core/layout";
+@import "../../../../skins/oasis/css/mixins/bodytext";
 
 $radius-user-profile-masthead: 5px;
 
@@ -218,6 +219,7 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 	}
 	
 	.details {
+		@include bodytext;
 		font-size: 14px;
 		li {
 			padding-top: 10px;
