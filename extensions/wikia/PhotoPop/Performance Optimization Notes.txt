@@ -1,0 +1,24 @@
+@author Sean Colombo
+@date 20110831
+
+Performance is probably going to be very important to this app in the long-run.
+
+Here are some known areas for improvement:
+
+* Audio
+** The sounds could be pre-loaded into a hash of Audio objects at the beginning of the game & then just used when needed (then re-loaded since you have to create a new Audio object for every play).
+** '''BETTER''' since the sounds don't work on Android anyway, figure out how to move the audio functionality up into the Titanium layer when playing w/the app (rather than via the web).
+
+* Make pages load faster
+** The selector-screen has a bunch of external JS/CSS that could be combined/minified and hosted off of fewer domains.  See the comments in PhotoPop_selectorScreen.php
+** Most of the pages (except for the home-screen) have a decent amount of CSS right in the top of the template files (instead of off in separate, cachable CSS files). This was because the app had to be designed to be able to be completely changed on short-notice since the spec wasn't certain about sizes of things, numbers of things, etc... so there are PHP varaibles right in the CSS.  Some of the CSS could probably be modified to not need as many vars, and many lines that don't need PHP could be moved off into another file & maybe even served up minimized via AssetsManager or ResourceLoader.
+** The "watermark" images probably won't change often for the first few versions of the app (since there aren't short-term plans to have the community be able to add games yet) so those images could be included in the Titanium wrapper so they wouldn't have to be downloaded at the beginning of each game.
+** The image for the background of the Home / Selector Screen / High Scores is a small image, but still requires an http call to get it.  Might be able to embed that (and all of the other GUI images) into the Titanium layer when being played from the app & just bundle those into the executable.
+
+* Make images load faster
+** When calling for the image from the server, we should be able to use ImageServing's thumbnailing to get just the size of the image we're going to use rather than the full original size of the image.
+*** If this fails, then we could use Sencha.io to get the scaled version of the image (would still have more data than we need because it wouldn't be cropped, just scaled): http://www.sencha.com/learn/how-to-use-src-sencha-io/
+** Can we build the whole game in the background at the beginning of the game, then start asynchronously loading the images in the background?
+
+* General performance issues
+** ''Low yield'': Gradients are kinda slow for mobile browsers... we could move some of those to be images. However, I don't suspect we have any that are too terribly slow in places that matter. The most commonly seen gradient that I can think of is for the "wrong answer" background which is only shown when the user clicks.
