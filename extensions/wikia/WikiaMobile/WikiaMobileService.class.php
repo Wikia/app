@@ -30,6 +30,7 @@ class WikiaMobileService extends WikiaService {
 	}
 	
 	public function index() {
+		$bottomscripts = '';
 		$jsFiles = '';
 		$cssFiles = '';
 		$tmpOut = new OutputPage();
@@ -42,6 +43,9 @@ class WikiaMobileService extends WikiaService {
 			}
 		}
 		
+		//Bottom Scripts
+		$this->wf->RunHooks( 'SkinAfterBottomScripts', array ( $this->wg->User->getSkin(), &$bottomscripts ) );
+		
 		//force skin main CSS file to be the first so it will be always overridden by other files
 		$cssFiles .= "<link rel=\"stylesheet\" href=\"" . AssetsManager::getInstance()->getSassCommonURL( 'skins/wikiamobile/css/main.scss' ) . "\"/>";
 		$cssFiles .= $tmpOut->buildCssLinks();
@@ -51,9 +55,7 @@ class WikiaMobileService extends WikiaService {
 		foreach ( $srcs as $src ) {
 			$jsFiles .= "<script type=\"{$this->wg->JsMimeType}\" src=\"$src\"></script>\n";
 		}
-		//TODO: make it load on hook
-		$src = 'extensions/wikia/JSSnippets/js/JSSnippets.js';
-		$jsFiles .=  Html::inlineScript("if (JSSnippetsStack.length) $.getScript('{$src}');");
+		
 		$this->appCacheManifestPath = ( $this->wg->DevelEnvironment && !$this->wg->Request->getBool( 'appcache' ) ) ? null : self::CACHE_MANIFEST_PATH . "&{$this->wg->StyleVersion}";
 		$this->mimeType = $this->templateObject->data['mimetype'];
 		$this->charSet = $this->templateObject->data['charset'];
@@ -68,5 +70,6 @@ class WikiaMobileService extends WikiaService {
 		$this->leftPaneContent = $this->sendRequest( 'WikiaMobileLeftPaneService', 'index' )->toString();
 		$this->wikiaFooter = $this->sendRequest( 'WikiaMobileFooterService', 'index')->toString();
 		$this->jsFiles = $jsFiles;
+		$this->bottomscripts = $bottomscripts;
 	}
 }
