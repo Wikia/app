@@ -1440,6 +1440,30 @@ $messages['sr-ec'] = array(
 	'phalanx-stats-table-reason' => 'Разлог',
 );
 
+/** Swedish (Svenska)
+ * @author WikiPhoenix
+ */
+$messages['sv'] = array(
+	'phalanx-type-content' => 'sidinnehåll',
+	'phalanx-type-summary' => 'sidsammanfattning',
+	'phalanx-type-title' => 'sidtitel',
+	'phalanx-type-user' => 'användare',
+	'phalanx-type-answers-recent-questions' => 'senaste frågorna',
+	'phalanx-type-wiki-creation' => 'wiki-skapande',
+	'phalanx-label-type' => 'Typ:',
+	'phalanx-label-lang' => 'Språk:',
+	'phalanx-view-type' => 'Typ av blockering...',
+	'phalanx-view-blocks' => 'Sökfilter',
+	'phalanx-test-submit' => 'Test',
+	'phalanx-stats-table-type' => 'Typ',
+	'phalanx-stats-table-create' => 'Skapades',
+	'phalanx-stats-table-expire' => 'Upphör',
+	'phalanx-stats-table-exact' => 'Exakt',
+	'phalanx-stats-table-language' => 'Språk',
+	'phalanx-stats-table-text' => 'Text',
+	'phalanx-stats-table-reason' => 'Anledning',
+);
+
 /** Telugu (తెలుగు)
  * @author Veeven
  */
@@ -1555,7 +1579,7 @@ Mangyaring lumikha ng kahaliling pangalan ng tagagamit o [[Special:Contact|makip
 	'phalanx-stats-table-wiki-last-edited' => 'Huling binago',
 );
 
-/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+/** Татарча (Татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(

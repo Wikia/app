@@ -236,6 +236,7 @@ $messages['ca'] = array(
  * @author Jan Luca
  * @author LWChris
  * @author SVG
+ * @author Tiin
  */
 $messages['de'] = array(
 	'chat-desc' => '[[Special:Chat|Live-Chat]]',
@@ -247,6 +248,7 @@ $messages['de'] = array(
 	'chat-user-blocked' => '$1 hat $2 blockiert.',
 	'chat-user-allow' => '$1 hat $2 zugelassen.',
 	'chat-user-was-kickbanned' => '$1 wurde aus dem Chat augeschlossen.',
+	'chat-user-permanently-disconnected' => 'Die Verbindung wurde getrennt. Überprüfe deine Internet-Verbindung und aktualisiere das Browser-Fenster.',
 	'chat-inlinealert-a-made-b-chatmod' => '$1 hat <strong>$2</strong> zum Chat-Moderator gemacht.',
 	'chat-err-connected-from-another-browser' => 'Du hast dich mit einem anderen Browser verbunden. Diese Verbindung wird geschlossen.',
 	'chat-err-communicating-with-mediawiki' => 'Fehler bei Kommunikation mit MediaWiki Server.',
@@ -279,6 +281,16 @@ Wenn du dies für einen Fehler hältst oder möchtest, dass die Entscheidung üb
 	'chat-user-manu-private-allow' => 'Private Nachrichten erlauben',
 	'chat-user-manu-private-close' => 'Privatchat schließen',
 	'chat-private-headline' => 'Privater Chat mit $1',
+	'right-chatmoderator' => 'Kann einen Benutzer aus dem [[Hilfe:Chat|Chat]] kicken/bannen',
+	'group-chatmoderator' => 'Chat-Moderatoren',
+	'group-chatmoderator-member' => 'Chat-Moderator',
+);
+
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
+ * @author Tiin
+ */
+$messages['de-formal'] = array(
+	'chat-user-permanently-disconnected' => 'Die Verbindung wurde getrennt. Überprüfen Sie ihre Internet-Verbindung und aktualisieren Sie das Browser-Fenster.',
 );
 
 /** Spanish (Español)
@@ -948,6 +960,7 @@ $messages['ru'] = array(
 	'chat-user-blocked' => '$1 заблокировал $2.',
 	'chat-user-allow' => '$1 допустил $2.',
 	'chat-user-was-kickbanned' => '$1 был заблокирован.',
+	'chat-user-permanently-disconnected' => 'Вы были отключены; проверьте своё подключение к Интернету и перезагрузите окно браузера.',
 	'chat-inlinealert-a-made-b-chatmod' => '$1 сделал <strong>$2</strong> модератором чата.',
 	'chat-err-connected-from-another-browser' => 'Вы подключены из другого браузера. Это соединение будет закрыто.',
 	'chat-err-communicating-with-mediawiki' => 'Ошибка связи с сервером MediaWiki.',
@@ -979,6 +992,11 @@ $messages['ru'] = array(
 	'chat-user-manu-private-allow' => 'Разрешить личные сообщения',
 	'chat-user-manu-private-close' => 'Закрыть отдельную комнату',
 	'chat-private-headline' => 'Отдельный чат с $1',
+	'right-chatmoderator' => 'Как забанить участника в [[Help:Chat|чате]]',
+	'group-chatmoderator' => 'Модераторы чата',
+	'group-chatmoderator-member' => 'Модератор чата',
+	'group-bannedfromchat' => 'Забанен в чате',
+	'group-bannedfromchat-member' => 'Забанен в чате',
 );
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
@@ -1005,8 +1023,12 @@ $messages['sv'] = array(
 	'chat-no-login' => 'Du måste vara inloggad för att chatta.',
 	'chat-no-login-text' => 'Var god logga in för att chatta.',
 	'chat-default-topic' => 'Välkommen till $1-chatten',
+	'chat-user-joined' => '$1 har gått med i chatten.',
 	'chat-user-parted' => '$1 har lämnat chatten.',
+	'chat-user-blocked' => '$1 har blockerat $2 .',
+	'chat-user-allow' => '$1 har tillåtit $2 .',
 	'chat-user-was-kickbanned' => '$1 blev utsparkad.',
+	'chat-user-permanently-disconnected' => 'Du har kopplats från, kontrollera internetanslutningen och uppdatera webbläsarfönstret',
 	'chat-inlinealert-a-made-b-chatmod' => '$1 har gjort <strong>$2</strong> till en chattmoderator.',
 	'chat-err-connected-from-another-browser' => 'Du har anslutit från en annan webbläsare. Denna anslutning kommer att stängas.',
 	'chat-err-communicating-with-mediawiki' => 'Fel uppstod vid kommunikation med MediaWiki-servern.',
@@ -1028,6 +1050,16 @@ $messages['sv'] = array(
 	'chat-join-the-chat' => 'Delta i chatten',
 	'chat-edit-count' => '$1 redigeringar',
 	'chat-member-since' => 'Medlem sedan $1',
+	'chat-great-youre-logged-in' => 'Toppen! Du är inloggad.',
+	'chat-user-manu-profile' => 'Användarprofil',
+	'chat-user-manu-contribs' => 'Bidrag',
+	'chat-user-manu-private' => 'Privat meddelande',
+	'chat-user-manu-give-chat-mod' => 'Ge ChatMod-status',
+	'chat-user-manu-private-block' => 'Blockera privata meddelanden',
+	'chat-user-manu-private-allow' => 'Tillåt privata meddelanden',
+	'chat-private-headline' => 'Privat chatt med $1',
+	'group-chatmoderator' => 'Chattmoderatorer',
+	'group-chatmoderator-member' => 'Chattmoderator',
 );
 
 /** Telugu (తెలుగు)

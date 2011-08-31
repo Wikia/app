@@ -290,7 +290,7 @@ $messages['tl'] = array(
 	'quickcreate' => 'ipasa ang iyong reseta',
 );
 
-/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+/** Татарча (Татарча)
  * @author Ильнар
  */
 $messages['tt-cyrl'] = array(

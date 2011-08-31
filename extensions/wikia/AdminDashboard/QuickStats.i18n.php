@@ -25,6 +25,36 @@ $messages['qqq'] = array(
 	'quickstats-date-format' => 'Follow this guide: http://php.net/manual/en/function.date.php.',
 );
 
+/** Azerbaijani (Azərbaycanca)
+ * @author Melikov Memmed
+ */
+$messages['az'] = array(
+	'quickstats-header-photos' => 'Şəkillər',
+);
+
+/** German (Deutsch)
+ * @author LWChris
+ */
+$messages['de'] = array(
+	'quickstats-header-label' => 'Ministatistik',
+	'quickstats-header-date' => 'Datum',
+	'quickstats-header-views' => 'Aufrufe',
+	'quickstats-header-edits' => 'Bearbeitungen',
+	'quickstats-header-photos' => 'Fotos',
+	'quickstats-header-likes' => 'Likes',
+	'quickstats-totals-label' => 'Gesamt',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Weitere Statistiken]]',
+	'quickstats-number-shortening' => '$1k',
+);
+
+/** Esperanto (Esperanto)
+ * @author Tradukisto
+ */
+$messages['eo'] = array(
+	'quickstats-header-date' => 'Dato',
+	'quickstats-header-edits' => 'Redaktoj',
+);
+
 /** French (Français)
  * @author Wyz
  */
@@ -38,6 +68,30 @@ $messages['fr'] = array(
 	'quickstats-totals-label' => 'Totaux',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Voir plus de stats]]',
 	'quickstats-number-shortening' => '$1K',
+);
+
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'quickstats-header-label' => 'Estatísticas rápidas',
+	'quickstats-header-date' => 'Data',
+	'quickstats-header-views' => 'Visitas',
+	'quickstats-header-edits' => 'Edicións',
+	'quickstats-header-photos' => 'Fotos',
+	'quickstats-header-likes' => 'Gústame',
+	'quickstats-totals-label' => 'Totais',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Ollar máis estatísticas]]',
+	'quickstats-number-shortening' => '$1K',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'quickstats-header-date' => 'Datum',
+	'quickstats-header-photos' => 'Fotoen',
+	'quickstats-header-likes' => 'Hunn ech gär',
 );
 
 /** Macedonian (Македонски)
@@ -116,5 +170,30 @@ $messages['pl'] = array(
 	'quickstats-header-likes' => 'Polubienia',
 	'quickstats-totals-label' => 'Łącznie',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Więcej statystyk]]',
+);
+
+/** Russian (Русский)
+ * @author Kuzura
+ */
+$messages['ru'] = array(
+	'quickstats-header-label' => 'Статистика Вики',
+	'quickstats-header-date' => 'Дата',
+	'quickstats-header-views' => 'Просмотров',
+	'quickstats-header-edits' => 'Правок',
+	'quickstats-header-photos' => 'Фото',
+	'quickstats-header-likes' => 'Нравится',
+	'quickstats-totals-label' => 'Итого',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Ещё статистика]]',
+	'quickstats-number-shortening' => '$1K',
+);
+
+/** Татарча (Татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'quickstats-header-views' => 'караулар',
+	'quickstats-header-edits' => 'төзәтмә',
+	'quickstats-header-photos' => 'Рәсем',
+	'quickstats-header-likes' => 'Ошый',
 );
 

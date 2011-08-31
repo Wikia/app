@@ -106,6 +106,14 @@ $messages['es'] = array(
 	'unsubscribe-working-done' => 'Completado.',
 );
 
+/** Persian (فارسی)
+ * @author Mjbmr
+ */
+$messages['fa'] = array(
+	'unsubscribe-confirm-button' => 'بله، من مطمئن هستم',
+	'unsubscribe-working-done' => 'کامل.',
+);
+
 /** Finnish (Suomi)
  * @author Tofu II
  */
@@ -347,6 +355,7 @@ $messages['pt-br'] = array(
 
 /** Russian (Русский)
  * @author DCamer
+ * @author Kuzura
  */
 $messages['ru'] = array(
 	'unsubscribe' => 'Отписаться',
@@ -362,6 +371,8 @@ $messages['ru'] = array(
 	'unsubscribe-working' => 'Отписка $1 {{PLURAL:$1|учётной записи|учётных записей}} для $2',
 	'unsubscribe-working-problem' => 'проблема с загрузкой информации о пользователе: $1',
 	'unsubscribe-working-done' => 'Готово.',
+	'unsubscribe-preferences-toggle' => 'Отписаться от всех писем от Викия (снимите это для доступа к параметрам ниже)',
+	'unsubscribe-preferences-notice' => 'Получение писем было отключено для вашей учётной записи. Посетите вкладку Личные данные, чтобы снова включить это.',
 );
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
@@ -393,6 +404,8 @@ $messages['sv'] = array(
 	'unsubscribe-working' => 'Avslutar prenumerationen för $1 {{PLURAL:$1|konto|konton}} för $2',
 	'unsubscribe-working-problem' => 'problem med att läsa användarinformationen för: $1',
 	'unsubscribe-working-done' => 'Slutfört.',
+	'unsubscribe-preferences-toggle' => 'Avsluta prenumerationen från alla e-postmeddelanden från Wikia (avmarkera detta för att komma åt alternativen nedan)',
+	'unsubscribe-preferences-notice' => 'E-post har inaktiverats för ditt konto. Besök fliken Användarprofil för att återaktivera dem.',
 );
 
 /** Telugu (తెలుగు)

@@ -1366,7 +1366,7 @@ $PAGETITLE_URL
 <a href="{{fullurl:Special:Preferences}}">{{fullurl:Special:Preferences}}</a></p>',
 );
 
-/** Kurdish (Latin) (Kurdî (Latin))
+/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -1388,6 +1388,8 @@ $messages['lb'] = array(
 	'wikiafollowedpages-special-heading-mediawiki' => 'MediaWiki-Säiten ($1)',
 	'wikiafollowedpages-special-heading-media' => 'Biller a Videoen ($1)',
 	'wikiafollowedpages-special-namespace' => '($1-Säit)',
+	'oasis-wikiafollowedpages-special-seeall' => 'All kucken >',
+	'wikiafollowedpages-special-seeall' => 'All kucken >',
 	'wikiafollowedpages-special-showall' => 'All weisen >',
 	'wikiafollowedpages-special-showmore' => 'Méi weisen',
 	'wikiafollowedpages-special-title' => 'Iwwerwaachte Säiten',

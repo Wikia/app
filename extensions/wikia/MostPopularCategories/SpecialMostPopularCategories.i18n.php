@@ -403,3 +403,10 @@ $messages['zh-hans'] = array(
 	'mostpopularcategories' => '最受欢迎的类别',
 );
 
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Lauhenry
+ */
+$messages['zh-hant'] = array(
+	'mostpopularcategories' => '最受歡迎的類別',
+);
+

@@ -193,6 +193,14 @@ $messages['es'] = array(
 	'sponsorpage-save' => 'Grabar',
 );
 
+/** Persian (فارسی)
+ * @author Mjbmr
+ */
+$messages['fa'] = array(
+	'sponsorpage-edit' => 'ویرایش',
+	'sponsorpage-save' => 'ذخیره',
+);
+
 /** Finnish (Suomi)
  * @author Centerlink
  * @author Nike
@@ -311,7 +319,7 @@ $messages['ksh'] = array(
 	'sponsor-template' => '<li><a href="http://$1" rel="nofollow">$2</a><br />$3</li>',
 );
 
-/** Kurdish (Latin) (Kurdî (Latin))
+/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -649,7 +657,7 @@ $messages['tl'] = array(
 	'sponsorpage-save' => 'Sagipin',
 );
 
-/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+/** Татарча (Татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(

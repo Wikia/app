@@ -2258,7 +2258,7 @@ Dat es e brandneu Projäk, un wann De Froore häß, schriiv ons dovun!
 	'autocreatewiki-subname-answers' => 'Antwoote',
 );
 
-/** Kurdish (Latin) (Kurdî (Latin))
+/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -3985,6 +3985,7 @@ $messages['sv'] = array(
 	'autocreatewiki-info-domain' => 'Det är bäst att använda ett ord är ett sannolikt sökord för ditt ämne.',
 	'autocreatewiki-info-topic' => 'Lägg till en kort beskrivning, som "Star Wars" eller "TV-program".',
 	'autocreatewiki-info-category-default' => 'Detta kommer att hjälpa besökare att hitta din wiki.',
+	'autocreatewiki-info-category-answers' => 'Detta kommer att hjälpa besökare att hitta din Svarsida.',
 	'autocreatewiki-info-language' => 'Detta kommer att vara standardspråket för dina besökare på din wiki.',
 	'autocreatewiki-info-email-address' => 'Din e-postadress visas aldrig för någon på Wikia.',
 	'autocreatewiki-info-realname' => 'Om du väljer att ange det, kommer det att användas för att tillskriva dig ditt arbete.',
@@ -4254,7 +4255,7 @@ $messages['tr'] = array(
 	'autocreatewiki-step2' => 'Veri tabanı oluşturuluyor...',
 );
 
-/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+/** Татарча (Татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(

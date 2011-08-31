@@ -465,7 +465,7 @@ $messages['nl'] = array(
 	'wva-title' => 'Video vanuit URL toevoegen',
 	'wva-notlogged' => "U moet aanmelden of registreren om video's te kunnen toevoegen.",
 	'wva-notallowed' => "U kunt geen video's toevoegen in deze wiki.",
-	'wva-protected' => 'Deze video is beschermd.',
+	'wva-protected' => 'Deze video is beveiligd.',
 );
 
 /** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)

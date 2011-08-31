@@ -177,7 +177,7 @@ $messages['ksh'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Fähler: En Sigg bruch ene Enhalld',
 );
 
-/** Kurdish (Latin) (Kurdî (Latin))
+/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(

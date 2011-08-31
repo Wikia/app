@@ -600,6 +600,7 @@ $messages['cs'] = array(
  * @author LWChris
  * @author Pill
  * @author SVG
+ * @author Tiin
  */
 $messages['de'] = array(
 	'oasis-home' => 'Startseite',
@@ -671,6 +672,7 @@ $messages['de'] = array(
 	'oasis-notification-youhavenewmessages' => 'Du hast $1.',
 	'oasis-member-since' => 'Mitglied seit $1',
 	'oasis-edits-counter' => '$1 <sup>{{PLURAL:$1|Bearbeitung|Bearbeitungen}}</sup>',
+	'oasis-edit-saved' => 'Deine Bearbeitung wurde gespeichert!',
 	'oasis-toolbar-edit-title' => 'Werkzeugkasten bearbeiten',
 	'oasis-toolbar-edit-toolbar-list' => 'Dein Werkzeugkasten',
 	'oasis-toolbar-edit-reset-defaults' => 'Standard wiederherstellen',
@@ -709,6 +711,7 @@ $messages['de'] = array(
 	'oasis-latest-activity-delete-details' => 'gelöscht von $1 $2',
 	'oasis-interlang-show-all' => '... alle sehen >',
 	'oasis-interlang-languages' => 'Sprachen:',
+	'oasis-edit-this-menu' => 'Bearbeite dieses Menü',
 	'imageseo-featured-on' => 'Verwendet auf:',
 	'imageseo-featured-more' => 'mehr...',
 	'oasis-editpage-readonlywarning' => '<h2>Sorry!</h2>
@@ -727,6 +730,14 @@ $messages['de'] = array(
 	'oasis-related-categories' => 'Verwandte Kategorien',
 	'corporatelandingpage-trivia-title' => 'Wikia Kleinigkeiten',
 	'corporatelandingpage-trivia-description' => 'Teste deine Trivia-Kenntnisse und gewinne ein Geschenkpaket von Wikia!',
+);
+
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
+ * @author Tiin
+ */
+$messages['de-formal'] = array(
+	'oasis-edit-saved' => 'Ihre Bearbeitung wurde gespeichert!',
+	'oasis-edit-this-menu' => 'Bearbeiten Sie dieses Menü',
 );
 
 /** Esperanto (Esperanto)
@@ -1715,7 +1726,7 @@ $messages['ko'] = array(
 <p>위키아의 <a href="http://twitter.com/wikia">트위터</a>나 <a href="http://facebook.com/wikia">페이스북</a>을 확인하시면 서버에 상태에 대한 정보를 더 얻으실 수 있습니다.</P>',
 );
 
-/** Kurdish (Latin) (Kurdî (Latin))
+/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -2165,7 +2176,7 @@ $messages['ms'] = array(
 	'oasis-add-photo' => 'Bubuh Gambar',
 	'oasis-anon-user' => 'seorang Penyumbang Wikia',
 	'oasis-create-page' => 'Cipta laman baru di wiki ini',
-	'oasis-add-page' => 'Cipta Laman Baru',
+	'oasis-add-page' => 'Buat Laman Baru',
 	'oasis-section-edit' => 'Sunting',
 	'oasis-section-edit-alt' => 'Sunting bahagian $1',
 	'oasis-popular-blogs-title' => 'Kiriman blog<br />popular',
@@ -2913,6 +2924,7 @@ $messages['pt-br'] = array(
 
 /** Russian (Русский)
  * @author Eleferen
+ * @author Exlex
  * @author Kaganer
  * @author Kuzura
  */
@@ -2984,6 +2996,7 @@ $messages['ru'] = array(
 	'oasis-notification-youhavenewmessages' => 'У вас есть $1.',
 	'oasis-member-since' => 'Участник с $1',
 	'oasis-edits-counter' => '$1 <sup>{{PLURAL:$1|правка|правок}} сделал</sup',
+	'oasis-edit-saved' => 'Ваша правка сохранена!',
 	'oasis-toolbar-edit-title' => 'Настроить Мои инструменты',
 	'oasis-toolbar-edit-toolbar-list' => 'Список инструментов',
 	'oasis-toolbar-edit-reset-defaults' => 'Вернуть по умолчанию',
@@ -3000,7 +3013,7 @@ $messages['ru'] = array(
 	'oasis-toolbar-more' => 'подробнее...',
 	'oasis-toolbar-customize' => 'Настройка',
 	'oasis-toolbar-devinfo' => 'Сведения для разработчиков',
-	'oasis-comments-header' => '{{PLURAL:$1|комментарий|комментария|комментариев}}',
+	'oasis-comments-header' => '$1 {{PLURAL:$1|комментарий|комментария|комментариев}}',
 	'oasis-comments-showing-most-recent' => 'Показаны $1 последних изменения',
 	'oasis-comments-anonymous-prompt' => 'Анонимный участник<br /> <a href="#">Войти?</a>',
 	'oasis-comments-show-all' => 'Показать все',
@@ -3022,6 +3035,7 @@ $messages['ru'] = array(
 	'oasis-latest-activity-delete-details' => 'удалил $1 $2',
 	'oasis-interlang-show-all' => '... см. все >',
 	'oasis-interlang-languages' => 'Языки:',
+	'oasis-edit-this-menu' => 'Править это меню',
 	'imageseo-featured-more' => 'больше ...',
 	'oasis-editpage-readonlywarning' => '<h2>Извините!</h2>
 <p>Вы не можете править страницу в данный момент. Викия будет перезапущена в ближайшее время. Вот что происходит сейчас:<br /><em>$1</em></p>
@@ -3226,7 +3240,7 @@ $messages['sv'] = array(
 	'oasis-spotlights-rail-title' => 'Mer från',
 	'oasis-pages-on-wiki-header' => 'Sidor på $1',
 	'oasis-latest-activity-new-details' => 'skapad av $1 för $2',
-	'oasis-latest-activity-edit-details' => 'redigerad av $1 för $2',
+	'oasis-latest-activity-edit-details' => 'redigerades av $1 för $2',
 	'oasis-latest-activity-delete-details' => 'raderad av $1 för $2',
 	'oasis-interlang-show-all' => '... se alla >',
 	'oasis-interlang-languages' => 'Språk:',

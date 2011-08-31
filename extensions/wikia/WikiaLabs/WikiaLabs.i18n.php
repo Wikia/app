@@ -77,9 +77,12 @@ $messages['en'] = array(
         'wikialabs-log-disabled-extension' => 'disabled $1',
 );
 
-/** Message documentation (Message documentation) */
+/** Message documentation (Message documentation)
+ * @author Siebrand
+ */
 $messages['qqq'] = array(
 	'wikialabs-list-project-add-give-feedback' => 'keep it short, size limitation',
+	'wikialabs-staff-add' => 'A "lab item" in this context is exactly the same thing as a "project" in other messages.',
 );
 
 /** Bulgarian (Български)
@@ -291,6 +294,17 @@ $messages['es'] = array(
 	'wikialabs-feedback-validator-notification-ok' => 'Tus sugerencias han sido enviadas. ¡Gracias!',
 	'wikialabs-log-enabled-extension' => '$1 habilitado',
 	'wikialabs-log-disabled-extension' => '$1 deshabilitado',
+);
+
+/** Persian (فارسی)
+ * @author Mjbmr
+ */
+$messages['fa'] = array(
+	'wikialabs-add-project-status-active' => 'نمایش پروژه',
+	'wikialabs-add-project-add-save' => 'ذخیره',
+	'wikialabs-add-project-add-cancel' => 'انصراف',
+	'wikialabs-feedback-submit' => 'ثبت',
+	'wikialabs-feedback-title' => 'بازخورد',
 );
 
 /** French (Français)
@@ -664,6 +678,7 @@ $messages['nl'] = array(
 	'wikialabs-add-project-warning' => 'De-activatie waarschuwingsbericht (gebruik &lt;h2&gt; Titel &lt;/h2&gt; voor de naam)',
 	'wikialabs-add-project-enable-warning' => 'Waarschuwingen',
 	'wikialabs-add-project-status' => 'Status',
+	'wikialabs-add-project-status-inactive' => 'Project in de hoofdweergave verbergen',
 	'wikialabs-add-project-status-active' => 'Project weergeven',
 	'wikialabs-add-project-add-save' => 'Opslaan',
 	'wikialabs-add-project-add-cancel' => 'Annuleren',
@@ -684,6 +699,7 @@ $messages['nl'] = array(
 	'wikialabs-list-wikias-list-back-to-wikialab' => 'Terug naar Wikia Laboratorium',
 	'wikialabs-list-wikias-list-wrong-project-id' => 'Onjuist project-ID. De lijst kan niet worden weergegeven.',
 	'wikialabs-graduates-tile' => 'Succesvolle projecten',
+	'wikialabs-staff-title' => 'Labsbeheer',
 	'wikialabs-staff-info' => 'alleen zichtbaar voor Wikiamedewerkers',
 	'wikialabs-staff-items' => 'Labitem bewerken',
 	'wikialabs-staff-empty-project' => 'Selecteer een project...',
@@ -693,14 +709,18 @@ $messages['nl'] = array(
 	'wikialabs-feedback-title' => 'Terugkoppeling',
 	'wikialabs-feedback-rating' => 'Uw beoordeling:',
 	'wikialabs-feedback-comments' => 'Opmerking:',
+	'wikialabs-feedback-validator-user-not-allowed' => 'U kunt geen terugkoppeling geven',
 	'wikialabs-feedback-validator-message-too-long' => 'De opmerking kan niet langer dan 255 tekens zijn',
 	'wikialabs-feedback-validator-message-too-short' => 'Geef een reactie op',
+	'wikialabs-feedback-validator-rating' => 'Geef een waardering op',
 	'wikialabs-feedback-category' => 'Waar gaat dit over?',
 	'wikialabs-category-choose-one' => 'Kies er een...',
 	'wikialabs-love-this-project' => 'Ik hou van dit project.',
 	'wikialabs-hate-this-project' => 'Ik haat dit project.',
 	'wikialabs-problem-with-project' => 'Ik heb een probleem met dit project.',
 	'wikialabs-an-idea-for-project' => 'Ik heb een idee voor dit project.',
+	'wikialabs-feedback-validator-spam-attempt' => 'Wacht 60 seconden voordat u opnieuw terugkoppeling geeft',
+	'wikialabs-feedback-validator-notification-ok' => 'Uw terugkoppeling is toegevoegd. Bedankt!',
 	'wikialabs-log-enabled-extension' => 'heeft $1 ingeschakeld',
 	'wikialabs-log-disabled-extension' => 'heeft $1 uitgeschakeld',
 );
@@ -731,14 +751,14 @@ $messages['no'] = array(
 	'wikialabs-add-project-validator-link' => 'Lenken kan ikke være tom',
 	'wikialabs-add-project-validator-prjscreen' => 'Bildet kan ikke være tomt',
 	'wikialabs-list-project-title' => 'Wikia-laben',
-	'wikialabs-list-project-add-give-feedback' => 'Gi en tilbakemelding',
+	'wikialabs-list-project-add-give-feedback' => 'Gi tilbakemelding',
 	'wikialabs-list-project-inactive' => 'inaktiv',
 	'wikialabs-list-project-active' => 'aktiv',
 	'wikialabs-list-project-warning' => 'Er du sikker?',
 	'wikialabs-list-project-warning-ok' => 'Ja, deaktiver',
 	'wikialabs-list-project-warning-cancel' => 'Avbryt',
 	'wikialabs-list-project-currently-active-on-wikis' => 'Aktiv på $1 {{PLURAL:$1|wiki|wikier}}',
-	'wikialabs-list-project-warning-box' => 'Prøv ut noen av ideene vi leker med og del dine tilbakemeldinger med oss.<br /><br />Husk at vi fremdeles jobber med disse funksjonene. Du kan finne feil og funksjonene kan <b>endres</b>, <b>gå i stykker</b> eller <b>forsvinne</b>. Det er bare moro!',
+	'wikialabs-list-project-warning-box' => 'Prøv ut noen av ideene vi leker med og del dine tilbakemeldinger med oss.<br /><br />Husk at vi fremdeles jobber med disse funksjonene. Du kan finne feil og funksjonene kan <b>endres</b>, <b>gå i stykker</b> eller <b>forsvinne</b>. Det er bare uskyldig moro.',
 	'wikialabs-list-project-warning-box-no-admin' => 'Wikia-laben lar administratorer prøve ut betafunksjoner på wikien.<br /><br />Husk at vi fremdeles jobber med disse funksjonene. Du kan finne feil og funksjonene kan <b>endres</b>, <b>gå i stykker</b> eller <b>forsvinne</b>.<br /><br />Hvis du har tilbakemeldinger til teamet, vennligst si ifra ved å trykke på «Gi en tilbakemelding»-knappen. Takk.',
 	'wikialabs-list-project-list-of-wikis-uses' => 'Liste over wikier som bruker denne utvidelsen',
 	'wikialabs-list-wikias-list-title' => 'Wiki-laber - Liste over wikier',
@@ -775,11 +795,17 @@ $messages['no'] = array(
 
 /** Polish (Polski)
  * @author Sovq
+ * @author Woytecr
  */
 $messages['pl'] = array(
 	'wikialabs-add-project-name' => 'Nazwa',
 	'wikialabs-add-project-description' => 'Opis',
 	'wikialabs-add-project-add-image' => 'Dodaj zdjęcie',
+	'wikialabs-add-project-title' => 'Dodaj/Edytuj projekt (ID:$1)',
+	'wikialabs-add-project-project' => 'Projekt',
+	'wikialabs-add-project-enable-warning' => 'Ostrzeżenia',
+	'wikialabs-add-project-status' => 'Status',
+	'wikialabs-add-project-status-active' => 'Pokaż projekt',
 	'wikialabs-add-project-add-save' => 'Zapisz',
 	'wikialabs-add-project-add-cancel' => 'Anuluj',
 	'wikialabs-add-project-validator-description' => 'Opis nie może być pusty',
@@ -796,6 +822,8 @@ $messages['pl'] = array(
 	'wikialabs-list-wikias-list-title' => 'Wiki Labs - Lista wikii',
 	'wikialabs-list-wikias-list-back-to-wikialab' => 'Wróć do Wikia Labs',
 	'wikialabs-graduates-tile' => 'Absolwenci Wikia Labs',
+	'wikialabs-staff-empty-project' => 'Wybierz projekt...',
+	'wikialabs-feedback-submit' => 'Wyślij',
 	'wikialabs-feedback-title' => 'Opinie',
 	'wikialabs-feedback-rating' => 'Twoja ocena:',
 	'wikialabs-feedback-we-love-getting-feedback' => 'Uwielbiamy czytać opinie na temat rozszerzeń dostępnych w WikiaLabs. Jeśli masz pomysł jak możemy polepszyć ich funkcjonalność lub znalazłeś błąd, proszę dodaj komentarz poniżej, a zespół pracujący nad rozszerzeniem dostanie Twoją wiadomość',
@@ -936,7 +964,7 @@ $messages['te'] = array(
 	'wikialabs-list-project-warning-cancel' => 'రద్దుచేయి',
 );
 
-/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+/** Татарча (Татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(

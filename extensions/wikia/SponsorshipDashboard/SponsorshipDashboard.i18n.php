@@ -902,6 +902,23 @@ $messages['es'] = array(
 	'sponsorship-dashboard-download' => 'acciones adicionales',
 );
 
+/** Persian (فارسی)
+ * @author Mjbmr
+ */
+$messages['fa'] = array(
+	'sponsorship-dashboard-tab-ViewGroups' => 'گروه‌ها',
+	'sponsorship-dashboard-tab-ViewUsers' => 'کاربران',
+	'sponsorship-dashboard-users-name' => 'نام',
+	'sponsorship-dashboard-source-Mobile' => 'تلفن همراه',
+	'sponsorship-dashboard-source-none' => '-- هیچ --',
+	'sponsorship-dashboard-source-default' => '-- پیش‌فرض --',
+	'sponsorship-dashboard-source-wikis' => 'ویکی‌ها',
+	'sponsorship-dashboard-source-list' => 'فهرست',
+	'sponsorship-dashboard-report-new-source-mobile' => 'تلفن همراه',
+	'sponsorship-dashboard-source-serie-name' => 'نام',
+	'sponsorship-dashboard-table-collumn-date' => 'تاریخ',
+);
+
 /** Finnish (Suomi)
  * @author Nike
  * @author Olli
@@ -1826,13 +1843,20 @@ $messages['lb'] = array(
 	'sponsorship-dashboard-serie-direct' => 'Direkt',
 	'sponsorship-dashboard-serie-content-article' => 'Säiten',
 	'sponsorship-dashboard-serie-clicks' => 'Klicken',
+	'sponsorship-dashboard-serie-visitors' => 'Visiteuren',
+	'sponsorship-dashboard-serie-avgTimeOnPage' => 'Duerchschnëttlech Zäit op der Säit',
+	'sponsorship-dashboard-serie-namespace-Special' => 'Spezialsäiten',
+	'sponsorship-dashboard-serie-namespace-Talk' => 'Diskussiounssäiten',
 	'sponsorship-dashboard-description-source' => 'Wéi Är Benotzer Iech fannen',
 	'sponsorship-dashboard-report-activity' => 'Aktivitéit',
 	'sponsorship-dashboard-report-participation' => 'Bedeelegung',
 	'sponsorship-dashboard-day' => 'Dag',
 	'sponsorship-dashboard-month' => 'Mount',
 	'sponsorship-dashboard-year' => 'Joer',
+	'sponsorship-dashboard-error-nodataforcurrentweek' => 'Feeler: Keng Donnéeë fir déi aktuell Woch',
+	'not-allowed' => 'Pardon. Dir hutt net déi néideg Rechter fir op dës Säit ze gesinn.',
 	'show' => 'Weisen:',
+	'sponsorship-dashboard-tab-ViewGroups' => 'Gruppen',
 	'sponsorship-dashboard-tab-ViewUsers' => 'Benotzer',
 	'sponsorship-dashboard-user-new' => 'Benotzer derbäisetzen',
 	'sponsorship-dashboard-user-name' => 'Benotzernumm',
@@ -1840,8 +1864,11 @@ $messages['lb'] = array(
 	'sponsorship-dashboard-users-name' => 'Numm',
 	'sponsorship-dashboard-editor-Users' => 'Benotzer',
 	'sponsorship-dashboard-report-description' => 'Beschreiwung',
+	'sponsorship-dashboard-cancel' => 'ofbriechen',
+	'sponsorship-dashboard-save' => 'späicheren',
 	'sponsorship-dashboard-source-none' => '-- keen --',
 	'sponsorship-dashboard-source-wikis' => 'Wikien',
+	'sponsorship-dashboard-source-list' => 'Lëscht',
 	'sponsorship-dashboard-source-serie-name' => 'Numm',
 	'sponsorship-dashboard-source-query' => 'Optiounen',
 	'sponsorship-dashboard-other-options' => 'Aner Optiounen',
@@ -1883,7 +1910,7 @@ $messages['mk'] = array(
 	'sponsorship-dashboard-serie-bounces' => 'Одбивања',
 	'sponsorship-dashboard-serie-visitors' => 'Посетители',
 	'sponsorship-dashboard-serie-entranceRate' => 'Новопосетеност',
-	'sponsorship-dashboard-serie-uniquePageviews' => 'Засебни прегледи',
+	'sponsorship-dashboard-serie-uniquePageviews' => 'Засебни посети',
 	'sponsorship-dashboard-serie-exitRate' => 'Излезност',
 	'sponsorship-dashboard-serie-avgTimeOnSite' => 'Просечно проведено време на местото',
 	'sponsorship-dashboard-serie-visitBounceRate' => 'Одбиени посети',

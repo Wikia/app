@@ -119,7 +119,7 @@ $messages['gl'] = array(
 	'tab-discover-loading-message' => 'Cargando...',
 	'tab-discover-no-network-dialog-title' => 'Rede non dispoñible',
 	'tab-discover-no-network-dialog-message' => 'Non se detectou ningunha conexión de rede',
-	'tab-discover-no-network-dialog-close-button' => 'De acordo',
+	'tab-discover-no-network-dialog-close-button' => 'Aceptar',
 	'tab-search-loading-message' => 'Procurando...',
 	'browser-loading-message' => 'Cargando...',
 );
@@ -270,6 +270,22 @@ $messages['ru'] = array(
 	'tab-discover-no-network-dialog-close-button' => 'OK',
 	'tab-search-loading-message' => 'Поиск...',
 	'browser-loading-message' => 'Загрузка...',
+);
+
+/** Swedish (Svenska)
+ * @author WikiPhoenix
+ */
+$messages['sv'] = array(
+	'main-tab-discover' => 'Upptäck',
+	'main-tab-personal' => 'Min Wikia',
+	'main-tab-search' => 'Sök',
+	'main-tab-offline' => 'Ej ansluten',
+	'tab-discover-loading-message' => 'Läser in...',
+	'tab-discover-no-network-dialog-title' => 'Nätverket otillgänglig',
+	'tab-discover-no-network-dialog-message' => 'Ingen nätverksanslutning upptäcktes',
+	'tab-discover-no-network-dialog-close-button' => 'OK',
+	'tab-search-loading-message' => 'Söker...',
+	'browser-loading-message' => 'Läser in...',
 );
 
 /** Telugu (తెలుగు)

@@ -320,6 +320,7 @@ Inténteo de novo ou [[Special:Contact|informe do problema]].',
 <p>Comprobe o <a href="http://twitter.com/wikia">Twitter</a> ou o <a href="http://facebook.com/wikia">Facebook</a> para obter máis información.
 <br />
 (Se xa ten unha conta, pode <a href="#">acceder ao sistema</a> como de costume, pero non poderá editar.)</p>',
+	'comboajaxlogin-ajaxerror' => 'Wikia non responde. Comprobe a súa conexión.',
 );
 
 /** Hungarian (Magyar)

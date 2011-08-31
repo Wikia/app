@@ -238,7 +238,7 @@ $messages['tl'] = array(
 	'relatedvideo' => 'Kaugnay na mga bidyo',
 );
 
-/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+/** Татарча (Татарча)
  * @author Zahidulla
  */
 $messages['tt-cyrl'] = array(

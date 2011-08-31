@@ -606,7 +606,7 @@ $messages['ja'] = array(
 	'lookupcontribscontent' => 'コンテンツ',
 );
 
-/** Kurdish (Latin) (Kurdî (Latin))
+/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(

@@ -1056,6 +1056,7 @@ Místo toho můžete kliknout na "$2" a zobrazit aktualizovanou stránku.',
  * @author Avatar
  * @author LWChris
  * @author The Evil IP address
+ * @author Tiin
  */
 $messages['de'] = array(
 	'wikiaphotogallery-desc' => 'Oberfläche für die Verwaltung von Galerien und Slideshows in Seiten',
@@ -1229,8 +1230,8 @@ Wenn auf dieses Bild geklickt wird, zu dieser Seite gehen.",
 	'wikiaPhotoGallery-photooptions-linkurl' => 'Link-Ziel (Seitennamen oder URL einfügen)',
 	'wikiaPhotoGallery-photooptions-description' => 'Bilddetails.',
 	'wikiaPhotoGallery-search-tooltip' => 'Suche Fotos in diesem Wiki',
-	'wikiaPhotoGallery-upload-image-size-error' => 'Falsche Bildgröße. Bilder müssen 673 mal 410 Pixel groß sein.',
-	'wikiaPhotoGallery-upload-image-size' => 'Bilder müssen 673 mal 410 Pixel groß sein.',
+	'wikiaPhotoGallery-upload-image-size-error' => 'Falsche Bildgröße. Bilder müssen 660 mal 360 Pixel oder größer sein.',
+	'wikiaPhotoGallery-upload-image-size' => 'Bilder müssen 660 mal 360 Pixel oder größer sein.',
 	'wikiaPhotoGallery-not-displayed' => 'Nicht angezeigt',
 	'galery-slider-read-more' => 'Mehr lesen >',
 );
@@ -1497,6 +1498,15 @@ Describe esta imagen.",
 	'wikiaPhotoGallery-upload-image-size' => 'Las imágenes deben ser de 660 px por 360 px o mayores.',
 	'wikiaPhotoGallery-not-displayed' => 'No mostrado',
 	'galery-slider-read-more' => 'Leer más >',
+);
+
+/** Persian (فارسی)
+ * @author Mjbmr
+ */
+$messages['fa'] = array(
+	'wikiaPhotoGallery-back' => 'بازگشت',
+	'wikiaPhotoGallery-finish' => 'پایان',
+	'wikiaPhotoGallery-lightbox-caption' => 'توسط $1',
 );
 
 /** Finnish (Suomi)
@@ -2730,7 +2740,7 @@ $messages['ja'] = array(
 	'galery-slider-read-more' => ' さらに読む >',
 );
 
-/** Kurdish (Latin) (Kurdî (Latin))
+/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -3741,6 +3751,7 @@ $messages['pfl'] = array(
 /** Polish (Polski)
  * @author Sovq
  * @author Sp5uhe
+ * @author Woytecr
  */
 $messages['pl'] = array(
 	'wikiaphotogallery-desc' => 'Interfejs zarządzania galeriami i przeglądaniem zdjęć na stronach',
@@ -3912,8 +3923,8 @@ Alternatywnie, możesz kliknąć „$2”, aby zobaczyć stronę w jej uaktualni
 	'wikiaPhotoGallery-photooptions-linkurl' => 'Linkuj do (wklej nazwę strony lub adres URL).',
 	'wikiaPhotoGallery-photooptions-description' => 'Szczegóły zdjęcia.',
 	'wikiaPhotoGallery-search-tooltip' => 'Szukaj zdjęć na tej wiki',
-	'wikiaPhotoGallery-upload-image-size-error' => 'Niewłaściwe wymiary obrazu. Prawidłowe to 673px na 410px.',
-	'wikiaPhotoGallery-upload-image-size' => 'Obrazy muszą mieć wymiary 673px na 410px.',
+	'wikiaPhotoGallery-upload-image-size-error' => 'Niewłaściwy rozmiar zdjęcia. Wymagany rozmiar to 660 na 360px lub większy.',
+	'wikiaPhotoGallery-upload-image-size' => 'Obrazu muszą mieć rozmiar 660 px na 360 px lub więcej.',
 	'wikiaPhotoGallery-not-displayed' => 'Brak',
 	'galery-slider-read-more' => 'Więcej >',
 );
@@ -4465,6 +4476,7 @@ $messages['ro'] = array(
  * @author Eleferen
  * @author G0rn
  * @author Kaganer
+ * @author Kuzura
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
@@ -4638,8 +4650,8 @@ $messages['ru'] = array(
 	'wikiaPhotoGallery-photooptions-linkurl' => 'Перейти на (вставьте название страницы или URL).',
 	'wikiaPhotoGallery-photooptions-description' => 'Детали изображения.',
 	'wikiaPhotoGallery-search-tooltip' => 'Поиск фотографий на этой вики',
-	'wikiaPhotoGallery-upload-image-size-error' => 'Неправильный размер изображения. Изображения должны размером 673 пикселей на 410 пикселей.',
-	'wikiaPhotoGallery-upload-image-size' => 'Изображения должны быть размером 673 пикселей на 410 пикселей.',
+	'wikiaPhotoGallery-upload-image-size-error' => 'Неправильный размер изображения. Изображения должны быть 660 на 360px или больше.',
+	'wikiaPhotoGallery-upload-image-size' => 'Изображения должны быть 660 пикселей на 360 пикселей или больше.',
 	'wikiaPhotoGallery-not-displayed' => 'Не отображается',
 	'galery-slider-read-more' => 'Читать подробнее >',
 );
@@ -4855,6 +4867,7 @@ $messages['sv'] = array(
 	'wikiaPhotoGallery-error-caption' => 'Fel',
 	'wikiaPhotoGallery-error-outdated' => 'Detta galleri har redigerats medan du tittat på sidan. 
 Vänligen uppdatera sidan och försök igen.',
+	'wikiaPhotoGallery-error-user-rights' => 'Användarrättighetersfel.',
 	'wikiaPhotoGallery-upload-title' => 'Hitta & Ladda Upp Bild',
 	'wikiaPhotoGallery-upload-info-choose-list' => "'''ELLER''' välj:",
 	'wikiaPhotoGallery-upload-info-images-label' => 'bilder från denna sida',
@@ -4918,7 +4931,7 @@ Vad vill du göra?',
 	'wikiaPhotoGallery-preview-orientation-landscape-tooltip' => 'Beskär bilder för att göra dem alla till landskap',
 	'wikiaPhotoGallery-preview-orientation-portrait-tooltip' => 'Beskär bilder för att göra dem alla till ett porträtt',
 	'wikiaPhotoGallery-preview-orientation-none-tooltip' => 'Lämna foton i deras ursprungliga form',
-	'wikiaPhotoGallery-preview-crop-sub' => 'Beskär bilder för att passa nätet',
+	'wikiaPhotoGallery-preview-crop-sub' => 'Beskär bilder för att passa rutnät',
 	'wikiaPhotoGallery-preview-tab-theme' => 'Kanter och bildtexter',
 	'wikiaPhotoGallery-preview-captionposition' => 'Bildtextens position',
 	'wikiaPhotoGallery-preview-captionposition-within' => 'Inom fotot',
@@ -4944,7 +4957,7 @@ Vad vill du göra?',
 	'wikiaPhotoGallery-preview-captions-left' => 'Vänster',
 	'wikiaPhotoGallery-preview-captions-center' => 'Center',
 	'wikiaPhotoGallery-preview-captions-right' => 'Höger',
-	'wikiaPhotoGallery-conflict-title' => 'En konflikt har uppstått om redigeringen',
+	'wikiaPhotoGallery-conflict-title' => 'En redigeringskonflikt har uppstått',
 	'wikiaPhotoGallery-conflict-help' => 'Vi har lämnat wikitexten som din redigerare skapat nedan.
 Du kan kopiera denna text, klicka på "$1" och klistra in den på rätt plats för att återställa dina ändringar.
 Alternativt kan du klicka på "$2" för att se sidan i sin uppdaterade form.',
@@ -4989,6 +5002,8 @@ Alternativt kan du klicka på "$2" för att se sidan i sin uppdaterade form.',
 	'wikiaPhotoGallery-sliderpreview-choosetype-bottom-tooltip' => 'Horisontella miniatyrer',
 	'wikiaPhotoGallery-sliderpreview-choosetype-right-tooltip' => 'Vertikala miniatyrer',
 	'wikiaPhotoGallery-sliderpreview-addphoto' => 'Lägg till ett foto',
+	'wikiaPhotoGallery-upload-title-slideshow' => 'Bildspelsbyggare - Hitta och ladda upp foto',
+	'wikiaPhotoGallery-upload-title-gallery' => 'Galleribyggare - Hitta och ladda upp foto',
 	'wikiaPhotoGallery-upload-uploadtext' => "'''Antingen''' laddar du upp en bild från din dator",
 	'wikiaPhotoGallery-upload-existingtext' => "'''Eller''' klicka för att välja bilder från:",
 	'wikiaPhotoGallery-upload-existingtext-onarticle' => 'denna sida',
@@ -4999,12 +5014,13 @@ Alternativt kan du klicka på "$2" för att se sidan i sin uppdaterade form.',
 	'wikiaPhotoGallery-photooptions-captiontitle' => 'Ge ditt foto en bildtext (frivilligt)',
 	'wikiaPhotoGallery-photooptions-captionsub' => 'Beskriv detta foto.',
 	'wikiaPhotoGallery-photooptions-linktitle' => 'Länka ditt foto (frivilligt)',
-	'wikiaPhotoGallery-photooptions-linksub' => 'När detta foto har klickats på, gå till denna sida.',
+	'wikiaPhotoGallery-photooptions-linksub' => 'När detta foto klickas, gå till denna sida.',
 	'wikiaPhotoGallery-photooptions-linktext' => 'Text att visa för länken.',
 	'wikiaPhotoGallery-photooptions-linkurl' => 'Länk till (klistra in sidans namn eller URL).',
 	'wikiaPhotoGallery-photooptions-description' => 'Bilddetaljer.',
 	'wikiaPhotoGallery-search-tooltip' => 'Sök efter bilder på denna wiki',
-	'wikiaPhotoGallery-upload-image-size-error' => 'Fel bildstorlek. Bilder måste vara 673x410 pixlar.',
+	'wikiaPhotoGallery-upload-image-size-error' => 'Fel bildstorlek. Bilder måste vara 660x360 pixlar eller större.',
+	'wikiaPhotoGallery-upload-image-size' => 'Bilder måste vara 660x360 px eller större.',
 	'wikiaPhotoGallery-not-displayed' => 'Visas inte',
 	'galery-slider-read-more' => ' Läs mer >',
 );

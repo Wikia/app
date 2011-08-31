@@ -1444,7 +1444,7 @@ $messages['ksh'] = array(
 	'multiwikirecords' => '{{PLURAL:$1|Ei Wiki|$1 Wikis|Kei Wiki}} jefonge',
 );
 
-/** Kurdish (Latin) (Kurdî (Latin))
+/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -2627,7 +2627,7 @@ $messages['te'] = array(
 	'multidelete_english_wikis' => 'అన్ని ఆంగ్ల వికీలు',
 );
 
-/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+/** Татарча (Татарча)
  * @author Ильнар
  */
 $messages['tt-cyrl'] = array(

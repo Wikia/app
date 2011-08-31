@@ -43,6 +43,14 @@ $messages['fr'] = array(
 	'globalnotification-general-ajax-failure' => 'Le navigateur n’a pas pu se connecter à Wikia. Veuillez réessayer plus tard.',
 );
 
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'globalnotification-desc' => 'Extensión do sistema de notificación de Wikia. Mostra as notificación do sistema para os eventos como fallos no funcionamento do AJAX',
+	'globalnotification-general-ajax-failure' => 'O navegador non puido conectar con Wikia. Inténteo máis tarde.',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */

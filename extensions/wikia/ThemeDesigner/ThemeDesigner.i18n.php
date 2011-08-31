@@ -364,6 +364,7 @@ $messages['cs'] = array(
  * @author LWChris
  * @author Laximilian scoken
  * @author The Evil IP address
+ * @author Tiin
  */
 $messages['de'] = array(
 	'themedesigner-desc' => 'Erlaubt Wiki-Administratoren die Erstellung eines Themes für ein Wiki',
@@ -380,7 +381,9 @@ $messages['de'] = array(
 	'themedesigner-small' => 'Klein',
 	'themedesigner-medium' => 'Mittel',
 	'themedesigner-large' => 'Groß',
-	'themedesigner-tile-background' => 'Hintergrund kacheln',
+	'themedesigner-tile-background' => 'kacheln',
+	'themedesigner-fix-background' => 'fixieren',
+	'themedesigner-transparency' => 'Transparenz',
 	'themedesigner-tab-theme' => 'Farbschema',
 	'themedesigner-tab-customize' => 'Anpassen',
 	'themedesigner-tab-wordmark' => 'Logo',
@@ -425,6 +428,7 @@ $messages['en-gb'] = array(
  * @author Absay
  * @author Bola
  * @author Danke7
+ * @author Fitoschido
  * @author Locos epraix
  * @author Sanbec
  * @author VegaDark
@@ -437,7 +441,7 @@ $messages['es'] = array(
 	'themedesigner-color' => 'color',
 	'themedesigner-graphic' => 'gráfico',
 	'themedesigner-buttons' => 'botones',
-	'themedesigner-links' => 'Enlaces',
+	'themedesigner-links' => 'enlaces',
 	'themedesigner-header' => 'cabecera',
 	'themedesigner-text-wordmark' => 'Símbolo textual',
 	'themedesigner-graphic-wordmark' => 'Símbolo gráfico',
@@ -641,7 +645,7 @@ $messages['gl'] = array(
 	'themedesigner-pick-a-color' => 'Elixir unha cor',
 	'themedesigner-enter-your-own' => 'Introducir a súa',
 	'themedesigner-color-name-or-hex-code' => 'Nome da cor ou código hexadecimal',
-	'themedesigner-button-ok' => 'De acordo',
+	'themedesigner-button-ok' => 'Aceptar',
 	'themedesigner-pick-an-image' => 'Elixir unha imaxe',
 	'themedesigner-dont-use-a-background' => 'Non usar unha imaxe de fondo',
 	'themedesigner-upload-your-own' => 'Cargar o seu',
@@ -859,7 +863,7 @@ $messages['km'] = array(
 	'themedesugber-uknown-error' => 'មានបញ្ហាកើតឡើង ដោយយើងមិនដឹងថាមកពីមូលហេតុអ្វី។ សូមសាកល្បងម្ដងទៀត',
 );
 
-/** Kurdish (Latin) (Kurdî (Latin))
+/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -1413,7 +1417,9 @@ $messages['ru'] = array(
 	'themedesigner-small' => 'Маленький',
 	'themedesigner-medium' => 'Средний',
 	'themedesigner-large' => 'Большой',
-	'themedesigner-tile-background' => 'плиточный фон',
+	'themedesigner-tile-background' => 'плитка',
+	'themedesigner-fix-background' => 'фикс.',
+	'themedesigner-transparency' => 'прозрачность',
 	'themedesigner-tab-theme' => 'Тема',
 	'themedesigner-tab-customize' => 'Настройка',
 	'themedesigner-tab-wordmark' => 'Логотип',

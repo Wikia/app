@@ -1463,10 +1463,14 @@ $messages['sv'] = array(
 	'wikiadoption-notification' => '{{SITENAME}} är tillgänglig för adoption! Intressant att bli en ledare här? Adoptera denna wiki för att komma igång! $2',
 	'wikiadoption-mail-first-subject' => 'Vi har inte sett dig på ett tag',
 	'wikiadoption-mail-first-content-HTML' => 'Hej $1,<br /><br />
-Det har varit ett par veckor sen vi såg en administratör på din wiki. Kom ihåg att din commynity kommer att titta till er för att se om wikin fungerar som den ska.<br /><br />
-Om du behöver hjälp med att sköta din wiki, kan du tillåta andra medlemmar i din community att bli administratörer genom att gå till <a href="$2">Användarrättigheterna</a>.<br /><br />
-<b>The Wikia Team</b><br /><br />
-<small>Du kan <a href="$3">avbryta prenumerationen</a> från ändringar av denna lista.</small>',
+
+Det har varit ett par veckor sen vi såg en administratör på #WIKINAME. Administratörer är en väsentlig del av #WIKINAME och det är viktigt att de är närvarande regelbundet. Om det inte finns några aktiva medlemmar administratörer under en lång period, kan denna wiki läggas ut för adoption för att låta en annan aktiv användare att bli en administratör.<br /><br />
+
+Om du behöver hjälp med att sköta din wiki, kan du tillåta andra medlemmar i din gemenskap att bli administratörer genom att gå till <a href="$2">Användarrättigheterna</a>. Hoppas att vi syns på #WIKINAME snart!<br /><br />
+
+<b>Wikia-teamet</b><br /><br />
+
+Du kan <a href="$3">avbryta prenumerationen</a> från ändringar av denna lista.',
 	'wikiadoption-mail-second-subject' => '#WIKINAME kommer att sättas upp för adoption snart',
 	'wikiadoption-mail-second-content' => 'Hej $1,
 
@@ -1477,25 +1481,33 @@ Eftersom det är så många dagar sedan en nuvarande administratör varit där, 
 Wikia-teamet
 
 Du kan avbryta din prenumeration på ändringar för denna lista här: $3.',
-	'wikiadoption-mail-second-content-HTML' => 'Hej $1,
+	'wikiadoption-mail-second-content-HTML' => 'Hej $1,<br /><br />
+Åh nej! Det har nästan gått 30 dagar sedan det var en aktiv administratör på #WIKINAME. Det är viktig att administratörer regelbundet dyker upp och bidrar så att wikin kan ska fungera väl. <br /><br />
 
-Det var ett tag sen vi såg en administratör på din wiki. Det är viktigt att ha aktiva administratörer för din community så att din wiki kan fortsätta att fungera smidigt - så vi kommer att sätta upp din wiki för adoption snart för att ge den en chans att få aktiva administratörer igen.
+Eftersom det är så många dagar sedan en närvarande administratör var där, kommer #WIKINAME att erbjudas för adoption till andra redigerare. <br /><br />
 
-<b>The Wikia Team</b>
+Wikia-teamet<br /><br />
 
-<small>Du kan <a href="$3">avbryta prenumerationen</a> från ändringar på denna lista.</small>',
+Du kan <a href="$3">avbryta prenumerationen</a> från ändringar av denna lista.',
 	'wikiadoption-mail-adoption-subject' => '#WIKINAME har adopterats',
 	'wikiadoption-mail-adoption-content' => 'Hej $1,
 
-Din wiki har adopterats! Detta innebär att någon annan har erbjudit sig att bidra till att upprätthålla din community och innehållet på webbplatsen. Oroa dig inte - du är fortfarande en administratör, och du är välkommen att komma tillbaka när som helst.
+#WIKINAME har adopterats. Wikis finns tillgängliga för att adopteras när ingen av de närvarande administratörerna är aktiv i 30 dagar eller fler.
 
-The Wikia Team
+Den adopterande användaren av #WIKINAME kommer nu ha byråkrat- och administrationsstatus. Oroa dig inte, du kommer också att behålla din administrationsstatus på denna wiki och är välkommen att återvända och fortsätta bidra när som helst!
+
+Wikia-teamet
 
 Klicka på följande länk för att avsluta prenumerationen på ändringar i denna lista: $3.',
 	'wikiadoption-mail-adoption-content-HTML' => 'Hej $1,<br /><br />
-Din wiki har adopterats! Detta innebär att någon annan har erbjudit sig att bidra till att upprätthålla din community och innehållet på webbplatsen. Oroa dig inte - du är fortfarande en administratör, och du är välkommen att komma tillbaka när som helst.<br /><br />
-<b>The Wikia Team</b><br /><br />
-<small>Du kan <a href="$3">avbryta prenumerationen</a> på ändringar i denna lista.</small>',
+
+#WIKINAME har adopterats. Wikis finns tillgängliga för att adopteras när ingen av de närvarande administratörerna är aktiv i 30 dagar eller fler.<br /><br />
+
+Den adopterande användaren av #WIKINAME kommer nu ha byråkrat- och administrationsstatus. Oroa dig inte, du kommer också att behålla din administrationsstatus på denna wiki och är välkommen att återvända och fortsätta bidra när som helst!<br /><br />
+
+Wikia-teamet<br /><br />
+
+Du kan <a href="$3">avbryta prenumerationen</a> på ändringar i denna lista.',
 	'tog-adoptionmails' => 'Skicka ett e-post till mig om $1 kommer att bli tillgänglig för andra användare att adoptera',
 	'wikiadoption-pref-label' => 'Att ändra dessa inställningar kommer bara påverkar e-post från $1.',
 	'wikiadoption-welcome-header' => 'Gratulerar! Du har adopterat {{SITENAME}}!',

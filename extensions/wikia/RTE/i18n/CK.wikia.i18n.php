@@ -574,6 +574,7 @@ $messages['cs'] = array(
  * @author Kjell
  * @author LWChris
  * @author The Evil IP address
+ * @author Tiin
  */
 $messages['de'] = array(
 	'rte-ck-bucket-textAppearance' => 'Textaussehen',
@@ -661,6 +662,15 @@ $messages['de'] = array(
 	'rte-ck-poll-confirmDelete' => 'Willst du diese Umfrage wirklich von dieser Seite entfernen?',
 	'rte-ck-poll-confirmDeleteTitle' => 'Diese Umfrage entfernen?',
 	'rte-ck-spellchecker-moreSuggestions' => 'Weitere Vorschläge',
+	'rte-ck-pasteText-title' => 'Füge deinen Text ein',
+	'rte-ck-clipboard-pasteMsg' => "Aus Sicherheitsgründen kann der Editor nicht direkt auf den Text zugreifen. Bitte füge ihn mithilfe von Tastenkombinationen (Strg/Cmd+V) in das Feld weiter unten ein und klicke auf 'OK'.<br /><br />Hinweis: Formatierungen des Textes werden entfernt, um das Erzeugen komplizierter Wikitexte zu vermeiden.",
+);
+
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
+ * @author Tiin
+ */
+$messages['de-formal'] = array(
+	'rte-ck-pasteText-title' => 'Fügen Sie Ihren Text ein',
 );
 
 /** Spanish (Español)
@@ -1212,7 +1222,7 @@ $messages['ksh'] = array(
 	'rte-ck-hoverPreview-comment-title' => 'Aanmerkung',
 );
 
-/** Kurdish (Latin) (Kurdî (Latin))
+/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -2227,6 +2237,8 @@ $messages['ru'] = array(
 	'rte-ck-poll-confirmDelete' => 'Вы действительно хотите удалить опрос с этой страницы?',
 	'rte-ck-poll-confirmDeleteTitle' => 'Удалить этот опрос?',
 	'rte-ck-spellchecker-moreSuggestions' => 'Дополнительная поддержка',
+	'rte-ck-pasteText-title' => 'Вставить текст',
+	'rte-ck-clipboard-pasteMsg' => 'По соображениям безопасности, редактор не может получить доступ к вашему буферу обмена. Пожалуйста, вставьте в поле ниже с помощью сочетаний клавиш (Ctrl / Cmd + V) и нажмите «OK». <br /><br /> Примечание: ваш текст будет лишён форматирование, чтобы избежать создания сложного викитекста.',
 );
 
 /** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
@@ -2589,7 +2601,7 @@ $messages['tr'] = array(
 	'rte-ck-widescreen-toggle' => 'Geniş ekran',
 );
 
-/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+/** Татарча (Татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(

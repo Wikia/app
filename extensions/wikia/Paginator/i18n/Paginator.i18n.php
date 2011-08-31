@@ -239,3 +239,11 @@ $messages['zh-hans'] = array(
 	'paginator-back' => '前一步',
 );
 
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Lauhenry
+ */
+$messages['zh-hant'] = array(
+	'paginator-next' => '下一頁',
+	'paginator-back' => '上一頁',
+);
+

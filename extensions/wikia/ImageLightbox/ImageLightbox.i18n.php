@@ -45,6 +45,53 @@ $messages['qqq'] = array(
 * $2 is are the error details.',
 );
 
+/** German (Deutsch)
+ * @author Tiin
+ */
+$messages['de'] = array(
+	'lightbox_details_tooltip' => 'Foto-Details anzeigen',
+	'lightbox-forum' => 'Forum',
+	'lightbox-standard-link' => 'Standard-Link',
+	'lightbox-blog-link' => 'Blog-Link',
+	'lightbox-send' => 'Senden',
+	'lightbox-share-description' => 'Foto auf $1 im $2',
+	'lightbox-share-email-subject' => '$1 hat dir ein Foto auf Wikia geschickt.',
+	'lightbox-share-email-body' => 'Hallo, 
+
+jemand will dir ein Foto auf Wikia zeigen. Sieh es dir an:
+
+$1
+
+- Das Wikia-Team',
+	'lightbox-share-button-email' => 'E-Mail',
+	'lightbox-share-button-www' => 'Teilen',
+	'lightbox-share-button-embed' => 'Einbinden',
+	'lightbox-share-email-label' => 'Dieses Bild an einen Freund senden',
+	'lightbox-share-email-ok-caption' => 'Bestätigung',
+	'lightbox-share-email-ok-content' => 'Die {{PLURAL:$1|E-Mail wurde|E-Mails wurden}} gesendet.',
+	'lightbox-share-email-error-caption' => 'Fehler',
+	'lightbox-share-email-error-content' => 'Fehler beim Senden der {{PLURAL:$1|E-Mail|E-Mails}}.
+
+Details: $2',
+	'lightbox-share-email-error-login' => 'Um E-Mails zu senden, musst du dich anmelden',
+	'lightbox-share-email-error-noaddress' => 'Es wurden keine Adressen angegeben.',
+);
+
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
+ * @author Tiin
+ */
+$messages['de-formal'] = array(
+	'lightbox-share-email-subject' => '$1 hat Ihnen ein Foto auf Wikia geschickt.',
+	'lightbox-share-email-body' => 'Hallo, 
+
+jemand will Ihnen ein Foto auf Wikia zeigen. Sehen Sie es sich an:
+
+$1
+
+- Das Wikia-Team',
+	'lightbox-share-email-error-login' => 'Um E-Mails zu senden, müssen Sie sich anmelden',
+);
+
 /** French (Français)
  * @author Wyz
  */
@@ -111,7 +158,10 @@ $1
  * @author Anakmalaysia
  */
 $messages['ms'] = array(
+	'lightbox_details_tooltip' => 'Lihat butiran gambar',
 	'lightbox-forum' => 'Forum',
+	'lightbox-standard-link' => 'Pautan standard',
+	'lightbox-blog-link' => 'Pautan blog',
 	'lightbox-send' => 'Hantar',
 	'lightbox-share-description' => 'Gambar di $1 di $2',
 	'lightbox-share-email-subject' => '$1 telah menghantar gambar kepada anda di Wikia',
@@ -125,11 +175,14 @@ $1
 	'lightbox-share-button-email' => 'E-mel',
 	'lightbox-share-button-www' => 'Kongsi',
 	'lightbox-share-button-embed' => 'Benamkan',
+	'lightbox-share-email-label' => 'E-melkan gambar ini kepada kawan',
 	'lightbox-share-email-ok-caption' => 'Pengesahan',
 	'lightbox-share-email-ok-content' => '{{PLURAL:$1|E-mel|Beberapa e-mel}} telah dihantar.',
 	'lightbox-share-email-error-caption' => 'Ralat',
 	'lightbox-share-email-error-content' => 'Ralat ketika menghantar {{PLURAL:$1|e-mel|emel-emel}}.
 Butiran: $2',
+	'lightbox-share-email-error-login' => 'Untuk menghantar e-mel, anda perlu log masuk',
+	'lightbox-share-email-error-noaddress' => 'Tiada alamat yang dinyatakan.',
 );
 
 /** Dutch (Nederlands)
@@ -192,5 +245,36 @@ $1
 Detaljer: $2',
 	'lightbox-share-email-error-login' => 'For å sende e-poster må du logge inn',
 	'lightbox-share-email-error-noaddress' => 'Ingen adresse har blitt spesifisert.',
+);
+
+/** Russian (Русский)
+ * @author Kuzura
+ */
+$messages['ru'] = array(
+	'lightbox_details_tooltip' => 'Просмотр сведений об изображении',
+	'lightbox-forum' => 'Форум',
+	'lightbox-standard-link' => 'Стандартная ссылка',
+	'lightbox-blog-link' => 'Ссылка в блог',
+	'lightbox-send' => 'Отправить',
+	'lightbox-share-description' => 'Изображение в $1 на $2',
+	'lightbox-share-email-subject' => '$1 прислал вам фото на Викия',
+	'lightbox-share-email-body' => 'Привет.
+
+Кто-то хочет показать вам фотографии на Викия. Посмотреть:
+
+$1
+
+-Команда Викия',
+	'lightbox-share-button-email' => 'Электронная почта',
+	'lightbox-share-button-www' => 'Поделиться',
+	'lightbox-share-button-embed' => 'Вставить',
+	'lightbox-share-email-label' => 'Отправить это изображение другу по email',
+	'lightbox-share-email-ok-caption' => 'Подтвердить',
+	'lightbox-share-email-ok-content' => '{{PLURAL:$1|эл. письма}} были отправлены.',
+	'lightbox-share-email-error-caption' => 'Ошибка',
+	'lightbox-share-email-error-content' => 'Ошибка при отправке {{PLURAL:$1|эл. письма|эл. писем}}.
+Подробнее: $2',
+	'lightbox-share-email-error-login' => 'Для отправки писем вам нужно войти на сайт',
+	'lightbox-share-email-error-noaddress' => 'Не был указан адрес(а).',
 );
 

@@ -309,7 +309,7 @@ $messages['tr'] = array(
 	'tog-disablelinksuggest' => 'Bağlantı önermesini gösterme',
 );
 
-/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+/** Татарча (Татарча)
  * @author Ильнар
  */
 $messages['tt-cyrl'] = array(
@@ -330,8 +330,9 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Frankou
+ * @author Lauhenry
  */
 $messages['zh-hant'] = array(
-	'tog-disablelinksuggest' => '不顯示鏈接建議',
+	'tog-disablelinksuggest' => '源代碼模式時不顯示鏈接建議',
 );
 

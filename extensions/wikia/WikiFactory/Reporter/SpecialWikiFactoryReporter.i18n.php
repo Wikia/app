@@ -427,7 +427,7 @@ $messages['tr'] = array(
 	'wikifactoryreporter' => 'VikiFabrika Raporlayıcısı',
 );
 
-/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+/** Татарча (Татарча)
  * @author Zahidulla
  */
 $messages['tt-cyrl'] = array(

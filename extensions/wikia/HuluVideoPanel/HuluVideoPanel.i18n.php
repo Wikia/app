@@ -11,6 +11,27 @@ $messages['en'] = array(
 	'huluvideopanel-title' => '{{SITENAME}} Hulu Videos'
 );
 
+/** German (Deutsch)
+ * @author Tiin
+ */
+$messages['de'] = array(
+	'huluvideopanel-title' => '{{SITENAME}} Hulu-Videos',
+);
+
+/** French (Français)
+ * @author Wyz
+ */
+$messages['fr'] = array(
+	'huluvideopanel-title' => 'Vidéos Hulu de {{SITENAME}}',
+);
+
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'huluvideopanel-title' => 'Vídeos Hulu de {{SITENAME}}',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */

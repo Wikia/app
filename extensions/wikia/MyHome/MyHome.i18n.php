@@ -1673,7 +1673,7 @@ $messages['ksh'] = array(
 	'myhome-feed-redirect-details' => 'Ömleidung',
 );
 
-/** Kurdish (Latin) (Kurdî (Latin))
+/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -3074,7 +3074,7 @@ $messages['tr'] = array(
 	'tooltip-pt-myhome' => 'Evime git',
 );
 
-/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+/** Татарча (Татарча)
  * @author Ajdar
  * @author Ильнар
  */

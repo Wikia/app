@@ -161,7 +161,7 @@ $messages['gl'] = array(
 	'searchview-button-back-list' => 'Volver á lista',
 	'searchview-button-back-article' => 'Volver ao artigo',
 	'searchbar-hint' => 'Procurar %s...',
-	'alert-download-updated-wikis-button-ok' => 'De acordo',
+	'alert-download-updated-wikis-button-ok' => 'Aceptar',
 );
 
 /** Interlingua (Interlingua)
