@@ -289,9 +289,16 @@ JQUERY_INCLUDE;
 		
 		$watermarkSrc = $wgBlankImgUrl;
 		$games = $this->getGameConfigs();
-		foreach($games as $game){
-			if( startsWith($game->gameUrl, $wgServer) ){
-				$watermarkSrc = $game->watermarkSrc;
+		if($this->isTutorial){
+			// The tutorial is run on Community (which doesn't have its own game), so just grab any watermark an example.
+			if(count($games) > 0){
+				$watermarkSrc = $games[0]->watermarkSrc;
+			}
+		} else {
+			foreach($games as $game){
+				if( startsWith($game->gameUrl, $wgServer) ){
+					$watermarkSrc = $game->watermarkSrc;
+				}
 			}
 		}
 
