@@ -8,7 +8,7 @@
 	WE.plugins.wikiacore = $.createClass(WE.plugin,{
 
 		requires: ['core','noticearea','loadingstatus','pagecontrols','autoresizer','edittools',
-			'widemodemanager', 'railminimumheight', 'tracker', 'cssloadcheck', 'preloads']
+			'widemodemanager', 'railminimumheight', 'tracker', 'cssloadcheck', 'preloads', 'leaveconfirm']
 
 	});
 
