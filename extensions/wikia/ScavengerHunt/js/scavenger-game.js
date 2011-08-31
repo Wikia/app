@@ -232,7 +232,8 @@ var ScavengerHunt = {
 									articleTitle: wgPageName,
 									controller: 'ScavengerHunt',
 									format: 'json',
-									method: 'clearGameData'
+									method: 'clearGameData',
+									cb: Math.round(new Date().getTime())
 								},
 								function() {
 									ScavengerHunt.log( 'game data cleared' );
@@ -303,7 +304,8 @@ var ScavengerHunt = {
 							method: 'pushEntry',
 							name: w.find('input[name=name]').val(),
 							email: w.find('input[name=email]').val(),
-							answer: w.find('textarea[name=answer]').val()
+							answer: w.find('textarea[name=answer]').val(),
+							cb: Math.round(new Date().getTime())
 						};
 						$.postJSON(
 							window.wgScriptPath + '/wikia.php',
@@ -489,7 +491,8 @@ var ScavengerHunt = {
 					articleTitle: wgPageName,
 					controller: 'ScavengerHunt',
 					format: 'json',
-					method: 'itemFound'
+					method: 'itemFound',
+					cb: Math.round(new Date().getTime())
 				};
 
 				$.getJSON(
@@ -566,7 +569,8 @@ var ScavengerHunt = {
 				articleTitle: wgPageName,
 				controller: 'ScavengerHunt',
 				format: 'json',
-				method: 'clearGameData'
+				method: 'clearGameData',
+				cb: Math.round(new Date().getTime())
 			},
 			function() {
 				ScavengerHunt.log( 'game data cleared' );
