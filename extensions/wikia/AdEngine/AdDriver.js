@@ -274,10 +274,11 @@ AdDriver.adjustSlotDisplay = function(slotname) {
 		case 'HOME_TOP_LEADERBOARD':
 		case 'TOP_LEADERBOARD':
 			$('#'+slotname).removeClass(AdDriver.classNameDefaultHeight);
-			// if jumbo/expanding leaderboard, change padding-top and padding-bottom
+			// if jumbo/expanding leaderboard, eliminate white space
+			// above ad, and center ad
 			if (($('#'+slotname).height() >= 0 && $('#'+slotname).height() < AdDriver.standardLeaderboardMinHeight) // expandable leaderboard, minimized state
 			|| $('#'+slotname).height() > AdDriver.standardLeaderboardMaxHeight) { // jumbo leaderboard or expandable leaderboard, maximized state
-				$('#'+slotname).css('padding-top', 0); 
+				$('#'+slotname).css({'padding-top': 0, 'margin': '0 auto', 'width': 980});
 			}
 			return true;
 			break;
