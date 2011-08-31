@@ -9,8 +9,9 @@ $messages = array();
 
 $messages['en'] = array(
 	'photopop' => 'Photo Pop game',
-	'photopop-title-tag-playgame' => 'Photo Pop - $1 $2',
+	'photopop-title-tag-homescreen' => 'Photo Pop',
 	'photopop-title-tag-selectorscreen' => 'Photo Pop',
+	'photopop-title-tag-playgame' => 'Photo Pop - $1 $2',
 	'photopop-desc' => 'Creates a page where the Foggy Foto game can be played in HTML5 + Canvas. It will be accessible via Nirvana\'s APIs',
 	'photopop-score' => 'Score: <span>$1</span>',
 	'photopop-progress' => 'Photos: <span>$1</span>',
