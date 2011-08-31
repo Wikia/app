@@ -30,7 +30,7 @@ if (typeof PhotoPop.SoundManager === 'undefined') {
 		this.play = function(soundName){
 			if(this.soundFiles[ soundName ]){
 				self.soundCache[soundName] = new Audio( this.soundFiles[soundName] );
-				self.log("Playing '" + soundName + "' sound");
+				//self.log("Playing '" + soundName + "' sound");
 				self.soundCache[soundName].play();
 			} else {
 				self.log("Tried to play invalid sound: " + soundName);
@@ -43,7 +43,7 @@ if (typeof PhotoPop.SoundManager === 'undefined') {
 		 */
 		this.pause = function(soundName){
 			if(this.soundCache[ soundName ]){
-				self.log("Pausing '" + soundName + "' sound");
+				//self.log("Pausing '" + soundName + "' sound");
 				this.soundCache[soundName].pause();
 			} else {
 				self.log("Tried to pause sound which hasn't been started: " + soundName);
