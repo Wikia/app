@@ -149,9 +149,6 @@ JQUERY_INCLUDE;
 		$this->boardWidth = $this->getVal('width', $this->DEFAULT_WIDTH);
 		$this->boardHeight = $this->getVal('height', $this->DEFAULT_HEIGHT);
 
-//var_dump($this);
-//print "{$this->boardWidth}, {$this->boardHeight}";exit;
-		
 		$this->numRows = 4;
 		$this->numCols = 6;
 		$this->tileWidth = ceil($this->boardWidth / $this->numCols); // the tiles at the very bottom and right of the board may be slightly too large. their extra pixels will just fall outside of the visible board and not be seen.

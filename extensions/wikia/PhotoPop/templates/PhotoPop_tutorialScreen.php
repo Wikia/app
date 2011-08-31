@@ -8,8 +8,9 @@
 	// the Home button from the normal game works) and we show an extra div with the tutorial text on it.
 
 	$app = F::app();
-	$response = $app->sendRequest( 'PhotoPop', 'playGame' );
-	$response->setVal('isTutorial', true);
-	$response->setVal('width', $boardWidth);
-	$response->setVal('height', $boardHeight);
+	$response = $app->sendRequest( 'PhotoPop', 'playGame', array(
+		'isTutorial' => true,
+		'width' => $boardWidth,
+		'height' => $boardHeight
+	));
 	print $response->render();
