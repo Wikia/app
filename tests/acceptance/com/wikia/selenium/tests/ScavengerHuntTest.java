@@ -56,20 +56,20 @@ public class ScavengerHuntTest extends BaseTest {
 	@AfterMethod(alwaysRun = true)
 	public void deleteArtifacts() throws Exception {
 		session().open("wiki/Special:ScavengerHunt");
-		//session().waitForPageToLoad(this.getTimeout());
+		
 		
 		if (createdGameName != null) {
 			int index = findGamePosition(createdGameName);
 			
 			if (index > 0) {
 				clickAndWait("//table[contains(@class, 'scavengerhunt-list-table')]//tr[" + index + "]/td[3]/a");
-				//session().waitForPageToLoad(this.getTimeout());
+				
 				waitForElement("delete");
 				session().click("delete");
 				waitForElement("//section[@id='WikiaConfirm']");
 				clickAndWait("//a[@id='WikiaConfirmOk']");
 				waitForElement("//div[@class='WikiaConfirmation']");
-				//session().waitForPageToLoad(this.getTimeout());
+				
 				assertTrue("Game has not been deleted", session().isTextPresent("Hunt game has been deleted"));
 			}
 		}
@@ -103,14 +103,14 @@ public class ScavengerHuntTest extends BaseTest {
 	//@Test(groups={"CI"})
 	public void testCreatingAHunt() throws Exception {
 		session().open("wiki/Special:ScavengerHunt");
-		//session().waitForPageToLoad(this.getTimeout());
+		
 		waitForElement("//a[contains(@class, 'scavengerhunt-add-button')]");
 		clickAndWait("//a[contains(@class, 'scavengerhunt-add-button')]");
-		//session().waitForPageToLoad(this.getTimeout());
+		
 		
 		// save empty form
 		clickAndWait("save");
-		//session().waitForPageToLoad(this.getTimeout());
+		
 		assertTrue("Game without name has been created", session().isTextPresent("Please correct the following errors"));
 		assertTrue("Game without name has been created", session().isTextPresent("Please enter the hunt name"));
 		
@@ -118,7 +118,7 @@ public class ScavengerHuntTest extends BaseTest {
 		String gameName = "Test game " + (new Date()).toString();
 		session().type("gameName", gameName);
 		clickAndWait("save");
-		//session().waitForPageToLoad(this.getTimeout());
+		
 		
 		// verify messages
 		assertTrue("After creating game user should be redirected to list of games", session().getLocation().contains("wiki/Special:ScavengerHunt"));
@@ -136,10 +136,10 @@ public class ScavengerHuntTest extends BaseTest {
 		
 		// edit and try to enable the game
 		clickAndWait("//table[contains(@class, 'scavengerhunt-list-table')]//tr[" + index + "]/td[3]/a");
-		//session().waitForPageToLoad(this.getTimeout());
+		
 		clickAndWait("enable");
 		waitForElement("//div[@class='WikiaConfirmation']");
-		//session().waitForPageToLoad(this.getTimeout());
+		
 
 		assertTrue("Game missing data has been enabled", session().isTextPresent("Please correct the following errors"));
 	}
@@ -152,10 +152,10 @@ public class ScavengerHuntTest extends BaseTest {
 	@Test(groups={"CI"})
 	public void testCreateAnExampleHunt() throws Exception {
 		session().open("wiki/Special:ScavengerHunt");
-		//session().waitForPageToLoad(this.getTimeout());
+		
 		waitForElement("//a[contains(@class, 'scavengerhunt-add-button')]");
 		clickAndWait("//a[contains(@class, 'scavengerhunt-add-button')]");
-		////session().waitForPageToLoad(this.getTimeout());
+		//
 		
 		String gameName = "Test game " + (new Date()).toString();
 
@@ -575,7 +575,8 @@ public class ScavengerHuntTest extends BaseTest {
 		
 		clickAndWait("save");
 		
-		////session().waitForPageToLoad(this.getTimeout());
+		
+		//
 		
 		assertTrue("After creating game user should be redirected to list of games", session().getLocation().contains("wiki/Special:ScavengerHunt"));
 		assertFalse("After creating game user should be redirected to list of games", session().getLocation().contains("wiki/Special:ScavengerHunt/add"));
@@ -586,72 +587,73 @@ public class ScavengerHuntTest extends BaseTest {
 		
 		// landing page (disabled)
 		openAndWait((this.webSite + "/wiki/" + LANDING_PAGE.replace(" ", "_")).replace("//wiki", "/wiki"));
-		////session().waitForPageToLoad(this.getTimeout());
+		//
 		
 		assertFalse("Start button of disabled game is present", session().isElementPresent("//input[@value='" + landingButton + "']"));
 		
 		// enable game
 		openAndWait("wiki/Special:ScavengerHunt");
-		////session().waitForPageToLoad(this.getTimeout());
+		//
 		
 		int index = findGamePosition(gameName);
 		
 		// edit and try to enable the game
 		clickAndWait("//table[contains(@class, 'scavengerhunt-list-table')]//tr[" + index + "]/td[3]/a");
-		////session().waitForPageToLoad(this.getTimeout());
+		//
 		clickAndWait("enable");
 		waitForElement("//div[@class='WikiaConfirmation']");
-		////session().waitForPageToLoad(this.getTimeout());
+		//
 
 		assertTrue("Valid game hasn't been enabled", session().isTextPresent("Selected Scavenger Hunt game has been enabled."));
 		
 		// landing page (enabled)
 		openAndWait((this.webSite + "/wiki/" + LANDING_PAGE.replace(" ", "_")).replace("//wiki", "/wiki"));
-		////session().waitForPageToLoad(this.getTimeout());
+		//
 		
 		assertTrue("Start button of enabled game is not present", session().isElementPresent("//input[@value='" + landingButton + "']"));
 		
 		// disable game
 		openAndWait("wiki/Special:ScavengerHunt");
-		////session().waitForPageToLoad(this.getTimeout());
+		//
 		
 		index = findGamePosition(gameName);
 		
 		// edit and try to disable the game
 		clickAndWait("//table[contains(@class, 'scavengerhunt-list-table')]//tr[" + index + "]/td[3]/a");
-		//session().waitForPageToLoad(this.getTimeout());
+		
 
 		// "disable" button is called "enable"
 		clickAndWait("enable");
 		waitForElement("//div[@class='WikiaConfirmation']");
-		//session().waitForPageToLoad(this.getTimeout());
+		
 
 		assertTrue("Game hasn't been disabled", session().isTextPresent("Selected Scavenger Hunt game has been disabled."));
 		
 		// landing page (disabled)
 		openAndWait((this.webSite + "/wiki/" + LANDING_PAGE.replace(" ", "_")).replace("//wiki", "/wiki"));
-		//session().waitForPageToLoad(this.getTimeout());
+		
 		
 		assertFalse("Start button of disabled game is present", session().isElementPresent("//input[@value='" + landingButton + "']"));
 		
 		// enable game
 		openAndWait("wiki/Special:ScavengerHunt");
-		//session().waitForPageToLoad(this.getTimeout());
+		
+		
 		
 		index = findGamePosition(gameName);
 		
 		// edit and try to enable the game
 		clickAndWait("//table[contains(@class, 'scavengerhunt-list-table')]//tr[" + index + "]/td[3]/a");
-		//session().waitForPageToLoad(this.getTimeout());
+		
 		clickAndWait("enable");
 		waitForElement("//div[@class='WikiaConfirmation']");
-		//session().waitForPageToLoad(this.getTimeout());
+		
 
 		assertTrue("Valid game hasn't been enabled", session().isTextPresent("Selected Scavenger Hunt game has been enabled."));
 		
 		// landing page (enabled)
 		openAndWait((this.webSite + "/wiki/" + LANDING_PAGE.replace(" ", "_")).replace("//wiki", "/wiki"));
-		//session().waitForPageToLoad(this.getTimeout());
+		
 		
 		assertTrue("Start button of enabled game is not present", session().isElementPresent("//input[@value='" + landingButton + "']"));
 		
@@ -660,7 +662,7 @@ public class ScavengerHuntTest extends BaseTest {
 		waitForElement("//section[@id='scavengerClueModal']");
 		
 		clickAndWait("//a[@id='ScavengerHuntModalConfirmButton']");
-		//session().waitForPageToLoad(this.getTimeout());
+		
 		
 		// url and progress bar
 		assertTrue("Starting the game redirects to wrong page", session().getLocation().contains(START_PAGE.replace(" ", "_")));
@@ -679,16 +681,16 @@ public class ScavengerHuntTest extends BaseTest {
 		
 		// play the game again
 		openAndWait((this.webSite + "/wiki/" + LANDING_PAGE.replace(" ", "_")).replace("//wiki", "/wiki"));
-		//session().waitForPageToLoad(this.getTimeout());
+		
 		session().click("//input[@value='" + landingButton + "']");
 		waitForElement("//section[@id='scavengerClueModal']");
 		
 		clickAndWait("//a[@id='ScavengerHuntModalConfirmButton']");
-		//session().waitForPageToLoad(this.getTimeout());
+		
 		
 		// first clue
 		clickAndWait("//div[@id='scavenger-hunt-progress-bar']/div[3]");
-		//session().waitForPageToLoad(this.getTimeout());
+		
 		assertTrue("First clue page is incorrect", session().getLocation().contains(TARGET_PAGE_ONE.replace(" ", "_")));
 		assertTrue("In game clue image is missing", session().isElementPresent("//div[@id='scavenger-ingame-image']"));
 		
@@ -697,7 +699,7 @@ public class ScavengerHuntTest extends BaseTest {
 		
 		// second clue
 		clickAndWait("//div[@id='scavenger-hunt-progress-bar']/div[4]");
-		//session().waitForPageToLoad(this.getTimeout());
+		
 		assertTrue("First clue page is incorrect", session().getLocation().contains(TARGET_PAGE_TWO.replace(" ", "_")));
 		assertTrue("In game clue image is missing", session().isElementPresent("//div[@id='scavenger-ingame-image']"));
 		session().click("//div[@id='scavenger-ingame-image']");
@@ -705,7 +707,7 @@ public class ScavengerHuntTest extends BaseTest {
 		
 		//third clue
 		clickAndWait("//div[@id='scavenger-hunt-progress-bar']/div[5]");
-		//session().waitForPageToLoad(this.getTimeout());
+		
 		assertTrue("First clue page is incorrect", session().getLocation().contains(TARGET_PAGE_THREE.replace(" ", "_")));
 		assertTrue("In game clue image is missing", session().isElementPresent("//div[@id='scavenger-ingame-image']"));
 		session().click("//div[@id='scavenger-ingame-image']");
@@ -713,7 +715,7 @@ public class ScavengerHuntTest extends BaseTest {
 		
 		// four clue
 		clickAndWait("//div[@id='scavenger-hunt-progress-bar']/div[6]");
-		//session().waitForPageToLoad(this.getTimeout());
+		
 		assertTrue("First clue page is incorrect", session().getLocation().contains(TARGET_PAGE_FOUR.replace(" ", "_")));
 		assertTrue("In game clue image is missing", session().isElementPresent("//div[@id='scavenger-ingame-image']"));
 		session().click("//div[@id='scavenger-ingame-image']");
@@ -721,7 +723,6 @@ public class ScavengerHuntTest extends BaseTest {
 		
 		// five clue
 		clickAndWait("//div[@id='scavenger-hunt-progress-bar']/div[7]");
-		//session().waitForPageToLoad(this.getTimeout());
 		assertTrue("First clue page is incorrect", session().getLocation().contains(TARGET_PAGE_FIVE.replace(" ", "_")));
 		assertTrue("In game clue image is missing", session().isElementPresent("//div[@id='scavenger-ingame-image']"));
 		
@@ -743,6 +744,7 @@ public class ScavengerHuntTest extends BaseTest {
 		
 		session().click("//section[@id='scavengerGoodbyeModal']//button[contains(@class, 'close wikia-chiclet-button')]");
 		waitForElementNotPresent("//section[@id='scavengerGoodbyeModal']");
+		
 		
 	}
 }
