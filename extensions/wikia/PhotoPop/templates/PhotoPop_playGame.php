@@ -13,6 +13,7 @@
 	$END_GAME_BORDER_RADIUS = 15;
 	
 	$DARK_BLUE = "#00396d"; // the mask background color and the text color
+	$DRAWER_GREEN = "rgba(137, 196, 64, 0.9)";
 
 	// TODO: REFACTOR: If front-end team has a sec, it would be nice to have them take a look over it and see what we can clean up.
 
@@ -182,9 +183,8 @@
 				border-top-left-radius: 15px;
 				border-bottom-left-radius: 15px;
 
-				opacity:0.8;filter:alpha(opacity=80);
 				color:#215B68;
-				background-color:#adff2f;
+				background-color:<?= $DRAWER_GREEN ?>;
 
 				z-index:29; /* below the question mark, but above everything else */
 			}
@@ -197,9 +197,8 @@
 			}
 			#answerListWrapper ul li{
 				height:25%;
-				opacity:0.8;filter:alpha(opacity=80);
 				color:#215B68;
-				background-color:#adff2f;
+				background-color:<?= $DRAWER_GREEN ?>;
 				border-bottom:1px solid #fff;
 				line-height: <?= floor($answerDrawerHeight / $NUM_ANSWER_CHOICES) ?>px;
 				overflow:hidden;
@@ -245,7 +244,7 @@
 				z-index:23;
 			}
 			#scoreBar{
-				background-color: #0f0;
+				background-color: <?= $DRAWER_GREEN ?>;
 				position:absolute;
 				bottom:0px;
 				margin: 0;
@@ -278,7 +277,7 @@
 				background-color:transparent;
 			}
 			#hud div{
-				color:white;
+				color:#d3eaff;
 				position:static;
 				float:left;
 				width:30%;
@@ -287,7 +286,7 @@
 			}
 			#hud span{
 				margin-left:2px;
-				color:#adff2f;
+				color:<?= $DRAWER_GREEN ?>;
 			}
 			.transparent{
 				opacity: 0;
@@ -412,7 +411,7 @@ background-color: rgba(255, 255, 255, 0.9);
 						print "\t\t\t#sprite_{$row}_{$col}{"; // intentionally no trailing linebreak here
 						print "top: {$top}px; ";
 						print "left: {$left}px; ";
-						print "background: {$DARK_BLUE} url({$frontImageSrc}) -{$left}px -{$top}px; ";
+						print "background: {$DARK_BLUE} url({$frontImageSrc}) no-repeat -{$left}px -{$top}px; ";
 						print "}\n";
 					}
 				}

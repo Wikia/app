@@ -348,11 +348,20 @@ self.log("ERROR LOADING COVERED IMAGE");
 			// Will fade the colors from green to yellow to red as we go from full points, approaching no points.
 			var fgb=0;
 			if(percent > 50){
+
 				fgg = 255;
 				fgr = Math.floor( 255-((255*((percent-50)*2))/100) ); // in english: the top half of the bar should go from 0 red to 255 red between 100% and 50%.
+				
+				// Change the color a bit to match the answer drawer
+				fgb = 64;
+				fgg = 196;
+				fgr = Math.min(255, fgr + 127);
 			} else {
 				fgg = Math.floor( ((255*(percent*2))/100) ); // in english: the bottom half of the bar should go from 255 green to 0 green between 50% and 0%.
 				fgr = 255;
+				
+				// Change the color a bit to match the answer drawer;
+				fgg = Math.min(196, fgg);
 			}
 			//self.log("SCORE-FOR-ROUND PERCENT: " + Math.floor(percent) + "% ... COLOR: rgb(" + fgr + ", " + fgg + ", " + fgb + ")");
 
