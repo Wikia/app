@@ -22,6 +22,7 @@ $messages['en'] = array(
 	'photopop-endgame-highscore-summary' => 'highscore: $1',
 	'photopop-endgame-completion-summary' => 'you got $1 out of $2 correct.',
 	'photopop-endgame-score-summary' => 'score: $1',
+	'photopop-tutorial-text' => 'Tap the screen to uncover a hidden image. Then tap the arrow to guess what it is.',
 );
 
 /** Message documentation (Message documentation) */
