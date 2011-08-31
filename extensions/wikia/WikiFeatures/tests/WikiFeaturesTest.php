@@ -99,7 +99,7 @@
 				array(true, null, null,'error', wfMsg('wikifeatures-error-invalid-parameter')),	// missing params - not pass $feature and $enabled
 				array(true, null, 0,'error', wfMsg('wikifeatures-error-invalid-parameter')),	// missing params - not pass $feature
 				array(true, 'wgEnableAchievementsExt', null,'error', wfMsg('wikifeatures-error-invalid-parameter')),	// missing params - not pass $enabled
-				array(true, 'wgEnableAchievements', 'true','error', wfMsg('wikifeatures-error-invalid-parameter')),	// invalid params - $feature
+				array(true, 'wgEnableAchievements', 'true','error', wfMsg('wikifeatures-error-invalid-parameter')),	// invalid params - $feature not found
 				array(true, 123, 0,'error', wfMsg('wikifeatures-error-invalid-parameter')),	// invalid params - $feature is integer
 				array(true, 'wgEnableAchievementsExt', 1,'error', wfMsg('wikifeatures-error-invalid-parameter')),	// invalid params - $enabled > 1
 				array(true, 'wgEnableAchievementsExt', -3,'error', wfMsg('wikifeatures-error-invalid-parameter')),	// invalid params - $enabled is negative
