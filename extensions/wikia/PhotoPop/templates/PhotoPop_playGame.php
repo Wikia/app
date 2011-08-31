@@ -14,7 +14,7 @@
 
 	// TODO: REFACTOR: If front-end team has a sec, it would be nice to have them take a look over it and see what we can clean up.
 
-	// TODO: REFACTOR: Figure out how to get as much of this CSS out of the PHP and into an external file (so it can be cached).
+	// TODO: REFACTOR: Figure out how to get as much of this CSS out of the PHP and into an external file (so it can be cached).  Most of the templates in this extension need this refactoring (home screen was done right though).
 ?>
 			html {
 				margin:0px;
@@ -253,31 +253,34 @@
 
 				z-index:24;
 			}
-			#hudBg{
-				position:absolute;
-				bottom:0;
-				width:100%;
-				background-color:#000;
-				opacity:0.4;filter:alpha(opacity=40);
-				height: 1.5em;
-				z-index:22; /* below the scoreBarWrapper but above the frontImage */
-			}
 			#hud{
+				position:absolute;
 				bottom: 0;
 				width:100%;
 				text-align:left;
-				left: <?= ($SCORE_BAR_WIDTH * 2) ?>px;
+				
+				background-color: rgba(0, 0, 0, 0.4);
+				padding-left: <?= ($SCORE_BAR_WIDTH * 3) ?>px;
+				padding-top: 2px;
+				padding-bottom:2px;
 
-				height:1em;
-				padding-bottom:0.25em;
+				height: <?= $homeButtonHeight ?>px;
 
-				z-index:25;
+				z-index:22;
+			}
+			#hud .home, #hud div a:hover{
+				width: <?= $homeButtonWidth ?>px;
+				height: <?= $homeButtonHeight ?>px;
+				padding-right: 15px;
+				background-color:transparent;
 			}
 			#hud div{
 				color:white;
 				position:static;
 				float:left;
-				width:30%
+				width:30%;
+				line-height: <?= $homeButtonHeight ?>px;
+				height: <?= $homeButtonHeight ?>px;
 			}
 			#hud span{
 				margin-left:2px;
@@ -471,15 +474,18 @@
 					</div>
 				</div>
 			</div>
-			<div id='hudBg'></div>
 			<div id='hud'>
-					<div class='score'>
-						<?= wfMsg('photopop-score', 0) ?>
-					</div>
+				<div class='home'>
+					<a href='<?= $url_goHome ?>'><img src='<?= $homeButtonSrc ?>'/></a>
+				</div>
 
-					<div class='progress'>
-						<?= wfMsg('photopop-progress', wfMsg('photopop-progress-numbers', 0, $photosPerGame)) ?>
-					</div>
+				<div class='score'>
+					<?= wfMsg('photopop-score', 0) ?>
+				</div>
+
+				<div class='progress'>
+					<?= wfMsg('photopop-progress', wfMsg('photopop-progress-numbers', 0, $photosPerGame)) ?>
+				</div>
 			</div>
 <?php
 				for($row = 0;  $row < $numRows; $row++){

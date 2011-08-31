@@ -46,11 +46,16 @@ class PhotoPopController extends WikiaController {
 		$this->boardWidth = $this->getVal('width', $this->DEFAULT_WIDTH);
 		$this->boardHeight = $this->getVal('height', $this->DEFAULT_HEIGHT);
 
+		$this->cssLink = "<link rel=\"stylesheet\" href=\"{$wgExtensionsPath}/wikia/PhotoPop/css/homescreen.css\" />";
+
 		$this->buttonSrc_scores = "$wgExtensionsPath/wikia/PhotoPop/images/button_scores.png";
 		$this->buttonSrc_tutorial = "$wgExtensionsPath/wikia/PhotoPop/images/button_tutorial.png";
 		$this->buttonSrc_volumeOn = "$wgExtensionsPath/wikia/PhotoPop/images/button_volume_on.png";
 		$this->buttonSrc_volumeOff = "$wgExtensionsPath/wikia/PhotoPop/images/button_volume_off.png";
 		$this->buttonSrc_play = "$wgExtensionsPath/wikia/PhotoPop/images/button_play.png";
+
+		$this->playButtonUrl = $this->getSelectorScreenUrl();
+		$this->tutorialButtonUrl = $this->getTutorialScreenUrl();
 
 		wfProfileOut(__METHOD__);
 	} // end homeScreen()
@@ -145,6 +150,10 @@ JQUERY_INCLUDE;
 		$this->answerDrawerWidth = 150;
 		$this->answerDrawerHeight = 250;
 		$this->continueButtonSrc = $wgExtensionsPath.'/wikia/PhotoPop/images/continue-button.png';
+		
+		$this->homeButtonSrc = $wgExtensionsPath.'/wikia/PhotoPop/images/home.png';
+		$this->homeButtonWidth = 27;
+		$this->homeButtonHeight =25;
 
 		// Settings for the end-game screen.
 		$this->endGame_overlayWidth = 300;
@@ -154,7 +163,7 @@ JQUERY_INCLUDE;
 		$this->endGame_playAgainSrc = $wgExtensionsPath.'/wikia/PhotoPop/images/end_replay.png';
 		$this->endGame_goHomeSrc = $wgExtensionsPath.'/wikia/PhotoPop/images/end_home.png';
 		$this->endGame_goToHighScoresSrc = $wgExtensionsPath.'/wikia/PhotoPop/images/end_scores.png';
-		$this->url_goHome = "$wgScriptPath/wikia.php?controller=PhotoPop&method=homeScreen";
+		$this->url_goHome = $this->getHomeScreenUrl();
 
 		$this->mwJsApiUrl = $wgExtensionsPath."/wikia/JavascriptAPI/Mediawiki.js?$wgStyleVersion";
 		$this->gameJs_FlipBoard = $wgExtensionsPath."/wikia/PhotoPop/js/PhotoPop_FlipBoard.js?$wgStyleVersion";
@@ -219,20 +228,40 @@ JQUERY_INCLUDE;
 	} // end getGameConfigs()
 	
 	/**
-	 * Returns a link back to the home screen (will probably not be on the same wiki where the game is being played since
-	 * we try to run that separately (makes it easier to track stats).
+	 * Returns a link to the specified screen (will probably not be on the same wiki where the game is being played since
+	 * we try to run that separately (makes it easier to track stats)).
 	 *
-	 * NOTE: Make sure boardWidth and boardHeight are set before calling this function.
+	 * NOTE: Make sure boardWidth and boardHeight are set before calling these functions.
 	 */
-	private function getHomeScreenUrl(){
+	private function getHomeScreenUrl(){ return $this->getLinkToMethod( 'homeScreen' ); }
+	private function getSelectorScreenUrl(){ return $this->getLinkToMethod( 'selectorScreen' ); }
+	private function getTutorialScreenUrl(){ return $this->getLinkToMethod( 'tutorialScreen' ); }
+
+	/**
+	 * Returns an absolute URL to the specified method name on this controller.  This uses Community wiki since the non-wiki-specific screens will
+	 * all be served from there.
+	 *
+	 * WARNING: This is not made for linking to playGame since that should be served up from the domain of the wiki whose content
+	 * you want to play the game with.
+	 */
+	private function getLinkToMethod($methodName){
+		$sld = $this->getSecondLevelDomain();
+		return "http://community.$sld/wikia.php?controller=PhotoPop&method={$methodName}&width={$this->boardWidth}&height={$this->boardHeight}";
+	}
+	
+	/**
+	 * Small helper to return the second-level domain along with the top-level domain.  This helps us build links
+	 * from devboxes to devboxes and from production wikis to other production wikis.
+	 */
+	private function getSecondLevelDomain(){
 		global $wgDevelEnvironment;
 		if(empty($wgDevelEnvironment)){
 			$sld = "wikia.com"; // second-level domain
 		} else {
 			$sld = "sean.wikia-dev.com";
 		}
-		return "http://community.$sld/wikia.php?controller=PhotoPop&method=homeScreen&width={$this->boardWidth}&height={$this->boardHeight}";
-	} // end getHomeScreenUrl()
+		return $sld;
+	} // end getSecondLevelDomain()
 
 	/**
 	 * Returns the watermark url of the current wiki (if there is one in the config... otherwise returns a blank image).
