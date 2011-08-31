@@ -31,6 +31,7 @@ class PhotoPopController extends WikiaController {
 		wfLoadExtensionMessages( 'PhotoPop' );
 		$this->BG_IMAGE = "$wgExtensionsPath/wikia/PhotoPop/images/main_bg.png";
 		$this->PHOTOPOP_LOGO = "$wgExtensionsPath/wikia/PhotoPop/images/photopop_logo.png";
+		$this->POWERED_BY_LOGO = "$wgExtensionsPath/wikia/PhotoPop/images/brought_to_you_by.png";
 
 		wfProfileOut(__METHOD__);
 	} // end init()
@@ -39,12 +40,17 @@ class PhotoPopController extends WikiaController {
 	 * Endpoint for the first screen that the player will see.  Essentially serves as a menu.
 	 */
 	public function homeScreen(){
+		global $wgExtensionsPath;
 		wfProfileIn( __METHOD__ );
+		
 		$this->boardWidth = $this->getVal('width', $this->DEFAULT_WIDTH);
 		$this->boardHeight = $this->getVal('height', $this->DEFAULT_HEIGHT);
 
-		// TODO: IMPLEMENT
-		// TODO: IMPLEMENT
+		$this->buttonSrc_scores = "$wgExtensionsPath/wikia/PhotoPop/images/button_scores.png";
+		$this->buttonSrc_tutorial = "$wgExtensionsPath/wikia/PhotoPop/images/button_tutorial.png";
+		$this->buttonSrc_volumeOn = "$wgExtensionsPath/wikia/PhotoPop/images/button_volume_on.png";
+		$this->buttonSrc_volumeOff = "$wgExtensionsPath/wikia/PhotoPop/images/button_volume_off.png";
+		$this->buttonSrc_play = "$wgExtensionsPath/wikia/PhotoPop/images/button_play.png";
 
 		wfProfileOut(__METHOD__);
 	} // end homeScreen()
