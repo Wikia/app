@@ -74,7 +74,8 @@ class UserIdentityBox {
 		if( $this->user->isAnon() ) {
 		//if user doesn't exist
 			$this->getEmptyData($data);
-			$data['edits'] = 0;
+			//-1 edits means it's an anon user/ip where we don't display editcount at all
+			$data['edits'] = -1;
 			$data['showZeroStates'] = $this->checkIfDisplayZeroStates($data);
 			$data['name'] = $this->app->wf->Msg('user-identity-box-wikia-contributor');
 			$data['realName'] = $userName;
