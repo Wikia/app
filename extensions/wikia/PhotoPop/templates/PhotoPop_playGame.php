@@ -11,6 +11,8 @@
 	$CONTINUE_FONT_SIZE_PX = 24;
 	$TIME_UP_FONT_SIZE_PX = ($CONTINUE_FONT_SIZE_PX * 2);
 	$END_GAME_BORDER_RADIUS = 15;
+	
+	$DARK_BLUE = "#00396d"; // the mask background color and the text color
 
 	// TODO: REFACTOR: If front-end team has a sec, it would be nice to have them take a look over it and see what we can clean up.
 
@@ -234,8 +236,8 @@
 				top:0;
 				height: <?= $boardHeight ?>px;
 				width: <?= $SCORE_BAR_WIDTH ?>px;
-				border-left: 1px solid black;
-				border-right: 1px solid black;
+				border-left: 1px solid #3a3a3a;
+				border-right: 1px solid #3a3a3a;
 				padding: 0 2px 0 2px;
 
 				background-color: rgba(204, 204, 204, 0.4);
@@ -345,7 +347,7 @@
 				#endGameInnerWrapper #summaryWrapper #endGameSummary .headingText{
 					width:100%;
 					text-align:center;
-					color:#00396d;
+					color:<?= $DARK_BLUE ?>;
 					padding:10px;
 					font-size:2.5em;
 				}
@@ -386,8 +388,8 @@ height:<?= $endGame_overlayHeight ?>px;
 				margin-top:-<?= floor($endGame_overlayHeight/2) ?>px;
 				left:50%;
 				margin-left:-<?= floor($endGame_overlayWidth/2) ?>px;
-background-color:#ddd;
-				color:#00396d;
+background-color: rgba(255, 255, 255, 0.9);
+				color:<?= $DARK_BLUE ?>;
 				border-radius:10px;
 				font-weight:normal;
 				padding:10px;
@@ -409,7 +411,7 @@ background-color:#ddd;
 						print "\t\t\t#sprite_{$row}_{$col}{"; // intentionally no trailing linebreak here
 						print "top: {$top}px; ";
 						print "left: {$left}px; ";
-						print "background: #6495ed url({$frontImageSrc}) -{$left}px -{$top}px; ";
+						print "background: {$DARK_BLUE} url({$frontImageSrc}) -{$left}px -{$top}px; ";
 						print "}\n";
 					}
 				}
