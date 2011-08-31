@@ -10,4 +10,6 @@
 	$app = F::app();
 	$response = $app->sendRequest( 'PhotoPop', 'playGame' );
 	$response->setVal('isTutorial', true);
+	$response->setVal('width', $boardWidth);
+	$response->setVal('height', $boardHeight);
 	print $response->render();

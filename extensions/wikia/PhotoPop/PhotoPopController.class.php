@@ -139,9 +139,19 @@ JQUERY_INCLUDE;
 
 		// Sometimes we want to generate the game-screen without any functionality but with a tutorial overlay... allow that tutorial mode here.
 		$this->isTutorial = $this->getVal('isTutorial', $this->isTutorial);
+		$this->tutorialButtonSrc = $wgExtensionsPath.'/wikia/PhotoPop/images/got_it.png';
+		$this->tutorialButtonWidth = 109;
+		$this->tutorialButtonHeight = 36;
+		$this->tutorialTriangleWidth = 15;
+		$this->tutorialTriangleHeight = 15; // the height of one of the triangle shards (there are two, on top of each other to make up the bigger triangle, so this number might be half of what you expect if you're thinking about the larger triangle).
 
+		
 		$this->boardWidth = $this->getVal('width', $this->DEFAULT_WIDTH);
 		$this->boardHeight = $this->getVal('height', $this->DEFAULT_HEIGHT);
+
+//var_dump($this);
+//print "{$this->boardWidth}, {$this->boardHeight}";exit;
+		
 		$this->numRows = 4;
 		$this->numCols = 6;
 		$this->tileWidth = ceil($this->boardWidth / $this->numCols); // the tiles at the very bottom and right of the board may be slightly too large. their extra pixels will just fall outside of the visible board and not be seen.

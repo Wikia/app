@@ -382,23 +382,62 @@
 		/** TUTORIAL SCREEN - BEGIN **/
 			#instructionsWrapper{
 				position:relative;
-width:<?= $endGame_overlayWidth ?>px;
-height:<?= $endGame_overlayHeight ?>px;
+				width:<?= $endGame_overlayWidth ?>px;
+				height:<?= $endGame_overlayHeight ?>px;
 				top:50%;
 				margin-top:-<?= floor($endGame_overlayHeight/2) ?>px;
 				left:50%;
 				margin-left:-<?= floor($endGame_overlayWidth/2) ?>px;
-background-color: rgba(255, 255, 255, 0.9);
+				background-color: rgba(255, 255, 255, 0.9);
 				color:<?= $DARK_BLUE ?>;
 				border-radius:10px;
 				font-weight:normal;
-				padding:10px;
+				padding-top:10px;
 				padding-left:20px;
 				font-size:1.25em;
 				line-height:1.5em;
 				text-align:left;
 				
 				z-index:50;
+			}
+				#instructionsWrapper.triangle-isosceles { /* thanks to http://nicolasgallagher.com/pure-css-speech-bubbles/demo/ */
+				}
+				#instructionsWrapper..triangle-isosceles.right {
+				}
+				/* creates triangle */
+				#instructionsWrapper.triangle-isosceles:after {
+					content:"";
+					position:absolute;
+					bottom:-15px; /* value = - border-top-width - border-bottom-width */
+					left:<?= $tutorialTriangleWidth ?>px; /* controls horizontal position */
+					border-width:15px 15px 0; /* vary these values to change the angle of the vertex */
+					border-style:solid;
+					border-color:rgba(255, 255, 255, 0.9) transparent;
+					/* reduce the damage in FF3.0 */
+					display:block; 
+					width:0;
+				}
+				#instructionsWrapper.triangle-isosceles.right:after {
+					top:<?= floor($endGame_overlayHeight/2) - $tutorialTriangleHeight ?>px; /* controls vertical position */
+					right:-<?= $tutorialTriangleWidth ?>px; /* value = - border-left-width - border-right-width */
+					bottom:auto;
+					left:auto;
+					border-width:<?= $tutorialTriangleHeight ?>px 0 <?= $tutorialTriangleHeight ?>px <?= $tutorialTriangleWidth ?>px;
+					border-color:transparent rgba(255, 255, 255, 0.9);
+				}
+			#instructionsWrapper .buttonBar{
+				position:absolute;
+				bottom:0px;
+				width:<?= $endGame_overlayWidth ?>px;
+				height:<?= $tutorialButtonHeight ?>px;
+			}
+			#instructionsWrapper .buttonBar a, #instructionsWrapper .buttonBar a:hover{
+				background-color:transparent;
+				width:<?= $tutorialButtonWidth ?>px;
+				height:<?= $tutorialButtonHeight ?>px;
+				right:0px;
+				margin-right:15px;
+				margin-top: -15px;
 			}
 		/** TUTORIAL SCREEN - END **/
 
@@ -419,7 +458,8 @@ background-color: rgba(255, 255, 255, 0.9);
 		</style>
 
 		<script>
-			wgScriptPath = '<?= $wg->ScriptPath; ?>';
+			wgScriptPath = '<?= $wg->ScriptPath ?>';
+			wgExtensionsPath = '<?= $wg->ExtensionsPath ?>';
 			boardWidth = <?= $boardWidth ?>;
 			boardHeight = <?= $boardHeight ?>;
 			photoPopCategory = '<?= $category ?>';
@@ -449,8 +489,13 @@ background-color: rgba(255, 255, 255, 0.9);
 				// If this is the tutorial rather than a real game, we need to show the quotation bubble with i18n instructions inside of it.
 				if($isTutorial){
 					?>
-					<div id='instructionsWrapper'>
-						<?= wfMsg( 'photopop-tutorial-text' ) ?>
+					<div id='instructionsWrapper' class='triangle-isosceles right'>
+						<div>
+							<?= wfMsg( 'photopop-tutorial-text' ) ?>
+						</div>
+						<div class='buttonBar'>
+							<a href="<?= $url_goHome ?>"><img src='<?= $tutorialButtonSrc ?>' /></a>
+						</div>
 					</div>
 					<?php
 				}
