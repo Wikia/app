@@ -32,4 +32,4 @@ WikiaEditor instance events
 		- uiAddExternalProvider( editor, externalProvider ) - external UI elements provider
 			was just added
 		- uiFetchDefaults( editor, elements ) - UI manager is about to add default UI elements
-			from config (good place to alter this list eg. add or remove some entries from elements) 
+			from config (good place to alter this list eg. add or remove some entries from elements)
