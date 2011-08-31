@@ -376,7 +376,30 @@
 				right:<?= $END_GAME_BORDER_RADIUS ?>px;
 			}
 		/** END-GAME SCREEN-OVERLAY - END **/
-			
+		
+		/** TUTORIAL SCREEN - BEGIN **/
+			#instructionsWrapper{
+				position:relative;
+width:<?= $endGame_overlayWidth ?>px;
+height:<?= $endGame_overlayHeight ?>px;
+				top:50%;
+				margin-top:-<?= floor($endGame_overlayHeight/2) ?>px;
+				left:50%;
+				margin-left:-<?= floor($endGame_overlayWidth/2) ?>px;
+background-color:#ddd;
+				color:#00396d;
+				border-radius:10px;
+				font-weight:normal;
+				padding:10px;
+				padding-left:20px;
+				font-size:1.25em;
+				line-height:1.5em;
+				text-align:left;
+				
+				z-index:50;
+			}
+		/** TUTORIAL SCREEN - END **/
+
 <?php
 				// Create the CSS rules to position the tiles and sprite the frontImage over them.
 				for($row = 0;  $row < $numRows; $row++){
@@ -399,15 +422,20 @@
 			boardHeight = <?= $boardHeight ?>;
 			photoPopCategory = '<?= $category ?>';
 		</script>
-<!-- TODO: Serve from our own servers using AssetsManager or convert to using jQuery Mobile (should help for the selector-screen) -->
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
-		<?= $globalVariablesScript ?>
-		<script src="<?= $jsMessagesUrl ?>"></script>
-		<script src="<?= $mwJsApiUrl ?>"></script>
+		<?php
+			if(empty($isTutorial)){ ?>
+				<!-- TODO: Serve from our own servers using AssetsManager or convert to using jQuery Mobile (should help for the selector-screen) -->
+				<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+
+				<?= $globalVariablesScript ?>
+				<script src="<?= $jsMessagesUrl ?>"></script>
+				<script src="<?= $mwJsApiUrl ?>"></script>
+				<script src="<?= $gameJs_FlipBoard ?>"></script>
+				<script src="<?= $gameJs ?>"></script>
+			<?php }
+		?>
 	</head>
 	<body>
-		<script src="<?= $gameJs_FlipBoard ?>"></script>
-		<script src="<?= $gameJs ?>"></script>
 		<div id='scoreBarWrapper'>
 			<div id='scoreBar'></div>
 		</div>
@@ -415,6 +443,16 @@
 			<div id='bgPic'></div>
 		</div>
 		<div id='gameBoard'>
+			<?php
+				// If this is the tutorial rather than a real game, we need to show the quotation bubble with i18n instructions inside of it.
+				if($isTutorial){
+					?>
+					<div id='instructionsWrapper'>
+						<?= wfMsg( 'photopop-tutorial-text' ) ?>
+					</div>
+					<?php
+				}
+			?>
 			<div id='endGameOuterWrapper'>
 				<div id='endGameInnerWrapper'>
 					<div id='highScore'>

@@ -32,6 +32,8 @@ class PhotoPopController extends WikiaController {
 		$this->BG_IMAGE = "$wgExtensionsPath/wikia/PhotoPop/images/main_bg.png";
 		$this->PHOTOPOP_LOGO = "$wgExtensionsPath/wikia/PhotoPop/images/photopop_logo.png";
 		$this->POWERED_BY_LOGO = "$wgExtensionsPath/wikia/PhotoPop/images/brought_to_you_by.png";
+		
+		$this->isTutorial = false; // cleaner to set it here than have empty() checks all over.
 
 		wfProfileOut(__METHOD__);
 	} // end init()
@@ -94,6 +96,12 @@ class PhotoPopController extends WikiaController {
 		$this->jQueryMobile = <<<JQUERY_INCLUDE
 			<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0b2/jquery.mobile-1.0b2.min.css" />
 			<script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
+			<script>
+				// Has to be done before including jQueryMobile
+				$(document).bind("mobileinit", function(){
+					$.extend(  $.mobile , { ajaxEnabled : false });
+				});
+			</script>
 			<script src="http://code.jquery.com/mobile/1.0b2/jquery.mobile-1.0b2.min.js"></script>
 			
 			<link rel="stylesheet" href="{$wgExtensionsPath}/wikia/PhotoPop/css/jquery.mobile.scrollview.css" />
@@ -115,10 +123,8 @@ JQUERY_INCLUDE;
 		$this->boardWidth = $this->getVal('width', $this->DEFAULT_WIDTH);
 		$this->boardHeight = $this->getVal('height', $this->DEFAULT_HEIGHT);
 		
-		// TODO: IMPLEMENT
-		// TODO: IMPLEMENT
-		
-		
+		$this->isTutorial = true;
+
 		wfProfileOut(__METHOD__);
 	} // end tutorialScreen()
 
@@ -130,6 +136,9 @@ JQUERY_INCLUDE;
 	 public function playGame(){
 		global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgRequest, $wgScriptPath;
 		wfProfileIn( __METHOD__ );
+
+		// Sometimes we want to generate the game-screen without any functionality but with a tutorial overlay... allow that tutorial mode here.
+		$this->isTutorial = $this->getVal('isTutorial', $this->isTutorial);
 
 		$this->boardWidth = $this->getVal('width', $this->DEFAULT_WIDTH);
 		$this->boardHeight = $this->getVal('height', $this->DEFAULT_HEIGHT);
@@ -219,7 +228,7 @@ JQUERY_INCLUDE;
 		return array(
 			new PhotoPopGameConfig("True Blood", "Category:Characters", "trueblood", "$iconDir/thumb_trueblood.png", "$watermarkDir/trueblood.png", $this->boardWidth, $this->boardHeight),
 			new PhotoPopGameConfig("Glee Wiki", "Category:Characters", "glee", "$iconDir/thumb_glee.png", "$watermarkDir/glee.png", $this->boardWidth, $this->boardHeight),
-			new PhotoPopGameConfig("LyricWiki", "Category:Album", "lyrics", "$iconDir/thumb_lyrics.png", "$watermarkDir/lyrics.png", $this->boardWidth, $this->boardHeight),
+			new PhotoPopGameConfig("LyricWiki", "Category:Albums_released_in_2011", "lyrics", "$iconDir/thumb_lyrics.png", "$watermarkDir/lyrics.png", $this->boardWidth, $this->boardHeight),
 			new PhotoPopGameConfig("Muppet Wiki", "Category:The_Muppets_Characters", "muppet", "$iconDir/thumb_muppet.png", "$watermarkDir/muppet.png", $this->boardWidth, $this->boardHeight),
 			new PhotoPopGameConfig("Dexter Wiki", "Category:Characters", "dexter", "$iconDir/thumb_dexter.png", "$watermarkDir/dexter.png", $this->boardWidth, $this->boardHeight),
 			new PhotoPopGameConfig("Futurama", "Category:Characters", "futurama", "$iconDir/thumb_futurama.png", "$watermarkDir/futurama.png", $this->boardWidth, $this->boardHeight),
