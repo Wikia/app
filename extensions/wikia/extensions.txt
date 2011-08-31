@@ -313,6 +313,9 @@ Wikia Labs
 
 Wikia Mini Upload
 
+Wikia Mobile
+ignored = wikiamobile-page-header-title
+
 Wikia Poll
 optional = wikiapoll-question-mark-before, wikiapoll-question-mark-after
 
@@ -339,6 +342,8 @@ Wiki Factory
 file = WikiFactory/SpecialWikiFactory.i18n.php
 optional = wikifactory-label-eznamespace
 ignored = awc-metrics-language-top-list
+
+Wiki Features
 
 Wiki Payment
 ignored = wikipayment-click-here
