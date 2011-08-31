@@ -19,9 +19,9 @@ class WikiaSpecialPageController extends WikiaController {
 	public function execute( $par ) {
 		$this->app = F::app();
 		$out = $this->app->wg->Out;
-		$response = $this->sendRequest( get_class( $this ), null, array( 'par' => $par /* to be compatibile with MW core */ ), false );
+		$response = $this->sendRequest( get_class( $this ), null, array( 'par' => $par /* to be compatibile with MW core */ ) );
 		$this->response = $response;
-		
+
 		if( $response->getFormat() == WikiaResponse::FORMAT_HTML ) {
 			try {
 				$out->addHTML( $response->toString() );
@@ -50,7 +50,7 @@ class WikiaSpecialPageController extends WikiaController {
 			return $this->specialPage->$propertyName;
 		else if (property_exists($this, $propertyName))
 			return $this->$propertyName;
-		else 
+		else
 			return $this->response->getVal($propertyName);
 	}
 
@@ -61,7 +61,7 @@ class WikiaSpecialPageController extends WikiaController {
 			$this->specialPage->$propertyName = $value;
 		else if (property_exists($this, $propertyName))
 			$this->$propertyName = $value;
-		else 
+		else
 			$this->response->setVal( $propertyName, $value );
 	}
 }
