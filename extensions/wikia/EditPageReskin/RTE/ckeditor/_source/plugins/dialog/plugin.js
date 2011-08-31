@@ -1,4 +1,4 @@
-/*
+﻿/*
 Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -318,17 +318,34 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 					{
 						if ( item.validate )
 						{
-							var retval = item.validate( this ),
-								invalid = typeof ( retval ) == 'string' || retval === false;
+							var isValid = item.validate( this );
 
-							if ( invalid )
+							if ( typeof isValid == 'string' )
 							{
-								evt.data.hide = false;
-								evt.stop();
+								// Wikia - start
+								//alert( isValid );
+								var editor = this.getDialog()._.editor;
+								RTE.tools.alert(editor.lang.errorPopupTitle, isValid);
+								// Wikia - end
+								isValid = false;
 							}
 
-							handleFieldValidated.call( item, !invalid, typeof retval == 'string' ? retval : undefined );
-							return invalid;
+							if ( isValid === false )
+							{
+								// Wikia - start
+								var dialog = item.getDialog();
+								dialog.fire('notvalid', {item: item});
+								// Wikia - end
+
+								if ( item.select )
+									item.select();
+								else
+									item.focus();
+
+								evt.data.hide = false;
+								evt.stop();
+								return true;
+							}
 						}
 					});
 			}, this, null, 0 );
@@ -502,9 +519,6 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 				dialogElement.removeListener( 'keydown', focusKeydownHandler );
 				if ( CKEDITOR.env.opera || ( CKEDITOR.env.gecko && CKEDITOR.env.mac ) )
 					dialogElement.removeListener( 'keypress', focusKeyPressHandler );
-
-				// Reset fields state when closing dialog.
-				iterContents( function( item ) { resetField.apply( item ); } );
 			} );
 		this.on( 'iframeAdded', function( evt )
 			{
@@ -897,7 +911,7 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 			for ( var i in this._.contents )
 			{
 				for ( var j in this._.contents[i] )
-					fn.call( this, this._.contents[i][j] );
+					fn( this._.contents[i][j] );
 			}
 			return this;
 		},
@@ -948,10 +962,6 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 			var args = arguments;
 			this.foreach( function( widget )
 				{
-					// Make sure IE triggers "change" event on last focused input before closing the dialog. (#7915)
-					if ( CKEDITOR.env.ie && this._.currentFocusIndex == widget.focusIndex )
-						widget.getInputElement().$.blur();
-
 					if ( widget.commit )
 						widget.commit.apply( widget, args );
 				});
@@ -2333,15 +2343,6 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 
 				// Write the inline CSS styles.
 				var styleStr = ( elementDefinition.style || '' ).split( ';' );
-
-				// Element alignment support.
-				if ( elementDefinition.align )
-				{
-					var align = elementDefinition.align;
-					styles[ 'margin-left' ] = align == 'left' ? 0 : 'auto';
-					styles[ 'margin-right' ] = align == 'right' ? 0 : 'auto';
-				}
-
 				for ( i in styles )
 					styleStr.push( i + ':' + styles[i] );
 				if ( elementDefinition.hidden )
@@ -2489,9 +2490,6 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 							styles.push( 'height:' + cssLength( height ) );
 						if ( elementDefinition && elementDefinition.padding != undefined )
 							styles.push( 'padding:' + cssLength( elementDefinition.padding ) );
-						// In IE Quirks alignment has to be done on table cells. (#7324)
-						if ( CKEDITOR.env.ie && CKEDITOR.env.quirks && children[ i ].align )
-							styles.push( 'text-align:' + children[ i ].align );
 						if ( styles.length > 0 )
 							html.push( 'style="' + styles.join('; ') + '" ' );
 						html.push( '>', childHtmlList[i], '</td>' );
@@ -2577,9 +2575,6 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 							styles.push( 'height:' + Math.floor( 100 / childHtmlList.length ) + '%' );
 						if ( elementDefinition && elementDefinition.padding != undefined )
 							styles.push( 'padding:' + cssLength( elementDefinition.padding ) );
-						// In IE Quirks alignment has to be done on table cells. (#7324)
-						if ( CKEDITOR.env.ie && CKEDITOR.env.quirks && children[ i ].align )
-							styles.push( 'text-align:' + children[ i ].align );
 						if ( styles.length > 0 )
 							html.push( 'style="', styles.join( '; ' ), '" ' );
 						html.push( ' class="cke_dialog_ui_vbox_child">', childHtmlList[i], '</td></tr>' );
@@ -2832,9 +2827,8 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 		 */
 		disable : function()
 		{
-			var element = this.getElement(),
-				input = this.getInputElement();
-			input.setAttribute( 'disabled', 'true' );
+			var element = this.getElement();
+			element.setAttribute( 'disabled', 'true' );
 			element.addClass( 'cke_disabled' );
 		},
 
@@ -2844,9 +2838,8 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 		 */
 		enable : function()
 		{
-			var element = this.getElement(),
-				input = this.getInputElement();
-			input.removeAttribute( 'disabled' );
+			var element = this.getElement();
+			element.removeAttribute( 'disabled' );
 			element.removeClass( 'cke_disabled' );
 		},
 
@@ -2857,7 +2850,7 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 		 */
 		isEnabled : function()
 		{
-			return !this.getElement().hasClass( 'cke_disabled' );
+			return !this.getInputElement().getAttribute( 'disabled' );
 		},
 
 		/**
@@ -2980,9 +2973,7 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 	{
 		var notEmptyRegex = /^([a]|[^a])+$/,
 			integerRegex = /^\d*$/,
-			numberRegex = /^\d*(?:\.\d+)?$/,
-			htmlLengthRegex = /^(((\d*(\.\d+))|(\d*))(px|\%)?)?$/,
-			cssLengthRegex = /^(((\d*(\.\d+))|(\d*))(px|em|ex|in|cm|mm|pt|pc|\%)?)?$/i;
+			numberRegex = /^\d*(?:\.\d+)?$/;
 
 		CKEDITOR.VALIDATE_OR = 1;
 		CKEDITOR.VALIDATE_AND = 2;
@@ -2991,7 +2982,6 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 		{
 			functions : function()
 			{
-				var args = arguments;
 				return function()
 				{
 					/**
@@ -3000,28 +2990,28 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 					 * combine validate functions together to make more sophisticated
 					 * validators.
 					 */
-					var value = this && this.getValue ? this.getValue() : args[ 0 ];
+					var value = this && this.getValue ? this.getValue() : arguments[0];
 
 					var msg = undefined,
 						relation = CKEDITOR.VALIDATE_AND,
 						functions = [], i;
 
-					for ( i = 0 ; i < args.length ; i++ )
+					for ( i = 0 ; i < arguments.length ; i++ )
 					{
-						if ( typeof( args[i] ) == 'function' )
-							functions.push( args[i] );
+						if ( typeof( arguments[i] ) == 'function' )
+							functions.push( arguments[i] );
 						else
 							break;
 					}
 
-					if ( i < args.length && typeof( args[i] ) == 'string' )
+					if ( i < arguments.length && typeof( arguments[i] ) == 'string' )
 					{
-						msg = args[i];
+						msg = arguments[i];
 						i++;
 					}
 
-					if ( i < args.length && typeof( args[i]) == 'number' )
-						relation = args[i];
+					if ( i < arguments.length && typeof( arguments[i]) == 'number' )
+						relation = arguments[i];
 
 					var passed = ( relation == CKEDITOR.VALIDATE_AND ? true : false );
 					for ( i = 0 ; i < functions.length ; i++ )
@@ -3041,9 +3031,12 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 							RTE.tools.alert(editor.lang.errorPopupTitle, msg);
 							// Wikia - end
 						}
+						if ( this && ( this.select || this.focus ) )
+							( this.select || this.focus )();
+						return false;
 					}
 
-					return !passed ? msg : true;
+					return true;
 				};
 			},
 
@@ -3065,8 +3058,16 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 							RTE.tools.alert(editor.lang.errorPopupTitle, msg);
 							// Wikia - end
 						}
+						if ( this && ( this.select || this.focus ) )
+						{
+							if ( this.select )
+								this.select();
+							else
+								this.focus();
+						}
+						return false;
 					}
-					return !regex.test( value ) ? msg : true;
+					return true;
 				};
 			},
 
