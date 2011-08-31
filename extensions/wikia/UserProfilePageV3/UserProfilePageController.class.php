@@ -526,7 +526,7 @@ class UserProfilePageController extends WikiaController {
 		$this->setVal('result', $result);
 		return ;
 	}
-
+	
 	protected function storeInTempImage($fileName, $fileuploader){
 		$this->app->wf->ProfileIn( __METHOD__ );
 		
@@ -534,11 +534,11 @@ class UserProfilePageController extends WikiaController {
 			return UPLOAD_ERR_FORM_SIZE;
 		}
 		
-		$tempName = $fileuploader->tempFileName($this->wg->User); 
+		$tempName = $fileuploader->tempFileName($this->wg->User);
 		$title = Title::makeTitle(NS_FILE, $tempName);
 		$localRepo = RepoGroup::singleton()->getLocalRepo();
 		
-		$ioh = F::build('ImageOperationsHelper' );
+		$ioh = F::build('ImageOperationsHelper');
 		
 		$out = $ioh->postProcessFile($fileName);
 		if($out !== true) {
@@ -923,7 +923,7 @@ class UserProfilePageController extends WikiaController {
 			);
 			
 			$data->source = 'facebook';
-			$data->file = $userFbData['pic_big'];	
+			$data->file = $userFbData['pic_big'];
 
 			$oAvatarObj = F::build('Masthead', array( $user ), 'newFromUser'); 
 			$tmpFile = '';
@@ -934,8 +934,7 @@ class UserProfilePageController extends WikiaController {
 			
 			$result = array('success' => true, 'avatar' => $thumbnail->url . '?cb=' . date('U') );
 			$this->setVal('result', $result);
-		}	
-		
+		}
 		
 		$this->app->wf->ProfileOut( __METHOD__ );
 		return true;
