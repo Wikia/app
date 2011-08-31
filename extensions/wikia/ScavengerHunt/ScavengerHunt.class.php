@@ -307,7 +307,11 @@ class ScavengerHunt {
 			return false;
 		}
 		$userId = F::app()->wg->user->getId();
-		return wfSharedMemcKey( 'ScavengerHuntUserProgress', $userId, wfGetBeaconId() );
+		return wfSharedMemcKey( 
+				'ScavengerHuntUserProgress',
+				$userId,
+				( $userId > 0  ) ? 0 : wfGetBeaconId()
+			);
 	}
 
 	public function getDataFromCache() {
