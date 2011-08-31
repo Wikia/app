@@ -206,9 +206,11 @@ class UserProfilePageController extends WikiaController {
 			}
 			
 			if( $canProtect ) {
+				$protectStatus = $this->title->isProtected() ? 'unprotect' : 'protect';
+				
 				$actionButtonArray['dropdown']['protect'] = array(
-					'href' => $this->title->getLocalUrl(array('action' => 'protect')),
-					'text' => $this->wf->Msg('user-action-menu-protect'),
+					'href' => $this->title->getLocalUrl(array('action' => $protectStatus)),
+					'text' => $this->wf->Msg('user-action-menu-'.$protectStatus),
 				);
 			}
 			
