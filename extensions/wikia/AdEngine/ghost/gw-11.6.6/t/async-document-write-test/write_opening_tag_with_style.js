@@ -1,0 +1,1 @@
+document.write('<p style="background-color:red">This ');
