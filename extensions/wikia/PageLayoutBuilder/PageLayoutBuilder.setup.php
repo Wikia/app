@@ -29,7 +29,7 @@ $wgExtensionMessagesFiles['PageLayoutBuilder'] = $dir . 'PageLayoutBuilder.i18n.
 $wgExtensionAliasesFiles['PageLayoutBuilder'] = $dir . 'PageLayoutBuilder.alias.php';
 $wgSpecialPages['PageLayoutBuilder'] = 'PageLayoutBuilderSpecialPage'; # Let MediaWiki know about your new special page.
 $wgSpecialPages['PageLayoutBuilderForm'] = 'PageLayoutBuilderForm';
-
+$wgSpecialPageGroups['PageLayoutBuilder'] = 'pagetools';
 
 /* job */
 $wgAutoloadClasses['PageLayoutBuilderJob'] = $dir . 'PageLayoutBuilderJob.class.php'; # Tell MediaWiki to load the extension body.
