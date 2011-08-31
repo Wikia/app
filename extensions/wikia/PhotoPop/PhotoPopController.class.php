@@ -61,17 +61,7 @@ class PhotoPopController extends WikiaController {
 		$this->boardHeight = $this->getVal('height', $this->DEFAULT_HEIGHT);
 
 		// Configuration for the different available games.
-		$iconDir = "$wgExtensionsPath/wikia/PhotoPop/gameicons";
-		$watermarkDir = "$wgExtensionsPath/wikia/PhotoPop/watermarks";
-		$this->games = array(
-			new PhotoPopGameConfig("True Blood", "Category:Characters", "trueblood", "$iconDir/thumb_trueblood.png", "$watermarkDir/trueblood.png", $this->boardWidth, $this->boardHeight),
-			new PhotoPopGameConfig("Glee Wiki", "Category:Characters", "glee", "$iconDir/thumb_glee.png", "$watermarkDir/glee.png", $this->boardWidth, $this->boardHeight),
-			new PhotoPopGameConfig("LyricWiki", "Category:Album", "lyrics", "$iconDir/thumb_lyrics.png", "$watermarkDir/lyrics.png", $this->boardWidth, $this->boardHeight),
-			new PhotoPopGameConfig("Muppet Wiki", "Category:The_Muppets_Characters", "muppet", "$iconDir/thumb_muppet.png", "$watermarkDir/muppet.png", $this->boardWidth, $this->boardHeight),
-			new PhotoPopGameConfig("Dexter Wiki", "Category:Characters", "dexter", "$iconDir/thumb_dexter.png", "$watermarkDir/dexter.png", $this->boardWidth, $this->boardHeight),
-			new PhotoPopGameConfig("Futurama", "Category:Characters", "futurama", "$iconDir/thumb_futurama.png", "$watermarkDir/futurama.png", $this->boardWidth, $this->boardHeight),
-			new PhotoPopGameConfig("Twilight Saga", "Category:Twilight_characters", "twilightsaga", "$iconDir/thumb_twilight.png", "$watermarkDir/twilight.png", $this->boardWidth, $this->boardHeight)
-		);
+		$this->games = $this->getGameConfigs();
 		$this->numItems = count($this->games);
 		$this->iconWidth = 120;
 		$this->iconHeight = 120;
@@ -138,8 +128,7 @@ JQUERY_INCLUDE;
 
 		$this->photosPerGame = 10;
 
-// TODO: FIGURE OUT HOW TO DO THIS BETTER.  Use URL params? Have it in a predictable image name on each wiki?  load it from the config-array by wiki-prefix? <-- I LIKE THE LAST ONE!
-		$this->frontImageSrc = $wgExtensionsPath.'/wikia/PhotoPop/watermarks/glee.png'; // this shows up immediately
+		$this->frontImageSrc = $this->getWatermarkSrc();
 
 		$this->backImageSrc = ''; // this is the one that's obscured... will be figured out in JS using the API.
 		$this->answerButtonSrc_toOpen = $wgExtensionsPath.'/wikia/PhotoPop/images/answer-button-to-open.png';
@@ -200,5 +189,45 @@ JQUERY_INCLUDE;
 
 		wfProfileOut( __METHOD__ );
 	} // end getCanvas()
+	
+	/**
+	 * Returns all of the possible game configs currently set up.  Slightly more efficient to create these objects in a separate function, only when needed
+	 * than to do it in the init() function.
+	 *
+	 * Make sure to set the boardWidth and boardHeight prior to calling this method (otherwise they'll be using the defaults).
+	 */
+	private function getGameConfigs(){
+		global $wgExtensionsPath;
+		$iconDir = "$wgExtensionsPath/wikia/PhotoPop/gameicons";
+		$watermarkDir = "$wgExtensionsPath/wikia/PhotoPop/watermarks";
+		return array(
+			new PhotoPopGameConfig("True Blood", "Category:Characters", "trueblood", "$iconDir/thumb_trueblood.png", "$watermarkDir/trueblood.png", $this->boardWidth, $this->boardHeight),
+			new PhotoPopGameConfig("Glee Wiki", "Category:Characters", "glee", "$iconDir/thumb_glee.png", "$watermarkDir/glee.png", $this->boardWidth, $this->boardHeight),
+			new PhotoPopGameConfig("LyricWiki", "Category:Album", "lyrics", "$iconDir/thumb_lyrics.png", "$watermarkDir/lyrics.png", $this->boardWidth, $this->boardHeight),
+			new PhotoPopGameConfig("Muppet Wiki", "Category:The_Muppets_Characters", "muppet", "$iconDir/thumb_muppet.png", "$watermarkDir/muppet.png", $this->boardWidth, $this->boardHeight),
+			new PhotoPopGameConfig("Dexter Wiki", "Category:Characters", "dexter", "$iconDir/thumb_dexter.png", "$watermarkDir/dexter.png", $this->boardWidth, $this->boardHeight),
+			new PhotoPopGameConfig("Futurama", "Category:Characters", "futurama", "$iconDir/thumb_futurama.png", "$watermarkDir/futurama.png", $this->boardWidth, $this->boardHeight),
+			new PhotoPopGameConfig("Twilight Saga", "Category:Twilight_characters", "twilightsaga", "$iconDir/thumb_twilight.png", "$watermarkDir/twilight.png", $this->boardWidth, $this->boardHeight)
+		);
+	} // end getGameConfigs()
+	
+	/**
+	 * Returns the watermark url of the current wiki (if there is one in the config... otherwise returns a blank image).
+	 */
+	private function getWatermarkSrc(){
+		global $wgBlankImgUrl, $wgServer;
+		wfProfileIn( __METHOD__ );
+		
+		$watermarkSrc = $wgBlankImgUrl;
+		$games = $this->getGameConfigs();
+		foreach($games as $game){
+			if( startsWith($game->gameUrl, $wgServer) ){
+				$watermarkSrc = $game->watermarkSrc;
+			}
+		}
+
+		return $watermarkSrc;
+		wfProfileOut( __METHOD__ );
+	} // end getWatermarkSrc()
 
 } // end class SpecialPhotoPop
