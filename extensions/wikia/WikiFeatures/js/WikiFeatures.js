@@ -19,23 +19,49 @@ var WikiFeatures = {
 		$('#WikiFeatures .feedback').click(function(e) {
 			e.preventDefault();
 			var feature = $(this).closest('.feature');
+			var featureName = feature.data('name');
 			var image = feature.find('.representation');
 			var heading = feature.find('.details h3');
-			var modal = WikiFeatures.feedbackDialogPrototype.clone();
-			modal.find('.feature-highlight h2').text(heading.text());
-			modal.find('.feature-highlight img').attr('src', image.attr('src'));
-			modal.makeModal({width:670});
+			var modalClone = WikiFeatures.feedbackDialogPrototype.clone();
+			modalClone.find('.feature-highlight h2').text(heading.text());
+			modalClone.find('.feature-highlight img').attr('src', image.attr('src'));
+			modal = modalClone.makeModal({width:670});
 
 			var commentLabel = modal.find('.comment-group label');
 			var comment = modal.find('textarea[name=comment]');
 			var commentCounter = modal.find('.comment-character-count');
+			var submitButton = modal.find('input[type=submit]');
+			var statusMsg = modal.find('.status-msg');
+			var msgHandle = false;
 			
 			modal.find('form').submit(function(e) {
 				e.preventDefault();
-				ratingInput.val(rating);
-				// post somewhere
-				$().log('form submitted');
-				modal.find('.error-msg').text('this is an error/debug message: ' + rating).show().delay(4000).fadeOut(1000);
+				submitButton.attr('disabled', 'true');
+				$.post(wgScriptPath + '/wikia.php', {
+					controller: 'WikiFeaturesSpecial',
+					method: 'saveFeedback',
+					format: 'json',
+					feature: featureName,
+					category: modal.find('select[name=feedback] option:selected').val(),
+					message: comment.val()
+				}, function(res) {
+					if(res['result'] == 'ok') {
+						clearTimeout(msgHandle);
+						statusMsg.removeClass('invalid').text('Submitted').show();
+						setTimeout(function() {
+							modal.closeModal();
+						}, 3000);
+					} else if (res['result'] == 'error') {
+						submitButton.removeAttr('disabled');
+						statusMsg.addClass('invalid').text(res['error']).show();
+						msgHandle = setTimeout(function() { 
+							statusMsg.fadeOut(1000);
+						}, 4000);
+					} else {
+						// TODO: show error message
+						GlobalNotification.warn('Something is wrong');
+					}
+				});
 			});
 			
 			comment.bind('keypress keydown keyup paste cut', function(e) {
@@ -61,7 +87,6 @@ var WikiFeatures = {
 			feature: featureName,
 			enabled: enable
 		}, function(res) {
-			$().log(res);
 			if(res['result'] == 'ok') {
 				WikiFeatures.lockedFeatures[featureName] = false;
 			} else {

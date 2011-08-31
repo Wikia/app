@@ -52,7 +52,7 @@
 		</div>
 		
 		<input type="submit" value="Submit">
-		<span class="error-msg invalid"></span>
+		<span class="status-msg"></span>
 	</form>
 
 	

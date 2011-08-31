@@ -94,19 +94,13 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 		if ( !array_key_exists($feature, WikiFeaturesHelper::$feedbackAreaIDs) ) {
 			$this->result = 'error';
 			$this->error = $this->wf->Msg('wikifeatures-error-invalid-parameter', 'feature');
-		}
-		
-		if ( !array_key_exists($category, WikiFeaturesHelper::$feedbackCategories) ) {
+		} else if ( !array_key_exists($category, WikiFeaturesHelper::$feedbackCategories) ) {
 			$this->result = 'error';
 			$this->error = $this->wf->Msg('wikifeatures-error-invalid-parameter', 'category');
-		}
-		
-		if ( !$message || strlen($message) < 10 || strlen($message) > 1000 ) {
+		} else if ( !$message || strlen($message) < 10 || strlen($message) > 1000 ) {
 			$this->result = 'error';
-			$this->error = $this->wf->Msg('wikifeatures-error-invalid-parameter', 'message');
-		}
-								
-		if( WikiFeaturesHelper::getInstance()->isSpam($user->getName(), $feature) ) {
+			$this->error = $this->wf->Msg('wikifeatures-error-message');
+		} else if( WikiFeaturesHelper::getInstance()->isSpam($user->getName(), $feature) ) {
 			$this->result = 'error';
 			$this->error = $this->wf->Msg('wikifeatures-error-spam-attempt');
 		}
@@ -114,8 +108,10 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 		// Passed validations, actually do something useful
 		if( is_null($this->error) ) {
 			$this->result = 'ok';
-			$bugzdata = WikiFeaturesHelper::getInstance()->saveFeedbackInFogbugz( $feature, $user->getEmail(), $user->getName(), $message, $category );
-			$this->caseId = $bugzdata['caseId'];
+			//TODO: remove before release
+			//$bugzdata = WikiFeaturesHelper::getInstance()->saveFeedbackInFogbugz( $feature, $user->getEmail(), $user->getName(), $message, $category );
+			//$this->caseId = $bugzdata['caseId'];
+			$this->caseId = 123;
 		}
 	}
 	
