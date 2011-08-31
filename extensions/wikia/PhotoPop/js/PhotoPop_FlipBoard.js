@@ -496,7 +496,10 @@ self.log("ERROR LOADING COVERED IMAGE");
 		 */
 		this._hideAnswerDrawer = function(){
 			$('#answerListWrapper').hide();
-			$('#answerDrawerWrapper').width( $('.answerButton').width() );
+
+			// The drawer should be set back to the width of half of the button plus the width of the false-edge.
+			var ansDrawerWidth = Math.floor($('.answerButton').width() / 2) + $('#answerListFalseEdge').width();
+			$('#answerDrawerWrapper').width( ansDrawerWidth );
 
 			// Flip which button is showing.
 			$('#answerButton_toOpen').add('#answerListFalseEdge').show();

@@ -92,7 +92,7 @@
 				float:right;
 				right:0px;
 				height: 100%;
-				width:<?= $answerButtonWidth ?>px;
+				width:<?= $answerButtonWidth + $answerEdgeExtra ?>px;
 			}
 			#answerDrawer{
 				top: 50%;
@@ -115,7 +115,7 @@
 				cursor:pointer;
 				z-index:30;
 
-				right:0px;
+				right:0;
 				display:none;
 			}
 			#answerButton_toClose{ /* start closed... will toggle when needed */
@@ -176,8 +176,8 @@
 			}
 			#answerListFalseEdge{ /* We added this edge late in the game, so just fake the edge of the Wrapper */
 				height:100%;
-				width:<?= floor($answerButtonWidth / 2) ?>px;
-				margin-right:-<?= $answerButtonWidth ?>px;
+				width:<?= floor($answerButtonWidth / 2) + $answerEdgeExtra ?>px;
+				margin-right:-<?= ($answerButtonWidth + $answerEdgeExtra) ?>px;
 				right:0px;
 				border-top-left-radius: 15px;
 				border-bottom-left-radius: 15px;
@@ -252,6 +252,7 @@
 				padding: 0;
 				width: <?= $SCORE_BAR_WIDTH ?>px;
 				height: 100%;
+				border-radius:3px;
 
 				z-index:24;
 			}

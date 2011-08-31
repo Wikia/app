@@ -158,6 +158,7 @@ JQUERY_INCLUDE;
 		$this->continueButtonWidth = 48;
 		$this->answerDrawerWidth = 150;
 		$this->answerDrawerHeight = 250;
+		$this->answerEdgeExtra = 12; // this is the amount to make it peek out slightly past the half-the-button mark
 		$this->continueButtonSrc = $wgExtensionsPath.'/wikia/PhotoPop/images/continue-button.png';
 		
 		$this->homeButtonSrc = $wgExtensionsPath.'/wikia/PhotoPop/images/home.png';
