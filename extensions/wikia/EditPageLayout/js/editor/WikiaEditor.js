@@ -584,10 +584,7 @@
 
 		initEditor: function() {
 			this.editor.getEditorElement = this.proxy(this.getEditorElement);
-
-			this.editor.fire('editorReady',this.editor);
-			this.editor.setMode(this.editor.mode,true /* forceEvents */);
-			this.editor.setState(this.editor.states.IDLE);
+			this.editor.getContent = this.proxy(this.getContent);
 
 			var self = this,
 				cnt = this.editor.getEditorSpace() || this.editor.element;
@@ -601,6 +598,10 @@
 				.click(this.proxy(this.editorClicked));
 
 			//this.editor.fire('editboxReady',this.editor,this.getEditbox());
+
+			this.editor.fire('editorReady',this.editor);
+			this.editor.setMode(this.editor.mode,true /* forceEvents */);
+			this.editor.setState(this.editor.states.IDLE);
 		},
 
 		initDom: function() {
@@ -613,6 +614,10 @@
 
 		getEditorElement: function() {
 			return this.textarea;
+		},
+
+		getContent: function() {
+			return this.textarea.val();
 		},
 
 		editorFocused: function() {
@@ -647,6 +652,7 @@
 			this.instance = RTE.instance;
 			this.editor.ck = this.instance;
 			this.editor.getEditorElement = this.proxy(this.getEditorElement);
+			this.editor.getContent = this.proxy(this.getContent);
 
 			for (var i=0;i<this.proxyEvents.length;i++) {
 				(function(eventName){
@@ -718,6 +724,10 @@
 				return $(this.instance.textarea.$);
 			}
 			return false;
+		},
+
+		getContent: function() {
+			return this.instance.getData();
 		},
 
 		editorFocused: function() {

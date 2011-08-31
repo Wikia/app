@@ -59,6 +59,8 @@ $messages['en'] = array(
 
 	'wikia-editor-preview-editSummary' => 'Edit Summary: $1',
 
+	'wikia-editor-leaveconfirm-message' => 'You have made some unpublished edits. Are you sure you want to leave without publishing them?',
+
 	// Short notices
 	'nonunicodebrowser-notice' => "'''Warning: Your browser is not Unicode compliant.'''",
 	'rev-deleted-text-notice' => "This page revision has been '''deleted'''. [More info]",
