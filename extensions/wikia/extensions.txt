@@ -53,6 +53,9 @@ Category Galleries
 
 Category Select
 
+Central Help Search
+file = SharedHelp/CentralHelpSearch.i18n.php
+
 Chat
 optional = grouppage-bannedfromchat, grouppage-bannedfromchat, grouppage-chatmoderator
 

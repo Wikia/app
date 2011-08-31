@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Messages file for the CentralHelpSearch extension
  *
@@ -7,11 +6,6 @@
  * @ingroup Extensions
  */
 
-/**
- * Get all extension messages
- *
- * @return array
- */
 $messages = array();
 
 $messages['en'] = array(
