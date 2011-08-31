@@ -107,7 +107,7 @@
 			</div>
 			<div id='sliderWrapper'>
 				<div id='closeButton'>
-					<a href=''><img src='<?= $buttonSrc ?>'/></a>
+					<a href="<?= $backHomeUrl ?>"><img src='<?= $buttonSrc ?>'/></a>
 				</div>
 				<div class='sliderContent' data-scroll='x'>
 					<?php

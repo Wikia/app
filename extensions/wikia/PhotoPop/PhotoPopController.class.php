@@ -69,6 +69,7 @@ class PhotoPopController extends WikiaController {
 		$this->buttonWidth = 38;
 		$this->buttonHeight = 39;
 		$this->buttonSrc = "$wgExtensionsPath/wikia/PhotoPop/images/down_arrow_button.png";
+		$this->backHomeUrl = $this->getHomeScreenUrl();
 		
 		$this->textOffset = 7;
 		$this->textHeight = 24;
@@ -211,6 +212,22 @@ JQUERY_INCLUDE;
 		);
 	} // end getGameConfigs()
 	
+	/**
+	 * Returns a link back to the home screen (will probably not be on the same wiki where the game is being played since
+	 * we try to run that separately (makes it easier to track stats).
+	 *
+	 * NOTE: Make sure boardWidth and boardHeight are set before calling this function.
+	 */
+	private function getHomeScreenUrl(){
+		global $wgDevelEnvironment;
+		if(empty($wgDevelEnvironment)){
+			$sld = "wikia.com"; // second-level domain
+		} else {
+			$sld = "sean.wikia-dev.com";
+		}
+		return "http://community.$sld/wikia.php?controller=PhotoPop&method=homeScreen&width={$this->boardWidth}&height={$this->boardHeight}";
+	} // end getHomeScreenUrl()
+
 	/**
 	 * Returns the watermark url of the current wiki (if there is one in the config... otherwise returns a blank image).
 	 */
