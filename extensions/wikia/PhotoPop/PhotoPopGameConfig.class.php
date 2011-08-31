@@ -18,7 +18,7 @@ class PhotoPopGameConfig {
 	function __construct($gameName, $category, $wikiPrefix, $iconSrc, $watermarkSrc){
 		$this->gameName = $gameName;
 		$this->categoryName = $category;
-		$this->gameUrl = "http://$wikiPrefix.wikia.com/wikia.php?controller=PhotoPop&method=playGame";
+		$this->gameUrl = "http://$wikiPrefix.wikia.com/wikia.php?controller=PhotoPop&method=playGame&category=".urlencode($this->categoryName);
 		$this->iconSrc = $iconSrc;
 		$this->watermarkSrc = $watermarkSrc;
 	} // end __construct()

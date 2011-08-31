@@ -76,9 +76,13 @@ class PhotoPopController extends WikiaController {
 		$this->iconWidth = 120;
 		$this->iconHeight = 120;
 
-		$this->buttonWidth = 40;
-		$this->buttonHeight = 40;
-		$this->buttonSrc = "$wgExtensionsPath/wikia/PhotoPop/";
+		$this->buttonWidth = 38;
+		$this->buttonHeight = 39;
+		$this->buttonSrc = "$wgExtensionsPath/wikia/PhotoPop/images/down_arrow_button.png";
+		
+		$this->textOffset = 7;
+		$this->textHeight = 24;
+
 
 		// TODO: PERFORMANCE TASKS
 			// TODO: Make local copies of the remote files (less DNS lookups & lets us combine them).
