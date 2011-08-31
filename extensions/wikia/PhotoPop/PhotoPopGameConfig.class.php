@@ -15,10 +15,19 @@ class PhotoPopGameConfig {
 	/**
 	 *
 	 */
-	function __construct($gameName, $category, $wikiPrefix, $iconSrc, $watermarkSrc){
+	function __construct($gameName, $category, $wikiPrefix, $iconSrc, $watermarkSrc, $width=480, $height=320){
+		global $wgDevelEnvironment;
+
 		$this->gameName = $gameName;
 		$this->categoryName = $category;
-		$this->gameUrl = "http://$wikiPrefix.wikia.com/wikia.php?controller=PhotoPop&method=playGame&category=".urlencode($this->categoryName);
+		
+		if(empty($wgDevelEnvironment)){
+			$sld = "wikia.com"; // second-level domain
+		} else {
+			$sld = "sean.wikia-dev.com";
+		}
+		$this->gameUrl = "http://$wikiPrefix.$sld/wikia.php?controller=PhotoPop&method=playGame&category=".urlencode($this->categoryName)."&width=$width&height=$height";
+
 		$this->iconSrc = $iconSrc;
 		$this->watermarkSrc = $watermarkSrc;
 	} // end __construct()

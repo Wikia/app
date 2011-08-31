@@ -64,13 +64,13 @@ class PhotoPopController extends WikiaController {
 		$iconDir = "$wgExtensionsPath/wikia/PhotoPop/gameicons";
 		$watermarkDir = "$wgExtensionsPath/wikia/PhotoPop/watermarks";
 		$this->games = array(
-			new PhotoPopGameConfig("True Blood", "Category:Characters", "trueblood", "$iconDir/thumb_trueblood.png", "$watermarkDir/trueblood.png"),
-			new PhotoPopGameConfig("Glee Wiki", "Category:Characters", "glee", "$iconDir/thumb_glee.png", "$watermarkDir/glee.png"),
-			new PhotoPopGameConfig("LyricWiki", "Category:Album", "lyrics", "$iconDir/thumb_lyrics.png", "$watermarkDir/lyrics.png"),
-			new PhotoPopGameConfig("Muppet Wiki", "Category:The_Muppets_Characters", "muppet", "$iconDir/thumb_muppet.png", "$watermarkDir/muppet.png"),
-			new PhotoPopGameConfig("Dexter Wiki", "Category:Characters", "dexter", "$iconDir/thumb_dexter.png", "$watermarkDir/dexter.png"),
-			new PhotoPopGameConfig("Futurama", "Category:Characters", "futurama", "$iconDir/thumb_futurama.png", "$watermarkDir/futurama.png"),
-			new PhotoPopGameConfig("Twilight Saga", "Category:Twilight_characters", "twilightsaga", "$iconDir/thumb_twilight.png", "$watermarkDir/twilight.png")
+			new PhotoPopGameConfig("True Blood", "Category:Characters", "trueblood", "$iconDir/thumb_trueblood.png", "$watermarkDir/trueblood.png", $this->boardWidth, $this->boardHeight),
+			new PhotoPopGameConfig("Glee Wiki", "Category:Characters", "glee", "$iconDir/thumb_glee.png", "$watermarkDir/glee.png", $this->boardWidth, $this->boardHeight),
+			new PhotoPopGameConfig("LyricWiki", "Category:Album", "lyrics", "$iconDir/thumb_lyrics.png", "$watermarkDir/lyrics.png", $this->boardWidth, $this->boardHeight),
+			new PhotoPopGameConfig("Muppet Wiki", "Category:The_Muppets_Characters", "muppet", "$iconDir/thumb_muppet.png", "$watermarkDir/muppet.png", $this->boardWidth, $this->boardHeight),
+			new PhotoPopGameConfig("Dexter Wiki", "Category:Characters", "dexter", "$iconDir/thumb_dexter.png", "$watermarkDir/dexter.png", $this->boardWidth, $this->boardHeight),
+			new PhotoPopGameConfig("Futurama", "Category:Characters", "futurama", "$iconDir/thumb_futurama.png", "$watermarkDir/futurama.png", $this->boardWidth, $this->boardHeight),
+			new PhotoPopGameConfig("Twilight Saga", "Category:Twilight_characters", "twilightsaga", "$iconDir/thumb_twilight.png", "$watermarkDir/twilight.png", $this->boardWidth, $this->boardHeight)
 		);
 		$this->numItems = count($this->games);
 		$this->iconWidth = 120;
@@ -138,7 +138,7 @@ JQUERY_INCLUDE;
 
 		$this->photosPerGame = 10;
 
-// TODO: FIGURE OUT HOW TO DO THIS BETTER.  Use URL params? Have it in a predictable image name on each wiki?
+// TODO: FIGURE OUT HOW TO DO THIS BETTER.  Use URL params? Have it in a predictable image name on each wiki?  load it from the config-array by wiki-prefix? <-- I LIKE THE LAST ONE!
 		$this->frontImageSrc = $wgExtensionsPath.'/wikia/PhotoPop/watermarks/glee.png'; // this shows up immediately
 
 		$this->backImageSrc = ''; // this is the one that's obscured... will be figured out in JS using the API.

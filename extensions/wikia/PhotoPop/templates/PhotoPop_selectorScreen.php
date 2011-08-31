@@ -4,7 +4,8 @@
 		<meta name="viewport" content = "width=device-width, initial-scale = 1, minimum-scale = 1, maximum-scale = 1, user-scalable = no" />
 		<style><?php
 		
-		$PADDING_AROUND_ICONS = 15;
+		$ICON_V_PADDING = 15;
+		$ICON_H_PADDING = 5;
 
 		?>
 		html {
@@ -33,7 +34,7 @@
 			margin-top:5px;
 		}
 		#sliderWrapper{
-			height: <?=  $buttonHeight + $iconHeight + ($PADDING_AROUND_ICONS * 2) ?>px;
+			height: <?=  $buttonHeight + $iconHeight + ($ICON_V_PADDING * 2) ?>px;
 			position:absolute;
 			bottom:0px;
 			z-index:10;
@@ -66,8 +67,8 @@
 		}
 		.gameIcon {
 			width: <?= $iconWidth ?>px;
-			height: <?= $iconHeight + $textHeight + $textOffset + ($PADDING_AROUND_ICONS * 2)?>px;
-			padding: <?= $PADDING_AROUND_ICONS ?>px;
+			height: <?= $iconHeight + $textHeight + $textOffset + ($ICON_V_PADDING * 2)?>px;
+			padding: <?= $ICON_V_PADDING ?>px <?= $ICON_H_PADDING ?>px <?= $ICON_V_PADDING ?>px <?= $ICON_H_PADDING ?>px;
 			text-align: center;
 			margin:0px;
 			font-weight:bold;
@@ -80,7 +81,7 @@
 		}
 		
 		.sliderContent > .ui-scrollview-view {
-			width: <?= $numItems * ($iconWidth + ($PADDING_AROUND_ICONS * 2))?>px;
+			width: <?= $numItems * ($iconWidth + ($ICON_H_PADDING * 2))?>px;
 		}
 		.sliderContent .gameIcon {
 			float: left;
@@ -91,6 +92,13 @@
 		</style>
 
 		<?= $jQueryMobile ?>
+		<script>
+			$(document).ready(function(){
+				$('.gameIcon').click(function(){
+					document.location = $(this).data('gameurl');
+				});
+			});
+		</script>
 	</head>
 	<body>
 		<div id='wrapper'>
