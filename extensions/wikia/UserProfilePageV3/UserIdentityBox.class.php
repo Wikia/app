@@ -27,8 +27,9 @@ class UserIdentityBox {
 	 * @var array
 	 */
 	protected $groupsRank = array(
-		'sysop' => 3,
-		'staff' => 2,
+		'sysop' => 4,
+		'staff' => 3,
+		'helper' => 2,
 		'chatmoderator' => 1,
 	);
 	
