@@ -18,6 +18,7 @@ We know they still have their kinks, and we would love to receive your feedback 
 	'wikifeatures-feedback' => 'Give feedback',
 	'wikifeatures-error-permission' => 'Sorry, you do not have permission to display this page.',
 	'wikifeatures-error-invalid-parameter' => 'Invalid parameter: $1. Please try again.',
+	'wikifeatures-error-message' => 'Comment is too short or too long.',
 	'wikifeatures-error-spam-attempt' => 'Please wait 60 seconds before submitting more feedback.',
 	'wikifeatures-toggle-active' => 'Enabled',
 	'wikifeatures-toggle-inactive' => 'Disabled',

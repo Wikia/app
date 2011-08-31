@@ -163,9 +163,13 @@
 	}
 	
 	input[type=submit], 
-	.error-msg {
+	.status-msg {
 		float: right;
 		margin-left: 20px
+	}
+	
+	.status-msg {
+		color: #090;
 	}
 	
 	.invalid {
