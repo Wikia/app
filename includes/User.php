@@ -2717,8 +2717,10 @@ class User {
 			}
 			else {
 				global $wgTitle;
-				$log .= $wgTitle->getFullUrl();
-				error_log( $log );
+				if (is_object($wgTitle)) {
+					$log .= $wgTitle->getFullUrl();
+					error_log( $log );
+				}
 			}
 		}
 		// wikia change end
