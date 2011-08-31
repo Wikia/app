@@ -47,13 +47,12 @@ $messages['en'] = array(
 	'user-identity-box-edits' => '<em>$1</em><span>EDITS</span>',
 	
 	'user-identity-box-group-blocked' => 'Blocked',
-	'user-identity-box-group-member' => 'Member',
 	'user-identity-box-group-chatmoderator' => 'Chat moderator',
 	'user-identity-box-group-sysop' => 'Admin',
 	'user-identity-box-group-bureaucrat' => 'Bureaucrat',
 	'user-identity-box-group-founder' => 'Founder',
 	'user-identity-box-group-staff' => 'Staff',
-	'user-identity-box-group-vstf' => 'VSTF',
+	'user-identity-box-group-helper' => 'Helper',
 	
 	'user-identity-box-zero-state-location' => 'Location',
 	'user-identity-box-zero-state-birthday' => 'Birthday',
