@@ -16,7 +16,10 @@ import java.math.BigInteger;
 import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -592,5 +595,21 @@ public class BaseTest {
 		}
 		assertTrue(session().isTextPresent("Image:" + destinationFilename)
 			|| session().isTextPresent("File:" + destinationFilename));
+	}
+	
+	protected boolean isPreview() {
+		return this.webSite.contains("preview.");
+	}
+	
+	protected boolean isDevBox() {
+		return this.webSite.contains("wikia-dev.com");
+	}
+	
+	protected boolean isProduction() {
+		return this.webSite.contains("wikia.com") && !isPreview();
+	}
+	
+	public String[] testWikiNames() throws Exception {
+		return getTestConfig().getStringArray("ci.wiki.name");
 	}
 }
