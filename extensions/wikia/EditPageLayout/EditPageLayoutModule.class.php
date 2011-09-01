@@ -143,6 +143,8 @@ class EditPageLayoutModule extends Module {
 		}
 
 		$this->hideTitle = $editPage->hideTitle;
+
+		$this->app->wf->RunHooks('EditPageLayoutExecute', array($this));
 		$app->wf->ProfileOut(__METHOD__);
 	}
 }
