@@ -439,7 +439,7 @@ class WikiaLabsProject {
 			}
 			$this->updateCachedRating( $userId, $rating );
 
-			$row = $this->getDb( DB_MASTER )->selectRow( 'wikia_labs_project_rating', array( 'round((SUM(wlpra_value)/(COUNT(*)*5))*5) AS rating' ), array( 'wlpra_wlpr_id' => $this->getId() ), __METHOD__ );
+			$row = $this->getDb( DB_MASTER )->selectRow( 'wikia_labs_project_rating', array( 'round(SUM(wlpra_value)/COUNT(*)) AS rating' ), array( 'wlpra_wlpr_id' => $this->getId() ), __METHOD__ );
 
 			$this->setRating( $row->rating );
 			$this->update();
