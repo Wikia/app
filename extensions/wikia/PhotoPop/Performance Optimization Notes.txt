@@ -19,6 +19,7 @@ Here are some known areas for improvement:
 ** When calling for the image from the server, we should be able to use ImageServing's thumbnailing to get just the size of the image we're going to use rather than the full original size of the image.
 *** If this fails, then we could use Sencha.io to get the scaled version of the image (would still have more data than we need because it wouldn't be cropped, just scaled): http://www.sencha.com/learn/how-to-use-src-sencha-io/
 ** Can we build the whole game in the background at the beginning of the game, then start asynchronously loading the images in the background?
+** Open every one of our watermarks & gui buttons in Gimp, then save them (Gimp has good lossless compression).
 
 * General performance issues
 ** ''Low yield'': Gradients are kinda slow for mobile browsers... we could move some of those to be images. However, I don't suspect we have any that are too terribly slow in places that matter. The most commonly seen gradient that I can think of is for the "wrong answer" background which is only shown when the user clicks.
