@@ -38,7 +38,7 @@ Are you ready to take the next steps to help {{SITENAME}}?",
 	'wikiadoption-not-enough-edits' => "Oops! You need to have more than 10 edits to adopt this wiki.",
 	'wikiadoption-adopted-recently' => "Oops! You have already adopted another wiki recently. You will need to wait a while before you can adopt a new wiki.",
 	'wikiadoption-log-reason' => 'Automatic Wiki Adoption',
-	'wikiadoption-notification' => "{{SITENAME}} is up for adoption. Interesting in becoming a leader here? Adopt this wiki to get started!  $2",
+	'wikiadoption-notification' => "{{SITENAME}} is up for adoption. Interested in becoming a leader here? Adopt this wiki to get started! $2",
 	'wikiadoption-mail-first-subject' => "We have not seen you around in a while",
 	'wikiadoption-mail-first-content' => "Hi $1,
 
