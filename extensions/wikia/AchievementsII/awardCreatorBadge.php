@@ -1,12 +1,8 @@
 <?php
 
-$optionsWithArgs = array( 'user' );
-
 include( '../../../maintenance/commandLine.inc' );
 
-$username = $options['user'];
-
-$user = User::newFromName( $username );
+$user = User::newFromId( WikiFactory::getWikiById( $wgCityId )->city_founding_user );
 
 if ( is_null( $user ) ) {
 	echo "Not a valid user. Aborting.\n";
