@@ -66,6 +66,7 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 			WikiFactory::setVarByName('wgShowTopListsInCreatePage', $this->wg->CityId, $enabled, "WikiFeatures");
 		
 		// clear cache for active wikis
+        WikiFactory::clearCache( $this->wg->CityId );		
 		$this->wg->Memc->delete(WikiFeaturesHelper::getInstance()->getMemcKeyNumActiveWikis($feature));
 			
 		$this->setVal('result', 'ok');
