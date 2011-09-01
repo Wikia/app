@@ -469,7 +469,7 @@ $(function() {
 jQuery.fn.placeholder = function() {
 	 //feature detection
 	var hasNativeSupport = 'placeholder' in document.createElement('input');
-	
+
 	if(!hasNativeSupport){
 		this.each(function() {
 			var input = $(this);
@@ -640,7 +640,7 @@ Observable = $.createClass(Object,{
 		}
 		return true;
 	},
-	
+
 	debugEvents: function( list ) {
 		var fns = list ? list : ['bind','unbind','fire','relayEvents'];
 		for (var i=0;i<fns.length;i++) {
@@ -826,31 +826,31 @@ jQuery.nirvana = {};
  *
  * @author TomekO
  */
+jQuery.nirvana.sendRequest = function(attr, callback) {
+	var type = (typeof attr.type == 'undefined') ? 'POST' : attr.type.toUpperCase();
+	var format = (typeof attr.format == 'undefined') ?  'json' : attr.format.toLowerCase();
+	var data = (typeof attr.data == 'undefined') ? {} : attr.data;
 
-jQuery.nirvana.sendRequest = function( attr ) {
-	var type = (typeof attr.type == 'undefined') ?  'POST':attr.type.toUpperCase();
-	var format = (typeof attr.format == 'undefined') ?  'json':attr.format.toLowerCase();
-	var data = (typeof attr.data == 'undefined') ? {}:attr.data;
-	var callback = (typeof attr.callback == 'undefined') ? function(){}:attr.callback;
-	
+	callback = callback || ((typeof attr.callback == 'undefined') ? function(){} : attr.callback);
+
 	if((typeof attr.controller == 'undefined') || (typeof attr.method == 'undefined')) {
 		throw "controller and method are required";
 	}
-	
+
 	if( !(format === 'json' || format === 'html') ) {
 		throw "Only Json and Html format are allowed";
 	}
-	
+
 	var data = $.extend( data, {
 		controller: attr.controller,
 		method: attr.method,
 		format: format
-	});	
-	
+	});
+
 	$().log(data, 'request to nirvana');
-	
+
 	$.ajax({
-		  url: '/wikia.php',
+		  url: wgScriptPath + '/wikia.php',
 		  dataType: format,
 		  type: type,
 		  data: data,
