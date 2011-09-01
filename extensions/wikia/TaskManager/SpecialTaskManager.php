@@ -37,7 +37,7 @@ extAddBatchTask( dirname(__FILE__)."/Tasks/SWMSendToGroupTask.php", "SWMSendToGr
 extAddBatchTask( dirname(__FILE__)."/Tasks/LocalMaintenanceTask.php", "local-maintenance", "LocalMaintenanceTask" );
 extAddBatchTask( dirname(__FILE__) ."/Tasks/RebuildLocalisationCacheTask.php", "rebuild_localisation_cache", "RebuildLocalisationCacheTask" );
 extAddBatchTask( dirname(__FILE__) ."/Tasks/UpdateSpecialPagesTask.php", "update_special_pages", "UpdateSpecialPagesTask" );
-extAddBatchTask( dirname(__FILE__)."/../AchievementsII/EnableAchievementsTask.php", "enbl-ach", "EnableAchievementsTask" );
+extAddBatchTask( dirname(__FILE__)."/../AchievementsII/EnableAchievementsTask.php", "enableachivements", "EnableAchievementsTask" );
 
 /**
  * permissions

@@ -12,7 +12,11 @@ Class WikiFactoryChangedHooks {
 		wfProfileIn( __METHOD__ );
 
 		if ( $cv_name == 'wgEnableAchievementsExt' && $value == true ) {
-			$task = new EnableAchievementsTask( array( $city_id ) );
+			$params = array(
+				'wiki' => $city_id
+			);
+
+			$task = new EnableAchievementsTask( $params );
 			$task->submitForm();
 		}
 

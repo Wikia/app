@@ -29,39 +29,20 @@ class EnableAchievementsTask extends BatchTask {
 		global $IP, $wgWikiaLocalSettingsPath ;
 
 		$this->mTaskID = $params->task_id;
-		$oUser = User::newFromId( $params->task_user_id );
-
-		if ( $oUser instanceof User ) {
-			$oUser->load();
-			$this->mUser = $oUser->getName();
-		} else {
-			$this->log("Invalid user - id: " . $params->task_user_id );
-			return true;
-		}
 
 		# task params 
 		$data = unserialize($params->task_arguments);
 				
-		# user 
-		if ( isset($data["user"]) ) {
-			// proper validation is done in the maint script
-			$username = escapeshellarg($data["user"]);
-		} else {
-			$this->addLog( 'Username not given, aborting.' );
-			return false;
-		}
-
 		# start task
 		$this->addLog('Starting task.');
 
 		# command
-		$sCommand  = "SERVER_ID={$oWiki->city_id} php " . dirname( __FILE__ ) . '/awardCreatorBadge.php';
-		$sCommand .= "--u " . $username . " ";
+		$sCommand  = "SERVER_ID={$data["wiki"]} php " . dirname( __FILE__ ) . '/awardCreatorBadge.php';
 		$sCommand .= "--conf $wgWikiaLocalSettingsPath";
 
 		$log = wfShellExec( $sCommand, $retval );
 		if ($retval) {
-			$this->log ('Article editing error! (' . $city_url . '). Error code returned: ' .  $retval . ' Error was: ' . $log);
+			$this->log ('Article editing error! (City ID: ' . $data['wiki'] . '). Error code returned: ' .  $retval . ' Error was: ' . $log);
 		}
 		else {
 			$this->log ("Log: \n" . $log ."\n");
