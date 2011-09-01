@@ -307,7 +307,7 @@ function initializeCategories(cats) {
 	}
 
 	//inform PHP what source should it use [this field exists only in 'edit page' mode]
-	if ($('#wpCategorySelectSourceType').length > 0) {
+	if ($('#wpCategorySelectSourceType').length > 0 && window.csMode === 'json') {
 		$('#wpCategorySelectSourceType').attr('value', 'json');
 	}
 
@@ -359,6 +359,8 @@ function toggleCodeView() {
 		$('#wpCategorySelectSourceType').attr('value', 'wiki');	//inform PHP what source it should use
 
 		window.csMode = 'source';
+
+		$().log(window.csMode, 'CS mode');
 	} else {	//switch to visual code
 		$.tracker.byStr('editpage/visualviewCategory');
 
@@ -377,6 +379,8 @@ function toggleCodeView() {
 			}
 
 			window.csMode = 'wysiwyg';
+
+			$().log(window.csMode, 'CS mode');
 		}, "json");
 	}
 }
