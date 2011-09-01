@@ -26,7 +26,12 @@ class EnableAchievementsTask extends BatchTask {
 	}
 
 	function execute ($params = null) {
-		global $IP, $wgWikiaLocalSettingsPath ;
+		global $IP, $wgWikiaLocalSettingsPath, $wgMaxShellMemory, $wgMaxShellFileSize, $wgMaxShellTime;
+
+		// per moli, seriously frakked
+		$wgMaxShellMemory = 0;
+		$wgMaxShellFileSize = 0;
+		$wgMaxShellTime = 0;
 
 		$this->mTaskID = $params->task_id;
 
@@ -37,12 +42,11 @@ class EnableAchievementsTask extends BatchTask {
 		$this->addLog('Starting task.');
 
 		# command
-		$sCommand  = "SERVER_ID={$data["wiki"]} php " . dirname( __FILE__ ) . '/awardCreatorBadge.php';
-		$sCommand .= "--conf $wgWikiaLocalSettingsPath";
+		$sCommand  = "SERVER_ID={$data["wiki"]} php " . dirname( __FILE__ ) . "/awardCreatorBadge.php --conf $wgWikiaLocalSettingsPath";
 
 		$log = wfShellExec( $sCommand, $retval );
 		if ($retval) {
-			$this->log ('Article editing error! (City ID: ' . $data['wiki'] . '). Error code returned: ' .  $retval . ' Error was: ' . $log);
+			$this->log ('Achievement awarding error! (City ID: ' . $data['wiki'] . '). Error code returned: ' .  $retval . ' Error was: ' . $log);
 		}
 		else {
 			$this->log ("Log: \n" . $log ."\n");
