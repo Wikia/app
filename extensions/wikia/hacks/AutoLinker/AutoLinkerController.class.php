@@ -33,7 +33,7 @@ class AutoLinkerController extends WikiaController {
 		$queryPage = new $className();
 
 		$sql = $dbr->limitResult($queryPage->getSQL(), self::LIMIT, 0);
-		$res = $dbr->query($sql);
+		$res = $dbr->query($sql, __METHOD__ . "::{$source}");
 		$num = $dbr->numRows($res);
 
 		$pages = array();
