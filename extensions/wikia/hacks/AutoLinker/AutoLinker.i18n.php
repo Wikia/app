@@ -4,5 +4,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'wikia-editor-modules-autolinker-title' => 'Auto linker tool',
-	'wikia-editor-modules-autolinker-message' => '$1 link(s) has been found in this article'
+	'wikia-editor-modules-autolinker-loading' => 'Fetching list of pages to link to...',
+	'wikia-editor-modules-autolinker-button' => 'Perform auto linking',
+	'wikia-editor-modules-autolinker-completed' => '$1 link(s) has been added to this article',
 );
