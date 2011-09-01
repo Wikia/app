@@ -826,12 +826,11 @@ jQuery.nirvana = {};
  *
  * @author TomekO
  */
-jQuery.nirvana.sendRequest = function(attr, callback) {
+jQuery.nirvana.sendRequest = function(attr) {
 	var type = (typeof attr.type == 'undefined') ? 'POST' : attr.type.toUpperCase();
 	var format = (typeof attr.format == 'undefined') ?  'json' : attr.format.toLowerCase();
 	var data = (typeof attr.data == 'undefined') ? {} : attr.data;
-
-	callback = callback || ((typeof attr.callback == 'undefined') ? function(){} : attr.callback);
+	var callback = (typeof attr.callback == 'undefined') ? function(){} : attr.callback;
 
 	if((typeof attr.controller == 'undefined') || (typeof attr.method == 'undefined')) {
 		throw "controller and method are required";
@@ -841,7 +840,7 @@ jQuery.nirvana.sendRequest = function(attr, callback) {
 		throw "Only Json and Html format are allowed";
 	}
 
-	var data = $.extend( data, {
+	data = $.extend( data, {
 		controller: attr.controller,
 		method: attr.method,
 		format: format
@@ -855,6 +854,23 @@ jQuery.nirvana.sendRequest = function(attr, callback) {
 		  type: type,
 		  data: data,
 		  success: callback
+	});
+}
+
+jQuery.nirvana.getJson = function(controller, method, data, callback) {
+	// data parameter can be omitted
+	if (typeof data == 'function') {
+		callback = data;
+		data = {};
+	}
+
+	jQuery.nirvana.sendRequest({
+		controller: controller,
+		method: method,
+		data: data,
+		type: 'GET',
+		format: 'json',
+		callback: callback
 	});
 }
 
