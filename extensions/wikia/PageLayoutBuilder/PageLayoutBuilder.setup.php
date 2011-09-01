@@ -8,11 +8,15 @@ $wgExtensionCredits['specialpage'][] = array(
 	'version' => '0.0.1'
 );
 
+$dir = dirname(__FILE__) . '/';
+
 define("NS_PLB_LAYOUT", 902);
 
 $wgExtraNamespaces[ NS_PLB_LAYOUT ] = "Layout";
 
-$dir = dirname(__FILE__) . '/';
+$wgExtensionNamespacesFiles[ 'PageLayoutBuilder' ] = "{$dir}PageLayoutBuilder.namespaces.php";
+
+wfLoadExtensionNamespaces( 'PageLayoutBuilder', array( NS_PLB_LAYOUT ) );
 
 $wgAutoloadClasses['PageLayoutBuilderSpecialPage'] = $dir . 'PageLayoutBuilderSpecialPage.class.php'; # Tell MediaWiki to load the extension body.
 $wgAutoloadClasses['PageLayoutBuilderForm'] = $dir . 'PageLayoutBuilderForm.class.php';
