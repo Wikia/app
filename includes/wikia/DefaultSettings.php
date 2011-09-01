@@ -255,6 +255,7 @@ $wgAutoloadClasses[ "WikiaApiQueryEventsData"      ] = "{$IP}/extensions/wikia/W
 $wgAutoloadClasses[ "WikiaApiQueryEventInfo"       ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiQueryEventInfo.php";
 $wgAutoloadClasses[ "WikiaApiQueryScribeEvents"    ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiQueryScribeEvents.php";
 $wgAutoloadClasses[ "WikiaApiQueryAllUsers"        ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiQueryAllUsers.php";
+$wgAutoloadClasses[ "WikiaApiQueryLastEditors"     ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiQueryLastEditors.php";
 $wgAutoloadClasses[ "ApiRunJob"                    ] = "{$IP}/extensions/wikia/WikiaApi/ApiRunJob.php";
 $wgAutoloadClasses[ "WikiaApiRiakAccess"           ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiRiakAccess.php";
 $wgAutoloadClasses[ "ExternalUser_Wikia"           ] = "{$IP}/includes/wikia/ExternalUser_Wikia.php";
@@ -324,6 +325,7 @@ $wgAPIPropModules[ "info"         ] = "WikiaApiQueryPageinfo";
 $wgAPIPropModules[ "wkevinfo"     ] = "WikiaApiQueryEventsData";
 $wgAPIPropModules[ "wkevent"      ] = "WikiaApiQueryEventInfo";
 $wgAPIPropModules[ "wkevents"     ] = "WikiaApiQueryScribeEvents";
+$wgAPIPropModules[ "wklasteditors"] = "WikiaApiQueryLastEditors";
 
 /**
  * registered Format names
