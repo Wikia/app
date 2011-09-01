@@ -2,9 +2,7 @@
 /**
  * @author Sean Colombo
  *
- * Displays the HTML5 + Canvas mobile game which will be inside of a Titanium app. Currently,
- * we're not sure how stand-alone the canvas part will be and how much it will communicate with the
- * Titanium code.
+ * Displays the HTML5 + mobile game which will be inside of a Titanium app.
  *
  * @file
  * @ingroup SpecialPage
@@ -34,6 +32,10 @@ class PhotoPopController extends WikiaController {
 		$this->POWERED_BY_LOGO = "$wgExtensionsPath/wikia/PhotoPop/images/brought_to_you_by.png";
 		
 		$this->isTutorial = false; // cleaner to set it here than have empty() checks all over.
+		
+		// Some features (like audio and high scores) will take slightly different paths on
+		// the web version and when embedded in the mobile app.  This var will help us track the difference.
+		$this->isMobileVersion = $this->getVal('isMobile', true);
 
 		wfProfileOut(__METHOD__);
 	} // end init()
@@ -145,7 +147,6 @@ JQUERY_INCLUDE;
 		$this->tutorialTriangleWidth = 15;
 		$this->tutorialTriangleHeight = 15; // the height of one of the triangle shards (there are two, on top of each other to make up the bigger triangle, so this number might be half of what you expect if you're thinking about the larger triangle).
 
-		
 		$this->boardWidth = $this->getVal('width', $this->DEFAULT_WIDTH);
 		$this->boardHeight = $this->getVal('height', $this->DEFAULT_HEIGHT);
 
