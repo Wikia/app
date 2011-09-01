@@ -24,6 +24,13 @@ $namespaces['de'] = array(
 	NS_BLOG_LISTING_TALK => 'Blog_Diskussion'
 );
 
+$namespaces['ko'] = array(
+	NS_BLOG_ARTICLE => '사용자 블로그',
+	NS_BLOG_ARTICLE_TALK => '사용자 블로그 댓글',
+	NS_BLOG_LISTING => '블로그',
+	NS_BLOG_LISTING_TALK => '블로그토론',
+);
+
 $namespaces['ru'] = array(
 	NS_BLOG_ARTICLE => 'Блог_участника',
 	NS_BLOG_ARTICLE_TALK => 'Комментарий_блога_участника',
