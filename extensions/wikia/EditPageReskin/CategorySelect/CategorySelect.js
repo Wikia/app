@@ -72,7 +72,7 @@ function deleteCategory(e) {
 	var catId = e.parentNode.getAttribute('catId');
 	e.parentNode.parentNode.removeChild(e.parentNode);
 	categories[catId] = null;
-	$('#csWikitext').html(generateWikitextForCategories());
+	$('#csWikitext').val(generateWikitextForCategories());
 
 	$('#csItemsContainer').trigger('categorySelectDelete');
 }
@@ -277,15 +277,24 @@ function addCategory(category, params, index) {
 
 function generateWikitextForCategories() {
 	var categoriesStr = '';
-	for (var c=0; c < categories.length; c++) {
-		if (categories[c] === null) continue;
-		catTmp = '\n[[' + categories[c].namespace + ':' + categories[c].category + (categories[c].sortkey == '' ? '' : ('|' + categories[c].sortkey)) + ']]';
-		if (categories[c].outerTag != '') {
-			catTmp = '<' + categories[c].outerTag + '>' + catTmp + '</' + categories[c].outerTag + '>';
+
+	if (categories.length) {
+		for (var c=0; c < categories.length; c++) {
+			if (categories[c] === null) continue;
+			catTmp = '\n[[' + categories[c].namespace + ':' + categories[c].category + (categories[c].sortkey == '' ? '' : ('|' + categories[c].sortkey)) + ']]';
+			if (categories[c].outerTag != '') {
+				catTmp = '<' + categories[c].outerTag + '>' + catTmp + '</' + categories[c].outerTag + '>';
+			}
+			categoriesStr += catTmp;
 		}
-		categoriesStr += catTmp;
+		categoriesStr = categoriesStr.replace(/^\n+/, '');
 	}
-	return categoriesStr.replace(/^\n+/, '');
+	else {
+		// fix for initialization in wikitext mode (BugId:10880)
+		categoriesStr = $.trim($('#csWikitext').attr('data-initial-value'));
+	}
+
+	return categoriesStr;
 }
 
 function initializeCategories(cats) {
@@ -340,7 +349,7 @@ function toggleCodeView() {
 	if ($('#csWikitextContainer').css('display') != 'block') {	//switch to code view
 		$.tracker.byStr('editpage/codeviewCategory');
 
-		$('#csWikitext').attr('value', generateWikitextForCategories());
+		$('#csWikitext').val(generateWikitextForCategories());
 		$('#csItemsContainerDiv').hide();
 		$('#csHintContainer').hide();
 		$('#csCategoryInput').prop('disabled', true).removeAttr('placeholder');
@@ -353,7 +362,7 @@ function toggleCodeView() {
 	} else {	//switch to visual code
 		$.tracker.byStr('editpage/visualviewCategory');
 
-		$.post(ajaxUrl, {rs: "CategorySelectAjaxParseCategories", rsargs: [$('#csWikitext').attr('value') + ' ']}, function(result){
+		$.post(ajaxUrl, {rs: "CategorySelectAjaxParseCategories", rsargs: [$('#csWikitext').val() + ' ']}, function(result){
 			if (typeof result.error !== 'undefined') {
 				alert(result.error);
 			} else if (typeof result.categories !== 'undefined') {
@@ -419,7 +428,7 @@ function inputKeyPress(e) {
 			addCategory(category);
 		}
 
-		$('#csWikitext').attr('value', generateWikitextForCategories());
+		$('#csWikitext').val(generateWikitextForCategories());
 		//hide input and show button when [enter] pressed with empty input
 		if (category == '') {
 			csTrack('enterCategoryEmpty');
