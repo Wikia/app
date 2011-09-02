@@ -358,7 +358,7 @@ CKEDITOR.nodeRunner.prototype = {
 
 		for (var n=0, len = childNodes.count(); n < len; n++) {
 			childNode = childNodes.getItem(n);
-			callback.call(callback, childNode);
+			callback(childNode);
 			this.walk(childNode, callback);
 		}
 	},
