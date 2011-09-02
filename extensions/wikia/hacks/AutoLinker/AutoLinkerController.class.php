@@ -15,7 +15,10 @@ class AutoLinkerController extends WikiaController {
 
 		sort($ret);
 
+		$regexp = implode('|', array_map('preg_quote', $ret));
+
 		$this->setVal('pages', $ret);
+		$this->setVal('regexp', $regexp);
 		$this->setVal('count', count($ret));
 
 		$this->getResponse()->setCacheValidity(self::CACHE_TTL, self::CACHE_TTL, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH));
