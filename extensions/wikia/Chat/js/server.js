@@ -12,6 +12,7 @@ var app = require('express').createServer()
 	, urlUtil = require('url');
 var http = require("http");
 var config = require("./server_config.js");
+var emoticons = require("./server_emoticons.js");
 
 
 //console.log = function() {};
@@ -90,6 +91,7 @@ console.log("Updating runtime stats");
 rc.hgetall(config.getKey_runtimeStats(), function(err, data){
 	var started = parseInt(new Date().getTime());
 	if(err) {
+		console.log("Error getting runtime stats:");
 		console.log(err);
 	} else {
 		if(!data) {
@@ -979,9 +981,9 @@ function broadcastToRoom(client, socket, data, users, callback){
 				
 				if(socketId){
 					
-					console.log("==============================================================");
-					console.log(socket.socket(socketId));
-					console.log("==============================================================");
+					console.log("============ SOCKET "+socketId+" ==========================================");
+					//console.log(socket.socket(socketId));
+					console.log("============ /SOCKET "+socketId+" ==========================================");
 					
 					if( typeof socket.socket(socketId).sessionId  == "undefined"){
 						// This happened once (and before this check was here, crashed the server).  Not sure if this is just a normal side-effect of the concurrency or is a legit
@@ -1013,7 +1015,7 @@ function processText(text, client) {
 	text = text.replace(/>/g, "&gt;");
 
 	// TODO: Use the wgServer and wgArticlePath from the chat room. Maybe the room should be passed into this function? (it seems like it could be called a bunch of times in rapid succession).
-
+	
 	// Linkify local wiki links (eg: http://thiswiki.wikia.com/wiki/Page_Name ) as shortened links (like bracket links)
 	var localWikiLinkReg = client.wgServer + client.wgArticlePath;
 	localWikiLinkReg = localWikiLinkReg.replace(/\$1/, "([-A-Z0-9+&@#\/%?=~_|'!:,.;]*[-A-Z0-9+&@#\/%=~_|'])");
@@ -1051,6 +1053,15 @@ function processText(text, client) {
 		var url = path.replace("$1", article);
 		return '<a href="' + url + '">' + linkText + '</a>';
 	});
+	
+	// Process emoticons (should be done after the linking because the link code is searching for URLs and the emoticons contain URLs).
+
+	// TODO: Load the emoticon mapping for the wiki (this is just default for now... need to get it from the wiki).
+	var emoticonMapping = new EmoticonMapping();
+
+	// Replace appropriate shortcuts in the text with the emoticons.
+	console.log("\n\n\n\n\n\n=============== About to do emoticon replacements."); // TODO: REMOVE THIS AFTER DONE DEBUGGING
+	text = emoticons.doReplacements(text, emoticonMapping);
 
 	return text;
 } // end processText()
