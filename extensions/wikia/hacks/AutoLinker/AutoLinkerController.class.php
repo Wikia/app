@@ -7,19 +7,19 @@ class AutoLinkerController extends WikiaController {
 
 	public function getPagesList() {
 		// list of sources can be found in QueryPage.php
-		$ret = array_values(array_unique(array_merge(
+		$pages = array_values(array_unique(array_merge(
 			$this->getPagesFrom('LonelyPages'),
 			$this->getPagesFrom('Mostlinked'),
 			$this->getPagesFrom('Shortpages')
 		)));
 
-		sort($ret);
+		sort($pages);
 
-		$regexp = implode('|', array_map('preg_quote', $ret));
+		$regexp = implode('|', array_map('preg_quote', $pages));
 
-		$this->setVal('pages', $ret);
+		//$this->setVal('pages', $ret);
 		$this->setVal('regexp', $regexp);
-		$this->setVal('count', count($ret));
+		$this->setVal('count', count($pages));
 
 		$this->getResponse()->setCacheValidity(self::CACHE_TTL, self::CACHE_TTL, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH));
 	}
