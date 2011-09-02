@@ -32,6 +32,12 @@ function efCategoryBlueLinks( $skin, $target, &$text, &$customAttribs, &$query, 
 		return true;
 	}
 
+	// remove "broken" assumption/override
+	$brokenKey = array_search( 'broken', $options );
+	if ( $brokenKey !== false ) {
+		unset( $options[$brokenKey] );
+	}
+
 	// make the link "blue"
 	$options[] = 'known';
 
