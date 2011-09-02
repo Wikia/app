@@ -96,7 +96,7 @@ class UserRenameLocalTask extends BatchTask {
 
 				$this->addLog( "--- Command output ---\n{$output}\n--- End of command output ---" );
 
-				$process->addLog("End processing wiki with ID {$cityId}.");
+				$process->addLog("Finished processing wiki with ID {$cityId}.");
 			}
 		}
 
