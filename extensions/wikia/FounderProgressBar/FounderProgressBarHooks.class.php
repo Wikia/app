@@ -199,7 +199,7 @@ class FounderProgressBarHooks {
 			$data = $response->getVal('data');
 			// Completion task NOT set but all other tasks are complete, so set it.  
 			// TODO: display some kind of YAY YOU DID IT! message here
-			if ($data['tasks_completed'] >= $data['total_tasks']) {
+			if ($data['total_tasks'] > 1 && $data['tasks_completed'] >= $data['total_tasks']) {
 				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_COMPLETION));
 				$app->wg->Memc->set($memKey, true, 86400*30 );
 				return true;
