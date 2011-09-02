@@ -126,6 +126,12 @@ class CreateWikiLocalJob extends Job {
 		$this->sendRevisionToScribe();
 		$this->addStarterImagesToUploadLog();
 
+		// FIXME: needs to be handled by Task via WikiFactoryChanged hook but fails to run for some reason
+		if(class_exists("AchAwardingService")) {
+			$achService = new AchAwardingService();
+			$achService->awardCustomNotInTrackBadge( $this->mFounder, BADGE_CREATOR );
+		}
+
 		/**
 		 * different things for different types
 		 */
