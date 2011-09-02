@@ -38,7 +38,7 @@ class FounderProgressBarHooks {
 				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_TOPTENLIST_ADD));				
 			}				
 			// Bonus task: add page layout builder
-			if (defined( NS_PLB_LAYOUT ) && $title->getNamespace() == NS_PLB_LAYOUT && self::bonusTaskEnabled(FT_BONUS_PAGELAYOUT_ADD) ) {
+			if (defined( 'NS_PLB_LAYOUT' ) && $title->getNamespace() == NS_PLB_LAYOUT && self::bonusTaskEnabled(FT_BONUS_PAGELAYOUT_ADD) ) {
 				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_BONUS_PAGELAYOUT_ADD));
 			} 	
 
