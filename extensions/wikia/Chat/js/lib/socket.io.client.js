@@ -1531,7 +1531,7 @@
         , options.host + ':' + options.port
         , this.options.resource
         , io.protocol
-        , '?t=' + + new Date
+        , '?t=' + new Date
       ].join('/');
 
     if (this.isXDomain()) {

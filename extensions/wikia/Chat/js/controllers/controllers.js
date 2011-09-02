@@ -209,9 +209,10 @@ var NodeRoomController = $.createClass(Observable,{
 		this.viewDiscussion.bind('sendMessage', $.proxy(this.sendMessage, this) );
 		
 		//TODO: move to view ??
-		$(window).focus($.proxy(function() {
-			// set focus on the text input
-			this.viewDiscussion.getTextInput().focus();
+		$(window).focus($.proxy(function(e) {// set focus on the text input
+			if($(e.target).attr('name') != 'message') {
+				this.viewDiscussion.getTextInput().focus();
+			}
 		},this));
 
 		this.viewDiscussion.getTextInput().focus();
