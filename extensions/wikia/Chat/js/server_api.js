@@ -263,112 +263,85 @@ function api_getRoomsList(successCallback, errorCallback){
 				});
 		}
 	});
+}function api_getRedisStats(callback) {
+	var stats = [];
+	rc.info(function(err, data){
+		if (err) {
+			console.log(err);
+			errorCallback(err);
+		} else {
+			var data = data.split("\r\n");
+			for(var i = 0; i < data.length; i++){
+				var temp = data[i].split(":");
+				if(temp.length == 2){
+					stats[temp[0]] = temp[1];
+				}
+			}
+
+			console.log(stats);
+
+			if(data.indexOf('allocation_stats')) {
+				callback(stats);
+			}
+		}
+	});
 }
+
+/**
+ * get cpu % usege
+ */
+
+function getCpuPused(pid, callback) {
+	var sys = require('sys')
+	var exec = require('child_process').exec;
+	var puts = function(error, stdout, stderr) { callback(parseFloat(stdout)) }
+	var com = "ps -opcpu -p " + pid + " | grep -v CPU";
+	console.log( com );
+	exec(com, puts);
+}
+
 /**
  * Returns some JSON of stats about the server (to help judge the usage-level for making scaling estimations).
  */
 function api_getStats(successCallback, errorCallback){
-
-	console.log("== GETTING DETAILED STATS ABOUT THE STATE OF THE SERVER ==");
-
-	var stats = {
-		totalRooms: 0,
-		roomsWithOccupants: 0,
-		totalConnectedUsers: 0,
-		usersInMostPopularRoom: 0,
-		mostPopularRoom: {} // will contain the hash of data about the most popular room.
-	};
-
-	// Find total number of rooms.
-	console.log("STATS: FINDING NUMBER OF ROOMS...");
-	rc.keys(config.getKey_room("*"), function(err, roomKeys){
-		if (err) {
-			var errorMsg = 'Error: while getting all rooms: ' + err;
-			console.log(errorMsg);
-			errorCallback(errorMsg);
-		} else {
-			// Count the rooms that have been created on this server (many may be empty).
-			var totalRooms = 0, key;
-			for (key in roomKeys) {
-				if (roomKeys.hasOwnProperty(key)){
-					totalRooms++;
-				}
+	var out = {};
+	out.node_heapTotal = process.memoryUsage().heapTotal;
+	out.node_heapUsed = process.memoryUsage().heapUsed;
+	
+	api_getRedisStats(function(data){
+		var redis_pid = data.process_id;
+		out.redis_used_memory = data.used_memory;
+		out.redis_used_memory_rss = data.used_memory_rss;
+		out.redis_mem_fragmentation_ratio = parseFloat(data.mem_fragmentation_ratio);
+		out.redis_uptime_in_days = data.uptime_in_days;
+		out.redis_used_cpu_sys = data.used_cpu_sys;
+		out.redis_used_cpu_user = data.used_cpu_user;
+		out.redis_used_cpu_by_days = (out.redis_used_cpu_sys + out.redis_used_cpu_user)/out.redis_uptime_in_days;  
+			
+		rc.hgetall(config.getKey_runtimeStats(), function(err, data){
+			if(err) {
+				errorCallback(err);	
+				return ;
 			}
-			stats.totalRooms = totalRooms;
-
-			// Iterate through rooms and find number of occupants total (and track number of rooms which have > 0 users in them right now).
-			var roomsWithOccupants = 0;
-			var totalConnectedUsers = 0;
-			var usersInMostPopularRoom = 0;
-			var mostPopularRoomKey = "";
-			console.log("STATS: FINDING OCCUPANTS PER ROOM & RELATED STATS...");
-			rc.keys(config.getKey_usersInRoom("*"), function(err, usersInRoomKeys){
-				if (err) {
-					var errorMsg = 'Error: while getting all users_in_room keys: ' + err;
-					console.log(errorMsg);
-					errorCallback(errorMsg);
-				} else {
-					if(usersInRoomKeys.length == 0){
-						console.log("STATS: No users in any rooms yet.");
-						errorCallback("There are no users in any rooms at the moment.");
-					} else {
-
-						// Die for now... these stats are all wrong because of race-conditions.
-						console.log("STATS: ");
-						console.log(stats);
-						successCallback( stats );
-					
-						// NOTE: this won't work because the redis calls are async, so they're going in paraallel. It gets quite wrong quite fast.
-						// NEED TO DO IT A DIFFERENT WAY... Perhaps have a queue of rooms to check, then recursively check one, dequeue it, then recursively call the same function on the remainder of the queue.
-						/*
-						console.log("STATS: Found " + usersInRoomKeys.length + " room keys.");
-						for (var index = 0; index < usersInRoomKeys.length; index++){
-							var usersInRoomKey = usersInRoomKeys[index];
-							console.log("STATS: Looking for number of users in roomkey: " + usersInRoomKey + " (index=" + index + ").");
-							rc.hlen(usersInRoomKey, function(err, numUsersInRoom){
-								console.log("STATS: Roomkey " + usersInRoomKey + " has " + numUsersInRoom + " users in it (index=" + index + ").");
-								if (err) {
-									var errorMsg = 'Error: while getting number of users in room with key: ' + numUsersInRoom + ' ...error was: '+ err;
-									console.log(errorMsg);
-									errorCallback(errorMsg);
-								} else if(numUsersInRoom && (numUsersInRoom > 0)){
-									roomsWithOccupants++;
-									totalConnectedUsers += numUsersInRoom;
-									if(numUsersInRoom > usersInMostPopularRoom){
-										console.log("There were " + usersInMostPopularRoom + " users in room " + mostPopularRoomKey + " but there are " + numUsersInRoom + " in " + usersInRoomKey);
-										usersInMostPopularRoom = numUsersInRoom;
-										mostPopularRoomKey = usersInRoomKey;
-									}
-								}
-								
-								// If this is the last key in the array, do the follow-up processing.
-								if(index + 1 >= usersInRoomKeys.length){
-									// Find the info about the most popular room.
-									mostPopularRoomKey = mostPopularRoomKey.replace(new RegExp(config.getKeyPrefix_usersInRoom()), config.getKeyPrefix_room()); // convert from users_in_room key to key for info about room.
-									console.log("STATS: FINDING INFO ABOUT THE MOST POPULAR ROOM (" + mostPopularRoomKey + ")...");
-									rc.hgetall(mostPopularRoomKey, function(err, roomData){
-										if (err) {
-											var errorMsg = 'Error: while getting room information about most popular room with key: ' + mostPopularRoomKey + ' ...error was: '+ err;
-											console.log(errorMsg);
-											errorCallback(errorMsg);
-										} else {
-											stats.mostPopularRoom = roomData;
-										}
-										
-										stats.roomsWithOccupants = roomsWithOccupants;
-										stats.totalConnectedUsers = totalConnectedUsers;
-										stats.usersInMostPopularRoom = usersInMostPopularRoom;
-										console.log("STATS: ");
-										console.log(stats);
-										successCallback( stats );
-									});
-								}
-							});
-						}
-						*/
-					}
+			out.runtime = (parseInt(new Date().getTime()) - parseInt(data.laststart) + parseInt(data.runtime) );
+			out.avg_runtime = out.runtime/(parseInt(data.startcount) + 1);
+			rc.hget(config.getKey_userCount(), 'count', function(err, data){
+				if(err) {
+					errorCallback(err);	
+					return ;
 				}
+				out.usercount = data;
+				
+				getCpuPused( process.pid, function(cpu) {
+					out.node_cpup = cpu;
+					getCpuPused( redis_pid, function(cpu) {
+						out.redis_cpup = cpu;
+						successCallback(out);
+					}); 
+				});
+		
 			});
-		}
+		});
+
 	});
 } // end api_getStats()
