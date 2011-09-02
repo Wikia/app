@@ -25,20 +25,3 @@ $wgGroupPermissions['sysop']['wikifeatures'] = true;
 $wgGroupPermissions['bureaucrat']['wikifeatures'] = true;
 
 $wgRevokePermissions['vstf']['wikifeatures'] = true;
-
-// for testing
-$wgWikiFeatures = array (
-	'normal' => array (
-		'wgEnableAjaxPollExt',	// Polls
-		'wgEnableTopListsExt', // Top 10 Lists
-		'wgEnableAchievementsExt',	// Achievements
-		'wgEnablePageLayoutBuilder',	// Page Layout Builder
-		'wgEnableBlogArticles',	// Blogs
-		'wgEnableArticleCommentsExt',	// Article Comments
-		'wgEnableCategoryExhibitionExt',	// Category Exhibition
-	),
-	'labs' => array (
-		'wgEnableChat',	// Chat
-		'wgEnableEditPageReskinExt',	// Editor Redesign (new RTE)
-	)
-);
