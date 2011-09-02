@@ -41,6 +41,7 @@ class ImageServingDriverCategoryNS extends ImageServingDriverMainNS {
 			),
 			__METHOD__,
 			array(
+				'STRAIGHT_JOIN',
 				'ORDER BY' =>  'page.page_len desc',
 				'LIMIT' => $this->articlesFromCategory
 			)
