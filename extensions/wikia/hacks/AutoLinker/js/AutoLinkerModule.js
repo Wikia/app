@@ -96,6 +96,9 @@
 				blacklist[this.title] = 1;
 			});
 
+			// mark undo point
+			this.editor.ck.fire('saveSnapshot');
+
 			// scan text nodes in the article and perform linking
 			this.nodeRunner.walkTextNodes(editbox, this.proxy(function(node) {
 				var content = node.getText();
@@ -152,6 +155,11 @@
 				fadeIn('slow');
 
 			$().log(linksCreated + ' replacement(s) performed', 'Autolinker');
+
+			// mark undo point
+			setTimeout(this.proxy(function() {
+				this.editor.ck.fire('saveSnapshot');
+			}), 750);
 		},
 
 		// get all links from the editor and apply additional filtering
