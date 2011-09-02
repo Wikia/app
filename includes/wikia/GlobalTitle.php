@@ -66,8 +66,10 @@ class GlobalTitle extends Title {
 				array( 'page_id' => $id ),
 				__METHOD__
 			);
-			$res = array( 'title' => $row->page_title, 'namespace' => $row->page_namespace );
-			$wgMemc->set($memkey, $res, 60 * 60);
+			if ( !empty( $row->page_title ) ) { 
+				$res = array( 'title' => $row->page_title, 'namespace' => $row->page_namespace );
+				$wgMemc->set($memkey, $res, 60 * 60);
+			}
 		}
 
 		if ( isset( $res['title'] ) && isset($res['namespace']) ) {
