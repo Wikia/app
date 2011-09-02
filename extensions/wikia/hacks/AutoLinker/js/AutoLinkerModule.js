@@ -3,6 +3,10 @@
  *  - http://futurama.macbre.wikia-dev.com/index.php?title=Morbo&action=edit
  *  - http://futurama.macbre.wikia-dev.com/index.php?title=Hubert_J._Farnsworth&action=edit
  *  - http://futurama.macbre.wikia-dev.com/index.php?title=Bender_Bending_Rodr%C3%ADguez&action=edit
+ *  - http://muppet.macbre.wikia-dev.com/index.php?title=Sesame_Street&action=edit
+ *  - http://muppet.macbre.wikia-dev.com/index.php?title=Kermit_the_Frog&action=edit
+ *  - http://starwars.macbre.wikia-dev.com/index.php?title=Coruscant&action=edit&section=1
+ *  - http://starwars.macbre.wikia-dev.com/index.php?title=New_Republic&action=edit&section=1
  */
 
 (function(window){
