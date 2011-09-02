@@ -80,7 +80,7 @@ function generateList( $format ) {
 	global $wgMemc, $wgExternalSharedDB;
 	
 	$func = "begin_".$format; $res = $func();
-	$dbr = WikiFactory::db( DB_SLAVE );
+	$dbr = WikiFactory::db( DB_SLAVE, array(), $wgExternalSharedDB );
 	$sth = $dbr->select(
 		array( "city_list" ),
 		array( "city_title", "city_lang", "city_url", "city_id" ),
