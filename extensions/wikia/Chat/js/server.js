@@ -14,7 +14,7 @@ var http = require("http");
 var config = require("./server_config.js");
 
 
-console.log = function() {};
+//console.log = function() {};
 
 console.error = function(err) {
         console.log('Error ' + err);
@@ -82,9 +82,37 @@ app.listen(config.CHAT_SERVER_PORT, function () {
 	console.log('   app listening on http://' + addr.address + ':' + addr.port);
 });
 
+
 var io = sio.listen(app);
 
-console.log("Chat server running on port " + config.CHAT_SERVER_PORT);
+console.log("Updating runtime stats");
+
+rc.hgetall(config.getKey_runtimeStats(), function(err, data){
+	var started = parseInt(new Date().getTime());
+	if(err) {
+		console.log(err);
+	} else {
+		if(!data) {
+			var data = {
+					laststart : started, 
+					startcount: 0,
+					runtime: 0 
+			};
+		} else {
+			data.startcount++;
+			data.runtime = parseInt(data.runtime) + started - parseInt(data.laststart); 
+			data.laststart = started;
+		}
+		console.log(data);
+		rc.hmset(config.getKey_runtimeStats(), data , function(err) {
+			if(err) {
+				console.log(err);
+			}
+		});
+	}
+	startServer();
+});
+
 
 //create local state
 var sessionIdsByKey = {}; // for each room/username combo, store the sessionId so that we can send targeted messages.
@@ -92,29 +120,34 @@ io.configure(function () {
 	io.set('transports', [   'websocket', 'flashsocket', 'htmlfile', 'xhr-polling', 'jsonp-polling'  ]);
 });
 
-io.sockets.on('connection', function(client){
-	client.isAuthenticated = false;
+function startServer() {
+	console.log("Chat server running on port " + config.CHAT_SERVER_PORT);
 
-	// On initial connection, just wait around for the client to send it's authentication info.
-	client.on('message', function(msg){
-		messageDispatcher(client, io.sockets, msg)}
-	);
+	rc.hset(config.getKey_userCount(), 'count', 0, function(err, data) {});
+	
+	io.sockets.on('connection', function(client){
+		client.isAuthenticated = false;
+		rc.hincrby(config.getKey_userCount(), 'count', 1, function(err, data) {});
+		// On initial connection, just wait around for the client to send it's authentication info.
+		client.on('message', function(msg){
+			messageDispatcher(client, io.sockets, msg)}
+		);
 
-	client.on('disconnect', function(){
-//		loger(client.namespace);
-		delete client.namespace.sockets[client.id];
-		clientDisconnect(client, io.sockets);
+		client.on('disconnect', function(){
+			rc.hincrby(config.getKey_userCount(), 'count', -1,function(err, data) {});
+			clientDisconnect(client, io.sockets);
+		});
+
+		client.sessionId = client.id; //for 0.6 
+		// Send a message to the client to cause it to send it's authentication info back to the server.
+
+		client.json.send({
+			event: 'auth'
+	    });
+
+		console.log("Raw connection recieved. Waiting for authentication info from client.");
 	});
-
-	client.sessionId = client.id; //for 0.6 
-	// Send a message to the client to cause it to send it's authentication info back to the server.
-
-	client.json.send({
-		event: 'auth'
-    });
-
-	console.log("Raw connection recieved. Waiting for authentication info from client.");
-});
+}
 
 /**
  * Bound to the 'message' event, gets any message from the client. If the user
@@ -200,50 +233,6 @@ function messageDispatcher(client, socket, data){
 } // end messageDispatcher()
 
 
-function simpleHttpRequest(wgServer, requestUrl, callback) {
-	var wikiHostname = wgServer.replace(/^https?:\/\//i, "");
-	
-	var requestHeaders = {
-		'Host': wikiHostname
-	}; 
-
-	console.log("Requesting user info from: " + requestUrl);
-	
-	console.log("Making request to host: " + wikiHostname);
-	
-	// NOTE: Swap back if we want to use a proxy again.
-	//var httpClient = http.createClient(config.WIKIA_PROXY_PORT, config.WIKIA_PROXY_HOST);
-	var httpClient = http.createClient(80, wikiHostname); // TODO: Swap this in for ALL INSTANCES of createClient if we don't want to use local proxy anymore.
-
-	var httpRequest = httpClient.request("GET", requestUrl, requestHeaders);
-	httpRequest.addListener("response", function (response) {
-		//debugObject(client.request.headers);
-		var responseBody = "";
-		//response.setBodyEncoding("utf8");
-		response.addListener("data", function(chunk) {
-			responseBody += chunk;
-		});
-		response.addListener("end", function() {
-			try{
-				data = JSON.parse(responseBody);
-			} catch(e){
-				console.log("Error: while parsing result of getUserInfo(). Error was: ");
-				console.log(e);
-				console.log("Response that didn't parse was:\n" + responseBody);
-
-				data = {
-					error: '',
-					errorWfMsg: 'chat-err-communicating-with-mediawiki',
-					errorMsgParams: []
-				};
-			}
-		
-			callback(data);
-		});
-	});
-	httpRequest.end();
-}
-
 /**
  *  open private chat with other users 
  */
@@ -273,7 +262,6 @@ function openPrivateRoom(client, socket, data){
  * are used - since users could be banned on one wiki and not another).
  */
 function authConnection(client, socket, authData){
-	console.log(new Date().getTime());
 	var authJson = JSON.parse( authData );
 	var auth = new models.AuthInfo( authJson.attrs );
 	if(typeof  authJson.attrs != "undefined"){
@@ -288,13 +276,34 @@ function authConnection(client, socket, authData){
 			console.log('Error getting wgServer for a room: ' + err);
 		} else if (data) {
 			console.log("Got wgServer in data: " + data);
+			var wikiHostname = data.replace(/^https?:\/\//i, "");
+			console.log("Making getUserInfo request to host: " + wikiHostname);
 
 			// Format the cookie-data into the correct string for sending the data as a header.
 			var roomId = auth.get('roomId');
 
 			console.log("Auth data for client w/sessionId '" + client.sessionId + "': " + auth.get('key') );
+			client.authKey = auth.get('key');
 			
 			// Send auth cookies to apache to make sure this user is authorized & get the user information.
+			
+			client.userKey = auth.get('key');
+			
+			var requestHeaders = {
+				'Host': wikiHostname
+			};
+
+			var requestUrl = config.AUTH_URL + "&roomId=" + roomId ;	
+			requestUrl +=  "&name=" + encodeURIComponent(auth.get('name'));
+			requestUrl +=  "&key=" + client.userKey ;
+			requestUrl += "&cb=" + Math.floor(Math.random()*99999); // varnish appears to be caching this (at least on dev boxes) when we don't want it to... so cachebust it.
+
+			console.log("Requesting user info from: " + requestUrl);
+
+			// NOTE: Swap back if we want to use a proxy again.
+			var httpClient = http.createClient(config.WIKIA_PROXY_PORT, config.WIKIA_PROXY_HOST);
+			//var httpClient = http.createClient(80, wikiHostname); // TODO: Swap this in for ALL INSTANCES of createClient if we don't want to use local proxy anymore.
+			
 			var callback = function(data) {
 				if( (data.canChat) && (data.isLoggedIn) && data.username == auth.get('name') ){
 					rc.hkeys( config.getKey_usersAllowedInPrivRoom( auth.get('roomId') ),  function(err, users){
@@ -344,14 +353,47 @@ function authConnection(client, socket, authData){
 				}
 			};
 			
-			client.userKey = auth.get('key');
 			
-			var requestUrl = config.AUTH_URL + "&roomId=" + roomId ;	
-			requestUrl +=  "&name=" + encodeURIComponent(auth.get('name'));
-			requestUrl +=  "&key=" + client.userKey;
-			requestUrl += "&cb=" + Math.floor(Math.random()*99999); // varnish appears to be caching this (at least on dev boxes) when we don't want it to... so cachebust it.
+			if(typeof(data.isLoggedIn) != 'undefined') {
+				callback(data);
+			} else {
+				var httpRequest = httpClient.request("GET", requestUrl, requestHeaders);
+				httpRequest.addListener("response", function (response) {
+					//debugObject(client.request.headers);
+					var responseBody = "";
+					//response.setBodyEncoding("utf8");
+					response.addListener("data", function(chunk) {
+						responseBody += chunk;
+					});
+					response.addListener("end", function() {
+						try{
+							data = JSON.parse(responseBody);
+						} catch(e){
+							console.log("Error: while parsing result of getUserInfo(). Error was: ");
+							console.log(e);
+							console.log("Response that didn't parse was:\n" + responseBody);
 
-			simpleHttpRequest(data, requestUrl, callback);
+							data = {
+								error: '',
+								errorWfMsg: 'chat-err-communicating-with-mediawiki',
+								errorMsgParams: []
+							};
+						}
+						
+						rc.hmset(config.getKey_sessionData( client.userKey ), data, function() {});
+						
+						console.log("=============Session data================");
+						console.log(data);
+						console.log("=============/Session data================");
+						
+						callback(data);
+					});
+				});
+				httpRequest.end();
+			}
+			console.log("=============Session data from cache================");
+			console.log(data);
+			console.log("=============/Session data from cache================");
 		} else {
 			console.log("Didn't get data for the roomId so it probably doesn't exist anymore: " + auth.get('roomId'));
 		}
@@ -556,32 +598,62 @@ function kickBan(client, socket, msg){
 		if (err) {
 			console.log('Error: getting wgServer for a room: ' + err);
 		} else if (data) {
+			var wikiHostname = data.replace(/^https?:\/\//i, "");
+
+			// Ban the user via request to Wikia MediaWiki server ajax-endpoint.
+		
+			var requestHeaders = {
+					'Host': wikiHostname
+				};
 			
 			var requestUrl = config.KICKBAN_URL;
 			requestUrl += "&userToBan=" + encodeURIComponent(userToBan);
 			requestUrl +=  "&key=" + client.userKey ;
 			requestUrl += "&cb=" + Math.floor(Math.random()*99999); // varnish appears to be caching ajax requests (at least on dev boxes) when we don't want it to... so cachebust it.
-			
-			simpleHttpRequest(data, requestUrl, function(data) {
-				// Process response from MediaWiki server and then kick the user from all clients.
-				if(data.error || data.errorWfMsg){
-					sendInlineAlertToClient(client, data.error, data.errorWfMsg, data.errorMsgParams);
-					
-					if(data.doKickAnyway){
-						kickedUser = new models.User({name: userToBan});
-						kickUserFromRoom(client, socket, kickedUser, client.roomId);
+			var httpClient = http.createClient(config.WIKIA_PROXY_PORT, config.WIKIA_PROXY_HOST);
+			var httpRequest = httpClient.request("GET", requestUrl, requestHeaders);
+			console.log("Trying to ban '" + userToBan + "' by hitting hostname " + wikiHostname + " with URL:\n" + requestUrl);
+			httpRequest.addListener("response", function (response) {
+				var responseBody = "";
+				response.addListener("data", function(chunk) {
+					responseBody += chunk;
+				});
+				response.addListener("end", function() {
+					var data;
+					try{
+						data = JSON.parse(responseBody);
+					} catch(e){
+						data = {
+							error: '',
+							errorWfMsg: 'chat-err-communicating-with-mediawiki',
+							errorMsgParams: []
+						};
+						console.log("Error: while parsing result of kickBan call to MediaWiki server. Error was: ");
+						console.log(e);
+						console.log("Response that didn't parse was:\n" + responseBody);
 					}
-				} else {
-					// TODO: ONCE WE HAVE A LIST OF CLIENTS, INSTEAD OF BUILDING A FAKE... LOOP THROUGH THE USERS IN THIS CHAT AND FIND THE REAL ONE. THAT'S FAR SAFER/BETTER.
-					// TODO: The users are in a hash now... grab (or build) the user from that data or obj and use that instead of this fake user.
-					// Build a user that looks like the one that got banned... then kick them!
-					kickedUser = new models.User({name: userToBan});
-					broadcastInlineAlert(client, socket, 'chat-user-was-kickbanned', [kickedUser.get('name')], function(){
-						// The user has been banned and the ban has been broadcast, now physically remove them from the room.
-						kickUserFromRoom(client, socket, kickedUser, client.roomId);
-					});
-				}
+
+					// Process response from MediaWiki server and then kick the user from all clients.
+					if(data.error || data.errorWfMsg){
+						sendInlineAlertToClient(client, data.error, data.errorWfMsg, data.errorMsgParams);
+						
+						if(data.doKickAnyway){
+							kickedUser = new models.User({name: userToBan});
+							kickUserFromRoom(client, socket, kickedUser, client.roomId);
+						}
+					} else {
+		// TODO: ONCE WE HAVE A LIST OF CLIENTS, INSTEAD OF BUILDING A FAKE... LOOP THROUGH THE USERS IN THIS CHAT AND FIND THE REAL ONE. THAT'S FAR SAFER/BETTER.
+		// TODO: The users are in a hash now... grab (or build) the user from that data or obj and use that instead of this fake user.
+						// Build a user that looks like the one that got banned... then kick them!
+						kickedUser = new models.User({name: userToBan});
+						broadcastInlineAlert(client, socket, 'chat-user-was-kickbanned', [kickedUser.get('name')], function(){
+							// The user has been banned and the ban has been broadcast, now physically remove them from the room.
+							kickUserFromRoom(client, socket, kickedUser, client.roomId);
+						});
+					}
+				});
 			});
+			httpRequest.end();
 		}
 	});
 } // end kickBan()

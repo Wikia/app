@@ -37,7 +37,8 @@ exports.getKey_nextRoomId = function(){ return "next.room.id"; }
 exports.getKeyPrefix_room = function(){ return "room"; }
 
 
-exports.getKey_UserCounts = function(){ return "UserCounts"; }
+exports.getKey_userCount = function(){ return "UserCounts"; }
+exports.getKey_runtimeStats = function(){ return "runtimeStats"; }
 
 exports.getKey_sessionData = function(key){ return "session_data:" + key; }
 
