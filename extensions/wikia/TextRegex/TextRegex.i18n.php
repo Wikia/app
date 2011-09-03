@@ -757,7 +757,7 @@ $messages['ru'] = array(
 	'textregex-return-mainpage' => '[{{SERVER}}$1 Возврат к списку]',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  * @author Verlor
  */

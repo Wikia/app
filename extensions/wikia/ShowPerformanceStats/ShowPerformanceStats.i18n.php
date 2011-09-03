@@ -128,7 +128,7 @@ $messages['it'] = array(
 	'performancestat-cpu' => 'CPU: $1',
 );
 
-/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -184,10 +184,11 @@ $messages['no'] = array(
 );
 
 /** Piedmontese (Piemontèis)
+ * @author Borichèt
  * @author Dragonòt
  */
 $messages['pms'] = array(
-	'showperformancestats-desc' => 'Artorna statìstiche dle prestassion lesìbij da uman',
+	'showperformancestats-desc' => "A smon dle statìstiche ëd prestassion lesìbij da n'òm",
 	'performancestat-total' => 'Total: $1',
 	'performancestat-apache' => 'Apache: $1',
 	'performancestat-cpu' => 'CPU: $1',
@@ -227,7 +228,7 @@ $messages['ru'] = array(
 	'performancestat-total' => 'Итого: $1s',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(

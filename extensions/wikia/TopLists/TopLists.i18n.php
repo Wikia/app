@@ -939,12 +939,24 @@ $messages['ksh'] = array(
 	'toplists-desc' => 'Leßte met de bövverste Zehn.',
 );
 
-/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
 	'toplists-editor-title-label' => 'Navê lîstê',
 	'toplists-cancel-button' => 'Betal bike',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'toplists-editor-title-label' => 'Numm vun der Lëscht',
+	'toplists-seconds' => '$1 {{PLURAL:$1|Sekonn|Sekonnen}}',
+	'toplists-minutes' => '$1 {{PLURAL:$1|Minutt|Minutten}}',
+	'toplists-hours' => '$1 {{PLURAL:$1|Stonn|Stonnen}}',
+	'toplists-days' => '$1 {{PLURAL:$1|Dag|Deeg}}',
+	'toplists-weeks' => '$1 {{PLURAL: $1|Woch|Wochen}}',
 );
 
 /** Macedonian (Македонски)
@@ -1334,8 +1346,8 @@ $messages['pms'] = array(
 	'toplists-desc' => 'Liste dij prim 10',
 	'right-toplists-create-edit-list' => 'Crea e modìfica le pàgine dle liste dij Prim 10',
 	'right-toplists-create-item' => "Creé e gionta dj'element a na pàgina ëd lista dij Prim 10",
-	'right-toplists-edit-item' => "Modìfica j'element ant la pagina ëd la lista Top 10",
-	'right-toplists-delete-item' => "Scansela j'element da la pagina ëd la lista Top 10",
+	'right-toplists-edit-item' => "Modifiché j'element ant la pàgina ëd la lista dij Prim 10",
+	'right-toplists-delete-item' => "Scancelé j'element da na pàgina ëd lista dij Prim 10",
 	'createtoplist' => 'Crea na lista neuva dij Prim 10',
 	'edittoplist' => 'Modìfica dij Prim 10',
 	'toplists-category' => 'Liste dij prim 10',
@@ -1354,7 +1366,7 @@ $messages['pms'] = array(
 	'toplists-error-add-item-permission' => "Eror ëd përmess: Sò cont a l'ha pa ël drit ëd creé d'element neuv.",
 	'toplists-error-add-item-list-not-exists' => 'La lista "$1" dij Prim 10 a esist pa.',
 	'toplists-error-backslash-not-allowed' => 'Ël caràter "/" a l\'é pa përmëttù ant ël tìtol ëd na lista dij Prim 10.',
-	'toplists-upload-error-unknown' => "N'eror a l'é capità mente as processava l'arcesta ëd caria. Për piasì preuva torna.",
+	'toplists-upload-error-unknown' => "N'eror a l'é capità antramente ch'as tratava l'arcesta d'amportassion. Për piasì, ch'a preuva torna.",
 	'toplists-editor-title-label' => 'Nòm ëd lista',
 	'toplists-editor-title-placeholder' => 'Buté un nòm për la lista',
 	'toplists-editor-related-article-label' => 'Pàgina corelà <small>(opsional, ma selession-a na figura)</small>',
@@ -1621,7 +1633,7 @@ $messages['ru'] = array(
 	'toplists-create-button-msg' => 'Создать список',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(

@@ -202,7 +202,7 @@ $messages['ru'] = array(
 	'relatedvideo' => 'Похожие видео',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -238,7 +238,7 @@ $messages['tl'] = array(
 	'relatedvideo' => 'Kaugnay na mga bidyo',
 );
 
-/** Татарча (Татарча)
+/** Tatar (Cyrillic script) (Татарча)
  * @author Zahidulla
  */
 $messages['tt-cyrl'] = array(

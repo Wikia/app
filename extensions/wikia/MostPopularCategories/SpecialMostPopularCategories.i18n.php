@@ -340,7 +340,7 @@ $messages['sl'] = array(
 	'mostpopularcategories' => 'Najbolj priljubljene kategorije',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Verlor
  */
 $messages['sr-ec'] = array(

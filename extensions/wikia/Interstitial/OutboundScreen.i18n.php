@@ -316,7 +316,7 @@ $messages['ru'] = array(
 	'outbound-screen-you-are-leaving' => 'Вы покидаете Wikia.',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Charmed94
  * @author Rancher
  * @author Verlor

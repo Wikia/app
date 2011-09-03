@@ -522,7 +522,7 @@ $messages['ru'] = array(
 	'wikiapoll-error-invalid-title' => 'Текст вопроса является недопустимым.',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(

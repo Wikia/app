@@ -638,7 +638,7 @@ $messages['si'] = array(
 	'wva-protected' => 'මෙම වීඩියෝව ආරක්‍ෂිතය',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Charmed94
  * @author Rancher
  * @author Verlor

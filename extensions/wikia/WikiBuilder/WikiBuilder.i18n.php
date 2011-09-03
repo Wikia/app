@@ -616,7 +616,7 @@ Scribe hic le prime section de tu pagina. Memora de includer ligamines a altere 
 Scribe hic le secunde section de tu pagina. Non oblida de adder un categoria pro adjutar le gente a trovar le pagina.',
 );
 
-/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -1185,7 +1185,7 @@ $messages['ru'] = array(
 Напишите второй раздел вашей страницы. Не забудьте добавить категорию, чтобы помочь людям найти эту страницу.',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(

@@ -201,7 +201,7 @@ $messages['ru'] = array(
 	'paginator-back' => 'Назад',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(

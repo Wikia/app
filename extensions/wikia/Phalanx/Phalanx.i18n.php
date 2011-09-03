@@ -1414,7 +1414,17 @@ Se acredita que este bloqueio foi feito em erro [[Special:Contact|contacte a Wik
 	'right-phalanxexempt' => 'Isento da regras do Phalanx',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Russian (Русский)
+ * @author Lvova
+ */
+$messages['ru'] = array(
+	'phalanx-label-reason' => 'Причина:',
+	'phalanx-stats-table-language' => 'Язык',
+	'phalanx-stats-table-text' => 'Текст',
+	'phalanx-stats-table-reason' => 'Причина',
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -1579,7 +1589,7 @@ Mangyaring lumikha ng kahaliling pangalan ng tagagamit o [[Special:Contact|makip
 	'phalanx-stats-table-wiki-last-edited' => 'Huling binago',
 );
 
-/** Татарча (Татарча)
+/** Tatar (Cyrillic script) (Татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(

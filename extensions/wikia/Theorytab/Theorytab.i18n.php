@@ -180,7 +180,7 @@ $messages['ksh'] = array(
 	'theorytab-parent-title' => 'De Sigg drövver',
 );
 
-/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -303,7 +303,7 @@ $messages['sl'] = array(
 	'theorytab-parent-title' => 'Starševski članek',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Charmed94
  * @author Verlor
  */

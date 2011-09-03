@@ -388,7 +388,7 @@ $messages['ksh'] = array(
 	'our404handler-oops' => 'Dat sin nit de Sigge, woh De noh aam looere bes. Nemm andere!',
 );
 
-/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -676,7 +676,7 @@ $messages['sl'] = array(
 * Za obisk glavne strani tega mesta kliknite povezavo: [{{SERVER}} {{SITENAME}}]",
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Charmed94
  * @author Rancher
  * @author Verlor
@@ -730,7 +730,7 @@ Hindi matagpuan ang artikulong '''$1'''.
 * Upang makapunta sa pangunahing pahina ng sityong ito, pindutin ang kawing na: [{{SERVER}} {{SITENAME}}]",
 );
 
-/** Татарча (Татарча)
+/** Tatar (Cyrillic script) (Татарча)
  * @author Ильнар
  */
 $messages['tt-cyrl'] = array(

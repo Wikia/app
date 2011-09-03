@@ -2258,7 +2258,7 @@ Dat es e brandneu Projäk, un wann De Froore häß, schriiv ons dovun!
 	'autocreatewiki-subname-answers' => 'Antwoote',
 );
 
-/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -3232,9 +3232,9 @@ $messages['pms'] = array(
 	'autocreatewiki-bad-name' => 'Ël nòm a peul pa conten-e caràter speciaj (com $ o @) e a deuv esse na sola paròla minùscola sensa spassi.',
 	'autocreatewiki-invalid-wikiname' => 'Ël nòm a peul pa conten-e caràter speciaj (com $ e @) e a peul pa esse veuid',
 	'autocreatewiki-violate-policy' => "Sto nòm ëd wiki-sì a conten na paròla ch'a rispeta pa nòstre régole pr'ij nòm",
-	'autocreatewiki-name-taken' => 'A-i é già na wiki con sta adrëssa. Ancamin-a a modifiché a <a href="http://$1.wikia.com">http://$1.wikia.com</a> o sern n\'àutra adrëssa.',
+	'autocreatewiki-name-taken' => 'A-i é già na wiki con costa adrëssa. Ch\'a ancamin-a a modifiché a <a href="http://$1.wikia.com">http://$1.wikia.com</a> o ch\'a serna n\'àutra adrëssa.',
 	'autocreatewiki-name-too-short' => "St'adrëssa a l'é tròp curta, sern n'adrëssa con almanch 3 caràter.",
-	'autocreatewiki-name-too-long' => "St'adrëssa a l'é tròp longa. Për piasì sern n'adfrëssa con al pi 50 caràter.",
+	'autocreatewiki-name-too-long' => "St'adrëssa a l'é tròp longa. Për piasì, ch'a serna n'adrëssa con al pi 50 caràter.",
 	'autocreatewiki-similar-wikis' => "Sì-sota a-i son le wiki già creà su sto argoment-sì. Nòst sugeriment a l'é ëd travajé su un-a ëd cole.",
 	'autocreatewiki-invalid-username' => "Sto nòm utent a l'é pa bon.",
 	'autocreatewiki-busy-username' => "Sto nòm utent a l'é già pijà.",
@@ -3880,7 +3880,7 @@ $3
 	'autocreatewiki-subname-answers' => 'Ответы',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  * @author Verlor
  * @author Жељко Тодоровић
@@ -4255,7 +4255,7 @@ $messages['tr'] = array(
 	'autocreatewiki-step2' => 'Veri tabanı oluşturuluyor...',
 );
 
-/** Татарча (Татарча)
+/** Tatar (Cyrillic script) (Татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(

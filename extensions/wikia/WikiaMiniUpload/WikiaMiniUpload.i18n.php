@@ -106,6 +106,7 @@ $messages['qqq'] = array(
 	'wmu-next' => '{{Identical|Next}}',
 	'wmu-back' => '{{Identical|Back}}',
 	'wmu-close' => '{{Identical|Close}}',
+	'wmu-gallery' => '{{Identical|Gallery}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -1486,7 +1487,7 @@ $messages['ko'] = array(
 	'wmu-added-from-plc' => '플레이스홀더를 통해 삽입된 그림',
 );
 
-/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -2306,7 +2307,7 @@ $messages['sl'] = array(
 	'wmu-back' => 'nazaj',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  * @author Verlor
  */

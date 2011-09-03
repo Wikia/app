@@ -572,7 +572,7 @@ $messages['ru'] = array(
 	'prefs-rte' => 'Визуальный текстовый редактор (RTE)',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(

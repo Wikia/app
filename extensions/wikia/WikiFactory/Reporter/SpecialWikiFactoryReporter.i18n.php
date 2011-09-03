@@ -384,7 +384,7 @@ $messages['sl'] = array(
 	'wikifactoryreporter' => 'Poročevalec WikiFactory',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Charmed94
  * @author Rancher
  */
@@ -427,7 +427,7 @@ $messages['tr'] = array(
 	'wikifactoryreporter' => 'VikiFabrika Raporlayıcısı',
 );
 
-/** Татарча (Татарча)
+/** Tatar (Cyrillic script) (Татарча)
  * @author Zahidulla
  */
 $messages['tt-cyrl'] = array(

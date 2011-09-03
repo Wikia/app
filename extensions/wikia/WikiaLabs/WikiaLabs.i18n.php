@@ -582,8 +582,8 @@ $messages['mk'] = array(
 	'wikialabs-feedback-validator-message-too-short' => 'Внесете забелешка',
 	'wikialabs-feedback-validator-rating' => 'Дајте ваша оценка',
 	'wikilabs-feedback-validator-category' => 'Одберете категорија од паѓачкото мени „{{int:wikialabs-feedback-category}}“',
-	'wikialabs-feedback-category' => 'На што се однесува ова?',
-	'wikialabs-category-choose-one' => 'Одберете едно...',
+	'wikialabs-feedback-category' => 'За што служи ова?',
+	'wikialabs-category-choose-one' => 'Изберете...',
 	'wikialabs-love-this-project' => 'Го обожавам проектов.',
 	'wikialabs-hate-this-project' => 'Го мразам проектов.',
 	'wikialabs-problem-with-project' => 'Имам проблем со проектов',
@@ -674,6 +674,7 @@ $messages['nl'] = array(
 	'wikialabs-add-project-add-image-info' => '150x100 voor laboratorium<br />80x80 voor succesvolle projecten',
 	'wikialabs-add-project-title' => 'Project toevoegen of bewerken (ID:$1)',
 	'wikialabs-add-project-project' => 'Project',
+	'wikialabs-add-project-fogbugz-area' => 'FogBugzgebied',
 	'wikialabs-add-project-show-in-graduates' => 'Weergeven in succesvolle projecten',
 	'wikialabs-add-project-warning' => 'De-activatie waarschuwingsbericht (gebruik &lt;h2&gt; Titel &lt;/h2&gt; voor de naam)',
 	'wikialabs-add-project-enable-warning' => 'Waarschuwingen',
@@ -907,6 +908,7 @@ $messages['pt'] = array(
 
 /** Russian (Русский)
  * @author Kuzura
+ * @author Lvova
  */
 $messages['ru'] = array(
 	'wikialabs-add-project-name' => 'Название',
@@ -914,6 +916,10 @@ $messages['ru'] = array(
 	'wikialabs-add-project-link' => 'Ссылка на проект (пример: Special:WikiaLabs)',
 	'wikialabs-add-project-add-image' => 'Добавить изображение',
 	'wikialabs-add-project-add-image-info' => '150x100 для labs <br />80x80 для выпускников',
+	'wikialabs-add-project-project' => 'Проект',
+	'wikialabs-add-project-status' => 'Статус',
+	'wikialabs-add-project-add-save' => 'Сохранить',
+	'wikialabs-add-project-add-cancel' => 'Отмена',
 	'wikialabs-list-project-title' => 'Wikia Labs',
 	'wikialabs-list-project-add-give-feedback' => 'Добавь отзыв',
 	'wikialabs-list-project-inactive' => 'неактивно',
@@ -964,7 +970,7 @@ $messages['te'] = array(
 	'wikialabs-list-project-warning-cancel' => 'రద్దుచేయి',
 );
 
-/** Татарча (Татарча)
+/** Tatar (Cyrillic script) (Татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(

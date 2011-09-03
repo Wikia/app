@@ -2094,7 +2094,7 @@ Jangk retuur noh [[Special:AdSS|{{int:Adss}}]].',
 	'adss-cancel-confirmation' => 'Wells De heh di Reklame verhaftesh fottschmieße?',
 );
 
-/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -2158,6 +2158,7 @@ $messages['lb'] = array(
 	'adss-button-save-pay' => 'Späicheren',
 	'adss-button-select' => 'Eraussichen',
 	'adss-button-save' => 'Späicheren',
+	'adss-button-cancel' => 'Ofbriechen',
 	'adss-button-yes' => 'Jo',
 	'adss-button-no' => 'Neen',
 	'adss-click-here' => 'Hei klicken',
@@ -2176,6 +2177,7 @@ $messages['lb'] = array(
 	'adss-description' => 'Beschreiwung',
 	'adss-amount' => '$1&nbsp;$',
 	'adss-cancel-confirmation' => 'Sidd Dir sécher datt Dir dës Reklamm läsche wëllt?',
+	'adss-more-information' => 'Méi Informatiounen',
 );
 
 /** Lezghian (Лезги)
@@ -3506,6 +3508,7 @@ $messages['roa-tara'] = array(
  * @author Eleferen
  * @author Exlex
  * @author Kuzura
+ * @author Lvova
  * @author Ytsukeng Fyvaprol
  */
 $messages['ru'] = array(
@@ -3545,6 +3548,7 @@ $messages['ru'] = array(
 1 акция равна $1% спонсорских ссылок {{SITENAME}} и стоит всего $2. Вы в любое время можете отменить это.',
 	'adss-form-site-plan-price' => '$1 за одну акцию',
 	'adss-form-site-premium-plan-header' => 'Купите перекрёстную премиум-ссылку через всю вики',
+	'adss-form-site-premium-plan-header-ribbon' => 'Лучшее значение',
 	'adss-form-site-premium-plan-description' => 'Получите ссылки работающие на всей вики по единой низкой цене и получите ещё большую выдержку, покупая больше акций. 
 
 1 акция равна $1% рекламных ссылок {{SITENAME}}. С помощью этой опции вы покупаете четыре акции по цене трех! Вы в любое время можете отменить это.',
@@ -3629,7 +3633,7 @@ $messages['sl'] = array(
 	'adss-button-save-pay' => 'Shrani',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -3990,7 +3994,7 @@ $messages['tr'] = array(
 	'adss-created' => 'Oluşturuldu',
 );
 
-/** Татарча (Татарча)
+/** Tatar (Cyrillic script) (Татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(

@@ -1274,7 +1274,7 @@ $messages['ksh'] = array(
 	'swm-button-new' => '[ Neu ]',
 );
 
-/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -2028,7 +2028,7 @@ $messages['sl'] = array(
 	'swm-no' => 'Ne',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  * @author Verlor
  */
@@ -2255,7 +2255,7 @@ $messages['tl'] = array(
 	'swm-lang-other' => 'lahat ng natitirang mga wika',
 );
 
-/** Татарча (Татарча)
+/** Tatar (Cyrillic script) (Татарча)
  * @author Ильнар
  */
 $messages['tt-cyrl'] = array(

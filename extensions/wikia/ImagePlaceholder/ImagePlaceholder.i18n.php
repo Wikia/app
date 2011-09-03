@@ -218,7 +218,7 @@ $messages['ksh'] = array(
 	'imgplc-notinhistory' => 'Belder kammer nit em Zosammehang vun de verjange Versione dobei donn',
 );
 
-/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -375,7 +375,7 @@ $messages['ru'] = array(
 	'imgplc-notinhistory' => 'Вы не можете добавить изображение в режиме истории.',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Charmed94
  * @author Rancher
  * @author Verlor

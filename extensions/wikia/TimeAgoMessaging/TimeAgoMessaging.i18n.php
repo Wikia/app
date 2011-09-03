@@ -259,7 +259,7 @@ $messages['ru'] = array(
 	'timeago-second' => 'минуту назад',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(

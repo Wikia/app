@@ -289,7 +289,7 @@ $messages['ja'] = array(
 	'tagsreportgenerated' => '$1 $2 に生成',
 );
 
-/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -413,7 +413,7 @@ $messages['pms'] = array(
 	'tagsreportnoresults' => 'Pa gnun arzultà trovà',
 	'tagsreportmainnspace' => 'Prinsipal',
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|pàgina|pàgina}})',
-	'tagsreportpagesfound' => 'Trovà <strong>$1</strong> {{PLURAL:$1|pagina|pagine}}, che a conten-o etichëtte speciaj (DPL, YouTube, etc...)',
+	'tagsreportpagesfound' => 'Trovà <strong>$1</strong> {{PLURAL:$1|pagina|pagine}}, che a conten-o ëd tichëtte speciaj (DPL, YouTube, e via fòrt)',
 	'tagsreportgenerated' => 'Generà ël $1 a $2',
 );
 
@@ -478,7 +478,7 @@ $messages['ru'] = array(
 	'tagsreportgenerated' => 'Создана $1 в $2',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Charmed94
  * @author Rancher
  * @author Verlor

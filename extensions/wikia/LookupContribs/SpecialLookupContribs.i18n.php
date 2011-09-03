@@ -606,7 +606,7 @@ $messages['ja'] = array(
 	'lookupcontribscontent' => 'コンテンツ',
 );
 
-/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -1214,7 +1214,7 @@ $messages['ru'] = array(
 	'lookupcontribsall' => 'все',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  * @author Verlor
  */

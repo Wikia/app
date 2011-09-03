@@ -2876,6 +2876,7 @@ $messages['ro'] = array(
 
 /** Russian (Русский)
  * @author DCamer
+ * @author Lvova
  */
 $messages['ru'] = array(
 	'sponsorship-dashboard' => '[[Special:SponsorshipDashboard|Слежебная страница]] для получения метрики, связанной со спонсорством',
@@ -2891,6 +2892,7 @@ $messages['ru'] = array(
 	'sponsorship-dashboard-serie-article-edits-5' => '+5 к числу правок страницы',
 	'sponsorship-dashboard-serie-article-edits-10' => '+100 к числу правок страницы',
 	'sponsorship-dashboard-serie-pageviews' => 'Всего просмотров страницы',
+	'sponsorship-dashboard-serie-namespace-Talk' => 'Страницы обсуждения',
 	'sponsorship-dashboard-description-activity' => 'Деятельность вкладчика по месяцам',
 	'sponsorship-dashboard-description-engagement' => 'Всего проведено часов в день',
 	'sponsorship-dashboard-description-participation' => 'Уникальный редакторы по месяцам',
@@ -2935,9 +2937,21 @@ $messages['ru'] = array(
 	'sponsorship-dashboard-overwiev-label' => 'выберите область для увеличения',
 	'sponsorship-dashboard-empty-chart' => 'Извините. Нет данных по этой диаграммы.',
 	'sponsorship-dashboard-cityname-and-familiarity' => '$1 - <i>соответствие: $2%</i>',
+	'sponsorship-dashboard-report-description' => 'Описание',
+	'sponsorship-dashboard-report-new-source-gapi' => 'ХС',
+	'sponsorship-dashboard-cancel' => 'отменить',
+	'sponsorship-dashboard-save' => 'сохранить',
+	'sponsorship-dashboard-preview' => 'предпросмотр',
+	'sponsorship-dashboard-Edit' => 'Править',
+	'sponsorship-dashboard-Group' => 'Группа',
+	'sponsorship-dashboard-source-GoogleAnalytics' => 'GoogleAnalytics',
+	'sponsorship-dashboard-source-list' => 'Список',
+	'sponsorship-dashboard-mobile-serie-iphone' => 'iPhone',
+	'sponsorship-dashboard-select-all' => 'выбрать все',
+	'sponsorship-dashboard-deselect-all' => 'снять выделение со всех',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(

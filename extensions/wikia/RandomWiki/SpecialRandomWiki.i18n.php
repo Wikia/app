@@ -265,7 +265,7 @@ $messages['ru'] = array(
 	'randomwiki' => 'Случайная вики',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -295,7 +295,7 @@ $messages['tl'] = array(
 	'randomwiki' => 'Alinmang Wiki',
 );
 
-/** Татарча (Татарча)
+/** Tatar (Cyrillic script) (Татарча)
  * @author Zahidulla
  * @author Ильнар
  */

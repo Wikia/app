@@ -539,7 +539,7 @@ $messages['si'] = array(
 	'ajaxpoll-submit' => 'ඡන්දය දෙන්න!',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  * @author Verlor
  */

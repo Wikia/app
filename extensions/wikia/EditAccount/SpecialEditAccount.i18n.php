@@ -1037,11 +1037,11 @@ $messages['pms'] = array(
 	'editaccount-label-email' => 'Buté na neuva adrëssa ëd pòsta eletrònica',
 	'editaccount-label-pass' => 'Ampòsta neuva ciav',
 	'editaccount-label-realname' => 'Ampòsta neuv nòm ver',
-	'editaccount-label-clearunsub' => 'Disiscrivù',
+	'editaccount-label-clearunsub' => "Anulà l'abonament",
 	'editaccount-submit-email' => "Salvé l'adrëssa ëd pòsta eletrònica",
 	'editaccount-submit-pass' => 'Salva Ciav',
 	'editaccount-submit-realname' => 'Salva Nòm Ver',
-	'editaccount-submit-clearunsub' => 'Scansela disiscrission',
+	'editaccount-submit-clearunsub' => "Scancelé l'anulament ëd l'abonament",
 	'editaccount-submit-close' => 'Sara Cont',
 	'editaccount-usage-close' => "A peul ëdcò disabilité a un cont utent an cripté soa ciav e gavand soa adrëssa ëd pòsta eletrònica. Ch'a fasa atension che sto dat a l'é përdù e a l'é pa arcuperàbil.",
 	'editaccount-warning-close' => "<b>Atension!</b> A l'é an camin ch'a disabìlita për sempe ël cont ëd l'utent <b>$1</b>. As peul pa torné andré. É-lo sigur ëd vorèj felo?",
@@ -1050,7 +1050,7 @@ $messages['pms'] = array(
 	'editaccount-success-email-blank' => "Gavà da bin l'adrëssa ëd pòsta eletrònica dal cont $1.",
 	'editaccount-success-pass' => 'Cambià da bin ciav për ël cont $1.',
 	'editaccount-success-realname' => 'Cambià da bin ël nòm ver për ël cont $1.',
-	'editaccount-success-unsub' => 'Gavà da bin ël bit ëd disiscrission për ël cont $1.',
+	'editaccount-success-unsub' => "Gavà për da bin l'anformassion d'anulament ëd l'abonament për ël cont $1.",
 	'editaccount-success-close' => 'Disabilità da bin ël cont $1.',
 	'editaccount-error-email' => "L'adrëssa ëd pòsta eletrònica e l'é pa stàita cambià. Ch'a preuva torna o ch'a contata l'Echip técnica.",
 	'editaccount-error-pass' => "La ciav a l'é pa stàita cangià. Ch'a preuva torna o ch'a contata l'Echip técnica.",
@@ -1296,7 +1296,7 @@ $messages['si'] = array(
 	'editaccount-submit-pass' => 'මුර පදය සුරකින්න',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  * @author Verlor
  */

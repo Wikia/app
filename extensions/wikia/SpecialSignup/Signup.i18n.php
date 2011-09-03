@@ -207,7 +207,7 @@ $messages['tl'] = array(
 	'signup' => 'Magpatala',
 );
 
-/** Татарча (Татарча)
+/** Tatar (Cyrillic script) (Татарча)
  * @author Zahidulla
  */
 $messages['tt-cyrl'] = array(

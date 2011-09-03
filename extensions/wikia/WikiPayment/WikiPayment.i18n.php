@@ -231,7 +231,7 @@ $messages['ru'] = array(
 	'wikipayment-paypal-profile-name' => 'Платные вики',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(

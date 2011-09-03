@@ -612,7 +612,7 @@ $messages['ia'] = array(
 	'scavengerhunt-entry-form-submit' => 'Submitter entrata',
 );
 
-/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -760,6 +760,7 @@ $messages['mk'] = array(
 	'scavengerhunt-label-clue-size' => 'Големина на фонтот',
 	'scavengerhunt-label-clue-font' => 'Украси на фонтот',
 	'scavengerhunt-label-article-congrats' => 'Порака за честитање',
+	'scavengerhunt-label-facebook' => 'Споделување на Facebook',
 	'scavengerhunt-editor-tip-name' => 'Ова е името што се појавува во списокот на сите потраги.',
 	'scavengerhunt-editor-tip-landing-title' => 'Ова е страницата кајшто одат корисниците за да ја започнат потрагата.',
 	'scavengerhunt-editor-tip-landing-button-text' => 'Ова е текстот на копчето за започнување (на пр. „Стиснете тука за да започнете со потрагата!“)',
@@ -789,6 +790,10 @@ $messages['mk'] = array(
 	'scavengerhunt-editor-tip-goodbye-text' => 'Ова е текстот на завршната скокачка порака на потрагата.',
 	'scavengerhunt-editor-tip-clue-color' => 'Боите треба да се претставени во хексадецимаен облик како #F00',
 	'scavengerhunt-editor-tip-entry-form-button-text' => 'Ова е текстот на копчето што се појавува во дијалогот на крајот од потрагата.',
+	'scavengerhunt-editor-tip-facebook-image' => 'Патека за сликата на викито на Целната страница во МедијаВики-стил. Пример: „Пример_за_слика.png“',
+	'scavengerhunt-editor-tip-facebook-description' => 'Текстот што ќе се прикажува при споделување на сликата',
+	'scavengerhunt-facebook-image' => 'Слика за споделување на Facebook',
+	'scavengerhunt-facebook-description' => 'Текс за споденото на Facebook',
 );
 
 /** Malay (Bahasa Melayu)
@@ -1269,7 +1274,23 @@ $messages['ro'] = array(
 	'scavengerhunt-entry-form-email' => 'Adresa ta de e-mail:',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Russian (Русский)
+ * @author Lvova
+ */
+$messages['ru'] = array(
+	'scavengerhunt-list-edit' => 'править',
+	'scavengerhunt-button-save' => 'Сохранить',
+	'scavengerhunt-button-delete' => 'Удалить',
+	'scavengerhunt-entry-form-name' => 'Ваше имя:',
+	'scavengerhunt-entry-form-email' => 'Ваш адрес электронной почты:',
+	'scavengerhunt-quit-game-button-quit' => 'Выход',
+	'scavengerhunt-label-entry-form-email' => 'Электронный адрес участника',
+	'scavengerhunt-label-entry-form-username' => 'Имя участника',
+	'scavengerhunt-label-clue-color' => 'Цвет шрифта',
+	'scavengerhunt-label-clue-size' => 'Размер шрифта',
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(

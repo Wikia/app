@@ -318,7 +318,7 @@ $messages['ru'] = array(
 	'wikiawidget' => 'Виджеты Wikia',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Verlor
  */
 $messages['sr-ec'] = array(
@@ -346,7 +346,7 @@ $messages['tl'] = array(
 	'wikiawidget' => 'Mga widyet ng Wikia',
 );
 
-/** Татарча (Татарча)
+/** Tatar (Cyrillic script) (Татарча)
  * @author Ильнар
  */
 $messages['tt-cyrl'] = array(
