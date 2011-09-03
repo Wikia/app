@@ -17,6 +17,7 @@
 // spammy or inviting disruptive vandalism (19px vandalism probably won't be AS offensive).
 exports.EMOTICON_WIDTH = 19;
 exports.EMOTICON_HEIGHT = 19;
+exports.EMOTICON_ARTICLE = "MediaWiki:Emoticons";
 
 
 /** FUNCTIONS **/
@@ -46,14 +47,6 @@ exports.doReplacements = function(text, emoticonMapping){
 	return text;
 } // end doReplacements()
 
-
-// TODO: Make a function to load the emoticon mapping for a given wiki (from Wikitext).
-// TODO: Make a function to load the emoticon mapping for a given wiki (from Wikitext).
-
-
-
-
-
 // class EmoticonMapping
 if(typeof EmoticonMapping === 'undefined'){
 	EmoticonMapping = function(){
@@ -68,6 +61,32 @@ if(typeof EmoticonMapping === 'undefined'){
 		this._settings = {
 			"http://images.wikia.com/lyricwiki/images/6/67/Smile001.gif": [":)", ":-)", "(smile)"],
 			"http://images3.wikia.nocookie.net/__cb20100822133322/lyricwiki/images/d/d8/Sad.png": [":(", ":-(", ":|"],
+		};
+		
+		/**
+		 * Convert our specific wikitext format into the hash of emoticons settings.  Overwrites all
+		 * of the existing settings (instead of merging).
+		 */
+		this.loadFromWikiText = function(wikiText){
+			self._settings = {}; // clear out old values
+
+			var emoticonArray = wikiText.split("\n");
+			var currentKey = '';
+
+			// Loop through array, construct object
+			for(var i=0; i<emoticonArray.length; i++) {
+				if (emoticonArray[i].indexOf('* ') == 0) {
+					var url = emoticonArray[i].substr(2);
+					self._settings[url] = [];
+					currentKey = url;
+				} else if (emoticonArray[i].indexOf('** ') == 0) {
+					var glyph = emoticonArray[i].substr(3);
+					self._settings[currentKey].push(glyph);
+				}
+			}
+		
+			// Clear out the regexes cache (they'll be rebuilt on-demand the first time this object is used).
+			self._regexes = {}; 
 		};
 
 		/**
