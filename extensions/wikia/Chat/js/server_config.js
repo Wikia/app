@@ -14,6 +14,7 @@ exports.NUM_MESSAGES_TO_SHOW_ON_CONNECT = 10;
 exports.AUTH_URL = "/?action=ajax&rs=ChatAjax&method=getUserInfo"; // do NOT add hostname into this URL.
 exports.KICKBAN_URL = "/?action=ajax&rs=ChatAjax&method=kickBan";
 exports.GIVECHATMOD_URL = "/?action=ajax&rs=ChatAjax&method=giveChatMod";
+exports.API_URL = "/api.php";
 exports.WIKIA_PROXY_HOST = "";
 exports.WIKIA_PROXY_PORT = "";
 

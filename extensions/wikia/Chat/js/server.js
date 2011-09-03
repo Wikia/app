@@ -162,24 +162,24 @@ function messageDispatcher(client, socket, data){
 		authConnection(client, socket, data)
 	} else {
 		// The user is authed. Check to make sure their client sessionId still exists. If it doesn't, we probably banned them.
-                var sessionId = false;
-                if(typeof client.myUser != 'undefined' && typeof client.myUser.get != 'undefined'){
-                        var sessionId = sessionIdsByKey[config.getKey_userInRoom(client.myUser.get('name'), client.roomId)];
-                }
-                if(sessionId === false || (typeof sessionId == "undefined") || (sessionId != client.sessionId)){
-                        client.json.send({
-                                event: 'forceReconnect'
-                        });
-                        // Message ignored. Log the reason.
-                        if(sessionId === false || typeof sessionId == "undefined"){
-                                console.log("GOT A MESSAGE WITH NO socket.io sessionId. ASSUMING THEY ARE BANNED AND SKIPPING.");
-                        } else if(sessionId != client.sessionId){
-                                var msg = "Got a message from a user with a mismatched client-id. This implies that the user sending the message ";
-                                msg += "(" + client.myUser.get('name');
-                                msg += ") has connected from a newer browser and the old browser which sent the message has been closed ";
-                                msg += "and is in the process of having its connection closed.";
-                                console.log(msg);
-                        }
+		var sessionId = false;
+		if(typeof client.myUser != 'undefined' && typeof client.myUser.get != 'undefined'){
+				var sessionId = sessionIdsByKey[config.getKey_userInRoom(client.myUser.get('name'), client.roomId)];
+		}
+		if(sessionId === false || (typeof sessionId == "undefined") || (sessionId != client.sessionId)){
+			client.json.send({
+					event: 'forceReconnect'
+			});
+			// Message ignored. Log the reason.
+			if(sessionId === false || typeof sessionId == "undefined"){
+					console.log("GOT A MESSAGE WITH NO socket.io sessionId. ASSUMING THEY ARE BANNED AND SKIPPING.");
+			} else if(sessionId != client.sessionId){
+					var msg = "Got a message from a user with a mismatched client-id. This implies that the user sending the message ";
+					msg += "(" + client.myUser.get('name');
+					msg += ") has connected from a newer browser and the old browser which sent the message has been closed ";
+					msg += "and is in the process of having its connection closed.";
+					console.log(msg);
+			}
 		} else {
 			// The user is authenticated.  Dispatch to appropriate place for the message.
 			var dataObj;
@@ -343,6 +343,19 @@ function authConnection(client, socket, authData){
 									});
 								}
 							});
+
+							// Asynchronously load the emoticon settings for this wiki, into the client object that just connected.
+							// PERFORMANCE NOTE: We could cache the emoticonMapping per-wiki in redis for a certain amount of time but we'd have to worry about purging or reasonable expiration.
+							// Currently, we just rely on the fact that Varnish will cache the API result (which will then be purged if there are updates).
+							console.log("Starting request to get emoticons for '" + data.username + "'...");
+							var emoticonMapping = new EmoticonMapping();
+							getWikiText(httpClient, wikiHostname, emoticons.EMOTICON_ARTICLE, function(wikiText){
+								var emoticonMapping = new EmoticonMapping();
+								emoticonMapping.loadFromWikiText( wikiText );
+								client.emoticonMapping = emoticonMapping;
+								console.log("Done getting emoticons for '" + data.username + "'.");
+							});
+
 						} else {
 							console.log("User try to conect with someone else private room");
 							//it is hack attempts no meesage for this
@@ -1053,14 +1066,20 @@ function processText(text, client) {
 		var url = path.replace("$1", article);
 		return '<a href="' + url + '">' + linkText + '</a>';
 	});
-	
+
+
 	// Process emoticons (should be done after the linking because the link code is searching for URLs and the emoticons contain URLs).
 
-	// TODO: Load the emoticon mapping for the wiki (this is just default for now... need to get it from the wiki).
-	var emoticonMapping = new EmoticonMapping();
+	// Load the emoticon mapping. Since the mapping is loaded async for the client, the wiki-specific settings may not
+	// have arrived yet... in that case, falls back to the default for this message.
+	var emoticonMapping;
+	if(typeof client.emoticonMapping === 'undefined'){
+		emoticonMapping = new EmoticonMapping();
+	} else {
+		emoticonMapping = client.emoticonMapping;
+	}
 
 	// Replace appropriate shortcuts in the text with the emoticons.
-	console.log("\n\n\n\n\n\n=============== About to do emoticon replacements."); // TODO: REMOVE THIS AFTER DONE DEBUGGING
 	text = emoticons.doReplacements(text, emoticonMapping);
 
 	return text;
@@ -1088,3 +1107,76 @@ function debugObject(obj, padding){
 		console.log(padding + "Not an object: " + obj);
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * Given an already set-up httpClient, a wiki hostname, and the page-title of an article
+ * on that hostname, fetches the wikitext via the MediaWiki API and passes the wikitext
+ * to the callback.  If the call to the API doesn't work, the callback will not be called.
+ */
+function getWikiText(httpClient, wikiHostname, pageTitle, callback){
+	// Trying to fetch the wikitext of the emoticon page.
+	var requestHeaders = {
+		'Host': wikiHostname
+	};
+	//http://lyrics.sean.wikia-dev.com/api.php?action=query&prop=revisions&titles=MediaWiki:Emoticons&rvprop=content&format=jsonfm <-- human-readable json
+	var requestUrl = config.API_URL + "?action=query&prop=revisions&rvprop=content&format=json&titles=" + pageTitle ;
+	var httpRequest = httpClient.request("GET", requestUrl, requestHeaders);
+	httpRequest.addListener("response", function (response) {
+		//debugObject(client.request.headers);
+		var responseBody = "";
+		//response.setBodyEncoding("utf8");
+		response.addListener("data", function(chunk) {
+			responseBody += chunk;
+		});
+		response.addListener("end", function() {
+			try{
+				data = JSON.parse(responseBody);
+			} catch(e){
+				console.log("Error: while parsing result of API call for wikitext. Error was: ");
+				console.log(e);
+				console.log("Response that didn't parse was:\n" + responseBody);
+			}
+
+			var wikiText = "";
+			//console.log("=============API data================");
+			//console.log(data);
+
+			// Is there a less messy way to dig down to the value without all of these checks?
+			if(data && data.query && data.query.pages){
+				var pages = data.query.pages;
+				if(pages){
+					var pagesKeys = Object.keys(pages);
+					if(pagesKeys[0] && pages[pagesKeys[0]] && pages[pagesKeys[0]].revisions){
+						var revisions = pages[pagesKeys[0]].revisions;
+						if(revisions && revisions[0]){
+							var rev = revisions[0];
+							if(rev && rev['*']){
+								wikiText = rev['*'];
+								console.log("Fetched wikitext: \n" + wikiText);
+							}
+						}
+					}
+				}
+			}
+			//console.log("=============/API data================");
+
+			callback(wikiText);
+		});
+	});
+	httpRequest.end();
+
+} // end getWikiText()
