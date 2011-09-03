@@ -725,7 +725,7 @@ Wikia
 	'globalwatchlist-no-blog-page-found' => 'Не найдено страниц блогов.',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Charmed94
  * @author Rancher
  * @author Verlor

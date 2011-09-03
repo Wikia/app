@@ -502,7 +502,7 @@ $messages['krc'] = array(
 	'wikiavideo-intro-old' => "Сиз [$4 $3, $2] тамалы болгъан  '''[$1 $5]''' версияны кетересиз .",
 );
 
-/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -786,7 +786,7 @@ $messages['sl'] = array(
 	'wikiavideo-back' => 'nazaj',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Charmed94
  * @author Rancher
  * @author Verlor

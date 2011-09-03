@@ -392,7 +392,7 @@ $messages['ksh'] = array(
 	'protectsite-comment' => 'Jrond:',
 );
 
-/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -605,7 +605,7 @@ $messages['pms'] = array(
 	'protectsite-until' => 'Protegiù fin-a a:',
 	'protectsite-protect' => 'Protet',
 	'protectsite-unprotect' => 'Dësprotege',
-	'protectsite-nologs' => 'mosta pa ant ij registr',
+	'protectsite-nologs' => 'mostré nen ant ij registr',
 );
 
 /** Pashto (پښتو)
@@ -719,7 +719,7 @@ $messages['ru'] = array(
 	'protectsite-nologs' => 'не записывать в журнал',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  * @author Verlor
  * @author Жељко Тодоровић

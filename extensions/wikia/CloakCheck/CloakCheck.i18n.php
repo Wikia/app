@@ -276,7 +276,7 @@ $messages['ja'] = array(
 	'cloakcheck-process-edits-no' => '編集回数が不足しています。',
 );
 
-/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -508,7 +508,7 @@ $messages['ru'] = array(
 	'cloakcheck-process-edits-no' => 'Участником не сделано необходимого числа правок.',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(

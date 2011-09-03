@@ -167,7 +167,7 @@ $messages['ksh'] = array(
 	'loggernoresult' => 'Nix jefonge',
 );
 
-/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -304,7 +304,7 @@ $messages['ru'] = array(
 	'loggernoresult' => 'Ничего не найдено',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(

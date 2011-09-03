@@ -1366,7 +1366,7 @@ $PAGETITLE_URL
 <a href="{{fullurl:Special:Preferences}}">{{fullurl:Special:Preferences}}</a></p>',
 );
 
-/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -1979,7 +1979,7 @@ Dodaj strony do listy klikając „{{int:watch}}“ na górze strony.',
  */
 $messages['pms'] = array(
 	'follow-desc' => "Ameliorament për la funsionalità ëd lòn ch'as ten sot euj",
-	'prefs-basic' => 'Opsion base',
+	'prefs-basic' => 'Opsion ëd base',
 	'wikiafollowedpages-special-heading-category' => 'Categorìe ($1)',
 	'wikiafollowedpages-special-heading-article' => 'Artìcoj ($1)',
 	'wikiafollowedpages-special-heading-blogs' => 'Scartari e artìcoj ($1)',
@@ -1990,8 +1990,8 @@ $messages['pms'] = array(
 	'wikiafollowedpages-special-heading-mediawiki' => 'Pàgine ëd MediaWiki ($1)',
 	'wikiafollowedpages-special-heading-media' => 'Figure e filmà ($1)',
 	'wikiafollowedpages-special-namespace' => '(Pàgina $1)',
-	'wikiafollowedpages-special-empty' => 'La lista dle toe pàgine tnùe sot euj a l\'é veuida.
-Ch\'a gionta dle pàgine a costa lista an sgnacand "{{int:watch}}" an cò dla pàgina.',
+	'wikiafollowedpages-special-empty' => 'La lista dle pàgine che chiel a ten sot-euj a l\'é veuida.
+Ch\'a gionta dle pàgine a costa lista an sgnacand "{{int:watch}}" an cò ëd na pàgina.',
 	'wikiafollowedpages-special-anon' => "Për piasì ch'a [[Special:Signup|intra ant ël sistema]] për creé o vardé soa lista dle pàgine tnùe sot euj.",
 	'oasis-wikiafollowedpages-special-seeall' => 'Varda tut >',
 	'wikiafollowedpages-special-seeall' => 'Varda tut >',
@@ -2008,7 +2008,7 @@ Ch\'a gionta dle pàgine a costa lista an sgnacand "{{int:watch}}" an cò dla p�
 	'tog-enotiffollowedpages' => "Mandeme un mëssagi an pòsta eletrònica quand che na pàgina ch'im ten-o sot euj a l'é modìficà",
 	'tog-enotiffollowedminoredits' => "Mandeme un mëssagi an pòsta eletrònica për dle modìfiche cite a le pàgine ch'im ten-o sot euj",
 	'prefs-wikiafollowedpages-prefs-advanced' => 'Opsion avansà',
-	'prefs-wikiafollowedpages-prefs-watchlist' => 'Mach lista tnàa sot euj',
+	'prefs-wikiafollowedpages-prefs-watchlist' => 'Mach la lista dla ròba tnùa sot-euj',
 	'tog-hidefollowedpages' => "Rende privà le liste dle pàgine ch'im ten-o sot euj",
 	'follow-categoryadd-summary' => 'Pàgine giontà a la categorìa',
 	'follow-bloglisting-summary' => 'Scartari scrivù an sla pàgina djë scartari',
@@ -2460,7 +2460,7 @@ ___________________________________________
 </p>',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(

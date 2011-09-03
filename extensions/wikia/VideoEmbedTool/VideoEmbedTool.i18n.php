@@ -106,6 +106,7 @@ $messages['qqq'] = array(
 	'vet-close' => '{{Identical|Close}}',
 	'vet-left' => '{{Identical|Left}}',
 	'vet-right' => '{{Identical|Right}}',
+	'vet-gallery' => '{{Identical|Gallery}}',
 );
 
 /** Abkhazian (Аҧсуа)
@@ -1306,7 +1307,7 @@ $messages['ksh'] = array(
 	'vet-upload-btn' => 'Lohß Jonn!',
 );
 
-/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -2209,7 +2210,7 @@ $messages['sl'] = array(
 	'vet-back' => 'Nazaj',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  * @author Verlor
  */

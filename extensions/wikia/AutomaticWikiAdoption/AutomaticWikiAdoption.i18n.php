@@ -1432,7 +1432,7 @@ $messages['ru'] = array(
 [[Special:UserRights|Управление правами участников]]',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(

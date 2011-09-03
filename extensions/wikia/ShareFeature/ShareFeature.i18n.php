@@ -334,7 +334,7 @@ $messages['ru'] = array(
 	'sf-link-tooltip' => 'Поделиться ссылкой на статью с друзьями',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  * @author Verlor
  */

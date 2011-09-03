@@ -420,7 +420,7 @@ $messages['ja'] = array(
 	'right-multilookup' => '複数ウィキにおけるユーザの情報を閲覧',
 );
 
-/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -767,7 +767,7 @@ $messages['ru'] = array(
 	'right-multilookup' => 'просмотр сведений об участниках в нескольких вики',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  * @author Verlor
  */
@@ -862,7 +862,7 @@ $messages['tl'] = array(
 	'right-multilookup' => 'Kabatirang panghanap sa mga tagagamit na nasa maramihang mga wiki',
 );
 
-/** Татарча (Татарча)
+/** Tatar (Cyrillic script) (Татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(

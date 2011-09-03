@@ -486,7 +486,7 @@ $messages['ko'] = array(
 	'wikiaquiz-facebook-creative' => '{{SITENAME}}에서 $1 퀴즈를 진행해보세요.',
 );
 
-/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(

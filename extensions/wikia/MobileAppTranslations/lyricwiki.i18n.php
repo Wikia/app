@@ -669,6 +669,15 @@ $messages['pl'] = array(
 	'ringtone-matcher-by-song' => 'Wyślij %s jako dzwonek na Twój telefon',
 );
 
+/** Russian (Русский)
+ * @author Lvova
+ */
+$messages['ru'] = array(
+	'app-async-error-title' => 'Ой',
+	'login-username-hint' => 'Имя участника',
+	'login-password-hint' => 'Пароль',
+);
+
 /** Swedish (Svenska)
  * @author Nghtwlkr
  * @author WikiPhoenix

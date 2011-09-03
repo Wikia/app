@@ -264,7 +264,7 @@ $messages['ru'] = array(
 	'quickcreate' => 'отправить свой рецепт',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Charmed94
  * @author Rancher
  * @author Verlor
@@ -290,7 +290,7 @@ $messages['tl'] = array(
 	'quickcreate' => 'ipasa ang iyong reseta',
 );
 
-/** Татарча (Татарча)
+/** Tatar (Cyrillic script) (Татарча)
  * @author Ильнар
  */
 $messages['tt-cyrl'] = array(

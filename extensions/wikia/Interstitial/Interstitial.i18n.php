@@ -267,7 +267,7 @@ $messages['ru'] = array(
 	'exitstitial-button' => 'Пропустить эту рекламу',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(

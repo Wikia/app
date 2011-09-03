@@ -795,7 +795,7 @@ $messages['si'] = array(
 	'blog-avatar-nouser' => 'මෙම පරිශීලකයා සොයාගත නොහැකිය!',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(

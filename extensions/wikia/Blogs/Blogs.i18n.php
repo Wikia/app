@@ -1966,7 +1966,7 @@ $messages['ksh'] = array(
 	'blug-cut-sign' => '&nbsp;…',
 );
 
-/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -3295,7 +3295,7 @@ $messages['sl'] = array(
 	'blog-comment-history' => 'zgodovina',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  * @author Verlor
  */

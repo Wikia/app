@@ -782,7 +782,7 @@ $messages['ru'] = array(
 	'comboajaxlogin-ajaxerror' => 'Викия не отвечает. Пожалуйста, проверьте подключение к сети.',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(

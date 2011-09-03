@@ -999,7 +999,7 @@ $messages['ru'] = array(
 	'group-bannedfromchat-member' => 'Забанен в чате',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(

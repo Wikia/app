@@ -782,7 +782,7 @@ $messages['sl'] = array(
 	'categoryselect-button-save' => 'Shrani',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  * @author Verlor
  */
@@ -877,7 +877,7 @@ $messages['tr'] = array(
 	'categoryselect-button-cancel' => 'İptal',
 );
 
-/** Татарча (Татарча)
+/** Tatar (Cyrillic script) (Татарча)
  * @author Zahidulla
  */
 $messages['tt-cyrl'] = array(

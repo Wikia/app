@@ -319,7 +319,7 @@ $messages['ksh'] = array(
 	'sponsor-template' => '<li><a href="http://$1" rel="nofollow">$2</a><br />$3</li>',
 );
 
-/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -585,7 +585,7 @@ $messages['sl'] = array(
 	'sponsorpage-save' => 'Shrani',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -657,7 +657,7 @@ $messages['tl'] = array(
 	'sponsorpage-save' => 'Sagipin',
 );
 
-/** Татарча (Татарча)
+/** Tatar (Cyrillic script) (Татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(

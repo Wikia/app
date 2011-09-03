@@ -665,7 +665,7 @@ $messages['ce'] = array(
 	'renameuser' => 'Декъашхочуьна цlе хийца',
 );
 
-/** Crimean Turkish (Latin) (‪Qırımtatarca (Latin)‬)
+/** Crimean Turkish (Latin script) (‪Qırımtatarca (Latin)‬)
  * @author Alessandro
  */
 $messages['crh-latn'] = array(
@@ -675,7 +675,7 @@ $messages['crh-latn'] = array(
 	'userrenametool-log' => '{{PLURAL:$1|1 deñişiklik|$1 deñişiklik}} yapqan. Sebep: $2',
 );
 
-/** Crimean Turkish (Cyrillic) (‪Къырымтатарджа (Кирилл)‬)
+/** Crimean Turkish (Cyrillic script) (‪Къырымтатарджа (Кирилл)‬)
  * @author Alessandro
  */
 $messages['crh-cyrl'] = array(
@@ -1119,8 +1119,10 @@ $messages['ext'] = array(
 
 /** Persian (فارسی)
  * @author Huji
+ * @author Mjbmr
  */
 $messages['fa'] = array(
+	'userrenametool' => 'تغییر یک نام کاربر',
 	'renameuser' => 'تغییر نام کاربر',
 	'userrenametool-desc' => "نام یک کاربر را تغییر می‌دهد (نیازمند برخورداری از اختیارات ''تغییرنام'' است)",
 	'userrenametool-old' => 'نام کاربری فعلی:',
@@ -1128,6 +1130,7 @@ $messages['fa'] = array(
 	'userrenametool-reason' => 'علت تغییر نام کاربری:',
 	'userrenametool-move' => 'صفحه کاربر و صفحه بحث کاربر (و زیر صفحه‌های آن‌ها) را به نام جدید انتقال بده',
 	'userrenametool-reserve' => 'نام کاربری قبلی را در مقابل استفادهٔ مجدد حفظ کن',
+	'userrenametool-notify-renamed' => 'ارسال پست الکترونیکی به کاربر تغییر نام داده شده، در هنگام اتمام کار.',
 	'userrenametool-warnings' => 'هشدار:',
 	'userrenametool-confirm' => 'بله، نام کاربر را تغییر بده',
 	'userrenametool-submit' => 'ثبت',
@@ -1484,7 +1487,7 @@ $messages['hi'] = array(
 	'right-renameuser' => 'सदस्योंके नाम बदलें',
 );
 
-/** Fiji Hindi (Fiji Hindi)
+/** Fiji Hindi (Latin script) (Fiji Hindi)
  * @author Thakurji
  */
 $messages['hif-latn'] = array(
@@ -2122,7 +2125,7 @@ Bes esu joot un versöök et noch ens.',
 	'right-renameuser' => 'Metmaacher ömdäufe',
 );
 
-/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -3431,7 +3434,7 @@ $messages['sq'] = array(
 	'userrenametool-log' => '{{PLURAL:$1|1 redaktim|$1 redaktime}}. Arsyeja: $2',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Millosh
  * @author Rancher
  * @author Sasa Stefanovic
@@ -3473,7 +3476,7 @@ $messages['sr-ec'] = array(
 	'right-renameuser' => 'преименовање корисничких имена',
 );
 
-/** Serbian Latin ekavian (‪Srpski (latinica)‬) */
+/** Serbian (Latin script) (‪Srpski (latinica)‬) */
 $messages['sr-el'] = array(
 	'renameuser' => 'Preimenuj korisnika',
 	'right-renameuser' => 'preimenovanje korisničkih imena',
@@ -3668,7 +3671,7 @@ $messages['tet'] = array(
 	'right-renameuser' => "Fó naran foun ba uza-na'in sira",
 );
 
-/** Тоҷикӣ (Тоҷикӣ)
+/** Tajik (Cyrillic script) (Тоҷикӣ)
  * @author Ibrahim
  */
 $messages['tg-cyrl'] = array(
@@ -3700,7 +3703,7 @@ $messages['tg-cyrl'] = array(
 	'right-renameuser' => 'Тағйири номи корбарон',
 );
 
-/** tojikī (tojikī) */
+/** Tajik (Latin script) (tojikī) */
 $messages['tg-latn'] = array(
 	'renameuser' => 'Taƣjiri nomi korbarī',
 	'right-renameuser' => 'Taƣjiri nomi korbaron',

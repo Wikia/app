@@ -2740,7 +2740,7 @@ $messages['ja'] = array(
 	'galery-slider-read-more' => ' さらに読む >',
 );
 
-/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -4691,7 +4691,7 @@ $messages['sl'] = array(
 	'wikiaPhotoGallery-back' => 'Nazaj',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(

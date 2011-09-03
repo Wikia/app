@@ -1673,7 +1673,7 @@ $messages['ksh'] = array(
 	'myhome-feed-redirect-details' => 'Ömleidung',
 );
 
-/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -2323,7 +2323,7 @@ $messages['pms'] = array(
 La wiki a l'é fàita da la comunità, e na vira ch'a sgnaca ël boton ëd modìfica, chiel a l'é part ëd la comunità. Ch'a fasa la preuva!",
 	'myhome-hot-spots-number-of-editors' => 'editor',
 	'myhome-log-in' => "<center>La funsion Mia Intrada a l'é disponìbil mach s'a l'é intrà ant ël sistema.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Ch'a intra ant ël sistema për vëdde sta pàgina-sì!]'''</big></center>",
-	'myhome-switch-to-monaco' => "La funsion WikiActivity a l'é mach disponìbil s'a deuvra la pel Wikia. S'a vorèissa vardé Mia Intrada, për piasì ch'a vìsita '''[[Special:Preferences|sò Gust]]''' për cangé soa pel.",
+	'myhome-switch-to-monaco' => "La funsion WikiActivity a l'é mach disponìbil s'a deuvra la pel Wikia. S'a vorèissa vardé Mia Intrada, për piasì ch'a vìsita ij '''[[Special:Preferences|sò Gust]]''' për cangé soa pel.",
 	'myhome-namespace-blog' => 'Scartari',
 	'myhome-community-corner-header' => 'Mëssagi ëd la Comunità',
 	'oasis-myhome-community-corner-edit' => 'modifiché ël mëssagi &gt;',
@@ -2721,7 +2721,7 @@ $messages['sl'] = array(
 	'myhome-feed-summary-details' => 'Povzetek',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  * @author Verlor
  * @author Жељко Тодоровић
@@ -3074,7 +3074,7 @@ $messages['tr'] = array(
 	'tooltip-pt-myhome' => 'Evime git',
 );
 
-/** Татарча (Татарча)
+/** Tatar (Cyrillic script) (Татарча)
  * @author Ajdar
  * @author Ильнар
  */

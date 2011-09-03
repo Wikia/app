@@ -251,7 +251,7 @@ $messages['ksh'] = array(
 	'ircgate-channel' => 'Kanaal:',
 );
 
-/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -414,7 +414,7 @@ $messages['si'] = array(
 	'ircgate-channel' => 'චැනලය:',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Verlor
  */
 $messages['sr-ec'] = array(

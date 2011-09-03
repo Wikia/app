@@ -160,10 +160,11 @@ $messages['pl'] = array(
 );
 
 /** Piedmontese (Piemontèis)
+ * @author Borichèt
  * @author Dragonòt
  */
 $messages['pms'] = array(
-	'skinchooser-desc' => "A përmëtt a j'utent ëd serne jë skint ant ij Sò Gust",
+	'skinchooser-desc' => "A përmët a j'utent ëd serne dle pel ant ij Sò Gust",
 	'skinchooser-customcss' => "Për ij tema përsonalisà, selession-a j'opsion përsonalisà ant ël menu dzora e specìfica ij CSS përsonalisà an [[MediaWiki:Monaco.css]].",
 	'new-look' => 'Presentassion Neuva ëd Wikia',
 	'site-layout' => 'Presentassion dël sit',
@@ -196,7 +197,7 @@ $messages['ru'] = array(
 	'skinchooser-desc' => 'Позволяет участникам выбирать оболочки в личных настройках',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(

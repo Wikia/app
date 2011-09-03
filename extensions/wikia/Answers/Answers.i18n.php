@@ -473,10 +473,12 @@ $messages['lb'] = array(
 	'in_category' => '...an der Kategorie',
 	'ask_button' => 'Froen',
 	'new_question_comment' => 'nei Fro',
+	'improve_this_answer' => 'Dës Äntwert verbesseren',
 	'answer_this_question' => 'Dës Fro beäntweren:',
 	'research_this' => 'Dëst nosichen',
 	'recent_asked_questions' => 'Rezent gestallte Froen',
 	'answered_category' => 'Beäntwert Froen',
+	'category' => 'Numm vun der Kategorie',
 	'ads_by_google' => 'Reklamme vu Google',
 	'reword_this' => '<a href="$1" $2>Dës Fro nei formuléieren</a>',
 );
@@ -1043,8 +1045,12 @@ $messages['roa-tara'] = array(
 	'research_this' => 'Cerche quiste',
 );
 
-/** Russian (Русский) */
+/** Russian (Русский)
+ * @author Lvova
+ */
 $messages['ru'] = array(
+	'in_category' => '…в категории',
+	'question_asked_by' => 'Вопрос, заданный',
 	'research_this' => 'Исследовать',
 );
 
@@ -1177,7 +1183,7 @@ $messages['tl'] = array(
 	'research_this' => 'Saliksikin ito',
 );
 
-/** Татарча (Татарча)
+/** Tatar (Cyrillic script) (Татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(

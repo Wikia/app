@@ -781,7 +781,7 @@ $messages['ksh'] = array(
 	'enotif_subject_article_comment' => '$PAGEEDITOR hädd_en Aanmärkong zoh "$PAGETITLE" op {{SITENAME}} jemaat.',
 );
 
-/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -1189,6 +1189,7 @@ $messages['ps'] = array(
 
 /** Portuguese (Português)
  * @author Hamilton Abreu
+ * @author Malafaya
  * @author SandroHc
  * @author Waldir
  */
@@ -1211,6 +1212,7 @@ $messages['pt'] = array(
 	'article-comments-login' => 'Por favor, <a href="$1">autentique-se</a> para publicar um comentário nesta wiki.',
 	'article-comments-toc-item' => 'Comentários',
 	'article-comments-comment-cannot-add' => 'Não pode adicionar um comentário ao artigo.',
+	'article-comments-vote' => 'Voto positivo',
 	'article-comments-reply' => 'Responder',
 	'article-comments-show-all' => 'Mostrar todos os comentários',
 	'article-comments-prev-page' => 'Anterior',
@@ -1517,7 +1519,7 @@ $messages['tr'] = array(
 	'article-comments-next-page' => 'Sonraki',
 );
 
-/** Татарча (Татарча)
+/** Tatar (Cyrillic script) (Татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(

@@ -112,7 +112,7 @@ $messages['qqq'] = array(
 	'rte-ck-hoverPreview-edit' => '{{Identical|Edit}}',
 	'rte-ck-link-error-title' => '{{Identical|Error}}',
 	'rte-ck-link-external-tab' => '{{Identical|Liên kết ngoài}}',
-	'rte-ck-link-internal-pageName' => 'Tên trang',
+	'rte-ck-link-internal-pageName' => '{{Identical|Page name}}',
 	'rte-ck-link-internal-tab' => '{{Identical|Internal link}}',
 	'rte-ck-link-status-external' => '{{Identical|External link}}',
 	'rte-ck-media-delete' => '{{Identical|Remove}}',
@@ -1222,7 +1222,7 @@ $messages['ksh'] = array(
 	'rte-ck-hoverPreview-comment-title' => 'Aanmerkung',
 );
 
-/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -2241,7 +2241,7 @@ $messages['ru'] = array(
 	'rte-ck-clipboard-pasteMsg' => 'По соображениям безопасности, редактор не может получить доступ к вашему буферу обмена. Пожалуйста, вставьте в поле ниже с помощью сочетаний клавиш (Ctrl / Cmd + V) и нажмите «OK». <br /><br /> Примечание: ваш текст будет лишён форматирование, чтобы избежать создания сложного викитекста.',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -2601,7 +2601,7 @@ $messages['tr'] = array(
 	'rte-ck-widescreen-toggle' => 'Geniş ekran',
 );
 
-/** Татарча (Татарча)
+/** Tatar (Cyrillic script) (Татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(

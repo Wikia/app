@@ -306,7 +306,7 @@ $messages['shi'] = array(
 	'staffpowers-ipblock-aborted' => 'Ur  as tufit ad tqnt f midn n trabbut n Wikia. Tzḍart ad tswwurt s [[Special:Contact]] bac adaɣ tmlt timukrisin lli dark illan d tarabbut nɣ',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Charmed94
  * @author Rancher
  */

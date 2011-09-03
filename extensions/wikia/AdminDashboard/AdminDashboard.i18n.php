@@ -71,6 +71,24 @@ $messages['az'] = array(
 	'admindashboard-control-multiple-upload-label' => 'Çox sayda şəkil əlavə et',
 );
 
+/** Czech (Česky)
+ * @author Mr. Richard Bolla
+ */
+$messages['cs'] = array(
+	'admindashboard-toolbar-link' => 'Správce',
+	'admindashboard-tab-advanced' => 'Pokročilé',
+	'admindashboard-tab-general' => 'Obecné',
+	'admindashboard-controls-wiki-header' => 'Wiki',
+	'admindashboard-control-theme-designer-label' => 'Designér motivu.',
+	'admindashboard-control-recent-changes-label' => 'Poslední změny',
+	'admindashboard-control-user-list-label' => 'Seznam uživatelů',
+	'admindashboard-control-invite-label' => 'Pozvat',
+	'admindashboard-control-help-label' => 'Pomoc',
+	'admindashboard-control-help-tooltip' => 'Najít pomoc.',
+	'admindashboard-controls-content-header' => 'Obsah',
+	'admindashboard-control-community-corner-label' => 'Komunitní koutek',
+);
+
 /** German (Deutsch)
  * @author LWChris
  */

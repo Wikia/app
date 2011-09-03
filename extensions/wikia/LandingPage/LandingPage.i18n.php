@@ -340,7 +340,7 @@ $messages['ru'] = array(
 	'landingpage-buttons-learn-more' => 'Подробнее &gt;',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(

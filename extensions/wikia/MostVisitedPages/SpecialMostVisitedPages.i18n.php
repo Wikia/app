@@ -295,7 +295,7 @@ $messages['kn'] = array(
 	'mostvisitedpagesalllink' => 'ಅತ್ಯಂತ ಹೆಚ್ಚು ಭೇಟಿಕೊಟ್ಟ ಪುಟಗಳನ್ನು ನೋಡಿ',
 );
 
-/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -477,7 +477,7 @@ $messages['sl'] = array(
 	'mostvisitedpagesalllink' => 'Ogled najbolj obiskanih strani',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Charmed94
  * @author Rancher
  * @author Verlor

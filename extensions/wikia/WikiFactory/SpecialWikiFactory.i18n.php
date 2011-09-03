@@ -3379,7 +3379,7 @@ media art.',
 	'awc-metrics-images' => 'Figure',
 	'awc-metrics-all-users' => 'Utent<br />
 reg.',
-	'awc-metrics-all-users-edit-main-ns' => 'Utent reg.<br />(Content NS)',
+	'awc-metrics-all-users-edit-main-ns' => 'Utent argistrà<br />(Spassi nominal ëd contnù)',
 	'awc-metrics-pageviews' => 'Visualisassion<br />
 pàgine',
 	'awc-metrics-statistics' => 'Statìstiche (media për tùit ij mèis)',
@@ -3943,7 +3943,7 @@ $messages['sl'] = array(
 	'closed-reason' => 'Razlog:',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Charmed94
  * @author Rancher
  * @author Verlor
@@ -4373,7 +4373,7 @@ $messages['tl'] = array(
 	'closed-reason' => 'Dahilan:',
 );
 
-/** Татарча (Татарча)
+/** Tatar (Cyrillic script) (Татарча)
  * @author Ajdar
  * @author Ильнар
  */

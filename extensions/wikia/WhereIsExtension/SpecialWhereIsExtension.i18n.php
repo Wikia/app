@@ -307,9 +307,10 @@ $messages['ia'] = array(
 /** Indonesian (Bahasa Indonesia)
  * @author Farras
  * @author Irwangatot
+ * @author Kenrick95
  */
 $messages['id'] = array(
-	'whereisextension' => 'Dimana ekstensi',
+	'whereisextension' => 'Di mana ekstensi',
 	'whereisextension-submit' => 'Cari',
 	'whereisextension-list' => 'Daftar wiki dengan kriteria yang cocok',
 	'whereisextension-isset' => 'diatur ke',
@@ -372,7 +373,7 @@ $messages['ksh'] = array(
 	'whereisextension-search-type' => 'Tüp:',
 );
 
-/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -604,7 +605,7 @@ $messages['sl'] = array(
 	'whereisextension-search-type-full' => 'Kot',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Charmed94
  * @author Rancher
  * @author Verlor

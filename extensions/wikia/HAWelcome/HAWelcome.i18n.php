@@ -1123,7 +1123,7 @@ $messages['ru'] = array(
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|справочный форум]] | [[w:sblog|блог]])</small>',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Charmed94
  * @author Rancher
  * @author Verlor

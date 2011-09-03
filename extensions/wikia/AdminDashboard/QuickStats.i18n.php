@@ -90,6 +90,7 @@ $messages['gl'] = array(
  */
 $messages['lb'] = array(
 	'quickstats-header-date' => 'Datum',
+	'quickstats-header-edits' => 'Ännerungen',
 	'quickstats-header-photos' => 'Fotoen',
 	'quickstats-header-likes' => 'Hunn ech gär',
 );
@@ -187,7 +188,7 @@ $messages['ru'] = array(
 	'quickstats-number-shortening' => '$1K',
 );
 
-/** Татарча (Татарча)
+/** Tatar (Cyrillic script) (Татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(

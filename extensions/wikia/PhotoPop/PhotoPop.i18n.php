@@ -53,12 +53,19 @@ $messages['fr'] = array(
  */
 $messages['mk'] = array(
 	'photopop' => 'Матна слика',
+	'photopop-title-tag-homescreen' => 'Фотоскок',
+	'photopop-title-tag-selectorscreen' => 'Фотоскок',
+	'photopop-title-tag-playgame' => 'Фотоскок - $1 $2',
 	'photopop-desc' => 'Создава страница кајшто се игра играта „Матна слика“ (Foggy Foto) во HTML5 + Canvas. Ќе биде достапна преку прилозите (API) на Nirvana',
-	'photopop-score' => 'Бодови: <span>$1</span>',
+	'photopop-score' => 'резултат: <span>$1</span>',
 	'photopop-progress' => 'Слики: <span>$1</span>',
 	'photopop-progress-numbers' => '$1/$2',
 	'photopop-continue-correct' => 'ТОЧНО!',
 	'photopop-continue-timeup' => 'ВРЕМЕТО ИСТЕЧЕ!',
+	'photopop-finished-heading' => 'готово!',
+	'photopop-endgame-highscore-summary' => 'најдобар резултат: $1',
+	'photopop-endgame-completion-summary' => 'погодивте $1 од $2.',
+	'photopop-endgame-score-summary' => 'резултат: $1',
 );
 
 /** Malay (Bahasa Melayu)
@@ -66,11 +73,18 @@ $messages['mk'] = array(
  */
 $messages['ms'] = array(
 	'photopop' => 'Permainan Foggy Foto',
+	'photopop-title-tag-homescreen' => 'Photo Pop',
+	'photopop-title-tag-selectorscreen' => 'Photo Pop',
+	'photopop-title-tag-playgame' => 'Photo Pop - $1 $2',
 	'photopop-desc' => 'Mewujudkan laman permainan Foggy Foto di HTML5 + Canvas. Boleh dicapai melalui API Nirvana',
 	'photopop-score' => 'Markah: <span>$1</span>',
 	'photopop-progress' => 'Gambar: <span>$1</span>',
 	'photopop-continue-correct' => 'YA, BETUL!',
 	'photopop-continue-timeup' => 'MASA DAH TAMAT!',
+	'photopop-finished-heading' => 'siap!',
+	'photopop-endgame-highscore-summary' => 'markah tertinggi: $1',
+	'photopop-endgame-completion-summary' => 'anda menjawab betul $1 daripada $2.',
+	'photopop-endgame-score-summary' => 'markah: $1',
 );
 
 /** Dutch (Nederlands)

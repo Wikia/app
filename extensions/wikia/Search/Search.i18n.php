@@ -294,7 +294,7 @@ $messages['jam'] = array(
 	'wikiasearch-image-results' => 'Imij Rizolt fi "$1"',
 );
 
-/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -485,7 +485,7 @@ $messages['ru'] = array(
 	'wikiasearch-image-results' => 'Результаты поиска изображения для «$1»',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  * @author Verlor
  */
@@ -555,7 +555,7 @@ $messages['tl'] = array(
 	'wikiasearch-image-results' => 'Mga Kinalabasang Larawan para sa "$1"',
 );
 
-/** Татарча (Татарча)
+/** Tatar (Cyrillic script) (Татарча)
  * @author Ильнар
  */
 $messages['tt-cyrl'] = array(

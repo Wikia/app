@@ -263,8 +263,8 @@ $messages['pms'] = array(
 	'taskmanager' => "Visualisé e gestì j'atività an slë sfond",
 	'taskmanager_title' => "Visualisé e gestì j'atività an slë sfond",
 	'taskmanager_tasklist' => "Artorna a la Lista dj'Atività",
-	'right-taskmanager' => "A peul mosté j'operassion an background",
-	'right-taskmanager-action' => "A peul gestì j'operassion an background",
+	'right-taskmanager' => "A peul mosté j'operassion an slë sfond",
+	'right-taskmanager-action' => "A peul gestì j'operassion an slë sfond",
 );
 
 /** Portuguese (Português)
@@ -311,7 +311,7 @@ $messages['si'] = array(
 	'taskmanager_tasklist' => 'කාර්යයන් නාමාවලිය වෙත නැවත යන්න',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Charmed94
  * @author Verlor
  */

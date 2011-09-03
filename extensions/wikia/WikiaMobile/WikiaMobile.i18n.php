@@ -139,6 +139,22 @@ $messages['pl'] = array(
 	'wikiamobile-login-submit' => 'Zaloguj',
 );
 
+/** Russian (Русский)
+ * @author Lvova
+ */
+$messages['ru'] = array(
+	'wikiamobile-search' => 'Поиск',
+	'wikiamobile-password' => 'Пароль',
+	'wikiamobile-menu' => 'Меню',
+);
+
+/** Sakha (Саха тыла)
+ * @author HalanTul
+ */
+$messages['sah'] = array(
+	'wikiamobile-login-submit' => 'Киир',
+);
+
 /** Swedish (Svenska)
  * @author WikiPhoenix
  */

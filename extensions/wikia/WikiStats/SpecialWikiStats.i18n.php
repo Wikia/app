@@ -797,6 +797,7 @@ $messages['bjn'] = array(
 );
 
 /** Bengali (বাংলা)
+ * @author Bellayet
  * @author Usarker
  */
 $messages['bn'] = array(
@@ -805,7 +806,7 @@ $messages['bn'] = array(
 	'wikistats_showstats_btn' => 'পরিসংখ্যান দেখাও',
 	'wikistats_showcharts' => 'চার্ট দেখাও',
 	'wikistats_export_xls' => 'এক্সএলএস এ পরিবর্তন করুন',
-	'wikistats_panel_close_btn' => 'বন্ধ করুন',
+	'wikistats_panel_close_btn' => 'বন্ধ',
 	'wikistats_active_day' => 'দিন',
 	'wikistats_active_month' => 'মাস',
 	'wikistats_active_year' => 'বছর',
@@ -1486,6 +1487,7 @@ $messages['el'] = array(
 /** Spanish (Español)
  * @author Bola
  * @author Crazymadlover
+ * @author Fitoschido
  * @author Locos epraix
  * @author McDutchie
  * @author Pertile
@@ -1553,7 +1555,7 @@ $messages['es'] = array(
 	'wikistats_archived' => 'Archivado',
 	'wikistats_other' => 'Otro',
 	'wikistats_database' => 'Base de datos',
-	'wikistats_links' => 'Vínculos',
+	'wikistats_links' => 'Enlaces',
 	'wikistats_reg_users' => 'Editores registrados únicos',
 	'wikistats_images' => 'Imágenes',
 	'wikistats_video' => 'Vídeo',
@@ -1792,6 +1794,48 @@ $messages['eu'] = array(
 	'wikistats_nbr_kilo' => 'K = x 1000',
 	'wikistats_nbr_mega' => 'M = K x 1000',
 	'wikistats_nbr_giga' => 'G = M x 1000',
+);
+
+/** Persian (فارسی)
+ * @author Mjbmr
+ */
+$messages['fa'] = array(
+	'wikistats' => 'آمار ویکیا',
+	'wikistats_wikia' => 'ویکیا',
+	'wikistats_pagetitle' => 'آمار ویکیا',
+	'wikistats_panel_close_btn' => 'بستن',
+	'wikistats_daterange_from' => 'از:',
+	'wikistats_daterange_to' => 'به:',
+	'wikistats_active_day' => 'روز',
+	'wikistats_active_month' => 'ماه',
+	'wikistats_active_year' => 'سال',
+	'wikistats_namespace' => 'فضای نام',
+	'wikistats_show' => 'نمایش',
+	'wikistats_hide' => 'نهفتن',
+	'wikistats_wikicategory' => 'رده:',
+	'wikistats_largerthan' => 'بزرگتر از',
+	'wikistats_username' => 'کاربر',
+	'wikistats_usernames' => 'کاربران',
+	'wikistats_edits' => 'ویرایش‌ها',
+	'wikistats_bytes' => 'بايت',
+	'wikistats_size' => 'اندازه',
+	'wikistats_words' => 'کلمه',
+	'wikistats_interwiki' => 'میان‌ویکی',
+	'wikistats_back_to_prevpage' => 'بازگشت',
+	'wikistats_trend_all_wikia_text' => 'تمام ویکی‌های',
+	'wikistats_current_dump_stats' => 'کنونی',
+	'wikistats_xls_generate' => 'تولید',
+	'wikistats_xls_cancel' => 'انصراف',
+	'wikistats_select_text' => 'انتخاب ویکیا:',
+	'wikistats_select_btn' => 'انتخاب',
+	'wikistats_search_text' => 'جستجو:',
+	'wikistats_statistics_information' => 'اطلاعات آمار',
+	'wikistats_month' => 'آمار ماهانه',
+	'wikistats_current_month' => 'ماه کنونی',
+	'wikistats_see_also' => 'جستارهای وابسته:',
+	'wikistats_language_all' => 'همه زبان‌ها',
+	'wikistats_title' => 'عنوان',
+	'wikistats_namespaces_top10list' => '۱۰ فهرست برتر',
 );
 
 /** Finnish (Suomi)
@@ -2940,6 +2984,7 @@ $messages['it'] = array(
 
 /** Japanese (日本語)
  * @author Naohiro19
+ * @author Schu
  * @author Tommy6
  */
 $messages['ja'] = array(
@@ -2959,6 +3004,7 @@ $messages['ja'] = array(
 	'wikistats_daterange_from' => '開始月:',
 	'wikistats_daterange_to' => '終了月:',
 	'wikistats_nostats_found' => '選択したウィキの統計がありません',
+	'wikistats_invalid_date' => '日付の範囲が無効',
 	'wikistats_distrib_article' => '利用者の活動分布',
 	'wikistats_active_absent_wikians' => '投稿数順の活発/不活発な登録利用者',
 	'wikistats_anon_wikians' => '投稿数順の活発な匿名利用者',
@@ -2985,7 +3031,8 @@ $messages['ja'] = array(
 	'wikistats_active_month' => 'ヶ月',
 	'wikistats_active_year' => '年',
 	'wikistats_active_months' => 'ヶ月',
-	'wikistats_wikians' => '登録利用者',
+	'wikistats_number_editors' => '編集者の数',
+	'wikistats_wikians' => '登録編集者',
 	'wikistats_articles' => '記事(リダイレクトを除く)',
 	'wikistats_articles_text' => '記事',
 	'wikistats_archived' => 'アーカイブサイズ',
@@ -2994,6 +3041,8 @@ $messages['ja'] = array(
 	'wikistats_links' => 'リンク数',
 	'wikistats_reg_users' => '登録利用者数',
 	'wikistats_images' => '画像',
+	'wikistats_video' => '動画',
+	'wikistats_media' => '画像＆動画',
 	'wikistats_uploaded_images' => '個数',
 	'wikistats_with_links' => 'リンクのあるもの',
 	'wikistats_connection_error' => '接続エラー',
@@ -3021,6 +3070,8 @@ $messages['ja'] = array(
 	'wikistats_interwiki' => 'ウィキ間',
 	'wikistats_image' => '画像',
 	'wikistats_external' => '外部',
+	'wikistats_rollups' => 'ロールアップ',
+	'wikistats_namespaces' => '名前空間',
 	'wikistats_redirects' => 'リダイレクト',
 	'wikistats_main_namespace' => '標準名前空間',
 	'wikistats_image_namespace' => 'ファイル',
@@ -3391,7 +3442,7 @@ $messages['ksh'] = array(
 	'wikistats_uploaded_images' => 'huhjelaade',
 );
 
-/** Kurdish (Latin) (Kurdî (Latin))
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -4447,7 +4498,7 @@ U moet aangemeld zijn om de Wikia-statistieken in te zien.
 	'wikistats_title' => 'Naam',
 	'wikistats_summary_data' => 'Samenvatting',
 	'wikistats_namespaces_talk' => 'Overleg (inclusief reacties)',
-	'wikistats_namespaces_top10list' => 'Top 10 lijst',
+	'wikistats_namespaces_top10list' => 'Top 10-lijst',
 	'wikistats_namespaces_blog' => 'Blogs (inclusief blog en blogreacties)',
 	'wikistats_namespaces_user' => 'Gebruiker (inclusief Overleg gebruiker)',
 	'wikistats_namespaces_maintenance' => 'Onderhoud (MediaWiki, Sjabloon, Project)',
@@ -5781,7 +5832,7 @@ $messages['sl'] = array(
 	'wikistats_back_to_prevpage' => 'Nazaj',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  * @author Verlor
  */
@@ -6673,7 +6724,7 @@ $messages['tr'] = array(
 	'wikistats_select_statistics' => 'İstatistikleri seç',
 );
 
-/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+/** Tatar (Cyrillic script) (Татарча)
  * @author Ильнар
  */
 $messages['tt-cyrl'] = array(

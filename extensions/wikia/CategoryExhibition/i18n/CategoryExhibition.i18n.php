@@ -380,7 +380,7 @@ $messages['ru'] = array(
 	'category-exhibition-display-new' => 'Просмотр категории-выставки',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(

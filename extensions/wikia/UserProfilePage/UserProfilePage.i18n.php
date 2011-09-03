@@ -967,7 +967,7 @@ $messages['ja'] = array(
 	'userprofilepage-recent-activity-title' => '$1 の最近の活動',
 );
 
-/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -1627,7 +1627,7 @@ $messages['shi'] = array(
 	'userprofilepage-about-article-title' => 'F',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(

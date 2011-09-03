@@ -39,6 +39,13 @@ $messages['en'] = array(
 	'unsubscribe-preferences-notice' => 'Emails have been disabled for your account. Visit the User Profile tab to re-enable them.',
 );
 
+/** Message documentation (Message documentation)
+ * @author HvW
+ */
+$messages['qqq'] = array(
+	'unsubscribe-preferences-toggle' => 'zugehörige Adresse: http://de.wikia.com/Spezial:Einstellungen',
+);
+
 /** Breton (Brezhoneg)
  * @author Y-M D
  */
@@ -69,6 +76,7 @@ $messages['cs'] = array(
 );
 
 /** German (Deutsch)
+ * @author HvW
  * @author LWChris
  */
 $messages['de'] = array(
@@ -85,6 +93,8 @@ $messages['de'] = array(
 	'unsubscribe-working' => 'Trage $1 {{PLURAL:$1|Konto|Konten}} für $2 aus',
 	'unsubscribe-working-problem' => 'Problem beim Laden der Benutzer-Informationen für: $1',
 	'unsubscribe-working-done' => 'Fertig.',
+	'unsubscribe-preferences-toggle' => 'Alle E-Mails von Wikia abbestellen (Haken entfernen, um aus den weiteren Optionen auszuwählen)',
+	'unsubscribe-preferences-notice' => 'E-Mails wurden für Ihr Benutzerkonto deaktiviert. Gehen Sie zur Benutzerdaten-Seite, um sie wieder zu aktivieren.',
 );
 
 /** Spanish (Español)
@@ -375,7 +385,7 @@ $messages['ru'] = array(
 	'unsubscribe-preferences-notice' => 'Получение писем было отключено для вашей учётной записи. Посетите вкладку Личные данные, чтобы снова включить это.',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(

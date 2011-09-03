@@ -624,7 +624,7 @@ $messages['si'] = array(
 	'dump-database-request-submit' => 'ඉල්ලීම යවන්න',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Charmed94
  * @author Rancher
  * @author Verlor

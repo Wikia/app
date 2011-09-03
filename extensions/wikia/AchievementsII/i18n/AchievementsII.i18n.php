@@ -1522,6 +1522,7 @@ Prohlédněte si svůj báječný nový odznak na své profilové stránce:",
 	'achievements-badge-name-picture-5' => 'Dekoratér',
 	'achievements-badge-name-picture-6' => 'Designér',
 	'achievements-badge-name-picture-7' => 'Kurátor',
+	'achievements-badge-name-category-0' => 'Navázat spojení',
 	'achievements-badge-name-category-2' => 'Badatel',
 	'achievements-badge-name-category-3' => 'Průvodce',
 	'achievements-badge-name-category-4' => 'Navigátor',
@@ -1542,22 +1543,38 @@ Prohlédněte si svůj báječný nový odznak na své profilové stránce:",
 	'achievements-badge-name-introduction' => 'Úvod',
 	'achievements-badge-name-creator' => 'Zakladatel',
 	'achievements-badge-to-get-introduction' => 'přidat k vlastní uživatelské stránce',
+	'achievements-badge-to-get-sayhi' => 'zanechat někomu zprávu na diskusní stránce',
+	'achievements-badge-to-get-creator' => 'být tvůrcem této wiki',
 	'achievements-badge-to-get-pounce' => 'rychle',
 	'achievements-badge-to-get-luckyedit' => 'mějte štěstí',
 	'achievements-badge-to-get-edit-details' => 'Něco chybí?
 Vidíte chybu?
 Neostýchejte se.
 Klikněte na tlačítko „{{int:edit}}“ a upravte kteroukoliv stránku!',
+	'achievements-badge-to-get-blogpost-details' => 'Napište své názory či dotazy!
+Klikněte na „{{int:blogs-recent-url-text}}“ na postranním panelu a poté na odkaz „{{int:create-blog-post-title}}“.',
 	'achievements-badge-to-get-introduction-details' => 'Je vaše uživatelská stránka prázdná?
 Klikněte v horní části obrazovky  na své uživatelské jméno a podívejte se.
 Klikněte na tlačítko „{{int:edit}}“ a doplňte nějaké informace o sobě!',
 	'achievements-badge-to-get-sayhi-details' => 'Můžete poslat zprávu ostatním uživatelům kliknutím na tlačítko „{{int:tooltip-ca-addsection}}“ na jejich diskusní stránce.
 Požádejte o pomoc, poděkujte za spolupráci nebo jen pošlete pozdrav!',
+	'achievements-badge-to-get-creator-details' => 'Tento odznak je udělen osobě, jež založila wiki.
+Klikněte nahoře na tlačítko „{{int:createwiki}}“ a založte stránku o čemkoli, co vás zajímá!',
+	'achievements-badge-to-get-luckyedit-details' => 'Abyste získali tento odznak, musíte mít štěstí. 
+Editujte dál!',
+	'achievements-badge-hover-desc-introduction' => 'pro přidání na<br />
+vaší uživatelskou stránku!',
+	'achievements-badge-your-desc-blogcomment' => 'pro komentování {{PLURAL:$1|blogového příspěvků|$1 jiných blogových příspěvků}}!',
 	'achievements-badge-your-desc-love' => 'pro každodenní přispívání na wiki po dobu {{PLURAL:$1|dne|$1 dnů}}!',
 	'achievements-badge-your-desc-welcome' => 'pro vstup na wiki!',
 	'achievements-badge-your-desc-introduction' => 'pro přidání na vaší uživatelskou stránku!',
+	'achievements-badge-your-desc-sayhi' => 'za napsání zprávy na diskusní stránce jiného uživatele!',
+	'achievements-badge-your-desc-creator' => 'pro založení wiki!',
+	'achievements-badge-desc-love' => 'za každodenní přispívání do wiki po dobu {{PLURAL:$1|dne|$1 dnů}}!',
 	'achievements-badge-desc-sayhi' => 'pro zanechání zprávy na diskusní stránce jiného uživatele!',
 	'achievements-badge-desc-creator' => 'pro vytvoření wiki!',
+	'achievements-badge-desc-caffeinated' => 'za provedení 100 editací v jediném dni!',
+	'achievements-userprofile-no-badges-visitor' => 'Tento uživatel ještě nemá žádný odznak!',
 	'achievements-userprofile-ranked' => '[[Special:Leaderboard|Hodnocení #$1]]<br />na této wiki',
 );
 
@@ -4429,7 +4446,7 @@ op sing Klaafsigg jedonn ze han!',
 	'achievements-userprofile-no-badges-visitor' => 'Dä Metmaacher hät noch kein Afzeische verdeent.',
 );
 
-/** ‪Kurdî (latînî)‬ (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -4508,6 +4525,7 @@ $messages['lb'] = array(
 	'achievements-badge-name-picture-1' => 'Paparazzi',
 	'achievements-badge-name-picture-5' => 'Decorateur',
 	'achievements-badge-name-blogcomment-1' => 'An dann nach eppes',
+	'achievements-badge-name-love-0' => "Schlëssel fir d'Wiki!",
 	'achievements-badge-name-love-1' => 'Zwou Wochen op der Wiki',
 	'achievements-badge-name-love-6' => 'Wiki Held!',
 	'achievements-badge-name-welcome' => 'Wëllkomm op der Wiki',
@@ -7710,7 +7728,7 @@ $messages['si'] = array(
 	'achievements-community-platinum-cancel' => 'අත් හරින්න',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -8364,7 +8382,7 @@ Lütfen bir başkasını deneyin.',
 	'achievements-badge-desc-creator' => 'wiki oluşturduğun için!',
 );
 
-/** Татарча (Татарча)
+/** Tatar (Cyrillic script) (Татарча)
  * @author Ajdar
  * @author Рашат Якупов
  */
