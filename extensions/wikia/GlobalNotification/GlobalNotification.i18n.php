@@ -8,7 +8,7 @@
 $messages = array();
 
 $messages['en'] = array(
-	'globalnotification-desc' => 'Wikia system notification extension.  Displays system notification for events such as AJAX failures',
+	'globalnotification-desc' => 'Displays system notifications for events such as AJAX failures',
 	'globalnotification-general-ajax-failure' => 'The browser could not connect to the Wikia.  Try again later.',
 );
 
