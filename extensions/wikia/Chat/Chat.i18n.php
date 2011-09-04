@@ -68,15 +68,24 @@ $messages['en'] = array(
 	'group-bannedfromchat' => 'BannedFromChat',
 	'group-bannedfromchat-member' => 'BannedFromChat',
 	'grouppage-bannedfromchat' => 'w:c:community:Help:Chat',
+	
+	// Emoticons
+	'emoticons' => '
+	TODO: FILL THIS IN
+	
+	
+	'
 );
 
 /** Message documentation (Message documentation)
  * @author Claudia Hattitten
  * @author Lloffiwr
+ * @author Sean Colombo
  */
 $messages['qqq'] = array(
 	'chat-whos-here' => 'Regards users that are in a chat room. The parameter gives the total count.',
 	'chat-user-manu-give-chat-mod' => 'ChatMod = chat moderator',
+	'emoticons' => 'This is used as the data to power the emoticon mappings.  There is no default heirarchy, so a translated version of this message must contain ALL mappings desired.  The format is that the first-level bullet-point is the image to use, and the second-level bullet-points nested below that image are all of the shortcuts that will be valid to result in that image.'
 );
 
 /** Afrikaans (Afrikaans)
