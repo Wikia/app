@@ -58,6 +58,7 @@ file = SharedHelp/CentralHelpSearch.i18n.php
 
 Chat
 optional = grouppage-bannedfromchat, grouppage-bannedfromchat, grouppage-chatmoderator
+ignored = emoticons
 
 Cloak Check
 
@@ -93,7 +94,7 @@ Founder Emails
 ignored = founderemails-email-footer-line3
 
 Founder Progress Bar
-optional = founderprogressbar-commcentral-visit-url
+optional = founderprogressbar-commcentral-visit-url, founderprogressbar-user-add5-url
 
 Game Guides
 
