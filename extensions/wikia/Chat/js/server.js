@@ -349,6 +349,12 @@ function authConnection(client, socket, authData){
 							// Currently, we just rely on the fact that Varnish will cache the API result (which will then be purged if there are updates).
 							console.log("Starting request to get emoticons for '" + data.username + "'...");
 							var emoticonMapping = new EmoticonMapping();
+							
+							// TODO: Instead of just using loadDefault here... have the server make one call to Community Wiki's
+							// MediaWiki:Emoticon on bootup to make the "default" EmoticonMapping object, then use that object
+							// for initialization here instead of .loadDefault().
+							emoticonMapping.loadDefault();
+
 							getWikiText(httpClient, wikiHostname, emoticons.EMOTICON_ARTICLE, function(wikiText){
 								var emoticonMapping = new EmoticonMapping();
 								emoticonMapping.loadFromWikiText( wikiText );
