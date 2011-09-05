@@ -131,10 +131,10 @@ class LoadBalancer {
 		foreach ( $lags as $i => $lag ) {
 			if ( $i != 0 ) {
 				if ( $lag === false ) {
-					wfDebug( "Server #$i is not replicating\n" );
+					wfDebugLog( 'replication', "Server #$i is not replicating\n" );
 					unset( $loads[$i] );
 				} elseif ( isset( $this->mServers[$i]['max lag'] ) && $lag > $this->mServers[$i]['max lag'] ) {
-					wfDebug( "Server #$i is excessively lagged ($lag seconds)\n" );
+					wfDebugLog( 'replication', "Server #$i is excessively lagged ($lag seconds)\n" );
 					unset( $loads[$i] );
 				}
 			}
