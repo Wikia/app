@@ -1,6 +1,7 @@
 <?php 
 class ImageServingDriverCategoryNS extends ImageServingDriverMainNS {
 	protected $articlesFromCategory = 10;
+	private $straightJoinLimit = 70000;
 	
 	protected function getImagesFromDB($articles = array()) {
 		parent::getImagesFromDB($articles);
@@ -27,6 +28,27 @@ class ImageServingDriverCategoryNS extends ImageServingDriverMainNS {
 	}
 	
 	protected function getCategoryArticleList($id, &$toGetFromArticle) {
+		$out = array();
+				
+		$count = $this->db->selectField ( 
+			array( 'page', 'categorylinks' ), 
+			array( 'COUNT(cl_from)' ), 
+			array(
+				'cl_to  = page_title', 
+				'page_id' => $id 
+			),
+			__METHOD__
+		);
+		
+		$options = array(
+			'ORDER BY' =>  'page.page_len desc',
+			'LIMIT' => $this->articlesFromCategory
+		);
+		
+		if ( $count > $this->straightJoinLimit ) {
+			$options[] = 'STRAIGHT_JOIN';
+		}
+
 		$res = $this->db->select(
 			array( 'page', 'categorylinks' ,'page as cat_page'  ),
 			array(
@@ -40,14 +62,9 @@ class ImageServingDriverCategoryNS extends ImageServingDriverMainNS {
 				'cat_page.page_id' => $id 
 			),
 			__METHOD__,
-			array(
-				'STRAIGHT_JOIN',
-				'ORDER BY' =>  'page.page_len desc',
-				'LIMIT' => $this->articlesFromCategory
-			)
+			$options
 		);
-		
-		$out = array();
+
 		while ($row =  $this->db->fetchRow( $res ) ) {
 			if(empty($toGetFromArticle[$row['page_id']])) {
 				$toGetFromArticle[$row['page_id']] = array( $id );	
