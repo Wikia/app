@@ -360,11 +360,12 @@ function authConnection(client, socket, authData){
 							var emoticonMapping = new EmoticonMapping();
 							
 							// TODO: Use defaultEmoticonMapping instead (after this method has been tested).
-							emoticonMapping.loadDefault();
+							//emoticonMapping.loadDefault();
+							emoticonMapping._settings =  defaultEmoticonMapping._settings;
+							emoticonMapping._regexes = {};
 
 							getWikiText(httpClient, wikiHostname, emoticons.EMOTICON_ARTICLE, function(wikiText){
 								if(wikiText != ""){
-console.log("Emoticon wikiText: " + wikiText);
 									var emoticonMapping = new EmoticonMapping();
 									emoticonMapping.loadFromWikiText( wikiText );
 									client.emoticonMapping = emoticonMapping;

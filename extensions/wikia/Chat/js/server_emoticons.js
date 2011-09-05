@@ -92,7 +92,7 @@ if(typeof EmoticonMapping === 'undefined'){
 			}
 		
 			// Clear out the regexes cache (they'll be rebuilt on-demand the first time this object is used).
-			self._regexes = {}; 
+			self._regexes = {};
 		};
 
 		/**
