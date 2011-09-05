@@ -34,7 +34,9 @@ exports.doReplacements = function(text, emoticonMapping){
 	var imgUrlsByRegexString = emoticonMapping.getImgUrlsByRegexString();
 	for(var regexString in imgUrlsByRegexString){
 		imgSrc = imgUrlsByRegexString[regexString];
-		var regex = new RegExp(regexString, "gi");
+		
+		// Build the regex for the character (make it ignore the match if there is a "/" immediately after the emoticon. That creates all kinds of problems with URLs).
+		var regex = new RegExp("(" + regexString + ")($|[^/])", "gi");
 
 		imgSrc = imgSrc.replace(/"/g, "%22"); // prevent any HTML-injection
 		var emoticon = " <img src=\""+imgSrc+"\" width='"+exports.EMOTICON_WIDTH+"' height='"+exports.EMOTICON_HEIGHT+"'/> ";
@@ -75,17 +77,17 @@ if(typeof EmoticonMapping === 'undefined'){
 
 			// TODO: FIXME: Rewrite this to use regexes so that we don't require the space after the asterisks (because that's not needed in normal wikitext).
 			// Loop through array, construct object
-console.log("Loading emoticon mapping...");
+			//console.log("Loading emoticon mapping...");
 			for(var i=0; i<emoticonArray.length; i++) {
 				if (emoticonArray[i].indexOf('* ') == 0) {
 					var url = emoticonArray[i].substr(2);
 					self._settings[url] = [];
 					currentKey = url;
-console.log("  " + url + "...");
+					//console.log("  " + url + "...");
 				} else if (emoticonArray[i].indexOf('** ') == 0) {
 					var glyph = emoticonArray[i].substr(3);
 					self._settings[currentKey].push(glyph);
-console.log("       " + glyph);
+					//console.log("       " + glyph);
 				}
 			}
 		
@@ -107,10 +109,8 @@ console.log("       " + glyph);
 					var regexString = "";
 					for(var index in codes){
 						var code = codes[index];
-console.log("..Code: " + code);
 						// Escape the string for use in the regex (thanks to http://simonwillison.net/2006/Jan/20/escape/#p-6).
 						code = code.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
-console.log("..Rewritten to " + code);
 						if(code != ""){
 							regexString += ((regexString =="")?"":"|");
 							regexString += code;
