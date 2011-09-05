@@ -358,12 +358,6 @@ function authConnection(client, socket, authData){
 							// Currently, we just rely on the fact that Varnish will cache the API result (which will then be purged if there are updates).
 							console.log("Starting request to get emoticons for '" + data.username + "'...");
 							var emoticonMapping = new EmoticonMapping();
-							
-							// TODO: Use defaultEmoticonMapping instead (after this method has been tested).
-							//emoticonMapping.loadDefault();
-							emoticonMapping._settings =  defaultEmoticonMapping._settings;
-							emoticonMapping._regexes = {};
-
 							getWikiText(httpClient, wikiHostname, emoticons.EMOTICON_ARTICLE, function(wikiText){
 								if(wikiText != ""){
 									var emoticonMapping = new EmoticonMapping();
@@ -1092,6 +1086,10 @@ function processText(text, client) {
 	var emoticonMapping;
 	if(typeof client.emoticonMapping === 'undefined'){
 		emoticonMapping = new EmoticonMapping();
+
+		// Use the default global mapping from Community Wiki (was loaded on server startup).
+		emoticonMapping._settings =  defaultEmoticonMapping._settings;
+		emoticonMapping._regexes = {};
 	} else {
 		emoticonMapping = client.emoticonMapping;
 	}
