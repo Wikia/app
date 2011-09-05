@@ -91,6 +91,9 @@ class WikiaApiQueryLastEditors extends ApiQueryBase {
 		$i = 0;
 		$data = array();
 		while ( $row = $db->fetchObject($oRes) ) {
+			# wiki 
+			$oWiki = WikiFactory::getWikiByID( $row->wiki_id );
+			if ( empty( $oWiki ) ) continue;
 			# server name
 			$server = WikiFactory::getVarValueByName( "wgServer", $row->wiki_id );
 			# user
