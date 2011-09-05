@@ -76,6 +76,15 @@ rc.keys( config.getKeyPrefix_usersInRoom()+":*", function(err, data){
 });
 console.log("Rooms cleaned.");
 
+// Load default emoticon mapping (will be the mapping for all wikis which don't have MediaWiki:Emoticons set.
+var defaultEmoticonMapping = new EmoticonMapping();
+defaultEmoticonMapping.loadDefault();
+console.log("Loading the default emoticon mapping from Community Wiki...");
+var httpClient = http.createClient(config.WIKIA_PROXY_PORT, config.WIKIA_PROXY_HOST);
+getWikiText(httpClient, config.COMMUNITY_WIKI_HOSTNAME, emoticons.EMOTICON_ARTICLE, function(wikiText){
+	defaultEmoticonMapping.loadFromWikiText( wikiText );
+	console.log("Done loading default emoticons from CommunityWiki.");
+});
 
 //Start the main chat server listening.
 app.listen(config.CHAT_SERVER_PORT, function () {
@@ -350,16 +359,17 @@ function authConnection(client, socket, authData){
 							console.log("Starting request to get emoticons for '" + data.username + "'...");
 							var emoticonMapping = new EmoticonMapping();
 							
-							// TODO: Instead of just using loadDefault here... have the server make one call to Community Wiki's
-							// MediaWiki:Emoticon on bootup to make the "default" EmoticonMapping object, then use that object
-							// for initialization here instead of .loadDefault().
+							// TODO: Use defaultEmoticonMapping instead (after this method has been tested).
 							emoticonMapping.loadDefault();
 
 							getWikiText(httpClient, wikiHostname, emoticons.EMOTICON_ARTICLE, function(wikiText){
-								var emoticonMapping = new EmoticonMapping();
-								emoticonMapping.loadFromWikiText( wikiText );
-								client.emoticonMapping = emoticonMapping;
-								console.log("Done getting emoticons for '" + data.username + "'.");
+								if(wikiText != ""){
+console.log("Emoticon wikiText: " + wikiText);
+									var emoticonMapping = new EmoticonMapping();
+									emoticonMapping.loadFromWikiText( wikiText );
+									client.emoticonMapping = emoticonMapping;
+									console.log("Done getting emoticons for '" + data.username + "'.");
+								}
 							});
 
 						} else {
