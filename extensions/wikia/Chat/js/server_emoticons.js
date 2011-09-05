@@ -81,11 +81,11 @@ console.log("Loading emoticon mapping...");
 					var url = emoticonArray[i].substr(2);
 					self._settings[url] = [];
 					currentKey = url;
-console.log("  " + url + "...\n");
+console.log("  " + url + "...");
 				} else if (emoticonArray[i].indexOf('** ') == 0) {
 					var glyph = emoticonArray[i].substr(3);
 					self._settings[currentKey].push(glyph);
-console.log("       " + glyph + "\n");
+console.log("       " + glyph);
 				}
 			}
 		
@@ -107,10 +107,10 @@ console.log("       " + glyph + "\n");
 					var regexString = "";
 					for(var index in codes){
 						var code = codes[index];
-						//console.log("..Code: " + code);
+console.log("..Code: " + code);
 						// Escape the string for use in the regex (thanks to http://simonwillison.net/2006/Jan/20/escape/#p-6).
 						code = code.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
-						//console.log("..Rewritten to " + code);
+console.log("..Rewritten to " + code);
 						if(code != ""){
 							regexString += ((regexString =="")?"":"|");
 							regexString += code;
