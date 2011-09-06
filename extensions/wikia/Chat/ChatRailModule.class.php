@@ -48,11 +48,11 @@ class ChatRailModule extends Module {
 		// is essentially saying that they accept some risk since they're going somewhere our interface doesn't direct them to.
 		// If it's just, eg: a database problem, then they may get lucky and be able to use most of the chat features (kickbanning wouldn't work, etc.).
 		$this->wgReadOnly = $wgReadOnly;
+		$this->chatHeadline = wfMsg('chat-headline', $wgSitename);
 		if(empty($wgReadOnly)){
 			// Main variables
 			$this->linkToSpecialChat = SpecialPage::getTitleFor("Chat")->escapeLocalUrl();
 			$this->windowFeatures = $this->getWindowFeatures();
-			$this->chatHeadline = wfMsg('chat-headline', $wgSitename);
 			$this->isLoggedIn = $wgUser->isLoggedIn();
 			if($wgUser->isLoggedIn()){
 				$this->profileAvatar = AvatarService::renderAvatar($wgUser->getName(), ChatRailModule::AVATAR_SIZE);
