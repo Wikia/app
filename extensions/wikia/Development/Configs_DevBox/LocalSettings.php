@@ -131,7 +131,6 @@ $wgHTTPProxy = "squid-proxy.local:3128";
 $devBoxImageServer = "http://{$wgDevelEnvironmentName}.wikia-dev.com";
 $wgStylePath = $devBoxImageServer . '/skins';
 $wgExtensionsPath = $devBoxImageServer . '/extensions';
-$wgBlankImgUrl = $wgStylePath . '/common/blank.gif';
 $wgCdnStylePath = $devBoxImageServer; // paths for images requested from CSS/SASS
 $wgDevBoxImageServerOverride ="images.{$wgDevelEnvironmentName}.wikia-dev.com";
 
