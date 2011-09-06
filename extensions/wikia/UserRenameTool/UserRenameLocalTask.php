@@ -35,7 +35,10 @@ class UserRenameLocalTask extends BatchTask {
 	 * @return boolean - status of operation
 	 */
 	public function execute( $params = null ) {
-		global $IP, $wgWikiaLocalSettingsPath, $wgWikiaAdminSettingsPath;
+		global $IP, $wgWikiaLocalSettingsPath, $wgWikiaAdminSettingsPath, $wgMaxShellMemory, $wgMaxShellTime;
+		
+		$wgMaxShellMemory = 0;
+		$wgMaxShellTime = 0;
 		
 		$this->mParams = unserialize($params->task_arguments);
 		$noErrors = true;
