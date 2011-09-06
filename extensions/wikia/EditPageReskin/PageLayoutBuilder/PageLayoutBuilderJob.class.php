@@ -93,9 +93,13 @@ class PageLayoutBuilderJob extends Job {
 			$oTitle = Title::makeTitle( $row->page_namespace, $row->page_title );
 			if ( is_null($oTitle) ) {
 				Wikia::log( __METHOD__, "pglayout", "{$row->page_title} ({$row->page_namespace}) ");
-				continue;				
+				continue;
 			}
 			$jobs[] = new RefreshLinksJob( $oTitle, '' );
+			
+			// Send purge
+			$update = SquidUpdate::newSimplePurge($oTitle);
+			$update->doUpdate();
 		}
 		
 		if ( !empty($jobs) ) {
@@ -140,6 +144,7 @@ class PageLayoutBuilderJob extends Job {
 
 			if ( is_object($Title) && ( NS_PLB_LAYOUT == $Title->getNamespace() )  ) {	
 				Wikia::log( __METHOD__, "pblayout", $Title->getDBkey() );
+				
 				$pbLayoutJob = new PageLayoutBuilderJob(
 					$Title,
 					array(
@@ -149,10 +154,12 @@ class PageLayoutBuilderJob extends Job {
 						"user_name" => $wgUser->getName(),
 					)
 				);
+				
 				$pbLayoutJob->insert();
 				Wikia::log( __METHOD__, "job" );
 			}
 		}
+		
 		$wgErrorLog = $oldValue;
 		wfProfileOut( __METHOD__ );
 
