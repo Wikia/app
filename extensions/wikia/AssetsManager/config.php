@@ -50,7 +50,7 @@ $config['site_user_css'] = array(
 $config['oasis_jquery'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//skins/common/jquery/jquery-1.6.2.js',
+		'#external_http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js',
 		'//skins/common/jquery/jquery.json-2.2.js',
 		'//skins/common/jquery/jquery.getcss.js',
 		'//skins/common/jquery/jquery.cookies.2.1.0.js',
@@ -62,13 +62,14 @@ $config['oasis_jquery'] = array(
 	)
 );
 
-// Oasis shared JS
+// Oasis core shared JS
 $config['oasis_shared_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'#group_oasis_jquery',
 		'//skins/common/wikibits.js',
 		'//skins/common/mwsuggest.js',
+		'//skins/common/ajax.js',
 		'//skins/oasis/js/tracker.js',
 		'//skins/common/jquery/jquery.wikia.modal.js',
 		'//skins/common/jquery/jquery.wikia.tracker.js',
@@ -80,12 +81,21 @@ $config['oasis_shared_js'] = array(
 		'//skins/oasis/js/WikiHeader.js',
 		'//skins/oasis/js/LatestPhotos.js',
 		'//skins/oasis/js/Interlang.js',
+		'//skins/oasis/js/WikiaNotifications.js',
+		'//skins/oasis/js/Spotlights.js',
+		'//skins/oasis/js/GlobalModal.js',
+		'//skins/oasis/js/FirefoxFindFix.js',
+		'//skins/oasis/js/isTouchScreen.js',
+	)
+);
+
+// Oasis extensions shared JS
+$config['oasis_extensions_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
 		'//extensions/wikia/ShareFeature/js/ShareFeature.js',
 		'//extensions/wikia/ArticleComments/js/ArticleComments.js',
 		'//extensions/wikia/RelatedPages/js/RelatedPages.js',
-		'//skins/oasis/js/WikiaNotifications.js',
-		'//skins/oasis/js/Spotlights.js',
-		'//skins/common/ajax.js',
 		'//extensions/wikia/CreatePage/js/CreatePage.js',
 		'//extensions/wikia/ImageLightbox/ImageLightbox.js',
 		'//extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
@@ -105,10 +115,7 @@ $config['oasis_shared_js'] = array(
 		'//extensions/wikia/AdSS/adss.js',
 		'//extensions/wikia/PageLayoutBuilder/js/view.js', // TODO: load it on demand
 		'//extensions/wikia/JSMessages/js/JSMessages.js', // TODO: maybe move to jquery.wikia.js
-		'//skins/oasis/js/GlobalModal.js',
-		'//skins/oasis/js/FirefoxFindFix.js',
 		'//extensions/wikia/GlobalNotification/GlobalNotification.js',
-		'//skins/oasis/js/isTouchScreen.js'
 	)
 );
 

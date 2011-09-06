@@ -232,6 +232,7 @@ EOF;
 		$this->jsFiles =  '';
 
 		$srcs = AssetsManager::getInstance()->getGroupCommonURL('oasis_shared_js');
+		$srcs = array_merge($srcs, AssetsManager::getInstance()->getGroupCommonURL('oasis_extensions_js'));
 		$srcs = array_merge($srcs, AssetsManager::getInstance()->getGroupLocalURL($wgUser->isLoggedIn() ? 'oasis_user_js' : 'oasis_anon_js'));
 
 		foreach($srcs as $src) {

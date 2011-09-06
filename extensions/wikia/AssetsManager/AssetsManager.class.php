@@ -9,11 +9,11 @@ class AssetsManager {
 	const TYPE_CSS = 'text/css';
 	const TYPE_JS = 'application/x-javascript';
 	const TYPE_SCSS = -1;
-	
+
 	const URL_TYPE_LOCAL = 0;
 	const URL_TYPE_COMMON = 1;
 	const URL_TYPE_FULL = 2;
-	
+
 	const SINGLE = 0;
 	const PACKAGE = 1;
 
@@ -120,6 +120,14 @@ class AssetsManager {
 	 * @return array Array of one or many URLs
  	 */
 	private function getGroupURL(/* string */ $groupName, /* array */ $params = array(), /* string */ $prefix, /* boolean */ $combine, /* boolean */ $minify) {
+
+		// Lazy loading of AssetsConfig
+		if(empty($this->mAssetsConfig)) {
+			$this->mAssetsConfig = F::build('AssetsConfig');
+		}
+		$assets = $this->mAssetsConfig->resolve($groupName, $this->mCombine, $this->mMinify);
+		$URLs = array();
+
 		if($combine != null ? $combine : $this->mCombine) {
 			// "minify" is a special parameter that can be set only when initialising object and can not be overwritten per request
 			if($minify != null ? !$minify : !$this->mMinify) {
@@ -128,25 +136,26 @@ class AssetsManager {
 				unset($params['minify']);
 			}
 
-			// When AssetsManager works in "combine" mode then only one URL will be returned
-			return array($prefix . $this->getAMLocalURL('group', $groupName, $params));
-
-		} else {
-			// Lazy loading of AssetsConfig
-			if(empty($this->mAssetsConfig)) {
-				$this->mAssetsConfig = F::build('AssetsConfig');
+			// check for an #external_ URL being the first item in the package (BugId:9522)
+			if (isset($assets[0]) && substr($assets[0], 0, 10) == '#external_') {
+				$URLs[] = substr($assets[0], 10);
 			}
-			$assets = $this->mAssetsConfig->resolve($groupName, $this->mCombine, $this->mMinify);
-			$URLs = array();
+
+			// When AssetsManager works in "combine" mode return URL to the combined package
+			$URLs[] = $prefix . $this->getAMLocalURL('group', $groupName, $params);
+		} else {
 			foreach($assets as $asset) {
-				if(Http::isValidURI($asset)) {
+				if(substr($asset, 0, 10) == '#external_') {
+					$URLs[] = substr($asset, 10);
+				} else if(Http::isValidURI($asset)) {
 					$URLs[] = $asset;
 				} else {
 					$URLs[] = $prefix . $this->getOneLocalURL($asset);
 				}
 			}
-			return $URLs;
 		}
+
+		return $URLs;
 	}
 
 	/**
@@ -186,8 +195,8 @@ class AssetsManager {
 			/* 3 */ urlencode(http_build_query($params)),
 			/* 4 */ $this->mCacheBuster);
 	}
-	
-	
+
+
 	public function getAllowedAssetExtensions(){
 		return $this->mAllowedAssetExtensions;
 	}

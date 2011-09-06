@@ -2,6 +2,8 @@
 
 /**
  * @author Inez Korczyński <korczynski@gmail.com>
+ *
+ * @see https://internal.wikia-inc.com/wiki/AssetsManager
  */
 
 if(!defined('MEDIAWIKI')) {
@@ -27,11 +29,11 @@ function AssetsManagerEntryPoint() {
 	$wgAutoloadClasses['AssetsManagerBaseBuilder'] = $dir.'builders/AssetsManagerBaseBuilder.class.php';
 	$wgAutoloadClasses['AssetsManagerOneBuilder'] = $dir.'builders/AssetsManagerOneBuilder.class.php';
 	$wgAutoloadClasses['AssetsManagerGroupBuilder'] = $dir.'builders/AssetsManagerGroupBuilder.class.php';
-	$wgAutoloadClasses['AssetsManagerSassBuilder'] = $dir.'builders/AssetsManagerSassBuilder.class.php';	
+	$wgAutoloadClasses['AssetsManagerSassBuilder'] = $dir.'builders/AssetsManagerSassBuilder.class.php';
 	$wgAutoloadClasses['AssetsManagerServer'] = $dir.'AssetsManagerServer.class.php';
-	
+
 	AssetsManagerServer::serve($wgRequest);
-	
+
 	exit();
 }
 
