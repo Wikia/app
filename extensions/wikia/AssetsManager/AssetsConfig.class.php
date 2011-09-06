@@ -158,6 +158,11 @@ class AssetsConfig {
 				// reference to a function that returns array of URIs
 				$assets = array_merge( $assets, call_user_func( substr( $item, 10 ), $combine, $minify, $params ) );
 
+			} else if( substr ($item, 0, 10 ) == '#external_' ) {
+
+				// reference to a file to be fetched by the browser from external server (BugId:9522)
+				$assets[] = $item;
+
 			} else if( Http::isValidURI( $item ) ) {
 
 				// reference to remote file (http and https)

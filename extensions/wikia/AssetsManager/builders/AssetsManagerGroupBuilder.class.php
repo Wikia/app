@@ -28,6 +28,9 @@ class AssetsManagerGroupBuilder extends AssetsManagerBaseBuilder {
 				} else {
 					$this->mContent .= HTTP::get($asset);
 				}
+			// reference to a file to be fetched by the browser from external server (BugId:9522)
+			} else if (substr($asset, 0, 10) == '#external_') {
+				// do nothing
 			} else {
 				$this->mContent .= file_get_contents($IP . '/' . $asset);
 			}
