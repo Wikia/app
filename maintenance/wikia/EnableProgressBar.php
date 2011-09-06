@@ -29,7 +29,7 @@ if ( !in_array( $wgLanguageCode, $allowedLanguages ) ) {
 $db = wfGetDB( DB_SLAVE );
 
 $oRow = $db->selectRow(array('revision'), array('count(*) as count'), array());
-if ( isset($oRow) && isset($oRow->count) && $oRow->count < 250 && $oRow->count > 2 ) {
+if ( isset($oRow) && isset($oRow->count) && $oRow->count < 250 && $oRow->count > 5 ) {
 
 	echo "$wgCityId enabled\n";
 	WikiFactory::setVarByName( 'wgEnableFounderProgressBarExt', $wgCityId, 1);
