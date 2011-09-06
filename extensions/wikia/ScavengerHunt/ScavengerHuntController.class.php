@@ -119,4 +119,12 @@ class ScavengerHuntController extends WikiaController {
 		$this->setVal( 'val', $memcData );
 	}
 
+	public function getHunterId(){
+		// needed for overriding browser cache
+		$user = $this->app->getGlobal('wgUser');
+		$this->setVal(
+			'name',
+			( $user->isAnon() ) ? '' : $user->getName()
+		);
+	}
 }

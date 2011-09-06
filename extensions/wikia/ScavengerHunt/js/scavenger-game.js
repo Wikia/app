@@ -6,6 +6,7 @@ var ScavengerHunt = {
 	progressBarVisible: false,
 	spritePrepared: false,
 	clueTimeout: null,
+	userName: '',
 
 	MODAL_WIDTH: 588,
 	LOCAL_CACHE_KEY: 'ScavengerHunt',
@@ -22,18 +23,38 @@ var ScavengerHunt = {
 
 	//global init
 	init: function() {
-		this.gameId = ScavengerHunt.getCookieHuntId();
-		this.log('running gameId: ' + this.gameId);
 
-		//check if there is a need to initialize JS for start page
-		if ( window.wgScavengerHuntStart ) {
-			this.initStartPage();
-		}
+		this.log('sending request for hunter Id');
+		$.getJSON(
+			window.wgScriptPath + '/wikia.php',
+			{
+				controller: 'ScavengerHunt',
+				format: 'json',
+				cb: Math.round( new Date().getTime() ),
+				method: 'getHunterId'
+			},
+			function( json ) {
+				if ( json.name ){ ScavengerHunt.userName = json.name};
+				ScavengerHunt.gameId = $.cookies.get(
+					ScavengerHunt.getCookieKey(),
+					{
+						domain: wgCookieDomain
+					}
+				);
 
-		//check if there is a need to initialize JS for game
-		if ( this.gameId ) {
-			ScavengerHunt.initGame();
-		}
+				ScavengerHunt.log('running gameId: ' + ScavengerHunt.gameId);
+
+				//check if there is a need to initialize JS for start page
+				if ( window.wgScavengerHuntStart ) {
+					ScavengerHunt.initStartPage();
+				}
+
+				//check if there is a need to initialize JS for game
+				if ( ScavengerHunt.gameId ) {
+					ScavengerHunt.initGame();
+				}
+			}
+		);
 	},
 
 	//init starting page
@@ -275,7 +296,8 @@ var ScavengerHunt = {
 				callback: function() {
 					var w = $('#scavengerEntryFormModal');
 					var b = w.find('.scavenger-clue-button input[type=submit]');
-					var inputs = w.find('.scavenger-entry-form').find('input, textarea').not('input[type=submit]')
+					var inputFrom = w.find('.scavenger-entry-form');
+					var inputs = inputFrom.find('input, textarea').not('input[type=submit]')
 					var inputsChange = function() {
 						var ok = true;
 						inputs.each(
@@ -291,38 +313,40 @@ var ScavengerHunt = {
 						inputs.blur(inputsChange).keyup(inputsChange);
 						b.attr('disabled','disabled');
 					}
-					b.click( function(e) {
+					inputFrom.submit( function(e) {
 						ScavengerHunt.track('game/modalEntryForm/clickButton');
 						e.preventDefault();
-						b.attr('disabled','disabled');
-						var cacheTimestamp = ScavengerHunt.huntData ? ScavengerHunt.huntData.cacheTimestamp : 0;
-						var formdata = {
-							cacheTimestamp: cacheTimestamp,
-							controller: 'ScavengerHunt',
-							currentArticleId: wgArticleId,
-							format: 'json',
-							method: 'pushEntry',
-							name: w.find('input[name=name]').val(),
-							email: w.find('input[name=email]').val(),
-							answer: w.find('textarea[name=answer]').val(),
-							cb: Math.round(new Date().getTime())
-						};
-						$.postJSON(
-							window.wgScriptPath + '/wikia.php',
-							formdata,
-							function(json) {
-								ScavengerHunt.goodbyeData = json.result;
-								if (json.result.status) {
-									ScavengerHunt.track('game/modalEntryForm/saveOk');
-									w.closeModal();
-									ScavengerHunt.showGoodbyeForm();
-								} else {
-									ScavengerHunt.track('game/modalEntryForm/saveError');
-									ScavengerHunt.log('entryForm error: ' + json.error);
-									b.attr('disabled', '');
+						if ( b.attr('disabled') != 'disabled' ){
+							b.attr('disabled','disabled');
+							var cacheTimestamp = ScavengerHunt.huntData ? ScavengerHunt.huntData.cacheTimestamp : 0;
+							var formdata = {
+								cacheTimestamp: cacheTimestamp,
+								controller: 'ScavengerHunt',
+								currentArticleId: wgArticleId,
+								format: 'json',
+								method: 'pushEntry',
+								name: w.find('input[name=name]').val(),
+								email: w.find('input[name=email]').val(),
+								answer: w.find('textarea[name=answer]').val(),
+								cb: Math.round(new Date().getTime())
+							};
+							$.postJSON(
+								window.wgScriptPath + '/wikia.php',
+								formdata,
+								function(json) {
+									ScavengerHunt.goodbyeData = json.result;
+									if (json.result.status) {
+										ScavengerHunt.track('game/modalEntryForm/saveOk');
+										w.closeModal();
+										ScavengerHunt.showGoodbyeForm();
+									} else {
+										ScavengerHunt.track('game/modalEntryForm/saveError');
+										ScavengerHunt.log('entryForm error: ' + json.error);
+										b.attr('disabled', '');
+									}
 								}
-							}
-						);
+							);
+						}
 					});
 				},
 				onClose: function() {
@@ -433,12 +457,12 @@ var ScavengerHunt = {
 					ScavengerHunt.clueTimeout = setTimeout(ScavengerHunt.hideClueText, 200);
 				}
 			})
-			.append($('<span id="scavenger-progress-clue-area-inner">'));
+			.html('<table><tr><td id="scavenger-progress-clue-area-inner"></td></tr></table>');
 	},
 
 	showClueText: function(html) {
-		$('#scavenger-progress-clue-area-inner').html(html);
-		$('#scavenger-progress-clue-area').css('display', 'table');
+		$('#scavenger-progress-clue-area-inner').html( html );
+		$('#scavenger-progress-clue-area').show();
 	},
 
 	hideClueText: function () {
@@ -558,7 +582,17 @@ var ScavengerHunt = {
 		ScavengerHunt.log('onProgressBarItemClick invoked with target = ' + targetItem);
 		ScavengerHunt.track('progressBar/targetItem/click/targetItem=' + targetItem);
 		//using <a> in <div> for sprites is harder - let's stick to JS version for now
-		window.location.href = ScavengerHunt.huntData.articles[$(this).data('index')].articleTitle;
+		
+		window.location.href = ScavengerHunt.addCachebusterToLink( ScavengerHunt.huntData.articles[$(this).data('index')].articleTitle );		
+	},
+
+	addCachebusterToLink: function( link ){
+		var tmpArticleTitleForCB = link;
+		if ( tmpArticleTitleForCB.indexOf('?') == -1 ) {
+			return tmpArticleTitleForCB + '?shcb=' + Math.round(new Date().getTime());
+		} else {
+			return tmpArticleTitleForCB + '&shcb=' + Math.round(new Date().getTime());
+		}
 	},
 
 	quitHunt: function() {
@@ -609,10 +643,10 @@ var ScavengerHunt = {
 	},
 
 	getCookieKey: function() {
-		if ( wgUserName == null ) {
+		if ( this.userName == null ) {
 			return 'ScavengerHuntInProgress';
 		}
-		var key = 'ScavengerHuntInProgress' + wgUserName.replace(/ /g, '_');
+		var key = 'ScavengerHuntInProgress' + this.userName.replace(/ /g, '_');
 		this.log('cookie key: ' + key);
 		return key;
 	}

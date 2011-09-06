@@ -20,7 +20,7 @@
 		<label for="email"><?= $email ?></label>
 		<input type="text" name="email" />
 	<? } ?>
-	<div class="scavenger-clue-button">
+	<div id="scavenger-form-clue-submit-button" class="scavenger-clue-button">
 		<input type="submit" class="wikia-button" value="<?=$game->getEntryFormButtonText(); ?>"/>
 	</div>
 </form>
