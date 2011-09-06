@@ -45,6 +45,9 @@
 @import "core/Paginator";
 @import "core/successerror";
 
+// IE7 fix for URI-encoded image (BugId:9975)
+@import "core/ie7dataimage";
+
 // Ubiquitous modules that should be combined here to save space. Each file should contain a comment w/its name so we can see what was packaged. //
 @import "modules/LatestPhotos";
 @import "../../../extensions/wikia/EditPageReskin/Blogs/css/oasis.scss"; // SASS imports are relative to the current file

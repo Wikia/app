@@ -626,7 +626,11 @@ $wgNoExternals = false;
  * WARNING: Currently we need to dupliate this value into StaticChute::cdnStylePath.
  */
 $wgCdnStylePath = '';
-$wgBlankImgUrl = $wgCdnStylePath."/skins/common/blank.gif";
+
+/**
+ * Transpaent 1x1 GIF URI-encoded (BugId:9975)
+ */
+$wgBlankImgUrl = 'data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D';
 
 /**
  * The actual path to wikia_combined (without rewrites).  Used for development servers.

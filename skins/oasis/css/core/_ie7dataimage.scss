@@ -1,0 +1,9 @@
+/**
+ * This rule is a fix for IE7 not handling URI-endoded images
+ *
+ * @see http://dean.edwards.name/weblog/2005/06/base64-sexy/
+ */
+img.sprite,
+img.sprite-small {
+	*behavior:expression((this.runtimeStyle.behavior="none")&&(/^data:.*;base64/i.test(this.src))&&(this.src="http://images1.wikia.nocookie.net/__cb41527/common/skins/common/blank.gif"))
+}
