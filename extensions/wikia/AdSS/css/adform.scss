@@ -6,7 +6,7 @@
 
 .SponsoredLinkDesc {
 
-	height: 420px;
+	height: 510px;
 	margin: 0px auto;
 	width: 958px;
 
@@ -27,7 +27,7 @@
 		position: relative;
 
 		float: left;
-		height: 320px;
+		height: 350px;
 		margin-top: 15px;
 		width: 280px;
 		@include box-shadow(0, 0, 10px, #999, false, 1px);
@@ -36,7 +36,7 @@
 			background-color: $color-menu-highlight;
 			@include linear-gradient(false, top, $color-menu-highlight, 60%, $color-module-shadow, 100%);
 			border: 3px solid $color-page-border;
-			height: 350px;
+			height: 380px;
 			margin-top: 0px;
 			@include box-shadow(0, 0, 10px, #333, false, 1px);
 			z-index: 1;
@@ -59,7 +59,7 @@
 		.ribbon {
 			margin: 20px -30px 0 -30px;
 			height: 31px;
-			background-color: #aad33e;
+			background-color: $color-buttons;
 			text-align: center;
 		}
 		
