@@ -56,7 +56,7 @@ class NodeApiClient {
 		global $wgCityId, $wgSitename, $wgServer, $wgArticlePath, $wgMemc;
 		wfProfileIn(__METHOD__);
 
-		if(empty($roomData)){
+		if(empty($roomData)){ // TODO: FIXME: What is this testing? Isn't it ALWAYS empty? - SWC 20110905
 			// Add some extra data that the server will want in order to store it in the room's hash.
 			$extraData = array(
 				'wgServer' => $wgServer,
@@ -133,12 +133,20 @@ class NodeApiClient {
 	 * Does the request to the Node server and returns the responseText (empty string on failure).
 	 */
 	static private function makeRequest($params){
+		global $wgReadOnly;
 		wfProfileIn( __METHOD__ );
+		$response = "";
 		
-		$requestUrl = "http://" . NodeApiClient::getHostAndPort() . "/api?" . http_build_query($params);
-		$response = Http::get( $requestUrl, 'default', array('noProxy' => true) );
-		if($response === false){
-			$response = "";
+		// NOTE: When we fail over, the chat server host doesn't change which backend it points to (since there isn't
+		// even a chat server in the backup datacenter(s)), so if we're in read-only, even though this isn't a write
+		// operation, abort trying to contact the node server since it could be unavailable (in the event of complete
+		// network unavailability in the primary datacenter). - BugzId 11047
+		if(empty($wgReadOnly)){
+			$requestUrl = "http://" . NodeApiClient::getHostAndPort() . "/api?" . http_build_query($params);
+			$response = Http::get( $requestUrl, 'default', array('noProxy' => true) );
+			if($response === false){
+				$response = "";
+			}
 		}
 
 		wfProfileOut( __METHOD__ );

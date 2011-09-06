@@ -8,7 +8,8 @@ $messages['en'] = array(
 	'chat-no-login-text' => 'Please login to chat.',
 	'chat-default-topic' => 'Welcome to the $1 chat',
 	'chat-user-joined' => '$1 has joined the chat.',
-	
+	'chat-read-only' => 'Chat is temporarily unavailable while wiki is in read-only mode.',
+
 	// Many of these are sent from server.js to the client (which uses $.msg() to translate the message).
 	'chat-user-parted' => '$1 has left the chat.',
 	'chat-user-joined' => '$1 has joined the chat.',
