@@ -120,7 +120,6 @@ class FounderProgressBarController extends WikiaController {
 				FT_WORDMARK_EDIT => array("newFromText", "ThemeDesigner", NS_SPECIAL),
 				FT_MOSTVISITED_VISIT => array("newFromText", "Mostvisitedpages", NS_SPECIAL),
 				FT_TOPTENLIST_ADD => array("newFromText", "CreatePage", NS_SPECIAL),
-				FT_BLOGPOST_ADD => array("newFromText", $this->wg->User->getName(), NS_BLOG_ARTICLE),
 				FT_FB_LIKES_3 => array("newMainPage"),
 				FT_UNCATEGORIZED_VISIT => array("newFromText", "UncategorizedPages", NS_SPECIAL),
 				FT_BONUS_PHOTO_ADD_10 => array("newFromText", "Upload", NS_SPECIAL),
@@ -129,6 +128,13 @@ class FounderProgressBarController extends WikiaController {
 				FT_BONUS_EDIT_50 => array("newFromText", "WikiActivity", NS_SPECIAL),		
 				FT_TOTAL_EDIT_300 => array("newFromText", "CreatePage", NS_SPECIAL),
 		);
+		
+		// This task is optional on some wikis
+		if (defined('NS_BLOG_ARTICLE')) {
+			$this->urls[FT_BLOGPOST_ADD] = array("newFromText", $this->wg->User->getName(), NS_BLOG_ARTICLE);
+		} else {
+			$this->urls[FT_BLOGPOST_ADD] = array("newFromText", $this->wg->User->getName(), NS_USER);			
+		}
 		
 		// This list contains additional "bonus" tasks that can be completed if all other tasks are skipped or completed
 		$this->bonus_tasks = array (
