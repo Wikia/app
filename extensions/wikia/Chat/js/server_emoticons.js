@@ -129,8 +129,8 @@ if(typeof EmoticonMapping === 'undefined'){
 		/**
 		 * Loads a reasonable default of emoticons.
 		 *
-		 * TODO: Replace with loading Community Wiki's "MediaWiki:Emoticons" at startup and using that as the default
-		 * until the client load's their appropriate wikitext.
+		 * Only used as an extreme fallback. Replaced at startup with loading Messaging Wiki's "MediaWiki:Emoticons"
+		 * which is used as the default for each client until the async request returns from their appropriate wiki.
 		 */
 		this.loadDefault = function(){
 			self.loadFromWikiText('* http://images2.wikia.nocookie.net/__cb20110904035827/central/images/7/79/Emoticon_angry.png\n\

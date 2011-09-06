@@ -17,7 +17,7 @@ exports.GIVECHATMOD_URL = "/?action=ajax&rs=ChatAjax&method=giveChatMod";
 exports.API_URL = "/api.php";
 exports.WIKIA_PROXY_HOST = "";
 exports.WIKIA_PROXY_PORT = "";
-exports.COMMUNITY_WIKI_HOSTNAME = "community.wikia.com";
+exports.MESSAGING_WIKI_HOSTNAME = "messaging.wikia.com";
 
 // Settings for local varnish
 exports.WIKIA_PROXY_HOST = "127.0.0.1";
