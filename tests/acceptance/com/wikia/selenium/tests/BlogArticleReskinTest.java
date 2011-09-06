@@ -71,7 +71,11 @@ public class BlogArticleReskinTest extends EditPageBaseTest {
 		clickAndWait("wpSave");
 
 		// verify saved blog post
-		assertEquals(this.postTitle, session().getText("//div[@id='WikiaUserPagesHeader']/h1"));
+		
+		assertEquals("WikiaBot/" + this.postTitle, session().getText("//header[@id='WikiaPageHeader']/h1"));
+		
+		
+		
 		assertTrue(session().isTextPresent("test blog post --"));
 	}
 
