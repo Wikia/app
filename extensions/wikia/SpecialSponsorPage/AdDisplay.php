@@ -66,7 +66,8 @@ class AdDisplay {
 		
 		if ( ( !empty( $skin ) ? ( !in_array( $skin, array( 'SkinWikiaphone', 'SkinWikiaApp' ) ) ) : true)) {
 			$ads = Advertisement::GetAdsForCurrentPage();
-			$adtext = wfMsg('sponsor-header');
+			$adtext = '<div class="sponsorwrapper">';
+			$adtext .= wfMsg('sponsor-header');
 			$adtext .= '<div class="sponsormsg">';
 			$adtext .= '<ul>';
 			if(is_array($ads)){
@@ -78,6 +79,7 @@ class AdDisplay {
 	
 	
 	
+			$adtext .= '</div>';
 			$adtext .= '</div>';
 		}
 		return $adtext;

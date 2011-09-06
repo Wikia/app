@@ -6,20 +6,26 @@ var AdSS = {
 		AdSS.sponsormsg = $("div.sponsormsg > ul");
 		// if div exists
 		if(AdSS.sponsormsg.length) {
-			// display page ads
-			if(typeof(wgAdSS_pageAds) !== 'undefined') {
-				$.each( wgAdSS_pageAds, function(i,v) { AdSS.sponsormsg.append(v); } );
-			}
+			var contentHeight = AdSS.sponsormsg.parents('.sponsorwrapper').offset().top - $('#WikiaArticle').offset().top;
+			if(contentHeight >= 600) {
+				// display page ads
+				if(typeof(wgAdSS_pageAds) !== 'undefined') {
+					$.each( wgAdSS_pageAds, function(i,v) { AdSS.sponsormsg.append(v); } );
+				}
 
-			// display a self ads
-			if(typeof(wgAdSS_selfAd) !== 'undefined') {
-				$(wgAdSS_selfAd).appendTo(AdSS.sponsormsg)
-					.find("a").bind( "click", { adId: 0 }, AdSS.onClick );
-				$.tracker.byStr( "adss/publisher/view/0" );
-			}
+				// display a self ads
+				if(typeof(wgAdSS_selfAd) !== 'undefined') {
+					$(wgAdSS_selfAd).appendTo(AdSS.sponsormsg)
+						.find("a").bind( "click", { adId: 0 }, AdSS.onClick );
+					$.tracker.byStr( "adss/publisher/view/0" );
+				}
 
-			// fetch site ads
-			$.getJSON( wgScript, {'action':'ajax', 'rs':'AdSS_Publisher::getSiteAdsAjax', 'cb':'3.1'}, AdSS.onGetSiteAds );
+				// fetch site ads
+				$.getJSON( wgScript, {'action':'ajax', 'rs':'AdSS_Publisher::getSiteAdsAjax', 'cb':'3.1'}, AdSS.onGetSiteAds );
+			}
+			else {
+				AdSS.sponsormsg.parents('.sponsorwrapper').hide();
+			}
 		}
 	},
 
