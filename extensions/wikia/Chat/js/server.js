@@ -79,11 +79,11 @@ console.log("Rooms cleaned.");
 // Load default emoticon mapping (will be the mapping for all wikis which don't have MediaWiki:Emoticons set.
 var defaultEmoticonMapping = new EmoticonMapping();
 defaultEmoticonMapping.loadDefault();
-console.log("Loading the default emoticon mapping from Community Wiki...");
+console.log("Loading the default emoticon mapping from Messaging Wiki...");
 var httpClient = http.createClient(config.WIKIA_PROXY_PORT, config.WIKIA_PROXY_HOST);
-getWikiText(httpClient, config.COMMUNITY_WIKI_HOSTNAME, emoticons.EMOTICON_ARTICLE, function(wikiText){
+getWikiText(httpClient, config.MESSAGING_WIKI_HOSTNAME, emoticons.EMOTICON_ARTICLE, function(wikiText){
 	defaultEmoticonMapping.loadFromWikiText( wikiText );
-	console.log("Done loading default emoticons from CommunityWiki.");
+	console.log("Done loading default emoticons from MessagingWiki.");
 });
 
 //Start the main chat server listening.
@@ -1087,7 +1087,7 @@ function processText(text, client) {
 	if(typeof client.emoticonMapping === 'undefined'){
 		emoticonMapping = new EmoticonMapping();
 
-		// Use the default global mapping from Community Wiki (was loaded on server startup).
+		// Use the default global mapping from Messaging Wiki (was loaded on server startup).
 		emoticonMapping._settings =  defaultEmoticonMapping._settings;
 		emoticonMapping._regexes = {};
 	} else {
