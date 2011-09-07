@@ -413,27 +413,24 @@ class UserProfilePageController extends WikiaController {
 		$result = array('success' => true, 'error' => $errorMsg);
 		
 		if( $isAllowed && isset($data->source) && isset($data->file) ) {
-			$userIdentityBox = F::build('UserIdentityBox', array($this->app, $user, self::MAX_TOP_WIKIS));
-			
 			switch($data->source) {
 				case 'sample':
-					$user->setOption('avatar', $data->file );
+					$user->setOption('avatar', $data->file);
 					break;
 				case 'facebook':
 				case 'uploaded':
 					$avatar = $this->saveAvatarFromUrl($user, $data->file, $errorMsg);
-					$user->setOption('avatar', $avatar );
+					$user->setOption('avatar', $avatar);
 					break;
 				default:
 					$result = array('success' => false, 'error' => $errorMsg);
 					$errorMsg = $this->app->wf->msg('userprofilepage-interview-save-internal-error');
 					break;
 			}
-			
 			$user->setOption('avatar_rev', date('U') );
 			$user->saveSettings();
 		}
-
+		
 		return true;
 		$this->app->wf->ProfileOut( __METHOD__ );
 	}
