@@ -77,17 +77,22 @@
 		height: 30px;
 		margin-top: -7px;
 		padding: 5px 0 0;
+	}
+	>li {
+		>a {
+			color: $color-header-text;
+			float: left;
+			font-size: 16px;
+			&:visited, &:active {
+				color: $color-header-text;
+			}
+		}
 		&:hover {
 			@include linear-gradient(false, top, rgba(#000, 0), 0, #000, 100%);
-		}
-	}
-	>li >a {
-		color: $color-header-text;
-		float: left;
-		font-size: 16px;
-		&:visited, &:active {
-			color: $color-header-text;
-		}
+			>a {
+				color: #fff;
+			}
+		}	
 	}
 	a {
 		border-right: 1px solid mix($color-header-text, $color-header, 20%);
