@@ -7,6 +7,10 @@ class PartnerVideoHelper {
 	private static $SCREENPLAY_FEED_FILE = 'feed.xml';
 	private static $MOVIECLIPS_VIDEOS_LISTING_FOR_MOVIE_URL = 'http://api.movieclips.com/v2/movies/$1/videos';
 	private static $MOVIECLIPS_XMLNS = 'http://api.movieclips.com/schemas/2010';
+	private static $REALGRAVITY_API_KEY = '4bd3e310-9c30-012e-b52b-12313d017962';
+	private static $REALGRAVITY_PROVIDER_IDS = array('MACHINIMA'=>240);
+	private static $REALGRAVITY_PAGE_SIZE = 100;
+	private static $REALGRAVITY_VIDEOS_URL = 'http://mediacast.realgravity.com/vs/2/videos/$1.xml?providers=$2&search_term=$3&per_page=$4&page=$5';
 	private static $TEMP_DIR = '/tmp';
 	
 	private static $CLIP_TYPE_BLACKLIST = array( VideoPage::V_SCREENPLAY => array('trailerType'=>'Home Video', 'trailerVersion'=>'Trailer') );
@@ -110,9 +114,15 @@ class PartnerVideoHelper {
 				$numCreated = $this->importFromScreenplay($file);
 				break;
 			case VideoPage::V_MOVIECLIPS:
-				$ids = self::getMovieClipIdsFromFileContents($file);
+				$ids = self::getApiQueryTermsFromFileContents($file);
 				foreach ($ids as $id) {
 					$numCreated += $this->importFromMovieClips($id);
+				}
+				break;
+			case VideoPage::V_REALGRAVITY:
+				$keywords = self::getApiQueryTermsFromFileContents($file);
+				foreach ($keywords as $keyword) {
+					$numCreated += $this->importFromRealgravity($keyword);
 				}
 				break;
 			default:
@@ -203,7 +213,7 @@ class PartnerVideoHelper {
 	}
 
 	public function importFromMovieClips($id) {
-		global $wgHTTPProxy, $parseOnly;
+		global $parseOnly;
 
 		$articlesCreated = 0;
 
@@ -269,6 +279,7 @@ class PartnerVideoHelper {
 				$clipData['duration'] = $enclosure->get_duration();
 			}
 
+			$msg = '';
 			$articlesCreated += $this->createVideoPageForPartnerVideo(VideoPage::V_MOVIECLIPS, $clipData, $msg);
 			if ($msg) {
 				print "ERROR: $msg\n";
@@ -276,6 +287,63 @@ class PartnerVideoHelper {
 		}
 
 		return $articlesCreated;
+	}
+	
+	public function importFromRealgravity($keyword) {
+		global $parseOnly;
+		
+		$articlesCreated = 0;		
+		$page = 1;
+
+		do {
+			$numVideos = 0;
+	
+			$url = self::initRealgravityVideosApiUrl($keyword, $page++);
+
+			$info = array();
+			!$parseOnly && print("Connecting to $url...\n");
+
+			$xmlContent = $this->getUrlContent($url);
+
+			if (!$xmlContent) {
+				print("ERROR: problem downloading content!\n");
+				return 0;
+			}
+
+			$doc = new DOMDocument( '1.0', 'UTF-8' );
+			@$doc->loadXML( $xmlContent );
+			$videos = $doc->getElementsByTagName('video');
+			$numVideos = $videos->length;
+			!$parseOnly && print("Found $numVideos videos...\n");
+			for ($i=0; $i<$numVideos; $i++) {
+				$clipData = array();
+				$video = $videos->item($i);
+				$clipData['clipTitle'] = $video->getElementsByTagName('title')->item(0)->textContent;
+				$clipData['rgGuid'] = $video->getElementsByTagName('guid')->item(0)->textContent;
+				$clipData['thumbnail'] = $video->getElementsByTagName('thumbnail-url')->item(0)->textContent;
+				$clipData['description'] = $video->getElementsByTagName('description')->item(0)->textContent;
+				$clipData['duration'] = $video->getElementsByTagName('duration')->item(0)->textContent;
+				//@todo tag list
+				
+				$msg = '';
+				$articlesCreated += $this->createVideoPageForPartnerVideo(VideoPage::V_REALGRAVITY, $clipData, $msg);
+				if ($msg) {
+					print "ERROR: $msg\n";
+				}
+			}
+		}
+		while ($numVideos == self::$REALGRAVITY_PAGE_SIZE);
+		
+		return $articlesCreated;
+	}
+	
+	private static function initRealgravityVideosApiUrl($keyword, $page=1) {
+		$url = str_replace('$1', self::$REALGRAVITY_API_KEY, self::$REALGRAVITY_VIDEOS_URL );
+		$url = str_replace('$2', self::$REALGRAVITY_PROVIDER_IDS['MACHINIMA'], $url);
+		$url = str_replace('$3', urlencode($keyword), $url);
+		$url = str_replace('$4', self::$REALGRAVITY_PAGE_SIZE, $url);
+		$url = str_replace('$5', $page, $url);
+		return $url;
 	}
 	
 	protected function isClipTypeBlacklisted($provider, array $clipData) {
@@ -297,21 +365,21 @@ class PartnerVideoHelper {
 		return Http::get($url);
 	}
 	
-	public static function getMovieClipIdsFromFileContents($file) {
-		$ids = array();
+	protected static function getApiQueryTermsFromFileContents($file) {
+		$terms = array();
 
 		$lines = explode("\n", $file);
 
 		foreach ($lines as $line) {
 			$line = trim($line);
 			if ($line) {
-				$ids[] = $line;
+				$terms[] = $line;
 			}
 		}
 
-		return $ids;
+		return $terms;
 	}
-
+	
 	public static function generateNameForPartnerVideo($provider, array $data) {
 		$name = '';
 
@@ -327,8 +395,18 @@ class PartnerVideoHelper {
 			case VideoPage::V_MOVIECLIPS:
 				$name = sprintf("%s - %s", self::generateTitleNameForPartnerVideo($provider, $data), $data['clipTitle']);
 				break;
+			case VideoPage::V_REALGRAVITY:
+				$name = $data['clipTitle'];
+				break;
 			default:
 		}
+		
+		// sanitize title
+		$name = preg_replace(Title::getTitleInvalidRegex(), ' ', $name);
+		// get rid of slashes. these are technically allowed in article
+		// titles, but they refer to subpages, which videos don't have
+		$name = str_replace('/', ' ', $name);
+		$name = str_replace('  ', ' ', $name);
 
 		return $name;
 	}
@@ -351,6 +429,8 @@ class PartnerVideoHelper {
 				if (!empty($data['freebaseMid'])) {
 					$categories[] = 'freebasemid-' . (substr($data['freebaseMid'], 0, 3) == '/m/' ? substr($data['freebaseMid'], 3) : $data['freebaseMid']);	// since / is not valid in category name, remove preceding /m/
 				}
+				break;
+			case VideoPage::V_REALGRAVITY:
 				break;
 			default:
 				return array();
@@ -393,6 +473,9 @@ class PartnerVideoHelper {
 			case VideoPage::V_MOVIECLIPS:
 				$data['titleName'] = str_replace('  ', ' ', str_replace('/', ' ', $data['titleName']) );
 				break;
+			case VideoPage::V_REALGRAVITY:
+				$data['clipTitle'] = str_replace('  ', ' ', str_replace('/', ' ', $data['clipTitle']) );
+				break;
 			default:
 		}
 	}
@@ -403,10 +486,10 @@ class PartnerVideoHelper {
 		$id = null;
 		$metadata = null;	
 		
-		self::sanitizeDataForPartnerVideo($provider, $data);
+//		self::sanitizeDataForPartnerVideo($provider, $data);
 		
 		$name = self::generateNameForPartnerVideo($provider, $data);
-
+print($name."\n");
 		switch ($provider) {
 			case VideoPage::V_SCREENPLAY:
 				$id = $data['eclipId'];
@@ -423,11 +506,14 @@ class PartnerVideoHelper {
 				$id = $data['mcId'];
 				$metadata = array($data['thumbnail'], $data['duration'], $data['description']);
 				break;
+			case VideoPage::V_REALGRAVITY:
+				$id = $data['rgGuid'];
+				$metadata = array($data['thumbnail'], $data['duration'], $data['description']);
+				break;
 			default:
 				$msg = "unsupported provider $provider";
 				return 0;
 		}
-
 
 		$title = $this->makeTitleSafe($name);
 		if(is_null($title)) {
@@ -454,7 +540,7 @@ class PartnerVideoHelper {
 				printf("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n", basename($filename), $id, $data['titleName'], $data['year'], $title->getText(), self::generateTitleNameForPartnerVideo($provider, $data), $provider==VideoPage::V_SCREENPLAY ? $metadata[2] : $metadata[1], implode(',', $metadata), implode(',', $categories));
 			}
 			elseif ($debug) {
-				print "parsed partner clip id $id. name: {$title->getText()}. data: " . implode(',', $metadata) . ". categories: " . implode(',', $categories) . "\n";
+//				print "parsed partner clip id $id. name: {$title->getText()}. data: " . implode(',', $metadata) . ". categories: " . implode(',', $categories) . "\n";
 			}
 			else {
 				$video->save($categoryStr);
