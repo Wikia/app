@@ -182,7 +182,7 @@ class FounderProgressBarHooks {
 	 * Skipped tasks do NOT count against this total, but bonus tasks do
 	 * If all tasks are complete, award that event (if not awarded already) and set a memcache flag
 	 */
-	public static function allTasksComplete() {
+	public static function allTasksComplete($use_master = false) {
 		$app = F::app();
 		$memKey = $app->wf->MemcKey('FounderTasksCompleted');
 		$task_complete = $app->wg->Memc->get($memKey);
@@ -195,13 +195,13 @@ class FounderProgressBarHooks {
 				return true;				
 			}
 			// Tasks are not complete, so we need to count how many we have completed to see if we are done
-			$response = $app->sendRequest('FounderProgressBar',"getLongTaskList", array("use_master" => true));			
+			$response = $app->sendRequest('FounderProgressBar',"getLongTaskList", array("use_master" => $use_master));			
 			$data = $response->getVal('data');
 			// Completion task NOT set but all other tasks are complete, so set it.  
 			// TODO: display some kind of YAY YOU DID IT! message here
 			if ($data['total_tasks'] > 1 && $data['tasks_completed'] >= $data['total_tasks']) {
-				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_COMPLETION));
 				$app->wg->Memc->set($memKey, true, 86400*30 );
+				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_COMPLETION));
 				return true;
 			}
 			return false;
