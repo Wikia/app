@@ -34,14 +34,18 @@ exports.doReplacements = function(text, emoticonMapping){
 	var imgUrlsByRegexString = emoticonMapping.getImgUrlsByRegexString();
 	for(var regexString in imgUrlsByRegexString){
 		imgSrc = imgUrlsByRegexString[regexString];
+		imgSrc = imgSrc.replace(/"/g, "%22"); // prevent any HTML-injection
 		
 		// Build the regex for the character (make it ignore the match if there is a "/" immediately after the emoticon. That creates all kinds of problems with URLs).
-		var regex = new RegExp("(^|\s)(" + regexString + ")($|\s)", "gi");
-
-		imgSrc = imgSrc.replace(/"/g, "%22"); // prevent any HTML-injection
-		var emoticon = " <img src=\""+imgSrc+"\" width='"+exports.EMOTICON_WIDTH+"' height='"+exports.EMOTICON_HEIGHT+"'/> ";
-
-		text = text.replace(regex, emoticon );
+		var numIters = 0;
+		var origText = text;
+		do{
+			var regex = new RegExp("(^| )(" + regexString + ")([^/]|$)", "gi"); // NOTE: \s does not work for whitespace here for some reason.
+			var emoticon = " <img src=\""+imgSrc+"\" width='"+exports.EMOTICON_WIDTH+"' height='"+exports.EMOTICON_HEIGHT+"' alt=\"$2\" title=\"$2\"/> ";
+			var glyphUsed = text.replace(regex, '$2');
+			glyphUsed = glyphUsed.replace(/"/g, "&quot;"); // prevent any HTML-injection
+			text = text.replace(regex, '$1' + emoticon + '$3');
+		} while ((origText != text) && (numIters++ < 5));
 		//text = text.replace(/(^| ):\)( |$)/g, emoticon );
 	}
 
