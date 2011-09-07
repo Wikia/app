@@ -278,7 +278,8 @@ function api_getRoomsList(successCallback, errorCallback){
 				}
 			}
 
-			console.log(stats);
+			// Holy log-spam batman! :)
+			//console.log(stats);
 
 			if(data.indexOf('allocation_stats')) {
 				callback(stats);
@@ -296,7 +297,7 @@ function getCpuPused(pid, callback) {
 	var exec = require('child_process').exec;
 	var puts = function(error, stdout, stderr) { callback(parseFloat(stdout)) }
 	var com = "ps -opcpu -p " + pid + " | grep -v CPU";
-	console.log( com );
+	//console.log( com );
 	exec(com, puts);
 }
 
