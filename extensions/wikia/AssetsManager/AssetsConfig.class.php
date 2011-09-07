@@ -85,6 +85,21 @@ class AssetsConfig {
 		return array();
 	}
 
+	public static function getJQueryUrl( $combine, $minify, $params ) {
+		global $wgUseJQueryFromCDN;
+
+		if (!empty($wgUseJQueryFromCDN)) {
+			$url = $minify
+				? '#external_http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js'
+				: '#external_http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.js';
+		}
+		else {
+			$url = 'skins/common/jquery/jquery-1.6.1.js';
+		}
+
+		return array($url);
+	}
+
 	private /* array */ $mConfig;
 
 	/**
@@ -151,7 +166,7 @@ class AssetsConfig {
 			} else if(substr($item, 0, 7) == '#group_') {
 
 				// reference to another group
-				$assets = array_merge( $assets, $this->resolve( substr( $item, 7 ) ) );
+				$assets = array_merge( $assets, $this->resolve( substr( $item, 7 ), $combine, $minify, $params ) );
 
 			} else if( substr ($item, 0, 10 ) == '#function_' ) {
 

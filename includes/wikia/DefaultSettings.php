@@ -633,6 +633,11 @@ $wgCdnStylePath = '';
 $wgBlankImgUrl = 'data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D';
 
 /**
+ * Serve jQuery from Google's CDN. Disable this variable to serve jQuery as a part of AssetsManager package.
+ */
+$wgUseJQueryFromCDN = true;
+
+/**
  * The actual path to wikia_combined (without rewrites).  Used for development servers.
  *
  * NOTE: Keep this in sync with the value in /wikia-ops/config/varnish/wikia.vcl

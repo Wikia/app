@@ -95,7 +95,7 @@ class StaticChute {
 			'common/yui_2.5.2/tabview/tabview.js',
 			'common/yui_extra/tools-min.js',
 
-			'common/jquery/jquery-1.6.2.js',
+			'common/jquery/jquery-1.6.1.js',
 			'common/jquery/jquery.json-2.2.js',
 			'common/jquery/jquery.cookies.2.1.0.js',
 			'common/jquery/jquery.dump.js',
@@ -124,7 +124,7 @@ class StaticChute {
 
 		// JS served for anon on article view
 		$this->config['monaco_anon_article_js'] = array(
-			'common/jquery/jquery-1.6.2.js',
+			'common/jquery/jquery-1.6.1.js',
 			'common/jquery/jquery.json-1.3.js',
 			'common/jquery/jquery.cookies.2.1.0.js',
 			'common/jquery/jquery.dump.js',
@@ -166,7 +166,7 @@ class StaticChute {
 
 		// JS served for logged-in
 		$this->config['monaco_loggedin_js'] = array(
-			'common/jquery/jquery-1.6.2.js',
+			'common/jquery/jquery-1.6.1.js',
 			'common/jquery/jquery.json-1.3.js',
 			'common/jquery/jquery.cookies.2.1.0.js',
 			'common/jquery/jquery.dump.js',
@@ -207,7 +207,7 @@ class StaticChute {
 
 		// JS served for anon for everything that's not an article view
 		$this->config['monaco_anon_everything_else_js'] = array(
-			'common/jquery/jquery-1.6.2.js',
+			'common/jquery/jquery-1.6.1.js',
 			'common/jquery/jquery.json-1.3.js',
 			'common/jquery/jquery.cookies.2.1.0.js',
 			'common/jquery/jquery.dump.js',
@@ -286,7 +286,7 @@ class StaticChute {
 
 		// The jquery files we need in every JS package of Oasis.
 		$this->config['oasis_jquery'] = array(
-			"common/jquery/jquery-1.6.2.js",
+			"common/jquery/jquery-1.6.1.js",
 			"common/jquery/jquery.json-2.2.js",
 			'common/jquery/jquery.getcss.js',
 			"common/jquery/jquery.wikia.js",
@@ -414,7 +414,7 @@ class StaticChute {
 	private function generateConfigSkinCorporate(){
 		//JS
 		$this->config['corporate_page_js'] = array(
-			'common/jquery/jquery-1.6.2.js',
+			'common/jquery/jquery-1.6.1.js',
 			'common/jquery/jquery.getcss.js',
 			'common/jquery/jquery.wikia.js',
 			'common/wikibits.js',
@@ -428,7 +428,7 @@ class StaticChute {
 		);
 
 		$this->config['corporate_specialpage_js'] = array(
-			'common/jquery/jquery-1.6.2.js',
+			'common/jquery/jquery-1.6.1.js',
 			'common/jquery/jquery.getcss.js',
 			'common/jquery/jquery.wikia.js',
 			'common/wikibits.js',
@@ -474,7 +474,7 @@ class StaticChute {
 		);
 		//JS
 		$this->config['wikiaphone_js'] = array(
-			'common/jquery/jquery-1.6.2.js',
+			'common/jquery/jquery-1.6.1.js',
 			'wikiaphone/main.js'
 		);
 	}

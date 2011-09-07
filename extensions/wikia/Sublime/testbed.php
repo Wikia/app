@@ -86,7 +86,7 @@ $wikiHost = "http://sean.wikia-dev.com";
 	<br/><br/>
 
 	<!-- Javascript at the bottom - don't anger Artur! -->
-	<script type="text/javascript" src="<?= $wikiHost ?>/skins/common/jquery/jquery-1.6.2.js?1284232976"></script>
+	<script type="text/javascript" src="<?= $wikiHost ?>/skins/common/jquery/jquery-1.6.1.js?1284232976"></script>
 	<script type="text/javascript" src="<?= $wikiHost ?>/skins/common/jquery/jquery.json-2.2.js?1284232976"></script>
 	<script type="text/javascript" src="<?= $wikiHost ?>/skins/common/jquery/jquery.wikia.js?1284232976"></script>
 	<script type='text/javascript'>
