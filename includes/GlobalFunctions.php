@@ -2858,7 +2858,6 @@ function wfHttpOnlySafe() {
 function wfSetupSession() {
 	global $wgSessionsInMemcached, $wgCookiePath, $wgCookieDomain,
 			$wgCookieSecure, $wgCookieHttpOnly, $wgSessionHandler;
-	global $wgSessionsInRiak;
 
 	if( $wgSessionsInMemcached ) {
 		require_once( 'MemcachedSessions.php' );

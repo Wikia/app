@@ -1,20 +1,24 @@
 <?php
-namespace Predis;
+class PredisException extends Exception { }
 
-class PredisException extends \Exception { }
-class ClientException extends PredisException { }                   // Client-side errors
-class AbortedMultiExec extends PredisException { }                  // Aborted multi/exec
+// Client-side errors
+class Predis_ClientException extends PredisException { }
 
-class ServerException extends PredisException {                     // Server-side errors
+// Aborted multi/exec
+class Predis_AbortedMultiExec extends PredisException { }
+
+// Server-side errors
+class Predis_ServerException extends PredisException {
     public function toResponseError() {
-        return new ResponseError($this->getMessage());
+        return new Predis_ResponseError($this->getMessage());
     }
 }
 
-class CommunicationException extends PredisException {              // Communication errors
+// Communication errors
+class Predis_CommunicationException extends PredisException {
     private $_connection;
 
-    public function __construct(Connection $connection, $message = null, $code = null) {
+    public function __construct(Predis_Connection $connection, $message = null, $code = null) {
         $this->_connection = $connection;
         parent::__construct($message, $code);
     }
@@ -23,16 +27,17 @@ class CommunicationException extends PredisException {              // Communica
     public function shouldResetConnection() {  return true; }
 }
 
-class MalformedServerResponse extends CommunicationException { }    // Unexpected responses
+// Unexpected responses
+class Predis_MalformedServerResponse extends Predis_CommunicationException { }
 
 /* ------------------------------------------------------------------------- */
 
-class Client {
+class Predis_Client {
     const VERSION = '0.6.6';
     private $_options, $_connection, $_serverProfile, $_responseReader;
 
     public function __construct($parameters = null, $clientOptions = null) {
-        $this->setupClient($clientOptions ?: new ClientOptions());
+        $this->setupClient($clientOptions !== null ? $clientOptions : new Predis_ClientOptions());
         $this->setupConnection($parameters);
     }
 
@@ -42,37 +47,37 @@ class Client {
 
         $options = null;
         $lastArg = $argv[$argc-1];
-        if ($argc > 0 && !is_string($lastArg) && ($lastArg instanceof ClientOptions ||
-            is_subclass_of($lastArg, '\Predis\RedisServerProfile'))) {
+        if ($argc > 0 && !is_string($lastArg) && ($lastArg instanceof Predis_ClientOptions ||
+            is_subclass_of($lastArg, 'Predis_RedisServerProfile'))) {
             $options = array_pop($argv);
             $argc--;
         }
 
         if ($argc === 0) {
-            throw new ClientException('Missing connection parameters');
+            throw new Predis_ClientException('Missing connection parameters');
         }
 
-        return new Client($argc === 1 ? $argv[0] : $argv, $options);
+        return new Predis_Client($argc === 1 ? $argv[0] : $argv, $options);
     }
 
     private static function filterClientOptions($options) {
-        if ($options instanceof ClientOptions) {
+        if ($options instanceof Predis_ClientOptions) {
             return $options;
         }
         if (is_array($options)) {
-            return new ClientOptions($options);
+            return new Predis_ClientOptions($options);
         }
-        if ($options instanceof RedisServerProfile) {
-            return new ClientOptions(array(
+        if ($options instanceof Predis_RedisServerProfile) {
+            return new Predis_ClientOptions(array(
                 'profile' => $options
             ));
         }
         if (is_string($options)) {
-            return new ClientOptions(array(
-                'profile' => RedisServerProfile::get($options)
+            return new Predis_ClientOptions(array(
+                'profile' => Predis_RedisServerProfile::get($options)
             ));
         }
-        throw new \InvalidArgumentException("Invalid type for client options");
+        throw new InvalidArgumentException("Invalid type for client options");
     }
 
     private function setupClient($options) {
@@ -90,10 +95,10 @@ class Client {
 
     private function setupConnection($parameters) {
         if ($parameters !== null && !(is_array($parameters) || is_string($parameters))) {
-            throw new ClientException('Invalid parameters type (array or string expected)');
+            throw new Predis_ClientException('Invalid parameters type (array or string expected)');
         }
         if (is_array($parameters) && isset($parameters[0])) {
-            $cluster = new ConnectionCluster($this->_options->key_distribution);
+            $cluster = new Predis_ConnectionCluster($this->_options->key_distribution);
             foreach ($parameters as $shardParams) {
                 $cluster->add($this->createConnection($shardParams));
             }
@@ -105,11 +110,11 @@ class Client {
     }
 
     private function createConnection($parameters) {
-        if (!$parameters instanceof ConnectionParameters) {
-            $parameters = new ConnectionParameters($parameters);
+        if (!$parameters instanceof Predis_ConnectionParameters) {
+            $parameters = new Predis_ConnectionParameters($parameters);
         }
 
-        $connection = new Connection($parameters, $this->_responseReader);
+        $connection = new Predis_Connection($parameters, $this->_responseReader);
         if ($parameters->password !== null) {
             $connection->pushInitCommand($this->createCommand(
                 'auth', array($parameters->password)
@@ -124,20 +129,20 @@ class Client {
         return $connection;
     }
 
-    private function setConnection(IConnection $connection) {
+    private function setConnection(Predis_IConnection $connection) {
         $this->_connection = $connection;
     }
 
     public function setProfile($serverProfile) {
-        if ($serverProfile instanceof RedisServerProfile) {
+        if ($serverProfile instanceof Predis_RedisServerProfile) {
             $this->_serverProfile = $serverProfile;
         }
         else if (is_string($serverProfile)) {
-            $this->_serverProfile = RedisServerProfile::get($serverProfile);
+            $this->_serverProfile = Predis_RedisServerProfile::get($serverProfile);
         }
         else {
-            throw new \InvalidArgumentException(
-                "Invalid type for server profile, \Predis\RedisServerProfile or string expected"
+            throw new InvalidArgumentException(
+                "Invalid type for server profile, Predis_RedisServerProfile or string expected"
             );
         }
     }
@@ -151,20 +156,20 @@ class Client {
     }
 
     public function getClientFor($connectionAlias) {
-        if (!Shared\Utils::isCluster($this->_connection)) {
-            throw new ClientException(
+        if (!Predis_Shared_Utils::isCluster($this->_connection)) {
+            throw new Predis_ClientException(
                 'This method is supported only when the client is connected to a cluster of connections'
             );
         }
 
         $connection = $this->_connection->getConnectionById($connectionAlias);
         if ($connection === null) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 "Invalid connection alias: '$connectionAlias'"
             );
         }
 
-        $newClient = new Client();
+        $newClient = new Predis_Client();
         $newClient->setupClient($this->_options);
         $newClient->setConnection($connection);
         return $newClient;
@@ -187,7 +192,7 @@ class Client {
             return $this->_connection;
         }
         else {
-            return Shared\Utils::isCluster($this->_connection)
+            return Predis_Shared_Utils::isCluster($this->_connection) 
                 ? $this->_connection->getConnectionById($id)
                 : $this->_connection;
         }
@@ -202,13 +207,13 @@ class Client {
         return $this->_serverProfile->createCommand($method, $arguments);
     }
 
-    public function executeCommand(Command $command) {
+    public function executeCommand(Predis_Command $command) {
         return $this->_connection->executeCommand($command);
     }
 
-    public function executeCommandOnShards(Command $command) {
+    public function executeCommandOnShards(Predis_Command $command) {
         $replies = array();
-        if (Shared\Utils::isCluster($this->_connection)) {
+        if (Predis_Shared_Utils::isCluster($this->_connection)) {
             foreach($this->_connection as $connection) {
                 $replies[] = $connection->executeCommand($command);
             }
@@ -220,8 +225,8 @@ class Client {
     }
 
     public function rawCommand($rawCommandData, $closesConnection = false) {
-        if (Shared\Utils::isCluster($this->_connection)) {
-            throw new ClientException('Cannot send raw commands when connected to a cluster of Redis servers');
+        if (Predis_Shared_Utils::isCluster($this->_connection)) {
+            throw new Predis_ClientException('Cannot send raw commands when connected to a cluster of Redis servers');
         }
         return $this->_connection->rawCommand($rawCommandData, $closesConnection);
     }
@@ -243,7 +248,8 @@ class Client {
     }
 
     public function pipeline(/* arguments */) {
-        return $this->sharedInitializer(func_get_args(), 'initPipeline');
+        $args = func_get_args();
+        return $this->sharedInitializer($args, 'initPipeline');
     }
 
     public function pipelineSafe($pipelineBlock = null) {
@@ -255,82 +261,83 @@ class Client {
         if (isset($options)) {
             if (isset($options['safe']) && $options['safe'] == true) {
                 $connection = $this->getConnection();
-                $pipeline   = new CommandPipeline($this, $connection instanceof Connection
-                    ? new Pipeline\SafeExecutor($connection)
-                    : new Pipeline\SafeClusterExecutor($connection)
+                $pipeline   = new Predis_CommandPipeline($this, $connection instanceof Predis_Connection
+                    ? new Predis_Pipeline_SafeExecutor($connection)
+                    : new Predis_Pipeline_SafeClusterExecutor($connection)
                 );
             }
             else {
-                $pipeline = new CommandPipeline($this);
+                $pipeline = new Predis_CommandPipeline($this);
             }
         }
         else {
-            $pipeline = new CommandPipeline($this);
+            $pipeline = new Predis_CommandPipeline($this);
         }
         return $this->pipelineExecute($pipeline, $pipelineBlock);
     }
 
-    private function pipelineExecute(CommandPipeline $pipeline, $block) {
+    private function pipelineExecute(Predis_CommandPipeline $pipeline, $block) {
         return $block !== null ? $pipeline->execute($block) : $pipeline;
     }
 
     public function multiExec(/* arguments */) {
-        return $this->sharedInitializer(func_get_args(), 'initMultiExec');
+        $args = func_get_args();
+        return $this->sharedInitializer($args, 'initMultiExec');
     }
 
     private function initMultiExec(Array $options = null, $transBlock = null) {
-        $multi = isset($options) ? new MultiExecBlock($this, $options) : new MultiExecBlock($this);
+        $multi = isset($options) ? new Predis_MultiExecBlock($this, $options) : new Predis_MultiExecBlock($this);
         return $transBlock !== null ? $multi->execute($transBlock) : $multi;
     }
 
     public function pubSubContext(Array $options = null) {
-        return new PubSubContext($this, $options);
+        return new Predis_PubSubContext($this, $options);
     }
 }
 
 /* ------------------------------------------------------------------------- */
 
-interface IClientOptionsHandler {
+interface Predis_IClientOptionsHandler {
     public function validate($option, $value);
     public function getDefault();
 }
 
-class ClientOptionsProfile implements IClientOptionsHandler {
+class Predis_ClientOptionsProfile implements Predis_IClientOptionsHandler {
     public function validate($option, $value) {
-        if ($value instanceof \Predis\RedisServerProfile) {
+        if ($value instanceof Predis_RedisServerProfile) {
             return $value;
         }
         if (is_string($value)) {
-            return \Predis\RedisServerProfile::get($value);
+            return Predis_RedisServerProfile::get($value);
         }
-        throw new \InvalidArgumentException("Invalid value for option $option");
+        throw new InvalidArgumentException("Invalid value for option $option");
     }
 
     public function getDefault() {
-        return \Predis\RedisServerProfile::getDefault();
+        return Predis_RedisServerProfile::getDefault();
     }
 }
 
-class ClientOptionsKeyDistribution implements IClientOptionsHandler {
+class Predis_ClientOptionsKeyDistribution implements Predis_IClientOptionsHandler {
     public function validate($option, $value) {
-        if ($value instanceof \Predis\Distribution\IDistributionStrategy) {
+        if ($value instanceof Predis_Distribution_IDistributionStrategy) {
             return $value;
         }
         if (is_string($value)) {
-            $valueReflection = new \ReflectionClass($value);
-            if ($valueReflection->isSubclassOf('\Predis\Distribution\IDistributionStrategy')) {
+            $valueReflection = new ReflectionClass($value);
+            if ($valueReflection->isSubclassOf('Predis_Distribution_IDistributionStrategy')) {
                 return new $value;
             }
         }
-        throw new \InvalidArgumentException("Invalid value for option $option");
+        throw new InvalidArgumentException("Invalid value for option $option");
     }
 
     public function getDefault() {
-        return new \Predis\Distribution\HashRing();
+        return new Predis_Distribution_HashRing();
     }
 }
 
-class ClientOptionsIterableMultiBulk implements IClientOptionsHandler {
+class Predis_ClientOptionsIterableMultiBulk implements Predis_IClientOptionsHandler {
     public function validate($option, $value) {
         return (bool) $value;
     }
@@ -340,7 +347,7 @@ class ClientOptionsIterableMultiBulk implements IClientOptionsHandler {
     }
 }
 
-class ClientOptionsThrowOnError implements IClientOptionsHandler {
+class Predis_ClientOptionsThrowOnError implements Predis_IClientOptionsHandler {
     public function validate($option, $value) {
         return (bool) $value;
     }
@@ -350,35 +357,35 @@ class ClientOptionsThrowOnError implements IClientOptionsHandler {
     }
 }
 
-class ClientOptionsReader implements IClientOptionsHandler {
+class Predis_ClientOptionsReader implements Predis_IClientOptionsHandler {
     public function validate($option, $value) {
-        if ($value instanceof \Predis\IResponseReader) {
+        if ($value instanceof Predis_IResponseReader) {
             return $value;
         }
         if (is_string($value)) {
             if ($value === 'composable') {
-                return new \Predis\ResponseReader();
+                return new Predis_ResponseReader();
             }
-            $valueReflection = new \ReflectionClass($value);
-            if ($valueReflection->isSubclassOf('\Predis\IResponseReader')) {
+            $valueReflection = new ReflectionClass($value);
+            if ($valueReflection->isSubclassOf('Predis_IResponseReader')) {
                 return new $value;
             }
         }
-        throw new \InvalidArgumentException("Invalid value for option $option");
+        throw new InvalidArgumentException("Invalid value for option $option");
     }
 
     public function getDefault() {
-        return new \Predis\FastResponseReader();
+        return new Predis_FastResponseReader();
     }
 }
 
-class ClientOptions {
+class Predis_ClientOptions {
     private static $_optionsHandlers;
     private $_options;
 
     public function __construct($options = null) {
         self::initializeOptionsHandlers();
-        $this->initializeOptions($options ?: array());
+        $this->initializeOptions($options !== null ? $options : array());
     }
 
     private static function initializeOptionsHandlers() {
@@ -389,11 +396,11 @@ class ClientOptions {
 
     private static function getOptionsHandlers() {
         return array(
-            'profile'    => new \Predis\ClientOptionsProfile(),
-            'key_distribution' => new \Predis\ClientOptionsKeyDistribution(),
-            'iterable_multibulk' => new \Predis\ClientOptionsIterableMultiBulk(),
-            'throw_on_error' => new \Predis\ClientOptionsThrowOnError(),
-            'reader' => new \Predis\ClientOptionsReader(),
+            'profile'    => new Predis_ClientOptionsProfile(),
+            'key_distribution' => new Predis_ClientOptionsKeyDistribution(),
+            'iterable_multibulk' => new Predis_ClientOptionsIterableMultiBulk(),
+            'throw_on_error' => new Predis_ClientOptionsThrowOnError(),
+            'reader' => new Predis_ClientOptionsReader(),
         );
     }
 
@@ -421,7 +428,7 @@ class ClientOptions {
 
 /* ------------------------------------------------------------------------- */
 
-class Protocol {
+class Predis_Protocol {
     const NEWLINE = "\r\n";
     const OK      = 'OK';
     const ERROR   = 'ERR';
@@ -435,7 +442,7 @@ class Protocol {
     const PREFIX_MULTI_BULK = '*';
 }
 
-abstract class Command {
+abstract class Predis_Command {
     private $_hash;
     private $_arguments = array();
 
@@ -447,13 +454,13 @@ abstract class Command {
         return true;
     }
 
-    public function getHash(Distribution\IDistributionStrategy $distributor) {
+    public function getHash(Predis_Distribution_IDistributionStrategy $distributor) {
         if (isset($this->_hash)) {
             return $this->_hash;
         }
 
         if (isset($this->_arguments[0])) {
-            // TODO: should we throw an exception if the command does
+            // TODO: should we throw an exception if the command does 
             //       not support sharding?
             $key = $this->_arguments[0];
 
@@ -504,24 +511,12 @@ abstract class Command {
         return $data;
     }
 
-    public final function __invoke() {
+    public final function invoke() {
         return $this->serializeRequest($this->getCommandId(), $this->getArguments());
-    }
-
-    private static function reduceArguments($str, $arg) {
-        if (strlen($arg) > 32) {
-            $arg = substr($arg, 0, 32) . '[...]';
-        }
-        $str .= " $arg";
-        return $str;
-    }
-
-    public function __toString() {
-        return array_reduce($this->getArguments(), 'self::reduceArguments', $this->getCommandId());
     }
 }
 
-abstract class InlineCommand extends Command {
+abstract class Predis_InlineCommand extends Predis_Command {
     public function serializeRequest($command, $arguments) {
         if (isset($arguments[0]) && is_array($arguments[0])) {
             $arguments[0] = implode($arguments[0], ' ');
@@ -532,18 +527,18 @@ abstract class InlineCommand extends Command {
     }
 }
 
-abstract class BulkCommand extends Command {
+abstract class Predis_BulkCommand extends Predis_Command {
     public function serializeRequest($command, $arguments) {
         $data = array_pop($arguments);
         if (is_array($data)) {
             $data = implode($data, ' ');
         }
-        return $command . ' ' . implode($arguments, ' ') . ' ' . strlen($data) .
+        return $command . ' ' . implode($arguments, ' ') . ' ' . strlen($data) . 
             "\r\n" . $data . "\r\n";
     }
 }
 
-abstract class MultiBulkCommand extends Command {
+abstract class Predis_MultiBulkCommand extends Predis_Command {
     public function serializeRequest($command, $arguments) {
         $cmd_args = null;
         $argsc    = count($arguments);
@@ -572,39 +567,39 @@ abstract class MultiBulkCommand extends Command {
 
 /* ------------------------------------------------------------------------- */
 
-interface IResponseHandler {
-    function handle(Connection $connection, $payload);
+interface Predis_IResponseHandler {
+    function handle(Predis_Connection $connection, $payload);
 }
 
-class ResponseStatusHandler implements IResponseHandler {
-    public function handle(Connection $connection, $status) {
-        if ($status === 'OK') {
+class Predis_ResponseStatusHandler implements Predis_IResponseHandler {
+    public function handle(Predis_Connection $connection, $status) {
+        if ($status === "OK") {
             return true;
         }
-        if ($status === 'QUEUED') {
-            return new ResponseQueued();
+        if ($status === "QUEUED") {
+            return new Predis_ResponseQueued();
         }
         return $status;
     }
 }
 
-class ResponseErrorHandler implements IResponseHandler {
-    public function handle(Connection $connection, $errorMessage) {
-        throw new ServerException(substr($errorMessage, 4));
+class Predis_ResponseErrorHandler implements Predis_IResponseHandler {
+    public function handle(Predis_Connection $connection, $errorMessage) {
+        throw new Predis_ServerException(substr($errorMessage, 4));
     }
 }
 
-class ResponseErrorSilentHandler implements IResponseHandler {
-    public function handle(Connection $connection, $errorMessage) {
-        return new ResponseError(substr($errorMessage, 4));
+class Predis_ResponseErrorSilentHandler implements Predis_IResponseHandler {
+    public function handle(Predis_Connection $connection, $errorMessage) {
+        return new Predis_ResponseError(substr($errorMessage, 4));
     }
 }
 
-class ResponseBulkHandler implements IResponseHandler {
-    public function handle(Connection $connection, $lengthString) {
+class Predis_ResponseBulkHandler implements Predis_IResponseHandler {
+    public function handle(Predis_Connection $connection, $lengthString) {
         $length = (int) $lengthString;
         if ($length != $lengthString) {
-            Shared\Utils::onCommunicationException(new MalformedServerResponse(
+            Predis_Shared_Utils::onCommunicationException(new Predis_MalformedServerResponse(
                 $connection, "Cannot parse '$length' as data length"
             ));
         }
@@ -617,11 +612,11 @@ class ResponseBulkHandler implements IResponseHandler {
     }
 }
 
-class ResponseMultiBulkHandler implements IResponseHandler {
-    public function handle(Connection $connection, $lengthString) {
+class Predis_ResponseMultiBulkHandler implements Predis_IResponseHandler {
+    public function handle(Predis_Connection $connection, $lengthString) {
         $listLength = (int) $lengthString;
         if ($listLength != $lengthString) {
-            Shared\Utils::onCommunicationException(new MalformedServerResponse(
+            Predis_Shared_Utils::onCommunicationException(new Predis_MalformedServerResponse(
                 $connection, "Cannot parse '$lengthString' as data length"
             ));
         }
@@ -653,39 +648,41 @@ class ResponseMultiBulkHandler implements IResponseHandler {
     }
 }
 
-class ResponseMultiBulkStreamHandler implements IResponseHandler {
-    public function handle(Connection $connection, $lengthString) {
+class Predis_ResponseMultiBulkStreamHandler implements Predis_IResponseHandler {
+    public function handle(Predis_Connection $connection, $lengthString) {
         $listLength = (int) $lengthString;
         if ($listLength != $lengthString) {
-            Shared\Utils::onCommunicationException(new MalformedServerResponse(
+            Predis_Shared_Utils::onCommunicationException(new Predis_MalformedServerResponse(
                 $connection, "Cannot parse '$lengthString' as data length"
             ));
         }
-        return new Shared\MultiBulkResponseIterator($connection, $lengthString);
+        return new Predis_Shared_MultiBulkResponseIterator($connection, $lengthString);
     }
 }
 
-class ResponseIntegerHandler implements IResponseHandler {
-    public function handle(Connection $connection, $number) {
+class Predis_ResponseIntegerHandler implements Predis_IResponseHandler {
+    public function handle(Predis_Connection $connection, $number) {
         if (is_numeric($number)) {
             return (int) $number;
         }
-        if ($number !== 'nil') {
-            Shared\Utils::onCommunicationException(new MalformedServerResponse(
-                $connection, "Cannot parse '$number' as numeric response"
-            ));
+        else {
+            if ($number !== 'nil') {
+                Predis_Shared_Utils::onCommunicationException(new Predis_MalformedServerResponse(
+                    $connection, "Cannot parse '$number' as numeric response"
+                ));
+            }
+            return null;
         }
-        return null;
     }
 }
 
-interface IResponseReader {
-    public function read(Connection $connection);
+interface Predis_IResponseReader {
+    public function read(Predis_Connection $connection);
     public function setOption($option, $value);
     public function getOption($option);
 }
 
-class FastResponseReader implements IResponseReader {
+class Predis_FastResponseReader implements Predis_IResponseReader {
     private $_iterableMultibulk, $_throwErrors;
 
     public function __construct() {
@@ -693,7 +690,7 @@ class FastResponseReader implements IResponseReader {
         $this->_throwErrors = true;
     }
 
-    public function read(Connection $connection) {
+    public function read(Predis_Connection $connection) {
         $chunk = $connection->readLine();
         $prefix = $chunk[0];
         $payload = substr($chunk, 1);
@@ -703,7 +700,7 @@ class FastResponseReader implements IResponseReader {
                     case 'OK':
                         return true;
                     case 'QUEUED':
-                        return new ResponseQueued();
+                        return new Predis_ResponseQueued();
                     default:
                         return $payload;
                 }
@@ -721,7 +718,7 @@ class FastResponseReader implements IResponseReader {
                     return null;
                 }
                 if ($this->_iterableMultibulk) {
-                    return new \Predis\Shared\MultiBulkResponseIterator($connection, $count);
+                    return new Predis_Shared_MultiBulkResponseIterator($connection, $count);
                 }
                 $multibulk = array();
                 for ($i = 0; $i < $count; $i++) {
@@ -735,12 +732,12 @@ class FastResponseReader implements IResponseReader {
             case '-':    // error
                 $errorMessage = substr($payload, 4);
                 if ($this->_throwErrors) {
-                    throw new ServerException($errorMessage);
+                    throw new Predis_ServerException($errorMessage);
                 }
-                return new ResponseError($errorMessage);
+                return new Predis_ResponseError($errorMessage);
 
             default:
-                throw new CommunicationException(
+                throw new Predis_CommunicationException(
                     $connection, "Unknown prefix: '$prefix'"
                 );
         }
@@ -767,7 +764,7 @@ class FastResponseReader implements IResponseReader {
     }
 }
 
-class ResponseReader implements IResponseReader {
+class Predis_ResponseReader implements Predis_IResponseReader {
     private $_prefixHandlers;
 
     public function __construct() {
@@ -776,15 +773,15 @@ class ResponseReader implements IResponseReader {
 
     private function initializePrefixHandlers() {
         $this->_prefixHandlers = array(
-            Protocol::PREFIX_STATUS     => new ResponseStatusHandler(),
-            Protocol::PREFIX_ERROR      => new ResponseErrorHandler(),
-            Protocol::PREFIX_INTEGER    => new ResponseIntegerHandler(),
-            Protocol::PREFIX_BULK       => new ResponseBulkHandler(),
-            Protocol::PREFIX_MULTI_BULK => new ResponseMultiBulkHandler(),
+            Predis_Protocol::PREFIX_STATUS     => new Predis_ResponseStatusHandler(), 
+            Predis_Protocol::PREFIX_ERROR      => new Predis_ResponseErrorHandler(), 
+            Predis_Protocol::PREFIX_INTEGER    => new Predis_ResponseIntegerHandler(), 
+            Predis_Protocol::PREFIX_BULK       => new Predis_ResponseBulkHandler(), 
+            Predis_Protocol::PREFIX_MULTI_BULK => new Predis_ResponseMultiBulkHandler(), 
         );
     }
 
-    public function setHandler($prefix, IResponseHandler $handler) {
+    public function setHandler($prefix, Predis_IResponseHandler $handler) {
         $this->_prefixHandlers[$prefix] = $handler;
     }
 
@@ -794,7 +791,7 @@ class ResponseReader implements IResponseReader {
         }
     }
 
-    public function read(Connection $connection) {
+    public function read(Predis_Connection $connection) {
         $header = $connection->readLine();
         if ($header === '') {
             $this->throwMalformedResponse($connection, 'Unexpected empty header');
@@ -804,12 +801,13 @@ class ResponseReader implements IResponseReader {
         if (!isset($this->_prefixHandlers[$prefix])) {
             $this->throwMalformedResponse($connection, "Unknown prefix '$prefix'");
         }
+
         $handler = $this->_prefixHandlers[$prefix];
         return $handler->handle($connection, substr($header, 1));
     }
 
-    private function throwMalformedResponse(Connection $connection, $message) {
-        Shared\Utils::onCommunicationException(new MalformedServerResponse(
+    private function throwMalformedResponse(Predis_Connection $connection, $message) {
+        Predis_Shared_Utils::onCommunicationException(new Predis_MalformedServerResponse(
             $connection, $message
         ));
     }
@@ -817,12 +815,12 @@ class ResponseReader implements IResponseReader {
     public function setOption($option, $value) {
         switch ($option) {
             case 'iterable_multibulk':
-                $handler = $value ? 'Predis\ResponseMultiBulkStreamHandler' : 'Predis\ResponseMultiBulkHandler';
-                $this->_prefixHandlers[Protocol::PREFIX_MULTI_BULK] = new $handler();
+                $handler = $value ? 'Predis_ResponseMultiBulkStreamHandler' : 'Predis_ResponseMultiBulkHandler';
+                $this->_prefixHandlers[Predis_Protocol::PREFIX_MULTI_BULK] = new $handler();
                 break;
             case 'throw_on_error':
-                $handler = $value ? 'Predis\ResponseErrorHandler' : 'Predis\ResponseErrorSilentHandler';
-                $this->_prefixHandlers[Protocol::PREFIX_ERROR] = new $handler();
+                $handler = $value ? 'Predis_ResponseErrorHandler' : 'Predis_ResponseErrorSilentHandler';
+                $this->_prefixHandlers[Predis_Protocol::PREFIX_ERROR] = new $handler();
                 break;
         }
     }
@@ -830,14 +828,14 @@ class ResponseReader implements IResponseReader {
     public function getOption($option) {
         switch ($option) {
             case 'iterable_multibulk':
-                return $this->_prefixHandlers[Protocol::PREFIX_MULTI_BULK] instanceof ResponseMultiBulkStreamHandler;
+                return $this->_prefixHandlers[Predis_Protocol::PREFIX_MULTI_BULK] instanceof Predis_ResponseMultiBulkStreamHandler;
             case 'throw_on_error':
-                return $this->_prefixHandlers[Protocol::PREFIX_ERROR] instanceof ResponseErrorHandler;
+                return $this->_prefixHandlers[Predis_Protocol::PREFIX_ERROR] instanceof Predis_ResponseErrorHandler;
         }
     }
 }
 
-class ResponseError {
+class Predis_ResponseError {
     public $skipParse = true;
     private $_message;
 
@@ -863,11 +861,11 @@ class ResponseError {
     }
 }
 
-class ResponseQueued {
+class Predis_ResponseQueued {
     public $skipParse = true;
 
     public function __toString() {
-        return Protocol::QUEUED;
+        return Predis_Protocol::QUEUED;
     }
 
     public function __get($property) {
@@ -883,12 +881,12 @@ class ResponseQueued {
 
 /* ------------------------------------------------------------------------- */
 
-class CommandPipeline {
+class Predis_CommandPipeline {
     private $_redisClient, $_pipelineBuffer, $_returnValues, $_running, $_executor;
 
-    public function __construct(Client $redisClient, Pipeline\IPipelineExecutor $executor = null) {
+    public function __construct(Predis_Client $redisClient, Predis_Pipeline_IPipelineExecutor $executor = null) {
         $this->_redisClient    = $redisClient;
-        $this->_executor       = $executor ?: new Pipeline\StandardExecutor();
+        $this->_executor       = $executor !== null ? $executor : new Predis_Pipeline_StandardExecutor();
         $this->_pipelineBuffer = array();
         $this->_returnValues   = array();
     }
@@ -899,7 +897,7 @@ class CommandPipeline {
         return $this;
     }
 
-    private function recordCommand(Command $command) {
+    private function recordCommand(Predis_Command $command) {
         $this->_pipelineBuffer[] = $command;
     }
 
@@ -911,7 +909,7 @@ class CommandPipeline {
         if (count($this->_pipelineBuffer) > 0) {
             $connection = $this->_redisClient->getConnection();
             $this->_returnValues = array_merge(
-                $this->_returnValues,
+                $this->_returnValues, 
                 $this->_executor->execute($connection, $this->_pipelineBuffer)
             );
             $this->_pipelineBuffer = array();
@@ -921,14 +919,14 @@ class CommandPipeline {
 
     private function setRunning($bool) {
         if ($bool == true && $this->_running == true) {
-            throw new ClientException("This pipeline is already opened");
+            throw new Predis_ClientException("This pipeline is already opened");
         }
         $this->_running = $bool;
     }
 
     public function execute($block = null) {
         if ($block && !is_callable($block)) {
-            throw new \InvalidArgumentException('Argument passed must be a callable object');
+            throw new InvalidArgumentException('Argument passed must be a callable object');
         }
 
         // TODO: do not reuse previously executed pipelines
@@ -941,7 +939,7 @@ class CommandPipeline {
             }
             $this->flushPipeline();
         }
-        catch (\Exception $exception) {
+        catch (Exception $exception) {
             $pipelineBlockException = $exception;
         }
 
@@ -955,27 +953,27 @@ class CommandPipeline {
     }
 }
 
-class MultiExecBlock {
+class Predis_MultiExecBlock {
     private $_initialized, $_discarded, $_insideBlock, $_checkAndSet, $_watchedKeys;
     private $_redisClient, $_options, $_commands;
     private $_supportsWatch;
 
-    public function __construct(Client $redisClient, Array $options = null) {
+    public function __construct(Predis_Client $redisClient, Array $options = null) {
         $this->checkCapabilities($redisClient);
-        $this->_options = $options ?: array();
+        $this->_options = isset($options) ? $options : array();
         $this->_redisClient = $redisClient;
         $this->reset();
     }
 
-    private function checkCapabilities(Client $redisClient) {
-        if (Shared\Utils::isCluster($redisClient->getConnection())) {
-            throw new \Predis\ClientException(
+    private function checkCapabilities(Predis_Client $redisClient) {
+        if (Predis_Shared_Utils::isCluster($redisClient->getConnection())) {
+            throw new Predis_ClientException(
                 'Cannot initialize a MULTI/EXEC context over a cluster of connections'
             );
         }
         $profile = $redisClient->getProfile();
         if ($profile->supportsCommands(array('multi', 'exec', 'discard')) === false) {
-            throw new \Predis\ClientException(
+            throw new Predis_ClientException(
                 'The current profile does not support MULTI, EXEC and DISCARD commands'
             );
         }
@@ -984,7 +982,7 @@ class MultiExecBlock {
 
     private function isWatchSupported() {
         if ($this->_supportsWatch === false) {
-            throw new \Predis\ClientException(
+            throw new Predis_ClientException(
                 'The current profile does not support WATCH and UNWATCH commands'
             );
         }
@@ -1026,7 +1024,7 @@ class MultiExecBlock {
         }
         $command  = $client->createCommand($method, $arguments);
         $response = $client->executeCommand($command);
-        if (!$response instanceof \Predis\ResponseQueued) {
+        if (!$response instanceof Predis_ResponseQueued) {
             $this->malformedServerResponse(
                 'The server did not respond with a QUEUED status reply'
             );
@@ -1038,7 +1036,7 @@ class MultiExecBlock {
     public function watch($keys) {
         $this->isWatchSupported();
         if ($this->_initialized && !$this->_checkAndSet) {
-            throw new ClientException('WATCH inside MULTI is not allowed');
+            throw new Predis_ClientException('WATCH inside MULTI is not allowed');
         }
         $this->_watchedKeys = true;
         return $this->_redisClient->watch($keys);
@@ -1077,26 +1075,26 @@ class MultiExecBlock {
 
     private function checkBeforeExecution($block) {
         if ($this->_insideBlock === true) {
-            throw new \Predis\ClientException(
+            throw new Predis_ClientException(
                 "Cannot invoke 'execute' or 'exec' inside an active client transaction block"
             );
         }
         if ($block) {
             if (!is_callable($block)) {
-                throw new \InvalidArgumentException(
+                throw new InvalidArgumentException(
                     'Argument passed must be a callable object'
                 );
             }
             if (count($this->_commands) > 0) {
                 $this->discard();
-                throw new ClientException(
+                throw new Predis_ClientException(
                     'Cannot execute a transaction block after using fluent interface'
                 );
             }
         }
         if (isset($this->_options['retry']) && !isset($block)) {
             $this->discard();
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 'Automatic retries can be used only when a transaction block is provided'
             );
         }
@@ -1115,13 +1113,13 @@ class MultiExecBlock {
                 try {
                     $block($this);
                 }
-                catch (CommunicationException $exception) {
+                catch (Predis_CommunicationException $exception) {
                     $blockException = $exception;
                 }
-                catch (ServerException $exception) {
+                catch (Predis_ServerException $exception) {
                     $blockException = $exception;
                 }
-                catch (\Exception $exception) {
+                catch (Exception $exception) {
                     $blockException = $exception;
                     $this->discard();
                 }
@@ -1142,7 +1140,7 @@ class MultiExecBlock {
             $reply = $this->_redisClient->exec();
             if ($reply === null) {
                 if ($attemptsLeft === 0) {
-                    throw new AbortedMultiExec(
+                    throw new Predis_AbortedMultiExec(
                         'The current transaction has been aborted by the server'
                     );
                 }
@@ -1155,7 +1153,7 @@ class MultiExecBlock {
             break;
         } while ($attemptsLeft-- > 0);
 
-        $execReply = $reply instanceof \Iterator ? iterator_to_array($reply) : $reply;
+        $execReply = $reply instanceof Iterator ? iterator_to_array($reply) : $reply;
         $sizeofReplies = count($execReply);
 
         $commands = &$this->_commands;
@@ -1165,7 +1163,7 @@ class MultiExecBlock {
             );
         }
         for ($i = 0; $i < $sizeofReplies; $i++) {
-            $returnValues[] = $commands[$i]->parseResponse($execReply[$i] instanceof \Iterator
+            $returnValues[] = $commands[$i]->parseResponse($execReply[$i] instanceof Iterator
                 ? iterator_to_array($execReply[$i])
                 : $execReply[$i]
             );
@@ -1176,16 +1174,18 @@ class MultiExecBlock {
     }
 
     private function malformedServerResponse($message) {
-        // Since a MULTI/EXEC block cannot be initialized over a clustered
-        // connection, we can safely assume that Predis\Client::getConnection()
-        // will always return an instance of Predis\Connection.
-        Shared\Utils::onCommunicationException(new MalformedServerResponse(
-            $this->_redisClient->getConnection(), $message
-        ));
+        // Since a MULTI/EXEC block cannot be initialized over a clustered 
+        // connection, we can safely assume that Predis_Client::getConnection() 
+        // will always return an instance of Predis_Connection.
+        Predis_Shared_Utils::onCommunicationException(
+            new Predis_MalformedServerResponse(
+                $this->_redisClient->getConnection(), $message
+            )
+        );
     }
 }
 
-class PubSubContext implements \Iterator {
+class Predis_PubSubContext implements Iterator {
     const SUBSCRIBE    = 'subscribe';
     const UNSUBSCRIBE  = 'unsubscribe';
     const PSUBSCRIBE   = 'psubscribe';
@@ -1199,9 +1199,9 @@ class PubSubContext implements \Iterator {
 
     private $_redisClient, $_position, $_options;
 
-    public function __construct(Client $redisClient, Array $options = null) {
+    public function __construct(Predis_Client $redisClient, Array $options = null) {
         $this->checkCapabilities($redisClient);
-        $this->_options = $options ?: array();
+        $this->_options = isset($options) ? $options : array();
         $this->_redisClient = $redisClient;
         $this->_statusFlags = self::STATUS_VALID;
 
@@ -1210,19 +1210,21 @@ class PubSubContext implements \Iterator {
     }
 
     public function __destruct() {
-        $this->closeContext();
+        if ($this->valid()) {
+            $this->closeContext();
+        }
     }
 
-    private function checkCapabilities(Client $redisClient) {
-        if (Shared\Utils::isCluster($redisClient->getConnection())) {
-            throw new \Predis\ClientException(
+    private function checkCapabilities(Predis_Client $redisClient) {
+        if (Predis_Shared_Utils::isCluster($redisClient->getConnection())) {
+            throw new Predis_ClientException(
                 'Cannot initialize a PUB/SUB context over a cluster of connections'
             );
         }
         $profile = $redisClient->getProfile();
         $commands = array('publish', 'subscribe', 'unsubscribe', 'psubscribe', 'punsubscribe');
         if ($profile->supportsCommands($commands) === false) {
-            throw new \Predis\ClientException(
+            throw new Predis_ClientException(
                 'The current profile does not support PUB/SUB related commands'
             );
         }
@@ -1239,21 +1241,25 @@ class PubSubContext implements \Iterator {
     }
 
     public function subscribe(/* arguments */) {
-        $this->writeCommand(self::SUBSCRIBE, func_get_args());
+        $args = func_get_args();
+        $this->writeCommand(self::SUBSCRIBE, $args);
         $this->_statusFlags |= self::STATUS_SUBSCRIBED;
     }
 
     public function unsubscribe(/* arguments */) {
-        $this->writeCommand(self::UNSUBSCRIBE, func_get_args());
+        $args = func_get_args();
+        $this->writeCommand(self::UNSUBSCRIBE, $args);
     }
 
     public function psubscribe(/* arguments */) {
-        $this->writeCommand(self::PSUBSCRIBE, func_get_args());
+        $args = func_get_args();
+        $this->writeCommand(self::PSUBSCRIBE, $args);
         $this->_statusFlags |= self::STATUS_PSUBSCRIBED;
     }
 
     public function punsubscribe(/* arguments */) {
-        $this->writeCommand(self::PUNSUBSCRIBE, func_get_args());
+        $args = func_get_args();
+        $this->writeCommand(self::PUNSUBSCRIBE, $args);
     }
 
     public function closeContext() {
@@ -1331,7 +1337,7 @@ class PubSubContext implements \Iterator {
                     'payload' => $response[3],
                 );
             default:
-                throw new \Predis\ClientException(
+                throw new Predis_ClientException(
                     "Received an unknown message type {$response[0]} inside of a pubsub context"
                 );
         }
@@ -1340,7 +1346,7 @@ class PubSubContext implements \Iterator {
 
 /* ------------------------------------------------------------------------- */
 
-class ConnectionParameters {
+class Predis_ConnectionParameters {
     const DEFAULT_SCHEME = 'redis';
     const DEFAULT_HOST = '127.0.0.1';
     const DEFAULT_PORT = 6379;
@@ -1364,7 +1370,7 @@ class ConnectionParameters {
     private $_parameters;
 
     public function __construct($parameters = null) {
-        $parameters = $parameters ?: array();
+        $parameters = $parameters !== null ? $parameters : array();
         $extractor = is_array($parameters) ? 'filter' : 'parseURI';
         $this->_parameters = $this->$extractor($parameters);
     }
@@ -1375,7 +1381,7 @@ class ConnectionParameters {
             $uri = str_ireplace('unix:///', 'unix://localhost/', $uri);
         }
         if (($parsed = @parse_url($uri)) === false || !isset($parsed['host'])) {
-            throw new ClientException("Invalid URI: $uri");
+            throw new Predis_ClientException("Invalid URI: $uri");
         }
         if (isset($parsed['query'])) {
             foreach (explode('&', $parsed['query']) as $kv) {
@@ -1400,26 +1406,26 @@ class ConnectionParameters {
     }
 }
 
-interface IConnection {
+interface Predis_IConnection {
     public function connect();
     public function disconnect();
     public function isConnected();
-    public function writeCommand(Command $command);
-    public function readResponse(Command $command);
-    public function executeCommand(Command $command);
+    public function writeCommand(Predis_Command $command);
+    public function readResponse(Predis_Command $command);
+    public function executeCommand(Predis_Command $command);
 }
 
-class Connection implements IConnection {
+class Predis_Connection implements Predis_IConnection {
     private static $_allowedSchemes = array('redis', 'tcp', 'unix');
     private $_params, $_socket, $_initCmds, $_reader;
 
-    public function __construct(ConnectionParameters $parameters, IResponseReader $reader = null) {
+    public function __construct(Predis_ConnectionParameters $parameters, Predis_IResponseReader $reader = null) {
         if (!in_array($parameters->scheme, self::$_allowedSchemes)) {
-            throw new \InvalidArgumentException("Invalid scheme: {$parameters->scheme}");
+            throw new InvalidArgumentException("Invalid scheme: {$parameters->scheme}");
         }
         $this->_params   = $parameters;
         $this->_initCmds = array();
-        $this->_reader   = $reader ?: new FastResponseReader();
+        $this->_reader   = $reader !== null ? $reader : new Predis_FastResponseReader();
     }
 
     public function __destruct() {
@@ -1434,7 +1440,7 @@ class Connection implements IConnection {
 
     public function connect() {
         if ($this->isConnected()) {
-            throw new ClientException('Connection already estabilished');
+            throw new Predis_ClientException('Connection already estabilished');
         }
         $initializer = "{$this->_params->scheme}StreamInitializer";
         $this->_socket = $this->$initializer($this->_params);
@@ -1443,11 +1449,11 @@ class Connection implements IConnection {
         }
     }
 
-    private function tcpStreamInitializer(ConnectionParameters $parameters) {
+    private function tcpStreamInitializer(Predis_ConnectionParameters $parameters) {
         return $this->redisStreamInitializer($parameters);
     }
 
-    private function redisStreamInitializer(ConnectionParameters $parameters) {
+    private function redisStreamInitializer(Predis_ConnectionParameters $parameters) {
         $uri = sprintf('tcp://%s:%d/', $parameters->host, $parameters->port);
         $connectFlags = STREAM_CLIENT_CONNECT;
         if ($parameters->connection_async) {
@@ -1474,7 +1480,7 @@ class Connection implements IConnection {
         return $socket;
     }
 
-    private function unixStreamInitializer(ConnectionParameters $parameters) {
+    private function unixStreamInitializer(Predis_ConnectionParameters $parameters) {
         $uri = sprintf('unix:///%s', $parameters->path);
         $connectFlags = STREAM_CLIENT_CONNECT;
         if ($parameters->connection_persistent) {
@@ -1496,7 +1502,7 @@ class Connection implements IConnection {
         }
     }
 
-    public function pushInitCommand(Command $command){
+    public function pushInitCommand(Predis_Command $command){
         $this->_initCmds[] = $command;
     }
 
@@ -1510,21 +1516,21 @@ class Connection implements IConnection {
     }
 
     private function onCommunicationException($message, $code = null) {
-        Shared\Utils::onCommunicationException(
-            new CommunicationException($this, $message, $code)
+        Predis_Shared_Utils::onCommunicationException(
+            new Predis_CommunicationException($this, $message, $code)
         );
     }
 
-    public function writeCommand(Command $command) {
-        $this->writeBytes($command());
+    public function writeCommand(Predis_Command $command) {
+        $this->writeBytes($command->invoke());
     }
 
-    public function readResponse(Command $command) {
+    public function readResponse(Predis_Command $command) {
         $response = $this->_reader->read($this);
         return isset($response->skipParse) ? $response : $command->parseResponse($response);
     }
 
-    public function executeCommand(Command $command) {
+    public function executeCommand(Predis_Command $command) {
         $this->writeCommand($command);
         if ($command->closesConnection()) {
             return $this->disconnect();
@@ -1558,7 +1564,7 @@ class Connection implements IConnection {
 
     public function readBytes($length) {
         if ($length <= 0) {
-            throw new \InvalidArgumentException('Length parameter must be greater than 0');
+            throw new InvalidArgumentException('Length parameter must be greater than 0');
         }
         $socket = $this->getSocket();
         $value  = '';
@@ -1608,12 +1614,12 @@ class Connection implements IConnection {
     }
 }
 
-class ConnectionCluster implements IConnection, \IteratorAggregate {
+class Predis_ConnectionCluster implements Predis_IConnection, IteratorAggregate {
     private $_pool, $_distributor;
 
-    public function __construct(Distribution\IDistributionStrategy $distributor = null) {
+    public function __construct(Predis_Distribution_IDistributionStrategy $distributor = null) {
         $this->_pool = array();
-        $this->_distributor = $distributor ?: new Distribution\HashRing();
+        $this->_distributor = $distributor !== null ? $distributor : new Predis_Distribution_HashRing();
     }
 
     public function isConnected() {
@@ -1637,7 +1643,7 @@ class ConnectionCluster implements IConnection, \IteratorAggregate {
         }
     }
 
-    public function add(Connection $connection) {
+    public function add(Predis_Connection $connection) {
         $parameters = $connection->getParameters();
         if (isset($parameters->alias)) {
             $this->_pool[$parameters->alias] = $connection;
@@ -1648,9 +1654,9 @@ class ConnectionCluster implements IConnection, \IteratorAggregate {
         $this->_distributor->add($connection, $parameters->weight);
     }
 
-    public function getConnection(Command $command) {
+    public function getConnection(Predis_Command $command) {
         if ($command->canBeHashed() === false) {
-            throw new ClientException(
+            throw new Predis_ClientException(
                 sprintf("Cannot send '%s' commands to a cluster of connections", $command->getCommandId())
             );
         }
@@ -1658,23 +1664,23 @@ class ConnectionCluster implements IConnection, \IteratorAggregate {
     }
 
     public function getConnectionById($id = null) {
-        $alias = $id ?: 0;
+        $alias = $id !== null ? $id : 0;
         return isset($this->_pool[$alias]) ? $this->_pool[$alias] : null;
     }
 
     public function getIterator() {
-        return new \ArrayIterator($this->_pool);
+        return new ArrayIterator($this->_pool);
     }
 
-    public function writeCommand(Command $command) {
+    public function writeCommand(Predis_Command $command) {
         $this->getConnection($command)->writeCommand($command);
     }
 
-    public function readResponse(Command $command) {
+    public function readResponse(Predis_Command $command) {
         return $this->getConnection($command)->readResponse($command);
     }
 
-    public function executeCommand(Command $command) {
+    public function executeCommand(Predis_Command $command) {
         $connection = $this->getConnection($command);
         $connection->writeCommand($command);
         return $connection->readResponse($command);
@@ -1683,7 +1689,7 @@ class ConnectionCluster implements IConnection, \IteratorAggregate {
 
 /* ------------------------------------------------------------------------- */
 
-abstract class RedisServerProfile {
+abstract class Predis_RedisServerProfile {
     private static $_serverProfiles;
     private $_registeredCommands;
 
@@ -1705,11 +1711,11 @@ abstract class RedisServerProfile {
 
     private static function predisServerProfiles() {
         return array(
-            '1.2'     => '\Predis\RedisServer_v1_2',
-            '2.0'     => '\Predis\RedisServer_v2_0',
-            '2.2'     => '\Predis\RedisServer_v2_2',
-            'default' => '\Predis\RedisServer_v2_2',
-            'dev'     => '\Predis\RedisServer_vNext',
+            '1.2'     => 'Predis_RedisServer_v1_2',
+            '2.0'     => 'Predis_RedisServer_v2_0',
+            '2.2'     => 'Predis_RedisServer_v2_2',
+            'default' => 'Predis_RedisServer_v2_2',
+            'dev'     => 'Predis_RedisServer_vNext',
         );
     }
 
@@ -1718,10 +1724,10 @@ abstract class RedisServerProfile {
             self::$_serverProfiles = self::predisServerProfiles();
         }
 
-        $profileReflection = new \ReflectionClass($profileClass);
+        $profileReflection = new ReflectionClass($profileClass);
 
-        if (!$profileReflection->isSubclassOf('\Predis\RedisServerProfile')) {
-            throw new ClientException("Cannot register '$profileClass' as it is not a valid profile class");
+        if (!$profileReflection->isSubclassOf('Predis_RedisServerProfile')) {
+            throw new Predis_ClientException("Cannot register '$profileClass' as it is not a valid profile class");
         }
 
         if (is_array($aliases)) {
@@ -1739,7 +1745,7 @@ abstract class RedisServerProfile {
             self::$_serverProfiles = self::predisServerProfiles();
         }
         if (!isset(self::$_serverProfiles[$version])) {
-            throw new ClientException("Unknown server profile: $version");
+            throw new Predis_ClientException("Unknown server profile: $version");
         }
         $profile = self::$_serverProfiles[$version];
         return new $profile();
@@ -1760,7 +1766,7 @@ abstract class RedisServerProfile {
 
     public function createCommand($method, $arguments = array()) {
         if (!isset($this->_registeredCommands[$method])) {
-            throw new ClientException("'$method' is not a registered Redis command");
+            throw new Predis_ClientException("'$method' is not a registered Redis command");
         }
         $commandClass = $this->_registeredCommands[$method];
         $command = new $commandClass();
@@ -1775,9 +1781,9 @@ abstract class RedisServerProfile {
     }
 
     public function registerCommand($command, $aliases) {
-        $commandReflection = new \ReflectionClass($command);
+        $commandReflection = new ReflectionClass($command);
 
-        if (!$commandReflection->isSubclassOf('\Predis\Command')) {
+        if (!$commandReflection->isSubclassOf('Predis_Command')) {
             throw new ClientException("Cannot register '$command' as it is not a valid Redis command");
         }
 
@@ -1796,459 +1802,457 @@ abstract class RedisServerProfile {
     }
 }
 
-class RedisServer_v1_2 extends RedisServerProfile {
+class Predis_RedisServer_v1_2 extends Predis_RedisServerProfile {
     public function getVersion() { return '1.2'; }
     public function getSupportedCommands() {
         return array(
             /* ---------------- Redis 1.2 ---------------- */
 
             /* miscellaneous commands */
-            'ping'                      => '\Predis\Commands\Ping',
-            'echo'                      => '\Predis\Commands\DoEcho',
-            'auth'                      => '\Predis\Commands\Auth',
+            'ping'                      => 'Predis_Commands_Ping',
+            'echo'                      => 'Predis_Commands_DoEcho',
+            'auth'                      => 'Predis_Commands_Auth',
 
             /* connection handling */
-            'quit'                      => '\Predis\Commands\Quit',
+            'quit'                      => 'Predis_Commands_Quit',
 
             /* commands operating on string values */
-            'set'                       => '\Predis\Commands\Set',
-            'setnx'                     => '\Predis\Commands\SetPreserve',
-            'mset'                      => '\Predis\Commands\SetMultiple',
-            'msetnx'                    => '\Predis\Commands\SetMultiplePreserve',
-            'get'                       => '\Predis\Commands\Get',
-            'mget'                      => '\Predis\Commands\GetMultiple',
-            'getset'                    => '\Predis\Commands\GetSet',
-            'incr'                      => '\Predis\Commands\Increment',
-            'incrby'                    => '\Predis\Commands\IncrementBy',
-            'decr'                      => '\Predis\Commands\Decrement',
-            'decrby'                    => '\Predis\Commands\DecrementBy',
-            'exists'                    => '\Predis\Commands\Exists',
-            'del'                       => '\Predis\Commands\Delete',
-            'type'                      => '\Predis\Commands\Type',
+            'set'                       => 'Predis_Commands_Set',
+            'setnx'                     => 'Predis_Commands_SetPreserve',
+            'mset'                      => 'Predis_Commands_SetMultiple',
+            'msetnx'                    => 'Predis_Commands_SetMultiplePreserve',
+            'get'                       => 'Predis_Commands_Get',
+            'mget'                      => 'Predis_Commands_GetMultiple',
+            'getset'                    => 'Predis_Commands_GetSet',
+            'incr'                      => 'Predis_Commands_Increment',
+            'incrby'                    => 'Predis_Commands_IncrementBy',
+            'decr'                      => 'Predis_Commands_Decrement',
+            'decrby'                    => 'Predis_Commands_DecrementBy',
+            'exists'                    => 'Predis_Commands_Exists',
+            'del'                       => 'Predis_Commands_Delete',
+            'type'                      => 'Predis_Commands_Type',
 
             /* commands operating on the key space */
-            'keys'                      => '\Predis\Commands\Keys_v1_2',
-            'randomkey'                 => '\Predis\Commands\RandomKey',
-            'rename'                    => '\Predis\Commands\Rename',
-            'renamenx'                  => '\Predis\Commands\RenamePreserve',
-            'expire'                    => '\Predis\Commands\Expire',
-            'expireat'                  => '\Predis\Commands\ExpireAt',
-            'dbsize'                    => '\Predis\Commands\DatabaseSize',
-            'ttl'                       => '\Predis\Commands\TimeToLive',
+            'keys'                      => 'Predis_Commands_Keys_v1_2',
+            'randomkey'                 => 'Predis_Commands_RandomKey',
+            'rename'                    => 'Predis_Commands_Rename',
+            'renamenx'                  => 'Predis_Commands_RenamePreserve',
+            'expire'                    => 'Predis_Commands_Expire',
+            'expireat'                  => 'Predis_Commands_ExpireAt',
+            'dbsize'                    => 'Predis_Commands_DatabaseSize',
+            'ttl'                       => 'Predis_Commands_TimeToLive',
 
             /* commands operating on lists */
-            'rpush'                     => '\Predis\Commands\ListPushTail',
-            'lpush'                     => '\Predis\Commands\ListPushHead',
-            'llen'                      => '\Predis\Commands\ListLength',
-            'lrange'                    => '\Predis\Commands\ListRange',
-            'ltrim'                     => '\Predis\Commands\ListTrim',
-            'lindex'                    => '\Predis\Commands\ListIndex',
-            'lset'                      => '\Predis\Commands\ListSet',
-            'lrem'                      => '\Predis\Commands\ListRemove',
-            'lpop'                      => '\Predis\Commands\ListPopFirst',
-            'rpop'                      => '\Predis\Commands\ListPopLast',
-            'rpoplpush'                 => '\Predis\Commands\ListPopLastPushHead',
+            'rpush'                     => 'Predis_Commands_ListPushTail',
+            'lpush'                     => 'Predis_Commands_ListPushHead',
+            'llen'                      => 'Predis_Commands_ListLength',
+            'lrange'                    => 'Predis_Commands_ListRange',
+            'ltrim'                     => 'Predis_Commands_ListTrim',
+            'lindex'                    => 'Predis_Commands_ListIndex',
+            'lset'                      => 'Predis_Commands_ListSet',
+            'lrem'                      => 'Predis_Commands_ListRemove',
+            'lpop'                      => 'Predis_Commands_ListPopFirst',
+            'rpop'                      => 'Predis_Commands_ListPopLast',
+            'rpoplpush'                 => 'Predis_Commands_ListPopLastPushHead',
 
             /* commands operating on sets */
-            'sadd'                      => '\Predis\Commands\SetAdd',
-            'srem'                      => '\Predis\Commands\SetRemove',
-            'spop'                      => '\Predis\Commands\SetPop',
-            'smove'                     => '\Predis\Commands\SetMove',
-            'scard'                     => '\Predis\Commands\SetCardinality',
-            'sismember'                 => '\Predis\Commands\SetIsMember',
-            'sinter'                    => '\Predis\Commands\SetIntersection',
-            'sinterstore'               => '\Predis\Commands\SetIntersectionStore',
-            'sunion'                    => '\Predis\Commands\SetUnion',
-            'sunionstore'               => '\Predis\Commands\SetUnionStore',
-            'sdiff'                     => '\Predis\Commands\SetDifference',
-            'sdiffstore'                => '\Predis\Commands\SetDifferenceStore',
-            'smembers'                  => '\Predis\Commands\SetMembers',
-            'srandmember'               => '\Predis\Commands\SetRandomMember',
+            'sadd'                      => 'Predis_Commands_SetAdd',
+            'srem'                      => 'Predis_Commands_SetRemove',
+            'spop'                      => 'Predis_Commands_SetPop',
+            'smove'                     => 'Predis_Commands_SetMove',
+            'scard'                     => 'Predis_Commands_SetCardinality',
+            'sismember'                 => 'Predis_Commands_SetIsMember',
+            'sinter'                    => 'Predis_Commands_SetIntersection',
+            'sinterstore'               => 'Predis_Commands_SetIntersectionStore',
+            'sunion'                    => 'Predis_Commands_SetUnion',
+            'sunionstore'               => 'Predis_Commands_SetUnionStore',
+            'sdiff'                     => 'Predis_Commands_SetDifference',
+            'sdiffstore'                => 'Predis_Commands_SetDifferenceStore',
+            'smembers'                  => 'Predis_Commands_SetMembers',
+            'srandmember'               => 'Predis_Commands_SetRandomMember',
 
             /* commands operating on sorted sets */
-            'zadd'                      => '\Predis\Commands\ZSetAdd',
-            'zincrby'                   => '\Predis\Commands\ZSetIncrementBy',
-            'zrem'                      => '\Predis\Commands\ZSetRemove',
-            'zrange'                    => '\Predis\Commands\ZSetRange',
-            'zrevrange'                 => '\Predis\Commands\ZSetReverseRange',
-            'zrangebyscore'             => '\Predis\Commands\ZSetRangeByScore',
-            'zcard'                     => '\Predis\Commands\ZSetCardinality',
-            'zscore'                    => '\Predis\Commands\ZSetScore',
-            'zremrangebyscore'          => '\Predis\Commands\ZSetRemoveRangeByScore',
+            'zadd'                      => 'Predis_Commands_ZSetAdd',
+            'zincrby'                   => 'Predis_Commands_ZSetIncrementBy',
+            'zrem'                      => 'Predis_Commands_ZSetRemove',
+            'zrange'                    => 'Predis_Commands_ZSetRange',
+            'zrevrange'                 => 'Predis_Commands_ZSetReverseRange',
+            'zrangebyscore'             => 'Predis_Commands_ZSetRangeByScore',
+            'zcard'                     => 'Predis_Commands_ZSetCardinality',
+            'zscore'                    => 'Predis_Commands_ZSetScore',
+            'zremrangebyscore'          => 'Predis_Commands_ZSetRemoveRangeByScore',
 
             /* multiple databases handling commands */
-            'select'                    => '\Predis\Commands\SelectDatabase',
-            'move'                      => '\Predis\Commands\MoveKey',
-            'flushdb'                   => '\Predis\Commands\FlushDatabase',
-            'flushall'                  => '\Predis\Commands\FlushAll',
+            'select'                    => 'Predis_Commands_SelectDatabase',
+            'move'                      => 'Predis_Commands_MoveKey',
+            'flushdb'                   => 'Predis_Commands_FlushDatabase',
+            'flushall'                  => 'Predis_Commands_FlushAll',
 
             /* sorting */
-            'sort'                      => '\Predis\Commands\Sort',
+            'sort'                      => 'Predis_Commands_Sort',
 
             /* remote server control commands */
-            'info'                      => '\Predis\Commands\Info',
-            'slaveof'                   => '\Predis\Commands\SlaveOf',
+            'info'                      => 'Predis_Commands_Info',
+            'slaveof'                   => 'Predis_Commands_SlaveOf',
 
             /* persistence control commands */
-            'save'                      => '\Predis\Commands\Save',
-            'bgsave'                    => '\Predis\Commands\BackgroundSave',
-            'lastsave'                  => '\Predis\Commands\LastSave',
-            'shutdown'                  => '\Predis\Commands\Shutdown',
-            'bgrewriteaof'              => '\Predis\Commands\BackgroundRewriteAppendOnlyFile',
+            'save'                      => 'Predis_Commands_Save',
+            'bgsave'                    => 'Predis_Commands_BackgroundSave',
+            'lastsave'                  => 'Predis_Commands_LastSave',
+            'shutdown'                  => 'Predis_Commands_Shutdown',
+            'bgrewriteaof'              => 'Predis_Commands_BackgroundRewriteAppendOnlyFile',
         );
     }
 }
 
-class RedisServer_v2_0 extends RedisServerProfile {
+class Predis_RedisServer_v2_0 extends Predis_RedisServerProfile {
     public function getVersion() { return '2.0'; }
     public function getSupportedCommands() {
         return array(
             /* ---------------- Redis 1.2 ---------------- */
 
             /* miscellaneous commands */
-            'ping'                      => '\Predis\Commands\Ping',
-            'echo'                      => '\Predis\Commands\DoEcho',
-            'auth'                      => '\Predis\Commands\Auth',
+            'ping'                      => 'Predis_Commands_Ping',
+            'echo'                      => 'Predis_Commands_DoEcho',
+            'auth'                      => 'Predis_Commands_Auth',
 
             /* connection handling */
-            'quit'                      => '\Predis\Commands\Quit',
+            'quit'                      => 'Predis_Commands_Quit',
 
             /* commands operating on string values */
-            'set'                       => '\Predis\Commands\Set',
-            'setnx'                     => '\Predis\Commands\SetPreserve',
-            'mset'                      => '\Predis\Commands\SetMultiple',
-            'msetnx'                    => '\Predis\Commands\SetMultiplePreserve',
-            'get'                       => '\Predis\Commands\Get',
-            'mget'                      => '\Predis\Commands\GetMultiple',
-            'getset'                    => '\Predis\Commands\GetSet',
-            'incr'                      => '\Predis\Commands\Increment',
-            'incrby'                    => '\Predis\Commands\IncrementBy',
-            'decr'                      => '\Predis\Commands\Decrement',
-            'decrby'                    => '\Predis\Commands\DecrementBy',
-            'exists'                    => '\Predis\Commands\Exists',
-            'del'                       => '\Predis\Commands\Delete',
-            'type'                      => '\Predis\Commands\Type',
+            'set'                       => 'Predis_Commands_Set',
+            'setnx'                     => 'Predis_Commands_SetPreserve',
+            'mset'                      => 'Predis_Commands_SetMultiple',
+            'msetnx'                    => 'Predis_Commands_SetMultiplePreserve',
+            'get'                       => 'Predis_Commands_Get',
+            'mget'                      => 'Predis_Commands_GetMultiple',
+            'getset'                    => 'Predis_Commands_GetSet',
+            'incr'                      => 'Predis_Commands_Increment',
+            'incrby'                    => 'Predis_Commands_IncrementBy',
+            'decr'                      => 'Predis_Commands_Decrement',
+            'decrby'                    => 'Predis_Commands_DecrementBy',
+            'exists'                    => 'Predis_Commands_Exists',
+            'del'                       => 'Predis_Commands_Delete',
+            'type'                      => 'Predis_Commands_Type',
 
             /* commands operating on the key space */
-            'keys'                      => '\Predis\Commands\Keys',
-            'randomkey'                 => '\Predis\Commands\RandomKey',
-            'rename'                    => '\Predis\Commands\Rename',
-            'renamenx'                  => '\Predis\Commands\RenamePreserve',
-            'expire'                    => '\Predis\Commands\Expire',
-            'expireat'                  => '\Predis\Commands\ExpireAt',
-            'dbsize'                    => '\Predis\Commands\DatabaseSize',
-            'ttl'                       => '\Predis\Commands\TimeToLive',
+            'keys'                      => 'Predis_Commands_Keys',
+            'randomkey'                 => 'Predis_Commands_RandomKey',
+            'rename'                    => 'Predis_Commands_Rename',
+            'renamenx'                  => 'Predis_Commands_RenamePreserve',
+            'expire'                    => 'Predis_Commands_Expire',
+            'expireat'                  => 'Predis_Commands_ExpireAt',
+            'dbsize'                    => 'Predis_Commands_DatabaseSize',
+            'ttl'                       => 'Predis_Commands_TimeToLive',
 
             /* commands operating on lists */
-            'rpush'                     => '\Predis\Commands\ListPushTail',
-            'lpush'                     => '\Predis\Commands\ListPushHead',
-            'llen'                      => '\Predis\Commands\ListLength',
-            'lrange'                    => '\Predis\Commands\ListRange',
-            'ltrim'                     => '\Predis\Commands\ListTrim',
-            'lindex'                    => '\Predis\Commands\ListIndex',
-            'lset'                      => '\Predis\Commands\ListSet',
-            'lrem'                      => '\Predis\Commands\ListRemove',
-            'lpop'                      => '\Predis\Commands\ListPopFirst',
-            'rpop'                      => '\Predis\Commands\ListPopLast',
-            'rpoplpush'                 => '\Predis\Commands\ListPopLastPushHead',
+            'rpush'                     => 'Predis_Commands_ListPushTail',
+            'lpush'                     => 'Predis_Commands_ListPushHead',
+            'llen'                      => 'Predis_Commands_ListLength',
+            'lrange'                    => 'Predis_Commands_ListRange',
+            'ltrim'                     => 'Predis_Commands_ListTrim',
+            'lindex'                    => 'Predis_Commands_ListIndex',
+            'lset'                      => 'Predis_Commands_ListSet',
+            'lrem'                      => 'Predis_Commands_ListRemove',
+            'lpop'                      => 'Predis_Commands_ListPopFirst',
+            'rpop'                      => 'Predis_Commands_ListPopLast',
+            'rpoplpush'                 => 'Predis_Commands_ListPopLastPushHead',
 
             /* commands operating on sets */
-            'sadd'                      => '\Predis\Commands\SetAdd',
-            'srem'                      => '\Predis\Commands\SetRemove',
-            'spop'                      => '\Predis\Commands\SetPop',
-            'smove'                     => '\Predis\Commands\SetMove',
-            'scard'                     => '\Predis\Commands\SetCardinality',
-            'sismember'                 => '\Predis\Commands\SetIsMember',
-            'sinter'                    => '\Predis\Commands\SetIntersection',
-            'sinterstore'               => '\Predis\Commands\SetIntersectionStore',
-            'sunion'                    => '\Predis\Commands\SetUnion',
-            'sunionstore'               => '\Predis\Commands\SetUnionStore',
-            'sdiff'                     => '\Predis\Commands\SetDifference',
-            'sdiffstore'                => '\Predis\Commands\SetDifferenceStore',
-            'smembers'                  => '\Predis\Commands\SetMembers',
-            'srandmember'               => '\Predis\Commands\SetRandomMember',
+            'sadd'                      => 'Predis_Commands_SetAdd',
+            'srem'                      => 'Predis_Commands_SetRemove',
+            'spop'                      => 'Predis_Commands_SetPop',
+            'smove'                     => 'Predis_Commands_SetMove',
+            'scard'                     => 'Predis_Commands_SetCardinality',
+            'sismember'                 => 'Predis_Commands_SetIsMember',
+            'sinter'                    => 'Predis_Commands_SetIntersection',
+            'sinterstore'               => 'Predis_Commands_SetIntersectionStore',
+            'sunion'                    => 'Predis_Commands_SetUnion',
+            'sunionstore'               => 'Predis_Commands_SetUnionStore',
+            'sdiff'                     => 'Predis_Commands_SetDifference',
+            'sdiffstore'                => 'Predis_Commands_SetDifferenceStore',
+            'smembers'                  => 'Predis_Commands_SetMembers',
+            'srandmember'               => 'Predis_Commands_SetRandomMember',
 
             /* commands operating on sorted sets */
-            'zadd'                      => '\Predis\Commands\ZSetAdd',
-            'zincrby'                   => '\Predis\Commands\ZSetIncrementBy',
-            'zrem'                      => '\Predis\Commands\ZSetRemove',
-            'zrange'                    => '\Predis\Commands\ZSetRange',
-            'zrevrange'                 => '\Predis\Commands\ZSetReverseRange',
-            'zrangebyscore'             => '\Predis\Commands\ZSetRangeByScore',
-            'zcard'                     => '\Predis\Commands\ZSetCardinality',
-            'zscore'                    => '\Predis\Commands\ZSetScore',
-            'zremrangebyscore'          => '\Predis\Commands\ZSetRemoveRangeByScore',
+            'zadd'                      => 'Predis_Commands_ZSetAdd',
+            'zincrby'                   => 'Predis_Commands_ZSetIncrementBy',
+            'zrem'                      => 'Predis_Commands_ZSetRemove',
+            'zrange'                    => 'Predis_Commands_ZSetRange',
+            'zrevrange'                 => 'Predis_Commands_ZSetReverseRange',
+            'zrangebyscore'             => 'Predis_Commands_ZSetRangeByScore',
+            'zcard'                     => 'Predis_Commands_ZSetCardinality',
+            'zscore'                    => 'Predis_Commands_ZSetScore',
+            'zremrangebyscore'          => 'Predis_Commands_ZSetRemoveRangeByScore',
 
             /* multiple databases handling commands */
-            'select'                    => '\Predis\Commands\SelectDatabase',
-            'move'                      => '\Predis\Commands\MoveKey',
-            'flushdb'                   => '\Predis\Commands\FlushDatabase',
-            'flushall'                  => '\Predis\Commands\FlushAll',
+            'select'                    => 'Predis_Commands_SelectDatabase',
+            'move'                      => 'Predis_Commands_MoveKey',
+            'flushdb'                   => 'Predis_Commands_FlushDatabase',
+            'flushall'                  => 'Predis_Commands_FlushAll',
 
             /* sorting */
-            'sort'                      => '\Predis\Commands\Sort',
+            'sort'                      => 'Predis_Commands_Sort',
 
             /* remote server control commands */
-            'info'                      => '\Predis\Commands\Info',
-            'slaveof'                   => '\Predis\Commands\SlaveOf',
+            'info'                      => 'Predis_Commands_Info',
+            'slaveof'                   => 'Predis_Commands_SlaveOf',
 
             /* persistence control commands */
-            'save'                      => '\Predis\Commands\Save',
-            'bgsave'                    => '\Predis\Commands\BackgroundSave',
-            'lastsave'                  => '\Predis\Commands\LastSave',
-            'shutdown'                  => '\Predis\Commands\Shutdown',
-            'bgrewriteaof'              => '\Predis\Commands\BackgroundRewriteAppendOnlyFile',
+            'save'                      => 'Predis_Commands_Save',
+            'bgsave'                    => 'Predis_Commands_BackgroundSave',
+            'lastsave'                  => 'Predis_Commands_LastSave',
+            'shutdown'                  => 'Predis_Commands_Shutdown',
+            'bgrewriteaof'              => 'Predis_Commands_BackgroundRewriteAppendOnlyFile',
 
 
             /* ---------------- Redis 2.0 ---------------- */
 
             /* transactions */
-            'multi'                     => '\Predis\Commands\Multi',
-            'exec'                      => '\Predis\Commands\Exec',
-            'discard'                   => '\Predis\Commands\Discard',
+            'multi'                     => 'Predis_Commands_Multi',
+            'exec'                      => 'Predis_Commands_Exec',
+            'discard'                   => 'Predis_Commands_Discard',
 
             /* commands operating on string values */
-            'setex'                     => '\Predis\Commands\SetExpire',
-            'append'                    => '\Predis\Commands\Append',
-            'substr'                    => '\Predis\Commands\Substr',
+            'setex'                     => 'Predis_Commands_SetExpire',
+            'append'                    => 'Predis_Commands_Append',
+            'substr'                    => 'Predis_Commands_Substr',
 
             /* commands operating on lists */
-            'blpop'                     => '\Predis\Commands\ListPopFirstBlocking',
-            'brpop'                     => '\Predis\Commands\ListPopLastBlocking',
+            'blpop'                     => 'Predis_Commands_ListPopFirstBlocking',
+            'brpop'                     => 'Predis_Commands_ListPopLastBlocking',
 
             /* commands operating on sorted sets */
-            'zunionstore'               => '\Predis\Commands\ZSetUnionStore',
-            'zinterstore'               => '\Predis\Commands\ZSetIntersectionStore',
-            'zcount'                    => '\Predis\Commands\ZSetCount',
-            'zrank'                     => '\Predis\Commands\ZSetRank',
-            'zrevrank'                  => '\Predis\Commands\ZSetReverseRank',
-            'zremrangebyrank'           => '\Predis\Commands\ZSetRemoveRangeByRank',
+            'zunionstore'               => 'Predis_Commands_ZSetUnionStore',
+            'zinterstore'               => 'Predis_Commands_ZSetIntersectionStore',
+            'zcount'                    => 'Predis_Commands_ZSetCount',
+            'zrank'                     => 'Predis_Commands_ZSetRank',
+            'zrevrank'                  => 'Predis_Commands_ZSetReverseRank',
+            'zremrangebyrank'           => 'Predis_Commands_ZSetRemoveRangeByRank',
 
             /* commands operating on hashes */
-            'hset'                      => '\Predis\Commands\HashSet',
-            'hsetnx'                    => '\Predis\Commands\HashSetPreserve',
-            'hmset'                     => '\Predis\Commands\HashSetMultiple',
-            'hincrby'                   => '\Predis\Commands\HashIncrementBy',
-            'hget'                      => '\Predis\Commands\HashGet',
-            'hmget'                     => '\Predis\Commands\HashGetMultiple',
-            'hdel'                      => '\Predis\Commands\HashDelete',
-            'hexists'                   => '\Predis\Commands\HashExists',
-            'hlen'                      => '\Predis\Commands\HashLength',
-            'hkeys'                     => '\Predis\Commands\HashKeys',
-            'hvals'                     => '\Predis\Commands\HashValues',
-            'hgetall'                   => '\Predis\Commands\HashGetAll',
+            'hset'                      => 'Predis_Commands_HashSet',
+            'hsetnx'                    => 'Predis_Commands_HashSetPreserve',
+            'hmset'                     => 'Predis_Commands_HashSetMultiple',
+            'hincrby'                   => 'Predis_Commands_HashIncrementBy',
+            'hget'                      => 'Predis_Commands_HashGet',
+            'hmget'                     => 'Predis_Commands_HashGetMultiple',
+            'hdel'                      => 'Predis_Commands_HashDelete',
+            'hexists'                   => 'Predis_Commands_HashExists',
+            'hlen'                      => 'Predis_Commands_HashLength',
+            'hkeys'                     => 'Predis_Commands_HashKeys',
+            'hvals'                     => 'Predis_Commands_HashValues',
+            'hgetall'                   => 'Predis_Commands_HashGetAll',
 
             /* publish - subscribe */
-            'subscribe'                 => '\Predis\Commands\Subscribe',
-            'unsubscribe'               => '\Predis\Commands\Unsubscribe',
-            'psubscribe'                => '\Predis\Commands\SubscribeByPattern',
-            'punsubscribe'              => '\Predis\Commands\UnsubscribeByPattern',
-            'publish'                   => '\Predis\Commands\Publish',
+            'subscribe'                 => 'Predis_Commands_Subscribe',
+            'unsubscribe'               => 'Predis_Commands_Unsubscribe',
+            'psubscribe'                => 'Predis_Commands_SubscribeByPattern',
+            'punsubscribe'              => 'Predis_Commands_UnsubscribeByPattern',
+            'publish'                   => 'Predis_Commands_Publish',
 
             /* remote server control commands */
-            'config'                    => '\Predis\Commands\Config',
+            'config'                    => 'Predis_Commands_Config',
         );
     }
 }
 
-class RedisServer_v2_2 extends RedisServerProfile {
+class Predis_RedisServer_v2_2 extends Predis_RedisServerProfile {
     public function getVersion() { return '2.2'; }
     public function getSupportedCommands() {
         return array(
             /* ---------------- Redis 1.2 ---------------- */
 
             /* miscellaneous commands */
-            'ping'                      => '\Predis\Commands\Ping',
-            'echo'                      => '\Predis\Commands\DoEcho',
-            'auth'                      => '\Predis\Commands\Auth',
+            'ping'                      => 'Predis_Commands_Ping',
+            'echo'                      => 'Predis_Commands_DoEcho',
+            'auth'                      => 'Predis_Commands_Auth',
 
             /* connection handling */
-            'quit'                      => '\Predis\Commands\Quit',
+            'quit'                      => 'Predis_Commands_Quit',
 
             /* commands operating on string values */
-            'set'                       => '\Predis\Commands\Set',
-            'setnx'                     => '\Predis\Commands\SetPreserve',
-            'mset'                      => '\Predis\Commands\SetMultiple',
-            'msetnx'                    => '\Predis\Commands\SetMultiplePreserve',
-            'get'                       => '\Predis\Commands\Get',
-            'mget'                      => '\Predis\Commands\GetMultiple',
-            'getset'                    => '\Predis\Commands\GetSet',
-            'incr'                      => '\Predis\Commands\Increment',
-            'incrby'                    => '\Predis\Commands\IncrementBy',
-            'decr'                      => '\Predis\Commands\Decrement',
-            'decrby'                    => '\Predis\Commands\DecrementBy',
-            'exists'                    => '\Predis\Commands\Exists',
-            'del'                       => '\Predis\Commands\Delete',
-            'type'                      => '\Predis\Commands\Type',
+            'set'                       => 'Predis_Commands_Set',
+            'setnx'                     => 'Predis_Commands_SetPreserve',
+            'mset'                      => 'Predis_Commands_SetMultiple',
+            'msetnx'                    => 'Predis_Commands_SetMultiplePreserve',
+            'get'                       => 'Predis_Commands_Get',
+            'mget'                      => 'Predis_Commands_GetMultiple',
+            'getset'                    => 'Predis_Commands_GetSet',
+            'incr'                      => 'Predis_Commands_Increment',
+            'incrby'                    => 'Predis_Commands_IncrementBy',
+            'decr'                      => 'Predis_Commands_Decrement',
+            'decrby'                    => 'Predis_Commands_DecrementBy',
+            'exists'                    => 'Predis_Commands_Exists',
+            'del'                       => 'Predis_Commands_Delete',
+            'type'                      => 'Predis_Commands_Type',
 
             /* commands operating on the key space */
-            'keys'                      => '\Predis\Commands\Keys',
-            'randomkey'                 => '\Predis\Commands\RandomKey',
-            'rename'                    => '\Predis\Commands\Rename',
-            'renamenx'                  => '\Predis\Commands\RenamePreserve',
-            'expire'                    => '\Predis\Commands\Expire',
-            'expireat'                  => '\Predis\Commands\ExpireAt',
-            'dbsize'                    => '\Predis\Commands\DatabaseSize',
-            'ttl'                       => '\Predis\Commands\TimeToLive',
+            'keys'                      => 'Predis_Commands_Keys',
+            'randomkey'                 => 'Predis_Commands_RandomKey',
+            'rename'                    => 'Predis_Commands_Rename',
+            'renamenx'                  => 'Predis_Commands_RenamePreserve',
+            'expire'                    => 'Predis_Commands_Expire',
+            'expireat'                  => 'Predis_Commands_ExpireAt',
+            'dbsize'                    => 'Predis_Commands_DatabaseSize',
+            'ttl'                       => 'Predis_Commands_TimeToLive',
 
             /* commands operating on lists */
-            'rpush'                     => '\Predis\Commands\ListPushTail',
-            'lpush'                     => '\Predis\Commands\ListPushHead',
-            'llen'                      => '\Predis\Commands\ListLength',
-            'lrange'                    => '\Predis\Commands\ListRange',
-            'ltrim'                     => '\Predis\Commands\ListTrim',
-            'lindex'                    => '\Predis\Commands\ListIndex',
-            'lset'                      => '\Predis\Commands\ListSet',
-            'lrem'                      => '\Predis\Commands\ListRemove',
-            'lpop'                      => '\Predis\Commands\ListPopFirst',
-            'rpop'                      => '\Predis\Commands\ListPopLast',
-            'rpoplpush'                 => '\Predis\Commands\ListPopLastPushHead',
+            'rpush'                     => 'Predis_Commands_ListPushTail',
+            'lpush'                     => 'Predis_Commands_ListPushHead',
+            'llen'                      => 'Predis_Commands_ListLength',
+            'lrange'                    => 'Predis_Commands_ListRange',
+            'ltrim'                     => 'Predis_Commands_ListTrim',
+            'lindex'                    => 'Predis_Commands_ListIndex',
+            'lset'                      => 'Predis_Commands_ListSet',
+            'lrem'                      => 'Predis_Commands_ListRemove',
+            'lpop'                      => 'Predis_Commands_ListPopFirst',
+            'rpop'                      => 'Predis_Commands_ListPopLast',
+            'rpoplpush'                 => 'Predis_Commands_ListPopLastPushHead',
 
             /* commands operating on sets */
-            'sadd'                      => '\Predis\Commands\SetAdd',
-            'srem'                      => '\Predis\Commands\SetRemove',
-            'spop'                      => '\Predis\Commands\SetPop',
-            'smove'                     => '\Predis\Commands\SetMove',
-            'scard'                     => '\Predis\Commands\SetCardinality',
-            'sismember'                 => '\Predis\Commands\SetIsMember',
-            'sinter'                    => '\Predis\Commands\SetIntersection',
-            'sinterstore'               => '\Predis\Commands\SetIntersectionStore',
-            'sunion'                    => '\Predis\Commands\SetUnion',
-            'sunionstore'               => '\Predis\Commands\SetUnionStore',
-            'sdiff'                     => '\Predis\Commands\SetDifference',
-            'sdiffstore'                => '\Predis\Commands\SetDifferenceStore',
-            'smembers'                  => '\Predis\Commands\SetMembers',
-            'srandmember'               => '\Predis\Commands\SetRandomMember',
+            'sadd'                      => 'Predis_Commands_SetAdd',
+            'srem'                      => 'Predis_Commands_SetRemove',
+            'spop'                      => 'Predis_Commands_SetPop',
+            'smove'                     => 'Predis_Commands_SetMove',
+            'scard'                     => 'Predis_Commands_SetCardinality',
+            'sismember'                 => 'Predis_Commands_SetIsMember',
+            'sinter'                    => 'Predis_Commands_SetIntersection',
+            'sinterstore'               => 'Predis_Commands_SetIntersectionStore',
+            'sunion'                    => 'Predis_Commands_SetUnion',
+            'sunionstore'               => 'Predis_Commands_SetUnionStore',
+            'sdiff'                     => 'Predis_Commands_SetDifference',
+            'sdiffstore'                => 'Predis_Commands_SetDifferenceStore',
+            'smembers'                  => 'Predis_Commands_SetMembers',
+            'srandmember'               => 'Predis_Commands_SetRandomMember',
 
             /* commands operating on sorted sets */
-            'zadd'                      => '\Predis\Commands\ZSetAdd',
-            'zincrby'                   => '\Predis\Commands\ZSetIncrementBy',
-            'zrem'                      => '\Predis\Commands\ZSetRemove',
-            'zrange'                    => '\Predis\Commands\ZSetRange',
-            'zrevrange'                 => '\Predis\Commands\ZSetReverseRange',
-            'zrangebyscore'             => '\Predis\Commands\ZSetRangeByScore',
-            'zcard'                     => '\Predis\Commands\ZSetCardinality',
-            'zscore'                    => '\Predis\Commands\ZSetScore',
-            'zremrangebyscore'          => '\Predis\Commands\ZSetRemoveRangeByScore',
+            'zadd'                      => 'Predis_Commands_ZSetAdd',
+            'zincrby'                   => 'Predis_Commands_ZSetIncrementBy',
+            'zrem'                      => 'Predis_Commands_ZSetRemove',
+            'zrange'                    => 'Predis_Commands_ZSetRange',
+            'zrevrange'                 => 'Predis_Commands_ZSetReverseRange',
+            'zrangebyscore'             => 'Predis_Commands_ZSetRangeByScore',
+            'zcard'                     => 'Predis_Commands_ZSetCardinality',
+            'zscore'                    => 'Predis_Commands_ZSetScore',
+            'zremrangebyscore'          => 'Predis_Commands_ZSetRemoveRangeByScore',
 
             /* multiple databases handling commands */
-            'select'                    => '\Predis\Commands\SelectDatabase',
-            'move'                      => '\Predis\Commands\MoveKey',
-            'flushdb'                   => '\Predis\Commands\FlushDatabase',
-            'flushall'                  => '\Predis\Commands\FlushAll',
+            'select'                    => 'Predis_Commands_SelectDatabase',
+            'move'                      => 'Predis_Commands_MoveKey',
+            'flushdb'                   => 'Predis_Commands_FlushDatabase',
+            'flushall'                  => 'Predis_Commands_FlushAll',
 
             /* sorting */
-            'sort'                      => '\Predis\Commands\Sort',
+            'sort'                      => 'Predis_Commands_Sort',
 
             /* remote server control commands */
-            'info'                      => '\Predis\Commands\Info',
-            'slaveof'                   => '\Predis\Commands\SlaveOf',
+            'info'                      => 'Predis_Commands_Info',
+            'slaveof'                   => 'Predis_Commands_SlaveOf',
 
             /* persistence control commands */
-            'save'                      => '\Predis\Commands\Save',
-            'bgsave'                    => '\Predis\Commands\BackgroundSave',
-            'lastsave'                  => '\Predis\Commands\LastSave',
-            'shutdown'                  => '\Predis\Commands\Shutdown',
-            'bgrewriteaof'              => '\Predis\Commands\BackgroundRewriteAppendOnlyFile',
+            'save'                      => 'Predis_Commands_Save',
+            'bgsave'                    => 'Predis_Commands_BackgroundSave',
+            'lastsave'                  => 'Predis_Commands_LastSave',
+            'shutdown'                  => 'Predis_Commands_Shutdown',
+            'bgrewriteaof'              => 'Predis_Commands_BackgroundRewriteAppendOnlyFile',
 
 
             /* ---------------- Redis 2.0 ---------------- */
 
             /* transactions */
-            'multi'                     => '\Predis\Commands\Multi',
-            'exec'                      => '\Predis\Commands\Exec',
-            'discard'                   => '\Predis\Commands\Discard',
+            'multi'                     => 'Predis_Commands_Multi',
+            'exec'                      => 'Predis_Commands_Exec',
+            'discard'                   => 'Predis_Commands_Discard',
 
             /* commands operating on string values */
-            'setex'                     => '\Predis\Commands\SetExpire',
-            'append'                    => '\Predis\Commands\Append',
-            'substr'                    => '\Predis\Commands\Substr',
+            'setex'                     => 'Predis_Commands_SetExpire',
+            'append'                    => 'Predis_Commands_Append',
+            'substr'                    => 'Predis_Commands_Substr',
 
             /* commands operating on lists */
-            'blpop'                     => '\Predis\Commands\ListPopFirstBlocking',
-            'brpop'                     => '\Predis\Commands\ListPopLastBlocking',
+            'blpop'                     => 'Predis_Commands_ListPopFirstBlocking',
+            'brpop'                     => 'Predis_Commands_ListPopLastBlocking',
 
             /* commands operating on sorted sets */
-            'zunionstore'               => '\Predis\Commands\ZSetUnionStore',
-            'zinterstore'               => '\Predis\Commands\ZSetIntersectionStore',
-            'zcount'                    => '\Predis\Commands\ZSetCount',
-            'zrank'                     => '\Predis\Commands\ZSetRank',
-            'zrevrank'                  => '\Predis\Commands\ZSetReverseRank',
-            'zremrangebyrank'           => '\Predis\Commands\ZSetRemoveRangeByRank',
+            'zunionstore'               => 'Predis_Commands_ZSetUnionStore',
+            'zinterstore'               => 'Predis_Commands_ZSetIntersectionStore',
+            'zcount'                    => 'Predis_Commands_ZSetCount',
+            'zrank'                     => 'Predis_Commands_ZSetRank',
+            'zrevrank'                  => 'Predis_Commands_ZSetReverseRank',
+            'zremrangebyrank'           => 'Predis_Commands_ZSetRemoveRangeByRank',
 
             /* commands operating on hashes */
-            'hset'                      => '\Predis\Commands\HashSet',
-            'hsetnx'                    => '\Predis\Commands\HashSetPreserve',
-            'hmset'                     => '\Predis\Commands\HashSetMultiple',
-            'hincrby'                   => '\Predis\Commands\HashIncrementBy',
-            'hget'                      => '\Predis\Commands\HashGet',
-            'hmget'                     => '\Predis\Commands\HashGetMultiple',
-            'hdel'                      => '\Predis\Commands\HashDelete',
-            'hexists'                   => '\Predis\Commands\HashExists',
-            'hlen'                      => '\Predis\Commands\HashLength',
-            'hkeys'                     => '\Predis\Commands\HashKeys',
-            'hvals'                     => '\Predis\Commands\HashValues',
-            'hgetall'                   => '\Predis\Commands\HashGetAll',
+            'hset'                      => 'Predis_Commands_HashSet',
+            'hsetnx'                    => 'Predis_Commands_HashSetPreserve',
+            'hmset'                     => 'Predis_Commands_HashSetMultiple',
+            'hincrby'                   => 'Predis_Commands_HashIncrementBy',
+            'hget'                      => 'Predis_Commands_HashGet',
+            'hmget'                     => 'Predis_Commands_HashGetMultiple',
+            'hdel'                      => 'Predis_Commands_HashDelete',
+            'hexists'                   => 'Predis_Commands_HashExists',
+            'hlen'                      => 'Predis_Commands_HashLength',
+            'hkeys'                     => 'Predis_Commands_HashKeys',
+            'hvals'                     => 'Predis_Commands_HashValues',
+            'hgetall'                   => 'Predis_Commands_HashGetAll',
 
             /* publish - subscribe */
-            'subscribe'                 => '\Predis\Commands\Subscribe',
-            'unsubscribe'               => '\Predis\Commands\Unsubscribe',
-            'psubscribe'                => '\Predis\Commands\SubscribeByPattern',
-            'punsubscribe'              => '\Predis\Commands\UnsubscribeByPattern',
-            'publish'                   => '\Predis\Commands\Publish',
+            'subscribe'                 => 'Predis_Commands_Subscribe',
+            'unsubscribe'               => 'Predis_Commands_Unsubscribe',
+            'psubscribe'                => 'Predis_Commands_SubscribeByPattern',
+            'punsubscribe'              => 'Predis_Commands_UnsubscribeByPattern',
+            'publish'                   => 'Predis_Commands_Publish',
 
             /* remote server control commands */
-            'config'                    => '\Predis\Commands\Config',
+            'config'                    => 'Predis_Commands_Config',
 
 
             /* ---------------- Redis 2.2 ---------------- */
 
             /* transactions */
-            'watch'                     => '\Predis\Commands\Watch',
-            'unwatch'                   => '\Predis\Commands\Unwatch',
+            'watch'                     => 'Predis_Commands_Watch',
+            'unwatch'                   => 'Predis_Commands_Unwatch',
 
             /* commands operating on string values */
-            'strlen'                    => '\Predis\Commands\Strlen',
-            'setrange'                  => '\Predis\Commands\SetRange',
-            'getrange'                  => '\Predis\Commands\Substr',
-            'setbit'                    => '\Predis\Commands\SetBit',
-            'getbit'                    => '\Predis\Commands\GetBit',
+            'strlen'                    => 'Predis_Commands_Strlen',
+            'setrange'                  => 'Predis_Commands_SetRange',
+            'getrange'                  => 'Predis_Commands_Substr',
+            'setbit'                    => 'Predis_Commands_SetBit',
+            'getbit'                    => 'Predis_Commands_GetBit',
 
             /* commands operating on the key space */
-            'persist'                   => '\Predis\Commands\Persist',
+            'persist'                   => 'Predis_Commands_Persist',
 
             /* commands operating on lists */
-            'rpushx'                    => '\Predis\Commands\ListPushTailX',
-            'lpushx'                    => '\Predis\Commands\ListPushHeadX',
-            'linsert'                   => '\Predis\Commands\ListInsert',
-            'brpoplpush'                => '\Predis\Commands\ListPopLastPushHeadBlocking',
+            'rpushx'                    => 'Predis_Commands_ListPushTailX',
+            'lpushx'                    => 'Predis_Commands_ListPushHeadX',
+            'linsert'                   => 'Predis_Commands_ListInsert',
+            'brpoplpush'                => 'Predis_Commands_ListPopLastPushHeadBlocking',
 
             /* commands operating on sorted sets */
-            'zrevrangebyscore'          => '\Predis\Commands\ZSetReverseRangeByScore',
+            'zrevrangebyscore'          => 'Predis_Commands_ZSetReverseRangeByScore',
         );
     }
 }
 
-class RedisServer_vNext extends RedisServer_v2_2 {
+class Predis_RedisServer_vNext extends Predis_RedisServer_v2_2 {
     public function getVersion() { return 'DEV'; }
     public function getSupportedCommands() {
         return array_merge(parent::getSupportedCommands(), array(
             /* remote server control commands */
-            'info'                      => '\Predis\Commands\Info_v24',
+            'info'                      => 'Predis_Commands_Info_v24',
         ));
     }
 }
 
 /* ------------------------------------------------------------------------- */
 
-namespace Predis\Pipeline;
-
-interface IPipelineExecutor {
-    public function execute(\Predis\IConnection $connection, &$commands);
+interface Predis_Pipeline_IPipelineExecutor {
+    public function execute(Predis_IConnection $connection, &$commands);
 }
 
-class StandardExecutor implements IPipelineExecutor {
-    public function execute(\Predis\IConnection $connection, &$commands) {
+class Predis_Pipeline_StandardExecutor implements Predis_Pipeline_IPipelineExecutor {
+    public function execute(Predis_IConnection $connection, &$commands) {
         $sizeofPipe = count($commands);
         $values = array();
 
@@ -2258,13 +2262,13 @@ class StandardExecutor implements IPipelineExecutor {
         try {
             for ($i = 0; $i < $sizeofPipe; $i++) {
                 $response = $connection->readResponse($commands[$i]);
-                $values[] = $response instanceof \Iterator
+                $values[] = $response instanceof Iterator
                     ? iterator_to_array($response)
                     : $response;
                 unset($commands[$i]);
             }
         }
-        catch (\Predis\ServerException $exception) {
+        catch (Predis_ServerException $exception) {
             // force disconnection to prevent protocol desynchronization
             $connection->disconnect();
             throw $exception;
@@ -2274,8 +2278,8 @@ class StandardExecutor implements IPipelineExecutor {
     }
 }
 
-class SafeExecutor implements IPipelineExecutor {
-    public function execute(\Predis\IConnection $connection, &$commands) {
+class Predis_Pipeline_SafeExecutor implements Predis_Pipeline_IPipelineExecutor {
+    public function execute(Predis_IConnection $connection, &$commands) {
         $sizeofPipe = count($commands);
         $values = array();
 
@@ -2283,7 +2287,7 @@ class SafeExecutor implements IPipelineExecutor {
             try {
                 $connection->writeCommand($command);
             }
-            catch (\Predis\CommunicationException $exception) {
+            catch (Predis_CommunicationException $exception) {
                 return array_fill(0, $sizeofPipe, $exception);
             }
         }
@@ -2293,15 +2297,15 @@ class SafeExecutor implements IPipelineExecutor {
             unset($commands[$i]);
             try {
                 $response = $connection->readResponse($command);
-                $values[] = ($response instanceof \Iterator
+                $values[] = ($response instanceof Iterator
                     ? iterator_to_array($response)
                     : $response
                 );
             }
-            catch (\Predis\ServerException $exception) {
+            catch (Predis_ServerException $exception) {
                 $values[] = $exception->toResponseError();
             }
-            catch (\Predis\CommunicationException $exception) {
+            catch (Predis_CommunicationException $exception) {
                 $toAdd  = count($commands) - count($values);
                 $values = array_merge($values, array_fill(0, $toAdd, $exception));
                 break;
@@ -2312,8 +2316,8 @@ class SafeExecutor implements IPipelineExecutor {
     }
 }
 
-class SafeClusterExecutor implements IPipelineExecutor {
-    public function execute(\Predis\IConnection $connection, &$commands) {
+class Predis_Pipeline_SafeClusterExecutor implements Predis_Pipeline_IPipelineExecutor {
+    public function execute(Predis_IConnection $connection, &$commands) {
         $connectionExceptions = array();
         $sizeofPipe = count($commands);
         $values = array();
@@ -2326,7 +2330,7 @@ class SafeClusterExecutor implements IPipelineExecutor {
             try {
                 $cmdConnection->writeCommand($command);
             }
-            catch (\Predis\CommunicationException $exception) {
+            catch (Predis_CommunicationException $exception) {
                 $connectionExceptions[spl_object_hash($cmdConnection)] = $exception;
             }
         }
@@ -2345,15 +2349,15 @@ class SafeClusterExecutor implements IPipelineExecutor {
 
             try {
                 $response = $cmdConnection->readResponse($command);
-                $values[] = ($response instanceof \Iterator
+                $values[] = ($response instanceof Iterator
                     ? iterator_to_array($response)
                     : $response
                 );
             }
-            catch (\Predis\ServerException $exception) {
+            catch (Predis_ServerException $exception) {
                 $values[] = $exception->toResponseError();
             }
-            catch (\Predis\CommunicationException $exception) {
+            catch (Predis_CommunicationException $exception) {
                 $values[] = $exception;
                 $connectionExceptions[$connectionObjectHash] = $exception;
             }
@@ -2365,18 +2369,16 @@ class SafeClusterExecutor implements IPipelineExecutor {
 
 /* ------------------------------------------------------------------------- */
 
-namespace Predis\Distribution;
-
-interface IDistributionStrategy {
+interface Predis_Distribution_IDistributionStrategy {
     public function add($node, $weight = null);
     public function remove($node);
     public function get($key);
     public function generateKey($value);
 }
 
-class EmptyRingException extends \Exception { }
+class Predis_Distribution_EmptyRingException extends Exception { }
 
-class HashRing implements IDistributionStrategy {
+class Predis_Distribution_HashRing implements Predis_Distribution_IDistributionStrategy {
     const DEFAULT_REPLICAS = 128;
     const DEFAULT_WEIGHT   = 100;
     private $_nodes, $_ring, $_ringKeys, $_ringKeysCount, $_replicas;
@@ -2389,14 +2391,19 @@ class HashRing implements IDistributionStrategy {
     public function add($node, $weight = null) {
         // NOTE: in case of collisions in the hashes of the nodes, the node added
         //       last wins, thus the order in which nodes are added is significant.
-        $this->_nodes[] = array('object' => $node, 'weight' => (int) $weight ?: $this::DEFAULT_WEIGHT);
+        // TODO: self::DEFAULT_WEIGHT does not work for inherited classes that 
+        //       override the DEFAULT_WEIGHT constant.
+        $this->_nodes[] = array(
+            'object' => $node, 
+            'weight' => (int) ($weight !== null ? $weight : self::DEFAULT_WEIGHT), 
+        );
         $this->reset();
     }
 
     public function remove($node) {
-        // NOTE: a node is removed by resetting the ring so that it's recreated from
-        //       scratch, in order to reassign possible hashes with collisions to the
-        //       right node according to the order in which they were added in the
+        // NOTE: a node is removed by resetting the ring so that it's recreated from 
+        //       scratch, in order to reassign possible hashes with collisions to the 
+        //       right node according to the order in which they were added in the 
         //       first place.
         for ($i = 0; $i < count($this->_nodes); ++$i) {
             if ($this->_nodes[$i]['object'] === $node) {
@@ -2418,7 +2425,6 @@ class HashRing implements IDistributionStrategy {
     }
 
     private function computeTotalWeight() {
-        // TODO: array_reduce + lambda for PHP 5.3
         $totalWeight = 0;
         foreach ($this->_nodes as $node) {
             $totalWeight += $node['weight'];
@@ -2431,7 +2437,7 @@ class HashRing implements IDistributionStrategy {
             return;
         }
         if (count($this->_nodes) === 0) {
-            throw new EmptyRingException('Cannot initialize empty hashring');
+            throw new Predis_Distribution_EmptyRingException('Cannot initialize empty hashring');
         }
 
         $this->_ring = array();
@@ -2487,18 +2493,18 @@ class HashRing implements IDistributionStrategy {
     }
 
     protected function wrapAroundStrategy($upper, $lower, $ringKeysCount) {
-        // NOTE: binary search for the last item in _ringkeys with a value
-        //       less or equal to the key. If no such item exists, return the
+        // NOTE: binary search for the last item in _ringkeys with a value 
+        //       less or equal to the key. If no such item exists, return the 
         //       last item.
         return $upper >= 0 ? $upper : $ringKeysCount - 1;
     }
 }
 
-class KetamaPureRing extends HashRing {
+class Predis_Distribution_KetamaPureRing extends Predis_Distribution_HashRing {
     const DEFAULT_REPLICAS = 160;
 
     public function __construct() {
-        parent::__construct($this::DEFAULT_REPLICAS);
+        parent::__construct(self::DEFAULT_REPLICAS);
     }
 
     protected function addNodeToRing(&$ring, $node, $totalNodes, $replicas, $weightRatio) {
@@ -2519,8 +2525,8 @@ class KetamaPureRing extends HashRing {
     }
 
     protected function wrapAroundStrategy($upper, $lower, $ringKeysCount) {
-        // NOTE: binary search for the first item in _ringkeys with a value
-        //       greater or equal to the key. If no such item exists, return the
+        // NOTE: binary search for the first item in _ringkeys with a value 
+        //       greater or equal to the key. If no such item exists, return the 
         //       first item.
         return $lower < $ringKeysCount ? $lower : 0;
     }
@@ -2528,14 +2534,12 @@ class KetamaPureRing extends HashRing {
 
 /* ------------------------------------------------------------------------- */
 
-namespace Predis\Shared;
-
-class Utils {
-    public static function isCluster(\Predis\IConnection $connection) {
-        return $connection instanceof \Predis\ConnectionCluster;
+class Predis_Shared_Utils {
+    public static function isCluster(Predis_IConnection $connection) {
+        return $connection instanceof Predis_ConnectionCluster;
     }
 
-    public static function onCommunicationException(\Predis\CommunicationException $exception) {
+    public static function onCommunicationException(Predis_CommunicationException $exception) {
         if ($exception->shouldResetConnection()) {
             $connection = $exception->getConnection();
             if ($connection->isConnected()) {
@@ -2553,7 +2557,7 @@ class Utils {
     }
 }
 
-abstract class MultiBulkResponseIteratorBase implements \Iterator, \Countable {
+abstract class Predis_Shared_MultiBulkResponseIteratorBase implements Iterator, Countable {
     protected $_position, $_current, $_replySize;
 
     public function rewind() {
@@ -2580,8 +2584,8 @@ abstract class MultiBulkResponseIteratorBase implements \Iterator, \Countable {
     }
 
     public function count() {
-        // NOTE: use count if you want to get the size of the current multi-bulk
-        //       response without using iterator_count (which actually consumes
+        // NOTE: use count if you want to get the size of the current multi-bulk 
+        //       response without using iterator_count (which actually consumes 
         //       our iterator to calculate the size, and we cannot perform a rewind)
         return $this->_replySize;
     }
@@ -2589,10 +2593,10 @@ abstract class MultiBulkResponseIteratorBase implements \Iterator, \Countable {
     protected abstract function getValue();
 }
 
-class MultiBulkResponseIterator extends MultiBulkResponseIteratorBase {
+class Predis_Shared_MultiBulkResponseIterator extends Predis_Shared_MultiBulkResponseIteratorBase {
     private $_connection;
 
-    public function __construct(\Predis\Connection $connection, $size) {
+    public function __construct(Predis_Connection $connection, $size) {
         $this->_connection = $connection;
         $this->_reader     = $connection->getResponseReader();
         $this->_position   = 0;
@@ -2627,10 +2631,10 @@ class MultiBulkResponseIterator extends MultiBulkResponseIteratorBase {
     }
 }
 
-class MultiBulkResponseKVIterator extends MultiBulkResponseIteratorBase {
+class Predis_Shared_MultiBulkResponseKVIterator extends Predis_Shared_MultiBulkResponseIteratorBase {
     private $_iterator;
 
-    public function __construct(MultiBulkResponseIterator $iterator) {
+    public function __construct(Predis_Shared_MultiBulkResponseIterator $iterator) {
         $virtualSize = count($iterator) / 2;
 
         $this->_iterator   = $iterator;
@@ -2654,10 +2658,8 @@ class MultiBulkResponseKVIterator extends MultiBulkResponseIteratorBase {
 
 /* ------------------------------------------------------------------------- */
 
-namespace Predis\Commands;
-
 /* miscellaneous commands */
-class Ping extends  \Predis\MultiBulkCommand {
+class Predis_Commands_Ping extends  Predis_MultiBulkCommand {
     public function canBeHashed()  { return false; }
     public function getCommandId() { return 'PING'; }
     public function parseResponse($data) {
@@ -2665,38 +2667,38 @@ class Ping extends  \Predis\MultiBulkCommand {
     }
 }
 
-class DoEcho extends \Predis\MultiBulkCommand {
+class Predis_Commands_DoEcho extends Predis_MultiBulkCommand {
     public function canBeHashed()  { return false; }
     public function getCommandId() { return 'ECHO'; }
 }
 
-class Auth extends \Predis\MultiBulkCommand {
+class Predis_Commands_Auth extends Predis_MultiBulkCommand {
     public function canBeHashed()  { return false; }
     public function getCommandId() { return 'AUTH'; }
 }
 
 /* connection handling */
-class Quit extends \Predis\MultiBulkCommand {
+class Predis_Commands_Quit extends Predis_MultiBulkCommand {
     public function canBeHashed()  { return false; }
     public function getCommandId() { return 'QUIT'; }
     public function closesConnection() { return true; }
 }
 
 /* commands operating on string values */
-class Set extends \Predis\MultiBulkCommand {
+class Predis_Commands_Set extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'SET'; }
 }
 
-class SetExpire extends \Predis\MultiBulkCommand {
+class Predis_Commands_SetExpire extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'SETEX'; }
 }
 
-class SetPreserve extends \Predis\MultiBulkCommand {
+class Predis_Commands_SetPreserve extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'SETNX'; }
     public function parseResponse($data) { return (bool) $data; }
 }
 
-class SetMultiple extends \Predis\MultiBulkCommand {
+class Predis_Commands_SetMultiple extends Predis_MultiBulkCommand {
     public function canBeHashed()  { return false; }
     public function getCommandId() { return 'MSET'; }
     public function filterArguments(Array $arguments) {
@@ -2713,241 +2715,241 @@ class SetMultiple extends \Predis\MultiBulkCommand {
     }
 }
 
-class SetMultiplePreserve extends \Predis\Commands\SetMultiple {
+class Predis_Commands_SetMultiplePreserve extends Predis_Commands_SetMultiple {
     public function canBeHashed()  { return false; }
     public function getCommandId() { return 'MSETNX'; }
     public function parseResponse($data) { return (bool) $data; }
 }
 
-class Get extends \Predis\MultiBulkCommand {
+class Predis_Commands_Get extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'GET'; }
 }
 
-class GetMultiple extends \Predis\MultiBulkCommand {
+class Predis_Commands_GetMultiple extends Predis_MultiBulkCommand {
     public function canBeHashed()  { return false; }
     public function getCommandId() { return 'MGET'; }
     public function filterArguments(Array $arguments) {
-        return \Predis\Shared\Utils::filterArrayArguments($arguments);
+        return Predis_Shared_Utils::filterArrayArguments($arguments);
     }
 }
 
-class GetSet extends \Predis\MultiBulkCommand {
+class Predis_Commands_GetSet extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'GETSET'; }
 }
 
-class Increment extends \Predis\MultiBulkCommand {
+class Predis_Commands_Increment extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'INCR'; }
 }
 
-class IncrementBy extends \Predis\MultiBulkCommand {
+class Predis_Commands_IncrementBy extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'INCRBY'; }
 }
 
-class Decrement extends \Predis\MultiBulkCommand {
+class Predis_Commands_Decrement extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'DECR'; }
 }
 
-class DecrementBy extends \Predis\MultiBulkCommand {
+class Predis_Commands_DecrementBy extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'DECRBY'; }
 }
 
-class Exists extends \Predis\MultiBulkCommand {
+class Predis_Commands_Exists extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'EXISTS'; }
     public function parseResponse($data) { return (bool) $data; }
 }
 
-class Delete extends \Predis\MultiBulkCommand {
+class Predis_Commands_Delete extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'DEL'; }
 }
 
-class Type extends \Predis\MultiBulkCommand {
+class Predis_Commands_Type extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'TYPE'; }
 }
 
-class Append extends \Predis\MultiBulkCommand {
+class Predis_Commands_Append extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'APPEND'; }
 }
 
-class SetRange extends \Predis\MultiBulkCommand {
+class Predis_Commands_SetRange extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'SETRANGE'; }
 }
 
-class Substr extends \Predis\MultiBulkCommand {
+class Predis_Commands_Substr extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'SUBSTR'; }
 }
 
-class SetBit extends \Predis\MultiBulkCommand {
+class Predis_Commands_SetBit extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'SETBIT'; }
 }
 
-class GetBit extends \Predis\MultiBulkCommand {
+class Predis_Commands_GetBit extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'GETBIT'; }
 }
 
-class Strlen extends \Predis\MultiBulkCommand {
+class Predis_Commands_Strlen extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'STRLEN'; }
 }
 
 /* commands operating on the key space */
-class Keys extends \Predis\MultiBulkCommand {
+class Predis_Commands_Keys extends Predis_MultiBulkCommand {
     public function canBeHashed()  { return false; }
     public function getCommandId() { return 'KEYS'; }
 }
 
-class Keys_v1_2 extends Keys {
+class Predis_Commands_Keys_v1_2 extends Predis_Commands_Keys {
     public function parseResponse($data) {
         return explode(' ', $data);
     }
 }
 
-class RandomKey extends \Predis\MultiBulkCommand {
+class Predis_Commands_RandomKey extends Predis_MultiBulkCommand {
     public function canBeHashed()  { return false; }
     public function getCommandId() { return 'RANDOMKEY'; }
     public function parseResponse($data) { return $data !== '' ? $data : null; }
 }
 
-class Rename extends \Predis\MultiBulkCommand {
+class Predis_Commands_Rename extends Predis_MultiBulkCommand {
     public function canBeHashed()  { return false; }
     public function getCommandId() { return 'RENAME'; }
 }
 
-class RenamePreserve extends \Predis\MultiBulkCommand {
+class Predis_Commands_RenamePreserve extends Predis_MultiBulkCommand {
     public function canBeHashed()  { return false; }
     public function getCommandId() { return 'RENAMENX'; }
     public function parseResponse($data) { return (bool) $data; }
 }
 
-class Expire extends \Predis\MultiBulkCommand {
+class Predis_Commands_Expire extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'EXPIRE'; }
     public function parseResponse($data) { return (bool) $data; }
 }
 
-class ExpireAt extends \Predis\MultiBulkCommand {
+class Predis_Commands_ExpireAt extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'EXPIREAT'; }
     public function parseResponse($data) { return (bool) $data; }
 }
 
-class Persist extends \Predis\MultiBulkCommand {
+class Predis_Commands_Persist extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'PERSIST'; }
     public function parseResponse($data) { return (bool) $data; }
 }
 
-class DatabaseSize extends \Predis\MultiBulkCommand {
+class Predis_Commands_DatabaseSize extends Predis_MultiBulkCommand {
     public function canBeHashed()  { return false; }
     public function getCommandId() { return 'DBSIZE'; }
 }
 
-class TimeToLive extends \Predis\MultiBulkCommand {
+class Predis_Commands_TimeToLive extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'TTL'; }
 }
 
 /* commands operating on lists */
-class ListPushTail extends \Predis\MultiBulkCommand {
+class Predis_Commands_ListPushTail extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'RPUSH'; }
 }
 
-class ListPushTailX extends \Predis\MultiBulkCommand {
+class Predis_Commands_ListPushTailX extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'RPUSHX'; }
 }
 
-class ListPushHead extends \Predis\MultiBulkCommand {
+class Predis_Commands_ListPushHead extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'LPUSH'; }
 }
 
-class ListPushHeadX extends \Predis\MultiBulkCommand {
+class Predis_Commands_ListPushHeadX extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'LPUSHX'; }
 }
 
-class ListLength extends \Predis\MultiBulkCommand {
+class Predis_Commands_ListLength extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'LLEN'; }
 }
 
-class ListRange extends \Predis\MultiBulkCommand {
+class Predis_Commands_ListRange extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'LRANGE'; }
 }
 
-class ListTrim extends \Predis\MultiBulkCommand {
+class Predis_Commands_ListTrim extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'LTRIM'; }
 }
 
-class ListIndex extends \Predis\MultiBulkCommand {
+class Predis_Commands_ListIndex extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'LINDEX'; }
 }
 
-class ListSet extends \Predis\MultiBulkCommand {
+class Predis_Commands_ListSet extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'LSET'; }
 }
 
-class ListRemove extends \Predis\MultiBulkCommand {
+class Predis_Commands_ListRemove extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'LREM'; }
 }
 
-class ListPopLastPushHead extends \Predis\MultiBulkCommand {
+class Predis_Commands_ListPopLastPushHead extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'RPOPLPUSH'; }
 }
 
-class ListPopLastPushHeadBlocking extends \Predis\MultiBulkCommand {
+class Predis_Commands_ListPopLastPushHeadBlocking extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'BRPOPLPUSH'; }
 }
 
-class ListPopFirst extends \Predis\MultiBulkCommand {
+class Predis_Commands_ListPopFirst extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'LPOP'; }
 }
 
-class ListPopLast extends \Predis\MultiBulkCommand {
+class Predis_Commands_ListPopLast extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'RPOP'; }
 }
 
-class ListPopFirstBlocking extends \Predis\MultiBulkCommand {
+class Predis_Commands_ListPopFirstBlocking extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'BLPOP'; }
 }
 
-class ListPopLastBlocking extends \Predis\MultiBulkCommand {
+class Predis_Commands_ListPopLastBlocking extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'BRPOP'; }
 }
 
-class ListInsert extends \Predis\MultiBulkCommand {
+class Predis_Commands_ListInsert extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'LINSERT'; }
 }
 
 /* commands operating on sets */
-class SetAdd extends \Predis\MultiBulkCommand {
+class Predis_Commands_SetAdd extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'SADD'; }
     public function parseResponse($data) { return (bool) $data; }
 }
 
-class SetRemove extends \Predis\MultiBulkCommand {
+class Predis_Commands_SetRemove extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'SREM'; }
     public function parseResponse($data) { return (bool) $data; }
 }
 
-class SetPop  extends \Predis\MultiBulkCommand {
+class Predis_Commands_SetPop  extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'SPOP'; }
 }
 
-class SetMove extends \Predis\MultiBulkCommand {
+class Predis_Commands_SetMove extends Predis_MultiBulkCommand {
     public function canBeHashed()  { return false; }
     public function getCommandId() { return 'SMOVE'; }
     public function parseResponse($data) { return (bool) $data; }
 }
 
-class SetCardinality extends \Predis\MultiBulkCommand {
+class Predis_Commands_SetCardinality extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'SCARD'; }
 }
 
-class SetIsMember extends \Predis\MultiBulkCommand {
+class Predis_Commands_SetIsMember extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'SISMEMBER'; }
     public function parseResponse($data) { return (bool) $data; }
 }
 
-class SetIntersection extends \Predis\MultiBulkCommand {
+class Predis_Commands_SetIntersection extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'SINTER'; }
     public function filterArguments(Array $arguments) {
-        return \Predis\Shared\Utils::filterArrayArguments($arguments);
+        return Predis_Shared_Utils::filterArrayArguments($arguments);
     }
 }
 
-class SetIntersectionStore extends \Predis\MultiBulkCommand {
+class Predis_Commands_SetIntersectionStore extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'SINTERSTORE'; }
     public function filterArguments(Array $arguments) {
         if (count($arguments) === 2 && is_array($arguments[1])) {
@@ -2957,46 +2959,46 @@ class SetIntersectionStore extends \Predis\MultiBulkCommand {
     }
 }
 
-class SetUnion extends \Predis\Commands\SetIntersection {
+class Predis_Commands_SetUnion extends Predis_Commands_SetIntersection {
     public function getCommandId() { return 'SUNION'; }
 }
 
-class SetUnionStore extends \Predis\Commands\SetIntersectionStore {
+class Predis_Commands_SetUnionStore extends Predis_Commands_SetIntersectionStore {
     public function getCommandId() { return 'SUNIONSTORE'; }
 }
 
-class SetDifference extends \Predis\MultiBulkCommand {
+class Predis_Commands_SetDifference extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'SDIFF'; }
 }
 
-class SetDifferenceStore extends \Predis\Commands\SetIntersectionStore {
+class Predis_Commands_SetDifferenceStore extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'SDIFFSTORE'; }
 }
 
-class SetMembers extends \Predis\MultiBulkCommand {
+class Predis_Commands_SetMembers extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'SMEMBERS'; }
 }
 
-class SetRandomMember extends \Predis\MultiBulkCommand {
+class Predis_Commands_SetRandomMember extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'SRANDMEMBER'; }
 }
 
 /* commands operating on sorted sets */
-class ZSetAdd extends \Predis\MultiBulkCommand {
+class Predis_Commands_ZSetAdd extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'ZADD'; }
     public function parseResponse($data) { return (bool) $data; }
 }
 
-class ZSetIncrementBy extends \Predis\MultiBulkCommand {
+class Predis_Commands_ZSetIncrementBy extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'ZINCRBY'; }
 }
 
-class ZSetRemove extends \Predis\MultiBulkCommand {
+class Predis_Commands_ZSetRemove extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'ZREM'; }
     public function parseResponse($data) { return (bool) $data; }
 }
 
-class ZSetUnionStore extends \Predis\MultiBulkCommand {
+class Predis_Commands_ZSetUnionStore extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'ZUNIONSTORE'; }
     public function filterArguments(Array $arguments) {
         $options = array();
@@ -3029,11 +3031,11 @@ class ZSetUnionStore extends \Predis\MultiBulkCommand {
     }
 }
 
-class ZSetIntersectionStore extends \Predis\Commands\ZSetUnionStore {
+class Predis_Commands_ZSetIntersectionStore extends Predis_Commands_ZSetUnionStore {
     public function getCommandId() { return 'ZINTERSTORE'; }
 }
 
-class ZSetRange extends \Predis\MultiBulkCommand {
+class Predis_Commands_ZSetRange extends Predis_MultiBulkCommand {
     private $_withScores = false;
     public function getCommandId() { return 'ZRANGE'; }
     public function filterArguments(Array $arguments) {
@@ -3062,8 +3064,8 @@ class ZSetRange extends \Predis\MultiBulkCommand {
     }
     public function parseResponse($data) {
         if ($this->_withScores) {
-            if ($data instanceof \Iterator) {
-                return new \Predis\Shared\MultiBulkResponseKVIterator($data);
+            if ($data instanceof Iterator) {
+                return new Predis_Shared_MultiBulkResponseKVIterator($data);
             }
             $result = array();
             for ($i = 0; $i < count($data); $i++) {
@@ -3075,11 +3077,11 @@ class ZSetRange extends \Predis\MultiBulkCommand {
     }
 }
 
-class ZSetReverseRange extends \Predis\Commands\ZSetRange {
+class Predis_Commands_ZSetReverseRange extends Predis_Commands_ZSetRange {
     public function getCommandId() { return 'ZREVRANGE'; }
 }
 
-class ZSetRangeByScore extends \Predis\Commands\ZSetRange {
+class Predis_Commands_ZSetRangeByScore extends Predis_Commands_ZSetRange {
     public function getCommandId() { return 'ZRANGEBYSCORE'; }
     protected function prepareOptions($options) {
         $opts = array_change_key_case($options, CASE_UPPER);
@@ -3094,50 +3096,50 @@ class ZSetRangeByScore extends \Predis\Commands\ZSetRange {
     }
 }
 
-class ZSetReverseRangeByScore extends \Predis\Commands\ZSetRangeByScore {
+class Predis_Commands_ZSetReverseRangeByScore extends Predis_Commands_ZSetRangeByScore {
     public function getCommandId() { return 'ZREVRANGEBYSCORE'; }
 }
 
-class ZSetCount extends \Predis\MultiBulkCommand {
+class Predis_Commands_ZSetCount extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'ZCOUNT'; }
 }
 
-class ZSetCardinality extends \Predis\MultiBulkCommand {
+class Predis_Commands_ZSetCardinality extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'ZCARD'; }
 }
 
-class ZSetScore extends \Predis\MultiBulkCommand {
+class Predis_Commands_ZSetScore extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'ZSCORE'; }
 }
 
-class ZSetRemoveRangeByScore extends \Predis\MultiBulkCommand {
+class Predis_Commands_ZSetRemoveRangeByScore extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'ZREMRANGEBYSCORE'; }
 }
 
-class ZSetRank extends \Predis\MultiBulkCommand {
+class Predis_Commands_ZSetRank extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'ZRANK'; }
 }
 
-class ZSetReverseRank extends \Predis\MultiBulkCommand {
+class Predis_Commands_ZSetReverseRank extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'ZREVRANK'; }
 }
 
-class ZSetRemoveRangeByRank extends \Predis\MultiBulkCommand {
+class Predis_Commands_ZSetRemoveRangeByRank extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'ZREMRANGEBYRANK'; }
 }
 
 /* commands operating on hashes */
-class HashSet extends \Predis\MultiBulkCommand {
+class Predis_Commands_HashSet extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'HSET'; }
     public function parseResponse($data) { return (bool) $data; }
 }
 
-class HashSetPreserve extends \Predis\MultiBulkCommand {
+class Predis_Commands_HashSetPreserve extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'HSETNX'; }
     public function parseResponse($data) { return (bool) $data; }
 }
 
-class HashSetMultiple extends \Predis\MultiBulkCommand {
+class Predis_Commands_HashSetMultiple extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'HMSET'; }
     public function filterArguments(Array $arguments) {
         if (count($arguments) === 2 && is_array($arguments[1])) {
@@ -3153,15 +3155,15 @@ class HashSetMultiple extends \Predis\MultiBulkCommand {
     }
 }
 
-class HashIncrementBy extends \Predis\MultiBulkCommand {
+class Predis_Commands_HashIncrementBy extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'HINCRBY'; }
 }
 
-class HashGet extends \Predis\MultiBulkCommand {
+class Predis_Commands_HashGet extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'HGET'; }
 }
 
-class HashGetMultiple extends \Predis\MultiBulkCommand {
+class Predis_Commands_HashGetMultiple extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'HMGET'; }
     public function filterArguments(Array $arguments) {
         if (count($arguments) === 2 && is_array($arguments[1])) {
@@ -3176,33 +3178,33 @@ class HashGetMultiple extends \Predis\MultiBulkCommand {
     }
 }
 
-class HashDelete extends \Predis\MultiBulkCommand {
+class Predis_Commands_HashDelete extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'HDEL'; }
     public function parseResponse($data) { return (bool) $data; }
 }
 
-class HashExists extends \Predis\MultiBulkCommand {
+class Predis_Commands_HashExists extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'HEXISTS'; }
     public function parseResponse($data) { return (bool) $data; }
 }
 
-class HashLength extends \Predis\MultiBulkCommand {
+class Predis_Commands_HashLength extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'HLEN'; }
 }
 
-class HashKeys extends \Predis\MultiBulkCommand {
+class Predis_Commands_HashKeys extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'HKEYS'; }
 }
 
-class HashValues extends \Predis\MultiBulkCommand {
+class Predis_Commands_HashValues extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'HVALS'; }
 }
 
-class HashGetAll extends \Predis\MultiBulkCommand {
+class Predis_Commands_HashGetAll extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'HGETALL'; }
     public function parseResponse($data) {
-        if ($data instanceof \Iterator) {
-            return new \Predis\Shared\MultiBulkResponseKVIterator($data);
+        if ($data instanceof Iterator) {
+            return new Predis_Shared_MultiBulkResponseKVIterator($data);
         }
         $result = array();
         for ($i = 0; $i < count($data); $i++) {
@@ -3213,29 +3215,29 @@ class HashGetAll extends \Predis\MultiBulkCommand {
 }
 
 /* multiple databases handling commands */
-class SelectDatabase extends \Predis\MultiBulkCommand {
+class Predis_Commands_SelectDatabase extends Predis_MultiBulkCommand {
     public function canBeHashed()  { return false; }
     public function getCommandId() { return 'SELECT'; }
 }
 
-class MoveKey extends \Predis\MultiBulkCommand {
+class Predis_Commands_MoveKey extends Predis_MultiBulkCommand {
     public function canBeHashed()  { return false; }
     public function getCommandId() { return 'MOVE'; }
     public function parseResponse($data) { return (bool) $data; }
 }
 
-class FlushDatabase extends \Predis\MultiBulkCommand {
+class Predis_Commands_FlushDatabase extends Predis_MultiBulkCommand {
     public function canBeHashed()  { return false; }
     public function getCommandId() { return 'FLUSHDB'; }
 }
 
-class FlushAll extends \Predis\MultiBulkCommand {
+class Predis_Commands_FlushAll extends Predis_MultiBulkCommand {
     public function canBeHashed()  { return false; }
     public function getCommandId() { return 'FLUSHALL'; }
 }
 
 /* sorting */
-class Sort extends \Predis\MultiBulkCommand {
+class Predis_Commands_Sort extends Predis_MultiBulkCommand {
     public function getCommandId() { return 'SORT'; }
     public function filterArguments(Array $arguments) {
         if (count($arguments) === 1) {
@@ -3262,7 +3264,7 @@ class Sort extends \Predis\MultiBulkCommand {
                 $query[] = $getargs;
             }
         }
-        if (isset($sortParams['LIMIT']) && is_array($sortParams['LIMIT'])
+        if (isset($sortParams['LIMIT']) && is_array($sortParams['LIMIT']) 
             && count($sortParams['LIMIT']) == 2) {
 
             $query[] = 'LIMIT';
@@ -3285,22 +3287,54 @@ class Sort extends \Predis\MultiBulkCommand {
 }
 
 /* transactions */
-class Multi extends \Predis\MultiBulkCommand {
+class Predis_Commands_Multi extends Predis_MultiBulkCommand {
     public function canBeHashed()  { return false; }
     public function getCommandId() { return 'MULTI'; }
 }
 
-class Exec extends \Predis\MultiBulkCommand {
+class Predis_Commands_Exec extends Predis_MultiBulkCommand {
     public function canBeHashed()  { return false; }
     public function getCommandId() { return 'EXEC'; }
 }
 
-class Discard extends \Predis\MultiBulkCommand {
+class Predis_Commands_Discard extends Predis_MultiBulkCommand {
     public function canBeHashed()  { return false; }
     public function getCommandId() { return 'DISCARD'; }
 }
 
-class Watch extends \Predis\MultiBulkCommand {
+/* publish/subscribe */
+class Predis_Commands_Subscribe extends Predis_MultiBulkCommand {
+    public function canBeHashed() { return false; }
+    public function getCommandId() { return 'SUBSCRIBE'; }
+    public function filterArguments(Array $arguments) {
+        return Predis_Shared_Utils::filterArrayArguments($arguments);
+    }
+}
+
+class Predis_Commands_Unsubscribe extends Predis_MultiBulkCommand {
+    public function canBeHashed()  { return false; }
+    public function getCommandId() { return 'UNSUBSCRIBE'; }
+}
+
+class Predis_Commands_SubscribeByPattern extends Predis_MultiBulkCommand {
+    public function canBeHashed() { return false; }
+    public function getCommandId() { return 'UNSUBSCRIBE'; }
+    public function filterArguments(Array $arguments) {
+        return Predis_Shared_Utils::filterArrayArguments($arguments);
+    }
+}
+
+class Predis_Commands_UnsubscribeByPattern extends Predis_MultiBulkCommand {
+    public function canBeHashed()  { return false; }
+    public function getCommandId() { return 'PUNSUBSCRIBE'; }
+}
+
+class Predis_Commands_Publish extends Predis_MultiBulkCommand {
+    public function canBeHashed()  { return false; }
+    public function getCommandId() { return 'PUBLISH'; }
+}
+
+class Predis_Commands_Watch extends Predis_MultiBulkCommand {
     public function canBeHashed()  { return false; }
     public function getCommandId() { return 'WATCH'; }
     public function filterArguments(Array $arguments) {
@@ -3312,51 +3346,19 @@ class Watch extends \Predis\MultiBulkCommand {
     public function parseResponse($data) { return (bool) $data; }
 }
 
-class Unwatch extends \Predis\MultiBulkCommand {
+class Predis_Commands_Unwatch extends Predis_MultiBulkCommand {
     public function canBeHashed()  { return false; }
     public function getCommandId() { return 'UNWATCH'; }
     public function parseResponse($data) { return (bool) $data; }
 }
 
-/* publish/subscribe */
-class Subscribe extends \Predis\MultiBulkCommand {
-    public function canBeHashed() { return false; }
-    public function getCommandId() { return 'SUBSCRIBE'; }
-    public function filterArguments(Array $arguments) {
-        return \Predis\Shared\Utils::filterArrayArguments($arguments);
-    }
-}
-
-class Unsubscribe extends \Predis\MultiBulkCommand {
-    public function canBeHashed()  { return false; }
-    public function getCommandId() { return 'UNSUBSCRIBE'; }
-}
-
-class SubscribeByPattern extends \Predis\MultiBulkCommand {
-    public function canBeHashed() { return false; }
-    public function getCommandId() { return 'UNSUBSCRIBE'; }
-    public function filterArguments(Array $arguments) {
-        return \Predis\Shared\Utils::filterArrayArguments($arguments);
-    }
-}
-
-class UnsubscribeByPattern extends \Predis\MultiBulkCommand {
-    public function canBeHashed()  { return false; }
-    public function getCommandId() { return 'PUNSUBSCRIBE'; }
-}
-
-class Publish extends \Predis\MultiBulkCommand {
-    public function canBeHashed()  { return false; }
-    public function getCommandId() { return 'PUBLISH'; }
-}
-
 /* persistence control commands */
-class Save extends \Predis\MultiBulkCommand {
+class Predis_Commands_Save extends Predis_MultiBulkCommand {
     public function canBeHashed()  { return false; }
     public function getCommandId() { return 'SAVE'; }
 }
 
-class BackgroundSave extends \Predis\MultiBulkCommand {
+class Predis_Commands_BackgroundSave extends Predis_MultiBulkCommand {
     public function canBeHashed()  { return false; }
     public function getCommandId() { return 'BGSAVE'; }
     public function parseResponse($data) {
@@ -3367,7 +3369,7 @@ class BackgroundSave extends \Predis\MultiBulkCommand {
     }
 }
 
-class BackgroundRewriteAppendOnlyFile extends \Predis\MultiBulkCommand {
+class Predis_Commands_BackgroundRewriteAppendOnlyFile extends Predis_MultiBulkCommand {
     public function canBeHashed()  { return false; }
     public function getCommandId() { return 'BGREWRITEAOF'; }
     public function parseResponse($data) {
@@ -3375,19 +3377,19 @@ class BackgroundRewriteAppendOnlyFile extends \Predis\MultiBulkCommand {
     }
 }
 
-class LastSave extends \Predis\MultiBulkCommand {
+class Predis_Commands_LastSave extends Predis_MultiBulkCommand {
     public function canBeHashed()  { return false; }
     public function getCommandId() { return 'LASTSAVE'; }
 }
 
-class Shutdown extends \Predis\MultiBulkCommand {
+class Predis_Commands_Shutdown extends Predis_MultiBulkCommand {
     public function canBeHashed()  { return false; }
     public function getCommandId() { return 'SHUTDOWN'; }
     public function closesConnection() { return true; }
 }
 
 /* remote server control commands */
-class Info extends \Predis\MultiBulkCommand {
+class Predis_Commands_Info extends Predis_MultiBulkCommand {
     public function canBeHashed()  { return false; }
     public function getCommandId() { return 'INFO'; }
     public function parseResponse($data) {
@@ -3434,7 +3436,7 @@ class Info extends \Predis\MultiBulkCommand {
     }
 }
 
-class Info_v24 extends Info {
+class Predis_Commands_Info_v24 extends Predis_Commands_Info {
     public function parseResponse($data) {
         $info      = array();
         $current   = null;
@@ -3464,7 +3466,7 @@ class Info_v24 extends Info {
     }
 }
 
-class SlaveOf extends \Predis\MultiBulkCommand {
+class Predis_Commands_SlaveOf extends Predis_MultiBulkCommand {
     public function canBeHashed()  { return false; }
     public function getCommandId() { return 'SLAVEOF'; }
     public function filterArguments(Array $arguments) {
@@ -3475,7 +3477,7 @@ class SlaveOf extends \Predis\MultiBulkCommand {
     }
 }
 
-class Config extends \Predis\MultiBulkCommand {
+class Predis_Commands_Config extends Predis_MultiBulkCommand {
     public function canBeHashed()  { return false; }
     public function getCommandId() { return 'CONFIG'; }
 }
