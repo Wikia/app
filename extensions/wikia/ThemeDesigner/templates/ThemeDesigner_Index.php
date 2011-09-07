@@ -26,7 +26,7 @@
 	<!--[if lt IE 8]>
 		<script src="<?= $wgStylePath ?>/common/json2.js"></script>
 	<![endif]-->
-	<script src="<?= $wgStylePath ?>/common/jquery/jquery-1.6.2.js"></script>
+	<script src="<?= $wgStylePath ?>/common/jquery/jquery-1.6.1.js"></script>
 	<script src="<?= $wgStylePath ?>/common/jquery/jquery.wikia.js"></script>
 	<script src="<?= $wgStylePath ?>/common/jquery/jquery.wikia.tracker.js"></script>
 	<script src="<?= $wgStylePath ?>/common/jquery/jquery.json-2.2.js"></script>
