@@ -9,7 +9,7 @@
 
 		requires: ['sizechangedevent'],
 
-		MINIMUM_HEIGHT: 600,
+		MINIMUM_VIEWPORT_HEIGHT: 775,
 		CONTAINER_SELECTOR: '> .rail-auto-height',
 
 		beforeInit: function() {
@@ -33,7 +33,7 @@
 			var el, rail = this.editor.getSpace('rail');
 
 			if (rail.exists() && (el = rail.find(this.CONTAINER_SELECTOR)) && el.exists()) {
-				if (viewportHeight > this.MINIMUM_HEIGHT) {
+				if (viewportHeight > this.MINIMUM_VIEWPORT_HEIGHT) {
 					el.css({
 						'overflow-y': 'hidden',
 						'height': 'auto'
