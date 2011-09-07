@@ -140,7 +140,7 @@ function wikia_fbconnect_considerProfilePic( &$specialConnect ){
 						$app = F::app();
 						$userProfilePageV3 = new UserProfilePageController($app);
 						$data->source = 'facebook';
-						$data->file = $sUrl;
+						$data->file = $tmpFile;
 						$userProfilePageV3->saveUsersAvatar($wgUser->getId(), $data);
 					} else {
 						$errorNo = $masthead->uploadByUrl($picUrl);
