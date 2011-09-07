@@ -323,7 +323,7 @@ class FounderProgressBarController extends WikiaController {
 		$dbw->query ($sql);
 		$res = $dbw->select (
 				'founder_progress_bar_tasks',
-				array('task_id', 'task_count'),
+				array('task_id', 'task_count', 'task_completed'),
 				array('wiki_id' => $wiki_id, 'task_id' => $task_id)
 			);
 		
@@ -340,7 +340,7 @@ class FounderProgressBarController extends WikiaController {
 		$this->setVal('actions_completed', $actions_completed);
 		$this->setVal('actions_remaining', $actions_remaining);
 		$this->setVal('result', 'OK');
-		if ($actions_remaining <= 0) {
+		if ($actions_remaining <= 0 &&  !$row['task_completed']) {
 			$completedSQL = "task_completed = 1";
 			// Bonus tasks can be completed more than once
 			if (in_array($task_id, $this->bonus_tasks)) {
