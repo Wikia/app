@@ -409,7 +409,7 @@ class UserProfilePageController extends WikiaController {
 			$data = json_decode($this->getVal('data'));
 		}
 		
-		$errorMsg = $this->wf->msg('userprofilepage-interview-save-internal-error');
+		$errorMsg = $this->app->wf->msg('userprofilepage-interview-save-internal-error');
 		$result = array('success' => true, 'error' => $errorMsg);
 		
 		if( $isAllowed && isset($data->source) && isset($data->file) ) {
@@ -426,7 +426,7 @@ class UserProfilePageController extends WikiaController {
 					break;
 				default:
 					$result = array('success' => false, 'error' => $errorMsg);
-					$errorMsg = $this->wf->msg('userprofilepage-interview-save-internal-error');
+					$errorMsg = $this->app->wf->msg('userprofilepage-interview-save-internal-error');
 					break;
 			}
 			
