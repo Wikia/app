@@ -66,6 +66,7 @@ $provider = strtolower($args[0]);
 switch ($provider) {
 	case VideoPage::V_SCREENPLAY:
 	case VideoPage::V_MOVIECLIPS:
+	case VideoPage::V_REALGRAVITY:
 		break;
 	default:
 		die("unknown provider $provider. aborting.\n");		

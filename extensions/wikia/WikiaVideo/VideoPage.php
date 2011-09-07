@@ -26,6 +26,7 @@ class VideoPage extends Article {
 	const V_GAMETRAILERS = 20;
 	const V_SCREENPLAY = 21;
 	const V_MOVIECLIPS = 22;
+	const V_REALGRAVITY = 23;
 
 	const SCREENPLAY_MEDIUM_JPEG_BITRATE_ID = 267;	// 250x200
 	const SCREENPLAY_LARGE_JPEG_BITRATE_ID = 382;	// 480x360
@@ -2014,7 +2015,8 @@ $wgWikiaVideoProviders = array(
 		VideoPage::V_DAILYMOTION => 'dailymotion',
 		VideoPage::V_VIDDLER => 'viddler',
 		VideoPage::V_SCREENPLAY => 'Screenplay, Inc.',
-		VideoPage::V_MOVIECLIPS => 'MovieClips Inc.'
+		VideoPage::V_MOVIECLIPS => 'MovieClips Inc.',
+		VideoPage::V_REALGRAVITY => 'RealGravity'
 		);
 
 class VideoHistoryList {
