@@ -10,14 +10,14 @@ $dir = dirname(__FILE__) . '/';
 
 // Special:MyHome
 $wgAutoloadClasses['SpecialMyHome'] = $dir.'SpecialMyHome.class.php';
-$wgSpecialPages['MyHome'] = 'SpecialMyHome';
-$wgSpecialPageGroups['MyHome'] = 'users';
+//$wgSpecialPages['MyHome'] = 'SpecialMyHome';
+//$wgSpecialPageGroups['MyHome'] = 'users';
 $wgExtensionAliasesFiles['MyHome'] = $dir . 'SpecialMyHome.alias.php';
 
 // Special:ActivityFeed
 $wgAutoloadClasses['SpecialActivityFeed'] = $dir.'SpecialActivityFeed.class.php';
-$wgSpecialPages['ActivityFeed'] = 'SpecialActivityFeed';
-$wgSpecialPageGroups['ActivityFeed'] = 'changes';
+//$wgSpecialPages['ActivityFeed'] = 'SpecialActivityFeed';
+//$wgSpecialPageGroups['ActivityFeed'] = 'changes';
 
 // Special:WikiActivity
 $wgAutoloadClasses['SpecialWikiActivity'] = $dir.'SpecialWikiActivity.class.php';
