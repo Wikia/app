@@ -58,6 +58,10 @@ if ($(window).width() < 1010) {
 		var db = Liftium.dbnameForTracking(Liftium.getPageVar("wgDBname", "unknown"));
 		var geo = Liftium.geoForTracking(Liftium.getCountry());
 
+		_gaq.push(['liftium._setCustomVar', 1, 'db',   db,   3]);
+		_gaq.push(['liftium._setCustomVar', 2, 'hub',  hub,  3]);
+		_gaq.push(['liftium._setCustomVar', 3, 'lang', lang, 3]);
+
 		_gaq.push(['liftium._trackEvent', 'slot', 'slot-' + slot,  hub + '/' + lang + '/' + db + '/' + geo]);
 
 		_gaq.push(['liftium._trackEvent',  slot,  'hub-'  + hub,  'lang-' + lang]);
