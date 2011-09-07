@@ -38,7 +38,6 @@ class RedisSessionHandler {
 
 	static public function read( $id ) {
 		$app = F::app();
-		print_tmp("redis:read:$id");
 		try {
 			wfDebugLog( "session", __METHOD__ . ": reading $id from storage\n", true );
 			$data = $app->wg->redis->get( self::key( $id ) );
@@ -50,7 +49,6 @@ class RedisSessionHandler {
 
 	static public function write( $id, $data ) {
 		$app = F::app();
-		print_tmp("redis:write:$id");
 		try {
 			wfDebugLog( "session", __METHOD__ . ": stored with key {$id}\n", true );
 			$app->wg->redis->setex( self::key( $id ), self::EXPIRE, $data );
@@ -87,7 +85,6 @@ class RedisSessionHandler {
 
 if( $wgSessionsInRedis ) {
 	register_shutdown_function( 'session_write_close' );
-	print_tmp("redis:setting handler");
 	session_set_save_handler(
 		array( "RedisSessionHandler", "open" ),
 		array( "RedisSessionHandler", "close" ),
