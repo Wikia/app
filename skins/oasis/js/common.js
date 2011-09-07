@@ -30,7 +30,7 @@ jQuery.hideAds = function() {
 	styleContent = styleContent.substr(0, styleContent.length-1); // remove trailing ','
 
 	$('<style type="text/css" class="wikia-ad-hidden">' + styleContent + ' { margin-left:-9999px; } </style>').appendTo('head');
-}
+};
 
 /**
  * Show hidden ads
@@ -44,4 +44,4 @@ jQuery.showAds = function() {
 	return;
 	
 	$('head .wikia-ad-hidden').remove();
-}
+};
