@@ -130,7 +130,7 @@
 	}
 	section{
 		margin:0 15px; 
-		border: 1px solid #D9D9D9;
+		border: 1px solid $color-page-border;
 		border-top-width: 0;
 	}
 	section >ul {
@@ -149,7 +149,7 @@
 	}
 	&.notoolbar {
 		section {
-			border-top: 1px solid $color-page-border;
+			border-top-width: 1px;
 		}
 	}
 	.banner-corner-left {
