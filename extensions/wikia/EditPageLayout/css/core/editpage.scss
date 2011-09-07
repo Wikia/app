@@ -12,6 +12,11 @@
 	i {
 		font-style: italic;
 	}
+
+	// fix for BugId:10773
+	&:after {
+		display: none;
+	}
 }
 
 #EditPageMain {
