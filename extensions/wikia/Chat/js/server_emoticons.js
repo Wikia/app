@@ -36,7 +36,7 @@ exports.doReplacements = function(text, emoticonMapping){
 		imgSrc = imgUrlsByRegexString[regexString];
 		
 		// Build the regex for the character (make it ignore the match if there is a "/" immediately after the emoticon. That creates all kinds of problems with URLs).
-		var regex = new RegExp("(" + regexString + ")($|[^/])", "gi");
+		var regex = new RegExp("(^|\s)(" + regexString + ")($|\s)", "gi");
 
 		imgSrc = imgSrc.replace(/"/g, "%22"); // prevent any HTML-injection
 		var emoticon = " <img src=\""+imgSrc+"\" width='"+exports.EMOTICON_WIDTH+"' height='"+exports.EMOTICON_HEIGHT+"'/> ";
