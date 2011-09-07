@@ -37,15 +37,11 @@ class PageLayoutBuilderJob extends Job {
 		global $wgUser, $wgTitle, $wgErrorLog, $wgParser;
 
 		wfProfileIn( __METHOD__ );
-		
-		error_log(__METHOD__.' - fired');
 
 		$oldValue = $wgErrorLog;
 		$wgErrorLog = true;
 
 		if( is_null( $this->title ) ) {
-			error_log(__METHOD__.' PageLayoutBuilder: Invalid title');
-			
 			$this->error = "PageLayoutBuilder: Invalid title";
 			Wikia::log( __METHOD__, "pglayout", "Invalid title" );
 			wfProfileOut( __METHOD__ );
@@ -57,8 +53,6 @@ class PageLayoutBuilderJob extends Job {
 			$page_id = $this->title->getArticleID(GAID_FOR_UPDATE);
 		}
 		if( empty( $page_id ) ) {
-			error_log(__METHOD__.' PageLayoutBuilder: Invalid title (identifier not found)');
-			
 			$this->error = "PageLayoutBuilder: Invalid title (identifier not found)";
 			Wikia::log( __METHOD__, "pglayout", "Invalid title (identifier not found) ");
 			wfProfileOut( __METHOD__ );
@@ -67,33 +61,21 @@ class PageLayoutBuilderJob extends Job {
 
 		$revision = Revision::newFromTitle( $this->title );
 		if ( !$revision ) {
-			error_log(__METHOD__.' PageLayoutBuilder: Article not found '. $this->title->getPrefixedDBkey());
-			
 			$this->error = "PageLayoutBuilder: Article not found '" . $this->title->getPrefixedDBkey() . "'";
 			Wikia::log( __METHOD__, "pglayout", "Article not found '" . $this->title->getPrefixedDBkey() . "'");
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
-		
-		error_log(__METHOD__.' - before parsing');
 
 		wfProfileIn( __METHOD__.'-parse' );
 		$options = new ParserOptions;
 		$parserOutput = $wgParser->parse( $revision->getText(), $this->title, $options, true, true, $revision->getId() );
 		wfProfileOut( __METHOD__.'-parse' );
 		
-		error_log(__METHOD__.' - after parsing');
-		
-		error_log(__METHOD__.' - before LinksUpdate');
-		
 		wfProfileIn( __METHOD__.'-update' );
 		$update = new LinksUpdate( $this->title, $parserOutput, false );
 		$update->doUpdate();
 		wfProfileIn( __METHOD__.'-update' );
-		
-		error_log(__METHOD__.' - after LinksUpdate');
-		
-		error_log(__METHOD__.' - before database query');
 		
 		$dbr = wfGetDB( DB_SLAVE );
 		$res = $dbr->select( 
@@ -106,8 +88,6 @@ class PageLayoutBuilderJob extends Job {
 			__METHOD__
 		);
 		
-		error_log(__METHOD__.' - after database query');
-
 		$jobs = array();
 		foreach( $res as $row ) {
 			$oTitle = Title::makeTitle( $row->page_namespace, $row->page_title );
@@ -116,29 +96,19 @@ class PageLayoutBuilderJob extends Job {
 				continue;
 			}
 			$jobs[] = new RefreshLinksJob( $oTitle, '' );
-			
-			error_log(__METHOD__.' - before invalidateCache of '.$oTitle);
 
 			$oTitle->invalidateCache();
-
-			error_log(__METHOD__.' - after invalidateCache of '.$oTitle);
-
-			error_log(__METHOD__.' - before SquidUpdate::newSimplePurge of '.$oTitle);
 			
 			// Send purge
 			$update = SquidUpdate::newSimplePurge($oTitle);
 			$update->doUpdate();
-			
-			error_log(__METHOD__.' - after SquidUpdate::newSimplePurge of '.$oTitle);
 		}
 		
 		if ( !empty($jobs) ) {
-			Job::batchInsert( $jobs );		
+			Job::batchInsert( $jobs );
 		}
 		
 		$wgErrorLog = $oldValue;
-		
-		error_log(__METHOD__.' - finished');
 
 		wfProfileOut( __METHOD__ );
 		return true;
