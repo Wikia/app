@@ -3,6 +3,9 @@
 	<input type="hidden" name="fulltext" value="<?= $fulltext ?>">
 	<input type="submit">
 	<button class="secondary"><img src="<?= $wgBlankImgUrl ?>" class="sprite search" height="17" width="21"></button>
+	<?php if( $crossWikiaSearchOptionEnabled ) { ?>
+		<div><input type="checkbox" value="1" name="crossWikiaSearch" <?= $isCrossWikiaSearch ? 'checked' : ''; ?> /><?= wfMsg('wikiasearch-search-all-wikia'); ?></div>
+	<?php } ?>
 </form>
 <?php
 if ($wgTitle->isSpecial('Search')) {
