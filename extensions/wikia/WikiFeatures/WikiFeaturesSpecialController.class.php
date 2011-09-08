@@ -18,7 +18,7 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 	}
 	
 	public function index() {
-		if (!$this->wg->User->isAllowed( 'wikifeatures' )) {
+		if (!$this->wg->User->isLoggedIn()) {
 			$this->displayRestrictionError();
 			return false;  // skip rendering
 		}
@@ -27,6 +27,8 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 		
 		$this->features = WikiFeaturesHelper::getInstance()->getFeatureNormal();
 		$this->labsFeatures = WikiFeaturesHelper::getInstance()->getFeatureLabs();
+		
+		$this->editable = ($this->wg->User->isAllowed('wikifeatures')) ? true : false ;
 	}
 
 	/**
@@ -87,7 +89,7 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 		$category = $this->getVal('category');
 		$message = $this->getVal('message');
 	
-		if( !$user->isAllowed( 'wikifeatures' ) ) {
+		if( !$user->isLoggedIn() ) {
 			$this->result = 'error';
 			$this->error = $this->wf->Msg('wikifeatures-error-permission');
 		}
