@@ -6,6 +6,11 @@
 </form>
 <?php
 if ($wgTitle->isSpecial('Search')) {
-	echo Xml::element('h1', array(), wfMsg('oasis-search-results-from', $wgSitename));
+	if( $isCrossWikiaSearch ) {
+		echo Xml::element('h1', array(), wfMsg('oasis-search-results-from-all-wikis'));
+	}
+	else {
+		echo Xml::element('h1', array(), wfMsg('oasis-search-results-from', $wgSitename));
+	}
 }
 ?>
