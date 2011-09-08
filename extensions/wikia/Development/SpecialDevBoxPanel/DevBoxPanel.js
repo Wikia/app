@@ -1,7 +1,3 @@
-$(function() {
-	DevBoxPanel.init();
-});
-
 var DevBoxPanel = {
 	init: function() {
 		$(".tabs").find("li").click(function() { DevBoxPanel.switchTab($(this)) });
@@ -15,3 +11,7 @@ var DevBoxPanel = {
 		$('#' + $(elem).attr("pane")).css("display", "block");
 	}
 };
+
+$(function() {
+	DevBoxPanel.init();
+});

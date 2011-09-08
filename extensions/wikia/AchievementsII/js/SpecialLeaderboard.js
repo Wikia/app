@@ -1,7 +1,3 @@
-$(function() {
-	AchievementsLeaderboard.init();
-});
-
 AchievementsLeaderboard = {
 	init: function() {
 		//Set correct initial state of page intro (visible or hidden)
@@ -27,3 +23,7 @@ AchievementsLeaderboard = {
 		});
 	}
 }
+
+$(function() {
+	AchievementsLeaderboard.init();
+});

@@ -1,7 +1,3 @@
-$(function() {
-	WikiaSearchApp.init();
-});
-
 WikiaSearchApp = {
 	searchForm: false,
 	searchField: false,
@@ -68,3 +64,7 @@ WikiaSearchApp = {
 		});
 	}
 };
+
+$(function() {
+	WikiaSearchApp.init();
+});

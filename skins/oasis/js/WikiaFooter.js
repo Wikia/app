@@ -1,7 +1,3 @@
-$(function() {
-	WikiaFooterApp.init();
-});
-
 WikiaFooterApp = {
 
 	init: function() {
@@ -267,5 +263,5 @@ WikiaFooterApp = {
 		
 	});
 	
-	
+	WikiaFooterApp.init();
 })();

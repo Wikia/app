@@ -1,41 +1,3 @@
-$(function(){
-	$('#phalanx-block').bind('submit', Phalanx.postForm);
-	var placeholder = $( '#phalanx-check-results' );
-	placeholder.delegate( 'a.modify', "click", Phalanx.getSingleBlockData );
-	placeholder.delegate( 'a.unblock', "click", Phalanx.removeSingleBlock );
-
-	var testArea = $('#phalanx-block-test-result');
-	testArea.delegate( 'a.modify', 'click', Phalanx.getSingleBlockData );
-	testArea.delegate( 'a.unblock', 'click', Phalanx.removeSingleBlock );
-
-	//add bindings to tabs
-	$('#phalanx-nav-area').find('a').bind('click', function(e) {
-		e.preventDefault();
-		Phalanx.selectTab($(this).blur().parent().attr('id'));
-	});
-
-	$('#phalanx-block-test').bind('submit', Phalanx.postTestForm);
-
-	// help tooltips
-	$('#phalanx-block-types').find('label').hover(Phalanx.displayInfo, Phalanx.hideInfo);
-
-	//select proper tab if id is passed via hash
-	if (window.location.hash != '') {
-		var id = 'phalanx-' + window.location.hash.substr(1) + '-tab';
-		var hash = $('#' + id);
-		if (hash.length) {
-			Phalanx.selectTab(id);
-		}
-	}
-	
-	$('#enterbulk').click( function() {
-		$().log('pushed the button');
-		$('div#singlemode').toggle('slow');
-		$('div#bulkmode').toggle('slow');
-	});
-
-});
-
 var Phalanx = {};
 Phalanx.mode = 'add';
 Phalanx.addMsg = $( '#wpPhalanxSubmit' ).attr( 'value' );
@@ -226,3 +188,40 @@ Phalanx.hideInfo = function(e) {
 	var helpId = '#phalanx-help-' + $(this).prev('input').attr('value');
 	$(helpId).hide();
 }
+
+$(function(){
+	$('#phalanx-block').bind('submit', Phalanx.postForm);
+	var placeholder = $( '#phalanx-check-results' );
+	placeholder.delegate( 'a.modify', "click", Phalanx.getSingleBlockData );
+	placeholder.delegate( 'a.unblock', "click", Phalanx.removeSingleBlock );
+
+	var testArea = $('#phalanx-block-test-result');
+	testArea.delegate( 'a.modify', 'click', Phalanx.getSingleBlockData );
+	testArea.delegate( 'a.unblock', 'click', Phalanx.removeSingleBlock );
+
+	//add bindings to tabs
+	$('#phalanx-nav-area').find('a').bind('click', function(e) {
+		e.preventDefault();
+		Phalanx.selectTab($(this).blur().parent().attr('id'));
+	});
+
+	$('#phalanx-block-test').bind('submit', Phalanx.postTestForm);
+
+	// help tooltips
+	$('#phalanx-block-types').find('label').hover(Phalanx.displayInfo, Phalanx.hideInfo);
+
+	//select proper tab if id is passed via hash
+	if (window.location.hash != '') {
+		var id = 'phalanx-' + window.location.hash.substr(1) + '-tab';
+		var hash = $('#' + id);
+		if (hash.length) {
+			Phalanx.selectTab(id);
+		}
+	}
+	
+	$('#enterbulk').click( function() {
+		$().log('pushed the button');
+		$('div#singlemode').toggle('slow');
+		$('div#bulkmode').toggle('slow');
+	});
+});

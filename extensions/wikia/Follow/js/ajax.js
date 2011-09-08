@@ -1,20 +1,3 @@
-$(function(){
-    $('.ajax-unwatch').click(Follow.uwatch);
-    $('.ajax-show-more').click(Follow.showMore);
-    $('.ajax-show-more').show();
-
-    $('#mw-input-enotiffollowedminoredits,#mw-input-enotiffollowedpages,#mw-input-enotifminoredits,#mw-input-enotifwatchlistpages').click(Follow.syncUserPrefsEvent);
-    Follow.syncUserPrefs($('#mw-input-enotifminoredits'));
-    Follow.syncUserPrefs($('#mw-input-enotifwatchlistpages'));
-    $('.watched-list li').hover( Follow.hover,Follow.unhover );
-    $('.title-link').click(Follow.tracklick);
-
-    $('#unhide_list').click( function() {
-        WET.byStr( 'WikiaFollowedPages/specialpage/unhide' );
-    });
-});
-
-
 Follow = {};
 
 Follow.tracklick = function(e) {
@@ -105,3 +88,19 @@ Follow.syncUserPrefs = function(target) {
     var dst = $( '#' + syncArray[target.attr('id')] );
     dst.attr('checked', target.attr('checked'));
 }
+
+$(function(){
+    $('.ajax-unwatch').click(Follow.uwatch);
+    $('.ajax-show-more').click(Follow.showMore);
+    $('.ajax-show-more').show();
+
+    $('#mw-input-enotiffollowedminoredits,#mw-input-enotiffollowedpages,#mw-input-enotifminoredits,#mw-input-enotifwatchlistpages').click(Follow.syncUserPrefsEvent);
+    Follow.syncUserPrefs($('#mw-input-enotifminoredits'));
+    Follow.syncUserPrefs($('#mw-input-enotifwatchlistpages'));
+    $('.watched-list li').hover( Follow.hover,Follow.unhover );
+    $('.title-link').click(Follow.tracklick);
+
+    $('#unhide_list').click( function() {
+        WET.byStr( 'WikiaFollowedPages/specialpage/unhide' );
+    });
+});

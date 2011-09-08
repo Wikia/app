@@ -1,10 +1,3 @@
-$(function() {
-	if (typeof(localStorage) != 'undefined' && wgArticleId && wgCityId && wgCurRevisionId) {
-		EditSave.init();
-		$(window).unload(EditSave.save);
-	}
-});
-
 EditSave = {
 
 	settings: {
@@ -48,3 +41,10 @@ EditSave = {
 	}
 	
 };
+
+$(function() {
+	if (typeof(localStorage) != 'undefined' && wgArticleId && wgCityId && wgCurRevisionId) {
+		EditSave.init();
+		$(window).unload(EditSave.save);
+	}
+});

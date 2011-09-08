@@ -1,7 +1,3 @@
-$(function() {
-	ChatRailModule.init();
-});
-
 var ChatRailModule = {
 	init: function() {
 		// Lazy load module contents
@@ -28,3 +24,7 @@ var ChatRailModule = {
 		});
 	}
 };
+
+$(function() {
+	ChatRailModule.init();
+});

@@ -1,8 +1,3 @@
-$(function() {
-    ProfileSync.init();
-});
-
-
 var ProfileSync = {
 	init: function() {
 		ProfileSync.attachListeners();
@@ -36,3 +31,7 @@ var ProfileSync = {
 		$.tracker.byStr('facebookprofilesync/' + fakeUrl);
 	}
 };
+
+$(function() {
+    ProfileSync.init();
+});

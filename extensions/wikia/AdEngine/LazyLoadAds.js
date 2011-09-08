@@ -1,7 +1,3 @@
-$(function() {
-	LazyLoadAds.init();
-});
-
 var LazyLoadAds = {
 
 	log: function(msg) {
@@ -57,3 +53,7 @@ var LazyLoadAds = {
 		}
 	}
 };
+
+$(function() {
+	LazyLoadAds.init();
+});

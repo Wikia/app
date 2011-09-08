@@ -43,7 +43,9 @@
 	?>
 
 	<?= $globalVariablesScript ?>
-
+	
+	<?= $wikiaScriptLoader; /*needed for jsLoader and for the async loading of CSS files.*/ ?>
+	
 	<!-- Make IE recognize HTML5 tags. -->
 	<!--[if IE]>
 		<script>/*@cc_on'abbr article aside audio canvas details figcaption figure footer header hgroup mark menu meter nav output progress section summary time video'.replace(/\w+/g,function(n){document.createElement(n)})@*/</script>
@@ -53,17 +55,14 @@
 	<script>/*<![CDATA[*/
 		var wgNow = new Date();
 	/*]]>*/</script><?php
-		if(!$jsAtBottom) {
-		?>
+		if( !$jsAtBottom ):?>
 			<!--[if lt IE 8]>
 			<script src="<?= $wgStylePath ?>/common/json2.js"></script>
 			<![endif]-->
-		<?php
-			print $wikiaScriptLoader; // needed for jsLoader and for the async loading of CSS files.
-			print "\n\n\t<!-- Combined JS files (StaticChute) and head scripts -->\n";
-			print $jsFiles . "\n";
-		}
-	?>
+			
+			<!-- Combined JS files (StaticChute) and head scripts -->
+			<?= $jsFiles ;?>
+	<?endif;?>
 	<? if($displayAdminDashboard) { ?>
 		<!--[if IE]><script src="<?= $wgStylePath ?>/common/excanvas.js"></script><![endif]-->
 	<? } ?>
@@ -80,18 +79,13 @@
 <!-- googleAnalytics -->
 <?= $googleAnalytics ?>
 
-<?php
-	if($jsAtBottom) {
-?>
+<?if( $jsAtBottom ):?>
 		<!--[if lt IE 8]>
 		<script src="<?= $wgStylePath ?>/common/json2.js"></script>
 		<![endif]-->
-<?php
-		print $wikiaScriptLoader; // needed for jsLoader and for the async loading of CSS files.
-		print "\n\n\t<!-- Combined JS files (StaticChute) and head scripts -->\n";
-		print $jsFiles . "\n";
-	}
-?>
+		<!-- Combined JS files (StaticChute) and head scripts -->
+		<?= $jsFiles ;?>
+<?endif;?>
 
 <?php
 	if (empty($wgSuppressAds)) {

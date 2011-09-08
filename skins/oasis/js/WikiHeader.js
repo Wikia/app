@@ -1,7 +1,3 @@
-$(function() {
-	WikiHeader.init()
-});
-
 var WikiHeader = {
 	isDisplayed: false,
 
@@ -157,3 +153,7 @@ var WikiHeader = {
 	}
 
 };
+
+$(function() {
+	WikiHeader.init()
+});

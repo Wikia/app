@@ -1,7 +1,3 @@
-$(function() {
-	LandingPage.init();
-});
-
 LandingPage = {
 	track: function(url) {
 		$.tracker.byStr('landingpage/' + url);
@@ -69,3 +65,7 @@ LandingPage = {
 		self.track('view');
 	}
 };
+
+$(function() {
+	LandingPage.init();
+});

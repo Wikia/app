@@ -1,29 +1,3 @@
-$(function() {
-	wikiaSearch_setup();
-	$('.staff-hide-link').click(blockArticle);
-	$('#MainContent').find('.toggleFeed').click(autoHubToggle);
-
-	$('.toggleContainer').each(function(i){
-		var link = $(this).find('a');
-		if( 'Unhide' == link.html() ) {
-			$(this).parent().addClass( "hiddenAdminSection" );
-		}
-	});
-
-	// Bartek - pack tracking so it doesn't pollute other pages
-	if( $('#hub-name').exists() ) {
-		$('#top-wikis-lists-box').click(trackContainer);
-		$('#hub-blogs').click(trackContainer);
-		$('#wikia-global-hot-spots').click(trackContainer);
-		$('#hub-top-contributors').click(trackContainer);
-
-		trackTag( 'pv/' + wgPageName );
-	}
-
-	makeWikiaButtons();
-	initHideLinks();
-});
-
 function trackTag( str ) {
 	WET.byStr( 'hub/' + str );
 };
@@ -205,3 +179,29 @@ function spotlightSlider_scroll(nav, callback /* function to fire when animation
 }
 
 $(spotlightSlider_setup);
+
+$(function() {
+	wikiaSearch_setup();
+	$('.staff-hide-link').click(blockArticle);
+	$('#MainContent').find('.toggleFeed').click(autoHubToggle);
+
+	$('.toggleContainer').each(function(i){
+		var link = $(this).find('a');
+		if( 'Unhide' == link.html() ) {
+			$(this).parent().addClass( "hiddenAdminSection" );
+		}
+	});
+
+	// Bartek - pack tracking so it doesn't pollute other pages
+	if( $('#hub-name').exists() ) {
+		$('#top-wikis-lists-box').click(trackContainer);
+		$('#hub-blogs').click(trackContainer);
+		$('#wikia-global-hot-spots').click(trackContainer);
+		$('#hub-top-contributors').click(trackContainer);
+
+		trackTag( 'pv/' + wgPageName );
+	}
+
+	makeWikiaButtons();
+	initHideLinks();
+});

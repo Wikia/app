@@ -3,11 +3,6 @@ var ACWikiRequest = {};
 
 $('#highlightform').submit(function(e){e.preventDefault()});
 
-$(function () {
-	canAcceptForm()
-	$.tracker.byStr('autocreatewiki/view');
-});
-
 ACWikiRequest.NameCallback = function( res ) {
 	if (res) {
 		var divData = JSON.parse(res);
@@ -300,3 +295,8 @@ function realoadAutoCreateForm(){
 	$('#highlightform').unbind('submit');
 	$("#highlightform").submit();
 }
+
+$(function () {
+	canAcceptForm()
+	$.tracker.byStr('autocreatewiki/view');
+});

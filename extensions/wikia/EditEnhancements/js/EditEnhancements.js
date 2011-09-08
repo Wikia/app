@@ -1,7 +1,3 @@
-$(function() {
-	EditEnhancements.init();
-});
-
 var EditEnhancements = {
 
 	// Variables used in various EditEnhancements functions
@@ -138,3 +134,7 @@ var EditEnhancements = {
 	}
 
 };
+
+$(function() {
+	EditEnhancements.init();
+});

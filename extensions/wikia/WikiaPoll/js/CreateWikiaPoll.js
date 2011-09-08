@@ -1,10 +1,3 @@
-$(function() {
-	if (wgAction != "edit" && wgAction != "submit"){
-		// only init on special page
-		CreateWikiaPoll.init();
-	}
-});
-
 var CreateWikiaPoll = {
 
 	init: function() {
@@ -149,3 +142,10 @@ var CreateWikiaPoll = {
 		window.jQuery.tracker.byStr('poll' + fakeUrl);
 	}
 };
+
+$(function() {
+	if (wgAction != "edit" && wgAction != "submit"){
+		// only init on special page
+		CreateWikiaPoll.init();
+	}
+});

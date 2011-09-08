@@ -1,7 +1,3 @@
-$(function() {
-	WikiaNewFiles.init();
-});
-
 var WikiaNewFiles = {
 	init: function() {
 		$("#gallery-")
@@ -34,3 +30,7 @@ var WikiaNewFiles = {
 		$.tracker.byStr('/newFilesGallery/' + navType)
 	}
 };
+
+$(function() {
+	WikiaNewFiles.init();
+});

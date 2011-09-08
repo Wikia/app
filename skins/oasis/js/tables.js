@@ -1,9 +1,4 @@
-$(function() {
-	WikiaWideTables.init();
-});
-
 WikiaWideTables = {
-
 	settings: {
 		article: $("#WikiaArticle"),
 		tables: new Array(),
@@ -140,3 +135,7 @@ WikiaWideTables = {
 	}
 
 };
+
+$(function() {
+	WikiaWideTables.init();
+});

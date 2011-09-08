@@ -3,10 +3,6 @@ WikiaLabs = {};
 WikiaLabs.sliderEnable = true;
 WikiaLabs.feedbackTextLimit = 1000;
 
-$(function() {
-	WikiaLabs.init();	
-});
-
 WikiaLabs.init = function() {
 	var startPosition;
 	var startLeft;
@@ -331,3 +327,7 @@ WikiaLabs.onFeedbackTextChange = function(e) {
 		counter.text(chars);
 	}, 100);
 }
+
+$(function() {
+	WikiaLabs.init();	
+});

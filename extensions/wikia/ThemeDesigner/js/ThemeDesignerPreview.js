@@ -1,7 +1,3 @@
-$(function() {
-	ThemeDesignerPreview.init();
-});
-
 var ThemeDesignerPreview = {
 	link: null,
 
@@ -39,3 +35,7 @@ var ThemeDesignerPreview = {
 		});
 	}
 };
+
+$(function() {
+	ThemeDesignerPreview.init();
+});

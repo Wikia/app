@@ -1,7 +1,3 @@
-$(function() {
-	WikiWelcome.init();
-});
-
 var WikiWelcome = {
 	doptions: {persistent: false, width:400},
 	init: function () {
@@ -20,3 +16,7 @@ var WikiWelcome = {
 		});
 	}
 };
+
+$(function() {
+	WikiWelcome.init();
+});
