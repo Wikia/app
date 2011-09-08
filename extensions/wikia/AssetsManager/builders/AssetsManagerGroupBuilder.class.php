@@ -15,7 +15,10 @@ class AssetsManagerGroupBuilder extends AssetsManagerBaseBuilder {
 		$assets = $ac->resolve($this->mOid, true, (!isset($this->mParams['minify']) || $this->mParams['minify'] == true), $this->mParams);
 
 		foreach($assets as $asset) {
-			if(Http::isValidURI($asset)) {
+			// reference to a file to be fetched by the browser from external server (BugId:9522)
+			if (substr($asset, 0, 10) == '#external_') {
+				// do nothing
+			} else if(Http::isValidURI($asset)) {
 				if(strpos($asset, 'index.php?title=-&action=raw&smaxage=0&gen=js') !== false) {
 					$this->mContent .= $wgUser->getSkin()->generateUserJs();
 				} else if(strpos($asset, 'Wikia.css') !== false) {
@@ -28,9 +31,6 @@ class AssetsManagerGroupBuilder extends AssetsManagerBaseBuilder {
 				} else {
 					$this->mContent .= HTTP::get($asset);
 				}
-			// reference to a file to be fetched by the browser from external server (BugId:9522)
-			} else if (substr($asset, 0, 10) == '#external_') {
-				// do nothing
 			} else {
 				$this->mContent .= file_get_contents($IP . '/' . $asset);
 			}
