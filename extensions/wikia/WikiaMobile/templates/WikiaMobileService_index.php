@@ -14,6 +14,7 @@
 		<script>var JSSnippetsStack = [];</script>
 		<?= $headLinks ;?>
 		<?= $cssLinks ;?>
+		<?= $globalVariablesScript ;?>
 	</head>
 	<body>
 		<?= $wikiaNavigation ;?>

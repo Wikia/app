@@ -165,6 +165,7 @@ $config['wikiamobile_js'] = array(
 	'assets' => array(
 		'//skins/common/zepto/zepto-0.7.js',
 		'//skins/wikiamobile/js/zepto.wikiamobile.js',
+		'//skins/common/zepto/zepto.getcss.js',
 		'//skins/common/zepto/orientation.js',
 		'//skins/wikiamobile/js/main.js',
 		'//extensions/wikia/JSSnippets/js/JSSnippetsMobile.js'

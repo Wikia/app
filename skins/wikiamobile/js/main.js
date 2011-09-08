@@ -6,7 +6,7 @@ var WikiaMobile = {
 		//setTimeout is necessary to make it work on ios...
 		  setTimeout( function() { 
 		  	if (!pageYOffset) window.scrollTo( 0, 1 );
-		  	}, 100 );
+		  	}, 10 );
 		}
 	},
 	
