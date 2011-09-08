@@ -369,6 +369,7 @@ class SpecialSearch {
 	 */
 	protected function setupPage( $term ) {
 		global $wgOut;
+
 		// Figure out the active search profile header
 		$nsAllSet = array_keys( SearchEngine::searchableNamespaces() );
 		if( $this->searchAdvanced )
@@ -1002,8 +1003,14 @@ class SpecialSearch {
 			'size' => '50',
 			#'autofocus' // Wikia - commented out due to BugId:4016
 		) ) . "\n";
+
 		$out .= Html::hidden( 'fulltext', 'Search' ) . "\n";
 		$out .= Xml::submitButton( wfMsg( 'searchbutton' ) ) . "\n";
+
+		// Wikia change (ADi) /begin
+		wfRunHooks( 'SpecialSearchShortDialog', array( $term, &$out ) );
+		// Wikia change (ADi) /end
+
 		return $out . $this->didYouMeanHtml;
 	}
 
