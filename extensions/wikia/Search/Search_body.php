@@ -15,6 +15,9 @@ class SolrSearch extends SearchEngine implements SearchErrorReporting {
 		$thisWikiOnly = $wgRequest->getVal('thisWikiOnly');
 		$this->crossWikiSearch = empty($thisWikiOnly) ? $wgEnableCrossWikiaSearch : false;
 
+		// allow cross-wikia search on selected wikis (eg. community) (BugId: #9412)
+		$this->crossWikiSearch = $wgRequest->getCheck( 'crossWikiaSearch' ) ? true : $this->crossWikiSearch;
+
 		wfLoadExtensionMessages( 'WikiaSearch' );
 	}
 
@@ -111,6 +114,20 @@ class SolrSearch extends SearchEngine implements SearchErrorReporting {
 		$refinements = "<p>" . $titles . " " . $titlesLabel . "</p>\n";
 		return true;
 	}
+
+	public static function onSpecialSearchShortDialog( $term, &$out ) {
+		global $wgRequest, $wgEnableCrossWikiaSearchOption;
+
+		if( !empty( $wgEnableCrossWikiaSearchOption ) ) {
+			$out .= "<p>";
+			$out .= Xml::check( 'crossWikiaSearch', $wgRequest->getCheck('crossWikiaSearch'), array( 'value' => '1', 'id' => 'crossWikiaSearch' ) );
+			$out .= wfMsg( 'wikiasearch-search-all-wikia' );
+			$out .= "</p>";
+		}
+
+		return true;
+	}
+
 }
 
 class SolrSearchSet extends SearchResultSet {
@@ -202,6 +219,7 @@ class SolrSearchSet extends SearchResultSet {
 		//echo "fq=" . $params['fq'] . "<br />";
 
 		try {
+			wfRunHooks( 'Search-beforeBackendCall', array( &$sanitizedQuery, &$offset, &$limit, &$params ) );
 			$response = $solr->search($sanitizedQuery, $offset, $limit, $params);
 		}
 		catch (Exception $exception) {
