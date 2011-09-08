@@ -1,5 +1,5 @@
 <form id="WikiaSearch" class="WikiaSearch" action="index.php?title=Special:Search" method="get">
-	<input type="text" name="search" placeholder="<?= $placeholder ?>" autocomplete="off" accesskey="f">
+	<input type="text" name="search" placeholder="<?= $placeholder ?>" autocomplete="off" accesskey="f" value="<?= $searchterm ?>">
 	<input type="hidden" name="fulltext" value="<?= $fulltext ?>">
 	<input type="submit">
 	<button class="secondary"><img src="<?= $wgBlankImgUrl ?>" class="sprite search" height="17" width="21"></button>
