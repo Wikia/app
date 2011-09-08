@@ -83,18 +83,22 @@ if(typeof EmoticonMapping === 'undefined'){
 			// Loop through array, construct object
 			//console.log("Loading emoticon mapping...");
 			for(var i=0; i<emoticonArray.length; i++) {
-				if (emoticonArray[i].indexOf('* ') == 0) {
-					var url = emoticonArray[i].substr(2);
+				var urlMatch = emoticonArray[i].match(/^\*[ ]*([^*].*)/); // line starting with 1 "*" then optional spaces, then some non-empty content.
+				if(urlMatch && urlMatch[1]){
+					var url = urlMatch[1];
 					self._settings[url] = [];
 					currentKey = url;
 					//console.log("  " + url + "...");
-				} else if (emoticonArray[i].indexOf('** ') == 0) {
-					var glyph = emoticonArray[i].substr(3);
-					self._settings[currentKey].push(glyph);
-					//console.log("       " + glyph);
+				} else {
+					var glyphMatch = emoticonArray[i].match(/^\*\*[ ]*([^*].*)/); // line starting with 2 "**"'s then optional spaces, then some non-empty content.
+					if(glyphMatch && glyphMatch[1]){
+						var glyph = glyphMatch[1];
+						self._settings[currentKey].push(glyph);
+						//console.log("       " + glyph);
+					}
 				}
 			}
-		
+
 			// Clear out the regexes cache (they'll be rebuilt on-demand the first time this object is used).
 			self._regexes = {};
 		};

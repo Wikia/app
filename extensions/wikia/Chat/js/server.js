@@ -1062,7 +1062,7 @@ function processText(text, client) {
 
 		var path = client.wgServer + client.wgArticlePath;
 		article = escape( article );
-		article.replace(/%3A/ig, ":"); // make colons more human-readable (they don't really need to be escaped)
+		article = article.replace(/%3a/ig, ":"); // make colons more human-readable (they don't really need to be escaped)
 		var url = path.replace("$1", article);
 		return '<a href="' + url + '">' + linkText + '</a>';
 	});
@@ -1077,7 +1077,7 @@ function processText(text, client) {
 		
 		var path = client.wgServer + client.wgArticlePath;
 		article = escape( article );
-		article.replace(/%3A/ig, ":"); // make colons more human-readable (they don't really need to be escaped)
+		article = article.replace(/%3a/ig, ":"); // make colons more human-readable (they don't really need to be escaped)
 		var url = path.replace("$1", article);
 		return '<a href="' + url + '">' + linkText + '</a>';
 	});
