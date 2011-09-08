@@ -12,12 +12,14 @@ class SearchModule extends Module {
 	var $wgBlankImgUrl;
 	var $wgSitename;
 	var $wgTitle;
+	var $isCrossWikiaSearch;
 
 	public function executeIndex() {
-		global $wgSitename, $wgSearchDefaultFulltext;
+		global $wgRequest, $wgSitename, $wgSearchDefaultFulltext;
 
 		$this->fulltext = !empty($wgSearchDefaultFulltext) ? 1 : 0;
 		$this->placeholder = wfMsg('Tooltip-search', $wgSitename);
+		$this->isCrossWikiaSearch = $wgRequest->getCheck('crossWikiaSearch');
 	}
 
 }
