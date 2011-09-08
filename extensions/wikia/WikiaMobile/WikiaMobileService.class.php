@@ -43,6 +43,8 @@ class WikiaMobileService extends WikiaService {
 			}
 		}
 		
+
+		
 		//Bottom Scripts
 		$this->wf->RunHooks( 'SkinAfterBottomScripts', array ( $this->wg->User->getSkin(), &$bottomscripts ) );
 		
@@ -60,6 +62,7 @@ class WikiaMobileService extends WikiaService {
 		$this->mimeType = $this->templateObject->data['mimetype'];
 		$this->charSet = $this->templateObject->data['charset'];
 		$this->showAllowRobotsMetaTag = !$this->wg->DevelEnvironment;
+		$this->globalVariablesScript = Skin::makeGlobalVariablesScript($this->templateObject->data['skinname']);
 		$this->pageTitle = $this->wg->Out->getPageTitle();
 		$this->cssLinks = $cssFiles;
 		$this->headLinks = $this->wg->Out->getHeadLinks();

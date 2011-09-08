@@ -7,7 +7,14 @@
  */
 if( !defined( 'MEDIAWIKI' ) )
 	die( -1 );
-
+	
+/**
+ * Set filters for JSSnippets
+ * Has to be that early as it has to be set
+ * before ANY JSSnippet addToStack is called
+ */
+F::build("JSSnippets")->setFilters(array("wikiamobile"));
+		
 class SkinWikiamobile extends SkinTemplate {
 	private $app;
 
@@ -28,9 +35,11 @@ class WikiaMobileTemplate extends QuickTemplate {
 	function __construct(){
 		parent::__construct();
 		$this->app = F::app();
+		
 	}
 	
 	function execute() {
+
 		$this->app->sendRequest( 'WikiaMobileService', 'setTemplateObject', array( 'templateObject' => $this ) );
 		
 		$response = $this->app->sendRequest( 'WikiaMobileService', 'index' );

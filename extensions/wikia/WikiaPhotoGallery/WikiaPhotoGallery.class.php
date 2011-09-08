@@ -1165,7 +1165,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 		// output JS to init slideshow
 		$width = "{$params['width']}px";
-
+		
 		$slideshowHtml .= F::build('JSSnippets')->addToStack(
 			array(
 				'/skins/common/jquery/jquery-slideshow-0.4.js',
@@ -1273,6 +1273,17 @@ class WikiaPhotoGallery extends ImageGallery {
 				array(),
 				'WikiaPhotoGallerySlider.init',
 				array($this->mData['id'])
+			);
+			
+			$html .= F::build('JSSnippets')->addToStack(
+				array(
+					'/extensions/wikia/WikiaPhotoGallery/mobile/css/WikiaPhotoGallery.slidertag.css',
+					'/extensions/wikia/WikiaPhotoGallery/mobile/js/WikiaPhotoGallery.slider.js'
+				),
+				array(),
+				'WikiaPhotoGallerySlider.init',
+				array($this->mData['id']),
+				array("wikiamobile")
 			);
 		}
 
