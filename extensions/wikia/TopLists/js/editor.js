@@ -3,10 +3,6 @@
  *
  * Interaction handlers for the creation/editing UI of TopLists extension
  */
-$(function() {
-	TopListsEditor._init();
-});
-
 var TopListsEditor = {
 	_mListContainer: null,
 	_mAutocompleteField: null,
@@ -274,3 +270,7 @@ var TopListsImageBrowser = {
 		);
 	}
 }
+
+$(function() {
+	TopListsEditor._init();
+});

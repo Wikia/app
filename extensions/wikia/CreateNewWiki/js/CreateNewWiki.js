@@ -1,14 +1,3 @@
-$(function() {
-	wgAjaxPath = wgScriptPath + wgScript;
-	WikiBuilder.init();
-	$('#AjaxLoginButtons').hide();
-	$('#AjaxLoginLoginForm').show();
-	
-	ThemeDesigner.slideByDefaultWidth = 608;
-	ThemeDesigner.slideByItems = 4;
-	ThemeDesigner.themeTabInit();
-});
-
 var WikiBuilder = {
 	registerInit: false,
 	wntimer: false,
@@ -467,3 +456,14 @@ function sendToConnectOnLogin() {
 	wgPageQuery += encodeURIComponent('&fbreturn=1');
 	sendToConnectOnLoginForSpecificForm("");
 }
+
+$(function() {
+	wgAjaxPath = wgScriptPath + wgScript;
+	WikiBuilder.init();
+	$('#AjaxLoginButtons').hide();
+	$('#AjaxLoginLoginForm').show();
+	
+	ThemeDesigner.slideByDefaultWidth = 608;
+	ThemeDesigner.slideByItems = 4;
+	ThemeDesigner.themeTabInit();
+});

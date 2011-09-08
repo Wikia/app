@@ -1,8 +1,3 @@
-$(function() {
-    UserInterview.init();
-});
-
-
 var UserInterview = {
 	init: function() {
 		UserInterview.attachListeners();
@@ -75,3 +70,7 @@ var UserInterview = {
 		});
 	}
 };
+
+$(function() {
+    UserInterview.init();
+});

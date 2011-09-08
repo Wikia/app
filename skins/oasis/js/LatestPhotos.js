@@ -1,8 +1,3 @@
-$(function() {
-    LatestPhotos.init();
-    UploadPhotos.init();
-});
-
 var UploadPhotos = {
 	d: false,
 	destfile: false,
@@ -302,3 +297,8 @@ var LatestPhotos = {
 		return width;
 	}
 };
+
+$(function() {
+    LatestPhotos.init();
+    UploadPhotos.init();
+});

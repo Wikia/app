@@ -1,7 +1,3 @@
-$(function() {
-	CategoryAutoComplete.init();
-});
-
 CategoryAutoComplete = {
 	FORM_ID: "CategoryAutoComplete",
 	NS_CATEGORY: 14, // TODO: is there a more programmatic way to get this?
@@ -78,3 +74,7 @@ CategoryAutoComplete = {
 		});
 	}
 };
+
+$(function() {
+	CategoryAutoComplete.init();
+});

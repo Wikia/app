@@ -1,7 +1,3 @@
-$(function() {
-	WikiActivity.init();
-});
-
 var WikiActivity = {
 	feedType: false,
 	wrapper: false,
@@ -188,3 +184,7 @@ var WikiActivity = {
 		});
 	}
 };
+
+$(function() {
+	WikiActivity.init();
+});

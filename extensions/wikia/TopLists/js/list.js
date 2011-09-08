@@ -1,8 +1,3 @@
-
-$(function() {
-	TopList._init();
-});
-
 var TopList = {
 	_canVote: false,
 	_mWrapper: null,
@@ -118,3 +113,7 @@ var TopList = {
 		TopList._mWrapper.parent().find('.NewItemForm').unbind('submit').bind('submit', TopList.addItem);
 	}
 }
+
+$(function() {
+	TopList._init();
+});

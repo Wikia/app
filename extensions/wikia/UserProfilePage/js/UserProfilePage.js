@@ -1,7 +1,3 @@
-$(function() {
-	UserProfilePage._init();
-});
-
 var UserProfilePage = {
 	_topWikisWrapper: null,
 	_topPagesWrapper: null,
@@ -153,3 +149,7 @@ var UserProfilePage = {
 		}
 	}
 };
+
+$(function() {
+	UserProfilePage._init();
+});

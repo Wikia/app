@@ -1,9 +1,4 @@
-$(function() {
-	WikiaButtons.init()
-});
-
 var WikiaButtons = {
-
 	settings: {
 		delay: 350
 	},
@@ -83,3 +78,7 @@ var WikiaButtons = {
 	}
 
 };
+
+$(function() {
+	WikiaButtons.init()
+});

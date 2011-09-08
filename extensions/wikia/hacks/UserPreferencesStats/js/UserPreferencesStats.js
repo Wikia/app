@@ -1,7 +1,3 @@
-$(function() {
-	HelloWorld.init();
-})
-
 var HelloWorld = {
 	
 	init: function() {
@@ -15,3 +11,7 @@ var HelloWorld = {
 	}
 	
 };
+
+$(function() {
+	HelloWorld.init();
+})

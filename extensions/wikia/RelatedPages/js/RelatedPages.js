@@ -1,8 +1,3 @@
-$(function() {
-	    RelatedPages.init();
-	    RelatedPages.attachLazyLoaderEvents();
-});
-
 RelatedPages = {
 	module: false,
 
@@ -110,4 +105,9 @@ RelatedPages = {
 		});
 		$(window).unbind('scroll', RelatedPages.updateScroll);
 	}
-}
+};
+
+$(function() {
+	    RelatedPages.init();
+	    RelatedPages.attachLazyLoaderEvents();
+});

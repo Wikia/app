@@ -1,10 +1,3 @@
-$(function() {
-	if (wgAction != "edit" && wgAction != "submit"){
-		// only init on special page
-		CreateWikiaQuiz.init();
-	}
-});
-
 var CreateWikiaQuiz = {
 
 	init: function() {
@@ -152,3 +145,10 @@ var CreateWikiaQuiz = {
 		window.jQuery.tracker.byStr('quiz' + fakeUrl);
 	}
 };
+
+$(function() {
+	if (wgAction != "edit" && wgAction != "submit"){
+		// only init on special page
+		CreateWikiaQuiz.init();
+	}
+});

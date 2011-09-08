@@ -1,7 +1,3 @@
-$(function() {
-	WikiaNotificationsApp.init();
-});
-
 WikiaNotificationsApp = {
 
 	purgeCurrentPage: function() {
@@ -104,3 +100,7 @@ WikiaNotificationsApp = {
 		return false;
 	}
 };
+
+$(function() {
+	WikiaNotificationsApp.init();
+});

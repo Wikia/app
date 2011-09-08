@@ -1,7 +1,3 @@
-$(function() {
-	EditEnhancementsPreview.init();
-});
-
 EditEnhancementsPreview = {
 		
 	/**
@@ -71,3 +67,7 @@ EditEnhancementsPreview = {
 	}
 
 };
+
+$(function() {
+	EditEnhancementsPreview.init();
+});

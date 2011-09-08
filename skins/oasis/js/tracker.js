@@ -1,19 +1,3 @@
-/* Temporary code for FB#7136 by Inez */
-$(function() {
-	if(window.beacon_id) {
-		function simpleHash(s, tableSize) {
-			var i, hash = 0;
-			for (i = 0; i < s.length; i++) {
-				hash += (String.prototype.charCodeAt.call(s[i]) * (i+1));
-			}
-			return Math.abs(hash) % tableSize;
-		}
-		if(simpleHash(window.beacon_id, 10) === 0) {
-			Liftium.trackEvent('SamplingPageview', 'UA-2871474-1');
-		}
-	}
-});
-
 var initTracker = function() {
 	// global header
 	$('#WikiaHeader').click(function(ev) {
@@ -634,4 +618,20 @@ var initTracker = function() {
 	$('#SPOTLIGHT_FOOTER').bind('click', function(e) {
 		spotlightTrack(e, 'footer');
 	});
-}
+};
+
+/* Temporary code for FB#7136 by Inez */
+$(function() {
+	if(window.beacon_id) {
+		function simpleHash(s, tableSize) {
+			var i, hash = 0;
+			for (i = 0; i < s.length; i++) {
+				hash += (String.prototype.charCodeAt.call(s[i]) * (i+1));
+			}
+			return Math.abs(hash) % tableSize;
+		}
+		if(simpleHash(window.beacon_id, 10) === 0) {
+			Liftium.trackEvent('SamplingPageview', 'UA-2871474-1');
+		}
+	}
+});

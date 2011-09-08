@@ -1,9 +1,3 @@
-$(function() {
-	WikiBuilder.init();
-
-	ThemeDesigner.themeTabInit();
-});
-
 // ThemeDesigner.js overwrites
 ThemeDesigner.init = function() {};
 ThemeDesigner.set = function(setting, newValue) {
@@ -259,3 +253,9 @@ var WikiBuilder = {
 		return ret;
 	}
 }
+
+$(function() {
+	WikiBuilder.init();
+
+	ThemeDesigner.themeTabInit();
+});

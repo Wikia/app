@@ -1,9 +1,3 @@
-$(function() {
-	if ($.browser.mozilla && $("#WikiaFooter .toolbar").exists()) {
-		FirefoxFindFix.init();
-	}
-});
-
 FirefoxFindFix = {
 	
 	scrollThreshold: 30,
@@ -70,3 +64,9 @@ FirefoxFindFix = {
 	}
 		
 };
+
+$(function() {
+	if ($.browser.mozilla && $("#WikiaFooter .toolbar").exists()) {
+		FirefoxFindFix.init();
+	}
+});

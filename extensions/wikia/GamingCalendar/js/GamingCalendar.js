@@ -1,7 +1,3 @@
-$(function() {
-	GamingCalendar.init();
-});
-
 var GamingCalendar = {
 
     init: function() {
@@ -125,3 +121,7 @@ var GamingCalendar = {
 		});
     }
 }
+
+$(function() {
+	GamingCalendar.init();
+});

@@ -1,153 +1,139 @@
-// @see http://www.stevesouders.com/blog/2009/04/27/loading-scripts-without-blocking/
-var WikiaScriptLoader = function() {
+/**
+ * WikiaScriptLoader
+ * @see http://www.stevesouders.com/blog/2009/04/27/loading-scripts-without-blocking/
+ */
+
+/**
+ * @namespace WikiaScriptLoader
+ */
+
+var WikiaScriptLoader = {};
+
+(function(){
+	/**
+	 * @private
+	 */
+
 	// detect Firefox 3.x (ignore Fx4.0 beta - RT #91718/BugId:3622) / Opera and use script DOM node injection for them
-	var userAgent = navigator.userAgent.toLowerCase();
-	this.useDOMInjection = (userAgent.indexOf('opera') != -1) ||
-		(userAgent.indexOf('firefox/3.') != -1);
-
-	// detect IE
-	this.isIE = (userAgent.indexOf('opera') == -1) && (userAgent.indexOf('msie') != -1);
-
-	// get reference to <head> tag
-	this.headNode = document.getElementsByTagName('HEAD')[0];
-};
-
-WikiaScriptLoader.prototype = {
-	// load script from provided URL and don't block another downloads
-	// see pages 57 and 58 of "Even Faster Web Sites"
-	loadScript: function(url, onloadCallback) {
-		if (this.useDOMInjection) {
-			// Opera, Firefox 3.6.x
-			this.loadScriptDOMInjection(url, onloadCallback);
-		}
-		else {
-			// IE, Firefox 4 beta, WebKit browsers
-			this.loadScriptDocumentWrite(url, onloadCallback);
-		}
-	},
-
-	// use script DOM node injection method
-	loadScriptDOMInjection: function(url, onloadCallback) {
-		// add <script> tag to <head> node
-		var scriptNode = document.createElement('script');
-		scriptNode.type = "text/javascript";
-		scriptNode.src = url;
-
-		// handle script onload event
-		var scriptOnLoad = function() {
-			scriptNode.onloadDone = true;
-
-			if (typeof onloadCallback == 'function') {
-				onloadCallback();
-			}
-		};
-
-		scriptNode.onloadDone = false;
-		scriptNode.onload = scriptOnLoad;
-		scriptNode.onreadystatechange = function() {
-			// for Opera
-			if (scriptNode.readyState == 'loaded' && !scriptNode.onloadDone) {
-				scriptOnLoad();
-			}
-		}
-
-		this.headNode.appendChild(scriptNode);
-	},
-
-	// use document.write method to add script tag
-	loadScriptDocumentWrite: function(url, onloadCallback) {
-		document.write('<scr' + 'ipt src="' + url + '" type="text/javascript"></scr' + 'ipt>');
-
-		// handle script onload event
-		var scriptOnLoad = function() {
-			if (typeof onloadCallback == 'function') {
-				onloadCallback();
-			}
-		};
-
-		if (typeof onloadCallback == 'function') {
-			this.addHandler(window, 'load', scriptOnLoad);
-		}
-	},
-
-	// load script content using AJAX request
-	// TODO:remove? - only used in Monaco for navigation menu
-	loadScriptAjax: function(url, onloadCallback) {
-		var self = this;
-		var xhr = this.getXHRObject();
-
-		xhr.onreadystatechange = function() {
-			if (xhr.readyState == 4) {
-				var jsCode = xhr.responseText;
-
-				// evaluate JS via eval() / inline <script> tag
-				if (self.isIE) {
-					// in IE eval is about 50% faster then inline script
-					eval(jsCode);
+	//our code strongly relies on the scripts' loading to block any further
+	//JS execution (on Edit and Special pages also the page loading process),
+	//on some browsers injecting nodes doesn't ensure the execution to be
+	//blocked, in that case fall back to document.write
+	var userAgent = navigator.userAgent.toLowerCase(),
+	useDOMInjection = (userAgent.indexOf('opera') != -1) || (userAgent.indexOf('firefox/3.') != -1),
+	headNode = document.getElementsByTagName('HEAD')[0],
+	NodeFactories = {
+		js: function(url, options){
+			var script = document.createElement('script');
+			script.src = url;
+			script.type = "text/javascript";
+			script.async = false;
+			script.onLoadDone = false;
+			script.onLoadCallback = options.callback || null;
+			script.onload = function() {
+				if (!this.onLoadDone && typeof this.onLoadCallback == 'function') {
+					this.onLoadCallback();
+					this.onLoadDone = true;
+				}					
+			};
+			//for Opera
+			script.onreadystatechange = function() {
+				if (!this.onloadDone && this.readyState == 'loaded' && typeof this.onLoadCallback == 'function') {
+					this.onLoadCallback();
+					this.onLoadDone = true;
 				}
-				else {
-					var scriptNode = document.createElement('script');
-					scriptNode.type = "text/javascript";
-					scriptNode.text = jsCode;
+			};
 
-					self.headNode.appendChild(scriptNode);
-				}
+			return script;
+		},
+		css: function(url, options){
+			var link = document.createElement('link');
+			link.href = url;
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.media = options.media || '';
 
-				if (typeof onloadCallback == 'function') {
-					onloadCallback();
-				}
-			}
-		};
-
-		xhr.open("GET", url, true);
-		xhr.send('');
-	},
-
-	// load CSS
-	loadCSS: function(url, media) {
-		var link = document.createElement('link');
-		link.rel = 'stylesheet';
-		link.type = 'text/css';
-		link.media = (media || '');
-		link.href = url;
-		this.headNode.appendChild(link);
-	},
-
-	// add event handler
-	addHandler: function(elem, type, func) {
-		if (window.addEventListener) {
-			window.addEventListener(type, func, false);
-		}
-		else if (window.attachEvent) {
-			window.attachEvent('on' + type, func);
+			return link;
 		}
 	},
+	counter = 0;
 
-	// get XHR object
-	// TODO: remove? - only used by loadScriptAjax function
-	getXHRObject: function() {
-		var xhrObj = false;
-
-		try {
-			xhrObj = new XMLHttpRequest();
-		}
-		catch(e) {
-			var types = ["Msxml2.XMLHTTP.6.0", "Msxml2.XMLHTTP.3.0", "Msxml2.XMLHTTP", "Microsoft.XMLHTTP"];
-
-			var len = types.length;
-			for (var i=0; i<len; i++) {
-				try {
-					xhrObj = new ActiveXObject(types[i]);
-				}
-				catch(e) {
-					continue;
-				}
-				break;
-			}
-		}
-
-		return xhrObj;
+	//X-Browser isArray(), including Safari
+	function isArray(obj){
+		return obj instanceof Array;
 	}
-}
 
-window.wsl = new WikiaScriptLoader();
+	function injectNode(type, urls, options){
+		options = options || {};
+
+		if(!isArray(urls))
+			urls = [urls];
+
+		var node,
+		url,
+		finalCallback,
+		opts;
+
+		if(options.callback){
+			finalCallback = function(){
+				counter--;
+
+				if(counter == 0){
+					options.callback();
+				}
+			}
+		}
+		
+		if(type == 'js'){
+			opts = {callback: finalCallback};
+			counter += urls.length;
+		}else
+			opts = options;
+
+		for(var x = 0, y = urls.length; x < y; x++){
+			headNode.appendChild(NodeFactories[type](urls[x], opts));
+		}
+	}
+	
+	function writeScript(urls, callback){
+		var output = '';
+
+		if(!isArray(urls))
+			urls = [urls];
+
+		for(var x = 0, y = urls.length; x < y; x++){
+			output += '<scr' + 'ipt src="' + urls[x] + '" type="text/javascript"></scr' + 'ipt>';
+		}
+
+		document.write(output);
+
+		// handle onload event
+		if (typeof callback == 'function') {
+			var handler = function(){
+				callback();
+			};
+
+			if(window.addEventListener)
+				window.addEventListener('load', handler, false);
+			else if(window.attachEvent)
+				window.attachEvent('onload', handler);
+		}
+	}
+	
+	/**
+	 * @public
+	 */
+
+	this.loadScript = function(urls, callback){
+		if(useDOMInjection)
+			injectNode('js', urls, {callback: callback});
+		else
+			writeScript(urls, callback);
+	};
+
+	this.loadCSS = function(urls, media) {
+		injectNode('css', urls, {media: media});
+	};
+}).apply(WikiaScriptLoader);
+
+window.wsl = WikiaScriptLoader;

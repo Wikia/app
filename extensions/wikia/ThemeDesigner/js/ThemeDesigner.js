@@ -1,7 +1,3 @@
-$(function() {
-	ThemeDesigner.init();
-});
-
 var ThemeDesigner = {
 	slideByDefaultWidth: 760,
 	slideByItems: 5,
@@ -822,3 +818,7 @@ var ThemeDesigner = {
 	}
 
 };
+
+$(function() {
+	ThemeDesigner.init();
+});

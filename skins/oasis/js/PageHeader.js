@@ -1,7 +1,3 @@
-$(function() {
-	PageHeader.init();
-});
-
 var PageHeader = {
 
 	settings: {
@@ -95,13 +91,6 @@ var PageHeader = {
 	}
 };
 
-
-
-
-$(function() {
-	ProfileSyncButton.init();
-});
-
 var ProfileSyncButton = {
 	init: function() {
 		ProfileSyncButton.attachEventListeners();
@@ -115,3 +104,7 @@ var ProfileSyncButton = {
 	}
 }
 
+$(function() {
+	PageHeader.init();
+	ProfileSyncButton.init();
+});

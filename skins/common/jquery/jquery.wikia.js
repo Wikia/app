@@ -461,11 +461,6 @@ $(window).bind('load', function() {
  * HTML5 placeholder attribute fallback for HTML5-disabled browsers.
  * A placeholder CSS class should be defined (use the forms mixin in Oasis)
  */
-
-$(function() {
-	$('input[placeholder], textarea[placeholder]').placeholder();
-});
-
 jQuery.fn.placeholder = function() {
 	 //feature detection
 	var hasNativeSupport = 'placeholder' in document.createElement('input');
@@ -506,6 +501,10 @@ jQuery.fn.placeholder = function() {
 		});
 	}
 }
+
+$(function() {
+	$('input[placeholder], textarea[placeholder]').placeholder();
+});
 
 $.htmlentities = function ( s ) {
 	return String(s).replace(/\&/g,'&'+'amp;').replace(/</g,'&'+'lt;')

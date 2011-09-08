@@ -1,7 +1,3 @@
-$(function() {
-	Interlang.init();
-});
-
 var Interlang = {
 	init: function() {
 		$('.WikiaArticleInterlang .more-link').click(Interlang.showAll);
@@ -12,4 +8,8 @@ var Interlang = {
 		$('.WikiaArticleInterlang .more').show();
 		 return false;
 	}
-}
+};
+
+$(function() {
+	Interlang.init();
+});
