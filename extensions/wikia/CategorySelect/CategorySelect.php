@@ -519,7 +519,7 @@ function CategorySelectGenerateHTMLforEditRaw($categories, $text = '') {
 			<div id="csItemsContainer">
 				<input id="csCategoryInput" type="text" style="display: none; outline: none;" />
 			</div>
-			<div id="csWikitextContainer"><textarea id="csWikitext" name="csWikitext">' . $categories . '</textarea></div>
+			<div id="csWikitextContainer"><textarea id="csWikitext" name="csWikitext" placeholder="Add categories here, e.g. [[Category:Name]]">' . $categories . '</textarea></div>
 			<div id="csSwitchViewContainer"><a id="csSwitchView" href="#" onclick="toggleCodeView(); return false;" onfocus="this.blur()" tabindex="-1" rel="nofollow">' . wfMsg('categoryselect-code-view') . '</a></div>
 			<div class="clearfix"></div>
 		</div>';
