@@ -17,3 +17,17 @@
 #csSuggestContainer {
 	@include yui-suggest;
 }
+
+.csWikitextContainer{
+	::-webkit-input-placeholder {
+		color: #3A3A3A;
+		font-family: Helvetica, Arial, sans-serif;
+		font-size: 13px;
+	}
+	
+	:-moz-placeholder {
+		color: #3A3A3A;
+		font-family: Helvetica, Arial, sans-serif;
+		font-size: 13px;
+	}
+}
