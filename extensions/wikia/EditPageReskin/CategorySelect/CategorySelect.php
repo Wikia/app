@@ -94,7 +94,8 @@ function CategorySelectInitializeHooks($output, $article, $title, $user, $reques
 
 	if (!$force) {
 		if ( ( !in_array($title->mNamespace, array_merge( $wgContentNamespaces, array( NS_FILE, NS_CATEGORY, NS_VIDEO ) ) ) && ( $action == 'view' || $action == 'purge' ) )
-			|| !in_array($title->mNamespace, array_merge( $wgContentNamespaces, array( NS_FILE, NS_USER, NS_CATEGORY, NS_VIDEO, NS_SPECIAL ) ) ) ) {
+			|| !in_array($title->mNamespace, array_merge( $wgContentNamespaces, array( NS_FILE, NS_USER, NS_CATEGORY, NS_VIDEO, NS_SPECIAL ) ) )
+			|| ( $title->mNamespace == NS_TEMPLATE ) ) {
 			return true;
 		}
 	}
