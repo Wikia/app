@@ -1,6 +1,7 @@
 /**
  * WikiaScriptLoader
  * @see http://www.stevesouders.com/blog/2009/04/27/loading-scripts-without-blocking/
+ * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
 
 /**
