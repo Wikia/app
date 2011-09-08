@@ -65,6 +65,7 @@ $messages['en'] = array(
 	'oasis-page-header-subtitle-forum' => 'Forum page',
 	'oasis-page-header-subtitle-special-wikiactivity' => 'See all activity >',
 	'oasis-search-results-from' => 'Showing results from: $1',
+	'oasis-search-results-from-all-wikis' => 'Showing results from all of Wikia',
 	'oasis-user-page-change-avatar' => 'Change avatar',
 	'oasis-content-picture-added-by' => 'Added by $1',
 	'oasis-confirmation-page-deleted' => '"$1" has been deleted. ([[Special:Undelete/$1|undelete]])',
