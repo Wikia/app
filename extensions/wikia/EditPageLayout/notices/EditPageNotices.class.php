@@ -17,6 +17,7 @@ class EditPageNotices implements IteratorAggregate {
 
 	public function clear() {
 		$this->notices = array();
+		$this->log(__METHOD__, 'cleared');
 	}
 
 	public function isEmpty() {
@@ -41,6 +42,7 @@ class EditPageNotices implements IteratorAggregate {
 		foreach( $this->notices as $key => $notice ) {
 			if( $notice->getMessageId() == $messageId ) {
 				unset( $this->notices[ $key ] );
+				$this->log(__METHOD__, $messageId);
 			}
 		}
 	}

@@ -90,7 +90,7 @@ class EditPageOutputBridge {
 	protected function analyzeHtml( $html, &$more = null ) {
 		$pos = 0;
 		$tags = array();
-		preg_match_all("/<(\\/?)div[^>]*>/isU",$html,$tags,PREG_SET_ORDER|PREG_OFFSET_CAPTURE);
+		preg_match_all("/<(\\/?)(div|table)[^>]*>/isU",$html,$tags,PREG_SET_ORDER|PREG_OFFSET_CAPTURE);
 		$depth = 0;
 
 		$chunks = array();

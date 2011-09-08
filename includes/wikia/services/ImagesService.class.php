@@ -107,6 +107,8 @@ class ImagesService extends Service {
 			'lelimit' => $limit * 2,
 		));
 
+		print_r($res);
+
 		if (!empty($res['query']['logevents'])) {
 			foreach($res['query']['logevents'] as $entry) {
 				// ignore Video:foo entries from VideoEmbedTool
