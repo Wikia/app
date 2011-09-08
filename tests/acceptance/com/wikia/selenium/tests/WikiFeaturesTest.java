@@ -10,6 +10,35 @@ public class WikiFeaturesTest extends BaseTest {
 	@Test(groups={"CI"})
 	public void testWikiFeaturesPage() throws Exception {
 
+		// not login
+		logout();
+		session().open("/wiki/Special:WikiFeatures");
+		session().waitForPageToLoad(this.getTimeout());
+		assertEquals(session().getText("css=#WikiaPageHeader > h1"), "Permission error");
+
+		// login as regular user
+		loginAsRegular();
+		session().open("/wiki/Special:WikiFeatures");
+		session().waitForPageToLoad(this.getTimeout());
+
+		assertEquals(session().getText("//*[@id='WikiFeatures']/h2[1]"), "Features");
+		assertTrue(session().isVisible("//section[@id='WikiFeatures']/p[1]"));
+		assertEquals(session().getText("//*[@id='WikiFeatures']/h2[2]"), "Wikia Labs");
+		assertTrue(session().isVisible("//section[@id='WikiFeatures']/p[2]"));
+
+		assertFalse(session().isElementPresent("//section[@id='WikiFeatures']/ul[@class='features']/li[@class='feature']/div[@class='actions']/span[contains(@class,'slider')]"));
+
+		assertTrue(session().getText("//section[@id='WikiFeatures']/ul[2]/li[@class='feature']/div[@class='actions']/div[@class='active-on']").matches("Active on[\\s\\S]*wikis$"));
+		assertTrue(session().isVisible("//section[@id='WikiFeatures']/ul[2]/li[@class='feature']/div[@class='actions']/button[@class='secondary feedback']"));
+		assertEquals(session().getText("//section[@id='WikiFeatures']/ul[2]/li[@class='feature']/div[@class='actions']/button[@class='secondary feedback']"), "Give feedback");
+
+		session().click("css=button.secondary.feedback");
+		assertEquals(session().getText("css=#FeedbackDialogWrapper > h1"), "Feedback");
+		session().click("css=button.close.wikia-chiclet-button");
+
+		logout();
+
+		// login as sysop
 		loginAsSysop();
 
 		session().open("/wiki/Special:WikiFeatures");
@@ -91,6 +120,8 @@ public class WikiFeaturesTest extends BaseTest {
 		assertFalse(session().isVisible("//section[@id='WikiFeatures']/ul[1]/li[1]/div/span/span["+default_show+"]"));
 		assertTrue(session().isVisible("//section[@id='WikiFeatures']/ul[1]/li[1]/div/span/span["+default_hide+"]"));
 		session().click("//section[@id='WikiFeatures']/ul[1]/li[1]/div[@class='actions']/span[contains(@class,'slider')]/span[@class='button']");
+
+		logout();
 	}
 
 }
