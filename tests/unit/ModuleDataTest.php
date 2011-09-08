@@ -355,8 +355,8 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 
 		// assertions
 		$this->assertTrue(in_array('testCssClass', $moduleData['bodyClasses']));
-		$this->assertRegExp('/cssReferences/', $moduleData['printableCss']);
-		$this->assertRegExp('/jsReferences/', $moduleData['jsFiles']);
+		$this->assertRegExp('/wsl\.loadCSS\(\[.+\], ?\'print\'\);/', $moduleData['printableCss']);
+		$this->assertRegExp('/wsl\.loadScript\(\[.+\]\);/', $moduleData['jsFiles']);
 		$this->assertType('string', $moduleData['body']);
 		$this->assertType('string', $moduleData['csslinks']);
 		$this->assertType('string', $moduleData['headlinks']);
