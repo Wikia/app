@@ -103,22 +103,11 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 				: input.setAttribute( 'aria-invalid', true );
 		}
 
-		var retval = item.validate( this ),
-			invalid = typeof ( retval ) == 'string' || retval === false;
-
-		if ( invalid )
-		{
-			// Wikia - start
-			var editor = this.getDialog()._.editor;
-			RTE.tools.alert(editor.lang.errorPopupTitle, isValid);
-			// Wikia - end
-		}
-
 		if ( !isValid )
 		{
 			// Wikia - start
-			var dialog = item.getDialog();
-			dialog.fire('notvalid', {item: item});
+			var dialog = this.getDialog();
+			dialog.fire('notvalid', {item: this});
 			// Wikia - end
 			if ( this.select )
 				this.select();
@@ -318,34 +307,17 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 					{
 						if ( item.validate )
 						{
-							var isValid = item.validate( this );
+							var retval = item.validate( this ),
+								invalid = typeof ( retval ) == 'string' || retval === false;
 
-							if ( typeof isValid == 'string' )
+							if ( invalid )
 							{
-								// Wikia - start
-								//alert( isValid );
-								var editor = this.getDialog()._.editor;
-								RTE.tools.alert(editor.lang.errorPopupTitle, isValid);
-								// Wikia - end
-								isValid = false;
-							}
-
-							if ( isValid === false )
-							{
-								// Wikia - start
-								var dialog = item.getDialog();
-								dialog.fire('notvalid', {item: item});
-								// Wikia - end
-
-								if ( item.select )
-									item.select();
-								else
-									item.focus();
-
 								evt.data.hide = false;
 								evt.stop();
-								return true;
 							}
+
+							handleFieldValidated.call( item, !invalid, typeof retval == 'string' ? retval : undefined );
+							return invalid;
 						}
 					});
 			}, this, null, 0 );
