@@ -40,6 +40,7 @@ $wgExtensionMessagesFiles['WikiaSearch'] = $dir . 'Search.i18n.php';
 $wgHooks['SearchShowHit'][] = 'SolrResult::showHit';
 $wgHooks['SpecialSearchBoxExtraRefinements'][] = 'SolrSearch::renderExtraRefinements';
 $wgHooks['SpecialSearchPagerParams'][] = 'SolrSearch::addPagerParams';
+$wgHooks['SpecialSearchShortDialog'][] = 'SolrSearch::onSpecialSearchShortDialog';
 
 if( !empty($wgEnableWikiaImageOneBoxInSearch) ) {
 	$wgHooks['SpecialSearchResults'][] = 'ImageOneBox::examineSearchResults';
