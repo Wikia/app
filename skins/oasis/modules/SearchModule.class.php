@@ -7,6 +7,7 @@
 
 class SearchModule extends Module {
 
+	var $searchterm;
 	var $fulltext;
 	var $placeholder;
 	var $wgBlankImgUrl;
@@ -17,6 +18,8 @@ class SearchModule extends Module {
 
 	public function executeIndex() {
 		global $wgRequest, $wgSitename, $wgSearchDefaultFulltext, $wgEnableCrossWikiaSearchOption;
+
+		$this->searchterm = $this->wg->request->getVal('search');
 
 		$this->fulltext = !empty($wgSearchDefaultFulltext) ? 1 : 0;
 		$this->placeholder = wfMsg('Tooltip-search', $wgSitename);
