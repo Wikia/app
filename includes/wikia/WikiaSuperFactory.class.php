@@ -42,6 +42,19 @@ abstract class WikiaSuperFactory {
 		self::$constructors[$className]['INSTANCE'] = $instance;
 	}
 
+	/**
+	 * get predefined instance of given class (useful for mocks or singletons)
+	 * @param string $className class name
+	 *
+	 * @return mixed the class instance or null if one has not been registered
+	 */
+	public static function getInstance($className) {
+		if(isset(self::$constructors[$className]) && array_key_exists('INSTANCE', self::$constructors[$className])) {
+			return self::$constructors[$className]['INSTANCE'];
+		}
+
+		return null;
+	}
 
 	/**
 	 * reset predefined instance of given class (if any)
@@ -52,7 +65,6 @@ abstract class WikiaSuperFactory {
 			unset(self::$constructors[$className]['INSTANCE']);
 		}
 	}
-
 
 	/**
 	 * set class setter methods to be called while building an object
