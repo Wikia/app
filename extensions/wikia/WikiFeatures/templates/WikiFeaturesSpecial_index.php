@@ -8,7 +8,7 @@
 	
 	<ul class="features">
 		<? foreach ($features as $feature) { ?>
-			<?= F::app()->getView( 'WikiFeaturesSpecial', 'feature', array('feature' => $feature ) ) ?>
+			<?= F::app()->getView( 'WikiFeaturesSpecial', 'feature', array('feature' => $feature, 'editable' => $editable ) ) ?>
 		<? } ?>
 	</ul>
 	
@@ -21,7 +21,7 @@
 	
 	<ul class="features">
 		<? foreach ($labsFeatures as $feature) { ?>
-			<?= F::app()->getView( 'WikiFeaturesSpecial', 'feature', array('feature' => $feature ) ) ?>
+			<?= F::app()->getView( 'WikiFeaturesSpecial', 'feature', array('feature' => $feature, 'editable' => $editable ) ) ?>
 		<? } ?>
 	</ul>
 </section>
