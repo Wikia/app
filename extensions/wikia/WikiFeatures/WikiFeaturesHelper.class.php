@@ -37,7 +37,11 @@ class WikiFeaturesHelper extends WikiaModel {
 		'wgEnableArticleCommentsExt' => 200,	// Article Comments
 		'wgEnableCategoryExhibitionExt' => 201,	// Category Exhibition
 		'wgEnableChat' => 258,					// Chat
-		'wgEnableEditPageReskinExt' => 254,		// Editor Redesign (new RTE)		
+	);
+	
+	// no need to add feature to $release_date if not require "new" flag
+	public static $release_date = array (
+		'wgEnableChat' => '2011-08-01',					// Chat
 	);
 	
 	public static function getInstance() {
@@ -58,7 +62,8 @@ class WikiFeaturesHelper extends WikiaModel {
 			foreach ($this->wg->WikiFeatures['normal'] as $feature) {
 				$list[] = array(
 					'name' => $feature, 
-					'enabled' => $this->app->getGlobal($feature)
+					'enabled' => $this->app->getGlobal($feature),
+					'new' => self::isNew($feature),
 				);
 			}
 		}
@@ -76,6 +81,7 @@ class WikiFeaturesHelper extends WikiaModel {
 				$list[] = array(
 					'name' => $feature, 
 					'enabled' => $this->app->getGlobal($feature), 
+					'new' => self::isNew($feature),
 					'active' => $this->getNumActiveWikis($feature),
 				);
 			}
@@ -126,6 +132,24 @@ class WikiFeaturesHelper extends WikiaModel {
 	 */
 	public function getMemcKeyNumActiveWikis($feature) {
 		return $this->wf->SharedMemcKey('wikifeatures', 'active_wikis', $feature);
+	}
+	
+	/**
+	 * @desc checks if this is new or not (new if release_date <= 14 days). Note: return false if not in the $release_date.
+	 * @param string $feature
+	 * @return boolean 
+	 */
+	protected static function isNew($feature) {
+		$result = false;
+		if (isset(self::$release_date[$feature])) {
+			$release = strtotime(self::$release_date[$feature]);
+			if ($release != false) {
+				if (floor((time()-$release)/86400) < 15)
+					$result = true;
+			}
+		}
+		
+		return $result;
 	}
 	
 	/**

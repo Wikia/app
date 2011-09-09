@@ -95,16 +95,16 @@
 		
 		public function toggleFeatureDataProvider() {
 			return array(
-				array(false, null, null,'error', wfMsg('wikifeatures-error-permission')),	// permission denied
-				array(true, null, null,'error', wfMsg('wikifeatures-error-invalid-parameter')),	// missing params - not pass $feature and $enabled
-				array(true, null, 0,'error', wfMsg('wikifeatures-error-invalid-parameter')),	// missing params - not pass $feature
+				array(false, null, null,'error', wfMsg('wikifeatures-error-permission')),								// permission denied
+				array(true, null, null,'error', wfMsg('wikifeatures-error-invalid-parameter')),							// missing params - not pass $feature and $enabled
+				array(true, null, 0,'error', wfMsg('wikifeatures-error-invalid-parameter')),							// missing params - not pass $feature
 				array(true, 'wgEnableAchievementsExt', null,'error', wfMsg('wikifeatures-error-invalid-parameter')),	// missing params - not pass $enabled
-				array(true, 'wgEnableAchievements', 'true','error', wfMsg('wikifeatures-error-invalid-parameter')),	// invalid params - $feature not found
-				array(true, 123, 0,'error', wfMsg('wikifeatures-error-invalid-parameter')),	// invalid params - $feature is integer
-				array(true, 'wgEnableAchievementsExt', 1,'error', wfMsg('wikifeatures-error-invalid-parameter')),	// invalid params - $enabled > 1
-				array(true, 'wgEnableAchievementsExt', -3,'error', wfMsg('wikifeatures-error-invalid-parameter')),	// invalid params - $enabled is negative
+				array(true, 'wgEnableAchievements', 'true','error', wfMsg('wikifeatures-error-invalid-parameter')),		// invalid params - $feature not found
+				array(true, 123, 0,'error', wfMsg('wikifeatures-error-invalid-parameter')),								// invalid params - $feature is integer
+				array(true, 'wgEnableAchievementsExt', 1,'error', wfMsg('wikifeatures-error-invalid-parameter')),		// invalid params - $enabled > 1
+				array(true, 'wgEnableAchievementsExt', -3,'error', wfMsg('wikifeatures-error-invalid-parameter')),		// invalid params - $enabled is negative
 				array(true, 'wgEnableAchievementsExt', 'test','error', wfMsg('wikifeatures-error-invalid-parameter')),	// invalid params - $enabled is string
-				array(true, 'wgEnableAchievementsExt', '0','error', wfMsg('wikifeatures-error-invalid-parameter')),	// invalid params - $enabled is string
+				array(true, 'wgEnableAchievementsExt', '0','error', wfMsg('wikifeatures-error-invalid-parameter')),		// invalid params - $enabled is string
 
 				array(true, 'wgEnableAchievementsExt', 'true','ok', null),	// enable feature
 				array(true, 'wgEnableAchievementsExt', 'false','ok', null),	// disable feature
@@ -114,11 +114,12 @@
 		/**
 		 * @dataProvider getFeatureNormalDataProvider
 		 */
-		public function testGetFeatureNormal($wg_wiki_features, $exp_result) {
+		public function testGetFeatureNormal($wg_wiki_features, $exp_result, $release_date=array()) {
 			$this->setUpGetFeature('normal', $wg_wiki_features);
 			$this->setUpMock();
 
 			$helper = new WikiFeaturesHelper();
+			$helper::$release_date = $release_date;
 			$response = $helper->getFeatureNormal();
 			$this->assertEquals($exp_result, $response);
 
@@ -133,28 +134,53 @@
 				'normal' => array('wgEnableAchievementsExt','wgEnablePageLayoutBuilder')
 			);
 			$exp4 = array (
-				array ('name' => 'wgEnableAchievementsExt', 'enabled' => true),
-				array ('name' => 'wgEnablePageLayoutBuilder', 'enabled' => true),
+				array ('name' => 'wgEnableAchievementsExt', 'enabled' => true, 'new' => false),
+				array ('name' => 'wgEnablePageLayoutBuilder', 'enabled' => true, 'new' => false),
 			);
 			$wiki_features5 = array_merge($wiki_features3, $wiki_features4);
 			
+			$release_date6 = array('wgEnableAchievementsExt' => 'abc');
+			$release_date7 = array('wgEnableAchievementsExt' => '');
+			$release_date8 = array('wgEnableAchievementsExt' => '123');
+			$release_date9 = array('wgEnableAchievementsExt' => date('Y-m-d', strtotime('-15 days')));
+			$release_date10 = array('wgEnableAchievementsExt' => date('Y-m-d', strtotime('-14 days')));
+			$release_date11 = array('wgEnableAchievementsExt' => date('Y-m-d', strtotime('-13 days')));
+			$release_date12 = array('wgEnableAchievementsExt' => date('Y-m-d', strtotime('now')));
+			$release_date13 = array('wgEnableAchievementsExt' => date('Y-m-d', strtotime('+20 days')));
+
+			$exp10 = array (
+				array ('name' => 'wgEnableAchievementsExt', 'enabled' => true, 'new' => true),
+				array ('name' => 'wgEnablePageLayoutBuilder', 'enabled' => true, 'new' => false),
+			);			
+			
 			return array(
-				array(null, array()),	// invalid wgWikiFeatures - null
-				array(array(), array()),	// invalid wgWikiFeatures - array()
+				array(null, array()),				// invalid wgWikiFeatures - null
+				array(array(), array()),			// invalid wgWikiFeatures - array()
 				array($wiki_features3, array()),	// invalid wgWikiFeatures - key does not exist
+				
 				array($wiki_features4, $exp4),
-				array($wiki_features5, $exp4)
+				array($wiki_features5, $exp4),		// return only normal
+				
+				array($wiki_features4, $exp4, $release_date6),	// invalid release date
+				array($wiki_features4, $exp4, $release_date7),	// invalid release date
+				array($wiki_features4, $exp4, $release_date8),	// invalid release date
+				array($wiki_features4, $exp4, $release_date9),	// invalid release date - release date > 15 days
+				array($wiki_features4, $exp10, $release_date10),	// release date = 14 days
+				array($wiki_features4, $exp10, $release_date11),	// release date < 14 days
+				array($wiki_features4, $exp10, $release_date12),	// release date < 14 days
+				array($wiki_features4, $exp10, $release_date13),	// release date -> future
 			);
 		}
 
 		/**
 		 * @dataProvider getFeatureLabsDataProvider
 		 */
-		public function testGetFeatureLabs($wg_wiki_features, $exp_result, $cache_value=null) {
+		public function testGetFeatureLabs($wg_wiki_features, $exp_result, $cache_value=null, $release_date=array()) {
 			$this->setUpGetFeature('labs', $wg_wiki_features);
 			$this->setUpMock($cache_value);
 
 			$helper = new WikiFeaturesHelper();
+			$helper::$release_date = $release_date;
 			$response = $helper->getFeatureLabs();
 			$this->assertEquals($exp_result, $response);
 
@@ -169,18 +195,41 @@
 				'labs' => array('wgEnableChat'),
 			);
 			$exp4 = array (
-				array ('name' => 'wgEnableChat', 'enabled' => true, 'active' => 500),
+				array ('name' => 'wgEnableChat', 'enabled' => true, 'new' => false, 'active' => 500),
 			);
 			$cache_value4 = '500';
 			$wiki_features5 = array_merge($wiki_features3, $wiki_features4);
 			$cache_value5 = 500;
+
+			$release_date6 = array('wgEnableChat' => 'abc');
+			$release_date7 = array('wgEnableChat' => '');
+			$release_date8 = array('wgEnableChat' => '123');
+			$release_date9 = array('wgEnableChat' => date('Y-m-d', strtotime('-15 days')));
+			$release_date10 = array('wgEnableChat' => date('Y-m-d', strtotime('-14 days')));
+			$release_date11 = array('wgEnableChat' => date('Y-m-d', strtotime('-13 days')));
+			$release_date12 = array('wgEnableChat' => date('Y-m-d', strtotime('now')));
+			$release_date13 = array('wgEnableChat' => date('Y-m-d', strtotime('+20 days')));
+
+			$exp10 = array (
+				array ('name' => 'wgEnableChat', 'enabled' => true, 'new' => true, 'active' => 500),
+			);			
 			
 			return array(
-				array(null, array()),	// invalid wgWikiFeatures - null
-				array(array(), array()),	// invalid wgWikiFeatures - array()
+				array(null, array()),				// invalid wgWikiFeatures - null
+				array(array(), array()),			// invalid wgWikiFeatures - array()
 				array($wiki_features3, array()),	// invalid wgWikiFeatures - key does not exist
+				
 				array($wiki_features4, $exp4, $cache_value4),
-				array($wiki_features5, $exp4, $cache_value5)
+				array($wiki_features5, $exp4, $cache_value5),		// return only labs
+				
+				array($wiki_features4, $exp4, $cache_value4, $release_date6),	// invalid release date
+				array($wiki_features4, $exp4, $cache_value4, $release_date7),	// invalid release date
+				array($wiki_features4, $exp4, $cache_value4, $release_date8),	// invalid release date
+				array($wiki_features4, $exp4, $cache_value4, $release_date9),	// invalid release date - release date > 15 days
+				array($wiki_features4, $exp10, $cache_value4, $release_date10),	// release date = 14 days
+				array($wiki_features4, $exp10, $cache_value4, $release_date11),	// release date < 14 days
+				array($wiki_features4, $exp10, $cache_value4, $release_date12),	// release date < 14 days
+				array($wiki_features4, $exp10, $cache_value4, $release_date13),	// release date -> future
 			);
 		}
 	}
