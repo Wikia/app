@@ -220,14 +220,16 @@ EOT
 			$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-registration', $registration ) );
 			
 			//Begin: Small Stuff Week - adding table from Special:LookupContribs --nAndy
-			if( !empty($wgEnableLookupContribsExt) && class_exists('UserBlock') ) {
+			if( !empty($wgEnableLookupContribsExt) ) {
 				$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/LookupContribs/css/table.css?{$wgStyleVersion}");
 				$wgOut->addExtensionStyle("{$wgExtensionsPath}/LookupUser/css/lookupuser.css?{$wgStyleVersion}");
 				$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgStylePath}/common/jquery/jquery.dataTables.min.js?{$wgStyleVersion}\"></script>\n");
 			
 				//checking and setting User::mBlockedGlobally if needed
 				//only for this instance of class User
-				UserBlock::blockCheck($user);
+				if( class_exists('UserBlock') ) {
+					UserBlock::blockCheck($user);
+				}
 				
 				$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 				$oTmpl->set_vars(array(
