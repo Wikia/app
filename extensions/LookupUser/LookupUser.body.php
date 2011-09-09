@@ -220,7 +220,7 @@ EOT
 			$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-registration', $registration ) );
 			
 			//Begin: Small Stuff Week - adding table from Special:LookupContribs --nAndy
-			if( !empty($wgEnableLookupContribsExt) ) {
+			if( !empty($wgEnableLookupContribsExt) && class_exists('UserBlock') ) {
 				$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/LookupContribs/css/table.css?{$wgStyleVersion}");
 				$wgOut->addExtensionStyle("{$wgExtensionsPath}/LookupUser/css/lookupuser.css?{$wgStyleVersion}");
 				$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgStylePath}/common/jquery/jquery.dataTables.min.js?{$wgStyleVersion}\"></script>\n");
