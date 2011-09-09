@@ -34,6 +34,8 @@ foreach($sectionData as $section)
 
 print Xml::closeElement('table');
 ?>
+<div id="SpecialContactFooterPicker">
 <?php echo $foot ?>
+</div>
 </div>
 <!-- e:<?= __FILE__ ?> -->

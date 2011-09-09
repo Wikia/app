@@ -23,6 +23,8 @@ class ContactForm extends SpecialPage {
 
 		//$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/SpecialContact/SpecialContact.css?{$wgStyleVersion}");
 		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/SpecialContact2/SpecialContact.scss'));
+                $extPath = F::app()->wg->extensionsPath;
+                F::app()->wg->out->addScript( "<script src=\"{$extPath}/wikia/SpecialContact2/SpecialContact.js\"></script>" );
 		$this->mName = null;
 		$this->mRealName = null;
 		$this->mWhichWiki = null;
@@ -223,7 +225,8 @@ class ContactForm extends SpecialPage {
 				}
 
 				$title = Title::newFromText('Contact/' . $sub, NS_SPECIAL);
-				$newsec['links'][] = $uskin->makeKnownLinkObj( $title, wfMsg('specialcontact-seclink-' . $msg ) );
+                                $msgKey = 'specialcontact-seclink-' . $msg;
+				$newsec['links'][] = $uskin->makeKnownLinkObj( $title, wfMsg( $msgKey ), '', '', '', "class={$msgKey}" );
 			}
 			$secDat[] = $newsec;
 		}
