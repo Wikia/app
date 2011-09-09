@@ -911,6 +911,8 @@ EOD;
 				return true;
 			}
 		}
+		
+		// 9/9/11 wlee: no support for Real Gravity yet
 
 		return false;
 	}
@@ -968,6 +970,18 @@ EOD;
 				break;
 			case self::V_MOVIECLIPS:
 				$ratio = (560 / 304);
+				break;
+			case self::V_REALGRAVITY:
+				$ratio = (640 / 360);
+				if (!empty($this->mData[0])) {
+					list($width, $height) = explode('x', $this->mData[0]);
+					if ($width > 660) {
+						$scalingRatio = 660 / $width;
+						$width = 660;
+						$height = round($height * $scalingRatio);
+					}
+					$ratio = $width / $height;
+				}
 				break;
 			default:
 				$ratio = 1;
@@ -1029,6 +1043,18 @@ EOD;
 				break;
 			case self::V_MOVIECLIPS:
 				$ratio = "560 x 304";
+				break;
+			case self::V_REALGRAVITY:
+				$ratio = "640 x 360";
+				if (!empty($this->mData[0])) {
+					list($width, $height) = explode('x', $this->mData[0]);
+					if ($width > 660) {
+						$scalingRatio = 660 / $width;
+						$width = 660;
+						$height = round($height * $scalingRatio);
+					}
+					$ratio = $width . ' x ' . $height;
+				}				
 				break;
 			default:
 				$ratio = "300 x 300";
@@ -1133,6 +1159,11 @@ EOD;
 			case self::V_MOVIECLIPS:
 				//@todo verify if exists
 				$exists = true;
+				break;
+			case self::V_REALGRAVITY:
+				//@todo verify if exists
+				$exists = true;
+				break;
 			default:
 				break;
 		}
@@ -1183,6 +1214,8 @@ EOD;
 				return 'http://www.screenplayinc.com';
 			case self::V_MOVIECLIPS:
 				return 'http://movieclips.com';
+			case self::V_REALGRAVITY:
+				return 'http://www.realgravity.com';
 			default:
 				return '';
 		}
@@ -1255,6 +1288,10 @@ EOD;
 			case self::V_MOVIECLIPS:
 				$url = 'http://movieclips.com/' . $id . '/';
 				break;
+			case self::V_REALGRAVITY:
+				// not provided by realgravity api
+				$url = '';
+				break;
 			default:
 				$url = '';
 				break;
@@ -1322,6 +1359,7 @@ EOD;
 			case self::V_HULU:
 			case self::V_SCREENPLAY:
 			case self::V_MOVIECLIPS:
+			case self::V_REALGRAVITY:
 				$metadata = $this->mProvider . ',' . $this->mId . ',' . implode(',', $this->mData);
 				break;
 			default:
@@ -1861,6 +1899,34 @@ EOD;
 			case self::V_MOVIECLIPS:
 				$url = 'http://movieclips.com/e/' . $this->mId . '/';
 				break;
+			case self::V_REALGRAVITY:
+				$width = ''; $height = '';
+				if (!empty($this->mData[0])) {
+					list($width, $height) = explode('x', $this->mData[0]);
+					if ($width > 660) {
+						$scalingRatio = 660 / $width;
+						$width = 660;
+						$height = round($height * $scalingRatio);
+					}
+					$ratio = $width / $height;
+				}				
+				$embed = 
+					'<object id="rg_player_63541030-a4fd-012e-7c44-1231391272da" name="rg_player_63541030-a4fd-012e-7c44-1231391272da" type="application/x-shockwave-flash"
+					    width="'.$width.'" height="'.$height.'" classid="clsid:63541030-a4fd-012e-7c44-1231391272da" style="visibility: visible;"
+					    data="http://anomaly.realgravity.com/flash/player.swf">
+					  <param name="allowscriptaccess" value="always"></param>
+					  <param name="allowNetworking" value="all"></param>
+					  <param name="menu" value="false"></param>
+					  <param name="wmode" value="transparent"></param>
+					  <param name="allowFullScreen" value="true"></param>
+					  <param name="flashvars" value="config=http://mediacast.realgravity.com/vs/api/playerxml/63541030-a4fd-012e-7c44-1231391272da"></param>
+					  <embed id="63541030-a4fd-012e-7c44-1231391272da" name="63541030-a4fd-012e-7c44-1231391272da" width="'.$width.'" height="'.$height.'"
+					    allowNetworking="all" allowscriptaccess="always" allowfullscreen="true" wmode="transparent"
+					    flashvars="config=http://mediacast.realgravity.com/vs/api/playerxml/63541030-a4fd-012e-7c44-1231391272da?video_guid='.$this->mId.'"
+					    src="http://anomaly.realgravity.com/flash/player.swf"></embed>
+					</object>';
+				$code = 'custom';
+				break;
 			default: break;
 		}
 		if( 'custom' != $code ) {
@@ -1928,6 +1994,9 @@ EOD;
 				break;
 			case self::V_MOVIECLIPS:
 				$thumb = $this->mData[0];
+				break;
+			case self::V_REALGRAVITY:
+				$thumb = $this->mData[1];
 				break;
 			default:
 				break;
