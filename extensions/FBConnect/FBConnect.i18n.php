@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright © 2008-2010 Garrett Brown <http://www.mediawiki.org/wiki/User:Gbruin>
+ * Copyright ï¿½ 2008-2010 Garrett Brown <http://www.mediawiki.org/wiki/User:Gbruin>
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -61,8 +61,9 @@ $messages['en'] = array(
 	'fbconnect-logout'   => 'Logout of Facebook',
 	'fbconnect-link'     => 'Back to facebook.com',
 	'fbconnect-or'       => 'OR',
+	'fbconnect-log-in'   => 'Log In',
 
-// Special:Connect
+	// Special:Connect
 	'fbconnect-title'    => 'Connect account with Facebook',
 	'fbconnect-intro'    => 'This wiki is enabled with Facebook Connect, the next evolution of Facebook Platform. This means that when you are Connected, in addition to the normal [[Wikipedia:Help:Logging in#Why log in?|benefits]] you see when logging in, you will be able to take advantage of some extra features...',
 	'fbconnect-click-to-login' => 'Click this button to login to this site via facebook',
@@ -79,9 +80,9 @@ $messages['en'] = array(
 	'fbconnect-logoutbox'=> "$1\n\nThis will also log you out of Facebook and all Connected sites, including this wiki.",
 	'fbconnect-listusers-header'
               => '$1 and $2 privileges are automatically transfered from the Officer and Admin titles of the Facebook group $3.\n\nFor more info, please contact the group creator $4.',
-// Prefix to use for automatically-generated usernames
+	// Prefix to use for automatically-generated usernames
 	'fbconnect-usernameprefix' => 'FacebookUser',
-// Special:Connect
+	// Special:Connect
 	'fbconnect-error' => 'Verification error',
 	'fbconnect-errortext' => 'Yikes! It looks like that didn\'t work out. Please try again.',
 	'fbconnect-cancel' => 'Action cancelled',
@@ -119,7 +120,7 @@ $messages['en'] = array(
 
 	'fbconnect-error-creating-user' => "Error creating the user in the local database.",
 	'fbconnect-error-user-creation-hook-aborted' => "A hook (extension) aborted the account creation with the message: $1",
-//fbconnect-prefstext
+	//fbconnect-prefstext
 	'prefs-fbconnect-prefstext' => 'Facebook Connect',
 	'fbconnect-link-to-profile' => 'Facebook profile',
 	'fbconnect-prefsheader' => "By default, some events will push items to your Facebook feed. You can customise these now, or later at any time in your preferences.",
