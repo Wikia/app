@@ -3,7 +3,7 @@
 class JSSnippets {
 
 	private $app, $filters;
-	static $FILTER_NONE = -1;
+	const FILTER_NONE = -1;
 
 	function __construct() {
 		$this->app = F::build('App');
@@ -15,7 +15,10 @@ class JSSnippets {
 	* as we need to load changed extension resources
 	*/
 	public function setFilters( $filters ) {
-		if($filters) $this->filters = $filters;
+		if ( !is_array( $filters ) ) {
+			$filters = array( $filters );
+		}
+		if( $filters ) $this->filters = $filters;
 	}
 
 	/**
@@ -51,15 +54,22 @@ class JSSnippets {
 		$js = "";
 		$generateJSSnippet = false;
 		
+		if ( $filters && !is_array( $filters ) ) {
+			$filters = array( $filters );
+		}
+
 		//check wether this stack should be added
+		//both are empty
 		if ( !$this->filters && !$filters) {
 			$generateJSSnippet = true;
-		} else if ( $this->filters && $filters  ) {
-			if ( array_intersect( $this->filters, $filters) ) {
+		//if set filter is set to output all stacks
+		} else if ( $this->filters && in_array( $this::FILTER_NONE, $this->filters ) ) {
+			$generateJSSnippet = true;
+		//filter add to stack is matching set filters
+		} else if( $this->filters && $filters ) {
+			if ( array_intersect( $this->filters, $filters ) ) {
 				$generateJSSnippet = true;
 			}
-		} else if ( in_array( $filters, $this::$FILTER_NONE ) ) {
-			$generateJSSnippet = true;
 		}
 		
 		if ( $generateJSSnippet ) {

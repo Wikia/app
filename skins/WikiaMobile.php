@@ -13,7 +13,7 @@ if( !defined( 'MEDIAWIKI' ) )
  * Has to be that early as it has to be set
  * before ANY JSSnippet addToStack is called
  */
-F::build("JSSnippets")->setFilters(array("wikiamobile"));
+F::build("JSSnippets")->setFilters("wikiamobile");
 		
 class SkinWikiamobile extends SkinTemplate {
 	private $app;
