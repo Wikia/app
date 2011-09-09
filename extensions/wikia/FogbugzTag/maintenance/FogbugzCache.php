@@ -49,7 +49,7 @@ else {
 		foreach ($results as $res ) {
 			if (strtotime($res['dtLastUpdated']) > strtotime($LastUpdated)) {
 				echo "Updating/inserting case ".$res['ixBug']." in database...\n";
-				$DBconnMSTR->replace('smurfs.fogbugz_cases', $res['ixBug'],array(
+				$DBconnMSTR->replace('fogbugz_cases', $res['ixBug'],array(
 					'sTitle' => $res['sTitle'],
 					'ixBug' => $res['ixBug'],
 					'sStatus' => $res['sStatus'],
@@ -99,7 +99,7 @@ else {
 		$DBconn = wfGetDB( DB_MASTER );
 		echo "Putting data in database...\n";
 		foreach ($results as $res ) {
-			$DBconn->replace('smurfs.fogbugz_cases', $res['ixBug'], array(
+			$DBconn->replace('fogbugz_cases', $res['ixBug'], array(
 				'sTitle' => $res['sTitle'],
 				'ixBug' => $res['ixBug'],
 				'sStatus' => $res['sStatus'],
