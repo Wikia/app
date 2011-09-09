@@ -207,7 +207,9 @@ class FogbugzService extends Service {
 	 * @return array $results
 	 *
 	 */
-	public function getCasesBasicInfo( $casesIDs ) { // returns set of info of cases passed as a parameter and all subcases
+	public function getCasesBasicInfo( $casesIDs ) { 
+		// returns set of info of cases passed as a parameter and all subcases
+		//$mysqlCommand = 'select * from fogbugz_cases where ixBug in ('.implode(',', $casesIDs).')';
 		$results = array();
 		$IDsToGet = $casesIDs;
 		$childrenIDs = array();
@@ -248,20 +250,28 @@ class FogbugzService extends Service {
 		}
 	}
 
-
+	
 
 	/**
 	 * Find and save result of query 
 	 * @param string $q - query 
 	 * @return null/array $results  
 	 */
-	public function findAndSaveCasesToMemc($q){
-
+	public function findAndSaveCasesToMemc($q, $saveToMemc = true){
+		$cols = 'sTitle,ixBug,sStatus,ixBugChildren,ixBugParent,ixPriority,ixProject,ixCategory,dtOpened,dtResolved,dtClosed,dtLastUpdated';
+		//$results = array();
 		$this->resetParams();
 		$this->setParam( 'cmd', 'search' );
 		$this->setParam( 'token', $this->token );
 		$this->setParam( 'q', $q );
-		$this->setParam( 'cols', 'sTitle,ixBug,sStatus,ixBugChildren,ixBugParent,ixPriority,dtLastUpdated' );
+		
+		//if is_string:
+		//if (is_string($cols)) {
+		$this->setParam( 'cols', $cols );
+		//} else {
+		//	$this->setParam( 'cols', implode(",", $cols ) );
+		//}
+		
 		$this->curl->setopt_array( $this->getCurlOptions() );
 		$xml = $this->curl->exec();
 
@@ -269,15 +279,25 @@ class FogbugzService extends Service {
 			$dom = new DOMDocument;
 			$dom->loadXML( $xml );
 			$cases = $dom->getElementsByTagName( 'case' );
-			foreach( $cases as $case ) {
+			foreach( $cases as  $case ) {
 				
 				$ixBugChildren = $case->getElementsByTagName( 'ixBugChildren' )->item(0)->nodeValue;
 				if ( strlen($ixBugChildren) > 0 ) {
-					$ixBugChildren = explode( ",", $ixBugChildren );;
+					$ixBugChildren = explode( ",", $ixBugChildren );
 				} else {
 					$ixBugChildren = array();
 				}
-						
+				$res = array();
+				$titles = explode( ",", $cols );
+				foreach ($titles as $title) {
+					if ($title == 'ixBugChildren') {
+						$res[$title] = $ixBugChildren;
+					} else {	
+						$res[$title] = $case->getElementsByTagName( $title )->item(0)->nodeValue;
+					}
+				}
+				$results[] = $res;
+				/*
 				$results[] = array(
 								'ixBug' => $case->getElementsByTagName( 'ixBug' )->item(0)->nodeValue,
 								'sTitle' => $case->getElementsByTagName( 'sTitle' )->item(0)->nodeValue,
@@ -286,15 +306,19 @@ class FogbugzService extends Service {
 								'ixBugParent' => $case->getElementsByTagName( 'ixBugParent' )->item(0)->nodeValue,
 								'ixPriority' => $case->getElementsByTagName( 'ixPriority' )->item(0)->nodeValue,
 								'dtLastUpdated' => $case->getElementsByTagName( 'dtLastUpdated')->item(0)->nodeValue
-				);
-				$this->sendToMemCache($results[count($results)-1] );
+				);*/
+				
+				//wfGetDB( DB_SLAVE )->insert('fogbugz_cases', );
+				if ($saveToMemc == true) {
+					$this->sendToMemCache($results[count($results)-1] );
+				}
 			}
 		}
 
 		if (isset($results)){
 			return $results;
 		} else {
-			return null;
+			return array();
 		}
 
 	}
