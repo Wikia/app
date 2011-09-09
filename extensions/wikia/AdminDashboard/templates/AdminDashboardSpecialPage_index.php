@@ -30,14 +30,25 @@
 							<?= wfMsg("admindashboard-control-top-navigation-label") ?>
 						</a>
 					</li>
-					<li class="control" data-tooltip="<?= wfMsg("admindashboard-control-wikia-labs-tooltip") ?>">
-						<a href="<?= $urlWikiaLabs ?>" class="set" data-tracking="general/wikialabs">
-							<span class="representation">
-								<span class="icon wikialabs"></span>
-							</span>
-							<?= wfMsg("admindashboard-control-wikia-labs-label") ?>
-						</a>
-					</li>
+					<? if ($displayWikiFeatures) { ?>
+						<li class="control" data-tooltip="<?= wfMsg("admindashboard-control-wiki-features-tooltip") ?>">
+							<a href="<?= $urlWikiFeatures ?>" class="set" data-tracking="general/wikifeatures">
+								<span class="representation">
+									<span class="icon wikifeatures"></span>
+								</span>
+								<?= wfMsg("admindashboard-control-wiki-features-label") ?>
+							</a>
+						</li>
+					<? } else { ?>
+						<li class="control" data-tooltip="<?= wfMsg("admindashboard-control-wikia-labs-tooltip") ?>">
+							<a href="<?= $urlWikiaLabs ?>" class="set" data-tracking="general/wikialabs">
+								<span class="representation">
+									<span class="icon wikialabs"></span>
+								</span>
+								<?= wfMsg("admindashboard-control-wikia-labs-label") ?>
+							</a>
+						</li>
+					<? } ?>
 					<? if ($displayPageLayoutBuilder) { ?>
 						<li class="control" data-tooltip="<?= wfMsg("admindashboard-control-page-layout-builder-tooltip") ?>">
 							<a href="<?= $urlPageLayoutBuilder ?>" class="set" data-tracking="general/pagelayoutbuilder">

@@ -23,6 +23,8 @@ $messages['en'] = array(
 	'admindashboard-control-top-navigation-tooltip' => 'Top Navigation allows you to customize the navigation menu at the top of your wiki.',
 	'admindashboard-control-wikia-labs-label' => 'Wikia Labs',
 	'admindashboard-control-wikia-labs-tooltip' => 'Wikia Labs lets you be the first to try out new beta features on your wiki.',
+	'admindashboard-control-wiki-features-label' => 'Wiki Features',
+	'admindashboard-control-wiki-features-tooltip' => 'Wiki Features lets you enable additional features on your wiki.',
 	'admindashboard-control-page-layout-builder-label' => 'Page Layout Builder',
 	'admindashboard-control-page-layout-builder-tooltip' => 'Page Layout Builder allows you to create page outlines for users to choose from and use to create new pages.',
 // Community Controls
@@ -409,7 +411,7 @@ $messages['nl'] = array(
 	'admindashboard-back-to-dashboard' => 'Terug naar het Dashboard',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian (bokmål) (Norsk (bokmål))
  * @author Audun
  */
 $messages['no'] = array(
