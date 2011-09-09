@@ -414,7 +414,8 @@ function CategorySelectImportFormData($editPage, $request) {
 				}
 			}
 
-			$editPage->textbox1 .= $categories;
+			// rtrim needed because of BugId:11238
+			$editPage->textbox1 .= rtrim($categories);
 		}
 		$wgCategorySelectCategoriesInWikitext = $categories;
 	}
