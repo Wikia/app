@@ -5,7 +5,9 @@ if ( !empty($err) ) {
 	print $err;
 }
 ?>
+<div id="SpecialContactIntroForm">
 <?php print $intro; ?>
+</div>
 <hr/>
 <form name="contactform" id="contactform" method="post" action="<?php echo $form_action; ?>">
 <p class="contactformcaption"><?php echo wfMsg( 'specialcontact-wikiname' ); ?></p>
