@@ -93,7 +93,7 @@ function wfEditSimilarViewMesg( &$out ) {
 			}
 
 			if ( '' != $message_text ) {
-				EditSimilar::showMessage( $message_text, $article_title );
+				EditSimilar::showMessage( $message_text );
 			}
 		}
 		// display that only once
