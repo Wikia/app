@@ -180,7 +180,7 @@ $messages['en'] = array(
 	'scavengerhunt-editor-tip-clue-color' => 'Colors should have hexadecymal notation like #F00',
 	'scavengerhunt-editor-tip-entry-form-button-text' => 'This is the text for the button that appears on the dialog at the end of the hunt. ',
 	'scavengerhunt-editor-tip-facebook-image' => 'MediaWiki style image path on Landing page\'s wiki. Example: \'Some_image_example.png\'',
-	'scavengerhunt-editor-tip-facebook-description' => 'Text that will be displeyed in shareing message',
+	'scavengerhunt-editor-tip-facebook-description' => 'Text that will be displayed in sharing message',
 	'scavengerhunt-facebook-image' => 'Facebook sharing image',
 	'scavengerhunt-facebook-description' => 'Facebook sharing text',
 	
