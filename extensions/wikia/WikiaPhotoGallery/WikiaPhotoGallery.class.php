@@ -1283,7 +1283,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				array(),
 				'WikiaPhotoGallerySlider.init',
 				array($this->mData['id']),
-				array("wikiamobile")
+				"wikiamobile"
 			);
 		}
 
