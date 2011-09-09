@@ -226,7 +226,7 @@ class GameGuidesModel{
 	}
 	
 	private function loadFromCache( $key ){
-		$this->app->wg->memc->get( $key );
+		return $this->app->wg->memc->get( $key );
 	}
 	
 	private function storeInCache( $key, $value, $duration = self::CACHE_DURATION ){
