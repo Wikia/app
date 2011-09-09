@@ -11,7 +11,13 @@
 	>h2 {
 		border-bottom: 1px solid $color-page-border;
 		font-size: 28px;
-		padding-bottom: 5px;
+		padding: 5px 0 15px 50px;
+		&.heading-features {
+			background: url(/extensions/wikia/WikiFeatures/images/icon_features_big.png) no-repeat 5px 0;
+		}
+		&.heading-labs {
+			background: url(/extensions/wikia/WikiFeatures/images/icon_labs_big.png) no-repeat 5px 0;
+		}
 	}
 	.features {
 		margin: 0;
