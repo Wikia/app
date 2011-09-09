@@ -45,6 +45,7 @@ Follow the links below to learn more about how to use Wikia, make changes to you
 
 	/* titles (overrides normal page title) */
 	'specialcontact-sectitle' => "Wikia Support - $1",
+                'specialcontact-sectitle-general' => "Contact form",
 		'specialcontact-sectitle-content-issue' => "Content issue",
 		'specialcontact-sectitle-user-conflict' => "User interactions",
 		'specialcontact-sectitle-adoption' => "Admin rights",
