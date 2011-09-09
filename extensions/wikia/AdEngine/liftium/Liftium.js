@@ -2245,7 +2245,7 @@ Liftium.trackQcseg = function() {
 			}
 			if (Liftium.e(qcseg.segments[i].id)) {
 				//Liftium.trackEvent(Liftium.buildTrackUrl(["quantcast", "segments", "broken"]), "UA-17475676-9");
-				Liftium.trackEvent3(Liftium.buildTrackUrl(["quantcast", "segments", "broken", c]));
+				Liftium.trackEvent3(Liftium.buildTrackUrl(["quantcast", "segments", "broken", c]), '100%');
 				Liftium.trackEvent2(Liftium.buildTrackUrl(["quantcast", "segments", "broken", c]));
 				continue;
 			}
