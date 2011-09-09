@@ -8,20 +8,18 @@
 if( !defined( 'MEDIAWIKI' ) )
 	die( -1 );
 
-/** */
 require_once( dirname(__FILE__) . '/MonoBook.php' );
 
 global $wgHooks, $wgEnableArticleCommentsExt, $wgEnableFacebookConnectExt,
-	$wgEnableFacebookConnectPushing, $wgEnableMWSuggest, $wgAjaxWatch;
+	$wgEnableFacebookConnectPushing, $wgEnableMWSuggest, $wgAjaxWatch, $wgUseSiteJs;
 
 $wgEnableArticleCommentsExt = false;
 $wgEnableFacebookConnectExt = false;
 $wgEnableFacebookConnectPushing = false;
 $wgEnableMWSuggest = false;
 $wgAjaxWatch = false;
+$wgUseSiteJs = false;
 
-//$wgHooks['MakeGlobalVariablesScript'][] = 'SkinWikiaApp::onMakeGlobalVariablesScript';
-//$wgHooks['SkinAfterContent'][] = 'SkinWikiaApp::onSkinAfterContent';
 $wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'SkinWikiaApp::onSkinTemplateOutputPageBeforeExec';
 $wgHooks['SkinGetHeadScripts'][] = 'SkinWikiaApp::onSkinGetHeadScripts';
 
@@ -77,6 +75,8 @@ class SkinWikiaApp extends SkinTemplate {
 	
 	public function onSkinGetHeadScripts(&$scripts) {
 		global $wgJsMimeType;
+		
+		$scripts = '';
 		
 		foreach ( AssetsManager::getInstance()->getGroupCommonURL( 'wikiaapp_js' ) as $src ) {
 			$scripts .= "\n<script type=\"$wgJsMimeType\" src=\"{$src}\"></script>";
