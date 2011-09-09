@@ -69,14 +69,14 @@ class PathFinderLogger extends WikiaObject{
 	 * @param string $type the log type, one of LOG_TYPE_INFO, LOG_TYPE_WARNING, LOG_TYPE_ERROR
 	 */
 	public function log( $msg, $type = self::LOG_TYPE_INFO ) {
-		$this->app->wf->profileIn( __METHOD__ );
+		$this->wf->profileIn( __METHOD__ );
 		
-		if ( $this->app->wg->DevelEnvironment ) {
+		if ( $this->wg->DevelEnvironment ) {
 			if ( isset( $msg ) ) {
 				file_put_contents( $this->logPath, '[' . date("H:i:s") . "] {$type}: " . var_export( $msg, true ) . "\n", FILE_APPEND );
 			}
 		}
 		
-		$this->app->wf->profileOut( __METHOD__ );
+		$this->wf->profileOut( __METHOD__ );
 	}
 }
