@@ -6,6 +6,8 @@ YAHOO.example.AutoCompleteTextArea = function(a,b,c,d) {
 	this.constructor.superclass.constructor.call(this,a,b,c,d);
 	YAHOO.util.Event.removeListener(a, "keydown");
 	YAHOO.util.Event.removeListener(a, "keypress");
+
+	this.updateValueEvent = new YAHOO.util.CustomEvent("updateValue", this);
 };
 
 YAHOO.lang.extend(YAHOO.example.AutoCompleteTextArea, YAHOO.widget.AutoComplete, {
@@ -159,6 +161,8 @@ YAHOO.lang.extend(YAHOO.example.AutoCompleteTextArea, YAHOO.widget.AutoComplete,
 		this._suggestionSuccessful = true;
 
 		this._elTextbox.focus();
+
+		this.updateValueEvent.fire(this, oItem);
 
 		var scrollTop = this._elTextbox.scrollTop;
 		var text = this._elTextbox.value.replace(/\r/g, "");
@@ -422,11 +426,11 @@ YAHOO.lang.extend(YAHOO.example.AutoCompleteTextArea, YAHOO.widget.AutoComplete,
 
 });
 
-function LS_PrepareTextarea (textarea, oDS) {
-	$().log('init for ' + textarea, 'LinkSuggest');
-	$('<div id="wpTextbox1_container" class="link-suggest-container"></div><div id="LS_imagePreview" style="visibility: hidden; position: absolute; z-index: 1001; width: 180px;" class="yui-ac-content"></div>').insertAfter('#'+textarea);
+function LS_PrepareTextarea (textareaId, oDS) {
+	$().log('init for #' + textareaId, 'LinkSuggest');
+	$('<div id="' + textareaId + '_container" class="link-suggest-container"></div><div id="LS_imagePreview" style="visibility: hidden; position: absolute; z-index: 1001; width: 180px;" class="yui-ac-content"></div>').insertAfter('#'+textareaId);
 
-	var oAutoComp = new YAHOO.example.AutoCompleteTextArea(textarea, 'wpTextbox1_container', oDS);
+	var oAutoComp = new YAHOO.example.AutoCompleteTextArea(textareaId, textareaId + '_container', oDS);
 	oAutoComp.highlightClassName = oAutoComp.prehighlightClassName = 'navigation-hover';
 	oAutoComp.typeAhead = oAutoComp.animHoriz = oAutoComp.animVert = oAutoComp.autoHighlight = oAutoComp.forceSelection = oAutoComp.useShadow = false;
 	oAutoComp.minQueryLength = 1;
@@ -461,6 +465,8 @@ function LS_PrepareTextarea (textarea, oDS) {
 
 	oAutoComp.itemArrowToEvent.subscribe(LS_itemHighlight);
 	oAutoComp.itemArrowFromEvent.subscribe(LS_itemUnHighlight);
+
+	return oAutoComp;
 }
 
 var LS_previewTimer;

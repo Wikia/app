@@ -481,6 +481,10 @@ function getCategories(sQuery) {
 	var resultsSecond = [];
 	sQuery = decodeURIComponent(sQuery);
 	sQuery = sQuery.toLowerCase().replace(/_/g, ' ');
+
+	// remove "Category:" prefix when querying for suggestions
+	sQuery = sQuery.replace(/^category:/, '');
+
 	for (var i = 0, len = categoryArray.length; i < len; i++) {
 		var index = categoryArray[i].toLowerCase().indexOf(sQuery);
 		if (index == 0) {
@@ -495,12 +499,15 @@ function getCategories(sQuery) {
 	return resultsFirst.concat(resultsSecond).slice(0,10);
 }
 
+function getCategoriesDataSource() {
+	return new YAHOO.widget.DS_JSFunction(getCategories);
+}
+
 // TODO: PORT AWAY FROM YUI
 function initAutoComplete() {
 	$.loadYUI(function() {
 		// Init datasource
-		var oDataSource = new YAHOO.widget.DS_JSFunction(getCategories);
-		//oDataSource.queryMatchCase = true;
+		var oDataSource = getCategoriesDataSource();
 
 		// Init AutoComplete object and assign datasource object to it
 		oAutoComp = new YAHOO.widget.AutoComplete('csCategoryInput', 'csSuggestContainer', oDataSource);
@@ -515,6 +522,30 @@ function initAutoComplete() {
 		oAutoComp.containerExpandEvent.subscribe(expandAutoComplete);
 		//do not show delayed ajax suggestion when user already added the category
 		oAutoComp.doBeforeExpandContainer = function (elTextbox, elContainer, sQuery, aResults) {return elTextbox.value != '';};
+	});
+}
+
+// BugId:11168
+function initSourceModeSuggest() {
+	// requires LinkSuggest extension
+	if (typeof LS_PrepareTextarea != 'function') {
+		return;
+	}
+
+	$.loadYUI(function() {
+		// Init datasource
+		var oDataSource = getCategoriesDataSource();
+
+		// TODO: cleaner integration with LinkSuggest
+		var oAutoComp = LS_PrepareTextarea('csWikitext', oDataSource);
+
+		// add "Category:" prefix when adding an item from suggest dropdown
+		oAutoComp.updateValueEvent.subscribe(function(eventName, data) {
+			var node = data[1];
+			if (node) {
+				node._oResultData[0] = 'Category:' + node._oResultData[0];
+			}
+		});
 	});
 }
 
@@ -616,6 +647,7 @@ initCatSelectForEdit = function() {
 	$.loadJQueryUI(function() {
 		initHandlers();
 		initAutoComplete();
+		initSourceModeSuggest();
 		initializeDragAndDrop();
 		initializeCategories();
 		$('#csHintContainer').hide();
