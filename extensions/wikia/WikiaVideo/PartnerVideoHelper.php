@@ -323,6 +323,13 @@ class PartnerVideoHelper {
 				$clipData['thumbnail'] = $video->getElementsByTagName('thumbnail-url')->item(0)->textContent;
 				$clipData['description'] = $video->getElementsByTagName('description')->item(0)->textContent;
 				$clipData['duration'] = $video->getElementsByTagName('duration')->item(0)->textContent;
+				if ($video->getElementsByTagName('source-video-props')->item(0)) {			
+					$sourceVideoPropsTxt = $video->getElementsByTagName('source-video-props')->item(0)->textContent;
+					$sourceVideoProps = explode('|', $sourceVideoPropsTxt);
+					if (sizeof($sourceVideoProps)) {
+						$clipData['aspectRatio'] = $sourceVideoProps[0];
+					}
+				}
 				//@todo tag list
 				
 				$msg = '';
@@ -486,10 +493,8 @@ class PartnerVideoHelper {
 		$id = null;
 		$metadata = null;	
 		
-//		self::sanitizeDataForPartnerVideo($provider, $data);
-		
 		$name = self::generateNameForPartnerVideo($provider, $data);
-print($name."\n");
+
 		switch ($provider) {
 			case VideoPage::V_SCREENPLAY:
 				$id = $data['eclipId'];
@@ -508,7 +513,7 @@ print($name."\n");
 				break;
 			case VideoPage::V_REALGRAVITY:
 				$id = $data['rgGuid'];
-				$metadata = array($data['thumbnail'], $data['duration'], $data['description']);
+				$metadata = array($data['aspectRatio'], $data['thumbnail'], $data['duration'], $data['description']);
 				break;
 			default:
 				$msg = "unsupported provider $provider";
@@ -537,10 +542,15 @@ print($name."\n");
 			$video->loadFromPars( $provider, $id, $metadata );
 			$video->setName( $name );
 			if ($parseOnly) {
-				printf("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n", basename($filename), $id, $data['titleName'], $data['year'], $title->getText(), self::generateTitleNameForPartnerVideo($provider, $data), $provider==VideoPage::V_SCREENPLAY ? $metadata[2] : $metadata[1], implode(',', $metadata), implode(',', $categories));
+				if (!empty($data['titleName']) && !empty($data['year'])) {
+					printf("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n", basename($filename), $id, $data['titleName'], $data['year'], $title->getText(), self::generateTitleNameForPartnerVideo($provider, $data), $provider==VideoPage::V_SCREENPLAY ? $metadata[2] : $metadata[1], implode(',', $metadata), implode(',', $categories));
+				}
+				else {
+					printf("%s\t%s\t%s\t%s\t%s\t%s\t%s\n", basename($filename), $id, $title->getText(), self::generateTitleNameForPartnerVideo($provider, $data), $provider==VideoPage::V_SCREENPLAY ? $metadata[2] : $metadata[1], implode(',', $metadata), implode(',', $categories));					
+				}
 			}
 			elseif ($debug) {
-//				print "parsed partner clip id $id. name: {$title->getText()}. data: " . implode(',', $metadata) . ". categories: " . implode(',', $categories) . "\n";
+				print "parsed partner clip id $id. name: {$title->getText()}. data: " . implode(',', $metadata) . ". categories: " . implode(',', $categories) . "\n";
 			}
 			else {
 				$video->save($categoryStr);
