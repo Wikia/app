@@ -187,6 +187,22 @@
 	display: block;
 }
 
+.DeactivateDialog {
+	display: none;
+	p {
+		margin-bottom: 10px;
+	}
+	nav {
+		bottom: 10px;
+		position: absolute;
+		right: 10px;
+	}
+}
+
+.modalWrapper .DeactivateDialog {
+	display: block;
+}
+
 .star-rating {
 	@include clearfix;
 	>img {

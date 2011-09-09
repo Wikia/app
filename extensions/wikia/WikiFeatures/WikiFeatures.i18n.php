@@ -8,6 +8,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'wikifeatures-title' => 'Wiki Features',
 	'wikifeatures-heading' => 'Features',
 	'wikifeatures-creative' => "Welcome to Wikia Features.
 Below, you will find tools you can use to customize your wiki by activating any of the features.
@@ -32,6 +33,11 @@ We know they still have their kinks, and we would love to receive your feedback 
 	'wikifeatures-feedback-description' => 'We love getting feedback on features that are in WikiaLabs.  If you have an idea for how we can improve this feature, or if you have discovered a bug, please add a comment below and the people working on this feature will get your message.',
 	'wikifeatures-feedback-type-label' => 'What\'s this about?',
 	'wikifeatures-feedback-comment-label' => 'Comment',
+	'wikifeatures-deactivate-heading' => 'Disable $1?',
+	'wikifeatures-deactivate-description' => 'Disabling a feature will remove it from your wiki.  Your users won\'t be able to use this feature anymore, and they won\'t see the feature anywhere on the wiki.',
+	'wikifeatures-deactivate-notification' => 'You can turn the feature on again at any time.',
+	'wikifeatures-deactivate-confirm-button' => 'Yes, disable',
+	'wikifeatures-deactivate-cancel-button' => 'Cancel',
 	// feature message list
 	'wikifeatures-feature-heading-wgEnableTopListsExt' => 'Top 10 Lists',
 	'wikifeatures-feature-description-wgEnableTopListsExt' => 'Top 10 Lists allow anyone on your wiki to create a votable list. They are a good way to get your junior editors to interact with the wiki. [[Special:CreateTopList|Create a new list]]!',
@@ -217,7 +223,7 @@ $messages['nl'] = array(
 	'wikifeatures-feature-description-wgEnableEditPageReskinExt' => "Bewerken is de kern van een wiki en het hebben van een goede tekstverwerker is de sleutel tot een makkelijk aanvoelende en leuke ervaring bij het toevoegen van inhoud. Om uw ervaring te verbeteren, hebben wij de bewerkingspagina's opnieuw ontworpen.",
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian (bokmål) (Norsk (bokmål))
  * @author Audun
  */
 $messages['no'] = array(
