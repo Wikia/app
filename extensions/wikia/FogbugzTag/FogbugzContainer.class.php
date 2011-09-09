@@ -2,23 +2,9 @@
 
 class FogbugzContainer {
 	
-	//data:
-	/*
-	private $ixBug;
-	private $sTitle;
-	private $sStatus;
-	private $ixBugParent = 0;
-	private $ixPriority;
-	private $sublevel;
-	*/
-	private $parentReference = null;
-	public $childReference = null;
-	
 	private $caseData = array(); 
 	
 	private $childrenList = array();
-	
-	public static $res = 0;
 	
 	/**
 	 * Creates new case object
@@ -31,57 +17,54 @@ class FogbugzContainer {
 	}
 	
 	public function addChildren( $casesList ){
-		$i = 0;
-		while ( $i < count( $casesList ) ){
+		for ( $i = 0; $i < count( $casesList ); $i++ ){
 			if ( $casesList[$i]['ixBugParent'] == $this->getInfo( 'ixBug' ) ) {
 				$this->addChild($casesList[$i]);
 			}
-			++$i;
 		}
-		$j = 0;
-		while ($j < $this->getChildrenCount()){
+		for ($j = 0; $j < $this->getChildrenCount(); $j++){
 			$this->getChild($j)->addChildren( $casesList );
-			++$j;
 		}
 	}
-	public static function prepareHtml($parent, Array &$results, $index){
-		static $counter = 0;
-		++$counter;
-		$j = 0;
+	public function prepareHtml(Array &$results, $index, $counter = 1){
+		
+		
+		
 		$ticketBuffer = "";
 		$ticketBuffer .= str_repeat("*", $counter);
+		
 		//TODO: cache it
-		$ticketBuffer .= '{{Template:'.$parent->getInfo( 'sStatus' ).'}} '.
-							$parent->getInfo('sTitle').
+		// check if there's a Html ready in memcache; it should happens in FogbugzService
+		// (proper template should be passed as a parameter to the function getCasesBasicInfo 
+		$ticketBuffer .= '{{Template:'.$this->getInfo( 'sStatus' ).'}} '.
+							$this->getInfo('sTitle').
 							' -- [https://wikia.fogbugz.com/default.asp?'.
-							$parent->getInfo('ixBug').' #'.
-							$parent->getInfo('ixBug').']';
+							$this->getInfo('ixBug').' #'.
+							$this->getInfo('ixBug').']';
 		$ticketBuffer .= "\n";
+		
 		$results[$index][] = $ticketBuffer;
-		while ($j < $parent->getChildrenCount()){
-			self::prepareHtml($parent->getChild($j), $results, $index);
-			
-			++$j;
+		
+		//end
+		
+		for ($j = 0; $j < $this->getChildrenCount(); $j++){
+			$this->getChild($j)->prepareHtml($results, $index, $counter + 1);
 		}
-		--$counter;
 		
 	}
 	
-	public static function prioritySort(&$parent){
-		$j = 0;
-		while ($j < $parent->getChildrenCount()){
-			self::prioritySort($parent->getChild($j));
-			
-			++$j;
+	public function prioritySort(){
+		for ($j = 0; $j < $this->getChildrenCount(); $j++){
+			$this->getChild($j)->prioritySort();
 		}
 		
-		if ( $parent->getChildrenCount() > 0) {
-			for ($outerIndex = 1; $outerIndex < $parent->getChildrenCount(); $outerIndex++) {
-				$buffer = $parent->getChild($outerIndex);
+		if ( $this->getChildrenCount() > 0) {
+			for ($outerIndex = 1; $outerIndex < $this->getChildrenCount(); $outerIndex++) {
+				$buffer = $this->getChild($outerIndex);
 				for ($innerIndex = $outerIndex; $innerIndex > 0 
-					&& $parent->getChildInfo($innerIndex - 1, 'ixPriority') > $buffer->getInfo('ixPriority'); $innerIndex--) 
+					&& $this->getChildInfo($innerIndex - 1, 'ixPriority') > $buffer->getInfo('ixPriority'); $innerIndex--) 
 				{
-					$parent->swapForInsertSort($innerIndex, $buffer);
+					$this->swapForInsertSort($innerIndex, $buffer);
 				}
 			}
 		} 
