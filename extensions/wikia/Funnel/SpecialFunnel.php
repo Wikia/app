@@ -5,6 +5,7 @@
  */
 
 if (!defined('MEDIAWIKI')) {
+	global $IP;
         echo <<<EOT
 To install this extension, put the following line in LocalSettings.php:
 require_once( "$IP/extensions/wikia/Funnel/SpecialFunnel.php" );
