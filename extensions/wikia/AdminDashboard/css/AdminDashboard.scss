@@ -221,6 +221,9 @@ $use-theme: get_command_line_param("use-theme", false);
 							&.wikialabs {
 								background-position: -150px 0;
 							}
+							&.wikifeatures {
+								background-position: -750px 0;
+							}
 							&.pagelayoutbuilder {
 								background-position: -200px 0;
 							}
