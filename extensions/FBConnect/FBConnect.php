@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright © 2008-2010 Garrett Brown <http://www.mediawiki.org/wiki/User:Gbruin>
+ * Copyright ï¿½ 2008-2010 Garrett Brown <http://www.mediawiki.org/wiki/User:Gbruin>
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -29,7 +29,7 @@
  * and at http://wiki.developers.facebook.com/index.php/Talk:MediaWiki
  *
  * @author Garrett Bruin, Sean Colombo
- * @copyright Copyright © 2008 Garrett Brown, Sean Colombo
+ * @copyright Copyright ï¿½ 2008 Garrett Brown, Sean Colombo
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  * @addtogroup Extensions
  */
@@ -228,8 +228,9 @@ class FBConnect {
 
 	public static function getFBButton($onload = "", $id = "") {
 		global $fbExtendedPermissions;
-		return '<fb:login-button length="short" size="large" onlogin="'.$onload.'" perms="'.implode(",", $fbExtendedPermissions).'" id="'.$id.'">
-                </fb:login-button>';
+		return '<fb:login-button length="short" size="large" onlogin="'.$onload.'" perms="'.implode(",", $fbExtendedPermissions).'" id="'.$id.'">'.
+					wfMsg('fbconnect-log-in').
+				'</fb:login-button>';
 	}
 
 	/*
