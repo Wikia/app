@@ -1277,8 +1277,8 @@ class WikiaPhotoGallery extends ImageGallery {
 			
 			$html .= F::build('JSSnippets')->addToStack(
 				array(
-					'/extensions/wikia/WikiaPhotoGallery/mobile/css/WikiaPhotoGallery.slidertag.css',
-					'/extensions/wikia/WikiaPhotoGallery/mobile/js/WikiaPhotoGallery.slider.js'
+					'/extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slidertag.mobile.css',
+					'/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slider.mobile.js'
 				),
 				array(),
 				'WikiaPhotoGallerySlider.init',
