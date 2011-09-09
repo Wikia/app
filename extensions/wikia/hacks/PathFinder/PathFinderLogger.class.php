@@ -8,26 +8,58 @@
  * @author Jakub Olek <bukaj.kelo(at)gmail.com
  */
 
-class PathFinderLogger extends WikiaService {
-	const LOG_PATH_TEMPLATE = '/tmp/PathFinder_%s.log';
+class PathFinderLogger extends WikiaObject{
+	/**
+	 * paths
+	 */
+	const LOG_PATH_TEMPLATE = '/tmp/PathFinder%s.log';
 	
 	/**
-	 * Log action types
+	 * log data types
 	 */
 	const LOG_TYPE_INFO = 'INFO';
 	const LOG_TYPE_WARNING = 'WARNING';
 	const LOG_TYPE_ERROR = 'ERROR';
 	
-	static private $instance = null;
-	private $logPath = null;
-	private $app = null;
+	private $logPath;
 	
 	function __construct(){
-		$this->app = F::app();
 		$this->logPath = sprintf( self::LOG_PATH_TEMPLATE, date( 'Ymd' ) );
+	}
+	
+	/**
+	 * Returns the singleton instance
+	 *
+	 * @return PathFinderLogger singleton instance
+	 */
+	public static function getInstance(){
+		$class = get_called_class();
+		$instance = F::getInstance( $class );
 		
-		//singleton
-		F::setInstance( __CLASS__, $this );
+		if ( empty( $instance ) ) {
+			$instance = F::build($class);
+			F::setInstance( $class, $instance );
+		}
+		
+		return $instance;
+	}
+	
+	/**
+	 * @brief sets the path to the log file
+	 * 
+	 * @param string $filePath the path to the log file
+	 */
+	public function setLogPath( $filePath ){
+		$this->logPath = $filePath;
+	}
+	
+	/**
+	 * @brief retrieves the path to the log file
+	 *
+	 * @return string the log file path
+	 */
+	public function getLogPath(){
+		return $this->logPath;
 	}
 	
 	/**
@@ -39,21 +71,12 @@ class PathFinderLogger extends WikiaService {
 	public function log( $msg, $type = self::LOG_TYPE_INFO ) {
 		$this->app->wf->profileIn( __METHOD__ );
 		
-		if ( $this->wg->DevelEnvironment ) {
+		if ( $this->app->wg->DevelEnvironment ) {
 			if ( isset( $msg ) ) {
 				file_put_contents( $this->logPath, '[' . date("H:i:s") . "] {$type}: " . var_export( $msg, true ) . "\n", FILE_APPEND );
 			}
 		}
 		
 		$this->app->wf->profileOut( __METHOD__ );
-	}
-	
-	/**
-	 * @brief sets the path to the log file
-	 * 
-	 * @param string $path the path to the log file
-	 */
-	public function setLogPath( $path ) {
-		$this->logPath = $path;
 	}
 }
