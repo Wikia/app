@@ -149,7 +149,7 @@ Happy editing!",
 
 If you are an admin and feel that specific feature is not working well for your wiki, please discuss with your wiki's community if it is OK that something is turned off. If everyone agrees, you send a message with more details [[Special:Contact/general|here]].
 
-Admins interested in testing out new features that are still in development can check out our new [[Special:Wikia_Labs|Wikia Labs]] interface that allows you to enable (or even disable) some features.
+Admins interested in testing out new features that are still in development can check out our new [[Special:WikiaLabs|Wikia Labs]] interface that allows you to enable (or even disable) some features.
 
 Want to stay current on announcement of new features and improvements to current ones? Stop by and follow the [[w:Blog:Wikia_New_Features|staff blog new features list]].
 
