@@ -2,17 +2,32 @@ var WikiFeatures = {
 	lockedFeatures: {},
 	init: function() {
 		WikiFeatures.feedbackDialogPrototype = $('.FeedbackDialog');
+		WikiFeatures.deactivateDialogPrototype = $('.DeactivateDialog');
 		WikiFeatures.sliders = $('#WikiFeatures .slider');
 		WikiFeatures.sliders.find('.button').click(function(e) {
 			var feature = $(this).closest('.feature');
 			var featureName = feature.data('name');
 			
-			if(!WikiFeatures.lockedFeatures[featureName]) {
-				WikiFeatures.lockedFeatures[featureName] = true;				
+			if(!WikiFeatures.lockedFeatures[featureName]) {				
 				var el = $(this).closest('.slider');
 				var isEnabled = el.hasClass('on');
-				WikiFeatures.toggleFeature(featureName, !isEnabled);
-				el.toggleClass('on');
+				if(isEnabled) {
+					var featureHeading = feature.find('h3').text().trim();
+					var modalClone = WikiFeatures.deactivateDialogPrototype.clone();
+					var modalHeading = modalClone.find('h1');
+					modalHeading.text(modalHeading.text().replace(/\$1/g, featureHeading));
+					var modal = modalClone.makeModal({width:670});
+					modal.find('nav button').click(function() {
+						if($(this).hasClass('confirm')) {
+							WikiFeatures.toggleFeature(featureName, false);
+							el.toggleClass('on');
+						}
+						modal.closeModal();
+					});
+				} else {
+					WikiFeatures.toggleFeature(featureName, true);
+					el.toggleClass('on');
+				}
 			}
 			
 		});
@@ -25,7 +40,7 @@ var WikiFeatures = {
 			var modalClone = WikiFeatures.feedbackDialogPrototype.clone();
 			modalClone.find('.feature-highlight h2').text(heading.text());
 			modalClone.find('.feature-highlight img').attr('src', image.attr('src'));
-			modal = modalClone.makeModal({width:670});
+			var modal = modalClone.makeModal({width:670});
 
 			var commentLabel = modal.find('.comment-group label');
 			var comment = modal.find('textarea[name=comment]');
@@ -80,6 +95,7 @@ var WikiFeatures = {
 		});
 	},
 	toggleFeature: function(featureName, enable) {
+		WikiFeatures.lockedFeatures[featureName] = true;
 		$.post(wgScriptPath + '/wikia.php', {
 			controller: 'WikiFeaturesSpecial',
 			method: 'toggleFeature',

@@ -18,6 +18,7 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 	}
 	
 	public function index() {
+		$this->wg->Out->setPageTitle(wfMsg('wikifeatures-title'));
 		if (!$this->wg->User->isLoggedIn()) {
 			$this->displayRestrictionError();
 			return false;  // skip rendering
