@@ -385,7 +385,6 @@
 			return array(
 				'SpecialPage:ThemeDesigner',
 				'SpecialPage:LayoutBuilder',
-				'SpecialPage:WikiaLabs',
 			);
 		}
 
@@ -473,7 +472,6 @@
 				'SpecialPage:ThemeDesigner',
 				'SpecialPage:LayoutBuilder',
 				'SpecialPage:MyContributions',
-				'SpecialPage:WikiaLabs',
 				'SpecialPage:Statistics',
 				'SpecialPage:WikiFactory',
                                 'Action:DevInfo' // a.k.a. PerformanceStats, BugId:5497
