@@ -1,5 +1,5 @@
 <section class="WikiFeatures" id="WikiFeatures">
-	<h2>
+	<h2 class="heading-features">
 		<?= wfMsg('wikifeatures-heading') ?>
 	</h2>
 	<p>
@@ -12,7 +12,7 @@
 		<? } ?>
 	</ul>
 	
-	<h2>
+	<h2 class="heading-labs">
 		<?= wfMsg('wikifeatures-labs-heading') ?>
 	</h2>
 	<p>
