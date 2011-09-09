@@ -1,6 +1,3 @@
-//mixpanel
-var mpq=[];
-
 var MobileSkin = {
 	GA: {
 		accountID: "UA-2871474-1",
@@ -13,58 +10,21 @@ var MobileSkin = {
 	h: null,
 	b: null,
 	
-	initMixpanel: function(){
-		if(!DevelEnvironment){
-			mpq.push(["init","f64b56c48325a31a1a442e31b98cf2c1"]);
-			var b,a,e,d,c;
-			b = document.createElement("script");
-			b.type = "text/javascript";
-			b.async = true;
-			b.src = (document.location.protocol === "https:" ? "https:" : "http:") + "//api.mixpanel.com/site_media/js/api/mixpanel.js";
-			a = document.getElementsByTagName("script")[0];
-			a.parentNode.insertBefore(b, a);
-			e = function(f){
-				return function(){
-					mpq.push([f].concat(Array.prototype.slice.call(arguments,0)))
-				}
-			};
-			
-			d = ["track", "track_links", "track_forms", "register", "register_once", "identify", "name_tag", "set_config"];
-			
-			for(c = 0; c < d.length; c++){
-				mpq[d[c]] = e(d[c]);
-			}
-		}
-	},
-	
 	track: function(category, action, label, intVal) {
-		//GA
 		var paramsArray = ['_trackEvent', category, action];
 		
-		//mixpanel
-		var paramsObject = {'category': category};
-		
 		//optional parameters
-		if(label){
+		if(label)
 			paramsArray.push(label);
-			paramsObject.label = label;
-		}
 		
-		if(intVal){
+		if(intVal)
 			paramsArray.push(intVal);
-			paramsObject.number = intVal;
-		}
 		
-		//GA
 		_gaq.push(paramsArray);
-		
-		//mixpanel
-		if (mpq.track && category != 'pageview') mpq.track(action, paramsObject);
 	},
 	
 	init: function(){
 		//analytics
-		//GA
 		_gaq.push(
 			['_setSampleRate', MobileSkin.GA.samplingRate],
 			['_setAccount', MobileSkin.GA.accountID],
@@ -77,28 +37,9 @@ var MobileSkin = {
 			['_trackPageview', '/1_mobile/' + MobileSkin.GA.userName + '/view']
 		);
 		
-		//GA
 		if(wgPrivateTracker) {
 			_gaq.push(['_trackPageview', '/1_mobile/' + wgDB + '/' + MobileSkin.GA.userName + '/view']);
 		}
-		
-		//mixpanel
-		if(mpq.name_tag && wgUserName && wgUserName != null){ 
- 			mpq.name_tag(wgUserName); 
- 		}
- 		
- 		//mixpanel
- 		if(mpq.register){
- 			mpq.register({
-	 			'user type': MobileSkin.userType,
-	 			'user language': wgUserLanguage,
-	 			'hub': cityShort,
-	 			'wiki': wgDBname,
-	 			'visiting mainpage': wgIsMainpage,
-	 			'skin': skin,
-	 			'user agent': navigator.userAgent
-	 		});
- 		}
  		
 		MobileSkin.track('pageview', 'view', wgPageName);
 		
@@ -170,8 +111,5 @@ var MobileSkin = {
 		}
 	}
 };
-
-//mixpanel
-MobileSkin.initMixpanel();
 
 $(document).ready(MobileSkin.init);
