@@ -114,12 +114,11 @@
 		/**
 		 * @dataProvider getFeatureNormalDataProvider
 		 */
-		public function testGetFeatureNormal($wg_wiki_features, $exp_result, $release_date=array()) {
+		public function testGetFeatureNormal($wg_wiki_features, $exp_result) {
 			$this->setUpGetFeature('normal', $wg_wiki_features);
 			$this->setUpMock();
 
 			$helper = new WikiFeaturesHelper();
-			$helper::$release_date = $release_date;
 			$response = $helper->getFeatureNormal();
 			$this->assertEquals($exp_result, $response);
 
@@ -134,24 +133,10 @@
 				'normal' => array('wgEnableAchievementsExt','wgEnablePageLayoutBuilder')
 			);
 			$exp4 = array (
-				array ('name' => 'wgEnableAchievementsExt', 'enabled' => true, 'new' => false),
-				array ('name' => 'wgEnablePageLayoutBuilder', 'enabled' => true, 'new' => false),
+				array ('name' => 'wgEnableAchievementsExt', 'enabled' => true),
+				array ('name' => 'wgEnablePageLayoutBuilder', 'enabled' => true),
 			);
 			$wiki_features5 = array_merge($wiki_features3, $wiki_features4);
-			
-			$release_date6 = array('wgEnableAchievementsExt' => 'abc');
-			$release_date7 = array('wgEnableAchievementsExt' => '');
-			$release_date8 = array('wgEnableAchievementsExt' => '123');
-			$release_date9 = array('wgEnableAchievementsExt' => date('Y-m-d', strtotime('-15 days')));
-			$release_date10 = array('wgEnableAchievementsExt' => date('Y-m-d', strtotime('-14 days')));
-			$release_date11 = array('wgEnableAchievementsExt' => date('Y-m-d', strtotime('-13 days')));
-			$release_date12 = array('wgEnableAchievementsExt' => date('Y-m-d', strtotime('now')));
-			$release_date13 = array('wgEnableAchievementsExt' => date('Y-m-d', strtotime('+20 days')));
-
-			$exp10 = array (
-				array ('name' => 'wgEnableAchievementsExt', 'enabled' => true, 'new' => true),
-				array ('name' => 'wgEnablePageLayoutBuilder', 'enabled' => true, 'new' => false),
-			);			
 			
 			return array(
 				array(null, array()),				// invalid wgWikiFeatures - null
@@ -160,15 +145,6 @@
 				
 				array($wiki_features4, $exp4),
 				array($wiki_features5, $exp4),		// return only normal
-				
-				array($wiki_features4, $exp4, $release_date6),	// invalid release date
-				array($wiki_features4, $exp4, $release_date7),	// invalid release date
-				array($wiki_features4, $exp4, $release_date8),	// invalid release date
-				array($wiki_features4, $exp4, $release_date9),	// invalid release date - release date > 15 days
-				array($wiki_features4, $exp10, $release_date10),	// release date = 14 days
-				array($wiki_features4, $exp10, $release_date11),	// release date < 14 days
-				array($wiki_features4, $exp10, $release_date12),	// release date < 14 days
-				array($wiki_features4, $exp10, $release_date13),	// release date -> future
 			);
 		}
 

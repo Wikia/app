@@ -63,7 +63,6 @@ class WikiFeaturesHelper extends WikiaModel {
 				$list[] = array(
 					'name' => $feature, 
 					'enabled' => $this->app->getGlobal($feature),
-					'new' => self::isNew($feature),
 				);
 			}
 		}
