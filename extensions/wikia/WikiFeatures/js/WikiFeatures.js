@@ -4,6 +4,11 @@ var WikiFeatures = {
 		WikiFeatures.feedbackDialogPrototype = $('.FeedbackDialog');
 		WikiFeatures.deactivateDialogPrototype = $('.DeactivateDialog');
 		WikiFeatures.sliders = $('#WikiFeatures .slider');
+		
+		if(!Modernizr.csstransforms) {
+			$('.representation').removeClass('promotion');
+		}
+		
 		WikiFeatures.sliders.find('.button').click(function(e) {
 			var feature = $(this).closest('.feature');
 			var featureName = feature.data('name');
@@ -35,7 +40,7 @@ var WikiFeatures = {
 			e.preventDefault();
 			var feature = $(this).closest('.feature');
 			var featureName = feature.data('name');
-			var image = feature.find('.representation');
+			var image = feature.find('.representation img');
 			var heading = feature.find('.details h3');
 			var modalClone = WikiFeatures.feedbackDialogPrototype.clone();
 			modalClone.find('.feature-highlight h2').text(heading.text());

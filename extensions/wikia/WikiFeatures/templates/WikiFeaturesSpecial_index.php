@@ -2,7 +2,7 @@
 	<h2 class="heading-features">
 		<?= wfMsg('wikifeatures-heading') ?>
 	</h2>
-	<p>
+	<p class="creative">
 		<?= wfMsg('wikifeatures-creative') ?>
 	</p>
 	
@@ -15,7 +15,7 @@
 	<h2 class="heading-labs">
 		<?= wfMsg('wikifeatures-labs-heading') ?>
 	</h2>
-	<p>
+	<p class="creative">
 		<?= wfMsg('wikifeatures-labs-creative') ?>
 	</p>
 	

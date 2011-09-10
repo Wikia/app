@@ -38,6 +38,7 @@ We know they still have their kinks, and we would love to receive your feedback 
 	'wikifeatures-deactivate-notification' => 'You can turn the feature on again at any time.',
 	'wikifeatures-deactivate-confirm-button' => 'Yes, disable',
 	'wikifeatures-deactivate-cancel-button' => 'Cancel',
+	'wikifeatures-promotion-new' => 'New',
 	// feature message list
 	'wikifeatures-feature-heading-wgEnableTopListsExt' => 'Top 10 Lists',
 	'wikifeatures-feature-description-wgEnableTopListsExt' => 'Top 10 Lists allow anyone on your wiki to create a votable list. They are a good way to get your junior editors to interact with the wiki. [[Special:CreateTopList|Create a new list]]!',
