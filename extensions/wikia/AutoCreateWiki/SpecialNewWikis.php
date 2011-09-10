@@ -37,6 +37,10 @@ extAddSpecialPage( dirname(__FILE__) . '/SpecialNewWikis_body.php', 'Newwikis', 
 
 $wgSpecialPageGroups['Newwikis'] = 'highuse';
 
+$wgAvailableRights[] = 'newwikislist';
+$wgGroupPermissions['*']['newwikislist'] = false;
+$wgGroupPermissions['staff']['newwikislist'] = true;
+
 function wfSetupNewWikis( $queryPages = array() ) {
     $queryPages[] = array( 'NewWikisPage', 'Newwikis');
     return true;
