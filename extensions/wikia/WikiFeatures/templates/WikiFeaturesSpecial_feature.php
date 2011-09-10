@@ -29,7 +29,7 @@
 			<?= wfMsg('wikifeatures-feature-heading-'.$feature['name']) ?>
 		</h3>
 		<p>
-			<?= wfMsg('wikifeatures-feature-description-'.$feature['name']) ?>
+			<?= wfMsgExt('wikifeatures-feature-description-'.$feature['name'], 'parseinline') ?>
 		</p>
 	</div>
 </li>

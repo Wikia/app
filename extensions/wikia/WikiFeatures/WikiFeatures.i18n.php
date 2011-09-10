@@ -53,7 +53,12 @@ We know they still have their kinks, and we would love to receive your feedback 
 	'wikifeatures-feature-description-wgEnableChat' => 'Instantaneously communicate with other people who love your wiki and your wiki\'s topic as much as you do! Anyone with a Wikia account can join chat via the "Join the Chat" button in the right navigational area of your site. lol omg rotfl.',
 	'wikifeatures-feature-heading-wgEnableEditPageReskinExt' => 'Wikia Editor Redesign',
 	'wikifeatures-feature-description-wgEnableEditPageReskinExt' => 'Editing is at the heart of a wiki and having a great editor is key to having an easy and fun experience when adding content. To improve your experience, we have redesigned our edit pages.',
-	
+	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'Polls',
+	'wikifeatures-feature-description-wgEnableAjaxPollExt' => 'Allow anyone on your wiki to create a poll! With Polls enabled your users can use the [http://help.wikia.com/wiki/Help:Poll poll tag] to add this neat feature to any page. This feature is a great way to increase contribution on your wiki.',
+	'wikifeatures-feature-heading-wgEnablePageLayoutBuilder' => 'Layout Builder',
+	'wikifeatures-feature-description-wgEnablePageLayoutBuilder' => 'Help editors on your wiki create great looking pages in less time. Layout builder lets the admins on your wiki create pre-formatted pages for your editors to choose from while adding a page.',
+	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blogs',
+	'wikifeatures-feature-description-wgEnableBlogArticles' => 'Blogs allow users on your wiki to create their own blog posts on their profile page and can also be used as a great way to communicate news and events to your wiki community.',
 	'wikifeatures-feature-heading-emptylabs' => 'Looks like the lab is taking a break',
 	'wikifeatures-feature-description-emptylabs' => 'Our tech scientists are hard at work bubbling up new features for you to try out. Look for more labs here soon!',
 );
