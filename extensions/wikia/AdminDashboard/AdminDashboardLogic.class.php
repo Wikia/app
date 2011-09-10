@@ -21,7 +21,7 @@ class AdminDashboardLogic {
 			'Upload' => true,
 			'UserRights' => true,
 			'Userrights' => true,
-			'WikiaLabs' => true,
+			'WikiFeatures' => true,
 		);
 		return !empty($generalApps[$appName]);
 	}
