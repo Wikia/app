@@ -110,9 +110,9 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 		if ( !array_key_exists($feature, WikiFeaturesHelper::$feedbackAreaIDs) ) {
 			$this->result = 'error';
 			$this->error = $this->wf->Msg('wikifeatures-error-invalid-parameter', 'feature');
-		} else if ( !array_key_exists($category, WikiFeaturesHelper::$feedbackCategories) ) {
+		} else if ( !array_key_exists($category, WikiFeaturesHelper::$feedbackCategories) || $category == 0) {
 			$this->result = 'error';
-			$this->error = $this->wf->Msg('wikifeatures-error-invalid-parameter', 'category');
+			$this->error = $this->wf->Msg('wikifeatures-error-invalid-category');
 		} else if ( !$message || strlen($message) < 10 || strlen($message) > 1000 ) {
 			$this->result = 'error';
 			$this->error = $this->wf->Msg('wikifeatures-error-message');
@@ -124,10 +124,8 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 		// Passed validations, actually do something useful
 		if( is_null($this->error) ) {
 			$this->result = 'ok';
-			//TODO: remove before release
-			//$bugzdata = WikiFeaturesHelper::getInstance()->saveFeedbackInFogbugz( $feature, $user->getEmail(), $user->getName(), $message, $category );
-			//$this->caseId = $bugzdata['caseId'];
-			$this->caseId = 123;
+			$bugzdata = WikiFeaturesHelper::getInstance()->saveFeedbackInFogbugz( $feature, $user->getEmail(), $user->getName(), $message, $category );
+			$this->caseId = $bugzdata['caseId'];
 		}
 	}
 	

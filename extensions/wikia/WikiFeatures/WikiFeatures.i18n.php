@@ -21,6 +21,7 @@ We know they still have their kinks, and we would love to receive your feedback 
 	'wikifeatures-error-invalid-parameter' => 'Invalid parameter: $1. Please try again.',
 	'wikifeatures-error-message' => 'Comment is too short or too long.',
 	'wikifeatures-error-spam-attempt' => 'Please wait 60 seconds before submitting more feedback.',
+	'wikifeatures-error-invalid-category' => 'Oops!  Please choose what this ticket is about.',
 	'wikifeatures-toggle-active' => 'Enabled',
 	'wikifeatures-toggle-inactive' => 'Disabled',
 	'wikifeatures-active-on' => 'Active on $1 wikis',
