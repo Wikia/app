@@ -17,7 +17,7 @@ var WikiFeatures = {
 				var el = $(this).closest('.slider');
 				var isEnabled = el.hasClass('on');
 				if(isEnabled) {
-					var featureHeading = feature.find('h3').text().trim();
+					var featureHeading = feature.find('h3').text().replace(/(^[\s\xA0]+|[\s\xA0]+$)/g, '');	//jquery doesn't support trim in IE7
 					var modalClone = WikiFeatures.deactivateDialogPrototype.clone();
 					var modalHeading = modalClone.find('h1');
 					modalHeading.text(modalHeading.text().replace(/\$1/g, featureHeading));
