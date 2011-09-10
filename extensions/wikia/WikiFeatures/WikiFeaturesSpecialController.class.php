@@ -24,6 +24,7 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 			return false;  // skip rendering
 		}
 		$this->response->addAsset('extensions/wikia/WikiFeatures/css/WikiFeatures.scss');
+		$this->response->addAsset('extensions/wikia/WikiFeatures/js/modernizr.transform.js');
 		$this->response->addAsset('extensions/wikia/WikiFeatures/js/WikiFeatures.js');
 		
 		$this->features = WikiFeaturesHelper::getInstance()->getFeatureNormal();

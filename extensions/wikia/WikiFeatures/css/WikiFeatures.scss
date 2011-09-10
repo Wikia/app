@@ -3,6 +3,7 @@
 @import "../../../../skins/oasis/css/mixins/box-shadow";
 @import "../../../../skins/oasis/css/mixins/clearfix";
 @import "../../../../skins/oasis/css/mixins/gradient";
+@import "../../../../skins/oasis/css/mixins/transform";
 @import "../../../../skins/oasis/css/mixins/transition";
 @import "../../../../skins/oasis/css/core/color";
 
@@ -18,6 +19,11 @@
 		&.heading-labs {
 			background: url(/extensions/wikia/WikiFeatures/images/icon_labs_big.png) no-repeat 5px 0;
 		}
+	}
+	>.creative {
+		font-size: 16px;
+		line-height: 26px;
+		margin-top: 15px;
 	}
 	.features {
 		margin: 0;
@@ -39,7 +45,40 @@
 			.representation {
 				border: 1px solid $color-page-border;
 				float: left;
+				height: 100px;
+				position: relative;
+				width: 150px;
+				.promo-text {
+					color: red;
+					display: block;
+					font-size: 14px;
+					text-align: center;
+					font-weight: bold;
+				}
+				&.promotion {
+					.promo-text {
+						color: white;
+						left: 0;
+						position: absolute;
+						top: 0;
+						width: 100px;
+						z-index: 5;
+						@include transform-origin(0 0);
+						@include transform(translate(-17px, 54px) rotate(-45deg));
+						
+					}
+					&:after {
+						background: url(/extensions/wikia/WikiFeatures/images/new_ribbon.png);
+						content: "";
+						height: 93px;
+						left: -6px;
+						position: absolute;
+						top: -6px;
+						width: 93px;
+					}
+				}
 			}
+			
 			.details {
 				margin: 0 190px 0 165px;
 			}

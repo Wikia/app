@@ -26,3 +26,10 @@
   -moz-transform: translate($x, $y);
   -ms-transform: translate($x, $y);
 }
+
+@mixin transform-origin($values) {
+	transform-origin: $values;
+	-webkit-transform-origin: $values;
+	-moz-transform-origin: $values;
+	-ms-transform-origin: $values;
+}
