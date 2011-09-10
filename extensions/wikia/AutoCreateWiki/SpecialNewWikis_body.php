@@ -191,7 +191,7 @@ class NewWikisPage extends AlphabeticPager {
 		$name = XML::tags('A', array('href' => $row->city_url), $row->city_title);
 		if ($this->more_details) {
 			$confirm = ($row->user_email_authenticated) ? 'Y' : 'N';
-			$detail = "$row->city_lang, $row->city_created, FounderName:$row->user_name, Email:$row->user_email Confirm:$confirm";
+			$detail = "$row->city_lang, $row->city_created, FounderName:$row->user_name, Email:$row->user_email, Confirm:$confirm";
 		} else {
 			$detail = $row->city_lang;
 		}
