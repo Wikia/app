@@ -20,7 +20,16 @@
 	</p>
 	
 	<ul class="features">
-		<? foreach ($labsFeatures as $feature) { ?>
+		<? if (!empty($labsFeatures)) { ?>
+			<? foreach ($labsFeatures as $feature) { ?>
+				<?= F::app()->getView( 'WikiFeaturesSpecial', 'feature', array('feature' => $feature, 'editable' => $editable ) ) ?>
+			<? } ?>
+		<? } else { ?>
+		<? 
+			$feature = array(
+				"name" => "emptylabs"
+			); 
+		?>
 			<?= F::app()->getView( 'WikiFeaturesSpecial', 'feature', array('feature' => $feature, 'editable' => $editable ) ) ?>
 		<? } ?>
 	</ul>
