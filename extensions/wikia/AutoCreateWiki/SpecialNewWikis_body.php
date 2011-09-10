@@ -86,6 +86,7 @@ class NewWikisSpecialPage extends SpecialPage {
 class NewWikisPage extends AlphabeticPager {
 	private $firstChar;
 	private $lang;
+	private $more_details = false;
 
 	/**
 	 * constructor
@@ -93,7 +94,7 @@ class NewWikisPage extends AlphabeticPager {
 	 * @access public
 	 */
 	function __construct( $par = null ) {
-		global $wgRequest;
+		global $wgRequest, $wgUser;
 		$parms = explode( '/', ($par = ( $par !== null ) ? $par : '' ) );
 		if ( isset($parms[0]) && !empty($parms[0]) ) {
 			$this->firstChar = $parms[0];
@@ -104,6 +105,9 @@ class NewWikisPage extends AlphabeticPager {
 		$this->lang = ( $this->lang != '' ) ? $this->lang : $wgRequest->getVal( 'language' );
 		$this->firstChar = ( $this->firstChar != '' ) ? $this->firstChar : $wgRequest->getText( 'start' );
 		$this->hub = $wgRequest->getText( 'hub' );
+		
+		if ($wgUser->isAllowed('newwikislist'))
+			$this->more_details = true;
 
 		parent::__construct();
 
@@ -133,6 +137,14 @@ class NewWikisPage extends AlphabeticPager {
 
 		// Don't show hidden names
 		$query['conds'][] = 'city_public = 1';
+		
+		// founder info
+		if ($this->more_details) {
+			$query['tables'][] = 'user';
+			$extra_fields = array('user.user_name', 'user.user_email', 'user.user_email_authenticated');
+			$query['fields'] = array_merge($query['fields'], $extra_fields);
+			$query['join_conds']['user'] = array('left join', 'city_list.city_founding_user=user.user_id');
+		}
 
 		if ( $this->firstChar != "" ) {
 			$query['conds'][] = sprintf( "upper(city_title) like upper('%s%%')", $this->mDb->escapeLike( $this->firstChar ) );
@@ -177,7 +189,13 @@ class NewWikisPage extends AlphabeticPager {
 		global $wgLang;
 
 		$name = XML::tags('A', array('href' => $row->city_url), $row->city_title);
-		$item = wfSpecialList( $name, $row->city_lang );
+		if ($this->more_details) {
+			$confirm = ($row->user_email_authenticated) ? 'Y' : 'N';
+			$detail = "$row->city_lang, $row->city_created, FounderName:$row->user_name, Email:$row->user_email Confirm:$confirm";
+		} else {
+			$detail = $row->city_lang;
+		}
+		$item = wfSpecialList( $name, $detail );
 
 		return "<li>{$item}</li>";
 	}
