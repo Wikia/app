@@ -6,7 +6,7 @@
 		<? } ?>
 	</div>
 	<div class="actions">
-		<? if ($editable) { ?>
+		<? if ($editable && isset($feature['enabled'])) { ?>
 			<span class="slider<?= $feature['enabled'] ? ' on' : '' ?>">
 				<span class="button"></span>
 				<span class="textoff"><?= wfMsg('wikifeatures-toggle-inactive') ?></span>

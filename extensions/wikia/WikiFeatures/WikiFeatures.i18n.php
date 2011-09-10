@@ -52,6 +52,9 @@ We know they still have their kinks, and we would love to receive your feedback 
 	'wikifeatures-feature-description-wgEnableChat' => 'Instantaneously communicate with other people who love your wiki and your wiki\'s topic as much as you do! Anyone with a Wikia account can join chat via the "Join the Chat" button in the right navigational area of your site. lol omg rotfl.',
 	'wikifeatures-feature-heading-wgEnableEditPageReskinExt' => 'Wikia Editor Redesign',
 	'wikifeatures-feature-description-wgEnableEditPageReskinExt' => 'Editing is at the heart of a wiki and having a great editor is key to having an easy and fun experience when adding content. To improve your experience, we have redesigned our edit pages.',
+	
+	'wikifeatures-feature-heading-emptylabs' => 'Looks like the lab is taking a break',
+	'wikifeatures-feature-description-emptylabs' => 'Our tech scientists are hard at work bubbling up new features for you to try out. Look for more labs here soon!',
 );
 
 /** German (Deutsch)

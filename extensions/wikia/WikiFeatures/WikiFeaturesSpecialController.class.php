@@ -19,7 +19,7 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 	
 	public function index() {
 		$this->wg->Out->setPageTitle(wfMsg('wikifeatures-title'));
-		if (!$this->wg->User->isLoggedIn()) {
+		if (!$this->wg->User->isLoggedIn()) {	// show this feature to logged in users only regardless of their rights
 			$this->displayRestrictionError();
 			return false;  // skip rendering
 		}
@@ -27,10 +27,20 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 		$this->response->addAsset('extensions/wikia/WikiFeatures/js/modernizr.transform.js');
 		$this->response->addAsset('extensions/wikia/WikiFeatures/js/WikiFeatures.js');
 		
+		if($this->getVal('simulateNewLabs', false)) { // debug code
+			WikiFeaturesHelper::$release_date = array (
+				'wgEnableChat' => '2032-09-01'
+			);
+		}
+		
 		$this->features = WikiFeaturesHelper::getInstance()->getFeatureNormal();
 		$this->labsFeatures = WikiFeaturesHelper::getInstance()->getFeatureLabs();
 		
-		$this->editable = ($this->wg->User->isAllowed('wikifeatures')) ? true : false ;
+		$this->editable = ($this->wg->User->isAllowed('wikifeatures')) ? true : false ;	// only those with rights can make edits
+		
+		if($this->getVal('simulateEmptyLabs', false)) {	// debug code
+			$this->labsFeatures = array();
+		}
 	}
 
 	/**
