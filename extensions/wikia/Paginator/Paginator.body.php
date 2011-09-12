@@ -79,13 +79,17 @@ class Paginator extends Service{
 
 	private function paginate( $aData ){
 		
-		if ( ( is_array($aData) ) && ( count($aData) > 0 ) ){
-			$aPaginatedData = array_chunk( $aData, $this->config['itemsPerPage'] );
-			$this->paginatedData = $aPaginatedData;
-		}else{
-			$this->paginatedData = $aData;
+		if ( is_array($aData) ) {
+			if ( count($aData) > 0 ) {
+				$aPaginatedData = array_chunk( $aData, $this->config['itemsPerPage'] );
+				$this->paginatedData = $aPaginatedData;
+			}else{
+				$this->paginatedData = $aData;
+			}
+			$this->pagesCount = count( $this->paginatedData );
+		} else if ( is_int($aData) ) {
+			$this->pagesCount = ceil($aData / $this->config['itemsPerPage']);
 		}
-		$this->pagesCount = count( $this->paginatedData );
 	}
 
 	public function hasContent(){

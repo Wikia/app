@@ -393,7 +393,7 @@ class ArticleCommentList {
 			'isFBConnectionProblem' => ArticleCommentInit::isFbConnectionNeeded(),
 			'isReadOnly' => $isReadOnly,
 			'page' => $page,
-			'pagination' => $pagination,
+			'pagination' => array('totalItems' => $countComments, 'itemsPerPage' => $wgArticleCommentsMaxPerPage, 'currentPage' => $page),
 			'reason' => $isBlocked ? $this->blockedPage() : '',
 			'stylePath' => $wgStylePath,
 			'title' => $wgTitle
