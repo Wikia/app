@@ -20,6 +20,32 @@ $messages['en'] = array(
 	'wikiamobile-explore' => 'Explore'
 );
 
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'wikiamobile-search' => 'Soek',
+	'wikiamobile-search-wiki' => 'Wiki',
+	'wikiamobile-search-wikia' => 'Wikia',
+	'wikiamobile-login' => 'Meld aan',
+	'wikiamobile-password' => 'Wagwoord',
+	'wikiamobile-login-submit' => 'Meld aan',
+	'wikiamobile-menu' => 'Keuses',
+	'wikiamobile-explore' => 'Verken',
+);
+
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'wikiamobile-search' => 'Axtar',
+	'wikiamobile-search-wiki' => 'Viki',
+	'wikiamobile-search-wikia' => 'Wikia',
+	'wikiamobile-login' => 'Loqin',
+	'wikiamobile-password' => 'Parol',
+	'wikiamobile-login-submit' => 'Loqin',
+);
+
 /** Breton (Brezhoneg)
  * @author Y-M D
  */
@@ -71,6 +97,19 @@ $messages['fr'] = array(
 	'wikiamobile-login-submit' => 'Se connecter',
 	'wikiamobile-menu' => 'Menu',
 	'wikiamobile-explore' => 'Explorer',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'wikiamobile-search' => 'Sichen',
+	'wikiamobile-search-wiki' => 'Wiki',
+	'wikiamobile-search-wikia' => 'Wikia',
+	'wikiamobile-login' => 'Aloggen',
+	'wikiamobile-password' => 'Passwuert',
+	'wikiamobile-login-submit' => 'Aloggen',
+	'wikiamobile-menu' => 'Menü',
 );
 
 /** Macedonian (Македонски)
@@ -131,12 +170,18 @@ $messages['no'] = array(
 	'wikiamobile-explore' => 'Utforsk',
 );
 
-/** Polish (Polski) */
+/** Polish (Polski)
+ * @author Woytecr
+ */
 $messages['pl'] = array(
 	'wikiamobile-search' => 'Szukaj',
+	'wikiamobile-search-wiki' => 'Wiki',
+	'wikiamobile-search-wikia' => 'Wikia',
 	'wikiamobile-login' => 'Login',
 	'wikiamobile-password' => 'Hasło',
 	'wikiamobile-login-submit' => 'Zaloguj',
+	'wikiamobile-menu' => 'Menu',
+	'wikiamobile-explore' => 'Eksploruj',
 );
 
 /** Russian (Русский)
@@ -179,6 +224,20 @@ $messages['te'] = array(
 	'wikiamobile-password' => 'సంకేతపదం',
 	'wikiamobile-login-submit' => 'ప్రవేశించు',
 	'wikiamobile-menu' => 'మెనూ',
+);
+
+/** Thai (ไทย)
+ * @author Akkhaporn
+ */
+$messages['th'] = array(
+	'wikiamobile-search' => 'ค้นหา',
+	'wikiamobile-search-wiki' => 'วิกิ',
+	'wikiamobile-search-wikia' => 'วิเกีย',
+	'wikiamobile-login' => 'ลงชื่อเข้าใช้',
+	'wikiamobile-password' => 'รหัสผ่าน',
+	'wikiamobile-login-submit' => 'ลงชื่อเข้าใช้',
+	'wikiamobile-menu' => 'เมนู',
+	'wikiamobile-explore' => 'สำรวจ',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)

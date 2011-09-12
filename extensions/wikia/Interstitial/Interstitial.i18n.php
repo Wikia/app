@@ -219,16 +219,17 @@ $messages['pl'] = array(
 );
 
 /** Piedmontese (Piemontèis)
+ * @author Borichèt
  * @author Dragonòt
  */
 $messages['pms'] = array(
 	'interstitial-default-campaign-code' => 'Wikia at Veul Bin!',
-	'interstitial-skip-ad' => 'Sàuta sto ad',
-	'interstitial-already-logged-in-no-link' => 'It ses già intrà e a-i é pa gnun-e destinassion ampostà.',
-	'interstitial-disabled-no-link' => "A-i é pa gnun-e destinassion ampostà e j'interstitial a son pa abilità su sta wiki.",
-	'interstitial-link-away' => 'A-i é pa gnente da vardé ambelessì!<br /><br />Veul-lo andé a la [[{{MediaWiki:Mainpage}}|Pàgina prinsipal]] o miraco a na [[Special:Random|pàgina a asar]]?',
-	'exitstitial-register' => '<a href="#" class="register">Registrë-te</a> o <a href="#" class="login">Intra</a> për sauté j\'ads.',
-	'exitstitial-button' => 'Sàuta Sto Ad',
+	'interstitial-skip-ad' => "Sauté s'areclam",
+	'interstitial-already-logged-in-no-link' => "A l'é già intrà ant ël sistema e a-i son gnun-e destinassion ampostà.",
+	'interstitial-disabled-no-link' => 'A-i son gnun-e destinassion ampostà e ij trames a son pa abilità su sta wiki.',
+	'interstitial-link-away' => "A-i é gnente da vëdde ambelessì!<br /><br />Veul-lo andé a la [[{{MediaWiki:Mainpage}}|Pàgina d'intrada]] o miraco a na [[Special:Random|pàgina qualsëssìa]]?",
+	'exitstitial-register' => '<a href="#" class="register">Argistresse</a> o <a href="#" class="login">Intré ant ël sistema</a> për sauté j\'areclam.',
+	'exitstitial-button' => "Sauté S'areclam",
 );
 
 /** Portuguese (Português)
@@ -282,6 +283,8 @@ $messages['sr-ec'] = array(
 $messages['sv'] = array(
 	'interstitial-default-campaign-code' => 'Wikia älskar dig!',
 	'interstitial-skip-ad' => 'Hoppa över denna annons',
+	'interstitial-link-away' => 'Det finns ingenting att se här!<br /><br />Vill du gå till [[{{MediaWiki:Mainpage}}|Huvudsidan]] eller kanske en [[Special:Random|slumpartad sida]]?',
+	'exitstitial-register' => '<a href="#" class="register">Registrera</a> eller <a href="#" class="login">Logga in</a> för att hoppa över annonser.',
 	'exitstitial-button' => 'Hoppa över denna annons',
 );
 

@@ -46,6 +46,13 @@ $messages['qqq'] = array(
 	'unsubscribe-preferences-toggle' => 'zugehörige Adresse: http://de.wikia.com/Spezial:Einstellungen',
 );
 
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'unsubscribe-confirm-legend' => 'Təsdiq et',
+);
+
 /** Breton (Brezhoneg)
  * @author Y-M D
  */
@@ -288,6 +295,8 @@ $messages['nl'] = array(
 	'unsubscribe-working' => 'Bezig met het uitschrijven van {{PLURAL:$1|een gebruiker|$1 gebruikers}} voor $2',
 	'unsubscribe-working-problem' => 'probleem bij het laden van de gebruikersgegevens voor: $1',
 	'unsubscribe-working-done' => 'Afgerond.',
+	'unsubscribe-preferences-toggle' => 'Afmelden voor alle e-mails van Wikia (vink dit uit dit voor toegang tot de instellingen hieronder)',
+	'unsubscribe-preferences-notice' => 'E-mails zijn uitgeschakeld voor uw gebruiker. Ga naar het gebruikersprofiel om e-mailberichten opnieuw in te schakelen.',
 );
 
 /** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)

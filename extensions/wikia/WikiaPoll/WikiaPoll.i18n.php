@@ -90,6 +90,7 @@ $messages['az'] = array(
 	'wikiapoll-thanks-for-vote' => 'Təşəkkürlər!',
 	'wikiapoll-question-label' => 'Sual',
 	'wikiapoll-cancel-label' => 'Ləğv et',
+	'wikiapoll-publish-label' => 'Naşir',
 );
 
 /** Bulgarian (Български)

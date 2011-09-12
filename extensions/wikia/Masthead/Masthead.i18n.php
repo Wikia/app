@@ -65,6 +65,7 @@ $messages['ar'] = array(
  */
 $messages['az'] = array(
 	'blog-avatar-delete' => 'Sil',
+	'blog-avatar-getuser' => 'Axtar',
 );
 
 /** Bulgarian (Български)
@@ -820,9 +821,15 @@ $messages['sr-ec'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'blog-avatar-goto-userpage' => 'Gå till användarsida',
 	'blog-avatar-edit' => 'Ändra',
 	'blog-avatar-delete' => 'Radera',
+	'blog-avatar-choose-avatar' => 'Välj en ny avatar',
+	'blog-avatar-upload-avatar' => 'Ladda upp en ny avatar',
+	'blog-avatar-nouser' => 'Kan inte hitta denna användare!',
 	'blog-avatar-getuser' => 'Sök',
+	'blog-avatar-remove-confirm' => 'Är du säker på att du vill ta bort avatar?',
+	'blog-avatar-error-size' => 'Uppladdad fil är för stor, tillåten storlek är upp till $1 kB.',
 	'masthead-edits-since' => 'redigeringar sedan',
 );
 

@@ -37,7 +37,11 @@ class CreateWikiTest extends PHPUnit_Framework_TestCase {
 	 * @group Infrastructure
 	 */
 	public function testWikiCreation() {
-		global $wgCityId, $wgWikiaLocalSettingsPath; 
+		global $wgCityId, $wgWikiaLocalSettingsPath, $wgMaxShellMemory, $wgMaxShellTime;
+		
+		$wgMaxShellMemory = 0;
+		$wgMaxShellTime = 0;
+                
 		$languages = array( 'en', 'pl', 'de', 'pt-br' );;
 
 		$types = array( false, "answers" );

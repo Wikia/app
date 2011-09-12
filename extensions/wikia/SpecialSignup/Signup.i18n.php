@@ -179,7 +179,7 @@ $messages['ru'] = array(
 	'signup' => 'Регистрация',
 );
 
-/** Tachelhit (Tašlḥiyt) */
+/** Tachelhit (Tašlḥiyt/ⵜⴰⵛⵍⵃⵉⵜ) */
 $messages['shi'] = array(
 	'signup-desc' => 'Zayd alias [[{{#Special:Signup}}]] i [[{{#Special:UserLogin}}/signup]]',
 	'signup' => 'Aqqiyd (akcum)',

@@ -321,7 +321,7 @@ $messages['ru'] = array(
 	'mostpopularcategories' => 'Самые популярные категории',
 );
 
-/** Tachelhit (Tašlḥiyt) */
+/** Tachelhit (Tašlḥiyt/ⵜⴰⵛⵍⵃⵉⵜ) */
 $messages['shi'] = array(
 	'mostpopularcategories' => 'Taggayyin lli bahra ttuyssanin',
 );

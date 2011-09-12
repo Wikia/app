@@ -273,6 +273,7 @@ $messages['az'] = array(
 	'myhome-feed-newpage' => 'yeni səhifə',
 	'myhome-feed-edit' => 'redaktə',
 	'myhome-feed-talkpage' => 'müzakirə səhifəsi',
+	'myhome-feed-by' => '$1-dən',
 	'myhome-feed-new-page-details' => 'Yeni səhifə',
 	'myhome-feed-summary-details' => 'Xülasə',
 	'myhome-feed-section-edit-details' => 'Bölmənin redaktəsi',
@@ -2355,7 +2356,7 @@ Se chiel a l'é ël fondador o n'aministrator ëd la wiki, a peul cangé sto më
  */
 $messages['ps'] = array(
 	'myhome' => 'زما کورپاڼه',
-	'myhome-watchlist-feed' => 'کتنلړليک',
+	'myhome-watchlist-feed' => 'کتنلړ',
 	'myhome-user-contributions-feed' => 'ونډې',
 	'myhome-hot-spots-newest' => 'په ويکي کې نوي مخونه',
 	'myhome-feed-newpage' => 'نوی مخ',

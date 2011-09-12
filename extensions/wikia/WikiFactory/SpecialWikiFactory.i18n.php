@@ -642,7 +642,7 @@ $messages['bg'] = array(
 	'closed-reason' => 'Причина:',
 );
 
-/** Bahasa Banjar (Bahasa Banjar)
+/** Banjar (Bahasa Banjar)
  * @author Ezagren
  */
 $messages['bjn'] = array(
@@ -2301,7 +2301,7 @@ $messages['ka'] = array(
 	'awc-metrics-images' => 'სურათები',
 );
 
-/** کھوار (کھوار)
+/** Khowar (کھوار)
  * @author Rachitrali
  */
 $messages['khw'] = array(

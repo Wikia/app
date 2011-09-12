@@ -45,6 +45,7 @@ $messages['af'] = array(
  */
 $messages['az'] = array(
 	'tagsreportgo' => 'Göstər',
+	'tagsreportmainnspace' => 'Əsas',
 );
 
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)

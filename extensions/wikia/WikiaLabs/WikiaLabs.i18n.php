@@ -85,6 +85,19 @@ $messages['qqq'] = array(
 	'wikialabs-staff-add' => 'A "lab item" in this context is exactly the same thing as a "project" in other messages.',
 );
 
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'wikialabs-add-project-name' => 'Ad',
+	'wikialabs-add-project-project' => 'Layihə',
+	'wikialabs-add-project-status' => 'Status',
+	'wikialabs-add-project-add-save' => 'Qeyd et',
+	'wikialabs-add-project-add-cancel' => 'İmtina',
+	'wikialabs-list-project-warning-cancel' => 'İmtina',
+	'wikialabs-feedback-comments' => 'Şərh:',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  */
@@ -224,8 +237,8 @@ $messages['de'] = array(
 	'wikialabs-an-idea-for-project' => 'Ich habe eine Idee für dieses Projekt',
 	'wikialabs-feedback-validator-spam-attempt' => 'Bitte warten Sie 60 Sekunden vor dem Absenden Ihres nächsten Feedbacks',
 	'wikialabs-feedback-validator-notification-ok' => 'Ihr Feedback wurde hinzugefügt. Vielen Dank!',
-	'wikialabs-log-enabled-extension' => 'aktiviert $1',
-	'wikialabs-log-disabled-extension' => 'deaktiviert $1',
+	'wikialabs-log-enabled-extension' => '$1 aktiviert',
+	'wikialabs-log-disabled-extension' => '$1 deaktiviert',
 );
 
 /** Spanish (Español)
@@ -695,6 +708,8 @@ $messages['nl'] = array(
 	'wikialabs-list-project-warning-ok' => 'Ja, uitschakelen',
 	'wikialabs-list-project-warning-cancel' => 'Annuleren',
 	'wikialabs-list-project-currently-active-on-wikis' => "Actief op $1 {{PLURAL:$1|wiki|wiki's}}",
+	'wikialabs-list-project-warning-box' => 'Gebruik een aantal van onze experimenten en laat ons weten wat u ervan vindt.<br /><br />Bedenk u wel dat we nog steeds aan deze functionaliteit werken. Het is mogelijk dat er fouten voorkomen en het is goed mogelijk dat er nog dingen <b>wijzigen</b>, <b>stuk gaan</b> of <b>verdwijnen</b>.',
+	'wikialabs-list-project-warning-box-no-admin' => 'Via WikiaLabs kunnen beheerders nieuwe mogelijkheden in de wiki testen.<br /><br />Houd in gedachten dat we nog steeds bezig zijn deze functies. Het is mogelijk dat er fouten voorkomen en het is goed mogelijk dat er nog dingen <b>wijzigen</b>, <b>stuk gaan</b> of <b>verdwijnen</b><br /><br />.Laat ons weten wat u ervan vindt door te klikken op de knop "Terugkoppeling geven". Bedankt.',
 	'wikialabs-list-project-list-of-wikis-uses' => "Lijst van wiki's die deze uitbreiding gebruiken",
 	'wikialabs-list-wikias-list-title' => "Wikia Laboratorium - Lijst van wiki's",
 	'wikialabs-list-wikias-list-back-to-wikialab' => 'Terug naar Wikia Laboratorium',
@@ -709,11 +724,13 @@ $messages['nl'] = array(
 	'wikialabs-feedback-submit' => 'Opslaan',
 	'wikialabs-feedback-title' => 'Terugkoppeling',
 	'wikialabs-feedback-rating' => 'Uw beoordeling:',
+	'wikialabs-feedback-we-love-getting-feedback' => 'We krijgen graag terugkoppeling over functionaliteit in WikiaLabs. Als u weet hoe we deze functie kunnen verbeteren of als u een probleem hebt gevonden, laat hieronder dan een bericht achter voor de mensen die aan deze functie werken .',
 	'wikialabs-feedback-comments' => 'Opmerking:',
 	'wikialabs-feedback-validator-user-not-allowed' => 'U kunt geen terugkoppeling geven',
 	'wikialabs-feedback-validator-message-too-long' => 'De opmerking kan niet langer dan 255 tekens zijn',
 	'wikialabs-feedback-validator-message-too-short' => 'Geef een reactie op',
 	'wikialabs-feedback-validator-rating' => 'Geef een waardering op',
+	'wikilabs-feedback-validator-category' => 'Selecteer een categorie in het dropdownmenu "{{int:wikialabs-feedback-category}}"',
 	'wikialabs-feedback-category' => 'Waar gaat dit over?',
 	'wikialabs-category-choose-one' => 'Kies er een...',
 	'wikialabs-love-this-project' => 'Ik hou van dit project.',

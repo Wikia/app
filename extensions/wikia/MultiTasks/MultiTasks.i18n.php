@@ -228,7 +228,30 @@ $messages['af'] = array(
  */
 $messages['az'] = array(
 	'multiwikiedit_button' => 'REDAKTƏ',
+	'multiwikiedit_confirm' => 'QUR',
+	'multiwikiedit_caption' => 'Səhifə siyahısı',
+	'multiwikiedit_list_caption' => 'Viki siyahısı',
+	'multiwikiedit_all_wikis' => 'Bütün vikilər',
+	'multiwikiedit_success_subtitle' => '$1 üçün',
 	'multidelete_button' => 'SİL',
+	'multidelete_caption' => 'Səhifə siyahısı',
+	'multidelete_select_all' => 'Hamısını seç',
+	'multidelete_this_wiki' => 'bu viki',
+	'multidelete_all_wikis' => 'bütün vikilər',
+	'multidelete_success_subtitle' => '$1 üçün',
+	'multidelete_chinese_wikis' => 'çincə bütün vikilər',
+	'multidelete_polish_wikis' => 'polyakca bütün vikilər',
+	'multidelete_czech_wikis' => 'çexcə bütün vikilər',
+	'multidelete_portuguese_wikis' => 'portuqalca bütün vikilər',
+	'multidelete_italian_wikis' => 'italyanca bütün vikilər',
+	'multidelete_russian_wikis' => 'rusca bütün vikilər',
+	'multidelete_english_wikis' => 'ingiliscə bütün vikilər',
+	'multidelete_japanese_wikis' => 'yaponca bütün vikilər',
+	'multidelete_finnish_wikis' => 'fincə bütün vikilər',
+	'multidelete_spanish_wikis' => 'ispanca bütün vikilər',
+	'multidelete_french_wikis' => 'fransızca bütün vikilər',
+	'multidelete_swedish_wikis' => 'isveçcə bütün vikilər',
+	'multidelete_german_wikis' => 'almanca bütün vikilər',
 );
 
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
@@ -370,6 +393,13 @@ $messages['br'] = array(
 	'multiwikifindpagenames' => 'Kavout anvioù pajennoù',
 	'multiwikienterpagename' => 'Lakait un anv pajenn :',
 	'multiwikirecords' => '$1 wiki bet kavet',
+);
+
+/** Catalan (Català)
+ * @author BroOk
+ */
+$messages['ca'] = array(
+	'multiwikiedit_minoredit_caption' => 'Edició menor',
 );
 
 /** Chechen (Нохчийн)
@@ -2574,12 +2604,17 @@ $messages['sr-ec'] = array(
  */
 $messages['sv'] = array(
 	'multitasks-link-back-label' => 'här',
+	'multiwikiedit_button' => 'REDIGERA',
+	'multiwikiedit_confirm' => 'BEKRÄFTA',
 	'multiwikiedit_or' => '<b>ELLER</b>',
+	'multiwikiedit_list_caption' => 'Wiki-lista',
 	'multiwikiedit_minoredit_caption' => 'Mindre redigering',
 	'multiwikiedit_all_wikis' => 'alla wikis',
 	'multiwikiedit_selected_wikis' => 'valda wikis',
 	'multidelete_button' => 'RADERA',
 	'multidelete_or' => '<b>ELLER</b>',
+	'multidelete_select_all' => 'Välj alla',
+	'multidelete_this_wiki' => 'denna wiki',
 	'multidelete_success_subtitle' => 'för $1',
 	'multidelete_brazilian_portuguese_wikis' => 'alla brasilianska portugisiska wikis',
 	'multidelete_hebrew_wikis' => 'alla hebreiska wikis',
@@ -2597,6 +2632,7 @@ $messages['sv'] = array(
 	'multidelete_french_wikis' => 'alla franska wikis',
 	'multidelete_swedish_wikis' => 'alla svenska wikis',
 	'multidelete_german_wikis' => 'alla tyska wikis',
+	'multiwikirecords' => '$1 wiki hittades',
 );
 
 /** Tamil (தமிழ்)

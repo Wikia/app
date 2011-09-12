@@ -34,6 +34,14 @@ $messages['fr'] = array(
 	'confirmemailprompt-error' => 'Est-ce votre adresse de courriel : <strong>$1</strong> ? [[$2|Confirmer]] ou [[$3|la changer]].',
 );
 
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'confirmemailprompt-desc' => 'Mostra unha mensaxe de advertencia se o usuario ten un enderezo de correo electrónico non confirmado',
+	'confirmemailprompt-error' => 'É este o seu enderezo de correo electrónico: <strong>$1</strong>? [[$2|Confírmeo]] ou [[$3|modifíqueo]].',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */

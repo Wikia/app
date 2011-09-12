@@ -32,6 +32,16 @@ $messages['en'] = array(
 	'browser-loading-message' => 'Loading...'
 );
 
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'tab-discover-loading-message' => 'Yüklənir…',
+	'tab-discover-no-network-dialog-close-button' => 'OK',
+	'tab-search-loading-message' => 'Axtarılır...',
+	'browser-loading-message' => 'Yüklənir…',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  */
@@ -161,7 +171,7 @@ $messages['it'] = array(
 	'browser-loading-message' => 'Caricamento...',
 );
 
-/** کھوار (کھوار)
+/** Khowar (کھوار)
  * @author Rachitrali
  */
 $messages['khw'] = array(
@@ -295,5 +305,21 @@ $messages['te'] = array(
 	'main-tab-personal' => 'నా వికియా',
 	'main-tab-search' => 'అన్వేషణ',
 	'tab-discover-no-network-dialog-close-button' => 'సరే',
+);
+
+/** Uyghur (Arabic script) (ئۇيغۇرچە)
+ * @author Sahran
+ */
+$messages['ug-arab'] = array(
+	'main-tab-discover' => 'بايقاش',
+	'main-tab-personal' => 'مېنىڭ Wikia',
+	'main-tab-search' => 'ئىزدە',
+	'main-tab-offline' => 'تورسىز',
+	'tab-discover-loading-message' => 'يۈكلەۋاتىدۇ…',
+	'tab-discover-no-network-dialog-title' => 'تورنى ئىشلەتكىلى بولمايدۇ',
+	'tab-discover-no-network-dialog-message' => 'تور باغلىنىشى بايقالمىدى',
+	'tab-discover-no-network-dialog-close-button' => 'جەزملە',
+	'tab-search-loading-message' => 'ئىزدەۋاتىدۇ…',
+	'browser-loading-message' => 'يۈكلەۋاتىدۇ…',
 );
 

@@ -174,14 +174,15 @@ $messages['no'] = array(
 );
 
 /** Piedmontese (Piemontèis)
+ * @author Borichèt
  * @author Dragonòt
  */
 $messages['pms'] = array(
-	'wikipayment-desc' => 'A përmëtt wiki a pagament për disabilité la reclame',
-	'wikipayment-paypal-redirect' => 'Rediressioné a PayPal, për piasì speta&hellip;',
+	'wikipayment-desc' => "A përmët ëd paghé le wiki për disabilité j'areclam.",
+	'wikipayment-paypal-redirect' => "Ridiression vers PayPal; për piasì, ch'a speta&hellip;",
 	'wikipayment-paypal-error' => 'Eror ëd pagament PayPal (còdes: $1)',
 	'wikipayment-paypal-return-ok' => 'Pagament PayPal andàit bin',
-	'wikipayment-paypal-return-cancel' => 'Pagament PayPal scanselà',
+	'wikipayment-paypal-return-cancel' => 'Pagament PayPal anulà',
 	'wikipayment-paypal-profile-name' => 'Wiki pagà',
 );
 

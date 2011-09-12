@@ -52,6 +52,13 @@ $messages['ar'] = array(
 	'ircgate-channel' => 'لقناة :',
 );
 
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'ircgate-username' => 'İstifadəçi adı:',
+);
+
 /** Bashkir (Башҡортса)
  * @author Comp1089
  */
@@ -76,7 +83,7 @@ $messages['bg'] = array(
 	'ircgate-channel' => 'Канал:',
 );
 
-/** Bahasa Banjar (Bahasa Banjar)
+/** Banjar (Bahasa Banjar)
  * @author Ezagren
  */
 $messages['bjn'] = array(

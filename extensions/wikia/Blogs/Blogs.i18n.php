@@ -1966,6 +1966,14 @@ $messages['ksh'] = array(
 	'blug-cut-sign' => '&nbsp;…',
 );
 
+/** Kurdish (Kurdî)
+ * @author Gomada
+ */
+$messages['ku'] = array(
+	'blog-added' => 'lê hate zêdekirin',
+	'blog-edited' => 'hate guherandin',
+);
+
 /** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
  */
@@ -3413,6 +3421,8 @@ Skapa blogg-listor för kategorier som "Barack Obama", "Fan Fiction", eller komb
 	'create-blog-listing-sortby-author' => 'Författare',
 	'create-blog-listing-sortby-comments' => 'Antal kommentarer',
 	'create-blog-listing-output-as-box' => 'Generera kod för att kopiera och klistra',
+	'blog-header' => 'Bloggartiklar i kategorin "$1"',
+	'blog-subheader' => '{{PLURAL:$1|Det finns ett blogginlägg|Följande bloggartiklar finns}} i denna kategori.',
 	'blog-defaulttitle' => 'Bloggar',
 	'blog-continuereading' => 'Fortsätt läsa &raquo;',
 	'blog-readfullpost' => 'Läs mer',

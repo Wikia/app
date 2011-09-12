@@ -146,8 +146,11 @@ $messages['az'] = array(
 	'themedesigner-large' => 'Geniş',
 	'themedesigner-button-cancel' => 'Ləğv et',
 	'themedesigner-button-ok' => 'Ok',
+	'themedesigner-button-upload' => 'Yüklə',
+	'themedesigner-button-upload-wordmark' => 'Yüklə',
 	'themedesigner-font' => 'şrift',
 	'themedesigner-size' => 'həcm',
+	'themedesigner-button-save' => 'Qeyd et',
 	'themedesigner-history-item' => '$1 tərəfindən $2',
 );
 
@@ -634,7 +637,9 @@ $messages['gl'] = array(
 	'themedesigner-small' => 'Pequeno',
 	'themedesigner-medium' => 'Mediano',
 	'themedesigner-large' => 'Grande',
-	'themedesigner-tile-background' => 'fondo en mosaico',
+	'themedesigner-tile-background' => 'mosaico',
+	'themedesigner-fix-background' => 'fixo',
+	'themedesigner-transparency' => 'transparencia',
 	'themedesigner-tab-theme' => 'Tema visual',
 	'themedesigner-tab-customize' => 'Personalizar',
 	'themedesigner-tab-wordmark' => 'Símbolo',
@@ -666,6 +671,7 @@ $messages['gl'] = array(
 	'themedesigner-dimensions-error' => 'O tamaño da imaxe supera os límites',
 	'themedesigner-type-error' => 'Tipo de ficheiro incorrecto',
 	'themedesugber-uknown-error' => 'Houbo un erro. Por desgraza, non fomos capaces de identificalo. Inténteo de novo',
+	'themedesigner-manual-upload-error' => 'Use o Deseñador de temas visuais para cargar un logo ou o fondo do wiki',
 );
 
 /** Hungarian (Magyar)
@@ -969,6 +975,7 @@ $messages['ms'] = array(
 	'themedesigner-medium' => 'Sederhana',
 	'themedesigner-large' => 'Besar',
 	'themedesigner-tile-background' => 'jubin',
+	'themedesigner-fix-background' => 'fix',
 	'themedesigner-transparency' => 'transparensi',
 	'themedesigner-tab-theme' => 'Tema',
 	'themedesigner-tab-customize' => 'Ubah suai',
@@ -1172,7 +1179,7 @@ $messages['pl'] = array(
 	'themedesigner-small' => 'Mała',
 	'themedesigner-medium' => 'Średnia',
 	'themedesigner-large' => 'Duża',
-	'themedesigner-tile-background' => 'powtarzaj tło',
+	'themedesigner-tile-background' => 'tło',
 	'themedesigner-tab-theme' => 'Motyw',
 	'themedesigner-tab-customize' => 'Dostosuj',
 	'themedesigner-tab-wordmark' => 'Logo tekstowe',
@@ -1252,7 +1259,7 @@ $messages['pms'] = array(
 	'themedesigner-dont-use-a-graphic' => "Dovré pa 'd gràfich",
 	'themedesigner-history-item' => '$1 da $2',
 	'themedesigner-button-change-text' => 'Modifiché ël test',
-	'themedesigner-reason' => 'Theme Designer - salvatagi fàit da $1',
+	'themedesigner-reason' => 'Progetista ëd tema - salvatagi fàit da $1',
 	'themedesigner-size-error' => "Dimension d'archivi pa giusta",
 	'themedesigner-dimensions-error' => 'La figura a passa ij lìmit ëd dimension',
 	'themedesigner-type-error' => "Sòrt d'archivi pa giusta",

@@ -524,15 +524,17 @@ $messages['gl'] = array(
 	'editaccount-submit-pass' => 'Gardar o contrasinal',
 	'editaccount-submit-realname' => 'Gardar o nome real',
 	'editaccount-submit-clearunsub' => 'Desfacer a cancelación da subscrición',
+	'editaccount-submit-cleardisable' => 'Retirar a marca de desactivado',
 	'editaccount-submit-close' => 'Pechar a conta',
 	'editaccount-usage-close' => 'Tamén pode desactivar unha conta de usuario codificando o seu contrasinal e eliminando o enderezo de correo electrónico. Teña en conta que se perderá esa información e non se poderá recuperar.',
 	'editaccount-warning-close' => '<b>Coidado!</b> Está a piques de desactivar permanentemente a conta do usuario <b>$1</b>. Isto non se pode reverter. Está seguro de que é o que quere facer?',
 	'editaccount-status' => 'Mensaxe de estado',
 	'editaccount-success-email' => 'O correo electrónico da conta $1 cambiouse con éxito a $2.',
-	'editaccount-success-email-blank' => 'Eliminouse con éxito o correo electrónico da conta $1.',
+	'editaccount-success-email-blank' => 'Eliminouse correctamente o correo electrónico da conta $1.',
 	'editaccount-success-pass' => 'Cambiouse con éxito o contrasinal da conta $1.',
 	'editaccount-success-realname' => 'Cambiouse con éxito o nome real da conta $1.',
 	'editaccount-success-unsub' => 'Eliminouse correctamente a cancelación da subscrición para a conta $1 .',
+	'editaccount-success-disable' => 'Eliminouse correctamente a marca de desactivado para a conta $1 .',
 	'editaccount-success-close' => 'Desactivouse con éxito a conta $1.',
 	'editaccount-error-email' => 'Non se modificou o correo electrónico. Inténteo de novo ou póñase en contacto co equipo técnico.',
 	'editaccount-error-pass' => 'Non se modificou o contrasinal. Inténteo de novo ou póñase en contacto co equipo técnico.',
@@ -540,13 +542,14 @@ $messages['gl'] = array(
 	'editaccount-error-close' => 'Houbo un problema ao pechar a conta. Inténteo de novo ou póñase en contacto co equipo técnico.',
 	'editaccount-invalid-email' => '"$1" non é un enderezo de correo electrónico válido!',
 	'editaccount-nouser' => 'A conta "$1" non existe!',
+	'editaccount-remove-avatar-fail' => 'Problema durante a eliminación automática do avatar.',
 	'editaccount-log' => 'Rexistro de contas de usuario',
 	'editaccount-log-header' => 'Esta páxina lista as modificacións feitas ás preferencias do usuario polo persoal de Wikia.',
 	'editaccount-log-entry-email' => 'cambiou o correo electrónico do usuario $2',
 	'editaccount-log-entry-pass' => 'cambiou o contrasinal do usuario $2',
 	'editaccount-log-entry-realname' => 'cambiou o nome real do usuario $2',
 	'editaccount-log-entry-close' => 'desactivou a conta $2',
-	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Esta conta foi desactivada.</div>',
+	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Esta conta foi desactivada globalmente por Wikia.</div>',
 	'right-editaccount' => 'Editar as preferencias doutros usuarios',
 );
 
@@ -1011,12 +1014,19 @@ $messages['pa'] = array(
 	'editaccount-submit-realname' => 'ਅਸਲੀ ਨਾਂ ਸੰਭਾਲੋ',
 );
 
-/** Polish (Polski) */
+/** Polish (Polski)
+ * @author Woytecr
+ */
 $messages['pl'] = array(
 	'editaccount' => 'Edytuj konto',
 	'editaccount-desc' => 'Pozwala zmienić informacje o koncie użytkownika',
 	'editaccount-title' => 'Special:EditAccount',
 	'editaccount-frame-manage' => 'Edytuj konto',
+	'editaccount-label-email' => 'Ustaw nowy adres e-mail',
+	'editaccount-label-pass' => 'Ustaw nowe hasło',
+	'editaccount-submit-email' => 'Zapisz adres e-mail',
+	'editaccount-invalid-email' => '"$1" nie jest prawidłowym adresem e-mail!',
+	'editaccount-nouser' => 'Konto "$1" nie istnieje!',
 );
 
 /** Piedmontese (Piemontèis)
@@ -1371,7 +1381,7 @@ $messages['sv'] = array(
 	'editaccount-log-entry-pass' => 'ändrade lösenord för användare $2',
 	'editaccount-log-entry-realname' => 'ändrade riktigt namn för användare $2',
 	'editaccount-log-entry-close' => 'inaktiverade kontot $2',
-	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Detta konto har inaktiverats.</div>',
+	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Detta konto har inaktiverat globalt av Wikia.</div>',
 	'right-editaccount' => 'Redigera andra användares inställningar',
 );
 

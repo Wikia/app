@@ -235,6 +235,7 @@ $messages['as'] = array(
  */
 $messages['az'] = array(
 	'userprofilepage-edit-button' => 'Redaktə',
+	'userprofilepage-about-article-title' => 'İzah',
 	'userprofilepage-user-group-sysop' => 'İdarəçi',
 	'userprofilepage-user-group-bot' => 'Botlar',
 	'userprofilepage-user-group-bureaucrat' => 'Bürokrat',
@@ -1621,7 +1622,7 @@ $messages['ru'] = array(
 	'right-editprofile' => 'Править личные страницы других участников',
 );
 
-/** Tachelhit (Tašlḥiyt) */
+/** Tachelhit (Tašlḥiyt/ⵜⴰⵛⵍⵃⵉⵜ) */
 $messages['shi'] = array(
 	'userprofilepage-edit-button' => 'Ẓreg (bddel)',
 	'userprofilepage-about-article-title' => 'F',

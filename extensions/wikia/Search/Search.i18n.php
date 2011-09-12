@@ -160,6 +160,7 @@ $messages['fi'] = array(
 /** French (Français)
  * @author IAlex
  * @author Peter17
+ * @author Wyz
  */
 $messages['fr'] = array(
 	'search-desc' => 'Moteur de recherche à travers les Wikia utilisant Solr',
@@ -168,6 +169,7 @@ $messages['fr'] = array(
 	'wikiasearch-search-this-wiki' => 'Ne chercher que dans Wikia Central',
 	'wikiasearch-search-wikia' => 'Chercher dans Wikia',
 	'wikiasearch-image-results' => 'Résultats d’images pour « $1 »',
+	'wikiasearch-search-all-wikia' => 'Rechercher sur tous les Wikia',
 );
 
 /** Scottish Gaelic (Gàidhlig)
@@ -342,6 +344,7 @@ $messages['mk'] = array(
 	'wikiasearch-search-this-wiki' => 'Пербарувај само по Викија Централата',
 	'wikiasearch-search-wikia' => 'Пребарајте ја Викија',
 	'wikiasearch-image-results' => 'Резултати за слики за „$1“',
+	'wikiasearch-search-all-wikia' => 'Пребарај ја целата Викија',
 );
 
 /** Malay (Bahasa Melayu)
@@ -354,6 +357,7 @@ $messages['ms'] = array(
 	'wikiasearch-search-this-wiki' => 'Cari di Wikia Central sahaja',
 	'wikiasearch-search-wikia' => 'Cari Wikia',
 	'wikiasearch-image-results' => 'Hasil Carian Gambar (Imej) untuk "$1"',
+	'wikiasearch-search-all-wikia' => 'Cari Seluruh Wikia',
 );
 
 /** Dutch (Nederlands)
@@ -366,6 +370,7 @@ $messages['nl'] = array(
 	'wikiasearch-search-this-wiki' => 'Alleen Wikia Central doorzoeken',
 	'wikiasearch-search-wikia' => 'Wikia doorzoeken',
 	'wikiasearch-image-results' => 'Afbeeldingsresultaten voor "$1"',
+	'wikiasearch-search-all-wikia' => 'Heel Wikia dooezoeken',
 );
 
 /** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
@@ -476,14 +481,17 @@ $messages['ro'] = array(
 
 /** Russian (Русский)
  * @author Eleferen
+ * @author Kuzura
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
+	'search-desc' => 'Кросс-Викия поиск с помощью сервера Solr',
 	'wikiasearch-titles-only' => 'Искать только в заголовках страниц',
 	'wikiasearch-system-error-msg' => 'Из-за системной ошибки, поиск не может быть выполнен',
 	'wikiasearch-search-this-wiki' => 'Поиск только по Wikia Central',
 	'wikiasearch-search-wikia' => 'Найти на Wikia',
 	'wikiasearch-image-results' => 'Результаты поиска изображения для «$1»',
+	'wikiasearch-search-all-wikia' => 'Поиск по всей Викия',
 );
 
 /** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)

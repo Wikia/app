@@ -87,7 +87,7 @@ $messages['bg'] = array(
 	'dump-database-request-submit' => 'Изпращане на заявка',
 );
 
-/** Bahasa Banjar (Bahasa Banjar)
+/** Banjar (Bahasa Banjar)
  * @author Ezagren
  */
 $messages['bjn'] = array(

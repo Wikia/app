@@ -45,6 +45,13 @@ $messages['qqq'] = array(
 * $2 is are the error details.',
 );
 
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'lightbox-share-button-email' => 'E-məktub',
+);
+
 /** German (Deutsch)
  * @author Tiin
  */
@@ -276,5 +283,28 @@ $1
 Подробнее: $2',
 	'lightbox-share-email-error-login' => 'Для отправки писем вам нужно войти на сайт',
 	'lightbox-share-email-error-noaddress' => 'Не был указан адрес(а).',
+);
+
+/** Swedish (Svenska)
+ * @author WikiPhoenix
+ */
+$messages['sv'] = array(
+	'lightbox_details_tooltip' => 'Visa fotodetaljer',
+	'lightbox-forum' => 'Forum',
+	'lightbox-standard-link' => 'Standardlänk',
+	'lightbox-blog-link' => 'Blogglänk',
+	'lightbox-send' => 'Skicka',
+	'lightbox-share-description' => 'Foto på $1 på $2',
+	'lightbox-share-button-email' => 'E-post',
+	'lightbox-share-button-www' => 'Dela',
+	'lightbox-share-button-embed' => 'Bädda in',
+	'lightbox-share-email-label' => 'E-posta denna bild till en vän',
+	'lightbox-share-email-ok-caption' => 'Bekräftelse',
+	'lightbox-share-email-ok-content' => '{{PLURAL:$1|E-postmeddelande|E-postmeddelanden}} har skickats.',
+	'lightbox-share-email-error-caption' => 'Fel',
+	'lightbox-share-email-error-content' => 'Fel uppstod när {{PLURAL:$1|e-postmeddelande|e-postmeddelanden}} skulle skickas.
+Detaljer: $2',
+	'lightbox-share-email-error-login' => 'För att skicka e-postmeddelanden måste du logga in',
+	'lightbox-share-email-error-noaddress' => 'Inga adresser har angivits.',
 );
 

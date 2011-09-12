@@ -165,8 +165,8 @@ $messages['pl'] = array(
  */
 $messages['pms'] = array(
 	'skinchooser-desc' => "A përmët a j'utent ëd serne dle pel ant ij Sò Gust",
-	'skinchooser-customcss' => "Për ij tema përsonalisà, selession-a j'opsion përsonalisà ant ël menu dzora e specìfica ij CSS përsonalisà an [[MediaWiki:Monaco.css]].",
-	'new-look' => 'Presentassion Neuva ëd Wikia',
+	'skinchooser-customcss' => "Për ij tema përsonalisà, ch'a selession-a j'opsion përsonalisà ant la lista sì-dzora e ch'a spessìfica ij còdes CSS përsonalisà an [[MediaWiki:Monaco.css]].",
+	'new-look' => 'Neuva presentassion ëd Wikia',
 	'site-layout' => 'Presentassion dël sit',
 );
 

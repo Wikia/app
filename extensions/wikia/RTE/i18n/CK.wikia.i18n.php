@@ -173,6 +173,7 @@ $messages['ast'] = array(
  * @author Cekli829
  */
 $messages['az'] = array(
+	'rte-ck-errorPopupTitle' => 'Xəta!',
 	'rte-ck-hoverPreview-comment-title' => 'Şərh',
 	'rte-ck-hoverPreview-delete' => 'sil',
 	'rte-ck-hoverPreview-edit' => 'redaktə',
@@ -982,6 +983,8 @@ $messages['gl'] = array(
 	'rte-ck-poll-confirmDelete' => 'Está seguro de querer eliminar a enquisa da páxina?',
 	'rte-ck-poll-confirmDeleteTitle' => 'Quere eliminar a enquisa?',
 	'rte-ck-spellchecker-moreSuggestions' => 'Máis suxestións',
+	'rte-ck-pasteText-title' => 'Pegue o seu texto',
+	'rte-ck-clipboard-pasteMsg' => 'Por razóns de seguridade, o editor non pode pegar o seu texto directamente. Por favor, pegue no cadro de embaixo usando os atallos do teclado (Ctrl/Cmd+V) e prema en "Aceptar"..<br /><br />Nota: O texto será desposuído de formato para evitar a creación de texto wiki complexo.',
 );
 
 /** Hungarian (Magyar)
@@ -1876,13 +1879,13 @@ $messages['pms'] = array(
 	'rte-ck-media-edit' => 'modìfica',
 	'rte-ck-modeSwitch-toSource' => 'Passé an manera sorgiss',
 	'rte-ck-modeSwitch-toWysiwyg' => 'Cangia a manera WYSIWYG',
-	'rte-ck-modeSwitch-error' => "A l'é capitaje n'eror an mente dël cangiament ëd manera. Për piasì preuva torna.",
+	'rte-ck-modeSwitch-error' => "A l'é ancapitaje n'eror durant ël cangiament ëd manera. Për piasì, ch'a preuva torna.",
 	'rte-ck-photoGallery-add' => 'Gionté na galarìa ëd fòto o ëd diapositive',
 	'rte-ck-photoGallery-confirmDelete' => 'É-lo sigur ëd vorèj gavé la galarìa da sta pàgina?',
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Gavé sta galarìa?',
 	'rte-ck-photoGallery-tooltip' => "Costa a l'é na galarìa.",
 	'rte-ck-photoGallery-tooltipSlideshow' => "Costa a l'é na sequensa ëd diapositive.",
-	'rte-ck-poll-add' => 'Gionta un custionari',
+	'rte-ck-poll-add' => 'Gionté un chestionari',
 	'rte-ck-signature-add' => 'Gionta toa firma',
 	'rte-ck-signature-label' => 'Firma',
 	'rte-ck-table-alignNotSet' => 'Pa ampostà',
@@ -1912,9 +1915,9 @@ $messages['pms'] = array(
 	'rte-ck-videoPlaceholder-confirmDeleteTitle' => "Gavé 's marcapòst për un filmà?",
 	'rte-ck-videoPlaceholder-tooltip' => "Sossì a l'é un marcapòst ëd filmà.",
 	'rte-ck-widescreen-toggle' => 'Cangé lë scren pien',
-	'rte-ck-poll-confirmDelete' => 'É-lo sigur ëd vorèj gavé ël custionari da sta pàgina?',
-	'rte-ck-poll-confirmDeleteTitle' => 'Gavé sto custionari?',
-	'rte-ck-spellchecker-moreSuggestions' => 'Pi sugeriment',
+	'rte-ck-poll-confirmDelete' => 'É-lo sigur ëd vorèj gavé ël chestionari da sa pàgina?',
+	'rte-ck-poll-confirmDeleteTitle' => "Gavé 's chestionari?",
+	'rte-ck-spellchecker-moreSuggestions' => "Pi 'd sugeriment",
 );
 
 /** Pashto (پښتو)
@@ -2303,6 +2306,7 @@ $messages['sr-ec'] = array(
 
 /** Swedish (Svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'rte-ck-bucket-textAppearance' => 'Textutseende',
@@ -2385,6 +2389,7 @@ $messages['sv'] = array(
 	'rte-ck-videoPlaceholder-confirmDeleteTitle' => 'Ta bort den här videoplatshållaren?',
 	'rte-ck-videoPlaceholder-tooltip' => 'Det här är en video platshållare.',
 	'rte-ck-widescreen-toggle' => 'Sätt på widescreen',
+	'rte-ck-pasteText-title' => 'Klistra in din text',
 );
 
 /** Tamil (தமிழ்)

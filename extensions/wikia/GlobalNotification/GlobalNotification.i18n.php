@@ -79,6 +79,7 @@ $messages['ms'] = array(
  * @author Siebrand
  */
 $messages['nl'] = array(
+	'globalnotification-desc' => 'Geeft systeemberichten weer voor gebeurtenissen zoals AJAX-fouten',
 	'globalnotification-general-ajax-failure' => 'De browser kon geen verbinding maken met de Wikia. Probeer het later nog opnieuw.',
 );
 

@@ -65,8 +65,13 @@ $messages['ar'] = array(
  * @author Cekli829
  */
 $messages['az'] = array(
+	'contact' => 'Viki əlaqə',
+	'specialcontact-wikia' => 'Viki əlaqə',
+	'specialcontact-pagetitle' => 'Viki əlaqə',
+	'specialcontact-username' => 'İstifadəçi adı',
 	'specialcontact-realname' => 'Sizin adınız',
 	'specialcontact-yourmail' => 'E-poçt ünvanı',
+	'specialcontact-problem' => 'Mövzu',
 	'specialcontact-problemdesc' => 'Mesaj',
 );
 
@@ -293,6 +298,11 @@ $messages['gl'] = array(
 	'contact' => 'Contactar con Wikia',
 	'specialcontact-wikia' => 'Contactar con Wikia',
 	'specialcontact-pagetitle' => 'Contactar con Wikia',
+	'specialcontact-intro' => 'Pode poñerse en contacto co [[w:project:Staff|persoal de Wikia]] usando este formulario. Os administradores deste wiki poden atoparse [[Special:ListAdmins|aquí]].
+
+Pode atopar información adicional sobre como informar de problemas a Wikia [[w:project:Report_a_problem|aquí]] ou pode publicar unha mensaxe nos [[w:Forum:Index|foros comunitarios]] se quere axuda dos usuarios.
+
+Se prefire usar o correo electrónico ou necesita enviar ficheiros adxuntos, pode poñerse en contacto connosco en [mailto:community@wikia.com community@wikia.com].',
 	'specialcontact-username' => 'Nome de usuario',
 	'specialcontact-wikiname' => 'Que wiki',
 	'specialcontact-realname' => 'O seu nome',
@@ -755,6 +765,19 @@ $messages['sr-ec'] = array(
 	'specialcontact-notyou' => 'Нисте ви?',
 	'specialcontact-captchatitle' => 'Замагљена реч',
 	'specialcontact-submitcomplete' => 'Хвала вам што сте контактирали Викију.',
+);
+
+/** Swedish (Svenska)
+ * @author WikiPhoenix
+ */
+$messages['sv'] = array(
+	'contact' => 'Kontakta Wikia',
+	'specialcontact-wikia' => 'Kontakta Wikia',
+	'specialcontact-pagetitle' => 'Kontakta Wikia',
+	'specialcontact-username' => 'Användarnamn',
+	'specialcontact-wikiname' => 'Vilken wiki',
+	'specialcontact-realname' => 'Ditt namn',
+	'specialcontact-yourmail' => 'E-postadress',
 );
 
 /** Telugu (తెలుగు)

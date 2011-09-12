@@ -1262,6 +1262,31 @@ Oppgrader gjennom PayPal for å få en reklamefri wiki til kun $4,95 per måned!
 	'cnw-error-torblock' => 'Å opprette wikier via Tor-nettverket er ikke tillatt.',
 );
 
+/** Polish (Polski)
+ * @author Woytecr
+ */
+$messages['pl'] = array(
+	'cnw-next' => 'Następny',
+	'cnw-back' => 'Wstecz',
+	'cnw-or' => 'lub',
+	'cnw-title' => 'Utwórz nową Wiki',
+	'cnw-name-wiki-headline' => 'Uruchom Wiki',
+	'cnw-name-wiki-wiki' => 'Wiki',
+	'cnw-login' => 'Zaloguj',
+	'cnw-signup' => 'Utwórz konto',
+	'cnw-login-prompt' => 'Posiadasz już konto?',
+	'cnw-auth-headline' => 'Zaloguj się',
+	'cnw-auth-headline2' => 'Zarejestruj się',
+	'cnw-auth-facebook-signup' => 'Zarejestruj się poprzez Facebooka',
+	'cnw-auth-facebook-login' => 'Zaloguj się poprzez Facebooka',
+	'cnw-desc-tip2' => 'Psst',
+	'cnw-desc-choose' => 'Wybierz kategorię',
+	'cnw-desc-select-one' => 'Wybierz',
+	'cnw-desc-change-lang' => 'zmień',
+	'cnw-desc-lang' => 'Język',
+	'cnw-desc-wiki-submit-error' => 'Proszę wybrać kategorię',
+);
+
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */

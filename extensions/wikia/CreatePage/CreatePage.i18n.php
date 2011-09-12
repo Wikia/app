@@ -1118,6 +1118,7 @@ $messages['pa'] = array(
 /** Polish (Polski)
  * @author Cloudissimo
  * @author Sp5uhe
+ * @author Woytecr
  */
 $messages['pl'] = array(
 	'createpage-desc' => 'Pozwala na utworzenie nowej strony za pomocą edytora WYSIWYG',
@@ -1126,6 +1127,7 @@ $messages['pl'] = array(
 	'createpage_title_caption' => 'Tytuł',
 	'createpage_enter_text' => 'Tekst:',
 	'createpage_empty_title_error' => 'Wymagany tytuł',
+	'createpage_empty_article_body_error' => 'Wymagane podanie treści strony',
 	'createpage_invalid_title_error' => 'Nieprawidłowy tytuł',
 	'createpage_article_already_exists' => 'Strona o zadanej nazwie już istnieje.
 Wybierz inną nazwę.',

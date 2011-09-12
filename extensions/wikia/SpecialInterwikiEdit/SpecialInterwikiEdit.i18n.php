@@ -55,6 +55,7 @@ $messages['ar'] = array(
  */
 $messages['az'] = array(
 	'iwedit-title' => 'İnterviki redaktoru',
+	'iwedit-all-interwikis' => 'bütün intervikilər',
 );
 
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)

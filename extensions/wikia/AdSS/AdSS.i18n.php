@@ -279,20 +279,28 @@ $messages['ar'] = array(
 /** Azerbaijani (Azərbaycanca)
  * @author Cekli829
  * @author Melikov Memmed
+ * @author Vago
  */
 $messages['az'] = array(
 	'adss-form-login-link' => 'Daxil ol',
+	'adss-upsell-yes' => 'Bəli, mən bunu istəyirəm!',
 	'adss-upsell-no' => 'Xeyr, təşəkkürlər',
+	'adss-button-preview' => 'Sınaq göstərişi',
 	'adss-button-edit' => 'Redaktə',
 	'adss-button-login' => 'Daxil ol',
+	'adss-button-select' => 'Seç',
+	'adss-button-buy-now' => 'İNDİ alın',
 	'adss-button-save' => 'Qeyd et',
 	'adss-button-cancel' => 'Ləğv et',
 	'adss-button-yes' => 'Bəli',
 	'adss-button-no' => 'Xeyr',
+	'adss-preview-header' => 'Sınaq göstərişi',
+	'adss-click-here' => 'Bura çıqqıldadın',
 	'adss-per-site' => 'Bütün səhifələr',
 	'adss-per-page' => 'Yalnız bir səhifə',
 	'adss-close' => 'Bağla',
 	'adss-cancel' => 'Ləğv et',
+	'adss-wikia' => 'Wikia',
 	'adss-type' => 'Tipi',
 	'adss-price' => 'Qiymət',
 	'adss-status' => 'Status',
@@ -1415,15 +1423,15 @@ $messages['fr'] = array(
 	'adss-ad-default-text' => 'Cliquez ici !',
 	'adss-ad-default-desc' => 'Achetez un lien sponsorisé et une description pour vos sites web sur cette page. Agissez vite, les quelques offres de parrainage se vendent vite !',
 	'adss-form-header' => 'Concevez votre annonce',
-	'adss-form-url' => 'Adresse URL du site parrain (votre site web) :',
-	'adss-form-linktext' => 'Texte que vous voulez afficher dans le lien :',
-	'adss-form-additionaltext' => 'Texte à afficher sous votre lien :',
+	'adss-form-url' => 'URL de clic',
+	'adss-form-linktext' => 'Titre de l’annonce',
+	'adss-form-additionaltext' => 'Description de l’annonce',
 	'adss-form-type' => 'Type de parrainage :',
 	'adss-form-page' => 'Page à parrainer :',
 	'adss-form-banner' => 'Téléversez votre bannière ici :',
 	'adss-form-price' => 'Montant du parrainage :',
 	'adss-form-shares' => 'Nombre d’actions :',
-	'adss-form-email' => 'Votre adresse de courriel :',
+	'adss-form-email' => 'Votre adresse de courriel',
 	'adss-form-password' => 'Votre mot de passe :',
 	'adss-form-login-link' => 'Connectez-vous',
 	'adss-form-login-desc' => 'Vous avez un mot de passe ? $1 pour gagner du temps et acheter de la publicité en un clic !',
@@ -1439,14 +1447,16 @@ $messages['fr'] = array(
 	'adss-form-pick-plan-errormsg' => 'Vous devez sélectionner un plan de campagne',
 	'adss-form-pick-plan' => 'Choisissez un forfait d’annonce',
 	'adss-form-site-plan-header' => 'Acheter un lien exposé sur l’ensemble du wiki',
-	'adss-form-site-plan-description' => 'Obtenez des liens parrainés sur {{SITENAME}} pour un prix modique.
+	'adss-form-site-plan-header-ribbon' => 'Les moins chères',
+	'adss-form-site-plan-description' => '* Obtenez des liens parrainés sur {{SITENAME}} pour un prix modique.
 
-1 part représente actuellement $1&nbsp;% des liens parrainés sur {{SITENAME}} et ne coûte que $2. Vous pouvez annuler à tout moment.',
+* 1 part représente actuellement $1&nbsp;% des liens parrainés sur {{SITENAME}} et ne coûte que $2. Vous pouvez annuler à tout moment.',
 	'adss-form-site-plan-price' => 'Une part coûte $1',
 	'adss-form-site-premium-plan-header' => 'Acheter 4 liens parrainés pour le prix de 3',
-	'adss-form-site-premium-plan-description' => 'Obtenez des liens parrainés sur {{SITENAME}} et soyez plus visible en achetant en gros.
+	'adss-form-site-premium-plan-header-ribbon' => 'Meilleur valeur',
+	'adss-form-site-premium-plan-description' => '* Obtenez des liens parrainés sur {{SITENAME}} et soyez plus visible en achetant en gros.
 
-1 part représente actuellement $1&nbsp;% des liens parrainés sur {{SITENAME}}. Avec cette option, vous achetez quatre parts au prix de trois ! Vous pouvez annuler à tout moment.',
+* 1 part représente actuellement $1&nbsp;% des liens parrainés sur {{SITENAME}}. Avec cette option, vous achetez quatre parts au prix de trois ! Vous pouvez annuler à tout moment.',
 	'adss-form-site-premium-plan-price' => 'Seulement $1 pour quatre parts !',
 	'adss-form-page-plan-header' => 'Acheter un lien uniquement sur une page',
 	'adss-form-page-plan-description' => 'Ceci vous permet de cibler avec un message personnalisé la meilleure page pour votre produit, à seulement $1. Vous pouvez l’annuler à tout moment.',
@@ -1455,9 +1465,10 @@ $messages['fr'] = array(
 	'adss-form-banner-plan-description' => 'Obtenez une part des bannières affichées sur le wiki pour un prix modique.',
 	'adss-form-banner-plan-price' => '$1 pour une part des bannières',
 	'adss-form-hub-plan-header' => 'Acheter un lien sponsorisé sur l’ensemble des $1 wikis',
-	'adss-form-hub-plan-description' => 'Obtenez des liens sponsorisés sur l’ensemble des $1 wikis (sur $2) pour un prix modique.
+	'adss-form-hub-plan-header-ribbon' => 'Trafic le plus élevé',
+	'adss-form-hub-plan-description' => '* Obtenez des liens sponsorisés sur l’ensemble des $1 wikis (sur $2) pour un prix modique.
 
-Ceci vous permet d’atteindre un public plus large en affichant votre annonce sur d’autres wikis du même thème.',
+* Ceci vous permet d’atteindre un public plus large en affichant votre annonce sur d’autres wikis du même thème.',
 	'adss-form-hub-plan-price' => 'Une part coûte $1',
 	'adss-form-reviews-page-year-plan-header' => 'Parrainage annuel',
 	'adss-form-reviews-page-year-plan-description' => "Vous pouvez acheter un lien <br /> par ce compte rendu d'activité <br /> pour votre entreprise",
@@ -1471,6 +1482,12 @@ Ceci vous permet d’atteindre un public plus large en affichant votre annonce s
 	'adss-form-or' => '– ou –',
 	'adss-form-thanks' => 'Vous avez terminé votre achat. Votre annonce sera effective après avoir été approuvée (dans les 48 heures, voire moins).',
 	'adss-form-buy-another' => 'Souhaitez-vous acheter une deuxième annonce maintenant ? [[Special:AdSS|Cliquez ici]]',
+	'adss-form-tooltip-clickurl' => 'Ceci est l’URL de la page spécifique sur laquelle les utilisateurs seront dirigés après avoir cliqué. Vous pouvez utiliser cette URL pour suivi via bitly ou Google Analytics.',
+	'adss-form-tooltip-displayurl' => 'Cette URL sera affiché en dessous de la description de votre annonce.',
+	'adss-form-tooltip-adtitle' => 'Créez un titre pour votre annonce qui est distinct, concis et captivant.',
+	'adss-form-tooltip-addesc' => 'La description de l’annonce est là où vous expliquez la valeur de votre produit ou service. Mettez en valeur vos qualités uniques, les offres spéciales et promotions.',
+	'adss-form-tooltip-email' => 'Cette adresse de courriel est notre point de contact avec vous. Elle ne sera pas affichée sur l’annonce.',
+	'adss-form-modal-title' => 'Aller à PayPal pour régler.',
 	'adss-upsell-header' => 'Offre spéciale limitée',
 	'adss-upsell-text' => 'Obtenez le premier mois gratuitement pour l’annonce que vous venez d’acheter !<br />
 Convertissez votre annonce en un abonnement trimestriel<br />et payez $1$ au lieu de $2$ (33% de réduction !)',
@@ -1495,6 +1512,9 @@ Convertissez votre annonce en un abonnement trimestriel<br />et payez $1$ au lie
 	'adss-preview-header' => 'Prévisualisation',
 	'adss-preview-prompt' => 'Voici à quoi votre parrainage ressemblera. Cliquez sur « modifier » pour revenir et apporter des changements ou sur « sauvegarder » pour enregistrer et vous rendre sur PayPal.',
 	'adss-click-here' => 'Cliquez ici',
+	'adss-paypal-item-type-site-name' => 'Liens sponsorisés (moins cher)',
+	'adss-paypal-item-type-site-premium-name' => 'Liens sponsorisés (meilleure valeur)',
+	'adss-paypal-item-type-hub-name' => 'Liens sponsorisés (trafic le plus élevé)',
 	'adss-paypal-redirect' => '$1 si vous n’êtes pas redirigé vers PayPal dans 5 secondes.',
 	'adss-paypal-error' => 'Impossible de payer avec PayPal en ce moment. Veuillez essayer plus tard.
 
@@ -1562,6 +1582,9 @@ associé à votre adresse de courriel dans nos fichiers.
 
 -- 
 L’équipe Wikia',
+	'adss-more-information' => 'Plus d’informations',
+	'adss-email-us' => 'Envoyez-nous un courriel à [mailto:sponsoredlinks@wikia-inc.com sponsoredlinks@wikia-inc.com] si vous avez besoin de plus amples informations.',
+	'adss-faq' => 'Foire Aux Questions',
 );
 
 /** Galician (Galego)
@@ -3243,15 +3266,15 @@ $messages['pt-br'] = array(
 	'adss-ad-default-text' => 'Clique aqui!',
 	'adss-ad-default-desc' => 'Compre nesta página um link e uma descrição patrocinados para o seu site. Faça-o depressa, os poucos lotes de patrocínio esgotam-se rapidamente!',
 	'adss-form-header' => 'Componha o seu anúncio',
-	'adss-form-url' => 'URL do site patrocinador (o seu site na internet):',
-	'adss-form-linktext' => 'Texto que pretende que seja apresentado no link:',
-	'adss-form-additionaltext' => 'Texto para ser apresentado abaixo do link:',
+	'adss-form-url' => 'Clickthrough URL',
+	'adss-form-linktext' => 'Título do anúncio',
+	'adss-form-additionaltext' => 'Descrição do anúncio',
 	'adss-form-type' => 'Tipo de patrocínio:',
 	'adss-form-page' => 'Página a patrocinar:',
 	'adss-form-banner' => 'Faça o upload do seu anúncio aqui:',
 	'adss-form-price' => 'Montante do patrocínio:',
 	'adss-form-shares' => 'Número de quotas:',
-	'adss-form-email' => 'Endereço de e-mail:',
+	'adss-form-email' => 'Seu endereço de e-mail:',
 	'adss-form-password' => 'Sua senha:',
 	'adss-form-login-link' => 'Autentique-se',
 	'adss-form-login-desc' => 'Tem uma senha? $1 para poupar tempo e compre o anúncio com um só clique!',
@@ -3267,6 +3290,7 @@ $messages['pt-br'] = array(
 	'adss-form-pick-plan-errormsg' => 'Tem de selecionar um plano',
 	'adss-form-pick-plan' => 'Escolha um pacote de anúncios',
 	'adss-form-site-plan-header' => 'Compre um Link Patrocinado para a wiki toda',
+	'adss-form-site-plan-header-ribbon' => 'Mais barata',
 	'adss-form-site-plan-description' => 'Tenha Links Patrocinados na {{SITENAME}} toda por baixo custo.
 
 1 quota é, neste momento, igual a $1% dos links patrocinados da {{SITENAME}} e só custa $2. Pode cancelar em qualquer altura.',
@@ -3698,6 +3722,7 @@ $messages['sv'] = array(
 1 aktie är för närvarande lika med $1% av {{SITENAME}} sponsrade länkar och kostar bara $2. Du kan avbryta när som helst.',
 	'adss-form-site-plan-price' => '$1 för en aktie',
 	'adss-form-site-premium-plan-header' => 'Köp 4 Sponsrade Länkar till priset av 3',
+	'adss-form-site-premium-plan-header-ribbon' => 'Bästa värde',
 	'adss-form-site-premium-plan-description' => 'Få Sponsrade Länkar på {{SITENAME}} och få ännu mer exponering genom att köpa i stora partier.
 
 1 aktie är för närvarande lika med $1% av {{SITENAME}} sponsrade länkar. Med det här alternativet kan du köpa fyra aktier till priset av tre! Du kan avbryta när som helst.',

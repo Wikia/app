@@ -490,6 +490,7 @@ $messages['ar'] = array(
  * @author Vugar 1981
  */
 $messages['az'] = array(
+	'wikistats_wikia' => 'Wikia',
 	'wikistats_panel_close_btn' => 'Bağla',
 	'wikistats_daterange_from' => 'Kimdən:',
 	'wikistats_daterange_to' => 'Kimə:',
@@ -530,6 +531,7 @@ $messages['az'] = array(
 	'wikistats_website' => 'vebsayt',
 	'wikistats_back_to_prevpage' => 'Geri',
 	'wikistats_trend_where_text' => 'hara:',
+	'wikistats_trend_all_wikia_text' => 'Bütün vikilər',
 	'wikistats_full_dump_stats' => 'Əla',
 	'wikistats_xls_cancel' => 'Ləğv et',
 	'wikistats_select_btn' => 'Seç',
@@ -786,7 +788,7 @@ $messages['bg'] = array(
 	'wikistats_title' => 'Заглавие',
 );
 
-/** Bahasa Banjar (Bahasa Banjar)
+/** Banjar (Bahasa Banjar)
  * @author Ezagren
  */
 $messages['bjn'] = array(
@@ -3151,6 +3153,14 @@ $messages['ja'] = array(
 	'wikistats_nbr_mega' => 'M (メガ) = Kx1000',
 	'wikistats_nbr_giga' => 'G (ギガ) = Mx1000',
 	'wikistats_nbr_format' => '数値のフォーマット:',
+);
+
+/** Khowar (کھوار)
+ * @author Rachitrali
+ */
+$messages['khw'] = array(
+	'wikistats_active_month' => 'مس',
+	'wikistats_active_year' => 'سال',
 );
 
 /** Kalaallisut (Kalaallisut)
@@ -6051,7 +6061,7 @@ $messages['sr-ec'] = array(
 	'wikistats_month' => 'Месечна статистика',
 	'wikistats_current_month' => 'Текући месец',
 	'wikistats_see_also' => 'Погледајте:',
-	'wikistats_language_top' => 'Топ $1 језика',
+	'wikistats_language_top' => 'Најбољих $1 језика',
 	'wikistats_language_all' => 'Сви језици',
 	'wikistats_recordspager' => "Приказивање '''$1''' до '''$2''' од '''$3''' белешки.",
 	'wikistats_title' => 'Наслов',

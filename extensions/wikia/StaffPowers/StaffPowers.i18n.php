@@ -301,7 +301,7 @@ $messages['ru'] = array(
 	'staffpowers-ipblock-aborted' => 'Невозможно заблокировать сотрудника Wikia. Пожалуйста, воспользуйтесь [[Special:Contact]], чтобы сообщить о проблемах, связанных с нашими сотрудниками.',
 );
 
-/** Tachelhit (Tašlḥiyt) */
+/** Tachelhit (Tašlḥiyt/ⵜⴰⵛⵍⵃⵉⵜ) */
 $messages['shi'] = array(
 	'staffpowers-ipblock-aborted' => 'Ur  as tufit ad tqnt f midn n trabbut n Wikia. Tzḍart ad tswwurt s [[Special:Contact]] bac adaɣ tmlt timukrisin lli dark illan d tarabbut nɣ',
 );

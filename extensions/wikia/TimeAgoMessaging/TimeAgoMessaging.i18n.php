@@ -199,10 +199,11 @@ $messages['pl'] = array(
 );
 
 /** Piedmontese (Piemontèis)
+ * @author Borichèt
  * @author Dragonòt
  */
 $messages['pms'] = array(
-	'timeagomessaging-desc' => 'A dà i18n për ël plugin jquery.timeago.js',
+	'timeagomessaging-desc' => 'A forniss i18n për ël plugin jquery.timeago.js',
 	'timeago-day' => '{{PLURAL:$1|un di|$1 di}} fà',
 	'timeago-hour' => "{{PLURAL:$1|n'ora|$1 ore}} fà",
 	'timeago-minute' => '{{PLURAL:$1|na minuta|$1 minute}} fà',

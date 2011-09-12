@@ -63,6 +63,20 @@ We know they still have their kinks, and we would love to receive your feedback 
 	'wikifeatures-feature-description-emptylabs' => 'Our tech scientists are hard at work bubbling up new features for you to try out. Look for more labs here soon!',
 );
 
+/** Message documentation (Message documentation)
+ * @author Siebrand
+ */
+$messages['qqq'] = array(
+	'wikifeatures-feature-description-wgEnableChat' => 'Feel free not to translate "lol omg rolfl" if there is no proper equivalent in your language. These are acronyms for Laughing Out Loud, Oh My God, and Rolling On The Floor Laughing.',
+);
+
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'wikifeatures-feedback-comment-label' => 'Şərh',
+);
+
 /** German (Deutsch)
  * @author Tiin
  */
@@ -79,6 +93,7 @@ $messages['de'] = array(
  * @author Wyz
  */
 $messages['fr'] = array(
+	'wikifeatures-title' => 'Fonctionnalités de wiki',
 	'wikifeatures-heading' => 'Fonctionnalités',
 	'wikifeatures-creative' => 'Bienvenue dans les fonctionnalités de Wikia.
 Ci-dessous, vous trouverez des outils que vous pouvez utiliser pour personnaliser votre wiki en activant l’une de ces fonctionnalités.
@@ -103,6 +118,11 @@ Nous savons qu'elles ont encore des défauts et nous aimerions avoir votre avis 
 	'wikifeatures-feedback-description' => 'Nous apprécions d’avoir des avis sur les fonctionnalités présentes dans Wikia Labs. Si vous avez des idées sur comment nous pourrions améliorer cette fonctionnalité ou si vous avez découvert un bug, veuillez laisser un commentaire ci-dessous et les personnes qui travaillent dessus recevront votre message.',
 	'wikifeatures-feedback-type-label' => "De quoi s'agit-il?",
 	'wikifeatures-feedback-comment-label' => 'Commentaire',
+	'wikifeatures-deactivate-heading' => 'Désactiver $1 ?',
+	'wikifeatures-deactivate-description' => 'Désactiver une fonctionnalité la retirera de votre wiki. Vos utilisateurs ne pourront plus utiliser cette fonction et ils ne la verront plus nulle part sur le wiki.',
+	'wikifeatures-deactivate-notification' => 'Vous pouvez réactiver cette fonctionnalité à nouveau à tout moment.',
+	'wikifeatures-deactivate-confirm-button' => 'Oui, désactiver',
+	'wikifeatures-deactivate-cancel-button' => 'Annuler',
 	'wikifeatures-feature-heading-wgEnableTopListsExt' => 'Listes de top 10',
 	'wikifeatures-feature-description-wgEnableTopListsExt' => 'Les listes de top 10 permettent à n’importe qui sur votre wiki de créer une liste pour laquelle on peut voter. Elles sont un bon moyen pour que vos contributeurs juniors interagissent avec le wiki. Créez une nouvelle liste via Special:CreateTopList.',
 	'wikifeatures-feature-heading-wgEnableAchievementsExt' => 'Récompenses',
@@ -121,6 +141,7 @@ Nous savons qu'elles ont encore des défauts et nous aimerions avoir votre avis 
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
+	'wikifeatures-title' => 'Можности на викито',
 	'wikifeatures-heading' => 'Можности',
 	'wikifeatures-creative' => 'Добредојдовте на Можностите на Викија.
 Подолу ќе најдете алатки што можете да ги активирате, така прилагодувајќи го вашето вики.
@@ -145,6 +166,11 @@ $messages['mk'] = array(
 	'wikifeatures-feedback-description' => 'Сакаме да добиваме мислења за фунциите во ВикииниЛаборатории. Ако имате идеја за тоа како да се подобри оваа функција, или пак откривте бубачка, тогаш би ве замолиле подолу да дадете своја забелешка. Забелешката ќе ја добијат лицата одговорни за функцијава.',
 	'wikifeatures-feedback-type-label' => 'За што служи ова?',
 	'wikifeatures-feedback-comment-label' => 'Коментар',
+	'wikifeatures-deactivate-heading' => 'Да ја оневозможам функцијата $1?',
+	'wikifeatures-deactivate-description' => 'Ако ја оневозможите функцијата, со тоа воедно ќе ја отстраните од вашето вики. Корисниците повеќе нема да можат да ја гледаат и користат.',
+	'wikifeatures-deactivate-notification' => 'Можете повторно да ја вклучите функцијата во секое време.',
+	'wikifeatures-deactivate-confirm-button' => 'Да, оневозможи ја',
+	'wikifeatures-deactivate-cancel-button' => 'Откажи',
 	'wikifeatures-feature-heading-wgEnableTopListsExt' => 'Списоци на 10 предводници',
 	'wikifeatures-feature-description-wgEnableTopListsExt' => 'Списоците на 10 предводници овозможуваат секој на вашето вики да создаде ваков список со гласање. Ова е добар начин поновите уредници да општат со викито. Нов список можете да создадете на Special:CreateTopList',
 	'wikifeatures-feature-heading-wgEnableAchievementsExt' => 'Достигнувања',
@@ -163,6 +189,7 @@ $messages['mk'] = array(
  * @author Anakmalaysia
  */
 $messages['ms'] = array(
+	'wikifeatures-title' => 'Wiki Features',
 	'wikifeatures-heading' => 'Ciri-ciri',
 	'wikifeatures-creative' => 'Selamat datang ke Wikia Features.
 Di bawah, anda akan menemui alat-alat yang boleh anda gunakan untuk mengubah suai wiki anda dengan mengaktifkan mana-mana ciri.
@@ -187,6 +214,11 @@ Kami tahu yang ciri-ciri ini belum sempurna lagi, dan kami mengalu-alukan maklum
 	'wikifeatures-feedback-description' => 'Kami sudi mendengar maklum balas tentang ciri-ciri yang terdapat di WikiaLabs. Jika anda ada sebarang cadangan untuk kami memperbaiki ciri ini, ataupun anda menemui pepijat, sila tambahkan komen di bawah supaya pihak yang mengusahakan ciri ini akan menerima pesanan anda.',
 	'wikifeatures-feedback-type-label' => 'Ini tentang apa?',
 	'wikifeatures-feedback-comment-label' => 'Komen',
+	'wikifeatures-deactivate-heading' => 'Matikan $1?',
+	'wikifeatures-deactivate-description' => 'Ciri yang dimatikan akan digugurkan daripada wiki anda. Pengguna-pengguna anda tidak akan dapat menggunakan ciri ini lagi, dan tidak dapat melihatnya di mana-mana di wiki.',
+	'wikifeatures-deactivate-notification' => 'Anda boleh menghidupkan semula ciri ini pada bila-bila masa.',
+	'wikifeatures-deactivate-confirm-button' => 'Ya, matikan',
+	'wikifeatures-deactivate-cancel-button' => 'Batalkan',
 	'wikifeatures-feature-heading-wgEnableTopListsExt' => 'Senarai 10 Teratas',
 	'wikifeatures-feature-description-wgEnableTopListsExt' => 'Senarai 10 Teratas membolehkan sesiapa di wiki anda untuk membuat senarai undian. Inilah cara yang baik untuk memujuk penyunting baru anda untuk berinteraksi dengan wiki. Buat senarai baru di Special:CreateTopList',
 	'wikifeatures-feature-heading-wgEnableAchievementsExt' => 'Pencapaian',
@@ -206,11 +238,21 @@ Kami tahu yang ciri-ciri ini belum sempurna lagi, dan kami mengalu-alukan maklum
  * @author Siebrand
  */
 $messages['nl'] = array(
+	'wikifeatures-title' => 'Wikifuncties',
 	'wikifeatures-heading' => 'Additionele functionaliteit',
+	'wikifeatures-creative' => 'Welkom bij Wikia Features.
+Hieronder vindt u hulp middelen die u kunt gebruiken om uw wiki aan de passen door de functionaliteiten in te schakelen.
+Speel er een beetje mee.
+U kunt de hulpmiddelen die u niet wilt gebruiken weer uitschakelen.',
 	'wikifeatures-labs-heading' => 'Wikia Labs',
+	'wikifeatures-labs-creative' => 'In Wikia Labs treft u functies aan waar we mee aan het spelen zijn.
+We weten dat er nog probleempjes mee zijn, maar we willen graag van u horen wat u er goed en slect aan vindt, en waar u problemen tegenkomt.',
 	'wikifeatures-feedback' => 'Terugkoppeling geven',
+	'wikifeatures-error-permission' => 'U hebt geen toegang tot deze pagina.',
 	'wikifeatures-error-invalid-parameter' => 'Ongeldige parameter: $1. Probeer het opnieuw.',
 	'wikifeatures-error-message' => 'De opmerking is te kort of te lang.',
+	'wikifeatures-error-spam-attempt' => 'Wacht 60 seconden voordat u opnieuw terugkoppeling geeft.',
+	'wikifeatures-error-invalid-category' => 'Kies alstublieft waar deze melding over gaat.',
 	'wikifeatures-toggle-active' => 'Ingeschakeld',
 	'wikifeatures-toggle-inactive' => 'Uitgeschakeld',
 	'wikifeatures-active-on' => "Actief op  $1 wiki's",
@@ -220,20 +262,38 @@ $messages['nl'] = array(
 	'wikifeatures-problem-with-project' => 'Ik heb een probleem met dit project.',
 	'wikifeatures-an-idea-for-project' => 'Ik heb een idee voor dit project.',
 	'wikifeatures-feedback-heading' => 'Terugkoppeling',
+	'wikifeatures-feedback-description' => 'We krijgen graag terugkoppeling over functionaliteit in WikiaLabs. Als u weet hoe we deze functie kunnen verbeteren of als u een probleem hebt gevonden, laat hieronder dan een bericht achter voor de mensen die aan deze functie werken .',
 	'wikifeatures-feedback-type-label' => 'Waar gaat dit over?',
 	'wikifeatures-feedback-comment-label' => 'Opmerking',
+	'wikifeatures-deactivate-heading' => '$1 uitschakelen?',
+	'wikifeatures-deactivate-description' => 'Door een functionaliteit uit te schakelen, wordt deze functionaliteit verwijderd uit uw wiki. uw gebruikers kunnen er dan niet langer gebruik van maken, en de functionaliteit komt in uw wiki nergens meer voor.',
+	'wikifeatures-deactivate-notification' => 'U kunt de functionaliteit weer inschakelen wanneer u wilt.',
+	'wikifeatures-deactivate-confirm-button' => 'Ja, uitschakelen',
+	'wikifeatures-deactivate-cancel-button' => 'Annuleren',
+	'wikifeatures-promotion-new' => 'Nieuw',
 	'wikifeatures-feature-heading-wgEnableTopListsExt' => 'Top 10-lijsten',
 	'wikifeatures-feature-description-wgEnableTopListsExt' => 'Via Top-10 lijsten kan iedereen in uw wiki een lijst maken waarop gestemd kan worden. Het is een leuke manier om beginnende redacteuren in uw wiki te laten werken. [[Special:CreateTopList|Maak een nieuwe lijst aan]]!',
 	'wikifeatures-feature-heading-wgEnableAchievementsExt' => 'Prestaties',
+	'wikifeatures-feature-description-wgEnableAchievementsExt' => 'Via speldjes kunt u uw redacteuren belonen voor het toevoegen van verschillende soorten inhoud. U kunt uw eigen unieke uitdagingen aanmaken en zelfs uw eigen afbeeldingen uploaden voor uw speldjes.',
 	'wikifeatures-feature-heading-wgEnableArticleCommentsExt' => 'Paginareacties',
+	'wikifeatures-feature-description-wgEnableArticleCommentsExt' => "Deze uitbreiding laat mensen opmerkingen schrijven onderaan pagina's. Andere gebruikers kunnen reageren op de opmerkingen en ondertekeningen en tijdstempels worden automatisch toegevoegd. Dit vervangt overleg pagina's op uw wiki.",
 	'wikifeatures-feature-heading-wgEnableCategoryExhibitionExt' => 'Categorietentoonstelling',
 	'wikifeatures-feature-description-wgEnableCategoryExhibitionExt' => "De meest populaire acht pagina's in uw categorieën worden al weergegeven als afbeeldingen, maar deze functie biedt een lijst van al uw pagina's als afbeeldingskoppelingen, te sorteren op naam, leeftijd of populariteit!",
 	'wikifeatures-feature-heading-wgEnableChat' => 'Chatten',
+	'wikifeatures-feature-description-wgEnableChat' => 'Communiceren direct met andere mensen ook net zo graag aan uw wiki werken als u! Iedereen met een Wikiagebruiker kan deelnemen aan de chat via de knop "Chatten" in de menubalk.',
 	'wikifeatures-feature-heading-wgEnableEditPageReskinExt' => 'Wikia Editor Redesign',
 	'wikifeatures-feature-description-wgEnableEditPageReskinExt' => "Bewerken is de kern van een wiki en het hebben van een goede tekstverwerker is de sleutel tot een makkelijk aanvoelende en leuke ervaring bij het toevoegen van inhoud. Om uw ervaring te verbeteren, hebben wij de bewerkingspagina's opnieuw ontworpen.",
+	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'Peilingen',
+	'wikifeatures-feature-description-wgEnableAjaxPollExt' => 'Laat alle gebruikers van uw wiki een peiling opzetten. Als peilingen zijn ingeschakeld, kunnen gebruikers het [http://help.wikia.com/wiki/Help:Poll label peiling] gebruiken om deze functie op iedere pagina in te schakelen. Deze functie is een geweldige manier om het aantal bijdragen op de wiki te verhogen.',
+	'wikifeatures-feature-heading-wgEnablePageLayoutBuilder' => 'Vormgeving bouwen',
+	'wikifeatures-feature-description-wgEnablePageLayoutBuilder' => 'Help de redacteuren van uw wiki goed uitziende pagina\'s aan te maken in minder tijd. Met de functie "Vormgeving bouwen" kunnen wikibeheerders vooringestelde pagina\'s voor redacteuren aanmaken waaruit gekozen kan worden tijdens het toevoegen van een pagina.',
+	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blogs',
+	'wikifeatures-feature-description-wgEnableBlogArticles' => "De functie Blogs stelt gebruikers in staat eigen blogberichten toe te voegen aan hun profielpagina's. De functie is ook goed te gebruiken om nieuws en gebeurtenissen aan uw gemeenschap aan te kondigen.",
+	'wikifeatures-feature-heading-emptylabs' => 'Het lijkt erop dat het lab even pauze aan het houden is',
+	'wikifeatures-feature-description-emptylabs' => 'Onze ontwikkelaars werken had aan het ontwerpen van nieuwe functies die u kunt uitproberen. Kom snel terug!',
 );
 
-/** Norwegian (bokmål) (Norsk (bokmål))
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
 $messages['no'] = array(
@@ -249,12 +309,49 @@ $messages['no'] = array(
 );
 
 /** Russian (Русский)
+ * @author Kuzura
  * @author Lvova
  */
 $messages['ru'] = array(
-	'wikifeatures-love-this-project' => 'Мне нравится этот проект',
-	'wikifeatures-problem-with-project' => 'У меня есть проблема с этим проектом',
-	'wikifeatures-an-idea-for-project' => 'У меня есть идея для этого проекта',
+	'wikifeatures-heading' => 'Расширения',
+	'wikifeatures-creative' => 'Добро пожаловать на Wikia Features.
+Ниже вы сможете активировать то или иное дополнительное расширение к вашей вики.
+Попробуйте эти расширения. Вы всегда можете отключить те, которые вам не понравятся.',
+	'wikifeatures-labs-creative' => 'Wikia Labs - место, где находятся начальные версии новых расширений.
+Мы знаем, что они ещё не до конца готовы, поэтому мы будем рады получить ваши отзывы о хороший, плохой или странной работе этих расширений.',
+	'wikifeatures-feedback' => 'Оставить отзыв',
+	'wikifeatures-error-permission' => 'Извините, у вас недостаточно прав для доступа к этой странице.',
+	'wikifeatures-error-invalid-parameter' => 'Недопустимый параметр: $1. Пожалуйста, попробуйте ещё раз.',
+	'wikifeatures-error-message' => 'Комментарий слишком короткий или слишком длинный.',
+	'wikifeatures-error-spam-attempt' => 'Пожалуйста, подождите 60 секунд перед отправкой следующего отзыва',
+	'wikifeatures-toggle-active' => 'Включено',
+	'wikifeatures-toggle-inactive' => 'Отключено',
+	'wikifeatures-active-on' => 'Активно на $1 викиях',
+	'wikifeatures-category-choose-one' => 'Выберите из...',
+	'wikifeatures-love-this-project' => 'Мне нравится это расширение.',
+	'wikifeatures-hate-this-project' => 'Мне не нравится это расширение.',
+	'wikifeatures-problem-with-project' => 'У меня проблема с этим расширением.',
+	'wikifeatures-an-idea-for-project' => 'У меня есть идея для этого расширения.',
+	'wikifeatures-feedback-heading' => 'Отзыв',
+	'wikifeatures-feedback-description' => 'Нам нравится получать отзывы о расширениях, которые находятся в WikiaLabs. Если у вас есть идея, как можно улучшить то или иное расширение, или если вы обнаружили ошибку, пожалуйста, добавьте свой отзыв ниже, и люди, работающие на этим расширением получат ваше сообщение.',
+	'wikifeatures-feedback-type-label' => 'Что это значит?',
+	'wikifeatures-feedback-comment-label' => 'Комментарий',
+	'wikifeatures-deactivate-heading' => 'Отключить  $1?',
+	'wikifeatures-deactivate-description' => 'Отключение расширения удалит его из вашей вики. Участники вики больше не смогут использовать это расширение, и они не будут видеть его на вики.',
+	'wikifeatures-deactivate-notification' => 'Вы можете включить расширение снова в любое время.',
+	'wikifeatures-deactivate-confirm-button' => 'Да, отключить',
+	'wikifeatures-deactivate-cancel-button' => 'Отмена',
+	'wikifeatures-feature-heading-wgEnableTopListsExt' => 'Списки Топ-10',
+	'wikifeatures-feature-description-wgEnableTopListsExt' => 'Списки Топ-10 позволяют любому участник вашей вики создать собственный список для голосования. Это расширение является отличным способом наладить взаимоотношения новых участников друг с другом и с вики. [[Special:CreateTopList|Создать новый список]]!',
+	'wikifeatures-feature-heading-wgEnableAchievementsExt' => 'Достижения',
+	'wikifeatures-feature-description-wgEnableAchievementsExt' => 'Достижения помогут Вашей вики расти за счёт поощрения разнообразных видов деятельности участников на вики. Вы можете создавать свои собственные наборы стандартных значков, которые можно будет получить только на Вашей вики, а также загружать собственные изображения на значки.',
+	'wikifeatures-feature-heading-wgEnableArticleCommentsExt' => 'Комментарии к статьям',
+	'wikifeatures-feature-description-wgEnableArticleCommentsExt' => 'Это расширение позволит пользователям писать комментарии в нижней части страницы каждой статьи. Другие пользователи могут ответить на комментарии. Подпись и время комментария будут проставлены автоматически. Внимание! Это приведёт к исчезновению страниц обсуждения на страницах из основного пространства имён.',
+	'wikifeatures-feature-heading-wgEnableCategoryExhibitionExt' => 'Категории-галереи',
+	'wikifeatures-feature-description-wgEnableCategoryExhibitionExt' => 'Категории-галереи преобразуют текстовые ссылки на страницах категории в изображения-миниатюры, давая Вам способ визуализировать навигацию по Вашей вики. Если Вы активируете это расширение, все страницы категорий Вашей вики преобразуются в категории-галереи. Вы можете отключить эту функцию на определённых страницах категорий, используя "волшебное слово" __NOCATEGORYEXHIBITION__.',
 	'wikifeatures-feature-heading-wgEnableChat' => 'Чат',
+	'wikifeatures-feature-description-wgEnableChat' => 'Это расширение позволит участникам викии обмениваться мгновенными сообщениями друг с другом. Любой зарегистрированный участник может присоединиться к чату, нажав кнопку "Присоединиться к чату" в окошке чата, которое появится в правой части любой страницы викии.',
+	'wikifeatures-feature-heading-wgEnableEditPageReskinExt' => 'Новый дизайн визуального редактора',
+	'wikifeatures-feature-description-wgEnableEditPageReskinExt' => 'Редактирование - это основа Вики, поэтому наличие удобного визуального редактора необходимо для облегчения этого процесса. Мы изменили текущий визуальный редактор, существенно усовершенствовав его.',
 );
 

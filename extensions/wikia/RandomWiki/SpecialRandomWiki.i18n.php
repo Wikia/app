@@ -265,6 +265,13 @@ $messages['ru'] = array(
 	'randomwiki' => 'Случайная вики',
 );
 
+/** Sakha (Саха тыла)
+ * @author Kyraha
+ */
+$messages['sah'] = array(
+	'randomwiki' => 'Үлүбээй биики',
+);
+
 /** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  */
