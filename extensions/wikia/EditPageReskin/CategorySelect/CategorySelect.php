@@ -31,7 +31,7 @@ $wgExtensionCredits['other'][] = array(
 
 $wgExtensionFunctions[] = 'CategorySelectInit';
 $wgExtensionMessagesFiles['CategorySelect'] = dirname(__FILE__) . '/CategorySelect.i18n.php';
-$wgAutoloadClasses['CategorySelect'] = "$IP/extensions/wikia/EditPageReskin/CategorySelect/CategorySelect_body.php";
+$wgAutoloadClasses['CategorySelect'] = dirname(__FILE__) . '/CategorySelect_body.php';
 $wgAjaxExportList[] = 'CategorySelectAjaxParseCategories';
 $wgAjaxExportList[] = 'CategorySelectAjaxSaveCategories';
 $wgAjaxExportList[] = 'CategorySelectGenerateHTMLforView';

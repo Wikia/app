@@ -37,7 +37,7 @@ class BlogArticle extends Article {
 			$article->doEdit(
 				"__HIDDENCAT__", $title, EDIT_NEW | EDIT_FORCE_BOT | EDIT_SUPPRESS_RC
 			);
-		} 
+		}
 	}
 
 	/**
@@ -129,7 +129,7 @@ class BlogArticle extends Article {
 		// Clear Oasis rail module
 		$mcKey = wfMemcKey( "OasisPopularBlogPosts", $wgLang->getCode() );
 		$wgMemc->delete($mcKey);
-		
+
 		$user = $this->mTitle->getPrefixedDBkey();
 		foreach( range(0, 5) as $page ) {
 			$wgMemc->delete( wfMemcKey( "blog", "listing", $user, $page ) );
@@ -230,7 +230,7 @@ class BlogArticle extends Article {
 		return true;
 	}
 
-	
+
 	/**
 	 * return list of props
 	 *
@@ -238,12 +238,12 @@ class BlogArticle extends Article {
 	 * @static
 	 *
 	 */
-	
+
 	static public function getPropsList() {
 		$replace = array('voting' => WPP_BLOGS_VOTING, 'commenting' => WPP_BLOGS_COMMENTING );
 		return $replace;
 	}
-	
+
 	/**
 	 * save article extra properties to page_props table
 	 *
@@ -273,14 +273,14 @@ class BlogArticle extends Article {
 					__METHOD__
 				);
 				Wikia::log( __METHOD__, "save", "id: {$page_id}, key: {$sPropName}, value: {$sPropValue}" );
-			} 
+			}
 		}
 
 		$replace = self::getPropsList();
 		foreach( $props as $sPropName => $sPropValue) {
 			wfSetWikiaPageProp($replace[$sPropName], $page_id, $sPropValue );
-		}	
-		
+		}
+
 		$dbw->commit(); #--- for ajax
 		wfProfileOut( __METHOD__ );
 	}
@@ -315,7 +315,7 @@ class BlogArticle extends Article {
 				$return[$key] =  (int) wfGetWikiaPageProp($value, $page_id );
 			}
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 		wfDebug( __METHOD__ . ": getting props for $page_id\n" );
 
@@ -703,24 +703,6 @@ class BlogArticle extends Article {
 	}
 
 	/**
-	 * Get User_blog article from USer_blog_comment
-	 *
-	 * @access public
-	 * @static
-	 */
-	static public function commentToUserBlog( $oTitle ) {
-		$oUBlogTitle = null;
-		if ($oTitle instanceof Title) {
-			list( $author, $title, $comment_title )  = BlogComment::explode( $oTitle->getPrefixedText() );
-			if ( !empty($author) ) {
-				list ( $ns, $user ) = explode ( ':', $author );
-				$oUBlogTitle = Title::newFromText( "{$user}/{$title}#{$comment_title}", NS_BLOG_ARTICLE);
-			}
-		}
-		return $oUBlogTitle;
-	}
-
-	/**
 	 * auto-unwatch all comments if blog post was unwatched
 	 *
 	 * @access public
@@ -782,9 +764,9 @@ class BlogArticle extends Article {
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
-	
+
 	/* hook used to redirect to custom edit page */
-	
+
 	public static function alternateEditHook($oEditPage) {
 		global $wgOut;
 		$oTitle = $oEditPage->mTitle;
@@ -794,9 +776,9 @@ class BlogArticle extends Article {
 		}
 		if($oTitle->getNamespace() == NS_BLOG_ARTICLE && $oTitle->isSubpage() && empty($oEditPage->isCreateBlogPage) ) {
 			$oSpecialPageTitle = Title::newFromText('CreateBlogPage', NS_SPECIAL);
-			$url = $oSpecialPageTitle->getFullUrl("pageId=" . $oTitle->getArticleId() ); 
+			$url = $oSpecialPageTitle->getFullUrl("pageId=" . $oTitle->getArticleId() );
 			$wgOut->redirect($url);
-			
+
 		}
 		return true;
 	}

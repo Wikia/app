@@ -703,12 +703,12 @@ class RTEReverseParser {
 		// RT #40935
 		else if (self::isChildOf($node, 'div') && (trim($textContent) != '')) {
 			// this is first paragraph in this <div>
-			if (self::previousSiblingIsTextNode($node, 'p')) {
+			if (self::previousSiblingIsTextNode($node)) {
 				$out = "\n{$out}";
 			}
 
 			// this is last paragraph in this <div>
-			if (self::nextSiblingIsTextNode($node, 'p')) {
+			if (self::nextSiblingIsTextNode($node)) {
 				$out .= "\n";
 			}
 		}

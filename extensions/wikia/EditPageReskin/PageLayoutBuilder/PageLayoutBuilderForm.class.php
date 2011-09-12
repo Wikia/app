@@ -156,7 +156,7 @@ class PageLayoutBuilderForm extends SpecialCustomEditPage {
 
 		if( !empty( $this->pageId ) ) {
 			$pageTitle = Title::newFromID($this->pageId);
-			$oldValues = $parser->loadForm($pageTitle, $this->layoutTitle->getArticleId() );
+			$oldValues = $this->parser->loadForm($pageTitle, $this->layoutTitle->getArticleId() );
 
 			foreach($oldValues as $key => $oldValue) {
 				if(!isset($tagValues['val_'.$key])){

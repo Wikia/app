@@ -66,7 +66,7 @@ class SpecialPageLayoutBuilder extends SpecialCustomEditPage {
 		if ( $mode == self::MODE_NEW_SETUP || $mode == self::MODE_NEW ) {
 			$this->isNoPublish = true;
 			if( $this->action == self::ACTION_CREATE_FROM_ARTICLE ) {
-				$this->preloadedText = $this->getWikitextFromRequest();	
+				$this->preloadedText = $this->getWikitextFromRequest();
 			}
 		}
 	}
@@ -75,7 +75,7 @@ class SpecialPageLayoutBuilder extends SpecialCustomEditPage {
 		$titleText = trim( $this->getField(self::FIELD_DEFAULT_TITLE, '') );
 
 		if ( !empty( $titleText ) ) {
-			$title =  new Title($titleText, $titleNS);
+			$title =  Title::newFromText($titleText, $this->titleNS);
 			return $title;
 		}
 

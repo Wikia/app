@@ -64,7 +64,7 @@ class BlogsFolllowJob extends Job {
 			return true;
 		}
 
-		
+
 		/**
 		 * get title of page, take main part from this title which will be
 		 * main page for user blogs (listing)
@@ -75,7 +75,7 @@ class BlogsFolllowJob extends Job {
 		 * check who watches this page
 		 */
 		$dbr = wfGetDB( DB_SLAVE );
-		$sth = $dbr->select(
+		$res = $dbr->select(
 			array( "watchlist" ),
 			array( "wl_user" ),
 			array(
@@ -84,37 +84,37 @@ class BlogsFolllowJob extends Job {
 			),
 			__METHOD__
 		);
-		
+
 		while ($row = $dbw->fetchObject( $res ) ) {
 			$watchers[] = intval( $row->wl_user );
-		}		
+		}
 
 		if ( !empty($watchers) ) {
 			$enotif = new EmailNotification();
 			$title = Title::makeTitle( $ownerTitle->getNamespace(), $ownerTitle->getDBKey() );
-			$enotif->actuallyNotifyOnPageChange( 
-				$editor, 
-				$title, 
+			$enotif->actuallyNotifyOnPageChange(
+				$editor,
+				$title,
 				$this->params['timestamp'],
 				$this->params['comment'],
 				$this->params['minor'],
 				0,
 				$watchers,
-				$this->params['log_action'] 
+				$this->params['log_action']
 			);
-							
+
 			/* Update wl_notificationtimestamp for all watching users except the editor */
 			$dbw = wfGetDB( DB_MASTER );
 			$dbw->begin();
 			$dbw->update( 'watchlist',
-				array( 'wl_notificationtimestamp' => $dbw->timestamp( $timestamp ) ), 
-				array( 
+				array( 'wl_notificationtimestamp' => $dbw->timestamp( $timestamp ) ),
+				array(
 					'wl_title' 		=> $ownerTitle->getDBkey(),
 					'wl_namespace'	=> $ownerTitle->getNamespace(),
 					'wl_user' 		=> $watchers
 				), __METHOD__
 			);
-			$dbw->commit();			
+			$dbw->commit();
 		}
 
 		wfProfileOut( __METHOD__ );
