@@ -44,7 +44,7 @@ class ArticleCommentsModule extends Module {
 			$this->commentListRaw = $data['commentListRaw'];
 			$this->isReadOnly = $data['isReadOnly'];
 			$this->page = $data['page'];
-			$this->pagination = $data['pagination'];
+			$this->pagination = Paginator::newFromArray( $data['countComments'], 25 );
 			$this->countComments = $data['countComments'];
 			$this->countCommentsNested = $data['countCommentsNested'];
 			$this->commentingAllowed = $data['commentingAllowed'];

@@ -294,7 +294,7 @@ var ArticleComments = {
 	setPage: function(e) {
 		ArticleComments.log('begin: setPage');
 		e.preventDefault();
-		var page = parseInt($(this).attr('page'));
+		var page = parseInt($(this).data('page'));
 
 		var trackingPage = page;
 		var id = $(this).attr('id');
@@ -342,7 +342,14 @@ var ArticleComments = {
 	},
 
 	addHover: function() {
-		$('.article-comments-pagination-link').bind('click', ArticleComments.setPage).not('.article-comments-pagination-link-active, #article-comments-pagination-link-prev, #article-comments-pagination-link-next').hover(function() {$(this).addClass('accent');}, function() {$(this).removeClass('accent');});
+		$('.article-comments-pagination a')
+			.bind('click', ArticleComments.setPage)
+			.not('.active')
+			.hover(function() {
+				$(this).addClass('accent');
+			}, function() {
+				$(this).removeClass('accent');
+			});
 	},
 
 	changeOrder: function() {

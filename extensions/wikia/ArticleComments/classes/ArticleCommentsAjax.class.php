@@ -287,7 +287,9 @@ class ArticleCommentsAjax {
 			$listing = ArticleCommentList::newFromTitle($title);
 			$comments = $listing->getCommentPages(false, $page);
 			$text = wfRenderPartial('ArticleComments', 'CommentList', array('commentListRaw' => $comments, 'page' => $page, 'useMaster' => false));
-			$pagination = ArticleCommentList::doPagination($listing->getCountAll(), count($comments), $page === false ? 1 : $page, $title);
+			$paginator = Paginator::newFromArray( $listing->getCountAll(), 25 );
+			$paginator->setActivePage($page === false ? 1 : $page - 1);
+			$pagination = $paginator->getBarHTML('#');
 		}
 
 		$result = array('error' => $error, 'text' => $text, 'pagination' => $pagination);
