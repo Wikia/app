@@ -39,7 +39,7 @@ $messages['en'] = array(
 	'admindashboard-control-invite-tooltip' => 'Invite other people to use this wiki.',
 	'admindashboard-control-help-label' => 'Help',
 	'admindashboard-control-help-tooltip' => 'Find Help.',
-	'admindashboard-control-help-url' => 'http://www.community.wikia.com',
+	'admindashboard-control-help-url' => 'http://community.wikia.com/wiki/Help:Contents',
 // Content Controls
 	'admindashboard-controls-content-header' => 'Content',
 	'admindashboard-control-community-corner-label' => 'Community Corner',
@@ -477,7 +477,7 @@ $messages['nl'] = array(
 	'admindashboard-back-to-dashboard' => 'Terug naar het Dashboard',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian (bokmål) (Norsk (bokmål))
  * @author Audun
  */
 $messages['no'] = array(
