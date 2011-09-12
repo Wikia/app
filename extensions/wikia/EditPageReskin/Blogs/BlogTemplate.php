@@ -710,6 +710,8 @@ class BlogTemplateClass {
 	}
 
 	private static function __parseCategories($text, $parser) {
+		global $wgTitle;
+
 		if ( is_object($parser) ) {
 			$pOptions = $parser->getOptions();
 			if ( is_null($pOptions) ) {
@@ -1076,7 +1078,7 @@ class BlogTemplateClass {
 
 				/* ignore comment lines */
 				if ($sParamName[0] == '#') {
-					wfDebugLog( __METHOD__, "ignore comment line: ".$iKey." \n" );
+					wfDebugLog( __METHOD__, "ignore comment line: ".$sParamName." \n" );
 					continue;
 				}
 
@@ -1383,7 +1385,7 @@ class BlogTemplateClass {
 							$count = intval($params['count']);
 						}
 						if (empty($count)) {
-							$count = int(self::$aBlogParams['count']['default']);
+							$count = intval(self::$aBlogParams['count']['default']);
 						}
 						$offset = $count * $offset;
 						/* set new value of offset */

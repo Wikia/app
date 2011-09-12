@@ -16,7 +16,7 @@ class LayoutWidgetGallery extends LayoutWidgetImage {
 			$style = "border-color: red; border-style: solid;";
 			$data['error'] = $style;
 		}
-		
+
 		$data['caption'] = $this->getCaption();
 		$data['align'] =  $this->getAlign("left");
 		$data['isform'] = true;
@@ -36,75 +36,75 @@ class LayoutWidgetGallery extends LayoutWidgetImage {
 								'type' => 'hidden',
 								'value' => $this->getValue()
 							), "", true );
-							
+
 		if(!empty($this->value)) {
 			return $this->parseGallery($this->value).$input;
 		}
-		
+
 		return $this->renderForPreviewAndForm($data).$input;
 	}
-	
+
 	public static function renderForFormAjax() {
 		global $wgRequest;
-		
+
 		$element_id= $wgRequest->getVal('element_id', 0);
 		$plb_id = $wgRequest->getVal('plb_id', 0);
 		$text = $wgRequest->getVal('gallery');
-		
+
 		$out = PageLayoutBuilderModel::getElement($plb_id, $element_id);
 		$class = LayoutWidgetBase::getNewWidget('plb_gallery', $out['attributes'], $text);
 		return $class->parseGallery($text);
 	}
-	
-	
+
+
 	public static function getGalleryDataAjax() {
 		global $wgRequest;
-		
+
 		WikiaPhotoGalleryHelper::initParserHook();
-		$text = $wgRequest->getVal('text'); 
-		
+		$text = $wgRequest->getVal('text');
+
 		$element_id= $wgRequest->getVal('element_id', 0);
 		$plb_id = $wgRequest->getVal('plb_id', 0);
 		$text = $wgRequest->getVal('text');
-		
+
 		$out = PageLayoutBuilderModel::getElement($plb_id, $element_id);
-		
+
 		$class = LayoutWidgetBase::getNewWidget('plb_gallery', $out['attributes'], $text);
 		$class->parseGallery($text);
-		
-		return Wikia::json_encode(WikiaPhotoGalleryHelper::$lastGalleryData); 
+
+		return Wikia::json_encode(WikiaPhotoGalleryHelper::$lastGalleryData);
 	}
-	
+
 	private function getMwText($value, $parmas = array()) {
 		return XML::element('gallery', $parmas, $value, false );
-	} 
-	
+	}
+
 	public function parseGallery( $text ) {
 		$params = array(
 			'position' => $this->getAttrVal("align", true),
 			'spacing'=> $this->getAttrVal("spacing", true),
 			'widths' => $this->getAttrVal("size", true),
-		 	'captionalign' => 'left' 
-		); 
-		
+		 	'captionalign' => 'left'
+		);
+
 		$articleText = $this->getMwText($text, $params);
 		$tmpParser = new Parser();
 		$tmpParser->setOutputType(OT_HTML);
 		$tmpParserOptions = new ParserOptions();
 		$fakeTitle = new FakeTitle();
-		$html = $tmpParser->parse( $articleText, $fakeTitle, $tmpParserOptions)->getText();	 	
+		$html = $tmpParser->parse( $articleText, $fakeTitle, $tmpParserOptions)->getText();
 		$html = str_replace( 'id="gallery-0"', 'id="gallery-plb_'.$this->getAttrVal("id", true).'"',  $html );
-		
+
 		return $html;
 	}
-	
+
 	public function renderForResult() {
 		$params = array(
 			'position' => $this->getAttrVal("align", true),
 			'spacing'=> $this->getAttrVal("spacing", true),
 			'widths' => $this->getAttrVal("size", true),
-		 	'captionalign' => 'left' 
-		); 
+		 	'captionalign' => 'left'
+		);
 		return XML::element('gallery', $params, $this->getValue(), false );
 	}
 
@@ -131,9 +131,9 @@ class LayoutWidgetGallery extends LayoutWidgetImage {
 	public function renderForPreview() {
 		global $wgExtensionsPath, $wgHooks;
 		$wgHooks['GalleryBeforeRenderImage'][] =  'LayoutWidgetGallery::renderImageForPreview';
-		return self::parseGallery("1.png\n2.png\n3.png\n4.png\n5.png\n6.png", 0);
+		return self::parseGallery("1.png\n2.png\n3.png\n4.png\n5.png\n6.png");
 	}
-	
+
 	public static function renderImageForPreview(&$image) {
 		global $wgExtensionsPath;
 		$image['link'] = "#";
@@ -193,7 +193,7 @@ class LayoutWidgetGallery extends LayoutWidgetImage {
 			if( $size < 50 ) {
 				return wfMsg( 'plb-parser-gallery-size-too-small' );
 			}
-			
+
 			if( $size > 310 ) {
 				return wfMsg( 'plb-parser-gallery-size-too-big' );
 			}
@@ -209,14 +209,14 @@ Photo orientation: FIXED to "leave in original shape"
 		if( !$this->validateAllowedVal( "spacing", array('small','medium','large') )) {
 			return  wfMsg( 'plb-parser-gallery-incorrect-spacing' );
 		}
-				
+
 		if( !$this->validateAllowedVal( "align", array('left','center','right') )) {
 			return  wfMsg( 'plb-parser-gallery-incorrect-align' );
 		}
 
 		return true;
 	}
-	
+
 	//private function get
 	public function getAllAttrs() {
 		//param name => default value
@@ -228,7 +228,7 @@ Photo orientation: FIXED to "leave in original shape"
 				'required'  => 0,
 				'size' => '185',
 				'align' => 'left',
-				'spacing' => 'large',		
+				'spacing' => 'large',
 		);
 	}
 
