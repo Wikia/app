@@ -62,7 +62,7 @@ class WikiFeaturesHelper extends WikiaModel {
 			foreach ($this->wg->WikiFeatures['normal'] as $feature) {
 				$list[] = array(
 					'name' => $feature, 
-					'enabled' => $this->app->getGlobal($feature),
+					'enabled' => $this->getFeatureEnabled($feature),
 				);
 			}
 		}
@@ -79,7 +79,7 @@ class WikiFeaturesHelper extends WikiaModel {
 			foreach ($this->wg->WikiFeatures['labs'] as $feature) {
 				$list[] = array(
 					'name' => $feature, 
-					'enabled' => $this->app->getGlobal($feature), 
+					'enabled' => $this->getFeatureEnabled($feature),
 					'new' => self::isNew($feature),
 					'active' => $this->getNumActiveWikis($feature),
 				);
@@ -131,6 +131,13 @@ class WikiFeaturesHelper extends WikiaModel {
 	 */
 	public function getMemcKeyNumActiveWikis($feature) {
 		return $this->wf->SharedMemcKey('wikifeatures', 'active_wikis', $feature);
+	}
+	
+	protected function getFeatureEnabled($feature) {
+		if ($this->app->getGlobal($feature)==true)
+			return true;
+		else
+			return false;
 	}
 	
 	/**
