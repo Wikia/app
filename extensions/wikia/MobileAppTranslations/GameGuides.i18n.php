@@ -48,6 +48,17 @@ $messages['en'] = array(
 	'error-json-parse' => 'There was a problem with the data returned from our servers, sorry.\\nPlease try again.'
 );
 
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'window-article-button-close' => 'Bağlı',
+	'window-article-button-back' => 'Əvvəlki',
+	'window-article-menu-search-label' => 'Axtar',
+	'window-article-menu-cancel-label' => 'İmtina',
+	'alert-download-updated-wikis-button-ok' => 'Ok',
+);
+
 /** Breton (Brezhoneg)
  * @author Y-M D
  */

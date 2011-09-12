@@ -914,6 +914,13 @@ function wfWikiFeeds_Linker($a, $b) {
 		$wgWikiFeedsSettings['__linkerTracker'] = array();
 	}
 
+	/** Wikia change start, author Federico "Lox" Lucignano **/
+	if ( !( $wgTitle instanceof Title ) ) {
+		//$wgTitle is not set, skip processing
+		return true;
+	}
+	/** Wikia change end **/
+
 	// if we have already processed this title, don't do it again
 	if (in_array($wgTitle->getFullText(), $wgWikiFeedsSettings['__linkerTracker'])) {
 		return true;

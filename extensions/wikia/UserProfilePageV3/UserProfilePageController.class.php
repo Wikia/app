@@ -157,30 +157,35 @@ class UserProfilePageController extends WikiaController {
 			);
 		} else if( defined('NS_USER_TALK') && $namespace == NS_USER_TALK ) {
 			$title = F::build('Title', array($user->getName(), NS_USER_TALK), 'newFromText');
-			if( $isUserPageOwner ) {
-				$actionButtonArray = array(
-					'action' => array(
-						'href' => $this->title->getLocalUrl(array('action' => 'edit')),
-						'text' => $this->wf->Msg('user-action-menu-edit'),
-					),
-					'image' => MenuButtonModule::EDIT_ICON,
-					'name' => 'editprofile',
-				);
-			} else {
-				$actionButtonArray = array(
-					'action' => array(
-						'href' => $title->getLocalUrl(array('action' => 'edit', 'section' => 'new')),
-						'text' => $this->wf->Msg('user-action-menu-leave-message'),
-					),
-					'image' => MenuButtonModule::MESSAGE_ICON,
-					'name' => 'leavemessage',
-					'dropdown' => array(
-						'edit' => array(
-							'href' => $this->title->getFullUrl(array('action' => 'edit')),
+			
+			if( $title instanceof Title ) {
+			//sometimes title isn't created, i've tried to reproduce it on my devbox and i couldn't
+			//checking if $title is instance of Title is a quick fix -- if it isn't no action button will be shown
+				if( $isUserPageOwner ) {
+					$actionButtonArray = array(
+						'action' => array(
+							'href' => $this->title->getLocalUrl(array('action' => 'edit')),
 							'text' => $this->wf->Msg('user-action-menu-edit'),
-						)
-					),
-				);
+						),
+						'image' => MenuButtonModule::EDIT_ICON,
+						'name' => 'editprofile',
+					);
+				} else {
+					$actionButtonArray = array(
+						'action' => array(
+							'href' => $title->getLocalUrl(array('action' => 'edit', 'section' => 'new')),
+							'text' => $this->wf->Msg('user-action-menu-leave-message'),
+						),
+						'image' => MenuButtonModule::MESSAGE_ICON,
+						'name' => 'leavemessage',
+						'dropdown' => array(
+							'edit' => array(
+								'href' => $this->title->getFullUrl(array('action' => 'edit')),
+								'text' => $this->wf->Msg('user-action-menu-edit'),
+							)
+						),
+					);
+				}
 			}
 		} else if( defined('NS_BLOG_ARTICLE') && $namespace == NS_BLOG_ARTICLE && $isUserPageOwner ) {
 			global $wgCreateBlogPagePreload;

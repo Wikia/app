@@ -334,6 +334,7 @@ $messages['sr-ec'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'outbound-screen-login-text' => '[[Special:UserLogin/signup|Skapa ett nytt konto]] eller [[Special:UserLogin|logga in på ditt existerande konto]] för att hoppa över denna sida i framtiden.',
 	'outbound-screen-you-are-leaving' => 'Du lämnar nu Wikia.',
 );
 

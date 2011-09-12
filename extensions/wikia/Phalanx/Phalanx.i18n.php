@@ -152,6 +152,7 @@ $messages['az'] = array(
 	'phalanx-stats-table-type' => 'Tipi',
 	'phalanx-stats-table-language' => 'Dil',
 	'phalanx-stats-table-text' => 'Mətn',
+	'phalanx-stats-table-reason' => 'Səbəb',
 	'phalanx-stats-table-wiki-name' => 'Viki adı',
 	'phalanx-stats-table-wiki-url' => 'Viki URL',
 );
@@ -1460,11 +1461,16 @@ $messages['sv'] = array(
 	'phalanx-type-user' => 'användare',
 	'phalanx-type-answers-recent-questions' => 'senaste frågorna',
 	'phalanx-type-wiki-creation' => 'wiki-skapande',
+	'phalanx-label-filter' => 'Filter:',
+	'phalanx-label-reason' => 'Orsak:',
 	'phalanx-label-type' => 'Typ:',
 	'phalanx-label-lang' => 'Språk:',
 	'phalanx-view-type' => 'Typ av blockering...',
 	'phalanx-view-blocks' => 'Sökfilter',
 	'phalanx-test-submit' => 'Test',
+	'phalanx-test-results-legend' => 'Testresultat',
+	'phalanx-display-row-created' => "skapades av '''$1''' den $2",
+	'phalanx-stats-table-user' => 'Lades till av',
 	'phalanx-stats-table-type' => 'Typ',
 	'phalanx-stats-table-create' => 'Skapades',
 	'phalanx-stats-table-expire' => 'Upphör',
@@ -1472,6 +1478,8 @@ $messages['sv'] = array(
 	'phalanx-stats-table-language' => 'Språk',
 	'phalanx-stats-table-text' => 'Text',
 	'phalanx-stats-table-reason' => 'Anledning',
+	'phalanx-stats-table-wiki-id' => 'Wiki-ID',
+	'phalanx-stats-table-wiki-name' => 'Wiki-namn',
 );
 
 /** Telugu (తెలుగు)

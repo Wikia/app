@@ -94,6 +94,19 @@ $messages['qqq'] = array(
 	'wikiaquiz-game-cadence-1' => 'Third part of "Ready - Set - Go!" (sports countdown)',
 );
 
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'wikiaquiz-title-label' => 'Başlıq',
+	'wikiaquiz-questions-label' => 'Suallar',
+	'wikiaquiz-answers-label' => 'Cavablar',
+	'wikiaquiz-answer-label' => 'Cavab',
+	'wikiaquiz-cancel-label' => 'İmtina',
+	'wikiaquiz-publish-label' => 'Naşir',
+	'wikiaquiz-game-finish-button' => 'Son',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  */

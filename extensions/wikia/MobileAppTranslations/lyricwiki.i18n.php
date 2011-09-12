@@ -67,6 +67,20 @@ $messages['qqq'] = array(
 	'app-tab-sotd' => 'SotD = Song of the Day',
 );
 
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'app-loading' => 'Yüklənir…',
+	'app-tab-search' => 'Axtar',
+	'app-tab-about' => 'İzah',
+	'app-nonetwork-dialog-close-button' => 'OK',
+	'search-go' => 'Seç!',
+	'login-username-hint' => 'İstifadəçi adı',
+	'login-password-hint' => 'Parol',
+	'login-submit-button' => 'Loqin',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  */
@@ -637,7 +651,9 @@ $messages['no'] = array(
 	'ringtone-matcher-by-song' => 'Send %s Ringetone til din mobil',
 );
 
-/** Polish (Polski) */
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
 $messages['pl'] = array(
 	'app-loading' => 'Ładowanie...',
 	'app-tab-search' => 'Szukaj',
@@ -653,6 +669,11 @@ $messages['pl'] = array(
 	'search-hint-text' => "np: 'Maryla Rodowicz:Czadu Maryla!'",
 	'search-no-match-found' => 'Brak wyników.',
 	'search-no-match-found-query' => 'Szukane hasło: %s',
+	'search-results-title' => 'Wyniki wyszukiwania „%s”',
+	'login-label' => 'Zaloguj się do LyricWiki',
+	'login-username-hint' => 'Nazwa użytkownika',
+	'login-password-hint' => 'Hasło',
+	'login-submit-button' => 'Zaloguj',
 	'about-heading' => 'LyricWiki',
 	'about-credits' => 'przez %s',
 	'about-heading-tips' => 'Wyszukiwanie',
@@ -663,7 +684,8 @@ $messages['pl'] = array(
 	'about-heading-feedback' => 'Sugestie',
 	'about-feedback-0' => 'Chcesz zgłosić jakieś sugestię? Napisz na adres: %s',
 	'about-heading-rate' => 'Oceń aplikację!',
-	'about-rate-0-android' => 'Jeśli podoba Ci się ta aplikacja przydziel jej 5 gwiazdek w Android Market :)',
+	'about-rate-0-android' => 'Jeśli podoba Ci się ta aplikacja oceń ją na 5 gwiazdek w Android Market!',
+	'about-rate-0-ios' => 'Jeśli podoba Ci się ta aplikacja oceń ją na 5 gwiazdek w App Store!',
 	'gracenote-takedown' => 'Oh! Niestety nie posiadamy licencji aby wyświetlić pełny tekst tej piosenki w tym momencie (to się zdarza dla około jednego procenta naszych piosenek). Proszę spróbuj ponownie w przyszłym tygodniu.',
 	'lyrics-artist-byline' => 'przez %s',
 	'ringtone-matcher-by-song' => 'Wyślij %s jako dzwonek na Twój telefon',

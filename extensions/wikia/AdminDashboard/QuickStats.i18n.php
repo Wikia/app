@@ -26,10 +26,17 @@ $messages['qqq'] = array(
 );
 
 /** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
  * @author Melikov Memmed
+ * @author Vago
  */
 $messages['az'] = array(
+	'quickstats-header-date' => 'Tarix',
+	'quickstats-header-views' => 'Görünüş',
+	'quickstats-header-edits' => 'Redaktələr',
 	'quickstats-header-photos' => 'Şəkillər',
+	'quickstats-totals-label' => 'Yekunu',
+	'quickstats-number-shortening' => '$1K',
 );
 
 /** German (Deutsch)
@@ -83,6 +90,17 @@ $messages['gl'] = array(
 	'quickstats-totals-label' => 'Totais',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Ollar máis estatísticas]]',
 	'quickstats-number-shortening' => '$1K',
+);
+
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'quickstats-header-label' => 'Statistica rapide',
+	'quickstats-header-date' => 'Data',
+	'quickstats-header-views' => 'Visitas',
+	'quickstats-header-edits' => 'Modificationes',
+	'quickstats-header-photos' => 'Photos',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -173,6 +191,19 @@ $messages['pl'] = array(
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Więcej statystyk]]',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Giro720
+ */
+$messages['pt-br'] = array(
+	'quickstats-header-date' => 'Data',
+	'quickstats-header-views' => 'Visualizações',
+	'quickstats-header-edits' => 'Edições',
+	'quickstats-header-photos' => 'Fotos',
+	'quickstats-totals-label' => 'Totais',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Ver mais estatísticas]]',
+	'quickstats-number-shortening' => '$1K',
+);
+
 /** Russian (Русский)
  * @author Kuzura
  */
@@ -186,6 +217,20 @@ $messages['ru'] = array(
 	'quickstats-totals-label' => 'Итого',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Ещё статистика]]',
 	'quickstats-number-shortening' => '$1K',
+);
+
+/** Swedish (Svenska)
+ * @author WikiPhoenix
+ */
+$messages['sv'] = array(
+	'quickstats-header-label' => 'Snabbstatistik',
+	'quickstats-header-date' => 'Datum',
+	'quickstats-header-views' => 'Visningar',
+	'quickstats-header-edits' => 'Redigeringar',
+	'quickstats-header-photos' => 'Foton',
+	'quickstats-header-likes' => 'Gilla',
+	'quickstats-totals-label' => 'Totalt',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Se mer statistik]]',
 );
 
 /** Tatar (Cyrillic script) (Татарча)

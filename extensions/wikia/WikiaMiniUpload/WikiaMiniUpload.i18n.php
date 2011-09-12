@@ -264,10 +264,16 @@ $messages['ar'] = array(
  * @author Cekli829
  */
 $messages['az'] = array(
+	'wmu-upload-image' => 'Şəkil yüklə',
+	'wmu-title' => 'Şəkil yüklə',
+	'wmu-upload' => 'Yüklə',
 	'wmu-thiswiki' => 'Bu viki',
 	'wmu-name' => 'Ad',
 	'wmu-license' => 'Lisenziya',
 	'wmu-size' => 'Həcm',
+	'wmu-width' => 'Eni',
+	'wmu-imagebutton' => 'Bütün şəkillər',
+	'wmu-gallery' => 'Qalereya',
 );
 
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
@@ -367,7 +373,7 @@ $messages['bg'] = array(
 	'wmu-alignment' => 'Подравняване',
 );
 
-/** Bahasa Banjar (Bahasa Banjar)
+/** Banjar (Bahasa Banjar)
  * @author Ezagren
  */
 $messages['bjn'] = array(
@@ -1967,7 +1973,7 @@ $messages['pl'] = array(
  * @author Dragonòt
  */
 $messages['pms'] = array(
-	'wmu-upload-image' => 'Caria Figura',
+	'wmu-upload-image' => 'Carié na Figura',
 	'wmu-upload' => 'Carié',
 	'wmu-notlogged' => "Ch'a intra ant ël sistema o ch'as argistra për carié dle figure da sò ordinator",
 	'wmu-find' => 'Treuva',
@@ -2032,10 +2038,10 @@ $messages['pms'] = array(
 	'wmu-no-preview' => "A peul pa gionté na figura da n'artìcol an manera ëd preuva",
 	'wmu-no-protect' => "Sta pàgina-sì a l'é protegiùa, it peule pa giontéjë na figura",
 	'wmu-no-rights' => "A l'ha pa 'l përmess ëd gionté dle figure a sta pàgina-sì",
-	'wmu-more-options' => 'Pi opsion',
+	'wmu-more-options' => "Pi d'opsion",
 	'wmu-fewer-options' => 'Men opsion',
-	'wmu-replace-default-caption' => 'rimpiassa tìtol ëd default',
-	'wmu-appearance-in-article' => 'Aparensa an Artìcol',
+	'wmu-replace-default-caption' => 'rampiassé descrission dë stàndard',
+	'wmu-appearance-in-article' => 'Aparensa ant la pàgina',
 	'wmu-alignment' => 'Aliniament',
 );
 

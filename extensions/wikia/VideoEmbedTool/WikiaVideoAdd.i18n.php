@@ -54,6 +54,13 @@ $messages['ar'] = array(
 	'wva-protected' => 'هذا الفيديو. محمي',
 );
 
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'wva-add' => 'Əlavə et',
+);
+
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
@@ -78,7 +85,7 @@ $messages['bg'] = array(
 	'wva-add' => 'Добавяне',
 );
 
-/** Bahasa Banjar (Bahasa Banjar)
+/** Banjar (Bahasa Banjar)
  * @author Ezagren
  */
 $messages['bjn'] = array(

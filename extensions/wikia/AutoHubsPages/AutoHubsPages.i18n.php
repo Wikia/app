@@ -126,6 +126,7 @@ $messages['cs'] = array(
  * @author Diebuche
  * @author George Animal
  * @author LWChris
+ * @author Tiin
  */
 $messages['de'] = array(
 	'unhide' => 'Einblenden���',
@@ -139,7 +140,7 @@ $messages['de'] = array(
 	'hub-blog-continue' => 'Weiterlesen',
 	'hub-blog-showarticle' => 'Seite anzeigen',
 	'hub-topusers-editpoints' => '<span class="userPoints">$1</span><span class="txt">Bearbeitungs{{PLURAL:$1|punkt|punkte}}</span>',
-	'hub-topusers-editpoints-nonformatted' => ' $1 Bearbeitungs {{PLURAL:$1|punkt|punkte}}',
+	'hub-topusers-editpoints-nonformatted' => '$1 Bearbeitungs{{PLURAL:$1|punkt|punkte}}',
 	'hub-hotspot-from' => 'von',
 	'hub-hide-feed' => 'Feed ausblenden',
 	'hub-show-feed' => 'Feed anzeigen',

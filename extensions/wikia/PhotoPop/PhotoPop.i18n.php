@@ -36,16 +36,45 @@ $messages['qqq'] = array(
 * $2 is the total number of photos in a round of the game.',
 );
 
+/** German (Deutsch)
+ * @author LWChris
+ */
+$messages['de'] = array(
+	'photopop' => 'Photo Pop Spiel',
+	'photopop-title-tag-homescreen' => 'Photo Pop',
+	'photopop-title-tag-selectorscreen' => 'Photo Pop',
+	'photopop-title-tag-playgame' => 'Photo Pop - $1 $2',
+	'photopop-desc' => 'Erstellt eine Seite, auf der das Foto-Aufdeck-Spiel mit einer HTML5 Canvas gespielt werden kann. Es wird über Nirvana APIs erreichbar sein',
+	'photopop-score' => 'Punkte: <span>$1</span>',
+	'photopop-progress' => 'Fotos: <span>$1</span>',
+	'photopop-continue-correct' => 'richtig!',
+	'photopop-continue-timeup' => 'Zeit abgelaufen!',
+	'photopop-finished-heading' => 'fertig!',
+	'photopop-endgame-highscore-summary' => 'Highscore: $1',
+	'photopop-endgame-completion-summary' => 'Du hattest $1 von $2 richtig!',
+	'photopop-endgame-score-summary' => 'Ergebnis: $1',
+	'photopop-tutorial-text' => 'Tippe auf den Bildschirm um ein verdecktes Bild aufzudecken. Tippe dann auf den Pfeil um zu raten, was es ist.',
+);
+
 /** French (Français)
+ * @author Gomoko
  * @author Wyz
  */
 $messages['fr'] = array(
 	'photopop' => 'Jeu Foggy Foto',
+	'photopop-title-tag-homescreen' => 'Photo Pop',
+	'photopop-title-tag-selectorscreen' => 'Photo Pop',
+	'photopop-title-tag-playgame' => 'Photo Pop - $1 $2',
 	'photopop-desc' => 'Crée une page où le jeu Foggy Foto peut être joué dans un canevas HTML5. Elle sera accessible via les APIs de Nirvana.',
 	'photopop-score' => 'Score : <span>$1</span>',
 	'photopop-progress' => 'Photos : <span>$1</span>',
 	'photopop-continue-correct' => 'CORRECT !',
 	'photopop-continue-timeup' => 'LE TEMPS EST ÉCOULÉ !',
+	'photopop-finished-heading' => 'terminé!',
+	'photopop-endgame-highscore-summary' => 'score maximal: $1',
+	'photopop-endgame-completion-summary' => 'vous avez $1 sur $2 de bon.',
+	'photopop-endgame-score-summary' => 'score: $1',
+	'photopop-tutorial-text' => "Touchez l'écran pour dévoiler une image cachée. Puis touchez la flèche pour deviner ce que c'est.",
 );
 
 /** Macedonian (Македонски)
@@ -66,6 +95,7 @@ $messages['mk'] = array(
 	'photopop-endgame-highscore-summary' => 'најдобар резултат: $1',
 	'photopop-endgame-completion-summary' => 'погодивте $1 од $2.',
 	'photopop-endgame-score-summary' => 'резултат: $1',
+	'photopop-tutorial-text' => 'Потчукнете на екранот за да се појави скриена слика. Пооа потчукнете на стрелката за да погодите што се крие во неа.',
 );
 
 /** Malay (Bahasa Melayu)
@@ -85,6 +115,7 @@ $messages['ms'] = array(
 	'photopop-endgame-highscore-summary' => 'markah tertinggi: $1',
 	'photopop-endgame-completion-summary' => 'anda menjawab betul $1 daripada $2.',
 	'photopop-endgame-score-summary' => 'markah: $1',
+	'photopop-tutorial-text' => 'Ketik skrin untuk mendedahkan gambar yang tersorok. Kemudian, ketik anak panah untuk menekanya.',
 );
 
 /** Dutch (Nederlands)
@@ -105,6 +136,7 @@ $messages['nl'] = array(
 	'photopop-endgame-highscore-summary' => 'highscore: $1',
 	'photopop-endgame-completion-summary' => 'U hebt $1 van de $2 vragen juist.',
 	'photopop-endgame-score-summary' => 'score: $1',
+	'photopop-tutorial-text' => 'Tik op het scherm om een verborgen afbeelding te onthullen. Klik daarna op het pijltje om te raden wat het is.',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -117,5 +149,14 @@ $messages['no'] = array(
 	'photopop-progress' => 'Bilder: <span>$1</span>',
 	'photopop-continue-correct' => 'RIKTIG!',
 	'photopop-continue-timeup' => 'TIDEN ER UTE!',
+);
+
+/** Swedish (Svenska)
+ * @author WikiPhoenix
+ */
+$messages['sv'] = array(
+	'photopop-finished-heading' => 'klart!',
+	'photopop-endgame-score-summary' => 'poäng: $1',
+	'photopop-tutorial-text' => 'Tryck på skärmen för att avslöja en dold bild. Tryck sedan på pilen för att gissa vad den är.',
 );
 

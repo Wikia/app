@@ -1169,7 +1169,9 @@ $messages['sr-ec'] = array(
 Ако вам буде затребала помоћ а не нађете администратора, посетите [[wikia:Forum:Community Central Forum|форум на Централној вики заједници]] $3",
 );
 
-/** Swedish (Svenska) */
+/** Swedish (Svenska)
+ * @author WikiPhoenix
+ */
 $messages['sv'] = array(
 	'welcome-user-page' => "==Om mig==
 
@@ -1195,6 +1197,7 @@ Hej, välkommen till {{SITENAME}}. Tack för din ändring till [[:$1]] sidan.
 
 Lämna ett meddelande på [[$2|min diskussionssida]] om jag kan hjälpa till med något! $3",
 	'welcome-message-log' => 'välkomna nya bidragsgivare',
+	'staffsig-text' => '$1<staff /> <small>([[w:forums|hjälpforum]] | [[w:sblog|blogg]])</small>',
 );
 
 /** Thai (ไทย)
@@ -1350,7 +1353,7 @@ Xin vui lòng để lại tin nhắn vào [[$2|trang thảo luận thành viên]
 	'welcome-message-log' => 'Chào mừng cộng sự mới',
 	'welcome-message-user-staff' => '==Xin chào==
 
-Chào bạn, hoang nghênh bạn đến {{SITENAME}}! Cảm ơn bạn đã sửa đổi trang [[:$1]].
+Chào bạn, hoan nghênh bạn đến {{SITENAME}}! Cảm ơn bạn đã sửa đổi trang [[:$1]].
 
 Wiki hiện nay không có bảo quản viên, vì thế nên nếu bạn cần giúp đỡ, có lẽ bạn sẽ cần đến [[wikia:Forum:Community Central Forum|Cộng đồng trung tâm Wikia]] $3',
 	'welcome-message-anon-staff' => "==Xin chào==

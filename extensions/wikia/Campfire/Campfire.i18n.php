@@ -112,6 +112,14 @@ $messages['ru'] = array(
 	'campfire-licensed-under' => 'Под лицензией $1',
 );
 
+/** Swedish (Svenska)
+ * @author WikiPhoenix
+ */
+$messages['sv'] = array(
+	'campfire-page-header' => '$1 från $2',
+	'campfire-licensed-under' => 'Licensierad under $1',
+);
+
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Lauhenry
  */

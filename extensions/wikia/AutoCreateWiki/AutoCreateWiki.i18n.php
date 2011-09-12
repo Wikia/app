@@ -301,6 +301,7 @@ $messages['ar'] = array(
  * @author Cekli829
  */
 $messages['az'] = array(
+	'autocreatewiki-web-address' => 'Veb ünvanı:',
 	'autocreatewiki-language-all' => 'Bütün dillər',
 	'autocreatewiki-birthdate' => 'Doğum tarixi:',
 	'autocreatewiki-done' => 'heç biri',
@@ -3890,7 +3891,7 @@ $messages['sr-ec'] = array(
 	'autocreatewiki-page-title-default' => 'Прављење нове викије',
 	'createwiki' => 'Направи нову викију',
 	'autocreatewiki-category-select' => 'Изаберите једну',
-	'autocreatewiki-language-top' => 'Топ $1 језика',
+	'autocreatewiki-language-top' => 'Најбољих $1 језика',
 	'autocreatewiki-language-all' => 'Сви језици',
 	'autocreatewiki-birthdate' => 'Датум рођења:',
 	'autocreatewiki-blurry-word' => 'Мутна реч:',

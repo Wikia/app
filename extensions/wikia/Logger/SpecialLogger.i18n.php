@@ -245,17 +245,18 @@ $messages['no'] = array(
 );
 
 /** Piedmontese (Piemontèis)
+ * @author Borichèt
  * @author Dragonòt
  */
 $messages['pms'] = array(
-	'logger-desc' => 'Logger për script ëd backend',
-	'logger' => 'Logger ëd backend',
-	'loggertitle' => 'Logger ëd backend',
-	'loggerselectlogname' => 'Selession-a nòm ëd registr:',
+	'logger-desc' => "Scritor d'argistr për copion dël sërvent",
+	'logger' => "Scritor d'argistr an sël sërvent",
+	'loggertitle' => "Scritor d'argistr an sël sërvent",
+	'loggerselectlogname' => 'Selessioné ël nòm dël registr:',
 	'loggerrecordswithpercent' => "'''$1''' registrassion ('''$2''' përsent finì)",
 	'loggerrecords' => '$1 registrassion',
 	'loggergo' => 'Smon',
-	'loggernoresult' => 'Pa gnun arzultà trovà',
+	'loggernoresult' => 'Gnun arzultà trovà',
 );
 
 /** Portuguese (Português)

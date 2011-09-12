@@ -196,6 +196,11 @@ $messages['ar'] = array(
 $messages['az'] = array(
 	'toplists-cancel-button' => 'Ləğv et',
 	'toplists-list-created-by' => '[[User:$1|$1]] tərəfindən',
+	'toplists-seconds' => '$1 {{PLURAL:$1|saniyə|saniyə}}',
+	'toplists-minutes' => '$1 {{PLURAL:$1|dəqiqə|dəqiqə}}',
+	'toplists-hours' => '$1 {{PLURAL:$1|saat|saat}}',
+	'toplists-days' => '$1 {{PLURAL:$1|gün|gün}}',
+	'toplists-weeks' => '$1 {{PLURAL:$1|həftə|həftə}}',
 );
 
 /** Bulgarian (Български)

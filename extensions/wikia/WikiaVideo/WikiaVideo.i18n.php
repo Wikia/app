@@ -119,7 +119,7 @@ $messages['bg'] = array(
 	'wikiavideo-links' => 'Препратки',
 );
 
-/** Bahasa Banjar (Bahasa Banjar)
+/** Banjar (Bahasa Banjar)
  * @author Ezagren
  */
 $messages['bjn'] = array(
@@ -335,6 +335,7 @@ $messages['gl'] = array(
 	'wikiavideo-reverted' => 'Reverteuse con éxito o vídeo $1. Volver a $2.',
 	'wikiavideo-unreverted' => 'Non ten os permisos necesarios para reverter $1.',
 	'wikiavideo-added' => 'engadiu o vídeo $1',
+	'wikiavideo-updated' => 'actualizou o vídeo "[[$1]]"',
 	'wikiavideo-back' => 'volver',
 	'wikiavideo-create' => 'Engadir un vídeo',
 	'wikiavideo-replace' => 'Substituír o vídeo',
@@ -345,6 +346,7 @@ $messages['gl'] = array(
 	'wikiavideo-not-supported' => 'Esta aparencia non permite a inserción de vídeos en galerías no modo de visualización.',
 	'wikiavideo-deleted-old' => "A versión de '''[$1 $2]''' do $3 ás $4 foi borrada.",
 	'wikiavideo-intro-old' => "Está a piques de borrar a versión de '''[$1 $5]''' a data de [$4 $3 ás $2].",
+	'wikiavideo-details' => '$1 ($2 {{PLURAL:$2|píxel|píxeles}}, provedor: <a href="$3" class="external" target="_blank">$4</a>)',
 );
 
 /** Hebrew (עברית)

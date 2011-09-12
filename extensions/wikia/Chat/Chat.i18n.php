@@ -188,7 +188,6 @@ $messages['en'] = array(
 $messages['qqq'] = array(
 	'chat-whos-here' => 'Regards users that are in a chat room. The parameter gives the total count.',
 	'chat-user-manu-give-chat-mod' => 'ChatMod = chat moderator',
-	'emoticons' => 'This is used as the data to power the emoticon mappings.  There is no default heirarchy, so a translated version of this message must contain ALL mappings desired.  The format is that the first-level bullet-point is the image to use, and the second-level bullet-points nested below that image are all of the shortcuts that will be valid to result in that image.'
 );
 
 /** Afrikaans (Afrikaans)
@@ -396,6 +395,8 @@ Wenn du dies für einen Fehler hältst oder möchtest, dass die Entscheidung üb
 	'right-chatmoderator' => 'Kann einen Benutzer aus dem [[Hilfe:Chat|Chat]] kicken/bannen',
 	'group-chatmoderator' => 'Chat-Moderatoren',
 	'group-chatmoderator-member' => 'Chat-Moderator',
+	'group-bannedfromchat' => 'Aus dem Chat verbannt',
+	'group-bannedfromchat-member' => 'Aus dem Chat verbannt',
 );
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)
@@ -454,6 +455,7 @@ Por favor, contáctalo para más información.',
 );
 
 /** French (Français)
+ * @author Gomoko
  * @author IAlex
  * @author McDutchie
  * @author Notafish
@@ -466,6 +468,7 @@ $messages['fr'] = array(
 	'chat-no-login-text' => 'Veuillez vous connecter pour tchater.',
 	'chat-default-topic' => 'Bienvenue sur le tchat de $1',
 	'chat-user-joined' => '$1 a rejoint le tchat.',
+	'chat-read-only' => 'La discussion est temporairement indisponible car le wiki est en mode lecture seule.',
 	'chat-user-parted' => '$1 a quitté le tchat.',
 	'chat-user-blocked' => '$1 a bloqué $2.',
 	'chat-user-allow' => '$1 a autorisé $2.',
@@ -659,7 +662,7 @@ $messages['ja'] = array(
 	'chat-private-headline' => '$1 とのプライベートチャット',
 );
 
-/** کھوار (کھوار)
+/** Khowar (کھوار)
  * @author Rachitrali
  */
 $messages['khw'] = array(
@@ -711,6 +714,7 @@ $messages['mk'] = array(
 	'chat-no-login-text' => 'Најавете се за да разговарате.',
 	'chat-default-topic' => 'Добредојдовте на разговорот за $1',
 	'chat-user-joined' => '$1 се приклучи на разговорот.',
+	'chat-read-only' => 'Разговорите се привремено недостапни кога викито е во режимот „само читање“.',
 	'chat-user-parted' => '$1 го напушти разговорот.',
 	'chat-user-blocked' => '$1 го блокираше корисникот $2.',
 	'chat-user-allow' => '$1 го прими корисникот $2.',
@@ -772,6 +776,7 @@ $messages['ms'] = array(
 	'chat-no-login-text' => 'Sila log masuk untuk bersembang',
 	'chat-default-topic' => 'Selamat datang ke ruang sembang $1',
 	'chat-user-joined' => '$1 telah memasuki ruang sembang.',
+	'chat-read-only' => 'Laman Sembang tergendala buat sementara kerana wiki berada dalam mod baca sahaja.',
 	'chat-user-parted' => '$1 telah meninggalkan ruang sembang.',
 	'chat-user-blocked' => '$1 telah menyekat $2 .',
 	'chat-user-allow' => '$1 telah membenarkan $2 .',
@@ -829,6 +834,7 @@ $messages['nl'] = array(
 	'chat-no-login-text' => 'Meld u aan om deel te nemen aan de chat.',
 	'chat-default-topic' => 'Welkom bij de chat van $1',
 	'chat-user-joined' => '$1 neemt nu deel aan de chat.',
+	'chat-read-only' => 'Chatten is tijdelijk niet mogelijk omdat de wiki alleen-lezen is.',
 	'chat-user-parted' => '$1 heeft de chat verlaten.',
 	'chat-user-blocked' => '$1 heeft $2 geblokkeerd.',
 	'chat-user-allow' => '$1 heeft $2 gedeblokkeerd.',
@@ -942,7 +948,9 @@ Vennligst kontakt dem for mer informasjon.',
 );
 
 /** Polish (Polski)
+ * @author Anoon6
  * @author Cloudissimo
+ * @author Sp5uhe
  */
 $messages['pl'] = array(
 	'chat-desc' => '[[Special:Chat|Czat na żywo]]',
@@ -963,6 +971,21 @@ $messages['pl'] = array(
 	'chat-join-the-chat' => 'Dołącz do czatu',
 	'chat-edit-count' => '$1 Edycji',
 	'chat-member-since' => 'Użytkownik od $1',
+	'chat-great-youre-logged-in' => 'Świetnie! Jesteś zalogowany',
+	'chat-user-manu-profile' => 'Profil użytkownika',
+	'chat-user-manu-contribs' => 'Wkład użytkownika',
+	'chat-user-manu-private' => 'Prywatna wiadomość',
+	'chat-user-manu-give-chat-mod' => 'Nadaj status moderatora',
+	'chat-user-manu-kickban' => 'Wyrzuć i zablokuj',
+	'chat-user-manu-private-block' => 'Zablokuj prywatne wiadomości',
+	'chat-user-manu-private-allow' => 'Zezwól na prywatne wiadomości',
+	'chat-user-manu-private-close' => 'Zamknij prywatny pokój',
+	'chat-private-headline' => 'Prywatna rozmowa z $1',
+	'right-chatmoderator' => 'Może wyrzucać i banować użytkowników [[Help:Chat|czatu]]',
+	'group-chatmoderator' => 'Moderatorzy czatu',
+	'group-chatmoderator-member' => 'Moderator czatu',
+	'group-bannedfromchat' => 'Zablokowany na czacie',
+	'group-bannedfromchat-member' => 'Zablokowany na czacie',
 );
 
 /** Pashto (پښتو)
@@ -1068,6 +1091,7 @@ $messages['ru'] = array(
 	'chat-no-login-text' => 'Пожалуйста, войдите в чат.',
 	'chat-default-topic' => 'Добро пожаловать в $1 чат',
 	'chat-user-joined' => '$1 присоединился к чату',
+	'chat-read-only' => 'Чат временно недоступен, так как вики находится в режиме только для чтения.',
 	'chat-user-parted' => '$1 покинул чат.',
 	'chat-user-blocked' => '$1 заблокировал $2.',
 	'chat-user-allow' => '$1 допустил $2.',

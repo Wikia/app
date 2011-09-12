@@ -170,13 +170,22 @@ $messages['af'] = array(
 );
 
 /** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
  * @author Melikov Memmed
+ * @author Vago
  */
 $messages['az'] = array(
+	'answer_title' => 'Cavab',
+	'question_asked_by' => 'Sualı verən',
+	'question_asked_by_a_wikia_user' => 'Sualı verən Viki istifadəçisi',
+	'answer_this_question' => 'Bu suala cavab verin:',
+	'width' => 'Genişlik',
+	'see_all' => 'Həmçinin bax',
 	'twitter_ask' => 'Twitterdə soruş',
 	'facebook_ask' => 'Facebookda soruş',
 	'facebook_send_request' => 'Birbaşa dostlarına göndər',
 	'ask_friends' => 'Cavab üçün dostlarından kömək istə',
+	'answers_skins' => 'Cavablar',
 );
 
 /** Breton (Brezhoneg) */
@@ -261,12 +270,30 @@ $messages['de'] = array(
 	'research_this_on_wikipedia' => '<a href="$1">Die Frage recherchieren</a> auf Wikipedia',
 	'receive_email' => '<a href="$1" $2>Eine E-Mail erhalten</a> wenn diese Frage beantwortet wird',
 	'ask_friends_on_twitter' => 'Freunde bei <a href="$1" $2>Twitter</a> fragen',
+	'categorize' => 'Kategorisieren',
+	'categorize_help' => 'Eine Kategorie pro Zeile',
+	'answers_widget_admin_note' => '<b>Administratoren:</b> Wenn du gerne ein Administrator von <a href="http://answers.wikia.com" target="_blank">Wikianswers</a> werden würdest, <a href="http://answers.wikia.com/wiki/Wikianswers:Become_an_admin" target="_blank">klicke hier</a>.',
+	'answers_widget_user_note' => 'Kannst du helfen, indem du ein <a href="http://answers.wikia.com/wiki/Wikianswers:Sign_up_for_a_category" target="_blank">Kategorie-Editor</a> auf <a href="http://answers.wikia.com" target="_blank">Wikianswers</a> wirst?',
+	'answers_widget_anon_note' => '<a href="http://answers.wikia.com" target="_blank">Wikianswers</a> ist ein Q&amp;A-Wiki, wo Antworten nach dem Wiki-Prinzip verbessert werden.',
 	'answers-category-count-answered' => 'Diese Kategorie enthält $1 beantwortete {{PLURAL:$1|Frage|Fragen}}.',
 	'answers-category-count-unanswered' => 'Diese Kategorie enthält $1 unbeantwortete {{PLURAL:$1|Frage|Fragen}}.',
+	'answers_widget_no_questions' => '<a href="http://answers.wikia.com" target="_blank">Wikianswers</a> ist eine Seite, auf der du Fragen stellen und Antworten bearbeiten kannst. Wir zielen darauf ab, die beste Antwort zu jeder Frage zu geben. <a href="http://answers.wikia.com/wiki/Special:Search" target="_blank">Finde</a> und beantworte <a href="http://answers.wikia.com/wiki/Category:Un-answered_questions">unbeantwortete</a> Fragen. Dies ist ein Wiki - also traue dich!',
+	'answers_widget_no_questions_askabout' => '<br /><br />Beginne, indem du eine Frage über "{{PAGENAME}}" stellst',
+	'reword_this' => '<a href="$1" $2>Frage umformulieren</a>',
+	'no_related_answered_questions' => 'Es gibt noch keine ähnliche Fragen. Erhalte stattdessen eine <a href="http://answers.wikia.com/wiki/Special:Randomincategory/answered_questions">zufällig beantwortete Frage</a> oder stelle eine Neue!<br />
+<div class="createbox" align="center">
+<p></p><form name="createbox" action="/index.php" method="get" class="createboxForm">
+<input name="action" value="create" type="hidden">
+<input name="prefix" value="Special:CreateQuestionPage/" type="hidden">
+<input name="editintro" value="" type="hidden">
+<input class="createboxInput" name="title" value="" size="50" type="text">
+<input name="create" class="createboxButton" value="Frage eingeben und klicken" type="submit"></form></div>',
 	'auto_friend_request_body' => 'Willst du mich als Freund hinzufügen?',
 	'a' => 'Antwort:',
 	'answering_tips' => '<h3>Tipps für das Antworten:</h3> Wenn du eine Antwort gibst, versuche so präzise wie möglich zu sein. Wenn du die Informationen aus einer anderen Quelle wie der Wikipedia beziehst, ergänze einen entsprechenden Link im Text. Und vielen Dank für den Beitrag zum {{SITENAME}}!',
 	'plus_x_more_helpers' => '... sowie $1 weitere Helfer',
+	'anwb-step1-headline' => 'Worum geht es in deinem Wiki?',
+	'anwb-logo-preview' => 'Hier ist eine Vorschau deines Logos',
 	'qa-toolbox-button' => 'Beantworte eine zufällige Frage',
 	'qa-toolbox-share' => 'Teilen',
 	'qa-toolbox-tools' => 'Erweiterte Optionen »',
@@ -274,11 +301,16 @@ $messages['de'] = array(
 	'qa-toolbox-delete' => 'Lösche diese Frage',
 	'qa-toolbox-history' => 'Frühere Versionen dieser Seite',
 	'answers_skins' => 'Antworten',
+	'answers-bluebell' => 'Glockenblume',
 	'answers-leaf' => 'Blatt',
 	'answers-carnation' => 'Nelke',
 	'answers-sky' => 'Himmel',
+	'answers-spring' => 'Frühling',
 	'answers-forest' => 'Wald',
 	'answers-moonlight' => 'Mondschein',
+	'answers-carbon' => 'Karbon',
+	'answers-obsession' => 'Besessenheit',
+	'answers-custom' => 'Benutzerdefiniert',
 );
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)
@@ -444,6 +476,7 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'answer_title' => 'Resposta',
+	'anonymous_edit_points' => '$1 {{PLURAL:$1|axudante|axudantes}}',
 	'question_asked_by' => 'Pregunta formulada por',
 	'research_this' => 'Pescudar isto',
 );
@@ -846,11 +879,19 @@ $messages['nl'] = array(
 	'auto_friend_request_body' => 'Wilt u mij als vriend toevoegen?',
 	'tog-hidefromattribution' => 'Mijn avatar en naam verbergen in de lijst met naamsvermeldingen',
 	'a' => 'Antwoord:',
+	'answering_tips' => '<h3>Tips voor het beantwoorden:</h3> Als u een antwoord geeft, probeer dan zo precies mogelijk te zijn. Als u uw informatie uit een andere bron heeft gekregen, zoals Wikipedia, plaats dan een verwijzing in de tekst. Dank u wel voor uw bijdragen aan {{SITENAME}}!',
 	'plus_x_more_helpers' => '... en $1 andere hulpjes',
 	'anwb-step1-headline' => 'Waar gaat uw wiki over?',
+	'anwb-step1-text' => 'Uw Wikiantwoordensite heeft een <strong>slogan</strong> nodig.<br /><br />Uw slogan helpt mensen uw site te vinden via zoekmachines, dus probeer te duidelijk zijn over waar uw site over gaat.',
+	'anwb-step1-example' => 'Antwoorden op al uw vragen over professioneel worstelen!',
 	'anwb-choose-logo' => 'Kies uw logo',
+	'anwb-step2-text' => 'Kies nu een logo voor uw site. U kunt het beste een plaatje uploaden dat in uw ogen het beste uw Antwoordensite weergeeft.<br />U kunt deze stap overslaan als u die niet nu direct wilt uitvoeren.<br /><br />',
+	'anwb-step2-example' => 'Dit is een goed logo voor een Antwoordensite over skateboarden.',
 	'anwb-fp-headline' => 'Stel wat vragen!',
+	'anwb-fp-text' => 'Uw Antwoordensite moet beginnen met een paar vragen!<br /><br />Voeg een lijst met vragen toe en geef vervolgens de antwoorden zelf. Het is belangrijk om wat nuttige informatie op de site te krijgen, zodat mensen de site kunnen vinden en nog meer vragen kunnen stellen en antwoorden kunnen geven.',
+	'anwb-fp-example' => '<strong>Voorbeeld</strong><br /><br />Voor een site met vragen over zorgen voor huisdieren:<br /><br /><ul><li>Moet ik kattenbakvulling kopen?</li><li>Wat is de best gefokte hond?</li><li>Wat is de beste manier om een kat te trainen?</li><li></ul><br /><br />Voor een site met vragen over gezondheidszorg:<br /><br /><ul><li>Wat zijn de gezondheidsvoordelen van bewegen?</li><li>Hoe vind ik een goede huisarts in de buurt?</li><li>Hoe kan ik gemakkelijk gewicht verliezen?</li></ul>',
 	'nwb-thatisall-headline' => 'Dat is het. Klaar!',
+	'anwb-thatisall-text' => 'Dat is het. U bent klaar om van start te gaan!<br /><br />Nu moet u meer vragen en antwoorden gaan schrijven, zodat uw site makkelijker gevonden kan worden via zoekmachines.<br /><br />De lijst met vragen uit de laatste stap is toegevoegd aan uw Antwoordensite. Ga nu uw vragen beantwoorden en begin uw Antwoordengemeenschap!',
 	'anwb-logo-preview' => 'Hier is een voorbeeld van uw logo',
 	'anwb-save-tagline' => 'Slogan opslaan',
 	'qa-toolbox-button' => 'Een willekeurige vraag beantwoorden',
@@ -1046,12 +1087,16 @@ $messages['roa-tara'] = array(
 );
 
 /** Russian (Русский)
+ * @author Kuzura
  * @author Lvova
  */
 $messages['ru'] = array(
 	'in_category' => '…в категории',
 	'question_asked_by' => 'Вопрос, заданный',
 	'research_this' => 'Исследовать',
+	'auto_friend_request_body' => 'Вы добавите меня в друзья?',
+	'tog-hidefromattribution' => 'Скрыть мой аватар и моё имя из списка атрибуции',
+	'a' => 'Ответ:',
 );
 
 /** Swedish (Svenska)

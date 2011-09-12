@@ -438,13 +438,21 @@ $messages['ar'] = array(
  * @author Vago
  */
 $messages['az'] = array(
+	'wikiaPhotoGallery-back' => 'Əvvəlki',
+	'wikiaPhotoGallery-finish' => 'Son',
 	'wikiaPhotoGallery-error-caption' => 'Xəta',
+	'wikiaPhotoGallery-upload-error-conflict-insert' => 'Yerləşdirmək',
+	'wikiaPhotoGallery-upload-select-images' => 'Seç',
 	'wikiaPhotoGallery-photooptions-done' => 'Oldu',
 	'wikiaPhotoGallery-preview-hover-delete' => 'sil',
 	'wikiaPhotoGallery-preview-px' => 'px',
+	'wikiaPhotoGallery-preview-size-smaller' => 'kiçiyi',
+	'wikiaPhotoGallery-preview-size-larger' => 'böyüyü',
 	'wikiaPhotoGallery-preview-position-left' => 'Sol',
+	'wikiaPhotoGallery-preview-position-center' => 'Mərkəz',
 	'wikiaPhotoGallery-preview-position-right' => 'Sağ',
 	'wikiaPhotoGallery-preview-spacing-small' => 'Kiçik',
+	'wikiaPhotoGallery-preview-spacing-medium' => 'Orta',
 	'wikiaPhotoGallery-preview-spacing-large' => 'Geniş',
 	'wikiaPhotoGallery-preview-captionposition-below' => 'Fotonun aşağısı',
 	'wikiaPhotoGallery-preview-captionalignment-left' => 'Sol',
@@ -454,6 +462,7 @@ $messages['az'] = array(
 	'wikiaPhotoGallery-preview-captionsize-medium' => 'Orta',
 	'wikiaPhotoGallery-preview-captionsize-large' => 'Geniş',
 	'wikiaPhotoGallery-preview-bordersize' => 'Xəttin qalınlığı',
+	'wikiaPhotoGallery-preview-bordersize-none' => 'Heç biri',
 	'wikiaPhotoGallery-preview-bordersize-small' => 'Kiçik',
 	'wikiaPhotoGallery-preview-bordersize-medium' => 'Orta',
 	'wikiaPhotoGallery-preview-bordersize-large' => 'Böyük',
@@ -470,6 +479,7 @@ $messages['az'] = array(
 	'wikiaPhotoGallery-slideshowpreview-position-left' => 'Sol',
 	'wikiaPhotoGallery-slideshowpreview-position-right' => 'Sağ',
 	'wikiaPhotoGallery-upload-existingtext-onarticle' => 'bu səhifə',
+	'wikiaPhotoGallery-upload-selectbutton' => 'Seç',
 );
 
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
@@ -688,13 +698,14 @@ $messages['bg'] = array(
 	'galery-slider-read-more' => ' Прочетете повече >',
 );
 
-/** Bahasa Banjar (Bahasa Banjar)
+/** Banjar (Bahasa Banjar)
  * @author Ezagren
+ * @author J Subhi
  */
 $messages['bjn'] = array(
 	'wikiaPhotoGallery-back' => 'Bulik',
 	'wikiaPhotoGallery-finish' => 'Tuntung',
-	'wikiaPhotoGallery-photooptions-done' => 'Talah',
+	'wikiaPhotoGallery-photooptions-done' => 'Sudah',
 	'wikiaPhotoGallery-preview-captions-center' => 'Tangah',
 	'wikiaPhotoGallery-preview-captions-right' => 'Kanan',
 	'wikiaPhotoGallery-quit-savequit' => 'Simpan wan bingsul',
@@ -866,6 +877,14 @@ Deskrivit ar skeudenn-mañ.",
 	'wikiaPhotoGallery-photooptions-description' => 'Munudoù ar skeudenn.',
 	'wikiaPhotoGallery-search-tooltip' => 'Klask skeudennoù er wiki-mañ',
 	'galery-slider-read-more' => "Lenn muioc'h >",
+);
+
+/** Catalan (Català)
+ * @author BroOk
+ */
+$messages['ca'] = array(
+	'wikiaPhotoGallery-viewmode-addphoto' => 'Afegeix una foto a aquesta galeria',
+	'wikiaPhotoGallery-preview-add-photo' => 'Afegeix una foto',
 );
 
 /** Sorani (کوردی) */
@@ -1953,8 +1972,8 @@ Describa esta foto.",
 	'wikiaPhotoGallery-photooptions-linkurl' => 'Ligazón cara a (pegue o nome da páxina ou o URL).',
 	'wikiaPhotoGallery-photooptions-description' => 'Detalles da imaxe.',
 	'wikiaPhotoGallery-search-tooltip' => 'Procurar fotos neste wiki',
-	'wikiaPhotoGallery-upload-image-size-error' => 'Tamaño de imaxe incorrecto. As imaxes deben ser de 673px por 410px.',
-	'wikiaPhotoGallery-upload-image-size' => 'As imaxes deben ser de 673px por 410px.',
+	'wikiaPhotoGallery-upload-image-size-error' => 'Tamaño de imaxe incorrecto. As imaxes deben ser de 660 por 360px ou maiores.',
+	'wikiaPhotoGallery-upload-image-size' => 'As imaxes deben ser de 660px por 360px ou maiores.',
 	'wikiaPhotoGallery-not-displayed' => 'Non mostrado',
 	'galery-slider-read-more' => ' Ler máis >',
 );

@@ -100,6 +100,21 @@ $messages['qqq'] = array(
 The first parameter is a placeholder for the license logo/image. The third parameter is the license name.',
 );
 
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'wikia-editor-media-image' => 'Şəkil',
+	'wikia-editor-media-gallery' => 'Qalereya',
+	'wikia-editor-media-video' => 'Video',
+	'wikia-editor-media-image-tooltip' => 'Şəkil əlavə et',
+	'wikia-editor-media-video-tooltip' => 'Video əlavə et',
+	'wikia-editor-modules-templates-title' => 'Şablonlar',
+	'wikia-editor-modules-categories-title' => 'Kateqoriyalar',
+	'wikia-editor-edittools-caption' => 'daha çox',
+	'prefs-general' => 'Ümumi',
+);
+
 /** Bavarian (Boarisch)
  * @author Mucalexx
  */
@@ -230,6 +245,27 @@ $messages['br'] = array(
 	'prefs-editing-experience' => 'O kemmañ an arnod',
 );
 
+/** Catalan (Català)
+ * @author BroOk
+ */
+$messages['ca'] = array(
+	'editpagelayout-pageControls-minorEdit' => 'Edició menor',
+	'editpagelayout-pageControls-summaryLabel' => 'Afegeix un resum de la teva edició',
+	'wikia-editor-media-gallery-tooltip' => 'Afegeix una Galeria',
+	'wikia-editor-media-slideshow-tooltip' => 'Afegeix un Slideshow',
+	'wikia-editor-media-slider-tooltip' => 'Afegeix un Slider',
+	'wikia-editor-media-video-tooltip' => 'Afegeix un Vídeo',
+	'wikia-editor-modules-templates-title' => 'Plantilles',
+	'wikia-editor-modules-templates-add-tooltip' => "Afegeix la Plantilla '$1'",
+	'wikia-editor-modules-templates-otherTemplates' => 'Afegeix altres plantilles',
+	'wikia-editor-modules-templates-showUsedList' => 'Mostra una llista de plantilles usades',
+	'wikia-editor-modules-templates-showUsedList-dialog-title' => 'Llista de plantilles usades',
+	'wikia-editor-modules-insert-title' => 'Afegeix multimèdia',
+	'wikia-editor-loadingStates-toSource' => 'Canviant al codi font...',
+	'wikia-editor-loadingStates-toVisual' => 'Canviant al mode visual...',
+	'wikia-editor-loadingStates-saving' => 'Publicant la teva edició',
+);
+
 /** German (Deutsch)
  * @author Claudia Hattitten
  * @author LWChris
@@ -285,6 +321,7 @@ $messages['de'] = array(
 	'wikia-editor-edittools-dialog-title' => 'Wikitext-Vorlagen',
 	'wikia-editor-notices-dialog-title' => 'Hinweis-Details',
 	'wikia-editor-preview-editSummary' => 'Zusammenfassung: $1',
+	'wikia-editor-leaveconfirm-message' => 'Du hast einige unveröffentlichte Bearbeitungen getätigt. Bis du sicher, dass du gehen willst, ohne sie zu veröffentlichen?',
 	'nonunicodebrowser-notice' => "'''Achtung: Dein Browser ist nicht Unicode-kompatibel.'''",
 	'rev-deleted-text-notice' => "Diese Version wurde '''gelöscht'''. [Mehr Informationen]",
 	'readonlywarning-notice' => "'''Warnung: Die Datenbank wurde wegen Wartungsarbeiten gesperrt.''' [Mehr Informationen]",
@@ -376,6 +413,7 @@ $messages['es'] = array(
 );
 
 /** French (Français)
+ * @author Gomoko
  * @author Verdy p
  * @author Wyz
  */
@@ -428,6 +466,7 @@ $messages['fr'] = array(
 	'wikia-editor-edittools-dialog-title' => 'Raccourcis wikitext',
 	'wikia-editor-notices-dialog-title' => 'Détails des avis',
 	'wikia-editor-preview-editSummary' => 'Résumé de la modification : $1',
+	'wikia-editor-leaveconfirm-message' => 'Vous avez fait des modifications non publiées. Êtes-vous sûr de vouloir quitter sans les publier?',
 	'nonunicodebrowser-notice' => "'''Attention : votre navigateur n’est pas compatible Unicode.'''",
 	'rev-deleted-text-notice' => "Cette version de la page a été '''supprimée'''. [Plus d’infos]",
 	'readonlywarning-notice' => "'''Attention : la base de données a été verrouillée pour maintenance.''' [Plus d’infos]",
@@ -781,6 +820,7 @@ $messages['mk'] = array(
 	'wikia-editor-edittools-dialog-title' => 'Кратенки за викитекст',
 	'wikia-editor-notices-dialog-title' => 'Подробно за известувањата',
 	'wikia-editor-preview-editSummary' => 'Опис на уредувањето: $1',
+	'wikia-editor-leaveconfirm-message' => 'Извршивте уредувања, но не ги објавивте. Дали сте сигурни дека сакате да си заминете без да ги објавите?',
 	'nonunicodebrowser-notice' => "'''Предупредување: Вашиот прелистувач не поддржува Уникод.'''",
 	'rev-deleted-text-notice' => "Оваа ревизија на страницата е '''избришана'''. [Повеќе инфо]",
 	'readonlywarning-notice' => "'''Предупредување: Базата на податоци е заклучена за одржување.''' [Повеќе инфо]",
@@ -852,6 +892,7 @@ $messages['ms'] = array(
 	'wikia-editor-edittools-dialog-title' => 'Kekunci pintas teks wiki',
 	'wikia-editor-notices-dialog-title' => 'Butiran pemberitahuan',
 	'wikia-editor-preview-editSummary' => 'Ringkasan Suntingan: $1',
+	'wikia-editor-leaveconfirm-message' => 'Anda telah membuat beberapa suntingan yang belum diterbitkan. Adakah anda benar-benar mahu keluar tanpa menerbitkannya?',
 	'nonunicodebrowser-notice' => "'''Amaran: Pelayar anda tidak mematuhi Unicode.'''",
 	'rev-deleted-text-notice' => "Semakan laman ini telah '''dihapuskan'''. [Maklumat lanjut]",
 	'readonlywarning-notice' => "'''Amaran: Pangkalan data telah dikunci untuk penyelenggaraan.''' [Maklumat lanjut]",
@@ -925,6 +966,7 @@ $messages['nl'] = array(
 	'wikia-editor-edittools-dialog-title' => 'Sneltoetsen voor wikitekst',
 	'wikia-editor-notices-dialog-title' => 'Detailsgegevens over mededelingen',
 	'wikia-editor-preview-editSummary' => 'Bewerkingssamenvatting: $1',
+	'wikia-editor-leaveconfirm-message' => 'U hebt een aantal ongepubliceerde wijzigingen aangebracht. Weet u zeker dat u de pagina wilt verlaten zonder ze te publiceren?',
 	'nonunicodebrowser-notice' => "'''Waarschuwing: Uw browser is niet compatibel met Unicode.'''",
 	'rev-deleted-text-notice' => "Deze paginaversie is '''verwijderd'''. [Meer informatie]",
 	'readonlywarning-notice' => "'''Waarschuwing: De database is geblokkeerd voor onderhoud.''' [Meer informatie]",
@@ -1018,7 +1060,7 @@ $messages['no'] = array(
 	'semiprotectedpagewarning-notice' => "'''Merk:''' Denne siden har blitt låst slik at kun registrerte brukere kan redigere den. [Mer info]",
 	'protectedpagewarning-notice' => "'''Advarsel:''' Denne siden har blitt låst slik at kun brukere med spesielle rettigheter kan redigere den. [Mer info]",
 	'titleprotectedwarning-notice' => "'''Advarsel:''' Denne siden har blitt låst slik at kun enkelte brukere kan opprette den. [Mer info]",
-	'recreate-moveddeleted-warn-notice' => "'''Merk:''' Du gjenskaper en side som tidligere har blitt slettet. [Mer info]",
+	'recreate-moveddeleted-warn-notice' => "'''Merk:''' Du er i ferd med å opprette en side som tidligere har blitt slettet. [Mer info]",
 	'prefs-general' => 'Generelt',
 	'prefs-starting-an-edit' => 'Starter en redigering',
 	'prefs-editing-experience' => 'Redigeringserfaring',
@@ -1032,6 +1074,7 @@ $messages['no'] = array(
 
 /** Polish (Polski)
  * @author Cloudissimo
+ * @author Sp5uhe
  */
 $messages['pl'] = array(
 	'editpagelayout-more' => 'więcej',
@@ -1061,14 +1104,14 @@ $messages['pl'] = array(
 	'wikia-editor-modules-templates-otherTemplates' => 'Dodaj inne szablony',
 	'wikia-editor-modules-templates-showUsedList' => 'Pokaż listę użytych szablonów',
 	'wikia-editor-modules-templates-showUsedList-dialog-title' => 'Lista użytych szablonów',
-	'wikia-editor-modules-license-text' => '$1 Wkład udostępniony na licencji CC-BY-SA. <a href="$2">Więcej informacji.</a>',
+	'wikia-editor-modules-license-text' => '$1 Wkład udostępniony na licencji $3. <a href="$2">Więcej informacji.</a>',
 	'wikia-editor-modules-insert-title' => 'Dodaj opcje i media',
 	'wikia-editor-modules-categories-title' => 'Kategorie',
 	'wikia-editor-loadingStates-loading' => 'Wczytuję edytor...',
 	'wikia-editor-loadingStates-toSource' => 'Przełączanie do trybu źródłowego...',
 	'wikia-editor-loadingStates-toVisual' => 'Przełączanie do trybu wizualnego...',
 	'wikia-editor-loadingStates-saving' => 'Publikowanie edycji!',
-	'wikia-editor-edittools-caption' => 'Więcej skrótów',
+	'wikia-editor-edittools-caption' => 'więcej',
 	'wikia-editor-edittools-dialog-title' => 'Skróty wikitekstu',
 	'wikia-editor-notices-dialog-title' => 'Szczegóły powiadomienia',
 	'wikia-editor-preview-editSummary' => 'Opis zmian: $1',
@@ -1077,7 +1120,7 @@ $messages['pl'] = array(
 	'readonlywarning-notice' => "'''Uwaga: Baza danych została zablokowana do celów konserwacyjnych.''' [Więcej informacji]",
 	'userinvalidcssjstitle-notice' => "'''Uwaga:''' Nie istnieje skórka o nazwie \"\$1\". [Więcej informacji]",
 	'semiprotectedpagewarning-notice' => "'''Uwaga:''' Ta strona została zabezpieczona i tylko zarejestrowani użytkownicy mogą ją edytować. [Więcej informacji]",
-	'protectedpagewarning-notice' => "'''Uwaga:''' Ta strona została zabezpieczona i tylko użytkownicy z uprawnieniami administratora mogą ją edytować. [Więcej informacji]",
+	'protectedpagewarning-notice' => "'''Uwaga:''' Ta strona została zabezpieczona i tylko użytkownicy z właściwymi uprawnieniami mogą ją edytować. [Więcej informacji]",
 	'titleprotectedwarning-notice' => "'''Uwaga:''' Ta strona została zabezpieczona i tylko niektórzy użytkownicy mogą ją utworzyć. [Więcej informacji]",
 	'recreate-moveddeleted-warn-notice' => "'''Uwaga:''' Próbujesz utworzyć stronę, która została wcześniej usunięta. [Więcej informacji]",
 	'prefs-editarea-size' => 'Rozmiar okna edycji (tylko MonoBook)',
@@ -1232,7 +1275,7 @@ $messages['sv'] = array(
 	'editpagelayout-less' => 'mindre',
 	'editpagelayout-helpLink-url' => 'Help:Redigering',
 	'editpagelayout-helpLink' => 'Behöver du [[{{MediaWiki:Editpagelayout-helpLink-url}}|hjälp?]]',
-	'editpagelayout-notificationsLink' => '<span>$1</span> notifikationer',
+	'editpagelayout-notificationsLink' => '<span>$1</span> {{PLURAL:$1|meddelande|meddelanden}}',
 	'editpagelayout-notificationsLink-none' => 'Notifikationer',
 	'editpagelayout-edit-title' => 'Redigera titel',
 	'editpagelayout-edit-info' => 'Redigera info',

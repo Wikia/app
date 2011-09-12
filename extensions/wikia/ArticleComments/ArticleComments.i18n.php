@@ -95,6 +95,7 @@ $messages['ar'] = array(
  * @author Cekli829
  */
 $messages['az'] = array(
+	'article-comments-cancel' => 'İmtina',
 	'article-comments-delete' => 'sil',
 	'article-comments-edit' => 'redaktə',
 	'article-comments-history' => 'Tarix',

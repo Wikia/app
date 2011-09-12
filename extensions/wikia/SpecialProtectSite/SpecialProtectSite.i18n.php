@@ -65,6 +65,14 @@ $messages['ar'] = array(
 	'protectsite-unprotect' => 'أزل الحماية',
 );
 
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'protectsite-maxtimeout' => 'Maksimum:',
+	'protectsite-comment' => 'Şərh:',
+);
+
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by

@@ -59,6 +59,7 @@ $messages['en'] = array(
 );
 
 /** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
  * @author Melikov Memmed
  */
 $messages['az'] = array(
@@ -66,6 +67,7 @@ $messages['az'] = array(
 	'admindashboard-control-user-list-label' => 'İstifadəçi siyahısı',
 	'admindashboard-control-invite-label' => 'Dəvət et',
 	'admindashboard-control-invite-tooltip' => 'Digərlərini bu vikidən istifadə etməyə dəvət et',
+	'admindashboard-control-help-label' => 'Kömək',
 	'admindashboard-control-help-tooltip' => 'Kömək tap.',
 	'admindashboard-control-add-page-tooltip' => 'Öz vikinə yeni səhifə əlavə et',
 	'admindashboard-control-add-photo-label' => 'Şəkil əlavə et',
@@ -138,6 +140,13 @@ $messages['de'] = array(
 	'admindashboard-back-to-dashboard' => 'Zurück zur Übersicht',
 );
 
+/** Greek (Ελληνικά)
+ * @author Glavkos
+ */
+$messages['el'] = array(
+	'admindashboard-control-invite-label' => 'Πρόσκληση',
+);
+
 /** Spanish (Español)
  * @author DJ Nietzsche
  */
@@ -201,6 +210,8 @@ $messages['fr'] = array(
 	'admindashboard-control-top-navigation-tooltip' => 'La Navigation supérieure vous permet de personnaliser le menu de navigation en haut de votre wiki.',
 	'admindashboard-control-wikia-labs-label' => 'Wikia Labs',
 	'admindashboard-control-wikia-labs-tooltip' => "Wikia Labs vous permet d'être le premier à essayer de nouvelles fonctionnalités beta sur votre wiki.",
+	'admindashboard-control-wiki-features-label' => 'Fonctionnalités de wiki',
+	'admindashboard-control-wiki-features-tooltip' => 'Fonctionnalités de wiki vous permet d’activer des fonctionnalités supplémentaires sur votre wiki.',
 	'admindashboard-control-page-layout-builder-label' => 'Générateur de mise en page',
 	'admindashboard-control-page-layout-builder-tooltip' => 'Le Générateur de mise en page vous permet de créer des gabarits de page que les utilisateurs peuvent sélectionner et utiliser pour créer de nouvelles pages.',
 	'admindashboard-controls-community-header' => 'Communauté',
@@ -254,6 +265,55 @@ $messages['gl'] = array(
 	'admindashboard-control-add-photo-label' => 'Engadir unha foto',
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'admindashboard-title' => 'Pannello de instrumentos de {{SITENAME}}',
+	'admindashboard-header' => 'Pannello de administration',
+	'admindashboard-toolbar-link' => 'Admin',
+	'admindashboard-tab-advanced' => 'Avantiate',
+	'admindashboard-tab-general' => 'General',
+	'admindashboard-controls-wiki-header' => 'Wiki',
+	'admindashboard-control-theme-designer-label' => 'Designator de apparentias',
+	'admindashboard-control-theme-designer-tooltip' => 'Le Designator de apparentias permitte personalisar le colores, le fundo e altere aspectos del wiki.',
+	'admindashboard-control-recent-changes-label' => 'Modificationes recente',
+	'admindashboard-control-recent-changes-tooltip' => 'Le Modificationes recente monstra tote le cambiamentos facite in tu wiki in un certe periodo de tempore.',
+	'admindashboard-control-top-navigation-label' => 'Navigation superior',
+	'admindashboard-control-top-navigation-tooltip' => 'Navigation Superior permitte personalisar le menu de navigation in le parte superior de tu wiki.',
+	'admindashboard-control-wikia-labs-label' => 'Wikia Labs',
+	'admindashboard-control-wikia-labs-tooltip' => 'Wikia Labs te permitte esser le prime a testar le nove functionalitate beta in tu wiki.',
+	'admindashboard-control-wiki-features-label' => 'Functionalitate wiki',
+	'admindashboard-control-wiki-features-tooltip' => 'Functionalitate Wiki permitte activar additional functionalitate in tu wiki.',
+	'admindashboard-control-page-layout-builder-label' => 'Constructor de designos de pagina',
+	'admindashboard-control-page-layout-builder-tooltip' => 'Le "Constructor de designos de paginas" permitte crear schizzos de paginas que le usatores pote seliger e usar pro crear nove paginas.',
+	'admindashboard-controls-community-header' => 'Communitate',
+	'admindashboard-control-user-list-label' => 'Lista de usatores',
+	'admindashboard-control-user-list-tooltip' => 'Vider un lista complete del usatores que ha participate in tu wiki.',
+	'admindashboard-control-user-rights-label' => 'Derectos de usator',
+	'admindashboard-control-user-rights-tooltip' => 'Adder e remover derectos de gruppo e permissiones pro usatores in tu wiki.',
+	'admindashboard-control-group-rights-label' => 'Derectos de gruppo',
+	'admindashboard-control-group-rights-tooltip' => 'Vista general de derectos pro le diverse gruppos de usatores.',
+	'admindashboard-control-invite-label' => 'Invitar',
+	'admindashboard-control-invite-tooltip' => 'Invitar altere personas a usar iste wiki.',
+	'admindashboard-control-help-label' => 'Adjuta',
+	'admindashboard-control-help-tooltip' => 'Cercar adjuta.',
+	'admindashboard-controls-content-header' => 'Contento',
+	'admindashboard-control-community-corner-label' => 'Messages del communitate',
+	'admindashboard-control-community-corner-tooltip' => 'Modificar le section "Messages del communitate" de tu wiki e notificar le usatores.',
+	'admindashboard-control-categories-list-label' => 'Tote le categorias',
+	'admindashboard-control-categories-list-tooltip' => 'Vider tote le categorias actualmente listate in tu wiki.',
+	'admindashboard-control-add-page-label' => 'Adder un pagina',
+	'admindashboard-control-add-page-tooltip' => 'Adder un nove pagina a tu wiki.',
+	'admindashboard-control-add-photo-label' => 'Adder un photo',
+	'admindashboard-control-add-photo-tooltip' => 'Adder nove photos a tu wiki.',
+	'admindashboard-control-add-blog-label' => 'Adder un articulo de blog',
+	'admindashboard-control-add-blog-tooltip' => 'Adder un articulo de blog a tu wiki.',
+	'admindashboard-control-multiple-upload-label' => 'Adder multiple photos',
+	'admindashboard-control-multiple-upload-tooltip' => 'Incargar plure photos simultaneemente con le instrumento pro incargamento de multiple photos.',
+	'admindashboard-back-to-dashboard' => 'Retornar al pannello de instrumentos',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -286,6 +346,8 @@ $messages['mk'] = array(
 	'admindashboard-control-top-navigation-tooltip' => 'Навигацијата на врвот овозможува прилагодување на менито за навигација што се наоѓа на најгорниот дел од викито.',
 	'admindashboard-control-wikia-labs-label' => 'Викиини лаборатории',
 	'admindashboard-control-wikia-labs-tooltip' => 'Викиините лаборатии ви овозможуваат да бидете првиот што ќе ги испроба новите бета-функции на вашето вики.',
+	'admindashboard-control-wiki-features-label' => 'Можности на викито',
+	'admindashboard-control-wiki-features-tooltip' => '„Можности на викито“ ви дава дополнителни функции на вашето вики што можете да ги вклучите.',
 	'admindashboard-control-page-layout-builder-label' => 'Распоредувач на страници',
 	'admindashboard-control-page-layout-builder-tooltip' => 'Распоредувачот на страници овозможува создавање на распореди на страници што корисниците ќе може да ги одбираат и со нив да прават нови страници.',
 	'admindashboard-controls-community-header' => 'Заедница',
@@ -334,6 +396,8 @@ $messages['ms'] = array(
 	'admindashboard-control-top-navigation-tooltip' => 'Pandu Arah Atas membolehkan anda menyesuaikan menu pandu arah di atas wiki anda.',
 	'admindashboard-control-wikia-labs-label' => 'Wikia Labs',
 	'admindashboard-control-wikia-labs-tooltip' => 'Wikia Labs membolehkan anda menjadi yang pertama untuk mencuba ciri-ciri beta baru di wiki anda.',
+	'admindashboard-control-wiki-features-label' => 'Wiki Features',
+	'admindashboard-control-wiki-features-tooltip' => 'Wiki Features membolehkan anda mengaktifkan ciri-ciri tambahan di wiki anda.',
 	'admindashboard-control-page-layout-builder-label' => 'Pembina Tataletak Laman',
 	'admindashboard-control-page-layout-builder-tooltip' => 'Pembina Tataletak Laman membolehkan anda mencipta rangka untuk dipilih dan digunakan oleh pengguna untuk membuat laman baru.',
 	'admindashboard-controls-community-header' => 'Komuniti',
@@ -382,6 +446,8 @@ $messages['nl'] = array(
 	'admindashboard-control-top-navigation-tooltip' => 'Met topnavigatie kunt u het navigatiemenu bovenaan de wiki personaliseren.',
 	'admindashboard-control-wikia-labs-label' => 'Wikia Labs',
 	'admindashboard-control-wikia-labs-tooltip' => 'Met Wikia Labs kunt u de eerste zijn die nieuwe betafunctionaliteiten gebruikt in uw wiki.',
+	'admindashboard-control-wiki-features-label' => 'Wikifuncties',
+	'admindashboard-control-wiki-features-tooltip' => 'Via Wikifuncties kunt u extra functionaliteit inschakelen voor uw wiki.',
 	'admindashboard-control-page-layout-builder-label' => 'Wizard voor paginavormgeving',
 	'admindashboard-control-page-layout-builder-tooltip' => "Via de Wizard voor paginavormgeving kunt u sjablonen voor de vormgeving van pagina's maken waaruit gebruikers kunnen kiezen bij het aanmaken van nieuwe pagina's.",
 	'admindashboard-controls-community-header' => 'Gemeenschap',
@@ -411,7 +477,7 @@ $messages['nl'] = array(
 	'admindashboard-back-to-dashboard' => 'Terug naar het Dashboard',
 );
 
-/** Norwegian (bokmål) (Norsk (bokmål))
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
 $messages['no'] = array(
@@ -461,12 +527,15 @@ $messages['no'] = array(
 
 /** Polish (Polski)
  * @author Cloudissimo
+ * @author Woytecr
  */
 $messages['pl'] = array(
 	'admindashboard-title' => 'Panel {{SITENAME}}',
 	'admindashboard-header' => 'Panel Administratora',
+	'admindashboard-toolbar-link' => 'Administrator',
 	'admindashboard-tab-advanced' => 'Zaawansowane',
 	'admindashboard-tab-general' => 'Ogólne',
+	'admindashboard-controls-wiki-header' => 'Wiki',
 	'admindashboard-control-theme-designer-label' => 'Kreator motywu',
 	'admindashboard-control-theme-designer-tooltip' => 'Kreator motywu pozwala dostosować kolorystykę wiki, tło i więcej.',
 	'admindashboard-control-recent-changes-label' => 'Ostatnie zmiany',
@@ -566,6 +635,7 @@ $messages['ru'] = array(
 	'admindashboard-control-top-navigation-tooltip' => 'Это позволяет настроить меню навигации, которое расположено в верхней части вики',
 	'admindashboard-control-wikia-labs-label' => 'Wikia Labs',
 	'admindashboard-control-wikia-labs-tooltip' => 'Wikia Labs позволяет вам быть подключить/отключить новые расширения Викия.',
+	'admindashboard-control-wiki-features-tooltip' => 'Wiki Features позволяет вам подключать дополнительные расширения на ввашей вики.',
 	'admindashboard-control-page-layout-builder-label' => 'Страница создания макетов',
 	'admindashboard-control-page-layout-builder-tooltip' => 'Мастер создания макетов позволяет вам создавать макеты страниц. Участники смогут использовать их при создании новых страниц вики.',
 	'admindashboard-controls-community-header' => 'Сообщество',
@@ -591,6 +661,46 @@ $messages['ru'] = array(
 	'admindashboard-control-multiple-upload-label' => 'Добавить несколько фотографий',
 	'admindashboard-control-multiple-upload-tooltip' => 'Загрузить несколько изображений одновременно с помощью специального инструмента.',
 	'admindashboard-back-to-dashboard' => 'Вернуться в Кабинет',
+);
+
+/** Swedish (Svenska)
+ * @author WikiPhoenix
+ */
+$messages['sv'] = array(
+	'admindashboard-tab-advanced' => 'Avancerad',
+	'admindashboard-tab-general' => 'Allmänt',
+	'admindashboard-controls-wiki-header' => 'Wiki',
+	'admindashboard-control-theme-designer-label' => 'Temadesigner',
+	'admindashboard-control-theme-designer-tooltip' => 'Temadesignern låter dig anpassa dina wikifärger, bakgrund, m.m.',
+	'admindashboard-control-recent-changes-label' => 'Senaste ändringar',
+	'admindashboard-control-recent-changes-tooltip' => 'Senaste ändringar visar alla ändringar som gjorts på din wiki i en enda tidslinje.',
+	'admindashboard-control-top-navigation-label' => 'Toppnavigation',
+	'admindashboard-control-top-navigation-tooltip' => 'Toppnavigation låter dig anpassa navigeringsmenyn högst upp på din wiki.',
+	'admindashboard-control-wiki-features-label' => 'Wiki-funktioner',
+	'admindashboard-control-wiki-features-tooltip' => 'Wiki-funktioner låter dig aktivera ytterligare funktioner på din wiki.',
+	'admindashboard-controls-community-header' => 'Gemenskap',
+	'admindashboard-control-user-list-label' => 'Användarlista',
+	'admindashboard-control-user-list-tooltip' => 'Visa en fullständig lista över de användare som har medverkat på din wiki.',
+	'admindashboard-control-user-rights-label' => 'Användarrättigheter',
+	'admindashboard-control-user-rights-tooltip' => 'Lägg till och ta bort grupprättigheter och behörigheter för användare på din wiki.',
+	'admindashboard-control-group-rights-label' => 'Grupprättigheter',
+	'admindashboard-control-group-rights-tooltip' => 'Översikt över rättigheter för olika användargrupper.',
+	'admindashboard-control-invite-label' => 'Bjud in',
+	'admindashboard-control-invite-tooltip' => 'Bjud in andra människor att använda denna wiki.',
+	'admindashboard-control-help-label' => 'Hjälp',
+	'admindashboard-control-help-tooltip' => 'Få hjälp.',
+	'admindashboard-controls-content-header' => 'Innehåll',
+	'admindashboard-control-community-corner-label' => 'Gemenskaphörnan',
+	'admindashboard-control-community-corner-tooltip' => 'Redigera avsnittet Gemenskaphörnan av din wiki och meddela användare.',
+	'admindashboard-control-categories-list-label' => 'Alla kategorier',
+	'admindashboard-control-categories-list-tooltip' => 'Visa samtliga kategorier som visas på din wiki.',
+	'admindashboard-control-add-page-label' => 'Lägg till en sida',
+	'admindashboard-control-add-page-tooltip' => 'Lägg till en ny sida till din wiki.',
+	'admindashboard-control-add-photo-label' => 'Lägg till ett foto',
+	'admindashboard-control-add-photo-tooltip' => 'Lägg till nya foton till din wiki.',
+	'admindashboard-control-add-blog-label' => 'Lägg till ett blogginlägg',
+	'admindashboard-control-add-blog-tooltip' => 'Lägg till ett blogginlägg till din wiki.',
+	'admindashboard-control-multiple-upload-label' => 'Lägg till flera foton',
 );
 
 /** Telugu (తెలుగు)

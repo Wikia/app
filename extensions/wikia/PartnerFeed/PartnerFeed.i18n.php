@@ -466,8 +466,12 @@ $messages['sr-ec'] = array(
 
 /** Swedish (Svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'feed-title-blogposts' => 'Senaste blogginlägg',
+	'feed-title-recent-badges' => 'Senaste emblem',
+	'feed-title-recent-images' => 'Senaste bilder',
 	'all-blog-posts' => 'alla kategorier',
 );
 

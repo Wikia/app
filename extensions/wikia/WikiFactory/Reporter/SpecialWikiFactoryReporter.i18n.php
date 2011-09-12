@@ -46,7 +46,7 @@ $messages['be-tarask'] = array(
 	'wikifactoryreporter' => 'Справаздачы WikiFactory',
 );
 
-/** Bahasa Banjar (Bahasa Banjar)
+/** Banjar (Bahasa Banjar)
  * @author Ezagren
  */
 $messages['bjn'] = array(

@@ -243,7 +243,10 @@ $messages['az'] = array(
 	'wikiafollowedpages-special-heading-article' => 'Məqalələr ($1)',
 	'wikiafollowedpages-special-namespace' => '($1 səhifə)',
 	'oasis-wikiafollowedpages-special-seeall' => 'Hamısına bax >',
+	'wikiafollowedpages-special-seeall' => 'Hamısına bax >',
 	'wikiafollowedpages-special-showall' => 'Hamısını göstər >',
+	'wikiafollowedpages-special-blog-by' => '$1-dən',
+	'wikiafollowedpages-userpage-hide' => 'gizlət',
 );
 
 /** Bulgarian (Български)
@@ -2494,6 +2497,7 @@ $messages['sr-ec'] = array(
 
 /** Swedish (Svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'follow-desc' => 'Förbättringar för bevakningslistans funktionalitet',
@@ -2536,6 +2540,7 @@ Lägg till sidor i denna lista genom att klicka på "{{int:watch}}" överst på 
 	'wikiafollowedpages-userpage-hide' => 'göm',
 	'wikiafollowedpages-userpage-empty' => 'Den här användarens lista på bevakade sidor är tom.
 Lägg till sidor i denna lista genom att klicka på "{{int:watch}}" överst på en sida.',
+	'enotif_subject_categoryadd' => '{{SITENAME}} sidan $PAGETITLE har lagts till på $CATEGORYNAME av $PAGEEDITOR',
 	'enotif_body_categoryadd' => 'Kära $WATCHINGUSERNAME,
 
 En sida har lagts till en kategori du bevakar, på {{SITENAME}}.
@@ -2567,6 +2572,7 @@ Vänligen besök och redigera ofta...
 <li>Vill du kontrollera vilka mail du får? Gå till <a href="{{fullurl:{{ns:special}}:Preferences}}">Användarinställningarna</a></li>
 </ul>
 </p>',
+	'enotif_subject_blogpost' => '{{SITENAME}} sidan $PAGETITLE har postats på $BLOGLISTINGNAME av $PAGEEDITOR',
 	'enotif_body_blogpost' => 'Kära $WATCHINGUSERNAME,
 
 Det har skett en redigering på en blogglista som du följer, på {{SITENAME}}.
