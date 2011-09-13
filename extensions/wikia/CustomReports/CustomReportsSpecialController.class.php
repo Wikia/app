@@ -18,17 +18,17 @@ class CustomReportsSpecialController extends WikiaSpecialPageController {
 				'founderemails_clicks_per_sent',
 				'founderemails_opens_per_sent',
 			),
-			'allemails' => array(
-				'allemails_sent',
-				'allemails_opens',
-				'allemails_clicks',
-				'allemails_clicks_per_sent',
-				'allemails_opens_per_sent',
-			),
+//			'allemails' => array(
+//				'allemails_sent',
+//				'allemails_opens',
+//				'allemails_clicks',
+//				'allemails_clicks_per_sent',
+//				'allemails_opens_per_sent',
+//			),
 		);
 		$this->height = 410;
 		$this->width = 700;
-		$this->opt_days = array(3,7,14,30);
+		$this->opt_days = array(3,7,14,30,60);
 	}
 	
 	public function index() {
@@ -59,7 +59,7 @@ class CustomReportsSpecialController extends WikiaSpecialPageController {
 	public function getChart() {
 		$this->data_xml = $this->getVal('data_xml', null);
 		$this->num_chart = $this->getVal('num_chart', 1);
-		$this->swf = $this->wg->ExtensionsPath."/wikia/CustomReports/charts/FCF_MSLine.swf?".$this->wg->StyleVersion;
+		$this->swf = $this->wg->ExtensionsPath."/wikia/CustomReports/charts/FCF_MSLine.swf?chartWidth=".$this->width."&chartHeight=".$this->height."&".$this->wg->StyleVersion;
 	}
 
 }
