@@ -19,15 +19,6 @@
 		delayedResize: function() {
 			setTimeout(this.proxy(this.resize),10);
 		},
-
-		// get height needed to fit given node into browser's viewport height
-		getHeightToFit: function(node) {
-			var topOffset = node.offset().top,
-				viewportHeight = $(window).height();
-
-			return viewportHeight - topOffset;
-		},
-
 		resize: function() {
 			var viewportHeight = $(window).height();
 			var el, rail = this.editor.getSpace('rail');
@@ -39,7 +30,8 @@
 						'height': 'auto'
 					});
 				} else {
-					var h = viewportHeight - el.offset().top - (el.outerHeight(true) - el.height());
+					// Use body height not window height because if below min viewport height, page scrolls (BugId: 11282)
+					var h = $('body').height() - el.offset().top - (el.outerHeight(true) - el.height());
 					el.css({
 						'overflow-y': 'auto',
 						'height' : h
