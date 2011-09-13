@@ -10,6 +10,8 @@ import static org.testng.AssertJUnit.assertTrue;
 
 public class UploadImageTest extends BaseTest {
 	private String uploadFileUrl = "http://images.wikia.com/wikiaglobal/images/b/bc/Wiki.png";
+	
+	
 
 	@Test(groups={"CI", "verified", "envProduction", "fileUpload"})
 	public void testNormalUploadImage() throws Exception {
@@ -49,7 +51,8 @@ public class UploadImageTest extends BaseTest {
 		logout();
 	}
 
-	@Test(groups={"CI", "verified", "envProduction", "fileUpload"},dependsOnMethods="testNormalUploadImage")
+	/*Delete file is removed as is deleting source file http://images.wikia.com/wikiaglobal/images/b/bc/Wiki.png Needs investigating
+	 * @Test(groups={"CI", "verified", "envProduction", "fileUpload"},dependsOnMethods="testNormalUploadImage")
 	public void testDeleteUploadedImage() throws Exception {
 		// keep file extensions consistent (uploaded image can be either PNG or JPG)
 		String fileNameExtenstion = uploadFileUrl.substring(uploadFileUrl.length() - 3, uploadFileUrl.length());
@@ -67,5 +70,5 @@ public class UploadImageTest extends BaseTest {
 		session().uncheck("wpWatch");
 		clickAndWait("mw-filedelete-submit");
 		waitForTextPresent("has been deleted");
-	}
+	}*/
 }
