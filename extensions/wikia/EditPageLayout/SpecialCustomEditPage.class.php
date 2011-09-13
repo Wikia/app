@@ -331,7 +331,7 @@ class SpecialCustomEditPage extends SpecialPage {
 		// (try to) create instance of custom EditPage class
 		$this->mEditPage = $this->initializeEditPage();
 
-		if (empty($this->mEditPage)) {
+		if (!($this->mEditPage instanceof EditPage)) {
 			return;
 		}
 		$this->mEditPage->hideTitle = $this->hideTitle;
