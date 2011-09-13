@@ -22,6 +22,7 @@ $messages = array();
 $messages['en'] = array(
 	'categoryselect-desc' => 'Provides an interface for managing categories in article without editing whole article',
 	'categoryselect-code-view' => 'Code view',
+	'categoryselect-code-view-placeholder' => 'Add categories here, e.g. [[Category:Name]]',
 	'categoryselect-visual-view' => 'Visual view',
 	'categoryselect-infobox-caption' => 'Category options',
 	'categoryselect-infobox-category' => 'Provide the name of the category:',
@@ -103,7 +104,7 @@ $messages['as'] = array(
 	'categoryselect-button-cancel' => 'বাতিল কৰক',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -202,7 +203,7 @@ $messages['de'] = array(
 	'tog-disablecategoryselect' => 'Vereinfachtes Kategorisieren ausschalten',
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
+/** German (formal address) (Deutsch (Sie-Form))
  * @author LWChris
  */
 $messages['de-formal'] = array(
@@ -552,7 +553,7 @@ Terugschakelen naar visuele weergave is niet mogelijk.',
 	'tog-disablecategoryselect' => 'Categorielabels uitschakelen',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian (bokmål) (Norsk (bokmål))
  * @author Audun
  * @author Nghtwlkr
  */
@@ -703,7 +704,7 @@ $messages['sl'] = array(
 	'categoryselect-button-save' => 'Shrani',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
  * @author Rancher
  * @author Verlor
  */
@@ -821,7 +822,7 @@ $messages['zh'] = array(
 	'categoryselect-button-cancel' => '取消',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (中文(简体))
  * @author Hydra
  */
 $messages['zh-hans'] = array(
