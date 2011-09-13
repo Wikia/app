@@ -16,6 +16,7 @@
 		editbox: false,
 		editboxParentPadding: 0,
 		mode: false,
+		minPageHeight: 500,
 		rightrail: false,
 		widemode: false,
 
@@ -64,29 +65,33 @@
 		// get height needed to fit given node into browser's viewport height
 		getHeightToFit: function(node) {
 			var topOffset = node.offset().top,
-				viewportHeight = $(window).height();
+				viewportHeight = $(window).height(),
+				dimensions = {
+					nodeHeight: parseInt(viewportHeight - topOffset - this.editboxParentPadding),
+					viewportHeight: viewportHeight
+				};
 
-			return parseInt(viewportHeight - topOffset - this.editboxParentPadding);
+			return dimensions;
 		},
 
 		resize: function() {
 			switch(this.mode) {
 				// resize editor area
 				case 'editarea':
-					if (this.editbox) {
-						this.editbox.height(this.getHeightToFit(this.editbox));
+					if (this.editbox && this.getHeightToFit(this.editbox).viewportHeight > this.minPageHeight) {
+						this.editbox.height(this.getHeightToFit(this.editbox).nodeHeight);
 					}
 					break;
 
 				// resize whole page (edit conflicts)
 				case 'editpage':
-					this.editarea.css('minHeight', this.getHeightToFit(this.editarea));
+					this.editarea.css('minHeight', this.getHeightToFit(this.editarea).nodeHeight);
 					break;
 			}
 
 			// set height of right rail (BugId:7498)
 			if (this.rightrail) {
-				this.rightrail.height(this.getHeightToFit(this.rightrail));
+				this.rightrail.height(this.getHeightToFit(this.rightrail).nodeHeight);
 			}
 		}
 	});
