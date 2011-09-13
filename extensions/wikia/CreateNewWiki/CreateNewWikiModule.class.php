@@ -132,19 +132,26 @@ class CreateNewWikiModule extends Module {
 		$params = $wgRequest->getArray('data');
 
 		if ( !empty($params) && 
-			!empty($params['wikiName']) &&
-			!empty($params['wikiDomain']) )
+			(!empty($params['wikiName']) && !empty($params['wikiDomain']) ) )
 		{
 			// log if called with old params
 			$wgUser = $this->app->getGlobal('wgUser');
 			trigger_error("CreateWiki called with old params." . $params['wikiName'] . " " . $params['wikiDomain'] . " " . wfGetIP() . " " . $wgUser->getName() . " " . $wgUser->getId(), E_USER_WARNING);
 		}
+		
+		if ( !empty($params) && 
+			(!empty($params['wikiaName']) && !empty($params['wikiaDomain']) ) )
+		{
+			// log if called with old params
+			$wgUser = $this->app->getGlobal('wgUser');
+			trigger_error("CreateWiki called with 2nd old params." . $params['wikiaName'] . " " . $params['wikiaDomain'] . " " . wfGetIP() . " " . $wgUser->getName() . " " . $wgUser->getId(), E_USER_WARNING);
+		}
 
 		if ( empty($params) ||
-			empty($params['wikiaName']) ||
-			empty($params['wikiaDomain']) ||
-			empty($params['wikiaLanguage']) ||
-			empty($params['wikiaCategory']) )
+			empty($params['wName']) ||
+			empty($params['wDomain']) ||
+			empty($params['wLanguage']) ||
+			empty($params['wCategory']) )
 		{
 			// do nothing
 			$this->status = 'error';
@@ -178,7 +185,7 @@ class CreateNewWikiModule extends Module {
 				return;
 			}
 
-			$createWiki = F::build('CreateWiki', array($params['wikiaName'], $params['wikiaDomain'], $params['wikiaLanguage'], $params['wikiaCategory']));
+			$createWiki = F::build('CreateWiki', array($params['wName'], $params['wDomain'], $params['wLanguage'], $params['wCategory']));
 			$error_code = $createWiki->create();
 			$this->cityId = $createWiki->getWikiInfo('city_id');
 			if(empty($this->cityId)) {
@@ -187,7 +194,7 @@ class CreateNewWikiModule extends Module {
 					'<br>'.
 					$this->app->runFunction('wfMsg', 'cnw-error-general');
 				$this->statusHeader = $this->app->runFunction('wfMsg', 'cnw-error-general-heading');
-				trigger_error("Failed to create new wiki: $error_code " . $params['wikiaName'] . " " . $params['wikiaLanguage'] . " " . wfGetIP(), E_USER_WARNING);
+				trigger_error("Failed to create new wiki: $error_code " . $params['wName'] . " " . $params['wLanguage'] . " " . wfGetIP(), E_USER_WARNING);
 			} else {
 				$this->status = 'ok';
 				$this->siteName = $createWiki->getWikiInfo('sitename');
