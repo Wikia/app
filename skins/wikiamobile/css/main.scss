@@ -149,11 +149,12 @@ html {
   padding: 0;
   margin: 0;
   cursor: pointer;
-  
+
   body {
     background-color: #EEE;
     color: #222;
     margin: 0;
+    -webkit-text-size-adjust:none;
     
     //images
     .thumb {
@@ -225,6 +226,7 @@ html {
 #adPlace {
   width: 100%;
   height: 50px;
+  z-index: 99999;
   
   #adWrapper {
     opacity: 1;
@@ -233,6 +235,7 @@ html {
     background-color: red;
     color: white;
     -webkit-transition: all 0.5s;
+    z-index: 9999;
     
     &.up {
       position: absolute;
@@ -278,13 +281,24 @@ html {
   }
 }
 
+#WikiaPage {
+	padding: 2px;
+}
+
 #WikiaMainContent{
   //REALESE THE HELL: overflow used here for a demo reason the page now has static width what on mobile device is desiered
   //shoudnt be done on production site as it is a workaround on to wide content
-  overflow: hidden;
+  //overflow: hidden;
+  width: 100%;
+  font-size: medium;
   padding-bottom: 20px;
-  margin: 2px;
   
+  //fixes for fluid content
+  div > div > div, embed, .tvetnone {
+	width: 100% !important;
+  }
+  
+  //end of fluiding thead content
   a.buttonify {
     display: inline-block;
     padding: 5px;
