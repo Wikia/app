@@ -67,7 +67,7 @@ var WikiFeatures = {
 				}, function(res) {
 					if(res['result'] == 'ok') {
 						clearTimeout(msgHandle);
-						statusMsg.removeClass('invalid').text('Submitted').show();
+						statusMsg.removeClass('invalid').text(res['msg']).show();
 						setTimeout(function() {
 							modal.closeModal();
 						}, 3000);

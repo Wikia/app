@@ -10,30 +10,28 @@ $messages = array();
 $messages['en'] = array(
 	'wikifeatures-title' => 'Wiki Features',
 	'wikifeatures-heading' => 'Features',
-	'wikifeatures-creative' => "Welcome to Wikia Features.
-Below, you will find tools you can use to customize your wiki by activating any of the features.
-Play around a little - you can always turn off the tools you do not want.",
-	'wikifeatures-labs-heading' => 'Wikia Labs',
-	'wikifeatures-labs-creative' => "Wikia Labs is where you will find some ideas we are playing with.
-We know they still have their kinks, and we would love to receive your feedback on the good, the bad, and the downright quirky behavior of these products.",
-	'wikifeatures-feedback' => 'Give feedback',
+	'wikifeatures-creative' => "Wiki Features allows you to select which of Wikia's optional features you'd like to have on your wiki. Take a look and remember to play around, you can enable or disable these features at any time.",
+	'wikifeatures-labs-heading' => 'Labs',
+	'wikifeatures-labs-creative' => "Labs is where you can find features and ideas that we're experimenting with. Since we're still in the lab tweaking these features they might have some kinks, but we want you to join the fun! Turn them on and send us your feedback on the good, the bad, and the downright quirky behavior of these products.",
+	'wikifeatures-feedback' => 'Give Feedback',
 	'wikifeatures-error-permission' => 'Sorry, you do not have permission to display this page.',
 	'wikifeatures-error-invalid-parameter' => 'Invalid parameter: $1. Please try again.',
-	'wikifeatures-error-message' => 'Comment is too short or too long.',
+	'wikifeatures-error-message' => 'Your comment is either too short or too long.',
 	'wikifeatures-error-spam-attempt' => 'Please wait 60 seconds before submitting more feedback.',
 	'wikifeatures-error-invalid-category' => 'Oops!  Please choose what this ticket is about.',
 	'wikifeatures-toggle-active' => 'Enabled',
 	'wikifeatures-toggle-inactive' => 'Disabled',
 	'wikifeatures-active-on' => 'Active on $1 wikis',
 	'wikifeatures-category-choose-one' => 'Choose one...',
-	'wikifeatures-love-this-project' => 'I love this project.',
-	'wikifeatures-hate-this-project' => 'I hate this project.',
-	'wikifeatures-problem-with-project' => 'I have a problem with this project',
-	'wikifeatures-an-idea-for-project' => 'I have an idea for this project',
+	'wikifeatures-love-this-project' => 'I love this feature',
+	'wikifeatures-hate-this-project' => 'I hate this feature',
+	'wikifeatures-problem-with-project' => 'I have a problem to report',
+	'wikifeatures-an-idea-for-project' => 'I have an idea for this feature',
 	'wikifeatures-feedback-heading' => 'Feedback',
-	'wikifeatures-feedback-description' => 'We love getting feedback on features that are in WikiaLabs.  If you have an idea for how we can improve this feature, or if you have discovered a bug, please add a comment below and the people working on this feature will get your message.',
+	'wikifeatures-feedback-description' => 'We love to hear feedback about features that are in Labs! Do you have an idea on how we can improve this feature, a problem report, or simply some feedback on what you like or dislike? Let us know by using the box below.',
 	'wikifeatures-feedback-type-label' => 'What\'s this about?',
-	'wikifeatures-feedback-comment-label' => 'Comment',
+	'wikifeatures-feedback-comment-label' => 'Leave us a comment',
+	'wikifeatures-feedback-success' => 'Thanks for your feedback!',
 	'wikifeatures-deactivate-heading' => 'Disable $1?',
 	'wikifeatures-deactivate-description' => 'Disabling a feature will remove it from your wiki.  Your users won\'t be able to use this feature anymore, and they won\'t see the feature anywhere on the wiki.',
 	'wikifeatures-deactivate-notification' => 'You can turn the feature on again at any time.',
@@ -42,7 +40,7 @@ We know they still have their kinks, and we would love to receive your feedback 
 	'wikifeatures-promotion-new' => 'New',
 	// feature message list
 	'wikifeatures-feature-heading-wgEnableTopListsExt' => 'Top 10 Lists',
-	'wikifeatures-feature-description-wgEnableTopListsExt' => 'Top 10 Lists allow anyone on your wiki to create a votable list. They are a good way to get your junior editors to interact with the wiki. [[Special:CreateTopList|Create a new list]]!',
+	'wikifeatures-feature-description-wgEnableTopListsExt' => 'Top 10 Lists allow anyone on your wiki to create a votable list. If you\'re looking for a great way to get junior editors to interact with the wiki, this is it! Enabling this feature will add "Top 10 List" as an option when you click "Add a Page"',
 	'wikifeatures-feature-heading-wgEnableAchievementsExt' => 'Achievements',
 	'wikifeatures-feature-description-wgEnableAchievementsExt' => 'Achievements will help your wiki to grow by incentivizing editors to contribute a variety of content. You can create your own challenges that are unique to your wiki, and even upload your own images for the badges.',
 	'wikifeatures-feature-heading-wgEnableArticleCommentsExt' => 'Article Comments',
@@ -293,7 +291,7 @@ We weten dat er nog probleempjes mee zijn, maar we willen graag van u horen wat 
 	'wikifeatures-feature-description-emptylabs' => 'Onze ontwikkelaars werken had aan het ontwerpen van nieuwe functies die u kunt uitproberen. Kom snel terug!',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian (bokmål) (Norsk (bokmål))
  * @author Audun
  */
 $messages['no'] = array(
