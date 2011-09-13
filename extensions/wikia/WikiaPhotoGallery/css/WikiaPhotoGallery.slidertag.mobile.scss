@@ -4,13 +4,14 @@ $descriptionBackgroundColor: #000;
 $descriptionTextColor: #FFF;
 
 .WikiaPhotoGalleryPreview {
-	display: none;
+	height: 270px;
+	width: 100%;
+	overflow: hidden;
 }
 .wikiaPhotoGallery-slider-body {
 	clear:both;
 	overflow: hidden;
 	position: relative;
-	display: none;
 	width: 100%;
 	background-color: $backgroundColor;
 	height: 270px;
@@ -25,7 +26,7 @@ $descriptionTextColor: #FFF;
 		top: 195px;
 		height: 60px;
 		width: 20%;
-		z-index: 200;
+		z-index: 2;
 		text-align:center;
 		
 		img {
@@ -44,16 +45,13 @@ $descriptionTextColor: #FFF;
 		-webkit-box-shadow: 0 0 6px $shadowColor;	
 	}
 	
-	a img {
-		width: 100% !important;
-		display: none;
-	}
-	
 	.wikiaPhotoGallery-slider {
 		position: absolute;
 		top: 0;
 		left: 0;
 		height: 200px;
+		width: 100%;
+		display: none;
 	}
 	
 	.description {
@@ -64,9 +62,9 @@ $descriptionTextColor: #FFF;
 		position: absolute;
 		width: 100%;
 		height: 60px;
-		z-index: 99;
+		z-index: 1;
 		background-color: $descriptionBackgroundColor;
-		-webkit-transition: opacity .5s ease;
+		-webkit-transition: opacity .5s linear;
 		
 		h2, p {
 			margin: 5px 0 0 5px;
@@ -102,6 +100,11 @@ $descriptionTextColor: #FFF;
 }
 
 @media ( orientation: landscape ) {
+	
+	.WikiaPhotoGalleryPreview {
+		height: 260px;
+	}
+	
 	.wikiaPhotoGallery-slider-body {
 		height: 260px;
 		
@@ -121,8 +124,8 @@ $descriptionTextColor: #FFF;
 			opacity: .7;
 			
 			img {
-				width: 80px !important;
-				height: 55px !important;
+				width: 80px;
+				height: 55px;
 			}
 		}
 	}

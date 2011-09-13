@@ -1195,6 +1195,8 @@ class WikiaPhotoGallery extends ImageGallery {
 			return '';
 		}
 		
+		$skin = $this->getSkin();
+		
 		// setup image serving for "big" images
 		$imagesDimensions = array(
 			'w' => WikiaPhotoGalleryHelper::SLIDER_MIN_IMG_WIDTH,
@@ -1263,7 +1265,12 @@ class WikiaPhotoGallery extends ImageGallery {
 				'sliderId' => $this->mData['id']
 			));
 
-			$html = $template->render('renderSlider');
+			if( $skin->skinname == "wikiamobile") {
+				$html = $template->render('renderMobileSlider');	
+			} else {
+				$html = $template->render('renderSlider');
+			}
+
 
 			$html .= F::build('JSSnippets')->addToStack(
 				array(
@@ -1277,7 +1284,7 @@ class WikiaPhotoGallery extends ImageGallery {
 			
 			$html .= F::build('JSSnippets')->addToStack(
 				array(
-					'/extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slidertag.mobile.css',
+					'/extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slidertag.mobile.scss',
 					'/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slider.mobile.js'
 				),
 				array(),
