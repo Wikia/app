@@ -63,7 +63,7 @@ class JSSnippets {
 		if ( !$this->filters && !$filters) {
 			$generateJSSnippet = true;
 		//if set filter is set to output all stacks
-		} else if ( $this->filters && in_array( self::FILTER_NONE, $this->filters ) ) {
+		} else if ( $this->filters && in_array( $this::FILTER_NONE, $this->filters ) ) {
 			$generateJSSnippet = true;
 		//filter add to stack is matching set filters
 		} else if( $this->filters && $filters ) {
