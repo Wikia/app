@@ -5,10 +5,6 @@ $menuBackgroundColor: #555;
 $menuSecondColor: #333;
 $footerBackground: #CCF;
 
-#wikiaPhotoGallery-slider-body-0 {
-	display: block !important;
-}
-
 //navigation
 #navigation {
   width: 100%;
@@ -292,6 +288,7 @@ html {
   width: 100%;
   font-size: medium;
   padding-bottom: 20px;
+  z-index: 10;
   
   //fixes for fluid content
   div > div > div, embed, .tvetnone {

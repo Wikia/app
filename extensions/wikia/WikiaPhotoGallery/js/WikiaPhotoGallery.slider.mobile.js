@@ -3,9 +3,6 @@ var WikiaPhotoGallerySlider = {
 	timer: null,
 	//sliderEnable: true,
 
-	//ID of image that will be shown on load, integer, 0-3
-	initialImageId: Math.floor(Math.random() * 4),
-
 	sliderId: null,
 
 	log: function(msg) {
@@ -14,28 +11,33 @@ var WikiaPhotoGallerySlider = {
 
 	init: function(sliderId) {
 		this.sliderId = sliderId;
-		var initialSlider = $('#wikiaPhotoGallery-slider-' + sliderId + '-' + WikiaPhotoGallerySlider.initialImageId),
-			slider = $('#wikiaPhotoGallery-slider-body-' + sliderId );
-
+		var 	slider = $('#wikiaPhotoGallery-slider-body-' + sliderId ),
+			initialImageId = 0, //for now always first
+			initialSlider = $('#wikiaPhotoGallery-slider-' + sliderId + '-' + initialImageId),
+			image = initialSlider.find('a img');
+		
 		//select nav
 		initialSlider.find('.nav').addClass('selected');
 
 		//show description
 		initialSlider.find('.description').addClass('visible');
-
+		
+		//load image
+		image.show().attr('src', image.data('src'));
+		
 		//bind events
 		slider.delegate('.nav', 'click', function() {
 				WikiaPhotoGallerySlider.scroll($(this))
 		});
-
-		$('.WikiaPhotoGalleryPreview').show();
 	},
 
 	scroll: function(nav) {
 		//setup variables
-		var parentNav = nav.parent(),
+		var 	parentNav = nav.parent(),
+			image = parentNav.find('img'),
+			imageData = image.data('src'),
 			slider = parentNav.parents('.wikiaPhotoGallery-slider-body');
-		
+
 		//set 'selected' class
 		slider.find('.nav').removeClass('selected');
 		nav.addClass('selected');
@@ -46,6 +48,11 @@ var WikiaPhotoGallerySlider = {
 		
 		//show relevant img
 		slider.find('a img').hide();
-		parentNav.find('img').show();
+		image.show();
+		if( imageData && imageData != image.attr('src')) {
+			console.log("asd");
+			image.attr('src', imageData);			
+		}
+
 	}
 }
