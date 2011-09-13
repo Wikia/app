@@ -155,7 +155,6 @@ $wgHooks[ 'CategoryViewer::addPage' ][] = 'BlogArticle::addCategoryPage';
 $wgHooks[ 'SkinTemplateTabs' ][] = 'BlogArticle::skinTemplateTabs';
 $wgHooks[ 'EditPage::showEditForm:checkboxes' ][] = 'BlogArticle::editPageCheckboxes';
 $wgHooks[ 'LinksUpdate' ][] = 'BlogArticle::linksUpdate';
-$wgHooks[ 'WikiFactoryChanged' ][] = 'BlogArticle::WikiFactoryChanged';
 $wgHooks[ 'UnwatchArticleComplete' ][] = 'BlogArticle::UnwatchBlogComments';
 
 /**
@@ -169,5 +168,5 @@ include( dirname( __FILE__ ) . "/BlogLockdown.php");
  * add task
  */
 if( function_exists( "extAddBatchTask" ) ) {
-	extAddBatchTask( dirname(__FILE__)."/BlogTask.php", "blog", "BlogTask" );
+	extAddBatchTask( dirname(__FILE__)."/BlogTask.php", "enableblog", "BlogTask" );
 }

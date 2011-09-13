@@ -685,24 +685,6 @@ class BlogArticle extends Article {
 	}
 
 	/**
-	 * Hook handler
-	 *
-	 * @access public
-	 * @static
-	 */
-	static public function wikiFactoryChanged( $cv_name, $city_id, $value ) {
-		Wikia::log( __METHOD__, $city_id, "{$cv_name} = {$value}" );
-		if( $cv_name == "wgEnableBlogArticles" && $value == true ) {
-			/**
-			 * add task to TaskManager
-			 */
-			$Task = new BlogTask();
-			$Task->createTask( array( "city_id" => $city_id ), TASK_QUEUED );
-		}
-		return true;
-	}
-
-	/**
 	 * auto-unwatch all comments if blog post was unwatched
 	 *
 	 * @access public

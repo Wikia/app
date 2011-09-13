@@ -74,7 +74,6 @@ if ( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
 }
 
 /* Automatically set up database when PLB is switched on on some wiki */
-$wgHooks[ 'WikiFactoryChanged' ][] = 'PageLayoutBuilderHelper::wikiFactoryChanged';
 $wgHooks[ 'LoadExtensionSchemaUpdates' ][] = 'PageLayoutBuilderHelper::schemaUpdate';
 
 /* Set up the toolbar options with the proper caption and target link */
