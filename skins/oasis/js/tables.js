@@ -20,6 +20,7 @@ WikiaWideTables = {
 				wrapper = table.wrap('<div class="WikiaWideTablesWrapper"><div class="table"></div></div>').parent().parent();
 
 				//Add expand button
+				// TODO: FIXME: Use wgBlankImgUrl instead and test that it still works.
 				$('<img src="' + stylepath + '/common/blank.gif" class="sprite popout">').click(WikiaWideTables.makeModal).prependTo(wrapper);
 
 				//If table is too wide, add jagged edge styling

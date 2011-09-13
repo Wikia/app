@@ -149,7 +149,7 @@ function askQuestion(){
 
 	// Override default content handling
 	function printContent(){
-		global $wgTitle, $wgEnableReviews, $wgUser, $wgCdnStylePath;
+		global $wgTitle, $wgEnableReviews, $wgUser, $wgCdnStylePath, $wgBlankImgUrl;
 		$answer_page = Answer::newFromTitle( $wgTitle );
 
 		if (ArticleAdLogic::isMainPage()){
@@ -298,7 +298,7 @@ function askQuestion(){
 
 			<div id="qa_toolbox_functions">
 				<a name="qa_toolbox"></a>
-				<span id="control_share_feature"><img class="sprite share" src="<?=$wgCdnStylePath?>/skins/common/blank.gif" alt="Share"/><a href="#" onclick="ShareFeature.openDialog( '' ); WET.byStr('toolbox/share_feature')" id="qa_ca-share_feature" rel="nofollow"><?php echo wfMsg('qa-toolbox-share' ); ?></a></span>
+				<span id="control_share_feature"><img class="sprite share" src="<?= $wgBlankImgUrl ?>" alt="Share"/><a href="#" onclick="ShareFeature.openDialog( '' ); WET.byStr('toolbox/share_feature')" id="qa_ca-share_feature" rel="nofollow"><?php echo wfMsg('qa-toolbox-share' ); ?></a></span>
 				<span id="qa_toolbox_advancedtools_toggler">
 					<a href="#qa_toolbox" onclick="$('#qa_toolbox_advancedtools_wrapper').toggle(); WET.byStr('toolbox/advanced_opentoggle'); "><?php echo wfMsg('qa-toolbox-tools' ); ?></a>
 				</span>
@@ -337,7 +337,7 @@ function askQuestion(){
 
 	foreach($toolboxActions as $action) {
 ?>
-					<span id="qa_control_<?= $action ?>"><img class="sprite <?= $action ?>" src="<?=$wgCdnStylePath?>/skins/common/blank.gif" alt="<?=wfMsg($action) ?>" />
+					<span id="qa_control_<?= $action ?>"><img class="sprite <?= $action ?>" src="<?= $wgBlankImgUrl ?>" alt="<?=wfMsg($action) ?>" />
 						<?php echo $sk->makeKnownLinkObj( $wgTitle, wfMsg($action), "action={$action}", '', '', 'id="qa_ca-'.$action.'" onclick="WET.byStr(\'toolbox/'.$action.'\')" title="' . wfMsg( "qa-toolbox-{$action}" ) . '" rel="nofollow"', '')  ?>
 					</span>
 <?php

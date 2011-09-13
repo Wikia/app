@@ -160,7 +160,7 @@ class Answer {
 	}
 
 	public static function getUserAvatar($userId, $width = 50, $height = 50) {
-		global $wgStylePath;
+		global $wgStylePath, $wgBlankImgUrl;
 
 		wfProfileIn(__METHOD__);
 
@@ -171,7 +171,7 @@ class Answer {
 			$img = $avatar->getImageTag($width, $height);
 		}
 		else {
-			$avatarImgSrc = 'http://images.wikia.com/common/skins/monobook/blank.gif';
+			$avatarImgSrc = $wgBlankImgUrl;
 			$img = Xml::element('img', array(
 				'src' => $avatarImgSrc,
 				'height' => $height,

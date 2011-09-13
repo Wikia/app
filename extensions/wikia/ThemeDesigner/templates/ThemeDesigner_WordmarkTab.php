@@ -51,7 +51,7 @@
 		</form>
 
 		<div class="preview">
-			<img src="<?= $wgStylePath ?>/common/blank.gif" class="wordmark">
+			<img src="<?= $wgBlankImgUrl ?>" class="wordmark">
 			<a href="#"><?= wfMsg('themedesigner-dont-use-a-graphic') ?></a>
 		</div>
 

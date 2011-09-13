@@ -571,6 +571,7 @@ var ThemeDesigner = {
 
 		if (ThemeDesigner.settings["background-image"] == "") {
 			//no background image
+			// TODO: FIXME: Use wgBlankImgUrl and test that it still works
 			$("#swatch-image-background").attr("src", "/skins/common/blank.gif");
 		} else if (ThemeDesigner.settings["background-image"].indexOf("images/themes") > 0) {
 			//wikia background image
