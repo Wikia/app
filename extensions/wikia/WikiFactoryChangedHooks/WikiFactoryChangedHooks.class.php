@@ -210,7 +210,7 @@ Class WikiFactoryChangedHooks {
 			 */
 			if (!class_exists('BlogTask')) {
 				global $IP, $wgEditPageReskinPath;
-				extAddBatchTask( "$IP/extensions/wikia/{$wgEditPageReskinPath}Blogs/BlogTask.php", "enableblog", "BlogTask" );				
+				extAddBatchTask( "$IP/extensions/wikia/{$wgEditPageReskinPath}Blogs/BlogTask.php", "blog", "BlogTask" );				
 			}
 			$Task = new BlogTask();
 			$Task->createTask( array( "city_id" => $city_id ), TASK_QUEUED );
