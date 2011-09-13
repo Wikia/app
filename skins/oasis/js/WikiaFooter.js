@@ -263,5 +263,8 @@ WikiaFooterApp = {
 		
 	});
 	
-	WikiaFooterApp.init();
 })();
+
+$(function() {
+	WikiaFooterApp.init();
+});
