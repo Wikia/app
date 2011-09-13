@@ -72,6 +72,7 @@ var SponsorshipDashboardGroupEditor = {
 	reportItemText : function( value ){
 
 		var elementText = '<li>';
+		// TODO: FIXME: Use wgBlankImgUrl and test that it still works
 		elementText = elementText + '<a data-id="' + value + '" data-type="report" class="delete wikia-button secondary"><img src="http://images1.wikia.nocookie.net/__cb33534/common/skins/common/blank.gif" class="sprite trash"></a> ';
 		elementText = elementText + $( "#groupReportList option[value=" + value + "]" ).html();
 		elementText = elementText + '</li>';
@@ -82,6 +83,7 @@ var SponsorshipDashboardGroupEditor = {
 	userItemText : function( value ){
 
 		var elementText = '<li>';
+		// TODO: FIXME: Use wgBlankImgUrl and test that it still works
 		elementText = elementText + '<a data-id="' + value + '" data-type="user" class="delete wikia-button secondary"><img src="http://images1.wikia.nocookie.net/__cb33534/common/skins/common/blank.gif" class="sprite trash"></a> ';
 		elementText = elementText + $( "#groupUserList option[value=" + value + "]" ).html();
 		elementText = elementText + '</li>';

@@ -7,7 +7,7 @@
 			<label><?= wfMsg('oasis-toolbar-edit-toolbar-list') ?></label>
 			<span class="reset-defaults">
 				<a class="wikia-chiclet-button" href="#">
-					<img height="0" width="0" src="http://images1.wikia.nocookie.net/__cb30984/common/skins/common/blank.gif">
+					<img height="0" width="0" src="<?= wfBlankImgUrl() ?>">
 				</a>
 				<a href="#">
 					<?= wfMsg('oasis-toolbar-edit-reset-defaults') ?>

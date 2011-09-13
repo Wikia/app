@@ -46,7 +46,6 @@ exports.doReplacements = function(text, emoticonMapping){
 			glyphUsed = glyphUsed.replace(/"/g, "&quot;"); // prevent any HTML-injection
 			text = text.replace(regex, '$1' + emoticon + '$3');
 		} while ((origText != text) && (numIters++ < 5));
-		//text = text.replace(/(^| ):\)( |$)/g, emoticon );
 	}
 
 	console.log("Done processing emoticons.");

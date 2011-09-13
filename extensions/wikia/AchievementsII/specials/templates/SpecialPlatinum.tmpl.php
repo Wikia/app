@@ -1,5 +1,5 @@
 <?php
-global $wgScriptPath, $wgStylePath;
+global $wgScriptPath, $wgStylePath, $wgBlankImgUrl;
 ?>
 <div class="CustomizePlatinum">
 
@@ -18,7 +18,7 @@ global $wgScriptPath, $wgStylePath;
 			</div>
 			<div class="column">
 				<label><?=wfMsg('achievements-community-platinum-badge-image');?></label>
-				<img src="<?= $wgStylePath ?>/common/blank.gif" class="badge-preview neutral" />
+				<img src="<?= $wgBlankImgUrl ?>" class="badge-preview neutral" />
 				<input type="file" name="wpUploadFile" />
 			</div>
 

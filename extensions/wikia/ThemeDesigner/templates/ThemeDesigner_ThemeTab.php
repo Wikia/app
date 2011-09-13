@@ -1,5 +1,5 @@
 <section id="ThemeTab" class="ThemeTab">
-	<img src="<?= $wgStylePath ?>/common/blank.gif" class="previous chevron disabled">
+	<img src="<?= $wgBlankImgUrl ?>" class="previous chevron disabled">
 	<div class="slider">
 		<ul>
 		<?php
@@ -14,5 +14,5 @@
 		?>
 		</ul>
 	</div>
-	<img src="<?= $wgStylePath ?>/common/blank.gif" class="next chevron">
+	<img src="<?= $wgBlankImgUrl ?>" class="next chevron">
 </section>
