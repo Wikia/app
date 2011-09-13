@@ -68,7 +68,7 @@
 
 	if ($countComments) {
 	if ($countComments) {		
-		echo '<div class="article-comments-pagination upper-pagination">'. $data['testPagination']->getBarHTML('#') .'</div>';
+		echo '<div class="article-comments-pagination upper-pagination">'. $data['pagination']->getBarHTML('#') .'</div>';
 	}
 	}
 
@@ -78,7 +78,7 @@
 
 <?php
 	if ($countComments) {		
-		echo '<div class="article-comments-pagination">'. $data['testPagination']->getBarHTML('#') .'</div>';
+		echo '<div class="article-comments-pagination">'. $data['pagination']->getBarHTML('#') .'</div>';
 	}
 ?>
 	</div>
