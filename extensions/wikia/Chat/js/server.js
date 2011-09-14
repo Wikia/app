@@ -129,6 +129,7 @@ rc.hgetall(config.getKey_runtimeStats(), function(err, data){
 var sessionIdsByKey = {}; // for each room/username combo, store the sessionId so that we can send targeted messages.
 io.configure(function () {
 	io.set('transports', [   'websocket', 'flashsocket', 'htmlfile', 'xhr-polling', 'jsonp-polling'  ]);
+	io.set('log level', 1); // turn the socket.io debugging way down
 });
 
 function startServer() {
@@ -974,38 +975,35 @@ function broadcastToRoom(client, socket, data, users, callback){
 			console.log('Error: while trying to find members of room "' + roomId + '": ' + err);
 		} else {
 			//console.log("Raw data from key " + config.getKey_usersInRoom( roomId ) + ": ");
-			//console.log(usernameToData);
 			//(input instanceof Array)
-			console.log("usernameToData:");
+			//console.log("usernameToData:");
+			//console.log(users);
+			//console.log(usernameToData);
 
-			console.log(users);
-			console.log(usernameToData);
-			
-			var usernameToDataFilterd = {};
-			
+			var usernameToDataFiltered = {};
+
 			if((users instanceof Array) && users.length > 0) {
 				for( var i in users ) {
 					if(typeof(usernameToData[users[i]]) != 'undefined') {
-						usernameToDataFilterd[users[i]] = usernameToData[users[i]];	
+						usernameToDataFiltered[users[i]] = usernameToData[users[i]];	
 					}
 				}
 			} else {
-				usernameToDataFilterd = usernameToData;
+				usernameToDataFiltered = usernameToData;
 			}
 			
-			console.log(usernameToDataFilterd);
+			console.log(usernameToDataFiltered);
 			
-			_.each(usernameToDataFilterd, function(userData){
+			_.each(usernameToDataFiltered, function(userData){
 				var userModel = new models.User( JSON.parse(userData) );
 				
 				console.log("\tSENDING TO " + userModel.get('name'));
 				var socketId = sessionIdsByKey[ config.getKey_userInRoom(userModel.get('name'), roomId) ];
 				
 				if(socketId){
-					
-					console.log("============ SOCKET "+socketId+" ==========================================");
+					//console.log("============ SOCKET "+socketId+" ==========================================");
 					//console.log(socket.socket(socketId));
-					console.log("============ /SOCKET "+socketId+" ==========================================");
+					//console.log("============ /SOCKET "+socketId+" ==========================================");
 					
 					if( typeof socket.socket(socketId).sessionId  == "undefined"){
 						// This happened once (and before this check was here, crashed the server).  Not sure if this is just a normal side-effect of the concurrency or is a legit
