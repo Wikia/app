@@ -37,25 +37,28 @@ if ( isset( $options['help'] ) ) {
 }
 
 //by default the script will download and process data for the last 24 hours
-$date = ( !empty( $options['date'] ) ) ? $options['date'] : date( "Ymd", strtotime( "-1 day" ) );//"20110504"
+$date = ( !empty( $options['date'] ) ) ? $options['date'] : date( "Ymd", strtotime( "-1 day" ) );//"20110906"
 $s3ConfigFile = ( !empty( $options['s3conf'] ) ) ? $options['s3conf'] : null;
 
 require_once( "$IP/extensions/wikia/hacks/PathFinder/PathFinder.setup.php" );
 
 $app = F::app();
+$logger = PathFinderLogger::getInstance();
 $wikis;
 
-$app->sendRequest( 'PathFinderLogService', 'log', array( 'msg' => 'Start' ) );
+
+$logger->log( 'Start...' );
 echo( "Initializing data analysis for User Path Prediction.\n\n" );
 
 try{
 	echo( "Downloading and parsing data from {$date}, this could take a while...\n\n");
 	$app->sendRequest( 'PathFinderService', 'extractOneDotData', array( 'date' => $date, 'backendParams' => array( 's3ConfigFile' => $s3ConfigFile ) ) );
-	echo( 'Done.');
+	echo( "Done.\n" );
 } catch (WikiaException $e) {
 	echo $e;
 	exit( 1 );
 }
 
-echo( "Done.\n" );
+$logger->log( 'Data analysis completed.' );
+echo( "Complete.\n" );
 ?>

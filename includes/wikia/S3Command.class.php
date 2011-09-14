@@ -30,8 +30,7 @@ class S3Command extends WikiaObject{
 	const ACTION_PUT = 'put';
 	const ACTION_MAKE_BUCKET = 'mb';
 	const ACTION_REMOVE_BUCKET = 'mb';
-
-	private $instance;
+	
 	private $command;
 	private $parameters;
 	private $options;
@@ -121,9 +120,13 @@ class S3Command extends WikiaObject{
 	 * @throws S3CommandException
 	 */
 	public function run( $action, Array $params = array(), Array $options = array() ){
+		$this->wf->profileIn( __METHOD__ );
+		
 		$output = shell_exec( $this->getCommandLine( $action, $params, $options ) );
 		$matches = array();
 		$errorFound = preg_match( self::REGEX_ERROR, $output, $matches );
+		
+		$this->wf->profileOut( __METHOD__ );
 		
 		if ( !empty( $errorFound ) ) {
 			throw new S3CommandException( $matches[1] );

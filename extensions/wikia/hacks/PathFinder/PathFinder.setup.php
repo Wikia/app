@@ -32,10 +32,24 @@ $app->wg->append(
 );
 
 /**
+ * dependencies
+ */
+require_once( "{$IP}/lib/predis/Predis.php" );//Redis
+require_once( "{$IP}/includes/wikia/S3Command.class.php" );//Amazon S3
+
+/**
  * classes
  */
+$app->wg->set( 'wgAutoloadClasses', "{$dir}/S3Command.class.php", 'S3Command' );
+$app->wg->set( 'wgAutoloadClasses', "{$dir}/PathFinderCache.class.php", 'PathFinderCache' );
+$app->wg->set( 'wgAutoloadClasses', "{$dir}/PathFinderParser.class.php", 'PathFinderParser' );
+
+/**
+ * models
+ */
+$app->wg->set( 'wgAutoloadClasses', "{$dir}/PathFinderDataSource.class.php", 'PathFinderDataSource' );
+$app->wg->set( 'wgAutoloadClasses', "{$dir}/PathFinderDataSet.class.php", 'PathFinderDataSet' );
 $app->wg->set( 'wgAutoloadClasses', "{$dir}/PathFinderModel.class.php", 'PathFinderModel' );
-$app->wg->set( 'wgAutoloadClasses', "{$dir}/BetterGlobalTitle.class.php", 'BetterGlobalTitle' );
 
 /**
  * services
@@ -50,9 +64,14 @@ $app->wg->set( 'wgAutoloadClasses', "{$dir}/PathFinderController.class.php", 'Pa
 $app->wg->set( 'wgAutoloadClasses', "{$dir}/PathFinderSpecialController.class.php", 'PathFinderSpecialController' );
 
 /**
+ * exceptions
+ */
+$app->wg->set( 'wgAutoloadClasses', "{$dir}/PathFinderDataSource.class.php", 'PathFinderDataSourceNoDataException' );
+$app->wg->set( 'wgAutoloadClasses', "{$dir}/PathFinderDataSet.class.php", 'PathFinderDataSetInvalidName' );
+
+/**
  * special pages
  */
-
 $app->wg->set( 'wgSpecialPages', 'PathFinderSpecialController', 'PathFinder' );
 
 /**

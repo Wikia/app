@@ -1,8 +1,3 @@
-$(function() {
-	PathFinder.init();
-
-})
-
 //beware: a lot of hacks you don't want to know anything about ahead! do not trespass!
 var PathFinder = {
 	
@@ -157,3 +152,8 @@ var PathFinder = {
 		});
 	}
 };
+
+$(function() {
+	PathFinder.init();
+
+});
