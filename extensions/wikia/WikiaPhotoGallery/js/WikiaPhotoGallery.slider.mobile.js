@@ -1,16 +1,9 @@
 var WikiaPhotoGallerySlider = {
-	//timer for automatic wikiaPhotoGallery slideshow
-	timer: null,
-	//sliderEnable: true,
-
 	sliderId: null,
-
-	log: function(msg) {
-		console.log(msg, 'WikiaPhotoGallery:Slider');
-	},
 
 	init: function(sliderId) {
 		this.sliderId = sliderId;
+		
 		var 	slider = $('#wikiaPhotoGallery-slider-body-' + sliderId ),
 			initialImageId = 0, //for now always first
 			initialSlider = $('#wikiaPhotoGallery-slider-' + sliderId + '-' + initialImageId),
@@ -50,7 +43,6 @@ var WikiaPhotoGallerySlider = {
 		slider.find('a img').hide();
 		image.show();
 		if( imageData && imageData != image.attr('src')) {
-			console.log("asd");
 			image.attr('src', imageData);			
 		}
 

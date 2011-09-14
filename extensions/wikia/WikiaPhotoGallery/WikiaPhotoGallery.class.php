@@ -934,7 +934,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		global $wgBlankImgUrl, $wgStylePath;
 
 		wfProfileIn(__METHOD__);
-
+		
 		// don't render empty slideshows
 		if (empty($this->mImages)) {
 			wfProfileOut(__METHOD__);
@@ -974,6 +974,17 @@ class WikiaPhotoGallery extends ImageGallery {
 				'id' => $id,
 			),
 			$this->mAttribs );
+		
+		if( $sk->skinname == "wikiamobile" ) {
+		
+			$template = new EasyTemplate(dirname(__FILE__) . '/templates');
+			$template->set_vars(array(
+				'attribs' => $attribs
+			));
+			$slideshowHtml = $template->render('renderMobileSlideshow');
+			
+		} else {
+			
 		$slideshowHtml = Xml::openElement('div', $attribs);
 
 		// render slideshow caption
@@ -1162,7 +1173,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		// close slideshow wrapper
 		$slideshowHtml .= Xml::closeElement('div');
 		$slideshowHtml .= Xml::closeElement('div');
-
+		
 		// output JS to init slideshow
 		$width = "{$params['width']}px";
 		
@@ -1176,6 +1187,20 @@ class WikiaPhotoGallery extends ImageGallery {
 			array('id' => $id, 'width' => $width)
 		);
 
+		}
+
+		
+		$slideshowHtml .= F::build('JSSnippets')->addToStack(
+			array(
+				'/extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slideshow.placeholder.scss',
+				'/extensions/wikia/WikiaMobile/js/MobileDialog.js'
+			),
+			array(),
+			'WikiaMobileDialog.init',
+			array('id' => $id, 'extension' => 'slideshow'),
+			'wikiamobile'
+		);
+		
 		wfProfileOut(__METHOD__);
 		return $slideshowHtml;
 	} // renderSlideshow()
