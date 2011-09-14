@@ -410,8 +410,9 @@
 							var pageTitle = '<h1 class="pagetitle">' + window.wgEditedTitle + '</h1>',
 								isSectionEdit = !!parseInt(window.wgEditPageSection) || (window.wgEditPageSection == 'new'),
 								html = (!isSectionEdit ? pageTitle : '') + data.html;
-
-							contentNode.html(html);
+							
+							// innerShiv is IE < 9 fix (BugId: 11294)
+							contentNode.html($.innerShiv(html));
 
 							// move "edit" link to the right side of heading names
 							contentNode.find('.editsection').each(function() {
