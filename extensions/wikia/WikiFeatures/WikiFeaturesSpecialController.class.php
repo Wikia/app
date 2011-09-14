@@ -76,8 +76,8 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 		$log->addEntry( 'wikifeatures', SpecialPage::getTitleFor('WikiFeatures'), $logMsg, array() );
 		WikiFactory::setVarByName($feature, $this->wg->CityId, $enabled, "WikiFeatures");
 		
-		if ($feature == 'wgEnableTopListsExt')
-			WikiFactory::setVarByName('wgShowTopListsInCreatePage', $this->wg->CityId, $enabled, "WikiFeatures");
+		if ($feature == 'wgShowTopListsInCreatePage')
+			WikiFactory::setVarByName('wgEnableTopListsExt', $this->wg->CityId, $enabled, "WikiFeatures");
 		
 		// clear cache for active wikis
         WikiFactory::clearCache( $this->wg->CityId );		
