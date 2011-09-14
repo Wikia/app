@@ -25,5 +25,3 @@ $wgGroupPermissions['*']['wikifeatures'] = false;
 $wgGroupPermissions['staff']['wikifeatures'] = true;
 $wgGroupPermissions['sysop']['wikifeatures'] = true;
 $wgGroupPermissions['bureaucrat']['wikifeatures'] = true;
-
-$wgRevokePermissions['vstf']['wikifeatures'] = true;
