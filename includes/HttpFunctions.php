@@ -230,7 +230,7 @@ class HttpRequest {
 	 * @return string
 	 */
 	public function proxySetup() {
-		global $wgHTTPProxy, $wgDevelEnvironment;
+		global $wgHTTPProxy;
 
 		if ( $this->proxy ) {
 			return;
