@@ -75,28 +75,23 @@ class CreateBlogPage extends SpecialBlogPage {
 			if($wgRequest->getVal('article') != null) {
 				$this->parseArticle(urldecode($wgRequest->getVal('article')));
 			}
-			else {
-				$text = '';
-
-				$preload = $wgRequest->getText( 'preload' );
-				if ( !empty( $preload ) ) {
-					$preloadTitle = Title::newFromText( $preload );
-					if ( !is_null( $preloadTitle ) ) {
-						$preloadArticle = new Article( $preloadTitle );
-						$text = $preloadArticle->getContent();
-					}
+			else if ($wgRequest->getText( 'preload' ) != null) {
+				// TOR: added preload functionality
+				$preloadTitle = Title::newFromText( $wgRequest->getText( 'preload' ) );
+				if ( !is_null( $preloadTitle ) ) {
+					$preloadArticle = new Article( $preloadTitle );
+					$text = $preloadArticle->getContent();
+					$this->createEditPage( $text );
 				}
-				
-				//nAndy: bugId:9804
-				if( $pageId > 0 && empty($preload) ) {
-					$preloadTitle = Title::newFromId($pageId);
-					if( !is_null($preloadTitle) ) {
-						$preloadArticle = new Article($preloadTitle);
-						$text = $preloadArticle->getContent();
-					}
+			}
+			else if ($pageId > 0) {
+				//nAndy: bugId:9804 Owen: bugId:11432
+				$preloadTitle = Title::newFromId($pageId);
+				if ( !is_null( $preloadTitle ) ) {
+					$this->parseArticle($preloadTitle->getDBKey());
 				}
-				
-				$this->createEditPage( $text );
+			} else {
+				$this->createEditPage ('');
 			}
 			$this->renderForm();
 		}
