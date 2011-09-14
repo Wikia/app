@@ -66,7 +66,7 @@ class AdDisplay {
 		
 		if ( ( !empty( $skin ) ? ( !in_array( $skin, array( 'SkinWikiaphone', 'SkinWikiaApp' ) ) ) : true)) {
 			$ads = Advertisement::GetAdsForCurrentPage();
-			$adtext = '<div class="sponsorwrapper" style="display: none;">';
+			$adtext = '<div class="sponsorwrapper">';
 			$adtext .= wfMsg('sponsor-header');
 			$adtext .= '<div class="sponsormsg">';
 			$adtext .= '<ul>';
