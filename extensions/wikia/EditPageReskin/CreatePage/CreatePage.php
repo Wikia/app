@@ -46,11 +46,6 @@ function wfCreatePageInit() {
 	// load messages from file
 	wfLoadExtensionMessages( 'CreatePage' );
 
-	if ( empty( $wgWikiaEnableNewCreatepageExt ) ) {
-		// disable all new features and preserve old Special:CreatePage behavior
-		return true;
-	}
-
 	/**
 	 * hooks
 	 */
