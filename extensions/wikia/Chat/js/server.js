@@ -357,12 +357,10 @@ function authConnection(client, socket, authData){
 							// PERFORMANCE NOTE: We could cache the emoticonMapping per-wiki in redis for a certain amount of time but we'd have to worry about purging or reasonable expiration.
 							// Currently, we just rely on the fact that Varnish will cache the API result (which will then be purged if there are updates).
 							console.log("Starting request to get emoticons for '" + data.username + "'...");
-							var emoticonMapping = new EmoticonMapping();
 							getWikiText(httpClient, wikiHostname, emoticons.EMOTICON_ARTICLE, function(wikiText){
 								if(wikiText != ""){
-									var emoticonMapping = new EmoticonMapping();
-									emoticonMapping.loadFromWikiText( wikiText );
-									client.emoticonMapping = emoticonMapping;
+									client.emoticonMapping = new EmoticonMapping();
+									client.emoticonMapping.loadFromWikiText( wikiText );
 									console.log("Done getting emoticons for '" + data.username + "'.");
 								}
 							});
