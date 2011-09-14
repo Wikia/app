@@ -1099,6 +1099,12 @@ function processText(text, client) {
 	// Replace appropriate shortcuts in the text with the emoticons.
 	text = emoticons.doReplacements(text, emoticonMapping);
 
+	// If the emoticon mapping is still undefined on the client (it might have been fixed asynchronously already) then store the defaults
+	// for now so that we don't have to recreate the default object for this client on every processText() call.
+	if(typeof client.emoticonMapping === 'undefined'){
+		client.emoticonMapping = emoticonMapping;
+	}
+
 	return text;
 } // end processText()
 
