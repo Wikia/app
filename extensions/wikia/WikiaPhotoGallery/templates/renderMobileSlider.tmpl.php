@@ -1,6 +1,5 @@
-<?php $initialSlider = rand( 0, 3 ); ?>
 <div class="WikiaPhotoGalleryPreview" style='height:270px;overflow:hidden'>
-	<div class="wikiaPhotoGallery-slider-body" id="wikiaPhotoGallery-slider-body-<?= $sliderId ?>" data-initialslider="<?= $initialSlider; ?>">
+	<div class="wikiaPhotoGallery-slider-body" id="wikiaPhotoGallery-slider-body-<?= $sliderId ?>">
 		<ul>
 		<?php
 		$readMore = wfMsg('galery-slider-read-more');
@@ -19,12 +18,6 @@
 				<div class="description">
 				<h2><?= $val['imageTitle'] ?></h2>
 				<p><?= $val['imageDescription'] ?></p>
-				<?php
-					if (!empty( $val['imageLink'] )){ ?>
-						<a href='<?= $val['imageLink'] ?>' class='wikia-button secondary'>
-							<span><?= $readMore ?></span>
-						</a>
-					<?php } ?>
 				</div>
 				<p class='nav'>
 					<img src='<?= $val['imageThumbnail'] ?>'>
