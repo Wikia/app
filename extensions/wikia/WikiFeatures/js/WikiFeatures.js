@@ -9,12 +9,12 @@ var WikiFeatures = {
 			$('.representation').removeClass('promotion');
 		}
 		
-		WikiFeatures.sliders.find('.button').click(function(e) {
+		WikiFeatures.sliders.click(function(e) {
 			var feature = $(this).closest('.feature');
 			var featureName = feature.data('name');
 			
 			if(!WikiFeatures.lockedFeatures[featureName]) {				
-				var el = $(this).closest('.slider');
+				var el = $(this);
 				var isEnabled = el.hasClass('on');
 				if(isEnabled) {
 					var featureHeading = feature.find('h3').text().replace(/(^[\s\xA0]+|[\s\xA0]+$)/g, '');	//jquery doesn't support trim in IE7
