@@ -40,12 +40,13 @@ class PathFinderModel {
 		$this->createDir( self::RAW_DATA_PATH );
 		
 		$this->logger->log( "Running \"{$cmd}\" ..." );
-		//$commandOutput = shell_exec( $cmd );
+		$commandOutput = shell_exec( $cmd );
 		$this->logger->log( "Done, command output: {$commandOutput}." );
 		
 		$tmpFiles = scandir( self::RAW_DATA_PATH );
 		
 		if ( is_array( $tmpFiles ) && count( $tmpFiles )  > 2 ) {
+			//skip . and ..
 			$this->files = array_slice( $tmpFiles, 2 );
 			
 			$this->app->wf->profileOut( __METHOD__ );
@@ -139,8 +140,6 @@ class PathFinderModel {
 				$obj = new stdClass();
 				
 				$obj->domain = $item['domain_name'];
-				$obj->hasPrefix = ( strpos( $item['domain_name'], '.wikia.com' ) !== false );
-				
 				$this->wikis[$item['city_id']] = $obj;
 			}
 		}
@@ -288,7 +287,7 @@ class PathFinderModel {
 	private function removePath( $path ) {
 		$this->app->wf->profileIn( __METHOD__ );
 		
-		if ( is_dir( $path ) ) {
+		/*if ( is_dir( $path ) ) {
 			$this->logger->log( "Removing {$path} ...");
 			$objects = scandir( $path );
 			
@@ -310,7 +309,7 @@ class PathFinderModel {
 		} elseif ( is_file( $path ) ) {
 			$this->app->wf->profileOut( __METHOD__ );
 			return unlink ( $path );
-		}
+		}*/
 		
 		return true;
 	}
