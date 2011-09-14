@@ -83,10 +83,13 @@ function lyricTagCss($out)
 	$css = <<<DOC
 .lyricbox
 {
-	padding: 1em;
+	padding: 1em 1em 0;
 	border: 1px solid silver;
 	color: black;
 	background-color: #ffffcc;
+}
+.lyricsbreak{
+	clear:both;
 }
 DOC
 ;
@@ -147,6 +150,7 @@ function renderLyricTag($input, $argv, $parser)
 	$retVal.= ($isInstrumental?"":$ringtoneLink); // if this is an instrumental, just a ringtone link on the bottom is plenty.
 	$retVal.= gracenote_obfuscateText($transform);
 	$retVal.= $ringtoneLink;
+	$retVal.= "<div class='lyricsbreak'></div>\n"; // so that we can have stuff in the box (like videos & awards) even if the lyrics are short.
 	$retVal.= "</div>";
 
 	// Tell the Google Analytics code that this view was for non-Gracenote lyrics.
