@@ -2,6 +2,7 @@
 	@include box-shadow(0, 10px, 60px, mix($color-page, #000));
 	background: $color-page;
 	border: 5px solid $color-body;
+	color: $color-text;
 	position: absolute;
 	>h1 {
 		color: $color-links;
