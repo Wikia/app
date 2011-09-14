@@ -3,7 +3,8 @@
 $messages = array();
 $messages['en'] = array(
 	'mobilesearches' => 'Mobile Searches',
-	
+
+	'mobilesearches-stats-header' => 'Please note that since successful responses get cached by Varnish, these numbers will show a high skew towards "not-found".',
 	'mobilesearches-stats-timeperiod' => 'Time period',
 	'mobilesearches-stats-numfound' => 'Num found',
 	'mobilesearches-stats-numnotfound' => 'Not found',

@@ -4,6 +4,7 @@ $messages = array();
 $messages['en'] = array(
 	'soapfailures' => 'SOAP Page Failures',
 
+	'soapfailures-stats-header' => 'Please note that since successful responses get cached by Varnish, these numbers will show a high skew towards "not-found".',
 	'soapfailures-stats-timeperiod' => 'Time period',
 	'soapfailures-stats-numfound' => 'Num found',
 	'soapfailures-stats-numnotfound' => 'Not found',

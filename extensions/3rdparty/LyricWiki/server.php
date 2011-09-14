@@ -1029,7 +1029,8 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 					// SWC 20101017 - Rewriting this to use memcached.  Should be fast enough now.
 					include "soap_stats.php"; // for tracking success/failure
 					$resultFound = ($retVal['lyrics'] != $defaultLyrics);
-					lw_soapStats_logHit($resultFound);
+					$reqType = (($wgRequest->getVal("fullApiAuth", "") == "")? LW_API_TYPE_WEB : LW_API_TYPE_MOBILE);
+					lw_soapStats_logHit($resultFound, $reqType);
 				}
 
 				// SWC 20101209 - Now we allow our own apps to get full lyrics, but the request has to be cryptographically signed so that others can't do the same thing.

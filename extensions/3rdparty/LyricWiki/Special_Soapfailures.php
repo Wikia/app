@@ -201,16 +201,18 @@ function wfSoapFailures(){
 			// Display some hit-rate stats.
 			ob_start();
 			include "soap_stats.php"; // for tracking success/failure
-			print "<br/><br/><br/><table border='1px' cellpadding='5px'>\n";
+			print "<br/><br/><br/>";
+			print "<em>".wfMsg('soapfailures-stats-header')."</em><br/>\n";
+			print "<table border='1px' cellpadding='5px'>\n";
 			print "\t<tr><th>".wfMsg('soapfailures-stats-timeperiod')."</th><th>".wfMsg('soapfailures-stats-numfound')."</th><th>".wfMsg('soapfailures-stats-numnotfound')."</th><th>&nbsp;</th></tr>\n";
 
-			$stats = lw_soapStats_getStats(LW_TERM_DAILY);
+			$stats = lw_soapStats_getStats(LW_TERM_DAILY, "", LW_API_TYPE_WEB);
 			print "\t<tr><td>".wfMsg('soapfailures-stats-period-today')."</td><td>{$stats[LW_API_FOUND]}</td><td>{$stats[LW_API_NOT_FOUND]}</td><td>{$stats[LW_API_PERCENT_FOUND]}%</td></tr>\n";
 
-			$stats = lw_soapStats_getStats(LW_TERM_WEEKLY);
+			$stats = lw_soapStats_getStats(LW_TERM_WEEKLY, "", LW_API_TYPE_WEB);
 			print "\t<tr><td>".wfMsg('soapfailures-stats-period-thisweek')."</td><td>{$stats[LW_API_FOUND]}</td><td>{$stats[LW_API_NOT_FOUND]}</td><td>{$stats[LW_API_PERCENT_FOUND]}%</td></tr>\n";
 			
-			$stats = lw_soapStats_getStats(LW_TERM_MONTHLY);
+			$stats = lw_soapStats_getStats(LW_TERM_MONTHLY, "", LW_API_TYPE_WEB);
 			print "\t<tr><td>".wfMsg('soapfailures-stats-period-thismonth')."</td><td>{$stats[LW_API_FOUND]}</td><td>{$stats[LW_API_NOT_FOUND]}</td><td>{$stats[LW_API_PERCENT_FOUND]}%</td></tr>\n";
 			print "</table>\n";
 			$statsHtml = ob_get_clean();

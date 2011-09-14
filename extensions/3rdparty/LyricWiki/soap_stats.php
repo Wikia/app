@@ -22,19 +22,21 @@ define('LW_API_FOUND', 'FOUND');
 define('LW_API_NOT_FOUND', 'NOT_FOUND');
 define('LW_API_PERCENT_FOUND', 'PERCENT_FOUND');
 define('LW_API_STATS_MEMKEY', 'LW_API_STATS');
-define('LW_API_STATS_SAMPLING_INTERVAL', 10);
+define('LW_API_STATS_SAMPLING_INTERVAL', 5);
+define('LW_API_TYPE_WEB', 'web');
+define('LW_API_TYPE_MOBILE', 'mobile');
 
 /**
  * Logs a SOAP webservice hit and records whether the result was found
  * successfully or not.
  */
-function lw_soapStats_logHit($resultsFound){
+function lw_soapStats_logHit($resultsFound, $type=LW_API_TYPE_WEB){
 	wfProfileIn(__METHOD__);
 	
 	if(rand(1, LW_API_STATS_SAMPLING_INTERVAL) === 1){
-		lw_soapStats_term($resultsFound, LW_TERM_DAILY);
-		lw_soapStats_term($resultsFound, LW_TERM_WEEKLY);
-		lw_soapStats_term($resultsFound, LW_TERM_MONTHLY);
+		lw_soapStats_term($resultsFound, LW_TERM_DAILY, $type);
+		lw_soapStats_term($resultsFound, LW_TERM_WEEKLY, $type);
+		lw_soapStats_term($resultsFound, LW_TERM_MONTHLY, $type);
 	}
 	wfProfileOut(__METHOD__);
 } // end lw_soapStats_logHit()
@@ -50,7 +52,7 @@ function lw_soapStats_logHit($resultsFound){
  *
  * If a stat could not be found in memcached for a metric, 0 will be returned for that statistic.
  */
-function lw_soapStats_getStats($termType = LW_TERM_DAILY, $termValue = ""){
+function lw_soapStats_getStats($termType = LW_TERM_DAILY, $termValue = "", $type=LW_API_TYPE_WEB){
 	global $wgMemc;
 	wfProfileIn(__METHOD__);
 	
@@ -58,8 +60,8 @@ function lw_soapStats_getStats($termType = LW_TERM_DAILY, $termValue = ""){
 		$termValue = lw_soapStats_currentTermValue($termType);
 	}
 
-	$foundKey = wfMemcKey(LW_API_STATS_MEMKEY, LW_API_FOUND, $termType, $termValue);
-	$notFoundKey = wfMemcKey(LW_API_STATS_MEMKEY, LW_API_NOT_FOUND, $termType, $termValue);
+	$foundKey = wfMemcKey(LW_API_STATS_MEMKEY, $type, LW_API_FOUND, $termType, $termValue);
+	$notFoundKey = wfMemcKey(LW_API_STATS_MEMKEY, $type, LW_API_NOT_FOUND, $termType, $termValue);
 	
 	$numFound = $wgMemc->get($foundKey);
 	$numNotFound = $wgMemc->get($notFoundKey);
@@ -92,14 +94,14 @@ function lw_soapStats_getStats($termType = LW_TERM_DAILY, $termValue = ""){
  * of the time, all increments are done in chunks of LW_API_STATS_SAMPLING_INTERVAL
  * because that is how many hits this call represents.
  */
-function lw_soapStats_term($resultsFound, $term){
+function lw_soapStats_term($resultsFound, $term, $type){
 	global $wgMemc;
 	wfProfileIn(__METHOD__);
 
 	$termValue = lw_soapStats_currentTermValue($term);
 	if($termValue === null){return;} // can't do anything useful if there is an invalid term-type.
 
-	$memcKey = wfMemcKey(LW_API_STATS_MEMKEY, ($resultsFound ? LW_API_FOUND : LW_API_NOT_FOUND), $term, $termValue);
+	$memcKey = wfMemcKey(LW_API_STATS_MEMKEY, $type, ($resultsFound ? LW_API_FOUND : LW_API_NOT_FOUND), $term, $termValue);
 
 	// Incr doesn't create keys, so if incr fails: create the key.
 	$result = $wgMemc->incr($memcKey, LW_API_STATS_SAMPLING_INTERVAL);
@@ -133,5 +135,3 @@ function lw_soapStats_currentTermValue($termType){
 	}
 	return $termValue;
 } // end lw_soapStats_currentTermValue()
-
-?>
