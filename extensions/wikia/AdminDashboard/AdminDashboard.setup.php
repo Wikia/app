@@ -27,5 +27,3 @@ $wgGroupPermissions['*']['admindashboard'] = false;
 $wgGroupPermissions['staff']['admindashboard'] = true;
 $wgGroupPermissions['sysop']['admindashboard'] = true;
 $wgGroupPermissions['bureaucrat']['admindashboard'] = true;
-
-$wgRevokePermissions['vstf']['admindashboard'] = true;
