@@ -22,7 +22,7 @@ var WikiFeatures = {
 					var modalHeading = modalClone.find('h1');
 					modalHeading.text(modalHeading.text().replace(/\$1/g, featureHeading));
 					var modal = modalClone.makeModal({width:670});
-					modal.find('nav button').click(function() {
+					modal.find('.cancel, .confirm').click(function() {
 						if($(this).hasClass('confirm')) {
 							WikiFeatures.toggleFeature(featureName, false);
 							el.toggleClass('on');
