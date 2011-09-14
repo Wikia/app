@@ -75,6 +75,9 @@ if ($(window).width() < 1010) {
 		Liftium.trackEvent3(Liftium.buildTrackUrl(['AIC2', 'test4']), {profile:'UA-17475676-11', sample:100});
 	}
 	Liftium.trackEvent3(Liftium.buildTrackUrl(['AIC2', 'test5']), {profile:'UA-17475676-11', sample:10});
+	if (inGroup(groups.N)) {
+		Liftium.trackEvent3(Liftium.buildTrackUrl(['AIC2', 'test6']), {profile:'UA-17475676-11', sample:100});
+	}
 
 	} else {
 		Liftium.d("AIC2: page too short", 3);

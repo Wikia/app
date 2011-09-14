@@ -11,13 +11,68 @@ class AnalyticsProviderGA_Urchin implements iAnalyticsProvider {
 		}
 		$called = true;
 
+		$script = '';
+
+		global $wgCityId, $wgContLanguageCode, $wgDBname, $wgDBcluster, $wgUser, $wgArticle, $wgTitle, $wgAdServerTest;
+		$beaconUrl = 'http://a.wikia-beacon.com/__onedot?'.
+			'c='.$wgCityId.'&'.
+			'lc='.$wgContLanguageCode.'&'.
+			'lid='.WikiFactory::LangCodeToId($wgContLanguageCode).'&'.
+			'x='.$wgDBname.'&'.
+			'y='.$wgDBcluster.'&'.
+			'u='.$wgUser->getID().'&'.
+			'a='.(is_object($wgArticle) ? $wgArticle->getID() : null).'&'.
+			'n='.$wgTitle->getNamespace(). (!empty($wgAdServerTest) ? '&db_test=1' : '');
+
+		$script .= <<<SCRIPT1
+<noscript><img src="$beaconUrl" width="1" height="1" border="0" alt="" /></noscript>
+<script type="text/javascript">
+	var beaconUrl = "$beaconUrl" + ((typeof document.referrer != "undefined") ? "&amp;r=" + escape(document.referrer) : "") + "&amp;cb=" + (new Date).valueOf();
+	document.write('<'+'script type="text/javascript" src="' + beaconUrl + '"><'+'/script>');
+</script>
+SCRIPT1;
+
 		if(strpos($_SERVER['SCRIPT_URI'], '.wikia.com/') !== false) {
-			$extra = '_gaq.push([\'_setDomainName\', \'.wikia.com\']);';
+			$setDomainName = '_gaq.push([\'_setDomainName\', \'.wikia.com\']);';
 		} else {
-			$extra = '';
+			$setDomainName = '';
 		}
 
-		return  '<script type="text/javascript" src="' . $wgProto . '://www.google-analytics.com/ga.js"></script><script type="text/javascript">' . $extra . '_gaq.push([\'_setSampleRate\', \'10\']);</script><script type="text/javascript">urchinTracker = function() {_gaq.push([\'_setAccount\', \'UA-2871474-1\']);_gaq.push([\'_trackEvent\', \'Error\', \'FakeUrchinTrackerCalled\']);};</script>' . "\n";
+		$script .= <<<SCRIPT2
+<script type="text/javascript">
+	function simpleHash(s, tableSize) {
+		var i, hash = 0;
+		for (i = 0; i < s.length; i++) {
+			hash += (s[i].charCodeAt() * (i+1));
+		}
+		return Math.abs(hash) % tableSize;
+ 	}
+	var groupNo = simpleHash(window.beacon_id, 100);
+	var groups = {
+		all : { rangeStart: 0, rangeStop: 99, id: 'UA-1' },
+		A : { rangeStart: 20, rangeStop: 29, id: 'UA-2' },
+		B : { rangeStart: 30, rangeStop: 39, id: 'UA-3' },
+		N : { rangeStart: 80, rangeStop: 89, id: 'UA-8' }
+	};
+	function inGroup(group) {
+		if( groupNo >= group.rangeStart && groupNo <= group.rangeStop ) {
+			return true;
+		}
+		return false;
+	}
+</script>
+<script type="text/javascript" src="' . $wgProto . '://www.google-analytics.com/ga.js"></script>
+<script type="text/javascript">
+$setDomainName
+/*_gaq.push([\'_setSampleRate\', \'10\']);*/
+urchinTracker = function() {
+	_gaq.push(['_setAccount', 'UA-2871474-1']);
+	_gaq.push(['_trackEvent', 'Error', 'FakeUrchinTrackerCalled']);
+};
+</script>
+SCRIPT2;
+
+		return $script;
 	}
 
 	public function trackEvent($event, $eventDetails=array()){

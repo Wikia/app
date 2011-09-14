@@ -1,4 +1,5 @@
 <?php
+return;
 if(!defined('MEDIAWIKI')) {
     exit( 1 ) ;
 }
