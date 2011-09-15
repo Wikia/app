@@ -6,7 +6,6 @@ var AdSS = {
 		AdSS.sponsormsg = $("div.sponsormsg > ul");
 		// if div exists
 		if(AdSS.sponsormsg.length) {
-			if(AdSS.sponsormsg.parents('.sponsorwrapper').position().top >= 600) {
 				// display page ads
 				if(typeof(wgAdSS_pageAds) !== 'undefined') {
 					$.each( wgAdSS_pageAds, function(i,v) { AdSS.sponsormsg.append(v); } );
@@ -21,7 +20,6 @@ var AdSS = {
 
 				// fetch site ads
 				$.getJSON( wgScript, {'action':'ajax', 'rs':'AdSS_Publisher::getSiteAdsAjax', 'cb':'3.1'}, AdSS.onGetSiteAds );
-			}
 		}
 	},
 
