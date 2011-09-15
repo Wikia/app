@@ -23,7 +23,7 @@ class AssetsManagerBaseBuilder {
 	}
 
 	public function getContent() {
-		if(!empty($this->mContent)) {
+		if((!empty($this->mContent)) && ((!isset($this->mParams['minify'])) || ($this->mParams['minify'] == true))){
 			$start = microtime(true);
 
 			if($this->mOid == 'oasis_shared_js' || $this->mOid == 'rte') {
