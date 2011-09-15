@@ -61,7 +61,7 @@ SCRIPT1;
 		return false;
 	}
 </script>
-<script type="text/javascript" src="' . $wgProto . '://www.google-analytics.com/ga.js"></script>
+<script type="text/javascript" src="{$wgProto}://www.google-analytics.com/ga.js"></script>
 <script type="text/javascript">
 $setDomainName
 /*_gaq.push([\'_setSampleRate\', \'10\']);*/
