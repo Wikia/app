@@ -196,6 +196,8 @@
 			<ul class="tools">
 				<?= wfRenderModule('Footer','Toolbar') ?>
 			</ul>
+			<img src="<?= $wgBlankImgUrl; ?>" class="banner-corner-left" height="0" width="0">
+			<img src="<?= $wgBlankImgUrl; ?>" class="banner-corner-right" height="0" width="0">
 		</div>
 	</footer>
 	<? } ?>
