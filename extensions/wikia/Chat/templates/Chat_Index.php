@@ -95,7 +95,8 @@
 	<!-- Load these after the DOM is built -->
 	<?php
 		$MINIFY = false; // minifier is breaking the JS. - SWC 20110914
-		$srcs = F::build('AssetsManager',array(),'getInstance')->getGroupCommonURL('chat_js', array(), null, $MINIFY);
+		$COMBINE = null; // it seems to always minify still... maybe removing combination will help with that
+		$srcs = F::build('AssetsManager',array(),'getInstance')->getGroupCommonURL('chat_js', array(), $COMBINE, $MINIFY);
 	?>
 	<?php foreach($srcs as $src): ?>
 		<script src="<?php echo $src ?>"></script>
