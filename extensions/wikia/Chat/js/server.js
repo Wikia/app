@@ -992,7 +992,7 @@ function broadcastToRoom(client, socket, data, users, callback){
 				usernameToDataFiltered = usernameToData;
 			}
 			
-			console.log(usernameToDataFiltered);
+			//console.log(usernameToDataFiltered);
 			
 			_.each(usernameToDataFiltered, function(userData){
 				var userModel = new models.User( JSON.parse(userData) );
@@ -1187,7 +1187,7 @@ function getWikiText(httpClient, wikiHostname, pageTitle, callback){
 							var rev = revisions[0];
 							if(rev && rev['*']){
 								wikiText = rev['*'];
-								console.log("Fetched wikitext: \n" + wikiText);
+								//console.log("Fetched wikitext: \n" + wikiText);
 							}
 						}
 					}
