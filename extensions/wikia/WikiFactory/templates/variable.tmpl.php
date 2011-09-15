@@ -55,7 +55,7 @@ Current value:
 </div>
 
 <div style="width: 45%; float: right">
-Default value:
+Value on community (possibly default value):
 <?php
 $name = $variable->cv_name;
 global $$name;
@@ -68,7 +68,7 @@ if( isset( $preWFValues[$name] ) ) {
 	echo "<pre>" . var_export( $$name, true ) . "</pre>";
 } else {
 	// no value set
-	echo "<strong>No default value set.</strong>";
+	echo "<strong>No value set.</strong>";
 } ?>
 </div>
 
