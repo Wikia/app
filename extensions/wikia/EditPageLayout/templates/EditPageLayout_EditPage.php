@@ -189,4 +189,15 @@
 			</section>
 		</form>
 	</article>
+	
+	<? if ($wgUser->isLoggedIn()) { ?>
+	<footer id="WikiaFooter" class="WikiaFooter">
+		<div class="toolbar">
+			<ul class="tools">
+				<?= wfRenderModule('Footer','Toolbar') ?>
+			</ul>
+		</div>
+	</footer>
+	<? } ?>
+	
 </section>

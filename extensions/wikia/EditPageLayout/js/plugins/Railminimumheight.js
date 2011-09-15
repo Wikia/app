@@ -31,7 +31,7 @@
 					});
 				} else {
 					// Use body height not window height because if below min viewport height, page scrolls (BugId: 11282)
-					var h = $('body').height() - el.offset().top - (el.outerHeight(true) - el.height());
+					var h = $('body').height() - el.offset().top - (el.outerHeight(true) - el.height()) - $('#WikiaFooter').outerHeight();
 					el.css({
 						'overflow-y': 'auto',
 						'height' : h

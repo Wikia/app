@@ -66,8 +66,9 @@
 		getHeightToFit: function(node) {
 			var topOffset = node.offset().top,
 				viewportHeight = $(window).height(),
+				footerHeight = $('#WikiaFooter').outerHeight(),
 				dimensions = {
-					nodeHeight: parseInt(viewportHeight - topOffset - this.editboxParentPadding),
+					nodeHeight: parseInt(viewportHeight - topOffset - this.editboxParentPadding - footerHeight),
 					viewportHeight: viewportHeight
 				};
 
@@ -80,6 +81,9 @@
 				case 'editarea':
 					if (this.editbox && this.getHeightToFit(this.editbox).viewportHeight > this.minPageHeight) {
 						this.editbox.height(this.getHeightToFit(this.editbox).nodeHeight);
+						if (!wgUserName) {
+							$('#cke_contents_wpTextbox1').height(this.editbox.height() - 10);
+						}
 					}
 					break;
 

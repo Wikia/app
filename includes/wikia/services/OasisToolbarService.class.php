@@ -150,7 +150,7 @@
 					ob_end_clean();
 					*/
 					/* unsafe but a lot faster version - hard trick */
-					$skin->iscontent = ( $skin->mTitle->getNamespace() != NS_SPECIAL );
+					$skin->iscontent = ( $skin->mTitle->getNamespace() != NS_SPECIAL || 1 == 1);
 					$skin->thispage = $skin->mTitle->getPrefixedDBkey();
 					$skin->loggedin = $wgUser->isLoggedIn();
 				}

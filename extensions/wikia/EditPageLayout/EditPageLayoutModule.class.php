@@ -10,7 +10,7 @@ class EditPageLayoutModule extends Module {
 	const TITLE_MAX_LENGTH = 30;
 
 	// globals
-	var $wgBlankImgUrl;
+	var $wgBlankImgUrl, $wgUser;
 
 	// template variables
 	var $bodytext;

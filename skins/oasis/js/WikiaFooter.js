@@ -24,6 +24,11 @@ WikiaFooterApp = {
 
 			//Scroll Detection
 			windowObj.resolvePosition = function() {
+				// Disable floating for RTE
+				if ($('body').hasClass('rte')) {
+					return;
+				}
+				
 				var scroll = windowObj.scrollTop() + windowObj.height();
 				var line = 0;
 				if(footer.offset()){
