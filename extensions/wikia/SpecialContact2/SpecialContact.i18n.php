@@ -148,14 +148,13 @@ If you feel you have found a bug while updating your wiki's design, please provi
 Happy editing!",
 	'specialcontact-intro-features' => "Wikia offers many features, the majority of which are live on all wikis across the site by default.
 
-If you are an admin and feel that specific feature is not working well for your wiki, please discuss with your wiki's community if it is OK that something is turned off. If everyone agrees, you send a message with more details [[Special:Contact/general|here]].
+If you are an admin and feel that specific feature is not working well for your wiki, please discuss with your wiki's community if they would also like the feature turned off. If everyone agrees, you can use the [[Special:WikiFeatures|Wiki Features]] section of the [[Special:AdminDashboard|Admin Dashboard]] to disable or re-enable features. If the feature is not list there, please [[Special:Contact/general|contact us]] with your request.
 
-Admins interested in testing out new features that are still in development can check out our new [[Special:WikiaLabs|Wikia Labs]] interface that allows you to enable (or even disable) some features.
+Admins interested in testing out new features that are still in development can check out the Labs section of [[Special:WikiFeatures|Wiki Features]].
 
-Want to stay current on announcement of new features and improvements to current ones? Stop by and follow the [[w:Blog:Wikia_New_Features|staff blog new features list]].
+Want to stay current on announcement of new features and improvements to current ones? Stop by and follow the [[w:c:community:Blog:Wikia_New_Features|staff blog new features list]]",
 
-Happy editing!",
-	'specialcontact-intro-close-wiki' => "Thanks for contacting Wikia. We don't usually delete wikis once they have been created. Wikis are community-owned projects, and a wiki you are no longer interested in can wait for someone else to come along and [[Special:Contact/adoption|adopt it]].
+    'specialcontact-intro-close-wiki' => "Thanks for contacting Wikia. We don't usually delete wikis once they have been created. Wikis are community-owned projects, and a wiki you are no longer interested in can wait for someone else to come along and [[Special:Contact/adoption|adopt it]].
 
 If you feel this wiki is on a topic that no other users may be interested in (such as a personal or spam wiki), please submit a request using the form below. Please make the request from the wiki that needs closing.
 
