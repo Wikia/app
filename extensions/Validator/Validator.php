@@ -41,7 +41,7 @@ $wgExtensionCredits['other'][] = array(
 
 // Autoload the classes.
 $incDir = dirname( __FILE__ ) . '/includes/';
-$wgAutoloadClasses['CriterionValidationResult']	= $incDir . 'CriterionValidationResult.php'; 
+$wgAutoloadClasses['CriterionValidationResult']	= $incDir . 'CriterionValidationResult.php';
 $wgAutoloadClasses['ItemParameterCriterion']	= $incDir . 'ItemParameterCriterion.php';
 $wgAutoloadClasses['ItemParameterManipulation']	= $incDir . 'ItemParameterManipulation.php';
 $wgAutoloadClasses['ListParameter'] 			= $incDir . 'ListParameter.php';
@@ -66,11 +66,12 @@ $wgAutoloadClasses['CriterionIsInteger']		= $incDir . 'criteria/CriterionIsInteg
 $wgAutoloadClasses['CriterionIsNumeric']		= $incDir . 'criteria/CriterionIsNumeric.php';
 $wgAutoloadClasses['CriterionItemCount']		= $incDir . 'criteria/CriterionItemCount.php';
 $wgAutoloadClasses['CriterionMatchesRegex']		= $incDir . 'criteria/CriterionMatchesRegex.php';
-$wgAutoloadClasses['CriterionNotEmpty']			= $incDir . 'criteria/CriterionNotEmpty.php'; 
+$wgAutoloadClasses['CriterionNotEmpty']			= $incDir . 'criteria/CriterionNotEmpty.php';
 $wgAutoloadClasses['CriterionTrue']				= $incDir . 'criteria/CriterionTrue.php';
 $wgAutoloadClasses['CriterionUniqueItems']		= $incDir . 'criteria/CriterionUniqueItems.php';
 
 $wgAutoloadClasses['ParamManipulationBoolean']	= $incDir . 'manipulations/ParamManipulationBoolean.php';
+$wgAutoloadClasses['ParamManipulationBoolstr']	= $incDir . 'manipulations/ParamManipulationBoolstr.php';
 $wgAutoloadClasses['ParamManipulationFloat']	= $incDir . 'manipulations/ParamManipulationFloat.php';
 $wgAutoloadClasses['ParamManipulationFunctions']= $incDir . 'manipulations/ParamManipulationFunctions.php';
 $wgAutoloadClasses['ParamManipulationImplode']	= $incDir . 'manipulations/ParamManipulationImplode.php';
