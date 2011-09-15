@@ -113,7 +113,18 @@ if(typeof EmoticonMapping === 'undefined'){
 		this.getImgUrlsByRegexString = function(){
 			// If the regexes haven't been built from the config yet, build them.
 			//console.log("settings len: " + Object.keys(self._settings).length + " regex len: " + Object.keys(self._regexes).length);
-			if(Object.keys(self._settings).length != Object.keys(self._regexes).length){
+			
+			// Object.keys() doesn't exist in IE 8, so do this the oldschool way.
+			//if(Object.keys(self._settings).length != Object.keys(self._regexes).length){
+			var numSettings = 0;
+			var numRegexes = 0;
+			for(var keyName in self._settings){
+				numSettings++;
+			}
+			for(var regKeyName in self._regexes){
+				numRegexes++;
+			}
+			if(numSettings != numRegexes){
 				//console.log("..Processing settings");
 				for(var imgSrc in self._settings){
 					var codes = self._settings[imgSrc];
