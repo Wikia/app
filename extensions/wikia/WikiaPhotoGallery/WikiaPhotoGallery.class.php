@@ -975,11 +975,23 @@ class WikiaPhotoGallery extends ImageGallery {
 			),
 			$this->mAttribs );
 		
+		//renderSlideshow for WikiaMobile
 		if( $sk->skinname == "wikiamobile" ) {
-		
+			
+			$img = wfFindFile( $this->mImages[0][0], false );
+			$thumb = $img->transform( array('width'=>'480','height'=>'320') );
+			$counter = count($this->mImages);
+
 			$template = new EasyTemplate(dirname(__FILE__) . '/templates');
 			$template->set_vars(array(
-				'attribs' => $attribs
+				'class' => 'wikia-slideshow',
+				'id' => $id,
+				'hash' => $this->mData['hash'],
+				'images' => $this->mImages,
+				'caption' => $this->mCaption,
+				'placeholderImg' => $thumb,
+				'magnifyClipSrc' => "{$wgStylePath}/common/images/magnify-clip.png",
+				'counterValue' => wfMsg('wikiaPhotoGallery-slideshow-view-number', '1', $counter)
 			));
 			$slideshowHtml = $template->render('renderMobileSlideshow');
 			
@@ -988,7 +1000,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		$slideshowHtml = Xml::openElement('div', $attribs);
 
 		// render slideshow caption
-		if ($this->mCaption) {
+		if ( $this->mCaption ) {
 			$slideshowHtml .= '<div class="wikia-slideshow-caption">' . $this->mCaption . '</div>';
 		}
 
@@ -1028,7 +1040,6 @@ class WikiaPhotoGallery extends ImageGallery {
 				$thumbParams = WikiaPhotoGalleryHelper::getThumbnailDimensions($img, $params['width'], $params['height'], $this->mCrop);
 			}
 
-
 			$caption = $linkOverlay = '';
 
 			// render caption overlay
@@ -1042,7 +1053,6 @@ class WikiaPhotoGallery extends ImageGallery {
 
 			// parse link
 			$linkAttribs = $this->parseLink($nt->getLocalUrl(), $nt->getText(), $link);
-
 			// extra link tag attributes
 			$linkAttribs['id'] = "{$id}-{$index}";
 			$linkAttribs['style'] = 'width: ' . ($params['width'] - 80) . 'px';
@@ -1189,14 +1199,13 @@ class WikiaPhotoGallery extends ImageGallery {
 
 		}
 
-		
 		$slideshowHtml .= F::build('JSSnippets')->addToStack(
 			array(
 				'/extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slideshow.placeholder.scss',
 				'/extensions/wikia/WikiaMobile/js/MobileDialog.js'
 			),
 			array(),
-			'WikiaMobileDialog.init',
+			'MobileDialog.init',
 			array('id' => $id, 'extension' => 'slideshow'),
 			'wikiamobile'
 		);

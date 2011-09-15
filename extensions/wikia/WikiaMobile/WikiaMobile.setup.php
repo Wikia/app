@@ -47,7 +47,7 @@ $app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileLeftPaneService.class.php
  * controllers
  */
 $app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileAppCacheController.class.php", 'WikiaMobileAppCacheController' );
-
+$app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileDialogController.class.php", 'WikiaMobileDialogController' );
 /**
  * special pages
  */
