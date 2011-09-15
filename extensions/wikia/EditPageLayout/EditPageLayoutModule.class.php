@@ -72,6 +72,9 @@ class EditPageLayoutModule extends Module {
 		// Editing [foo]
 		$this->title = $editPage->getEditedTitle();
 		$section = $app->getGlobal('wgRequest')->getVal('section');
+		
+		// Is user logged in?
+		$this->isLoggedIn = $this->wg->User->isLoggedIn();
 
 		if ($section == 'new') {
 			$msgKey = 'editingcomment';

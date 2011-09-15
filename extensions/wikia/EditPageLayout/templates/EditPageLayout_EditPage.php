@@ -132,10 +132,12 @@
 								<?php
 									}
 								?>
+								<?php if($isLoggedIn){ ?>
 								<label class="wpMinoredit">
 									<input type="checkbox" name="wpMinoredit" id="wpMinoredit" accesskey="<?=wfMsg('accesskey-minoredit');?>"<?= $minorEditCheckbox ? ' checked="checked"' : '' ?> />
 									<?= wfMsg('editpagelayout-pageControls-minorEdit') ?>
 								</label>
+								<?php } ?>
 							</div>
 							<div id="wpSummaryLabel">
 								<?= $summaryBox ?>
