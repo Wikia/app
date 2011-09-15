@@ -50,7 +50,7 @@ class AchRankingService {
 				if ( $user && AchAwardingService::canEarnBadges( $user ) ) {
 					// If this user has the same score as previous user, give them the same (lower) rank (RT#67874).
 					if ( $prevScore != $row->score ) {
-						$position++;
+						$position = $counter;
 					}
 					
 					$ranking[] = new AchRankedUser($user, $row->score, $position, ($rankingSnapshot != null && isset($rankingSnapshot[$user->getId()])) ? $rankingSnapshot[$user->getId()] : null);
