@@ -4,6 +4,7 @@
  * Handles the display of ads
  */
 
+
 class AdDisplay {
 
 	//wrapper function for specific hooks (method signature appropriate for certain hook(s)
@@ -66,7 +67,7 @@ class AdDisplay {
 		
 		if ( ( !empty( $skin ) ? ( !in_array( $skin, array( 'SkinWikiaphone', 'SkinWikiaApp' ) ) ) : true)) {
 			$ads = Advertisement::GetAdsForCurrentPage();
-			$adtext = '<div class="sponsorwrapper">';
+			$adtext = '<div class="sponsorwrapper" style="display: none;">';
 			$adtext .= wfMsg('sponsor-header');
 			$adtext .= '<div class="sponsormsg">';
 			$adtext .= '<ul>';
