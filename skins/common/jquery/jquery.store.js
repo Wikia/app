@@ -38,6 +38,7 @@ $.store = function( driver, serializers )
 {
 	var that = this;
 
+	// macbre: each instance of $.store should have its own list of encoders & decoders
 	this.encoders = [];
 	this.decoders = [];
 
