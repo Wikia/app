@@ -150,7 +150,7 @@ class AssetsManager {
 				} else if(Http::isValidURI($asset)) {
 					$URLs[] = $asset;
 				} else {
-					$URLs[] = $prefix . $this->getOneLocalURL($asset);
+					$URLs[] = $prefix . $this->getOneLocalURL($asset, $minify);
 				}
 			}
 		}
