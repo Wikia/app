@@ -38,6 +38,9 @@ $.store = function( driver, serializers )
 {
 	var that = this;
 
+	this.encoders = [];
+	this.decoders = [];
+
 	if( typeof driver == 'string' )
 	{
 		if( $.store.drivers[ driver ] )
@@ -119,8 +122,6 @@ $.extend( $.store.prototype, {
 		this.driver.flush();
 	},
 	driver : undefined,
-	encoders : [],
-	decoders : [],
 	serialize: function( value )
 	{
 		var that = this;
