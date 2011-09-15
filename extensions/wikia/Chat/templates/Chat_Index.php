@@ -93,7 +93,10 @@
 	</script>
 	<script type='text/template' id='user-action-template'><li class="<%= actionName %>"><a href="#"><%= actionDesc %></a></li></script>
 	<!-- Load these after the DOM is built -->
-	<?php $srcs = F::build('AssetsManager',array(),'getInstance')->getGroupCommonURL('chat_js'); ?>
+	<?php
+		$MINIFY = false; // minifier is breaking the JS. - SWC 20110914
+		$srcs = F::build('AssetsManager',array(),'getInstance')->getGroupCommonURL('chat_js', array(), null, $MINIFY);
+	?>
 	<?php foreach($srcs as $src): ?>
 		<script src="<?php echo $src ?>"></script>
 	<?php endforeach;?>
