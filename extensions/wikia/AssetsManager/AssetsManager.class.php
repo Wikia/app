@@ -71,7 +71,7 @@ class AssetsManager {
 			$params['hd'] = 1;
 		}
 
-		if($minify != null ? !$minify : !$this->mMinify) {
+		if($minify !== null ? !$minify : !$this->mMinify) {
 			$params['minify'] = false;
 		} else {
 			unset($params['minify']);
@@ -86,7 +86,7 @@ class AssetsManager {
  	 */
 	public function getOneLocalURL(/* string */ $filePath, /* boolean */ $minify = null) {
 		global $wgScriptPath;
-		if ($minify != null ? $minify : $this->mMinify) {
+		if ($minify !== null ? $minify : $this->mMinify) {
 			$url = $this->getAMLocalURL('one', $filePath);
 		} else {
 			$url = $wgScriptPath . '/' . $filePath . '?cb=' . $this->mCacheBuster;
@@ -108,7 +108,7 @@ class AssetsManager {
 	 * @return string Full common URL to one file, uses not wiki specific host
  	 */
 	public function getOneCommonURL(/* string */ $filePath, /* boolean */ $minify = null) {
-		if ($minify != null ? $minify : $this->mMinify) {
+		if ($minify !== null ? $minify : $this->mMinify) {
 			return $this->mCommonHost . $this->getOneLocalURL($filePath, $minify);
 		} else {
 			return $this->getOneLocalURL($filePath, $minify);
@@ -128,9 +128,9 @@ class AssetsManager {
 		$assets = $this->mAssetsConfig->resolve($groupName, $this->mCombine, $this->mMinify);
 		$URLs = array();
 
-		if($combine != null ? $combine : $this->mCombine) {
+		if($combine !== null ? $combine : $this->mCombine) {
 			// "minify" is a special parameter that can be set only when initialising object and can not be overwritten per request
-			if($minify != null ? !$minify : !$this->mMinify) {
+			if($minify !== null ? !$minify : !$this->mMinify) {
 				$params['minify'] = false;
 			} else {
 				unset($params['minify']);
@@ -180,7 +180,7 @@ class AssetsManager {
 	 * @return array Array of one or many full common URLs, uses not wiki specific host
  	 */
 	public function getGroupCommonURL(/* string */ $groupName, /* array */ $params = array(), /* boolean */ $combine = null, /* boolean */ $minify = null)  {
-		if (($combine != null ? $combine : $this->mCombine) || ($minify != null ? $minify : $this->mMinify)) {
+		if (($combine !== null ? $combine : $this->mCombine) || ($minify !== null ? $minify : $this->mMinify)) {
 			return $this->getGroupURL($groupName, $params, $this->mCommonHost, $combine, $minify);
 		} else {
 			return $this->getGroupURL($groupName, $params, '', $combine, $minify);
