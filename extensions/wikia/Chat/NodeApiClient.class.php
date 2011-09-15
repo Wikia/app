@@ -51,12 +51,13 @@ class NodeApiClient {
 	 *
 	 * @param roomName - will be filled with the name of the chat (a string stored in VARCHAR(255), so it's reasonable length)
 	 * @param roomTopic - will be filled with the topic of the chat (a string stored in a blob, so it might be fairly large).
+	 * @param roomUsers - for private chats: an array of users who are in the room. TODO: Document what formatat these users are in (user ids? db_keys?)
 	 */
 	static public function getDefaultRoomId(&$roomName, &$roomTopic, $roomType = "open", $roomUsers = array() ){
 		global $wgCityId, $wgSitename, $wgServer, $wgArticlePath, $wgMemc;
 		wfProfileIn(__METHOD__);
 
-		$memKey = wfMemcKey("NodeApiClient::getDefaultRoomId", $roomName, $roomType, implode("|", $roomUsers));
+		$memKey = wfMemcKey("NodeApiClient::getDefaultRoomId", $roomName, $roomType, str_replace(" ", "_", implode("|", $roomUsers)));
 		$roomData = $wgMemc->get($memKey);
 		if(empty($roomData)){
 			// Add some extra data that the server will want in order to store it in the room's hash.
