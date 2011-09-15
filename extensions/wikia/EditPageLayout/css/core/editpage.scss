@@ -1,7 +1,6 @@
 #EditPage {
 	@include clearfix;
-	@include gradient-module;
-
+	background: $color-epl-gradient-solid;
 	overflow: hidden;
 	position: relative;
 
@@ -25,15 +24,10 @@
 }
 
 #EditPageEditorWrapper {
-	background-color: #f6f6f6;
 	padding-left: 10px;
 }
 
 #EditPageEditor {
-	background-color: #fff;
-	border-left: solid 1px #eae8e9;
-	border-right: solid 1px #efefef;
-
 	// source mode tweak
 	textarea {
 		@include epl-editorarea;

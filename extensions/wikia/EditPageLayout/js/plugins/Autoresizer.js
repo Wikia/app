@@ -44,6 +44,10 @@
 			if (this.enabled) {
 				this.delayedResize();
 			}
+			
+			if (!wgUserName) {
+				$('#EditPageEditor').css('margin-bottom', 10);
+			}
 		},
 
 		editboxReady: function(editor, editbox) {
@@ -68,7 +72,7 @@
 				viewportHeight = $(window).height(),
 				footerHeight = $('#WikiaFooter').outerHeight(),
 				dimensions = {
-					nodeHeight: parseInt(viewportHeight - topOffset - this.editboxParentPadding - footerHeight),
+					nodeHeight: parseInt(viewportHeight - topOffset - this.editboxParentPadding - footerHeight - 1),
 					viewportHeight: viewportHeight
 				};
 

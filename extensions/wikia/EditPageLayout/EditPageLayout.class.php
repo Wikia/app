@@ -290,7 +290,6 @@ class EditPageLayout extends EditPage {
 			$this->out->addHtml('<div id="diff">');
 			$this->showDiff();
 			$this->out->addHtml('</div>');
-			$this->out->addHtml('<div class="gap">&nbsp;</div>');
 		}
 
 		parent::showEditForm($formCallback);
@@ -469,8 +468,6 @@ class EditPageLayout extends EditPage {
 		$this->textbox1 = $this->getContent();
 
 		if ( wfRunHooks( 'EditPageBeforeConflictDiff', array( &$this, &$this->out ) ) ) {
-			$this->out->addHtml('<div class="gap">&nbsp;</div>');
-
 			// diff
 			$this->out->addHtml('<div id="diff">');
 			$this->out->wrapWikiMsg( '<h2>$1</h2>', 'editpagelayout-diff-header' );
@@ -480,8 +477,6 @@ class EditPageLayout extends EditPage {
 			$de->showDiff( wfMsg( "yourtext" ), wfMsg( "storedversion" ) );
 
 			$this->out->addHtml('</div>');
-
-			$this->out->addHtml('<div class="gap">&nbsp;</div>');
 
 			// user's edit
 			$this->out->addHtml('<div id="myedit">');

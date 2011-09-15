@@ -88,7 +88,6 @@
 									<span>+</span>
 								</a>
 							</div>
-							<div class="gap">&nbsp;</div>
 							<?php
 									}
 								}
