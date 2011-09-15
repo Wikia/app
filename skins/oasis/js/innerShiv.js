@@ -1,5 +1,8 @@
 // http://bit.ly/ishiv | WTFPL License
 // IE < 9 fix for inserting HTML5 elements into the dom. 
+
+// Add 2nd param of False to return jQuery-friendly object instead of document fragment
+
 var innerShiv = function(){
 	function h(c,e,b){
 		return /^(?:area|br|col|embed|hr|img|input|link|meta|param)$/i.test(b)?c:e+"></"+b+">";
