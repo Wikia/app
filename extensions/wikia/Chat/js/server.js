@@ -12,7 +12,6 @@ var app = require('express').createServer()
 	, urlUtil = require('url');
 var http = require("http");
 var config = require("./server_config.js");
-var emoticons = require("./server_emoticons.js");
 
 
 //console.log = function() {};
@@ -75,16 +74,6 @@ rc.keys( config.getKeyPrefix_usersInRoom()+":*", function(err, data){
 	}
 });
 console.log("Rooms cleaned.");
-
-// Load default emoticon mapping (will be the mapping for all wikis which don't have MediaWiki:Emoticons set.
-var defaultEmoticonMapping = new EmoticonMapping();
-defaultEmoticonMapping.loadDefault();
-console.log("Loading the default emoticon mapping from Messaging Wiki...");
-var httpClient = http.createClient(config.WIKIA_PROXY_PORT, config.WIKIA_PROXY_HOST);
-getWikiText(httpClient, config.MESSAGING_WIKI_HOSTNAME, emoticons.EMOTICON_ARTICLE, function(wikiText){
-	defaultEmoticonMapping.loadFromWikiText( wikiText );
-	console.log("Done loading default emoticons from MessagingWiki.");
-});
 
 //Start the main chat server listening.
 app.listen(config.CHAT_SERVER_PORT, function () {
@@ -351,18 +340,6 @@ function authConnection(client, socket, authData){
 									rc.del(config.getKey_chatEntriesInRoom(client.roomId), function(err, delData){
 										finishConnectingUser(client, socket, data);
 									});
-								}
-							});
-
-							// Asynchronously load the emoticon settings for this wiki, into the client object that just connected.
-							// PERFORMANCE NOTE: We could cache the emoticonMapping per-wiki in redis for a certain amount of time but we'd have to worry about purging or reasonable expiration.
-							// Currently, we just rely on the fact that Varnish will cache the API result (which will then be purged if there are updates).
-							console.log("Starting request to get emoticons for '" + data.username + "'...");
-							getWikiText(httpClient, wikiHostname, emoticons.EMOTICON_ARTICLE, function(wikiText){
-								if(wikiText != ""){
-									client.emoticonMapping = new EmoticonMapping();
-									client.emoticonMapping.loadFromWikiText( wikiText );
-									console.log("Done getting emoticons for '" + data.username + "'.");
 								}
 							});
 
@@ -1078,31 +1055,6 @@ function processText(text, client) {
 		return '<a href="' + url + '">' + linkText + '</a>';
 	});
 
-
-	// Process emoticons (should be done after the linking because the link code is searching for URLs and the emoticons contain URLs).
-
-	// Load the emoticon mapping. Since the mapping is loaded async for the client, the wiki-specific settings may not
-	// have arrived yet... in that case, falls back to the default for this message.
-	var emoticonMapping;
-	if(typeof client.emoticonMapping === 'undefined'){
-		emoticonMapping = new EmoticonMapping();
-
-		// Use the default global mapping from Messaging Wiki (was loaded on server startup).
-		emoticonMapping._settings =  defaultEmoticonMapping._settings;
-		emoticonMapping._regexes = {};
-	} else {
-		emoticonMapping = client.emoticonMapping;
-	}
-
-	// Replace appropriate shortcuts in the text with the emoticons.
-	text = emoticons.doReplacements(text, emoticonMapping);
-
-	// If the emoticon mapping is still undefined on the client (it might have been fixed asynchronously already) then store the defaults
-	// for now so that we don't have to recreate the default object for this client on every processText() call.
-	if(typeof client.emoticonMapping === 'undefined'){
-		client.emoticonMapping = emoticonMapping;
-	}
-
 	return text;
 } // end processText()
 
@@ -1147,6 +1099,11 @@ function debugObject(obj, padding){
  * Given an already set-up httpClient, a wiki hostname, and the page-title of an article
  * on that hostname, fetches the wikitext via the MediaWiki API and passes the wikitext
  * to the callback.  If the call to the API doesn't work, the callback will not be called.
+ *
+ * NOTE: Not used at the moment (because Emoticon code was moved to the client-side), but I could
+ * see this becoming used at some point.
+ *
+ * DELETE THIS FUNCTION IF DESIRED.
  */
 function getWikiText(httpClient, wikiHostname, pageTitle, callback){
 	// Trying to fetch the wikitext of the emoticon page.

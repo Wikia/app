@@ -196,6 +196,7 @@ $config['chat_js'] = array(
 		'#group_oasis_jquery',
 		'//extensions/wikia/Chat/js/lib/socket.io.client.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
+		'//extensions/wikia/Chat/js/emoticons.js', // must be before controllers.js
 		'//extensions/wikia/Chat/js/lib/underscore.js',
 		'//extensions/wikia/Chat/js/lib/backbone.js',
 		'//extensions/wikia/Chat/js/models/models.js',

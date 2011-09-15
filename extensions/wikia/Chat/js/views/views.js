@@ -266,7 +266,7 @@ var NodeChatDiscussion = Backbone.View.extend({
 		this.chatDiv.scrollTop(this.chatDiv.get(0).scrollHeight);	
 	}
 });
-//TODO: raname it to frame NodeChatFrame ? 
+//TODO: rename it to frame NodeChatFrame ? 
 var NodeChatUsers = Backbone.View.extend({
 	actionTemplate: _.template( $('#user-action-template').html() ),
 	initialize: function(options) {

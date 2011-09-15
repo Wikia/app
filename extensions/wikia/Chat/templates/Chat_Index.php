@@ -92,7 +92,6 @@
 		</div>
 	</script>
 	<script type='text/template' id='user-action-template'><li class="<%= actionName %>"><a href="#"><%= actionDesc %></a></li></script>
-	<?php //TODO: use AM ?>
 	<!-- Load these after the DOM is built -->
 	<?php $srcs = F::build('AssetsManager',array(),'getInstance')->getGroupCommonURL('chat_js'); ?>
 	<?php foreach($srcs as $src): ?>

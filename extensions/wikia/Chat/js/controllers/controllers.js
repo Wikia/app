@@ -162,9 +162,19 @@ var NodeRoomController = $.createClass(Observable,{
 	roomId: null,
 	mainController: null,
 	afterInitQueue: [],
+	emoticonMapping: new EmoticonMapping(),
+
 	constructor: function(roomId) {
 		
 		NodeRoomController.superclass.constructor.apply(this,arguments);
+
+		// Load the mapping of emoticons.  This wiki has priority, then falls back to Messaging.  If both of those fail, uses some hardcoded fallback.
+		var wikiText = $.msg( WikiaEmoticons.EMOTICON_MESSAGE );
+		if(wikiText && (wikiText != "") && (wikiText != "<" + WikiaEmoticons.EMOTICON_MESSAGE + ">")){
+			this.emoticonMapping.loadFromWikiText( wikiText );
+		} else {
+			this.emoticonMapping.loadDefault();
+		}
 
 		this.afterInitQueue = [];
 		$().log(this.afterInitQueue);
@@ -177,10 +187,13 @@ var NodeRoomController = $.createClass(Observable,{
 			'roomId': roomId, 
 			'unreadMessage': 0, 
 			'isActive': this.active 
-		}); 
-			
+		});
+
+		// This is called any time a new message arrives in the room.
 		this.model.chats.bind('add', $.proxy(function(current) {
-			
+			// Make a call to process any text for links, unsafe html/js, emoticions, etc.
+			current.set({'text': this.processText(current.get('text'))});
+		
 			if(current.get('isInlineAlert') !== true && current.get('msgType') == 'chat' && current.get('name') != wgUserName) {
 				this.unreadMessage ++;	
 			}
@@ -398,6 +411,21 @@ var NodeRoomController = $.createClass(Observable,{
 	
 	init: function() {
 		this.socket.connect();
+	},
+	
+	/**
+	 * All messages that are recieved are processed here before being displayed. This
+	 * will escape html/js, build links, and process emoticons.
+	 */
+	processText: function( text ){
+		// TODO: Pull in other processText stuff from server-side.
+		// TODO: Pull in other processText stuff from server-side.
+
+		// Process emoticons (should be done after the linking because the link code is searching for URLs and the emoticons contain URLs).
+		// Replace appropriate shortcuts in the text with the emoticons.
+		text = WikiaEmoticons.doReplacements(text, this.emoticonMapping);
+	
+		return text;
 	}
 });
 
@@ -436,7 +464,7 @@ var NodeChatController = $.createClass(NodeRoomController,{
 		this.viewDiscussion.show();
 		
 		// Handle Away status 
-		//TODO: move widnow to view ??? 
+		//TODO: move window to view ??? 
 		$(window)
 			.mousemove($.proxy(this.resetActivityTimer, this))
 			.keypress($.proxy(this.resetActivityTimer, this))

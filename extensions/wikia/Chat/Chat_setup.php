@@ -66,6 +66,7 @@ $wgHooks[ 'GetRailModuleList' ][] = 'ChatHelper::onGetRailModuleList';
 // register messages package for JS
 F::build('JSMessages')->registerPackage('Chat', array(
 	'chat-*',
+	'emoticons'
 ));
 
 // ajax
