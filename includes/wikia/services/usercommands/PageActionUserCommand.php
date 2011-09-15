@@ -69,7 +69,7 @@
 			if ( empty($action['text']) ) {
 				$action['text'] = wfMsg( $pageActionInfo['message'] );
 			}
-			$this->available = (BodyModule::isEditPage()) ? false : true;
+			$this->available = true;
 			$this->enabled = true;
 			$this->caption = $action['text'];
 			$this->description = $action['text'];
