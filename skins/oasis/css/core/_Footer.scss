@@ -1,3 +1,6 @@
+.rte .WikiaFooter .toolbar:after {
+	display: none;
+}
 .WikiaFooter {
 	clear: both;
 	padding-top: 23px;
@@ -12,7 +15,7 @@
 			top: auto;
 		}
 	}
-	
+		
 	.toolbar {
 		@include linear-gradient($color-header, left, $color-header-alt, 0, $color-header, 50%, $color-header-alt, 100%);
 		border-top: 3px solid #000;
@@ -41,7 +44,6 @@
 			vertical-align: middle;
 		}
 		.tools {
-			@include clearfix;
 			background-image: url(/skins/oasis/images/checkers.png); /* $wgCdnStylePath */
 			display: block;
 			list-style: none;

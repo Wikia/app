@@ -17,7 +17,7 @@
 				return;
 			}
 
-			$this->available = true;
+			$this->available = (BodyModule::isEditPage()) ? false : true;
 			$this->enabled = true;
 
 			$this->href = $follow['href'];

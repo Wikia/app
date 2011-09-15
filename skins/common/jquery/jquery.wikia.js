@@ -254,7 +254,7 @@ $.loadJQueryUI = function(callback) {
 $.loadJQueryAutocomplete = function(callback) {
 	$.loadLibrary('jQuery Autocomplete',
 		stylepath + '/common/jquery/jquery.autocomplete.js?' + wgStyleVersion,
-		typeof jQuery.fn.autocomplete,
+		typeof jQuery.fn.pluginAutocomplete,
 		callback
 	);
 }
