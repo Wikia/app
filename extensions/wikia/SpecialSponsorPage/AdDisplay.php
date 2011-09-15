@@ -4,7 +4,6 @@
  * Handles the display of ads
  */
 
-
 class AdDisplay {
 
 	//wrapper function for specific hooks (method signature appropriate for certain hook(s)
