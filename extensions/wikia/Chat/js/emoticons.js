@@ -15,9 +15,13 @@
 /** CONSTANTS & VARIABLES **/
 // By explicitly setting the dimensions, this will make sure the feature stays as emoticons instead of getting
 // spammy or inviting disruptive vandalism (19px vandalism probably won't be AS offensive).
-exports.EMOTICON_WIDTH = 19;
-exports.EMOTICON_HEIGHT = 19;
-exports.EMOTICON_ARTICLE = "MediaWiki:Emoticons";
+if(typeof WikiaEmoticons == 'undefined'){
+	WikiaEmoticons = {};
+}
+WikiaEmoticons.EMOTICON_WIDTH = 19;
+WikiaEmoticons.EMOTICON_HEIGHT = 19;
+WikiaEmoticons.EMOTICON_MESSAGE = "emoticons";
+WikiaEmoticons.EMOTICON_ARTICLE = "MediaWiki:Emoticons";
 
 
 /** FUNCTIONS **/
@@ -26,7 +30,7 @@ exports.EMOTICON_ARTICLE = "MediaWiki:Emoticons";
  * Takes in some chat text and an emoticonMapping (which strings should be replaced with images at which URL) and returns
  * the text modified so that the replacable text (eg ":)") is replaced with the HTML for the image of that emoticon.
  */
-exports.doReplacements = function(text, emoticonMapping){
+WikiaEmoticons.doReplacements = function(text, emoticonMapping){
 	// This debug is probably noisy, but I added it here just in case all of these regexes turn out to be slow (so we could
 	// see that in the log & know that we need to make this function more efficient).
 	console.log("Processing any emoticons... ");
@@ -41,7 +45,7 @@ exports.doReplacements = function(text, emoticonMapping){
 		var origText = text;
 		do{
 			var regex = new RegExp("(^| )(" + regexString + ")([^/]|$)", "gi"); // NOTE: \s does not work for whitespace here for some reason.
-			var emoticon = " <img src=\""+imgSrc+"\" width='"+exports.EMOTICON_WIDTH+"' height='"+exports.EMOTICON_HEIGHT+"' alt=\"$2\" title=\"$2\"/> ";
+			var emoticon = " <img src=\""+imgSrc+"\" width='"+WikiaEmoticons.EMOTICON_WIDTH+"' height='"+WikiaEmoticons.EMOTICON_HEIGHT+"' alt=\"$2\" title=\"$2\"/> ";
 			var glyphUsed = text.replace(regex, '$2');
 			glyphUsed = glyphUsed.replace(/"/g, "&quot;"); // prevent any HTML-injection
 			text = text.replace(regex, '$1' + emoticon + '$3');
