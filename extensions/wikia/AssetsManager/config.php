@@ -204,3 +204,14 @@ $config['chat_js'] = array(
 		'//extensions/wikia/Chat/js/views/views.js',
 	)
 );
+
+$config['theme_designer_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'#group_oasis_jquery',
+		'//skins/common/jquery/jquery.wikia.tracker.js',
+		'//skins/common/jquery/jquery-ui-1.8.14.custom.js',
+		'//extensions/wikia/ThemeDesigner/js/ThemeDesigner.js',
+		'//extensions/wikia/ThemeDesigner/js/aim.js',
+	)
+);
