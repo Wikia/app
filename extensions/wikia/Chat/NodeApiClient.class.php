@@ -57,7 +57,7 @@ class NodeApiClient {
 		global $wgCityId, $wgSitename, $wgServer, $wgArticlePath, $wgMemc;
 		wfProfileIn(__METHOD__);
 
-		$memKey = wfMemcKey("NodeApiClient::getDefaultRoomId", $roomName, $roomType, str_replace(" ", "_", implode("|", $roomUsers)));
+		$memKey = wfMemcKey("NodeApiClient::getDefaultRoomId", $roomName, $roomType, implode("|", $roomUsers));
 		$roomData = $wgMemc->get($memKey);
 		if(empty($roomData)){
 			// Add some extra data that the server will want in order to store it in the room's hash.
