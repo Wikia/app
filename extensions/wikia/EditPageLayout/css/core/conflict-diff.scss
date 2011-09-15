@@ -1,20 +1,15 @@
 #EditPageEditor {
-	.gap {
-		background-color: #f6f6f6;
-		border-bottom: solid 1px #eae8e9;
-		border-top: solid 1px #eae8e9;
-		height: 15px;
-		margin: 0 -1px;
-	}
-
 	#diff {
 		@include bodytext;
 		background-color: #e6f0fb;
+		border: 1px solid $color-epl-gradient-border;
+		margin: 10px 0;
 		padding: 5px;
 	}
 
 	#myedit {
 		background-color: #e6f0fb;
+		border: 1px solid $color-epl-gradient-border;
 		color: #000;
 		padding: 5px;
 		> textarea {
