@@ -4,6 +4,7 @@
 var app = require('express').createServer()
     , jade = require('jade')
     , sio = require('./lib/socket.io.js')
+    , request = require('request')
     , _ = require('underscore')._
     , Backbone = require('backbone')
     , redis = require('redis')
@@ -150,6 +151,44 @@ function startServer() {
 	});
 }
 
+
+
+function requestMW(wikiUrl, query, callback) {
+	var url = 'http://' + wikiUrl + '/index.php' + query;
+	console.log(url);
+	request({
+	    	method: 'GET',
+	    	//followRedirect: false,
+	    	url: url,
+	    	proxy: 'http://' + config.WIKIA_PROXY_HOST + ':' + config.WIKIA_PROXY_PORT
+	    }, 
+	    function (error, response, body) {
+	    	if(error) {
+	    		console.log(error);	
+	    		return ;
+	    	}
+	    	
+	    	if(response.statusCode ==  200) {
+				try{
+					data = JSON.parse(body);
+					callback(data);
+				} catch(e) {
+					console.log("Error: while parsing result. Error was: ");
+					console.log(e);
+					console.log("Response that didn't parse was:\n" + responseBody);
+
+					data = {
+						error: '',
+						errorWfMsg: 'chat-err-communicating-with-mediawiki',
+						errorMsgParams: []
+					};
+				}
+	    		console.log(data);
+	    	}
+	    }
+	);
+}
+
 /**
  * Bound to the 'message' event, gets any message from the client. If the user
  * is not authenticated, this won't listen to anything other than authentications.
@@ -289,10 +328,6 @@ function authConnection(client, socket, authData){
 			// Send auth cookies to apache to make sure this user is authorized & get the user information.
 			
 			client.userKey = auth.get('key');
-			
-			var requestHeaders = {
-				'Host': wikiHostname
-			};
 
 			var requestUrl = config.AUTH_URL + "&roomId=" + roomId ;	
 			requestUrl +=  "&name=" + encodeURIComponent(auth.get('name'));
@@ -301,11 +336,8 @@ function authConnection(client, socket, authData){
 
 			console.log("Requesting user info from: " + requestUrl);
 
-			// NOTE: Swap back if we want to use a proxy again.
-			var httpClient = http.createClient(config.WIKIA_PROXY_PORT, config.WIKIA_PROXY_HOST);
-			//var httpClient = http.createClient(80, wikiHostname); // TODO: Swap this in for ALL INSTANCES of createClient if we don't want to use local proxy anymore.
-			
 			var callback = function(data) {
+				console.log(data);
 				if( (data.canChat) && (data.isLoggedIn) && data.username == auth.get('name') ){
 					rc.hkeys( config.getKey_usersAllowedInPrivRoom( auth.get('roomId') ),  function(err, users){
 						if(users.length == 0 || _.indexOf(users, data.username) !== -1 ) { //
@@ -342,7 +374,6 @@ function authConnection(client, socket, authData){
 									});
 								}
 							});
-
 						} else {
 							console.log("User try to conect with someone else private room");
 							//it is hack attempts no meesage for this
@@ -355,47 +386,11 @@ function authConnection(client, socket, authData){
 				}
 			};
 			
-			
 			if(typeof(data.isLoggedIn) != 'undefined') {
 				callback(data);
 			} else {
-				var httpRequest = httpClient.request("GET", requestUrl, requestHeaders);
-				httpRequest.addListener("response", function (response) {
-					//debugObject(client.request.headers);
-					var responseBody = "";
-					//response.setBodyEncoding("utf8");
-					response.addListener("data", function(chunk) {
-						responseBody += chunk;
-					});
-					response.addListener("end", function() {
-						try{
-							data = JSON.parse(responseBody);
-						} catch(e){
-							console.log("Error: while parsing result of getUserInfo(). Error was: ");
-							console.log(e);
-							console.log("Response that didn't parse was:\n" + responseBody);
-
-							data = {
-								error: '',
-								errorWfMsg: 'chat-err-communicating-with-mediawiki',
-								errorMsgParams: []
-							};
-						}
-						
-						rc.hmset(config.getKey_sessionData( client.userKey ), data, function() {});
-						
-						console.log("=============Session data================");
-						console.log(data);
-						console.log("=============/Session data================");
-						
-						callback(data);
-					});
-				});
-				httpRequest.end();
+				requestMW(wikiHostname, requestUrl, callback);
 			}
-			console.log("=============Session data from cache================");
-			console.log(data);
-			console.log("=============/Session data from cache================");
 		} else {
 			console.log("Didn't get data for the roomId so it probably doesn't exist anymore: " + auth.get('roomId'));
 		}
@@ -603,59 +598,30 @@ function kickBan(client, socket, msg){
 			var wikiHostname = data.replace(/^https?:\/\//i, "");
 
 			// Ban the user via request to Wikia MediaWiki server ajax-endpoint.
-		
-			var requestHeaders = {
-					'Host': wikiHostname
-				};
 			
 			var requestUrl = config.KICKBAN_URL;
 			requestUrl += "&userToBan=" + encodeURIComponent(userToBan);
 			requestUrl +=  "&key=" + client.userKey ;
 			requestUrl += "&cb=" + Math.floor(Math.random()*99999); // varnish appears to be caching ajax requests (at least on dev boxes) when we don't want it to... so cachebust it.
-			var httpClient = http.createClient(config.WIKIA_PROXY_PORT, config.WIKIA_PROXY_HOST);
-			var httpRequest = httpClient.request("GET", requestUrl, requestHeaders);
-			console.log("Trying to ban '" + userToBan + "' by hitting hostname " + wikiHostname + " with URL:\n" + requestUrl);
-			httpRequest.addListener("response", function (response) {
-				var responseBody = "";
-				response.addListener("data", function(chunk) {
-					responseBody += chunk;
-				});
-				response.addListener("end", function() {
-					var data;
-					try{
-						data = JSON.parse(responseBody);
-					} catch(e){
-						data = {
-							error: '',
-							errorWfMsg: 'chat-err-communicating-with-mediawiki',
-							errorMsgParams: []
-						};
-						console.log("Error: while parsing result of kickBan call to MediaWiki server. Error was: ");
-						console.log(e);
-						console.log("Response that didn't parse was:\n" + responseBody);
-					}
-
-					// Process response from MediaWiki server and then kick the user from all clients.
-					if(data.error || data.errorWfMsg){
-						sendInlineAlertToClient(client, data.error, data.errorWfMsg, data.errorMsgParams);
-						
-						if(data.doKickAnyway){
-							kickedUser = new models.User({name: userToBan});
-							kickUserFromRoom(client, socket, kickedUser, client.roomId);
-						}
-					} else {
-		// TODO: ONCE WE HAVE A LIST OF CLIENTS, INSTEAD OF BUILDING A FAKE... LOOP THROUGH THE USERS IN THIS CHAT AND FIND THE REAL ONE. THAT'S FAR SAFER/BETTER.
-		// TODO: The users are in a hash now... grab (or build) the user from that data or obj and use that instead of this fake user.
-						// Build a user that looks like the one that got banned... then kick them!
+			
+			requestMW(wikiHostname, requestUrl, function(data){
+				// Process response from MediaWiki server and then kick the user from all clients.
+				if(data.error || data.errorWfMsg){
+					sendInlineAlertToClient(client, data.error, data.errorWfMsg, data.errorMsgParams);
+					
+					if(data.doKickAnyway){
 						kickedUser = new models.User({name: userToBan});
-						broadcastInlineAlert(client, socket, 'chat-user-was-kickbanned', [kickedUser.get('name')], function(){
-							// The user has been banned and the ban has been broadcast, now physically remove them from the room.
-							kickUserFromRoom(client, socket, kickedUser, client.roomId);
-						});
+						kickUserFromRoom(client, socket, kickedUser, client.roomId);
 					}
-				});
+				} else {
+					// Build a user that looks like the one that got banned... then kick them!
+					kickedUser = new models.User({name: userToBan});
+					broadcastInlineAlert(client, socket, 'chat-user-was-kickbanned', [kickedUser.get('name')], function(){
+						// The user has been banned and the ban has been broadcast, now physically remove them from the room.
+						kickUserFromRoom(client, socket, kickedUser, client.roomId);
+					});
+				}
 			});
-			httpRequest.end();
 		}
 	});
 } // end kickBan()
@@ -686,55 +652,28 @@ function giveChatMod(client, socket, msg){
 			requestUrl += "&cb=" + Math.floor(Math.random()*99999); // varnish appears to be caching ajax requests (at least on dev boxes) when we don't want it to... so cachebust it.
 			
 			
-			console.log('================giveChatMod===============');
-			console.log(requestUrl);
-			console.log('================/giveChatMod==============');
-			
-			var httpClient = http.createClient(config.WIKIA_PROXY_PORT, config.WIKIA_PROXY_HOST);
-			var httpRequest = httpClient.request("GET", requestUrl, requestHeaders);
-			httpRequest.addListener("response", function (response) {
-				var responseBody = "";
-				response.addListener("data", function(chunk) {
-					responseBody += chunk;
-				});
-				response.addListener("end", function() {
-					var data;
-					try{
-						data = JSON.parse(responseBody);
-					} catch(e){
-						data = {
-							error: '',
-							errorWfMsg: 'chat-err-communicating-with-mediawiki',
-							errorMsgParams: []
-						};
-						console.log("Error: while parsing result of giveChatMod call to MediaWiki server. Error was: ");
-						console.log(e);
-						console.log("Response that didn't parse was:\n" + responseBody);
-					}
+			requestMW(wikiHostname, requestUrl, function(data){
+				// Either send the error to the client who tried this action, or (if it was a success), send the updated User to all clients.
+				if(data.error || data.errorWfMsg){
+					sendInlineAlertToClient(client, data.error, data.errorWfMsg, data.errorMsgParams);
+				} else {
+	// TODO: ONCE WE HAVE A LIST OF CLIENTS, INSTEAD OF BUILDING A FAKE... LOOP THROUGH THE USERS IN THIS CHAT AND FIND THE REAL ONE. THAT'S FAR SAFER/BETTER.
+	// TODO: The users are in a hash now... grab the user, then send them.
+					// Build a user that looks like the one that got banned... then kick them!
+					promotedUser = new models.User({name: userToPromote});
 
-					// Either send the error to the client who tried this action, or (if it was a success), send the updated User to all clients.
-					if(data.error || data.errorWfMsg){
-						sendInlineAlertToClient(client, data.error, data.errorWfMsg, data.errorMsgParams);
-					} else {
-		// TODO: ONCE WE HAVE A LIST OF CLIENTS, INSTEAD OF BUILDING A FAKE... LOOP THROUGH THE USERS IN THIS CHAT AND FIND THE REAL ONE. THAT'S FAR SAFER/BETTER.
-		// TODO: The users are in a hash now... grab the user, then send them.
-						// Build a user that looks like the one that got banned... then kick them!
-						promotedUser = new models.User({name: userToPromote});
-
-						// Broadcast inline-alert saying that A has made B a chatmoderator.
-						broadcastInlineAlert(client, socket, 'chat-inlinealert-a-made-b-chatmod', [client.myUser.get('name'), promotedUser.get('name')], function(){
-							// Force the user to reconnect so that their real state is fetched again and is broadcast to all users (whose models will be updated).
-							var promotedClientId = sessionIdsByKey[config.getKey_userInRoom(promotedUser.get('name'), client.roomId)];
-							if(typeof promotedClientId != 'undefined'){
-								socket.socket(promotedClientId).json.send({
-									event: 'forceReconnect'
-								});
-							}
-						});
-					}
-				});
+					// Broadcast inline-alert saying that A has made B a chatmoderator.
+					broadcastInlineAlert(client, socket, 'chat-inlinealert-a-made-b-chatmod', [client.myUser.get('name'), promotedUser.get('name')], function(){
+						// Force the user to reconnect so that their real state is fetched again and is broadcast to all users (whose models will be updated).
+						var promotedClientId = sessionIdsByKey[config.getKey_userInRoom(promotedUser.get('name'), client.roomId)];
+						if(typeof promotedClientId != 'undefined'){
+							socket.socket(promotedClientId).json.send({
+								event: 'forceReconnect'
+							});
+						}
+					});
+				}
 			});
-			httpRequest.end();
 		}
 	});
 
@@ -1080,81 +1019,3 @@ function debugObject(obj, padding){
 		console.log(padding + "Not an object: " + obj);
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/**
- * Given an already set-up httpClient, a wiki hostname, and the page-title of an article
- * on that hostname, fetches the wikitext via the MediaWiki API and passes the wikitext
- * to the callback.  If the call to the API doesn't work, the callback will not be called.
- *
- * NOTE: Not used at the moment (because Emoticon code was moved to the client-side), but I could
- * see this becoming used at some point.
- *
- * DELETE THIS FUNCTION IF DESIRED.
- */
-function getWikiText(httpClient, wikiHostname, pageTitle, callback){
-	// Trying to fetch the wikitext of the emoticon page.
-	var requestHeaders = {
-		'Host': wikiHostname
-	};
-	//http://lyrics.sean.wikia-dev.com/api.php?action=query&prop=revisions&titles=MediaWiki:Emoticons&rvprop=content&format=jsonfm <-- human-readable json
-	var requestUrl = config.API_URL + "?action=query&prop=revisions&rvprop=content&format=json&titles=" + pageTitle ;
-	var httpRequest = httpClient.request("GET", requestUrl, requestHeaders);
-	httpRequest.addListener("response", function (response) {
-		//debugObject(client.request.headers);
-		var responseBody = "";
-		//response.setBodyEncoding("utf8");
-		response.addListener("data", function(chunk) {
-			responseBody += chunk;
-		});
-		response.addListener("end", function() {
-			try{
-				data = JSON.parse(responseBody);
-			} catch(e){
-				console.log("Error: while parsing result of API call for wikitext. Error was: ");
-				console.log(e);
-				console.log("Response that didn't parse was:\n" + responseBody);
-			}
-
-			var wikiText = "";
-			//console.log("=============API data================");
-			//console.log(data);
-
-			// Is there a less messy way to dig down to the value without all of these checks?
-			if(data && data.query && data.query.pages){
-				var pages = data.query.pages;
-				if(pages){
-					var pagesKeys = Object.keys(pages);
-					if(pagesKeys[0] && pages[pagesKeys[0]] && pages[pagesKeys[0]].revisions){
-						var revisions = pages[pagesKeys[0]].revisions;
-						if(revisions && revisions[0]){
-							var rev = revisions[0];
-							if(rev && rev['*']){
-								wikiText = rev['*'];
-								//console.log("Fetched wikitext: \n" + wikiText);
-							}
-						}
-					}
-				}
-			}
-			//console.log("=============/API data================");
-
-			callback(wikiText);
-		});
-	});
-	httpRequest.end();
-
-} // end getWikiText()
