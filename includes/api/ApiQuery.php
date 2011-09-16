@@ -166,7 +166,7 @@ class ApiQuery extends ApiBase {
 
 	/**
 	 * Get the array mapping module names to class names
-	 * @return array(modulename => classname)
+	 * @return array (modulename => classname)
 	 */
 	function getModules() {
 		return array_merge( $this->mQueryPropModules, $this->mQueryListModules, $this->mQueryMetaModules );
