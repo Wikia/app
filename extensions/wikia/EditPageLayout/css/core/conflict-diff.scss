@@ -20,10 +20,3 @@
 		}
 	}
 }
-
-// the area below the diff should match the gap between sections
-.EditPageScrollable {
-	#EditPageEditor {
-		@include linear-gradient(#fafafa, top, #fff, 400px, #f6f6f6, 401px);
-	}
-}
