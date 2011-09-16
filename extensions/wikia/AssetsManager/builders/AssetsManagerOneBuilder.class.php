@@ -23,7 +23,14 @@ class AssetsManagerOneBuilder extends AssetsManagerBaseBuilder {
 			throw new Exception('Requested file must be .css or .js.');
 		}
 
-		$this->mContent = file_get_contents($IP . '/' . $this->mOid);
+		$filePath = $IP . '/' . $this->mOid;
+
+		if (file_exists($filePath)) {
+			$this->mContent = file_get_contents($IP . '/' . $this->mOid);
+		}
+		else {
+			Wikia::log(__METHOD__, false, "File doesn't exist - {$filePath} (URL: " . wfGetCurrentUrl(true /* $as_string */) . ")", true  /* always add to PHP log */);
+		}
 	}
 
 }
