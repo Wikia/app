@@ -78,7 +78,7 @@ class UserProfilePageController extends WikiaController {
 		
 		$this->app->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/UserProfilePageV3/css/UserProfilePage.scss'));
 		$this->wg->Out->addScriptFile( $this->wg->ExtensionsPath . '/wikia/UserProfilePageV3/js/UserProfilePage.js' );
-						
+		
 		$sessionUser = $this->wg->User;
 		
 		$this->setRequest( new WikiaRequest($this->app->wg->Request->getValues()) );

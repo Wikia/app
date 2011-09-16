@@ -53,6 +53,7 @@ $messages['en'] = array(
 	'user-identity-box-group-founder' => 'Founder',
 	'user-identity-box-group-staff' => 'Staff',
 	'user-identity-box-group-helper' => 'Helper',
+	'user-identity-box-group-vstf' => 'Volunteer Spam Task Force',
 	
 	'user-identity-box-zero-state-location' => 'Location',
 	'user-identity-box-zero-state-birthday' => 'Birthday',
