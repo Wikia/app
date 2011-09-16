@@ -572,7 +572,7 @@ var initTracker = function() {
 	});
 
 	// track clicks on Facebook's "Like" buttons
-	if (typeof FB != 'undefined') {
+	if (typeof FB != 'undefined' && typeof FB.Event != 'undefined' /* (BugId: 11701) */) {
 		FB.Event.subscribe('edge.create', function(resp) {
 			$.tracker.byStr('pageheader/like');
 		});

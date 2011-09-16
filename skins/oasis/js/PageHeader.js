@@ -16,7 +16,7 @@ var PageHeader = {
 		PageHeader.setupTimeAgo(PageHeader.history.find("time.timeago"));
 
 		// RT #72155: resize FB like wrapper to match width of an iframe
-		if (typeof FB != 'undefined') {
+		if (typeof FB != 'undefined' && typeof FB.Event != 'undefined' /* (BugId: 11701) */) {
 			FB.Event.subscribe('xfbml.render', function() {
 				var likeWrapper = $('.commentslikes').children('.likes');
 
