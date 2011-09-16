@@ -29,7 +29,8 @@ class AssetsManagerOneBuilder extends AssetsManagerBaseBuilder {
 			$this->mContent = file_get_contents($filePath);
 		}
 		else {
-			error_log("PHP Warning: " . __METHOD__ . " - File doesn't exist - {$filePath} (URL: " . wfGetCurrentUrl(true /* $as_string */) . ")");
+			$referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'none';
+			error_log("PHP Warning: " . __METHOD__ . " - File doesn't exist - {$filePath} (referer: {$referer})");
 		}
 	}
 
