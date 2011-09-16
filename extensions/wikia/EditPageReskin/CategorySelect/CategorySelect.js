@@ -152,7 +152,9 @@ function replaceAddToInput(e) {
 	$('#csAddCategoryButton').hide();
 	$('#csCategoryInput').show();
 	positionSuggestBox();
-	$('#csHintContainer').show();
+	if(csType != 'module') {
+		$('#csHintContainer').show();
+	}
 	$('#csCategoryInput').focus();
 }
 
