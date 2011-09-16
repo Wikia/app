@@ -29,7 +29,7 @@ class AssetsManagerOneBuilder extends AssetsManagerBaseBuilder {
 			$this->mContent = file_get_contents($filePath);
 		}
 		else {
-			Wikia::log(__METHOD__, false, "File doesn't exist - {$filePath} (URL: " . wfGetCurrentUrl(true /* $as_string */) . ")", true  /* always add to PHP log */);
+			Wikia::log(__METHOD__, false, "PHP Warning: File doesn't exist - {$filePath} (URL: " . wfGetCurrentUrl(true /* $as_string */) . ")", true  /* always add to PHP log */);
 		}
 	}
 
