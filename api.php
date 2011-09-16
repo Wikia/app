@@ -60,7 +60,7 @@ if ( $wgRequest->isPathInfoBad() ) {
 }
 
 // Verify that the API has not been disabled
-if ( !$wgEnableAPI || $wgHideAPI ) {
+if ( !$wgEnableAPI ) {
 	echo 'MediaWiki API is not enabled for this site. Add the following line to your LocalSettings.php';
 	echo '<pre><b>$wgEnableAPI=true;</b></pre>';
 	die( 1 );

@@ -113,7 +113,7 @@ function getRegisterJS(){
 }
 
 function comboAjaxLoginVars($vars) {
-	global $wgUser,$wgWikiaEnableConfirmEditExt, $wgRequest, $wgEnableAPI, $wgHideAPI;
+	global $wgUser,$wgWikiaEnableConfirmEditExt, $wgRequest, $wgEnableAPI;
 	if ($wgWikiaEnableConfirmEditExt){
 		wfLoadExtensionMessages('ConfirmEdit');
 	}
@@ -128,7 +128,7 @@ function comboAjaxLoginVars($vars) {
 		$vars['wgReturnTo'] = $titleObj->getText( );
 	}
 
-	if ( (empty($wgEnableAPI)) || (!$wgUser->isAllowed('read')) || (!empty($wgHideAPI)) ) {
+	if ( (empty($wgEnableAPI)) || (!$wgUser->isAllowed('read')) ) {
 		$vars['wgEnableLoginAPI'] = false;
 	} else {
 		$vars['wgEnableLoginAPI'] = true;
