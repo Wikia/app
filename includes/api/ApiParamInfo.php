@@ -33,15 +33,21 @@ if ( !defined( 'MEDIAWIKI' ) ) {
  */
 class ApiParamInfo extends ApiBase {
 
+	/**
+	 * @var ApiQuery
+	 */
+	protected $queryObj;
+
 	public function __construct( $main, $action ) {
 		parent :: __construct( $main, $action );
+		$this->queryObj = new ApiQuery( $this->getMain(), 'query' );
 	}
 
 	public function execute() {
 		// Get parameters
 		$params = $this->extractRequestParams();
 		$result = $this->getResult();
-		$queryObj = new ApiQuery( $this->getMain(), 'query' );
+
 		$r = array();
 		if ( is_array( $params['modules'] ) )
 		{
@@ -63,7 +69,7 @@ class ApiParamInfo extends ApiBase {
 		}
 		if ( is_array( $params['querymodules'] ) )
 		{
-			$qmodArr = $queryObj->getModules();
+			$qmodArr = $this->queryObj->getModules();
 			$r['querymodules'] = array();
 			foreach ( $params['querymodules'] as $qm )
 			{
@@ -75,6 +81,7 @@ class ApiParamInfo extends ApiBase {
 				$obj = new $qmodArr[$qm]( $this, $qm );
 				$a = $this->getClassInfo( $obj );
 				$a['name'] = $qm;
+				$a['querytype'] = $this->queryObj->getModuleType( $qm );
 				$r['querymodules'][] = $a;
 			}
 			$result->setIndexedTagName( $r['querymodules'], 'module' );
@@ -83,7 +90,7 @@ class ApiParamInfo extends ApiBase {
 			$r['mainmodule'] = $this->getClassInfo( $this->getMain() );
 		if ( $params['pagesetmodule'] )
 		{
-			$pageSet = new ApiPageSet( $queryObj );
+			$pageSet = new ApiPageSet( $this->queryObj );
 			$r['pagesetmodule'] = $this->getClassInfo( $pageSet );
 		}
 		$result->addValue( null, $this->getModuleName(), $r );
@@ -186,10 +193,12 @@ class ApiParamInfo extends ApiBase {
 	public function getAllowedParams() {
 		return array (
 			'modules' => array(
-				ApiBase :: PARAM_ISMULTI => true
+				ApiBase::PARAM_ISMULTI => true,
+				ApiBase::PARAM_TYPE => array_keys( $this->getMain()->getModules() ),
 			),
 			'querymodules' => array(
-				ApiBase :: PARAM_ISMULTI => true
+				ApiBase::PARAM_ISMULTI => true,
+				ApiBase::PARAM_TYPE => array_keys( $this->queryObj->getModules() ),
 			),
 			'mainmodule' => false,
 			'pagesetmodule' => false,
