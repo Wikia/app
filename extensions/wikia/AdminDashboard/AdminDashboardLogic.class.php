@@ -36,7 +36,11 @@ class AdminDashboardLogic {
 		if (!$app->wg->User->isLoggedIn()) return false;
 		if (!$app->wg->User->isAllowed( 'admindashboard' )) return false;
 		if ($title && $title->isSpecialPage()) {
+			$alias = SpecialPage::resolveAlias($title->getDBKey());
+		
+			// NOTE: keep this list in alphabetical order
 			$exclusionList = array(
+				"AdSS",
 				"Connect",
 				"Contact",
 				"Contributions",
@@ -44,6 +48,7 @@ class AdminDashboardLogic {
 				"CreatePage",
 				"CreateNewWiki",
 				"CreateTopList",
+				"Crunchyroll",
 				"CloseWiki",
 				"Following",
 				"EditAccount",
@@ -67,6 +72,7 @@ class AdminDashboardLogic {
 				"Search",
 				"Signup",
 				"SiteWideMessages",
+				"SponsorshipDashboard",
 				"TaskManager",
 				"ThemeDesigner",
 				"ThemeDesignerPreview",
@@ -79,11 +85,8 @@ class AdminDashboardLogic {
 				"WikiFactoryReporter",
 				"WikiaLabs",
 				"WikiStats",
-				"AdSS",
-				"SponsorshipDashboard",
-				"Crunchyroll"
 			);
-			return (!in_array($title->getDBKey(), $exclusionList));
+			return (!in_array($alias, $exclusionList));
 		}
 		return false;
 	}
