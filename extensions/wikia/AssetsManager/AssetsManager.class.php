@@ -188,10 +188,6 @@ class AssetsManager {
 	}
 
 	private function getAMLocalURL($type, $oid, $params = array()) {
-		global $IP;
-		if ($type == 'one' && !file_exists($IP.'/'.$oid)) {
-			error_log("PHP Warning: AM: file not found: $oid URL: ".wfGetCurrentUrl(true));
-		}
 		global $wgAssetsManagerQuery;
 		return sprintf($wgAssetsManagerQuery,
 			/* 1 */ $type,
