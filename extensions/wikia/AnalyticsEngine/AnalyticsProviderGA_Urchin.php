@@ -64,7 +64,7 @@ SCRIPT1;
 <script type="text/javascript" src="{$wgProto}://www.google-analytics.com/ga.js"></script>
 <script type="text/javascript">
 $setDomainName
-/*_gaq.push([\'_setSampleRate\', \'10\']);*/
+_gaq.push(['_setSampleRate', '10']);
 urchinTracker = function() {
 	_gaq.push(['_setAccount', 'UA-2871474-1']);
 	_gaq.push(['_trackEvent', 'Error', 'FakeUrchinTrackerCalled']);
