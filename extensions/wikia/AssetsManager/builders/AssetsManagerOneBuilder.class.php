@@ -26,7 +26,7 @@ class AssetsManagerOneBuilder extends AssetsManagerBaseBuilder {
 		$filePath = $IP . '/' . $this->mOid;
 
 		if (file_exists($filePath)) {
-			$this->mContent = file_get_contents($IP . '/' . $this->mOid);
+			$this->mContent = file_get_contents($filePath);
 		}
 		else {
 			Wikia::log(__METHOD__, false, "File doesn't exist - {$filePath} (URL: " . wfGetCurrentUrl(true /* $as_string */) . ")", true  /* always add to PHP log */);
