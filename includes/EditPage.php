@@ -393,11 +393,16 @@ class EditPage {
 			// Wikia change - end
 		}
 
-		# Optional notices on a per-namespace and per-page basis
+		# Optional notices on a per-namespace and per-page basis		
+		/* Wikia change begin - @author: Christian, #BugId: 7092 */
 		$editnotice_ns   = 'editnotice-'.$this->mTitle->getNamespace();
-		if ( !wfEmptyMsg( $editnotice_ns, wfMsgForContent( $editnotice_ns ) ) ) {
-			$wgOut->addWikiText( wfMsgForContent( $editnotice_ns )  );
+		if ( empty($wgEnableEditPageReskinExt) || !Wikia::isOasis() ) {
+			if ( !wfEmptyMsg( $editnotice_ns, wfMsgForContent( $editnotice_ns ) ) ) {
+				$wgOut->addWikiText( wfMsgForContent( $editnotice_ns )  );
+			}
 		}
+		/* Wikia change end */
+		
 		if ( MWNamespace::hasSubpages( $this->mTitle->getNamespace() ) ) {
 			$parts = explode( '/', $this->mTitle->getDBkey() );
 			$editnotice_base = $editnotice_ns;
