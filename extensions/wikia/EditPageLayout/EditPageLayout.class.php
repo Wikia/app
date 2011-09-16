@@ -613,6 +613,16 @@ class EditPageLayout extends EditPage {
 				'class' => 'mw-talkpagetext',
 			);
 		}
+
+		// Edit notice (BugId:7616)
+		$editnotice_ns = 'editnotice-'.$this->mTitle->getNamespace();
+		if ( !wfEmptyMsg( $editnotice_ns, wfMsgForContent( $editnotice_ns ) ) ) {
+			$this->mEditPagePreloads['EditPageEditNotice'] = array(
+				'content' => $this->app->wf->msg($editnotice_ns),
+				'class' => 'mw-editnotice',
+			);
+		}
+
 	}
 
 	/**
