@@ -29,11 +29,13 @@ class CodeLintJs extends CodeLint {
 			'AjaxLogin',
 			'CKEDITOR',
 			'FB',
+			'GlobalNotification',
+			'GlobalTriggers',
 			'insertTags',
 			'jQuery',
-			'GlobalTriggers',
 			'Liftium',
 			'Mediawiki',
+			'Modernizr',
 			'mwCustomEditButtons',
 			'Observable',
 			'RTE',
@@ -41,8 +43,8 @@ class CodeLintJs extends CodeLint {
 			'skin',
 			'stylepath',
 			'Timer',
-			'YAHOO',
 			'WET',
+			'YAHOO',
 		);
 	}
 
