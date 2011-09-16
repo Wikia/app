@@ -514,7 +514,8 @@ class AchAwardingService {
 			if($this->mTitle->isContentPage() && $this->mStatus->value['new'] != true) {
 				if(empty($this->mCounters[BADGE_POUNCE]) || !in_array($this->mArticle->getID(), $this->mCounters[BADGE_POUNCE])) {
 					$firstRevision = $this->mTitle->getFirstRevision();
-					if(strtotime(wfTimestampNow()) - strtotime($firstRevision->getTimestamp()) < 60 * 60) {
+					
+					if( $firstRevision instanceof Revision && ( strtotime( wfTimestampNow() ) - strtotime($firstRevision->getTimestamp()) < ( 60 * 60 ) ) ) {
 						if(empty($this->mCounters[BADGE_POUNCE])) {
 							$this->mCounters[BADGE_POUNCE] = array();
 						}
