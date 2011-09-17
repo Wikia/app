@@ -5,32 +5,40 @@ class FounderEmailsModule extends Module {
 
 	// This function is only used for testing / previewing / debugging the FounderEmails templates
 	public function executeIndex() {
-		global $wgRequest;
+		global $wgRequest, $wgContLang;
+		
 		$day = $wgRequest->getVal('day');
 		$type = $wgRequest->getVal('type');
+		$lang = $wgRequest->getVal('lang', 'en');
+		
+		if ($type != 'views-digest' && $type != 'complete-digest') {
+			$wgContLang = wfGetLangObj($lang);
+		}
+		
 		if(!empty($day)){
-			$this->previewBody = wfRenderModule("FounderEmails", $day, array('language' => 'en'));
+			$this->previewBody = wfRenderModule("FounderEmails", $day, array('language' => $lang));
 			$this->previewBody = strtr($this->previewBody, 
-				array('$FOUNDERNAME' => 'WEB TESTING',
-					'$WIKINAME' => '<a href="#" style="color:#2C85D5;">WikiWiki</a>',
+				array('$FOUNDERNAME' => 'FounderName',
+					'$WIKINAME' => '<a href="#" style="color:#2C85D5;">WikiName</a>',
 					'$UNIQUEVIEWS' => '6')
 			);
 		} else if(!empty($type)) {
 			$this->previewBody = wfRenderModule("FounderEmails", 'GeneralUpdate', 
 				array('type' => $type, 
-					'language' => 'en', 
+					'language' => $lang, 
 					'$PAGEURL' => 'http://www.wikia.com',
 					'$MYHOMEURL' => 'http://www.wikia.com',
 					'$UNIQUEVIEWS' => '1',
-					'$USEREDITS' => '1',
-					'$USERJOINS' => '1',
-					'$USERTALKPAGEURL' => 'http://www.wikia.com'
+					'$USEREDITS' => '2',
+					'$USERJOINS' => '3',
+					'$USERTALKPAGEURL' => 'http://www.wikia.com',
 					)
 				);
 			$this->previewBody = strtr($this->previewBody, 
-				array('$FOUNDERNAME' => 'WEB TESTING',
-					'$WIKINAME' => '<a href="#" style="color:#2C85D5;">WikiWiki</a>',
-					'$PAGETITLE' => '<a href="#" style="color:#2C85D5;">WikiWiki</a>',
+				array('$FOUNDERNAME' => 'FounderName',
+					'$WIKINAME' => '<a href="#" style="color:#2C85D5;">WikiName</a>',
+					'$PAGETITLE' => '<a href="#" style="color:#2C85D5;">PageTitle</a>',
+					'$USERNAME' => '<a href="#" style="color:#2C85D5;">UserName</a>',
 					)
 			);
 		}

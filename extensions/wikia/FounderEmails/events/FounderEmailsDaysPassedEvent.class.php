@@ -12,7 +12,7 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 	}
 	
 	public function process( Array $events ) {
-		global $wgExternalSharedDB, $wgEnableAnswers, $wgTitle;
+		global $wgExternalSharedDB, $wgEnableAnswers, $wgTitle, $wgContLang;
 		wfProfileIn( __METHOD__ );
 
 		$wgTitle = Title::newMainPage();		
@@ -41,7 +41,7 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 				$wikiType = !empty( $wgEnableAnswers ) ? '-answers' : '';
 				$langCode = $founderEmails->getWikiFounder( $wikiId )->getOption( 'language' );
 				// force loading messages for given languege, to make maintenance script works properly
-				wfLoadExtensionMessages( 'FounderEmails', $langCode );
+				$wgContLang = wfGetLangObj($langCode);
 
 				$mailSubject = strtr(wfMsgExt('founderemails' . $wikiType . '-email-' . $activateDays . '-days-passed-subject', array('content')), $emailParams);
 				$mailBody = strtr(wfMsgForContent('founderemails' . $wikiType . '-email-' . $activateDays . '-days-passed-body'), $emailParams);
