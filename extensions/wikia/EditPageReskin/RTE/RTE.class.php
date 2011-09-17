@@ -394,7 +394,7 @@ HTML
 		}
 
 		// check namespaces
-		global $wgWysiwygDisabledNamespaces, $wgWysiwygDisableOnTalk;
+		global $wgWysiwygDisabledNamespaces, $wgWysiwygDisableOnTalk, $wgEnableSemanticMediaWikiExt;
 		if(!empty($wgWysiwygDisabledNamespaces) && is_array($wgWysiwygDisabledNamespaces)) {
 			if(in_array(self::$title->getNamespace(), $wgWysiwygDisabledNamespaces)) {
 				self::disableEditor('disablednamespace');
@@ -409,7 +409,11 @@ HTML
 				self::disableEditor('talkpage');
 			}
 		}
-
+		// BugId: 11336 disable RTE on Special SMW namespaces
+		if ($wgEnableSemanticMediaWikiExt && in_array(self::$title->getNamespace(), array( SMW_NS_PROPERTY, SF_NS_FORM, NS_CATEGORY, SMW_NS_CONCEPT ))) {
+			self::disableEditor('namespace');
+		}		
+		
 		// RT #10170: do not initialize for user JS/CSS subpages
 		if (self::$title->isCssJsSubpage()) {
 			RTE::log('editor is disabled on user JS/CSS subpages');
