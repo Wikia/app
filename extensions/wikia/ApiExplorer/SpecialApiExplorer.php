@@ -53,10 +53,12 @@ function wfSpecialApiExplorer () {
 			// Note that this should have ?{$wgStyleVersion} at the end for non-wikia MediaWikis. We have the cachebuster in our wgExtensionsPath (we rewrite that in varnish because many proxies won't cache things that have "?" in the URL).
 			$wgOut->addScript( "<script type=\"text/javascript\" src=\"{$wgExtensionsPath}/wikia/JavascriptAPI/Mediawiki.js\"></script>" );
 			$wgOut->addScript( "<script type=\"text/javascript\" src=\"{$wgExtensionsPath}/wikia/ApiExplorer/apiExplorer.js\"></script>" );
+			$wgOut->addScript( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgExtensionsPath}/wikia/ApiExplorer/apiExplorer.css\" />" );
 
 			ob_start();
 
-				print "API EXPLORER GOES HERE.\n";
+				print "<div id='apEx_intro'>". wfMsg('apiexplorer-intro') ."</div>\n";
+				print "<div id='apEx_loading'>". wfMsg('apiexplorer-loading') ."</div>\n";
 				// TODO: IMPLEMENT
 
 			$outHtml = ob_get_clean();
