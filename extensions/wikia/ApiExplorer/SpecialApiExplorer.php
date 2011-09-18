@@ -49,6 +49,8 @@ function wfSpecialApiExplorer () {
 			global $wgOut, $wgExtensionsPath;
 			wfProfileIn( __METHOD__ );
 
+			wfLoadExtensionMessages( "AutoCreateWiki" ); // TODO: This isn't needed anymore, even in Wikia code (which is 2 versions back at the moment), is it?
+
 			// TODO: Make this work for ResourceLoader (Wikia isn't using RL yet at the time of this writing).
 			// Note that this should have ?{$wgStyleVersion} at the end for non-wikia MediaWikis. We have the cachebuster in our wgExtensionsPath (we rewrite that in varnish because many proxies won't cache things that have "?" in the URL).
 			$wgOut->addScript( "<script type=\"text/javascript\" src=\"{$wgExtensionsPath}/wikia/JavascriptAPI/Mediawiki.js\"></script>" );
@@ -59,7 +61,6 @@ function wfSpecialApiExplorer () {
 
 				print "<div id='apEx_intro'>". wfMsg('apiexplorer-intro') ."</div>\n";
 				print "<div id='apEx_loading'>". wfMsg('apiexplorer-loading') ."</div>\n";
-				// TODO: IMPLEMENT
 
 			$outHtml = ob_get_clean();
 
