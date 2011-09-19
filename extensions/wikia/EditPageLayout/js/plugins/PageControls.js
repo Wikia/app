@@ -330,12 +330,14 @@
 					var contentNode = $('#EditPageDialog .WikiaArticle');
 
 					// block all clicks
+					var previewHeight = $(window).height() - 250;
+					previewHeight = previewHeight < 320 ? 320 : previewHeight;
 					contentNode.
 						bind('click', function(ev) {
 							ev.preventDefault();
 						}).
 						css({
-							height: $(window).height() - 250,
+							height: previewHeight,
 							overflow: 'auto'
 						});
 
