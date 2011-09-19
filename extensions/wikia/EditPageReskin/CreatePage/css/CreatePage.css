@@ -89,7 +89,7 @@
 
 #CreatePageDialogChoices li.long input {
 	float: left;
-	padding-top: 114px;
+	/*padding-top: 114px;*/
 	border-top-width: 7px;
 	margin-top: 32px;
 }

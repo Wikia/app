@@ -138,6 +138,7 @@
 								</label>
 								<?php } ?>
 							</div>
+							<label for="wpSummary">Edit Summary</label>
 							<div id="wpSummaryLabel">
 								<?= $summaryBox ?>
 							</div>
