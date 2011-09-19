@@ -8,7 +8,7 @@
  * constructor
  */
 function wfSpecialUserlogin( $par = '' ) {
-	global $wgRequest, $wgHooks;
+	global $wgRequest;
 	if( session_id() == '' ) {
 		wfSetupSession();
 	}
