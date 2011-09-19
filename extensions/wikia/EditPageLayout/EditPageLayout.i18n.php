@@ -36,7 +36,7 @@ $messages['en'] = array(
 	'wikia-editor-media-video-tooltip' => 'Add Video',
 
 	'wikia-editor-modules-templates-title' => 'Templates',
-	'wikia-editor-modules-templates-add-tooltip' => 'Add \'$1\' Template',
+	'wikia-editor-modules-templates-add-tooltip' => 'Add "$1" Template',
 	'wikia-editor-modules-templates-otherTemplates' => 'Add other templates',
 	'wikia-editor-modules-templates-showUsedList' => 'Show list of used templates',
 	'wikia-editor-modules-templates-showUsedList-dialog-title' => 'List of used templates',
