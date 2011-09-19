@@ -8,7 +8,7 @@ var MobileDialog = {
 		$('body').delegate('.wikia-slideshow', 'click', function() {
 			console.log("open MobileDialog for: " + params.id + " " + params.extension);
 			
-			$.get("index.php", function(data) {
+			$.get("/wikia.php?controller=WikiaMobileDialogController&format=html", function(data) {
 				console.log(data);
 			});
 		});
