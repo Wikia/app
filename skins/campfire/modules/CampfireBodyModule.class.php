@@ -87,7 +87,7 @@ class CampfireBodyModule extends Module {
 	}
 
 	public function executeIndex() {
-		global $wgOut, $wgTitle, $wgSitename, $wgUser, $wgEnableBlog, $wgEnableCorporatePageExt, $wgEnableInfoBoxTest, $wgEnableWikiAnswers, $wgRequest, $wgEnableEditPageReskinExt, $wgMaximizeArticleAreaArticleIds;
+		global $wgOut, $wgTitle, $wgSitename, $wgUser, $wgEnableBlog, $wgEnableCorporatePageExt, $wgEnableInfoBoxTest, $wgEnableWikiAnswers, $wgRequest, $wgMaximizeArticleAreaArticleIds;
 
 		$this->isMainPage = ArticleAdLogic::isMainPage();
 
