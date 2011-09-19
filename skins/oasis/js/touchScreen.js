@@ -7,7 +7,7 @@ iPadImprovements = {
 	init: function() {
 		
 		//onload scroll to main content
-		wikiaMainContent = $( '#WikiaMainContent' ).offset();
+		var wikiaMainContent = $( '#WikiaMainContent' ).offset();
 		window.scrollTo( 0, wikiaMainContent.top );
 
 		//global nav fix: first click opens nav,  second redirects to a hub
@@ -20,7 +20,7 @@ iPadImprovements = {
 
 		//wiki nav fix: first click opens nav, second redirects to a desired page
 		$( '#WikiHeader' ).delegate( 'nav > ul > li > a', 'click', function() {
-			subnav = $( this ).next( 'ul.subnav' );
+			var subnav = $( this ).next( 'ul.subnav' );
 			if ( subnav.length && subnav.css( 'display' ) != 'block') {
 				event.preventDefault();
 			};
