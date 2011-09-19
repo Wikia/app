@@ -45,7 +45,7 @@ class CampfireModule extends Module {
 	var $wgEnableCorporatePageExt;
 
 	public function executeIndex($params) {
-		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgCityId, $wgAllInOne, $wgContLang, $wgJsMimeType, $wgEnableEditPageReskinExt;
+		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgCityId, $wgAllInOne, $wgContLang, $wgJsMimeType;
 
 		$allInOne = $wgRequest->getBool('allinone', $wgAllInOne);
 
