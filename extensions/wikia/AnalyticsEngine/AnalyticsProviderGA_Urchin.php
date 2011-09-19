@@ -15,20 +15,26 @@ class AnalyticsProviderGA_Urchin implements iAnalyticsProvider {
 
 		global $wgCityId, $wgContLanguageCode, $wgDBname, $wgDBcluster, $wgUser, $wgArticle, $wgTitle, $wgAdServerTest;
 		$beaconUrl = 'http://a.wikia-beacon.com/__onedot?'.
-			'c='.$wgCityId.'&'.
-			'lc='.$wgContLanguageCode.'&'.
-			'lid='.WikiFactory::LangCodeToId($wgContLanguageCode).'&'.
-			'x='.$wgDBname.'&'.
-			'y='.$wgDBcluster.'&'.
-			'u='.$wgUser->getID().'&'.
-			'a='.(is_object($wgArticle) ? $wgArticle->getID() : null).'&'.
+			'c='.$wgCityId.'&amp;'.
+			'lc='.$wgContLanguageCode.'&amp;'.
+			'lid='.WikiFactory::LangCodeToId($wgContLanguageCode).'&amp;'.
+			'x='.$wgDBname.'&amp;'.
+			'y='.$wgDBcluster.'&amp;'.
+			'u='.$wgUser->getID().'&amp;'.
+			'a='.(is_object($wgArticle) ? $wgArticle->getID() : null).'&amp;'.
 			'n='.$wgTitle->getNamespace(). (!empty($wgAdServerTest) ? '&db_test=1' : '');
 
 		$script .= <<<SCRIPT1
 <noscript><img src="$beaconUrl" width="1" height="1" border="0" alt="" /></noscript>
 <script type="text/javascript">
-	var beaconUrl = "$beaconUrl" + ((typeof document.referrer != "undefined") ? "&amp;r=" + escape(document.referrer) : "") + "&amp;cb=" + (new Date).valueOf();
+	var matches = /wikia_beacon_id=([^;]+)/(document.cookie);
+	var beaconCookie = matches[1];
+
+	var beaconUrl = "$beaconUrl" + ((typeof document.referrer != "undefined") ? "&amp;r=" + escape(document.referrer) : "") + "&amp;cb=" + (new Date).valueOf() + (beaconCookie ? "&amp;beacon=" + beaconCookie : "");
 	document.write('<'+'script type="text/javascript" src="' + beaconUrl + '"><'+'/script>');
+</script>
+<script>
+	
 </script>
 SCRIPT1;
 
