@@ -65,6 +65,7 @@ class AdminDashboardLogic {
 				"NewFiles",
 				"Our404Handler",
 				"PageLayoutBuilder",
+				"PageLayoutBuilderForm",
 				"Phalanx",
 				"PhalanxStats",
 				"Preferences",
