@@ -47,6 +47,9 @@ if ($(window).width() < 1010) {
 			$(window).bind("resize.AIC2", AIC2.onScroll);
 		//}
 
+	if (inGroup(groups.N)) {
+		Liftium.trackEvent3(Liftium.buildTrackUrl(['AIC2', 'test6']), {profile:'UA-17475676-11', sample:100});
+	}
 	if (!Liftium.e(Liftium.debugLevel) || Math.floor(Math.random() * 10) == 7) {
 		Liftium.trackEvent(Liftium.buildTrackUrl(['AIC2', 'test1']), 'UA-17475676-11');
 		_gaq.push(['liftium._setAccount', 'UA-17475676-11']);
@@ -70,14 +73,8 @@ if ($(window).width() < 1010) {
 		_gaq.push(['liftium._trackEvent',  slot,  'geo-'  + geo]);
 
 		_gaq.push(['liftium._trackPageview', '/999/' + Liftium.buildTrackUrl(['AIC2', 'test2'])]);
-		
-		Liftium.trackEvent2(Liftium.buildTrackUrl(['AIC2', 'test3']), 'UA-17475676-11');
-		Liftium.trackEvent3(Liftium.buildTrackUrl(['AIC2', 'test4']), {profile:'UA-17475676-11', sample:100});
 	}
 	Liftium.trackEvent3(Liftium.buildTrackUrl(['AIC2', 'test5']), {profile:'UA-17475676-11', sample:10});
-	if (inGroup(groups.N)) {
-		Liftium.trackEvent3(Liftium.buildTrackUrl(['AIC2', 'test6']), {profile:'UA-17475676-11', sample:100});
-	}
 
 	} else {
 		Liftium.d("AIC2: page too short", 3);

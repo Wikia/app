@@ -355,8 +355,8 @@ Liftium.callInjectedIframeAd = function (sizeOrSlot, iframeElement){
 
 	// this is a(n ugly?) shortcut, the right name would be slotname's parent div
 	var placement = iframeElement.id.replace(/_iframe$/, "");
-	Liftium.trackEvent(Liftium.buildTrackUrl(["slot", sizeOrSlot + "_" + placement]), "UA-17475676-6");
 	Liftium.trackEvent3(Liftium.buildTrackUrl(["slot", sizeOrSlot + "_" + placement]), {profile: "UA-17475676-16", sample: 100});
+	Liftium.trackEvent(Liftium.buildTrackUrl(["slot", sizeOrSlot + "_" + placement]), "UA-17475676-6");
 
 	var t = Liftium.getNextTag(slotname);
 	if (!t) {
@@ -1327,8 +1327,10 @@ Liftium.init = function () {
 	}
 
 
+	if (inGroup(groups.N)) {
+		Liftium.trackEvent3(Liftium.buildTrackUrl(["init"]), {profile:'UA-17475676-15', sample:100});
+	}
 	Liftium.trackEvent3(Liftium.buildTrackUrl(["init"]), "UA-17475676-4");
-	Liftium.trackEvent2(Liftium.buildTrackUrl(["init"]), "UA-17475676-15");
 
 	Liftium.trackQcseg();
 
@@ -1946,8 +1948,10 @@ Liftium.sendBeacon = function (){
 	Liftium.d ("Liftium done, beacon sent");
 
 	// Track the beacons with GA
+	if (inGroup(groups.N)) {
+		Liftium.trackEvent3(Liftium.buildTrackUrl(["beacon"]), {profile:'UA-17475676-14', sample:100});
+	}
 	Liftium.trackEvent3(Liftium.buildTrackUrl(["beacon"]), "UA-17475676-5");
-	Liftium.trackEvent2(Liftium.buildTrackUrl(["beacon"]), "UA-17475676-14");
 
 	// Call the unit tests
 	if (window.LiftiumTest && typeof window.LiftiumTest.afterBeacon == "function"){
