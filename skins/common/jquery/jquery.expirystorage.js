@@ -4,8 +4,8 @@
  ******** real cookies, the simulation requires an expiration. ***************
  *****************************************************************************/
 
-$.storageWithExp = new $.store();
-$.storageWithExp.get = function(key) {
+$.expiryStorage = new $.store();
+$.expiryStorage.get = function(key) {
 	var value = this.driver.get( key );
 	if (!value) {
 		return;
@@ -24,7 +24,7 @@ $.storageWithExp.get = function(key) {
 
 // Set cookie. Expires logic borrowed from a jquery plugin. 
 // NOTE: expires is either a date object, or a number of *milli*seconds until the cookie expires 
-$.storageWithExp.set = function(key, value, expires) {
+$.expiryStorage.set = function(key, value, expires) {
 	var d;
 	if (typeof expires == 'number') {
 		d = new Date();
