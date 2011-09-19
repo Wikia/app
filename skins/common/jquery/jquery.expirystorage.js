@@ -10,11 +10,11 @@ $.storageWithExp.get = function(key) {
 	if (!value) {
 		return;
 	}
-	var cookie = this.driver.encodes ? value : this.unserialize( value );
+	var data = this.driver.encodes ? value : this.unserialize( value );
 	value = null; 
 	var d = new Date();
-	if (cookie.expires >= d.getTime()) {
-		value = cookie.value;
+	if (data.expires >= d.getTime()) {
+		value = data.value;
 	}
 	else {
 		this.del(key);
@@ -36,8 +36,8 @@ $.storageWithExp.set = function(key, value, expires) {
 	else {
 		throw 'expires is not in a valid form';
 	}
-	var cookie = { value: value, expires: d.getTime() };
-	this.driver.set( key, this.driver.encodes ? cookie : this.serialize( cookie ) );
+	var data = { value: value, expires: d.getTime() };
+	this.driver.set( key, this.driver.encodes ? data : this.serialize( data ) );
 };
 
 /*****************************************************************************
