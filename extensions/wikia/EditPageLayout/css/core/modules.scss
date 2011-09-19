@@ -41,18 +41,28 @@
 	}
 	// page controls
 	.module_page_controls {
+		#wpSummaryLabel { 
+			clear: both;
+		}
+		label[for="wpSummary"] {
+			clear: right;
+			display: block; 
+			float: left;
+			margin: -17px 0 7px 0;
+		}
 		.checkboxes {
 			@include clearfix;
+			clear: right;
+			float: right;
+			line-height: 17px;
 
 			> label {
+				display: block;
 				font-size: 10px;
-				text-align: right;
+				margin-bottom: 5px;
 				input {
+					margin: 0 5px 0 0;
 					vertical-align: middle;
-				}
-
-				&.wpMinoredit {
-					float: right;
 				}
 			}
 		}
