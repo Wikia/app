@@ -61,6 +61,13 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 			return;
 		}
 
+		// check if feature given is actually something we allow setting
+		if ( !in_array( $feature, $this->wg->WikiFeatures['normal'] ) && !in_array( $feature, $this->wg->WikiFeatures['labs'] ) ) {
+			$this->setVal('result', 'error');
+			$this->setVal('error', $this->wf->Msg('wikifeatures-error-invalid-parameter'));
+			return;
+		}
+
 		// validate feature
 		$wg_value = WikiFactory::getVarByName($feature, $this->wg->CityId);
 		if (($enabled != 'true' && $enabled != 'false') || empty($feature) || empty($wg_value)) {
