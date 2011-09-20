@@ -122,6 +122,7 @@ $messages['en'] = array(
 	'oasis-latest-activity-edit-details' => 'edited by $1 $2',
 	'oasis-latest-activity-delete-details' => 'deleted by $1 $2',
 
+	'oasis-edit-this-menu' => 'Edit this menu',
 	'oasis-interlang-show-all' => '... see all >',
 	'oasis-interlang-languages' => 'Languages:',
 	'photosblacklist' => '* example-blacklist.png', // @todo FIXME: give this an extension specific key prefix.
