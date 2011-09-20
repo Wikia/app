@@ -17,6 +17,7 @@ class NavigationServiceTest extends PHPUnit_Framework_TestCase {
 					'original' => '1',
 					'text' => '1',
 					'href' => Title::newFromText('1')->fixSpecialName()->getLocalURL(),
+					'specialAttr' => null,
 					'depth' => 1,
 					'parentIndex' => 0
 				),
@@ -24,6 +25,7 @@ class NavigationServiceTest extends PHPUnit_Framework_TestCase {
 					'original' => '1',
 					'text' => '1',
 					'href' => Title::newFromText('1')->fixSpecialName()->getLocalURL(),
+					'specialAttr' => null,
 					'depth' => 1,
 					'parentIndex' => 0
 				),
@@ -31,6 +33,7 @@ class NavigationServiceTest extends PHPUnit_Framework_TestCase {
 					'original' => '1',
 					'text' => '1',
 					'href' => Title::newFromText('1')->fixSpecialName()->getLocalURL(),
+					'specialAttr' => null,
 					'depth' => 1,
 					'parentIndex' => 0,
 					'children' => array(4, 5)
@@ -39,6 +42,7 @@ class NavigationServiceTest extends PHPUnit_Framework_TestCase {
 					'original' => '2',
 					'text' => '2',
 					'href' => Title::newFromText('2')->fixSpecialName()->getLocalURL(),
+					'specialAttr' => null,
 					'depth' => 2,
 					'parentIndex' => 3,
 				),
@@ -46,6 +50,7 @@ class NavigationServiceTest extends PHPUnit_Framework_TestCase {
 					'original' => '2',
 					'text' => '2',
 					'href' => Title::newFromText('2')->fixSpecialName()->getLocalURL(),
+					'specialAttr' => null,
 					'depth' => 2,
 					'parentIndex' => 3,
 					'children' => array(6)
@@ -54,6 +59,7 @@ class NavigationServiceTest extends PHPUnit_Framework_TestCase {
 					'original' => '4',
 					'text' => '4',
 					'href' => Title::newFromText('4')->fixSpecialName()->getLocalURL(),
+					'specialAttr' => null,
 					'depth' => 4,
 					'parentIndex' => 5,
 				),
@@ -71,6 +77,7 @@ class NavigationServiceTest extends PHPUnit_Framework_TestCase {
 					'original' => '1',
 					'text' => '1',
 					'href' => Title::newFromText('1')->fixSpecialName()->getLocalURL(),
+					'specialAttr' => null,				
 					'depth' => 1,
 					'parentIndex' => 0
 				)
@@ -88,6 +95,7 @@ class NavigationServiceTest extends PHPUnit_Framework_TestCase {
 					'original' => '1',
 					'text' => '1',
 					'href' => Title::newFromText('1')->fixSpecialName()->getLocalURL(),
+					'specialAttr' => null,				
 					'depth' => 1,
 					'parentIndex' => 0,
 					'children' => array(2)
@@ -96,6 +104,7 @@ class NavigationServiceTest extends PHPUnit_Framework_TestCase {
 					'original' => '2',
 					'text' => '2',
 					'href' => Title::newFromText('2')->fixSpecialName()->getLocalURL(),
+					'specialAttr' => null,				
 					'depth' => 2,
 					'parentIndex' => 1
 				)
@@ -128,6 +137,7 @@ class NavigationServiceTest extends PHPUnit_Framework_TestCase {
 				'original' => 'whatever',
 				'text' => 'whatever',
 				'href' => Title::newFromText('whatever')->fixSpecialName()->getLocalURL(),
+				'specialAttr' => null,
 				'depth' => 1,
 				'parentIndex' => 0
 			)
@@ -146,6 +156,7 @@ class NavigationServiceTest extends PHPUnit_Framework_TestCase {
 				'original' => 'whatever',
 				'text' => 'whatever',
 				'href' => Title::newFromText('whatever')->fixSpecialName()->getLocalURL(),
+				'specialAttr' => null,				
 			)
 		);
 
@@ -155,6 +166,7 @@ class NavigationServiceTest extends PHPUnit_Framework_TestCase {
 				'original' => 'whatever',
 				'text' => 'whatever',
 				'href' => Title::newFromText('whatever')->fixSpecialName()->getLocalURL(),
+				'specialAttr' => null,				
 			)
 		);
 
@@ -164,6 +176,7 @@ class NavigationServiceTest extends PHPUnit_Framework_TestCase {
 				'original' => 'whatever',
 				'text' => 'something',
 				'href' => Title::newFromText('whatever')->fixSpecialName()->getLocalURL(),
+				'specialAttr' => null,				
 			)
 		);
 
@@ -173,6 +186,7 @@ class NavigationServiceTest extends PHPUnit_Framework_TestCase {
 				'original' => 'http://www.google.com',
 				'text' => 'http://www.google.com',
 				'href' => 'http://www.google.com',
+				'specialAttr' => null,				
 			)
 		);
 
@@ -182,6 +196,7 @@ class NavigationServiceTest extends PHPUnit_Framework_TestCase {
 				'original' => 'http://www.google.com',
 				'text' => 'Google',
 				'href' => 'http://www.google.com',
+				'specialAttr' => null,				
 			)
 		);
 
@@ -191,6 +206,7 @@ class NavigationServiceTest extends PHPUnit_Framework_TestCase {
 				'original' => '#',
 				'text' => 'Google',
 				'href' => '#',
+				'specialAttr' => null,				
 			)
 		);
 
@@ -200,6 +216,7 @@ class NavigationServiceTest extends PHPUnit_Framework_TestCase {
 				'original' => '',
 				'text' => 'Google',
 				'href' => '#',
+				'specialAttr' => null,				
 			)
 		);
 
@@ -209,6 +226,7 @@ class NavigationServiceTest extends PHPUnit_Framework_TestCase {
 				'original' => "\xef\xbf\xbd",
 				'text' => "\xef\xbf\xbd",
 				'href' => '#',
+				'specialAttr' => null,				
 			)
 		);
 
