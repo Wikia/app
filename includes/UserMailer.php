@@ -462,12 +462,9 @@ class UserMailer {
 		if ( !is_array( $emails ) ) {
 			$emails = array ( $emails );
 		}
-
 		foreach ( $emails as $to ) {
 			if ( $to instanceof MailAddress ) {
-
 				wfRunHooks('ComposeMail', array( $to, &$body, &$subject ));
-
 				if ( $mail == 'mail' ) {
 					$res = mail( $to->toString(), wfQuotedPrintable( $subject ), $body, $headers );
 				} elseif ( is_object( $mail ) ) {
@@ -484,6 +481,55 @@ class UserMailer {
 
 		return $res;
 	}
+	
+	//pawelrychly, piotrp
+	/**
+	 * This is a method that allows senning e-mails with any number of attachments to one 
+	 * or more e-mail adresses. 
+	 * @param $emails Array of MailAddress objects - receivers of your e-mails
+	 * @param $subject String - subject of your e-mail
+	 * @param $attachments_dirs Array of Strings/String - full paths to files you want to send
+	 * with the filenames (e.g. '/home/myuser/mytextfile.txt')
+	 * @param $from_mail String ( optional ) - if not provided, sender is: yourdevbox@wikia.com (we guess :P) 
+	 * @param $from_name String ( optional ) - default value is sender alias 
+	 * @param $body String ( optional ) - text of your message. Default value is empty.
+	 */
+	public static function sendWithAttachment( $emails, $subject, $attachments_dirs, $from_mail='', $from_name='', $body = ''){
+		$uid = md5( uniqid( time() ) );
+		
+		$header="";
+		if ( !empty( $from_mail ) ) {
+			$header = "From: ".$from_name." <".$from_mail.">\r\n";
+		}
+		$header .= "MIME-Version: 1.0\r\n";
+		$header .= "Content-Type: multipart/mixed; boundary=\"".$uid."\"\r\n\r\n";
+		$header .= "--".$uid."\r\n";
+		$header .= "Content-type:text/plain; charset=iso-8859-1\r\n";
+		$header .= "Content-Transfer-Encoding: 7bit\r\n\r\n";
+		$header .= $body."\r\n\r\n";
+		
+		if ( !is_array( $attachments_dirs ) ) {
+			$attachments_dirs = array( $attachments_dirs );
+		}
+		
+		foreach ( $attachments_dirs as $key => $dir ) {	
+			if ( file_exists( $dir ) ) {		
+				$filename = basename( $dir );						
+				$file_size = filesize( $dir );
+				$handle = fopen( $dir, "r" );
+				$content = fread( $handle, $file_size );
+				fclose( $handle );
+				$content = chunk_split( base64_encode( $content ) );
+				$header .= "--".$uid."\r\n";	
+				$header .= "Content-Type: application/octet-stream; name=\"".$filename."\"\r\n"; // use diff. tyoes here
+				$header .= "Content-Transfer-Encoding: base64\r\n";
+				$header .= "Content-Disposition: attachment; filename=\"".$filename."\"\r\n\r\n";
+				$header .= $content."\r\n\r\n";
+			}
+		} 	
+		$header .= "--".$uid."--";	
+		UserMailer::sendMail( 'mail', $emails , $header, $subject, $body ); 
+	} 
 }
 
 /**
