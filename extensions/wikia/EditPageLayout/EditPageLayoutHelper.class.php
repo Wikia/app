@@ -167,6 +167,8 @@ class EditPageLayoutHelper {
 	 * Add wgIsEditPage global JS variable on edit pages
 	 */
 	function onMakeGlobalVariablesScript($vars) {
+		$this->app->wf->RunHooks('EditPageMakeGlobalVariablesScript', array(&$vars));
+
 		foreach( $this->jsVars as $key => $value ) {
 			$vars[$key] = $value;
 		}

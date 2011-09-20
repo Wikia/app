@@ -332,10 +332,15 @@
 					// block all clicks
 					contentNode.
 						bind('click', function(ev) {
-							ev.preventDefault();
+							var target = $(ev.target);
+
+							// don't block links opening in new tab
+							if (target.attr('target') !== '_blank') {
+								ev.preventDefault();
+							}
 						}).
 						css({
-							height: $(window).height() - 250,
+							height: options.height || ($(window).height() - 250),
 							overflow: 'auto'
 						});
 
@@ -348,7 +353,7 @@
 			}, options);
 
 			// use loading indicator before real content will be fetched
-			var content = '<div class="WikiaArticle"><img src="' + stylepath + '/common/images/ajax.gif" class="loading"></div>';
+			var content = '<div class="ArticlePreview WikiaArticle"><img src="' + stylepath + '/common/images/ajax.gif" class="loading"></div>';
 
 			$.showCustomModal(title, content, options);
 		},
@@ -368,7 +373,7 @@
 				width += config.extraPageWidth;
 			}
 
-			this.renderDialog($.msg('preview'), {
+			var options = {
 				buttons: [
 					{
 						id: 'close',
@@ -389,7 +394,12 @@
 				],
 				width: width,
 				className: 'preview'
-			}, function(contentNode) {
+			};
+
+			// allow extension to modify the preview dialog
+			$(window).trigger('EditPageRenderPreview', [options]);
+
+			this.renderDialog($.msg('preview'), options, function(contentNode) {
 				self.getContent(function(content) {
 					var summary = $('#wpSummary').val();
 
@@ -403,13 +413,14 @@
 
 					extraData.content = content;
 
+					if (window.wgEditPageSection !== null) {
+						extraData.section = window.wgEditPageSection;
+					}
+
 					self.ajax('preview',
 						extraData,
 						function(data) {
-							// wrap article's HTML inside .WikiaArticle
-							var pageTitle = '<h1 class="pagetitle">' + window.wgEditedTitle + '</h1>',
-								isSectionEdit = !!parseInt(window.wgEditPageSection) || (window.wgEditPageSection == 'new'),
-								html = (!isSectionEdit ? pageTitle : '') + data.html;
+							contentNode.html(data.html);
 							
 							// innerShiv is IE < 9 fix (BugId: 11294)
 							contentNode.html(innerShiv(html));

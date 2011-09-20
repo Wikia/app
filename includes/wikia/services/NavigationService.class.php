@@ -3,25 +3,32 @@
 class NavigationService {
 
 	const version = '0.01';
+	const ORIGINAL = 'original';
+	const PARENT_INDEX = 'parentIndex';
+	const CHILDREN = 'children';
+	const DEPTH = 'depth';
+	const HREF = 'href';
+	const TEXT = 'text';
+	const SPECIAL = 'specialAttr';
+
 
 	private $biggestCategories;
-
 	private $lastExtraIndex = 1000;
-
-	private $extraWordsMap = array(	'voted' => 'GetTopVotedArticles',
-									'popular' => 'GetMostPopularArticles',
-									'visited' => 'GetMostVisitedArticles',
-									'newlychanged' => 'GetNewlyChangedArticles',
-									'topusers' => 'GetTopFiveUsers');
+	private $extraWordsMap = array(
+		'voted' => 'GetTopVotedArticles',
+		'popular' => 'GetMostPopularArticles',
+		'visited' => 'GetMostVisitedArticles',
+		'newlychanged' => 'GetNewlyChangedArticles',
+		'topusers' => 'GetTopFiveUsers'
+	);
 
 	private $forContent = false;
 
 	/**
 	 * @author: Inez Korczyński
 	 */
-	public function parseMessage($messageName, $maxChildrenAtLevel = array(), $duration, $forContent = false ) {
+	public function parseMessage($messageName, $maxChildrenAtLevel = array(), $duration, $forContent = false, $filterInactiveSpecialPages = false ) {
 		wfProfileIn( __METHOD__ );
-
 		global $wgLang, $wgContLang, $wgMemc;
 
 		$this->forContent = $forContent;
@@ -30,16 +37,12 @@ class NavigationService {
 
 		if($useCache || $this->forContent ) {
 			$cacheKey = wfMemcKey($messageName, self::version);
-			$nodes = $wgMemc->get($cacheKey);
+			$nodes = array(); //$wgMemc->get($cacheKey); # DEBUG !!!
 		}
 
 		if(empty($nodes)) {
-			if ( $this->forContent ) {
-				$lines = explode("\n", wfMsgForContent($messageName));
-			} else {
-				$lines = explode("\n", wfMsg($messageName));
-			}
-			$nodes = $this->parseLines($lines, $maxChildrenAtLevel);
+			$text = $this->forContent ? wfMsgForContent($messageName) : wfMsg($messageName);
+			$nodes = $this->parseText($text, $maxChildrenAtLevel, $filterInactiveSpecialPages);
 
 			if($useCache || $this->forContent ) {
 				$wgMemc->set($cacheKey, $nodes, $duration);
@@ -50,7 +53,44 @@ class NavigationService {
 		return $nodes;
 	}
 
+	public function parseText($text, $maxChildrenAtLevel = array(), $filterInactiveSpecialPages = false) {
+		$lines = explode("\n", $text);
+
+		$nodes = $this->parseLines($lines, $maxChildrenAtLevel);
+		$nodes = $this->filterSpecialPages( $nodes, $filterInactiveSpecialPages );
+
+		return $nodes;
+	}
+
+	public function filterSpecialPages( $nodes, $filterInactiveSpecialPages ){
+		wfProfileIn( __METHOD__ );
+		if( !$filterInactiveSpecialPages ) {
+			return $nodes;
+		}
+
+		// filters out every special page that is not defined
+		foreach( $nodes as $key => $node ){
+			if (
+				isset( $node[ self::ORIGINAL ] ) &&
+				stripos( $node[ self::ORIGINAL ], 'special:' ) === 0
+			) {
+
+				list(, $specialPageName) = explode( ':', $node[ self::ORIGINAL ] );
+				if ( !SpecialPage::exists( $specialPageName ) ){
+					$inParentKey = array_search( $key, $nodes[ $node[ self::PARENT_INDEX ] ][ self::CHILDREN ]);
+					// remove from parent's child list
+					unset( $nodes[ $node[ self::PARENT_INDEX ] ][ self::CHILDREN ][$inParentKey] );
+					// remove node
+					unset( $nodes[ $key ] );
+				}
+			}
+		}
+		wfProfileOut( __METHOD__ );
+		return $nodes;
+	}
+
 	/**
+	 *
 	 * @author: Inez Korczyński
 	 */
 	public function parseLines($lines, $maxChildrenAtLevel = array()) {
@@ -64,7 +104,7 @@ class NavigationService {
 			$i = 0;
 			$lastSkip = null;
 
-			foreach($lines as $line) {
+			foreach ($lines as $line ) {
 
 				// we are interested only in lines that are not empty and start with asterisk
 				if(trim($line) != '' && $line{0} == '*') {
@@ -80,14 +120,14 @@ class NavigationService {
 					if($depth == $lastDepth + 1) {
 						$parentIndex = $i;
 					} else if ($depth == $lastDepth) {
-						$parentIndex = $nodes[$i]['parentIndex'];
+						$parentIndex = $nodes[$i][ self::PARENT_INDEX ];
 					} else {
 						for($x = $i; $x >= 0; $x--) {
 							if($x == 0) {
 								$parentIndex = 0;
 								break;
 							}
-							if($nodes[$x]['depth'] <= $depth - 1) {
+							if($nodes[$x][ self::DEPTH ] <= $depth - 1) {
 								$parentIndex = $x;
 								break;
 							}
@@ -95,8 +135,8 @@ class NavigationService {
 					}
 
 					if(isset($maxChildrenAtLevel[$depth-1])) {
-						if(isset($nodes[$parentIndex]['children'])) {
-							if(count($nodes[$parentIndex]['children']) >= $maxChildrenAtLevel[$depth-1]) {
+						if(isset($nodes[$parentIndex][ self::CHILDREN ])) {
+							if(count($nodes[$parentIndex][ self::CHILDREN ]) >= $maxChildrenAtLevel[$depth-1]) {
 								$lastSkip = $depth;
 								continue;
 							}
@@ -104,14 +144,14 @@ class NavigationService {
 					}
 
 					$node = $this->parseOneLine($line);
-					$node['parentIndex'] = $parentIndex;
-					$node['depth'] = $depth;
+					$node[ self::PARENT_INDEX ] = $parentIndex;
+					$node[ self::DEPTH ] = $depth;
 
 					$this->handleExtraWords($node, $nodes);
 
-					$nodes[$node['parentIndex']]['children'][] = $i+1;
+					$nodes[$node[ self::PARENT_INDEX ]][ self::CHILDREN ][] = $i+1;
 					$nodes[$i+1] = $node;
-					$lastDepth = $node['depth'];
+					$lastDepth = $node[ self::DEPTH ];
 					$i++;
 				}
 			}
@@ -128,7 +168,14 @@ class NavigationService {
 		wfProfileIn( __METHOD__ );
 
 		// trim spaces and asterisks from line and then split it to maximum two chunks
-		$lineArr = explode('|', trim($line, '* '), 2);
+		$lineArr = explode('|', trim($line, '* '), 3);
+
+		if ( isset( $lineArr[2] ) ){
+			$specialParam = trim( addslashes( $lineArr[2] ) );
+			unset( $lineArr[2] );
+		} else {
+			$specialParam = '';
+		}
 
 		// trim [ and ] from line to have just http://www.wikia.com instrad of [http://www.wikia.com] for external links
 		$lineArr[0] = trim($lineArr[0], '[]');
@@ -169,9 +216,10 @@ class NavigationService {
 
 		wfProfileOut( __METHOD__ );
 		return array(
-			'original' => $lineArr[0],
-			'text' => $text,
-			'href' => $href
+			self::ORIGINAL => $lineArr[0],
+			self::TEXT => $text,
+			self::HREF => $href,
+			self::SPECIAL => $specialParam
 		);
 	}
 
@@ -180,10 +228,10 @@ class NavigationService {
 	 */
 	private function handleExtraWords(&$node, &$nodes) {
 
-		$originalLower = strtolower($node['original']);
+		$originalLower = strtolower($node[ self::ORIGINAL ]);
 
 		if(substr($originalLower, 0, 9) == '#category') {
-			$param = trim(substr($node['original'], 9), '#');
+			$param = trim(substr($node[ self::ORIGINAL ], 9), '#');
 
 			if(is_numeric($param)) {
 				$category = $this->getBiggestCategory($param);
@@ -192,9 +240,9 @@ class NavigationService {
 				$name = substr($param, 1);
 			}
 
-			$node['href'] = Title::makeTitle(NS_CATEGORY, $name)->getLocalURL();
-			if(strpos($node['text'], '#') === 0) {
-				$node['text'] = str_replace('_', ' ', $name);
+			$node[ self::HREF ] = Title::makeTitle(NS_CATEGORY, $name)->getLocalURL();
+			if(strpos($node[ self::TEXT ], '#') === 0) {
+				$node[ self::TEXT ] = str_replace('_', ' ', $name);
 			}
 
 			$data = getMenuHelper($name);
@@ -202,9 +250,9 @@ class NavigationService {
 			foreach($data as $key => $val) {
 				$title = Title::newFromId($val);
 				if(is_object($title)) {
-					$node['children'][] = $this->lastExtraIndex;
-					$nodes[$this->lastExtraIndex]['text'] = $title->getText();
-					$nodes[$this->lastExtraIndex]['href'] = $title->getLocalUrl();
+					$node[ self::CHILDREN ][] = $this->lastExtraIndex;
+					$nodes[$this->lastExtraIndex][ self::TEXT ] = $title->getText();
+					$nodes[$this->lastExtraIndex][ self::HREF ] = $title->getLocalUrl();
 					$this->lastExtraIndex++;
 				}
 			}
@@ -214,19 +262,18 @@ class NavigationService {
 
 			if(isset($this->extraWordsMap[$extraWord])) {
 
-				if($node['text']{0} == '#') {
-					$node['text'] = wfMsg(trim($node['original'], ' *'));
+				if($node[ self::TEXT ]{0} == '#') {
+					$node[ self::TEXT ] = wfMsg(trim($node[ self::ORIGINAL], ' *'));
 				}
 
 				$fname = $this->extraWordsMap[$extraWord];
 				$data = DataProvider::$fname();
 				//http://bugs.php.net/bug.php?id=46322 count(false) == 1
 				if (!empty($data)) {
-					$node['children'] = array();
 					foreach($data as $val) {
-						$node['children'][] = $this->lastExtraIndex;
-						$nodes[$this->lastExtraIndex]['text'] = $val['text'];
-						$nodes[$this->lastExtraIndex]['href'] = $val['url'];
+						$node[ self::CHILDREN ][] = $this->lastExtraIndex;
+						$nodes[$this->lastExtraIndex][ self::TEXT ] = $val[ self::TEXT ];
+						$nodes[$this->lastExtraIndex][ self::HREF ] = $val['url'];
 						$this->lastExtraIndex++;
 					}
 				}

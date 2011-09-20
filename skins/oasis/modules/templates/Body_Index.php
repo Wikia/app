@@ -9,9 +9,11 @@
 <div id="ad-skin" class="wikia-ad noprint"></div>
 <?= wfRenderModule('Ad', 'Index', array('slotname' => 'INVISIBLE_TOP')) ?>
 <?= wfRenderModule('Ad', 'Index', array('slotname' => 'HOME_INVISIBLE_TOP')) ?>
-<?= wfRenderModule('GlobalHeader') ?>
+<?= empty( $wgOasisNavV2  )
+	? wfRenderModule( 'GlobalHeaderV2' )
+	: wfRenderModule( 'GlobalHeader' ) ?>
 
-<section id="WikiaPage" class="WikiaPage">
+<section id="WikiaAdvertPage" class="WikiaAdvertPage">
 	<div id="WikiaPageBackground" class="WikiaPageBackground"></div>
 	<div class="WikiaPageContentWrapper">
 		<?= wfRenderModule('Notifications', 'Confirmation') ?>
@@ -42,10 +44,20 @@
 		}
 		?>
 
+<? if($wgOasisNavV2): ?>
+	</div>
+</section>
+
+<section id="WikiaPage" class="WikiaPage<?= empty( $wgOasisNavV2 ) ? '' : ' V2' ?>">
+	<div id="WikiaPageBackground" class="WikiaPageBackground"></div>
+	<div class="WikiaPageContentWrapper">
+<? endif; ?>
 
 		<?php
-			if (empty($wgSuppressWikiHeader)) {
-				echo wfRenderModule('WikiHeader');
+			if ( empty( $wgSuppressWikiHeader ) ) {
+				echo empty( $wgOasisNavV2  )
+					? wfRenderModule( 'WikiHeader' )
+					: wfRenderModule( 'WikiHeaderV2' );
 			}
 		?>
 
@@ -84,7 +96,7 @@
 							echo F::app()->renderView( $headerModuleName, $headerModuleAction, $headerModuleParams ); 
 						} else {
 							// Show just the edit button
-							echo F::app()->renderView( 'UserProfilePage', 'renderActionButton', array() );
+						echo F::app()->renderView( 'UserProfilePage', 'renderActionButton', array() );
 						}
 					} else {
 						echo wfRenderModule($headerModuleName, $headerModuleAction, $headerModuleParams);

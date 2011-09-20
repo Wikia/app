@@ -16,6 +16,7 @@ class BodyModule extends Module {
 	var $wgEnableWikiAnswers;
 	var $wgABTests;
 	var $wgEnableTopButton;
+	var $wgOasisNavV2;
 
 	// skin vars
 	var $content;
@@ -99,7 +100,7 @@ class BodyModule extends Module {
 		global $wgTitle, $wgEnableUserProfilePagesV3;
 
 		// perform namespace and special page check
-		
+
 		$isUserPage = in_array($wgTitle->getNamespace(), self::getUserPagesNamespaces());
 
 		$ret =  ($isUserPage && empty($wgEnableUserProfilePagesV3))
@@ -150,7 +151,7 @@ class BodyModule extends Module {
 			$wgEnableWikiaCommentsExt, $wgExtraNamespaces, $wgExtraNamespacesLocal,
 			$wgEnableCorporatePageExt, $wgEnableSpotlightsV2_Rail,
 			$wgEnableUserProfilePagesExt, $wgABTests, $wgEnableWikiAnswers, $wgEnableWikiReviews,
-			$wgEnableBlogsAsClassifieds, $wgSalesTitles, $wgEnableHuluVideoPanel, 
+			$wgEnableBlogsAsClassifieds, $wgSalesTitles, $wgEnableHuluVideoPanel,
 			$wgEnableGamingCalendarExt, $wgEnableUserProfilePagesV3;
 
 		if ($this->wgSuppressRail) {
@@ -239,7 +240,7 @@ class BodyModule extends Module {
 			// If this page is not a page with the UserPagesHeader on version 3, show search (majority case)
 			$railModuleList = array (
 				1500 => array('Search', 'Index', null),
-			);		
+			);
 		}
 
 		// Content, category and forum namespaces.  FB:1280 Added file,video,mw,template
@@ -345,23 +346,23 @@ class BodyModule extends Module {
 		}
 		$railModuleList[1291] = array('Ad', 'Index', array('slotname' => 'MIDDLE_RIGHT_BOXAD'));
 		$railModuleList[1100] = array('Ad', 'Index', array('slotname' => 'LEFT_SKYSCRAPER_2'));
-                
+
                 /**
                  * Michał Roszka <michal@wikia-inc.com>
-                 * 
+                 *
                  * SSW Gaming Calendar
-                 * 
+                 *
                  * This is most likely going to be replaced with something similar to:
-                 * 
+                 *
                  * $railModuleList[1260] = array( 'Ad', 'Index', array( 'slotname' => 'GAMING_CALENDAR_RAIL' ) );
                  */
                 if ( !empty( $wgEnableGamingCalendarExt ) ) {
 			$railModuleList[1430] = array( 'GamingCalendarRail', 'Index', array( ) );
                 }
 		else {
-			$railModuleList[1430] = array('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BUTTON'));			
+			$railModuleList[1430] = array('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BUTTON'));
 		}
-                    
+
 		wfRunHooks( 'GetRailModuleList', array( &$railModuleList ) );
 
 		wfProfileOut(__METHOD__);
@@ -416,8 +417,8 @@ class BodyModule extends Module {
 				if(!empty($wgEnableUserProfilePagesV3)) {
 					$this->headerModuleAction = 'Index';
 				} else {
-					$this->headerModuleAction = 'BlogPost';	
-				}
+				$this->headerModuleAction = 'BlogPost';
+			}
 			}
 			// is this page a blog listing?
 			else if (self::isBlogListing()) {
@@ -500,7 +501,7 @@ class BodyModule extends Module {
 			$this->displayAdminDashboard = false;
 			$this->displayAdminDashboardChromedArticle = false;
 		}
-		
+
 		$this->isUserProfilePageV3Enabled = !empty($wgEnableUserProfilePagesV3);
 
 
@@ -530,8 +531,8 @@ class BodyModule extends Module {
 					$this->subtitle .= ' | ';
 					$this->subtitle .= Wikia::link($subjectPage);
 					break;
-			}
-		}
+	}
+}
 
 		if ($wgEnableTopButton) {
 			if (strtolower($wgTopButtonPosition) == 'right') {

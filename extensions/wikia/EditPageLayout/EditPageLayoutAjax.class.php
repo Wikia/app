@@ -20,14 +20,19 @@ class EditPageLayoutAjax {
 					if($method == 'preview') {
 						$html = $service->getPreview($wikitext);
 
-						// allow extensions to modify preview (BugId:8354)
+						// allow extensions to modify preview (BugId:8354) - this hook should only be run on article's content
 						wfRunHooks('OutputPageBeforeHTML', array(&$wgOut, &$html));
 
+						// add page title when not in section edit mode
+						if ($section === '') {
+							$html = '<h1 class="pagetitle">' . $wgTitle->getPrefixedText() .  '</h1>' . $html;
+						}
+
 						// allow extensions to modify preview (BugId:6721)
-						wfRunHooks('EditPageLayoutModifyPreview', array($wgTitle, &$html));
+						wfRunHooks('EditPageLayoutModifyPreview', array($wgTitle, &$html, $wikitext));
 
 					} elseif($method == 'diff') {
-						$html = $service->getDiff($wikitext, $section);
+						$html = $service->getDiff($wikitext, intval($section));
 					}
 				}
 
@@ -53,7 +58,7 @@ class EditPageLayoutAjax {
 		$content = $wgRequest->getVal('content', '');
 		$mode = $wgRequest->getVal('mode', '');
 		$page = $wgRequest->getVal('page', '');
-		$section = $wgRequest->getInt('section', 0);
+		$section = $wgRequest->getVal('section', '');
 
 		$wikitext = self::resolveWikitext($content, $mode, $page, $method, $section);
 		wfProfileOut(__METHOD__);
