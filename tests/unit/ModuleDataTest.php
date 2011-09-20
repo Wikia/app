@@ -708,17 +708,6 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$this->assertRegExp('/Talk:Foo%26Bar" title="Talk:Foo&amp;Bar"/', $moduleData['subtitle']);
 		$this->assertTrue($moduleData['displaytitle']);
 
-		// add edit box header
-		$editPage = (object) array(
-			'preview' => true,
-			'diff' => false,
-			'editFormTextTop' => '',
-		);
-
-		PageHeaderModule::modifyEditPage($editPage);
-
-		$this->assertRegExp('/<div id="WikiaEditBoxHeader"/', $editPage->editFormTextTop);
-		$this->assertRegExp('/Editing:/', $editPage->editFormTextTop);
 	}
 
 	function testUserPagesHeaderModule() {
