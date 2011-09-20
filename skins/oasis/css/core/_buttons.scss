@@ -102,7 +102,7 @@ This list-based button is used in the page header for edit/history/delete action
 		text-decoration: none;
 	}
 	/* fb:5020 - highlight individual elements of menu button separately */
-	>a, .drop {
+	>a, .drop, >li >a {
 		display: inline-block;
 		&:hover {
 			@include linear-gradient(darken($color-buttons, 4%), top, darken($color-button-highlight, 4%), 35%, darken($color-buttons, 4%), 65%);
@@ -112,7 +112,7 @@ This list-based button is used in the page header for edit/history/delete action
 			color: $color-button-text;
 		}
 	}
-	>a {
+	>a, >li >a {
 		@include border-radius-nw(4px);
 		@include border-radius-sw(4px);
 		border-right: 1px solid mix($color-button-text, $color-buttons, 40%);
