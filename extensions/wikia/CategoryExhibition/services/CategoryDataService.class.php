@@ -16,7 +16,7 @@ class CategoryDataService extends Service {
 		return $articles;
 	}
 
-	public static function getAlphabetical( $sCategoryDBKey, $mNamespace ){
+	public static function getAlphabetical( $sCategoryDBKey, $mNamespace, $negative = false ){
 
 		$dbr = wfGetDB( DB_SLAVE );
 		$res = $dbr->select(
@@ -24,7 +24,7 @@ class CategoryDataService extends Service {
 			array( 'page_id', 'page_title' ),
 			array(
 				'cl_to' => $sCategoryDBKey,
-				'page_namespace IN(' . $mNamespace . ')'
+				'page_namespace ' . ($negative ? 'NOT ' : '') . 'IN(' . $mNamespace . ')'
 			),
 			__METHOD__,
 			array(	'ORDER BY' => 'page_title' ),
@@ -33,7 +33,7 @@ class CategoryDataService extends Service {
 		return self::tableFromResult( $res, $mNamespace );
 	}
 
-	public static function getRecentlyEdited( $sCategoryDBKey, $mNamespace ){
+	public static function getRecentlyEdited( $sCategoryDBKey, $mNamespace, $negative = false  ){
 		
 		$dbr = wfGetDB( DB_SLAVE );
 		$res = $dbr->select(
@@ -41,7 +41,7 @@ class CategoryDataService extends Service {
 			array( 'page_id', 'page_title' ),
 			array(
 				'cl_to' => $sCategoryDBKey,
-				'page_namespace IN(' . $mNamespace . ')'
+				'page_namespace ' . ($negative ? 'NOT ' : '') . 'IN(' . $mNamespace . ')'
 			),
 			__METHOD__,
 			array(	'ORDER BY' => 'rev_timestamp DESC, page_title' ),
@@ -51,7 +51,7 @@ class CategoryDataService extends Service {
 		return self::tableFromResult( $res, $mNamespace );
 	}
 	
-	public function getMostVisited( $sCategoryDBKey, $mNamespace, $limit = false ){
+	public function getMostVisited( $sCategoryDBKey, $mNamespace, $limit = false, $negative = false  ){
 
 		global $wgStatsDB, $wgCityId, $wgDevelEnvironment, $wgStatsDBEnabled;
 
@@ -68,7 +68,7 @@ class CategoryDataService extends Service {
 				array( 'page', 'categorylinks' ),
 				array( 'page_id', 'cl_to' ),
 				array(	'cl_to' => $sCategoryDBKey,
-					'page_namespace IN(' . $mNamespace . ')'
+					'page_namespace ' . ($negative ? 'NOT ' : '') . 'IN(' . $mNamespace . ')'
 				),
 				__METHOD__,
 				array( 'ORDER BY' => 'page_title' ),
@@ -93,7 +93,7 @@ class CategoryDataService extends Service {
 					array( 'page_id' ),
 					array(
 						'city_id' => $wgCityId,
-						'page_ns IN(' . $mNamespace . ')'
+						'page_ns ' . ($negative ? 'NOT ' : '') . 'IN(' . $mNamespace . ')'
 					),
 					__METHOD__,
 					$optionsArray
@@ -115,7 +115,7 @@ class CategoryDataService extends Service {
 						array( 'pv_page_id as page_id' ),
 						array(
 							'pv_city_id' => $wgCityId,
-							'pv_namespace IN(' . $mNamespace . ')'
+							'pv_namespace ' . ($negative ? 'NOT ' : '') . 'IN(' . $mNamespace . ')'
 						),
 						__METHOD__,
 						array(

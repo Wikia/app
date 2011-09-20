@@ -42,7 +42,7 @@ class CategoryExhibitionSection {
 	 * @return array
 	 */
 
-	protected function fetchSectionItems( $mNamespace = NS_MAIN ) {
+	protected function fetchSectionItems( $mNamespace = NS_MAIN, $negative = false ) {
 
 		global $wgDevelEnvironment;
 		$sCategoryDBKey = $this->categoryTitle->getDBkey();
@@ -52,9 +52,9 @@ class CategoryExhibitionSection {
 			$mNamespace = implode(',', $mNamespace);
 		}
 		switch ( $this->getSortType() ){
-			case 'alphabetical': return CategoryDataService::getAlphabetical( $sCategoryDBKey, $mNamespace );
-			case 'recentedits': return CategoryDataService::getRecentlyEdited( $sCategoryDBKey, $mNamespace );
-			case 'mostvisited': return CategoryDataService::getMostVisited( $sCategoryDBKey, $mNamespace );
+			case 'alphabetical': return CategoryDataService::getAlphabetical( $sCategoryDBKey, $mNamespace, $negative );
+			case 'recentedits': return CategoryDataService::getRecentlyEdited( $sCategoryDBKey, $mNamespace, $negative );
+			case 'mostvisited': return CategoryDataService::getMostVisited( $sCategoryDBKey, $mNamespace, $negative );
 		}
 		return array();
 	}
@@ -167,13 +167,13 @@ class CategoryExhibitionSection {
 	 * @return EasyTemplate object
 	 */
 
-	protected function getTemplateForNameSpace( $namespace, $itemsPerPage = 16 ){
+	protected function getTemplateForNameSpace( $namespace, $itemsPerPage = 16, $negative = false ){
 
 		global $wgTitle;
 		$cachedContent = $this->getFromCache();
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		if( empty( $cachedContent ) ){
-			$aTmpData = $this->fetchSectionItems( $namespace );
+			$aTmpData = $this->fetchSectionItems( $namespace, $negative );
 			$pages = Paginator::newFromArray( $aTmpData, $itemsPerPage );
 			if ( is_array( $aTmpData ) && count( $aTmpData ) > 0 ){
 				$aTmpData = $pages->getPage( $this->paginatorPosition, true );
@@ -309,7 +309,7 @@ class CategoryExhibitionSection {
 			'id'		=> $pageId,
 			'img'		=> $imageUrl,
 			'snippet'	=> $snippetText,
-			'title'		=> $oTitle->getText(),
+			'title'		=> $this->getTitleForElement( $oTitle ),
 			'url'		=> $oTitle->getFullURL()
 		);
 
@@ -317,6 +317,10 @@ class CategoryExhibitionSection {
 		$oMemCache->set( $sKey, $returnData, 60*60*24 );
 		
 		return $returnData ;
+	}
+
+	protected function getTitleForElement( $oTitle ){
+		return $oTitle->getText();
 	}
 
 	/**
