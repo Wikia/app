@@ -174,12 +174,18 @@ $.fn.extend({
 			});
 
 		// macbre: associate blackout with current modal
-		var blackout = $('<div>').addClass('blackout');
+		// jakub: adding control of blackoutOpacity;
+		var blackoutOpacity = 0.65;
+		if (settings.blackoutOpacity) {
+			blackoutOpacity = settings.blackoutOpacity;
+		}
+
+		var blackout = $('<div>').addClass('blackout').attr('data-opacity', blackoutOpacity);
 
 		blackout
 			.height($(document).height())
 			.css({zIndex: zIndex})
-			.fadeTo("fast", 0.65)
+			.fadeTo("fast", blackoutOpacity)
 			.bind("click", function() {
 				if (!closeOnBlackoutClick) {
 					return;
@@ -274,11 +280,15 @@ $.fn.extend({
 		var zIndex = 2000000001 + ($('body').children('.blackout').length) * 2 ;
 		// show associated blackout
 		var blackout = $(this).data('blackout');
+		var blackoutOpacity = blackout.attr('data-opacity');
+		if ( !blackoutOpacity ){
+			blackoutOpacity = 0.65;
+		}
 		blackout
 			.height($(document).height())
 			.css({
 				display: 'block',
-				opacity: 0.65,
+				opacity: blackoutOpacity,
 				zIndex: zIndex
 			})
 			.removeClass('blackoutHidden');
