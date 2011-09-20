@@ -47,8 +47,12 @@ if ($(window).width() < 1010) {
 			$(window).bind("resize.AIC2", AIC2.onScroll);
 		//}
 
+	if (typeof inGroup != 'undefined') {
 	if (inGroup(groups.N)) {
 		Liftium.trackEvent3(Liftium.buildTrackUrl(['AIC2', 'test6']), {profile:'UA-17475676-11', sample:100});
+	}
+	} else {
+		Liftium.trackEvent3(Liftium.buildTrackUrl(["error", "inGroup", "AdsInContent"]), '100%');
 	}
 	if (!Liftium.e(Liftium.debugLevel) || Math.floor(Math.random() * 10) == 7) {
 		Liftium.trackEvent(Liftium.buildTrackUrl(['AIC2', 'test1']), 'UA-17475676-11');
