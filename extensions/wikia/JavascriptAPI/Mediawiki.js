@@ -707,22 +707,17 @@ Mediawiki.logout = function (callbackSuccess){
 
 /*
  * Get info about the module or querymodule passed in.
+ * 
+ * @param paramName - the parameter to send to the query.  Valid choices are eg: 'modules', 'querymodules', 'formatmodules'.
+ * @param paramValue - the string to send as the value for the 'paramName'. For example if the paramName is 'modules' and the paramValue is 'bob' then the API will get 'modules=bob'.
  *
  * Example: to handle the array of all of the param's in the callback (the useful info): $().log(result.paraminfo.modules[0].parameters);
  */
-Mediawiki.paraminfo = function(moduleName, queryModuleName, callbackSuccess, callbackError){
+Mediawiki.paraminfo = function(paramName, paramValue, callbackSuccess, callbackError){
 	var apiParams = {
 		'action' : 'paraminfo',
 	};
-	if(moduleName){
-		apiParams['modules'] = moduleName;
-	}
-	if(queryModuleName){
-		apiParams['querymodules'] = queryModuleName;
-	}
-	
-console.log("PARAMS: " );
-console.log(apiParams);
+	apiParams[paramName] = paramValue;
 
 	//Mediawiki.waiting();
 	return Mediawiki.apiCall(apiParams, callbackSuccess, callbackError);
