@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -429,6 +429,13 @@ CKEDITOR.tools.extend( CKEDITOR.dom.element.prototype,
 							name = 'className';
 							break;
 
+						case 'http-equiv':
+							name = 'httpEquiv';
+							break;
+
+						case 'name':
+							return this.$.name;
+
 						case 'tabindex':
 							var tabIndex = standard.call( this, name );
 
@@ -714,6 +721,9 @@ CKEDITOR.tools.extend( CKEDITOR.dom.element.prototype,
 
 		isEditable : function()
 		{
+			if ( this.isReadOnly() )
+				return false;
+
 			// Get the element name.
 			var name = this.getName();
 
@@ -884,11 +894,28 @@ CKEDITOR.tools.extend( CKEDITOR.dom.element.prototype,
 		 * @param {String} name The attribute name.
 		 * @example
 		 */
-		hasAttribute : function( name )
+		hasAttribute : (function()
 		{
-			var $attr = this.$.attributes.getNamedItem( name );
-			return !!( $attr && $attr.specified );
-		},
+			function standard( name )
+			{
+				var $attr = this.$.attributes.getNamedItem( name );
+				return !!( $attr && $attr.specified );
+			}
+
+			return ( CKEDITOR.env.ie && CKEDITOR.env.version < 8 ) ?
+					function( name )
+					{
+						// On IE < 8 the name attribute cannot be retrieved
+						// right after the element creation and setting the
+						// name with setAttribute.
+						if ( name == 'name' )
+							return !!this.$.name;
+
+						return standard.call( this, name );
+					}
+				:
+					standard;
+		})(),
 
 		/**
 		 * Hides this element (display:none).
@@ -1030,6 +1057,18 @@ CKEDITOR.tools.extend( CKEDITOR.dom.element.prototype,
 						this.$.tabIndex = value;
 					else if ( name == 'checked' )
 						this.$.checked = value;
+					else
+						standard.apply( this, arguments );
+					return this;
+				};
+			}
+			else if ( CKEDITOR.env.ie8Compat && CKEDITOR.env.secure )
+			{
+				return function( name, value )
+				{
+					// IE8 throws error when setting src attribute to non-ssl value. (#7847)
+					if ( name == 'src' && value.match( /^http:\/\// ) )
+						try { standard.apply( this, arguments ); } catch( e ){}
 					else
 						standard.apply( this, arguments );
 					return this;
@@ -1556,7 +1595,13 @@ CKEDITOR.tools.extend( CKEDITOR.dom.element.prototype,
 		 */
 		getDirection : function( useComputed )
 		{
-			return useComputed ? this.getComputedStyle( 'direction' ) : this.getStyle( 'direction' ) || this.getAttribute( 'dir' );
+			return useComputed ?
+				this.getComputedStyle( 'direction' )
+					// Webkit: offline element returns empty direction (#8053).
+					|| this.getDirection()
+					|| this.getDocument().$.dir
+					|| this.getDocument().getBody().getDirection( 1 )
+				: this.getStyle( 'direction' ) || this.getAttribute( 'dir' );
 		},
 
 		/**

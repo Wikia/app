@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -17,7 +17,7 @@ CKEDITOR.plugins.add( 'basicstyles',
 
 			editor.attachStyleStateChange( style, function( state )
 				{
-					editor.getCommand( commandName ).setState( state );
+					!editor.readOnly && editor.getCommand( commandName ).setState( state );
 				});
 
 			editor.addCommand( commandName, new CKEDITOR.styleCommand( style ) );

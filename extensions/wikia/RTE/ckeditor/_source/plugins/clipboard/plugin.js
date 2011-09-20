@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -166,6 +166,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		}
 	};
 
+	function cancel( evt ) { evt.cancel(); }
+
 	// Allow to peek clipboard content by redirecting the
 	// pasting content into a temporary bin and grab the content of it.
 	function getClipboardData( evt, mode, callback )
@@ -216,19 +218,11 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 		var bms = sel.createBookmarks();
 
+		this.on( 'selectionChange', cancel, null, null, 0 );
+
 		// Turn off design mode temporarily before give focus to the paste bin.
 		if ( mode == 'text' )
-		{
-			if ( CKEDITOR.env.ie )
-			{
-				var ieRange = doc.getBody().$.createTextRange();
-				ieRange.moveToElementText( pastebin.$ );
-				ieRange.execCommand( 'Paste' );
-				evt.data.preventDefault();
-			}
-			else
-				pastebin.$.focus();
-		}
+			pastebin.$.focus();
 		else
 		{
 			range.setStartAt( pastebin, CKEDITOR.POSITION_AFTER_START );
@@ -242,6 +236,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		{
 			mode == 'text' && CKEDITOR.env.gecko && editor.focusGrabber.focus();
 			pastebin.remove();
+			editor.removeListener( 'selectionChange', cancel );
 
 			// Grab the HTML contents.
 			// We need to look for a apple style wrapper on webkit it also adds
@@ -296,7 +291,9 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		// keyboard paste or execCommand ) (#4874).
 		CKEDITOR.env.ie && ( depressBeforeEvent = 1 );
 
-		var retval = editor.document.$.queryCommandEnabled( command ) ? CKEDITOR.TRISTATE_OFF : CKEDITOR.TRISTATE_DISABLED;
+		var retval = CKEDITOR.TRISTATE_OFF;
+		try { retval = editor.document.$.queryCommandEnabled( command ) ? CKEDITOR.TRISTATE_OFF : CKEDITOR.TRISTATE_DISABLED; }catch( er ){}
+
 		depressBeforeEvent = 0;
 		return retval;
 	}
@@ -329,6 +326,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 							editor.insertHtml( data[ 'html' ] );
 						else if ( data[ 'text' ] )
 							editor.insertText( data[ 'text' ] );
+
+						setTimeout( function () { editor.fire( 'afterPaste' ); }, 0 );
 
 					}, null, null, 1000 );
 
@@ -385,53 +384,48 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				// it's introduced by a document command execution (e.g. toolbar buttons) or
 				// user paste behaviors. (e.g. Ctrl-V)
 
-				// Wikia - start
-				// commented out (caused RT #40922)
-				/*
 				editor.on( 'contentDom', function()
 				{
 					var body = editor.document.getBody();
-					body.on( ( ( mode == 'text' && CKEDITOR.env.ie ) || CKEDITOR.env.webkit ) ? 'paste' : 'beforepaste',
-						function( evt )
-						{
-							if ( depressBeforeEvent )
-								return;
+ 					body.on( CKEDITOR.env.webkit ? 'paste' : 'beforepaste', function( evt )
+  						{
+  							if ( depressBeforeEvent )
+  								return;
 
-							getClipboardData.call( editor, evt, mode, function ( data )
-							{
-								// The very last guard to make sure the
-								// paste has successfully happened.
-								if ( !data )
-									return;
+ 							// Fire 'beforePaste' event so clipboard flavor get customized
+ 							// by other plugins.
+ 							var eventData =  { mode : 'html' };
+ 							editor.fire( 'beforePaste', eventData );
 
-								var dataTransfer = {};
-								dataTransfer[ mode ] = data;
-								editor.fire( 'paste', dataTransfer );
+							/**
+							 * Wikia change
+							 * Commented out because of RT#40922
+							 *
+ 							getClipboardData.call( editor, evt, eventData.mode, function ( data )
+  							{
+  								// The very last guard to make sure the
+  								// paste has successfully happened.
+ 								if ( !( data = CKEDITOR.tools.trim( data.replace( /<span[^>]+data-cke-bookmark[^<]*?<\/span>/ig,'' ) ) ) )
+  									return;
+
+  								var dataTransfer = {};
+ 								dataTransfer[ eventData.mode ] = data;
+  								editor.fire( 'paste', dataTransfer );
 							} );
+							/**/
 						});
+
+					// Dismiss the (wrong) 'beforepaste' event fired on context menu open. (#7953)
+					body.on( 'contextmenu', function()
+					{
+						depressBeforeEvent = 1;
+						setTimeout( function() { depressBeforeEvent = 0; }, 10 );
+					});
 
 					body.on( 'beforecut', function() { !depressBeforeEvent && fixCut( editor ); } );
 					body.on( 'mouseup', function(){ setTimeout( function(){ setToolbarStates.call( editor ); }, 0 ); }, editor );
 					body.on( 'keyup', setToolbarStates, editor );
 				});
-				*/
-
-				// macbre: Trigger custom CK event when beforepaste DOM event is triggered
-				editor.on( 'contentDom', function()	{
-					var body = editor.document.getBody();
-
-					body.on('beforepaste', function(ev) {
-						// IE Bug: queryCommandEnabled('paste') fires also 'beforepaste(copy/cut)',
-						// guard to distinguish from the ordinary sources( either
-						// keyboard paste or execCommand ) (#4874).
-						if (depressBeforeEvent) {
-							return;
-						}
-
-						editor.fire('beforepaste', {originalEvent: ev});
-					});
-				});
-				// Wikia - end
 
 				// For improved performance, we're checking the readOnly state on selectionChange instead of hooking a key event for that.
 				editor.on( 'selectionChange', function( evt )
@@ -473,3 +467,12 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
  * @name CKEDITOR.editor#pasteDialog
  * @event
  */
+
+/**
+ * Force plain text pasting
+ * @type Boolean
+ * @default false
+ * @example
+ * config.forcePasteAsPlainText = false;
+ */
+CKEDITOR.config.forcePasteAsPlainText = false;

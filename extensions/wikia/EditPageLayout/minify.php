@@ -22,7 +22,7 @@ $srv->process(false);
 
 SpriteService::newStandard(
 	'page-layout-builder',
-	"$IP/extensions/wikia/EditPageReskin/PageLayoutBuilder"
+	"$IP/extensions/wikia/PageLayoutBuilder"
 )->process(false);
 
 /*

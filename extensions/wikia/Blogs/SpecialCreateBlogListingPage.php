@@ -5,10 +5,15 @@
  *
  * @author Adrian Wieczorek
  */
-class CreateBlogListingPage extends SpecialBlogPage {
+class CreateBlogListingPage extends SpecialPage {
 
 	private $mTagBody = '';
 	private $mRenderedPreview;
+	
+	protected $mFormData = array();
+	protected $mFormErrors = array();
+	protected $mPreviewTitle = '';
+	protected $mPostArticle = null;
 	
 	const defaultListingCount = 10;
 
@@ -60,6 +65,26 @@ class CreateBlogListingPage extends SpecialBlogPage {
 
 	}
 
+	protected function getCategoriesAsText ($aCategories) {
+		global $wgContLang;
+
+		$sText = '';
+		$sCategoryNSName = $wgContLang->getFormattedNsText( NS_CATEGORY );
+
+		foreach($aCategories as $sCategory) {
+			if(!empty($sCategory)) {
+				$sText .= "\n[[" . $sCategoryNSName . ":" . $sCategory . "]]";
+			}
+		}
+
+		return $sText;
+	}
+	
+
+	public function setFormData($sKey, $value) {
+		$this->mFormData[$sKey] = $value;
+	}
+	
 	protected function parseFormData() {
 		global $wgUser, $wgRequest, $wgOut, $wgParser;
 

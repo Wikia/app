@@ -1,152 +1,147 @@
 <?php
 
-/**
- * @addto SpecialPages
- *
- * @author Adrian Wieczorek
- */
-class CreateBlogPage extends SpecialBlogPage {
+class CreateBlogPage extends SpecialCustomEditPage {
 
-	private $mEditPage = null;
-	private $mCategorySelectEnabled = false;
+	const FIELD_IS_COMMENTING_ENABLED = 'wpIsCommentingEnabled';
+	const STATUS_BLOG_PERMISSION_DENIED = -101;
+	protected $mFormData = array();
+	protected $titleNS = NS_BLOG_ARTICLE;
 
 	public function __construct() {
-		// initialise messages
-		wfLoadExtensionMessages( "Blogs" );
-		parent::__construct( 'CreateBlogPage'  /*class*/, '' /*restriction*/, true);
-
-		// force EditEnhancements initialisation if available
-		if(function_exists('wfEditEnhancementsInit') && !class_exists('EditEnhancements')) {
-			wfEditEnhancementsInit(true);
-		}
+		//TODO create some abstract metod to force user to get CreateBlogPage
+		parent::__construct('CreateBlogPage');
 	}
 
-	public function execute() {
-		global $wgOut, $wgUser, $wgRequest, $wgTitle;
+	protected function initializeEditPage() {
+		$editPage = parent::initializeEditPage();
+		$editPage->isCreateBlogPage = true;
+		return $editPage;
+	}
 
-		if( !$wgUser->isLoggedIn() ) {
-			$wgOut->showErrorPage( 'create-blog-no-login', 'create-blog-login-required', array(wfGetReturntoParam()));
+
+	public function execute($par) {
+		if( !$this->user->isLoggedIn() ) {
+			$this->out->showErrorPage( 'create-blog-no-login', 'create-blog-login-required', array(wfGetReturntoParam()));
 			return;
 		}
 
-		if( $wgUser->isBlocked() ) {
-			$wgOut->blockedPage();
+		if( $this->user->isBlocked() ) {
+			$this->out->blockedPage();
 			return;
 		}
 
 		if( wfReadOnly() ) {
-			$wgOut->readOnlyPage();
+			$this->out->readOnlyPage();
 			return;
 		}
 
-		$this->mTitle = Title::makeTitle( NS_SPECIAL, 'CreateBlogPage' );
+		parent::execute($par);
+	}
 
-		// force CategorySelect initialisation if available
-		if(function_exists('CategorySelectInitializeHooks') && ($wgUser->getOption('disablecategoryselect', false) == false)) {
-			$this->mCategorySelectEnabled = true;
-			$wgRequest->setVal('action', 'edit');
-			CategorySelectInit(true);
-			CategorySelectInitializeHooks(null, null, $this->mTitle, null, null, null);
-		}
+	protected function afterArticleInitialize($mode, $title, $article) {
+		if( $mode == self::MODE_EDIT ) {
+			$aPageProps = BlogArticle::getProps($article->getId());
+			$this->mFormData['isCommentingEnabled'] = empty($aPageProps['commenting']) ? 0 :$aPageProps['commenting'];
 
-		$wgOut->setPageTitle( wfMsg("create-blog-post-title") );
-
-		if($wgRequest->wasPosted()) {
-			// BugId:954 - check for "show changes"
-			$isShowDiff = !is_null($wgRequest->getVal('wpDiff'));
-
-			$this->parseFormData();
-			if(count($this->mFormErrors) > 0 || !empty($this->mPreviewTitle)) {
-				$this->renderForm();
+			$isAllowed = $this->user->isAllowed( "blog-articles-edit" );
+			if((strtolower($this->user->getName()) != strtolower( BlogArticle::getOwner($title))) && !$isAllowed) {
+				$this->titleStatus = self::STATUS_BLOG_PERMISSION_DENIED;
+				$this->addEditNotice(  wfMsg('create-blog-permission-denied') );
 			}
-			else if ($isShowDiff) {
-				// watch out! there be dragons (temporary workaround)
-				$this->mEditPage->diff = true;
-				$this->mEditPage->edittime = null;
-				$this->renderForm();
-			}
-			else {
-				$this->save();
-			}
-		}
-		else {
-			if($wgRequest->getVal('article') != null) {
-				$this->parseArticle(urldecode($wgRequest->getVal('article')));
-			}
-			else {
-				$text = '';
-
-				$preload = $wgRequest->getText( 'preload' );
-				if ( !empty( $preload ) ) {
-					$preloadTitle = Title::newFromText( $preload );
-					if ( !is_null( $preloadTitle ) ) {
-						$preloadArticle = new Article( $preloadTitle );
-						$text = $preloadArticle->getContent();
-					}
-				}
-
-				$this->createEditPage( $text );
-			}
-			$this->renderForm();
+		} else {
+			$this->mFormData['isCommentingEnabled'] = true;
 		}
 	}
 
-	protected function save() {
-		global $wgOut, $wgUser, $wgContLang, $wgRequest;
+	/**
+	 * Return wikitext for generating preview / diff / to be saved
+	 */
+	public function getWikitextFromRequest() {
+		$wikitext = parent::getWikitextFromRequest();
 
-		// CategorySelect compatibility (add categories to article body)
-		if($this->mCategorySelectEnabled) {
-			CategorySelectImportFormData($this->mEditPage, $wgRequest);
+		if( $this->mode == self::MODE_NEW ) {
+			$catName = wfMsgForContent("create-blog-post-category");
+			$sCategoryNSName = $this->contLang->getFormattedNsText( NS_CATEGORY );
+			$wikitext .= "\n[[" . $sCategoryNSName . ":" . $catName . "]]";
 		}
 
-		$sPostBody = $this->mEditPage->textbox1;
+		return $wikitext;
+	}
 
-		/**
-		 * add category for blogs (if defined in message and not existed already)
-		 * @author eloy
-		 */
-		$catName = wfMsgForContent("create-blog-post-category");
-		if( $catName && $catName !== "-" && !$this->mPostArticle->exists()) {
-			$sCategoryNSName = $wgContLang->getFormattedNsText( NS_CATEGORY );
-			$sPostBody .= "\n[[" . $sCategoryNSName . ":" . $catName . "]]";
+
+	protected function getTitlePrefix() {
+		return $this->user->getName() . '/';
+	}
+
+	/**
+	 * add some default values
+	 */
+	public function beforeSave() {
+		if( empty($this->mEditPage->summary )) {
+			$this->mEditPage->summary = wfMsgForContent('create-blog-updated');
 		}
+		$this->mEditPage->recreate = true;
+	}
 
-		$aPageProps = array();
+	/**
+	 * Perform additional checks when saving an article
+	 */
+	protected function processSubmit() {
+		//used to set some default values */
 
-		$aPageProps['voting'] = 0;
-		$aPageProps['commenting'] = 0;
+		if ($this->mode != self::MODE_NEW_SETUP) {
+			if ($this->contentStatus == EditPage::AS_BLANK_ARTICLE) {
+				$this->addEditNotice(wfMsg('plb-create-empty-body-error'));
+			}
 
-		if(!empty($this->mFormData['isVotingEnabled'])) {
-			$aPageProps['voting'] = 1;
+			switch ($this->titleStatus) {
+				case self::STATUS_EMPTY:
+					$this->addEditNotice(wfMsg( 'create-blog-empty-title-error' ));
+					break;
+				case self::STATUS_INVALID:
+					$this->addEditNotice( wfMsg('create-blog-invalid-title-error') );
+					break;
+				case self::STATUS_ALREADY_EXISTS:
+					$this->addEditNotice(wfMsg( 'create-blog-article-already-exists' ));
+					break;
+			}
 		}
-		if(!empty($this->mFormData['isCommentingEnabled'])) {
-			$aPageProps['commenting'] = 1;
+	}
+	public function getPageTitle() {
+		if( $this->mode == self::MODE_EDIT ) {
+			return wfMsg( 'create-blog-post-title-edit' );
+		} else {
+			return wfMsg( 'create-blog-post-title' );
 		}
+	}
 
-		$editPage = new EditBlogPage( $this->mPostArticle );
-		$editPage->initialiseForm();
-		$editPage->textbox1 = $sPostBody;
-		$editPage->watchthis = $this->mFormData['isWatched'];
-		$editPage->summary = isset($this->mFormData['postEditSummary']) ? $this->mFormData['postEditSummary'] : wfMsgForContent('create-blog-updated');
+	public function renderHeader($par) {
+		$this->forceUserToProvideTitle('create-blog-form-post-title');
+		$this->addCustomCheckbox(self::FIELD_IS_COMMENTING_ENABLED, wfMsg('blog-comments-label'), $this->mFormData['isCommentingEnabled']);
+	}
 
-		$result = false;
-		$bot = $wgUser->isAllowed('bot') && $wgRequest->getBool('bot',true);
-		$status = $editPage->internalAttemptSave( $result, $bot );
-
+	protected function afterSave( $status ) {
 		switch( $status ) {
 			case EditPage::AS_SUCCESS_UPDATE:
 			case EditPage::AS_SUCCESS_NEW_ARTICLE:
-				if( count( $aPageProps ) ) {
-					BlogArticle::setProps( $this->mPostArticle->getId(), $aPageProps );
-				}
-				self::invalidateCacheConnected( $this->mPostArticle );
-				$this->createListingPage();
-				$wgOut->redirect($this->mPostArticle->getTitle()->getFullUrl());
-				break;
 
-			// fix an issue with double edit page when captcha is triggered (BugId:6679)
-			case EditPage::AS_HOOK_ERROR:
-				Wikia::log( __METHOD__, 'editpage', 'hook prevented the save' );
+				$article = $this->getEditedArticle();
+				$articleId = $article->getID();
+
+				$aPageProps = array();
+				$aPageProps['commenting'] = 0;
+				if( $this->getField(self::FIELD_IS_COMMENTING_ENABLED) != "" ) {
+					$aPageProps['commenting'] = 1;
+				}
+
+				if( count( $aPageProps ) ) {
+					BlogArticle::setProps( $articleId, $aPageProps );
+				}
+
+				$this->invalidateCacheConnected( $article );
+				$this->createListingPage();
+
+				$this->out->redirect($article->getTitle()->getFullUrl());
 				break;
 
 			default:
@@ -157,193 +152,20 @@ class CreateBlogPage extends SpecialBlogPage {
 				else {
 					$sMsg = wfMsg('create-blog-spam');
 				}
+
 				$this->mFormErrors[] = $sMsg . "($status)";
-				$this->renderForm();
 				break;
 		}
-
-	}
-
-	protected function parseFormData() {
-		global $wgUser, $wgRequest, $wgOut;
-
-		wfRunHooks('BlogsAlternateEdit', array(false));
-
-		$this->mFormData['postId'] = $wgRequest->getVal('blogPostId');
-		$this->mFormData['postTitle'] = $wgRequest->getVal('blogPostTitle');
-		$this->mFormData['postBody'] = $wgRequest->getVal('wpTextbox1');
-		$this->mFormData['postEditSummary'] = $wgRequest->getVal('wpSummary');
-		$this->mFormData['postCategories'] = $wgRequest->getVal('wpCategoryTextarea1');
-		$this->mFormData['isVotingEnabled'] = $wgRequest->getCheck('blogPostIsVotingEnabled');
-		$this->mFormData['isCommentingEnabled'] = $wgRequest->getCheck('blogPostIsCommentingEnabled');
-		$this->mFormData['isExistingArticleEditAllowed'] = $wgRequest->getVal('articleEditAllowed');
-		$this->mFormData['isWatched'] = $wgRequest->getCheck( 'wpWatchthis' );
-
-		if(empty($this->mFormData['postId'])) {
-			if(empty($this->mFormData['postTitle'])) {
-				$this->mFormErrors[] = wfMsg('create-blog-empty-title-error');
-			}
-			else {
-				$oPostTitle = Title::newFromText( $wgUser->getName() . '/' . $this->mFormData['postTitle'], NS_BLOG_ARTICLE);
-
-				if(!($oPostTitle instanceof Title)) {
-					$this->mFormErrors[] = wfMsg('create-blog-invalid-title-error');
-				}
-				else {
-					$sFragment = $oPostTitle->getFragment();
-					if ( strlen($sFragment) > 0 ) {
-						$this->mFormErrors[] = wfMsg('create-blog-invalid-title-error');
-					} else {
-						$this->mPostArticle = new BlogArticle($oPostTitle, 0);
-						if($this->mPostArticle->exists() && !$this->mFormData['isExistingArticleEditAllowed']) {
-							$this->mFormErrors[] = wfMsg('create-blog-article-already-exists');
-						}
-					}
-				}
-			}
-		}
-		else { // we have an article id
-			$isAllowed = $wgUser->isAllowed( "blog-articles-edit" );
-			$oPostTitle = Title::newFromID($this->mFormData['postId']);
-			$this->mPostArticle = new BlogArticle($oPostTitle, 0);
-			if((strtolower($wgUser->getName()) != strtolower( BlogArticle::getOwner($oPostTitle))) && !$isAllowed) {
-				$this->mFormErrors[] = wfMsg('create-blog-permission-denied');
-			}
-		}
-
-		if(empty($this->mFormData['postBody'])) {
-			$this->mFormErrors[] = wfMsg('create-blog-empty-post-error');
-		}
-
-		//create EditPage object
-		$this->createEditPage( $this->mFormData['postBody'] );
-
-		// BugId:954 - show changes
-		if (!empty($this->mPostArticle)) {
-			$this->mEditPage->mArticle = $this->mPostArticle;
-		}
-
-		if(!count($this->mFormErrors) && $wgRequest->getVal('wpPreview')) {
-			// preview mode
-			$this->mEditPage->formtype = 'preview';
-			$this->mPreviewTitle = Title::newFromText( $this->mFormData['postTitle'] );
-
-			//simple hack to show correct title in preview mode
-			global $wgCustomTitle;
-			$wgCustomTitle = $this->mPreviewTitle;
-
-			// CategorySelect compatibility (add categories to article body)
-			if($this->mCategorySelectEnabled) {
-				CategorySelectImportFormData( $this->mEditPage, $wgRequest );
-			}
-		}
-
-	}
-
-	protected function createEditPage($sPostBody) {
-		$oArticle = new Article( Title::makeTitle( NS_BLOG_ARTICLE, 'New or Updated Blog Post' ) );
-
-		$this->mEditPage = new EditPage($oArticle);
-		$this->mEditPage->textbox1 = $sPostBody;
-
-		// this applies user preferences, such as minor and watchlist
-		// EditPage::getContent was called twice (causes BugId:4604)
-		// beware: dirty copy&paste of the code (will be replaced by RTE reskin)
-		global $wgUser;
-		# Sort out the "watch" checkbox
-		if ( $wgUser->getOption( 'watchdefault' ) ) {
-			# Watch all edits
-			$this->mEditPage->watchthis = true;
-		} elseif ( $wgUser->getOption( 'watchcreations' ) && !$this->mEditPage->mTitle->exists() ) {
-			# Watch creations
-			$this->mEditPage->watchthis = true;
-		} elseif ( $this->mEditPage->mTitle->userIsWatching() ) {
-			# Already watched
-			$this->mEditPage->watchthis = true;
-		}
-		if ( $wgUser->getOption( 'minordefault' ) ) $this->mEditPage->minoredit = true;
-
-		// fix for RT #33844 - run hook fired by "classical" EditPage
-		// Allow extensions to modify edit form
-		global $wgEnableRTEExt, $wgRequest;
-		if (!empty($wgEnableRTEExt)) {
-			$wgRequest->setVal('wpTextbox1', $sPostBody); // RT #34055
-
-			wfRunHooks('AlternateEdit', array(&$this->mEditPage));
-			$this->mEditPage->textbox1 = $wgRequest->getVal('wpTextbox1');
-
-			RTE::log(__METHOD__ . '::wikitext', $this->mEditPage->textbox1);
-		}
-	}
-
-	protected function renderForm() {
-		$this->mEditPage->showEditForm( array($this, 'renderFormHeader') );
-		return true;
-	}
-
-	/**
-	 * EditPage::showEditForm callback - need to be public
-	 */
-	public function renderFormHeader($wgOut) {
-		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-
-		$oTmpl->set_vars( array(
-			"formErrors" => $this->mFormErrors,
-			"formData" => $this->mFormData,
-			"preview" => $this->mPreviewTitle
-		) );
-
-		$wgOut->setPageTitle( wfMsg("create-blog-post-title") );
-		$wgOut->addScriptFile('edit.js');
-		$wgOut->addHTML( $oTmpl->render("createBlogFormHeader") );
-
-		// BugId:954 - show changes
-		if ($this->mEditPage->diff) {
-			$this->mEditPage->mArticle->loadContent();
-			$this->mEditPage->showDiff();
-		}
-	}
-
-	private function parseArticle($sTitle) {
-		global $wgParser, $wgContLang;
-
-		$oTitle = Title::newFromText($sTitle, NS_BLOG_ARTICLE);
-		$oArticle = new Article($oTitle, 0);
-
-		// macbre: RT #37120
-		$sArticleBody = $oTitle->exists() ? $oArticle->getContent() : '';
-
-		$aPageProps = BlogArticle::getProps($oArticle->getId());
-		$aTitleParts = explode('/', $oTitle->getText(), 2);
-
-		$this->mFormData['postId'] = $oArticle->getId();
-		$this->mFormData['postTitle'] = $aTitleParts[1];
-		$this->mFormData['postBody'] = trim(preg_replace('/\[\[' . $wgContLang->getFormattedNsText( NS_CATEGORY ) . ':(.*)\]\]/siU', '', $sArticleBody));
-		$this->mFormData['postBody'] = $sArticleBody;
-		$this->mFormData['isVotingEnabled'] = isset($aPageProps['voting']) ? $aPageProps['voting'] : 0;
-		$this->mFormData['isCommentingEnabled'] = isset($aPageProps['commenting']) ? $aPageProps['commenting'] : 0;
-		$this->mFormData['isExistingArticleEditAllowed'] = 1;
-
-		//create EditPage object
-		$this->createEditPage( $this->mFormData['postBody'] );
-
-		// CategorySelect compatibility (restore categories from article body)
-		if ($this->mCategorySelectEnabled) {
-			CategorySelectReplaceContent( $this->mEditPage, $this->mEditPage->textbox1 );
-		}
-
-		return $oArticle;
 	}
 
 	/**
 	 * purge cache for connected articles
 	 *
-	 * @static
 	 * @access public
 	 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
 	 *
 	 */
-	static public function invalidateCacheConnected( BlogArticle $article ) {
+	public function invalidateCacheConnected( BlogArticle $article ) {
 		$title = $article->getTitle();
 		$title->invalidateCache();
 		/**
@@ -378,31 +200,8 @@ class CreateBlogPage extends SpecialBlogPage {
 		}
 	}
 
-	/**
-	 * Add hidden field with blog page title when captcha is triggered (BugId:6679)
-	 *
-	 * Title provided by the user will be maintained when captcha is resolved and next POST request sent
-	 */
-	public static function onEditPageShowEditFormFields(&$editPage, &$wgOut) {
-		global $wgRequest;
-		$blogPostTitle = $wgRequest->getVal('blogPostTitle');
 
-		if (!is_null($blogPostTitle) && $wgRequest->wasPosted()) {
-			$wgOut->addHTML(Xml::hidden('blogPostTitle', $blogPostTitle));
-		}
-
-		return true;
-	}
-}
-
-class EditBlogPage extends EditPage {
-	#---
-	function __construct ($article) {
-		parent::__construct($article);
-	}
-
-	protected function wasDeletedSinceLastEdit() {
-		# allow to recreate (always)
-		return false;
+	protected function setEditedTitle(Title $title) {
+		$this->setEditedArticle(new BlogArticle($title));
 	}
 }

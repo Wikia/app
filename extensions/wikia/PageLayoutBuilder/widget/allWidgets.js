@@ -15,6 +15,29 @@ PageLayoutBuilder.inputExit = function (e) {
 	}
 }
 
+$(function() {
+	$('.plb-empty-input').focus(PageLayoutBuilder.inputEnter)
+						 .blur(PageLayoutBuilder.inputExit);
+
+	$(".WikiaArticle form").submit(function() {
+		$("input.plb-empty-input, textarea.plb-empty-input ").val("");
+	});
+
+	PageLayoutBuilder.hideImageButtons();
+
+	$('.gallerybox').hover(function() {
+	    $(this).find("button").css("visibility", "visible");
+	},function() {
+		if(PageLayoutBuilder.hasImage($(this))) {
+			$(this).find("button").css("visibility", "hidden");
+		}
+	});
+
+	if (window.WikiaPhotoGalleryView) {
+		WikiaPhotoGalleryView.initGalleries();
+	}
+});
+
 PageLayoutBuilder.uploadImage = function (size, name) {
 	$.loadYUI( function() {
 		importStylesheetURI( wgExtensionsPath+ '/wikia/WikiaMiniUpload/css/WMU.css?'+wgStyleVersion );
@@ -52,6 +75,7 @@ PageLayoutBuilder.uploadImage = function (size, name) {
 	return false;
 }
 
+
 PageLayoutBuilder.hasImage = function(element) {
 	if($( '#'  + element.attr('id').replace('imagediv','plb') ).val() == "") {
 		return false;
@@ -71,28 +95,6 @@ PageLayoutBuilder.hideImageButtons = function() {
 	);
 }
 
-$(function() {
-	$('.plb-empty-input').focus(PageLayoutBuilder.inputEnter)
-						 .blur(PageLayoutBuilder.inputExit);
-
-	$("#plbForm,#editform").submit(function() {
-		$("input.plb-empty-input, textarea.plb-empty-input ").val("");
-	});
-
-	PageLayoutBuilder.hideImageButtons();
-
-	$('.gallerybox').hover(function() {
-	    $(this).find("button").css("visibility", "visible");
-	},function() {
-		if(PageLayoutBuilder.hasImage($(this))) {
-			$(this).find("button").css("visibility", "hidden");
-		}
-	});
-
-	if (window.WikiaPhotoGalleryView) {
-		WikiaPhotoGalleryView.initGalleries();
-	}
-});
 //* END IMAGE *//
 
 //* MULTILINE *//
@@ -268,7 +270,7 @@ $(function() {
 //* gallery *//
 PageLayoutBuilder.uploadGallery = function(element_id) {
 	if (typeof window.WikiaPhotoGalleryView == 'undefined') {
-		$.getScript('/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js', function() {
+		$.getScript('/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js', function() {	
 			WikiaPhotoGalleryView.loadEditorJS(function() {
 				PageLayoutBuilder.showGalleryForPLB(element_id);
 			});

@@ -50,7 +50,7 @@ class OasisModule extends Module {
 	var $wgOasisLastCssScripts;
 
 	public function executeIndex($params) {
-		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgCityId, $wgAllInOne, $wgContLang, $wgJsMimeType, $wgEnableEditPageReskinExt, $wgEnableAdminDashboardExt, $wgDevelEnvironment;
+		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgCityId, $wgAllInOne, $wgContLang, $wgJsMimeType, $wgEnableAdminDashboardExt, $wgDevelEnvironment;
 
 		$this->showAllowRobotsMetaTag = !$this->wgDevelEnvironment;
 
@@ -180,9 +180,6 @@ class OasisModule extends Module {
 		}
 
 		$this->mainsassfile = 'skins/oasis/css/oasis.scss';
-		if ( !empty($wgEnableEditPageReskinExt) ) {
-			$this->mainsassfile = 'skins/oasis/css/oasis-epl.scss';
-		}
 
 		if (!empty($wgEnableAdminDashboardExt) && AdminDashboardLogic::displayAdminDashboard($this->app, $wgTitle)) {
 			$this->displayAdminDashboard = true;

@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -359,7 +359,7 @@ CKEDITOR.dom.range = function( document )
 			if ( node.type == CKEDITOR.NODE_TEXT )
 			{
 				// If there's any visible text, then we're not at the start.
-				if ( CKEDITOR.tools.trim( node.getText() ).length )
+				if ( node.hasAscendant( 'pre' ) || CKEDITOR.tools.trim( node.getText() ).length )
 					return false;
 			}
 			else if ( node.type == CKEDITOR.NODE_ELEMENT )
@@ -595,6 +595,10 @@ CKEDITOR.dom.range = function( document )
 						startContainer = child;
 						startOffset = 0;
 					}
+
+					// Get the normalized offset.
+					if ( child && child.type == CKEDITOR.NODE_ELEMENT )
+						startOffset = child.getIndex( 1 );
 				}
 
 				// Normalize the start.
@@ -623,6 +627,10 @@ CKEDITOR.dom.range = function( document )
 							endContainer = child;
 							endOffset = 0;
 						}
+
+						// Get the normalized offset.
+						if ( child && child.type == CKEDITOR.NODE_ELEMENT )
+							endOffset = child.getIndex( 1 );
 					}
 
 					// Normalize the end.
@@ -1898,7 +1906,7 @@ CKEDITOR.dom.range = function( document )
 							return 0;
 						}
 						// Range enclosed entirely in an editable element.
-						else if ( node.is( 'body' )
+						else if ( node.is( 'html' )
 							|| node.getAttribute( 'contentEditable' ) == 'true'
 							&& ( node.contains( anotherEnd ) || node.equals( anotherEnd ) ) )
 						{

@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -95,15 +95,6 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 			plugin.instances[ editor.name ] = scayt_control;
 
-			//window.scayt.uiTags
-			var menuGroup = 'scaytButton';
-			var uiTabs = window.scayt.uiTags;
-			var fTabs  = [];
-
-			for ( var i = 0, l=4; i < l; i++ )
-			    fTabs.push( uiTabs[i] && plugin.uiTabs[i] );
-
-			plugin.uiTabs = fTabs;
 			try {
 				scayt_control.setDisabled( plugin.isPaused( editor ) === false );
 			} catch (e) {}
@@ -356,6 +347,26 @@ CKEDITOR.plugins.scayt =
 			var scayt_instance = this.getScayt( editor );
 			return ( scayt_instance ) ? scayt_instance.disabled === false : false;
 		},
+		getUiTabs : function( editor )
+		{
+			var uiTabs = [];
+
+			// read UI tabs value from config
+			var configUiTabs = editor.config.scayt_uiTabs || "1,1,1";
+
+			// convert string to array
+			configUiTabs = configUiTabs.split( ',' );
+
+			// "About us" should be always shown for standard config
+			configUiTabs[3] = "1";
+
+			for ( var i = 0; i < 4; i++ ) {
+				uiTabs[i] = (typeof window.scayt != "undefined" && typeof window.scayt.uiTags != "undefined")
+								? (parseInt(configUiTabs[i],10) && window.scayt.uiTags[i])
+								: parseInt(configUiTabs[i],10);
+			}
+			return uiTabs;
+		},
 		loadEngine : function( editor )
 		{
 			// SCAYT doesn't work with Firefox2, Opera and AIR.
@@ -504,22 +515,22 @@ CKEDITOR.plugins.scayt =
 
 		init : function( editor )
 		{
-			// Delete span[data-scaytid] when text pasting in editor (#6921) 
-			var dataFilter = editor.dataProcessor && editor.dataProcessor.dataFilter; 
-			var dataFilterRules = 
-			{ 
-					elements : 
-					{ 
-							span : function( element ) 
-							{ 
-									var attrs = element.attributes; 
-									if ( attrs && attrs[ 'data-scaytid' ] ) 
-											delete element.name; 
-							} 
-					} 
-			}; 
-			dataFilter && dataFilter.addRules( dataFilterRules ); 
-			
+			// Delete span[data-scaytid] when text pasting in editor (#6921)
+			var dataFilter = editor.dataProcessor && editor.dataProcessor.dataFilter;
+			var dataFilterRules =
+			{
+					elements :
+					{
+							span : function( element )
+							{
+									var attrs = element.attributes;
+									if ( attrs && attrs[ 'data-scaytid' ] )
+											delete element.name;
+							}
+					}
+			};
+			dataFilter && dataFilter.addRules( dataFilterRules );
+
 			var moreSuggestions = {},
 				mainSuggestions = {};
 
@@ -528,27 +539,18 @@ CKEDITOR.plugins.scayt =
 
 			// Add Options dialog.
 			CKEDITOR.dialog.add( commandName, CKEDITOR.getUrl( this.path + 'dialogs/options.js' ) );
-			// read ui tags
-			var confuiTabs = editor.config.scayt_uiTabs || '1,1,1';
-			var uiTabs =[];
-			// string to array convert
-			confuiTabs = confuiTabs.split( ',' );
-			// check array length ! always must be 3 filled with 1 or 0
-			for ( var i=0, l=3; i < l; i++ )
-			{
-				var flag = parseInt( confuiTabs[i] || '1', 10 );
-				uiTabs.push( flag );
-			}
+
+			var uiTabs = plugin.getUiTabs( editor );
 
 			var menuGroup = 'scaytButton';
 			editor.addMenuGroup( menuGroup );
 			// combine menu items to render
-			var uiMuneItems = {};
+			var uiMenuItems = {};
 
 			var lang = editor.lang.scayt;
 
 			// always added
-			uiMuneItems.scaytToggle =
+			uiMenuItems.scaytToggle =
 				{
 					label : lang.enable,
 					command : commandName,
@@ -556,7 +558,7 @@ CKEDITOR.plugins.scayt =
 				};
 
 			if ( uiTabs[0] == 1 )
-				uiMuneItems.scaytOptions =
+				uiMenuItems.scaytOptions =
 				{
 					label : lang.options,
 					group : menuGroup,
@@ -568,7 +570,7 @@ CKEDITOR.plugins.scayt =
 				};
 
 			if ( uiTabs[1] == 1 )
-				uiMuneItems.scaytLangs =
+				uiMenuItems.scaytLangs =
 				{
 					label : lang.langs,
 					group : menuGroup,
@@ -579,7 +581,7 @@ CKEDITOR.plugins.scayt =
 					}
 				};
 			if ( uiTabs[2] == 1 )
-				uiMuneItems.scaytDict =
+				uiMenuItems.scaytDict =
 				{
 					label : lang.dictionariesTab,
 					group : menuGroup,
@@ -590,7 +592,7 @@ CKEDITOR.plugins.scayt =
 					}
 				};
 			// always added
-			uiMuneItems.scaytAbout =
+			uiMenuItems.scaytAbout =
 				{
 					label : editor.lang.scayt.about,
 					group : menuGroup,
@@ -601,10 +603,7 @@ CKEDITOR.plugins.scayt =
 					}
 				};
 
-			uiTabs[3] = 1; // about us tab is always on
-			plugin.uiTabs = uiTabs;
-
-			editor.addMenuItems( uiMuneItems );
+			editor.addMenuItems( uiMenuItems );
 
 				editor.ui.add( 'Scayt', CKEDITOR.UI_MENUBUTTON,
 					{
@@ -626,12 +625,14 @@ CKEDITOR.plugins.scayt =
 
 							editor.getMenuItem( 'scaytToggle' ).label = lang[ isEnabled ? 'disable' : 'enable' ];
 
+							var uiTabs = plugin.getUiTabs( editor );
+
 							return {
 								scaytToggle  : CKEDITOR.TRISTATE_OFF,
-								scaytOptions : isEnabled && plugin.uiTabs[0] ? CKEDITOR.TRISTATE_OFF : CKEDITOR.TRISTATE_DISABLED,
-								scaytLangs   : isEnabled && plugin.uiTabs[1] ? CKEDITOR.TRISTATE_OFF : CKEDITOR.TRISTATE_DISABLED,
-								scaytDict    : isEnabled && plugin.uiTabs[2] ? CKEDITOR.TRISTATE_OFF : CKEDITOR.TRISTATE_DISABLED,
-								scaytAbout   : isEnabled && plugin.uiTabs[3] ? CKEDITOR.TRISTATE_OFF : CKEDITOR.TRISTATE_DISABLED
+								scaytOptions : isEnabled && uiTabs[0] ? CKEDITOR.TRISTATE_OFF : CKEDITOR.TRISTATE_DISABLED,
+								scaytLangs   : isEnabled && uiTabs[1] ? CKEDITOR.TRISTATE_OFF : CKEDITOR.TRISTATE_DISABLED,
+								scaytDict    : isEnabled && uiTabs[2] ? CKEDITOR.TRISTATE_OFF : CKEDITOR.TRISTATE_DISABLED,
+								scaytAbout   : isEnabled && uiTabs[3] ? CKEDITOR.TRISTATE_OFF : CKEDITOR.TRISTATE_DISABLED
 							};
 						}
 					});
@@ -662,15 +663,15 @@ CKEDITOR.plugins.scayt =
 						if ( !items_suggestion || !items_suggestion.length )
 							return null;
 						// Remove unused commands and menuitems
-						for ( i in moreSuggestions )
+						for ( var m in moreSuggestions )
 						{
-							delete editor._.menuItems[ i ];
-							delete editor._.commands[ i ];
+							delete editor._.menuItems[ m ];
+							delete editor._.commands[ m ];
 						}
-						for ( i in mainSuggestions )
+						for ( m in mainSuggestions )
 						{
-							delete editor._.menuItems[ i ];
-							delete editor._.commands[ i ];
+							delete editor._.menuItems[ m ];
+							delete editor._.commands[ m ];
 						}
 						moreSuggestions = {};		// Reset items.
 						mainSuggestions = {};

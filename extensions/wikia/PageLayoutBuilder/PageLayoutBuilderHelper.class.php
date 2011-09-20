@@ -1,37 +1,14 @@
 <?php
 
 class PageLayoutBuilderHelper {
+
 	/*
 	 * @author Tomasz Odrobny
-	 * @param Title
-	 * @return Parser
 	 */
-
 	public static function rteIsCustom($name, $params, $frame, $wikitextIdx) {
 		global $wgPLBwidgets;
 		if (isset($wgPLBwidgets[$name])) {
 			return false;
-		}
-		return true;
-	}
-
-
-	static public function wikiFactoryChanged( $cv_name, $city_id, $value ) {
-		global $IP;
-		Wikia::log( __METHOD__, $city_id, "{$cv_name} = {$value}" );
-
-		if( $cv_name != 'wgEnablePageLayoutBuilder' ){
-			return true;
-		}
-
-		$dbr = wfGetDB( DB_MASTER, array(), WikiFactory::IDtoDB($city_id) );
-
-		if( !$dbr->tableExists( "plb_field" ) ){
-			$dbr->sourceFile( "$IP/extensions/wikia/PageLayoutBuilder/sql/plb_field.sql" );
-		}
-
-		if( !$dbr->tableExists( "plb_page" ) ){
-			$dbr->sourceFile( "$IP/extensions/wikia/PageLayoutBuilder/sql/plb_page.sql" );
 		}
 		return true;
 	}
@@ -66,15 +43,15 @@ class PageLayoutBuilderHelper {
 
 		return true;
 	}
-	
+
 	/*
 	 * copyLayout - use by task to copy layouts from commuinty
-	 * 
+	 *
 	 * @author Tomasz Odrobny
 	 * @param Title
 	 * @return Parser
 	 */
-	
+
 	public static function copyLayout() {
 		global $wgCityId;
 		$list = PageLayoutBuilderModel::getLayoutsToCopy();
@@ -83,33 +60,169 @@ class PageLayoutBuilderHelper {
 			if(in_array($cat->cat_id, $cats)) {
 				PageLayoutBuilderModel::setLayoutCopy( $layout, $wgCityId );
 				$layoutInfo = PageLayoutBuilderModel::getLayoutCopyInfo( $layout );
-				
+
 				if($layoutInfo !== false) {
 					$newTitle = Title::newFromText( $layoutInfo['title'], NS_PLB_LAYOUT );
 					if(!$newTitle->exists()){
 						$article = new Article( $newTitle );
 						$article->doEdit( $layoutInfo['text'], '', EDIT_NEW | EDIT_DEFER_UPDATES | EDIT_AUTOSUMMARY );
 						PageLayoutBuilderModel::setProp($article->getId(), array('desc' => $layoutInfo['desc'] ) );
-						
+
 					}
 				}
-				
-			}		
+
+			}
 		}
-		
+
 		return true;
 	}
-	
-	
+
+
 	/**
-	 * createPageOptions - There are prepared for lists of bytes
+	 * myTools add link to mytools
 	 *
 	 * @author Tomek Odrobny
 	 *
 	 * @access public
 	 *
 	 */
+	public static function onGetDefaultMyTools(&$list) {
+		global $wgUser;
 
+		wfLoadExtensionMessages( 'PageLayoutBuilder' );
+
+		if($wgUser->isAllowed( 'plbmanager' )) {
+			$list[] = array(
+				'text' => wfMsg( 'plb-mytools-link' ),
+				'name' => 'plbmanager',
+				'href' => Title::newFromText( "LayoutBuilder", NS_SPECIAL )->getFullUrl("action=list")
+			);
+		}
+
+		return true;
+	}
+
+	/**
+	 * Sets up the caption and the link for this special page
+	 * in user commands subsystem
+	 *
+	 * @param $userCommand UserCommand An instance of user command being processed
+	 * @param $options Options which can be altered by this hook
+	 * @return true
+	 */
+	public static function onGetUserCommandDetails( $userCommand, &$options ) {
+		$options['caption'] = wfMsg('plb-mytools-link');
+		$options['href'] = Title::newFromText( "LayoutBuilder", NS_SPECIAL )->getFullUrl("action=list");
+
+		return true;
+	}
+
+
+	/**
+	 * Returns the full URL to create a new layout from article being edited
+	 *
+	 * @return string
+	 */
+	protected static function getCreateLayoutFromArticleUrl() {
+		return Title::newFromText('LayoutBuilder', NS_SPECIAL)->getFullURL("action=createfromarticle");
+	}
+
+	/**
+	 * addNewButtonForArtilce - adding button allows you to make a layout of the article
+	 *
+	 * @author Tomek Odrobny
+	 *
+	 * @access public
+	 */
+	public static function addNewButtonForArtilce($cat) {
+		global $wgUser, $wgOut, $wgTitle, $wgContentNamespaces;
+
+		if (!in_array($wgTitle->getNamespace() , $wgContentNamespaces)) {
+			return true;
+		}
+
+		if( !$wgUser->isAllowed( 'plbmanager' ) ) {
+			return true;
+		}
+
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+		$oTmpl->set_vars(array(
+		    "post_url" => self::getCreateLayoutFromArticleUrl(),
+		));
+
+		return true;
+	}
+
+	public static function onShowEditFormInitial() {
+		global $wgHooks;
+		$wgHooks['MakeGlobalVariablesScript'][] = 'PageLayoutBuilderHelper::onMakeGlobalVariablesScript';
+		return true;
+	}
+
+	public static function onMakeGlobalVariablesScript( &$vars ) {
+		$vars['PLBMakeLayoutUrl'] = self::getCreateLayoutFromArticleUrl();
+		return true;
+	}
+
+	/**
+	 * alternateEditHook - redirect to edit LayoutBuilder if article is in layout namespace
+	 *
+	 * @author Tomek Odrobny
+	 *
+	 * @access public
+	 */
+	public static function alternateEditHook($oEditPage) {
+		global $wgOut, $wgRequest;
+		if(empty($oEditPage->mTitle) || empty($oEditPage)) {
+			return true;
+		}
+
+		if ( !empty($oEditPage->isLayoutBuilderEditPage) ) {
+			return true;
+		}
+
+		if($oEditPage->mTitle->getNamespace() == NS_PLB_LAYOUT) {
+			$oSpecialPageTitle = Title::newFromText('LayoutBuilder', NS_SPECIAL);
+			if($oEditPage->mTitle->getArticleId() == 0) {
+				$wgOut->redirect($oSpecialPageTitle->getFullUrl("default=".$oEditPage->mTitle->getText()."&plbId=" . $oEditPage->mTitle->getArticleId() ));
+				return true;
+			}
+			$wgOut->redirect($oSpecialPageTitle->getFullUrl("plbId=" . $oEditPage->mTitle->getArticleId() ));
+		}
+		return true;
+	}
+
+	/**
+	 * getUserPermissionsErrors -  control access to articles in the namespace layout
+	 *
+	 * @author Tomek Odrobny
+	 *
+	 * @access public
+	 */
+	public static function getUserPermissionsErrors( &$title, &$user, $action, &$result ) {
+		if( $title->getNamespace() == NS_PLB_LAYOUT ) {
+			$result = array();
+			if( $user->isAllowed( 'plbmanager' )  && ($action == 'create' || $action == 'edit') ) {
+				$result = null;
+				return true;
+			} else {
+				wfLoadExtensionMessages( 'PageLayoutBuilder' );
+				$result = array('badaccess-group0');
+				return false;
+			}
+		}
+		$result = null;
+		return true;
+	}
+
+
+	/**
+	 * createPageOptions - There are prepared for lists of bytes
+	 *
+	 * @author Tomek Odrobny
+	 *
+	 * @access public
+	 */
 	public static function createPageOptions(&$standardOptions, &$options, &$listtype) {
 		global $wgCdnStylePath, $wgScript;
 		$listtype = "long";
@@ -126,29 +239,43 @@ class PageLayoutBuilderHelper {
 				);
 			}
 		}
-		
+
 		if(!empty($optionsAdd)) {
 			unset($standardOptions['format']);
 		}
 		$options = $optionsAdd + $options;
 		return true;
 	}
-	
-	
+
+
 	/**
-	 * onArticleSave - prevent save if someone try to save plb article from api,etc. 
+	 * beforeCategoryData - hide layout namespace from category page
+	 *
+	 * @author Tomek Odrobny
+	 *
+	 * @access public
+	 */
+	public static function beforeCategoryData(&$userCon) {
+		$userCon = "not page_namespace = ".NS_PLB_LAYOUT;
+		return true;
+	}
+
+
+
+	/**
+	 * onArticleSave - prevent save if someone try to save plb article from api,etc.
 	 *
 	 * @author Tomek Odrobny
 	 *
 	 * @access public
 	 *
 	 */
-	
+
 	public static function onArticleSave(&$article, &$user, &$text, &$summary, $minor, $watchthis, $sectionanchor, &$flags, &$status) {
 		global $wgTitle;
 		if ( PageLayoutBuilderForm::articleIsFromPLBFull($article->getId(), $article->getContent() ) ) {
 			if ( !$wgTitle->isSpecial('PageLayoutBuilderForm') ) {
-				return false;	
+				return false;
 			}
 		}
 		return true;

@@ -1,0 +1,58 @@
+.cke_rail {
+	vertical-align: top;
+	width: 290px;
+}
+
+/* Page Controls */
+.cke_module_page_controls label {
+	display: block;
+	text-align: right;
+}
+.cke_module_page_controls label input {
+	vertical-align: middle;
+}
+
+.cke_module_page_controls textarea {
+	background: #f6f6f6;
+	border: solid 1px #adadad;
+	color: #666;
+	display: block;
+	font-family: Helvetica,Arial,sans-serif;
+	font-size: 12px;
+	font-style: italic;
+	line-height: 23px;
+	margin: 5px 0 10px 0;
+	padding: 8px;
+	width: 240px;
+}
+
+.cke_module_page_controls #wpSave {
+	width: 110px;
+}
+
+.cke_module_page_controls .wikia-menu-button {
+	float: right;
+	height: 21px;
+}
+
+.cke_module_page_controls .wikia-menu-button > li > a {
+	display: inline-block;
+	width: 100px;
+}
+
+/* License */
+.cke_module_license,
+.cke_module_license .cke_module_content {
+	background: none;
+	border: none !important;
+}
+
+.cke_module_license .cke_module_content p,
+.cke_module_license .cke_module_content p a {
+	font-size: 11px;
+	line-height: 20px;
+}
+
+.cke_module_license * {
+	white-space: normal;
+}

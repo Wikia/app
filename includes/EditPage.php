@@ -327,8 +327,7 @@ class EditPage {
 		}
 
 		/* Wikia change begin - @author: Marcin, #BugId: 7845 */
-		global $wgEnableEditPageReskinExt;
-		if ( empty($wgEnableEditPageReskinExt) || !Wikia::isOasis() ) {
+		if ( !Wikia::isOasis() ) {
 			$wgOut->addScriptFile( 'edit.js' );
 		}
 		/* Wikia change end */
@@ -396,7 +395,7 @@ class EditPage {
 		# Optional notices on a per-namespace and per-page basis		
 		/* Wikia change begin - @author: Christian, #BugId: 7092 */
 		$editnotice_ns   = 'editnotice-'.$this->mTitle->getNamespace();
-		if ( empty($wgEnableEditPageReskinExt) || !Wikia::isOasis() ) {
+		if ( !Wikia::isOasis() ) {
 			if ( !wfEmptyMsg( $editnotice_ns, wfMsgForContent( $editnotice_ns ) ) ) {
 				$wgOut->addWikiText( wfMsgForContent( $editnotice_ns )  );
 			}
@@ -1308,10 +1307,6 @@ class EditPage {
 <form id="editform" name="editform" method="post" action="$action" enctype="multipart/form-data">
 HTML
 );
-			global $wgEnableEditPageReskinExt;
-			if ( empty($wgEnableEditPageReskinExt) ) {
-				$wgOut->addHTML( '<a name="EditPage"></a>' );
-			}
 		}
 		/* Wikia change end */
 

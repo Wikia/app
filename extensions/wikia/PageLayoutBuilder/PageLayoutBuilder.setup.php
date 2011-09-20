@@ -8,17 +8,13 @@ $wgExtensionCredits['specialpage'][] = array(
 	'version' => '0.0.1'
 );
 
-$dir = dirname(__FILE__) . '/';
-
 define("NS_PLB_LAYOUT", 902);
 
 $wgExtraNamespaces[ NS_PLB_LAYOUT ] = "Layout";
 
-$wgExtensionNamespacesFiles[ 'PageLayoutBuilder' ] = "{$dir}PageLayoutBuilder.namespaces.php";
+$dir = dirname(__FILE__) . '/';
 
-wfLoadExtensionNamespaces( 'PageLayoutBuilder', array( NS_PLB_LAYOUT ) );
-
-$wgAutoloadClasses['PageLayoutBuilderSpecialPage'] = $dir . 'PageLayoutBuilderSpecialPage.class.php'; # Tell MediaWiki to load the extension body.
+$wgAutoloadClasses['SpecialPageLayoutBuilder'] = $dir . 'PageLayoutBuilderSpecialPage.class.php'; # Tell MediaWiki to load the extension body.
 $wgAutoloadClasses['PageLayoutBuilderForm'] = $dir . 'PageLayoutBuilderForm.class.php';
 $wgAutoloadClasses['PageLayoutBuilderModel'] = $dir . 'PageLayoutBuilderModel.class.php'; # Tell MediaWiki to load the extension body.
 $wgAutoloadClasses['PageLayoutBuilderParser'] = $dir . 'PageLayoutBuilderParser.class.php'; # Tell MediaWiki to load the extension body.
@@ -31,9 +27,14 @@ $wgAutoloadClasses['PageLayoutBuilderFormModule'] = $dir . 'PageLayoutBuilderFor
 $wgAutoloadClasses['simple_html_dom'] = $dir . '3rdparty/simple_html_dom.php'; # Simple parser to easy replace tags by media wiki text
 $wgExtensionMessagesFiles['PageLayoutBuilder'] = $dir . 'PageLayoutBuilder.i18n.php';
 $wgExtensionAliasesFiles['PageLayoutBuilder'] = $dir . 'PageLayoutBuilder.alias.php';
-$wgSpecialPages['PageLayoutBuilder'] = 'PageLayoutBuilderSpecialPage'; # Let MediaWiki know about your new special page.
+$wgSpecialPages['PageLayoutBuilder'] = 'SpecialPageLayoutBuilder'; # Let MediaWiki know about your new special page.
 $wgSpecialPages['PageLayoutBuilderForm'] = 'PageLayoutBuilderForm';
-$wgSpecialPageGroups['PageLayoutBuilder'] = 'pagetools';
+
+/* JS messages */
+$wgJSMessagesPackages['PageLayoutBuilder'] = array(
+	'plb-special-form-cat-info',
+);
+
 
 /* job */
 $wgAutoloadClasses['PageLayoutBuilderJob'] = $dir . 'PageLayoutBuilderJob.class.php'; # Tell MediaWiki to load the extension body.
@@ -62,10 +63,9 @@ $wgAutoloadClasses['LayoutWidgetGallery'] = $dir . "widget/LayoutWidgetGallery.c
 $wgAjaxExportList[] = 'LayoutWidgetGallery::renderForFormAjax';
 $wgAjaxExportList[] = 'LayoutWidgetGallery::getGalleryDataAjax';
 
-/* parser and revers parser */
+/* parser and reverse parser */
 
 $wgAjaxExportList[] = 'PageLayoutBuilderEditor::closeHelpbox';
-
 
 if ( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
 	$wgHooks['ParserFirstCallInit'][] = 'PageLayoutBuilderParser::init';
@@ -73,13 +73,40 @@ if ( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
 	$wgExtensionFunctions[] = 'PageLayoutBuilderParser::init';
 }
 
-$wgHooks[ 'WikiFactoryChanged' ][] = 'PageLayoutBuilderHelper::wikiFactoryChanged';
+/* Automatically set up database when PLB is switched on on some wiki */
 $wgHooks[ 'LoadExtensionSchemaUpdates' ][] = 'PageLayoutBuilderHelper::schemaUpdate';
 
-$wgHooks['AlternateEdit'][] = 'PageLayoutBuilderSpecialPage::alternateEditHook';
+/* Set up the toolbar options with the proper caption and target link */
+$wgHooks['MyTools::getDefaultTools'][] = 'PageLayoutBuilderHelper::onGetDefaultMyTools';
+$wgHooks['UserCommand::SpecialPage::PageLayoutBuilder'][] = 'PageLayoutBuilderHelper::onGetUserCommandDetails';
+
+/* Enhance edit pages with options to create new layout from currently edited article */
+$wgHooks['EditPage::CategoryBox'][] = 'PageLayoutBuilderHelper::addNewButtonForArtilce';
+$wgHooks['EditPage::showEditForm:initial'][] = 'PageLayoutBuilderHelper::onShowEditFormInitial';
+
+/* Disallow editing layouts by unprivileged users */
+$wgHooks['getUserPermissionsErrors'][] = 'PageLayoutBuilderHelper::getUserPermissionsErrors';
+
+/* Automatically redirect users to proper edit pages when they click "Edit" button */
+$wgHooks['AlternateEdit'][] = 'PageLayoutBuilderHelper::alternateEditHook';
+
+/* Add all possible layouts to CreatePage types list */
+$wgHooks['CreatePage::FetchOptions'][] = 'PageLayoutBuilderHelper::createPageOptions';
+
+/* Set up verious elements on layout edit pages */
+//$wgHooks['CategorySelect:beforeDisplayingEdit'][] = 'SpecialPageLayoutBuilder::beforeCategorySelect';
+$wgHooks['EditPageBeforeEditButtons'][] = 'SpecialPageLayoutBuilder::addFormButton';
+
+/* Hide layout from Category Select */
+$wgHooks['CategoryPage::beforeCategoryData'][] = 'PageLayoutBuilderHelper::beforeCategoryData';
+
+/* Handling of various layout edit special cases */
+$wgHooks['ArticleRollbackComplete'][] = 'SpecialPageLayoutBuilder::onArticleRollbackComplete';
+
+
+// --- Uncategorized hooks
+
 $wgHooks['AlternateEdit'][] = 'PageLayoutBuilderForm::alternateEditHook';
-$wgHooks['CategoryPage::beforeCategoryData'][] = 'PageLayoutBuilderSpecialPage::beforeCategoryData';
-$wgHooks['CategorySelect:beforeDisplayingEdit'][] = 'PageLayoutBuilderSpecialPage::beforeCategorySelect';
 $wgHooks['CategorySelect:beforeDisplayingView'][] = 'PageLayoutBuilderForm::blockCategorySelect';
 
 $wgHooks['RTEUseDefaultPlaceholder'][] = 'PageLayoutBuilderParser::rteIsCustom';
@@ -89,21 +116,15 @@ $wgHooks['ParserAfterTidy'][] = 'PageLayoutBuilderParser::replaceTags';
 $wgHooks['ParserAfterStrip'][] = 'PageLayoutBuilderParser::removeGalleryAndIPHook';
 $wgHooks['Parser::FetchTemplateAndTitle'][] =  'PageLayoutBuilderParser::fetchTemplateAndTitleHook';
 
-$wgHooks['ArticleRollbackComplete'][] = 'PageLayoutBuilderSpecialPage::rollbackHook';
-$wgHooks['EditPageBeforeEditButtons'][] = 'PageLayoutBuilderForm::addFormButton';
-$wgHooks['getUserPermissionsErrors'][] = 'PageLayoutBuilderSpecialPage::getUserPermissionsErrors';
+//$wgHooks['EditPageBeforeEditButtons'][] = 'PageLayoutBuilderForm::addFormButton';
 
-$wgHooks['EditPageBeforeEditButtons'][] = 'PageLayoutBuilderSpecialPage::addFormButton';
-$wgHooks['EditPage::CategoryBox'][] = 'PageLayoutBuilderSpecialPage::addNewButtonForArtilce';
+//$wgHooks['EditPage::getContent::isUndo'][] = 'PageLayoutBuilderForm::isUndo';
 
-$wgHooks['EditPage::getContent::isUndo'][] = 'PageLayoutBuilderForm::isUndo';
-
-$wgHooks['CreatePage::FetchOptions'][] = 'PageLayoutBuilderHelper::createPageOptions';
-$wgHooks['MyTools::getDefaultTools'][] = 'PageLayoutBuilderSpecialPage::myTools';
-$wgHooks['UserCommand::SpecialPage::PageLayoutBuilder'][] = 'PageLayoutBuilderSpecialPage::myTools2';
-
+$wgHooks['GetEditPageRailModuleList'][] = 'PageLayoutBuilderForm::getEditPageRailModuleList';
 $wgHooks['CreateWikiLocalJob-complete'][] = 'PageLayoutBuilderHelper::copyLayout';
-$wgHooks['BeforeEditEnhancements'][] = 'PageLayoutBuilderSpecialPage::onBeforeEditEnhancements';
+
+$wgHooks['BeforeEditEnhancements'][] = 'SpecialPageLayoutBuilder::onBeforeEditEnhancements';
+//$wgHooks['GetRailModuleList'][] = 'SpecialPageLayoutBuilder::onGetRailModuleSpecialPageList';
 
 $wgHooks['SpecialCreatePage::Subpage'][] = 'PageLayoutBuilderHelper::onCreatePageSubpage';
 

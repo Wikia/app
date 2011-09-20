@@ -13,8 +13,8 @@ $namespaces['en'] = array(
 );
 
 $namespaces['fr'] = array(
-	NS_BLOG_ARTICLE => 'Blog_utilisateur',
-	NS_BLOG_ARTICLE_TALK => 'Commentaire_blog_utilisateur'
+        NS_BLOG_ARTICLE => 'Blog_utilisateur',
+        NS_BLOG_ARTICLE_TALK => 'Commentaire_blog_utilisateur'
 );
 
 $namespaces['de'] = array(
@@ -22,13 +22,6 @@ $namespaces['de'] = array(
 	NS_BLOG_ARTICLE_TALK => 'Benutzer_Blog_Kommentare',
 	NS_BLOG_LISTING => 'Blog',
 	NS_BLOG_LISTING_TALK => 'Blog_Diskussion'
-);
-
-$namespaces['ko'] = array(
-	NS_BLOG_ARTICLE => '사용자 블로그',
-	NS_BLOG_ARTICLE_TALK => '사용자 블로그 댓글',
-	NS_BLOG_LISTING => '블로그',
-	NS_BLOG_LISTING_TALK => '블로그토론',
 );
 
 $namespaces['ru'] = array(
@@ -58,3 +51,4 @@ $namespaces['nn'] = array(
 	NS_BLOG_LISTING => 'Blogg',
 	NS_BLOG_LISTING_TALK => 'Bloggdiskusjon'
 );
+?>

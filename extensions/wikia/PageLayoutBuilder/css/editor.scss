@@ -3,150 +3,99 @@
 @import "../../../../skins/oasis/css/mixins/box-shadow";
 @import "../../../../skins/oasis/css/mixins/clearfix";
 @import "../../../../skins/oasis/css/core/color";
+@import "sprite-page-layout-builder";
 
 $toolbox-width: 300px;
-$manager-height: 36px;
 $color-list-background: darken($color-page,30%);
 
-td.plb-toolbox {
-	width: $toolbox-width;
-	max-width: $toolbox-width;
-	vertical-align: top;
 
-	a, a:hover, a:active, a:visited {
-		cursor: auto;
-	}
+.module_plb_list {
+	.plb-toolbox {
+		vertical-align: top;
 
-	.plb-manager {
-		height: $manager-height;
-
-		a:hover { /* ck override */
-			text-decoration: none;
+		a, a:hover, a:active, a:visited {
+			cursor: auto;
 		}
 
-		.wikia-menu-button {
-			margin-top: 12px;
-			margin-left: 9px;
-		}
-	}
+		$item-padding: 6px;
+		$item-outer-height: 48px;
+		$item-height: $item-outer-height - 2 * $item-padding;
 
-	$item-padding: 6px;
-	$item-outer-height: 48px;
-	$item-height: $item-outer-height - 2 * $item-padding;
-
-	.plb-widgets {
-		border: 1px solid $color-text;
-		margin: 6px;
-		margin-left: 0;
-		padding: 0 6px;
-
-		& > * {
-			width: 100%;
-		}
-
-		.plb-widgets-summary {
-			padding: ( $item-outer-height - 32px ) / 2 0;
-			height: $item-outer-height;
-			width: 100%;
-			display: block;
-			line-height: $item-height;
-			> * {
-				line-height: normal;
-				vertical-align: middle;
-			}
-			> span {
-				display: inline; // ie7
-				zoom: 1; // ie7
-				display: inline-block;
-				height: 32px;
-				vertical-align: middle;
-			}
-			.plb-widgets-count {
-				width: 32px;
-				line-height: 32px;
-				font-size: 20px;
-				text-align: center;
-			}
-			.plb-brick {
-				width: 32px;
-				height: 32px;
-				background: url(/extensions/wikia/PageLayoutBuilder/images/brick-icon.png); /* $wgCdnStylePath */
-			}
-			.plb-widgets-count-text {
-				margin-left: 9px;
-			}
-			.plb-widgets-count-text span {
-				display: block;
-			}
-		}
-
-		ul.plb-widget-list {
-			overflow-x: hidden;
-			overflow-y: auto;
-			list-style-type: none;
-			margin: 0;
-			padding: 0;
-			input[type=button] {
-				&.wikia-button {
-					color:$color-button-text;
-				}
-				&.wikia-button.secondary {
-					color:$color-text;
-				}
-			}
-			li {
+		.plb-widgets {
+			padding-top: 3px;
+			
+			ul.plb-widget-list {
+				overflow-x: hidden;
+				overflow-y: auto;
+				list-style-type: none;
 				margin: 0;
-				height: $item-outer-height;
-				padding: $item-padding 0;
-				position: relative;
-				border-top: 1px solid $color-text;
+				padding: 0;
 				width: 100%;
-				line-height: $item-height;
-				vertical-align: middle;
-				overflow: hidden;
-			}
+				input[type=button] {
+					&.wikia-button {
+						color:$color-button-text;
+					}
+					&.wikia-button.secondary {
+						color:$color-text;
+					}
+				}
+				li {
+					height: $item-outer-height;
+					padding: $item-padding 0;
+					position: relative;
+					border-top: 1px solid mix($color-text,$color-page,40%);
+					width: 100%;
+					line-height: $item-height;
+					vertical-align: middle;
+					overflow: hidden;
+				}
+				li:first-child {
+					border-top-width: 0;
+				}
 
-			li > * {
-				line-height: normal;
-				vertical-align: middle;
-			}
-
-			li > span.details {
-				display: inline;
-				zoom: 1;
-				display: inline-block;
-				margin-left: 3px;
-			}
-
-			li span.type {
-				font-weight: bold;
-				display: block;
-			}
-
-			li > .buttons {
-				position: absolute;
-				display: block;
-				top: 50%;
-				right: 0;
-				margin-right: 12px;
-				margin-top: -8px;
-				width: auto;
-				height: 22px;
-				line-height: 22px;
-
-				>input[type=button], >a {
-					float: left;
+				li > * {
+					line-height: normal;
+					vertical-align: middle;
+				}
+				
+				li > span.details {
+					display: inline;
+					zoom: 1;
+					display: inline-block;
+					margin-left: 3px;
+				}
+				
+				li span.type {
+					font-weight: bold;
 					display: block;
-					cursor: pointer;
-					margin-left: 6px;
 				}
 
-				>.delete {
-					width: 16px;  // width and height must be repeated from the .sprite.delete class
-					height: 16px; // because they get overriden by ck css rules
+				li > .buttons {
+					position: absolute;
+					display: block;
+					top: 50%;
+					right: 0;
+					margin-right: 12px;
+					margin-top: -8px;
+					width: auto;
+					height: 22px;
+					line-height: 22px;
+					
+					>input[type=button], >a {
+						float: left;
+						display: block;
+						cursor: pointer;
+						margin-left: 6px;
+					}
+					
+					>.delete {
+						width: 16px;  // width and height must be repeated from the .sprite.delete class
+						height: 16px; // because they get overriden by ck css rules
+						margin-top: 2px;
+					}
 				}
+		
 			}
-
 	/*
 			.plb-widget-list-entry.selected {
 				background-color: lighten($color-list-background,10%);
@@ -157,8 +106,12 @@ td.plb-toolbox {
 			}
 	*/
 		}
+		
+		.plb-widgets-tutorial {
+			margin: 6px 0;
+			white-space: normal;
+		}
 	}
-
 	.plb-widgets-tutorial {
 		margin: 6px;
 		margin-left: 0;
@@ -515,6 +468,48 @@ span.plb-editor-element-list{
 			margin-top:6px;
 			position:absolute;
 			top:100%;
+		}
+	}
+}
+
+
+#EditPage {
+	.module_plb_insert {
+		.cke_button {
+			.cke_icon {
+				@include sprite-page-layout-builder-base;
+			}
+			&.PLBAddElement_plb_input.cke_button_big .cke_icon {
+				@include sprite-page-layout-builder('widget-icon-plb_input',48px,32px);
+			}
+			&.PLBAddElement_plb_image.cke_button_big .cke_icon {
+				@include sprite-page-layout-builder('widget-icon-plb_image',48px,32px);
+			}
+			&.PLBAddElement_plb_mlinput.cke_button_big .cke_icon {
+				@include sprite-page-layout-builder('widget-icon-plb_mlinput',48px,32px);
+			}
+			&.PLBAddElement_plb_sinput.cke_button_big .cke_icon {
+				@include sprite-page-layout-builder('widget-icon-plb_sinput',48px,32px);
+			}
+			&.PLBAddElement_plb_gallery.cke_button_big .cke_icon {
+				@include sprite-page-layout-builder('widget-icon-plb_gallery',48px,32px);
+			}
+		}
+		// additional ".module" required here for higher priority than default value in editor
+		&.module > .module_content { 
+			padding: 10px 0 10px 12px;
+		}
+		.cke_button_big {
+			display: inline-block;
+			margin: 5px 0 4px 5px;
+		}
+		.cke_hidden {
+			display: none;
+		}		
+	}
+	.module_plb_list {
+		.module_content {
+			overflow-y: auto;
 		}
 	}
 }

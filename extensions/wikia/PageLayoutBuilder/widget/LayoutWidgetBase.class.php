@@ -108,7 +108,7 @@ abstract class LayoutWidgetBase {
 		$caption =  $this->getAttrVal( "caption", true );
 		if($this->getAttrVal('required')) {
 			$caption = $caption.'*';
-		} 
+		}
 		return XML::element('p', array('id' =>  "input_".$this->getAttrVal( "id", true ), 'class' => 'plb-form-caption-p'), $caption);
 	}
 
@@ -133,7 +133,7 @@ abstract class LayoutWidgetBase {
 		if( strlen( $this->value ) < 1) {
 			return true;
 		}
-		
+
 		return false;
 	}
 
@@ -148,7 +148,7 @@ abstract class LayoutWidgetBase {
 				if($this->isSeftAttr($name)) {
 					return htmlspecialchars($attrs[$name]);
 				} else {
-					return $attrs[$name];	
+					return $attrs[$name];
 				}
 			} else {
 				return "";
@@ -183,7 +183,7 @@ abstract class LayoutWidgetBase {
 				$data["__plb_param_".$name] = $this->attributes[$name];
 			}
 		}
-		
+
 		global $wgEnableRTEExt;
 		if ($wgEnableRTEExt) {
 			if ($directly) {
@@ -196,6 +196,10 @@ abstract class LayoutWidgetBase {
 			// This value will not be used when RTE is disabled
 			return '';
 		}
+	}
+
+	public function getNameCaption() {
+		return wfMsg('plb-widget-name-'.$this->getName());
 	}
 
 	public function renderEditorMenuItem() {
@@ -218,14 +222,14 @@ abstract class LayoutWidgetBase {
 	protected function isSeftAttr($name) {
 		return in_array($name, $this->safeAttr());
 	}
-	
+
 	protected function safeAttr() {
 		return array(
 				'caption',
-				'instructions'	
+				'instructions'
 		);
 	}
-	
+
 	public function getRequiredAttrs() {
 		return array(
 				'id',
@@ -277,7 +281,7 @@ abstract class LayoutWidgetBase {
 				."<button class=\"plb-rte-widget-edit-button wikia-button secondary\">".htmlspecialchars(wfMsg('plb-editor-edit'))."</button></span>"
 			."<span class=\"plb-rte-widget-clickable plb-rte-widget-clickable-left\">$content</span>"
 			."<span class=\"plb-rte-widget-clickable plb-rte-widget-clickable-right\">$content</span>";
-				
+
 	}
 
 }

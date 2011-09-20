@@ -101,55 +101,54 @@ CKEDITOR.plugins.add('rte-dialog',
 			}
 		};
 
+		// setup click tracking when dialog is about to be shown
+		CKEDITOR.dialog.prototype.showOriginal = CKEDITOR.dialog.prototype.show;
+		CKEDITOR.dialog.prototype.show = function() {
+			this.showOriginal();
+
+			if(!this._.trackingSetUp) {
+				this.initTracking();
+
+				// run this just once per dialog's instance
+				this._.trackingSetUp = true;
+			}
+		};
+
 		// setup tracking for given dialog
-		// events "<name>/dialog/<event>" will be reported
-		CKEDITOR.dialog.prototype.setupTracking = function(name, options) {
-			// options handling (which events should be reported)
-			var defaults = {cancel: 1, close: 1, ok:1, error: 1};
-			options = $().extend(defaults, options);
+		CKEDITOR.dialog.prototype.initTracking = function() {
+			this.on('show', $.proxy(this.track, this));
+			this.on('close', $.proxy(this.track, this));
 
-			// cleanup
-			this._.wikiaTrack = {
-				sendEvent: options,
-				sendEvents: true,
-				name: name
-			};
+			// dialog field did not pass validation
+			this.on('notvalid', $.proxy(this.track, this));
 
-			// add custom events callbacks
-			var self = this;
-			this.on('cancelClicked', function(ev) {
-				self.fireTrackingEvent('cancel', ev);
-			});
-			this.on('close', function(ev) {
-				self.fireTrackingEvent('close', ev);
-			});
-			this.on('notvalid', function(ev) {
-				self.fireTrackingEvent('error', ev);
-			});
+			// handle clicks on OK button - set a flag (to be read by "onHide" event)
+			this.on('ok', $.proxy(function(ev) {
+				this._.okClicked = true;
+			}, this));
 
-			// handle clicks on OK button
-			var okButton = this.getButton('ok');
-			if (okButton) {
-				okButton.on('click', function(ev) {
-					self.fireTrackingEvent('ok', ev);
-				});
-			}
-		};
+			// when dialog is being closed check whether if was caused by clicking "Ok" button
+			this.on('hide', $.proxy(function() {
+				if (this._.okClicked) {
+					this.track({name: 'ok'});
 
-		CKEDITOR.dialog.prototype.fireTrackingEvent = function(eventName, ev) {
-			var wikiaTrack = this._.wikiaTrack;
-
-			if (wikiaTrack.sendEvents) {
-				// should this type of event be reported
-				if  (wikiaTrack.sendEvent[eventName]) {
-					RTE.track(wikiaTrack.name, 'dialog', eventName);
-
-					// prevent duplicated reports
-					if (eventName == 'cancel' || eventName == 'close') {
-						wikiaTrack.sendEvents = false;
-					}
+					delete this._.okClicked;
 				}
-			}
+			}, this));
 		};
+
+		// report "<dialogName>/dialog/<eventName>" events
+		CKEDITOR.dialog.prototype.track = function(ev) {
+			RTE.track(this._.name, 'dialog', ev.name);
+		};
+
+		// always show body's scrollbars when modal is shown (BugId:7498)
+		editor.on('dialogShow', function(ev) {
+			$(document.body).addClass('modalShown');
+		});
+
+		editor.on('dialogHide', function(ev) {
+			$(document.body).removeClass('modalShown');
+		});
 	}
 });

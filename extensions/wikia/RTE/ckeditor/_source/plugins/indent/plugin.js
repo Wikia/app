@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -15,11 +15,14 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 	function onSelectionChange( evt )
 	{
+ 		if ( evt.editor.readOnly )
+ 			return null;
+
 		var editor = evt.editor;
 
 		// Wikia - start
-		var path = evt.data.path;
-		var nodeName = path.block ? path.block.getName() : '';
+		var path = evt.data.path,
+			nodeName = path.block ? path.block.getName() : '';
 
 		// disable indent buttons when inside a heading
 		if ( (/h\d/).test(nodeName) ) {
@@ -37,7 +40,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		// Wikia - end
 
 		var elementPath = evt.data.path,
-				list = elementPath && elementPath.contains( listNodeNames );
+				list = elementPath && elementPath.contains( listNodeNames ),
+	 			firstBlock = elementPath.block || elementPath.blockLimit;
 
 		if ( list )
 				return this.setState( CKEDITOR.TRISTATE_OFF );
@@ -45,8 +49,6 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		if ( !this.useIndentClasses && this.name == 'indent' )
 			return this.setState( CKEDITOR.TRISTATE_OFF );
 
-		var path = evt.data.path,
-			firstBlock = path.block || path.blockLimit;
 		if ( !firstBlock )
 			return this.setState( CKEDITOR.TRISTATE_DISABLED );
 
@@ -477,7 +479,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
  * and instead the {@link #indentUnit} and {@link #indentOffset} properties will be used.
  * @name CKEDITOR.config.indentClasses
  * @type Array
- * default null
+ * @default null
  * @example
  * // Use the classes 'Indent1', 'Indent2', 'Indent3'
  * config.indentClasses = ['Indent1', 'Indent2', 'Indent3'];

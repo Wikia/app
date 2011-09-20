@@ -34,6 +34,13 @@ class BlogLockdown {
 			return true;
 		}
 
+		/**
+		 * check if default blog post was passed (BugId:8331)
+		 */
+		if ($namespace == NS_BLOG_ARTICLE && $title->mTextform == '') {
+			return true;
+		}
+
 		$username = $user->getName();
 		if ( $namespace == NS_BLOG_ARTICLE_TALK && class_exists('ArticleComment')) {
 			$oComment = ArticleComment::newFromTitle( $title );
@@ -134,6 +141,7 @@ class BlogLockdown {
 					$return = ( isset($owner) && ($username == $owner) );
 				}
 		}
+
 		return $return;
 	}
 }

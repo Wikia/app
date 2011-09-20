@@ -18,10 +18,7 @@ CKEDITOR.themes.add( 'wikia', (function()
 			if ( elementMode == CKEDITOR.ELEMENT_MODE_REPLACE )
 				element.hide();
 
-			// Get the HTML for the predefined spaces.
-			var topHtml			= editor.fire( 'themeSpace', { space : 'top', html : '' } ).html;
-			var contentsHtml	= editor.fire( 'themeSpace', { space : 'contents', html : '' } ).html;
-			var bottomHtml		= editor.fireOnce( 'themeSpace', { space : 'bottom', html : '' } ).html;
+			var contentsHtml	= editor.fire( 'themeSpace', { space : 'contents', html : '', elements: [] } ).html;
 
 			var height	= contentsHtml && editor.config.height;
 
@@ -44,17 +41,8 @@ CKEDITOR.themes.add( 'wikia', (function()
 				style += "width: " + width + ";";
 			}
 
-			// Wikia: add second column on Oasis skin (except main pages)
-			var contentColumns = 1,
-				extraContentColumnHtml = '';
-
-			if (window.skin == 'oasis' && !window.wgIsMainpage) {
-				contentColumns = 2;
-				extraContentColumnHtml = '<td id="cke_contents_' + name + '_sidebar"></td>';
-			}
-
 			var container = CKEDITOR.dom.element.createFromHtml( [
-				'<span' +
+				'<div' +
 					' id="cke_', name, '"' +
 					' class="', editor.skinClass, '"' +
 					' dir="', editor.lang.dir, '"' +
@@ -63,21 +51,14 @@ CKEDITOR.themes.add( 'wikia', (function()
 					' tabindex="' + tabIndex + '"' +
 					( style ? ' style="' + style + '"' : '' ) +
 					'>' +
-					'<span class="' , CKEDITOR.env.cssClass, '">' +
-						'<span class="cke_wrapper cke_', editor.lang.dir, '">' +
-							'<table class="cke_editor" border="0" cellspacing="0" cellpadding="0"><tbody>' +
-								'<tr', topHtml		? '' : ' style="display:none"', '><td id="cke_top_', name, '" class="cke_top" colspan="', contentColumns, '" style="background-color: ' + editor.config.baseBackgroundColor + '; color:' + editor.config.baseColor + '">'	, topHtml		, '</td></tr>' +
-								'<tr', contentsHtml	? '' : ' style="display:none"', '><td id="cke_contents_', name, '" class="cke_contents" style="height:', height, '">', contentsHtml, '</td>', extraContentColumnHtml, '</tr>' +
-								'<tr', bottomHtml	? '' : ' style="display:none"', '><td id="cke_bottom_'	, name, '" class="cke_bottom" colspan="', contentColumns, '">', bottomHtml	, '</td></tr>' +
-							'</tbody></table>' +
+					'<div class="' , CKEDITOR.env.cssClass, '">' +
+						'<div class="cke_wrapper cke_', editor.lang.dir, '">' +
+							'<div id="cke_contents_', name, '" class="cke_contents" style="height:', height, '">', contentsHtml, '</div>' +
 							//Hide the container when loading skins, later restored by skin css.
 							'<style>.', editor.skinClass, '{visibility:hidden;}</style>' +
-						'</span>' +
-					'</span>' +
-				'</span>' ].join( '' ) );
-
-			container.getChild( [0, 0, 0, 0, 0] ).unselectable();
-			container.getChild( [0, 0, 0, 0, 2] ).unselectable();
+						'</div>' +
+					'</div>' +
+				'</div>' ].join( '' ) );
 
 			if ( elementMode == CKEDITOR.ELEMENT_MODE_REPLACE )
 				container.insertAfter( element );
@@ -99,6 +80,8 @@ CKEDITOR.themes.add( 'wikia', (function()
 
 			editor.fireOnce( 'themeLoaded' );
 			editor.fireOnce( 'uiReady' );
+
+			RTE.log('theme is ready');
 		},
 
 		buildDialog : function( editor )
@@ -115,7 +98,7 @@ CKEDITOR.themes.add( 'wikia', (function()
 							' cke_', editor.lang.dir, '" style="position:absolute">' +
 							'<div class="%body">' +
 								'<div id="%title#" class="%title"></div>' +
-								'<div id="%close_button#" class="%close_button"><img src="' + window.stylepath + '/common/blank.gif" class="sprite close" /></div>' +
+								'<div id="%close_button#" class="%close_button close wikia-chiclet-button"><img src="' + window.stylepath + '/oasis/images/icon_close.png" /></div>' +
 								'<div id="%tabs#" class="%tabs accent tabs"></div>' +
 								'<div id="%contents#" class="%contents"></div>' +
 								'<div id="%footer#" class="%footer"></div>' +
@@ -208,17 +191,31 @@ CKEDITOR.themes.add( 'wikia', (function()
 
 CKEDITOR.editor.prototype.getThemeSpace = function( spaceName )
 {
+	var getSpaceId = function(editorName, spaceName) {
+		switch (spaceName) {
+			case 'tabs':
+				return 'EditPageTabs';
+			case 'toolbar':
+				return 'EditPageToolbar';
+			case 'contents':
+				return spacePrefix + '_' + editorName;
+			case 'rail':
+				return 'EditPageRail';
+		}
+	};
+
 	var spacePrefix = 'cke_' + spaceName;
 	var space = this._[ spacePrefix ] ||
-		( this._[ spacePrefix ] = CKEDITOR.document.getById( spacePrefix + '_' + this.name ) );
+		( this._[ spacePrefix ] = CKEDITOR.document.getById( getSpaceId(this.name, spaceName) ) );
 	return space;
 };
 
 CKEDITOR.editor.prototype.resize = function( width, height, isContentHeight, resizeInner )
 {
 	var numberRegex = /^\d+$/;
-	if ( numberRegex.test( width ) )
+	if ( numberRegex.test( width ) ) {
 		width += 'px';
+	}
 
 	var contents = CKEDITOR.document.getById( 'cke_contents_' + this.name );
 	var outer = resizeInner ? contents.getAscendant( 'table' ).getParent()

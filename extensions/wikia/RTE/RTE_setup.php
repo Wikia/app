@@ -41,8 +41,6 @@ $wgHooks['EditPage::getContent::end'][] = 'RTEMagicWord::checkEditPageContent';
 
 // i18n
 $wgExtensionMessagesFiles['RTE'] = $dir.'/i18n/RTE.i18n.php';
-$wgExtensionMessagesFiles['CKcore'] = $dir.'/i18n/CK.core.i18n.php';
-$wgExtensionMessagesFiles['CKwikia'] = $dir.'/i18n/CK.wikia.i18n.php';
 
 // enable MW suggest - this needs to be set here to make API calls working
 $wgEnableMWSuggest = true;

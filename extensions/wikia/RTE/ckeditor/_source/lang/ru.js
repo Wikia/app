@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -34,8 +34,8 @@ CKEDITOR.lang['ru'] =
 	editorTitle : 'Rich text editor, %1, press ALT 0 for help.', // MISSING
 
 	// ARIA descriptions.
-	toolbar	: 'Toolbar', // MISSING
-	editor	: 'Rich Text Editor', // MISSING
+	toolbars	: 'Editor toolbars', // MISSING
+	editor		: 'Rich Text Editor', // MISSING
 
 	// Toolbar buttons without dialogs.
 	source			: 'Источник',
@@ -121,6 +121,8 @@ CKEDITOR.lang['ru'] =
 		alignBottom		: 'Понизу',
 		invalidHeight	: 'Высота задается числом.',
 		invalidWidth	: 'Ширина задается числом.',
+		invalidCssLength	: 'Value specified for the "%1" field must be a positive number with or without a valid CSS measurement unit (px, %, in, cm, mm, em, ex, pt, or pc).', // MISSING
+		invalidHtmlLength	: 'Value specified for the "%1" field must be a positive number with or without a valid HTML measurement unit (px or %).', // MISSING
 
 		// Put the voice-only part of the label in the span.
 		unavailable		: '%1<span class="cke_accessibility">, недоступно</span>'
@@ -201,7 +203,8 @@ CKEDITOR.lang['ru'] =
 		menu		: 'Свойства якоря',
 		title		: 'Свойства якоря',
 		name		: 'Имя якоря',
-		errorName	: 'Пожалуйста, введите имя якоря'
+		errorName	: 'Пожалуйста, введите имя якоря',
+		remove		: 'Remove Anchor' // MISSING
 	},
 
 	// List style dialog
@@ -413,7 +416,6 @@ CKEDITOR.lang['ru'] =
 		upload		: 'Закачать',
 		alt			: 'Альтернативный текст',
 		lockRatio	: 'Сохранять пропорции',
-		unlockRatio	: 'Unlock Ratio', // MISSING
 		resetSize	: 'Сбросить размер',
 		border		: 'Бордюр',
 		hSpace		: 'Горизонтальный отступ',
@@ -715,6 +717,8 @@ CKEDITOR.lang['ru'] =
 	{
 		title		: 'О программе CKEditor',
 		dlgTitle	: 'О программе CKEditor',
+		help	: 'Check $1 for help.', // MISSING
+		userGuide : 'CKEditor User\'s Guide', // MISSING
 		moreInfo	: 'По вопросам лицензирования обращайтесь на наш сайт:',
 		copy		: 'Copyright &copy; $1. Все права защищены.'
 	},
@@ -745,9 +749,64 @@ CKEDITOR.lang['ru'] =
 	toolbarCollapse	: 'Свернуть панель инструментов',
 	toolbarExpand	: 'Развернуть панель инструментов',
 
+	toolbarGroups :
+	{
+		document : 'Document', // MISSING
+		clipboard : 'Clipboard/Undo', // MISSING
+		editing : 'Editing', // MISSING
+		forms : 'Forms', // MISSING
+		basicstyles : 'Basic Styles', // MISSING
+		paragraph : 'Paragraph', // MISSING
+		links : 'Links', // MISSING
+		insert : 'Insert', // MISSING
+		styles : 'Styles', // MISSING
+		colors : 'Colors', // MISSING
+		tools : 'Tools' // MISSING
+	},
+
 	bidi :
 	{
 		ltr : 'Text direction from left to right', // MISSING
 		rtl : 'Text direction from right to left' // MISSING
+	},
+
+	docprops :
+	{
+		label : 'Свойства документа',
+		title : 'Свойства документа',
+		design : 'Design', // MISSING
+		meta : 'Мета данные',
+		chooseColor : 'Выберите',
+		other : '<другой>',
+		docTitle :	'Заголовок страницы',
+		charset : 	'Кодировка набора символов',
+		charsetOther : 'Другая кодировка набора символов',
+		charsetASCII : 'ASCII', // MISSING
+		charsetCE : 'Центрально-европейская',
+		charsetCT : 'Китайская традиционная (Big5)',
+		charsetCR : 'Кириллица',
+		charsetGR : 'Греческая',
+		charsetJP : 'Японская',
+		charsetKR : 'Корейская',
+		charsetTR : 'Турецкая',
+		charsetUN : 'Юникод (UTF-8)',
+		charsetWE : 'Западно-европейская',
+		docType : 'Заголовок типа документа',
+		docTypeOther : 'Другой заголовок типа документа',
+		xhtmlDec : 'Включить XHTML объявления',
+		bgColor : 'Цвет фона',
+		bgImage : 'URL изображения фона',
+		bgFixed : 'Нескроллируемый фон',
+		txtColor : 'Цвет текста',
+		margin : 'Отступы страницы',
+		marginTop : 'Верхний',
+		marginLeft : 'Левый',
+		marginRight : 'Правый',
+		marginBottom : 'Нижний',
+		metaKeywords : 'Ключевые слова документа (разделенные запятой)',
+		metaDescription : 'Описание документа',
+		metaAuthor : 'Автор',
+		metaCopyright : 'Авторские права',
+		previewHtml : '<p>This is some <strong>sample text</strong>. You are using <a href="javascript:void(0)">CKEditor</a>.</p>' // MISSING
 	}
 };

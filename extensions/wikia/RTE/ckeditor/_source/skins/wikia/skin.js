@@ -16,8 +16,8 @@ CKEDITOR.skins.add( 'wikia', (function()
 
 	return {
 		preload		: preload,
-		editor		: { css : [ window.RTEDevMode ? 'editor.css' : 'editor.min.css' ] },
-		dialog		: { css : [ 'dialog.css' ] },
+		editor		: { css : [ $.getSassCommonURL('/extensions/wikia/RTE/ckeditor/_source/skins/wikia/editor.scss') ] },
+		dialog		: { /* css : [ 'dialog.css' ] - loaded in editor.scss (BugId:7843) */ },
 		templates	: { css : [ 'templates.css' ] },
 		margins		: [ 0, 0, 0, 0 ],
 		init : function( editor )
@@ -218,7 +218,7 @@ if ( CKEDITOR.dialog )
 				return;
 
 			contents.setStyles(
-				( CKEDITOR.env.ie || ( CKEDITOR.env.gecko && CKEDITOR.env.version < 10900 ) ) ?		// IE && FF2
+				( CKEDITOR.env.ie || CKEDITOR.env.opera /*wikia change - bugid:6902*/ || ( CKEDITOR.env.gecko && CKEDITOR.env.version < 10900 ) ) ?		// IE && FF2 && OPERA
 					{
 						width : width + 'px',
 						height : height + 'px'

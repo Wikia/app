@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -19,11 +19,11 @@ CKEDITOR.plugins.add( 'styles',
 });
 
 /**
- * Registers a function to be called whenever a style changes its state in the
+ * Registers a function to be called whenever the selection position changes in the
  * editing area. The current state is passed to the function. The possible
  * states are {@link CKEDITOR.TRISTATE_ON} and {@link CKEDITOR.TRISTATE_OFF}.
  * @param {CKEDITOR.style} style The style to be watched.
- * @param {Function} callback The function to be called when the style state changes.
+ * @param {Function} callback The function to be called.
  * @example
  * // Create a style object for the &lt;b&gt; element.
  * var style = new CKEDITOR.style( { element : 'b' } );
@@ -79,12 +79,14 @@ CKEDITOR.STYLE_OBJECT = 3;
 
 (function()
 {
-	var blockElements	= { address:1,div:1,h1:1,h2:1,h3:1,h4:1,h5:1,h6:1,p:1,pre:1 };
-	var objectElements	= { a:1,embed:1,hr:1,img:1,li:1,object:1,ol:1,table:1,td:1,tr:1,th:1,ul:1,dl:1,dt:1,dd:1,form:1};
+	var blockElements	= { address:1,div:1,h1:1,h2:1,h3:1,h4:1,h5:1,h6:1,p:1,pre:1,section:1,header:1,footer:1,nav:1,article:1,aside:1,figure:1,dialog:1,hgroup:1,time:1,meter:1,menu:1,command:1,keygen:1,output:1,progress:1,details:1,datagrid:1,datalist:1 },
+		objectElements	= { a:1,embed:1,hr:1,img:1,li:1,object:1,ol:1,table:1,td:1,tr:1,th:1,ul:1,dl:1,dt:1,dd:1,form:1,audio:1,video:1 };
 
-	var semicolonFixRegex = /\s*(?:;\s*|$)/;
+	var semicolonFixRegex = /\s*(?:;\s*|$)/,
+		varRegex = /#\((.+?)\)/g;
 
-	var notBookmark = CKEDITOR.dom.walker.bookmark( 0, 1 );
+	var notBookmark = CKEDITOR.dom.walker.bookmark( 0, 1 ),
+		nonWhitespaces = CKEDITOR.dom.walker.whitespaces( 1 );
 
 	CKEDITOR.style = function( styleDefinition, variablesValues )
 	{
@@ -96,15 +98,21 @@ CKEDITOR.STYLE_OBJECT = 3;
 			replaceVariables( styleDefinition.styles, variablesValues );
 		}
 
-		var element = this.element = ( styleDefinition.element || '*' ).toLowerCase();
+		var element = this.element = styleDefinition.element ?
+				( typeof styleDefinition.element == 'string' ? styleDefinition.element.toLowerCase() : styleDefinition.element )
+				: '*';
 
 		this.type =
-			( element == '#' || blockElements[ element ] ) ?
+			blockElements[ element ] ?
 				CKEDITOR.STYLE_BLOCK
 			: objectElements[ element ] ?
 				CKEDITOR.STYLE_OBJECT
 			:
 				CKEDITOR.STYLE_INLINE;
+
+		// If the 'element' property is an object with a set of possible element, it will be applied like an object style: only to existing elements
+		if ( typeof this.element == 'object' )
+			this.type = CKEDITOR.STYLE_OBJECT;
 
 		this._ =
 		{
@@ -177,9 +185,12 @@ CKEDITOR.STYLE_OBJECT = 3;
 							  && ( element == elementPath.block || element == elementPath.blockLimit ) )
 							continue;
 
-						if( this.type == CKEDITOR.STYLE_OBJECT
-							 && !( element.getName() in objectElements ) )
+						if( this.type == CKEDITOR.STYLE_OBJECT )
+						{
+							var name = element.getName();
+							if ( !( typeof this.element == 'string' ? name == this.element : name in this.element ) )
 								continue;
+						}
 
 						if ( this.checkElementRemovable( element, true ) )
 							return true;
@@ -211,14 +222,15 @@ CKEDITOR.STYLE_OBJECT = 3;
 		// current style definition.
 		checkElementRemovable : function( element, fullMatch )
 		{
-			if ( !element )
+			if ( !element || element.isReadOnly() )
 				return false;
 
 			var def = this._.definition,
-				attribs;
+				attribs,
+				name = element.getName();
 
 			// If the element name is the same as the style name.
-			if ( element.getName() == this.element )
+			if ( typeof this.element == 'string' ? name == this.element : name in this.element )
 			{
 				// If no attributes are defined in the element.
 				if ( !fullMatch && !element.hasAttributes() )
@@ -286,7 +298,7 @@ CKEDITOR.STYLE_OBJECT = 3;
 		},
 
 		// Builds the preview HTML based on the styles definition.
-		buildPreview : function()
+		buildPreview : function( label )
 		{
 			var styleDefinition = this._.definition,
 				html = [],
@@ -313,7 +325,7 @@ CKEDITOR.STYLE_OBJECT = 3;
 			if ( cssStyle )
 				html.push( ' style="', cssStyle, '"' );
 
-			html.push( '>', styleDefinition.name, '</', elementName, '>' );
+			html.push( '>', ( label || styleDefinition.name ), '</', elementName, '>' );
 
 			return html.join( '' );
 		}
@@ -821,26 +833,26 @@ CKEDITOR.STYLE_OBJECT = 3;
 		}
 
 		range.moveToBookmark( bookmark );
-}
+	}
 
 	function applyObjectStyle( range )
 	{
 		var root = range.getCommonAncestor( true, true ),
-				element = root.getAscendant( this.element, true );
-		element && setupElement( element, this );
+			element = root.getAscendant( this.element, true );
+		element && !element.isReadOnly() && setupElement( element, this );
 	}
 
 	function removeObjectStyle( range )
 	{
 		var root = range.getCommonAncestor( true, true ),
-				element = root.getAscendant( this.element, true );
+			element = root.getAscendant( this.element, true );
 
 		if ( !element )
 			return;
 
-		var style = this;
-		var def = style._.definition;
-		var attributes = def.attributes;
+		var style = this,
+			def = style._.definition,
+			attributes = def.attributes;
 		var styles = CKEDITOR.style.getStyleText( def );
 
 		// Remove all defined attributes.
@@ -884,8 +896,11 @@ CKEDITOR.STYLE_OBJECT = 3;
 
 		while ( ( block = iterator.getNextParagraph() ) )		// Only one =
 		{
-			var newBlock = getElement( this, doc, block );
-			replaceBlock( block, newBlock );
+			if ( !block.isReadOnly() )
+			{
+				var newBlock = getElement( this, doc, block );
+				replaceBlock( block, newBlock );
+			}
 		}
 
 		range.moveToBookmark( bookmark );
@@ -970,7 +985,6 @@ CKEDITOR.STYLE_OBJECT = 3;
 			removeNoAttribsElement( newBlock );
 	}
 
-	var nonWhitespaces = CKEDITOR.dom.walker.whitespaces( 1 );
 	/**
 	 * Merge a <pre> block with a previous sibling if available.
 	 */
@@ -1039,6 +1053,7 @@ CKEDITOR.STYLE_OBJECT = 3;
 			} );
 		return headBookmark + str.replace( regexp, replacement ) + tailBookmark;
 	}
+
 	/**
 	 * Converting a list of <pre> into blocks with format well preserved.
 	 */
@@ -1174,9 +1189,8 @@ CKEDITOR.STYLE_OBJECT = 3;
 		var def = style._.definition,
 			attribs = def.attributes,
 			styles = def.styles,
-			overrides = getOverrides( style );
-
-		var innerElements = element.getElementsByTag( style.element );
+			overrides = getOverrides( style ),
+			innerElements = element.getElementsByTag( style.element );
 
 		for ( var i = innerElements.count(); --i >= 0 ; )
 			removeFromElement( style,  innerElements.getItem( i ) );
@@ -1195,7 +1209,6 @@ CKEDITOR.STYLE_OBJECT = 3;
 				}
 			}
 		}
-
 	}
 
 	/**
@@ -1279,11 +1292,9 @@ CKEDITOR.STYLE_OBJECT = 3;
 
 	function getElement( style, targetDocument, element )
 	{
-		var el;
-
-		var def = style._.definition;
-
-		var elementName = style.element;
+		var el,
+			def = style._.definition,
+			elementName = style.element;
 
 		// The "*" element name will always be a span for this function.
 		if ( elementName == '*' )
@@ -1309,9 +1320,9 @@ CKEDITOR.STYLE_OBJECT = 3;
 
 	function setupElement( el, style )
 	{
-		var def = style._.definition;
-		var attributes = def.attributes;
-		var styles = CKEDITOR.style.getStyleText( def );
+		var def = style._.definition,
+			attributes = def.attributes,
+			styles = CKEDITOR.style.getStyleText( def );
 
 		// Assign all defined attributes.
 		if ( attributes )
@@ -1329,7 +1340,6 @@ CKEDITOR.STYLE_OBJECT = 3;
 		return el;
 	}
 
-	var varRegex = /#\((.+?)\)/g;
 	function replaceVariables( list, variablesValues )
 	{
 		for ( var item in list )
@@ -1340,7 +1350,6 @@ CKEDITOR.STYLE_OBJECT = 3;
 				});
 		}
 	}
-
 
 	// Returns an object that can be used for style matching comparison.
 	// Attributes names and values are all lowercased, and the styles get
@@ -1470,6 +1479,16 @@ CKEDITOR.STYLE_OBJECT = 3;
 		else
 			styleText = unparsedCssText;
 
+		// Normalize font-family property, ignore quotes and being case insensitive. (#7322)
+		// http://www.w3.org/TR/css3-fonts/#font-family-the-font-family-property
+		styleText = styleText.replace( /(font-family:)(.*?)(?=;|$)/, function ( match, prop, val )
+		{
+			var names = val.split( ',' );
+			for ( var i = 0; i < names.length; i++ )
+				names[ i ] = CKEDITOR.tools.trim( names[ i ].replace( /["']/g, '' ) );
+			return prop + names.join( ',' );
+		});
+
 		// Shrinking white-spaces around colon and semi-colon (#4147).
 		// Compensate tail semi-colon.
 		return styleText.replace( /\s*([;:])\s*/, '$1' )
@@ -1521,6 +1540,8 @@ CKEDITOR.STYLE_OBJECT = 3;
 	function applyStyle( document, remove )
 	{
 		var selection = document.getSelection(),
+			// Bookmark the range so we can re-select it after processing.
+			bookmarks = selection.createBookmarks( 1 ),
 			ranges = selection.getRanges( /* Wikia - Original: 1 */ CKEDITOR.ONLY_FORMATTABLES ),
 			func = remove ? this.removeFromRange : this.applyToRange,
 			range;
@@ -1537,7 +1558,13 @@ CKEDITOR.STYLE_OBJECT = 3;
 		document.fire('afterApplyStyle', {style: this.element, remove: remove, selection: selection, ranges: ranges});
 		// Wikia - end
 
-		selection.selectRanges( ranges );
+		if ( bookmarks.length == 1 && bookmarks[ 0 ].collapsed )
+		{
+			selection.selectRanges( ranges );
+			document.getById( bookmarks[ 0 ].startNode ).remove();
+		}
+		else
+			selection.selectBookmarks( bookmarks );
 
 		document.removeCustomData( 'doc_processing_style' );
 	}
@@ -1578,11 +1605,11 @@ CKEDITOR.styleCommand.prototype.exec = function( editor )
  * 	// Block Styles
  * 	{ name : 'Blue Title'		, element : 'h3', styles : { 'color' : 'Blue' } },
  * 	{ name : 'Red Title'		, element : 'h3', styles : { 'color' : 'Red' } },
- * 
+ *
  * 	// Inline Styles
  * 	{ name : 'Marker: Yellow'	, element : 'span', styles : { 'background-color' : 'Yellow' } },
  * 	{ name : 'Marker: Green'	, element : 'span', styles : { 'background-color' : 'Lime' } },
- * 
+ *
  * 	// Object Styles
  * 	{
  * 		name : 'Image on Left',

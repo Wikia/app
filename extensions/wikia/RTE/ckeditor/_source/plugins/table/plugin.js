@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -16,6 +16,7 @@ CKEDITOR.plugins.add( 'table',
 		editor.ui.addButton( 'Table',
 			{
 				label : lang.toolbar,
+				title: lang.toolbarTooltip,
 				command : 'table'
 			});
 

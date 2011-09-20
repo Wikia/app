@@ -97,9 +97,6 @@ CKEDITOR.dialog.add( 'link', function( editor )
 					case 'internal':
 						setMode('internal');
 						setTimeout(checkStatus,200);
-						if (data.text === data.link) {
-							this._.similarLink = true;
-						}
 						break;
 
 					case 'external':
@@ -213,6 +210,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 		title : editor.lang.link.title,
 		minWidth : 500,
 		minHeight : 185,
+		doNotCheckForChanged: true /* link dialog no longer warns on close (r25573 refactored) */,
 		contents : [
 			{
 				id : 'internal',
@@ -263,7 +261,12 @@ CKEDITOR.dialog.add( 'link', function( editor )
 								var re = new RegExp('^(#(.+))|[' + RTE.constants.validTitleChars + ']+$');
 								var validPageNameFunc = CKEDITOR.dialog.validate.regex(re, editor.lang.link.error.badPageTitle);
 
-								return validPageNameFunc.apply(this);
+								var isValid = validPageNameFunc.apply(this);
+								if (!isValid) {
+									RTE.track('link', 'dialog', 'error');
+								}
+
+								return isValid;
 							}
 							else{
 								// validate URL
@@ -273,7 +276,12 @@ CKEDITOR.dialog.add( 'link', function( editor )
 								}
 								var validUrlFunc = CKEDITOR.dialog.validate.regex(re, editor.lang.link.error.badUrl);
 
-								return validUrlFunc.apply(this);
+								var isValid = validUrlFunc.apply(this);
+								if (!isValid) {
+									RTE.track('link', 'dialog', 'error');
+								}
+
+								return isValid;
 							}
 						}
 					},
@@ -298,8 +306,12 @@ CKEDITOR.dialog.add( 'link', function( editor )
 								RTE.log("mode changed to "+e.data.value);
 								if( e.data && e.data.value == 'ext' ){
 									setMode('external');
+
+									RTE.track('link', 'dialog', 'tab', 'internal2external');
 								}else{
 									setMode('internal');
+
+									RTE.track('link', 'dialog', 'tab', 'external2internal');
 								}
 							}
 						}
@@ -334,12 +346,6 @@ CKEDITOR.dialog.add( 'link', function( editor )
 
 			// setup editor fields
 			setupDialog.apply( this, [editor, element] );
-
-			// tracking
-			var self = this;
-
-			// setup dialog tracking code (close / cancel)
-			this.setupTracking('link');
 		},
 
 		// create new link / update link' meta data
@@ -425,8 +431,6 @@ CKEDITOR.dialog.add( 'link', function( editor )
 
 					element.setAttribute('href',data.link);
 
-					// set content and class of link element
-					element.setText(data.text != '' ? data.text : data.link);
 					element.addClass('external');
 					element.removeClass('new');
 					break;
@@ -441,18 +445,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 						'wikitext': null
 					};
 
-					//If the target and display text match: updating the target should update the display text.
-					//If they do not match, this should not happen.
-					if ( (this._.similarLink) && (data.text !== data.link) ) {
-						data.text = data.link;
-					}
 
-					// set content of link element
-
-					// don't modify links containing HTML formatting (RT #37706)
-					if (element.getText() == element.getHtml()) {
-						element.setText(data.text != '' ? data.text : data.link);
-					}
 
 					if (data.text == '') {
 						type = 'internalSimple';
@@ -466,11 +459,16 @@ CKEDITOR.dialog.add( 'link', function( editor )
 					break;
 			}
 
+			// set content of link element
+			var linkContent = (data.text != '') ? data.text : data.link;
+			element.setHtml(linkContent);
+
 			$(element.$).setData(data);
 
 			// log updated meta data entry
 			RTE.log('updating link data');
-			RTE.log( [element, $(element.$).getData()] );
+			RTE.log([element, $(element.$).getData()]);
+			RTE.log(linkContent);
 
 			// regenerate numbers of external "autonumber" links
 			RTE.tools.renumberExternalLinks();

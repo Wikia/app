@@ -105,11 +105,37 @@ $wgGroupPermissions['sysop'][ 'blog-auto-follow' ] = false;
 $wgGroupPermissions['staff'][ 'blog-auto-follow' ] = true;
 $wgGroupPermissions['helper'][ 'blog-auto-follow' ] = false;
 
-/**
- * Special pages
- */
-extAddSpecialPage(dirname(__FILE__) . '/SpecialCreateBlogPage.php', 'CreateBlogPage', 'CreateBlogPage');
-extAddSpecialPage(dirname(__FILE__) . '/SpecialCreateBlogListingPage.php', 'CreateBlogListingPage', 'CreateBlogListingPage');
+// special pages
+$wgAutoloadClasses['CreateBlogListingPage'] = $dir . '/SpecialCreateBlogListingPage.php';
+$wgSpecialPages['CreateBlogListingPage'] = 'CreateBlogListingPage';
+
+$wgAutoloadClasses['SpecialBlogPage'] = $dir . '/SpecialBlogPage.php';
+$wgAutoloadClasses['CreateBlogPage'] = $dir . '/SpecialCreateBlogPage.php';
+$wgSpecialPages['CreateBlogPage'] = 'CreateBlogPage';
+
+// initialize blogs special pages (BugId:7604)
+$wgHooks['BeforeInitialize'][] = 'wfBlogsOnBeforeInitialize';
+$wgHooks['AfterInitialize'][] = 'wfBlogsOnAfterInitialize';
+
+function wfBlogsOnBeforeInitialize(&$title, &$article, &$output, &$user, $request, $mediaWiki) {
+	global $wgAutoloadClasses;
+
+	// this line causes initialization of the skin
+	// title before redirect handling is passed causing BugId:7282 - it will be fixed in "AfterInitialize" hook
+	$skinName = get_class($user->getSkin());
+
+	if ($skinName == 'SkinMonoBook') {
+		$wgAutoloadClasses['CreateBlogPage'] = dirname(__FILE__) . '/monobook/SpecialCreateBlogPage.php';
+	}
+
+	return true;
+}
+
+// and now use "redirected" title in the skin (BugId:7282)
+function wfBlogsOnAfterInitialize(&$title, &$article, &$output, &$user, $request, $mediaWiki) {
+	$user->getSkin()->setTitle($title);
+	return true;
+}
 
 $wgSpecialPageGroups['CreateBlogPage'] = 'wikia';
 $wgSpecialPageGroups['CreateBlogListingPage'] = 'wikia';
@@ -122,21 +148,18 @@ $wgAjaxExportList[] = "CreateBlogListingPage::axBlogListingCheckMatches";
 /**
  * hooks
  */
-$wgHooks[ 'AlternateEdit' ][] = 'SpecialBlogPage::alternateEditHook';
-$wgHooks[ 'EditPage::showEditForm:fields' ][] = 'CreateBlogPage::onEditPageShowEditFormFields';
+$wgHooks[ 'AlternateEdit' ][] = 'BlogArticle::alternateEditHook';
 $wgHooks[ 'ArticleFromTitle' ][] = 'BlogArticle::ArticleFromTitle';
 $wgHooks[ 'CategoryViewer::getOtherSection' ][] = 'BlogArticle::getOtherSection';
 $wgHooks[ 'CategoryViewer::addPage' ][] = 'BlogArticle::addCategoryPage';
 $wgHooks[ 'SkinTemplateTabs' ][] = 'BlogArticle::skinTemplateTabs';
 $wgHooks[ 'EditPage::showEditForm:checkboxes' ][] = 'BlogArticle::editPageCheckboxes';
 $wgHooks[ 'LinksUpdate' ][] = 'BlogArticle::linksUpdate';
-$wgHooks[ 'WikiFactoryChanged' ][] = 'BlogArticle::WikiFactoryChanged';
 $wgHooks[ 'UnwatchArticleComplete' ][] = 'BlogArticle::UnwatchBlogComments';
 
 /**
  * load other parts
  */
-include( dirname( __FILE__ ) . "/SpecialBlogPage.php");
 include( dirname( __FILE__ ) . "/BlogTemplate.php");
 include( dirname( __FILE__ ) . "/BlogArticle.php");
 include( dirname( __FILE__ ) . "/BlogLockdown.php");

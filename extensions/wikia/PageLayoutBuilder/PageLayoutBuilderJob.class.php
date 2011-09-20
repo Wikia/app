@@ -50,7 +50,7 @@ class PageLayoutBuilderJob extends Job {
 
 		$page_id = $this->title->getArticleID();
 		if ( empty($page_id) ) {
-			$page_id = $this->title->getArticleID(GAID_FOR_UPDATE);			
+			$page_id = $this->title->getArticleID(GAID_FOR_UPDATE);
 		}
 		if( empty( $page_id ) ) {
 			$this->error = "PageLayoutBuilder: Invalid title (identifier not found)";
@@ -87,19 +87,25 @@ class PageLayoutBuilderJob extends Job {
 			), 
 			__METHOD__
 		);
-
+		
 		$jobs = array();
 		foreach( $res as $row ) {
 			$oTitle = Title::makeTitle( $row->page_namespace, $row->page_title );
 			if ( is_null($oTitle) ) {
 				Wikia::log( __METHOD__, "pglayout", "{$row->page_title} ({$row->page_namespace}) ");
-				continue;				
+				continue;
 			}
 			$jobs[] = new RefreshLinksJob( $oTitle, '' );
+
+			$oTitle->invalidateCache();
+			
+			// Send purge
+			$update = SquidUpdate::newSimplePurge($oTitle);
+			$update->doUpdate();
 		}
 		
 		if ( !empty($jobs) ) {
-			Job::batchInsert( $jobs );		
+			Job::batchInsert( $jobs );
 		}
 		
 		$wgErrorLog = $oldValue;
@@ -140,6 +146,7 @@ class PageLayoutBuilderJob extends Job {
 
 			if ( is_object($Title) && ( NS_PLB_LAYOUT == $Title->getNamespace() )  ) {	
 				Wikia::log( __METHOD__, "pblayout", $Title->getDBkey() );
+				
 				$pbLayoutJob = new PageLayoutBuilderJob(
 					$Title,
 					array(
@@ -149,10 +156,12 @@ class PageLayoutBuilderJob extends Job {
 						"user_name" => $wgUser->getName(),
 					)
 				);
+				
 				$pbLayoutJob->insert();
 				Wikia::log( __METHOD__, "job" );
 			}
 		}
+		
 		$wgErrorLog = $oldValue;
 		wfProfileOut( __METHOD__ );
 

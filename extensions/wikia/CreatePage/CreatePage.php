@@ -26,10 +26,10 @@ define( 'CREATEPAGE_DIALOG_SIDE_PADDING', 10 );
 $wgExtensionMessagesFiles['CreatePage'] = dirname( __FILE__ ) . '/CreatePage.i18n.php';
 
 /**
- * Special pages
+ * Special page
  */
-extAddSpecialPage( dirname( __FILE__ ) . '/SpecialCreatePage.php', 'CreatePage', 'CreatePage' );
-
+$wgAutoloadClasses['SpecialCreatePage'] = dirname(__FILE__) . '/SpecialCreatePage.class.php';
+$wgSpecialPages['CreatePage'] = 'SpecialCreatePage';
 $wgSpecialPageGroups['CreatePage'] = 'pagetools';
 
 /**
@@ -39,26 +39,12 @@ $wgExtensionFunctions[] = 'wfCreatePageInit';
 
 // initialize create page extension
 function wfCreatePageInit() {
-	global $wgUser,
-		$wgHooks,
+	global $wgHooks,
 		$wgAjaxExportList,
-		$wgOut,
-		$wgScriptPath,
-		$wgStyleVersion,
-		$wgExtensionsPath,
-		$wgWikiaEnableNewCreatepageExt,
-		$wgCdnStylePath,
-		$wgScript,
-		$wgCreatePageOptions,
-		$wgWikiaCreatePageUseFormatOnly;
+		$wgWikiaEnableNewCreatepageExt;
 
 	// load messages from file
 	wfLoadExtensionMessages( 'CreatePage' );
-
-	if ( empty( $wgWikiaEnableNewCreatepageExt ) ) {
-		// disable all new features and preserve old Special:CreatePage behavior
-		return true;
-	}
 
 	/**
 	 * hooks
@@ -66,9 +52,36 @@ function wfCreatePageInit() {
 	$wgHooks['MakeGlobalVariablesScript'][] = 'wfCreatePageSetupVars';
 	$wgHooks['EditPage::showEditForm:initial'][] = 'wfCreatePageLoadPreformattedContent';
 	$wgHooks['GetPreferences'][] = 'wfCreatePageOnGetPreferences';
+	$wgHooks['BeforeInitialize'][] = 'wfCreatePageOnBeforeInitialize';
+	$wgHooks['AfterInitialize'][] = 'wfCreatePageOnAfterInitialize';
 
 	$wgAjaxExportList[] = 'wfCreatePageAjaxGetDialog';
 	$wgAjaxExportList[] = 'wfCreatePageAjaxCheckTitle';
+}
+
+// use different code for Special:CreatePage when using monobook (BugId:6601)
+function wfCreatePageOnBeforeInitialize(&$title, &$article, &$output, &$user, $request, $mediaWiki) {
+	global $wgAutoloadClasses;
+
+	// this line causes initialization of the skin
+	// title before redirect handling is passed causing BugId:7282 - it will be fixed in "AfterInitialize" hook
+	$skinName = get_class($user->getSkin());
+
+	if ($skinName == 'SkinMonoBook') {
+		// use different class to handle Special:CreatePage
+		$dir = dirname(__FILE__) . '/monobook';
+
+		$wgAutoloadClasses['SpecialCreatePage'] = $dir . '/SpecialCreatePage.class.php';
+		$wgAutoloadClasses['SpecialEditPage'] = $dir . '/SpecialEditPage.class.php';
+	}
+
+	return true;
+}
+
+// and now use "redirected" title in the skin (BugId:7282)
+function wfCreatePageOnAfterInitialize(&$title, &$article, &$output, &$user, $request, $mediaWiki) {
+	$user->getSkin()->setTitle($title);
+	return true;
 }
 
 function wfCreatePageSetupVars( $vars ) {
@@ -104,13 +117,13 @@ function wfCreatePageOnGetPreferences( $user, &$preferences ) {
 
 	$preferences['createpagedefaultblank'] = array(
 		'type' => 'toggle',
-		'section' => 'editing/advancedediting',
+		'section' => 'editing/starting-an-edit',
 		'label-message' => 'tog-createpagedefaultblank',
 	);
 
 	$preferences['createpagepopupdisabled'] = array(
 		'type' => 'toggle',
-		'section' => 'editing/advancedediting',
+		'section' => 'editing/starting-an-edit',
 		'label-message' => 'tog-createpagepopupdisabled',
 	);
 
@@ -214,7 +227,7 @@ function wfCreatePageAjaxCheckTitle() {
 			$result['msg'] = wfMsg( 'createpage-error-invalid-title' );
 		}
 		else {
-			if ( $oTitle->exists() && !$oTitle->isDeleted() ) {
+			if ( $oTitle->exists() ) {
 				$result['result'] = 'error';
 				$result['msg'] = wfMsg( 'createpage-error-article-exists', array( $oTitle->getFullUrl(), $oTitle->getText() ) );
 			}
@@ -244,6 +257,3 @@ function wfCreatePageAjaxCheckTitle() {
 
 	return $response;
 }
-
-include( dirname( __FILE__ ) . "/SpecialEditPage.php" );
-include( dirname( __FILE__ ) . "/SpecialCreatePage.php" );

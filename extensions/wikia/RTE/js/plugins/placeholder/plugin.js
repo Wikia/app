@@ -35,6 +35,9 @@ CKEDITOR.plugins.add('rte-placeholder',
 			return;
 		}
 
+		var chevron = '<img class="chevron chevronBackground" src="'+wgBlankImgUrl+'" />'
+			+'<img class="chevron" src="'+wgBlankImgUrl+'" />';
+
 		// get node in which preview is / will be stored
 		var preview = placeholder.data('preview');
 
@@ -42,7 +45,7 @@ CKEDITOR.plugins.add('rte-placeholder',
 		if (typeof preview == 'undefined') {
 			// create preview node
 			preview = $('<div>').addClass('RTEPlaceholderPreview RTEPlaceholderPreviewLoading');
-			preview.html('<div class="RTEPlaceholderPreviewInner">&nbsp;</div>');
+			preview.html(chevron + '<div class="RTEPlaceholderPreviewInner">&nbsp;</div>');
 
 			// setup events
 			preview.bind('mouseover', function() {
@@ -140,14 +143,14 @@ CKEDITOR.plugins.add('rte-placeholder',
 						'<a class="RTEPlaceholderPreviewToolsEdit">' + lang.edit + '</a>';
 				}
 
-				tools += '<img class="sprite delete" src="'+wgBlankImgUrl+'" />' +
+				tools += '<img class="sprite remove" src="'+wgBlankImgUrl+'" />' +
 					'<a class="RTEPlaceholderPreviewToolsDelete">' +
 					lang['delete'] + '</a>';
 
 				//
 				// render HTML
 				//
-				var html = '';
+				var html = chevron;
 
 				// preview "header"
 				html += '<div class="RTEPlaceholderPreviewInner ' + className + '">';
@@ -171,7 +174,7 @@ CKEDITOR.plugins.add('rte-placeholder',
 
 				// handle clicks on [delete] button
 				preview.find('.RTEPlaceholderPreviewToolsDelete').bind('click', function(ev) {
-					RTE.track(self.getTrackingType($(placeholder)), 'hover', 'delete');
+					RTE.track('visualMode', self.getTrackingType($(placeholder)), 'hover', 'delete');
 
 					RTE.tools.confirm(title, lang.confirmDelete, function() {
 						RTE.tools.removeElement(placeholder);
@@ -188,7 +191,7 @@ CKEDITOR.plugins.add('rte-placeholder',
 						preview.hide();
 
 						// tracking code
-						RTE.track(self.getTrackingType($(placeholder)), 'hover', 'edit');
+						RTE.track('visualMode', self.getTrackingType($(placeholder)), 'hover', 'edit');
 
 						// call editor for this type of placeholder
 						$(placeholder).trigger('edit');
@@ -202,7 +205,7 @@ CKEDITOR.plugins.add('rte-placeholder',
 
 				// close button
 				preview.find('.RTEPlaceholderPreviewTitleBar').children('span').bind('click', function(ev) {
-					RTE.track(self.getTrackingType($(placeholder)), 'hover', 'close');
+					RTE.track('visualMode', self.getTrackingType($(placeholder)), 'hover', 'close');
 
 					self.hidePreview(placeholder, true);
 				});
@@ -236,10 +239,20 @@ CKEDITOR.plugins.add('rte-placeholder',
 
 		// position preview node
 		var position = RTE.tools.getPlaceholderPosition(placeholder);
+		var tempTop,
+			freeBottomSpace = $(RTE.instance.getThemeSpace('contents').$).height() - position.top;
+		if (freeBottomSpace <= preview.height()) { 
+			tempTop = position.top - preview.height() - placeholder.height();
+			preview.addClass('bottom');
+			
+		} else {
+			tempTop = position.top + placeholder.height() + 6;
+			preview.removeClass('bottom');
+		}
 
 		preview.css({
 			'left': position.left + 'px',
-			'top': parseInt(position.top + placeholder.height() + 6) + 'px'
+			'top': parseInt(tempTop) + 'px'
 		});
 
 		// hide remaining previews
@@ -341,7 +354,7 @@ CKEDITOR.plugins.add('rte-placeholder',
 
 		// tracking code when hovered
 		placeholder.bind('hover.placeholder', function(ev) {
-			RTE.track(self.getTrackingType($(this)), 'hover', 'init');
+			RTE.track('visualMode', self.getTrackingType($(this)), 'hover', 'init');
 		});
 
 		// setup events once more on each drag&drop

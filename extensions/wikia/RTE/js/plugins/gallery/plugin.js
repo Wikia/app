@@ -12,30 +12,55 @@ CKEDITOR.plugins.add('rte-gallery',
 
 		// check existance of WikiaPhotoGallery extension
 		if (typeof window.WikiaPhotoGallery != 'undefined') {
-			// register "Add Image" command
-			editor.addCommand('addphotogallery', {
-				exec: function(editor) {
-					// call editor
-					WikiaPhotoGallery.showEditor({
-						from: 'wysiwyg'
-					});
-				}
+			self.addButton(editor,{
+				type: WikiaPhotoGallery.TYPE_GALLERY,
+				commandName: 'addgallery',
+				buttonName: 'Gallery',
+				buttonLabel: editor.lang.photoGallery.gallery,
+				buttonTooltip: editor.lang.photoGallery.addGallery,
+				buttonClass: 'RTEGalleryButton'
 			});
-
-			// register "Image" toolbar button
-			editor.ui.addButton('Gallery', {
-				title: editor.lang.photoGallery.add,
-				className: 'RTEGalleryButton',
-				command: 'addphotogallery'
+			self.addButton(editor,{
+				type: WikiaPhotoGallery.TYPE_SLIDESHOW,
+				commandName: 'addslideshow',
+				buttonName: 'Slideshow',
+				buttonLabel: editor.lang.photoGallery.slideshow,
+				buttonTooltip: editor.lang.photoGallery.addSlideshow,
+				buttonClass: 'RTESlideshowButton'
 			});
-
-			// ... and block it when cursor is placed within a header (RT #67987)
-			RTE.tools.blockCommandInHeader('addphotogallery');
+			self.addButton(editor,{
+				type: WikiaPhotoGallery.TYPE_SLIDER,
+				commandName: 'addslider',
+				buttonName: 'Slider',
+				buttonLabel: editor.lang.photoGallery.slider,
+				buttonTooltip: editor.lang.photoGallery.addSlider,
+				buttonClass: 'RTESliderButton'
+			});
 		}
 		else {
 			RTE.log('WikiaPhotoGallery is not enabled here - disabling "Gallery" button');
 			return;
 		}
+	},
+	
+	addButton: function(editor,params){
+		editor.addCommand(params.commandName, {
+			exec: function(editor) {
+				// call editor
+				WikiaPhotoGallery.showEditor({
+					from: 'wysiwyg',
+					type: params.type
+				});
+			}
+		});
+
+		// register "Image" toolbar button
+		editor.ui.addButton(params.buttonName, {
+			label: params.buttonLabel,
+			title: params.buttonTooltip,
+			className: params.buttonClass,
+			command: params.commandName
+		});
 	},
 
 	setupGallery: function(gallery) {

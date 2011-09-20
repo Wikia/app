@@ -2,10 +2,13 @@
 	position: relative;
 	top: 4px;
 	left: 0;
-	width: 250px;
 }
 
 #csMainContainer {
+	position: relative;
+}
+
+.csViewMode#csMainContainer, .csEditMode#csMainContainer {
 	border: 1px solid #AAA;
 	padding: 5px 5px 2px 5px;
 	position: relative;
@@ -34,6 +37,73 @@
 	outline: none;
 }
 
+.csEditMode #csCategoryInput {
+	float: none;
+	border: 1px solid;
+	height: 22px;
+	padding-top: 4px;
+	padding-left: 4px;
+}
+
+.csEditMode #csItemsContainer .CSitem {
+	border: none;
+	background: none;
+    white-space: normal !important;
+}
+
+.csEditMode .listmark {
+    text-align: center;
+    font-size: 11px;
+    width: 38px;
+}
+
+.csEditMode #csCategoryInput {
+    width: 100%;
+   	margin-bottom: 0;
+}
+
+.csEditMode#csMainContainer {
+	border: none;
+}
+.csEditMode #csItemsContainer {
+    margin-top: 10px;
+}
+
+.csEditMode .CSitem .edit {
+	margin-left: 8px;
+}
+
+
+.csEditMode .CSitem .delete {
+    margin-left: 4px;
+    margin-right: 2px;
+}
+
+.csEditMode #csItemsContainer .CSitem {
+	font-size: 13px !important;
+}
+
+
+.csEditMode #csItemsContainer .CSitem img.sprite-small{
+	display: none;
+}
+
+
+.csEditMode #csItemsContainer .CSitem.ui-sortable-helper {
+	white-space: nowrap;
+}
+
+
+.csEditMode #csItemsContainer .CSitem:hover img{
+	display: inline-block;
+}
+
+.csEditMode #csItemsContainer .CSitem:hover .listmark{
+	display: none;
+}
+
+
+
 #csSwitchViewContainer {
 	display: none;
 	float: right;
@@ -57,6 +127,7 @@
 	padding: 0 5px;
 	position: relative;
 	white-space: nowrap;
+	border-radius: 3px;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 }
@@ -147,7 +218,7 @@
 	color: #000000;
 	overflow: hidden;
 	position: absolute;
-	width: 100%;
+	width: 250px;
 	z-index: 9050;
 }
 
@@ -156,7 +227,7 @@
 	list-style-image: none !important;
 	margin: 0 !important;
 	padding: 0 !important;
-	width: 100%;
+	width: 250px;
 }
 
 .wikiaSkinMonaco .yui-ac-content li {

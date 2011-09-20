@@ -36,13 +36,11 @@ CKEDITOR.plugins.add('rte-media',
 
 		// register "Image" toolbar button
 		editor.ui.addButton('Image', {
+			label: editor.lang.image.photo,
 			title: editor.lang.image.add,
 			className: 'RTEImageButton',
 			command: 'addimage'
 		});
-
-		// ... and block it when cursor is placed within a header (RT #67987)
-		RTE.tools.blockCommandInHeader('addimage');
 
 		// check for existance of VideoEmbedTool
 		if (typeof window.VET_show == 'function') {
@@ -56,13 +54,11 @@ CKEDITOR.plugins.add('rte-media',
 
 			// register "Video" toolbar button
 			editor.ui.addButton('Video', {
+				label: editor.lang.video.video,
 				title: editor.lang.video.add,
 				className: 'RTEVideoButton',
 				command: 'addvideo'
 			});
-
-			// ... and block it when cursor is placed within a header (RT #67987)
-			RTE.tools.blockCommandInHeader('addvideo');
 		}
 		else {
 			RTE.log('VET is not enabled here - disabling "Video" button');
@@ -363,7 +359,7 @@ CKEDITOR.plugins.add('rte-media',
 			case 'image-gallery':
 				type = 'photoGallery';
 				break;
-				
+
 			case 'poll':
 				type = 'poll';
 				break;
@@ -446,7 +442,6 @@ RTE.mediaEditor = {
 		// render an image and replace old one
 		RTE.tools.parseRTE(wikitext, function(html) {
 			var newMedia = $(html).children('img');
-
 
 			// replace old one with new one
 			newMedia.insertAfter(media);

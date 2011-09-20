@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -34,8 +34,8 @@ CKEDITOR.lang['et'] =
 	editorTitle : 'Rich text editor, %1, press ALT 0 for help.', // MISSING
 
 	// ARIA descriptions.
-	toolbar	: 'Toolbar', // MISSING
-	editor	: 'Rich Text Editor', // MISSING
+	toolbars	: 'Editor toolbars', // MISSING
+	editor		: 'Rich Text Editor', // MISSING
 
 	// Toolbar buttons without dialogs.
 	source			: 'Lähtekood',
@@ -121,6 +121,8 @@ CKEDITOR.lang['et'] =
 		alignBottom		: 'Alla',
 		invalidHeight	: 'Height must be a number.', // MISSING
 		invalidWidth	: 'Width must be a number.', // MISSING
+		invalidCssLength	: 'Value specified for the "%1" field must be a positive number with or without a valid CSS measurement unit (px, %, in, cm, mm, em, ex, pt, or pc).', // MISSING
+		invalidHtmlLength	: 'Value specified for the "%1" field must be a positive number with or without a valid HTML measurement unit (px or %).', // MISSING
 
 		// Put the voice-only part of the label in the span.
 		unavailable		: '%1<span class="cke_accessibility">, unavailable</span>' // MISSING
@@ -201,7 +203,8 @@ CKEDITOR.lang['et'] =
 		menu		: 'Ankru omadused',
 		title		: 'Ankru omadused',
 		name		: 'Ankru nimi',
-		errorName	: 'Palun sisest ankru nimi'
+		errorName	: 'Palun sisest ankru nimi',
+		remove		: 'Remove Anchor' // MISSING
 	},
 
 	// List style dialog
@@ -271,8 +274,8 @@ CKEDITOR.lang['et'] =
 		invalidBorder	: 'Border size must be a number.', // MISSING
 		invalidWidth	: 'Table width must be a number.', // MISSING
 		invalidHeight	: 'Table height must be a number.', // MISSING
-		invalidCellSpacing	: 'Cell spacing must be a number.', // MISSING
-		invalidCellPadding	: 'Cell padding must be a number.', // MISSING
+		invalidCellSpacing	: 'Cell spacing must be a positive number.', // MISSING
+		invalidCellPadding	: 'Cell padding must be a positive number.', // MISSING
 
 		cell :
 		{
@@ -413,7 +416,6 @@ CKEDITOR.lang['et'] =
 		upload		: 'Lae üles',
 		alt			: 'Alternatiivne tekst',
 		lockRatio	: 'Lukusta kuvasuhe',
-		unlockRatio	: 'Unlock Ratio', // MISSING
 		resetSize	: 'Lähtesta suurus',
 		border		: 'Joon',
 		hSpace		: 'H. vaheruum',
@@ -715,6 +717,8 @@ CKEDITOR.lang['et'] =
 	{
 		title		: 'About CKEditor', // MISSING
 		dlgTitle	: 'About CKEditor', // MISSING
+		help	: 'Check $1 for help.', // MISSING
+		userGuide : 'CKEditor User\'s Guide', // MISSING
 		moreInfo	: 'For licensing information please visit our web site:', // MISSING
 		copy		: 'Copyright &copy; $1. All rights reserved.' // MISSING
 	},
@@ -745,9 +749,64 @@ CKEDITOR.lang['et'] =
 	toolbarCollapse	: 'Collapse Toolbar', // MISSING
 	toolbarExpand	: 'Expand Toolbar', // MISSING
 
+	toolbarGroups :
+	{
+		document : 'Document', // MISSING
+		clipboard : 'Clipboard/Undo', // MISSING
+		editing : 'Editing', // MISSING
+		forms : 'Forms', // MISSING
+		basicstyles : 'Basic Styles', // MISSING
+		paragraph : 'Paragraph', // MISSING
+		links : 'Links', // MISSING
+		insert : 'Insert', // MISSING
+		styles : 'Styles', // MISSING
+		colors : 'Colors', // MISSING
+		tools : 'Tools' // MISSING
+	},
+
 	bidi :
 	{
 		ltr : 'Text direction from left to right', // MISSING
 		rtl : 'Text direction from right to left' // MISSING
+	},
+
+	docprops :
+	{
+		label : 'Dokumendi omadused',
+		title : 'Dokumendi omadused',
+		design : 'Design', // MISSING
+		meta : 'Meta andmed',
+		chooseColor : 'Choose', // MISSING
+		other : '<muu>',
+		docTitle :	'Lehekülje tiitel',
+		charset : 	'Märgistiku kodeering',
+		charsetOther : 'Ülejäänud märgistike kodeeringud',
+		charsetASCII : 'ASCII', // MISSING
+		charsetCE : 'Kesk-Euroopa',
+		charsetCT : 'Hiina traditsiooniline (Big5)',
+		charsetCR : 'Kirillisa',
+		charsetGR : 'Kreeka',
+		charsetJP : 'Jaapani',
+		charsetKR : 'Korea',
+		charsetTR : 'Türgi',
+		charsetUN : 'Unicode (UTF-8)', // MISSING
+		charsetWE : 'Lääne-Euroopa',
+		docType : 'Dokumendi tüüppäis',
+		docTypeOther : 'Teised dokumendi tüüppäised',
+		xhtmlDec : 'Arva kaasa XHTML deklaratsioonid',
+		bgColor : 'Taustavärv',
+		bgImage : 'Taustapildi URL',
+		bgFixed : 'Mittekeritav tagataust',
+		txtColor : 'Teksti värv',
+		margin : 'Lehekülje äärised',
+		marginTop : 'Ülaserv',
+		marginLeft : 'Vasakserv',
+		marginRight : 'Paremserv',
+		marginBottom : 'Alaserv',
+		metaKeywords : 'Dokumendi võtmesõnad (eraldatud komadega)',
+		metaDescription : 'Dokumendi kirjeldus',
+		metaAuthor : 'Autor',
+		metaCopyright : 'Autoriõigus',
+		previewHtml : '<p>This is some <strong>sample text</strong>. You are using <a href="javascript:void(0)">CKEditor</a>.</p>' // MISSING
 	}
 };

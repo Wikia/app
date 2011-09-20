@@ -4,30 +4,51 @@ window.RTE = {
 	// configuration
 	// @see http://docs.cksource.com/ckeditor_api/symbols/CKEDITOR.config.html
 	config: {
-		'alignableElements':  ['p', 'div', 'td' ,'th'],
-		'baseFloatZIndex': 1000,
-		'bodyClass': 'WikiaArticle',
-		'bodyId': 'bodyContent',
-		'coreStyles_bold': {element: 'b', overrides: 'strong'},
-		'coreStyles_italic': {element: 'i', overrides: 'em'},
-		'customConfig': '',
-		'dialog_backgroundCoverColor': '#000',
-		'dialog_backgroundCoverOpacity': (window.skin == 'oasis' ? 0.8 : 0.5),
-		'disableDragDrop': false,
-		'disableObjectResizing': true,
-		'entities': false,
-		'forcePasteAsPlainText': CKEDITOR.env.webkit, // BugId:7605
-		'forcePasteInDialog': CKEDITOR.env.webkit, // BugId:7605
-		'format_tags': 'p;h2;h3;h4;h5;pre',
-		'height': 400,
-		'language': window.wgUserLanguage,
-		'removePlugins': 'about,elementspath,filebrowser,flash,forms,horizontalrule,image,justify,link,liststyle,maximize,newpage,pagebreak,toolbar,save,scayt,smiley,wsc',
-		'resize_enabled': false,
-		'skin': 'wikia',
-		'startupFocus': false, // CKEDITOR.env.gecko ? false : true, // BugId:2700
-		'theme': 'wikia',
-		'toolbar': 'Wikia',
-		'toolbarCanCollapse': false
+		alignableElements: {
+			div: true,
+			p: true,
+			td: true,
+			th: true
+		},
+		baseFloatZIndex: 20000001, // $zTop from _layout.scss
+		bodyClass: 'WikiaArticle',
+		bodyId: 'bodyContent',
+		contentsCss: $.getSassCommonURL('/extensions/wikia/RTE/css/content.scss'),
+		coreStyles_bold: {element: 'b', overrides: 'strong'},
+		coreStyles_italic: {element: 'i', overrides: 'em'},
+		customConfig: '',
+		dialog_backgroundCoverColor: '#000',
+		dialog_backgroundCoverOpacity: (window.skin == 'oasis' ? 0.8 : 0.5),
+		disableDragDrop: false,
+		disableObjectResizing: true,
+		entities: false,
+		format_tags: 'p;h2;h3;h4;h5;pre',
+		height: 400, // default height when "auto resizing" is not applied
+		language: window.wgUserLanguage,
+		plugins:
+			'basicstyles,' +
+			'button,' +
+			'clipboard,' +
+			'contextmenu,' +
+			'dialog,' +
+			'enterkey,' +
+			'format,' +
+			'htmldataprocessor,' +
+			'indent,' +
+			'keystrokes,' +
+			'list,' +
+			'pastetext,' +
+			'removeformat,' +
+			'sourcearea,' +
+			'table,' +
+			'tabletools,' +
+			'undo,' +
+			'wysiwygarea',
+		resize_enabled: false,
+		richcomboCss: $.getSassCommonURL('extensions/wikia/RTE/css/richcombo.scss'),
+		skin: 'wikia',
+		startupFocus: true,
+		theme: 'wikia'
 	},
 
 	// reference to current CK instance
@@ -43,14 +64,15 @@ window.RTE = {
 	loadTime: false,
 
 	// reference to #RTEStuff node
+	// TODO: store this node per instance
 	stuffNode: false,
 
 	// list of our RTE custom plugins (stored in js/plugins) to be loaded on editor init
 	plugins: [
+		'accesskey',
 		'comment',
 		'dialog',
 		'dragdrop',
-		'edit-buttons',
 		'entities',
 		'gallery',
 		'justify',
@@ -69,8 +91,7 @@ window.RTE = {
 		'temporary-save',
 		'toolbar',
 		'tools',
-		'track',
-		'widescreen'
+		'track'
 	],
 
 	// use firebug / opera console to log events / dump objects
@@ -92,38 +113,36 @@ window.RTE = {
 		}, 'json');
 	},
 
-	// track events
-	// @see http://code.google.com/intl/pl-PL/apis/analytics/docs/tracking/eventTrackerGuide.html
 	track: function(action, label, value) {
-		// get method attributes
-		var args = ['ckeditor']; for (i=0; i < arguments.length; i++) args.push(arguments[i]);
-
-		// TODO: use GA event tracking
-		// pageTracker._trackEvent.apply(window, args);
-		if (typeof jQuery.tracker != 'undefined') {
-			jQuery.tracker.byStr(args.join('/'));
-		}
 	},
 
 	// start editor in mode provided
 	init : function(mode) {
+		// Fire the global event
+		GlobalTriggers.fire('rtebeforeinit', RTE, CKEDITOR);
+
 		// cache buster used by CK when loading CSS/JS
 		CKEDITOR.timestamp = window.wgStyleVersion;
+
+		// CKEDITOR.dtd fixes
+		// TODO: move to different place
 
 		// allow <img> (used for placeholders) to be placed inside <pre>
 		CKEDITOR.dtd.pre.img = 1;
 
 		// allow <center> to be placed inside <p>
-		CKEDITOR.dtd.p.center = 1;
+		CKEDITOR.dtd.p = $.extend({}, CKEDITOR.dtd.p, {center:1});
 
 		// allow <img> (used for placeholders) to be "direct" child of <table> (refs RT #49507)
 		CKEDITOR.dtd.table.img = 1;
 
-		// allow UL id DT (RT#52593)
-		//CKEDITOR.dtd.dt.ul = 1; // (BUGID#1034)
+		// allow UL and OL in DT (RT#52593)
+		// DTD rules for <dt> use $inline elements which should not be modified (BugId:1304)
+		CKEDITOR.dtd.dt = $.extend({}, CKEDITOR.dtd.dt, {ul:1, ol:1});
 
-		// allow OL id DT (RT#52593)
-		//CKEDITOR.dtd.dt.ol = 1; // (BUGID#1034)
+		// allow placeholders in UL/OL lists (BugId:10481)
+		CKEDITOR.dtd.ol = $.extend({}, CKEDITOR.dtd.ol, {img:1});
+		CKEDITOR.dtd.ul = $.extend({}, CKEDITOR.dtd.ul, {img:1});
 
 		// set startup mode
 		RTE.config.startupMode = mode;
@@ -154,48 +173,16 @@ window.RTE = {
 		// editor is loaded
 		CKEDITOR.on('instanceReady', RTE.onEditorReady);
 
-		// user wants to switch modes - send AJAX request
-		RTE.instance.on('modeSwitch', function() {
-			RTE.modeSwitch(RTE.instance.mode);
-		});
-
-		// mode is ready
-		RTE.instance.on('mode', function() {
-			RTE.loading(false);
-			RTE.log('mode "' + this.mode + '" is loaded');
-		});
-
-		// wysiwyg mode is ready - fire "wysiwygModeReady" custom event
-		RTE.instance.on('dataReady', function() {
-			if (this.mode == 'wysiwyg') {
-				this.fire('wysiwygModeReady');
-			}
-		});
-
-		RTE.instance.on('wysiwygModeReady', RTE.onWysiwygModeReady);
-
-		// event fired when Widescreen button in pressed
-		RTE.instance.on('widescreen', RTE.onWidescreen);
-
 		// clean HTML returned by CKeditor
 		RTE.instance.on('getData', RTE.filterHtml);
 
-		// CK is loading...
-		RTE.loading(true);
+		// CKeditor code is loaded, now it's time to initialize RTE
+		GlobalTriggers.fire('rteinit', RTE.instance);
 	},
 
 	// load extra CSS files
 	loadCss: function() {
 		var css = [];
-
-		if (window.skin == 'oasis') {
-			// RT #69159
-			RTE.instance.config.contentsCss = $.getSassCommonURL('/extensions/wikia/RTE/css/oasis.scss');
-		}
-		else {
-			css.push(window.stylepath + '/monobook/main.css');
-			css.push(CKEDITOR.basePath + '../css/RTEcontent.css');
-		}
 
 		// load MW:Common.css / MW:Wikia.css (RT #77759)
 		css.push(window.RTESiteCss);
@@ -205,7 +192,7 @@ window.RTE = {
 			css.push(wgExtensionsPath + '/wikia/AutoPageCreate/AutoPageCreate.css');
 		}
 
-		GlobalTriggers.fire('rterequestcss',css);
+		GlobalTriggers.fire('rterequestcss', css);
 
 		for (var n=0; n<css.length; n++) {
 			var cb = ( (css[n].indexOf('?') > -1 || css[n].indexOf('__am') > -1) ? '' : ('?' + CKEDITOR.timestamp) );
@@ -236,14 +223,16 @@ window.RTE = {
 		RTE.config.extraPlugins = extraPlugins.join(',');
 	},
 
-	// final setup
-	onEditorReady: function() {
+	// final setup of editor's instance
+	onEditorReady: function(ev) {
+		var editor = ev.editor;
+
 		// base colors: use color / background-color from .color1 CSS class
 		RTE.tools.getThemeColors();
 
 		// remove HTML indentation
-		RTE.instance.dataProcessor.writer.indentationChars = '';
-		RTE.instance.dataProcessor.writer.lineBreakChars = '';
+		editor.dataProcessor.writer.indentationChars = '';
+		editor.dataProcessor.writer.lineBreakChars = '';
 
 		// override "Source" button to send AJAX request first, instead of mode switching
 		CKEDITOR.plugins.sourcearea.commands.source.exec = function(editor) {
@@ -251,69 +240,52 @@ window.RTE = {
 				editor.fire('saveSnapshot');
 			}
 
-			editor.getCommand('source').setState(CKEDITOR.TRISTATE_DISABLED);
-
 			editor.fire('modeSwitch');
 		}
 
 		// ok, we're done!
 		RTE.loaded = true;
-		RTE.loading(false);
 
 		// calculate load time
-		RTE.loadTime = ( (new Date()).getTime() - window.wgRTEStart.getTime() ) / 1000;
+		RTE.loadTime = (new Date() - window.wgNow) / 1000;
 
-		RTE.log('CKEditor v' + CKEDITOR.version + ' (' +
-			(window.RTEDevMode ? 'in development mode' : CKEDITOR.revision) +
-			') is ready in "' + RTE.instance.mode + '" mode (loaded in ' + RTE.loadTime + ' s)');
+		RTE.log('CKEditor v' + CKEDITOR.version +
+			(window.RTEDevMode ? ' (in development mode)' : '') +
+			' is ready in "' + editor.mode + '" mode (loaded in ' + RTE.loadTime + ' s)');
 
 		// fire custom event for "track" plugin
-		RTE.instance.fire('RTEready');
+		editor.fire('RTEready');
 
 		// let extensions do their tasks when RTE is fully loaded
-		$(document.body).add(window).trigger('rteready');
-		GlobalTriggers.fire('rteready',RTE.instance);
+		$(window).trigger('rteready', editor);
+		GlobalTriggers.fire('rteready', editor);
 
 		// reposition #RTEStuff
 		RTE.repositionRTEStuff();
-		$(window).bind('resize', RTE.repositionRTEStuff);
+		$(window).
+			add('#EditPage').
+			bind('resize', RTE.repositionRTEStuff);
 
-		// BugId:2700 - don't focus when in preview/diff mode
-		if(!RTE.config.startupFocus) {
-			if (wgEditFormType != 'preview' && wgEditFormType != 'diff') {
-				setTimeout(function() {RTE.instance.focus(); }, 100);
-			}
+		// preload format dropdown (BugId:4592)
+		var formatDropdown = editor.ui.create('Format');
+		if (formatDropdown) {
+			formatDropdown.createPanel(editor);
 		}
-	},
 
-	// extra setup of <body> wrapping editing area in wysiwyg mode
-	onWysiwygModeReady: function() {
-		RTE.log('onWysiwygModeReady');
+		// send custom event "submit" when edit page is being saved (BugId:2947)
+		var editform = $(editor.element.$.form);
+		editform.bind('submit', $.proxy(function() {
+			editor.fire('submit', {form: editform}, editor);
+		}, this));
 
-		var body = RTE.getEditor();
-
-		body.
-			// set ID, so CSS rules from MW can be applied
-			attr('id', RTE.instance.config.bodyId).
-			// set CSS class with content language of current wiki (used by RT #40248)
-			addClass('lang-' + window.wgContentLanguage);
-
-		// RT #38516: remove first <BR> tag (fix strange Opera bug)
-		setTimeout(function() {
-			if (CKEDITOR.env.opera) {
-				var firstChild = RTE.getEditor().children().eq(0);
-
-				// first child is <br> without any attributes
-				if (firstChild.is('br')) {
-					firstChild.remove();
+		// remove data-rte-instance attribute when sending HTML to backend
+		editor.dataProcessor.htmlFilter.addRules({
+			attributes: {
+				'data-rte-instance': function(value, element) {
+					return false;
 				}
 			}
-		}, 750);
-	},
-
-	// reposition of #RTEStuff div when Widescreen button is pressed
-	onWidescreen: function() {
-		RTE.repositionRTEStuff();
+		});
 	},
 
 	// reposition #RTEStuff div
@@ -334,113 +306,13 @@ window.RTE = {
 		return jQuery(RTE.instance.document.$.body);
 	},
 
-	// set loading state of an editor (show progress icon)
-	loading: function(loading) {
-		if (loading) {
-			$('body').addClass('RTEloading');
-		}
-		else {
-			$('body').removeClass('RTEloading');
-		}
-	},
-
-	// handle mode switching (prepare data)
-	modeSwitch: function(mode) {
-		RTE.log('switching from "' + mode +'" mode');
-
-		var editor = RTE.instance,
-			content = editor.getData();
-
-		// BugId:1852 - error handling
-		var onError = function() {
-			RTE.log('error occured during mode switch');
-
-			// remove loading indicator, don't switch mode
-			RTE.loading(false);
-
-			// enable "Source" button
-			editor.getCommand('source').setState(mode == 'wysiwyg' ? CKEDITOR.TRISTATE_OFF : CKEDITOR.TRISTATE_ON);
-
-			// track errors
-			RTE.track('switchMode', 'error');
-
-			// modal with a message
-			$.showModal(editor.lang.errorPopupTitle, editor.lang.modeSwitch.error, {width: 400});
-		};
-
-		// show loading indicator
-		RTE.loading(true);
-
-		switch (mode) {
-			case 'wysiwyg':
-				RTE.ajax('html2wiki', {html: content, title: window.wgPageName}, function(data) {
-					if (!data) {
-						onError();
-						return;
-					}
-
-					editor.setMode('source');
-					editor.setData(data.wikitext);
-
-					RTE.track('switchMode', 'wysiwyg2source');
-				});
-				break;
-
-			case 'source':
-				RTE.ajax('wiki2html', {wikitext: content, title: window.wgPageName}, function(data) {
-					if (!data) {
-						onError();
-						return;
-					}
-
-					// RT #36073 - don't allow mode switch when __NOWYSIWYG__ is found in another article section
-					if ( (typeof window.RTEEdgeCase != 'undefined') && (window.RTEEdgeCase == 'nowysiwyg') ) {
-						RTE.log('article contains __NOWYSIWYG__ magic word');
-
-						data.edgecase = {
-							type: window.RTEEdgeCase,
-							info: {
-								title: window.RTEMessages.edgecase.title,
-								content: window.RTEMessages.edgecase.content
-							}
-						};
-					}
-
-					if (data.edgecase) {
-						RTE.log('edgecase found!');
-						RTE.tools.alert(data.edgecase.info.title, data.edgecase.info.content);
-
-						// stay in source mode
-						editor.getCommand('source').setState(CKEDITOR.TRISTATE_ON);
-						RTE.loading(false);
-
-						// tracking
-						RTE.track('switchMode', 'edgecase', data.edgecase.type);
-						return;
-					}
-
-					editor.setMode('wysiwyg');
-					editor.setData(data.html);
-
-					// RT #84586: update instanceId
-					RTE.instanceId = data.instanceId;
-
-					RTE.track('switchMode', 'source2wysiwyg');
-				});
-				break;
-		}
-	},
-
 	// filter HTML returned by CKEditor
+	// TODO: implement using htmlFilter
+	// @see http://docs.cksource.com/CKEditor_3.x/Developers_Guide/Data_Processor#HTML_Parser_Filters
 	filterHtml: function(ev) {
 		if (ev.editor.mode == 'wysiwyg') {
-			ev.data.dataValue = ev.data.dataValue.
-				// remove "data-rte-instance" attributes
-				replace(' data-rte-instance="' + RTE.instanceId + '"', '').
-				// remove <div> added by Firebug
-				replace(/<div firebug[^>]+>[^<]+<\/div>/g, '');
-
-			//$().log(ev.data, 'RTE.filterHtml');
+			// remove <div> added by Firebug
+			ev.data.dataValue = ev.data.dataValue.replace(/<div firebug[^>]+>[^<]+<\/div>/g, '');
 		}
 	},
 
@@ -486,43 +358,6 @@ CKEDITOR.config.baseBackgroundColor = '#ddd';
 */
 CKEDITOR.config.baseColor = '#000';
 
-// Wikia toolbar
-CKEDITOR.config.toolbar_Wikia =
-[
-	{
-		name: "",
-		data: [
-		{
-			msg: 'textAppearance',
-			groups: [
-				['Format'],
-				['Bold','Italic','Underline','Strike'],
-				['BulletedList','NumberedList'],
-				['Link','Unlink'],
-				['Outdent','Indent'],
-				['JustifyLeft','JustifyCenter','JustifyRight']
-			]
-		},
-		{
-			msg: 'insert',
-			groups: [
-				['Image', 'Gallery', 'Poll', 'Video'],
-				['Table'],
-				['Template'],
-				['Signature']
-			]
-		},
-		{
-			msg: 'controls',
-			groups: [
-				['Undo','Redo'],
-				(window.skin == 'oasis' ? false : ['Widescreen']), // temp hack
-				['Source']
-			]
-		}
-	]}
-];
-
 //
 // extend CK core objects
 //
@@ -562,7 +397,7 @@ CKEDITOR.getUrl = function( resource ) {
 
 		// fetch JSON with language definition from backend
 		var url = window.wgServer + wgScript + '?action=ajax&rs=RTEAjax&method=i18n&uselang=' + lang +
-			'&cb=' + window.wgMWrevId + '-' + window.wgStyleVersion;
+			'&cb=' + window.wgJSMessagesCB;
 
 		return url;
 	}
@@ -592,8 +427,6 @@ CKEDITOR.editor.prototype.switchMode = function(mode) {
 	}
 
 	RTE.log('switchMode("' + mode + '")');
-
-	this.mode = (mode == 'wysiwyg') ? 'source' : 'wysiwyg';
 
 	CKEDITOR.plugins.sourcearea.commands.source.exec(this);
 }
@@ -629,63 +462,3 @@ CKEDITOR.dom.element.prototype.setState = function( state ) {
  * Used in selection.getRanges() as an additional value for the onlyEditables parameter
  */
 CKEDITOR.ONLY_FORMATTABLES = 2;
-
-//
-// extend jQuery
-//
-
-// get meta data from given node
-jQuery.fn.getData = function() {
-	var json = this.attr('data-rte-meta');
-	if (!json) {
-		return {};
-	}
-
-	// decode JSON
-	json = decodeURIComponent(json);
-
-	var data = $.secureEvalJSON(json) || {};
-	return data;
-}
-
-// set meta data for given node
-jQuery.fn.setData = function(key, value) {
-	var data = {};
-
-	// prepare data to be stored
-	if (typeof key == 'object') {
-		data = key;
-	}
-	else if (typeof key == 'string') {
-		data[key] = value;
-	}
-
-	// read current data stored in node and merge with data
-	data = jQuery().extend(true, this.getData(), data);
-
-	// encode JSON
-	var json = $.toJSON(data);
-
-	this.attr('data-rte-meta', encodeURIComponent(json));
-
-	// return modified data
-	return data;
-}
-
-// set type of current placeholder
-jQuery.fn.setPlaceholderType = function(type) {
-	$(this).
-		attr('class', 'placeholder placeholder-' + type).
-		setData('type', type);
-}
-
-// load RTE on DOM ready
-jQuery(function() {
-	GlobalTriggers.fire('rtebeforeinit',RTE,CKEDITOR);
-
-	RTE.log('loading...');
-
-	// select initial mode
-	var mode = window.RTEInitMode ? window.RTEInitMode : 'wysiwyg';
-	RTE.init(mode);
-});

@@ -31,7 +31,7 @@ $wgExtensionCredits['other'][] = array(
 
 $wgExtensionFunctions[] = 'CategorySelectInit';
 $wgExtensionMessagesFiles['CategorySelect'] = dirname(__FILE__) . '/CategorySelect.i18n.php';
-$wgAutoloadClasses['CategorySelect'] = "$IP/extensions/wikia/CategorySelect/CategorySelect_body.php";
+$wgAutoloadClasses['CategorySelect'] = dirname(__FILE__) . '/CategorySelect_body.php';
 $wgAjaxExportList[] = 'CategorySelectAjaxParseCategories';
 $wgAjaxExportList[] = 'CategorySelectAjaxSaveCategories';
 $wgAjaxExportList[] = 'CategorySelectGenerateHTMLforView';
@@ -75,7 +75,6 @@ function CategorySelectInit($forceInit = false) {
  */
 function CategorySelectInitializeHooks($output, $article, $title, $user, $request, $mediawiki, $force = false ) {
 	global $wgHooks, $wgRequest, $wgUser, $wgContentNamespaces;
-
 	// Check user preferences option
 	if ($wgUser->getOption('disablecategoryselect') == true) {
 		return true;
@@ -95,7 +94,8 @@ function CategorySelectInitializeHooks($output, $article, $title, $user, $reques
 
 	if (!$force) {
 		if ( ( !in_array($title->mNamespace, array_merge( $wgContentNamespaces, array( NS_FILE, NS_CATEGORY, NS_VIDEO ) ) ) && ( $action == 'view' || $action == 'purge' ) )
-			|| !in_array($title->mNamespace, array_merge( $wgContentNamespaces, array( NS_FILE, NS_USER, NS_CATEGORY, NS_VIDEO, NS_SPECIAL ) ) ) ) {
+			|| !in_array($title->mNamespace, array_merge( $wgContentNamespaces, array( NS_FILE, NS_USER, NS_CATEGORY, NS_VIDEO, NS_SPECIAL ) ) )
+			|| ( $title->mNamespace == NS_TEMPLATE ) ) {
 			return true;
 		}
 	}
@@ -121,16 +121,28 @@ function CategorySelectInitializeHooks($output, $article, $title, $user, $reques
 		$wgHooks['Skin::getCategoryLinks::end'][] = 'CategorySelectGetCategoryLinksEnd';
 		$wgHooks['Skin::getCategoryLinks::begin'][] = 'CategorySelectGetCategoryLinksBegin';
 		$wgHooks['MakeGlobalVariablesScript'][] = 'CategorySelectSetupVars';
-	} else if ($action == 'edit' || $action == 'submit') {
+	} else if ($action == 'edit' || $action == 'submit' || $force) {
 		//edit mode
 		$wgHooks['EditPage::importFormData::finished'][] = 'CategorySelectImportFormData';
 		$wgHooks['EditPage::getContent::end'][] = 'CategorySelectReplaceContent';
 		$wgHooks['EditPage::CategoryBox'][] = 'CategorySelectCategoryBox';
 		$wgHooks['EditPage::showEditForm:fields'][] = 'CategorySelectAddFormFields';
 		$wgHooks['EditPageGetDiffText'][] = 'CategorySelectDiffArticle';
+		$wgHooks['EditPageBeforeDiffText'][] = 'CategorySelectBeforeDiffArticle';
 		$wgHooks['EditForm::MultiEdit:Form'][] = 'CategorySelectDisplayCategoryBox';
 
 		$wgHooks['MakeGlobalVariablesScript'][] = 'CategorySelectSetupVars';
+
+		/**
+		// used by PLB (when creating layout from an article), but not really needed here
+		if($wgRequest->wasPosted()) {
+			$csWikitext = $wgRequest->getVal('csWikitext', '');
+
+			if ($csWikitext != '') {
+				CategorySelect::SelectCategoryAPIgetData($csWikitext, true);
+			}
+ 		}
+		**/
 	}
 	wfLoadExtensionMessages('CategorySelect');
 
@@ -278,7 +290,7 @@ function CategorySelectAjaxSaveCategories($articleId, $categories) {
 					$result['html'] = $cats;
 				} elseif ( $retval == EditPage::AS_SPAM_ERROR ) {
 					$dbw->rollback();
-					$result['error'] = wfMsg('spamprotectiontext') . '<p>( Call #6 )</p>';
+					$result['error'] = wfMsg('spamprotectiontext') . '<p>( Case #8 )</p>';
 				} else {
 					$dbw->rollback();
 					$result['error'] = wfMsg('categoryselect-edit-abort');
@@ -401,7 +413,8 @@ function CategorySelectImportFormData($editPage, $request) {
 				}
 			}
 
-			$editPage->textbox1 .= $categories;
+			// rtrim needed because of BugId:11238
+			$editPage->textbox1 .= rtrim($categories);
 		}
 		$wgCategorySelectCategoriesInWikitext = $categories;
 	}
@@ -419,6 +432,17 @@ function CategorySelectDiffArticle($editPage, $newtext) {
 	if ($editPage->section == '' && isset($wgCategorySelectCategoriesInWikitext)) {
 		$newtext .= $wgCategorySelectCategoriesInWikitext;
 	}
+	return true;
+}
+
+/**
+ * Removes categories from article for DiffEngine fogBugz:5412
+ *
+ * @author Andrzej 'nAndy' Łukaszewski
+ */
+function CategorySelectBeforeDiffArticle($editPage, $newtext, $oldtext, $newtitle, $oldtitle) {
+	CategorySelectReplaceContent($editPage, $oldtext);
+
 	return true;
 }
 
@@ -508,21 +532,25 @@ JS
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 
-
+//TODO
 function CategorySelectGenerateHTMLforEditRaw($categories, $text = '') {
+	global $wgWysiwygEdit, $wgEditPageLayoutEnable;
 	$result = '
 		<script type="text/javascript">document.write(\'<style type="text/css">#csWikitextContainer {display: none}</style>\');</script>
-		<div id="csMainContainer"> ' . $text . '
+		<div class="csEditMode" style="display:none" id="csMainContainer"> ' . $text . '
+			<input placeholder="'.wfMsg('categoryselect-addcategory-edit').'" data-placeholder="'.wfMsg('categoryselect-addcategory-edit').'" id="csCategoryInput" type="text" />
 			<div id="csSuggestContainer">
 				<div id="csHintContainer">' . wfMsg('categoryselect-suggest-hint') . '</div>
 			</div>
-			<div id="csItemsContainer">
-				<input id="csCategoryInput" type="text" style="display: none; outline: none;" />
+			<div id="csItemsContainerDiv">
+				<ul id="csItemsContainer">
+
+				</ul>
 			</div>
-			<div id="csWikitextContainer" class="csWikitextContainer"><textarea id="csWikitext" name="csWikitext" placeholder="Add categories here, e.g. [[Category:Name]]">' . $categories . '</textarea></div>
-			<div id="csSwitchViewContainer"><a id="csSwitchView" href="#" onclick="toggleCodeView(); return false;" onfocus="this.blur()" tabindex="-1" rel="nofollow">' . wfMsg('categoryselect-code-view') . '</a></div>
+			<div id="csWikitextContainer"><textarea id="csWikitext" name="csWikitext" placeholder="'.wfMsg('categoryselect-code-view-placeholder').'" rows="4" data-initial-value="' . $categories . '">' . $categories . '</textarea></div>
 			<div class="clearfix"></div>
 		</div>';
+
 	return $result;
 }
 
@@ -589,7 +617,7 @@ function CategorySelectGenerateHTMLforView() {
 function CategorySelectOnGetPreferences($user, &$preferences) {
 	$preferences['disablecategoryselect'] = array(
 		'type' => 'toggle',
-		'section' => 'editing/advancedediting',
+		'section' => 'editing/editing-experience',
 		'label' => wfMsg('tog-disablecategoryselect'),
 	);
 	return true;

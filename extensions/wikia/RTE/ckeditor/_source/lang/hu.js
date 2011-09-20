@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -34,8 +34,8 @@ CKEDITOR.lang['hu'] =
 	editorTitle : 'HTML szerkesztő',
 
 	// ARIA descriptions.
-	toolbar	: 'Eszköztár',
-	editor	: 'HTML szerkesztő',
+	toolbars	: 'Editor toolbars', // MISSING
+	editor		: 'HTML szerkesztő',
 
 	// Toolbar buttons without dialogs.
 	source			: 'Forráskód',
@@ -121,6 +121,8 @@ CKEDITOR.lang['hu'] =
 		alignBottom		: 'Aljára',
 		invalidHeight	: 'A magasság mezőbe csak számokat írhat.',
 		invalidWidth	: 'A szélesség mezőbe csak számokat írhat.',
+		invalidCssLength	: 'Value specified for the "%1" field must be a positive number with or without a valid CSS measurement unit (px, %, in, cm, mm, em, ex, pt, or pc).', // MISSING
+		invalidHtmlLength	: 'Value specified for the "%1" field must be a positive number with or without a valid HTML measurement unit (px or %).', // MISSING
 
 		// Put the voice-only part of the label in the span.
 		unavailable		: '%1<span class="cke_accessibility">, unavailable</span>' // MISSING
@@ -201,7 +203,8 @@ CKEDITOR.lang['hu'] =
 		menu		: 'Horgony tulajdonságai',
 		title		: 'Horgony tulajdonságai',
 		name		: 'Horgony neve',
-		errorName	: 'Kérem adja meg a horgony nevét'
+		errorName	: 'Kérem adja meg a horgony nevét',
+		remove		: 'Remove Anchor' // MISSING
 	},
 
 	// List style dialog
@@ -413,7 +416,6 @@ CKEDITOR.lang['hu'] =
 		upload		: 'Feltöltés',
 		alt			: 'Buborék szöveg',
 		lockRatio	: 'Arány megtartása',
-		unlockRatio	: 'Arány figyelmen kívül hagyása',
 		resetSize	: 'Eredeti méret',
 		border		: 'Keret',
 		hSpace		: 'Vízsz. táv',
@@ -715,6 +717,8 @@ CKEDITOR.lang['hu'] =
 	{
 		title		: 'CKEditor névjegy',
 		dlgTitle	: 'CKEditor névjegy',
+		help	: 'Check $1 for help.', // MISSING
+		userGuide : 'CKEditor User\'s Guide', // MISSING
 		moreInfo	: 'Licenszelési információkért kérjük látogassa meg weboldalunkat:',
 		copy		: 'Copyright &copy; $1. Minden jog fenntartva.'
 	},
@@ -745,9 +749,64 @@ CKEDITOR.lang['hu'] =
 	toolbarCollapse	: 'Eszköztár összecsukása',
 	toolbarExpand	: 'Eszköztár szétnyitása',
 
+	toolbarGroups :
+	{
+		document : 'Document', // MISSING
+		clipboard : 'Clipboard/Undo', // MISSING
+		editing : 'Editing', // MISSING
+		forms : 'Forms', // MISSING
+		basicstyles : 'Basic Styles', // MISSING
+		paragraph : 'Paragraph', // MISSING
+		links : 'Links', // MISSING
+		insert : 'Insert', // MISSING
+		styles : 'Styles', // MISSING
+		colors : 'Colors', // MISSING
+		tools : 'Tools' // MISSING
+	},
+
 	bidi :
 	{
 		ltr : 'Szöveg iránya balról jobbra',
 		rtl : 'Szöveg iránya jobbról balra'
+	},
+
+	docprops :
+	{
+		label : 'Dokumentum tulajdonságai',
+		title : 'Dokumentum tulajdonságai',
+		design : 'Design', // MISSING
+		meta : 'Meta adatok',
+		chooseColor : 'Válasszon',
+		other : '<más>',
+		docTitle :	'Oldalcím',
+		charset : 	'Karakterkódolás',
+		charsetOther : 'Más karakterkódolás',
+		charsetASCII : 'ASCII', // MISSING
+		charsetCE : 'Közép-Európai',
+		charsetCT : 'Kínai Tradicionális (Big5)',
+		charsetCR : 'Cyrill',
+		charsetGR : 'Görög',
+		charsetJP : 'Japán',
+		charsetKR : 'Koreai',
+		charsetTR : 'Török',
+		charsetUN : 'Unicode (UTF-8)', // MISSING
+		charsetWE : 'Nyugat-Európai',
+		docType : 'Dokumentum típus fejléc',
+		docTypeOther : 'Más dokumentum típus fejléc',
+		xhtmlDec : 'XHTML deklarációk beillesztése',
+		bgColor : 'Háttérszín',
+		bgImage : 'Háttérkép cím',
+		bgFixed : 'Nem gördíthető háttér',
+		txtColor : 'Betűszín',
+		margin : 'Oldal margók',
+		marginTop : 'Felső',
+		marginLeft : 'Bal',
+		marginRight : 'Jobb',
+		marginBottom : 'Alsó',
+		metaKeywords : 'Dokumentum keresőszavak (vesszővel elválasztva)',
+		metaDescription : 'Dokumentum leírás',
+		metaAuthor : 'Szerző',
+		metaCopyright : 'Szerzői jog',
+		previewHtml : '<p>This is some <strong>sample text</strong>. You are using <a href="javascript:void(0)">CKEditor</a>.</p>' // MISSING
 	}
 };

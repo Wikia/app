@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -46,7 +46,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	 * &lt;script src="/ckeditor/adapters/jquery.js"&gt;&lt;/script&gt;
 	 * @example
 	 * // ... then later in the code ...
-	 * 
+	 *
 	 * $( 'textarea' ).ckeditor();
 	 * // ...
 	 * $( 'textarea' ).val( 'New content' );

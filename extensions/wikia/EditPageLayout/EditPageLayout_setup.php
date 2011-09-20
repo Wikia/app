@@ -108,30 +108,3 @@ function EditPageLayoutAjax() {
 	return $ret;
 }
 
-
-// TEMPORARY SOLUTION TO WORK-AROUND MESSAGE CACHE AND DUAL CODEBASE FOR RELATED EXTENSIONS
-// TO BE REMOVED AFTER FINAL RELEASES OF EDIT PAGE RESKIN
-$app->registerExtensionFunction('EditPageReskinMessageCacheFix');
-function EditPageReskinMessageCacheFix() {
-	global $wgMessageCache;
-
-	$dir = dirname(dirname(__FILE__));
-	$files = array(
-		$dir . '/EditPageLayout/EditPageLayout.i18n.php',
-		$dir . '/EditPageReskin/CreatePage/CreatePage.i18n.php',
-		$dir . '/EditPageReskin/CategorySelect/CategorySelect.i18n.php',
-		$dir . '/EditPageReskin/PageLayoutBuilder/PageLayoutBuilder.i18n.php',
-		$dir . '/EditPageReskin/Blogs/Blogs.i18n.php',
-		$dir . '/EditPageReskin/RTE/i18n/RTE.i18n.php',
-		$dir . '/EditPageReskin/RTE/i18n/CK.core.i18n.php',
-		$dir . '/EditPageReskin/RTE/i18n/CK.wikia.i18n.php',
-	);
-
-	foreach ($files as $file) {
-		$messages = array();
-		include $file;
-		$wgMessageCache->addMessagesByLang($messages);
-	}
-
-	return true;
-}
