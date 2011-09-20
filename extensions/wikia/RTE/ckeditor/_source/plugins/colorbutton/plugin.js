@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -66,7 +66,7 @@ CKEDITOR.plugins.add( 'colorbutton',
 							color;
 
 						// Find the closest block element.
-						block = path.block || path.blockLimit;
+						block = path.block || path.blockLimit || editor.document.getBody();
 
 						// The background color might be transparent. In that case, look up the color in the DOM tree.
 						do
@@ -115,8 +115,7 @@ CKEDITOR.plugins.add( 'colorbutton',
 
 					editor.focus();
 
-					panel.hide();
-
+					panel.hide( false );
 
 					editor.fire( 'saveSnapshot' );
 
@@ -227,6 +226,7 @@ CKEDITOR.plugins.add( 'colorbutton',
 
 /**
  * Whether to enable the "More Colors..." button in the color selectors.
+ * @name CKEDITOR.config.colorButton_enableMore
  * @default true
  * @type Boolean
  * @example
@@ -240,6 +240,7 @@ CKEDITOR.plugins.add( 'colorbutton',
  * Since 3.3: A name may be optionally defined by prefixing the entries with the
  * name and the slash character. For example, "FontColor1/FF9900" will be
  * displayed as the color #FF9900 in the selector, but will be outputted as "FontColor1".
+ * @name CKEDITOR.config.colorButton_colors
  * @type String
  * @default '000,800000,8B4513,2F4F4F,008080,000080,4B0082,696969,B22222,A52A2A,DAA520,006400,40E0D0,0000CD,800080,808080,F00,FF8C00,FFD700,008000,0FF,00F,EE82EE,A9A9A9,FFA07A,FFA500,FFFF00,00FF00,AFEEEE,ADD8E6,DDA0DD,D3D3D3,FFF0F5,FAEBD7,FFFFE0,F0FFF0,F0FFFF,F0F8FF,E6E6FA,FFF'
  * @example
@@ -257,6 +258,7 @@ CKEDITOR.config.colorButton_colors =
 
 /**
  * Holds the style definition to be used to apply the text foreground color.
+ * @name CKEDITOR.config.colorButton_foreStyle
  * @type Object
  * @example
  * // This is basically the default setting value.
@@ -275,6 +277,7 @@ CKEDITOR.config.colorButton_foreStyle =
 
 /**
  * Holds the style definition to be used to apply the text background color.
+ * @name CKEDITOR.config.colorButton_backStyle
  * @type Object
  * @example
  * // This is basically the default setting value.

@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -229,10 +229,10 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	 *
 	 * @param String
 	 *            dialogName Dialog name.
-	 * @param {CKEDITOR.dialog.dialogDefinitionObject}
+	 * @param {CKEDITOR.dialog.definitionObject}
 	 *            definition Dialog definition.
 	 * @param {Array}
-	 *            elements Array of {@link CKEDITOR.dialog.contentDefinition}
+	 *            elements Array of {@link CKEDITOR.dialog.definition.content}
 	 *            objects.
 	 */
 	function attachFileBrowser( editor, dialogName, definition, elements )
@@ -336,7 +336,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	/*
 	 * Returns true if filebrowser is configured in one of the elements.
 	 *
-	 * @param {CKEDITOR.dialog.dialogDefinitionObject}
+	 * @param {CKEDITOR.dialog.definitionObject}
 	 *            definition Dialog definition.
 	 * @param String
 	 *            tabId The tab id where element(s) can be found.

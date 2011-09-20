@@ -301,8 +301,8 @@ class BlogTemplateClass {
         '&nbsp;', //\t
 	);
 
-	private static $skipStrinBeforeParse	= "<br><p><div><a><b><del><i><ins><u><font><big><small><sub><sup><cite><code><em><s><strike><strong><tt><var><center><blockquote><ol><ul><dl><u><q><abbr><acronym><li><dt><dd><span>";
-	private static $skipStrinAfterParse		= "<br><p><b><del><i><ins><u><font><big><small><sub><sup><cite><code><em><s><strike><strong><tt><var><center><blockquote><ol><ul><dl><u><q><abbr><acronym><li><dt><dd><span>";
+	private static $skipStrinBeforeParse	= "<p><div><a><b><del><i><ins><u><font><big><small><sub><sup><cite><code><em><s><strike><strong><tt><var><center><blockquote><ol><ul><dl><u><q><abbr><acronym><li><dt><dd><span>";
+	private static $skipStrinAfterParse		= "<p><b><del><i><ins><u><font><big><small><sub><sup><cite><code><em><s><strike><strong><tt><var><center><blockquote><ol><ul><dl><u><q><abbr><acronym><li><dt><dd><span>";
 	private static $parseTagTruncateText	= "/<(p|a(.*))>(.*)<\/(p|a)>/siU";
 
 	private static $pageOffsetName 			= "page";
@@ -710,6 +710,8 @@ class BlogTemplateClass {
 	}
 
 	private static function __parseCategories($text, $parser) {
+		global $wgTitle;
+
 		if ( is_object($parser) ) {
 			$pOptions = $parser->getOptions();
 			if ( is_null($pOptions) ) {
@@ -880,7 +882,7 @@ class BlogTemplateClass {
 				$hooks = $wgParser->getTags();
 				$hooksRegExp = implode('|', array_map('preg_quote', $hooks));
 				$sBlogText = preg_replace('#<(' . $hooksRegExp . ')[^>]{0,}>(.*)<\/[^>]+>#s', '', $sBlogText);
-				
+
 				/* skip HTML tags */
 				if (!empty(self::$blogTAGS)) {
 					/* skip some special tags  */
@@ -888,7 +890,7 @@ class BlogTemplateClass {
 						$sBlogText = preg_replace($tag, '', $sBlogText);
 					}
 				}
-				
+
 				$sBlogText = strip_tags($sBlogText, self::$skipStrinBeforeParse);
 				/* skip invalid Wiki-text  */
 				$sBlogText = preg_replace('/\{\{\/(.*?)\}\}/si', '', $sBlogText);
@@ -984,10 +986,10 @@ class BlogTemplateClass {
 				$aResult = array_slice($aResult, 0, self::$aOptions['displaycount']);
 			}
 		}
-		
+
 		// macbre: change for Oasis to add avatars and comments / likes data
 		wfRunHooks('BlogTemplateGetResults', array(&$aResult));
-		
+
 		self::$dbr->freeResult( $res );
     	wfProfileOut( __METHOD__ );
     	return $aResult;
@@ -1076,7 +1078,7 @@ class BlogTemplateClass {
 
 				/* ignore comment lines */
 				if ($sParamName[0] == '#') {
-					wfDebugLog( __METHOD__, "ignore comment line: ".$iKey." \n" );
+					wfDebugLog( __METHOD__, "ignore comment line: ".$sParamName." \n" );
 					continue;
 				}
 
@@ -1383,7 +1385,7 @@ class BlogTemplateClass {
 							$count = intval($params['count']);
 						}
 						if (empty($count)) {
-							$count = int(self::$aBlogParams['count']['default']);
+							$count = intval(self::$aBlogParams['count']['default']);
 						}
 						$offset = $count * $offset;
 						/* set new value of offset */

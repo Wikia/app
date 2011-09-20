@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -34,8 +34,8 @@ CKEDITOR.lang['ja'] =
 	editorTitle : 'リッチテキストエディタ, %1, ヘルプは ALT 0 を押してください',
 
 	// ARIA descriptions.
-	toolbar	: 'ツールバー',
-	editor	: 'リッチテキストエディタ',
+	toolbars	: 'Editor toolbars', // MISSING
+	editor		: 'リッチテキストエディタ',
 
 	// Toolbar buttons without dialogs.
 	source			: 'ソース',
@@ -121,6 +121,8 @@ CKEDITOR.lang['ja'] =
 		alignBottom		: '下',
 		invalidHeight	: '高さは数値で入力してください。',
 		invalidWidth	: '幅は数値で入力してください。',
+		invalidCssLength	: 'Value specified for the "%1" field must be a positive number with or without a valid CSS measurement unit (px, %, in, cm, mm, em, ex, pt, or pc).', // MISSING
+		invalidHtmlLength	: 'Value specified for the "%1" field must be a positive number with or without a valid HTML measurement unit (px or %).', // MISSING
 
 		// Put the voice-only part of the label in the span.
 		unavailable		: '%1<span class="cke_accessibility">, 利用不可能</span>'
@@ -201,7 +203,8 @@ CKEDITOR.lang['ja'] =
 		menu		: 'アンカー プロパティ',
 		title		: 'アンカー プロパティ',
 		name		: 'アンカー名',
-		errorName	: 'アンカー名を必ず入力してください。'
+		errorName	: 'アンカー名を必ず入力してください。',
+		remove		: 'Remove Anchor' // MISSING
 	},
 
 	// List style dialog
@@ -413,7 +416,6 @@ CKEDITOR.lang['ja'] =
 		upload		: 'アップロード',
 		alt			: '代替テキスト',
 		lockRatio	: 'ロック比率',
-		unlockRatio	: 'アンロック比率',
 		resetSize	: 'サイズリセット',
 		border		: 'ボーダー',
 		hSpace		: '横間隔',
@@ -715,6 +717,8 @@ CKEDITOR.lang['ja'] =
 	{
 		title		: 'CKEditorバージョン情報',
 		dlgTitle	: 'CKEditorバージョン情報',
+		help	: 'Check $1 for help.', // MISSING
+		userGuide : 'CKEditor User\'s Guide', // MISSING
 		moreInfo	: 'ライセンス情報の詳細はウェブサイトにて確認してください:',
 		copy		: 'Copyright &copy; $1. All rights reserved.'
 	},
@@ -745,9 +749,64 @@ CKEDITOR.lang['ja'] =
 	toolbarCollapse	: 'ツールバーを閉じる',
 	toolbarExpand	: 'ツールバーを開く',
 
+	toolbarGroups :
+	{
+		document : 'Document', // MISSING
+		clipboard : 'Clipboard/Undo', // MISSING
+		editing : 'Editing', // MISSING
+		forms : 'Forms', // MISSING
+		basicstyles : 'Basic Styles', // MISSING
+		paragraph : 'Paragraph', // MISSING
+		links : 'Links', // MISSING
+		insert : 'Insert', // MISSING
+		styles : 'Styles', // MISSING
+		colors : 'Colors', // MISSING
+		tools : 'Tools' // MISSING
+	},
+
 	bidi :
 	{
 		ltr : 'テキストの向き : 左から右へ',
 		rtl : 'テキストの向き : 右から左へ'
+	},
+
+	docprops :
+	{
+		label : '文書 プロパティ',
+		title : '文書 プロパティ',
+		design : 'Design', // MISSING
+		meta : 'メタデータ',
+		chooseColor : '色の選択',
+		other : '<その他の>',
+		docTitle :	'ページタイトル',
+		charset : 	'文字セット符号化',
+		charsetOther : '他の文字セット符号化',
+		charsetASCII : 'ASCII', // MISSING
+		charsetCE : 'Central European', // MISSING
+		charsetCT : 'Chinese Traditional (Big5)', // MISSING
+		charsetCR : 'Cyrillic', // MISSING
+		charsetGR : 'Greek', // MISSING
+		charsetJP : 'Japanese', // MISSING
+		charsetKR : 'Korean', // MISSING
+		charsetTR : 'Turkish', // MISSING
+		charsetUN : 'Unicode (UTF-8)', // MISSING
+		charsetWE : 'Western European',
+		docType : '文書タイプヘッダー',
+		docTypeOther : 'その他文書タイプヘッダー',
+		xhtmlDec : 'XHTML宣言をインクルード',
+		bgColor : '背景色',
+		bgImage : '背景画像 URL',
+		bgFixed : 'スクロールしない背景',
+		txtColor : 'テキスト色',
+		margin : 'ページ・マージン',
+		marginTop : '上部',
+		marginLeft : '左',
+		marginRight : '右',
+		marginBottom : '下部',
+		metaKeywords : '文書のキーワード(カンマ区切り)',
+		metaDescription : '文書の概要',
+		metaAuthor : '文書の作者',
+		metaCopyright : '文書の著作権',
+		previewHtml : '<p>This is some <strong>sample text</strong>. You are using <a href="javascript:void(0)">CKEditor</a>.</p>' // MISSING
 	}
 };

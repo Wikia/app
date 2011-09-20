@@ -615,38 +615,6 @@ class PageHeaderModule extends Module {
 		wfProfileOut( __METHOD__ );
 	}
 
-	/**
-	 * Modify edit page: add preview notice bar and render edit box header
-	 * (to be removed after EditPageReskin fully released)
-	 */
-	public static function modifyEditPage(&$editPage) {
-		wfProfileIn(__METHOD__);
-		global $wgUser;
-
-		// get skin name
-		$skinName = get_class($wgUser->getSkin());
-
-		if ($skinName == 'SkinOasis') {
-			// load CSS for editpage
-			global $wgOut;
-			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/core/_EditPage.scss'));
-
-			// render preview notice bar
-			if ($editPage->preview) {
-				// show preview confirmation bar below global nav
-				NotificationsModule::addConfirmation(wfMsg('oasis-preview-confirmation'), NotificationsModule::CONFIRMATION_PREVIEW);
-			}
-
-			// render edit box header
-			if ($editPage->preview || $editPage->diff) {
-				$editPage->editFormTextTop .= wfRenderModule('PageHeader', 'EditBox');
-			}
-		}
-
-		wfProfileOut(__METHOD__);
-		return true;
-	}
-
 	static function onArticleSaveComplete(&$article, &$user, $text, $summary,
 		$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
 		global $wgMemc;

@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -34,8 +34,8 @@ CKEDITOR.lang['fi'] =
 	editorTitle : 'Rikastekstieditori, %1, paina ALT 0 nähdäksesi ohjeen.',
 
 	// ARIA descriptions.
-	toolbar	: 'Työkalupalkki',
-	editor	: 'Rikastekstieditori',
+	toolbars	: 'Editor toolbars', // MISSING
+	editor		: 'Rikastekstieditori',
 
 	// Toolbar buttons without dialogs.
 	source			: 'Koodi',
@@ -121,6 +121,8 @@ CKEDITOR.lang['fi'] =
 		alignBottom		: 'Alas',
 		invalidHeight	: 'Korkeuden täytyy olla numero.',
 		invalidWidth	: 'Leveyden täytyy olla numero.',
+		invalidCssLength	: 'Value specified for the "%1" field must be a positive number with or without a valid CSS measurement unit (px, %, in, cm, mm, em, ex, pt, or pc).', // MISSING
+		invalidHtmlLength	: 'Value specified for the "%1" field must be a positive number with or without a valid HTML measurement unit (px or %).', // MISSING
 
 		// Put the voice-only part of the label in the span.
 		unavailable		: '%1<span class="cke_accessibility">, ei saatavissa</span>'
@@ -182,7 +184,7 @@ CKEDITOR.lang['fi'] =
 		cssClasses		: 'Tyyliluokat',
 		charset			: 'Linkitetty kirjaimisto',
 		styles			: 'Tyyli',
-		rel			: 'Relationship', // MISSING
+		rel			: 'Suhde',
 		selectAnchor		: 'Valitse ankkuri',
 		anchorName		: 'Ankkurin nimen mukaan',
 		anchorId			: 'Ankkurin ID:n mukaan',
@@ -201,7 +203,8 @@ CKEDITOR.lang['fi'] =
 		menu		: 'Ankkurin ominaisuudet',
 		title		: 'Ankkurin ominaisuudet',
 		name		: 'Nimi',
-		errorName	: 'Ankkurille on kirjoitettava nimi'
+		errorName	: 'Ankkurille on kirjoitettava nimi',
+		remove		: 'Remove Anchor' // MISSING
 	},
 
 	// List style dialog
@@ -413,7 +416,6 @@ CKEDITOR.lang['fi'] =
 		upload		: 'Lisää kuva',
 		alt			: 'Vaihtoehtoinen teksti',
 		lockRatio	: 'Lukitse suhteet',
-		unlockRatio	: 'Vapauta suhteet',
 		resetSize	: 'Alkuperäinen koko',
 		border		: 'Kehys',
 		hSpace		: 'Vaakatila',
@@ -715,6 +717,8 @@ CKEDITOR.lang['fi'] =
 	{
 		title		: 'Tietoa CKEditorista',
 		dlgTitle	: 'Tietoa CKEditorista',
+		help	: 'Check $1 for help.', // MISSING
+		userGuide : 'CKEditor User\'s Guide', // MISSING
 		moreInfo	: 'Lisenssitiedot löytyvät kotisivuiltamme:',
 		copy		: 'Copyright &copy; $1. Kaikki oikeuden pidätetään.'
 	},
@@ -745,9 +749,64 @@ CKEDITOR.lang['fi'] =
 	toolbarCollapse	: 'Kutista työkalupalkki',
 	toolbarExpand	: 'Laajenna työkalupalkki',
 
+	toolbarGroups :
+	{
+		document : 'Document', // MISSING
+		clipboard : 'Clipboard/Undo', // MISSING
+		editing : 'Editing', // MISSING
+		forms : 'Forms', // MISSING
+		basicstyles : 'Basic Styles', // MISSING
+		paragraph : 'Paragraph', // MISSING
+		links : 'Links', // MISSING
+		insert : 'Insert', // MISSING
+		styles : 'Styles', // MISSING
+		colors : 'Colors', // MISSING
+		tools : 'Tools' // MISSING
+	},
+
 	bidi :
 	{
 		ltr : 'Tekstin suunta vasemmalta oikealle',
 		rtl : 'Tekstin suunta oikealta vasemmalle'
+	},
+
+	docprops :
+	{
+		label : 'Dokumentin ominaisuudet',
+		title : 'Dokumentin ominaisuudet',
+		design : 'Design', // MISSING
+		meta : 'Meta-tieto',
+		chooseColor : 'Valitse',
+		other : '<muu>',
+		docTitle :	'Sivun nimi',
+		charset : 	'Merkistökoodaus',
+		charsetOther : 'Muu merkistökoodaus',
+		charsetASCII : 'ASCII', // MISSING
+		charsetCE : 'Keskieurooppalainen',
+		charsetCT : 'Kiina, perinteinen (Big5)',
+		charsetCR : 'Kyrillinen',
+		charsetGR : 'Kreikka',
+		charsetJP : 'Japani',
+		charsetKR : 'Korealainen',
+		charsetTR : 'Turkkilainen',
+		charsetUN : 'Unicode (UTF-8)', // MISSING
+		charsetWE : 'Länsieurooppalainen',
+		docType : 'Dokumentin tyyppi',
+		docTypeOther : 'Muu dokumentin tyyppi',
+		xhtmlDec : 'Lisää XHTML julistukset',
+		bgColor : 'Taustaväri',
+		bgImage : 'Taustakuva',
+		bgFixed : 'Paikallaanpysyvä tausta',
+		txtColor : 'Tekstiväri',
+		margin : 'Sivun marginaalit',
+		marginTop : 'Ylä',
+		marginLeft : 'Vasen',
+		marginRight : 'Oikea',
+		marginBottom : 'Ala',
+		metaKeywords : 'Hakusanat (pilkulla erotettuna)',
+		metaDescription : 'Kuvaus',
+		metaAuthor : 'Tekijä',
+		metaCopyright : 'Tekijänoikeudet',
+		previewHtml : '<p>This is some <strong>sample text</strong>. You are using <a href="javascript:void(0)">CKEditor</a>.</p>' // MISSING
 	}
 };

@@ -23,7 +23,7 @@ CKEDITOR.plugins.add('rte-template',
 				// list of templates to be added to dropdown
 				var templates = window.RTETemplatesDropdown;
 
-				for (t=0; t < templates.length; t++) {
+				for (var t=0; t < templates.length; t++) {
 					var value = templates[t].replace(/_/g, ' ');
 					var label = window.RTEMessages.template + ':' + value;
 
@@ -35,20 +35,36 @@ CKEDITOR.plugins.add('rte-template',
 				this.add('--other--',
 					'<strong>' + editor.lang.templateDropDown.chooseAnotherTpl  + '</strong>',
 					editor.lang.templateDropDown.chooseAnotherTpl);
+				
+				// add "List of used templates"
+				this.add('--list--',
+					'<strong>' + editor.lang.templateDropDown.showUsedList  + '</strong>',
+					editor.lang.templateDropDown.showUsedList);
+				// add "Make a layout"
+				this.add('--make-layout--',
+					'<strong>' + editor.lang.templateDropDown.makeLayout  + '</strong>',
+					editor.lang.templateDropDown.makeLayout);
 			},
 
 			onClick : function(value) {
 				RTE.log('template dropdown: "' + value +'"');
 
-				if (value == '--other--') {
-					// show template editor with list of templates to choose
-					RTE.templateEditor.createTemplateEditor(false);
-				}
-				else {
-					RTE.track('template', 'dialog', 'search', 'dropdown', value);
-
-					// show template editor with selected template
-					RTE.templateEditor.createTemplateEditor(value);
+				switch (value) {
+					case '--other--':
+						// show template editor with list of templates to choose
+						RTE.templateEditor.createTemplateEditor(false);
+						break;
+					case '--list--':
+						RTE.templateHelpers.showUsedList(editor);
+						break;
+					case '--make-layout--':
+						RTE.templateHelpers.makeLayout(editor);
+						break;
+					default:
+						RTE.track('visualMode', 'template', 'dialog', 'search', 'dropdown', value);
+	
+						// show template editor with selected template
+						RTE.templateEditor.createTemplateEditor(value);
 				}
 
 				// don't show selected template on toolbar
@@ -58,8 +74,59 @@ CKEDITOR.plugins.add('rte-template',
 				}, 50);
 			}
 		});
+		
+		// list of templates to be added to dropdown
+		/*
+		var templates = window.RTETemplatesDropdown;
+
+		for (var t=0; t < templates.length && t < 4; t++) {
+			var name = templates[t].replace(/_/g, ' ');
+			
+			editor.ui.addButton('Template_Popular'+t, {
+				label: name,
+				title: name,
+				click: (function(templateName){
+					return function() {
+						RTE.templateEditor.createTemplateEditor(templateName);
+					}
+				})(templates[t])
+			});
+		}
+		*/
+		editor.addCommand('InsertTemplate',{
+			exec: function( editor, data ) {
+				editor.fire('insertTemplate', data);
+				if (data && data.templateName)
+					RTE.templateEditor.createTemplateEditor(data.templateName);
+			}
+		});
 	}
 });
+
+RTE.templateHelpers = {
+	showUsedList: function(editor) {
+		editor = editor || RTE.instance;
+		var el = $('#editform > .templatesUsed');
+		if (el.exists()) {
+			var list = $('<div>');
+			list.html(el.html());
+			list.children().not('ul').remove();
+			list.find('a').attr('target','_blank');
+			$.showModal(editor.lang.templateEditor.usedTemplates.title,list.html(),{
+				width: 400
+			});
+		}
+	},
+	makeLayout: function() {
+		if (typeof window.PLBMakeLayoutUrl != 'undefined') {
+			$("#editform")
+				.attr("action", window.PLBMakeLayoutUrl)
+				.submit();
+		} else {
+			// XXX: show error message
+		}
+	}
+};
 
 // object used between plugin and template editor
 RTE.templateEditor = {
@@ -460,6 +527,13 @@ RTE.templateEditor = {
 
 	// create new template placeholder (and maybe show template editor for it)
 	createTemplateEditor: function(templateName) {
+		// quick hack to make it work in source mode
+		if (RTE.instance.mode == 'source') {
+			if (templateName) {
+				insertTags('{{'+templateName,'}}','');
+			}
+			return
+		}
 
 		// create template placeholder
 		var placeholder = RTE.tools.createPlaceholder('double-brackets');

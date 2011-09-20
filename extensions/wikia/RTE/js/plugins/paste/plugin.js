@@ -7,7 +7,7 @@ CKEDITOR.plugins.add('rte-paste',
 	},
 
 	track: function(ev) {
-		RTE.track('paste', ev);
+		RTE.track('visualMode', 'paste', ev);
 	},
 
 	init: function(editor) {
@@ -53,6 +53,28 @@ CKEDITOR.plugins.add('rte-paste',
 				self.track('plainText');
 			}
 		});
+
+		// remove CSS added by WebKit when pasting the content (BugId:9841)
+		// @see http://docs.cksource.com/CKEditor_3.x/Developers_Guide/Data_Processor#HTML_Parser_Filters
+		if (CKEDITOR.env.webkit) {
+			editor.dataProcessor.htmlFilter.addRules({
+				elements: {
+					// remove meta tag with characters encoding info
+					meta: function(element) {
+						return false;
+					}
+				},
+
+				attributes: {
+					// remove style attributes added by WebKit browsers
+					style: function(value, element) {
+						if (value.indexOf('border-top-width: 0px; border-right-width: 0px;') === 0) {
+							return false;
+						}
+					}
+				}
+			});
+		}
 	},
 
 	// get pasted HTML

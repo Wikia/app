@@ -192,11 +192,11 @@ Class WikiFactoryChangedHooks {
 			$dbr = wfGetDB( DB_MASTER, array(), WikiFactory::IDtoDB($city_id) );
 
 			if( !$dbr->tableExists( "plb_field" ) ) {
-				$dbr->sourceFile( "$IP/extensions/wikia/EditPageReskin/PageLayoutBuilder/sql/plb_field.sql" );
+				$dbr->sourceFile( "$IP/extensions/wikia/PageLayoutBuilder/sql/plb_field.sql" );
 			}
 
 			if( !$dbr->tableExists( "plb_page" ) ) {
-				$dbr->sourceFile( "$IP/extensions/wikia/EditPageReskin/PageLayoutBuilder/sql/plb_page.sql" );
+				$dbr->sourceFile( "$IP/extensions/wikia/PageLayoutBuilder/sql/plb_page.sql" );
 			}
 		}
 		return true;
@@ -209,8 +209,8 @@ Class WikiFactoryChangedHooks {
 			 * add task to TaskManager
 			 */
 			if (!class_exists('BlogTask')) {
-				global $IP, $wgEditPageReskinPath;
-				extAddBatchTask( "$IP/extensions/wikia/{$wgEditPageReskinPath}Blogs/BlogTask.php", "blog", "BlogTask" );				
+				global $IP;
+				extAddBatchTask( "$IP/extensions/wikia/Blogs/BlogTask.php", "blog", "BlogTask" );				
 			}
 			$Task = new BlogTask();
 			$Task->createTask( array( "city_id" => $city_id ), TASK_QUEUED );

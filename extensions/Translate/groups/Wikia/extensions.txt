@@ -175,10 +175,10 @@ Related Video
 file = RelatedVideo/i18n/RelatedVideo.i18n.php
 
 RTE - Base
-file = EditPageReskin/RTE/i18n/RTE.i18n.php
+file = RTE/i18n/RTE.i18n.php
 
 RTE - CK Wikia
-file = EditPageReskin/RTE/i18n/CK.wikia.i18n.php
+file = RTE/i18n/CK.wikia.i18n.php
 
 Scavenger Hunt
 ignored = scavengerhunt-form-error-name

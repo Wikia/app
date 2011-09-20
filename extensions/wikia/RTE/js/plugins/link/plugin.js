@@ -37,6 +37,23 @@ CKEDITOR.plugins.add('rte-link',
 			});
 		}
 
+		// Link icon should show as selected when cursor is on a link
+		editor.on('selectionChange', function(ev) {
+			var elements = ev.data.path.elements,
+				len = elements.length,
+				state = false;
+
+			// find <a> in a tree of elements in the current selection
+			for (var i = 0, element ; i < len ; i++) {
+				if (elements[i].is('a')) {
+					state = true;
+					break;
+				}
+			 }
+
+			editor.getCommand('link').setState(state ? CKEDITOR.TRISTATE_ON : CKEDITOR.TRISTATE_OFF);
+		});
+
 		// If the "contextmenu" plugin is loaded, register the listeners.
 		// added to solve RT #47452
 		if ( editor.contextMenu )
@@ -183,7 +200,7 @@ CKEDITOR.unlinkCommand.prototype =
 
 		selection.selectBookmarks( bookmarks );
 	},
-	
+
 	removeLink : function( editor, element )
 	{
 		element.remove( true );

@@ -55,6 +55,7 @@ class RTEAjax {
 	 */
 	static public function checkInternalLink() {
 		global $wgTitle;
+		wfProfileIn(__METHOD__);
 
 		$res = array('exists' => false);
 
@@ -70,6 +71,7 @@ class RTEAjax {
 			);
 		}
 
+		wfProfileOut(__METHOD__);
 		return $res;
 	}
 
@@ -78,6 +80,7 @@ class RTEAjax {
 	 */
 	static public function parse() {
 		global $wgTitle, $wgRequest, $wgUser;
+		wfProfileIn(__METHOD__);
 
 		$wikitext = $wgRequest->getVal('wikitext', '');
 
@@ -90,9 +93,12 @@ class RTEAjax {
 		// parse wikitext using MW parser
 		$html = $parser->parse($wikitext, $wgTitle, $parserOptions)->getText();
 
-		return array(
+		$res = array(
 			'html' => $html,
 		);
+
+		wfProfileOut(__METHOD__);
+		return $res;
 	}
 
 	/**
@@ -100,6 +106,7 @@ class RTEAjax {
 	 */
 	static public function rteparse() {
 		global $wgTitle, $wgRequest, $wgUser;
+		wfProfileIn(__METHOD__);
 
 		$wikitext = $wgRequest->getVal('wikitext', '');
 
@@ -119,9 +126,12 @@ class RTEAjax {
 		// parse wikitext using RTE parser
 		$html = $parser->parse($wikitext, $wgTitle, $parserOptions)->getText();
 
-		return array(
+		$res = array(
 			'html' => $html,
 		);
+
+		wfProfileOut(__METHOD__);
+		return $res;
 	}
 
 	/**
@@ -180,16 +190,15 @@ class RTEAjax {
 	 * Get localisation
 	 */
 	static public function i18n() {
-		// get CK messages array
-		$messages = RTELang::getMessages();
-
 		// code of requested language
 		global $wgLang;
 		$lang = $wgLang->getCode();
 
-		$rawJavascript = "CKEDITOR.lang['{$lang}'] = " . Wikia::json_encode($messages) . ';';
+		// get CK messages array
+		$messages = RTELang::getMessages($lang);
+		$js = "CKEDITOR.lang['{$lang}'] = " . Wikia::json_encode($messages) . ';';
 
-		$ret = new AjaxResponse($rawJavascript);
+		$ret = new AjaxResponse($js);
 		$ret->setContentType('application/x-javascript');
 		$ret->setCacheDuration(86400 * 365 * 10); // 10 years
 

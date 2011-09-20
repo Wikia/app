@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -37,7 +37,11 @@ CKEDITOR.skins = (function()
 		{
 			for ( var n = 0 ; n < fileNames.length ; n++ )
 			{
-				fileNames[ n ] = CKEDITOR.getUrl( paths[ skinName ] + fileNames[ n ] );
+				/* Wikia change begin - @author: Marcin, #BugId: 7834 */
+				if ( fileNames[ n ].indexOf('://') == -1 && fileNames[ n ].indexOf( '/' ) !== 0 ) {
+					fileNames[ n ] = CKEDITOR.getUrl( paths[ skinName ] + fileNames[ n ] );
+				}
+				/* Wikia change end */
 			}
 		};
 

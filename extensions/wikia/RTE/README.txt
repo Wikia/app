@@ -56,7 +56,8 @@ i18n files:
 * CK.wikia.i18n.php - messages for wikia plugins for CKeditor and changes to default CKeditor messages (this file can be edited)
 
 
-Minifying JS/CSS:
+How JS/CSS is served:
 
-* use minify.sh script to generate minified version of JS/CSS
-* add "allinone=0" to URL of edit page to use development version of RTE (using separated JS/CSS files)
+* JS is served by AssetsManager
+* CSS is served by SASS
+* add "allinone=0" to URL of edit page to use development version of RTE (using separated JS files)

@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -34,8 +34,8 @@ CKEDITOR.lang['is'] =
 	editorTitle : 'Rich text editor, %1, press ALT 0 for help.', // MISSING
 
 	// ARIA descriptions.
-	toolbar	: 'Toolbar', // MISSING
-	editor	: 'Rich Text Editor', // MISSING
+	toolbars	: 'Editor toolbars', // MISSING
+	editor		: 'Rich Text Editor', // MISSING
 
 	// Toolbar buttons without dialogs.
 	source			: 'Kóði',
@@ -121,6 +121,8 @@ CKEDITOR.lang['is'] =
 		alignBottom		: 'Neðst',
 		invalidHeight	: 'Height must be a number.', // MISSING
 		invalidWidth	: 'Width must be a number.', // MISSING
+		invalidCssLength	: 'Value specified for the "%1" field must be a positive number with or without a valid CSS measurement unit (px, %, in, cm, mm, em, ex, pt, or pc).', // MISSING
+		invalidHtmlLength	: 'Value specified for the "%1" field must be a positive number with or without a valid HTML measurement unit (px or %).', // MISSING
 
 		// Put the voice-only part of the label in the span.
 		unavailable		: '%1<span class="cke_accessibility">, unavailable</span>' // MISSING
@@ -201,7 +203,8 @@ CKEDITOR.lang['is'] =
 		menu		: 'Eigindi kaflamerkis',
 		title		: 'Eigindi kaflamerkis',
 		name		: 'Nafn bókamerkis',
-		errorName	: 'Sláðu inn nafn bókamerkis!'
+		errorName	: 'Sláðu inn nafn bókamerkis!',
+		remove		: 'Remove Anchor' // MISSING
 	},
 
 	// List style dialog
@@ -271,8 +274,8 @@ CKEDITOR.lang['is'] =
 		invalidBorder	: 'Border size must be a number.', // MISSING
 		invalidWidth	: 'Table width must be a number.', // MISSING
 		invalidHeight	: 'Table height must be a number.', // MISSING
-		invalidCellSpacing	: 'Cell spacing must be a number.', // MISSING
-		invalidCellPadding	: 'Cell padding must be a number.', // MISSING
+		invalidCellSpacing	: 'Cell spacing must be a positive number.', // MISSING
+		invalidCellPadding	: 'Cell padding must be a positive number.', // MISSING
 
 		cell :
 		{
@@ -413,7 +416,6 @@ CKEDITOR.lang['is'] =
 		upload		: 'Hlaða upp',
 		alt			: 'Baklægur texti',
 		lockRatio	: 'Festa stærðarhlutfall',
-		unlockRatio	: 'Unlock Ratio', // MISSING
 		resetSize	: 'Reikna stærð',
 		border		: 'Rammi',
 		hSpace		: 'Vinstri bil',
@@ -715,6 +717,8 @@ CKEDITOR.lang['is'] =
 	{
 		title		: 'About CKEditor', // MISSING
 		dlgTitle	: 'About CKEditor', // MISSING
+		help	: 'Check $1 for help.', // MISSING
+		userGuide : 'CKEditor User\'s Guide', // MISSING
 		moreInfo	: 'For licensing information please visit our web site:', // MISSING
 		copy		: 'Copyright &copy; $1. All rights reserved.' // MISSING
 	},
@@ -745,9 +749,64 @@ CKEDITOR.lang['is'] =
 	toolbarCollapse	: 'Collapse Toolbar', // MISSING
 	toolbarExpand	: 'Expand Toolbar', // MISSING
 
+	toolbarGroups :
+	{
+		document : 'Document', // MISSING
+		clipboard : 'Clipboard/Undo', // MISSING
+		editing : 'Editing', // MISSING
+		forms : 'Forms', // MISSING
+		basicstyles : 'Basic Styles', // MISSING
+		paragraph : 'Paragraph', // MISSING
+		links : 'Links', // MISSING
+		insert : 'Insert', // MISSING
+		styles : 'Styles', // MISSING
+		colors : 'Colors', // MISSING
+		tools : 'Tools' // MISSING
+	},
+
 	bidi :
 	{
 		ltr : 'Text direction from left to right', // MISSING
 		rtl : 'Text direction from right to left' // MISSING
+	},
+
+	docprops :
+	{
+		label : 'Eigindi skjals',
+		title : 'Eigindi skjals',
+		design : 'Design', // MISSING
+		meta : 'Lýsigögn',
+		chooseColor : 'Choose', // MISSING
+		other : '<annar>',
+		docTitle :	'Titill síðu',
+		charset : 	'Letursett',
+		charsetOther : 'Annað letursett',
+		charsetASCII : 'ASCII', // MISSING
+		charsetCE : 'Mið-evrópskt',
+		charsetCT : 'Kínverskt, hefðbundið (Big5)',
+		charsetCR : 'Kýrilskt',
+		charsetGR : 'Grískt',
+		charsetJP : 'Japanskt',
+		charsetKR : 'Kóreskt',
+		charsetTR : 'Tyrkneskt',
+		charsetUN : 'Unicode (UTF-8)', // MISSING
+		charsetWE : 'Vestur-evrópst',
+		docType : 'Flokkur skjalategunda',
+		docTypeOther : 'Annar flokkur skjalategunda',
+		xhtmlDec : 'Fella inn XHTML lýsingu',
+		bgColor : 'Bakgrunnslitur',
+		bgImage : 'Slóð bakgrunnsmyndar',
+		bgFixed : 'Læstur bakgrunnur',
+		txtColor : 'Litur texta',
+		margin : 'Hliðarspássía',
+		marginTop : 'Efst',
+		marginLeft : 'Vinstri',
+		marginRight : 'Hægri',
+		marginBottom : 'Neðst',
+		metaKeywords : 'Lykilorð efnisorðaskrár (aðgreind með kommum)',
+		metaDescription : 'Lýsing skjals',
+		metaAuthor : 'Höfundur',
+		metaCopyright : 'Höfundarréttur',
+		previewHtml : '<p>This is some <strong>sample text</strong>. You are using <a href="javascript:void(0)">CKEditor</a>.</p>' // MISSING
 	}
 };

@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -85,7 +85,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		for ( var i in all )
 		{
 			var one = all[ i ];
-			if ( one.mode == 'wysiwyg' )
+			if ( one.mode == 'wysiwyg' && !one.readOnly )
 			{
 				var body = one.document.getBody();
 				// Refresh 'contentEditable' otherwise
@@ -155,6 +155,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			editor.addCommand( 'maximize',
 				{
 					modes : { wysiwyg : 1, source : 1 },
+					readOnly : 1,
 					editorFocus : false,
 					exec : function()
 					{
@@ -203,7 +204,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 							mainDocument.getDocumentElement().setStyles( styles );
 							!CKEDITOR.env.gecko && mainDocument.getDocumentElement().setStyle( 'position', 'fixed' );
-							mainDocument.getBody().setStyles( styles );
+							!( CKEDITOR.env.gecko && CKEDITOR.env.quirks ) && mainDocument.getBody().setStyles( styles );
 
 							// Scroll to the top left (IE needs some time for it - #4923).
 							CKEDITOR.env.ie ?
@@ -211,7 +212,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 								mainWindow.$.scrollTo( 0, 0 );
 
 							// Resize and move to top left.
-							container.setStyle( 'position', 'absolute' );
+							// Special treatment for FF Quirks (#7284)
+							container.setStyle( 'position', CKEDITOR.env.gecko && CKEDITOR.env.quirks ? 'fixed' : 'absolute' );
 							container.$.offsetLeft;			// SAFARI BUG: See #2066.
 							container.setStyles(
 								{

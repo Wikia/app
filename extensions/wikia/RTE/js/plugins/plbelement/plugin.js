@@ -15,7 +15,9 @@ CKEDITOR.plugins.add('rte-plbelement',
 			}
 //			$(v.menuItemHtml.html).appendTo(itemsContainer);
 		});
-		
+
+		// macbre: to be removed - magic is performed in PLB/js/editor.js
+		/**
 		// register template dropdown list
 		editor.ui.addRichCombo('Plbelement', {
 			label : PageLayoutBuilder.Lang['plb-editor-rte-caption'],
@@ -32,7 +34,7 @@ CKEDITOR.plugins.add('rte-plbelement',
 				this.addButton = $('.plb-add-element',this.el);
 				var addMenu = $('ul',this.addButton);
 				// ... by adding the items representing all widget types
-				
+
 				var templates = new Array();
 				$.each(PageLayoutBuilder.Library,function(i,v) {
 					templates.push(v.menuItemHtml);
@@ -44,9 +46,33 @@ CKEDITOR.plugins.add('rte-plbelement',
 			},
 
 			onClick : function(value) {
-				window.plb.ui.onAddElementClick(value);	
+				window.plb.ui.onAddElementClick(value);
 				return false;
 			}
 		});
+
+		function addElement(type) {
+			var plb = window.plb;
+			if (editor.mode == 'source') {
+				plb.creator.onAddElementClick( type );
+			} else {
+				plb.onCreateWidgetRequest( type );
+			}
+		};
+
+		$.each(PageLayoutBuilder.Library,function(type,def){
+			var name = 'PLBAddElement_' + type;
+			editor.ui.addButton(name,{
+				label: def.caption,
+				title: def.caption,
+				className: name,
+				click: (function(type){
+					return function() {
+						addElement(type);
+					};
+				})(type)
+			});
+		});
+		**/
 	}
 });

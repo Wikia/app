@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -34,8 +34,8 @@ CKEDITOR.lang['it'] =
 	editorTitle : 'Rich text editor, %1, press ALT 0 for help.', // MISSING
 
 	// ARIA descriptions.
-	toolbar	: 'Toolbar', // MISSING
-	editor	: 'Rich Text Editor', // MISSING
+	toolbars	: 'Editor toolbars', // MISSING
+	editor		: 'Rich Text Editor', // MISSING
 
 	// Toolbar buttons without dialogs.
 	source			: 'Codice Sorgente',
@@ -121,6 +121,8 @@ CKEDITOR.lang['it'] =
 		alignBottom		: 'In Basso',
 		invalidHeight	: 'L\'altezza dev\'essere un numero',
 		invalidWidth	: 'La Larghezza dev\'essere un numero',
+		invalidCssLength	: 'Value specified for the "%1" field must be a positive number with or without a valid CSS measurement unit (px, %, in, cm, mm, em, ex, pt, or pc).', // MISSING
+		invalidHtmlLength	: 'Value specified for the "%1" field must be a positive number with or without a valid HTML measurement unit (px or %).', // MISSING
 
 		// Put the voice-only part of the label in the span.
 		unavailable		: '%1<span class="cke_accessibility">, non disponibile</span>'
@@ -201,7 +203,8 @@ CKEDITOR.lang['it'] =
 		menu		: 'Proprietà ancora',
 		title		: 'Proprietà ancora',
 		name		: 'Nome ancora',
-		errorName	: 'Inserici il nome dell\'ancora'
+		errorName	: 'Inserici il nome dell\'ancora',
+		remove		: 'Remove Anchor' // MISSING
 	},
 
 	// List style dialog
@@ -413,7 +416,6 @@ CKEDITOR.lang['it'] =
 		upload		: 'Carica',
 		alt			: 'Testo alternativo',
 		lockRatio	: 'Blocca rapporto',
-		unlockRatio	: 'Unlock Ratio', // MISSING
 		resetSize	: 'Reimposta dimensione',
 		border		: 'Bordo',
 		hSpace		: 'HSpace',
@@ -715,6 +717,8 @@ CKEDITOR.lang['it'] =
 	{
 		title		: 'About CKEditor',
 		dlgTitle	: 'About CKEditor',
+		help	: 'Check $1 for help.', // MISSING
+		userGuide : 'CKEditor User\'s Guide', // MISSING
 		moreInfo	: 'Per le informazioni sulla licenza si prega di visitare il nostro sito:',
 		copy		: 'Copyright &copy; $1. Tutti i diritti riservati.'
 	},
@@ -745,9 +749,64 @@ CKEDITOR.lang['it'] =
 	toolbarCollapse	: 'Collapse Toolbar', // MISSING
 	toolbarExpand	: 'Expand Toolbar', // MISSING
 
+	toolbarGroups :
+	{
+		document : 'Document', // MISSING
+		clipboard : 'Clipboard/Undo', // MISSING
+		editing : 'Editing', // MISSING
+		forms : 'Forms', // MISSING
+		basicstyles : 'Basic Styles', // MISSING
+		paragraph : 'Paragraph', // MISSING
+		links : 'Links', // MISSING
+		insert : 'Insert', // MISSING
+		styles : 'Styles', // MISSING
+		colors : 'Colors', // MISSING
+		tools : 'Tools' // MISSING
+	},
+
 	bidi :
 	{
 		ltr : 'Text direction from left to right', // MISSING
 		rtl : 'Text direction from right to left' // MISSING
+	},
+
+	docprops :
+	{
+		label : 'Proprietà del Documento',
+		title : 'Proprietà del Documento',
+		design : 'Design', // MISSING
+		meta : 'Meta Data',
+		chooseColor : 'Choose', // MISSING
+		other : '<altro>',
+		docTitle :	'Titolo pagina',
+		charset : 	'Set di caretteri',
+		charsetOther : 'Altro set di caretteri',
+		charsetASCII : 'ASCII', // MISSING
+		charsetCE : 'Europa Centrale',
+		charsetCT : 'Cinese Tradizionale (Big5)',
+		charsetCR : 'Cirillico',
+		charsetGR : 'Greco',
+		charsetJP : 'Giapponese',
+		charsetKR : 'Coreano',
+		charsetTR : 'Turco',
+		charsetUN : 'Unicode (UTF-8)', // MISSING
+		charsetWE : 'Europa Occidentale',
+		docType : 'Intestazione DocType',
+		docTypeOther : 'Altra intestazione DocType',
+		xhtmlDec : 'Includi dichiarazione XHTML',
+		bgColor : 'Colore di sfondo',
+		bgImage : 'Immagine di sfondo',
+		bgFixed : 'Sfondo fissato',
+		txtColor : 'Colore testo',
+		margin : 'Margini',
+		marginTop : 'In Alto',
+		marginLeft : 'A Sinistra',
+		marginRight : 'A Destra',
+		marginBottom : 'In Basso',
+		metaKeywords : 'Chiavi di indicizzazione documento (separate da virgola)',
+		metaDescription : 'Descrizione documento',
+		metaAuthor : 'Autore',
+		metaCopyright : 'Copyright', // MISSING
+		previewHtml : '<p>This is some <strong>sample text</strong>. You are using <a href="javascript:void(0)">CKEditor</a>.</p>' // MISSING
 	}
 };

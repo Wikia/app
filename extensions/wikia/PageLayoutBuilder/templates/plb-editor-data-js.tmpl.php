@@ -1,4 +1,5 @@
 <?php foreach ($widgets as $widgetName => $widgetData) {
+	$caption = $widgetData['caption'];
 	$widgetForm = $widgetData['form'];
 	$widgetHtmlMenuItem = $widgetData['editor_menu_item_html'];
 	$widgetHtmlListItem = $widgetData['editor_list_item_html'];
@@ -9,6 +10,7 @@
 	$widgetLogic = $widgetData['logic'];
 ?>
 PageLayoutBuilder.Library['<?php echo $widgetName; ?>'] = {
+	caption: <?php echo $caption; ?>,
 	editorHtml: <?php echo $widgetForm; ?>,
 	menuItemHtml: <?php echo $widgetHtmlMenuItem; ?>,
 	listItemHtml: <?php echo $widgetHtmlListItem; ?>,

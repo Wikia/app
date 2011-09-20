@@ -9,7 +9,7 @@ $messages['en'] = array(
 	'createpage-desc' => 'Allows to create a new page using Wikia\'s WYSIWYG editor',
 	'createpage-sp-title' => 'Create a new page',
 	'createpage_title' => 'Create a new page',
-	'createpage_title_caption' => 'Title:',
+	'createpage_title_caption' => 'Title',
 	'createpage_enter_text' => 'Text:',
 	'createpage_empty_title_error' => 'Title required',
 	'createpage_empty_article_body_error' => 'Page text required',
@@ -33,7 +33,7 @@ You can go to <a href="$1">$2</a>, or rename your page',
 Please use a different title.',
 	'createpage-error-article-blocked' => 'Sorry, you are unable to create that page at this time.',
 	'tog-createpagedefaultblank' => 'Use blank page as default for creating a new page',
-	'tog-createpagepopupdisabled' => 'Disable Create Page pop-up',
+	'tog-createpagepopupdisabled' => 'Disable \'Create a new article\' pop-up dialog',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
 Write the first paragraph of your page here.
 
@@ -96,10 +96,9 @@ Skryf die tweede afdeling van u bladsy hier.',
 
 /** Arabic (العربية)
  * @author Achraf94
- * @author OsamaK
  */
 $messages['ar'] = array(
-	'createpage-sp-title' => 'إنشاء صفحة جديدة',
+	'createpage-sp-title' => 'أنشأ مقالة جديدة',
 	'createpage_title' => 'أنشئ مقالة جديدة',
 	'createpage_title_caption' => 'العنوان',
 	'createpage_enter_text' => 'النص:',
@@ -110,7 +109,7 @@ $messages['ar'] = array(
 الرجاء إختيار اسم آخر.',
 	'createpage_spam' => 'عذرا، تحريرك لا يمكن تسجيله',
 	'createpage_cant_edit' => 'لا يمكن إجراء التعديل',
-	'createpage-dialog-title' => 'إنشاء صفحة جديدة',
+	'createpage-dialog-title' => 'إنشاء مقالة جديدة',
 	'createpage-dialog-message1' => 'مرحى! أنت تنشئ صفحة جديدة!',
 	'createpage-dialog-message2' => 'ماذا تريد تمسيتها؟',
 	'createpage-dialog-choose' => 'إختر تخطيط الصفحة:',
@@ -138,14 +137,6 @@ $messages['ar'] = array(
 كتابة عنوان المقطع الثاني من مقالك هنا.',
 );
 
-/** Azerbaijani (Azərbaycanca)
- * @author Cekli829
- */
-$messages['az'] = array(
-	'createpage_title_caption' => 'Başlıq:',
-	'createpage_enter_text' => 'Mətn:',
-);
-
 /** Bashkir (Башҡортса)
  * @author Рустам Нурыев
  */
@@ -157,16 +148,11 @@ $messages['ba'] = array(
  * @author DCLXVI
  */
 $messages['bg'] = array(
-	'createpage-desc' => 'Позволява създаване на нова страница чрез визуалния редактор на Wikia',
 	'createpage-sp-title' => 'Създаване на нова страница',
 	'createpage_title' => 'Създаване на нова страница',
 	'createpage_title_caption' => 'Заглавие:',
 	'createpage_enter_text' => 'Текст:',
-	'createpage_invalid_title_error' => 'Невалидно заглавие',
 	'createpage-dialog-title' => 'Създаване на нова страница',
-	'createpage-dialog-choose' => 'Избиране на облик на страницата:',
-	'createpage-dialog-format' => 'Стандартен облик',
-	'createpage-dialog-blank' => 'Празна страница',
 );
 
 /** Breton (Brezhoneg)
@@ -212,50 +198,6 @@ Skrivit amañ rannskrid kentañ ho pennad.
 == Titl ar rannskrid ==
 
 Skrivit amañ eil rannskrid ho pennad.',
-);
-
-/** Catalan (Català)
- * @author BroOk
- */
-$messages['ca'] = array(
-	'createpage-desc' => "Permet crear una pàgina nova utilitzant l'editor WYSIWYG de Wikia",
-	'createpage-sp-title' => 'Crea una pàgina nova',
-	'createpage_title' => 'Crea una pàgina nova',
-	'createpage_title_caption' => 'Títol:',
-	'createpage_enter_text' => 'Text:',
-	'createpage_empty_title_error' => 'Títol requerit',
-	'createpage_empty_article_body_error' => 'Text de la pàgina requerit',
-	'createpage_invalid_title_error' => 'Títol no vàlid',
-	'createpage_article_already_exists' => 'Ja existeix una pàgina amb aquest nom.
-Si us plau, tria un nom diferent.',
-	'createpage_spam' => "Ho sentim, l'edició no s'ha pogut guardar",
-	'createpage_cant_edit' => "No s'ha pogut realitzar l'edició",
-	'createpage-dialog-title' => 'Crea una pàgina nova',
-	'createpage-dialog-message1' => 'Visca, has creat una pàgina nova!',
-	'createpage-dialog-message2' => 'Què vols que et digui?',
-	'createpage-dialog-choose' => 'Trieu un disseny de pàgina:',
-	'createpage-dialog-format' => 'Disseny estàndard',
-	'createpage-dialog-blank' => 'Pàgina en blanc',
-	'createpage-error-empty-title' => 'Si us plau, escriu un títol per la pàgina',
-	'createpage-error-invalid-title' => 'Ho sentim, el títol de la pàgina no és vàlid!
-Si us plau, utilitzeu un títol diferent.',
-	'createpage-error-article-exists' => 'Ja existeix una pàgina amb aquest títol.
-Pots anar a <a href="$1">$2</a>, o canviar el nom de la pàgina',
-	'createpage-error-article-spam' => "Ho sentim, el títol de pàgina ha estat rebutjat pel nostre filtre d'spam.
-Si us plau, utilitzeu un títol diferent.",
-	'createpage-error-article-blocked' => 'Ho sentim, no pots crear aquesta pàgina en aquest moment.',
-	'tog-createpagedefaultblank' => "Utilitzeu la pàgina en blanc per defecte per a la creació d'una nova pàgina",
-	'tog-createpagepopupdisabled' => 'Desactivat la creació de pàgina pop-up',
-	'newpagelayout' => '[[File:Placeholder|right|300px]]
-Escriu el primer paràgraf de la pàgina aquí.
-
-== Encapçalament ==
-
-Escriu la primera secció de la pàgina aquí.
-
-== Encapçalament ==
-
-Escriu la segona secció de la pàgina aquí.',
 );
 
 /** German (Deutsch)
@@ -349,7 +291,6 @@ $messages['el'] = array(
 
 /** Spanish (Español)
  * @author Crazymadlover
- * @author Mor
  * @author Translationista
  */
 $messages['es'] = array(
@@ -372,7 +313,7 @@ $messages['es'] = array(
 	'createpage-dialog-blank' => 'Página en blanco',
 	'createpage-error-empty-title' => 'Por favor, escribe un título para tu artículo',
 	'createpage-error-invalid-title' => 'Lo sentimos, el título del artículo no era válido. Por favor, usa un título diferente.',
-	'createpage-error-article-exists' => 'Ya existe un artículo con ese título. Puedes ir a <a href="$1">$2</a> o cambiar el nombre de tu página',
+	'createpage-error-article-exists' => 'YA existe un artículo con ese título. Puedes ir a <a href="$1">$2</a> o cambiar el nombre de tu página',
 	'createpage-error-article-spam' => 'Lo sentimos, el título del artículo fue rechazado por nuestro filtro de contenido no deseado. Por favor, usa un título diferente.',
 	'createpage-error-article-blocked' => 'Lo sentimos, no puedes crear ese artículo en este momento.',
 	'tog-createpagedefaultblank' => 'Usa una página en blanco de manera predeterminada para la traducción de nuevas páginas.',
@@ -386,7 +327,7 @@ Escribe aquí la primera sección de tu artículo.
 
 ==Encabezado de sección==
 
-Escribe aquí la segunda sección de tu artículo.',
+EScribe aquí la segunda sección de tu artículo.',
 );
 
 /** Basque (Euskara)
@@ -594,7 +535,6 @@ $messages['he'] = array(
 );
 
 /** Hungarian (Magyar)
- * @author Dani
  * @author Enbéká
  * @author Glanthor Reviol
  */
@@ -606,16 +546,9 @@ $messages['hu'] = array(
 	'createpage_empty_title_error' => 'A cím megadása kötelező',
 	'createpage_empty_article_body_error' => 'A szócikk nem lehet üres',
 	'createpage_invalid_title_error' => 'Érvénytelen cím',
-	'createpage_article_already_exists' => 'Már létezik ilyen nevű lap.
-Válassz másikat!',
-	'createpage_spam' => 'Sajnáljuk, a mentést nem sikerült elmenteni',
-	'createpage_cant_edit' => 'Nem sikerült végrehajtani a szerkesztést',
 	'createpage-dialog-title' => 'Új szócikk létrehozása',
-	'createpage-dialog-message1' => 'Hurrá, egy új lapot hozol létre!',
 	'createpage-dialog-choose' => 'Válaszd ki az oldal elrendezését:',
-	'createpage-dialog-format' => 'Szabványos elrendezés',
 	'createpage-dialog-blank' => 'Üres lap',
-	'createpage-error-empty-title' => 'Adj címet a lapnak',
 );
 
 /** Interlingua (Interlingua)
@@ -751,48 +684,7 @@ $messages['ja'] = array(
 ここに2番目の節を書く。',
 );
 
-/** Khmer (ភាសាខ្មែរ)
- * @author គីមស៊្រុន
- */
-$messages['km'] = array(
-	'createpage-sp-title' => 'បង្កើតទំព័រថ្មីមួយ',
-	'createpage_title' => 'បង្កើតទំព័រថ្មីមួយ',
-	'createpage_title_caption' => 'ចំណងជើង៖',
-	'createpage_enter_text' => 'អត្ថបទ៖',
-	'createpage_empty_title_error' => 'តំរូវអោយមានចំណងជើង',
-	'createpage_empty_article_body_error' => 'តំរូវអោយមានអត្ថបទ',
-	'createpage_invalid_title_error' => 'ចំណងជើងមិនត្រឹមត្រូវ',
-	'createpage_article_already_exists' => 'មានទំព័រដែលមានឈ្មោះបែបនេះហើយ។
-សូមជ្រើសរើសឈ្មោះផ្សេងពីនេះ។',
-	'createpage_spam' => 'សូមទោស។ ការកែប្រែរបស់អ្នកមិនអាចរក្សាទុកបានទេ',
-	'createpage_cant_edit' => 'មិនអាចធ្វើការកែប្រែ',
-	'createpage-dialog-title' => 'បង្កើតទំព័រថ្មីមួយ',
-	'createpage-dialog-message1' => 'ជយោ! អ្នកកំពុងតែបង្កើតទំព័រថ្មីមួយហើយ!',
-	'createpage-dialog-message2' => 'តើអ្នកចង់ហៅវាយ៉ាងម៉េច?',
-	'createpage-dialog-choose' => 'ជ្រើសរើសប្លង់ទំព័រ៖',
-	'createpage-dialog-format' => 'ប្លង់ស្តង់ដារ',
-	'createpage-dialog-blank' => 'ទំព័រទទេ',
-	'createpage-error-empty-title' => 'សូម​សរសេរចំណងជើង​ទំព័រ​ឱ្យ​ទំព័រ​របស់​អ្នក​។',
-	'createpage-error-invalid-title' => 'សូមទោស។ ចំណងជើងទំព័រមិនត្រឹមត្រូវទេ។
-សូមប្រើចំណងជើងផ្សេងពីនេះ។',
-	'createpage-error-article-exists' => 'ទំព័រដែលមានចំណងជើងបែបនេះមានរួចហើយ។
-អ្នកអាចទៅកាន់<a href="$1">$2</a> ឬប្ដូរឈ្មោះទំព័ររបស់អ្នក',
-	'createpage-error-article-spam' => 'សូមទោស។ ចំណងជើងទំព័រត្រូវបានច្រានចោលដោយតំរងស្ប៉ាមរបស់យើង។
-សូមប្រើប្រាស់ចំណងជើងមួយផ្សេងទៀត។',
-	'createpage-error-article-blocked' => 'សូមទោស។ អ្នកមិនអាចបង្កើតទំព័រនោះបានទេនាពេលនេះ។',
-	'tog-createpagedefaultblank' => 'ប្រើទំព័រទទេក្នុងលំនាំដើម ក្នុងការបង្កើតទំព័រថ្មីមួយ',
-	'newpagelayout' => '[[File:Placeholder|right|300px]]
-សរសេរកឋាខណ្ឌទីមួយរបស់អ្នកនៅទីនេះ។
-
-==ចំណងជើងផ្នែក==
-
-សរសេរផ្នែកទីមួយរបស់ទំព័រអ្នកនៅទៅនេះ។
-
-==ចំណងជើងផ្នែក==
-សរសេរផ្នែកទីពីររបស់ទំព័រអ្នកនៅទៅនេះ។',
-);
-
-/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+/** Kurdish (Latin) (Kurdî (Latin))
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -926,15 +818,6 @@ $messages['mk'] = array(
 Тука напишете го второто заглавие од статијата.',
 );
 
-/** Malayalam (മലയാളം)
- * @author Praveenp
- */
-$messages['ml'] = array(
-	'createpage-sp-title' => 'പുതിയൊരു താൾ സൃഷ്ടിക്കുക',
-	'createpage_title' => 'പുതിയൊരു താൾ സൃഷ്ടിക്കുക',
-	'createpage_title_caption' => 'ശീർഷകം:',
-);
-
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  */
@@ -1023,28 +906,6 @@ Schrijf hier de eerste paragraaf van uw pagina.
 Schrijf hier de tweede paragraaf van uw pagina.',
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
- * @author Siebrand
- */
-$messages['nl-informal'] = array(
-	'createpage_spam' => 'Sorry, je bewerking kon niet worden opgeslagen',
-	'createpage-dialog-message1' => 'Gefeliciteerd.
-Je hebt een nieuwe pagina aangemaakt!',
-	'createpage-dialog-message2' => 'Hoe wil je de pagina noemen?',
-	'createpage-error-empty-title' => 'Geef een naam op voor je pagina',
-	'createpage-error-article-exists' => 'Er bestaat als een pagina met die naam.
-Je kunt naar "<a href="$1">$2</a>" gaan of je pagina anders noemen',
-	'createpage-error-article-blocked' => "Sorry, maar je kunt op het moment geen nieuwe pagina's aanmaken.",
-	'newpagelayout' => '[[File:Placeholder|right|300px]]
-Schrijf hier de eerste alinea van je pagina.
-
-==Paragraafkop==
-Schrijf hier de eerste paragraaf van je pagina.
-
-==Paragraafkop==
-Schrijf hier de tweede paragraaf van je pagina.',
-);
-
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
@@ -1116,18 +977,12 @@ $messages['pa'] = array(
 );
 
 /** Polish (Polski)
- * @author Cloudissimo
  * @author Sp5uhe
- * @author Woytecr
  */
 $messages['pl'] = array(
 	'createpage-desc' => 'Pozwala na utworzenie nowej strony za pomocą edytora WYSIWYG',
-	'createpage-sp-title' => 'Utwórz nową stronę',
 	'createpage_title' => 'Stwórz Stronę',
 	'createpage_title_caption' => 'Tytuł',
-	'createpage_enter_text' => 'Tekst:',
-	'createpage_empty_title_error' => 'Wymagany tytuł',
-	'createpage_empty_article_body_error' => 'Wymagane podanie treści strony',
 	'createpage_invalid_title_error' => 'Nieprawidłowy tytuł',
 	'createpage_article_already_exists' => 'Strona o zadanej nazwie już istnieje.
 Wybierz inną nazwę.',
@@ -1142,8 +997,6 @@ Wybierz inną nazwę.',
 	'createpage-error-empty-title' => 'Podaj tytuł strony',
 	'createpage-error-invalid-title' => 'Tytuł strony jest nieprawidłowy.
 Podaj inny tytuł.',
-	'createpage-error-article-exists' => 'Strona o tym tytule już istnieje.
-Możesz przejść do <a href="$1">$2</a>, lub zmienić nazwę strony',
 	'createpage-error-article-spam' => 'Tytuł strony został odrzucony przez nasz filtr antyspamowy.
 Podaj inny tytuł.',
 	'createpage-error-article-blocked' => 'Nie można utworzyć strony w tej chwili.',
@@ -1319,22 +1172,6 @@ Escreva a primeira seção do seu artigo aqui.
 Escreva a segunda seção do seu artigo aqui.',
 );
 
-/** Romanian (Română)
- * @author Stelistcristi
- */
-$messages['ro'] = array(
-	'createpage-sp-title' => 'Crează o pagină nou',
-	'createpage_title' => 'Crează o pagină nouă',
-	'createpage_title_caption' => 'Titlu:',
-	'createpage_empty_title_error' => 'Titlul necesar',
-	'createpage_empty_article_body_error' => 'Textul paginii este necesar',
-	'createpage_invalid_title_error' => 'Titlu invalid',
-	'createpage_cant_edit' => 'Nu se poate efectua modificarea',
-	'createpage-dialog-title' => 'Crează o nouă pagină',
-	'createpage-dialog-message1' => 'Ura! În acest moment creezi o nouă pagină!',
-	'createpage-dialog-blank' => 'Pagină necompletată',
-);
-
 /** Russian (Русский)
  * @author Lockal
  * @author Александр Сигачёв
@@ -1380,7 +1217,7 @@ $messages['ru'] = array(
 Напишите здесь вторую секцию вашей статьи.',
 );
 
-/** Sakha (Саха тыла)
+/** Yakut (Саха тыла)
  * @author HalanTul
  */
 $messages['sah'] = array(
@@ -1424,7 +1261,7 @@ $messages['sah'] = array(
 Манна ыстатыйаҥ иккис салаатын суруй.',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Rancher
  * @author Verlor
  * @author Жељко Тодоровић
@@ -1468,7 +1305,7 @@ $messages['sv'] = array(
 	'createpage_empty_title_error' => 'Rubrik krävs',
 	'createpage_empty_article_body_error' => 'Text på sidan krävs',
 	'createpage_invalid_title_error' => 'Ogiltig rubrik',
-	'createpage_article_already_exists' => 'En sida med det namnet finns redan. 
+	'createpage_article_already_exists' => 'En sida med det namnet finns redan.
 Välj ett annat namn.',
 	'createpage_spam' => 'Tyvärr, din redigering kunde inte sparas',
 	'createpage_cant_edit' => 'Kunde inte utföra redigering',
@@ -1483,7 +1320,7 @@ Välj ett annat namn.',
 Använd en annan rubrik.',
 	'createpage-error-article-exists' => 'En sida med den rubriken finns redan.
 Du kan gå till <a href="$1">$2</a>, eller byta namn på din sida',
-	'createpage-error-article-spam' => 'Tyvärr stoppades den rubriken av vårt spamfilter. 
+	'createpage-error-article-spam' => 'Tyvärr stoppades den rubriken av vårt spamfilter.
 Använd en annan titel.',
 	'createpage-error-article-blocked' => 'Tyvärr kan du inte skapa den sidan just nu.',
 	'tog-createpagedefaultblank' => 'Använd en tom sida som standard för att skapa en ny sida',
@@ -1574,14 +1411,6 @@ Isulat ang unang sekyon ng artikulo mo rito.
 Isulat ang pangalawang ulo ng sekyon mo rito.',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
- * @author Ajdar
- */
-$messages['tt-cyrl'] = array(
-	'createpage-sp-title' => 'Яңа мәкалә язу',
-	'createpage_title' => 'Яңа мәкалә язу',
-);
-
 /** Ukrainian (Українська)
  * @author Prima klasy4na
  */
@@ -1597,51 +1426,6 @@ $messages['uk'] = array(
 Будь ласка, оберіть іншу назву.',
 	'createpage-dialog-title' => 'Створити нову статтю',
 	'createpage-dialog-blank' => 'Порожня сторінка',
-);
-
-/** Vietnamese (Tiếng Việt)
- * @author Xiao Qiao
- * @author XiaoQiaoGrace
- */
-$messages['vi'] = array(
-	'createpage-desc' => 'Cho phép tạo ra một trang mới bằng cách sử dụng trình soạn thảo WYSIWYG của Wikia',
-	'createpage-sp-title' => 'Tạo một trang mới',
-	'createpage_title' => 'Tạo một trang mới',
-	'createpage_title_caption' => 'Tiêu đề',
-	'createpage_enter_text' => 'Văn bản',
-	'createpage_empty_title_error' => 'Tiêu đề bắt buộc',
-	'createpage_empty_article_body_error' => 'Trang văn bản yêu cầu',
-	'createpage_invalid_title_error' => 'Tiêu đề không hợp lệ',
-	'createpage_article_already_exists' => 'Một trang với tên đó đã tồn tại.
-Hãy chọn tên khác.',
-	'createpage_spam' => 'Xin lỗi, không thể lưu các chỉnh sửa của bạn',
-	'createpage_cant_edit' => 'Không thể thực hiện chỉnh sửa',
-	'createpage-dialog-title' => 'Tạo một trang mới',
-	'createpage-dialog-message1' => 'Bạn đang tạo ra một trang mới!',
-	'createpage-dialog-message2' => 'Bạn muốn gọi nó là gì?',
-	'createpage-dialog-choose' => 'Hãy chọn một bố cục trang:',
-	'createpage-dialog-format' => 'Bố cục chuẩn',
-	'createpage-dialog-blank' => 'Trang trống',
-	'createpage-error-empty-title' => 'Xin nhập tựa đề cho trang',
-	'createpage-error-invalid-title' => 'Xin lỗi, tiêu đề trang không hợp lệ.
-Xin thử một tên khác',
-	'createpage-error-article-exists' => 'Một trang với tựa đề đó đã tồn tại.
-Bạn có thể đến <a href="$1">$2</a>, hoặc đổi tên lại trang của bạn',
-	'createpage-error-article-spam' => 'Xin lỗi, tiêu đề trang không được chấp nhận bởi bộ lọc thư rác của chúng tôi.
-Hãy sử dụng một tên khác khác.',
-	'createpage-error-article-blocked' => 'Xin lỗi, bạn không thể tạo trang vào thời điểm này',
-	'tog-createpagedefaultblank' => 'Sử dụng trang trống như là mặc định cho việc tạo ra một trang mới',
-	'tog-createpagepopupdisabled' => 'Vô hiệu hoá cửa sổ tạo trang',
-	'newpagelayout' => '[[File:Placeholder|right|300px]]
-Viết đoạn văn thứ nhất ở đây
-
-==Đề mục 1==
-
-Viết cho đề mục 1 tại đây
-
-==Đề mục 2==
-
-Viết cho đề mục 2 tại đây',
 );
 
 /** Chinese (中文) */

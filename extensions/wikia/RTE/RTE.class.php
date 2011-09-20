@@ -11,6 +11,9 @@ class RTE {
 	// should we use Wysiwyg editor?
 	private static $useWysiwyg = true;
 
+	// reason of fallback to source mode
+	private static $wysiwygDisabledReason = false;
+
 	// are we using development version of CK?
 	private static $devMode;
 
@@ -50,7 +53,7 @@ class RTE {
 	 * Callback function for preg_replace_callback which handle placeholer markers.
 	 * Called from RTEParser class.
 	 *
-	 * @author: Inez Korczyński
+	 * @author: Inez KorczyDski
 	 */
 	public static function replacePlaceholder($var) {
 		$data = RTEData::get('placeholder', intval($var[1]));
@@ -69,6 +72,30 @@ class RTE {
 		// this is placeholder
 		$data['placeholder'] = 1;
 
+		// Special case for WikiaPoll placeholder
+		// If we do more of these, refactor
+		if (defined ( "NS_WIKIA_POLL" )) {
+			global $wgContLang;
+			$pollNamespace = $wgContLang->getNsText( NS_WIKIA_POLL );
+			// Check for both canonical Poll and localized version of Poll
+			if (isset($data['title']) && ( (stripos($data['title'], 'Poll') === 0) || (stripos($data['title'], $pollNamespace) === 0) ) ) {
+				$data['type'] = 'poll';
+				$cssClass = "media-placeholder placeholder-poll";
+				$title = Title::newFromText($data['title'], NS_WIKIA_POLL);
+				if ($title->exists()) {
+					$data['pollId'] = $title->getArticleId();
+					$poll = WikiaPoll::newFromTitle($title);
+					$pollData = $poll->getData();
+					$data['question'] = $pollData['question'];
+					if (isset($pollData['answers'])) {
+						foreach ($pollData["answers"] as $answer ) {
+							$data['answers'][] = $answer['text'];
+						}
+					}
+				}
+			}
+		}
+
 		// store data
 		$dataIdx = RTEData::put('data', $data);
 
@@ -85,10 +112,10 @@ class RTE {
 	/**
 	 * Setup Rich Text Editor by loading needed JS/CSS files and adding hook(s)
 	 *
-	 * @author Inez Korczyński, Macbre
+	 * @author Inez KorczyDski, Macbre
 	 */
 	public static function init(&$form) {
-		global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgHooks, $wgRequest;
+		global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgHooks, $wgRequest, $wgAllInOne;
 
 		wfProfileIn(__METHOD__);
 
@@ -103,6 +130,9 @@ class RTE {
 		// i18n
 		wfLoadExtensionMessages('RTE');
 
+		// add global JS variables
+		$wgHooks['MakeGlobalVariablesScript'][] = 'RTE::makeGlobalVariablesScript';
+
 		// should CK editor be disabled?
 		if (self::$useWysiwyg === false) {
 			RTE::log('fallback to MW editor');
@@ -110,26 +140,17 @@ class RTE {
 			return true;
 		}
 
-		// used for load time reports
-		$wgOut->addInlineScript('var wgRTEStart = new Date();');
+		// devmode
+		self::$devMode = $wgRequest->getBool('allinone', $wgAllInOne) == false;
 
 		// add RTE javascript files
-		$srcs = AssetsManager::getInstance()->getGroupCommonURL('oldrte');
-		foreach($srcs as $src) {
-			$wgOut->addScript("<script src=\"$src\" type=\"$wgJsMimeType\"></script>");
-		}
-		
+		// scripts loaded by edit page layout
+
 		// add RTE css file
-		$wgOut->addExtensionStyle(AssetsManager::getInstance()->getOneCommonURL("extensions/wikia/RTE/css/RTE.css"));
+		$wgOut->addExtensionStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/RTE/css/RTE.scss'));
 
 		// parse wikitext of edited page and add extra fields to editform
 		$wgHooks['EditPage::showEditForm:fields'][] = 'RTE::init2';
-
-		// disable save / preview / show changes buttons until RTE is fully loaded
-		$wgHooks['EditPageBeforeEditButtons'][] = 'RTE::disableEditButtons';
-
-		// add global JS variables
-		$wgHooks['MakeGlobalVariablesScript'][] = 'RTE::makeGlobalVariablesScript';
 
 		// add CSS class to <body> tag
 		$wgHooks['SkinGetPageClasses'][] = 'RTE::addBodyClass';
@@ -137,8 +158,8 @@ class RTE {
 		// remove default editor toolbar (RT #78393)
 		$wgHooks['EditPageBeforeEditToolbar'][] = 'RTE::removeDefaultToolbar';
 
-		// add fake form used by MW suggest
-		$wgOut->addHTML( Xml::openElement('form', array('id' => 'RTEFakeForm')) . Xml::closeElement('form') );
+		// add fake form used by MW suggest in CK dialogs
+		$wgHooks['SkinAfterBottomScripts'][] = 'RTE::onSkinAfterBottomScripts';
 
 		// adds fallback for non-JS users (RT #20324)
 		self::addNoScriptFallback();
@@ -193,27 +214,6 @@ class RTE {
 	}
 
 	/**
-	 * Disable save / preview / show changes buttons until RTE is fully loaded
-	 *
-	 * @author Macbre
-	 */
-	public static function disableEditButtons(&$editPage, &$checkboxes) {
-		wfProfileIn(__METHOD__);
-
-		// add disabled='disabled' attribute
-		$buttons = array('save', 'preview', 'diff');
-		foreach($buttons as $button) {
-			if(!empty($checkboxes[$button])) {
-				$checkboxes[$button] = substr($checkboxes[$button], 0, -3) . ' disabled="disabled" />';
-			}
-		}
-
-		wfProfileOut(__METHOD__);
-
-		return true;
-	}
-
-	/**
 	 * Add global JS variables
 	 *
 	 * @author Macbre
@@ -222,6 +222,17 @@ class RTE {
 		global $wgLegalTitleChars, $wgServer, $wgScriptPath;
 
 		wfProfileIn(__METHOD__);
+
+		// reason why wysiwyg is disabled
+		if (self::$useWysiwyg === false) {
+			if (!empty(self::$wysiwygDisabledReason)) {
+				$vars['RTEDisabledReason'] = self::$wysiwygDisabledReason;
+			}
+
+			// no reason to add variables listed below
+			wfProfileOut(__METHOD__);
+			return true;
+		}
 
 		// CK instance id
 		$vars['RTEInstanceId'] = self::getInstanceId();
@@ -256,7 +267,7 @@ class RTE {
 		$vars['RTELocalPath'] = $wgServer .  $wgScriptPath . '/extensions/wikia/RTE';
 
 		$vars['CKEDITOR_BASEPATH'] = $wgServer .  $wgScriptPath . '/extensions/wikia/RTE/ckeditor/';
-		
+
 		// link to raw version of MediaWiki:Common.css
 		global $wgSquidMaxage;
 		$query = wfArrayToCGI(array(
@@ -301,6 +312,14 @@ class RTE {
 	}
 
 	/**
+	 * Add fake form used by MW suggest in CK dialogs
+	 */
+	public static function onSkinAfterBottomScripts($skin, &$text) {
+		$text .= Xml::openElement('form', array('id' => 'RTEFakeForm')) . Xml::closeElement('form');
+		return true;
+	}
+
+	/**
 	 * Adds fallback for non-JS users (RT #20324)
 	 */
 	private static function addNoScriptFallback() {
@@ -312,10 +331,6 @@ class RTE {
 
 <noscript>
 	<style type="text/css">
-		#editform {
-			display: none;
-		}
-
 		.RTEFallback,
 		#page_bar {
 			display: block !important;
@@ -353,7 +368,7 @@ HTML
 		// check browser compatibility
 		if (!self::isCompatibleBrowser()) {
 			RTE::log('editor is disabled because of unsupported browser');
-			self::disableEditor();
+			self::disableEditor('browser');
 		}
 
 		// check useeditor URL param (wysiwyg / source / mediawiki)
@@ -364,50 +379,59 @@ HTML
 
 			switch($useEditor) {
 				case 'mediawiki':
-					self::disableEditor();
+					self::disableEditor('useeditor');
 					break;
 
 				case 'source':
 					self::setInitMode('source');
 					break;
+
+				case 'wysiwyg':
+				case 'visual':
+					self::setInitMode('wysiwyg');
+					break;
 			}
 		}
 
 		// check namespaces
-		global $wgWysiwygDisabledNamespaces, $wgWysiwygDisableOnTalk;
+		global $wgWysiwygDisabledNamespaces, $wgWysiwygDisableOnTalk, $wgEnableSemanticMediaWikiExt;
 		if(!empty($wgWysiwygDisabledNamespaces) && is_array($wgWysiwygDisabledNamespaces)) {
 			if(in_array(self::$title->getNamespace(), $wgWysiwygDisabledNamespaces)) {
-				self::disableEditor();
+				self::disableEditor('disablednamespace');
 			}
 		} else {
 			if(self::$title->getNamespace() == NS_TEMPLATE || self::$title->getNamespace() == NS_MEDIAWIKI) {
-				self::disableEditor();
+				self::disableEditor('namespace');
 			}
 		}
 		if(!empty($wgWysiwygDisableOnTalk)) {
 			if(self::$title->isTalkPage()) {
-				self::disableEditor();
+				self::disableEditor('talkpage');
 			}
 		}
-
+		// BugId: 11336 disable RTE on Special SMW namespaces
+		if ($wgEnableSemanticMediaWikiExt && in_array(self::$title->getNamespace(), array( SMW_NS_PROPERTY, SF_NS_FORM, NS_CATEGORY, SMW_NS_CONCEPT ))) {
+			self::disableEditor('namespace');
+		}		
+		
 		// RT #10170: do not initialize for user JS/CSS subpages
 		if (self::$title->isCssJsSubpage()) {
 			RTE::log('editor is disabled on user JS/CSS subpages');
-			self::disableEditor();
+			self::disableEditor('cssjssubpage');
 		}
 
 		// check user preferences option
 		$userOption = $wgUser->getOption('enablerichtext');
 		if( ($userOption != true) && ($useEditor != 'wysiwyg') ) {
 			RTE::log('editor is disabled because of user preferences');
-			self::disableEditor();
+			self::disableEditor('usepreferences');
 		}
 
 		// check current skin - enable RTE only on Monaco
 		$skinName = get_class($wgUser->getSkin());
 		if($skinName != 'SkinMonaco' && $skinName != 'SkinOasis') {
 			RTE::log("editor is disabled because skin {$skinName} is unsupported");
-			self::disableEditor();
+			self::disableEditor('skin');
 		}
 
 		// start in source when previewing from source mode
@@ -424,10 +448,11 @@ HTML
 	/**
 	 * Disable CK editor - MediaWiki editor will be loaded
 	 */
-	public static function disableEditor() {
+	public static function disableEditor($reason = false) {
 		self::$useWysiwyg = false;
+		self::$wysiwygDisabledReason = $reason;
 
-		RTE::log('CK editor disabled');
+		RTE::log("CK editor disabled - the reason is '{$reason}'");
 	}
 
 	/**
@@ -599,27 +624,10 @@ HTML
 
 	/*
 	 * Return list of templates to be placed in dropdown menu on CK toolbar
+	 * (moved to TemplateService)
 	 */
 	private static function getTemplateDropdownList() {
-		wfProfileIn(__METHOD__);
-
-		// TODO: add caching for this data
-		$templateDropdown = array();
-		$lines = explode("\n", wfMsg('editor-template-list')); // we do not care if the message is empty
-
-		foreach($lines as $line) {
-			if(strrpos($line, '*') === 0) {
-				$title = Title::newFromText(trim($line, '* '));
-				//$templateDropdown[$title->getPrefixedText()] = RTE::getTemplateParams($title, RTE::$parser);
-				if ( is_object( $title ) ) {
-					$templateDropdown[] = $title->getText();
-				}
-			}
-		}
-
-		wfProfileOut(__METHOD__);
-
-		return $templateDropdown;
+		return TemplateService::getPromotedTemplates();
 	}
 
 	/*
@@ -663,51 +671,10 @@ HTML
 
 	/**
 	 * Grabbing list of most included templates
-	 *
-	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
+	 * (moved to TemplateService)
 	 */
 	static public function getHotTemplates() {
-		global $wgMemc;
-
-		wfProfileIn(__METHOD__);
-
-		$key = wfMemcKey('rte', 'template-list');
-		$list = $wgMemc->get($key);
-
-		if (empty($list)) {
-			$dbr = wfGetDB(DB_SLAVE);
-			$conds = array(
-				'qc_type' => 'Mostlinkedtemplates',
-				'qc_namespace' => NS_TEMPLATE,
-			);
-
-			// handle list of excluded templates
-			global $wgTemplateExcludeList;
-			if (is_array($wgTemplateExcludeList) && count($wgTemplateExcludeList)) {
-				$templateExcludeListA = array();
-				foreach($wgTemplateExcludeList as $tmpl) {
-					$templateExcludeListA[] = $dbr->AddQuotes($tmpl);
-				}
-				$conds[] = 'qc_title NOT IN (' . implode(',', $templateExcludeListA) . ')';
-			}
-
-			$res = $dbr->select('querycache', 'qc_title', $conds, __METHOD__, array('ORDER BY' => 'qc_value DESC', 'LIMIT' => 10));
-			$list = array();
-
-			while ($row = $dbr->fetchObject($res)) {
-				$title = Title::newFromText($row->qc_title, NS_TEMPLATE);
-				if (!$title->exists()) {
-					continue;
-				}
-				$list[] = $row->qc_title;
-			}
-
-			$wgMemc->set($key, $list, 3600);
-		}
-
-		wfProfileOut(__METHOD__);
-
-		return $list;
+		return TemplateService::getHotTemplates();
 	}
 
 	/**
@@ -780,8 +747,8 @@ HTML
 
 		if ( array_key_exists($name, $values) ) {
 			// don't continue when on Special:Preferences (actually only check namespace ID, it's faster)
-			global $wgTitle;
-			if ( !empty($wgTitle) && ($wgTitle->getNamespace() == NS_SPECIAL) ) {
+			global $wgTitle, $wgRTEDisablePreferencesChange;
+			if ( !empty($wgRTEDisablePreferencesChange) || !empty($wgTitle) && ($wgTitle->getNamespace() == NS_SPECIAL) ) {
 				wfProfileOut(__METHOD__);
 				return true;
 			}

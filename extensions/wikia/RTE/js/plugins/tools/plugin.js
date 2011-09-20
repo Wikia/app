@@ -8,6 +8,8 @@ window.RTE.tools = {
 	},
 
 	// block given button (RTE command) when cursor is placed within a header (RT #67987)
+	// as per BugId:4440 it should no longer be used
+	/**
 	blockCommandInHeader: function(commandName) {
 		var editor = RTE.instance,
 			command = editor.getCommand(commandName);
@@ -24,6 +26,7 @@ window.RTE.tools = {
 
 		return this.setState(disabled ? CKEDITOR.TRISTATE_DISABLED : CKEDITOR.TRISTATE_OFF);
 	},
+	**/
 
 	// call given function with special RTE event type and provide function with given element and extra data
 	callFunction: function(fn, element, data) {
@@ -216,8 +219,12 @@ window.RTE.tools = {
 	},
 
 	// inserts given DOMElement / jQuery element into CK
+	// TODO: throw an exception if jQuery element was not
+	// created inside CKeditor's document
 	insertElement: function(element, dontReinitialize) {
-		RTE.instance.insertElement( new CKEDITOR.dom.element($(element)[0]) );
+		var CKelement = new CKEDITOR.dom.element($(element).get(0));
+
+		RTE.instance.insertElement(CKelement);
 
 		// re-initialize placeholders
 		if (!dontReinitialize) {
@@ -329,17 +336,12 @@ window.RTE.tools = {
 
 	// makes the element and its children unselectable
 	// @see http://www.highdots.com/forums/javascript/making-image-unselectable-ff-292462.html
-	unselectable: function(elem) {
-		return;
-
-		$(elem).each(function(i) {
-			var CKelem = new CKEDITOR.dom.element(this);
-			CKelem.unselectable();
-		});
-	}
+	// TODO: remove as it's no longer needed
+	unselectable: function(elem) {}
 }
 
 // helper class for highlighting given parts of editor's HTML
+// TODO: move to a separate file (plugin maybe?)
 CKEDITOR.nodeRunner = function() {
 	// "Beep, Beep"
 };
@@ -352,12 +354,11 @@ CKEDITOR.nodeRunner.prototype = {
 		}
 
 		var childNode,
-			childNodes = node.getChildren(),
-			n;
+			childNodes = node.getChildren();
 
-		for (n=0; n < childNodes.count(); n++) {
+		for (var n=0, len = childNodes.count(); n < len; n++) {
 			childNode = childNodes.getItem(n);
-			callback.call(callback, childNode);
+			callback(childNode);
 			this.walk(childNode, callback);
 		}
 	},

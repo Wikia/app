@@ -37,10 +37,12 @@ CKEDITOR.plugins.add('rte-linksuggest',
 			editor.on('mode', function(ev) {
 				if (editor.mode == 'source') {
 					var textarea = $(editor.textarea.$);
-					textarea.attr('id', 'RTEtextarea').css( 'font-family', 'monospace' ).linksuggest();
+					textarea
+						.attr('id', 'RTEtextarea')
+						.css( 'font-family', 'monospace' )
+						.linksuggest();
 				}
 			});
 		}
 	}
-
 });

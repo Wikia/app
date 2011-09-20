@@ -68,9 +68,9 @@ class AssetsConfig {
 	}
 
 	public static function getRTEAssetsEPL($combine) {
-		$files = self::getRTEAssetsEx( $combine, "extensions/wikia/EditPageReskin/RTE" );
+		$files = self::getRTEAssetsEx( $combine, "extensions/wikia/RTE" );
 		if ( !$combine ) {
-			$files[] = 'extensions/wikia/EditPageReskin/RTE/js/jquery.editor.js';
+			$files[] = 'extensions/wikia/RTE/js/jquery.editor.js';
 		}
 		return $files;
 	}

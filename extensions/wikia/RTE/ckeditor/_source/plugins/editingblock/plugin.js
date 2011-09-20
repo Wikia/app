@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -10,11 +10,6 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 (function()
 {
-	var getMode = function( editor, mode )
-	{
-		return editor._.modes && editor._.modes[ mode || editor.mode ];
-	};
-
 	// This is a semaphore used to avoid recursive calls between
 	// the following data handling functions.
 	var isHandlingData;
@@ -49,7 +44,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 						function setData()
 						{
 							isHandlingData = true;
-							getMode( editor ).loadData( editor.getData() );
+							editor.getMode().loadData( editor.getData() );
 							isHandlingData = false;
 						}
 
@@ -59,8 +54,11 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 						{
 							editor.on( 'mode', function()
 								{
-									setData();
-									editor.removeListener( 'mode', arguments.callee );
+									if ( editor.mode )
+									{
+										setData();
+										editor.removeListener( 'mode', arguments.callee );
+									}
 								});
 						}
 					}
@@ -71,7 +69,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 					if ( !isHandlingData && editor.mode )
 					{
 						isHandlingData = true;
-						editor.setData( getMode( editor ).getData(), null, 1 );
+						editor.setData( editor.getMode().getData(), null, 1 );
 						isHandlingData = false;
 					}
 				});
@@ -79,13 +77,13 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			editor.on( 'getSnapshot', function( event )
 				{
 					if ( editor.mode )
-						event.data = getMode( editor ).getSnapshotData();
+						event.data = editor.getMode().getSnapshotData();
 				});
 
 			editor.on( 'loadSnapshot', function( event )
 				{
 					if ( editor.mode )
-						getMode( editor ).loadSnapshotData( event.data );
+						editor.getMode().loadSnapshotData( event.data );
 				});
 
 			// For the first "mode" call, we'll also fire the "instanceReady"
@@ -101,8 +99,19 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 							editor.focus();
 						});
 
-					if ( editor.config.startupFocus )
-						editor.focus();
+					// Wikia change - begin
+					// fix focus broken in Fx
+					if (editor.config.startupFocus) {
+						if (CKEDITOR.env.gecko) {
+							setTimeout(function() {
+								editor.focus();
+							}, 500);
+						}
+						else {
+							editor.focus();
+						}
+					}
+					// Wikia change - end
 
 					// Fire instanceReady for both the editor and CKEDITOR, but
 					// defer this until the whole execution has completed
@@ -153,6 +162,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	 */
 	CKEDITOR.editor.prototype.setMode = function( mode )
 	{
+		this.fire( 'beforeSetMode', { newMode : mode } );
+
 		var data,
 			holderElement = this.getThemeSpace( 'contents' ),
 			isDirty = this.checkDirty();
@@ -165,7 +176,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 			this.fire( 'beforeModeUnload' );
 
-			var currentMode = getMode( this );
+			var currentMode = this.getMode();
 			data = currentMode.getData();
 			currentMode.unload( holderElement );
 			this.mode = '';
@@ -174,7 +185,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		holderElement.setHtml( '' );
 
 		// Load required mode.
-		var modeEditor = getMode( this, mode );
+		var modeEditor = this.getMode( mode );
 		if ( !modeEditor )
 			throw '[CKEDITOR.editor.setMode] Unknown mode "' + mode + '".';
 
@@ -191,11 +202,23 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	};
 
 	/**
+	 * Gets the current or any of the objects that represent the editing
+	 * area modes. The two most common editing modes are "wysiwyg" and "source".
+	 * @param {String} [mode] The mode to be retrieved. If not specified, the
+	 *		current one is returned.
+	 */
+	CKEDITOR.editor.prototype.getMode = function( mode )
+	{
+		return this._.modes && this._.modes[ mode || this.mode ];
+	};
+
+	/**
 	 * Moves the selection focus to the editing are space in the editor.
 	 */
 	CKEDITOR.editor.prototype.focus = function()
 	{
-		var mode = getMode( this );
+		this.forceNextSelectionCheck();
+		var mode = this.getMode();
 		if ( mode )
 			mode.focus();
 	};
@@ -213,6 +236,7 @@ CKEDITOR.config.startupMode = 'wysiwyg';
 
 /**
  * Sets whether the editor should have the focus when the page loads.
+ * @name CKEDITOR.config.startupFocus
  * @type Boolean
  * @default false
  * @example
@@ -242,7 +266,21 @@ CKEDITOR.config.editingBlock = true;
  */
 
 /**
- * Fired before changing the editing mode
+ * Fired before changing the editing mode. See also CKEDITOR.editor#beforeSetMode and CKEDITOR.editor#mode
  * @name CKEDITOR.editor#beforeModeUnload
+ * @event
+ */
+
+ /**
+ * Fired before the editor mode is set. See also CKEDITOR.editor#mode and CKEDITOR.editor#beforeModeUnload
+ * @name CKEDITOR.editor#beforeSetMode
+ * @event
+ * @since 3.5.3
+ * @param {String} newMode The name of the mode which is about to be set.
+ */
+
+/**
+ * Fired after setting the editing mode. See also CKEDITOR.editor#beforeSetMode and CKEDITOR.editor#beforeModeUnload
+ * @name CKEDITOR.editor#mode
  * @event
  */

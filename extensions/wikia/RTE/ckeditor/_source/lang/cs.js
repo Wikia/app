@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -34,8 +34,8 @@ CKEDITOR.lang['cs'] =
 	editorTitle : 'Textový editor, %1, nápovědu zobrazíte stiskem ALT 0.',
 
 	// ARIA descriptions.
-	toolbar	: 'Panel nástrojů',
-	editor	: 'Textový editor',
+	toolbars	: 'Editor toolbars', // MISSING
+	editor		: 'Textový editor',
 
 	// Toolbar buttons without dialogs.
 	source			: 'Zdroj',
@@ -121,6 +121,8 @@ CKEDITOR.lang['cs'] =
 		alignBottom		: 'Dolů',
 		invalidHeight	: 'Zadaná výška musí být číslo.',
 		invalidWidth	: 'Zadaná šířka musí být číslo.',
+		invalidCssLength	: 'Value specified for the "%1" field must be a positive number with or without a valid CSS measurement unit (px, %, in, cm, mm, em, ex, pt, or pc).', // MISSING
+		invalidHtmlLength	: 'Value specified for the "%1" field must be a positive number with or without a valid HTML measurement unit (px or %).', // MISSING
 
 		// Put the voice-only part of the label in the span.
 		unavailable		: '%1<span class="cke_accessibility">, nedostupné</span>'
@@ -201,7 +203,8 @@ CKEDITOR.lang['cs'] =
 		menu		: 'Vlastnosti záložky',
 		title		: 'Vlastnosti záložky',
 		name		: 'Název záložky',
-		errorName	: 'Zadejte prosím název záložky'
+		errorName	: 'Zadejte prosím název záložky',
+		remove		: 'Remove Anchor' // MISSING
 	},
 
 	// List style dialog
@@ -413,7 +416,6 @@ CKEDITOR.lang['cs'] =
 		upload		: 'Odeslat',
 		alt			: 'Alternativní text',
 		lockRatio	: 'Zámek',
-		unlockRatio	: 'Odemknout poměr',
 		resetSize	: 'Původní velikost',
 		border		: 'Okraje',
 		hSpace		: 'H-mezera',
@@ -715,6 +717,8 @@ CKEDITOR.lang['cs'] =
 	{
 		title		: 'O aplikaci CKEditor',
 		dlgTitle	: 'O aplikaci CKEditor',
+		help	: 'Check $1 for help.', // MISSING
+		userGuide : 'CKEditor User\'s Guide', // MISSING
 		moreInfo	: 'Pro informace o lincenci navštivte naši webovou stránku:',
 		copy		: 'Copyright &copy; $1. All rights reserved.'
 	},
@@ -745,9 +749,64 @@ CKEDITOR.lang['cs'] =
 	toolbarCollapse	: 'Skrýt panel nástrojů',
 	toolbarExpand	: 'Zobrazit panel nástrojů',
 
+	toolbarGroups :
+	{
+		document : 'Document', // MISSING
+		clipboard : 'Clipboard/Undo', // MISSING
+		editing : 'Editing', // MISSING
+		forms : 'Forms', // MISSING
+		basicstyles : 'Basic Styles', // MISSING
+		paragraph : 'Paragraph', // MISSING
+		links : 'Links', // MISSING
+		insert : 'Insert', // MISSING
+		styles : 'Styles', // MISSING
+		colors : 'Colors', // MISSING
+		tools : 'Tools' // MISSING
+	},
+
 	bidi :
 	{
 		ltr : 'Orientace textu zleva doprava',
 		rtl : 'Orientace textu zprava do leva'
+	},
+
+	docprops :
+	{
+		label : 'Vlastnosti dokumentu',
+		title : 'Vlastnosti dokumentu',
+		design : 'Design', // MISSING
+		meta : 'Metadata',
+		chooseColor : 'Výběr',
+		other : '<jiný>',
+		docTitle :	'Titulek stránky',
+		charset : 	'Znaková sada',
+		charsetOther : 'Další znaková sada',
+		charsetASCII : 'ASCII', // MISSING
+		charsetCE : 'Středoevropské jazyky',
+		charsetCT : 'Tradiční čínština (Big5)',
+		charsetCR : 'Cyrilice',
+		charsetGR : 'Řečtina',
+		charsetJP : 'Japonština',
+		charsetKR : 'Korejština',
+		charsetTR : 'Turečtina',
+		charsetUN : 'Unicode (UTF-8)', // MISSING
+		charsetWE : 'Západoevropské jazyky',
+		docType : 'Typ dokumentu',
+		docTypeOther : 'Jiný typ dokumetu',
+		xhtmlDec : 'Zahrnou deklarace XHTML',
+		bgColor : 'Barva pozadí',
+		bgImage : 'URL obrázku na pozadí',
+		bgFixed : 'Nerolovatelné pozadí',
+		txtColor : 'Barva textu',
+		margin : 'Okraje stránky',
+		marginTop : 'Horní',
+		marginLeft : 'Levý',
+		marginRight : 'Pravý',
+		marginBottom : 'Dolní',
+		metaKeywords : 'Klíčová slova (oddělená čárkou)',
+		metaDescription : 'Popis dokumentu',
+		metaAuthor : 'Autor',
+		metaCopyright : 'Autorská práva',
+		previewHtml : '<p>This is some <strong>sample text</strong>. You are using <a href="javascript:void(0)">CKEditor</a>.</p>' // MISSING
 	}
 };

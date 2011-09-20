@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -27,7 +27,11 @@ if ( !CKEDITOR.env )
 			 * if ( CKEDITOR.env.ie )
 			 *     alert( "I'm on IE!" );
 			 */
-			ie	: (!+"\v1"), // @see http://webreflection.blogspot.com/2009/01/32-bytes-to-know-if-your-browser-is-ie.html
+			// Wikia change - begin
+			// fix for compatibility with Closure - wrap using evil eval()
+			// @see http://code.google.com/intl/pl/closure/compiler/docs/limitations.html
+			ie	: eval("/*@cc_on!@*/false"),
+			// Wikia change - end
 
 			/**
 			 * Indicates that CKEditor is running on Opera.
@@ -102,7 +106,16 @@ if ( !CKEDITOR.env )
 
 				return domain != hostname &&
 					domain != ( '[' + hostname + ']' );	// IPv6 IP support (#5434)
-			}
+			},
+
+			/**
+			 * Indicates that page is running under an encrypted connection.
+			 * @returns {Boolean} "true" if the page has an encrypted connection.
+			 * @example
+			 * if ( CKEDITOR.env.secure )
+			 *     alert( "I'm in SSL!" );
+			 */
+			secure : location.protocol == 'https:'
 		};
 
 		/**
@@ -147,6 +160,16 @@ if ( !CKEDITOR.env )
 			 *     alert( "Now I'm on IE8, for real!" );
 			 */
 			env.ie8Compat = document.documentMode == 8;
+
+			/**
+			 * Indicates that CKEditor is running on Internet Explorer 9's standards mode.
+			 * @name CKEDITOR.env.ie9Compat
+			 * @type Boolean
+			 * @example
+			 * if ( CKEDITOR.env.ie9Compat )
+			 *     alert( "IE9, the beauty of the web!" );
+			 */
+			env.ie9Compat = document.documentMode == 9;
 
 			/**
 			 * Indicates that CKEditor is running on an IE7-like environment, which

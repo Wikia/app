@@ -332,6 +332,11 @@ class RTEReverseParser {
 				$out = '';
 				break;
 
+			// spans are used for styling pieces of content
+			case 'span':
+				$out = $this->handleSpan($node, $textContent);
+				break;
+
 			// rest of tags
 			default:
 				$out = $textContent;
@@ -416,9 +421,11 @@ class RTEReverseParser {
 					$prefix = '';
 				}
 
-				// if first child of this HTML block have data-rte-line-start, add line break before closing tag
-				if ( !empty($node->firstChild) && ($node->firstChild->nodeType == XML_ELEMENT_NODE) ) {
-					if ($node->firstChild->hasAttribute('data-rte-line-start')) {
+				// if the first / last child of this HTML block have data-rte-line-start, add line break before closing tag
+				$child = ($node->nodeName == 'div') ? $node->lastChild /* BugId:4748 */ : $node->firstChild;
+
+				if ( !empty($child) && ($child->nodeType == XML_ELEMENT_NODE) ) {
+					if ($child->hasAttribute('data-rte-line-start')) {
 						$beforeClose = "\n";
 					}
 				}
@@ -457,6 +464,12 @@ class RTEReverseParser {
 					$beforeText = "\n";
 				}
 			}
+		}
+
+		// special handling of headings in <div> tags (BugId:4908)
+		if (self::isHeadingNode($node) && self::isChildOf($node, 'div') && !self::isFirstChild($node)) {
+			$prefix = '';
+			$suffix = "\n";
 		}
 
 		// generate HTML
@@ -636,6 +649,12 @@ class RTEReverseParser {
 			return '';
 		}
 
+		// handle "raw" HTML paragraphs within wikitext (BugId:3359)
+		if (self::wasHtml($node) && !$node->hasAttribute('data-rte-attribs')) {
+			wfProfileOut(__METHOD__);
+			return "<p>{$textContent}</p>";
+		}
+
 		// handle paragraphs alignment and indentation
 		// (ignore when paragraph is empty)
 		if ($node->hasAttribute('style') && (trim($textContent) != '')) {
@@ -659,7 +678,13 @@ class RTEReverseParser {
 			}
 		}
 
-		$out = "{$textContent}\n";
+		if (self::nextSiblingIs($node,'p') && self::wasHtml($node->nextSibling) && !$node->nextSibling->hasAttribute('data-rte-line-start')) {
+			// support foo<p>bar</p> (BugId:3559)
+			$out = $textContent;
+		}
+		else {
+			$out = "{$textContent}\n";
+		}
 
 		// if next paragraph has been pasted into CK add extra newline
 		if (self::nextSiblingIs($node, 'p') && self::isPasted($node->nextSibling)) {
@@ -669,11 +694,6 @@ class RTEReverseParser {
 		// this node was added in CK
 		// handle paragraphs outside tables only (RT #56402)
 		else if (self::isNewNode($node) && self::isChildOf($node, 'body')) {
-			// previous element is paragraph
-			if (self::previousSiblingIs($node, 'p') && !self::isNewNode($node->previousSibling)) {
-				$out = "\n{$out}";
-			}
-
 			// next element is (not pasted) paragraph
 			if (self::nextSiblingIs($node, 'p') && self::isNewNode($node->nextSibling)) {
 				$out = "{$out}\n";
@@ -683,20 +703,24 @@ class RTEReverseParser {
 		// RT #40935
 		else if (self::isChildOf($node, 'div') && (trim($textContent) != '')) {
 			// this is first paragraph in this <div>
-			if (self::previousSiblingIsTextNode($node, 'p')) {
+			if (self::previousSiblingIsTextNode($node)) {
 				$out = "\n{$out}";
 			}
 
 			// this is last paragraph in this <div>
-			if (self::nextSiblingIsTextNode($node, 'p')) {
+			if (self::nextSiblingIsTextNode($node)) {
 				$out .= "\n";
 			}
+		}
+
+		// BugId:4748
+		else if (self::isChildOf($node, 'center') && self::isFirstChild($node)) {
+			$out = "\n{$out}";
 		}
 
 		$out = $this->fixForTableCell($node, $out);
 
 		wfProfileOut(__METHOD__);
-
 		return $out;
 	}
 
@@ -1125,8 +1149,13 @@ class RTEReverseParser {
 			case 'dd':
 				$textContent = rtrim( self::addSpaces($node, $textContent) );
 
+				// fix for empty list item between items (BugId:4821)
+				// MW parser skips those items, we should maintain empty line
+				if (($textContent == '') && self::isNewNode($node) && self::nextSiblingIs($node, $node->nodeName)) {
+					$out = "\n";
+				}
 				// fix for single ":::: foo" gaining extra :
-				if (strspn($textContent, ':') > 0) {
+				else if (strspn($textContent, ':') > 0) {
 					$out = "{$textContent}\n";
 				}
 				// check for <dl><dd><ul><li>1</li></ul></dd></dl>
@@ -1224,9 +1253,10 @@ class RTEReverseParser {
 
 			$out = $this->fixForTableCell($node, $out);
 
-			// RT #38254
-			if (self::isChildOf($node, 'div') && self::isFirstChild($node)) {
-				$out = "\n{$out}";
+			if (self::isChildOf($node, 'div')) {
+				if (self::isFirstChild($node) /* RT#38254 */ || self::previousSiblingIs($node, 'center') /* BugId:4748 */) {
+					$out = "\n{$out}";
+				}
 			}
 		}
 		else {
@@ -1313,7 +1343,13 @@ class RTEReverseParser {
 					$addRowDelimiter = true;
 				}
 
+				// delimiter is needed when <tr> has attributes provided
 				if ($attributes != '') {
+					$addRowDelimiter = true;
+				}
+
+				// preserve row delimiter from wikitext
+				if (self::getEmptyLinesBefore($node)) {
 					$addRowDelimiter = true;
 				}
 
@@ -1386,6 +1422,24 @@ class RTEReverseParser {
 		$out = $data['wikitext'];
 
 		wfProfileOut(__METHOD__);
+
+		return $out;
+	}
+
+	/**
+	 * Handle <span> nodes
+	 *
+	 * @see http://www.mediawiki.org/wiki/Images
+	 */
+	private function handleSpan($node, $textContent) {
+		// if tag contains style attribute, preserve full HTML (BugId:7098)
+		if ($node->hasAttribute('style')) {
+			$attrs = self::getAttributesStr($node);
+			$out = "<{$node->nodeName}{$attrs}>{$textContent}</{$node->nodeName}>";
+		}
+		else {
+			$out = $textContent;
+		}
 
 		return $out;
 	}

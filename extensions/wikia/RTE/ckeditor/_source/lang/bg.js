@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
@@ -34,8 +34,8 @@ CKEDITOR.lang['bg'] =
 	editorTitle : 'Rich text editor, %1, press ALT 0 for help.', // MISSING
 
 	// ARIA descriptions.
-	toolbar	: 'Toolbar', // MISSING
-	editor	: 'Rich Text Editor', // MISSING
+	toolbars	: 'Editor toolbars', // MISSING
+	editor		: 'Rich Text Editor', // MISSING
 
 	// Toolbar buttons without dialogs.
 	source			: 'Код',
@@ -121,6 +121,8 @@ CKEDITOR.lang['bg'] =
 		alignBottom		: 'Долу',
 		invalidHeight	: 'Height must be a number.', // MISSING
 		invalidWidth	: 'Width must be a number.', // MISSING
+		invalidCssLength	: 'Value specified for the "%1" field must be a positive number with or without a valid CSS measurement unit (px, %, in, cm, mm, em, ex, pt, or pc).', // MISSING
+		invalidHtmlLength	: 'Value specified for the "%1" field must be a positive number with or without a valid HTML measurement unit (px or %).', // MISSING
 
 		// Put the voice-only part of the label in the span.
 		unavailable		: '%1<span class="cke_accessibility">, unavailable</span>' // MISSING
@@ -201,7 +203,8 @@ CKEDITOR.lang['bg'] =
 		menu		: 'Параметри на котвата',
 		title		: 'Параметри на котвата',
 		name		: 'Име на котвата',
-		errorName	: 'Моля, въведете име на котвата'
+		errorName	: 'Моля, въведете име на котвата',
+		remove		: 'Remove Anchor' // MISSING
 	},
 
 	// List style dialog
@@ -271,8 +274,8 @@ CKEDITOR.lang['bg'] =
 		invalidBorder	: 'Border size must be a number.', // MISSING
 		invalidWidth	: 'Table width must be a number.', // MISSING
 		invalidHeight	: 'Table height must be a number.', // MISSING
-		invalidCellSpacing	: 'Cell spacing must be a number.', // MISSING
-		invalidCellPadding	: 'Cell padding must be a number.', // MISSING
+		invalidCellSpacing	: 'Cell spacing must be a positive number.', // MISSING
+		invalidCellPadding	: 'Cell padding must be a positive number.', // MISSING
 
 		cell :
 		{
@@ -413,7 +416,6 @@ CKEDITOR.lang['bg'] =
 		upload		: 'Качи',
 		alt			: 'Алтернативен текст',
 		lockRatio	: 'Запази пропорцията',
-		unlockRatio	: 'Unlock Ratio', // MISSING
 		resetSize	: 'Възстанови размера',
 		border		: 'Рамка',
 		hSpace		: 'Хоризонтален отстъп',
@@ -715,6 +717,8 @@ CKEDITOR.lang['bg'] =
 	{
 		title		: 'About CKEditor', // MISSING
 		dlgTitle	: 'About CKEditor', // MISSING
+		help	: 'Check $1 for help.', // MISSING
+		userGuide : 'CKEditor User\'s Guide', // MISSING
 		moreInfo	: 'For licensing information please visit our web site:', // MISSING
 		copy		: 'Copyright &copy; $1. All rights reserved.' // MISSING
 	},
@@ -745,9 +749,64 @@ CKEDITOR.lang['bg'] =
 	toolbarCollapse	: 'Collapse Toolbar', // MISSING
 	toolbarExpand	: 'Expand Toolbar', // MISSING
 
+	toolbarGroups :
+	{
+		document : 'Document', // MISSING
+		clipboard : 'Clipboard/Undo', // MISSING
+		editing : 'Editing', // MISSING
+		forms : 'Forms', // MISSING
+		basicstyles : 'Basic Styles', // MISSING
+		paragraph : 'Paragraph', // MISSING
+		links : 'Links', // MISSING
+		insert : 'Insert', // MISSING
+		styles : 'Styles', // MISSING
+		colors : 'Colors', // MISSING
+		tools : 'Tools' // MISSING
+	},
+
 	bidi :
 	{
 		ltr : 'Text direction from left to right', // MISSING
 		rtl : 'Text direction from right to left' // MISSING
+	},
+
+	docprops :
+	{
+		label : 'Параметри на документа',
+		title : 'Параметри на документа',
+		design : 'Design', // MISSING
+		meta : 'Мета данни',
+		chooseColor : 'Choose', // MISSING
+		other : '<друг>',
+		docTitle :	'Заглавие на страницата',
+		charset : 	'Кодиране на символите',
+		charsetOther : 'Друго кодиране на символите',
+		charsetASCII : 'ASCII', // MISSING
+		charsetCE : 'Central European', // MISSING
+		charsetCT : 'Chinese Traditional (Big5)', // MISSING
+		charsetCR : 'Cyrillic', // MISSING
+		charsetGR : 'Greek', // MISSING
+		charsetJP : 'Japanese', // MISSING
+		charsetKR : 'Korean', // MISSING
+		charsetTR : 'Turkish', // MISSING
+		charsetUN : 'Unicode (UTF-8)', // MISSING
+		charsetWE : 'Western European', // MISSING
+		docType : 'Тип на документа',
+		docTypeOther : 'Друг тип на документа',
+		xhtmlDec : 'Включи XHTML декларация',
+		bgColor : 'Цвят на фона',
+		bgImage : 'Пълен път до фоновото изображение',
+		bgFixed : 'Не-повтарящо се фоново изображение',
+		txtColor : 'Цвят на текста',
+		margin : 'Отстъпи на страницата',
+		marginTop : 'Горе',
+		marginLeft : 'Ляво',
+		marginRight : 'Дясно',
+		marginBottom : 'Долу',
+		metaKeywords : 'Ключови думи за документа (разделени със запетаи)',
+		metaDescription : 'Описание на документа',
+		metaAuthor : 'Автор',
+		metaCopyright : 'Авторски права',
+		previewHtml : '<p>This is some <strong>sample text</strong>. You are using <a href="javascript:void(0)">CKEditor</a>.</p>' // MISSING
 	}
 };

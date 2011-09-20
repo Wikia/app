@@ -24,13 +24,11 @@ CKEDITOR.plugins.add('rte-poll',
 
 			// register "Image" toolbar button
 			editor.ui.addButton('Poll', {
+				label: editor.lang.poll.poll,
 				title: editor.lang.poll.add,
 				className: 'RTEPollButton',
 				command: 'addpoll'
 			});
-
-			// ... and block it when cursor is placed within a header (RT #67987)
-			RTE.tools.blockCommandInHeader('addpoll');
 		}
 		else {
 			RTE.log('WikiaPoll is not enabled here - disabling "Poll" button');

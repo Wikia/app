@@ -1,117 +1,71 @@
 CKEDITOR.plugins.add('rte-track',
 {
-	init: function(editor) {
-		var self = this;
+	stats: {},
 
-		// track style applies
-		editor.on('wysiwygModeReady', function() {
-			editor.document.removeListener(self.trackApplyStyle);
-			editor.document.on('applyStyle', self.trackApplyStyle);
-		});
+	// increase stats entry value (default by 1)
+	statsInc: function(key, val) {
+		val = parseInt(val) || 1;
 
-		// track context menu
-		editor.on('contextMenuOnOpen', self.trackContextMenuOpen);
-		editor.on('contextMenuOnClick', self.trackContextMenuItem);
-
-		// track list creation
-		editor.on('listCreated', self.trackListCreated);
-
-		// track loading time
-		editor.on('RTEready', function() {
-			self.trackLoadTime(editor);
-		});
-
-		// track browser info (RT #37894)
-		editor.on('RTEready', function() {
-			self.trackBrowser('init');
-		});
-
-		$('#wpSave').click(function() {
-			self.trackBrowser('save');
-		});
-
-		// toolbar tracking
-
-		// tracking for CK toolbar buttons
-		editor.on('buttonClick', function(ev) {
-			var buttonClicked = ev.data.button;
-			//RTE.log(buttonClicked);
-
-			RTE.track('toolbar', buttonClicked.command);
-		});
-
-		// tracking for CK toolbar rich combos (dropdowns)
-		editor.on('panelShow', function(ev) {
-			var me = ev.data.me;
-			//RTE.log(me);
-
-			var id = me.trackingName || me.className.split('_').pop();
-
-			// track combo panel open
-			RTE.track('toolbar', id + 'Menu', 'open');
-		});
-		editor.on('panelClick', function(ev) {
-			var me = ev.data.me;
-			var value = ev.data.value;
-			//RTE.log([me, value]);
-
-			var id = me.trackingName || me.className.split('_').pop();
-
-			// for templates dropdown
-			if (id == 'template') {
-				if (value == '--other--') {
-					value = 'other';
-				}
-				else {
-					var panelItems = me._.items;
-					var idx = 0;
-
-					// iterate thru panel items and find index chosen template
-					for (tpl in panelItems) {
-						idx++;
-						if (tpl == value) {
-							value = idx;
-							break;
-						}
-					}
-				}
-			}
-
-			// track combo panel open
-			RTE.track('toolbar', id + 'Menu', value);
-		});
-
-		// tracking for MW toolbar buttons
-		editor.on('instanceReady', function() {
-			$('#mw-toolbar').bind('click', function(ev) {
-				var target = $(ev.target).filter('img');
-				//RTE.log(target);
-
-				if (!target.exists()) {
-					return;
-				}
-
-				var id = target.attr('id').split('-').pop();
-				RTE.track('source', id);
-			});
-		});
-	},
-
-	trackApplyStyle: function(ev) {
-		var style = ev.data.style;
-		var remove = ev.data.remove;
-
-		// only track when style is applied
-		if (style && !remove) {
-			RTE.track('toolbar', 'format', style);
+		if (this.stats[key]) {
+			this.stats[key] += val;
+		}
+		else {
+			this.stats[key] = val;
 		}
 	},
 
-	trackContextMenuOpen: function(ev) {
-		RTE.track('contextMenu', 'open');
+	// get value of given stats entry
+	statsGet: function(key) {
+		return this.stats[key] || 0;
 	},
 
-	trackContextMenuItem: function(ev) {
+	// pass tracking events to RTE.track
+	track: function() {
+		RTE.track.apply(RTE, Array.prototype.slice.call(arguments));
+	},
+
+	init: function(editor) {
+		// track style applies
+		editor.on('wysiwygModeReady', function() {
+			editor.document.removeListener(this.onApplyStyle);
+			editor.document.on('applyStyle', this.onApplyStyle, this);
+		}, this /* scope */);
+
+		// track context menu
+		editor.on('contextMenuOnOpen', this.onContextMenuOpen, this /* scope */);
+		editor.on('contextMenuOnClick', this.onContextMenuItem, this);
+
+		// track list creation
+		editor.on('listCreated', this.onListCreated, this);
+
+		// tracking for CK toolbar buttons
+		editor.on('buttonClick', this.onButtonClick, this);
+
+		// insert media / templates
+		editor.on('afterCommandExec', this.onAfterCommandExec, this);
+
+		// tracking for CK toolbar rich combos (dropdowns)
+		editor.on('panelShow', this.onPanelShow, this);
+		editor.on('panelClick', this.onPanelClick, this);
+
+		editor.on('submit', this.onSubmit, this);
+	},
+
+	onApplyStyle: function(ev) {
+		var style = ev.data.style,
+			remove = ev.data.remove;
+
+		// only track when style is applied
+		if (style && !remove) {
+			this.track('visualMode', 'applyFormat', style);
+		}
+	},
+
+	onContextMenuOpen: function(ev) {
+		this.track('visualMode', 'contextMenu', 'open');
+	},
+
+	onContextMenuItem: function(ev) {
 		var name = ev.data.item.command;
 
 		// group events which name starts with...
@@ -121,67 +75,58 @@ CKEDITOR.plugins.add('rte-track',
 			var group = groups[g];
 
 			if (name.indexOf(group) == 0) {
-				RTE.track('contextMenu', 'action', group, name);
+				this.track('visualMode', 'contextMenu', 'action', group, name);
 				return;
 			}
 		}
 
-		RTE.track('contextMenu', 'action', name);
+		this.track('visualMode', 'contextMenu', 'action', name);
 	},
 
-	trackListCreated: function(ev) {
-		var listNode = ev.data.listNode;
-		var listType = (listNode.getName() == 'ul') ? 'unorderedList' : 'orderedList';
+	onListCreated: function(ev) {
+		var listNode = ev.data.listNode,
+			listType = (listNode.getName() == 'ul') ? 'unorderedList' : 'orderedList';
 
-		RTE.track('format', listType);
+		this.track('format', listType);
 	},
 
-	trackLoadTime: function(editor) {
-		// load time in ms (3.141 s will be reported as .../3100)
-		var trackingLoadTime = parseInt(RTE.loadTime * 10) * 100;
+	onButtonClick: function(ev) {
+		var buttonClicked = ev.data.button;
 
-		// tracking
-		switch (editor.mode) {
-			case 'source':
-				RTE.track('init', 'sourceMode', trackingLoadTime);
+		this.track('toolbar', buttonClicked.command);
+		this.statsInc('toolbarButtonsClicked');
+	},
 
-				// add edgecase name (if any)
-				if (window.RTEEdgeCase) {
-					RTE.track('init', 'edgecase',  window.RTEEdgeCase);
-				}
+	onAfterCommandExec: function(ev) {
+		var commandName = ev.data.name || '';
 
-				break;
-
-			case 'wysiwyg':
-				RTE.track('init', 'wysiwygMode', trackingLoadTime);
-				break;
+		if(commandName.substring(0, 3) == 'add') {
+			this.statsInc('addButtonsClicked');
 		}
 	},
 
-	// track browser data (name, version) - RT #37894
-	trackBrowser: function(eventName) {
-		var env = CKEDITOR.env;
+	onPanelShow: function(ev) {
+		var me = ev.data.me,
+			id = me.trackingName || me.className.split('_').pop();
 
-		var name = (
-			env.ie ? 'ie' :
-			env.gecko ? 'gecko' :
-			env.opera ? 'opera' :
-			env.air ? 'air' :
-			env.webkit ? 'webkit' :
-			'unknown'
-		);
+		// track combo panel open
+		this.track('toolbar', id + 'Menu', 'open');
+	},
 
-		if (name == 'gecko') {
-			// small version fix for Gecko browsers
-			// 10900 => 1.9.0 (3.0.x line)
-			// 10902 => 1.9.2 (3.6.x line)
-			var version = parseInt(env.version / 10000) + '.' + parseInt(env.version / 100 % 100) + '.' + (env.version % 100);
+	onPanelClick: function(ev) {
+		var me = ev.data.me,
+			value = ev.data.value,
+			id = me.trackingName || me.className.split('_').pop();
+
+		this.track('toolbar', id + 'Menu', value);
+	},
+
+	onSubmit: function() {
+		// count number of click on toolbar and "Add media" buttons (BugId:2947)
+		var buttonsClicked = this.statsGet('toolbarButtonsClicked') + this.statsGet('addButtonsClicked');
+
+		if (buttonsClicked > 0) {
+			this.track('buttonsClicked', buttonsClicked);
 		}
-		else {
-			var version = env.version;
-		}
-
-		// and finally send it to GA
-		RTE.track('browser', eventName, name, version);
 	}
 });
