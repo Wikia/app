@@ -173,6 +173,14 @@ $messages['en'] = array(
 	# Corporate landing pages
 	'corporatelandingpage-trivia-title' => 'Wikia Trivia',
 	'corporatelandingpage-trivia-description' => 'Test your trivia knowledge and win a prize pack from Wikia!',
+
+	#wikia navigation v2
+	'oasis-navigation-v2-create-page' => 'Add a Page',
+	'oasis-navigation-v2-edit-page' => 'Edit this Page',
+	'oasis-navigation-v2-add-photo' => 'Add a Photo',
+	'oasis-navigation-v2-edit-wikia-local-menu' => 'Edit local Wikia menu',
+	'oasis-navigation-v2-edit-wikia-global-menu' => 'Edit global Wikia menu',
+	'oasis-navigation-v2-edit-this-menu' => 'Edit Wiki Navigation',
 );
 
 /** Message documentation (Message documentation)
