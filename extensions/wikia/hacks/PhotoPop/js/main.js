@@ -1,8 +1,11 @@
-require(["core/configServer", "lib/mustache", "core/templates"], function(config) {
+require(["core/configServer", "lib/mustache", "core/templates", "imageServer"], function(config) {
 	
-	for(var prop in config.mainPage) {
-		config.mainPage[prop] = "extensions/wikia/hacks/PhotoPop/" + config.mainPage[prop];
+	imageServer.processImages(config.mainPage);
+	
+	
+	for(var prop in config.selectorScreen.games) {
+		config.selectorScreen.games[prop].iconSrc = "extensions/wikia/hacks/PhotoPop/" + config.selectorScreen.games[prop].iconSrc;
 	};
-		
-	document.body.innerHTML = Mustache.to_html(templates.selectorScreen, config.selectorScreen);
+	document.body.innerHTML = Mustache.to_html(templates.mainPage, config.mainPage)
+	document.body.innerHTML += Mustache.to_html(templates.selectorScreen, config.selectorScreen);
 });
