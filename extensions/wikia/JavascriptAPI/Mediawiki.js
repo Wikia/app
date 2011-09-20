@@ -705,6 +705,28 @@ Mediawiki.logout = function (callbackSuccess){
 
 };
 
+/*
+ * Get info about the module or querymodule passed in.
+ *
+ * Example: to handle the array of all of the param's in the callback (the useful info): $().log(result.paraminfo.modules[0].parameters);
+ */
+Mediawiki.paraminfo = function(moduleName, queryModuleName, callbackSuccess, callbackError){
+	var apiParams = {
+		'action' : 'paraminfo',
+	};
+	if(moduleName){
+		apiParams['modules'] = moduleName;
+	}
+	if(queryModuleName){
+		apiParams['querymodules'] = queryModuleName;
+	}
+	
+console.log("PARAMS: " );
+console.log(apiParams);
+
+	//Mediawiki.waiting();
+	return Mediawiki.apiCall(apiParams, callbackSuccess, callbackError);
+}
 
 /* Parse the selected text and return the html */
 Mediawiki.parse = function (text){

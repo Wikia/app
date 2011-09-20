@@ -19,13 +19,45 @@ if(typeof ApiExplorer == "undefined"){
 			// Show the loading indicator until the API request has returned & the new page-content is set-up.
 			$('#apEx_loading').show();
 
-			// TODO: MAKE THE REQUEST TO THE API FOR THE LIST OF FUNCTIONS.
-			// TODO: MAKE THE REQUEST TO THE API FOR THE LIST OF FUNCTIONS.
-		
-			// TODO: Add the list of functions to the DOM.
-			// TODO: Add the list of functions to the DOM.
-			//$('#apEx_loading').hide();
-		
+			// Make a request to the API to get the list of available modules, querymodules, and formats.
+			Mediawiki.paraminfo('paraminfo', '', function(result){
+				var params = result.paraminfo.modules[0].parameters;
+				for(var index in params){
+					var param = params[index];
+					if(param.type){
+						var allTypes = [];
+						for(var typeIndex in param.type){
+							var t = param.type[typeIndex];
+							allTypes.push(t);
+						}
+						allTypes = allTypes.sort();
+
+						// There are three very specific lists we care about.
+						if(param.name == 'modules'){
+							for(var typeIndex in allTypes){
+								var t = allTypes[typeIndex];
+								$('#apEx div.modules>ul').append("<li>" + t + "</li>");
+							}
+						} else if(param.name == 'querymodules'){
+							for(var typeIndex in allTypes){
+								var t = allTypes[typeIndex];
+								$('#apEx div.querymodules>ul').append("<li>" + t + "</li>");
+							}
+						} else if(param.name == 'formatmodules'){
+							for(var typeIndex in allTypes){
+								var t = allTypes[typeIndex];
+								$('#apEx div.formatmodules>ul').append("<li>" + t + "</li>");
+							}
+						}
+					}
+				}
+
+				$('#apEx_loading').hide();
+				$('#apEx_main').show();
+			}, function(err){
+				$().log("ERROR GETTING LIST OF MODULES FROM THE API.\nMake sure this wiki is a Wikia wiki or running v1.18+ of MediaWiki.");
+				$().log(err);
+			});
 		};
 	};
 }

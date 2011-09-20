@@ -59,9 +59,28 @@ function wfSpecialApiExplorer () {
 
 			ob_start();
 
-				print "<div id='apEx_intro'>". wfMsg('apiexplorer-intro') ."</div>\n";
-				print "<div id='apEx_loading'>". wfMsg('apiexplorer-loading') ."</div>\n";
-
+				?><div id='apEx_intro'>
+					<?= wfMsg('apiexplorer-intro') ?>
+				</div>
+				<div id='apEx_loading'><?= wfMsg('apiexplorer-loading') ?></div>
+				<div id='apEx_main'>
+					<div id='modules'>
+						<div></div>
+						<ul>
+						</ul>
+					</div>
+					<div id='querymodules'>
+						<div></div>
+						<ul>
+						</ul>
+					</div>
+					<div class='formatmodules'>
+						<div></div>
+						<ul>
+						</ul>
+					</div>
+				</div>
+			<?php
 			$outHtml = ob_get_clean();
 
 			$this->setHeaders();
