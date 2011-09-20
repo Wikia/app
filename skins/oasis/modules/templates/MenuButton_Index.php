@@ -3,44 +3,29 @@
 		if (empty($dropdown)) {
 			// render simple edit button
 ?>
-			<a accesskey="e" href="<?= htmlspecialchars($action['href']) ?>" class="<?= $class ?>" data-id="<?= $actionName ?>"><?= $icon ?> <?= htmlspecialchars($action['text']) ?></a>
+<a accesskey="e" href="<?= htmlspecialchars($action['href']) ?>" class="<?= $class ?>" data-id="<?= $actionName ?>"><?= $icon ?> <?= htmlspecialchars($action['text']) ?></a>
 <?php
-			}
+		}
 		// render edit button with dropdown
 		else {
 ?>
-<ul class="<?= $class ?>">
-	<li>
-<?php
-			if ( !empty( $promptLogin ) && isset($action['href']) ) {
-?>
-			<?= Wikia::specialPageLink('SignUp', 'oasis-edit-protected-article', 'loginToEditProtectedPage', 'blank.gif', 'oasis-edit-protected-article', 'sprite edit-pencil', $loginToEditURL) ?>
-<?php
-			}
-			// render edit menu
-			else if (isset($action['href'])) {
-?>
-			<a <?= !empty($actionAccessKey) ? "accesskey=\"{$actionAccessKey}\"" : '' ?> href="<?= empty($action['href']) ? '' : htmlspecialchars($action['href']) ?>" data-id="<?= $actionName ?>"><?= $icon ?> <?= htmlspecialchars($action['text']) ?></a>
-<?php
-			}
-			// render contribute menu (no action attached to the button itself)
-			else {
-?>
-				<?= $icon ?> <?= htmlspecialchars($action['text']) ?>
-<?php
-			}
-?>
+<nav class="<?= $class ?>" <?= empty($id) ? '' : 'id="'.$id.'"'?>>
+	<a <?= !empty($actionAccessKey) ? "accesskey=\"{$actionAccessKey}\"" : '' ?> href="<?= empty($action['href']) ? '' : htmlspecialchars($action['href']) ?>" data-id="<?= $actionName ?>" <?= empty($action['id']) ? '' : 'id="'.$action['id'].'"'?>>
+		<?= $icon ?> <?= htmlspecialchars($action['text']) ?>
+	</a>
+	<span class="drop">
 		<img src="<?= $wgBlankImgUrl ?>" class="chevron">
-		<ul>
+	</span>
+	<ul>
 <?php
-			foreach($dropdown as $key => $item) {
-				// render accesskeys
-				if (isset($item['accesskey'])) {
-					$accesskey = ' accesskey="' . $item['accesskey'] . '"';
-				}
-				else {
-					$accesskey = '';
-				}
+		foreach($dropdown as $key => $item) {
+			// render accesskeys
+			if (isset($item['accesskey'])) {
+				$accesskey = ' accesskey="' . $item['accesskey'] . '"';
+			}
+			else {
+				$accesskey = '';
+			}
 
 			$href = isset($item['href']) ? htmlspecialchars($item['href']) : '#';
 ?>
@@ -50,11 +35,10 @@
 			</a>
 		</li>
 <?php
-			}
+		}
 ?>
-		</ul>
-	</li>
-</ul>
+	</ul>
+</nav>
 <?php
 		}
 	}
