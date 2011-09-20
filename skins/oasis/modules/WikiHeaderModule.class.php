@@ -19,11 +19,11 @@ class WikiHeaderModule extends Module {
 
 	public function executeIndex() {
 		global $wgOut, $wgCityId, $wgUser, $wgMemc, $wgIsPrivateWiki, $wgEnableAdminDashboardExt, $wgTitle;
-		
+
 		//fb#1090
 		$this->isInternalWiki = empty($wgCityId);
 		$this->showMenu = !(($this->isInternalWiki || $wgIsPrivateWiki) && $wgUser->isAnon());
-		
+
 		$themeSettings = new ThemeSettings();
 		$settings = $themeSettings->getSettings();
 
@@ -47,9 +47,8 @@ class WikiHeaderModule extends Module {
 		}
 
 		$service = new NavigationService();
-		$this->menuNodes = $service->parseMessage('Wiki-navigation', array(4, 7), 60*60*3 /* 3 hours */, true);
+		$this->menuNodes = $service->parseMessage('Wiki-navigation', array(4, 7, 7), 60*60*3 /* 3 hours */, true);
 		
 		$this->displaySearch = !empty($wgEnableAdminDashboardExt) && AdminDashboardLogic::displayAdminDashboard(F::app(), $wgTitle);
 	}
-
 }

@@ -76,6 +76,12 @@ $messages['en'] = array(
 	'oasis-member-since' => 'Member since $1',
 	'oasis-edits-counter' => '$1 <sup>{{PLURAL:$1|edit|edits}} made</sup>',
 	'oasis-edit-saved' => 'Your edit has been saved!',
+	'oasis-button-contribute-tooltip' => 'Contribute',
+	'oasis-button-add-video' => 'Add video',
+	'oasis-button-create-page' => 'Add page',
+	'oasis-button-add-photo' => 'Add image',
+	'oasis-button-edit-wikia-local-menu' => 'Edit local Wikia menu',
+	'oasis-button-edit-wikia-global-menu' => 'Edit global Wikia menu',
 
 	# Toolbar customize
 	'oasis-toolbar-edit-title' => 'Customize Toolbar',

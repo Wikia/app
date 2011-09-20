@@ -181,6 +181,7 @@ $wgAutoloadLocalClasses = array(
 	'PoolCounter_Stub' => 'includes/PoolCounter.php',
 	'Predis_Client' => 'lib/predis/Predis.php',
 	'Preferences' => 'includes/Preferences.php',
+	'Predis_Client' => 'lib/predis/Predis.php',
 	'PrefixSearch' => 'includes/PrefixSearch.php',
 	'Profiler' => 'includes/Profiler.php',
 	'ProfilerSimple' => 'includes/ProfilerSimple.php',

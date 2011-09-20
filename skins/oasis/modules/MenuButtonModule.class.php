@@ -12,6 +12,7 @@ class MenuButtonModule extends Module {
 	const LOCK_ICON = 3;
 	const BLOG_ICON = 4;
 	const MESSAGE_ICON = 5;
+	const CONTRIBUTE_ICON = 6;
 
 	var $wgStylePath;
 	var $wgBlankImgUrl;
@@ -79,6 +80,12 @@ class MenuButtonModule extends Module {
 					$width = 22;
 					break;
 
+				case self::CONTRIBUTE_ICON:
+					$img_class = 'sprite contribute';
+					$height = 16;
+					$width = 22;
+					break;
+
 				case self::EDIT_ICON:
 				default:
 					$img_class = 'sprite edit-pencil';
@@ -91,7 +98,7 @@ class MenuButtonModule extends Module {
 				'alt' => '',
 				'class' => $img_class,
 				'height' => $height,
-				'src' => "{$this->wgBlankImgUrl}",
+				'src' => $this->wgBlankImgUrl,
 				'width' => $width,
 			));
 
@@ -112,6 +119,10 @@ class MenuButtonModule extends Module {
 			#print_pre($this->dropdown);
 
 			$this->class = 'wikia-menu-button';
+
+			if (isset($data['class'])) {
+				$this->class .= ' ' . $data['class'];
+			}
 		}
 
 		// prompt for login to edit?

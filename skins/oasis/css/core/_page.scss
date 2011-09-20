@@ -3,6 +3,10 @@
 	border: 1px solid $color-page-border;
 	margin: -59px auto -39px;
 	padding-top: 59px;
+	&.V2 {
+		padding-top: 0px;
+		margin: 0px auto -39px;
+	}
 	position: relative;
 	width: $width-outside;
 	z-index: 1;
@@ -20,6 +24,38 @@
 	}
 	.WikiaPageContentWrapper {
 		position: relative;
+	}
+}
+
+.WikiaAdvertPage {
+	/*background: $color-page;*/
+	border: 1px solid $color-page-border;
+	margin: 0px auto 10px;
+	padding-bottom: 0px;
+	position: relative;
+	width: $width-outside;
+	z-index: 1;
+	min-height: 5px;
+	>h1:first-child {
+		display: none;
+	}
+	.WikiaPageBackground {
+		@include opacity($page-opacity);
+		background: $color-page;
+		height: 100%;
+		left: 0;
+		position: absolute;
+		top: 0;
+		width: 100%;
+		@include box-shadow( 1px, 2px, 10px, mix( $color-body, #000, 75% ) );
+	}
+
+	.WikiaPageContentWrapper {
+		position: relative;
+	}
+
+	#HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD, #CORP_TOP_LEADERBOARD {
+		padding: 10px 0 10px 0;
 	}
 }
 
