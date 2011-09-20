@@ -48,7 +48,10 @@
 			clear: right;
 			display: block; 
 			float: left;
-			margin: -17px 0 7px 0;
+			margin: 0 0 7px 0;
+			&.wpSummary_loggedIn {
+				margin-top: -17px;
+			}
 		}
 		.checkboxes {
 			@include clearfix;
