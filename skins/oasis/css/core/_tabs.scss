@@ -21,12 +21,13 @@ ol.tabs {
 			color: $color-text;
 			display: inline-block;
 			font-size: 14px;
-			padding: 5px 10px;
+			line-height: 23px;
+			padding: 6px 14px 3px;
 			position: relative;
 			top: 1px;
 			&:hover {
 				background-color: $color-tab-hover-background;
-				padding-bottom: 4px;
+				padding-bottom: 2px;
 				text-decoration: none;
 			}
 		}
@@ -47,7 +48,7 @@ ol.tabs {
 			font-weight: bold;
 			&:hover {
 				background-color: $color-page;
-				padding-bottom: 5px;
+				padding-bottom: 3px;
 			}
 		}
 	}
