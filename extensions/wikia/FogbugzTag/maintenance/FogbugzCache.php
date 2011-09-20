@@ -5,32 +5,52 @@
  * When run without any parameters it gets cases updated within last 15 mins to update data in database and data
  * that was updated within current day to update cache. 
  */
+function replaceCase( $connection, $case ) {
+	$connection->replace( 'fogbugz_cases', $case['ixBug'],array(
+		'sTitle' => $case['sTitle'],
+		'ixBug' => $case['ixBug'],
+		'sStatus' => $case['sStatus'],
+		'ixBugChildren' => implode( ",", $case['ixBugChildren'] ),
+		'ixBugParent' => $case['ixBugParent'],
+		'ixPriority' => $case['ixPriority'],
+		'ixProject' => $case['ixProject'],
+		'ixCategory' => $case['ixCategory'],
+		'dtOpened' => $case['dtOpened'],
+		'dtResolved' => $case['dtResolved'],
+		'dtClosed' => $case['dtClosed'],
+		'dtLastUpdated' => $case['dtLastUpdated'],
+		'OpenedYW' => date( 'YW', strtotime( $case['dtOpened'] ) ),
+		'ResolvedYW' => !empty( $case['dtResolved'] ) ? date( 'YW', strtotime( $case['dtResolved'] ) ) : null,
+		'ClosedYW' => !empty( $case['dtClosed'] ) ? date( 'YW', strtotime( $case['dtClosed'] ) ) : null
+	) );
+}
+
 echo "Script start...\n";
 
-if( file_exists('/../../../../maintenance/commandLine.inc') ) {
+if( file_exists( '/../../../../maintenance/commandLine.inc' ) ) {
 	require_once ( '/../../../../maintenance/commandLine.inc' );
 } else {
-	require_once ('/usr/wikia/source/wiki/maintenance/commandLine.inc');
+	require_once ( '/usr/wikia/source/wiki/maintenance/commandLine.inc' );
 }
 
 global $wgRequest, $wgHTTPProxy, $wgFogbugzAPIConfig, $wgMemc;
 
 $key = wfSharedMemcKey( 'FogbugzService', 'LastUpdate');
 
-if ($argc > 4 || ($argc == 4 && $argv[2] != '-c') ) { // if number of parameters wasn't correct or parameters were wrong
+if ( in_array('-h', $argv) ) { // if number of parameters wasn't correct or parameters were wrong
 	die("Usage:\tphp FogbugzCache.php [ -c [ clear ] ]\n".
 		"no options: \n\tupdates data about Fogbugz cases:\n\tin cache (old version)/database(current version)\n".
 		"options:\n".
-		"\t-c      clear database\n"); // I see name should be probably changed
+		"\t-c      clear database\n".
+		"\t-h      shows this screen\n"); // I see name should be probably changed
 }
 
-else if ($argc == 4 && $argv[2] == '-c') { 
+else if ( in_array('-c', $argv) ) { 
 	echo "Yupie! We are clearing the database!\n";
 	wfGetDB( DB_MASTER )->delete('fogbugz_cases', '*');
 	$wgMemc->set( $key, null );
 	echo "Database clear!\n";
 }
-
 else {
 	//$command = $wgRequest->getText('cmd');
 	$myFBService = new FogbugzService( $wgFogbugzAPIConfig['apiUrl'], $wgFogbugzAPIConfig['username'],
@@ -40,36 +60,20 @@ else {
 	echo "Date of last updated case:\n";
 	print_r($LastUpdated);
 	echo "\n";
-	if ($LastUpdated != null) {
+	$DBconnMSTR = wfGetDB( DB_MASTER );
+	$dateToday = new DateTime();
+	if ( $LastUpdated != null ) {
 		echo "Getting cases updated in last 15 mins...\n";
-		$results = $myFBService->logon()->findAndSaveCasesToMemc('category:"Bug" lastupdated:"-15m.."', false);
-		$DBconnMSTR = wfGetDB( DB_MASTER );
-		$DBconnSLV = wfGetDB( DB_SLAVE );
+		$results = $myFBService->logon()->findAndSaveCasesToMemc( 'category:"Bug" lastupdated:"-15m.."', false );
 		$totalLastUpdate = ''; // value that should be written in memc after adding/updating data
-		foreach ($results as $res ) {
-			if (strtotime($res['dtLastUpdated']) > strtotime($LastUpdated)) {
+		foreach ( $results as $res ) {
+			if ( strtotime( $res['dtLastUpdated'] ) > strtotime( $LastUpdated ) ) {
 				echo "Updating/inserting case ".$res['ixBug']." in database...\n";
-				$DBconnMSTR->replace('fogbugz_cases', $res['ixBug'],array(
-					'sTitle' => $res['sTitle'],
-					'ixBug' => $res['ixBug'],
-					'sStatus' => $res['sStatus'],
-					'ixBugChildren' => implode(",", $res['ixBugChildren']),
-					'ixBugParent' => $res['ixBugParent'],
-					'ixPriority' => $res['ixPriority'],
-					'ixProject' => $res['ixProject'],
-					'ixCategory' => $res['ixCategory'],
-					'dtOpened' => $res['dtOpened'],
-					'dtResolved' => $res['dtResolved'],
-					'dtClosed' => $res['dtClosed'],
-					'dtLastUpdated' => $res['dtLastUpdated'],
-					'OpenedYW' => !empty($res['dtOpened']) ? date('YW', strtotime($res['dtOpened'])) : null,
-					'ResolvedYW' => !empty($res['dtResolved']) ? date('YW', strtotime($res['dtResolved'])) : null,
-					'ClosedYW' => !empty($res['dtClosed']) ? date('YW', strtotime($res['dtClosed'])) : null
-				));
+				replaceCase( $DBconnMSTR, $res );
 				$totalLastUpdate = $res['dtLastUpdated'];
 			}
 		}
-		if ($totalLastUpdate != '') {
+		if ( $totalLastUpdate != '' ) {
 			$LastUpdated = $totalLastUpdate;
 		}
 		$wgMemc->set( $key, $LastUpdated );
@@ -77,59 +81,138 @@ else {
 	else {
 		echo "Updating whole database...\n";
 		$results = array();
-		$dateToday = new DateTime();
 		//$dateToday->format('n/j/Y');
-		$dateBegin = new DateTime('2011-01-01');
+		$dateBegin = new DateTime( '2011-01-01' );
 		//$dateBegin->format('n/j/Y');
-		$dateEnd = new DateTime('2011-01-01');
-		$dateEnd->modify('+1 month');
+		$dateEnd = new DateTime( '2011-01-01' );
+		$dateEnd->modify( '+1 month' );
 		//$dateEnd->format('n/j/Y');
-		while ($dateEnd < $dateToday) {
-			echo "Getting cases since ".$dateBegin->format('d-m-Y')." to ".$dateEnd->format('d-m-Y')."...\n";
-			$results = array_merge($results, $myFBService->logon()->findAndSaveCasesToMemc('category:"Bug" opened:"'.$dateBegin->format('n/j/Y').'..'.
-			$dateEnd->format('n/j/Y').'"', false)); // we have to get all cases since february
-			$dateBegin->modify('+1 month');
-			$dateEnd->modify('+1 month');	
+		while ( $dateEnd < $dateToday ) {
+			echo "Getting cases since ".$dateBegin->format( 'd-m-Y' )." to ".$dateEnd->format( 'd-m-Y' )."...\n";
+			$results = $myFBService->logon()->findAndSaveCasesToMemc( 'category:"Bug" opened:"'.$dateBegin->format( 'n/j/Y' ).'..'.
+			$dateEnd->format( 'n/j/Y' ).'"', false );
+			echo "Putting cases in the database ...\n";
+			foreach ( $results as $res ) {
+				replaceCase( $DBconnMSTR, $res );
+				if ( $LastUpdated == null || strtotime( $res['dtLastUpdated'] ) > strtotime( $LastUpdated ) ) {
+					$LastUpdated = $res['dtLastUpdated'];
+				}
+			}
+			$dateEnd->format( 'n/j/Y' ); // we have to get all cases since february
+			$dateBegin->modify( '+1 month' );
+			$dateEnd->modify( '+1 month' );
+			$results = array();	
 		}
-		if ($dateBegin < $dateToday) {
-			echo "Getting cases since ".$dateBegin->format('d-m-Y')." to ".$dateToday->format('d-m-Y')."...\n";
-			$results = array_merge($results, $myFBService->logon()->findAndSaveCasesToMemc('category:"Bug" opened:"'.$dateBegin->format('n/j/Y').'..today"', false));
-		}
-		//var_dump(array_slice($results,0,3));
-		$DBconn = wfGetDB( DB_MASTER );
-		echo "Putting data in database...\n";
-		foreach ($results as $res ) {
-			$DBconn->replace('fogbugz_cases', $res['ixBug'], array(
-				'sTitle' => $res['sTitle'],
-				'ixBug' => $res['ixBug'],
-				'sStatus' => $res['sStatus'],
-				'ixBugChildren' => implode(",", $res['ixBugChildren']),
-				'ixBugParent' => $res['ixBugParent'],
-				'ixPriority' => $res['ixPriority'],
-				'ixProject' => $res['ixProject'],
-				'ixCategory' => $res['ixCategory'],
-				'dtOpened' => !empty($res['dtOpened']) ? $res['dtOpened'] : null,
-				'dtResolved' => !empty($res['dtResolved']) ? $res['dtResolved'] : null,
-				'dtClosed' => !empty($res['dtClosed']) ? $res['dtClosed'] : null,
-				'dtLastUpdated' => $res['dtLastUpdated'],
-				'OpenedYW' => !empty($res['dtOpened']) ? date('YW', strtotime($res['dtOpened'])) : null,
-				'ResolvedYW' => !empty($res['dtResolved']) ? date('YW', strtotime($res['dtResolved'])) : null,
-				'ClosedYW' => !empty($res['dtClosed']) ? date('YW', strtotime($res['dtClosed'])) : null
-			));
-			if ($LastUpdated == null || strtotime($res['dtLastUpdated']) > strtotime($LastUpdated)) {
-				$LastUpdated = $res['dtLastUpdated'];
+		if ( $dateBegin < $dateToday ) {
+			echo "Getting cases since ".$dateBegin->format( 'd-m-Y' )." to ".$dateToday->format( 'd-m-Y' )."...\n";
+			$results = array_merge( $results, $myFBService->logon()->findAndSaveCasesToMemc( 'category:"Bug" opened:"'.
+				$dateBegin->format( 'n/j/Y' ).'..today"', false ) );
+			echo "Putting cases in the database ...";
+			foreach ( $results as $res ) {
+				replaceCase( $DBconnMSTR, $res );
+				if ( $LastUpdated == null || strtotime( $res['dtLastUpdated'] ) > strtotime( $LastUpdated ) ) {
+					$LastUpdated = $res['dtLastUpdated'];
+				}
 			}
 		}
+		//var_dump(array_slice($results,0,3));		
 		$wgMemc->set( $key, $LastUpdated );
-	}
-	
+	}	
 	echo "Updating cache...\n";
-	$myFBService->findAndSaveCasesToMemc("lastupdated:\"Today\"");
+	//$myFBService->findAndSaveCasesToMemc("lastupdated:\"Today\"");
+	
+	echo "Operations report.\n";
+	
+	$key = wfSharedMemcKey( 'FogbugzService', 'operations_report' , $dateToday->format( "Y-d-m" ) );
+	
+	//$wgMemc->set( $key, null ); //pawelrychly
+	
+	if ( $wgMemc->get( $key ) == null ) {
+		$operations = array();
+		//pawelrychly - changing sTags on tags - becouse of fact that sTags doesnt work properly
+ 		$operations['OPEN'] = $myFBService->logon()->findAndSaveCasesToMemc( 'project:"Operations"status:"open"', 
+			false, 'ixBug,sTitle,sStatus,sCategory,sPriority,sArea,sPersonAssignedTo,ixPersonOpenedBy,ixPersonResolvedBy,'.
+			'ixPersonClosedBy,dtOpened,dtLastUpdated,dtResolved,dtClosed,tags'
+		);
+		
+		$operations['RESOLVED'] = $myFBService->logon()->findAndSaveCasesToMemc( 'project:"Operations"status:"resolved"', 
+			false, 'ixBug,sTitle,sStatus,sCategory,sPriority,sArea,sPersonAssignedTo,ixPersonOpenedBy,ixPersonResolvedBy,'.
+			'ixPersonClosedBy,dtOpened,dtLastUpdated,dtResolved,dtClosed,tags'
+		);
+		
+		$operations['CLOSED'] = $myFBService->logon()->findAndSaveCasesToMemc( 'project:"Operations"closed:"-2d.."status:"closed"', 
+			false, 'ixBug,sTitle,sStatus,sCategory,sPriority,sArea,sPersonAssignedTo,ixPersonOpenedBy,ixPersonResolvedBy,'.
+			'ixPersonClosedBy,dtOpened,dtLastUpdated,dtResolved,dtClosed,tags'
+		);
+		
+		$namesTable = array(); 
+		foreach ( $operations as &$operation ) {
+			foreach ( $operation as $key => &$case ) {
+				$case['sTags'] = $case['tags'];
+				unset( $case['tags'] );
+				changeIdOnName( $case, "PersonOpenedBy", $myFBService, $namesTable );
+				changeIdOnName( $case, "PersonResolvedBy", $myFBService, $namesTable );
+				changeIdOnName( $case, "PersonClosedBy", $myFBService, $namesTable );
+			} 			
+		}
+
+		if ( ( count ( $operations['OPEN'] ) + count( $operations['CLOSED'] ) + count( $operations['RESOLVED'] ) ) > 50 ) {
+			$outputData = '';
+			
+			foreach ( $operations as $name => $dataType ) {
+				$outputData .= $name."\r\n"; 
+				$line = implode( ',', array_keys(  $dataType[0] ) ) . "\r\n";
+				$outputData .= $line;
+				foreach ( $dataType as $record ) {
+					$line = '"' . implode( '","',  $record ) . '"' . "\r\n";
+					$outputData .= $line;
+				}
+			}
+
+			$file = '/tmp/operations-'.$dateToday->format( 'Ymd-His' ).'.txt';
+			$fp = fopen($file, "a");
+			flock( $fp, 2 );
+			fwrite( $fp, $outputData );
+			flock( $fp, 3 );
+			fclose( $fp ); 
+
+			$emails = array();
+			//$emails[] = new MailAddress( 'pawelrychly@gmail.com' );		//pawelrychly
+			$emails[] = new MailAddress( 'ops-automatic-l@wikia-inc.com' );
+			//$emails[] = new MailAddress( 'socrat@wikia-inc.com' );
+			$attachment_dir = '/tmp/operations-'.$dateToday->format( 'Ymd-His' ).'.txt';
+			UserMailer::sendWithAttachment( 
+				$emails , 
+				'FogBugz Operations Daily Report '.$dateToday->format( 'Y-d-m H:i:s' ), 
+				$attachment_dir,
+				'ops-automatic-l@wikia-inc.com'
+			);
+			unlink('/tmp/operations-' . $dateToday->format( 'Ymd-His' ) . '.txt' );
+			$wgMemc->set( $key, 1 );
+			
+		}
+	}
 	$myFBService->logoff();
 }
-
-
-
 echo "Done.\n";
 
+
+
+function changeIdOnName( &$case, $key, $myFBService, &$namesTable ) {
+	$ix = 'ix' . $key;
+	$s = 's' . $key;
+	if ( array_key_exists( $case[$ix], $namesTable ) ) {
+		$personName = $namesTable[$case[$ix]];
+	} else {
+		$namesTable[$case[$ix]] = $myFBService->logon()->getPersonInfo( intval( $case[$ix] ), "sFullName" );
+		$personName = $namesTable[$case[$ix]]; 
+	
+	}
+	if ( !empty( $personName ) ) {
+		$case[$s] = $personName['sFullName'];	
+	} else {
+		$case[$s] = '';
+	}
+	unset( $case[$ix] );
+}
 ?>
