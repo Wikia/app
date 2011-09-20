@@ -45,23 +45,26 @@ function egOgmcParserOutputApplyValues( $out, $parserOutput, $data ) {
 	$titleImage = $titleDescription = null;
 	wfRunHooks('OpenGraphMeta:beforeCustomFields', array($articleId, &$titleImage, &$titleDescription));
 
-	if (is_null($titleImage)) {
-		// Get image from ImageServing
-		// TODO: Make sure we automatically respect these restrictions from Facebook:
-		// 		"An image URL which should represent your object within the graph.
-		//		The image must be at least 50px by 50px and have a maximum aspect ratio of 3:1.
-		//		We support PNG, JPEG and GIF formats."
-		$imageServing = new ImageServing( array( $articleId ) );
-		foreach ( $imageServing->getImages( 1 ) as $key => $value ) {
-			$titleImage = Title::newFromText( $value[0]['name'], NS_FILE );
+	// Only use ImageServing if no main image is already specified.  This lets people override the image with the parser function: [[File:{{#setmainimage:Whatever.png}}]].
+	if(!isset($out->mMainImage)){
+		if (is_null($titleImage)) {
+			// Get image from ImageServing
+			// TODO: Make sure we automatically respect these restrictions from Facebook:
+			// 		"An image URL which should represent your object within the graph.
+			//		The image must be at least 50px by 50px and have a maximum aspect ratio of 3:1.
+			//		We support PNG, JPEG and GIF formats."
+			$imageServing = new ImageServing( array( $articleId ) );
+			foreach ( $imageServing->getImages( 1 ) as $key => $value ) {
+				$titleImage = Title::newFromText( $value[0]['name'], NS_FILE );
+			}
 		}
-	}
 
-	if (!empty($titleImage) && is_object($titleImage)) {
-		$mainImage = wfFindFile($titleImage);
-		if ($mainImage !== false) {
-			$parserOutput->setProperty('mainImage', $mainImage);
-			$out->mMainImage = $parserOutput->getProperty('mainImage');
+		if (!empty($titleImage) && is_object($titleImage)) {
+			$mainImage = wfFindFile($titleImage);
+			if ($mainImage !== false) {
+				$parserOutput->setProperty('mainImage', $mainImage);
+				$out->mMainImage = $parserOutput->getProperty('mainImage');
+			}
 		}
 	}
 
