@@ -58,7 +58,7 @@ var Mediawiki = {
 	apiTimeout	: 30000,
 
 	// The higher the number, the more info. See Mediawiki.debug
-	debugLevel	: 0,
+	debugLevel	: 2,
 
 	// http://www.mediawiki.org/wiki/Manual:$wgCookiePrefix
 	cookiePrefix	: null,
