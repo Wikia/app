@@ -44,9 +44,11 @@ class ErrorPageSpecialController extends WikiaSpecialPageController {
 
 		// Cause an error
 		$db = wfGetDB( DB_SLAVE );
-		$db->doQuery("SELECT * FROM tablethatdoesn'texist");
+		$db->doQuery("SELECT * FROM tablethatdoesntexist");
+		
+		throw new WikiaException("Throwing errors all up in here because things are intentionally broken. But if they're intentionally broken, then they're working as expcted. Russel Paradox?");
 
-		$this->wg->Out->addHTML("Error should have been thrown already");
+		$this->wg->Out->addHTML("Created an error and it should show up below.");
 
 		//$this->forward( 'HelloWorldSpecial', 'Hello' ); // would forward to the "Hello()" controller method instead of index()
 	} // end index()
