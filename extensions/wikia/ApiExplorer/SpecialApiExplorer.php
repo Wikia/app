@@ -63,17 +63,16 @@ function wfSpecialApiExplorer () {
 					<?= wfMsg('apiexplorer-intro') ?>
 				</div>
 				<div id='apEx_loading'><?= wfMsg('apiexplorer-loading') ?></div>
-				<div id='apEx_main'>
+				<div id='apEx'>
 					<?php
 					$params = array("modules", "querymodules", "formatmodules");
 					foreach($params as $param){
-						?><div id='<?= $param ?> collapsible'>
+						?><div class='<?= $param ?> collapsible collapsed paramName' data-param-name='<?= $param ?>'>
 							<h2 class='name'></h2>
-							<div class='collapsed'>
-								<div class='description'></div>
-								<ul>
-								</ul>
-							</div>
+							<div class='description'></div>
+							<dl>
+								<!-- Filled by a call to the API -->
+							</dl>
 						</div><?php
 					} ?>
 				</div>
