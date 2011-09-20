@@ -43,7 +43,7 @@ class WikiHeaderModule extends Module {
 
 		if($wgUser->isAllowed('editinterface')) {
 			$this->editURL['href'] = Title::newFromText('Wiki-navigation', NS_MEDIAWIKI)->getFullURL();
-			$this->editURL['text'] = wfMsg('monaco-edit-this-menu');
+			$this->editURL['text'] = wfMsg('oasis-edit-this-menu');
 		}
 
 		$service = new NavigationService();

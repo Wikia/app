@@ -55,7 +55,7 @@ function wfMakeGlobalVariablesScript($vars) {
 	// Monaco specific?
 	$vars['wgMenuMore'] = strtolower(wfMsg('moredotdotdot'));
 	if($wgUser->isAllowed('editinterface')) {
-		$vars['wgMenuEdit'] = wfMsg('monaco-edit-this-menu');
+		$vars['wgMenuEdit'] = wfMsg('oasis-edit-this-menu');
 	}
 
 	$vars['wgAfterContentAndJS'] = array();
