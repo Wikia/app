@@ -23,8 +23,8 @@ global $wgAuth, $wgUser, $wgEnableEmail,$wgStylePath,$wgBlankImgUrl;
 		}
 	?>
 
-	<div class="<?= Wikia::isOasis() ? 'tabs modal-tabs' : 'wikia-tabs' ?>" id="AjaxLoginButtons">
-		<ul>
+	<div class="<?= Wikia::isOasis() ? 'modal-tabs' : 'wikia-tabs' ?>" id="AjaxLoginButtons">
+		<ul<?= Wikia::isOasis() ? ' class="tabs"' : '' ?>>
 			<li class="accent <?php echo ($showLogin ? 'selected':''); ?> " id="wpGoLogin" onclick="AjaxLogin.showLogin(this); return false;"><a href="<? echo htmlspecialchars($loginaction); ?>" ><?php print wfMsg("login") ?></a><img class="chevron" src="<?= $wgBlankImgUrl; ?>"></li>
 			<?php
 				if($wgUser->isAllowed('createaccount')){
