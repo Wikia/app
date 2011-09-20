@@ -257,20 +257,21 @@ class FogbugzService extends Service {
 	 * @param string $q - query 
 	 * @return null/array $results  
 	 */
-	public function findAndSaveCasesToMemc($q, $saveToMemc = true){
-		$cols = 'sTitle,ixBug,sStatus,ixBugChildren,ixBugParent,ixPriority,ixProject,ixCategory,dtOpened,dtResolved,dtClosed,dtLastUpdated';
+	public function findAndSaveCasesToMemc($q, $saveToMemc = true, $columns = '' ){
+		$cols = '';
+		if ( $columns == '' ) {
+			$cols = 'sTitle,ixBug,sStatus,ixBugChildren,ixBugParent,ixPriority,ixProject,ixCategory,dtOpened,dtResolved,dtClosed,dtLastUpdated';	
+		} else {
+			$cols = $columns;
+		}
+		
 		//$results = array();
 		$this->resetParams();
 		$this->setParam( 'cmd', 'search' );
 		$this->setParam( 'token', $this->token );
 		$this->setParam( 'q', $q );
-		
-		//if is_string:
-		//if (is_string($cols)) {
 		$this->setParam( 'cols', $cols );
-		//} else {
-		//	$this->setParam( 'cols', implode(",", $cols ) );
-		//}
+
 		
 		$this->curl->setopt_array( $this->getCurlOptions() );
 		$xml = $this->curl->exec();
@@ -280,35 +281,55 @@ class FogbugzService extends Service {
 			$dom->loadXML( $xml );
 			$cases = $dom->getElementsByTagName( 'case' );
 			foreach( $cases as  $case ) {
-				
-				$ixBugChildren = $case->getElementsByTagName( 'ixBugChildren' )->item(0)->nodeValue;
+				$titles = explode( ",", $cols );
+				$ixBugChildren = '';
+				$sTags = '';
+				if (in_array('ixBugChildren', $titles)) {
+					$ixBugChildren = $case->getElementsByTagName( 'ixBugChildren' )->item(0)->nodeValue;
+				}				
 				if ( strlen($ixBugChildren) > 0 ) {
 					$ixBugChildren = explode( ",", $ixBugChildren );
 				} else {
 					$ixBugChildren = array();
 				}
+				
+				//pawelrychly - tags repair
+				if ( in_array( 'tags', $titles ) ){ 
+					$tags = $case->getElementsByTagName( 'tags' );
+					$tagsList = "";
+					foreach ( $tags as $tag_list ) {
+						$tag = $tag_list->getElementsByTagName( 'tag' );
+						for ( $i=0; $i < $tag->length; $i++ ) {
+							$tagsList .= $tag->item($i)->nodeValue;
+							if ( $i != $tag->length-1 ) {
+								$tagsList .= ', ';	
+							}
+			
+						}
+					}
+				}
+			
+				if (!isset($case->getElementsByTagName( 'sTags' )->item(0)->nodeValue)) {
+					$sTags = '';
+				} else {
+					$sTags = $case->getElementsByTagName( 'sTags' )->item(0)->nodeValue;
+				}
+				
 				$res = array();
-				$titles = explode( ",", $cols );
-				foreach ($titles as $title) {
-					if ($title == 'ixBugChildren') {
+				
+				foreach ( $titles as $title ) {
+					if ( $title == 'ixBugChildren' ) {
 						$res[$title] = $ixBugChildren;
-					} else {	
+					} else if ( $title == 'sTags' ) {
+						$res[$title] = $sTags;
+					} else if ( $title == 'tags' ) {
+						$res[$title] = $tagsList; 
+					}else {	
 						$res[$title] = $case->getElementsByTagName( $title )->item(0)->nodeValue;
 					}
 				}
 				$results[] = $res;
-				/*
-				$results[] = array(
-								'ixBug' => $case->getElementsByTagName( 'ixBug' )->item(0)->nodeValue,
-								'sTitle' => $case->getElementsByTagName( 'sTitle' )->item(0)->nodeValue,
-								'sStatus' => $case->getElementsByTagName( 'sStatus' )->item(0)->nodeValue,
-								'ixBugChildren' => $ixBugChildren,
-								'ixBugParent' => $case->getElementsByTagName( 'ixBugParent' )->item(0)->nodeValue,
-								'ixPriority' => $case->getElementsByTagName( 'ixPriority' )->item(0)->nodeValue,
-								'dtLastUpdated' => $case->getElementsByTagName( 'dtLastUpdated')->item(0)->nodeValue
-				);*/
-				
-				//wfGetDB( DB_SLAVE )->insert('fogbugz_cases', );
+			
 				if ($saveToMemc == true) {
 					$this->sendToMemCache($results[count($results)-1] );
 				}
@@ -322,8 +343,43 @@ class FogbugzService extends Service {
 		}
 
 	}
-
-
+	//pawelrychly, piotrp
+	/**
+	 * Function return info about user with given id or email
+	 * @param int/string $idOrEmail
+	 * @param string $infolist list of columns which we want to get ( comma is a separator )
+	 * @return array informations about user
+	 */
+	public function getPersonInfo( $idOrEmail, $infolist ) {
+		unset($result);
+		$result = array();
+		$this->resetParams();
+		$this->setParam( 'cmd', 'viewPerson' );
+		$this->setParam( 'token', $this->token );
+		if ( is_int( $idOrEmail ) ) {
+			$this->setParam( 'ixPerson', $idOrEmail );
+		} else {
+			$this->setParam( 'sEmail', $idOrEmail );
+		}
+		$this->curl->setopt_array( $this->getCurlOptions() );
+		$xml = $this->curl->exec();
+		if( !empty( $xml ) ) {
+			$dom = new DOMDocument;
+			$dom->loadXML( $xml );
+			$person = $dom->getElementsByTagName( 'person' );
+			
+			if ( !is_array( $infolist ) ) {
+				$infolist = explode(',', $infolist);
+			}
+	
+			foreach ($person as $per) {
+				foreach ( $infolist as $data ) {
+					$result[$data] = $per->getElementsByTagName( $data )->item(0)->nodeValue;
+				}
+			}	
+		}
+		return $result;
+	}
 	/**
 	 *
 	 * Return case's comments; I assume that there wouldn't be single requests for events of more than 1 case
