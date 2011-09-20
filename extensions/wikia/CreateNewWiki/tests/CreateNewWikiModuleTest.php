@@ -25,10 +25,10 @@ class CreateNewWikiModuleTest extends PHPUnit_Framework_TestCase {
 		$siteName = 'asdfasdf';
 		$mainPageUrl = 'muppet.wikia.com/wiki/Main_page';
 
-		$requestParams = array("wikiaName" => $wikiName,
-			"wikiaDomain" => $wikiDomain,
-			"wikiaLanguage" => $wikiLanguage,
-			"wikiaCategory" => $wikiCategory);
+		$requestParams = array("wName" => $wikiName,
+			"wDomain" => $wikiDomain,
+			"wLanguage" => $wikiLanguage,
+			"wCategory" => $wikiCategory);
 
 		$wgRequest = $this->getMock('WebRequest');
 		$wgRequest->expects($this->once())
