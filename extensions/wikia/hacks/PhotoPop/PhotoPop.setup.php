@@ -1,30 +1,66 @@
 <?php
 /**
- * @author Sean Colombo
+ * WikiaMobile
  *
- * This extension is the server-side of the Photo Pop mobile app.  Most of the gameplay is handled
- * by this extension (which will be wrapped in a web-view on the device).
+ * @author Jakub Olek, Federico Lucignano, Sean Colombo
  */
+if ( !defined( 'MEDIAWIKI' ) ) {
+	echo "This file is part of MediaWiki, it is not a valid entry point.\n";
+	exit( 1 );
+}
 
-if ( !defined( 'MEDIAWIKI' ) ) die("This is a MediaWiki extension.");
+$app = F::app();
+$dir = dirname( __FILE__ );
 
-$wgExtensionMessagesFiles['PhotoPop'] = dirname( __FILE__ ) . '/SpecialFoggyFoto.i18n.php';
-$wgExtensionCredits['specialpage'][] = array(
-	'name' => 'Photo Pop',
-	'url' => 'http://www.wikia.com/Mobile', // TODO: Update with a link to a landing page for the SPECIFIC mobile app once that is available (eg: /Mobile/PhotoPop)
-	'author' => '[http://www.seancolombo.com Sean Colombo]',
-	'descriptionmsg' => 'photopop-desc',
-	'version' => '0.1',
+/**
+ * info
+ */
+$app->wg->append(
+	'wgExtensionCredits',
+	array(
+		"name" => "PhotoPop",
+		"description" => "Mobile Skin for Wikia",
+		"author" => array(
+			'Federico "Lox" Lucignano <federico(at)wikia-inc.com>',
+			'Jakub Olek <bukaj.kelo(at)gmail.com>',
+			'[http://www.seancolombo.com Sean Colombo]'
+		),
+		'descriptionmsg' => 'photopop-desc',
+		'version' => '0.1'
+	),
+	'other'
 );
 
+/**
+ * classes
+ */
 
-$dir = dirname(__FILE__) . '/';
-$app = F::app();
+/**
+ * services
+ */
+$app->wg->set( 'wgAutoloadClasses', "{$dir}/PhotoPopController.class.php", 'PhotoPopController' );
 
-$app->registerClass('PhotoPopController', $dir . 'PhotoPopController.class.php');
-$app->registerClass('PhotoPopGameConfig', $dir . 'PhotoPopGameConfig.class.php');
-$app->registerExtensionMessageFile('PhotoPop', $dir . 'PhotoPop.i18n.php');
+/**
+ * controllers
+ */
 
+/**
+ * special pages
+ */
+
+
+/**
+ * message files
+ */
+$app->wg->set( 'wgExtensionMessagesFiles', "{$dir}/PhotoPop.i18n.php", 'PhotoPop' );
+
+/**
+ * hooks
+ */
+
+/*
+ * settings
+ */
 // register messages package for JS
 F::build('JSMessages')->registerPackage('PhotoPop', array(
 	'photopop-progress-numbers',
