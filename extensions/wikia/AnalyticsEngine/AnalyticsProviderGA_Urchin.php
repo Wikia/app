@@ -27,8 +27,13 @@ class AnalyticsProviderGA_Urchin implements iAnalyticsProvider {
 		$script .= <<<SCRIPT1
 <noscript><img src="$beaconUrl" width="1" height="1" border="0" alt="" /></noscript>
 <script type="text/javascript">
-	var matches = /wikia_beacon_id=([^;]+)/(document.cookie);
-	var beaconCookie = matches[1];
+	var beaconCookie;
+	var startIdx = document.cookie.indexOf('wikia_beacon_id');
+	if (startIdx != -1) {
+		startIdx = startIdx+16; // Advance past the '='
+		var endIdx = document.cookie.indexOf(';', startIdx);
+		beaconCookie = document.cookie.substr(startIdx, endIdx-startIdx);
+	}
 
 	var beaconUrl = "$beaconUrl" + ((typeof document.referrer != "undefined") ? "&amp;r=" + escape(document.referrer) : "") + "&amp;cb=" + (new Date).valueOf() + (beaconCookie ? "&amp;beacon=" + beaconCookie : "");
 	document.write('<'+'script type="text/javascript" src="' + beaconUrl + '"><'+'/script>');
