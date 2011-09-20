@@ -82,6 +82,7 @@ $color-tab-background-bottom: mix($color-tab-background, $color-page, 80%);
 $color-active-tab-background-top: mix($color-buttons, $color-page, 50%);
 $color-active-tab-background-bottom: mix($color-buttons, $color-page, 80%);
 $color-active-tab-shadow: #4E4E4E;
+$color-tab-hover-background: mix($color-buttons, $color-page, 20%);
 
 // Notifications
 $color-confirmation-background: #90e491;
