@@ -136,7 +136,6 @@ $messages['en'] = array(
 *portal-url|Community
 **blogs-recent-url|blogs-recent-url-text
 **forum-url|Forum', // @todo FIXME: give this an extension specific key prefix.
-	'oasis-edit-this-menu' => 'Edit this menu',
 
 	# Related to ImageSEO RT#55755
 	'imageseo-featured-on' => 'Featured on:', // @todo FIXME: give this an extension specific key prefix.
@@ -900,7 +899,7 @@ $messages['es'] = array(
 	'oasis-skip-to-wiki-navigation' => 'Saltar al Navegación Wiki',
 	'oasis-skip-to-site-navigation' => 'Saltar a la navegación del sitio',
 	'oasis-wiki-navigation' => 'Navegación de $1',
-	'oasis-related-categories' => 'Categorías Relacionadas',
+	'oasis-related-categories' => 'Categorías Relacionads',
 	'corporatelandingpage-trivia-title' => 'Wikia Trivia',
 	'corporatelandingpage-trivia-description' => '¡Prueba tus conocimientos y gana un paquete de premios de Wikia!',
 );
@@ -1048,6 +1047,7 @@ $messages['fi'] = array(
 	'oasis-latest-activity-edit-details' => '$1 muokkasi tätä $2',
 	'oasis-latest-activity-delete-details' => 'poistettu $1 $2',
 	'oasis-interlang-show-all' => '... näytä kaikki >',
+	'oasis-edit-this-menu' => 'Muokkaa valikkoa',
 );
 
 /** French (Français)
@@ -2653,6 +2653,7 @@ $messages['pl'] = array(
 	'oasis-upload-photos-force' => 'Prześlij mimo wszystko',
 	'oasis-upload-photos-caption' => 'Podpis',
 	'oasis-modal-error-headline' => 'Proszę poprawić następujące błędy',
+	'oasis-edit-this-menu' => 'Edytuj to menu',
 );
 
 /** Piedmontese (Piemontèis)
