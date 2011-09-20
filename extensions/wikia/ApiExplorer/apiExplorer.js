@@ -35,21 +35,21 @@ if(typeof ApiExplorer == "undefined"){
 						// There are three very specific lists we care about. TODO: They seem all the same code structure, refactor to use a hash of approved names (not array so that we don't have to loop).
 						if(param.name == 'modules'){
 							$('#apEx div.modules>div.name').html( param.name );
-							$('#apEx div.modules>div.description').html( param.description);
+							$('#apEx div.modules>div.description').html( param.description );
 							for(var typeIndex in allTypes){
 								var t = allTypes[typeIndex];
 								$('#apEx div.modules>ul').append("<li>" + t + "</li>");
 							}
 						} else if(param.name == 'querymodules'){
 							$('#apEx div.querymodules>div.name').html( param.name );
-							$('#apEx div.querymodules>div.description').html( param.description);
+							$('#apEx div.querymodules>div.description').html( param.description );
 							for(var typeIndex in allTypes){
 								var t = allTypes[typeIndex];
 								$('#apEx div.querymodules>ul').append("<li>" + t + "</li>");
 							}
 						} else if(param.name == 'formatmodules'){
 							$('#apEx div.formatmodules>div.name').html( param.name );
-							$('#apEx div.formatmodules>div.description').html( param.description);
+							$('#apEx div.formatmodules>div.description').html( param.description );
 							for(var typeIndex in allTypes){
 								var t = allTypes[typeIndex];
 								$('#apEx div.formatmodules>ul').append("<li>" + t + "</li>");
@@ -57,14 +57,14 @@ if(typeof ApiExplorer == "undefined"){
 						}
 					}
 				}
-				
+
 				// TODO: Make the divs collapsible.
 				// TODO: Make the divs collapsible.
 
 				// TODO: Make all of them collapsed except the first div?
 				// TODO: Make all of them collapsed except the first div?
-				
-				// TODO: Add click-handlers to each li. 
+
+				// TODO: Add click-handlers to each li.
 				// TODO: Add click-handlers to each li.
 
 				$('#apEx_loading').hide();

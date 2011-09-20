@@ -64,24 +64,18 @@ function wfSpecialApiExplorer () {
 				</div>
 				<div id='apEx_loading'><?= wfMsg('apiexplorer-loading') ?></div>
 				<div id='apEx_main'>
-					<div id='modules'>
-						<div class='name'></div>
-						<div class='description'></div>
-						<ul>
-						</ul>
-					</div>
-					<div id='querymodules'>
-						<div class='name'></div>
-						<div class='description'></div>
-						<ul>
-						</ul>
-					</div>
-					<div class='formatmodules'>
-						<div class='name'></div>
-						<div class='description'></div>
-						<ul>
-						</ul>
-					</div>
+					<?php
+					$params = array("modules", "querymodules", "formatmodules");
+					foreach($params as $param){
+						?><div id='<?= $param ?> collapsible'>
+							<h2 class='name'></h2>
+							<div class='collapsed'>
+								<div class='description'></div>
+								<ul>
+								</ul>
+							</div>
+						</div><?php
+					} ?>
 				</div>
 			<?php
 			$outHtml = ob_get_clean();
