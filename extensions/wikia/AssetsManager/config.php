@@ -57,7 +57,7 @@ $config['oasis_jquery'] = array(
 		'//skins/common/jquery/jquery.timeago.js',
 		'//skins/common/jquery/jquery.store.js',
 		'//skins/common/jquery/jquery.wikia.js',
-		'//skins/common/jquery/jquery.storagewithexp.js',
+		'//skins/common/jquery/jquery.expirystorage.js',
 		'//skins/oasis/js/tables.js',
 		'//skins/oasis/js/common.js'
 	)
