@@ -8,14 +8,17 @@ class ContributionMenuModule extends Module {
 	public function executeIndex() {
 		// add "edit this page" item
 		if (isset($this->content_actions['edit'])) {
-			$this->dropdownItems['edit'] = $this->content_actions['edit'];
+			$this->dropdownItems['edit'] = array(
+				'text' => wfMsg('oasis-navigation-v2-edit-page'),
+				'href' => $this->content_actions['edit']['href']
+			);
 		}
 
 		// menu items linking to special pages
 		$specialPagesLinks = array(
-			'Upload' => 'oasis-button-add-photo',
-			'WikiaVideoAdd' => 'oasis-button-add-video',
-			'CreatePage' => 'oasis-button-create-page',
+			'Upload' => 'oasis-navigation-v2-add-photo',
+			//'WikiaVideoAdd' => 'oasis-button-add-video',
+			'CreatePage' => 'oasis-navigation-v2-create-page',
 			'WikiActivity' => 'oasis-button-wiki-activity',
 		);
 
@@ -36,7 +39,7 @@ class ContributionMenuModule extends Module {
 
 		if($wgUser->isAllowed('editinterface')) {
 			$this->dropdownItems['wikinavedit'] = array(
-				'text' => wfMsg('monaco-edit-this-menu'),
+				'text' => wfMsg('oasis-navigation-v2-edit-this-menu'),
 				'href' => Title::newFromText(WikiNavigationModule::WIKI_LOCAL_MESSAGE, NS_MEDIAWIKI)->getLocalURL('action=edit'),
 			);
 		}
@@ -44,7 +47,7 @@ class ContributionMenuModule extends Module {
 		if($wgUser->isAllowed('wikianavglobal')) {
 			$this->dropdownItems['wikinavglobaledit'] = array(
 				'text' => wfMsg('oasis-button-edit-wikia-global-menu'),
-				'href' => GlobalTitle::newFromText(WikiNavigationModule::WIKIA_GLOBAL_MESSAGE, NS_MEDIAWIKI, WikiNavigationModule::MESSAGING_WIKI_ID)->getFullURL('action=edit'),
+				'href' => Title::newFromText(WikiNavigationModule::WIKIA_GLOBAL_MESSAGE, NS_MEDIAWIKI)->getLocalURL('action=edit'),
 			);
 		}
 
