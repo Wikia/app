@@ -22,7 +22,7 @@ class AnalyticsProviderGA_Urchin implements iAnalyticsProvider {
 			'y='.$wgDBcluster.'&amp;'.
 			'u='.$wgUser->getID().'&amp;'.
 			'a='.(is_object($wgArticle) ? $wgArticle->getID() : null).'&amp;'.
-			'n='.$wgTitle->getNamespace(). (!empty($wgAdServerTest) ? '&db_test=1' : '');
+			'n='.$wgTitle->getNamespace(). (!empty($wgAdServerTest) ? '&amp;db_test=1' : '');
 
 		$script .= <<<SCRIPT1
 <noscript><img src="$beaconUrl" width="1" height="1" border="0" alt="" /></noscript>
