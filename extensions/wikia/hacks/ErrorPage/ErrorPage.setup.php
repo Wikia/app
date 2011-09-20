@@ -20,5 +20,11 @@ $wgExtensionCredits['specialpage'][] = array(
 $dir = dirname(__FILE__) . '/';
 $app = F::app();
 
+$wgExceptionHooks[] = array( 'ErrorPage', 'showErrorPage');
+
+$app->registerClass('ErrorPage', $dir . 'ErrorPage.class.php');
 $app->registerClass('ErrorPageSpecialController', $dir . 'ErrorPageSpecialController.class.php');
+$app->wg->set( 'wgSpecialPages', 'ErrorPageSpecialController', 'ErrorPage' );
+
 $app->registerExtensionMessageFile('ErrorPage', $dir . 'ErrorPage.i18n.php');
+
