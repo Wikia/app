@@ -65,17 +65,20 @@ function wfSpecialApiExplorer () {
 				<div id='apEx_loading'><?= wfMsg('apiexplorer-loading') ?></div>
 				<div id='apEx_main'>
 					<div id='modules'>
-						<div></div>
+						<div class='name'></div>
+						<div class='description'></div>
 						<ul>
 						</ul>
 					</div>
 					<div id='querymodules'>
-						<div></div>
+						<div class='name'></div>
+						<div class='description'></div>
 						<ul>
 						</ul>
 					</div>
 					<div class='formatmodules'>
-						<div></div>
+						<div class='name'></div>
+						<div class='description'></div>
 						<ul>
 						</ul>
 					</div>
