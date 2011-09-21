@@ -299,6 +299,9 @@ User Profile Page
 optional = recipes-template-skip-toggle-types
 ignored = recipes-template-aboutuser-fields, recipes-template-aboutuser-wikitext
 
+User Profile Page V3
+file = UserProfilePageV3/UserProfilePage.i18n.php
+
 User Rename Tool
 file = UserRenameTool/SpecialRenameuser.i18n.php
 
