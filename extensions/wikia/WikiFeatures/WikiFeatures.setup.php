@@ -25,3 +25,4 @@ $wgGroupPermissions['*']['wikifeatures'] = false;
 $wgGroupPermissions['staff']['wikifeatures'] = true;
 $wgGroupPermissions['sysop']['wikifeatures'] = true;
 $wgGroupPermissions['bureaucrat']['wikifeatures'] = true;
+$wgGroupPermissions['helper']['wikifeatures'] = true;
