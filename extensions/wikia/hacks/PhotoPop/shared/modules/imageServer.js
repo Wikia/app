@@ -7,7 +7,7 @@ define.call(exports, {
 	init: function(configImages) {
 		var preload = new Image(),
 		link = "",
-		prefix = (document) ? "extensions/wikia/hacks/PhotoPop/" : null;
+		prefix = (document && !Titanium) ? "extensions/wikia/hacks/PhotoPop/" : null;
 		
 		for(var prop in configImages) {
 			link = this.images[prop] = prefix + "shared/images/" + configImages[prop] + ".png"; 
