@@ -6,9 +6,11 @@ define.call(exports, {
 
 	init: function(configImages) {
 		var preload = new Image(),
-			link = "";
+		link = "",
+		prefix = (document) ? "extensions/wikia/hacks/PhotoPop/" : null;
+		
 		for(var prop in configImages) {
-			link = this.images[prop] = "extensions/wikia/hacks/PhotoPop/shared/images/" + configImages[prop] + ".png"; 
+			link = this.images[prop] = prefix + "shared/images/" + configImages[prop] + ".png"; 
 			preload.src = link; 
 		}
 	},
