@@ -199,23 +199,13 @@ function inputFocus(e) {
 	$(e.target).val("").addClass('focus');
 }
 
-function isDupe(category){
-	// create array of curent category names
-	var dupcheck = [];
-	for (var c=0; c < categories.length; c++) {
-		if (categories[c] === null) continue;
-		dupcheck.push(categories[c].category.toLowerCase());
-	}
-	if($.inArray(category, dupcheck) > 0){
-		// category is already there, it's a dupe. 
-		return true;
-	}
-	return false;
-}
-
-function addCategoryBase(category, params, index) {
+function addCategoryBase(category, params, index, checkdupes) {
 	if (params === undefined) {
-		params = {'namespace': csDefaultNamespace, 'outerTag': '', 'sortkey': ''};
+		params = {
+			'namespace': csDefaultNamespace, 
+			'outerTag': '', 
+			'sortkey': ''
+		};
 	}
 
 	if (index === undefined) {
@@ -224,17 +214,34 @@ function addCategoryBase(category, params, index) {
 
 	//replace full wikitext that user may provide (eg. [[category:abc]]) to just a name (abc)
 	category = category.replace(fixCategoryRegexp, '$1');
+	
 	//if user provides "abc|def" explode this into category "abc" and sortkey "def"
 	extractedParams = extractSortkey(category);
-	category = extractedParams['name'];
-	params['sortkey'] = extractedParams['sort'] + params['sortkey'];
+	category = extractedParams.name;
+	params.sortkey = extractedParams.sort + params.sortkey;
 
 	if (category == '') {
 		alert(csEmptyName);
 		return;
 	}
 
-	categories[index] = {'namespace': params['namespace'] ? params['namespace'] : csDefaultNamespace, 'category': category, 'outerTag': params['outerTag'], 'sortkey': params['sortkey']};
+	// Check if category name, outertag and sort key are all the same.  If they are, don't add to categories array
+	if(checkdupes){
+		for (var c=0; c < categories.length; c++) {
+			if (categories[c] === null) continue;
+			if(category.toLowerCase() == categories[c].category.toLowerCase() && params.outerTag == categories[c].outerTag && params.sortkey == categories[c].sortkey){
+				return;
+			}
+		}
+	}
+	
+	categories[index] = {
+		'namespace': params.namespace ? params.namespace : csDefaultNamespace, 
+		'category': category, 
+		'outerTag': params.outerTag, 
+		'sortkey': params.sortkey
+	};
+	
 	var categoryText = category;
 	if(csType == 'module') {
 
@@ -284,9 +291,9 @@ function addCategoryBase(category, params, index) {
 
 
 function addCategory(category, params, index) {
-	if(!isDupe(category)){
-		addCategoryBase(category, params, index);
-	}
+	var checkdupes = true;
+	addCategoryBase(category, params, index, checkdupes);
+
 	$('#csCategoryInput').attr('value', '');
 
 	$('#csItemsContainer').trigger('categorySelectAdd');
@@ -331,6 +338,7 @@ function initializeCategories(cats) {
 
 	// Only on view page, not on edit page
 	addAddCategoryButton();
+	
 	for (var c=0; c < categories.length; c++) {
 		addCategoryBase(categories[c].category, {'namespace': categories[c].namespace, 'outerTag': categories[c].outerTag, 'sortkey': categories[c].sortkey}, c);
 	}
