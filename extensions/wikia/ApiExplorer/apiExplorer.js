@@ -2,6 +2,8 @@
  * @author Sean Colombo
  * @date 20110917
  *
+ * Javascript app that uses the API on the current wiki to dynamically generate browsable documentation
+ * for the same API.
  */
 
 $().log("== API Explorer ==");
@@ -70,15 +72,13 @@ if(typeof ApiExplorer == "undefined"){
 										$().log("Content is empty, loading info from API for " + paramName + '=' + dtName);
 
 										Mediawiki.paraminfo(paramName, dtName, function(result){
-
 											$().log("Got info for "+ paramName + '=' + dtName);
 											var modulesArray = result.paraminfo[paramName];
 
-											$().log(modulesArray[0].parameters);
-
-						// TEMPORARY UNTIL WE MAKE IT PRETTIER. TODO: FORMAT THIS DATA.
-											var rawData = JSON.stringify( modulesArray[0] );
-											$(e.currentTarget).append("<dd class='paramContent'>" + rawData + "</dd>");
+											var module = modulesArray[0];
+											//var rawData = JSON.stringify( module );
+											var html = self.objToHtml( module );
+											$(e.currentTarget).append("<dd class='paramContent'>" + html + "</dd>");
 										});
 									}
 								}
@@ -98,6 +98,28 @@ if(typeof ApiExplorer == "undefined"){
 				$().log("ERROR GETTING LIST OF MODULES FROM THE API.\nMake sure this wiki is a Wikia wiki or running v1.18+ of MediaWiki.");
 				$().log(err);
 			});
+		};
+		
+		/**
+		 * Converts a JS object to HTML (mostly nested lists), but tweaked for the specific use-case of
+		 * the API Explorer's results from the API... so it will make the result more readable, but this function
+		 * isn't as simple/portable as it would be otherwise.
+		 */
+		this.objToHtml = function( obj ){
+			var html = "";
+			var html = "<ul>";
+
+			// TODO: Customize this for better display of parameters, errors, etc. (they're too nested right now).
+
+			for(var key in obj){
+				var value = obj[key];
+				if(typeof value == 'object'){
+					value = self.objToHtml( value );
+				}
+				html += "<li><strong>"+key+"</strong>: " + value + "</li>";
+			}
+			html += "</ul>";
+			return html;
 		};
 
 		this.clicked_modules = function(e){ return self.dtClicked( e, 'modules'); }
