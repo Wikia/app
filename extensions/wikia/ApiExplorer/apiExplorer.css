@@ -2,3 +2,24 @@
 #apEx_loading{
 	display:none;
 }
+
+#apEx div.collapsible h2{
+	/* TODO: Style as a bar */
+	
+	/* TODO: add an arrow to COLLAPSE */
+}
+#apEx div.collapsible.collapsed h2{
+	/* TODO: add an arrow to EXPAND */
+}
+
+#apEx div.collapsed dl, #apEx div.collapsed div{
+	display:none;
+}
+
+#apEx dl.collapsed dt{
+	display:none;
+}
+
+#apEx dt.collapsed dd{
+	display:none;
+}

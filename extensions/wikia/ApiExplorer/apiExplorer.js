@@ -49,46 +49,48 @@ if(typeof ApiExplorer == "undefined"){
 
 							// Add click-handlers to each dt to get more info on that function.
 							$('#apEx div.'+name+' dt').click( function(e){
-							
-								// TODO: If already expanded, just collapse.
-								// TODO: If already expanded, just collapse.
-							
-								var paramName = $(e.currentTarget).parents('div.paramName').data('param-name');
+								// If already expanded, just collapse.
+								if(!$( e.currentTarget ).hasClass('collapsed')){
+									$( e.currentTarget ).addClass('collapsed');
+								} else {
+									// Toggle dt (yes, T) state to be expanded
+									$( e.currentTarget ).removeClass('collapsed');
 
-								// Make call to API to get info for that dt... ONLY if the dd is still empty.
-								var ddContent = $(e.currentTarget).find('dd').html();
-								if(ddContent == "" || ddContent == null){
-									// The dd (definition) for this dt (term) is not loaded yet.  Use the API to load it.
-									var dtName = $(e.currentTarget).find('h3').html();
-									$().log("Content is empty, loading info from API for " + paramName + '=' + dtName);
+									var paramName = $(e.currentTarget).parents('div.paramName').data('param-name');
 
-									Mediawiki.paraminfo(paramName, dtName, function(result){
+									// Make call to API to get info for that dt... ONLY if the dd is still empty.
+									var ddContent = $(e.currentTarget).find('dd').html();
+									if(ddContent == "" || ddContent == null){
+										// The dd (definition) for this dt (term) is not loaded yet.  Use the API to load it.
 
-										$().log("Got info for "+ paramName + '=' + dtName);
-										var modulesArray = result.paraminfo[paramName];
-										
-										$().log(modulesArray[0].parameters);
+										// TODO: Put a loading-indicator in the h3 and then remove when finished loading?
+										// TODO: Put a loading-indicator in the h3 and then remove when finished loading?
 
-					// TEMPORARY UNTIL WE MAKE IT PRETTIER. TODO: FORMAT THIS DATA.
-										var rawData = JSON.stringify( modulesArray[0] );
-										$(e.currentTarget).append("<dd>" + rawData + "</dd>");
-									});
+										var dtName = $(e.currentTarget).find('h3').html();
+										$().log("Content is empty, loading info from API for " + paramName + '=' + dtName);
+
+										Mediawiki.paraminfo(paramName, dtName, function(result){
+
+											$().log("Got info for "+ paramName + '=' + dtName);
+											var modulesArray = result.paraminfo[paramName];
+
+											$().log(modulesArray[0].parameters);
+
+						// TEMPORARY UNTIL WE MAKE IT PRETTIER. TODO: FORMAT THIS DATA.
+											var rawData = JSON.stringify( modulesArray[0] );
+											$(e.currentTarget).append("<dd>" + rawData + "</dd>");
+										});
+									}
 								}
-
-								// TODO: Toggle dT (yes, T) state to be expanded
-								// TODO: Toggle dT (yes, T) state to be expanded
-
-
 							});
 						}
 					}
 				}
 
-				// TODO: Make the divs collapsible.
-				// TODO: Make the divs collapsible.
-
-				// TODO: Make all of them collapsed (except the first div?)
-				// TODO: Make all of them collapsed (except the first div?)
+				// Make the top-level divs (modules, querymodules, formatmodules) collapsible.
+				$('#apEx div.collapsible h2').click(function( e ){
+					$( e.currentTarget ).parent('div').toggleClass('collapsed');
+				});
 
 				$('#apEx_loading').hide();
 				$('#apEx_main').show();
@@ -97,7 +99,7 @@ if(typeof ApiExplorer == "undefined"){
 				$().log(err);
 			});
 		};
-		
+
 		this.clicked_modules = function(e){ return self.dtClicked( e, 'modules'); }
 		this.clicked_querymodules = function(e){ return self.dtClicked( e, 'querymodules'); }
 		this.clicked_formatmodules = function(e){ return self.dtClicked( e, 'formatmodules'); }
