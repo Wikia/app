@@ -140,7 +140,7 @@ else {
 			'ixPersonClosedBy,dtOpened,dtLastUpdated,dtResolved,dtClosed,tags'
 		);
 		
-		$operations['CLOSED'] = $myFBService->logon()->findAndSaveCasesToMemc( 'project:"Operations"closed:"-2d.."status:"closed"', 
+		$operations['CLOSED48h'] = $myFBService->logon()->findAndSaveCasesToMemc( 'project:"Operations"closed:"-2d.."status:"closed"', 
 			false, 'ixBug,sTitle,sStatus,sCategory,sPriority,sArea,sPersonAssignedTo,ixPersonOpenedBy,ixPersonResolvedBy,'.
 			'ixPersonClosedBy,dtOpened,dtLastUpdated,dtResolved,dtClosed,tags'
 		);
@@ -156,40 +156,40 @@ else {
 			} 			
 		}
 
-		if ( ( count ( $operations['OPEN'] ) + count( $operations['CLOSED'] ) + count( $operations['RESOLVED'] ) ) > 50 ) {
-			$outputData = '';
+		if ( ( count ( $operations['OPEN'] ) + count( $operations['CLOSED48h'] ) + count( $operations['RESOLVED'] ) ) > 50 ) {
 			
+			$attachment_dirs = array();
 			foreach ( $operations as $name => $dataType ) {
-				$outputData .= $name."\r\n"; 
+				//$outputData .= $name."\r\n"; 
+				$outputData = '';
 				$line = implode( ',', array_keys(  $dataType[0] ) ) . "\r\n";
 				$outputData .= $line;
 				foreach ( $dataType as $record ) {
 					$line = '"' . implode( '","',  $record ) . '"' . "\r\n";
 					$outputData .= $line;
 				}
+				$file = '/tmp/operations-'.$dateToday->format( 'Ymd-His' ) . "-" . $name .'.csv';
+				$fp = fopen($file, "a");
+				flock( $fp, 2 );
+				fwrite( $fp, $outputData );
+				flock( $fp, 3 );
+				fclose( $fp ); 	
+				$attachment_dirs[] = '/tmp/operations-'.$dateToday->format( 'Ymd-His' ) . "-" . $name .'.csv';
 			}
 
-			$file = '/tmp/operations-'.$dateToday->format( 'Ymd-His' ).'.txt';
-			$fp = fopen($file, "a");
-			flock( $fp, 2 );
-			fwrite( $fp, $outputData );
-			flock( $fp, 3 );
-			fclose( $fp ); 
 
 			$emails = array();
-			//$emails[] = new MailAddress( 'pawelrychly@gmail.com' );		//pawelrychly
-			$emails[] = new MailAddress( 'ops-automatic-l@wikia-inc.com' );
-			//$emails[] = new MailAddress( 'socrat@wikia-inc.com' );
-			$attachment_dir = '/tmp/operations-'.$dateToday->format( 'Ymd-His' ).'.txt';
+			$emails[] = new MailAddress( 'ops-automatic-l@wikia-inc.com' );			
 			UserMailer::sendWithAttachment( 
 				$emails , 
 				'FogBugz Operations Daily Report '.$dateToday->format( 'Y-d-m H:i:s' ), 
-				$attachment_dir,
+				$attachment_dirs,
 				'ops-automatic-l@wikia-inc.com'
 			);
-			unlink('/tmp/operations-' . $dateToday->format( 'Ymd-His' ) . '.txt' );
+			foreach ( $attachment_dirs as $dir ) {
+				unlink( $dir );	
+			}
 			$wgMemc->set( $key, 1 );
-			
 		}
 	}
 	$myFBService->logoff();
