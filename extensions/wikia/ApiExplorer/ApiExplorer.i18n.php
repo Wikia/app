@@ -13,7 +13,7 @@ $messages = array();
 $messages['en'] = array(
 	'apiexplorer' => 'API Explorer',
 	'apiexplorer-desc' => 'Page for interactively exploring the documentation of the live version of the MediaWiki API running on this installation.',
-	'apiexplorer-intro' => 'This page shows documentation for the current wiki\'s API. Please click on a function below to see more info about it.',
+	'apiexplorer-intro' => 'This page shows documentation for the current wiki\'s API. Please click on a function below to see more info about what parameters can be used in each call.  For the general MediaWiki API documentation, see $1',
 	
 	'apiexplorer-loading' => 'Loading functions...',
 );

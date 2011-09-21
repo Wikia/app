@@ -78,7 +78,7 @@ function wfSpecialApiExplorer () {
 					}
 				</style>
 				<div id='apEx_intro'>
-					<?= wfMsg('apiexplorer-intro') ?>
+					<?= wfMsg('apiexplorer-intro', "<a href='http://www.mediawiki.org/wiki/API:Main_page'>http://www.mediawiki.org/wiki/API:Main_page</a>") ?>
 				</div>
 				<div id='apEx_loading'><?= wfMsg('apiexplorer-loading') ?></div>
 				<div id='apEx'>
