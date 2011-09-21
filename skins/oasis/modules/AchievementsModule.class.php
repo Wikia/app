@@ -29,23 +29,6 @@ class AchievementsModule extends Module {
 		$this->getBadgesData();
 	}
 
-	public function executeUserProfilePagesModule() {
-		global $wgTitle, $wgUser, $wgOut, $wgExtensionsPath, $wgStylePath, $wgStyleVersion, $wgJsMimeType;
-
-		// add CSS for this module
-		
-		//tooltips
-		$wgOut->addScript("<script type=\"$wgJsMimeType\" src=\"$wgStylePath/common/jquery/jquery.wikia.tooltip.js?{$wgStyleVersion}\"></script>");
-		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/modules/WikiaTooltip.scss'));
-		
-		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL("extensions/wikia/AchievementsII/css/oasis.scss"));
-		// add JS for this module
-		$wgOut->addScript( "<script src=\"{$wgStylePath}/oasis/js/Achievements.js?{$wgStyleVersion}\"></script>\n" );
-		$this->getBadgesData();
-		wfLoadExtensionMessages( 'UserProfilePage' );
-	}
-
-
 	private function getBadgesData(){
 		global $wgContLang;
 		
