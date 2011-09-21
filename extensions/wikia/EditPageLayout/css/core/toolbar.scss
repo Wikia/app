@@ -4,7 +4,6 @@
 	@include gradient-toolbar;
 	padding: 0 15px;
 	position: relative;
-	z-index: 1;
 
 	.cke_buttons {
 		@include clearfix;
