@@ -1,12 +1,14 @@
-require(["core/configServer", "lib/mustache", "core/templates", "imageServer", "soundServer"], function(config) {
+require(["../shared/modules/configServer", "../shared/modules/templates", "../modules/imageServer", "../modules/soundServer", "../shared/lib/mustache"], function(config,templates,imageServer,soundServer) {
 
 	var view = {
 		"image": function() {
 			return function(text, render) {
-			      return imageServer.get(text);
+			      return imageServer.get(render(text));
 			}
-	;	}
+		},
+		"games": config.games
 	}
+	
 	imageServer.init(config.images);
 	soundServer.init(config.sounds);	
 	
