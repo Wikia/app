@@ -28,6 +28,7 @@
 }
 
 #EditPageEditor {
+	margin-top: 1px;
 	// source mode tweak
 	textarea {
 		@include epl-editorarea;
