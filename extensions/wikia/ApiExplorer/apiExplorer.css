@@ -6,8 +6,15 @@
 	display:none;
 }
 
-#apEx div.paramName, dt.collapsible{
+#apEx div.paramName{
 	margin-bottom:10px;
+}
+dt.collapsible{
+	margin-bottom:15px;
+}
+dt.collapsed{
+	width:35%;
+	min-width:300px; /* gives less "wall of green" effect when list is loaded & will still expand when the module is clicked on */
 }
 
 #apEx div.paramName h2, .paramContent{
@@ -82,8 +89,9 @@ dd.paramContent{ /* per-module */
 
 
 /** Second-level of style... the dts **/
-#apEx dt *{
+#apEx dt h3, #apEx dt dd{
 	border-color: #080;
+	box-shadow: 4px 4px 4px #888888;
 }
 #apEx dt h3{
 	padding:5px;

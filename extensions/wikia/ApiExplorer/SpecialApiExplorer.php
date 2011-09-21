@@ -46,20 +46,38 @@ function wfSpecialApiExplorer () {
 		 * @param $par - parameters for SpecialPage. Ignored.
 		 */
 		function execute( $par = null ) {
-			global $wgOut, $wgExtensionsPath;
+			global $wgOut, $wgExtensionsPath, $wgCityId, $wgStyleVersion;
 			wfProfileIn( __METHOD__ );
 
 			wfLoadExtensionMessages( "AutoCreateWiki" ); // TODO: This isn't needed anymore, even in Wikia code (which is 2 versions back at the moment), is it?
 
 			// TODO: Make this work for ResourceLoader (Wikia isn't using RL yet at the time of this writing).
-			// Note that this should have ?{$wgStyleVersion} at the end for non-wikia MediaWikis. We have the cachebuster in our wgExtensionsPath (we rewrite that in varnish because many proxies won't cache things that have "?" in the URL).
-			$wgOut->addScript( "<script type=\"text/javascript\" src=\"{$wgExtensionsPath}/wikia/JavascriptAPI/Mediawiki.js\"></script>" );
-			$wgOut->addScript( "<script type=\"text/javascript\" src=\"{$wgExtensionsPath}/wikia/ApiExplorer/apiExplorer.js\"></script>" );
-			$wgOut->addScript( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgExtensionsPath}/wikia/ApiExplorer/apiExplorer.css\" />" );
+			// Wikia has the cachebuster in the wgExtensionPath (we rewrite that in varnish because many proxies won't cache things that have "?" in the URL), but other MediaWikis need the style-version in the querystring.
+			$cbSuffix = ( isset($wgCityId) ? "?{$wgStyleVersion}" : "" );
+			$wgOut->addScript( "<script type=\"text/javascript\" src=\"{$wgExtensionsPath}/wikia/JavascriptAPI/Mediawiki.js{$cbSuffix}\"></script>" );
+			$wgOut->addScript( "<script type=\"text/javascript\" src=\"{$wgExtensionsPath}/wikia/ApiExplorer/apiExplorer.js{$cbSuffix}\"></script>" );
+			$wgOut->addScript( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgExtensionsPath}/wikia/ApiExplorer/apiExplorer.css{$cbSuffix}\" />" );
 
 			ob_start();
+				$buttonHeight = 15;
+				$collapseSrc = "$wgExtensionsPath/wikia/ApiExplorer/collapse.png$cbSuffix";
+				$expandSrc = "$wgExtensionsPath/wikia/ApiExplorer/collapse.png$cbSuffix"; 
+				?><style>
+					.collapsible h2 span, .collapsible h3 span{
+						width:<?= $buttonHeight ?>px;
+						height:1em;
+						float:right;
+						display:inline-block;
 
-				?><div id='apEx_intro'>
+						background-repeat:no-repeat;
+						background-position:right center;
+						background-image: url(<?= "$wgExtensionsPath/wikia/ApiExplorer/collapse.png$cbSuffix"; ?>);
+					}
+					.collapsed h2 span, .collapsed h3 span{
+						background-image: url(<?= "$wgExtensionsPath/wikia/ApiExplorer/expand.png$cbSuffix"; ?>);
+					}
+				</style>
+				<div id='apEx_intro'>
 					<?= wfMsg('apiexplorer-intro') ?>
 				</div>
 				<div id='apEx_loading'><?= wfMsg('apiexplorer-loading') ?></div>
@@ -68,7 +86,7 @@ function wfSpecialApiExplorer () {
 					$params = array("modules", "querymodules", "formatmodules");
 					foreach($params as $param){
 						?><div class='<?= $param ?> collapsible collapsed paramName' data-param-name='<?= $param ?>'>
-							<h2 class='name'></h2>
+							<h2 class='name'><span class='toggleIcon'></span></h2>
 							<div class='paramContent'>
 								<div class='description'></div>
 								<dl>
