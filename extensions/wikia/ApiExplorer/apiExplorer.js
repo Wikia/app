@@ -40,15 +40,15 @@ if(typeof ApiExplorer == "undefined"){
 						};
 						if(typeof names[param.name] != 'undefined'){
 							var name = param.name;
-							$('#apEx div.'+name+' h2.name').html( param.name );
+							$('#apEx div.'+name+' h2.name').prepend( param.name ).data('module-name', param.name);
 							$('#apEx div.'+name+' div.description').html( param.description );
 							for(var typeIndex in allTypes){
 								var t = allTypes[typeIndex];
-								$('#apEx div.'+name+' dl').append("<dt class='collapsible collapsed'><h3>" + t + "</h3></dt>");
+								$('#apEx div.'+name+' dl').append("<dt class='collapsible collapsed'><h3 data-param-name='"+t+"'>" + t + "<span class='toggleIcon'></span></h3></dt>");
 							}
 
 							// Add click-handlers to each dt to get more info on that function.
-							$('#apEx div.'+name+' dt').click( function(e){
+							$('#apEx div.'+name+' dt.collapsible').click( function(e){
 								// If already expanded, just collapse.
 								if(!$( e.currentTarget ).hasClass('collapsed')){
 									$( e.currentTarget ).addClass('collapsed');
@@ -66,7 +66,7 @@ if(typeof ApiExplorer == "undefined"){
 										// TODO: Put a loading-indicator in the h3 and then remove when finished loading?
 										// TODO: Put a loading-indicator in the h3 and then remove when finished loading?
 
-										var dtName = $(e.currentTarget).find('h3').html();
+										var dtName = $(e.currentTarget).find('h3').data('param-name');
 										$().log("Content is empty, loading info from API for " + paramName + '=' + dtName);
 
 										Mediawiki.paraminfo(paramName, dtName, function(result){
