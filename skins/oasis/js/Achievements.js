@@ -33,10 +33,12 @@ var AchievementsThing = {
 
 	seeAllClick: function(event) {
 		if ($(".AchievementsModule .badges-more").is(':visible')) {
-			$(".AchievementsModule").find(".view-all").text(wgAchievementsMoreButton[0]);
+			$(".AchievementsModule").find(".view-all span").text(wgAchievementsMoreButton[0]);
+			$(".AchievementsModule").find(".view-all img").show();
 		}
 		else {
-			$(".AchievementsModule").find(".view-all").text(wgAchievementsMoreButton[1]);
+			$(".AchievementsModule").find(".view-all span").text(wgAchievementsMoreButton[1]);
+			$(".AchievementsModule").find(".view-all img").hide();
 
 			$('.AchievementsModule, .WikiaLatestEarnedBadgesModule').find('.sponsored-link img.badges-more').each(function(){
 				AchievementsThing.trackSponsored($(this).parent().attr('data-badgetrackurl'));

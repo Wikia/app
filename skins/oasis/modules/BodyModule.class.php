@@ -276,7 +276,7 @@ class BodyModule extends Module {
 				}
 
 				if($wgEnableAchievementsExt && !(($wgUser->getId() == $page_owner->getId()) && $page_owner->getOption('hidepersonalachievements'))){
-					$railModuleList[1102] = array('Achievements', 'UserProfilePagesModule', null);
+					$railModuleList[1102] = array('Achievements', 'Index', null);
 				}
 			}
 		}
