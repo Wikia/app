@@ -199,6 +199,11 @@ function inputFocus(e) {
 	$(e.target).val("").addClass('focus');
 }
 
+// ignore case of first character of category
+function ignoreCapitalization(str){
+	return str.slice(0,1).toUpperCase() + str.slice(1);
+}
+
 function addCategoryBase(category, params, index, checkdupes) {
 	if (params === undefined) {
 		params = {
@@ -229,7 +234,8 @@ function addCategoryBase(category, params, index, checkdupes) {
 	if(checkdupes){
 		for (var c=0; c < categories.length; c++) {
 			if (categories[c] === null) continue;
-			if(category.toLowerCase() == categories[c].category.toLowerCase() && params.outerTag == categories[c].outerTag && params.sortkey == categories[c].sortkey){
+			
+			if(ignoreCapitalization(category) == ignoreCapitalization(categories[c].category) && params.outerTag == categories[c].outerTag && params.sortkey == categories[c].sortkey){
 				return;
 			}
 		}
