@@ -4,6 +4,7 @@
 }
 
 #apEx div.collapsible h2{
+	cursor:pointer;
 	/* TODO: Style as a bar */
 	
 	/* TODO: add an arrow to COLLAPSE */
@@ -16,6 +17,9 @@
 	display:none;
 }
 
+#apEx dt.collapsible h3{
+	cursor:pointer;
+}
 #apEx dl.collapsed dt{
 	display:none;
 }
