@@ -7,7 +7,7 @@ define.call(exports, {
 	mute: false,
 	
 	init: function(counfigSounds) {
-		var 	path = "extensions/wikia/hacks/PhotoPop/shared/audio/";
+		var path = ((document && !Titanium) ? "extensions/wikia/hacks/PhotoPop/" : '') + "shared/audio/";
 			
 		this.sounds = {
 			"win": new Audio(path + counfigSounds.win + ".wav" ),
