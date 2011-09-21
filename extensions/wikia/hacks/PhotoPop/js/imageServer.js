@@ -1,5 +1,5 @@
 var imageServer = {	
-	getImage: function(image) {
+	get: function(image) {
 		return "extensions/wikia/hacks/PhotoPop/images/" + image + ".png";
 	}
 }

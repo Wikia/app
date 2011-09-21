@@ -2,23 +2,23 @@ var templates = {
 	mainPage: "<div id='wrapper'>\
 			<div id='logoWrapper'>\
 				<div id='photopop_logo'>\
-					<img src='{{PHOTOPOP_LOGO}}'/><br/>\
-					<img src='{{POWERED_BY_LOGO}}'/>\
+					<img src='{{#image}}PHOTOPOP_LOGO{{/image}}'/><br/>\
+					<img src='{{#image}}POWERED_BY_LOGO{{/image}}'/>\
 				</div>\
 			</div>\
 			<div id='playWrapper'>\
-				<a href='{{playButtonUrl}}'><img src='{{buttonSrc_play}}'/></a>\
+				<a href='{{#image}}playButtonUrl{{/image}}'><img src='{{#image}}buttonSrc_play{{/image}}'/></a>\
 			</div>\
 			<div id='buttonWrapper'>\
 				<div id='button_scores'>\
-					<img src='{{buttonSrc_scores}}'/>\
+					<img src='{{#image}}buttonSrc_scores{{/image}}'/>\
 				</div>\
 			<div id='button_tutorial'>\
-				<a href='{{tutorialButtonUrl}}'><img src='{{buttonSrc_tutorial}}'/></a>\
+				<a href='{{#image}}tutorialButtonUrl{{/image}}'><img src='{{#image}}buttonSrc_tutorial{{/image}}'/></a>\
 			</div>\
 			<div id='button_volume'>\
-				<img class='on' src='{{buttonSrc_volumeOn}}'/>\
-				<img class='off' src='{{buttonSrc_volumeOff}}'/>\
+				<img class='on' src='{{#image}}buttonSrc_volumeOn{{/image}}'/>\
+				<img class='off' src='{{#image}}buttonSrc_volumeOff{{/image}}'/>\
 			</div>\
 		</div>\
 	</div>",
