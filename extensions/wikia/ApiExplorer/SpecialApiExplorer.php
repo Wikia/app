@@ -69,10 +69,12 @@ function wfSpecialApiExplorer () {
 					foreach($params as $param){
 						?><div class='<?= $param ?> collapsible collapsed paramName' data-param-name='<?= $param ?>'>
 							<h2 class='name'></h2>
-							<div class='description'></div>
-							<dl>
-								<!-- Filled by a call to the API -->
-							</dl>
+							<div class='paramContent'>
+								<div class='description'></div>
+								<dl>
+									<!-- Filled by a call to the API -->
+								</dl>
+							</div>
 						</div><?php
 					} ?>
 				</div>

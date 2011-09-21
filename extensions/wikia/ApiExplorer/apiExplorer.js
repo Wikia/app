@@ -78,7 +78,7 @@ if(typeof ApiExplorer == "undefined"){
 
 						// TEMPORARY UNTIL WE MAKE IT PRETTIER. TODO: FORMAT THIS DATA.
 											var rawData = JSON.stringify( modulesArray[0] );
-											$(e.currentTarget).append("<dd>" + rawData + "</dd>");
+											$(e.currentTarget).append("<dd class='paramContent'>" + rawData + "</dd>");
 										});
 									}
 								}
@@ -93,7 +93,7 @@ if(typeof ApiExplorer == "undefined"){
 				});
 
 				$('#apEx_loading').hide();
-				$('#apEx_main').show();
+				$('#apEx').show();
 			}, function(err){
 				$().log("ERROR GETTING LIST OF MODULES FROM THE API.\nMake sure this wiki is a Wikia wiki or running v1.18+ of MediaWiki.");
 				$().log(err);

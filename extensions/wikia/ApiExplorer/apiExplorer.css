@@ -1,14 +1,64 @@
 
+#apEx{
+	display:none;
+}
 #apEx_loading{
 	display:none;
 }
 
-#apEx div.collapsible h2{
+#apEx div.paramName, dt.collapsible{
+	margin-bottom:10px;
+}
+
+#apEx div.paramName h2, .paramContent{
+	padding:10px;
+	margin:0px;
+}
+dd.paramContent{ /* even with the rule above, this is still needed in order to have higher specificity than other statements in the skin */
+	margin:0px;
+}
+
+.paramContent{
+	border-left: 2px solid #008;
+	border-right: 2px solid #008;
+}
+div.paramContent{ /* Top level*/
+	background-color: #bdf;
+}
+dd.paramContent{ /* per-module */
+	background-color:#bfd;
+}
+
+.collapsible h2, .collapsible h3{
+	/* Make it into a bar */
+	margin:0px;
+	text-decoration:none;
 	cursor:pointer;
-
+	border:2px solid #008;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	
+	/* Not collapsed... so hide the bottom border so it bleeds into the rest */
+	border-bottom:0px;
+	border-bottom-left-radius:0px;
+	border-bottom-right-radius:0px;
+	
 	/* TODO: add an arrow to COLLAPSE */
 	/* TODO: add an arrow to COLLAPSE */
+}
+.collapsible.collapsed h2, .collapsible.collapsed h3, .paramContent{
 
+	/* TODO: add an arrow to EXPAND */
+	/* TODO: add an arrow to EXPAND */
+	
+	/* Collapsed state for h2, h3 or expanded for content... show bottom border & rounded corners */
+	border-bottom:2px solid #008;
+	border-bottom-left-radius:10px;
+	border-bottom-right-radius:10px;
+}
+
+#apEx div.collapsible h2{
 	/* Pretty gradient background */
 	background-image: linear-gradient(bottom, rgb(10,74,143) 43%, rgb(52,112,217) 72%);
 	background-image: -o-linear-gradient(bottom, rgb(10,74,143) 43%, rgb(52,112,217) 72%);
@@ -23,43 +73,32 @@
 			color-stop(0.72, rgb(52,112,217))
 	);
 
-	/* Make it into a bar */
 	color:white;
-	width:600px;
-	text-decoration:none;
-	border:2px solid #008;
-	-webkit-border-radius: 10px;
-	-moz-border-radius: 10px;
-	border-radius: 10px;
-	padding:10px;
-
-	/* Not collapsed... so hide the bottom border so it bleeds into the rest */
-	border-bottom:0px;
-	border-bottom-left-radius:0px;
-	border-bottom-right-radius:0px;
-}
-#apEx div.collapsible.collapsed h2{
-
-	/* TODO: add an arrow to EXPAND */
-
-	/* Collapsed state... show bottom border & rounded corners */
-	border-bottom:2px solid #008;
-	border-bottom-left-radius:10px;
-	border-bottom-right-radius:10px;
 }
 
-#apEx div.collapsed dl, #apEx div.collapsed div{
+.collapsed div, .collapsed dl, .collapsed dt, .collapsed dd{
 	display:none;
 }
 
-#apEx dt.collapsible h3{
-	/* TODO: Style as a bar */
-	cursor:pointer;
-}
-#apEx dl.collapsed dt{
-	display:none;
-}
 
-#apEx dt.collapsed dd{
-	display:none;
+/** Second-level of style... the dts **/
+#apEx dt *{
+	border-color: #080;
+}
+#apEx dt h3{
+	padding:5px;
+
+	background-image: linear-gradient(bottom, rgb(40,230,30) 48%, rgb(133,248,156) 74%);
+	background-image: -o-linear-gradient(bottom, rgb(40,230,30) 48%, rgb(133,248,156) 74%);
+	background-image: -moz-linear-gradient(bottom, rgb(40,230,30) 48%, rgb(133,248,156) 74%);
+	background-image: -webkit-linear-gradient(bottom, rgb(40,230,30) 48%, rgb(133,248,156) 74%);
+	background-image: -ms-linear-gradient(bottom, rgb(40,230,30) 48%, rgb(133,248,156) 74%);
+
+	background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0.48, rgb(40,230,30)),
+		color-stop(0.74, rgb(133,248,156))
+	);
 }
