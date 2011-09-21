@@ -8,4 +8,5 @@ echo wfRenderModule('MenuButton', 'Index', array(
 	'class' => 'secondary contribute',
 	'image' => MenuButtonModule::CONTRIBUTE_ICON,
 	'dropdown' => $dropdownItems,
+	'contribute' => true
 ));
