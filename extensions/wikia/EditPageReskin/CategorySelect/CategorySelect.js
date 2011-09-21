@@ -1,3 +1,4 @@
+// This is officially old. This file has been updated in extensions/wikia/CategorySelect
 var oAutoComp;
 var categories = [];
 var fixCategoryRegexp = new RegExp('\\[\\[(?:' + csCategoryNamespaces + '):([^\\]]+)]]', 'i');
