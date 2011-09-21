@@ -895,3 +895,9 @@ $wgEnableNirvanaAPI = true;
  * Array of disabled article actions which will fallback to "view" action (BugId:9964)
  */
 $wgDisabledActionsWithViewFallback = array();
+
+/**
+ * Variable for enabling Special:ApiExplorer which lets users browse the documentation for the API
+ * on that specific wiki (uses the actual API to build the documentation).
+ */
+$wgEnableApiExplorerExt = true;
