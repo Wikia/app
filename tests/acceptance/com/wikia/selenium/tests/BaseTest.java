@@ -376,7 +376,7 @@ public class BaseTest {
 			}
 			byte[] md5sum = digest.digest();
 			BigInteger bigInt = new BigInteger(1, md5sum);
-			output = bigInt.toString(16);
+			output = String.format("%0" + (md5sum.length << 1) + "x", bigInt);
 		} finally {
 			is.close();
 		}
