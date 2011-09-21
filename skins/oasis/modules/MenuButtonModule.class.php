@@ -27,6 +27,7 @@ class MenuButtonModule extends Module {
 	var $loginURL;
 	var $loginToEditURL;
 	var $loginTitle;
+	var $contribute;
 
 	var $wgOut;
 
@@ -145,6 +146,8 @@ class MenuButtonModule extends Module {
 		if(!empty($data['id'])) {
 			$this->id = $data['id'];
 		}
+
+		if(!empty($data['contribute'])) $this->contribute = $data['contribute'];
 
 		wfProfileOut(__METHOD__);
 	}
