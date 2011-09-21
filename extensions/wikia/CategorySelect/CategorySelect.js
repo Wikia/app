@@ -149,10 +149,10 @@ function modifyCategory(e) {
 }
 
 function replaceAddToInput(e) {
-	$('#csAddCategoryButton').hide();
-	$('#csCategoryInput').show();
-	positionSuggestBox();
 	if(csType != 'module') {
+		$('#csAddCategoryButton').hide();
+		$('#csCategoryInput').show();
+		positionSuggestBox();
 		$('#csHintContainer').show();
 	}
 	$('#csCategoryInput').focus();
@@ -197,6 +197,20 @@ function inputBlur() {
 function inputFocus(e) {
 	collapseAutoComplete();
 	$(e.target).val("").addClass('focus');
+}
+
+function isDupe(category){
+	// create array of curent category names
+	var dupcheck = [];
+	for (var c=0; c < categories.length; c++) {
+		if (categories[c] === null) continue;
+		dupcheck.push(categories[c].category.toLowerCase());
+	}
+	if($.inArray(category, dupcheck) > 0){
+		// category is already there, it's a dupe. 
+		return true;
+	}
+	return false;
 }
 
 function addCategoryBase(category, params, index) {
@@ -270,7 +284,9 @@ function addCategoryBase(category, params, index) {
 
 
 function addCategory(category, params, index) {
-	addCategoryBase(category, params, index);
+	if(!isDupe(category)){
+		addCategoryBase(category, params, index);
+	}
 	$('#csCategoryInput').attr('value', '');
 
 	$('#csItemsContainer').trigger('categorySelectAdd');
@@ -313,6 +329,7 @@ function initializeCategories(cats) {
 		$('#wpCategorySelectSourceType').attr('value', 'json');
 	}
 
+	// Only on view page, not on edit page
 	addAddCategoryButton();
 	for (var c=0; c < categories.length; c++) {
 		addCategoryBase(categories[c].category, {'namespace': categories[c].namespace, 'outerTag': categories[c].outerTag, 'sortkey': categories[c].sortkey}, c);
@@ -430,16 +447,18 @@ function inputKeyPress(e) {
 		e.preventDefault();
 		var category = $('#csCategoryInput').val();
 
-		if (category != '' && (window.oAutoComp && window.oAutoComp._oCurItem == null) /* BugId:5671 */) {
-			addCategory(category);
-		}
-
-		$('#csWikitext').val(generateWikitextForCategories());
-		//hide input and show button when [enter] pressed with empty input
-		if (category == '') {
+		if (category != '') {
+			if(window.oAutoComp && window.oAutoComp._oCurItem == null){ /* BugId:5671 */
+				addCategory(category);
+				$('#csWikitext').val(generateWikitextForCategories());
+			}
+		} else {
 			csTrack('enterCategoryEmpty');
-			$('#csCategoryInput').blur();
-			inputBlur();
+			//on view page, hide input and show button when [enter] pressed with empty input
+			if(csType != 'module'){
+				$('#csCategoryInput').blur();
+				inputBlur();
+			}
 		}
 	}
 	if(e.keyCode == 27) {
