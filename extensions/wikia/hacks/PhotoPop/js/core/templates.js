@@ -7,14 +7,14 @@ var templates = {
 				</div>\
 			</div>\
 			<div id='playWrapper'>\
-				<a href='{{#image}}playButtonUrl{{/image}}'><img src='{{#image}}buttonSrc_play{{/image}}'/></a>\
+				<a href='{{#url}}playButtonUrl{{/url}}'><img src='{{#image}}buttonSrc_play{{/image}}'/></a>\
 			</div>\
 			<div id='buttonWrapper'>\
 				<div id='button_scores'>\
 					<img src='{{#image}}buttonSrc_scores{{/image}}'/>\
 				</div>\
 			<div id='button_tutorial'>\
-				<a href='{{#image}}tutorialButtonUrl{{/image}}'><img src='{{#image}}buttonSrc_tutorial{{/image}}'/></a>\
+				<a href='{{#url}}tutorialButtonUrl{{/url}}'><img src='{{#image}}buttonSrc_tutorial{{/image}}'/></a>\
 			</div>\
 			<div id='button_volume'>\
 				<img class='on' src='{{#image}}buttonSrc_volumeOn{{/image}}'/>\
