@@ -58,21 +58,29 @@ class CreateWikiLocalJob extends Job {
 	 */
 	public function run() {
 
-		global $wgUser, $wgErrorLog, $wgExtensionMessagesFiles, $wgDebugLogFile, $wgServer;
+		global $wgUser, $wgErrorLog, $wgExtensionMessagesFiles, $wgDebugLogFile,
+			$wgServer, $wgInternalServer;
 
 		wfProfileIn( __METHOD__ );
 
 		/**
 		 * overwrite $wgServer. It is sometimes set as localhost which sends broken url
 		 * to purgers
+		 *
+		 * @see SquidUpdate::expand
 		 */
 		$wgServer = $this->mParams->url;
+		$wgInternalServer = $wgServer;
 
 		$wgExtensionMessagesFiles[ "AutoCreateWiki" ] = dirname(__FILE__) . "/AutoCreateWiki.i18n.php";
 
+		/**
+		 * very verbose
+		 */
 		$debugLogFile = $wgDebugLogFile;
 		$wgDebugLogFile = "php://stdout";
 		$wgErrorLog = false;
+
 		/**
 		 * setup founder user
 		 */

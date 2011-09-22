@@ -212,10 +212,12 @@ class SquidUpdate {
 				$url = SquidUpdate::expand( $url );
 
 				wfDebug( "Purging URL $url via Scribe\n" );
-				$data = Wikia::json_encode( array('url' => $url,
-												  'time' => time(),
-											 	 )
-										  );
+				$data = Wikia::json_encode(
+					array(
+						'url' => $url,
+						'time' => time(),
+					)
+				);
 				WScribeClient::singleton($key)->send($data);
 			}
 		}
