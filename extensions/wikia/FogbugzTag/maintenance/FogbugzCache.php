@@ -15,11 +15,11 @@ function replaceCase( $connection, $case ) {
 		'ixPriority' => $case['ixPriority'],
 		'ixProject' => $case['ixProject'],
 		'ixCategory' => $case['ixCategory'],
-		'dtOpened' => $case['dtOpened'],
-		'dtResolved' => $case['dtResolved'],
-		'dtClosed' => $case['dtClosed'],
-		'dtLastUpdated' => $case['dtLastUpdated'],
-		'OpenedYW' => date( 'YW', strtotime( $case['dtOpened'] ) ),
+		'dtOpened' => !empty( $case['dtOpened'] ) ? $case['dtOpened'] : null,
+		'dtResolved' => !empty( $case['dtResolved'] ) ? $case['dtResolved'] : null,
+		'dtClosed' => !empty( $case['dtClosed'] ) ? $case['dtClosed'] : null,
+		'dtLastUpdated' => !empty( $case['dtLastUpdated'] ) ? $case['dtLastUpdated'] : null,
+		'OpenedYW' => !empty( $case['dtOpened'] ) ? date( 'YW', strtotime( $case['dtOpened'] ) ) : null,
 		'ResolvedYW' => !empty( $case['dtResolved'] ) ? date( 'YW', strtotime( $case['dtResolved'] ) ) : null,
 		'ClosedYW' => !empty( $case['dtClosed'] ) ? date( 'YW', strtotime( $case['dtClosed'] ) ) : null
 	) );
@@ -177,7 +177,6 @@ else {
 				$attachment_dirs[] = '/tmp/operations-'.$dateToday->format( 'Ymd-His' ) . "-" . $name .'.csv';
 			}
 
-
 			$emails = array();
 			$emails[] = new MailAddress( 'ops-automatic-l@wikia-inc.com' );			
 			UserMailer::sendWithAttachment( 
@@ -192,6 +191,7 @@ else {
 			$wgMemc->set( $key, 1 );
 		}
 	}
+	
 	$myFBService->logoff();
 }
 echo "Done.\n";
