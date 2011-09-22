@@ -89,15 +89,13 @@ class MultiDeleteTask extends BatchTask {
 			foreach ( $wikiList as $id => $city_id ) {
 				$retval = "";
 				# check dbname exists
-				$dbname = WikiFactory::IDtoDB( $city_id );
+				$dbname = WikiFactory::getWikiByID( $city_id );
 				if ( !$dbname ) continue;			
 				
 				$city_url = WikiFactory::getVarValueByName( "wgServer", $city_id );
+				if ( empty($city_url) ) continue;
+				
 				$city_path = WikiFactory::getVarValueByName( "wgScript", $city_id );
-
-				if ( empty($city_url) ) {
-					$city_url = 'wiki id in WikiFactory: ' . $city_id;
-				}
 				# command
 				$sCommand  = "SERVER_ID={$city_id} php $IP/maintenance/wikia/deleteOn.php ";
 				$sCommand .= "-u " . $username . " ";
