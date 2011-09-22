@@ -1488,31 +1488,39 @@ class Wikia {
 
 	/**
 	 * save article extra properties to page_props table
+	 *
+	 * Warning: Fails silently if the write can not be made (for instance, if in read-only mode or if there is a db error).
+	 *
 	 * @static
 	 * @access public
 	 * @param array $props array of properties to save (prop name => prop value)
 	 */
 
 	static public function setProps( $page_id, Array $props ) {
+		global $wgReadOnly;
 		wfProfileIn( __METHOD__ );
-		$dbw = wfGetDB( DB_MASTER );
-		foreach( $props as $sPropName => $sPropValue) {
-			$dbw->replace(
-				"page_props",
-				array(
-					"pp_page",
-					"pp_propname"
-				),
-				array(
-					"pp_page" => $page_id,
-					"pp_propname" => $sPropName,
-					"pp_value" => $sPropValue
-				),
-				__METHOD__
-			);
-			Wikia::log( __METHOD__, "save", "id: {$page_id}, key: {$sPropName}, value: {$sPropValue}" );
+		
+		if( empty($wgReadOnly) ){ // Change to wgReadOnlyDbMode if we implement thatwgReadOnly
+			$dbw = wfGetDB( DB_MASTER );
+			foreach( $props as $sPropName => $sPropValue) {
+				$dbw->replace(
+					"page_props",
+					array(
+						"pp_page",
+						"pp_propname"
+					),
+					array(
+						"pp_page" => $page_id,
+						"pp_propname" => $sPropName,
+						"pp_value" => $sPropValue
+					),
+					__METHOD__
+				);
+				Wikia::log( __METHOD__, "save", "id: {$page_id}, key: {$sPropName}, value: {$sPropValue}" );
+			}
+			$dbw->commit(); #--- for ajax
 		}
-		$dbw->commit(); #--- for ajax
+
 		wfProfileOut( __METHOD__ );
 	}
 
