@@ -47,7 +47,7 @@ class LocalMaintenanceTask extends BatchTask {
 	 */
 	public function execute( $params = null ) {
 		global $IP, $wgWikiaLocalSettingsPath, $wgWikiaAdminSettingsPath,
-			$wgExtensionMessagesFiles, $wgServer;
+			$wgExtensionMessagesFiles;
 
 		$this->mTaskID = $params->task_id;
 		$this->mParams = unserialize( $params->task_arguments );
@@ -55,15 +55,16 @@ class LocalMaintenanceTask extends BatchTask {
 		$city_id = $this->mParams[ "city_id" ];
 		$command = $this->mParams[ "command" ];
 		$type    = $this->mParams[ "type" ];
+		$server  = $this->mParams[ "server" ];
 
-		$this->addLog( "wgServer for this site is: $wgServer" );
+		$this->addLog( "wgServer for this site is: $server" );
 
 		if( $city_id && $command ) {
 			$this->mWikiId = $city_id;
 			/**
 			 * execute maintenance script
 			 */
-			$cmd = sprintf( "SERVER_ID={$city_id} php {$IP}/{$command} --conf {$wgWikiaLocalSettingsPath} --aconf {$wgWikiaAdminSettingsPath}" );
+			$cmd = sprintf( "SERVER_ID={$city_id} php {$IP}/{$command} --server={$server} --conf {$wgWikiaLocalSettingsPath} --aconf {$wgWikiaAdminSettingsPath}" );
 			$this->addLog( "Running {$cmd}" );
 			$retval = wfShellExec( $cmd, $status );
 			$this->addLog( $retval );

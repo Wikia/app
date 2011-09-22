@@ -157,7 +157,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->mPosted       = $wgRequest->wasPosted();
 		$this->mPostedErrors = array();
 		$this->mErrors       = 0;
-		
+
 		// redirect to the new create wiki.  use action or type query params to bypass.
 		if(!($wgRequest->wasPosted()) && empty($this->mAction) && empty($this->mType)) {
 			$cnwTitle = Title::newFromText("CreateNewWiki", NS_SPECIAL);
@@ -764,10 +764,11 @@ class AutoCreateWikiPage extends SpecialPage {
 		$Task = new LocalMaintenanceTask();
 		$Task->createTask(
 			array(
-				"city_id" 	=> $this->mWikiId,
-				"command" 	=> "maintenance/runJobs.php",
-				"type" 		=> "ACWLocal",
-				"data" 		=> $this->mWikiData
+				"city_id" => $this->mWikiId,
+				"command" => "maintenance/runJobs.php",
+				"type"    => "ACWLocal",
+				"data"    => $this->mWikiData,
+				"server"  => rtrim( $this->mWikiData[ "url" ], "/" )
 			),
 			TASK_QUEUED
 		);
@@ -974,7 +975,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		$wgOut->addScript( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgStylePath}/common/wikia_ui/tabs.css?{$wgStyleVersion}\" />" );
 		// RT #19245
 		$wgOut->addStyle("common/form.ie7.css{$wgStyleVersion}", '', 'IE 7');
-		
+
 		$wgOut->addScript( "<script type=\"text/javascript\" src=\"{$wgStylePath}/common/form.js?{$wgStyleVersion}\"></script>" );
 
 		/**
@@ -1277,7 +1278,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		$oUser = User::newFromName( $name, 'creatable' );
 
 		$oExtUser = ExternalUser::newFromName( $this->mUsername );
-		
+
 		if ( ! $oUser instanceof User) {
 			$this->makeError( "wiki-username", wfMsg('noname') );
 		} elseif ( is_object( $oExtUser ) && ( 0 != $oExtUser->getId() ) ) {
@@ -1350,11 +1351,11 @@ class AutoCreateWikiPage extends SpecialPage {
 		wfProfileIn( __METHOD__ );
 
 		$oExtUser = null;
-		if ( $wgExternalAuthType ) {			
+		if ( $wgExternalAuthType ) {
 			$oUser = ExternalUser::addUser( $oUser, $this->mPassword, $this->mEmail, "" );
 			if ( is_object( $oUser ) ) {
-				$oExtUser = ExternalUser::newFromName( $this->mUsername );	
-			}	
+				$oExtUser = ExternalUser::newFromName( $this->mUsername );
+			}
 		} else {
 			$oUser->addToDatabase();
 		}
