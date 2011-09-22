@@ -8,7 +8,7 @@ class EditPageLayoutAjax {
 	static private function resolveWikitext($content, $mode, $page, $method, $section ) {
 		global $wgRequest, $wgTitle, $wgOut;
 		wfProfileIn(__METHOD__);
-		if(class_exists($page)) {
+		if($wgTitle && class_exists($page)) {
 			$pageObj = new $page();
 			if(is_a( $pageObj, 'SpecialCustomEditPage' )) {
 				$wikitext = $pageObj->getWikitextFromRequestForPreview($wgRequest->getVal('title', 'empty'));
