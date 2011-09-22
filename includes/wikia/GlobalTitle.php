@@ -294,6 +294,14 @@ class GlobalTitle extends Title {
 		 * get value from city_list.city_url
 		 */
 		$city = WikiFactory::getWikiByID( $this->mCityId );
+
+		/**
+		 * if we got this far and not have a value, ask master
+		 */
+		if ( empty( $city ) ) {
+			$city = WikiFactory::getWikiByID( $this->mCityId, true );
+		}
+
 		if( $city ) {
 			$server = rtrim( $city->city_url, "/" );
 			$this->mServer = $server;
