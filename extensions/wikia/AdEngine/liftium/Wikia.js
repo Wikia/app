@@ -271,16 +271,37 @@ LiftiumDART.getQuantcastSegmentKV = function (){
 	return kv;
 };
 
+// depends on jquery.expirystorage.js and jquery.store.js
 LiftiumDART.getImpressionCount = function (slotname) {
 	// return key-value only if impression cookie exists
+	
+	var adDriverNumAllCallStorageName = 'adDriverNumAllCall';
+	var storage = '';
+	var cookieStorage = '';
 
 	if (Liftium.e(Liftium.adDriverNumCall)) {
-		Liftium.d('Loading AdDriver data from cookie');
-		var cookie = Liftium.cookie('adDriverNumAllCall');
-		if (!Liftium.e(cookie)) {
-			Liftium.adDriverNumCall = eval('(' + cookie + ')');
+		if (window.wgAdDriverUseExpiryStorage) {
+			Liftium.d('Loading AdDriver data from expiry storage');
+			storage = $.expiryStorage.get(adDriverNumAllCallStorageName);
+		}
+		
+		if (window.wgAdDriverUseCookie) {
+			Liftium.d('Loading AdDriver data from cookie');
+			cookieStorage = Liftium.cookie('adDriverNumAllCall');			
+			if (Liftium.e(window.wgAdDriverUseExpiryStorage)) {
+				storage = cookieStorage;
+			}
+		}
+		if (!Liftium.e(storage)) {
+			Liftium.adDriverNumCall = eval('(' + storage + ')');
 			Liftium.d('AdDriver data loaded:', 7, Liftium.AdDriverNumCall);
 		}
+		
+		if (window.wgAdDriverUseExpiryStorage && window.wgAdDriverUseCookie) {
+			if (storage != cookieStorage) {
+				Liftium.trackEvent(Liftium.buildTrackUrl(["error", "impctoutofsync", slotname]));
+			}
+		}		
 	}
 
 	if (!Liftium.e(Liftium.adDriverNumCall)) {
