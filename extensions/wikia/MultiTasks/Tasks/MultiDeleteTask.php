@@ -88,6 +88,10 @@ class MultiDeleteTask extends BatchTask {
 		if ( !empty($wikiList) ) {
 			foreach ( $wikiList as $id => $city_id ) {
 				$retval = "";
+				# check dbname exists
+				$dbname = WikiFactory::IDtoDB( $city_id );
+				if ( !$dbname ) continue;			
+				
 				$city_url = WikiFactory::getVarValueByName( "wgServer", $city_id );
 				$city_path = WikiFactory::getVarValueByName( "wgScript", $city_id );
 
