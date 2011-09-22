@@ -1500,11 +1500,14 @@ class WikiFactory {
 
 		wfRunHooks( 'WikiFactoryPublicStatusChange', array( &$city_public, &$city_id ) );
 
-		$update = array( "city_public" => $city_public );
+		$update = array( 
+			"city_public" => $city_public,
+			"city_last_timestamp" => wfTimestamp( TS_DB ),
+		);
 		if ( !empty($reason) ) {
 			$update["city_additional"] = $reason;
 		}
-
+		
 		$dbw = self::db( DB_MASTER );
 		$dbw->update(
 			"city_list",
@@ -1571,6 +1574,25 @@ class WikiFactory {
 		}
 
 		return false;
+	}
+	
+	/**
+	 * hideWiki
+	 * 
+	 * Hides the wiki from users, still leaving database and files in place
+	 * 
+	 * @author wladek
+	 * @static
+	 * 
+	 * @param integer $wikiId wiki id
+	 * @param integer $flags close flags
+	 * @param string  $reason [optional] reason text
+	 */
+	static public function hideWiki( $wikiId, $flags, $reason = '' ) {
+		self::setFlags( $wikiId, $flags );
+		$res = self::setPublicStatus( self::CLOSE_ACTION, $wikiId, $reason );
+		self::clearCache( $wikiId );
+		return $res;
 	}
 
 	/**

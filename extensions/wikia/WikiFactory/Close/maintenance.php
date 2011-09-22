@@ -15,6 +15,8 @@ require_once( "commandLine.inc" );
 require_once( "Archive/Tar.php" );
 
 class CloseWikiMaintenance {
+	
+	const CLOSE_WIKI_DELAY = 14;
 
 	private $mTarget, $mOptions;
 
@@ -62,13 +64,15 @@ class CloseWikiMaintenance {
 			}
 		}
 
+		$timestamp = wfTimestamp(TS_DB,strtotime(sprintf("-%d days",self::CLOSE_WIKI_DELAY)));
 		$dbr = WikiFactory::db( DB_SLAVE );
 		$sth = $dbr->select(
 			array( "city_list" ),
 			array( "city_id", "city_flags", "city_dbname", "city_url", "city_public" ),
 			array(
 				"city_public" => array( 0, -1 ),
-				"city_flags <> 0 && city_flags <> 32"
+				"city_flags <> 0 && city_flags <> 32",
+				"city_last_timestamp < '{$timestamp}'",
 			),
 			__METHOD__,
 			$condition
