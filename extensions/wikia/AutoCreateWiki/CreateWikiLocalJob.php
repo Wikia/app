@@ -69,7 +69,7 @@ class CreateWikiLocalJob extends Job {
 		 *
 		 * @see SquidUpdate::expand
 		 */
-		$wgServer = $this->mParams->url;
+		$wgServer = rtrim( $this->mParams->url, "/" );
 		$wgInternalServer = $wgServer;
 
 		$wgExtensionMessagesFiles[ "AutoCreateWiki" ] = dirname(__FILE__) . "/AutoCreateWiki.i18n.php";
