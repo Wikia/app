@@ -1532,16 +1532,18 @@ class Wikia {
 	 * hooked up to AddNewAccount
 	 */
 	static public function ignoreUser( $user, $byEmail = false ) {
-		global $wgStatsDB, $wgStatsDBEnabled;
+		global $wgStatsDB, $wgStatsDBEnabled, $wgReadOnly;
 
 		if ( empty( $wgStatsDBEnabled ) ) {
 			return true;
 		}
 
 		if ( ( $user instanceof User ) && ( 0 === strpos( $user->getName(), 'WikiaTestAccount' ) ) ) {
-			$dbw = wfGetDB( DB_MASTER, array(), $wgStatsDB );
+			if( empty($wgReadOnly) ){ // Change to wgReadOnlyDbMode if we implement thatwgReadOnly
+				$dbw = wfGetDB( DB_MASTER, array(), $wgStatsDB );
 
-			$dbw->insert( 'ignored_users', array( 'user_id' => $user->getId() ), __METHOD__, "IGNORE" );
+				$dbw->insert( 'ignored_users', array( 'user_id' => $user->getId() ), __METHOD__, "IGNORE" );
+			}
 		}
 
 		return true;
