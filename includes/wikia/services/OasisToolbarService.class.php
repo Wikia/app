@@ -497,7 +497,8 @@
 		
 		public function getBlacklist() {
                         $out = array(
-                            'PageAction:Share'
+                            'PageAction:Share',
+                            'SpecialPage:WikiaLabs',
                         );
                         // BugId:5497, blacklist DevInfo if not allowed
                         if ( !F::app()->wg->user->isAllowed( 'performancestats' ) ) {
