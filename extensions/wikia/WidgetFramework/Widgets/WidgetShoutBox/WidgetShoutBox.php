@@ -221,9 +221,7 @@ function WidgetShoutBox($id, $params) {
 }
 
 function WidgetShoutBoxAddMessage($msg) {
-
-	global $wgUser, $wgMemc, $wgCityId, $wgExternalSharedDB;
-
+	global $wgUser, $wgMemc, $wgCityId, $wgExternalSharedDB, $wgReadOnly;
 	wfProfileIn(__METHOD__);
 
 	// check whether user is banned or anon
@@ -234,7 +232,9 @@ function WidgetShoutBoxAddMessage($msg) {
 	}
 
 	// add only non-empty messages
-	if ( !empty($msg) ) {
+	if( !empty($wgReadOnly) ){ // Change to wgReadOnlyDbMode if we implement that
+		wfDebug('Shoutbox: NOT adding msg ' . $message . " because we're in read-only mode...\n");
+	} else if ( !empty($msg) ) {
 		$message = substr(trim(urldecode($msg), ' :'), 0, 100);	// limit message length (100 chars)
 
 		wfDebug('Shoutbox: adding msg ' . $message . "...\n");
@@ -448,7 +448,7 @@ function WidgetShoutBoxGenerateHostname() {
 }
 
 function WidgetShoutBoxRemoveMessage($msgId) {
-	global $wgUser, $wgMemc, $wgExternalSharedDB;
+	global $wgUser, $wgMemc, $wgExternalSharedDB, $wgReadOnly;
 
 	wfProfileIn(__METHOD__);
 
@@ -459,28 +459,32 @@ function WidgetShoutBoxRemoveMessage($msgId) {
 		return false;
 	}
 
-	// msgId must be a number
-	if (ctype_digit($msgId)) {
-		wfDebug("Shoutbox: removing msg id=$msgId\n");
+	if( !empty($wgReadOnly) ){ // Change to wgReadOnlyDbMode if we implement thatwgReadOnly
+		wfDebug("Shoutbox: Not deleting msgId: {$msgId} because we're in read-only mode.");
+	} else {
+		// msgId must be a number
+		if (ctype_digit($msgId)) {
+			wfDebug("Shoutbox: removing msg id=$msgId\n");
 
 
-		$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
+			$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
 
-		// remove a message from shared table
-		$dbw->delete('shout_box_messages', array('id' => $msgId), __FUNCTION__ );
+			// remove a message from shared table
+			$dbw->delete('shout_box_messages', array('id' => $msgId), __FUNCTION__ );
 
-		// fix RT #14396
-		$dbw->commit();
+			// fix RT #14396
+			$dbw->commit();
 
-		// add msg also to memcache entry - avoid using unecessary updates queries
-		$key = wfMemcKey('widget::shoutbox::messages:1');
-		$msgs = $wgMemc->get($key);
-		if (is_array($msgs)) {
-			// remove a message from cache
-			unset($msgs[$msgId]);
+			// add msg also to memcache entry - avoid using unecessary updates queries
+			$key = wfMemcKey('widget::shoutbox::messages:1');
+			$msgs = $wgMemc->get($key);
+			if (is_array($msgs)) {
+				// remove a message from cache
+				unset($msgs[$msgId]);
 
-			// save to cache
-			$wgMemc->set($key, $msgs, 3600); // cache for an hour
+				// save to cache
+				$wgMemc->set($key, $msgs, 3600); // cache for an hour
+			}
 		}
 	}
 
