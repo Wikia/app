@@ -1497,10 +1497,9 @@ class Wikia {
 	 */
 
 	static public function setProps( $page_id, Array $props ) {
-		global $wgReadOnly;
 		wfProfileIn( __METHOD__ );
 		
-		if( empty($wgReadOnly) ){ // Change to wgReadOnlyDbMode if we implement that
+		if( !wfReadOnly() ){ // Change to wgReadOnlyDbMode if we implement that
 			$dbw = wfGetDB( DB_MASTER );
 			foreach( $props as $sPropName => $sPropValue) {
 				$dbw->replace(
@@ -1532,14 +1531,14 @@ class Wikia {
 	 * hooked up to AddNewAccount
 	 */
 	static public function ignoreUser( $user, $byEmail = false ) {
-		global $wgStatsDB, $wgStatsDBEnabled, $wgReadOnly;
+		global $wgStatsDB, $wgStatsDBEnabled;
 
 		if ( empty( $wgStatsDBEnabled ) ) {
 			return true;
 		}
 
 		if ( ( $user instanceof User ) && ( 0 === strpos( $user->getName(), 'WikiaTestAccount' ) ) ) {
-			if( empty($wgReadOnly) ){ // Change to wgReadOnlyDbMode if we implement that
+			if( !wfReadOnly() ){ // Change to wgReadOnlyDbMode if we implement that
 				$dbw = wfGetDB( DB_MASTER, array(), $wgStatsDB );
 
 				$dbw->insert( 'ignored_users', array( 'user_id' => $user->getId() ), __METHOD__, "IGNORE" );

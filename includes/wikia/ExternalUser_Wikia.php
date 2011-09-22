@@ -58,7 +58,7 @@ class ExternalUser_Wikia extends ExternalUser {
 	}
 
 	public function initFromCookie() {
-		global $wgMemc,$wgDBcluster, $wgReadOnly;
+		global $wgMemc,$wgDBcluster;
 		wfDebug( __METHOD__ . " \n" );
 
         if ( wfReadOnly() ) {
@@ -189,10 +189,12 @@ class ExternalUser_Wikia extends ExternalUser {
 	}
 
 	protected function addToDatabase( $User, $password, $email, $realname ) {
-		global $wgExternalSharedDB, $wgReadOnly;
+		global $wgExternalSharedDB;
 		wfProfileIn( __METHOD__ );
 
-		if( empty($wgReadOnly) ){ // Change to wgReadOnlyDbMode if we implement that
+		if( wfReadOnly() ){ // Change to wgReadOnlyDbMode if we implement that
+			wfDebug( __METHOD__ . ": Tried to add user to the $wgExternalSharedDB database while in wgReadOnly mode! " . $User->getName() . " (that's bad... fix the calling code)\n" );
+		} else {
 			wfDebug( __METHOD__ . ": add user to the $wgExternalSharedDB database: " . $User->getName() . " \n" );
 
 			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
@@ -222,8 +224,6 @@ class ExternalUser_Wikia extends ExternalUser {
 
 			// Clear instance cache other than user table data, which is already accurate
 			$User->clearInstanceCache();
-		} else {
-			wfDebug( __METHOD__ . ": Tried to add user to the $wgExternalSharedDB database while in wgReadOnly mode! " . $User->getName() . " (that's bad... fix the calling code)\n" );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -238,7 +238,6 @@ class ExternalUser_Wikia extends ExternalUser {
 	 * @author Piotr Molski (moli) <moli@wikia-inc.com>
 	 */
 	public function linkToLocal( $id ) {
-		global $wgReadOnly;
 		wfProfileIn( __METHOD__ );
 
 		if ( empty( $this->mRow ) ) {
@@ -252,7 +251,7 @@ class ExternalUser_Wikia extends ExternalUser {
 			return false;
 		}
 
-		if( empty($wgReadOnly) ){ // Change to wgReadOnlyDbMode if we implement that
+		if( !wfReadOnly() ){ // Change to wgReadOnlyDbMode if we implement that
 			$dbw = wfGetDB( DB_MASTER );
 			$data = array();
 			foreach ( ( array )$this->mRow as $field => $value ) {
@@ -294,10 +293,14 @@ class ExternalUser_Wikia extends ExternalUser {
 	}
 
 	public function updateUser() {
-		global $wgExternalSharedDB, $wgReadOnly;
-		wfDebug( __METHOD__ . ": update central user data \n" );
+		global $wgExternalSharedDB;
+		wfProfileIn( __METHOD__ );
 
-		if( empty($wgReadOnly) ){ // Change to wgReadOnlyDbMode if we implement that
+		if( wfReadOnly() ){ // Change to wgReadOnlyDbMode if we implement that
+			wfDebug( __METHOD__ . ": tried to updateUser while in read-only mode.\n" );
+		} else {
+			wfDebug( __METHOD__ . ": update central user data \n" );
+
 			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 			$this->mUser->mTouched = User::newTouchedTimestamp();
 			$dbw->update( '`user`',
@@ -319,5 +322,6 @@ class ExternalUser_Wikia extends ExternalUser {
 				), __METHOD__
 			);
 		}
+		wfProfileOut( __METHOD__ );
 	}
 }

@@ -64,14 +64,14 @@ class Chat {
 
 	//TODO: move it to some data base table 
 	public static function blockPrivate($username, $dir = 'add', $kickingUser) {
-		global $wgExternalDatawareDB, $wgReadOnly;
+		global $wgExternalDatawareDB;
 		
 		$kickingUserId = intval($kickingUser->getId());
 		$userToBlock = User::newFromName($username);
 		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
 		
 		if( !empty($userToBlock) && $kickingUserId > 0) {
-			if( empty($wgReadOnly) ){ // Change to wgReadOnlyDbMode if we implement thatwgReadOnly
+			if( !wfReadOnly() ){ // Change to wgReadOnlyDbMode if we implement thatwgReadOnly
 				if($dir == 'remove') {
 					$dbw->delete( 
 						"chat_blocked_users",
@@ -287,7 +287,7 @@ class Chat {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public static function logChatWindowOpenedEvent() {
-		global $wgCityId, $wgUser, $wgCatId, $wgDevelEnvironment, $wgStatsDB, $wgReadOnly;
+		global $wgCityId, $wgUser, $wgCatId, $wgDevelEnvironment, $wgStatsDB;
 		
 		wfProfileIn(__METHOD__);
 		
@@ -308,7 +308,7 @@ class Chat {
 				'event_type' => 6
 			);
 			
-			if( empty($wgReadOnly) ){ // Change to wgReadOnlyDbMode if we implement thatwgReadOnly
+			if( !wfReadOnly() ){ // Change to wgReadOnlyDbMode if we implement thatwgReadOnly
 				$dbw->insert('chatlog', $eventRow, __METHOD__);
 				$dbw->commit();
 			}

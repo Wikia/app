@@ -221,7 +221,7 @@ function WidgetShoutBox($id, $params) {
 }
 
 function WidgetShoutBoxAddMessage($msg) {
-	global $wgUser, $wgMemc, $wgCityId, $wgExternalSharedDB, $wgReadOnly;
+	global $wgUser, $wgMemc, $wgCityId, $wgExternalSharedDB;
 	wfProfileIn(__METHOD__);
 
 	// check whether user is banned or anon
@@ -232,7 +232,7 @@ function WidgetShoutBoxAddMessage($msg) {
 	}
 
 	// add only non-empty messages
-	if( !empty($wgReadOnly) ){ // Change to wgReadOnlyDbMode if we implement that
+	if( wfReadOnly() ){ // Change to wgReadOnlyDbMode if we implement that
 		wfDebug('Shoutbox: NOT adding msg ' . $message . " because we're in read-only mode...\n");
 	} else if ( !empty($msg) ) {
 		$message = substr(trim(urldecode($msg), ' :'), 0, 100);	// limit message length (100 chars)
@@ -448,7 +448,7 @@ function WidgetShoutBoxGenerateHostname() {
 }
 
 function WidgetShoutBoxRemoveMessage($msgId) {
-	global $wgUser, $wgMemc, $wgExternalSharedDB, $wgReadOnly;
+	global $wgUser, $wgMemc, $wgExternalSharedDB;
 
 	wfProfileIn(__METHOD__);
 
@@ -459,7 +459,7 @@ function WidgetShoutBoxRemoveMessage($msgId) {
 		return false;
 	}
 
-	if( !empty($wgReadOnly) ){ // Change to wgReadOnlyDbMode if we implement thatwgReadOnly
+	if( wfReadOnly() ){ // Change to wgReadOnlyDbMode if we implement that
 		wfDebug("Shoutbox: Not deleting msgId: {$msgId} because we're in read-only mode.");
 	} else {
 		// msgId must be a number
