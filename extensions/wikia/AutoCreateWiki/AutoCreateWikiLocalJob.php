@@ -56,14 +56,18 @@ class AutoCreateWikiLocalJob extends Job {
 	 */
 	public function run() {
 
-		global $wgUser, $wgErrorLog, $wgExtensionMessagesFiles;
+		global $wgUser, $wgErrorLog, $wgExtensionMessagesFiles, $wgInternalServer, $wgServer;
 
 		wfProfileIn( __METHOD__ );
 
-		$wgExtensionMessagesFiles[ "AutoCreateWiki" ] = dirname(__FILE__) . "/AutoCreateWiki.i18n.php";
-		wfLoadExtensionMessages( "AutoCreateWiki" );
+		/**
+		 * @see SquidUpdate::expand
+		 */
+		$wgInternalServer = $wgServer;
 
-		$wgErrorLog = true;
+		$wgExtensionMessagesFiles[ "AutoCreateWiki" ] = dirname(__FILE__) . "/AutoCreateWiki.i18n.php";
+		$wgErrorLog = false;
+
 		/**
 		 * setup founder user
 		 */
@@ -567,9 +571,9 @@ class AutoCreateWikiLocalJob extends Job {
 
 		wfProfileOut( __METHOD__ );
 	}
-	
+
 	/**
-	 * log starter images to upload_log table 
+	 * log starter images to upload_log table
 	 *
 	 * @access private
 	 * @author Piotr Molski (moli)
@@ -578,10 +582,10 @@ class AutoCreateWikiLocalJob extends Job {
 	private function addStarterImagesToUploadLog( ) {
 		global $wgEnableUploadInfoExt;
 		wfProfileIn( __METHOD__ );
-	
+
 		if ( empty($wgEnableUploadInfoExt) ) {
-			wfProfileOut( __METHOD__ );		
-			return;	
+			wfProfileOut( __METHOD__ );
+			return;
 		}
 
 		$files = array("Wiki.png", "Favicon.ico");
@@ -598,7 +602,7 @@ class AutoCreateWikiLocalJob extends Job {
 			}
 		}
 		$dbr->freeResult( $oRes );
-				
+
 		$loop = 0;
 		foreach ( $files as $image ) {
 			$oTitle = Title::newFromText($image, NS_IMAGE);
@@ -613,5 +617,5 @@ class AutoCreateWikiLocalJob extends Job {
 		Wikia::log( __METHOD__, "info", "added {$loop} images to upload_log table" );
 
 		wfProfileOut( __METHOD__ );
-	}	
+	}
 }
