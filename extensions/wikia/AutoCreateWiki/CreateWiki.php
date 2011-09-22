@@ -190,12 +190,12 @@ class CreateWiki {
 			wfProfileOut( __METHOD__ );
 			return self::ERROR_READONLY;
 		}
-		
+
 		if ( wfIsDBLightMode() ) {
 			wfProfileOut( __METHOD__ );
 			return self::ERROR_DBLIGHTMODE;
 		}
-		
+
 		// check founder
 		if ( $this->mFounder->isAnon() ) {
 			wfProfileOut( __METHOD__ );
@@ -470,10 +470,11 @@ class CreateWiki {
 		$Task = new LocalMaintenanceTask();
 		$Task->createTask(
 			array(
-				"city_id" 	=> $this->mNewWiki->city_id,
-				"command" 	=> "maintenance/runJobs.php",
-				"type" 		=> "CWLocal",
-				"data" 		=> $this->mNewWiki
+				"city_id" => $this->mNewWiki->city_id,
+				"command" => "maintenance/runJobs.php",
+				"type"    => "CWLocal",
+				"data"    => $this->mNewWiki,
+				"server"  => rtrim( $this->mNewWiki->url, "/" )
 			),
 			TASK_QUEUED
 		);
