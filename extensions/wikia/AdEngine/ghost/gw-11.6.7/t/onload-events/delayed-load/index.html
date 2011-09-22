@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html> 
+<head >
+<title> GhostWriter Unit Test: Onload Event Handling</title> 
+<style type="text/css" > 
+.myclass { height: 10px; } 
+#log .yui3-console-bd { 
+	font-size: 1.25em; 
+}
+</style> 
+</head> 
+<body onload="window.globalOnloadFired= true" class="yui3-skin-sam"> 
+<script charset="utf-8" src="http://yui.yahooapis.com/3.1.1/build/yui/yui-min.js"></script>
+<script src="../../../src/ghostwriter.js"></script> 
+<script src="../../../src/loadhandlers.js"></script> 
+<script src="../../../src/domtree.js"></script> 
+<script src="../../../src/domelement.js"></script> 
+<script src="../../../src/htmlstreamparser.js"></script> 
+<script src="../../../src/scriptloader.js"></script> 
+
+&cent;  &#162;
+<script src="../../lib/gw.min.js" ></script>
+<h1> Ghostwriter Unit Test: Onload Event Firing </h1> 
+<div id=writeto-1></div> 
+<div style="font-size: 1.25em;" id="log"></div>
+<script src="t0.js" ></script> 
+<script> 
+YUI({ logInclude: { TestRunner: true } })
+	.use("console", "test", tester); 
+function tester(Y){
+	window.Y= Y; 
+	var 
+		yc= new Y.Console({ newestOnTop: false, width: "95%", height: "400px" })
+	; 
+	yc.render("#log"); 
+	test(); 
+}
+</script> 
+<img src="http://a.ec2-1.digital-fulcrum.com/?delay=1&cache-control=no-cache;max-age=0" /> 
+</body> 
+</html> 
