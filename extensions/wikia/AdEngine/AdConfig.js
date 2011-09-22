@@ -1,5 +1,4 @@
 AdConfig = {
-	adDriverNumCallCookieName: 'adDriverNumAllCall',
 	adSlotsRequiringJSInvocation: { HOME_INVISIBLE_TOP:1, INVISIBLE_TOP:1, INVISIBLE_1:1, INVISIBLE_2:1 },
 	gaLiftiumTrackingAcct: 'UA-17475676-6',
 	geo: null, 
