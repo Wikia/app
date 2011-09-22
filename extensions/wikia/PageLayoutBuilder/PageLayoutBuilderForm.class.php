@@ -180,7 +180,7 @@ class PageLayoutBuilderForm extends SpecialCustomEditPage {
 
 	public function execute( $par ) {
 		if( wfReadOnly() ) {
-			$this->user->readOnlyPage();
+			$this->out->readOnlyPage();
 			return;
 		}
 
