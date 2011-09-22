@@ -1500,7 +1500,7 @@ class Wikia {
 		global $wgReadOnly;
 		wfProfileIn( __METHOD__ );
 		
-		if( empty($wgReadOnly) ){ // Change to wgReadOnlyDbMode if we implement thatwgReadOnly
+		if( empty($wgReadOnly) ){ // Change to wgReadOnlyDbMode if we implement that
 			$dbw = wfGetDB( DB_MASTER );
 			foreach( $props as $sPropName => $sPropValue) {
 				$dbw->replace(
@@ -1539,7 +1539,7 @@ class Wikia {
 		}
 
 		if ( ( $user instanceof User ) && ( 0 === strpos( $user->getName(), 'WikiaTestAccount' ) ) ) {
-			if( empty($wgReadOnly) ){ // Change to wgReadOnlyDbMode if we implement thatwgReadOnly
+			if( empty($wgReadOnly) ){ // Change to wgReadOnlyDbMode if we implement that
 				$dbw = wfGetDB( DB_MASTER, array(), $wgStatsDB );
 
 				$dbw->insert( 'ignored_users', array( 'user_id' => $user->getId() ), __METHOD__, "IGNORE" );

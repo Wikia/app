@@ -58,7 +58,7 @@ class ExternalUser_Wikia extends ExternalUser {
 	}
 
 	public function initFromCookie() {
-		global $wgMemc,$wgDBcluster;
+		global $wgMemc,$wgDBcluster, $wgReadOnly;
 		wfDebug( __METHOD__ . " \n" );
 
         if ( wfReadOnly() ) {
@@ -189,38 +189,44 @@ class ExternalUser_Wikia extends ExternalUser {
 	}
 
 	protected function addToDatabase( $User, $password, $email, $realname ) {
-		global $wgExternalSharedDB;
+		global $wgExternalSharedDB, $wgReadOnly;
+		wfProfileIn( __METHOD__ );
 
-		wfDebug( __METHOD__ . ": add user to the $wgExternalSharedDB database: " . $User->getName() . " \n" );
+		if( empty($wgReadOnly) ){ // Change to wgReadOnlyDbMode if we implement that
+			wfDebug( __METHOD__ . ": add user to the $wgExternalSharedDB database: " . $User->getName() . " \n" );
 
-		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
-		$seqVal = $dbw->nextSequenceValue( 'user_user_id_seq' );
+			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+			$seqVal = $dbw->nextSequenceValue( 'user_user_id_seq' );
 
-		$User->setPassword( $password );
-		$User->setToken();
+			$User->setPassword( $password );
+			$User->setToken();
 
-		$dbw->insert( '`user`',
-			array(
-				'user_id' => $seqVal,
-				'user_name' => $User->mName,
-				'user_password' => $User->mPassword,
-				'user_newpassword' => $User->mNewpassword,
-				'user_newpass_time' => $dbw->timestamp( $User->mNewpassTime ),
-				'user_email' => $email,
-				'user_email_authenticated' => $dbw->timestampOrNull( $User->mEmailAuthenticated ),
-				'user_real_name' => $realname,
-				'user_options' => '',
-				'user_token' => $User->mToken,
-				'user_registration' => $dbw->timestamp( $User->mRegistration ),
-				'user_editcount' => 0,
-				'user_birthdate' => $User->mBirthDate
-			), __METHOD__, array('IGNORE')
-		);
-		$User->mId = $dbw->insertId();
+			$dbw->insert( '`user`',
+				array(
+					'user_id' => $seqVal,
+					'user_name' => $User->mName,
+					'user_password' => $User->mPassword,
+					'user_newpassword' => $User->mNewpassword,
+					'user_newpass_time' => $dbw->timestamp( $User->mNewpassTime ),
+					'user_email' => $email,
+					'user_email_authenticated' => $dbw->timestampOrNull( $User->mEmailAuthenticated ),
+					'user_real_name' => $realname,
+					'user_options' => '',
+					'user_token' => $User->mToken,
+					'user_registration' => $dbw->timestamp( $User->mRegistration ),
+					'user_editcount' => 0,
+					'user_birthdate' => $User->mBirthDate
+				), __METHOD__, array('IGNORE')
+			);
+			$User->mId = $dbw->insertId();
 
-		// Clear instance cache other than user table data, which is already accurate
-		$User->clearInstanceCache();
+			// Clear instance cache other than user table data, which is already accurate
+			$User->clearInstanceCache();
+		} else {
+			wfDebug( __METHOD__ . ": Tried to add user to the $wgExternalSharedDB database while in wgReadOnly mode! " . $User->getName() . " (that's bad... fix the calling code)\n" );
+		}
 
+		wfProfileOut( __METHOD__ );
 		return $User;
 	}
 
@@ -232,7 +238,7 @@ class ExternalUser_Wikia extends ExternalUser {
 	 * @author Piotr Molski (moli) <moli@wikia-inc.com>
 	 */
 	public function linkToLocal( $id ) {
-
+		global $wgReadOnly;
 		wfProfileIn( __METHOD__ );
 
 		if ( empty( $this->mRow ) ) {
@@ -240,31 +246,34 @@ class ExternalUser_Wikia extends ExternalUser {
 		}
 
 		wfDebug( __METHOD__ . ": update local user table: $id \n" );
-		$dbw = wfGetDB( DB_MASTER );
 
 		if ( $id != $this->getId() ) {
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
-		$data = array();
-		foreach ( ( array )$this->mRow as $field => $value ) {
-			$data[ $field ] = $value;
-		}
-
-		$row = $dbw->selectRow( 'user', array( '*' ), array( 'user_id' => $this->getId() ), __METHOD__ );
-
-		if ( empty( $row ) ) {
-			$dbw->insert( 'user', $data, __METHOD__, array('IGNORE') );
-		} else {
-			$need_update = false;
-			foreach ( $row as $field => $value ) {
-				if ( isset( $data[$field] ) && ( $data[$field] != $value ) )  {
-					$need_update = true;
-				}
+		if( empty($wgReadOnly) ){ // Change to wgReadOnlyDbMode if we implement that
+			$dbw = wfGetDB( DB_MASTER );
+			$data = array();
+			foreach ( ( array )$this->mRow as $field => $value ) {
+				$data[ $field ] = $value;
 			}
-			
-			if ( $need_update ) { 
-				$dbw->update( 'user', $data, array( 'user_id' => $this->getId() ), __METHOD__ );
+
+			$row = $dbw->selectRow( 'user', array( '*' ), array( 'user_id' => $this->getId() ), __METHOD__ );
+
+			if ( empty( $row ) ) {
+				$dbw->insert( 'user', $data, __METHOD__, array('IGNORE') );
+			} else {
+				$need_update = false;
+				foreach ( $row as $field => $value ) {
+					if ( isset( $data[$field] ) && ( $data[$field] != $value ) )  {
+						$need_update = true;
+					}
+				}
+				
+				if ( $need_update ) { 
+					$dbw->update( 'user', $data, array( 'user_id' => $this->getId() ), __METHOD__ );
+				}
 			}
 		}
 
@@ -285,28 +294,30 @@ class ExternalUser_Wikia extends ExternalUser {
 	}
 
 	public function updateUser() {
-		global $wgExternalSharedDB;
+		global $wgExternalSharedDB, $wgReadOnly;
 		wfDebug( __METHOD__ . ": update central user data \n" );
 
-		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
-		$this->mUser->mTouched = User::newTouchedTimestamp();
-		$dbw->update( '`user`',
-			array( /* SET */
-				'user_name' => $this->mUser->mName,
-				'user_password' => $this->mUser->mPassword,
-				'user_newpassword' => $this->mUser->mNewpassword,
-				'user_newpass_time' => $dbw->timestampOrNull( $this->mUser->mNewpassTime ),
-				'user_real_name' => $this->mUser->mRealName,
-		 		'user_email' => $this->mUser->mEmail,
-		 		'user_email_authenticated' => $dbw->timestampOrNull( $this->mUser->mEmailAuthenticated ),
-				'user_options' => '',
-				'user_touched' => $dbw->timestamp( $this->mUser->mTouched ),
-				'user_token' => $this->mUser->mToken,
-				'user_email_token' => $this->mUser->mEmailToken,
-				'user_email_token_expires' => $dbw->timestampOrNull( $this->mUser->mEmailTokenExpires ),
-			), array( /* WHERE */
-				'user_id' => $this->mUser->mId
-			), __METHOD__
-		);
+		if( empty($wgReadOnly) ){ // Change to wgReadOnlyDbMode if we implement that
+			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+			$this->mUser->mTouched = User::newTouchedTimestamp();
+			$dbw->update( '`user`',
+				array( /* SET */
+					'user_name' => $this->mUser->mName,
+					'user_password' => $this->mUser->mPassword,
+					'user_newpassword' => $this->mUser->mNewpassword,
+					'user_newpass_time' => $dbw->timestampOrNull( $this->mUser->mNewpassTime ),
+					'user_real_name' => $this->mUser->mRealName,
+					'user_email' => $this->mUser->mEmail,
+					'user_email_authenticated' => $dbw->timestampOrNull( $this->mUser->mEmailAuthenticated ),
+					'user_options' => '',
+					'user_touched' => $dbw->timestamp( $this->mUser->mTouched ),
+					'user_token' => $this->mUser->mToken,
+					'user_email_token' => $this->mUser->mEmailToken,
+					'user_email_token_expires' => $dbw->timestampOrNull( $this->mUser->mEmailTokenExpires ),
+				), array( /* WHERE */
+					'user_id' => $this->mUser->mId
+				), __METHOD__
+			);
+		}
 	}
 }
