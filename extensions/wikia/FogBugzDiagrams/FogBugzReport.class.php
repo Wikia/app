@@ -72,7 +72,7 @@ class FogBugzReport {
 				array( 
 					'ixProject' => 13, 
 					"yearweek( c.dtOpened ) <= '" . $week . "'",
-				    "( c.dtResolved is null or yearweek( c.dtResolved ) > '" . $week . "' ) and c.ixPriority = " . $priority )
+				    "( c.dtResolved is null or yearweek( c.dtResolved ) > '" . $week . "' or sStatus = 'Active' ) and c.ixPriority = " . $priority )
 			)
 		);
 	}
