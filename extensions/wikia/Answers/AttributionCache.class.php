@@ -321,13 +321,17 @@ class AttributionCache {
 		}
 	}
 
-	public function purge($title, $user) {
-		global $wgScript;
-		AttributionCache::getInstance()->updateArticleContribs($title, $user);
+	/**
+	 * @param $title Title
+	 * @param $user User
+	 */
+	public function purge( $title, $user ) {
+		global $wgScript, $wgServer;
+		AttributionCache::getInstance()->updateArticleContribs( $title, $user );
 
 		// invalidate varnish cache
 		if($user->getId() != 0) {
-			SquidUpdate::purge( array( $wgScript."?action=ajax&rs=wfAnswersGetEditPointsAjax&userId=".$user->getId() ) );
+			SquidUpdate::purge( array( "{$wgServer}{$wgScript}?action=ajax&rs=wfAnswersGetEditPointsAjax&userId={$user->getId()}" ) );
 		}
 	}
 
