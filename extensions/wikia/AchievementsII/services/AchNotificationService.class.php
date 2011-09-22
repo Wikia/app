@@ -37,6 +37,7 @@ class AchNotificationService {
 	 * to be returned on the next call of this function.
 	 */
 	public function getBadgeToNotify($userId, $markAsNotified = true) {
+		global $wgReadOnly;
 		wfProfileIn(__METHOD__);
 
 		global $wgCityId, $wgExternalSharedDB;
@@ -62,7 +63,7 @@ class AchNotificationService {
 			}
 
 			$badge = $badges[$maxLevel][0];
-			if($markAsNotified){
+			if($markAsNotified && empty($wgReadOnly)){
 				$dbw->update('ach_user_badges', array('notified' => 1), array('wiki_id' => $wgCityId, 'user_id' => $userId, 'notified' => 0));
 			}
 		}
