@@ -287,7 +287,7 @@ class Chat {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public static function logChatWindowOpenedEvent() {
-		global $wgCityId, $wgUser, $wgCatId, $wgDevelEnvironment, $wgStatsDB;
+		global $wgCityId, $wgUser, $wgCatId, $wgDevelEnvironment, $wgStatsDB, $wgReadOnly;
 		
 		wfProfileIn(__METHOD__);
 		
