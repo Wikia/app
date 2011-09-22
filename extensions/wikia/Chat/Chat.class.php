@@ -64,35 +64,36 @@ class Chat {
 
 	//TODO: move it to some data base table 
 	public static function blockPrivate($username, $dir = 'add', $kickingUser) {
-		global $wgExternalDatawareDB;
+		global $wgExternalDatawareDB, $wgReadOnly;
 		
 		$kickingUserId = intval($kickingUser->getId());
 		$userToBlock = User::newFromName($username);
 		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
 		
 		if( !empty($userToBlock) && $kickingUserId > 0) {
-			
-			if($dir == 'remove') {
-				$dbw->delete( 
-					"chat_blocked_users",
-					array( 
-						'cbu_user_id' => $kickingUserId,
-						'cbu_blocked_user_id' => $userToBlock->getId()
-					), 
-					__METHOD__ 
-				);
-			} else {
-				$dbw->insert(
-					"chat_blocked_users",
-					array( 
-						'cbu_user_id' => $kickingUserId,
-						'cbu_blocked_user_id' => $userToBlock->getId()
-					),
-					__METHOD__,
-					array( 'IGNORE' )
-				);
+			if( empty($wgReadOnly) ){ // Change to wgReadOnlyDbMode if we implement thatwgReadOnly
+				if($dir == 'remove') {
+					$dbw->delete( 
+						"chat_blocked_users",
+						array( 
+							'cbu_user_id' => $kickingUserId,
+							'cbu_blocked_user_id' => $userToBlock->getId()
+						), 
+						__METHOD__ 
+					);
+				} else {
+					$dbw->insert(
+						"chat_blocked_users",
+						array( 
+							'cbu_user_id' => $kickingUserId,
+							'cbu_blocked_user_id' => $userToBlock->getId()
+						),
+						__METHOD__,
+						array( 'IGNORE' )
+					);
+				}
+				$dbw->commit();
 			}
-			$dbw->commit();
 		}
 		return true;
 	}
@@ -307,8 +308,10 @@ class Chat {
 				'event_type' => 6
 			);
 			
-			$dbw->insert('chatlog', $eventRow, __METHOD__);
-			$dbw->commit();
+			if( empty($wgReadOnly) ){ // Change to wgReadOnlyDbMode if we implement thatwgReadOnly
+				$dbw->insert('chatlog', $eventRow, __METHOD__);
+				$dbw->commit();
+			}
 		} else {
 			wfDebugLog('chat', 'User did open a chat room but it was not logged in chatlog');
 		}
