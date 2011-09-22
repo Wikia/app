@@ -70,17 +70,17 @@ class LocalMaintenanceTask extends BatchTask {
 			$this->addLog( $retval );
 
 			if( $type == "ACWLocal" || $type == "CWLocal" ) {
-				$cmd = sprintf( "SERVER_ID={$city_id} php {$IP}/maintenance/update.php --quick --nopurge --conf {$wgWikiaLocalSettingsPath} --aconf {$wgWikiaAdminSettingsPath}" );
+				$cmd = sprintf( "SERVER_ID={$city_id} php {$IP}/maintenance/update.php --server={$server} --quick --nopurge --conf {$wgWikiaLocalSettingsPath} --aconf {$wgWikiaAdminSettingsPath}" );
 				$this->addLog( "Running {$cmd}" );
 				$retval = wfShellExec( $cmd, $status );
 				$this->addLog( $retval );
 
-				$cmd = sprintf( "SERVER_ID={$city_id} php {$IP}/maintenance/initStats.php --conf {$wgWikiaLocalSettingsPath} --aconf {$wgWikiaAdminSettingsPath}" );
+				$cmd = sprintf( "SERVER_ID={$city_id} php {$IP}/maintenance/initStats.php --server={$server} --conf {$wgWikiaLocalSettingsPath} --aconf {$wgWikiaAdminSettingsPath}" );
 				$this->addLog( "Running {$cmd}" );
 				$retval = wfShellExec( $cmd, $status );
 				$this->addLog( $retval );
 
-				$cmd = sprintf( "SERVER_ID={$city_id} php {$IP}/maintenance/refreshLinks.php --new-only --conf {$wgWikiaLocalSettingsPath} --aconf {$wgWikiaAdminSettingsPath}" );
+				$cmd = sprintf( "SERVER_ID={$city_id} php {$IP}/maintenance/refreshLinks.php --server={$server} --new-only --conf {$wgWikiaLocalSettingsPath} --aconf {$wgWikiaAdminSettingsPath}" );
 				$this->addLog( "Running {$cmd}" );
 				$retval = wfShellExec( $cmd, $status );
 				$this->addLog( $retval );
