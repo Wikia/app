@@ -6,7 +6,7 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 		$this->setData( $data );
 	}
 
-	public function enabled ( $wgCityId ) {
+	public function enabled ( $wgCityId, $user ) {
 		// This type of email cannot be disabled or avoided without unsubscribing from all email
 		return true;
 	}
@@ -16,21 +16,19 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 		wfProfileIn( __METHOD__ );
 
 		$wgTitle = Title::newMainPage();		
-		$founderEmails = FounderEmails::getInstance();
+		$founderEmailObj = FounderEmails::getInstance();
 		foreach ( $events as $event ) {
 			$wikiId = $event['wikiId'];
 			$activateTime = $event['data']['activateTime'];
 			$activateDays = $event['data']['activateDays'];
 
+			$user_ids = $founderEmailObj->getWikiAdminIds($wikiId);
 			if ( time() >= $activateTime ) {
 
 				$emailParams = array(
-					'$FOUNDERNAME' => $event['data']['founderUsername'],
-					'$FOUNDERPAGEEDITURL' => $event['data']['founderUserpageEditUrl'],
 					'$WIKINAME' => $event['data']['wikiName'],
 					'$WIKIURL' => $event['data']['wikiUrl'],
 					'$WIKIMAINPAGEURL' => $event['data']['wikiMainpageUrl'],
-					'$UNSUBSCRIBEURL' => $event['data']['unsubscribeUrl'],
 					'$ADDAPAGEURL' => $event['data']['addapageUrl'],
 					'$ADDAPHOTOURL' => $event['data']['addaphotoUrl'],
 					'$CUSTOMIZETHEMEURL' => $event['data']['customizethemeUrl'],
@@ -39,35 +37,47 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 				);
 
 				$wikiType = !empty( $wgEnableAnswers ) ? '-answers' : '';
-				$langCode = $founderEmails->getWikiFounder( $wikiId )->getOption( 'language' );
-				// force loading messages for given languege, to make maintenance script works properly
-				$wgContLang = wfGetLangObj($langCode);
+				
+				foreach ($user_ids as $user_id) {
+					$user = User::newFromId($user_id);
+					
+					// skip if not enable
+					if (!$this->enabled($wikiId, $user)) {
+						continue;
+					}
+					self::addParamsUser($wikiId, $user->getName(), $emailParams);
+					$emailParams['$USERPAGEEDITURL'] = $user->getUserPage()->getFullUrl(array('action' => 'edit'));
+					
+					$langCode = $user->getOption( 'language' );
+					// force loading messages for given languege, to make maintenance script works properly
+					$wgContLang = wfGetLangObj($langCode);
 
-				$mailSubject = strtr(wfMsgExt('founderemails' . $wikiType . '-email-' . $activateDays . '-days-passed-subject', array('content')), $emailParams);
-				$mailBody = strtr(wfMsgForContent('founderemails' . $wikiType . '-email-' . $activateDays . '-days-passed-body'), $emailParams);
-				$mailCategory = FounderEmailsEvent::CATEGORY_DEFAULT;
-				if($activateDays == 3) {
-					$mailCategory = FounderEmailsEvent::CATEGORY_3_DAY;
-				} else if($activateDays == 10) {
-					$mailCategory = FounderEmailsEvent::CATEGORY_10_DAY;
-				} else if($activateDays == 0) {
-					$mailCategory = FounderEmailsEvent::CATEGORY_0_DAY;
-				}
-				$mailCategory .= (!empty($langCode) && $langCode == 'en' ? 'EN' : 'INT');
+					$mailSubject = strtr(wfMsgExt('founderemails' . $wikiType . '-email-' . $activateDays . '-days-passed-subject', array('content')), $emailParams);
+					$mailBody = strtr(wfMsgForContent('founderemails' . $wikiType . '-email-' . $activateDays . '-days-passed-body'), $emailParams);
+					$mailCategory = FounderEmailsEvent::CATEGORY_DEFAULT;
+					if($activateDays == 3) {
+						$mailCategory = FounderEmailsEvent::CATEGORY_3_DAY;
+					} else if($activateDays == 10) {
+						$mailCategory = FounderEmailsEvent::CATEGORY_10_DAY;
+					} else if($activateDays == 0) {
+						$mailCategory = FounderEmailsEvent::CATEGORY_0_DAY;
+					}
+					$mailCategory .= (!empty($langCode) && $langCode == 'en' ? 'EN' : 'INT');
 				
-				if (empty( $wgEnableAnswers )) {
-					$links = array(
-						'$WIKINAME' => $emailParams['$WIKIURL'],
-					);
-					$emailParams_new = FounderEmails::addLink($emailParams,$links);
-					$emailParams_new['$HDWIKINAME'] = str_replace('#2C85D5', '#fa5c1f', $emailParams_new['$WIKINAME']);	// header color = #fa5c1f
-					$mailBodyHTML = wfRenderModule("FounderEmails", $event['data']['dayName'], array('language' => 'en'));
-					$mailBodyHTML = strtr($mailBodyHTML, $emailParams_new);
-				} else {
-					$mailBodyHTML = $this->getLocalizedMsg( 'founderemails' . $wikiType . '-email-' . $activateDays . '-days-passed-body-HTML', $emailParams );
+					if (empty( $wgEnableAnswers )) {
+						$links = array(
+							'$WIKINAME' => $emailParams['$WIKIURL'],
+						);
+						$emailParams_new = FounderEmails::addLink($emailParams,$links);
+						$emailParams_new['$HDWIKINAME'] = str_replace('#2C85D5', '#fa5c1f', $emailParams_new['$WIKINAME']);	// header color = #fa5c1f
+						$mailBodyHTML = wfRenderModule("FounderEmails", $event['data']['dayName'], array('language' => 'en'));
+						$mailBodyHTML = strtr($mailBodyHTML, $emailParams_new);
+					} else {
+						$mailBodyHTML = $this->getLocalizedMsg( 'founderemails' . $wikiType . '-email-' . $activateDays . '-days-passed-body-HTML', $emailParams );
+					}
+					
+					$founderEmailObj->notifyFounder( $user, $this, $mailSubject, $mailBody, $mailBodyHTML, $wikiId, $mailCategory );
 				}
-				
-				$founderEmails->notifyFounder( $this, $mailSubject, $mailBody, $mailBodyHTML, $wikiId, $mailCategory );
 
 				$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 				$dbw->delete( 'founder_emails_event', array( 'feev_id' => $event['id'] ) );
@@ -83,8 +93,8 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 		global $wgFounderEmailsExtensionConfig, $wgCityId;
 		wfProfileIn( __METHOD__ );
 
-		$founderEmails = FounderEmails::getInstance();
-		$wikiFounder = $founderEmails->getWikiFounder();
+		$founderEmailObj = FounderEmails::getInstance();
+		$wikiFounder = $founderEmailObj->getWikiFounder();
 		$mainpageTitle = Title::newFromText( wfMsgForContent( 'Mainpage' ) );
 
 		// set FounderEmails notifications enabled by default for wiki founder
@@ -108,9 +118,6 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 				default:
 					$dayName = 'DayZero';
 			}
-			// Build unsubscribe url
-			$hash_url = Wikia::buildUserSecretKey( $wikiFounder->getName(), 'sha256' );
-			$unsubscribe_url = Title::newFromText('Unsubscribe', NS_SPECIAL)->getFullURL( array( 'key' => $hash_url ) );
 			
 			$mainPage = wfMsgForContent( 'mainpage' );
 
@@ -120,9 +127,6 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 				'wikiName' => $wikiParams['title'],
 				'wikiUrl' => $wikiParams['url'],
 				'wikiMainpageUrl' => $mainpageTitle->getFullUrl(),
-				'founderUsername' => $wikiFounder->getName(),
-				'founderUserpageEditUrl' => $wikiFounder->getUserPage()->getFullUrl( array('action' => 'edit') ),
-				'unsubscribeUrl' => $unsubscribe_url,
 				'addapageUrl' => Title::newFromText( 'Createpage', NS_SPECIAL )->getFullUrl( array('modal' => 'AddPage') ),
 				'addaphotoUrl' => Title::newFromText( 'NewFiles', NS_SPECIAL )->getFullUrl( array('modal' => 'UploadImage') ),
 				'customizethemeUrl' => Title::newFromText('ThemeDesigner', NS_SPECIAL)->getFullUrl( array('modal' => 'Login') ),
@@ -135,7 +139,7 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 				$eventData['activateTime'] = 0;
 			}
 
-			$founderEmails->registerEvent( new FounderEmailsDaysPassedEvent( $eventData ), false );
+			$founderEmailObj->registerEvent( new FounderEmailsDaysPassedEvent( $eventData ), false );
 		}
 
 		wfProfileOut( __METHOD__ );

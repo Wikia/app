@@ -90,8 +90,8 @@ function wfFounderEmailsInit() {
 
 	// Set default for the toggle (applied to all new user accounts).  This is safe even if this user isn't a founder yet.
 	// $wgDefaultUserOptions["founderemailsenabled"] = 1;  // Old preference not used any more
-	$wgDefaultUserOptions["founderemails-joins-$wgCityId"] = 1;
-	$wgDefaultUserOptions["founderemails-edits-$wgCityId"] = 1;
+	$wgDefaultUserOptions["founderemails-joins-$wgCityId"] = 0;
+	$wgDefaultUserOptions["founderemails-edits-$wgCityId"] = 0;
 	$wgDefaultUserOptions["founderemails-views-digest-$wgCityId"] = 0;
 	$wgDefaultUserOptions["founderemails-complete-digest-$wgCityId"] = 0;
 }

@@ -40,17 +40,17 @@
 	$wikiType = (!empty($wgEnableAnswers)) ? '-answers' : '' ;
 	
 	$emailParams = array(
-						'$FOUNDERNAME' => $params['name'],
+						'$USERNAME' => $params['name'],
 						'$WIKINAME' => $foundingWiki->city_title,
 						'$WIKIURL' => $foundingWiki->city_url,
 						'$UNIQUEVIEWS' => 789,	
 						'$USERJOINS' => 456,
 						'$USEREDITS' => 123,
-						'$USERNAME' => 'Someone',
-						'$USERURL' => 'http://www.wikia.com',
+						'$EDITORNAME' => 'Someone',
+						'$EDITORURL' => 'http://www.wikia.com',
 						'$PAGETITLE' => 'Main Page',
 						'$PAGEURL' => 'http://www.wikia.com',
-						'$USERTALKPAGEURL' => 'http://www.wikia.com',
+						'$EDITORTALKPAGEURL' => 'http://www.wikia.com',
 						'$MYHOMEURL' => 'http://www.wikia.com',
 						'$ADDAPAGEURL' => 'http://www.wikia.com',
 						'$ADDAPHOTOURL' => 'http://www.wikia.com',
@@ -58,7 +58,7 @@
 						'$EDITMAINPAGEURL' => 'http://www.wikia.com',
 						'$EXPLOREURL' => 'http://www.wikia.com',
 						'$WIKIMAINPAGEURL' => 'http://www.wikia.com',
-						'$FOUNDERPAGEEDITURL' => 'http://www.wikia.com',
+						'$USERPAGEEDITURL' => 'http://www.wikia.com',
 					);
 	
 	$content_types = array('html', 'text');
@@ -136,7 +136,7 @@
 				if ($params['language'] == 'en' && empty($wgEnableAnswers) || empty($msg_key_body_html)) { // FounderEmailv2.1
 					$links = array(
 								'$WIKINAME' => $emailParams['$WIKIURL'],
-								'$USERNAME' => $emailParams['$USERURL'],
+								'$EDITORNAME' => $emailParams['$EDITORURL'],
 								'$PAGETITLE' => $emailParams['$PAGEURL'],
 							);
 					$emailParams_new = FounderEmails::addLink($emailParams, $links);

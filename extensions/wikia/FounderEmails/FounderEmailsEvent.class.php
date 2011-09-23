@@ -66,7 +66,17 @@ abstract class FounderEmailsEvent {
 		$this->mData = $data;
 	}
 
-	abstract public function enabled ( $wgCityId );
+	abstract public function enabled ( $wgCityId, $user );
+
+	public function enabled_wiki($wgCityId) {
+		$user_ids = FounderEmails::getInstance()->getWikiAdminIds($wgCityId);
+		foreach ($user_ids as $user_id) {
+			$user = User::newFromId($user_id);
+			if ($this->enabled($wgCityId, $user))
+				return true;
+		}
+		return false;
+	}
 	
 	abstract public function process( Array $events );
 
@@ -121,4 +131,13 @@ abstract class FounderEmailsEvent {
 		$sBody = wfMsgExt( $sMsgKey, array( 'content') );
 		return strtr( $sBody, $params );
 	}
+	
+	protected static function addParamsUser($wiki_id, $user_name, &$params) {
+		$hash_url = Wikia::buildUserSecretKey($user_name, 'sha256');
+		$unsubscribe_url = GlobalTitle::newFromText('Unsubscribe', NS_SPECIAL, $wiki_id)->getFullURL(array('key' => $hash_url));		
+		
+		$params['$USERNAME'] = $user_name;
+		$params['$UNSUBSCRIBEURL'] = $unsubscribe_url;
+	}
+	
 }
