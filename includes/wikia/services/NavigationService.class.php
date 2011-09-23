@@ -27,7 +27,7 @@ class NavigationService {
 	/**
 	 * @author: Inez Korczyński
 	 */
-	public function parseMessage($messageName, $maxChildrenAtLevel = array(), $duration, $forContent = false, $filterInactiveSpecialPages = false ) {
+	public function parseMessage($messageName, $maxChildrenAtLevel = array(), $duration = 3600, $forContent = false, $filterInactiveSpecialPages = false ) {
 		wfProfileIn( __METHOD__ );
 		global $wgLang, $wgContLang, $wgMemc;
 

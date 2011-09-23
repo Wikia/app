@@ -9,7 +9,7 @@
 		}
 		
 		public function clearCache() {
-			self::$cache = array();
+			$this->cache = array();
 		}
 		
 		public function get( $name, $options = array() ) {

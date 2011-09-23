@@ -153,7 +153,7 @@ class NotificationsModule extends Module {
 				self::addConfirmation(wfMsg('savedprefs'));
 			}
 			else if ($wgRequest->getCheck('eauth')) {
-				self::addConfirmation($message, self::CONFIRMATION_ERROR);
+				self::addConfirmation(wfMsg('eauthentsent'), self::CONFIRMATION_ERROR);
 			}
 
 			// clear the state, so that MW core doesn't render any message
