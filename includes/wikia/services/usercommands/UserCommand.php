@@ -174,7 +174,7 @@
 
 		static public function needSkinData() {
 			if (is_null(self::$skinData)) {
-				global $wgTitle;
+				global $wgSkin;
 				self::$skinData = array(
 					'content_actions' => $wgSkin->buildContentActions(),
 					'nav_urls' => $wgSkin->buildNavUrls(),

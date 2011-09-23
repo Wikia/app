@@ -230,7 +230,7 @@ class UserPagesHeaderModule extends Module {
 				);
 
 
-
+		/*  Disabled for now -- this is not used and hiphop complains that saveUserAnswersHTML is not implemented
 		global $wgEnableUserInterview;
 
 		if ($wgEnableUserInterview == true && $wgUser->isLoggedIn() && self::isItMe( $this->userName ) && isset($this->content_actions['edit']) && $namespace == NS_USER) {
@@ -243,6 +243,7 @@ class UserPagesHeaderModule extends Module {
 				}
 			}
 		}
+		 */
 
 
 		// page type specific stuff
@@ -392,10 +393,10 @@ class UserPagesHeaderModule extends Module {
 	 * @param bool $arg Users has granted access (true or false)*
 	 */
 	public function executeFacebookConnect($arg) {
-		global $wgRequest, $wgTitle, $wgUser, $wgCityId, $wgFacebookSyncAppID, $wgFacebookSyncAppSecret;
+		global $wgRequest, $wgTitle, $wgUser, $wgCityId, $wgFacebookSyncAppID, $wgFacebookSyncAppSecret, $IP;
 
 		if ($arg['fbAccess'] == true) {
-			include('extensions/FBConnect/facebook-sdk/facebook.php');
+			include($IP . '/extensions/FBConnect/facebook-sdk/facebook.php');
 			$facebook = new FacebookAPI(array('appId' =>$wgFacebookSyncAppID,'secret'=>$wgFacebookSyncAppSecret,	'cookie' =>true, ));
 
 			$token_url = 'https://graph.facebook.com/oauth/access_token?client_id=' .$wgFacebookSyncAppID .'&redirect_uri=' .FACEBOOK_REDIRECT_URL .'&client_secret=' .$wgFacebookSyncAppSecret .'&code=' .$wgRequest->getVal( 'code' );

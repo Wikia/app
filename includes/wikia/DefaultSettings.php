@@ -358,14 +358,6 @@ if( $wgUseFakeExternalStoreDB !== true ) {
 	$wgAPIModules[ "blob"              ] = "WikiaApiQueryBlob";
 }
 
-/*
- * Widget FrameWork declarations
- */
-global $wgWidgetFrameWork;
-if ( $wgWidgetFrameWork) {
-    require_once ( 'widgetFrameWork/lib/widgetConfig.php' );
-}
-
 $wgUseAjax                = true;
 $wgValidateUserName       = true;
 $wgAjaxAutoCompleteSearch = true;
