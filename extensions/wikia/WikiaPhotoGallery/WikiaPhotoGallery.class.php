@@ -1168,7 +1168,7 @@ class WikiaPhotoGallery extends ImageGallery {
 					'width' => 15,
 				));
 			$slideshowHtml .= Xml::element('span',
-				array('class' => 'wikia-slideshow-toolbar-counter', 'value' => $counterValue),
+				array('class' => 'wikia-slideshow-toolbar-counter', 'data-counter' => $counterValue),
 				str_replace('$1', '1', $counterValue));
 		$slideshowHtml .= Xml::closeElement('div');
 
@@ -1696,7 +1696,7 @@ class WikiaPhotoGallery extends ImageGallery {
 					'width' => 15,
 				));
 			$html .= Xml::element('span',
-				array('class' => 'wikia-slideshow-toolbar-counter', 'value' => $counterValue),
+				array('class' => 'wikia-slideshow-toolbar-counter', 'data-counter' => $counterValue),
 				str_replace('$1', '1', $counterValue));
 		$html .= Xml::closeElement('div');
 

@@ -72,7 +72,7 @@ var WikiaPhotoGallerySlideshow = {
 		// update counter
 		slideshow.bind('slide', function(ev, data) {
 			var counter = slideshow.find('.wikia-slideshow-toolbar-counter');
-			counter.text( counter.attr('value').replace(/\$1/, 1 + data.currentSlideId) );
+			counter.text( counter.data('counter').replace(/\$1/, 1 + data.currentSlideId) );
 		});
 
 		// track clicks on prev / next
