@@ -29,6 +29,7 @@ class WikiaResponse {
 	const FORMAT_RAW = 'raw';
 	const FORMAT_HTML = 'html';
 	const FORMAT_JSON = 'json';
+	const FORMAT_INVALID = 'invalid';
 	
 	/**
 	 * Cache targets
@@ -222,7 +223,11 @@ class WikiaResponse {
 	}
 
 	public function setFormat( $value ) {
-		$this->format = $value;
+		if ( $value == self::FORMAT_HTML || $value == self::FORMAT_JSON || $value == self::FORMAT_RAW ) {
+			$this->format = $value; 
+		} else {
+			$this->format = self::FORMAT_INVALID;
+		}
 	}
 
 	public function getHeaders() {
