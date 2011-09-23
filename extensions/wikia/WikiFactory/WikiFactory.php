@@ -1577,9 +1577,10 @@ class WikiFactory {
 	}
 	
 	/**
-	 * hideWiki
+	 * disableWiki
 	 * 
-	 * Hides the wiki from users, still leaving database and files in place
+	 * Disables wiki, users won't be able to access it, 
+	 * database and files are still in place
 	 * 
 	 * @author wladek
 	 * @static
@@ -1588,7 +1589,7 @@ class WikiFactory {
 	 * @param integer $flags close flags
 	 * @param string  $reason [optional] reason text
 	 */
-	static public function hideWiki( $wikiId, $flags, $reason = '' ) {
+	static public function disableWiki( $wikiId, $flags, $reason = '' ) {
 		self::setFlags( $wikiId, $flags );
 		$res = self::setPublicStatus( self::CLOSE_ACTION, $wikiId, $reason );
 		self::clearCache( $wikiId );
