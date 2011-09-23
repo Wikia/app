@@ -36,16 +36,18 @@ class WikiaDispatcher {
 	 */
 	public function dispatch( WikiaApp $app, WikiaRequest $request ) {
 		$autoloadClasses = $app->wg->AutoloadClasses;
-		$format = $request->getVal( 'format', WikiaResponse::FORMAT_HTML );
-		
-		$response = F::build( 'WikiaResponse', array( 'format' => $format ) );
-		
 		if (empty($autoloadClasses)) {
 			throw new WikiaException( "wgAutoloadClasses is empty, cannot dispatch Request" );
-		} elseif ( $app->wg->EnableSkinTemplateOverride && $app->isSkinInitialized() ) {
+		}
+
+		$format = $request->getVal( 'format', WikiaResponse::FORMAT_HTML );		
+		$response = F::build( 'WikiaResponse', array( 'format' => $format ) );
+		if ( $app->wg->EnableSkinTemplateOverride && $app->isSkinInitialized() ) {
 			$response->setSkinName( $app->wg->User->getSkin()->getSkinName() );
 		}
 		
+		// Main dispatch is a loop because Controllers can forward to each other
+		// Error condition is also handled via dispatching to the error controller
 		do {
 			$request->setDispatched(true);
 			
@@ -88,8 +90,7 @@ class WikiaDispatcher {
 					$params = $request->getParams();
 				}
 				
-				$app->wf->profileIn ( __METHOD__ . " ({$controllerName}_{$method})" )
-				;
+				$app->wf->profileIn ( __METHOD__ . " ({$controllerName}_{$method})" );
 				$response->setControllerName( $controllerName );
 				$response->setMethodName( $method );
 

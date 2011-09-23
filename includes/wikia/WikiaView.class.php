@@ -230,5 +230,13 @@ class WikiaView {
 
 		return json_encode( $output );
 	}
+	
+	// Invalid request format is an interesting case since it's not really a fatal error by itself
+	// For now, we will process the request normally, default to json and attach an exception message
+	protected function renderInvalid() {
+		$output = $this->response->getData();
+		$output += array( 'exception' => array( 'message' => "Invalid Format, defaulting to JSON", 'code' => WikiaResponse::RESPONSE_CODE_ERROR ) );
+		return json_encode ( $output );
+	}
 
 }
