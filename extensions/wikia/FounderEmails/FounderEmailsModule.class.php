@@ -18,8 +18,9 @@ class FounderEmailsModule extends Module {
 		if(!empty($day)){
 			$this->previewBody = wfRenderModule("FounderEmails", $day, array('language' => $lang));
 			$this->previewBody = strtr($this->previewBody, 
-				array('$FOUNDERNAME' => 'FounderName',
+				array('$USERNAME' => 'UserName',
 					'$WIKINAME' => '<a href="#" style="color:#2C85D5;">WikiName</a>',
+					'$HDWIKINAME' => '<a href="#" style="color:#fa5c1f;">WikiName</a>',
 					'$UNIQUEVIEWS' => '6')
 			);
 		} else if(!empty($type)) {
@@ -31,14 +32,14 @@ class FounderEmailsModule extends Module {
 					'$UNIQUEVIEWS' => '1',
 					'$USEREDITS' => '2',
 					'$USERJOINS' => '3',
-					'$USERTALKPAGEURL' => 'http://www.wikia.com',
+					'$EDITORTALKPAGEURL' => 'http://www.wikia.com',
 					)
 				);
 			$this->previewBody = strtr($this->previewBody, 
-				array('$FOUNDERNAME' => 'FounderName',
+				array('$USERNAME' => 'UserName',
 					'$WIKINAME' => '<a href="#" style="color:#2C85D5;">WikiName</a>',
 					'$PAGETITLE' => '<a href="#" style="color:#2C85D5;">PageTitle</a>',
-					'$USERNAME' => '<a href="#" style="color:#2C85D5;">UserName</a>',
+					'$EDITORNAME' => '<a href="#" style="color:#2C85D5;">EditorName</a>',
 					)
 			);
 		}
@@ -86,7 +87,7 @@ class FounderEmailsModule extends Module {
 		}
 		switch($this->type) {
 			case 'user-registered':
-				$this->buttonUrl = $params['$USERTALKPAGEURL'];
+				$this->buttonUrl = $params['$EDITORTALKPAGEURL'];
 				break;
 			case 'anon-edit':
 				break;

@@ -37,6 +37,50 @@ class FounderEmails {
 	}
 
 	/**
+	 * get list of wiki founder/admin/bureaucrat id
+	 * Note: also called from maintenance script.
+	 * @return array of user_id
+	 */
+	public function getWikiAdminIds($wikiId = 0) {
+		global $wgCityId, $wgFounderEmailsDebugUserId, $wgEnableAnswers, $wgMemc;
+
+		$user_ids = array();
+		if (empty($wgFounderEmailsDebugUserId)) {
+			// get founder
+			$wikiId = !empty( $wikiId ) ? $wikiId : $wgCityId;
+			$user_ids[] = WikiFactory::getWikiById($wikiId)->city_founding_user;
+			
+			// get admin and bureaucrat
+			if (empty($wgEnableAnswers)) {
+				$memKey = wfSharedMemcKey('founderemail_admin_ids',$wikiId);
+				$admin_ids = $wgMemc->get($memKey);
+				if (is_null($admin_ids)) {
+					$dbname = WikiFactory::IDtoDB($wikiId);
+					$dbr = wfGetDB(DB_SLAVE, array(), $dbname);
+					$result = $dbr->select(
+						'user_groups',
+						'distinct ug_user',
+						array ("ug_group in ('sysop','bureaucrat')"),
+						__METHOD__
+					);
+					
+					$admin_ids = array();
+					while ($row = $dbr->fetchObject($result)) {
+						$admin_ids[] = $row->ug_user;
+					}
+					$dbr->freeResult($result);
+					$wgMemc->set($memKey, $admin_ids, 60*60*12);
+				}
+				$user_ids = array_unique(array_merge($user_ids, $admin_ids));
+			}
+		} else {
+			$user_ids[] = $wgFounderEmailsDebugUserId;
+		}
+		
+		return $user_ids;
+	}
+	
+	/**
 	 * Get list of wikis with a particular local preference setting
 	 * Since the expected default is 0, we need to look for users with up_property value set to 1
 	 * 
@@ -70,12 +114,12 @@ class FounderEmails {
 	/**
 	 * send notification email to wiki founder
 	 */
-	public function notifyFounder( $event, $mailSubject, $mailBody, $mailBodyHTML, $wikiId = 0, $category = 'FounderEmails' ) {
+	public function notifyFounder( $user, $event, $mailSubject, $mailBody, $mailBodyHTML, $wikiId = 0, $category = 'FounderEmails' ) {
 		global $wgPasswordSender, $wgNoReplyAddress;
 		$from = new MailAddress( $wgPasswordSender, 'Wikia' );
 		$replyTo = new MailAddress ( $wgNoReplyAddress );
-		if ( $event->enabled( $wikiId ) ) {
-			return $this->getWikiFounder( $wikiId )->sendMail( $mailSubject, $mailBody, $from, $replyTo, $category, $mailBodyHTML );
+		if ( $event->enabled( $wikiId, $user ) ) {
+			return $user->sendMail( $mailSubject, $mailBody, $from, $replyTo, $category, $mailBodyHTML );
 		}
 	}
 
@@ -88,7 +132,7 @@ class FounderEmails {
 		global $wgCityId;
 		wfProfileIn( __METHOD__ );
 		// Each event has a different named option now
-		if ( $event->enabled( $wgCityId ) ) {
+		if ( $event->enabled_wiki( $wgCityId ) ) {
 			$event->create();
 			if ( $doProcess ) {
 				$this->processEvents( $event->getType(), true, $wgCityId );
@@ -148,7 +192,7 @@ class FounderEmails {
 		global $wgUser, $wgCityId, $wgSitename;
 		wfProfileIn( __METHOD__ );
 
-		if ( FounderEmails::getInstance()->getWikiFounder()->getId() == $wgUser->getId() ) {
+		if ( in_array($wgUser->getId(), FounderEmails::getInstance()->getWikiAdminIds()) ) {
 			
 			// If we are in digest mode, grey out the individual email options
 			$disableEmailPrefs = FounderEmails::getInstance()->getWikiFounder()->getOption("founderemails-complete-digest-$wgCityId");
