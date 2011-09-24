@@ -164,7 +164,7 @@ class CreateNewWikiModule extends Module {
 		} else {
 			$wgUser = $this->app->getGlobal('wgUser');
 			
-			$stored_answer = $_SESSION['cnw-answer'];
+			$stored_answer = $this->getStoredAnswer();
 			if(empty($stored_answer) || $params['wAnswer'].'' !== $stored_answer.'') {
 				$this->status = 'error';
 				$this->statusMsg = $this->app->runFunction('wfMsgExt', 'cnw-error-bot', array('parseinline'));
@@ -217,6 +217,13 @@ class CreateNewWikiModule extends Module {
 
 
 		wfProfileOut(__METHOD__);
+	}
+	
+	/**
+	 * a method that exists purely for unit test.  yay.  it shouldn't be public either
+	 */
+	public function getStoredAnswer() {
+		return $_SESSION['cnw-answer'];
 	}
 
 	/**
