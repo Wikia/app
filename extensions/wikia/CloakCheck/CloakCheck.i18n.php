@@ -5,7 +5,7 @@ $messages = array();
 $messages['en'] = array(
 	'cloakcheck' => 'IRC cloak eligibility check',
 	'cloakcheck-desc' => 'Provides an all-in-one interface to verify requirements for an IRC cloak',
-	'right-cloakcheck' => 'can check IRC cloak related information on other users',
+	'right-cloakcheck' => 'Can check IRC cloak related information on other users',
 
 	#form
 	##only seen by flagged users
