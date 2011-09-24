@@ -85,6 +85,8 @@ Upgrade through PayPal to get an ad-free wiki for only $4.95 per month!',
 	'cnw-error-blocked-header' => 'Account blocked',
 	'cnw-error-blocked' => 'You have been blocked by $1. The reason given was: $2. (Block ID for reference: $3)',
 	'cnw-error-torblock' => 'Creating wikis via the Tor Network is not allowed.',
+	'cnw-error-bot' => 'We have detected that you may be a bot.  If we made a mistake, please contact us describing that you have been falsely detected as a bot, and we will aid you in creating your wiki: [http://www.wikia.com/Special:Contact/general Contact Us]',
+	'cnw-error-bot-header' => 'You have been detected as a bot',
 );
 
 /** Message documentation (Message documentation)
@@ -149,6 +151,8 @@ Be carefull to keep it short as there are 3 successive balloon tips to display i
 * $1 is a username
 * $2 is a block reason
 * $3 is a block ID',
+	'cnw-error-bot' => 'Message describing you may be a bot and link to contact page',
+	'cnw-error-bot-header' => 'Message header for modal box',
 );
 
 /** Afrikaans (Afrikaans)
@@ -369,7 +373,7 @@ Upgrade mit PayPal um ein werbefreies Wiki für nur $4,95 pro Monat zu bekommen!
 	'cnw-error-torblock' => 'Das Erstellen von Wikis über das Tor-Netzwerk ist nicht erlaubt.',
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
+/** German (formal address) (Deutsch (Sie-Form))
  * @author Tiin
  */
 $messages['de-formal'] = array(
@@ -875,7 +879,7 @@ $messages['ko'] = array(
 	'cnw-login' => '로그인',
 );
 
-/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (Kurdî (latînî))
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -1161,7 +1165,7 @@ Schaf uw upgrade aan via PayPal. Geen advertenties voor maar $4,95 per maand!",
 	'cnw-error-torblock' => "Wiki's aanmaken via het Tor Network is niet toegestaan.",
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel) (Nederlands (informeel))
  * @author MarkvA
  * @author Siebrand
  */
@@ -1188,7 +1192,7 @@ $messages['nl-informal'] = array(
 	'cnw-error-wiki-limit' => "Hoi. Je mag maximaal $1 wiki's per dag aanmaken. Wacht 24 uur om een nieuwe wiki aan te kunnen maken.",
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian (bokmål) (Norsk (bokmål))
  * @author Audun
  * @author Nghtwlkr
  */
@@ -1562,7 +1566,7 @@ $messages['ru'] = array(
 	'cnw-error-torblock' => 'Создание вики через сеть Tor не допускается.',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (Српски (ћирилица))
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -1895,7 +1899,7 @@ Upgrade through PayPal to get an ad-free wiki for only $4.95 per month!',
 	'cnw-welcome-help' => 'Find answers, advice, and more on <a href="http://community.wikia.com">Community Central</a>.',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (中文(简体))
  * @author Hydra
  */
 $messages['zh-hans'] = array(
@@ -1925,7 +1929,7 @@ $messages['zh-hans'] = array(
 	'cnw-welcome-headline' => '恭喜！$1 已被创造',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (中文(繁體))
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(

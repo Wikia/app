@@ -176,6 +176,19 @@ var WikiBuilder = {
 		WikiBuilder.wikiName.focus();
 	},
 	
+	requestKeys: function() {
+		WikiBuilder.keys = WikiBuilderCfg['cnw-keys'];
+	},
+	
+	solveKeys: function() {
+		var v = 0;
+		for(i = 0; i < WikiBuilder.keys.length; i++) {
+			v *= (i % 5) + 1;
+			v += WikiBuilder.keys[i];
+		}
+		WikiBuilder.answer = v;
+	}, 
+
 	handleRegister: function() {
 		AjaxLogin.showRegister();
 		$('#wpRemember').attr('checked', 'true').hide().siblings().hide();
@@ -387,6 +400,8 @@ var WikiBuilder = {
 	},
 	
 	createWiki: function() {
+		WikiBuilder.requestKeys();
+		WikiBuilder.solveKeys();
 		$.postJSON(wgScript,
 			{
 				action: 'ajax',
@@ -398,7 +413,8 @@ var WikiBuilder = {
 					wName: WikiBuilder.wikiName.val(),
 					wDomain: WikiBuilder.wikiDomain.val(),
 					wLanguage: WikiBuilder.wikiLanguage.find('option:selected').val(),
-					wCategory: WikiBuilder.wikiCategory.find('option:selected').val()
+					wCategory: WikiBuilder.wikiCategory.find('option:selected').val(),
+					wAnswer: Math.floor(WikiBuilder.answer)
 				}
 			},
 			function(res) {
