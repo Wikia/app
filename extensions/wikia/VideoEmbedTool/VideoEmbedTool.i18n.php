@@ -47,7 +47,7 @@ $messages['en'] = array(
 	'vet-imagebutton' => 'Insert videos' ,
 	'vet-license-cc' => 'Licenced under Creative Commons Attribution-Share Alike 3.0',
 	'vet-name-incorrect' => 'This video name contains invalid characters',
-	'vet-description' => 'Enter the full URL, from any of the supported sites. See ',
+	'vet-description' => 'Enter the full URL, from any of the supported sites. See',
 	'vet-uploadtext' => '\'\'\'This form allows you to quickly upload and display files in articles.\'\'\'
 
 \'\'See also the [[Special:Log/upload|upload log]] and a [[Special:ImageList|list of all uploaded files]].\'\'',
@@ -58,7 +58,7 @@ $messages['en'] = array(
 	'vet-max-thumb' => 'maximum thumbnail size exceeded, reverting to original size',
 	'vet-notallowed' => 'You cannot insert videos on this wiki',
 	'vet-title' => 'Add a video to your article',
-	'vet-description' => 'Enter the full URL from any of the supported sites. See ',
+	'vet-description' => 'Enter the full URL from any of the supported sites. See',
 	'vet-supported' => 'Supported video sites:',
 	'vet-preview' => '<i>This preview is not to scale</i>',
 	'vet-bad-url' => 'The supplied URL is invalid',
