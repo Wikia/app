@@ -25,6 +25,7 @@ class SpecialCreateNewWiki extends UnlistedSpecialPage {
 		$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/ThemeDesigner/js/ThemeDesigner.js"></script>');
 		$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/AjaxLogin/AjaxLogin.js"></script>');
 		$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/CreateNewWiki/js/CreateNewWiki.js"></script>');
+		$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/CreateNewWiki/js/CreateNewWikiSupplemental.js"></script>');
 		
 		wfProfileOut( __METHOD__ );
 	}
