@@ -84,6 +84,9 @@ class CreateNewWikiModule extends Module {
 
 		// remove wikia plus for now for all languages
 		$this->skipWikiaPlus = true;
+		
+		$this->keys = CreateNewWikiObfuscate::generateValidSeeds();
+		$_SESSION['cnw-answer'] = CreateNewWikiObfuscate::generateAnswer($this->keys);
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -151,7 +154,8 @@ class CreateNewWikiModule extends Module {
 			empty($params['wName']) ||
 			empty($params['wDomain']) ||
 			empty($params['wLanguage']) ||
-			empty($params['wCategory']) )
+			empty($params['wCategory']) ||
+			empty($params['wAnswer'] ))
 		{
 			// do nothing
 			$this->status = 'error';
@@ -159,6 +163,14 @@ class CreateNewWikiModule extends Module {
 			$this->statusHeader = $this->app->runFunction('wfMsg', 'cnw-error-general-heading');
 		} else {
 			$wgUser = $this->app->getGlobal('wgUser');
+			
+			$stored_answer = $_SESSION['cnw-answer'];
+			if(empty($stored_answer) || $params['wAnswer'].'' !== $stored_answer.'') {
+				$this->status = 'error';
+				$this->statusMsg = $this->app->runFunction('wfMsgExt', 'cnw-error-bot', array('parseinline'));
+				$this->statusHeader = $this->app->runFunction('wfMsg', 'cnw-error-bot-header');
+				return;
+			}
 
 			// check if user is blocked
 			if ( $wgUser->isBlocked() ) {

@@ -188,7 +188,8 @@
 		'skipwikiaplus':'<?= $skipWikiaPlus ?>',
 		'descriptionplaceholder':'<?= wfMsg('cnw-desc-placeholder') ?>',
 		'cnw-error-general':'<?= wfMsg('cnw-error-general') ?>',
-		'cnw-error-general-heading':'<?= wfMsg('cnw-error-general-heading') ?>'
+		'cnw-error-general-heading':'<?= wfMsg('cnw-error-general-heading') ?>',
+		'cnw-keys': <?= Wikia::json_encode($keys) ?>
 	};
 	var themes = <?= Wikia::json_encode($wgOasisThemes) ?>;
 </script>
