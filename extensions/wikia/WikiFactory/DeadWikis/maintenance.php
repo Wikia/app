@@ -18,10 +18,14 @@ $optionsWithArgs = array(
 
 require_once( "commandLine.inc" );
 
+// PEAR::Mail::mime
+require_once( "Mail/mime.php" );
+
 class AutomatedDeadWikisDeletionMaintenance {
 
 	const BATCH_SIZE = 100;
 	const COMMUNITY_ID = 177;
+	const DELETION_REASON = 'dead wiki';
 	
 	static protected $conditions = array(
 		'deleteNow' => array(
@@ -93,6 +97,7 @@ class AutomatedDeadWikisDeletionMaintenance {
 	protected $from = null;
 	protected $to = null;
 	protected $verbose = false;
+	protected $forced = false;
 
 	public function __construct( $options ) {
 		// read command line arguments
@@ -109,8 +114,10 @@ class AutomatedDeadWikisDeletionMaintenance {
 				$this->from = intval($v);
 			} else if ($k == 'to') {
 				$this->to = intval($v);
-			} else if ($k == 'verbose' || $k == 'v') {
+			} else if ($k == 'verbose') {
 				$this->verbose = true;
+			} else if ($k == 'force') {
+				$this->forced = true;
 			}
 		}
 	}
@@ -209,6 +216,9 @@ class AutomatedDeadWikisDeletionMaintenance {
 		}
 		return $this->oracle;
 	}
+
+	
+	protected $wikis = array();
 	
 	protected $deleteNow = array();
 	protected $deleteSoon = array();
@@ -242,12 +252,21 @@ class AutomatedDeadWikisDeletionMaintenance {
 		return $exitCode;
 	}
 	
-	protected function parseEvaluationScriptOutput( $output ) {
+	protected function parseEvaluationScriptOutput( $output, $initialData = array() ) {
+		if ($this->verbose) {
+			echo $output;
+			var_dump($initialData);
+		}
 		$wikis = array();
 		$lines = preg_split("/[\r\n]+/",$output);
 		foreach ($lines as $line) {
 			if ( ($data = $this->parseWikiDescription(trim($line))) ) {
-				$wikis[$data['id']] = $data;	
+				var_dump($initialData[$data['id']],$data);
+				$wikis[$data['id']] = array_merge(
+					isset($initialData[$data['id']]) ? $initialData[$data['id']] : array(),
+					$data
+				);
+				var_dump("parsing",$initialData[$data['id']],$data,$wikis[$data['id']]);
 			}
 		}
 		
@@ -270,22 +289,31 @@ class AutomatedDeadWikisDeletionMaintenance {
 		return $result;
 	}
 	
-	protected function evaluateWikis( $ids ) {
+	protected function evaluateWikis( $wikis ) {
 		// evaluate wikis in groups of 100 wikis
-		while ($batch = array_splice($ids,0,self::BATCH_SIZE)) {
+		while ($batch = array_splice($wikis,0,self::BATCH_SIZE)) {
 			// fetch data from wikis
-			$wikis = array();
-			$ids = array_combine($ids,$ids);
+			$ids = array();
+			$batchData = array();
+			foreach ($batch as $wiki) {
+				$batchData[$wiki['id']] = $wiki;
+				$ids[$wiki['id']] = $wiki['id'];
+			}
+			$evaluated = array();
 			for ( $pass = 0; $pass < 3 && count($ids) > 0; $pass++ ) {
 				$output = '';
-				$status = $this->evaluateWikis($ids,$output);
+				$status = $this->runEvaluationScript($ids,$output);
 				if ($status == 0) {
-					$wikis = $wikis + $this->parseEvaluationScriptOutput($output);
+					$evaluatedNow = $this->parseEvaluationScriptOutput($output,$batchData);
+					foreach ($evaluatedNow as $k => $wiki) {
+						unset($ids[$wiki['id']]);
+					}
+					$evaluated = $evaluated + $evaluatedNow;
 				}				
 			}
 			
 			// classify wikis
-			$classifications = $this->getOracleClassification($wikis);
+			$classifications = $this->getOracleClassification($evaluated);
 			$knownClassifications = array_keys( self::$conditions );
 			foreach ($knownClassifications as $classification) {
 				if (isset($classifications[$classification])) {
@@ -309,7 +337,7 @@ class AutomatedDeadWikisDeletionMaintenance {
 			$where[] = "city_id <= ".intval($this->to);
 		$res = $db->select(
 			'city_list',
-			array( 'city_id' ),
+			array( 'city_id', 'city_dbname', 'city_url' ),
 			$where,
 			__METHOD__,
 			array(
@@ -317,32 +345,75 @@ class AutomatedDeadWikisDeletionMaintenance {
 			)
 		);
 		
-		$ids = array();
+		$wikis = array();
 		while ($row = $res->fetchRow($res)) {
-			$ids[] = $row['city_id'];
+			$wikis[] = array(
+				'id' => $row['city_id'],
+				'dbname' => $row['city_dbname'],
+				'url' => $row['city_url'],
+			);
 		}
 		$db->freeResult($res);
 		
-		return $ids;
+		return $wikis;
 	}
 	
 	protected function disableWikis( $wikis ) {
+		return;
 		$flags = $this->getFlags();
 		foreach ($wikis as $id => $wiki) {
-			WikiFactory::disableWiki($id,$flags);
+			WikiFactory::disableWiki($id,$flags,self::DELETION_REASON);
 		}
 	}
 	
-	protected function sendEmails() {
+	protected function sendEmail( $from, $to, $subject, $body, $csvName, $wikis ) {
+		// prepare mime 
+		$mime = new Mail_mime();
+		$mime->setTXTBody($body);
 		
+		$csv = "ID,DatabaseName,URL\r\n";
+		foreach ($wikis as $wiki) {
+			$csv .= "\"{$wiki['id']}\",\"{$wiki['dbname']}\",\"{$wiki['url']}\"\r\n";
+		}
+		var_dump($mime->addAttachment($csv,'text/csv',$csvName,false));
+		
+		$fromAddress = new MailAddress($from);
+		$toAddress = new MailAddress($to);
+		var_dump($mime->get());
+		UserMailer::send($toAddress,$fromAddress,$subject,$mime->get());
+	}
+	
+	protected function sendEmails() {
+		$date = gmdate('Ymd');
+		$dateNice = gmdate('Y m d');
+		
+		$count = count($this->deleteNow);
+		$this->sendEmail(
+			"wikis-deleted-l@wikia-inc.com",
+			"wladek@wikia-inc.com",
+			"wikis deleted {$dateNice}",
+			"Script deleted {$count} wikis today, the list of closed wikis is attached in CSV file.",
+			"wikis-deleted-{$date}.csv",
+			$this->deleteNow);
+		
+		$count = count($this->deleteSoon);
+		$this->sendEmail(
+			"wikis-to-be-deleted-l@wikia-inc.com",
+			"wladek@wikia-inc.com",
+			"wikis to be deleted in 5 days {$dateNice}",
+			"Script found {$count} wikis which will be deleted shortly, the list of wikis is attached in CSV file.",
+			"wikis-to-be-deleted-{$date}.csv",
+			$this->deleteSoon);
 	}
 	
 	protected function actionClean() {
-		$ids = $this->getWikisList();
-		$this->evaluateWikis($ids);
+		$wikis = $this->getWikisList();
+		$this->evaluateWikis($wikis);
 
-		$this->disableWikis($this->deleteNow);
-		
+		if ($forced) {
+			$this->disableWikis($this->deleteNow);
+//			$this->sendEmails();
+		};
 		$this->sendEmails();
 		
 //		var_dump($this->deleteNow);
