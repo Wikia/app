@@ -43,6 +43,7 @@ class FounderEmails {
 	 */
 	public function getWikiAdminIds($wikiId = 0) {
 		global $wgCityId, $wgFounderEmailsDebugUserId, $wgEnableAnswers, $wgMemc;
+		wfProfileIn( __METHOD__ );
 
 		$user_ids = array();
 		if (empty($wgFounderEmailsDebugUserId)) {
@@ -52,7 +53,7 @@ class FounderEmails {
 			
 			// get admin and bureaucrat
 			if (empty($wgEnableAnswers)) {
-				$memKey = wfSharedMemcKey('founderemail_admin_ids',$wikiId);
+				$memKey = self::getMemKeyAdminIds($wikiId);
 				$admin_ids = $wgMemc->get($memKey);
 				if (is_null($admin_ids)) {
 					$dbname = WikiFactory::IDtoDB($wikiId);
@@ -69,7 +70,7 @@ class FounderEmails {
 						$admin_ids[] = $row->ug_user;
 					}
 					$dbr->freeResult($result);
-					$wgMemc->set($memKey, $admin_ids, 60*60*12);
+					$wgMemc->set($memKey, $admin_ids, 60*60*24);
 				}
 				$user_ids = array_unique(array_merge($user_ids, $admin_ids));
 			}
@@ -77,7 +78,17 @@ class FounderEmails {
 			$user_ids[] = $wgFounderEmailsDebugUserId;
 		}
 		
+		wfProfileOut( __METHOD__ );
 		return $user_ids;
+	}
+	
+	/**
+	 * Get memcache key for list of admin_ids
+	 * @param integer $wikiId
+	 * @return string memcache key
+	 */
+	protected static function getMemKeyAdminIds($wikiId) {
+		return wfSharedMemcKey('founderemail_admin_ids',$wikiId);
 	}
 	
 	/**
@@ -236,6 +247,29 @@ class FounderEmails {
 			);
 		}
 
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+	
+	/**
+	 * Hook - clear cache for list of admin_ids
+	 * @param object $user
+	 * @param array $addgroup
+	 * @param array $removegroup
+	 * @return true 
+	 */
+	public function onUserRightsChange($user, $addgroup, $removegroup) {
+		global $wgCityId, $wgMemc;
+		wfProfileIn( __METHOD__ );
+		
+		if (!empty($wgCityId)) {
+			if (($addgroup && (in_array('sysop', $addgroup) || in_array('bureaucrat', $addgroup))) 
+				|| ($removegroup && (in_array('sysop', $removegroup) || in_array('bureaucrat', $removegroup)))) {
+				$memKey  = self::getMemKeyAdminIds($wgCityId);
+				$wgMemc->delete($memKey);
+			}
+		}
+		
 		wfProfileOut( __METHOD__ );
 		return true;
 	}

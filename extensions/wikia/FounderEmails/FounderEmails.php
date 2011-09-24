@@ -87,6 +87,7 @@ function wfFounderEmailsInit() {
 	}
 
 	$wgHooks['GetPreferences'][] = 'FounderEmails::onGetPreferences';
+	$wgHooks['UserRights'][] = 'FounderEmails::onUserRightsChange';
 
 	// Set default for the toggle (applied to all new user accounts).  This is safe even if this user isn't a founder yet.
 	// $wgDefaultUserOptions["founderemailsenabled"] = 1;  // Old preference not used any more
