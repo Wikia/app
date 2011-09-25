@@ -1288,6 +1288,7 @@ dalawin ang [[wikia:Forum:Community Central Forum|mga poro sa Wiki ng Pangunahin
 );
 
 /** Ukrainian (Українська)
+ * @author Ahonc
  * @author Ast
  * @author Microcell
  * @author Prima klasy4na
@@ -1316,7 +1317,7 @@ $messages['uk'] = array(
 Це допоможе вам легко стежити за вашим внеском і спілкуватися з іншими учасниками спільноти.
 
 Будь ласка, повідомте на [[$2|моїй сторінці обговорення]], якщо я можу чимось допомогти! $3",
-	'welcome-message-log' => 'привітання нового учасника',
+	'welcome-message-log' => 'привітання нового користувача',
 	'welcome-message-user-staff' => '==Вітаємо==
 
 Привіт, ласкаво просимо на {{SITENAME}}! Дякуємо за ваші зміни на сторінці [[:$1]].

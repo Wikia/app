@@ -374,6 +374,16 @@ $messages['tr'] = array(
 	'sf-link-tooltip' => 'Bu maddeyi arkadaşlarınızla paylaşın',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Xiao Qiao
+ */
+$messages['vi'] = array(
+	'sharefeature-desc' => 'Cho phép người dùng liên kết đến các trang từ trang web phổ biến',
+	'sf-link' => 'Chia sẻ bài viết này',
+	'sf-link-popup' => 'Chia sẻ bài viết này',
+	'sf-link-tooltip' => 'Chia sẻ bài viết này với bạn bè',
+);
+
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Hydra
  */

@@ -251,6 +251,7 @@ $messages['kn'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
+	'interwikiedit' => 'Interwiki Editeur',
 	'iwedit-title' => 'Interwiki Editeur',
 	'iwedit-language-interwikis' => 'nëmme Sproochen-Interwikien',
 	'iwedit-all-interwikis' => 'all Interwikien',

@@ -239,3 +239,11 @@ $messages['tl'] = array(
 	'tog-watchlistsubpages' => 'Sundan ang kabahaging mga pahina',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Xiao Qiao
+ */
+$messages['vi'] = array(
+	'wikia-watchsubpages-desc' => 'Tự động theo dõi các trang con',
+	'tog-watchlistsubpages' => 'Theo dõi các trang con',
+);
+

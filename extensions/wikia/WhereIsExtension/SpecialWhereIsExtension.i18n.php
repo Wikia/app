@@ -338,14 +338,17 @@ $messages['it'] = array(
 
 /** Japanese (日本語)
  * @author Naohiro19
+ * @author Schu
  * @author Yanajin66
  */
 $messages['ja'] = array(
 	'whereisextension' => '拡張子の場所',
 	'whereisextension-submit' => '検索',
 	'whereisextension-list' => 'ウィキに一致した基準の一覧',
+	'whereisextension-isset' => '設定済',
 	'whereisextension-filter' => 'フィルター',
 	'whereisextension-all-groups' => 'すべてのグループ',
+	'whereisextension-name-contains' => '変数名が含まれています',
 	'whereisextension-search-like-value' => 'Like演算子:',
 	'whereisextension-search-type' => 'タイプ:',
 	'whereisextension-search-type-bool' => 'ブール値',

@@ -453,12 +453,14 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Schu
  * @author Tommy6
  */
 $messages['ja'] = array(
 	'wikiavideo-reverted' => '動画「$1」の差し戻しに成功しました。「$2」に戻る。',
 	'wikiavideo-unreverted' => '「$1」を差し戻す権限がありません。',
-	'wikiavideo-added' => '動画"$1"を追加',
+	'wikiavideo-added' => '動画「$1」を追加',
+	'wikiavideo-updated' => '動画「[[$1]]」を更新',
 	'wikiavideo-back' => '戻る',
 	'wikiavideo-create' => '動画を追加',
 	'wikiavideo-replace' => '動画を上書きする',
@@ -469,6 +471,7 @@ $messages['ja'] = array(
 	'wikiavideo-not-supported' => 'このスキンは閲覧モードでのギャラリーへの動画挿入をサポートしていません。',
 	'wikiavideo-deleted-old' => "'''[$1 $2]'''の $3 $4 の版は削除されました。",
 	'wikiavideo-intro-old' => "あなたは'''[$1 $5]'''の[$4 $2 $3]の版を削除しようとしています。",
+	'wikiavideo-details' => '$1 ($2 {{PLURAL:$2|ピクセル|ピクセル}}、プロバイダー： <a href="$3" class="external" target="_blank">$4</a>)',
 );
 
 /** Georgian (ქართული)
@@ -647,11 +650,13 @@ $messages['pdc'] = array(
 /** Polish (Polski)
  * @author Marcin Łukasz Kiejzik
  * @author Sp5uhe
+ * @author Woytecr
  */
 $messages['pl'] = array(
 	'wikiavideo-reverted' => 'Film $1 został pomyślnie wycofany. Powróć do $2.',
 	'wikiavideo-unreverted' => 'Nie masz uprawnień do przywrócenia $1.',
 	'wikiavideo-added' => 'dodał film $1',
+	'wikiavideo-updated' => 'zaktualizowano wideo [[$1]]',
 	'wikiavideo-back' => 'powrót',
 	'wikiavideo-create' => 'Dodaj film',
 	'wikiavideo-replace' => 'Podmień film',
@@ -785,7 +790,18 @@ $messages['si'] = array(
  * @author Dbc334
  */
 $messages['sl'] = array(
+	'wikiavideo-reverted' => 'Videoposnetek $1 je bil uspešno vrnjen. Pojdite nazaj na $2.',
+	'wikiavideo-unreverted' => 'Nimate dovoljenja za vrnitev $1.',
+	'wikiavideo-added' => 'je dodal(-a) videoposnetek $1',
+	'wikiavideo-updated' => 'je posodobil(-a) videoposnetek [[$1]]',
 	'wikiavideo-back' => 'nazaj',
+	'wikiavideo-create' => 'Dodaj videoposnetek',
+	'wikiavideo-replace' => 'Zamenjaj videoposnetek',
+	'wikiavideo-category' => 'Videoposnetki',
+	'wikiavideo-links' => 'Povezave',
+	'wikiavideo-deleted-old' => "Različica '''[$1 $2]''' z dne $4, $3 je izbrisana.",
+	'wikiavideo-intro-old' => "Brišete različico '''[$1 $5]''' z dne [$4 $3, $2].",
+	'wikiavideo-details' => '$1 ($2 {{PLURAL:$2|slikovna pika|slikovni piki|slikovne pike|slikovnih pik}}, ponudnik: <a href="$3" class="external" target="_blank">$4</a>)',
 );
 
 /** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)

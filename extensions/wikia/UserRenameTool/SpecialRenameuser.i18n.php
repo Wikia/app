@@ -3379,6 +3379,7 @@ $messages['sl'] = array(
 	'userrenametool-reason' => 'Razlog za preimenovanje:',
 	'userrenametool-move' => 'Prestavi uporabniške in pogovorne strani (ter njihove podstrani) na novo ime',
 	'userrenametool-reserve' => 'Blokiraj staro uporabniško ime pred nadaljnjo uporabo',
+	'userrenametool-notify-renamed' => 'Po koncu pošlji e-pošto preimenovanemu uporabniku',
 	'userrenametool-warnings' => 'Opozorila:',
 	'userrenametool-confirm' => 'Da, preimenuj uporabnika',
 	'userrenametool-submit' => 'Spremeni uporabniško ime',
@@ -3387,6 +3388,7 @@ $messages['sl'] = array(
 	'userrenametool-errorinvalid' => '»<nowiki>$1</nowiki>« ni veljavno uporabniško ime.',
 	'userrenametool-errorinvalidnew' => '»<nowiki>$1</nowiki>« ni veljavno novo uporabniško ime.',
 	'userrenametool-errortoomany' => 'Uporabnik »<nowiki>$1</nowiki>« ima $2 {{PLURAL:$2|prispevek|prispevka|prispevke|prispevkov}}; preimenovanje uporabnika z več kot $3 {{PLURAL:$3|prispevkom|prispevkoma|prispevki}} lahko neželeno vpliva na delovanje strani.',
+	'userrenametool-errorprocessing' => 'Postopek preimenovanja uporabnika <nowiki>$1</nowiki> v <nowiki>$2</nowiki> je že v teku.',
 	'userrenametool-errorblocked' => 'Uporabnika <nowiki>$1</nowiki> je blokiral <nowiki>$2</nowiki> za $3.',
 	'userrenametool-errorlocked' => 'Uporabnik <nowiki>$1</nowiki> je zaklenjen.',
 	'userrenametool-errorbot' => 'Uporabnik <nowiki>$1</nowiki> je bot.',
@@ -3394,11 +3396,24 @@ $messages['sl'] = array(
 Prosimo, pojdite nazaj in poskusite znova.',
 	'userrenametool-error-same-user' => 'Uporabnika ne morete preimenovati v isto ime.',
 	'userrenametool-error-extension-abort' => 'Razširitev je preprečila postopek preimenovanja.',
+	'userrenametool-error-cannot-rename-account' => 'Preimenovanje uporabniškega računa v skupni globalni zbirki podatkov ni uspelo.',
+	'userrenametool-error-cannot-create-block' => 'Ustvarjanje dnevnika v blokadi ni uspelo.',
+	'userrenametool-warn-repeat' => 'Pozor! Uporabnik »<nowiki>$1</nowiki>« je že preimenovan v »<nowiki>$2</nowiki>«.
+Nadaljujte obdelavo le, če morate posodobiti kakšne manjkajoče informacije.',
 	'userrenametool-warn-table-missing' => 'Tabela »<nowiki>$2</nowiki>« v zbirki podatkov »<nowiki>$1</nowiki>« ne obstaja.',
+	'userrenametool-info-started' => '$1 je pričel s preimenovanjem: $2 v $3 (dnevniki: $4).
+Razlog: »$5«.',
+	'userrenametool-info-finished' => '$1 je dokončal preimenovanje: $2 v $3 (dnevniki: $4).
+Razlog: »$5«.',
+	'userrenametool-info-failed' => '$1 je SPODLETELO preimenovanje: $2 v $3 (dnevniki: $4).
+Razlog: »$5«.',
 	'userrenametool-info-wiki-finished' => '$1 je preimenoval(-a) $2 v $3 dne $4.
 Razlog: »$5«.',
 	'userrenametool-info-wiki-finished-problems' => '$1 je preimenoval(-a) $2 v $3 dne $4 z napakami.
 Razlog: »$5«.',
+	'userrenametool-info-in-progress' => 'Postopek preimenovanja je v teku.
+Preostalo bo opravljeno v ozadju.
+Ko bo dokončan, boste obveščeni po e-pošti.',
 	'userrenametool-success' => 'Uporabnik »$1« je preimenovan v »$2«.',
 	'userrenametool-confirm-intro' => 'Ali to res želite storiti?',
 	'userrenametool-confirm-yes' => 'Da',
@@ -3406,6 +3421,9 @@ Razlog: »$5«.',
 	'userrenametool-page-exists' => 'Stran $1 že obstaja in je ni mogoče samodejno prepisati.',
 	'userrenametool-page-moved' => 'Stran $1 je bila prestavljena na $2.',
 	'userrenametool-page-unmoved' => 'Strani $1 ni mogoče prestaviti na $2.',
+	'userrenametool-finished-email-subject' => 'Postopek preimenovanja uporabnika je končan za [$1]',
+	'userrenametool-finished-email-body-text' => 'Postopek prestavitve »<nowiki>$1</nowiki>« na »<nowiki>$2</nowiki>« je bil zaključen.',
+	'userrenametool-finished-email-body-html' => 'Postopek prestavitve »<nowiki>$1</nowiki>« na »<nowiki>$2</nowiki>« je bil zaključen.',
 	'userrenametool-logpage' => 'Dnevnik preimenovanj uporabnikov',
 	'userrenametool-logpagetext' => 'Prikazan je dnevnik sprememb uporabniških imen.',
 	'userrenametool-logentry' => 'preimenoval(-a) $1 v »$2«',

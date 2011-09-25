@@ -366,6 +366,20 @@ $messages['tl'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Kamalian: Kailangan ang  isang pamagat ng pahina',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Xiao Qiao
+ */
+$messages['vi'] = array(
+	'contentfeeds-desc' => 'Cung cấp thông tin phong phú và cập nhật thông qua các thẻ hoặc "nguồn cấp dữ liệu"',
+	'contentfeeds-newimages-rss-title' => 'Nguồn dữ liệu RSS cho {{#Special:Tập tin mới}}',
+	'contentfeeds-newimages-rss-desc' => 'Nguồn dữ liệu từ $1',
+	'contentfeeds-firstfewarticles-tag-header' => 'Tạo một vài trang đầu tiên của bạn!',
+	'contentfeeds-firstfewarticles-tag-title' => 'Tiêu đề',
+	'contentfeeds-firstfewarticles-tag-next' => 'Tiếp theo',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Lỗi: Tiêu đề trang là bắt buộc',
+	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Lỗi: Nội dung trang là bắt buộc',
+);
+
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Hydra
  */

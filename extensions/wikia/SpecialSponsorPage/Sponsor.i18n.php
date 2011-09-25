@@ -98,6 +98,7 @@ $messages['bg'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Y-M D
  */
 $messages['br'] = array(
@@ -105,7 +106,7 @@ $messages['br'] = array(
 	'sponsor-header' => '<h2>Liammoù davet ar paeroned diavaez</h2>',
 	'sponsor-msg' => '<li><a href="$1" rel="nofollow">Sponsorañ ar bajenn-mañ</a></li>',
 	'sponsor-preview-prompt' => 'Setu da betra e tenno ho paeroniañ. Klikit war "kemmañ" evit distreiñ ha degas kemmoù pe war "saveteiñ" evit enrollañ hag evit mont war PayPal.',
-	'sponsor-preview-errors' => 'Fazioù a zo en ho kinnig :',
+	'sponsor-preview-errors' => 'Fazioù zo en ho kinnig :',
 	'sponsor-form-url' => "URL al lec'hienn paeron (ho lec'hienn web) :",
 	'sponsor-form-linktext' => "Testenn hoc'h eus c'hoant diskouez el liamm :",
 	'sponsor-form-additionaltext' => 'Testenn da ziskouez dindan ho liamm :',
@@ -582,6 +583,18 @@ $messages['ru'] = array(
  * @author Dbc334
  */
 $messages['sl'] = array(
+	'sponsor-msg' => '<li><a href="$1" rel="nofollow">Sponzorirajte to stran</a></li>',
+	'sponsor-preview-errors' => 'V vašem obrazcu so napake:',
+	'sponsor-form-url' => 'URL sponzorske spletne strani (vaše spletne strani):',
+	'sponsor-form-linktext' => 'Besedilo, ki se naj prikaže v povezavi:',
+	'sponsor-form-additionaltext' => 'Besedilo, ki se naj prikaže pod vašo povezavo:',
+	'sponsor-form-page' => 'Stran, ki jo želite sponzorirati:',
+	'sponsor-form-price' => 'Znesek sponzorstva:',
+	'sponsor-form-email' => 'Vaš e-poštni naslov:',
+	'sponsor-form-thanks' => 'Zahvaljujemo se vam za vaše sponzorstvo!',
+	'sponsor-price-45yr' => '45 USD letno',
+	'sponsor-price-5mo' => '5 USD mesečno',
+	'sponsorpage-edit' => 'Uredi',
 	'sponsorpage-save' => 'Shrani',
 );
 

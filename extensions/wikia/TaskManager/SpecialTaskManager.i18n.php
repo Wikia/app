@@ -180,11 +180,14 @@ $messages['it'] = array(
 
 /** Japanese (日本語)
  * @author Naohiro19
+ * @author Schu
  */
 $messages['ja'] = array(
 	'taskmanager' => '表示とバックグランド管理タスク',
 	'taskmanager_title' => '表示とバックグランド管理タスク',
 	'taskmanager_tasklist' => 'タスク一覧へ戻る',
+	'right-taskmanager' => 'バックグラウンド・タスク表示可能',
+	'right-taskmanager-action' => 'バックグラウンド・タスク管理可能',
 );
 
 /** Luxembourgish (Lëtzebuergesch)

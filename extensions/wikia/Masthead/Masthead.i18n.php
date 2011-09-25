@@ -148,6 +148,7 @@ Pamatujte, avatary jsou globální - odstranění proběhne na celé Wikii.',
 );
 
 /** German (Deutsch)
+ * @author SVG
  * @author The Evil IP address
  */
 $messages['de'] = array(
@@ -171,7 +172,7 @@ $messages['de'] = array(
 	'blog-avatar-save-info' => 'Um Änderungen zu speichern, gehe <a href="#prefcontrol">zum Ende der Seite</a> und wähle „{{int:saveprefs}}“.',
 	'masthead-edits-since' => 'Bearbeitungen seit',
 	'useravatar-log' => 'Avatar-Logbuch',
-	'blog-avatar-alt' => 'Dies ist das Logbuch der Hinzufügungen ud Entfernungen von Avataren.',
+	'blog-avatar-alt' => 'Dies ist das Logbuch der Hinzufügungen und Entfernungen von Avataren.',
 	'removeuseravatar' => 'Entferne den Avatar eines Benutzers',
 	'right-removeavatar' => 'Avatar eines Benutzers entfernen',
 );
@@ -821,14 +822,17 @@ $messages['sr-ec'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'blog-avatar-removeavatar' => 'Ta bort avatar',
 	'blog-avatar-goto-userpage' => 'Gå till användarsida',
 	'blog-avatar-edit' => 'Ändra',
 	'blog-avatar-delete' => 'Radera',
 	'blog-avatar-choose-avatar' => 'Välj en ny avatar',
 	'blog-avatar-upload-avatar' => 'Ladda upp en ny avatar',
 	'blog-avatar-nouser' => 'Kan inte hitta denna användare!',
+	'blog-avatar-cannot-remove' => 'Kan inte ta bort avatarer för vald användare!',
 	'blog-avatar-getuser' => 'Sök',
 	'blog-avatar-remove-confirm' => 'Är du säker på att du vill ta bort avatar?',
+	'blog-avatar-error-nofile' => 'Var god välj en fil från din dator',
 	'blog-avatar-error-size' => 'Uppladdad fil är för stor, tillåten storlek är upp till $1 kB.',
 	'masthead-edits-since' => 'redigeringar sedan',
 );

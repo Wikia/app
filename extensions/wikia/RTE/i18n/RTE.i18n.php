@@ -37,6 +37,13 @@ $messages['af'] = array(
 	'enablerichtexteditor' => 'Aktiveer uitgebreide teksverwerker',
 );
 
+/** Arabic (العربية)
+ * @author OsamaK
+ */
+$messages['ar'] = array(
+	'rte-edgecase-comment' => 'تعليقات HTML',
+);
+
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
@@ -234,7 +241,7 @@ $messages['fr'] = array(
 	'rte-edgecase-templateintable' => 'un tableau avec un appel de modèle dans sa définition',
 	'rte-edgecase-unclosed-tags' => 'balise HTML non fermée',
 	'enablerichtexteditor' => 'Activer le nouvel éditeur',
-	'rte-enablerichtexteditormessage' => 'Nouvel éditeur activé!',
+	'rte-enablerichtexteditormessage' => 'Éditeur de texte enrichi activé !',
 	'rte-first-run-notice' => "Nous avons apporté quelques améliorations à l'éditeur. Pour en savoir plus, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news lisez l'annonce].",
 	'prefs-rte' => 'Éditeur de texte enrichi',
 );
@@ -257,7 +264,7 @@ $messages['gl'] = array(
 	'rte-edgecase-redirect' => 'redirección',
 	'rte-edgecase-templateintable' => 'unha táboa cunha chamada de modelo na definición',
 	'rte-edgecase-unclosed-tags' => 'etiqueta HTML non pechada',
-	'enablerichtexteditor' => 'Activar o editor de texto enriquecido',
+	'enablerichtexteditor' => 'Activar o editor no modo visual (ademais do modo fonte)',
 	'rte-enablerichtexteditormessage' => 'O editor de texto enriquecido está activado!',
 	'rte-first-run-notice' => 'Fixemos algunhas melloras no editor. Para obter máis información, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news bótelle un ollo ás notas de publicación].',
 	'prefs-rte' => 'Editor de texto enriquecido',
@@ -288,6 +295,7 @@ $messages['ia'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Schu
  * @author Tommy6
  */
 $messages['ja'] = array(
@@ -295,6 +303,20 @@ $messages['ja'] = array(
 	'rte-no-js-fallback' => 'JavaScript をオフにした状態ではリッチテキストエディタを利用できません。ブラウザの設定で JavaScript を有効にするか[[Special:Preferences|個人設定]]で旧式のメディアウィキエディタに切り替えてください。',
 	'rte-edgecase-info-title' => 'ソースモードである必要があります',
 	'rte-edgecase-info' => '記事に含まれるコードが複雑なため、リッチテキストモードによる編集は無効にされています。',
+	'rte-edgecase-comment' => 'HTML コメント',
+	'rte-edgecase-triplecurls' => 'テンプレートのパラメータ',
+	'rte-edgecase-nowysiwyg' => '"no WYSIWYG" コマンド',
+	'rte-edgecase-complex-description' => 'リンクの説明に含まれる外部 URL またはテンプレート',
+	'rte-edgecase-template-with-link' => 'パラメータにリンクが指定されているテンプレート',
+	'rte-edgecase-syntax' => '許可されていない構文',
+	'rte-edgecase-image-with-link' => 'キャプションにリンクを含む画像',
+	'rte-edgecase-redirect' => 'リダイレクト',
+	'rte-edgecase-templateintable' => '内部にテンプレート呼び出しを含むテーブル',
+	'rte-edgecase-unclosed-tags' => '閉じられていない HTML タグ',
+	'enablerichtexteditor' => 'リッチテキストエディタを有効にする',
+	'rte-enablerichtexteditormessage' => 'リッチテキストエディタを有効にしました',
+	'rte-first-run-notice' => '私たちは、エディタの改善に取り組んでいます。詳細につきましては、[http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news アナウンスを確認してください。]',
+	'prefs-rte' => 'リッチテキストエディタ',
 );
 
 /** Colognian (Ripoarisch)
@@ -322,10 +344,19 @@ $messages['mk'] = array(
 	'rte-edgecase-redirect' => 'пренасочи',
 	'rte-edgecase-templateintable' => 'табела со шаблонски повик во зададеното',
 	'rte-edgecase-unclosed-tags' => 'незатворена HTML-ознака',
-	'enablerichtexteditor' => 'Овозможи го уредникот на збогатен текст',
+	'enablerichtexteditor' => 'Овозможи уредување во визуелен режим (покрај режимот „Извор“)',
 	'rte-enablerichtexteditormessage' => 'Уредникот на збогатен текст е овозможен!',
 	'rte-first-run-notice' => 'Направивме извесни подобрувања во уредникот. За повеќе информации [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news прочитајте го соопштението].',
 	'prefs-rte' => 'Уредник на збогатен текст',
+);
+
+/** Malayalam (മലയാളം)
+ * @author Praveenp
+ */
+$messages['ml'] = array(
+	'rte-edgecase-triplecurls' => 'ഫലകത്തിനുള്ള ചരങ്ങൾ',
+	'rte-edgecase-syntax' => 'അനുവദനീയമല്ലാത്ത സിന്റാക്സ്',
+	'rte-edgecase-redirect' => 'തിരിച്ചുവിടൽ',
 );
 
 /** Malay (Bahasa Melayu)
@@ -346,7 +377,7 @@ $messages['ms'] = array(
 	'rte-edgecase-redirect' => 'lencong',
 	'rte-edgecase-templateintable' => 'jadual dengan panggilan templat dalam pemerian',
 	'rte-edgecase-unclosed-tags' => 'tag HTML yang tak tertutup',
-	'enablerichtexteditor' => 'Hidupkan Penyunting Teks Beraneka',
+	'enablerichtexteditor' => 'Hidupkan mod visual untuk menyunting (sebagai tambahan kepada mod sumber)',
 	'rte-enablerichtexteditormessage' => 'Alat Penyunting Teks Beraneka dihidupkan!',
 	'rte-first-run-notice' => 'Kami telah membuat sedikit peningkatan pada alat penyunting. Untuk mengetahui lebih lanjut, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news baca pengumumannya].',
 	'prefs-rte' => 'Alat Penyunting Teks Beraneka',
@@ -377,6 +408,13 @@ $messages['nl'] = array(
 	'prefs-rte' => 'Uitgebreide tekstverwerker',
 );
 
+/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+ * @author Siebrand
+ */
+$messages['nl-informal'] = array(
+	'rte-no-js-fallback' => 'De uitgebreide tekstverwerker werkt niet als JavaScript is uitgeschakeld. Schakel JavaScript in in je browser of schakel in je [[Special:Preferences| voorkeuren]] terug naar de oude tekstverwerker voor MediaWiki.',
+);
+
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
@@ -396,7 +434,7 @@ $messages['no'] = array(
 	'rte-edgecase-redirect' => 'omdiriger',
 	'rte-edgecase-templateintable' => 'en tabell med malpåkallelse i definisjonen',
 	'rte-edgecase-unclosed-tags' => 'ulukket HTML-element',
-	'enablerichtexteditor' => 'Aktiver Rik tekstredaktør',
+	'enablerichtexteditor' => 'Aktiver redigering i visuell modus (i tillegg til kildemodus)',
 	'rte-enablerichtexteditormessage' => 'Rik tekstredaktør aktivert!',
 	'rte-first-run-notice' => 'Vi har gjort noen forbedringer på redaktøren. For å lære mer kan du [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news lese annonseringen].',
 	'prefs-rte' => 'Rich Text Editor',
@@ -504,6 +542,7 @@ $messages['pt-br'] = array(
 
 /** Russian (Русский)
  * @author Eleferen
+ * @author Kuzura
  * @author Lockal
  * @author Ytsukeng Fyvaprol
  * @author Александр Сигачёв
@@ -523,12 +562,13 @@ $messages['ru'] = array(
 	'rte-edgecase-redirect' => 'перенаправление',
 	'rte-edgecase-templateintable' => 'таблица с вызовом шаблона в определении',
 	'rte-edgecase-unclosed-tags' => 'не закрытые HTML теги',
-	'enablerichtexteditor' => 'Включить улучшенный редактор текста',
+	'enablerichtexteditor' => 'Включить редактирование в визуальном режиме (в дополнение к режиму исходного кода)',
 	'rte-enablerichtexteditormessage' => 'Улучшенный редактор текста включен!',
 	'rte-first-run-notice' => 'Мы сделали несколько улучшений в редактор. Чтобы узнать больше, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news посетите страницу] с описанием изменений.',
+	'prefs-rte' => 'Визуальный текстовый редактор (RTE)',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -578,6 +618,7 @@ $messages['tl'] = array(
 	'enablerichtexteditor' => 'Paganahin ang Patnugot ng Mayamang Teksto',
 	'rte-enablerichtexteditormessage' => 'Pinagana na ang Patnugot ng Mayamang Teksto!',
 	'rte-first-run-notice' => 'Mayroon kaming ilang mga pagpapainam sa patnugot. Upang makaalam ng mas marami, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news basahin ang pahayag].',
+	'prefs-rte' => 'Patnugot ng Mayamang Teksto',
 );
 
 /** Turkish (Türkçe)

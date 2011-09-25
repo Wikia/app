@@ -361,6 +361,7 @@ $messages['it'] = array(
 
 /** Japanese (日本語)
  * @author Hosiryuhosi
+ * @author Schu
  * @author Tommy6
  */
 $messages['ja'] = array(
@@ -373,6 +374,7 @@ $messages['ja'] = array(
 	'dump-database-request' => '更新をリクエスト',
 	'dump-database-request-info' => '（ダンプは通常1週間ごとに生成されます）',
 	'dump-database-request-submit' => 'リクエストを送信',
+	'dump-database-request-already-submitted' => 'ダンプは最近（7日未満前）要求されています',
 	'dump-database-request-requested' => 'データベースダンプのリクエストを送信しました',
 	'dump-database-info-more' => '詳しくは<a href="http://community.wikia.com/wiki/Help:Database_download">データベースダウンロード</a>をご覧ください。',
 );

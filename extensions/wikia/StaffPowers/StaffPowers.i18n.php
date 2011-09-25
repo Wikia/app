@@ -357,3 +357,10 @@ $messages['uk'] = array(
 	'staffpowers-ipblock-aborted' => 'Заблокувати співробітника Wikia неможливо. Будь ласка, скористайтесь [[Special:Contact]], щоб повідомити про будь-яких питання або проблеми з нашими співробітниками.',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Xiao Qiao
+ */
+$messages['vi'] = array(
+	'staffpowers-ipblock-aborted' => 'Cấm nhân viên Wikia là điều không thể. Vui lòng sử dụng [[Special:Contact|Liên hệ Wiki]] để tường thuật bất kỳ vấn đề hoặc các vấn đề với nhân viên của chúng tôi.',
+);
+

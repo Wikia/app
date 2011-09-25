@@ -233,3 +233,18 @@ $messages['uk'] = array(
 	'cacheepoch-wf-reason' => 'Значення оновлене за допомогою Special:CacheEpoch',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Xiao Qiao
+ */
+$messages['vi'] = array(
+	'cacheepoch-desc' => 'Cung cấp một giao diện để thay đổi lưu trữ bộ đệm cho mỗi wiki',
+	'cacheepoch' => 'Giao diện lưu trữ bộ đệm',
+	'cacheepoch-header' => 'Tăng lưu trữ bộ đệm',
+	'cacheepoch-value' => 'Giá trị hiện tại của bộ đệm lưu trữ là "$1". Nhấn nút để cài đặt nó cho thời gian hiện tại.',
+	'cacheepoch-submit' => 'Cập nhật các giá trị',
+	'cacheepoch-updated' => 'Cập nhật lưu trữ bộ đệm đến "$1".',
+	'cacheepoch-not-updated' => 'Thất bại khi cập nhật lưu trữ bộ đệm.',
+	'cacheepoch-wf-reason' => 'Cập nhật giá trị thông qua Special:CacheEpoch',
+	'cacheepoch-no-wf' => 'WikiFactory không được kích hoạt trên wiki này. Không thể thay đổi lưu trữ bộ đệm.',
+);
+

@@ -53,11 +53,26 @@ $messages['nl'] = array(
 	'centralhelpsearch-placeholder' => 'Zoek in Help &hellip;',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['no'] = array(
+	'centralhelpsearch-desc' => 'Tillat inkludering av et skjema for søk i Community Centrals hjelperegister',
+	'centralhelpsearch-placeholder' => 'Søk Hjelp&hellip;',
+);
+
 /** Russian (Русский)
  * @author Kuzura
  */
 $messages['ru'] = array(
 	'centralhelpsearch-desc' => 'Разрешить включение формы для поиска по Справке Вики Сообщества',
 	'centralhelpsearch-placeholder' => 'Поиск по Справке&hellip;',
+);
+
+/** Swedish (Svenska)
+ * @author WikiPhoenix
+ */
+$messages['sv'] = array(
+	'centralhelpsearch-placeholder' => 'Sök hjälp&hellip;',
 );
 

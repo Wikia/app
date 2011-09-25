@@ -130,6 +130,37 @@ Détails : $2',
 	'lightbox-share-email-error-noaddress' => 'Vous n’avez spécifié aucune adresse.',
 );
 
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'lightbox_details_tooltip' => 'Ollar os detalles da foto',
+	'lightbox-forum' => 'Foro',
+	'lightbox-standard-link' => 'Ligazón estándar',
+	'lightbox-blog-link' => 'Ligazón de blogue',
+	'lightbox-send' => 'Enviar',
+	'lightbox-share-description' => 'Foto de "$1" en $2',
+	'lightbox-share-email-subject' => '$1 envioulle unha foto en Wikia',
+	'lightbox-share-email-body' => 'Ola:
+
+Alguén quixo ensinarlle unha foto en Wikia. Bótelle unha ollada:
+
+$1
+
+- O equipo de Wikia',
+	'lightbox-share-button-email' => 'Enviar',
+	'lightbox-share-button-www' => 'Compartir',
+	'lightbox-share-button-embed' => 'Incorporar',
+	'lightbox-share-email-label' => 'Envíe esta imaxe por correo a un amigo',
+	'lightbox-share-email-ok-caption' => 'Configuración',
+	'lightbox-share-email-ok-content' => '{{PLURAL:$1|Enviouse o correo|Enviáronse os correos}}.',
+	'lightbox-share-email-error-caption' => 'Erro',
+	'lightbox-share-email-error-content' => 'Erro ao enviar {{PLURAL:$1|o correo|os correos}}.
+Detalles: $2',
+	'lightbox-share-email-error-login' => 'Para enviar correos ten que rexistrarse',
+	'lightbox-share-email-error-noaddress' => 'Non se especificou ningún enderezo.',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -295,6 +326,7 @@ $messages['sv'] = array(
 	'lightbox-blog-link' => 'Blogglänk',
 	'lightbox-send' => 'Skicka',
 	'lightbox-share-description' => 'Foto på $1 på $2',
+	'lightbox-share-email-subject' => '$1 har skickat ett foto till dig på Wikia',
 	'lightbox-share-button-email' => 'E-post',
 	'lightbox-share-button-www' => 'Dela',
 	'lightbox-share-button-embed' => 'Bädda in',

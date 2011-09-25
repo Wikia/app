@@ -162,6 +162,8 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'activityindicator-message' => 'Cargando...',
+	'window-wikis-title' => 'Guías de xogos de Wikia',
+	'window-wikis-wikilist-search-hint' => 'Procurar entre os nosos xogos preferidos...',
 	'window-category-load-batch' => 'Máis',
 	'window-article-button-close' => 'Pechar',
 	'window-article-button-back' => 'Volver',
@@ -172,7 +174,12 @@ $messages['gl'] = array(
 	'searchview-button-back-list' => 'Volver á lista',
 	'searchview-button-back-article' => 'Volver ao artigo',
 	'searchbar-hint' => 'Procurar %s...',
+	'alert-download-updated-wikis-message' => 'A lista das guías dispoñibles será actualizada.',
 	'alert-download-updated-wikis-button-ok' => 'Aceptar',
+	'error-update-required' => 'Hai unha actualización necesaria e dispoñible para esta aplicación.',
+	'error-no-connection' => 'Non hai dispoñible ningunha conexión á internet.\\nInténteo de novo.',
+	'error-server' => 'Os nosos servidores devolveron un erro, sentímolo.\\nInténteo de novo.',
+	'error-json-parse' => 'Houbo un problema cos datos obtidos dos nosos servidores, sentímolo.\\nInténteo de novo.',
 );
 
 /** Interlingua (Interlingua)

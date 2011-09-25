@@ -473,6 +473,7 @@ $messages['sv'] = array(
 	'feed-title-recent-badges' => 'Senaste emblem',
 	'feed-title-recent-images' => 'Senaste bilder',
 	'all-blog-posts' => 'alla kategorier',
+	'feed-title-blogcomments' => 'Kommentarer till $1',
 );
 
 /** Telugu (తెలుగు)

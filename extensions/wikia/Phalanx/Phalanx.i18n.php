@@ -1459,6 +1459,7 @@ $messages['sv'] = array(
 	'phalanx-type-summary' => 'sidsammanfattning',
 	'phalanx-type-title' => 'sidtitel',
 	'phalanx-type-user' => 'användare',
+	'phalanx-type-answers-question-title' => 'frågetitel',
 	'phalanx-type-answers-recent-questions' => 'senaste frågorna',
 	'phalanx-type-wiki-creation' => 'wiki-skapande',
 	'phalanx-label-filter' => 'Filter:',
@@ -1467,6 +1468,8 @@ $messages['sv'] = array(
 	'phalanx-label-lang' => 'Språk:',
 	'phalanx-view-type' => 'Typ av blockering...',
 	'phalanx-view-blocks' => 'Sökfilter',
+	'phalanx-format-case' => 'skiftlägeskänslig',
+	'phalanx-format-exact' => 'exakt',
 	'phalanx-test-submit' => 'Test',
 	'phalanx-test-results-legend' => 'Testresultat',
 	'phalanx-display-row-created' => "skapades av '''$1''' den $2",
@@ -1478,8 +1481,10 @@ $messages['sv'] = array(
 	'phalanx-stats-table-language' => 'Språk',
 	'phalanx-stats-table-text' => 'Text',
 	'phalanx-stats-table-reason' => 'Anledning',
+	'phalanx-rule-log-details' => 'Filter: "$1", typ: "$2", orsak: "$3"',
 	'phalanx-stats-table-wiki-id' => 'Wiki-ID',
 	'phalanx-stats-table-wiki-name' => 'Wiki-namn',
+	'phalanx-stats-table-wiki-last-edited' => 'Senast redigerad',
 );
 
 /** Telugu (తెలుగు)

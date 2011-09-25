@@ -453,7 +453,7 @@ $3
 * За да ги промените вашите нагодувања за известувања за списокот на набљудувања, посетете ја страницата http://www.wikia.com/wiki/Special:Preferences
 * За да ги означите сите страници од овој Неделен преглед како посетени, одберете ја таа можност во јазичето „Список на набљудувања“ на вашата страница за нагодувања',
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|коментар|коментари}})',
-	'globalwatchlist-no-page-found' => 'Нема пронајдено страница.',
+	'globalwatchlist-no-page-found' => 'Нема пронајдено ниедна страница.',
 	'globalwatchlist-no-blog-page-found' => 'Нема пронајдено блог-страница.',
 );
 
@@ -761,6 +761,7 @@ $3
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|kommentar|kommentarer}})',
 	'globalwatchlist-no-page-found' => 'Ingen sida hittades.',
 	'globalwatchlist-no-blog-page-found' => 'Ingen bloggsida hittades.',
 );

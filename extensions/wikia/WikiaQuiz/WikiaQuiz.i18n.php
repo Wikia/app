@@ -328,12 +328,15 @@ $messages['fr'] = array(
  * @author Toliño
  */
 $messages['gl'] = array(
+	'wikiaquiz-createquiz-headline' => 'Crear un cuestionario',
+	'wikiaquiz-editquiz-headline' => 'Editar o cuestionario',
 	'wikiaquiz-title-label' => 'Título',
 	'wikiaquiz-moreinfoarticle-label' => 'Artigo',
 	'wikiaquiz-moreinfolinktext-label' => 'Texto da ligazón',
 	'wikiaquiz-question-label' => 'Pregunta',
 	'wikiaquiz-image-label' => 'Imaxe (opcional)',
 	'wikiaquiz-explanation-label' => 'Explicación da resposta (opcional)',
+	'wikiaquiz-quiz-label' => 'Cuestionario',
 	'wikiaquiz-questions-label' => 'Preguntas',
 	'wikiaquiz-answers-label' => 'Respostas',
 	'wikiaquiz-answer-label' => 'Resposta',

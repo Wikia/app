@@ -787,14 +787,18 @@ $messages['sr-ec'] = array(
 
 /** Swedish (Svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'textregex-desc' => '[[Special:textregex/XXXX|Filtrera ut]] oönskade fraser i redigerade sidor, baserade på reguljära uttryck',
 	'textregex-page-title' => 'Lista över oönskade uttryck',
 	'textregex-error-unblocking' => 'Fel med avblockeringen ($1).
 Försök igen.',
 	'textregex-currently-blocked' => "'''Nuvarande blockerande fraser:'''",
 	'textregex_nocurrently-blocked' => 'Inga blockerade fraser hittades',
 	'textregex-addedby-user' => 'lades till av $1 den $2',
+	'textregex-remove-url' => '[{{SERVER}}$1&id=$2 ta bort]',
+	'textregex-stats-url' => '[{{SERVER}}$1&id=$2 statistik]',
 	'textregex-unblock-succ' => 'Avblockering lyckades',
 	'textregex-block-succ' => 'Blockering lyckades',
 	'textregex-unblock-message' => "Fras '''$1''' har tagits bort från de oönskade uttrycken.",
@@ -812,6 +816,7 @@ Försök igen.',
 	'textregex-select-regexlist' => 'gå till listan',
 	'textregex-invalid-regexid' => 'Ogiltig fras.',
 	'textregex-phrase-statistics' => "Statistik för \"'''\$1'''\" fras (antal poster: \$2)",
+	'textregex-return-mainpage' => '[{{SERVER}}$1 gå tillbaka till listan]',
 );
 
 /** Tetum (Tetun)

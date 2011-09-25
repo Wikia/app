@@ -251,6 +251,13 @@ $messages['sr-ec'] = array(
 Активност на страницама за оцењивање ''није'' урачунато у налог.",
 );
 
+/** Swedish (Svenska)
+ * @author WikiPhoenix
+ */
+$messages['sv'] = array(
+	'graceexpired-row' => '$1 (i $2, senast redigerad kl. $3)',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */

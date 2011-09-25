@@ -102,10 +102,12 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Schu
  * @author Tommy6
  */
 $messages['ja'] = array(
-	'skinchooser-desc' => '利用者が個人設定で外装を変更できるようにする',
+	'skinchooser-desc' => '利用者の個人設定での外装選択を可能にします。',
+	'skinchooser-customcss' => 'カスタムテーマの場合、上記のメニューでカスタムオプションを選択し、 [[MediaWiki:Monaco.css]]でカスタム CSS を指定してください。',
 	'new-look' => 'ウィキアの新しい外装',
 	'site-layout' => 'サイトの外装',
 );

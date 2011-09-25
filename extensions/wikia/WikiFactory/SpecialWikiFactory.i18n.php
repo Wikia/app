@@ -2555,6 +2555,7 @@ $messages['mk'] = array(
 	'wikifactory-label-masstags' => 'МасовниОзнаки',
 	'wikifactory-label-findtags' => 'НајдиОзнаки',
 	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
+	'wikifactory-label-eznamespace' => 'Именски простор EZ',
 	'wikifactory-label-compare' => 'Спореди',
 	'right-wikifactory' => 'Променете ги внатрешните нагодувања на викијата',
 	'wikifactory-domain-edit' => 'уреди ја ова URL-адреса',

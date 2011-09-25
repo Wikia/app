@@ -74,10 +74,26 @@ $messages['no'] = array(
 	'confirmemailprompt-error' => 'Er dette e-postadressen din: <strong>$1</strong>? [[$2|Bekreft den]] eller [[$3|endre den]].',
 );
 
+/** Polish (Polski)
+ * @author Woytecr
+ */
+$messages['pl'] = array(
+	'confirmemailprompt-desc' => 'Wyświetla ostrzeżenie, jeżeli użytkownik nie potwierdził adresu e-mail',
+	'confirmemailprompt-error' => 'Czy to jest twój adres e-mail: <strong>$1</strong>? [[$2|Potwierdź go]] lub [[$3|zmień]].',
+);
+
 /** Russian (Русский)
  * @author Kuzura
  */
 $messages['ru'] = array(
 	'confirmemailprompt-error' => 'Это ваш адрес электронной почты: <strong>$1</strong>? [[$2|подтвердить его]] или [[$3|изменить его]].',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Xiao Qiao
+ */
+$messages['vi'] = array(
+	'confirmemailprompt-desc' => 'Hiển thị một thông điệp cảnh báo nếu một người dùng có địa chỉ thư điện tử chưa được xác nhận',
+	'confirmemailprompt-error' => 'Đây có phải là địa chỉ e-mail của bạn: <strong>$1</strong>? [[$2|Xác nhận nó]] hoặc [[$3|thay đổi nó]].',
 );
 

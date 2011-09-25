@@ -120,6 +120,14 @@ $messages['sv'] = array(
 	'campfire-licensed-under' => 'Licensierad under $1',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Xiao Qiao
+ */
+$messages['vi'] = array(
+	'campfire-page-header' => '$1 từ $2',
+	'campfire-licensed-under' => 'Theo giấy phép $1',
+);
+
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Lauhenry
  */
