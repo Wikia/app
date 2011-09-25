@@ -62,12 +62,12 @@ $messages['en'] = array(
 
 	//rights/groups
 	'right-chatmoderator' => 'Can kick/ban users from [[Help:Chat|Chat]]',
-	'group-chatmoderator' => 'Chat Moderators',
-	'group-chatmoderator-member' => 'Chat Moderator',
+	'group-chatmoderator' => 'Chat moderators',
+	'group-chatmoderator-member' => 'Chat moderator',
 	'grouppage-chatmoderator' => 'w:c:community:Help:Chat',
 
-	'group-bannedfromchat' => 'BannedFromChat',
-	'group-bannedfromchat-member' => 'BannedFromChat',
+	'group-bannedfromchat' => 'Banned from chat',
+	'group-bannedfromchat-member' => 'Banned from chat',
 	'grouppage-bannedfromchat' => 'w:c:community:Help:Chat',
 	
 	// Emoticons
