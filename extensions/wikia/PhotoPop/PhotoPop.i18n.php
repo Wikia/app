@@ -77,6 +77,19 @@ $messages['fr'] = array(
 	'photopop-tutorial-text' => "Touchez l'écran pour dévoiler une image cachée. Puis touchez la flèche pour deviner ce que c'est.",
 );
 
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'photopop-score' => 'puntuación: <span>$1</span>',
+	'photopop-progress' => 'fotos: <span>$1</span>',
+	'photopop-continue-correct' => 'correcto!',
+	'photopop-continue-timeup' => 'rematou o tempo!',
+	'photopop-finished-heading' => 'rematado!',
+	'photopop-endgame-highscore-summary' => 'puntuación máxima: $1',
+	'photopop-endgame-score-summary' => 'puntuación: $1',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -144,18 +157,33 @@ $messages['nl'] = array(
  */
 $messages['no'] = array(
 	'photopop' => 'Tåkebilde-spill',
+	'photopop-title-tag-homescreen' => 'BildePopper',
+	'photopop-title-tag-selectorscreen' => 'BildePopper',
+	'photopop-title-tag-playgame' => 'BildePopper – $1 $2',
 	'photopop-desc' => 'Lager en side hvor Tåkebilde-spillet kan spilles i HTML5 + Canvas. Det vil være tilgjengelig via Nirvanas APIer',
 	'photopop-score' => 'Poengsum: <span>$1</span>',
 	'photopop-progress' => 'Bilder: <span>$1</span>',
 	'photopop-continue-correct' => 'RIKTIG!',
 	'photopop-continue-timeup' => 'TIDEN ER UTE!',
+	'photopop-finished-heading' => 'fullført!',
+	'photopop-endgame-highscore-summary' => 'toppskår: $1',
+	'photopop-endgame-completion-summary' => 'du fikk $1 av $2 riktige.',
+	'photopop-endgame-score-summary' => 'skår: $1',
+	'photopop-tutorial-text' => 'Trykk på skjermen for å avdekke et skjult bilde. Trykk deretter på pilen for å gjette hva det er.',
 );
 
 /** Swedish (Svenska)
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'photopop-score' => 'poäng: <span>$1</span>',
+	'photopop-progress' => 'foton: <span>$1</span>',
+	'photopop-progress-numbers' => '$1/$2',
+	'photopop-continue-correct' => 'rätt!',
+	'photopop-continue-timeup' => 'tiden är slut!',
 	'photopop-finished-heading' => 'klart!',
+	'photopop-endgame-highscore-summary' => 'toppoäng: $1',
+	'photopop-endgame-completion-summary' => 'du fick $1 av $2 rätt.',
 	'photopop-endgame-score-summary' => 'poäng: $1',
 	'photopop-tutorial-text' => 'Tryck på skärmen för att avslöja en dold bild. Tryck sedan på pilen för att gissa vad den är.',
 );

@@ -160,6 +160,7 @@ $messages['cs'] = array(
 
 /** German (Deutsch)
  * @author LWChris
+ * @author SVG
  * @author The Evil IP address
  */
 $messages['de'] = array(
@@ -184,7 +185,7 @@ $messages['de'] = array(
 	'protectsite-until' => 'Geschützt bis:',
 	'protectsite-protect' => 'Schützen',
 	'protectsite-unprotect' => 'Freigeben',
-	'protectsite-nologs' => 'nicht in den Logs anzeigen',
+	'protectsite-nologs' => 'nicht in den Logbüchern anzeigen',
 );
 
 /** Spanish (Español)

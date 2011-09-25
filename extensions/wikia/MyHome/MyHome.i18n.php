@@ -473,6 +473,17 @@ Ma'z oc'h diazezer ar wiki-mañ pe unan eus merourien anezhañ e c'hallit kemma�
 	'activityfeed' => 'Gwazh obererezh',
 );
 
+/** Catalan (Català)
+ * @author BroOk
+ */
+$messages['ca'] = array(
+	'myhome-feed-newpage' => 'nova pàgina',
+	'myhome-feed-edit' => 'edita',
+	'myhome-feed-categorization' => 'categorització',
+	'myhome-feed-edited-by' => 'editat per $1',
+	'myhome-feed-article-comment-edited-by' => 'comentari editat per $1',
+);
+
 /** Chechen (Нохчийн)
  * @author Sasan700
  */
@@ -2806,6 +2817,7 @@ $messages['sr-ec'] = array(
 );
 
 /** Swedish (Svenska)
+ * @author Diupwijk
  * @author Lokal Profil
  * @author McDutchie
  * @author Tobulos1
@@ -2820,7 +2832,7 @@ $messages['sv'] = array(
 	'myhome-activity-feed-empty' => "Denna wiki väntar på att du engagerar dig. Klicka på '''[[Special:CreatePage|Ny sida]]''' för att börja skriva!",
 	'myhome-watchlist-feed' => 'Bevakningslista',
 	'myhome-watchlist-feed-empty' => 'Du kan lägga till sidor i din bevakningslista genom att klicka på "Bevaka" länken i fältet längst upp på sidan. Du kan använda din bevakningslista för att hålla koll på de senaste ändringarna på sidor som du bryr dig om.',
-	'myhome-user-contributions-feed' => 'Bidrager',
+	'myhome-user-contributions-feed' => 'Bidrag',
 	'myhome-hot-spots-feed' => 'Hotspot',
 	'myhome-hot-spots-feed-empty' => "Denna wiki väntar på dig att engagera. Klicka på '''[[Special:CreatePage|Ny sida]]''' för att börja skriva!",
 	'myhome-hot-spots-newest' => 'Nya sidor på wikin',
@@ -3143,16 +3155,57 @@ $messages['uk'] = array(
 $messages['vi'] = array(
 	'myhome-desc' => 'Trang riêng này dành cho thành viên đã đăng nhập',
 	'wikiactivity' => 'Hoạt động của Wiki',
+	'myhome-activity-more' => 'xem nhiều hơn hoạt động gần đây',
+	'myhome-activity-feed-empty' => "Wiki này đang chờ bạn tham gia.
+Nhấp vào '''[[Special:CreatePage|Tạo trang]]''' để bắt đầu viết!",
+	'myhome-watchlist-feed' => 'Danh sách theo dõi',
+	'myhome-watchlist-feed-empty' => 'Bạn có thể thêm các trang vào danh sách theo dõi của bạn bằng cách nhấp vào liên kết "{{int:watch}}" trên thanh ở đầu trang.
+Bạn có thể sử dụng danh sách theo dõi để theo dõi các thay đổi mới nhất cho các trang mà bạn quan tâm đến.',
 	'myhome-user-contributions-feed' => 'Đóng góp',
 	'myhome-hot-spots-feed' => 'Điểm nóng',
+	'myhome-hot-spots-feed-empty' => "Wiki này đang chờ bạn tham gia.
+Nhấp vào '''[[Special:CreatePage|Tạo trang]]''' để bắt đầu viết!",
 	'myhome-hot-spots-newest' => 'Trang mới trên wiki này',
-	'myhome-feed-created-by' => 'Tạo bởi $1',
-	'myhome-feed-added-by' => 'Thêm vào bởi $1',
+	'myhome-hot-spots-brandnew' => 'Đây là một wiki hoàn toàn mới. Nhấp vào [[Special:CreatePage|Tạo trang]] để bắt đầu viết!',
+	'tog-myhomedisableredirect' => 'Vô hiệu hoá chuyển hướng đến Hoạt động của Wiki',
+	'myhome-feed-newpage' => 'Trang mới',
+	'myhome-feed-edit' => 'sửa đổi',
+	'myhome-feed-move' => 'trang di chuyển',
+	'myhome-feed-talkpage' => 'trang thảo luận',
+	'myhome-feed-blogcomment' => 'bình luận blog',
+	'myhome-feed-delete' => 'xóa',
+	'myhome-feed-image' => 'ảnh được thêm vào',
+	'myhome-feed-video' => 'đoạn phim được thêm vào',
+	'myhome-feed-categorization' => 'phân loại',
+	'myhome-feed-created-by' => 'tạo bởi $1',
+	'myhome-feed-added-by' => 'thêm vào bởi $1',
 	'myhome-feed-edited-by' => 'sửa đổi bởi $1',
 	'myhome-feed-posted-by' => 'đăng bởi $1',
+	'myhome-feed-comment-by' => 'bình luận bởi $1',
+	'myhome-feed-deleted-by' => 'xóa bởi $1',
+	'myhome-feed-moved-by' => 'di chuyển bởi $1',
+	'myhome-feed-article-comment-created-by' => 'bình luận mới bởi $1',
+	'myhome-feed-article-comment-edited-by' => 'sửa đổi bình luận bởi $1',
+	'myhome-feed-by' => 'bởi $1',
+	'myhome-feed-diff-alt' => 'chỉ cho tôi những thay đổi trên trang này',
 	'myhome-feed-new-page-details' => 'Trang mới',
 	'myhome-feed-summary-details' => 'Tóm lược',
 	'myhome-feed-section-edit-details' => 'Chỉnh sửa mục',
+	'myhome-feed-new-blog-post-details' => 'Blog mới',
+	'myhome-feed-new-blog-comment-details' => 'Bình luận',
+	'myhome-feed-new-article-comment-details' => 'Bình luận',
+	'myhome-feed-move-details' => 'Đổi tên',
+	'myhome-feed-redirect-details' => 'Chuyển hướng',
+	'myhome-user-contributions-empty' => 'Bạn có thể tham gia vào wiki này bằng cách nhấp vào "{{int:editthispage}}" trên mọi trang, vào thêm vào đó những gì bạn biết.
+Mọi người đều có thể tạo ra sửa đổi, thêm thông tin và chỉnh sửa lỗi.
+Wiki được xây dựng bởi cộng đồng, và chỉ với một lần nhấp vào nút sửa đổi, bạn đã trở thành một phần của cộng đồng này.
+Hãy thử xem!',
+	'myhome-hot-spots-number-of-editors' => 'biên tập viên',
+	'myhome-namespace-blog' => 'Blog',
+	'myhome-community-corner-header' => 'Thông điệp cộng đồng',
+	'oasis-myhome-community-corner-edit' => 'sửa đổi thông điệp &gt;',
+	'myhome-community-corner-edit' => 'sửa đổi thông điệp',
+	'myhome-hot-spots-definition' => 'Các trang với nhiều biên tập viên nhất trong {{PLURAL:$1|ngày hôm nay|$1 ngày qua}}.',
 );
 
 /** Chinese (中文)

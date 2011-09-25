@@ -316,6 +316,7 @@ $messages['sr-ec'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'loggerselectlogname' => 'Välj loggnamn:',
 	'loggergo' => 'Visa',
 	'loggernoresult' => 'Inga resultat hittades',
 );

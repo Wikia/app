@@ -1167,6 +1167,7 @@ $messages['eu'] = array(
 /** Persian (فارسی)
  * @author BlueDevil
  * @author Ebraminio
+ * @author Huji
  * @author Wayiran
  */
 $messages['fa'] = array(
@@ -1267,7 +1268,7 @@ $messages['fa'] = array(
 	'adss-welcome-subject' => '[AdSS] از حمایت شما متشکریم!',
 	'adss-welcome-body' => 'سلام،
 
-تبریک، حساب شما ایجاد شد و آگهی‌هایتان تا ۴۸ ساعت به نمایش درخواهند آمد. شما می‌توانید برای بررسی دوبارهٔ متن آگهی‌تان، خرید آگهی‌های بیشتر، یا بازبینی صورت‌حسابتان با اطلاعات زیر به سامانه وارد شوید. صورت‌حساب‌های ویکیا از طریق پی‌پال هر موقع که $$4 یا بیش‌تر خرج کرده باشید، صادر می‌شوند. 
+تبریک، حساب شما ایجاد شد و آگهی‌هایتان تا ۴۸ ساعت به نمایش درخواهند آمد. شما می‌توانید برای بررسی دوبارهٔ متن آگهی‌تان، خرید آگهی‌های بیشتر، یا بازبینی صورت‌حسابتان با اطلاعات زیر به سامانه وارد شوید. صورت‌حساب‌های ویکیا از طریق پی‌پال هر موقع که $$4 یا بیشتر خرج کرده باشید، صادر می‌شوند. 
 
 نشانی: $1
 نام کاربری: $2
@@ -1597,15 +1598,15 @@ $messages['gl'] = array(
 	'adss-ad-header' => '<h2>Ligazóns externas patrocinadas</h2>',
 	'adss-ad-default-text' => 'Prema aquí!',
 	'adss-form-header' => 'Deseñe o seu anuncio',
-	'adss-form-url' => 'URL do sitio web do patrocinador (a súa páxina web):',
-	'adss-form-linktext' => 'Texto que queira mostrar na ligazón:',
-	'adss-form-additionaltext' => 'Texto a mostrar baixo a súa ligazón:',
+	'adss-form-url' => 'URL de clic',
+	'adss-form-linktext' => 'Texto do anuncio',
+	'adss-form-additionaltext' => 'Descrición do anuncio',
 	'adss-form-type' => 'Tipo de patrocinio:',
 	'adss-form-page' => 'Páxina a patrocinar:',
 	'adss-form-banner' => 'Cargue o seu cartel aquí:',
 	'adss-form-price' => 'Cantidade do patrocinio:',
 	'adss-form-shares' => 'Número de accións:',
-	'adss-form-email' => 'O seu enderezo de correo electrónico:',
+	'adss-form-email' => 'O seu enderezo de correo electrónico',
 	'adss-form-password' => 'O seu contrasinal:',
 	'adss-form-login-link' => 'Rexístrese',
 	'adss-form-login-desc' => 'Ten un contrasinal? $1 para aforrar tempo e mercar o anuncio cun só clic!',
@@ -1802,15 +1803,15 @@ $messages['ia'] = array(
 	'adss-ad-default-text' => 'Clicca hic!',
 	'adss-ad-default-desc' => 'Compra un ligamine sponsorisate e description pro tu sito web in iste pagina. Face lo tosto, le numero limitate de sponsorisationes se vende rapidemente!',
 	'adss-form-header' => 'Designar tu annuncio',
-	'adss-form-url' => 'URL del sito del sponsor (tu sito web):',
-	'adss-form-linktext' => 'Le texto que tu vole monstrar in le ligamine:',
-	'adss-form-additionaltext' => 'Le texto a monstrar sub tu ligamine:',
+	'adss-form-url' => 'URL post clic',
+	'adss-form-linktext' => 'Titulo del annuncio',
+	'adss-form-additionaltext' => 'Description del annuncio',
 	'adss-form-type' => 'Typo de sponsorisation:',
 	'adss-form-page' => 'Pagina a sponsorisar:',
 	'adss-form-banner' => 'Incarga hic vostre bandiera:',
 	'adss-form-price' => 'Amonta de sponsoring:',
 	'adss-form-shares' => 'Numero de actiones:',
-	'adss-form-email' => 'Tu adresse de e-mail:',
+	'adss-form-email' => 'Vostre adresse de e-mail',
 	'adss-form-password' => 'Tu contrasigno:',
 	'adss-form-login-link' => 'Aperi session',
 	'adss-form-login-desc' => 'Ha un contrasigno? $1 pro economisar tempore e acquirer le annuncio con un sol clic!',
@@ -1826,14 +1827,16 @@ $messages['ia'] = array(
 	'adss-form-pick-plan-errormsg' => 'Tu debe seliger un plano',
 	'adss-form-pick-plan' => 'Selige un pacchetto de publicitate',
 	'adss-form-site-plan-header' => 'Compra un ligamine in tote le wiki',
-	'adss-form-site-plan-description' => 'Diffunde vostre ligamines in tote le wiki pro un sol precio basse.
+	'adss-form-site-plan-header-ribbon' => 'Le minus car',
+	'adss-form-site-plan-description' => '* Obtene ligamines sponsorisate in {{SITENAME}} pro un sol precio basse.
 
-1 parte equala actualmente $1% del ligamines sponsorisate de {{SITENAME}} e costa solmente $2. Vos pote cancellar a omne momento.',
+* 1 parte equala actualmente $1% del ligamines sponsorisate de {{SITENAME}} e costa solmente $2. Vos pote cancellar a omne momento.',
 	'adss-form-site-plan-price' => '$1 per parte',
 	'adss-form-site-premium-plan-header' => 'Compra 4 ligamines sponsorisate pro le precio de 3',
-	'adss-form-site-premium-plan-description' => 'Face circular vostre ligamines sponsorisate in {{SITENAME}}, e augmenta le diffusion per comprar in massa.
+	'adss-form-site-premium-plan-header-ribbon' => 'Melior valor',
+	'adss-form-site-premium-plan-description' => '* Obtene ligamines sponsorisate in {{SITENAME}}, e augmenta le diffusion per comprar in massa.
 
-1 parte equala actualmente $1% del ligamines sponsorisate de {{SITENAME}}. Con iste option, vos compra quatro partes pro le precio de tres! Vos pote cancellar a omne momento.',
+* 1 parte equala actualmente $1% del ligamines sponsorisate de {{SITENAME}}. Con iste option, vos compra quatro partes pro le precio de tres! Vos pote cancellar a omne momento.',
 	'adss-form-site-premium-plan-price' => 'Solmente $1 pro quatro partes!',
 	'adss-form-page-plan-header' => 'Acquire un ligamine sur un sol pagina',
 	'adss-form-page-plan-description' => 'Isto permitte diriger un message personalisate al optime pagina pro vostre producto pro solmente $1, e vos pote cancellar a omne momento.',
@@ -1842,9 +1845,10 @@ $messages['ia'] = array(
 	'adss-form-banner-plan-description' => 'Obtene un parte del bandieras circulante trans le sito pro un sol precio basse.',
 	'adss-form-banner-plan-price' => '$1 pro un sol parte del bandieras',
 	'adss-form-hub-plan-header' => 'Compra un ligamine sponsorisate in tote le wikis de $1',
-	'adss-form-hub-plan-description' => 'Obtene ligamines sponsorisate in tote le wikis de $1 (plus de $2 wikis) pro un sol precio basse.
+	'adss-form-hub-plan-header-ribbon' => 'Traffico maxime',
+	'adss-form-hub-plan-description' => '* Obtene ligamines sponsorisate in tote le wikis de $1 (plus de $2 wikis) pro un sol precio basse.
 
-Isto permitte attinger un audientia plus ample per circular vostre annuncio in altere wikis del mesme centro.',
+* Isto permitte attinger un audientia plus ample perque vostre annuncio es circulate in altere wikis del mesme centro.',
 	'adss-form-hub-plan-price' => '$1 per parte',
 	'adss-form-reviews-page-year-plan-header' => 'Sponsorisation annual',
 	'adss-form-reviews-page-year-plan-description' => 'Vos pote acquirer un ligamine<br />ab iste analyse de interprisa<br />verso vostre interprisa',
@@ -1858,6 +1862,12 @@ Isto permitte attinger un audientia plus ample per circular vostre annuncio in a
 	'adss-form-or' => '- o -',
 	'adss-form-thanks' => 'Le acquisition ha succedite. Le annuncio entrara in circulation post approbation (intra 48 horas, usualmente minus).',
 	'adss-form-buy-another' => 'Vole acquirer un altere annuncio ora? [[Special:AdSS|Clicca hic]]',
+	'adss-form-tooltip-clickurl' => 'Isto es le URL pro le pagina specific ubi le usatores arriva post cliccar. Vos pote usar iste URL pro traciar le visitas via bit.ly o Google Analytics.',
+	'adss-form-tooltip-displayurl' => 'Iste URL essera monstrate sub le description de vostre annuncio.',
+	'adss-form-tooltip-adtitle' => 'Crea un titulo pro vostre annuncio que es distincte, concise e captivante.',
+	'adss-form-tooltip-addesc' => 'Le description del annuncio es pro explicar le valor de vostre producto o servicio. Mitte in evidentia vostre qualitates unic, offertas special e promotiones.',
+	'adss-form-tooltip-email' => 'Iste adresse de e-mail es nostre puncto de contacto con vos. Illo non essera monstrate in le annuncio.',
+	'adss-form-modal-title' => 'Redirection a PayPal pro le pagamento',
 	'adss-upsell-header' => 'Offerta special e unic',
 	'adss-upsell-text' => 'Recipe gratuitemente le prime mense del annuncio que vos justo acquireva!<br />
 Converte ora vostre annuncio in un subscription trimestral<br />e paga $$1 in loco de $$2 (un rebatto de 33%)!',
@@ -1882,6 +1892,9 @@ Converte ora vostre annuncio in un subscription trimestral<br />e paga $$1 in lo
 	'adss-preview-header' => 'Previsualisation',
 	'adss-preview-prompt' => 'Ecce le aspecto de tu sponsoring - clicca "Modificar" pro retornar e facer cambios, o "Salveguardar" pro salveguardar lo e continuar a PayPal.',
 	'adss-click-here' => 'Clicca hic',
+	'adss-paypal-item-type-site-name' => 'Ligamines sponsorisate (le minus car)',
+	'adss-paypal-item-type-site-premium-name' => 'Ligamines sponsorisate (le melior valor)',
+	'adss-paypal-item-type-hub-name' => 'Ligamines sponsorisate (pro traffico maxime)',
 	'adss-paypal-redirect' => '$1 si tu non es redirigite a PayPal intra 5 secundas.',
 	'adss-paypal-error' => 'Impossibile pagar con PayPal in iste momento. Per favor reproba plus tarde.
 
@@ -1949,6 +1962,9 @@ e nos vos inviara le contrasigno al adresse de e-mail registrate.
 
 -- 
 Le equipa de Wikia',
+	'adss-more-information' => 'Plus information',
+	'adss-email-us' => 'Scribe nos a [mailto:sponsoredlinks@wikia-inc.com sponsoredlinks@wikia-inc.com] si vos ha besonio de plus information.',
+	'adss-faq' => 'Folio a questiones',
 );
 
 /** Igbo (Igbo)
@@ -2648,7 +2664,7 @@ $messages['nl'] = array(
 	'adss-form-tooltip-displayurl' => 'Deze URL wordt weergegeven onder de beschrijving van uw advertentie.',
 	'adss-form-tooltip-adtitle' => 'Maak een koptekst voor uw advertentie die onderscheidend, beknopt en boeiend is.',
 	'adss-form-tooltip-addesc' => 'De beschrijving van de advertentie is waar u uitlegt wat de waarde van uw product of dienst is. Leg de nedruk op uw unieke kwaliteiten, speciale aanbiedingen of promoties.',
-	'adss-form-tooltip-email' => 'Via dit e-mailadres kan met contact met u opnemen. Het wordt niet weergegeven in de advertentie.',
+	'adss-form-tooltip-email' => 'Via dit e-mailadres kunnen wij contact met u opnemen. Het wordt niet weergegeven in de advertentie.',
 	'adss-form-modal-title' => 'Wacht op doorverwijzing naar PayPal voor de betaling',
 	'adss-upsell-header' => 'Speciale eenmalige aanbieding',
 	'adss-upsell-text' => 'U kunt de eerste maand van de advertentie die u net hebt gekocht gratis krijgen!<br />
@@ -2993,10 +3009,16 @@ Wikia-teamet',
 	'adss-faq' => 'Ofte stilte spørsmål',
 );
 
-/** Polish (Polski) */
+/** Polish (Polski)
+ * @author Woytecr
+ */
 $messages['pl'] = array(
+	'adss-form-additionaltext' => 'Opis reklamy',
+	'adss-form-email' => 'Twój adres e-mail',
 	'adss-form-password' => 'Twoje hasło',
 	'adss-form-login-link' => 'Zaloguj się',
+	'adss-form-field-empty-errormsg' => 'To pole nie może być puste',
+	'adss-form-non-existent-title-errormsg' => 'Ta strona nie istnieje',
 	'adss-button-preview' => 'Podgląd',
 	'adss-button-edit' => 'Edytuj',
 	'adss-button-select' => 'Wybierz',
@@ -3717,9 +3739,9 @@ $messages['sv'] = array(
 	'adss-form-pick-plan' => 'Välj ett annonspaket',
 	'adss-form-site-plan-header' => 'Köp en sponsrad länk för hela wikin',
 	'adss-form-site-plan-header-ribbon' => 'Billigaste',
-	'adss-form-site-plan-description' => 'Få sponsrade länkar på {{SITENAME}} till ett lågt pris.
+	'adss-form-site-plan-description' => '* Få sponsrade länkar på {{SITENAME}} till ett lågt pris.
 
-1 aktie är för närvarande lika med $1% av {{SITENAME}} sponsrade länkar och kostar bara $2. Du kan avbryta när som helst.',
+* 1 aktie är för närvarande lika med $1% av {{SITENAME}} sponsrade länkar och kostar bara $2. Du kan avbryta när som helst.',
 	'adss-form-site-plan-price' => '$1 för en aktie',
 	'adss-form-site-premium-plan-header' => 'Köp 4 Sponsrade Länkar till priset av 3',
 	'adss-form-site-premium-plan-header-ribbon' => 'Bästa värde',
@@ -3729,6 +3751,8 @@ $messages['sv'] = array(
 	'adss-form-site-premium-plan-price' => 'Endast $1 för fyra aktier!',
 	'adss-form-page-plan-header' => 'Köp en länk på en enda sida',
 	'adss-form-page-plan-price' => '$1 för en länk',
+	'adss-form-hub-plan-header' => 'Köp en sponsrad länk över alla $1-wikis',
+	'adss-form-hub-plan-price' => '$1 för en aktie',
 	'adss-form-reviews-page-year-plan-price' => 'Spara mer: för $1',
 	'adss-form-reviews-page-month-plan-price' => 'Spara 50 %: för $1',
 	'adss-form-reviews-page-day-plan-header' => 'Sponsra denna verksamhet',

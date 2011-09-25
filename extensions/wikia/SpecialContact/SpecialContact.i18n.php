@@ -137,12 +137,13 @@ Si es prefereix l'ús regular de correu electrònic o arxius adjunts, es pot con
 /** German (Deutsch)
  * @author George Animal
  * @author LWChris
+ * @author SVG
  */
 $messages['de'] = array(
 	'contact' => 'Kontaktiere Wikia',
 	'specialcontact-wikia' => 'Kontaktiere Wikia',
 	'specialcontact-pagetitle' => 'Kontaktiere Wikia',
-	'specialcontact-intro' => 'Du kannst [[w:project:Staff|Wikia Personal]] über dieses Formular kontaktieren. Admins dieses Wikis kannst du [[Special:ListAdmins|hier]] finden.
+	'specialcontact-intro' => 'Du kannst das [[w:project:Staff|Wikia Personal]] über dieses Formular kontaktieren. Die Administratoren dieses Wikis kannst du [[Special:ListAdmins|hier]] finden.
 
 Zusätzliche Informationen über das Melden von Problemen auf Wikia findest du [[w:project:Report_a_problem|hier]], oder du kannst in den [[w:Forum:Index|Wikia-Community-Foren]] posten und um Hilfe bitten.
 
@@ -774,10 +775,31 @@ $messages['sv'] = array(
 	'contact' => 'Kontakta Wikia',
 	'specialcontact-wikia' => 'Kontakta Wikia',
 	'specialcontact-pagetitle' => 'Kontakta Wikia',
+	'specialcontact-intro' => 'Du kan kontakta [[w:project:Staff|Wikias personal]] med hjälp av detta formulär. Administratörer för denna wiki kan hittas [[Special:ListAdmins|här]].
+
+Tilläggande information om hur man rapporterar problem till Wikia kan hittas [[w:project:Report_a_problem|här]], eller så kan du posta ett inlägg på [[w:Forum:Index|Wikias gemenskapsforum]] för användarsupport.
+
+Om du föredrar att använda e-post eller har bifogade filer kan du kontakta oss på [mailto:community@wikia.com community@wikia.com].',
 	'specialcontact-username' => 'Användarnamn',
 	'specialcontact-wikiname' => 'Vilken wiki',
 	'specialcontact-realname' => 'Ditt namn',
 	'specialcontact-yourmail' => 'E-postadress',
+	'specialcontact-problem' => 'Ämne',
+	'specialcontact-problemdesc' => 'Meddelande',
+	'specialcontact-mail' => 'Skicka till Wikia',
+	'specialcontact-filledin' => 'Denna information har fyllts i från dina kontoinställningar',
+	'specialcontact-ccme' => 'Skicka en kopia av detta meddelande till mig',
+	'specialcontact-ccdisabled' => 'Inaktiverat: Var god bekräfta din e-postadress för att använda denna funktion',
+	'specialcontact-notyou' => 'Inte du?',
+	'specialcontact-captchainfo' => 'Var god ange texten i bilden.',
+	'specialcontact-captchatitle' => 'Suddiga ord',
+	'specialcontact-formtitle' => 'Kontakta Wikias supportpersonal',
+	'specialcontact-nomessage' => 'Var god fyll i ett meddelande',
+	'specialcontact-captchafail' => 'Felaktig eller saknad bekräftelsekod.',
+	'specialcontact-mailsub' => 'Wikia kontakt-e-post',
+	'specialcontact-mailsubcc' => 'Kopia av Wikia kontakt-e-post',
+	'specialcontact-ccheader' => 'Detta är en kopia av ditt meddelande som skickades till Wikia Support',
+	'specialcontact-submitcomplete' => 'Tack för att kontaktar Wikia.',
 );
 
 /** Telugu (తెలుగు)

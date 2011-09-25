@@ -45,6 +45,14 @@ $messages['br'] = array(
 	'paginator-back' => 'Distreiñ',
 );
 
+/** Catalan (Català)
+ * @author BroOk
+ */
+$messages['ca'] = array(
+	'paginator-next' => 'Següent',
+	'paginator-back' => 'Enrere',
+);
+
 /** Czech (Česky)
  * @author Dontlietome7
  */
@@ -229,6 +237,14 @@ $messages['sw'] = array(
 $messages['tl'] = array(
 	'paginator-next' => 'Susunod',
 	'paginator-back' => 'Bumalik',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Xiao Qiao
+ */
+$messages['vi'] = array(
+	'paginator-next' => 'Tiếp theo',
+	'paginator-back' => 'Quay lại',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

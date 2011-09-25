@@ -48,6 +48,15 @@ $messages['br'] = array(
 	'timeago-second' => 'ur vunutenn zo',
 );
 
+/** Catalan (Català)
+ * @author BroOk
+ */
+$messages['ca'] = array(
+	'timeago-hour' => 'fa {{PLURAL:$1|una hora|$1 hores}}',
+	'timeago-minute' => 'fa {{PLURAL:$1|un minut|$1 minuts}}',
+	'timeago-second' => 'fa un minut',
+);
+
 /** Czech (Česky)
  * @author Dontlietome7
  */

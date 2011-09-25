@@ -91,6 +91,7 @@ Téntalo otra vuelta o [[Special:Contact|informa d'ello]].",
 <p>Por favor, visita <a href="http://twitter.com/wikia">Twitter</a> o <a href="http://facebook.com/wikia">Facebook</a> pa más información.
 <br />
 (Si yá tienes una cuenta, pues <a href="#">entrar</a> de mou normal, pero nun podrás editar.)</p>',
+	'comboajaxlogin-ajaxerror' => 'Wikia nun ta respondiendo. Por favor, comprueba la to conexón.',
 );
 
 /** Bulgarian (Български)
@@ -792,6 +793,7 @@ $messages['sr-ec'] = array(
 
 /** Swedish (Svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'comboajaxlogin-desc' => 'En dynamisk box som tillåter användare att logga in, påminna lösenord och registrera användare',
@@ -822,6 +824,7 @@ Försök igen eller [[Special:Contact|anmäl det här]].',
 <p>Kolla in <a href="http://twitter.com/wikia">Twitter</a> eller <a href="http://facebook.com/wikia">Facebook</a> för mer information.
 <br />
 (Om du redan har ett konto kan du <a href="#">logga in</a> som vanligt, men du kommer inte kunna redigera.)</p>',
+	'comboajaxlogin-ajaxerror' => 'Wikia svarar inte. Var god kontrollera din nätverksanslutning.',
 );
 
 /** Telugu (తెలుగు)
@@ -906,6 +909,7 @@ Sau đó, bạn có thể đặng nhập dễ dàng dùng bất cứ nút Facebo
 <p>Vui lòng kiểm tra <a href="http://twitter.com/wikia">Twitter</a> hay <a href="http://facebook.com/wikia">Facebook</a> để biết thêm thông tin.
 <br />
 (Nếu bạn có tài khoản, bạn có thể <a href="#">đăng nhập</a> như bình thường, nhưng có thể bạn không thể chỉnh sửa trong một thời gian ngắn.)</p>',
+	'comboajaxlogin-ajaxerror' => 'Wikia chưa trả lời. Xin vui lòng kiểm tra lại kết nối mạng của bạn.',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

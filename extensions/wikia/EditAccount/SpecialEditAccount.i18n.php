@@ -553,6 +553,13 @@ $messages['gl'] = array(
 	'right-editaccount' => 'Editar as preferencias doutros usuarios',
 );
 
+/** Hebrew (עברית)
+ * @author שומבלע
+ */
+$messages['he'] = array(
+	'right-editaccount' => 'עריכת מידע של משתמשים אחרים',
+);
+
 /** Hungarian (Magyar)
  * @author Dani
  * @author Glanthor Reviol

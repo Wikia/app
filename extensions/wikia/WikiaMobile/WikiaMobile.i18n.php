@@ -99,6 +99,34 @@ $messages['fr'] = array(
 	'wikiamobile-explore' => 'Explorer',
 );
 
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'wikiamobile-search' => 'Procurar',
+	'wikiamobile-search-wiki' => 'Wiki',
+	'wikiamobile-search-wikia' => 'Wikia',
+	'wikiamobile-login' => 'Rexistro',
+	'wikiamobile-password' => 'Contrasinal',
+	'wikiamobile-login-submit' => 'Rexistro',
+	'wikiamobile-menu' => 'Menú',
+	'wikiamobile-explore' => 'Explorar',
+);
+
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+ * @author Gomada
+ */
+$messages['ku-latn'] = array(
+	'wikiamobile-search' => 'Lêgerîn',
+	'wikiamobile-search-wiki' => 'Wîkî',
+	'wikiamobile-search-wikia' => 'Wîkiya',
+	'wikiamobile-login' => 'Têketin',
+	'wikiamobile-password' => 'Şîfre',
+	'wikiamobile-login-submit' => 'Têkeve',
+	'wikiamobile-menu' => 'Menû',
+	'wikiamobile-explore' => 'Vedîtin',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -182,6 +210,19 @@ $messages['pl'] = array(
 	'wikiamobile-login-submit' => 'Zaloguj',
 	'wikiamobile-menu' => 'Menu',
 	'wikiamobile-explore' => 'Eksploruj',
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'wikiamobile-search' => 'پلټل',
+	'wikiamobile-search-wiki' => 'ويکي',
+	'wikiamobile-search-wikia' => 'ويکيا',
+	'wikiamobile-login' => 'ننوتل',
+	'wikiamobile-password' => 'پټنوم',
+	'wikiamobile-login-submit' => 'ننوتل',
+	'wikiamobile-menu' => 'غورنۍ',
 );
 
 /** Russian (Русский)

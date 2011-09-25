@@ -319,6 +319,13 @@ $messages['uk'] = array(
 	'randomwiki' => 'Випадкова вікі',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Xiao Qiao
+ */
+$messages['vi'] = array(
+	'randomwiki' => 'Wiki ngẫu nhiên',
+);
+
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Hydra
  */

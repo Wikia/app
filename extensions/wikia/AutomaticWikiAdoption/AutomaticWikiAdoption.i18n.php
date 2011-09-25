@@ -1449,6 +1449,7 @@ $messages['sr-ec'] = array(
  */
 $messages['sv'] = array(
 	'wikiadoption' => 'Automatisk wiki-adoption',
+	'wikiadoption-desc' => 'En AutomatiskWikiAdoptions-förlängning för MediaWiki',
 	'wikiadoption-header' => 'Adoptera den här wikin',
 	'wikiadoption-button-adopt' => 'Ja, jag vill adoptera {{SITENAME}}!',
 	'wikiadoption-adopt-inquiry' => 'Lär dig mer!',

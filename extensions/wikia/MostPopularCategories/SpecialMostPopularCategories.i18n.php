@@ -396,6 +396,13 @@ $messages['uk'] = array(
 	'mostpopularcategories' => 'Найпопулярніші категорії',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Xiao Qiao
+ */
+$messages['vi'] = array(
+	'mostpopularcategories' => 'Thể loại phổ biến nhất',
+);
+
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Hydra
  */

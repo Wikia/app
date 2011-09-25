@@ -2857,7 +2857,110 @@ ___________________________________________
  * @author Xiao Qiao
  */
 $messages['vi'] = array(
+	'follow-desc' => 'Cải tiến cho chức năng danh sách theo dõi',
+	'prefs-basic' => 'Tùy chọn cơ bản',
+	'wikiafollowedpages-special-heading-category' => 'Thể loại ($1)',
+	'wikiafollowedpages-special-heading-article' => 'Bài viết ($1)',
+	'wikiafollowedpages-special-heading-blogs' => 'Blog và bài đăng ($1)',
+	'wikiafollowedpages-special-heading-forum' => 'Chủ đề Diễn đàn ($1)',
+	'wikiafollowedpages-special-heading-project' => 'Trang dự án ($1)',
+	'wikiafollowedpages-special-heading-user' => 'Trang thành viên ($1)',
+	'wikiafollowedpages-special-heading-templates' => 'Trang bản mẫu ($1)',
+	'wikiafollowedpages-special-heading-mediawiki' => 'Trang Phương tiện Wiki ($1)',
+	'wikiafollowedpages-special-heading-media' => 'Hình ảnh và đoạn phim ($1)',
+	'wikiafollowedpages-special-namespace' => '(trang $1)',
+	'wikiafollowedpages-special-empty' => 'Danh sách trang theo dõi của bạn đang trống.
+Thêm nhiều trang vào danh sách này bằng cách nhấn vào "{{int:watch}}" trên đỉnh của một trang.',
+	'wikiafollowedpages-special-anon' => 'Xin vui lòng [[Special:Signup|đăng nhập]] để tạo hoặc xem danh sách các trang theo dõi.',
 	'oasis-wikiafollowedpages-special-seeall' => 'Xem tất cả >',
+	'wikiafollowedpages-special-seeall' => 'Xem tất cả >',
+	'wikiafollowedpages-special-showall' => 'Hiển thị tất cả >',
+	'wikiafollowedpages-special-showmore' => 'Hiển thị nhiều hơn',
+	'wikiafollowedpages-special-title' => 'Các trang theo dõi',
+	'wikiafollowedpages-special-delete-tooltip' => 'Dời bỏ trang này',
+	'wikiafollowedpages-special-hidden' => 'Người dùng này đã chọn để ẩn danh sách các trang mà {{GENDER:$1|anh ấy|cô ấy|họ}} theo dõi từ việc công khai.',
+	'wikiafollowedpages-special-hidden-unhide' => 'Bỏ ẩn danh sách này.',
+	'wikiafollowedpages-special-blog-by' => 'bởi $1',
+	'wikiafollowedpages-masthead' => 'Các trang theo dõi',
+	'wikiafollowedpages-following' => 'Theo dõi',
+	'wikiafollowedpages-special-title-userbar' => 'Các trang theo dõi',
+	'tog-enotiffollowedpages' => 'Gửi email cho tôi khi một trang tôi theo dõi bị thay đổi',
+	'tog-enotiffollowedminoredits' => 'Gửi email cho tôi khi có sửa đổi nhỏ trên trang tôi theo dõi',
+	'prefs-wikiafollowedpages-prefs-advanced' => 'Tùy chọn nâng cao',
+	'prefs-wikiafollowedpages-prefs-watchlist' => 'Chỉ danh sách theo dõi',
+	'tog-hidefollowedpages' => 'Liệt kê trang tôi theo dõi vào danh sách riêng',
+	'follow-categoryadd-summary' => 'Trang thêm vào thể loại',
+	'follow-bloglisting-summary' => 'Blog đăng trên trang blog',
+	'wikiafollowedpages-userpage-heading' => 'Trang tôi theo dõi',
+	'wikiafollowedpages-userpage-hide-tooltip' => 'Ẩn danh sách trang theo dõi của bạn khỏi xem công khai',
+	'wikiafollowedpages-userpage-more' => 'Nhiều hơn',
+	'wikiafollowedpages-userpage-hide' => 'ẩn',
+	'wikiafollowedpages-userpage-empty' => 'Danh sách trang theo dõi của bạn đang trống.
+Thêm nhiều trang vào danh sách này bằng cách nhấn vào "{{int:watch}}" trên đỉnh của một trang.',
+	'enotif_subject_categoryadd' => '{{SITENAME}} trang $PAGETITLE đã được thêm vào $CATEGORYNAME bởi $PAGEEDITOR',
+	'enotif_body_categoryadd' => 'Chào $WATCHINGUSERNAME,
+
+Một trang bạn đang theo dõi đã được thêm vào một thể loại trên {{SITENAME}}.
+
+Xem "$PAGETITLE_URL" cho trang mới.
+
+Xin vui lòng truy cập và sửa đổi thường xuyên...
+
+{{SITENAME}}
+
+___________________________________________
+ * Lướt qua các tính năng wiki của chúng tôi! http://www.wikia.com
+
+ * Muốn kiểm soát e-mail bạn nhận được?!
+Đi đến: {{fullurl:{{ns:special}}:Tùy chọn}}.',
+	'enotif_body_categoryadd-html' => '<p>
+Chào $WATCHINGUSERNAME,
+<br /><br />
+Một trang bạn đang theo dõi đã được thêm vào một thể loại trên {{SITENAME}}.
+<br /><br />
+Xem <a href="$PAGETITLE_URL">$PAGETITLE</a> cho trang mới.
+<br /><br />
+Xin vui lòng truy cập và sửa đổi thường xuyên...
+<br /><br />
+{{SITENAME}}
+<br /><hr />
+<ul>
+<li><a href="http://www.wikia.com">Lướt qua các tính năng wiki của chúng tôi!</a></li>
+<li>Muốn kiểm soát e-mail bạn nhận được?! Đi đến <a href="{{fullurl:{{ns:special}}:Tùy chọn}}">Tùy chọn cá nhân</a></li>
+</ul>
+</p>',
+	'enotif_subject_blogpost' => '{{SITENAME}} trang $PAGETITLE đã được thêm vào $BLOGLISTINGNAME bởi $PAGEEDITOR',
+	'enotif_body_blogpost' => 'Chào $WATCHINGUSERNAME,
+
+Đã có một sửa đổi trên danh sách trang blog mà bạn theo dõi trên {{SITENAME}}.
+
+Xem "$PAGETITLE_URL" cho bài đăng mới.
+
+Xin vui lòng truy cập và sửa đổi thường xuyên...
+
+{{SITENAME}}
+
+___________________________________________
+ * Lướt qua các tính năng wiki của chúng tôi! http://www.wikia.com
+
+ * Muốn kiểm soát e-mail bạn nhận được?!
+Đi đến: {{fullurl:{{ns:special}}:Tùy chọn}}.',
+	'enotif_body_blogpost-HTML' => '<p>
+Chào $WATCHINGUSERNAME,
+<br /><br />
+Đã có một sửa đổi trên danh sách trang blog mà bạn theo dõi trên {{SITENAME}}.
+<br /><br />
+Xem <a href="$PAGETITLE_URL">$PAGETITLE</a> cho bài đăng mới.
+<br /><br />
+Xin vui lòng truy cập và sửa đổi thường xuyên...
+<br /><br />
+{{SITENAME}}
+<br /><hr />
+<ul>
+<li><a href="http://www.wikia.com">Lướt qua các tính năng wiki của chúng tôi!</a></li>
+<li>Muốn kiểm soát e-mail bạn nhận được?! Đi đến <a href="{{fullurl:{{ns:special}}:Tùy chọn}}">Tùy chọn cá nhân</a></li>
+</ul>
+</p>',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

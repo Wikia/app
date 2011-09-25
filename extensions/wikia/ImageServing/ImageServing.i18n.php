@@ -83,6 +83,13 @@ $messages['it'] = array(
 	'imageserving-desc' => 'Seleziona le immagini da una lista specificata di pagine basata sulle esigenze visive',
 );
 
+/** Japanese (日本語)
+ * @author Schu
+ */
+$messages['ja'] = array(
+	'imageserving-desc' => '視覚的な要件に基づいてページの指定された配列から画像を選択します。',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */

@@ -2172,6 +2172,8 @@ $messages['gl'] = array(
 	'wikistats_daterange_from' => 'De:',
 	'wikistats_daterange_to' => 'Ata:',
 	'wikistats_nostats_found' => 'Non se atoparon estatísticas para o Wikia seleccionado',
+	'wikistats_pviews_notfound' => 'Non se atoparon visitas ás páxinas',
+	'wikistats_invalid_date' => 'Rango de datas inválido',
 	'wikistats_distrib_article' => 'Distribución de actividade dos editores',
 	'wikistats_breakdown_editors' => 'Actividade dos editores',
 	'wikistats_breakdown_anons' => 'Actividade dos anónimos',
@@ -2179,8 +2181,10 @@ $messages['gl'] = array(
 	'wikistats_anon_wikians' => 'Análise da actividade dos editores anónimos',
 	'wikistats_anon_wikians_count' => '{{PLURAL:$1|Atopouse un usuario anónimo|Atopáronse $1 usuarios anónimos}}',
 	'wikistats_latest_pageviews' => 'Últimas páxinas visitadas',
+	'wikistats_latest_userviews' => 'Usuarios activos (visitas ás páxinas)',
 	'wikistats_active_useredits' => 'Actividade por lingua',
 	'wikistats_latest_userviews_pages' => '$1 páxinas visitadas',
+	'wikistats_latest_userviews_list' => 'Lista de usuarios que visitaron o wiki na última hora (ordenads pola última visita)',
 	'wikistats_latest_pageviews_subtitle' => 'nos últimos $1 minutos',
 	'wikistats_pageviews' => 'Visitas ás páxinas por espazo de nomes e por mes',
 	'wikistats_article_size' => 'Artigos que conteñan, polo menos, unha ligazón interna e .. caracteres de texto lexibles, non contando códigos wiki e html, ligazóns agochadas etc.<br />As cabeceiras tampouco contan (excluíndo as redireccións)',
@@ -2278,6 +2282,17 @@ $messages['gl'] = array(
 	'wikistats_history_mainstats_value2' => '0% &lt; x &lt; 25%',
 	'wikistats_history_mainstats_value3' => '25% &lt; x &lt; 75%',
 	'wikistats_history_mainstats_value4' => '&gt; 75%',
+	'wikistats_column_A' => 'Total de editores rexistrados no mes actual (todos os espazos de nomes)',
+	'wikistats_column_B' => 'Total de editores rexistrados no mes actual (espazos de nomes de contido)',
+	'wikistats_column_C' => 'Número de editores rexistrados que editaron máis de 5 veces durante o mes actual (espazos de nomes de contido)',
+	'wikistats_column_D' => 'Número de editores rexistrados que editaron máis de 100 veces durante o mes actual (espazos de nomes de contido)',
+	'wikistats_column_E' => 'Número de artigos en todos os espazos de nomes de contido',
+	'wikistats_column_F' => 'Novos artigos ao día no mes actual',
+	'wikistats_column_G' => 'Número de edicións en artigos nos espazos de nomes de contido',
+	'wikistats_column_H' => 'Número total de ligazóns cara ás imaxes nos artigos dos espazos de nomes de contido',
+	'wikistats_column_I' => 'Número total de imaxes cargadas',
+	'wikistats_column_J' => 'Número total de vídeos incorporados nos artigos dos espazos de nomes de contido',
+	'wikistats_column_K' => 'Número total de vídeos cargados',
 	'wikistats_website' => 'Páxina web',
 	'wikistats_tables' => 'Táboas',
 	'wikistats_charts' => 'Cadros',
@@ -3497,6 +3512,7 @@ $messages['lb'] = array(
 	'wikistats_active_absent_wikians' => "Limit fir d'Aktivitéit vun engem  registréierte Benotzer",
 	'wikistats_anon_wikians' => 'Limit vun der Aktiitéit fir anonym Benotzer',
 	'wikistats_anon_wikians_count' => '$1 {{PLURAL:$1|anonym|eanonym}} Benotzer fonnt',
+	'wikistats_latest_userviews_pages' => '$1 besichte Säiten',
 	'wikistats_pageviews' => 'Zuel vun de Säiten déi pro Mount a pro Nummraum gekuckt goufen',
 	'wikistats_article_size' => 'Artikelen an deene mindestens een interne Link ass an .. Zeeche liesbaren Text, ouni Wiki- an HTML-Code, verstoppte Linken, asw.;<br />Och Iwwerschrëften zielen net (ouni Viruleedungen)',
 	'wikistats_article_one_link' => 'Artikelen an deen mindestens een interne Link ass',
@@ -3528,6 +3544,7 @@ $messages['lb'] = array(
 	'wikistats_links' => 'Linken',
 	'wikistats_reg_users' => 'Registréiert Editeuren',
 	'wikistats_images' => 'Biller',
+	'wikistats_media' => 'Biller & Videoen',
 	'wikistats_uploaded_images' => 'eropgelueden',
 	'wikistats_with_links' => 'mat Linken',
 	'wikistats_connection_error' => 'Feeler bei der Verbindung',
@@ -3621,6 +3638,7 @@ $messages['lb'] = array(
 	'wikistats_see_definitions' => "Kuckt d'Definitiounen",
 	'wikistats_generate_stats_msg' => "Waart w.e.g. ... d'Statistike gi generéiert ...",
 	'wikistats_generate_XLS_file_title' => 'En XLS-Fichier generéiere fir erofzelueden',
+	'wikistats_language_stats' => 'Sprooch-Statistiken',
 	'wikistats_main_statistics_legend' => 'Haaptstatistiken',
 	'wikistats_ns_statistics_legend' => 'Nummraim',
 	'wikistats_other_statistics_legend' => 'Aner Statistiken',
@@ -4769,14 +4787,17 @@ Vennligst [[Special:UserLogin|logg inn eller opprett en konto]] dersom du ikke a
 );
 
 /** Occitan (Occitan)
+ * @author Boulaur
  * @author Cedric31
  */
 $messages['oc'] = array(
+	'wikistats_wikia' => 'Wikia',
 	'wikistats_active_wikians_date' => 'Afichar los cambiaments del darrièr',
 	'wikistats_active_day' => 'jorn',
 	'wikistats_active_month' => 'mes',
 	'wikistats_active_year' => 'annada',
 	'wikistats_active_months' => 'meses',
+	'wikistats_number_editors' => "nombre d'editors",
 	'wikistats_wikians' => 'Editors enregistrats',
 	'wikistats_articles' => 'Articles (en exclusent redireccions)',
 	'wikistats_articles_text' => 'Articles',
@@ -4813,6 +4834,7 @@ $messages['oc'] = array(
 	'wikistats_interwiki' => 'interwiki',
 	'wikistats_image' => 'imatge',
 	'wikistats_external' => 'extèrne',
+	'wikistats_namespaces' => 'espacis de noms',
 	'wikistats_redirects' => 'redireccions',
 	'wikistats_edited_in_namespace' => "modificat dins l'espaci de noms",
 	'wikistats_main_namespace' => 'principal',
@@ -4834,6 +4856,12 @@ $messages['oc'] = array(
 	'wikistats_website' => 'Site web',
 	'wikistats_tables' => 'Tablèus',
 	'wikistats_charts' => 'Grafics',
+	'wikistats_xls_files_stats' => 'XLS',
+	'wikistats_xls_cancel' => 'Anullar',
+	'wikistats_search_text' => 'Cercar:',
+	'wikistats_language_all' => 'Totas las lengas',
+	'wikistats_recordspager' => "Mostrar '''$1''' de '''$2''' sus '''$3''' registraments",
+	'wikistats_title' => 'Títol',
 );
 
 /** Deitsch (Deitsch)
@@ -5116,7 +5144,12 @@ $messages['ps'] = array(
 	'wikistats_select_text' => 'ويکيا ټاکل:',
 	'wikistats_select_btn' => 'ټاکل',
 	'wikistats_search_text' => 'پلټنه:',
+	'wikistats_lifetime_editors' => 'ټولټال سمونګران',
+	'wikistats_article_total' => 'ټولټال ليکنې',
+	'wikistats_article_edits' => 'د ليکنو د سمونې شمېر',
+	'wikistats_photo_new' => 'نوي انځورونه',
 	'wikistats_content' => 'مېنځپانګه',
+	'wikistats_userns' => 'کارن',
 );
 
 /** Portuguese (Português)

@@ -1374,9 +1374,12 @@ $messages['ca'] = array(
 	'achievements-profile-title-challenges' => 'Més medalles que pots guanyar!',
 	'achievements-profile-customize' => 'Personalitzar medalles >',
 	'achievements-ranked' => 'Número $1 en aquest wiki',
+	'achievements-viewall' => 'Veure-ho tot',
 	'achievements-viewless' => 'Tancar',
 	'achievements-ranked-oasis' => '$1 és el [[Special:Leaderboard|Número #$2]] en aquest wiki',
 	'achievements-viewall-oasis' => 'Veure-ho tot',
+	'leaderboard-intro-hide' => 'amaga',
+	'leaderboard-intro-open' => 'obre',
 	'achievements-about-content' => 'Els administradors d\'aquest wiki poden personalitzar els noms i fotos de les medalles.
 
 Pots pujar qualsevol imatge .jpg. o .png i la imatge automàticament s\'ajustarà dins del marc.
@@ -4073,6 +4076,12 @@ $messages['ja'] = array(
 	'achievements-badge-desc-pounce' => 'ページの作成から1時間以内に 100 件のページを編集したことに対して',
 	'achievements-badge-desc-caffeinated' => '1日で 100 回の編集を行ったことに対して',
 	'achievements-badge-desc-luckyedit' => 'このウィキで $1 番目の編集を行った幸運に対して',
+	'achievements-userprofile-title-no' => '$1 が入手したバッジ',
+	'achievements-userprofile-title' => '$1 が入手したバッジ ($2)',
+	'achievements-userprofile-no-badges-owner' => '以下の一覧で、このウィキであなたが入手できるバッジを確認しましょう！',
+	'achievements-userprofile-no-badges-visitor' => 'この利用者はまだバッジを獲得していません。',
+	'achievements-userprofile-profile-score' => '<em>$1</em> 達成度<br />ポイント',
+	'achievements-userprofile-ranked' => 'このウィキでの順位<br />[[Special:Leaderboard|#$1]]',
 );
 
 /** Georgian (ქართული)
@@ -7835,6 +7844,7 @@ $messages['sr-ec'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'achievementsii-desc' => 'En prestationsemblems-system för wiki-användare',
 	'achievements-upload-error' => 'Tyvärr!
 Den här bilden fungerar inte.
 Se till att bilden är en .jpg eller .png fil.
@@ -7842,6 +7852,7 @@ Om det fortfarande inte fungerar, kan bilden vara för stor.
 Försök med en annan!',
 	'achievements-non-existing-category' => 'Den angivna kategorin finns inte.',
 	'achievements-edit-plus-category-track-exists' => 'Valda kategorin har redan ett <a href="#" onclick="$(window).scrollTo(\'#section$1\', 2500); return false;" title="Gå till spåret">associerat spår</a>.',
+	'achievements-no-stub-category' => 'Var god skapa inte spår för stubbar.',
 	'right-platinum' => 'Skapa och redigera Platinaemblem',
 	'right-sponsored-achievements' => 'Hantera sponsrade utmärkelser',
 	'achievements-platinum' => 'Platina',
@@ -7914,6 +7925,14 @@ Försök med en annan!',
 	'achievements-create-edit-plus-category' => 'Skapa denna serie',
 	'platinum' => 'Platina',
 	'achievements-community-platinum-awarded-email-subject' => 'Du har tilldelats ett nytt Platinaemblem!',
+	'achievements-community-platinum-awarded-email-body-text' => "Grattis $1!
+
+Du har just belönats med Platinaemblemet '$2' på $4 ($3).
+Detta lägger till 250 poäng till din poängsumma!
+
+Kolla in dina nya snygga emblem på din användarprofilsida:
+
+$5",
 	'achievements-community-platinum-awarded-email-body-html' => '<strong>Grattis, $1!</strong><br /><br />
 Du har tjänat Platina-emblemet \'<strong>$2</strong>\' på <a href="$3">$4</a>.
 Detta lägger till 250 poäng till din poängställning!<br /><br />

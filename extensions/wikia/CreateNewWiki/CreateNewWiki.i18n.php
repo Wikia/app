@@ -90,12 +90,14 @@ Upgrade through PayPal to get an ad-free wiki for only $4.95 per month!',
 );
 
 /** Message documentation (Message documentation)
+ * @author EugeneZelenko
  * @author Siebrand
  * @author Wyz
  */
 $messages['qqq'] = array(
 	'cnw-next' => 'Text for "Next" Button',
-	'cnw-back' => 'Text for "Back" Button',
+	'cnw-back' => 'Text for "Back" Button
+{{Identical|Back}}',
 	'cnw-or' => 'Division for login or Facebook login',
 	'cnw-title' => 'General Title for this feature',
 	'cnw-name-wiki-headline' => 'H1 for this step',
@@ -373,7 +375,7 @@ Upgrade mit PayPal um ein werbefreies Wiki für nur $4,95 pro Monat zu bekommen!
 	'cnw-error-torblock' => 'Das Erstellen von Wikis über das Tor-Netzwerk ist nicht erlaubt.',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author Tiin
  */
 $messages['de-formal'] = array(
@@ -597,8 +599,10 @@ $messages['gl'] = array(
 	'cnw-upgrade-decline' => 'Non, grazas. Quero continuar ata o meu wiki',
 	'cnw-welcome-headline' => 'Parabéns! Creouse $1',
 	'cnw-error-general-heading' => 'Erro durante a creación do novo wiki',
+	'cnw-error-database' => 'Erro na base de datos: $1',
 	'cnw-badword-header' => 'Vaites!',
 	'cnw-error-wiki-limit-header' => 'Alcanzouse o límite de wikis',
+	'cnw-error-blocked-header' => 'Conta bloqueada',
 );
 
 /** Hebrew (עברית)
@@ -809,14 +813,28 @@ $messages['ja'] = array(
 	'cnw-desc-headline' => 'どんなウィキを作成しますか？',
 	'cnw-desc-creative' => 'このウィキでどんな話題を扱うのかを記入してください',
 	'cnw-desc-placeholder' => 'ここに入力した内容がメインページに表示されます。',
+	'cnw-desc-tip1' => 'ヒント',
+	'cnw-desc-tip1-creative' => 'この領域を利用し、訪問者に対してこのウィキがどのようなウィキであるかを1・2文で伝えましょう。',
+	'cnw-desc-tip2' => 'ちょっとした補足',
+	'cnw-desc-tip2-creative' => 'このウィキが扱う話題について、具体的な内容をいくつか挙げましょう。',
+	'cnw-desc-tip3' => '上級',
+	'cnw-desc-tip3-creative' => 'さらに、訪問者に対して、あなたもページの編集や作成によってウィキの成長を手助けできるということを伝えましょう。',
 	'cnw-desc-choose' => 'カテゴリを選択',
 	'cnw-desc-select-one' => '一つを選択',
 	'cnw-desc-default-lang' => 'ウィキの言語設定は $1 になっています',
 	'cnw-desc-change-lang' => '変更する',
 	'cnw-desc-lang' => '言語',
 	'cnw-desc-wiki-submit-error' => 'カテゴリを選択してください',
+	'cnw-theme-headline' => 'テーマを選択',
+	'cnw-theme-creative' => '下の一覧からテーマを選んでください。それぞれのテーマをクリックすると、選択したテーマのプレビューを確認できます。',
+	'cnw-theme-instruction' => '後で「マイツール」から独自のテーマをデザインすることもできます。',
+	'cnw-welcome-headline' => 'おめでとうございます！ $1 が作成されました',
+	'cnw-welcome-instruction1' => '下のボタンをクリックすると、新しいページを作成できます。',
+	'cnw-welcome-instruction2' => 'このボタンはウィキ上の様々な場所にも設置されており、いつでも新しいページを作成できます。',
+	'cnw-welcome-help' => '助言を求めたいとき、質問したい時などは <a href="http://ja.wikia.com/">Community Central 日本語版</a> までお越しください。',
 	'cnw-error-general' => 'ウィキの作成中に問題が発生しました。時間をおいてもう一度お試しください。',
 	'cnw-error-general-heading' => 'ウィキ作成エラー',
+	'cnw-error-database' => 'データベースエラー: $1',
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -879,7 +897,7 @@ $messages['ko'] = array(
 	'cnw-login' => '로그인',
 );
 
-/** Kurdish (Latin script) (Kurdî (latînî))
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -987,6 +1005,8 @@ $messages['mk'] = array(
 	'cnw-error-blocked-header' => 'Сметката е блокирана',
 	'cnw-error-blocked' => 'Блокирани сте од $1. Понудената причина гласи: $2. (назнака или навод на блокирањето: $3)',
 	'cnw-error-torblock' => 'Не е дозволено создавање на викија преку Tor-мрежа.',
+	'cnw-error-bot' => 'Утврдивме дека можеби сте бот. Ако ова е погрешно, тогаш контактирајте нè и кажете дека сме ве погрешиле за бот. Тогаш ние ќе ви помогнеме да го направите викито: [http://www.wikia.com/Special:Contact/general?uselang=mk Пишете ни]',
+	'cnw-error-bot-header' => 'Утврдено е дека сте бот',
 );
 
 /** Malayalam (മലയാളം)
@@ -1090,6 +1110,8 @@ Naik taraf wiki anda kepada wiki tanpa iklan dengan membayar $4.95 (USD) sebulan
 	'cnw-error-blocked-header' => 'Akaun disekat',
 	'cnw-error-blocked' => 'Anda telah disekat oleh $1. Sebab yang diberikan ialah: $2. (ID sekatan untuk rujukan: $3)',
 	'cnw-error-torblock' => 'Pembentukan wiki melalui Tor Network tidak dibenarkan.',
+	'cnw-error-bot' => 'Kami telah mengesan bahawa anda mungkin sebuah bot. Jika kami tersilap, sila hubungi kami untuk menerangkan bahawa anda telah tersalah dikesan sebagai bot, dan kami akan membantu anda untuk membuat wiki anda: [http://www.wikia.com/Special:Contact/general Hubungi Kami]',
+	'cnw-error-bot-header' => 'Anda telah dikesan sebagai bot',
 );
 
 /** Dutch (Nederlands)
@@ -1165,7 +1187,7 @@ Schaf uw upgrade aan via PayPal. Geen advertenties voor maar $4,95 per maand!",
 	'cnw-error-torblock' => "Wiki's aanmaken via het Tor Network is niet toegestaan.",
 );
 
-/** Nederlands (informeel) (Nederlands (informeel))
+/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
  * @author MarkvA
  * @author Siebrand
  */
@@ -1192,7 +1214,7 @@ $messages['nl-informal'] = array(
 	'cnw-error-wiki-limit' => "Hoi. Je mag maximaal $1 wiki's per dag aanmaken. Wacht 24 uur om een nieuwe wiki aan te kunnen maken.",
 );
 
-/** Norwegian (bokmål) (Norsk (bokmål))
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -1264,6 +1286,8 @@ Oppgrader gjennom PayPal for å få en reklamefri wiki til kun $4,95 per måned!
 	'cnw-error-blocked-header' => 'Konto blokkert',
 	'cnw-error-blocked' => 'Du har blitt blokkert av $1. Begrunnelsen var: $2. (Blokkerings-ID for referanse: $3)',
 	'cnw-error-torblock' => 'Å opprette wikier via Tor-nettverket er ikke tillatt.',
+	'cnw-error-bot' => 'Vi har registrert at du kan være en bot. Hvis vi har gjort en feil, vennligst kontakt oss og gi beskjed om at du har blitt feilaktig registrert som en bot, og vi vil hjelpe deg med å opprette wikien din: [http://www.wikia.com/Special:Contact/general Kontakt oss]',
+	'cnw-error-bot-header' => 'Du har blitt fanget opp som en bot',
 );
 
 /** Polish (Polski)
@@ -1566,7 +1590,7 @@ $messages['ru'] = array(
 	'cnw-error-torblock' => 'Создание вики через сеть Tor не допускается.',
 );
 
-/** Serbian (Cyrillic script) (Српски (ћирилица))
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -1665,6 +1689,7 @@ Uppgradera via PayPal för att få en reklamfri wiki för endast $4,95 per måna
 	'cnw-badword-msg' => 'Hej, var god avstå från att använda dessa grova eller fula ord i beskrivningen av din wiki: $1',
 	'cnw-error-wiki-limit-header' => 'Wiki-gräns nådd',
 	'cnw-error-wiki-limit' => 'Hej, du är begränsad till $1 skapelser av wikis per dag. Vänta 24 timmar innan du skapar en annan wiki.',
+	'cnw-error-blocked-header' => 'Konto blockerat',
 );
 
 /** Telugu (తెలుగు)
@@ -1899,7 +1924,7 @@ Upgrade through PayPal to get an ad-free wiki for only $4.95 per month!',
 	'cnw-welcome-help' => 'Find answers, advice, and more on <a href="http://community.wikia.com">Community Central</a>.',
 );
 
-/** Simplified Chinese (中文(简体))
+/** Simplified Chinese (‪中文(简体)‬)
  * @author Hydra
  */
 $messages['zh-hans'] = array(
@@ -1929,7 +1954,7 @@ $messages['zh-hans'] = array(
 	'cnw-welcome-headline' => '恭喜！$1 已被创造',
 );
 
-/** Traditional Chinese (中文(繁體))
+/** Traditional Chinese (‪中文(繁體)‬)
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(

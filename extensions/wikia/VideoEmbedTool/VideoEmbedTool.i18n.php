@@ -1202,6 +1202,7 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Schu
  * @author Tommy6
  */
 $messages['ja'] = array(
@@ -1210,16 +1211,15 @@ $messages['ja'] = array(
 	'vet-find' => '動画を探す',
 	'vet-thiswiki' => 'このウィキ',
 	'vet-flickr' => 'Flickr',
-	'vet-upload-btn' => '挿入',
+	'vet-upload-btn' => '次',
 	'vet-find-btn' => '検索',
 	'vet-flickr-inf' => 'Flickrにある適切なライセンスのフリーな画像を検索し、ウィキにインポートします。',
 	'vet-conflict-inf' => '<h1>同じ名前の動画が既にあります。</h1><b>$1</b> に対する操作を選択してください。',
 	'vet-rename' => '動画名を変更',
 	'vet-existing' => '既にある動画を使用',
-	'vet-overwrite' => '新しい動画で上書きする',
+	'vet-overwrite' => '既にある動画に上書き',
 	'vet-insert' => '挿入',
-	'vet-details-inf' => '<h1>ファイルの詳細</h1>
-この動画の名前を指定してください。動画の内容がわかるようなものがいいでしょう。',
+	'vet-details-inf' => '<h1>ファイルの詳細</h1>この動画の名前を指定してください。動画の内容がわかるようなものがいいでしょう。',
 	'vet-name' => '動画名',
 	'vet-license' => 'ライセンス',
 	'vet-details-inf2' => '動画表示のオプション',
@@ -1250,6 +1250,7 @@ $messages['ja'] = array(
 	'vet-imagebutton' => '動画を挿入',
 	'vet-license-cc' => 'CC-by-sa 3.0を適用する',
 	'vet-name-incorrect' => '動画名に無効な文字が含まれています',
+	'vet-description' => 'サポートされているサイトのいずれかから完全なURLを入力してください。参照',
 	'vet-uploadtext' => "'''このフォームでは、簡単にファイルをアップロードして記事に挿入できます。'''
 
 ''[[Special:Log/upload|アップロード記録]]や[[Special:ImageList|アップロードされたファイルのリスト]]もご覧ください。''",
@@ -1257,18 +1258,18 @@ $messages['ja'] = array(
 	'vet-hide-message' => 'メッセージを非表示',
 	'vet-hide-license-msg' => 'ライセンステキストを非表示',
 	'vet-show-license-msg' => 'ライセンステキストを表示',
-	'vet-max-thumb' => 'サムネイルのサイズはオリジナルのサイズより大きくできません。オリジナルのサイズに戻します。',
+	'vet-max-thumb' => 'サムネイルのサイズが制限を越えるため、オリジナルのサイズに戻します',
 	'vet-notallowed' => 'このウィキでは動画を挿入できません',
 	'vet-title' => '記事に動画を追加',
 	'vet-supported' => '対応動画サイト:',
 	'vet-preview' => '縮小プレビュー',
 	'vet-bad-url' => '入力されたURLが不適切です。',
 	'vet-non-existing' => '指定された動画は存在しません',
-	'vet-main-info' => '<i>対応サイトの動画を検索するか動画のURLを入力してください。</i>',
+	'vet-main-info' => '<i>サポートされているサイトのいずれかから完全なURLを入力してください。</i>',
 	'vet-page-success' => '動画ページの更新に成功しました。変更を確認するには動画ページをパージする必要があります。',
 	'vet-add-button' => '動画を追加',
 	'vet-added-from-gallery' => '動画ギャラリーから動画を追加',
-	'vet-see-all' => '全て見る',
+	'vet-see-all' => 'すべて',
 	'vet-bad-search' => '検索クエリのロードでエラーが発生しました。',
 	'vet-no-preview' => 'プレビューモードでは記事に動画を追加できません',
 	'vet-single-success' => '動画の記事中への挿入に成功しました',
@@ -1354,7 +1355,14 @@ $messages['lb'] = array(
 	'vet-add-button' => 'Video derbäisetzen',
 	'vet-left' => 'Lenks',
 	'vet-right' => 'Riets',
-	'vet-gallery' => 'Gallerie',
+	'vet-gallery' => 'Galerie',
+);
+
+/** Limburgish (Limburgs)
+ * @author Ooswesthoesbes
+ */
+$messages['li'] = array(
+	'vet-upload' => 'Gansen URL',
 );
 
 /** Macedonian (Македонски)

@@ -90,6 +90,7 @@ $messages['cs'] = array(
 /** German (Deutsch)
  * @author LWChris
  * @author Reinhard Kraasch
+ * @author SVG
  * @author The Evil IP address
  */
 $messages['de'] = array(
@@ -99,6 +100,7 @@ $messages['de'] = array(
 	'wikiasearch-search-this-wiki' => 'Nur Wikia Zentrale durchsuchen',
 	'wikiasearch-search-wikia' => 'Wikia durchsuchen',
 	'wikiasearch-image-results' => 'Bild-Ergebnisse für „$1“',
+	'wikiasearch-search-all-wikia' => 'Suche alle von Wikia',
 );
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)
@@ -192,6 +194,7 @@ $messages['gl'] = array(
 	'wikiasearch-search-this-wiki' => 'Procurar só en Wikia Central',
 	'wikiasearch-search-wikia' => 'Procurar en Wikia',
 	'wikiasearch-image-results' => 'Resultados de imaxes para "$1"',
+	'wikiasearch-search-all-wikia' => 'Procurar en toda Wikia',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -276,14 +279,17 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Schu
  * @author Tommy6
  */
 $messages['ja'] = array(
+	'search-desc' => 'Solr バックエンドを使用したクロスウィキア検索エンジン',
 	'wikiasearch-titles-only' => 'ページのタイトルだけを検索する',
 	'wikiasearch-system-error-msg' => 'システムエラーにより検索を完了できませんでした。',
 	'wikiasearch-search-this-wiki' => 'セントラルウィキアのみを検索する',
 	'wikiasearch-search-wikia' => 'ウィキア全体を検索',
 	'wikiasearch-image-results' => '"$1" の画像検索結果',
+	'wikiasearch-search-all-wikia' => 'すべてのウィキアから検索',
 );
 
 /** Jamaican Creole English (Patios)
@@ -391,6 +397,7 @@ $messages['no'] = array(
 	'wikiasearch-search-this-wiki' => 'Søk kun i Wikiasentralen',
 	'wikiasearch-search-wikia' => 'Søk i Wikia',
 	'wikiasearch-image-results' => 'Bilderesultat for «$1»',
+	'wikiasearch-search-all-wikia' => 'Søk gjennom hele Wikia',
 );
 
 /** Occitan (Occitan)
@@ -597,5 +604,6 @@ $messages['vi'] = array(
 	'wikiasearch-search-this-wiki' => 'Chỉ tìm kiếm ở trung tâm Wikia',
 	'wikiasearch-search-wikia' => 'Tìm kiếm Wikia',
 	'wikiasearch-image-results' => 'Kết quả hình ảnh cho "$1"',
+	'wikiasearch-search-all-wikia' => 'Tìm kiếm tất cả Wikia',
 );
 

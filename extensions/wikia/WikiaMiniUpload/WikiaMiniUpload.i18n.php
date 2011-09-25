@@ -1548,7 +1548,7 @@ $messages['lb'] = array(
 	'wmu-close' => 'zoumaachen',
 	'wmu-imagelink' => '<b>Nei!</b> Biller derbäisetzenimages',
 	'wmu-imagebutton' => 'Biller derbäisetzen',
-	'wmu-gallery' => 'Gallerie',
+	'wmu-gallery' => 'Galerie',
 	'wmu-more-options' => 'Méi Optiounen',
 	'wmu-fewer-options' => 'Manner Optiounen',
 );
@@ -2050,22 +2050,27 @@ $messages['pms'] = array(
  */
 $messages['ps'] = array(
 	'wmu-upload-image' => 'انځور پورته کول',
+	'wmu-title' => 'انځور پورته کول',
 	'wmu-upload' => 'پورته کول',
 	'wmu-find' => 'موندل',
 	'wmu-thiswiki' => 'همدا ويکي',
 	'wmu-flickr' => 'فلېکر',
 	'wmu-upload-btn' => 'پورته کول',
 	'wmu-find-btn' => 'موندل',
+	'wmu-insert' => 'ورټومبل',
 	'wmu-name' => 'نوم',
 	'wmu-license' => 'منښتليک',
 	'wmu-size' => 'کچه',
 	'wmu-thumbnail' => 'بټنوک',
 	'wmu-layout' => 'ليدنمخ',
 	'wmu-link' => 'تړنه',
+	'wmu-insert2' => 'دوتنه ورټومبل',
 	'wmu-close' => 'تړل',
 	'wmu-imagebutton' => 'انځورونه ورګډول',
 	'wmu-gallery' => 'انځورتون',
 	'wmu-gallery-btn1' => 'يو بل انځور ورګډول',
+	'wmu-more-options' => 'نورې خوښنې',
+	'wmu-fewer-options' => 'لږې خوښنې',
 );
 
 /** Portuguese (Português)

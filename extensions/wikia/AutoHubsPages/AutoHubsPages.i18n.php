@@ -126,13 +126,14 @@ $messages['cs'] = array(
  * @author Diebuche
  * @author George Animal
  * @author LWChris
+ * @author SVG
  * @author Tiin
  */
 $messages['de'] = array(
 	'unhide' => 'Einblenden���',
 	'hub-blog-header' => 'Top $1 Beiträge',
 	'hub-hotspot-header' => 'Angesagte Seiten',
-	'hub-topusers-header' => 'Top $1 Benutzer',
+	'hub-topusers-header' => 'Top-Bearbeiter in dieser Woche auf $1 Wikis',
 	'hub-featured' => 'Top $1 Wikis',
 	'hub-header' => '$1 Wikis',
 	'hub-hotspot-info' => 'Dies sind die angesagtesten Seiten dieser Woche, gerankt nach den meisten Bearbeitern.',

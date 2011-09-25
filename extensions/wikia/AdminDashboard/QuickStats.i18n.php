@@ -101,6 +101,23 @@ $messages['ia'] = array(
 	'quickstats-header-views' => 'Visitas',
 	'quickstats-header-edits' => 'Modificationes',
 	'quickstats-header-photos' => 'Photos',
+	'quickstats-header-likes' => 'Me place',
+	'quickstats-totals-label' => 'Totales',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Vider plus statisticas]]',
+	'quickstats-number-shortening' => '$1K',
+);
+
+/** Japanese (日本語)
+ * @author Tommy6
+ */
+$messages['ja'] = array(
+	'quickstats-header-label' => '簡易統計',
+	'quickstats-header-date' => '日付',
+	'quickstats-header-views' => '閲覧数',
+	'quickstats-header-edits' => '編集数',
+	'quickstats-header-photos' => '新規画像数',
+	'quickstats-totals-label' => '合計',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|さらに詳しい統計をみる]]',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -179,6 +196,7 @@ $messages['no'] = array(
 
 /** Polish (Polski)
  * @author Cloudissimo
+ * @author Woytecr
  */
 $messages['pl'] = array(
 	'quickstats-header-label' => 'Szybkie statystyki',
@@ -189,6 +207,7 @@ $messages['pl'] = array(
 	'quickstats-header-likes' => 'Polubienia',
 	'quickstats-totals-label' => 'Łącznie',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Więcej statystyk]]',
+	'quickstats-number-shortening' => '$1K',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -231,6 +250,21 @@ $messages['sv'] = array(
 	'quickstats-header-likes' => 'Gilla',
 	'quickstats-totals-label' => 'Totalt',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Se mer statistik]]',
+	'quickstats-number-shortening' => '$1K',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'quickstats-header-label' => 'త్వరిత గణాంకాలు',
+	'quickstats-header-date' => 'తేదీ',
+	'quickstats-header-views' => 'వీక్షణలు',
+	'quickstats-header-edits' => 'మార్పులు',
+	'quickstats-header-photos' => 'ఫోటోలు',
+	'quickstats-header-likes' => 'మెచ్చుకోళ్ళు',
+	'quickstats-totals-label' => 'మొత్తాలు',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|మరిన్ని గణాంకాలను చూడండి]]',
 );
 
 /** Tatar (Cyrillic script) (Татарча)
@@ -241,5 +275,20 @@ $messages['tt-cyrl'] = array(
 	'quickstats-header-edits' => 'төзәтмә',
 	'quickstats-header-photos' => 'Рәсем',
 	'quickstats-header-likes' => 'Ошый',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Xiao Qiao
+ */
+$messages['vi'] = array(
+	'quickstats-header-label' => 'Thống kê nhanh',
+	'quickstats-header-date' => 'Ngày',
+	'quickstats-header-views' => 'Lượt xem',
+	'quickstats-header-edits' => 'Sửa đổi',
+	'quickstats-header-photos' => 'Hình ảnh',
+	'quickstats-header-likes' => 'Thích',
+	'quickstats-totals-label' => 'Tổng cộng',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Xem thêm các số liệu thống kê]]',
+	'quickstats-number-shortening' => '$1K',
 );
 

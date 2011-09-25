@@ -255,6 +255,7 @@ $messages['cs'] = array(
 /** German (Deutsch)
  * @author Claudia Hattitten
  * @author LWChris
+ * @author SVG
  */
 $messages['de'] = array(
 	'article-comments-anonymous' => 'Unangemeldeter Benutzer',
@@ -275,6 +276,7 @@ $messages['de'] = array(
 	'article-comments-login' => 'Zum Kommentieren <a href="$1">anmelden</a>.',
 	'article-comments-toc-item' => 'Kommentare',
 	'article-comments-comment-cannot-add' => 'Du kannst keinen Kommentar zum Artikel hinzufügen.',
+	'article-comments-vote' => 'Abstimmen',
 	'article-comments-reply' => 'Antworten',
 	'article-comments-show-all' => 'Alle Kommentare anzeigen',
 	'article-comments-prev-page' => 'Vorherige',
@@ -694,6 +696,7 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Schu
  * @author Tommy6
  */
 $messages['ja'] = array(
@@ -715,6 +718,7 @@ $messages['ja'] = array(
 	'article-comments-login' => 'コメントするには<a href="$1">ログイン</a>する必要があります',
 	'article-comments-toc-item' => 'コメント',
 	'article-comments-comment-cannot-add' => 'この記事にはコメントを追加できません。',
+	'article-comments-vote' => '投票する',
 	'article-comments-reply' => '返信する',
 	'article-comments-show-all' => '全てのコメントを表示',
 	'article-comments-prev-page' => '前',
@@ -801,7 +805,7 @@ $messages['lb'] = array(
 	'article-comments-cancel' => 'Ofbriechen',
 	'article-comments-delete' => 'läschen',
 	'article-comments-edit' => 'änneren',
-	'article-comments-history' => 'Historique',
+	'article-comments-history' => 'Versiounen',
 	'article-comments-error' => "D'Bemierkung konnt net gespäichert ginn",
 	'article-comments-undeleted-comment' => "Restauréiert Bemierkung dir d'Blog-Säit $1",
 	'article-comments-rc-comment' => 'Bemierkung vum Artikel (<span class="plainlinks">[$1 $2]</span>)',
@@ -1121,6 +1125,7 @@ Wikia
 
 /** Polish (Polski)
  * @author Sovq
+ * @author Woytecr
  */
 $messages['pl'] = array(
 	'article-comments-anonymous' => 'Anonimowy użytkownik',
@@ -1141,6 +1146,7 @@ $messages['pl'] = array(
 	'article-comments-login' => '<a href="$1">Zaloguj się</a>, aby komentować',
 	'article-comments-toc-item' => 'Komentarze',
 	'article-comments-comment-cannot-add' => 'Nie możesz dodać komentarza do tego artykułu',
+	'article-comments-vote' => 'Zagłosuj',
 	'article-comments-reply' => 'Odpowiedz',
 	'article-comments-show-all' => 'Pokaż wszystkie komentarze',
 	'article-comments-prev-page' => 'Poprzednia',
