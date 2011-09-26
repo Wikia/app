@@ -59,27 +59,5 @@ class WikiaLoginSpecialController extends WikiaSpecialPageController {
 	public function emailpassword() {
 		
 	}
-	
-	/**
-	 * @brief redirects/opens a new window to facebook authentication
-	 * @details
-	 */
-	public function loginFacebook() {
-		
-	}
-	
-	/**
-	 * @brief handles facebook oauth callback
-	 * @details
-	 *   if code returned, call facebook for an access_token
-	 *     using access_token, check if user exists.  
-	 *       if exists, login
-	 *       if not, retrieve basic user data and login
-	 * @requestParam string code - facebook code
-	 * @requestParam string error - error if facebook didn't authenticate the user
-	 */
-	public function facebookOauthCallback() {
-		
-	}
 
 }
