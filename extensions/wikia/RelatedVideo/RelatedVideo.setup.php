@@ -18,7 +18,7 @@ $wgAutoloadClasses['RelatedVideo']		= $dir . 'RelatedVideo.body.php';
 $wgAutoloadClasses['RelatedVideoRSS']		= $dir . 'RelatedVideoRSS.class.php';
 $wgAutoloadClasses['RelatedVideoHelper']	= $dir . 'RelatedVideoHelper.class.php';
 $wgExtensionMessagesFiles['RelatedVideo']	= $dir . 'i18n/RelatedVideo.i18n.php';
-$wgAutoloadClasses['RelatedVideoModule']	= $IP.'/skins/oasis/modules/RelatedVideoModule.class.php';
+$wgAutoloadClasses['RelatedVideoModule']	= $dir . 'modules/RelatedVideoModule.class.php';
 
 $wgSpecialPages['RelatedVideo']			= 'RelatedVideo';
 $wgSpecialPageGroups['RelatedVideo']		= 'wikia';
