@@ -369,7 +369,9 @@ class AutomatedDeadWikisDeletionMaintenance {
 		$wikis = $this->getWikisList();
 		$this->batchProcess($wikis);
 
-		$this->sendEmails();
+		if ($this->mailing) {
+			$this->sendEmails();
+		}
 		
 		if ($this->debug) {
 			var_dump("deleted",$this->deleted);
