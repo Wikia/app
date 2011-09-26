@@ -893,3 +893,10 @@ $wgDisabledActionsWithViewFallback = array();
  * on that specific wiki (uses the actual API to build the documentation).
  */
 $wgEnableApiExplorerExt = true;
+
+/**
+ * Default settings used by wiki navigation
+ */
+$wgMaxLevelOneNavElements = 4;
+$wgMaxLevelTwoNavElements = 7;
+$wgMaxLevelThreeNavElements = 10;
