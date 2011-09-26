@@ -50,15 +50,8 @@ dd.paramContent{ /* per-module */
 	border-bottom:0px;
 	border-bottom-left-radius:0px;
 	border-bottom-right-radius:0px;
-	
-	/* TODO: add an arrow to COLLAPSE */
-	/* TODO: add an arrow to COLLAPSE */
 }
 .collapsible.collapsed h2, .collapsible.collapsed h3, .paramContent{
-
-	/* TODO: add an arrow to EXPAND */
-	/* TODO: add an arrow to EXPAND */
-	
 	/* Collapsed state for h2, h3 or expanded for content... show bottom border & rounded corners */
 	border-bottom:2px solid #008;
 	border-bottom-left-radius:10px;
