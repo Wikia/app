@@ -241,6 +241,20 @@ class CloseWikiMaintenance {
 					Wikia::log( __CLASS__, "info", "{$row->city_id} removed from WikiFactory tables" );
 
 					/**
+					 * remove records from dataware
+					 */
+					global $wgExternalDatawareDB; 
+					$datawareDB = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB ); 
+					$datawareDB->delete(
+						"pages",
+						array(
+							"page_wikia_id" => $row->city_id
+						),
+						__METHOD__
+					);
+					Wikia::log( __CLASS__, "info", "{$row->city_id} removed from dataware tables" );
+
+					/**
 					 * drop database, get db handler for proper cluster
 					 */
 					global $wgDBadminuser, $wgDBadminpassword;
