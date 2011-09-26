@@ -367,8 +367,6 @@ class PartnerFeed extends SpecialPage {
 		
 		if ( $defaultWidth ){
 			$thumbSize = ( integer )$thumbSize;
-		} else {
-			$thumbSize = $defaultThumbSize;
 		}
 
 		$feedArray = array();
