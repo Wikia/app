@@ -54,7 +54,8 @@ class ArticleCommentsAjax {
 		}
 
 		$comment = ArticleComment::newFromId( $commentId );
-		if ( $comment ) {
+		
+		if ( !empty( $comment ) ) {
 			$comment->load(true);
 			if ( $comment->canEdit() ) {
 				$response = $comment->doSaveComment( $wgRequest, $wgUser, $title );
@@ -103,7 +104,8 @@ class ArticleCommentsAjax {
 		 * edit comment
 		 */
 		$comment = ArticleComment::newFromId( $commentId );
-		if ( $comment ) {
+		
+		if ( !empty( $comment ) ) {
 			$comment->load(true);
 			if ( $comment->canEdit() ) {
 				$result['error'] = 0;

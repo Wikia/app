@@ -651,7 +651,8 @@ class ArticleComment {
 				!empty($article_id)) {
 
 				$comment = ArticleComment::newFromId( $article_id );
-				if ( !is_null($comment) ) {
+				
+				if ( !empty( $comment ) ) {
 					$oArticlePage = $comment->getArticleTitle();
 					$mAttribs = $oRC->mAttribs;
 					$mAttribs['rc_title'] = $oArticlePage->getDBkey();
@@ -795,33 +796,42 @@ class ArticleComment {
 			$wgRC2UDPEnabled = false; //turn off
 			$finish = $moved = 0;
 			$comments = array_values($comments);
-			foreach ($comments as $id => $aCommentArr) {
-				$oCommentTitle = $aCommentArr['level1']->getTitle();
-
-				# move comment level #1
-				$error = self::moveComment( $oCommentTitle, $oNewTitle, $form->reason );
-				if ( $error !== true ) {
-					Wikia::log( __METHOD__, 'movepage',
-						'cannot move blog comments: old comment: ' . $oCommentTitle->getPrefixedText() . ', ' .
-						'new comment: ' . $oNewTitle->getPrefixedText() . ', error: ' . @implode(', ', $error)
-					);
+			
+			foreach ( $comments as $id => $aCommentArr ) {
+				if ( $aCommentArr['level1'] instanceof ArticleComment ) {
+					$oCommentTitle = $aCommentArr['level1']->getTitle();
+	
+					# move comment level #1
+					$error = self::moveComment( $oCommentTitle, $oNewTitle, $form->reason );
+					if ( $error !== true ) {
+						Wikia::log( __METHOD__, 'movepage',
+							'cannot move blog comments: old comment: ' . $oCommentTitle->getPrefixedText() . ', ' .
+							'new comment: ' . $oNewTitle->getPrefixedText() . ', error: ' . @implode(', ', $error)
+						);
+					} else {
+						$moved++;
+					}
 				} else {
-					$moved++;
+					Wikia::log( __METHOD__, 'movepage', 'cannot move blog comments (level 1): old comment not found' );
 				}
 
 				if (isset($aCommentArr['level2'])) {
 					foreach ($aCommentArr['level2'] as $oComment) {
-						$oCommentTitle = $oComment->getTitle();
-
-						# move comment level #2
-						$error = self::moveComment( $oCommentTitle, $oNewTitle, $form->reason );
-						if ( $error !== true ) {
-							Wikia::log( __METHOD__, 'movepage',
-								'cannot move blog comments: old comment: ' . $oCommentTitle->getPrefixedText() . ', ' .
-								'new comment: ' . $oNewTitle->getPrefixedText() . ', error: ' . @implode(', ', $error)
-							);
+						if ( $oComment instanceof ArticleComment ) {
+							$oCommentTitle = $oComment->getTitle();
+	
+							# move comment level #2
+							$error = self::moveComment( $oCommentTitle, $oNewTitle, $form->reason );
+							if ( $error !== true ) {
+								Wikia::log( __METHOD__, 'movepage',
+									'cannot move blog comments: old comment: ' . $oCommentTitle->getPrefixedText() . ', ' .
+									'new comment: ' . $oNewTitle->getPrefixedText() . ', error: ' . @implode(', ', $error)
+								);
+							} else {
+								$moved++;
+							}
 						} else {
-							$moved++;
+							Wikia::log( __METHOD__, 'movepage', 'cannot move blog comments (level 2): old comment not found' );
 						}
 					}
 				}
