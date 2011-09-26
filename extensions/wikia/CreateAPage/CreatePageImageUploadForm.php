@@ -76,51 +76,51 @@ class CreatePageImageUploadForm extends UploadForm {
                 $value = $this->internalProcessUpload( $details );
 
                 switch($value) {
-                        case self::SUCCESS:
+                        case UploadBase::SUCCESS:
 			    // don't... do... REDIRECT
                             return ;
 
-                        case self::BEFORE_PROCESSING:
+                        case UploadBase::BEFORE_PROCESSING:
                                 return false;
 
-                        case self::LARGE_FILE_SERVER:
+                        case UploadBase::LARGE_FILE_SERVER:
                                 return wfMsg ('largefileserver') ;
 
-                        case self::EMPTY_FILE:
+                        case UploadBase::EMPTY_FILE:
                                 return wfMsg ('emptyfile') ;
 
-                        case self::MIN_LENGTH_PARTNAME:
+                        case UploadBase::MIN_LENGTH_PARTNAME:
                                 return wfMsg ('minlength1') ;
                             return;
 
-                        case self::ILLEGAL_FILENAME:
+                        case UploadBase::ILLEGAL_FILENAME:
                                 $filtered = $details['filtered'];
                                 return wfMsg ('illegalfilename', $filtered) ;
 
-                        case self::PROTECTED_PAGE:
+                        case UploadBase::PROTECTED_PAGE:
                                 return wfMsg ('protectedpage') ;
 
-                        case self::OVERWRITE_EXISTING_FILE:
+                        case UploadBase::OVERWRITE_EXISTING_FILE:
                                 $errorText = $details['overwrite'];
                                 $overwrite = new WikiError( $wgOut->parse( $errorText ) );
                                 return $overwrite->toString() ;
 
-                        case self::FILETYPE_MISSING:
+                        case UploadBase::FILETYPE_MISSING:
                                 return wfMsg ('filetype-missing') ;
 
-                        case self::FILETYPE_BADTYPE:
+                        case UploadBase::FILETYPE_BADTYPE:
                                 $finalExt = $details['finalExt'];
                                 return wfMsg ('filetype-badtype') ;
 
-                        case self::VERIFICATION_ERROR:
+                        case UploadBase::VERIFICATION_ERROR:
                                 $veri = $details['veri'];
                                 return $veri->toString() ;
 
-                        case self::UPLOAD_VERIFICATION_ERROR:
+                        case UploadBase::UPLOAD_VERIFICATION_ERROR:
                                 $error = $details['error'];
                                 return $error ;
 
-                        case self::UPLOAD_WARNING:
+                        case UploadBase::UPLOAD_WARNING:
                                 $warning = $details['warning'];
                                 return $warning ;
                 }
@@ -153,14 +153,14 @@ class CreatePageImageUploadForm extends UploadForm {
 
                 /* Check for PHP error if any, requires php 4.2 or newer */
                 if( $this->mCurlError == 1/*UPLOAD_ERR_INI_SIZE*/ ) {
-                        return self::LARGE_FILE_SERVER;
+                        return UploadBase::LARGE_FILE_SERVER;
                 }
 
                 /**
                  * If there was no filename or a zero size given, give up quick.
                  */
                 if( trim( $this->mSrcName ) == '' || empty( $this->mFileSize ) ) {
-                        return self::EMPTY_FILE;
+                        return UploadBase::EMPTY_FILE;
                 }
 
                 # Chop off any directories in the given filename
@@ -192,7 +192,7 @@ class CreatePageImageUploadForm extends UploadForm {
                 }
 
                 if( strlen( $partname ) < 1 ) {
-                        return self::MIN_LENGTH_PARTNAME;
+                        return UploadBase::MIN_LENGTH_PARTNAME;
                 }
 
                 /**
@@ -204,7 +204,7 @@ class CreatePageImageUploadForm extends UploadForm {
 
                 if( is_null( $nt ) ) {
                         $resultDetails = array( 'filtered' => $filtered );
-                        return self::ILLEGAL_FILENAME;
+                        return UploadBase::ILLEGAL_FILENAME;
                 }
                 $this->mLocalFile = wfLocalFile( $nt );
                 $this->mDestName = $this->mLocalFile->getName();
@@ -214,7 +214,7 @@ class CreatePageImageUploadForm extends UploadForm {
                  * to modify it by uploading a new revision.
                  */
                 if( !$nt->userCan( 'edit' ) ) {
-                        return self::PROTECTED_PAGE;
+                        return UploadBase::PROTECTED_PAGE;
                 }
 
                 /**
@@ -246,11 +246,10 @@ class CreatePageImageUploadForm extends UploadForm {
 		}
 
 		if ($tmpcount > 0)  {
-			wfLocalFile( $title ) ;			
 			$tempname = preg_replace ( "/[^".Title::legalChars()."]|:/", '-', $tempname );
-	                $nt = Title::makeTitleSafe( NS_IMAGE, $tempname );
-	                $this->mLocalFile = wfLocalFile( $nt );
-	                $this->mDestName = $this->mLocalFile->getName();
+			$nt = Title::makeTitleSafe( NS_IMAGE, $tempname );
+			$this->mLocalFile = wfLocalFile( $nt );
+			$this->mDestName = $this->mLocalFile->getName();
 			$this->mDesiredDestName = $this->mStoredDestName . $tmpcount . '.' . $this->mParameterExt ;
 		} else { // append the extension anyway
 			$this->mDesiredDestName = $this->mStoredDestName . '.' . $this->mParameterExt ;
@@ -259,7 +258,7 @@ class CreatePageImageUploadForm extends UploadForm {
                 $overwrite = $this->checkOverwrite( $this->mDestName );
                 if( $overwrite !== true ) {
                         $resultDetails = array( 'overwrite' => $overwrite );
-                        return self::OVERWRITE_EXISTING_FILE;
+                        return UploadBase::OVERWRITE_EXISTING_FILE;
                 }
 
                 /* Don't allow users to override the blacklist (check file extension) */
@@ -267,11 +266,11 @@ class CreatePageImageUploadForm extends UploadForm {
                 global $wgFileExtensions, $wgFileBlacklist;
 
                if ($finalExt == '') {
-                        return self::FILETYPE_MISSING;
+                        return UploadBase::FILETYPE_MISSING;
                 } elseif ( $this->checkFileExtensionList( $ext, $wgFileBlacklist ) ||
                                 ($wgStrictFileExtensions && !$this->checkFileExtension( $finalExt, $wgFileExtensions ) ) ) {
                         $resultDetails = array( 'finalExt' => $finalExt );
-                        return self::FILETYPE_BADTYPE;
+                        return UploadBase::FILETYPE_BADTYPE;
                 }
 
                 /**
@@ -286,7 +285,7 @@ class CreatePageImageUploadForm extends UploadForm {
 
                         if( $veri !== true ) { //it's a wiki error...
                                 $resultDetails = array( 'veri' => $veri );
-                                return self::VERIFICATION_ERROR;
+                                return UploadBase::VERIFICATION_ERROR;
                         }
 
                         /**
@@ -338,7 +337,7 @@ class CreatePageImageUploadForm extends UploadForm {
                                  * to let it through and we'll complete the upload then.
                                  */
                                 $resultDetails = array( 'warning' => $warning );
-                                return self::UPLOAD_WARNING;
+                                return UploadBase::UPLOAD_WARNING;
                         }
                 }
 
@@ -361,7 +360,7 @@ class CreatePageImageUploadForm extends UploadForm {
                         // Success, redirect to description page
        			$this->mReturnedTimestamp = $this->getQuickTimestamp ($this->mDestName) ; 					
                         $img = null; // @todo: added to avoid passing a ref to null - should this be defined somewhere?			
-                        return self::SUCCESS;
+                        return UploadBase::SUCCESS;
                 }
         }
 

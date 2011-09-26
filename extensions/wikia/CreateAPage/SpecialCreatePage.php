@@ -434,7 +434,7 @@ class CreatePageCreateplateForm {
 	}
 
 	function submitForm () {
-		global $wgOut, $wgRequest, $wgServer, $wgScriptPath ;
+		global $wgOut, $wgRequest, $wgServer, $wgScriptPath, $wgScript;
 		// check if we are editing in red link mode
 		if ($wgRequest->getCheck ('wpSubmitCreateplate')) { 
 			$mainform = new CreatePageCreateplateForm () ;

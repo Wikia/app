@@ -15,7 +15,7 @@ if (!defined('MEDIAWIKI')) die();
 abstract class CreatePageEditor {
 	var $mTemplate ;
 
-	function CreatePageEditor ($template) {
+	function __construct( $template ) {
 		$this->mTemplate = $template ;
 	}
 
@@ -27,8 +27,8 @@ abstract class CreatePageEditor {
 //wraps up special multi editor class
 class CreatePageMultiEditor extends CreatePageEditor {	
 	var $mRedLinked, $mInitial, $mPreviewed;	
-	function CreatePageEditor ($template, $redlinked = false, $initial = false, $previewed = false) {
-		$this->mTemplate = $template ;
+	function __construct( $template, $redlinked = false, $initial = false, $previewed = false ) {
+		parent::__construct( $template );
 		$this->mRedLinked = $redlinked ;		
 		$this->mInitial = $initial ;
 		$this->mPreviewed = $previewed;
