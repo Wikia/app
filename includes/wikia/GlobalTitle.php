@@ -66,7 +66,7 @@ class GlobalTitle extends Title {
 				array( 'page_id' => $id ),
 				__METHOD__
 			);
-			if ( !empty( $row->page_title ) ) { 
+			if ( !empty( $row->page_title ) ) {
 				$res = array( 'title' => $row->page_title, 'namespace' => $row->page_namespace );
 				$wgMemc->set($memkey, $res, 60 * 60);
 			}
@@ -282,6 +282,20 @@ class GlobalTitle extends Title {
 		}
 
 		/**
+		 * special handling for dev boxes
+		 *
+		 * @author macbre
+		 */
+		global $wgDevelEnvironment, $wgDevelEnvironmentName;
+		if (!empty($wgDevelEnvironment)) {
+			$dbname = WikiFactory::IDtoDB( $this->mCityId );
+			if ($dbname !== false) {
+				$this->mServer = "http://{$dbname}.{$wgDevelEnvironmentName}.wikia-dev.com";
+				return $this->mServer;
+			}
+		}
+
+		/**
 		 * get value from city_variables
 		 */
 		$server = WikiFactory::getVarValueByName( "wgServer", $this->mCityId );
@@ -439,9 +453,15 @@ class GlobalTitle extends Title {
 	 * @return string
 	 */
 	private function memcKey() {
-		global $wgSharedDB;
+		global $wgSharedDB, $wgDevelEnvironmentName;
 
-		return implode(":", array( $wgSharedDB, "globaltitle", $this->mCityId ) );
+		$parts = array( $wgSharedDB, "globaltitle", $this->mCityId );
+
+		if (!empty($wgDevelEnvironmentName)) {
+			$parts[] = $wgDevelEnvironmentName;
+		}
+
+		return implode(":", $parts);
 	}
 
 	/**
