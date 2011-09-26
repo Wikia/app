@@ -261,6 +261,14 @@ class AutomatedDeadWikisDeletionMaintenance {
 		return $wikis;
 	}
 	
+	protected function doDisableWiki( $wikiId, $flags, $reason = '' ) {
+		// TOOD: copied from WikiFactory::disableWiki since it's not released yet
+		WikiFactory::setFlags( $wikiId, $flags );
+		$res = WikiFactory::setPublicStatus( WikiFactory::CLOSE_ACTION, $wikiId, $reason );
+		WikiFactory::clearCache( $wikiId );
+		return $res;
+	}
+	
 	protected function disableWikis( $wikis, &$deleted = array(), &$notDeleted = array() ) {
 		$flags = $this->getFlags();
 		foreach ($wikis as $id => $wiki) {
@@ -277,7 +285,7 @@ class AutomatedDeadWikisDeletionMaintenance {
 				continue;
 			}
 			echo "Closing wiki #$id ({$wiki['dbname']})...";
-			if (WikiFactory::disableWiki($id,$flags,self::DELETION_REASON)) {
+			if ($this->doDisableWiki($id,$flags,self::DELETION_REASON)) {
 				echo " ok\n";
 				$deleted[$id] = $wiki;
 				$this->deletedCount++;
