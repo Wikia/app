@@ -13,7 +13,8 @@ $optionsWithArgs = array(
 	'action',
 	'ids',
 	'from',
-	'to'
+	'to',
+	'limit',
 );
 
 require_once( "commandLine.inc" );
@@ -27,12 +28,15 @@ class AutomatedDeadWikisDeletionMaintenance {
 	const COMMUNITY_ID = 177;
 	const DELETION_REASON = 'dead wiki';
 	
+	const DELETE_NOW = 'deleteNow';
+	const DELETE_SOON = 'deleteSoon';
+	
 	static protected $conditions = array(
-		'deleteNow' => array(
+		self::DELETE_NOW => array(
 			array(
 				'type' => 'datetime',
 				'key' => 'created',
-				'max' => '-60 days',
+				'max' => '-365 days',
 			),
 			array(
 				'type' => 'datetime',
@@ -52,14 +56,14 @@ class AutomatedDeadWikisDeletionMaintenance {
 			array(
 				'type' => 'int',
 				'key' => 'pvlastmonth',
-				'max' => '4',
+				'max' => '1',
 			),
 		),
-		'deleteSoon' => array(
+		self::DELETE_SOON => array(
 			array(
 				'type' => 'datetime',
 				'key' => 'created',
-				'max' => '-55 days',
+				'max' => '-360 days',
 			),
 			array(
 				'type' => 'datetime',
@@ -79,7 +83,7 @@ class AutomatedDeadWikisDeletionMaintenance {
 			array(
 				'type' => 'int',
 				'key' => 'pvlastmonthm5',
-				'max' => '4',
+				'max' => '1',
 			),
 		)
 	);
@@ -97,7 +101,12 @@ class AutomatedDeadWikisDeletionMaintenance {
 	protected $from = null;
 	protected $to = null;
 	protected $verbose = false;
+	protected $debug = false;
+	
+	protected $deletedCount = 0;
+	protected $deletedLimit = 0;
 	protected $forced = false;
+	protected $mailing = false;
 
 	public function __construct( $options ) {
 		// read command line arguments
@@ -116,8 +125,15 @@ class AutomatedDeadWikisDeletionMaintenance {
 				$this->to = intval($v);
 			} else if ($k == 'verbose') {
 				$this->verbose = true;
+			} else if ($k == 'debug') {
+				$this->verbose = true;
+				$this->debug = true;
 			} else if ($k == 'force') {
 				$this->forced = true;
+			} else if ($k == 'limit') {
+				$this->deletedLimit = intval($v);
+			} else if ($k == 'mail') {
+				$this->mailing = true;
 			}
 		}
 	}
@@ -128,85 +144,6 @@ class AutomatedDeadWikisDeletionMaintenance {
 			$result |= intval($k);
 		return $result;
 	}
-
-	protected function showConfiguration() {
-		if ($this->quiet) {
-			return;
-		}
-		foreach (self::$flagsMapping as $name => $v) {
-			echo "Flag \"$name\" = " . (isset($this->flags[$v]) ? "YES" : "NO") . "\n";
-		}
-		echo "Reason = \"{$this->reason}\"\n";
-		echo "Input ids = " . ( !empty($this->inputIds) ? "\"{$this->inputIds}\"" : "---" ) . "\n";
-		echo "Input file = " . ( !empty($this->inputFile) ? "\"{$this->inputFile}\"" : "---" ) . "\n";
-	}
-
-
-
-	protected function loadWikiIds() {
-		if ($this->inputFile != '') {
-			$contents = file_get_contents($this->inputFile);
-			$this->inputIds = $contents;
-		}
-		if ($this->inputIds != '') {
-			$idsList = preg_replace("/[\r\n]+/", ",", $this->inputIds);
-			$idsList = preg_split("/,+/",$idsList);
-			$wikiIds = array();
-			foreach ($idsList as $id) {
-				$id = intval(trim($id));
-				if ($id > 0)
-					$wikiIds[$id] = $id;
-			}
-			$this->wikiIds = $wikiIds;
-		}
-	}
-
-	protected function processWikis() {
-		$flags = $this->getFlags();
-		$status = ( $flags & WikiFactory::FLAG_HIDE_DB_IMAGES ) ? WikiFactory::HIDE_ACTION : WikiFactory::CLOSE_ACTION;
-		$reason = $this->reason;
-
-		foreach ($this->wikiIds as $wikiId) {
-			// skip wikis with id lesser than "start"
-			if ($this->start && $this->start > $wikiId) {
-				continue;
-			}
-//			echo "status: memory = ".memory_get_usage(true)."\n";
-			// check memory usage
-			if ( !$this->checkMemoryLimit(1) ) {
-				echo "error: memory limit exceeded (1G), please restart the script\n";
-				return;
-			}
-
-			$city = WikiFactory::getWikiByID($wikiId);
-			if (!$city) {
-				echo "$wikiId: error: city could not be found\n";
-				continue;
-			}
-			$city_name = $city->city_dbname;
-			if (!$city->city_public) {
-				echo "$wikiId: error: ({$city_name}) city is already non-public\n";
-				continue;
-			}
-
-			$evaluator = new DeadWikiEvaluator($wikiId);
-			if (!$evaluator->getStatus()) {
-				echo "$wikiId: error: ({$city_name}) city does not meet requirements to be closed: ".$evaluator->getMessage()."\n";
-				continue;
-			}
-
-			echo "$wikiId: ({$city_name}) marking as closed... ";
-			if (!$this->dryRun) {
-				WikiFactory::setFlags($wikiId, $flags);
-				$res = WikiFactory::setPublicStatus($status, $wikiId, $reason);
-				WikiFactory::clearCache($wikiId);
-				echo "OK\n";
-			} else {
-				echo "OK (dry run)\n";
-			}
-		}
-	}
-	
 	
 	protected $oracle = null;
 	
@@ -216,12 +153,11 @@ class AutomatedDeadWikisDeletionMaintenance {
 		}
 		return $this->oracle;
 	}
-
 	
 	protected $wikis = array();
 	
-	protected $deleteNow = array();
-	protected $deleteSoon = array();
+	protected $deleted = array();
+	protected $toBeDeleted = array();
 	
 	protected function parseWikiDescription( $s ) {
 		$s = trim($s);
@@ -255,18 +191,18 @@ class AutomatedDeadWikisDeletionMaintenance {
 	protected function parseEvaluationScriptOutput( $output, $initialData = array() ) {
 		if ($this->verbose) {
 			echo $output;
-			var_dump($initialData);
+//			var_dump($initialData);
 		}
 		$wikis = array();
 		$lines = preg_split("/[\r\n]+/",$output);
 		foreach ($lines as $line) {
 			if ( ($data = $this->parseWikiDescription(trim($line))) ) {
-				var_dump($initialData[$data['id']],$data);
+//				var_dump($initialData[$data['id']],$data);
 				$wikis[$data['id']] = array_merge(
 					isset($initialData[$data['id']]) ? $initialData[$data['id']] : array(),
 					$data
 				);
-				var_dump("parsing",$initialData[$data['id']],$data,$wikis[$data['id']]);
+//				var_dump("parsing",$initialData[$data['id']],$data,$wikis[$data['id']]);
 			}
 		}
 		
@@ -289,7 +225,67 @@ class AutomatedDeadWikisDeletionMaintenance {
 		return $result;
 	}
 	
-	protected function evaluateWikis( $wikis ) {
+	protected function getWikisList() {
+		global $wgExternalSharedDB;
+		$db = wfGetDB(DB_SLAVE,array(),$wgExternalSharedDB);
+		$where = array(
+			'city_public' => 1,
+			// it could be -55 days, but leaving the margin for TZs
+			"city_created < \"".wfTimestamp(TS_DB,strtotime('-340 days'))."\""
+		);
+		if (!is_null($this->from))
+			$where[] = "city_id >= ".intval($this->from);
+		if (!is_null($this->to))
+			$where[] = "city_id <= ".intval($this->to);
+		$res = $db->select(
+			'city_list',
+			array( 'city_id', 'city_dbname', 'city_url' ),
+			$where,
+			__METHOD__,
+			array(
+//				'ORDER BY' => 'city_id DESC',
+				'ORDER BY' => 'city_id',
+			)
+		);
+		
+		$wikis = array();
+		while ($row = $res->fetchRow($res)) {
+			$wikis[] = array(
+				'id' => $row['city_id'],
+				'dbname' => $row['city_dbname'],
+				'url' => $row['city_url'],
+			);
+		}
+		$db->freeResult($res);
+		
+		return $wikis;
+	}
+	
+	protected function disableWikis( $wikis, &$deleted = array(), &$notDeleted = array() ) {
+		$flags = $this->getFlags();
+		foreach ($wikis as $id => $wiki) {
+			if ($this->debug) {
+				echo "$id STATUS " . intval(WikiFactory::isPublic($id)) . "\n";
+			}
+			if ($this->deletedLimit > 0 && $this->deletedCount >= $this->deletedLimit) {
+				$notDeleted[$id] = $wiki;
+				continue;
+			}
+			if (!$this->forced) {
+				$deleted[$id] = $wiki;
+				$this->deletedCount++;
+				continue;
+			}
+			if (WikiFactory::disableWiki($id,$flags,self::DELETION_REASON)) {
+				$deleted[$id] = $wiki;
+				$this->deletedCount++;
+			} else {
+				$notDeleted[$id] = $wiki;
+			}
+		}
+	}
+	
+	protected function batchProcess( $wikis ) {
 		// evaluate wikis in groups of 100 wikis
 		while ($batch = array_splice($wikis,0,self::BATCH_SIZE)) {
 			// fetch data from wikis
@@ -314,110 +310,68 @@ class AutomatedDeadWikisDeletionMaintenance {
 			
 			// classify wikis
 			$classifications = $this->getOracleClassification($evaluated);
+			if (isset($classifications[self::DELETE_NOW])) {
+				$this->disableWikis($classifications[self::DELETE_NOW],$this->deleted,$this->toBeDeleted);
+			}
+			if (isset($classifications[self::DELETE_SOON])) {
+				$this->toBeDeleted += $classifications[self::DELETE_SOON];
+			}
+			
+			/*
 			$knownClassifications = array_keys( self::$conditions );
 			foreach ($knownClassifications as $classification) {
 				if (isset($classifications[$classification])) {
 					$this->{$classification} = $this->{$classification} + $classifications[$classification];
 				}
 			}
+			*/
 		}
 	}
 	
-	protected function getWikisList() {
-		global $wgExternalSharedDB;
-		$db = wfGetDB(DB_SLAVE,array(),$wgExternalSharedDB);
-		$where = array(
-			'city_public' => 1,
-			// it could be -55 days, but leaving the margin for TZs
-			"city_created < \"".wfTimestamp(TS_DB,strtotime('-52 days'))."\""
-		);
-		if (!is_null($this->from))
-			$where[] = "city_id >= ".intval($this->from);
-		if (!is_null($this->to))
-			$where[] = "city_id <= ".intval($this->to);
-		$res = $db->select(
-			'city_list',
-			array( 'city_id', 'city_dbname', 'city_url' ),
-			$where,
-			__METHOD__,
-			array(
-				'ORDER BY' => 'city_id DESC',
-			)
-		);
-		
-		$wikis = array();
-		while ($row = $res->fetchRow($res)) {
-			$wikis[] = array(
-				'id' => $row['city_id'],
-				'dbname' => $row['city_dbname'],
-				'url' => $row['city_url'],
-			);
-		}
-		$db->freeResult($res);
-		
-		return $wikis;
-	}
-	
-	protected function disableWikis( $wikis ) {
-		return;
-		$flags = $this->getFlags();
-		foreach ($wikis as $id => $wiki) {
-			WikiFactory::disableWiki($id,$flags,self::DELETION_REASON);
-		}
-	}
-	
-	protected function sendEmail( $from, $to, $subject, $body, $csvName, $wikis ) {
-		// prepare mime 
-		$mime = new Mail_mime();
-		$mime->setTXTBody($body);
-		
-		$csv = "ID,DatabaseName,URL\r\n";
+	protected function sendEmail( $from, $to, $subject, $body, $wikis ) {
+		$body .= "\n\n\n======\n\n";
+		$body .= "ID,DatabaseName,URL\r\n";
 		foreach ($wikis as $wiki) {
-			$csv .= "\"{$wiki['id']}\",\"{$wiki['dbname']}\",\"{$wiki['url']}\"\r\n";
+			$body .= "\"{$wiki['id']}\",\"{$wiki['dbname']}\",\"{$wiki['url']}\"\r\n";
 		}
-		var_dump($mime->addAttachment($csv,'text/csv',$csvName,false));
 		
 		$fromAddress = new MailAddress($from);
 		$toAddress = new MailAddress($to);
-		var_dump($mime->get());
-		UserMailer::send($toAddress,$fromAddress,$subject,$mime->get());
+//		var_dump($mime->get());
+		UserMailer::send($toAddress,$fromAddress,$subject,$body);
 	}
 	
 	protected function sendEmails() {
 		$date = gmdate('Ymd');
 		$dateNice = gmdate('Y m d');
 		
-		$count = count($this->deleteNow);
+		$count = count($this->deleted);
 		$this->sendEmail(
+			"wladek@wikia-inc.com",
 			"wikis-deleted-l@wikia-inc.com",
-			"wladek@wikia-inc.com",
 			"wikis deleted {$dateNice}",
-			"Script deleted {$count} wikis today, the list of closed wikis is attached in CSV file.",
-			"wikis-deleted-{$date}.csv",
-			$this->deleteNow);
+			"Script deleted {$count} wiki(s) today, the list of closed wikis is provided below.",
+			$this->deleted);
 		
-		$count = count($this->deleteSoon);
+		$count = count($this->toBeDeleted);
 		$this->sendEmail(
-			"wikis-to-be-deleted-l@wikia-inc.com",
 			"wladek@wikia-inc.com",
+			"wikis-to-be-deleted-l@wikia-inc.com",
 			"wikis to be deleted in 5 days {$dateNice}",
-			"Script found {$count} wikis which will be deleted shortly, the list of wikis is attached in CSV file.",
-			"wikis-to-be-deleted-{$date}.csv",
-			$this->deleteSoon);
+			"Script found {$count} wiki(s) which will be deleted shortly, the list of wikis is provided below.",
+			$this->toBeDeleted);
 	}
 	
 	protected function actionClean() {
 		$wikis = $this->getWikisList();
-		$this->evaluateWikis($wikis);
+		$this->batchProcess($wikis);
 
-		if ($forced) {
-			$this->disableWikis($this->deleteNow);
-//			$this->sendEmails();
-		};
 		$this->sendEmails();
 		
-//		var_dump($this->deleteNow);
-//		var_dump($this->deleteSoon);
+		if ($this->debug) {
+			var_dump("deleted",$this->deleted);
+			var_dump("to be deleted",$this->toBeDeleted);
+		}
 	}
 	
 	protected function actionEvaluate() {
@@ -436,8 +390,8 @@ class AutomatedDeadWikisDeletionMaintenance {
 				$response .= " edits=" . (int)$dataSource->getEditsCount();
 				$response .= " editsl60=" . (int)$dataSource->getEditsCount('-60 days');
 				$response .= " contentpages=" . (int)$dataSource->getContentPagesCount();
-				$response .= " pvlastmonth=" . (int)$dataSource->getPageViews( '-28 days' );
-				$response .= " pvlastmonthm5=" . (int)$dataSource->getPageViews( '-23 days' );
+				$response .= " pvlastmonth=" . (int)$dataSource->getPageViews( '-30 days' );
+				$response .= " pvlastmonthm5=" . (int)$dataSource->getPageViews( '-25 days' );
 				$response .= "\n";
 				echo $response;
 			} catch (Exception $e) {
