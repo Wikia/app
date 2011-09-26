@@ -33,7 +33,7 @@ WikiaEmoticons.EMOTICON_ARTICLE = "MediaWiki:Emoticons";
 WikiaEmoticons.doReplacements = function(text, emoticonMapping){
 	// This debug is probably noisy, but I added it here just in case all of these regexes turn out to be slow (so we could
 	// see that in the log & know that we need to make this function more efficient).
-	console.log("Processing any emoticons... ");
+	$().log("Processing any emoticons... ");
 
 	var imgUrlsByRegexString = emoticonMapping.getImgUrlsByRegexString();
 	for(var regexString in imgUrlsByRegexString){
@@ -52,7 +52,7 @@ WikiaEmoticons.doReplacements = function(text, emoticonMapping){
 		} while ((origText != text) && (numIters++ < 5));
 	}
 
-	console.log("Done processing emoticons.");
+	$().log("Done processing emoticons.");
 	return text;
 } // end doReplacements()
 
@@ -84,20 +84,20 @@ if(typeof EmoticonMapping === 'undefined'){
 
 			// TODO: FIXME: Rewrite this to use regexes so that we don't require the space after the asterisks (because that's not needed in normal wikitext).
 			// Loop through array, construct object
-			//console.log("Loading emoticon mapping...");
+			//$().log("Loading emoticon mapping...");
 			for(var i=0; i<emoticonArray.length; i++) {
 				var urlMatch = emoticonArray[i].match(/^\*[ ]*([^*].*)/); // line starting with 1 "*" then optional spaces, then some non-empty content.
 				if(urlMatch && urlMatch[1]){
 					var url = urlMatch[1];
 					self._settings[url] = [];
 					currentKey = url;
-					//console.log("  " + url + "...");
+					//$().log("  " + url + "...");
 				} else {
 					var glyphMatch = emoticonArray[i].match(/^\*\*[ ]*([^*].*)/); // line starting with 2 "**"'s then optional spaces, then some non-empty content.
 					if(glyphMatch && glyphMatch[1]){
 						var glyph = glyphMatch[1];
 						self._settings[currentKey].push(glyph);
-						//console.log("       " + glyph);
+						//$().log("       " + glyph);
 					}
 				}
 			}
@@ -112,7 +112,7 @@ if(typeof EmoticonMapping === 'undefined'){
 		 */
 		this.getImgUrlsByRegexString = function(){
 			// If the regexes haven't been built from the config yet, build them.
-			//console.log("settings len: " + Object.keys(self._settings).length + " regex len: " + Object.keys(self._regexes).length);
+			//$().log("settings len: " + Object.keys(self._settings).length + " regex len: " + Object.keys(self._regexes).length);
 			
 			// Object.keys() doesn't exist in IE 8, so do this the oldschool way.
 			//if(Object.keys(self._settings).length != Object.keys(self._regexes).length){
@@ -125,7 +125,7 @@ if(typeof EmoticonMapping === 'undefined'){
 				numRegexes++;
 			}
 			if(numSettings != numRegexes){
-				//console.log("..Processing settings");
+				//$().log("..Processing settings");
 				for(var imgSrc in self._settings){
 					var codes = self._settings[imgSrc];
 					var regexString = "";
@@ -138,7 +138,7 @@ if(typeof EmoticonMapping === 'undefined'){
 							regexString += code;
 						}
 					}
-					//console.log("...Regexstr: " + regexString);
+					//$().log("...Regexstr: " + regexString);
 
 					// Stores the regex to img mapping.
 					self._regexes[regexString] = imgSrc;
