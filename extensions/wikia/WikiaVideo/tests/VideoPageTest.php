@@ -46,7 +46,7 @@ class WikiaVideoTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * @dataProvider videoExistsDataProvider
-	 * @group Integration
+	 * @group Infrastructure
 	 */
 	public function testCheckIfVideoExists($providerId, $videoId, $exists) {
 		$videoPage = new VideoPage(new Title());
