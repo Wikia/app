@@ -276,10 +276,13 @@ class AutomatedDeadWikisDeletionMaintenance {
 				$this->deletedCount++;
 				continue;
 			}
+			echo "Closing wiki #$id ({$wiki['dbname']})...";
 			if (WikiFactory::disableWiki($id,$flags,self::DELETION_REASON)) {
+				echo " ok\n";
 				$deleted[$id] = $wiki;
 				$this->deletedCount++;
 			} else {
+				echo " failed\n";
 				$notDeleted[$id] = $wiki;
 			}
 		}
