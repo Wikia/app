@@ -115,8 +115,8 @@ class HomePageStatisticCollector
 	 * Author: Tomek Odrobny
 	 * hole value for same period example: this week,month
 	 */
-	private static function periodHolder( $value = 0,$period ,$key){
-		$data = HomePageMemAdapter::getMemValue($key,null);
+	private static function periodHolder( $period ,$key, $value = 0 ){
+		$data = HomePageMemAdapter::getMemValue( $key );
 		if($data == null){
 			$data['period'] = time();
 			$data['value'] = 0;
@@ -141,7 +141,7 @@ class HomePageStatisticCollector
 			$time = time();
 		}
 		
-		$data = HomePageMemAdapter::getMemValue($key,null);
+		$data = HomePageMemAdapter::getMemValue( $key );
 
 		if($data == null){
 			$data['timestamp'] = array($time);
