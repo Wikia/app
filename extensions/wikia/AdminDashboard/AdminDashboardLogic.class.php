@@ -41,6 +41,7 @@ class AdminDashboardLogic {
 			// NOTE: keep this list in alphabetical order
 			$exclusionList = array(
 				"AdSS",
+				"ApiExplorer",
 				"Connect",
 				"Contact",
 				"Contributions",
