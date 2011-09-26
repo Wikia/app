@@ -140,12 +140,10 @@ AdDriver.getNumCall = function(storageName, slotname) {
 			storageNum = AdDriver.getNumCallFromStorageContents(numCallStorage, slotname);
 		}
 		
-		if (window.wgAdDriverUseCookie) {
-			numCallStorage = $.cookies.get(storageName);
-			cookieNum = AdDriver.getNumCallFromStorageContents(numCallStorage, slotname);
-		}
+		numCallStorage = $.cookies.get(storageName);
+		cookieNum = AdDriver.getNumCallFromStorageContents(numCallStorage, slotname);
 		
-		if (window.wgAdDriverUseExpiryStorage && window.wgAdDriverUseCookie) {
+		if (window.wgAdDriverUseExpiryStorage) {
 			// compare and report error if they're not equal
 			if (storageNum != cookieNum) {
 				Liftium.trackEvent(Liftium.buildTrackUrl(["error", "numcalloutofsync", storageName, slotname]));
@@ -212,7 +210,6 @@ AdDriver.incrementNumCall = function(storageName, slotname) {
 		$.expiryStorage.set(storageName, $.toJSON(newSlotnameObjs), window.wgAdDriverCookieLifetime*3600000);	// wgAdDriverCookieLifetime expressed in hours
 	}
 	
-	if (window.wgAdDriverUseCookie) {
 		newSlotnameObjs = new Array();
 		slotnameInStorage = false;
 
@@ -233,7 +230,6 @@ AdDriver.incrementNumCall = function(storageName, slotname) {
 
 		var cookieOptions = {hoursToLive: window.wgAdDriverCookieLifetime, path: wgCookiePath};	// do not set cookie domain
 		$.cookies.set(storageName, $.toJSON(newSlotnameObjs), cookieOptions);
-	}
 
 	return window.wgAdDriverUseExpiryStorage ? numInStorage : numInCookie;
 }
@@ -278,12 +274,10 @@ AdDriver.isLastDARTCallNoAd = function(slotname) {
 			storageValue = AdDriver.getLastDARTCallNoAdFromStorageContents(lastDARTCallNoAdStorage, slotname);
 		}
 		
-		if (window.wgAdDriverUseCookie) {
 			var lastDARTCallNoAdCookie = $.cookies.get(AdDriver.storageNameLastDARTCallNoAd);
 			cookieValue = AdDriver.getLastDARTCallNoAdFromStorageContents(lastDARTCallNoAdCookie, slotname);
-		}
 
-		if (window.wgAdDriverUseExpiryStorage && window.wgAdDriverUseCookie) {
+		if (window.wgAdDriverUseExpiryStorage) {
 			if (storageValue != cookieValue) {
 				Liftium.trackEvent(Liftium.buildTrackUrl(["error", "lastdartcallnoadoutofsync", slotname]));
 			}
@@ -340,7 +334,6 @@ AdDriver.setLastDARTCallNoAd = function(slotname, value) {
 		}
 	}
 
-	if (window.wgAdDriverUseCookie) {
 		var newSlotnameTimestamps = new Array();
 		var slotnameInStorage = false;
 		try {
@@ -361,7 +354,6 @@ AdDriver.setLastDARTCallNoAd = function(slotname, value) {
 			var cookieOptions = {hoursToLive: window.wgAdDriverCookieLifetime, path: wgCookiePath};	// do not set cookie domain
 			$.cookies.set(AdDriver.storageNameLastDARTCallNoAd, $.toJSON(newSlotnameTimestamps), cookieOptions);
 		}
-	}
 
 	return value;
 }
