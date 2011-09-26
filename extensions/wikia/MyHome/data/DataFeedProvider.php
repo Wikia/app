@@ -231,7 +231,7 @@ class DataFeedProvider {
 			if ($title && $title->exists()) {
 				if ($title->isRedirect()) {
 					if ($this->proxyType == self::WL) {
-						$item = $this->filterRedirect($res, $title);
+						$this->filterRedirect($res, $title);
 					}
 				} else {
 					$res['rc_params'] = MyHome::unpackData($res['rc_params']);
@@ -281,14 +281,14 @@ class DataFeedProvider {
 	private function filterRedirect($res, $title) {
 		wfProfileIn(__METHOD__);
 		$article = new Article($title);
-		$ret = $this->add(array('type' => 'redirect',
+		$this->add(array('type' => 'redirect',
 								'title' => $res['title'],
 								'url' => $title->getLocalUrl(),
 								'redir_title' => $article->getRedirectTarget()->getPrefixedText(),
 								'redir_url' => $article->getRedirectTarget()->getLocalUrl()
 								), $res);
 		wfProfileOut(__METHOD__);
-		return $ret;
+		return true;
 	}
 
 	private function filterEdit($res, $title) {
@@ -335,9 +335,9 @@ class DataFeedProvider {
 		}
 
 		if (count($item) > 1) {
-			$ret = $this->add($item, $res);
+			$this->add($item, $res);
 			wfProfileOut(__METHOD__);
-			return $ret;
+			return true;
 		}
 		wfProfileOut(__METHOD__);
 
@@ -412,9 +412,9 @@ class DataFeedProvider {
 			if ($res['comment'] != '') {
 				$item['comment'] = $res['comment'];
 			}
-			$ret = $this->add($item, $res);
+			$this->add($item, $res);
 			wfProfileOut(__METHOD__);
-			return $ret;
+			return true;
 		}
 		wfProfileOut(__METHOD__);
 
@@ -446,7 +446,7 @@ class DataFeedProvider {
 					return;
 				}
 
-				$ret = $this->add(array('type' => 'move',
+				$this->add(array('type' => 'move',
 										'to_title' => $newTitle->getPrefixedText(),
 										'to_url' => $newTitle->getLocalUrl(),
 										'title' => $oldTitle->getPrefixedText(),
@@ -455,7 +455,7 @@ class DataFeedProvider {
 										),
 										$res);
 				wfProfileOut(__METHOD__);
-				return $ret;
+				return true;
 			}
 
 		}
@@ -463,11 +463,11 @@ class DataFeedProvider {
 		if ($this->proxyType == self::WL) {
 
 			if ($res['logtype'] == 'delete') {
-				$ret = $this->add(array('type' => 'delete',
+				$this->add(array('type' => 'delete',
 										'title' => $res['title']),
 										$res);
 				wfProfileOut(__METHOD__);
-				return $ret;
+				return true;
 
 			} else if ($res['logtype'] == 'upload') {
 
@@ -475,14 +475,14 @@ class DataFeedProvider {
 				if ($title && $title->exists()) {
 					$file = wfFindFile($title);
 					if ($file) {
-						$ret = $this->add(array('type' => 'upload',
+						$this->add(array('type' => 'upload',
 												'title' => $title->getPrefixedText(),
 												'url' => $title->getLocalUrl(),
 												'thumbnail' => $file->getThumbnail(self::UPLOAD_THUMB_WIDTH)->toHtml()
 												),
 												$res);
 						wfProfileOut(__METHOD__);
-						return $ret;
+						return true;
 					}
 				}
 

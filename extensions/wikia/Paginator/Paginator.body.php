@@ -53,7 +53,7 @@ class Paginator extends Service{
 
 		$this->enableCache = ( !empty( $bCach ) && !empty( $sCacheKey ) );
 		$this->cacheKey = $sCacheKey;
-		$this->setConfig( $aConfig, $aData );
+		$this->setConfig( $aConfig );
 		$this->paginate( $aData );
 	}
 

@@ -680,7 +680,7 @@ class LookupContribsCore {
 	}
 
 	/* a customized version of makeKnownLinkObj - hardened'n'modified for all those non-standard wikia out there */
-	private function produceLink ($nt, $text = '', $query = '', $url = '', $sk, $wiki_meta, $namespace, $article_id) {
+	private function produceLink ($nt, $text, $query, $url, $sk, $wiki_meta, $namespace, $article_id) {
 		global $wgContLang, $wgOut, $wgMetaNamespace ;
 
 		$str = $nt->escapeLocalURL ($query) ;
