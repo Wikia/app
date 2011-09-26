@@ -1,7 +1,7 @@
 WikiaWideTables = {
 	settings: {
 		article: $("#WikiaArticle"),
-		tables: new Array(),
+		tables: [],
 		popouts: null
 	},
 
