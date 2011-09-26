@@ -14,11 +14,11 @@ class WikiaSignupSpecialController extends WikiaSpecialPageController {
 	}
 	
 	public function init() {
-		$this->response->addAsset('extensions/wikia/WikiaSignup/js/WikiaSignup.js');
+		
 	}
 	
 	public function index() {
-		
+		$this->response->addAsset('extensions/wikia/WikiaSignup/js/WikiaSignup.js');
 	}
 	
 }
