@@ -126,13 +126,13 @@ class ChatAjax {
 		
 	static public function getPrivateRoomID() {
 		global $wgRequest;
-		$users = explode( ',', $wgRequest->getVal('users'));
-		
-		//TODO: change this
+
+		// TODO: change this
 		$roomName = 'private room name';
 		$roomTopic = 'private room topic';
-		
-		$roomId = NodeApiClient::getDefaultRoomId($roomName, $roomTopic, 'private', $wgRequest->getVal('users') );
+
+		$users = explode( ',', $wgRequest->getVal('users'));
+		$roomId = NodeApiClient::getDefaultRoomId($roomName, $roomTopic, 'private', $users );
 		
 		return array("id" => $roomId);
 	} 
