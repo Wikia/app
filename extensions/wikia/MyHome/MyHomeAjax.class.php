@@ -72,15 +72,7 @@ class MyHomeAjax {
 		$maxWidth = $wgRequest->getInt('maxwidth', 500) - 20;
 		$maxHeight = $wgRequest->getInt('maxheight', 300) - 75;
 
-		// get the correct revision of file
-		$timestamp = $wgRequest->getInt('timestamp', 0);
-
-		if ($timestamp == 0) {
-			$image = wfFindFile($wgTitle);
-		}
-		else {
-			$image = FeedProvider::getFile($wgTitle, $timestamp);
-		}
+		$image = wfFindFile($wgTitle);
 
 		if (empty($image)) {
 			wfProfileOut(__METHOD__);

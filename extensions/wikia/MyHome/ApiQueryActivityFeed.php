@@ -14,26 +14,27 @@ class ApiQueryActivityFeed extends ApiQueryBase {
 	public function execute() {
 		$params = $this->extractRequestParams();
 
-$parameters = ActivityFeedHelper::parseParameters($attributes);
+		$attributes = '';
+		$parameters = ActivityFeedHelper::parseParameters($attributes);
 
-$removeDuplicatesType = in_array('shortlist', $parameters['flags']) ? 1 : 0; //remove duplicates using only title for shortlist
+		$removeDuplicatesType = in_array('shortlist', $parameters['flags']) ? 1 : 0; //remove duplicates using only title for shortlist
 
-$feedProxy = new ActivityFeedAPIProxy($parameters['includeNamespaces']);
-$feedRenderer = new ActivityFeedRenderer();
+		$feedProxy = new ActivityFeedAPIProxy($parameters['includeNamespaces']);
+		$feedRenderer = new ActivityFeedRenderer();
 
-$feedProvider = new DataFeedProvider($feedProxy, $removeDuplicatesType, $parameters);
-$feedData = $feedProvider->get($parameters['maxElements']);
+		$feedProvider = new DataFeedProvider($feedProxy, $removeDuplicatesType, $parameters);
+		$feedData = $feedProvider->get($parameters['maxElements']);
 
-#echo "<pre>";
-#print_r($feedData);
-#die;
+		#echo "<pre>";
+		#print_r($feedData);
+		#die;
 
-		$data = array();
-		foreach ($feedData["results"] as $id => $row) {
-			$data[] = $this->rewriteRow($row);
-		}
-#print_r($data);
-#die;
+				$data = array();
+				foreach ($feedData["results"] as $id => $row) {
+					$data[] = $this->rewriteRow($row);
+				}
+		#print_r($data);
+		#die;
 
 		$this->getResult()->setIndexedTagName($data, "af");
 		$this->getResult()->addValue("query", $this->getModuleName(), $data);
