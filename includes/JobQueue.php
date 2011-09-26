@@ -276,6 +276,14 @@ abstract class Job {
 	}
 
 	protected function insertFields() {
+		/**
+		 * @author Piotr Molski (moli)
+		 * trap for BugId: 11897
+		 */		
+		if ( is_null( $this->title ) ) {
+			$log = "MOLI JOB@invalid title: " . $this->command . " . params: " . print_r( $this->params, true ) . "\n";
+			error_log( $log );
+		}
 		$dbw = wfGetDB( DB_MASTER );
 		return array(
 			'job_id' => $dbw->nextSequenceValue( 'job_job_id_seq' ),
