@@ -29,14 +29,6 @@ $wgExtraNamespaces[ NS_BLOG_ARTICLE_TALK ] = "User_blog_comment";
 $wgExtraNamespaces[ NS_BLOG_LISTING ] = "Blog";
 $wgExtraNamespaces[ NS_BLOG_LISTING_TALK ] = "Blog_talk";
 
-if( !empty( $wgEnableBlogsAsClassifieds ) ) {
-	// Gil's hack
-	$wgExtraNamespaces[ NS_BLOG_ARTICLE ] = "Classifieds";
-	$wgExtraNamespaces[ NS_BLOG_ARTICLE_TALK ] = "Classifieds_comment";
-	$wgExtraNamespaces[ NS_BLOG_LISTING ] = "Classifieds_list";
-	$wgExtraNamespaces[ NS_BLOG_LISTING_TALK ] = "Classifieds_list_talk";
-}
-
 $wgNamespacesWithSubpages[ NS_BLOG_ARTICLE ] = true;
 $wgNamespacesWithSubpages[ NS_BLOG_ARTICLE_TALK ] = true;
 $wgNamespacesWithSubpages[ NS_BLOG_LISTING ] = true;
