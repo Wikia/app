@@ -17,7 +17,7 @@ define.call(exports, function(){
 		},
 		
 		get: function(image) {
-			return  this.images[image];
+			return  images[image];
 		}
 	};
 });
