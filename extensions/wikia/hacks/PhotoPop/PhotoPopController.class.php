@@ -9,7 +9,7 @@ class PhotoPopController extends WikiaController {
 	public function index() {
 		global $wgExtensionsPath;
 		
-		$this->requireJs = AssetsManager::getInstance()->getOneCommonURL("extensions/wikia/hacks/PhotoPop/lib/require.js");
+		$this->requireJs = AssetsManager::getInstance()->getOneCommonURL("extensions/wikia/hacks/PhotoPop/shared/lib/require.js");
 		$this->dataMain = "{$wgExtensionsPath}/wikia/hacks/PhotoPop/js/main";
 		$this->cssLink = AssetsManager::getInstance()->getOneCommonURL("extensions/wikia/hacks/PhotoPop/css/homescreen.css");
 	}
