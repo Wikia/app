@@ -876,12 +876,7 @@ jQuery.nirvana.getJson = function(controller, method, data, callback) {
 //beacon_id cookie
 $(function() {
 	if ( window.beacon_id ) {
-		var tmp_beacon_id = $.cookies.get( 'wikia_beacon_id', { path: wgCookiePath, domain: wgCookieDomain });
-		if( !tmp_beacon_id ){
-			$.cookies.set( 'wikia_beacon_id', window.beacon_id, { path: wgCookiePath, domain: wgCookieDomain });
-		} else {
-			window.beacon_id = tmp_beacon_id;
-		}
+		$.cookies.set( 'wikia_beacon_id', window.beacon_id, { path: wgCookiePath, domain: wgCookieDomain });
 	}
 });
 
