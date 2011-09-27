@@ -67,8 +67,8 @@
 					<li class="twitter">
 						<a href="<?= $user['twitter'] ?>" rel="nofollow">
 							<img src="<?= $wgBlankImgUrl ?>" class="twitter icon">
+							<?= wfMsg('user-identity-box-my-twitter' ); ?>
 						</a>
-						<?= wfMsg('user-identity-box-my-twitter', array( '$1' => $user['twitter'] )); ?>
 					</li>
 				<? else: ?>
 					<? if( $user['showZeroStates'] && ($isUserPageOwner || $canEditProfile) ): ?>
@@ -83,8 +83,8 @@
 					<li class="website">
 						<a href="<?= $user['website'] ?>" rel="nofollow">
 							<img src="<?= $wgBlankImgUrl ?>" class="website icon">
+							<?= wfMsg('user-identity-box-my-website' ); ?>
 						</a>
-						<?= wfMsg('user-identity-box-my-website', array( '$1' => $user['website'] )); ?>
 					</li>
 				<? else: ?>
 					<? if( $user['showZeroStates'] && ($isUserPageOwner || $canEditProfile) ): ?>
@@ -99,8 +99,8 @@
 					<li class="facebook">
 						<a href="<?= $user['fbPage'] ?>" rel="nofollow">
 							<img src="<?= $wgBlankImgUrl ?>" class="facebook icon">
+							<?= wfMsg('user-identity-box-my-fb-page' ); ?>
 						</a>
-						<?= wfMsg('user-identity-box-my-fb-page', array( '$1' => $user['fbPage'] )); ?>
 					</li>
 				<? else: ?>
 					<? if( $user['showZeroStates'] && ($isUserPageOwner || $canEditProfile) ): ?>
