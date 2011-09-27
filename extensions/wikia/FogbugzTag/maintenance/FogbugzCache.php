@@ -147,7 +147,7 @@ else {
 		
 		$namesTable = array(); 
 		foreach ( $operations as &$operation ) {
-			foreach ( $operation as $key => &$case ) {
+			foreach ( $operation as &$case ) {
 				$case['sTags'] = $case['tags'];
 				unset( $case['tags'] );
 				changeIdOnName( $case, "PersonOpenedBy", $myFBService, $namesTable );
