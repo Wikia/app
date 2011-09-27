@@ -193,7 +193,7 @@ class ImageOneBox {
 
 				// Take only the first 4 pages
 				$num_pages = 0;
-				$first_title;
+				$first_title = null;
 				foreach ($info['pages'] as $page_id) {
 					$title = Title::newFromID($page_id);
 					if ($num_pages == 0)
