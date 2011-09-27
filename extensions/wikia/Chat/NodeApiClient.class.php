@@ -57,9 +57,7 @@ class NodeApiClient {
 		global $wgCityId, $wgSitename, $wgServer, $wgArticlePath, $wgMemc;
 		wfProfileIn(__METHOD__);
 
-		$memKey = wfMemcKey("NodeApiClient::getDefaultRoomId", $roomName, $roomType, implode("|", $roomUsers));
-		$roomData = $wgMemc->get($memKey);
-		if(empty($roomData)){
+		if(empty($roomData)){ // TODO: FIXME: What is this testing? Isn't it ALWAYS empty? - SWC 20110905
 			// Add some extra data that the server will want in order to store it in the room's hash.
 			$extraData = array(
 				'wgServer' => $wgServer,
@@ -79,8 +77,6 @@ class NodeApiClient {
 			));
 			
 			$roomData = json_decode($roomJson);
-
-			$wgMemc->set($memKey, $roomData, 60 * 60 * 24);
 		}
 
 		if(isset($roomData->{'roomId'})){
