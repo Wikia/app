@@ -35,7 +35,7 @@ abstract class WikiaValidator {
 		return null;
 	}
 
-	abstract protected function configMsgs( array $msgs = array() ) {
+	protected function configMsgs( array $msgs = array() ) {
 		return null;
 	}
 
