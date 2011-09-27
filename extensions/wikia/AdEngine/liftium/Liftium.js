@@ -1327,6 +1327,13 @@ Liftium.init = function () {
 	}
 
 
+	if (Liftium.e(beaconCookie)) {
+		Liftium.d('beaconCookie @init is empty', 3);
+		Liftium.trackEvent3(Liftium.buildTrackUrl(["error", "beaconCookie", "init"]), '100%');
+	} else {
+		Liftium.d('beaconCookie @init is ' + beaconCookie, 7);
+	}
+
 	if (typeof inGroup != 'undefined') {
 	if (inGroup(groups.N)) {
 		Liftium.trackEvent3(Liftium.buildTrackUrl(["init"]), {profile:'UA-17475676-15', sample:100});
@@ -1952,6 +1959,14 @@ Liftium.sendBeacon = function (){
 	Liftium.d ("Liftium done, beacon sent");
 
 	// Track the beacons with GA
+
+	if (Liftium.e(beaconCookie)) {
+		Liftium.d('beaconCookie @beacon is empty', 3);
+		Liftium.trackEvent3(Liftium.buildTrackUrl(["error", "beaconCookie", "beacon"]), '100%');
+	} else {
+		Liftium.d('beaconCookie @beacon is ' + beaconCookie, 7);
+	}
+
 	if (typeof inGroup != 'undefined') {
 	if (inGroup(groups.N)) {
 		Liftium.trackEvent3(Liftium.buildTrackUrl(["beacon"]), {profile:'UA-17475676-14', sample:100});
