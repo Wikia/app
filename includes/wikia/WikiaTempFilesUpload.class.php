@@ -1,11 +1,14 @@
 <?php
 
 /**
- * This class handles images with temp store 
+ * This class handles images with temp store
  *
  **/
 
 class WikiaTempFilesUpload {
+
+	const USER_PERMISSION_ERROR = -1;
+
 	/**
 	 * Upload given file into MW
 	 */
@@ -146,7 +149,7 @@ class WikiaTempFilesUpload {
 		wfProfileOut(__METHOD__);
 		return $path;
 	}
-	
+
 	/**
 	 * Perform image name check
 	 */
@@ -176,7 +179,7 @@ class WikiaTempFilesUpload {
 			return $ret;
 		}
 	}
-	
+
 	public function log($method, $msg) {
 		wfDebug("{$method}: {$msg}\n");
 	}
