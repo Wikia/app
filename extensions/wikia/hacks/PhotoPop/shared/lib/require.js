@@ -1779,7 +1779,8 @@ var requirejs, require, define;
             } else {
                 node.addEventListener("load", callback, false);
             }
-            node.src = url;
+            
+            node.src = /** Wikia change start **/(window.requireJsGetUrl) ? window.requireJsGetUrl(url) :/** Wikia change end **/ url;
 
             //For some cache cases in IE 6-8, the script executes before the end
             //of the appendChild execution, so to tie an anonymous define
