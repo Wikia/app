@@ -1,27 +1,37 @@
 var exports = exports || {};
 
-define.call(exports, {
+define.call(exports, function(){
 	
-	sounds: {},
+	var sounds = {},
+	mute= false,
+	titanium = typeof Titanium != 'undefined';
 	
-	mute: false,
-	
-	init: function(configSounds) {
-		var Titanium = Titanium || undefined,
-		path = ((document && !Titanium) ? "extensions/wikia/hacks/PhotoPop/" : '') + "shared/audio/";
+	return {
+		init: function(configSounds){
+			var prefix = ((titanium) ? '' : "extensions/wikia/hacks/PhotoPop/") + "shared/audio/",
+			path;
 			
-		this.sounds = {
-			"win": new Audio(path + configSounds.win + ".mp3" ),
-			"fail": new Audio(path + configSounds.fail + ".wav" ),
-			"pop": new Audio(path + configSounds.pop + ".wav" ),
-			"timeEnd": new Audio(path + configSounds.timeEnd + ".wav" ),
-			"wrongAnswer": new Audio(path + configSounds.wrongAnswer + ".wav" )
+			for(var p in configSounds){
+				path = prefix + configSounds[p] + ".wav";
+				sounds[p] = (titanium) ? path : new Audio(path);
+			}
+		},
+		
+		play: function(sound) {
+			if(!mute){
+				if(titanium)
+					Ti.App.fireEvent('soundServer:play', {sound: sounds[sound]});
+				else
+					sounds[sound].play();
+			}
+		},
+		
+		setMute: function(flag){
+			mute = flag;
+		},
+		
+		getMute: function(){
+			return mute;
 		}
-	},
-	
-	play: function(sound) {
-		if(!this.mute) {
-			this.sounds[sound].play();		
-		}
-	}
+	};
 });
