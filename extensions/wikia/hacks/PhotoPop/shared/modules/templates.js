@@ -10,7 +10,7 @@ define.call(exports, {
 				</div>\
 			</div>\
 			<div id='playWrapper'>\
-				<a href='{{#url}}playButtonUrl{{/url}}'><img src='{{#image}}buttonSrc_play{{/image}}'/></a>\
+				<div><img src='{{#image}}buttonSrc_play{{/image}}'/></div>\
 			</div>\
 			<div id='buttonWrapper'>\
 				<div id='button_scores'>\
@@ -28,18 +28,18 @@ define.call(exports, {
 	
 	selectorScreen: "<div id='sliderWrapper'>\
 				<div id='closeButton'>\
-					<a href='{{backHomeUrl}}'><img src='{{#image}}buttonSrc{{/image}}'/></a>\
+					<img src='{{#image}}buttonSrc{{/image}}'/>\
 				</div>\
-				<div class='sliderContent' data-scroll='x'>\
+				<ul class='sliderContent' data-scroll='x'>\
 					{{#games}}\
-						<div class='gameIcon' data-gameurl='{{gameUrl}}'>\
+						<li class='gameIcon' data-gameurl='{{gameUrl}}'>\
 							<img src ='{{#image}}gameicon_{{name}}{{/image}}'><br/>\
 							<div class='gameName'>\
 								{{gameName}}\
 							</div>\
-						</div>\
+						</li>\
 					{{/games}}\
-				</div>\
+				</ul>\
 			</div>"
 
 });
