@@ -27,9 +27,17 @@ abstract class WikiaValidator {
 		}
 	}
 
-	abstract public function isValidInternal($value = null);
-	abstract protected function config( array $options = array() );
-	abstract protected function configMsgs( array $msgs = array() );
+	public function isValidInternal($value = null) {
+		return false;
+	}
+
+	protected function config( array $options = array() ) {
+		return null;
+	}
+
+	abstract protected function configMsgs( array $msgs = array() ) {
+		return null;
+	}
 
 	public function isValid($value = null) {
 		if(!is_array($value) && !$this->getOption("required") && strlen($value) == 0 ) {
@@ -79,13 +87,13 @@ abstract class WikiaValidator {
 
 	protected function mwMsg($errorCode) {
 		$msg = wfMsg( $this->getMsg($errorCode) );
-		 
+
 		$options = $this->options;
 		$options['value'] = $this->value;
-		
+
 		foreach ($this->options as $key => $value) {
 			if( is_string($value) || is_numeric($value) ) {
-				$msg = str_replace( '$' + $key, $value, $msg );	
+				$msg = str_replace( '$' + $key, $value, $msg );
 			}
 		}
 
@@ -119,7 +127,7 @@ abstract class WikiaValidator {
 
 	public function arrayMergeHelper( $array1, $array2 ) {
 		$plain = true;
-		
+
 		foreach ($array1 as $v)
 		if (is_array($v)) {
 			$plain = false;
@@ -135,7 +143,7 @@ abstract class WikiaValidator {
 		} else {
 			$keys = array_intersect( array_keys($array1), array_keys($array2) );
 			foreach ($keys as $key) {
-				$array1[$key] = $this->mergeErrors((array)$array1[$key],(array)$array2[$key]);
+				$array1[$key] = array_merge((array)$array1[$key],(array)$array2[$key]);
 				unset($array2[$key]);
 			}
 			foreach ($array2 as $k => $v) {
