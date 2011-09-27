@@ -80,9 +80,11 @@
 					<label><?= wfMsg('user-identity-box-about-birthday'); ?></label>
 					<select id="userBDayMonth" name="month">
 						<option value="0">--</option>
-						<? foreach($months as $month): ?>
-							<option value="<?= $month['no']; ?>" <? if( isset($user['birthday']['month']) && $user['birthday']['month'] === $month['no'] ):?>selected="selected"<? endif; ?>><?= $month['month']; ?></option>
-						<? endforeach; ?>
+						<?
+						$selectedMonth = isset($user['birthday']['month'] ) ? $user['birthday']['month'] : 0;
+						for( $i = 1; $i < 13; $i++ )
+							$options[] = Xml::option( $wgLang->getMonthName( $i ), $i, $selectedMonth === $i );
+						?>
 					</select>
 					<select id="userBDayDay" name="day">
 						<option value="0">--</option>
