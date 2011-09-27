@@ -30,16 +30,16 @@ define.call(exports, {
 				<div id='closeButton'>\
 					<img src='{{#image}}buttonSrc{{/image}}'/>\
 				</div>\
-				<ul class='sliderContent' data-scroll='x'>\
-					{{#games}}\
+				<div class='sliderContent' data-scroll='x'>\
+					<ul>{{#games}}\
 						<li class='gameIcon' data-gameurl='{{gameUrl}}'>\
 							<img src ='{{#image}}gameicon_{{name}}{{/image}}'><br/>\
 							<div class='gameName'>\
 								{{gameName}}\
 							</div>\
 						</li>\
-					{{/games}}\
-				</ul>\
+					{{/games}}</ul> \
+				</div>\
 			</div>"
 
 });
