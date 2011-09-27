@@ -138,7 +138,7 @@
 								</label>
 								<?php } ?>
 							</div>
-							<label <?php if($isLoggedIn){ ?>class="wpSummary_loggedIn"<?php } ?> for="wpSummary">Edit Summary</label>
+							<label <?php if($isLoggedIn){ ?>class="wpSummary_loggedIn"<?php } ?> for="wpSummary"><?= wfMsg('editpagelayout-edit-summary-label')?></label>
 							<div id="wpSummaryLabel">
 								<?= $summaryBox ?>
 							</div>

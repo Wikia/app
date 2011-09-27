@@ -22,6 +22,7 @@ $messages['en'] = array(
 	'editpagelayout-pageControls-back' => 'Back to editor',
 	'editpagelayout-pageControls-changes' => 'Changes',
 	'editpagelayout-blocked-user' => 'Your user name or IP address has been blocked',
+	'editpagelayout-edit-summary-label' => 'Edit Summary',
 
 	'wikia-editor-media-image' => 'Photo',
 	'wikia-editor-media-gallery' => 'Gallery',
@@ -1082,7 +1083,7 @@ $messages['nl'] = array(
 	'tog-forceeditsummary' => 'Een melding geven bij een lege bewerkingssamenvatting',
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel) (Nederlands (informeel))
  * @author MarkvA
  * @author Siebrand
  */
@@ -1095,7 +1096,7 @@ $messages['nl-informal'] = array(
 	'recreate-moveddeleted-warn-notice' => "'''Let op:''' Je maakt een pagina opnieuw aan die voorheen is verwijderd. [Meer info]",
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian (bokmål) (Norsk (bokmål))
  * @author Audun
  * @author Jon Harald Søby
  * @author Nghtwlkr
