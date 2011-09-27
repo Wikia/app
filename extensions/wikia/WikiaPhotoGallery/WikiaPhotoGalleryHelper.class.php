@@ -622,6 +622,7 @@ class WikiaPhotoGalleryHelper {
 		// render slider images
 		foreach($slider['images'] as &$image) {
 			$imageTitle = Title::newFromText($image['name'], NS_FILE);
+			$image['pageTitle'] = '';
 			$img = wfFindFile($imageTitle);
 
 			if ( is_object( $img ) && ( $imageTitle->getNamespace() == NS_FILE ) ) {
@@ -631,7 +632,7 @@ class WikiaPhotoGalleryHelper {
 					'h' => self::STRICT_IMG_HEIGHT_PREV)
 				);
 				$image['thumbnailBg'] = $is->getUrl($image['name'],  $img->getWidth(),  $img->getHeight());
-			} else {
+			} elseif ( is_object( $imageTitle ) ) {
 				$image[ 'pageTitle' ] = $imageTitle->getText();
 			}
 
