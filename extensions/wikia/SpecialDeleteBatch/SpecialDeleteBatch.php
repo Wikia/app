@@ -76,8 +76,8 @@ class DeleteBatchForm {
 	function deletebatchForm ( $par ) {
 		global $wgRequest ;
 		$this->mMode = $wgRequest->getVal( 'wpMode' ) ;
-		$this->mPage = $wgRequest->getVal( 'wpPage' ) ;	
-		$this->mReason = $wgRequest->getVal( 'wpReason' ) ;	
+		$this->mPage = $wgRequest->getVal( 'wpPage' ) ;
+		$this->mReason = $wgRequest->getVal( 'wpReason' ) ;
 		$this->mFile = $wgRequest->getFileName( 'wpFile' ) ;
 		$this->mFileTemp = $wgRequest->getFileTempName( 'wpFile' );
 	}
@@ -85,7 +85,7 @@ class DeleteBatchForm {
 	/* output */
 	function showForm ($err = '') {
 		global $wgOut, $wgUser, $wgRequest ;
-	
+
 		$token = htmlspecialchars( $wgUser->editToken() );
 		$titleObj = Title::makeTitle( NS_SPECIAL, 'deletebatch' );
 		$action = $titleObj->escapeLocalURL( "action=submit" ) ;
@@ -94,7 +94,7 @@ class DeleteBatchForm {
                         $wgOut->setSubtitle( wfMsgHtml( 'formerror' ) );
                         $wgOut->addHTML( "<p class='error'>{$err}</p>\n" );
                 }
-	
+
 		$wgOut->addWikiMsg( 'deletebatch_help' );
 
 		/* don't bother writing up former parameters if not error */
@@ -197,7 +197,7 @@ class DeleteBatchForm {
                         if ( !$wgUser->getID() ) {
                                 $wgUser->addToDatabase();
                         }
-		} 
+		}
 
 		/* todo run tests - run many tests */
 		$dbw =& wfGetDB( DB_MASTER );
@@ -212,17 +212,17 @@ class DeleteBatchForm {
 				   the rest is trash
 				*/
 				$arr = explode ("|",$line) ;
-				is_null($arr[1]) ? $reason = '' : $reason = $arr[1] ; 
-				$this->deletePage ($arr[0], $reason, $dbw, true, $linenum) ;					
+				is_null($arr[1]) ? $reason = '' : $reason = $arr[1] ;
+				$this->deletePage ($arr[0], $reason, $dbw, true, $linenum) ;
         		}
 //			$this->showForm ('') ;
 		} else {
                 	/* run through text and do all like it should be */
-			$lines = explode( "\n", $line );			
+			$lines = explode( "\n", $line );
 			foreach ($lines as $single_page) {
 				/* explode and give me a reason */
 				$page_data = explode ("|", trim ($single_page) ) ;
-				if (count($page_data) < 2) 
+				if (count($page_data) < 2)
 					$page_data[1] = '' ;
 				$result = $this->deletePage ($page_data[0], $page_data[1], $dbw, false, 0, $OldUser) ;
 			}
@@ -233,7 +233,7 @@ class DeleteBatchForm {
 			$wgUser = $OldUser ;
 		}
 
-		$sk = $wgUser->getSkin () ;	
+		$sk = $wgUser->getSkin () ;
 		$titleObj = Title::makeTitle( NS_SPECIAL, 'Deletebatch' );
 		$link_back = $sk->makeKnownLinkObj ($titleObj, '<b>here</b>') ;
 		$wgOut->addHtml ("<br/>".wfMsg('deletebatch_link_back')." ".$link_back.".") ;
@@ -244,18 +244,18 @@ class DeleteBatchForm {
 		@$mode String - singular/multi
 		@$linennum Integer - mostly for informational reasons
  */
-	function deletePage ($line, $reason = '', &$db, $multi = false, $linenum = 0, $user = null) {
+	function deletePage ($line, $reason, &$db, $multi = false, $linenum = 0, $user = null) {
 		global $wgOut, $wgUser ;
-		$page = Title::newFromText ($line);		
+		$page = Title::newFromText ($line);
         	if (is_null($page)) { /* invalid title? */
 		       	$wgOut->addWikiMsg( 'deletebatch_omitting_invalid', $line );
 			if (!$multi) {
 				if (!is_null($user)) {
 					$wgUser = $user ;
-				}				
+				}
 			}
 			return false;
-		}		
+		}
         	if (!$page->exists()) { /* no such page? */
                         $wgOut->addWikiMsg( 'deletebatch_omitting_nonexistant', $line );
 			if (!$multi) {
@@ -281,7 +281,7 @@ class DeleteBatchForm {
                 	$art = new Article ($page);
         	}
 
-		/* 	what is the generic reason for page deletion? 
+		/* 	what is the generic reason for page deletion?
                 	something about the content, I guess...
 		*/
         	$art->doDelete ($reason);
