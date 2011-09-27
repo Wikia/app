@@ -2,6 +2,9 @@
 #apEx{
 	display:none;
 }
+#apEx_intro{
+	margin-bottom:15px;
+}
 #apEx_loading{
 	display:none;
 }
@@ -26,14 +29,14 @@ dd.paramContent{ /* even with the rule above, this is still needed in order to h
 }
 
 .paramContent{
-	border-left: 2px solid #008;
-	border-right: 2px solid #008;
+	border-left: 2px solid #023c71;
+	border-right: 2px solid #023c71;
 }
 div.paramContent{ /* Top level*/
-	background-color: #bdf;
+	background-color: #d3eaff;
 }
 dd.paramContent{ /* per-module */
-	background-color:#bfd;
+	background-color:#c4e19f;
 }
 
 .collapsible h2, .collapsible h3{
@@ -41,7 +44,7 @@ dd.paramContent{ /* per-module */
 	margin:0px;
 	text-decoration:none;
 	cursor:pointer;
-	border:2px solid #008;
+	border:2px solid #023c71;
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
 	border-radius: 10px;
@@ -53,25 +56,19 @@ dd.paramContent{ /* per-module */
 }
 .collapsible.collapsed h2, .collapsible.collapsed h3, .paramContent{
 	/* Collapsed state for h2, h3 or expanded for content... show bottom border & rounded corners */
-	border-bottom:2px solid #008;
+	border-bottom:2px solid #023c71;
 	border-bottom-left-radius:10px;
 	border-bottom-right-radius:10px;
 }
 
 #apEx div.collapsible h2{
-	/* Pretty gradient background */
-	background-image: linear-gradient(bottom, rgb(10,74,143) 43%, rgb(52,112,217) 72%);
-	background-image: -o-linear-gradient(bottom, rgb(10,74,143) 43%, rgb(52,112,217) 72%);
-	background-image: -moz-linear-gradient(bottom, rgb(10,74,143) 43%, rgb(52,112,217) 72%);
-	background-image: -webkit-linear-gradient(bottom, rgb(10,74,143) 43%, rgb(52,112,217) 72%);
-	background-image: -ms-linear-gradient(bottom, rgb(10,74,143) 43%, rgb(52,112,217) 72%);
-	background-image: -webkit-gradient(
-			linear,
-			left bottom,
-			left top,
-			color-stop(0.43, rgb(10,74,143)),
-			color-stop(0.72, rgb(52,112,217))
-	);
+	/* Pretty gradient background for top-level button (blue) */
+	background-image: -ms-linear-gradient(top, #2C85D6 0%, #00396D 100%);
+	background-image: -moz-linear-gradient(top, #2C85D6 0%, #00396D 100%);
+	background-image: -o-linear-gradient(top, #2C85D6 0%, #00396D 100%);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #2C85D6), color-stop(1, #00396D));
+	background-image: -webkit-linear-gradient(top, #2C85D6 0%, #00396D 100%);
+	background-image: linear-gradient(top, #2C85D6 0%, #00396D 100%); 
 
 	color:white;
 }
@@ -83,23 +80,17 @@ dd.paramContent{ /* per-module */
 
 /** Second-level of style... the dts **/
 #apEx dt h3, #apEx dt dd{
-	border-color: #080;
+	border-color: #567c26;
 	box-shadow: 4px 4px 4px #888888;
 }
 #apEx dt h3{
 	padding:5px;
 
-	background-image: linear-gradient(bottom, rgb(40,230,30) 48%, rgb(133,248,156) 74%);
-	background-image: -o-linear-gradient(bottom, rgb(40,230,30) 48%, rgb(133,248,156) 74%);
-	background-image: -moz-linear-gradient(bottom, rgb(40,230,30) 48%, rgb(133,248,156) 74%);
-	background-image: -webkit-linear-gradient(bottom, rgb(40,230,30) 48%, rgb(133,248,156) 74%);
-	background-image: -ms-linear-gradient(bottom, rgb(40,230,30) 48%, rgb(133,248,156) 74%);
-
-	background-image: -webkit-gradient(
-		linear,
-		left bottom,
-		left top,
-		color-stop(0.48, rgb(40,230,30)),
-		color-stop(0.74, rgb(133,248,156))
-	);
+	/* Pretty gradient for module-level buttons (green) */
+	background-image: -ms-linear-gradient(top, #D7F3B3 0%, #6DA822 100%);
+	background-image: -moz-linear-gradient(top, #D7F3B3 0%, #6DA822 100%);
+	background-image: -o-linear-gradient(top, #D7F3B3 0%, #6DA822 100%);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #D7F3B3), color-stop(1, #6DA822));
+	background-image: -webkit-linear-gradient(top, #D7F3B3 0%, #6DA822 100%);
+	background-image: linear-gradient(top, #D7F3B3 0%, #6DA822 100%);
 }
