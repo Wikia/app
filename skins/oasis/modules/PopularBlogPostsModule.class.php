@@ -5,7 +5,7 @@ class PopularBlogPostsModule extends Module {
 
 	public function executeIndex() {
 		wfProfileIn(__METHOD__);
-		global $wgParser, $wgMemc, $wgLang, $wgPopularBlogPostsOnlyTitles;
+		global $wgParser, $wgMemc, $wgLang;
 
 		$mcKey = wfMemcKey( "OasisPopularBlogPosts", $wgLang->getCode() );
 		$this->body = $wgMemc->get($mcKey);
@@ -17,6 +17,7 @@ class PopularBlogPostsModule extends Module {
 			$time = date('Ymd', strtotime("-1 week")) . '000000'; // 7 days ago
 //			$time = '20091212000000';  // use this value for testing if there are no recent posts
 			$params = array (
+					"summary" => true,
 					"paging" => false,
 					"create_timestamp" => $time,
 					"count" => 50,
@@ -24,9 +25,6 @@ class PopularBlogPostsModule extends Module {
 					"order" => "comments"
 	//				"style" => "add additionalClass if necessary"
 			);
-			if( empty( $wgPopularBlogPostsOnlyTitles ) ) {
-				$params["summary"] = true;
-			}
 
 			$this->body = BlogTemplateClass::parseTag($input, $params, $wgParser);
 			if (substr($this->body, 0, 9) == '<p><br />') {

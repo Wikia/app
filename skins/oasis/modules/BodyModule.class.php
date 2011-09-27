@@ -151,7 +151,7 @@ class BodyModule extends Module {
 			$wgEnableWikiaCommentsExt, $wgExtraNamespaces, $wgExtraNamespacesLocal,
 			$wgEnableCorporatePageExt, $wgEnableSpotlightsV2_Rail,
 			$wgEnableUserProfilePagesExt, $wgABTests, $wgEnableWikiAnswers, $wgEnableWikiReviews,
-			$wgEnableBlogsAsClassifieds, $wgSalesTitles, $wgEnableHuluVideoPanel,
+			$wgSalesTitles, $wgEnableHuluVideoPanel,
 			$wgEnableGamingCalendarExt, $wgEnableUserProfilePagesV3;
 
 		if ($this->wgSuppressRail) {
@@ -281,8 +281,7 @@ class BodyModule extends Module {
 			}
 		}
 
-		if ( self::isBlogPost() || self::isBlogListing()
-		  || ( !empty( $wgEnableBlogsAsClassifieds ) && $wgTitle->isContentPage() ) ) {
+		if (self::isBlogPost() || self::isBlogListing()) {
 			$railModuleList[1250] = array('PopularBlogPosts', 'Index', null);
 			if($wgEnableSpotlightsV2_Rail) {
 				$railModuleList[1150] = array('Spotlights', 'Index', $spotlightsParams);

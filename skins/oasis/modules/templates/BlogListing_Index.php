@@ -1,12 +1,7 @@
 <section class="<?= $blogListingClass ?>">
 	<?php // only display header block for the BlogListingBox
-	if (strpos($blogListingClass, 'WikiaBlogListingBox') !== false) {
-		$q = null;
-		if( !empty( $GLOBALS['wgCreateBlogPagePreload'] ) ) {
-			$q = 'preload='.$GLOBALS['wgCreateBlogPagePreload'];
-		}
-	?>
-	<?= Wikia::specialPageLink('CreateBlogPage', 'blog-create-post-label', 'wikia-button', 'blank.gif', 'blog-create-post-label', 'sprite blog', $q) ?>
+	if (strpos($blogListingClass, 'WikiaBlogListingBox') !== false) { ?>
+	<?= Wikia::specialPageLink('CreateBlogPage', 'blog-create-post-label', 'wikia-button', 'blank.gif', 'blog-create-post-label', 'sprite blog') ?>
 	<h3>
 		<?= $title ?> 
 	</h3>
