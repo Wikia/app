@@ -749,52 +749,12 @@ class UserProfilePageController extends WikiaController {
 		$this->setVal( 'fbConnectButton', '<fb:login-button perms="user_about_me,user_birthday,user_location,user_work_history,user_website" onlogin="UserProfilePage.fbConnect();">'.$this->app->wf->Msg('user-identity-box-connect-to-fb').'</fb:login-button>' );
 
 		if( !empty($userData['birthday']['month']) ) {
-			$this->setVal('days', $this->getDays($userData['birthday']['month']));
+			$this->setVal('days', cal_days_in_month( CAL_GREGORIAN, $userData['birthday']['month'], 2000 /* leap year */ ) );
 		}
 
 		$this->app->wf->ProfileOut( __METHOD__ );
 	}
-
-	/**
-	 * Gets an multi-demensional array of months
-	 */
-	private function getMonths() {
-		return array(
-			array('no' => '01', 'month' => $this->wf->Msg('user-identity-box-about-date-01')),
-			array('no' => '02', 'month' => $this->wf->Msg('user-identity-box-about-date-02')),
-			array('no' => '03', 'month' => $this->wf->Msg('user-identity-box-about-date-03')),
-			array('no' => '04', 'month' => $this->wf->Msg('user-identity-box-about-date-04')),
-			array('no' => '05', 'month' => $this->wf->Msg('user-identity-box-about-date-05')),
-			array('no' => '06', 'month' => $this->wf->Msg('user-identity-box-about-date-06')),
-			array('no' => '07', 'month' => $this->wf->Msg('user-identity-box-about-date-07')),
-			array('no' => '08', 'month' => $this->wf->Msg('user-identity-box-about-date-08')),
-			array('no' => '09', 'month' => $this->wf->Msg('user-identity-box-about-date-09')),
-			array('no' => '10', 'month' => $this->wf->Msg('user-identity-box-about-date-10')),
-			array('no' => '11', 'month' => $this->wf->Msg('user-identity-box-about-date-11')),
-			array('no' => '12', 'month' => $this->wf->Msg('user-identity-box-about-date-12')),
-		);
-	}
-
-	/**
-	 * @brief Returns amount of days in given month
-	 *
-	 * @param integer $month number of month in year (1 = Jan, 2 = Feb...)
-	 *
-	 * @return integer 0 if input was invalid (i.e. $month = 0 or $month = 45)
-	 *
-	 * @author Andrzej 'nAndy' Łukaszewski
-	 */
-	private function getDays($month) {
-		$month = intval($month);
-		$daysInMonth = array(0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
-
-		if( isset($daysInMonth[$month]) ) {
-			return $daysInMonth[$month];
-		}
-
-		return 0;
-	}
-
+			
 	/**
 	 * @brief Get user object from given title
 	 *
