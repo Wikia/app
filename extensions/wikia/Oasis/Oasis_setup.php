@@ -28,6 +28,7 @@ function wfOasisSetup() {
 	$wgHooks['MakeHeadline'][] = 'ContentDisplayModule::onMakeHeadline';
 	$wgHooks['MakeThumbLink2'][] = 'ContentDisplayModule::renderPictureAttribution';
 	$wgHooks['MessageCacheReplace'][] = 'LatestPhotosModule::onMessageCacheReplace';
+	$wgHooks['MessageCacheReplace'][] = 'WikiNavigationModule::onMessageCacheReplace';
 	$wgHooks['Parser::showEditLink'][] = 'ContentDisplayModule::onShowEditLink';
 	$wgHooks['UploadComplete'][] = 'LatestPhotosModule::onImageUploadComplete';
 	$wgHooks['FileUpload'][] = 'LatestPhotosModule::onImageUpload';

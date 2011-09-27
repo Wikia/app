@@ -24,6 +24,10 @@ class NavigationService {
 
 	private $forContent = false;
 
+	public function getMemcKey($messageName) {
+		return wfMemcKey(__CLASS__, $messageName, self::version);
+	}
+
 	/**
 	 * @author: Inez Korczyński
 	 */
@@ -36,8 +40,8 @@ class NavigationService {
 		$useCache = $wgLang->getCode() == $wgContLang->getCode();
 
 		if($useCache || $this->forContent ) {
-			$cacheKey = wfMemcKey($messageName, self::version);
-			$nodes = array(); //$wgMemc->get($cacheKey); # DEBUG !!!
+			$cacheKey = $this->getMemcKey($messageName);
+			$nodes = $wgMemc->get($cacheKey);
 		}
 
 		if(empty($nodes)) {

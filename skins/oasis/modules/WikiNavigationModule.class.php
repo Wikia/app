@@ -198,6 +198,28 @@ HEADER;
 	}
 
 	/**
+	 * Clear the navigation service cache every time a message in edited
+	 *
+	 * @param string $title name of the page changed.
+	 * @param string $text new contents of the page
+	 * @return bool return true
+	 */
+	public static function onMessageCacheReplace($title, $text) {
+		global $wgMemc;
+
+		if (self::isWikiNavMessage(Title::newFromText($title, NS_MEDIAWIKI))) {
+			$service = new NavigationService();
+
+			$memcKey = $service->getMemcKey($title);
+			$wgMemc->delete($memcKey);
+
+			wfDebug(__METHOD__ . ": '{$memcKey}' cache cleared\n");
+		}
+
+		return true;
+	}
+
+	/**
 	 * Check if given title refers to one of three wiki nav messages
 	 */
 	private static function isWikiNavMessage(Title $title) {
