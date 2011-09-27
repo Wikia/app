@@ -1,10 +1,10 @@
 //
 //Controllers
 //
-if($.getUrlVar('nosockets', false) == 1) {
+if($.getUrlVar('nosockets', false) == 1 || 'ontouchstart' in document.createElement( 'div' )) {
 	var globalTransports = [ 'htmlfile', 'xhr-polling', 'jsonp-polling'  ];
 } else {
-	var globalTransports = [ 'websocket', 'flashsocket', 'htmlfile', 'xhr-polling', 'jsonp-polling'  ];	
+	var globalTransports = [ 'websocket', 'flashsocket', 'htmlfile', 'xhr-polling', 'jsonp-polling'  ];
 }
 
 var NodeChatSocketWrapper = $.createClass(Observable,{
