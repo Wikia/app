@@ -251,7 +251,12 @@ class SpecialEditTopList extends SpecialPage {
 						//purge items removed from the list
 						foreach ( $removedItems as $index ) {
 							$item = $listItems[ $index ];
-							$removeResult = $item->remove();
+							if ( is_object( $item ) && ( $item instanceof TopListItem ) ){
+								$removeResult = $item->remove();
+							} else {
+								// if item does not exist it means that it's deleted anyway
+								$removeResult = true;
+							}
 
 							if ( $removeResult !== true ) {
 								$items[] = array(
