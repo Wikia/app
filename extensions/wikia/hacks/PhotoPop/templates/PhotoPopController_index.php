@@ -6,6 +6,5 @@
 		<script data-main="<?= $dataMain ;?>" src="<?= $requireJs ;?>"></script>
 	</head>
 	<body>
-		
 	</body>
 </html>

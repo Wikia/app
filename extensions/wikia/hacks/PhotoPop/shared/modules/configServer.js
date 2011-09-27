@@ -28,8 +28,8 @@ define.call(exports, {
 	},
 	
 	urls: {
-		playButtonUrl: "",
-		tutorialButtonUrl: "",
+		playButtonUrl: "playButton();",
+		tutorialButtonUrl: "#tutorial",
 		backHomeUrl: "",
 		trueblood: "",
 		glee: "",

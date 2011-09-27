@@ -7,6 +7,7 @@ define.call(exports, {
 	init: function(configImages) {
 		var preload = new Image(),
 		link = "",
+		Titanium = Titanium || undefined,
 		prefix = (document && !Titanium) ? "extensions/wikia/hacks/PhotoPop/" : '';
 		
 		for(var prop in configImages) {
