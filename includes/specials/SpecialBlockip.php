@@ -410,7 +410,7 @@ class IPBlockForm {
 				# Username block
 				if( $wgSysopUserBans ) {
 					$user = User::newFromName( $this->BlockAddress );
-					if( !is_null( $user ) && $user->getId() ) {
+					if($user instanceof User) {
 						# Use canonical name
 						$userId = $user->getId();
 						$this->BlockAddress = $user->getName();
