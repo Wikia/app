@@ -137,11 +137,6 @@ class WikiNavigationModule extends Module {
 					$html
 					</nav>
 				</header>
-				<script>
-					\$('#WikiHeader').parent().removeClass('WikiaArticle');
-
-					WikiHeaderV2.init();
-				</script>
 HEADER;
 		}
 

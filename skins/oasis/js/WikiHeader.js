@@ -443,9 +443,17 @@ $(function() {
 
 	// modify preview dialog
 	if (window.wgIsWikiNavMessage) {
+		// modify size of preview modal
 		$(window).bind('EditPageRenderPreview', function(ev, options) {
 			options.height = 300;
 			options.width = 729 + 32 /* padding */;
+		});
+
+		// setup menu in preview mode
+		$(window).bind('EditPageAfterRenderPreview', function(ev, previewNode) {
+			// don't style wiki nav like article content
+			previewNode.removeClass('WikiaArticle');
+			WikiHeaderV2.init();
 		});
 	}
 });
