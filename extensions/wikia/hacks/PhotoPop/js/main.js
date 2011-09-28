@@ -19,24 +19,9 @@ require(["../shared/modules/configServer", "../shared/modules/templates", "../sh
 	soundServer.init(config.sounds);	
 	
 	//load main page
-	document.body.innerHTML = Mustache.to_html(templates.mainPage, view);
+	document.getElementById('PhotoPopWrapper').innerHTML = Mustache.to_html(templates.mainPage, view);
 	
 	var wrapper = document.getElementById('wrapper');
 	wrapper.innerHTML += Mustache.to_html(templates.selectorScreen, view);
-	
-	var play = document.getElementById('playWrapper').getElementsByTagName('div')[0];
-
-	play.onclick =  function() {
-		var sliderWrapper = document.getElementById('sliderWrapper');
-		sliderWrapper.style.bottom = 0;
-	};
-	
-	var closeButton = document.getElementById('closeButton');
-
-	closeButton.onclick =  function() {
-		var sliderWrapper = document.getElementById('sliderWrapper');
-		sliderWrapper.style.bottom = "-250px";
-		soundServer.play('pop');
-	};
 
 });

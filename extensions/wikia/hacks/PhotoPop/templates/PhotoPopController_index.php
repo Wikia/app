@@ -6,5 +6,7 @@
 		<script data-main="<?= $dataMain ;?>" src="<?= $requireJs ;?>"></script>
 	</head>
 	<body>
+		<div id="PhotoPopWrapper">
+		</div>
 	</body>
 </html>
