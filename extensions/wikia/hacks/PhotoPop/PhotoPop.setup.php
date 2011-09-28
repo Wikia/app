@@ -39,6 +39,7 @@ $app->wg->append(
  * services
  */
 $app->wg->set( 'wgAutoloadClasses', "{$dir}/PhotoPopController.class.php", 'PhotoPopController' );
+$app->wg->set( 'wgAutoloadClasses', "{$dir}/PhotoPopAppCacheController.class.php", 'PhotoPopAppCacheController' );
 
 /**
  * controllers
