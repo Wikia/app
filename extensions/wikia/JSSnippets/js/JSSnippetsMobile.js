@@ -1,7 +1,7 @@
 var JSSnippets = {
 	stack: [],
 	log: function(msg) {
-		console.log(msg, 'JSSnippets');
+		$().log(msg, 'JSSnippets');
 	},
 	// @see http://net.tutsplus.com/tutorials/javascript-ajax/javascript-from-null-utility-functions-and-debugging/
 	unique: function(origArr) {
