@@ -25,4 +25,4 @@ $wgExtensionMessagesFiles['SpecialSpamWikis'] = "{$dir}/SpecialSpamWikis.i18n.ph
 $app->registerSpecialPage( 'SpamWikis', 'SpecialSpamWikisSpecialPageController' );
 
 $wgGroupPermissions['*']['specialspamwikis'] = false;
-$wgGroupPermissions['utils']['specialspamwikis'] = true;
+$wgGroupPermissions['util']['specialspamwikis'] = true;
