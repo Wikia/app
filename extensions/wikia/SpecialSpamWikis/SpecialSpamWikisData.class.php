@@ -29,7 +29,7 @@ class SpecialSpamWikisData {
         return $this->criteria;
     }
     
-    public function getList($limit = 10, $offset = 0, $wikiName = null, $criteria = array()) {
+    public function getList($limit = 10, $offset = 0, $wikiName = null, $criteria = array(), $order = 'city_created DESC') {
         $sk = F::app()->wg->User->getSkin();
         $data = array( 'count' => 0, 'items' => array() );
         $link = new Linker();
@@ -69,7 +69,7 @@ class SpecialSpamWikisData {
                 array(
                     'LIMIT' => $limit,
                     'OFFSET' => $offset,
-                    'ORDER BY' => 'city_created DESC'
+                    'ORDER BY' => $order
                 )
         );
         
