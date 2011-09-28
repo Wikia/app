@@ -9,9 +9,7 @@
 <div id="ad-skin" class="wikia-ad noprint"></div>
 <?= wfRenderModule('Ad', 'Index', array('slotname' => 'INVISIBLE_TOP')) ?>
 <?= wfRenderModule('Ad', 'Index', array('slotname' => 'HOME_INVISIBLE_TOP')) ?>
-<?= !empty( $wgOasisNavV2  )
-	? wfRenderModule( 'GlobalHeaderV2' )
-	: wfRenderModule( 'GlobalHeader' ) ?>
+<?= wfRenderModule('GlobalHeader') ?>
 
 <section id="<?= !empty($wgOasisNavV2) ? 'WikiaAdvertPage' : 'WikiaPage' ?>" class="<?= !empty($wgOasisNavV2) ? 'WikiaAdvertPage' : 'WikiaPage' ?>">
 	<div id="WikiaPageBackground" class="WikiaPageBackground"></div>

@@ -167,7 +167,6 @@ $wgAutoloadClasses['OasisModule'] = $IP.'/skins/oasis/modules/OasisModule.class.
 $wgAutoloadClasses['BodyModule'] = $IP.'/skins/oasis/modules/BodyModule.class.php';
 $wgAutoloadClasses['ContentDisplayModule'] = $IP.'/skins/oasis/modules/ContentDisplayModule.class.php';
 $wgAutoloadClasses['GlobalHeaderModule'] = $IP.'/skins/oasis/modules/GlobalHeaderModule.class.php';
-$wgAutoloadClasses['GlobalHeaderV2Module'] = $IP.'/skins/oasis/modules/GlobalHeaderV2Module.class.php';
 $wgAutoloadClasses['CorporateFooterModule'] = $IP.'/skins/oasis/modules/CorporateFooterModule.class.php';
 $wgAutoloadClasses['WikiHeaderModule'] = $IP.'/skins/oasis/modules/WikiHeaderModule.class.php';
 $wgAutoloadClasses['WikiHeaderV2Module'] = $IP.'/skins/oasis/modules/WikiHeaderV2Module.class.php';
