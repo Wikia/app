@@ -42,6 +42,7 @@ class AdminDashboardLogic {
 			$exclusionList = array(
 				"AdSS",
 				"ApiExplorer",
+				"Confirmemail",
 				"Connect",
 				"Contact",
 				"Contributions",
@@ -55,6 +56,7 @@ class AdminDashboardLogic {
 				"EditAccount",
 				"EditTopList",
 				"HuluVideoPanel",
+				"Invalidateemail",
 				"LandingPageSmurfs",
 				"LayoutBuilder",
 				"LayoutBuilderForm",
