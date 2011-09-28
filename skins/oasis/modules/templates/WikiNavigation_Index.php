@@ -19,7 +19,7 @@ if ( is_array($menuNodes) && isset($menuNodes[0]) && $showMenu) {
 			foreach ($menuNodes[$level0][ NavigationService::CHILDREN ] as $level1) {
 ?>
 					<li>
-						<a class="subnav-2a"<?= empty( $menuNodes[$level1][ NavigationService::SPECIAL ] ) ? '' : ' data-extra="'.$menuNodes[$level1][ NavigationService::SPECIAL ].'"' ?> href="<?= $menuNodes[$level1][ NavigationService::HREF ] ?>"><?= $menuNodes[$level1][ NavigationService::TEXT ] ?></a>
+						<a class="subnav-2a"<? if($menuNodes[$level1][ NavigationService::TEXT ] == 'Chat'): ?> onclick="onChatButtonClick(); event.preventDefault();"<? endif; ?><?= empty( $menuNodes[$level1][ NavigationService::SPECIAL ] ) ? '' : ' data-extra="'.$menuNodes[$level1][ NavigationService::SPECIAL ].'"' ?> href="<?= $menuNodes[$level1][ NavigationService::HREF ] ?>"><?= $menuNodes[$level1][ NavigationService::TEXT ] ?></a>
 <?php
 				if (isset($menuNodes[$level1][ NavigationService::CHILDREN ])) {
 ?>
