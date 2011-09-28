@@ -251,6 +251,9 @@ $wgExtensionCredits['other'][] = array(
 );
 
 // TODO: move to CommonSettings.php once merged with trunk
+$wgAvailableRights[] = 'wikianavglobal';
+$wgAvailableRights[] = 'wikianavlocal';
+
 $wgGroupPermissions['*']['wikianavglobal'] = false;
 $wgGroupPermissions['*']['wikianavlocal'] = false;
 
