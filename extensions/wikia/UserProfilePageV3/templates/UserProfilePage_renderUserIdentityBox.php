@@ -43,8 +43,7 @@
 					<? if( !empty($user['edits']) || (empty($user['edits']) && !empty($user['registration'])) ): ?>
 						<em><?= $user['edits'] ?></em>
 						<span>
-							<?= wfMsg('user-identity-box-edits-since-joining') ?><br>
-							<?= $user['registration'] ?>
+							<?= wfMsg('user-identity-box-edits-since-joining', array( $user['registration'] ) ) ?>
 						</span>
 					<? else: ?>
 						<?php if( $user['edits'] >= 0 ): ?>
