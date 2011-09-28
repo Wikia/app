@@ -2254,180 +2254,185 @@ function lw_createPage($pageTitle, $content, $summary="Page created using [[Lyri
 	$wgTitle = $pageTitle; // must be done after lw_initAdvanced()
 
 	// Some of this is used in Wiki.php and EditPage.php to do an edit:
-	$article = $mediaWiki->articleFromTitle(Title::newFromText($pageTitle));
-	$editor = new EditPage($article);
-
-	# These fields need to be checked for encoding.
-	# Also remove trailing whitespace, but don't remove _initial_
-	# whitespace from the text boxes. This may be significant formatting.
-//	$this->textbox1 = $this->safeUnicodeInput( $request, 'wpTextbox1' );
-//	$this->textbox2 = $this->safeUnicodeInput( $request, 'wpTextbox2' );
-//	$this->mMetaData = rtrim( $request->getText( 'metadata'   ) );
-	# Truncate for whole multibyte characters. +5 bytes for ellipsis
-//	$this->summary   = $wgLang->truncate( $request->getText( 'wpSummary'  ), 250 );
-
-	$editor->textbox1  = $content;
-	$editor->textbox2  = '';
-	$editor->mMetaData = '';
-	$editor->summary   = $summary;
-	$editor->starttime = wfTimestampNow();
-	if($wgTitle->exists()){ // if this is an edit, load the edittime
-		$editor->edittime = $editor->mArticle->getTimestamp();
+	$titleObj = Title::newFromText($pageTitle);
+	if( $titleObj == null ){
+		$retVal = "Invalid title: \"$pageTitle\"";
 	} else {
-		$editor->edittime = wfTimestampNow();
-	}
-	$editor->preview   = false;
-	$editor->save      = true;
-	$editor->diff	 = false;
-	$editor->minoredit = false;
-	$editor->watchthis = false;
-	$editor->recreate  = false;
-	$editor->oldid = 0;
-	$editor->section = '';
-	$editor->live = false;
-	$editor->editintro = '';
+		$article = $mediaWiki->articleFromTitle( $titleObj );
+		$editor = new EditPage($article);
 
-	// Store it.
-	$fname = 'LW_SOAP::EditPage::edit';
-	$wgOut->setArticleFlag(false);
-	$editor->firsttime = false;
-	if ( ! $editor	->mTitle->userCanEdit() ) {
-		wfDebug( "$fname: user can't edit\n" );
-		$retVal = "User cannot edit this page.";
-		//$wgOut->readOnlyPage( $editor->getContent(), true );
-		wfProfileOut( $fname );
-		return $retVal;
-	}
+		# These fields need to be checked for encoding.
+		# Also remove trailing whitespace, but don't remove _initial_
+		# whitespace from the text boxes. This may be significant formatting.
+	//	$this->textbox1 = $this->safeUnicodeInput( $request, 'wpTextbox1' );
+	//	$this->textbox2 = $this->safeUnicodeInput( $request, 'wpTextbox2' );
+	//	$this->mMetaData = rtrim( $request->getText( 'metadata'   ) );
+		# Truncate for whole multibyte characters. +5 bytes for ellipsis
+	//	$this->summary   = $wgLang->truncate( $request->getText( 'wpSummary'  ), 250 );
 
-	wfDebug( "$fname: Checking blocks\n" );
-	if ( !$editor->preview && !$editor->diff && $wgUser->isBlockedFrom( $editor->mTitle, !$editor->save ) ) {
-		# When previewing, don't check blocked state - will get caught at save time.
-		# Also, check when starting edition is done against slave to improve performance.
-		wfDebug( "$fname: user is blocked\n" );
-		$retVal = "User is blocked.";
-		$editor->blockedPage();
-		wfProfileOut( $fname );
-		return $retVal;
-	}
-	if ( !$wgUser->isAllowed('edit') ) {
-		if ( $wgUser->isAnon() ) {
-			wfDebug( "$fname: user must log in\n" );
-			$editor->userNotLoggedInPage();
-			$retVal = "Must log in first.";
-			wfProfileOut( $fname );
-			return $retVal;
+		$editor->textbox1  = $content;
+		$editor->textbox2  = '';
+		$editor->mMetaData = '';
+		$editor->summary   = $summary;
+		$editor->starttime = wfTimestampNow();
+		if($wgTitle->exists()){ // if this is an edit, load the edittime
+			$editor->edittime = $editor->mArticle->getTimestamp();
 		} else {
-			wfDebug( "$fname: read-only page\n" );
-			$retVal = "This page is read only.\n";
-			$wgOut->readOnlyPage( $editor->getContent(), true );
+			$editor->edittime = wfTimestampNow();
+		}
+		$editor->preview   = false;
+		$editor->save      = true;
+		$editor->diff	 = false;
+		$editor->minoredit = false;
+		$editor->watchthis = false;
+		$editor->recreate  = false;
+		$editor->oldid = 0;
+		$editor->section = '';
+		$editor->live = false;
+		$editor->editintro = '';
+
+		// Store it.
+		$fname = 'LW_SOAP::EditPage::edit';
+		$wgOut->setArticleFlag(false);
+		$editor->firsttime = false;
+		if ( ! $editor	->mTitle->userCanEdit() ) {
+			wfDebug( "$fname: user can't edit\n" );
+			$retVal = "User cannot edit this page.";
+			//$wgOut->readOnlyPage( $editor->getContent(), true );
 			wfProfileOut( $fname );
 			return $retVal;
 		}
-	}
-	if ($wgEmailConfirmToEdit && !$wgUser->isEmailConfirmed()) {
-		wfDebug("$fname: user must confirm e-mail address\n");
-		$retVal = "You must confirm your email address before editing this page.";
-		$editor->userNotConfirmedPage();
-		wfProfileOut($fname);
-		return $retVal;
-	}
-	if ( !$editor->mTitle->userCanCreate() && !$editor->mTitle->exists() ) {
-		wfDebug( "$fname: no create permission\n" );
-		$retVal = "You do not have permision to create pages.";
-		$editor->noCreatePermission();
-		wfProfileOut( $fname );
-		return $retVal;
-	}
-	if ( wfReadOnly() ) {
-		wfDebug( "$fname: read-only mode is engaged\n" );
-		if( $editor->save || $editor->preview ) {
-			$editor->formtype = 'preview';
-		} else if ( $editor->diff ) {
-			$editor->formtype = 'diff';
-		} else {
-			$wgOut->readOnlyPage( $editor->getContent() );
-			$retVal = "Page (site?) is in read-only mode.";
+
+		wfDebug( "$fname: Checking blocks\n" );
+		if ( !$editor->preview && !$editor->diff && $wgUser->isBlockedFrom( $editor->mTitle, !$editor->save ) ) {
+			# When previewing, don't check blocked state - will get caught at save time.
+			# Also, check when starting edition is done against slave to improve performance.
+			wfDebug( "$fname: user is blocked\n" );
+			$retVal = "User is blocked.";
+			$editor->blockedPage();
 			wfProfileOut( $fname );
 			return $retVal;
 		}
-	} else {
-		if ( $editor->save ) {
-			$editor->formtype = 'save';
-		} else if ( $editor->preview ) {
-			$editor->formtype = 'preview';
-		} else if ( $editor->diff ) {
-			$editor->formtype = 'diff';
-		} else { # First time through
-			$editor->firsttime = true;
-			if( $editor->previewOnOpen() ) {
-				$editor->formtype = 'preview';
+		if ( !$wgUser->isAllowed('edit') ) {
+			if ( $wgUser->isAnon() ) {
+				wfDebug( "$fname: user must log in\n" );
+				$editor->userNotLoggedInPage();
+				$retVal = "Must log in first.";
+				wfProfileOut( $fname );
+				return $retVal;
 			} else {
-				$editor->extractMetaDataFromArticle () ;
-				$editor->formtype = 'initial';
+				wfDebug( "$fname: read-only page\n" );
+				$retVal = "This page is read only.\n";
+				$wgOut->readOnlyPage( $editor->getContent(), true );
+				wfProfileOut( $fname );
+				return $retVal;
 			}
 		}
-	}
-
-	wfProfileIn( "$fname-business-end" );
-
-	$editor->isConflict = false;
-	// css / js subpages of user pages get a special treatment
-	$editor->isCssJsSubpage      = $wgTitle->isCssJsSubpage();
-	$editor->isValidCssJsSubpage = $wgTitle->isValidCssJsSubpage();
-
-	/* Notice that we can't use isDeleted, because it returns true if article is ever deleted
-	 * no matter it's current state
-	 */
-	$editor->deletedSinceEdit = false;
-	if ( $editor->edittime != '' ) {
-		/* Note that we rely on logging table, which hasn't been always there,
-		 * but that doesn't matter, because this only applies to brand new
-		 * deletes. This is done on every preview and save request. Move it further down
-		 * to only perform it on saves
-		 */
-		if ( $editor->mTitle->isDeleted() ) {
-			$editor->lastDelete = $editor->getLastDelete();
-			if ( !is_null($editor->lastDelete) ) {
-				$deletetime = $editor->lastDelete->log_timestamp;
-				if ( ($deletetime - $editor->starttime) > 0 ) {
-					$editor->deletedSinceEdit = true;
+		if ($wgEmailConfirmToEdit && !$wgUser->isEmailConfirmed()) {
+			wfDebug("$fname: user must confirm e-mail address\n");
+			$retVal = "You must confirm your email address before editing this page.";
+			$editor->userNotConfirmedPage();
+			wfProfileOut($fname);
+			return $retVal;
+		}
+		if ( !$editor->mTitle->userCanCreate() && !$editor->mTitle->exists() ) {
+			wfDebug( "$fname: no create permission\n" );
+			$retVal = "You do not have permision to create pages.";
+			$editor->noCreatePermission();
+			wfProfileOut( $fname );
+			return $retVal;
+		}
+		if ( wfReadOnly() ) {
+			wfDebug( "$fname: read-only mode is engaged\n" );
+			if( $editor->save || $editor->preview ) {
+				$editor->formtype = 'preview';
+			} else if ( $editor->diff ) {
+				$editor->formtype = 'diff';
+			} else {
+				$wgOut->readOnlyPage( $editor->getContent() );
+				$retVal = "Page (site?) is in read-only mode.";
+				wfProfileOut( $fname );
+				return $retVal;
+			}
+		} else {
+			if ( $editor->save ) {
+				$editor->formtype = 'save';
+			} else if ( $editor->preview ) {
+				$editor->formtype = 'preview';
+			} else if ( $editor->diff ) {
+				$editor->formtype = 'diff';
+			} else { # First time through
+				$editor->firsttime = true;
+				if( $editor->previewOnOpen() ) {
+					$editor->formtype = 'preview';
+				} else {
+					$editor->extractMetaDataFromArticle () ;
+					$editor->formtype = 'initial';
 				}
 			}
 		}
-	}
 
-	if(!$editor->mTitle->getArticleID() && ('initial' == $editor->formtype || $editor->firsttime )) { # new article
-		$editor->showIntro();
-	}
-	if( $editor->mTitle->isTalkPage() ) {
-		$wgOut->addWikiText( wfMsg( 'talkpagetext' ) );
-	}
+		wfProfileIn( "$fname-business-end" );
 
-	# Attempt submission here.  This will check for edit conflicts,
-	# and redundantly check for locked database, blocked IPs, etc.
-	# that edit() already checked just in case someone tries to sneak
-	# in the back door with a hand-edited submission URL.
-	if ( 'save' == $editor->formtype ) {
-		if ( !$editor->attemptSave() ) {
-			wfProfileOut( "$fname-business-end" );
-			wfProfileOut( $fname );
-			$retVal = "Page saved.";
-			return $retVal;
-		} else {
-			$retVal = "Save attempt failed.";
+		$editor->isConflict = false;
+		// css / js subpages of user pages get a special treatment
+		$editor->isCssJsSubpage      = $wgTitle->isCssJsSubpage();
+		$editor->isValidCssJsSubpage = $wgTitle->isValidCssJsSubpage();
+
+		/* Notice that we can't use isDeleted, because it returns true if article is ever deleted
+		 * no matter it's current state
+		 */
+		$editor->deletedSinceEdit = false;
+		if ( $editor->edittime != '' ) {
+			/* Note that we rely on logging table, which hasn't been always there,
+			 * but that doesn't matter, because this only applies to brand new
+			 * deletes. This is done on every preview and save request. Move it further down
+			 * to only perform it on saves
+			 */
+			if ( $editor->mTitle->isDeleted() ) {
+				$editor->lastDelete = $editor->getLastDelete();
+				if ( !is_null($editor->lastDelete) ) {
+					$deletetime = $editor->lastDelete->log_timestamp;
+					if ( ($deletetime - $editor->starttime) > 0 ) {
+						$editor->deletedSinceEdit = true;
+					}
+				}
+			}
 		}
-	}
 
-	# First time through: get contents, set time for conflict
-	# checking, etc.
-	if ( 'initial' == $editor->formtype || $editor->firsttime ) {
-		$editor->initialiseForm();
-		if( !$editor->mTitle->getArticleId() )
-			wfRunHooks( 'EditFormPreloadText', array( &$editor->textbox1, &$editor->mTitle ) );
-	}
+		if(!$editor->mTitle->getArticleID() && ('initial' == $editor->formtype || $editor->firsttime )) { # new article
+			$editor->showIntro();
+		}
+		if( $editor->mTitle->isTalkPage() ) {
+			$wgOut->addWikiText( wfMsg( 'talkpagetext' ) );
+		}
 
-	$editor->showEditForm();
-	wfProfileOut( "$fname-business-end" );
+		# Attempt submission here.  This will check for edit conflicts,
+		# and redundantly check for locked database, blocked IPs, etc.
+		# that edit() already checked just in case someone tries to sneak
+		# in the back door with a hand-edited submission URL.
+		if ( 'save' == $editor->formtype ) {
+			if ( !$editor->attemptSave() ) {
+				wfProfileOut( "$fname-business-end" );
+				wfProfileOut( $fname );
+				$retVal = "Page saved.";
+				return $retVal;
+			} else {
+				$retVal = "Save attempt failed.";
+			}
+		}
+
+		# First time through: get contents, set time for conflict
+		# checking, etc.
+		if ( 'initial' == $editor->formtype || $editor->firsttime ) {
+			$editor->initialiseForm();
+			if( !$editor->mTitle->getArticleId() )
+				wfRunHooks( 'EditFormPreloadText', array( &$editor->textbox1, &$editor->mTitle ) );
+		}
+
+		$editor->showEditForm();
+		wfProfileOut( "$fname-business-end" );
+	}
 	wfProfileOut( $fname );
 
 	$retVal = ($retVal==""?"Page created successfully.":$retVal);
