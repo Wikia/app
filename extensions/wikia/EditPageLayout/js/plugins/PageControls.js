@@ -420,10 +420,8 @@
 					self.ajax('preview',
 						extraData,
 						function(data) {
-							contentNode.html(data.html);
-							
 							// innerShiv is IE < 9 fix (BugId: 11294)
-							contentNode.html(innerShiv(html));
+							contentNode.html(innerShiv(data.html));
 
 							// move "edit" link to the right side of heading names
 							contentNode.find('.editsection').each(function() {
