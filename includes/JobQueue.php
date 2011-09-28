@@ -280,7 +280,7 @@ abstract class Job {
 		 * @author Piotr Molski (moli)
 		 * trap for BugId: 11897
 		 */		
-		if ( is_null( $this->title ) ) {
+		if ( ! $this->title instanceof Title ) {
 			$log = "MOLI JOB@invalid title: " . $this->command . " . params: " . print_r( $this->params, true ) . "\n";
 			error_log( $log );
 		}
