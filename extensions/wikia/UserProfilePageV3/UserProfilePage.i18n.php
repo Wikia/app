@@ -3,7 +3,6 @@ $messages = array();
 
 $messages['en'] = array(
 	'userprofilepage-edit-modal-header' => 'Edit Profile',
-	'interview' => "Interview Admin",
 	'userprofilepage-question-caption' => "Question $1/$2",
 	'userprofilepage-lightbox-interview-cancel' => "Cancel",
 	'userprofilepage-lightbox-interview-save' => "Save, I'm Done",
@@ -18,7 +17,7 @@ $messages['en'] = array(
 	'userprofilepage-question-list-title' => '$1/$2 Questions',
 	'userprofilepage-interview-section-title' => 'User Interview',
 	'userprofilepage-stuff-section-title' => 'Stuff',
-	'userprofilepage-invalid-user' => 'Invalid user! You are not logged-in or do not have rights to process',
+	'userprofilepage-invalid-user' => 'Invalid user! You are not logged-in or do not have rights to proceed',
 	'userprofilepage-avatar-error-type' => 'Invalid MIME type. Allowed: $1',
 	'userprofilepage-avatar-error-resolution' => 'Maximum resolution of avatar is 2000x2000',
 	'user-identity-box-edit' => 'Edit',
@@ -42,8 +41,7 @@ $messages['en'] = array(
 	'user-identity-box-was-born-in' => '<span>I was born in</span> $1',
 	'user-identity-box-occupation' => '<span>My occupation is</span> $1',
 	'user-identity-i-am' => '<span>I am</span> $1',
-	'user-identity-gamertags' => '<span>GAMERTAGS</span> ',
-	'user-identity-box-edits-since-joining' => 'Edits since joining this wiki',
+	'user-identity-box-edits-since-joining' => 'Edits since joining this wiki<br />$1',
 	'user-identity-box-edits' => '<em>$1</em><span>EDITS</span>',
 	
 	'user-identity-box-group-blocked' => 'Blocked',
@@ -78,12 +76,12 @@ $messages['en'] = array(
 	'user-identity-box-connect-to-fb' => 'Connect with Facebook',
 	'user-identity-box-unsyc-fb' => 'Unsync with Facebook',
 	'user-identity-box-fb-page' => "What's your Facebook page?",
-	'user-identity-box-invalid-fb-id-error' => 'Invalid facebook id',
+	'user-identity-box-invalid-fb-id-error' => 'Invalid Facebook ID',
 	'user-identity-box-fb-prefs' => 'Feed Preferences',
 	
 	'user-identity-box-avatar-error-nofile' => 'Error: No avatar file found to upload',
 	'user-identity-box-avatar-error-cantwrite' => 'Error: Could not write to temporary directory',
-	'user-identity-box-avatar-error-size' => 'Error: Avatar file is too big (max.$1KB)',
+	'user-identity-box-avatar-error-size' => 'Error: Avatar file is too big (max $1KB)',
 	'user-identity-box-avatar-error' => 'Error: There was internal error while saving avatar',
 	
 	'userprofilepage-lightbox-about-me-cancel' => "Cancel",
@@ -115,5 +113,14 @@ $messages['en'] = array(
 );
 
 $messages['qqq'] = array(
-	'user-identity-box-was-born-on' => 'first var $1 is a month from user-identity-box-about-date-xx (where xx is a number from 01-12), second $2 is a day number',
+	'user-identity-box-was-born-on' => 'first var $1 is a month (genetive), second $2 is a day number',
+	'user-identity-box-location' => 'The parameter is a location, input by user. Usually a town or country.',
+	'user-identity-box-was-born-in' => '$1 is a user input, usually a town or country.',
+	'user-identity-i-am' => '$1 is free-form user input, usually contains gender but sometimes a more general statement, such as "a rockstar". This is by design.',
+	'user-identity-box-edits-since-joining' => '$1 is the number of edits',
+	'userprofilepage-question-caption' => '$1 is the number of the current question, $2 is the total number of questions in the interview',
+	'userprofilepage-question-list-title' => '$1 is the number of the current question, $2 is the total number of questions in the interview',
+	'user-identity-box-edit' => 'This is the lable of a link leading to profile editing mode, should be used as a verb phrase',
+	'user-identity-box-aka-label' => '$1 is the user\'s Real Name field entry, e.g. TOR aka Lucas Garczewski',
+			
 );
