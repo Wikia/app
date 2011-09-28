@@ -32,7 +32,7 @@ class SpecialSpamWikisSpecialPageController extends WikiaSpecialPageController {
                     );
                     
                     $tmpDb->delete(
-                         'noreptemp'.'spamwikis',
+                         'noreptemp.spamwikis',
                          array( 'city_id' => $k ),
                          __METHOD__
                     );
