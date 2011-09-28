@@ -435,6 +435,9 @@
 									appendTo(contentNode.parent()).
 									html(data.summary);
 							}
+
+							// fire an event once preview is rendered
+							$(window).trigger('EditPageAfterRenderPreview', [contentNode]);
 						});
 				});
 			});
