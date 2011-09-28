@@ -43,7 +43,7 @@ class SpecialSpamWikisData {
         }
         
         if ( !empty( $wikiName ) ) {
-            $where[] = 'city_sitename >= ' . $this->db->addQuotes( $wikiName );
+            $where[] = 'city_url >= ' . $this->db->addQuotes( 'http://' . $wikiName );
         }
         
         $oRow = $this->db->selectRow(
@@ -75,12 +75,16 @@ class SpecialSpamWikisData {
         
         while ( $oRow = $this->db->fetchObject( $res ) ) {
             $user = User::newFromId( $oRow->city_founding_user );
+            $mail = $user->getEmail();
+            if ( !empty( $mail ) ) {
+                $mail = $link->makeExternalLink( 'mailto:' . $user->getEmail(), $user->getEmail() );
+            }
             $data['items'][] = array(
                 '<input type="checkbox" name="close[' . $oRow->city_id . ']" value="1" />',
                 $link->makeExternalLink( $oRow->city_url, $oRow->city_title ),
                 $oRow->city_created,
                 $sk->makeLinkObj( $user->getUserPage(), $user->getName() ),
-                $link->makeExternalLink( 'mailto:' . $user->getEmail(), $user->getEmail() )
+                $mail
             );
         }
         
