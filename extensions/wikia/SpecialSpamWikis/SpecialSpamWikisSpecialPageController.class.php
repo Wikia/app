@@ -21,7 +21,7 @@ class SpecialSpamWikisSpecialPageController extends WikiaSpecialPageController {
             $this->mData->close = array();
             $data = $this->request->getVal( 'close' );
             if ( !empty( $data ) ) {
-                $tmpDb = F::app()->wf->getDb( DB_MASTER, array(), 'wikicities' );
+                $tmpDb = F::app()->wf->getDb( DB_MASTER, array(), 'stats' );
                 foreach ( $data as $k => $v ) {
                     $city = WikiFactory::getWikiByID( $k );
                     $status = WikiFactory::setPublicStatus( -2, $k, 'SpecialSpamWikis' );
