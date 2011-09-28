@@ -44,17 +44,10 @@ class ContributionMenuModule extends Module {
 			);
 		}
 
-		if($wgUser->isAllowed('wikianavglobal')) {
-			$this->dropdownItems['wikinavglobaledit'] = array(
-				'text' => wfMsg('oasis-button-edit-wikia-global-menu'),
-				'href' => GlobalTitle::newFromText(WikiNavigationModule::WIKIA_GLOBAL_MESSAGE, NS_MEDIAWIKI, WikiNavigationModule::MESSAGING_WIKI_ID)->getFullURL('action=edit'),
-			);
-		}
-
 		if($wgUser->isAllowed('wikianavlocal')) {
 			$this->dropdownItems['wikinavlocaledit'] = array(
 				'text' => wfMsg('oasis-button-edit-wikia-local-menu'),
-				'href' => Title::newFromText(WikiNavigationModule::WIKIA_LOCAL_MESSAGE, NS_MEDIAWIKI)->getLocalURL('action=edit'),
+				'href' => Title::newFromText(WikiNavigationModule::WIKIA_GLOBAL_MESSAGE, NS_MEDIAWIKI)->getLocalURL('action=edit'),
 			);
 		}
 	}
