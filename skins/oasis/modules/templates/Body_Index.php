@@ -9,11 +9,11 @@
 <div id="ad-skin" class="wikia-ad noprint"></div>
 <?= wfRenderModule('Ad', 'Index', array('slotname' => 'INVISIBLE_TOP')) ?>
 <?= wfRenderModule('Ad', 'Index', array('slotname' => 'HOME_INVISIBLE_TOP')) ?>
-<?= empty( $wgOasisNavV2  )
+<?= !empty( $wgOasisNavV2  )
 	? wfRenderModule( 'GlobalHeaderV2' )
 	: wfRenderModule( 'GlobalHeader' ) ?>
 
-<section id="WikiaAdvertPage" class="WikiaAdvertPage">
+<section id="<?= !empty($wgOasisNavV2) ? 'WikiaAdvertPage' : 'WikiaPage' ?>" class="<?= !empty($wgOasisNavV2) ? 'WikiaAdvertPage' : 'WikiaPage' ?>">
 	<div id="WikiaPageBackground" class="WikiaPageBackground"></div>
 	<div class="WikiaPageContentWrapper">
 		<?= wfRenderModule('Notifications', 'Confirmation') ?>
@@ -93,10 +93,10 @@
 					if (!empty($isUserProfilePageV3Enabled) && $headerModuleName == 'UserPagesHeader') {
 						if ($headerModuleAction == 'BlogPost' || $headerModuleAction == 'BlogListing') {
 							// Show blog post header
-							echo F::app()->renderView( $headerModuleName, $headerModuleAction, $headerModuleParams ); 
+							echo F::app()->renderView( $headerModuleName, $headerModuleAction, $headerModuleParams );
 						} else {
 							// Show just the edit button
-						echo F::app()->renderView( 'UserProfilePage', 'renderActionButton', array() );
+							echo F::app()->renderView( 'UserProfilePage', 'renderActionButton', array() );
 						}
 					} else {
 						echo wfRenderModule($headerModuleName, $headerModuleAction, $headerModuleParams);
