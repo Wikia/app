@@ -129,7 +129,8 @@ class FounderEmails {
 		global $wgPasswordSender, $wgNoReplyAddress;
 		$from = new MailAddress( $wgPasswordSender, 'Wikia' );
 		$replyTo = new MailAddress ( $wgNoReplyAddress );
-		if ( $event->enabled( $wikiId, $user ) ) {
+//		if ( $event->enabled( $wikiId, $user ) ) {
+		if ( $event->enabled( $wikiId, $user ) && $user->getId() == FounderEmails::getInstance()->getWikiFounder()->getId()) {
 			return $user->sendMail( $mailSubject, $mailBody, $from, $replyTo, $category, $mailBodyHTML );
 		}
 	}
