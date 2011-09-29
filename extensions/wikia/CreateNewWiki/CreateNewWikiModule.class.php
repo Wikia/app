@@ -154,7 +154,7 @@ class CreateNewWikiModule extends Module {
 			empty($params['wName']) ||
 			empty($params['wDomain']) ||
 			empty($params['wLanguage']) ||
-			empty($params['wCategory'])
+			empty($params['wCategory']))
 		{
 			// do nothing
 			$this->status = 'error';
