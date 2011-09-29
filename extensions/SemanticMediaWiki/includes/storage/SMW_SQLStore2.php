@@ -1194,6 +1194,8 @@ class SMWSQLStore2 extends SMWStore {
 		$result = array();
 
 		if ( $proptable->fixedproperty == false ) { // anything else would be crazy, but let's fail gracefully even if the whole world is crazy
+			/*
+			// original code - see FB#11063 Special:WantedProperties WhiteScreening
 			$db = wfGetDB( DB_SLAVE, 'smw' );
 			$options = $this->getSQLOptions( $requestoptions, 'title' );
 			$options['ORDER BY'] = 'count DESC';
@@ -1202,6 +1204,31 @@ class SMWSQLStore2 extends SMWStore {
 					           $db->addQuotes( SMW_NS_PROPERTY ) . ' AND page_title=smw_title)',
 							    'smw_title, COUNT(*) as count', 'smw_id > 50 AND page_id IS NULL GROUP BY smw_title',
 							   'SMW::getWantedPropertiesSpecial', $options );
+			*/
+			
+			$dbWiki = wfGetDB( DB_SLAVE );
+			$res = $dbWiki->select( 
+				$db->tableName( 'page' ),
+				'page_title',
+				array(
+					'page_namespace' => SMW_NS_PROPERTY,
+				),
+				__METHOD__
+			);
+			$titles = array();
+			while ($row = $dbWiki->fetchObject($res)) {
+				$titles[] = $row->page_title;
+			}
+			
+			$db = wfGetDB( DB_SLAVE, 'smw' );
+			$titlesQuery = !empty($titles) ? " AND smw_title NOT IN (".$db->makeList($titles).")" : '';
+			$options = $this->getSQLOptions( $requestoptions, 'title' );
+			$options['ORDER BY'] = 'count DESC';
+			$res = $db->select( $db->tableName( $proptable->name ) . ' INNER JOIN ' . $db->tableName( 'smw_ids' ) .
+		                       ' ON p_id=smw_id',
+							   'smw_title, COUNT(*) as count', "smw_id > 50 AND {$titlesQuery} GROUP BY smw_title",
+							   'SMW::getWantedPropertiesSpecial', $options );
+			
 
 			while ( $row = $db->fetchObject( $res ) ) {
 				$result[] = array( SMWPropertyValue::makeProperty( $row->smw_title ), $row->count );
