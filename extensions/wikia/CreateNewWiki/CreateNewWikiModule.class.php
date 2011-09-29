@@ -154,8 +154,7 @@ class CreateNewWikiModule extends Module {
 			empty($params['wName']) ||
 			empty($params['wDomain']) ||
 			empty($params['wLanguage']) ||
-			empty($params['wCategory']) ||
-			empty($params['wAnswer'] ))
+			empty($params['wCategory'])
 		{
 			// do nothing
 			$this->status = 'error';
@@ -164,6 +163,7 @@ class CreateNewWikiModule extends Module {
 		} else {
 			$wgUser = $this->app->getGlobal('wgUser');
 			
+			/*
 			$stored_answer = $this->getStoredAnswer();
 			if(empty($stored_answer) || $params['wAnswer'].'' !== $stored_answer.'') {
 				$this->status = 'error';
@@ -171,6 +171,7 @@ class CreateNewWikiModule extends Module {
 				$this->statusHeader = $this->app->runFunction('wfMsg', 'cnw-error-bot-header');
 				return;
 			}
+			*/
 
 			// check if user is blocked
 			if ( $wgUser->isBlocked() ) {
