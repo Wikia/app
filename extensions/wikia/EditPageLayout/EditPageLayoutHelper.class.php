@@ -206,7 +206,7 @@ class EditPageLayoutHelper {
 	 * Reverse parse wikitext when performing diff for undo revision
 	 */
 	function onEditPageGetDiffText($editform, &$newtext) {
-		if (class_exists('RTE') && $this->app->getGlobal('wgWysiwygEdit')) {
+		if (class_exists('RTE') && RTE::isWysiwygModeEnabled() ) {
 			$newtext = RTE::HtmlToWikitext($newtext);
 		}
 

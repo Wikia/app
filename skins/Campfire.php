@@ -21,19 +21,6 @@ class SkinCampfire extends SkinTemplate {
 		$this->themename = 'campfire';
 	}
 
-	function initPage( OutputPage $out ) {
-		parent::initPage( $out );
-		$this->skinname  = 'campfire';
-		$this->stylename = 'campfire';
-		$this->template  = 'CampfireTemplate';
-		$this->themename = 'campfire';
-
-		// register templates
-		global $wgWikiaTemplateDir;
-		$dir = dirname(__FILE__) . '/';
-		$wgWikiaTemplateDir['SharedTemplates'] = $dir . $this->skinname;
-	}
-
 	function setupSkinUserCss( OutputPage $out ) {}
 }
 

@@ -11,19 +11,6 @@ class SkinOasis extends SkinTemplate {
 		$this->themename = 'oasis';
 	}
 
-	function initPage( OutputPage $out ) {
-		parent::initPage( $out );
-		$this->skinname  = 'oasis';
-		$this->stylename = 'oasis';
-		$this->template  = 'OasisTemplate';
-		$this->themename = 'oasis';
-
-		// register templates
-		global $wgWikiaTemplateDir;
-		$dir = dirname(__FILE__) . '/';
-		$wgWikiaTemplateDir['SharedTemplates'] = $dir.'oasis';
-	}
-
 	function setupSkinUserCss( OutputPage $out ) {}
 }
 

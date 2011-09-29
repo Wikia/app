@@ -534,7 +534,7 @@ JS
 
 //TODO
 function CategorySelectGenerateHTMLforEditRaw($categories, $text = '') {
-	global $wgWysiwygEdit, $wgEditPageLayoutEnable;
+
 	$result = '
 		<script type="text/javascript">document.write(\'<style type="text/css">#csWikitextContainer {display: none}</style>\');</script>
 		<div class="csEditMode" style="display:none" id="csMainContainer"> ' . $text . '

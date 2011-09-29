@@ -164,10 +164,6 @@ class RTE {
 		// adds fallback for non-JS users (RT #20324)
 		self::addNoScriptFallback();
 
-		// wysiwyg editor is on
-		global $wgWysiwygEdit;
-		$wgWysiwygEdit = true;
-
 		wfProfileOut(__METHOD__);
 
 		return true;
@@ -702,6 +698,18 @@ HTML
 		return $ret;
 	}
 
+	/**
+	 * In some cases the entire RTE is disabled (fallback to mediawiki editor)
+	 * The self::$useWysiwyg variable is set to false in this case
+	 * In some cases, RTE is enabled but starts in source mode by default
+	 * The self::$initMode variable is checked for this
+	 * @return boolean true/false if we are in fancy edit mode
+	 */
+	
+	static function isWysiwygModeEnabled() {
+		return (self::$useWysiwyg && self::$initMode == "wysiwyg");
+	}
+		
 	/**
 	 * Add "Enable Rich Text Editing" as the first option in editing tab of user preferences
 	 */
