@@ -10,7 +10,7 @@
 			prefix + "shared/modules/game"
 		],
 		
-		function(config, templates, imageServer, soundServer, game) {
+		function(config, templates, imageServer, soundServer, games) {
 			var startTutorial = false,
 			wrapper,
 			view = {
@@ -61,7 +61,10 @@
 			}
 			
 			if(startTutorial){
-				var g = new game.Tutorial();
+				var g = new games.Game({
+					id: 'tutorial',
+					data: config.tutorial
+				});
 				g.addEventListener('roundStart', gameScreenRender);
 				g.play();
 			}

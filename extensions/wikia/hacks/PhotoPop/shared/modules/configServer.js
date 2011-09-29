@@ -52,6 +52,59 @@ define.call(exports, {
 		timeEnd: "CountdowntoBlastOff",
 		wrongAnswer: "tubePop"
 	},
+	
+	tutorial:[
+		{
+			image: 'tutorial_1',
+			answers:[
+				'Edward Cullen',
+				'Jacob Black',
+				'Bella Swan',
+				'Emmett Cullen'
+			],
+			correct: 'Edward Cullen'
+		},
+		{
+			image: 'tutorial_2',
+			answers:[
+				'Hermione Granger',
+				'Ron Weasley',
+				'Tom Riddle',
+				'Harry Potter'
+			],
+			correct: 'Harry Potter'
+		},
+		{
+			image: 'tutorial_3',
+			answers:[
+				'Kermit the Frog',
+				'Gonzo',
+				'Miss Piggy',
+				'Cookie Monster'
+			],
+			correct: 'Miss Piggy'
+		},
+		{
+			image: 'tutorial_4',
+			answers:[
+				'Marge Simpson',
+				'Lisa Simpson',
+				'Bart Simpson',
+				'Mr. Burns'
+			],
+			correct: 'Lisa Simpson'
+		},
+		{
+			image: 'tutorial_5',
+			answers:[
+				'Joker',
+				'Two-Face',
+				'Scarecrow',
+				'Penguin'
+			],
+			correct: 'Joker'
+		}
+	],
 
 	games: [{
 			category: "Category:Characters",
