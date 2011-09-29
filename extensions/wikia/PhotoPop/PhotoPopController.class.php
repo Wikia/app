@@ -276,7 +276,7 @@ JQUERY_INCLUDE;
 		if(empty($wgDevelEnvironment)){
 			$sld = "wikia.com"; // second-level domain
 		} else {
-			$sld = "sean.wikia-dev.com";
+			$sld = "federico.wikia-dev.com";
 		}
 		return $sld;
 	} // end getSecondLevelDomain()
