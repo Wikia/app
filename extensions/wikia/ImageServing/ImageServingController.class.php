@@ -25,12 +25,17 @@ class ImageServingController extends WikiaController {
 			$ids[$key] = (int) $ids[$key];
 		}
 		
-		$height = (int) $this->getVal('height');
+		$height = $this->getVal('height');
+		
+		if ( !is_array( $height ) ) {
+			$height = (int) $height;
+		}
+		
 		$width = (int) $this->getVal('width');
 		
 		$count = (int) $this->getVal('count');
 		
-		if($height < 1 || $count < 1 || $width < 1) {
+		if ( ( !is_array( $height ) && $height < 1 ) || $count < 1 || $width < 1) {
 			$this->setVal( 'status', 'error' );
 			$this->setVal( 'result', 'height, width, count need to be bigger then 0' );
 			return true;
