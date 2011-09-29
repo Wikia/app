@@ -9,3 +9,4 @@ $dir = dirname(__FILE__);
 $wgAutoloadClasses['Keyword'] = $dir . '/Keyword.body.php';
 $wgExtensionMessagesFiles['Keyword'] = $dir . '/Keyword.i18n.php';
 $wgSpecialPages['Keyword'] = 'Keyword';
+$wgHooks['LoadExtensionSchemaUpdates'][] = 'Keyword::loadSchemaUpdates';
