@@ -855,13 +855,17 @@ class ArticleComment {
 
 				for ( $i = $finish + 1; $i < count($comments); $i++ ) {
 					$aCommentArr = $comments[$i];
-					$oCommentTitle = $aCommentArr['level1']->getTitle();
-					self::addMoveTask( $oCommentTitle, $oNewTitle, $taskParams );
-					if (isset($aCommentArr['level2'])) {
-						foreach ($aCommentArr['level2'] as $oComment) {
-							$oCommentTitle = $oComment->getTitle();
-							self::addMoveTask( $oCommentTitle, $oNewTitle, $taskParams );
+					if ( is_object( $aCommentArr['level1'] ) ) {
+						$oCommentTitle = $aCommentArr['level1']->getTitle();
+						self::addMoveTask( $oCommentTitle, $oNewTitle, $taskParams );
+						if (isset($aCommentArr['level2'])) {
+							foreach ($aCommentArr['level2'] as $oComment) {
+								$oCommentTitle = $oComment->getTitle();
+								self::addMoveTask( $oCommentTitle, $oNewTitle, $taskParams );
+							}
 						}
+					} else {
+						Wikia::log( __METHOD__, 'movepage', 'cannot move sub-comments (level 2): old comment (level 1) not found' );
 					}
 				}
 			}
