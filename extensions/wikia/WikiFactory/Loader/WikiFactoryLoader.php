@@ -228,7 +228,7 @@ class WikiFactoryLoader {
 
 		wfProfileIn(__METHOD__);
 		global $wgCityId, $wgDevelEnvironment, $wgWikiaAdvertiserCategory,
-			$wgDBservers, $wgLBFactoryConf, $wgDBserver;
+			$wgDBservers, $wgLBFactoryConf, $wgDBserver, $wgContLang;
 
 		/**
 		 * Hook to allow extensions to alter the initialization.  For example,
@@ -240,6 +240,13 @@ class WikiFactoryLoader {
 		if( !wfRunHooks( 'WikiFactory::execute', array( &$this ) ) ) {
 			return $this->mWikiID;
 		}
+
+		/**
+		 * load balancer uses one method which demand wgContLang defined
+		 * See BugId: 12474
+		 */
+		$wgContLang = new StubContLang;
+
 
 		/**
 		 * local cache, change to CACHE_ACCEL for local
