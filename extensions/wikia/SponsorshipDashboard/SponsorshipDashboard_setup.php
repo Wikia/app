@@ -38,6 +38,7 @@ $wgAutoloadClasses['SponsorshipDashboardSourceStats'] = $dir . 'sources/SDSource
 $wgAutoloadClasses['SponsorshipDashboardSourceOneDot'] = $dir . 'sources/SDSourceOneDot.class.php';
 $wgAutoloadClasses['SponsorshipDashboardSourceMobile'] = $dir . 'sources/SDSourceMobile.class.php';
 $wgAutoloadClasses['SponsorshipDashboardSource'] = $dir . 'sources/SDSource.class.php';
+$wgAutoloadClasses['SponsorshipDashboardSourceDatabase'] = $dir . 'sources/SDSourceDatabase.class.php';
 
 // date provider classes
 $wgAutoloadClasses['SponsorshipDashboardDateProvider'] = $dir . 'SDDateProvider.class.php';
