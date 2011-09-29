@@ -28,7 +28,7 @@ class PhotoPopGameConfig {
 		if(empty($wgDevelEnvironment)){
 			$sld = "wikia.com"; // second-level domain
 		} else {
-			$sld = "sean.wikia-dev.com";
+			$sld = "federico.wikia-dev.com";
 		}
 		$this->gameUrl = "http://$wikiPrefix.$sld/wikia.php?controller=PhotoPop&method=playGame&category=".urlencode($this->categoryName)."&width=$width&height=$height";
 
