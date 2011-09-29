@@ -24,7 +24,12 @@ define.call(exports, {
 		watermark_muppet: "watermark_muppet",
 		watermark_dexter: "watermark_dexter",
 		watermark_futurama: "watermark_futurama",
-		watermark_twilight: "watermark_twilight"
+		watermark_twilight: "watermark_twilight",
+		tutorial_1: 'tutorial_1.jpeg',
+		tutorial_2: 'tutorial_2.jpeg',
+		tutorial_3: 'tutorial_3.jpeg',
+		tutorial_4: 'tutorial_4.jpeg',
+		tutorial_5: 'tutorial_5.jpeg'
 	},
 	
 	urls: {

@@ -3,21 +3,29 @@ var exports = exports || {};
 define.call(exports, function(){
 	
 	var images = {},
-	titanium = typeof Titanium != 'undefined';
+	isApp = typeof Titanium != 'undefined';
 	
 	return {
 		init: function(configImages) {
 			var preload,
-			prefix = (titanium) ? '' : "extensions/wikia/hacks/PhotoPop/";
+			prefix = (isApp) ? '' : 'extensions/wikia/hacks/PhotoPop/',
+			imagePath,
+			ext;
 			
 			for(var prop in configImages){
 				preload = new Image();
-				preload.src = images[prop] = prefix + "shared/images/" + configImages[prop] + ".png";
+				imagePath = configImages[prop];
+				ext = (imagePath.indexOf('.jpeg') >= 0 || imagePath.indexOf('.png') >= 0 || imagePath.indexOf('.gif') >= 0) ? '' : '.png';
+				preload.src = images[prop] = prefix + "shared/images/" + configImages[prop] + ext;
 			}
 		},
 		
-		get: function(image) {
+		getAsset: function(image) {
 			return  images[image];
+		},
+		
+		getPicture: function(gameId, image){
+			var prefix = (isApp) ? '/' + gameId + '/' + image : image;
 		}
 	};
 });

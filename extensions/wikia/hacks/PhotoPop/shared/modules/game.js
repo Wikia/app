@@ -1,29 +1,44 @@
 var exports = exports || {};
 
 define.call(exports, function(){
-	return{
-		Game: function(options){
-			option = option || {};
+	var Game = my.Class(Observable, {
+		constructor: function(options){
+			options = options || {};
 			
-			var gameId = options.id;
-			
-			//TODO: add game handling
-			
-			this.getId = function(){
-				return gameId;
-			};
-			
-			this.play = function(){
-				alert('Starting game: ' + gameId);
-			};
+			this._id = options.id;
+			this._data = [];
+			this._currentRound = 0;
 		},
 		
-		Tutorial: function(){
-			var gameId = 'tutorial',
-			currentRound = 0,
-			data = [
+		getId: function(){
+			return this._id;
+		},
+		
+		play: function(){
+			console.log('Starting game: ' + this._id);
+			this.next();
+		},
+		
+		next: function(){
+			if(this._currentRound < this._data.length){
+				var info = this._data[this._currentRound++];
+				
+				this.fire('roundStart', {gameId: this._id, data: info});
+			}else{
+				console.log('Game completed!');
+				this.fire('complete');
+			}
+		}
+	}),
+	Tutorial = my.Class(Game, {
+		constructor: function(){
+			Tutorial.Super.call(this, {
+				id: 'tutorial'
+			});
+			
+			this._data = [
 				{
-					image: 'tutorial_1.jpeg',
+					image: 'tutorial_1',
 					answers:[
 						'Edward Cullen',
 						'Jacob Black',
@@ -33,22 +48,11 @@ define.call(exports, function(){
 					correct: 'Edward Cullen'
 				}
 			];
-			
-			this.getId = function(){
-				return gameId;
-			};
-			
-			this.play = function(){
-				alert('Starting game: ' + gameId);
-			};
-			
-			this.next = function(){
-				if(currentRound < data.length){
-					var info = data[currentRound++];
-				}else{
-					alert('Game completed!');
-				}
-			};
 		}
-	}
+	});
+	
+	return {
+		Game: Game,
+		Tutorial: Tutorial
+	};
 });
