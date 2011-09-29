@@ -47,6 +47,7 @@ class WikiFactoryLoader {
 	public $mExpireValuesCacheTimeout = 86400; #--- 24 hours
 	public $mSaveDefaults = false;
 	public $mBeta = false;
+	public $mCacheAnyway = array( "wgArticlePath" );
 
 	private $mDBhandler, $mDBname;
 
@@ -647,10 +648,21 @@ class WikiFactoryLoader {
 			wfProfileOut( __METHOD__."-tagsdb" );
 
 			if( empty($this->mAlwaysFromDB) ) {
-			   /**
-				* store values in memcache
-				*/
-			   $oMemc->set(
+				/**
+				 * cache as well some values even if they are not defined in database
+				 * it will prevent GlobalTitle from doing empty selects
+				 * BugId: 12463
+				 */
+				foreach( $this->mCacheAnyway as $cvar ) {
+					if( !isset( $this->mVariables[ $cvar ] ) && isset( $GLOBALS[ $cvar ] ) ) {
+						$this->mVariables[ $cvar ] = $GLOBALS[ $cvar ];
+					}
+				}
+
+				/**
+				 * store values in memcache
+				 */
+				$oMemc->set(
 					WikiFactory::getVarsKey($this->mWikiID),
 					array(
 						"stamp" => $this->mTimestamp,
