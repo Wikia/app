@@ -1,8 +1,5 @@
 var JSSnippets = {
 	stack: [],
-	log: function(msg) {
-		$().log(msg, 'JSSnippets');
-	},
 	// @see http://net.tutsplus.com/tutorials/javascript-ajax/javascript-from-null-utility-functions-and-debugging/
 	unique: function(origArr) {
 		var newArr = [],
@@ -28,7 +25,6 @@ var JSSnippets = {
 	// clear the stack
 	clear: function() {
 		this.stack = window.JSSnippetsStack = [];
-		this.log('stack cleared');
 	},
 
 	// resolve dependencies, load them and initialize stuff
@@ -45,10 +41,7 @@ var JSSnippets = {
 			return;
 		}
 
-		this.log( 'init' );
-
 		// create unique list of dependiences (both static files and libraries loader functions) and callbacks
-
 
 		$.each( this.stack, function( i, entry ) {
 			// get list of JS/CSS files to load
@@ -94,18 +87,13 @@ var JSSnippets = {
 		// remove duplicated dependencies
 		dependencies = this.unique(dependencies);
 
-		self.log('loading dependencies...');
-
 		// load all dependencies in parallel and then fire all callbacks
 		$.getResources( dependencies, function() {
-			self.log('dependencies loaded, running callbacks...');
 			$.each(callbacks, function(id, callback) {
 				$.each(options[id], function(oid, option) {
 					callback(option);
 				});
 			});
-
-			self.log('done');
 		});
 
 		// clear the stack
