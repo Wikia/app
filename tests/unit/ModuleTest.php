@@ -3,11 +3,10 @@
 class ModuleTest extends PHPUnit_Framework_TestCase {
 
 	function setUp() {
-		global $wgAutoloadClasses, $wgWikiaTemplateDir, $IP;
+		global $wgAutoloadClasses, $IP;
 
 		$wgAutoloadClasses['UnitTestModule'] = dirname( __FILE__ ) . '/modules/UnitTestModule.class.php';
 		$wgAutoloadClasses['OasisTemplate'] = $IP . '/skins/Oasis.php';
-		$wgWikiaTemplateDir['UnitTest'] = dirname( __FILE__ ) . '/modules';
 	}
 
 	function testModuleGet() {

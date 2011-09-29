@@ -52,7 +52,10 @@ class EditPageLayoutModule extends Module {
 		if ($helper->fullScreen) {
 			// add stylesheet
 			$app->wg->Out->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/EditPageLayout/css/EditPageLayout.scss'));
-			$packageName = empty($app->wg->WysiwygEdit) ? 'epl' : 'eplrte';
+			$packageName = 'epl';
+			if (class_exists('RTE') && RTE::isWysiwygModeEnabled() ) {
+				$packageName = 'eplrte';
+			} 
 			$srcs = F::build('AssetsManager',array(),'getInstance')->getGroupCommonURL($packageName);
 			$wgJsMimeType = $app->wg->JsMimeType;
 			foreach($srcs as $src) {
