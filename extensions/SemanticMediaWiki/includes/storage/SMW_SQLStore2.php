@@ -1226,7 +1226,7 @@ class SMWSQLStore2 extends SMWStore {
 			$options['ORDER BY'] = 'count DESC';
 			$res = $db->select( $db->tableName( $proptable->name ) . ' INNER JOIN ' . $db->tableName( 'smw_ids' ) .
 		                       ' ON p_id=smw_id',
-							   'smw_title, COUNT(*) as count', "smw_id > 50 AND {$titlesQuery} GROUP BY smw_title",
+							   'smw_title, COUNT(*) as count', "smw_id > 50 {$titlesQuery} GROUP BY smw_title",
 							   'SMW::getWantedPropertiesSpecial', $options );
 			
 
