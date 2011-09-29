@@ -11,9 +11,6 @@
 		<ul class="tools">
 			<?php 
 				echo wfRenderModule('Footer','Toolbar');
-				if ($showAdminDashboardLink) {
-					echo "<li>" . Wikia::specialPageLink('AdminDashboard', 'admindashboard-toolbar-link', array('data-tracking' => 'admindashboard/toolbar/admin') ) . "</li>";
-				} 
 			?>
 		</ul>
 		<img src="<?= $wgBlankImgUrl; ?>" class="banner-corner-left" height="0" width="0">
