@@ -1208,7 +1208,7 @@ class SMWSQLStore2 extends SMWStore {
 			
 			$dbWiki = wfGetDB( DB_SLAVE );
 			$res = $dbWiki->select( 
-				$db->tableName( 'page' ),
+				$dbWiki->tableName( 'page' ),
 				'page_title',
 				array(
 					'page_namespace' => SMW_NS_PROPERTY,
