@@ -1,4 +1,5 @@
 <?php
+
 $messages = array();
 
 $messages['en'] = array(
@@ -30,7 +31,7 @@ $messages['en'] = array(
 	'user-identity-box-avatar-save' => "Save, I'm Done",
 	'user-identity-box-avatar-cancel' => 'Cancel',
 	'user-identity-box-avatar-anon-user-error' => 'You have to log-in before you change anything',
-	
+
 	'user-identity-box-aka-label' => '<span>aka</span> $1',
 	'user-identity-box-my-twitter' => 'My Twitter',
 	'user-identity-box-my-website' => 'My Website',
@@ -43,7 +44,7 @@ $messages['en'] = array(
 	'user-identity-i-am' => '<span>I am</span> $1',
 	'user-identity-box-edits-since-joining' => 'Edits since joining this wiki<br />$1',
 	'user-identity-box-edits' => '<em>$1</em><span>EDITS</span>',
-	
+
 	'user-identity-box-group-blocked' => 'Blocked',
 	'user-identity-box-group-chatmoderator' => 'Chat moderator',
 	'user-identity-box-group-sysop' => 'Admin',
@@ -52,7 +53,7 @@ $messages['en'] = array(
 	'user-identity-box-group-staff' => 'Staff',
 	'user-identity-box-group-helper' => 'Helper',
 	'user-identity-box-group-vstf' => 'Volunteer Spam Task Force',
-	
+
 	'user-identity-box-zero-state-location' => 'Location',
 	'user-identity-box-zero-state-birthday' => 'Birthday',
 	'user-identity-box-zero-state-gender' => 'Gender',
@@ -60,7 +61,7 @@ $messages['en'] = array(
 	'user-identity-box-zero-state-twitter' => 'My Twitter',
 	'user-identity-box-zero-state-website' => 'My Website',
 	'user-identity-box-zero-state-fb-page' => 'My Facebook',
-	
+
 	'user-identity-box-about-name' => 'What\'s your name?',
 	'user-identity-box-about-location' => 'Where do you live?',
 	'user-identity-box-about-birthday' => 'When is your birthday?',
@@ -71,25 +72,25 @@ $messages['en'] = array(
 	'user-identity-box-about-fav-wikis' => "Wikis you've contributed to:",
 	'user-identity-box-about-fav-wikis-refresh' => 'Refresh',
 	'user-identity-box-join-more-wikis' => 'Join more wikis to see them here!',
-	
+
 	'user-identity-box-import-from-fb' => 'Import your information from Facebook',
 	'user-identity-box-connect-to-fb' => 'Connect with Facebook',
 	'user-identity-box-unsyc-fb' => 'Unsync with Facebook',
 	'user-identity-box-fb-page' => "What's your Facebook page?",
 	'user-identity-box-invalid-fb-id-error' => 'Invalid Facebook ID',
 	'user-identity-box-fb-prefs' => 'Feed Preferences',
-	
+
 	'user-identity-box-avatar-error-nofile' => 'Error: No avatar file found to upload',
 	'user-identity-box-avatar-error-cantwrite' => 'Error: Could not write to temporary directory',
 	'user-identity-box-avatar-error-size' => 'Error: Avatar file is too big (max $1KB)',
 	'user-identity-box-avatar-error' => 'Error: There was internal error while saving avatar',
-	
+
 	'userprofilepage-lightbox-about-me-cancel' => "Cancel",
 	'userprofilepage-lightbox-about-me-save' => "Save, I'm Done",
-	
+
 	'user-identity-box-saving-error' => 'Saving user data failed - your data should be a plain text',
 	'user-identity-box-saving-internal-error' => 'Saving user data failed - internal error occured',
-	
+
 	'userprofilepage-closing-popup-header' => 'Exit Profile Editor',
 	'userprofilepage-closing-popup-info' => 'There are unsaved changes in your profile. What would you like to do?',
 	'userprofilepage-closing-popup-discard-and-quit' => 'Discard changes and quit',
@@ -105,7 +106,7 @@ $messages['en'] = array(
 	'user-action-menu-rename' => 'Rename',
 	'user-action-menu-delete' => 'Delete',
 	'user-action-menu-history' => 'History',
-	
+
 	// Logging messages are temporarily not used
 	'usermasthead-log' => 'User Masthead',
 	'usermasthead-log-message' => 'added profile information',
@@ -113,14 +114,24 @@ $messages['en'] = array(
 );
 
 $messages['qqq'] = array(
-	'user-identity-box-was-born-on' => 'first var $1 is a month (genetive), second $2 is a day number',
-	'user-identity-box-location' => 'The parameter is a location, input by user. Usually a town or country.',
-	'user-identity-box-was-born-in' => '$1 is a user input, usually a town or country.',
-	'user-identity-i-am' => '$1 is free-form user input, usually contains gender but sometimes a more general statement, such as "a rockstar". This is by design.',
-	'user-identity-box-edits-since-joining' => '$1 is the number of edits',
-	'userprofilepage-question-caption' => '$1 is the number of the current question, $2 is the total number of questions in the interview',
-	'userprofilepage-question-list-title' => '$1 is the number of the current question, $2 is the total number of questions in the interview',
-	'user-identity-box-edit' => 'This is the lable of a link leading to profile editing mode, should be used as a verb phrase',
-	'user-identity-box-aka-label' => '$1 is the user\'s Real Name field entry, e.g. TOR aka Lucas Garczewski',
-			
+	'user-identity-box-was-born-on' => 'Parameters:
+* $1 is a month name (genetive)
+* $2 is a day number',
+	'user-identity-box-location' => 'Parameters:
+* $1 is a location, input by user. Usually a town or country.',
+	'user-identity-box-was-born-in' => 'Parameters:
+* $1 is a user input, usually a town or country.',
+	'user-identity-i-am' => 'Parameters:
+* $1 is free-form user input, usually contains gender but sometimes a more general statement, such as "a rockstar". This is by design.',
+	'user-identity-box-edits-since-joining' => 'Parameters:
+* $1 is the number of edits',
+	'userprofilepage-question-caption' => 'Parameters:
+* $1 is the number of the current question
+* $2 is the total number of questions in the interview.',
+	'userprofilepage-question-list-title' => 'Parameters:
+* $1 is the number of the current question
+* $2 is the total number of questions in the interview,',
+	'user-identity-box-edit' => 'This is the label of a link leading to profile editing mode. Should be used as a verb phrase.',
+	'user-identity-box-aka-label' => 'Parameters:
+* $1 is the user\'s Real Name field entry, e.g. TOR aka Lucas Garczewski',
 );
