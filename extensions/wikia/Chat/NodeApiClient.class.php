@@ -70,7 +70,7 @@ class NodeApiClient {
 				"func" => "getDefaultRoomId",
 				"wgCityId" => $wgCityId,
 				"roomType" => $roomType,
-				"roomUsers" => $roomUsers,
+				"roomUsers" => implode(',', $roomUsers),
 				"defaultRoomName" => $wgSitename,
 				"defaultRoomTopic" => wfMsg('chat-default-topic', $wgSitename),
 				"extraDataString" => $extraDataString
