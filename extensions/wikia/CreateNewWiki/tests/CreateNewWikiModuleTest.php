@@ -64,9 +64,11 @@ class CreateNewWikiModuleTest extends PHPUnit_Framework_TestCase {
 		$wgUser = $this->getMock('User');
 
 		$cnwModule = $this->getMock( 'CreateNewWikiModule', array( 'countCreatedWikis', 'getStoredAnswer' ), array($app) );
+		/*
 		$cnwModule->expects($this->once())
 			->method('getStoredAnswer')
 			->will($this->returnValue($wikiAnswer));
+			*/
 		/*
 		$cnwModule->expects($this->once())
 			->method('countCreatedWikis')
