@@ -47,7 +47,7 @@
 		left: 275px;
 		position: absolute;
 		top: 10px;
-		width: 724px;
+		width: 724px - 150px /* spacing for contribute button (BugId:12490) */;
 		z-index: 3;
 		>h1 {
 			display: none;
