@@ -32,14 +32,14 @@ class ImageServingController extends WikiaController {
 		
 		if($height < 1 || $count < 1 || $width < 1) {
 			$this->setVal( 'status', 'error' );
-			$this->setVal( 'result', 'height, width, count need to be bigest then 0' );
+			$this->setVal( 'result', 'height, width, count need to be bigger then 0' );
 			return true;
 		}
 		
 		$is = new ImageServing($ids, $width, $height);
 	
 		$this->setVal( 'status', 'ok' );
-		$this->setVal( 'result', $is->getImages() );
+		$this->setVal( 'result', $is->getImages( $count ) );
 	}
 
 }
