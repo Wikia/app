@@ -13,8 +13,13 @@ class PhotoPopController extends WikiaController {
 		
 		
 		$this->appCacheManifestPath = self::CACHE_MANIFEST_PATH . "&{$this->wg->StyleVersion}";
-		$this->requireJs = AssetsManager::getInstance()->getOneCommonURL("extensions/wikia/hacks/PhotoPop/shared/lib/require.js");
-		$this->dataMain = "{$wgExtensionsPath}/wikia/hacks/PhotoPop/js/main";
+		//TODO: move to AssetsManager package
+		$this->scripts = array(
+			AssetsManager::getInstance()->getOneCommonURL("extensions/wikia/hacks/PhotoPop/shared/lib/mustache.js"),
+			AssetsManager::getInstance()->getOneCommonURL("extensions/wikia/hacks/PhotoPop/shared/lib/my.class.js"),
+			AssetsManager::getInstance()->getOneCommonURL("extensions/wikia/hacks/PhotoPop/shared/lib/observable.js"),
+			AssetsManager::getInstance()->getOneCommonURL("extensions/wikia/hacks/PhotoPop/shared/lib/require.js") . '" data-main="' . $wgExtensionsPath . '/wikia/hacks/PhotoPop/js/main'
+		);
 		$this->cssLink = AssetsManager::getInstance()->getOneCommonURL("extensions/wikia/hacks/PhotoPop/shared/css/homescreen.css");
 	}
 }

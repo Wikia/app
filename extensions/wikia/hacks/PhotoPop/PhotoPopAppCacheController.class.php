@@ -22,8 +22,8 @@ class PhotoPopAppCacheController extends WikiaController {
 		foreach( $dirs as $dir ) {
 			if ( $handle = opendir( $basePath . $dir ) ) {
 				while ( false !== ( $file = readdir( $handle ) ) ) {
-					if( $file != "." && $file != ".." ) {
-						array_push( $files, $dir . "/" . $file);
+					if( $file{0} != '.' ) {
+						array_push( $files, "{$basePath}{$dir}/{$file}");
 					}
 				}
 				closedir( $handle );

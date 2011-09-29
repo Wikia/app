@@ -23,16 +23,17 @@ define.call(exports, {
 		</div>",
 	
 	selectorScreen: "<div id='sliderWrapper'>\
-				<div class='sliderContent' data-scroll='x'>\
-					<ul>{{#games}}\
-						<li class='gameIcon' data-gameurl='{{gameUrl}}'>\
-							<img src ='{{#image}}gameicon_{{name}}{{/image}}'><br/>\
-							<div class='gameName'>\
-								{{gameName}}\
-							</div>\
-						</li>\
-					{{/games}}</ul> \
-				</div>\
-			</div>"
-
+			<div class='sliderContent' data-scroll='x'>\
+				<ul>{{#games}}\
+					<li class='gameIcon' data-gameurl='{{gameUrl}}'>\
+						<img src ='{{#image}}gameicon_{{name}}{{/image}}'><br/>\
+						<div class='gameName'>\
+							{{gameName}}\
+						</div>\
+					</li>\
+				{{/games}}</ul> \
+			</div>\
+		</div>",
+	
+	gameScreen: "<div id='gameWrapper'><img src='{{path}}'/></div>"
 });
