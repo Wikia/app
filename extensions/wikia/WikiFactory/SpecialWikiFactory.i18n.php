@@ -131,6 +131,9 @@ $messages['en'] = array(
 	"closed-confirm-btn" => "Confirm close",
 	"closed-redirect-alert" => "Please put new URL of redirect!",
 	"closed-reason" => "Reason:",
+
+	# new wikis graph metrics
+	'newwikisgraph' => 'New Wikis Graph',
 );
 
 /** Message documentation (Message documentation)
@@ -171,6 +174,7 @@ $messages['qqq'] = array(
 * $3 is the total number of results available (this can be more than the number of records displayed)',
 	'closed-hide-dumps' => 'The exact meaning is: "Hide database dump and hide image dump", i.e. both are dumps.',
 	'closed-reason' => '{{Identical|Reason}}',
+	'newwikisgraph' => 'Title of a special page',
 );
 
 /** Afrikaans (Afrikaans)

@@ -36,6 +36,8 @@ require_once( $dir . '/SpecialWikiFactory_ajax.php' );
  * metrics
  */
 require_once( $dir . '/Metrics/SpecialAWCMetrics.php' );
+$wgAutoloadClasses['SpecialNewWikisGraph'] = $dir . '/Metrics/SpecialNewWikisGraph.php';
+$wgSpecialPages['NewWikisGraph'] = 'SpecialNewWikisGraph';
 
 /**
  * tags
@@ -48,6 +50,8 @@ require_once( $dir . '/Tags/WikiFactoryTagsQuery.php' );
  */
 $wgAvailableRights[] = 'wikifactory';
 $wgGroupPermissions['util']['wikifactory'] = true;
+$wgAvailableRights[] = 'wikifactorymetrics';
+$wgGroupPermissions['staff']['wikifactorymetrics'] = true;
 
 extAddSpecialPage( dirname(__FILE__) . '/SpecialWikiFactory_body.php', 'WikiFactory', 'WikiFactoryPage' );
 $wgSpecialPageGroups['WikiFactory'] = 'wikia';
