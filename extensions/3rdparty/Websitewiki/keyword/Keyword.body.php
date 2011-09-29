@@ -173,4 +173,16 @@ class Keyword extends SpecialPage {
 			$wgOut->addHTML( $output );
 		}
 	}
+	
+	static public function loadSchemaUpdates() {
+		$db = wfGetDB( DB_MASTER );
+		if( $db->tableExists( 'kw_keywords' ) ) {
+			echo "...kw_keywords already exists.\n";
+		} else {
+			$db->sourceFile( dirname(dirname( __FILE__ )) . "/keywords.sql" );
+			echo "...kw_keywords created.\n";
+		}
+	
+		return true;
+	} 	
 }
