@@ -23,6 +23,7 @@ $messages['en'] = array(
 	'editpagelayout-pageControls-changes' => 'Changes',
 	'editpagelayout-blocked-user' => 'Your user name or IP address has been blocked',
 	'editpagelayout-edit-summary-label' => 'Edit Summary',
+	'editpagelayout-subject-headline-label' => 'Subject/headline:',
 
 	'wikia-editor-media-image' => 'Photo',
 	'wikia-editor-media-gallery' => 'Gallery',
@@ -96,6 +97,8 @@ $messages['qqq'] = array(
 	'editpagelayout-edit-title' => 'Tooltip for title edit popup icon',
 	'editpagelayout-edit-info' => 'Tooltip for title and description edit popup icon',
 	'editpagelayout-diff-header-url' => 'See interwiki links (below categories) on http://help.wikia.com/wiki/Help:Diff for eventually an appropiate page name. {{doc-important|Do not change the "<tt>Help:</tt>" part.}}',
+	'editpagelayout-edit-summary-label' => 'Label that appears above the input for summarizing the edit you\'re making.',
+	'editpagelayout-subject-headline-label' => 'When you add a section to an existing page, this is the label that appears above the input to add a subject or headline to the section you\'re adding.',
 	'wikia-editor-media-slider' => 'This refers to a special kind of slideshow which is intended for the main page. See http://help.wikia.com/wiki/Help:Galleries_and_slideshows#Creating_a_main_page_slider.',
 	'wikia-editor-modules-license-text' => 'Needs plural support.
 The first parameter is a placeholder for the license logo/image. The third parameter is the license name.',
