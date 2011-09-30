@@ -46,6 +46,17 @@ class CategoryExhibitionSection {
 
 		global $wgDevelEnvironment;
 		$sCategoryDBKey = $this->categoryTitle->getDBkey();
+
+		// Check if page is a redirect
+		if( $this->categoryTitle->isRedirect() ){
+			$oTmpArticle = new Article( $this->categoryTitle );
+			if ( !is_null( $oTmpArticle ) ) {
+				$rdTitle = $oTmpArticle->getRedirectTarget();
+				if ( !is_null( $rdTitle ) && ( $rdTitle->getNamespace() == NS_CATEGORY ) ) {
+					$sCategoryDBKey = $rdTitle->getDBkey();
+				}
+			}
+		}
 		if (!is_array($mNamespace)){
 			$mNamespace = (int)$mNamespace;
 		} else {
