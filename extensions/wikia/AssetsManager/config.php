@@ -53,11 +53,12 @@ $config['oasis_jquery'] = array(
 		'#function_AssetsConfig::getJQueryUrl',
 		'//skins/common/jquery/jquery.json-2.2.js',
 		'//skins/common/jquery/jquery.getcss.js',
+		//'//skins/common/socket.io/socket.io.js',
+		//'//skins/common/jquery/jquery.wikia.tsocket.js',
 		'//skins/common/jquery/jquery.cookies.2.1.0.js',
 		'//skins/common/jquery/jquery.timeago.js',
 		'//skins/common/jquery/jquery.store.js',
 		'//skins/common/jquery/jquery.wikia.js',
-		'//skins/common/jquery/jquery.expirystorage.js',
 		'//skins/oasis/js/tables.js',
 		'//skins/oasis/js/common.js'
 	)
@@ -87,7 +88,6 @@ $config['oasis_shared_js'] = array(
 		'//skins/oasis/js/GlobalModal.js',
 		'//skins/oasis/js/FirefoxFindFix.js',
 		'//skins/oasis/js/isTouchScreen.js',
-		'//skins/oasis/js/innerShiv.js',
 	)
 );
 
@@ -106,10 +106,11 @@ $config['oasis_extensions_js'] = array(
 		'//extensions/wikia/AdEngine/AdEngine.js',
 		'//extensions/wikia/AdEngine/AdProviderOpenX.js',
 		'//extensions/wikia/AdEngine/LazyLoadAds.js',
-		'//extensions/wikia/AdEngine/ghost/gw-11.6.7/lib/gw.min.js',
+		'//extensions/wikia/AdEngine/ghost/gw-11.6.6/lib/gw.min.js',
 		'//extensions/wikia/Geo/geo.js',
 		'//extensions/wikia/QuantcastSegments/qcs.js',
 		'//extensions/wikia/ApertureAudience/Aperture.js',
+		'//extensions/wikia/AdEngine/liftium/WikiaTracker.js',
 		'//extensions/wikia/AdEngine/liftium/Liftium.js',
 		'//extensions/wikia/AdEngine/liftium/Wikia.js',
 		'//extensions/wikia/AdEngine/liftium/AdsInContent.js',
@@ -197,22 +198,10 @@ $config['chat_js'] = array(
 		'#group_oasis_jquery',
 		'//extensions/wikia/Chat/js/lib/socket.io.client.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
-		'//extensions/wikia/Chat/js/emoticons.js', // must be before controllers.js
 		'//extensions/wikia/Chat/js/lib/underscore.js',
 		'//extensions/wikia/Chat/js/lib/backbone.js',
 		'//extensions/wikia/Chat/js/models/models.js',
 		'//extensions/wikia/Chat/js/controllers/controllers.js',
 		'//extensions/wikia/Chat/js/views/views.js',
-	)
-);
-
-$config['theme_designer_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'#group_oasis_jquery',
-		'//skins/common/jquery/jquery.wikia.tracker.js',
-		'//skins/common/jquery/jquery-ui-1.8.14.custom.js',
-		'//extensions/wikia/ThemeDesigner/js/ThemeDesigner.js',
-		'//extensions/wikia/ThemeDesigner/js/aim.js',
 	)
 );
