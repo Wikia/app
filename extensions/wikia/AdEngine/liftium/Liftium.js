@@ -2145,6 +2145,9 @@ Liftium.trackEvent3 = function(page, param) {
 
 	page = '/' + LiftiumOptions.pubid + '/' + page;
 
+	WikiaTracker.trackEvent3(page, param);
+
+/*
 	var profile = 'UA-17475676-10';
 	var sample = 10;
 	if (!Liftium.e(param)) {
@@ -2177,6 +2180,7 @@ Liftium.trackEvent3 = function(page, param) {
 	_gaq.push(['liftium._setAccount', profile]);
 	_gaq.push(['liftium._setSampleRate', sample]);
 	_gaq.push(['liftium._trackPageview', page]);
+*/
 };
 
 Liftium.buildTrackUrl = function(data) {

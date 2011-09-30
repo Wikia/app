@@ -18,18 +18,18 @@ AIC2.init = function() {
 	if ($("#WikiaMainContent").width() != AIC2.WMCbaseWidth) {
 		AIC2.marginLeft = AIC2.marginLeft + parseInt( ($("#WikiaMainContent").width() - AIC2.baseWidth) / 2 );
 		Liftium.d("AIC2: non standard width, new marginLeft set to " + AIC2.marginLeft, 5);
-		Liftium.trackEvent3(Liftium.buildTrackUrl(["AIC2", "wide"]));
+		WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "AIC2", "wide"]));
 	}
 	if ($('body').hasClass('rtl')) {
 		Liftium.d("AIC2: rtl wiki", 7);
-		Liftium.trackEvent3(Liftium.buildTrackUrl(["AIC2", "rtl"]));
+		WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "AIC2", "rtl"]));
 		AIC2.isRightToLeft = true;
 	}
 
 // FIXME
 if ($(window).width() < 1010) {
 	Liftium.d("AIC2: window too narrow, bailing out", 3);
-	Liftium.trackEvent3(Liftium.buildTrackUrl(["AIC2", "too_narrow"]));
+	WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "AIC2", "too_narrow"]));
 	return;
 }
 
@@ -46,10 +46,10 @@ if ($(window).width() < 1010) {
 
 	if (typeof inGroup != 'undefined') {
 	if (inGroup(groups.N)) {
-		Liftium.trackEvent3(Liftium.buildTrackUrl(['AIC2', 'test6']), {profile:'UA-17475676-11', sample:100});
+		WikiaTracker.trackEvent3(Liftium.buildTrackUrl([LiftiumOptions.pubid, 'AIC2', 'test6']), {profile:'UA-17475676-11', sample:100});
 	}
 	} else {
-		Liftium.trackEvent3(Liftium.buildTrackUrl(["error", "inGroup", "AdsInContent"]), '100%');
+		WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "error", "inGroup", "AdsInContent"]), 'liftium.error');
 	}
 	if (!Liftium.e(Liftium.debugLevel) || Math.floor(Math.random() * 10) == 7) {
 		Liftium.trackEvent(Liftium.buildTrackUrl(['AIC2', 'test1']), 'UA-17475676-11');
@@ -75,11 +75,11 @@ if ($(window).width() < 1010) {
 
 		_gaq.push(['liftium._trackPageview', '/999/' + Liftium.buildTrackUrl(['AIC2', 'test2'])]);
 	}
-	Liftium.trackEvent3(Liftium.buildTrackUrl(['AIC2', 'test5']), {profile:'UA-17475676-11', sample:10});
+	WikiaTracker._track(Liftium.buildTrackUrl([LiftiumOptions.pubid, 'AIC2', 'test5']), 'UA-17475676-11', 10);
 
 	} else {
 		Liftium.d("AIC2: page too short", 3);
-		Liftium.trackEvent3(Liftium.buildTrackUrl(["AIC2", "too_short"]));
+		WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "AIC2", "too_short"]));
 	}
 };
 
@@ -98,7 +98,7 @@ AIC2.checkStartStopPosition = function() {
 		}
 	} catch (e) {
 		Liftium.d("AIC2: catched in start/stop:", 1, e);
-		Liftium.trackEvent3(Liftium.buildTrackUrl(["error", "AIC2", "try_catch"]), '100%');
+		WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "error", "AIC2", "try_catch"]), 'liftium.error');
 		// bail out - missing elements, broken dom, erroneous cast...
 		return false;
 	}
