@@ -9,15 +9,24 @@
 		// render edit button with dropdown
 		else {
 ?>
-	<? if($contribute): ?>
-<ul class="<?= str_replace('loginToEditProtectedPage', '', $class) ?>"><li>
-		<?= $icon ?> <?= htmlspecialchars($action['text']) ?>
-	<? else: ?>
 <nav class="<?= $class ?>" <?= empty($id) ? '' : 'id="'.$id.'"'?>>
+<?php
+			// render edit menu
+			if (isset($action['href'])) {
+?>
 	<a <?= !empty($actionAccessKey) ? "accesskey=\"{$actionAccessKey}\"" : '' ?> href="<?= empty($action['href']) ? '' : htmlspecialchars($action['href']) ?>" data-id="<?= $actionName ?>" <?= empty($action['id']) ? '' : 'id="'.$action['id'].'"'?>>
 		<?= $icon ?> <?= htmlspecialchars($action['text']) ?>
 	</a>
-	<? endif; ?>
+<?php
+			}
+			// render menu without URL defined for a button
+			else {
+?>
+	<?= $icon ?> <?= htmlspecialchars($action['text']) ?>
+<?php
+			}
+?>
+
 	<span class="drop">
 		<img src="<?= $wgBlankImgUrl ?>" class="chevron">
 	</span>
@@ -43,11 +52,7 @@
 		}
 ?>
 	</ul>
-<? if($contribute): ?>
-</li></ul>
-<? else: ?>
 </nav>
-<? endif; ?>
 <?php
 		}
 	}

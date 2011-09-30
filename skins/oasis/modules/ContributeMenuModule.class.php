@@ -1,6 +1,6 @@
 <?php
 
-class ContributionMenuModule extends Module {
+class ContributeMenuModule extends Module {
 
 	var $dropdownItems = array();
 	var $content_actions;
