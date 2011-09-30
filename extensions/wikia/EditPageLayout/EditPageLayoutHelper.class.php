@@ -302,13 +302,6 @@ class EditPageLayoutHelper {
 		return true;
 	}
 
-	function onSkinAfterBottomScripts($skin, &$text) {
-		if ($this->editPage instanceof EditPageLayout) {
-			$text .= Html::inlineScript("$('#wpSave').attr('disabled', true);");
-		}
-		return true;
-	}
-
 	/**
 	 * Modify HTML before edit page textarea
 	 *
