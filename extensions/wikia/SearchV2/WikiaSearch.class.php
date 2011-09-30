@@ -42,9 +42,10 @@ class WikiaSearch extends WikiaObject {
 		$result['title'] = $page->getTitle()->getText();
 		$result['text'] = $this->wg->Out->getHTML();
 		$result['url'] = $page->getTitle()->getFullUrl();
+		$result['ns'] = $page->getTitle()->getNamespace();
 
 		if( $withMetaData ) {
-			$result = array_merge( $result, $this->getPageMetaData( $pageId ) );
+			$result['metadata'] = $this->getPageMetaData( $page );
 		}
 
 		// restore global state
@@ -54,12 +55,47 @@ class WikiaSearch extends WikiaObject {
 		return $result;
 	}
 
-	public function getPageMetaData( $pageId ) {
+	public function getPageMetaData( $page ) {
 		$result = array();
 
-		$result['backlinks'] = 0;
+		$data = $this->callMediaWikiAPI( array(
+			'titles' => $page->getTitle(),
+			'bltitle' => $page->getTitle(),
+			'action' => 'query',
+			'list' => 'backlinks',
+			'bllimit' => 300
+		));
+
+		if( is_array( $data['query']['backlinks'] ) ) {
+			$result['backlinks'] = count( $data['query']['backlinks'] );
+		}
+		else {
+			$result['backlinks'] = 0;
+		}
+
+		$data = $this->callMediaWikiAPI( array(
+			'pageids' => $page->getId(),
+			'action' => 'query',
+			'prop' => 'info',
+			'inprop' => 'url|created|views|revcount|redirect'
+		));
+
+		if( isset( $data['query']['pages'][$page->getId()] ) ) {
+			$pageData = $data['query']['pages'][$page->getId()];
+			$result['views'] = $pageData['views'];
+			$result['revcount'] = $pageData['revcount'];
+			$result['created'] = $pageData['created'];
+			$result['touched'] = $pageData['touched'];
+		}
 
 		return $result;
+	}
+
+	private function callMediaWikiAPI( Array $params ) {
+		$api = F::build( 'ApiMain', array( 'request' => new FauxRequest($params) ) );
+		$api->execute();
+
+		return  $api->getResultData();
 	}
 
 }
