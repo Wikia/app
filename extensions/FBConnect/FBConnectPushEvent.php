@@ -259,17 +259,19 @@ class FBConnectPushEvent {
 		global $wgStatsDB, $wgUser, $wgCityId, $wgStatsDBEnabled, $wgDevelEnvironment;
 
 		if ( !empty( $wgStatsDBEnabled ) && $wgDevelEnvironment !== true ) { // devboxes don't have writable stats
-			$class = str_replace('FBPush_', '', $class);
-			$dbs = wfGetDB( DB_MASTER, array(), $wgStatsDB);
-			$dbs->begin();
-			$dbs->insert('fbconnect_event_stats',
-				array(
-					 'user_id' => $wgUser->getId(),
-					 'status' => $status,
-					 'city_id' => $wgCityId,
-					 'event_type' =>  $class ,
-				),__METHOD__);
-			$dbs->commit();
+			if( !wfReadOnly() ){
+				$class = str_replace('FBPush_', '', $class);
+				$dbs = wfGetDB( DB_MASTER, array(), $wgStatsDB);
+				$dbs->begin();
+				$dbs->insert('fbconnect_event_stats',
+					array(
+						 'user_id' => $wgUser->getId(),
+						 'status' => $status,
+						 'city_id' => $wgCityId,
+						 'event_type' =>  $class ,
+					),__METHOD__);
+				$dbs->commit();
+			}
 		}
 	}
 
@@ -369,16 +371,18 @@ class FBConnectPushEvent {
 
 	static public function addDisplayStat($fbuser_id, $time, $class){
 		global $wgUser, $wgCityId, $wgStatsDB;
-		$class = str_replace('FBPush_', '', $class);
-		$dbs = wfGetDB( DB_MASTER, array(), $wgStatsDB);
-		$dbs->begin();
-		$dbs->insert('fbconnect_event_show',
-			array(
-  				'event_type' =>  $class,
-				'user_id' =>  (int) $fbuser_id,
-				'post_time' => (int) $time
-			),__METHOD__);
-		$dbs->commit();
+		if( !wfReadOnly() ){
+			$class = str_replace('FBPush_', '', $class);
+			$dbs = wfGetDB( DB_MASTER, array(), $wgStatsDB);
+			$dbs->begin();
+			$dbs->insert('fbconnect_event_show',
+				array(
+					'event_type' =>  $class,
+					'user_id' =>  (int) $fbuser_id,
+					'post_time' => (int) $time
+				),__METHOD__);
+			$dbs->commit();
+		}
 	}
 
 	/**
