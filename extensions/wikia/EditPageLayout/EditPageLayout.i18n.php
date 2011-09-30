@@ -99,6 +99,7 @@ $messages['qqq'] = array(
 	'wikia-editor-media-slider' => 'This refers to a special kind of slideshow which is intended for the main page. See http://help.wikia.com/wiki/Help:Galleries_and_slideshows#Creating_a_main_page_slider.',
 	'wikia-editor-modules-license-text' => 'Needs plural support.
 The first parameter is a placeholder for the license logo/image. The third parameter is the license name.',
+	'editpagelayout-edit-title' => 'This is a button label (tooltip). Should be translated as a verb phrase',
 );
 
 /** Azerbaijani (Azərbaycanca)
