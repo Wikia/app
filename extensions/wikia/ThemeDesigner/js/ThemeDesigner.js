@@ -8,15 +8,14 @@ var ThemeDesigner = {
 	},
 
 	init: function() {
-
 		// theme settings
-		ThemeDesigner.settings = themeSettings
+		ThemeDesigner.settings = window.themeSettings;
 
 		// settings history
-		ThemeDesigner.history = themeHistory;
+		ThemeDesigner.history = window.themeHistory;
 
 		// themes
-		ThemeDesigner.themes = themes;
+		ThemeDesigner.themes = window.themes;
 
 		$().log(ThemeDesigner, 'ThemeDesigner');
 
@@ -130,7 +129,7 @@ var ThemeDesigner = {
 		$("#fix-background").change(function() {
 			ThemeDesigner.set("background-fixed", $(this).attr("checked") ? "true" : "false");
 		});
-		
+
 		var currentVal = ThemeDesigner.settings["page-opacity"];
 		var base = 70;
 		$("#OpacitySlider").slider({
@@ -364,7 +363,7 @@ var ThemeDesigner = {
 				ThemeDesigner.set("background-align", "left");
 			}
 		}
-		
+
 		if (setting == "background-fixed") {
 			if (newValue == "true") {
 				//all fixed images are centered
@@ -588,7 +587,7 @@ var ThemeDesigner = {
 		} else {
 			$("#tile-background").attr("checked", false);
 		}
-		
+
 		$("#fix-background").attr("checked", ThemeDesigner.settings["background-fixed"] == "true");
 
 		/*** Wordmark Tab ***/
@@ -645,7 +644,7 @@ var ThemeDesigner = {
 						.html('')
 						.append('<img src="' + ThemeDesigner.settings["wordmark-image-url"] + '">');
 			}
-			
+
 			$("#PreviewFrame").contents().find('#WikiaPageBackground').css("opacity", ThemeDesigner.settings["page-opacity"]/100);
 			ThemeDesigner.settings["page-opacity"] < 100 ? $("#PreviewFrame").contents().find("#WikiHeader .shadow-mask").hide() : $("#PreviewFrame").contents().find("#WikiHeader .shadow-mask").show();
 		}
