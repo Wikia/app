@@ -2465,10 +2465,10 @@ class Article {
 
 				# Insert a null revision
 				$nullRevision = Revision::newNullRevision( $dbw, $id, $editComment, true );
-				
+
 				if( $nullRevision instanceof Revision ) {
 					$nullRevId = $nullRevision->insertOn( $dbw );
-					
+
 					$latest = $this->getLatest();
 					# Update page record
 					$dbw->update( 'page',
@@ -2480,10 +2480,10 @@ class Article {
 							'page_id' => $id
 						), 'Article::protect'
 					);
-					
+
 					wfRunHooks( 'NewRevisionFromEditComplete', array( $this, $nullRevision, $latest, $wgUser ) );
 					wfRunHooks( 'ArticleProtectComplete', array( &$this, &$wgUser, $limit, $reason ) );
-					
+
 					# Update the protection log
 					$log = new LogPage( 'protect' );
 					if ( $protect ) {
@@ -2496,7 +2496,7 @@ class Article {
 					wfDebug( "updateRestrictions failed: page supposed to be protected does not exist anymore (ID: $id) \n" );
 					return false;
 				}
-				
+
 			} # End hook
 		} # End "changed" check
 
@@ -3194,7 +3194,10 @@ class Article {
 
 		/* Wikia change begin - @author: Macbre */
 		/* MyHome: store ID of the rollbacked revision */
-		Wikia::setVar('RollbackedRevId', $target->getNext()->getId());
+		$nextRev = $target->getNext();
+		if ($nextRev instanceof Revision) {
+			Wikia::setVar('RollbackedRevId', $target->getNext()->getId());
+		}
 		/* Wikia change end */
 
 		# Allow the custom summary to use the same args as the default message
