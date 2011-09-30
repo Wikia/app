@@ -3196,7 +3196,7 @@ class Article {
 		/* MyHome: store ID of the rollbacked revision */
 		$nextRev = $target->getNext();
 		if ($nextRev instanceof Revision) {
-			Wikia::setVar('RollbackedRevId', $target->getNext()->getId());
+			Wikia::setVar('RollbackedRevId', $nextRev->getId());
 		}
 		/* Wikia change end */
 
