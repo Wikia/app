@@ -17,6 +17,8 @@
 
 		// init page controls widget
 		init: function() {
+			$('#wpSave').attr('disabled', true);
+			
 			var pageControls = $('#EditPageRail .module_page_controls'),
 				menu = pageControls.find('nav');
 
@@ -84,7 +86,7 @@
 			} else if ($('#EditPageHiddenFields [name=wpTitle]').exists()) { // page name is editable
 				this.updateEditedTitle();
 			}
-
+			
 			// track clicks on page title and help link
 			this.titleNode.children('a').bind('click', this.proxy(function(ev) {
 				this.editor.track('title', 'pagename');
