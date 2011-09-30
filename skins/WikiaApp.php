@@ -19,6 +19,7 @@ $wgEnableFacebookConnectPushing = false;
 $wgEnableMWSuggest = false;
 $wgAjaxWatch = false;
 $wgUseSiteJs = false;
+$wgUseSiteCss = false;
 
 $wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'SkinWikiaApp::onSkinTemplateOutputPageBeforeExec';
 $wgHooks['SkinGetHeadScripts'][] = 'SkinWikiaApp::onSkinGetHeadScripts';
@@ -38,7 +39,7 @@ class SkinWikiaApp extends SkinTemplate {
 	}
 	
 	function initPage( OutputPage $out ) {
-		global $wgHooks, $wgUseSiteCss, $wgRequest, $wgCookiePrefix;
+		global $wgRequest, $wgCookiePrefix;
 		
 		//this will force the skin after the first visit, only for selected mobile platforms
 		if( empty( $_COOKIE[ $wgCookiePrefix . self::COOKIE_NAME ] ) ) {	
@@ -55,8 +56,6 @@ class SkinWikiaApp extends SkinTemplate {
 		$this->stylename = 'wikiaapp';
 		$this->themename = 'wikiaapp';
 		$this->template  = 'MonoBookTemplate';
-		
-		$wgUseSiteCss = false;
 		
 		$out->addMeta("viewport", "width=320");
 	}
@@ -76,7 +75,7 @@ class SkinWikiaApp extends SkinTemplate {
 	public function onSkinGetHeadScripts(&$scripts) {
 		global $wgJsMimeType;
 		
-		$scripts = '';
+		//$scripts = '';
 		
 		foreach ( AssetsManager::getInstance()->getGroupCommonURL( 'wikiaapp_js' ) as $src ) {
 			$scripts .= "\n<script type=\"$wgJsMimeType\" src=\"{$src}\"></script>";
@@ -86,15 +85,6 @@ class SkinWikiaApp extends SkinTemplate {
 	}
 
 	function printTopHtml() {}
-	
-	public static function onMakeGlobalVariablesScript( $vars ) {
-		global $wgContLang;
-		
-		$vars['CategoryNamespaceMessage'] = $wgContLang->getNsText(NS_CATEGORY);
-		$vars['SpecialNamespaceMessage'] = $wgContLang->getNsText(NS_SPECIAL);
-		
-		return true;
-	}
 	
 	protected function afterContentHook () {
 		global $wgCityId, $wgRightsUrl;
