@@ -13,7 +13,7 @@ define.call(exports, {
 		buttonSrc: "button_down_arrow",
 		buttonSrc_home: "button_home",
 		buttonSrc_answerOpen: "button_answers_open",
-		buttonSrc_answerClose: "button_answers_open",
+		buttonSrc_answerClose: "button_answers_close",
 		buttonSrc_contiunue: "button_continue",
 		gameicon_trueblood: "gameicon_trueblood",
 		gameicon_glee: "gameicon_glee",
@@ -53,7 +53,7 @@ define.call(exports, {
 		fail: "Sad-Trombone",
 		pop: "FingerPlop4",
 		win: "Human-Applause-MediumCrowd03",
-		timeEnd: "CountdowntoBlastOff",
+		timeLow: "CountdowntoBlastOff",
 		wrongAnswer: "tubePop"
 	},
 	

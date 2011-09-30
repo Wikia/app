@@ -21,8 +21,13 @@ define.call(exports, function(){
 			if(!mute){
 				if(titanium)
 					Ti.App.fireEvent('soundServer:play', {sound: sounds[sound]});
-				else
+				else {
+					for(var p in sounds){
+						sounds[p].pause();
+						sounds[p].currentTime = 0;
+					}
 					sounds[sound].play();
+				}
 			}
 		},
 		
