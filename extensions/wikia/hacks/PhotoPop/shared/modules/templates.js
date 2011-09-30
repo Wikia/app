@@ -67,44 +67,29 @@ define.call(exports, {
 				</div>\
 			</div>\
 			<div id='timeUpText'>\
-				<div class='timeUpTextInner'>\
-					CONTINUE TIME UP\
-				</div>\
+				CONTINUE TIME UP\
 			</div>\
-			<div id='continueText'>\
-				CONTINUE CORRECT\
-			</div>\
-			<div id='continueButton'>\
+			<div id='continue'>\
+				<span id='continueText'>CONTINUE</span>\
 				<img src='{{#image}}buttonSrc_contiunue{{/image}}'/>\
 			</div>\
-			<div id='answerDrawerWrapper'>\
-				<div id='answerDrawer'>\
-					<div class='answerButton' id='answerButton_toOpen'>\
-						<img src='{{#image}}buttonSrc_answerOpen{{/image}}'/>\
-					</div>\
-					<div class='answerButton' id='answerButton_toClose'>\
-						<img src='{{#image}}buttonSrc_answerOpen{{/image}}'/>\
-					</div>\
-					<div id='answerListFalseEdge'>\
-					</div>\
-					<div id='answerListWrapper'>\
-						<ul>\
-							<li class='first'></li>\
-							<li></li>\
-							<li></li>\
-							<li class='last'></li>\
-						</ul>\
-					</div>\
-				</div>\
+			<div id='answerDrawer'>\
+				<img id='answerButton' class='closed' src='{{#image}}buttonSrc_answerOpen{{/image}}' />\
+				<ul id='answerList'>\
+					<li id='answer1'>1</li>\
+					<li id='answer2'>2</li>\
+					<li id='answer3'>3</li>\
+					<li id='answer4'>4</li>\
+				</ul>\
 			</div>\
 			<div id='hud'>\
-				<div class='home'>\
-					<a href=''><img src='{{#image}}buttonSrc_home{{/image}}'/></a>\
+				<div id='home'>\
+					<img src='{{#image}}buttonSrc_home{{/image}}'/>\
 				</div>\
-				<div class='score'>\
+				<div id='score'>\
 					SCORE\
 				</div>\
-				<div class='progress'>\
+				<div id='progress'>\
 					PROGRESS\
 				</div>\
 			</div><table id='tilesWrapper'></table>\
