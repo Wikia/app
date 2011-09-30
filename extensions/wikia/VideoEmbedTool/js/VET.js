@@ -259,18 +259,20 @@ function VET_manualWidthInput( elem ) {
 
 function VET_readjustSlider( value ) {
 		if ( 500 < value ) { // too big, hide slider
-			if ( 'hidden' != $G( 'VideoEmbedSliderThumb' ).style.visibility ) {
-				$G( 'VideoEmbedSliderThumb' ).style.visibility = 'hidden';
-				VET_slider.setValue( 200, true, true, true );
+			if ( $('#VideoEmbedSlider .ui-slider-handle').is(':visible') ) {
+				$('#VideoEmbedSlider .ui-slider-handle').hide();
+				$('#VideoEmbedSlider').slider({
+					value: 200
+				});
 			}
 		} else {
-			if ( 'hidden' == $G( 'VideoEmbedSliderThumb' ).style.visibility ) {
-				$G( 'VideoEmbedSliderThumb' ).style.visibility = 'visible';
+			if ( !$('#VideoEmbedSlider .ui-slider-handle').is(':visible') ) {
+				$('#VideoEmbedSlider .ui-slider-handle' ).show();
 			}
 
-			var fixed_width = value - 98;
-			value = Math.max(2, Math.round( ( fixed_width * 200 ) / 400 ) );
-			VET_slider.setValue( value, true, true, true );
+			$('#VideoEmbedSlider').slider({
+				value: value
+			});
 		}
 }
 
@@ -736,21 +738,18 @@ function VET_displayDetails(responseText) {
 		VET_orgThumbSize = null;
 	}
 
-                VET_slider = YAHOO.widget.Slider.getHorizSlider('VideoEmbedSlider', 'VideoEmbedSliderThumb', 0, 201);
-                VET_slider.initialRound = true;
-                VET_slider.getRealValue = function() {
-                        return ( Math.max( 2, Math.round( this.getValue() * 2 ) ) + 98 );
-                }
-                VET_slider.subscribe("change", function(offsetFromStart) {
-                        if (VET_slider.initialRound) {
-                                $G('VideoEmbedManualWidth').value = 300;
-                                VET_slider.initialRound = false;
-                        } else {
-                                $G('VideoEmbedManualWidth').value = VET_slider.getRealValue();
-                        }
-                });
+	$('.WikiaSlider').slider({
+		min: 100,
+		max: 500,
+		value: 300,
+		slide: function(event, ui) {
+			$('#VideoEmbedManualWidth').val(ui.value)
+		},
+		create: function(event, ui) {
+			$('#VideoEmbedManualWidth').val(300);
+		}
+	});
 
-                VET_slider.setValue(100, true);
 
 	if ($G( 'VET_error_box' )) {
 		alert( $G( 'VET_error_box' ).innerHTML );

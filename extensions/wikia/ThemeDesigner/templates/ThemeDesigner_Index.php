@@ -12,6 +12,7 @@
 	<![endif]-->
 
 	<link rel="stylesheet" href="<?= AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/ThemeDesigner/css/ThemeDesigner.scss') ?>">
+	<link rel="stylesheet" href="<?= AssetsManager::getInstance()->getSassCommonURL('/skins/oasis/css/core/_WikiaSlider.scss') ?>">
 
 	<?= $globalVariablesScript ?>
 

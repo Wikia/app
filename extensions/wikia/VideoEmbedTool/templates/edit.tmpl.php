@@ -35,10 +35,7 @@ if('' == $props['oname']) {
 	<tr id="VideoEmbedWidthRow">
 		<th><?= wfMsg('vet-width') ?></th>
 		<td>
-                        <div id="VideoEmbedSlider">
-                                <img src="<?= $wgExtensionsPath.'/wikia/VideoEmbedTool/images/slider_thumb_bg.png' ?>" id="VideoEmbedSliderThumb" />
-                        </div>
-
+			<div id="VideoEmbedSlider" class="WikiaSlider"></div>
 			<span id="VideoEmbedInputWidth">
 				<input type="text" id="VideoEmbedManualWidth" name="VideoEmbedManualWidth" value="" onchange="VET_manualWidthInput(this)" onkeyup="VET_manualWidthInput(this)" /> px
 			<span>
