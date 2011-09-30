@@ -120,7 +120,9 @@ class WikiNavigationModule extends Module {
 	 * @return bool return true
 	 */
 	public static function onEditPageLayoutModifyPreview(Title $title, $html, $wikitext) {
-		if (self::isWikiNavMessage($title)) {
+		global $wgOasisNavV2;
+
+		if (self::isWikiNavMessage($title) && !empty($wgOasisNavV2)) {
 			// render a preview
 			$html = wfRenderModule('WikiNavigation', 'Index', array(
 				'msgName' => $title->getText(),
