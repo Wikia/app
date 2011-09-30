@@ -87,7 +87,8 @@ function VETWikiaVideoBlueLink() {
                 wfLoadExtensionMessages('VideoEmbedTool');
                 $wgHooks['MakeGlobalVariablesScript'][] = 'VETSetupVars';
                 $wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/VideoEmbedTool/js/VET.js?'.$wgStyleVersion.'"></script>');
-                $wgOut->addScript('<link rel="stylesheet" type="text/css" href="'.$wgExtensionsPath.'/wikia/VideoEmbedTool/css/VET.css?'.$wgStyleVersion.'" />');
+                $wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/VideoEmbedTool/css/VET.scss'));
+                $wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/core/_WikiaSlider.scss'));
         }
 	return true;
 }
@@ -112,7 +113,8 @@ function VETWikiaVideoRedLink() {
                 wfLoadExtensionMessages('VideoEmbedTool');
                 $wgHooks['MakeGlobalVariablesScript'][] = 'VETSetupVars';
                 $wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/VideoEmbedTool/js/VET.js?'.$wgStyleVersion.'"></script>');
-                $wgOut->addScript('<link rel="stylesheet" type="text/css" href="'.$wgExtensionsPath.'/wikia/VideoEmbedTool/css/VET.css?'.$wgStyleVersion.'" />');
+                $wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/VideoEmbedTool/css/VET.scss'));
+                $wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/core/_WikiaSlider.scss'));
         }
 	return true;
 }
@@ -130,7 +132,8 @@ function VETSetup($editform) {
 		wfLoadExtensionMessages('VideoEmbedTool');
 		$wgHooks['MakeGlobalVariablesScript'][] = 'VETSetupVars';
 		$wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/VideoEmbedTool/js/VET.js?'.$wgStyleVersion.'"></script>');
-		$wgOut->addScript('<link rel="stylesheet" type="text/css" href="'.$wgExtensionsPath.'/wikia/VideoEmbedTool/css/VET.css?'.$wgStyleVersion.'" />');
+		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/VideoEmbedTool/css/VET.scss'));
+		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/core/_WikiaSlider.scss'));
 	}
 	return true;
 }
