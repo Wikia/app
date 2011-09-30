@@ -109,7 +109,7 @@ class EditPageLayoutModule extends Module {
 			$this->titleShortText = htmlspecialchars($this->titleText);
 		}
 
-		$this->editing = $app->runFunction('wfMsg', $msgKey, '');
+		$this->editing = wfMsg($msgKey);
 		
 		$this->wpSummaryLabelText = wfMsg($wpSummaryLabelText);
 
