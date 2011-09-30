@@ -50,6 +50,7 @@ WikiaNotificationsApp = {
 
 					// remove wrapping <li>
 					notification.parent().remove();
+					break;
 
 				default:
 					// remove wrapping <li>
