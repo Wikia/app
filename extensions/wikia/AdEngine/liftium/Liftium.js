@@ -2145,9 +2145,13 @@ Liftium.trackEvent3 = function(page, param) {
 
 	page = '/' + LiftiumOptions.pubid + '/' + page;
 
+	if (typeof WikiaTracker != 'undefined') {
+
 	WikiaTracker.trackEvent3(page, param);
 
-/*
+	} else {
+		page = page + '/oups';
+		
 	var profile = 'UA-17475676-10';
 	var sample = 10;
 	if (!Liftium.e(param)) {
@@ -2180,7 +2184,8 @@ Liftium.trackEvent3 = function(page, param) {
 	_gaq.push(['liftium._setAccount', profile]);
 	_gaq.push(['liftium._setSampleRate', sample]);
 	_gaq.push(['liftium._trackPageview', page]);
-*/
+
+	}
 };
 
 Liftium.buildTrackUrl = function(data) {
