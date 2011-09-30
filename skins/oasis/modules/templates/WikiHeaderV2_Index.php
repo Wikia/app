@@ -18,7 +18,7 @@
 	<div class="buttons">
 		<?php
 			// render "Contribute" menu
-			echo wfRenderModule('ContributionMenu');
+			echo wfRenderModule('ContributeMenu');
 		?>
 	</div>
 

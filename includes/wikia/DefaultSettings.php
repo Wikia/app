@@ -198,7 +198,7 @@ $wgAutoloadClasses['ArticleInterlangModule'] = $IP.'/skins/oasis/modules/Article
 $wgAutoloadClasses['PagesOnWikiModule'] = $IP.'/skins/oasis/modules/PagesOnWikiModule.class.php';
 $wgAutoloadClasses['EditPageModule'] = $IP.'/skins/oasis/modules/EditPageModule.class.php';
 $wgAutoloadClasses['HuluVideoPanelModule'] = $IP.'/skins/oasis/modules/HuluVideoPanelModule.class.php';
-$wgAutoloadClasses['ContributionMenuModule'] = $IP.'/skins/oasis/modules/ContributionMenuModule.class.php';
+$wgAutoloadClasses['ContributeMenuModule'] = $IP.'/skins/oasis/modules/ContributeMenuModule.class.php';
 $wgAutoloadClasses['WikiNavigationModule'] = $IP.'/skins/oasis/modules/WikiNavigationModule.class.php';
 
 $wgAutoloadClasses['UploadPhotosModule'] = $IP.'/skins/oasis/modules/UploadPhotosModule.class.php';
