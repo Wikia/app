@@ -79,8 +79,13 @@ class EditPageLayoutModule extends Module {
 		// Is user logged in?
 		$this->isLoggedIn = $this->wg->User->isLoggedIn();
 
+		// Text for Edit summary label
+		$wpSummaryLabelText = 'editpagelayout-edit-summary-label';
+		
 		if ($section == 'new') {
 			$msgKey = 'editingcomment';
+			// If adding new section to page, change label text (BugId: 7243)
+			$wpSummaryLabelText = 'editpagelayout-subject-headline-label';
 		}
 		else if (is_numeric($section)) {
 			$msgKey = 'editingsection';
@@ -105,6 +110,8 @@ class EditPageLayoutModule extends Module {
 		}
 
 		$this->editing = $app->runFunction('wfMsg', $msgKey, '');
+		
+		$this->wpSummaryLabelText = wfMsg($wpSummaryLabelText);
 
 		// render help link and point the link to new tab
 		$this->helpLink = $app->runFunction('wfMsgExt', 'editpagelayout-helpLink', array('parseinline'));
