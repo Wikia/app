@@ -575,15 +575,6 @@ function wfGetLangObj( $langcode = false ){
 		return $langcode;
 
 	global $wgContLang;
-
-	// Wikia change - begin (BugId:12474)
-	// @author macbre
-	if (empty($wgContLang)) {
-		$backtrace = str_replace("\n", ' / ', trim(strip_tags(wfBacktrace())));
-		trigger_error(__METHOD__ . ' ' . $backtrace, E_USER_ERROR);
-	}
-	// Wikia change - end
-
 	if( $langcode === $wgContLang->getCode() || $langcode === true )
 		# $langcode is the language code of the wikis content language object.
 		# or it is a boolean and value is true
