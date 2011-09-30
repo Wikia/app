@@ -110,6 +110,7 @@ $config['oasis_extensions_js'] = array(
 		'//extensions/wikia/Geo/geo.js',
 		'//extensions/wikia/QuantcastSegments/qcs.js',
 		'//extensions/wikia/ApertureAudience/Aperture.js',
+		'//extensions/wikia/AdEngine/liftium/WikiaTracker.js',
 		'//extensions/wikia/AdEngine/liftium/Liftium.js',
 		'//extensions/wikia/AdEngine/liftium/Wikia.js',
 		'//extensions/wikia/AdEngine/liftium/AdsInContent.js',
