@@ -14,26 +14,26 @@ $optionsWithArgs = array( "from", "to" );
 ini_set('include_path', dirname(__FILE__) . '/..' );
 require_once('commandLine.inc');
 	
-$cache = isset($options['cache']);
+$clearcache = isset($options['clearcache']);
 
 // get preferences
-$default_keys = array('conf', 'help', 'force', 'quiet', 'from', 'to', 'founder', 'cache');
+$default_keys = array('conf', 'help', 'force', 'quiet', 'from', 'to', 'founder', 'clearcache');
 $preferences = array();	//pairs key=value
 foreach($options as $key => $value) {
 	if (!in_array($key, $default_keys))
 		$preferences[$key] = $value;
 }
 
-if (isset($options['help']) || (empty($preferences) && !$cache)) {
-	die( "Usage: php setUserOptions.php --adoptionmails=1 --founderemails-joins-%=1 [--from=12345] [--to=12345] [--founder] [--cache] [--quiet] [--force]
+if (isset($options['help']) || (empty($preferences) && !$clearcache)) {
+	die( "Usage: php setUserOptions.php --adoptionmails=1 --founderemails-joins-%=1 [--from=12345] [--to=12345] [--founder] [--clearcache] [--quiet] [--force]
 
-		  --founder  get unique founders from active wikis
-		  --cache    clear user cache only
-		  --from     get data from user_id if not set founder or city_id if founder is set
-		  --to       get data to user_id if not set founder or city_id if founder is set
-		  --help     you are reading it right now
-		  --force    overwrite existing option
-		  --quiet    do not print anything to output\n\n");
+		  --founder       get unique founders from active wikis
+		  --clearcache    clear user cache only
+		  --from          get data from user_id if not set founder or city_id if founder is set
+		  --to            get data to user_id if not set founder or city_id if founder is set
+		  --help          you are reading it right now
+		  --force         overwrite existing option
+		  --quiet         do not print anything to output\n\n");
 }
 
 $founder = isset($options['founder']);
@@ -55,7 +55,7 @@ if ($founder) {
 		$limitUsers[] = "city_id <= $to";
 	
 	// SELECT in SQL
-	if($cache)
+	if($clearcache)
 		$selectUsers = 'distinct city_founding_user as user_id';
 	else
 		$selectUsers = array('city_id', 'city_founding_user as user_id');
@@ -88,7 +88,7 @@ $count = 0;
 while ($row = $dbr->fetchObject($res)) {
 	$user = User::newFromId($row->user_id);
 	if ($user) {
-		if ($cache) {
+		if ($clearcache) {
 			$user->invalidateCache();
 			$count++;
 			if (!$quiet) {
