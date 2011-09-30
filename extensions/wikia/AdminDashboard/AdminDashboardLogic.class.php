@@ -66,6 +66,7 @@ class AdminDashboardLogic {
 				"MovePage",
 				"MultiLookup",
 				"NewFiles",
+				"Newimages",
 				"Our404Handler",
 				"PageLayoutBuilder",
 				"PageLayoutBuilderForm",
