@@ -177,19 +177,19 @@
 			display: none;
 			top: 25;
 			margin-left:4px;
-			width: 150px;
+			min-width: 150px;
 			border: 1px solid $color-button-highlight;
 			margin-left: 3px;
 			@include box-shadow( 1px, 2px, 15px);
 			li {
 				background: $color-page;
 				color: $color-text;
+				float: none;
 				padding: 0px;
 				margin: 0px;
 				a {
 					border: 0px solid $color-button-highlight;
 					@include border-radius( 0px );
-					width: 136px;
 					font-size: 12px;
 					line-height: 25px;
 					display: block;
