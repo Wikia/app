@@ -22,7 +22,7 @@
 		<div class="session">
 			<?php
 				// Fail gracefully (use default avatar) for NY code.
-				if(get_class($avatar) == "wAvatar"){
+				if(empty($avatar)){
 					$avatarUserName = "";
 					$isLoggedIn = true;
 				} else {

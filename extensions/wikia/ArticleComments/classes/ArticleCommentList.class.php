@@ -347,7 +347,7 @@ class ArticleCommentList {
 			$avatar = Masthead::newFromUser( $wgUser );
 		} else {
 			// Formerly Answers (this was in the Social code).
-			$avatar = new wAvatar($wgUser->getId(), 'ml');
+			$avatar = null;
 		}
 
 		$groups = $wgUser->getEffectiveGroups();
