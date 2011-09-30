@@ -1,12 +1,21 @@
 <?php
 
 class ImageServingController extends WikiaController {
-
-	/**
-	 * @details Returns an array containing result from Image Serving
-	 * 
-	 */
 	public function index() {
+		$this->forward(__CLASS__, 'getImages');
+	}
+	
+	/**
+	 * @brief Returns an array containing result from Image Serving
+	 *
+	 * @requestParam Array $ids an array of Article IDs from which to retrieve images
+	 * @requestParam int $width the desired thumbnail width in pixels
+	 * @requestParam mixed $height the desired thumbnail height in pixels or an array of proportions (@see ImageServing::getImages)
+	 * @requestParam int $count the maximum number of images to retrieve for each Article ID
+	 *
+	 * @responseParam Array $result a multi-dimensional array whith the Article ID as the key and an array of image URL's as the values
+	 */
+	public function getImages() {
 		if(!$this->wg->User->isAllowed('read')) {
 			$this->setVal( 'status', 'error' );
 			$this->setVal( 'result', 'User is not allowed to read' );
@@ -17,7 +26,7 @@ class ImageServingController extends WikiaController {
 
 		if(!is_array($ids)) {
 			$this->setVal( 'status', 'error' );
-			$this->setVal( 'result', 'ids list need to be array' );
+			$this->setVal( 'result', 'ids list needs to be an array' );
 			return true;
 		}
 		
@@ -35,9 +44,9 @@ class ImageServingController extends WikiaController {
 		
 		$count = (int) $this->getVal('count');
 		
-		if ( ( !is_array( $height ) && $height < 1 ) || $count < 1 || $width < 1) {
+		if ( ( !is_array( $height ) && $height < 1 ) || $count < 1 || $width < 1 || count( $ids ) < 1 ) {
 			$this->setVal( 'status', 'error' );
-			$this->setVal( 'result', 'height, width, count need to be bigger then 0' );
+			$this->setVal( 'result', 'height, width, count and the total of passed in ID\'s need to be bigger than 0' );
 			return true;
 		}
 		
