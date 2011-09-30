@@ -38,7 +38,7 @@ class AdProviderNull implements iAdProvider {
 
 	public static function getInstance() {
 		if(self::$instance == false) {
-			self::$instance = new AdProviderNull();
+			self::$instance = new AdProviderNull('');
 		}
 		return self::$instance;
 	}

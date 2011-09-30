@@ -293,8 +293,7 @@ class ArticleComment {
 			return Masthead::newFromUser( $user )->display( 50, 50 );
 		} else {
 			// Answers
-			$avatar = new wAvatar($user->getId(), 'ml');
-			return $avatar->getAvatarURL();
+			return AvatarService::getAvatarUrl($user, 50);
 		}
 	}
 

@@ -44,7 +44,7 @@ class AdProviderPubMatic implements iAdProvider {
 		$kadid = $this->getKadid($slotname);
 		if (empty($kadid)){
 			$NullAd = new AdProviderNull("This slotname not available for AdProviderPubMatic", true);
-			return $NullAd->getAd($slotname);
+			return $NullAd->getAd($slotname, $slot);
 		}
 
                 $dim=AdEngine::getHeightWidthFromSize($slot['size']);

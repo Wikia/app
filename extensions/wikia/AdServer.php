@@ -80,9 +80,7 @@ class AdServer {
 					if(@include($wgAdServerPath.'phpadsnew.inc.php')) {
 						if(!isset($phpAds_context)) { $phpAds_context = array(); }
 						$userType = ($wgUser->isLoggedIn()) ? 'USER' : 'VISITOR';
-						$phpAds_raw = view_raw ("zone:{$row->ad_zone}", 0, '', $source, '0', $phpAds_context, true, array($userType));
 						$html = "\n<!-- adserver={$row->ad_server} {$row->ad_pos} {$row->ad_zone} -->\n";
-						$html.= $phpAds_raw['html'];
 						$html = str_replace("ADSERVER_KW_PLACEHOLDER", $row->ad_keywords, $html);
 						$html = str_replace("ADSERVER_URL_PLACEHOLDER", "$wgServer/wiki/" . wfMsgForContent('mainpage'), $html);
 						if($wgGoogleAnalyticsID) {

@@ -119,7 +119,7 @@ class AssetsManager {
 	 * @author Inez Korczyński <korczynski@gmail.com>
 	 * @return array Array of one or many URLs
  	 */
-	private function getGroupURL(/* string */ $groupName, /* array */ $params = array(), /* string */ $prefix, /* boolean */ $combine, /* boolean */ $minify) {
+	private function getGroupURL(/* string */ $groupName, /* array */ $params, /* string */ $prefix, /* boolean */ $combine, /* boolean */ $minify) {
 
 		// Lazy loading of AssetsConfig
 		if(empty($this->mAssetsConfig)) {

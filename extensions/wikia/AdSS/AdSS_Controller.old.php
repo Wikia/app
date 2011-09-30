@@ -21,7 +21,7 @@ class AdSS_Controller extends SpecialPage {
 		$sub = explode( '/', $sub );
 
 		if( $sub[0] == 'admin' ) {
-			$adminController = new AdSS_AdminController( $this );
+			$adminController = new AdSS_AdminController();
 			$adminController->execute( $sub );
 			return;
 		}
@@ -34,7 +34,7 @@ class AdSS_Controller extends SpecialPage {
 		}
 
 		if( $sub[0] == 'manager' ) {
-			$managerController = new AdSS_ManagerController( $this );
+			$managerController = new AdSS_ManagerController();
 			$managerController->execute( $sub );
 			return;
 		}
