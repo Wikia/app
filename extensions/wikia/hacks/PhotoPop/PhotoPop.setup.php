@@ -36,14 +36,19 @@ $app->wg->append(
  */
 
 /**
+ * models
+ */
+$app->wg->set( 'wgAutoloadClasses', "{$dir}/PhotoPopModel.class.php", 'PhotoPopModel' );
+
+/**
  * services
  */
-$app->wg->set( 'wgAutoloadClasses', "{$dir}/PhotoPopController.class.php", 'PhotoPopController' );
-$app->wg->set( 'wgAutoloadClasses', "{$dir}/PhotoPopAppCacheController.class.php", 'PhotoPopAppCacheController' );
 
 /**
  * controllers
  */
+$app->wg->set( 'wgAutoloadClasses', "{$dir}/PhotoPopController.class.php", 'PhotoPopController' );
+$app->wg->set( 'wgAutoloadClasses', "{$dir}/PhotoPopAppCacheController.class.php", 'PhotoPopAppCacheController' );
 
 /**
  * special pages
