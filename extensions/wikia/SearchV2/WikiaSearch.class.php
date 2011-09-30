@@ -73,6 +73,7 @@ class WikiaSearch extends WikiaObject {
 			$result['backlinks'] = 0;
 		}
 
+		/*
 		$data = $this->callMediaWikiAPI( array(
 			'pageids' => $page->getId(),
 			'action' => 'query',
@@ -87,6 +88,8 @@ class WikiaSearch extends WikiaObject {
 			$result['created'] = $pageData['created'];
 			$result['touched'] = $pageData['touched'];
 		}
+		*/
+		$result['views'] = 1;
 
 		return $result;
 	}
