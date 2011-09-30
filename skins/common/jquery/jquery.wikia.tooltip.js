@@ -1,6 +1,6 @@
-/* 
+/*
  * @author Federico "Lox" Lucignano
- * 
+ *
  * Features
  *	- Can be safely called multiple times on the same element to
  *	change/update tooltip content
@@ -8,33 +8,33 @@
  *	- supports a callback (accepts a reference to the target element
  *	and must return a value), a jQuery object reference or a scalar value
  *	as the tooltip content
- *	
+ *
  *	- supports different positioning options
  *
  *Examples
  *	//passing a string
  *	$('#test').wikiaTooltip('this is a tooltip');
- *	
+ *
  *	//passing a jQuery object
  *	<div class="wikia-tooltip" id="test-tooltip">This is a tooltip</div>
  *	$('#test').wikiaTooltip($('#test-tooltip'));
- *	
+ *
  *	//passing a callback returning a string
  *	$('#test').wikiaTooltip(function(elm){return elm.id + Math.random();});
- *	
+ *
  *	//passing a callback returning a jQuery object
  *	$('#test').wikiaTooltip(function(elm){return $('#' + elm.id + '-tooltip');});
- *	
+ *
  *	//customizing options
  *	$('#test').wikiaTooltip('this is a tooltip', {position: 'relative', top: -15, left: 20});
- *	
+ *
  *	//change tooltip on the fly
  *	$('#test').wikiaTooltip('this is a tooltip aligned top-left');
  *	$('#test').wikiaTooltip('and this is a tooltip aligned bottom-right', {side: 'bottom', align: 'right'});
- *	
+ *
  *	//loading asynchronously the script
  *	$.loadWikiaTooltip(function(){$('#test').wikiaTooltip('this is a tooltip');});
- *	
+ *
  *	//loading asynchronously the script and the required stylesheet
  *	$.getResources([$.loadWikiaTooltip, $.getSassCommonURL("skins/oasis/css/modules/WikiaTooltip.scss")], function(){$('#test').wikiaTooltip('this is a tooltip');});
  *
@@ -88,32 +88,30 @@ if(typeof jQuery.fn.wikiaTooltip === 'undefined'){
 				},
 				options
 			);
-			
+
 			var requestor = $(this);
-			
+
 			if(typeof requestor.data('tooltip-options') !== 'undefined'){
 				requestor
 					.removeData('tooltip-options')
 					.removeData('tooltip-value')
 					.removeData('tooltip-cached-position')
 					.removeData('tooltip-native');
-				
+
 				if(typeof requestor.data('tooltip-cached') !== 'undefined'){
 					requestor.data('tooltip-cached').remove();
 					requestor.removeData('tooltip-cached');
 				}
 			}
-			
-			requestor.data({
-				'tooltip-options': defaultOptions,
-				'tooltip-value': tooltip
-			});
-			
+
+			requestor.data('tooltip-options', defaultOptions);
+			requestor.data('tooltip-value', tooltip);
+
 			if(defaultOptions.suppressNative){
 				requestor.removeAttr('title');
 				if(defaultOptions.suppressNativeRecursive) requestor.find('[title]').removeAttr('title');
 			}
-			
+
 			requestor
 				.unbind('mouseenter.wikiaTooltip mouseleave.wikiaTooltip')
 				.bind({
@@ -122,7 +120,7 @@ if(typeof jQuery.fn.wikiaTooltip === 'undefined'){
 				});
 		}
 	}
-	
+
 	/*
 	 * shared callback for mouseenter event
 	 */
@@ -189,39 +187,39 @@ if(typeof jQuery.fn.wikiaTooltip === 'undefined'){
 							position.top = jQuery.__wikiaTooltipGetAlignedPosition(options, globalPosition, elm, tooltip);
 							break;
 					}
-					
+
 					break;
 				case 'absolute':
 					position.top = options.top;
 					position.left = options.left;
 					break;
 			}
-			
+
 			if(options.position === 'relative'){
 				position.top += options.top;
 				position.left += options.left;
 			}
-			
+
 			elm.data('tooltip-cached-position', globalPosition);
 			tooltip.css(position);
 		}
-		
+
 		tooltip.show();
 	}
-	
+
 	/*
 	 * shared callback for mouseleave event
 	 */
 	jQuery.__wikiaTooltipOnMouseLeave = function(){
 		$(this).data('tooltip-cached').hide();
 	}
-	
+
 	/*
 	 * Utility method to calculate tooltip element aligned position
 	 */
 	jQuery.__wikiaTooltipGetAlignedPosition = function(options, globalPosition, elm, tooltip){
 		var pos = undefined;
-		
+
 		if(options.side === 'top' || options.side === 'bottom'){
 			switch(options.align){
 				default:
@@ -249,7 +247,7 @@ if(typeof jQuery.fn.wikiaTooltip === 'undefined'){
 					break;
 			}
 		}
-		
+
 		return pos;
 	}
 }
