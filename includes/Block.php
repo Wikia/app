@@ -81,7 +81,7 @@ class Block {
 		$res = $dbr->resultObject( $dbr->select( 'ipblocks', '*',
 			array( 'ipb_id' => $id ), __METHOD__ ) );
 		$block = new Block;
-		if ( $block->loadFromResult( $res ) ) {
+		if ( /** Wikia change start **/$res instanceof ResultWrapper &&/** Wikia change end **/ $block->loadFromResult( $res ) ) {
 			return $block;
 		} else {
 			return null;
@@ -170,7 +170,7 @@ class Block {
 		if ( $user ) {
 			$res = $db->resultObject( $db->select( 'ipblocks', '*', array( 'ipb_user' => $user ),
 				__METHOD__, $options ) );
-			if ( $this->loadFromResult( $res, $killExpired ) ) {
+			if ( /** Wikia change start **/$res instanceof ResultWrapper &&/** Wikia change end **/ $this->loadFromResult( $res, $killExpired ) ) {
 				return true;
 			}
 		}
@@ -182,7 +182,7 @@ class Block {
 			$conds = array( 'ipb_address' => $address, 'ipb_auto' => 0 );
 			$res = $db->resultObject( $db->select( 'ipblocks', '*', $conds, __METHOD__, $options ) );
 
-			if ( $this->loadFromResult( $res, $killExpired ) ) {
+			if ( /** Wikia change start **/$res instanceof ResultWrapper &&/** Wikia change end **/ $this->loadFromResult( $res, $killExpired ) ) {
 				if ( $user && $this->mAnonOnly ) {
 					# Block is marked anon-only
 					# Whitelist this IP address against autoblocks and range blocks
@@ -220,7 +220,7 @@ class Block {
 
 			$res = $db->resultObject( $db->select( 'ipblocks', '*', $conds, __METHOD__, $options ) );
 
-			if ( $this->loadFromResult( $res, $killExpired ) ) {
+			if ( /** Wikia change start **/$res instanceof ResultWrapper &&/** Wikia change end **/ $this->loadFromResult( $res, $killExpired ) ) {
 				return true;
 			}
 		}
@@ -303,7 +303,9 @@ class Block {
 		}
 
 		$res = $db->resultObject( $db->select( 'ipblocks', '*', $conds, __METHOD__, $options ) );
-		$success = $this->loadFromResult( $res, $killExpired );
+		/** Wikia change start **/
+		$success = ( $res instanceof ResultWrapper ) ? $this->loadFromResult( $res, $killExpired ) : false;
+		/** Wikia change end **/ 
 		return $success;
 	}
 
