@@ -6,18 +6,20 @@
 		background: #FEF4BC;
 		color: #3a3a3a;
 		display: inline-block;
-		padding: 8px;
+		font-size: 11px;
+		line-height: 12px;
+		padding: 8px 11px;
 		zoom: 1;
 		*display: inline; /* IE7 hack */
 		.warning{
-			background-image: url(/extensions/wikia/GlobalNotification/bullet_error.png);	/* $wgCdnStylePath */
+			background: url(/extensions/wikia/GlobalNotification/bullet_error.png) -2px -3px no-repeat;	/* $wgCdnStylePath */
 			display: block;
 			float: left;
-			height: 16px;
+			height: 10px;
 			margin-right: 5px;
 			position: relative;
-			top: -1px;
-			width: 16px;
+			top: 1px;
+			width: 11px;
 		}
 	}
 } 
