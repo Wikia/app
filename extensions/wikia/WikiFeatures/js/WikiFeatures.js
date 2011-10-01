@@ -88,7 +88,7 @@ var WikiFeatures = {
 				setTimeout(function() {
 					var chars = comment.val().length;
 					commentCounter.text(chars);
-					if( chars >= 1000 ) {
+					if( chars > 1000 ) {
 						comment.addClass('invalid');
 						commentLabel.addClass('invalid');
 					} else {
