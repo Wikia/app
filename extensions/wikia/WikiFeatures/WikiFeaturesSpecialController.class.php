@@ -23,6 +23,14 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 			$this->displayRestrictionError();
 			return false;  // skip rendering
 		}
+		
+		$skinName = $this->wg->User->getSkin()->getSkinName();
+		$this->isOasis = ($skinName === 'oasis');
+		if($skinName !== 'oasis') {
+			$this->forward('WikiFeaturesSpecial', 'notOasis');
+			return;
+		}
+		
 		$this->response->addAsset('extensions/wikia/WikiFeatures/css/WikiFeatures.scss');
 		$this->response->addAsset('extensions/wikia/WikiFeatures/js/modernizr.transform.js');
 		$this->response->addAsset('extensions/wikia/WikiFeatures/js/WikiFeatures.js');
@@ -41,6 +49,10 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 		if($this->getVal('simulateEmptyLabs', false)) {	// debug code
 			$this->labsFeatures = array();
 		}
+	}
+	
+	public function notOasis() {
+		// empty method
 	}
 
 	/**

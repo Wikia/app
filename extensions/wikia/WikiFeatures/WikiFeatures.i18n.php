@@ -38,6 +38,7 @@ $messages['en'] = array(
 	'wikifeatures-deactivate-confirm-button' => 'Yes, disable',
 	'wikifeatures-deactivate-cancel-button' => 'Cancel',
 	'wikifeatures-promotion-new' => 'New',
+	'wikifeatures-oasis-only' => 'Wiki Features is not available in Monobook.  If you would like to use this feature please switch your preference to the Wikia skin.',
 	// feature message list
 	'wikifeatures-feature-heading-wgShowTopListsInCreatePage' => 'Top 10 Lists',
 	'wikifeatures-feature-description-wgShowTopListsInCreatePage' => 'Top 10 Lists allow anyone on your wiki to create a votable list. If you\'re looking for a great way to get junior editors to interact with the wiki, this is it! Enabling this feature will add "Top 10 List" as an option when you click "Add a Page"',
@@ -219,7 +220,7 @@ $messages['ja'] = array(
 	'wikifeatures-toggle-inactive' => '無効',
 );
 
-/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (Kurdî (latînî))
  * @author Gomada
  */
 $messages['ku-latn'] = array(
@@ -407,7 +408,7 @@ We weten dat er nog probleempjes mee zijn, maar we willen graag van u horen wat 
 	'wikifeatures-feature-description-emptylabs' => 'Onze ontwikkelaars werken had aan het ontwerpen van nieuwe functies die u kunt uitproberen. Kom snel terug!',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian (bokmål) (Norsk (bokmål))
  * @author Audun
  */
 $messages['no'] = array(
