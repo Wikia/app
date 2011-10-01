@@ -84,7 +84,6 @@
 			}
 			.actions {
 				float: right;
-				width: 110px;
 				.slider {
 					@include border-radius(4px);
 					@include box-shadow(0, 2px, 5px, #999, true);
