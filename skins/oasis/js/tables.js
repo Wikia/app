@@ -65,7 +65,7 @@ WikiaWideTables = {
 							context.lineTo(x, y);
 						}
 
-						context.fillStyle = $("#WikiaPage").css("background-color");
+						context.fillStyle = sassParams['color-page'];
 						context.fill();
 					} else {
 						//This is a browser that can't draw in canvas
