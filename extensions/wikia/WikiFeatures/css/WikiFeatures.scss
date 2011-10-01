@@ -153,9 +153,8 @@
 						top: -1px;
 					}
 				}
-				.star-rating {
-					margin-top: 5px;
-					@include clearfix;
+				.active-on {
+					font-size: 11px;
 				}
 			}
 		}
