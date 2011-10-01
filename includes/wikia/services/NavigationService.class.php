@@ -211,7 +211,13 @@ class NavigationService {
 			} else {
 				$title = Title::newFromText($link);
 				if(is_object($title)) {
-					$href = $title->fixSpecialName()->getLocalURL();
+					$sectionUrl = explode('#', $link);
+					if (!empty($sectionUrl[1])) {
+						$href = $title->fixSpecialName()->getLocalURL().'#'.$sectionUrl[1];
+					}
+					else {
+						$href = $title->fixSpecialName()->getLocalURL();
+					}
 				} else {
 					$href = '#';
 				}
