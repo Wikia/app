@@ -38,7 +38,7 @@ WikiaTracker.debug = function (msg, level, obj) {
 
 WikiaTracker.track = function(page, profile) {
 	if (typeof page == 'object') {
-		page = page.join('/');
+		page = '/' + page.join('/');
 	}
 
 	this.debug(page + ' in ' + profile, 3);
