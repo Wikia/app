@@ -1,0 +1,22 @@
+<? if($unread): ?>
+<li class="unread_notification">
+<? else: ?>
+<li class="read_notification">
+<? endif; ?>
+	<a href="<?= $url ?>">
+		<div class="avatars">
+			<?php foreach($authors as $key => $author): ?>
+				<div class="avatars_<?php echo count($authors); ?>_<?php echo $key + 1 ?>">	
+					<?= AvatarService::renderAvatar($author, 30 - (count($authors) - 1)*2 ) ?>
+				</div>			
+			<?php endforeach; ?>
+		</div>
+		<div class="notification">
+			<div class="msg-title"><?= $title ?></div>
+			<? if($unread): ?>
+				<?= $msg ?>
+			<? endif; ?>
+			<time class="timeago" datetime="<?= $iso_timestamp ?>"></time>
+		</div>
+	</a>
+</li>

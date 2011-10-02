@@ -463,7 +463,13 @@ class EditPage {
 				$remove[] = $error;
 			}
 		}
+		
 		$permErrors = wfArrayDiff2( $permErrors, $remove );
+		
+		/* Wikia change @author nAndy */
+		wfRunHooks( 'AfterEditPermissionErrors', array( &$permErrors, $this->mTitle, $remove ) );
+		/* End of Wikia change */
+		
 		return $permErrors;
 	}
 

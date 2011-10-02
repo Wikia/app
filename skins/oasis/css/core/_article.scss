@@ -347,15 +347,15 @@
 		}	
 		
 		.odd blockquote {
-			background: $color-comment-odd;
+			background: $color-speech-bubble;
 			&:after {
-				border-color: transparent $color-comment-odd $color-comment-odd transparent;
+				border-color: transparent $color-speech-bubble $color-speech-bubble transparent;
 			}
 		}
 		.even blockquote {
-			background: $color-comment-even;
+			background: $color-speech-bubble-alt;
 			&:after {
-				border-color: transparent $color-comment-even $color-comment-even transparent;
+				border-color: transparent $color-speech-bubble-alt $color-speech-bubble-alt transparent;
 			}
 		}
 		

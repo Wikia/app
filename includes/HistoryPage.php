@@ -62,7 +62,11 @@ class HistoryPage {
 	 */
 	function history() {
 		global $wgOut, $wgRequest, $wgScript;
-
+		
+		/* Wikia change @author nAndy */
+		wfRunHooks( 'BeforePageHistory', array( &$this->article ) );
+		/* End of Wikia change */
+		
 		/*
 		 * Allow client caching.
 		 */

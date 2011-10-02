@@ -1,0 +1,162 @@
+@import "../../../../skins/oasis/css/mixins/gradient";
+@import "../../../../skins/oasis/css/mixins/menus";
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../skins/oasis/css/mixins/border-radius";
+
+#AccountNavigation.AccountNavigation {
+	right: 60px;
+}
+
+#WallNotifications {
+	.bubbles {
+		background: url(/skins/common/images/bubbles.png) no-repeat 0 0; /* $wgCdnStylePath */
+		width: 34px;
+		height: 20px;
+		&.reddot #bubbles_count {
+			@include border-radius(15px);
+			background: red;
+			//border: 1px solid white;
+		}
+		#bubbles_count {
+			position: relative;
+			left: 16px;
+			top: -6px;
+			font-size: 12px;
+			text-align: center;
+			display: inline-block;
+			padding: 0px 4px 0px 4px;
+			line-height: 14px;
+		}
+	}
+	line-height: 20px;
+	list-style: none;
+	position: absolute;
+	top: 1px;
+	right: 10px;
+	.notifications-empty { color: $color-text; width: 200px; text-align: center; }
+	li {
+		border: 0;
+		height: 30px;
+		margin-top: 0;
+		padding: 6px 10px 0 10px;
+		position: relative;
+		&:hover {
+			@include linear-gradient(false, top, rgba(#000, 0), 0, #000, 100%);
+		}
+		&.nohover:hover {
+			background: transparent;
+		}
+		&:last-child a {
+			border: 0;
+		}
+	}
+	a {
+		border-right: 1px solid mix($color-header-text, $color-header, 20%);
+		display: inline-block;
+		padding: 0 15px;
+		width: 250px;
+		&:hover {
+			text-decoration: none;
+		}
+		.avatars {
+			vertical-align: top;
+			display: inline-block;
+			margin: 0;
+			padding: 0;
+			position: relative;
+			width: 45px;
+			height: 45px;
+			top: 5px;
+			left: 5px;
+
+			.avatars_2_1 .avatar { left: -2px; top: -2px; }
+			.avatars_2_2 .avatar { left:  2px; top:  2px; }
+			.avatars_3_1 .avatar { left: -3px; top: -3px; }
+			.avatars_3_2 .avatar { left:  0px; top:  0px; }
+			.avatars_3_3 .avatar { left:  3px; top:  3px; }
+	
+			.avatar {
+				position: absolute;
+			}
+		}
+		.notification {
+			width: 200px;
+			display: inline-block;
+			white-space: normal;
+			font-size: 10px;
+			line-height: 1.5em;
+			time { display: block; font-size: 10px; padding-top: 3px; padding-bottom: 3px;}
+			.msg-title { padding-top: 3px; padding-bottom: 2px; }
+		}
+	}
+	.subnav {
+		@include menu-heavy;
+		@include box-shadow(0, 5px, 10px, rgba(0, 0, 0, 0.5));
+		padding: 0px; // overwrite from menu-heavy
+		display: block;
+		top: -9999px;
+		right: 9999px;
+		margin-bottom: 20px;
+		&.show {
+			right: 0;
+			top: 34px;
+		}
+		li {
+			float: none;
+			height: auto;
+			&:hover {
+				background-image: none;
+			}
+		}
+		li.unread_notification a {
+			background: mix($color-buttons, $color-page, 10%);
+			@if lightness($color-page) < 50 {
+				background: mix($color-buttons, $color-page, 20%);
+			}
+		}
+		li.read_notification a {
+			color: mix($color-text, $color-page, 50%);
+		}
+		a {
+			border-right: 0;
+			&:hover {
+				@include box-shadow(0,0,8px, mix($color-buttons, $color-page, 25%), inset);
+				background: mix($color-buttons, $color-page, 15%) !important;
+				@if lightness($color-page) < 50 {
+					@include box-shadow(0,0,8px, mix($color-buttons, $color-page, 40%), inset);
+					background: mix($color-buttons, $color-page, 30%) !important;
+				}
+			}
+			color: $color-text;
+			&:visited, &:active { color: $color-text; }
+			time { color: #aaaaaa; }
+			.msg-title { font-weight: bold; font-size: 12px; }
+		}
+		&:before {
+			content: '';
+			height: 20px;
+			position: absolute;
+			width: 100%;
+			top: 100%;
+			left: 0px;
+			background: none;
+		}
+	}
+	.notifications-header {
+		color: $color-text; font-size: 13px; font-weight: bold;
+		padding-top: 1px;
+		padding-left: 10px;
+		background: $color-page;
+		cursor: default;
+	}
+	#wall-notifications-markasread {
+		color: $color-links;
+		cursor: pointer; 
+		text-align: center;
+		float: right;
+		font-weight: normal;
+		font-size: 11px;
+		padding-right: 10px; 
+	}
+}

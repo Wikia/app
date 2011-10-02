@@ -81,11 +81,15 @@
 		<article id="WikiaMainContent" class="WikiaMainContent">
 			<?php
 
+				
+				if (!empty(F::app()->wg->WallBrickHeader)){ 
+					echo F::app()->renderView( 'WallController', 'brickHeader', array( "id" => F::app()->wg->WallBrickHeader) );
+				}
+								
 				// Needs to be above page header so it can suppress page header
 				if ($displayAdminDashboard) {
 					echo wfRenderModule('AdminDashboard', 'Chrome');
 				}
-
 				// render UserPagesHeader or PageHeader or nothing...
 				if (empty($wgSuppressPageHeader) && $headerModuleName) {
 					if (!empty($isUserProfilePageV3Enabled) && $headerModuleName == 'UserPagesHeader') {
@@ -106,7 +110,6 @@
 			<?php if ($subtitle != '' && $headerModuleName == 'UserPagesHeader' ) { ?>
 				<div id="contentSub"><?= $subtitle ?></div>
 			<?php } ?>
-
 
 			<div id="WikiaArticle" class="WikiaArticle<?= $displayAdminDashboardChromedArticle ? ' AdminDashboardChromedArticle' : '' ?>">
 				<? if($displayAdminDashboardChromedArticle) { ?>
@@ -163,6 +166,10 @@
 	<?php
 		if ($displayComments) {
 			echo wfRenderModule('ArticleComments');
+		}
+		
+		if ($displayWall) { 
+			echo wfRenderModule('Wall'); 
 		}
 	?>
 

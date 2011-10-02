@@ -190,6 +190,10 @@ class PageHeaderModule extends Module {
 
 		// page namespace
 		$ns = $wgTitle->getNamespace();
+		
+		/** start of wikia changes @author nAndy */
+		$this->isWallEnabled = (defined('NS_USER_WALL') && $ns == NS_USER_WALL);
+		/** end of wikia changes */
 
 		// currently used skin
 		$skin = $wgUser->getSkin();
@@ -199,6 +203,10 @@ class PageHeaderModule extends Module {
 
 		// dropdown actions
 		$this->dropdown = $this->getDropdownActions();
+		
+		/** start of wikia changes @author nAndy */
+		wfRunHooks( 'PageHeaderIndexAfterActionButtonPrepared', array(&$this->action, &$this->dropdown, $ns, $skin) );
+		/** end of wikia changes */
 
 		// for not existing pages page header is a bit different
 		$this->pageExists = !empty($wgTitle) && $wgTitle->exists();
@@ -448,10 +456,11 @@ class PageHeaderModule extends Module {
 	 * Render header for edit page
 	 */
 	public function executeEditPage() {
-		global $wgTitle, $wgRequest, $wgSuppressToolbar, $wgShowMyToolsOnly;
+		global $wgTitle, $wgRequest, $wgSuppressToolbar, $wgShowMyToolsOnly, $wgEnableWallExt;
 
 		// special handling for special pages (CreateBlogPost, CreatePage)
-		if ($wgTitle->getNamespace() == NS_SPECIAL) {
+		$ns = $wgTitle->getNamespace();
+		if ( $ns == NS_SPECIAL) {
 			wfProfileOut(__METHOD__);
 			return;
 		}
@@ -467,6 +476,11 @@ class PageHeaderModule extends Module {
 		$isDiff = !is_null($wgRequest->getVal('diff')); // RT #69931
 		$isEdit = in_array($action, array('edit', 'submit'));
 		$isHistory = $action == 'history';
+		
+		/** start of wikia changes @author nAndy */
+		$this->isHistory = $isHistory;
+		$this->isUserTalkArchiveModeEnabled = (!empty($wgEnableWallExt) && $ns == NS_USER_TALK);
+		/** end of wikia changes */
 
 		// add editor's right rail when not editing main page
 		if (!Wikia::isMainPage()) {
@@ -506,8 +520,10 @@ class PageHeaderModule extends Module {
 			$this->subtitle = Wikia::link($wgTitle, wfMsg('oasis-page-header-back-to-article'), array('accesskey' => 'c'), array(), 'known');
 		}
 
+		/** start of wikia changes @author nAndy */
 		// add edit button
-		if ($isDiff || $isHistory) {
+		if ($isDiff || ($isHistory && !$this->isUserTalkArchiveModeEnabled) ) {
+		/** end of wikia changes */
 			$this->prepareActionButton();
 
 			// show only "My Tools" dropdown on toolbar

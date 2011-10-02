@@ -173,7 +173,7 @@ class RecentChange {
 
 		# Set the ID
 		$this->mAttribs['rc_id'] = $dbw->insertId();
-		
+
 		# Notify extensions
 		wfRunHooks( 'RecentChange_save', array( &$this ) );
 

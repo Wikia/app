@@ -1,0 +1,485 @@
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/box-sizing";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../skins/oasis/css/mixins/opacity";
+
+$roundness: 2px;
+$roundness_inputs: 0px;
+//$bubble_bg: saturation(lighten($color-links, 40%), 70%);
+//$bubble_bg: hsl(hue($color-links), 30%, 93%);
+//$loadmore_bg: hsl(hue($color-links), 30%, 96%);
+//$loadmore_bg_h: hsl(hue($color-links), 30%, 97%);
+
+$separators: mix($color-page-border,$color-page,50%);
+
+//$bubble_bg: desaturate(mix($color-links, $color-page, 9%),10%);
+$inputs_bg: lighten($color-page, 3%);
+$inputs_bg_f: lighten($color-page, 6%);
+$bubble_bg: mix($color-buttons, $color-page, 15%);
+$new_inputs_bg: mix($bubble_bg, $inputs_bg,20%);
+@if lightness($color-page) < 50 {
+  //$bubble_bg: mix($color-links, $color-page, 7%);
+	$inputs_bg: lighten($color-page, 5%);
+	$inputs_bg_f: lighten($color-page, 10%);
+	$bubble_bg: mix($color-buttons, $color-page, 30%);
+	$new_inputs_bg: mix($bubble_bg, $inputs_bg,30%);
+}
+
+/*
+.WikiaRail .module, .WikiaRail #RIGHT_SKYSCRAPER {
+	box-shadow: 0px 2px 5px darken($color-page,9%) !important;
+	background-image: none !important;
+	border: 1px solid mix($color-page,$color-page-border,25%);
+	@if lightness($color-page) < 50 {
+		border: 1px solid mix($color-page,$color-page-border,50%);
+		background: mix($color-page,$color-page-border,75%);
+		box-shadow: 0px 2px 5px darken($color-page,7%) !important;
+	}
+}*/
+
+#WikiaArticle.WikiaArticle {
+	padding-left: 15px;
+}
+
+.Wall {
+	/* Indenting for posts and replies */
+	.comments {
+		margin-left: 0;
+		.SpeechBubble { 
+			margin: 0;
+			margin-bottom: 20px;
+			padding-top: 5px;
+			position: relative;
+			.highlight {
+				position: absolute;
+				top: 0; left: 0; width: 100%; height: 100%;
+				background: yellow;
+			}
+			/* edit message */
+			.msg-title { 
+				font-weight: bold; 
+				font-size: 18px;
+				a {
+					color: $color-text;
+					font-decoration: none;
+				}
+			}
+			.msg-body textarea { font-size: 12px; height: 100px; }
+			.edited-by { margin-bottom: 5px; .subtle { margin-left: 5px; } }
+			> ul { margin-left: 75px; }
+			border-top: 1px solid $separators;
+			padding-top: 12px;
+			margin-bottom: 0px;
+		}
+		.message li { // replies only
+			position: relative;
+			&:first-child:before {
+				content: '';
+				position: absolute;
+				height: 0px; width: 0px;
+				border-width: 8px;
+				border-style: solid;
+				border-color: transparent transparent $separators transparent;
+				left: 28px; top: -16px;
+				visibility: visible;
+			}
+			&:first-child:after {
+				content: '';
+				position: absolute;
+				height: 0px; width: 0px;
+				border-width: 8px;
+				border-style: solid;
+				border-color: transparent transparent $color-page transparent;
+				left: 28px; top: -15px;
+				visibility: visible;
+			}
+		}
+	}
+	
+	.speech-bubble-message { padding: 5px 10px 0px 8px; }
+  .speech-bubble-message p { margin: 0.2em 0 0.2em 0 !important; }
+  .speech-bubble-message p:first-child { margin-top: 0 !important; }
+	
+	/* only messages, not replies */
+	ul.comments > li.message {
+		border-top: 1px solid $separators;
+		padding-top: 20px;
+		margin-bottom: 30px;
+	  & > .speech-bubble-message {
+			@include border-radius($roundness);
+			//@include box-shadow(0,0,6px,$bubble_bg);
+			//background: #e4edf6;
+			background: $bubble_bg;
+			border: none;
+			padding: 10px 20px 10px 20px;
+			margin-bottom: 15px;
+			margin-right: 16px;
+			&:before {
+				border: none;
+			}
+			&:after {
+				border-color: $bubble_bg $bubble_bg transparent transparent;
+				border-width: 12px;
+			}
+			.edited-by { margin-top: 6px;  }
+		}
+	}
+	
+	/* inputs on page */
+	textarea:-moz-placeholder { color: mix($color-text, $color-page, 50%); }
+	textarea::-webkit-input-placeholder { color: mix($color-text, $color-page, 50%); }
+	textarea { 
+		@include box-sizing;
+		@include border-radius($roundness_inputs);
+		background: $inputs_bg;
+		color: $color-text;
+		border: none;
+		outline: none;
+		width: 100%;
+		line-height: normal;
+		//line-height: 170%;
+		//padding: 3px 5px;
+		padding: 7px 10px 7px 10px;
+		resize: none;
+		margin: 0;
+		display: block;
+		overflow: hidden;
+		font-size: 12px;
+		&:focus { background: $inputs_bg_f; color: $color-text; }
+		&:focus { @include box-shadow(0px, 0px, 4px, mix($color-buttons,$color-page,100%) ); }
+		&.body { line-height: 170%; }
+	}
+	.new-message textarea{ 
+		background: $new_inputs_bg;
+		font-size: 14px;
+		&.title { height: 30px; margin-bottom: 10px; }
+		&.body { height: 70px; } 
+	}
+	.new-reply textarea{ height: 30px;  }
+	ul.comments > li.message li.message textarea { border: 1px solid $separators; }
+	ul.comments > li.message > .speech-bubble-message textarea { font-size: 14px; }
+
+	/* only replies */
+	ul.comments > li.message li.message {
+		//border-bottom: 1px solid #f4f4f4;
+		margin-right: 16px;
+		.speech-bubble-message {
+			background: none;
+			border: none;
+			margin-bottom: 10px;
+			//margin-right: 16px;
+			margin-left: 40px;
+			padding-top: 0px;
+			&:before {
+				border: none;
+			}
+			&:after {
+				border: none;
+			}
+		}
+	}
+
+
+	/* Common styles for new message and new reply */
+	.SpeechBubble.new-message, li.SpeechBubble.new-reply {
+		margin-right: 16px;
+		button {
+			position: absolute;
+			//float: right;
+			margin-top: 10px;
+		}
+	}
+	
+	/* Post new message (top of the wall) */
+	.new-message {
+		margin-bottom: 40px;
+		position: relative;
+		.speech-bubble-message {
+			@include border-radius($roundness);
+			//@include box-shadow(0,0,6px,$bubble_bg);
+			background: $bubble_bg;
+			border: none;
+			padding: 10px;
+			&:before {
+				border: none;
+			}
+			&:after {
+				border-color: $bubble_bg $bubble_bg transparent transparent;
+			}
+/*			textarea {
+				&:focus {
+					@include box-shadow(0px, 0px, 6px, $color-links);
+				}
+			}*/
+		}
+
+		input.no-title {
+		  background: #fff4f4;
+		}
+		.no-title-container {
+			position: relative;
+			float: right;
+			.no-title-warning {
+				@include border-radius($roundness);
+				position: absolute;
+				width: 200px;
+				font-size: 12px;
+				line-height: 19px;
+				height: 19px;
+				top: 4px;
+				left: -204px;
+				//border: 1px solid #dfa0a0;
+				background: #f8e8e8;
+				text-align: center;
+				display: none;
+				z-index: 50;
+			}
+		}
+		button {
+			right: 10px;
+		}
+
+	}
+	
+	/* Post reply to message (beneath each message thread) */
+	.new-reply {
+		margin-bottom: 0;
+		.speech-bubble-avatar {
+			display: none;
+			img {
+				//@include opacity(25);
+			}
+		}
+		.speech-bubble-message {
+			padding: 0;
+			background: none;
+			border: none;
+			margin-left: 0px;
+			&:before {
+				border: none;
+			}
+			&:after {
+				border: none;
+			}		
+			textarea {
+				border: 1px solid $color-page-border;
+			}
+		}
+		button {
+			display: none;
+			right: 0px;
+		}
+	}
+	
+	/* change background of inputs when they are disabled (submitting) */
+	.new-message input[disabled=disabled],
+	.new-message textarea[disabled=disabled],
+	.new-reply textarea[disabled=disabled]
+		{ opacity: 0.8; }
+	
+	#WallMessageSubmit, .replyButton { padding-left: 20px; padding-right: 20px; }
+	#WallMessageSubmit.loading,
+	.replyButton.loading {
+		//color: rgba(255,255,255,0);
+	}
+	#WallMessageSubmit.loading:before,
+	.replyButton.loading:before {
+		position: absolute;
+		left: -50px;
+		top: 0;
+		margin: 0;
+		padding: 0;
+		content: url(/skins/common/images/ajax.gif);
+	}
+	
+	.load-more{
+		//@include border-radius(4px);
+		border-top: 1px solid $separators;
+		//border-bottom: 1px solid $color-page-border;
+		//margin-left:75px;
+		margin: 9px 16px 0px 0px;
+		//padding: 3px 5px;
+		text-align: center;		
+		a {
+			display: block;
+			//background: $loadmore_bg;
+			background: transparent;
+			border-bottom: none;
+			padding-top: 10px;
+			padding-bottom: 5px;
+			width: 100%;
+			height: 100%;
+			&:hover {
+				//background: $loadmore_bg_h;
+				text-decoration: underline;
+			}
+		}
+	}
+	
+	/* buttons for editing existing msg/reply */
+	.edit-buttons {
+		width: 100%;
+		height: 30px;
+		a { margin: 0 5px 10px 5px; }
+		.wikia-button { float: right; }
+	}
+	
+	/* element used to hide original wikitext before edit starts */
+	.before-edit { display: none }
+	
+	.msg-title {
+		font-size: 14px;
+		//font-weight: bold;
+		margin: 0 0 2px 0;
+		overflow: hidden;
+		//text-shadow: #c0c0c0 1px 1px 3px;
+	}
+	
+	.follow {
+		float: right;
+		min-width: 60px;
+		text-align: center;
+		opacity: 0.7;
+		&:hover { opacity: 1; background-image: none; }
+		background-image: none;
+	}
+	.follow.secondary {
+		background-image: none;
+		&:hover { background-image: none; }
+	}
+	.follow:not(.secondary) {
+		opacity: 0.7;
+	}
+	.follow:not(.secondary):hover {
+		opacity: 1;
+	}
+	
+	.edited-by {
+		font-size: 14px;
+		margin-bottom: 5px;
+		font-weight: bold;
+		.subtle { color: $color-gray-text; font-weight: normal; font-size: 12px; }
+	}
+	
+	.timestamp a { color: $color-gray-text; font-size: 10px; }
+	
+	/* reserve space for invisible buttons */
+	.abs-container { position: absolute; width: 100% }
+	
+	.tools {
+		font-size: 11px;
+		.sprite.edit-pencil {
+			background: url(/skins/common/images/common/pencil.png) no-repeat 0 0;
+			height: 18px;
+			width: 12px;
+		}
+		.sprite-small.delete {
+			background: url(/skins/common/images/common/trashcan.png) no-repeat 0 0;
+			height: 18px;
+			width: 12px;
+		}
+	}
+		
+	.ChangeStyle {
+		 position: fixed;
+		 top: 50px;
+		 left: 50px;
+		 z-index: 100;
+		 line-height: normal;
+		 margin: 0px;
+		 padding: 0px;
+		 a { display: inline-block; width: 120px; margin: 5px; background: #d0d0e0; text-align: center; vertical-align: middle; }
+		 a:hover { text-decoration: none; background: #d0d0f0; }
+		 a.selected { background: #d0d0ff; }
+		 a i { font-size: 10px; color: #666; display: block; }
+	}
+}
+
+#WallBrickHeader {
+	font-size: 14px;
+	padding-left: 20px;
+	padding-bottom: 5px;
+	.WallName {
+		padding-right: 5px;
+	}
+	.Title { 
+		padding-left: 5px;
+	}
+	& + #WikiaArticle .comments > .SpeechBubble { padding-top: 30px; }
+}
+
+/* Move this to pagination dir */
+.Pagination {
+	 font-size: 0; /* hack to remove space between inline elements */
+	 list-style: none;
+	 margin: 0;
+	 padding: 0;
+	 text-align: center;
+	 li {
+	 	border-left: 1px solid $color-links;
+	 	color: $color-links;
+	 	display: inline-block;
+	 	font-size: 13px; /* override font-size: 0 */
+	 	line-height: 1.2em;
+	 	padding: 0;
+	 	text-align: center;
+	 	&.first {
+	 		border-left: 0;
+	 	}
+	 	a {
+	 		display: inline-block;
+		 	margin: 0 2px;
+		 	padding: 0 4px;
+	 		text-align: center;
+	 	}
+	 	&.selected {
+	 		a {
+	 			background: $color-links;
+	 			color: $color-page;
+	 			margin: 0 5px;
+	 		}
+	 	}
+	 	&.prev {
+	 		border: none;
+	 		margin-right: 5px;
+	 	}
+	 	&.next {
+	 		border: none;
+	 		margin-left: 5px;
+	 	}
+	 	&.ellipsis {
+	 		padding-left: 4px;
+	 		padding-right: 4px; 
+	 	}
+	 }
+}
+
+
+body.skin-monobook {
+	#Wall {
+		.avatar { float: left; }
+		& .speech-bubble-message { margin-right: 0px; }
+		& .new-message .speech-bubble-message,
+		& .comments > .SpeechBubble.message > .speech-bubble-message {
+			margin-left: 75px;
+		}
+		.SpeechBubble { 
+			margin-right: 0px;
+			.SpeechBubble {
+				&:before, &:after { display: none; }
+			}
+		}
+		.speech-bubble-message {
+			margin: 0;
+			padding: 0;
+			background: none;
+		}
+		.message .message .speech-bubble-message {
+			margin-left: 50px;
+		}
+		
+	}
+	
+}

@@ -98,6 +98,8 @@ For example, you could:
 	'tooltip-pt-myhome' => "Go to My Home",
 
 	'activityfeed' => 'Activity feed',
+
+	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|one message|$1 messages}}',
 );
 
 /** Message documentation (Message documentation)

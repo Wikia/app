@@ -1,0 +1,75 @@
+<section id="WikiaArticleComments" class="WikiaArticleComments noprint">
+
+	<ul class="controls">
+		<li id="article-comments-counter-recent"><?= wfMsg('oasis-comments-showing-most-recent', count($commentListRaw)) ?></li>
+	<?php
+	global $wgLang;
+	$countCommentsNestedFormatted = $wgLang->formatNum($countCommentsNested);
+	 /*see RT#64641*/  /*see RT#65179*/  /*see RT#68572 */
+	if ( $countCommentsNested > 1 && $countCommentsNested <= 200 && $countComments > $commentsPerPage ) {
+	?>
+		<li><a href="<?= $title->getFullURL("showall=1") ?>"><?= wfMsg('oasis-comments-show-all') ?></a></li>
+	<?php } ?>
+	</ul>
+	<h1 id="article-comments-counter-header"><?= wfMsgExt('oasis-comments-header', array('parsemag'), $countCommentsNestedFormatted) ?></h1>
+
+	<div id="article-comments">
+	<?php
+	if ( $canEdit && !$isBlocked && $commentingAllowed ) {
+	?>
+		<div id="article-comm-info">&nbsp;</div>
+
+		<div class="session">
+			<?php
+				echo $avatar;
+
+				if ($isLoggedIn) {
+				// FIXME: wfMsg this
+					// echo "You are Logged in as " . $avatar->mUser->getName(); /** out for now until designer tells gives updates on specs **/
+				} else {
+				/** @todo make anonymous posting impossible and force login **/
+					echo wfMsg('oasis-comments-anonymous-prompt');
+				}
+			?>
+		</div>
+
+		<form action="<?= $title->getFullURL() ?>" method="post" class="article-comm-form" id="article-comm-form">
+			<input type="hidden" name="wpArticleId" value="<?= $title->getArticleId() ?>" />
+			<textarea name="wpArticleComment" id="article-comm"></textarea>
+			<? if (!$isReadOnly) { ?>
+				<input type="submit" name="wpArticleSubmit" id="article-comm-submit" class="wikia-button" value="<?= wfMsg('article-comments-post') ?>" />
+			<? } ?>
+			<img src="<?= $ajaxicon ?>" class="throbber" />
+		</form>
+	<?php
+	} else {
+		if ( $isBlocked ) {
+	?>
+		<p><?= wfMsg('article-comments-comment-cannot-add') ?></p>
+		<p><?= $reason ?></p>
+	<?php } else if (!$canEdit) { ?>
+		<br/>
+		<p><?= wfMsg('article-comments-login', SpecialPage::getTitleFor('UserLogin')->getLocalUrl() ); ?> </p>
+	<?php
+		} else if (!$commentingAllowed) { ?>
+		<br/>
+		<p><?= wfMsg('article-comments-comment-cannot-add'); ?> </p>
+	<?php
+		}
+	}
+
+	if ($countComments) {
+		echo '<div class="article-comments-pagination upper-pagination"><div>' . $pagination . '</div></div>';
+	}
+
+	echo wfRenderPartial('ArticleComments', 'CommentList', array('commentListRaw' => $commentListRaw, 'page' => $page, 'useMaster' => false));
+
+	?>
+
+<?php
+	if ($countComments) {
+		echo '<div class="article-comments-pagination"><div>' . $pagination . '</div></div>';
+	}
+?>
+	</div>
+</section>

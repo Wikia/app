@@ -207,7 +207,6 @@ class JSMessages {
 		$this->app->wf->ProfileIn(__METHOD__);
 
 		$url = $this->getExternalPackagesUrl();
-
 		if ($url != "") {
 			// request a script
 			$this->app->wg->Out->addScript(Html::linkedScript($url));

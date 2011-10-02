@@ -149,6 +149,8 @@ class FeedRenderer {
 
 					// blog comment
 					case 501:
+					// message wall
+					case 1001:
 						$msgType = 'comment';
 						break;
 
@@ -252,6 +254,47 @@ class FeedRenderer {
 
 		return $html;
 	}
+	
+	/**
+	 * @brief Returns rows with message wall comments
+	 *
+	 * @param Array $comments an array with comments
+	 *
+	 * @author Andrzej 'nAndy' Łukaszewski
+	 */
+	public static function formatMessageWallRows($comments) {
+		$html = '';
+		
+		foreach( $comments as $comment ) {
+			$html .= '<tr>';
+			$html .= '<td>';
+			$html .= $comment['avatar'];
+			$html .= '</td>';
+			
+			$html .= '<td>';
+			$html .= '<p class="author">';
+			if( !empty($comment['user-profile-url']) ) {
+				if( !empty($comment['real-name']) ) {
+					$html .= '<a href="'.$comment['user-profile-url'].'">'.$comment['real-name'].'</a>';
+					$html .= ' <span>'.$comment['author'].'</span>';
+				} else {
+					$html .= '<a href="'.$comment['user-profile-url'].'">'.$comment['author'].'</a>';
+				}
+			} else {
+				$html .= $comment['author'];
+			}
+			$html .= '</p>';
+			$html .= '<p>'.$comment['wall-comment'];
+			if( !empty($comment['timestamp']) ) {
+				$html .= ' <time class="wall-timeago" datetime="'.wfTimestamp(TS_ISO_8601, $comment['timestamp']).'">'.self::formatTimestamp($comment['timestamp']).'</time>';
+			}
+			$html .= '</p>';
+			$html .= '</td>';
+			$html .= '</tr>';
+		}
+		
+		return $html;
+	}
 
 	/*
 	 * Returns <a> tag pointing to user page
@@ -316,6 +359,8 @@ class FeedRenderer {
 
 					// blog comment
 					case 501:
+					// wall comment
+					case 1001:
 						$type = self::FEED_COMMENT_ICON;
 						break;
 
@@ -495,6 +540,14 @@ class FeedRenderer {
 			// article comment
 			else if (!empty($row['articleComment'])) {
 				$html .= self::formatDetailsRow('new-article-comment', self::formatIntro($row['intro']),false);
+			}
+			// message wall thread
+			else if( !empty($row['wall']) ) {
+				if( !empty($row['comments']) ) {
+					$html .= self::formatMessageWallRows($row['comments']);
+				} else {
+					$html .= '';
+				}
 			}
 			// another new content
 			else {

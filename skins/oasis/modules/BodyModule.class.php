@@ -36,6 +36,7 @@ class BodyModule extends Module {
 	var $displayAdminDashboardChromedArticle;
 	var $isMainPage;
 	var $topAdsExtraClasses;
+	var $displayWall = false;
 
 	var $subtitle;
 
@@ -100,13 +101,15 @@ class BodyModule extends Module {
 		global $wgTitle, $wgEnableUserProfilePagesV3;
 
 		// perform namespace and special page check
-
 		$isUserPage = in_array($wgTitle->getNamespace(), self::getUserPagesNamespaces());
 
 		$ret =  ($isUserPage && empty($wgEnableUserProfilePagesV3))
-				|| ($isUserPage && !empty($wgEnableUserProfilePagesV3) && !$wgTitle->isSubpage())
+				|| ($isUserPage && !empty($wgEnableUserProfilePagesV3) && !$wgTitle->isSubpage() )
 				|| $wgTitle->isSpecial( 'Following' )
-				|| $wgTitle->isSpecial( 'Contributions' );
+				|| $wgTitle->isSpecial( 'Contributions' )
+				|| (defined('NS_USER_WALL') && $wgTitle->getNamespace() == NS_USER_WALL && !$wgTitle->isSubpage())
+				|| (defined('NS_BLOG_LISTING') && $wgTitle->getNamespace() == NS_BLOG_LISTING)
+				|| (defined('NS_BLOG_ARTICLE') && $wgTitle->getNamespace() == NS_BLOG_ARTICLE);
 
 		wfProfileOut(__METHOD__);
 		return $ret;
@@ -116,13 +119,21 @@ class BodyModule extends Module {
 	 * Return list of namespaces on which user pages header should be shown
 	 */
 	public static function getUserPagesNamespaces() {
-		$namespaces = array(NS_USER, NS_USER_TALK);
+		global $wgEnableWallExt;
+		
+		$namespaces = array(NS_USER);
+		if( empty($wgEnableWallExt) ) {
+			$namespaces[] = NS_USER_TALK;
+		}
 		if (defined('NS_BLOG_ARTICLE')) {
 			$namespaces[] = NS_BLOG_ARTICLE;
 		}
 		if (defined('NS_BLOG_LISTING')) {
 			// FIXME: THIS IS NOT REALLY PART OF THE USER PAGES NAMESPACES
 			//$namespaces[] = NS_BLOG_LISTING;
+		}
+		if (defined('NS_USER_WALL')) {
+			$namespaces[] = NS_USER_WALL;
 		}
 		return $namespaces;
 	}
@@ -371,7 +382,7 @@ class BodyModule extends Module {
 
 
 	public function executeIndex() {
-		global $wgOut, $wgTitle, $wgSitename, $wgUser, $wgEnableBlog, $wgEnableCorporatePageExt, $wgEnableInfoBoxTest, $wgEnableWikiAnswers, $wgRequest, $wgMaximizeArticleAreaArticleIds, $wgEnableAdminDashboardExt, $wgEnableUserProfilePagesV3, $wgEnableTopButton, $wgTopButtonPosition;
+		global $wgOut, $wgTitle, $wgSitename, $wgUser, $wgEnableBlog, $wgEnableCorporatePageExt, $wgEnableInfoBoxTest, $wgEnableWikiAnswers, $wgRequest, $wgMaximizeArticleAreaArticleIds, $wgEnableAdminDashboardExt, $wgEnableUserProfilePagesV3, $wgEnableTopButton, $wgTopButtonPosition, $wgEnableMessageWall;
 
 		// set up global vars
 		if (is_array($wgMaximizeArticleAreaArticleIds)
@@ -416,8 +427,8 @@ class BodyModule extends Module {
 				if(!empty($wgEnableUserProfilePagesV3)) {
 					$this->headerModuleAction = 'Index';
 				} else {
-				$this->headerModuleAction = 'BlogPost';
-			}
+					$this->headerModuleAction = 'BlogPost';	
+				}
 			}
 			// is this page a blog listing?
 			else if (self::isBlogListing()) {

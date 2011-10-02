@@ -34,7 +34,7 @@ class UserProfilePageController extends WikiaController {
 
 		$pageBody = $this->getVal( 'userPageBody' );
 		$wikiId = $this->getVal( 'wikiId' );
-
+		
 		if( $this->title instanceof Title ) {
 			$namespace = $this->title->getNamespace();
 			$isSubpage = $this->title->isSubpage();
@@ -42,7 +42,7 @@ class UserProfilePageController extends WikiaController {
 			$namespace = $this->app->wg->NamespaceNumber;
 			$isSubpage = false;
 		}
-
+		
 		$useOriginalBody = true;
 
 		if( $user instanceof User ) {
@@ -83,7 +83,7 @@ class UserProfilePageController extends WikiaController {
 
 		$this->setRequest( new WikiaRequest($this->app->wg->Request->getValues()) );
 		$user = $this->getUserFromTitle();
-
+		
 		$userIdentityBox = F::build('UserIdentityBox', array($this->app, $user, self::MAX_TOP_WIKIS));
 		$isUserPageOwner = (!$user->isAnon() && $user->getId() == $sessionUser->getId()) ? true : false;
 
@@ -107,6 +107,7 @@ class UserProfilePageController extends WikiaController {
 		$this->setVal( 'deleteAvatarLink', F::build('SpecialPage', array('RemoveUserAvatar'), 'getTitleFor')->getFullUrl('av_user='.$userData['name']) );
 		$this->setVal( 'canRemoveAvatar', $sessionUser->isAllowed('removeavatar') );
 		$this->setVal( 'isUserPageOwner', $isUserPageOwner );
+
 		$canEditProfile = $isUserPageOwner || $sessionUser->isAllowed('editprofilev3');
 		//if user is blocked locally (can't edit anything) he can't edit masthead too
 		$canEditProfile = $sessionUser->isAllowed('edit') ? $canEditProfile : false;
@@ -114,13 +115,15 @@ class UserProfilePageController extends WikiaController {
 		$blockId = $sessionUser->getBlockId();
 		$canEditProfile = empty($blockId) ? $canEditProfile : false;
 		$this->setVal( 'canEditProfile', $canEditProfile );
-
+		$this->setVal( 'isWikiStaff', $sessionUser->isAllowed('staff') );
+		$this->setVal( 'canEditProfile', ($isUserPageOwner || $sessionUser->isAllowed('staff') || $sessionUser->isAllowed('editprofilev3')) );
+		
 		if( !empty($this->title) ) {
 			$this->setVal( 'reloadUrl', htmlentities($this->title->getFullUrl(), ENT_COMPAT, 'UTF-8') );
 		} else {
 			$this->setVal( 'reloadUrl', '' );
 		}
-
+		
 		$this->app->wg->Out->addScript('<script type="'.$this->app->wg->JsMimeType.' src="'.$this->app->wg->StylePath.'/common/jquery/jquery.aim.js?'.$this->app->wg->StyleVersion.'"></script>');
 
 		$this->app->wf->ProfileOut( __METHOD__ );
@@ -138,7 +141,7 @@ class UserProfilePageController extends WikiaController {
 
 		$this->setRequest( new WikiaRequest($this->app->wg->Request->getValues()) );
 		$user = $this->getUserFromTitle();
-
+		
 		$sessionUser = $this->wg->User;
 		$canRename = $sessionUser->isAllowed('renameprofilev3');
 		$canProtect = $sessionUser->isAllowed('protect');
@@ -147,6 +150,7 @@ class UserProfilePageController extends WikiaController {
 
 		$actionButtonArray = array();
 		if( defined('NS_USER') && $namespace == NS_USER ) {
+		//profile page
 			$actionButtonArray = array(
 				'action' => array(
 					'href' => $this->title->getLocalUrl(array('action' => 'edit')),
@@ -155,7 +159,8 @@ class UserProfilePageController extends WikiaController {
 				'image' => MenuButtonModule::EDIT_ICON,
 				'name' => 'editprofile',
 			);
-		} else if( defined('NS_USER_TALK') && $namespace == NS_USER_TALK ) {
+		} else if( defined('NS_USER_TALK') && $namespace == NS_USER_TALK && empty($this->app->wg->EnableUserTalkArchiveMode) ) {
+		//talk page
 			$title = F::build('Title', array($user->getName(), NS_USER_TALK), 'newFromText');
 
 			if( $title instanceof Title ) {
@@ -188,6 +193,7 @@ class UserProfilePageController extends WikiaController {
 				}
 			}
 		} else if( defined('NS_BLOG_ARTICLE') && $namespace == NS_BLOG_ARTICLE && $isUserPageOwner ) {
+		//blog page
 			global $wgCreateBlogPagePreload;
 			wfLoadExtensionMessages('Blogs');
 
@@ -202,6 +208,7 @@ class UserProfilePageController extends WikiaController {
 		}
 
 		if( defined('NS_USER') && defined('NS_USER_TALK') && in_array($namespace, array(NS_USER, NS_USER_TALK)) ) {
+		//profile & talk page
 			if( $canRename ) {
 				$renameUrl = F::build('SpecialPage', array('MovePage'), 'getTitleFor')->getLocalUrl().'/'.$this->title->__toString();
 				$actionButtonArray['dropdown']['rename'] = array(
@@ -232,6 +239,8 @@ class UserProfilePageController extends WikiaController {
 			);
 		}
 
+		$this->wf->RunHooks( 'UserProfilePageAfterGetActionButtonData', array(&$actionButtonArray, $namespace, $canRename, $canProtect, $canDelete, $isUserPageOwner) );
+		
 		$actionButton = $this->wf->RenderModule('MenuButton', 'Index', $actionButtonArray);
 		$this->setVal('actionButton', $actionButton);
 
@@ -531,22 +540,22 @@ class UserProfilePageController extends WikiaController {
 
 	protected function storeInTempImage($fileName, $fileuploader){
 		$this->app->wf->ProfileIn( __METHOD__ );
-
+		
 		if(filesize($fileName) > self::AVATAR_MAX_SIZE ) {
 			return UPLOAD_ERR_FORM_SIZE;
 		}
-
-		$tempName = $fileuploader->tempFileName($this->wg->User);
+		
+		$tempName = $fileuploader->tempFileName($this->wg->User); 
 		$title = Title::makeTitle(NS_FILE, $tempName);
 		$localRepo = RepoGroup::singleton()->getLocalRepo();
-
+		
 		$ioh = F::build('ImageOperationsHelper');
-
+		
 		$out = $ioh->postProcessFile($fileName);
 		if($out !== true) {
 			return $out;
 		}
-
+		
 		$file = new FakeLocalFile($title, $localRepo);
 		$file->upload( $fileName , '', '' );
 
@@ -557,7 +566,7 @@ class UserProfilePageController extends WikiaController {
 			'height' => $height,
 			'width' => $width,
 		));
-
+		
 		$this->app->wf->ProfileOut( __METHOD__ );
 		return $thumbnail;
 	}
@@ -757,13 +766,13 @@ class UserProfilePageController extends WikiaController {
 			
 	/**
 	 * @brief Get user object from given title
-	 *
+	 * 
 	 * @desc getUserFromTitle() is sometimes called in hooks therefore I added returnUser flag and when
 	 * it is set to true getUserFromTitle() will assign $this->user variable with a user object
-	 *
+	 * 
 	 * @requestParam Title $title title object
 	 * @requestParam Boolean $returnUser a flag set to true or false
-	 *
+	 * 
 	 * @return User
 	 *
 	 * @author ADi
@@ -781,8 +790,15 @@ class UserProfilePageController extends WikiaController {
 			$title = $this->app->wg->Title;
 		}
 
+		$title = $this->getVal('title');
+		$returnUserInData = (boolean) $this->getVal('returnUser');
+		
+		if( !empty($title) && is_string($title) && strpos($title, ':') !== false ) {
+			$title = F::build('Title', array($title), 'newFromText');
+		}
+		
 		$user = null;
-
+		
 		if( $title instanceof Title && in_array( $title->getNamespace(), $this->allowedNamespaces ) ) {
 			// get "owner" of this user / user talk / blog page
 			$parts = explode('/', $title->getText());
@@ -807,7 +823,7 @@ class UserProfilePageController extends WikiaController {
 				return $this->app->wg->User;
 			}
 		}
-
+		
 		if( !empty($parts[0]) ) {
 			$userName = str_replace('_', ' ', $parts[0]);
 			$user = F::build('User', array($userName), 'newFromName');
@@ -832,6 +848,10 @@ class UserProfilePageController extends WikiaController {
 			$this->user = $user;
 		}
 
+		if( $returnUserInData ) {
+			$this->user = $user;
+		}
+		
 		$this->app->wf->ProfileOut( __METHOD__ );
 		return $user;
 	}
@@ -846,7 +866,7 @@ class UserProfilePageController extends WikiaController {
 
 		$title = $this->app->wg->Title;
 		$user = $this->getUserFromTitle();
-
+		
 		if( $user instanceof User ) {
 			$response = $this->app->sendRequest(
 			  'UserProfilePage',
@@ -856,7 +876,7 @@ class UserProfilePageController extends WikiaController {
 			    'userPageBody' => $template->data['bodytext'],
 			    'wikiId' => $this->app->wg->CityId,
 			  ));
-
+			
 			$template->data['bodytext'] = (string) $response;
 		}
 
@@ -1088,7 +1108,7 @@ class UserProfilePageController extends WikiaController {
 
 	public function onSkinSubPageSubtitleAfterTitle($title, &$ptext) {
 		if( !empty($title) && $title->getNamespace() == NS_USER) {
-			$ptext = $title->getText();
+			$ptext = $title->getText();	
 		}
 		return true;
 	}

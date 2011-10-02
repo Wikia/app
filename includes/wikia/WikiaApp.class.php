@@ -444,7 +444,7 @@ class WikiaApp {
 	 * @return string
 	 */
 	public function renderView( $controllerName, $method, Array $params = null ) {
-		return $this->sendRequest( $controllerName, $method, $params, false )->toString();
+		return $this->sendRequest( $controllerName, $method, $params, true )->toString();
 	}
 
 	/**

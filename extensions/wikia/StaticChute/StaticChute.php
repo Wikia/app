@@ -101,7 +101,8 @@ class StaticChute {
 			'common/jquery/jquery.dump.js',
 			'common/jquery/jquery.getcss.js',
 			'common/jquery/jquery.wikia.js',
-
+			'common/jquery/jquery.timeago.js',
+		
 			'common/wikibits.js',
 			'common/ajax.js',
 			'common/ajaxwatch.js',
@@ -110,6 +111,7 @@ class StaticChute {
 			'common/tracker.js',
 			'common/contributed.js',
 			'common/mwsuggest.js',
+			'../extensions/wikia/JSMessages/js/JSMessages.js',
 			'../extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
 			'../extensions/FBConnect/fbconnect.js',
 			'../extensions/wikia/AdEngine/AdProviderOpenX.js',

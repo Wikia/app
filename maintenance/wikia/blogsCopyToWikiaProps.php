@@ -13,6 +13,11 @@ ini_set( "include_path", dirname(__FILE__)."/.." );
 require_once( "commandLine.inc" );
 
 
+if(!empty($wgBlogsInWikiaProps)) {
+	echo "Already done";
+	exit;
+}
+
 $list = BlogArticle::getPropsList();
 
 $dbr = wfGetDB( DB_SLAVE );
@@ -30,4 +35,4 @@ while( $row = $dbr->fetchObject( $res ) ) {
 
 $dbr->commit();
 
-
+WikiFactory::setVarByName("wgBlogsInWikiaProps", $wgCityId, true );

@@ -3,13 +3,16 @@
 @import "../../../skins/oasis/css/mixins/border-radius";
 
 /* overwriting Monoco-styling */
+.WikiaArticle ul.activityfeed { margin-left: 0; }
 .activityfeed {
-	margin-left: 30px;
 	li {
 		padding-bottom: 7px;
-		margin-bottom: 10px;
+		padding-top: 10px;
+		margin-bottom: 0;
+		padding-left: 30px;
 
 		list-style: none;
+		&:not(:first-child) { border-top: 1px solid mix($color-page-border, $color-page, 50%); }
 	}
 
 	em {
@@ -85,6 +88,7 @@
 		position: absolute;
 		width: 160px;
 	}
+	.subtle { color: $color-gray-text; }
 
 }
 

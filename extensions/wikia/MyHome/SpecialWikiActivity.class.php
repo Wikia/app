@@ -73,6 +73,7 @@ JS
 				$feedRenderer = new WatchlistFeedRenderer();
 			}
 		} else {
+		//for example: wiki-domain.com/wiki/Special:WikiActivity
 			$this->feedSelected = 'activity';
 			$feedProxy = new ActivityFeedAPIProxy();
 			$feedRenderer = new ActivityFeedRenderer();
@@ -81,10 +82,15 @@ JS
 		$feedProvider = new DataFeedProvider($feedProxy);
 
 		// WikiActivity.js is MyHome.js modified for Oasis
-		global $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
+		global $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgEnableWallExt;
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/MyHome/WikiActivity.js?{$wgStyleVersion}\"></script>\n");
 		$wgOut->addExtensionStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/MyHome/oasis.scss'));
-
+		
+		if( !empty($wgEnableWallExt) ) {
+			$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/Wall/js/WallWikiActivity.js?{$wgStyleVersion}\"></script>\n");
+			$wgOut->addExtensionStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/Wall/css/WallWikiActivity.scss'));
+		}
+		
 		$data = $feedProvider->get(50);  // this breaks when set to 60...
 		
 		// FIXME: do it in AchievementsII extension

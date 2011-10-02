@@ -1,0 +1,91 @@
+
+#content { z-index: 0 }
+
+#wall-notifications-dropdown {
+	display: none;
+	z-index: 3;
+	right: 0;
+	position: absolute;
+	border: 1px solid gray;
+}
+
+#pt-wall-notifications {
+	position: relative
+}
+
+#wall-notifications-markasread {
+	text-align: center;
+}
+#wall-notifications-dropdown ul#wall-notifications-inner { padding: 0; }
+#wall-notifications-inner a { display: block; padding: 0; }
+#wall-notifications-inner ul {	padding: 0;	margin: 0; }
+#wall-notifications-inner li {	padding: 0; margin: 0; }
+#wall-notifications-inner .notification { }
+
+#wall-notifications-inner .avatars {
+	vertical-align: top;
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+	position: relative;
+	width: 45px;
+	height: 45px;
+	top: 5px;
+	left: 5px;
+}
+
+#wall-notifications-inner	.avatars_2_1 .avatar { left: -2px; top: -2px; }
+#wall-notifications-inner	.avatars_2_2 .avatar { left:  2px; top:  2px; }
+#wall-notifications-inner	.avatars_3_1 .avatar { left: -3px; top: -3px; }
+#wall-notifications-inner	.avatars_3_2 .avatar { left:  0px; top:  0px; }
+#wall-notifications-inner	.avatars_3_3 .avatar { left:  3px; top:  3px; }
+
+#wall-notifications-inner	.avatar { position: absolute; }
+
+#wall-notifications-inner .notification {
+	width: 200px;
+	display: inline-block;
+	white-space: normal;
+	font-size: 10px;
+	line-height: 1.5em;
+	text-align: left;
+	text-transform: none;
+}
+#wall-notifications-inner .notification:hover { text-decoration: underline; }
+#wall-notifications-inner .notification time { display: block; font-size: 10px; }
+#wall-notifications-inner .unread_notification { font-weight: bold; }
+#wall-notifications-inner .read_notification { font-weight: normal; }
+#wall-notifications-inner li,
+#wall-notifications-inner a {
+	border-top: 1px solid gray !important;
+	cursor: pointer;
+}
+#wall-notifications-markasread { cursor: pointer; }
+
+#wall-notifications-inner .notifications-header {
+	font-size: 13px; font-weight: bold;
+	padding-top: 1px;
+	padding-left: 10px;
+	cursor: default;
+	text-align: left;
+	text-transform: none;
+}
+#wall-notifications-markasread {
+	cursor: pointer; 
+	text-align: center;
+	float: right;
+	font-weight: normal;
+	font-size: 11px;
+	padding-right: 10px; 
+}
+#wall-notifications-markasread:hover { text-decoration: underline; }
+
+#wall-notifications-dropdown:before {
+	content: '';
+	height: 20px;
+	position: absolute;
+	width: 100%;
+	top: 100%;
+	left: 0px;
+	background: none;
+}

@@ -119,6 +119,9 @@ $wgAutoloadClasses['PayflowAPI'] = "$IP/includes/wikia/PayflowAPI.php";
 $wgAutoloadClasses['Curl'] = "$IP/includes/wikia/Curl.php";
 $wgAutoloadClasses['WikiaException'] = "$IP/includes/wikia/WikiaException.php";
 $wgAutoloadClasses['WikiaSkinMonoBook'] = "$IP/skins/wikia/WikiaMonoBook.php";
+$wgAutoloadClasses['PaginationController'] = "$IP/includes/wikia/services/PaginationController.class.php";
+$wgAutoloadClasses['MemcacheSync'] = "$IP/includes/wikia/MemcacheSync.class.php";
+
 
 //AutomaticWikiAdoption
 $wgAutoloadClasses['AutomaticWikiAdoptionGatherData']  =  $IP.'/extensions/wikia/AutomaticWikiAdoption/maintenance/AutomaticWikiAdoptionGatherData.php';

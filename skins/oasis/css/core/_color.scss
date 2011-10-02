@@ -54,9 +54,9 @@ $color-secondary-button-text: white;
 	$color-secondary-button-text: #333;
 }
 
-// Article Comments
-$color-comment-odd: mix($color-text, $color-page, 5%);
-$color-comment-even: mix($color-links, $color-page, 5%);
+// Speech Bubbles (Article Comments, Wall)
+$color-speech-bubble: mix($color-text, $color-page, 5%);
+$color-speech-bubble-alt: mix($color-links, $color-page, 5%);
 
 // TOC
 $color-article-toc-background: transparent;
