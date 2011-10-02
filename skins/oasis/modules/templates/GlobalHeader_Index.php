@@ -53,6 +53,7 @@ if(is_array($menuNodes) && isset($menuNodes[0])) {
 		</ul>
 	</nav>
 	<?= wfRenderModule('AccountNavigation') ?>
+	<? if( $wgEnableWallExt ) echo wfRenderModule('WallNotifications'); ?>
 	<img src="<?= $wgBlankImgUrl ?>" class="banner-corner-left" width="0" height="0">
 	<img src="<?= $wgBlankImgUrl ?>" class="banner-corner-right" width="0" height="0">
 </header>

@@ -160,8 +160,9 @@ var AjaxLogin = {
 				}
 
 				if((typeof wgReturnToQuery != 'undefined') && (wgReturnToQuery.length > 0)){
-					destUrl += "&" + wgReturnToQuery
+					destUrl += "&" + wgReturnToQuery;
 				}
+				
 				window.location.href = destUrl;
 			} else {
 				AjaxLogin.doReload();

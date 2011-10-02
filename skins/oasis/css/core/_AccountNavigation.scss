@@ -43,10 +43,13 @@
 		margin-right: 5px;
 		vertical-align: middle;
 	}
+
 	.subnav {
 		@include menu-heavy;
+		@include box-shadow(0, 5px, 10px, rgba(0, 0, 0, 0.5));
 		display: block;
 		top: -9999px;
+		padding: 0px;
 		&.show {
 			right: 0;
 			top: 34px;
@@ -56,6 +59,14 @@
 			height: auto;
 			&:hover {
 				background-image: none;
+			}
+			a {
+				padding: 10px;
+				color: $color-text;
+				&:hover { 
+					@include box-shadow(0,0,5px, mix($color-buttons, $color-page, 25%), inset);
+					background: mix($color-buttons, $color-page, 15%);
+				}
 			}
 		}
 		a {

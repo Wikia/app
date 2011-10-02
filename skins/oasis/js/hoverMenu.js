@@ -1,3 +1,15 @@
+$(function() {
+	//Create instances of HoverMenu
+	new HoverMenu("#GlobalNavigation");
+	new HoverMenu("#AccountNavigation");
+	new HoverMenu("#WallNotifications");
+	//Accessbility
+	$("div.skiplinkcontainer a").focus(function(evt) {
+		$("body").data("accessible", "true");
+		$("#GlobalNavigation .subnav, #WikiHeader .subnav").show();
+	});
+});
+
 HoverMenu = function(selector) {
 
 	//Settings

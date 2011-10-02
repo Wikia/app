@@ -1,4 +1,5 @@
 <div  class="wikia-paginator">
+co jest
 	<div>
 		<ul>
 		<?	$i = 1;

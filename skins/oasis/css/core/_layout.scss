@@ -10,3 +10,9 @@ $width-outside: 1000px;
 }
 
 $width-rail: 300px;
+
+/* We often use this amount of padding or margin to separate elements in our layout. 
+ * For example, .WikiaRail has this much padding on the left and right to not touch the edge of the page or the article content. 
+ * .WikiaArticle does the same. 
+ */ 
+$width-gutter: 10px; 

@@ -134,13 +134,17 @@ class UserPagesHeaderModule extends Module {
 						'data-id' => 'following',
 						);
 			}
-
+			
 			// avatar dropdown menu
 			$this->avatarMenu = array(
 					Wikia::link(SpecialPage::getTitleFor('Preferences'), wfMsg('oasis-user-page-change-avatar'))
 					);
 		}
-
+		
+		/** start of wikia change @author nAndy */
+		$this->wf->RunHooks( 'UserPagesHeaderModuleAfterGetTabs', array(&$tabs, $namespace, $userName) );
+		/* end of wikia change */
+		
 		wfProfileOut(__METHOD__);
 		return $tabs;
 	}
@@ -245,7 +249,6 @@ class UserPagesHeaderModule extends Module {
 		}
 		 */
 
-
 		// page type specific stuff
 		if ($namespace == NS_USER) {
 			if ( !$this->isUserProfilePageExt ) {
@@ -340,9 +343,6 @@ class UserPagesHeaderModule extends Module {
 		if (mb_strlen($this->title) > 35) {
 			$this->stats = false;
 		}
-
-
-
 
 		global $wgEnableFacebookSync;
 		// Facebook profile Sync

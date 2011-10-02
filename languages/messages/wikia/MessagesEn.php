@@ -1061,8 +1061,10 @@ Text should be placed on this page if you wish to explain usage, style and polic
 'prefs-editing-experience' => 'Editing experience',
 'prefs-monobook-layout' => 'Monobook layout only',
 'prefs-editarea-size' => 'Size of editing window (Monobook layout only)',
-
 # disabled namespaces (BugId:9980)
 'namespacedisabled' => 'Namespace disabled',
 'namespacedisabledtext' => 'This namespace has been disabled.',
+//Pagination service
+'wikia-pagination-prev' => 'Prev',
+'wikia-pagination-next' => 'Next',
 ));

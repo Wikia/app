@@ -60,6 +60,10 @@ $UPPNamespaces = array();
 $UPPNamespaces[] = NS_USER;
 $UPPNamespaces[] = NS_USER_TALK;
 
+if( defined('NS_USER_WALL') ) {
+	$UPPNamespaces[] = NS_USER_WALL;
+}
+
 if( defined('NS_BLOG_ARTICLE') ) {
 	$UPPNamespaces[] = NS_BLOG_ARTICLE;
 }

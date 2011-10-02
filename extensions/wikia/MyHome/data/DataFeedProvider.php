@@ -104,8 +104,8 @@ class DataFeedProvider {
 	private function add($item, $res) {
 		wfProfileIn(__METHOD__);
 		global $wgMemc;
-
-		if ($this->removeDuplicatesType == 0) {	//default
+		
+		if( $this->removeDuplicatesType == 0 ) { //default
 			$key = $res['user'].'#'.$res['title'].'#'.$res['comment'];
 
 			if (is_array($res['rc_params']) && !empty($res['rc_params']['imageInserts'])) {
@@ -114,6 +114,10 @@ class DataFeedProvider {
 
 			if (is_array($res['rc_params']) && !empty($res['rc_params']['categoryInserts'])) {
 				$key .= Wikia::json_encode($res['rc_params']['categoryInserts']);
+			}
+
+			if( !empty($res['ns']) && defined('NS_USER_WALL') && ($res['ns'] - 1) === NS_USER_WALL ) {
+				$key = $res['title'];
 			}
 		} elseif ($this->removeDuplicatesType == 1) {	//used in `shortlist`, activity tag
 			$key = $res['title'];
@@ -214,6 +218,19 @@ class DataFeedProvider {
 					$item['Badge'] = $res['rc_params']['Badge'];
 				}
 			}
+			
+			if( !empty($item['wall']) ) {
+				$wh = new WallHelper();
+				if( !empty($item['parent-id']) ) {
+					$data = $wh->getWallComments($item['parent-id']);
+					$item['comments'] = $data['comments'];
+					$item['comments-count'] = $data['count'];
+				} else {
+					$data = $wh->getWallComments($item['article-id']);
+					$item['comments'] = $data['comments'];
+					$item['comments-count'] = $data['count'];
+				}
+			}
 
 			$item['ns'] = $res['ns'];
 
@@ -224,11 +241,17 @@ class DataFeedProvider {
 
 	private function filterOne($res) {
 		wfProfileIn(__METHOD__);
+		
 		if ($res['type'] == 'log') {
 			$this->filterLog($res);
 		} else {
-			$title = Title::newFromText($res['title']);
-			if ($title && $title->exists()) {
+			if( empty($res['pageid']) ) {
+				$title = Title::newFromText($res['title']);
+			} else {
+				$title = Title::newFromID($res['pageid']);
+			}
+			
+			if( $title && $title->exists() ) {
 				if ($title->isRedirect()) {
 					if ($this->proxyType == self::WL) {
 						$this->filterRedirect($res, $title);
@@ -402,6 +425,9 @@ class DataFeedProvider {
 				$res['comment'] = ''; // suppressing needless details
 				$res['rc_params'] = '';
 			}
+		} else if( defined('NS_USER_WALL') && ($res['ns']-1) == NS_USER_WALL && $this->proxyType == self::AF ) {
+			$wh = new WallHelper();
+			$item = $wh->wikiActivityFilterMessageWall($title, $res);
 		}
 
 		if (count($item) > 1) {

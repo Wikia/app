@@ -95,7 +95,7 @@ class NotificationsModule extends Module {
 	 */
 	public static function addConfirmation($message, $type = 1) {
 		wfProfileIn(__METHOD__);
-
+		
 		$_SESSION[self::SESSION_KEY] = array(
 			'message' => $message,
 			'type' => $type,
@@ -103,6 +103,14 @@ class NotificationsModule extends Module {
 
 		wfDebug(__METHOD__ . " - {$message}\n");
 		wfProfileOut(__METHOD__);
+	}
+	
+	/**
+	 * Clear confirmation 
+	 */
+	
+	public static function clearConfirmation() {
+		$_SESSION[self::SESSION_KEY] = null;
 	}
 
 	/**
@@ -201,9 +209,8 @@ class NotificationsModule extends Module {
 
 		if (Wikia::isOasis()) {
 			$title = $article->getTitle();
-
 			// special handling of ArticleComments
-			if (class_exists('ArticleComment') && MWNamespace::isTalk($title->getNamespace()) && ArticleComment::isTitleComment($title)) {
+			if (class_exists('ArticleComment') && MWNamespace::isTalk($title->getNamespace()) && ArticleComment::isTitleComment($title) && $title->getNamespace() != NS_USER_WALL ) {
 				self::addConfirmation(wfMsg('oasis-confirmation-comment-deleted'));
 
 				wfProfileOut(__METHOD__);

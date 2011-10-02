@@ -18,7 +18,6 @@ $.fn.extend({
 		if (options) {
 			$.extend(settings, options);
 		}
-
 		// modal wrapper ID
 		var ts = Math.round((new Date()).getTime() / 1000);
 		var id = settings.id || ($(this).attr('id') || ts) + 'Wrapper';

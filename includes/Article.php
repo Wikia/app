@@ -2317,6 +2317,10 @@ class Article {
 	 * action=protect handler
 	 */
 	public function protect() {
+		/* Wikia change @author nAndy */
+		wfRunHooks( 'BeforePageProtect', array(&$this) );
+		/* End of Wikia change */
+		
 		$form = new ProtectionForm( $this );
 		$form->execute();
 	}
@@ -2325,6 +2329,10 @@ class Article {
 	 * action=unprotect handler (alias)
 	 */
 	public function unprotect() {
+		/* Wikia change @author nAndy */
+		wfRunHooks( 'BeforePageUnprotect', array(&$this) );
+		/* End of Wikia change */
+		
 		$this->protect();
 	}
 
@@ -2607,6 +2615,11 @@ class Article {
 	 */
 	public function delete() {
 		global $wgUser, $wgOut, $wgRequest;
+		
+		/* Wikia change @author nAndy */
+		wfRunHooks( 'BeforePageDelete', array(&$this) );
+		return;
+		/* End of Wikia change */
 
 		$confirm = $wgRequest->wasPosted() &&
 				$wgUser->matchEditToken( $wgRequest->getVal( 'wpEditToken' ) );

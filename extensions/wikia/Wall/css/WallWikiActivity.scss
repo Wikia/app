@@ -1,0 +1,43 @@
+@import "../../../../skins/oasis/css/core/color";
+
+.activity-type-talk a.title { margin-right: 0.5em; }
+
+table.wallfeed {
+	margin-top: 3px;
+	font-size: 12px;
+	td {
+		margin: 0;
+		padding: 0;
+		
+		p {
+			border: 0;
+			margin: 0 0 5px 10px;
+			padding: 0;
+			line-height: 150%;
+			&.author {
+				margin-bottom: 5px;
+				a {
+					font-weight: bold;
+					text-decoration: none;
+				}
+				span {
+					margin-left: 5px;
+					color: $color-gray-text;
+				}
+			}
+		}
+		
+		time {
+			font-size: 11px;
+			color: $color-gray-text;
+			display: inline-block;
+		}
+		
+		img.avatar {
+			border: 1px solid #a0a0a0;
+			height: 29px;
+			margin-top: 5px;
+			width: 29px;
+		}
+	}
+}

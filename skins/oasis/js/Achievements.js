@@ -8,7 +8,7 @@ var AchievementsThing = {
 			var hover = badge.prevAll(".profile-hover");
 			badge.wikiaTooltip(hover, {relativeToParent:true, align:'right'});
 		});
-
+		
 		$('.AchievementsModule, .WikiaLatestEarnedBadgesModule').find('.sponsored-link img:not(.badges-more)').each(function(){
 			AchievementsThing.trackSponsored($(this).parent().attr('data-badgetrackurl'));
 		});

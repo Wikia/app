@@ -18,7 +18,7 @@
 
 	<?php
 	// comments & like button
-	if (empty($isMainPage)) {
+	if( empty($isMainPage) && !$isWallEnabled ) {
 		echo wfRenderModule('CommentsLikes', 'Index', array('comments' => $comments, 'likes' => $likes));
 	}
 	?>

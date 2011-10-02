@@ -583,7 +583,12 @@ class EmailNotification {
 
 		// Build a list of users to notfiy
 		$watchers = array();
-		if ($wgEnotifWatchlist || $wgShowUpdatedMarker) {
+		
+		if(!empty($otherParam['watchers'])) {
+			$watchers = $otherParam['watchers'];
+		}
+
+		if (($wgEnotifWatchlist || $wgShowUpdatedMarker) && !empty($watchers) ) {
 
 			global $wgEnableWatchlistNotificationTimeout, $wgWatchlistNotificationTimeout;
 			/* Wikia change begin - @author: wladek & tomek */
@@ -719,7 +724,12 @@ class EmailNotification {
 			if ( $wgEnotifWatchlist ) {
 				// Send updates to watchers other than the current editor
 				$userArray = UserArray::newFromIDs( $watchers );
+
 				foreach ( $userArray as $watchingUser ) {
+					if(!wfRunHooks('beforeEnotifWatchlist ', array( $watchingUser,  $title ))){
+						continue;
+					}
+									
 					if ( $watchingUser->getOption( 'enotifwatchlistpages' ) &&
 						( !$minorEdit || $watchingUser->getOption('enotifminoredits') ) &&
 						$watchingUser->isEmailConfirmed() &&

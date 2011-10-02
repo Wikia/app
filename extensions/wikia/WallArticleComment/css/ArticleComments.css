@@ -1,0 +1,243 @@
+#article-comments-wrapper {
+/* copied from Monobook.css */
+	clear: both;
+	font-size: 127%;
+	line-height: 1.5em;
+	margin-top: 30px;
+}
+
+#article-comments img.throbber{
+	display: none;
+}
+
+#article-comm-form {
+	margin-bottom: 10px;
+}
+
+#article-comments-wrapper h2 {
+	border-top: 1px solid #AAA;
+	margin-bottom: 20px;
+	margin-top: 10px;
+	padding: 4px 10px;
+}
+#article-comments-wrapper a.wikia-button.secondary{
+	color: #333;
+}
+
+.article-helper-links {
+	float: right;
+	margin-top: -44px;
+	margin-right: 10px;
+}
+
+#article-comments-ul, #article-comments-ul ul.sub-comments {
+	list-style: none;
+	margin: 0;
+	padding: 0 10px;
+}
+
+#article-comments-ul ul.sub-comments {
+	margin-left: 54px;
+}
+
+#article-comments .article-comments-li {
+	background: transparent;
+	border-top: 1px solid #AAA;
+	margin-bottom: 5px;
+	padding: 12px 0;
+}
+
+#article-comments blockquote {
+	margin-top: 0px;
+	margin-left: 65px;
+}
+
+#article-comments blockquote .buttons{
+	margin-top: 10px;
+}
+
+#article-comments .article-comment-first,
+#article-comments .article-comments-nested {
+	border-top: none;
+}
+
+#article-comments > .article-comm-input {
+	padding: 0 10px;
+}
+
+div.article-comm-input-text textarea {
+	height: 100px;
+	margin-bottom: 5px;
+	padding: 3px;
+	width: 450px;
+}
+
+.article-comments .details {
+	float: left;
+	line-height: 1em;
+	overflow: hidden;
+	padding: 0px 4px 4px 10px;
+	width: 100px;
+}
+
+.article-comments span.timestamp {
+	line-height: 2em;
+}
+
+div.article-comment strong {
+	font-size: 10pt;
+	font-weight: 700;
+}
+
+.article-comments .comment strong {
+	font-weight: 700;
+}
+
+div.article-comm-input-avatar {
+	float: left;
+}
+
+.article-comments .comment,
+div.article-comm-input-text {
+	margin-left: 185px;
+}
+
+.custom_answers div.article-comm-input-text {
+	margin-left: 80px;
+}
+
+.article-comments span.info {
+	color: green;
+	margin-left: 8px;
+}
+
+.comment div.article-comm-input-text {
+	margin: 0 0 10px;
+}
+
+.rtl #article-comm-form-select select {
+	float: left;
+}
+
+.article-comments-pagination-link {
+	display: inline-block;
+	height: 16px;
+	line-height: 16px;
+	margin: 0 1px;
+	min-width: 16px;
+	padding: 2px;
+	text-align: center;
+}
+
+#article-comments-pagination-link-prev,
+#article-comments-pagination-link-next {
+	border: none;
+	font-weight: bold;
+	margin: 0 8px;
+	width: auto;
+}
+
+.article-comments-pagination-link:hover {
+	text-decoration: none;
+}
+
+#article-comments-pagination {
+	border-top: 1px solid #AAA;
+	margin: 10px;
+	padding: 15px 0 15px 245px;
+}
+
+#article-comments-login{
+	margin-left: 10px;
+}
+
+.article-comments-nested {
+	margin-left: 67px;
+}
+
+a.article-comm-reply {
+	display: inline-block;
+	margin-right: 10px;
+	padding: 0 20px;
+}
+
+.tools {
+	visibility: hidden;
+}
+
+.tools .sprite {
+	margin: 0 2px 0 4px;
+}
+
+#article-comments-wrapper .throbber {
+	visibility: hidden;
+}
+
+#article-comments-wrapper .buttons {
+	line-height: 18px;
+}
+
+div#article-comm-fbMonit {
+	height:100px;
+	margin: 0px 0px 5px 185px;
+	width:450px;
+	padding:6px;
+	background-color: white;
+	border: 1px solid #999;
+}
+
+#fbCommentMessage {
+	background-color: #EEEEEE;
+	height: 100px;
+	text-align:center;
+	width:450px;
+	display:none;
+}
+
+#fbCommentText{
+	padding-top:38px;
+}
+
+#article-comments .withVoting .article-comm-voteup-btn {
+	color: #999;
+	float: left;
+	font-size: 20px;
+	font-weight: bold;
+	margin-right: 15px;
+	position: absolute;
+}
+
+#article-comments .withVoting .article-comm-voteup-btn.No1 {
+	background: url("/extensions/wikia/TopLists/images/sprites.png") no-repeat scroll 10px 0 transparent;/* $wgCdnStylePath */
+	color: #000000;
+	font-size: 18px;
+	height: 65px;
+	line-height: 30px;
+	padding-top: 13px;
+	position: absolute;
+	top: -5px;
+	width: 60px;
+}
+
+#article-comments .withVoting .article-comm-voteup-btn span {
+	display: block;
+	margin-left: 25px;
+}
+
+#article-comments .withVoting .article-comm-text {
+	font-size: 17px;
+	overflow: hidden;
+	padding-left: 87px;
+	width: 288px;
+}
+
+#article-comments .withVoting .article-comm-votes {
+	line-height: 11px;
+	padding: 17px 10px;
+	position: absolute;
+	right: 0px;
+	text-align: right;
+	top: 0px;
+}
+
+

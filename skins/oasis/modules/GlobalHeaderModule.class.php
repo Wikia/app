@@ -15,6 +15,9 @@ class GlobalHeaderModule extends Module {
 
 	public function executeIndex() {
 		global $wgLangToCentralMap, $wgContLang, $wgCityId, $wgLang;
+		global $wgEnableWallExt;
+		
+		$this->wgEnableWallExt = $wgEnableWallExt;
 		
 		$wikiLang = $wgLang->getCode();
 		
