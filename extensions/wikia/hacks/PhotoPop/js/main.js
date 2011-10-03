@@ -65,9 +65,13 @@
 				var g = new games.Game({
 					id: 'tutorial',
 					data: config.tutorial,
-					soundServer: soundServer
+					watermark: imageServer.getAsset('watermark_dexter')
 				});
+				
 				g.addEventListener('roundStart', gameScreenRender);
+				g.addEventListener('playSound', function(event, sound) {
+					soundServer.play(sound.name);
+				});
 				g.play();			
 			}
 
