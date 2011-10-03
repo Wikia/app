@@ -45,7 +45,7 @@ class WallExternalController extends WikiaController {
 		
 		$userPageTitle = F::build('Title', array($this->request->getVal('username'), NS_USER_WALL), 'newFromText');
 		
-		$title = $this->request->getVal('title', null);
+		$title = trim($this->request->getVal('title', null));
 		$body = $this->request->getVal('body', null);
 		
 		if( empty($title) ) {
@@ -101,8 +101,14 @@ class WallExternalController extends WikiaController {
 
 	public function editMessageSave() {
 		$msgid = $this->request->getVal('msgid');
-		$newtitle = $this->request->getVal('newtitle');
+		$newtitle = trim($this->request->getVal('newtitle'));
 		$newbody = $this->request->getVal('newbody');
+		
+		if( empty($newtitle) ) {
+			$name = $this->wg->User->getRealName();
+			if (empty($name)) $name = $this->wg->User->getName();
+			$newtitle = $this->wf->msg('wall-default-title') . ' ' . $name;
+		}
 		
 		$ac = ArticleComment::newFromId($msgid);
 		$ac->load();
