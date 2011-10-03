@@ -49,7 +49,7 @@ if ($(window).width() < 1010) {
 		WikiaTracker.trackEvent3(Liftium.buildTrackUrl([LiftiumOptions.pubid, 'AIC2', 'test6']), {profile:'UA-17475676-11', sample:100});
 	}
 	} else {
-		WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "error", "inGroup", "AdsInContent"]), 'liftium.error');
+		WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "error", "inGroup", "AdsInContent"]), 'liftium.errors');
 	}
 	if (!Liftium.e(Liftium.debugLevel) || Math.floor(Math.random() * 10) == 7) {
 		Liftium.trackEvent(Liftium.buildTrackUrl(['AIC2', 'test1']), 'UA-17475676-11');
@@ -98,7 +98,7 @@ AIC2.checkStartStopPosition = function() {
 		}
 	} catch (e) {
 		Liftium.d("AIC2: catched in start/stop:", 1, e);
-		WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "error", "AIC2", "try_catch"]), 'liftium.error');
+		WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "error", "AIC2", "try_catch"]), 'liftium.errors');
 		// bail out - missing elements, broken dom, erroneous cast...
 		return false;
 	}
