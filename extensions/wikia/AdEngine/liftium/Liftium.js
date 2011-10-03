@@ -1322,12 +1322,10 @@ Liftium.init = function () {
 
 	if (typeof inGroup != 'undefined') {
 	if (inGroup(groups.N)) {
-		Liftium.trackEvent3(Liftium.buildTrackUrl(["init"]), {profile:'UA-17475676-15', sample:100});
+		WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "init"]), 'liftium.init2');
 	}
-	} else {
-		Liftium.trackEvent3(Liftium.buildTrackUrl(["error", "inGroup", "init"]), '100%');
 	}
-	Liftium.trackEvent3(Liftium.buildTrackUrl(["init"]), "UA-17475676-4");
+	WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "init"]), 'liftium.init');
 
 	Liftium.trackQcseg();
 
@@ -1946,12 +1944,10 @@ Liftium.sendBeacon = function (){
 
 	if (typeof inGroup != 'undefined') {
 	if (inGroup(groups.N)) {
-		Liftium.trackEvent3(Liftium.buildTrackUrl(["beacon"]), {profile:'UA-17475676-14', sample:100});
+		WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "beacon"]), 'liftium.beacon2');
 	}
-	} else {
-		Liftium.trackEvent3(Liftium.buildTrackUrl(["error", "inGroup", "beacon"]), '100%');
 	}
-	Liftium.trackEvent3(Liftium.buildTrackUrl(["beacon"]), "UA-17475676-5");
+	WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "beacon"]), 'liftium.beacon');
 
 	// Call the unit tests
 	if (window.LiftiumTest && typeof window.LiftiumTest.afterBeacon == "function"){
