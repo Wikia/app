@@ -3,7 +3,7 @@
  * PhotoPop game
  * 
  * @author Jakub Olek <bukaj.kelo(at)gmail.com>
- * @authore Federico "Lox" Lucignano <federico(at)wikia-inc.com>
+ * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
 class PhotoPopController extends WikiaController {
 	const CACHE_MANIFEST_PATH = 'wikia.php?controller=PhotoPopAppCacheController&method=serveManifest&format=html';

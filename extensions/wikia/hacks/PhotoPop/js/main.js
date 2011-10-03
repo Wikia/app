@@ -10,7 +10,7 @@
 			prefix + "shared/modules/game"
 		],
 		
-		function(config, templates, imageServer, soundServer, games) {
+		function(config, templates, imageServer, soundServer, gameLogic) {
 			var startTutorial = true,
 			games,
 			selectedGame,
@@ -135,7 +135,7 @@
 			}
 			
 			if(startTutorial){
-				var g = new games.Game({
+				var g = new gameLogic.Game({
 					id: 'tutorial',
 					data: config.tutorial,
 					watermark: imageServer.getAsset('watermark_dexter')
