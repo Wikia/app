@@ -1241,9 +1241,14 @@ var WikiaPhotoGallery = {
 		// unblock upload form
 		$('#WikiaPhotoGalleryImageUploadButton').attr('disabled', false);
 
-		// resize images list (RT #55203)
-		var spacing = (skin == 'oasis' ? 169 : 200);
-		$('#WikiaPhotoGallerySearchResults').height(this.editor.height - spacing);
+		// resize images list (RT #55203 / BugId:11679)
+		// at this time page is not shown yet, wait 50 ms...
+		setTimeout($.proxy(function() {
+			var resultsWrapper = $('#WikiaPhotoGallerySearchResults'),
+				offsetTop = resultsWrapper.position().top;
+
+			resultsWrapper.height(this.editor.height - offsetTop);
+		}, this), 50);
 	},
 
 	// setup upload conflict page
