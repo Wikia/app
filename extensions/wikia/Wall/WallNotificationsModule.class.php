@@ -45,39 +45,44 @@ class WallNotificationsModule extends Module {
 
 		$my_name = $this->wg->User->getName();
 		
-		$msgid  = 'wn-';
 		$params = array();
 		//Msg('msgid', array( '$1'=>
+		
 		
 		if(!$notify['grouped'][0]->isMain()) {
 			//$params[] = $data->msg_author_displayname;
 			$params[] = $data->msg_author_username;
-			if(count($authors) == 2) {
-				$msgid .= 'user2-';
-				$params['$1'] = $authors[1];
-			} elseif(count($authors) > 2 ) {
-				$msgid .= 'user3-';
-			} else {
-				$msgid .= 'user1-';
-			}
-			$msgid .= 'reply-';
-			if( $data->parent_username == $my_name )
-				$msgid .= 'you-';
-			elseif ( $data->parent_username == $data->msg_author_username )
-				$msgid .= 'self-';
-			else {
-				$msgid .= 'other-';
-				//$params['$'.(count($params)+1)] = $data->parent_displayname;
-				$params['$'.(count($params)+1)] = $data->parent_username;
-			}
-			if( $data->wall_username == $my_name )
-				$msgid .= 'your-wall';
-			else {
-			//elseif( $data->wall_username != $data->parent_username && $data->wall_username != $data->msg_author_username ) {
-				$msgid .= 'other-wall';
+
+			$user_count = 1;// 1 = 1 user,
+							// 2 = 2 users,
+							// 3 = more than 2 users
+
+			if(count($authors) == 2)     { $user_count = 2; $params['$1'] = $authors[1]; }
+			elseif(count($authors) > 2 ) { $user_count = 3; }
+
+			$reply_by = 'other'; // who replied?
+							   // you = same as person receiving notification
+							   // self = same as person who wrote original message (parent)
+							   // other = someone else
+
+			if( $data->parent_username == $my_name ) $reply_by = 'you';
+			elseif ( $data->parent_username == $data->msg_author_username ) $reply_by = 'self';
+			else $params['$'.(count($params)+1)] = $data->parent_username;
+
+			$whos_wall = 'a'; // on who's wall was the message written?
+								   // your  = on message author's wall
+								   // other = on someone else's wall
+								   // a     = the person was already mentioned (either author of msg or thread)
+
+			if( $data->wall_username == $my_name ) $whos_wall = 'your';
+			elseif( $data->wall_username != $data->parent_username && $data->wall_username != $data->msg_author_username ) {
+				$whos_wall = 'other';
 				//$params['$'.(count($params)+1)] = $data->wall_displayname;
 				$params['$'.(count($params)+1)] = $data->wall_username;
 			}
+			
+			$msgid = "wn-user$user_count-reply-$reply_by-$whos_wall-wall";
+			
 		} else {
 			if( $data->wall_username == $my_name) {
 				$msgid = 'wn-newmsg-onmywall';

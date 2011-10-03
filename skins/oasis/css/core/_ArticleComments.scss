@@ -102,14 +102,14 @@
 
 
 // /** the comment bubble list **/
-.comments {
+#article-comments .comments {
 	clear: both;
 	list-style: none;
 	li{
 		list-style: none;
 	}
 }
-.sub-comments {
+#article-comments .sub-comments {
 	list-style: none;
 	margin-bottom: 20px;
 	margin-left: 85px;

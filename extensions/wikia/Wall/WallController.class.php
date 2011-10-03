@@ -229,8 +229,12 @@ class WallController extends ArticleCommentsModule {
 			$displayname2 = '';
 		}
 
+		$url = F::build('Title', array($name, NS_USER), 'newFromText' )->getFullUrl();
+
 		$this->response->setVal( 'displayname',  $displayname );
 		$this->response->setVal( 'displayname2', $displayname2 );
+		
+		$this->response->setVal( 'user_author_url', $url);
 		
 		wfProfileOut( __METHOD__ );
 	}
