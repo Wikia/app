@@ -77,7 +77,10 @@ define.call(exports, {
 				<img src='{{#image}}buttonSrc_contiunue{{/image}}'/>\
 			</div>\
 			<div id='answerDrawer'>\
-				<img id='answerButton' class='closed' src='{{#image}}buttonSrc_answerOpen{{/image}}' />\
+			<div id='answerButton' class='closed'>\
+				<img src='{{#image}}buttonSrc_answerOpen{{/image}}' />\
+				<img src='{{#image}}buttonSrc_answerClose{{/image}}' />\
+			</div>\
 				<ul id='answerList'>\
 					<li id='answer1'>1</li>\
 					<li id='answer2'>2</li>\
@@ -102,9 +105,6 @@ define.call(exports, {
 		"<div id='instructionsWrapper' class='triangle-isosceles right'>\
 			<div>\
 				TUTORIAL\
-			</div>\
-			<div class='buttonBar'>\
-				<a href=''><img src='{{#image}}buttonSrc_tutorial{{/image}}' /></a>\
 			</div>\
 		</div>"
 });
