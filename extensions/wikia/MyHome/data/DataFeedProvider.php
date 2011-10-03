@@ -368,7 +368,7 @@ class DataFeedProvider {
 
 	private function filterNew($res, $title) {
 		wfProfileIn(__METHOD__);
-		global $wgContentNamespaces;
+		global $wgContentNamespaces, $wgEnableWallExt;
 
 		$item = array('type' => 'new');
 
@@ -425,7 +425,7 @@ class DataFeedProvider {
 				$res['comment'] = ''; // suppressing needless details
 				$res['rc_params'] = '';
 			}
-		} else if( defined('NS_USER_WALL') && ($res['ns']-1) == NS_USER_WALL && $this->proxyType == self::AF ) {
+		} else if( !empty($wgEnableWallExt) && ($res['ns']-1) == NS_USER_WALL && $this->proxyType == self::AF ) {
 			$wh = new WallHelper();
 			$item = $wh->wikiActivityFilterMessageWall($title, $res);
 		}

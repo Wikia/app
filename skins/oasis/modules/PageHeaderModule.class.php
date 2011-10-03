@@ -183,7 +183,7 @@ class PageHeaderModule extends Module {
 	 *    key: showSearchBox (default: false)
 	 */
 	public function executeIndex($params) {
-		global $wgTitle, $wgEnableUserProfilePagesV3, $wgArticle, $wgOut, $wgUser, $wgContLang, $wgSupressPageTitle, $wgSupressPageSubtitle, $wgSuppressNamespacePrefix, $wgCityId, $wgABTests;
+		global $wgTitle, $wgEnableUserProfilePagesV3, $wgArticle, $wgOut, $wgUser, $wgContLang, $wgSupressPageTitle, $wgSupressPageSubtitle, $wgSuppressNamespacePrefix, $wgCityId, $wgABTests, $wgEnableWallExt;
 		wfProfileIn(__METHOD__);
 
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();
@@ -192,7 +192,7 @@ class PageHeaderModule extends Module {
 		$ns = $wgTitle->getNamespace();
 		
 		/** start of wikia changes @author nAndy */
-		$this->isWallEnabled = (defined('NS_USER_WALL') && $ns == NS_USER_WALL);
+		$this->isWallEnabled = (!empty($wgEnableWallExt) && $ns == NS_USER_WALL);
 		/** end of wikia changes */
 
 		// currently used skin
