@@ -34,6 +34,7 @@ class CreateWiki {
 	const ERROR_USER_IN_ANON                           = 12;
 	const ERROR_READONLY                               = 13;
 	const ERROR_DBLIGHTMODE                            = 14;
+	const ERROR_DATABASE_WRITE_TO_CITY_LIST_BROKEN     = 15;
 
 	const IMGROOT              = "/images/";
 	const IMAGEURL             = "http://images.wikia.com/";
@@ -217,7 +218,7 @@ class CreateWiki {
 		}
 
 		// prepare all values needed for creating wiki
-		$this->prepareValues( $this->mDomain, $this->mLanguage, $this->mType );
+		$this->prepareValues();
 
 		// prevent domain to be registered more than once
 		if ( !AutoCreateWiki::lockDomain($this->mDomain) ) {
