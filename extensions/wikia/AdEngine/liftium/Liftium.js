@@ -1579,7 +1579,7 @@ Liftium.markLastAdAsRejected = function (slotname){
 
 	var time = Liftium.debugTime() - Liftium.slotTimer2[slotname + "-" + tag_id];
 	Liftium.d("slotTimer2 end for #" + tag_id + " in " + slotname + " after " + time + " ms", 3);
-	WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "hop", tag_id, Liftium.formatTrackTime(time, 5)], 'liftium.hop');
+	WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "hop", tag_id, Liftium.formatTrackTime(time, 5)]), 'liftium.hop');
 };
 
 
