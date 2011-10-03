@@ -146,20 +146,13 @@ class MenuButtonModule extends Module {
 	}
 
 	/**
-	 * @param extraReturnToQuery is a string which will be urlencoded and appended to the returntoquery. eg: "action=edit".
+	 * @param extraReturntoquery is a string which will be urlencoded and appended to the returntoquery. eg: "action=edit".
 	 */
-	public function createLoginURL($extraReturnToQuery='') {
-		global $wgUser, $wgTitle;
+	public function createLoginURL($extraReturntoquery='') {
+		global $wgTitle;
 
 		/** create login URL **/
-		$skin = $wgUser->getSkin();
-		$returnto = "returnto={$skin->thisurl}";
-
-		$returntoquery = $skin->thisquery;
-		$returntoquery .= ($returntoquery == "" ? "" : "&amp;") . urlencode( $extraReturnToQuery );
-		if( $returntoquery != '' ) {
-			$returnto .= "&returntoquery=$returntoquery";
-		}
+		$returnto = wfGetReturntoParam(null, $extraReturntoquery);
 
 		//$signUpHref = Skin::makeSpecialUrl('Signup', $returnto);
 		$signUpHref = $returnto;
