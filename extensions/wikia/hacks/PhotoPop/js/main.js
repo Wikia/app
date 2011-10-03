@@ -69,8 +69,8 @@
 					data: config.tutorial,
 					soundServer: soundServer
 				});
-				//g.addEventListener('roundStart', gameScreenRender);
-				//g.play();			
+				g.addEventListener('roundStart', gameScreenRender);
+				g.play();			
 			}
 
 
