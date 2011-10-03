@@ -41,6 +41,7 @@ class PageHeaderModule extends Module {
 
 	var $wgABTests;
 	var $wgEnableUploads;
+	var $wgOasisNavV2;
 
 	/**
 	 * Use MW core variable to generate action button
