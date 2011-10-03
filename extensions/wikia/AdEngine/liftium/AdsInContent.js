@@ -48,8 +48,6 @@ if ($(window).width() < 1010) {
 	if (inGroup(groups.N)) {
 		WikiaTracker._track(Liftium.buildTrackUrl([LiftiumOptions.pubid, 'AIC2', 'test6']), 'UA-17475676-11', 100);
 	}
-	} else {
-		WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "error", "inGroup", "AdsInContent"]), 'liftium.errors');
 	}
 	if (!Liftium.e(Liftium.debugLevel) || Math.floor(Math.random() * 10) == 7) {
 		Liftium.trackEvent(Liftium.buildTrackUrl(['AIC2', 'test1']), 'UA-17475676-11');
