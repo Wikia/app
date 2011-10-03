@@ -73,7 +73,6 @@
 
 		<?php
 		if ( !empty($isUserProfilePageV3Enabled) && $headerModuleName == 'UserPagesHeader' && ($headerModuleAction != 'BlogPost' && $headerModuleAction != 'BlogListing') ) {
-			//echo F::app()->renderView( 'UserProfilePage', 'renderUserIdentityBox', array() );
 			echo wfRenderModule($headerModuleName, $headerModuleAction, $headerModuleParams);
 		}
 		?>
@@ -85,7 +84,7 @@
 				if (!empty(F::app()->wg->WallBrickHeader)){ 
 					echo F::app()->renderView( 'WallController', 'brickHeader', array( "id" => F::app()->wg->WallBrickHeader) );
 				}
-								
+				
 				// Needs to be above page header so it can suppress page header
 				if ($displayAdminDashboard) {
 					echo wfRenderModule('AdminDashboard', 'Chrome');

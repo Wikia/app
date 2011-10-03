@@ -422,13 +422,8 @@ class BodyModule extends Module {
 		if (self::showUserPagesHeader()) {
 			$this->headerModuleName = 'UserPagesHeader';
 			// is this page a blog post?
-			if (self::isBlogPost()) {
-				global $wgEnableUserProfilePagesV3;
-				if(!empty($wgEnableUserProfilePagesV3)) {
-					$this->headerModuleAction = 'Index';
-				} else {
-					$this->headerModuleAction = 'BlogPost';	
-				}
+			if( self::isBlogPost() ) {
+				$this->headerModuleAction = 'BlogPost';	
 			}
 			// is this page a blog listing?
 			else if (self::isBlogListing()) {
