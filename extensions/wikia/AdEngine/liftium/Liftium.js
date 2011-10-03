@@ -700,11 +700,11 @@ Liftium.getContainingDivId = function(element){
 Liftium.getCookieDomain = function () {
 	var domain = document.domain;
 
-	var d = domain.match(/(?:wikia(?:-dev)?\.com|wowwiki\.com|wiki\.ffxiclopedia\.org|memory-alpha\.org|websitewiki\.de|yoyowiki\.org|marveldatabase\.com)$/);
+	var d = domain.match(/(?:wikia(?:-dev)?\.com|wowwiki\.com|wiki\.ffxiclopedia\.org|memory-alpha\.org|websitewiki\.de|yoyowiki\.org|marveldatabase\.com|www\.jedipedia\.de)$/);
 	if (!Liftium.e(d)) {
 		domain = d[0];
 	} else {
-		Liftium.trackEvent3(Liftium.buildTrackUrl(["cookie_domain", domain]), '100%');
+		WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "cookie_domain", domain]), 'liftium.varia');
 	}
 
 	Liftium.d("cookie domain is " + domain, 7);
