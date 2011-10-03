@@ -230,6 +230,15 @@ class WallController extends ArticleCommentsModule {
 		}
 
 		$url = F::build('Title', array($name, NS_USER), 'newFromText' )->getFullUrl();
+		
+		if($data['author']->getId() == 0) { // anynymous contributor
+			//$url = F::build('Title', array($name, NS_USER), 'newFromText' )->getFullUrl();
+			//$url = $this->app->wg->SpecialPages['Contributors']
+			$url = Skin::makeSpecialUrl('Contributions').'/'.$data['author']->getName();
+			
+			$displayname = wfMsg('oasis-anon-user');
+			$displayname2 = $data['author']->getName();
+		}
 
 		$this->response->setVal( 'displayname',  $displayname );
 		$this->response->setVal( 'displayname2', $displayname2 );
