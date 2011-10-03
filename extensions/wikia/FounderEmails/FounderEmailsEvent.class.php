@@ -77,6 +77,16 @@ abstract class FounderEmailsEvent {
 		}
 		return false;
 	}
+
+	public static function isAnswersWiki() {
+		global $wgEnableAnswers;
+		
+		if (empty($wgEnableAnswers)) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 	
 	abstract public function process( Array $events );
 
