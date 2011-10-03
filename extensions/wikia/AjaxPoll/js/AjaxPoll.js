@@ -1,7 +1,7 @@
 var AjaxPoll = {
 	callback: function( answer ) {
 		// hide loading inicator & unblock submit button
-		pollId = answer.id;
+		var pollId = answer.id;
 		$('#pollSubmittingInfo' + pollId).css('visibility', 'hidden');
 		$('#axPollSubmit' + pollId).attr('disabled', false);
 
