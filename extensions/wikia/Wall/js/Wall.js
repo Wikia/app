@@ -19,22 +19,22 @@ var Wall = $.createClass(Object, {
 		$('#WallMessageSubmit').live('click', this.proxy(this.postNewMessage));
 		
 		// New wall post change
-		$('.new-message textarea.title, .new-message textarea.body')
+		$('#WallMessageTitle, #WallMessageBody')
 			.keydown(this.proxy(this.postNewMessage_ChangeText_pre))
 			.keyup(this.proxy(this.postNewMessage_ChangeText_pre))
 			.change(this.proxy(this.postNewMessage_ChangeText_pre))
 			.focus(this.proxy(this.postNewMessage_focus))
 			.blur(this.proxy(this.postNewMessage_blur));
 			
-		$('.new-message textarea.title')
-			.keydown(function(e) { if(e.which == 13) {$('.new-message textarea.body').focus(); return false; }})
+		$('#WallMessageTitle')
+			.keydown(function(e) { if(e.which == 13) {$('#WallMessageBody').focus(); return false; }})
 			.autoResize(this.settings.new_title);
-		$('.new-message textarea.body').autoResize(this.settings.new_body);
+		$('#WallMessageBody').autoResize(this.settings.new_body);
 
 		// Reply focus, blur, and reply events
 		$('.new-reply textarea')
+			.bind('keydown keyup change', this.proxy(this.reply_ChangeText))
 			.live('focus', this.proxy(this.replyFocus))
-			.live('keydown keyup change', this.proxy(this.reply_ChangeText))
 			.live('blur', this.proxy(this.replyBlur))
 			.autoResize(this.settings.reply);
 		$('.replyButton').live('click', this.proxy(this.replyToMessage));
@@ -154,6 +154,7 @@ var Wall = $.createClass(Object, {
 				setTimeout(function() {
 					$('#Wall').find('textarea,input').placeholder();
 					$('time.timeago').timeago();
+					$('.new-reply textarea').bind('keydown keyup change', this.proxy(this.reply_ChangeText))
 				}, 100);
 
 			}
@@ -227,7 +228,9 @@ var Wall = $.createClass(Object, {
 					.slideDown('slow')
 					.animate({'opacity':1},'slow');
 				$('time.timeago',newmsg).timeago();
+				$('.new-reply textarea', newmsg).bind('keydown keyup change', this.proxy(this.reply_ChangeText))
 				$('textarea', newmsg).autoResize(this.settings.reply);
+				
 				this.enableNewMessage();
 				$('.new-message .speech-bubble-message').css({'padding-bottom':10});
 				$('#WallMessageSubmit').hide();
@@ -281,7 +284,7 @@ var Wall = $.createClass(Object, {
 	},
 	postNewMessage_ChangeText: function() {
 		// check if both topic and content are filled
-		topic_str = $('.new-message textarea.title').val();
+		topic_str = $('#WallMessageTitle').val();
 		topic_len = topic_str.length;
 		topic = !$('#WallMessageTitle').hasClass('placeholder') && topic_len > 0;
 		content = !$('#WallMessageBody').hasClass('placeholder') && $('#WallMessageBody').val().length > 0;
@@ -306,7 +309,7 @@ var Wall = $.createClass(Object, {
 
 	postNewMessage_blur: function() {
 		//topic = !$('.new-message textarea.title').hasClass('placeholder') && $('.new-message textarea.title').val().length > 0;
-		content = !$('.new-message textarea.body').hasClass('placeholder') && $('.new-message textarea.body').val().length > 0;
+		content = !$('#WallMessageBody').hasClass('placeholder') && $('#WallMessageBody').val().length > 0;
 		if(!content) {
 			$('#WallMessageSubmit').attr('disabled', 'disabled').hide();
 			$('.new-message .speech-bubble-message').css({'padding-bottom':10});
@@ -327,7 +330,7 @@ var Wall = $.createClass(Object, {
 		$('#WallMessageSubmit').removeClass('loading').fadeOut('fast');
 		$('#WallMessageSubmit').html($.msg('wall-button-to-submit-comment'));
 		$('.new-message .no-title-warning').fadeOut('fast');
-		$('.new-message textarea.title').removeClass('no-title');
+		$('#WallMessageTitle').removeClass('no-title');
 		$('.new-message .speech-bubble-message').removeClass('loading');
 	},
 
@@ -420,8 +423,8 @@ var Wall = $.createClass(Object, {
 								
 				$('.speech-bubble-message',msg).first().html(beforeedit);
 
-				$('.msg-title',msg).html(data.title);
-				$('.msg-body',msg).html(data.body);
+				$('.msg-title',msg).first().html(data.title);
+				$('.msg-body',msg).first().html(data.body);
 								
 				//$('.buttons',msg).first().show();
 				$('.buttons').show();
@@ -494,14 +497,15 @@ var Wall = $.createClass(Object, {
 	},
 
 	reply_ChangeText: function(e) {
-		content = !$(e.target).hasClass('placeholder') && $(e.target).val().length > 0;
+		var target = $(e.target);
+		content = !target.hasClass('placeholder') && target.val().length > 0;
 
-		if(content) {
-			$(e.target).closest('.SpeechBubble').find('.replyButton').removeAttr('disabled');
-			$(e.target).addClass('content');
-		} else {
-			$(e.target).closest('.SpeechBubble').find('.replyButton').attr('disabled', 'disabled');
-			$(e.target).removeClass('content');
+		if(content && !target.hasClass('content') ) {
+			target.closest('.SpeechBubble').find('.replyButton').removeAttr('disabled');
+			target.addClass('content');
+		} else if(!content && target.hasClass('content')) {
+			target.closest('.SpeechBubble').find('.replyButton').attr('disabled', 'disabled');
+			target.removeClass('content');
 		}
 	},
 

@@ -86,7 +86,7 @@
 			white-space: normal;
 			font-size: 10px;
 			line-height: 1.5em;
-			time { display: block; font-size: 10px; padding-top: 3px; padding-bottom: 3px;}
+			.timeago { display: block; font-size: 10px; padding-top: 3px; padding-bottom: 3px;}
 			.msg-title { padding-top: 3px; padding-bottom: 2px; }
 		}
 	}
@@ -130,7 +130,7 @@
 			}
 			color: $color-text;
 			&:visited, &:active { color: $color-text; }
-			time { color: #aaaaaa; }
+			time, .timeago { color: #aaaaaa; }
 			.msg-title { font-weight: bold; font-size: 12px; }
 		}
 		&:before {

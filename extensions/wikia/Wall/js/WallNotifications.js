@@ -91,7 +91,10 @@ var WallNotifications = $.createClass(Object, {
 		} else {
 			var subnav = $('#WallNotifications .subnav');
 			subnav.html(data.html);
-			$('time.timeago', subnav).timeago();
+			$('.timeago', subnav).timeago();
+			//$('.timeago', subnav).html('blabla');
+			//alert('hi');
+			//setTimeout( function() { alert($('TIME.timeago').length;}, 500);
 			if(data.count > 0) {
 				$('#bubbles_count').html(data.count);
 				$('.bubbles').addClass('reddot');
