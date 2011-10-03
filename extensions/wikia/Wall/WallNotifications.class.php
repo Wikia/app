@@ -29,7 +29,6 @@ class WallNotifications {
 		
 		$memcSync = $this->getCache($userId, $wikiId);
 		$list = $this->getData($memcSync, $userId, $wikiId);
-		$fh = fopen('/var/tmp/wall.log', 'a'); fwrite($fh, "xxx\n".print_r($list,1)); fclose($fh);
 		
 		if(empty($list)) {
 			return array();
@@ -97,7 +96,6 @@ class WallNotifications {
 		} 
 
 		$title = Title::newFromText($notification->data->wall_username. '/' . $notification->data->title_id, NS_USER_WALL );
-		
 		$this->sendEmails($title, $notification->data->msg_author_id, array_keys($users), $notification->isMain(), $notification->data->wall_userid );
 		$this->addNotificationLinks($users, $notification);
 	}
@@ -213,14 +211,11 @@ class WallNotifications {
 	}
 
 	protected function addNotificationLinkInternal($userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply ) {
-		$fh = fopen('/var/tmp/wall.log', 'a'); fwrite($fh, "link internal\n"); fclose($fh);
 		if($userId < 1) {
 			return true;
 		}
-		$fh = fopen('/var/tmp/wall.log', 'a'); fwrite($fh, "store db\n"); fclose($fh);
 		$this->storeInDB($userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply); 
 		//id use to prevent having of extra entry after memc fail.   
-		$fh = fopen('/var/tmp/wall.log', 'a'); fwrite($fh, "get cache\n"); fclose($fh);
 		$memcSync = $this->getCache($userId, $wikiId);
 		do {
 			$count = 0; //use to set priority of process 
@@ -234,7 +229,6 @@ class WallNotifications {
 		} while(!isset($data) || !$this->setData($memcSync, $data));
 		
 		$memcSync->unlock();
-		$fh = fopen('/var/tmp/wall.log', 'a'); fwrite($fh, "internal done\n"); fclose($fh);
 	}
 	
 	protected function sleep($userId, $wikiId){

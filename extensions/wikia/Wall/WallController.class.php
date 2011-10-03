@@ -19,7 +19,6 @@ class WallController extends ArticleCommentsModule {
 	}
 
 	public function index() {
-		//$fh = fopen('/var/tmp/wall.log', 'a'); fwrite($fh, "index\n"); fclose($fh);
 		F::build('JSMessages')->enqueuePackage('Wall', JSMessages::EXTERNAL); 
 		
 		$this->response->addAsset('extensions/wikia/Wall/js/Wall.js');
@@ -45,7 +44,6 @@ class WallController extends ArticleCommentsModule {
 			if( count($this->commentListRaw) > 0 ) {
 				$wn = F::build('WallNotifications', array());
 				foreach($this->commentListRaw as $key => $val ){
-					//$fh = fopen('/var/tmp/wall.log', 'a'); fwrite($fh, "foreach comment - first\n"); fclose($fh);
 					$all = $wn->markRead( $this->wg->User->getId(), $this->wg->CityId, $key );
 					break;
 				}
