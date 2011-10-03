@@ -376,7 +376,15 @@ class WikiaResponse {
 		if ( !empty( $this->contentType ) ) {
 			$this->sendHeader( "Content-Type: " . $this->contentType, true );
 		}
-
+	}
+	
+	/**
+	 * @brief redirects to another URL
+	 *
+	 * @param string $url the URL to redirect to
+	 */
+	public function redirect( $url ){
+		$this->sendHeader( "Location: " . $url, true );
 	}
 	
 	public function addAsset( $assetName ){
