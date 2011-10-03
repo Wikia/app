@@ -1,10 +1,10 @@
-<li id="comm-<?=$commentId?>" class="article-comments-li <?php if (!empty($comment['isStaff'])) echo 'article-comment-staff '; ?><?=$rowClass?>" data-user="<?=$comment['username']?>">
-	<div class="comment-avatar">
+<li id="comm-<?=$commentId?>" class="SpeechBubble <?php if (!empty($comment['isStaff'])) echo 'article-comment-staff '; ?><?=$rowClass?>" data-user="<?=$comment['username']?>">
+	<div class="speech-bubble-avatar">
 		<a href="<?= htmlspecialchars(AvatarService::getUrl($comment['username'])) ?>">
 			<?= AvatarService::renderAvatar($comment['username'], 50) ?>
 		</a>
 	</div>
-	<blockquote>
+	<blockquote  class="speech-bubble-message">
 		<?php if( isset( $comment['votes'] ) && $level == 1 ): ?>
 		<div class="withVoting">
 		<div class="article-comm-voteup-btn<?php if($page==1 && $id==1) echo " No1"; ?>">

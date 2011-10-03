@@ -41,7 +41,7 @@
 			?>
 		</div>
 
-		<form action="<?= $wgTitle->getFullURL() ?>" method="post" id="article-comm-form">
+		<form action="<?= $wgTitle->getFullURL() ?>" method="post" id="article-comm-form" class="article-comm-form" >
 			<input type="hidden" name="wpArticleId" value="<?= $wgTitle->getArticleId() ?>" />
 			<textarea name="wpArticleComment" id="article-comm"></textarea>
 			<? if (!$isReadOnly) { ?>
