@@ -631,7 +631,7 @@ $(function() {
 			return Math.abs(hash) % tableSize;
 		}
 		if(simpleHash(window.beacon_id, 10) === 0) {
-			Liftium.trackEvent('SamplingPageview', 'UA-2871474-1');
+			WikiaTracker.track('SamplingPageview', 'UA-2871474-2'); // FIXME NEF switch to profile name, not id
 		}
 	}
 });

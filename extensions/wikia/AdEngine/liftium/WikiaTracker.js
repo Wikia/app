@@ -1,5 +1,8 @@
 var WikiaTracker = {
 	profileAliases:{
+		'main':'UA-2871474-1',
+		'main.sampled':'UA-2871474-1',
+		'main.unsampled':'UA-2871474-2',
 		'liftium.beacon':'UA-17475676-5',
 		'liftium.beacon2':'UA-17475676-14',
 		'liftium.errors':'UA-17475676-12',
@@ -14,6 +17,8 @@ var WikiaTracker = {
 	},
 	defaultRate:10,
 	profileRates:{
+		'UA-2871474-1':100, // main.sampled (FIXME temporary, remove)
+		'UA-2871474-2':100, // main.unsampled
 		'UA-17475676-14':100, // liftium.beacon2
 		'UA-17475676-15':100, // liftium.init2
 		'UA-17475676-12':100 // liftium.errors
