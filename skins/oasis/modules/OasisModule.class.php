@@ -244,9 +244,11 @@ class OasisModule extends Module {
 		}
 
 		// load WikiaScriptLoader
-		$this->wikiaScriptLoader = '<script type="text/javascript" src="' .
-			AssetsManager::getInstance()->getOneCommonURL('skins/wikia/js/WikiaScriptLoader.js') .
-			'"></script>';
+		$this->wikiaScriptLoader = '';
+		$wslFiles = AssetsManager::getInstance()->getGroupCommonURL('wsl');
+		foreach($wslFiles as $wslFile) {
+			$this->wikiaScriptLoader .= "<script type=\"$wgJsMimeType\" src=\"$wslFile\"></script>";
+		}
 
 		wfProfileIn(__METHOD__ . '::regexp');
 
