@@ -62,9 +62,9 @@
 		}
 	?>
 <?php } else if( !empty($isUserProfilePageV3Enabled) ) {?>
-	<!-- User Identity Box /BEGIN -->
-	<?php echo F::app()->renderView( 'UserProfilePage', 'renderUserIdentityBox' ); ?>
-	<!-- User Identity Box /END --> 
+		<!-- User Identity Box /BEGIN -->
+		<?php echo F::app()->renderView( 'UserProfilePage', 'renderUserIdentityBox' ); ?>
+		<!-- User Identity Box /END -->
 <?php } else { //user profile page v2? ?>
 	<!-- UserProfilePage Extension /BEGIN -->
 	<?= wfRenderModule( 'UserProfilePage', 'Masthead', array( 'userName' => $userName, 'userPage' => $userPage, 'avatarMenu' => $avatarMenu, 'displayTitle' => $displaytitle, 'title' => $title, 'actionButton' => $actionButton, 'actionImage' => $actionImage, 'actionName' => $actionName, 'actionMenu' => $actionMenu, 'likes' => $likes, 'stats' => $stats ) ); ?>

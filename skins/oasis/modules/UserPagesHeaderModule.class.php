@@ -514,7 +514,7 @@ class UserPagesHeaderModule extends Module {
 	 */
 	public function executeBlogPost() {
 		wfProfileIn(__METHOD__);
-		global $wgTitle, $wgLang, $wgOut, $wgEnableUserProfilePagesV3;
+		global $wgTitle, $wgLang, $wgOut;
 
 		// remove User_blog:xxx from title
 		$titleParts = explode('/', $wgTitle->getText());
@@ -555,10 +555,8 @@ class UserPagesHeaderModule extends Module {
 			}
 		}
 
-		// load CSS for .WikiaUserPagesHeader (BugId:9212)
-		if(empty($wgEnableUserProfilePagesV3)) {
-			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL("skins/oasis/css/core/_UserPagesHeader.scss"));
-		}
+		// load CSS for .WikiaUserPagesHeader (BugId:9212, 10246)
+		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL("skins/oasis/css/core/_UserPagesHeader.scss"));
 
 		wfProfileOut(__METHOD__);
 	}
@@ -569,7 +567,7 @@ class UserPagesHeaderModule extends Module {
 	public function executeBlogListing() {
 		wfProfileIn(__METHOD__);
 
-		global $wgTitle, $wgOut, $wgEnableUserProfilePagesV3;
+		global $wgTitle, $wgOut;
 		
 		wfLoadExtensionMessages('Blogs');
 		// "Create blog post" button
@@ -581,10 +579,8 @@ class UserPagesHeaderModule extends Module {
 		//subtitle is no longer rendered in this module. this probably needs to be moved to body module.
 		$this->subtitle = wfMsg('create-blog-post-category');
 
-		// load CSS for .WikiaBlogListingHeader (BugId:9212)
-		if(empty($wgEnableUserProfilePagesV3)) {
-			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL("skins/oasis/css/core/_UserPagesHeader.scss"));
-		}
+		// load CSS for .WikiaBlogListingHeader (BugId:9212, 10246)
+		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL("skins/oasis/css/core/_UserPagesHeader.scss"));
 
 		wfProfileOut(__METHOD__);
 	}
