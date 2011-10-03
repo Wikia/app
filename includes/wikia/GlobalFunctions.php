@@ -875,10 +875,9 @@ function wfGetReturntoParam($customReturnto = null) {
 	} else if ($wgTitle instanceof Title) {
 		$thisurl = $wgTitle->getPrefixedURL();
 		$returnto = "returnto=$thisurl";
+	} else {
+		$returnto = "";
 	}
-        else {
-                $returnto = "";
-        } 
 
 	if (!$wgRequest->wasPosted()) {
 		$query = $wgRequest->getValues();
