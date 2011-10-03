@@ -40,7 +40,7 @@ define.call(exports, {
 	
 	gameScreen:
 		"<div id='scoreBarWrapper'>\
-			<div id='scoreBar'></div>\
+			<div id='scoreBar' class='composite transition-all'></div>\
 		</div>\
 		<div id='bgWrapper'>\
 			<div id='bgPic'><img src='{{path}}'></div>\

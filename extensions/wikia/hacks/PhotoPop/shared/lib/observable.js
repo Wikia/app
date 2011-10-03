@@ -24,10 +24,12 @@ var Observable;
 			var x,
 			callbacks = this._callbacks[event];
 			
-			data = data || null;
-			
-			for(x = 0, y = callbacks.length; x < y; x++){
-				callbacks[x].call(this, event, data);
+			if(callbacks instanceof Array){
+				data = data || null;
+				
+				for(x = 0, y = callbacks.length; x < y; x++){
+					callbacks[x].call(this, event, data);
+				}
 			}
 		},
 		
