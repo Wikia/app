@@ -23,11 +23,20 @@ class WallHooksHelper {
 		//message wall index - brick page
 			$outputDone = true;
 			
-			$title = F::build('Title', array($parts[0], NS_USER_WALL), 'newFromText' );
-			$app->wg->SuppressPageHeader = true;
-			$app->wg->WallBrickHeader = $parts[1];
-			$app->wg->Out->addHTML($app->renderView('WallController', 'index',  array('filterid' => $parts[1],  'title' => $title)));
-			
+			// ugly hack to check if article comment still exists
+			$ac = ArticleComment::newFromId($parts[1]);
+			//$title = F::build('Title', array($parts[0], NS_USER_WALL), 'newFromText' );
+			if(!empty($ac) ) {
+				$app->wg->SuppressPageHeader = true;
+				$app->wg->WallBrickHeader = $parts[1];
+				$app->wg->Out->addHTML($app->renderView('WallController', 'index',  array('filterid' => $parts[1],  'title' => $title)));
+			} else {
+				$app->wg->SuppressPageHeader = true;
+				$app->wg->Out->addHTML($app->renderView('WallController', 'messageDeleted', array( 'title' =>wfMsg( 'wall-deleted-msg-pagetitle' ) ) ));
+				$app->wg->Out->setPageTitle( wfMsg( 'wall-deleted-msg-pagetitle' ) );
+				$app->wg->Out->setHTMLTitle( wfMsg( 'errorpagetitle' ) );
+				//$app->wg->Out->showErrorPage( 'wall-deleted-msg-pagetitle', 'wall-deleted-msg-text', array( '$1'=>'<a href="/Message_Wall:USERNAME">USERNAME\'s Wall</a>') );
+			}
 			return true;
 		}
 		

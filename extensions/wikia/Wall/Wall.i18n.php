@@ -68,5 +68,9 @@ $messages['en'] = array(
 	'wn-newmsg' => 'You left a new message on $1\'s Wall',
 	
 	'tog-enotifwallthread' => 'Email me when someone replies on a Message Wall thread I\'m following.',
-	'tog-enotifmywall' => 'Email me when somebody writes a new message on my Message Wall.'
+	'tog-enotifmywall' => 'Email me when somebody writes a new message on my Message Wall.',
+	
+	'wall-deleted-msg-pagetitle' => 'Message deleted',
+	'wall-deleted-msg-text' => 'The message you are trying to reach has been deleted.',
+	'wall-deleted-msg-return-to' => 'Return to $1\'s Wall.'
 );

@@ -383,7 +383,8 @@ class PageHeaderModule extends Module {
 
 		if($wgEnableUserProfilePagesV3 && in_array($wgTitle->getNamespace(), BodyModule::getUserPagesNamespaces() )) {
 			$title = explode(':', $this->title);
-			$this->title = $title[1];
+			if(count($title) >= 2 && $wgTitle->getNsText() == $title[0]) // in case of error page (showErrorPage) $title is just a string (cannot explode it)
+				$this->title = $title[1];
 		}
 
 		// render MW subtitle (contains old revision data)
