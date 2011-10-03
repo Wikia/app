@@ -74,6 +74,9 @@
 	.speech-bubble-message:hover .tools {
 		visibility: visible;
 	}
+	.sub-comments .speech-bubble-message .article-comm-text {
+		width: 468px;
+	}
 	textarea {
 		@include box-sizing;
 		line-height: 21px;

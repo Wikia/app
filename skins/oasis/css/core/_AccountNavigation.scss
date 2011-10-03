@@ -80,3 +80,6 @@
 		}
 	}
 }
+// disable overrides (main offender: user talk page gets different color if it's not created yet,
+// but for new Account Navigation we don't want that)
+#AccountNavigation li a.new { color: $color-text !important; }

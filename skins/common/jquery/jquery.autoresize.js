@@ -66,7 +66,7 @@
                         
                     // Check for mins:
                     var focus = $(this).hasClass('focus') ? true : false;
-                    var content = $(this).val().length > 0 ? true : false;
+                    var content = $(this).val().length > 0 && !$(this).hasClass('placeholder') ? true : false;
                     if ( scrollTop < settings.min ) scrollTop = settings.min;
                     if ( focus && scrollTop < settings.minFocus ) scrollTop = settings.minFocus;
                     if ( content && scrollTop < settings.minContent ) scrollTop = settings.minContent;
