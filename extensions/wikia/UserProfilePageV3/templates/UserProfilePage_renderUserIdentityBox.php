@@ -133,7 +133,7 @@
 				<? endif; ?>
 				
 				<? if( !empty($user['birthday']) ): ?>
-					<li><?= wfMsg('user-identity-box-was-born-on', array( '$1' => wfMsg('user-identity-box-about-date-'.$user['birthday']['month']), '$2' => $user['birthday']['day'] )); ?></li>
+					<li><?= wfMsg('user-identity-box-was-born-on', array( '$1' => F::app()->wg->Lang->getMonthName( intval($user['birthday']['month']) ), '$2' => $user['birthday']['day'] )); ?></li>
 				<? else: ?>
 					<? if( $user['showZeroStates'] && ($isUserPageOwner || $canEditProfile) ): ?>
 					<li><?= wfMsg('user-identity-box-zero-state-birthday'); ?></li>
