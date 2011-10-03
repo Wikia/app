@@ -102,8 +102,7 @@ define.call(exports, function(){
 			this.startActivator();
 			this.answerButtonClick();
 			this.answerClick();
-			if(this._id == "tutorial")
-				this.fire('tutorialStart', {});
+			if(this._id == 'tutorial') this.prepareTutorial();
 		},
 		
 		next: function(){
@@ -114,6 +113,14 @@ define.call(exports, function(){
 			}else{
 				console.log('Game completed!');
 				this.fire('complete');
+			}
+		},
+		
+		prepareTutorial: function() {
+			document.getElementById('instructionText').innerText = "Tap the screen to take a peek of the mystery image underneath.";
+			document.getElementById('instructionsWrapper').onclick = function() {
+				this.style.opacity = 0;
+				this.style.zIndex = 0;
 			}
 		},
 		

@@ -29,11 +29,13 @@
 					}
 				}
 			},
+			
 			gameScreenRender = function(event, round){
 				var imgPath = (round.gameId == 'tutorial') ? imageServer.getAsset(round.data.image) : imageServer.getPicture(round.data.image);
 				view.path = imgPath;
 				wrapper.innerHTML = Mustache.to_html(templates.gameScreen, view);
 			},
+			
 			loadSelectedGame = function(){
 				if(typeof selectedGame != 'undefined'){
 					microAjax(
