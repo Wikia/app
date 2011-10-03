@@ -18,18 +18,18 @@ AIC2.init = function() {
 	if ($("#WikiaMainContent").width() != AIC2.WMCbaseWidth) {
 		AIC2.marginLeft = AIC2.marginLeft + parseInt( ($("#WikiaMainContent").width() - AIC2.baseWidth) / 2 );
 		Liftium.d("AIC2: non standard width, new marginLeft set to " + AIC2.marginLeft, 5);
-		WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "AIC2", "wide"]));
+		WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "AIC2", "wide"]), 'liftium.varia');
 	}
 	if ($('body').hasClass('rtl')) {
 		Liftium.d("AIC2: rtl wiki", 7);
-		WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "AIC2", "rtl"]));
+		WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "AIC2", "rtl"]), 'liftium.varia');
 		AIC2.isRightToLeft = true;
 	}
 
 // FIXME
 if ($(window).width() < 1010) {
 	Liftium.d("AIC2: window too narrow, bailing out", 3);
-	WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "AIC2", "too_narrow"]));
+	WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "AIC2", "too_narrow"]), 'liftium.varia');
 	return;
 }
 
@@ -46,7 +46,7 @@ if ($(window).width() < 1010) {
 
 	if (typeof inGroup != 'undefined') {
 	if (inGroup(groups.N)) {
-		WikiaTracker.trackEvent3(Liftium.buildTrackUrl([LiftiumOptions.pubid, 'AIC2', 'test6']), {profile:'UA-17475676-11', sample:100});
+		WikiaTracker._track(Liftium.buildTrackUrl([LiftiumOptions.pubid, 'AIC2', 'test6']), 'UA-17475676-11', 100);
 	}
 	} else {
 		WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "error", "inGroup", "AdsInContent"]), 'liftium.errors');
@@ -79,7 +79,7 @@ if ($(window).width() < 1010) {
 
 	} else {
 		Liftium.d("AIC2: page too short", 3);
-		WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "AIC2", "too_short"]));
+		WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "AIC2", "too_short"]), 'liftium.varia');
 	}
 };
 
