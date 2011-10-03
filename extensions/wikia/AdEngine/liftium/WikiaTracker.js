@@ -3,9 +3,12 @@ var WikiaTracker = {
 		'liftium.beacon':'UA-17475676-5',
 		'liftium.beacon2':'UA-17475676-14',
 		'liftium.errors':'UA-17475676-12',
+		'liftium.hop':'UA-17475676-8',
 		'liftium.init':'UA-17475676-4',
 		'liftium.init2':'UA-17475676-15',
 		'liftium.quantcast':'UA-17475676-9',
+		'liftium.slot':'UA-17475676-6',
+		'liftium.slot2':'UA-17475676-16',
 		'liftium.varia':'UA-17475676-10',
 		'default':'UA-17475676-10'
 	},
