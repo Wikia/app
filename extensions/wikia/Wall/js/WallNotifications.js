@@ -8,6 +8,8 @@ var WallNotifications = $.createClass(Object, {
 		setTimeout( this.proxy( this.updateLoop ), 300);
 		//setInterval( this.proxy( this.updateLoop ), 5000);
 		
+		$('#WallNotifications').hover( this.proxy( this.updateLoop ) );
+		
 		if($('.wall-notifications-monobook').length > 0) {
 			$('.wall-notifications-monobook').first()
 				.append('<span class="count">(?)</span>')
