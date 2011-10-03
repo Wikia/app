@@ -99,12 +99,6 @@ define.call(exports, {
 					PROGRESS\
 				</div>\
 			</div><table id='tilesWrapper'></table>\
+			<div id='instructionsWrapper'><div id='instructionText'></div></div>\
 		</div>",
-	
-	tutorialOverlap:
-		"<div id='instructionsWrapper' class='triangle-isosceles right'>\
-			<div>\
-				TUTORIAL\
-			</div>\
-		</div>"
 });
