@@ -134,6 +134,7 @@ class AssetsConfig {
 		if(isset( $this->mConfig[$groupName] ) ) {
 			return $this->mConfig[$groupName]['assets'];
 		} else {
+			error_log("PHP Warning: " . __METHOD__ . " - group '{$groupName}' doesn't exist");
 			return array();
 		}
 	}
