@@ -4,11 +4,12 @@ define.call(exports, {
 
 	mainPage: "<div id='wrapper'>\
 			<div id='logoWrapper'>\
-				<div id='photopop_logo'>\
-					<img src='{{#image}}PHOTOPOP_LOGO{{/image}}'/><br/>\
-					<img src='{{#image}}POWERED_BY_LOGO{{/image}}'>\
-				</div>\
+					<img id='logo_photopop' src='{{#image}}PHOTOPOP_LOGO{{/image}}'/><br/>\
+					<img id='logo_wikia' src='{{#image}}POWERED_BY_LOGO{{/image}}'>\
 			</div>\
+		</div>",
+	
+	selectorScreen: "<div id='sliderWrapper'>\
 			<div id='buttonWrapper'>\
 				<div id='button_scores'>\
 					<img src='{{#image}}buttonSrc_scores{{/image}}'/>\
@@ -21,10 +22,7 @@ define.call(exports, {
 					<img class='off' src='{{#image}}buttonSrc_volumeOff{{/image}}'/>\
 				</div>\
 			</div>\
-		</div>",
-	
-	selectorScreen: "<div id='sliderWrapper'>\
-			<div class='sliderContent' data-scroll='x'>\
+			<div id='sliderContent' data-scroll='x'>\
 				<ul>{{#games}}\
 					<li class='gameIcon' data-gameurl='{{gameUrl}}'>\
 						<img src ='{{#image}}gameicon_{{name}}{{/image}}'><br/>\
