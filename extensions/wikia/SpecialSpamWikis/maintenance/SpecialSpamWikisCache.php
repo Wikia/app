@@ -24,7 +24,7 @@ class SpecialSpamWikiCache {
          * noreptemp.spamwikis);
          */
         $res = $this->dbObj->select(
-                'wikicities.city_list AS c',
+                array( 'wikicities.city_list AS c', 'noreptemp.spamwikis AS s' ),
                 array( 'c.city_id', 'c.city_sitename', 'c.city_url', 'c.city_created', 'c.city_founding_user', 'c.city_title' ),
                 array(
                     'c.city_public' => 1,
@@ -33,13 +33,13 @@ class SpecialSpamWikiCache {
                 __METHOD__,
                 array(),
                 array(
-                    'noreptemp.spamwikis AS s' => array( 'LEFT JOIN', 'c.city_id = s.city_id', )
+                    'noreptemp.spamwikis AS s' => array( 'LEFT JOIN', 'c.city_id = s.city_id' )
                 )
                 
         );
-        
+
         while ( $oRow = $this->dbObj->fetchObject( $res ) ) {
-            $this->dbObject->insert(
+            $this->dbObj->insert(
                     'noreptemp.spamwikis',
                     array(
                         'city_id' => $oRow->city_id,
@@ -52,24 +52,27 @@ class SpecialSpamWikiCache {
                     __METHOD__
             );
         }
-        
+
         /* DELETE FROM noreptemp.spamwikis WHERE city_id IN (SELECT city_id
          * FROM wikicities.city_list WHERE city_public <> 1);
          */
         $res = $this->dbObj->select(
-                'wikicities.city_list',
-                array( 'city_id' ),
-                array( 'city_public <> 1' ),
-                __METHOD__
+                array( 'wikicities.city_list AS c', 'noreptemp.spamwikis AS s' ),
+                array( 'c.city_id' ),
+                array( 'c.city_public <> 1', 's.city_id is not null' ),
+                __METHOD__,
+		array(),
+		array( 'noreptemp.spamwikis AS s' => array( 'LEFT JOIN', 'c.city_id = s.city_id' ) )
         );
-        
+
         while ( $oRow = $this->dbObj->fetchObject( $res ) ) {
-            $this->dbObject->delete(
+            $this->dbObj->delete(
                     'noreptemp.spamwikis',
                     array( 'city_id' => $oRow->city_id ),
                     __METHOD__
             );
         }
+
         /* UPDATE noreptemp.spamwikis SET benchmark_1 = 1 WHERE benchmark_1 = 0
          * AND city_founding_user IN (SELECT city_founding_user FROM
          * wikicities.city_list GROUP BY city_founding_user HAVING
@@ -86,12 +89,12 @@ class SpecialSpamWikiCache {
                     'HAVING count(city_id) >= 2'
                 )
          );
-        
+
         while ( $oRow = $this->dbObj->fetchObject( $res ) ) {
             $this->dbObj->update(
                 'noreptemp.spamwikis',
                 array( 'benchmark_1' => 1 ),
-                array( 'city_id' => $oRow->city_id ),
+                array( 'city_founding_user' => $oRow->city_founding_user ),
                 __METHOD__,
                 array()
             );
@@ -112,22 +115,21 @@ class SpecialSpamWikiCache {
                     'HAVING count(city_id) < 2'
                 )
          );
-        
+
         while ( $oRow = $this->dbObj->fetchObject( $res ) ) {
             $this->dbObj->update(
                 'noreptemp.spamwikis',
                 array( 'benchmark_1' => 0 ),
-                array( 'city_id' => $oRow->city_id ),
+                array( 'city_founding_user' => $oRow->city_founding_user ),
                 __METHOD__,
                 array()
             );
         }
-        
+
         /* UPDATE noreptemp.spamwikis SET benchmark_2 = 1 WHERE benchmark_2 = 0
          * AND city_founding_user IN (SELECT user_id FROM wikicities.user
          * WHERE user_email_authenticated IS NULL);
          */
-        
         $tmpDbObj = F::app()->wf->getDb( DB_SLAVE, array(), 'wikicities' );
         
         $res = $tmpDbObj->select(
@@ -136,48 +138,36 @@ class SpecialSpamWikiCache {
                 array( 'user_email_authenticated is null' ),
                 __METHOD__
          );
-        
+
         while ( $oRow = $tmpDbObj->fetchObject( $res ) ) {
             $this->dbObj->update(
                 'noreptemp.spamwikis',
                 array( 'benchmark_2' => 1 ),
-                array( 'city_id' => $oRow->city_id ),
+                array( 'city_founding_user' => $oRow->city_founding_user ),
                 __METHOD__
             );
         }
         
         unset( $tmpDbObj );
-        
-        /* UPDATE noreptemp.spamwikis SET benchmark_2 = 0 WHERE benchmark_2 = 1
-         * AND city_founding_user NOT IN (SELECT user_idFROM wikicities.user
-         * WHERE user_email_authenticated IS NULL);
-         */
-        $res = $this->dbObj->select(
-                'wikicities.user',
-                array( 'user_id' ),
-                array( 'user_email_authenticated is not null' ),
-                __METHOD__
-         );
-        
-        while ( $oRow = $this->dbObj->fetchObject( $res ) ) {
-            $this->dbObj->update(
-                'noreptemp.spamwikis',
-                array( 'benchmark_2' => 0 ),
-                array( 'city_id' => $oRow->city_id ),
-                __METHOD__
-            );
-        }
 
-        $res = $this->dbObj->select(
+	$lu = WikiFactory::getVarValueByName( 'wgSpecialSpamWikisLastUpdate', F::app()->wg->cityId );
+
+	$res = $this->dbObj->select(
                 'wikicities.city_list',
                 array( 'city_id', 'city_dbname' ),
-                array( 'city_last_timestamp' => '>= ' . F::app()->wg->specialSpamWikisLastUpdate ),
+                array( 'city_last_timestamp >= ' . $this->dbObj->addQuotes( $lu ), 'city_public' => 1 ),
                 __METHOD__,
-                array()
+                array( 'ORDER BY city_id ASC' )
         );
 
+	$exceptions = array( 'search', 'test', 'wikicities', 'books299' );
+
         while ( $oRow = $this->dbObj->fetchObject( $res ) ) {
+	    if ( in_array( $oRow->city_dbname, $exceptions ) ) {
+		continue;
+	    }
             $tmpDbObj = F::app()->wf->getDb( DB_SLAVE, array(), $oRow->city_dbname );
+	
             $pages = $tmpDbObj->selectRow(
                 'page',
                 'count(1) as cnt',
@@ -186,18 +176,19 @@ class SpecialSpamWikiCache {
                 null
             );
             if ( is_object($pages) ) {
-                $pages = $pages->cnt;
-            }
-            $this->dbObj->update(
-                'noreptemp.spamwikis',
-                array( 'benchmark_3' => (int) ( 5 >= $pages ) ),
-                array( 'city_id' => $oRow->city_id ),
-                __METHOD__,
-                array()
-            );
+            
+	    	$this->dbObj->update(
+	                'noreptemp.spamwikis',
+	                array( 'benchmark_3' => (int) ( 5 >= $pages ) ),
+	                array( 'city_id' => $oRow->city_id ),
+        	        __METHOD__,
+	                array()
+	            );
+	    }
+	    $tmpDbObj->close();
         }
         
-        WikiFactory::setVarByName( 'wgSpecialSpamWikisLastUpdate', F::app()->wg->cityId , time(), 'SpecialSpamWikis update.' );
+        WikiFactory::setVarByName( 'wgSpecialSpamWikisLastUpdate', F::app()->wg->cityId , date('Y-m-d H:i:s'), 'SpecialSpamWikis update.' );
     }
 }
 
