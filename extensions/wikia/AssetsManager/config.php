@@ -46,6 +46,14 @@ $config['site_user_css'] = array(
 	)
 );
 
+// WikiaScriptLoader
+$config['wsl'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//skins/wikia/js/WikiaScriptLoader.js',
+	)
+);
+
 // jQuery
 $config['oasis_jquery'] = array(
 	'type' => AssetsManager::TYPE_JS,
