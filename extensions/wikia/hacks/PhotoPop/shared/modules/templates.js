@@ -1,15 +1,16 @@
 var exports = exports || {};
 
 define.call(exports, {
-
-	mainPage: "<div id='wrapper'>\
+	mainPage:
+		"<div id='wrapper'>\
 			<div id='logoWrapper'>\
 					<img id='logoPhotopop' src='{{#image}}PHOTOPOP_LOGO{{/image}}'/><br/>\
 					<img id='logoWikia' src='{{#image}}POWERED_BY_LOGO{{/image}}'>\
 			</div>\
 		</div>",
 	
-	selectorScreen: "<div id='sliderWrapper' class='composite transition-all'>\
+	selectorScreen:
+		"<div id='sliderWrapper' class='composite transition-all'>\
 			<div id='buttonWrapper'>\
 				<div id='button_scores'>\
 					<img src='{{#image}}buttonSrc_scores{{/image}}'/>\
@@ -23,18 +24,22 @@ define.call(exports, {
 				</div>\
 			</div>\
 			<div id='sliderContent' data-scroll='x'>\
-				<ul>{{#games}}\
-					<li class='gameIcon' data-gameurl='{{gameUrl}}'>\
-						<img src ='{{#image}}gameicon_{{name}}{{/image}}'><br/>\
-						<div class='gameName'>\
-							{{gameName}}\
-						</div>\
-					</li>\
-				{{/games}}</ul> \
+				<span class='progress'>Loading...</span>\
 			</div>\
 		</div>",
 	
-	gameScreen: "<div id='scoreBarWrapper'>\
+	gameSelector:
+		"<ul id='gamesList'>{{#games}}\
+			<li class='gameIcon' data-idx='{{index}}'>\
+				<img src ='{{image}}'><br/>\
+				<div class='gameName'>\
+					{{name}}\
+				</div>\
+			</li>\
+		{{/games}}</ul>",
+	
+	gameScreen:
+		"<div id='scoreBarWrapper'>\
 			<div id='scoreBar'></div>\
 		</div>\
 		<div id='bgWrapper'>\
@@ -93,12 +98,13 @@ define.call(exports, {
 			</div><table id='tilesWrapper'></table>\
 		</div>",
 	
-	tutorialOverlap: "<div id='instructionsWrapper' class='triangle-isosceles right'>\
-				<div>\
-					TUTORIAL\
-				</div>\
-				<div class='buttonBar'>\
-					<a href=''><img src='{{#image}}buttonSrc_tutorial{{/image}}' /></a>\
-				</div>\
-			</div>"
+	tutorialOverlap:
+		"<div id='instructionsWrapper' class='triangle-isosceles right'>\
+			<div>\
+				TUTORIAL\
+			</div>\
+			<div class='buttonBar'>\
+				<a href=''><img src='{{#image}}buttonSrc_tutorial{{/image}}' /></a>\
+			</div>\
+		</div>"
 });
