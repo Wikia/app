@@ -1320,13 +1320,6 @@ Liftium.init = function () {
 	}
 
 
-	if (Liftium.e(beacon_id)) {
-		Liftium.d('beacon_id @init is empty', 3);
-		Liftium.trackEvent3(Liftium.buildTrackUrl(["error", "beacon_id", "init"]), '100%');
-	} else {
-		Liftium.d('beacon_id @init is ' + beacon_id, 7);
-	}
-
 	if (typeof inGroup != 'undefined') {
 	if (inGroup(groups.N)) {
 		Liftium.trackEvent3(Liftium.buildTrackUrl(["init"]), {profile:'UA-17475676-15', sample:100});
@@ -1950,13 +1943,6 @@ Liftium.sendBeacon = function (){
 	Liftium.d ("Liftium done, beacon sent");
 
 	// Track the beacons with GA
-
-	if (Liftium.e(beacon_id)) {
-		Liftium.d('beacon_id @beacon is empty', 3);
-		Liftium.trackEvent3(Liftium.buildTrackUrl(["error", "beacon_id", "beacon"]), '100%');
-	} else {
-		Liftium.d('beacon_id @beacon is ' + beacon_id, 7);
-	}
 
 	if (typeof inGroup != 'undefined') {
 	if (inGroup(groups.N)) {
