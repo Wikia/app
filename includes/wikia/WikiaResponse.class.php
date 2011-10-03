@@ -427,26 +427,29 @@ class WikiaResponse {
 				throw new WikiaException( 'Unknown asset type' );
 			}
 			
-			$src = '';
+			$sources = array();
 			
 			if ( $isGroup ) {
-				$src =  $assetsManager->getGroupCommonURL( $assetName );
+				// Allinone == 0 ? returns array of URLS : returns url string
+				$sources =  $assetsManager->getGroupCommonURL( $assetName );
 			} else {
 				if ( $type == AssetsManager::TYPE_SCSS ) {
-					$src =  $assetsManager->getSassCommonURL( $assetName );
+					$sources[] =  $assetsManager->getSassCommonURL( $assetName );
 				} else {
-					$src =  $assetsManager->getOneCommonURL( $assetName );
+					$sources[] =  $assetsManager->getOneCommonURL( $assetName );
 				}
 			}
 			
-			switch ( $type ) {
-				case AssetsManager::TYPE_CSS:
-				case AssetsManager::TYPE_SCSS:
-					$app->wg->Out->addStyle( $src );
-					break;
-				case AssetsManager::TYPE_JS:
-					$app->wg->Out->addScript( "<script type=\"{$app->wg->JsMimeType}\" src=\"{$src}\"></script>" );
-					break;
+			foreach($sources as $src){
+				switch ( $type ) {
+					case AssetsManager::TYPE_CSS:
+					case AssetsManager::TYPE_SCSS:
+						$app->wg->Out->addStyle( $src );
+						break;
+					case AssetsManager::TYPE_JS:
+						$app->wg->Out->addScript( "<script type=\"{$app->wg->JsMimeType}\" src=\"{$src}\"></script>" );
+						break;
+				}
 			}
 		}
 	}
