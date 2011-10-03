@@ -7,6 +7,8 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 	}
 
 	public function enabled ( $wgCityId, $user ) {
+		if (self::isAnswersWiki())
+			return false;
  		
 		// If digest mode is enabled, do not create edit event notifications
 		if ( $user->getOption( "founderemails-complete-digest-$wgCityId" ) ) {

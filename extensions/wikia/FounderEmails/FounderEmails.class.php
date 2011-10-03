@@ -203,7 +203,7 @@ class FounderEmails {
 		global $wgUser, $wgCityId, $wgSitename;
 		wfProfileIn( __METHOD__ );
 
-		if ( in_array($wgUser->getId(), FounderEmails::getInstance()->getWikiAdminIds()) ) {
+		if ( !FounderEmailsEvent::isAnswersWiki() && in_array($wgUser->getId(), FounderEmails::getInstance()->getWikiAdminIds()) ) {
 			
 			// If we are in digest mode, grey out the individual email options
 			$disableEmailPrefs = FounderEmails::getInstance()->getWikiFounder()->getOption("founderemails-complete-digest-$wgCityId");

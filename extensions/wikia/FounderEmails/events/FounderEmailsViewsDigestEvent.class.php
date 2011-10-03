@@ -6,6 +6,9 @@ class FounderEmailsViewsDigestEvent extends FounderEmailsEvent {
 	}
 
 	public function enabled ( $wgCityId, $user ) {
+		if (self::isAnswersWiki())
+			return false;
+		
 		// If complete digest mode is enabled, do not send views only digest
 		if ( $user->getOption( "founderemails-complete-digest-$wgCityId" ) ) {
 			return false;
