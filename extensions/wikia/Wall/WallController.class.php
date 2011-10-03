@@ -67,7 +67,17 @@ class WallController extends ArticleCommentsModule {
 		
 		$this->response->setVal('currentPage', $page ); 
 	}
-	
+
+	public function messageDeleted() {
+		$parts = explode('/', $this->app->wg->Title->getText());
+		$parent_title = F::build('Title', array($parts[0], NS_USER_WALL), 'newFromText' );
+		$user = F::build('User',array($parts[0]),'newFromName');
+		$user_displayname = $user->getRealName();
+		if(empty($user_displayname)) $user_displayname = $user->getName();
+		
+		$this->response->setVal( 'wallOwner', $user_displayname);	
+		$this->response->setVal( 'wallUrl', $parent_title->getFullUrl() );
+	}	
 	/**
 	 * @brief Passes $userTalkArchiveContent to the template and renders the template
 	 * 
