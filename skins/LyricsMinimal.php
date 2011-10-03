@@ -636,9 +636,7 @@ EOF;
 		$data = array();
 
 		if(!$wgUser->isLoggedIn()) {
-			$returnto = "returnto={$this->thisurl}";
-			if( $this->thisquery != '' )
-				$returnto .= "&returntoquery={$this->thisquery}";
+			$returnto = wfGetReturntoParam();
 
 			$signUpHref = Skin::makeSpecialUrl( 'Signup', $returnto );
 			$data['login'] = array(

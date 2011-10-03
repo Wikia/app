@@ -67,10 +67,7 @@ class AccountNavigationModule extends Module {
 			$skin = $wgUser->getSkin();
 
 			// where to redirect after login
-			$returnto = "returnto={$skin->thisurl}";
-			if( $skin->thisquery != '' ) {
-				$returnto .= "&returntoquery={$skin->thisquery}";
-			}
+			$returnto = wfGetReturntoParam();
 
 			$signUpHref = Skin::makeSpecialUrl('Signup', $returnto);
 			$this->personal_urls['login'] = array(

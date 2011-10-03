@@ -864,10 +864,13 @@ function wfMsgHTMLwithLanguageAndAlternative($key, $keyAlternative, $lang, $opti
 /*
  * Build returnto parameter with new returntoquery from MW 1.16
  *
+ * @param customReturnto
+ * @param extraReturntoquery is a string which will be urlencoded and appended to the returntoquery. eg: "action=edit".
+ *
  * @author Marooned
  * @return string
  */
-function wfGetReturntoParam($customReturnto = null) {
+function wfGetReturntoParam($customReturnto = null, $extraReturntoquery=null) {
 	global $wgTitle, $wgRequest;
 
 	if ($customReturnto) {
@@ -885,8 +888,12 @@ function wfGetReturntoParam($customReturnto = null) {
 		unset($query['returnto']);
 		unset($query['returntoquery']);
 		$thisquery = wfUrlencode(wfArrayToCGI($query));
-		if($thisquery != '')
+		if($extraReturntoquery){
+			$thisquery .= ($thisquery == "" ? "" : "&amp;") . urlencode( $extraReturntoquery );
+		}
+		if($thisquery != ''){
 			$returnto .= "&returntoquery=$thisquery";
+		}
 	}
 	return $returnto;
 }
