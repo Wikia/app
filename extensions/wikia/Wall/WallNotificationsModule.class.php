@@ -51,7 +51,7 @@ class WallNotificationsModule extends Module {
 		
 		if(!$notify['grouped'][0]->isMain()) {
 			//$params[] = $data->msg_author_displayname;
-			$params[] = $data->msg_author_username;
+			$params[] = $this->getDisplayname($data->msg_author_username);
 
 			$user_count = 1;// 1 = 1 user,
 							// 2 = 2 users,
@@ -67,7 +67,7 @@ class WallNotificationsModule extends Module {
 
 			if( $data->parent_username == $my_name ) $reply_by = 'you';
 			elseif ( $data->parent_username == $data->msg_author_username ) $reply_by = 'self';
-			else $params['$'.(count($params)+1)] = $data->parent_username;
+			else $params['$'.(count($params)+1)] =$this->getDisplayname( $data->parent_username );
 
 			$whos_wall = 'a'; // on who's wall was the message written?
 								   // your  = on message author's wall
@@ -78,7 +78,7 @@ class WallNotificationsModule extends Module {
 			elseif( $data->wall_username != $data->parent_username && $data->wall_username != $data->msg_author_username ) {
 				$whos_wall = 'other';
 				//$params['$'.(count($params)+1)] = $data->wall_displayname;
-				$params['$'.(count($params)+1)] = $data->wall_username;
+				$params['$'.(count($params)+1)] = $this->getDisplayname($data->wall_username);
 			}
 			
 			$msgid = "wn-user$user_count-reply-$reply_by-$whos_wall-wall";
@@ -87,11 +87,11 @@ class WallNotificationsModule extends Module {
 			if( $data->wall_username == $my_name) {
 				$msgid = 'wn-newmsg-onmywall';
 				//$params['$'.(count($params)+1)] = $data->msg_author_displayname;
-				$params['$'.(count($params)+1)] = $data->msg_author_username;
+				$params['$'.(count($params)+1)] = $this->getDisplayname($data->msg_author_username);
 			} else {
 				$msgid = 'wn-newmsg';				
 				//$params['$'.(count($params)+1)] = $data->wall_displayname;
-				$params['$'.(count($params)+1)] = $data->wall_username;
+				$params['$'.(count($params)+1)] = $this->getDisplayname($data->wall_username);
 			}
 		}
 
@@ -103,6 +103,11 @@ class WallNotificationsModule extends Module {
 		$this->response->setVal( 'title',  $data->thread_title );
 		$this->response->setVal( 'iso_timestamp',  wfTimestamp(TS_ISO_8601, $data->timestamp ));
 		$this->response->setVal( 'unread', $this->request->getVal('unread') );
+	}
+
+	private function getDisplayname($username) {
+		if(User::isIP($username)) return wfMsg('oasis-anon-user');
+		return $username;
 	}
 }
 

@@ -235,6 +235,10 @@ class WallHelper {
 			$items[$i]['author'] = $data['username'];
 			$items[$i]['wall-comment'] = $this->shortenText($data['rawtext']).'&nbsp;';
 			$items[$i]['timestamp'] = $data['rawmwtimestamp'];
+			if(User::isIP( $data['username']) ) {
+				$items[$i]['user-profile-url'] = Skin::makeSpecialUrl('Contributions').'/'.$data['username'];
+				$items[$i]['real-name'] = wfMsg('oasis-anon-user');
+			}
 			$i++;
 		}
 		unset($data);
