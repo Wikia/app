@@ -2618,7 +2618,6 @@ class Article {
 		
 		/* Wikia change @author nAndy */
 		wfRunHooks( 'BeforePageDelete', array(&$this) );
-		return;
 		/* End of Wikia change */
 
 		$confirm = $wgRequest->wasPosted() &&

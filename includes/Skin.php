@@ -1245,7 +1245,7 @@ CSS;
 					$display .= $link;
 					$linkObj = Title::newFromText( $growinglink );
 					wfRunHooks( 'SkinSubPageSubtitleAfterTitle', array( $linkObj, &$display ) );
-					if( is_object( $linkObj ) && $linkObj->exists() || (defined('NS_USER_WALL') && $linkObj->getNamespace() == NS_USER_WALL) ) {
+					if( is_object( $linkObj ) && $linkObj->exists() || (!empty($wgEnableWallExt) && $linkObj->getNamespace() == NS_USER_WALL) ) {
 						$getlink = $this->link(
 							$linkObj,
 							htmlspecialchars( $display ),
