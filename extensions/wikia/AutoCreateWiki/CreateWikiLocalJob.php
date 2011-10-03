@@ -567,12 +567,13 @@ class CreateWikiLocalJob extends Job {
 
 		Wikia::log( __METHOD__, "info", "Queue reminder email $backurl" );
 
-		Http::post( self::REMINDER_URL, 'default', array (
+		Http::post( self::REMINDER_URL, array (
 			CURLOPT_POSTFIELDS => array (
 				"theschwartz_run_after" => time() + self::REMINDER_DELAY,
 				"url" => $backurl
 			),
-			CURLOPT_PROXY => "127.0.0.1:6081"
+			CURLOPT_PROXY => "127.0.0.1:6081",
+			'timeout' => 'default'
 		));
 	}
 

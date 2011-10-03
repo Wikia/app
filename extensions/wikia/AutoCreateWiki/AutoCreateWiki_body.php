@@ -1164,7 +1164,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		wfProfileIn( __METHOD__ );
 
 		#-- check Wiki's name
-		$sResponse = AutoCreateWiki::checkWikiNameIsCorrect($this->mName, $this->mLanguage, $this->mType );
+		$sResponse = AutoCreateWiki::checkWikiNameIsCorrect($this->mName, $this->mLanguage);
 		if ( !empty($sResponse) ) {
 			$this->makeError( "wiki-name", $sResponse );
 			$res = false;
