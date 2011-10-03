@@ -2256,12 +2256,11 @@ Liftium.trackQcseg = function() {
 				continue;
 			}
 			if (Liftium.e(qcseg.segments[i].id)) {
-				//Liftium.trackEvent(Liftium.buildTrackUrl(["quantcast", "segments", "broken"]), "UA-17475676-9");
-				Liftium.trackEvent3(Liftium.buildTrackUrl(["quantcast", "segments", "broken", c]), '100%');
+				WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "quantcast", "segments", "broken", c]), 'liftium.errors');
 				continue;
 			}
 			Liftium.d("Quantcast segment: " + qcseg.segments[i].id, 5);
-			Liftium.trackEvent3(Liftium.buildTrackUrl(["quantcast", "segments", qcseg.segments[i].id]), "UA-17475676-9");
+			WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "quantcast", "segments", qcseg.segments[i].id]), 'liftium.quantcast');
 
 			empty = false;
 		}
@@ -2272,7 +2271,7 @@ Liftium.trackQcseg = function() {
 		}
 	} catch (e) {
 		Liftium.d("Quantcast cookie parse error:", 7, e);
-		Liftium.trackEvent3(Liftium.buildTrackUrl(["quantcast", "broken"]), '100%');
+		WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "quantcast", "broken"]), 'liftium.errors');
 		return;
 	}
 };

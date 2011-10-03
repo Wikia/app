@@ -2,6 +2,7 @@ var WikiaTracker = {
 	profileAliases:{
 		'liftium.beacon':'UA-17475676-5',
 		'liftium.errors':'UA-17475676-12',
+		'liftium.quantcast':'UA-17475676-9',
 		'liftium.varia':'UA-17475676-10',
 		'default':'UA-17475676-10'
 	},
