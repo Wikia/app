@@ -15,7 +15,7 @@ class PhotoPopController extends WikiaController {
 	}
 	
 	public function index() {
-		$this->response->setVal( 'appCacheManifestPath', self::CACHE_MANIFEST_PATH . "&cb={$this->wg->StyleVersion}" );
+		$this->response->setVal( 'appCacheManifestPath', self::CACHE_MANIFEST_PATH . "&cb={$this->wg->CacheBuster}" );//$this->wg->StyleVersion
 		
 		//TODO: move to AssetsManager package
 		$this->response->setVal( 'scripts', array(
