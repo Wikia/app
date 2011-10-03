@@ -2,7 +2,7 @@
 	<? if ($isMainPage) { ?>
 		<?= wfRenderModule('CommentsLikes', 'Index', array('comments' => $comments, 'likes' => $likes)); ?>
 		<?php
-			if( empty( $wgEnableWikiAnswers ) ) {
+			if( empty( $wgEnableWikiAnswers ) && empty( $wgOasisNavV2 ) ) {
 		?>
 		<div class="mainpage-add-page">
 			<?= Wikia::specialPageLink('CreatePage', null, 'createpage', 'blank.gif', 'oasis-create-page', 'sprite new' . $loginClass); ?>
