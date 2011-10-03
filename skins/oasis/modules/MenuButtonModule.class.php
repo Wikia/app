@@ -125,18 +125,20 @@ class MenuButtonModule extends Module {
 		$promptLogin = !$wgTitle->userCan( 'edit' ) && $wgUser->isAnon();
 
 		// modify URLs (BugId:9494)
-		if ($promptLogin && $this->actionName != 'source' /* don't modify "view source" links - BugId:9494 */) {
-			$signUpTitle = SpecialPage::getTitleFor('SignUp');
-			$loginUrl = $this->createLoginURL(!empty($this->dropdown) ? 'action=edit' : '');
+		if ($promptLogin &&
+			$this->actionName != 'source' /* don't modify "view source" links - BugId:9494 */ &&
+			isset($this->action['href']) /* BugId:12613 */) {
+				$signUpTitle = SpecialPage::getTitleFor('SignUp');
+				$loginUrl = $this->createLoginURL(!empty($this->dropdown) ? 'action=edit' : '');
 
-			$this->action['href'] = $signUpTitle->getLocalUrl($loginUrl);
-			$this->class .= ' loginToEditProtectedPage';
+				$this->action['href'] = $signUpTitle->getLocalUrl($loginUrl);
+				$this->class .= ' loginToEditProtectedPage';
 		}
-		
+
 		if(!empty($data['class'])) {
 			$this->class .= ' '.$data['class'];
 		}
-		
+
 		$this->id = "";
 		if(!empty($data['id'])) {
 			$this->id = $data['id'];
