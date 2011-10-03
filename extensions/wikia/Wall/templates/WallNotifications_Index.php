@@ -5,10 +5,10 @@
 				<span id="bubbles_count"></span>
 			</div>
 			<ul class="subnav">
-				<div class="notifications-header">
+				<li class="notifications-header">
 					<?= wfMsg('wall-notifications') ?>
-				</div>
-				<div class="notifications-empty"><?= wfMsg('wall-notifications-loading') ?></div>
+				</li>
+				<li class="notifications-empty"><?= wfMsg('wall-notifications-loading') ?></li>
 			</ul>
 		</li>
 	</ul>

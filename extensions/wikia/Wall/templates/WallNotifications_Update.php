@@ -1,12 +1,12 @@
 <? if($user->isLoggedIn()): ?>
-	<div class="notifications-header">
+	<li class="notifications-header">
 		<?= wfMsg('wall-notifications') ?>
 		<? if( !empty($unread) ): ?>
 			<div id="wall-notifications-markasread"><?= wfMsg('wall-notifications-markasread') ?></div>
 		<? endif; ?>
-	</div>
+	</li>
 	<? if( empty($unread) && empty($read) ): ?>
-		<div class="notifications-empty"><?= wfMsg('wall-notifications-empty') ?></div>
+		<li class="notifications-empty"><?= wfMsg('wall-notifications-empty') ?></li>
 	<? endif; ?>
 	<? foreach($unread as $value): ?>
 		<? echo $app->renderView( 'WallNotificationsModule', 'notification', array('notify'=>$value,'unread'=>true) ); ?>

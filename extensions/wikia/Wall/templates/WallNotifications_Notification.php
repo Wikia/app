@@ -16,7 +16,7 @@
 			<? if($unread): ?>
 				<?= $msg ?>
 			<? endif; ?>
-			<time class="timeago" datetime="<?= $iso_timestamp ?>"></time>
+			<div class="timeago" title="<?= $iso_timestamp ?>"></div>
 		</div>
 	</a>
 </li>

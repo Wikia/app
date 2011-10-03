@@ -52,7 +52,7 @@
 	text-transform: none;
 }
 #wall-notifications-inner .notification:hover { text-decoration: underline; }
-#wall-notifications-inner .notification time { display: block; font-size: 10px; }
+#wall-notifications-inner .notification .timeago { display: block; font-size: 10px; }
 #wall-notifications-inner .unread_notification { font-weight: bold; }
 #wall-notifications-inner .read_notification { font-weight: normal; }
 #wall-notifications-inner li,
