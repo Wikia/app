@@ -469,6 +469,18 @@ abstract class DatabaseBase {
 			// Set a flag indicating that writes have been done
 			wfDebug( __METHOD__.": Writes done: $sql\n" );
 			$this->mDoneWrites = true;
+			# <Wikia>
+			# Please use this variable only with wgReadOnly
+			global $wgDBReadOnly;
+			if ( $wgDBReadOnly ) {
+				if ( isset( $wgProfiler ) ) {
+					wfProfileOut( $queryProf );
+					wfProfileOut( $totalProf );
+				}	
+				wfDebugLog( 'database', "DB readonly mode: $sql" );
+				return false;		
+			}
+			# </Wikia>
 		}
 
 		# Add a comment for easy SHOW PROCESSLIST interpretation
