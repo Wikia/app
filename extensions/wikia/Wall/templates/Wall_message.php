@@ -20,8 +20,8 @@
 			<div class="msg-title"><a href="<?= $fullpageurl; ?>"><? echo $feedtitle ?></a></div>
 		<? endif; ?>
 		<div class="edited-by">
-			<a href="/wiki/User:<?= $username ?>"><?= $displayname ?></a> 
-			<a href="/wiki/User:<?= $username ?>" class="subtle"><?= $displayname2 ?></a>
+			<a href="<?= $user_author_url ?>"><?= $displayname ?></a> 
+			<a href="<?= $user_author_url ?>" class="subtle"><?= $displayname2 ?></a>
 		</div>
 		<div class="msg-body">
 			<? echo $body ?>
