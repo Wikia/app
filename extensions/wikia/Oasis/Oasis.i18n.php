@@ -180,6 +180,11 @@ $messages['en'] = array(
 	'oasis-navigation-v2-edit-wikia-local-menu' => 'Edit local Wikia menu',
 	'oasis-navigation-v2-edit-wikia-global-menu' => 'Edit global Wikia menu',
 	'oasis-navigation-v2-edit-this-menu' => 'Edit Wiki Navigation',
+	'wikia-navigation-global' => "*<nowiki>On the Wiki</nowiki>
+**Special:WikiActivity|Wiki Activity
+**Special:Random|Random Page
+**Special:NewFiles|New Photos
+**Special:Chat|Chat",
 );
 
 /** Message documentation (Message documentation)
