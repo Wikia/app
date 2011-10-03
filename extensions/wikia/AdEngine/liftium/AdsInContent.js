@@ -50,7 +50,7 @@ if ($(window).width() < 1010) {
 	}
 	}
 	if (!Liftium.e(Liftium.debugLevel) || Math.floor(Math.random() * 10) == 7) {
-		Liftium.trackEvent(Liftium.buildTrackUrl(['AIC2', 'test1']), 'UA-17475676-11');
+		//Liftium.trackEvent(Liftium.buildTrackUrl(['AIC2', 'test1']), 'UA-17475676-11');
 		_gaq.push(['liftium._setAccount', 'UA-17475676-11']);
 		_gaq.push(['liftium._setSampleRate', '100']);
 
