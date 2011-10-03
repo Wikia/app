@@ -13,6 +13,7 @@
 		function(config, templates, imageServer, soundServer, games) {
 			var startTutorial = true,
 			wrapper,
+			muteButton,
 			view = {
 				image: function() {
 					return function(text, render) {
@@ -41,12 +42,9 @@
 			elm.innerHTML = Mustache.to_html(templates.mainPage, view);
 			
 			wrapper = document.getElementById('wrapper'),
-			muteButton = document.getElementById('button_volume');
-			
 			wrapper.innerHTML += Mustache.to_html(templates.selectorScreen, view);
 			
-
-			
+			muteButton = document.getElementById('button_volume');
 			muteButton.onclick = function(){
 				soundServer.play('pop');
 				
