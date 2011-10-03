@@ -15,12 +15,13 @@ var ArticleComments = {
 				$('.article-comm-edit', this).live('click', ArticleComments.edit);
 				$('.article-comm-history', this).live('click', ArticleComments.linkHistory);
 				$('.article-comm-reply', this).live('click', ArticleComments.reply);
-				$('.article-comments-li', this).live('mouseover', function() {
+				/*$('.SpeechBubble', this).live('mouseover', function() {
+				$('.SpeechBubble', this).live('mouseover', function() {
 					$(this).find('.tools').css('visibility', 'visible');
 				});
-				$('.article-comments-li', this).live('mouseout', function() {
+				$('.SpeechBubble', this).live('mouseout', function() {
 					$(this).find('.tools').css('visibility', 'hidden');
-				});
+				});*/
 			});
  		} else {
 			$('#article-comments').delegate('.article-comm-vote', 'click', ArticleComments.vote);
@@ -28,8 +29,8 @@ var ArticleComments = {
 			$('#article-comments').delegate('.article-comm-edit', 'click', ArticleComments.edit);
 			$('#article-comments').delegate('.article-comm-history', 'click', ArticleComments.linkHistory);
 			$('#article-comments').delegate('.article-comm-reply', 'click', ArticleComments.reply);
-			$('#article-comments').delegate('.article-comments-li', 'mouseover',  function(){$(this).find('.tools').css('visibility', 'visible');});
-			$('#article-comments').delegate('.article-comments-li', 'mouseout',  function(){$(this).find('.tools').css('visibility', 'hidden');});
+			$('#article-comments').delegate('.SpeechBubble', 'mouseover',  function(){$(this).find('.tools').css('visibility', 'visible');});
+			$('#article-comments').delegate('.SpeechBubble', 'mouseout',  function(){$(this).find('.tools').css('visibility', 'hidden');});
 		}
 		$('#article-comm-fbMonit').mouseenter( function() {$('#fbCommentMessage').fadeIn( 'slow' )});
 		$('#article-comm-fbMonit').mouseleave( function() {$('#fbCommentMessage').fadeOut( 'slow' )});
