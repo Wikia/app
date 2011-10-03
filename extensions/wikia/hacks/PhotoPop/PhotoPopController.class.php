@@ -59,4 +59,27 @@ class PhotoPopController extends WikiaController {
 		
 		$this->wf->profileOut( __METHOD__ );
 	}
+	
+	public function getIcon(){
+		$this->app->wf->profileIn( __METHOD__ );
+		
+		$titleName = $this->request->getVal( 'title', null );
+		$url = $this->model->getIconUrl( $titleName );
+		
+		/*
+		WARNING: yes, this is a redirect, and I feel guilty about that!
+		we needed a way to avoid a double roundtrip managed from JS to get
+		the configured image for this game in WF, a redirect makes the image tag
+		handle loading the image on its' own.
+		Better solution (for which we don't have time ATM, probably V2):
+		have a wikifactory hook that sets the value in the wikia properties table and fetch from there.
+		*/
+		if ( !empty( $url ) ) {
+			$this->response->redirect( $url );
+		} else {
+			throw new WikiaException( 'Cannot fetch an icon for this game', 404 );
+		}
+		
+		$this->app->wf->profileOut( __METHOD__ );
+	}
 }

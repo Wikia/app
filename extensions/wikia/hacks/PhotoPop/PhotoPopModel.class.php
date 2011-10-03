@@ -7,7 +7,10 @@
 
 class PhotoPopModel extends WikiaModel{
 	//the WikiFactory toggle that qualifies a wiki for being listed in the game
-	const WF_WIKI_RECOMMEND_VAR = 'wgEnablePhotoPopExt';
+	const WF_SWITCH_NAME = 'wgEnablePhotoPopExt';
+	const WF_SETTINGS_NAME = 'wgPhotoPopSettings';
+	const GAME_ICON_WIDTH = 120;
+	const GAME_ICON_HEIGHT = 120;
 	const MEMCHACHE_KEY_PREFIX = 'PhotoPop';
 	const CACHE_DURATION = 86400;//24h
 	const CATEGORY_RESULTS_LIMIT = 0;//no limits for now
@@ -47,30 +50,39 @@ class PhotoPopModel extends WikiaModel{
 		
 		if ( empty( $games ) ) {
 			$games = Array();
-			$wikiFactoryRecommendVar = true;//WikiFactory::getVarByName( self::WF_WIKI_RECOMMEND_VAR, null );
+			$wikiFactoryRecommendVar = WikiFactory::getVarByName( self::WF_SWITCH_NAME, null );
 			
 			if ( !empty( $wikiFactoryRecommendVar ) ) {
-				$recommendedIds = array();//WikiFactory::getCityIDsFromVarValue( $wikiFactoryRecommendVar->cv_variable_id, true, '=' );
+				$gamesIds = WikiFactory::getCityIDsFromVarValue( $wikiFactoryRecommendVar->cv_variable_id, true, '=' );
 				
-				//TODO: temporary, remove when fully migrating to WF
-				foreach ( array_keys( $this->gamesData ) as $dbName ) {
-					$recommendedIds[] = WikiFactory::DBtoID( $dbName );
-				}
-				
-				foreach( $recommendedIds as $wikiId ) {
-					$wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wikiId );
-					$wikiDomain = str_replace('http://', '', WikiFactory::getVarValueByName( 'wgServer', $wikiId ));
-					$wikiThemeSettings = WikiFactory::getVarValueByName( 'wgOasisThemeSettings', $wikiId);
+				foreach ( $gamesIds as $wikiId ) {
+					$gameSettings = WikiFactory::getVarValueByName( self::WF_SETTINGS_NAME, $wikiId );
+					$matches = array();
+					$game = new stdClass();
+					$result = preg_match_all( '/([^=|]+)=([^|]+)/m' ,$gameSettings, $matches );
 					
-					$games[] = Array(
-						'name' => ( !empty( $wikiThemeSettings[ 'wordmark-text' ] ) ) ? $wikiThemeSettings[ 'wordmark-text' ] : $wikiName,
-						'domain' => $wikiDomain,
-						'wordmarkUrl'=> ( !empty( $wikiThemeSettings[ 'wordmark-image-url' ] ) ) ? $wikiThemeSettings[ 'wordmark-image-url' ] : null
-					);
+					if ( $result > 0 && !empty( $matches[1] ) && !empty( $matches[2] ) ){
+						foreach( $matches[1] as $index => $setting ){
+							if ( !empty( $matches[2][$index] ) ) {
+								$game->$setting = $matches[2][$index];
+							}
+						}
+					}
+					
+					if( !empty( $game->category ) ) {
+						$wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wikiId );
+						$wikiThemeSettings = WikiFactory::getVarValueByName( 'wgOasisThemeSettings', $wikiId);
+						
+						$game->name = ( !empty( $wikiThemeSettings[ 'wordmark-text' ] ) ) ? $wikiThemeSettings[ 'wordmark-text' ] : $wikiName;
+						$game->dbName = WikiFactory::IDtoDB( $wikiId );
+						$game->domain = str_replace('http://', '', WikiFactory::getVarValueByName( 'wgServer', $wikiId ));
+						
+						$games[] = $game;
+					}
 				}
 			} else {
 				$this->wf->profileOut( __METHOD__ );
-				throw new WikiaException( 'WikiFactory variable \'' . self::WF_WIKI_RECOMMEND_VAR . '\' not found' );
+				throw new WikiaException( 'WikiFactory variable \'' . self::WF_SWITCH_NAME . '\' not found' );
 			}
 			
 			$this->storeInCache( $cacheKey , $games );
@@ -94,7 +106,7 @@ class PhotoPopModel extends WikiaModel{
 	 * - integer id the article's ID
 	 * - string text the article's title
 	 * - string url the article's local URL
-	 * - strimg image the url to the image for the article (only in the article property collection)
+	 * - string image the url to the image for the article (only in the article property collection)
 	 */
 	public function getGameContents( $categoryName, $imageWidth, $imageHeight ) {
 		$this->app->wf->profileIn( __METHOD__ );
@@ -109,9 +121,9 @@ class PhotoPopModel extends WikiaModel{
 		
 		if ( empty( $contents ) ) {
 			$category = F::build( 'Category', array( $categoryName ), 'newFromName' );
-			$articles = Array();
 			
 			if ( $category instanceof Category ) {
+				$articles = Array();
 				$titles = $category->getMembers();
 				
 				foreach ( $titles as $title ) {
@@ -145,6 +157,42 @@ class PhotoPopModel extends WikiaModel{
 		}
 		
 		$this->app->wf->profileOut( __METHOD__ );
+		return $contents;
+	}
+	
+	public function getIconUrl( $titleName ){
+		$this->app->wf->profileIn( __METHOD__ );
+		
+		if ( empty( $titleName ) ) {
+			return null;
+		}
+		
+		$cacheKey = $this->generateCacheKey(
+			__METHOD__ .
+			//memcache doesn't like spaces in keys
+			":" . str_replace( ' ', '_', $titleName )
+		);
+		
+		$contents = $this->loadFromCache( $cacheKey );
+		
+		if ( empty( $contents ) ) {
+			$title = F::build( 'Title', array( $titleName, NS_FILE ), 'newFromText' );
+			
+			if ( $title instanceof Title ) {
+				$id = $title->getArticleId();
+				$resp = $this->app->sendRequest( 'ImageServingController', 'index', array( 'ids' => array( $id ), 'height' => self::GAME_ICON_HEIGHT, 'width' => self::GAME_ICON_WIDTH, 'count' => 1 ) );
+
+				$images = $resp->getVal( 'result' );
+				
+				if ( !empty( $images[$id][0]['url'] ) ) {
+					$contents = $images[$id][0]['url'];
+					$this->storeInCache( $cacheKey , $contents );
+				}
+			}
+		}
+		
+		$this->app->wf->profileOut( __METHOD__ );
+		
 		return $contents;
 	}
 	
