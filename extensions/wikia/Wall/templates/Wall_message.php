@@ -29,7 +29,7 @@
 
 		<div class="timestamp" style="clear:both">
 			<a  href="<?= $fullpageurl; ?>" class='permalink'>
-				<time class="timeago" datetime="<?= $iso_timestamp ?>">&nbsp;</time>
+				<div class="timeago" title="<?= $iso_timestamp ?>">&nbsp;</div>
 			</a>
 		</div>
 

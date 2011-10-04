@@ -135,6 +135,13 @@ class WallController extends ArticleCommentsModule {
 		$wall_username = $this->helper->getUser()->getRealName();
 		if( empty( $wall_username) ) $wall_username = $this->helper->getUser()->getName();
 		
+		// only use realname if user made edits (use logic from masthead)
+		$userStatsService = F::build('UserStatsService', array($this->helper->getUser()->getID()));
+		$userStats = $userStatsService->getStats();
+		if(empty($userStats['edits']) || $userStats['edits'] == 0) {
+			$wall_username = $this->helper->getUser()->getName();
+		}
+		
 		$username = $this->wg->User->getName();
 		$this->response->setVal('username', $username);
 		$this->response->setVal('wall_username', $wall_username);
