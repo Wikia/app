@@ -271,6 +271,7 @@ class WallNotifications {
 		// scan relation list, remove element that has the same author
 		$found = false;
 		$first_key = null;
+		
 		foreach( $data['relation'][ $uniqueId ]['list'] as $key=>$rel ) {
 			if( $first_key == null ) $first_key = $key;
 			if( $rel['authorId'] == $authorId ) {
@@ -278,9 +279,9 @@ class WallNotifications {
 				$found = true;
 			}
 		}
-		// if we didn't find same author in our list, we need to remove oldest element
-		if($first_key != null && $found == false) unset($data['relation'][ $uniqueId ]['list'][$key]);
 		
+		// if we didn't find same author in our list, we need to remove oldest element
+		if($first_key != null && $found == false && count($data['relation'][ $uniqueId ]['list']) > 2 ) unset($data['relation'][ $uniqueId ]['list'][$key]);
 		$data['relation'][ $uniqueId ]['list'][] = array('entityKey' => $entityKey, 'authorId' => $authorId, 'isReply'=>$isReply);
 	
 		$data['relation'][ $uniqueId ]['read'] = $read;			
