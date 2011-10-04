@@ -109,7 +109,7 @@ var AdminDashboardTracking = {
 	},
 	track: function(str) {
 		$().log(str);
-		Liftium.trackEvent(str, 'UA-2871474-1');
+		WikiaTracking.track(str, 'UA-2871474-2'); // FIXME NEF switch to profile name, not id
 	}
 };
 
