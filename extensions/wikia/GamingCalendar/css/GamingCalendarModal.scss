@@ -55,13 +55,13 @@ $gaming-calendar-gray-text: mix($color-text, $color-page, 75%);
 	    line-height: 37px;
 	    position: relative;
 
-	    span {
-		display: block;
-		float: right;
-		font-size: 12px;
-		font-weight: normal;
-		margin: 0 12px 0 0;
-		text-transform: none;
+		.date {
+			display: block;
+			float: right;
+			font-size: 12px;
+			font-weight: normal;
+			margin: 0 12px 0 0;
+			text-transform: none;
 	    }
 	}
 
