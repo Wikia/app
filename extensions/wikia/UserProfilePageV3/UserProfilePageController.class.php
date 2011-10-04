@@ -445,8 +445,8 @@ class UserProfilePageController extends WikiaController {
 			$user->saveSettings();
 		}
 		
-		return true;
 		$this->app->wf->ProfileOut( __METHOD__ );
+		return true;
 	}
 
 	/**
