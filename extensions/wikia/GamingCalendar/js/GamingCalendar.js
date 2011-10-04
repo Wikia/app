@@ -115,7 +115,7 @@ var GamingCalendar = {
 		], function() {
 			// Get markup
 			$.get('/wikia.php?controller=GamingCalendar&method=getModalLayout&format=html', function(html) {
-				GamingCalendarModal.modal = $(html).makeModal({width: 710, persistent: true, blackoutOpacity: 0.80});
+				GamingCalendarModal.modal = $(html).makeModal({width: 610, persistent: true, blackoutOpacity: 0.80});
 				GamingCalendarModal.init();
 			});
 		});
