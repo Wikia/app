@@ -109,7 +109,7 @@ var AdminDashboardTracking = {
 	},
 	track: function(str) {
 		$().log(str);
-		WikiaTracking.track(str, 'UA-2871474-2'); // FIXME NEF switch to profile name, not id
+		WikiaTracker.track(str, 'UA-2871474-2'); // FIXME NEF switch to profile name, not id
 	}
 };
 
