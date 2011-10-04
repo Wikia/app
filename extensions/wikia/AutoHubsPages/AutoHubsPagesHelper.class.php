@@ -266,7 +266,7 @@ class AutoHubsPagesHelper{
 
 		foreach ( $values as $key =>  $value) {
 			if(is_array($value)) {
-				$values[ $key ] = 'Hub-' . $value['name'] . $name['lengcode'] .'-slider';
+				$values[ $key ] = 'Hub-' . $value['name'] .'-slider';
 			} else {
 				$values[ $key ] = 'Hub-' . $value . '-slider';
 			}

@@ -1,7 +1,7 @@
 <?php 
 
 class AutoHubsPagesData{
-	public function __construct($tag,$tagID,$lang){
+	public function __construct(){
 		
 	}
 	
@@ -50,7 +50,7 @@ class AutoHubsPagesData{
 	}
 	
 	static function newFromTagTitle(Title &$title){
-		$out = new AutoHubsPagesData(0,0,0);
+		$out = new AutoHubsPagesData();
 		return $out;
 	}
 	
