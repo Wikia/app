@@ -12,7 +12,7 @@
         // to make plugin users happy:
         var settings = $.extend({
             onResize : function(){},
-            animate : true,
+            animate : $.browser.msie ? false : true,
             animateDuration : 150,
             animateCallback : function(){},
             extraSpace : 20,

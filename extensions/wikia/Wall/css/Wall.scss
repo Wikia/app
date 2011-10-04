@@ -43,6 +43,8 @@ $new_inputs_bg: mix($bubble_bg, $inputs_bg,20%);
 	padding-left: 15px;
 }
 
+#Wall.Wall ul { list-style: none; }
+
 .Wall {
 	/* Indenting for posts and replies */
 	.comments {

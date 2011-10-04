@@ -59,7 +59,6 @@ var Wall = $.createClass(Object, {
 			.live('click', this.proxy(this.switchWatch))
 			.live('mouseenter', this.proxy(this.hoverFollow))
 			.live('mouseleave', this.proxy(this.unhoverFollow));
-		$().log($('#Wall .follow.wikia-button '));
 		
 		// If any textarea has content make sure Reply / Post button is visible
 		$(document).ready(this.iniciateTextareas);
@@ -149,7 +148,11 @@ var Wall = $.createClass(Object, {
 				$('#Wall .Pagination').html($('.Pagination',newhtml).html());
 				
 				var destination = $('#Wall').offset().top;
-				$("html:not(:animated),body:not(:animated)").animate({ scrollTop: destination-20}, 500 );
+				if($.browser.msie) {
+					$("html:not(:animated),body:not(:animated)").css({ scrollTop: destination-20});
+				} else {
+					$("html:not(:animated),body:not(:animated)").animate({ scrollTop: destination-20}, 500 );
+				}
 
 				setTimeout(function() {
 					$('#Wall').find('textarea,input').placeholder();
@@ -206,7 +209,11 @@ var Wall = $.createClass(Object, {
 		} else {
 			// let's force pagination - to post new msg on the top of 1st page
 			var destination = $('#Wall').offset().top;
-			$("html:not(:animated),body:not(:animated)").animate({ scrollTop: destination-20}, 500 );
+			if($.browser.msie) {
+				$("html:not(:animated),body:not(:animated)").css({ scrollTop: destination-20});
+			} else {
+				$("html:not(:animated),body:not(:animated)").animate({ scrollTop: destination-20}, 500 );
+			}
 			this._switchPage( 1, 0 );
 		}
 		
@@ -223,10 +230,12 @@ var Wall = $.createClass(Object, {
 				$('#WallMessageTitle').val("").trigger('blur');
 				var newmsg = $(data['message']);
 				$('#Wall .comments').prepend(newmsg);
-				newmsg.hide()
-					.css('opacity',0)
-					.slideDown('slow')
-					.animate({'opacity':1},'slow');
+				if(!$.browser.msie) { // IE is too slow for that (even IE8)
+					newmsg.hide()
+						.css('opacity',0)
+						.slideDown('slow')
+						.animate({'opacity':1},'slow');
+				}
 				$('time.timeago',newmsg).timeago();
 				$('.new-reply textarea', newmsg).bind('keydown keyup change', this.proxy(this.reply_ChangeText))
 				$('textarea', newmsg).autoResize(this.settings.reply);
