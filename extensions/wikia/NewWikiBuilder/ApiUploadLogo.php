@@ -35,7 +35,6 @@ class ApiUploadLogo extends ApiBase {
 		}
 
 		// Generate a temporary file name for the output file
-		$dir = dirname($file);
 		$outfile = tempnam(sys_get_temp_dir(), __FUNCTION__) . '.' . self::LOGO_TYPE;
 
 		// Convert to correct size and format	
@@ -126,7 +125,6 @@ class ApiUploadLogo extends ApiBase {
 		$r['converted_file'] = $convertedFile;
 
 		// Save the resulting file Mediawiki. 
-                $licenses = new Licenses(); // Just a weird fix
                 global $wgRequest, $wgOut;
 
                 # Set OutputPage object to contain only article body,
@@ -146,7 +144,7 @@ class ApiUploadLogo extends ApiBase {
 
 		// Everything go ok?
 		if (!empty($Upload->upload_error)){
-			$this->getResult()->addValue(null, error, array('info' => $Upload->upload_error));
+			$this->getResult()->addValue(null, $this->getModuleName(), array('info' => $Upload->upload_error));
 			return;
 		}
 
