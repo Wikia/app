@@ -2,7 +2,7 @@ var GamingCalendarModal = {
 	initialized: false,
 	modal: null,
 	displayWeek: 0,
-	firstWeek: new Date( 2011, 05, 20, 0, 0, 0 ),
+	firstWeek: new Date( 2011, 5, 20, 0, 0, 0 ),
 	lastWeek: null,
 	thisWeek: null,
 	today: new Date(),
@@ -30,7 +30,7 @@ var GamingCalendarModal = {
 
 		window.GamingCalendarModal.renderPage( null, 0 );
 
-		var months = new Array('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec');
+		var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 		$('#GamingCalendarWrapper > h1').append('<span>' + months[window.GamingCalendarModal.today.getUTCMonth()] + ' ' + window.GamingCalendarModal.today.getUTCDate() + ', ' + window.GamingCalendarModal.today.getUTCFullYear() +'</span>');
 		$('#GamingCalendarWrapper .game-more-info').trackClick('gamingCalendar/moreinfo');
 		$('#GamingCalendarWrapper .game-prie-order').trackClick('gamingCalendar/preorder');
@@ -42,7 +42,7 @@ var GamingCalendarModal = {
 		var template = $('#GamingCalendarWeekTemplate').html();
 		var itemsHtml = '';
 
-		weekdates = week[0];
+		var weekdates = week[0];
 
 		template = template.replace('##start##', weekdates['start'] );
 		template = template.replace('##end##', weekdates['end'] );
@@ -95,7 +95,7 @@ var GamingCalendarModal = {
 		var obj = wrapper.children('ul')[0];
 		var top = $(obj).position().top;
 		var scrollBy = 0;
-		
+
 		if ( top < 0 ) {
 			scrollBy = '+=' + Math.min( Math.abs(top), 75 );
 			$(obj).animate({
