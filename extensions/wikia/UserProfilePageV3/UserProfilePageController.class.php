@@ -444,7 +444,7 @@ class UserProfilePageController extends WikiaController {
 			$user->setOption('avatar_rev', date('U') );
 			$user->saveSettings();
 		}
-
+		
 		return true;
 		$this->app->wf->ProfileOut( __METHOD__ );
 	}
@@ -754,9 +754,6 @@ class UserProfilePageController extends WikiaController {
 		$userData = $userIdentityBox->setData(true);
 
 		$this->setVal('user', $userData);
-		$months = array();
-		for($i =1; $i < 13; $i++) $months[] = $this->app->wg->Lang->getMonthName($i);
-		$this->setVal('months', $months);
 		$this->setVal( 'fbConnectButton', '<fb:login-button perms="user_about_me,user_birthday,user_location,user_work_history,user_website" onlogin="UserProfilePage.fbConnect();">'.$this->app->wf->Msg('user-identity-box-connect-to-fb').'</fb:login-button>' );
 
 		if( !empty($userData['birthday']['month']) ) {
