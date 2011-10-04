@@ -2,64 +2,28 @@ var exports = exports || {};
 
 define.call(exports, function(){
 	var Points = my.Class( {
-		
-		STATIC: {
-			MAX_POINTS_PER_ROUND: 1000,
-			PERCENT_DEDUCTION_WRONG_GUESS: 40
-		},
 
-		_totalPoints: 0,
-		_pointsThisRound: 0,
+		_points: 0,
 		
 		constructor: function(options) {
 			options = options || {};
-			this._pointsThisRound = Points.MAX_POINTS_PER_ROUND;
-			this._timerPointDeduction = (Points.MAX_POINTS_PER_ROUND / ((options.maxSecondsPerRound*1000) / options.updateIntervalMillis));
+			this._points = options.points || 1000;
 		},
 		
-		getRoundPoints: function() {
-			return this._pointsThisRound;
+		getPoints: function() {
+			return this._points;
 		},
 		
-		setRoundPoints: function(points) {
-			this._pointsThisRound = Math.round(points);
+		setPoints: function(points) {
+			this._points = Math.round(points);
 		},
 		
-		deductRoundPoints: function(points) {
-			this._pointsThisRound -= Math.round(points);
+		deductPoints: function(points) {
+			this._points = Math.max(0, (this._points - Math.round(points)));
 		},
 		
-		addRoundPoints: function(points) {
-			this._pointsThisRound += Math.round(points);
-		},
-		
-		deductTimerPoints: function() {		
-			this._pointsThisRound = Math.max(0, (this._pointsThisRound - this._timerPointDeduction))	
-		},
-		
-		deductWrongGuessPoints: function() {
-			this._pointsThisRound -= ((Points.PERCENT_DEDUCTION_WRONG_GUESS/100) * this._pointsThisRound);
-		},
-		
-		getTotalPoints: function() {
-			return this._totalPoints;
-		},
-		
-		setTotalPoints: function(points) {
-			this._totalPoints = points;
-		},
-		
-		deductTotalPoints: function(points) {
-			this._totalPoints -= points;
-		},
-		
-		addTotalPoints: function(points) {
-			this._totalPoints += points;
-		},
-		
-		transferToTotal: function() {
-			this._totalPoints = this._pointsThisRound;
-			this._pointsThisRound = 0;
+		addPoints: function(points) {
+			this._points += Math.round(points);
 		}
 	});
 	
@@ -68,15 +32,21 @@ define.call(exports, function(){
 		STATIC: {
 			INCORRECT_CLASS_NAME: 'incorrect',
 			TIME_UP_NOTIFICATION_DURATION_MILLIS: 3000,
-			MAX_SECONDS_PER_ROUND: 10,
-			UPDATE_INTERVAL_MILLIS: 1000,
-			PERCENT_FOR_TIME_IS_LOW: 30
+			MAX_SECONDS_PER_ROUND: 20,
+			UPDATE_INTERVAL_MILLIS: 50,
+			PERCENT_FOR_TIME_IS_LOW: 30,
+			MAX_POINTS_PER_ROUND: 1000,
+			PERCENT_DEDUCTION_WRONG_GUESS: 40
 		},
 
 		_numCorrect: 0,
 		_roundIsOver: false,
 		_timeIsLow: false,
 		_pause: false,
+		_tileClicked: false,
+		_answerButtonClicked: false,
+		_tutorialSteps: [],
+		_timer: null,
 		
 		constructor: function(options){
 			options = options || {};
@@ -85,10 +55,19 @@ define.call(exports, function(){
 			this._data = options.data || [];
 			this._currentRound = 0;
 			this._watermark = options.watermark;
-			this._points = new Points({
-					maxSecondsPerRound: Game.MAX_SECONDS_PER_ROUND,
-					updateIntervalMillis: Game.UPDATE_INTERVAL_MILLIS
-				});
+			this._roundPoints = new Points();
+			this._totalPoints = new Points();
+			this._timerPointDeduction = Math.round((Game.MAX_POINTS_PER_ROUND / ((Game.MAX_SECONDS_PER_ROUND*1000) / Game.UPDATE_INTERVAL_MILLIS)));
+			this._wrongAnswerPointDeduction = Math.round((Game.MAX_POINTS_PER_ROUND * (Game.PERCENT_DEDUCTION_WRONG_GUESS / 100)));
+			
+			this.addEventListener('modalOpened', this.modalOpened);
+			this.addEventListener('modalClosed', this.modalClosed);
+			this.addEventListener('wrongAnswerClicked', this.wrongAnswerClicked);
+			this.addEventListener('rightAnswerClicked', this.rightAnswerClicked);
+			this.addEventListener('answerDrawerClosed', this.answerDrawerClosed);
+			this.addEventListener('answerDrawerOpened', this.answerDrawerOpened);
+			this.addEventListener('answerDrawerButtonClicked', this.answerDrawerButtonClicked);
+			this.addEventListener('continueClicked', this.continueClicked);
 		},
 		
 		getId: function(){
@@ -99,10 +78,15 @@ define.call(exports, function(){
 			console.log('Starting game: ' + this._id);
 			this.next();
 			this.createMask();
-			this.startActivator();
 			this.answerButtonClick();
 			this.answerClick();
-			if(this._id == 'tutorial') this.prepareTutorial();
+			this.continueClick();
+			if(this._id == 'tutorial') this.openModal({
+				name: 'intro',
+				html: "Tap the screen to take a peek of the mystery image underneath.",
+				fade: true,
+				clickThrough: false,
+				closeOnClick: true});
 		},
 		
 		next: function(){
@@ -116,24 +100,83 @@ define.call(exports, function(){
 			}
 		},
 		
-		prepareTutorial: function() {
-			document.getElementById('instructionText').innerText = "Tap the screen to take a peek of the mystery image underneath.";
-			document.getElementById('instructionsWrapper').onclick = function() {
-				this.style.opacity = 0;
-				this.style.zIndex = 0;
+		continueClick: function() {
+			var self = this;
+			document.getElementById('continue').onclick = function() {
+				self.fire('continueClicked');	
+			}
+
+		},
+		
+		continueClicked: function() {
+			this.play();
+		},
+		
+		modalOpened: function(event, options) {
+			console.log('modal opened: ' + options.name);
+			if(this._id == 'tutorial') {
+				this.pause();
+				this._tutorialSteps.push(options.name);
+				console.log(this._tutorialSteps);
 			}
 		},
 		
-		startActivator: function() {
-			var self = this;
-			document.getElementById('wrapper').onclick = function() {
-				self.timer();
-				this.onclick = null;
+		modalClosed: function(event, options) {
+			console.log('modal closed: ' + options.name);
+		},
+		
+		openModal: function(options) {
+			options = options || {};
+			
+			var modalWrapper = document.getElementById('modalWrapper'),
+			modal = document.getElementById('modal'),
+			self = this;
+			
+			if(options.fontSize) {
+				modal.style.fontSize = options.fontSize;
+			}
+			
+			if(options.fade) {
+				modal.classList.add('transition-all');
+			} else {
+				modal.classList.remove('transition-all');
+			}
+			
+			if(options.triangle) {
+				modal.classList.add('triangle');
+				modal.classList.add(options.triangle);
+			}
+			
+			modalWrapper.style.visibility = 'visible';
+			modal.style.opacity = 0.8;
+			
+			if( options.clickThrough ) {
+				modalWrapper.style.pointerEvents = 'none';
+				modal.style.pointerEvents = 'auto';
+			} else {
+				modalWrapper.style.pointerEvents = 'auto';
+			}
+			
+			if(options.html) {
+				modal.innerHTML = options.html;
+			}
+			
+			this.fire('modalOpened', {name: options.name});
+			
+			modalWrapper.onclick = function() {
+				if(options.closeOnClick) {
+					self.fire('modalClosed', {name: options.name});
+					
+					modal.style.opacity = 0;
+					modalWrapper.style.visibility = 'hidden';
+				}
+
 			}
 		},
 		
 		pause: function() {
 			this._pause = true;
+			this._timer = null;
 		},
 		
 		resume: function() {
@@ -145,28 +188,30 @@ define.call(exports, function(){
 			// Time has passed, take that off of the score bar
 
 			self = this;
-						
-			(function time() {
-				if( !self._pause ) {
-					self._points.deductTimerPoints();
-					self.updateScoreBar();
-					// If the round is out of time/points, end the round... otherwise queue up the next game-clock tick.
-					if((self._points.getRoundPoints() <= 0) && (!self._roundIsOver)){
-						self.timeIsUp();
-						
-					} else if(!self._roundIsOver){
-						// If the user is low on time, play timeLow sound to increase suspense.
-						if(!self._timeIsLow){
-							var percent = ((self._points.getRoundPoints() * 100)/ Points.MAX_POINTS_PER_ROUND);
-							if(percent < Game.PERCENT_FOR_TIME_IS_LOW){
-								self.fire('playSound', {name: 'timeLow'});
-								self._timeIsLow = true;
+			if(!self._timer) {	
+				(function time() {
+					if( !self._pause ) {
+						self._roundPoints.deductPoints(self._timerPointDeduction);
+						self.updateScoreBar();
+						self.updateHud_score();
+						// If the round is out of time/points, end the round... otherwise queue up the next game-clock tick.
+						if((self._roundPoints.getPoints() <= 0) && (!self._roundIsOver)){
+							self.timeIsUp();
+							
+						} else if(!self._roundIsOver){
+							// If the user is low on time, play timeLow sound to increase suspense.
+							if(!self._timeIsLow){
+								var percent = ((self._roundPoints.getPoints() * 100)/ Points.MAX_POINTS_PER_ROUND);
+								if(percent < Game.PERCENT_FOR_TIME_IS_LOW){
+									self.fire('playSound', {name: 'timeLow'});
+									self._timeIsLow = true;
+								}
 							}
+							self._timer = setTimeout(time, Game.UPDATE_INTERVAL_MILLIS);
 						}
-						setTimeout(time, Game.UPDATE_INTERVAL_MILLIS);
 					}
-				}
-			})();	
+				})();
+			}
 		},
 		
 		createMask: function( rows, cols ) {
@@ -221,31 +266,66 @@ define.call(exports, function(){
 		tileClick: function() {
 			var self = this;
 			return function() {
-				if(!self._pause) {
-					self.fire('playSound', {name: 'pop'});
-					this.onclick = null;
-					this.style.opacity = 0;	
+				if(self._pause) self.resume();
+				self.fire('playSound', {name: 'pop'});
+				this.onclick = null;
+				this.style.opacity = 0;
+				self.resume();
+				if(self._id == "tutorial" && !self._tileClicked) {
+					self._tileClicked = true;
+					self.pause();
+					self.openModal({
+						name: 'tile',
+						html:'Tap the "answer" button to make your guess.',
+						fade: true,
+						clickThrough: false,
+						closeOnClick: true,
+						triangle: 'right'});
 				}
-
 			}
 		},
 		
-		answerButtonClick: function() {
-			document.getElementById('answerButton').onclick = function() {
-				if(!self._pause) {
-					if (this.classList.contains('closed')) {
-						this.getElementsByTagName('img')[0].style.opacity = 0;
-						this.getElementsByTagName('img')[1].style.opacity = 1;
-						this.classList.remove('closed');
-						document.getElementById('answerDrawer').style.right = 0;
-					} else {
-						this.getElementsByTagName('img')[1].style.opacity = 0;
-						this.getElementsByTagName('img')[0].style.opacity = 1;
-						this.classList.add('closed');
-						document.getElementById('answerDrawer').style.right = -225;
-					}
+		answerDrawerButtonClicked: function(event, options) {
+			console.log('answerDrawerButtonClicked');
+			var button = options.button;
+			
+			if(!this._pause || this._id == 'tutorial') {
+				if (button.classList.contains('closed')) {
+					button.getElementsByTagName('img')[0].style.opacity = 0;
+					button.getElementsByTagName('img')[1].style.opacity = 1;
+					button.classList.remove('closed');
+					document.getElementById('answerDrawer').style.right = 0;
+					this.fire('answerDrawerOpened');
+				} else {
+					button.getElementsByTagName('img')[1].style.opacity = 0;
+					button.getElementsByTagName('img')[0].style.opacity = 1;
+					button.classList.add('closed');
+					document.getElementById('answerDrawer').style.right = -225;
+					this.fire('answerDrawerClosed');
 				}
-			}	
+			}
+		},
+		
+		answerDrawerOpened: function() {
+			console.log('answerDrawerOpened');
+			this.openModal({
+				name: 'drawer',
+				html: 'The fewer peek you take, the fewer guesses you make, and the less time you take, the bigger your score!',
+				fade: true,
+				clickThrough: false,
+				fontSize: 'x-large',
+				closeOnClick: true});
+		},
+		
+		answerDrawerClosed: function() {
+			console.log('answerDrawerClosed');		
+		},
+		
+		answerButtonClick: function() {
+			var self = this;
+			document.getElementById('answerButton').onclick = function() {
+				self.fire('answerDrawerButtonClicked', {button: this});
+			}
 		},
 		
 		answerClick: function() {
@@ -256,16 +336,16 @@ define.call(exports, function(){
 			for(var i = 0; i < 4; i++) {
 				answerList[i].onclick = function() {
 					if(this.id != correctAnswer) {
-						self.gotWrongAnswer(this);
+						self.fire('wrongAnswerClicked', {li: this});
 					} else {
-						self.gotRightAnswer(this);
+						self.fire('rightAnswerClicked', {li: this});
 					}
 				}
 			}	
 		},
 		
 		updateScoreBar: function(){
-			var percent = ((this._points.getRoundPoints() * 100)/ Points.MAX_POINTS_PER_ROUND);
+			var percent = ((this._roundPoints.getPoints() * 100)/ Game.MAX_POINTS_PER_ROUND);
 			var barHeight = Math.floor(percent * document.getElementById('scoreBarWrapper').clientHeight / 100);
 			// Will fade the colors from green to yellow to red as we go from full points, approaching no points.
 			var fgb=0;
@@ -341,15 +421,40 @@ define.call(exports, function(){
 			clear();
 		},
 
-		gotRightAnswer: function(li){
+		wrongAnswerClicked: function(event, options) {
+			console.log('wrongAnswerClicked');
+			
+			var li = options.li;
+			
+			li.className = Game.INCORRECT_CLASS_NAME;
+			li.onclick = null;
+			this.fire('playSound', {name: 'wrongAnswer'});
+
+			// Deduct points for answering incorrectly.
+			this._roundPoints.deductPoints(this._wrongAnswerPointDeduction);
+			this.updateScoreBar();
+			this.updateHud_score();
+		},
+		
+		rightAnswerClicked: function(event, options) {
+			console.log('rightAnswerClicked');
 			// Stops the timer from counting down & the clickhandler from listening for answers, etc.
+			if(this._id == 'tutorial') {
+				this.openModal({
+					name: 'continue',
+					html: 'After the answer is revealed tap the "next" button to continue on to a new image.',
+					fade: true,
+					clickThrough: false,
+					closeOnClick: true});
+			}
 			this._roundIsOver = true;
 
 			// Record this as a correct answer (for the stats at the end of the game).
 			this._numCorrect++;
 
 			// Move the points from the round-score to the total score.
-			this._points.transferToTotal();
+			this._totalPoints.addPoints(this._roundPoints.getPoints());
+			this._roundPoints.setPoints(0);
 			this.updateHud_score();
 			this.hidescoreBar();
 			// Play sound.
@@ -361,7 +466,7 @@ define.call(exports, function(){
 			// Reveal all tiles.
 			this.revealAll();
 			
-			this.showContinue(li.innerText);
+			this.showContinue(options.li.innerText);
 		},
 		
 		showEndGameScreen: function(){
@@ -376,7 +481,7 @@ define.call(exports, function(){
 		},
 		
 		updateHud_score: function(){
-			document.getElementById('score').innerText = this._points.getTotalPoints();
+			document.getElementById('score').innerText = this._roundPoints.getPoints();
 		},
 		
 		hideContinue: function() {
@@ -423,16 +528,6 @@ define.call(exports, function(){
 		
 		hideTutorialPopUp: function() {
 			
-		},
-		
-		gotWrongAnswer: function(li){
-			li.className = Game.INCORRECT_CLASS_NAME;
-			li.onclick = null;
-			this.fire('playSound', {name: 'wrongAnswer'});
-
-			// Deduct points for answering incorrectly.
-			this._points.deductWrongGuessPoints();
-			this.updateScoreBar();
 		}
 	});
 	

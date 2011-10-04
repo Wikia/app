@@ -99,6 +99,6 @@ define.call(exports, {
 					PROGRESS\
 				</div>\
 			</div><table id='tilesWrapper'></table>\
-			<div id='instructionsWrapper'><div id='instructionText'></div></div>\
+			<div id='modalWrapper'><div id='modal'></div></div>\
 		</div>",
 });
