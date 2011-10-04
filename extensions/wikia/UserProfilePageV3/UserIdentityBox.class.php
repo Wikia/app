@@ -380,8 +380,6 @@ class UserIdentityBox {
 		
 		//checking if user is blocked globally
 		$isBlocked = $this->user->getBlockId();
-		//checking if user is blocked locally
-		$isBlocked = empty($isBlocked) ? !$this->user->isAllowed('edit') : true;
 		
 		if( empty($isBlocked) ) {
 			$data['blocked'] = false;
