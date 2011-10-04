@@ -625,13 +625,20 @@ class HAWelcomeJob extends Job {
 
 		$list = array();
 
+		$cond = array(
+			'ug_group' => array(
+				'staff',
+				'helper'
+			)
+		);
+
 		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 
 		$res = $dbr->select(
 			'user_groups',
 			'ug_user',
 			array(
-				'ug_group' => 'staff'
+				$dbr->makeList( $cond, LIST_OR )
 			)
 		);
 
