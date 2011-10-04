@@ -47,7 +47,7 @@ class BlogLockdown {
 //			$oComment->load();
 			$canEdit = $oComment->canEdit();
 			$isOwner = (bool) ( $canEdit && !in_array($action, array('watch', 'protect') ) );
-			$isArticle = (bool )( $namespace == NS_BLOG_ARTICLE_TALK && $isOwner );
+			$isArticle = false; //if this is TALK it is not article
 		}
 		else {
 			$owner = BlogArticle::getOwner( $title );
