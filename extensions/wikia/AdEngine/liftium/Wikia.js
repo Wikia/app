@@ -299,7 +299,7 @@ LiftiumDART.getImpressionCount = function (slotname) {
 		
 		if (window.wgAdDriverUseExpiryStorage && window.wgAdDriverUseCookie) {
 			if (storage != cookieStorage) {
-				Liftium.trackEvent(Liftium.buildTrackUrl(["error", "impctoutofsync", slotname]));
+				WikiaTracking.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "error", "impctoutofsync", slotname]), 'liftium.errors');
 			}
 		}		
 	}
