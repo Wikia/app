@@ -225,3 +225,20 @@ $config['theme_designer_js'] = array(
 		'//extensions/wikia/ThemeDesigner/js/aim.js',
 	)
 );
+
+$config['yui'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//skins/common/yui_2.5.2/utilities/utilities.js',
+		'//skins/common/yui_2.5.2/cookie/cookie-beta.js',
+		'//skins/common/yui_2.5.2/container/container.js',
+		'//skins/common/yui_2.5.2/autocomplete/autocomplete.js',
+		'//skins/common/yui_2.5.2/animation/animation-min.js',
+		'//skins/common/yui_2.5.2/logger/logger.js',
+		'//skins/common/yui_2.5.2/menu/menu.js',
+		'//skins/common/yui_2.5.2/tabview/tabview.js',
+		'//skins/common/yui_2.5.2/slider/slider.js',
+		'//skins/common/yui_extra/tools-min.js',
+		'//skins/common/yui_extra/carousel-min.js',
+	)
+);

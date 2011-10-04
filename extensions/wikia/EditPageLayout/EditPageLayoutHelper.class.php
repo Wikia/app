@@ -47,10 +47,11 @@ class EditPageLayoutHelper {
 
 		// macbre: load YUI on edit page (it's always loaded using $.loadYUI)
 		// PLB has problems with $.loadYUI not working correctly in Firefox (callback is fired to early)
-		$staticChute = new StaticChute('js');
-		$staticChute->useLocalChuteUrl();
-
-		$this->out->addScript($staticChute->getChuteHtmlForPackage('yui'));
+		$srcs = F::build('AssetsManager',array(),'getInstance')->getGroupCommonURL('yui');
+		$wgJsMimeType = $this->app->wg->JsMimeType;
+		foreach($srcs as $src) {
+			$this->out->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$src}\"></script>");
+		}
 
 		// initialize custom edit page
 		$this->editPage = new EditPageLayout($editedArticle);
