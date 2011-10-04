@@ -149,15 +149,18 @@
 		padding-left: 10px;
 		background: $color-page;
 		cursor: default;
+		position: relative;
 		}
 	}
 	#wall-notifications-markasread {
 		color: $color-links;
 		cursor: pointer; 
 		text-align: center;
-		float: right;
 		font-weight: normal;
 		font-size: 11px;
 		padding-right: 10px; 
+		position: absolute;
+		top: 2px;
+		right: 0px;
 	}
 }
