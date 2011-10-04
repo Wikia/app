@@ -24,6 +24,7 @@
 
 #wall-notifications-inner .avatars {
 	vertical-align: top;
+	text-align: left;
 	display: inline-block;
 	margin: 0;
 	padding: 0;
