@@ -179,15 +179,6 @@ var GamingCalendarModal = {
 			$.get('/wikia.php?controller=GamingCalendar&method=getEntries&format=json&weeks='
 			+ weeksToLoad + '&offset=' + offset, function( data ) {
 				$(data.entries).each( function(index, value) {
-					// FB#9271
-					//if ( 1 == value.length && page > 0 ) {
-					//	window.GamingCalendarModal.lastWeek = offset + index - 1;
-					//	if (offset + index < page + 1) {
-					//		window.GamingCalendarModal.renderPageFlag = false;
-					//		window.GamingCalendarModal.renderPage(e, page - 1);
-					//		return;
-					//	}
-					//}
 					GamingCalendar.data['entries'][offset + index] = value;
 				});
 				window.GamingCalendarModal.renderPageFlag = false;
