@@ -7,7 +7,8 @@
  *
  */
 
-$wgAutoloadClasses['simple_html_dom'] = dirname(__FILE__). '/../../../lib/simplehtmldom/simple_html_dom.php'; # Simple parser to easy replace tags by media wiki text
+
+require_once( dirname(__FILE__). '/../../../lib/simplehtmldom/simple_html_dom.php' );
 
 class WikiaApiQueryEventsData extends ApiQueryBase {
 
