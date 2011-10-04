@@ -459,10 +459,16 @@ class WallHooksHelper {
 	public function onSkinTemplateContentActions($contentActions) {
 		$app = F::app();
 		
-		if( !empty($app->wg->EnableWallExt) 
-			&& $app->wg->Title instanceof Title 
-			&& $app->wg->Title->getNamespace() == NS_USER_WALL
-			&& $app->wg->Title->isSubpage() === true
+		if( !empty($app->wg->EnableWallExt) && $app->wg->Title instanceof Title ) {
+			$title = $app->wg->Title;
+			$parts = explode( '/', $title->getText() );
+			$helper = F::build('WallHelper', array());
+		}
+		
+		if( $title instanceof Title
+			&& $title->getNamespace() == NS_USER_WALL
+			&& $title->isSubpage() === true
+			&& mb_strtolower(str_replace(' ', '_', $parts[1])) !== mb_strtolower($helper->getArchiveSubPageText()) 
 		) {
 		//remove "History" and "View source" tabs in Monobook & don't show history in "My Tools" in Oasis
 		//because it leads to Message Wall (redirected) and a user could get confused
