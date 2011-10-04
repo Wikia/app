@@ -53,7 +53,7 @@ var Wall = $.createClass(Object, {
 		$('.load-more a').live('click', this.proxy(this.loadMore));
 		
 		// Make timestamps dynamic
-		$('time.timeago').timeago();
+		$('.timeago').timeago();
 		
 		$('#Wall .follow.wikia-button ')
 			.live('click', this.proxy(this.switchWatch))
@@ -171,7 +171,7 @@ var Wall = $.createClass(Object, {
 
 				setTimeout(function() {
 					$('#Wall').find('textarea,input').placeholder();
-					$('time.timeago').timeago();
+					$('.timeago').timeago();
 					$('.new-reply textarea').bind('keydown keyup change', this.proxy(this.reply_ChangeText))
 				}, 100);
 
@@ -251,7 +251,7 @@ var Wall = $.createClass(Object, {
 						.slideDown('slow')
 						.animate({'opacity':1},'slow');
 				}
-				$('time.timeago',newmsg).timeago();
+				$('.timeago',newmsg).timeago();
 				$('.new-reply textarea', newmsg).bind('keydown keyup change', this.proxy(this.reply_ChangeText))
 				$('textarea', newmsg).autoResize(this.settings.reply);
 				
@@ -483,7 +483,7 @@ var Wall = $.createClass(Object, {
 				main.find('textarea').val("").trigger('blur');
 				var newmsg = $($(data['message'])).insertBefore(main.find('ul li.new-reply')).hide().fadeIn('slow');
 				//$('<div class="highlight"></div>').appendTo(newmsg);//.fadeTo(0,0.05).fadeTo(1000, 0.05).fadeOut(3000);
-				$('time.timeago',newmsg).timeago();
+				$('.timeago',newmsg).timeago();
 				//$('.SpeechBubble[data-id='+main.attr('data-id')+']:after',newmsg.parent()).css('opacity',1).animate({opacity:'0'},2000);
 				main.find('ul li.load-more .count').html(main.find('ul li.message').length);
 				$('.speech-bubble-message', newreply).css({'margin-left':'0px'});
