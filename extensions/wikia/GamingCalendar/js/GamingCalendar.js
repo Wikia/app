@@ -81,7 +81,7 @@ var GamingCalendar = {
 		template = template.replace('##preorderLink##', item.preorderUrl ? '<a href="'+item.preorderUrl+'" class="game-pre-order" target="_blank">Pre-order now</a>' : '');
 		template = template.replace('##systems##', item.systems.join(', '));
 
-		var months = new Array('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec');
+		var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 		var date = new Date(item.releaseDate * 1000); // miliseconds!
 		template = template.replace('##month##', months[date.getUTCMonth()]);
 		template = template.replace('##day##', date.getUTCDate());
