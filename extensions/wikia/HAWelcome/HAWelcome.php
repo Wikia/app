@@ -625,7 +625,7 @@ class HAWelcomeJob extends Job {
 
 		$list = array();
 
-		$dbr = wfGetDB( $wgExternalSharedDB );
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 
 		$res = $dbr->select(
 			'user_groups',
