@@ -14,11 +14,9 @@
 
 	<div class="controls">
 		<div class="back">
-			<div class="back-month"><span>«</span></div>
 			<div class="back-week"><span>‹</span></div>
 		</div>
 		<div class="forward">
-			<div class="forward-month"><span>»</span></div>
 			<div class="forward-week"><span>›</span></div>
 		</div>
 		<div class="today">Today</div>
