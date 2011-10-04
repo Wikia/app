@@ -253,7 +253,7 @@ var Wall = $.createClass(Object, {
 				}
 				$('.timeago',newmsg).timeago();
 				$('.new-reply textarea', newmsg).bind('keydown keyup change', this.proxy(this.reply_ChangeText))
-				$('textarea', newmsg).autoResize(this.settings.reply);
+				$('textarea', newmsg).autoResize(this.settings.reply).placeholder();
 				
 				this.enableNewMessage();
 				$('.new-message .speech-bubble-message').css({'padding-bottom':10});
