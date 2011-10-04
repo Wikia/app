@@ -98,6 +98,10 @@ class WallNotificationsModule extends Module {
 			}
 		}
 
+		$unread = $this->request->getVal('unread');
+		$this->response->setVal( 'unread', $unread );
+		if(!$unread) $authors = array_slice($authors, 0, 1);
+
 		$msg = wfMsg($msgid, $params);
 		$this->response->setVal( 'msg', $msg );
 		if ( empty( $data->url ) ) $data->url = '';
@@ -105,7 +109,6 @@ class WallNotificationsModule extends Module {
 		$this->response->setVal( 'authors', $authors );
 		$this->response->setVal( 'title',  $data->thread_title );
 		$this->response->setVal( 'iso_timestamp',  wfTimestamp(TS_ISO_8601, $data->timestamp ));
-		$this->response->setVal( 'unread', $this->request->getVal('unread') );
 	}
 
 	private function getDisplayname($username) {
