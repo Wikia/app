@@ -308,10 +308,11 @@ var Wall = $.createClass(Object, {
 	},
 	postNewMessage_ChangeText: function() {
 		// check if both topic and content are filled
-		topic_str = $('#WallMessageTitle').val();
-		topic_len = topic_str.length;
-		topic = !$('#WallMessageTitle').hasClass('placeholder') && topic_len > 0;
-		content = !$('#WallMessageBody').hasClass('placeholder') && $('#WallMessageBody').val().length > 0;
+		var topic_str = $('#WallMessageTitle').val();
+		var topic_len = topic_str.length;
+		var topic = !$('#WallMessageTitle').hasClass('placeholder') && topic_len > 0;
+		var content = !$('#WallMessageBody').hasClass('placeholder');
+		content =  content && $('#WallMessageBody').val().length > 0;
 		if(content) {
 			$('#WallMessageSubmit').removeAttr('disabled');
 		} else {
@@ -333,7 +334,8 @@ var Wall = $.createClass(Object, {
 
 	postNewMessage_blur: function() {
 		//topic = !$('.new-message textarea.title').hasClass('placeholder') && $('.new-message textarea.title').val().length > 0;
-		content = !$('#WallMessageBody').hasClass('placeholder') && $('#WallMessageBody').val().length > 0;
+		var content = !$('#WallMessageBody').hasClass('placeholder');
+		content = content && $('#WallMessageBody').val().length > 0;
 		if(!content) {
 			$('#WallMessageSubmit').attr('disabled', 'disabled').hide();
 			$('.new-message .speech-bubble-message').css({'padding-bottom':10});
@@ -522,7 +524,7 @@ var Wall = $.createClass(Object, {
 
 	reply_ChangeText: function(e) {
 		var target = $(e.target);
-		content = !target.hasClass('placeholder') && target.val().length > 0;
+		var content = !target.hasClass('placeholder') && target.val().length > 0;
 
 		if(content && !target.hasClass('content') ) {
 			target.closest('.SpeechBubble').find('.replyButton').removeAttr('disabled');
@@ -534,7 +536,7 @@ var Wall = $.createClass(Object, {
 	},
 
 	replyBlur: function(e) {
-		content = !$(e.target).hasClass('placeholder') && $(e.target).val().length > 0;
+		var content = !$(e.target).hasClass('placeholder') && $(e.target).val().length > 0;
 
 		if(!content) {
 			var el = $(e.target).closest('.SpeechBubble');
