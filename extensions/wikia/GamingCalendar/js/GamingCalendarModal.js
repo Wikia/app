@@ -22,11 +22,11 @@ var GamingCalendarModal = {
 			0, 0, 0
 		);
 
-		if (1 == window.GamingCalendarData['entries'][2].length) {
+		if (1 == GamingCalendar.data['entries'][2].length) {
 			window.GamingCalendarModal.lastWeek = 1;
 		}
 		
-		var weeks = window.GamingCalendarData['entries'];
+		var weeks = GamingCalendar.data['entries'];
 
 		window.GamingCalendarModal.renderPage( null, 0 );
 
@@ -165,12 +165,12 @@ var GamingCalendarModal = {
 	var targetWeek = page;
 	var offset = targetWeek;
 	var weeksToLoad = 2;
-	if ('object' == typeof window.GamingCalendarData['entries'][targetWeek]) {
+	if ('object' == typeof GamingCalendar.data['entries'][targetWeek]) {
 		offset++;
 		weeksToLoad--;
 	}
 
-	if ('object' == typeof window.GamingCalendarData['entries'][targetWeek + 1]) {
+	if ('object' == typeof GamingCalendar.data['entries'][targetWeek + 1]) {
 		weeksToLoad--;
 	}
 	
@@ -187,7 +187,7 @@ var GamingCalendarModal = {
 				//		return;
 				//	}
 				//}
-				window.GamingCalendarData['entries'][offset + index] = value;
+				GamingCalendar.data['entries'][offset + index] = value;
 			});
 			window.GamingCalendarModal.renderPageFlag = false;
 			window.GamingCalendarModal.renderPage(e, page);
@@ -196,8 +196,8 @@ var GamingCalendarModal = {
 	}
 
 	var html = new Array (
-		window.GamingCalendarModal.renderWeek(window.GamingCalendarData['entries'][targetWeek]),
-		window.GamingCalendarModal.renderWeek(window.GamingCalendarData['entries'][targetWeek + 1])
+		window.GamingCalendarModal.renderWeek(GamingCalendar.data['entries'][targetWeek]),
+		window.GamingCalendarModal.renderWeek(GamingCalendar.data['entries'][targetWeek + 1])
 	);
 
 	var obj = $('#GamingCalendar .weeks > ul');
