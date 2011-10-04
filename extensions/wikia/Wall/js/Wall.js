@@ -75,11 +75,26 @@ var Wall = $.createClass(Object, {
 		// it's still disabled on new page loaded
 		$('textarea').removeAttr('disabled');
 		
+		$("#Wall textarea").live('keydown', this.proxy(this.focusButton) );
+		
 		$().log(this.username, "Wall username");
 	},
 
 	proxy: function(func) {
 		return $.proxy(func, this);
+	},
+	
+	
+	//hack for safari tab index
+	focusButton: function(e) {
+		var element = $(e.target);
+		var button = element.closest('.SpeechBubble').find('button');
+		if(e.keyCode == 9) {
+			if(element.attr('id') != 'WallMessageTitle') {
+				button.focus();
+				e.preventDefault();
+			}			
+		}
 	},
 	
 	iniciateTextareas: function() {
