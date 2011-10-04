@@ -321,7 +321,6 @@ class PartnerVideoHelper {
 				$clipData['clipTitle'] = $video->getElementsByTagName('title')->item(0)->textContent;
 				$clipData['rgGuid'] = $video->getElementsByTagName('guid')->item(0)->textContent;
 				$clipData['thumbnail'] = $video->getElementsByTagName('thumbnail-url')->item(0)->textContent;
-				$clipData['description'] = $video->getElementsByTagName('description')->item(0)->textContent;
 				$clipData['duration'] = $video->getElementsByTagName('duration')->item(0)->textContent;
 				if ($video->getElementsByTagName('source-video-props')->item(0)) {			
 					$sourceVideoPropsTxt = $video->getElementsByTagName('source-video-props')->item(0)->textContent;
@@ -330,9 +329,16 @@ class PartnerVideoHelper {
 						$clipData['aspectRatio'] = $sourceVideoProps[0];
 					}
 				}
-				//@todo tag list
 				
+				$description = $video->getElementsByTagName('description')->item(0)->textContent;
+				$description = str_replace("\n", '<br/>', $description);
+				// description may have commas, need to escape these before video metadata is imploded by comma
+				$clipData['description'] = str_replace(',', '&#44;', $description);	
+				
+				//@todo tag list
+
 				$msg = '';
+				
 				$articlesCreated += $this->createVideoPageForPartnerVideo(VideoPage::V_REALGRAVITY, $clipData, $msg);
 				if ($msg) {
 					print "ERROR: $msg\n";
@@ -419,9 +425,9 @@ class PartnerVideoHelper {
 	}
 
 	public static function generateCategoriesForPartnerVideo($provider, array $data) {
-		global $wgWikiaVideoProviders;
+		global $wgWikiaVideoProviders, $addlCategories;
 
-		$categories = array();
+		$categories = !empty($addlCategories) ? $addlCategories : array();
 		$categories[] = $wgWikiaVideoProviders[$provider];
 
 		switch ($provider) {
@@ -430,14 +436,19 @@ class PartnerVideoHelper {
 				if (!empty($data['trailerVersion'])) {
 					$categories[] = $data['trailerVersion'];
 				}
+				if (stripos($data['titleName'], '(VG)') !== false) {
+					$categories[] = 'Games';
+				}
+				else {
+					$categories[] = 'Entertainment';
+				}
 				break;
 			case VideoPage::V_MOVIECLIPS:
 				$categories[] = self::generateTitleNameForPartnerVideo($provider, $data);
-				if (!empty($data['freebaseMid'])) {
-					$categories[] = 'freebasemid-' . (substr($data['freebaseMid'], 0, 3) == '/m/' ? substr($data['freebaseMid'], 3) : $data['freebaseMid']);	// since / is not valid in category name, remove preceding /m/
-				}
+				$categories[] = 'Entertainment';
 				break;
 			case VideoPage::V_REALGRAVITY:
+				$categories[] = 'Games';
 				break;
 			default:
 				return array();
@@ -458,6 +469,9 @@ class PartnerVideoHelper {
 				else {
 					$name = $data['titleName'];					
 				}
+				break;
+			case VideoPage::V_REALGRAVITY:
+				// do nothing
 				break;
 			default:
 		}
@@ -538,15 +552,34 @@ class PartnerVideoHelper {
 		}
 
 		$video = F::build('VideoPage', array(&$title));
+		
 		if ($video instanceof VideoPage) {
 			$video->loadFromPars( $provider, $id, $metadata );
 			$video->setName( $name );
 			if ($parseOnly) {
 				if (!empty($data['titleName']) && !empty($data['year'])) {
-					printf("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n", basename($filename), $id, $data['titleName'], $data['year'], $title->getText(), self::generateTitleNameForPartnerVideo($provider, $data), $provider==VideoPage::V_SCREENPLAY ? $metadata[2] : $metadata[1], implode(',', $metadata), implode(',', $categories));
+					printf("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n", 
+						basename($filename), 
+						$id, 
+						$data['titleName'], 
+						$data['year'], 
+						$title->getText(), 
+						$title->getFullURL(),
+						self::generateTitleNameForPartnerVideo($provider, $data), 
+						$data['duration'],
+						implode(',', $metadata), 
+						implode(',', $categories));
 				}
 				else {
-					printf("%s\t%s\t%s\t%s\t%s\t%s\t%s\n", basename($filename), $id, $title->getText(), self::generateTitleNameForPartnerVideo($provider, $data), $provider==VideoPage::V_SCREENPLAY ? $metadata[2] : $metadata[1], implode(',', $metadata), implode(',', $categories));					
+					printf("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n", 
+						basename($filename), 
+						$id, 
+						$title->getText(), 
+						$title->getFullURL(),
+						self::generateTitleNameForPartnerVideo($provider, $data), 
+						$data['duration'],
+						implode(',', $metadata), 
+						implode(',', $categories));					
 				}
 			}
 			elseif ($debug) {

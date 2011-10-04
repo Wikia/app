@@ -27,6 +27,7 @@ class VideoPage extends Article {
 	const V_SCREENPLAY = 21;
 	const V_MOVIECLIPS = 22;
 	const V_REALGRAVITY = 23;
+	const V_WIKIAVIDEO = 24;
 
 	const SCREENPLAY_MEDIUM_JPEG_BITRATE_ID = 267;	// 250x200
 	const SCREENPLAY_LARGE_JPEG_BITRATE_ID = 382;	// 480x360
@@ -35,11 +36,21 @@ class VideoPage extends Article {
 	const SCREENPLAY_STANDARD_BITRATE_ID = 461;	// 360, 16:9
 	const SCREENPLAY_ENCODEFORMATCODE_JPEG = 9;
 	const SCREENPLAY_ENCODEFORMATCODE_MP4 = 20;
+	
+	const REALGRAVITY_PLAYER_AUTOSTART_ID = 'ac330d90-cb46-012e-f91c-12313d18e962';
+	const REALGRAVITY_PLAYER_NO_AUTOSTART_ID = '63541030-a4fd-012e-7c44-1231391272da';
 
 	const VIDEO_GOOGLE_ANALYTICS_ACCOUNT_ID = 'UA-24709745-1';
+	
+	const DEFAULT_OASIS_VIDEO_WIDTH = 660;
 
 	private static $SCREENPLAY_VENDOR_ID = 1893;
 	private static $SCREENPLAY_VIDEO_TYPE = '.mp4';
+	private static $JWPLAYER_DIR = '/extensions/wikia/JWPlayer/';
+	private static $JWPLAYER_JS = 'jwplayer.js';
+	private static $JWPLAYER_SWF = 'player.swf';
+	
+	private static $JWPLAYER_GOOGIMA_DATA = array('ad.tag'=>'http://ad.doubleclick.net/pfadx/instream_flash/;sz=320x240;tile=1', 'ad.position'=>'pre');
 
 	var	$mName,
 		$mVideoName,
@@ -48,7 +59,7 @@ class VideoPage extends Article {
 		$mData,
 		$mDataline;
 
-	function __construct(Title &$title){
+	function __construct(Title $title){
 		parent::__construct($title);
 	}
 
@@ -481,7 +492,7 @@ class VideoPage extends Article {
 			$width = intval( trim( $ratios[0] ) );
 		}
 
-		$code = $this->getEmbedCode($width);
+		$code = $this->getEmbedCode($width, false, false, false);
 
 		if(empty($thumb)) {
 			return "<div class=\"t{$align}\" style=\"width:{$width}px\">{$code}</div>";
@@ -601,6 +612,8 @@ EOD;
 	// recognize which supported provider we have from a given real life url
 	// extract all the necessary data from this url
 	public function parseUrl($url, $load = true) { // TODO: Consider renaming to loadFromURL
+		global $wgContLang, $wgWikiaVideoRepoPath;
+		
 		$provider = '';
 		$id = '';
 
@@ -900,7 +913,7 @@ EOD;
 		}
 
 		$text = strpos( $fixed_url, "MOVIECLIPS.COM" );
-		if ( false !== $test ) { // MovieClips
+		if ( false !== $text ) { // MovieClips
 			$provider = self::V_MOVIECLIPS;
 			$url = trim($url, '/');
 			$parsed = explode( "/", $url );
@@ -912,6 +925,21 @@ EOD;
 			}
 		}
 		
+		$text = strpos( strtolower($url), $wgWikiaVideoRepoPath );
+		if ( false !== $text ) { // Wikia Video
+			$provider = self::V_WIKIAVIDEO;
+			$url = trim($url, '/');
+			$parsed = explode( "/", $url );
+			if( is_array( $parsed ) ) {
+				$videoTitleAndNS = array_pop( $parsed );
+				$videoTitle = substr($videoTitleAndNS, strlen($wgContLang->getNsText(NS_VIDEO).':'));
+				$this->mProvider = $provider;
+				$this->mId = $videoTitle;
+				$this->mData = array();
+				return true;
+			}
+		}
+				
 		// 9/9/11 wlee: no support for Real Gravity yet
 
 		return false;
@@ -975,13 +1003,11 @@ EOD;
 				$ratio = (640 / 360);
 				if (!empty($this->mData[0])) {
 					list($width, $height) = explode('x', $this->mData[0]);
-					if ($width > 660) {
-						$scalingRatio = 660 / $width;
-						$width = 660;
-						$height = round($height * $scalingRatio);
-					}
 					$ratio = $width / $height;
 				}
+				break;
+			case self::V_WIKIAVIDEO:
+				// not applicable
 				break;
 			default:
 				$ratio = 1;
@@ -1048,13 +1074,16 @@ EOD;
 				$ratio = "640 x 360";
 				if (!empty($this->mData[0])) {
 					list($width, $height) = explode('x', $this->mData[0]);
-					if ($width > 660) {
-						$scalingRatio = 660 / $width;
-						$width = 660;
+					if ($width > self::DEFAULT_OASIS_VIDEO_WIDTH) {
+						$scalingRatio = self::DEFAULT_OASIS_VIDEO_WIDTH / $width;
+						$width = self::DEFAULT_OASIS_VIDEO_WIDTH;
 						$height = round($height * $scalingRatio);
 					}
 					$ratio = $width . ' x ' . $height;
 				}				
+				break;
+			case self::V_WIKIAVIDEO:
+				// not applicable
 				break;
 			default:
 				$ratio = "300 x 300";
@@ -1164,6 +1193,14 @@ EOD;
 				//@todo verify if exists
 				$exists = true;
 				break;
+			case self::V_WIKIAVIDEO:
+				$rvs = new RelatedVideosService();
+				$videoData = $rvs->getRelatedVideoData(0, $this->mId, true);
+				$exists = !empty($videoData['title']);
+				if ($exists) {
+					$this->mVideoName = $videoData['title'];
+				}
+				break;
 			default:
 				break;
 		}
@@ -1216,6 +1253,9 @@ EOD;
 				return 'http://movieclips.com';
 			case self::V_REALGRAVITY:
 				return 'http://www.realgravity.com';
+			case self::V_WIKIAVIDEO:
+				// not applicable
+				return;
 			default:
 				return '';
 		}
@@ -1292,6 +1332,10 @@ EOD;
 				// not provided by realgravity api
 				$url = '';
 				break;
+			case self::V_WIKIAVIDEO:
+				// not applicable
+				$url = '';
+				break;
 			default:
 				$url = '';
 				break;
@@ -1344,9 +1388,6 @@ EOD;
 			case self::V_5MIN:
 				$metadata = $this->mProvider . ',' . $this->mId . ',' . $this->mData[0];
 				break;
-			case self::V_YOUTUBE:
-				$metadata = $this->mProvider . ',' . $this->mId . ',' . $this->mData[0];
-				break;
 			case self::V_GAMEVIDEOS:
 			case self::V_VIMEO:
 			case self::V_SOUTHPARKSTUDIOS:
@@ -1360,8 +1401,12 @@ EOD;
 			case self::V_SCREENPLAY:
 			case self::V_MOVIECLIPS:
 			case self::V_REALGRAVITY:
+			case self::V_YOUTUBE:
 				$metadata = $this->mProvider . ',' . $this->mId . ',' . implode(',', $this->mData);
 				break;
+			// do not allow these providers to be saved
+			case self::V_WIKIAVIDEO:
+				return;
 			default:
 				$metadata = '';
 				break;
@@ -1430,7 +1475,6 @@ EOD;
 			);
 			$log = new LogPage( 'upload' );
 			$log->addEntry( 'overwrite', $this->mTitle, $desc );
-			$saved_text = $this->getContent();
 		}
 
 		$this->doEdit( $saved_text, $desc );
@@ -1478,9 +1522,9 @@ EOD;
 
 
 	// load the data for an empty video object (constructed from article name)
-	public function load() {
+	public function load($useMaster = false) {
 		$fname = get_class( $this ) . '::' . __FUNCTION__;
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( $useMaster ? DB_MASTER : DB_SLAVE );
 		$row = $dbr->selectRow(
 			'image',
 			'img_metadata',
@@ -1726,10 +1770,21 @@ EOD;
 	}
 
 	// return embed code for the particular video per provider
-        public function getEmbedCode( $width = 300, $autoplay = false ) {
+        public function getEmbedCode( $width = 300, $autoplay = false, $useJWPlayer = false, $asJSON = false ) {
+		// init jwplayer vars
+		$jwplayerData = array();
+		$jwplayerData['jwplayerjs'] = self::$JWPLAYER_DIR . self::$JWPLAYER_JS;
+		$jwplayerData['player'] = self::$JWPLAYER_DIR . self::$JWPLAYER_SWF;
+		$jwplayerData['playerId'] = 'player-'.$this->mId;
+		$jwplayerData['plugins'] = array('gapro-1'=>array('accountid'=>self::VIDEO_GOOGLE_ANALYTICS_ACCOUNT_ID));
+		
                 $embed = "";
 		$code = 'standard';
-		$height = round( $width / $this->getRatio() );
+		if ($this->getRatio()) {
+			// certain providers may not have width and height
+			// defined, like V_WIKIAVIDEO. This is ok.
+			$height = round( $width / $this->getRatio() );
+		}
                 switch( $this->mProvider ) {
                         case self::V_METACAFE:
 				$url = 'http://www.metacafe.com/fplayer/' . $this->mId . '/' . $this->mData[0];
@@ -1739,6 +1794,10 @@ EOD;
                                 break;
                         case self::V_YOUTUBE:
 				$url = 'http://www.youtube.com/v/' . $this->mId . '&enablejsapi=1&fs=1' . ($autoplay ? '&autoplay=1' : '') . ( !empty( $this->mData[0] ) ? '&hd=1' : '');
+				if ($useJWPlayer) {
+					$code = 'custom';
+					$jwplayerData['file'] = $url;
+				}
 				break;
 			case self::V_SEVENLOAD:
 				$code = 'custom';
@@ -1784,157 +1843,157 @@ EOD;
 					<param name="allowFullScreen" value="true" />
 					<param name="movie" value="http://www.gametrailers.com/remote_wrap.php?mid='.$this->mId.'"/>
 					<param name="quality" value="high" />
-					<embed src="http://www.gametrailers.com/remote_wrap.php?mid='.$this->mId.'" swLiveConnect="true" name="gtembed" align="middle" allowScriptAccess="sameDomain" allowFullScreen="true" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" width="'.$width.'" height="'.$height.'"></embed>
+					<embed src="http://www.gametrailers.com/remote_wrap.php?mid='.$this->mId.'" swLiveConnect="true" name="gtembed" align="middle" allowScriptAccess="sameDomain" allowFullScreen="true" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" width="'.$width.'" height="'.$height.'"></embed> ]
 				</object>' ;
 				break;
 			case self::V_HULU:
 				$url = $this->getUrlToEmbed();
 				break;
-			case self::V_SCREENPLAY:
-				$jwplayerdir = '/extensions/wikia/JWPlayer/';
-				$player = $jwplayerdir . 'player.swf';
-				$swfobject = $jwplayerdir . 'swfobject.js';
-				$jwplayerjs = $jwplayerdir . 'jwplayer.js';
-				$file = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid='.$this->mId.'&bitrateid='.$this->mData[0].'&vendorid='.self::$SCREENPLAY_VENDOR_ID.'&type='.self::$SCREENPLAY_VIDEO_TYPE;
-				$hdfile = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid='.$this->mId.'&bitrateid='.self::SCREENPLAY_HIGHDEF_BITRATE_ID.'&vendorid='.self::$SCREENPLAY_VENDOR_ID.'&type='.self::$SCREENPLAY_VIDEO_TYPE;
+			case self::V_SCREENPLAY:				
+				$useJWPlayer = true;	// always use JW Player
+				$jwplayerData['file'] = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid='.$this->mId.'&bitrateid='.$this->mData[0].'&vendorid='.self::$SCREENPLAY_VENDOR_ID.'&type='.self::$SCREENPLAY_VIDEO_TYPE;
+				$jwplayerData['hdfile'] = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid='.$this->mId.'&bitrateid='.self::SCREENPLAY_HIGHDEF_BITRATE_ID.'&vendorid='.self::$SCREENPLAY_VENDOR_ID.'&type='.self::$SCREENPLAY_VIDEO_TYPE;
 				$jpegBitrateId = !empty($this->mData[3]) ? $this->mData[3] : self::SCREENPLAY_MEDIUM_JPEG_BITRATE_ID;
-				$image = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid='.$this->mId.'&bitrateid='. $jpegBitrateId .'&vendorid='.self::$SCREENPLAY_VENDOR_ID.'&type=.jpg';
+				$jwplayerData['image'] = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid='.$this->mId.'&bitrateid='. $jpegBitrateId .'&vendorid='.self::$SCREENPLAY_VENDOR_ID.'&type=.jpg';
+				$jwplayerData['provider'] = 'video';
 
-				$plugins = array('gapro-1'=>array('accountid'=>self::VIDEO_GOOGLE_ANALYTICS_ACCOUNT_ID));
 				if ($this->mData[1]) {
-					$plugins['hd-1'] = array('file'=>urlencode($hdfile), 'state'=>'false');  // when player embedded in action=render page, the file URL is automatically linkified. prevent this behavior
+					$jwplayerData['plugins']['hd-1'] = array('file'=>$jwplayerData['hdfile'], 'state'=>'false');  // when player embedded in action=render page, the file URL is automatically linkified. prevent this behavior
 				}
-
-				// html embed code
-//				$flashvars = 'file='.urlencode($file).'&image='.urlencode($image).'&provider=video&type=video&stretching=fill';		//@todo add title, description variables
-//				$embed = '<object
-//				    width="'.$width.'"
-//				    height="'.$height.'">
-//				    <param name="movie" value="'.$player.'">
-//				    <param name="allowfullscreen" value="true">
-//				    <param name="allowscriptaccess" value="always">
-//				    <param name="wmode" value="opaque">
-//				    <param name="flashvars" value="file='.urlencode($file).'&image='.urlencode($image).'&provider=video&type=video&stretching=fill">
-//				    <embed
-//				      src="'.$player.'"
-//				      width="'.$width.'"
-//				      height="'.$height.'"
-//				      allowfullscreen="true"
-//				      allowscriptaccess="always"
-//				      wmode="opaque"
-//				      flashvars="'.$flashvars.'"
-//				    />
-//				</object>';
-				//@todo add title, description variables
-				//@todo show object in Add Video flow. show swfobject in article mode
-
-				$playerId = 'player-'.$this->mId;
-
-				// jwplayer embed code
-				$embed .= '<div id="'.$playerId.'"></div>'
-					. '<script type="text/javascript" src="'.$jwplayerjs.'"></script>'
-					. ' <script type="text/javascript">'
-					. 'jwplayer("'.$playerId.'").setup({'
-					. '"flashplayer": "'.$player.'",'
-					. '"id": "'.$playerId.'",'
-					. '"width": "'.$width.'",'
-					. '"height": "'.$height.'",'
-					. '"file": decodeURIComponent("'.urlencode($file).'"),'   // when player embedded in action=render page, the file URL is automatically linkified. prevent this behavior
-					. '"image": decodeURIComponent("'.urlencode($image).'"),' // when player embedded in action=render page, the image URL is automatically linkified. prevent this behavior
-					. '"provider": "video",'
-					. '"stretching": "fill",'
-					. '"controlbar.position": "bottom",';
-				$embed .= '"plugins": {';
-				$pluginTexts = array();
-				foreach ($plugins as $plugin=>$options) {
-					$pluginText = '"'.$plugin.'": {';
-					$pluginOptionTexts = array();
-					foreach ($options as $key=>$val) {
-						$text = '"'.$key.'": ';
-						if ($key == 'file') {
-							$text .= 'decodeURIComponent("'.$val.'")';  // when player embedded in action=render page, the file URL is automatically linkified. prevent this behavior
-						}
-						else {
-							$text .= '"'.$val.'"';
-						}
-						$pluginOptionTexts[] = $text;
-					}
-					$pluginText .= implode(',', $pluginOptionTexts);
-					$pluginText .= '}';
-					$pluginTexts[] = $pluginText;
-				}
-				$embed .= implode(',', $pluginTexts)
-					. '}'	// end plugins
-					. '});'
-					. '</script>';
-
-				/*
-				// swfobject code
-				$embed = '<div id="'.$playerId.'"></div>'
-					. '<script type="text/javascript" src="'.$swfobject.'"></script>'
-					. ' <script type="text/javascript">'
-					. ' var so = new SWFObject("'.$player.'","'.$playerId.'","'.$width.'","'.$height.'","9");'
-					. ' so.addParam("allowfullscreen","true");'
-					. ' so.addParam("allowscriptaccess","always");'
-					. ' so.addParam("wmode", "opaque");'
-					. ' so.addVariable("file", "'.urlencode($file).'");'
-					. ' so.addVariable("image","'.urlencode($image).'");'
-					. ' so.addVariable("type","video");'
-					. ' so.addVariable("provider","video");'
-					. ' so.addVariable("stretching", "fill");';
-				if (sizeof($plugins)) {
-					$embed .= ' so.addVariable("plugins", "'.implode(',', array_keys($plugins)).'");';
-					foreach ($plugins as $plugin=>$options) {
-						foreach ($options as $key=>$val) {
-							$embed .= ' so.addVariable("'.$plugin.'.'.$key.'", "'.$val.'");';
-						}
-					}
-				}
-				$embed .= ' so.write("'.$playerId.'");'
-					. ' </script>';
-				*/
+				
+				// ads
+				$jwplayerData['plugins']['googima'] = self::$JWPLAYER_GOOGIMA_DATA;
 
 				$code = 'custom';
 				break;
 			case self::V_MOVIECLIPS:
-				$url = 'http://movieclips.com/e/' . $this->mId . '/';
+				$code = 'custom';
+				$embed = '<object width="'.$width.'" height="'.$height.'" type="application/x-shockwave-flash" data="http://static.movieclips.com/embedplayer.swf?config=http://config.movieclips.com/player/config/embed/'.$this->mId.'/%3Floc%3DPL&endpoint=http://movieclips.com/api/v1/player/test/action/&start=0&v=1.0.15" style="display:block; overflow:hidden;">
+					<param name="movie" value="http://static.movieclips.com/embedplayer.swf?config=http://config.movieclips.com/player/config/embed/'.$this->mId.'/%3Floc%3DPL&endpoint=http://movieclips.com/api/v1/player/test/action/&start=0&v=1.0.15" />
+					<param name="wmode" value="transparent" />
+					<param name="allowscriptaccess" value="always" />
+					<param name="allowfullscreen" value="true" />
+					<param name="FlashVars" value="autoPlay='.($autoplay ? 'true' : 'false').'" />
+					<embed src="http://static.movieclips.com/embedplayer.swf?config=http://config.movieclips.com/player/config/embed/'.$this->mId.'/%3Floc%3DPL&endpoint=http://movieclips.com/api/v1/player/test/action/&start=0&v=1.0.15" type="application/x-shockwave-flash" width="'.$width.'" height="'.$height.'" wmode="transparent" allowscriptaccess="always" allowfullscreen="true" FlashVars="autoPlay='.($autoplay ? 'true' : 'false').'"></embed>
+					</object>';
 				break;
 			case self::V_REALGRAVITY:
-				$width = ''; $height = '';
+				// original aspect ratio may be larger than Oasis
+				// can support. Downscale if necessary.
 				if (!empty($this->mData[0])) {
-					list($width, $height) = explode('x', $this->mData[0]);
-					if ($width > 660) {
-						$scalingRatio = 660 / $width;
-						$width = 660;
-						$height = round($height * $scalingRatio);
+					list($origWidth, $origHeight) = explode('x', $this->mData[0]);
+					if ($origWidth > self::DEFAULT_OASIS_VIDEO_WIDTH) {
+						$width = self::DEFAULT_OASIS_VIDEO_WIDTH;
+						$height = round($width / $this->getRatio());
 					}
-					$ratio = $width / $height;
-				}				
+				}	
+				
+				$playerId = $autoplay ? self::REALGRAVITY_PLAYER_AUTOSTART_ID : self::REALGRAVITY_PLAYER_NO_AUTOSTART_ID;
+
 				$embed = 
-					'<object id="rg_player_63541030-a4fd-012e-7c44-1231391272da" name="rg_player_63541030-a4fd-012e-7c44-1231391272da" type="application/x-shockwave-flash"
-					    width="'.$width.'" height="'.$height.'" classid="clsid:63541030-a4fd-012e-7c44-1231391272da" style="visibility: visible;"
+					'<object id="rg_player_'.$playerId.'" name="rg_player_'.$playerId.'" type="application/x-shockwave-flash"
+					    width="'.$width.'" height="'.$height.'" classid="clsid:'.$playerId.'" style="visibility: visible;"
 					    data="http://anomaly.realgravity.com/flash/player.swf">
 					  <param name="allowscriptaccess" value="always"></param>
 					  <param name="allowNetworking" value="all"></param>
 					  <param name="menu" value="false"></param>
 					  <param name="wmode" value="transparent"></param>
 					  <param name="allowFullScreen" value="true"></param>
-					  <param name="flashvars" value="config=http://mediacast.realgravity.com/vs/api/playerxml/63541030-a4fd-012e-7c44-1231391272da"></param>
-					  <embed id="63541030-a4fd-012e-7c44-1231391272da" name="63541030-a4fd-012e-7c44-1231391272da" width="'.$width.'" height="'.$height.'"
+					  <param name="flashvars" value="&config=http://mediacast.realgravity.com/vs/api/playerxml/'.$playerId.'"></param>
+					  <embed id="'.$playerId.'" name="'.$playerId.'" width="'.$width.'" height="'.$height.'"
 					    allowNetworking="all" allowscriptaccess="always" allowfullscreen="true" wmode="transparent"
-					    flashvars="config=http://mediacast.realgravity.com/vs/api/playerxml/63541030-a4fd-012e-7c44-1231391272da?video_guid='.$this->mId.'"
+					    flashvars="config=http://mediacast.realgravity.com/vs/api/playerxml/'.$playerId.'?video_guid='.$this->mId.'"
 					    src="http://anomaly.realgravity.com/flash/player.swf"></embed>
 					</object>';
 				$code = 'custom';
 				break;
+			case self::V_WIKIAVIDEO:
+				// load the real Video Page referred to by this object,
+				// and get the embed code from there
+				$rvs = new RelatedVideosService();
+				$videoData = $rvs->getRelatedVideoData(0, $this->mId, true, $width);
+				$embed = $videoData['embedCode'];
+				return $embed;
+				break;
 			default: break;
 		}
+
+		$sJSON = '';
+
 		if( 'custom' != $code ) {
 			$embed = "<embed src=\"{$url}\" width=\"{$width}\" height=\"{$height}\" wmode=\"transparent\" allowScriptAccess=\"always\" allowfullscreen=\"true\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\"> </embed>";
 		}
-                return $embed;
-        }
+		elseif ($useJWPlayer && $this->isJWPlayerSupported()) {
+			// jwplayer embed code
+			$sJSON = '{'
+				. '"flashplayer": "'.$jwplayerData['player'].'",'
+				. '"id": "'.$jwplayerData['playerId'].'",'
+				. '"width": "'.$width.'",'
+				. '"height": "'.$height.'",'
+				. '"file": ' . $this->initJWPlayerURL($jwplayerData['file'], $asJSON) . ','
+				. (!empty($jwplayerData['image']) ? '"image": ' . $this->initJWPlayerURL($jwplayerData['image'], $asJSON) . ',' : '')
+				. (!empty($jwplayerData['provider']) ? '"provider": "' . $jwplayerData['provider'] . '",' : '')
+				. '"autostart": "' . ($autoplay ? 'true' : 'false') . '",'
+				. '"stretching": "fill",'
+				. '"controlbar.position": "over",';
+			$sJSON .= '"plugins": {';
+			$pluginTexts = array();
+			foreach ($jwplayerData['plugins'] as $plugin=>$options) {
+				$pluginText = '"'.$plugin.'": {';
+				$pluginOptionTexts = array();
+				foreach ($options as $key=>$val) {
+					$text = '"'.$key.'": ';
+					if ($key == 'file') {
+						$text .= $this->initJWPlayerURL($val, $asJSON);
+					}
+					else {
+						$text .= '"'.$val.'"';
+					}
+					$pluginOptionTexts[] = $text;
+				}
+				$pluginText .= implode(',', $pluginOptionTexts);
+				$pluginText .= '}';
+				$pluginTexts[] = $pluginText;
+			}
+			$sJSON .= implode(',', $pluginTexts)
+				. '}'	// end plugins
+				. '}';
+			
+			$embed  = '<div id="'.$jwplayerData['playerId'].'"></div>'
+				. '<script type="text/javascript" src="'.$jwplayerData['jwplayerjs'].'"></script>'
+				. ' <script type="text/javascript">'
+				. 'jwplayer("'.$jwplayerData['playerId'].'").setup('.$sJSON.');'
+				. '</script>';
+		}
 
+                return $asJSON ? $sJSON : $embed;
+        }
+	
+	protected function initJWPlayerURL($url, $useJSON) {
+		if (!empty($useJSON)) {
+			return '"' . $url . '"';
+		}
+		else {
+			return 'decodeURIComponent("' . urlencode($url) . '")';  // when player embedded in action=render page, the file URL is automatically linkified. prevent this behavior
+		}
+	}
+
+	public function isJWPlayerSupported(){
+		switch( $this->mProvider ) {
+			case self::V_YOUTUBE:
+			case self::V_SCREENPLAY:
+				return true;
+			default:
+				return false;
+		}
+	}
+
+	public function getJWPlayerJSON( $width = 300, $autoplay = false ){
+		if ( $this->isJWPlayerSupported() ){
+			$JSON = $this->getEmbedCode( $width, $autoplay, true, true );
+			return json_decode( $JSON, true );
+		}
+	}
 
 	public function getThumbnailParams( $width ){
 
@@ -1998,6 +2057,9 @@ EOD;
 			case self::V_REALGRAVITY:
 				$thumb = $this->mData[1];
 				break;
+			case self::V_WIKIAVIDEO:
+				// not applicable
+				break;
 			default:
 				break;
 		}
@@ -2060,6 +2122,88 @@ EOD;
 		$s = '<div id="VideoPageInfo">' . wfMsgExt( 'wikiavideo-details', array( 'parsemag' ), $link, $ratio, $purl, $provider ) . '</div>';
 		$wgOut->addHTML( $s );
 	}
+	
+	function getDuration() {
+		switch ($this->mProvider) {
+			case self::V_SCREENPLAY:
+				if (sizeof($this->mData) >= 3) {
+					return $this->mData[2];
+				}
+				break;
+			case self::V_MOVIECLIPS:
+				if (sizeof($this->mData) >= 2) {
+					return $this->mData[1];
+				}
+				break;
+			case self::V_REALGRAVITY:
+				if (sizeof($this->mData) >= 3) {
+					return $this->mData[2];
+				}
+				break;
+			case self::V_YOUTUBE:
+				if (sizeof($this->mData) >= 2) {	// duration could be last element in data
+					$duration = array_pop($this->mData);
+				}
+				if (!empty($duration) && is_numeric($duration) && $duration > 0) {
+					return $duration;
+				}
+				else {	// get duration from YouTube API
+					// We are using a non-standard version of the API for 
+					// getting details for a single video. This is because this
+					// version returns a proper RSS feed. YouTube's recommended
+					// version (https://gdata.youtube.com/feeds/api/videos/<id>) does not return a proper RSS feed, which
+					// means we can't use SimplePie to parse it!
+					$file = @Http::get( "http://gdata.youtube.com/feeds/videos?vq=" . $this->mId, FILE_TEXT );
+					if ($file) {
+						$feed = new SimplePie();
+						$feed->set_raw_data($file);
+						$feed->init();
+						$feed->handle_content_type();
+						if ($feed->error()) {
+							return '';
+						}
+
+						foreach ($feed->get_items() as $key=>$item) {
+							if ($enclosure = $item->get_enclosure()) {
+								$duration = $enclosure->get_duration();
+								// save data
+								$this->mData[] = $duration;
+								$this->save();
+								return $duration;
+							}
+						}
+					}
+				}
+				break;
+			default:
+				// duration unknown
+				
+		}
+		
+		return null;
+	}
+	
+	function getDescription() {
+		switch ($this->mProvider) {
+			case self::V_SCREENPLAY:
+				// no description
+				break;
+			case self::V_MOVIECLIPS:
+				if (sizeof($this->mData) >= 3) {
+					return $this->mData[2];
+				}
+				break;
+			case self::V_REALGRAVITY:
+				if (sizeof($this->mData) >= 4) {
+					return $this->mData[3];
+				} 
+				break;
+			default:
+		}
+		
+		return null;
+	}
+	
 }
 
 global $wgWikiaVideoProviders;
@@ -2086,6 +2230,7 @@ $wgWikiaVideoProviders = array(
 		VideoPage::V_SCREENPLAY => 'Screenplay, Inc.',
 		VideoPage::V_MOVIECLIPS => 'MovieClips Inc.',
 		VideoPage::V_REALGRAVITY => 'RealGravity'
+		// don't need V_WIKIAVIDEO
 		);
 
 class VideoHistoryList {

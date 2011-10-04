@@ -53,7 +53,7 @@ $wgAutoloadClasses['SponsorshipDashboardOutputTable'] = $dir . 'output/SDOutputT
 $wgAutoloadClasses['SponsorshipDashboardOutputCSV'] = $dir . 'output/SDOutputCSV.class.php';
 
 // Ajax
-$wgAutoloadClasses[ 'SponsorshipDashboardAjax' ]		= $dir . 'SponsorshipDashboardAjax.class.php';
+$wgAutoloadClasses[ 'SponsorshipDashboardAjax' ] = $dir . 'SponsorshipDashboardAjax.class.php';
 
 $wgAutoloadClasses['gapi'] = $dir . '../../../lib/gapi/gapi.class.php';
 

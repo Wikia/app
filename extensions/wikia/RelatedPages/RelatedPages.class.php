@@ -2,20 +2,21 @@
 
 class RelatedPages {
 
-	private $pages = null;
-	private $categories = null;
-	private $categoryCacheTTL = 8; // in hours
-	private $categoryRankCacheTTL = 24; // in hours
-	private $categoriesLimit = 6;
-	private $pageSectionNo = 4; // number of section before which module should be injected (for long articles)
-	private $isRendered = false;
-	static private $instance = null;
+	protected $pages = null;
+	protected $categories = null;
+	protected $categoryCacheTTL = 8; // in hours
+	protected $categoryRankCacheTTL = 24; // in hours
+	protected $categoriesLimit = 6;
+	protected $pageSectionNo = 4; // number of section before which module should be injected (for long articles)
+	protected $isRendered = false;
+	protected $memcKeyPrefix = '';
+	static protected $instance = null;
 
-	private function __construct( ) {
+	protected function __construct( ) {
 		$this->categories = array();
 	}
 
-	private function __clone() {
+	protected function __clone() {
 	}
 
 	/**
@@ -23,10 +24,10 @@ class RelatedPages {
 	 * @return RelatedPages
 	 */
 	static public function getInstance() {
-		if(self::$instance == null) {
-			self::$instance = new RelatedPages();
+		if( RelatedPages::$instance == null ) {
+			RelatedPages::$instance = new RelatedPages();
 		}
-		return self::$instance;
+		return RelatedPages::$instance;
 	}
 
 	public function setCategories( $categories ) {
@@ -39,6 +40,18 @@ class RelatedPages {
 
 	public function reset() {
 		$this->pages = null;
+	}
+
+	public function setData( $data ){
+		$this->pages = $data;
+	}
+
+	public function getData(){
+		return $this->pages;
+	}
+
+	public function pushData( $data ){
+		$this->pages[] = $data;
 	}
 
 	public function isRendered() {
@@ -61,20 +74,19 @@ class RelatedPages {
 	public function get( $articleId, $limit = 3 ) {
 		global $wgContentNamespaces, $wgEnableRelatedPagesUnionSelectQueries, $wgUser;
 		wfProfileIn( __METHOD__ );
+		$cs = new CategoriesService();
 
 		// prevent from calling this function more than one, use reset() to omit
-		if( is_array( $this->pages ) ) {
+		if( is_array( $this->getData() ) ) {
 			wfProfileOut( __METHOD__ );
-			return $this->pages;
+			return $this->getData();
 		}
 
-		$this->pages = array();
+		$this->setData( array() );
 		$categories = $this->getCategories();
-
 		if ( count($categories) > 0 ) {
 			//RT#80681/RT#139837: apply category blacklist
 			$categories = CategoriesService::filterOutBlacklistedCategories($categories);
-
 			$categories = $this->getCategoriesByRank( $categories );
 
 			if( count( $categories ) > $this->categoriesLimit ) {
@@ -83,57 +95,68 @@ class RelatedPages {
 			}
 
 			// limit * 2 - get more pages (some can be filtered out - RT #72703)
-			$pages = $this->getPagesForCategories($articleId, $limit * 2, $categories);
+			$pages = $this->getPagesForCategories( $articleId, $limit * 2, $categories );
 
-			//use text snippets for mobile skins
-			if( !in_array( get_class( $wgUser->getSkin() ), array( 'SkinWikiaphone', 'SkinWikiaApp' ) ) ){
-				// ImageServing extension enabled, get images
-				$imageServing = new ImageServing( array_keys($pages), 200, array( 'w' => 2, 'h' => 1 ) );
-				$images = $imageServing->getImages(1); // get just one image per article
+			$this->afterGet( $pages, $limit );
+		}
 
-				// TMP: always remove last article to get a text snippeting working example
-				// macbre: removed as requested by Angie
-				//$images = array_slice($images, 0, $limit-1, true);
+		wfProfileOut( __METHOD__ );
+		return $this->getData();
+	}
 
-				foreach( $pages as $pageId => $data ) {
-					if( isset( $images[$pageId] ) ) {
-						$image = $images[$pageId][0];
-						$data['imgUrl'] = $image['url'];
+	protected function afterGet( $pages, $limit ){
+		
+		global $wgContentNamespaces, $wgEnableRelatedPagesUnionSelectQueries, $wgUser;
+		wfProfileIn( __METHOD__ );
+		////use text snippets for mobile skins
+		
+		if( !in_array( get_class( $wgUser->getSkin() ), array( 'SkinWikiaphone', 'SkinWikiaApp' ) ) ){
 
-						$this->pages[] = $data;
-					}
-					else {
-						// no images, get a text snippet
-						$data['text'] = $this->getArticleSnippet( $pageId );
+			
+			// ImageServing extension enabled, get images
+			$imageServing = new ImageServing( array_keys($pages), 200, array( 'w' => 2, 'h' => 1 ) );
+			$images = $imageServing->getImages(1); // get just one image per article
 
-						if ($data['text'] != '') {
-							$this->pages[] = $data;
-						}
-					}
+			// TMP: always remove last article to get a text snippeting working example
+			// macbre: removed as requested by Angie
+			//$images = array_slice($images, 0, $limit-1, true);
+			
+			foreach( $pages as $pageId => $data ) {
+				if( isset( $images[$pageId] ) ) {
+					$image = $images[$pageId][0];
+					$data['imgUrl'] = $image['url'];
 
-					if (count($this->pages) >= $limit) {
-						break;
-					}
+					$this->pushData( $data );
 				}
-			}
-			else {
-				// ImageServing not enabled, just get text snippets for all articles
-				foreach( $pages as $pageId => &$data ) {
+				else {
+					// no images, get a text snippet
 					$data['text'] = $this->getArticleSnippet( $pageId );
 
 					if ($data['text'] != '') {
-						$this->pages[] = $data;
-					}
-
-					if (count($this->pages) >= $limit) {
-						break;
+						$this->pushData( $data );
 					}
 				}
-			}
-		} // if $categories
 
+				if (count($this->getData()) >= $limit) {
+					break;
+				}
+			}
+		} else {
+
+			// ImageServing not enabled, just get text snippets for all articles
+			foreach( $pages as $pageId => &$data ) {
+				$data['text'] = $this->getArticleSnippet( $pageId );
+
+				if ($data['text'] != '') {
+					$this->pushData( $data );
+				}
+
+				if (count($this->getData()) >= $limit) {
+					break;
+				}
+			}
+		}
 		wfProfileOut( __METHOD__ );
-		return $this->pages;
 	}
 
 	/**
@@ -141,11 +164,16 @@ class RelatedPages {
 	 * @param string $category category name
 	 * @return array list of page ids
 	 */
-	private function getPagesForCategory( $category ) {
+	protected function getPagesForCategory( $category ) {
 		global $wgMemc;
 		wfProfileIn( __METHOD__ );
 
-		$cacheKey = wfMemcKey( __METHOD__, $category );
+		$cacheKey = wfMemcKey( $this->memcKeyPrefix, __METHOD__, $category );
+		if ( empty( $this->memcKeyPrefix ) ){
+			$cacheKey = wfMemcKey( __METHOD__, $category);
+		} else {
+			$cacheKey = wfMemcKey( $this->memcKeyPrefix, __METHOD__, $category);
+		}
 		$cache = $wgMemc->get( $cacheKey );
 		if( is_array($cache) ) {
 			wfProfileOut( __METHOD__ );
@@ -171,7 +199,7 @@ class RelatedPages {
 		}
 
 		$wgMemc->set( $cacheKey, $pages, ( $this->categoryCacheTTL * 3600 ) );
-
+		
 		wfProfileOut( __METHOD__ );
 		return $pages;
 	}
@@ -180,12 +208,17 @@ class RelatedPages {
 	* get pages that belong to a list of categories
 	* @author Owen
 	*/
-	private function getPagesForCategories($articleId, $limit, Array $categories) {
+	protected function getPagesForCategories($articleId, $limit, Array $categories) {
 		global $wgMemc, $wgContentNamespaces;
 
 		wfProfileIn(__METHOD__);
-		$cacheKey = wfMemcKey(__METHOD__, $articleId);
-		$cache = $wgMemc->get($cacheKey);
+		if ( empty( $this->memcKeyPrefix ) ){
+			$cacheKey = wfMemcKey( __METHOD__, $articleId);
+		} else {
+			$cacheKey = wfMemcKey( $this->memcKeyPrefix, __METHOD__, $articleId);
+		}
+		$cache =  $wgMemc->get($cacheKey);
+		
 		if (is_array($cache)) {
 			wfProfileOut(__METHOD__);
 			return $cache;
@@ -205,15 +238,15 @@ class RelatedPages {
 		$innerSQL = $dbr->selectSQLText(
 			$tables,
 			array( "cl_from AS page_id"),
-			array( "cl_to IN ( " . $dbr->makeList($categories) . " )"),
+			array( "cl_to IN ( " . $dbr->makeList( $categories ) . " )"),
 			__METHOD__,
 			array(),
 			$joinSql
 		);
 
-		$sql = "SELECT page_id, count(*) c FROM ( $innerSQL ) i WHERE page_id != $articleId GROUP BY page_id ORDER BY c desc LIMIT 6";
+		$sql = "SELECT page_id, count(*) c FROM ( $innerSQL ) i WHERE page_id != $articleId GROUP BY page_id ORDER BY c desc LIMIT $limit";
 		$res = $dbr->query($sql, __METHOD__);
-		while ($row = $dbr->fetchObject($res)) {
+		while ( $row = $dbr->fetchObject( $res ) ) {
 			$pageId = $row->page_id;
 			$title = Title::newFromId($pageId);
 
@@ -227,14 +260,13 @@ class RelatedPages {
 				);
 			}
 		}
-
+		
 		$wgMemc->set($cacheKey, $pages, ( $this->categoryCacheTTL * 3600));
-
 		wfProfileOut(__METHOD__);
 		return $pages;
 	}
 
-	private function getPageJoinSql( $dbr, &$tables ) {
+	protected function getPageJoinSql( $dbr, &$tables ) {
 		global $wgContentNamespaces;
 		wfProfileIn( __METHOD__ );
 
@@ -266,7 +298,7 @@ class RelatedPages {
 	 * get categories sorted by rank
 	 * @param array $categories
 	 */
-	private function getCategoriesByRank( Array $categories ) {
+	protected function getCategoriesByRank( Array $categories ) {
 		$categoryRank = $this->getCategoryRank();
 
 		$results = array();
@@ -284,11 +316,15 @@ class RelatedPages {
 	 * get category rank, based on number of articles assigned
 	 * @return array
 	 */
-	private function getCategoryRank() {
+	protected function getCategoryRank() {
 		global $wgMemc;
 		wfProfileIn( __METHOD__ );
 
-		$cacheKey = wfMemcKey( __METHOD__ );
+		if ( empty( $this->memcKeyPrefix ) ){
+			$cacheKey = wfMemcKey( __METHOD__);
+		} else {
+			$cacheKey = wfMemcKey( $this->memcKeyPrefix, __METHOD__);
+		}
 		$cache = $wgMemc->get( $cacheKey );
 		if( is_array($cache) ) {
 			wfProfileOut( __METHOD__ );
@@ -336,7 +372,7 @@ class RelatedPages {
 	}
 
 	public static function onOutputPageMakeCategoryLinks( $outputPage, $categories, $categoryLinks ) {
-		RelatedPages::getInstance()->setCategories( $categories );
+		self::getInstance()->setCategories( $categories );
 		return true;
 	}
 

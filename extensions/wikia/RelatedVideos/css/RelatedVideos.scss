@@ -1,0 +1,306 @@
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/gradient";
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../skins/oasis/css/mixins/opacity";
+
+$color-inactive-button: darken($color-secondary-button, 50%);
+@if lightness($color-page) < 50 {
+	$color-inactive-button: lighten($color-secondary-button, 50%);
+}
+
+$color-related-videos-background: darken($color-page, 20%);
+@if lightness($color-page) < 50 {
+	$color-inactive-button: lighten($color-page, 20%);
+}
+
+.RelatedVideosPlaceholder {
+	@include clearfix;
+	height: 230px;
+	display: inline-block;
+	width: 660px;
+	background-image: url(/extensions/wikia/RelatedVideos/images/mock1.png); /* wgCdnStylePath */
+}
+
+.RelatedVideos {
+	@include clearfix;
+	display: inline-block;
+	width: 660px;
+	height: 230px;
+	margin-top: 55px;
+	margin-bottom: 20px;
+
+	.messageHolder {
+		display: none;
+	}
+
+	img.sprite {
+		background-color: transparent;
+		background-repeat: no-repeat;
+		&.addRelatedVideo {
+			background-image: url(/extensions/wikia/RelatedVideos/images/AddVideo_Icon.png);  /* wgCdnStylePath */
+			height: 22px;
+			width: 30px;
+		}
+		&.premiumVideo {
+			height: 16px;
+			width: 75px;
+			margin-top: 3px;
+			background-image: url(/extensions/wikia/RelatedVideos/images/WikiVideo_Sprite.png);  /* wgCdnStylePath */
+			@if lightness($color-page) < 50 {
+				background-position: 0px -19px;
+			} @else {
+				background-position: 0px 0px;
+			}
+		}
+	}
+
+	.RVHeader {
+		border: 1px solid $color-page-border;
+		height: 38px;
+		em {
+			font-style: normal;
+		}
+		.tally {
+			float: left;
+			margin: 5px 0 5px 10px;
+			display: inline-block;
+		}
+		.button {
+			margin-top: 8px;
+			display: inline-block;
+			float: left;
+			&.secondary{
+				float: right;
+				margin-right:5px;
+			}
+		}
+	}
+
+	.RVBody {
+		height: 200px;
+		.button {
+			&.secondary {
+				@include linear-gradient($color-secondary-button, top, $color-secondary-button-highlight, 35%, $color-secondary-button, 65%);
+				&:hover {
+					@include linear-gradient($color-secondary-button, top, $color-secondary-button, 5%, $color-secondary-button, 50%);
+				}
+			}
+			height: 90px;
+			width: 15px;
+			position: absolute;
+			margin-top: 15px;
+			.chevron {
+				border-color: transparent $color-buttons transparent transparent;
+				border-width: 11px;
+				margin: 35px -9px;
+			}
+			&.left{
+				left: 638px;
+				.chevron {
+					border-color: transparent transparent transparent $color-buttons;
+					margin: 35px 4px;
+				}
+				&.inactive{
+					img {
+						border-color: transparent transparent transparent $color-inactive-button;
+					}
+				}
+			}
+			&.inactive{
+				@include opacity(50);
+				@include linear-gradient($color-secondary-button, left, $color-secondary-button, 5%, $color-secondary-button, 50%);
+				cursor: auto;
+				img {
+					border-color: transparent $color-inactive-button transparent transparent;
+				}
+			}
+
+		}
+		.wrapper {
+			position: absolute;
+			width: 580px;
+			left: 50px;
+			overflow: hidden;
+			.container{
+				width: 500000px;
+				position: relative;
+				div.item {
+					vertical-align: top;
+					padding: 5px;
+					height: 175px;
+					width: 160px;
+					margin: 11px;
+					display: inline-block;
+					float: left;
+					position: relative;
+					.description{
+						width: 160px;
+						line-height: 15px;
+						font-size: 12px;
+						font-weight: bold;
+						padding-top: 8px;
+						max-height: 30px;
+						overflow: hidden;
+						margin-left: 2px;
+					}
+					a.video-thumbnail{
+						display: block;
+						width: 160px;
+						height: 90px;
+						overflow: hidden;
+						position: relative;
+						.timer {
+							position: absolute;
+							right: 3px;
+							bottom: 3px;
+							color: white;
+							font-size: 11px;
+							line-height: 14px;
+							background-color: black;
+							padding: 2px 4px;
+							@include border-radius(4px);
+						}
+						.playButton {
+							@include opacity(30);
+							width: 160px;
+							height: 90px;
+							position: absolute;
+							z-index: 100;
+							background-image: url(/extensions/wikia/RelatedVideos/images/PlayBtn_100Alpha.png); /* wgCdnStylePath */
+							background-repeat:no-repeat;
+							background-position:center;
+							&:hover {
+								@include opacity(75);
+							}
+						}
+						&:hover {
+								text-decoration: none;
+							}
+					}
+					.info {
+						font-size: 11px;
+						margin-left: 2px;
+						line-height: 14px;
+						margin-top: 2px;
+
+					}
+					.options {
+						float: left;
+						position: absolute;
+						left: 3px;
+						bottom: 0px;
+						font-size: 11px;
+						margin-left: 2px;
+						display: none;
+						img {
+							margin-top: -9px;
+							margin-right:5px;
+							width: 11px;
+							height: 14px;
+							background-image: url(/extensions/wikia/RelatedVideos/images/TrashCan.png); /* wgCdnStylePath */
+						}
+					}
+					&:hover{
+						border: 1px solid $color-page-border;
+						margin: 10px;
+						@include box-shadow( -1px, 1px, 3px, darken( $color-page, 9%) );
+						background-image: none;
+						border: 1px solid mix($color-page,$color-page-border,25%);
+						@if lightness($color-page) < 50 {
+							border: 1px solid mix($color-page,$color-page-border,50%);
+							background: mix($color-page,$color-page-border,75%);
+							@include box-shadow( 0px, 2px, 5px, darken( $color-page, 7%) );
+						}
+						.options {
+							display: block;
+						}
+					}
+				}
+
+				div.action {
+					vertical-align: top;
+					padding: 5px;
+					height: 175px;
+					width: 160px;
+					margin: 11px;
+					display: inline-block;
+					position: relative;
+					a.video-thumbnail{
+						width: 160px;
+						height: 90px;
+						display: block;
+						overflow: hidden;
+						position: relative;
+						border: 1px solid $color-page-border;
+						background: $color-related-videos-background;
+						.addVideo {
+							@include opacity(30);
+							width: 168px;
+							height: 83px;
+							position: absolute;
+							z-index: 100;
+							background-image: url(/extensions/wikia/RelatedVideos/images/AddVideo_Large.png); /* wgCdnStylePath */
+							background-repeat:no-repeat;
+							background-position:center;
+							&:hover {
+								@include opacity(100);
+							}
+						}
+					}
+					&:hover {
+						.addVideo {
+							@include opacity(50);
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+#relatedvideos-add-video {
+
+	input {
+		line-height: 25px;
+		height: 25px;
+		font-size:14px;
+		font-family: Helvetica, Arial, sans-serif;
+		padding: 1px 1px 1px 5px;
+		width: 400px;
+		&:focus {
+			@include box-shadow( 0px, 0px, 4px, $color-buttons );
+		}
+	}
+
+	.rv-error {
+		display: none;
+	}
+
+	.relatedVideosConfirm{
+		a {
+			float: right;
+		}
+	}
+
+	&.error-mode {
+		.rv-error {
+			@include border-radius(4px);
+			@include border-radius-nw(0px);
+			display: table-cell;
+			background-color: $color-buttons;
+			color: $color-button-text;
+			font-size: 12px;
+			line-height: 14px;
+			padding: 3px;
+		}
+		input {
+			background-color: #FFEEA6 !important;
+		}
+	}
+
+	.messageHolder {
+		display: none;
+	}
+}
