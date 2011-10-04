@@ -19,7 +19,7 @@
 #wall-notifications-dropdown ul#wall-notifications-inner { padding: 0; }
 #wall-notifications-inner a { display: block; padding: 0; }
 #wall-notifications-inner ul {	padding: 0;	margin: 0; }
-#wall-notifications-inner li {	padding: 0; margin: 0; display: list-item; }
+#wall-notifications-inner li {	padding: 0; margin: 0; display: list-item; position: relative; }
 #wall-notifications-inner .notification { }
 
 #wall-notifications-inner .avatars {
@@ -58,9 +58,12 @@
 #wall-notifications-inner .read_notification { font-weight: normal; }
 #wall-notifications-inner li,
 #wall-notifications-inner a {
-	border-top: 1px solid gray !important;
 	cursor: pointer;
 }
+#wall-notifications-inner li:not(:first-child) {
+	border-top: 1px solid gray !important;
+}
+
 #wall-notifications-markasread { cursor: pointer; }
 
 #wall-notifications-inner .notifications-header {
@@ -74,7 +77,9 @@
 #wall-notifications-markasread {
 	cursor: pointer; 
 	text-align: center;
-	float: right;
+	position: absolute;
+	top: 0px;
+	right: 0px;
 	font-weight: normal;
 	font-size: 11px;
 	padding-right: 10px; 

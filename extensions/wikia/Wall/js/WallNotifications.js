@@ -17,13 +17,10 @@ var WallNotifications = $.createClass(Object, {
 				.append('<table id="wall-notifications-dropdown"><tr><td><ul id="wall-notifications-inner"></ul></td></tr></table>')
 				.click( this.proxy( this.clickNotificationsMonobook ) );
 			var bgcolor = $('#wall-notifications-dropdown').css('background-color');
-			$().log(bgcolor);
 			if(bgcolor == 'none' || bgcolor == '' || bgcolor == 'inherit' || bgcolor == 'rgba(0, 0, 0, 0)')
 				bgcolor = $('body').css('background-color');
-			$().log(bgcolor);
 			if(bgcolor == 'none' || bgcolor == '' || bgcolor == 'inherit' || bgcolor == 'rgba(0, 0, 0, 0)')
 				bgcolor = 'white';
-			$().log(bgcolor);
 			
 			$('#wall-notifications-dropdown')
 				.css('background-color',bgcolor)
@@ -87,19 +84,15 @@ var WallNotifications = $.createClass(Object, {
 	},
 	
 	updateHtml: function(data) {
-		$().log(data);
 		if(this.monobook) {
 			$('.wall-notifications-monobook .count')
 				.html('(' + data.count + ')');
 			$('#wall-notifications-inner').html(data.html);
-			$('#wall-notifications-inner time.timeago').timeago();
+			$('#wall-notifications-inner .timeago').timeago();
 		} else {
 			var subnav = $('#WallNotifications .subnav');
 			subnav.html(data.html);
 			$('.timeago', subnav).timeago();
-			//$('.timeago', subnav).html('blabla');
-			//alert('hi');
-			//setTimeout( function() { alert($('TIME.timeago').length;}, 500);
 			if(data.count > 0) {
 				$('#bubbles_count').html(data.count);
 				$('.bubbles').addClass('reddot');
