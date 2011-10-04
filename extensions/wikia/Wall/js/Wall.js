@@ -237,7 +237,7 @@ var Wall = $.createClass(Object, {
 			method: 'postNewMessage',
 			data: {
 				body: $('#WallMessageBody').val(),
-				title: $('#WallMessageTitle').val(),
+				title: topic ? $('#WallMessageTitle').val() : '',
 				username: this.username
 			},
 			callback: this.proxy(function(data) {
