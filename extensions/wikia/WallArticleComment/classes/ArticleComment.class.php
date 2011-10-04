@@ -180,6 +180,7 @@ class ArticleComment {
 			} else {
 				$result = false;
 			}
+
 			$rawtext = $this->mLastRevision->getText();
 			$this->parseText($rawtext);
 			$wgMemc->set($memckey, array(
