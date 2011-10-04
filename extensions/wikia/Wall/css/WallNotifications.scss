@@ -142,13 +142,13 @@
 			left: 0px;
 			background: none;
 		}
-	}
-	.notifications-header {
+		li.notifications-header {
 		color: $color-text; font-size: 13px; font-weight: bold;
 		padding-top: 1px;
 		padding-left: 10px;
 		background: $color-page;
 		cursor: default;
+		}
 	}
 	#wall-notifications-markasread {
 		color: $color-links;

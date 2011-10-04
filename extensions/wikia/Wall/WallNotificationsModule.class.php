@@ -60,7 +60,7 @@ class WallNotificationsModule extends Module {
 							// 2 = 2 users,
 							// 3 = more than 2 users
 
-			if(count($authors) == 2)     { $user_count = 2; $params['$1'] = $authors[1]; }
+			if(count($authors) == 2)     { $user_count = 2; $params['$1'] = $this->getDisplayname( $authors[1] ); }
 			elseif(count($authors) > 2 ) { $user_count = 3; }
 
 			$reply_by = 'other'; // who replied?
@@ -69,7 +69,7 @@ class WallNotificationsModule extends Module {
 							   // other = someone else
 
 			if( $data->parent_username == $my_name ) $reply_by = 'you';
-			elseif ( $data->parent_username == $data->msg_author_username ) $reply_by = 'self';
+			elseif ( in_array($data->parent_username, $authors) ) $reply_by = 'self';
 			else $params['$'.(count($params)+1)] =$this->getDisplayname( $data->parent_username );
 
 			$whos_wall = 'a'; // on who's wall was the message written?
@@ -78,7 +78,7 @@ class WallNotificationsModule extends Module {
 								   // a     = the person was already mentioned (either author of msg or thread)
 
 			if( $data->wall_username == $my_name ) $whos_wall = 'your';
-			elseif( $data->wall_username != $data->parent_username && $data->wall_username != $data->msg_author_username ) {
+			elseif( $data->wall_username != $data->parent_username && !in_array($data->wall_username, $authors) ) {
 				$whos_wall = 'other';
 				//$params['$'.(count($params)+1)] = $data->wall_displayname;
 				$params['$'.(count($params)+1)] = $this->getDisplayname($data->wall_username);
@@ -106,7 +106,7 @@ class WallNotificationsModule extends Module {
 		$this->response->setVal( 'msg', $msg );
 		if ( empty( $data->url ) ) $data->url = '';
 		$this->response->setVal( 'url', $data->url );
-		$this->response->setVal( 'authors', $authors );
+		$this->response->setVal( 'authors', array_reverse($authors) );
 		$this->response->setVal( 'title',  $data->thread_title );
 		$this->response->setVal( 'iso_timestamp',  wfTimestamp(TS_ISO_8601, $data->timestamp ));
 	}

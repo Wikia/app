@@ -17,10 +17,13 @@ var WallNotifications = $.createClass(Object, {
 				.append('<table id="wall-notifications-dropdown"><tr><td><ul id="wall-notifications-inner"></ul></td></tr></table>')
 				.click( this.proxy( this.clickNotificationsMonobook ) );
 			var bgcolor = $('#wall-notifications-dropdown').css('background-color');
-			if(bgcolor == 'none' || bgcolor == '' || bgcolor == 'inherit')
+			$().log(bgcolor);
+			if(bgcolor == 'none' || bgcolor == '' || bgcolor == 'inherit' || bgcolor == 'rgba(0, 0, 0, 0)')
 				bgcolor = $('body').css('background-color');
-			if(bgcolor == 'none' || bgcolor == '' || bgcolor == 'inherit')
+			$().log(bgcolor);
+			if(bgcolor == 'none' || bgcolor == '' || bgcolor == 'inherit' || bgcolor == 'rgba(0, 0, 0, 0)')
 				bgcolor = 'white';
+			$().log(bgcolor);
 			
 			$('#wall-notifications-dropdown')
 				.css('background-color',bgcolor)
