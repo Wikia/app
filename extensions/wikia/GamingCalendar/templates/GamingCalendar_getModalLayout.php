@@ -1,5 +1,5 @@
 <div id="GamingCalendar">
-	<h1><?= wfMsg('gamingcalendar-heading') ?></h1>
+	<h1><span class="title-wrapper"><?= wfMsg('gamingcalendar-heading') ?></span></h1>
 
 	<div class="weeks">
 		<ul>

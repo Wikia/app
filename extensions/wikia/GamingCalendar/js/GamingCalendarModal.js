@@ -31,7 +31,7 @@ var GamingCalendarModal = {
 		window.GamingCalendarModal.renderPage( null, 0 );
 
 		var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-		$('#GamingCalendarWrapper > h1').append('<span>' + months[window.GamingCalendarModal.today.getUTCMonth()] + ' ' + window.GamingCalendarModal.today.getUTCDate() + ', ' + window.GamingCalendarModal.today.getUTCFullYear() +'</span>');
+		$('#GamingCalendarWrapper > h1').append('<span class="date">' + months[window.GamingCalendarModal.today.getUTCMonth()] + ' ' + window.GamingCalendarModal.today.getUTCDate() + ', ' + window.GamingCalendarModal.today.getUTCFullYear() +'</span>');
 		$('#GamingCalendarWrapper .game-more-info').trackClick('gamingCalendar/moreinfo');
 		$('#GamingCalendarWrapper .game-prie-order').trackClick('gamingCalendar/preorder');
 		GamingCalendarModal.initialized = true;
