@@ -311,7 +311,7 @@ var GamingCalendarModal = {
 
 		calendarElement.find('.forward-week').
 			unbind('click').
-			removeClass('disabled').
+			attr('disabled', false).
 			bind('click', function(event) {
 				GamingCalendarModal.renderPage(event, page + 1);
 				GamingCalendar.track('scroll/forward/week');
@@ -319,26 +319,10 @@ var GamingCalendarModal = {
 
 		calendarElement.find('.back-week').
 			unbind('click').
-			removeClass('disabled').
+			attr('disabled', false).
 			bind('click', function(event) {
 				GamingCalendarModal.renderPage(event, page - 1);
 				GamingCalendar.track('scroll/backward/week');
-			});
-
-		calendarElement.find('.forward-month').
-			unbind('click').
-			removeClass('disabled').
-			bind('click', function(event) {
-				GamingCalendarModal.renderPage( event, page + nextMonthWeeks );
-				GamingCalendar.track('scroll/forward/month');
-			});
-
-		calendarElement.find('.back-month').
-			unbind('click').
-			removeClass('disabled').
-			bind('click', function(event) {
-				GamingCalendarModal.renderPage( event, page - previousMonthWeeks );
-				GamingCalendar.track('scroll/backward/month');
 			});
 
 		calendarElement.find('.scroll-up').unbind('click').bind('click', GamingCalendarModal.scrollUp);
@@ -355,21 +339,21 @@ var GamingCalendarModal = {
 			todayButton.bind('click', function(event) {
 				GamingCalendarModal.renderPage( event, 0 );
 				GamingCalendar.track('scroll/today');
-			}).removeClass('disabled');
+			}).attr('disabled', false);
 		} else {
-			todayButton.addClass('disabled');
+			todayButton.attr('disabled', true);
 		}
 
 		if ( window.GamingCalendarModal.lastWeek && window.GamingCalendarModal.lastWeek < page + 2 ) {
-			calendarElement.find('.forward-month').addClass('disabled').unbind('click');
-			calendarElement.find('.forward-week').addClass('disabled').unbind('click');
+			calendarElement.find('.forward-week').
+				attr('disabled', true).
+				unbind('click');
 		}
 
 		if ( _today.getTime() <= window.GamingCalendarModal.firstWeek.getTime() ) {
-			calendarElement.find('.back-month').addClass('disabled');
-			calendarElement.find('.back-month').unbind('click');
-			calendarElement.find('.back-week').addClass('disabled');
-			calendarElement.find('.back-week').unbind('click');
+			calendarElement.find('.back-week').
+				attr('disabled', true).
+				unbind('click');
 		}
 	}
 };
