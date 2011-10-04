@@ -37,6 +37,7 @@ class WallHooksHelper {
 				$app->wg->Out->setHTMLTitle( wfMsg( 'errorpagetitle' ) );
 				//$app->wg->Out->showErrorPage( 'wall-deleted-msg-pagetitle', 'wall-deleted-msg-text', array( '$1'=>'<a href="/Message_Wall:USERNAME">USERNAME\'s Wall</a>') );
 			}
+			
 			return true;
 		}
 		
@@ -446,6 +447,37 @@ class WallHooksHelper {
 		}
 		
 		return true;
-	}	
+	}
+	
+	/**
+	 * @brief Just adjusting links and removing history from brick pages (My Tools bar)
+	 * 
+	 * @param array $contentActions passed by reference array with anchors elements
+	 * 
+	 * @return true because this is a hook
+	 */
+	public function onSkinTemplateContentActions($contentActions) {
+		$app = F::app();
+		
+		if( !empty($app->wg->EnableWallExt) 
+			&& $app->wg->Title instanceof Title 
+			&& $app->wg->Title->getNamespace() == NS_USER_WALL
+			&& $app->wg->Title->isSubpage() === true
+		) {
+		//remove "History" and "View source" tabs in Monobook & don't show history in "My Tools" in Oasis
+		//because it leads to Message Wall (redirected) and a user could get confused
+			if( isset($contentActions['history']['href']) ) {
+				//$contentActions['history']['href'] = $this->getWallTitle()->getLocalUrl('action=history');
+				unset($contentActions['history']);
+			}
+				
+			if( isset($contentActions['view-source']['href']) ) {
+				//$contentActions['view-source']['href'] = $this->getWallTitle()->getLocalUrl('action=edit');
+				unset($contentActions['view-source']);
+			}
+		}
+		
+		return true;
+	}
 }
 ?>
