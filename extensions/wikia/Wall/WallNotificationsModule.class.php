@@ -20,7 +20,7 @@ class WallNotificationsModule extends Module {
 
 	public function executeUpdate() {
 		wfProfileIn(__METHOD__);
-		
+				
 		$all = $this->request->getVal('notifications');
 		
 		//var_dump($all);
@@ -30,6 +30,9 @@ class WallNotificationsModule extends Module {
 		$this->response->setVal('unread',$all['unread']);
 		$this->response->setVal('read',$all['read']);
 		$this->response->setVal('count',$all['unread_count']);
+		
+		//$duration = 60; // one minute
+		//$this->response->setHeader('X-Pass-Cache-Control', 'public, max-age=' . $duration);
 		
 		wfProfileOut(__METHOD__);
 	}
