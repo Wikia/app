@@ -89,24 +89,24 @@ var GamingCalendarModal = {
 		GamingCalendar.track('scroll/down');
 	},
 
-    scrollUp: function(e) {
-        e.preventDefault();
-        var wrapper = $(this).next('div.list');
-        var obj = wrapper.children('ul')[0];
-        var top = $(obj).position().top;
-        var scrollBy = 0;
-
-        if ( top < 0 ) {
-            scrollBy = '+=' + Math.min( Math.abs(top), 75 );
-            $(obj).animate({
-                top: scrollBy
-            }, 250);
-        }
+	scrollUp: function(e) {
+		e.preventDefault();
+		var wrapper = $(this).next('div.list');
+		var obj = wrapper.children('ul')[0];
+		var top = $(obj).position().top;
+		var scrollBy = 0;
+		
+		if ( top < 0 ) {
+			scrollBy = '+=' + Math.min( Math.abs(top), 75 );
+			$(obj).animate({
+				top: scrollBy
+			}, 250);
+		}
 
 		GamingCalendar.track('scroll/up');
-    },
+	},
 
-    expandOrCollapse: function(e) {
+	expandOrCollapse: function(e) {
 		e.preventDefault();
 		if (window.GamingCalendarModal.expandFlag) {
 			return;
@@ -142,7 +142,7 @@ var GamingCalendarModal = {
 		GamingCalendar.track('brick/expand');
     },
 
-    renderPage: function(e, page) {
+	renderPage: function(e, page) {
 		if ( window.GamingCalendarModal.renderPageFlag ) {
 			return;
 		}
@@ -153,7 +153,7 @@ var GamingCalendarModal = {
 		//	return;
 		//}
 		window.GamingCalendarModal.renderPageFlag = true;
-	    	var week = 7 * 24 * 3600 * 1000;
+		var week = 7 * 24 * 3600 * 1000;
 		var currentWeek = new Date( window.GamingCalendarModal.thisWeek.getTime() + (week * page) );
 
 		if (currentWeek.getTime() < window.GamingCalendarModal.firstWeek.getTime()) {
