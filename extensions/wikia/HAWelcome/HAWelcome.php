@@ -281,11 +281,7 @@ class HAWelcomeJob extends Job {
 						while( $row = $dbr->fetchObject( $res ) ) {
 							if( $row->ug_group == "bot" ) {
 								$bots[] = $row->ug_user;
-							} elseif ( in_array( $row->ug_group, array( "staff", "helper" ) ) ) {
-								$staff[] = $row->ug_user;
-								$admins[] = $row->ug_user;
-							}
-							else {
+							} else {
 								$admins[] = $row->ug_user;
 							}
 						}
@@ -303,25 +299,31 @@ class HAWelcomeJob extends Job {
 								"rev_timestamp > " . $dbr->addQuotes(  $dbr->timestamp( time() - 5184000 ) ) // 60 days ago (24*60*60*60)
 							),
 							__METHOD__,
-							array( "ORDER BY" => "rev_timestamp DESC", "DISTINCT", "LIMIT" => 10 )
+							array( "ORDER BY" => "rev_timestamp DESC", "DISTINCT", "LIMIT" => 1 )
 						);
 						Wikia::log( __METHOD__, "query", $dbr->lastQuery() );
-						while ( $row = $dbr->fetchObject( $res ) ) {
-							if ( in_array( $row->rev_user, $staff ) ) {
-								if ( empty( $backupUser ) ) {
-									$backupUser = $row->rev_user;
-								}
-								continue;
-							}
-
+						if ( $row = $dbr->fetchObject( $res ) ) {
 							$user = $row->rev_user;
-							break;
+						} else {
+							$staff = self::getStaffAccounts();
+
+							$res = $dbr->select(
+								array( "revision" ),
+								array( "rev_user", "rev_user_text"),
+								array(
+									$dbr->makeList( $staff, LIST_OR )
+								),
+								__METHOD__,
+								array( "ORDER BY" => "rev_timestamp DESC", "DISTINCT", "LIMIT" => 1 )
+							);
+
+							if ( $row = $dbr->fetchObject( $res ) ) {
+								$user = $row->rev_user;
+							}
 						}
 
-						if ( empty( $user ) && !empty( $backupUser ) ) {
-							$user = $backupUser;
-						} else {
-							$user = User::newFromName( self::WELCOMEUSER )->getId();
+						if ( empty( $user ) ) {
+							$user = Wikia::staffForLang( $wgLanguageCode );
 						}
 
 						$this->mSysop = User::newFromId( $user );
@@ -617,6 +619,28 @@ class HAWelcomeJob extends Job {
 		wfProfileOut( __METHOD__ );
 
 		return $result;
+	}
+
+	static public function getStaffAccounts() {
+		global $wgExternalSharedDB;
+
+		$list = array();
+
+		$dbr = wfGetDB( $wgExternalSharedDB );
+
+		$res = $dbr->select(
+			'user_groups',
+			'ug_user',
+			array(
+				'ug_group' => 'staff'
+			)
+		);
+
+		while ( $row = $dbr->fetchObject( $res ) ) {
+			$list[] = $row->ug_user;
+		}
+
+		return $list;
 	}
 }
 
