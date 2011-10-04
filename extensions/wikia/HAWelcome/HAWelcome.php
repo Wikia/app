@@ -640,7 +640,7 @@ class HAWelcomeJob extends Job {
 			$list[] = $row->ug_user;
 		}
 
-		return $list;
+		return array( 'rev_user' => $list );
 	}
 }
 
