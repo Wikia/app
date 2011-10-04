@@ -1,5 +1,5 @@
 <div id="GamingCalendar">
-	<h1>Game Calendar</h1>
+	<h1><?= wfMsg('gamingcalendar-heading') ?></h1>
 
 	<div class="weeks">
 		<ul>
@@ -13,13 +13,9 @@
 	</div>
 
 	<div class="controls">
-		<div class="back">
-			<div class="back-week"><span>‹</span></div>
-		</div>
-		<div class="forward">
-			<div class="forward-week"><span>›</span></div>
-		</div>
-		<div class="today">Today</div>
+		<a class="back-week wikia-button secondary">‹</a>
+		<a class="forward-week wikia-button secondary">›</a>
+		<a class="today wikia-button secondary"><?= wfMsg('gamingcalendar-today') ?></a>
 	</div>
 
    <script type="text/template" id="GamingCalendarWeekTemplate">
