@@ -1,0 +1,4 @@
+<?=$videoHtml; ?>
+<div>
+<?=$embedUrl; ?>
+</div>

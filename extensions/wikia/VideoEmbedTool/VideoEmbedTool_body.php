@@ -178,7 +178,7 @@ class VideoEmbedTool {
 		$props['vname'] = $title->getText();
 
 		$props['metadata'] = implode( ",", $video->getData() );
-		$props['code'] = $video->getEmbedCode( VIDEO_PREVIEW );
+		$props['code'] = $video->getEmbedCode( VIDEO_PREVIEW, false, false, $props['provider'] == VideoPage::V_SCREENPLAY );
 		$props['href'] = $title->getPrefixedText();
 
 		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
@@ -218,7 +218,8 @@ class VideoEmbedTool {
 		} else {
 			$props['metadata'] = '';
 		}
-		$props['code'] = $video->getEmbedCode( VIDEO_PREVIEW );
+		
+		$props['code'] = $video->getEmbedCode( VIDEO_PREVIEW, false, false );
 		$props['oname'] = '';
 
 		return $this->detailsPage($props);
@@ -243,7 +244,7 @@ class VideoEmbedTool {
 	}
 
 	function insertFinalVideo() {
-		global $wgRequest, $wgUser, $wgContLang, $IP;
+		global $wgRequest, $wgUser, $wgContLang, $IP, $wgWikiaVideoInterwikiPrefix;
 		require_once( "$IP/extensions/wikia/WikiaVideo/VideoPage.php" );
 
 		$type = $wgRequest->getVal('type');
@@ -272,20 +273,74 @@ class VideoEmbedTool {
 
 		$embed_code = '';
 
-		if($name !== NULL) {
-			if($name == '') {
-				header('X-screen-type: error');
-				// todo messagize
-				return 'You need to specify file name first!'; // FIXME: missing i18n
-			} else {
-
-				$title = Title::makeTitleSafe(NS_VIDEO, $name);
-				if(is_null($title)) {
+		if ($provider != VideoPage::V_WIKIAVIDEO) {
+			if($name !== NULL) {
+				if($name == '') {
 					header('X-screen-type: error');
-					return wfMsg ( 'vet-name-incorrect' );
-				}
-				if($title->exists()) {
-					if($type == 'overwrite') {
+					// todo messagize
+					return 'You need to specify file name first!'; // FIXME: missing i18n
+				} else {
+
+					$title = Title::makeTitleSafe(NS_VIDEO, $name);
+					if(is_null($title)) {
+						header('X-screen-type: error');
+						return wfMsg ( 'vet-name-incorrect' );
+					}
+					if($title->exists()) {
+						if($type == 'overwrite') {
+							// is the target protected?
+							$permErrors = $title->getUserPermissionsErrors( 'edit', $wgUser );
+							$permErrorsUpload = $title->getUserPermissionsErrors( 'upload', $wgUser );
+							$permErrorsCreate = ( $title->exists() ? array() : $title->getUserPermissionsErrors( 'create', $wgUser ) );
+
+							if( $permErrors || $permErrorsUpload || $permErrorsCreate ) {
+								header('X-screen-type: error');
+								return wfMsg( 'vet-protected' );
+							}
+
+							$video = new VideoPage( $title );
+							if ($video instanceof VideoPage) {
+								$video->loadFromPars( $provider, $id, $metadata );
+								$video->setName( $name );
+								$video->save();
+								if ('' != $gallery) { // for gallery, return also embed code to insert live on page
+									$embed_code = $video->getEmbedCode( 300 );
+								}						
+							}
+						} else if($type == 'existing') {
+							header('X-screen-type: existing');
+							$title = Title::makeTitle( NS_VIDEO, $name );
+							$video = new VideoPage( $title );
+
+							$props = array();
+							$video->load();
+							$props['provider'] = $video->getProvider();
+							$props['id'] = $video->getVideoId();
+							$data = $video->getData();
+							if (is_array( $data ) ) {
+								$props['metadata'] = implode( ",", $video->getData() );
+							} else {
+								$props['metadata'] = '';
+							}
+							$props['code'] = $video->getEmbedCode( VIDEO_PREVIEW, false, false, $props['provider'] == VideoPage::V_SCREENPLAY );
+							$props['oname'] = $name;
+
+							return $this->detailsPage($props);
+						} else {
+							if ('' == $oname) {
+								header('X-screen-type: conflict');
+								$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
+								$tmpl->set_vars( array(
+											'name' => $name,
+											'id' => $id,
+											'provider' => $provider,
+											'metadata' => $metadata,
+										      )
+									       );
+								return $tmpl->execute('conflict');
+							}
+						}
+					} else {
 						// is the target protected?
 						$permErrors = $title->getUserPermissionsErrors( 'edit', $wgUser );
 						$permErrorsUpload = $title->getUserPermissionsErrors( 'upload', $wgUser );
@@ -302,66 +357,14 @@ class VideoEmbedTool {
 							$video->setName( $name );
 							$video->save();
 							if ('' != $gallery) { // for gallery, return also embed code to insert live on page
-								$embed_code = $video->getEmbedCode( 300 );
+								$embed_code = $video->getEmbedCode( 300 );							
 							}						
 						}
-					} else if($type == 'existing') {
-						header('X-screen-type: existing');
-						$title = Title::makeTitle( NS_VIDEO, $name );
-						$video = new VideoPage( $title );
-
-						$props = array();
-						$video->load();
-						$props['provider'] = $video->getProvider();
-						$props['id'] = $video->getVideoId();
-						$data = $video->getData();
-						if (is_array( $data ) ) {
-							$props['metadata'] = implode( ",", $video->getData() );
-						} else {
-							$props['metadata'] = '';
-						}
-						$props['code'] = $video->getEmbedCode( VIDEO_PREVIEW );
-						$props['oname'] = $name;
-
-						return $this->detailsPage($props);
-					} else {
-						if ('' == $oname) {
-							header('X-screen-type: conflict');
-							$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
-							$tmpl->set_vars( array(
-										'name' => $name,
-										'id' => $id,
-										'provider' => $provider,
-										'metadata' => $metadata,
-									      )
-								       );
-							return $tmpl->execute('conflict');
-						}
-					}
-				} else {
-					// is the target protected?
-					$permErrors = $title->getUserPermissionsErrors( 'edit', $wgUser );
-					$permErrorsUpload = $title->getUserPermissionsErrors( 'upload', $wgUser );
-					$permErrorsCreate = ( $title->exists() ? array() : $title->getUserPermissionsErrors( 'create', $wgUser ) );
-
-					if( $permErrors || $permErrorsUpload || $permErrorsCreate ) {
-						header('X-screen-type: error');
-						return wfMsg( 'vet-protected' );
-					}
-
-					$video = new VideoPage( $title );
-					if ($video instanceof VideoPage) {
-						$video->loadFromPars( $provider, $id, $metadata );
-						$video->setName( $name );
-						$video->save();
-						if ('' != $gallery) { // for gallery, return also embed code to insert live on page
-							$embed_code = $video->getEmbedCode( 300 );							
-						}						
 					}
 				}
-			}
-		} else {
-			$title = Title::newFromText($mwname, 6);
+			} else {
+				$title = Title::newFromText($mwname, 6);
+			}			
 		}
 
 		$ns_vid = $wgContLang->getFormattedNsText( NS_VIDEO );
@@ -465,17 +468,35 @@ class VideoEmbedTool {
 
 			if( 'gallery' != $layout ) {
 				if( '' == $mwInGallery ) { // not adding gallery, not in gallery
-					$tag = '[[' . $ns_vid . ':'.$name;
-					if($size != 'full') {
-						$tag .= '|thumb';
+					if ($provider == VideoPage::V_WIKIAVIDEO) {
+						$tag = '{{:' . $wgWikiaVideoInterwikiPrefix . ':' . $name;
+						$params = array();
+						if($size != 'full') {
+							$params[] = 'thumb=1';
+						}
+						$params[] = 'width='.$width;
+						$params[] = 'align='.$layout;
+						if($caption != '') {
+							$params[] = 'caption='.$caption;
+						}	
+						if (sizeof($params)) {
+							$tag .= '/' . implode('&', $params);
+						}
+						$tag .= '}}';
 					}
-					$tag .= '|'.$width;
-					$tag .= '|'.$layout;
+					else {
+						$tag = '[[' . $ns_vid . ':'.$name;
+						if($size != 'full') {
+							$tag .= '|thumb';
+						}
+						$tag .= '|'.$width;
+						$tag .= '|'.$layout;
 
-					if($caption != '') {
-						$tag .= '|'.$caption.']]';
-					} else {
-						$tag .= ']]';
+						if($caption != '') {
+							$tag .= '|'.$caption.']]';
+						} else {
+							$tag .= ']]';
+						}						
 					}
 					$message = wfMsg( 'vet-single-success' );
 				} else { // we were in gallery
