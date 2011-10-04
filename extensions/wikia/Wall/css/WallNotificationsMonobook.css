@@ -19,7 +19,7 @@
 #wall-notifications-dropdown ul#wall-notifications-inner { padding: 0; }
 #wall-notifications-inner a { display: block; padding: 0; }
 #wall-notifications-inner ul {	padding: 0;	margin: 0; }
-#wall-notifications-inner li {	padding: 0; margin: 0; }
+#wall-notifications-inner li {	padding: 0; margin: 0; display: list-item; }
 #wall-notifications-inner .notification { }
 
 #wall-notifications-inner .avatars {
