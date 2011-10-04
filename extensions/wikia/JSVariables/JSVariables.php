@@ -64,10 +64,9 @@ function wfMakeGlobalVariablesScript($vars) {
 	$vars['wgMWrevId'] = $wgMemc->get(wfMemcKey('wgMWrevId'));
 
 	// RT #21084: get URL to YUI StaticChute package
-	$StaticChute = new StaticChute('js');
-	$StaticChute->useLocalChuteUrl();
-
-	$vars['wgYUIPackageURL'] = $StaticChute->getChuteUrlForPackage('yui');
+	// thanks to $combine & $minify = true this will always return an array with just one URL in it
+	$yuiUrl = array_pop(AssetsManager::getInstance()->getGroupCommonURL('yui', array(), true /* $combine */, true /* $minify */));
+	$vars['wgYUIPackageURL'] = $yuiUrl;
 
 	// macbre: get revision ID of current article
 	if ( $wgTitle->isContentPage() && !is_null($wgArticle)) {
