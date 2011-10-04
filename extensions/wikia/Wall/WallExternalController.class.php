@@ -51,7 +51,10 @@ class WallExternalController extends WikiaController {
 		if( empty($title) ) {
 			$name = $this->wg->User->getRealName();
 			if (empty($name)) $name = $this->wg->User->getName();
-			if (User::isIP($name)) $name = lcfirst(wfMsg('oasis-anon-user'));
+			if (User::isIP($name)){
+				$name = wfMsg('oasis-anon-user');
+				$name{0} = strtolower($name{0});
+			}
 			$title = $this->wf->msg('wall-default-title') . ' ' . $name;
 		}
 		
