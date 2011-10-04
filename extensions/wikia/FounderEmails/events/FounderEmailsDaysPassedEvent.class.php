@@ -19,6 +19,7 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 		$founderEmailObj = FounderEmails::getInstance();
 		foreach ( $events as $event ) {
 			$wikiId = $event['wikiId'];
+			if ($wikiID == 0) continue;  // should "never" happen BugId:12717
 			$activateTime = $event['data']['activateTime'];
 			$activateDays = $event['data']['activateDays'];
 
