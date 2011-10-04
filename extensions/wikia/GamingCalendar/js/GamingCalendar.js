@@ -2,15 +2,19 @@ var GamingCalendar = {
 
 	data: {},
 
+	track: function(url) {
+		$.tracker.byStr('gamingCalendar/' + url);
+	},
+
     init: function() {
-		$.nirvana.getJson('GamingCalendar', 'getEntries', {weeks:3, offset: 0}, $.proxy(function (data) {
+		$.nirvana.getJson('GamingCalendar', 'getEntries', {weeks:3, offset: 0}, $.proxy(function(data) {
 			// get the current cookieVal
 			var cookieVal = this.getCookieVal();
 
 			// 0 if not set
 			if ( cookieVal == null ) {
 				cookieVal = 1;
-			// +1 othewise
+			// +1 otherwise
 			} else {
 				cookieVal++;
 			}
@@ -21,7 +25,7 @@ var GamingCalendar = {
 			}
 
 			// store the cookieVal for future requests
-			this.setCookieVal( cookieVal );
+			this.setCookieVal(cookieVal);
 
 			// tell modal, which item to expand
 			data.entries[0][cookieVal].expanded = true;
@@ -44,26 +48,15 @@ var GamingCalendar = {
 	},
 
 	getCookieVal: function() {
-		var cookieStart = document.cookie.indexOf( 'wikiagc=' );
-		if ( cookieStart == -1 ) {
-			return null;
-		}
-		var valueStart = document.cookie.indexOf( '=', cookieStart ) + 1;
-		var valueEnd   = document.cookie.indexOf( ';', valueStart );
-		if ( valueEnd == -1 ) {
-			valueEnd = document.cookie.length;
-		}
-		var val = document.cookie.substring( valueStart, valueEnd );
-		if ( val != null ) {
-			return unescape( val );
-		}
-		return null;
+		return $.cookies.get('wikiagc');
     },
 
-	setCookieVal: function( value ) {
-		var expiration = new Date( new Date().getTime() + 3600000 ); // 1 hour
-		var str = 'wikiagc=' + escape( value ) + '; path=/ ; expires=' + expiration.toUTCString();
-		document.cookie = str;
+	setCookieVal: function(value) {
+		$.cookies.set('wikiagc', value, {
+			hoursToLive: 1,
+			path: wgCookiePath,
+			domain: wgCookieDomain
+		});
 	},
 
 	renderItem: function(item, expanded) {
@@ -99,7 +92,7 @@ var GamingCalendar = {
 	showCalendar: function(e) {
 		e.preventDefault();
 
-		$.tracker.byStr( 'gamingCalendar/calendar/open' );
+		GamingCalendar.track('calendar/open');
 
 		// Check, whether the GamingCalendarModal has already been triggered once.
 		// We don't want the resources to be retrieved more than once.

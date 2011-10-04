@@ -8,7 +8,7 @@ var GamingCalendarModal = {
 	today: new Date(),
 	expandFlag: false,
 	renderPageFlag: false,
-	
+
 	init: function() {
 		$().log('init');
 		if (GamingCalendarModal.initialized) {
@@ -25,7 +25,7 @@ var GamingCalendarModal = {
 		if (1 == GamingCalendar.data['entries'][2].length) {
 			window.GamingCalendarModal.lastWeek = 1;
 		}
-		
+
 		var weeks = GamingCalendar.data['entries'];
 
 		window.GamingCalendarModal.renderPage( null, 0 );
@@ -43,13 +43,13 @@ var GamingCalendarModal = {
 		var itemsHtml = '';
 
 		weekdates = week[0];
-		
+
 		template = template.replace('##start##', weekdates['start'] );
 		template = template.replace('##end##', weekdates['end'] );
 
 		template = template.replace('##startmonth##', weekdates['startmonth'] );
 		template = template.replace('##endmonth##', weekdates['endmonth'] );
-		
+
 		template = template.replace('##week-caption##', weekdates['caption'] );
 
 		if ( 1 == week.length ) {
@@ -78,7 +78,7 @@ var GamingCalendarModal = {
 		var objHeight = $(obj).height();
 		var wrHeight = $(wrapper).height();
 		var scrollBy = 0;
-		
+
 		if (objHeight > wrHeight && objHeight + top > wrHeight) {
 			scrollBy = '-=' + Math.min( Math.abs(objHeight + top - wrHeight), 75 );
 			$(obj).animate({
@@ -86,16 +86,16 @@ var GamingCalendarModal = {
 			}, 250);
 		}
 
-		$.tracker.byStr( 'gamingCalendar/scroll/down' );
+		GamingCalendar.track('scroll/down');
 	},
-    
+
     scrollUp: function(e) {
         e.preventDefault();
         var wrapper = $(this).next('div.list');
         var obj = wrapper.children('ul')[0];
         var top = $(obj).position().top;
         var scrollBy = 0;
-        
+
         if ( top < 0 ) {
             scrollBy = '+=' + Math.min( Math.abs(top), 75 );
             $(obj).animate({
@@ -103,161 +103,161 @@ var GamingCalendarModal = {
             }, 250);
         }
 
-		$.tracker.byStr( 'gamingCalendar/scroll/up' );
+		GamingCalendar.track('scroll/up');
     },
-    
+
     expandOrCollapse: function(e) {
-	e.preventDefault();
-	if (window.GamingCalendarModal.expandFlag) {
-		return;
-	}
-	window.GamingCalendarModal.expandFlag = true;
-	$('#GamingCalendar').find('.GamingCalendarItem.selected').slideUp('slow',function() { $(this).removeClass('selected').addClass('unselected').slideDown().bind('click', GamingCalendarModal.expandOrCollapse ); });
-	$(this).slideUp('slow', function() { $(this).removeClass('unselected').addClass('selected').slideDown(
-		'slow', function() {
-			var obj = $(this).parent().parent();
-			var objTop = $(obj).position().top;
-			var objHeight = $(obj).height();
-			var thisTop = $(this).position().top;
-			var thisHeight = $(this).height();
-			var vpHeight = $(obj).parent().height();
-
-			if (objTop + thisTop < 0) {
-				var scrollBy = '+=' + Math.min(
-					Math.abs(objTop),
-					Math.abs(objTop + thisTop) + 5
-				);
-				$(obj).animate({top: scrollBy}, 250);
-			} else if (objTop + thisTop + thisHeight - vpHeight > -10) {
-				var scrollBy = '-=' + Math.min(
-					Math.abs(objHeight + objTop - vpHeight),
-					Math.abs(objTop + thisTop + thisHeight - vpHeight) + 40
-				);
-				$(obj).animate({top: scrollBy}, 250);
-			}
-			window.GamingCalendarModal.expandFlag = false;
-		}
-	).unbind('click'); });
-	$.tracker.byStr( 'gamingCalendar/brick/expand' );
-    },
-    
-    renderPage: function(e, page) {
-	if ( window.GamingCalendarModal.renderPageFlag ) {
-		return;
-	}
-	// FB#9271
-	//if (window.GamingCalendarModal.lastWeek && window.GamingCalendarModal.lastWeek < page + 1) {
-	//	window.GamingCalendarModal.renderPageFlag = false;
-	//	window.GamingCalendarModal.renderPage(e, page - 1);
-	//	return;
-	//}
-	window.GamingCalendarModal.renderPageFlag = true;
-    	var week = 7 * 24 * 3600 * 1000;
-	var currentWeek = new Date( window.GamingCalendarModal.thisWeek.getTime() + (week * page) );
-
-	if (currentWeek.getTime() < window.GamingCalendarModal.firstWeek.getTime()) {
-		window.GamingCalendarModal.renderPageFlag = false;
-		window.GamingCalendarModal.renderPage(e, page + 1);
-		return;
-	}
-	
-	if ( e ) { e.preventDefault(); }
-	var targetWeek = page;
-	var offset = targetWeek;
-	var weeksToLoad = 2;
-	if ('object' == typeof GamingCalendar.data['entries'][targetWeek]) {
-		offset++;
-		weeksToLoad--;
-	}
-
-	if ('object' == typeof GamingCalendar.data['entries'][targetWeek + 1]) {
-		weeksToLoad--;
-	}
-	
-	if (0 < weeksToLoad) {
-		$.get('/wikia.php?controller=GamingCalendar&method=getEntries&format=json&weeks='
-		+ weeksToLoad + '&offset=' + offset, function( data ) {
-			$(data.entries).each( function(index, value) {
-				// FB#9271
-				//if ( 1 == value.length && page > 0 ) {
-				//	window.GamingCalendarModal.lastWeek = offset + index - 1;
-				//	if (offset + index < page + 1) {
-				//		window.GamingCalendarModal.renderPageFlag = false;
-				//		window.GamingCalendarModal.renderPage(e, page - 1);
-				//		return;
-				//	}
-				//}
-				GamingCalendar.data['entries'][offset + index] = value;
-			});
-			window.GamingCalendarModal.renderPageFlag = false;
-			window.GamingCalendarModal.renderPage(e, page);
+		e.preventDefault();
+		if (window.GamingCalendarModal.expandFlag) {
 			return;
-		});
-	}
-
-	var html = new Array (
-		window.GamingCalendarModal.renderWeek(GamingCalendar.data['entries'][targetWeek]),
-		window.GamingCalendarModal.renderWeek(GamingCalendar.data['entries'][targetWeek + 1])
-	);
-
-	var obj = $('#GamingCalendar .weeks > ul');
-	var chl = obj.children('li');
-
-	if ( 0 == window.GamingCalendarModal.displayWeek && 0 == page ) {
-		$(chl.get(2)).html( html[0] );
-		$(chl.get(3)).html( html[1] );
-		$(chl.get(2)).css('left', 0);
-		$(chl.get(3)).css('left', 290);
-	} else if ( Math.abs(window.GamingCalendarModal.displayWeek - page) == 1 ) {
-		if (window.GamingCalendarModal.displayWeek < page) {
-			$(chl.get(4)).html( html[1] );
-			$(chl.get(4)).css('left', 580);
-			$(chl.get(2)).animate({left: '-=290'}, 250);
-			$(chl.get(3)).animate({left: '-=290'}, 250);
-			$(chl.get(4)).animate({left: '-=290'}, 250);
-			$(chl.get(0)).remove();
-			obj.append('<li class="week"></li>');
-		} else {
-			$(chl.get(1)).html( html[0] );
-			$(chl.get(1)).css('left', -290);
-			$(chl.get(1)).animate({left: '+=290'}, 250);
-			$(chl.get(2)).animate({left: '+=290'}, 250);
-			$(chl.get(3)).animate({left: '+=290'}, 250);
-			$(chl.get(5)).remove();
-			obj.prepend('<li class="week"></li>');
 		}
-	} else {
-		if (window.GamingCalendarModal.displayWeek < page) {
-			$(chl.get(4)).html( html[0] );
-			$(chl.get(5)).html( html[1] );
-			$(chl.get(4)).css('left', 580);
-			$(chl.get(5)).css('left', 870);
-			$(chl.get(2)).animate({left: '-=580'}, 250);
-			$(chl.get(3)).animate({left: '-=580'}, 250);
-			$(chl.get(4)).animate({left: '-=580'}, 250);
-			$(chl.get(5)).animate({left: '-=580'}, 250);
-			$(chl.get(0)).remove();
-			$(chl.get(1)).remove();
-			obj.append('<li class="week"></li><li class="week"></li>');
-		} else {
-			$(chl.get(0)).html( html[0] );
-			$(chl.get(1)).html( html[1] );
-			$(chl.get(0)).css('left', -580);
-			$(chl.get(1)).css('left', -290);
-			$(chl.get(0)).animate({left: '+=580'}, 250);
-			$(chl.get(1)).animate({left: '+=580'}, 250);
-			$(chl.get(2)).animate({left: '+=580'}, 250);
-			$(chl.get(3)).animate({left: '+=580'}, 250);
-			$(chl.get(4)).remove();
-			$(chl.get(5)).remove();
-			obj.prepend('<li class="week"></li><li class="week"></li>');
+		window.GamingCalendarModal.expandFlag = true;
+		$('#GamingCalendar').find('.GamingCalendarItem.selected').slideUp('slow',function() { $(this).removeClass('selected').addClass('unselected').slideDown().bind('click', GamingCalendarModal.expandOrCollapse ); });
+		$(this).slideUp('slow', function() { $(this).removeClass('unselected').addClass('selected').slideDown(
+			'slow', function() {
+				var obj = $(this).parent().parent();
+				var objTop = $(obj).position().top;
+				var objHeight = $(obj).height();
+				var thisTop = $(this).position().top;
+				var thisHeight = $(this).height();
+				var vpHeight = $(obj).parent().height();
+
+				if (objTop + thisTop < 0) {
+					var scrollBy = '+=' + Math.min(
+						Math.abs(objTop),
+						Math.abs(objTop + thisTop) + 5
+					);
+					$(obj).animate({top: scrollBy}, 250);
+				} else if (objTop + thisTop + thisHeight - vpHeight > -10) {
+					var scrollBy = '-=' + Math.min(
+						Math.abs(objHeight + objTop - vpHeight),
+						Math.abs(objTop + thisTop + thisHeight - vpHeight) + 40
+					);
+					$(obj).animate({top: scrollBy}, 250);
+				}
+				window.GamingCalendarModal.expandFlag = false;
+			}
+		).unbind('click'); });
+
+		GamingCalendar.track('brick/expand');
+    },
+
+    renderPage: function(e, page) {
+		if ( window.GamingCalendarModal.renderPageFlag ) {
+			return;
 		}
-	}
-	
-	window.GamingCalendarModal.bindEventHandlers(page);
-	window.GamingCalendarModal.displayWeek = page;
-	window.GamingCalendarModal.renderPageFlag = false;
-	return;
+		// FB#9271
+		//if (window.GamingCalendarModal.lastWeek && window.GamingCalendarModal.lastWeek < page + 1) {
+		//	window.GamingCalendarModal.renderPageFlag = false;
+		//	window.GamingCalendarModal.renderPage(e, page - 1);
+		//	return;
+		//}
+		window.GamingCalendarModal.renderPageFlag = true;
+	    	var week = 7 * 24 * 3600 * 1000;
+		var currentWeek = new Date( window.GamingCalendarModal.thisWeek.getTime() + (week * page) );
+
+		if (currentWeek.getTime() < window.GamingCalendarModal.firstWeek.getTime()) {
+			window.GamingCalendarModal.renderPageFlag = false;
+			window.GamingCalendarModal.renderPage(e, page + 1);
+			return;
+		}
+
+		if ( e ) { e.preventDefault(); }
+		var targetWeek = page;
+		var offset = targetWeek;
+		var weeksToLoad = 2;
+		if ('object' == typeof GamingCalendar.data['entries'][targetWeek]) {
+			offset++;
+			weeksToLoad--;
+		}
+
+		if ('object' == typeof GamingCalendar.data['entries'][targetWeek + 1]) {
+			weeksToLoad--;
+		}
+
+		if (0 < weeksToLoad) {
+			$.get('/wikia.php?controller=GamingCalendar&method=getEntries&format=json&weeks='
+			+ weeksToLoad + '&offset=' + offset, function( data ) {
+				$(data.entries).each( function(index, value) {
+					// FB#9271
+					//if ( 1 == value.length && page > 0 ) {
+					//	window.GamingCalendarModal.lastWeek = offset + index - 1;
+					//	if (offset + index < page + 1) {
+					//		window.GamingCalendarModal.renderPageFlag = false;
+					//		window.GamingCalendarModal.renderPage(e, page - 1);
+					//		return;
+					//	}
+					//}
+					GamingCalendar.data['entries'][offset + index] = value;
+				});
+				window.GamingCalendarModal.renderPageFlag = false;
+				window.GamingCalendarModal.renderPage(e, page);
+				return;
+			});
+		}
+
+		var html = new Array (
+			window.GamingCalendarModal.renderWeek(GamingCalendar.data['entries'][targetWeek]),
+			window.GamingCalendarModal.renderWeek(GamingCalendar.data['entries'][targetWeek + 1])
+		);
+
+		var obj = $('#GamingCalendar .weeks > ul');
+		var chl = obj.children('li');
+
+		if ( 0 == window.GamingCalendarModal.displayWeek && 0 == page ) {
+			$(chl.get(2)).html( html[0] );
+			$(chl.get(3)).html( html[1] );
+			$(chl.get(2)).css('left', 0);
+			$(chl.get(3)).css('left', 290);
+		} else if ( Math.abs(window.GamingCalendarModal.displayWeek - page) == 1 ) {
+			if (window.GamingCalendarModal.displayWeek < page) {
+				$(chl.get(4)).html( html[1] );
+				$(chl.get(4)).css('left', 580);
+				$(chl.get(2)).animate({left: '-=290'}, 250);
+				$(chl.get(3)).animate({left: '-=290'}, 250);
+				$(chl.get(4)).animate({left: '-=290'}, 250);
+				$(chl.get(0)).remove();
+				obj.append('<li class="week"></li>');
+			} else {
+				$(chl.get(1)).html( html[0] );
+				$(chl.get(1)).css('left', -290);
+				$(chl.get(1)).animate({left: '+=290'}, 250);
+				$(chl.get(2)).animate({left: '+=290'}, 250);
+				$(chl.get(3)).animate({left: '+=290'}, 250);
+				$(chl.get(5)).remove();
+				obj.prepend('<li class="week"></li>');
+			}
+		} else {
+			if (window.GamingCalendarModal.displayWeek < page) {
+				$(chl.get(4)).html( html[0] );
+				$(chl.get(5)).html( html[1] );
+				$(chl.get(4)).css('left', 580);
+				$(chl.get(5)).css('left', 870);
+				$(chl.get(2)).animate({left: '-=580'}, 250);
+				$(chl.get(3)).animate({left: '-=580'}, 250);
+				$(chl.get(4)).animate({left: '-=580'}, 250);
+				$(chl.get(5)).animate({left: '-=580'}, 250);
+				$(chl.get(0)).remove();
+				$(chl.get(1)).remove();
+				obj.append('<li class="week"></li><li class="week"></li>');
+			} else {
+				$(chl.get(0)).html( html[0] );
+				$(chl.get(1)).html( html[1] );
+				$(chl.get(0)).css('left', -580);
+				$(chl.get(1)).css('left', -290);
+				$(chl.get(0)).animate({left: '+=580'}, 250);
+				$(chl.get(1)).animate({left: '+=580'}, 250);
+				$(chl.get(2)).animate({left: '+=580'}, 250);
+				$(chl.get(3)).animate({left: '+=580'}, 250);
+				$(chl.get(4)).remove();
+				$(chl.get(5)).remove();
+				obj.prepend('<li class="week"></li><li class="week"></li>');
+			}
+		}
+
+		window.GamingCalendarModal.bindEventHandlers(page);
+		window.GamingCalendarModal.displayWeek = page;
+		window.GamingCalendarModal.renderPageFlag = false;
     },
 
 	bindEventHandlers: function(page) {
@@ -318,16 +318,41 @@ var GamingCalendarModal = {
 		}
 		var calendarElement = $('#GamingCalendar');
 
-		calendarElement.find('.forward-week').unbind('click').removeClass('disabled');
-		calendarElement.find('.forward-week').bind('click', function(event) { GamingCalendarModal.renderPage(event, page + 1); $.tracker.byStr( 'gamingCalendar/scroll/forward/week' ); });
-		calendarElement.find('.back-week').unbind('click').removeClass('disabled');
-		calendarElement.find('.back-week').bind('click', function(event) { GamingCalendarModal.renderPage(event, page - 1); $.tracker.byStr( 'gamingCalendar/scroll/backward/week' ); });
-		calendarElement.find('.forward-month').unbind('click').removeClass('disabled');
-		calendarElement.find('.forward-month').bind('click', function(event) { GamingCalendarModal.renderPage( event, page + nextMonthWeeks ); $.tracker.byStr( 'gamingCalendar/scroll/forward/month' ); });
-		calendarElement.find('.back-month').unbind('click').removeClass('disabled');
-		calendarElement.find('.back-month').bind('click', function(event) { GamingCalendarModal.renderPage( event, page - previousMonthWeeks ); $.tracker.byStr( 'gamingCalendar/scroll/backward/month' ); });
+		calendarElement.find('.forward-week').
+			unbind('click').
+			removeClass('disabled').
+			bind('click', function(event) {
+				GamingCalendarModal.renderPage(event, page + 1);
+				GamingCalendar.track('scroll/forward/week');
+			});
+
+		calendarElement.find('.back-week').
+			unbind('click').
+			removeClass('disabled').
+			bind('click', function(event) {
+				GamingCalendarModal.renderPage(event, page - 1);
+				GamingCalendar.track('scroll/backward/week');
+			});
+
+		calendarElement.find('.forward-month').
+			unbind('click').
+			removeClass('disabled').
+			bind('click', function(event) {
+				GamingCalendarModal.renderPage( event, page + nextMonthWeeks );
+				GamingCalendar.track('scroll/forward/month');
+			});
+
+		calendarElement.find('.back-month').
+			unbind('click').
+			removeClass('disabled').
+			bind('click', function(event) {
+				GamingCalendarModal.renderPage( event, page - previousMonthWeeks );
+				GamingCalendar.track('scroll/backward/month');
+			});
+
 		calendarElement.find('.scroll-up').unbind('click').bind('click', GamingCalendarModal.scrollUp);
 		calendarElement.find('.scroll-down').unbind('click').bind('click', GamingCalendarModal.scrollDown);
+
 		calendarElement.find('.GamingCalendarItem').unbind('click');
 		calendarElement.find('.GamingCalendarItem.unselected').bind('click', GamingCalendarModal.expandOrCollapse);
 
@@ -336,7 +361,10 @@ var GamingCalendarModal = {
 		todayButton.unbind('click');
 
 		if (0 != page) {
-			todayButton.bind('click', function(event) { GamingCalendarModal.renderPage( event, 0 ); $.tracker.byStr( 'gamingCalendar/scroll/today' ); } ).removeClass('disabled');
+			todayButton.bind('click', function(event) {
+				GamingCalendarModal.renderPage( event, 0 );
+				GamingCalendar.track('scroll/today');
+			}).removeClass('disabled');
 		} else {
 			todayButton.addClass('disabled');
 		}
