@@ -822,6 +822,7 @@ class UserProfilePageController extends WikiaController {
 
 			if( $title->isSpecial('Following') && !isset($parts[0]) ) {
 			//following pages are rendered only for profile owners
+				$this->app->wf->ProfileOut( __METHOD__ );
 				return $this->app->wg->User;
 			}
 		}
