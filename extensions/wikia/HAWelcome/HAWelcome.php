@@ -291,37 +291,36 @@ class HAWelcomeJob extends Job {
 						 * remove bots from admins
 						 */
 						$admins = array( "rev_user" => array_unique( array_diff( $admins, $bots ) ) );
-						$res = $dbr->select(
-							array( "revision" ),
-							array( "rev_user", "rev_user_text"),
+
+						// fetch most recently active admin that edited within the last 60 days
+						$user = $dbr->selectField(
+							"revision",
+							"rev_user",
 							array(
 								$dbr->makeList( $admins, LIST_OR ),
 								"rev_timestamp > " . $dbr->addQuotes(  $dbr->timestamp( time() - 5184000 ) ) // 60 days ago (24*60*60*60)
 							),
 							__METHOD__,
-							array( "ORDER BY" => "rev_timestamp DESC", "DISTINCT", "LIMIT" => 1 )
+							array( "ORDER BY" => "rev_timestamp DESC", "DISTINCT" )
 						);
 						Wikia::log( __METHOD__, "query", $dbr->lastQuery() );
-						if ( $row = $dbr->fetchObject( $res ) ) {
-							$user = $row->rev_user;
-						} else {
+
+						// if we have no active admins, fetch most recently active staff member
+						if ( empty( $user ) ) {
 							$staff = self::getStaffAccounts();
 
-							$res = $dbr->select(
-								array( "revision" ),
-								array( "rev_user", "rev_user_text"),
+							$user = $dbr->selectField(
+								"revision",
+								"rev_user",
 								array(
 									$dbr->makeList( $staff, LIST_OR )
 								),
 								__METHOD__,
-								array( "ORDER BY" => "rev_timestamp DESC", "DISTINCT", "LIMIT" => 1 )
+								array( "ORDER BY" => "rev_timestamp DESC", "DISTINCT" )
 							);
-
-							if ( $row = $dbr->fetchObject( $res ) ) {
-								$user = $row->rev_user;
-							}
 						}
 
+						// if there are no active staff members, fall back to default staffers per language
 						if ( empty( $user ) ) {
 							$user = Wikia::staffForLang( $wgLanguageCode );
 						}
