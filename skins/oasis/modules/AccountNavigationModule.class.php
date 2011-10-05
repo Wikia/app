@@ -60,7 +60,7 @@ class AccountNavigationModule extends Module {
 	 * Modify personal URLs list
 	 */
 	private function setupPersonalUrls() {
-		global $wgUser;
+		global $wgUser, $wgComboAjaxLogin;
 
 		if ($wgUser->isAnon()) {
 			// add login and register links for anons
@@ -68,8 +68,12 @@ class AccountNavigationModule extends Module {
 
 			// where to redirect after login
 			$returnto = wfGetReturntoParam();
-
-			$signUpHref = Skin::makeSpecialUrl('Signup', $returnto);
+			
+			if(empty($wgComboAjaxLogin)) {
+				$signUpHref = Skin::makeSpecialUrl('UserLogin', $returnto);
+			} else {
+				$signUpHref = Skin::makeSpecialUrl('Signup', $returnto);
+			}
 			$this->personal_urls['login'] = array(
 				'text' => wfMsg('login'),
 				'href' => $signUpHref . "&type=login",
