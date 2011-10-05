@@ -1,4 +1,11 @@
-<?php if ( empty( $mData->close ) ): ?>
+<?php
+/*
+ * The template for the view to be displayed after the form submission.
+ * 
+ * A list of wikis marked to close with the status of each operation (success or failure).
+ */
+
+if ( empty( $mData->close ) ): ?>
 
 <p><?= wfMsg( 'specialspamwikis-no-wikis-to-close' ); ?></p>
 <p><a href="<?= $mAction; ?>"><?= wfMsg( 'specialspamwikis-show-list' ); ?></a></p>

@@ -2,6 +2,8 @@
 /**
  * Michał Roszka (Mix) <michal@wikia-inc.com>
  * 
+ * A script populating the noreptemp.spamwikis table with the current data.
+ * 
  * Usage: SERVER_ID=177 php SpecialSpamWikisCache.php --conf /usr/wikia/conf/current/wiki.factory/LocalSettings.php
  */
 $dir = realpath( dirname( __FILE__ ) . '/../../../../maintenance/' );
@@ -9,15 +11,26 @@ include "{$dir}/commandLine.inc";
 
 class SpecialSpamWikiCache {
     
+    /**
+     * DB handle
+     */
     private $dbObj;
     
+    /**
+     * The constructor
+     */
     public function __construct( DatabaseMysql $dbObj ) {
         $this->dbObj = $dbObj;
         return null;
     }
     
+    /**
+     * The main method, executes a sequence of DB queries to populate the noreptemp.spamwikis with the current data.
+     */
     public function updateCache() {
-        /* INSERT INTO noreptemp.spamwikis (city_id, city_sitename, city_url,
+        /* The code below is equivalent to the following query:
+         * 
+         * INSERT INTO noreptemp.spamwikis (city_id, city_sitename, city_url,
          * city_created, city_founding_user, city_title) SELECT city_id, city_sitename,
          * city_url, city_created, city_founding_user, city_title FROM wikicities.city_list
          * WHERE city_public = 1 AND city_id NOT IN (SELECT city_id FROM
@@ -53,7 +66,9 @@ class SpecialSpamWikiCache {
             );
         }
 
-        /* DELETE FROM noreptemp.spamwikis WHERE city_id IN (SELECT city_id
+        /* The code below is equivalent to the following query:
+         * 
+         * DELETE FROM noreptemp.spamwikis WHERE city_id IN (SELECT city_id
          * FROM wikicities.city_list WHERE city_public <> 1);
          */
         $res = $this->dbObj->select(
@@ -73,7 +88,9 @@ class SpecialSpamWikiCache {
             );
         }
 
-        /* UPDATE noreptemp.spamwikis SET benchmark_1 = 1 WHERE benchmark_1 = 0
+        /* The code below is equivalent to the following query:
+         * 
+         * UPDATE noreptemp.spamwikis SET benchmark_1 = 1 WHERE benchmark_1 = 0
          * AND city_founding_user IN (SELECT city_founding_user FROM
          * wikicities.city_list GROUP BY city_founding_user HAVING
          * count(city_id) >= 2);
@@ -91,7 +108,9 @@ class SpecialSpamWikiCache {
             );
         }
         
-        /* UPDATE noreptemp.spamwikis SET benchmark_1 = 0 WHERE benchmark_1 = 1
+        /* The code below is equivalent to the following query:
+         * 
+         * UPDATE noreptemp.spamwikis SET benchmark_1 = 0 WHERE benchmark_1 = 1
          * AND city_founding_user NOT IN (SELECT city_founding_user FROM
          * wikicities.city_list GROUP BY city_founding_user HAVING
          * count(city_id) >= 2);
@@ -108,7 +127,9 @@ class SpecialSpamWikiCache {
             );
         }
 
-        /* UPDATE noreptemp.spamwikis SET benchmark_2 = 1 WHERE benchmark_2 = 0
+        /* The code below is equivalent to the following query:
+         * 
+         * UPDATE noreptemp.spamwikis SET benchmark_2 = 1 WHERE benchmark_2 = 0
          * AND city_founding_user IN (SELECT user_id FROM wikicities.user
          * WHERE user_email_authenticated IS NULL);
          */
@@ -174,10 +195,9 @@ class SpecialSpamWikiCache {
     }
 }
 
+// the work...
 $d = new SpecialSpamWikiCache(
         F::app()->wf->getDb( DB_MASTER, array(), 'stats' )
 );
-
 $d->updateCache();
-
 exit( 0 );

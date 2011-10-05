@@ -1,3 +1,12 @@
+<?php
+/*
+ * The template for the initial Special:SpamWikis view.
+ * 
+ * A list of wikis matching the specified criteria, checkboxes to pick wikis to be closed.
+ * 
+ * The script utilises jQuery DataTables plug-in: http://datatables.net/
+ */
+?>
 <!-- s: <?= __FILE__ ?> -->
 <script type="text/javascript" charset="utf-8"> 
  
