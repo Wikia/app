@@ -2731,18 +2731,23 @@ class DBQueryError extends DBError {
 	}
 
 	function getSQL() {
-		/* Wikia change begin - @author: Marooned */
+		/* Wikia change begin - @author: Marooned,wladek */
 		/* add unique ID to query - useful for users reports to find proper query */
+		$uniqueId = wfTimestamp( TS_MW ) . '.';
+		$pool = "0123456789qwertyuiopasdfghjklzxcvbnm";
+		for ($i=0;$i<8;$i++) {
+			$uniqueId .= $pool[rand(0,strlen($pool)-1)];
+		}
+		
 		global $wgShowSQLErrors, $wgDBname;
-		$time = wfTimestamp( TS_MW );
 		$uri  = $_SERVER[ 'SERVER_NAME' ] . $_SERVER[ 'REQUEST_URI' ];
 		$qry  = $_SERVER[ 'QUERY_STRING' ];
-		error_log("DBQueryError: id=$time, errorNo={$this->errno}, errorMessage={$this->error}, SQL={$this->sql}");
-		error_log("DBQueryError: id=$time, errorNo={$this->errno}, NAME={$wgDBname}, functionName={$this->fname}, URI={$uri}, QUERY={$qry}");
+		error_log("DBQueryError: id=$uniqueId, errorNo={$this->errno}, errorMessage={$this->error}, SQL={$this->sql}");
+		error_log("DBQueryError: id=$uniqueId, errorNo={$this->errno}, NAME={$wgDBname}, functionName={$this->fname}, URI={$uri}, QUERY={$qry}");
 		if( !$wgShowSQLErrors ) {
-			return "/*id=$time*/ " . $this->msg( 'sqlhidden', 'SQL hidden' );
+			return "/*id=$uniqueId*/ " . $this->msg( 'sqlhidden', 'SQL hidden' );
 		} else {
-			return "/*id=$time*/ " . $this->sql;
+			return "/*id=$uniqueId*/ " . $this->sql;
 		}
 		/* Wikia change end */
 	}
