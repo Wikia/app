@@ -709,7 +709,15 @@ HTML
 	static function isWysiwygModeEnabled() {
 		return (self::$useWysiwyg && self::$initMode == "wysiwyg");
 	}
-		
+	
+	/**
+	 * This will be false if mediawiki editor is being used
+	 * @return boolean true/false if RTE is enabled
+	 */
+	static function isEnabled() {
+		return self::$useWysiwyg;
+	}
+	
 	/**
 	 * Add "Enable Rich Text Editing" as the first option in editing tab of user preferences
 	 */

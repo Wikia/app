@@ -53,7 +53,7 @@ class EditPageLayoutModule extends Module {
 			// add stylesheet
 			$app->wg->Out->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/EditPageLayout/css/EditPageLayout.scss'));
 			$packageName = 'epl';
-			if (class_exists('RTE') && RTE::isWysiwygModeEnabled() ) {
+			if (class_exists('RTE') && RTE::isEnabled() ) {
 				$packageName = 'eplrte';
 			} 
 			$srcs = F::build('AssetsManager',array(),'getInstance')->getGroupCommonURL($packageName);
