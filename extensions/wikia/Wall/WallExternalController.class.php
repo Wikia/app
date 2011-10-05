@@ -148,4 +148,5 @@ class WallExternalController extends WikiaController {
 		$ac = ArticleComment::newFromId($acStatus[1]->getId());
 		$this->response->setVal('message', $this->app->renderView( 'WallController', 'message', array( 'comment' => $ac, 'isreply' => true ) ));
 	}
+	
 } // end class Wall

@@ -75,6 +75,24 @@ class WallController extends ArticleCommentsModule {
 		
 		$this->response->setVal( 'wallOwner', $user_displayname);	
 		$this->response->setVal( 'wallUrl', $parent_title->getFullUrl() );
+		
+		$canUndelete = $this->app->wg->User->isAllowed( 'browsearchive' );
+		
+		if($canUndelete) {
+			$dbr = wfGetDB( DB_SLAVE );
+			$row = $dbr->selectRow( 'archive',
+				array( 'ar_title' ),
+				array( 'ar_page_id' => $parts[1] ),
+				__METHOD__ );
+				
+			$dbkey = $row->ar_title;
+			$msg_title = F::build('Title', array($dbkey, NS_USER_WALL_MESSAGE), 'newFromText' );
+			
+			$undelete_title = F::build('Title', array('Undelete',NS_SPECIAL), 'newFromText' );
+			$undelete_url = $undelete_title->getFullUrl();
+			$this->response->setVal( 'undeleteUrl', $undelete_url.'/'.$msg_title->getPrefixedText() );
+		}
+		$this->response->setVal( 'canUndelete', $canUndelete );
 	}	
 	/**
 	 * @brief Passes $userTalkArchiveContent to the template and renders the template
@@ -210,7 +228,7 @@ class WallController extends ArticleCommentsModule {
 		else
 			$realname = '';
 		
-		$this->response->setVal( 'id', (empty($data['id']) ? '':$data['id'] ));
+		$this->response->setVal( 'id', $wallMessage->getTitle()->getArticleID());
 		$this->response->setVal( 'username', $name );
 		//$this->response->setVal( 'sig', $data['sig'] );
 		$this->response->setVal( 'realname', $realname );
