@@ -79,16 +79,7 @@ class SpecialSpamWikiCache {
          * count(city_id) >= 2);
          */
         
-        $res = $this->dbObj->select(
-                'wikicities.city_list',
-                array( 'city_founding_user' ),
-                array(),
-                __METHOD__,
-                array(
-                    'GROUP BY city_founding_user',
-                    'HAVING count(city_id) >= 2'
-                )
-         );
+        $res = $this->dbObj->query( 'SELECT city_founding_user FROM wikicities.city_list GROUP BY city_founding_user HAVING count(city_id) >= 2', __METHOD__ );
 
         while ( $oRow = $this->dbObj->fetchObject( $res ) ) {
             $this->dbObj->update(
@@ -105,16 +96,7 @@ class SpecialSpamWikiCache {
          * wikicities.city_list GROUP BY city_founding_user HAVING
          * count(city_id) >= 2);
          */
-        $res = $this->dbObj->select(
-                'wikicities.city_list',
-                array( 'city_founding_user' ),
-                array(),
-                __METHOD__,
-                array(
-                    'GROUP BY city_founding_user',
-                    'HAVING count(city_id) < 2'
-                )
-         );
+        $res = $this->dbObj->query( 'SELECT city_founding_user FROM wikicities.city_list GROUP BY city_founding_user HAVING count(city_id) < 2', __METHOD__ );
 
         while ( $oRow = $this->dbObj->fetchObject( $res ) ) {
             $this->dbObj->update(

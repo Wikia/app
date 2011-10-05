@@ -81,7 +81,7 @@ class SpecialSpamWikisData {
             }
             $data['items'][] = array(
                 '<input type="checkbox" name="close[' . $oRow->city_id . ']" value="1" />',
-                $link->makeExternalLink( $oRow->city_url, $oRow->city_title ),
+                '<b>' . $oRow->city_title . '</b><br /><small>' . $link->makeExternalLink( $oRow->city_url, $oRow->city_url ) . '</small>',
                 $oRow->city_created,
                 $sk->makeLinkObj( $user->getUserPage(), $user->getName() ),
                 $mail

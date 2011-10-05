@@ -38,12 +38,13 @@ $(document).ready(function() {
         'aLengthMenu': [[10, 25, 50, 100], [10, 25, 50, 100]],
         'sDom': '<"dttoolbar"><"top"flip>rt<"bottom"p><"clear">',
         'aoColumns': [
-            { 'sName': 'close'   },
-            { 'sName': 'wiki'    },
-            { 'sName': 'created' },
-            { 'sName': 'founder' },
-            { 'sName': 'email'   }
+            { 'sName': 'close', 'bSortable' : false   },
+            { 'sName': 'wiki' , 'bSortable' : true   },
+            { 'sName': 'created', 'bSortable' : true },
+            { 'sName': 'founder', 'bSortable' : false },
+            { 'sName': 'email', 'bSortable' : false   }
         ],
+        'aaSorting': [[2,'desc']],
         'bProcessing': true,
         'bServerSide': true,
         'bFilter' : false,
@@ -64,6 +65,7 @@ $(document).ready(function() {
             var iColumns	= 0;
             
             for ( i in aoData ) {
+                console.log( aoData[i] );
                 switch ( aoData[i].name ) {
                     case 'iDisplayLength'	: limit = aoData[i].value; break;
                     case 'iDisplayStart'	: offset = aoData[i].value; break;
@@ -104,12 +106,6 @@ $(document).ready(function() {
             });
         }
     });
-    var toolbar = '<div class="spamwikis-filter">';
-    toolbar += '<span class="spamwikis_filter spamwikis_first"> <?= wfMsg( 'specialspamwikis-startingtext' ); ?> </span>';
-    toolbar += '<span class="spamwikis_filter"><input type="text" name="spamwikis_search" id="spamwikis_search" size="5" value=""></span>';
-    toolbar += '<span class="spamwikis_filter"><input type="button" value="<?= wfMsg( 'show' ); ?>" id="spamwikis-show"></span></div>';
-    toolbar += '</div>';
-    $("div.dttoolbar").html( toolbar );
     $('#spamwikis-show').click( function() { oTable.fnDraw(); } );
 });
  
@@ -120,16 +116,25 @@ $(document).ready(function() {
 <form method="post" action="<?= $mAction ?>" id="spamwikis-form">
     <?php if ( !empty( $mData->criteria ) ) { ?>
     <fieldset class="spamwikis_fieldset">
-        <legend><?= wfMsg( 'specialspamwikis-criteria' ); ?></legend>
+        <legend><?= wfMsg( 'specialspamwikis-filter-by-name' ); ?></legend>
         <ul>
 <?php foreach ( $mData->criteria as $k => $v ): ?>
             <li>
-                <span style="vertical-align:middle"><input type="checkbox" name="spamwikis_target" id="spamwikis_target" value="<?= $k ?>" <?=( in_array( $k, $mData->defCriteria ) )? 'checked="checked"' : '' ?>></span>
+                <span style="vertical-align:middle"><input type="checkbox" name="spamwikis_target" id="spamwikis_target" value="<?= $k ?>" checked="checked" /></span>
                 <span style="padding-bottom:5px;"><?= wfMsg( $v['name'] ); ?></span>
             </li>
 <?php endforeach; ?>
         </ul>
     </fieldset>
+    <div class="spamwikis-filter">
+        <fieldset class="spamwikis_fieldset">
+            <legend><?= wfMsg( 'specialspamwikis-criteria' ); ?></legend>
+            <span class="spamwikis_filter spamwikis_first"> <?= wfMsg( 'specialspamwikis-startingtext' ); ?> </span>
+            <span class="spamwikis_filter"><input type="text" name="spamwikis_search" id="spamwikis_search" size="5" value=""></span>
+        </fieldset>
+        <span class="spamwikis_filter"><input type="button" value="<?= wfMsg( 'specialspamwikis-update-list' ); ?>" id="spamwikis-show"></span>
+    </div>
+    <hr />
 <?php } ?>
 </form> 
 </div>
