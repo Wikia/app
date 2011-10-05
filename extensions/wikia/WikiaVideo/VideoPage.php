@@ -50,7 +50,11 @@ class VideoPage extends Article {
 	private static $JWPLAYER_JS = 'jwplayer.js';
 	private static $JWPLAYER_SWF = 'player.swf';
 	
-	private static $JWPLAYER_GOOGIMA_DATA = array('ad.tag'=>'http://ad.doubleclick.net/pfadx/instream_flash/;sz=320x240;tile=1', 'ad.position'=>'pre');
+	private static $JWPLAYER_GOOGIMA_DATA = 
+		array('ad.tag'=>'http://ad.doubleclick.net/pfadx/instream_flash/;sz=320x240;tile=1', 'ad.position'=>'pre', 'ad.bandwidth'=>'high',
+			'admessagedynamic'=>'Your video will play in XX seconds', 'admessagedynamickey'=>'XX',
+			'scaled_ads'=>'false'
+			);
 
 	var	$mName,
 		$mVideoName,
