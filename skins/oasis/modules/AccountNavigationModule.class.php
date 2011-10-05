@@ -95,7 +95,7 @@ class AccountNavigationModule extends Module {
 	public function executeIndex() {
 		wfProfileIn(__METHOD__);
 
-		global $wgUser;
+		global $wgUser, $wgEnableWikiaLoginExt;
 
 		$this->setupPersonalUrls();
 
@@ -111,7 +111,11 @@ class AccountNavigationModule extends Module {
 			}
 
 			// render Login and Register links
-			$this->links[] = $this->renderPersonalUrl('login');
+			$loginhtml = $this->renderPersonalUrl('login');
+			if(!empty($wgEnableWikiaLoginExt)) {
+				$loginhtml = $loginhtml.(string)F::app()->sendRequest( 'WikiaLoginSpecial', 'widget', array('param' => 'paramvalue' ));
+			}
+			$this->links[] = $loginhtml;
 			$this->links[] = $this->renderPersonalUrl('register');
 		}
 		else {
@@ -134,9 +138,7 @@ class AccountNavigationModule extends Module {
 			// logout link
 			$this->dropdown[] = $this->renderPersonalUrl('logout');
 		}
-
-		#print_pre($this->personal_urls);
-
+		
 		wfProfileOut(__METHOD__);
 	}
 }

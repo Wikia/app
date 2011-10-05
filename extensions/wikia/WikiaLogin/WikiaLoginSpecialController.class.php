@@ -34,6 +34,15 @@ class WikiaLoginSpecialController extends WikiaSpecialPageController {
 	}
 	
 	/**
+	 * @brief renders html version that will be inserted into ajax based login interaction
+	 * @details
+	 *   on GET, template partial for an ajax element will render
+	 */
+	public function widget() {
+		
+	}
+	
+	/**
 	 * @brief logs in a user with given login name and password.  if keeploggedin, sets a cookie.
 	 * @details
 	 * @requestParam string username
