@@ -41,7 +41,7 @@ class FounderEmails {
 	 * Note: also called from maintenance script.
 	 * @return array of user_id
 	 */
-	public function getWikiAdminIds($wikiId = 0) {
+	public function getWikiAdminIds($wikiId = 0, $use_master = false) {
 		global $wgCityId, $wgFounderEmailsDebugUserId, $wgEnableAnswers, $wgMemc;
 		wfProfileIn( __METHOD__ );
 
@@ -57,7 +57,8 @@ class FounderEmails {
 				$admin_ids = $wgMemc->get($memKey);
 				if (is_null($admin_ids)) {
 					$dbname = WikiFactory::IDtoDB($wikiId);
-					$dbr = wfGetDB(DB_SLAVE, array(), $dbname);
+					$db_type = ($use_master) ? DB_MASTER : DB_SLAVE;
+					$dbr = wfGetDB($db_type, array(), $dbname);
 					$result = $dbr->select(
 						'user_groups',
 						'distinct ug_user',
@@ -206,7 +207,7 @@ class FounderEmails {
 		if ( !FounderEmailsEvent::isAnswersWiki() && in_array($wgUser->getId(), FounderEmails::getInstance()->getWikiAdminIds()) ) {
 			
 			// If we are in digest mode, grey out the individual email options
-			$disableEmailPrefs = FounderEmails::getInstance()->getWikiFounder()->getOption("founderemails-complete-digest-$wgCityId");
+			$disableEmailPrefs = $wgUser->getOption("founderemails-complete-digest-$wgCityId");
 			
 			/*  This is the old preference, no longer used 
 			 *  TODO: Write conversion script from old to new
@@ -267,6 +268,7 @@ class FounderEmails {
 				|| ($removegroup && (in_array('sysop', $removegroup) || in_array('bureaucrat', $removegroup)))) {
 				$memKey  = self::getMemKeyAdminIds($wgCityId);
 				$wgMemc->delete($memKey);
+				$this->getWikiAdminIds($wgCityId, true);
 			}
 		}
 		
