@@ -4,4 +4,9 @@
 <div class="WikiaArticle" id="WikiaArticle">
 	<?= wfMsg('wall-deleted-msg-text'); ?>
 	<a href="<?= $wallUrl ?>"><?=  wfMsg('wall-deleted-msg-return-to', $wallOwner) ?></a>
+	<? if( $canUndelete ): ?>
+	<p>
+		<a href="<?= $undeleteUrl ?>">(<?= wfMsg('wall-view-revert'); ?>)</a>
+	</p>
+	<? endif; ?>
 </div>

@@ -81,5 +81,7 @@ $messages['en'] = array(
 	
 	'wall-deleted-msg-pagetitle' => 'Message deleted',
 	'wall-deleted-msg-text' => 'The message you are trying to reach has been deleted.',
-	'wall-deleted-msg-return-to' => 'Return to $1\'s Wall.'
+	'wall-deleted-msg-return-to' => 'Return to $1\'s Wall.',
+
+	'wall-view-revert' => 'View/Revert',
 );

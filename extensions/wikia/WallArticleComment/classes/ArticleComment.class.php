@@ -408,7 +408,7 @@ class ArticleComment {
 		if(empty($this->mArticle)) {
 			$this->mArticle = new Article($this->mTitle, 0);
 		} 
-		
+		$fh = fopen('/var/tmp/wall.log', 'a'); fwrite($fh, print_r($this->mTitle,1)); fclose($fh);
 		$error = '';
 		//we need to run all the hook manual :/
 		if ( wfRunHooks( 'ArticleDelete', array( &$this->mArticle, &$wgUser, &$reason, &$error ) ) ) {
@@ -680,6 +680,10 @@ class ArticleComment {
 			$commentTitle = sprintf('%s/%s%s-%s', $title->getText(), ARTICLECOMMENT_PREFIX, $user->getName(), wfTimestampNow());
 		} else {
 			$parentArticle = Article::newFromID($parentId);
+			if(empty($parentArticle)) {
+				$parentTitle = Title::newFromID($parentId, GAID_FOR_UPDATE);
+				$parentArticle = new Article($parentTitle);
+			}
 			//FB#2875 (log data for further debugging)
 			if (is_null($parentArticle)) {
 				$debugTitle = !empty($title) ? $title->getText() : '--EMPTY--'; // BugId:2646
