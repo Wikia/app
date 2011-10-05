@@ -23,7 +23,7 @@ var ThemeDesignerPreview = {
 
 	loadSASS: function(url) {
 		//fade out
-		$("#clickmask").animate({"opacity": .65}, "fast", function() {
+		$("#clickmask").animate({"opacity": 0.65}, "fast", function() {
 			$.getCSS(url, function(link) {
 				//remove old <link>
 				$(ThemeDesignerPreview.link).remove();
