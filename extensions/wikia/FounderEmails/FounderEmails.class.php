@@ -268,7 +268,7 @@ class FounderEmails {
 				|| ($removegroup && (in_array('sysop', $removegroup) || in_array('bureaucrat', $removegroup)))) {
 				$memKey  = self::getMemKeyAdminIds($wgCityId);
 				$wgMemc->delete($memKey);
-				$this->getWikiAdminIds($wgCityId, true);
+				FounderEmails::getInstance()->getWikiAdminIds($wgCityId, true);
 			}
 		}
 		
