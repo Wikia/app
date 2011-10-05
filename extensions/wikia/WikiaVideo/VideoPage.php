@@ -2118,7 +2118,10 @@ EOD;
 			$this->mProvider,
 			$this->mId
 		);
-		$data = array_merge($data, $this->mData);
+
+		if ( is_array( $this->mData ) ){
+			$data = array_merge($data, $this->mData);
+		}
 		$data = implode( ",", $data ) ;
 		$url = self::getUrl( $data );
 		$provider = $wgWikiaVideoProviders[$this->mProvider];
