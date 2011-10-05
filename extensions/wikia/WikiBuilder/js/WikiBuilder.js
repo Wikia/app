@@ -1,17 +1,18 @@
 // ThemeDesigner.js overwrites
 ThemeDesigner.init = function() {};
 ThemeDesigner.set = function(setting, newValue) {
-	var t = themes[newValue];
+	var t = window.themes[newValue];
+	// TODO: remove hardcoded path
 	var owb = '/__sass/extensions/wikia/WikiBuilder/css/WikiBuilder.scss/3337777333333/';
 	var sass = '/__sass/skins/oasis/css/oasis.scss/3337777333333/';
 	var params = '';
-	params += 'color-body=' + escape(t['color-body']);
-	params += '&color-page=' + escape(t['color-page']);
-	params += '&color-buttons=' + escape(t['color-buttons']);
-	params += '&color-links=' + escape(t['color-links']);
+	params += 'color-body=' + encodeURIComponent(t['color-body']);
+	params += '&color-page=' + encodeURIComponent(t['color-page']);
+	params += '&color-buttons=' + encodeURIComponent(t['color-buttons']);
+	params += '&color-links=' + encodeURIComponent(t['color-links']);
 	params += '&background-image=' + encodeURIComponent(t['background-image']);
-	params += '&background-align=' + escape(t['background-align']);
-	params += '&background-tiled=' + escape(t['background-tiled']);
+	params += '&background-align=' + encodeURIComponent(t['background-align']);
+	params += '&background-tiled=' + encodeURIComponent(t['background-tiled']);
 	$('.ThemeDesignerSASS').addClass('remove');
 	$('<style class="ThemeDesignerSASS">').appendTo('head').load(sass + params, function() {
 		$('.ThemeDesignerSASS.remove').remove();
@@ -54,7 +55,7 @@ var WikiBuilder = {
 			$.tracker.byStr(tracking_prepend + '3/skip');
 		});
 		$('.dialog .step4 input.wb-basic').click(function(e){
-			window.location.href = redirect;
+			window.location.href = window.redirect;
 			$.tracker.byStr(tracking_prepend + '4/save');
 		});
 		$('.dialog .step4 input.wb-plus').click(function(e){
@@ -63,7 +64,7 @@ var WikiBuilder = {
 		});
 
 		$('.dialog .step3 input[type=text]').blur(WikiBuilder.pageNameExpansion);
-		
+
 		$.tracker.byStr('wikibuilder/view');
 	},
 
@@ -156,7 +157,7 @@ var WikiBuilder = {
 			);
 			if (p && p.length > 0) {
 				p.reverse();
-				pagetext = WikiBuilder.msg('owb-new-pages-text');
+				var pagetext = WikiBuilder.msg('owb-new-pages-text');
 				Mediawiki.apiCall(
 					{
 						'action': 'createmultiplepages',
@@ -246,7 +247,7 @@ var WikiBuilder = {
 	msg: function(msg){
 		var ret;
 		try {
-			ret = messages[msg];
+			ret = window.messages[msg];
 		} catch(e) {
 			ret = msg;
 		}
