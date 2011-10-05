@@ -35,8 +35,8 @@ class WallNotificationEntity {
 		return $wn;
 	}
 	
-	public static function getByWikiAndRCId($wikiId, $rc_id) {
-		
+	public static function getByWikiAndRCId($rc_id, $wikiId) {
+		return F::build('WallNotificationEntity', array($rc_id.'_'.$wikiId), 'getById');
 	}
 	
 	public static function getById($id) {
