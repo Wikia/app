@@ -1,18 +1,11 @@
 <?php
 $config = array();
 
-// Rich Text Editor JavaScript (before reskin)
-$config['oldrte'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'#function_AssetsConfig::getRTEAssets'
-	)
-);
-// Reskined rich text editor
+// Reskinned rich text editor
 $config['rte'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'#function_AssetsConfig::getRTEAssetsEPL'
+		'#function_AssetsConfig::getRTEAssets'
 	)
 );
 // Generic edit page JavaScript

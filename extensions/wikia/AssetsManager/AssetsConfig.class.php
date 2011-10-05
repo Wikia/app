@@ -35,9 +35,9 @@ class AssetsConfig {
 		return array(Title::newFromText('-')->getFullURL('action=raw&smaxage=0&gen=js&useskin=oasis'));
 	}
 
-	public static function getRTEAssetsEx( $combine, $path ) {
+	public static function getRTEAssets( $combine ) {
 		global $IP;
-
+		$path = "extensions/wikia/RTE";
 		$files = array();
 
 		if( $combine ) {
@@ -58,31 +58,18 @@ class AssetsConfig {
 		} else {
 			$files[] = $path . '/ckeditor/ckeditor_source.js';
 			$files[] = $path . '/js/RTE.js';
+			$files[] = $path . '/js/jquery.editor.js';
 		}
 
-		return $files;
-	}
-
-	public static function getRTEAssets( $combine ) {
-		return self::getRTEAssetsEx( $combine,"extensions/wikia/RTE" );
-	}
-
-	public static function getRTEAssetsEPL($combine) {
-		$files = self::getRTEAssetsEx( $combine, "extensions/wikia/RTE" );
-		if ( !$combine ) {
-			$files[] = 'extensions/wikia/RTE/js/jquery.editor.js';
-		}
 		return $files;
 	}
 
 	public static function getEPLAssets( $combine ) {
-		global $IP;
-		$file = "$IP/extensions/wikia/EditPageLayout/assets-config.php";
-		if ( file_exists( $file ) ) {
-			include $file;
-			return $files;
-		}
-		return array();
+		// This class always exists at the moment, this is just in case it goes away at some point
+		if (class_exists('EditPageLayoutHelper'))
+			return EditPageLayoutHelper::getAssets();
+		else 
+			return array();
 	}
 
 	public static function getJQueryUrl( $combine, $minify, $params ) {
