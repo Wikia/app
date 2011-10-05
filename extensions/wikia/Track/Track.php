@@ -71,6 +71,12 @@ SCRIPT1;
 	}
 
 	public function event ($param=null) {
+		$backtrace = debug_backtrace();
+		$class = $backtrace[1]['class'];
+		$func  = $backtrace[1]['function'];
+		$line  = $backtrace[1]['line'];
+		$param['caller'] = "$class::$func:$line";
+
 		$url = Track::getURL('event', $param);
 		if (Http::get($url) !== false) {
 			return true;
