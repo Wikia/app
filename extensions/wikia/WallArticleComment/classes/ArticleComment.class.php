@@ -408,7 +408,6 @@ class ArticleComment {
 		if(empty($this->mArticle)) {
 			$this->mArticle = new Article($this->mTitle, 0);
 		} 
-		$fh = fopen('/var/tmp/wall.log', 'a'); fwrite($fh, print_r($this->mTitle,1)); fclose($fh);
 		$error = '';
 		//we need to run all the hook manual :/
 		if ( wfRunHooks( 'ArticleDelete', array( &$this->mArticle, &$wgUser, &$reason, &$error ) ) ) {
