@@ -42,6 +42,7 @@ class CodeLintJs extends CodeLint {
 			'showComboAjaxForPlaceHolder',
 			'skin',
 			'stylepath',
+			'ThemeDesigner',
 			'Timer',
 			'WET',
 			'YAHOO',
