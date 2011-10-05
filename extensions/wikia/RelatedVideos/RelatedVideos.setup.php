@@ -28,7 +28,8 @@ if ( empty( $wgRelatedVideosPartialRelease ) ){
  * hooks
  */
 if ( empty( $wgRelatedVideosPartialRelease ) ){
-	$app->registerHook('OutputPageBeforeHTML', 'RelatedVideosHookHandler', 'onOutputPageBeforeHTML' );
+	//$wgHooks['OutputPageBeforeHTML'][] = 'RelatedVideosHookHandler::onOutputPageBeforeHTML';
+	array_splice( $wgHooks['OutputPageBeforeHTML'], 0, 0, 'RelatedVideosHookHandler::onOutputPageBeforeHTML' );
 	// $app->registerHook('OutputPageMakeCategoryLinks', 'RelatedVideosController', 'onOutputPageMakeCategoryLinks');
 	$app->registerHook('OutputPageMakeCategoryLinks', 'RelatedVideosHookHandler', 'onOutputPageMakeCategoryLinks');
 	$app->registerHook('ArticleSaveComplete', 'RelatedVideosHookHandler', 'onArticleSaveComplete');
@@ -38,7 +39,7 @@ if ( empty( $wgRelatedVideosPartialRelease ) ){
 /**
  * messages
  */
-$app->registerExtensionMessageFile('RelatedVideos', $dir . '/RelatedVideos.i18n.php');
+$app->registerExtensionMessageFile( 'RelatedVideos', $dir . '/RelatedVideos.i18n.php' );
 if ( empty( $wgRelatedVideosPartialRelease ) ){
 	F::addClassConstructor( 'RelatedVideosController', array( 'app' => $app ) );
 }
@@ -46,8 +47,7 @@ if ( empty( $wgRelatedVideosPartialRelease ) ){
 /**
  * extension related configuration
  */
- 
- // setup "RelatedVideo" namespace
+// setup "RelatedVideo" namespace
 define('NS_RELATED_VIDEOS', 1100);
 
 $wgExtensionNamespacesFiles['RelatedVideos'] = "{$dir}/RelatedVideos.namespaces.php";

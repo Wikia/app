@@ -7,14 +7,9 @@ class RelatedVideosHookHandler {
 	private $count = 0;
 	 
 	public function onOutputPageBeforeHTML( &$out, &$text ) {
-		
-			if( $out->isArticle()) {
-				$text = preg_replace_callback(
-					'/<h2><span/siU',
-					array( $this, 'onOutputPageBeforeHTMLCallback' ),
-					$text
-				);
-			}
+		if( $out->isArticle() && F::app()->wg->request->getVal( 'diff' ) === null ) {
+			$text .= F::app()->sendRequest('RelatedVideosController', 'getCarusel')->toString();
+		}
 		return true;
 	}
 
@@ -33,14 +28,6 @@ class RelatedVideosHookHandler {
 		$out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/RelatedVideos/css/RelatedVideos.scss' ) );
 		wfProfileOut(__METHOD__);
 		return true;
-	}
-
-	public function onOutputPageBeforeHTMLCallback( $matches ){
-		$this->count++;
-		return ( self::RELATED_VIDEOS_POSITION == $this->count
-				? F::app()->sendRequest('RelatedVideosController', 'getCarusel')->toString()
-				: ''
-			).$matches[0];
 	}
 
 	public static function onOutputPageMakeCategoryLinks( $outputPage, $categories, $categoryLinks ) {

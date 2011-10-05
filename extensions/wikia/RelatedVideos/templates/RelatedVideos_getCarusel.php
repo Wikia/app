@@ -1,4 +1,4 @@
-<div class="RelatedVideos" id="RelatedVideos" data-count="<?=ceil((count($videos)+1)/3);?>">
+<div class="RelatedVideos noprint" id="RelatedVideos" data-count="<?=ceil((count($videos)+1)/3);?>">
 	<div class="deleteConfirm messageHolder"><?=wfMsg('related-videos-remove-confirm');?></div>
 	<div class="removingProcess messageHolder"><?=wfMsg('related-videos-remove-call');?></div>
 	<div class="RVHeader">
