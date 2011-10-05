@@ -37,6 +37,7 @@ class WikiFeaturesHelper extends WikiaModel {
 		'wgEnableArticleCommentsExt' => 200,	// Article Comments
 		'wgEnableCategoryExhibitionExt' => 201,	// Category Exhibition
 		'wgEnableChat' => 258,					// Chat
+		'wgOasisNavV2' => 287,					// WikiNav
 	);
 	
 	// no need to add feature to $release_date if not require "new" flag
