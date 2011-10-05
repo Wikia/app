@@ -489,7 +489,7 @@ class WallHooksHelper {
 	}
 	
 	public function onChangesListInsertArticleLink($list, $articleLink, $s, $rc, $unpatrolled, $watched) {
-		if( !empty($rc->mAttribs['rc_namespace']) && !empty($rc->mAttribs['rc_namespace']) && $rc->mAttribs['rc_namespace'] == NS_USER_WALL_MESSAGE ) {
+		if(($rc->getAttribute('rc_type') == RC_NEW || $rc->getAttribute('rc_type') == RC_EDIT) && !empty($rc->mAttribs['rc_namespace']) && !empty($rc->mAttribs['rc_namespace']) && $rc->mAttribs['rc_namespace'] == NS_USER_WALL_MESSAGE ) {
 			$app = F::app();
 			
 			$wnEntity = F::build('WallNotificationEntity', array($rc->mAttribs['rc_id'], $app->wg->CityId), 'getByWikiAndRCId');
