@@ -23,7 +23,7 @@ class Track {
 		// Handle any parameters passed to us
 		if ($param) {
 			foreach ($param as $key => $val) {
-				$url .= '&amp;'.$key.'='.$val;
+				$url .= '&amp;'.urlencode($key).'='.urlencode($val);
 			}
 		}
 
@@ -76,7 +76,7 @@ SCRIPT1;
 		$func  = $backtrace[1]['function'];
 		$line  = $backtrace[1]['line'];
 		$param['caller'] = "$class::$func:$line";
-		$param['type'] = $event_type;
+		$param['type'] = urlencode($event_type);
 
 		$url = Track::getURL('event', $param);
 		if (Http::get($url) !== false) {
