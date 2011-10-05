@@ -21,8 +21,6 @@ class RelatedVideosService {
 		if ( empty( $result ) ){
 			Wikia::log( __METHOD__, 'RelatedVideos', 'Not from cache' );
 			if ( !empty( $source ) ){
-				$oMemc = F::app()->wg->memc;
-				$sKey = F::app()->wf->sharedMemcKey( 'VideoRepositoryData', md5( $title ) );
 				$url = F::app()->wg->wikiaVideoRepoPath;
 				if ( !empty( $url ) ){
 					$url.='wikia.php?controller=RelatedVideos&method=getVideoData&width='.self::width.'&videoWidth='.$videoWidth.'&title='.urlencode($title).'&articleId='.$articleId.'&format=json';
