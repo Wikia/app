@@ -106,7 +106,7 @@ AdDriver.isHighValue = function(slotname) {
 			return AdConfig.isHighValueCountry(AdDriver.country);
 		}
 		else {
-			Liftium.trackEvent(Liftium.buildTrackUrl(["error", "no_geo"]));
+			WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "error", "no_geo"]), 'liftium.varia'); // FIXME NEF should be liftium.errors but the volume is too heavy...
 		}
 	}
 
@@ -146,7 +146,7 @@ AdDriver.getNumCall = function(storageName, slotname) {
 		if (window.wgAdDriverUseExpiryStorage) {
 			// compare and report error if they're not equal
 			if (storageNum != cookieNum) {
-				Liftium.trackEvent(Liftium.buildTrackUrl(["error", "numcalloutofsync", storageName, slotname]));
+				WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "error", "numcalloutofsync", storageName, slotname]), 'liftium.errors');
 			}
 		}
 	}
@@ -279,7 +279,7 @@ AdDriver.isLastDARTCallNoAd = function(slotname) {
 
 		if (window.wgAdDriverUseExpiryStorage) {
 			if (storageValue != cookieValue) {
-				Liftium.trackEvent(Liftium.buildTrackUrl(["error", "lastdartcallnoadoutofsync", slotname]));
+				WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "error", "lastdartcallnoadoutofsync", slotname]), 'liftium.errors');
 			}
 		}		
 	}
@@ -557,7 +557,7 @@ AdDriverDelayedLoader.callDART = function() {
 					// Track only calls that do not fall back to Liftium.
 					// (Those calls will be tracked by Liftium.)
 					// Based on Liftium.callInjectedIframeAd
-					Liftium.trackEvent(Liftium.buildTrackUrl(["slot", AdDriverDelayedLoader.currentAd.size+ "_" + AdDriverDelayedLoader.currentAd.slotname]), AdConfig.gaLiftiumTrackingAcct);
+					WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "slot", AdDriverDelayedLoader.currentAd.size+ "_" + AdDriverDelayedLoader.currentAd.slotname]) + '/addriver', 'liftium.slot');
 				}
 				AdDriverDelayedLoader.loadNext();
 			}
