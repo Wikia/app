@@ -146,7 +146,10 @@ AdDriver.getNumCall = function(storageName, slotname) {
 		if (window.wgAdDriverUseExpiryStorage) {
 			// compare and report error if they're not equal
 			if (storageNum != cookieNum) {
-				WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "error", "numcalloutofsync", storageName, slotname]), 'liftium.errors');
+				WikiaTracker.track(LiftiumOptions.pubid+"/error/numcalloutofsync/"+storageName+"/"+slotname+"/"+storageNum+"/"+cookieNum, 'liftium.errors');				
+				AdDriver.log('Cookie and ExpiryStorage for ' + storageName + ':' + slotname + ' are out of sync!');
+				AdDriver.log('Cookie contents: ' + cookieNum);
+				AdDriver.log('ExpiryStogage contents: ' + storageNum);
 			}
 		}
 	}
@@ -279,7 +282,7 @@ AdDriver.isLastDARTCallNoAd = function(slotname) {
 
 		if (window.wgAdDriverUseExpiryStorage) {
 			if (storageValue != cookieValue) {
-				WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "error", "lastdartcallnoadoutofsync", slotname]), 'liftium.errors');
+				WikiaTracker.track(LiftiumOptions.pubid+"/error/lastdartcallnoadoutofsync/"+slotname, 'liftium.errors');
 			}
 		}		
 	}
