@@ -43,8 +43,8 @@ $gaming-calendar-gray-text: mix($color-text, $color-page, 75%);
 	    font-weight: bold;
 	    overflow: hidden;
 		height: 37px;
-	    line-height: 37px;
-	    position: relative;
+		line-height: 37px;
+		position: relative;
 		margin: 0 0 12px 0;
 		.date {
 			display: block;
@@ -55,16 +55,22 @@ $gaming-calendar-gray-text: mix($color-text, $color-page, 75%);
 			text-transform: none;
 		}
 		.title-wrapper {
-			background: transparent url(/extensions/wikia/GamingCalendar/images/gaming-calendar-modal-sprite.png); /* $wgCdnStylePath */
-			background-position: 20px -116px;
-			background-repeat: no-repeat;
 			display: inline-block;
 			height: 37px;
-			margin: 4px 0 0 0;
-			padding: 0 0 0 128px;
-			@if lightness($color-page) < 50 {
-				background-position: 20px -142px;
-				text-shadow: $color-page-border 1px 1px 1px;
+			margin: 0;
+			padding: 0;
+			.gradient-wrapper {
+				background: transparent url(/extensions/wikia/GamingCalendar/images/gaming-calendar-modal-sprite.png); /* $wgCdnStylePath */
+				background-position: 20px -116px;
+				background-repeat: no-repeat;
+				display: inline-block;
+				height: 37px;
+				margin: 4px 0 0 0;
+				padding: 0 0 0 128px;
+				@if lightness($color-page) < 50 {
+					background-position: 20px -142px;
+					text-shadow: $color-page-border 1px 1px 1px;
+				}
 			}
 		}
 	}
