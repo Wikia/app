@@ -1,11 +1,17 @@
 <?php
+/**
+ * Michał Roszka (Mix) <michal@wikia-inc.com>
+ * 
+ * The Special:SpamWikis staff tool.
+ * 
+ * A special page showing a list of wikis matching the specified criteria.
+ * Provides the staff with the ability to close multiple wikis in single operation.
+ */
 if ( !defined( 'MEDIAWIKI' ) ) {
     echo "This code is a MediaWiki extension and cannot be executed standalone.\n";
     exit( 1 );
 }
-/**
- * 
- */
+
 $wgExtensionCredits['other'][] = array(
     'name'        => 'SpecialSpamWikis',
     'description' => '',
