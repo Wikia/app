@@ -1854,7 +1854,9 @@ EOD;
 				$jwplayerData['file'] = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid='.$this->mId.'&bitrateid='.$this->mData[0].'&vendorid='.self::$SCREENPLAY_VENDOR_ID.'&type='.self::$SCREENPLAY_VIDEO_TYPE;
 				$jwplayerData['hdfile'] = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid='.$this->mId.'&bitrateid='.self::SCREENPLAY_HIGHDEF_BITRATE_ID.'&vendorid='.self::$SCREENPLAY_VENDOR_ID.'&type='.self::$SCREENPLAY_VIDEO_TYPE;
 				$jpegBitrateId = !empty($this->mData[3]) ? $this->mData[3] : self::SCREENPLAY_MEDIUM_JPEG_BITRATE_ID;
-				$jwplayerData['image'] = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid='.$this->mId.'&bitrateid='. $jpegBitrateId .'&vendorid='.self::$SCREENPLAY_VENDOR_ID.'&type=.jpg';
+				if (empty($autoplay)) {
+					$jwplayerData['image'] = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid='.$this->mId.'&bitrateid='. $jpegBitrateId .'&vendorid='.self::$SCREENPLAY_VENDOR_ID.'&type=.jpg';
+				}
 				$jwplayerData['provider'] = 'video';
 
 				if ($this->mData[1]) {
