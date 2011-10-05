@@ -20,4 +20,6 @@ $messages['en'] = array(
     'specialspamwikis-criteria-users-more-than-one-wiki' => 'Limit to wikis created by users who created more than one wiki',
     'specialspamwikis-criteria-users-non-email-confirmed' => 'Limit to wikis created by non-emailconfirmed users',
     'specialspamwikis-criteria-wikis-less-than-five-pages' => 'Limit to wikis with five or less pages',
+    'specialspamwikis-filter-by-name' => 'Filter by name',
+    'specialspamwikis-update-list' => 'Update the list',
 );

@@ -46,7 +46,6 @@ class SpecialSpamWikisSpecialPageController extends WikiaSpecialPageController {
         F::app()->wg->out->addScript( "<script src=\"{$extPath}/wikia/SpecialSpamWikis/js/jquery.dataTables.min.js\"></script>" );
         F::app()->wg->out->addStyle( AssetsManager::getInstance()->getSassCommonURL( "{$extPath}/wikia/SpecialSpamWikis/css/table.scss" ) );
         $this->mAction = $this->mTitle->escapeLocalURL( '' );
-        $this->mData->defCriteria = array();
         $data = new SpecialSpamWikisData();
         $this->mData->criteria = $data->getCriteria();
     }
