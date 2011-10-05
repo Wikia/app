@@ -407,7 +407,7 @@ HTML
 		}
 		// BugId: 11336 disable RTE on Special SMW namespaces
 		if ($wgEnableSemanticMediaWikiExt && in_array(self::$title->getNamespace(), array( SMW_NS_PROPERTY, SF_NS_FORM, NS_CATEGORY, SMW_NS_CONCEPT ))) {
-			self::disableEditor('namespace');
+			self::disableEditor('smw_namespace');
 		}		
 		
 		// RT #10170: do not initialize for user JS/CSS subpages
