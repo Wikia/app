@@ -1,6 +1,7 @@
 @import '../../../../skins/oasis/css/core/color';
 @import "../../../../skins/oasis/css/mixins/border-radius";
 @import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/gradient";
 
 /* Colors */
 $gaming-calendar-item: mix($color-page, #000, 95%);
@@ -55,20 +56,21 @@ $gaming-calendar-gray-text: mix($color-text, $color-page, 75%);
 			text-transform: none;
 		}
 		.title-wrapper {
+			@include linear-gradient(transparent, top, $color-page, 1%, $gaming-calendar-week-header, 100%);
 			display: inline-block;
 			height: 37px;
 			margin: 0;
-			padding: 0;
+			padding: 0 10px 0 0;
 			.gradient-wrapper {
 				background: transparent url(/extensions/wikia/GamingCalendar/images/gaming-calendar-modal-sprite.png); /* $wgCdnStylePath */
-				background-position: 20px -116px;
+				background-position: 20px -96px;
 				background-repeat: no-repeat;
 				display: inline-block;
 				height: 37px;
 				margin: 4px 0 0 0;
 				padding: 0 0 0 128px;
 				@if lightness($color-page) < 50 {
-					background-position: 20px -142px;
+					background-position: 20px -122px;
 					text-shadow: $color-page-border 1px 1px 1px;
 				}
 			}
