@@ -209,6 +209,10 @@ class RelatedVideosData {
 				return true;
 			}
 		}
+		else {	// error message returned
+			return $retval;
+		}
+		
 		wfProfileOut( __METHOD__ );
 		return wfMsg('related-videos-error-unknown', 543886);
 	}
