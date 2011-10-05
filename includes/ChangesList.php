@@ -319,7 +319,13 @@ class ChangesList {
 			),
 			array( 'known', 'noclasses' )
 		);
+		
 		$s .= ') . . ';
+		
+		/** Start of Wikia change @author nAndy */
+		wfRunHooks( 'ChangesListInsertDiffHist',
+			array(&$this, &$diffLink, &$s, &$rc, $unpatrolled) );
+		/** End of Wikia change @author nAndy */
 	}
 
 	public function insertArticleLink( &$s, &$rc, $unpatrolled, $watched ) {
@@ -477,7 +483,13 @@ class ChangesList {
 					'deleted'   => $rc->mAttribs['rc_deleted']
 				) );
 				$rev->setTitle( $page );
-				$s .= ' '.$this->skin->generateRollback( $rev );
+				
+				/** Start of Wikia change @author nAndy */
+				$rollbackLink = $this->skin->generateRollback( $rev );
+				wfRunHooks( 'ChangesListInsertRollback', array(&$this, &$s, &$rollbackLink, $rc) );
+				
+				$s .= ' '.$rollbackLink;
+				/*End of Wikia change @author nAndy */
 			}
 		}
 	}

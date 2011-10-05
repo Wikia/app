@@ -14,7 +14,7 @@ class WallMessage {
 	static public function newFromTitle(Title $title) {
 		$class = new WallMessage( $title );
 		return $class;
-	}  
+	}
 	
 	static public function newFromArticleComment(ArticleComment $articleComment) {
 		$class = new WallMessage( $articleComment->getTitle(), $articleComment );
@@ -67,8 +67,8 @@ class WallMessage {
 		return $wallUser->getId() == $user->getId();
 	}
 	
-	public function load() {
-		return $this->getArticleComment()->load();
+	public function load($master = false) {
+		return $this->getArticleComment()->load($master);
 	}
 	
 	public function getUser(){

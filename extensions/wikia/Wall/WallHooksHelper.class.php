@@ -485,5 +485,44 @@ class WallHooksHelper {
 		
 		return true;
 	}
+	
+	public function onChangesListInsertArticleLink($list, $articleLink, $s, $rc, $unpatrolled, $watched) {
+		if( !empty($rc->mAttribs['rc_namespace']) && !empty($rc->mAttribs['rc_namespace']) && $rc->mAttribs['rc_namespace'] == NS_USER_WALL_MESSAGE ) {
+			$app = F::app();
+			
+			$wnEntity = F::build('WallNotificationEntity', array($rc->mAttribs['rc_id'], $app->wg->CityId), 'getByWikiAndRCId');
+			
+			$link = $wnEntity->data->url;
+			$title = $wnEntity->data->thread_title;
+			$class = '';
+			
+			$articleLink = '<a href="'.$link.'" class="'.$class.'" >'.$title.'</a>';
+			# Bolden pages watched by this user
+			if( $watched ) {
+				$articleLink = '<strong class="mw-watched">'.$articleLink.'</strong>';
+			}
+			
+			# RTL/LTR marker
+			$articleLink .= $app->wg->ContLang->getDirMark();
+		}
+		
+		return true;
+	}
+	
+	public function onChangesListInsertDiffHist($list, $articleLink, $s, $rc, $unpatrolled) {
+		if( !empty($rc->mAttribs['rc_namespace']) && $rc->mAttribs['rc_namespace'] == NS_USER_WALL_MESSAGE ) {
+			$s = '';
+		}
+		
+		return true;
+	}
+	
+	public function onChangesListInsertRollback($list, $s, $rollbackLink, $rc) {
+		if( !empty($rc->mAttribs['rc_namespace']) && $rc->mAttribs['rc_namespace'] == NS_USER_WALL_MESSAGE ) {
+			$rollbackLink = '';
+		}
+		
+		return true;
+	}
 }
 ?>
