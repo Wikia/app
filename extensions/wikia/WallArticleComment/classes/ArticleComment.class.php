@@ -181,6 +181,11 @@ class ArticleComment {
 				$result = false;
 			}
 
+
+			if(empty($this->mFirstRevision) || empty($this->mLastRevision) ){
+				return false;
+			}
+
 			$rawtext = $this->mLastRevision->getText();
 			$this->parseText($rawtext);
 			$wgMemc->set($memckey, array(
