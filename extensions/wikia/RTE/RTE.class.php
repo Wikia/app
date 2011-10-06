@@ -215,7 +215,7 @@ class RTE {
 	 * @author Macbre
 	 */
 	public static function makeGlobalVariablesScript(&$vars) {
-		global $wgLegalTitleChars, $wgServer, $wgScriptPath;
+		global $wgLegalTitleChars, $wgServer, $wgExtensionsPath;
 
 		wfProfileIn(__METHOD__);
 
@@ -260,9 +260,9 @@ class RTE {
 
 		// local path to RTE (used to apply htc fixes for IE)
 		// this MUST point to local domain
-		$vars['RTELocalPath'] = $wgServer .  $wgScriptPath . '/extensions/wikia/RTE';
+		$vars['RTELocalPath'] = $wgExtensionsPath . '/wikia/RTE';
 
-		$vars['CKEDITOR_BASEPATH'] = $wgServer .  $wgScriptPath . '/extensions/wikia/RTE/ckeditor/';
+		$vars['CKEDITOR_BASEPATH'] = $wgExtensionsPath . '/wikia/RTE/ckeditor/';
 
 		// link to raw version of MediaWiki:Common.css
 		global $wgSquidMaxage;
