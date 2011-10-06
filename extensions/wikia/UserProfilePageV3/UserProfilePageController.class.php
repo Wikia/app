@@ -779,16 +779,16 @@ class UserProfilePageController extends WikiaController {
 	 */
 	public function getUserFromTitle() {
 		$this->app->wf->ProfileIn( __METHOD__ );
-
+		
 		$title = $this->getVal('title');
 		$returnUserInData = (boolean) $this->getVal('returnUser');
-
+		
 		if( !empty($title) && is_string($title) && strpos($title, ':') !== false ) {
 			$title = F::build('Title', array($title), 'newFromText');
 		} else {
 			$title = $this->app->wg->Title;
 		}
-
+		
 		$title = $this->getVal('title');
 		$returnUserInData = (boolean) $this->getVal('returnUser');
 		
@@ -804,7 +804,7 @@ class UserProfilePageController extends WikiaController {
 		} else if( $title instanceof Title && $title->getNamespace() == NS_SPECIAL && ($title->isSpecial('Following') || $title->isSpecial('Contributions')) ) {
 			$target = $this->getVal('target');
 			$target = ( empty($target) ) ? $this->app->wg->Request->getVal('target') : $target;
-
+			
 			if( !empty($target) ) {
 				// Special:Contributions?target=FooBar (RT #68323)
 				$parts = array($target);
@@ -812,15 +812,20 @@ class UserProfilePageController extends WikiaController {
 				// get user this special page referrs to
 				$titleVal = $this->app->wg->Request->getVal('title', false);
 				$parts = explode('/', $titleVal);
-
+				
 				// remove special page name
 				array_shift($parts);
 			}
-
+			
 			if( $title->isSpecial('Following') && !isset($parts[0]) ) {
 			//following pages are rendered only for profile owners
+				$user = $this->app->wg->User;
+				if( $returnUserInData ) {
+					$this->user = $user;
+				}
+				
 				$this->app->wf->ProfileOut( __METHOD__ );
-				return $this->app->wg->User;
+				return $user;
 			}
 		}
 		
@@ -842,10 +847,6 @@ class UserProfilePageController extends WikiaController {
 		//this is in case Blog:Recent_posts or Special:Contribution will be called
 		//then in title there is no username and "default" user instance is $wgUser
 			$user = $this->app->wg->User;
-		}
-
-		if( $returnUserInData ) {
-			$this->user = $user;
 		}
 
 		if( $returnUserInData ) {
