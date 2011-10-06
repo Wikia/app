@@ -234,6 +234,8 @@ class WallController extends ArticleCommentsModule {
 		$this->response->setVal( 'realname', $realname );
 		$this->response->setVal( 'rawtimestamp', $data['rawtimestamp'] );
 		$this->response->setVal( 'iso_timestamp',  wfTimestamp(TS_ISO_8601, $data['rawmwtimestamp'] ));
+		$language = new Language();
+		$this->response->setVal( 'fmt_timestamp',  $language->timeanddate($data['rawmwtimestamp']) );
 		
 		$this->response->setVal( 'fullpageurl', $this->helper->getMessagePageUrl($comment) );
 		$this->response->setVal( 'wgBlankImgUrl', $this->wg->BlankImgUrl );

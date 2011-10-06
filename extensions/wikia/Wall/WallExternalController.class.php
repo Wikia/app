@@ -45,7 +45,7 @@ class WallExternalController extends WikiaController {
 		
 		$userPageTitle = F::build('Title', array($this->request->getVal('username'), NS_USER_WALL), 'newFromText');
 		
-		$title = trim($this->request->getVal('title', null));
+		$title = trim($this->request->getVal('messagetitle', null));
 		$body = $this->request->getVal('body', null);
 		
 		if( empty($title) ) {

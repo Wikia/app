@@ -29,7 +29,7 @@
 
 		<div class="timestamp" style="clear:both">
 			<a  href="<?= $fullpageurl; ?>" class='permalink'>
-				<div class="timeago" title="<?= $iso_timestamp ?>">&nbsp;</div>
+				<div class="timeago abstimeago" title="<?= $iso_timestamp ?>" alt="<?= $fmt_timestamp ?>">&nbsp;</div>
 			</a>
 		</div>
 
@@ -47,7 +47,7 @@
 		</div>
 	</blockquote>
 	<? if(!$isreply): ?>
-		<ul>
+		<ul class="replies">
 			<? if(!empty($replies)): ?>
 				<? $i =0;?>
 				<? if($showLoadMore): ?>
