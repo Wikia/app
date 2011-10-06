@@ -884,11 +884,12 @@ class ArticleCommentList {
 	static private function getPageForComment( $title, $id ) {
 		$page = 0;
 
-		$commentList = ArticleCommentList::newFromTitle( $title )->getCommentList( false );
+		$articleComment = ArticleCommentList::newFromTitle( $title );
+		$commentList = $articleComment->getCommentList( false );
 		$topLevel = array_keys($commentList);
 		$found = array_search( $id, $topLevel );
 		if ( $found !== false ) {
-			$page = ceil( ( $found + 1 ) / $this->mMaxPerPage );
+			$page = ceil( ( $found + 1 ) / $articleComment->mMaxPerPage );
 		} else {
 			// not found in top level comments so we have to search 2nd level comments
 			$index = 0;
@@ -897,7 +898,7 @@ class ArticleCommentList {
 				if (isset($comment['level2'])) {
 					$found = array_search($id, $comment['level2']);
 					if ($found !== false) {
-						$page = ceil ( $index / $this->mMaxPerPage  );
+						$page = ceil ( $index / $articleComment->mMaxPerPage  );
 					}
 				}
 			}
