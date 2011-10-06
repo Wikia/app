@@ -182,7 +182,7 @@ class SpecialSpamWikiCache {
             
 	    	$this->dbObj->update(
 	                'noreptemp.spamwikis',
-	                array( 'benchmark_3' => (int) ( 5 >= $pages ) ),
+	                array( 'benchmark_3' => (int) ( 5 >= $pages->cnt ) ),
 	                array( 'city_id' => $oRow->city_id ),
         	        __METHOD__,
 	                array()
