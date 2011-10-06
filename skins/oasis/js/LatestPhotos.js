@@ -99,7 +99,9 @@ var UploadPhotos = {
 		onStart: function() {
 			UploadPhotos.uploadbutton.attr("disabled", "true").hide();
 			UploadPhotos.ajaxwait.show();
-			UploadPhotos.status.hide("fast", function() {$(this).removeClass("error")});
+			UploadPhotos.status.hide("fast", function() {
+				$(this).removeClass("error");
+			});
 		}
 	},
 	filePathSet: function() {
@@ -213,7 +215,7 @@ var LatestPhotos = {
 		if (LatestPhotos.browsing == false && LatestPhotos.enable_previous == true) {
 			LatestPhotos.browsing = true;
 			var images = $('.carousel li').length;
-			for (i=0; i < 3; i++) {
+			for (var i=0; i < 3; i++) {
 				$('.carousel').prepend( $('.carousel li').eq(images -1) ) ;
 			}
 			$(".carousel-container div").css('left', - width + 'px');
