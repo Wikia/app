@@ -588,7 +588,7 @@ class EmailNotification {
 			$watchers = $otherParam['watchers'];
 		}
 
-		if (($wgEnotifWatchlist || $wgShowUpdatedMarker) && !empty($watchers) ) {
+		if ($wgEnotifWatchlist || $wgShowUpdatedMarker) {
 
 			global $wgEnableWatchlistNotificationTimeout, $wgWatchlistNotificationTimeout;
 			/* Wikia change begin - @author: wladek & tomek */
@@ -726,7 +726,7 @@ class EmailNotification {
 				$userArray = UserArray::newFromIDs( $watchers );
 
 				foreach ( $userArray as $watchingUser ) {
-					if(!wfRunHooks('beforeEnotifWatchlist ', array( $watchingUser,  $title ))){
+					if(!wfRunHooks('beforeEnotifWatchlist', array( $watchingUser,  $title ))){
 						continue;
 					}
 									
