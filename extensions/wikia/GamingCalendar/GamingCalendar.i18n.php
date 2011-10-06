@@ -10,5 +10,5 @@ $messages = array();
  */
 $messages['en'] = array(
     'gamingcalendar-heading' => 'Game Calendar',
-    'gamingcalendar-today' => 'Today',
 );
+

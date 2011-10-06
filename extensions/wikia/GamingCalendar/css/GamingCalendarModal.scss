@@ -1,7 +1,6 @@
 @import '../../../../skins/oasis/css/core/color';
 @import "../../../../skins/oasis/css/mixins/border-radius";
 @import "../../../../skins/oasis/css/mixins/clearfix";
-@import "../../../../skins/oasis/css/mixins/gradient";
 
 /* Colors */
 $gaming-calendar-item: mix($color-page, #000, 95%);
@@ -29,61 +28,52 @@ $gaming-calendar-week-header: mix($color-page, #000, 95%);
 	$gaming-calendar-week-header: mix($color-page, #FFF, 85%);
 }
 
+
 $gaming-calendar-gray-text: mix($color-text, $color-page, 75%);
 
 #GamingCalendarWrapper {
-	background-image: url(/extensions/wikia/GamingCalendar/images/gaming-calendar-modal-sprite.png); /* $wgCdnStylePath */
+	background-image: url(/extensions/wikia/GamingCalendar/images/gaming-calendar-modal-sprite.png);
 	background-repeat: repeat-x;
 	background-position: 0 -172px;
 
 	>h1 {
-		text-shadow: $color-page-border 1px 1px 1px;
-		text-transform: uppercase;
-		font-size: 19px;
-		font-weight: bold;
-		overflow: hidden;
-		height: 37px;
-		line-height: 37px;
-		position: relative;
-		margin: 0 0 12px 0;
-		.date {
-			display: block;
-			float: right;
-			font-size: 12px;
-			font-weight: normal;
-			margin: 0 12px 0 0;
-			text-transform: none;
-		}
-		.title-wrapper {
-			@include linear-gradient(transparent, top, $color-page, 1%, $gaming-calendar-week-header, 100%);
-			display: inline-block;
-			height: 37px;
-			margin: 0;
-			padding: 0 30px 0 0;
-			.gradient-wrapper {
-				background: transparent url(/extensions/wikia/GamingCalendar/images/gaming-calendar-modal-sprite.png); /* $wgCdnStylePath */
-				background-position: 20px -96px;
-				background-repeat: no-repeat;
-				display: inline-block;
-				height: 37px;
-				margin: 2px 0 0 0;
-				padding: 0 0 0 137px;
-				@if lightness($color-page) < 50 {
-					background-position: 20px -132px;
-					text-shadow: $color-page-border 1px 1px 1px;
-				}
-			}
-		}
+	    padding: 0 0 0 128px;
+	    background: transparent url(/extensions/wikia/GamingCalendar/images/gaming-calendar-modal-sprite.png);
+	    background-position: 20px -116px;
+	    background-repeat: no-repeat;
+	    text-shadow: $color-page-border 1px 1px 1px;
+	    @if lightness($color-page) < 50 {
+		    background-position: 20px -142px;
+		    text-shadow: $color-page-border 1px 1px 1px;
+	    }
+	    text-transform: uppercase;
+	    font-size: 19px;
+	    font-weight: bold;
+	    overflow: hidden;
+	    margin: 0 0 12px 0;
+	    height: 37px;
+	    line-height: 37px;
+	    position: relative;
+	    
+	    span {
+		display: block;
+		float: right;
+		font-size: 12px;
+		font-weight: normal;
+		margin: 0 12px 0 0;
+		text-transform: none;
+	    }
 	}
 
 	>button.close {
-		margin: 8px 12px 0 0;
+	    margin: 8px 12px 0 0;
 	}
 
 	.weeks {
 		border: 1px solid $color-page-border;
 		height: 509px;
 		overflow: hidden;
+		width: 580px;
 		>ul {
 			width: 580px;
 			height: 509px;
@@ -117,11 +107,11 @@ $gaming-calendar-gray-text: mix($color-text, $color-page, 75%);
 			margin: 0 3px;
 			overflow: hidden;
 			position: relative;
-
+		
 			ul {
 				position: absolute;
 				width: 284px;
-			}
+			}		
 			li {
 				border-bottom: 1px solid $color-page-border;
 				padding: 3px 0;
@@ -132,7 +122,7 @@ $gaming-calendar-gray-text: mix($color-text, $color-page, 75%);
 					padding-top: 0;
 				}
 			}
-		}
+		}		
 	}
 
 	.scroll-up {
@@ -165,7 +155,7 @@ $gaming-calendar-gray-text: mix($color-text, $color-page, 75%);
 		}
 		&:hover {
 			img {
-				border-color: $color-links transparent transparent;
+				border-color: $color-links transparent transparent;		
 			}
 		}
 	}
@@ -173,15 +163,186 @@ $gaming-calendar-gray-text: mix($color-text, $color-page, 75%);
 	.controls {
 	    font-weight: bold;
 	    font-size: 10px;
+	    width: 582px;
 	    margin: 10px 0;
-	    text-align: center;
+
+	    div {
+		height: 16px;
+		line-height: 16px;
+	    }
+
+	    .back {
+		float: left;
+	    }
+
+	    .forward {
+		float: right;
+	    }
+
+	    span {
+		    overflow: hidden;
+		    display: block;
+		    margin: -2px 0 0 0;
+		}
 
 	    .back-week {
-				float: left;
+		@include border-radius(3px);
+		background-image: url(/extensions/wikia/GamingCalendar/images/gaming-calendar-modal-sprite.png);
+		font-size: 16px;
+		width: 26px;
+		background-position: 0px -20px;
+		@if lightness($color-page) < 50 {
+			background-position: 0px -80px;
+		}
+		text-align: center;
+		overflow: hidden;
+		float: left;
+
+		&:hover {
+		    background-position: 0px -40px;
+		    @if lightness($color-page) < 50 {
+			    background-position: 0px -100px;
+		    }
+		    cursor: pointer;
+		    &.disabled {
+			cursor: default;
+		    }
+		}
+
+		&.disabled {
+		    background-position: 0px 0px;
+		    @if lightness($color-page) < 50 {
+			    background-position: 0px -60px;
+		    }
+		}
+	    }
+
+	    .back-month {
+		@include border-radius(3px);
+		background-image: url(/extensions/wikia/GamingCalendar/images/gaming-calendar-modal-sprite.png);
+		font-size: 16px;
+		width: 26px;
+		background-position: 0px -20px;
+		@if lightness($color-page) < 50 {
+			background-position: 0px -80px;
+		}
+		text-align: center;
+		overflow: hidden;
+		float: left;
+
+		&:hover {
+		    background-position: 0px -40px;
+		    @if lightness($color-page) < 50 {
+			    background-position: 0px -100px;
+		    }
+		    cursor: pointer;
+		    &.disabled {
+			cursor: default;
+		    }
+		}
+
+		&.disabled {
+		    background-position: 0px 0px;
+		    @if lightness($color-page) < 50 {
+			    background-position: 0px -60px;
+		    }
+		}
 	    }
 
 	    .forward-week {
-				float: right;
+		@include border-radius(3px);
+		background-image: url(/extensions/wikia/GamingCalendar/images/gaming-calendar-modal-sprite.png);
+		font-size: 16px;
+		width: 26px;
+		background-position: -94px -20px;
+		@if lightness($color-page) < 50 {
+			background-position: -94px -80px;
+		}
+		text-align: center;
+		overflow: hidden;
+		float: right;
+
+		&:hover {
+		    background-position: -94px -40px;
+		    @if lightness($color-page) < 50 {
+			    background-position: -94px -100px;
+		    }
+		    cursor: pointer;
+		    &.disabled {
+			cursor: default;
+		    }
+		}
+
+		&.disabled {
+		    background-position: -94px 0px;
+		    @if lightness($color-page) < 50 {
+			    background-position: -94px -60px;
+		    }
+		}
+	    }
+
+	    .forward-month {
+		@include border-radius(3px);
+		background-image: url(/extensions/wikia/GamingCalendar/images/gaming-calendar-modal-sprite.png);
+		font-size: 16px;
+		width: 26px;
+		background-position: -94px -20px;
+		@if lightness($color-page) < 50 {
+			background-position: -94px -80px;
+		}
+		text-align: center;
+		overflow: hidden;
+		float: right;
+
+		&:hover {
+		    background-position: -94px -40px;
+		    @if lightness($color-page) < 50 {
+			    background-position: -94px -100px;
+		    }
+		    cursor: pointer;
+		    &.disabled {
+			cursor: default;
+		    }
+		}
+
+		&.disabled {
+		    background-position: -94px 0px;
+		    @if lightness($color-page) < 50 {
+			    background-position: -94px -60px;
+		    }
+		}
+	    }
+
+	    .today {
+		@include border-radius(3px);
+		@include clearfix;
+		margin: auto;
+		background-image: url(/extensions/wikia/GamingCalendar/images/gaming-calendar-modal-sprite.png);
+		width: 50px;
+		background-position: -20px -20px;
+		@if lightness($color-page) < 50 {
+			background-position: -20px -80px;
+		}
+		text-align: center;
+		overflow: hidden;
+
+		&:hover {
+		    background-position: -20px -40px;
+		    @if lightness($color-page) < 50 {
+			    background-position: -20px -100px;
+		    }
+		    cursor: pointer;
+		    &.disabled {
+			cursor: default;
+		    }
+		}
+
+		&.disabled {
+		    background-position: -20px 0px;
+		    @if lightness($color-page) < 50 {
+			    background-position: -20px -60px;
+		    }
+		}
 	    }
 	}
 
@@ -216,7 +377,7 @@ $gaming-calendar-gray-text: mix($color-text, $color-page, 75%);
 				display: none;
 			}
 		}
-
+		
 		&.selected {
 			background: $gaming-calendar-item-selected;
 		}
