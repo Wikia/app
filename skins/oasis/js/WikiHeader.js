@@ -164,13 +164,8 @@ var WikiHeaderV2 = {
 	isDisplayed: false,
 	activeL1: null,
 
-	settings: {
-		mouseoverDelay: 300,
-		mouseoutDelay: 350
-	},
-
 	log: function(msg) {
-		$().log(msg, 'WikiHeader');
+		$().log(msg, 'WikiHeaderV2');
 	},
 
 	init: function() {
@@ -178,7 +173,6 @@ var WikiHeaderV2 = {
 		WikiHeaderV2.nav = $('header.WikiHeaderRestyle').children('nav');
 		WikiHeaderV2.subnav2 = WikiHeaderV2.nav.find('.subnav-2');
 		WikiHeaderV2.subnav3 = WikiHeaderV2.nav.find('.subnav-3');
-		WikiHeaderV2.mouseoverTimerRunning = false;
 
 		WikiHeaderV2.positionNav();
 
@@ -288,6 +282,11 @@ var WikiHeaderV2 = {
 	},
 
 	mouseoverL1: function(event) {
+		// this menu is already opened - don't do anything
+		if (WikiHeaderV2.activeL1 === this) {
+			return;
+		}
+
 		//Hide all subnavs except for this one
 		$('header.WikiHeaderRestyle nav ul li').removeClass('marked');
 		WikiHeaderV2.hideNavL3();
@@ -328,7 +327,7 @@ var WikiHeaderV2 = {
 		}
 	},
 
-	mouseoverL2: function(event) {
+	mouseoverL2: function() {
 		//Hide all subnavs except for this one
 		var otherSubnavs = WikiHeaderV2.subnav3.not($(this).find('.subnav'));
 
@@ -340,59 +339,12 @@ var WikiHeaderV2 = {
 				otherSubnavs.hide();
 			}
 
-			//Cancel mouseoutTimer
-			clearTimeout(WikiHeaderV2.mouseoutTimer);
-
-			if ($(event.relatedTarget).closest('#WikiHeader nav li').length == 0) {
-				//Mouse is not coming from within the nav.
-
-				//Delay before showing subnav.
-				WikiHeaderV2.mouseoverTimer = setTimeout(function() {
-					WikiHeaderV2.showSubNavL3(event.currentTarget);
-					WikiHeaderV2.mouseoverTimerRunning = false;
-				}, WikiHeaderV2.settings.mouseoverDelay);
-				WikiHeaderV2.mouseoverTimerRunning = true;
-
-			} else {
-				//Mouse IS coming from within the nav
-
-				//Don't show subnavs when quickly moving mouse horizontally through wiki nav
-				if (WikiHeaderV2.mouseoverTimerRunning) {
-					//Stop current timer
-					clearTimeout(WikiHeaderV2.mouseoverTimer);
-					WikiHeaderV2.mouseoverTimerRunning = false;
-
-					//Start new timer
-					WikiHeaderV2.mouseoverTimer = setTimeout(function() {
-						WikiHeaderV2.showSubNavL3(event.currentTarget);
-					}, WikiHeaderV2.settings.mouseoverDelay);
-					WikiHeaderV2.mouseoverTimerRunning = true;
-
-				} else {
-					//Mouseover timer isn't running, so show subnavs immediately
-					WikiHeaderV2.showSubNavL3(this);
-				}
-			}
+			WikiHeaderV2.showSubNavL3(this);
 		}
 	},
 
-	mouseoutL2: function(event) {
-		if ($(event.relatedTarget).closest('header.WikiHeaderRestyle nav li').length == 0) {
-			//Mouse has exited the nav.
-
-			//Stop mouseoverTimer
-			clearTimeout(WikiHeaderV2.mouseoverTimer);
-			WikiHeaderV2.mouseoverTimerRunning = false;
-
-			//Start mouseoutTimer
-			WikiHeaderV2.mouseoutTimer = setTimeout(WikiHeaderV2.hideNavL3, WikiHeaderV2.settings.mouseoutDelay);
-
-		} else {
-			//Mouse is still within the nav
-
-			//Hide nav immediately
-			WikiHeaderV2.hideNavL3();
-		}
+	mouseoutL2: function() {
+		WikiHeaderV2.hideNavL3();
 	},
 
 	showSubNavL2: function(parent) {
