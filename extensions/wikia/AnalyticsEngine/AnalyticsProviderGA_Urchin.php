@@ -182,10 +182,12 @@ if(document.cookie.match(/id%22%3A%222463/)) {
 
 		$ns = $wgTitle->getNamespace();
 
-		$out  = "<script type=\"text/javascript\">_gaq.push(['_setAccount', 'UA-12241505-1']);_gaq.push(['_trackPageview', '/GN2/".$ns."']);</script>\n";
+		$out  = "<script type=\"text/javascript\">_gaq.push(['_setAccount', 'UA-12241505-1']);_gaq.push(['_trackPageview', '/GN2/".$ns."']);</script>\n"; // FIXME NEF turn off when -2 catches up
+		$out  .= "<script type=\"text/javascript\">WikiaTracker.track('/GN2/".$ns."', 'UA-12241505-2');</script>\n"; // FIXME NEF use profile name, not id
 
 		if (in_array($ns, array(0, 220))) {
-			$out .= "<script type=\"text/javascript\">_gaq.push(['_setAccount', 'UA-12241505-1']);_gaq.push(['_trackPageview', '/GN4/".$ns."/".$wgTitle->getArticleID()."']);</script>\n";
+			$out .= "<script type=\"text/javascript\">_gaq.push(['_setAccount', 'UA-12241505-1']);_gaq.push(['_trackPageview', '/GN4/".$ns."/".$wgTitle->getArticleID()."']);</script>\n"; // FIXME NEF turn off when -2 catches up
+			$out .= "<script type=\"text/javascript\">WikiaTracker.track('/GN4/".$ns."/".$wgTitle->getArticleID()."', 'UA-12241505-2');</script>\n"; // FIXME NEF use profile name, not id
 		}
 
 		return $out;
