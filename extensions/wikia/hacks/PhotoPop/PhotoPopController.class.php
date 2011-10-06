@@ -14,6 +14,20 @@ class PhotoPopController extends WikiaController {
 		$this->model = F::build( 'PhotoPopModel' );
 	}
 	
+	/**
+	 * @brief a proxy for other methods that need to output data in the
+	 * JSONP format
+	 *
+	 * @see PhotoPop_jsonp.php
+	 */
+	public function jsonp(){
+		$this->wf->profileIn( __METHOD__ );
+		
+		$this->response->setContentType( 'text/javascript' );
+		
+		$this->wf->profileOut( __METHOD__ );
+	}
+	
 	public function index() {
 		$this->response->setVal( 'appCacheManifestPath', self::CACHE_MANIFEST_PATH . "&cb={$this->wg->CacheBuster}" );//$this->wg->StyleVersion
 		
@@ -22,7 +36,7 @@ class PhotoPopController extends WikiaController {
 			AssetsManager::getInstance()->getOneCommonURL( "extensions/wikia/hacks/PhotoPop/shared/lib/mustache.js" ),
 			AssetsManager::getInstance()->getOneCommonURL( "extensions/wikia/hacks/PhotoPop/shared/lib/my.class.js" ),
 			AssetsManager::getInstance()->getOneCommonURL( "extensions/wikia/hacks/PhotoPop/shared/lib/observable.js" ),
-			AssetsManager::getInstance()->getOneCommonURL( "extensions/wikia/hacks/PhotoPop/shared/lib/microajax.js" ),
+			AssetsManager::getInstance()->getOneCommonURL( "extensions/wikia/hacks/PhotoPop/shared/lib/reqwest.js" ),
 			AssetsManager::getInstance()->getOneCommonURL( "extensions/wikia/hacks/PhotoPop/shared/lib/require.js" ) . '" data-main="' . $this->wg->ExtensionsPath . '/wikia/hacks/PhotoPop/js/main'
 		) );
 		$this->response->setVal( 'cssLink', AssetsManager::getInstance()->getOneCommonURL( "extensions/wikia/hacks/PhotoPop/shared/css/homescreen.css" ) );
@@ -31,34 +45,56 @@ class PhotoPopController extends WikiaController {
 	public function listGames(){
 		$this->wf->profileIn( __METHOD__ );
 		
+		$callbackName = $this->request->getVal( 'callback' );
+		
+		if ( empty( $callbackName ) ) {
+			$this->wf->profileOut( __METHOD__ );
+			throw new WikiaException( 'Missing parameter: callback' );
+		}
+		
 		$limit = $this->request->getInt( 'limit', null );
 		$batch = $this->request->getInt( 'batch', 1 );
 		$result = $this->model->getWikisList( $limit, $batch );
 		
-		foreach( $result as $key => $value ){
-			$this->response->setVal( $key, $value );
+		if ( empty( $callbackName ) ) {
+			$this->wf->profileOut( __METHOD__ );
+			throw new WikiaException( 'Missing parameter: callback' );
 		}
 		
+		$this->response->setVal( 'callbackName', $callbackName );
+		$this->response->setVal( 'jsonData', json_encode( $result ) );
+		
 		$this->wf->profileOut( __METHOD__ );
+		
+		$this->forward( __CLASS__, 'jsonp', false );
 	}
 	
 	public function getData(){
 		$this->wf->profileIn( __METHOD__ );
 		
-		$category = trim( $this->request->getVal( 'category', '' ) );
+		$category = trim( $this->request->getVal( 'category' ) );
+		$callbackName = $this->request->getVal( 'callback' );
 		
 		if ( empty( $category ) ) {
 			$this->wf->profileOut( __METHOD__ );
 			throw new WikiaException( 'Missing parameter: category' );
 		}
 		
+		if ( empty( $callbackName ) ) {
+			$this->wf->profileOut( __METHOD__ );
+			throw new WikiaException( 'Missing parameter: callback' );
+		}
+		
 		$width = $this->request->getInt( 'width', 480 );
 		$height = $this->request->getInt( 'height', 320 );
 		$result = $this->model->getGameContents( $category, $width, $height );
 		
-		$this->response->setVal( 'items', $result );
+		$this->response->setVal( 'callbackName', $callbackName );
+		$this->response->setVal( 'jsonData', json_encode( $result ) );
 		
 		$this->wf->profileOut( __METHOD__ );
+		
+		$this->forward( __CLASS__, 'jsonp', false );
 	}
 	
 	public function getIcon(){
