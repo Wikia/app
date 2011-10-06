@@ -18,15 +18,15 @@ $color-input-field-shadow: mix($color-input-field, #000, 95%);
 	-webkit-box-sizing: content-box;
 	-webkit-appearance: textfield;
 	&::-webkit-input-placeholder {
-		color: $color-links;
+		color: mix($color-page, $color-text, 30%);
 	}
 	
 	&:-moz-placeholder {
-		color: $color-links;
+		color: mix($color-page, $color-text, 30%);
 	}
 
 	&.placeholder {
-		color: $color-links;
+		color: mix($color-page, $color-text, 30%);
 	}
 
 	&.error {
