@@ -532,6 +532,10 @@ function wfLogProfilingData() {
 function wfReadOnly() {
 	global $wgReadOnlyFile, $wgReadOnly;
 
+	// <Wikia>
+	global $wgDBReadOnly;
+	$wgDBReadOnly = (bool)$wgReadOnly;
+	// </Wikia>
 	if ( !is_null( $wgReadOnly ) ) {
 		return (bool)$wgReadOnly;
 	}
