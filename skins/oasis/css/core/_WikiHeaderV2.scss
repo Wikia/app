@@ -197,8 +197,12 @@
 					padding: 0px 7px;
 					color: $color-text;
 					&:hover {
-						background: $color-button-highlight;
-						color: $color-button-text;
+						$color-level-3rd: mix($color-buttons, $color-page, 20%);
+						@if lightness($color-page) < 50 {
+							$color-level-3rd: lighten($color-level-3rd, 8%);
+						}
+						background: $color-level-3rd;
+						color: $color-text;
 					}
 				}
 			}
@@ -275,11 +279,11 @@
 						line-height: 25px;
 					}
 					a:hover {
-						$color-contribute: mix(#000, $color-page, 5%);
+						$color-contribute: mix($color-buttons, $color-page, 20%);
 						@if lightness($color-page) < 50 {
 							$color-contribute: lighten($color-contribute, 8%);
 						}
-						color: $color-links;
+						color: $color-text;
 						background-color: $color-contribute;
 					}
 				}

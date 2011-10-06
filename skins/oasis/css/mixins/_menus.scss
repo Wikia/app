@@ -5,7 +5,7 @@
 	border-color: #000;
 	display: none;
 	list-style: none;
-	padding: 5px;
+	padding: 0;
 	position: absolute;
 	li {
 		border-top: 1px solid $color-page-border;
@@ -16,13 +16,17 @@
 		}
 	}
 	a {
-		color: $color-links;
+		color: $color-text;
 		display: block;
 		font-size: 12px;
-		padding: 5px;
+		padding: 10px 5px;
 		white-space: nowrap;
 		&:hover {
-			background: $color-menu-highlight;
+			$color-tools-nav: mix($color-buttons, $color-page, 20%);
+			@if lightness($color-page) < 50 {
+				$color-tools-nav: lighten($color-tools-nav, 8%);
+			}
+			background-color: $color-tools-nav;
 			text-decoration: none;
 		}
 	}	
