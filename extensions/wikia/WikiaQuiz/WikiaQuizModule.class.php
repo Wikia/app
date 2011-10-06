@@ -56,6 +56,17 @@ class WikiaQuizModule extends Module {
 
 		$this->username = $wgUser->getName();
 		$this->isAnonUser = $wgUser->isAnon();
+		
+		// render this array in PHP and encode it properly for JS
+		$this->quizVars = array(
+			'cadence' => array(
+				wfMsg('wikiaquiz-game-cadence-3'),
+				wfMsg('wikiaquiz-game-cadence-2'),
+				wfMsg('wikiaquiz-game-cadence-1'),
+			),
+			'correctLabel' => wfMsg('wikiaquiz-game-correct-label'),
+			'incorrectLabel' => wfMsg('wikiaquiz-game-incorrect-label'),
+		);
 	}
 
 	/**

@@ -8,10 +8,11 @@ var WikiaQuiz = {
 	imgScaleFactor: '+=90',
 	score: 0,
 	trackerUrlPrefix: '',
+	vars: {},
 	init: function() {
 		// class vars
 		WikiaQuiz.trackerUrlPrefix = 'wikiaquiz/'+window.wgDBname+'/'+window.wgTitle.replace(/\//g, '_')+'/';
-			
+
 		//DOM
 		jQuery.fx.interval = 13; // 16 is roughly 60 fps, 32 is roughly 30 fps
 		WikiaQuiz.qSet = $('#WikiaQuiz .questions .question-set');
@@ -34,14 +35,19 @@ var WikiaQuiz = {
 		WikiaQuiz.sound.wrong = document.getElementById('SoundAnswerWrong');
 		WikiaQuiz.sound.applause = document.getElementById('SoundApplause');
 		WikiaQuiz.audio = (typeof Modernizr != 'undefined' && Modernizr.audio);
+		WikiaQuiz.vars = window.WikiaQuizVars;
+
+		var sound,
+			playCallback = function() {};
+
 		for(sound in WikiaQuiz.sound) {
 			if(WikiaQuiz.audio) {
 				WikiaQuiz.sound[sound].load();
 			} else {
-				WikiaQuiz.sound[sound].play = function() {};	//empty function
+				WikiaQuiz.sound[sound].play = playCallback;
 			}
 		}
-		
+
 		// events
 		WikiaQuiz.ui.startButton.click(WikiaQuiz.handleStart);
 		WikiaQuiz.ui.muteToggle.click(WikiaQuiz.toggleSound);
@@ -63,7 +69,7 @@ var WikiaQuiz = {
 				WikiaQuiz.showQuiz();
 			} else {
 				WikiaQuiz.ui.countDownNumber.html(3 - ++i);
-				WikiaQuiz.ui.countDownCadence.html(WikiaQuizVars.cadence[i]);
+				WikiaQuiz.ui.countDownCadence.html(WikiaQuiz.vars.cadence[i]);
 			}
 		}, 1000);
 	},
@@ -123,22 +129,22 @@ var WikiaQuiz = {
 				WikiaQuiz.trackByStr('correct/q'+WikiaQuiz.cqNum);
 				WikiaQuiz.correct = true;
 				WikiaQuiz.score++;
-				WikiaQuiz.ui.answerResponse.text(WikiaQuizVars.correctLabel);
+				WikiaQuiz.ui.answerResponse.text(WikiaQuiz.vars.correctLabel);
 			} else {
 				WikiaQuiz.trackByStr('wrong/q'+WikiaQuiz.cqNum);
 				WikiaQuiz.correct = false;
-				WikiaQuiz.ui.answerResponse.text(WikiaQuizVars.incorrectLabel);
+				WikiaQuiz.ui.answerResponse.text(WikiaQuiz.vars.incorrectLabel);
 			}
-			
+
 			WikiaQuiz.showSelection(answer);
 		}
-		
+
 	},
 	showSelection: function(answer) {
 		var r = answer.find('.representation');
 		if(r.length) {
 			var elementsToHide = WikiaQuiz.ui.allRepresentations.not(r).add(WikiaQuiz.ui.allAnswerLabels).add(WikiaQuiz.ui.questionBubble);
-			
+
 			var i = WikiaQuiz.ui.allAnswers.index(answer);
 			var left = (20 - (i * 190));
 			r.animate({
@@ -154,7 +160,7 @@ var WikiaQuiz = {
 						WikiaQuiz.ui.answerIndicator = WikiaQuiz.ui.wrongIcon;
 						WikiaQuiz.sound.answerIndicator = WikiaQuiz.sound.wrong;
 					}
-					
+
 					WikiaQuiz.ui.nextButton.bind('click', WikiaQuiz.handleNextClick);
 					WikiaQuiz.ui.answerIndicator.removeClass('effect');
 					setTimeout(function() {
