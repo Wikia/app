@@ -180,7 +180,7 @@
 			min-width: 150px;
 			border: 1px solid $color-button-highlight;
 			margin-left: 3px;
-			@include box-shadow( 1px, 2px, 15px);
+			@include box-shadow( 1px, 2px, 12px, darken($color-page,80%));
 			li {
 				background: $color-page;
 				color: $color-text;
@@ -194,7 +194,7 @@
 					line-height: 25px;
 					display: block;
 					margin: 0px;
-					padding: 0px 7px;
+					padding: 5px 9px;
 					color: $color-text;
 					&:hover {
 						$color-level-3rd: mix($color-buttons, $color-page, 20%);
@@ -273,7 +273,8 @@
 				border-top: 0;
 				padding: 1px;
 				width: 150px;
-				@include box-shadow(1px, 10px, 15px);
+				@include box-shadow(1px, 8px, 12px, darken($color-page,80%));
+
 				li {
 					a {
 						line-height: 25px;
