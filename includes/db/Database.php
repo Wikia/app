@@ -466,7 +466,7 @@ abstract class DatabaseBase {
 
 		$this->mLastQuery = $sql;
 		$is_writeable = $this->isWriteQuery( $sql );
-		if ( !$this->mDoneWrites && $is_writable ) {
+		if ( !$this->mDoneWrites && $is_writeable ) {
 			// Set a flag indicating that writes have been done
 			wfDebug( __METHOD__.": Writes done: $sql\n" );
 			$this->mDoneWrites = true;
