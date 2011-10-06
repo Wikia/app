@@ -119,7 +119,7 @@ else {
 		$wgMemc->set( $key, $LastUpdated );
 	}	
 	echo "Updating cache...\n";
-	//$myFBService->findAndSaveCasesToMemc("lastupdated:\"Today\"");
+	$myFBService->findAndSaveCasesToMemc("lastupdated:\"Today\"");
 	
 	echo "Operations report.\n";
 	
