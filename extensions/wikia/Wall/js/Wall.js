@@ -202,7 +202,7 @@ var Wall = $.createClass(Object, {
 	 * Message functions
 	 */
 	postNewMessage: function(href) {
-		topic = !$('#WallMessageTitle').hasClass('placeholder') && $('#WallMessageTitle').val().length > 0;
+		var topic = !$('#WallMessageTitle').hasClass('placeholder') && $('#WallMessageTitle').val().length > 0;
 
 		if(!topic && $('#WallMessageSubmit').html() != $.msg('wall-button-to-submit-comment-no-topic')) {
 			$('#WallMessageSubmit').html($.msg('wall-button-to-submit-comment-no-topic'));
@@ -237,7 +237,7 @@ var Wall = $.createClass(Object, {
 			method: 'postNewMessage',
 			data: {
 				body: $('#WallMessageBody').val(),
-				title: topic ? $('#WallMessageTitle').val() : '',
+				messagetitle: topic ? $('#WallMessageTitle').val() : '',
 				username: this.username
 			},
 			callback: this.proxy(function(data) {
@@ -412,9 +412,9 @@ var Wall = $.createClass(Object, {
 		$().log('cancelEdit');
 		e.preventDefault();
 
-		msg = $(e.target).closest('.message');
+		var msg = $(e.target).closest('.message');
 		
-		beforeedit = $('.before-edit',msg).html();
+		var beforeedit = $('.before-edit',msg).html();
 		
 		/* restore html to state from before edit */
 		$('.speech-bubble-message',msg).first().html(beforeedit);
