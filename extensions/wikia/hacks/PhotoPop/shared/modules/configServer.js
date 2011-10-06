@@ -1,6 +1,10 @@
 var exports = exports || {};
 
 define.call(exports, {
+	settings: {
+		centralDomain: 'community.wikia.com',
+		testDomain: 'federico.wikia-dev.com'//comment out or set to null/false before release
+	},
 	
 	images: {
 		PHOTOPOP_LOGO: "logo_photopop",
@@ -39,14 +43,7 @@ define.call(exports, {
 	urls: {
 		playButtonUrl: "playButton();",
 		tutorialButtonUrl: "#tutorial",
-		backHomeUrl: "",
-		trueblood: "",
-		glee: "",
-		lyrics: "",
-		muppet: "",
-		dexter: "",
-		futurama: "",
-		twilight: ""
+		backHomeUrl: ""
 	},
 	
 	sounds: {
@@ -108,41 +105,5 @@ define.call(exports, {
 			],
 			correct: 'Joker'
 		}
-	],
-
-	games: [{
-			category: "Category:Characters",
-			gameName: "True Blood",
-			name: "trueblood"
-		},
-		{
-			category: "Category:Characters",
-			gameName: "Glee Wiki",
-			name: "glee"
-		},
-		{
-			category: "Category:Albums_released_in_2011",
-			gameName: "LyricWiki",
-			name: "lyrics"
-		},
-		{
-			category: "Category:The_Muppets_Characters",
-			gameName: "Muppet Wiki",
-			name: "muppet"
-		},
-		{
-			category: "Category:Characters",
-			gameName: "Dexter Wiki",
-			name: "dexter"
-		},
-		{
-			category: "Category:Characters",
-			gameName: "Futurama",
-			name: "futurama"
-		},
-		{
-			category: "Category:Twilight_Characters",
-			gameName: "Twilight Saga",
-			name: "twilight"
-		}]
+	]
 });

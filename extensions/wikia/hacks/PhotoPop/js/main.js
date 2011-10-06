@@ -7,12 +7,15 @@
 			prefix + "shared/modules/templates",
 			prefix + "shared/modules/imageServer",
 			prefix + "shared/modules/soundServer",
-			prefix + "shared/modules/game"
+			prefix + "shared/modules/game",
+			prefix + "shared/modules/data"
 		],
 		
-		function(config, templates, imageServer, soundServer, gameLogic) {
-			var startTutorial = true,
+		function(config, templates, imageServer, soundServer, gameLogic, data) {
+			var startTutorial = false,//true,
 			games,
+			gamesListLoader = new data.XDomainLoader(),
+			gameLoader = new data.XDomainLoader(),
 			selectedGame,
 			wrapper,
 			muteButton,
@@ -22,7 +25,6 @@
 						  return imageServer.getAsset(render(text));
 					}
 				},
-				games: config.games,
 				url: function() {
 					return function(text, render) {
 						  return config.urls[text];
@@ -38,25 +40,15 @@
 			
 			loadSelectedGame = function(){
 				if(typeof selectedGame != 'undefined'){
-					microAjax(
-						'/wikia.php?controller=PhotoPopController&method=getData&category=' + encodeURIComponent(selectedGame.category) + '&format=json',
-						function(data) {
-							data = JSON.parse(data).items;
-							var item;
-							selectedGame.c = new Array();
-							selectedGame.w = new Array();
-							
-							for(var x = 0, y = data.length; x < y; x++){
-								item = data[x];
-								selectedGame[(typeof item.image != 'undefined') ? 'c' : 'w'].push(item);
-							}
-							
-							console.log(selectedGame);
-						}
-					);
+					gameLoader.load('http://' +
+							((config.settings.testDomain) ? selectedGame.dbName + '.' + config.settings.testDomain : selectedGame.domain) +
+							'/wikia.php?controller=PhotoPopController&method=getData&category=' +
+							encodeURIComponent(selectedGame.category) +
+							'&callback=?');
 				}
-			},
-			renderGamesList = function(){
+			};
+			
+			function renderGamesList(){
 				if(typeof games != 'undefined'){
 					var templateVars = {
 						games: []
@@ -67,7 +59,7 @@
 						item = games[x];
 						templateVars.games.push({
 							name: item.name,
-							image: 'http://' + item.dbName + '.federico.wikia-dev.com/wikia.php?controller=PhotoPopController&method=getIcon&title=' + item.thumbnail + '&format=raw',
+							image: 'http://' +  ((config.settings.testDomain) ? item.dbName + '.' + config.settings.testDomain : item.domain) + '/wikia.php?controller=PhotoPopController&method=getIcon&title=' + item.thumbnail + '&format=raw',
 							index: x
 						})
 					}
@@ -88,28 +80,53 @@
 						}
 					}
 				}
-			},
-			loadGamesList = function(){
-				microAjax(
-					'/wikia.php?controller=PhotoPopController&method=listGames&format=json',
-					function(data) {
-						games = JSON.parse(data).items
-						setTimeout(renderGamesList, 2000);
-					}
-				);
-			},
-			initHomeScreen = function(){
+			}
+			
+			function initHomeScreen(){
 				setTimeout(
 					function(){
 						document.getElementById('sliderWrapper').style.bottom = 0;
-						loadGamesList();
+						
+						gamesListLoader.load(
+							'http://' + (config.settings.testDomain || config.settings.centralDomain) +
+							'/wikia.php?controller=PhotoPopController&method=listGames&callback=?',
+							{method: 'get'}
+						);
 					},
 					2000
 				);
-			};
-		
+			}
+			
+			function onDataError(event, resp){
+				alert('Error loading ' + resp.url + ': ' + resp.error.toString());
+			}
+			
+			//init audio and graphics
 			imageServer.init(config.images);
-			soundServer.init(config.sounds);	
+			soundServer.init(config.sounds);
+			
+			//init data loading
+			gamesListLoader.addEventListener('error', onDataError);
+			gameLoader.addEventListener('error', onDataError);
+			
+			gamesListLoader.addEventListener('success', function(event, resp){
+				games = resp.response.items;
+				renderGamesList();
+			});
+			
+			gameLoader.addEventListener('success', function(event, obj){
+				var item;
+				selectedGame.c = new Array();
+				selectedGame.w = new Array();
+				
+				for(var x = 0, y = obj.response.length; x < y; x++){
+					item = obj.response[x];
+					selectedGame[(typeof item.image != 'undefined') ? 'c' : 'w'].push(item);
+				}
+				
+				console.log(selectedGame);
+				alert('Loaded game: ' + selectedGame.name + ' (' + selectedGame.c.length + ' correct answers).');
+			});
 			
 			//load main page
 			var elm = (isApp) ? document.body : document.getElementById('PhotoPopWrapper');
