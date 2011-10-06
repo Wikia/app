@@ -443,7 +443,7 @@ abstract class DatabaseBase {
 	 * @throws DBQueryError Thrown when the database returns an error of any kind
 	 */
 	public function query( $sql, $fname = '', $tempIgnore = false ) {
-		global $wgProfiler;
+		global $wgProfiler, $wgDBReadOnly;
 
 		$isMaster = !is_null( $this->getLBInfo( 'master' ) );
 		if ( isset( $wgProfiler ) ) {
@@ -465,23 +465,23 @@ abstract class DatabaseBase {
 		}
 
 		$this->mLastQuery = $sql;
-		if ( !$this->mDoneWrites && $this->isWriteQuery( $sql ) ) {
+		$is_writeable = $this->isWriteQuery( $sql );
+		if ( !$this->mDoneWrites && $is_writable ) {
 			// Set a flag indicating that writes have been done
 			wfDebug( __METHOD__.": Writes done: $sql\n" );
 			$this->mDoneWrites = true;
-			# <Wikia>
-			# Please use this variable only with wgReadOnly
-			global $wgDBReadOnly;
-			if ( $wgDBReadOnly ) {
-				if ( isset( $wgProfiler ) ) {
-					wfProfileOut( $queryProf );
-					wfProfileOut( $totalProf );
-				}	
-				wfDebugLog( 'database', "DB readonly mode: $sql" );
-				return false;		
-			}
-			# </Wikia>
 		}
+		
+		# <Wikia>
+		if ( $is_writeable && $wgDBReadOnly ) {
+			if ( isset( $wgProfiler ) ) {
+				wfProfileOut( $queryProf );
+				wfProfileOut( $totalProf );
+			}	
+			wfDebugLog( 'database', "DB readonly mode: $sql" );
+			return false;		
+		}
+		# </Wikia>	
 
 		# Add a comment for easy SHOW PROCESSLIST interpretation
 		#if ( $fname ) {
