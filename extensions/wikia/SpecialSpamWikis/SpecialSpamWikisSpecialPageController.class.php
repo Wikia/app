@@ -49,6 +49,8 @@ class SpecialSpamWikisSpecialPageController extends WikiaSpecialPageController {
                     $city = WikiFactory::getWikiByID( $k );
                     // set the public status to "spam"
                     $status = WikiFactory::setPublicStatus( -2, $k, 'SpecialSpamWikis' );
+                    // clear the cached settings for the wiki
+                    WikiFactory::clearCache( $k );
                     
                     // prepare the output data
                     $this->mData->close[] = array(
@@ -63,6 +65,9 @@ class SpecialSpamWikisSpecialPageController extends WikiaSpecialPageController {
                          __METHOD__
                     );
                 }
+                // clear the interwiki links for ALL languages in memcached.
+                WikiFactory::clearInterwikiCache();
+                
                 unset( $tmpDb );
             }
             
