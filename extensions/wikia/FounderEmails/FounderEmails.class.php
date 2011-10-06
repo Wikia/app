@@ -49,31 +49,34 @@ class FounderEmails {
 		if (empty($wgFounderEmailsDebugUserId)) {
 			// get founder
 			$wikiId = !empty( $wikiId ) ? $wikiId : $wgCityId;
-			$user_ids[] = WikiFactory::getWikiById($wikiId)->city_founding_user;
+			$wiki = WikiFactory::getWikiById($wikiId);
+			if (!empty($wiki)) {
+				$user_ids[] = $wiki->city_founding_user;
 			
-			// get admin and bureaucrat
-			if (empty($wgEnableAnswers)) {
-				$memKey = self::getMemKeyAdminIds($wikiId);
-				$admin_ids = $wgMemc->get($memKey);
-				if (is_null($admin_ids)) {
-					$dbname = WikiFactory::IDtoDB($wikiId);
-					$db_type = ($use_master) ? DB_MASTER : DB_SLAVE;
-					$dbr = wfGetDB($db_type, array(), $dbname);
-					$result = $dbr->select(
-						'user_groups',
-						'distinct ug_user',
-						array ("ug_group in ('sysop','bureaucrat')"),
-						__METHOD__
-					);
+				// get admin and bureaucrat
+				if (empty($wgEnableAnswers)) {
+					$memKey = self::getMemKeyAdminIds($wikiId);
+					$admin_ids = $wgMemc->get($memKey);
+					if (is_null($admin_ids)) {
+						$dbname = $wiki->city_dbname;
+						$db_type = ($use_master) ? DB_MASTER : DB_SLAVE;
+						$dbr = wfGetDB($db_type, array(), $dbname);
+						$result = $dbr->select(
+							'user_groups',
+							'distinct ug_user',
+							array ("ug_group in ('sysop','bureaucrat')"),
+							__METHOD__
+						);
 					
-					$admin_ids = array();
-					while ($row = $dbr->fetchObject($result)) {
-						$admin_ids[] = $row->ug_user;
+						$admin_ids = array();
+						while ($row = $dbr->fetchObject($result)) {
+							$admin_ids[] = $row->ug_user;
+						}
+						$dbr->freeResult($result);
+						$wgMemc->set($memKey, $admin_ids, 60*60*24);
 					}
-					$dbr->freeResult($result);
-					$wgMemc->set($memKey, $admin_ids, 60*60*24);
+					$user_ids = array_unique(array_merge($user_ids, $admin_ids));
 				}
-				$user_ids = array_unique(array_merge($user_ids, $admin_ids));
 			}
 		} else {
 			$user_ids[] = $wgFounderEmailsDebugUserId;
