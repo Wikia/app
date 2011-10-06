@@ -21,7 +21,7 @@
             minContent: 0,
             minAnim: 25,
             limit: 1000,
-            limitEmpty: 1000,
+            limitEmpty: 1000
         }, options);
         
         // Only textarea's auto-resize:
