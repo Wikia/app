@@ -22,7 +22,7 @@
 	</div>
 	<ul class="questions" id="Questions">
 
-		<?
+		<?php
 		$numOfQuestions = count($data['elements']);
 		for ($i = 0; $i < $numOfQuestions; $i++) {
 			$q = $data['elements'][$i]; ?>
@@ -127,11 +127,7 @@
 	<fb:like class="fblike" href="" send="true" width="530" show_faces="true" font="" height="75" action="recommend"></fb:like>
 </div>
 <script>
-	WikiaQuizVars = {
-		cadence: ['<?= wfMsg('wikiaquiz-game-cadence-3') ?>', '<?= wfMsg('wikiaquiz-game-cadence-2') ?>', '<?= wfMsg('wikiaquiz-game-cadence-1') ?>'],
-		correctLabel: '<?= wfMsg('wikiaquiz-game-correct-label') ?>',
-		incorrectLabel: '<?= wfMsg('wikiaquiz-game-incorrect-label') ?>'
-	};
+	var WikiaQuizVars = <?= json_encode($quizVars) ?>;
 </script>
 <audio id="SoundAnswerCorrect" src="<?= $wgExtensionsPath ?>/wikia/WikiaQuiz/sounds/correct.ogg" preload="auto"></audio>
 <audio id="SoundAnswerWrong" src="<?= $wgExtensionsPath ?>/wikia/WikiaQuiz/sounds/wrong.ogg" preload="auto"></audio>

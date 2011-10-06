@@ -5,7 +5,7 @@ var CreateWikiaQuizArticle = {
 			.find("ul").sortable({
 				axis: "y",
 				handle: ".drag",
-				opacity: .8,
+				opacity: 0.8,
 				stop: CreateWikiaQuizArticle.renumber
 			}).end()
 			.find(".drag").live("mousedown", function(event) {
@@ -20,22 +20,22 @@ var CreateWikiaQuizArticle = {
 				event.preventDefault();
 				$(this).closest(".modalWrapper").closeModal();
 			});
-		}		
+		}
 	},
-	
+
 	addNew: function(event) {
 		event.preventDefault();
 		$("#CreateWikiaQuizArticle .new-item").clone().removeClass("new-item").appendTo("#CreateWikiaQuizArticle ul");
 		CreateWikiaQuizArticle.renumber();
 	},
-	
+
 	remove: function() {
 		$(this).closest("li").slideUp("fast", function() {
 			$(this).remove();
 			CreateWikiaQuizArticle.renumber();
-		})
+		});
 	},
-	
+
 	renumber: function() {
 		$("#CreateWikiaQuizArticle li:not('.new-item') label.order").each(function(i) {
 			$(this).text("#" + (i + 1));
@@ -44,10 +44,10 @@ var CreateWikiaQuizArticle = {
 			$(this).val(i);
 		});
 	},
-	
+
 	showEditor: function(event) {
 		var self = CreateWikiaQuizArticle;
-	
+
 		// load CSS for editor popup and jQuery UI library (if not loaded yet) via loader function
 		$.getResources([
 			$.loadJQueryUI,
@@ -57,7 +57,7 @@ var CreateWikiaQuizArticle = {
 			$.get(wgServer + wgScript + '?action=ajax&rs=moduleProxy&moduleName=WikiaQuiz&actionName=SpecialPage&outputType=html', function(data) {
 				$(data).makeModal({width: 600});
 				CreateWikiaQuizArticle.init();
-				
+
 				// editing an existing quiz?
 				if ($(event.target).hasClass("placeholder-quiz")) {
 					CreateWikiaQuizArticle.editExisting(event.target);
@@ -65,33 +65,34 @@ var CreateWikiaQuizArticle = {
 			});
 		});
 	},
-	
+
 	editExisting: function(placeholder) {
-		var quizElementData = $(placeholder).getData();
+		var quizElementData = $(placeholder).getData(),
+			index;
 
 		// add hidden form element for quizElementId
 		$("#CreateWikiaQuizArticle").find("form").append('<input type="hidden" name="quizElementId" value="' + quizElementData.quizElementId + '">');
-		
+
 		// store data in main dom element for use when saving
 		$("#CreateWikiaQuizArticle").data(quizElementData);
-		
+
 		// populate question field
 		$("#CreateWikiaQuizArticle").find("input[name='question']").val(quizElementData.question);
-		
+
 		// remove 3 empty answer fields from the default template
 		$("#CreateWikiaQuizArticle li:not('.new-item')").remove();
-		
+
 		// generate answer list elements
 		for (index in quizElementData.answers) {
 			var li = $("#CreateWikiaQuizArticle .new-item").clone().removeClass("new-item").appendTo("#CreateWikiaQuizArticle ul");
 			li.find("input").val(quizElementData.answers[index]);
 		}
-		
+
 		// properly number the answers
 		CreateWikiaQuizArticle.renumber();
-		
+
 	},
-	
+
 	onSave: function(event) {
 		event.preventDefault();
 
@@ -132,7 +133,7 @@ var CreateWikiaQuizArticle = {
 					}
 				} else { // Special:Quiz
 					if (data.success) {
-						document.location = data.url;				
+						document.location = data.url;
 					} else if (data.error) {
 						$("#CreateWikiaQuizArticle").find(".errorbox").remove().end().prepend(data.error);
 					}
