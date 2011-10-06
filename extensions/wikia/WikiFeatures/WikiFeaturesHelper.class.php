@@ -43,6 +43,7 @@ class WikiFeaturesHelper extends WikiaModel {
 	// no need to add feature to $release_date if not require "new" flag
 	public static $release_date = array (
 		'wgEnableChat' => '2011-08-01',					// Chat
+		'wgOasisNavV2' => '2011-10-05',					// WikiNav
 	);
 	
 	public static function getInstance() {
