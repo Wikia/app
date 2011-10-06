@@ -1,6 +1,4 @@
 .WikiaPage {
-	/*background: $color-page;*/
-	border: 1px solid $color-page-border;
 	margin: -59px auto -39px;
 	padding-top: 59px;
 	&.V2 {
@@ -28,9 +26,7 @@
 }
 
 .WikiaAdvertPage {
-	/*background: $color-page;*/
-	border: 1px solid $color-page-border;
-	margin: 0px auto 10px;
+	margin: 0px auto;
 	padding-bottom: 0px;
 	position: relative;
 	width: $width-outside;
@@ -47,7 +43,6 @@
 		position: absolute;
 		top: 0;
 		width: 100%;
-		@include box-shadow( 1px, 2px, 10px, mix( $color-body, #000, 75% ) );
 	}
 
 	.WikiaPageContentWrapper {
