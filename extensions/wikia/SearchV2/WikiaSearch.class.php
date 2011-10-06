@@ -27,7 +27,11 @@ class WikiaSearch extends WikiaObject {
 	public function getPage( $pageId, $withMetaData = true ) {
 		$result = array();
 
-		$page = Article::newFromID( $pageId );
+		$page = F::build( 'Article', array( $pageId ), 'newFromID' );
+
+		if(!($page instanceof Article)) {
+			throw new WikiaException('Invalid Article ID');
+		}
 
 		// hack: setting wgTitle as rendering fails otherwise
 		$wgTitle = $this->wg->Title;
@@ -37,9 +41,24 @@ class WikiaSearch extends WikiaObject {
 		$wgRequest = $this->wg->Request;
 		$this->wg->Request->setVal('action', 'render');
 
-		$page->render();
+		if( $page->isRedirect() ) {
+			$redirectPage = F::build( 'Article', array( $page->getRedirectTarget() ) );
+			$redirectPage->loadContent();
 
+			// hack: setting wgTitle as rendering fails otherwise
+			$this->wg->Title = $page->getRedirectTarget();
+
+			$redirectPage->render();
+			$canonical = $page->getRedirectTarget()->getPrefixedText();
+		}
+		else {
+			$page->render();
+			$canonical = '';
+		}
+
+		$result['sitename'] = $this->wg->Sitename;
 		$result['title'] = $page->getTitle()->getText();
+		$result['canonical'] = $canonical;
 		$result['text'] = $this->wg->Out->getHTML();
 		$result['url'] = $page->getTitle()->getFullUrl();
 		$result['ns'] = $page->getTitle()->getNamespace();

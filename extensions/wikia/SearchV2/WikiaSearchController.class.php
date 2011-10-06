@@ -11,6 +11,12 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
+		if( !in_array( 'staff', $this->wg->User->getEffectiveGroups() ) ) {
+			$this->displayRestrictionError($this->user);
+			$this->skipRendering();
+			return false;
+		}
+
 		$query = $this->getVal('query');
 		$start = $this->getVal('start', 0);
 
