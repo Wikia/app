@@ -96,7 +96,11 @@ $wgEnableAntiSpoofExt = false;
 // Google Maps key for wikia-dev.com (different than the key for wikia.com).
 $wgGoogleMapsKey = "ABQIAAAAmEOzDwderqrXX0aQlmxZZhTsndpDQKTEb03AQ6hTlU-KPVq60xT7ljrIRMX04nVePZgDZS1NQCp3NQ";
 
-##### MAKE ANY CHANGES HERE THAT YOU  WANT TO SHOW UP ON DEVBOXES BY DEFAULT BUT STILL BE OVERRIDABLE #####
+// Staff should be able to change all groups on the devboxes.
+$wgAddGroups['staff'] = true;
+$wgRemoveGroups['staff'] = true;
+
+##### /MAKE ANY CHANGES _BEFORE_ HERE THAT YOU  WANT TO SHOW UP ON DEVBOXES BY DEFAULT BUT STILL BE OVERRIDABLE #####
 
 require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../DevBoxSettings.php' );
 
