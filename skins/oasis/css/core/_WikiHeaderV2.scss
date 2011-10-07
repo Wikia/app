@@ -243,7 +243,7 @@
 		text-align: right;
 		width: 270px;
 		height: 10px;
-		top: 17px;
+		top: 12px;
 		z-index: 4;
 
 		.wikia-button,
@@ -262,6 +262,12 @@
 		}
 
 		.contribute {
+			padding-top: 1px;
+			vertical-align: middle;
+			> img {
+				height: 18px;
+				margin-bottom: 4px;
+			}
 			>li {
 				padding: 2px 0 0 5px;
 			}
@@ -288,6 +294,10 @@
 						background-color: $color-contribute;
 					}
 				}
+			}
+			> .drop img {
+				height: 4px;
+				vertical-align: bottom;
 			}
 			> .drop:hover {
 				background: none;
