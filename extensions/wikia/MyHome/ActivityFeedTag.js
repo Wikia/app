@@ -114,9 +114,9 @@ ActivityFeedTag.addTracking = function(id) {
 	});
 }
 
-ActivityFeedTag.initActivityTag = function(id, params, timestamp) {
-	ActivityFeedTag.loadFreshData(id, params, timestamp);
-	ActivityFeedTag.addTracking(id);
+ActivityFeedTag.initActivityTag = function(obj) {
+	ActivityFeedTag.loadFreshData(obj.tagid, obj.jsParams, obj.timestamp);
+	ActivityFeedTag.addTracking(obj.tagid);
 }
 
 wgAfterContentAndJS.push(function() {
