@@ -36,12 +36,12 @@ function ActivityFeedTag_render($content, $attributes, $parser, $frame) {
 
 	$style = empty($parameters['style']) ? '' : ' style="' . $parameters['style'] . '"';
 	$timestamp = wfTimestampNow();
-	$includes  = "<script type=\"text/javascript\" src=\"{$wgExtensionsPath}/wikia/MyHome/ActivityFeedTag.js?{$wgStyleVersion}\"></script>";
-	$includes .= "<script type=\"text/javascript\">wgAfterContentAndJS.push(function() {ActivityFeedTag.initActivityTag('$tagid', '$jsParams', '$timestamp');});</script>";
-	$includes .= "<style type=\"text/css\">@import url({$wgExtensionsPath}/wikia/MyHome/ActivityFeedTag.css?{$wgStyleVersion});</style>";
+
+	$snippets = "<script>JSSnippetsStack.push({dependencies: ['/extensions/wikia/MyHome/ActivityFeedTag.js', '/extensions/wikia/MyHome/ActivityFeedTag.css'],callback: function() {ActivityFeedTag.initActivityTag('{$tagid}', '{$jsParams}', '{$timestamp}');}});</script>";
+
 	if((!empty($wgEnableAchievementsInActivityFeed)) && (!empty($wgEnableAchievementsExt))){	
-		$includes .= "<style type=\"text/css\">@import url({$wgExtensionsPath}/wikia/AchievementsII/css/achievements_sidebar.css?{$wgStyleVersion});</style>";
+		$snippets .= "<script>JSSnippetsStack.push({dependencies: ['/extensions/wikia/AchievementsII/css/achievements_sidebar.css']});</script>";
 	}
 	wfProfileOut(__METHOD__);
-	return "<div$style>$feedHTML</div>$includes";
+	return "<div$style>$feedHTML</div>$snippets";
 }
