@@ -31,8 +31,8 @@ define.call(exports, function(){
 		STATIC: {
 			INCORRECT_CLASS_NAME: 'incorrect',
 			TIME_UP_NOTIFICATION_DURATION_MILLIS: 3000,
-			MAX_SECONDS_PER_ROUND: 10,
-			UPDATE_INTERVAL_MILLIS: 100,
+			MAX_SECONDS_PER_ROUND: 15,
+			UPDATE_INTERVAL_MILLIS: 250,
 			PERCENT_FOR_TIME_IS_LOW: 30,
 			MAX_POINTS_PER_ROUND: 1000,
 			PERCENT_DEDUCTION_WRONG_GUESS: 30
@@ -104,6 +104,7 @@ define.call(exports, function(){
 		
 		prepareHud: function() {
 			var self = this;
+			document.getElementById('totalPoints').innerHTML = '0';
 			document.getElementById('home').onclick = function() {
 				self.fire('goHome');
 			}
@@ -227,6 +228,9 @@ define.call(exports, function(){
 		},
 		
 		showMask: function() {
+			
+			this.fire('displayingMask');
+			
 			var tds = document.getElementsByTagName('td'),
 			tdLength = tds.length,
 			next = 0,
@@ -284,9 +288,8 @@ define.call(exports, function(){
 				
 				this.fire('modalOpened', {name: options.name});
 				
-				modalWrapper.ontouchend = modal.ontouchend = function() {
+				modalWrapper.onclick = function() {
 					if(options.closeOnClick) {
-						self.fire('modalClosed', {name: options.name});
 						modal.style.opacity = 0;
 						modalWrapper.style.visibility = 'hidden';
 					}

@@ -132,7 +132,9 @@ class PhotoPopModel extends WikiaModel{
 				
 				foreach ( $articles as $id => $item ) {
 					if ( !empty( $images[$id][0]['url'] ) ) {
-						$item->image = $images[$id][0]['url'];
+						$url = $images[$id][0]['url'];
+						//images are not available on devbox and we need to test the game with real images!
+						$item->image = ( $this->wg->DevelEnvironment ) ? preg_replace('#http://[^/]+/#i', 'http://images.wikia.com/', $url) : $url;
 					}
 					
 					$contents[] = $item;
@@ -167,7 +169,7 @@ class PhotoPopModel extends WikiaModel{
 		if ( empty( $contents ) ) {
 			$title = F::build( 'Title', array( $titleName, NS_FILE ), 'newFromText' );
 			
-			if ( $title instanceof Title ) {
+			if ( $title instanceof Title && $title->exists() ) {
 				$id = $title->getArticleId();
 				$resp = $this->app->sendRequest( 'ImageServingController', 'index', array( 'ids' => array( $id ), 'height' => self::GAME_ICON_HEIGHT, 'width' => self::GAME_ICON_WIDTH, 'count' => 1 ) );
 
