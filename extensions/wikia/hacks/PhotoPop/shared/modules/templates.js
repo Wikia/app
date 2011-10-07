@@ -1,6 +1,8 @@
 var exports = exports || {};
 
 define.call(exports, {
+	wrapper: "<div id='PhotoPopWrapper'><div id='wrapper'></div></div>",
+	
 	selectorScreen: "<div id='logoWrapper'>\
 				<img id='logoPhotopop' src='{{#image}}PHOTOPOP_LOGO{{/image}}'/><br/>\
 				<img id='logoWikia' src='{{#image}}POWERED_BY_LOGO{{/image}}'>\
@@ -22,6 +24,7 @@ define.call(exports, {
 				<span class='progress'>Loading...</span>\
 			</div>\
 		</div>",
+	
 	gameSelector:
 		"<ul id='gamesList'>{{#games}}\
 			<li class='gameIcon' data-idx='{{index}}'>\
@@ -31,6 +34,7 @@ define.call(exports, {
 				</div>\
 			</li>\
 		{{/games}}</ul>",
+	
 	gameScreen:
 		"<div id='gameScreen' class='composite transition-all'><div id='scoreBarWrapper'  class='composite transition-all'>\
 			<div id='scoreBar' class='composite transition-all'></div>\

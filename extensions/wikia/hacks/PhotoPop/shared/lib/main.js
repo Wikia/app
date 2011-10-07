@@ -306,8 +306,7 @@
 				alert('Error loading ' + resp.url + ': ' + resp.error.toString());
 			}
 			//end of event handlers
-			elm = (isApp) ? document.body : document.getElementById('PhotoPopWrapper');
-			
+				
 			imageServer.init(config.images);
 			soundServer.init(config.sounds);
 			
@@ -335,8 +334,7 @@
 			});
 			
 			//load main page
-			var elm = (isApp) ? document.body : document.getElementById('PhotoPopWrapper');
-			
+			document.body.innerHTML = templates.wrapper;
 			wrapper = document.getElementById('wrapper');			
 			
 			function runTutorial() {
