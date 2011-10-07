@@ -50,7 +50,7 @@ class FounderEmails {
 			// get founder
 			$wikiId = !empty( $wikiId ) ? $wikiId : $wgCityId;
 			$wiki = WikiFactory::getWikiById($wikiId);
-			if (!empty($wiki)) {
+			if (!empty($wiki) && $wiki->city_public == 1) {
 				$user_ids[] = $wiki->city_founding_user;
 			
 				// get admin and bureaucrat
