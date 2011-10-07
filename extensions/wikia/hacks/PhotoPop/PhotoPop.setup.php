@@ -32,6 +32,14 @@ $app->wg->append(
 );
 
 /**
+ * rights
+ */
+$app->wg->append( 'AvailableRights', 'photopop_setup' );
+//Nirvana doesn't give access to multi-dimensional global arrays :(
+$wgGroupPermissions['*']['photopop_setup'] = false;
+$wgGroupPermissions['staff']['photopop_setup'] = true;
+
+/**
  * classes
  */
 
@@ -48,12 +56,13 @@ $app->wg->set( 'wgAutoloadClasses', "{$dir}/PhotoPopModel.class.php", 'PhotoPopM
  * controllers
  */
 $app->wg->set( 'wgAutoloadClasses', "{$dir}/PhotoPopController.class.php", 'PhotoPopController' );
+$app->wg->set( 'wgAutoloadClasses', "{$dir}/PhotoPopSpecialPageController.class.php", 'PhotoPopSpecialPageController' );
 $app->wg->set( 'wgAutoloadClasses', "{$dir}/PhotoPopAppCacheController.class.php", 'PhotoPopAppCacheController' );
 
 /**
  * special pages
  */
-
+$app->registerSpecialPage('PhotoPopSetup', 'PhotoPopSpecialPageController');
 
 /**
  * message files

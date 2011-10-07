@@ -28,7 +28,7 @@ define.call(exports, {
 	gameSelector:
 		"<ul id='gamesList'>{{#games}}\
 			<li class='gameIcon' data-idx='{{index}}'>\
-				<img src ='{{image}}'><br/>\
+				<img src ='{{thumbnail}}'><br/>\
 				<div class='gameName'>\
 					{{name}}\
 				</div>\

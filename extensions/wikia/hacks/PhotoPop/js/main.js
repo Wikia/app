@@ -69,12 +69,8 @@
 					item;
 					
 					for(var x = 0, y = games.length; x < y; x++){
-						item = games[x];
-						templateVars.games.push({
-							name: item.name,
-							image: 'http://' +  ((config.settings.testDomain) ? item.dbName + '.' + config.settings.testDomain : item.domain) + '/wikia.php?controller=PhotoPopController&method=getIcon&title=' + item.thumbnail + '&format=raw',
-							index: x
-						})
+						games[x].index = x;
+						templateVars.games.push(games[x]);
 					}
 					
 					document.getElementById('sliderContent').innerHTML = Mustache.to_html(templates.gameSelector, templateVars);
