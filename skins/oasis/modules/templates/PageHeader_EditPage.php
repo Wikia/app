@@ -1,5 +1,6 @@
 <div id="WikiaPageHeader" class="WikiaPageHeader">
-	<?php if( $isHistory && !$isUserTalkArchiveModeEnabled ) { ?>
+	<?php
+	if( !empty($isHistory) && !empty($isUserTalkArchiveModeEnabled) ) { ?>
 		<?= wfRenderModule('CommentsLikes', 'Index', array('comments' => $comments, 'likes' => $likes)); ?>
 	<?php } ?>
 	<h1><?= !empty($displaytitle) ? $title : htmlspecialchars($title) ?></h1>
