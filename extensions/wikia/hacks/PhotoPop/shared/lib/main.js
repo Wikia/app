@@ -1,14 +1,14 @@
 (function(){
 	var isApp = (typeof Titanium != 'undefined'),
-	prefix = (isApp) ? '' : '../';
+	prefix = (isApp) ? 'shared/' : '../';
 	
 	require([
-			prefix + "shared/modules/configServer",
-			prefix + "shared/modules/templates",
-			prefix + "shared/modules/imageServer",
-			prefix + "shared/modules/soundServer",
-			prefix + "shared/modules/game",
-			prefix + "shared/modules/data"
+			prefix + "modules/configServer",
+			prefix + "modules/templates",
+			prefix + "modules/imageServer",
+			prefix + "modules/soundServer",
+			prefix + "modules/game",
+			prefix + "modules/data"
 		],
 		
 		function(config, templates, imageServer, soundServer, gameLogic, data) {

@@ -16,7 +16,7 @@ class PhotoPopSpecialPageController extends WikiaSpecialPageController {
 	}
 	
 	public function index() {
-		$this->wg->Out->setPageTitle( $this->wf->msg( 'photopop-setup-title' ) );
+		$this->wg->Out->setPageTitle( $this->wf->Msg( 'photopop-setup-title' ) );
 		$this->response->addAsset( 'extensions/wikia/hacks/PhotoPop/css/PhotoPopSpecialPage.scss' );
 		
 		if( $this->wf->ReadOnly() ) {
