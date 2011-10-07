@@ -76,6 +76,23 @@ $color-related-videos-background: darken($color-page, 20%);
 				margin-right:5px;
 			}
 		}
+		.feedback {
+			line-height: 38px;
+			margin-right: 11px;
+			float: right;
+		}
+		.beta {
+			@include border-radius(4px);
+			margin-right: 11px;
+			float: right;
+			background-color: $color-buttons;
+			color: $color-button-text;
+			margin-top: 8px;
+			padding: 0px 5px;
+			&:hover{
+				text-decoration: none;
+			}
+		}
 	}
 
 	.RVBody {
@@ -309,5 +326,16 @@ $color-related-videos-background: darken($color-page, 20%);
 #relatedvideos-video-player {
 	section.modalContent {
 		margin-top: 27px;
+	}
+	.embedCode {
+		margin-top: 10px;
+		input {
+			line-height: 25px;
+			height: 25px;
+			font-size:14px;
+			font-family: Helvetica, Arial, sans-serif;
+			padding: 1px 1px 1px 5px;
+			width: 650px;
+		}
 	}
 }

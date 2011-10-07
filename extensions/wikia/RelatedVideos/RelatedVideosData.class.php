@@ -39,7 +39,7 @@ class RelatedVideosData {
 				$owner = $oArticle->getUserText();
 				if (!empty($owner)) {
 					$oOwner = F::build( 'User', array( $owner ), 'newFromName' );
-					if (is_object($owner)) {
+					if (is_object($oOwner)) {
 						$ownerUrl = $oOwner->getUserPage()->getFullURL();
 					}
 				}

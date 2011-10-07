@@ -10,6 +10,9 @@ class RelatedVideosNamespaceData {
 	private $mId;
 	private $mExists;
 	private $mMemcacheKey;
+	private $oParser;
+	private $oParserOptions;
+	private $oFakeTitle;
 
 	const CACHE_TTL = 86400;
 	const CACHE_VER = 5;
@@ -258,7 +261,7 @@ class RelatedVideosNamespaceData {
 		wfProfileIn( __METHOD__ );
 		$content = '';
 		$status = '';
-
+		$summary = '';
 		$this->load();	
 
 		// first, add to this list
@@ -280,6 +283,16 @@ class RelatedVideosNamespaceData {
 			}
 			// no duplicate found. add!
 			$this->mData['lists'][$list] = array_merge($this->mData['lists'][$list], $entries);
+
+			// managing WikiActivity
+			$oTmpTitle = F::build( 'Title', array( $newEntry['title'], NS_VIDEO), 'newFromText');
+			if ( $oTmpTitle->exists() ){
+				if ( $list == self::WHITELIST_MARKER ){
+					$summary = wfMsg('related-videos-wiki-summary-whitelist', array( $oTmpTitle->getText(), $oTmpTitle->getFullText() ));
+				} else {
+					$summary = wfMsg('related-videos-wiki-summary-blacklist', array( $oTmpTitle->getText(), $oTmpTitle->getFullText() ));
+				}
+			}
 		}
 		else {
 			$this->mData['lists'][$list] = $entries;
@@ -318,7 +331,12 @@ class RelatedVideosNamespaceData {
 		}
 
 		$article = F::build('Article', array($title));
-		$status = $article->doEdit($content, ucfirst(strtolower($list)) . ' Updated', $this->exists() ? EDIT_UPDATE : EDIT_NEW, false, F::app()->wg->user);
+
+		if ( empty( $summary )){
+			$summary = wfMsg( 'related-videos-updated', array( ucfirst(strtolower($list)) ) );
+		}
+
+		$status = $article->doEdit($content, $summary, $this->exists() ? EDIT_UPDATE : EDIT_NEW, false, F::app()->wg->user);
 		$this->purge();	// probably unnecessary b/c a hook does this, but can't hurt
 
 		wfProfileOut( __METHOD__ );
@@ -338,5 +356,4 @@ class RelatedVideosNamespaceData {
 		wfProfileOut( __METHOD__ );
 		return $entry;
 	}
-	
 }
