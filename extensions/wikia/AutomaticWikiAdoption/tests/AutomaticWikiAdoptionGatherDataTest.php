@@ -17,10 +17,14 @@ class AutomaticWikiAdoptionGatherDataTest extends PHPUnit_Framework_TestCase {
 					'admins' => array(1,2,3)
 				);
 		
-		$mock = $this->getMock('AutomaticWikiAdoptionGatherData', array('getRecentAdminEdits', $action));
+		$mock = $this->getMock('AutomaticWikiAdoptionGatherData', array('getRecentAdminEdits', 'getMaxWikiId', $action));
 		$mock->expects($this->once())
 				->method('getRecentAdminEdits')
 				->will($this->returnValue(array($id => $wikiData)));
+
+		$mock->expects($this->once())
+				->method('getMaxWikiId')
+				->will($this->returnValue(270000));
 		
 		$mock->expects($this->once())
 				->method($action) //'setAdoptionFlag' or 'sendEmail'
