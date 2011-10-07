@@ -1320,11 +1320,7 @@ Liftium.init = function () {
 	}
 
 
-	if (typeof inGroup != 'undefined') {
-	if (inGroup(groups.N)) {
-		WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "init"]), 'liftium.init2');
-	}
-	}
+	WikiaTracker._track2(Liftium.buildTrackUrl([LiftiumOptions.pubid, "init2"]), 'UA-17475676-15', 10);
 	WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "init"]), 'liftium.init');
 
 	Liftium.trackQcseg();
@@ -1942,11 +1938,7 @@ Liftium.sendBeacon = function (){
 
 	// Track the beacons with GA
 
-	if (typeof inGroup != 'undefined') {
-	if (inGroup(groups.N)) {
-		WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "beacon"]), 'liftium.beacon2');
-	}
-	}
+	WikiaTracker._track2(Liftium.buildTrackUrl([LiftiumOptions.pubid, "beacon2"]), 'UA-17475676-14', 10);
 	WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "beacon"]), 'liftium.beacon');
 
 	// Call the unit tests

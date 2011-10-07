@@ -129,3 +129,66 @@ WikiaTracker.trackEvent3 = function(page, param) {
 
 	return this._track(page, profile, sample);
 };
+
+WikiaTracker._track2 = function(page, profile, sample) {
+	if (!this._isTracked()) { return false; }
+
+	this.debug('(internal2) ' + page + ' in ' + profile + ' at ' + sample + '%', 5);
+
+	_gaq.push(['WikiaTracker._setAccount', profile]);
+
+	var hub = Liftium.getPageVar("Hub", "unknown");
+	var lang = Liftium.langForTracking(Liftium.getPageVar("cont_lang", "unknown"));
+	var db = Liftium.dbnameForTracking(Liftium.getPageVar("wgDBname", "unknown"));
+
+	_gaq.push(['WikiaTracker._setCustomVar', 1, 'db',   db,   3]);
+	_gaq.push(['WikiaTracker._setCustomVar', 2, 'hub',  hub,  3]);
+	_gaq.push(['WikiaTracker._setCustomVar', 3, 'lang', lang, 3]);
+
+	_gaq.push(['WikiaTracker._trackPageview', page]);
+
+	return true;
+};
+
+WikiaTracker._simpleHash = function(s, tableSize) {
+		var i, hash = 0;
+		for (i = 0; i < s.length; i++) {
+			hash += (s[i].charCodeAt() * (i+1));
+		}
+		return Math.abs(hash) % tableSize;
+ };
+
+WikiaTracker._inGroup = function(hash_id, group_id) {
+	var groups = {
+		all : { rangeStart: 0, rangeStop: 99, id: 'UA-1' },
+		A : { rangeStart: 20, rangeStop: 29, id: 'UA-2' },
+		B : { rangeStart: 30, rangeStop: 39, id: 'UA-3' },
+		N : { rangeStart: 80, rangeStop: 89, id: 'UA-8' }
+	};
+
+		if( groups[group_id].rangeStart <= hash_id && hash_id <= groups[group_id].rangeStop ) {
+			return true;
+		}
+
+	return false;
+};
+
+WikiaTracker._isTracked = function() {
+	var is_tracked = false;
+
+	if (typeof this._is_tracked_cache != 'undefined') {
+		is_tracked = this._is_tracked_cache;
+		this.debug('isTracked from cache', 5); // FIXME NEF 7
+	} else {
+		this.debug('beacon_id: ' + window.beacon_id, 5); // FIXME NEF 7
+		var hash = this._simpleHash(window.beacon_id, 100);
+		this.debug('beacon hashed: ' + hash, 5); // FIXME NEF 7
+
+		is_tracked = this._inGroup(hash, 'N');
+		this._is_tracked_cache = is_tracked;
+	}
+
+	this.debug('isTracked: ' + is_tracked, 5);
+
+	return is_tracked;
+};
