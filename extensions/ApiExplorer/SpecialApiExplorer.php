@@ -25,7 +25,7 @@ $wgExtensionCredits['specialpage'][] = array(
 
 $dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['ApiExplorer'] = $dir . 'ApiExplorer.i18n.php';
-$wgExtensionAliasesFiles['ApiExplorer'] = $dir . '/ApiExplorer.alias.php';
+$wgExtensionAliasesFiles['ApiExplorer'] = $dir . 'ApiExplorer.alias.php';
 
 /**
  * @ingroup SpecialPage
