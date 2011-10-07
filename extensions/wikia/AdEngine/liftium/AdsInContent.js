@@ -44,11 +44,7 @@ if ($(window).width() < 1010) {
 			$(window).bind("resize.AIC2", AIC2.onScroll);
 		//}
 
-	if (typeof inGroup != 'undefined') {
-	if (inGroup(groups.N)) {
-		WikiaTracker._track(Liftium.buildTrackUrl([LiftiumOptions.pubid, 'AIC2', 'test6']), 'UA-17475676-11', 100);
-	}
-	}
+	WikiaTracker._track2(Liftium.buildTrackUrl([LiftiumOptions.pubid, 'AIC2', 'test7']), 'UA-17475676-11', 10);
 	if (!Liftium.e(Liftium.debugLevel) || Math.floor(Math.random() * 10) == 7) {
 		//Liftium.trackEvent(Liftium.buildTrackUrl(['AIC2', 'test1']), 'UA-17475676-11');
 		_gaq.push(['liftium._setAccount', 'UA-17475676-11']);
