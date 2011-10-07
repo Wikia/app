@@ -39,15 +39,7 @@
 			gameScreenRender = function(event, round){
 				wrapper.innerHTML = Mustache.to_html(templates.gameScreen, view);
 				wrapper.style.pointerEvents = 'none';
-				if(g.getId() == 'tutorial')
-					g.openModal({
-						name: 'intro',
-						html: "Tap the screen to take a peek of the mystery image underneath.",
-						fade: true,
-						clickThrough: false,
-						closeOnClick: true
-					});
-				
+
 				//on load picture
 				var self = this;
 				document.getElementById('bgPic').getElementsByTagName('img')[0].onload = function() {
@@ -120,7 +112,6 @@
 				setTimeout(
 					function(){
 						document.getElementById('sliderWrapper').style.bottom = 0;
-						console.log(document.getElementById('sliderWrapper'));
 					},
 					2000
 				);
@@ -286,6 +277,14 @@
 			
 			maskDisplayed = function(event , options) {
 				changeImg(g.getId(), options.image);
+				if(g.getId() == 'tutorial')
+					g.openModal({
+						name: 'intro',
+						html: "Tap the screen to take a peek of the mystery image underneath.",
+						fade: true,
+						clickThrough: false,
+						closeOnClick: true
+					});
 				g.updateHudProgress();
 			},
 			
