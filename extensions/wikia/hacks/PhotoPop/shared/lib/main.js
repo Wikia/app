@@ -21,6 +21,8 @@
 			g,
 			Game = gameLogic.Game,
 			muteButton,
+			imgPath,
+			
 			view = {
 				image: function() {
 					return function(text, render) {
@@ -33,8 +35,10 @@
 					}
 				}
 			},
+			
 			gameScreenRender = function(event, round){
 				wrapper.innerHTML = Mustache.to_html(templates.gameScreen, view);
+				wrapper.style.pointerEvents = 'none';
 				if(g.getId() == 'tutorial')
 					g.openModal({
 						name: 'intro',
@@ -44,14 +48,26 @@
 						closeOnClick: true
 					});
 				
+				//on load picture
+				var self = this;
+				document.getElementById('bgPic').getElementsByTagName('img')[0].onload = function() {
+					imageLoaded();
+				}
+				
 				//highscore
 				if(!store.get('highScore_' + g.getId())) store.set('highScore_' + g.getId(), 0);
 				document.getElementById('highScore').getElementsByTagName('span')[0].innerHTML = store.get('highScore_' + g.getId());
 			},
+			
 			changeImg = function(gameId, image) {
-				var imgPath = (gameId == 'tutorial') ? imageServer.getAsset(image) : imageServer.getPicture(image);
-				document.getElementById('bgPic').getElementsByTagName('img')[0].src = imgPath;	
+				imgPath = (gameId == 'tutorial') ? imageServer.getAsset(image) : image;
+				document.getElementById('bgPic').getElementsByTagName('img')[0].src = imgPath;
 			},
+			
+			imageLoaded = function() {
+				wrapper.style.pointerEvents = 'auto';
+			},
+			
 			loadSelectedGame = function(){
 				if(typeof selectedGame != 'undefined'){
 					gameLoader.load('http://' +
@@ -61,6 +77,7 @@
 							'&callback=?');
 				}
 			},
+			
 			renderGamesList = function(){
 				if(typeof games != 'undefined'){
 					var templateVars = {
@@ -90,18 +107,20 @@
 					}
 				}
 			},
+			
 			initHomeScreen = function(){
 				wrapper.innerHTML = Mustache.to_html(templates.selectorScreen, view);
+				
+				gamesListLoader.load(
+					'http://' + (config.settings.testDomain || config.settings.centralDomain) +
+					'/wikia.php?controller=PhotoPopController&method=listGames&callback=?',
+					{method: 'get'}
+				);
 				
 				setTimeout(
 					function(){
 						document.getElementById('sliderWrapper').style.bottom = 0;
-						
-						gamesListLoader.load(
-							'http://' + (config.settings.testDomain || config.settings.centralDomain) +
-							'/wikia.php?controller=PhotoPopController&method=listGames&callback=?',
-							{method: 'get'}
-						);
+						console.log(document.getElementById('sliderWrapper'));
 					},
 					2000
 				);
@@ -132,19 +151,19 @@
 					}
 				}
 				document.getElementById('button_tutorial').onclick = function() {
-					
 					runTutorial();
 				}
 			},
+			
 			//event handlers
 			modalOpened = function(event, options) {
 				if(g.getId() == 'tutorial') {
+					console.log(g.getId());
 					g.pause();
 					g._tutorialSteps[options.name] = 1;
 				}
 			},
-			modalClosed = function(event, options) {
-			},
+			
 			answerClicked = function(event, options) {
 				g.resume();
 				if(options.li.id != g._correctAnswer) {
@@ -153,6 +172,7 @@
 					this.fire('rightAnswerClicked', {li: options.li});
 				}
 			},
+			
 			wrongAnswerClicked = function(event, options) {
 				var li = options.li;
 				if(!li.clicked) {
@@ -165,6 +185,7 @@
 					g.updateHudScore();
 				}
 			},
+			
 			rightAnswerClicked = function(event, options) {
 				if(g.getId() == 'tutorial') {
 					g.openModal({
@@ -195,6 +216,7 @@
 				g.hideScoreBar();
 				g.showContinue('Excellent! It\'s ' + options.li.innerHTML);
 			},
+			
 			answerDrawerButtonClicked = function(event, options) {
 				var button = options.button,
 				buttonClassList = button.classList,
@@ -223,6 +245,7 @@
 					document.getElementById('answerDrawer').style.right = -225;
 				}
 			},
+			
 			answerDrawerHidden = function() {
 				var answerList = document.getElementById('answerList'),
 				answerListLength = answerList.length,
@@ -232,9 +255,11 @@
 				answerButton.getElementsByTagName('img')[1].style.opacity = 0;
 				answerButton.getElementsByTagName('img')[0].style.opacity = 1;
 			},
+			
 			continueClicked = function() {
 				g.nextRound();
 			},
+			
 			endGame = function() {
 				g.showEndGameScreen();
 				if (store.get('highScore_' + g.getId()) < g._totalPoints.getPoints()) {
@@ -249,18 +274,27 @@
 				}
 				if(g.getId() == 'tutorial') store.set('tutorialPlayed', true);
 			},
+			
 			goHome = function() {
+				delete g;
 				this.fire('initHomeScreen');	
 			},
+			
+			displayingMask = function() {
+				wrapper.style.pointerEvents = 'none';
+			},
+			
 			maskDisplayed = function(event , options) {
 				changeImg(g.getId(), options.image);
 				g.updateHudProgress();
 			},
+			
 			scoreBarHidden = function() {
 				var scoreBarStyle = document.getElementById('scoreBar').style;
 				scoreBarStyle.height = g._barWrapperHeight;
 				scoreBarStyle.backgroundColor = 'rgba(137, 196, 64, 0.9)';
 			},
+			
 			tileClicked = function(event, tile) {
 				tile = tile.tile;
 				
@@ -281,6 +315,7 @@
 
 				}
 			},
+			
 			timeIsUp = function(event, options){
 				soundServer.play('fail');
 				g.roundIsOver = true;
@@ -288,25 +323,31 @@
 				g.hideAnswerDrawer();
 				g.hideScoreBar();
 				g.showTimeUp();
-				//g.updateHudScore();
+				g.updateHudScore();
 				setTimeout(function() {
 					g.hideTimeUp();
 					g.showContinue('Wrong! It\'s ' + options.correct);
 				}, Game.TIME_UP_NOTIFICATION_DURATION_MILLIS);
 			},
+			
 			timerEvent = function() {
 				g._roundPoints.deductPoints(g._timerPointDeduction);
 				g.updateScoreBar();
 				g.updateHudScore();
 			},
+			
 			timeIsLow = function() {
 				soundServer.play('timeLow')
 			},
+			
 			onDataError = function(event, resp){
 				alert('Error loading ' + resp.url + ': ' + resp.error.toString());
-			}
+			};
+			
+			document.body.innerHTML = templates.wrapper;
+			wrapper = document.getElementById('wrapper');
+			
 			//end of event handlers
-				
 			imageServer.init(config.images);
 			soundServer.init(config.sounds);
 			
@@ -329,13 +370,42 @@
 					selectedGame[(typeof item.image != 'undefined') ? 'c' : 'w'].push(item);
 				}
 				
-				console.log(selectedGame);
-				alert('Loaded game: ' + selectedGame.name + ' (' + selectedGame.c.length + ' correct answers).');
-			});
+				runGame(selectedGame);
+				//alert('Loaded game: ' + selectedGame.name + ' (' + selectedGame.c.length + ' correct answers).');
+			});		
 			
-			//load main page
-			document.body.innerHTML = templates.wrapper;
-			wrapper = document.getElementById('wrapper');			
+			function runGame(selectedGame) {
+				var id = selectedGame.dbName,
+				data = new Array(),
+				watermark = 'watermark_' + id;
+				
+				for(var i = 0; i < 10; i++) {
+					
+					var a = Math.floor(Math.random() * selectedGame.c.length),
+					b = Math.floor(Math.random() * selectedGame.c.length),
+					c = Math.floor(Math.random() * selectedGame.w.length),
+					d = Math.floor(Math.random() * selectedGame.w.length);
+					
+					data.push({
+						image: selectedGame.c[a].image,
+						answers: [
+							selectedGame.c[a].text,
+							selectedGame.c[b].text,
+							selectedGame.w[c].text,
+							selectedGame.w[d].text,
+						],
+						correct: selectedGame.c[a].text
+						})
+				}
+				g = new Game({
+					id: id,
+					data: data,
+					watermark: imageServer.getAsset(watermark)});
+				console.log(data[0].image);
+				registerEvents(g);
+				g.prepareGame();
+				
+			};
 			
 			function runTutorial() {
 				g = new Game({
@@ -346,21 +416,21 @@
 				
 				registerEvents(g);
 				g.prepareGame();
-			}
+			};
 			
 			if(!tutorialPlayed){
 				runTutorial();			
 			}else{
 				initHomeScreen();
-			}
+			};
 			
 			function registerEvents(game) {
+				game.addEventListener('displayingMask', displayingMask);
 				game.addEventListener('renderGameScreen', gameScreenRender);
 				game.addEventListener('initHomeScreen', initHomeScreen);
 				game.addEventListener('goHome', goHome);
 				game.addEventListener('timeIsUp', timeIsUp);
 				game.addEventListener('modalOpened', modalOpened);
-				game.addEventListener('modalClosed', modalClosed);
 				game.addEventListener('answerClicked', answerClicked);
 				game.addEventListener('wrongAnswerClicked', wrongAnswerClicked);
 				game.addEventListener('rightAnswerClicked', rightAnswerClicked);
