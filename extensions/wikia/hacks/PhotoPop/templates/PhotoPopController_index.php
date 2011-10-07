@@ -9,6 +9,7 @@
 	</head>
 	<body>
 		<div id="PhotoPopWrapper">
+			<div id='wrapper'></div>
 		</div>
 	</body>
 </html>

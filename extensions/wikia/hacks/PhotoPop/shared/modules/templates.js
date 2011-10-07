@@ -1,9 +1,6 @@
 var exports = exports || {};
 
 define.call(exports, {
-	mainPage:
-		"<div id='wrapper'>\
-		</div>",
 	selectorScreen: "<div id='logoWrapper'>\
 				<img id='logoPhotopop' src='{{#image}}PHOTOPOP_LOGO{{/image}}'/><br/>\
 				<img id='logoWikia' src='{{#image}}POWERED_BY_LOGO{{/image}}'>\
@@ -14,7 +11,7 @@ define.call(exports, {
 					<img src='{{#image}}buttonSrc_scores{{/image}}'/>\
 				</div>\
 				<div id='button_tutorial'>\
-					<a href='{{#url}}tutorialButtonUrl{{/url}}'><img src='{{#image}}buttonSrc_tutorial{{/image}}'/></a>\
+					<img src='{{#image}}buttonSrc_tutorial{{/image}}'/>\
 				</div>\
 				<div id='button_volume'>\
 					<img class='on' src='{{#image}}buttonSrc_volumeOn{{/image}}'/>\

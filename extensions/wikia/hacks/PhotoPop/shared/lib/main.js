@@ -12,7 +12,7 @@
 		],
 		
 		function(config, templates, imageServer, soundServer, gameLogic, data) {
-			var startTutorial = false,//true,
+			var tutorialPlayed = true,//true,
 			games,
 			gamesListLoader = new data.XDomainLoader(),
 			gameLoader = new data.XDomainLoader(),
@@ -36,16 +36,17 @@
 			gameScreenRender = function(event, round){
 				wrapper.innerHTML = Mustache.to_html(templates.gameScreen, view);
 				if(g.getId() == 'tutorial')
-				g.openModal({
-					name: 'intro',
-					html: "Tap the screen to take a peek of the mystery image underneath.",
-					fade: true,
-					clickThrough: false,
-					closeOnClick: true
-				});
+					g.openModal({
+						name: 'intro',
+						html: "Tap the screen to take a peek of the mystery image underneath.",
+						fade: true,
+						clickThrough: false,
+						closeOnClick: true
+					});
 				
-				if(!localStorage['highScore_' + g.getId()]) localStorage['highScore_' + g.getId()] = 0;
-				document.getElementById('highScore').getElementsByTagName('span')[0].innerHTML = localStorage['highScore_' + g.getId()];
+				//highscore
+				if(!store.get('highScore_' + g.getId())) store.set('highScore_' + g.getId(), 0);
+				document.getElementById('highScore').getElementsByTagName('span')[0].innerHTML = store.get('highScore_' + g.getId());
 			},
 			changeImg = function(gameId, image) {
 				var imgPath = (gameId == 'tutorial') ? imageServer.getAsset(image) : imageServer.getPicture(image);
@@ -59,9 +60,8 @@
 							encodeURIComponent(selectedGame.category) +
 							'&callback=?');
 				}
-			};
-			
-			function renderGamesList(){
+			},
+			renderGamesList = function(){
 				if(typeof games != 'undefined'){
 					var templateVars = {
 						games: []
@@ -89,10 +89,10 @@
 						}
 					}
 				}
-			}
-			
-			function initHomeScreen(){
-				wrapper.innerHTML += Mustache.to_html(templates.selectorScreen, view);
+			},
+			initHomeScreen = function(){
+				wrapper.innerHTML = Mustache.to_html(templates.selectorScreen, view);
+				
 				setTimeout(
 					function(){
 						document.getElementById('sliderWrapper').style.bottom = 0;
@@ -106,25 +106,38 @@
 					2000
 				);
 				
-				muteButton = document.getElementById('button_volume');
+				var muteButton = document.getElementById('button_volume'),
+				imgs = muteButton.getElementsByTagName('img');
+				
+				if(store.get('mute')) {
+					console.log('mute');
+					soundServer.setMute(true);
+					imgs[0].style.display = "none";
+					imgs[1].style.display = "block";
+				}
+				
+				
 				muteButton.onclick = function(){
-					soundServer.play('pop');
-					
-					var imgs = this.getElementsByTagName('img');
-					
 					if(!soundServer.getMute()) {
+						store.set('mute', true);
 						soundServer.setMute(true);
 						imgs[0].style.display = "none";
 						imgs[1].style.display = "block";
 					} else {
+						store.set('mute', false)
 						soundServer.setMute(false);
+						soundServer.play('pop');
 						imgs[1].style.display = "none";
 						imgs[0].style.display = "block";
 					}
 				}
-			};
+				document.getElementById('button_tutorial').onclick = function() {
+					
+					runTutorial();
+				}
+			},
 			//event handlers
-			var modalOpened = function(event, options) {
+			modalOpened = function(event, options) {
 				if(g.getId() == 'tutorial') {
 					g.pause();
 					g._tutorialSteps[options.name] = 1;
@@ -224,16 +237,17 @@
 			},
 			endGame = function() {
 				g.showEndGameScreen();
-				if (localStorage['highScore_' + g.getId()] < g._totalPoints.getPoints()) {
+				if (store.get('highScore_' + g.getId()) < g._totalPoints.getPoints()) {
 					document.getElementById('highScore').getElementsByTagName('span')[0].innerHTML = g._totalPoints.getPoints();
-					localStorage['highScore_' + g.getId()] = g._totalPoints.getPoints();
-						g.openModal({
-							name: 'highscore',
-							html: 'New highscore: ' + g._totalPoints.getPoints() + ' !',
-							fade: true,
-							clickThrough: false,
-							closeOnClick: true});
+					store.set('highScore_' + g.getId(), g._totalPoints.getPoints());
+					g.openModal({
+						name: 'highscore',
+						html: 'New highscore: ' + g._totalPoints.getPoints() + ' !',
+						fade: true,
+						clickThrough: false,
+						closeOnClick: true});
 				}
+				if(g.getId() == 'tutorial') store.set('tutorialPlayed', true);
 			},
 			goHome = function() {
 				this.fire('initHomeScreen');	
@@ -288,13 +302,12 @@
 			timeIsLow = function() {
 				soundServer.play('timeLow')
 			},
+			onDataError = function(event, resp){
+				alert('Error loading ' + resp.url + ': ' + resp.error.toString());
+			}
 			//end of event handlers
 			elm = (isApp) ? document.body : document.getElementById('PhotoPopWrapper');
 			
-			function onDataError(event, resp){
-				alert('Error loading ' + resp.url + ': ' + resp.error.toString());
-			}
-					
 			imageServer.init(config.images);
 			soundServer.init(config.sounds);
 			
@@ -324,41 +337,50 @@
 			//load main page
 			var elm = (isApp) ? document.body : document.getElementById('PhotoPopWrapper');
 			
-			elm.innerHTML = Mustache.to_html(templates.mainPage, view);
-			
 			wrapper = document.getElementById('wrapper');			
 			
-			if(startTutorial){
+			function runTutorial() {
+				console.log(g);
 				g = new Game({
 					id: 'tutorial',
 					data: config.tutorial,
 					watermark: imageServer.getAsset('watermark_dexter')
 				});
 				
-				g.addEventListener('renderGameScreen', gameScreenRender);
-				g.addEventListener('initHomeScreen', initHomeScreen);
+				registerEvents(g);
+				g.prepareGame();
+				
+			}
 			
-				//register event listeners
-				g.addEventListener('goHome', goHome);
-				g.addEventListener('timeIsUp', timeIsUp);
-				g.addEventListener('modalOpened', modalOpened);
-				g.addEventListener('modalClosed', modalClosed);
-				g.addEventListener('answerClicked', answerClicked);
-				g.addEventListener('wrongAnswerClicked', wrongAnswerClicked);
-				g.addEventListener('rightAnswerClicked', rightAnswerClicked);
-				g.addEventListener('answerDrawerButtonClicked', answerDrawerButtonClicked);
-				g.addEventListener('continueClicked', continueClicked);
-				g.addEventListener('maskDisplayed', maskDisplayed);
-				g.addEventListener('scoreBarHidden',scoreBarHidden);
-				g.addEventListener('answerDrawerHidden', answerDrawerHidden);
-				g.addEventListener('tileClicked', tileClicked);
-				g.addEventListener('timerEvent', timerEvent);
-				g.addEventListener('timeIsLow', timeIsLow);
-				g.addEventListener('endGame', endGame);
-				g.prepareGame();			
+			tutorialPlayed = store.get('tutorialPlayed') || false;
+			
+			if(!tutorialPlayed){
+				runTutorial();			
 			}else{
 				initHomeScreen();
 			}
+			
+			function registerEvents(game) {
+				game.addEventListener('renderGameScreen', gameScreenRender);
+				game.addEventListener('initHomeScreen', initHomeScreen);
+				game.addEventListener('goHome', goHome);
+				game.addEventListener('timeIsUp', timeIsUp);
+				game.addEventListener('modalOpened', modalOpened);
+				game.addEventListener('modalClosed', modalClosed);
+				game.addEventListener('answerClicked', answerClicked);
+				game.addEventListener('wrongAnswerClicked', wrongAnswerClicked);
+				game.addEventListener('rightAnswerClicked', rightAnswerClicked);
+				game.addEventListener('answerDrawerButtonClicked', answerDrawerButtonClicked);
+				game.addEventListener('continueClicked', continueClicked);
+				game.addEventListener('maskDisplayed', maskDisplayed);
+				game.addEventListener('scoreBarHidden',scoreBarHidden);
+				game.addEventListener('answerDrawerHidden', answerDrawerHidden);
+				game.addEventListener('tileClicked', tileClicked);
+				game.addEventListener('timerEvent', timerEvent);
+				game.addEventListener('timeIsLow', timeIsLow);
+				game.addEventListener('endGame', endGame);	
+			}
+
 		}
 	);
 })();

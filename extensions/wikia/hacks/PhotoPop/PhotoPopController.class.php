@@ -33,6 +33,7 @@ class PhotoPopController extends WikiaController {
 		
 		//TODO: move to AssetsManager package
 		$this->response->setVal( 'scripts', array(
+			AssetsManager::getInstance()->getOneCommonURL( "extensions/wikia/hacks/PhotoPop/shared/lib/store.min.js" ),
 			AssetsManager::getInstance()->getOneCommonURL( "extensions/wikia/hacks/PhotoPop/shared/lib/mustache.js" ),
 			AssetsManager::getInstance()->getOneCommonURL( "extensions/wikia/hacks/PhotoPop/shared/lib/my.class.js" ),
 			AssetsManager::getInstance()->getOneCommonURL( "extensions/wikia/hacks/PhotoPop/shared/lib/observable.js" ),
