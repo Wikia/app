@@ -101,11 +101,7 @@ function efOutboundScreen ( $url, $text, $link, $attribs, $linktype, $linker ) {
 		}
 
 		if(!$isWhitelisted) {
-			$link = Xml::tags('a', array(
-				'class' => 'external exitstitial',
-				'rel' => 'nofollow',
-				'href' => $url,
-			), $text);
+			$link = '<a href="' . $url . '" rel="nofollow" class="external exitstitial">' . $text . '</a>';
 
 			return false;
 		}
