@@ -13,15 +13,15 @@ define.call(exports, {
 			var that = this;
 			
 			if(typeof Titanium != 'undefined'){
-				Titanium.addEventListener('XDomainLoader:error', function(event){
+				Titanium.App.addEventListener('XDomainLoader:error', function(event){
 					that.fire('error', {url: url, error: event});
 				});
 				
-				Titanium.addEventListener('XDomainLoader:success', function(event){
+				Titanium.App.addEventListener('XDomainLoader:success', function(event){
 					that.fire('success', {url: url, response: event});
 				});
 				
-				Titanium.fire('XDomainLoader:load', {url: url, options: options});
+				Titanium.App.fire('XDomainLoader:load', {url: url, options: options});
 			}else{
 				reqwest({
 					url: url,
