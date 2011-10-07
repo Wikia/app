@@ -13,6 +13,7 @@ $app->registerClass('UserIdentityBox', $dir . '/UserIdentityBox.class.php');
 //we'll implement interview later
 //$app->registerClass('Interview', $dir . '/Interview.class.php');
 //$app->registerClass('InterviewQuestion', $dir . '/InterviewQuestion.class.php');
+$app->registerClass('UserProfilePageRailHelper', $dir . '/UserProfilePageRailHelper.class.php');
 $app->registerClass('ImageOperationsHelper', $dir . '/ImageOperationsHelper.class.php');
 
 /**
@@ -36,6 +37,7 @@ $app->registerHook('SkinSubPageSubtitleAfterTitle', 'UserProfilePageController',
 $app->registerHook('ArticleSaveComplete', 'UserProfilePageController', 'onArticleSaveComplete');
 //we'll implement interview later
 //$app->registerHook('GetRailModuleSpecialPageList', 'InterviewSpecialPageController', 'onGetRailModuleSpecialPageList' );
+$app->registerHook('GetRailModuleList', 'UserProfilePageRailHelper', 'onGetRailModuleList');
 
 /**
  * messages
