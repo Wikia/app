@@ -37,11 +37,24 @@ function ActivityFeedTag_render($content, $attributes, $parser, $frame) {
 	$style = empty($parameters['style']) ? '' : ' style="' . $parameters['style'] . '"';
 	$timestamp = wfTimestampNow();
 
-	$snippets = "<script>JSSnippetsStack.push({dependencies: ['/extensions/wikia/MyHome/ActivityFeedTag.js', '/extensions/wikia/MyHome/ActivityFeedTag.css'],callback: function() {ActivityFeedTag.initActivityTag('{$tagid}', '{$jsParams}', '{$timestamp}');}});</script>";
-
+	$snippetsDependencies = array('/extensions/wikia/MyHome/ActivityFeedTag.js', '/extensions/wikia/MyHome/ActivityFeedTag.css');
+	
 	if((!empty($wgEnableAchievementsInActivityFeed)) && (!empty($wgEnableAchievementsExt))){	
-		$snippets .= "<script>JSSnippetsStack.push({dependencies: ['/extensions/wikia/AchievementsII/css/achievements_sidebar.css']});</script>";
+		array_push($snippetsDependencies, '/extensions/wikia/AchievementsII/css/achievements_sidebar.css');
+		
 	}
+
+	$snippets = F::build('JSSnippets')->addToStack(
+		$snippetsDependencies,
+		null,
+		'ActivityFeedTag.initActivityTag',
+		array(
+			'tagid' => $tagid, 
+			'jsParams' => $jsParams, 
+			'timestamp' => $timestamp
+		)
+	);
+
 	wfProfileOut(__METHOD__);
 	return "<div$style>$feedHTML</div>$snippets";
 }
