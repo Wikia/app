@@ -27,68 +27,88 @@ class AutomaticWikiAdoptionGatherData {
 			return;
 		}
 
-		$recentAdminEdits = $this->getRecentAdminEdits();
 		$wikisToAdopt = 0;
 		$time14days = strtotime('-14 days');
 		$time27days = strtotime('-27 days');
 		$time30days = strtotime('-30 days');
+		
+		// set default
+		$from_wiki_id = 260000;	// 260000 = ID of wiki created on 2011-05-01
+		$max_wiki_id = (isset($commandLineOptions['max_wiki_id'])) ? $commandLineOptions['max_wiki_id'] : $this->getMaxWikiId();
+		$range = 10000;
+		if ($max_wiki_id-$from_wiki_id < $range)
+			$range = $max_wiki_id - $from_wiki_id;
+		
+		// looping
+		do {
+			$to_wiki_id = $from_wiki_id + $range;
+			$recentAdminEdits = $this->getRecentAdminEdits($from_wiki_id, $to_wiki_id);
 
-		foreach ($recentAdminEdits as $wikiId => $wikiData) {
-			$jobName = '';
-			$jobOptions = array();
-			if ($wikiData['recentEdit'] < $time30days) {
-				$wikisToAdopt++;
-				$this->setAdoptionFlag($commandLineOptions, $jobOptions, $wikiId, $wikiData);
-			} elseif ($wikiData['recentEdit'] < $time27days) {
-				$jobOptions['mailType'] = 'second';
-				$this->sendMail($commandLineOptions, $jobOptions, $wikiId, $wikiData);
-			} else /*if ($wikiData['recentEdit'] < $time14days)*/ {
-				$jobOptions['mailType'] = 'first';
-				$this->sendMail($commandLineOptions, $jobOptions, $wikiId, $wikiData);				
+			foreach ($recentAdminEdits as $wikiId => $wikiData) {
+				$jobName = '';
+				$jobOptions = array();
+				if ($wikiData['recentEdit'] < $time30days) {
+					$wikisToAdopt++;
+					$this->setAdoptionFlag($commandLineOptions, $jobOptions, $wikiId, $wikiData);
+				} elseif ($wikiData['recentEdit'] < $time27days) {
+					$jobOptions['mailType'] = 'second';
+					$this->sendMail($commandLineOptions, $jobOptions, $wikiId, $wikiData);
+				} else /*if ($wikiData['recentEdit'] < $time14days)*/ {
+					$jobOptions['mailType'] = 'first';
+					$this->sendMail($commandLineOptions, $jobOptions, $wikiId, $wikiData);				
+				}
 			}
-		}
+			
+			$from_wiki_id = $to_wiki_id;
+		} while ($max_wiki_id > $to_wiki_id);
 
 		if (!isset($commandLineOptions['quiet'])) {
 			echo "Set $wikisToAdopt wikis as adoptable.\n";
 		}
 	}
 
-	function getRecentAdminEdits() {
+	function getRecentAdminEdits($from_wiki_id=null, $to_wiki_id=null) {
 		global $wgStatsDB, $wgStatsDBEnabled;
 
 		$recentAdminEdit = array();
 		
-		if ( !empty($wgStatsDBEnabled) ) {
+		if ( !empty($wgStatsDBEnabled) && !empty($from_wiki_id) && !empty($to_wiki_id)) {
 			$dbrStats = wfGetDB(DB_SLAVE, array(), $wgStatsDB);			
 
-			//get wikis with pages < 1000 and admins not active in last 14 days but wit at least 1 edit
+			//get wikis with admins not active in last 14 days
 			//260000 = ID of wiki created on 2011-05-01 so it will work for wikis created after this project has been deployed
 			$res = $dbrStats->query(
 				'select e1.wiki_id, sum(e1.edits) as sum_edits from specials.events_local_users e1 ' .
-				'where e1.wiki_id > 260000 ' .
+				'where e1.wiki_id > '.$from_wiki_id.' and e1.wiki_id <= '.$to_wiki_id.' ' .
 				'group by e1.wiki_id ' .
 				'having sum_edits < 1000 and (' .
 				'select count(0) from specials.events_local_users e2 ' .
 				'where e1.wiki_id = e2.wiki_id and ' .
 				'all_groups like "%sysop%" and ' .
 				'editdate > now() - interval 14 day ' .
-				') = 0 and (' .
-				'select count(*) from specials.events_local_users e3 ' .
-				'where e1.wiki_id = e3.wiki_id and ' .
-				'all_groups like "%sysop%" and ' .
-				'edits > 0' .
-				') > 0 LIMIT 10000',
+				') = 0',
 				__METHOD__
 			);
 
 			while ($row = $dbrStats->fetchObject($res)) {
-				if (WikiFactory::IDtoDB($row->wiki_id) === false) {
+				$wiki_dbname = WikiFactory::IDtoDB($row->wiki_id);
+				if ($wiki_dbname === false) {
 					//check if wiki exists in city_list
 					continue;
 				}
 				
 				if (WikiFactory::isPublic($row->wiki_id) === false) {
 					//check if wiki is closed
+					continue;
+				}
+				
+				if (self::isFlagSet($row->wiki_id, WikiFactory::FLAG_ADOPTABLE)) {
+					// check if adoptable flag is set
+					continue;
+				}
+				
+				if (self::getNumPages($wiki_dbname) >= 1000) {
+					 //check if wiki has > 1000 pages
 					continue;
 				}
 
@@ -179,5 +199,57 @@ class AutomaticWikiAdoptionGatherData {
 		if (!isset($commandLineOptions['dryrun'])) {
 			WikiFactory::setFlags($wikiId, $flag);
 		}
+	}
+	
+	// get max wiki_id for active wikis
+	protected function getMaxWikiId() {
+		$max_wiki_id = 0;
+		
+		$dbr = wfGetDB(DB_SLAVE, array(), 'wikicities');
+		$row = $dbr->selectRow(
+			'city_list',
+			'max(city_id) max_wiki_id',
+			array('city_public' => 1),
+			__METHOD__
+		);
+		
+		if ($row !== false)
+			$max_wiki_id = $row->max_wiki_id;
+		
+		$dbr->close();
+		
+		return $max_wiki_id;
+	}
+	
+	// check if flag is set in city_flags
+	protected static function isFlagSet($wikiId = null, $flag = null) {
+		if ($wikiId && $flag) {
+			$flags = WikiFactory::getFlags($wikiId);
+			if ($flags & $flag) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	// get number of pages
+	protected static function getNumPages($wiki_dbname=null) {
+		$num_pages = 0;
+		if (!empty($wiki_dbname)) {
+			$dbr = wfGetDB(DB_SLAVE, array(), $wiki_dbname);
+			$row = $dbr->selectRow(
+				'site_stats',
+				'ss_good_articles',
+				array(),
+				__METHOD__
+			);
+			if ($row !== false) {
+				$num_pages = $row->ss_good_articles;
+			}
+			$dbr->close();
+		}
+		
+		return $num_pages;
 	}
 }

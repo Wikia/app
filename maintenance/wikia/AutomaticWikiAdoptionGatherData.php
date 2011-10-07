@@ -17,11 +17,12 @@
 require_once('../commandLine.inc');
 
 if (isset($options['help'])) {
-	die( "Usage: php AutomaticWikiAdoptionGatherData.php [--quiet]
+	die( "Usage: php AutomaticWikiAdoptionGatherData.php [--quiet] [--max_wiki_id=12345]
 
-		  --help     you are reading it right now
-		  --dryrun   do not perform any activity - only print it out on the screen
-		  --quiet    do not print anything to output\n\n");
+		  --help			you are reading it right now
+		  --dryrun			do not perform any activity - only print it out on the screen
+		  --quiet			do not print anything to output
+		  --max_wiki_id		maximum city id\n\n");
 }
 
 $wgExtensionMessagesFiles['AutomaticWikiAdoption'] = $GLOBALS['IP'] . '/extensions/wikia/AutomaticWikiAdoption/AutomaticWikiAdoption.i18n.php';
