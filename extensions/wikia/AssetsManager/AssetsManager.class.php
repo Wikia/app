@@ -200,4 +200,14 @@ class AssetsManager {
 	public function getAllowedAssetExtensions(){
 		return $this->mAllowedAssetExtensions;
 	}
+
+	/**
+	 * Return request details containing HTTP referer and user agent
+	 * @return string request details for debug logging
+	 */
+	public static function getRequestDetails() {
+		$referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '-';
+		$userAgent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '-';
+		return "UA:{$userAgent}, referer:{$referer}";
+	}
 }

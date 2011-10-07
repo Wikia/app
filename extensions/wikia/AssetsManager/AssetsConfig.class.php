@@ -68,7 +68,7 @@ class AssetsConfig {
 		// This class always exists at the moment, this is just in case it goes away at some point
 		if (class_exists('EditPageLayoutHelper'))
 			return EditPageLayoutHelper::getAssets();
-		else 
+		else
 			return array();
 	}
 
@@ -121,7 +121,8 @@ class AssetsConfig {
 		if(isset( $this->mConfig[$groupName] ) ) {
 			return $this->mConfig[$groupName]['assets'];
 		} else {
-			error_log("PHP Warning: " . __METHOD__ . " - group '{$groupName}' doesn't exist");
+			$requestDetails = AssetsManager::getRequestDetails();
+			Wikia::log(__METHOD__, false, "group '{$groupName}' doesn't exist ({$requestDetails})", true /* $always */);
 			return array();
 		}
 	}
