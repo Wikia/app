@@ -5,9 +5,12 @@
 	
 	input[type="text"] {
 		@include input-field;
-		background: $color-module-highlight;
+		background: lighten($color-page, 5%);
 		color: $color-text;
 		width: 292px;
+	}
+	input[type="text"]:focus {
+		background: lighten($color-page, 10%);
 	}
 
 	button {
