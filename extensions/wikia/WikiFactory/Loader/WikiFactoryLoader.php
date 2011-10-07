@@ -6,6 +6,7 @@
  * class is used in LocalSettings
  *
  * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com> for Wikia Inc.
+ * @todo change use of mIsWikiaActive to a series of isClosed, isDeleted, etc. methods
  */
 
 ini_set( "include_path", "{$IP}:{$IP}/includes:{$IP}/languages:{$IP}/lib:.:" );
@@ -455,8 +456,9 @@ class WikiFactoryLoader {
 		/**
 		 * if wikia is not defined or is marked for closing we redirect to
 		 * Not_a_valid_Wikia
+		 * @todo the -1 status should probably be removed or defined more precisely
 		 */
-		if( empty( $this->mWikiID ) || $this->mIsWikiaActive < 0 ) {
+		if( empty( $this->mWikiID ) || $this->mIsWikiaActive == -1 ) {
 			if( ! $this->mCommandLine ) {
 				global $wgNotAValidWikia;
 				$this->debug( "redirected to {$wgNotAValidWikia}, {$this->mWikiID} {$this->mIsWikiaActive}" );
@@ -479,7 +481,7 @@ class WikiFactoryLoader {
 		 * if wikia is disabled and is not Commandline mode we redirect it to
 		 * dump directory.
 		 */
-		if( empty( $this->mIsWikiaActive ) ) {
+		if( empty( $this->mIsWikiaActive ) || $this->mIsWikiaActive == -2 /* spam */ ) {
 			if( ! $this->mCommandLine ) {
 				global $wgNotAValidWikia;
 				if( $this->mCityDB ) {
