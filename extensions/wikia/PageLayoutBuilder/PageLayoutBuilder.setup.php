@@ -22,7 +22,7 @@ $wgAutoloadClasses['PageLayoutBuilderHelper'] = $dir . 'PageLayoutBuilderHelper.
 $wgAutoloadClasses['PageLayoutBuilderEditor'] = $dir . 'PageLayoutBuilderEditor.class.php'; # Tell MediaWiki to load the extension body.
 $wgAutoloadClasses['PageLayoutBuilderFormModule'] = $dir . 'PageLayoutBuilderFormModule.php';
 
-$wgAutoloadClasses['simple_html_dom'] = $dir . '3rdparty/simple_html_dom.php'; # Simple parser to easy replace tags by media wiki text
+$wgAutoloadClasses['simple_html_dom'] = $IP . '/lib/simplehtmldom/simple_html_dom.php'; # Simple parser to easy replace tags by media wiki text
 $wgExtensionMessagesFiles['PageLayoutBuilder'] = $dir . 'PageLayoutBuilder.i18n.php';
 $wgExtensionAliasesFiles['PageLayoutBuilder'] = $dir . 'PageLayoutBuilder.alias.php';
 $wgSpecialPages['PageLayoutBuilder'] = 'SpecialPageLayoutBuilder'; # Let MediaWiki know about your new special page.

@@ -180,8 +180,7 @@ class PageLayoutBuilderParser extends Parser {
 		$layoutText = $rev ? $rev->getRawText() : "";
 
 		$dom = new simple_html_dom;
-		$dom->load($layoutText, false);
-
+		$dom->load($layoutText, false, false);  // Do not stripRN from wikitext. :)
 		$plbParser = new PageLayoutBuilderParser();
 		$formValues = $plbParser->extractFormValues($attributes);
 		$elements = array_keys($wgPLBwidgets);
