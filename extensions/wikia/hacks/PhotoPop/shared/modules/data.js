@@ -21,7 +21,7 @@ define.call(exports, {
 					that.fire('success', {url: url, response: event});
 				});
 				
-				Titanium.App.fire('XDomainLoader:load', {url: url, options: options});
+				Titanium.App.fireEvent('XDomainLoader:load', {url: url, options: options});
 			}else{
 				reqwest({
 					url: url,
