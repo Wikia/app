@@ -3841,6 +3841,11 @@ class Article {
 		# File cache
 		HTMLFileCache::clearFileCache( $title );
 
+		/* Wikia change begin */
+		# LinkCache
+		LinkCache::singleton()->clearLink( $title );
+		/* Wikia change end */
+
 		# Messages
 		if ( $title->getNamespace() == NS_MEDIAWIKI ) {
 			$wgMessageCache->replace( $title->getDBkey(), false );
