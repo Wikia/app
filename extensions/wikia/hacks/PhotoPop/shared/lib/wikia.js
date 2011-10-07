@@ -74,9 +74,4 @@ var Wikia = {};
 			return 'app://Resources/' + url;
 		};
 	}
-	
-	//crossplatform class list implementation
-	HTMLElement.prototype.getClasses = function(){
-		return (this.classList) ? this.classList : this.className.split(' ');
-	};
 })(Wikia);
