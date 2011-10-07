@@ -74,6 +74,7 @@ define.call(exports, function(){
 			this.prepareAnswerDrawer();
 			this.prepareContinueView();
 			this.prepareFinishScreen();
+			this.prepareHud();
 			this.nextRound();
 		},
 		
@@ -99,6 +100,13 @@ define.call(exports, function(){
 			this.showAnswerDrawer();
 			this.prepareAnswers();
 			this.updateHudScore();
+		},
+		
+		prepareHud: function() {
+			var self = this;
+			document.getElementById('home').onclick = function() {
+				self.fire('goHome');
+			}
 		},
 		
 		prepareMask: function( rows, cols ) {
@@ -276,7 +284,7 @@ define.call(exports, function(){
 				
 				this.fire('modalOpened', {name: options.name});
 				
-				modalWrapper.onclick = function() {
+				modalWrapper.ontouchend = modal.ontouchend = function() {
 					if(options.closeOnClick) {
 						self.fire('modalClosed', {name: options.name});
 						modal.style.opacity = 0;
