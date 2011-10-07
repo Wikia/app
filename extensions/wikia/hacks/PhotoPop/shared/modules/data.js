@@ -12,7 +12,7 @@ define.call(exports, {
 			options = options || {};
 			var that = this;
 			
-			if(typeof Titanium != 'undefined'){
+			/*if(typeof Titanium != 'undefined'){
 				Titanium.App.addEventListener('XDomainLoader:error', function(event){
 					that.fire('error', {url: url, error: event});
 				});
@@ -22,7 +22,7 @@ define.call(exports, {
 				});
 				
 				Titanium.App.fireEvent('XDomainLoader:load', {url: url, options: options});
-			}else{
+			}else{*/
 				reqwest({
 					url: url,
 					type: 'jsonp',
@@ -34,7 +34,7 @@ define.call(exports, {
 						that.fire('success', {url: url, response: data});
 					}
 				});
-			}
+			//}
 		}
 	})
 });
