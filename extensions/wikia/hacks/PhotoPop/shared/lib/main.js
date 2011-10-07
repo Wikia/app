@@ -338,7 +338,6 @@
 			wrapper = document.getElementById('wrapper');			
 			
 			function runTutorial() {
-				console.log(g);
 				g = new Game({
 					id: 'tutorial',
 					data: config.tutorial,
@@ -347,7 +346,6 @@
 				
 				registerEvents(g);
 				g.prepareGame();
-				
 			}
 			
 			if(!tutorialPlayed){
