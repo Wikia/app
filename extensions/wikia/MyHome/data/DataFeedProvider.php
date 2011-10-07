@@ -77,7 +77,6 @@ class DataFeedProvider {
 		while((count($this->results) < $limit + 1) && $hard_limit--) {
 			$callLimit = max(10, round(($proxyLimit - count($this->results)) * 1.2));
 			$res = $this->proxy->get($callLimit, $queryContinue);
-			
 			if (isset($res['results'])) {
 				foreach($res['results'] as $oneres) {
 					$this->filterOne($oneres);
@@ -104,7 +103,6 @@ class DataFeedProvider {
 	private function add($item, $res) {
 		wfProfileIn(__METHOD__);
 		global $wgMemc;
-		
 		if( $this->removeDuplicatesType == 0 ) { //default
 			$key = $res['user'].'#'.$res['title'].'#'.$res['comment'];
 
@@ -241,7 +239,7 @@ class DataFeedProvider {
 
 	private function filterOne($res) {
 		wfProfileIn(__METHOD__);
-		
+
 		if ($res['type'] == 'log') {
 			$this->filterLog($res);
 		} else {
@@ -335,8 +333,7 @@ class DataFeedProvider {
 		|| ($res['ns'] == NS_MEDIAWIKI && $this->proxyType == self::WL)
 		|| ($res['ns'] == NS_IMAGE && $this->proxyType == self::WL)
 		|| ($res['ns'] == NS_VIDEO && $this->proxyType == self::WL)
-		|| (defined('NS_TOPLIST') && $res['ns'] == NS_TOPLIST) ) {
-			
+		|| (defined('NS_TOPLIST') && $res['ns'] == NS_TOPLIST)) {
 			$item['title'] = $res['title'];
 			$item['url'] = $title->getLocalUrl();
 			$item['diff'] = $title->getLocalUrl('diff='.$res['revid'].'&oldid='.$res['old_revid']);
@@ -354,6 +351,13 @@ class DataFeedProvider {
 				$item['articleComment'] = true;
 				$parts = ArticleComment::explode($res['title']);
 				$item['title'] = $parts['title'];
+			}
+
+		} else if (defined('NS_RELATED_VIDEOS') && $res['ns'] == NS_RELATED_VIDEOS ) {
+			if ( class_exists( 'RelatedVideosService' ) ){
+				$oRVService = F::build( 'RelatedVideosService' );
+				$item = $oRVService->editWikiActivityParams( $title, $res, $item );
+
 			}
 		}
 
@@ -426,8 +430,11 @@ class DataFeedProvider {
 				$res['rc_params'] = '';
 			}
 		} else if( !empty($wgEnableWallExt) && ($res['ns']-1) == NS_USER_WALL && $this->proxyType == self::AF ) {
-			$wh = new WallHelper();
+			$wh = F::build( 'WallHelper' );
 			$item = $wh->wikiActivityFilterMessageWall($title, $res);
+		} else if ( defined('NS_RELATED_VIDEOS') && $res['ns'] == NS_RELATED_VIDEOS ){
+			$oRVService = F::build( 'RelatedVideosService' );
+			$item = $oRVService->createWikiActivityParams($title, $res, $item);
 		}
 
 		if (count($item) > 1) {

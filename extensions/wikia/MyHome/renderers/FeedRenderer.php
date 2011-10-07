@@ -254,6 +254,21 @@ class FeedRenderer {
 
 		return $html;
 	}
+
+	/*
+	 * Returns one row for related videos section
+	 *
+	 * @author Jakub Kurcek <jakub@wikia-inc.com>
+	 */
+	public static function formatRelatedVideosRow( $text ){
+
+		$html = Xml::openElement('tr');
+		$html .= Xml::openElement('td');
+		$html .= $text;
+		$html .= Xml::closeElement('td');
+		$html .= Xml::closeElement('tr');
+		return $html;
+	}
 	
 	/**
 	 * @brief Returns rows with message wall comments
@@ -553,6 +568,10 @@ class FeedRenderer {
 			else {
 				$html .= self::formatDetailsRow('new-page', self::formatIntro($row['intro']), false);
 			}
+		}
+		if (defined('NS_RELATED_VIDEOS') && $row['ns'] == NS_RELATED_VIDEOS && isset( $row['relatedVideosDescription'] )) {
+			$RelatedVideosService = F::build('RelatedVideosService');
+			$html .= $RelatedVideosService->formatRelatedVideosRow($row['relatedVideosDescription']);
 		}
 
 		// section name

@@ -25,5 +25,13 @@ $messages['en'] = array(
 	'related-videos-remove-video-error-duplicate' => 'This video has already been removed.',
 	'related-videos-remove-video-error-nonexisting' => 'The video you are trying to remove does not exist.',
         'related-videos-remove-confirm' => 'Are you sure you want to remove this video?',
-	'related-videos-remove-call' => 'Please wait wile we are removing the video'
+	'related-videos-remove-call' => 'Please wait wile we are removing the video',
+	'related-videos-wiki-summary-blacklist' => 'Removed [[:$2|$1]] from Related Videos.',
+	'related-videos-wiki-summary-whitelist' => 'Added [[:$2|$1]] to Related Videos.',
+	'related-videos-updated' => 'Related Videos $1 updated.',
+	'related-videos-tooltip-add' => 'Add a video to this page',
+	'related-videos-tooltip-embed' => 'Paste this URL in the video embed tool',
+	'related-videos-beta-feature' => 'beta',
+	'related-videos-repo-name' => 'Wikia Videos',
+	'related-video-embed-text' => 'Embed code'
 );

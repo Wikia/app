@@ -19,17 +19,16 @@
 		<?
 			$owner = $video['owner'];
 			if ( !empty( $owner ) ){
-
-				if ( empty( $video['external'] ) ){
 				echo wfMsg('related-videos-added-by');
-				$ownerUrl = $video['ownerUrl'];
+				if ( empty( $video['external'] ) ){
+					$ownerUrl = $video['ownerUrl'];
 					if ( !empty( $ownerUrl ) ) {
 						?><a href="<?=$video['ownerUrl'];?>" /><?=$video['owner'];?></a><?
 					} else {
 						echo $video['owner'];
 					}
 				} else {
-					?><img src="<?=wfBlankImgUrl();?>" class="sprite premiumVideo" ><?
+					?><a href="<?=F::app()->wg->wikiaVideoCategoryPath;?>" /><?=wfMsg('related-videos-repo-name');?></a><?
 				}
 			}
 		?>

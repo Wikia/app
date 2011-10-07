@@ -4,6 +4,9 @@
  */
 $app = F::app();
 $dir = dirname( __FILE__ );
+if ( empty( $wgWikiaVideoRepoCategoryPath ) ){
+	$wgWikiaVideoRepoCategoryPath = '';
+}
 
 /**
  * classes

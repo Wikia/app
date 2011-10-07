@@ -82,4 +82,59 @@ class RelatedVideosService {
 		$oMemc = F::app()->wg->memc;
 		return $oMemc->get( $this->getMemcKey( $title, $source, $videoWidth ) );
 	}
+
+	public function isTitleRelatedVideos($title) {
+		if (!($title instanceof Title)) {
+			return false;
+		}
+		if (defined('NS_RELATED_VIDEOS') && $title->getNamespace() == NS_RELATED_VIDEOS ) {
+			return true;
+		}
+		return false;
+	}
+
+	public function editWikiActivityParams($title, $res, $item){
+		if ( $this->isTitleRelatedVideos( $title ) ){
+			$oTitle =  Title::newFromText( $title->getText(), NS_MAIN );
+			$item['title'] = $oTitle->getText();
+			$item['url'] = $oTitle->getLocalUrl();
+			$item['relatedVideos'] = true;
+			$item['relatedVideosDescription'] = isset( $res['comment'] ) ? $res['comment'] : '';
+		}
+		return $item;
+		
+	}
+
+	public function createWikiActivityParams($title, $res, $item){
+		if ( $this->isTitleRelatedVideos( $title ) ){
+			$oTitle =  Title::newFromText( $title->getText(), NS_MAIN );
+			$item['title'] = $oTitle->getText();
+			$item['url'] = $oTitle->getLocalUrl();
+			$item['relatedVideos'] = true;
+			$item['relatedVideosDescription'] = isset( $res['comment'] ) ? $res['comment'] : '';
+		}
+		return $item;	
+	}
+
+	private function parseSummary( $text ){
+		$app = F::app();
+		// empty title is requred for parsing, otherwise it will not work.
+		// cannot use wfMsgExt due to FogBugzId:12901
+		return $app->wg->parser->parse(
+			$text,
+			$app->wg->title,
+			F::build('ParserOptions'),
+			false
+		)->getText();
+	}
+
+	public function formatRelatedVideosRow( $text ){
+
+		$html = Xml::openElement('tr');
+		$html .= Xml::openElement('td');
+		$html .= $this->parseSummary( $text );
+		$html .= Xml::closeElement('td');
+		$html .= Xml::closeElement('tr');
+		return $html;
+	}
 }

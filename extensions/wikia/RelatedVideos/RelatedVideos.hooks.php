@@ -7,7 +7,7 @@ class RelatedVideosHookHandler {
 	private $count = 0;
 	 
 	public function onOutputPageBeforeHTML( &$out, &$text ) {
-		if( $out->isArticle() && F::app()->wg->request->getVal( 'diff' ) === null ) {
+		if( $out->isArticle() && F::app()->wg->request->getVal( 'diff' ) === null && ( F::app()->wg->title->getNamespace() == NS_MAIN ) ) {
 			$text .= F::app()->sendRequest('RelatedVideosController', 'getCarusel')->toString();
 		}
 		return true;
