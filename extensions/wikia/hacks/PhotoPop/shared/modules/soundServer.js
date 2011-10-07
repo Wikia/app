@@ -20,7 +20,7 @@ define.call(exports, function(){
 		play: function(sound) {
 			if(!mute){
 				if(titanium)
-					Ti.App.fireEvent('soundServer:play', {sound: sounds[sound]});
+					Titanium.App.fireEvent('soundServer:play', {sound: sounds[sound]});
 				else {
 					for(var p in sounds){
 						sounds[p].pause();
