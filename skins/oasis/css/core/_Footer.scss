@@ -107,6 +107,7 @@
 	}
 	.tools-menu {
 		@include menu-heavy;
+		@include box-shadow(0, 5px, 10px, rgba(0, 0, 0, 0.5));
 		border-width: 4px 4px 2px;
 		bottom: 22px;
 		min-width: 120px;
