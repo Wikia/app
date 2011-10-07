@@ -76,7 +76,7 @@ class SpecialApiExplorer extends SpecialPage {
 				}
 			</style>
 			<div id='apEx_intro'>
-				<?= wfMsg('apiexplorer-intro') ?>
+				<?= wfMsgExt('apiexplorer-intro', array('parse', 'content') ) ?>
 			</div>
 			<div id='apEx_loading'><?= wfMsg('apiexplorer-loading') ?></div>
 			<div id='apEx'>
