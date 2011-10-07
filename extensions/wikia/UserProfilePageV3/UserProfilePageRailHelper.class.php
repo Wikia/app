@@ -10,9 +10,19 @@ class UserProfilePageRailHelper {
 	public function onGetRailModuleList(&$modules) {
 		$app = F::App();
 		$app->wf->ProfileIn(__METHOD__);
+		$title = $app->wg->Title;
 		
-		$pageOwner = F::build('User', array($app->wg->Title->getText()), 'newFromName');
-		if( !$pageOwner->getOption('hidefollowedpages') ) {
+		$response = $app->sendRequest(
+			'UserProfilePage',
+			'getUserFromTitle',
+			array(
+				'title' => $title,
+				'returnUser' => true
+			)
+		);
+		
+		$pageOwner = $response->getVal('user');
+		if( !$pageOwner->getOption('hidefollowedpages') && !$title->isSpecial('Following') && !$title->isSpecial('Contributions') ) {
 			$modules[1101] = array('FollowedPages', 'Index', array('showDeletedPages' => false));
 		}
 		
