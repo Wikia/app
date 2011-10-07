@@ -107,9 +107,11 @@ public class BaseTest {
 
 	@AfterMethod(alwaysRun = true)
 	protected void closeSession() throws Exception {
+		/*
 		if (isLoggedIn()) {
 			logout();
 		}
+		*/
 		
 		if (noCloseAfterFail == null || noCloseAfterFail.equals("0")) {
 			closeSeleniumSession();
@@ -130,7 +132,7 @@ public class BaseTest {
 	}
 	
 	protected boolean isLoggedIn() throws Exception {
-		return session().getEval("window.wgUserName !== null").equals("true");
+		return session().getEval("typeof window != 'undefined' && typeof window.wgUserName != 'undefined' && window.wgUserName !== null").equals("true");
 	}
 
 	protected void login(String username, String password) throws Exception {
