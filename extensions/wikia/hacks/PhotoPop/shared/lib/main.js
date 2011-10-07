@@ -197,7 +197,7 @@
 			},
 			answerDrawerButtonClicked = function(event, options) {
 				var button = options.button,
-				buttonClassList = button.getClasses(),
+				buttonClassList = button.classList,
 				imgs = button.getElementsByTagName('img');
 				
 				g.resume();
