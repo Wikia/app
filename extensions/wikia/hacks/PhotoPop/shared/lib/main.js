@@ -12,7 +12,7 @@
 		],
 		
 		function(config, templates, imageServer, soundServer, gameLogic, data) {
-			var tutorialPlayed = true,//true,
+			var tutorialPlayed = store.get('tutorialPlayed') || true,//false,
 			games,
 			gamesListLoader = new data.XDomainLoader(),
 			gameLoader = new data.XDomainLoader(),
@@ -351,8 +351,6 @@
 				g.prepareGame();
 				
 			}
-			
-			tutorialPlayed = store.get('tutorialPlayed') || false;
 			
 			if(!tutorialPlayed){
 				runTutorial();			
