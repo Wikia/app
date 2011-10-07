@@ -246,7 +246,7 @@ class BodyModule extends Module {
 				wfProfileOut(__METHOD__);
 				return $railModuleList;
 			}
-		} else if (!($wgEnableUserProfilePagesV3 && self::showUserPagesHeader()) ) {
+		} else if ( !self::showUserPagesHeader() ) {
 			// ProfilePagesV3 renders its own search box.
 			// If this page is not a page with the UserPagesHeader on version 3, show search (majority case)
 			$railModuleList = array (
@@ -357,18 +357,18 @@ class BodyModule extends Module {
 		$railModuleList[1291] = array('Ad', 'Index', array('slotname' => 'MIDDLE_RIGHT_BOXAD'));
 		$railModuleList[1100] = array('Ad', 'Index', array('slotname' => 'LEFT_SKYSCRAPER_2'));
 
-                /**
-                 * Michał Roszka <michal@wikia-inc.com>
-                 *
-                 * SSW Gaming Calendar
-                 *
-                 * This is most likely going to be replaced with something similar to:
-                 *
-                 * $railModuleList[1260] = array( 'Ad', 'Index', array( 'slotname' => 'GAMING_CALENDAR_RAIL' ) );
-                 */
-                if ( !empty( $wgEnableGamingCalendarExt ) ) {
+		/**
+		 * Michał Roszka <michal@wikia-inc.com>
+		 *
+		 * SSW Gaming Calendar
+		 *
+		 * This is most likely going to be replaced with something similar to:
+		 *
+		 * $railModuleList[1260] = array( 'Ad', 'Index', array( 'slotname' => 'GAMING_CALENDAR_RAIL' ) );
+		 */
+		if ( !empty( $wgEnableGamingCalendarExt ) ) {
 			$railModuleList[1430] = array( 'GamingCalendarRail', 'Index', array( ) );
-                }
+		}
 		else {
 			$railModuleList[1430] = array('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BUTTON'));
 		}

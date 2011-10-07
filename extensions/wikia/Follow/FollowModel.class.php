@@ -18,8 +18,7 @@ class FollowModel {
 	 *
 	 * @return bool
 	 */
-
-	static function getWatchList($user_id, $from = 0, $limit = 15, $namespace_head = null) {
+	static function getWatchList($user_id, $from = 0, $limit = 15, $namespace_head = null, $show_deleted_pages = true) {
 		global $wgServer, $wgScript, $wgContentNamespaces, $wgEnableBlogArticles;
 		wfProfileIn( __METHOD__ );
 		$db = wfGetDB( DB_SLAVE );
@@ -90,21 +89,27 @@ class FollowModel {
 				$ttile = Title::makeTitle($row['wl_namespace'], "none");
 				$row['other_namespace'] = $ttile->getNsText();
 			}
-
-			$out_data[$namespaces[ $row['wl_namespace'] ]][] = $row;
+			
+			if( $show_deleted_pages ) {
+				$out_data[$namespaces[ $row['wl_namespace'] ]][] = $row;
+			} else {
+				if( !$title->isDeletedQuick() ) {
+					$out_data[$namespaces[ $row['wl_namespace'] ]][] = $row;
+				}
+			}
 		}
 		$con = " wl_user = ".intval($user_id)." and wl_namespace in (".implode(',', $namespaces_keys).")";
 
 		$res = $db->select(
-				array( 'watchlist' ),
-				array( 'wl_namespace',
-					   'count(wl_title) as cnt' ),
-				$con,
-				__METHOD__,
-				array(
-					'ORDER BY' 	=> 'wl_wikia_addedtimestamp desc,wl_title',
-					'GROUP BY' => 'wl_namespace'
-				)
+			array( 'watchlist' ),
+			array( 'wl_namespace',
+				   'count(wl_title) as cnt' ),
+			$con,
+			__METHOD__,
+			array(
+				'ORDER BY' 	=> 'wl_wikia_addedtimestamp desc,wl_title',
+				'GROUP BY' => 'wl_namespace'
+			)
 		);
 
 		$out_count = array();
@@ -114,7 +119,7 @@ class FollowModel {
 			if ( !empty($out[$ns]) ) {
 				$out[$ns]['count'] += $row['cnt'];
 			} else {
-				$out[$ns] = array('ns' => $ns,'count' => $row['cnt'], 'data' => $out_data[$ns]);
+				$out[$ns] = array('ns' => $ns,'count' => $row['cnt'], 'data' => (empty($out_data[$ns]) ? array() : $out_data[$ns]));
 			}
 
 			$out[$ns]['show_more'] = 0;

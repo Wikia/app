@@ -15,12 +15,12 @@ class FollowedPagesModule extends Module {
 		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL("skins/oasis/css/modules/FollowedPages.scss"));
 		
 		// probably need some logic to only display on user pages
-    	$page_owner = User::newFromName($wgTitle->getText());
-				
+		$page_owner = User::newFromName($wgTitle->getText());
+		
 		if ($page_owner) {
-
+			$showDeletedPages = isset($params['showDeletedPages']) ? (bool) $params['showDeletedPages'] : true;
 			// get 6 followed pages
-			$watchlist = FollowModel::getWatchList( $page_owner->getId(), 0, 6 );
+			$watchlist = FollowModel::getWatchList( $page_owner->getId(), 0, 6, null, $showDeletedPages );
 			// weird.  why is this an array of one element?
 			foreach ($watchlist as $unused_id => $item) {
 				$pagelist = $item['data'];
