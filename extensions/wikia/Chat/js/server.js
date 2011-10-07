@@ -3,7 +3,7 @@
 	
 var app = require('express').createServer()
     , jade = require('jade')
-    , sio = require('./lib/socket.io.js')
+    , sio = require('./lib/socket.io.8.4/socket.io.js')
     , request = require('request')
     , _ = require('underscore')._
     , Backbone = require('backbone')
@@ -120,6 +120,7 @@ var sessionIdsByKey = {}; // for each room/username combo, store the sessionId s
 io.configure(function () {
 	io.set('transports', [   'websocket', 'flashsocket', 'htmlfile', 'xhr-polling', 'jsonp-polling'  ]);
 	io.set('log level', 1); // turn the socket.io debugging way down
+	io.set('authorization', authConnection );  
 });
 
 function startServer() {
@@ -128,7 +129,12 @@ function startServer() {
 	rc.hset(config.getKey_userCount(), 'count', 0, function(err, data) {});
 	
 	io.sockets.on('connection', function(client){
-		client.isAuthenticated = false;
+		//TODO: use client.handshake.clientData and remove rewrite
+		for(var key in client.handshake.clientData) {
+			client[key] = client.handshake.clientData[key];
+		}
+		
+		console.log(client);
 		rc.hincrby(config.getKey_userCount(), 'count', 1, function(err, data) {});
 		// On initial connection, just wait around for the client to send it's authentication info.
 		client.on('message', function(msg){
@@ -141,52 +147,63 @@ function startServer() {
 		});
 
 		client.sessionId = client.id; //for 0.6 
-		// Send a message to the client to cause it to send it's authentication info back to the server.
 
-		client.json.send({
-			event: 'auth'
-	    });
-
+		clearChatBuffer(client);
+		
 		console.log("Raw connection recieved. Waiting for authentication info from client.");
 	});
 }
 
 
 
-function requestMW(wikiUrl, query, callback) {
-	var url = 'http://' + wikiUrl + '/index.php' + query;
-	console.log(url);
-	request({
-	    	method: 'GET',
-	    	//followRedirect: false,
-	    	url: url,
-	    	proxy: 'http://' + config.WIKIA_PROXY_HOST + ':' + config.WIKIA_PROXY_PORT
-	    }, 
-	    function (error, response, body) {
-	    	if(error) {
-	    		console.log(error);	
-	    		return ;
-	    	}
-	    	
-	    	if(response.statusCode ==  200) {
-				try{
-					data = JSON.parse(body);
-					callback(data);
-				} catch(e) {
-					console.log("Error: while parsing result. Error was: ");
-					console.log(e);
-					console.log("Response that didn't parse was:\n" + responseBody);
-
-					data = {
-						error: '',
-						errorWfMsg: 'chat-err-communicating-with-mediawiki',
-						errorMsgParams: []
-					};
-				}
-	    		console.log(data);
-	    	}
-	    }
-	);
+function requestMW(roomId, query, callback, errorcallback) {
+	if(!errorcallback){
+		errorcallback = function() {};
+	}
+	
+	console.log("Trying to find the wgServer for the room key: " + config.getKey_room( roomId ));
+	rc.hget(config.getKey_room( roomId ), 'wgServer', function(err, data) {
+		if (err) {
+			console.log('Error getting wgServer for a room: ' + err); 
+			errorcallback();
+		} else if (data) {
+			var wikiHostname = data.replace(/^https?:\/\//i, "");
+			var url = 'http://' + wikiHostname + '/index.php' + query + "&cb=" + Math.floor(Math.random()*99999); // varnish appears to be caching this (at least on dev boxes) when we don't want it to... so cachebust it.;
+			console.log("Making  request to host: " + url);
+			request({
+			    	method: 'GET',
+			    	//followRedirect: false,
+			    	url: url,
+			    	proxy: 'http://' + config.WIKIA_PROXY_HOST + ':' + config.WIKIA_PROXY_PORT
+			    }, 
+			    function (error, response, body) {
+			    	if(error) {
+			    		errorcallback();
+			    		console.log(error);	
+			    		return ;
+			    	}
+			    	
+			    	if(response.statusCode ==  200) {
+						try{
+							data = JSON.parse(body);
+							callback(data);
+						} catch(e) {
+							console.log("Error: while parsing result. Error was: ");
+							console.log(e);
+							console.log("Response that didn't parse was:\n" + responseBody);
+		
+							data = {
+								error: '',
+								errorWfMsg: 'chat-err-communicating-with-mediawiki',
+								errorMsgParams: []
+							};
+						}
+			    		console.log(data);
+			    	}
+			    }
+			);
+		}
+	});
 }
 
 /**
@@ -194,80 +211,74 @@ function requestMW(wikiUrl, query, callback) {
  * is not authenticated, this won't listen to anything other than authentications.
  */
 function messageDispatcher(client, socket, data){
-	console.log(data);
-	if( ! client.isAuthenticated ){
-		console.log("Dispatching to authConnection.");
-		authConnection(client, socket, data)
-	} else {
-		// The user is authed. Check to make sure their client sessionId still exists. If it doesn't, we probably banned them.
-		var sessionId = false;
-		if(typeof client.myUser != 'undefined' && typeof client.myUser.get != 'undefined'){
-				var sessionId = sessionIdsByKey[config.getKey_userInRoom(client.myUser.get('name'), client.roomId)];
+	// The user is authed. Check to make sure their client sessionId still exists. If it doesn't, we probably banned them.
+	var sessionId = false;
+	if(typeof client.myUser != 'undefined' && typeof client.myUser.get != 'undefined'){
+			var sessionId = sessionIdsByKey[config.getKey_userInRoom(client.myUser.get('name'), client.roomId)];
+	}
+	if(sessionId === false || (typeof sessionId == "undefined") || (sessionId != client.sessionId)){
+		client.json.send({
+				event: 'forceReconnect'
+		});
+		// Message ignored. Log the reason.
+		if(sessionId === false || typeof sessionId == "undefined"){
+				console.log("GOT A MESSAGE WITH NO socket.io sessionId. ASSUMING THEY ARE BANNED AND SKIPPING.");
+		} else if(sessionId != client.sessionId){
+				var msg = "Got a message from a user with a mismatched client-id. This implies that the user sending the message ";
+				msg += "(" + client.myUser.get('name');
+				msg += ") has connected from a newer browser and the old browser which sent the message has been closed ";
+				msg += "and is in the process of having its connection closed.";
+				console.log(msg);
 		}
-		if(sessionId === false || (typeof sessionId == "undefined") || (sessionId != client.sessionId)){
-			client.json.send({
-					event: 'forceReconnect'
-			});
-			// Message ignored. Log the reason.
-			if(sessionId === false || typeof sessionId == "undefined"){
-					console.log("GOT A MESSAGE WITH NO socket.io sessionId. ASSUMING THEY ARE BANNED AND SKIPPING.");
-			} else if(sessionId != client.sessionId){
-					var msg = "Got a message from a user with a mismatched client-id. This implies that the user sending the message ";
-					msg += "(" + client.myUser.get('name');
-					msg += ") has connected from a newer browser and the old browser which sent the message has been closed ";
-					msg += "and is in the process of having its connection closed.";
-					console.log(msg);
-			}
-		} else {
-			// The user is authenticated.  Dispatch to appropriate place for the message.
-			var dataObj;
-			try{
-				dataObj = JSON.parse(data);
-			} catch(e){
-				dataObj = {};
-				console.log("Error: while parsing raw incoming json (to msg dispatcher). Error was: ");
-				console.log(e);
-				console.log("JSON-string that didn't parse was:\n" + data);
-			}
-			if(typeof dataObj.attrs == 'undefined'){
-				dataObj.attrs = {};
-			}
-			if(typeof dataObj.attrs.msgType == 'undefined'){
-				dataObj.attrs.msgType = "[msgType was undefined]";
-			}
-			switch(dataObj.attrs.msgType){
-				case 'chat':
-					console.log("Dispatching to message handler.");
-					chatMessage(client, socket, data);
-					break;
-				case 'command':
-					switch(dataObj.attrs.command){ // all commands should be in lowercase
-						case 'kickban':
-							console.log("Kickbanning user: " + dataObj.attrs.userToBan);
-							kickBan(client, socket, data);
-							break;
-						case 'openprivate':
-							console.log( "openPrivateRoom" );
-							openPrivateRoom(client, socket, data);
-							break;
-						case 'givechatmod':
-							console.log("Giving chatmoderator status to user: " + dataObj.attrs.userToPromote);
-							giveChatMod(client, socket, data);
-							break;
-						case 'setstatus':
-							console.log("Setting status for " + client.myUser.get('name') + " to " + dataObj.attrs.statusState + " with message '" + dataObj.attrs.statusMessage + "'.");
-							setStatus(client, socket, data);
-							break;
-						default:
-							console.log("Unrecognized command: " + dataObj.attrs.command);
+	} else {
+		// The user is authenticated.  Dispatch to appropriate place for the message.
+		var dataObj;
+		try{
+			dataObj = JSON.parse(data);
+		} catch(e){
+			dataObj = {};
+			console.log("Error: while parsing raw incoming json (to msg dispatcher). Error was: ");
+			console.log(e);
+			console.log("JSON-string that didn't parse was:\n" + data);
+		}
+		if(typeof dataObj.attrs == 'undefined'){
+			dataObj.attrs = {};
+		}
+		if(typeof dataObj.attrs.msgType == 'undefined'){
+			dataObj.attrs.msgType = "[msgType was undefined]";
+		}
+		switch(dataObj.attrs.msgType){
+			case 'chat':
+				console.log("Dispatching to message handler.");
+				chatMessage(client, socket, data);
+				break;
+			case 'command':
+				switch(dataObj.attrs.command){ // all commands should be in lowercase
+					case 'kickban':
+						console.log("Kickbanning user: " + dataObj.attrs.userToBan);
+						kickBan(client, socket, data);
 						break;
-					}
+					case 'openprivate':
+						console.log( "openPrivateRoom" );
+						openPrivateRoom(client, socket, data);
+						break;
+					case 'givechatmod':
+						console.log("Giving chatmoderator status to user: " + dataObj.attrs.userToPromote);
+						giveChatMod(client, socket, data);
+						break;
+					case 'setstatus':
+						console.log("Setting status for " + client.myUser.get('name') + " to " + dataObj.attrs.statusState + " with message '" + dataObj.attrs.statusMessage + "'.");
+						setStatus(client, socket, data);
+						break;
+					default:
+						console.log("Unrecognized command: " + dataObj.attrs.command);
 					break;
-				default:
-					console.log("ERROR: Could not find recognized msgType to handle data: ");
-					console.log(data);
-					break;
-			}
+				}
+				break;
+			default:
+				console.log("ERROR: Could not find recognized msgType to handle data: ");
+				console.log(data);
+				break;
 		}
 	}
 } // end messageDispatcher()
@@ -301,109 +312,85 @@ function openPrivateRoom(client, socket, data){
  * chatting on - this guarantees that the permissions checks for the room's wiki
  * are used - since users could be banned on one wiki and not another).
  */
-function authConnection(client, socket, authData){
-	var authJson = JSON.parse( authData );
-	var auth = new models.AuthInfo( authJson.attrs );
-	if(typeof  authJson.attrs != "undefined"){
-		auth.set(authJson.attrs);
-	}
+function authConnection(handshakeData, authcallback){
 	console.log("Authentication info recieved from client. Verifying with Wikia MediaWiki app server...");
-	
 	// Need to auth with the correct wiki. Lookup the hostname for the chat in redis.
-	console.log("Trying to find the wgServer for the room key: " + config.getKey_room( auth.get('roomId') ));
-	rc.hget(config.getKey_room( auth.get('roomId') ), 'wgServer', function(err, data) {
-		if (err) {
-			console.log('Error getting wgServer for a room: ' + err);
-		} else if (data) {
-			console.log("Got wgServer in data: " + data);
-			var wikiHostname = data.replace(/^https?:\/\//i, "");
-			console.log("Making getUserInfo request to host: " + wikiHostname);
+	
+	var roomId = handshakeData.query.roomId;
+	var name = handshakeData.query.name;
+	var key = handshakeData.query.key;
 
-			// Format the cookie-data into the correct string for sending the data as a header.
-			var roomId = auth.get('roomId');
-
-			console.log("Auth data for client w/sessionId '" + client.sessionId + "': " + auth.get('key') );
-			client.authKey = auth.get('key');
+	var callback = function(data) {
+		if( (data.canChat) && (data.isLoggedIn) && data.username == name ){
+			rc.hkeys( config.getKey_usersAllowedInPrivRoom( roomId ),  function(err, users){
+				if(users.length == 0 || _.indexOf(users, data.username) !== -1 ) { //
+					var client = {};
+					client.userKey = key;
+					client.username = data.username
+					client.avatarSrc = data.avatarSrc;
+					client.isChatMod = data.isChatMod;
+					client.editCount = data.editCount;
+					client.wikiaSince = data.since;
+					client.isCanGiveChatMode = data.isCanGiveChatMode;
+					client.isStaff = data.isStaff;
+					client.roomId = roomId;
+					// TODO: REFACTOR THIS TO TAKE ANY FIELDS THAT data GIVES IT.
+					client.ATTEMPTED_NAME = data.username;
+					// User has been approved & their data has been set on the client. Put them into the chat.
+					client.wgServer = data.wgServer;
+					client.wgArticlePath = data.wgArticlePath; 
 			
-			// Send auth cookies to apache to make sure this user is authorized & get the user information.
-			
-			client.userKey = auth.get('key');
-
-			var requestUrl = config.AUTH_URL + "&roomId=" + roomId ;	
-			requestUrl +=  "&name=" + encodeURIComponent(auth.get('name'));
-			requestUrl +=  "&key=" + client.userKey ;
-			requestUrl += "&cb=" + Math.floor(Math.random()*99999); // varnish appears to be caching this (at least on dev boxes) when we don't want it to... so cachebust it.
-
-			console.log("Requesting user info from: " + requestUrl);
-
-			var callback = function(data) {
-				console.log(data);
-				if( (data.canChat) && (data.isLoggedIn) && data.username == auth.get('name') ){
-					rc.hkeys( config.getKey_usersAllowedInPrivRoom( auth.get('roomId') ),  function(err, users){
-						if(users.length == 0 || _.indexOf(users, data.username) !== -1 ) { //
-							client.isAuthenticated = true;
-							client.isChatMod = data.isChatMod;
-							client.isCanGiveChatMode = data.isCanGiveChatMode;
-							client.isStaff = data.isStaff;
-							client.roomId = roomId;
-							
-							// TODO: REFACTOR THIS TO TAKE ANY FIELDS THAT data GIVES IT.
-							client.ATTEMPTED_NAME = data.username;
-							
-							// User has been approved & their data has been set on the client. Put them into the chat.
-	
-							// TODO: REFACTOR THESE TO USE THE VALUE STORED IN THE 'chat' OBJ IN REDIS (remove the setting of these client vars from the ajax request also).
-							// Extra wg variables that we'll need.
-							client.wgServer = data.wgServer;
-							client.wgArticlePath = data.wgArticlePath;
-							// TODO: REFACTOR THESE TO USE THE VALUE STORED IN THE 'chat' OBJ IN REDIS (remove the setting of these client vars from the ajax request also).
-	
-							// BugzId 5752 - clear chat buffer if this is the first user in the room (to avoid confusion w/past chats).
-							rc.hlen(config.getKey_usersInRoom(client.roomId), function(err, numInRoom){
-								if (err) {
-									console.log('Error: while trying to find number of people in room "' + client.roomId + '": ' + err);
-								} else if((numInRoom) && (numInRoom > 0)){
-									finishConnectingUser(client, socket, data);
-								} else {
-									// Nobody is in the room yet, so clear the back-buffer before doing the rest of the setup (as per BugzId 5752).
-									console.log(data.username + " is the first person to re-enter a now-empty room " + client.roomId + ".");
-									console.log("Deleting the back-buffer before connecting them the rest of the way.");
-	
-									rc.del(config.getKey_chatEntriesInRoom(client.roomId), function(err, delData){
-										finishConnectingUser(client, socket, data);
-									});
-								}
-							});
-						} else {
-							console.log("User try to conect with someone else private room");
-							//it is hack attempts no meesage for this
-						}});
+					handshakeData.clientData = client;
+					authcallback(null, true); // error first callback style 
 				} else {
-					console.log("User failed authentication. Error from server was: " + data.errorMsg);
-					sendInlineAlertToClient(client, data.error, data.errorWfMsg, data.errorMsgParams);
-					console.log("Entire data was: ");
-					console.log(data);
-				}
-			};
-			
-			if(typeof(data.isLoggedIn) != 'undefined') {
-				callback(data);
-			} else {
-				requestMW(wikiHostname, requestUrl, callback);
-			}
+					console.log("User try to conect with someone else private room");
+					authcallback(null, false); // error first callback style
+					//it is hack attempts no meesage for this
+				}});
 		} else {
-			console.log("Didn't get data for the roomId so it probably doesn't exist anymore: " + auth.get('roomId'));
+			console.log("User failed authentication. Error from server was: " + data.errorMsg);
+			sendInlineAlertToClient(client, data.error, data.errorWfMsg, data.errorMsgParams);
+			console.log("Entire data was: ");
+			console.log(data);
+			authcallback(null, false); // error first callback style
 		}
-	}); // end of block for getting wgServer from the room's hash in redis.
-	console.log("Started request to get wgServer from redis");
+	};
+	
+	var requestUrl = config.AUTH_URL + "&roomId=" + roomId ;	
+	requestUrl +=  "&name=" + encodeURIComponent( name );
+	requestUrl +=  "&key=" + key ;
+
+	requestMW(roomId, requestUrl, callback, function(){
+		authcallback(null, false); // error first callback style
+	});
 } // end of socket connection code
 
+function clearChatBuffer(client) {
+	// TODO: REFACTOR THESE TO USE THE VALUE STORED IN THE 'chat' OBJ IN REDIS (remove the setting of these client vars from the ajax request also).
+	
+	// BugzId 5752 - clear chat buffer if this is the first user in the room (to avoid confusion w/past chats).
+	rc.hlen(config.getKey_usersInRoom(client.roomId), function(err, numInRoom){
+		if (err) {
+			console.log('Error: while trying to find number of people in room "' + client.roomId + '": ' + err);
+		} else if((numInRoom) && (numInRoom > 0)){
+			finishConnectingUser(client, io.sockets );
+		} else {
+			// Nobody is in the room yet, so clear the back-buffer before doing the rest of the setup (as per BugzId 5752).
+			console.log(client.username + " is the first person to re-enter a now-empty room " + client.roomId + ".");
+			console.log("Deleting the back-buffer before connecting them the rest of the way.");
+
+			rc.del(config.getKey_chatEntriesInRoom(client.roomId), function(err, delData){
+				finishConnectingUser(client, io.sockets );
+			});
+		}
+	});	
+}
 
 /**
  * This is called after the result from the MediaWiki server has set up this client's user-info.
  * This adds the user to the room in redis and sends the initial state to the client.
  */
-function finishConnectingUser(client, socket, rawUserInfo){
+function finishConnectingUser(client, socket ){
 	console.log(new Date().getTime());
 	var nodeChatModel = new models.NodeChatModel();
 	rc.lrange(config.getKey_chatEntriesInRoom(client.roomId), (-1 * config.NUM_MESSAGES_TO_SHOW_ON_CONNECT), -1, function(err, data) {
@@ -446,16 +433,16 @@ function finishConnectingUser(client, socket, rawUserInfo){
 			});
 			
 			// Initial connection of the user (unless they're already connected).
-			var connectedUser = nodeChatModel.users.find(function(user){return user.get('name') == rawUserInfo.username;});
+			var connectedUser = nodeChatModel.users.find(function(user){return user.get('name') == client.username;});
 			if(!connectedUser) {
 			connectedUser = new models.User({
-					name: rawUserInfo.username,
-					avatarSrc: rawUserInfo.avatarSrc,
+					name: client.username,
+					avatarSrc: client.avatarSrc,
 					isModerator: client.isChatMod,
 					isCanGiveChatMode: client.isCanGiveChatMode,
 					isStaff: client.isStaff,
-					editCount: rawUserInfo.editCount,
-					since: rawUserInfo.since
+					editCount: client.editCount,
+					since: client.wikiaSince
 				});
 			
 				nodeChatModel.users.add(connectedUser);
@@ -467,20 +454,26 @@ function finishConnectingUser(client, socket, rawUserInfo){
 				console.log("\t\t============== POSSIBLE IDENTITY PROBLEM!!!!!! - BEG ==============");
 				console.log("\t\tATTEMPTED NAME:     " + client.ATTEMPTED_NAME + " (probably the correct name)");
 				console.log("\t\tATTACHED TO USR:    " + client.myUser.get('name'));
-				console.log("\t\tAFTER MATCHING FOR: " + rawUserInfo.username);
 				console.log("\t\t============== POSSIBLE IDENTITY PROBLEM!!!!!! - END ==============");
 			}
 
 			// If this same user is already in the sessionIdsByKey hash, then they must be connected in
 			// another browser. Kick that other instance before continuing (multiple instances cause all kinds of weirdness.
 			var existingId = sessionIdsByKey[config.getKey_userInRoom(client.myUser.get('name'), client.roomId)];
+			
+			console.log(sessionIdsByKey);
+			console.log(config.getKey_userInRoom(client.myUser.get('name'), client.roomId));
+			
+			console.log("OLD_ID:" + existingId);
 			if(typeof existingId != "undefined"){
 				// Send the old client a notice that they're about to be disconnected and why.
 				var oldClient = socket.socket(existingId);
 				sendInlineAlertToClient(oldClient, '', 'chat-err-connected-from-another-browser', [], function(){
 					// Looks like we're kicking ourself, but since we're not in the sessionIdsByKey map yet,
 					// this will only kick the other instance of this same user connected to the room.
+					console.log('kickUserFromRoom');
 					kickUserFromRoom(oldClient, socket, client.myUser, client.roomId, function(){
+						console.log('kickUserFromRoom call back');	
 						// This needs to be done after the user is removed from the room.  Since clientDisconnect() is called asynchronously,
 						// the user is explicitly removed from the room first, then clientDisconnect() is prevented from attempting to remove
 						// the user (since that may get called at some point after formallyAddClient() adds the user intentionally).
@@ -525,9 +518,12 @@ function formallyAddClient(client, socket, connectedUser){
  * sometimes to prevent race conditions).
  */
 function clientDisconnect(client, socket) {
+	console.log("clientDisconnect"); 
 	// Remove the in-memory mapping of this user in this room to their sessionId
 	if(typeof client.myUser != 'undefined' && typeof client.myUser.get != 'undefined'){
-		delete sessionIdsByKey[config.getKey_userInRoom(client.myUser.get('name'), client.roomId)];
+		if(sessionIdsByKey[config.getKey_userInRoom(client.myUser.get('name'), client.roomId)] == client.sessionId ) {
+			var sessionId = sessionIdsByKey[config.getKey_userInRoom(client.myUser.get('name'), client.roomId)];
+		}
 	}
 
 	// Remove the user from the set of usernames in the current room (in redis).
@@ -590,37 +586,25 @@ function kickBan(client, socket, msg){
 
 	var userToBan = kickBanCommand.get('userToBan');
 
-	// Find the hostname to make the request to.
-	rc.hget(config.getKey_room(client.roomId), 'wgServer', function(err, data) {
-		if (err) {
-			console.log('Error: getting wgServer for a room: ' + err);
-		} else if (data) {
-			var wikiHostname = data.replace(/^https?:\/\//i, "");
-
-			// Ban the user via request to Wikia MediaWiki server ajax-endpoint.
+	var requestUrl = config.KICKBAN_URL;
+	requestUrl += "&userToBan=" + encodeURIComponent(userToBan);
+	requestUrl +=  "&key=" + client.userKey ;
+	
+	requestMW(client.roomId, requestUrl, function(data){
+		// Process response from MediaWiki server and then kick the user from all clients.
+		if(data.error || data.errorWfMsg){
+			sendInlineAlertToClient(client, data.error, data.errorWfMsg, data.errorMsgParams);
 			
-			var requestUrl = config.KICKBAN_URL;
-			requestUrl += "&userToBan=" + encodeURIComponent(userToBan);
-			requestUrl +=  "&key=" + client.userKey ;
-			requestUrl += "&cb=" + Math.floor(Math.random()*99999); // varnish appears to be caching ajax requests (at least on dev boxes) when we don't want it to... so cachebust it.
-			
-			requestMW(wikiHostname, requestUrl, function(data){
-				// Process response from MediaWiki server and then kick the user from all clients.
-				if(data.error || data.errorWfMsg){
-					sendInlineAlertToClient(client, data.error, data.errorWfMsg, data.errorMsgParams);
-					
-					if(data.doKickAnyway){
-						kickedUser = new models.User({name: userToBan});
-						kickUserFromRoom(client, socket, kickedUser, client.roomId);
-					}
-				} else {
-					// Build a user that looks like the one that got banned... then kick them!
-					kickedUser = new models.User({name: userToBan});
-					broadcastInlineAlert(client, socket, 'chat-user-was-kickbanned', [kickedUser.get('name')], function(){
-						// The user has been banned and the ban has been broadcast, now physically remove them from the room.
-						kickUserFromRoom(client, socket, kickedUser, client.roomId);
-					});
-				}
+			if(data.doKickAnyway){
+				kickedUser = new models.User({name: userToBan});
+				kickUserFromRoom(client, socket, kickedUser, client.roomId);
+			}
+		} else {
+			// Build a user that looks like the one that got banned... then kick them!
+			kickedUser = new models.User({name: userToBan});
+			broadcastInlineAlert(client, socket, 'chat-user-was-kickbanned', [kickedUser.get('name')], function(){
+				// The user has been banned and the ban has been broadcast, now physically remove them from the room.
+				kickUserFromRoom(client, socket, kickedUser, client.roomId);
 			});
 		}
 	});
@@ -635,48 +619,32 @@ function giveChatMod(client, socket, msg){
 
 	var userToPromote = giveChatModCommand.get('userToPromote');
 
-	// Find the hostname to make the request to.
-	rc.hget(config.getKey_room(client.roomId), 'wgServer', function(err, data) {
-		if (err) {
-			console.log('Error: getting wgServer for a room: ' + err);
-		} else if (data) {
-			var wikiHostname = data.replace(/^https?:\/\//i, "");
+	var requestUrl = config.GIVECHATMOD_URL;
+	requestUrl +=  "&key=" + client.userKey ;
+	requestUrl += "&userToPromote=" + encodeURIComponent(userToPromote);
+	
+	requestMW(client.roomId, requestUrl, function(data){
+		// Either send the error to the client who tried this action, or (if it was a success), send the updated User to all clients.
+		if(data.error || data.errorWfMsg){
+			sendInlineAlertToClient(client, data.error, data.errorWfMsg, data.errorMsgParams);
+		} else {
+// TODO: ONCE WE HAVE A LIST OF CLIENTS, INSTEAD OF BUILDING A FAKE... LOOP THROUGH THE USERS IN THIS CHAT AND FIND THE REAL ONE. THAT'S FAR SAFER/BETTER.
+// TODO: The users are in a hash now... grab the user, then send them.
+			// Build a user that looks like the one that got banned... then kick them!
+			promotedUser = new models.User({name: userToPromote});
 
-			// Ban the user via request to Wikia MediaWiki server ajax-endpoint.
-			var requestHeaders = {
-				'Host': wikiHostname
-			};
-			var requestUrl = config.GIVECHATMOD_URL;
-			requestUrl +=  "&key=" + client.userKey ;
-			requestUrl += "&userToPromote=" + encodeURIComponent(userToPromote);
-			requestUrl += "&cb=" + Math.floor(Math.random()*99999); // varnish appears to be caching ajax requests (at least on dev boxes) when we don't want it to... so cachebust it.
-			
-			
-			requestMW(wikiHostname, requestUrl, function(data){
-				// Either send the error to the client who tried this action, or (if it was a success), send the updated User to all clients.
-				if(data.error || data.errorWfMsg){
-					sendInlineAlertToClient(client, data.error, data.errorWfMsg, data.errorMsgParams);
-				} else {
-	// TODO: ONCE WE HAVE A LIST OF CLIENTS, INSTEAD OF BUILDING A FAKE... LOOP THROUGH THE USERS IN THIS CHAT AND FIND THE REAL ONE. THAT'S FAR SAFER/BETTER.
-	// TODO: The users are in a hash now... grab the user, then send them.
-					// Build a user that looks like the one that got banned... then kick them!
-					promotedUser = new models.User({name: userToPromote});
-
-					// Broadcast inline-alert saying that A has made B a chatmoderator.
-					broadcastInlineAlert(client, socket, 'chat-inlinealert-a-made-b-chatmod', [client.myUser.get('name'), promotedUser.get('name')], function(){
-						// Force the user to reconnect so that their real state is fetched again and is broadcast to all users (whose models will be updated).
-						var promotedClientId = sessionIdsByKey[config.getKey_userInRoom(promotedUser.get('name'), client.roomId)];
-						if(typeof promotedClientId != 'undefined'){
-							socket.socket(promotedClientId).json.send({
-								event: 'forceReconnect'
-							});
-						}
+			// Broadcast inline-alert saying that A has made B a chatmoderator.
+			broadcastInlineAlert(client, socket, 'chat-inlinealert-a-made-b-chatmod', [client.myUser.get('name'), promotedUser.get('name')], function(){
+				// Force the user to reconnect so that their real state is fetched again and is broadcast to all users (whose models will be updated).
+				var promotedClientId = sessionIdsByKey[config.getKey_userInRoom(promotedUser.get('name'), client.roomId)];
+				if(typeof promotedClientId != 'undefined'){
+					socket.socket(promotedClientId).json.send({
+						event: 'forceReconnect'
 					});
 				}
 			});
 		}
 	});
-
 } // end giveChatMod()
 
 /**
@@ -715,8 +683,10 @@ function kickUserFromServer(client, socket, userToKick, roomId){
 		// To prevent race-conditions, we don't have any users kicked by this function get removed from
 		// redis. Setting this variable here lets clientDisconnect() know not to delete the user from the
 		// room in redis.
-		socket.socket(kickedClientId).doNotRemoveFromRedis = true;
-		socket.socket(kickedClientId).disconnect();
+		setTimeout(function(){
+			socket.socket(kickedClientId).doNotRemoveFromRedis = true;
+			socket.socket(kickedClientId).disconnect();
+		}, 1000);
 		// This closes the connection (takes a few seconds) after calling the clientDisconnect() handler which will
 		// broadcast the 'part' and delete the session id from the sessionIdsByKey hash.
 
