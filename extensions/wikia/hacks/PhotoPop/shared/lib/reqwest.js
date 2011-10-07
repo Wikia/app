@@ -6,9 +6,10 @@
   */
 
 !function (name, definition) {
-  if (typeof define == 'function') define(definition)
+/** wikia change start **/
+  /*if (typeof define == 'function') define(definition)
   else if (typeof module != 'undefined') module.exports = definition()
-  else this[name] = definition()
+  else*/ /** wikia change end **/this[name] = definition()
 }('reqwest', function () {
 
   var context = this
