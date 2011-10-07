@@ -29,6 +29,11 @@ var CreatePage = {
 			return;
 		}
 
+		// Ignore middle-click. BugId:12544
+		if (e.which == 2) {
+			return;
+		}
+
 		// don't follow the link
 		if (e && e.preventDefault) {
 			e.preventDefault();
