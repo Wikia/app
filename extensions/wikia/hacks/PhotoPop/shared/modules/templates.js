@@ -7,7 +7,7 @@ define.call(exports, {
 				<img id='logoPhotopop' src='{{#image}}PHOTOPOP_LOGO{{/image}}'/><br/>\
 				<img id='logoWikia' src='{{#image}}POWERED_BY_LOGO{{/image}}'>\
 			</div>\
-		<div id='sliderWrapper' class='composite transition-all'>\
+		<div id='sliderWrapper' class='composite'>\
 			<div id='buttonWrapper'>\
 				<div id='button_scores'>\
 					<img src='{{#image}}buttonSrc_scores{{/image}}'/>\

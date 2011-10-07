@@ -236,16 +236,14 @@ define.call(exports, function(){
 			next = 0,
 			self = this;
 			
-			(function show() {
+			t = setInterval(function() {
 				tds[next].clicked = false;
 				tds[next++].style.opacity = 1;
 				if(next == tdLength) {
+					clearInterval(t);
 					setTimeout(function() {self.fire('maskDisplayed', {gameId: self.getId(), image: self._data[self._currentRound-1].image});}, 400);
-				} else {
-					setTimeout(show, 50);
 				}
-
-			})();
+			}, 100);
 		},
 		
 		openModal: function(options) {
@@ -378,15 +376,13 @@ define.call(exports, function(){
 			next = 0,
 			t;
 			
-			(function clear() {
+			t = setInterval(function() {
 				tds[next++].style.opacity = 0;
 				if(next == tdLength) {
-					clearTimeout(t);
-				} else {
-					t = setTimeout(clear, 100);
+					clearInterval(t);
 				}
+			}, 100);
 
-			})();
 		},
 		
 		showEndGameScreen: function(){
