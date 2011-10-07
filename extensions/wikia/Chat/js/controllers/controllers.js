@@ -30,7 +30,7 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 
 	baseconnect: function() {
 		io.transports = globalTransports ;
-		this.socket = io.connect('http://' + WIKIA_NODE_HOST + ':' + WIKIA_NODE_PORT, { 
+		this.socket = io.connect('http://' + WIKIA_NODE_HOST + ':' + WIKIA_NODE_PORT +'?query=string', { 
 			'force new connection' : true,	
 			'try multiple transports': true,
 			'connect timeout': false
