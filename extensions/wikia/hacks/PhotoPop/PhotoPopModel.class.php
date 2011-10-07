@@ -56,20 +56,9 @@ class PhotoPopModel extends WikiaModel{
 				$gamesIds = WikiFactory::getCityIDsFromVarValue( $wikiFactoryRecommendVar->cv_variable_id, true, '=' );
 				
 				foreach ( $gamesIds as $wikiId ) {
-					$gameSettings = WikiFactory::getVarValueByName( self::WF_SETTINGS_NAME, $wikiId );
-					$matches = array();
-					$game = new stdClass();
-					$result = preg_match_all( '/([^=|]+)=([^|]+)/m' ,$gameSettings, $matches );
+					$game = $this->getSettings( $wikiId );
 					
-					if ( $result > 0 && !empty( $matches[1] ) && !empty( $matches[2] ) ){
-						foreach( $matches[1] as $index => $setting ){
-							if ( !empty( $matches[2][$index] ) ) {
-								$game->$setting = $matches[2][$index];
-							}
-						}
-					}
-					
-					if( !empty( $game->category ) ) {
+					if( !empty( $game ) ) {
 						$wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wikiId );
 						$wikiThemeSettings = WikiFactory::getVarValueByName( 'wgOasisThemeSettings', $wikiId);
 						
@@ -122,7 +111,7 @@ class PhotoPopModel extends WikiaModel{
 		if ( empty( $contents ) ) {
 			$category = F::build( 'Category', array( $categoryName ), 'newFromName' );
 			
-			if ( $category instanceof Category ) {
+			if ( $category instanceof Category && $category->getID() !== false ) {
 				$articles = Array();
 				$titles = $category->getMembers();
 				
@@ -194,6 +183,46 @@ class PhotoPopModel extends WikiaModel{
 		$this->app->wf->profileOut( __METHOD__ );
 		
 		return $contents;
+	}
+	
+	public function getSettings( $wikiId ){
+		$gameSettings = WikiFactory::getVarValueByName( self::WF_SETTINGS_NAME, $wikiId );
+		$matches = array();
+		$game = new stdClass();
+		$result = preg_match_all( '/([^=|]+)=([^|]+)/m' ,$gameSettings, $matches );
+		
+		if ( $result > 0 && !empty( $matches[1] ) && !empty( $matches[2] ) ){
+			foreach( $matches[1] as $index => $setting ){
+				if ( !empty( $matches[2][$index] ) ) {
+					$game->$setting = $matches[2][$index];
+				}
+			}
+		}
+		
+		return ( !empty( $game->category ) ) ? $game : null;
+	}
+	
+	public function saveSettings( $wikiId, $categoryName, $iconUrl ){
+		$this->app->wf->profileIn( __METHOD__ );
+		
+		$values = array();
+		$ret = false;
+		
+		if( !empty( $categoryName ) ) {
+			$values[] = "category={$categoryName}";
+		}
+		
+		if( !empty( $iconUrl ) ) {
+			$values[] = "thumbnail={$iconUrl}";
+		}
+		
+		if ( !empty( $values ) ) {
+			$ret = WikiFactory::setVarByName( self::WF_SETTINGS_NAME, $wikiId, implode( '|', $values ), "Updating PhotoPop settings" );
+		}
+		
+		$this->app->wf->profileOut( __METHOD__ );
+		
+		return $ret;
 	}
 	
 	private function generateCacheKey( $token ){

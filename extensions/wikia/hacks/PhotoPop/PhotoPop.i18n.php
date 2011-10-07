@@ -8,6 +8,22 @@
 $messages = array();
 
 $messages['en'] = array(
+	//Special page, game setup
+	'photopop-setup-title' => 'Photo Pop setup',
+	'photopop-setup-category-label' => 'Category',
+	'photopop-setup-category-tip' => 'Enter a category name...',
+	'photopop-setup-icon-label' => 'Game icon',
+	'photopop-setup-icon-tip' => 'Enter a file article title...',
+	'photopop-setup-submit-label' => 'Save',
+	'photopop-current-settings-title' => 'Current settings',
+	'photpop-category-none' => 'N/A',
+	'photopop-error-category-non-existing' => "The specified category doesn't exist",
+	'photopop-error-field-compulsory' => 'This field is compulsory',
+	'photopop-error-icon-non-existing' => "The specified file article doesn't exist",
+	'photopop-error-db-error' => 'An error occurred, settings were not saved',
+	'photopop-settings-saved' => 'Settings have been saved',
+	
+	//old
 	'photopop' => 'Photo Pop game',
 	'photopop-title-tag-homescreen' => 'Photo Pop',
 	'photopop-title-tag-selectorscreen' => 'Photo Pop',
