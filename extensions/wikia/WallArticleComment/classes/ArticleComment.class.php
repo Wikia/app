@@ -301,7 +301,7 @@ class ArticleComment {
 				$commentingAllowed = isset($props['commenting']) ? (bool)$props['commenting'] : true;
 				
 			}
-
+			
 			if ( ( count( $parts['partsStripped'] ) == 1 ) && $commentingAllowed && !ArticleCommentInit::isFbConnectionNeeded() ) {
 				$replyButton = '<a href="#" class="article-comm-reply wikia-button secondary">' . wfMsg('article-comments-reply') . '</a>';
 			}

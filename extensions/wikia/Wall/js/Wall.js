@@ -383,7 +383,6 @@ var Wall = $.createClass(Object, {
 			data: data,
 			callback: this.proxy(function(data) {
 				var bubble = $('.speech-bubble-message',msg).first();
-				//var buttons = $(e.target).closest('.buttons');
 				
 				var beforeedit = bubble.html();
 				
@@ -519,7 +518,7 @@ var Wall = $.createClass(Object, {
 		$(el).css({ 'margin-bottom': '40px'});
 		$('.speech-bubble-message', el).stop().css({'margin-left':'40px'});
 		$('.speech-bubble-avatar', el).show();
-		$('textarea',el).css('line-height','170%');
+		$('textarea',el).css('line-height','150%');
 	},
 
 	reply_ChangeText: function(e) {

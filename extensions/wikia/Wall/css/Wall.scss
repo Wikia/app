@@ -29,7 +29,7 @@ $new_inputs_bg: mix($bubble_bg, $inputs_bg,20%);
 
 /*
 .WikiaRail .module, .WikiaRail #RIGHT_SKYSCRAPER {
-	box-shadow: 0px 2px 5px darken($color-page,9%) !important;
+	box-shadow: 0px 2px 5px darken($color-page,12%) !important;
 	background-image: none !important;
 	border: 1px solid mix($color-page,$color-page-border,25%);
 	@if lightness($color-page) < 50 {
@@ -71,6 +71,7 @@ $new_inputs_bg: mix($bubble_bg, $inputs_bg,20%);
 					font-decoration: none;
 				}
 			}
+			.speech-bubble-message { line-height: 150%; }
 			.msg-body textarea { font-size: 12px; height: 100px; }
 			.edited-by { margin-bottom: 5px; .subtle { margin-left: 5px; } }
 			> ul { margin-left: 75px; }
@@ -104,7 +105,7 @@ $new_inputs_bg: mix($bubble_bg, $inputs_bg,20%);
 	}
 	
 	.speech-bubble-message { padding: 5px 10px 0px 8px; }
-  .speech-bubble-message p { margin: 0.2em 0 0.2em 0 !important; }
+  .speech-bubble-message p { margin: 0.5em 0 0.5em 0 !important; }
   .speech-bubble-message p:first-child { margin-top: 0 !important; }
 	
 	/* only messages, not replies */
@@ -154,13 +155,14 @@ $new_inputs_bg: mix($bubble_bg, $inputs_bg,20%);
 		font-size: 12px;
 		&:focus { background: $inputs_bg_f; color: $color-text; }
 		&:focus { @include box-shadow(0px, 0px, 4px, mix($color-buttons,$color-page,100%) ); }
-		&.body { line-height: 170%; }
+		&.body { line-height: 150%; }
 	}
 	.new-message textarea{ 
 		background: $new_inputs_bg;
 		font-size: 14px;
 		&.title { height: 30px; margin-bottom: 10px; }
 		&.body { height: 70px; } 
+		&:focus { background: $inputs_bg_f; color: $color-text; }
 	}
 	.new-reply textarea{ height: 30px;  }
 	ul.comments > li.message li.message textarea { border: 1px solid $separators; }
@@ -347,6 +349,8 @@ $new_inputs_bg: mix($bubble_bg, $inputs_bg,20%);
 		min-width: 60px;
 		text-align: center;
 		opacity: 0.7;
+		display: block;
+		margin-right: -10px;
 		&:hover { opacity: 1; background-image: none; }
 		background-image: none;
 	}

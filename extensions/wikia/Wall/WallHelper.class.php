@@ -233,7 +233,7 @@ class WallHelper {
 			else
 				$items[$i]['real-name'] = '';
 			$items[$i]['author'] = $data['username'];
-			$items[$i]['wall-comment'] = $this->shortenText($data['rawtext']).'&nbsp;';
+			$items[$i]['wall-comment'] = htmlspecialchars($this->shortenText($data['rawtext'])).'&nbsp;';
 			$items[$i]['timestamp'] = $data['rawmwtimestamp'];
 			if(User::isIP( $data['username']) ) {
 				$items[$i]['user-profile-url'] = Skin::makeSpecialUrl('Contributions').'/'.$data['username'];

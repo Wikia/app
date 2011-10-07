@@ -15,10 +15,28 @@ class WallHooksHelper {
 		
 		$parts = explode( '/', $title->getText() );
 		
+		if( $title->getNamespace() == NS_USER_WALL_MESSAGE && !empty($parts[1]) ) {
+			// thread / message link in form of @comment-username-number
+			// needs converting to articleId
+
+			$title = F::build('Title', array($parts[0].'/'.$title->getArticleId(), NS_USER_WALL), 'newFromText');
+			$app->wg->Out->redirect($title->getFullUrl(), 301);
+			$app->wg->Out->enableRedirects(false);
+			return true;
+			
+		}
+		
+		if( $title->getNamespace() == NS_USER_WALL_MESSAGE && !$title->isSubpage() ) {
+			// is someone trying to use this namespace as talk page?
+			
+			$this->doSelfRedirect();
+			return true;
+		}
+		
 		if( $title->getNamespace() === NS_USER_WALL 
 			&& $title->isSubpage() 
 			&& !empty($parts[1]) 
-			&& intval($parts[1]) > 0 
+			&& intval($parts[1]) > 0
 		) {
 		//message wall index - brick page
 			$outputDone = true;
@@ -40,7 +58,7 @@ class WallHooksHelper {
 			
 			return true;
 		}
-		
+
 		if( $title->getNamespace() === NS_USER_TALK 
 			&& !$title->isSubpage() 
 		) {
@@ -237,9 +255,10 @@ class WallHooksHelper {
 		}
 		
 		if($app->wg->User->isLoggedIn()) {
-			if($app->wg->Skin == 'monobook') {
+			if($app->wg->User->getSkin()->getSkinName() == 'monobook') {
 				$personalUrls['wall-notifications'] = array(
 					'text'=>$app->wf->Msg('wall-notifications'),
+					//'text'=>print_r($app->wg->User->getSkin(),1),
 					'href'=>'#',
 					'class'=>'wall-notifications-monobook',
 					'active'=>false
@@ -377,6 +396,13 @@ class WallHooksHelper {
 		
 		if( $title->getNamespace() === NS_USER_WALL ) {
 			$app->wg->Out->redirect($title->getLocalUrl(), 301);
+			$app->wg->Out->enableRedirects(false);
+		}
+		if( $title->getNamespace() === NS_USER_WALL_MESSAGE ) {
+			$parts = explode( '/', $title->getText() );
+		
+			$title = F::build('Title', array($parts[0], NS_USER_WALL), 'newFromText');
+			$app->wg->Out->redirect($title->getFullUrl(), 301);
 			$app->wg->Out->enableRedirects(false);
 		}
 	}

@@ -223,7 +223,7 @@ class UserIdentityBox {
 		$changed = false;
 		
 		if( is_object($data) ) {
-			foreach(array('location', 'occupation', 'birthday', 'gender', 'website', 'avatar', 'twitter', 'fbPage') as $option) {
+			foreach(array('location', 'occupation', 'birthday', 'gender', 'website', 'avatar', 'twitter', 'fbPage', 'name') as $option) {
 				if( isset($data->$option) ) {
 					$data->$option = str_replace('*', '&asterix;', $data->$option);
 					$data->$option = $this->app->wg->Parser->parse($data->$option, $this->user->getUserPage(), new ParserOptions($this->user))->getText();
