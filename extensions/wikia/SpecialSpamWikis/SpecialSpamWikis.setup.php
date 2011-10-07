@@ -32,3 +32,5 @@ $app->registerSpecialPage( 'SpamWikis', 'SpecialSpamWikisSpecialPageController' 
 
 $wgGroupPermissions['*']['specialspamwikis'] = false;
 $wgGroupPermissions['util']['specialspamwikis'] = true;
+
+$wgHooks['StaffLog::formatRow'][] = 'SpecialSpamWikisController::formatLog';

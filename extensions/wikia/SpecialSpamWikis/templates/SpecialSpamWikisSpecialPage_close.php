@@ -1,3 +1,4 @@
+<!-- s: <?= __FILE__ ?> -->
 <?php
 /*
  * The template for the view to be displayed after the form submission.
@@ -13,6 +14,7 @@ if ( empty( $mData->close ) ): ?>
 <?php else: ?>
 
 <p><a href="<?= $mAction; ?>"><?= wfMsg( 'specialspamwikis-show-list' ); ?></a></p>
+<p><?= wfMsgExt( 'specialspamwikis-stafflog-summary', array('parsemag'), $mData->summary['sum'], $mData->summary['count'], $mData->summary['avg'] ); ?></p>
 <table cellpadding="0" cellspacing="0" border="0" class="TablePager" id="spamwikis-table">
     <thead>
         <tr>
@@ -38,3 +40,4 @@ if ( empty( $mData->close ) ): ?>
 <p><a href="<?= $mAction; ?>"><?= wfMsg( 'specialspamwikis-show-list' ); ?></a></p>
 
 <?php endif; ?>
+<!-- e: <?= __FILE__ ?> -->

@@ -22,4 +22,13 @@ $messages['en'] = array(
     'specialspamwikis-criteria-wikis-less-than-five-pages' => 'Limit to wikis with five or less pages',
     'specialspamwikis-filter-by-name' => 'Filter by name',
     'specialspamwikis-update-list' => 'Update the list',
+    'specialspamwikis-stafflog-summary' => 'closed $1 {{PLURAL:$1|wiki|wikis}} created by $2 {{PLURAL:$2|user|users}} (avg. $3 {{PLURAL:$3|wiki|wikis}} per user)',
+    'specialspamwikis-no-stats' => 'No stats to show',
+    'specialspamwikis-date' => 'Date',
+    'specialspamwikis-all-created' => 'Wikis created',
+    'specialspamwikis-spamwikis-amount' => 'Amount',
+    'specialspamwikis-spamwikis-percent' => '% of all',
+    'specialspamwikis-spamwikis-founders' => 'Amount',
+    'specialspamwikis-spamwikis-per-founder' => 'avg. spam wikis per founder',
+    'specialspamwikis-spam-users' => 'Spamming Users',
 );

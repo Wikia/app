@@ -57,4 +57,16 @@ class SpecialSpamWikisController extends WikiaController {
         $this->response->setVal( 'sColumns', 'close,wiki,created,founder,email' );
         $this->response->setVal( 'aaData', $list['items'] );
     }
+    /**
+     * a StaffLog::formatRow hook
+     * 
+     * Formats a log entry to be displayed on Special:StaffLog
+     */
+    public static function formatLog($type, $result, $time, $linker, &$out) {
+        if ( 'spamwiki' == $type ) {
+            $l = new Linker();
+            $out = "{$time} {$type} - user {$l->userLink( $result->slog_user, $result->slog_user_name )} {$result->slog_comment}.";
+        }
+        return true;
+    }
 }
