@@ -64,7 +64,7 @@
 			<ul class="links">
 				<? if( !empty($user['twitter']) ): ?>
 					<li class="twitter">
-						<a href="<?= $user['twitter'] ?>" rel="nofollow">
+						<a href="http://twitter.com/<?= $user['twitter'] ?>" rel="nofollow">
 							<img src="<?= $wgBlankImgUrl ?>" class="twitter icon">
 							<?= wfMsg('user-identity-box-my-twitter' ); ?>
 						</a>
