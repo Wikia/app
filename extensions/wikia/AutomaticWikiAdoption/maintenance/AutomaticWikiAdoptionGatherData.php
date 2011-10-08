@@ -28,9 +28,9 @@ class AutomaticWikiAdoptionGatherData {
 		}
 
 		$wikisToAdopt = 0;
-		$time14days = strtotime('-14 days');
-		$time27days = strtotime('-27 days');
-		$time30days = strtotime('-30 days');
+		$time45days = strtotime('-45 days');
+		$time57days = strtotime('-57 days');
+		$time60days = strtotime('-60 days');
 		
 		// set default
 		$from_wiki_id = 260000;	// 260000 = ID of wiki created on 2011-05-01
@@ -47,13 +47,13 @@ class AutomaticWikiAdoptionGatherData {
 			foreach ($recentAdminEdits as $wikiId => $wikiData) {
 				$jobName = '';
 				$jobOptions = array();
-				if ($wikiData['recentEdit'] < $time30days) {
+				if ($wikiData['recentEdit'] < $time60days) {
 					$wikisToAdopt++;
 					$this->setAdoptionFlag($commandLineOptions, $jobOptions, $wikiId, $wikiData);
-				} elseif ($wikiData['recentEdit'] < $time27days) {
+				} elseif ($wikiData['recentEdit'] < $time57days) {
 					$jobOptions['mailType'] = 'second';
 					$this->sendMail($commandLineOptions, $jobOptions, $wikiId, $wikiData);
-				} else /*if ($wikiData['recentEdit'] < $time14days)*/ {
+				} else /*if ($wikiData['recentEdit'] < $time45days)*/ {
 					$jobOptions['mailType'] = 'first';
 					$this->sendMail($commandLineOptions, $jobOptions, $wikiId, $wikiData);				
 				}
@@ -75,7 +75,7 @@ class AutomaticWikiAdoptionGatherData {
 		if ( !empty($wgStatsDBEnabled) && !empty($from_wiki_id) && !empty($to_wiki_id)) {
 			$dbrStats = wfGetDB(DB_SLAVE, array(), $wgStatsDB);			
 
-			//get wikis with admins not active in last 14 days
+			//get wikis with edits < 1000 and admins not active in last 45 days
 			//260000 = ID of wiki created on 2011-05-01 so it will work for wikis created after this project has been deployed
 			$res = $dbrStats->query(
 				'select e1.wiki_id, sum(e1.edits) as sum_edits from specials.events_local_users e1 ' .
@@ -85,7 +85,7 @@ class AutomaticWikiAdoptionGatherData {
 				'select count(0) from specials.events_local_users e2 ' .
 				'where e1.wiki_id = e2.wiki_id and ' .
 				'all_groups like "%sysop%" and ' .
-				'editdate > now() - interval 14 day ' .
+				'editdate > now() - interval 45 day ' .
 				') = 0',
 				__METHOD__
 			);
