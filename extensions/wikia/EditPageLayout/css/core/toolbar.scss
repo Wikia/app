@@ -71,10 +71,12 @@
 		> .right {
 			clear: right;
 			float: right;
-			height: 42px;
 			width: 220px;
 			> span {
 				display: inline-block;
+			}
+			&.right-bottom{
+				padding-bottom: 5px;
 			}
 		}
 		.cke_license {
