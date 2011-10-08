@@ -26,7 +26,12 @@ $wgExtensionCredits['specialpage'][] = array(
  * @ingroup SpecialPage
  */
 class SpecialApiGate extends SpecialPage {
-	private $AUTH_SUBPAGE = "checkKey";
+	private $SUBPAGE_NONE = ""; // basically, the main dashboard
+	private $SUBPAGE_CHECK_KEY = "checkKey";
+	private $SUBPAGE_REGISTER = "register";
+	private $SUBPAGE_ALL_KEYS = "allKeys";
+	private $SUBPAGE_USER_KEYS = "userKeys";
+	private $SUBPAGE_KEY = "key";
 
 	public function __construct() {
 		parent::__construct( 'ApiGate' );
@@ -36,33 +41,71 @@ class SpecialApiGate extends SpecialPage {
 	 * @param $subpage Mixed: string if any subpage provided, else null
 	 */
 	public function execute( $subpage ) {
-		global $wgOut, $wgRequest;
+		global $wgOut, $wgRequest, $IP;
 		wfProfileIn( __METHOD__ );
 
-		wfLoadExtensionMessages( 'ApiGate' );
+		include "$IP/lib/ApiGate/ApiGate.php";
+
 		$wgOut->setPagetitle( wfMsg('apigate') );
 
+		// TODO: Subpages
+			// TODO: /register
+			
+			// TODO: /userKeys
+			
+			// TODO: /allKeys
+			
+			// TODO: /key
+			
+			// TODO: /checkKey
+			
 		//print "SUBPAGE: $subpage<br/>\n";
 		$apiKey = $wgRequest->getVal( 'apiKey' );
-		if ( $subpage == $this->AUTH_SUBPAGE ) {
+		switch($subpage){
+			case $this->SUBPAGE_CHECK_KEY:
+
+				// TODO: Fill this out so that we can do per-method permissions.
+				$requestData = array(); 
+				// TODO: Fill this out so that we can do per-method permissions.
+
+				// Will output headers and a descriptive body-message.
+				ApiGate::isRequestAllowed_endpoint( $apiKey, $requestData );
+
+				// This sub-age is just for returning headers (http status-codes), etc.
+				exit;
+
+				break;
+			case $this->SUBPAGE_REGISTER:
+				
+				// TODO: IMPLEMENT
+				// TODO: IMPLEMENT
+				
+				break;
+			case $this->SUBPAGE_ALL_KEYS:
 			
-			// TEST VALUES FOR GETTING THE DIFFERENT CACHING RETURN VALUES
-			switch( $apiKey ){
-			case '509':
-				header("Status: 509 Bandwidth Limit Exceeded");
-
-				print "This API key has been disabled because the request-rate was too high. Please contact support for more information or to re-enable.";
-
+				// TODO: IMPLEMENT
+				// TODO: IMPLEMENT
+				
 				break;
-			case '200':
+			case $this->SUBPAGE_USER_KEYS:
+			
+				// TODO: IMPLEMENT
+				// TODO: IMPLEMENT
+				
+				break;
+			case $this->SUBPAGE_KEY:
+			
+				// TODO: IMPLEMENT
+				// TODO: IMPLEMENT
+			
+				break;
+			case $this->SUBPAGE_NONE:
 			default:
-				header("Status: 200 OK");
-				print "Cool";
-				break;
-			}
 
-			// This sub-age is just for returning error-codes.
-			exit;
+				// TODO: Landing page
+				// TODO: Landing page
+
+				break;
 		}
 
 		wfProfileOut( __METHOD__ );
