@@ -6,9 +6,18 @@
  * This class contains static functions for dealing with very simple requests
  * that are designed to be easily called from external code (ie: whatever framework
  * is using ApiGate inside of it).
+ *
+ * TODO: Solve how to do the i18n both here and in MediaWiki gracefully.
  */
 
 class ApiGate{
+	// Status codes that we use. Commented out the status codes that we don't use yet but are likely to soon.
+	public const HTTP_STATUS_OK = 200;
+	public const HTTP_STATUS_UNAUTHORIZED = 401;
+	public const HTTP_STATUS_FORBIDDEN = 403;
+	//public const HTTP_STATUS_IM_A_TEAPOT = 418; // not sure what this will come in use for ;)
+	//public const HTTP_STATUS_INSUFFICIENT_STORAGE = 507; // would come in handy for APIs which have per-key or per-user storage limits on accounts.
+	public const HTTP_STATUS_LIMIT_EXCEEDED = 509; // bandwidth exceeded code. closest to rate-limiting.
 
 	/**
 	 * Calling this funcction will ban the API key from all apiKey-required api calls.
@@ -42,16 +51,23 @@ class ApiGate{
 	 * per key once implemented.
 	 *
 	 * @param apiKey - string - the API key to check for validity.
-	 * @return boolean - true if the key is valid (ie: it exists) and is not banned, false if the key is not known or is banned.
+	 * @return int - an HTTP status code such as 200 if okay, 401 if auth wasn't provided (but was needed), 509 if the key has been rate-limited, etc..
 	 */
 	public static function checkKey( $apiKey ){
 		wfProfileIn( __METHOD__ );
 
+		$retVal = ApiGate::HTTP_STATUS_CODE_OK;
+		
+		// HARDCODED FOR DEBUGGING.  An "apiKey" of 509 (which wouldn't be an actual API key) will return a status-code of 509 for testing/debugging.
+		if($apiKey == "509"){
+			$retVal = ApiGate::HTTP_STATUS_LIMIT_EXCEEDED;
+		}
+		
 		// TODO: IMPLEMENT
 		// TODO: IMPLEMENT
 
 		wfProfileOut( __METHOD__ );
-		return true;
+		return $retVal;
 	} // end checkKey()
 	
 	/**
@@ -71,9 +87,8 @@ class ApiGate{
 	 *                                array(method => (the method name), params => (associative array of key-value pairs of parameters and their values)).
 	 *                                TODO: For XML-RPC, JSON-RPC, etc. have a static function that will parse a query-string into these for the caller so
 	 *                                that they don't have to do a bunch of work just to fill in that second parameter.
-	 * @return boolean - true if the given request is allowed for the given api key, false if it is not allowed (this may be because of rate-limiting, or
-	 *                   just that the key does not have permission to access the requested resource.  TODO: Figure out a good way to pass the error back
-	 *                   if desired (so that the developer isn't confused about why they got bounced & can work towards solving the issue).
+	 * @return int - an HTTP status code such as 200 if okay, 401 if auth wasn't provided (but was needed), 403 if auth was provided but does not have
+	 *               permission to make the requested call, 509 if the key has been rate-limited, etc..
 	 */
 	public static function isRequestAllowed($apiKey, $fullRequest){
 		wfProfileIn( __METHOD__ );
@@ -86,6 +101,35 @@ class ApiGate{
 		wfProfileOut( __METHOD__ );
 		return $isAllowed;
 	} // end isRequestAllowed()
+	
+	/**
+	 *
+	 */
+	public static function isRequestAllowed_endpoint( $apiKey, $fullRequest ){
+		wfProfileIn( __METHOD__ );
+
+// TODO: Implement further.
+// TODO: Implement further.
+		$responseCode = isRequestAllowed( $apiKey, $fullRequest );
+
+		switch( $responseCode ){
+		case ApiGate::HTTP_STATUS_LIMIT_EXCEEDED:
+			header("Status: 509 Bandwidth Limit Exceeded");
+
+			print "This API key has been disabled because the request-rate was too high. Please contact support for more information or to re-enable.";
+
+			break;
+		case ApiGate::HTTP_STATUS_OK:
+		default:
+			header("Status: 200 OK");
+			
+			print "Cool";
+			
+			break;
+		}
+
+		wfProfileOut( __METHOD__ );
+	} // end isRequestAllowed_endpoint()
 
 	/**
 	 * During the serving of an API request, prior to finishing of sending headers, this function should
