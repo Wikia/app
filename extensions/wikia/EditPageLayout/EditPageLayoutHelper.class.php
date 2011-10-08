@@ -204,17 +204,6 @@ class EditPageLayoutHelper {
 	}
 
 	/**
-	 * Reverse parse wikitext when performing diff for undo revision
-	 */
-	function onEditPageGetDiffText($editform, &$newtext) {
-		if (class_exists('RTE') && RTE::isWysiwygModeEnabled() ) {
-			$newtext = RTE::HtmlToWikitext($newtext);
-		}
-
-		return true;
-	}
-
-	/**
 	 * Get warning note shown when preview mode is forced and add it to the nofitication area
 	 */
 	function onEditPageGetPreviewNote($editform, &$note) {
