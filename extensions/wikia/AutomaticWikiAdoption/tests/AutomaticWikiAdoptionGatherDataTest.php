@@ -35,9 +35,9 @@ class AutomaticWikiAdoptionGatherDataTest extends PHPUnit_Framework_TestCase {
 	
 	function maintenanceScriptDataProvider() {
 		return array(
-			array('sendMail', 4, 16, array('mailType' => 'first')),
-			array('sendMail', 4, 29, array('mailType' => 'second')),
-			array('setAdoptionFlag', 4, 31, array())
+			array('sendMail', 4, 46, array('mailType' => 'first')),
+			array('sendMail', 4, 59, array('mailType' => 'second')),
+			array('setAdoptionFlag', 4, 61, array())
 		);
 	}
 }
