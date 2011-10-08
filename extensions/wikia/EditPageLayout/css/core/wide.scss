@@ -3,6 +3,11 @@
 		position: absolute;
 		top: 0;
 		right: 0;
+		.buttons{
+			.wikia-menu-button, .control-button{
+				margin-top: 0;
+			}
+		}
 		.module {
 			border-left: 0px;
 			@include clear-box-shadow;
@@ -10,6 +15,7 @@
 		.module_content {
 			background-color: transparent;
 			background-image: none;
+			padding-bottom: 10px;
 		}
 	}
 	#EditPageMain {
