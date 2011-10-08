@@ -5,7 +5,7 @@
     content: ".";
     display: block;
     height: 0;
-    overflow: hidden;
+    overflow: hidden; // (BugId:11677)
     visibility: hidden;
   }
 }
