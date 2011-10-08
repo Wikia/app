@@ -51,7 +51,6 @@ $app->registerClass('SpecialCustomEditPage', $dir . '/SpecialCustomEditPage.clas
 // hooks
 $app->registerHook('AlternateEditPageClass', 'EditPageLayoutHelper', 'onAlternateEditPageClass');
 $app->registerHook('EditPageBeforeConflictDiff', 'EditPageLayoutHelper', 'onEditPageBeforeConflictDiff');
-$app->registerHook('EditPageGetDiffText', 'EditPageLayoutHelper', 'onEditPageGetDiffText');
 $app->registerHook('EditPageGetPreviewNote', 'EditPageLayoutHelper', 'onEditPageGetPreviewNote');
 $app->registerHook('EditForm:AfterDisplayingTextbox', 'EditPageLayoutHelper', 'onAfterDisplayingTextbox');
 $app->registerHook('EditForm:BeforeDisplayingTextbox', 'EditPageLayoutHelper', 'onBeforeDisplayingTextbox');
