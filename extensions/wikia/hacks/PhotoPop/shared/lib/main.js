@@ -420,12 +420,17 @@
 				g.prepareGame();
 			};
 			
+			function initHighScoreScreen(){
+				alert('Sorry, this is not implemented ATM...');
+			}
+			
 			function registerEvents(game) {
 				game.addEventListener('displayingMask', displayingMask);
 				game.addEventListener('renderGameScreen', gameScreenRender);
 				game.addEventListener('initHomeScreen', initHomeScreen);
 				game.addEventListener('goHome', goHome);
 				game.addEventListener('playAgain', playAgain);
+				game.addEventListener('goToHighScores', initHighScoreScreen);
 				game.addEventListener('timeIsUp', timeIsUp);
 				game.addEventListener('modalOpened', modalOpened);
 				game.addEventListener('answerClicked', answerClicked);
