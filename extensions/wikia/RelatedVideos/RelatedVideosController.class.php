@@ -11,6 +11,9 @@ class RelatedVideosController extends WikiaController {
 
 	public function getCarusel(){
 
+		if( Wikia::isMainPage() ) {
+			return false;
+		}
 		$relatedVideos = RelatedVideos::getInstance();
 		$videos = $relatedVideos->get(
 			$this->app->wg->title->getArticleId(),
