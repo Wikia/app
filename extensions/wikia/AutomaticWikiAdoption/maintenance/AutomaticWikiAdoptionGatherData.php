@@ -216,8 +216,6 @@ class AutomaticWikiAdoptionGatherData {
 		if ($row !== false)
 			$max_wiki_id = $row->max_wiki_id;
 		
-		$dbr->close();
-		
 		return $max_wiki_id;
 	}
 	
@@ -247,7 +245,6 @@ class AutomaticWikiAdoptionGatherData {
 			if ($row !== false) {
 				$num_pages = $row->ss_good_articles;
 			}
-			$dbr->close();
 		}
 		
 		return $num_pages;
