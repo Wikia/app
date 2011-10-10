@@ -9,7 +9,7 @@ $messages['en'] = array(
 	'wikiasearch-search-this-wiki' => 'Search Wikia Central only',
 	'wikiasearch-search-wikia' => 'Search Wikia',
 	'wikiasearch-image-results' => 'Image Results for "$1"',
-	'wikiasearch-search-all-wikia' => 'Search All of Wikia'
+	'wikiasearch-search-all-wikia' => 'Search all of Wikia'
 );
 
 /** Afrikaans (Afrikaans)
