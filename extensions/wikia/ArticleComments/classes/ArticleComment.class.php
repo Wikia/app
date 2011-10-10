@@ -230,12 +230,11 @@ class ArticleComment {
 				$img = '<img class="history sprite" alt="" src="'. $wgBlankImgUrl .'" width="16" height="16" />';
 				$buttons[] = $img . $wgUser->getSkin()->makeKnownLinkObj( $this->mTitle, wfMsgHtml('article-comments-history'), 'action=history', '', '', 'class="article-comm-history"' );
 			}
-
-			$commentId = $this->getTitle()->getArticleId();
-			$timestamp = "<a href='" . $this->getTitle()->getFullUrl( array( 'permalink' => $commentId ) ) . '#comm-' . $commentId . "' class='permalink'>" . wfTimeFormatAgo($this->mFirstRevision->getTimestamp()) . "</a>";
+			
+			$timestamp = "<a href='" . $this->getTitle()->getFullUrl( array( 'permalink' => $articleId ) ) . '#comm-' . $articleId . "' class='permalink'>" . wfTimeFormatAgo($this->mFirstRevision->getTimestamp()) . "</a>";
 
 			$comment = array(
-				'id' => $commentId,
+				'id' => $articleId,
 				'articleId' => $articleId,
 				'author' => $this->mUser,
 				'username' => $this->mUser->getName(),
@@ -365,8 +364,8 @@ class ArticleComment {
 		global $wgUser;
 
 		$res = false;
-		if ( $this->mUser ) {
-			$isAuthor = $this->mUser->getId() == $wgUser->getId() && !$wgUser->isAnon();
+		if (  $this->mFirstRevision  ) {
+			$isAuthor =  $this->mFirstRevision->getUser( Revision::RAW ) == $wgUser->getId() && !$wgUser->isAnon();
 			$canEdit =
 				//prevent infinite loop for blogs - userCan hooked up in BlogLockdown
 				defined('NS_BLOG_ARTICLE_TALK') && $this->mTitle->getNamespace() == NS_BLOG_ARTICLE_TALK ||
@@ -374,7 +373,7 @@ class ArticleComment {
 
 			$isAllowed = $wgUser->isAllowed('commentedit');
 
-			$res = ( $isAuthor || $isAllowed ) && $canEdit;
+			$res = $isAuthor || ( $isAllowed && $canEdit );
 		}
 
 		return $res;
