@@ -560,7 +560,7 @@ AdDriverDelayedLoader.callDART = function() {
 					// Track only calls that do not fall back to Liftium.
 					// (Those calls will be tracked by Liftium.)
 					// Based on Liftium.callInjectedIframeAd
-					WikiaTracker.track(Liftium.buildTrackUrl(['addriver', "slot", AdDriverDelayedLoader.currentAd.size+ "_" + AdDriverDelayedLoader.currentAd.slotname]), 'liftium.slot');
+					WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "slot", AdDriverDelayedLoader.currentAd.size+ "_" + AdDriverDelayedLoader.currentAd.slotname]) + '/addriver', 'liftium.slot');
 				}
 				AdDriverDelayedLoader.loadNext();
 			}
