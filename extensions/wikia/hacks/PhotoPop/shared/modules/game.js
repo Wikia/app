@@ -30,6 +30,7 @@ define.call(exports, function(){
 	var Game = my.Class({
 		
 		STATIC: {
+			ROUND_LENGTH: 2,//10
 			INCORRECT_CLASS_NAME: 'incorrect',
 			TIME_UP_NOTIFICATION_DURATION_MILLIS: 3000,
 			MAX_SECONDS_PER_ROUND: 15,
@@ -59,6 +60,7 @@ define.call(exports, function(){
 			this._numRounds = options.data.length;
 			this._watermark = options.watermark;
 			this._roundPoints = new Points(Game.MAX_POINTS_PER_ROUND);
+			this._screen = options.screen || {};
 			this._timerPointDeduction = Math.round((Game.MAX_POINTS_PER_ROUND / ((Game.MAX_SECONDS_PER_ROUND*1000) / Game.UPDATE_INTERVAL_MILLIS)));
 			this._wrongAnswerPointDeduction = Math.round((Game.MAX_POINTS_PER_ROUND * (Game.PERCENT_DEDUCTION_WRONG_GUESS / 100)));
 		},
@@ -98,9 +100,12 @@ define.call(exports, function(){
 			this.showMask();
 			this.hideContinue();
 			this.showScoreBar();
+			this.hideAnswerDrawer();//puts the drawer back in place
 			this.showAnswerDrawer();
+			this.hideEndGameScreen();//needs to hide previously shown final screen
 			this.prepareAnswers();
 			this.updateHudScore();
+			this.updateScoreBar();//resets the scorebar
 		},
 		
 		prepareHud: function() {
@@ -116,9 +121,10 @@ define.call(exports, function(){
 			cols = cols || 6;
 			
 			var tilesWrapper = document.getElementById('tilesWrapper'),
+			screenElement = this._screen.getElement(),
 			table = "",
-			tableWidth = wrapper.clientWidth,
-			tableHeight = wrapper.clientHeight,
+			tableWidth = screenElement.clientWidth,
+			tableHeight = screenElement.clientHeight,
 			rowHeight = tableHeight / rows,
 			colWidth = tableWidth / cols,
 			offsetY = 0,
@@ -214,19 +220,18 @@ define.call(exports, function(){
 		prepareFinishScreen: function() {
 			var self = this;
 			document.getElementById('goHome').onclick = function() {
-				document.getElementById('gameScreen').style.opacity = 0;
 				self.fire('goHome');
-			}
+			};
 			
 			document.getElementById('playAgain').onclick = function() {
-				document.getElementById('gameScreen').style.opacity = 0;
 				self.fire('playAgain');
-			}
+			};
 			
 			document.getElementById('goToHighScores').onclick = function() {
-				document.getElementById('gameScreen').style.opacity = 0;
 				self.fire('goToHighScores');
-			}
+			};
+			
+			document.getElementById('playAgain').style.visibility = (this._id == 'tutorial') ? 'hidden' : 'visible';
 		},
 		
 		showMask: function() {
@@ -401,6 +406,10 @@ define.call(exports, function(){
 
 			document.querySelector('#endGameSummary .summaryText_completion').innerHTML = 'you got ' + this._numCorrect + ' out of ' + this._data.length + ' correct.';
 			document.querySelector('#endGameSummary .summaryText_score').innerHTML =  'score: ' + this._totalPoints.getPoints();
+		},
+		
+		hideEndGameScreen: function(){
+			document.getElementById('endGameOuterWrapper').style.display = 'none';
 		},
 		
 		updateHudScore: function(){

@@ -44,12 +44,6 @@ define.call(exports, {
 		tutorial_5: 'tutorial_5.jpeg'
 	},
 	
-	urls: {
-		playButtonUrl: "playButton();",
-		tutorialButtonUrl: "#tutorial",
-		backHomeUrl: ""
-	},
-	
 	sounds: {
 		fail: "Sad-Trombone",
 		pop: "FingerPlop4",
