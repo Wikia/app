@@ -80,7 +80,7 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 			return;
 		}
 
-		// validate feature
+		// validate feature: valid value ($enabled and $feature), check if Feature exists ($wg_value)
 		$wg_value = WikiFactory::getVarByName($feature, $this->wg->CityId);
 		if (($enabled != 'true' && $enabled != 'false') || empty($feature) || empty($wg_value)) {
 			$this->setVal('result', 'error');

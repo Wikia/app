@@ -223,4 +223,17 @@
 			sort($response);
 			$this->assertEquals($exp_result, $response);
 		}
+		
+		// check feedback id for all Labs Features
+		public function testLabsFeaturesFeedbackId() {
+			global $wgWikiFeatures;
+			
+			$exp_result = true;
+			$labs_features = array_values($wgWikiFeatures['labs']);
+			$feedback_ids = array_keys(WikiFeaturesHelper::$feedbackAreaIDs);
+			foreach($labs_features as $feature) {
+				$response = in_array($feature, $feedback_ids);
+				$this->assertEquals($exp_result, $response);
+			}
+		}
 	}
