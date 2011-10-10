@@ -213,7 +213,8 @@
 				
 				// Reveal all tiles.
 				g.hideScoreBar();
-				g.showContinue('Excellent! It\'s ' + options.li.innerHTML);
+				g.revealAll();
+				//g.showContinue('Excellent! It\'s ' + options.li.innerHTML);
 			},
 			
 			answerDrawerButtonClicked = function(event, options) {
@@ -259,10 +260,6 @@
 				g.nextRound();
 			},
 			
-			continueDisplayed = function() {
-				g.revealAll();
-			}
-			
 			endGame = function() {
 				g.showEndGameScreen();
 				if (store.get('highScore_' + g.getId()) < g._totalPoints.getPoints()) {
@@ -290,7 +287,10 @@
 			maskDisplayed = function(event , options) {
 				changeImg(g.getId(), options.image);
 				g.updateHudProgress();
-				//g.showContinue();
+			},
+			
+			tilesShown = function(event, options) {
+				g.showContinue('It\'s: ' + options.correct);
 			},
 			
 			scoreBarHidden = function() {
@@ -333,7 +333,7 @@
 			},
 			
 			timeUpHidden = function(event, options) {
-				g.showContinue('Wrong! It\'s ' + options.correct);
+				g.revealAll();
 			},
 			
 			timerEvent = function() {
@@ -449,8 +449,8 @@
 				game.addEventListener('timerEvent', timerEvent);
 				game.addEventListener('timeIsLow', timeIsLow);
 				game.addEventListener('endGame', endGame);
-				game.addEventListener('continueDisplayed', continueDisplayed);
 				game.addEventListener('timeUpHidden', timeUpHidden);
+				game.addEventListener('tilesShown', tilesShown);
 			}
 
 		}
