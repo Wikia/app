@@ -61,6 +61,7 @@
 			},
 			
 			changeImg = function(gameId, image) {
+				//TODO: preload the image
 				imgPath = (gameId == 'tutorial') ? imageServer.getAsset(image) : image;
 				document.getElementById('bgPic').getElementsByTagName('img')[0].src = imgPath;
 			},
@@ -273,7 +274,12 @@
 						clickThrough: false,
 						closeOnClick: true});
 				}
-				if(g.getId() == 'tutorial') store.set('tutorialPlayed', true);
+				if(g.getId() == 'tutorial') {
+					store.set('tutorialPlayed', true);
+					document.getElementById('playAgain').style.visibility = 'hidden';
+				} else {
+					document.getElementById('playAgain').style.visibility = 'visible';
+				}
 			},
 			
 			goHome = function() {
