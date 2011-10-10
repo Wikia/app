@@ -30,7 +30,7 @@ define.call(exports, function(){
 	var Game = my.Class({
 		
 		STATIC: {
-			ROUND_LENGTH: 2,//10
+			ROUND_LENGTH: 10,
 			INCORRECT_CLASS_NAME: 'incorrect',
 			TIME_UP_NOTIFICATION_DURATION_MILLIS: 3000,
 			MAX_SECONDS_PER_ROUND: 15,
