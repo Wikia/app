@@ -383,8 +383,11 @@ define.call(exports, function(){
 			tdLength = tds.length,
 			next = 0,
 			self = this,
+			td,
 			t = setInterval(function() {
-				tds[next++].style.opacity = 0;
+				td = tds[next++];
+				td.style.opacity = 0;
+				td.clicked = true;
 				if(next == tdLength) {
 					clearInterval(t);
 					self.fire('tilesShown', {correct: document.getElementById(self._correctAnswer).innerHTML});
