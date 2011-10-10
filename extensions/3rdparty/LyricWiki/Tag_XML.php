@@ -91,7 +91,7 @@ function unfilter( $string )
 	return str_replace("\\n","\n",$string);
 }
 
-function renderXML( $input, $argv, &$parser )
+function renderXML( $input, $argv, $parser )
 {
 	global $wgOut;
 	$localParser = new Parser();
