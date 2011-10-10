@@ -49,6 +49,15 @@
 				//highscore
 				if(!store.get('highScore_' + g.getId())) store.set('highScore_' + g.getId(), 0);
 				document.getElementById('highScore').getElementsByTagName('span')[0].innerHTML = store.get('highScore_' + g.getId());
+				
+				if(g.getId() == 'tutorial')
+					g.openModal({
+						name: 'intro',
+						html: "Tap the screen to take a peek of the mystery image underneath.",
+						fade: true,
+						clickThrough: false,
+						closeOnClick: true
+					});
 			},
 			
 			changeImg = function(gameId, image) {
@@ -203,7 +212,6 @@
 				g.hideAnswerDrawer();
 				
 				// Reveal all tiles.
-				g.revealAll();
 				g.hideScoreBar();
 				g.showContinue('Excellent! It\'s ' + options.li.innerHTML);
 			},
@@ -251,6 +259,10 @@
 				g.nextRound();
 			},
 			
+			continueDisplayed = function() {
+				g.revealAll();
+			}
+			
 			endGame = function() {
 				g.showEndGameScreen();
 				if (store.get('highScore_' + g.getId()) < g._totalPoints.getPoints()) {
@@ -277,15 +289,8 @@
 			
 			maskDisplayed = function(event , options) {
 				changeImg(g.getId(), options.image);
-				if(g.getId() == 'tutorial')
-					g.openModal({
-						name: 'intro',
-						html: "Tap the screen to take a peek of the mystery image underneath.",
-						fade: true,
-						clickThrough: false,
-						closeOnClick: true
-					});
 				g.updateHudProgress();
+				//g.showContinue();
 			},
 			
 			scoreBarHidden = function() {
@@ -315,18 +320,20 @@
 				}
 			},
 			
-			timeIsUp = function(event, options){
+			timeIsUp = function(){
 				soundServer.play('fail');
 				g.roundIsOver = true;
-				g.revealAll();
 				g.hideAnswerDrawer();
 				g.hideScoreBar();
 				g.showTimeUp();
 				g.updateHudScore();
 				setTimeout(function() {
 					g.hideTimeUp();
-					g.showContinue('Wrong! It\'s ' + options.correct);
 				}, Game.TIME_UP_NOTIFICATION_DURATION_MILLIS);
+			},
+			
+			timeUpHidden = function(event, options) {
+				g.showContinue('Wrong! It\'s ' + options.correct);
 			},
 			
 			timerEvent = function() {
@@ -441,7 +448,9 @@
 				game.addEventListener('tileClicked', tileClicked);
 				game.addEventListener('timerEvent', timerEvent);
 				game.addEventListener('timeIsLow', timeIsLow);
-				game.addEventListener('endGame', endGame);	
+				game.addEventListener('endGame', endGame);
+				game.addEventListener('continueDisplayed', continueDisplayed);
+				game.addEventListener('timeUpHidden', timeUpHidden);
 			}
 
 		}
