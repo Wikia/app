@@ -288,14 +288,21 @@ define.call(exports, function(){
 				
 				this.fire('modalOpened', {name: options.name});
 				
-				modalWrapper.onclick = function() {
-					if(options.closeOnClick) {
-						modal.style.opacity = 0;
-						modalWrapper.style.visibility = 'hidden';
+				
+				if(options.closeOnClick) {
+					modalWrapper.onclick = function() {
+						self.closeModal();
 					}
-	
 				}
 			}
+		},
+		
+		closeModal: function() {
+			var modalWrapper = document.getElementById('modalWrapper'),
+			modal = document.getElementById('modal');
+			console.log('closeModal');
+			modal.style.opacity = 0;
+			modalWrapper.style.visibility = 'hidden';	
 		},
 		
 		pause: function() {
