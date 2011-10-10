@@ -375,10 +375,12 @@ define.call(exports, function(){
 			var tds = document.getElementsByTagName('td'),
 			tdLength = tds.length,
 			next = 0,
+			self = this,
 			t = setInterval(function() {
 				tds[next++].style.opacity = 0;
 				if(next == tdLength) {
 					clearInterval(t);
+					self.fire('tilesShown', {correct: document.getElementById(self._correctAnswer).innerHTML});
 				}
 			}, 100);
 
@@ -410,18 +412,13 @@ define.call(exports, function(){
 		},
 		
 		showContinue: function(text) {
-			var nextRound = document.getElementById('continue'),
-			self = this;
+			var nextRound = document.getElementById('continue');
 			
 			document.getElementById('continueText').innerText = text || 'Next Round';
 		
 			nextRound.style.opacity = 1;
 			nextRound.style.right = 0;
 			nextRound.style.visibility = 'visible';
-			
-			setTimeout(function() {
-				self.fire('continueDisplayed');
-			}, 501);
 		},
 		
 		hideAnswerDrawer: function(){
