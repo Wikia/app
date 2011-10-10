@@ -14,17 +14,15 @@ class SearchModule extends Module {
 	var $wgSitename;
 	var $wgTitle;
 	var $isCrossWikiaSearch;
-	var $crossWikiaSearchOptionEnabled;
 
 	public function executeIndex() {
-		global $wgRequest, $wgSitename, $wgSearchDefaultFulltext, $wgEnableCrossWikiaSearchOption;
+		global $wgRequest, $wgSitename, $wgSearchDefaultFulltext;
 
 		$this->searchterm = $this->wg->request->getVal('search');
 
 		$this->fulltext = !empty($wgSearchDefaultFulltext) ? 1 : 0;
 		$this->placeholder = wfMsg('Tooltip-search', $wgSitename);
 		$this->isCrossWikiaSearch = $wgRequest->getCheck('crossWikiaSearch');
-		$this->crossWikiaSearchOptionEnabled = !empty( $wgEnableCrossWikiaSearchOption ) ? true : false;
 	}
 
 }
