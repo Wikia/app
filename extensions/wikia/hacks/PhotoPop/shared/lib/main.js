@@ -67,6 +67,7 @@
 			
 			imageLoaded = function() {
 				wrapper.style.pointerEvents = 'auto';
+				if(g.getId() != 'tutorial') g.closeModal();
 			},
 			
 			loadSelectedGame = function(){
@@ -281,6 +282,12 @@
 			},
 			
 			displayingMask = function() {
+				if(g.getId() != 'tutorial') g.openModal({
+					name: 'Loading Image',
+					html: 'Loading image...<br /> Please wait.',
+					fade: false,
+					clickThrough: false,
+					closeOnClick: false});
 				wrapper.style.pointerEvents = 'none';
 			},
 			
@@ -382,15 +389,17 @@
 			
 			function runGame(selectedGame) {
 				var id = selectedGame.dbName,
-				data = new Array(),
-				watermark = 'watermark_' + id;
+				data = [],
+				watermark = 'watermark_' + id,
+				correctLength = selectedGame.c.length,
+				wrongLength = selectedGame.w.length;
 				
 				for(var i = 0; i < 10; i++) {
 					
-					var a = Math.floor(Math.random() * selectedGame.c.length),
-					b = Math.floor(Math.random() * selectedGame.c.length),
-					c = Math.floor(Math.random() * selectedGame.w.length),
-					d = Math.floor(Math.random() * selectedGame.w.length);
+					var a = Math.floor(Math.random() * correctLength),
+					b = Math.floor(Math.random() * correctLength),
+					c = Math.floor(Math.random() * wrongLength),
+					d = Math.floor(Math.random() * wrongLength);
 					
 					data.push({
 						image: selectedGame.c[a].image,
@@ -401,12 +410,13 @@
 							selectedGame.w[d].text,
 						],
 						correct: selectedGame.c[a].text
-						})
+						});
 				}
 				g = new Game({
 					id: id,
 					data: data,
 					watermark: imageServer.getAsset(watermark)});
+				
 				console.log(data[0].image);
 				registerEvents(g);
 				g.prepareGame();
@@ -417,7 +427,7 @@
 				g = new Game({
 					id: 'tutorial',
 					data: config.tutorial,
-					watermark: imageServer.getAsset('watermark_dexter')
+					watermark: imageServer.getAsset('watermark_tutorial')
 				});
 				
 				registerEvents(g);

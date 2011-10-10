@@ -29,6 +29,7 @@ define.call(exports, {
 		gameicon_dexter: "gameicon_dexter",
 		gameicon_futurama: "gameicon_futurama",
 		gameicon_twilight: "gameicon_twilight",
+		watermark_tutorial: "watermark_tutorial",
 		watermark_trueblood: "watermark_trueblood",
 		watermark_glee: "watermark_glee",
 		watermark_lyrics: "watermark_lyrics",
