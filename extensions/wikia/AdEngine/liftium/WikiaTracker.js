@@ -136,6 +136,7 @@ WikiaTracker._track2 = function(page, profile, sample) {
 	this.debug('(internal2) ' + page + ' in ' + profile + ' at ' + sample + '%', 5);
 
 	_gaq.push(['WikiaTracker._setAccount', profile]);
+	_gaq.push(['WikiaTracker._setSampleRate', 100]);
 
 	var hub = Liftium.getPageVar("Hub", "unknown");
 	var lang = Liftium.langForTracking(Liftium.getPageVar("cont_lang", "unknown"));
