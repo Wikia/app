@@ -81,7 +81,7 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 		}
 
 		// validate feature
-		$wg_value = WikiFactory::getVarValueByName($feature, $this->wg->CityId);
+		$wg_value = WikiFactory::getVarByName($feature, $this->wg->CityId);
 		if (($enabled != 'true' && $enabled != 'false') || empty($feature) || empty($wg_value)) {
 			$this->setVal('result', 'error');
 			$this->setVal('error', $this->wf->Msg('wikifeatures-error-invalid-parameter'));

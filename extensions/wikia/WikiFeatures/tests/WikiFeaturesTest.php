@@ -7,6 +7,7 @@
 		
 		protected $wgWikicitiesReadOnly_org = null;
 		protected $wgWikiFeatures_org = null;
+		protected $release_date_org = null;
 
 		protected function setUpMock($cache_value=null) {
 			if(is_null($cache_value)) {
@@ -60,6 +61,7 @@
 			
 			$this->wgWikiFeatures_org = $wgWikiFeatures;
 			$wgWikiFeatures = $wg_wiki_features;
+			$this->release_date_org = WikiFeaturesHelper::$release_date;
 			
 			if(isset($wg_wiki_features[$feature_type])) {
 				foreach ($wg_wiki_features[$feature_type] as $feature) {
@@ -72,6 +74,7 @@
 			global $wgWikiFeatures;
 			
 			$wgWikiFeatures = $this->wgWikiFeatures_org;
+			WikiFeaturesHelper::$release_date = $this->release_date_org;
 		}
 		
 		
@@ -100,6 +103,7 @@
 				array(true, null, 0,'error', wfMsg('wikifeatures-error-invalid-parameter')),							// missing params - not pass $feature
 				array(true, 'wgEnableAchievementsExt', null,'error', wfMsg('wikifeatures-error-invalid-parameter')),	// missing params - not pass $enabled
 				array(true, 'wgEnableAchievements', 'true','error', wfMsg('wikifeatures-error-invalid-parameter')),		// invalid params - $feature not found
+				array(true, 'wgEnableWikiaLabsExt', 'true','error', wfMsg('wikifeatures-error-invalid-parameter')),		// invalid params - $feature not allowed
 				array(true, 123, 0,'error', wfMsg('wikifeatures-error-invalid-parameter')),								// invalid params - $feature is integer
 				array(true, 'wgEnableAchievementsExt', 1,'error', wfMsg('wikifeatures-error-invalid-parameter')),		// invalid params - $enabled > 1
 				array(true, 'wgEnableAchievementsExt', -3,'error', wfMsg('wikifeatures-error-invalid-parameter')),		// invalid params - $enabled is negative
@@ -207,5 +211,16 @@
 				array($wiki_features4, $exp10, $cache_value4, $release_date12),	// release date < 14 days
 				array($wiki_features4, $exp10, $cache_value4, $release_date13),	// release date -> future
 			);
+		}
+		
+		// check release date for all Labs Features
+		public function testLabsFeaturesReleaseDate() {
+			global $wgWikiFeatures;
+			
+			$exp_result = array_values($wgWikiFeatures['labs']);
+			sort($exp_result);
+			$response = array_keys(WikiFeaturesHelper::$release_date);
+			sort($response);
+			$this->assertEquals($exp_result, $response);
 		}
 	}
