@@ -1,4 +1,5 @@
 var exports = exports || {};
+//TODO: Create animation managment system
 
 define.call(exports, function(){
 	var Points = my.Class( {
@@ -32,8 +33,8 @@ define.call(exports, function(){
 			INCORRECT_CLASS_NAME: 'incorrect',
 			TIME_UP_NOTIFICATION_DURATION_MILLIS: 3000,
 			MAX_SECONDS_PER_ROUND: 15,
-			UPDATE_INTERVAL_MILLIS: 250,
-			PERCENT_FOR_TIME_IS_LOW: 30,
+			UPDATE_INTERVAL_MILLIS: 500,
+			PERCENT_FOR_TIME_IS_LOW: 25,
 			MAX_POINTS_PER_ROUND: 1000,
 			PERCENT_DEDUCTION_WRONG_GUESS: 30
 		},
@@ -80,7 +81,7 @@ define.call(exports, function(){
 		
 		nextRound: function(){
 			if(this._currentRound < this._data.length){
-				var info = this._data[this._currentRound++];
+				this._currentRound++
 				this.play();
 			}else{
 				this.fire('endGame');
@@ -92,7 +93,7 @@ define.call(exports, function(){
 			this._timeIsLow = false;
 			this._pause = true;
 			this._timer = null;
-			this._roundIsOver =  false,
+			this._roundIsOver = false;
 			
 			this.showMask();
 			this.hideContinue();
@@ -155,6 +156,7 @@ define.call(exports, function(){
 			}
 			
 			document.getElementById('bgPic').style.display = "block";
+
 		},
 		
 		tileClick: function() {
@@ -316,12 +318,11 @@ define.call(exports, function(){
 				(function time() {
 					if( !self._pause ) {
 						if((self._roundPoints.getPoints() <= 0) && (!self._roundIsOver)){
-							self.fire('timeIsUp',{correct: document.getElementById(self._correctAnswer).innerHTML});
+							self.fire('timeIsUp');
 						} else if(!self._roundIsOver){
 							self.fire('timerEvent');
 							if(!self._timeIsLow){
-								var percent = ((self._roundPoints.getPoints() * 100)/ Points.MAX_POINTS_PER_ROUND);
-								if(percent < Game.PERCENT_FOR_TIME_IS_LOW){
+								if(((self._roundPoints.getPoints() * 100) / Game.MAX_POINTS_PER_ROUND) < Game.PERCENT_FOR_TIME_IS_LOW){
 									self.fire('timeIsLow');
 									self._timeIsLow = true;
 								}
@@ -374,8 +375,6 @@ define.call(exports, function(){
 			var tds = document.getElementsByTagName('td'),
 			tdLength = tds.length,
 			next = 0,
-			t;
-			
 			t = setInterval(function() {
 				tds[next++].style.opacity = 0;
 				if(next == tdLength) {
@@ -411,13 +410,18 @@ define.call(exports, function(){
 		},
 		
 		showContinue: function(text) {
-			var nextRound = document.getElementById('continue');
+			var nextRound = document.getElementById('continue'),
+			self = this;
 			
 			document.getElementById('continueText').innerText = text || 'Next Round';
 		
 			nextRound.style.opacity = 1;
 			nextRound.style.right = 0;
 			nextRound.style.visibility = 'visible';
+			
+			setTimeout(function() {
+				self.fire('continueDisplayed');
+			}, 501);
 		},
 		
 		hideAnswerDrawer: function(){
@@ -439,11 +443,16 @@ define.call(exports, function(){
 		},
 		
 		hideTimeUp: function() {
-			var timeUpTextStyle = document.getElementById('timeUpText').style;
+			var timeUpTextStyle = document.getElementById('timeUpText').style,
+			self = this;
 			
 			timeUpTextStyle.zIndex = 0;
 			timeUpTextStyle.margin = '50px 0 0 -150px';
 			timeUpTextStyle.opacity = 0;
+			
+			setTimeout(function() {
+				self.fire('timeUpHidden',{correct: document.getElementById(self._correctAnswer).innerHTML});
+			}, 1001);
 		}
 	});
 	

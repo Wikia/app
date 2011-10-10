@@ -67,7 +67,7 @@ define.call(exports, {
 				</div>\
 			</div>\
 			<div id='timeUpText'>\
-				CONTINUE TIME UP\
+				Time's Up!\
 			</div>\
 			<div id='continue'>\
 				<span id='continueText'>CONTINUE</span>\
