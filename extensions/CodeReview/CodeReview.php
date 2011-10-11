@@ -134,7 +134,7 @@ $wgSubversionUser = false;
 $wgSubversionPassword = false;
 
 // Leave this off by default until it works right
-$wgCodeReviewENotif = false;
+$wgCodeReviewENotif = true;
 
 // Set this to an e-mail list to send all comments to
 $wgCodeReviewCommentWatcher = false;
