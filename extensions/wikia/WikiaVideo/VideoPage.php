@@ -50,8 +50,9 @@ class VideoPage extends Article {
 	private static $JWPLAYER_JS = 'jwplayer.js';
 	private static $JWPLAYER_SWF = 'player.swf';
 	
+	// ad.tag must be initialized somewhere in this class!
 	private static $JWPLAYER_GOOGIMA_DATA = 
-		array('ad.tag'=>'http://ad.doubleclick.net/pfadx/instream_flash/;sz=320x240;tile=1', 'ad.position'=>'pre', 'ad.bandwidth'=>'high',
+		array('ad.tag'=>'', 'ad.position'=>'pre', 'ad.bandwidth'=>'high',
 			'admessagedynamic'=>'Your video will play in XX seconds', 'admessagedynamickey'=>'XX',
 			'scaled_ads'=>'false'
 			);
@@ -1774,11 +1775,11 @@ EOD;
 	}
 
 	// return embed code for the particular video per provider
-        public function getEmbedCode( $width = 300, $autoplay = false, $useJWPlayer = false, $asJSON = false ) {
+        public function getEmbedCode( $width = 300, $autoplay = false, $useJWPlayer = false, $asJSON = false, $cityShort='life' ) {
 		// init jwplayer vars
 		$jwplayerData = array();
-		$jwplayerData['jwplayerjs'] = self::$JWPLAYER_DIR . self::$JWPLAYER_JS;
-		$jwplayerData['player'] = self::$JWPLAYER_DIR . self::$JWPLAYER_SWF;
+		$jwplayerData['jwplayerjs'] = AssetsManager::getInstance()->getOneCommonURL( trim(self::$JWPLAYER_DIR . self::$JWPLAYER_JS, '/'), false );
+		$jwplayerData['player'] = AssetsManager::getInstance()->getOneCommonURL( trim(self::$JWPLAYER_DIR . self::$JWPLAYER_SWF, '/'), false );
 		$jwplayerData['playerId'] = 'player-'.$this->mId;
 		$jwplayerData['plugins'] = array('gapro-1'=>array('accountid'=>self::VIDEO_GOOGLE_ANALYTICS_ACCOUNT_ID));
 		
@@ -1867,9 +1868,15 @@ EOD;
 					$jwplayerData['plugins']['hd-1'] = array('file'=>$jwplayerData['hdfile'], 'state'=>'false');  // when player embedded in action=render page, the file URL is automatically linkified. prevent this behavior
 				}
 				
-				// ads
-				$jwplayerData['plugins']['googima'] = self::$JWPLAYER_GOOGIMA_DATA;
+				// preroll
+//				$jwplayerData['plugins']['http://lp.longtailvideo.com/5/adtvideo/adtvideo.swf'] = array('config'=>'/extensions/wikia/WikiaVideo/wikia_exclusive.xml');
 
+				// ads
+				self::$JWPLAYER_GOOGIMA_DATA['ad.tag'] = $this->initGoogleIMAAdTag($cityShort);
+				if (self::$JWPLAYER_GOOGIMA_DATA['ad.tag']) {
+					$jwplayerData['plugins']['googima'] = self::$JWPLAYER_GOOGIMA_DATA;
+				}
+				
 				$code = 'custom';
 				break;
 			case self::V_MOVIECLIPS:
@@ -1917,7 +1924,7 @@ EOD;
 				// load the real Video Page referred to by this object,
 				// and get the embed code from there
 				$rvs = new RelatedVideosService();
-				$videoData = $rvs->getRelatedVideoData(0, $this->mId, true, $width);
+				$videoData = $rvs->getRelatedVideoData(0, $this->mId, true, $width, '');	// fifth param is empty to suppress ads
 				$embed = $videoData['embedCode'];
 				return $embed;
 				break;
@@ -1949,7 +1956,8 @@ EOD;
 				$pluginOptionTexts = array();
 				foreach ($options as $key=>$val) {
 					$text = '"'.$key.'": ';
-					if ($key == 'file') {
+					if (startsWith($val, 'http://')
+					|| startsWith($val, 'https://')) {
 						$text .= $this->initJWPlayerURL($val, $asJSON);
 					}
 					else {
@@ -1975,6 +1983,13 @@ EOD;
                 return $asJSON ? $sJSON : $embed;
         }
 	
+	/**
+	 * MediaWiki parser tries to linkify any URL it encounters.
+	 * This method escapes URLs for use in JW Player to avoid this linkification.
+	 * @param string $url
+	 * @param boolean $useJSON
+	 * @return string 
+	 */
 	protected function initJWPlayerURL($url, $useJSON) {
 		if (!empty($useJSON)) {
 			return '"' . $url . '"';
@@ -1982,6 +1997,22 @@ EOD;
 		else {
 			return 'decodeURIComponent("' . urlencode($url) . '")';  // when player embedded in action=render page, the file URL is automatically linkified. prevent this behavior
 		}
+	}
+	
+	/**
+	 * @return string 
+	 */
+	protected function initGoogleIMAAdTag($cityShort='life') {
+		//@todo use logic in AdConfig.js to construct tag
+
+		if ($cityShort) {
+			$hubToken = '[HUB]';
+			$url = "http://ad.doubleclick.net/pfadx/wka.$hubToken/_$hubToken;sz=320x240";
+
+			return str_replace($hubToken, $cityShort, $url);
+		}
+		
+		return '';
 	}
 
 	public function isJWPlayerSupported(){
@@ -1994,9 +2025,9 @@ EOD;
 		}
 	}
 
-	public function getJWPlayerJSON( $width = 300, $autoplay = false ){
+	public function getJWPlayerJSON( $width = 300, $autoplay = false, $cityShort='life' ){
 		if ( $this->isJWPlayerSupported() ){
-			$JSON = $this->getEmbedCode( $width, $autoplay, true, true );
+			$JSON = $this->getEmbedCode( $width, $autoplay, true, true, $cityShort );
 			return json_decode( $JSON, true );
 		}
 	}

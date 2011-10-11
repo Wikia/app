@@ -115,7 +115,7 @@ var RelatedVideos = {
 
 	displayVideoModal : function(e) {
 		e.preventDefault();
-		RelatedVideos.track( 'module/tumbnailClick' );
+		RelatedVideos.track( 'module/thumbnailClick' );
 		var url = $(this).attr('data-ref');
 		var external = $(this).attr('data-external');
 		var link = $(this).attr('href');
@@ -124,7 +124,8 @@ var RelatedVideos = {
 			'getVideo',
 			{
 				title: url,
-				external: external
+				external: external,
+				cityShort: window.cityShort
 			},
 			function( res ) {
 				if ( res.json ) {
