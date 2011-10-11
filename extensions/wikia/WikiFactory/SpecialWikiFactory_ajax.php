@@ -591,7 +591,13 @@ function axWFactoryDomainQuery() {
 
 	$exact = array( "suggestions" => array(), "data" => array() );
 	$match = array( "suggestions" => array(), "data" => array() );
-
+	
+	// query terms: wik, wiki, wikia take too much memory
+	// and end up with fatal errors
+	if ( substr("wikia",0,strlen((string)$query)) === $query ) {
+		$query = false;
+	}
+	
 	if( $query ) {
 		/**
 		 * maybe not very effective but used only by staff anyway
