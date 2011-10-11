@@ -11,7 +11,7 @@ class CategoryExhibitionSection {
 	protected $displayOption = false;	// current state of display option
 	protected $sortOption = false;		// current state of sort option
 
-	protected $allowedSortOptions = array( 'alphabetical', 'recentedits', 'mostvisited' );
+	protected $allowedSortOptions = array( 'alphabetical', 'recentedits' ); // once contained "mostivisited", removed b/c no data
 	protected $allowedDisplayOptions = array( 'exhibition', 'page' );
 
 	protected $verifyChecker = '';
