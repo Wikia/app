@@ -82,6 +82,7 @@ class WatchSubPagesHelper {
 			return true;
 		}
 		
+		$parentOnlyWatchers = array();
 		$dbw = wfGetDB( DB_MASTER );
 		$res = $dbw->select( array( 'watchlist' ),
 			array( 'wl_user' ),
