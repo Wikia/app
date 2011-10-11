@@ -56,11 +56,11 @@
 			z-index: 1;
 		}
 		li {
-			line-height: 32px;
+			line-height: 31px;
 			display: inline-block;
 			float: left;
 			font-size: 15px;
-
+			border-bottom: 1px solid $color-buttons;
 
 			&:first-child {
 				border-left: none;
