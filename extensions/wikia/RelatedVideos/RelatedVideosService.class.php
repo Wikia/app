@@ -13,7 +13,7 @@ class RelatedVideosService {
 	 * @param int $videoWidth Width of resulting video player, in pixels
 	 * @return Array 
 	 */
-	public function getRelatedVideoData( $articleId, $title, $source='', $videoWidth=VideoPage::DEFAULT_OASIS_VIDEO_WIDTH ){
+	public function getRelatedVideoData( $articleId, $title, $source='', $videoWidth=VideoPage::DEFAULT_OASIS_VIDEO_WIDTH, $cityShort='life' ){
 
 		wfProfileIn( __METHOD__ );
 		$title = urldecode( $title );
@@ -23,7 +23,7 @@ class RelatedVideosService {
 			if ( !empty( $source ) ){
 				$url = F::app()->wg->wikiaVideoRepoPath;
 				if ( !empty( $url ) ){
-					$url.='wikia.php?controller=RelatedVideos&method=getVideoData&width='.self::width.'&videoWidth='.$videoWidth.'&title='.urlencode($title).'&articleId='.$articleId.'&format=json';
+					$url.='wikia.php?controller=RelatedVideos&method=getVideoData&width='.self::width.'&videoWidth='.$videoWidth.'&title='.urlencode($title).'&articleId='.$articleId.'&cityShort='.$cityShort.'&format=json';
 				}
 				$httpResponse = Http::post( $url );
 				$result = json_decode( $httpResponse, true );
@@ -35,7 +35,8 @@ class RelatedVideosService {
 					array(
 					    'width' => self::width,
 					    'title' => $title,
-					    'articleId' => $articleId
+					    'articleId' => $articleId,
+					    'cityShort' => $cityShort
 					)
 				)->getData();
 				$result['data']['external'] = 0;
@@ -47,9 +48,9 @@ class RelatedVideosService {
 		return $result['data'];
 	}
 
-	public function getRelatedVideoDataFromTitle( $title, $source='', $videoWidth=VideoPage::DEFAULT_OASIS_VIDEO_WIDTH ){
+	public function getRelatedVideoDataFromTitle( $title, $source='', $videoWidth=VideoPage::DEFAULT_OASIS_VIDEO_WIDTH, $cityShort='life' ){
 
-		return $this->getRelatedVideoData( 0, $title, $source, $videoWidth );
+		return $this->getRelatedVideoData( 0, $title, $source, $videoWidth, $cityShort );
 	}
 
 	public function getMemcKey( $title, $source, $videoWidth ) {
