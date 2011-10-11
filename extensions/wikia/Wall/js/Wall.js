@@ -6,7 +6,7 @@ $(function() {
 
 var Wall = $.createClass(Object, {
 	constructor: function() {
-		this.settings = {}
+		this.settings = {};
 		this.settings.new_title = {min: 30, minFocus:30, minContent: 30, limit: 300, limitEmpty: 30, extraSpace: 15};
 		this.settings.new_body = {minFocus:100, minContent: 100, limit: 9999, limitEmpty: 70, extraSpace: 30};
 		this.settings.edit_title = {min: 30, minFocus:30, minContent: 30, limit: 300, limitEmpty: 30, extraSpace: 0};
@@ -30,15 +30,25 @@ var Wall = $.createClass(Object, {
 			
 		$('#WallMessageTitle')
 			.keydown(function(e) { if(e.which == 13) {$('#WallMessageBody').focus(); return false; }})
-			.autoResize(this.settings.new_title);
-		$('#WallMessageBody').autoResize(this.settings.new_body);
+			.autoResize(this.settings.new_title)
+			.click(this.proxy(function() {
+				this.track('new_message/subject_field');
+			}));
+		$('#WallMessageBody')
+			.autoResize(this.settings.new_body)
+			.click(this.proxy(function() {
+				this.track('new_message/body');
+			}));
 
 		// Reply focus, blur, and reply events
 		$('.new-reply textarea')
 			.bind('keydown keyup change', this.proxy(this.reply_ChangeText))
 			.live('focus', this.proxy(this.replyFocus))
 			.live('blur', this.proxy(this.replyBlur))
-			.autoResize(this.settings.reply);
+			.autoResize(this.settings.reply)
+			.click(this.proxy(function() {
+				this.track('message/reply_field');
+			}));
 		$('.replyButton').live('click', this.proxy(this.replyToMessage));
 		$('.replyPreview').live('click', this.proxy(this.replyToMessagePreview));
 		$('.replyPreviewCancel').live('click', this.proxy(this.replyToMessagePreviewCancel));
@@ -69,13 +79,20 @@ var Wall = $.createClass(Object, {
 		// If any textarea has content make sure Reply / Post button is visible
 		$(document).ready(this.iniciateTextareas);
 		
-		
 		if(wgTitle.indexOf('/') > 0) {
 			var titlePart = wgTitle.split('/');
 			this.username = titlePart[0]; 
 		} else {
 			this.username = wgTitle;
 		}
+		
+		//click tracking
+		$('.user-talk-archive-anchor').click(this.proxy(this.trackClick));
+		$('.edited-by a').click(this.proxy(this.trackClick));
+		$('.timestamp a').click(this.proxy(this.trackClick));
+		$('.speech-bubble-avatar a').click(this.proxy(this.trackClick));
+		$('.load-more a').click(this.proxy(this.trackClick));
+		$('#WallBrickHeader .wall-owner').click(this.proxy(this.trackClick));
 		
 		// fix firefox bug (when textarea is disabled and you refresh a page
 		// it's still disabled on new page loaded
@@ -136,9 +153,15 @@ var Wall = $.createClass(Object, {
 					if(isWatched) {
 						element.animate({'opacity':0.7},'slow', function() { element.css('opacity','');} );
 						$(e.target).text($.msg('wall-message-follow')).addClass('secondary');
+						
+						//click tracking
+						this.track('message/unfollow');
 					} else {
 						element.animate({'opacity':0.7},'slow', function() { element.css('opacity','');} );
 						$(e.target).text($.msg('wall-message-following')).removeClass('secondary');
+						
+						//click tracking
+						this.track('message/follow');
 					}
 				}}
 			)
@@ -268,6 +291,13 @@ var Wall = $.createClass(Object, {
 				
 				if( typeof(href) == 'string' ) {
 					window.location.href = href;
+				}
+				
+				//click tracking
+				if( !topic ) {
+					this.track('new_message/post_without_title');
+				} else {
+					this.track('new_message/post');
 				}
 			})
 
@@ -513,6 +543,9 @@ var Wall = $.createClass(Object, {
 				
 				bubble.append(editbuttons);
 				bubble.append( $('<div class="before-edit"></div>').html(beforeedit) );
+				
+				//click tracking
+				this.track('wall/message/edit/click');
 			})
 
 		});
@@ -532,7 +565,9 @@ var Wall = $.createClass(Object, {
 		$('.speech-bubble-message',msg).first().html(beforeedit);
 		//$('.buttons',msg).first().show();
 		$('.buttons').show();
-
+		
+		//click tracking
+		$.tracker.byStr('wall/message/edit/cancel');
 	},
 	
 	saveEdit: function(e) {
@@ -567,8 +602,10 @@ var Wall = $.createClass(Object, {
 								
 				//$('.buttons',msg).first().show();
 				$('.buttons').show();
-			})
 
+				//click tracking
+				$.tracker.byStr('wall/message/edit/save_changes');
+			})
 		});
 	},
 
@@ -650,8 +687,11 @@ var Wall = $.createClass(Object, {
 				if( typeof(href) == 'string' ) {
 					window.location.href = href;
 				}
+				
 				$('.follow', $(e.target).closest('.SpeechBubble.message')).text($.msg('wall-message-following')).removeClass('secondary');
-
+				
+				//click tracking
+				this.track('message/reply_post');
 			})
 
 		});
@@ -750,6 +790,8 @@ var Wall = $.createClass(Object, {
 					},
 					callback: function(data) {
 						if( data.status ) msg.fadeOut('fast', function() { msg.remove(); });
+						//click tracking
+						$.tracker.byStr('wall/message/delete');
 					}
 
 				});
@@ -757,6 +799,42 @@ var Wall = $.createClass(Object, {
 
 		});
 		e.preventDefault();
+	},
+	
+	track: function(url) {
+		if( typeof(wgUserName) != 'undefined' && wgUserName != null ) {
+			this.trackUser(url);
+		} else {
+			this.trackAnon(url);
+		}
+	},
+	
+	trackUser: function(url) {
+		$.tracker.byStr(url);
+	},
+	
+	trackAnon: function(url) {
+		$.tracker.byStr('1_wikia/anon/wall/' + url);
+	},
+	
+	trackClick: function(event) {
+		var node = $(event.target);
+		
+		if( node.hasClass('user-talk-archive-anchor') ) {
+			this.track('archived_talk_page/view');
+		} else if( node.parent().hasClass('edited-by') && node.hasClass('subtle') ) {
+			this.track('message/username');
+		} else if( node.parent().hasClass('edited-by') && !node.hasClass('subtle') ) {
+			this.track('message/name');
+		} else if( node.parent().hasClass('speech-bubble-avatar') ) {
+			this.track('message/avatar');
+		} else if( node.parent().hasClass('timestamp') ) {
+			this.track('message/timestamp');
+		} else if( node.parent().hasClass('load-more') ) {
+			this.track('message/uncondense');
+		} else if( node.hasClass('wall-owner') ) {
+			this.track('thread_page/owners_wall');
+		}
 	}
 
 });
