@@ -48,18 +48,6 @@ class SpecialApiGate extends SpecialPage {
 
 		$wgOut->setPagetitle( wfMsg('apigate') );
 
-		// TODO: Subpages
-			// TODO: /register
-			
-			// TODO: /userKeys
-			
-			// TODO: /allKeys
-			
-			// TODO: /key
-			
-			// TODO: /checkKey
-			
-		//print "SUBPAGE: $subpage<br/>\n";
 		$apiKey = $wgRequest->getVal( 'apiKey' );
 		switch($subpage){
 			case $this->SUBPAGE_CHECK_KEY:
@@ -76,33 +64,37 @@ class SpecialApiGate extends SpecialPage {
 
 				break;
 			case $this->SUBPAGE_REGISTER:
-				
+
 				// TODO: IMPLEMENT
+
+				print "Registration page here";
+
 				// TODO: IMPLEMENT
-				
+
 				break;
 			case $this->SUBPAGE_ALL_KEYS:
-			
+
 				// TODO: IMPLEMENT
 				// TODO: IMPLEMENT
-				
+
 				break;
 			case $this->SUBPAGE_USER_KEYS:
-			
+
 				// TODO: IMPLEMENT
 				// TODO: IMPLEMENT
-				
+
 				break;
 			case $this->SUBPAGE_KEY:
-			
+
 				// TODO: IMPLEMENT
 				// TODO: IMPLEMENT
-			
+
 				break;
 			case $this->SUBPAGE_NONE:
 			default:
 
 				// TODO: Landing page
+				print "This is where the landing-page will go. It will be state-dependent on the user, their keys, etc.\n"; // TODO: REMOVE
 				// TODO: Landing page
 
 				break;
