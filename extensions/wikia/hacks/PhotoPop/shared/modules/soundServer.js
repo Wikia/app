@@ -26,14 +26,13 @@ define.call(exports, function(){
 						sounds[p].pause();
 						sounds[p].currentTime = 0;
 					}
-					
 					sounds[sound].play();
 				}
 			}
 		},
 		
 		setMute: function(flag){
-			mute = flag;
+			return mute = flag;
 		},
 		
 		getMute: function(){

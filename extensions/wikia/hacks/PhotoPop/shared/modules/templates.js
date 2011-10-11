@@ -81,6 +81,13 @@ define.call(exports, {
 					<div id='score'>\
 						Points: <span id='roundPoints'>0</span> Total: <span id='totalPoints'>0</span>\
 					</div>\
+					<div id='muteButton'>\
+						<img src='{{#image}}buttonSrc_gameMute{{/image}}'>\
+						<img src='{{#image}}buttonSrc_gameUnmute{{/image}}'>\</div>\
+					<div id='pauseButton'>\
+						<img src='{{#image}}buttonSrc_pause{{/image}}'>\
+						<img src='{{#image}}buttonSrc_resume{{/image}}'>\
+					</div>\
 					<div id='progress'>\
 						Progress: <span>0/0</span>\
 					</div>\
