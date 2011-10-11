@@ -12,12 +12,12 @@
 
 class ApiGate{
 	// Status codes that we use. Commented out the status codes that we don't use yet but are likely to soon.
-	public const HTTP_STATUS_OK = 200;
-	public const HTTP_STATUS_UNAUTHORIZED = 401;
-	public const HTTP_STATUS_FORBIDDEN = 403;
-	//public const HTTP_STATUS_IM_A_TEAPOT = 418; // not sure what this will come in use for ;)
-	//public const HTTP_STATUS_INSUFFICIENT_STORAGE = 507; // would come in handy for APIs which have per-key or per-user storage limits on accounts.
-	public const HTTP_STATUS_LIMIT_EXCEEDED = 509; // bandwidth exceeded code. closest to rate-limiting.
+	const HTTP_STATUS_OK = 200;
+	const HTTP_STATUS_UNAUTHORIZED = 401;
+	const HTTP_STATUS_FORBIDDEN = 403;
+	//const HTTP_STATUS_IM_A_TEAPOT = 418; // not sure what this will come in use for ;)
+	//const HTTP_STATUS_INSUFFICIENT_STORAGE = 507; // would come in handy for APIs which have per-key or per-user storage limits on accounts.
+	const HTTP_STATUS_LIMIT_EXCEEDED = 509; // bandwidth exceeded code. closest to rate-limiting.
 
 	/**
 	 * Calling this funcction will ban the API key from all apiKey-required api calls.
@@ -56,13 +56,13 @@ class ApiGate{
 	public static function checkKey( $apiKey ){
 		wfProfileIn( __METHOD__ );
 
-		$retVal = ApiGate::HTTP_STATUS_CODE_OK;
+		$retVal = ApiGate::HTTP_STATUS_OK;
 		
 		// HARDCODED FOR DEBUGGING.  An "apiKey" of 509 (which wouldn't be an actual API key) will return a status-code of 509 for testing/debugging.
 		if($apiKey == "509"){
 			$retVal = ApiGate::HTTP_STATUS_LIMIT_EXCEEDED;
 		}
-		
+
 		// TODO: IMPLEMENT
 		// TODO: IMPLEMENT
 
@@ -117,7 +117,7 @@ class ApiGate{
 	public static function isRequestAllowed_endpoint( $apiKey, $fullRequest ){
 		wfProfileIn( __METHOD__ );
 
-		$responseCode = isRequestAllowed( $apiKey, $fullRequest );
+		$responseCode = self::isRequestAllowed( $apiKey, $fullRequest );
 
 		// Based on the response-code, set the headers and give a reasonable human-readable error-message.
 		switch( $responseCode ){ // in numerical order except for 200 since that's the default (so it goes at the end)

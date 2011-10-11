@@ -18,3 +18,4 @@ require_once "$dir/ApiGate.class.php";
 require_once "$dir/ApiGate_ApiKey.class.php";
 require_once "$dir/ApiGate_ApiKey_Profile.class.php"; // TODO: Roll into ApiKey and just lazy-load it as needed.
 require_once "$dir/ApiGate_RateLimitRules.class.php";
+require_once "$dir/ApiGate_Dispatcher.class.php";

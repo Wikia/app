@@ -64,12 +64,13 @@ class SpecialApiGate extends SpecialPage {
 
 				break;
 			case $this->SUBPAGE_REGISTER:
+			
+				$data = array();
 
-				// TODO: IMPLEMENT
+				// TODO: Set up some more vars for registration form (user_id?)
+				// TODO: Set up some more vars for registration form (user_id?)
 
-				print "Registration page here";
-
-				// TODO: IMPLEMENT
+				$wgOut->addHTML( ApiGate_Dispatcher::renderTemplate( $data, "register" ) );
 
 				break;
 			case $this->SUBPAGE_ALL_KEYS:

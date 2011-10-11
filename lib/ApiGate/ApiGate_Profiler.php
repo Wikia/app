@@ -17,11 +17,11 @@
  * 
  */
  
-if ( !method_exists( 'wfProfileIn' ) ) {
+if ( !function_exists( 'wfProfileIn' ) ) {
 	function wfProfileIn( $methodName ) {
 	}
 }
-if ( !method_exists( 'wfProfileOut' ) ) {
+if ( !function_exists( 'wfProfileOut' ) ) {
 	function wfProfileOut( $methodName ) {
 	}
 }
