@@ -2,7 +2,7 @@
 
 include( '../../../maintenance/commandLine.inc' );
 
-$user = User::newFromId( WikiFactory::getWikiById( $wgCityId )->city_founding_user );
+$user = User::newFromId( WikiFactory::getWikiById( $wgCityId, true )->city_founding_user );
 
 if ( is_null( $user ) ) {
 	echo "Not a valid user. Aborting.\n";
