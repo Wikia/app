@@ -82,7 +82,7 @@ class ApiGate{
 	 * foo() but not bar() and key B can access foo() and bar()".  That will probably be implemented eventually though (when
 	 * someone needs it).
 	 * 
-	 * @param apiKey - string - the API key of the app which this method will check the permissions for
+	 * @param apiKey - string - the API key of the app which this method will check the permissions for.
 	 * @param fullRequest - [mixed] - information about the full request. This should be an associative array of this structure:
 	 *                                array(method => (the method name), params => (associative array of key-value pairs of parameters and their values)).
 	 *                                TODO: For XML-RPC, JSON-RPC, etc. have a static function that will parse a query-string into these for the caller so
@@ -103,28 +103,47 @@ class ApiGate{
 	} // end isRequestAllowed()
 	
 	/**
+	 * This function will return appropriate headers and a message-body which just indicate whether the given API key
+	 * has permission to access the request in fullRequest.
 	 *
+	 * This is meant to be called and in the majority of uses, the calling-code should immediately exit afterwards.
+	 *
+	 * @param apiKey - string - the API key of the app which this method will check the permissions for.
+	 * @param fullRequest - [mixed] - information about the full request. This should be an associative array of this structure:
+	 *                                array(method => (the method name), params => (associative array of key-value pairs of parameters and their values)).
+	 *                                TODO: For XML-RPC, JSON-RPC, etc. have a static function that will parse a query-string into these for the caller so
+	 *                                that they don't have to do a bunch of work just to fill in that second parameter.
 	 */
 	public static function isRequestAllowed_endpoint( $apiKey, $fullRequest ){
 		wfProfileIn( __METHOD__ );
 
-// TODO: Implement further.
-// TODO: Implement further.
 		$responseCode = isRequestAllowed( $apiKey, $fullRequest );
 
-		switch( $responseCode ){
-		case ApiGate::HTTP_STATUS_LIMIT_EXCEEDED:
-			header("Status: 509 Bandwidth Limit Exceeded");
-
-			print "This API key has been disabled because the request-rate was too high. Please contact support for more information or to re-enable.";
-
+		// Based on the response-code, set the headers and give a reasonable human-readable error-message.
+		switch( $responseCode ){ // in numerical order except for 200 since that's the default (so it goes at the end)
+			case ApiGate::HTTP_STATUS_UNAUTHORIZED:
+				header("Status: 401 Unauthorized");
+				if( empty($apiKey) ){
+					print "Unauthorized: No API key was found. Please provide an API key to use this API.\n"; // TODO: i18n ?
+				} else {
+					print "Unauthorized: Invalid API key.  The API key found was: \"$apiKey\" but that is invalid.  Please provide a valid API key."; // TODO: i18n ?
+				}
 			break;
-		case ApiGate::HTTP_STATUS_OK:
-		default:
-			header("Status: 200 OK");
-			
-			print "Cool";
-			
+
+			case ApiGate::HTTP_STATUS_FORBIDDEN:
+				header("Status: 403 Forbidden");
+				print "Forbidden. Your API key is not authorized to make this request."; // TODO: i18n
+			break;
+				
+			case ApiGate::HTTP_STATUS_LIMIT_EXCEEDED:
+				header("Status: 509 Bandwidth Limit Exceeded");
+				print "This API key has been disabled because the request-rate was too high. Please contact support for more information or to re-enable."; // TODO: i18n ?
+			break;
+
+			case ApiGate::HTTP_STATUS_OK:
+			default:
+				header("Status: 200 OK");
+				print "OK"; // TODO: i18n
 			break;
 		}
 
