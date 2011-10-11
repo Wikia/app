@@ -105,7 +105,7 @@
 		@include clearfix;
 		@include box-shadow(0px, 2px, 5px, darken($color-page,12%));
 		border: 1px solid mix($color-page,$color-page-border,25%);
-		background-image: none;
+		background: $color-page;
 		@if lightness($color-page) < 50 {
 			@include box-shadow(0px, 2px, 5px, darken($color-page,7%));
 			border: 1px solid mix($color-page,$color-page-border,50%);
