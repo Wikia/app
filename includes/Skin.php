@@ -1231,7 +1231,7 @@ CSS;
 			return $subpages;
 		}
 		
-		global $wgOut;
+		global $wgOut, $wgEnableWallExt;
 		if( $wgOut->isArticle() && MWNamespace::hasSubpages( $this->mTitle->getNamespace() ) ) {
 			$ptext = $this->mTitle->getPrefixedText();
 			if( preg_match( '/\//', $ptext ) ) {
@@ -1244,12 +1244,13 @@ CSS;
 					$growinglink .= $link;
 					$display .= $link;
 					$linkObj = Title::newFromText( $growinglink );
-					wfRunHooks( 'SkinSubPageSubtitleAfterTitle', array( $linkObj, &$display ) );
+					$cssClass = '';
+					wfRunHooks( 'SkinSubPageSubtitleAfterTitle', array( $linkObj, &$display, &$cssClass ) );
 					if( is_object( $linkObj ) && ($linkObj->exists() || (!empty($wgEnableWallExt) && $linkObj->getNamespace() == NS_USER_WALL)) ) {
 						$getlink = $this->link(
 							$linkObj,
 							htmlspecialchars( $display ),
-							array(),
+							array('class' => $cssClass),
 							array(),
 							array( 'known', 'noclasses' )
 						);

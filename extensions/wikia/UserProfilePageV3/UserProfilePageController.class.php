@@ -1111,6 +1111,7 @@ class UserProfilePageController extends WikiaController {
 		if( !empty($title) && $title->getNamespace() == NS_USER) {
 			$ptext = $title->getText();	
 		}
+		
 		return true;
 	}
 
