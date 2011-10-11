@@ -33,53 +33,55 @@ class AutomaticWikiAdoptionGatherData {
 		$time60days = strtotime('-60 days');
 		
 		// set default
-		$from_wiki_id = 260000;	// 260000 = ID of wiki created on 2011-05-01
-		$max_wiki_id = (isset($commandLineOptions['max_wiki_id'])) ? $commandLineOptions['max_wiki_id'] : $this->getMaxWikiId();
+		$fromWikiId = 260000;	// 260000 = ID of wiki created on 2011-05-01
+		$maxWikiId = (isset($commandLineOptions['maxwiki']) && is_numeric($commandLineOptions['maxwiki'])) ? $commandLineOptions['maxwiki'] : $this->getMaxWikiId();
 		$range = 10000;
-		if ($max_wiki_id-$from_wiki_id < $range)
-			$range = $max_wiki_id - $from_wiki_id;
+		if ( $fromWikiId <= $maxWikiId ) {
+			if ($maxWikiId-$fromWikiId < $range)
+				$range = $maxWikiId - $fromWikiId;
 		
-		// looping
-		do {
-			$to_wiki_id = $from_wiki_id + $range;
-			$recentAdminEdits = $this->getRecentAdminEdits($from_wiki_id, $to_wiki_id);
+			// looping
+			do {
+				$toWikiId = $fromWikiId + $range;
+				$recentAdminEdits = $this->getRecentAdminEdits($fromWikiId, $toWikiId);
 
-			foreach ($recentAdminEdits as $wikiId => $wikiData) {
-				$jobName = '';
-				$jobOptions = array();
-				if ($wikiData['recentEdit'] < $time60days) {
-					$wikisToAdopt++;
-					$this->setAdoptionFlag($commandLineOptions, $jobOptions, $wikiId, $wikiData);
-				} elseif ($wikiData['recentEdit'] < $time57days) {
-					$jobOptions['mailType'] = 'second';
-					$this->sendMail($commandLineOptions, $jobOptions, $wikiId, $wikiData);
-				} else /*if ($wikiData['recentEdit'] < $time45days)*/ {
-					$jobOptions['mailType'] = 'first';
-					$this->sendMail($commandLineOptions, $jobOptions, $wikiId, $wikiData);				
+				foreach ($recentAdminEdits as $wikiId => $wikiData) {
+					$jobName = '';
+					$jobOptions = array();
+					if ($wikiData['recentEdit'] < $time60days) {
+						$wikisToAdopt++;
+						$this->setAdoptionFlag($commandLineOptions, $jobOptions, $wikiId, $wikiData);
+					} elseif ($wikiData['recentEdit'] < $time57days) {
+						$jobOptions['mailType'] = 'second';
+						$this->sendMail($commandLineOptions, $jobOptions, $wikiId, $wikiData);
+					} elseif ($wikiData['recentEdit'] < $time45days) {
+						$jobOptions['mailType'] = 'first';
+						$this->sendMail($commandLineOptions, $jobOptions, $wikiId, $wikiData);
+					}
 				}
-			}
 			
-			$from_wiki_id = $to_wiki_id;
-		} while ($max_wiki_id > $to_wiki_id);
+				$fromWikiId = $toWikiId;
+			} while ($maxWikiId > $toWikiId);
+		}
 
 		if (!isset($commandLineOptions['quiet'])) {
 			echo "Set $wikisToAdopt wikis as adoptable.\n";
 		}
 	}
 
-	function getRecentAdminEdits($from_wiki_id=null, $to_wiki_id=null) {
+	function getRecentAdminEdits($fromWikiId=null, $toWikiId=null) {
 		global $wgStatsDB, $wgStatsDBEnabled;
 
 		$recentAdminEdit = array();
 		
-		if ( !empty($wgStatsDBEnabled) && !empty($from_wiki_id) && !empty($to_wiki_id)) {
+		if ( !empty($wgStatsDBEnabled) && !empty($fromWikiId) && !empty($toWikiId) ) {
 			$dbrStats = wfGetDB(DB_SLAVE, array(), $wgStatsDB);			
 
 			//get wikis with edits < 1000 and admins not active in last 45 days
 			//260000 = ID of wiki created on 2011-05-01 so it will work for wikis created after this project has been deployed
 			$res = $dbrStats->query(
 				'select e1.wiki_id, sum(e1.edits) as sum_edits from specials.events_local_users e1 ' .
-				'where e1.wiki_id > '.$from_wiki_id.' and e1.wiki_id <= '.$to_wiki_id.' ' .
+				'where e1.wiki_id > '.$fromWikiId.' and e1.wiki_id <= '.$toWikiId.' ' .
 				'group by e1.wiki_id ' .
 				'having sum_edits < 1000 and (' .
 				'select count(0) from specials.events_local_users e2 ' .
@@ -91,8 +93,8 @@ class AutomaticWikiAdoptionGatherData {
 			);
 
 			while ($row = $dbrStats->fetchObject($res)) {
-				$wiki_dbname = WikiFactory::IDtoDB($row->wiki_id);
-				if ($wiki_dbname === false) {
+				$wikiDbname = WikiFactory::IDtoDB($row->wiki_id);
+				if ($wikiDbname === false) {
 					//check if wiki exists in city_list
 					continue;
 				}
@@ -107,7 +109,7 @@ class AutomaticWikiAdoptionGatherData {
 					continue;
 				}
 				
-				if (self::getNumPages($wiki_dbname) >= 1000) {
+				if (self::getNumPages($wikiDbname) >= 1000) {
 					 //check if wiki has > 1000 pages
 					continue;
 				}
@@ -124,6 +126,11 @@ class AutomaticWikiAdoptionGatherData {
 				while ($row2 = $dbrStats->fetchObject($res2)) {
 					if (($lastedit = wfTimestamp(TS_UNIX, $row2->lastedit)) < $recentAdminEdit[$row->wiki_id]['recentEdit']) {
 						$recentAdminEdit[$row->wiki_id]['recentEdit'] = $lastedit;
+					} else if ($row2->lastedit == '0000-00-00 00:00:00') { // use city_created if no lastedit
+						$wiki = WikiFactory::getWikiByID($row->wiki_id);
+						if (!empty($wiki)) {
+							$recentAdminEdit[$row->wiki_id]['recentEdit'] = wfTimestamp(TS_UNIX, $wiki->city_created);
+						}
 					}
 					$recentAdminEdit[$row->wiki_id]['admins'][] = $row2->user_id;
 				}
@@ -203,9 +210,11 @@ class AutomaticWikiAdoptionGatherData {
 	
 	// get max wiki_id for active wikis
 	protected function getMaxWikiId() {
-		$max_wiki_id = 0;
+		global $wgExternalSharedDB;
+
+		$maxWikiId = 0;
 		
-		$dbr = wfGetDB(DB_SLAVE, array(), 'wikicities');
+		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 		$row = $dbr->selectRow(
 			'city_list',
 			'max(city_id) max_wiki_id',
@@ -214,9 +223,9 @@ class AutomaticWikiAdoptionGatherData {
 		);
 		
 		if ($row !== false)
-			$max_wiki_id = $row->max_wiki_id;
+			$maxWikiId = $row->max_wiki_id;
 		
-		return $max_wiki_id;
+		return $maxWikiId;
 	}
 	
 	// check if flag is set in city_flags
@@ -232,10 +241,10 @@ class AutomaticWikiAdoptionGatherData {
 	}
 	
 	// get number of pages
-	protected static function getNumPages($wiki_dbname=null) {
-		$num_pages = 0;
-		if (!empty($wiki_dbname)) {
-			$dbr = wfGetDB(DB_SLAVE, array(), $wiki_dbname);
+	protected static function getNumPages($wikiDbname = null) {
+		$numPages = 0;
+		if (!empty($wikiDbname)) {
+			$dbr = wfGetDB(DB_SLAVE, array(), $wikiDbname);
 			$row = $dbr->selectRow(
 				'site_stats',
 				'ss_good_articles',
@@ -243,10 +252,10 @@ class AutomaticWikiAdoptionGatherData {
 				__METHOD__
 			);
 			if ($row !== false) {
-				$num_pages = $row->ss_good_articles;
+				$numPages = $row->ss_good_articles;
 			}
 		}
 		
-		return $num_pages;
+		return $numPages;
 	}
 }
