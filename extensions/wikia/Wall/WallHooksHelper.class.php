@@ -305,13 +305,14 @@ class WallHooksHelper {
 	}
 	
 	/**
-	 * @brief Remove User:: from back link
+	 * @brief Remove Message Wall:: from back link
 	 * 
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	public function onSkinSubPageSubtitleAfterTitle($title, &$ptext) {
+	public function onSkinSubPageSubtitleAfterTitle($title, &$ptext, &$cssClass) {
 		if( !empty($title) && $title->getNamespace() == NS_USER_WALL) {
 			$ptext = $title->getText();
+			$cssClass = 'back-user-wall';
 		}
 		
 		return true;
