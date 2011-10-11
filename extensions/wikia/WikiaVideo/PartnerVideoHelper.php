@@ -10,7 +10,7 @@ class PartnerVideoHelper {
 	private static $REALGRAVITY_API_KEY = '4bd3e310-9c30-012e-b52b-12313d017962';
 	private static $REALGRAVITY_PROVIDER_IDS = array('MACHINIMA'=>240);
 	private static $REALGRAVITY_PAGE_SIZE = 100;
-	private static $REALGRAVITY_VIDEOS_URL = 'http://mediacast.realgravity.com/vs/2/videos/$1.xml?providers=$2&lookup_columns=tag_list&search_term=$3&per_page=$4&page=$5';
+	private static $REALGRAVITY_VIDEOS_URL = 'http://mediacast.realgravity.com/vs/2/videos/$1.xml?providers=$2&lookup_columns=tag_list,title&search_term=$3&per_page=$4&page=$5';
 	private static $TEMP_DIR = '/tmp';
 	
 	private static $CLIP_TYPE_BLACKLIST = array( VideoPage::V_SCREENPLAY => array('trailerType'=>'Home Video', 'trailerVersion'=>'Trailer') );
