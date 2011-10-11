@@ -7,9 +7,12 @@
 	</blockquote>
 	<div class="abs-container">
 		<?php if( $loginToEditProtectedPage ) { ?>
-			<button class="replyButton wall-require-login" data="<?= $ajaxLoginUrl; ?>"><?= wfMsg('wall-button-to-submit-reply') ?></button>
+			<button class="replyButton wall-require-login" disabled="disabled" data="<?= $ajaxLoginUrl; ?>"><?= wfMsg('wall-button-to-submit-reply') ?></button>
 		<?php } else { ?>
-			<button class="replyButton"><?= wfMsg('wall-button-to-submit-reply') ?></button>
+			<button class="replyButton" disabled="disabled"><?= wfMsg('wall-button-to-submit-reply') ?></button>
 		<?php } ?>
+		<button class="replyPreview secondary" disabled="disabled" style="display: none"><?= wfMsg('wall-button-to-preview-comment') ?></button>
+		<button class="replyPreviewCancel secondary" style="display: none"><?= wfMsg('wall-button-to-cancel-preview') ?></button>
+		<div class="loadingAjax"></div>
 	</div>
 </li>

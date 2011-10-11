@@ -304,4 +304,25 @@ class WallHelper {
 		$app->wf->ProfileOut(__METHOD__);
 		return $text;
 	}
+	
+	public function getDefaultTitle() {
+		$app = F::app();
+		$name = $app->wg->User->getRealName();
+		if (empty($name)) $name = $app->wg->User->getName();
+		if (User::isIP($name)){
+			$name = wfMsg('oasis-anon-user');
+			$name{0} = strtolower($name{0});
+		}
+		return $app->wf->msg('wall-default-title') . ' ' . $name;
+		
+	}
+	
+	public function getParsedText($rawtext, $title) {
+		global $wgParser, $wgOut;
+		global $wgEnableParserCache;
+		global $wgUser;
+		$wgEnableParserCache = false;
+
+		return $wgParser->parse( $rawtext, $title, $wgOut->parserOptions())->getText();
+	}
 }

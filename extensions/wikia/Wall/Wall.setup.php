@@ -79,7 +79,9 @@ F::build('JSMessages')->registerPackage('Wall', array(
 	'wall-delete-confirm-thread',
 	'wall-delete-confirm-cancel',
 	'wall-delete-confirm-ok',
-	'wall-delete-title'
+	'wall-delete-title',
+	'wall-button-to-cancel-preview',
+	'wall-button-to-preview-comment'
 ));
 
 /**

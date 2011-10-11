@@ -16,7 +16,9 @@ var Wall = $.createClass(Object, {
 		// Submit new wall post
 		$('.wall-require-login').live('click', this.proxy(this.onAfterAjaxLogin));
 		$('.wall-reply-require-login').live('click', this.proxy(this.onAfterAjaxLogin));
-		$('#WallMessageSubmit').live('click', this.proxy(this.postNewMessage));
+		$('#WallMessageSubmit').bind('click', this.proxy(this.postNewMessage));
+		$('#WallMessagePreview').bind('click', this.proxy(this.previewNewMessage));
+		$('#WallMessagePreviewCancel').bind('click', this.proxy(this.cancelPreviewNewMessage));
 		
 		// New wall post change
 		$('#WallMessageTitle, #WallMessageBody')
@@ -38,6 +40,8 @@ var Wall = $.createClass(Object, {
 			.live('blur', this.proxy(this.replyBlur))
 			.autoResize(this.settings.reply);
 		$('.replyButton').live('click', this.proxy(this.replyToMessage));
+		$('.replyPreview').live('click', this.proxy(this.replyToMessagePreview));
+		$('.replyPreviewCancel').live('click', this.proxy(this.replyToMessagePreviewCancel));
 
 		// Delete
 		$('#Wall .delete-message').live('click', this.proxy(this.confirmDelete));
@@ -46,6 +50,8 @@ var Wall = $.createClass(Object, {
 		$('#Wall .edit-message').live('click', this.proxy(this.editMessage));
 		$('#Wall .cancel-edit').live('click', this.proxy(this.cancelEdit));
 		$('#Wall .save-edit').live('click', this.proxy(this.saveEdit));
+		$('#Wall .preview-edit').live('click', this.proxy(this.previewEdit));
+		$('#Wall .cancel-preview-edit').live('click', this.proxy(this.cancelPreviewEdit));
 		
 		// Pagination
 		$('.Pagination a').live('click', this.proxy(this.switchPage));
@@ -55,7 +61,7 @@ var Wall = $.createClass(Object, {
 		// Make timestamps dynamic
 		$('.timeago').timeago();
 		
-		$('#Wall .follow.wikia-button ')
+		$('#Wall .follow.wikia-button')
 			.live('click', this.proxy(this.switchWatch))
 			.live('mouseenter', this.proxy(this.hoverFollow))
 			.live('mouseleave', this.proxy(this.unhoverFollow));
@@ -229,7 +235,7 @@ var Wall = $.createClass(Object, {
 			} else {
 				$("html:not(:animated),body:not(:animated)").animate({ scrollTop: destination-20}, 500 );
 			}
-			this._switchPage( 1, 0 );
+			this._switchPage( 1, 0 ); // switch to page 1, fade to 0 opacity on animate
 		}
 		
 		$.nirvana.sendRequest({
@@ -241,6 +247,7 @@ var Wall = $.createClass(Object, {
 				username: this.username
 			},
 			callback: this.proxy(function(data) {
+				this.cancelPreviewNewMessage();
 				$('#WallMessageBody').val("").trigger('blur');
 				$('#WallMessageTitle').val("").trigger('blur');
 				var newmsg = $(data['message']);
@@ -266,6 +273,51 @@ var Wall = $.createClass(Object, {
 
 		});
 	},
+
+	previewNewMessage: function() {
+		var topic = !$('#WallMessageTitle').hasClass('placeholder') && $('#WallMessageTitle').val().length > 0;
+
+		$.nirvana.sendRequest({
+			controller: 'WallExternalController',
+			method: 'previewMessage',
+			data: {
+				body: $('#WallMessageBody').val(),
+				messagetitle: topic ? $('#WallMessageTitle').val() : '',
+				username: this.username
+			},
+			callback: this.proxy(function(data) {
+				$('#WallMessageBody').hide();
+				$('#WallMessageTitle').hide();
+				
+				var newmsg  = $('.new-message .speech-bubble-message');
+				newmsg.addClass('preview-bubble');
+				var preview = $('<div class="preview"></div>' );
+				preview.append( '<div class="preview-title">'+data['title']+'</div>' );
+				preview.append( '<div class="edited-by"><a>'+data['displayname']+'</a><a class="subtle">'+data['displayname2']+'</a></div>' );
+				preview.append( '<div class="preview-body">' +data['body']+'</div>' );
+				$('.new-message .preview').remove();
+
+				preview.prependTo(newmsg);
+				
+				$('#WallMessagePreviewCancel').show();
+				$('#WallMessagePreview').hide();
+			})
+
+		});
+	},	
+
+	cancelPreviewNewMessage: function() {
+		var newmsg  = $('.new-message .speech-bubble-message');
+		newmsg.removeClass('preview-bubble');
+
+		$('#WallMessageBody').show();
+		$('#WallMessageTitle').show();
+		
+		$('.new-message .speech-bubble-message .preview').remove();
+		
+		$('#WallMessagePreviewCancel').hide();
+		$('#WallMessagePreview').show();
+	},	
 	
 	onAfterAjaxLogin: function(e) {
 		var event = e;
@@ -306,6 +358,7 @@ var Wall = $.createClass(Object, {
 		}
 		setTimeout( this.proxy(this.postNewMessage_ChangeText), 50 );
 	},
+	
 	postNewMessage_ChangeText: function() {
 		// check if both topic and content are filled
 		var topic_str = $('#WallMessageTitle').val();
@@ -315,8 +368,10 @@ var Wall = $.createClass(Object, {
 		content =  content && $('#WallMessageBody').val().length > 0;
 		if(content) {
 			$('#WallMessageSubmit').removeAttr('disabled');
+			$('#WallMessagePreview').removeAttr('disabled');
 		} else {
 			$('#WallMessageSubmit').attr('disabled','disabled');
+			$('#WallMessagePreview').attr('disabled','disabled');
 		}
 		if(topic && $('#WallMessageSubmit').html() == $.msg('wall-button-to-submit-comment-no-topic')) {
 			$('#WallMessageSubmit').html($.msg('wall-button-to-submit-comment'));
@@ -327,6 +382,7 @@ var Wall = $.createClass(Object, {
 
 	postNewMessage_focus: function(e) {
 		$('#WallMessageSubmit').show();
+		$('#WallMessagePreview').show();
 		$('.new-message .speech-bubble-message').css({'padding-bottom':45});
 		//if($(e.target).hasClass('title'))
 		//	$(e.target).css('line-height','170%');
@@ -338,6 +394,7 @@ var Wall = $.createClass(Object, {
 		content = content && $('#WallMessageBody').val().length > 0;
 		if(!content) {
 			$('#WallMessageSubmit').attr('disabled', 'disabled').hide();
+			$('#WallMessagePreview').attr('disabled', 'disabled').hide();
 			$('.new-message .speech-bubble-message').css({'padding-bottom':10});
 		}
 		/*if(!title) {
@@ -346,18 +403,72 @@ var Wall = $.createClass(Object, {
 	},
 
 	disableNewMessage: function() {
-		$('#WallMessageSubmit, .new-message textarea').attr('disabled', 'disabled');
-		$('#WallMessageSubmit').addClass('loading');
+		$('#WallMessageSubmit, #WallMessagePreview, .new-message textarea').attr('disabled', 'disabled');
+		$('.new-message .loadingAjax').show();
 		$('.new-message .speech-bubble-message').addClass('loading');
 	},
 
 	enableNewMessage: function() {
-		$('#WallMessageSubmit, .new-message textarea').removeAttr('disabled');
-		$('#WallMessageSubmit').removeClass('loading').fadeOut('fast');
+		$('#WallMessageSubmit, #WallMessagePreview, .new-message textarea').removeAttr('disabled');
+		$('#WallMessageSubmit, #WallMessagePreview').fadeOut('fast');
 		$('#WallMessageSubmit').html($.msg('wall-button-to-submit-comment'));
 		$('.new-message .no-title-warning').fadeOut('fast');
 		$('#WallMessageTitle').removeClass('no-title');
+		$('.new-message .loadingAjax').hide();
 		$('.new-message .speech-bubble-message').removeClass('loading');
+	},
+	
+	previewEdit: function(e) {
+		e.preventDefault();
+		
+		var el = $(e.target).closest('.message');
+		var isreply = el.attr('is-reply');
+		el = $('.speech-bubble-message',el).first();
+		
+		$().log(isreply);
+		
+		var topic = null;
+		if($('textarea.title',el).length>0)
+			topic = !$('textarea.title',el).not('textarea[tabindex=-1]').hasClass('placeholder') && $('textarea.title',el).not('textarea[tabindex=-1]').val().length > 0;
+		
+		$.nirvana.sendRequest({
+			controller: 'WallExternalController',
+			method: 'previewMessage',
+			data: {
+				body: $('textarea.body',el).not('textarea[tabindex=-1]').val(),
+				messagetitle: topic ? $('textarea.title',el).not('textarea[tabindex=-1]').val() : '',
+				username: this.username
+			},
+			callback: this.proxy(function(data) {
+				$('.msg-title, .edited-by, .msg-body',el).hide();
+				el.addClass('preview-bubble');
+				
+				var preview = $('<div class="preview"></div>' );
+				if(!isreply)
+					preview.append( '<div class="preview-title">' +data['title']+'</div>' );
+				preview.append( '<div class="edited-by"><a>'+data['displayname']+'</a><a class="subtle">'+data['displayname2']+'</a></div>' );
+				preview.append( '<div class="preview-body">' +data['body']+'</div>' );
+				$('.preview',el).remove();
+				preview.prependTo(el);
+				
+				$('.preview-edit',el.parent()).hide();
+				$('.cancel-preview-edit',el.parent()).show();
+			})
+
+		});
+	},
+	
+	cancelPreviewEdit: function(e) {
+		e.preventDefault();
+
+		var el = $(e.target).closest('.message');
+		el = $('.speech-bubble-message',el).first();
+		el.removeClass('preview-bubble');
+		
+		$('.preview',el).remove();
+		$('.msg-title, .edited-by, .msg-body').show();
+		$('.preview-edit',el.parent()).show();
+		$('.cancel-preview-edit',el.parent()).hide();
 	},
 
 	editMessage: function(e) {
@@ -370,6 +481,7 @@ var Wall = $.createClass(Object, {
 		var id = msg.attr('data-id');
 		var isreply = msg.attr('is-reply');
 		
+		 
 		var data = {
 			'msgid': id,
 			'isreply': isreply,
@@ -382,12 +494,15 @@ var Wall = $.createClass(Object, {
 			format: 'json',
 			data: data,
 			callback: this.proxy(function(data) {
+				$().log(data);
 				var bubble = $('.speech-bubble-message',msg).first();
 				
 				var beforeedit = bubble.html();
 				
 				var editbuttons = $('<div class="edit-buttons"></div>');
 				$('<a class="wikia-button save-edit">'+$.msg('wall-button-save-changes')+'</a>').appendTo(editbuttons);
+				$('<a class="wikia-button preview-edit secondary">'+$.msg('wall-button-to-preview-comment')+'</a>').appendTo(editbuttons);
+				$('<a class="wikia-button cancel-preview-edit secondary" style="display: none;">'+$.msg('wall-button-to-cancel-preview')+'</a>').appendTo(editbuttons);
 				$('<a class="wikia-button cancel-edit secondary">'+$.msg('wall-button-cancel-changes')+'</a>').appendTo(editbuttons);
 				
 				
@@ -408,8 +523,9 @@ var Wall = $.createClass(Object, {
 	},
 
 	cancelEdit: function(e) {
-		$().log('cancelEdit');
 		e.preventDefault();
+		
+		this.cancelPreviewEdit(e);
 
 		var msg = $(e.target).closest('.message');
 		
@@ -442,7 +558,8 @@ var Wall = $.createClass(Object, {
 			method: 'editMessageSave',
 			format: 'json',
 			data: data,
-			callback: function(data) {
+			callback: this.proxy(function(data) {
+				this.cancelPreviewEdit(e);
 				var beforeedit = $('.before-edit',msg).html();
 				var bubble = $('.speech-bubble-message',msg).first();
 								
@@ -453,7 +570,7 @@ var Wall = $.createClass(Object, {
 								
 				//$('.buttons',msg).first().show();
 				$('.buttons').show();
-			}
+			})
 
 		});
 	},
@@ -461,6 +578,48 @@ var Wall = $.createClass(Object, {
 	/*
 	 * Reply functions
 	 */
+	
+	replyToMessagePreview: function(e) {
+		var el = $(e.target).closest('.new-reply');
+		el = $('.speech-bubble-message',el);
+
+		$.nirvana.sendRequest({
+			controller: 'WallExternalController',
+			method: 'previewMessage',
+			data: {
+				body: $('textarea.content', el).val(),
+				messagetitle: '',
+				username: this.username
+			},
+			callback: this.proxy(function(data) {
+				$('textarea.content').hide();
+				el.addClass('preview-bubble');
+				
+				var preview = $('<div class="preview"></div>' );
+				preview.append( '<div class="edited-by"><a>'+data['displayname']+'</a><a class="subtle">'+data['displayname2']+'</a></div>' );
+				preview.append( '<div class="preview-body">' +data['body']+'</div>' );
+				$('.preview',el).remove();
+				preview.prependTo(el);
+				
+				$('.replyPreviewCancel',el.parent()).show();
+				$('.replyPreview',el.parent()).hide();
+			})
+
+		});
+	},	
+	
+	replyToMessagePreviewCancel: function(e) {
+		var el = $(e.target).closest('.new-reply');
+		$('.speech-bubble-message',el).removeClass('preview-bubble');
+		$('textarea.content',el).show();
+		
+		$('.speech-bubble-message .preview',el).remove();
+		
+		$('.replyPreview',el).show();
+		$('.replyPreviewCancel',el).hide();
+	},	
+	
+	
 	replyToMessage: function(e, href) {
 		if( $(e.target).hasClass('wall-require-login') ) {
 		//do nothing -- ajax combo box will take care of it starting from now
@@ -479,6 +638,7 @@ var Wall = $.createClass(Object, {
 				username: this.username
 			},
 			callback: this.proxy(function(data) {
+				this.replyToMessagePreviewCancel(e);
 				this.enableReply($(e.target).closest('.SpeechBubble'));
 				//this.replyShrink($(e.target).closest('.SpeechBubble'), true);
 				main.find('textarea').val("").trigger('blur');
@@ -502,19 +662,22 @@ var Wall = $.createClass(Object, {
 
 	disableReply: function(e) {
 		$('textarea', e).attr('disabled', 'disabled');
-		$('.replyButton', e).addClass('loading').attr('disabled', 'disabled');
+		$('.replyButton', e).attr('disabled', 'disabled');
+		$('.loadingAjax', e).show();
 		$('.speech-bubble-message', e).addClass('loading');
 	},
 
 	enableReply: function(e) {
 		$('textarea', e).removeAttr('disabled');
 		$('.replyButton', e).removeClass('loading').removeAttr('disabled');
+		$('.loadingAjax', e).hide();
 		$('.speech-bubble-message', e).removeClass('loading');
 	},
 
 	replyFocus: function(e) {
 		var el = $(e.target).closest('.SpeechBubble');
-		$('.replyButton', el ).show();
+		$('.replyButton', el).show();
+		$('.replyPreview',el).show();
 		$(el).css({ 'margin-bottom': '40px'});
 		$('.speech-bubble-message', el).stop().css({'margin-left':'40px'});
 		$('.speech-bubble-avatar', el).show();
@@ -528,9 +691,13 @@ var Wall = $.createClass(Object, {
 		if(content && !target.hasClass('content') ) {
 			target.closest('.SpeechBubble').find('.replyButton').removeAttr('disabled');
 			target.addClass('content');
+			var el = target.closest('.SpeechBubble');
+			$('button', el ).removeAttr('disabled');
 		} else if(!content && target.hasClass('content')) {
 			target.closest('.SpeechBubble').find('.replyButton').attr('disabled', 'disabled');
 			target.removeClass('content');
+			var el = target.closest('.SpeechBubble');
+			$('button', el ).attr('disabled','disabled');
 		}
 	},
 
@@ -539,7 +706,7 @@ var Wall = $.createClass(Object, {
 
 		if(!content) {
 			var el = $(e.target).closest('.SpeechBubble');
-			$('.replyButton', el ).hide();
+			$('button', el ).hide();
 			$(el).css({ 'margin-bottom': '0px'});
 			/*if(global_hide==0) setTimeout(function() { $('.speech-bubble-message', el).css({'margin-left':'0px'});}, 150);
 			if(global_hide==1) setTimeout(function() { $('.speech-bubble-message', el).animate({'margin-left':'0px'},100);}, 150);
@@ -555,7 +722,7 @@ var Wall = $.createClass(Object, {
 				.css('position','absolute')
 				.fadeOut(150);
 			$('textarea',el).css('line-height','normal');
-		}
+		} 
 	},
 
 	confirmDelete: function(e) {

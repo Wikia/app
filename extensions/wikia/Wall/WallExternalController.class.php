@@ -38,6 +38,42 @@ class WallExternalController extends WikiaController {
 		}	
 	}
 
+	public function previewMessage() {
+		$this->app->wf->ProfileIn(__METHOD__);
+		
+		$this->response->setVal('status', true);
+		
+		$title = trim($this->request->getVal('messagetitle', null));
+		$body = $this->request->getVal('body', null);
+		
+		$helper = F::build('WallHelper', array());
+
+		if( empty($title) ) {
+			$title = $helper->getDefaultTitle();
+		}
+		
+		$oTitle = F::build('Title', array($this->request->getVal('username'), NS_USER_WALL), 'newFromText');
+		
+		//$title = $helper->shortenText($title);
+		$body = $helper->getParsedText($body, $oTitle);
+		
+		$displayname = $this->wg->User->getRealName();
+		if(empty($displayname))  {
+			$displayname  = $this->wg->User->getName();
+			$displayname2 = '';
+		} else {
+			$displayname2 = $this->wg->User->getName();
+		}
+
+		$this->response->setVal('displayname',$displayname);
+		$this->response->setVal('displayname2',$displayname2);
+		
+		$this->response->setVal('title',$title);
+		$this->response->setVal('body',$body);
+		
+		$this->app->wf->ProfileOut(__METHOD__);
+	}
+
 	public function postNewMessage() {
 		$this->app->wf->ProfileIn(__METHOD__);
 		
@@ -48,14 +84,10 @@ class WallExternalController extends WikiaController {
 		$title = trim($this->request->getVal('messagetitle', null));
 		$body = $this->request->getVal('body', null);
 		
+		$helper = F::build('WallHelper', array());
+
 		if( empty($title) ) {
-			$name = $this->wg->User->getRealName();
-			if (empty($name)) $name = $this->wg->User->getName();
-			if (User::isIP($name)){
-				$name = wfMsg('oasis-anon-user');
-				$name{0} = strtolower($name{0});
-			}
-			$title = $this->wf->msg('wall-default-title') . ' ' . $name;
+			$title = $helper->getDefaultTitle();
 		}
 		
 		if( empty($body) || empty($userPageTitle) ) {
@@ -64,7 +96,6 @@ class WallExternalController extends WikiaController {
 			return true;
 		}
 		
-		$helper = F::build('WallHelper', array());
 		$acStatus = F::build('ArticleComment', array($body, $this->wg->User, $userPageTitle, false, array('title' => $title) ), 'doPost');
 		
 		if($acStatus === false) {
@@ -148,5 +179,7 @@ class WallExternalController extends WikiaController {
 		$ac = ArticleComment::newFromId($acStatus[1]->getId());
 		$this->response->setVal('message', $this->app->renderView( 'WallController', 'message', array( 'comment' => $ac, 'isreply' => true ) ));
 	}
+	
+
 	
 } // end class Wall

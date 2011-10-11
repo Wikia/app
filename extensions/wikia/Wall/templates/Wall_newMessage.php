@@ -13,5 +13,8 @@
 		<?php } else { ?>
 			<button id="WallMessageSubmit" disabled="disabled" style="display: none"><?= wfMsg('wall-button-to-submit-comment') ?></button>
 		<?php } ?>
+		<button id="WallMessagePreview" disabled="disabled" style="display: none" class="secondary"><?= wfMsg('wall-button-to-preview-comment') ?></button>
+		<button id="WallMessagePreviewCancel" style="display: none" class="secondary"><?= wfMsg('wall-button-to-cancel-preview') ?></button>
+		<div class="loadingAjax"></div>
 	</blockquote>
 </div>
