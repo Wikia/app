@@ -27,7 +27,8 @@ var WikiaTracker = {
 		'UA-17475676-15':100, // liftium.init2
 		'UA-17475676-12':100 // liftium.errors
 	},
-	debugLevel:5
+	debugLevel:5,
+	_in_group_cache:{}
 };
 
 WikiaTracker.debug = function (msg, level, obj) {
@@ -161,10 +162,9 @@ WikiaTracker._simpleHash = function(s, tableSize) {
 
 WikiaTracker._inGroup = function(hash_id, group_id) {
 	var groups = {
-		all : { rangeStart: 0, rangeStop: 99, id: 'UA-1' },
-		A : { rangeStart: 20, rangeStop: 29, id: 'UA-2' },
-		B : { rangeStart: 30, rangeStop: 39, id: 'UA-3' },
-		N : { rangeStart: 80, rangeStop: 89, id: 'UA-8' }
+		A : { rangeStart: 80, rangeStop: 84, id: 'UA-A' },
+		B : { rangeStart: 85, rangeStop: 89, id: 'UA-B' },
+		N : { rangeStart: 80, rangeStop: 89, id: 'UA-N' }
 	};
 
 		if( groups[group_id].rangeStart <= hash_id && hash_id <= groups[group_id].rangeStop ) {
@@ -172,6 +172,26 @@ WikiaTracker._inGroup = function(hash_id, group_id) {
 		}
 
 	return false;
+};
+
+WikiaTracker.inGroup = function(group) {
+	var in_group = false;
+
+	if (typeof this._in_group_cache[group] != 'undefined') {
+		in_group = this._in_group_cache[group];
+		this.debug('inGroup from cache', 5); // FIXME NEF 7
+	} else {
+		this.debug('beacon_id: ' + window.beacon_id, 5); // FIXME NEF 7
+		var hash = this._simpleHash(window.beacon_id, 100);
+		this.debug('beacon hashed: ' + hash, 5); // FIXME NEF 7
+
+		in_group = this._inGroup(hash, group);
+		this._in_group_cache[group] = in_group;
+	}
+
+	this.debug('inGroup(' + group + '): ' + in_group, 5);
+
+	return in_group;
 };
 
 WikiaTracker._isTracked = function() {
