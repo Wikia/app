@@ -842,8 +842,8 @@
 		},
 
 		ckReady: function() {
-			this.addQueuedButtons();
 			this.ready = true;
+			this.addQueuedButtons();
 			this.editor.fire('uiExternalProviderReady',this.editor);
 		},
 
@@ -869,7 +869,7 @@
 		},
 
 		addButton: function( element ) {
-			if (!this.ready)
+			if (this.ready)
 				this.editor.ck.ui.add(element.name,element.type,element);
 			else
 				this.queuedButtons.push(element);
@@ -878,8 +878,8 @@
 		addQueuedButtons: function() {
 			var queue = this.queuedButtons;
 			this.queuedButtons = [];
-			for (var i=0;i<this.queuedButtons.length;i++)
-				this.addButton(this.queuedButtons[i]);
+			for (var i=0;i<queue.length;i++)
+				this.addButton(queue[i]);
 		},
 
 		createElement: function( name ) {
