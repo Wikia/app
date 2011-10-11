@@ -61,7 +61,6 @@ var WallNotifications = $.createClass(Object, {
 	
 	dropdownShow: function() {
 		$('#wall-notifications-dropdown').show();
-		//$('#pt-wall-notifications').css('background
 	},
 
 	dropdownHide: function() {
@@ -78,9 +77,12 @@ var WallNotifications = $.createClass(Object, {
 			},
 			callback: this.proxy(function(data) {
 				this.updateHtml(data);
+				
+				//click tracking
+				$.tracker.byStr('wall/notifications/mark_all_as_read');
 			})
 	
-		});		
+		});
 	},
 	
 	updateHtml: function(data) {

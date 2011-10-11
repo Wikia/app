@@ -104,6 +104,7 @@ class WallController extends ArticleCommentsModule {
 	public function renderOldUserTalkPage() {
 		$wallUrl = $this->request->getVal('wallUrl');
 		
+		$this->response->addAsset('extensions/wikia/Wall/js/WallUserTalkArchive.js');
 		$this->userTalkArchiveContent = $this->getUserTalkContent();
 		
 		if( $this->userTalkArchiveContent === false && !empty($wallUrl) ) {
