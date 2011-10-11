@@ -425,8 +425,6 @@ var Wall = $.createClass(Object, {
 		var isreply = el.attr('is-reply');
 		el = $('.speech-bubble-message',el).first();
 		
-		$().log(isreply);
-		
 		var topic = null;
 		if($('textarea.title',el).length>0)
 			topic = !$('textarea.title',el).not('textarea[tabindex=-1]').hasClass('placeholder') && $('textarea.title',el).not('textarea[tabindex=-1]').val().length > 0;
@@ -494,7 +492,6 @@ var Wall = $.createClass(Object, {
 			format: 'json',
 			data: data,
 			callback: this.proxy(function(data) {
-				$().log(data);
 				var bubble = $('.speech-bubble-message',msg).first();
 				
 				var beforeedit = bubble.html();
