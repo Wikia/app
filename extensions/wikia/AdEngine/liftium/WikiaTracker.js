@@ -132,7 +132,7 @@ WikiaTracker.trackEvent3 = function(page, param) {
 };
 
 WikiaTracker._track2 = function(page, profile, sample) {
-	if (!this._isTracked()) { return false; }
+	if (!this.isTracked()) { return false; }
 
 	this.debug('(internal2) ' + page + ' in ' + profile + ' at ' + sample + '%', 5);
 
@@ -194,22 +194,6 @@ WikiaTracker.inGroup = function(group) {
 	return in_group;
 };
 
-WikiaTracker._isTracked = function() {
-	var is_tracked = false;
-
-	if (typeof this._is_tracked_cache != 'undefined') {
-		is_tracked = this._is_tracked_cache;
-		this.debug('isTracked from cache', 5); // FIXME NEF 7
-	} else {
-		this.debug('beacon_id: ' + window.beacon_id, 5); // FIXME NEF 7
-		var hash = this._simpleHash(window.beacon_id, 100);
-		this.debug('beacon hashed: ' + hash, 5); // FIXME NEF 7
-
-		is_tracked = this._inGroup(hash, 'N');
-		this._is_tracked_cache = is_tracked;
-	}
-
-	this.debug('isTracked: ' + is_tracked, 5);
-
-	return is_tracked;
+WikiaTracker.isTracked = function() {
+	return this.inGroup('N');
 };
