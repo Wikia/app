@@ -11,6 +11,9 @@ var FounderProgressList = {
 		FounderProgressList.seeFullList = $('#FounderProgressListToggle .see-full-list');
 		FounderProgressList.hideFullList = $('#FounderProgressListToggle .hide-full-list');
 		FounderProgressList.trackedActivities = FounderProgressList.d.find('.clickevent');
+		FounderProgressList.tailColorMain = FounderProgressList.d.find('>header').css('backgroundColor');
+		FounderProgressList.tailColorActivity = FounderProgressList.allActivities.find('.actions').css('backgroundColor');
+		FounderProgressList.tailColorShadow = FounderProgressList.d.find('.shadowColorContainer').css('backgroundColor');
 		
 		FounderProgressList.allActivities.hover(FounderProgressList.showActivity, FounderProgressList.hideActivity);
 		
@@ -133,11 +136,11 @@ var FounderProgressList = {
 		var el = FounderProgressList.d.find('>.tail');
 		if(!el.data('drawn')){
 			var c = (el[0]).getContext('2d');
-			c.fillStyle = '#f8f8f8';
+			c.fillStyle = FounderProgressList.tailColorMain;
 			c.shadowOffsetX = 2;
 			c.shadowOffsetY = 0;
 			c.shadowBlur = 5;
-			c.shadowColor = '#ccc';
+			c.shadowColor = FounderProgressList.tailColorShadow;
 			c.moveTo(0, 0);
 			c.lineTo(20, 20);
 			c.lineTo(0, 40);
@@ -152,11 +155,11 @@ var FounderProgressList = {
 		var el = activity.find('.tail');
 		if(!el.data('drawn')){
 			var c = (el[0]).getContext('2d');
-			c.fillStyle = '#f3f3f3';
+			c.fillStyle = FounderProgressList.tailColorActivity;
 			c.shadowOffsetX = 0;
 			c.shadowOffsetY = 2;
 			c.shadowBlur = 5;
-			c.shadowColor = '#ccc';
+			c.shadowColor = FounderProgressList.tailColorShadow;
 			c.moveTo(0, 0);
 			c.lineTo(10, 10);
 			c.lineTo(20, 0);

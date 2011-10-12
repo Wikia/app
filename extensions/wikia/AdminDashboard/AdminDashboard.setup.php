@@ -21,6 +21,9 @@ $wgExtensionMessagesFiles['QuickStats'] = $dir . 'QuickStats.i18n.php';
 // special pages
 $app->registerSpecialPage('AdminDashboard', 'AdminDashboardSpecialPageController');
 
+// hooks
+$wgHooks[ 'BeforeInitialize' ][] = 'AdminDashboardLogic::onBeforeInitialize';
+
 $wgAvailableRights[] = 'admindashboard';
 
 $wgGroupPermissions['*']['admindashboard'] = false;

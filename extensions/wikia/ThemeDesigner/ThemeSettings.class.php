@@ -63,9 +63,12 @@ class ThemeSettings {
 	}
 
 	public function getSettings() {
+		$settings = $this->defaultSettings;
 		if(!empty($GLOBALS[self::WikiFactorySettings])) {
-			$settings = array_merge($this->defaultSettings, $GLOBALS[self::WikiFactorySettings]);
+			$settings = array_merge($settings, $GLOBALS[self::WikiFactorySettings]);
 			$colorKeys = array( "color-body", "color-page", "color-buttons", "color-links", "color-header" );
+			
+			// if any of the user set colors are invalid, use default
 			foreach ($colorKeys as $colorKey) {
 				if (!ThemeDesignerHelper::isValidColor($settings[$colorKey])) {
 					$settings = $this->defaultSettings;
@@ -80,11 +83,9 @@ class ThemeSettings {
 			if(!isset($settings['page-opacity'])) {
 				$settings['page-opacity'] = 100;
 			}
-			
-			return $settings;
-		} else {
-			return $this->defaultSettings;
 		}
+		
+		return $settings;
 	}
 
 	public function getHistory() {
