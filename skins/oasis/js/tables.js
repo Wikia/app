@@ -65,7 +65,7 @@ WikiaWideTables = {
 							context.lineTo(x, y);
 						}
 
-						context.fillStyle = sassParams['color-page'];
+						context.fillStyle = window.sassParams['color-page'];
 						context.fill();
 					} else {
 						//This is a browser that can't draw in canvas
@@ -84,7 +84,7 @@ WikiaWideTables = {
 
 	getTables: function() {
 		WikiaWideTables.settings.article.find("table").each(function() {
-			table = $(this);
+			var table = $(this);
 
 			//If the table isn't very wide and doesn't have class="popout", ignore it
 			if (table.width() <= WikiaWideTables.settings.article.width() && !table.hasClass('popout')) {
@@ -102,7 +102,7 @@ WikiaWideTables = {
 
 	//This function is called by the "expand" button
 	makeModal: function(event) {
-		table = $(event.currentTarget).next(".table").children("table:first");
+		var table = $(event.currentTarget).next(".table").children("table:first");
 		table.clone().makeModal({
 			id: "ModalTable",
 			width: $(window).width() - 100
