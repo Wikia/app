@@ -13,8 +13,9 @@ $messages = array();
  */
 $messages['en'] = array(
 	'apigate' => 'API Gate',
-	'apigate-register-title' => "Get API Key",
-	'apigate-register-heading' => "Get API Key",
+	'apigate-register-title' => 'Get API Key',
+	'apigate-register-heading' => 'Get API Key',
+	'apigate-register-submit' => 'Submit',
 );
 
 /** Message documentation (Message documentation)
