@@ -25,6 +25,7 @@ var WikiaTracker = {
 		'UA-12241505-2':100, // lyrics.unsampled
 		'UA-17475676-14':100, // liftium.beacon2
 		'UA-17475676-15':100, // liftium.init2
+		'UA-17475676-16':100, // liftium.slot2
 		'UA-17475676-12':100 // liftium.errors
 	},
 	debugLevel:0,
