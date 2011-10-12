@@ -43,39 +43,6 @@ class RelatedVideos extends RelatedPages {
 			}
 		}
 
-		$oLocalLists = RelatedVideosNamespaceData::newFromTargetTitle( F::app()->wg->title );
-		$oGlobalLists = RelatedVideosNamespaceData::newFromGeneralMessage();
-		
-		$oRelatedVideosService = F::build('RelatedVideosService');
-		$blacklist = array();
-		foreach( array( $oLocalLists, $oGlobalLists ) as $oLists ){
-			if ( !empty( $oLists ) && $oLists->exists() ){
-				$data = $oLists->getData();
-				if ( isset(  $data['lists'] ) && isset( $data['lists']['WHITELIST'] ) ) {
-					foreach( $data['lists']['WHITELIST'] as $page ){
-						$videoData = $oRelatedVideosService->getRelatedVideoData( 0, $page['title'], $page['source'] );
-						if ( isset( $videoData['timestamp'] ) && isset( $videoData['id'] ) ){
-							$videoId = $videoData['timestamp'].'|'.$videoData['id'];
-							$this->pages[ $videoId ] = $videoData;
-						}
-					}
-					foreach( $data['lists']['BLACKLIST'] as $page ){
-						$videoData = $oRelatedVideosService->getRelatedVideoData( 0, $page['title'], $page['source'] );
-						if ( isset( $videoData['timestamp'] ) && isset( $videoData['id'] ) ){
-							$videoId = $videoData['timestamp'].'|'.$videoData['id'];
-							$blacklist[ $videoId ] = $videoData;
-						}
-					}
-				}
-			}
-		}
-
-		foreach( $blacklist as $key => $blElement ){
-			unset( $this->pages[ $key ] );
-		}
-
-		ksort( $this->pages );
-		$this->pages = array_reverse( $this->pages, true );
 		wfProfileOut( __METHOD__ );
 		return $this->pages;
 	}

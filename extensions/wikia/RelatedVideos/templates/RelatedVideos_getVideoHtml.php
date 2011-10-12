@@ -1,4 +1,6 @@
+<div class="embedHtml">
 <?=$videoHtml; ?>
+</div>
 <? if ( !empty( $embedUrl )){ ?>
 <div class="embedCode" id="relatedvideos-video-player-embed-code">
 <label>
