@@ -4,7 +4,7 @@
 echo wfRenderModule('MenuButton', 'Index', array(
 	'action' => array(
 		'text' => wfMsg('oasis-share'),
-		'html' => '<span class="share-dot"></span>',
+		'html' => '<span class="share-dot"></span><span class="share-pixel"></span>',
 		'href' => ''
 	),
 	'name' => 'shareButton',
