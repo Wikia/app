@@ -104,12 +104,12 @@
 	.module {
 		@include clearfix;
 		@include box-shadow(0px, 2px, 5px, darken($color-page,12%));
-		border: 1px solid mix($color-page,$color-page-border,25%);
 		background: $color-page;
+		border: 1px solid $color-page-border;
 		@if lightness($color-page) < 50 {
 			@include box-shadow(0px, 2px, 5px, darken($color-page,7%));
-			border: 1px solid mix($color-page,$color-page-border,50%);
-			background: mix($color-page,$color-page-border,75%);
+			background: $color-module-background;
+			border: 1px solid $color-page-border;
 		}
 		margin-bottom: 10px;
 		padding: 16px 8px 8px;
@@ -327,7 +327,7 @@
 		.banner-corner-right {
 			border: 19px solid transparent;
 			border-right-width: 20px;
-			border-right-color: $color-module-highlight;
+			border-right-color: $color-module-background;
 			position: absolute;
 			right: 0px;
 			top: 0px;
