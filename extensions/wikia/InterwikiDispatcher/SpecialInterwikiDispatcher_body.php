@@ -22,7 +22,7 @@ if (!defined('MEDIAWIKI')) {
 }
 
 class InterwikiDispatcher extends UnlistedSpecialPage {
-	const IS_WIKI_EXISTS_CACHE_TTL = 20;//10800;
+	const IS_WIKI_EXISTS_CACHE_TTL = 10800;
 	/**
 	 * contructor
 	 */
