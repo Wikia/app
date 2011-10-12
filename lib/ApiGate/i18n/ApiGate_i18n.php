@@ -13,8 +13,8 @@
  */
 
 // Load the actual string files.
-$dir = dirname(__FILE__);
-require "$dir/i18n/ApiGate_i18n.strings.php";
+$i18nDir = dirname(__FILE__);
+require "$i18nDir/ApiGate_i18n.strings.php";
 
 // For now, just wrap MediaWiki's i18n functions.
 function i18n( $msgName ) {
