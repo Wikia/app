@@ -26,4 +26,10 @@ $messages['qqq'] = array(
 
 // Merge together the messages.
 // SpecialApiGate messages will take preference over ApiGate library messages.
-$messages = array_merge($apiGateMessages, $messages);
+foreach($apiGateMessages as $langCode => $langMessages){
+	if( isset($messages[$langCode]) ){
+		$messages[$langCode] = array_merge($langMessages, $messages[$langCode]);
+	} else {
+		$messages[$langCode] = $langMessages;
+	}
+}
