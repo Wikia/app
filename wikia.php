@@ -5,6 +5,9 @@ require ( dirname( __FILE__ ) . '/includes/WebStart.php' );
 if ( !empty( $wgEnableNirvanaAPI ) ){
 	$app = F::app();
 	
+	// Ensure that we have a title stub, otherwise parser does not work BugId: 12901
+	$app->wg->title = new Title();
+	
 	// initialize skin if requested
 	$app->initSkin( (bool) $app->wg->Request->getVal( "skin", false ) );
 	
