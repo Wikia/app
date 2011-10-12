@@ -8,6 +8,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'wikifeatures' => 'Wiki Features',
 	'wikifeatures-title' => 'Wiki Features',
 	'wikifeatures-heading' => 'Features',
 	'wikifeatures-creative' => "Wiki Features allows you to select which of Wikia's optional features you'd like to have on your wiki. Take a look and remember to play around, you can enable or disable these features at any time.",

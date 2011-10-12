@@ -474,7 +474,8 @@
 				'SpecialPage:MyContributions',
 				'SpecialPage:Statistics',
 				'SpecialPage:WikiFactory',
-                                'Action:DevInfo' // a.k.a. PerformanceStats, BugId:5497
+				'SpecialPage:WikiFeatures',
+				'Action:DevInfo' // a.k.a. PerformanceStats, BugId:5497
 			);
 		}
 
