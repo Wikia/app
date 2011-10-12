@@ -9,66 +9,33 @@
 @import "../../../../skins/oasis/css/mixins/wordmark";
 @import "../../../../skins/oasis/css/core/layout";
 @import "../../../../skins/oasis/css/core/color";
-@import "../../../../skins/oasis/css/core/body";
-@import "../../../../skins/oasis/css/core/buttons";
-@import "../../../../skins/oasis/css/core/Search";
-@import "../../../../skins/oasis/css/core/tablepager";
-@import "../../../../skins/oasis/css/core/WikiHeader";
 @import "../../Listusers/css/table";
-
-
 
 $admin-dashboard-content-width: 690px;
 $admin-dashboard-header-height: 40px;
 $base-z: 5;
 
-/* colors */
-$color-admin-page: white;
-$color-admin-text: #464646;
-$color-admin-tab-inactive: #dfdfdf;
-$color-admin-tab-active: white;
-$color-admin-rail-header: #737373;
-$color-admin-rail-border: #e8e8e8;
-$color-admin-header-highlight: #fff;
-$color-admin-header-shadow: #ebebeb;
-$color-admin-header-text: #2070AD;
-$color-admin-header-text-alternate: #6AA8D1;
-$color-admin-header-box-shadow: #ddd;
-$color-admin-content-highlight: #fff;
-$color-admin-content-shadow: #f5f5f5;
-$color-admin-icon-highlight: #fff;
-$color-admin-icon-shadow: #f0f0f0;
-$color-admin-icon-border: #cfcfd0;
-$color-admin-icon-hover-highlight: #f5f5f5;
-$color-admin-icon-hover-shadow: #e4e4e4;
-$color-admin-icon-active-highlight: #e2e2e2;
-$color-admin-article-border: #eee;
-$color-admin-article-box-shadow: #f0f0f0;
-
-$use-theme: get_command_line_param("use-theme", false);
-@if $use-theme {
-	$color-admin-page: $color-page;
-	$color-admin-text: $color-text;
-	$color-admin-tab-inactive: $color-module-shadow;
-	$color-admin-tab-active: $color-module-highlight;
-	$color-admin-rail-header: $color-text;
-	$color-admin-rail-border: $color-page-border;
-	$color-admin-header-highlight: $color-module-highlight;
-	$color-admin-header-shadow: $color-module-shadow;
-	$color-admin-header-text: $color-links;
-	$color-admin-header-text-alternate: lighten($color-links, 20%);
-	$color-admin-header-box-shadow: darken($color-module-shadow, 6%);
-	$color-admin-content-highlight: $color-module-highlight;
-	$color-admin-content-shadow: $color-module-shadow;
-	$color-admin-icon-highlight: $color-module-highlight;
-	$color-admin-icon-shadow: $color-module-shadow;
-	$color-admin-icon-border: $color-page-border;
-	$color-admin-icon-hover-highlight: darken($color-module-highlight, 6%);
-	$color-admin-icon-hover-shadow: darken($color-module-shadow, 6%);
-	$color-admin-icon-active-highlight: darken($color-admin-icon-hover-highlight, 6%);
-	$color-admin-article-border: $color-page-border;
-	$color-admin-article-box-shadow: $color-admin-icon-shadow;
-}
+$color-admin-page: $color-page;
+$color-admin-text: $color-text;
+$color-admin-tab-inactive: $color-module-shadow;
+$color-admin-tab-active: $color-module-highlight;
+$color-admin-rail-header: $color-text;
+$color-admin-rail-border: $color-page-border;
+$color-admin-header-highlight: $color-module-highlight;
+$color-admin-header-shadow: $color-module-shadow;
+$color-admin-header-text: $color-links;
+$color-admin-header-text-alternate: lighten($color-links, 20%);
+$color-admin-header-box-shadow: darken($color-module-shadow, 6%);
+$color-admin-content-highlight: $color-module-highlight;
+$color-admin-content-shadow: $color-module-shadow;
+$color-admin-icon-highlight: $color-module-highlight;
+$color-admin-icon-shadow: $color-module-shadow;
+$color-admin-icon-border: $color-page-border;
+$color-admin-icon-hover-highlight: darken($color-module-highlight, 6%);
+$color-admin-icon-hover-shadow: darken($color-module-shadow, 6%);
+$color-admin-icon-active-highlight: darken($color-admin-icon-hover-highlight, 6%);
+$color-admin-article-border: $color-page-border;
+$color-admin-article-box-shadow: $color-admin-icon-shadow;
 
 .AdminDashboardHeader {
 	background-color: #b4d0e6;

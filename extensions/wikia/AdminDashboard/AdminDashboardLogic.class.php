@@ -39,7 +39,7 @@ class AdminDashboardLogic {
 			$alias = SpecialPage::resolveAlias($title->getDBKey());
 		
 			// NOTE: keep this list in alphabetical order
-			$exclusionList = array(
+			static $exclusionList = array(
 				"AdSS",
 				"ApiExplorer",
 				"Confirmemail",
@@ -94,6 +94,19 @@ class AdminDashboardLogic {
 			return (!in_array($alias, $exclusionList));
 		}
 		return false;
+	}
+
+	/**
+	 * Set global color profile long before the page loads.
+	 */
+	public function onBeforeInitialize( &$title, &$article, &$output, &$user, $request, $mediaWiki ) {
+		global $wgTitle;
+		if(self::displayAdminDashboard(F::app(), $wgTitle)) {
+			$profile = SassColorProfile::getInstance();
+			$profile->setDualMode(true);
+		}
+		
+		return $output;
 	}
 
 }

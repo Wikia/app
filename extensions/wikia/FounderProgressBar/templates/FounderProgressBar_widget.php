@@ -41,6 +41,7 @@
 			</div>
 		</li>
 	</ul>
+	<div class="shadowColorContainer"></div>	<!-- purposeful empty div for shadowColor.  look at SASS file -->
 </section>
 <section id="FounderProgressWidget">
 	<h1><?= wfMsg('founderprogressbar-widget-label') ?></h1>

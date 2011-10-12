@@ -13,43 +13,56 @@ class SassUtil {
 	 *  - theme chosen using usetheme URL param
 	 */
 	public static function getOasisSettings() {
-		global $wgOasisThemes, $wgUser, $wgAdminSkin, $wgRequest, $wgOasisThemeSettings, $wgContLang, $wgABTests;
+		global $wgOasisThemes, $wgContLang;
 		wfProfileIn(__METHOD__);
 
 		// Load the 5 deafult colors by theme here (eg: in case the wiki has an override but the user doesn't have overrides).
 		static $oasisSettings = array();
-
-		if (!empty($oasisSettings)) {
-			wfProfileOut(__METHOD__);
-			return $oasisSettings;
-		}
-
-		$themeSettings = new ThemeSettings();
-		$settings = $themeSettings->getSettings();
-
-		$oasisSettings["color-body"] = self::sanitizeColor($settings["color-body"]);
-		$oasisSettings["color-page"] = self::sanitizeColor($settings["color-page"]);
-		$oasisSettings["color-buttons"] = self::sanitizeColor($settings["color-buttons"]);
-		$oasisSettings["color-links"] = self::sanitizeColor($settings["color-links"]);
-		$oasisSettings["color-header"] = self::sanitizeColor($settings["color-header"]);
-		$oasisSettings["background-image"] = wfReplaceImageServer($settings['background-image'], self::getCacheBuster());
-		$oasisSettings["background-align"] = $settings["background-align"];
-		$oasisSettings["background-tiled"] = $settings["background-tiled"];
-		$oasisSettings["background-fixed"] = $settings["background-fixed"];
-		$oasisSettings["page-opacity"] = $settings["page-opacity"];
-		if (isset($settings["wordmark-font"]) && $settings["wordmark-font"] != "default") {
-			$oasisSettings["wordmark-font"] = $settings["wordmark-font"];
-		}
-
-		// RTL
-		if($wgContLang && $wgContLang->isRTL()){
-			$oasisSettings['rtl'] = 'true';
-		}
-
-		// RT:70673
-		foreach ($oasisSettings as $key => $val) {
-			if(!empty($val)) {
-				$oasisSettings[$key] = trim($val);
+		
+		if (empty($oasisSettings)) {
+			$themeSettings = new ThemeSettings();
+			$settings = $themeSettings->getSettings();
+	
+			$oasisSettings["color-body"] = self::sanitizeColor($settings["color-body"]);
+			$oasisSettings["color-page"] = self::sanitizeColor($settings["color-page"]);
+			$oasisSettings["color-buttons"] = self::sanitizeColor($settings["color-buttons"]);
+			$oasisSettings["color-links"] = self::sanitizeColor($settings["color-links"]);
+			$oasisSettings["color-header"] = self::sanitizeColor($settings["color-header"]);
+			$oasisSettings["background-image"] = wfReplaceImageServer($settings['background-image'], self::getCacheBuster());
+			$oasisSettings["background-align"] = $settings["background-align"];
+			$oasisSettings["background-tiled"] = $settings["background-tiled"];
+			$oasisSettings["background-fixed"] = $settings["background-fixed"];
+			$oasisSettings["page-opacity"] = $settings["page-opacity"];
+			if (isset($settings["wordmark-font"]) && $settings["wordmark-font"] != "default") {
+				$oasisSettings["wordmark-font"] = $settings["wordmark-font"];
+			}
+	
+			// RTL
+			if($wgContLang && $wgContLang->isRTL()){
+				$oasisSettings['rtl'] = 'true';
+			}
+			
+			$dualMode = SassColorProfile::getInstance()->isDualMode();
+			
+			// theme override by Wikia.  The override is determined by original user setting
+			// override should not carry over from other getOasisSettings requests, thus it is merged with static oasisSettings instead of saving into oasisSettings
+			if($dualMode) {
+				if(self::isThemeDark($oasisSettings)) {
+					$oasisSettings['color-buttons'] = '#C4C4C4';
+					$oasisSettings['color-links'] = '#70B8FF';
+					$oasisSettings['color-page'] = '#3A3A3A';
+				} else {
+					$oasisSettings['color-buttons'] = '#006CB0';
+					$oasisSettings['color-links'] = '#006CB0';
+					$oasisSettings['color-page'] = '#FFFFFF';
+				}
+			}
+	
+			// RT:70673
+			foreach ($oasisSettings as $key => $val) {
+				if(!empty($val)) {
+					$oasisSettings[$key] = trim($val);
+				}
 			}
 		}
 
@@ -113,14 +126,16 @@ class SassUtil {
 	/**
 	 * Calculates whether currently used theme is light or dark
 	 */
-	public static function isThemeDark() {
+	public static function isThemeDark($oasisSettings = null) {
 		wfProfileIn(__METHOD__);
 
-		$oasisSettings = self::getOasisSettings();
 		if (empty($oasisSettings)) {
-			$oasisSettings = self::getDefaultOasisSettings();
+			$oasisSettings = self::getOasisSettings();
+			if(empty($oasisSettings)) {	// if it's still empty
+				$oasisSettings = self::getDefaultOasisSettings();
+			}
 		}
-
+		
 		$backgroundColor = $oasisSettings['color-page'];
 
 		// convert RGB to HSL
@@ -191,4 +206,39 @@ class SassUtil {
 		return array($H, $S, $L);
 	}
 
+}
+
+/**
+ * SassColorProfile singleton
+ * Keeps state of color profile to load later down the road
+ * @author Hyun Lim
+ */
+class SassColorProfile {
+	private $isDualMode = false;
+	private static $instance = null;
+	
+	private function __construct() {
+		$this->isDualMode = false;
+	}
+	
+	public static function getInstance(){
+		if(self::$instance == null){
+			self::$instance = new SassColorProfile();
+		}
+		return self::$instance;
+	}
+	
+	/**
+	 * One way switch.  Once set to true, it cannot be set to false.
+	 */
+	public function setDualMode($dualMode) {
+		if(!$this->isDualMode && $dualMode) {
+			$this->isDualMode = true;
+		}	
+	}
+	
+	public function isDualMode() {
+		return $this->isDualMode;
+	}
+	
 }
