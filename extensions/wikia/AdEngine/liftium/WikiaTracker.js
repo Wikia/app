@@ -27,7 +27,7 @@ var WikiaTracker = {
 		'UA-17475676-15':100, // liftium.init2
 		'UA-17475676-12':100 // liftium.errors
 	},
-	debugLevel:5,
+	debugLevel:0,
 	_in_group_cache:{}
 };
 
