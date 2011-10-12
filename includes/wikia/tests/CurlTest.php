@@ -24,6 +24,12 @@ class CurlTest extends PHPUnit_Framework_TestCase {
 	const TEST_VALID_URL      = 'http://wikia.com';
 	const TEST_INVALID_HANDLE = 6.6260693;
 	
+	private $proxy = null;
+	
+	public function setUp() {
+		global $wgHTTPProxy;
+		$this->proxy = $wgHTTPProxy;
+	}
 	/**
 	 * cURL handle should be initialized only of URL is given in constructor
 	 */
@@ -50,6 +56,7 @@ class CurlTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals('', $curl->error());
 		
 		$curl->setopt(CURLOPT_RETURNTRANSFER, 1);
+		$curl->setopt(CURLOPT_PROXY, $this->proxy);
 		$curl->exec();
 
 		$this->assertEquals(0, $curl->errno());
@@ -59,6 +66,7 @@ class CurlTest extends PHPUnit_Framework_TestCase {
 	function testEnsureGettingRequestInfoReturnsCorrectInfo() {
 		$curl = new Curl(self::TEST_VALID_URL);
 		$curl->setopt(CURLOPT_RETURNTRANSFER, 1);
+		$curl->setopt(CURLOPT_PROXY, $this->proxy);
 		$curl->exec();
 
 		$info = $curl->getinfo();
@@ -71,6 +79,7 @@ class CurlTest extends PHPUnit_Framework_TestCase {
 	
 	function testCurlWrapperCanDoHttpQueries() {
 		$curl = new Curl(self::TEST_VALID_URL);
+		$curl->setopt(CURLOPT_PROXY, $this->proxy);
 		$this->assertTrue($curl->setopt(CURLOPT_RETURNTRANSFER, 1));
 		$this->assertTrue($curl->setopt_array(array(
 			CURLOPT_TIMEOUT        => self::CURL_TIMEOUT,
