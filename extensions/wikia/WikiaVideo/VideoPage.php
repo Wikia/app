@@ -1775,7 +1775,7 @@ EOD;
 	}
 
 	// return embed code for the particular video per provider
-        public function getEmbedCode( $width = 300, $autoplay = false, $useJWPlayer = false, $asJSON = false, $cityShort='life' ) {
+        public function getEmbedCode( $width = 300, $autoplay = false, $useJWPlayer = false, $asJSON = false, $cityShort='life', $height='' ) {
 		// init jwplayer vars
 		$jwplayerData = array();
 		$jwplayerData['jwplayerjs'] = AssetsManager::getInstance()->getOneCommonURL( trim(self::$JWPLAYER_DIR . self::$JWPLAYER_JS, '/'), false );
@@ -1785,10 +1785,12 @@ EOD;
 		
                 $embed = "";
 		$code = 'standard';
-		if ($this->getRatio()) {
-			// certain providers may not have width and height
-			// defined, like V_WIKIAVIDEO. This is ok.
-			$height = round( $width / $this->getRatio() );
+		if (!$height) {
+			if ($this->getRatio()) {
+				// certain providers may not have width and height
+				// defined, like V_WIKIAVIDEO. This is ok.
+				$height = round( $width / $this->getRatio() );
+			}
 		}
                 switch( $this->mProvider ) {
                         case self::V_METACAFE:
@@ -1947,7 +1949,7 @@ EOD;
 				. (!empty($jwplayerData['image']) ? '"image": ' . $this->initJWPlayerURL($jwplayerData['image'], $asJSON) . ',' : '')
 				. (!empty($jwplayerData['provider']) ? '"provider": "' . $jwplayerData['provider'] . '",' : '')
 				. '"autostart": "' . ($autoplay ? 'true' : 'false') . '",'
-				. '"stretching": "fill",'
+				. '"stretching": "uniform",'
 				. '"controlbar.position": "over",';
 			$sJSON .= '"plugins": {';
 			$pluginTexts = array();
@@ -2025,9 +2027,9 @@ EOD;
 		}
 	}
 
-	public function getJWPlayerJSON( $width = 300, $autoplay = false, $cityShort='life' ){
+	public function getJWPlayerJSON( $width = 300, $autoplay = false, $cityShort='life', $height='' ){
 		if ( $this->isJWPlayerSupported() ){
-			$JSON = $this->getEmbedCode( $width, $autoplay, true, true, $cityShort );
+			$JSON = $this->getEmbedCode( $width, $autoplay, true, true, $cityShort, $height );
 			return json_decode( $JSON, true );
 		}
 	}
