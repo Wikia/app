@@ -588,5 +588,5 @@ REPLACE INTO interwiki (iw_prefix, iw_url, iw_local, iw_trans) VALUES
 ("olpc","http://wiki.laptop.org/go/$1",0,0),
 ("wowwiki","http://www.wowwiki.com/$1",0,0),
 ("wikimoon","http://wikimoon.org/index.php?title=$1",0,0),
-("homepage","http://www.wikia.com/$1",1,0);
-("wikiavideo","http://video.wikia.com/wiki$1",1,1);
+("homepage","http://www.wikia.com/$1",1,0),
+("wikiavideo","http://video.wikia.com/wiki/Video:$1",1,1);
