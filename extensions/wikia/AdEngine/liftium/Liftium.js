@@ -356,7 +356,7 @@ Liftium.callInjectedIframeAd = function (sizeOrSlot, iframeElement){
 	var placement = iframeElement.id.replace(/_iframe$/, "");
 	WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "slot", sizeOrSlot + "_" + placement]), 'liftium.slot');
 	WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "slot", sizeOrSlot + "_" + placement]), 'liftium.slot2');
-	//Liftium.trackEvent(Liftium.buildTrackUrl(["slot", sizeOrSlot + "_" + placement]), "UA-17475676-6");
+	Liftium.trackEvent(Liftium.buildTrackUrl(["slot", sizeOrSlot + "_" + placement]), "UA-17475676-17");
 
 	var t = Liftium.getNextTag(slotname);
 	if (!t) {
