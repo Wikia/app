@@ -35,13 +35,13 @@ class AutomaticWikiAdoptionGatherData {
 		// set default
 		$fromWikiId = 260000;	// 260000 = ID of wiki created on 2011-05-01
 		$maxWikiId = (isset($commandLineOptions['maxwiki']) && is_numeric($commandLineOptions['maxwiki'])) ? $commandLineOptions['maxwiki'] : $this->getMaxWikiId();
-		$range = 10000;
+		$range = 5000;
 		if ( $fromWikiId <= $maxWikiId ) {
-			if ($maxWikiId-$fromWikiId < $range)
-				$range = $maxWikiId - $fromWikiId;
-		
 			// looping
 			do {
+				if ($maxWikiId-$fromWikiId < $range)
+					$range = $maxWikiId - $fromWikiId;
+				
 				$toWikiId = $fromWikiId + $range;
 				$recentAdminEdits = $this->getRecentAdminEdits($fromWikiId, $toWikiId);
 
@@ -218,7 +218,7 @@ class AutomaticWikiAdoptionGatherData {
 		$row = $dbr->selectRow(
 			'city_list',
 			'max(city_id) max_wiki_id',
-			array('city_public' => 1),
+			array('city_public' => 1, 'city_created < now() - interval 45 day' ),
 			__METHOD__
 		);
 		
