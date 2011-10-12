@@ -123,13 +123,12 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 			@include border-radius-ne($radius-user-profile-masthead);
 			@include linear-gradient($color-buttons, top, $color-button-highlight, 0%, $color-buttons, 100%);
 			color: $color-button-text;
-			height: 62px;
-			overflow: hidden;
+			overflow: auto;
 			padding: 8px 25px;
 		}
 		h1 {
 			display: inline;
-			font-size: 32px;
+			font-size: 30px;
 			font-weight: bold;
 			line-height: 38px;
 		}
@@ -144,11 +143,13 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 			top: -5px;
 		}
 		h2 {
-			font-size: 21px;
+			display: inline;
+			font-size: 24px;
 			font-weight: lighter;
 			margin: 0;
 			span {
 				color: $color-user-profile-masthead-aka;
+				margin: 0 1px 0 6px;
 			}
 		}
 	}

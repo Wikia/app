@@ -111,7 +111,9 @@ var Wall = $.createClass(Object, {
 	//hack for safari tab index
 	focusButton: function(e) {
 		var element = $(e.target);
-		var button = element.closest('.SpeechBubble').find('button');
+		var button = element.closest('.speech-bubble-message')
+			.find('button#WallMessageSubmit,.save-edit,.replyButton').first();
+		$().log(button.length);
 		if(e.keyCode == 9) {
 			if(element.attr('id') != 'WallMessageTitle') {
 				button.focus();
@@ -186,7 +188,7 @@ var Wall = $.createClass(Object, {
 				page: page,
 				username: this.username
 			},
-			callback: function(data) {
+			callback: this.proxy(function(data) {
 				var newhtml = $(data.html);
 				$('#Wall .comments').html($('.comments',newhtml).html()).animate({'opacity':1},'slow');
 				$('#Wall .Pagination').html($('.Pagination',newhtml).html());
@@ -198,13 +200,15 @@ var Wall = $.createClass(Object, {
 					$("html:not(:animated),body:not(:animated)").animate({ scrollTop: destination-20}, 500 );
 				}
 
-				setTimeout(function() {
+				setTimeout(this.proxy(function() {
 					$('#Wall').find('textarea,input').placeholder();
 					$('.timeago').timeago();
-					$('.new-reply textarea').bind('keydown keyup change', this.proxy(this.reply_ChangeText))
-				}, 100);
+					$('.new-reply textarea')
+						.bind('keydown keyup change', this.proxy(this.reply_ChangeText))
+						.autoResize(this.settings.reply);
+				}), 100);
 
-			}
+			})
 		});
 	},
 	
@@ -527,10 +531,10 @@ var Wall = $.createClass(Object, {
 				var beforeedit = bubble.html();
 				
 				var editbuttons = $('<div class="edit-buttons"></div>');
-				$('<a class="wikia-button save-edit">'+$.msg('wall-button-save-changes')+'</a>').appendTo(editbuttons);
-				$('<a class="wikia-button preview-edit secondary">'+$.msg('wall-button-to-preview-comment')+'</a>').appendTo(editbuttons);
-				$('<a class="wikia-button cancel-preview-edit secondary" style="display: none;">'+$.msg('wall-button-to-cancel-preview')+'</a>').appendTo(editbuttons);
-				$('<a class="wikia-button cancel-edit secondary">'+$.msg('wall-button-cancel-changes')+'</a>').appendTo(editbuttons);
+				$('<button class="wikia-button save-edit">'+$.msg('wall-button-save-changes')+'</button>').appendTo(editbuttons);
+				$('<button class="wikia-button preview-edit secondary">'+$.msg('wall-button-to-preview-comment')+'</button>').appendTo(editbuttons);
+				$('<button class="wikia-button cancel-preview-edit secondary" style="display: none;">'+$.msg('wall-button-to-cancel-preview')+'</button>').appendTo(editbuttons);
+				$('<button class="wikia-button cancel-edit secondary">'+$.msg('wall-button-cancel-changes')+'</button>').appendTo(editbuttons);
 				
 				
 				$('.msg-title',msg).first().html('<textarea class="title">'+$('.msg-title a',msg).html()+'</textarea>');

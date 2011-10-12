@@ -71,7 +71,7 @@ $new_inputs_bg: mix($bubble_bg, $inputs_bg,20%);
 					font-decoration: none;
 				}
 			}
-			.speech-bubble-message { line-height: 150%; }
+			//.speech-bubble-message { line-height: 150%; }
 			.msg-body textarea { font-size: 12px; height: 100px; }
 			> ul { margin-left: 75px; }
 			border-top: 1px solid $separators;
@@ -104,8 +104,9 @@ $new_inputs_bg: mix($bubble_bg, $inputs_bg,20%);
 	}
 	
 	.speech-bubble-message { padding: 5px 10px 0px 8px; }
-  .speech-bubble-message p { margin: 0.5em 0 0.5em 0 !important; }
+  //.speech-bubble-message p { margin: 0.5em 0 0.5em 0 !important; }
   .speech-bubble-message p:first-child { margin-top: 0 !important; }
+  .speech-bubble-message p:last-child { margin-bottom: 0 !important; }
 	
 	/* only messages, not replies */
 	ul.comments > li.message {
@@ -154,7 +155,7 @@ $new_inputs_bg: mix($bubble_bg, $inputs_bg,20%);
 		font-size: 12px;
 		&:focus { background: $inputs_bg_f; color: $color-text; }
 		&:focus { @include box-shadow(0px, 0px, 4px, mix($color-buttons,$color-page,100%) ); }
-		&.body { line-height: 150%; }
+		//&.body { line-height: 150%; }
 	}
 	.new-message textarea{ 
 		background: $new_inputs_bg;
@@ -352,7 +353,7 @@ $new_inputs_bg: mix($bubble_bg, $inputs_bg,20%);
 	.edit-buttons {
 		width: 100%;
 		height: 30px;
-		a { margin: 0 5px 10px 5px; }
+		button { margin: 0 5px 10px 5px; }
 		.wikia-button { float: right; }
 	}
 	
