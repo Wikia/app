@@ -392,31 +392,36 @@ var WikiHeaderV2 = {
 	},
 	
 	firstMenuValidator: function() {
-		var widthLevelFirst = 0; 
+		var widthLevelFirst = 0, returnVal = true; 
 		$.each($('.ArticlePreview #WikiHeader > nav > ul > li'), function(menuItemKey, menuItem) {
-			$().log($(menuItem).width());
 			widthLevelFirst += $(menuItem).width();
 		});
 		if (widthLevelFirst > 580) {
-			alert($.msg('oasis-navigation-v2-level1-validation')); //TODO: add messages here
+			alert($.msg('oasis-navigation-v2-level1-validation'));
+			$('.preview .modalToolbar #publish').remove();
+			returnVal = false;
 		}
+		return returnVal;
 	},
 	
 	secondMenuValidator: function() {
-		var widthLevelSecond = 0;
+		var widthLevelSecond = 0, returnVal = true;
 		$.each($('.ArticlePreview #WikiHeader .subnav-2'), function(parentMenuItemKey, parentMenuItem) {
 			$(parentMenuItem).show(1, function() {
 				$.each($(parentMenuItem).children('li'), function(menuItemKey, menuItem) {
 					widthLevelSecond += $(menuItem).width();
 				});
 				if (widthLevelSecond > 720) {
-					alert($.msg('oasis-navigation-v2-level2-validation')); //TODO: add messages here
+					alert($.msg('oasis-navigation-v2-level2-validation'));
+					$('.preview .modalToolbar #publish').remove();
+					returnVal = false;
 				}
 				widthLevelSecond = 0;
 				$(parentMenuItem).hide();
 			});
 		});
 		$('.ArticlePreview #WikiHeader .marked .subnav-2').show();
+		return returnVal;
 	}
 };
 
