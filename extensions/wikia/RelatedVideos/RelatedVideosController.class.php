@@ -64,9 +64,10 @@ class RelatedVideosController extends WikiaController {
 		$external = $this->getVal( 'external', '' );
 		$external = empty( $external ) ? null : $this->app->wg->wikiaVideoRepoDBName;
 		$cityShort = $this->getVal('cityShort');
+		$videoHeight = $this->getVal('videoHeight');
 
 		$oRelatedVideosService = F::build('RelatedVideosService');
-		$result = $oRelatedVideosService->getRelatedVideoDataFromTitle( $title, $external, VideoPage::DEFAULT_OASIS_VIDEO_WIDTH, $cityShort );
+		$result = $oRelatedVideosService->getRelatedVideoDataFromTitle( $title, $external, VideoPage::DEFAULT_OASIS_VIDEO_WIDTH, $cityShort, $videoHeight );
 		
 		$this->setVal( 'width', intval( $result['thumbnailData']['width'] ) );
 		$this->setVal( 'height', intval( $result['thumbnailData']['height'] ) );
@@ -121,6 +122,7 @@ class RelatedVideosController extends WikiaController {
 		$videoName = urldecode($this->getVal( 'title', '' ));
 		$width = $this->getVal( 'width', 0 );
 		$videoWidth = $this->getVal( 'videoWidth', VideoPage::DEFAULT_OASIS_VIDEO_WIDTH );
+		$videoHeight = $this->getVal( 'videoHeight', '' );
 		$cityShort = $this->getVal( 'cityShort', 'life');
 		if ($videoArticleId) {
 			$videoTitle = Title::newFromID($videoArticleId, GAID_FOR_UPDATE);
@@ -132,7 +134,7 @@ class RelatedVideosController extends WikiaController {
 		}
 
 		$rvd = new RelatedVideosData();
-		$videoData = $rvd->getVideoData( $videoTitle, $width, $videoWidth, true, $useMaster, $cityShort );
+		$videoData = $rvd->getVideoData( $videoTitle, $width, $videoWidth, true, $useMaster, $cityShort, $videoHeight );
 		$this->setVal( 'data', $videoData );
 	}
 

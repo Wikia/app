@@ -5,6 +5,7 @@ var RelatedVideos = {
 	maxRooms:		1,
 	currentRoom:		1,
 	modalWidth:		660,
+	playerHeight:		371,
 
 	init: function() {
 		$('#RelatedVideos').delegate( 'a.video-thumbnail', 'click', RelatedVideos.displayVideoModal );
@@ -125,7 +126,8 @@ var RelatedVideos = {
 			{
 				title: url,
 				external: external,
-				cityShort: window.cityShort
+				cityShort: window.cityShort,
+				videoHeight: RelatedVideos.playerHeight
 			},
 			function( res ) {
 				if ( res.json ) {
