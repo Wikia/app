@@ -55,10 +55,10 @@ var RelatedVideos = {
 			
 		}
 	},
-
 	// State calculations & refresh
 
 	checkButtonState: function(){
+
 		$('#RelatedVideos .scrollleft').removeClass( 'inactive' );
 		$('#RelatedVideos .scrollright').removeClass( 'inactive' );
 		if ( RelatedVideos.currentRoom == 1 ){
@@ -187,7 +187,7 @@ var RelatedVideos = {
 
 	addVideoConfirm: function( e ){
 		e.preventDefault();
-		GlobalNotification.notify( $('#relatedvideos-add-video .notifyHolder').html() );
+		//GlobalNotification.notify( $('#relatedvideos-add-video .notifyHolder').html() );
 		$('#relatedvideos-add-video .relatedVideosConfirm').undelegate( '.button', 'click', RelatedVideos.addVideoConfirm );
 		$.nirvana.getJson(
 			'RelatedVideosController',
@@ -197,7 +197,7 @@ var RelatedVideos = {
 				url: $('#relatedvideos-add-video input').val()
 			},
 			function( formRes ) {
-				GlobalNotification.hide();
+				//GlobalNotification.hide();
 				if ( formRes.error ) {
 					$('#relatedvideos-add-video').addClass( 'error-mode' );
 					$('#relatedvideos-add-video .relatedVideosConfirm').undelegate( '.button', 'click' );

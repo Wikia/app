@@ -10,7 +10,6 @@ class RelatedVideosController extends WikiaController {
 	}
 
 	public function getCarusel(){
-
 		if( Wikia::isMainPage() ) {
 			return false;
 		}
@@ -19,6 +18,42 @@ class RelatedVideosController extends WikiaController {
 			$this->app->wg->title->getArticleId(),
 			RelatedVideosController::MAX_RELATEDVIDEOS
 		);
+
+		if ( !is_array( $videos ) ){ $videos = array(); }
+
+		$oLocalLists = RelatedVideosNamespaceData::newFromTargetTitle( F::app()->wg->title );
+		$oGlobalLists = RelatedVideosNamespaceData::newFromGeneralMessage();
+
+		$oRelatedVideosService = F::build('RelatedVideosService');
+		$blacklist = array();
+		foreach( array( $oLocalLists, $oGlobalLists ) as $oLists ){
+			if ( !empty( $oLists ) && $oLists->exists() ){
+				$data = $oLists->getData();
+				if ( isset(  $data['lists'] ) && isset( $data['lists']['WHITELIST'] ) ) {
+					foreach( $data['lists']['WHITELIST'] as $page ){
+						$videoData = $oRelatedVideosService->getRelatedVideoData( 0, $page['title'], $page['source'] );
+						if ( isset( $videoData['timestamp'] ) && isset( $videoData['id'] ) ){
+							$videoId = $videoData['timestamp'].'|'.$videoData['id'];
+							$videos[ $videoId ] = $videoData;
+						}
+					}
+					foreach( $data['lists']['BLACKLIST'] as $page ){
+						$videoData = $oRelatedVideosService->getRelatedVideoData( 0, $page['title'], $page['source'] );
+						if ( isset( $videoData['timestamp'] ) && isset( $videoData['id'] ) ){
+							$videoId = $videoData['timestamp'].'|'.$videoData['id'];
+							$blacklist[ $videoId ] = $videoData;
+						}
+					}
+				}
+			}
+		}
+
+		foreach( $blacklist as $key => $blElement ){
+			unset( $videos[ $key ] );
+		}
+
+		ksort( $videos );
+		$videos = array_reverse( $videos, true );
 
 		$this->setVal( 'videos', $videos );
 	}

@@ -83,15 +83,16 @@ $color-related-videos-background: darken($color-page, 20%);
 		}
 		.beta {
 			@include border-radius(4px);
+			font-size: 11px;
+			line-height: 14px;
+			padding: 2px 4px;
 			margin-right: 11px;
 			float: right;
 			background-color: $color-buttons;
 			color: $color-button-text;
-			margin-top: 8px;
+			margin-top: 13px;
 			padding: 0px 5px;
-			&:hover{
-				text-decoration: none;
-			}
+			text-decoration: none;
 		}
 	}
 
@@ -108,6 +109,7 @@ $color-related-videos-background: darken($color-page, 20%);
 			width: 15px;
 			position: absolute;
 			margin-top: 15px;
+			left: 10px;
 			.chevron {
 				border-color: transparent $color-buttons transparent transparent;
 				border-width: 11px;
@@ -133,7 +135,6 @@ $color-related-videos-background: darken($color-page, 20%);
 					border-color: transparent $color-inactive-button transparent transparent;
 				}
 			}
-
 		}
 		.wrapper {
 			position: absolute;
@@ -286,6 +287,8 @@ $color-related-videos-background: darken($color-page, 20%);
 		font-family: Helvetica, Arial, sans-serif;
 		padding: 1px 1px 1px 5px;
 		width: 400px;
+		background-color: mix( #FFFFFF, $color-page, 75% );
+		border-color: mix( #FFFFFF, $color-page, 65% );
 		&:focus {
 			@include box-shadow( 0px, 0px, 4px, $color-buttons );
 		}
@@ -335,7 +338,13 @@ $color-related-videos-background: darken($color-page, 20%);
 			font-size:14px;
 			font-family: Helvetica, Arial, sans-serif;
 			padding: 1px 1px 1px 5px;
+			text-decoration: none;
+			background-color: mix( #FFFFFF, $color-page, 75% );
+			border-color: mix( #FFFFFF, $color-page, 65% );
 			width: 650px;
 		}
+	}
+	.embedHtml {
+		margin-top: 53px;
 	}
 }
