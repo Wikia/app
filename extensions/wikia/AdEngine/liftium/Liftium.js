@@ -2587,6 +2587,7 @@ Liftium.startTime = Liftium.now.getTime();
 Liftium.debugLevel = Liftium.getRequestVal('liftium_debug', 0) || Liftium.cookie("liftium_debug");
 Liftium.maxHopTime = Liftium.getRequestVal('liftium_timeout', 0) || Liftium.cookie("liftium_timeout") || 1800000;
 
+WikiaTracker.debugLevel = Liftium.getRequestVal('wikiatracker_debug', 0) || Liftium.cookie('wikiatracker_debug'); // FIXME NEF un-depend it of Liftium and move to WikiaTracker
 
 } // \if (typeof Liftium == "undefined" ) 
 
