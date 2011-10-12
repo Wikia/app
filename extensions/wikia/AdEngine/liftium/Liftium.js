@@ -2588,6 +2588,14 @@ Liftium.debugLevel = Liftium.getRequestVal('liftium_debug', 0) || Liftium.cookie
 Liftium.maxHopTime = Liftium.getRequestVal('liftium_timeout', 0) || Liftium.cookie("liftium_timeout") || 1800000;
 
 WikiaTracker.debugLevel = Liftium.getRequestVal('wikiatracker_debug', 0) || Liftium.cookie('wikiatracker_debug'); // FIXME NEF un-depend it of Liftium and move to WikiaTracker
+if (Liftium.getRequestVal('wikiatracker_is_tracked', 0) || Liftium.cookie('wikiatracker_is_tracked')) { // FIXME NEF un-depend it of Liftium and move to WikiaTracker
+	WikiaTracker._in_group_cache['N'] = true;
+}
+if (Liftium.getRequestVal('wikiatracker_ab_group', 0) || Liftium.cookie('wikiatracker_ab_group')) { // FIXME NEF un-depend it of Liftium and move to WikiaTracker
+	var ab_group = Liftium.getRequestVal('wikiatracker_ab_group', 0) || Liftium.cookie('wikiatracker_ab_group');
+	WikiaTracker._in_group_cache[ab_group] = true;
+	WikiaTracker._in_group_cache['N'] = true;
+}
 
 } // \if (typeof Liftium == "undefined" ) 
 
