@@ -134,6 +134,10 @@ WikiaTracker.trackEvent3 = function(page, param) {
 WikiaTracker._track2 = function(page, profile, sample) {
 	if (!this.isTracked()) { return false; }
 
+	if (page.indexOf('/') != 0) {
+		page = '/' + page;
+	}
+
 	this.debug('(internal2) ' + page + ' in ' + profile + ' at ' + sample + '%', 5);
 
 	_gaq.push(['WikiaTracker._setAccount', profile]);
