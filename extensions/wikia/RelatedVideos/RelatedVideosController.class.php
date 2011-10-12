@@ -64,32 +64,34 @@ class RelatedVideosController extends WikiaController {
 		$external = $this->getVal( 'external', '' );
 		$external = empty( $external ) ? null : $this->app->wg->wikiaVideoRepoDBName;
 		$cityShort = $this->getVal('cityShort');
-		$videoHeight = $this->getVal('videoHeight');
 
 		$oRelatedVideosService = F::build('RelatedVideosService');
-		$result = $oRelatedVideosService->getRelatedVideoDataFromTitle( $title, $external, VideoPage::DEFAULT_OASIS_VIDEO_WIDTH, $cityShort, $videoHeight );
-		
-		$this->setVal( 'width', intval( $result['thumbnailData']['width'] ) );
-		$this->setVal( 'height', intval( $result['thumbnailData']['height'] ) );
-		$this->setVal( 'json', $result['embedJSON'] );
-		if ( !empty( $result['embedJSON'] ) && isset( $result['embedJSON']['id'] ) ){
-			$videoHtml = '<div id="'.$result['embedJSON']['id'].'"></div>';
+		$result = $oRelatedVideosService->getRelatedVideoDataFromTitle( $title, $external, VideoPage::DEFAULT_OASIS_VIDEO_WIDTH, $cityShort );
+		if ( isset( $result['error'] ) ){
+			$this->setVal( 'error', $result['error'] );
 		} else {
-			$videoHtml = $result['embedCode'];
-		}
-		$this->setVal( 'html',
-			 $this->app->renderView(
-				'RelatedVideos',
-				'getVideoHtml',
-				array(
-					 'videoHtml' => $videoHtml,
-					 'embedUrl' => empty( $result['external'] ) ? '' : $result['fullUrl']
+			$this->setVal( 'width', intval( $result['thumbnailData']['width'] ) );
+			$this->setVal( 'height', intval( $result['thumbnailData']['height'] ) );
+			$this->setVal( 'json', $result['embedJSON'] );
+			if ( !empty( $result['embedJSON'] ) && isset( $result['embedJSON']['id'] ) ){
+				$videoHtml = '<div id="'.$result['embedJSON']['id'].'"></div>';
+			} else {
+				$videoHtml = $result['embedCode'];
+			}
+			$this->setVal( 'html',
+				 $this->app->renderView(
+					'RelatedVideos',
+					'getVideoHtml',
+					array(
+						 'videoHtml' => $videoHtml,
+						 'embedUrl' => empty( $result['external'] ) ? '' : $result['fullUrl']
+					)
 				)
-			)
-		 );
-		$this->setVal( 'title', $result['title'] );
-		if ( !empty( $result['external'] ) ){
-			$this->setVal( 'embedUrl', $result['fullUrl'] );
+			 );
+			$this->setVal( 'title', $result['title'] );
+			if ( !empty( $result['external'] ) ){
+				$this->setVal( 'embedUrl', $result['fullUrl'] );
+			}
 		}
 	}
 
@@ -122,7 +124,6 @@ class RelatedVideosController extends WikiaController {
 		$videoName = urldecode($this->getVal( 'title', '' ));
 		$width = $this->getVal( 'width', 0 );
 		$videoWidth = $this->getVal( 'videoWidth', VideoPage::DEFAULT_OASIS_VIDEO_WIDTH );
-		$videoHeight = $this->getVal( 'videoHeight', '' );
 		$cityShort = $this->getVal( 'cityShort', 'life');
 		if ($videoArticleId) {
 			$videoTitle = Title::newFromID($videoArticleId, GAID_FOR_UPDATE);
@@ -134,7 +135,7 @@ class RelatedVideosController extends WikiaController {
 		}
 
 		$rvd = new RelatedVideosData();
-		$videoData = $rvd->getVideoData( $videoTitle, $width, $videoWidth, true, $useMaster, $cityShort, $videoHeight );
+		$videoData = $rvd->getVideoData( $videoTitle, $width, $videoWidth, true, $useMaster, $cityShort );
 		$this->setVal( 'data', $videoData );
 	}
 
