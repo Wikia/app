@@ -190,7 +190,7 @@ function requestMW(roomId, query, callback, errorcallback) {
 						} catch(e) {
 							console.log("Error: while parsing result. Error was: ");
 							console.log(e);
-							console.log("Response that didn't parse was:\n" + responseBody);
+							console.log("Response that didn't parse was:\n" + body);
 		
 							data = {
 								error: '',
