@@ -155,7 +155,11 @@
 				line-height: 1.3em;
 				padding: 7px 5px;
 				&:hover {
-					background: $color-menu-highlight;
+					$dropdown-background: mix($color-buttons, $color-page, 20%); 
+					@if lightness($color-page) < 50 { 
+						$dropdown-background: lighten($dropdown-background, 8%); 
+					} 
+					background-color: $dropdown-background;
 				}
 			}
 		}

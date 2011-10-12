@@ -210,16 +210,18 @@ This list-based button used for all additional actions
 			left: -1px;
 			list-style: none;
 			margin: 0;
-			padding: 5px;
 			position: absolute;
 			top: 19px;
 			z-index: 100;
 			a {
 				color: $color-text;
 				display: block;
-				padding: 4px 4px 2px;
 				&:hover {
-					background: $color-menu-highlight;
+					$dropdown-background: mix($color-buttons, $color-page, 20%); 
+					@if lightness($color-page) < 50 { 
+						$dropdown-background: lighten($dropdown-background, 8%); 
+					} 
+					background-color: $dropdown-background !important;
 				}
 			}
 			li {
