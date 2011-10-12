@@ -7,13 +7,19 @@
 		<li class="activity-type-<?php print FeedRenderer::getIconType($row) ?> activity-ns-<?php print $row['ns'] ?>">
 		<?php print FeedRenderer::getSprite( $row, $wgBlankImgUrl) ?>
 		<?php if( isset( $row['url'] ) ) { ?>
-			<strong>
-				<a class="title" href="<?php print htmlspecialchars($row['url']) ?>"><?php print htmlspecialchars($row['title'])  ?></a>
-			</strong>
-			<?php if( !empty($row['comments-count']) ): ?>
-				<?= wfMsgExt('wiki-activity-message-wall-messages-count', array('parseinline'), $row['comments-count']); ?>
+			<strong><a class="title" href="<?php print htmlspecialchars($row['url']) ?>"><?php print htmlspecialchars($row['title'])  ?></a></strong>
+			<?php if( !empty($row['wall-url']) ): ?>
+				<span class="wall-owner">
+					<?= wfMsg(
+						'wiki-activity-wall-on',
+						'<a href="'.$row['wall-url'].'">'.wfMsg('wiki-activity-wall-owner', $row['wall-owner']).'</a>') ?>
+				</span>
 			<?php endif;?>
 			<br />
+			<?php if( !empty($row['comments-count']) ): ?>
+				<?= wfMsgExt('wiki-activity-message-wall-messages-count', array('parseinline'), $row['comments-count']); ?>
+				<br />
+			<?php endif;?>
 		<?php } else { ?>
 			<span class="title"><?php print htmlspecialchars($row['title']) ?></span>
 <?php		  } ?>

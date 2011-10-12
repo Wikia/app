@@ -240,4 +240,6 @@ div#article-comm-fbMonit {
 	top: 0px;
 }
 
-
+.skin-monobook #article-comments .speech-bubble-avatar {
+	float: left;
+}
