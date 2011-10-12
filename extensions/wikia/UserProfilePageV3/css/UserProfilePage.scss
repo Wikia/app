@@ -95,18 +95,6 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 		margin-bottom: 20px;
 		position: relative;
 		
-		&:before {
-			border-color: $color-page $color-page transparent transparent;
-			border-style: solid;
-			border-width: 14px;
-			content: ' ';
-			display: block;
-			height: 1px;
-			left: -28px;
-			position: absolute;
-			top: 78px;
-			width: 1px;
-		}
 		&:hover {
 			#userIdentityBoxEdit {
 				display: block;
@@ -140,7 +128,7 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 			padding: 2px 5px;
 			position: relative;
 			text-transform: uppercase;
-			top: -5px;
+			top: -4px;
 		}
 		h2 {
 			display: inline;
@@ -151,6 +139,22 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 				color: $color-user-profile-masthead-aka;
 				margin: 0 1px 0 6px;
 			}
+		}
+	}
+	
+	.masthead-info-lower {
+		position: relative;
+		&:before {
+			border-color: $color-page $color-page transparent transparent;
+			border-style: solid;
+			border-width: 14px;
+			content: ' ';
+			display: block;
+			height: 1px;
+			left: -28px;
+			position: absolute;
+			top: 0px;
+			width: 1px;
 		}
 	}
 	
@@ -221,6 +225,7 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 	.details {
 		@include bodytext;
 		font-size: 14px;
+		line-height: 16px;
 		li {
 			padding-top: 10px;
 			&:first-child {

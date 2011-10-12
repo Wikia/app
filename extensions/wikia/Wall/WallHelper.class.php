@@ -21,7 +21,11 @@ class WallHelper {
 	public function getMessagePageUrl(ArticleComment $comment) {
 		return $comment->getArticleTitle()->getFullUrl().'/'.$comment->getTitle()->getArticleId();
 	}
-	
+
+	public function getWallPageUrl(ArticleComment $comment) {
+		return $comment->getArticleTitle()->getFullUrl();
+	}
+		
 	/**
 	 * @brief Gets and returns user's talk page's content
 	 * 
@@ -111,6 +115,14 @@ class WallHelper {
 		$ac = new ArticleComment($title);
 		$ac->load();
 		$parent = $ac->getTopParentObj();
+
+		$item['wall-url'] = $this->getWallPageUrl($ac);
+		$wmessage = F::build('WallMessage', array($title,$ac) );
+		$owner = $wmessage->getWallOwner();
+		if($realname = $owner->getRealName())
+			$item['wall-owner'] = $realname;
+		else
+			$item['wall-owner'] = $owner->getName();
 		
 		if( empty($parent) ) {
 		//parent

@@ -39,7 +39,7 @@
 			<input type="hidden" id="user" value="<?= $user['id']; ?>" />
 		<? endif; ?>
 		
-		<div>
+		<div class="masthead-info-lower">
 			<div class="tally">
 				<? if( !empty($user['registration']) ): ?>
 					<? if( !empty($user['edits']) || (empty($user['edits']) && !empty($user['registration'])) ): ?>
