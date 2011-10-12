@@ -22,6 +22,7 @@ if (!defined('MEDIAWIKI')) {
 }
 
 class InterwikiDispatcher extends UnlistedSpecialPage {
+	const IS_WIKI_EXISTS_CACHE_TTL = 20;//10800;
 	/**
 	 * contructor
 	 */
@@ -58,7 +59,15 @@ class InterwikiDispatcher extends UnlistedSpecialPage {
 	}
 
 	private static function isWikiExists($sName) {
-		global $wgExternalSharedDB;
+		global $wgExternalSharedDB, $wgMemc;
+
+		$cacheKey = wfSharedMemcKey( __METHOD__ . ':' . $sName );
+
+		$cachedValue = $wgMemc->get( $cacheKey );
+		if( !is_null( $cachedValue) ) {
+			return $cachedValue;
+		}
+
 		$DBr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 		$dbResult = $DBr->Query(
 			  'SELECT city_id'
@@ -71,10 +80,12 @@ class InterwikiDispatcher extends UnlistedSpecialPage {
 
 		if ($row = $DBr->FetchObject($dbResult)) {
 			$DBr->FreeResult($dbResult);
+			$wgMemc->set( $cacheKey, $row->city_id, self::IS_WIKI_EXISTS_CACHE_TTL );
 			return $row->city_id;
 		}
 		else {
 			$DBr->FreeResult($dbResult);
+			$wgMemc->set( $cacheKey, false, self::IS_WIKI_EXISTS_CACHE_TTL );
 			return false;
 		}
 	}
