@@ -60,6 +60,8 @@ define.call(exports, function(){
 			this._roundPoints = new Points(Game.MAX_POINTS_PER_ROUND);
 			this._timerPointDeduction = Math.round((Game.MAX_POINTS_PER_ROUND / ((Game.MAX_SECONDS_PER_ROUND*1000) / Game.UPDATE_INTERVAL_MILLIS)));
 			this._wrongAnswerPointDeduction = Math.round((Game.MAX_POINTS_PER_ROUND * (Game.PERCENT_DEDUCTION_WRONG_GUESS / 100)));
+			
+			this.addEventListener('modalOpened', this.modalOpened);
 		},
 		
 		getId: function(){
@@ -86,7 +88,12 @@ define.call(exports, function(){
 				this._currentRound++
 				this.play();
 			}else{
-				this.fire('endGame');
+				this.fire('endGame', {
+					gameId: this.getId(),
+					totalPoints: this._totalPoints.getPoints(),
+					numCorrect: this._numCorrect,
+					numTotal: this._data.length
+				});
 			}
 		},
 		
@@ -97,15 +104,17 @@ define.call(exports, function(){
 			this._timer = null;
 			this._roundIsOver = false;
 			
-			this.fire('roundStart', {gameId: this.getId(), image: this._data[this._currentRound-1].image, totalPoints: this._totalPoints.getPoints()});
-			//this.hideContinue();
-			//this.showScoreBar();
-			//this.hideAnswerDrawer();//puts the drawer back in place
-			//this.showAnswerDrawer();
-			//this.hideEndGameScreen();//needs to hide previously shown final screen
+			this.fire('roundStart', {
+				gameId: this.getId(),
+				image: this._data[this._currentRound-1].image,
+				totalPoints: this._totalPoints.getPoints(),
+				progress: this._currentRound + '/' + this._data.length
+			});
 			this.prepareAnswers();
-			//this.updateHudScore();
-			//this.updateScoreBar();//resets the scorebar
+		},
+		
+		modalOpened: function() {
+			this.pause();	
 		},
 		
 		prepareTiles: function() {
@@ -115,7 +124,6 @@ define.call(exports, function(){
 			
 			for(var i = 0; i < tdsLength; i++) {
 				tds[i].onclick = function() {
-					console.log('clicked;');
 					self.resume();
 					self.fire('tileClicked', this)
 				}
@@ -149,6 +157,7 @@ define.call(exports, function(){
 		prepareContinueView: function() {
 			var self = this;
 			document.getElementById('continue').onclick = function() {
+				self.nextRound();
 				self.fire('continueClicked');	
 			}
 		},
@@ -193,14 +202,17 @@ define.call(exports, function(){
 		prepareFinishScreen: function() {
 			var self = this;
 			document.getElementById('goHome').onclick = function() {
+				self.pause();
 				self.fire('goHome');
 			};
 			
 			document.getElementById('playAgain').onclick = function() {
+				self.pause();
 				self.fire('playAgain');
 			};
 			
 			document.getElementById('goToHighScores').onclick = function() {
+				self.pause();
 				self.fire('goToHighScores');
 			};
 			
@@ -208,13 +220,11 @@ define.call(exports, function(){
 		},
 		
 		pause: function() {
-			console.log('pause');
 			this._pause = true;
 			this._timer = null;
 		},
 		
 		resume: function() {
-			console.log('resume');
 			if(this._pause) {
 				this._pause = false;
 				this.timer();
@@ -227,7 +237,12 @@ define.call(exports, function(){
 				(function time() {
 					if( !self._pause ) {
 						if((self._roundPoints.getPoints() <= 0) && (!self._roundIsOver)){
-							self.fire('timeIsUp');
+							self.roundIsOver = true;
+							self.fire('timeIsUp', {
+								totalPoints: self._totalPoints.getPoints(),
+								timeout: Game.TIME_UP_NOTIFICATION_DURATION_MILLIS,
+								correct: self._correctAnswer
+							});
 						} else if(!self._roundIsOver){
 							self._roundPoints.deductPoints(self._timerPointDeduction);
 							self.fire('timerEvent', self.getPercent());
