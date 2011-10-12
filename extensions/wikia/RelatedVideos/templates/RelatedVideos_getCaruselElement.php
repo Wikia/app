@@ -1,5 +1,5 @@
 <div class="item">
-	<a class="video-thumbnail" href="<?=$video['fullUrl'];?>" data-ref="<?=$video['prefixedUrl'];?>" data-external="<?=$video['external'];?>" >
+	<a class="video-thumbnail video-play" href="<?=$video['fullUrl'];?>" data-ref="<?=$video['prefixedUrl'];?>" data-external="<?=$video['external'];?>" >
 		<?
 		if ( !empty( $video['duration'] ) ) {
 			$mins = floor ($video['duration'] / 60);

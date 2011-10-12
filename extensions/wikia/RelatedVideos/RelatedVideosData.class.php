@@ -12,20 +12,22 @@ class RelatedVideosData {
 		
 	}
 	
-	public function getVideoData( Title $title, $thumbnailWidth, $videoWidth = VideoPage::DEFAULT_OASIS_VIDEO_WIDTH, $autoplay = true, $useMaster = false, $cityShort='life', $videoHeight='' ) {
+	public function getVideoData( $title, $thumbnailWidth, $videoWidth = VideoPage::DEFAULT_OASIS_VIDEO_WIDTH, $autoplay = true, $useMaster = false, $cityShort='life' ) {
 
 		wfProfileIn( __METHOD__ );
 
 		$data = array();
-		if ($title->exists()) {
+		if ( empty( $title ) || !is_object( $title ) || !( $title instanceof Title ) || !$title->exists() ){
+			$data['error'] = wfMsg('related-videos-error-no-video-title');
+		} else {
 			$videoPage = F::build( 'VideoPage', array( $title ) );
 			$videoPage->load($useMaster);
 			$data['external'] = false; // false means it is not set. Meaning values are 0 and 1.
 			$data['id'] = $title->getArticleID();
 			$data['description'] = $videoPage->getDescription();
 			$data['duration'] = $videoPage->getDuration();
-			$data['embedCode'] = $videoPage->getEmbedCode( $videoWidth, $autoplay, true, false, $cityShort, $videoHeight );
-			$data['embedJSON'] = $videoPage->getJWPlayerJSON( $videoWidth, $autoplay, $cityShort, $videoHeight );
+			$data['embedCode'] = $videoPage->getEmbedCode( $videoWidth, $autoplay, true, false, $cityShort );
+			$data['embedJSON'] = $videoPage->getJWPlayerJSON( $videoWidth, $autoplay, $cityShort );
 			$data['fullUrl'] = $title->getFullURL();
 			$data['prefixedUrl'] = $title->getPrefixedURL();
 			$data['provider'] = $videoPage->getProvider();
@@ -47,9 +49,6 @@ class RelatedVideosData {
 			}
 			$data['owner'] = $owner;
 			$data['ownerUrl'] = $ownerUrl;
-		}
-		else {
-			// do nothing
 		}
 		wfProfileOut( __METHOD__ );
 		return $data;

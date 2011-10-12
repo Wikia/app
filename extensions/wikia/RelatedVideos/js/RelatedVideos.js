@@ -5,10 +5,9 @@ var RelatedVideos = {
 	maxRooms:		1,
 	currentRoom:		1,
 	modalWidth:		660,
-	playerHeight:		371,
 
 	init: function() {
-		$('#RelatedVideos').delegate( 'a.video-thumbnail', 'click', RelatedVideos.displayVideoModal );
+		$('#RelatedVideos').delegate( 'a.video-play', 'click', RelatedVideos.displayVideoModal );
 		$('#RelatedVideos').delegate( '.scrollright', 'click', RelatedVideos.scrollright );
 		$('#RelatedVideos').delegate( '.scrollleft', 'click', RelatedVideos.scrollleft );
 		$('#RelatedVideos').delegate( '.addVideo', 'click', RelatedVideos.addVideoLoginWrapper );
@@ -53,7 +52,6 @@ var RelatedVideos = {
 					callback();
 				}
 			});
-			
 		}
 	},
 	// State calculations & refresh
@@ -126,11 +124,14 @@ var RelatedVideos = {
 			{
 				title: url,
 				external: external,
-				cityShort: window.cityShort,
-				videoHeight: RelatedVideos.playerHeight
+				cityShort: window.cityShort
 			},
 			function( res ) {
-				if ( res.json ) {
+				if ( res.error ) {
+					$.showModal( /*res.title*/ '', res.error, {
+						'width': RelatedVideos.modalWidth
+					});
+				} else if ( res.json ) {
 					$.showModal( /*res.title*/ '', res.html, {
 						'id': 'relatedvideos-video-player',
 						'width': RelatedVideos.modalWidth,

@@ -20,6 +20,7 @@ $messages['en'] = array(
 	'related-videos-error-permission-article' => 'You cannot modify this article.',
 	'related-videos-error-no-article-id' => 'No target article id provided',
 	'related-videos-error-no-video-url' => 'No video url provided',
+	'related-videos-error-no-video-title' => 'No video title provided',
 	'related-videos-notify' => 'Please wait while we process this video',
 	'related-videos-something-went-wrong' => 'We are sorry, but something went wrong with the upload.',
 	'related-videos-remove-video-error-duplicate' => 'This video has already been removed.',
