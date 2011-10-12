@@ -58,8 +58,7 @@ define.call(exports, function(){
 		},
 		
 		init: function() {
-			
-			this._barWrapperHeight = document.getElementById('scoreBarWrapper').clientHeight;
+			this._barWrapperHeight = document.getElementById('PhotoPopWrapper').clientHeight;
 			
 			this.addEventListener('prepareGameScreen', this.prepareGameScreen);
 			this.addEventListener('tileClicked', this.tileClicked);
@@ -72,14 +71,46 @@ define.call(exports, function(){
 			this.addEventListener('answersPrepared', this.answersPrepared);
 			this.addEventListener('roundStart', this.roundStart);
 			this.addEventListener('tileClicked', this.tileClicked);
+			this.addEventListener('timeIsUp', this.timeIsUp);
+			this.addEventListener('continueClicked', this.continueClicked);
+			this.addEventListener('endGame', this.endGame);
+		},
+		
+		endGame: function(e, options) {
+			this.showEndGameScreen(options);
+		},
+		
+		continueClicked: function() {
+			this.showAnswerDrawer();
+			this.showScoreBar();
+			this.hideContinue();
+		},
+		
+		timeIsUp: function(e, options) {
+			var self = this;
+			this.hideAnswerDrawer();
+			this.hideScoreBar();
+			this.showTimeUp();
+			this.updateHudScore(options.totalPoints);
+			setTimeout(function() {
+				self.hideTimeUp(options.correct);
+			}, options.timeout);	
 		},
 		
 		prepareGameScreen: function(e, watermark) {
 			this.prepareMask(watermark);
+			this.hideContinue();
+			this.showScoreBar();
+			this.hideAnswerDrawer();//puts the drawer back in place
+			this.showAnswerDrawer();
+			this.hideEndGameScreen();//needs to hide previously shown final screen
+			//this.updateHudScore();
+			this.updateScoreBar();//resets the scorebar
 		},
 		
 		roundStart: function(e, options) {
 			this.showMask(options);
+			this.updateHudProgress(options.progress);
 		},
 		
 		openModal: function(options) {
@@ -134,13 +165,11 @@ define.call(exports, function(){
 		closeModal: function() {
 			var modalWrapper = document.getElementById('modalWrapper'),
 			modal = document.getElementById('modal');
-			console.log('closeModal');
 			modal.style.opacity = 0;
 			modalWrapper.style.visibility = 'hidden';	
 		},
 		
 		timerEvent: function(event, percent) {
-			console.log('timer - point percent: ' +percent);
 			this.updateScoreBar(percent);
 			//this.updateHudScore();
 		},
@@ -284,8 +313,12 @@ define.call(exports, function(){
 		},
 		
 		hideScoreBar: function() {
+			var scoreBarStyle = document.getElementById('scoreBar').style;
+			
 			document.getElementById('scoreBarWrapper').style.opacity = 0;
-			this.fire('scoreBarHidden');
+			
+			scoreBarStyle.height = this._barWrapperHeight;
+			scoreBarStyle.backgroundColor = 'rgba(137, 196, 64, 0.9)';
 		},
 		
 		revealAll: function(correct) {
@@ -300,14 +333,14 @@ define.call(exports, function(){
 				td.clicked = true;
 				if(next == tdLength) {
 					clearInterval(t);
-					self.showContinue('Correct! It\'s: ' + correct);
+					self.showContinue('It\'s: ' + correct);
 				}
 			}, 100);
 
 		},
 		
 		showMask: function(options) {
-			this.fire('displayingMask');
+			this.fire('displayingMask', options);
 			var tds = document.getElementsByTagName('td'),
 			tdLength = tds.length,
 			next = 0,
@@ -317,18 +350,23 @@ define.call(exports, function(){
 				tds[next++].style.opacity = 1;
 				if(next == tdLength) {
 					clearInterval(t);
+					
 					self.updateHudScore(options.totalPoints);
-					setTimeout(function() {self.fire('maskDisplayed', options);}, 400);
+					setTimeout(function() {self.fire('maskDisplayed');}, 400);
 				}
 			}, 100);
 		},
 		
 		hideAnswerDrawer: function(){
-			var answerDrawerStyle = document.getElementById('answerDrawer').style;
+			var answerDrawerStyle = document.getElementById('answerDrawer').style,
+			answerButton = document.getElementById('answerButton');
 			
 			answerDrawerStyle.display = 'none';
 			answerDrawerStyle.right = -225;
-			this.fire('answerDrawerHidden');
+
+			answerButton.classList.add('closed');
+			answerButton.getElementsByTagName('img')[1].style.opacity = 0;
+			answerButton.getElementsByTagName('img')[0].style.opacity = 1;
 		},
 		
 		showContinue: function(text) {
@@ -352,27 +390,27 @@ define.call(exports, function(){
 			document.getElementById('scoreBarWrapper').style.opacity = 1;
 		},
 		
-		showEndGameScreen: function(numCorrect, numTotal, totalPoints){
+		showEndGameScreen: function(options){
+			//TODO: reset whole game
 			document.getElementById('endGameOuterWrapper').style.display = 'block';
 
-			document.querySelector('#endGameSummary .summaryText_completion').innerHTML = 'you got ' + numCorrect + ' out of ' + numTotal + ' correct.';
-			document.querySelector('#endGameSummary .summaryText_score').innerHTML =  'score: ' + totalPoints;
+			document.querySelector('#endGameSummary .summaryText_completion').innerHTML = 'you got ' + options.numCorrect + ' out of ' + options.numTotal + ' correct.';
+			document.querySelector('#endGameSummary .summaryText_score').innerHTML =  'score: ' + options.totalPoints;
 		},
 		
 		hideEndGameScreen: function(){
 			document.getElementById('endGameOuterWrapper').style.display = 'none';
 		},
 		
-		updateHudScore: function(roundPoints, totalPoints){
-			document.getElementById('roundPoints').innerHTML = roundPoints;
+		updateHudScore: function(totalPoints){
+			//document.getElementById('roundPoints').innerHTML = roundPoints;
 			document.getElementById('totalPoints').innerHTML = totalPoints;
 		},
 		
-		updateHudProgress: function(currentRound, totalRounds) {
-			document.getElementById('progress').getElementsByTagName('span')[0].innerHTML = currentRound + "/" + totalRounds;
+		updateHudProgress: function(progress) {
+			document.getElementById('progress').getElementsByTagName('span')[0].innerHTML = progress;
 		},
 	
-		
 		showAnswerDrawer: function(){
 			document.getElementById('answerDrawer').style.display = 'block';
 		},
@@ -394,7 +432,7 @@ define.call(exports, function(){
 			timeUpTextStyle.opacity = 0;
 			
 			setTimeout(function() {
-				self.fire('timeUpHidden',document.getElementById(correct).innerHTML);
+				self.revealAll(document.getElementById(correct).innerHTML);
 			}, 1001);
 		}
 		
@@ -404,6 +442,14 @@ define.call(exports, function(){
 		
 		constructor: function() {
 			console.log('Home Screen created');
+		}
+		
+	}),
+	
+	HighscoreScreen = my.Class({
+		
+		constructor: function() {
+			console.log('Highscore Screen created');
 		}
 		
 	}),
