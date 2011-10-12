@@ -87,12 +87,12 @@ var Wall = $.createClass(Object, {
 		}
 		
 		//click tracking
-		$('.user-talk-archive-anchor').click(this.proxy(this.trackClick));
-		$('.edited-by a').click(this.proxy(this.trackClick));
-		$('.timestamp a').click(this.proxy(this.trackClick));
-		$('.speech-bubble-avatar a').click(this.proxy(this.trackClick));
-		$('.load-more a').click(this.proxy(this.trackClick));
+		$('.user-talk-archive-anchor').click(this.proxy(this.trackClick) );
+		$('.edited-by a').live( 'click', this.proxy(this.trackClick) );
+		$('.timeago').live( 'click', this.proxy(this.trackClick) );
+		$('.avatar').live( 'click', this.proxy(this.trackClick) );
 		$('#WallBrickHeader .wall-owner').click(this.proxy(this.trackClick));
+		$('.load-more a').click(this.proxy(this.trackClick));
 		
 		// fix firefox bug (when textarea is disabled and you refresh a page
 		// it's still disabled on new page loaded
@@ -818,23 +818,24 @@ var Wall = $.createClass(Object, {
 	},
 	
 	trackAnon: function(url) {
-		$.tracker.byStr('1_wikia/anon/wall/' + url);
+		$.tracker.byStr(url);
 	},
 	
 	trackClick: function(event) {
-		var node = $(event.target);
+		var node = $(event.target),
+			parent = node.parent();
 		
 		if( node.hasClass('user-talk-archive-anchor') ) {
 			this.track('archived_talk_page/view');
-		} else if( node.parent().hasClass('edited-by') && node.hasClass('subtle') ) {
+		} else if( parent.hasClass('edited-by') && node.hasClass('subtle') ) {
 			this.track('message/username');
-		} else if( node.parent().hasClass('edited-by') && !node.hasClass('subtle') ) {
+		} else if( parent.hasClass('edited-by') && !node.hasClass('subtle') ) {
 			this.track('message/name');
-		} else if( node.parent().hasClass('speech-bubble-avatar') ) {
+		} else if( parent.parent().hasClass('speech-bubble-avatar') ) {
 			this.track('message/avatar');
-		} else if( node.parent().hasClass('timestamp') ) {
+		} else if( parent.parent().hasClass('timestamp') ) {
 			this.track('message/timestamp');
-		} else if( node.parent().hasClass('load-more') ) {
+		} else if( parent.hasClass('load-more') ) {
 			this.track('message/uncondense');
 		} else if( node.hasClass('wall-owner') ) {
 			this.track('thread_page/owners_wall');

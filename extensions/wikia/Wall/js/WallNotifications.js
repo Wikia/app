@@ -32,6 +32,10 @@ var WallNotifications = $.createClass(Object, {
 		
 		$('#wall-notifications-markasread')
 			.live('click', this.proxy( this.markAllAsRead ) );
+		
+		if( this.monobook === false ) {
+			$('#WallNotifications .bubbles').trackClick('wall/notifications/dropdown_open');
+		}
 	},
 	
 	updateLoop: function() {
@@ -47,7 +51,6 @@ var WallNotifications = $.createClass(Object, {
 					this.updateHtml(data);
 					this.updateInProgress = false;
 				})
-	
 			});
 		}
 	},
@@ -102,6 +105,11 @@ var WallNotifications = $.createClass(Object, {
 			else {
 				$('#bubbles_count').html('');
 				$('.bubbles').removeClass('reddot');
+			}
+			
+			if( this.monobook === false ) {
+				$('.read_notification').trackClick('wall/notifications/read');
+				$('.unread_notification').trackClick('wall/notifications/unread');
 			}
 		}
 	},
