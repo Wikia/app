@@ -3,7 +3,7 @@
 		if (empty($dropdown)) {
 			// render simple edit button
 ?>
-<a accesskey="e" href="<?= htmlspecialchars($action['href']) ?>" class="<?= $class ?>" data-id="<?= $actionName ?>"><?= $icon ?> <?= htmlspecialchars($action['text']) ?></a>
+<a accesskey="e" href="<?= htmlspecialchars($action['href']) ?>" class="<?= $class ?>" data-id="<?= $actionName ?>"><?= $icon ?> <?= htmlspecialchars($action['text']) ?><?= $action['html'] ?></a>
 <?php
 		}
 		// render edit button with dropdown
