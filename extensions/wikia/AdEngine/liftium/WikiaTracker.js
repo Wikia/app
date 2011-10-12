@@ -181,6 +181,11 @@ WikiaTracker.inGroup = function(group) {
 		in_group = this._in_group_cache[group];
 		this.debug('inGroup from cache', 5); // FIXME NEF 7
 	} else {
+		if (typeof window.beacon_id == 'undefined') {
+			this.debug('beacon_id unavailable (yet?), bailing out', 3);
+			return false;
+		}
+
 		this.debug('beacon_id: ' + window.beacon_id, 5); // FIXME NEF 7
 		var hash = this._simpleHash(window.beacon_id, 100);
 		this.debug('beacon hashed: ' + hash, 5); // FIXME NEF 7
