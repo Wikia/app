@@ -28,7 +28,7 @@
 		</div>
 
 		<div class="timestamp" style="clear:both">
-			<a  href="<?= $fullpageurl; ?>" class='permalink'>
+			<a  href="<?= $fullpageurl; ?>" class="permalink" tabindex="-1">
 				<div class="timeago abstimeago" title="<?= $iso_timestamp ?>" alt="<?= $fmt_timestamp ?>">&nbsp;</div>
 			</a>
 		</div>
