@@ -24,7 +24,7 @@ class AutomaticWikiAdoptionGatherDataTest extends PHPUnit_Framework_TestCase {
 
 		$mock->expects($this->once())
 				->method('getMaxWikiId')
-				->will($this->returnValue(270000));
+				->will($this->returnValue(263000));
 		
 		$mock->expects($this->once())
 				->method($action) //'setAdoptionFlag' or 'sendEmail'
