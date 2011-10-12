@@ -562,6 +562,7 @@ AdDriverDelayedLoader.callDART = function() {
 					// Based on Liftium.callInjectedIframeAd
 					WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "slot", AdDriverDelayedLoader.currentAd.size+ "_" + AdDriverDelayedLoader.currentAd.slotname]) + '/addriver', 'liftium.slot');
 					WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "slot", AdDriverDelayedLoader.currentAd.size+ "_" + AdDriverDelayedLoader.currentAd.slotname]) + '/addriver', 'liftium.slot2');
+					Liftium.trackEvent(Liftium.buildTrackUrl(["slot", AdDriverDelayedLoader.currentAd.size+ "_" + AdDriverDelayedLoader.currentAd.slotname]) + '/addriver', 'UA-17475676-17');
 				}
 				AdDriverDelayedLoader.loadNext();
 			}
