@@ -13,13 +13,14 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 	announceConnection: true,
 	autoReconnect: true,
 	isInitialized: false,
+	inAuthRequestWithMW: false,
 	comingBackFromAway: false,	
 	roomId: false,
 	socket: false,
 	reConnectCount: 0,
 	constructor: function( roomId ) {
 		NodeChatSocketWrapper.superclass.constructor.apply(this,arguments);
-		NodeChatSocketWrapper.sessionData = null;		
+		this.sessionData = null;		
 		this.roomId = roomId;
 	},
 	
@@ -30,15 +31,24 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 
 	baseconnect: function() {
 		io.transports = globalTransports ;
-		this.socket = io.connect('http://' + WIKIA_NODE_HOST + ':' + WIKIA_NODE_PORT +'?query=string', { 
-			'force new connection' : true,	
-			'try multiple transports': true,
-			'connect timeout': false
+		this.authRequestWithMW(function(data){
+			this.socket = io.connect('http://' + WIKIA_NODE_HOST + ':' + WIKIA_NODE_PORT, { 
+				'force new connection' : true,	
+				'try multiple transports': true,
+				'connect timeout': false,
+				'query':data,
+				'reconnect':false
+			});
+			
+			this.socket.on('connect', this.proxy( this.onConnect, this ) );
+			this.socket.on('message', this.proxy( this.onMsgReceived, this ) );
+		    this.socket.on('disconnect', this.proxy( this.onDisconnect, this ) );
+		    this.socket.on('error', this.proxy( this.onError, this ) );
 		});
+	},
+	
+	onError: function(){
 		
-		this.socket.on('connect', this.proxy( this.onConnect, this ) );
-		this.socket.on('message', this.proxy( this.onMsgReceived, this ) );
-	    this.socket.on('disconnect', this.proxy( this.onDisconnect, this ) );
 	},
 	
 	connect: function() {
@@ -65,8 +75,8 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
     
 	onDisconnect: function(){
 		$().log("Node-server connection needs to be refreshed...");
-		
         this.connected = false;
+        this.socket = false;
 		this.announceConnection = true;
 		
 		// Sometimes the view is in a state where it shouldn't reconnected (eg: user has entered the same room from another computer and wants to kick this instance off w/o it reconnecting).
@@ -75,33 +85,29 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 		}
     },
 	
-    onAuthRequestWithMW: function() {
+    authRequestWithMW: function(callback) {
 		// We can't access the second-level-domain cookies from Javascript, so we make a request to wikia's
 		// servers (which we trust) to echo back the session info which we then send to node via socket.io
 		// (which doesn't reliably get cookies directly from clients since they may be on flash, etc. and
 		// there isn't good support for getting cookies anyway).
 		$().log("Getting full session info from Apache.");
+		if(this.isAuthRequestWithMW){
+			return true;
+		}
 		
+		this.isAuthRequestWithMW = true;
 		
 		this.checkSession = function(data) {
-			NodeChatSocketWrapper.sessionData = data;
-			$().log("Got full session info from Apache: ");
-
-			var authData = {
-					'name': wgUserName, // for debugging only
-					'key': data.key,
-					'roomId': this.roomId // this is set in the js by Chat_Index.php
-			};
-			
-			var authInfo = new models.AuthInfo(authData);
-			$().log(authInfo)
-			this.send(authInfo.xport());
-
-			$().log("Sent auth info");
+			this.proxy(callback, this)('name=' + wgUserName + '&key=' + data.key + '&roomId=' + this.roomId);
 		};
-		
-		if(NodeChatSocketWrapper.sessionData == null) {
-			$.post(wgScript + '?action=ajax&rs=ChatAjax&method=echoCookies&time=' + (new Date().getTime()) + "&name=" + wgUserName , {}, this.proxy(this.checkSession, this) );
+
+		if(this.sessionData == null) {
+			$().log(wgScript + '?action=ajax&rs=ChatAjax&method=echoCookies&time=' + (new Date().getTime()) + "&name=" + wgUserName);
+			$.post(wgScript + '?action=ajax&rs=ChatAjax&method=echoCookies&time=' + (new Date().getTime()) + "&name=" + wgUserName , {}, 
+				this.proxy(function(data) {
+					this.isAuthRequestWithMW = false;
+					this.checkSession(data); 
+			}, this));
 		} else {
 			this.checkSession(NodeChatSocketWrapper.sessionData);
 		}
@@ -116,12 +122,8 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
     },
     
     onMsgReceived: function(message) {
-    	$().log(message);
+    	$().log(message.event);
     	switch(message.event) {
-			case 'auth':
-					// Server has requested that the client send its authentication data (Wikia session cookies).
-					this.onAuthRequestWithMW(message);
-				break;
 			case 'disableReconnect':
 				this.autoReconnect = false;
 				break;
@@ -141,16 +143,17 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
     },
     
 	tryconnect: function (){
+    	$().log('tryconnect');
         if(!this.connected) {
 			$().log("Trying to re-connect to node-server:" + this.reConnectCount);
             this.connect();
             clearTimeout(trying);
             this.reConnectCount++;
             
-            if(this.reConnectCount == 15) {
+            if(this.reConnectCount == 35) {
             	this.fire( "reConnectFail", {} );
             } else {
-            	trying = setTimeout(this.proxy(this.tryconnect, this), 5000);	
+            	trying = setTimeout(this.proxy(this.tryconnect, this), 500);	
             }
         }
     }
