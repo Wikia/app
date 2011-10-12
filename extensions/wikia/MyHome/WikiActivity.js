@@ -67,8 +67,12 @@ var WikiActivity = {
 			WikiActivity.track('diff');
 		}
 		// user name
-		else if (node.parent().is('cite')) {
+		else if (node.parent().is('cite') || (!node.hasClass('real-name') && node.parent().hasClass('author')) ) {
 			WikiActivity.track('user');
+		}
+		// name (added with wall extension)
+		else if ( node.hasClass('real-name') && node.parent().hasClass('author') ) {
+			WikiActivity.track('name');
 		}
 		// badge (r25110 refactored)
 		else if (node.hasClass('badgeName')) {

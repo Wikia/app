@@ -290,7 +290,7 @@ class FeedRenderer {
 			$html .= '<p class="author">';
 			if( !empty($comment['user-profile-url']) ) {
 				if( !empty($comment['real-name']) ) {
-					$html .= '<a href="'.$comment['user-profile-url'].'">'.$comment['real-name'].'</a>';
+					$html .= '<a href="'.$comment['user-profile-url'].'" class="real-name">'.$comment['real-name'].'</a>';
 					$html .= ' <span>'.$comment['author'].'</span>';
 				} else {
 					$html .= '<a href="'.$comment['user-profile-url'].'">'.$comment['author'].'</a>';

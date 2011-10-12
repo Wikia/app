@@ -376,8 +376,10 @@ class WallHooksHelper {
 			}
 			
 			$canEdit = $app->wg->User->isAllowed('editwallarchivedpages');
+			
 			if( $canEdit ) {
 				$action['text'] = $app->wf->Msg('edit');
+				$action['id'] = 'talkArchiveEditButton';
 			}
 		}
 		
