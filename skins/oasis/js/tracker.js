@@ -626,7 +626,7 @@ $(function() {
 		function simpleHash(s, tableSize) {
 			var i, hash = 0;
 			for (i = 0; i < s.length; i++) {
-				hash += (String.prototype.charCodeAt.call(s[i]) * (i+1));
+				hash += (s.charCodeAt(i) * (i+1));
 			}
 			return Math.abs(hash) % tableSize;
 		}

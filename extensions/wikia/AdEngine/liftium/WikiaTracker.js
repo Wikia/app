@@ -160,7 +160,7 @@ WikiaTracker._track2 = function(page, profile, sample) {
 WikiaTracker._simpleHash = function(s, tableSize) {
 		var i, hash = 0;
 		for (i = 0; i < s.length; i++) {
-			hash += (s[i].charCodeAt() * (i+1));
+			hash += (s.charCodeAt(i) * (i+1));
 		}
 		return Math.abs(hash) % tableSize;
  };
