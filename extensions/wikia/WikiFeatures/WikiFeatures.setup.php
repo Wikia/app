@@ -14,6 +14,7 @@ $app->registerClass('WikiaLabsSpecialController', $dir . 'WikiaLabsSpecialContro
 
 // i18n mapping
 $wgExtensionMessagesFiles['WikiFeatures'] = $dir . 'WikiFeatures.i18n.php';
+$wgExtensionAliasesFiles['WikiFeatures'] = $dir . 'WikiFeatures.alias.php' ;
 
 // special pages
 $app->registerSpecialPage('WikiFeatures', 'WikiFeaturesSpecialController');
