@@ -105,7 +105,7 @@
 #article-comments .comments {
 	clear: both;
 	list-style: none;
-	li{
+	& > li{
 		list-style: none;
 	}
 }
@@ -120,6 +120,9 @@
 	.article-comm-text {
 		overflow: hidden;
 		width: 468px;
+	}
+	& > li{
+		list-style: none;
 	}
 }
 
