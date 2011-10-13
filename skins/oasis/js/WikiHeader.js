@@ -55,6 +55,11 @@ var WikiHeader = {
 				}
 			}
 		});
+
+		if (
+			( (wgPageName == "MediaWiki:Wiki-navigation") || (wgPageName == "MediaWiki:Wikia-navigation-global") )
+			&& (wgAction == "edit")
+		) $('#wpSave').hide();
 	},
 
 	mouseover: function(event) {
