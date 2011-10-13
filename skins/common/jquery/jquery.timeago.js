@@ -108,10 +108,10 @@
     if (!isNaN(data.datetime)) {
       if($(this).hasClass('abstimeago') && $(this).attr('alt')) {
       	var one_day = 1000*60*60*24;
-      	if( ( distance(data.datetime) )/one_day > 3 )
+      	if( ( distance(data.datetime) )/one_day > 7 )
       		$(this).text( $(this).attr('alt') );
       	else
-      		$(this).text( inWords(data.datetime) + ' (' + $(this).attr('alt') + ')' );
+      		$(this).text( inWords(data.datetime) );
       } else 
       	$(this).text(inWords(data.datetime));
     }
