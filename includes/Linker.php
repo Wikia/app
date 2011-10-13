@@ -953,7 +953,7 @@ class Linker {
 			$messageWallPage = Title::makeTitle( NS_USER_WALL, $userText );
 			$link = $this->link(
 				$messageWallPage, 
-				wfMsgHtml( 'wall-message-wall' ),
+				wfMsgHtml( 'wall-message-wall-short' ),
 				array(),
 				array(),
 				array( 'known', 'noclasses' )

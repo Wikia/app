@@ -528,17 +528,32 @@ class WallHooksHelper {
 		return true;
 	}
 	
+	public function onChangesListInsertFlags($list, $flags, $rc) {
+		if( $rc->getAttribute('rc_type') == RC_NEW && $rc->getAttribute('rc_namespace') == NS_USER_WALL_MESSAGE ) {
+			$app = F::app();
+			$wnEntity = F::build('WallNotificationEntity', array($rc->getAttribute('rc_id'), $app->wg->CityId), 'getByWikiAndRCId');
+			
+			if( !empty($wnEntity->data->parent_id) ) {
+			//we don't need flags if this is a reply on a message wall
+				$flags = '';
+			}
+		}
+		
+		return true;
+	}
+	
 	public function onChangesListInsertArticleLink($list, $articleLink, $s, $rc, $unpatrolled, $watched) {
 		if(($rc->getAttribute('rc_type') == RC_NEW || $rc->getAttribute('rc_type') == RC_EDIT) && $rc->getAttribute('rc_namespace') == NS_USER_WALL_MESSAGE ) {
 			$app = F::app();
 			
 			$wnEntity = F::build('WallNotificationEntity', array($rc->getAttribute('rc_id'), $app->wg->CityId), 'getByWikiAndRCId');
+			$messageWallPage = F::build('Title', array(NS_USER_WALL, $wnEntity->data->parent_username), 'makeTitle');
 			
 			$link = $wnEntity->data->url;
 			$title = $wnEntity->data->thread_title;
 			$class = '';
 			
-			$articleLink = '<a href="'.$link.'" class="'.$class.'" >'.$title.'</a>';
+			$articleLink = '<a href="'.$link.'" class="'.$class.'" >'.$title.'</a> '.$app->wf->Msg('wall-recentchanges-article-link-new-message', array($messageWallPage->getFullUrl(), $messageWallPage->getText()));
 			# Bolden pages watched by this user
 			if( $watched ) {
 				$articleLink = '<strong class="mw-watched">'.$articleLink.'</strong>';
@@ -587,7 +602,7 @@ class WallHooksHelper {
 				$link = $wnEntity->data->url;
 				$link = '<a href="'.$link.'">'.$app->wf->Msg('wall-user-wall-link-text', array($wnEntity->data->wall_username)).'</a>';
 				
-				$comment = ($rc->getAttribute('rc_type') == RC_NEW) ? $app->wf->Msg('wall-recentchanges-new-message', array($link, $content)) : $app->wf->Msg('wall-recentchanges-edit');
+				$comment = ($rc->getAttribute('rc_type') == RC_NEW) ? $app->wf->Msg('wall-recentchanges-comment-new-message', array($content)) : $app->wf->Msg('wall-recentchanges-edit');
 			} else {
 				$comment = ($rc->getAttribute('rc_type') == RC_NEW) ? $app->wf->Msg('wall-recentchanges-new-reply', array($content)) : $app->wf->Msg('wall-recentchanges-edit');
 			}
