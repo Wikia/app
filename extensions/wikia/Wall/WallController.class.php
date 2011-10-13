@@ -180,7 +180,7 @@ class WallController extends ArticleCommentsModule {
 		wfProfileIn( __METHOD__ );
 		$comment = $this->request->getVal('comment');
 
-		if(($comment instanceof ArticleComment)) {
+		if(!($comment instanceof ArticleComment)) {
 			$this->forward( $this->response->getControllerName(), 'message_error');
 			return;
 		}
