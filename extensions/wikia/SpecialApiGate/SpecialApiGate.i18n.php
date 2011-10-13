@@ -16,7 +16,8 @@ $messages['en'] = array(
 	'apigate' => 'API Gate',
 	'apigate-desc' => 'API Gate is an Open Source API Key Management system that is being used to manage access to the Wikia API.',
 	'apigate-nologin' => 'Please log in to get an API key',
-	'apigate-nologintext' => 'In order to get an API key, you must be logged in to a Wikia account.  This will let you track the API keys for all of your applications from one place.',
+	'apigate-nologintext' => 'In order to get an API key, you must log in to a Wikia account.  This will let you track the API keys for all of your applications from one place.',
+	'apigate-login-button' => 'Log in',
 );
 
 /** Message documentation (Message documentation)
