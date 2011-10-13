@@ -2,8 +2,6 @@
 
 class RelatedVideosController extends WikiaController {
 
-
-	const MAX_RELATEDVIDEOS = 25;
 	const SURVEY_URL = 'http://www.surveymonkey.com/s/RelatedVideosExperience';
 	public function __construct( WikiaApp $app ) {
 		$this->app = $app;
@@ -16,7 +14,7 @@ class RelatedVideosController extends WikiaController {
 		$relatedVideos = RelatedVideos::getInstance();
 		$videos = $relatedVideos->get(
 			$this->app->wg->title->getArticleId(),
-			RelatedVideosController::MAX_RELATEDVIDEOS
+			RelatedVideos::MAX_RELATEDVIDEOS
 		);
 
 		if ( !is_array( $videos ) ){ $videos = array(); }

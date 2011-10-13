@@ -5,6 +5,8 @@ class RelatedVideos extends RelatedPages {
 	protected $memcKeyPrefix = 'RelatedVideos';
 	protected $width = 160;
 	static protected $videoInstance = null;
+	
+	const MAX_RELATEDVIDEOS = 25;
 
 	protected function getPageJoinSql( $dbr, &$tables ) {
 

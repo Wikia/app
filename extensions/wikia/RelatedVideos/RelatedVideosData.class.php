@@ -129,7 +129,7 @@ class RelatedVideosData {
 		// add to article's whitelist
 		$rvn = F::build('RelatedVideosNamespaceData', array($targetTitle), 'newFromTargetTitle');
 		$entry = $rvn->createEntry($videoTitle->getText(), $videoProvider == VideoPage::V_WIKIAVIDEO);
-		$retval = $rvn->addToList( RelatedVideosNamespaceData::WHITELIST_MARKER, array($entry) );
+		$retval = $rvn->addToList( RelatedVideosNamespaceData::WHITELIST_MARKER, array($entry), $articleId );
 		if (is_object($retval)) {
 			if ($retval->ok) {
 				$data['articleId'] = $videoPageId;

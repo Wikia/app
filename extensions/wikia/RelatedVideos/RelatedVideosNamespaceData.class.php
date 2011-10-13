@@ -254,9 +254,10 @@ class RelatedVideosNamespaceData {
 	 * Add entries to specified list, and remove them from the other list
 	 * @param string $list BLACKLIST_MARKER or WHITELIST_MARKER
 	 * @param array $entries
+	 * @param int $mainNsArticleId ID of associated article in NS_MAIN
 	 * @return type 
 	 */
-	public function addToList($list, Array $entries) {
+	public function addToList($list, Array $entries, $mainNsArticleId) {
 
 		wfProfileIn( __METHOD__ );
 		$content = '';
@@ -264,6 +265,37 @@ class RelatedVideosNamespaceData {
 		$summary = '';
 		$this->load();	
 
+		
+		if ($list == self::WHITELIST_MARKER) {
+			// check Related Pages results for duplicate
+			// initialize categories of RelatedPages object
+			$mainNsTitle = Title::newFromID($mainNsArticleId);
+			$categoryMap = $mainNsTitle->getParentCategories();
+			$startIdx = strlen('Category:');
+			$categories = array();
+			foreach ($categoryMap as $categoryTitle=>$articleTitle) {
+				$shortCategoryTitle = substr($categoryTitle, $startIdx);
+				$categories[$shortCategoryTitle] = $articleTitle;
+			}
+			RelatedVideos::getInstance()->setCategories($categories);
+			
+			// get related videos
+			$relatedVideos = RelatedVideos::getInstance()->get(
+				$mainNsArticleId,
+				RelatedVideos::MAX_RELATEDVIDEOS
+				);
+			
+			// check for duplicate
+			foreach ($relatedVideos as $dateId=>$rvData) {
+				foreach ($entries as $newEntry) {
+					if ($newEntry['title'] == $rvData['title']) {
+						wfProfileOut( __METHOD__ );
+						return wfMsg('related-videos-add-video-error-duplicate');						
+					}
+				}
+			}
+		}
+		
 		// first, add to this list
 		if (!empty($this->mData['lists'][$list])) {
 			foreach ($this->mData['lists'][$list] as $entry) {
