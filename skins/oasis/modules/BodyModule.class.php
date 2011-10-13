@@ -293,6 +293,7 @@ class BodyModule extends Module {
 		}
 
 		if (self::isBlogPost() || self::isBlogListing()) {
+			$railModuleList[1500] = array('Search', 'Index', null);
 			$railModuleList[1250] = array('PopularBlogPosts', 'Index', null);
 			if($wgEnableSpotlightsV2_Rail) {
 				$railModuleList[1150] = array('Spotlights', 'Index', $spotlightsParams);
