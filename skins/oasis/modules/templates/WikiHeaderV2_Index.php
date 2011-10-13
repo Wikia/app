@@ -19,7 +19,6 @@
 		<?php
 			// render "Contribute" menu
 			echo wfRenderModule('ContributeMenu');
-			echo wfRenderModule('ShareButton');
 		?>
 	</div>
 
