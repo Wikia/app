@@ -72,19 +72,32 @@ class SpecialApiGate extends SpecialPage {
 				break;
 			case $this->SUBPAGE_REGISTER:
 
-				$data = array();
-
 				// Users must be logged in to get an API key
-				if ( !$wgUser->isAllowed( 'emailconfirmed' ) ) {
-					if( !$wgUser->isLoggedIn() ){
-						$wgOut->showErrorPage( 'apigate-nologin', 'apigate-nologintext' );
-					} else {
-						$wgOut->permissionRequired( 'emailconfirmed' );
-					}
-				} else {
+				if( !$wgUser->isLoggedIn() ){
+					$wgOut->setPageTitle( wfMsg( 'apigate-nologin' ) );
+					$wgOut->setHTMLTitle( wfMsg( 'errorpagetitle' ) );
+					$wgOut->setRobotPolicy( 'noindex,nofollow' );
+					$wgOut->setArticleRelated( false );
+					$wgOut->enableClientCache( false );
 
-					// TODO: Set up some more vars for registration form (user_id?) - also, prepopulate their email addr if they're email-confirmed
-					// TODO: Set up some more vars for registration form (user_id?) - also, prepopulate their email addr if they're email-confirmed
+					$mainSectionHtml .= wfMsg('apigate-nologintext') . "<br/><br/><button type='button' data-id='login' class='ajaxLogin'>" . wfMsg('apigate-login-button') . "</button>";
+				} else {
+					$data = array('firstName' => '', 'lastName' => '', 'email_1' => '', 'email_2' => '');
+
+					// If the user's real name is in their profile, split it up and use it to initialize the form.
+					$name = $wgUser->getName();
+					$index = strpos($name, " ");
+					if($index === false){
+						$data['firstName'] = $name;
+						$data['lastName'] = "";
+					} else {
+						$data['firstName'] = substr($name, 0, $index);
+						$data['lastName'] = substr($name, $index+1);
+					}
+
+					// If the user has an email address set, use it to pre-populate the form.
+					$data['email_1'] = $wgUser->getEmail();
+					$data['email_2'] = $data['email_1'];
 
 					$mainSectionHtml = ApiGate_Dispatcher::renderTemplate( $data, "register" );
 				}
@@ -112,7 +125,7 @@ class SpecialApiGate extends SpecialPage {
 			default:
 
 				// TODO: Landing page
-				print "This is where the landing-page will go. It will be state-dependent on the user, their keys, etc.\n"; // TODO: REMOVE
+				$wgOut->addHTML( "This is where the landing-page will go. It will be state-dependent on the user, their keys, etc.\n" ); // TODO: REMOVE
 				// TODO: Landing page
 
 				break;
