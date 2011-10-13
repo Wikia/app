@@ -260,7 +260,7 @@ class RTE {
 
 		// local path to RTE (used to apply htc fixes for IE)
 		// this MUST point to local domain
-		$vars['RTELocalPath'] = $wgExtensionsPath . '/wikia/RTE';
+		$vars['RTELocalPath'] = $wgServer . '/extensions/wikia/RTE';
 
 		$vars['CKEDITOR_BASEPATH'] = $wgExtensionsPath . '/wikia/RTE/ckeditor/';
 
@@ -408,8 +408,8 @@ HTML
 		// BugId: 11336 disable RTE on Special SMW namespaces
 		if ($wgEnableSemanticMediaWikiExt && in_array(self::$title->getNamespace(), array( SMW_NS_PROPERTY, SF_NS_FORM, NS_CATEGORY, SMW_NS_CONCEPT ))) {
 			self::disableEditor('smw_namespace');
-		}		
-		
+		}
+
 		// RT #10170: do not initialize for user JS/CSS subpages
 		if (self::$title->isCssJsSubpage()) {
 			RTE::log('editor is disabled on user JS/CSS subpages');
@@ -705,11 +705,11 @@ HTML
 	 * The self::$initMode variable is checked for this
 	 * @return boolean true/false if we are in fancy edit mode
 	 */
-	
+
 	static function isWysiwygModeEnabled() {
 		return (self::$useWysiwyg && self::$initMode == "wysiwyg");
 	}
-	
+
 	/**
 	 * This will be false if mediawiki editor is being used
 	 * @return boolean true/false if RTE is enabled
@@ -717,7 +717,7 @@ HTML
 	static function isEnabled() {
 		return self::$useWysiwyg;
 	}
-	
+
 	/**
 	 * Add "Enable Rich Text Editing" as the first option in editing tab of user preferences
 	 */
