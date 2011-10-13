@@ -389,6 +389,8 @@ class ChangesList {
 
 	/** insert a formatted action */
 	public function insertAction( &$s, &$rc ) {
+		$actionText = '';
+		
 		if( $rc->mAttribs['rc_type'] == RC_LOG ) {
 			if( $this->isDeleted( $rc, LogPage::DELETED_ACTION ) ) {
 				$actionText = ' <span class="history-deleted">' . wfMsgHtml( 'rev-deleted-event' ) . '</span>';
@@ -505,7 +507,7 @@ class ChangesList {
 				wfRunHooks( 'ChangesListInsertRollback', array(&$this, &$s, &$rollbackLink, $rc) );
 				
 				$s .= ' '.$rollbackLink;
-				/*End of Wikia change @author nAndy */
+				/*End of Wikia change*/
 			}
 		}
 	}
