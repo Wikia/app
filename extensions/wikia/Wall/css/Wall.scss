@@ -405,9 +405,6 @@ $new_inputs_bg: mix($bubble_bg, $inputs_bg,20%);
 		&:hover .timeago-fmt { display: block; }
 	}
 	
-	/* reserve space for invisible buttons */
-	.abs-container { position: absolute; width: 100% }
-	
 	.tools {
 		font-size: 11px;
 		.sprite.edit-pencil {

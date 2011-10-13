@@ -20,8 +20,17 @@ class WallHooksHelper {
 		if( $title->getNamespace() == NS_USER_WALL_MESSAGE && !empty($parts[1]) ) {
 			// thread / message link in form of @comment-username-number
 			// needs converting to articleId
-
-			$title = F::build('Title', array($parts[0].'/'.$title->getArticleId(), NS_USER_WALL), 'newFromText');
+			$articleId = $title->getArticleId();
+			if($articleId == 0) {
+				// thread was deleted, ressurect it's ID from archives
+				$dbr = wfGetDB( DB_SLAVE );
+				$row = $dbr->selectRow( 'archive',
+					array( 'ar_page_id' ),
+					array( 'ar_title' => str_replace(' ','_',$title->getText() ) ),
+					__METHOD__ );
+					$articleId = $row->ar_page_id;
+			}
+			$title = F::build('Title', array($parts[0].'/'.$articleId, NS_USER_WALL), 'newFromText');
 			$app->wg->Out->redirect($title->getFullUrl(), 301);
 			$app->wg->Out->enableRedirects(false);
 			return true;
