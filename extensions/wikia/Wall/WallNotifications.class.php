@@ -232,7 +232,7 @@ class WallNotifications {
 	}
 	
 	protected function sleep($userId, $wikiId){
-		$time = 100000 - $count*1000; //change priority of process with access to resorce
+		$time = 100000 - $count*1000; //change priority of process with access to resource
 		if($time < 0) {
 			$time = 0;
 		}
@@ -314,7 +314,6 @@ class WallNotifications {
 		$dbData = $this->getBackupData($userId, $wikiId);
 		
 		foreach($dbData as $key => $value) {
-			//$this->addNotificationToData($data, $value['unique_id'], $value['entity_key'], $value['author_id'], $value['read']);
 			$this->addNotificationToData($data, $value['unique_id'], $value['entity_key'], $value['author_id'], $value['is_read'], $value['is_reply']);
 		}
 		
