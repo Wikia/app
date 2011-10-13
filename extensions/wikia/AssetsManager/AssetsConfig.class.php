@@ -38,27 +38,21 @@ class AssetsConfig {
 	public static function getRTEAssets( $combine ) {
 		global $IP;
 		$path = "extensions/wikia/RTE";
-		$files = array();
+		$files = array(
+			// CK core entry point
+			$path . '/ckeditor/_source/core/ckeditor_base.js',
+		);
 
-		if( $combine ) {
-			$input = file_get_contents( $IP . '/' . $path . '/ckeditor/ckeditor.wikia.pack' );
-			$input = substr( $input, strpos($input, 'files :') + 7 );
-			$input = trim( $input, " \n\t[]{}" );
+		$input = file_get_contents( $IP . '/' . $path . '/ckeditor/ckeditor.wikia.pack' );
+		$input = substr( $input, strpos($input, 'files :') + 7 );
+		$input = trim( $input, " \n\t[]{}" );
 
-			// CK core files
-			$files[] = $path . '/ckeditor/_source/core/ckeditor_base.js';
-
-			// get all *.js files
-			if ( preg_match_all( '%[^/]\'([^\']+).js%', $input, $matches, PREG_SET_ORDER ) ) {
-				foreach( $matches as $match ) {
-					$name = $match[1] . '.js';
-					$files[] = $path . '/ckeditor/' . $name;
-				}
+		// get all *.js files from ckeditor.wikia.pack file
+		if ( preg_match_all( '%[^/]\'([^\']+).js%', $input, $matches, PREG_SET_ORDER ) ) {
+			foreach( $matches as $match ) {
+				$name = $match[1] . '.js';
+				$files[] = $path . '/ckeditor/' . $name;
 			}
-		} else {
-			$files[] = $path . '/ckeditor/ckeditor_source.js';
-			$files[] = $path . '/js/RTE.js';
-			$files[] = $path . '/js/jquery.editor.js';
 		}
 
 		return $files;
