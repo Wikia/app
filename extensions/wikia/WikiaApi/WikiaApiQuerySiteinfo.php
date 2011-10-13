@@ -18,7 +18,7 @@ class WikiaApiQuerySiteinfo extends ApiQuerySiteinfo {
 	public function __construct($query, $moduleName) {
 		global $wgHooks;
 		$wgHooks['UseExternalQuerySiteInfo'][] = 'WikiaApiQuerySiteinfo::useExternalQuerySiteInfo';
-		parent :: __construct($query, $moduleName, 'si');
+		parent :: __construct($query, $moduleName);
 	}
 
 	public function execute() {
