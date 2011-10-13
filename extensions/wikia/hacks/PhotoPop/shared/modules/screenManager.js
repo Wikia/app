@@ -14,20 +14,21 @@ define.call(exports, function(){
 			this._domElement = document.getElementById(id + 'Screen');
 			
 			if(!this._domElement) throw "Couldn't find screen '" + id + "'";
-			
-			switch(id){
-				case 'game':
-					this.screen = new GameScreen();
-					break;
-				case 'home':
-					this.screen = new HomeScreen();
-					break;
-			};
 				
 			this._manager = manager;
 			this._screenId = id;
 			this._origDisplay = (this._domElement.style.display && this._domElement.style.display != 'none') ? this._domElement.style.display : 'block';
 			Observe(this);
+			
+			switch(id){
+				case 'game':
+					return new GameScreen(this);
+				case 'home':
+					return new HomeScreen(this);
+				case 'highscore':
+					return HighscoreScreen(this);
+			};
+			return this;
 		},
 		
 		hide: function(){
@@ -52,9 +53,20 @@ define.call(exports, function(){
 		_barWrapperHeight: 0,
 		_tutorialSteps: [],
 		
-		constructor: function() {
+		constructor: function(parent) {
 			console.log('Game Screen created');
 			Observe(this);
+			this._parent = parent;
+		},
+		
+		show: function() {
+			return this._parent.show();
+		},
+		hide: function() {
+			return this._parent.hide();
+		},
+		getElement: function() {
+			return this._parent.getElement();
 		},
 		
 		init: function() {
@@ -74,6 +86,25 @@ define.call(exports, function(){
 			this.addEventListener('timeIsUp', this.timeIsUp);
 			this.addEventListener('continueClicked', this.continueClicked);
 			this.addEventListener('endGame', this.endGame);
+			this.addEventListener('paused', this.paused);
+			this.addEventListener('resumed', this.resumed);
+			this.addEventListener('goHomeClicked', this.goHomeClicked);
+		},
+		
+		goHomeClicked: function(e, gameFinished) {
+			if(gameFinished) {
+				//this.prepareGameScreen();
+			}
+		},
+		
+		resumed: function() {
+			document.getElementById('pauseButton').getElementsByTagName('img')[0].style.visibility = 'hidden';
+			document.getElementById('pauseButton').getElementsByTagName('img')[1].style.visibility = 'visible';
+		},
+		
+		paused: function() {
+			document.getElementById('pauseButton').getElementsByTagName('img')[1].style.visibility = 'hidden';
+			document.getElementById('pauseButton').getElementsByTagName('img')[0].style.visibility = 'visible';
 		},
 		
 		endGame: function(e, options) {
@@ -104,7 +135,6 @@ define.call(exports, function(){
 			this.hideAnswerDrawer();//puts the drawer back in place
 			this.showAnswerDrawer();
 			this.hideEndGameScreen();//needs to hide previously shown final screen
-			//this.updateHudScore();
 			this.updateScoreBar();//resets the scorebar
 		},
 		
@@ -185,13 +215,7 @@ define.call(exports, function(){
 		},
 		
 		pauseButtonClicked: function(event, pause) {
-			if(pause) {
-				document.getElementById('pauseButton').getElementsByTagName('img')[1].style.visibility = 'hidden';
-				document.getElementById('pauseButton').getElementsByTagName('img')[0].style.visibility = 'visible';
-			} else {
-				document.getElementById('pauseButton').getElementsByTagName('img')[0].style.visibility = 'hidden';
-				document.getElementById('pauseButton').getElementsByTagName('img')[1].style.visibility = 'visible';
-			}
+			
 		},
 		
 		prepareMask: function( watermark, rows, cols ) {
@@ -370,20 +394,20 @@ define.call(exports, function(){
 		},
 		
 		showContinue: function(text) {
-			var nextRoundStyle = document.getElementById('continue').style;
+			var nextRoundStyle = document.getElementById('continue').style,
+			hudStyle = document.getElementById('hud').style;
 			
 			document.getElementById('continueText').innerText = text || 'Next Round';
-			nextRoundStyle.opacity = 1;
-			nextRoundStyle.right = 0;
-			nextRoundStyle.visibility = 'visible';
+			nextRoundStyle.right = '0%';
+			hudStyle.left = '100%';
 		},
 		
 		hideContinue: function() {
-			var nextRound = document.getElementById('continue');
+			var nextRoundStyle = document.getElementById('continue').style,
+			hudStyle = document.getElementById('hud').style;
 			
-			nextRound.style.opacity = 0;
-			nextRound.style.right = 400;
-			nextRound.style.visibility = 'hidden';
+			nextRoundStyle.right = '100%';
+			hudStyle.left = '0%';
 		},
 		
 		showScoreBar: function() {
@@ -440,16 +464,40 @@ define.call(exports, function(){
 	
 	HomeScreen = my.Class({
 		
-		constructor: function() {
+		constructor: function(parent) {
 			console.log('Home Screen created');
+			Observe(this);
+			this._parent = parent;
+		},
+		
+		show: function() {
+			return this._parent.show();
+		},
+		hide: function() {
+			return this._parent.hide();
+		},
+		getElement: function() {
+			return this._parent.getElement();
 		}
 		
 	}),
 	
 	HighscoreScreen = my.Class({
 		
-		constructor: function() {
+		constructor: function(parent) {
 			console.log('Highscore Screen created');
+			Observe(this);
+			this._parent = parent;
+		},
+		
+		show: function() {
+			return this._parent.show();
+		},
+		hide: function() {
+			return this._parent.hide();
+		},
+		getElement: function() {
+			return this._parent.getElement();
 		}
 		
 	}),

@@ -85,8 +85,8 @@ define.call(exports, {
 						<img src='{{#image}}buttonSrc_gameMute{{/image}}'>\
 						<img src='{{#image}}buttonSrc_gameUnmute{{/image}}'>\</div>\
 					<div id='pauseButton'>\
-						<img src='{{#image}}buttonSrc_pause{{/image}}'>\
 						<img src='{{#image}}buttonSrc_resume{{/image}}'>\
+						<img src='{{#image}}buttonSrc_pause{{/image}}'>\
 					</div>\
 					<div id='progress'>\
 						Progress: <span>0/0</span>\

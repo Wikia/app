@@ -3,7 +3,7 @@ var exports = exports || {};
 define.call(exports, function(){
 	
 	var sounds = {},
-	mute= false,
+	mute = false,
 	titanium = typeof Titanium != 'undefined';
 	
 	return {
@@ -18,20 +18,24 @@ define.call(exports, function(){
 		},
 		
 		play: function(sound) {
-			if(!mute){
-				if(titanium)
-					Titanium.App.fireEvent('soundServer:play', {sound: sounds[sound]});
-				else {
-					for(var p in sounds){
+			if(titanium)
+				Titanium.App.fireEvent('soundServer:play', {sound: sounds[sound]});
+			else {
+				if(sound == 'win' || sound == 'fail') {
+					for(var p in sounds) {
 						sounds[p].pause();
 						sounds[p].currentTime = 0;
 					}
-					sounds[sound].play();
 				}
+				sounds[sound].play();
 			}
 		},
 		
-		setMute: function(flag){
+		setMute: function(flag) {
+			for(var sound in sounds) {
+				sounds[sound].muted = flag;
+			}
+
 			return mute = flag;
 		},
 		

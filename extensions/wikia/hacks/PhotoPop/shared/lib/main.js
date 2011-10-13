@@ -36,14 +36,14 @@
 			},
 			
 			initGameScreen = function(e , gameId){
-				screenManager.get('game').screen.fire('prepareGameScreen', imageServer.getAsset('watermark_' + gameId));
+				screenManager.get('game').fire('prepareGameScreen', imageServer.getAsset('watermark_' + gameId));
 
 				//highscore
 				if(!store.get('highScore_' + g.getId())) store.set('highScore_' + g.getId(), 0);
 				document.getElementById('highScore').getElementsByTagName('span')[0].innerHTML = store.get('highScore_' + g.getId());
 				
 				if(g.getId() == 'tutorial')
-					screenManager.get('game').screen.openModal({
+					screenManager.get('game').openModal({
 						name: 'intro',
 						html: "Tap the screen to take a peek of the mystery image underneath.",
 						fade: true,
@@ -85,14 +85,7 @@
 						}
 						
 						if(target.tagName == 'LI'){
-							if(g !== undefined) {
-								screenManager.get('game').show();
-							} else {
-								selectedGameIndex = target.getAttribute('data-idx');
-								selectedGame = games[selectedGameIndex];
-								loadSelectedGame();
-							}
-							
+							runGame(target);
 						}
 					}
 				}
@@ -147,7 +140,7 @@
 			},
 			
 			wrongAnswerClicked = function(event, options) {
-				screenManager.get('game').screen.fire('wrongAnswerClicked', {
+				screenManager.get('game').fire('wrongAnswerClicked', {
 					"class" : Game.INCORRECT_CLASS_NAME,
 					li: options.li,
 					percent: options.percent
@@ -157,7 +150,7 @@
 			
 			rightAnswerClicked = function(event, correct) {
 				if(g.getId() == 'tutorial') {
-					screenManager.get('game').screen.openModal({
+					screenManager.get('game').openModal({
 						name: 'continue',
 						html: 'After the answer is revealed tap the "next" button to continue on to a new image.',
 						fade: true,
@@ -166,14 +159,14 @@
 					});
 				}
 				soundServer.play('win');
-				screenManager.get('game').screen.fire('rightAnswerClicked', correct);
+				screenManager.get('game').fire('rightAnswerClicked', correct);
 			},
 			
 			answerDrawerButtonClicked = function() {
-				screenManager.get('game').screen.fire('answerDrawerButtonClicked');
+				screenManager.get('game').fire('answerDrawerButtonClicked');
 				g.resume();
 				if(g.getId() == 'tutorial') {
-					screenManager.get('game').screen.openModal({
+					screenManager.get('game').openModal({
 						name: 'drawer',
 						html: 'The fewer peek you take, the fewer guesses you make, and the less time you take, the bigger your score!',
 						fade: true,
@@ -184,21 +177,21 @@
 			},
 			
 			answersPrepared = function(e, options) {
-				screenManager.get('game').screen.fire('answersPrepared', options);	
+				screenManager.get('game').fire('answersPrepared', options);	
 			},
 			
 			continueClicked = function() {
-				screenManager.get('game').screen.fire('continueClicked');
+				screenManager.get('game').fire('continueClicked');
 			},
 			
 			endGame = function(e, options) {
-				screenManager.get('game').screen.fire('endGame', options);
+				screenManager.get('game').fire('endGame', options);
 				
 				if (store.get('highScore_' + options.gameId) < options.totalPoints) {
 					document.getElementById('highScore').getElementsByTagName('span')[0].innerHTML = options.totalPoints;
 					store.set('highScore_' + options.gameId, options.totalPoints);
 					
-					screenManager.get('game').screen.openModal({
+					screenManager.get('game').openModal({
 						name: 'highscore',
 						html: 'New highscore: ' + options.totalPoints + ' !',
 						fade: true,
@@ -214,12 +207,20 @@
 			playAgain = function(){
 				var id = g.getId();
 				g.pause();
-				delete g;
+				g = null;
 				selectedGame = games[selectedGameIndex];
 				runGame(selectedGame);
 			},
 			
-			goHome = function() {
+			goHome = function(e, gameFinished) {
+				
+				if(gameFinished) {
+					store.remove(g.getId());
+					g = null;
+				} else {
+					g.fire('storeData');
+				}
+				screenManager.get('game').fire('goHomeClicked', gameFinished);
 				screenManager.get('home').show();
 			},
 			
@@ -228,7 +229,7 @@
 				img.src = (g.getId() == 'tutorial') ? imageServer.getAsset(options.image) : options.image;
 				
 				if(g.getId() != 'tutorial'){
-					screenManager.get('game').screen.openModal({
+					screenManager.get('game').openModal({
 						name: 'Loading Image',
 						html: 'Loading image...<br /> Please wait.',
 						fade: false,
@@ -253,7 +254,7 @@
 			
 			manageInteraction = function() {
 				if(maskShown && imagePreloaded) {
-					if(g.getId() != 'tutorial') screenManager.get('game').screen.closeModal();
+					if(g.getId() != 'tutorial') screenManager.get('game').closeModal();
 					screenManager.get('game').getElement().style.pointerEvents = 'auto';
 					imagePreloaded = maskShown = false;
 				}
@@ -266,10 +267,10 @@
 			tileClicked = function(event, tile) {
 				if(!tile.clicked) {
 					soundServer.play('pop');
-					screenManager.get('game').screen.fire('tileClicked', tile);
+					screenManager.get('game').fire('tileClicked', tile);
 
 					if( g.getId() == "tutorial" ) {
-						screenManager.get('game').screen.openModal({
+						screenManager.get('game').openModal({
 							name: 'tile',
 							html:'Tap the "answer" button to make your guess.',
 							fade: true,
@@ -283,7 +284,7 @@
 			
 			muteButtonClicked = function(){
 				var mute = soundServer.getMute();
-				screenManager.get('game').screen.fire('muteButtonClicked', mute);
+				screenManager.get('game').fire('muteButtonClicked', mute);
 				if(mute) {
 					soundServer.setMute(false);
 				} else {
@@ -292,25 +293,29 @@
 			},
 			
 			pauseButtonClicked = function(e, pause) {
-				screenManager.get('game').screen.fire('pauseButtonClicked', pause);	
+				screenManager.get('game').fire('pauseButtonClicked', pause);	
 			},
-			
-			homeClicked = function() {
-				screenManager.get('home').show();
-			}
 			
 			roundStart = function(e, options) {
 				screenManager.get('game').show().getElement().style.pointerEvents = 'none';
-				screenManager.get('game').screen.fire('roundStart', options);	
+				screenManager.get('game').fire('roundStart', options);	
 			},
 			
 			timeIsUp = function(e, options){
 				soundServer.play('fail');
-				screenManager.get('game').screen.fire('timeIsUp', options);
+				screenManager.get('game').fire('timeIsUp', options);
 			},
 			
 			timerEvent = function(event, percent) {
-				screenManager.get('game').screen.fire('timerEvent', percent);
+				screenManager.get('game').fire('timerEvent', percent);
+			},
+			
+			paused = function() {
+				screenManager.get('game').fire('paused');
+			},
+			
+			resumed = function() {
+				screenManager.get('game').fire('resumed');
 			},
 			
 			timeIsLow = function() {
@@ -321,23 +326,39 @@
 				alert('Error loading ' + resp.url + ': ' + resp.error.toString());
 			};
 			
-			function runGame(selectedGame) {
-				console.log(config.tutorial);
-				if(selectedGame === 'tutorial') {
-					g = new Game({
-						id: 'tutorial',
-						data: config.tutorial,
-						screen: screenManager.get('game')
-					});
+			function runGame(target) {
+				var id, data, game;
+				if(target == 'tutorial') {
+					id =  'tutorial';
+					data = config.tutorial;
+					newGame({_id:id, _data:data});
 				} else {
-					var id = selectedGame.dbName,
+					if(g && g.getId() == selectedGame.dbName) {
+
+						screenManager.get('game').show();	
+					} else {
+						selectedGameIndex = target.getAttribute('data-idx');
+						selectedGame = games[selectedGameIndex];
+						gameData = store.get(selectedGame.dbName)
+						if(gameData) {
+							newGame(gameData);
+						} else {
+							loadSelectedGame();
+						}
+							
+					}
+				}
+			};
+			
+			function loadGame() {
+				var id = selectedGame.dbName,
 					data = [],
 					watermark = 'watermark_' + id,
 					correctLength = selectedGame.c.length,
 					wrongLength = selectedGame.w.length;
 				
 				
-					for(var i = 0; i < Game.ROUND_LENGTH; i++) {
+					for(var i = 0, l = Game.ROUND_LENGTH;i < l; i++) {
 						
 						var a = Math.floor(Math.random() * correctLength),
 						b = Math.floor(Math.random() * correctLength),
@@ -355,19 +376,20 @@
 							correct: selectedGame.c[a].text
 							});
 					}
-					g = new Game({
-						id: id,
-						data: data,
-						screen: screenManager.get('game')
-					});	
-				}
+				newGame({_id:id, _data:data});
+			};
+			
+			function newGame(gameData) {
+				g = new Game(gameData);
+				
 				registerEvents(g);
 				g.prepareGame();
+				console.log(g);
 			};
 			
 			function initHighScoreScreen(){
 				alert('Sorry, this is not implemented ATM...');
-			}
+			};
 			
 			function registerEvents(game) {
 				game.addEventListener('initGameScreen', initGameScreen);
@@ -388,7 +410,8 @@
 				game.addEventListener('pauseButtonClicked', pauseButtonClicked);
 				game.addEventListener('answersPrepared', answersPrepared);
 				game.addEventListener('roundStart', roundStart);
-				game.addEventListener('homeClicked', homeClicked);
+				game.addEventListener('paused', paused);
+				game.addEventListener('resumed', resumed);
 			}
 			
 			//end of event handlers
@@ -418,26 +441,14 @@
 				}
 			});
 			
-			screenManager.get('game').screen.init();
+			//Init all screens
+			screenManager.get('home');
+			screenManager.get('game').init();
 			
-			screenManager.get('game').screen.addEventListener('tileClickedNOT', function() {
-				soundServer.play('pop');
-				if( g.getId() == "tutorial" ) {
-					screenManager.get('game').screen.openModal({
-						name: 'tile',
-						html:'Tap the "answer" button to make your guess.',
-						fade: true,
-						clickThrough: false,
-						closeOnClick: true,
-						triangle: 'right'
-					});
-				}
-			});
-			
-			screenManager.get('game').screen.addEventListener('tilesShown', tilesShown);
-			screenManager.get('game').screen.addEventListener('maskDisplayed', maskDisplayed);
-			screenManager.get('game').screen.addEventListener('modalOpened', modalOpened);
-			screenManager.get('game').screen.addEventListener('displayingMask', displayingMask);
+			screenManager.get('game').addEventListener('tilesShown', tilesShown);
+			screenManager.get('game').addEventListener('maskDisplayed', maskDisplayed);
+			screenManager.get('game').addEventListener('modalOpened', modalOpened);
+			screenManager.get('game').addEventListener('displayingMask', displayingMask);
 			
 			//init data loading
 			gamesListLoader.addEventListener('error', onDataError);
@@ -458,7 +469,7 @@
 					selectedGame[(typeof item.image != 'undefined') ? 'c' : 'w'].push(item);
 				}
 				
-				runGame(selectedGame);
+				loadGame(selectedGame);
 			});
 			
 			if(!tutorialPlayed){
