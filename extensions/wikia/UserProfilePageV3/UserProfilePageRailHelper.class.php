@@ -11,7 +11,12 @@ class UserProfilePageRailHelper {
 		$app = F::App();
 		$app->wf->ProfileIn(__METHOD__);
 		$title = $app->wg->Title;
-		
+		$namespaces = $app->getGlobal( 'UPPNamespaces', array() );
+
+		if ( !in_array( $title->getNamespace(), $namespaces ) ) {
+			return true;
+		}
+	
 		$response = $app->sendRequest(
 			'UserProfilePage',
 			'getUserFromTitle',
