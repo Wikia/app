@@ -7,6 +7,7 @@ $messages['en'] = array(
 	'wall-no-title' => 'No title',
 	'wall-message-loadmore' => 'View all $1 replies',
 	'wall-message-wall' => 'Message Wall',
+	'wall-message-wall-short' => 'Wall',
 	'wall-message-unfollow' => 'Unfollow',
 	'wall-message-following' => 'Following',
 	'wall-message-follow' => 'Follow',
@@ -86,10 +87,13 @@ $messages['en'] = array(
 	'wall-deleted-msg-return-to' => 'Return to $1\'s Wall.',
 
 	'wall-view-revert' => 'View/Revert',
-
-	'wall-recentchanges-new-message' => '(new post on $1: $2)',
-	'wall-recentchanges-new-reply' => '(added reply: $1)',
+	
+	'wall-recentchanges-article-link-new-message' => 'on <a href="$1">$2\'s wall</a>',
+	'wall-recentchanges-comment-new-message' => '(new: "$1")',
+	'wall-recentchanges-new-reply' => '(reply: "$1")',
 	'wall-recentchanges-edit' => '(edited message)',
+);
 
-	'wall-user-wall-link-text' => '$1\'s Wall',
+$messages['qqq'] = array(
+	'wall-recentchanges-article-link-new-message' => '$1 is link to user\'s wall page $2 is username (wall owner)',
 );

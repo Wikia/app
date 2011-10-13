@@ -90,6 +90,7 @@ class ChangesList {
 		$f .= $minor ? self::flag( 'minor' ) : $nothing;
 		$f .= $bot ? self::flag( 'bot' ) : $nothing;
 		$f .= $patrolled ? self::flag( 'unpatrolled' ) : $nothing;
+		
 		return $f;
 	}
 
@@ -571,9 +572,14 @@ class OldChangesList extends ChangesList {
 		// Regular entries
 		} else {
 			$this->insertDiffHist( $s, $rc, $unpatrolled );
+			
+			/** Start of Wikia change @author nAndy */
 			# M, N, b and ! (minor, new, bot and unpatrolled)
-			$s .= $this->recentChangesFlags( $rc->mAttribs['rc_new'], $rc->mAttribs['rc_minor'],
-				$unpatrolled, '', $rc->mAttribs['rc_bot'] );
+			$flags = $this->recentChangesFlags( $rc->mAttribs['rc_new'], $rc->mAttribs['rc_minor'], $unpatrolled, '', $rc->mAttribs['rc_bot'] );
+			wfRunHooks( 'ChangesListInsertFlags', array(&$this, &$flags, $rc) );
+			$s .= $flags;
+			/** End of Wikia change */
+			
 			$this->insertArticleLink( $s, $rc, $unpatrolled, $watched );
 		}
 		# Edit/log timestamp

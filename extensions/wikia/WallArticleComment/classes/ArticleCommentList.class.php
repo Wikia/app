@@ -754,7 +754,7 @@ class ArticleCommentList {
 	 * @return true -- because it's a hook
 	 */
 	static public function setHeaderBlockGroup(&$oChangeList, &$header, Array /*of oRCCacheEntry*/ &$oRCCacheEntryArray) {
-		global $wgLang, $wgContLang, $wgEnableGroupedArticleCommentsRC;
+		global $wgLang, $wgContLang, $wgEnableGroupedArticleCommentsRC, $wgEnableWallExt;
 
 		if ( empty($wgEnableGroupedArticleCommentsRC) ) {
 			return true;
@@ -803,6 +803,8 @@ class ArticleCommentList {
 					if ((defined('NS_BLOG_ARTICLE') && $namespace == NS_BLOG_ARTICLE) ||
 						defined('NS_BLOG_ARTICLE_TALK') && $namespace == NS_BLOG_ARTICLE_TALK ) {
 						$messageKey = 'article-comments-rc-blog-comments';
+					} else if( !empty($wgEnableWallExt) && $namespace == NS_USER_WALL_MESSAGE ) {
+						$messageKey = 'article-comments-rc-wall-messages';
 					} else {
 						$messageKey = 'article-comments-rc-comments';
 					}

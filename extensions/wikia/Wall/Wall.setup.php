@@ -54,6 +54,7 @@ $app->registerHook('SkinTemplateContentActions', 'WallHooksHelper', 'onSkinTempl
 $app->registerHook('PageHeaderIndexAfterActionButtonPrepared', 'WallHooksHelper', 'onPageHeaderIndexAfterActionButtonPrepared');
 
 $app->registerHook('AC_RecentChange_Save', 'WallHooksHelper', 'onRecentChangeSave');
+$app->registerHook('ChangesListInsertFlags', 'WallHooksHelper', 'onChangesListInsertFlags');
 $app->registerHook('ChangesListInsertArticleLink', 'WallHooksHelper', 'onChangesListInsertArticleLink');
 $app->registerHook('ChangesListInsertDiffHist', 'WallHooksHelper', 'onChangesListInsertDiffHist');
 $app->registerHook('ChangesListInsertRollback', 'WallHooksHelper', 'onChangesListInsertRollback');
