@@ -785,15 +785,6 @@ class UserProfilePageController extends WikiaController {
 		
 		if( !empty($title) && is_string($title) && strpos($title, ':') !== false ) {
 			$title = F::build('Title', array($title), 'newFromText');
-		} else {
-			$title = $this->app->wg->Title;
-		}
-		
-		$title = $this->getVal('title');
-		$returnUserInData = (boolean) $this->getVal('returnUser');
-		
-		if( !empty($title) && is_string($title) && strpos($title, ':') !== false ) {
-			$title = F::build('Title', array($title), 'newFromText');
 		}
 		
 		$user = null;
