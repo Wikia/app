@@ -55,7 +55,10 @@ class WallMessage {
 		if(empty($obj)) {
 			return null;
 		}
-		return WallMessage::newFromArticleComment($obj);
+		if($obj instanceof ArticleComment)
+			return WallMessage::newFromArticleComment($obj);
+		else
+			return null;
 	}
 	
 	public function isWallOwner(User $user) {
