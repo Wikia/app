@@ -172,10 +172,19 @@ class WallController extends ArticleCommentsModule {
 		$this->response->setVal('repliesNumber', $this->request->getVal('repliesNumber'));
 	}
 	
+	public function message_error() {
+
+	}
+	
 	public function message() {
 		wfProfileIn( __METHOD__ );
 		$comment = $this->request->getVal('comment');
-		
+
+		if(($comment instanceof ArticleComment)) {
+			$this->forward( $this->response->getControllerName(), 'message_error');
+			return;
+		}
+
 		$wallMessage = F::build('WallMessage', array($comment), 'newFromArticleComment' );
 	
 		$this->response->setVal('hide',  false);

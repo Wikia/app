@@ -92,6 +92,8 @@ $messages['en'] = array(
 	'wall-recentchanges-comment-new-message' => '(new: "$1")',
 	'wall-recentchanges-new-reply' => '(reply: "$1")',
 	'wall-recentchanges-edit' => '(edited message)',
+	
+	'wall-message-not-found' => 'This message could not be found. If you see this error please contact Wikia at [[Special:Contact]] and provide as much details as possible about how this bug can be reproduced. Thank You!',
 );
 
 $messages['qqq'] = array(
