@@ -23,7 +23,7 @@ jQuery.getScript = function(url, callback, failureFn) {
 				}
 			}
 		},
-		error: typeof failure == 'function' ? failureFn : $.noop,
+		error: typeof failureFn == 'function' ? failureFn : $.noop,
 		dataType: 'script'
 	});
 }
