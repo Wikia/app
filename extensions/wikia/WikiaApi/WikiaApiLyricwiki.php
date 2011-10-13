@@ -36,10 +36,13 @@ class WikiaApiLyricwiki extends ApiBase {
 	public function execute() {
 		global $IP;
 
-		define('LYRICWIKI_SOAP_FUNCS_ONLY', true);
+		if(!defined('LYRICWIKI_SOAP_FUNCS_ONLY')) {
+			define('LYRICWIKI_SOAP_FUNCS_ONLY', true);
+		}
 		require( "$IP/extensions/3rdparty/LyricWiki/server.php" );
 
 		$func = $song = $artist = $fmt = null;
+		
 		$matches = array();
 
 		extract( $this->extractRequestParams() );
@@ -283,7 +286,7 @@ class WikiaApiLyricwiki extends ApiBase {
 	} // end rest_getTopSongs()
 	
 	// Returns the Song Of The Day.
-	function rest_getSotd(){
+	function rest_getSotd($fmt = null){
 		if(empty( $fmt )){
 			$fmt = 'html';
 		}
