@@ -11,8 +11,18 @@ class AchAwardingService {
 	var $mNewBadges = array();
 	var $mCounters;
 	var $mUserCountersService;
+        private $mCityId;
 
 	private static $mDone = false;
+        
+        public function __construct( $city_id = null ) {
+            if ( is_null( $city_id ) ) {
+                global $wgCityId;
+                $this->mCityId = $wgCityId;
+            } else {
+                $this->mCityId = $city_id;
+            }
+        }
 
 	public function migration($user_id)  {
 		wfProfileIn(__METHOD__);
@@ -31,7 +41,7 @@ class AchAwardingService {
 	public function awardCustomNotInTrackBadge($user, $badge_type_id) {
 		wfProfileIn(__METHOD__);
 
-		global $wgExternalSharedDB, $wgCityId;
+		global $wgExternalSharedDB;
 
 		$this->mUser = $user;
 
@@ -42,7 +52,7 @@ class AchAwardingService {
 			$badge = $dbr->selectField(
 				'ach_user_badges',
 				'badge_type_id',
-				array('badge_type_id' => $badge_type_id, 'user_id' => $this->mUser->getId(), 'wiki_id' => $wgCityId),
+				array('badge_type_id' => $badge_type_id, 'user_id' => $this->mUser->getId(), 'wiki_id' => $this->mCityId),
 				__METHOD__);
 
 			if($badge === false) {
@@ -183,8 +193,6 @@ class AchAwardingService {
 
 		if(count($this->mBadges) > 0) {
 
-			global $wgCityId;
-
 			$notInTrackStatic = AchConfig::getInstance()->getNotInTrackStatic();
 			$inTrackStatic = AchConfig::getInstance()->getInTrackStatic();
 
@@ -227,7 +235,7 @@ class AchAwardingService {
 
 			global $wgExternalSharedDB;
 			$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
-			$dbw->replace('ach_user_score', null, array('user_id' => $this->mUser->getId(), 'wiki_id' => $wgCityId, 'score' => $score), __METHOD__);
+			$dbw->replace('ach_user_score', null, array('user_id' => $this->mUser->getId(), 'wiki_id' => $this->mCityId, 'score' => $score), __METHOD__);
 			$dbw->commit();
 		}
 
@@ -238,11 +246,11 @@ class AchAwardingService {
 		wfProfileIn(__METHOD__);
 
 		if(count($this->mNewBadges) > 0) {
-			global $wgCityId, $wgExternalSharedDB;
+			global $wgExternalSharedDB;
 
 			foreach($this->mNewBadges as $key => $val) {
 				$this->mNewBadges[$key]['user_id'] = $this->mUser->getId();
-				$this->mNewBadges[$key]['wiki_id'] = $wgCityId;
+				$this->mNewBadges[$key]['wiki_id'] = $this->mCityId;
 			}
 
 			$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
@@ -473,7 +481,7 @@ class AchAwardingService {
 	private function processAllNotInTrack() {
 		wfProfileIn(__METHOD__);
 
-		global $wgCityId, $wgExternalSharedDB;
+		global $wgExternalSharedDB;
 
 		// BADGE_LUCKYEDIT
 		if($this->mRevision->getId() % 1000 == 0) {
@@ -481,7 +489,7 @@ class AchAwardingService {
 			$maxLap = $dbr->selectField(
 				'ach_user_badges',
 				'max(badge_lap) as cnt',
-				array('badge_type_id' => BADGE_LUCKYEDIT, 'wiki_id' => $wgCityId),
+				array('badge_type_id' => BADGE_LUCKYEDIT, 'wiki_id' => $this->mCityId),
 				__METHOD__);
 			$this->awardNotInTrackBadge(BADGE_LUCKYEDIT, $maxLap + 1);
 		}
@@ -629,14 +637,14 @@ class AchAwardingService {
 
 	private function loadUserBadges() {
 		wfProfileIn(__METHOD__);
-		global $wgCityId, $wgExternalSharedDB;
+		global $wgExternalSharedDB;
 
 		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 
 		$res = $dbr->select(
 			'ach_user_badges',
 			'badge_type_id, badge_lap',
-			array('user_id' => $this->mUser->getId(), 'wiki_id' => $wgCityId),
+			array('user_id' => $this->mUser->getId(), 'wiki_id' => $this->mCityId),
 			__METHOD__,
 			array('ORDER BY' => 'badge_type_id, badge_lap')
 		);

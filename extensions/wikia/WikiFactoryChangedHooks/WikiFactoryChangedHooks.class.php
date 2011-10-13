@@ -10,15 +10,27 @@
 Class WikiFactoryChangedHooks {
 	static public function achievements( $cv_name, $city_id, $value ) {
 		wfProfileIn( __METHOD__ );
-
+                
 		if ( $cv_name == 'wgEnableAchievementsExt' && $value == true ) {
-			$params = array(
-				'wiki' => $city_id
-			);
-
-			$task = new EnableAchievementsTask( $params );
-			$task->submitForm();
-		}
+                    
+                    if ( !class_exists( 'AchAwardingService' ) ) {
+                        global $IP;
+                        include "{$IP}/extensions/wikia/AchievementsII/Ach_setup.php";
+                    }
+                    
+                    $wiki = WikiFactory::getWikiById( $city_id );
+                    
+                    // Force WikiFactory::getWikiById() to query DB_MASTER if needed.
+                    if ( !is_object( $wiki ) ) {
+                        $wiki = WikiFactory::getWikiById( $city_id, true );
+                    }
+                    
+                    $user = User::newFromId( $wiki->city_founding_user );
+                    $user->load();
+                    
+                    $achService = new AchAwardingService( $city_id );
+                    $achService->awardCustomNotInTrackBadge( $user, BADGE_CREATOR );
+                }
 
 		wfProfileOut( __METHOD__ );
 
