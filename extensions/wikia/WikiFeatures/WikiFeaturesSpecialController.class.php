@@ -10,7 +10,7 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 
 	public function __construct() {
 		wfLoadExtensionMessages('WikiFeatures');
-		parent::__construct('WikiFeatures', '', false);
+		parent::__construct('WikiFeatures', 'wikifeaturesview');
 	}
 	
 	public function init() {
@@ -19,7 +19,7 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 	
 	public function index() {
 		$this->wg->Out->setPageTitle(wfMsg('wikifeatures-title'));
-		if (!$this->wg->User->isLoggedIn()) {	// show this feature to logged in users only regardless of their rights
+		if (!$this->wg->User->isAllowed('wikifeaturesview')) {	// show this feature to logged in users only regardless of their rights
 			$this->displayRestrictionError();
 			return false;  // skip rendering
 		}
