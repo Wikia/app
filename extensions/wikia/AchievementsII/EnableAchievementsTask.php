@@ -18,7 +18,7 @@ class EnableAchievementsTask extends BatchTask {
 
 	/* constructor */
 	function __construct( $params = array() ) {
-		$this->mType = 'enableachivements';
+		$this->mType = 'enableachievements';
 		$this->mVisible = false; //we don't show form for this, it already exists
 		$this->mParams = $params;
 		$this->mTTL = 60 * 60 * 24; // 24 hours
