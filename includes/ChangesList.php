@@ -325,7 +325,7 @@ class ChangesList {
 		/** Start of Wikia change @author nAndy */
 		wfRunHooks( 'ChangesListInsertDiffHist',
 			array(&$this, &$diffLink, &$s, &$rc, $unpatrolled) );
-		/** End of Wikia change @author nAndy */
+		/** End of Wikia change */
 	}
 
 	public function insertArticleLink( &$s, &$rc, $unpatrolled, $watched ) {
@@ -363,8 +363,10 @@ class ChangesList {
 		# RTL/LTR marker
 		$articlelink .= $wgContLang->getDirMark();
 
+		/** Start of Wikia change @author nAndy */
 		wfRunHooks( 'ChangesListInsertArticleLink',
 			array(&$this, &$articlelink, &$s, &$rc, $unpatrolled, $watched) );
+		/** End of Wikia change */
 
 		$s .= " $articlelink";
 	}
@@ -389,23 +391,37 @@ class ChangesList {
 	public function insertAction( &$s, &$rc ) {
 		if( $rc->mAttribs['rc_type'] == RC_LOG ) {
 			if( $this->isDeleted( $rc, LogPage::DELETED_ACTION ) ) {
-				$s .= ' <span class="history-deleted">' . wfMsgHtml( 'rev-deleted-event' ) . '</span>';
+				$actionText = ' <span class="history-deleted">' . wfMsgHtml( 'rev-deleted-event' ) . '</span>';
 			} else {
-				$s .= ' '.LogPage::actionText( $rc->mAttribs['rc_log_type'], $rc->mAttribs['rc_log_action'],
+				$actionText = ' '.LogPage::actionText( $rc->mAttribs['rc_log_type'], $rc->mAttribs['rc_log_action'],
 					$rc->getTitle(), $this->skin, LogPage::extractParams( $rc->mAttribs['rc_params'] ), true, true );
 			}
 		}
+		
+		/** Start of Wikia change @author nAndy */
+		wfRunHooks( 'ChangesListInsertAction', array($this, &$actionText, &$s, &$rc) );
+		
+		$s .= $actionText;
+		/** End of Wikia change */
 	}
 
 	/** insert a formatted comment */
 	public function insertComment( &$s, &$rc ) {
+		$comment = '';
+		
 		if( $rc->mAttribs['rc_type'] != RC_MOVE && $rc->mAttribs['rc_type'] != RC_MOVE_OVER_REDIRECT ) {
 			if( $this->isDeleted( $rc, Revision::DELETED_COMMENT ) ) {
-				$s .= ' <span class="history-deleted">' . wfMsgHtml( 'rev-deleted-comment' ) . '</span>';
+				$comment = ' <span class="history-deleted">' . wfMsgHtml( 'rev-deleted-comment' ) . '</span>';
 			} else {
-				$s .= $this->skin->commentBlock( $rc->mAttribs['rc_comment'], $rc->getTitle() );
+				$comment = $this->skin->commentBlock( $rc->mAttribs['rc_comment'], $rc->getTitle() );
 			}
 		}
+		
+		/** Start of Wikia change @author nAndy */
+		wfRunHooks( 'ChangesListInsertComment', array($this, &$comment, &$s, &$rc) );
+		/** End of Wikia change */
+		
+		$s .= $comment;
 	}
 
 	/**

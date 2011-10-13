@@ -947,9 +947,22 @@ class Linker {
 	 * @private
 	 */
 	function userTalkLink( $userId, $userText ) {
-		$userTalkPage = Title::makeTitle( NS_USER_TALK, $userText );
-		$userTalkLink = $this->link( $userTalkPage, wfMsgHtml( 'talkpagelinktext' ) );
-		return $userTalkLink;
+		global $wgEnableWallExt;
+		
+		if( !empty($wgEnableWallExt) ) {
+			$messageWallPage = Title::makeTitle( NS_USER_WALL, $userText );
+			$link = $this->link(
+				$messageWallPage, 
+				wfMsgHtml( 'wall-message-wall' ),
+				array(),
+				array(),
+				array( 'known', 'noclasses' )
+			);
+		} else {
+			$userTalkPage = Title::makeTitle( NS_USER_TALK, $userText );
+			$link = $this->link( $userTalkPage, wfMsgHtml( 'talkpagelinktext' ) );
+		}
+		return $link;
 	}
 
 	/**

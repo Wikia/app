@@ -61,9 +61,9 @@ class WallNotificationEntity {
 	
 	public function getUniqueId() {
 		if($this->isMain()) {
-			return $this->data->title_id;		
+			return $this->data->title_id;
 		} else {
-			return $this->data->parent_id;	
+			return $this->data->parent_id;
 		}
 	}
 	
@@ -82,13 +82,13 @@ class WallNotificationEntity {
 		
 		$this->data->wiki = $wiki;
 		$this->data->rc_id = $RC->getAttribute('rc_id');
-		$this->data->timestamp = $RC->getAttribute('rc_timestamp');		
+		$this->data->timestamp = $RC->getAttribute('rc_timestamp');
 		
-		$msg_author_realname = $authoruser->getRealName(); 
-		$this->data->msg_author_id = $authoruser->getId();		
-		$this->data->msg_author_username = $authoruser->getName();		
+		$msg_author_realname = $authoruser->getRealName();
+		$this->data->msg_author_id = $authoruser->getId();
+		$this->data->msg_author_username = $authoruser->getName();
 
-		$this->data->msg_author_displayname = empty($msg_author_realname) ?  $this->data->msg_author_username:$msg_author_realname;		
+		$this->data->msg_author_displayname = empty($msg_author_realname) ?  $this->data->msg_author_username:$msg_author_realname;
 		
 		$this->data->wall_username = $walluser->getName();
 		$wall_realname = $walluser->getRealName();
@@ -109,7 +109,7 @@ class WallNotificationEntity {
 			$acParent->load();
 			$this->data->parent_username = $acParent->getUser()->getName();
 			$parent_realname = $acParent->getUser()->getRealName();
-									
+			
 			$this->data->parent_displayname = empty($parent_realname) ? $this->data->parent_username:$parent_realname; 
 			
 			$this->data->parent_user_id = $acParent->getUser()->getId();

@@ -1,5 +1,7 @@
 <?php
 class WallHooksHelper {
+	const RC_WALL_COMMENTS_MAX_LEN = 50;
+	
 	public function onArticleViewHeader(&$article, &$outputDone, &$useParserCache) {
 		$app = F::App();
 		$helper = F::build('WallHelper', array());
@@ -518,10 +520,10 @@ class WallHooksHelper {
 	}
 	
 	public function onChangesListInsertArticleLink($list, $articleLink, $s, $rc, $unpatrolled, $watched) {
-		if(($rc->getAttribute('rc_type') == RC_NEW || $rc->getAttribute('rc_type') == RC_EDIT) && !empty($rc->mAttribs['rc_namespace']) && !empty($rc->mAttribs['rc_namespace']) && $rc->mAttribs['rc_namespace'] == NS_USER_WALL_MESSAGE ) {
+		if(($rc->getAttribute('rc_type') == RC_NEW || $rc->getAttribute('rc_type') == RC_EDIT) && $rc->getAttribute('rc_namespace') == NS_USER_WALL_MESSAGE ) {
 			$app = F::app();
 			
-			$wnEntity = F::build('WallNotificationEntity', array($rc->mAttribs['rc_id'], $app->wg->CityId), 'getByWikiAndRCId');
+			$wnEntity = F::build('WallNotificationEntity', array($rc->getAttribute('rc_id'), $app->wg->CityId), 'getByWikiAndRCId');
 			
 			$link = $wnEntity->data->url;
 			$title = $wnEntity->data->thread_title;
@@ -555,5 +557,45 @@ class WallHooksHelper {
 		
 		return true;
 	}
+	
+	public function onChangesListInsertComment($list, $comment, $s, $rc) {
+		if(($rc->getAttribute('rc_type') == RC_NEW || $rc->getAttribute('rc_type') == RC_EDIT) && $rc->getAttribute('rc_namespace') == NS_USER_WALL_MESSAGE ) {
+			$app = F::app();
+			$wnEntity = F::build('WallNotificationEntity', array($rc->getAttribute('rc_id'), $app->wg->CityId), 'getByWikiAndRCId');
+			
+			//this is innocent hack -- we didn't know where char(127) came from in rc_params
+			//but it stopped us from unserializing rc_params if anyone knows where those chars 
+			//comes from please fix all rc_params and remove trim() function from below
+			$params = json_decode(trim($rc->getAttribute('rc_params'), chr(127)));
+			if( empty($params->intro) ) {
+				$content = '';
+			} else {
+				$wh = F::build('WallHelper', array());
+				$content = $wh->shortenText($params->intro, self::RC_WALL_COMMENTS_MAX_LEN);
+			}
+			
+			if( empty($wnEntity->data->parent_id) ) {
+				$link = $wnEntity->data->url;
+				$link = '<a href="'.$link.'">'.$app->wf->Msg('wall-user-wall-link-text', array($wnEntity->data->wall_username)).'</a>';
+				
+				$comment = ($rc->getAttribute('rc_type') == RC_NEW) ? $app->wf->Msg('wall-recentchanges-new-message', array($link, $content)) : $app->wf->Msg('wall-recentchanges-edit');
+			} else {
+				$comment = ($rc->getAttribute('rc_type') == RC_NEW) ? $app->wf->Msg('wall-recentchanges-new-reply', array($content)) : $app->wf->Msg('wall-recentchanges-edit');
+			}
+			
+			$comment = ' <span class="comment">'.$comment.'</span>';
+		}
+		
+		return true;
+	}
+	
+	public function onChangesListInsertAction($list, $actionText, $s, $rc) {
+		if( $rc->getAttribute('rc_type') == RC_LOG && $rc->getAttribute('rc_namespace') == NS_USER_WALL_MESSAGE ) {
+			
+		}
+		
+		return true;
+	}
+	
 }
 ?>
