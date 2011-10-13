@@ -386,8 +386,8 @@ var Wall = $.createClass(Object, {
 	postNewMessage_ChangeText_pre: function(e) {
 		var trg = $(e.target);
 		if(trg.hasClass('title')) {
-			topic_str = trg.val();
-			topic_len = topic_str.length;
+			var topic_str = trg.val();
+			var topic_len = topic_str.length;
 			if(topic_len >= 200) trg.val( topic_str.slice(0,200) );
 		}
 		setTimeout( this.proxy(this.postNewMessage_ChangeText), 50 );
@@ -855,7 +855,8 @@ function ChangeStyle(name,val) {
 		$('a.'+name+'_1').removeClass('selected');
 		$('a.'+name+'_0').addClass('selected');
 	}*/
+	/*
 	$('a.'+name).removeClass('selected');
 	$('a.'+name+'_'+val).addClass('selected');
-	global_hide = val;
+	global_hide = val;*/
 }
