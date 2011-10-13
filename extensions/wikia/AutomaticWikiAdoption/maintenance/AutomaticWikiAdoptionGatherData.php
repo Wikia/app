@@ -109,11 +109,6 @@ class AutomaticWikiAdoptionGatherData {
 					continue;
 				}
 				
-				if (self::getNumPages($wikiDbname) >= 1000) {
-					 //check if wiki has > 1000 pages
-					continue;
-				}
-
 				$res2 = $dbrStats->query(
 					"select user_id, max(editdate) as lastedit from specials.events_local_users where wiki_id = {$row->wiki_id} and all_groups like '%sysop%' group by 1 order by null;",
 					__METHOD__
@@ -238,24 +233,5 @@ class AutomaticWikiAdoptionGatherData {
 		}
 		
 		return false;
-	}
-	
-	// get number of pages
-	protected static function getNumPages($wikiDbname = null) {
-		$numPages = 0;
-		if (!empty($wikiDbname)) {
-			$dbr = wfGetDB(DB_SLAVE, array(), $wikiDbname);
-			$row = $dbr->selectRow(
-				'site_stats',
-				'ss_good_articles',
-				array(),
-				__METHOD__
-			);
-			if ($row !== false) {
-				$numPages = $row->ss_good_articles;
-			}
-		}
-		
-		return $numPages;
 	}
 }
