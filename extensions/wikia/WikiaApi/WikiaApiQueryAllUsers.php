@@ -14,7 +14,7 @@ if (!defined('MEDIAWIKI')) {
 class WikiaApiQueryAllUsers extends ApiQueryAllUsers {
 
 	public function __construct($query, $moduleName) {
-		parent :: __construct($query, $moduleName, 'au');
+		parent :: __construct($query, $moduleName);
 		$this->showError = true;
 	}
 
