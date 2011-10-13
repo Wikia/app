@@ -86,4 +86,10 @@ $messages['en'] = array(
 	'wall-deleted-msg-return-to' => 'Return to $1\'s Wall.',
 
 	'wall-view-revert' => 'View/Revert',
+
+	'wall-recentchanges-new-message' => '(new post on $1: $2)',
+	'wall-recentchanges-new-reply' => '(added reply: $1)',
+	'wall-recentchanges-edit' => '(edited message)',
+
+	'wall-user-wall-link-text' => '$1\'s Wall',
 );

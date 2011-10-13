@@ -57,6 +57,8 @@ $app->registerHook('AC_RecentChange_Save', 'WallHooksHelper', 'onRecentChangeSav
 $app->registerHook('ChangesListInsertArticleLink', 'WallHooksHelper', 'onChangesListInsertArticleLink');
 $app->registerHook('ChangesListInsertDiffHist', 'WallHooksHelper', 'onChangesListInsertDiffHist');
 $app->registerHook('ChangesListInsertRollback', 'WallHooksHelper', 'onChangesListInsertRollback');
+$app->registerHook('ChangesListInsertAction', 'WallHooksHelper', 'onChangesListInsertAction');
+$app->registerHook('ChangesListInsertComment', 'WallHooksHelper', 'onChangesListInsertComment');
 
 $app->registerHook('ArticleCommentBeforeWatchlistAdd', 'WallHooksHelper', 'onArticleCommentBeforeWatchlistAdd');
 
