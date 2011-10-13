@@ -380,16 +380,16 @@ class WikiaStatsAutoHubsConsumerDB {
 
 		if ( $this->dbs->numRows( $res ) == 0 && !empty($wgDotDisplay) ) {
 			$date = date('Ymd', time() - 7 * 24 * 60 * 60);
-			$conditions[] = "use_date > $date";
+			$conditions = array("pv_use_date > $date", 'ct.city_id = pv.pv_city_id');
 			$res = $this->dbs->select(
-				array( '`stats`.`page_views_tags` use key(tag_lang) ' ),
-				array( 'tag_id as tag_id,
-						city_id as city_id,
+				array( 'stats.page_views as pv', 'wikicities.city_tag_map as ct' ),
+				array( 'ct.tag_id as tag_id,
+						pv_city_id as city_id,
 						sum(pv_views) as count ' ),
 				$conditions,
 				__METHOD__,
 				array(
-					'GROUP BY' 	=> ' tag_id,city_id ',
+					'GROUP BY' 	=> ' ct.tag_id,pv_city_id ',
 					'ORDER BY' 	=> ' count DESC ',
 					'LIMIT'		=> $limit
 				)
