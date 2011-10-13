@@ -242,7 +242,6 @@ $wgAutoloadClasses["WikiaApiQuery"] = "extensions/wikia/WikiaApi/WikiaApiQuery.p
 $wgAutoloadClasses["WikiaApiQueryConfGroups"] = "extensions/wikia/WikiaApi/WikiaApiQueryConfGroups.php";
 $wgAutoloadClasses["WikiaApiQueryDomains"] = "extensions/wikia/WikiaApi/WikiaApiQueryDomains.php";
 $wgAutoloadClasses["WikiaApiQueryPopularPages"]  = "extensions/wikia/WikiaApi/WikiaApiQueryPopularPages.php";
-$wgAutoloadClasses["WikiaApiFormatTemplate"]  = "extensions/wikia/WikiaApi/WikiaApiFormatTemplate.php";
 $wgAutoloadClasses["WikiaApiQueryVoteArticle"] = "extensions/wikia/WikiaApi/WikiaApiQueryVoteArticle.php";
 $wgAutoloadClasses["WikiaApiQueryWrite"] = "extensions/wikia/WikiaApi/WikiaApiQueryWrite.php";
 $wgAutoloadClasses["WikiaApiQueryMostAccessPages"] = "extensions/wikia/WikiaApi/WikiaApiQueryMostAccessPages.php";
@@ -332,12 +331,6 @@ $wgAPIPropModules[ "wkevinfo"     ] = "WikiaApiQueryEventsData";
 $wgAPIPropModules[ "wkevent"      ] = "WikiaApiQueryEventInfo";
 $wgAPIPropModules[ "wkevents"     ] = "WikiaApiQueryScribeEvents";
 $wgAPIPropModules[ "wklasteditors"] = "WikiaApiQueryLastEditors";
-
-/**
- * registered Format names
- */
-global $wgApiMainListFormats;
-$wgApiMainListFormats["wktemplate"] = "WikiaApiFormatTemplate";
 
 /*
  * reqistered API modules
