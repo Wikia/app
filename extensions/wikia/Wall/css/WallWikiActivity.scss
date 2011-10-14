@@ -41,4 +41,16 @@ table.wallfeed {
 			width: 29px;
 		}
 	}
+	
+	/* ugly hacks for WikiActivity architecture */
+	tr[data-type=inserted-image] {
+		.activityfeed-details-label {
+			visibility: hidden;
+			em { position: absolute; left: 85px; visibility: visible; }
+		}
+		ul.activityfeed-inserted-media {
+			padding-top: 20px !important;
+			li { padding: 0; }
+		}
+	}
 }
