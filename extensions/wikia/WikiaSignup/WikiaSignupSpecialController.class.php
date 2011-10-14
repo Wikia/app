@@ -61,4 +61,20 @@ class WikiaSignupSpecialController extends WikiaSpecialPageController {
 	 */
 	private function getTopUsers() {
 	}
+	
+	/**
+	 * @brief renders content in modal dialog
+	 * @details
+	 * @requestParam string username
+	 */
+	public function confirmEmailWidget() {
+	}
+	
+	/**
+	 * @brief sends confirmationEmail
+	 * @details
+	 * @requestParam string username
+	 */
+	public function sendConfirmationEmail() {
+	}
 }
