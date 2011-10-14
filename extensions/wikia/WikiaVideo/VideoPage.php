@@ -39,10 +39,12 @@ class VideoPage extends Article {
 	
 	const REALGRAVITY_PLAYER_AUTOSTART_ID = 'ac330d90-cb46-012e-f91c-12313d18e962';
 	const REALGRAVITY_PLAYER_NO_AUTOSTART_ID = '63541030-a4fd-012e-7c44-1231391272da';
+	const REALGRAVITY_PLAYER_VIDEOEMBEDTOOL_ID = '49321a60-d897-012e-f9bf-12313d18e962';
 
 	const VIDEO_GOOGLE_ANALYTICS_ACCOUNT_ID = 'UA-24709745-1';
 	
 	const DEFAULT_OASIS_VIDEO_WIDTH = 660;
+	const DEFAULT_VET_WIDTH = 350;	// defined in VideoEmbedTool_setup.php, but that extension may not be enabled!
 
 	private static $SCREENPLAY_VENDOR_ID = 1893;
 	private static $SCREENPLAY_VIDEO_TYPE = '.mp4';
@@ -1893,17 +1895,15 @@ EOD;
 					</object>';
 				break;
 			case self::V_REALGRAVITY:
-				// original aspect ratio may be larger than Oasis
-				// can support. Downscale if necessary.
-				if (!empty($this->mData[0])) {
-					list($origWidth, $origHeight) = explode('x', $this->mData[0]);
-					if ($origWidth > self::DEFAULT_OASIS_VIDEO_WIDTH) {
-						$width = self::DEFAULT_OASIS_VIDEO_WIDTH;
-						$height = round($width / $this->getRatio());
-					}
-				}	
-				
-				$playerId = $autoplay ? self::REALGRAVITY_PLAYER_AUTOSTART_ID : self::REALGRAVITY_PLAYER_NO_AUTOSTART_ID;
+				if ($width == self::DEFAULT_VET_WIDTH) {
+					$playerId = self::REALGRAVITY_PLAYER_VIDEOEMBEDTOOL_ID;
+				}
+				elseif ($autoplay) {
+					$playerId = self::REALGRAVITY_PLAYER_AUTOSTART_ID;
+				}
+				else {
+					$playerId = self::REALGRAVITY_PLAYER_NO_AUTOSTART_ID;
+				}
 
 				$embed = 
 					'<object id="rg_player_'.$playerId.'" name="rg_player_'.$playerId.'" type="application/x-shockwave-flash"

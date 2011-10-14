@@ -17,7 +17,7 @@ class RelatedVideosService {
 
 		wfProfileIn( __METHOD__ );
 		$title = urldecode( $title );
-		$result = $this->getFromCache( $title, $source, $videoWidth );
+		$result = $this->getFromCache( $title, $source, $videoWidth, $cityShort );
 		if ( empty( $result ) ){
 			Wikia::log( __METHOD__, 'RelatedVideos', 'Not from cache' );
 			if ( !empty( $source ) ){
@@ -41,7 +41,7 @@ class RelatedVideosService {
 				)->getData();
 				$result['data']['external'] = 0;
 			}
-			$this->saveToCache( $title, $source, $videoWidth, $result );
+			$this->saveToCache( $title, $source, $videoWidth, $cityShort, $result );
 		} else Wikia::log( __METHOD__, 'RelatedVideos', 'From cache' );
 
 		wfProfileOut( __METHOD__ );
@@ -53,35 +53,35 @@ class RelatedVideosService {
 		return $this->getRelatedVideoData( 0, $title, $source, $videoWidth, $cityShort );
 	}
 
-	public function getMemcKey( $title, $source, $videoWidth ) {
+	public function getMemcKey( $title, $source, $videoWidth, $cityShort ) {
 
 		if( empty( $source ) ){
 			$video = Title::newFromText( $title, NS_VIDEO );
 			if ($video instanceof Title && $video->exists() ) {
-				return F::app()->wf->memcKey( $video->getArticleID(), F::app()->wg->wikiaVideoRepoDBName, $videoWidth, self::memcKeyPrefix );					
+				return F::app()->wf->memcKey( $video->getArticleID(), F::app()->wg->wikiaVideoRepoDBName, $videoWidth, $cityShort, self::memcKeyPrefix );					
 			}
 			
 			return '';
 		} else {
-			return F::app()->wf->sharedMemcKey( md5( $title ), F::app()->wg->wikiaVideoRepoDBName, $videoWidth, self::memcKeyPrefix );
+			return F::app()->wf->sharedMemcKey( md5( $title ), F::app()->wg->wikiaVideoRepoDBName, $videoWidth, $cityShort, self::memcKeyPrefix );
 		}
 	}
 
-	public function saveToCache( $title, $source, $videoWidth, $data ) {
+	public function saveToCache( $title, $source, $videoWidth, $cityShort, $data ) {
 
 		$oMemc = F::app()->wg->memc;
 		$weekInSeconds = 604800;
 		$oMemc->set(
-			$this->getMemcKey( $title, $source, $videoWidth ),
+			$this->getMemcKey( $title, $source, $videoWidth, $cityShort ),
 			$data, 
 			$weekInSeconds
 		);
 	}
 
-	public function getFromCache( $title, $source, $videoWidth ) {
+	public function getFromCache( $title, $source, $videoWidth, $cityShort ) {
 
 		$oMemc = F::app()->wg->memc;
-		return $oMemc->get( $this->getMemcKey( $title, $source, $videoWidth ) );
+		return $oMemc->get( $this->getMemcKey( $title, $source, $videoWidth, $cityShort ) );
 	}
 
 	public function isTitleRelatedVideos($title) {
