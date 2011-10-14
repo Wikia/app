@@ -867,6 +867,7 @@ jQuery.nirvana.sendRequest = function(attr) {
 	var format = (typeof attr.format == 'undefined') ?  'json' : attr.format.toLowerCase();
 	var data = (typeof attr.data == 'undefined') ? {} : attr.data;
 	var callback = (typeof attr.callback == 'undefined') ? function(){} : attr.callback;
+	var onErrorCallback = (typeof attr.onErrorCallback == 'undefined') ? function(){} : attr.onErrorCallback;
 
 	if((typeof attr.controller == 'undefined') || (typeof attr.method == 'undefined')) {
 		throw "controller and method are required";
@@ -889,13 +890,37 @@ jQuery.nirvana.sendRequest = function(attr) {
 		  dataType: format,
 		  type: type,
 		  data: data,
-		  success: callback
+		  success: callback,
+		  error: onErrorCallback
 	});
 }
 
-jQuery.nirvana.getJson = function(controller, method, data, callback) {
-	// data parameter can be omitted
-	if (typeof data == 'function') {
+jQuery.nirvana.getJson = function(controller, method, data, callback, onErrorCallback) {
+	jQuery.nirvana.ajaxJson(
+		controller,
+		method,
+		data,
+		callback,
+		onErrorCallback,
+		'GET'
+	);
+}
+
+jQuery.nirvana.postJson = function(controller, method, data, callback, onErrorCallback) {
+	jQuery.nirvana.ajaxJson(
+		controller,
+		method,
+		data,
+		callback,
+		onErrorCallback,
+		'POST'
+	);
+}
+
+jQuery.nirvana.ajaxJson = function(controller, method, data, callback, onErrorCallback, requestType) {
+	
+		// data parameter can be omitted
+	if ( typeof data == 'function' ) {
 		callback = data;
 		data = {};
 	}
@@ -904,10 +929,12 @@ jQuery.nirvana.getJson = function(controller, method, data, callback) {
 		controller: controller,
 		method: method,
 		data: data,
-		type: 'GET',
+		type: requestType,
 		format: 'json',
-		callback: callback
+		callback: callback,
+		onErrorCallback: onErrorCallback
 	});
+
 }
 
 jQuery.openPopup = function(url, name, moduleName, width, height) {
