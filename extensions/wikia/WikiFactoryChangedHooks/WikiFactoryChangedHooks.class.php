@@ -13,11 +13,6 @@ Class WikiFactoryChangedHooks {
                 
 		if ( $cv_name == 'wgEnableAchievementsExt' && $value == true ) {
                     
-                    if ( !class_exists( 'AchAwardingService' ) ) {
-                        global $IP;
-                        include "{$IP}/extensions/wikia/AchievementsII/Ach_setup.php";
-                    }
-                    
                     $wiki = WikiFactory::getWikiById( $city_id );
                     
                     // Force WikiFactory::getWikiById() to query DB_MASTER if needed.
