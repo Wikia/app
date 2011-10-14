@@ -1321,7 +1321,6 @@ Liftium.init = function () {
 	}
 
 
-	WikiaTracker._track2(Liftium.buildTrackUrl([LiftiumOptions.pubid, "init2"]), 'UA-17475676-15', 10);
 	WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "init"]), 'liftium.init');
 
 	Liftium.trackQcseg();
@@ -1939,7 +1938,6 @@ Liftium.sendBeacon = function (){
 
 	// Track the beacons with GA
 
-	WikiaTracker._track2(Liftium.buildTrackUrl([LiftiumOptions.pubid, "beacon2"]), 'UA-17475676-14', 10);
 	WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "beacon"]), 'liftium.beacon');
 
 	// Call the unit tests
@@ -2106,14 +2104,14 @@ Liftium.trackEvent = function(page, profile) {
 	Liftium.beaconCall(url, false);
 };
 
-Liftium.trackEvent2 = function(page, profile) {
+Liftium.trackEvent2 = function(page, profile) {  // FIXME NEF remove
 	// removed
 };
 
 /*
  * param mixed - {profile:'profile-id', sample:10|'10%'} or 'profile-id' or 10|'10%'
  */
-Liftium.trackEvent3 = function(page, param) {
+Liftium.trackEvent3 = function(page, param) { // FIXME NEF deprecated, remove
 	if (typeof page == "object") {
 		page = page.join("/");
 	}
