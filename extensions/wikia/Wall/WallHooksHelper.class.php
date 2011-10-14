@@ -240,7 +240,7 @@ class WallHooksHelper {
 	}
 	
 	/**
-	 * @brief Changes "My talk" to "Message wall" in Monobook
+	 * @brief Changes "My talk" to "Message wall" in the user links.
 	 * 
 	 * @return true
 	 * 
@@ -277,7 +277,7 @@ class WallHooksHelper {
 	}
 	
 	/**
-	 * @brief Changes "My talk" to "Message wall" in Oasis
+	 * @brief Changes "My talk" to "Message wall" in Oasis (in the tabs on the User page).
 	 * 
 	 * @return true
 	 * 

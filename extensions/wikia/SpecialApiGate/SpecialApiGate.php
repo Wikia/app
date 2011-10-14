@@ -11,6 +11,8 @@
 
 if ( !defined( 'MEDIAWIKI' ) ) die();
 
+$API_GATE_DIR = "$IP/lib/ApiGate";
+
 $wgSpecialPages[ "ApiGate" ] = "SpecialApiGate";
 $wgExtensionMessagesFiles['ApiGate'] = dirname( __FILE__ ) . '/SpecialApiGate.i18n.php';
 $wgExtensionCredits['specialpage'][] = array(
@@ -21,7 +23,8 @@ $wgExtensionCredits['specialpage'][] = array(
 	'version' => '1.0',
 );
 
-$API_GATE_DIR = "$IP/lib/ApiGate";
+$wgHooks['PersonalUrls'][] = "SpecialApiGate::onPersonalUrls";
+$wgHooks['AccountNavigationModuleAfterDropdownItems'][] = "SpecialApiGate::onAccountNavigationModuleAfterDropdownItems";
 
 
 /**
@@ -103,12 +106,14 @@ class SpecialApiGate extends SpecialPage {
 
 					include "$API_GATE_DIR/ApiGate_Register.class.php";
 					$registered = ApiGate_Register::processPost( $data );
-					if( $registered ){
+					if( $registered ) { // TODO: Not portable. This works well here, but more work would need to be done for API Gate to have a good default behvaior.
+						// Display a success message containing the new key.
+						$msg = wfMsgExt( 'apigate-register-success', array('parse'), array( $data['apiKey'] ) );
+						$msg .= "<br/><br/>" . wfMsgExt( 'apigate-register-success-return', array('parse'), array() );
+						$mainSectionHtml .=  ApiGate_Dispatcher::renderTemplate( array('message' => $msg), "success" );
 
-						// TODO: Display a success message (add it to mainSectionHtml)
-						// TODO: Display a success message (add it to mainSectionHtml)
-						
-						$mainSectionHtml .= $this->subpage_landingPage( $data );
+						// TODO: I'm not sure I like this.  It makes the URL different from what's shown.  Perhaps get rid of it?
+						// $mainSectionHtml .= $this->subpage_landingPage( $data );
 
 					} else {
 						$mainSectionHtml .=  ApiGate_Dispatcher::renderTemplate( $data, "register" );
@@ -170,5 +175,30 @@ class SpecialApiGate extends SpecialPage {
 
 		wfProfileOut( __METHOD__ );
 	} // end subpage_landingPage()
+
+	/**
+	 * @brief Hook to add API Gate to user links.
+	 */
+	public static function onPersonalUrls(&$personalUrls, &$title) {
+		wfProfileIn( __METHOD__ );
+		
+		$personalUrls['apiGate']['href'] = "";
+		$personalUrls['apiGate']['text'] = "API Control Panel";
+		
+		wfProfileOut( __METHOD__ );
+		return true;
+	} // end onPersonalUrls()
+	
+	/**
+	 * Hook for adding API Gate user link (which was added to personalUrls by onPersonalUrls()) to the Oasis user-links dropdown.
+	 */
+	public static function onAccountNavigationModuleAfterDropdownItems(&$dropdownItems, $personalUrls){
+		wfProfileIn( __METHOD__ );
+		
+		$dropdownItems[] = 'apiGate';
+	
+		wfProfileOut( __METHOD__ );
+		return true; // a hook function's way of saying it's okay to continue
+	} // end onAccountNavigationModuleAfterDropdownItems()
 
 } // end class SpecialApiGate

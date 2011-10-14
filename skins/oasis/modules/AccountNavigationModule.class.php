@@ -126,6 +126,9 @@ class AccountNavigationModule extends Module {
 			// dropdown items
 			$dropdownItems = array('mytalk', 'following', 'preferences');
 
+			// Allow hooks to modify the dropdown items.
+			$this->wf->RunHooks( 'AccountNavigationModuleAfterDropdownItems', array(&$dropdownItems, &$this->personal_urls) );
+
 			foreach($dropdownItems as $item) {
 				if (isset($this->personal_urls[$item])) {
 					$this->dropdown[] = $this->renderPersonalUrl($item);
