@@ -4,6 +4,7 @@ var WikiaTracker = {
 		'main':          'UA-2871474-1',
 		'main.sampled':  'UA-2871474-1',
 		'main.unsampled':'UA-2871474-2',
+		'main.test':     'UA-2871474-3',
 
 		'liftium.beacon':'UA-17475676-5',
 		'liftium.beacon2':'UA-17475676-14',
@@ -23,6 +24,7 @@ var WikiaTracker = {
 	profileRates:{
 		'UA-2871474-1':100, // main.sampled (FIXME temporary, remove)
 		'UA-2871474-2':100, // main.unsampled
+		'UA-2871474-3':1, // main.test
 		'UA-12241505-2':100, // lyrics.unsampled
 		'UA-17475676-16':100, // liftium.slot2
 		'UA-17475676-12':100 // liftium.errors
@@ -56,7 +58,7 @@ WikiaTracker.debug = function (msg, level, obj) {
 };
 
 WikiaTracker.trackGA = function(page, profile) {
-	if (typeof page == 'object') {
+	if (typeof page == 'object') { // TODO instanceof Array
 		page = page.join('/');
 	}
 	if (page.indexOf('/') != 0) {
@@ -82,7 +84,7 @@ WikiaTracker.trackGA = function(page, profile) {
 };
 
 WikiaTracker.track = function(page, profile) {
-	if (typeof page == 'object') {
+	if (typeof page == 'object') { // TODO instanceof Array
 		page = page.join('/');
 	}
 	if (page.indexOf('/') != 0) {
