@@ -7,7 +7,6 @@
 class WikiaLabsSpecialController extends WikiaSpecialPageController {
 
 	public function __construct() {
-		wfLoadExtensionMessages('WikiaLabs');
 		parent::__construct('WikiaLabs', '', false);
 	}
 	
