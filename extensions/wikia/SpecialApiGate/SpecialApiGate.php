@@ -182,9 +182,9 @@ class SpecialApiGate extends SpecialPage {
 	public static function onPersonalUrls(&$personalUrls, &$title) {
 		wfProfileIn( __METHOD__ );
 		
-		$personalUrls['apiGate']['href'] = "";
-		$personalUrls['apiGate']['text'] = "API Control Panel";
-		
+		$personalUrls['apiGate']['href'] = SpecialPage::getTitleFor("ApiGate")->getFullURL();
+		$personalUrls['apiGate']['text'] = wfMsg( 'apigate-userlink' );
+
 		wfProfileOut( __METHOD__ );
 		return true;
 	} // end onPersonalUrls()
@@ -194,9 +194,9 @@ class SpecialApiGate extends SpecialPage {
 	 */
 	public static function onAccountNavigationModuleAfterDropdownItems(&$dropdownItems, $personalUrls){
 		wfProfileIn( __METHOD__ );
-		
+
 		$dropdownItems[] = 'apiGate';
-	
+
 		wfProfileOut( __METHOD__ );
 		return true; // a hook function's way of saying it's okay to continue
 	} // end onAccountNavigationModuleAfterDropdownItems()
