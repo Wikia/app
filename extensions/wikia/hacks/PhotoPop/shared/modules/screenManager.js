@@ -2,6 +2,7 @@ var exports = exports || {};
 
 define.call(exports, function(){
 	var screens = {},
+	lastScreen;
 	
 	Screen = my.Class({
 		_screenId: '',
@@ -26,7 +27,7 @@ define.call(exports, function(){
 				case 'home':
 					return new HomeScreen(this);
 				case 'highscore':
-					return HighscoreScreen(this);
+					return new HighscoreScreen(this);
 			};
 			return this;
 		},
@@ -51,8 +52,8 @@ define.call(exports, function(){
 	GameScreen = my.Class({
 		
 		_barWrapperHeight: 0,
-		_tutorialSteps: [],
-		
+		_tutorialSteps: ['tutorial', 'intro', 'tile', 'continue', 'drawer'],//[]
+
 		constructor: function(parent) {
 			console.log('Game Screen created');
 			Observe(this);
@@ -69,9 +70,11 @@ define.call(exports, function(){
 			return this._parent.getElement();
 		},
 		
-		init: function() {
+		init: function(mute) {
 			this._barWrapperHeight = document.getElementById('PhotoPopWrapper').clientHeight;
-			
+			if(mute) {
+				
+			}
 			this.addEventListener('prepareGameScreen', this.prepareGameScreen);
 			this.addEventListener('tileClicked', this.tileClicked);
 			this.addEventListener('answerDrawerButtonClicked', this.answerDrawerButtonClicked);
@@ -195,6 +198,7 @@ define.call(exports, function(){
 		closeModal: function() {
 			var modalWrapper = document.getElementById('modalWrapper'),
 			modal = document.getElementById('modal');
+			modal.classList.remove('triangle');
 			modal.style.opacity = 0;
 			modalWrapper.style.visibility = 'hidden';	
 		},
@@ -204,13 +208,14 @@ define.call(exports, function(){
 			//this.updateHudScore();
 		},
 		
-		muteButtonClicked: function(event, mute) {
-			if(mute) {
-				document.getElementById('muteButton').getElementsByTagName('img')[1].style.visibility = 'hidden';
-				document.getElementById('muteButton').getElementsByTagName('img')[0].style.visibility = 'visible';
+		muteButtonClicked: function(event, options) {
+			var button = options.button.getElementsByTagName('img');
+			if(options.mute) {
+				button[1].style.visibility = 'hidden';
+				button[0].style.visibility = 'visible';
 			} else {
-				document.getElementById('muteButton').getElementsByTagName('img')[0].style.visibility = 'hidden';
-				document.getElementById('muteButton').getElementsByTagName('img')[1].style.visibility = 'visible';
+				button[0].style.visibility = 'hidden';
+				button[1].style.visibility = 'visible';
 			}
 		},
 		
@@ -252,7 +257,7 @@ define.call(exports, function(){
 				for(var j = 0; j < cols; j++) {
 					var td = tds[j],
 					tdStyle = td.style;
-					tdStyle.backgroundImage = 'url(' +watermark+ ')';
+					tdStyle.backgroundImage = 'url(' + watermark + ')';
 					tdStyle.width = colWidth;
 					tdStyle.height = rowHeight;
 					tdStyle.backgroundPosition = '-'+ offsetX + 'px -' + offsetY + 'px';
@@ -418,8 +423,8 @@ define.call(exports, function(){
 			//TODO: reset whole game
 			document.getElementById('endGameOuterWrapper').style.display = 'block';
 
-			document.querySelector('#endGameSummary .summaryText_completion').innerHTML = 'you got ' + options.numCorrect + ' out of ' + options.numTotal + ' correct.';
-			document.querySelector('#endGameSummary .summaryText_score').innerHTML =  'score: ' + options.totalPoints;
+			document.querySelector('#endGameSummary .summaryText_completion').innerHTML = wgMessages['photopop-game-yougot'] + ' ' + options.numCorrect + wgMessages['photopop-game-outof'] + ' ' + options.numTotal + ' ' + wgMessages['photopop-game-correct'];
+			document.querySelector('#endGameSummary .summaryText_score').innerHTML =  wgMessages['photopop-game-correct'] + ': ' + options.totalPoints;
 		},
 		
 		hideEndGameScreen: function(){
@@ -478,6 +483,30 @@ define.call(exports, function(){
 		},
 		getElement: function() {
 			return this._parent.getElement();
+		},
+		
+		init: function() {
+			setTimeout(
+				function(){
+					document.getElementById('sliderWrapper').style.bottom = 0;
+				},
+				2000
+			);
+			
+			this.addEventListener('muteButtonClicked', this.muteButtonClicked);
+			
+			this._muteButton =  document.getElementById('button_volume').getElementsByTagName('img');
+		},
+		
+		muteButtonClicked: function(e, options) {
+			var imgs = this._muteButton;
+			if(options.mute) {
+				imgs[0].style.display = "none";
+				imgs[1].style.display = "block";
+			} else {
+				imgs[1].style.display = "none";
+				imgs[0].style.display = "block";
+			}
 		}
 		
 	}),
@@ -498,8 +527,24 @@ define.call(exports, function(){
 		},
 		getElement: function() {
 			return this._parent.getElement();
-		}
+		},
 		
+		init: function() {
+			this.addEventListener('openHighscore', this.openHighscore);
+		},
+		
+		openHighscore: function(e, highscore) {
+			var table = document.getElementById('highscoreScreen').getElementsByTagName('tbody')[0]
+			header = table.getElementsByTagName('tr')[0].innerHTML,
+				fragment = '';
+
+			for(var i = 0, l = highscore.length; i < l; i++ ) {
+				var row = '<tr><td>'+(i+1)+'.</td><td>' + highscore[i].wiki + '</td><td>' + highscore[i].date + '</td><td>' + highscore[i].score + '</td></tr>';
+				fragment += row;
+			}
+			
+			table.innerHTML = header + fragment;
+		}
 	}),
 	
 	ScreenManager = my.Class({
@@ -510,6 +555,16 @@ define.call(exports, function(){
 		
 		get: function(id){
 			return screens[id] = screens[id] || new Screen(id, this);
+		},
+		
+		getScreenIds: function() {
+			var names = [];
+			
+			for(var id in screens) {
+				names.push(id);
+			}
+			
+			return names;
 		}
 	});
 	

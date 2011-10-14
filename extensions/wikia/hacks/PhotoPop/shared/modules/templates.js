@@ -22,10 +22,21 @@ define.call(exports, {
 						</div>\
 					</div>\
 					<div id='sliderContent' data-scroll='x'>\
-						<span class='progress'>Loading...</span>\
+						<span class='progress'>"+wgMessages['photopop-game-loading']+"</span>\
 					</div>\
 				</div>\
 			</div>\
+			<div id='highscoreScreen' class='screen'>\
+				<h1>"+wgMessages['photopop-game-highscores']+"</h1>\
+				<table><tr>\
+				<th> </th>\
+				<th>"+wgMessages['photopop-game-wiki']+"</th>\
+				<th>"+wgMessages['photopop-game-date']+"</th>\
+				<th>"+wgMessages['photopop-game-score']+"</th>\
+				<tr></table>\
+				<div id='goBack'>\
+					<img src='{{#image}}buttonSrc_home{{/image}}'/>\
+				</div>\</div>\
 			<div id='gameScreen' class='screen'>\
 				<div id='scoreBarWrapper'>\
 				<div id='scoreBar'></div>\
@@ -37,7 +48,7 @@ define.call(exports, {
 				<div id='endGameOuterWrapper'>\
 					<div id='endGameInnerWrapper'>\
 						<div id='highScore'>\
-							highscore: <span>0</span>\
+							"+wgMessages['photopop-game-highscore']+": <span>0</span>\
 						</div>\
 						<div id='summaryWrapper'>\
 							<div id='endGameSummary'>\
@@ -55,11 +66,11 @@ define.call(exports, {
 						</div>\
 					</div>\
 				</div>\
-				<div id='timeUpText'>\
-					Time's up!\
-				</div>\
+				<div id='timeUpText'>"
+						+wgMessages['photopop-game-timeup']+
+				"</div>\
 				<div id='continue'>\
-					<span id='continueText'>Continue</span>\
+					<span id='continueText'>"+wgMessages['photopop-game-continue']+"</span>\
 					<img src='{{#image}}buttonSrc_contiunue{{/image}}'/>\
 				</div>\
 				<div id='answerDrawer'>\
@@ -79,7 +90,7 @@ define.call(exports, {
 						<img src='{{#image}}buttonSrc_home{{/image}}'/>\
 					</div>\
 					<div id='score'>\
-						Points: <span id='roundPoints'>0</span> Total: <span id='totalPoints'>0</span>\
+						"+wgMessages['photopop-game-points']+": <span id='roundPoints'>0</span> "+wgMessages['photopop-game-total']+": <span id='totalPoints'>0</span>\
 					</div>\
 					<div id='muteButton'>\
 						<img src='{{#image}}buttonSrc_gameMute{{/image}}'>\
@@ -100,8 +111,13 @@ define.call(exports, {
 	
 	gameSelector:
 		"<ul id='gamesList'>{{#games}}\
-			<li class='gameIcon' data-idx='{{index}}'>\
-				<img src ='{{thumbnail}}'><br/>\
+			<li class='gameIcon' data-idx='{{index}}' background-image=url('{{thumbnail}}')>\
+				{{#round}}<div id='saveInfo'>"
+					+wgMessages['photopop-game-round']+": {{round}}<br>"
+					+wgMessages['photopop-game-correct']+": {{correct}}<br>"
+					+wgMessages['photopop-game-points']+": {{roundPoints}}<br> "
+					+wgMessages['photopop-game-total']+":{{totalPoints}}<br/>\
+				</div>{{/round}}\
 				<div class='gameName'>\
 					{{name}}\
 				</div>\

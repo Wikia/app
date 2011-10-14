@@ -43,7 +43,6 @@ define.call(exports, function(){
 		_roundIsOver: false,
 		_timeIsLow: false,
 		_pause: true,
-		_tutorialSteps: {},
 		_timer: null,
 		_correctAnswer: '',
 		
@@ -161,7 +160,7 @@ define.call(exports, function(){
 				}
 			};
 			document.getElementById('muteButton').onclick = function() {
-				self.fire('muteButtonClicked');
+				self.fire('muteButtonClicked', this);
 			};
 			document.getElementById('home').onclick = function() {
 				self.pause();
@@ -182,6 +181,7 @@ define.call(exports, function(){
 			answerList = document.getElementById('answerList').getElementsByTagName('li');
 			document.getElementById('answerButton').onclick = function() {
 				self.fire('answerDrawerButtonClicked');
+				self.resume();
 			};
 			
 			for(var i = 0; i < 4; i++) {
