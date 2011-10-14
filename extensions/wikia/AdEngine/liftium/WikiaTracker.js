@@ -14,6 +14,7 @@ var WikiaTracker = {
 		'liftium.quantcast':'UA-17475676-9',
 		'liftium.slot':'UA-17475676-6',
 		'liftium.slot2':'UA-17475676-16',
+		'liftium.test':'UA-17475676-11',
 		'liftium.varia':'UA-17475676-10',
 		'lyrics':'UA-12241505-1',
 		'lyrics.unsampled':'UA-12241505-2'
@@ -23,8 +24,6 @@ var WikiaTracker = {
 		'UA-2871474-1':100, // main.sampled (FIXME temporary, remove)
 		'UA-2871474-2':100, // main.unsampled
 		'UA-12241505-2':100, // lyrics.unsampled
-		'UA-17475676-14':100, // liftium.beacon2
-		'UA-17475676-15':100, // liftium.init2
 		'UA-17475676-16':100, // liftium.slot2
 		'UA-17475676-12':100 // liftium.errors
 	},
@@ -56,7 +55,7 @@ WikiaTracker.debug = function (msg, level, obj) {
 	return true;
 };
 
-WikiaTracker.track = function(page, profile) {
+WikiaTracker.trackGA = function(page, profile) {
 	if (typeof page == 'object') {
 		page = page.join('/');
 	}
@@ -82,6 +81,42 @@ WikiaTracker.track = function(page, profile) {
 	return this._track(page, profile, sample);
 };
 
+WikiaTracker.track = function(page, profile) {
+	if (typeof page == 'object') {
+		page = page.join('/');
+	}
+	if (page.indexOf('/') != 0) {
+		page = '/' + page;
+	}
+
+	this.debug(page + ' in ' + profile, 3);
+
+	if (typeof profile == 'undefined') {
+		profile = 'default';
+	}
+
+	if (typeof this.profileAliases[profile] != 'undefined') {
+		profile = this.profileAliases[profile];
+	}
+	
+	var sample = this.defaultRate;
+	if (typeof this.profileRates[profile] != 'undefined') {
+		sample = this.profileRates[profile];
+	}
+
+	this.debug('sample rate is ' + sample, 5); // FIXME NEF 7
+
+	if (sample == 100) {
+		// just track it
+	} else if (sample == 1) {
+		if (!this.inGroup('O')) { return false; }
+	} else {
+		if (!this.isTracked()) { return false; }
+	}
+
+	return this._track(page, profile, 100);
+};
+
 WikiaTracker._track = function(page, profile, sample) {
 	this.debug('(internal) ' + page + ' in ' + profile + ' at ' + sample + '%', 5);
 
@@ -101,7 +136,7 @@ WikiaTracker._track = function(page, profile, sample) {
 	return true;
 };
 
-WikiaTracker.trackEvent3 = function(page, param) {
+WikiaTracker.trackEvent3 = function(page, param) { // FIXME NEF deprecated, remove
 	var profile = 'UA-17475676-10';
 	var sample = 10;
 	if (!Liftium.e(param)) {
@@ -132,7 +167,7 @@ WikiaTracker.trackEvent3 = function(page, param) {
 	return this._track(page, profile, sample);
 };
 
-WikiaTracker._track2 = function(page, profile, sample) {
+WikiaTracker._track2 = function(page, profile, sample) { // FIXME NEF deprecated, remove
 	if (!this.isTracked()) { return false; }
 
 	if (page.indexOf('/') != 0) {
@@ -169,7 +204,8 @@ WikiaTracker._inGroup = function(hash_id, group_id) {
 	var groups = {
 		A : { rangeStart: 80, rangeStop: 84, id: 'UA-A' },
 		B : { rangeStart: 85, rangeStop: 89, id: 'UA-B' },
-		N : { rangeStart: 80, rangeStop: 89, id: 'UA-N' }
+		N : { rangeStart: 80, rangeStop: 89, id: 'UA-N' },
+		O : { rangeStart: 13, rangeStop: 13, id: 'UA-O' }
 	};
 
 		if( groups[group_id].rangeStart <= hash_id && hash_id <= groups[group_id].rangeStop ) {

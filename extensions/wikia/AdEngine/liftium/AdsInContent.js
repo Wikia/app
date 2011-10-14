@@ -44,7 +44,7 @@ if ($(window).width() < 1010) {
 			$(window).bind("resize.AIC2", AIC2.onScroll);
 		//}
 
-	WikiaTracker._track2(Liftium.buildTrackUrl([LiftiumOptions.pubid, 'AIC2', 'test7']), 'UA-17475676-11', 10);
+	WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, 'AIC2', 'test7']), 'liftium.test');
 	if (!Liftium.e(Liftium.debugLevel) || Math.floor(Math.random() * 10) == 7) {
 		//Liftium.trackEvent(Liftium.buildTrackUrl(['AIC2', 'test1']), 'UA-17475676-11');
 		_gaq.push(['liftium._setAccount', 'UA-17475676-11']);
@@ -69,13 +69,13 @@ if ($(window).width() < 1010) {
 
 		_gaq.push(['liftium._trackPageview', '/999/' + Liftium.buildTrackUrl(['AIC2', 'test2'])]);
 	}
-	WikiaTracker._track(Liftium.buildTrackUrl([LiftiumOptions.pubid, 'AIC2', 'test5']), 'UA-17475676-11', 10);
+	WikiaTracker.trackGA(Liftium.buildTrackUrl([LiftiumOptions.pubid, 'AIC2', 'test5']), 'liftium.test');
 
 	if (WikiaTracker.inGroup('A')) {
-		WikiaTracker._track2(Liftium.buildTrackUrl([LiftiumOptions.pubid, 'AIC2', 'testA']), 'UA-17475676-11', 10);
+		WikiaTracker._track(Liftium.buildTrackUrl([LiftiumOptions.pubid, 'AIC2', 'testA']), 'UA-17475676-11', 100);
 	}
 	if (WikiaTracker.inGroup('B')) {
-		WikiaTracker._track2(Liftium.buildTrackUrl([LiftiumOptions.pubid, 'AIC2', 'testB']), 'UA-17475676-11', 10);
+		WikiaTracker._track(Liftium.buildTrackUrl([LiftiumOptions.pubid, 'AIC2', 'testB']), 'UA-17475676-11', 100);
 	}
 
 	} else {
