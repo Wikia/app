@@ -5,6 +5,7 @@ var RelatedVideos = {
 	maxRooms:		1,
 	currentRoom:		1,
 	modalWidth:		660,
+	alreadyLoggedIn:	false,
 
 	init: function() {
 		$('#RelatedVideos').delegate( 'a.video-play', 'click', RelatedVideos.displayVideoModal );
@@ -77,7 +78,7 @@ var RelatedVideos = {
 			}
 		});
 	},
-	
+
 	recalculateLenght: function(){
 		var numberItems = $( '#RelatedVideos .container .item' ).size();
 		$( '#RelatedVideos .tally em' ).html( numberItems );
@@ -90,10 +91,11 @@ var RelatedVideos = {
 
 	loginWrapper: function ( callback, target ){
 		var message = 'protected';
-		if( wgUserName == null){
+		if(( wgUserName == null ) || ( RelatedVideos.alreadyLoggedIn )){
 			showComboAjaxForPlaceHolder( false, "", function() {
 				AjaxLogin.doSuccess = function() {
 					$('#AjaxLoginBoxWrapper').closest('.modalWrapper').closeModal();
+					RelatedVideos.alreadyLoggedIn = true;
 					callback( target );
 				};
 				AjaxLogin.close = function() {
@@ -110,6 +112,11 @@ var RelatedVideos = {
 		$.tracker.byStr('relatedVideos/' + fakeUrl);
 	},
 
+	showError: function(){
+		$().log('asd');
+		GlobalNotification.warn( $('.errorWhileLoading').html() );
+	},
+
 	// Video Modal
 
 	displayVideoModal : function(e) {
@@ -118,7 +125,7 @@ var RelatedVideos = {
 		var url = $(this).attr('data-ref');
 		var external = $(this).attr('data-external');
 		var link = $(this).attr('href');
-		$.nirvana.getJson(
+		$.nirvana.postJson(
 			'RelatedVideosController',
 			'getVideo',
 			{
@@ -149,6 +156,9 @@ var RelatedVideos = {
 					// redirect if modal seems to be broken
 					window.location.href = link;
 				}
+			},
+			function(){
+				RelatedVideos.showError()
 			}
 		);
 	},
@@ -158,13 +168,32 @@ var RelatedVideos = {
 	addVideoLoginWrapper: function( e ){
 		e.preventDefault();
 		RelatedVideos.track( 'module/addVideo/beforeLogin' );
-		RelatedVideos.loginWrapper( RelatedVideos.addVideoModal, this );
+		GlobalNotification.init(
+			RelatedVideos.loginWrapper( RelatedVideos.addVideoModal, this )
+		);
 	},
-	
+
+	enableVideoSubmit: function(){
+		$('#relatedvideos-add-video').undelegate( '.rv-add-form', 'submit' );
+		$('#relatedvideos-add-video').delegate( '.rv-add-form', 'submit', RelatedVideos.addVideoConfirm );
+		
+	},
+
+	preventVideoSubmit: function(){
+		$('#relatedvideos-add-video').undelegate( '.rv-add-form', 'submit' );
+		$('#relatedvideos-add-video').delegate( 
+			'.rv-add-form',
+			'submit',
+			function( e ){
+				e.preventDefault()
+			}
+		);
+
+	},
 	addVideoModal: function( target ){
 		RelatedVideos.track( 'module/addVideo/afterLogin' );
 		$('#RelatedVideos').undelegate( '.addVideo', 'click' );
-		$.nirvana.getJson(
+		$.nirvana.postJson(
 			'RelatedVideosController',
 			'getAddVideoModal',
 			{
@@ -179,20 +208,22 @@ var RelatedVideos = {
 						callback : function(){
 							$('#RelatedVideos').undelegate( '.addVideo', 'click' );
 							$('#RelatedVideos').delegate( '.addVideo', 'click', RelatedVideos.addVideoModal );
-							$('#relatedvideos-add-video .relatedVideosConfirm').undelegate( '.button', 'click' );
-							$('#relatedvideos-add-video .relatedVideosConfirm').delegate( '.button', 'click', RelatedVideos.addVideoConfirm );
+							RelatedVideos.enableVideoSubmit();
 						}
 					});
 				}
+			},
+			function(){
+				RelatedVideos.showError()
 			}
 		);
 	},
 
 	addVideoConfirm: function( e ){
 		e.preventDefault();
-		//GlobalNotification.notify( $('#relatedvideos-add-video .notifyHolder').html() );
-		$('#relatedvideos-add-video .relatedVideosConfirm').undelegate( '.button', 'click', RelatedVideos.addVideoConfirm );
-		$.nirvana.getJson(
+		GlobalNotification.notify( $('#relatedvideos-add-video .notifyHolder').html() );
+		RelatedVideos.preventVideoSubmit();
+		$.nirvana.postJson(
 			'RelatedVideosController',
 			'addVideo',
 			{
@@ -200,11 +231,10 @@ var RelatedVideos = {
 				url: $('#relatedvideos-add-video input').val()
 			},
 			function( formRes ) {
-				//GlobalNotification.hide();
+				GlobalNotification.hide();
 				if ( formRes.error ) {
 					$('#relatedvideos-add-video').addClass( 'error-mode' );
-					$('#relatedvideos-add-video .relatedVideosConfirm').undelegate( '.button', 'click' );
-					$('#relatedvideos-add-video .relatedVideosConfirm').delegate( '.button', 'click', RelatedVideos.addVideoConfirm );
+					RelatedVideos.enableVideoSubmit();
 					RelatedVideos.injectCaruselElementError( formRes.error );
 				} else if ( formRes.html ){
 					$('#relatedvideos-add-video').removeClass( 'error-mode' );
@@ -212,10 +242,12 @@ var RelatedVideos = {
 					RelatedVideos.injectCaruselElement( formRes.html );
 				} else {
 					$('#relatedvideos-add-video').addClass( 'error-mode' );
-					$('#relatedvideos-add-video .relatedVideosConfirm').undelegate( '.button', 'click' );
-					$('#relatedvideos-add-video .relatedVideosConfirm').delegate( '.button', 'click', RelatedVideos.addVideoConfirm );
+					RelatedVideos.enableVideoSubmit();
 					RelatedVideos.injectCaruselElementError( $('#relatedvideos-add-video .somethingWentWrong').html() );
 				}
+			},
+			function(){
+				RelatedVideos.showError()
 			}
 		)
 	},
@@ -262,7 +294,7 @@ var RelatedVideos = {
 	removeVideoItem: function( parentItem ){
 		$( parentItem ).fadeTo( 'slow', 0 );
 		var item = $(parentItem).find('a.video-thumbnail');
-		$.nirvana.getJson(
+		$.nirvana.postJson(
 			'RelatedVideosController',
 			'removeVideo',
 			{
@@ -284,6 +316,9 @@ var RelatedVideos = {
 					RelatedVideos.showImages();
 				}
 
+			},
+			function(){
+				RelatedVideos.showError()
 			}
 		)
 	}
