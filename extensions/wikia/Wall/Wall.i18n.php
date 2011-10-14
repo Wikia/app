@@ -96,6 +96,8 @@ $messages['en'] = array(
 	'wall-recentchanges-deleted-reply-title' => 'A reply on message wall',
 	
 	'wall-message-not-found' => 'This message could not be found. If you see this error please contact Wikia at [[Special:Contact]] and provide as much details as possible about how this bug can be reproduced. Thank You!',
+
+	'wall-message-staff-text' => 'This user is a member of Wikia staff',
 );
 
 $messages['qqq'] = array(
