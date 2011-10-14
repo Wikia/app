@@ -173,7 +173,7 @@ class SpecialApiGate extends SpecialPage {
 		wfProfileIn( __METHOD__ );
 
 		ob_start();
-		print "This is where the landing-page will go. It will be state-dependent on the user, their keys, etc.\n" ); // TODO: REMOVE
+		print "This is where the landing-page will go. It will be state-dependent on the user, their keys, etc.\n" ; // TODO: REMOVE
 		$html = ob_get_clean();
 
 		wfProfileOut( __METHOD__ );
