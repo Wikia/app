@@ -11,7 +11,8 @@
 
 if ( !defined( 'MEDIAWIKI' ) ) die();
 
-$API_GATE_DIR = "$IP/lib/ApiGate";
+$API_GATE_DIR = "$IP/lib/ApiGate"; // this is used for more than just the initial include, please don't remove it.
+include "$API_GATE_DIR/ApiGate.php";
 
 $wgSpecialPages[ "ApiGate" ] = "SpecialApiGate";
 $wgExtensionMessagesFiles['ApiGate'] = dirname( __FILE__ ) . '/SpecialApiGate.i18n.php';
@@ -50,7 +51,6 @@ class SpecialApiGate extends SpecialPage {
 		global $wgOut, $wgRequest, $IP, $wgUser, $API_GATE_DIR;
 		wfProfileIn( __METHOD__ );
 
-		include "$IP/lib/ApiGate/ApiGate.php";
 
 		$wgOut->setPagetitle( wfMsg('apigate') );
 		
