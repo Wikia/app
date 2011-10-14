@@ -37,6 +37,7 @@ class SpecialApiGate extends SpecialPage {
 	private $SUBPAGE_ALL_KEYS = "allKeys";
 	private $SUBPAGE_USER_KEYS = "userKeys";
 	private $SUBPAGE_KEY = "key";
+	const API_WIKI_CITYID = "97439";
 
 	public function __construct() {
 		parent::__construct( 'ApiGate' );
@@ -182,8 +183,10 @@ class SpecialApiGate extends SpecialPage {
 	public static function onPersonalUrls(&$personalUrls, &$title) {
 		wfProfileIn( __METHOD__ );
 		
-		$personalUrls['apiGate']['href'] = SpecialPage::getTitleFor("ApiGate")->getFullURL();
-		$personalUrls['apiGate']['text'] = wfMsg( 'apigate-userlink' );
+		if( SpecialApiGate::shouldShowUserLink() ) {
+			$personalUrls['apiGate']['href'] = SpecialPage::getTitleFor("ApiGate")->getFullURL();
+			$personalUrls['apiGate']['text'] = wfMsg( 'apigate-userlink' );
+		}
 
 		wfProfileOut( __METHOD__ );
 		return true;
@@ -195,10 +198,35 @@ class SpecialApiGate extends SpecialPage {
 	public static function onAccountNavigationModuleAfterDropdownItems(&$dropdownItems, $personalUrls){
 		wfProfileIn( __METHOD__ );
 
-		$dropdownItems[] = 'apiGate';
+		if( SpecialApiGate::shouldShowUserLink() ) {
+			$dropdownItems[] = 'apiGate';
+		}
 
 		wfProfileOut( __METHOD__ );
 		return true; // a hook function's way of saying it's okay to continue
 	} // end onAccountNavigationModuleAfterDropdownItems()
+	
+	/**
+	 * The user link only makes sense for users with an API key (with one exception: we'll make it show up for ALL users while they're on the Wikia API wiki).
+	 *
+	 * @return bool - true if the currently logged in user should see the link to API Gate in their user-links on this page.
+	 */
+	public static function shouldShowUserLink(){
+		global $wgCityId, $wgUser;
+		wfProfileIn( __METHOD__ );
+		
+		$showLink = false;
+		if($wgCityId == self::API_WIKI_CITYID){
+			$showLink = true;
+		} else {
+			$apiKeys = ApiGate::getKeysByUserId( $wgUser->getId() );
+			if( count( $apiKeys ) > 0 ){
+				$showLink = true;
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $showLink;
+	} // end shouldShowUserLink()
 
 } // end class SpecialApiGate

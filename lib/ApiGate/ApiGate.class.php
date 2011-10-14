@@ -185,5 +185,21 @@ class ApiGate{
 
 		wfProfileOut( __METHOD__ );
 	} // end purgeKey()
+	
+	/**
+	 * @param userId - user id to use to search for associated api keys.
+	 * @return array - array of API keys (empty array if there are no keys associated with that user-id)
+	 */
+	public static function getKeysByUserId( $userId ) {
+		wfProfileIn( __METHOD__ );
+		
+		$apiKeys = array();
+		
+		// TODO: IMPLEMENT!
+		// TODO: IMPLEMENT!
+
+		wfProfileOut( __METHOD__ );
+		return $apiKeys;
+	} // end getKeysByUserId()
 
 } // end class ApiGate
