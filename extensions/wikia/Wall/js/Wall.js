@@ -111,11 +111,10 @@ var Wall = $.createClass(Object, {
 	//hack for safari tab index
 	focusButton: function(e) {
 		var element = $(e.target);
-		var button = element.closest('.speech-bubble-message')
+		var button = element.closest('.SpeechBubble')
 			.find('button#WallMessageSubmit,.save-edit,.replyButton').first();
-		$().log(button.length);
 		if(e.keyCode == 9) {
-			if(element.attr('id') != 'WallMessageTitle') {
+			if(element.attr('id') != 'WallMessageTitle' && !element.hasClass('title')) {
 				button.focus();
 				e.preventDefault();
 			}			
@@ -238,6 +237,7 @@ var Wall = $.createClass(Object, {
 		var topic = !$('#WallMessageTitle').hasClass('placeholder') && $('#WallMessageTitle').val().length > 0;
 
 		if(!topic && $('#WallMessageSubmit').html() != $.msg('wall-button-to-submit-comment-no-topic')) {
+			this.cancelPreviewNewMessage();
 			$('#WallMessageSubmit').html($.msg('wall-button-to-submit-comment-no-topic'));
 			$('.new-message .no-title-warning').fadeIn();
 			$('.new-message input').addClass('no-title');
