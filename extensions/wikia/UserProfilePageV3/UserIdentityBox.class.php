@@ -78,8 +78,8 @@ class UserIdentityBox {
 			//-1 edits means it's an anon user/ip where we don't display editcount at all
 			$data['edits'] = -1;
 			$data['showZeroStates'] = $this->checkIfDisplayZeroStates($data);
-			$data['name'] = $this->app->wf->Msg('user-identity-box-wikia-contributor');
-			$data['realName'] = $userName;
+			$data['name'] = $userName;
+			$data['realName'] = $this->app->wf->Msg('user-identity-box-wikia-contributor');
 		} else {
 			$userStatsService = F::build('UserStatsService', array($userId));
 			$userStats = $userStatsService->getStats();
