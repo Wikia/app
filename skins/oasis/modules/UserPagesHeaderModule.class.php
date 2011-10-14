@@ -141,9 +141,7 @@ class UserPagesHeaderModule extends Module {
 					);
 		}
 		
-		/** start of wikia change @author nAndy */
 		$this->wf->RunHooks( 'UserPagesHeaderModuleAfterGetTabs', array(&$tabs, $namespace, $userName) );
-		/* end of wikia change */
 		
 		wfProfileOut(__METHOD__);
 		return $tabs;
