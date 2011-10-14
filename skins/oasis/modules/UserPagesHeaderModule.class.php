@@ -140,9 +140,9 @@ class UserPagesHeaderModule extends Module {
 					Wikia::link(SpecialPage::getTitleFor('Preferences'), wfMsg('oasis-user-page-change-avatar'))
 					);
 		}
-		
+
 		$this->wf->RunHooks( 'UserPagesHeaderModuleAfterGetTabs', array(&$tabs, $namespace, $userName) );
-		
+
 		wfProfileOut(__METHOD__);
 		return $tabs;
 	}
