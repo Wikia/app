@@ -251,8 +251,6 @@ class WallHooksHelper {
 		
 		F::build('JSMessages')->enqueuePackage('Wall', JSMessages::EXTERNAL);
 		
-		$personalUrls['mytalk']['text'] = $app->wf->Msg('wall-message-wall');
-		
 		$userWallTitle = $this->getWallTitle();
 		
 		if( $userWallTitle instanceof Title ) {
@@ -260,6 +258,7 @@ class WallHooksHelper {
 		}
 		
 		if($app->wg->User->isLoggedIn()) {
+			$personalUrls['mytalk']['text'] = $app->wf->Msg('wall-message-wall');
 			if($app->wg->User->getSkin()->getSkinName() == 'monobook') {
 				$personalUrls['wall-notifications'] = array(
 					'text'=>$app->wf->Msg('wall-notifications'),
