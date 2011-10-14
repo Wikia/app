@@ -288,6 +288,10 @@ jQuery.tracker.trackStr = function(str, account) {
 	}
 	_gaq.push(['_trackPageview', str]);
 	$().log('tracker: ' + str);
+
+	if (typeof WikiaTracker != 'undefined') {
+		WikiaTracker.track(str, 'main.test');
+	}
 };
 
 jQuery.tracker.track = function(fakeurl) {
