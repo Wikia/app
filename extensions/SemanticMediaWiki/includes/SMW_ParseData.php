@@ -200,14 +200,16 @@ class SMWParseData {
 				$subjects = smwfGetStore()->getAllPropertySubjects( $prop );
 
 				foreach ( $subjects as $subject ) {
-					$jobs[] = new SMWUpdateJob( $subject->getTitle() );
+					$title = $subject->getTitle();
+					if ( $title instanceof Title ) $jobs[] = new SMWUpdateJob( $title );
 				}
 				wfRunHooks( 'smwUpdatePropertySubjects', array( &$jobs ) );
 
 				$subjects = smwfGetStore()->getPropertySubjects( SMWPropertyValue::makeProperty( '_ERRP' ), $prop->getWikiPageValue() );
 
 				foreach ( $subjects as $subject ) {
-					$jobs[] = new SMWUpdateJob( $subject->getTitle() );
+					$title = $subject->getTitle();
+					if ( $title instanceof Title ) $jobs[] = new SMWUpdateJob( $title );
 				}
 			}
 		} elseif ( $makejobs && $smwgEnableUpdateJobs && ( $namespace == SMW_NS_TYPE ) ) {
@@ -227,12 +229,16 @@ class SMWParseData {
 				$proppages = $store->getPropertySubjects( $ptype, $dv );
 
 				foreach ( $proppages as $proppage ) {
-					$jobs[] = new SMWUpdateJob( $proppage->getTitle() );
+					$title = $proppage->getTitle();
+					if ( !$title instanceof Title ) continue;
+					
+					$jobs[] = new SMWUpdateJob( $title );
 					$prop = SMWPropertyValue::makeProperty( $proppage->getDBkey() );
 					$subjects = $store->getAllPropertySubjects( $prop );
 
 					foreach ( $subjects as $subject ) {
-						$jobs[] = new SMWUpdateJob( $subject->getTitle() );
+						$title = $subject->getTitle();
+						if ( $title instanceof Title ) $jobs[] = new SMWUpdateJob( $title );
 					}
 
 					$subjects = smwfGetStore()->getPropertySubjects(
@@ -241,7 +247,8 @@ class SMWParseData {
 					);
 
 					foreach ( $subjects as $subject ) {
-						$jobs[] = new SMWUpdateJob( $subject->getTitle() );
+						$title = $subject->getTitle();
+						if ( $title instanceof Title ) $jobs[] = new SMWUpdateJob( $title );
 					}
 				}
 			}

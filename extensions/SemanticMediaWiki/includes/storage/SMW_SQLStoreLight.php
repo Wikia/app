@@ -405,9 +405,11 @@ class SMWSQLStoreLight extends SMWStore {
 		}
 		$titles = Title::newFromIDs( $tids );
 		foreach ( $titles as $title ) {
-			if ( ( $namespaces == false ) || ( in_array( $title->getNamespace(), $namespaces ) ) ) {
-				$updatejobs[] = new SMWUpdateJob( $title );
-				$emptyrange = false;
+			if ( $title instanceof Title ) {
+				if ( ( $namespaces == false ) || ( in_array( $title->getNamespace(), $namespaces ) ) ) {
+					$updatejobs[] = new SMWUpdateJob( $title );
+					$emptyrange = false;
+				}
 			}
 		}
 
