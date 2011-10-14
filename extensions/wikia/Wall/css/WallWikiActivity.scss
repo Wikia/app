@@ -42,7 +42,7 @@ table.wallfeed {
 		}
 	}
 	
-	/* ugly hacks for WikiActivity architecture */
+	/* ugly hacks for WikiActivity architecture [display of added photos to message wall posts], not proud of this code */
 	tr[data-type=inserted-image] {
 		.activityfeed-details-label {
 			visibility: hidden;
