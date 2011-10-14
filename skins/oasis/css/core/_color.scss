@@ -14,11 +14,16 @@ $page-opacity: get_command_line_param("page-opacity", 100);	// default: 100
 
 // Text color
 $color-text: #3a3a3a;
+$is-dark-wiki: false;
 @if lightness($color-page) < 50 {
+	$is-dark-wiki: true;
+}
+@if $is-dark-wiki {
 	$color-text: #D5D4D4;
+	
 }
 $color-gray-text: #999;
-@if lightness($color-page) < 50 {
+@if $is-dark-wiki {
 	$color-gray-text: #666;
 }
 
@@ -34,7 +39,7 @@ $color-menu-highlight: mix($color-links, $color-page, 20%);
 // Modules
 /* Rail modules now use solid colors, but there are still components that use the module highlight and shadow vars */
 $color-module-background: $color-page;
-@if lightness($color-page) < 50 {
+@if $is-dark-wiki {
 	$color-module-background: mix($color-page, #FFFFFF, 97%);
 }
 $color-module-highlight: lighten($color-page, 2%);
@@ -42,7 +47,7 @@ $color-module-shadow: darken($color-page, 5%);
 
 // Page Borders
 $color-page-border: darken(lighten($color-page, 100%), 15%);
-@if lightness($color-page) < 50 {
+@if $is-dark-wiki {
 	$color-page-border: lighten(darken($color-page, 100%), 25%);
 }
 
@@ -66,14 +71,14 @@ $color-speech-bubble-alt: mix($color-links, $color-page, 5%);
 // TOC
 $color-article-toc-background: transparent;
 $color-article-toc-border: darken(lighten($color-page, 100%), 15%);
-@if lightness($color-page) < 50 {
+@if $is-dark-wiki {
 	$color-article-toc-border: lighten(darken($color-page, 100%), 25%);
 }
 
 // Images
 $color-article-thumb-background: darken($color-page, 5%);
 $color-article-thumb-border: darken(lighten($color-page, 100%), 15%);
-@if lightness($color-page) < 50 {
+@if $is-dark-wiki {
 	$color-article-thumb-border: lighten(darken($color-page, 100%), 25%);
 }
 
@@ -104,10 +109,10 @@ $color-error: #FF3333;
 
 //Diff and History pages
 $color-pagehistory: darken($color-page, 5%);
-@if lightness($color-page) < 50 {
+@if $is-dark-wiki {
 	$color-pagehistory: lighten($color-page, 15%);
 }
 $color-diff-context: darken($color-page, 5%);
-@if lightness($color-page) < 50 {
+@if $is-dark-wiki {
 	$color-diff-context: lighten($color-page, 15%);
 }

@@ -14,8 +14,8 @@ $color-founder-progress-header-highlight: $color-module-highlight;
 $color-founder-progress-header-highlight-alternate: darken($color-module-highlight, 2%);
 $color-founder-progress-header-shadow-alternate: darken($color-module-highlight, 9%);
 $color-founder-progress-header-shadow: $color-module-shadow;
-$color-founder-progress-header-text: #2070AD;
-$color-founder-progress-text-alternate: #6AA8D1;
+$color-founder-progress-header-text: $color-text;
+$color-founder-progress-text-alternate: $color-text;
 $color-founder-progress-list-border-shadow: #e2e2e2;
 @if lightness($color-page) < 50 {
 	$color-founder-progress-list-border-shadow: #333;
