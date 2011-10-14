@@ -157,11 +157,6 @@
 			</div>
 			<?php } ?>
 
-			<div id="WikiaArticleBottomAd" class="noprint">
-				<?= wfRenderModule('Ad', 'Index', array('slotname' => 'PREFOOTER_LEFT_BOXAD')) ?>
-				<?= wfRenderModule('Ad', 'Index', array('slotname' => 'PREFOOTER_RIGHT_BOXAD')) ?>
-			</div>
-
 	<?php
 		if ($displayComments) {
 			echo wfRenderModule('ArticleComments');
@@ -171,6 +166,11 @@
 			echo wfRenderModule('Wall'); 
 		}
 	?>
+
+			<div id="WikiaArticleBottomAd" class="noprint">
+				<?= wfRenderModule('Ad', 'Index', array('slotname' => 'PREFOOTER_LEFT_BOXAD')) ?>
+				<?= wfRenderModule('Ad', 'Index', array('slotname' => 'PREFOOTER_RIGHT_BOXAD')) ?>
+			</div>
 
 		</article><!-- WikiaMainContent -->
 
