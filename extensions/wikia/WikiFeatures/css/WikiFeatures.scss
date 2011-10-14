@@ -85,7 +85,7 @@
 			.actions {
 				float: right;
 				.slider {
-					@include border-radius(4px);
+					@include border-radius(14px);
 					@include box-shadow(0, 2px, 5px, #999, true);
 					background-color: #eeeded;
 					border: 1px solid #a6a6a6;
@@ -95,30 +95,28 @@
 					position: relative;
 					width: 107px;
 					.texton {
-						margin-left: 10px;
-						position: absolute;
-						top: 2px;
 						color: #FFFFFF;
-						font-weight: bold;
 						display: none;
-						&.on {
-							display: block;
-						}
+						font-weight: bold;
+						margin-left: 5px;
+						position: absolute;
+						text-align: center;
+						top: 2px;
+						width: 70px;
 					}
 					.textoff {
-						margin-left: 49px;
-						position: absolute;
-						top: 2px;
 						color: #000;
 						font-weight: bold;
-						&.on {
-							display: none;
-						}
+						margin-left: 32px;
+						position: absolute;
+						text-align: center;
+						top: 2px;
+						width: 70px;
 					}
 					.button {
-						@include border-radius(4px);
+						@include border-radius(14px);
 						@include linear-gradient(#f2f2f2, top, #F2F2F2, 35%, #D8D8D8, 65%);
-						@include transition-shorthand(left 200ms);
+						@include transition-shorthand(left 350ms);
 						border: 1px solid #a6a6a6;
 						display: block;
 						height: 26px;
@@ -126,11 +124,8 @@
 						padding: 0;
 						position: absolute;
 						top: -1px;
-						width: 42px;
+						width: 26px;
 						z-index: 1;
-						&.on {
-							left: 65px;
-						}
 					}
 					&.on {
 						@include linear-gradient(#477c0f, top, #477c0f, 0%, #85cd38, 100%);
@@ -141,7 +136,7 @@
 							display: none;
 						}
 						.button {
-							left: 65px;
+							left: 80px;
 						}
 					}
 				}
