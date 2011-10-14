@@ -167,6 +167,12 @@
 		}
 	?>
 
+			<?php if (!empty($afterCommentsHookText)) { ?>
+			<div id="WikiaArticleAfterComments" class="WikiaArticleAfterComments">
+				<?= $afterCommentsHookText ?>
+			</div>
+			<?php } ?>
+
 			<div id="WikiaArticleBottomAd" class="noprint">
 				<?= wfRenderModule('Ad', 'Index', array('slotname' => 'PREFOOTER_LEFT_BOXAD')) ?>
 				<?= wfRenderModule('Ad', 'Index', array('slotname' => 'PREFOOTER_RIGHT_BOXAD')) ?>
