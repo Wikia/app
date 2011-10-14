@@ -31,6 +31,10 @@ class PhotoPopController extends WikiaController {
 	public function index() {
 		$this->response->setVal( 'appCacheManifestPath', self::CACHE_MANIFEST_PATH . "&cb={$this->wg->CacheBuster}" );//$this->wg->StyleVersion
 		
+		F::build('JSMessages')->enqueuePackage('PhotoPop', JSMessages::INLINE);
+		
+		$this->globalVariablesScript = Skin::makeGlobalVariablesScript('');
+		
 		//TODO: move to AssetsManager package
 		$this->response->setVal( 'scripts', array(
 			AssetsManager::getInstance()->getOneCommonURL( "extensions/wikia/hacks/PhotoPop/shared/lib/mustache.js" ),
@@ -66,7 +70,6 @@ class PhotoPopController extends WikiaController {
 		
 		$this->response->setVal( 'callbackName', $callbackName );
 		$this->response->setVal( 'jsonData', json_encode( $result ) );
-		
 		$this->wf->profileOut( __METHOD__ );
 		
 		$this->forward( __CLASS__, 'jsonp', false );

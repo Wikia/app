@@ -35,8 +35,6 @@ define.call(exports, function(){
 			for(var sound in sounds) {
 				sounds[sound].muted = flag;
 			}
-
-			return mute = flag;
 		},
 		
 		getMute: function(){
