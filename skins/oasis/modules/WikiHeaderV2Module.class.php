@@ -13,6 +13,7 @@ class WikiHeaderV2Module extends Module {
 	var $wordmarkSize;
 	var $wordmarkUrl;
 	var $wordmarkFont;
+	var $displaySearch;
 
 	public function executeIndex() {
 		$themeSettings = new ThemeSettings();
@@ -28,5 +29,7 @@ class WikiHeaderV2Module extends Module {
 		}
 
 		$this->mainPageURL = Title::newMainPage()->getLocalURL();
+		
+		$this->displaySearch = !empty($this->wg->EnableAdminDashboardExt) && AdminDashboardLogic::displayAdminDashboard($this, $this->wg->Title);
 	}
 }
