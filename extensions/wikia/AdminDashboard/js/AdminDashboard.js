@@ -108,8 +108,7 @@ var AdminDashboardTracking = {
 		});
 	},
 	track: function(str) {
-		$().log(str);
-		WikiaTracker.track(str, 'UA-2871474-2'); // FIXME NEF switch to profile name, not id
+		$.tracker.byStr(str, true); // FIXME unsample when done
 	}
 };
 

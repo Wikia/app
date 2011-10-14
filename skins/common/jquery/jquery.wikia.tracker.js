@@ -274,8 +274,8 @@ jQuery.tracker = function() {
 	}
 };
 
-jQuery.tracker.byStr = function(message) {
-	$.tracker.track(message);
+jQuery.tracker.byStr = function(message, unsampled) {
+	$.tracker.track(message, unsampled);
 };
 
 jQuery.tracker.byId = function(e) {
@@ -283,18 +283,18 @@ jQuery.tracker.byId = function(e) {
 };
 
 jQuery.tracker.trackStr = function(str, account) {
+	WikiaTracker.track(str, 'main.test');
+
 	if(typeof account != 'undefined') {
 		_gaq.push(['_setAccount', account]);
 	}
 	_gaq.push(['_trackPageview', str]);
 	$().log('tracker: ' + str);
-
-	if (typeof WikiaTracker != 'undefined') {
-		WikiaTracker.track(str, 'main.test');
-	}
 };
 
-jQuery.tracker.track = function(fakeurl) {
+jQuery.tracker.track = function(fakeurl, unsampled) {
+	unsampled = unsampled || false;
+
 	fakeurlArray = fakeurl.split('/');
 
 	var username = wgUserName == null ? 'anon' : 'user';
@@ -320,8 +320,14 @@ jQuery.tracker.track = function(fakeurl) {
 	}
 
 	$.tracker.trackStr('/1_' + skinname + '/' + username + '/' + fakeurl, 'UA-2871474-1');
+	if (unsampled) {
+		WikiaTracker.track('/1_' + skinname + '/' + username + '/' + fakeurl, 'main.unsampled');
+	}
 	if(wgPrivateTracker) {
 		$.tracker.trackStr('/1_' + skinname + '/' + wgDB + '/' + username + '/' + fakeurl);
+		if (unsampled) {
+			WikiaTracker.track('/1_' + skinname + '/' + wgDB + '/' + username + '/' + fakeurl, 'main.unsampled');
+		}
 	}
 	var testGroupName = document.cookie.match(/wikia-ab=[^;]*name=(.*?)\//);
 	if(testGroupName) {
