@@ -22,6 +22,11 @@
 		<div class="edited-by">
 			<a href="<?= $user_author_url ?>"><?= $displayname ?></a> 
 			<a href="<?= $user_author_url ?>" class="subtle"><?= $displayname2 ?></a>
+			<?php if( !empty($isStaff) ): ?> 
+				<span class="stafflogo">
+					<img src="<?= $wikiaEmblemUrl; ?>" title="<?php wfMsg('wall-message-staff-text'); ?>" alt="@wikia" />
+				</span>
+			<?php endif; ?>
 		</div>
 		<div class="msg-body">
 			<? echo $body ?>

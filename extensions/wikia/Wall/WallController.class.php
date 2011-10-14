@@ -233,10 +233,11 @@ class WallController extends ArticleCommentsModule {
 		// it's a cached object, and we need to make sure that we are
 		// using newest RealName
 		// cache invalidation in this case would require too many queries
-		if($author_user)
+		if($author_user) {
 			$realname = $author_user->getRealName();
-		else
+		} else {
 			$realname = '';
+		}
 		
 		$this->response->setVal( 'id', $wallMessage->getTitle()->getArticleID());
 		$this->response->setVal( 'username', $name );
@@ -280,6 +281,13 @@ class WallController extends ArticleCommentsModule {
 		$this->response->setVal( 'displayname2', $displayname2 );
 		
 		$this->response->setVal( 'user_author_url', $url);
+		
+		$isStaff = $data['author']->isAllowed('wallshowwikiaemblem');
+		$this->response->setVal( 'isStaff', $isStaff );
+		if( $isStaff ) {
+			$wikiaEmblemUrl = $this->app->wf->ReplaceImageServer('http://images.wikia.com/wikia/images/e/e9/WikiaStaff.png');
+			$this->response->setVal( 'wikiaEmblemUrl', $wikiaEmblemUrl );
+		}
 		
 		wfProfileOut( __METHOD__ );
 	}
