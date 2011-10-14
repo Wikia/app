@@ -21,6 +21,8 @@ $wgExtensionCredits['specialpage'][] = array(
 	'version' => '1.0',
 );
 
+$API_GATE_DIR = "$IP/lib/ApiGate";
+
 
 /**
  * @ingroup SpecialPage
@@ -41,7 +43,7 @@ class SpecialApiGate extends SpecialPage {
 	 * @param $subpage Mixed: string if any subpage provided, else null
 	 */
 	public function execute( $subpage ) {
-		global $wgOut, $wgRequest, $IP, $wgUser;
+		global $wgOut, $wgRequest, $IP, $wgUser, $API_GATE_DIR;
 		wfProfileIn( __METHOD__ );
 
 		include "$IP/lib/ApiGate/ApiGate.php";
@@ -82,7 +84,7 @@ class SpecialApiGate extends SpecialPage {
 
 					$mainSectionHtml .= wfMsg('apigate-nologintext') . "<br/><br/><button type='button' data-id='login' class='ajaxLogin'>" . wfMsg('apigate-login-button') . "</button>";
 				} else {
-					$data = array('firstName' => '', 'lastName' => '', 'email_1' => '', 'email_2' => '');
+					$data = array('firstName' => '', 'lastName' => '', 'email_1' => '', 'email_2' => '', 'errorString' => '');
 
 					// If the user's real name is in their profile, split it up and use it to initialize the form.
 					$name = $wgUser->getName();
@@ -99,7 +101,18 @@ class SpecialApiGate extends SpecialPage {
 					$data['email_1'] = $wgUser->getEmail();
 					$data['email_2'] = $data['email_1'];
 
-					$mainSectionHtml = ApiGate_Dispatcher::renderTemplate( $data, "register" );
+					include "$API_GATE_DIR/ApiGate_Register.class.php";
+					$registered = ApiGate_Register::processPost( $data );
+					if( $registered ){
+
+						// TODO: Display a success message (add it to mainSectionHtml)
+						// TODO: Display a success message (add it to mainSectionHtml)
+						
+						$mainSectionHtml .= $this->subpage_landingPage( $data );
+
+					} else {
+						$mainSectionHtml .=  ApiGate_Dispatcher::renderTemplate( $data, "register" );
+					}
 				}
 
 				break;
@@ -123,11 +136,7 @@ class SpecialApiGate extends SpecialPage {
 				break;
 			case $this->SUBPAGE_NONE:
 			default:
-
-				// TODO: Landing page
-				$wgOut->addHTML( "This is where the landing-page will go. It will be state-dependent on the user, their keys, etc.\n" ); // TODO: REMOVE
-				// TODO: Landing page
-
+				$mainSectionHtml .= $this->subpage_landingPage();
 				break;
 		}
 		$wgOut->addHTML( "<div id='specialApiGateMainSection'><div class='module'>
@@ -144,5 +153,22 @@ class SpecialApiGate extends SpecialPage {
 
 		wfProfileOut( __METHOD__ );
 	} // end execute()
+	
+	/**
+	 * State-dependent dashboard for when you hit Special:ApiGate with no subpage specified.
+	 *
+	 * This performs its function by returning HTML.
+	 *
+	 * @param data - optional associative array where keys are variable names (and values are the values for that variable) to be exported to templates.
+	 * @return 
+	 */
+	public function subpage_landingPage( $data = array() ){
+		global $wgOut;
+		wfProfileIn( __METHOD__ );
+
+		$wgOut->addHTML( "This is where the landing-page will go. It will be state-dependent on the user, their keys, etc.\n" ); // TODO: REMOVE
+
+		wfProfileOut( __METHOD__ );
+	} // end subpage_landingPage()
 
 } // end class SpecialApiGate
