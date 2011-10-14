@@ -102,9 +102,15 @@ $wgAutoloadClasses[ 'WikiaPhotoGalleryUpload' ] = "{$dir}../WikiaPhotoGallery/Wi
 // I18N
 $wgExtensionMessagesFiles['AchievementsII'] = $dir.'i18n/AchievementsII.i18n.php';
 
-// SETUP
-$wgExtensionFunctions[] = 'Ach_Setup';
-
+// Michał Roszka (Mix) <michal@wikia-inc.com>
+// BugId:10474
+// I want the code of the extension to be included regardless of the $wgEnableAchievementsExt.
+// The effective execution still depends on $wgEnableAchievementsExt's value.
+// Also: grep CommonExtensions.php for BugId:10474
+if( !empty( $wgEnableAchievementsExt ) ) {
+    // SETUP
+    $wgExtensionFunctions[] = 'Ach_Setup';
+}
 // AJAX
 $wgAjaxExportList[] = 'AchAjax';
 
