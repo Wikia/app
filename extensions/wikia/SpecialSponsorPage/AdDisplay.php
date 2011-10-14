@@ -7,19 +7,6 @@
 class AdDisplay {
 
 	//wrapper function for specific hooks (method signature appropriate for certain hook(s)
-	public static function OutputAdvertisementAfterArticleFetch(&$article, &$content){
-		if(!self::ArticleCanShowAd()) return true;
-		$content .= self::OutputAdvertisement();
-		return true;
-	}
-
-	public static function OutputAdvertisementOutputPageParserOutput( &$out, $parseroutput ){
-		if(!self::ArticleCanShowAd()) return true;
-		$parseroutput->setText(self::OutputAdvertisement());
-		return true;
-	}
-
-
 	//use this one
 	public static function OutputAdvertisementOutputHook( &$out, &$text ){
 		global $wgUser, $wgRequest, $wgShowAds, $wgTitle, $wgMaximizeArticleAreaArticleIds;
@@ -38,12 +25,6 @@ class AdDisplay {
 		if(!self::ArticleCanShowAd()) return true;
 		wfLoadExtensionMessages( 'SponsorPage' );
 
-		$text.= self::OutputAdvertisement();
-		return true;
-	}
-
-	public static function OutputAdvertisementParserAfterTidy($parser, &$text) {
-		if(!self::ArticleCanShowAd()) return true;
 		$text.= self::OutputAdvertisement();
 		return true;
 	}

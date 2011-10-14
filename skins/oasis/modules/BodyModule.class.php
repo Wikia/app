@@ -24,6 +24,7 @@ class BodyModule extends Module {
 	// Module vars
 	var $afterBodyHtml;
 	var $afterContentHookText;
+	var $afterCommentsHookText;
 
 	var $headerModuleName;
 	var $headerModuleAction;
@@ -407,6 +408,10 @@ class BodyModule extends Module {
 		// this hook is needed for SMW's factbox
 		if (!wfRunHooks('SkinAfterContent', array( &$this->afterContentHookText ) )) {
 			$this->afterContentHookText = '';
+		}
+
+		if (!wfRunHooks('SkinAfterComments', array( &$wgOut, &$this->afterCommentsHookText ) )) {
+			$this->afterCommentsHookText = '';
 		}
 
 		$this->headerModuleAction = 'Index';
