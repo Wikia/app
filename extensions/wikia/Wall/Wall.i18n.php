@@ -92,10 +92,13 @@ $messages['en'] = array(
 	'wall-recentchanges-comment-new-message' => '(new: "$1")',
 	'wall-recentchanges-new-reply' => '(reply: "$1")',
 	'wall-recentchanges-edit' => '(edited message)',
+	'wall-recentchanges-delete' => ' deleted "<a href="$1" class="new">$2</a>" from <a href="$3">$4\'s wall</a>',
+	'wall-recentchanges-deleted-reply-title' => 'A reply on message wall',
 	
 	'wall-message-not-found' => 'This message could not be found. If you see this error please contact Wikia at [[Special:Contact]] and provide as much details as possible about how this bug can be reproduced. Thank You!',
 );
 
 $messages['qqq'] = array(
-	'wall-recentchanges-article-link-new-message' => '$1 is link to user\'s wall page $2 is username (wall owner)',
+	'wall-recentchanges-article-link-new-message' => "$1 is link to user's wall page $2 is username (wall owner)",
+	'wall-recentchanges-delete' => "$1 is link to deleted message, $2 is title of the message, $3 is link to wall owner's wall and $4 is the owner's username",
 );

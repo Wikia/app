@@ -22,13 +22,7 @@ class WallHooksHelper {
 			// needs converting to articleId
 			$articleId = $title->getArticleId();
 			if($articleId == 0) {
-				// thread was deleted, ressurect it's ID from archives
-				$dbr = wfGetDB( DB_SLAVE );
-				$row = $dbr->selectRow( 'archive',
-					array( 'ar_page_id' ),
-					array( 'ar_title' => str_replace(' ','_',$title->getText() ) ),
-					__METHOD__ );
-					$articleId = $row->ar_page_id;
+				$articleId = $helper->getDeletedArticleId($title->getText());
 			}
 			$title = F::build('Title', array($parts[0].'/'.$articleId, NS_USER_WALL), 'newFromText');
 			$app->wg->Out->redirect($title->getFullUrl(), 301);
@@ -274,7 +268,7 @@ class WallHooksHelper {
 					'class'=>'wall-notifications-monobook',
 					'active'=>false
 				);
-				$app->wg->Out->addScript("<script type=\"{$app->wg->JsMimeType}\" src=\"{$app->wg->StylePath}/common/jquery/jquery.timeago.js?{$app->wg->StyleVersion}\"></script>\n");
+				$app->wg->Out->addScript("<script type=\"{$app->wg->JsMimeType}\" src=\"/skins/common/jquery/jquery.timeago.js?{$app->wg->StyleVersion}\"></script>\n");
 				$app->wg->Out->addScript("<link rel=\"stylesheet\" type=\"text/css\" href=\"{$app->wg->ExtensionsPath}/wikia/Wall/css/WallNotificationsMonobook.css?{$app->wg->StyleVersion}\" />\n");
 			}
 			$app->wg->Out->addScript("<script type=\"{$app->wg->JsMimeType}\" src=\"{$app->wg->ExtensionsPath}/wikia/Wall/js/WallNotifications.js?{$app->wg->StyleVersion}\"></script>\n");
@@ -528,6 +522,19 @@ class WallHooksHelper {
 		return true;
 	}
 	
+	/**
+	 * @brief Adjusting recent changes for Wall 
+	 * 
+	 * @desc This method doesn't let display flags for message wall replies (they are displayed only for messages from message wall)
+	 * 
+	 * @param ChangesList $list
+	 * @param string $flags
+	 * @param RecentChange $rc
+	 * 
+	 * @return true because this is a hook
+	 * 
+	 * @author Andrzej 'nAndy' Lukaszewski
+	 */
 	public function onChangesListInsertFlags($list, $flags, $rc) {
 		if( $rc->getAttribute('rc_type') == RC_NEW && $rc->getAttribute('rc_namespace') == NS_USER_WALL_MESSAGE ) {
 			$app = F::app();
@@ -542,6 +549,22 @@ class WallHooksHelper {
 		return true;
 	}
 	
+	/**
+	 * @brief Adjusting recent changes for Wall 
+	 * 
+	 * @desc This method shows link to message wall thread page
+	 * 
+	 * @param ChangesList $list
+	 * @param string $articleLink
+	 * @param string $s
+	 * @param RecentChange $rc
+	 * @param boolean $unpatrolled
+	 * @param boolean $watched
+	 * 
+	 * @return true because this is a hook
+	 * 
+	 * @author Andrzej 'nAndy' Lukaszewski
+	 */
 	public function onChangesListInsertArticleLink($list, $articleLink, $s, $rc, $unpatrolled, $watched) {
 		if(($rc->getAttribute('rc_type') == RC_NEW || $rc->getAttribute('rc_type') == RC_EDIT) && $rc->getAttribute('rc_namespace') == NS_USER_WALL_MESSAGE ) {
 			$app = F::app();
@@ -566,6 +589,21 @@ class WallHooksHelper {
 		return true;
 	}
 	
+	/**
+	 * @brief Adjusting recent changes for Wall 
+	 * 
+	 * @desc This method doesn't let display diff history links
+	 * 
+	 * @param ChangesList $list
+	 * @param string $articleLink
+	 * @param string $s
+	 * @param RecentChange $rc
+	 * @param boolean $unpatrolled
+	 * 
+	 * @return true because this is a hook
+	 * 
+	 * @author Andrzej 'nAndy' Lukaszewski
+	 */
 	public function onChangesListInsertDiffHist($list, $articleLink, $s, $rc, $unpatrolled) {
 		if( !empty($rc->mAttribs['rc_namespace']) && $rc->mAttribs['rc_namespace'] == NS_USER_WALL_MESSAGE ) {
 			$s = '';
@@ -574,6 +612,20 @@ class WallHooksHelper {
 		return true;
 	}
 	
+	/**
+	 * @brief Adjusting recent changes for Wall 
+	 * 
+	 * @desc This method doesn't let display rollback link for message wall inputs
+	 * 
+	 * @param ChangesList $list
+	 * @param string $s
+	 * @param string $rollbackLink
+	 * @param RecentChange $rc
+	 * 
+	 * @return true because this is a hook
+	 * 
+	 * @author Andrzej 'nAndy' Lukaszewski
+	 */
 	public function onChangesListInsertRollback($list, $s, $rollbackLink, $rc) {
 		if( !empty($rc->mAttribs['rc_namespace']) && $rc->mAttribs['rc_namespace'] == NS_USER_WALL_MESSAGE ) {
 			$rollbackLink = '';
@@ -582,6 +634,20 @@ class WallHooksHelper {
 		return true;
 	}
 	
+	/**
+	 * @brief Adjusting recent changes for Wall 
+	 * 
+	 * @desc This method creates comment to a recent change line
+	 * 
+	 * @param ChangesList $list
+	 * @param string $comment
+	 * @param string $s
+	 * @param RecentChange $rc
+	 * 
+	 * @return true because this is a hook
+	 * 
+	 * @author Andrzej 'nAndy' Lukaszewski
+	 */
 	public function onChangesListInsertComment($list, $comment, $s, $rc) {
 		if(($rc->getAttribute('rc_type') == RC_NEW || $rc->getAttribute('rc_type') == RC_EDIT) && $rc->getAttribute('rc_namespace') == NS_USER_WALL_MESSAGE ) {
 			$app = F::app();
@@ -613,9 +679,39 @@ class WallHooksHelper {
 		return true;
 	}
 	
+	/**
+	 * @brief Adjusting recent changes for Wall 
+	 * 
+	 * @desc This method creates comment about deleted messages from message wall
+	 * 
+	 * @param ChangesList $list
+	 * @param string $actionText
+	 * @param string $s
+	 * @param RecentChange $rc
+	 * 
+	 * @return true because this is a hook
+	 * 
+	 * @author Andrzej 'nAndy' Lukaszewski
+	 */
 	public function onChangesListInsertAction($list, $actionText, $s, $rc) {
 		if( $rc->getAttribute('rc_type') == RC_LOG && $rc->getAttribute('rc_namespace') == NS_USER_WALL_MESSAGE ) {
+			$app = F::app();
+			$helper = F::build('WallHelper', array());
+			$userText = $rc->getAttribute('rc_user_text');
 			
+			$articleId = $helper->getDeletedArticleId($rc->getTitle()->getText());
+			$articleTitleObj = F::build('Title', array($userText.'/'.$articleId, NS_USER_WALL), 'newFromText');
+			
+			$wallTitleObj = F::build('Title', array(NS_USER_WALL, $userText), 'newFromText');
+			$wallUrl = ($wallTitleObj instanceof Title) ? $wallTitleObj->getLocalUrl() : '#';
+			$articleUrl = ($articleTitleObj instanceof Title) ? $articleTitleObj->getLocalUrl() : '#';
+			
+			$actionText = $app->wf->Msg('wall-recentchanges-delete', array(
+				$articleUrl,
+				$articleTitleTxt,
+				$wallUrl,
+				$userText,
+			));
 		}
 		
 		return true;

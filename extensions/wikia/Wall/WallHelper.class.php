@@ -337,4 +337,18 @@ class WallHelper {
 
 		return $wgParser->parse( $rawtext, $title, $wgOut->parserOptions())->getText();
 	}
+	
+	public function getDeletedArticleId($dbkey) {
+		// thread was deleted, ressurect it's ID from archives
+		$dbr = wfGetDB( DB_SLAVE );
+		
+		$row = $dbr->selectRow(
+			'archive',
+			array( 'ar_page_id' ),
+			array( 'ar_title' => str_replace(' ', '_', $dbkey) ),
+			__METHOD__ 
+		);
+		
+		return $row->ar_page_id;
+	}
 }
