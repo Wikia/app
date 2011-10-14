@@ -90,7 +90,7 @@ class ScribeEventProducer {
 		$this->app->wf->ProfileOut( __METHOD__ );
 	}
 	
-	public function buildRemovePackage ( $oArticle, $oUser, $page_id )
+	public function buildRemovePackage ( $oArticle, $oUser, $page_id ) {
 		$this->app->wf->ProfileIn( __METHOD__ );
 	
 		$oTitle = $oArticle->getTitle();
@@ -112,7 +112,7 @@ class ScribeEventProducer {
 			$oRow = $dbr->selectRow( $table, $what, $cond, __METHOD__, $options );
 		}
 		
-		$logid = ( !empty( $oRow ) ) $oRow->rc_logid : 0;
+		$logid = ( !empty( $oRow ) ) ? $oRow->rc_logid : 0;
 
 		if ( $logid ) { 
 			$this->setPageId( $page_id ) ;

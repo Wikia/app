@@ -211,7 +211,7 @@ class ScribeEventProducerController extends WikiaController {
 			}
 
 			$redirect_page_id = $oRevision->getPage();
-			if ( empty( redirect_page_id ) || $redirect_page_id < 0 ) {
+			if ( empty( $redirect_page_id ) || $redirect_page_id < 0 ) {
 				$redirect_page_id = $oOldTitle->getArticleId();
 			}
 							
