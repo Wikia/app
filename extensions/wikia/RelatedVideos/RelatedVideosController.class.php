@@ -16,7 +16,7 @@ class RelatedVideosController extends WikiaController {
 			$this->app->wg->title->getArticleId(),
 			RelatedVideos::MAX_RELATEDVIDEOS
 		);
-
+		
 		if ( !is_array( $videos ) ){ $videos = array(); }
 
 		$oLocalLists = RelatedVideosNamespaceData::newFromTargetTitle( F::app()->wg->title );

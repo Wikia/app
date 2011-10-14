@@ -329,6 +329,7 @@ $color-related-videos-background: darken($color-page, 20%);
 #relatedvideos-video-player {
 	section.modalContent {
 		margin-top: 27px;
+		_margin-top: 0px;
 	}
 	.embedCode {
 		margin-top: 10px;
@@ -346,5 +347,6 @@ $color-related-videos-background: darken($color-page, 20%);
 	}
 	.embedHtml {
 		margin-top: 53px;
+		_margin-top: 0px;
 	}
 }

@@ -1,3 +1,4 @@
+<form class="rv-add-form" action="#">
 <div class="addRelatedVideos">
 	<label>
 		<?= wfMsg('related-videod-add-video-label-name') ?>
@@ -11,7 +12,8 @@
 	</label>
 </div>
 <div class="relatedVideosConfirm">
-	<a class="button"><?= wfMsg('related-videod-add-video-ok') ?></a>
+	<button type="submit" class="button"><?= wfMsg('related-videod-add-video-ok') ?></button>
 </div>
+</form>
 <div class="notifyHolder messageHolder"><?= wfMsg('related-videos-notify') ?></div>
 <div class="somethingWentWrong messageHolder"><?= wfMsg('related-videos-something-went-wrong') ?></div>
