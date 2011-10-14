@@ -71,7 +71,7 @@ class WallHooksHelper {
 			$outputDone = true;
 			
 			$app->wg->request->setVal('dontGetUserFromSession', true);
-			$app->wg->Out->redirect($this->getWallTitle()->getFullUrl(), 301);
+			$app->wg->Out->redirect($this->getWallTitle()->getFullUrl().'/'.$helper->getArchiveSubPageText(), 301);
 			return true;
 		}
 		
