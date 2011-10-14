@@ -1071,6 +1071,6 @@ function VET_sendQueryEmbed(query) {
 	}
 	VET_indicator(1, true);
 	YAHOO.util.Connect.abort(VET_asyncTransaction);
-	VET_asyncTransaction = YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=VET&method=insertVideo&' + 'url=' + escape($G('VideoEmbedUrl').value), callback);
+	VET_asyncTransaction = YAHOO.util.Connect.asyncRequest('POST', wgScriptPath + '/index.php', callback, 'action=ajax&rs=VET&method=insertVideo&url=' + escape($G('VideoEmbedUrl').value));
 }
 
