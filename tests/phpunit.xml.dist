@@ -18,7 +18,7 @@
          <testsuite name="Facebook Connect Extension">
             <directory>../extensions/FBConnect/</directory>
          </testsuite>
-         <testsuite name="WikiaLabs Test Suite">
+         <testsuite name="Wikia Extensions Test Suite">
             <directory>../extensions/wikia/</directory>
          </testsuite>
          <testsuite name="Wikia Maintenance Test Suite">

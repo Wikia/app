@@ -88,7 +88,6 @@ class AdminDashboardLogic {
 				"WikiActivity",
 				"WikiFactory",
 				"WikiFactoryReporter",
-				"WikiaLabs",
 				"WikiStats",
 			);
 			return (!in_array($alias, $exclusionList));
