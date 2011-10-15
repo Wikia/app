@@ -32,13 +32,32 @@ class ApiGate_Register {
 			$email_1 = self::getPost('email_1');
 			$email_2 = self::getPost('email_2');
 			
-			// TODO: IMPLEMENT
-			// TODO: IMPLEMENT
-			
-			$data['apiKey'] = "APIKEYGOESHERE";
-			$didRegister = true; // TODO: MOVE THIS TO ONLY HAPPEN WHEN REGISTRATION ACTUALLY HAPPENS
-			
+			// Validate the input.
+			if("$firstName$lastName" == ""){
+				$errorString .= "\n" . i18n( 'apigate-register-error-noname' );
+			}
+			if( preg_match('/^[a-z0-9._%+-]+@(?:[a-z0-9\-]+\.)+[a-z]{2,4}$/i', $email_1) === 0 ){
+				$errorString .= "\n". i18n( 'apigate-register-error-invalid-email' );
+			}
+			if($email_1 != $email_2){
+				$errorString .= "\n". i18n( 'apigate-register-error-email-doesnt-match' );
+			}
 
+			// If input was valid, attempt to create a key.
+			if($errorString == ""){
+		
+				// TODO: IMPLEMENT
+				// TODO: IMPLEMENT
+
+				$data['apiKey'] = "APIKEYGOESHERE";
+				$didRegister = true; // TODO: MOVE THIS TO ONLY HAPPEN WHEN REGISTRATION ACTUALLY HAPPENS
+			}
+
+			if( $errorString != "" ) {
+				$errorString = trim($errorString);
+				$errorString = str_replace("\n", "<br/>", $errorString);
+				$data['errorString'] = $errorString;
+			}
 		}
 	
 		return $didRegister;
