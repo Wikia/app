@@ -13,6 +13,7 @@ $messages = array();
  */
 $messages['en'] = array(
 	'apigate' => 'API Gate',
+
 	'apigate-register-title' => 'Get an API Key',
 	'apigate-register-heading' => 'Get an API Key',
 	'apigate-register-name' => 'Name*',
@@ -22,6 +23,9 @@ $messages['en'] = array(
 	'apigate-register-hint-email' => 'Email address',
 	'apigate-register-hint-confirm-email' => 'Confirm email',
 	'apigate-register-submit' => 'Submit',
+	'apigate-register-error-noname' => 'Please enter your name.',
+	'apigate-register-error-invalid-email' => 'Please enter a valid email address.',
+	'apigate-register-error-email-doesnt-match' => 'Email addresses entered do not match.',
 );
 
 /** Message documentation (Message documentation)

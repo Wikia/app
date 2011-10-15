@@ -159,7 +159,7 @@ class SpecialApiGate extends SpecialPage {
 
 		wfProfileOut( __METHOD__ );
 	} // end execute()
-	
+
 	/**
 	 * State-dependent dashboard for when you hit Special:ApiGate with no subpage specified.
 	 *
