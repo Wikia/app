@@ -210,6 +210,9 @@ descmsg = wikiarelatedpages-desc
 Related Video
 file = RelatedVideo/i18n/RelatedVideo.i18n.php
 
+Related Videos
+file = RelatedVideos/RelatedVideos.i18n.php
+
 RTE - Base
 file = RTE/i18n/RTE.i18n.php
 ignored = editor-template-list
