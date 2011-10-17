@@ -255,6 +255,7 @@ class WallNotifications {
 		if(empty($data['relation'][ $uniqueId ]['list']) || $data['relation'][ $uniqueId ]['read'] ) {
 			$data['relation'][ $uniqueId ]['list'] = array();
 			$data['relation'][ $uniqueId ]['count'] = 0;
+			$data['relation'][ $uniqueId ]['read'] = false;
 		}
 
 		if(empty($data['relation'][ $uniqueId ]['count'])) $data['relation'][ $uniqueId ]['count'] = count($data['relation'][ $uniqueId ]['list']);
@@ -325,6 +326,7 @@ class WallNotifications {
 	}
 	
 	protected function setData($cache, $data) {
+		//$cache->delete();
 		return $cache->set( $data );
 	}
 

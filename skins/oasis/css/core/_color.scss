@@ -26,6 +26,7 @@ $color-gray-text: #999;
 @if $is-dark-wiki {
 	$color-gray-text: #666;
 }
+$color-gray-text: desaturate(mix($color-text,$color-page,60%),100%);
 
 
 // GlobalHeader

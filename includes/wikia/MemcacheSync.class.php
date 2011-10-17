@@ -66,4 +66,8 @@ class MemcacheSync{
 			return false;
 		}
 	}
+	
+	function delete() {
+		$this->memc->delete($this->key);
+	}
 }
