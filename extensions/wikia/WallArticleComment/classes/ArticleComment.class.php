@@ -190,7 +190,7 @@ class ArticleComment {
 			$this->parseText($rawtext);
 			$wgMemc->set($memckey, array(
 				'text' => $this->mText, 
-				'metadata' => $wgParser->ac_metadata, 
+				'metadata' => $this->mMetadata, 
 				'raw' => $this->mRawtext,
 				'first' => $this->mFirstRevision, 
 				'last' => $this->mLastRevision,

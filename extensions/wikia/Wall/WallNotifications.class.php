@@ -41,12 +41,14 @@ class WallNotifications {
 				if($list['relation'][ $listval ]['read']){
 					if(count($read) < $readSlice){
 						$read[] = array(
-							"grouped" => $this->groupEntity($list['relation'][ $listval ]['list'])
+							"grouped" => $this->groupEntity($list['relation'][ $listval ]['list']),
+							"count" => empty($list['relation'][ $listval ]['count']) ? count($list['relation'][ $listval ]['list']) : $list['relation'][ $listval ]['count'] 
 						);	
 					}
 				} else {
 					$unread[] = array(
-						"grouped" => $this->groupEntity($list['relation'][ $listval ]['list'])
+						"grouped" => $this->groupEntity($list['relation'][ $listval ]['list']),
+						"count" => empty($list['relation'][ $listval ]['count']) ? count($list['relation'][ $listval ]['list']) : $list['relation'][ $listval ]['count']
 					);
 				}
 			}
@@ -216,19 +218,23 @@ class WallNotifications {
 		}
 		$this->storeInDB($userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply); 
 		//id use to prevent having of extra entry after memc fail.   
-		$memcSync = $this->getCache($userId, $wikiId);
-		do {
-			$count = 0; //use to set priority of process 
-			if($memcSync->lock()) {
-				$data = $this->getData($memcSync, $userId, $wikiId);
-				$this->addNotificationToData($data, $uniqueId, $entityKey, $authorId, $isReply );
-			} else {
-				$this->sleep($count);
-			}
-			$count++;
-		} while(!isset($data) || !$this->setData($memcSync, $data));
 		
-		$memcSync->unlock();
+		// if the object is in memory, update it, if not, skip it (it will be rebuild from db at some point anyway)
+		if($this->isCachedData($userId, $wikiId)) {
+			$memcSync = $this->getCache($userId, $wikiId);
+			do {
+				$count = 0; //use to set priority of process 
+				if($memcSync->lock()) {
+					$data = $this->getData($memcSync, $userId, $wikiId);
+					$this->addNotificationToData($data, $uniqueId, $entityKey, $authorId, $isReply );
+				} else {
+					$this->sleep($count);
+				}
+				$count++;
+			} while(!isset($data) || !$this->setData($memcSync, $data));
+			
+			$memcSync->unlock();
+		}
 	}
 	
 	protected function sleep($userId, $wikiId){
@@ -240,7 +246,7 @@ class WallNotifications {
 	}
 	
 	protected function addNotificationToData(&$data, $uniqueId, $entityKey, $authorId, $isReply, $read = false) {
-		$data['notification'][] = $uniqueId;		
+		$data['notification'][] = $uniqueId;
 		
 		if(isset($data['relation'][ $uniqueId ]['last']) && $data['relation'][ $uniqueId ]['last'] > -1) {
 			$data['notification'][ $data['relation'][$uniqueId ]['last'] ] = null;
@@ -248,7 +254,11 @@ class WallNotifications {
 
 		if(empty($data['relation'][ $uniqueId ]['list']) || $data['relation'][ $uniqueId ]['read'] ) {
 			$data['relation'][ $uniqueId ]['list'] = array();
+			$data['relation'][ $uniqueId ]['count'] = 0;
 		}
+
+		if(empty($data['relation'][ $uniqueId ]['count'])) $data['relation'][ $uniqueId ]['count'] = count($data['relation'][ $uniqueId ]['list']);
+		
 
 		$data['relation'][ $uniqueId ]['last'] = count($data['notification']) - 1;
 
@@ -265,6 +275,7 @@ class WallNotifications {
 				// so we are adding unread notification to read notifications
 				// get rid of all read elements
 				$data['relation'][ $uniqueId ]['list'] = array();
+				$data['relation'][ $uniqueId ]['count'] = 0;
 			}
 		}
 		
@@ -282,12 +293,26 @@ class WallNotifications {
 		
 		// if we didn't find same author in our list, we need to remove oldest element
 		if($first_key != null && $found == false && count($data['relation'][ $uniqueId ]['list']) > 2 ) unset($data['relation'][ $uniqueId ]['list'][$key]);
+		
+		// add new element
 		$data['relation'][ $uniqueId ]['list'][] = array('entityKey' => $entityKey, 'authorId' => $authorId, 'isReply'=>$isReply);
+		$data['relation'][ $uniqueId ]['count'] += 1;
 	
 		$data['relation'][ $uniqueId ]['read'] = $read;			
 		
 	}
 	
+	protected function isCachedData($userId, $wikiId) {
+		$key = $this->getKey($userId, $wikiId);
+		$val = F::App()->getGlobal('wgMemc')->get($key);
+		
+		if(empty($val) && !is_array($val)) {
+			return False;
+		}
+		
+		return True;
+	}
+
 	protected function getData($cache, $userId, $wiki) {
 		$val = $cache->get();
 		

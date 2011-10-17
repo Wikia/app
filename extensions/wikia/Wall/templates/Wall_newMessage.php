@@ -7,7 +7,11 @@
 			<div class="no-title-warning" style="display:none"><?= wfMsg('wall-no-title-warning') ?></div>
 		</div>
 		<textarea id="WallMessageTitle" class="title" type="text" placeholder="<?= wfMsg('wall-placeholder-topic') ?>"></textarea>
-		<textarea id="WallMessageBody" class="body" placeholder="<?= wfMsg('wall-placeholder-message', $wall_username . '\'s') ?>"></textarea>
+		<? if (User::isIP($wall_username) ): ?>
+			<textarea id="WallMessageBody" class="body" placeholder="<?= wfMsg('wall-placeholder-message-anon') ?>"></textarea>
+		<? else: ?>
+			<textarea id="WallMessageBody" class="body" placeholder="<?= wfMsg('wall-placeholder-message', $wall_username) ?>"></textarea>
+		<? endif; ?>
 		<?php if( $loginToEditProtectedPage ) { ?>
 			<button id="WallMessageSubmit" class="wall-require-login" disabled="disabled" style="display: none" data="<?= $ajaxLoginUrl; ?>"><?= wfMsg('wall-button-to-submit-comment') ?></button>
 		<?php } else { ?>

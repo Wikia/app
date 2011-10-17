@@ -48,3 +48,20 @@ jQuery.showAds = function() {
 	$('head .wikia-ad-hidden').remove();
 	*/
 };
+
+
+/* DEBUG
+ * if you see this in commit please inform pbablok@wikia-inc.com as this is not intended to be commited
+ */
+
+$(document).ready( function() {
+	$('img').attr('src', function(index, src) {
+		return src.replace('pbablok.wikia-dev','wikia');
+	});
+	setTimeout( function() {
+		$('img').attr('src', function(index, src) {
+			return src.replace('pbablok.wikia-dev','wikia');
+		});
+	},1500);
+
+});
