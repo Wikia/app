@@ -4,7 +4,7 @@ class CommentsOnlyHistoryDropdownModule extends HistoryDropdownModule {
 
 	protected function getTemplatePath() {
 		global $wgAutoloadClasses;
-		if( wfCommentsOnlyCheck() ) {
+		if( wfCOCheck() ) {
 			wfLoadExtensionMessages('CommentsOnly');
 			return dirname($wgAutoloadClasses['CommentsOnlyHistoryDropdownModule']).'/templates/'.$this->moduleName.'_'.$this->moduleAction.'.php';
 		} else {
