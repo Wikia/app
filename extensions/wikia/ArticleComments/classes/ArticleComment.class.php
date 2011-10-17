@@ -523,28 +523,32 @@ class ArticleComment {
 		}
 
 		$commentTitle = Title::newFromText($commentTitle, MWNamespace::getTalk($title->getNamespace()));
-		/**
-		 * because we save different tile via Ajax request
-		 */
-		$wgTitle = $commentTitle;
-
-		/**
-		 * add article using EditPage class (for hooks)
-		 */
-		$result   = null;
-		$article  = new Article( $commentTitle, 0 );
-		$editPage = new EditPage( $article );
-		$editPage->edittime = $article->getTimestamp();
-		$editPage->textbox1 = $text;
-		$bot = $user->isAllowed('bot');
-		//this function calls Article::onArticleCreate which clears cache for article and it's talk page
-		$retval = $editPage->internalAttemptSave( $result, $bot );
-
-		$key = $title->getPrefixedDBkey(); // FIXME: does this line cause some side-effects that are needed? Otherwise, this line doesn't appear to serve any purpose.
-
-		wfProfileOut( __METHOD__ );
-
-		return array( $retval, $article );
+		if( $commentTitle instanceof Title ) {
+			/**
+			 * because we save different tile via Ajax request
+			 */
+			$wgTitle = $commentTitle;
+	
+			/**
+			 * add article using EditPage class (for hooks)
+			 */
+			$result   = null;
+			$article  = new Article( $commentTitle, 0 );
+			$editPage = new EditPage( $article );
+			$editPage->edittime = $article->getTimestamp();
+			$editPage->textbox1 = $text;
+			$bot = $user->isAllowed('bot');
+			//this function calls Article::onArticleCreate which clears cache for article and it's talk page
+			$retval = $editPage->internalAttemptSave( $result, $bot );
+	
+			$key = $title->getPrefixedDBkey(); // FIXME: does this line cause some side-effects that are needed? Otherwise, this line doesn't appear to serve any purpose.
+	
+			wfProfileOut( __METHOD__ );
+	
+			return array( $retval, $article );
+		}
+		
+		return false;
 	}
 
 	static public function doAfterPost($status, $article, $commentId = 0) {
