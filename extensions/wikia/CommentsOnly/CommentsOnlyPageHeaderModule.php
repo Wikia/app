@@ -8,7 +8,7 @@ class CommentsOnlyPageHeaderModule extends PageHeaderModule {
 	}
 
 	protected function getDropdownActions() {
-		if( wfCommentsOnlyCheck() ) {
+		if( wfCOCheck() ) {
 			return array();
 		} else {
 			return parent::getDropdownActions();
@@ -16,7 +16,7 @@ class CommentsOnlyPageHeaderModule extends PageHeaderModule {
 	}
 
 	protected function prepareActionButton() {
-		if( wfCommentsOnlyCheck() ) {
+		if( wfCOCheck() ) {
 			if( isset( $this->content_actions['delete'] ) ) {
 				wfLoadExtensionMessages('CommentsOnly');
 				$this->action = $this->content_actions['delete'];
@@ -29,7 +29,7 @@ class CommentsOnlyPageHeaderModule extends PageHeaderModule {
 	}
 
 	protected function getRecentRevisions() {
-		if( wfCommentsOnlyCheck() ) {
+		if( wfCOCheck() ) {
 			global $wgTitle;
 			$rev = $wgTitle->getFirstRevision();
 			if($rev) {
