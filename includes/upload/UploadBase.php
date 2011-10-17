@@ -1011,21 +1011,27 @@ abstract class UploadBase {
 		if ( self::isThumbName( $file->getName() ) ) {
 			# Check for filenames like 50px- or 180px-, these are mostly thumbnails
 			$nt_thb = Title::newFromText( substr( $partname , strpos( $partname , '-' ) +1 ) . '.' . $extension, NS_FILE );
-			$file_thb = wfLocalFile( $nt_thb );
-			if( $file_thb->exists() ) {
-				return array(
-					'warning' => 'thumb',
-					'file' => $file,
-					'thumbFile' => $file_thb
-				);
-			} else {
-				// File does not exist, but we just don't like the name
-				return array(
-					'warning' => 'thumb-name',
-					'file' => $file,
-					'thumbFile' => $file_thb
-				);
+			
+			//wikia change start - FB#13270
+			if ( $nt_thb instanceof Title && $nt_thb->exists() ){
+				$file_thb = wfLocalFile( $nt_thb );
+				
+				if( $file_thb->exists() ) {
+					return array(
+						'warning' => 'thumb',
+						'file' => $file,
+						'thumbFile' => $file_thb
+					);
+				}
 			}
+			
+			// File does not exist, but we just don't like the name
+			return array(
+				'warning' => 'thumb-name',
+				'file' => $file,
+				'thumbFile' => $file
+			);
+			//wikia change end
 		}
 
 
