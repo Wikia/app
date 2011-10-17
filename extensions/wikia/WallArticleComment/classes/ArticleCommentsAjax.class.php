@@ -57,8 +57,8 @@ class ArticleCommentsAjax {
 		if ( $comment ) {
 			$comment->load(true);
 			if ( $comment->canEdit() ) {
-				$text = $request->getText('wpArticleComment', false);
-				$commentId = $request->getText('id', false);
+				$text = $wgRequest->getText('wpArticleComment', false);
+				$commentId = $wgRequest->getText('id', false);
 				$response = $comment->doSaveComment( $text, $wgUser, $title, $commentId );
 				if ( $response !== false ) {
 					$status = $response[0];
