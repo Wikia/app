@@ -113,7 +113,7 @@ class RelatedVideosData {
 			// is the target protected?
 			$permErrors = $videoTitle->getUserPermissionsErrors( 'edit', F::app()->wg->user );
 			$permErrorsUpload = $videoTitle->getUserPermissionsErrors( 'upload', F::app()->wg->user );
-			$permErrorsCreate = ( $videoTitle->exists() ? array() : $videoTitle->getUserPermissionsErrors( 'create', F::app()->wg->user ) );
+			$permErrorsCreate = $videoTitle->getUserPermissionsErrors( 'create', F::app()->wg->user );
 
 			if( $permErrors || $permErrorsUpload || $permErrorsCreate ) {
 				return wfMsg( 'related-videos-add-video-error-permission-video' );
@@ -202,7 +202,7 @@ class RelatedVideosData {
 			return wfMsg('related-videos-remove-video-error-nonexisting');
 		}
 
-		$retval = $rvn->addToList( RelatedVideosNamespaceData::BLACKLIST_MARKER, array($entry) );
+		$retval = $rvn->addToList( RelatedVideosNamespaceData::BLACKLIST_MARKER, array($entry), $articleId );
 		if (is_object($retval)) {
 			if ($retval->ok) {
 				wfProfileOut( __METHOD__ );
