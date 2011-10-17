@@ -153,6 +153,7 @@ var NodeChatDiscussion = Backbone.View.extend({
 		this.model = options.model;
 		this.model.chats.bind('afteradd', $.proxy(this.addChat, this));
 		this.model.chats.bind('clear', $.proxy(this.clear, this));
+		this.forceScroll = true;
 		        
 		this.delegateEventsToTrigger(this.triggerEvents, function(e){
 			return e;
@@ -168,6 +169,7 @@ var NodeChatDiscussion = Backbone.View.extend({
         },this)); 
 		
 		this.model.room.bind('change', $.proxy(this.updateRoom, this));
+		this.chatDiv.bind('scroll', $.proxy(this.userScroll, this));
 	},
 	//TODO: divide to NodeChatDiscussion and NodeChatUsers
 	updateRoom: function(status) {
@@ -246,24 +248,31 @@ var NodeChatDiscussion = Backbone.View.extend({
 	},
 	
 	addChat: function(chat) {
-		// Determine if chat view is presently scrolled to the bottom
-		var isAtBottom = false;				
-		if (( this.chatDiv.scrollTop() + 1) >= (this.chatUL.outerHeight() - this.chatDiv.height())) {
-			isAtBottom = true;
-		}
+		if (chat.attributes.name == wgUserName) this.forceScroll = true;
 		
 		// Add message to chat
 		var view = new ChatView({model: chat});
 		this.chatUL.append(view.render().el);
 
 		// Scroll chat to bottom
-		if (chat.attributes.name == wgUserName || isAtBottom) {
+		if (this.forceScroll) {
 			this.scrollToBottom();
 		}
 	},
 	
 	scrollToBottom: function() {
 		this.chatDiv.scrollTop(this.chatDiv.get(0).scrollHeight);	
+	},
+	
+	userScroll: function() {
+		// Determine if chat view is presently scrolled to the bottom
+		var isAtBottom = false;				
+		if (( this.chatDiv.scrollTop() + 1) >= (this.chatUL.outerHeight() - this.chatDiv.height())) {
+			isAtBottom = true;
+		}
+		
+		if(isAtBottom)	this.forceScroll = true;
+		else			this.forceScroll = false;
 	}
 });
 //TODO: rename it to frame NodeChatFrame ? 
