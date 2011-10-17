@@ -161,7 +161,6 @@ class WallController extends ArticleCommentsModule {
 			$wall_username = $this->helper->getUser()->getName();
 		}
 		
-		if(User::isIP($wall_username)) $wall_username = wfMsg('oasis-anon-user');
 		$username = $this->wg->User->getName();
 		$this->response->setVal('username', $username);
 		$this->response->setVal('wall_username', $wall_username);

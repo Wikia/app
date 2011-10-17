@@ -61,7 +61,7 @@ class WallNotificationsModule extends Module {
 							// 3 = more than 2 users
 
 			if(count($authors) == 2)     { $user_count = 2; $params['$1'] = $this->getDisplayname( $authors[1] ); }
-			elseif(count($authors) > 2 ) { $user_count = 3; }
+			elseif(count($authors) > 2 ) { $user_count = 3; $params['$'.(count($params)+1)] = $notify['count']; }
 
 			$reply_by = 'other'; // who replied?
 							   // you = same as person receiving notification
