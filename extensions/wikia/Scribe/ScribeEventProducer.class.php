@@ -13,10 +13,10 @@ class ScribeEventProducer {
 		DELETE_CATEGORY		    = 'log_delete';
 
 	const 
-		EDIT_CATEGORY_INT					= 1,
+		EDIT_CATEGORY_INT			= 1,
 		CREATEPAGE_CATEGORY_INT		= 2,
-		DELETE_CATEGORY_INT				= 3,
-		UNDELETE_CATEGORY_INT			= 4;
+		DELETE_CATEGORY_INT			= 3,
+		UNDELETE_CATEGORY_INT		= 4;
 
 	function __construct( WikiaApp $app, $key, $archive = 0 ) {
 		$this->app = $app;
@@ -50,6 +50,26 @@ class ScribeEventProducer {
 	public function buildEditPackage( $oArticle, $oUser, $oRevision = null, $revision_id = null ) {
 		$this->app->wf->ProfileIn( __METHOD__ );
 
+		if ( !is_object( $oArticle ) ) {
+			Wikia::log( __METHOD__, "error", "Cannot send log using scribe ($this->app->wg->CityId): invalid article object" );
+			$this->app->wf->ProfileOut( __METHOD__ );
+			return false;
+		}
+		
+		if ( !$oUser instanceof User ) {
+			Wikia::log( __METHOD__, "error", "Cannot send log using scribe ($this->app->wg->CityId): invalid user object" );
+			$this->app->wf->ProfileOut( __METHOD__ );
+			return false;
+		}
+		
+		if ( !empty( $oRevision ) ) {
+			if ( !$oRevision instanceof Revision ) {
+				Wikia::log( __METHOD__, "error", "Cannot send log using scribe ($this->app->wg->CityId): invalid revision object" );
+				$this->app->wf->ProfileOut( __METHOD__ );
+				return false;
+			}
+		}
+		
 		$revision_id = $page_id = $page_namespace = 0;
 		$oTitle = $oArticle->getTitle();
 		
@@ -88,11 +108,25 @@ class ScribeEventProducer {
 		$this->setTotalWords( str_word_count( $rev_text ) );	
 
 		$this->app->wf->ProfileOut( __METHOD__ );
+		
+		return true;
 	}
 	
 	public function buildRemovePackage ( $oArticle, $oUser, $page_id ) {
 		$this->app->wf->ProfileIn( __METHOD__ );
 	
+		if ( !is_object( $oArticle ) ) {
+			Wikia::log( __METHOD__, "error", "Cannot send log using scribe ($this->app->wg->CityId): invalid article object" );
+			$this->app->wf->ProfileOut( __METHOD__ );
+			return false;
+		}
+		
+		if ( !$oUser instanceof User ) {
+			Wikia::log( __METHOD__, "error", "Cannot send log using scribe ($this->app->wg->CityId): invalid user object" );
+			$this->app->wf->ProfileOut( __METHOD__ );
+			return false;
+		}
+			
 		$oTitle = $oArticle->getTitle();
                                     
 		$table = 'recentchanges';
@@ -129,6 +163,81 @@ class ScribeEventProducer {
 		return $logid;    
 	}
 	
+	public function buildUndeletePackage( $oTitle ) {
+		$this->app->wf->ProfileIn( __METHOD__ );
+			
+		if ( !is_object( $oTitle ) ) {
+			Wikia::log( __METHOD__, "error", "Cannot send log using scribe ($this->app->wg->CityId): invalid title object" );
+			$this->app->wf->ProfileOut( __METHOD__ );
+			return true;
+		}
+
+		$oArticle = new Article( $oTitle );
+		if ( !$oArticle instanceof Article ) {
+			Wikia::log( __METHOD__, "error", "Cannot send log using scribe ($this->app->wg->CityId): invalid article object" );
+			$this->app->wf->ProfileOut( __METHOD__ );
+			return true;
+		}
+		
+		$username = $oArticle->getUserText();
+		if ( empty( $username ) ) {
+			Wikia::log( __METHOD__, "error", "Cannot send log using scribe ($this->app->wg->CityId): invalid username" );
+			$this->app->wf->ProfileOut( __METHOD__ );
+			return true;
+		}
+
+		$oUser = F::build('User', array( $username ), 'newFromName');		
+		if ( !$oUser instanceof User ) {
+			Wikia::log( __METHOD__, "error", "Cannot send log using scribe ($this->app->wg->CityId): invalid user object" );
+			$this->app->wf->ProfileOut( __METHOD__ );
+			return true;
+		}
+		
+		$this->app->wf->ProfileOut( __METHOD__ );
+		
+		return $this->buildEditPackage( $oArticle, $oUser );
+	}
+	
+	public function buildMovePackage( $oTitle, $oUser, $page_id = null, $redirect_id = null ) {
+		$this->app->wf->ProfileIn( __METHOD__ );		
+		
+		if ( !$oTitle instanceof Title ) {
+			Wikia::log( __METHOD__, "error", "Cannot send log using scribe ($this->app->wg->CityId): invalid title object" );
+			$this->app->wf->ProfileOut( __METHOD__ );
+			return true;
+		}
+
+		$oRevision = F::build('Revision', array( $oTitle ), 'newFromTitle');
+		if ( !is_object($oRevision) && !empty( $redirect_id ) ) {
+			$db = wfGetDB( DB_MASTER );
+			$oRevision = Revision::loadFromPageId( $db, $redirect_id );
+		}
+		if ( !$oRevision instanceof Revision ) {
+			Wikia::log( __METHOD__, "error", "Cannot send log using scribe ($this->app->wg->CityId): invalid revision object" );
+			$this->app->wf->ProfileOut( __METHOD__ );
+			return true;
+		}	
+
+		if ( empty( $page_id ) ) {
+			$page_id = $oRevision->getPage();
+		}
+		
+		if ( empty( $page_id ) || $page_id < 0 ) {
+			$page_id = $oTitle->getArticleId();
+		}		
+
+		$oArticle = F::build('Article', array( $page_id ), 'newFromId');		
+		if ( !$oArticle instanceof Article ) {
+			Wikia::log( __METHOD__, "error", "Cannot send log using scribe ($this->app->wg->CityId): invalid article object" );
+			$this->app->wf->ProfileOut( __METHOD__ );
+			return true;
+		}
+
+		$this->app->wf->ProfileOut( __METHOD__ );
+		
+		return $this->buildEditPackage( $oArticle, $oUser, $oRevision );
+	}
+	
 	public function setCityId ( $city_id ) { 
 		$this->mParams['city_id'] = $city_id; 
 	}
@@ -162,15 +271,15 @@ class ScribeEventProducer {
 	}
 	
 	public function setUserIsBot ( $user_is_bot ) { 
-		$this->mParams['user_is_bot'] = $user_is_bot; 
+		$this->mParams['user_is_bot'] = intval( $user_is_bot ); 
 	}
 	
 	public function setIsContent ( $is_content ) { 
-		$this->mParams['is_content'] = $is_content; 
+		$this->mParams['is_content'] = intval( $is_content ); 
 	}
 	
 	public function setIsRedirect ( $is_redirect ) { 
-		$this->mParams['is_redirect'] = $is_redirect; 
+		$this->mParams['is_redirect'] = intval( $is_redirect ); 
 	}
 	
 	public function setIP ( $ip ) { 
@@ -240,7 +349,7 @@ class ScribeEventProducer {
 	}
 	
 	public function setArchive ( $archive ) { 
-		$this->mParams['archive'] = $archive; 
+		$this->mParams['archive'] = intval( $archive ); 
 	}
 
 	public function setBeaconId ( $beacon_id ) {
@@ -260,7 +369,7 @@ class ScribeEventProducer {
 	}
 	
 	public function setMediaLinks( $oArticle ) {
-		$links = array();
+		$links = array( 'image' => 0, 'video' => 0 );
 		if ( isset( $oArticle->mPreparedEdit ) && isset( $oArticle->mPreparedEdit->output ) ) {
 			$images = $oArticle->mPreparedEdit->output->getImages();
 			if ( !empty($images) ) {
