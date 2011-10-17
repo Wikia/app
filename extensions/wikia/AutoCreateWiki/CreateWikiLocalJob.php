@@ -607,6 +607,8 @@ class CreateWikiLocalJob extends Job {
 	 *
 	 */
 	private function sendRevisionToScribe( ) {
+		global $wgEnableScribeNewReport;
+		
 		wfProfileIn( __METHOD__ );
 
 		$dbr = wfGetDB( DB_SLAVE );
@@ -620,21 +622,32 @@ class CreateWikiLocalJob extends Job {
 		);
 		$loop = 0;
 		while ( $oRow = $dbr->fetchObject( $oRes ) ) {
-			$flags = "";
 			# article
 			$oArticle = Article::newFromID($oRow->page_id);
 			# user
 			$oUser = User::newFromId($oRow->rev_user);
 			# revision
 			$oRevision = Revision::newFromId($oRow->rev_id);
-			# status - new or edit
-			$status = Status::newGood( array() );
-			# check is new
-			$status->value['new'] = ( isset($pages[$oRow->page_id]) ? false : true );
-			# call function
-			$archive = 0;
-			$res = ScribeProducer::saveComplete( $oArticle, $oUser, null, null, null, $archive, null, $flags, $oRevision, $status, 0 );
-
+			if ( $wgEnableScribeNewReport ) {	
+				$key = ( isset($pages[$oRow->page_id]) ) ? 'edit' : 'create';			
+				$oScribeProducer = F::build( 'ScribeEventProducer', array( 'key' => $key, 'archive' => 0 ) );		
+				if ( is_object( $oScribeProducer ) ) {
+					if ( $oScribeProducer->buildEditPackage( $oArticle, $oUser, $oRevision ) ) {
+						$oScribeProducer->sendLog();
+					}
+				}
+			} else {
+				$flags = "";				
+				# status - new or edit
+				$status = Status::newGood( array() );
+				# check is new
+				$status->value['new'] = ( isset($pages[$oRow->page_id]) ? false : true );
+				# call function
+				$archive = 0;
+		
+				$res = ScribeProducer::saveComplete( $oArticle, $oUser, null, null, null, $archive, null, $flags, $oRevision, $status, 0 );		
+			}			
+			
 			$pages[$oRow->page_id] = $oRow->rev_id;
 			$loop++;
 		}

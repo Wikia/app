@@ -628,6 +628,13 @@ class WikiFactoryLoader {
 			$dbr->freeResult( $oRes );
 
 			/**
+			 * wgArticlePath
+			 */
+			if ( !isset( $this->mVariables['wgArticlePath'] ) ) {
+				$this->mVariables['wgArticlePath'] = $GLOBALS['wgArticlePath'];
+			}
+
+			/**
 			 * read tags for this wiki, store in global variable as array
 			 * @name $wgWikiFactoryTags
 			 */

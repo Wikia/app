@@ -63,10 +63,10 @@ class ScribeeventsPage {
 
 		if ( !empty($type) ) {
 			switch ( $type ) {
-				case 'edit' 		: $this->mType = ScribeProducer::EDIT_CATEGORY_INT; break;
-				case 'create' 		: $this->mType = ScribeProducer::CREATEPAGE_CATEGORY_INT; break;
-				case 'delete' 		: $this->mType = ScribeProducer::DELETE_CATEGORY_INT; break;
-				case 'undelete'		: $this->mType = ScribeProducer::UNDELETE_CATEGORY_INT; break;
+				case 'edit' 		: $this->mType = ScribeEventProducer::EDIT_CATEGORY_INT; break;
+				case 'create' 		: $this->mType = ScribeEventProducer::CREATEPAGE_CATEGORY_INT; break;
+				case 'delete' 		: $this->mType = ScribeEventProducer::DELETE_CATEGORY_INT; break;
+				case 'undelete'		: $this->mType = ScribeEventProducer::UNDELETE_CATEGORY_INT; break;
 			}
 		}
 		$this->mValidType = ( !is_null( $this->mType ) );
@@ -325,10 +325,10 @@ class ScribeeventsPage {
 					
 					$type = "";
 					switch ( $event_type ) {
-						case ScribeProducer::EDIT_CATEGORY_INT			: $type = ScribeProducer::EDIT_CATEGORY; break;
-						case ScribeProducer::CREATEPAGE_CATEGORY_INT 	: $type = ScribeProducer::CREATEPAGE_CATEGORY; break;
-						case ScribeProducer::DELETE_CATEGORY_INT 		: $type = ScribeProducer::DELETE_CATEGORY; break;
-						case ScribeProducer::UNDELETE_CATEGORY_INT		: $type = ScribeProducer::UNDELETE_CATEGORY; break;
+						case ScribeEventProducer::EDIT_CATEGORY_INT			: $type = ScribeEventProducer::EDIT_CATEGORY; break;
+						case ScribeEventProducer::CREATEPAGE_CATEGORY_INT 	: $type = ScribeEventProducer::CREATEPAGE_CATEGORY; break;
+						case ScribeEventProducer::DELETE_CATEGORY_INT 		: $type = ScribeEventProducer::DELETE_CATEGORY; break;
+						case ScribeEventProducer::UNDELETE_CATEGORY_INT		: $type = ScribeEventProducer::UNDELETE_CATEGORY; break;
 					}
 					$addInfo[] = "event type: $type";
 

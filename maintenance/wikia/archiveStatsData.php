@@ -14,7 +14,11 @@ ini_set( "include_path", dirname(__FILE__)."/.." );
 $IP = $GLOBALS["IP"];
 require_once( "commandLine.inc" );
 include_once("$IP/extensions/wikia/Scribe/ScribeClient.php");
-include_once("$IP/extensions/wikia/Scribe/ScribeProducer.php");
+if ( $wgEnableScribeNewReport ) {
+	include_once("$IP/extensions/wikia/Scribe/ScribeEventProducer.class.php");
+} else {
+	include_once("$IP/extensions/wikia/Scribe/ScribeProducer.php");
+}
 
 # Do an initial scan for inactive accounts and report the result
 echo( "Start script ...\n" );
@@ -116,23 +120,36 @@ function checkIsNew($page_id, $rev_id) {
 }
 
 function callEditHook($page_id, $rev_id, $page_ns, $user_id, $serverName) {
-	global $wgCityId, $wgServer;
+	global $wgCityId, $wgServer, $wgEnableScribeNewReport;
 	$wgServer = $serverName; 
-	# flags
-	$flags = "";
+
 	# article
 	$oArticle = Article::newFromID($page_id);
 	# user
 	$oUser = User::newFromId($user_id);
 	# revision
 	$oRevision = Revision::newFromId($rev_id);
-	# status - new or edit
-	$status = Status::newGood( array() );
-	# check is new
-	$status->value['new'] = checkIsNew($page_id, $rev_id);
-	# call function
-	$archive = 1;
-	$res = ScribeProducer::saveComplete( $oArticle, $oUser, null, null, null, $archive, null, $flags, $oRevision, $status, 0 );
+
+	if ( $wgEnableScribeNewReport ) {	
+		$key = ( checkIsNew($page_id, $rev_id) ) ? 'create' : 'edit';			
+		$oScribeProducer = F::build( 'ScribeEventProducer', array( 'key' => $key, 'archive' => 1 ) );		
+		if ( is_object( $oScribeProducer ) ) {
+			if ( $oScribeProducer->buildEditPackage( $oArticle, $oUser, $oRevision ) ) {
+				$oScribeProducer->sendLog();
+			}
+		}
+	} else {
+		# flags
+		$flags = "";
+		# status - new or edit
+		$status = Status::newGood( array() );
+		# check is new
+		$status->value['new'] = checkIsNew($page_id, $rev_id);
+		# call function
+		$archive = 1;			
+		$res = ScribeProducer::saveComplete( $oArticle, $oUser, null, null, null, $archive, null, $flags, $oRevision, $status, 0 );		
+	}
+	
 	#
 	$oArticle = $oUser = $oRevision = $status = $res = null;
 }
