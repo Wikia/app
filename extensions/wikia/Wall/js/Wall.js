@@ -1,4 +1,4 @@
-$(function() {
+$(document).ready(function() {
 	var wall = new Wall();
 });
 
@@ -837,18 +837,3 @@ var Wall = $.createClass(Object, {
 });
 
 
-function ChangeStyle(name,val) {
-	/*if(val) {
-		$('#Wall').addClass(name);
-		$('a.'+name+'_0').removeClass('selected');
-		$('a.'+name+'_1').addClass('selected');
-	} else {
-		$('#Wall').removeClass(name);
-		$('a.'+name+'_1').removeClass('selected');
-		$('a.'+name+'_0').addClass('selected');
-	}*/
-	/*
-	$('a.'+name).removeClass('selected');
-	$('a.'+name+'_'+val).addClass('selected');
-	global_hide = val;*/
-}
