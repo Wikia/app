@@ -116,7 +116,7 @@ class RelatedVideosData {
 			$permErrorsCreate = ( $videoTitle->exists() ? array() : $videoTitle->getUserPermissionsErrors( 'create', F::app()->wg->user ) );
 
 			if( $permErrors || $permErrorsUpload || $permErrorsCreate ) {
-				return wfMsg( 'related-videos-add-video-error-protected-video' );
+				return wfMsg( 'related-videos-add-video-error-permission-video' );
 			}
 
 			$video = new VideoPage( $videoTitle );
