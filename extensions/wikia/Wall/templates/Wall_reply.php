@@ -11,8 +11,10 @@
 		<?php } else { ?>
 			<button class="replyButton" disabled="disabled"><?= wfMsg('wall-button-to-submit-reply') ?></button>
 		<?php } ?>
+		<? if (0): ?>
 		<button class="replyPreview secondary" disabled="disabled" style="display: none"><?= wfMsg('wall-button-to-preview-comment') ?></button>
 		<button class="replyPreviewCancel secondary" style="display: none"><?= wfMsg('wall-button-to-cancel-preview') ?></button>
+		<? endif; ?>
 		<div class="loadingAjax"></div>
 	</div>
 </li>
