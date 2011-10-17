@@ -540,9 +540,6 @@ class ArticleComment {
 			$bot = $user->isAllowed('bot');
 			//this function calls Article::onArticleCreate which clears cache for article and it's talk page
 			$retval = $editPage->internalAttemptSave( $result, $bot );
-	
-			$key = $title->getPrefixedDBkey(); // FIXME: does this line cause some side-effects that are needed? Otherwise, this line doesn't appear to serve any purpose.
-	
 			wfProfileOut( __METHOD__ );
 	
 			return array( $retval, $article );
