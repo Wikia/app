@@ -53,9 +53,9 @@ class EditPageLayoutModule extends Module {
 			// add stylesheet
 			$app->wg->Out->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/EditPageLayout/css/EditPageLayout.scss'));
 			$packageName = 'epl';
-			if (class_exists('RTE') && RTE::isEnabled() ) {
+			if (class_exists('RTE') && RTE::isEnabled() && !$editPage->isReadOnlyPage()) {
 				$packageName = 'eplrte';
-			} 
+			}
 			$srcs = F::build('AssetsManager',array(),'getInstance')->getGroupCommonURL($packageName);
 			$wgJsMimeType = $app->wg->JsMimeType;
 			foreach($srcs as $src) {
@@ -75,13 +75,13 @@ class EditPageLayoutModule extends Module {
 		// Editing [foo]
 		$this->title = $editPage->getEditedTitle();
 		$section = $app->getGlobal('wgRequest')->getVal('section');
-		
+
 		// Is user logged in?
 		$this->isLoggedIn = $this->wg->User->isLoggedIn();
 
 		// Text for Edit summary label
 		$wpSummaryLabelText = 'editpagelayout-edit-summary-label';
-		
+
 		if ($section == 'new') {
 			$msgKey = 'editingcomment';
 			// If adding new section to page, change label text (BugId: 7243)
@@ -110,7 +110,7 @@ class EditPageLayoutModule extends Module {
 		}
 
 		$this->editing = wfMsg($msgKey, '');
-		
+
 		$this->wpSummaryLabelText = wfMsg($wpSummaryLabelText);
 
 		// render help link and point the link to new tab
