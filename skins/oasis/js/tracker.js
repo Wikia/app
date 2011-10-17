@@ -619,19 +619,3 @@ var initTracker = function() {
 		spotlightTrack(e, 'footer');
 	});
 };
-
-/* Temporary code for FB#7136 by Inez */
-$(function() {
-	if(window.beacon_id) {
-		function simpleHash(s, tableSize) {
-			var i, hash = 0;
-			for (i = 0; i < s.length; i++) {
-				hash += (s.charCodeAt(i) * (i+1));
-			}
-			return Math.abs(hash) % tableSize;
-		}
-		if(simpleHash(window.beacon_id, 10) === 0) {
-			WikiaTracker.track('SamplingPageview', 'UA-2871474-2'); // FIXME NEF switch to profile name, not id
-		}
-	}
-});
