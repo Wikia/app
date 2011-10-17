@@ -46,6 +46,8 @@ class VideoPage extends Article {
 	const DEFAULT_OASIS_VIDEO_WIDTH = 660;
 	const DEFAULT_VET_WIDTH = 350;	// defined in VideoEmbedTool_setup.php, but that extension may not be enabled!
 
+	const MAX_TITLE_LENGTH = 240;
+
 	private static $SCREENPLAY_VENDOR_ID = 1893;
 	private static $SCREENPLAY_VIDEO_TYPE = '.mp4';
 	private static $JWPLAYER_DIR = '/extensions/wikia/JWPlayer/';

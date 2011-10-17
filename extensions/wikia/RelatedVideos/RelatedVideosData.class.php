@@ -156,6 +156,8 @@ class RelatedVideosData {
 		$name = str_replace('/', ' ', $name);
 		$name = str_replace('  ', ' ', $name);
 		
+		$name = substr($name, 0, VideoPage::MAX_TITLE_LENGTH);	// DB column Image.img_name has size 255
+		
 		wfProfileOut( __METHOD__ );
 		return Title::makeTitleSafe(NS_VIDEO, $name);		
 	}

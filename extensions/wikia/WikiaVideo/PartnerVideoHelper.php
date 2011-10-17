@@ -14,7 +14,7 @@ class PartnerVideoHelper {
 	private static $TEMP_DIR = '/tmp';
 	
 	private static $CLIP_TYPE_BLACKLIST = array( VideoPage::V_SCREENPLAY => array('trailerType'=>'Home Video', 'trailerVersion'=>'Trailer') );
-
+	
 	protected static $instance;
 
 	public static function getInstance() {
@@ -420,6 +420,8 @@ class PartnerVideoHelper {
 		// titles, but they refer to subpages, which videos don't have
 		$name = str_replace('/', ' ', $name);
 		$name = str_replace('  ', ' ', $name);
+		
+		$name = substr($name, 0, VideoPage::MAX_TITLE_LENGTH);	// DB column Image.img_name has size 255
 
 		return $name;
 	}
