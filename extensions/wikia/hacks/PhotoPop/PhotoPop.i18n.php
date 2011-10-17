@@ -41,6 +41,7 @@ $messages['en'] = array(
 	'photopop-game-yougot' => 'You got',
 	'photopop-game-outof' => 'out of',
 	'photopop-game-progress' => 'Progress',
+	'photopop-game-image-load-error' => 'Image could not be loaded. We\'re sorry',
 	'photopop-game-tutorial-intro' => 'Tap the screen to take a peek of the mystery image underneath.',
 	'photopop-game-tutorial-continue' => 'After the answer is revealed tap the "next" button to continue on to a new image.',
 	'photopop-game-tutorial-drawer' => 'The fewer peek you take, the fewer guesses you make, and the less time you take, the bigger your score!',
