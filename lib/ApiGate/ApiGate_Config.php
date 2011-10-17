@@ -23,3 +23,30 @@
 	$APIGATE_HTTP_STATUS_RATE_LIMITED = 509; // 509 means "Bandwidth exceeded" which is the closest match.
 	//$APIGATE_HTTP_STATUS_TEAPOT = 418; // unused, for now ;)
 /** /HTTP STATUS CODES **/
+
+
+
+/**
+ * Class for holding static functions related specifically to config (database connections, etc.).
+ *
+ * If you're looking for the wrappers for doing the simple database operations such as simpleQuery() and sendQuery(), please see ApiGate.class.php.
+ */
+class ApiGate_Config{
+
+	public static function getSlaveDb(){
+		wfProfileIn( __METHOD__ );
+		$dbr =& wfGetDB (DB_SLAVE, array(), $wgExternalSharedDB);
+		$db = $dbr->mConn;
+		wfProfileOut( __METHOD__ );
+		return $db;
+	} // end getSlaveDb()
+	
+	public static function getMasterDb(){
+		wfProfileIn( __METHOD__ );
+		$dbw =& wfGetDB (DB_MASTER, array(), $wgExternalSharedDB);
+		$db = $dbw->mConn;
+		wfProfileOut( __METHOD__ );
+		return $db;
+	} // end getMasterDb()
+	
+} // end class ApiGate_Config

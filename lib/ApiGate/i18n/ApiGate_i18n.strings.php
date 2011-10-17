@@ -26,6 +26,7 @@ $messages['en'] = array(
 	'apigate-register-error-noname' => 'Please enter your name.',
 	'apigate-register-error-invalid-email' => 'Please enter a valid email address.',
 	'apigate-register-error-email-doesnt-match' => 'Email addresses entered do not match.',
+	'apigate-register-error-mysql_error' => 'Error trying to save new API key to the database.',
 );
 
 /** Message documentation (Message documentation)
