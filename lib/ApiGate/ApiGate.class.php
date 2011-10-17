@@ -19,6 +19,9 @@ class ApiGate{
 	//const HTTP_STATUS_INSUFFICIENT_STORAGE = 507; // would come in handy for APIs which have per-key or per-user storage limits on accounts.
 	const HTTP_STATUS_LIMIT_EXCEEDED = 509; // bandwidth exceeded code. closest to rate-limiting.
 
+	const TABLE_KEYS = "apiGate_keys";
+	const TABLE_USERS = "apiGate_users";
+
 	/**
 	 * Calling this funcction will ban the API key from all apiKey-required api calls.
 	 *
@@ -195,11 +198,55 @@ class ApiGate{
 		
 		$apiKeys = array();
 		
+		$dbr = ApiGate_Config::getSlaveDb();
+		$queryString = "SELECT apiKey FROM ".ApiGate::TABLE_KEYS." WHERE user_id='". mysql_real_escape_string( $userId, $dbr ). "'";
+	
+		
 		// TODO: IMPLEMENT!
 		// TODO: IMPLEMENT!
+
 
 		wfProfileOut( __METHOD__ );
 		return $apiKeys;
 	} // end getKeysByUserId()
+	
+	/**
+	 * Sends a WRITE query (usually an insert/update/delete) and returns true on success false on failure.
+	 * Nothing sophisticated here, just makes the code shorter by saving the need
+	 * for other pieces of code to get the global connection to the db.
+	 *
+	 * NOTE: for WRITE queries primarily (although both will work, use simpleQuery() for read-only queries).
+	 */
+	public static function sendQuery( $queryString ){
+		wfProfileIn( __METHOD__ );
+
+		$dbw = ApiGate_Config::getMasterDb();
+		$retVal = mysql_query($queryString, $dbw);
+
+		wfProfileOut( __METHOD__ );
+		return $retVal;
+	} // end sendQuery()
+
+	/**
+	 * Returns the result of a READ-ONLY mySQL query that only has one result (one column and one row)
+	 *
+	 * NOTE: for READ-ONLY operations
+	 */
+	public static function simpleQuery( $queryString ){
+		wfProfileIn( __METHOD__ );
+
+		$dbr = ApiGate_Config::getSlaveDb();
+		$retVal = "";
+		if($result = mysql_query($queryString,$dbr)){
+			if(mysql_num_rows($result) > 0){
+				if($myRow = mysql_fetch_row($result)){
+					$retVal = $myRow[0];
+				}
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $retVal;
+	} // end simpleQuery()
 
 } // end class ApiGate
