@@ -167,7 +167,7 @@ jQuery.tracker = function() {
 	if (wgIsArticle && wgArticleId > 0) {
 		// catch all clicks inside article content, but track clicks on links only
 		content.click(function(e) {
-			
+
 			var track = function(fakeUrl) {
 				var root = isOasis ? 'contentpage/contentlink/' : 'articleActions/contentLink/';
 				$.tracker.byStr(root + fakeUrl);
@@ -283,7 +283,9 @@ jQuery.tracker.byId = function(e) {
 };
 
 jQuery.tracker.trackStr = function(str, account) {
-	WikiaTracker.track(str, 'main.test');
+	if (window.WikiaTracker) {
+		WikiaTracker.track(str, 'main.test');
+	}
 
 	if(typeof account != 'undefined') {
 		_gaq.push(['_setAccount', account]);
