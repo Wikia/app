@@ -56,10 +56,15 @@ var WallNotifications = $.createClass(Object, {
 	},
 	
 	clickNotificationsMonobook: function() {
-		if( $('#wall-notifications-dropdown').css('display') == 'none' )
+		if( $('#wall-notifications-dropdown').css('display') == 'none' ) {
 			this.dropdownShow();
-		else
+			
+			this.proxy(function(){
+				this.track('wall/notifications/dropdown_open');
+			});
+		} else {
 			this.dropdownHide();
+		}
 	},
 	
 	dropdownShow: function() {
@@ -82,7 +87,11 @@ var WallNotifications = $.createClass(Object, {
 				this.updateHtml(data);
 				
 				//click tracking
-				$.tracker.byStr('wall/notifications/mark_all_as_read');
+				if( typeof($.tracker) != 'undefined' ) {
+					$.tracker.byStr('wall/notifications/mark_all_as_read');
+				} else {
+					WET.byStr('wall/notifications/mark_all_as_read');
+				}
 			})
 	
 		});
@@ -106,16 +115,29 @@ var WallNotifications = $.createClass(Object, {
 				$('#bubbles_count').html('');
 				$('.bubbles').removeClass('reddot');
 			}
-			
-			if( this.monobook === false ) {
-				$('.read_notification').trackClick('wall/notifications/read');
-				$('.unread_notification').trackClick('wall/notifications/unread');
-			}
 		}
+		
+		$('.read_notification').click(this.proxy(function(){
+			this.track('wall/notifications/read');
+		}));
+		
+		$('.unread_notification').click(this.proxy(function(){
+			this.track('wall/notifications/unread');
+		}));
 	},
 	
 	proxy: function(func) {
 		return $.proxy(func, this);
+	},
+	
+	track: function(url) {
+		if( typeof($.tracker) != 'undefined' ) {
+		//oasis
+			$.tracker.byStr(url);
+		} else {
+		//monobook
+			WET.byStr(url);
+		}
 	}
 });
 

@@ -1,19 +1,45 @@
 $(function() {
-	if( typeof(wgUserName) != 'undefined' && wgUserName != null ) {
-		$('.wikia-menu-button a[data-id="history"]').trackClick('wall/archived_talk_page/history');
-		$('#WikiaPageHeader .back-user-wall').trackClick('wall/archived_talk_page/breadcrumb');
-		$('.wikia-menu-button a[data-id="edit"]').click(function(e) {
+	var wallUserTalkArchive = new WallUserTalkArchive();
+});
+
+var WallUserTalkArchive = $.createClass(Object, {
+	constructor: function() {
+		$('.back-user-wall').click(this.proxy(function(){
+			this.track('wall/archived_talk_page/breadcrumb');
+		}));
+		//oasis
+		$('.wikia-menu-button a[data-id="history"]').click(this.proxy(function(){
+			this.track('wall/archived_talk_page/history');
+		}));
+		$('.wikia-menu-button a[data-id="edit"]').click(this.proxy(function(){
 			var node = $(e.target);
 			
 			if( node.attr('id') == 'talkArchiveEditButton' ) {
-				$.tracker.byStr('wall/archived_talk_page/edit');
+				this.track('wall/archived_talk_page/edit');
 			} else {
-				$.tracker.byStr('wall/archived_talk_page/view_source_button');
+				this.track('wall/archived_talk_page/view_source_button');
 			}
-		});
-	} else {
-		$('.wikia-menu-button a[data-id="history"]').trackClick('wall/archived_talk_page/history');
-		$('#WikiaPageHeader .back-user-wall').trackClick('wall/archived_talk_page/breadcrumb');
-		$('.wikia-menu-button a[data-id="edit"]').trackClick('wall/archived_talk_page/view_source_button');
+		}));
+		//monobook
+		$('#ca-history').click(this.proxy(function(){
+			this.track('wall/archived_talk_page/history');
+		}));
+		$('#ca-view-source').click(this.proxy(function(){
+			this.track('wall/archived_talk_page/view_source_button');
+		}));
+	},
+	
+	track: function(url) {
+		if( typeof($.tracker) != 'undefined' ) {
+		//oasis
+			$.tracker.byStr(url);
+		} else {
+		//monobook
+			WET.byStr(url);
+		}
+	},
+	
+	proxy: function(func) {
+		return $.proxy(func, this);
 	}
 });

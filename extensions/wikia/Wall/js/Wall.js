@@ -806,19 +806,11 @@ var Wall = $.createClass(Object, {
 	},
 	
 	track: function(url) {
-		if( typeof(wgUserName) != 'undefined' && wgUserName != null ) {
-			this.trackUser(url);
+		if( typeof($.tracker) != 'undefined' ) {
+			$.tracker.byStr(url);
 		} else {
-			this.trackAnon(url);
+			WET.byStr(url);
 		}
-	},
-	
-	trackUser: function(url) {
-		$.tracker.byStr(url);
-	},
-	
-	trackAnon: function(url) {
-		$.tracker.byStr(url);
 	},
 	
 	trackClick: function(event) {
