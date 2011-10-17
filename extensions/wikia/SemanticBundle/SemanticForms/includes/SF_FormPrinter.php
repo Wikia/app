@@ -364,7 +364,7 @@ END;
 //		$got_form_def_from_cache = false;
 //		global $sfgCacheFormDefinitions;
 //		if ( $sfgCacheFormDefinitions && ! is_null( $form_id ) ) {
-//			$db = wfGetDB( DB_MASTER );
+//			$db = wfGetDB( DB_MASTER, 'smw' );
 //			$res = $db->select( 'page_props', 'pp_value', "pp_propname = 'formdefinition' AND pp_page = '$form_id'" );
 //			if ( $res->numRows() >	0 ) {
 //				$form_def = $res->fetchObject()->pp_value;
