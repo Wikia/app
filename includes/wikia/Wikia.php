@@ -881,6 +881,20 @@ class Wikia {
 		wfDebug( $method . ": " . $message . "\n" );
 	}
 
+	/**
+	 * Simple one line backtrace logger
+	 *
+	 * @example Wikia::logBacktrace(__METHOD__);
+	 * @author Maciej Brencz <macbre@wikia-inc.com>
+	 *
+	 * @param String $method - use __METHOD__
+	 */
+	static public function logBacktrace($method) {
+		$backtrace = trim(strip_tags(wfBacktrace()));
+		$message = str_replace("\n", '/', $backtrace);
+
+		Wikia::log($method, false, $message, true /* $force */);
+	}
 
 	/**
 	 * get staff person responsible for language
@@ -1498,7 +1512,7 @@ class Wikia {
 
 	static public function setProps( $page_id, Array $props ) {
 		wfProfileIn( __METHOD__ );
-		
+
 		if( !wfReadOnly() ){ // Change to wgReadOnlyDbMode if we implement that
 			$dbw = wfGetDB( DB_MASTER );
 			foreach( $props as $sPropName => $sPropValue) {

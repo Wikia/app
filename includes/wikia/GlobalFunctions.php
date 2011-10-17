@@ -1365,7 +1365,7 @@ function wfDBLightMode( $maxSleep ) {
 
 function wfIsDBLightMode() {
 	global $wgExternalSharedDB;
-	
+
 	$dbLightMode = WikiFactory::getVarValueByName( 'wgDBLightMode', WikiFactory::DBToId( $wgExternalSharedDB ) );
 	return (bool) $dbLightMode;
 }
@@ -1519,7 +1519,25 @@ function wfArrayToString( $array ) {
  * @return string string with beacon ID
  */
 function wfGetBeaconId() {
-	return ( isset( $_COOKIE['wikia_beacon_id'] ) ) 
-	? $_COOKIE['wikia_beacon_id'] 
+	return ( isset( $_COOKIE['wikia_beacon_id'] ) )
+	? $_COOKIE['wikia_beacon_id']
 	: '';
 }
+
+/**
+ * Defines error handler to log backtrace for PHP (catchable) fatal errors
+ *
+ * @author Maciej Brencz <macbre@wikia-inc.com>
+ */
+function wfWikiaErrorHandler($errno, $errstr, $errfile, $errline) {
+	switch($errno) {
+		case E_RECOVERABLE_ERROR:
+			Wikia::logBacktrace("PHP fatal error caught ({$errstr})");
+			break;
+	}
+
+	// error was not really handled
+	return false;
+}
+
+set_error_handler('wfWikiaErrorHandler');
