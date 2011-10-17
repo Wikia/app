@@ -67,7 +67,6 @@ class ImageServing {
 		wfProfileIn( __METHOD__ );
 		$articles = $this->articles;
 		$out = array();
-
 		if( !empty( $articles ) ) {
 			if( $this->db == null ) {
 				$db = wfGetDB( DB_SLAVE, array() );
@@ -155,8 +154,8 @@ class ImageServing {
 		$this->articlesByNS[$value['ns']][$value['id']] = $value;
 	}
 
-	private function makeKey( $key  ) {
-		return wfMemcKey("imageserving-article-details", $key);
+	private function makeKey( $key ) {
+		return wfMemcKey("imageserving-article-details", $key, is_array($this->proportion)?implode(":",$this->proportion):$this->proportion);
 	}
 
 	/**
