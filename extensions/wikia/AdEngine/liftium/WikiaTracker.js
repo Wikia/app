@@ -139,59 +139,11 @@ WikiaTracker._track = function(page, profile, sample) {
 };
 
 WikiaTracker.trackEvent3 = function(page, param) { // FIXME NEF deprecated, remove
-	var profile = 'UA-17475676-10';
-	var sample = 10;
-	if (!Liftium.e(param)) {
-		// {profile:'profile-id', sample:10|'10%'}
-		if (typeof param == 'object') {
-			if (!Liftium.e(param['profile'])) {
-				profile = param['profile'];
-				this.debug("using custom profile: " + profile, 7);
-			}
-			if (!Liftium.e(param['sample'])) {
-				sample = parseInt(param['sample']);
-				this.debug("using custom sample rate: " + sample, 7);
-			}
-		} else {
-			param = param.toString();
-			// 'profile-id'
-			if (param.search(/\d-\d/) != -1) {
-				profile = param;
-				this.debug("using custom profile: " + profile, 7);
-			// 10|'10%'
-			} else if (parseInt(param)) {
-				sample = parseInt(param);
-				this.debug("using custom sample rate: " + sample, 7);
-			}
-		}
-	}
-
-	return this._track(page, profile, sample);
+	return false;
 };
 
 WikiaTracker._track2 = function(page, profile, sample) { // FIXME NEF deprecated, remove
-	if (!this.isTracked()) { return false; }
-
-	if (page.indexOf('/') != 0) {
-		page = '/' + page;
-	}
-
-	this.debug('(internal2) ' + page + ' in ' + profile + ' at ' + sample + '%', 5);
-
-	_gaq.push(['WikiaTracker._setAccount', profile]);
-	_gaq.push(['WikiaTracker._setSampleRate', 100]);
-
-	var hub = Liftium.getPageVar("Hub", "unknown");
-	var lang = Liftium.langForTracking(Liftium.getPageVar("cont_lang", "unknown"));
-	var db = Liftium.dbnameForTracking(Liftium.getPageVar("wgDBname", "unknown"));
-
-	_gaq.push(['WikiaTracker._setCustomVar', 1, 'db',   db,   3]);
-	_gaq.push(['WikiaTracker._setCustomVar', 2, 'hub',  hub,  3]);
-	_gaq.push(['WikiaTracker._setCustomVar', 3, 'lang', lang, 3]);
-
-	_gaq.push(['WikiaTracker._trackPageview', page]);
-
-	return true;
+	return false;
 };
 
 WikiaTracker._simpleHash = function(s, tableSize) {
