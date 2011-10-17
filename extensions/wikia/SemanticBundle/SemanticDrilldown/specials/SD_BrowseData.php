@@ -229,8 +229,8 @@ class SDBrowseDataPage extends QueryPage {
 	 * all remaining filters
 	 */
 	function createTempTable( $category, $subcategory, $subcategories, $applied_filters ) {
-		$dbr = wfGetDB( DB_SLAVE );
-		$sql1 = "CREATE TEMPORARY TABLE semantic_drilldown_values ( id INT NOT NULL )";
+		$dbr = wfGetDB( DB_SLAVE, 'smw' );
+		$sql1 = "CREATE TEMPORARY TABLE semantic_drilldown_values ( id INT NOT NULL ) Engine=Memory";
 		$dbr->query( $sql1 );
 		$sql2 = "CREATE INDEX id_index ON semantic_drilldown_values ( id )";
 		$dbr->query( $sql2 );
@@ -260,7 +260,7 @@ class SDBrowseDataPage extends QueryPage {
 	 * subcategory's child subcategories, to ensure completeness.
 	 */
 	function getSQLFromClauseForCategory( $subcategory, $child_subcategories ) {
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE, 'smw' );
 		$smw_insts = $dbr->tableName( 'smw_inst2' );
 		$smw_ids = $dbr->tableName( 'smw_ids' );
 		$ns_cat = NS_CATEGORY;
@@ -285,7 +285,7 @@ class SDBrowseDataPage extends QueryPage {
 	 * category, subcategory and filters
 	 */
 	function getSQLFromClause( $category, $subcategory, $subcategories, $applied_filters ) {
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE, 'smw' );
 		$smw_ids = $dbr->tableName( 'smw_ids' );
 		$smw_insts = $dbr->tableName( 'smw_inst2' );
 		$smw_rels = $dbr->tableName( 'smw_rels2' );
@@ -380,7 +380,7 @@ class SDBrowseDataPage extends QueryPage {
 	 * set of filters and either a new subcategory or a new filter.
 	 */
 	function getNumResults( $subcategory, $subcategories, $new_filter = null ) {
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE, 'smw' );
 		$sql = "SELECT COUNT(DISTINCT sdv.id) ";
 		if ( $new_filter )
 			$sql .= $this->getSQLFromClauseForField( $new_filter );
