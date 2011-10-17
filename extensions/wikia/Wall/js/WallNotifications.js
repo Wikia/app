@@ -76,7 +76,8 @@ var WallNotifications = $.createClass(Object, {
 	},
 
 	
-	markAllAsRead: function() {
+	markAllAsRead: function(e) {
+		e.preventDefault();
 		$.nirvana.sendRequest({
 			controller: 'WallNotificationsExternalController',
 			method: 'markAllAsRead',
@@ -95,6 +96,7 @@ var WallNotifications = $.createClass(Object, {
 			})
 	
 		});
+		return false;
 	},
 	
 	updateHtml: function(data) {

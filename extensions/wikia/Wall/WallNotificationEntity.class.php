@@ -149,6 +149,7 @@ class WallNotificationEntity {
 		$cache = $this->getCache();
 		$key = $this->getMemcKey();
 		
+		//$cache->delete($key);
 		$cache->set($key, $this->data);
 	}
 

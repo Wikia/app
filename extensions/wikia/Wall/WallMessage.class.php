@@ -34,7 +34,13 @@ class WallMessage {
 	}
 	
 	public function getWallOwner() {
-		return User::newFromName($this->getArticleComment()->getArticleTitle()->getBaseText());
+		$wall_owner = User::newFromName($this->getArticleComment()->getArticleTitle()->getBaseText());
+		if(empty($wall_owner)) {
+			error_log('EMPTY_WALL_OWNER: (id)'. $this->getArticleComment()->getArticleTitle()->getArticleID());
+			error_log('EMPTY_WALL_OWNER: (basetext)'. $this->getArticleComment()->getArticleTitle()->getBaseText());
+			error_log('EMPTY_WALL_OWNER: (fulltext)'. $this->getArticleComment()->getArticleTitle()->getFullText());
+		}
+		return $wall_owner;
 	}
 	
 	public function getArticleTitle(){ 
