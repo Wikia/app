@@ -180,8 +180,8 @@ define.call(exports, function(){
 			var self = this,
 			answerList = document.getElementById('answerList').getElementsByTagName('li');
 			document.getElementById('answerButton').onclick = function() {
-				self.fire('answerDrawerButtonClicked');
 				self.resume();
+				self.fire('answerDrawerButtonClicked');				
 			};
 			
 			for(var i = 0; i < 4; i++) {

@@ -364,7 +364,7 @@ define.call(exports, function(){
 					clearInterval(t);
 					self.showContinue('It\'s: ' + correct);
 				}
-			}, 100);
+			}, 200);
 
 		},
 		

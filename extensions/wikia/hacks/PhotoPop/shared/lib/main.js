@@ -238,7 +238,7 @@
 			
 			goHome = function(e, gameFinished) {
 				
-				if(!gameFinished) g.fire('storeData');
+				if(!gameFinished && g.getId() != 'tutorial') g.fire('storeData');
 				
 				screenManager.get('game').fire('goHomeClicked', gameFinished);
 				screenManager.get('home').show();
@@ -341,6 +341,7 @@
 			
 			runGame = function(target) {
 				var id, data, game;
+				console.log(g);
 				if(target == 'tutorial') {
 					id =  'tutorial';
 					data = config.tutorial;
@@ -447,9 +448,14 @@
 			img.onload = function() {
 				imageLoaded();
 			};
+			
 			img.onerror = function() {
-				//TODO: write better error handling
-				alert('error loading image')
+				screenManager.get('game').openModal({
+					name: 'tile',
+					html: wgMessages['photopop-game-image-load-error'],
+					fade: true,
+					clickThrough: false,
+					closeOnClick: true});
 			};
 			
 			screenManager.addEventListener('show', function(event, data){
