@@ -7,7 +7,7 @@
  * @ingroup JobQueue
  *
  * @copyright Copyright © Krzysztof Krzyżaniak for Wikia Inc.
- * @author Krzysztof Krzyżaniak (eloy) <eloy@wlikia-inc.com>
+ * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
  * @date 2010-07-19
  * @version 1.0
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
