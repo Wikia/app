@@ -58,6 +58,12 @@ wfLoadExtensionNamespaces('RelatedVideos', array(NS_RELATED_VIDEOS));
 
 // permissions
 $wgGroupPermissions['*']['relatedvideos'] = false;
-$wgGroupPermissions['staff']['relatedvideos'] = true;
+// Ideally we would hide viewing of the namespace articles from all but admins
+// and staff, but give logged-in users edit privileges (which are needed to
+// support the GUI add/remove video tools).
+// The relatedvideos namespace covers editing of the namespace. we should
+// restrict viewing of the namespace articles in some other way.
+$wgGroupPermissions['user']['relatedvideos'] = true;
+//$wgGroupPermissions['staff']['relatedvideos'] = true;
 $wgNamespaceProtection[ NS_RELATED_VIDEOS ] = array( 'relatedvideos' );
 $wgNonincludableNamespaces[] = NS_RELATED_VIDEOS;
