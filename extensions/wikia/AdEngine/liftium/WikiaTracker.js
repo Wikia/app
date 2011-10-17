@@ -125,9 +125,9 @@ WikiaTracker._track = function(page, profile, sample) {
 	_gaq.push(['WikiaTracker._setAccount', profile]);
 	_gaq.push(['WikiaTracker._setSampleRate', sample]);
 
-	var hub = Liftium.getPageVar("Hub", "unknown");
-	var lang = Liftium.langForTracking(Liftium.getPageVar("cont_lang", "unknown"));
-	var db = Liftium.dbnameForTracking(Liftium.getPageVar("wgDBname", "unknown"));
+	var hub = window.wgCatId || 'unknown'; // FIXME expand cat id to name
+	var lang = window.wgContentLanguage || 'unknown';
+	var db = window.wgDBname || window.wgDB || 'unknown';
 
 	_gaq.push(['WikiaTracker._setCustomVar', 1, 'db',   db,   3]);
 	_gaq.push(['WikiaTracker._setCustomVar', 2, 'hub',  hub,  3]);
