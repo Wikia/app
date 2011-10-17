@@ -124,8 +124,10 @@ class AccountNavigationModule extends Module {
 			$this->profileAvatar = AvatarService::renderAvatar($this->username, 20);
 
 			// dropdown items
-			$dropdownItems = array('mytalk', 'following', 'preferences');
-
+			/** Begin of Wikia Change @author Andrzej 'nAndy' Lukaszewski */
+			$dropdownItems = array('mytalk', 'mywall', 'following', 'preferences');
+			/** End of Wikia Change */
+			
 			// Allow hooks to modify the dropdown items.
 			$this->wf->RunHooks( 'AccountNavigationModuleAfterDropdownItems', array(&$dropdownItems, &$this->personal_urls) );
 
