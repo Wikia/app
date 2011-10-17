@@ -101,7 +101,7 @@ class WikiaApiQueryMostVisitedPages extends WikiaApiQuery {
 			{
 				#check to take data from article
 				$templateTitle = Title::newFromText ($pagename, NS_MEDIAWIKI);
-				if( $templateTitle->exists() )
+				if( $templateTitle instanceof Title && $templateTitle->exists() )
 				{
 					$templateArticle = new Article ($templateTitle);
 					$templateContent = $templateArticle->getContent();
