@@ -251,14 +251,19 @@ class WallHooksHelper {
 		
 		F::build('JSMessages')->enqueuePackage('Wall', JSMessages::EXTERNAL);
 		
+		if( !empty($personalUrls['mytalk']) ) {
+			unset($personalUrls['mytalk']);
+		}
+		
+		$personalUrls['mywall']['text'] = $app->wf->Msg('wall-message-wall');
+		
 		$userWallTitle = $this->getWallTitle();
 		
 		if( $userWallTitle instanceof Title ) {
-			$personalUrls['mytalk']['href'] = $userWallTitle->getLocalUrl();
+			$personalUrls['mywall']['href'] = $userWallTitle->getLocalUrl();
 		}
 		
 		if($app->wg->User->isLoggedIn()) {
-			$personalUrls['mytalk']['text'] = $app->wf->Msg('wall-message-wall');
 			if($app->wg->User->getSkin()->getSkinName() == 'monobook') {
 				$personalUrls['wall-notifications'] = array(
 					'text'=>$app->wf->Msg('wall-notifications'),
@@ -700,6 +705,7 @@ class WallHooksHelper {
 			
 			$articleId = $helper->getDeletedArticleId($rc->getTitle()->getText());
 			$articleTitleObj = F::build('Title', array($userText.'/'.$articleId, NS_USER_WALL), 'newFromText');
+			$articleTitleTxt = $app->wf->Msg('wall-recentchanges-deleted-reply-title');
 			
 			$wallTitleObj = F::build('Title', array(NS_USER_WALL, $userText), 'newFromText');
 			$wallUrl = ($wallTitleObj instanceof Title) ? $wallTitleObj->getLocalUrl() : '#';
