@@ -712,7 +712,7 @@ class BlogTemplateClass {
 	private static function __parseCategories($text, $parser) {
 		global $wgTitle;
 
-		if ( is_object($parser) ) {
+		if ( is_object($parser) && $wgTitle instanceof Title ) {
 			$pOptions = $parser->getOptions();
 			if ( is_null($pOptions) ) {
 				$parser->startExternalParse( $wgTitle, new ParserOptions(), OT_PREPROCESS );

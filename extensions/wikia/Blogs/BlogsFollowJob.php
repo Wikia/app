@@ -7,7 +7,7 @@
  * @ingroup JobQueue
  *
  * @copyright Copyright © Krzysztof Krzyżaniak for Wikia Inc.
- * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
+ * @author Krzysztof Krzyżaniak (eloy) <eloy@wlikia-inc.com>
  * @date 2010-07-19
  * @version 1.0
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
@@ -85,7 +85,7 @@ class BlogsFolllowJob extends Job {
 			__METHOD__
 		);
 
-		while ($row = $dbw->fetchObject( $res ) ) {
+		while ($row = $dbr->fetchObject( $res ) ) {
 			$watchers[] = intval( $row->wl_user );
 		}
 
@@ -107,7 +107,7 @@ class BlogsFolllowJob extends Job {
 			$dbw = wfGetDB( DB_MASTER );
 			$dbw->begin();
 			$dbw->update( 'watchlist',
-				array( 'wl_notificationtimestamp' => $dbw->timestamp( $timestamp ) ),
+				array( 'wl_notificationtimestamp' => $dbw->timestamp( wfTimestampNow() ) ),
 				array(
 					'wl_title' 		=> $ownerTitle->getDBkey(),
 					'wl_namespace'	=> $ownerTitle->getNamespace(),
