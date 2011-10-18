@@ -22,8 +22,8 @@
 	<div class="masthead-info">
 		<hgroup>
 			<? if( !empty($user['realName']) ): ?>
-				<h1 itemprop="name"><?= $user['realName']; ?></h1>
-				<h2><?= wfMsg('user-identity-box-aka-label', array('$1' => $user['name']) ); ?></h2>
+				<h1 itemprop="name"><?= $user['name']; ?></h1>
+				<h2><?= wfMsg('user-identity-box-aka-label', array('$1' => $user['realName']) ); ?></h2>
 			<? else: ?>
 				<h1 itemprop="name"><?= $user['name']; ?></h1>
 			<? endif; ?>
