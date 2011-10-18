@@ -34,17 +34,23 @@
 class ApiGate_Config{
 
 	public static function getSlaveDb(){
+		global $wgExternalSharedDB;
 		wfProfileIn( __METHOD__ );
+
 		$dbr =& wfGetDB (DB_SLAVE, array(), $wgExternalSharedDB);
 		$db = $dbr->mConn;
+
 		wfProfileOut( __METHOD__ );
 		return $db;
 	} // end getSlaveDb()
 	
 	public static function getMasterDb(){
+		global $wgExternalSharedDB;
 		wfProfileIn( __METHOD__ );
+		
 		$dbw =& wfGetDB (DB_MASTER, array(), $wgExternalSharedDB);
 		$db = $dbw->mConn;
+
 		wfProfileOut( __METHOD__ );
 		return $db;
 	} // end getMasterDb()
