@@ -125,7 +125,7 @@ var RelatedVideos = {
 		var url = $(this).attr('data-ref');
 		var external = $(this).attr('data-external');
 		var link = $(this).attr('href');
-		$.nirvana.postJson(
+		$.nirvana.getJson(
 			'RelatedVideosController',
 			'getVideo',
 			{
