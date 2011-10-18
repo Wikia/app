@@ -122,9 +122,9 @@ class ListusersData {
 			'L'  . $this->mLimit,
 			'O'  . $orderby
 		);
-		
+                
 		$memkey = wfForeignMemcKey( $this->mCityId, null, "ludata", md5( implode(', ', $subMemkey) ) );
-		$cached = ""; #$wgMemc->get($memkey);
+                $cached = ""; #$wgMemc->get($memkey);
 		
 		if ( empty($cached) && !empty($this->mDBEnable) ) { 
 			/* db handle */
@@ -286,7 +286,11 @@ class ListusersData {
 					}					
 				}
 				$dbs->freeResult( $oRes );
-				$wgMemc->set( $memkey, $data, 60*60 );
+                                
+                                // BugId:12643 - We DO NOT want to cache empty arrays.
+                                if ( !empty( $data ) ) {
+                                    $wgMemc->set( $memkey, $data, 60*60 );
+                                }
 			}
 		} else {
 			$data = $cached;
@@ -396,7 +400,11 @@ class ListusersData {
 					}
 					$dbs->freeResult($res);
 				}
-				$wgMemc->set( $memkey, $result, 60*60 );
+                                
+                                // BugId:12643 - We DO NOT want to cache empty arrays.
+                                if ( !empty( $result ) ) {
+                                    $wgMemc->set( $memkey, $result, 60*60 );
+                                }
 			}
 		} else {
 			$result = $cached;
