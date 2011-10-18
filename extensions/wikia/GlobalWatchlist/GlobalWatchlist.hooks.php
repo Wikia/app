@@ -95,7 +95,7 @@ class GlobalWatchlistHook {
 				$data = Wikia::json_encode( $message );
 				WScribeClient::singleton('trigger')->send($data);
 			}
-			catch( TException $e ) {
+			catch( Exception $e ) {
 				Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
 			}
 		}
@@ -152,7 +152,7 @@ class GlobalWatchlistHook {
 				$data = Wikia::json_encode( $message );
 				WScribeClient::singleton('trigger')->send($data);
 			}
-			catch( TException $e ) {
+			catch( Exception $e ) {
 				Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
 			}
 		}
@@ -235,7 +235,7 @@ class GlobalWatchlistHook {
 				$data = Wikia::json_encode( $message );
 				WScribeClient::singleton('trigger')->send($data);
 			}
-			catch( TException $e ) {
+			catch( Exception $e ) {
 				Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
 			}
 		}
@@ -317,7 +317,7 @@ class GlobalWatchlistHook {
 				$data = Wikia::json_encode( $message );
 				WScribeClient::singleton('trigger')->send($data);
 			}
-			catch( TException $e ) {
+			catch( Exception $e ) {
 				Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
 			}
 		}
@@ -367,7 +367,7 @@ class GlobalWatchlistHook {
 			$data = Wikia::json_encode( $message );
 			WScribeClient::singleton('trigger')->send($data);
 		}
-		catch( TException $e ) {
+		catch( Exception $e ) {
 			Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
 		}
 		
@@ -387,7 +387,7 @@ class GlobalWatchlistHook {
 
 		wfProfileIn( __METHOD__ );		
 
-		$oUser = User::newFromId( $user );
+		$oUser = User::newFromId( $user_id );
 		
 		return self::clearGlobalWatch( $oUser );
 	}	

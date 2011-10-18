@@ -146,9 +146,6 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 
 	global $wgContLang, $wgUser, $wgThumbLimits, $wgThumbUpright, $wgWysiwygParserEnabled, $wgWysiwygMetaData;
 
-	if ( !empty( $wgWysiwygParserEnabled ) ) {
-		$refid = Wysiwyg_GetRefId($options, true); // strip refid
-	}
 	$plc_tag = '';
 	$plc_tag = $wgContLang->getFormattedNsText( NS_FILE ) . ':' . wfMsgForContent( 'imgplc-placeholder' );
 	( isset( $hp['options'] ) && ( '' != $hp['options'] ) ) ? $wikitext = '[[' . $plc_tag . '|' . $hp['options'] . ']]' : $wikitext = '[[' . $plc_tag . ']]';
@@ -221,9 +218,7 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 	$tmarg = ceil( ( $height - 30 ) / 2 );
 
 	// macbre: Wysiwyg support for video placeholder
-	if (!empty($wgWysiwygParserEnabled)) {
-		$refid = Wysiwyg_SetRefId('image_add', array( 'width' => $iswidth, 'height' => $height, 'isAlign' => $isalign, 'isThumb' => $isthumb, 'original' => $wikitext, 'caption' => $caption, 'link' => $link ), false, true);
-	} else {
+	if (empty($wgWysiwygParserEnabled)) {
 		if( ($wgRequest->getVal('diff',0) == 0) && ($wgRequest->getVal('oldid',0) == 0) ) {
 			$onclick = '$.loadYUI( function() {$.getScript(wgExtensionsPath+\'/wikia/WikiaMiniUpload/js/WMU.js?\'+wgStyleVersion, function() { WMU_show( $.getEvent(), ' . -2  . ', ' . $wgWikiaImagePlaceholderId . ','. $isalign .','. $isthumb .' ,'. $iswidth .', \''. htmlspecialchars($caption) .'\' , \'' . htmlspecialchars($link) . '\' ); importStylesheetURI( wgExtensionsPath+\'/wikia/WikiaMiniUpload/css/WMU.css?\'+wgStyleVersion ) } ) } )';
 		} else {
