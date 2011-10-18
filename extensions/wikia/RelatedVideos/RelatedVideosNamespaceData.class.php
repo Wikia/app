@@ -307,8 +307,8 @@ class RelatedVideosNamespaceData {
 							return wfMsg('related-videos-add-video-error-duplicate');
 						}
 						else {
-							wfProfileOut( __METHOD__ );
-							return wfMsg('related-videos-remove-video-error-duplicate');
+							// no need to report duplicate error.
+							// ok to remove a video that is already on blacklist
 						}
 					}
 				}
