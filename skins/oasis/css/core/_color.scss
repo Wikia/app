@@ -22,12 +22,13 @@ $is-dark-wiki: false;
 	$color-text: #D5D4D4;
 	
 }
-$color-gray-text: #999;
-@if $is-dark-wiki {
-	$color-gray-text: #666;
-}
-$color-gray-text: desaturate(mix($color-text,$color-page,60%),100%);
 
+// Gray text (aka Alternate text, because it is not really gray)
+// TODO: rename this variable
+$color-gray-text: mix($color-page, #000000, 50%);
+@if $is-dark-wiki {
+	$color-gray-text: mix($color-page, #ffffff, 50%);
+}
 
 // GlobalHeader
 $color-header-alt: mix($color-header, #000, 25%);
@@ -47,9 +48,9 @@ $color-module-highlight: lighten($color-page, 2%);
 $color-module-shadow: darken($color-page, 5%);
 
 // Page Borders
-$color-page-border: darken(lighten($color-page, 100%), 15%);
+$color-page-border: mix($color-page, #000000, 80%);
 @if $is-dark-wiki {
-	$color-page-border: lighten(darken($color-page, 100%), 25%);
+	$color-page-border: mix($color-page, #ffffff, 80%);
 }
 
 // Buttons
