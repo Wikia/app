@@ -8,9 +8,12 @@
 
 abstract class ImageServingDriverBase {
 	private $articles;
-	function __construct($db, $imageServing) {
+	private $proportion;
+	
+	function __construct($db, $imageServing, $proportion) {
 		$this->app = F::app();
 		$this->db = $db;
+		$this->proportion = $proportion;
 		//TODO: remove it
 		$this->imageServing = $imageServing; 
 		$this->memc =  $this->app->getGlobal( 'wgMemc' ); 
@@ -35,7 +38,7 @@ abstract class ImageServingDriverBase {
 		$articles = $this->getSimpleArticlesList();
 		$cacheOut = $this->loadFromCache($articles);
 		$articles = $cacheOut['rest'];
-	
+		
 		if(count($articles) == 0) {
 			return $cacheOut['data'];
 		}
@@ -141,6 +144,6 @@ abstract class ImageServingDriverBase {
 	 * @author Federico "Lox" Lucignano
 	 */
 	private function makeKey( $key  ) {
-		return wfMemcKey("imageserving-images-data", $key);
+		return wfMemcKey("imageserving-images-data", $key, $this->proportion);
 	}
 }
