@@ -17,7 +17,6 @@ $messages['en'] = array(
 	'userprofilepage-question-save' => 'Save question',
 	'userprofilepage-question-list-title' => '$1/$2 Questions',
 	'userprofilepage-interview-section-title' => 'User Interview',
-	'userprofilepage-stuff-section-title' => 'Stuff',
 	'userprofilepage-invalid-user' => 'Invalid user! You are not logged-in or do not have rights to proceed',
 	'userprofilepage-avatar-error-type' => 'Invalid MIME type. Allowed: $1',
 	'userprofilepage-avatar-error-resolution' => 'Maximum resolution of avatar is 2000x2000',
