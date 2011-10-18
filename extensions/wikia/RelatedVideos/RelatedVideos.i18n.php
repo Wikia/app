@@ -35,6 +35,6 @@ $messages['en'] = array(
 	'related-videos-tooltip-add' => 'Add a video to this page',
 	'related-videos-tooltip-embed' => 'Paste this URL in the video embed tool',
 	'related-videos-beta-feature' => 'beta',
-	'related-videos-repo-name' => 'Wikia Videos',
+	'related-videos-repo-name' => 'Wikia Video Library',
 	'related-video-embed-text' => 'Embed code'
 );
