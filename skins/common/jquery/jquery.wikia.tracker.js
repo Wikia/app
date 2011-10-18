@@ -167,7 +167,7 @@ jQuery.tracker = function() {
 	if (wgIsArticle && wgArticleId > 0) {
 		// catch all clicks inside article content, but track clicks on links only
 		content.click(function(e) {
-
+			
 			var track = function(fakeUrl) {
 				var root = isOasis ? 'contentpage/contentlink/' : 'articleActions/contentLink/';
 				$.tracker.byStr(root + fakeUrl);
@@ -283,9 +283,7 @@ jQuery.tracker.byId = function(e) {
 };
 
 jQuery.tracker.trackStr = function(str, account) {
-	if (window.WikiaTracker) {
-		WikiaTracker.track(str, 'main.test');
-	}
+	WikiaTracker.track(str, 'main.test');
 
 	if(typeof account != 'undefined') {
 		_gaq.push(['_setAccount', account]);
@@ -335,6 +333,7 @@ jQuery.tracker.track = function(fakeurl, unsampled) {
 	if(testGroupName) {
 		$.tracker.trackStr('/1_' + skinname + '/' + testGroupName[1] + '/' + username + '/' + fakeurl, 'UA-19473076-1');
 	}
+	WikiaTracker.AB('/1_' + skinname + '/' + username + '/' + fakeurl);
 };
 
 jQuery.tracker.trackEvent = function(category, action, opt_label, opt_value) {

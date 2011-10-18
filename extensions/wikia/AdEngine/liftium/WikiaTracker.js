@@ -31,6 +31,7 @@ var WikiaTracker = {
 	},
 	debugLevel:0,
 	_in_group_cache:{}
+	//_in_ab_cache:[] dont declare, leave undefined
 };
 
 WikiaTracker.debug = function (msg, level, obj) {
@@ -155,9 +156,18 @@ WikiaTracker._simpleHash = function(s, tableSize) {
  };
 
 WikiaTracker._inGroup = function(hash_id, group_id) {
+	// TODO rethink group schema, get rid of start/stop?
 	var groups = {
-		A : { rangeStart: 80, rangeStop: 84, id: 'UA-A' },
-		B : { rangeStart: 85, rangeStop: 89, id: 'UA-B' },
+		A : { rangeStart: 80, rangeStop: 80, id: 'UA-A' },
+		B : { rangeStart: 81, rangeStop: 81, id: 'UA-B' },
+		C : { rangeStart: 82, rangeStop: 82, id: 'UA-C' },
+		D : { rangeStart: 83, rangeStop: 83, id: 'UA-D' },
+		E : { rangeStart: 84, rangeStop: 84, id: 'UA-E' },
+		F : { rangeStart: 85, rangeStop: 85, id: 'UA-F' },
+		G : { rangeStart: 86, rangeStop: 86, id: 'UA-G' },
+		H : { rangeStart: 87, rangeStop: 87, id: 'UA-H' },
+		I : { rangeStart: 88, rangeStop: 88, id: 'UA-I' },
+		J : { rangeStart: 89, rangeStop: 89, id: 'UA-J' },
 		N : { rangeStart: 80, rangeStop: 89, id: 'UA-N' },
 		O : { rangeStart: 13, rangeStop: 13, id: 'UA-O' }
 	};
@@ -178,6 +188,7 @@ WikiaTracker.inGroup = function(group) {
 	} else {
 		if (typeof window.beacon_id == 'undefined') {
 			this.debug('beacon_id unavailable (yet?), bailing out', 3);
+			// TODO track it...
 			return false;
 		}
 
@@ -196,4 +207,41 @@ WikiaTracker.inGroup = function(group) {
 
 WikiaTracker.isTracked = function() {
 	return this.inGroup('N');
+};
+
+WikiaTracker._abData = function() {
+	var tests = {
+		'test1':['C', 'D'],
+		'test2':['A']
+	};
+
+	var in_ab = [];
+
+	if (typeof this._in_ab_cache != 'undefined') {
+		in_ab = this._in_ab_cache;
+		this.debug('abData from cache', 5); // FIXME NEF 7
+	} else {
+		for (var test in tests) {
+			this.debug('abData: ' + test, 5);
+			for (var i in tests[test]) {
+				var group = tests[test][i];
+				this.debug('abData: ' + group, 5);
+				if (this.inGroup(group)) {
+					in_ab.push(test + '/' + group);
+				}
+			}
+		}
+		this._in_ab_cache = in_ab;
+	}
+
+	return in_ab;	
+};
+
+WikiaTracker.AB = function(page) {
+	var ab = this._abData();
+	for (var i in ab) {
+		WikiaTracker.track('/' + ab[i] + page, 'main.test');
+	}
+
+	return true;
 };
