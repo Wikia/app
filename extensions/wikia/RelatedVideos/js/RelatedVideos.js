@@ -7,6 +7,7 @@ var RelatedVideos = {
 	modalWidth:		660,
 	alreadyLoggedIn:	false,
 	heightThreshold:	600,	
+	playerHeight:           371,
 
 	init: function() {
 		var importantContentHeight = $('#WikiaArticle').height();
@@ -137,7 +138,8 @@ var RelatedVideos = {
 			{
 				title: url,
 				external: external,
-				cityShort: window.cityShort
+				cityShort: window.cityShort,
+				videoHeight: RelatedVideos.playerHeight
 			},
 			function( res ) {
 				if ( res.error ) {

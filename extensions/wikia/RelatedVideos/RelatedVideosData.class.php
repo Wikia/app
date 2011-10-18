@@ -12,7 +12,7 @@ class RelatedVideosData {
 		
 	}
 	
-	public function getVideoData( $title, $thumbnailWidth, $videoWidth = VideoPage::DEFAULT_OASIS_VIDEO_WIDTH, $autoplay = true, $useMaster = false, $cityShort='life' ) {
+	public function getVideoData( $title, $thumbnailWidth, $videoWidth = VideoPage::DEFAULT_OASIS_VIDEO_WIDTH, $autoplay = true, $useMaster = false, $cityShort='life', $videoHeight='' ) {
 
 		wfProfileIn( __METHOD__ );
 
@@ -26,8 +26,8 @@ class RelatedVideosData {
 			$data['id']		= $title->getArticleID();
 			$data['description']	= $videoPage->getDescription();
 			$data['duration']	= $videoPage->getDuration();
-			$data['embedCode']	= $videoPage->getEmbedCode( $videoWidth, $autoplay, true, false, $cityShort );
-			$data['embedJSON']	= $videoPage->getJWPlayerJSON( $videoWidth, $autoplay, $cityShort );
+			$data['embedCode']	= $videoPage->getEmbedCode( $videoWidth, $autoplay, true, false, $cityShort, $videoHeight );
+			$data['embedJSON']	= $videoPage->getJWPlayerJSON( $videoWidth, $autoplay, $cityShort, $videoHeight );
 			$data['fullUrl']	= $title->getFullURL();
 			$data['prefixedUrl']	= $title->getPrefixedURL();
 			$data['provider']	= $videoPage->getProvider();

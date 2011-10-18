@@ -13,7 +13,7 @@ class RelatedVideosService {
 	 * @param int $videoWidth Width of resulting video player, in pixels
 	 * @return Array 
 	 */
-	public function getRelatedVideoData( $articleId, $title, $source='', $videoWidth=VideoPage::DEFAULT_OASIS_VIDEO_WIDTH, $cityShort='life', $useMaster=0 ){
+	public function getRelatedVideoData( $articleId, $title, $source='', $videoWidth=VideoPage::DEFAULT_OASIS_VIDEO_WIDTH, $cityShort='life', $useMaster=0, $videoHeight='' ){
 
 		wfProfileIn( __METHOD__ );
 		$title = urldecode( $title );
@@ -23,7 +23,7 @@ class RelatedVideosService {
 			if ( !empty( $source ) ){
 				$url = F::app()->wg->wikiaVideoRepoPath;
 				if ( !empty( $url ) ){
-					$url.='wikia.php?controller=RelatedVideos&method=getVideoData&width='.self::width.'&videoWidth='.$videoWidth.'&title='.urlencode($title).'&articleId='.$articleId.'&cityShort='.$cityShort.'&format=json';
+					$url.='wikia.php?controller=RelatedVideos&method=getVideoData&width='.self::width.'&videoWidth='.$videoWidth.'&title='.urlencode($title).'&articleId='.$articleId.'&cityShort='.$cityShort.'&videoHeight='.$videoHeight.'&format=json';
 				}
 				$httpResponse = Http::post( $url );
 				$result = json_decode( $httpResponse, true );
@@ -37,7 +37,8 @@ class RelatedVideosService {
 						'title'		=> $title,
 						'articleId'	=> $articleId,
 						'cityShort'	=> $cityShort,
-						'useMaster'	=> $useMaster
+						'useMaster'	=> $useMaster,
+						'videoHeight' => $videoHeight
 					)
 				)->getData();
 				$result['data']['external'] = 0;
@@ -49,14 +50,14 @@ class RelatedVideosService {
 		return $result['data'];
 	}
 
-	public function getRelatedVideoDataFromMaster( $title, $source='', $videoWidth=VideoPage::DEFAULT_OASIS_VIDEO_WIDTH, $cityShort='life' ){
+	public function getRelatedVideoDataFromMaster( $title, $source='', $videoWidth=VideoPage::DEFAULT_OASIS_VIDEO_WIDTH, $cityShort='life', $videoHeight='' ){
 
-		return $this->getRelatedVideoData( 0, $title, $source, $videoWidth, $cityShort, 1 );
+		return $this->getRelatedVideoData( 0, $title, $source, $videoWidth, $cityShort, 1, $videoHeight );
 	}
 
-	public function getRelatedVideoDataFromTitle( $title, $source='', $videoWidth=VideoPage::DEFAULT_OASIS_VIDEO_WIDTH, $cityShort='life' ){
+	public function getRelatedVideoDataFromTitle( $title, $source='', $videoWidth=VideoPage::DEFAULT_OASIS_VIDEO_WIDTH, $cityShort='life', $videoHeight='' ){
 
-		return $this->getRelatedVideoData( 0, $title, $source, $videoWidth, $cityShort );
+		return $this->getRelatedVideoData( 0, $title, $source, $videoWidth, $cityShort, 0, $videoHeight );
 	}
 
 	public function getMemcKey( $title, $source, $videoWidth, $cityShort ) {
