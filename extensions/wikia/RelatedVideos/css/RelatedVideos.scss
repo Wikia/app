@@ -313,7 +313,9 @@ $color-related-videos-background: darken($color-page, 20%);
 		.rv-error {
 			@include border-radius(4px);
 			@include border-radius-nw(0px);
-			display: table-cell;
+			display: table;
+			_display: block;
+			*display: block;
 			background-color: $color-buttons;
 			color: $color-button-text;
 			font-size: 12px;
