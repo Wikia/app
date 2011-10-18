@@ -30,8 +30,9 @@ class PhotoPopAppCacheController extends WikiaController {
 			}
 		}
 		
-		
-		$this->cacheVersion = $this->wg->CacheBuster;//$this->wg->StyleVersion;
+		//not using $this->wg->StyleVersion as that changes always on devbox
+		//making it impossible to test the AppCache
+		$this->cacheVersion = $this->wg->CacheBuster;
 		$this->cacheFiles = implode("\n",$files);
 		$this->freshFiles = '*';
 	}

@@ -76,5 +76,9 @@ $app->wg->set( 'wgExtensionMessagesFiles', "{$dir}/PhotoPop.i18n.php", 'PhotoPop
 /*
  * settings
  */
-// register messages package for JS
-F::build('JSMessages')->registerPackage('PhotoPop', array('photopop-game-*'));
+
+/**
+ * register messages package for JS, messages to export must be listed in shared/message_index.json
+ * @see PhotoPopModel::getMessageIndexes for more informations
+ */
+F::build( 'JSMessages' )->registerPackage( 'PhotoPop', F::build( 'PhotoPopModel' )->getMessageIndexes() );
