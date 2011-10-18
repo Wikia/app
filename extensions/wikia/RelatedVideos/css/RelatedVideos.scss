@@ -278,6 +278,10 @@ $color-related-videos-background: darken($color-page, 20%);
 	}
 }
 
+.RelatedVideosHidden {
+	display: none;
+}
+
 #relatedvideos-add-video {
 
 	input {

@@ -6,17 +6,23 @@ var RelatedVideos = {
 	currentRoom:		1,
 	modalWidth:		660,
 	alreadyLoggedIn:	false,
+	heightThreshold:	600,	
 
 	init: function() {
-		$('#RelatedVideos').delegate( 'a.video-play', 'click', RelatedVideos.displayVideoModal );
-		$('#RelatedVideos').delegate( '.scrollright', 'click', RelatedVideos.scrollright );
-		$('#RelatedVideos').delegate( '.scrollleft', 'click', RelatedVideos.scrollleft );
-		$('#RelatedVideos').delegate( '.addVideo', 'click', RelatedVideos.addVideoLoginWrapper );
-		$('#RelatedVideos').delegate( '.remove', 'click', RelatedVideos.removeVideoLoginWrapper );
-		RelatedVideos.maxRooms = $('#RelatedVideos').attr('data-count');
-		if ( RelatedVideos.maxRooms < 1 ) RelatedVideos.maxRooms = 1;
-		RelatedVideos.checkButtonState();
-		$('#RelatedVideos .addVideo').wikiaTooltip( $('#RelatedVideos .addVideoTooltip').html() );		
+		var importantContentHeight = $('#WikiaArticle').height();
+		importantContentHeight += $('#WikiaArticleComments').height();
+		if (importantContentHeight >= RelatedVideos.heightThreshold) {
+			$('#RelatedVideos').removeClass('RelatedVideosHidden');
+			$('#RelatedVideos').delegate( 'a.video-play', 'click', RelatedVideos.displayVideoModal );
+			$('#RelatedVideos').delegate( '.scrollright', 'click', RelatedVideos.scrollright );
+			$('#RelatedVideos').delegate( '.scrollleft', 'click', RelatedVideos.scrollleft );
+			$('#RelatedVideos').delegate( '.addVideo', 'click', RelatedVideos.addVideoLoginWrapper );
+			$('#RelatedVideos').delegate( '.remove', 'click', RelatedVideos.removeVideoLoginWrapper );
+			RelatedVideos.maxRooms = $('#RelatedVideos').attr('data-count');
+			if ( RelatedVideos.maxRooms < 1 ) RelatedVideos.maxRooms = 1;
+			RelatedVideos.checkButtonState();
+			$('#RelatedVideos .addVideo').wikiaTooltip( $('#RelatedVideos .addVideoTooltip').html() );		
+		}
 	},
 
 	// Scrolling modal items
