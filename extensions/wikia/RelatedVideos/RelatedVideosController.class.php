@@ -8,7 +8,7 @@ class RelatedVideosController extends WikiaController {
 	}
 
 	public function getCarusel(){
-		if( Wikia::isMainPage() ) {
+		if( Wikia::isMainPage() || !$this->app->wg->title->exists() ) {
 			return false;
 		}
 		$relatedVideos = RelatedVideos::getInstance();
@@ -21,7 +21,7 @@ class RelatedVideosController extends WikiaController {
 
 		$oLocalLists = RelatedVideosNamespaceData::newFromTargetTitle( F::app()->wg->title );
 		$oGlobalLists = RelatedVideosNamespaceData::newFromGeneralMessage();
-
+		
 		$oRelatedVideosService = F::build('RelatedVideosService');
 		$blacklist = array();
 		foreach( array( $oLocalLists, $oGlobalLists ) as $oLists ){
