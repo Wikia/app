@@ -227,6 +227,29 @@ class PhotoPopModel extends WikiaModel{
 		return $ret;
 	}
 	
+	/**
+	 *@brief Reads the messages' indexes to pass to JSMessages initialization
+	 *from a JSON file which is shared with the mobile app code
+	 */
+	public function getMessageIndexes(){
+		$this->app->wf->profileIn( __METHOD__ );
+		
+		//using the cachebuster in the key to be able to
+		//update this cache if/when needed by just pushing
+		//a cb++
+		$cacheKey = $this->generateCacheKey( __METHOD__ . $this->wg->StyleVersion );
+		$contents = $this->loadFromCache( $cacheKey );
+		
+		if ( empty( $contents ) ) {
+			$contents = json_decode( file_get_contents( dirname( __FILE__ ) . '/shared/message_index.json' ) );
+			$this->storeInCache( $cacheKey , $contents );
+		}
+		
+		$this->app->wf->profileOut( __METHOD__ );
+		
+		return $contents;
+	}
+	
 	private function generateCacheKey( $token ){
 		return $this->wf->memcKey( $token ); 
 	}
