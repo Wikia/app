@@ -36,7 +36,7 @@ class TopologicalSort {
 		}
 		
 		// turn pairs into double-linked node tree
-		foreach ( $dependencies as $key => $dpair ) {
+		foreach ( $dependencies as $dpair ) {
 			list ( $module, $dependency ) = each ( $dpair );
 			if ( !isset( $this->mNodes[$module] ) ) $this->mNodes[$module] = new TSNode( $module );
 			if ( !isset( $this->mNodes[$dependency] ) ) $this->mNodes[$dependency] = new TSNode( $dependency );

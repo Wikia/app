@@ -4,17 +4,46 @@ For a documentation of all features, see http://www.mediawiki.org/wiki/Extension
 This change log contains a list of completed to-do's (new features, bug fixes, refactoring) for every version of Validator.
 
 
-=== Validator 0.4.6 ===
-(2011-05-xx)
+=== Validator 0.4.10 ===
+(2011-08-04)
+
+* Added language parameter to describe that allows setting the lang for the generated docs.
+
+* Added getMessage method to ParserHook class for better i18n.
+
+=== Validator 0.4.9 ===
+(2011-07-30)
+
+* Added setMessage and getMessage methods to Parameter class for better i18n.
+
+=== Validator 0.4.8 ===
+(2011-07-19)
+
+* Added unit tests for the criteria.
+
+* Fixed issue with handling floats in CriterionInRange.
+
+* Added support for open limits in CriterionHasLength and CriterionItemCount.
+
+=== Validator 0.4.7 ===
+(2011-05-15)
 
 * Added ParameterInput class to generate HTML inputs for parameters, based on code from SMWs Special:Ask.
-
-* Removed ParamManipulationBoolstr
 
 * Added "$manipulate = true" as second parameter for Parameter::setDefault,
   which gets passed to Parameter::setDoManipulationOfDefault.
 
 * Boolean manipulation now ignores values that are already a boolean.
+=== Validator 0.4.6 ===
+(2011-03-21)
+
+* Removed ParamManipulationBoolstr.
+
+* Added method to get the allowed values to CriterionInArray.
+
+* Added automatic non-using of boolean manipulation when a boolean param was defaulted to a boolean value.
+
+* Parameter fix in ListParameter::setDefault, follow up to change in 0.4.5.
 
 === Validator 0.4.5 ===
 (2011-03-05)

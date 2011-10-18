@@ -54,7 +54,16 @@ class CriterionInRange extends ItemParameterCriterion {
 			return false;
 		}
 		
-		$value = (int)$value;
+		switch( $parameter->getType() ) {
+			case Parameter::TYPE_INTEGER:
+				$value = (int)$value;
+				break;
+			case Parameter::TYPE_FLOAT:
+				$value = (float)$value;
+				break;
+			default:
+				return false;
+		}
 		
 		return ( $this->upperBound === false || $value <= $this->upperBound ) 
 			&& ( $this->lowerBound === false || $value >= $this->lowerBound );		

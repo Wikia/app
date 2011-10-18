@@ -415,20 +415,34 @@ abstract class ParserHook {
 		return array(
 			'names' => $this->getNames(),
 			'description' => $this->getDescription(),
+			'message' => $this->getMessage(),
 			'parameters' => $this->getParameterInfo( $type ),
 			'defaults' => $this->getDefaultParameters( $type ),
 		);
+	}
+
+	/**
+	 * Returns a description for the parser hook, or false when there is none.
+	 * Override in deriving classes to add a message.
+	 *
+	 * @since 0.4.3
+	 *
+	 * @return mixed string or false
+	 */
+	public function getDescription() {
+		$msg = $this->getMessage();
+		return $msg === false ? false : wfMsg( $msg );
 	}
 	
 	/**
 	 * Returns a description message for the parser hook, or false when there is none.
 	 * Override in deriving classes to add a message.
 	 * 
-	 * @since 0.4.3
+	 * @since 0.4.10
 	 * 
 	 * @return mixed string or false
 	 */
-	public function getDescription() {
+	public function getMessage() {
 		return false;
 	}
 	
@@ -468,7 +482,7 @@ abstract class ParserHook {
 		// Parse the wikitext to HTML.
 		if ( $this->isFunction() ) {
 			return $this->parser->parse(
-				text,
+				$text,
 				$this->parser->mTitle,
 				$this->parser->mOptions,
 				true,
