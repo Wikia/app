@@ -19,16 +19,16 @@ class CriterionItemCount extends ListParameterCriterion {
 	/**
 	 * Constructor.
 	 * 
-	 * @param integer $lowerBound
-	 * @param mixed $upperBound
+	 * @param integer $lowerBound False for no lower bound (since 0.4.8).
+	 * @param mixed $upperBound False for no lower bound (since 0.4.8).
 	 * 
 	 * @since 0.4
 	 */
-	public function __construct( $lowerBound, $upperBound = false ) {
+	public function __construct( $lowerBound, $upperBound = null ) {
 		parent::__construct();
 		
 		$this->lowerBound = $lowerBound;
-		$this->upperBound = $upperBound === false ? $lowerBound : $upperBound;
+		$this->upperBound = is_null( $upperBound ) ? $lowerBound : $upperBound;
 	}
 	
 	/**
@@ -36,7 +36,8 @@ class CriterionItemCount extends ListParameterCriterion {
 	 */	
 	public function validate( Parameter $parameter, array $parameters) {
 		$count = count( $parameter->getValue() );
-		return $count <= $this->upperBound && $count >= $this->lowerBound;
+		return ( $this->upperBound === false || $count <= $this->upperBound )
+			&& ( $this->lowerBound === false || $count >= $this->lowerBound );
 	}
 	
 }

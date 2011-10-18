@@ -71,6 +71,11 @@ class Validator {
 	protected $unknownInvalid;
 	
 	/**
+	 * @var array
+	 */
+	protected $paramsTohandle;
+	
+	/**
 	 * Constructor.
 	 * 
 	 * @param string $element

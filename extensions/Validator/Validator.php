@@ -25,7 +25,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	die( 'Not an entry point.' );
 }
 
-define( 'Validator_VERSION', '0.4.6 alpha' );
+define( 'Validator_VERSION', '0.4.10' );
 
 // Register the internationalization file.
 $wgExtensionMessagesFiles['Validator'] = dirname( __FILE__ ) . '/Validator.i18n.php';
@@ -40,6 +40,7 @@ $wgExtensionCredits['other'][] = array(
 );
 
 // Autoload the classes.
+$wgAutoloadClasses['ValidatorHooks']			= dirname( __FILE__ ) . '/Validator.hooks.php';
 $incDir = dirname( __FILE__ ) . '/includes/';
 $wgAutoloadClasses['CriterionValidationResult']	= $incDir . 'CriterionValidationResult.php';
 $wgAutoloadClasses['ItemParameterCriterion']	= $incDir . 'ItemParameterCriterion.php';
@@ -89,6 +90,8 @@ $wgHooks['LanguageGetMagic'][] = 'ValidatorListErrors::staticMagic';
 # Registration of the describe parser hooks.
 $wgHooks['ParserFirstCallInit'][] = 'ValidatorDescribe::staticInit';
 $wgHooks['LanguageGetMagic'][] = 'ValidatorDescribe::staticMagic';
+// Since 0.4.8
+$wgHooks['UnitTestsList'][] = 'ValidatorHooks::registerUnitTests';
 
 // This file needs to be included directly, since Validator_Settings.php
 // uses it, in some rare cases before autoloading is defined.

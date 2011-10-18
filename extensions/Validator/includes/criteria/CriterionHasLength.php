@@ -19,16 +19,16 @@ class CriterionHasLength extends ItemParameterCriterion {
 	/**
 	 * Constructor.
 	 * 
-	 * @param integer $lowerBound
-	 * @param mixed $upperBound
+	 * @param integer $lowerBound False for no lower bound (since 0.4.8).
+	 * @param mixed $upperBound False for same value as lower bound. False for no upper bound (since 0.4.8).
 	 * 
 	 * @since 0.4
 	 */
-	public function __construct( $lowerBound, $upperBound = false ) {
+	public function __construct( $lowerBound, $upperBound = null ) {
 		parent::__construct();
 		
 		$this->lowerBound = $lowerBound;
-		$this->upperBound = $upperBound === false ? $lowerBound : $upperBound;
+		$this->upperBound = is_null( $upperBound ) ? $lowerBound : $upperBound;
 	}
 	
 	/**
@@ -36,7 +36,8 @@ class CriterionHasLength extends ItemParameterCriterion {
 	 */	
 	protected function doValidation( $value, Parameter $parameter, array $parameters ) {
 		$strlen = strlen( $value );
-		return $strlen <= $this->upperBound && $strlen >= $this->lowerBound;
+		return ( $this->upperBound === false || $strlen <= $this->upperBound )
+			&& ( $this->lowerBound === false || $strlen >= $this->lowerBound );
 	}
 	
 	/**

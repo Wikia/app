@@ -115,6 +115,7 @@ class ParameterInput {
 					break;
 				case Parameter::TYPE_BOOLEAN:
 					$html = $this->getBooleanInput();
+					break;
 				case Parameter::TYPE_STRING:
 				default:
 					$html = $this->getStrInput();

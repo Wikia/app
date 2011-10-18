@@ -189,6 +189,16 @@ class Parameter {
 	protected $description = false;
 	
 	/**
+	 * A message that acts as description for the parameter or false when there is none.
+	 * Can be obtained via getMessage and set via setMessage.
+	 * 
+	 * @since 0.4.9
+	 * 
+	 * @var mixed string or false
+	 */
+	protected $message = false;
+	
+	/**
 	 * Constructor.
 	 * 
 	 * @since 0.4
@@ -785,6 +795,29 @@ class Parameter {
 	 */
 	public function setDescription( $descriptionMessage ) {
 		$this->description = $descriptionMessage;
-	}	
+	}
+
+	/**
+	 * Returns a message that will act as a description message for the parameter, or false when there is none.
+	 * Override in deriving classes to add a message.
+	 * 
+	 * @since 0.4.9
+	 * 
+	 * @return mixed string or false
+	 */
+	public function getMessage() {
+		return $this->message;
+	}
+	
+	/**
+	 * Sets a message for the parameter that will act as description.
+	 * 
+	 * @since 0.4.9
+	 * 
+	 * @param string $message
+	 */
+	public function setMessage( $message ) {
+		$this->message = $message;
+	}
 	
 }
