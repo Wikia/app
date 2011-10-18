@@ -12,7 +12,9 @@
 		padding-left: 30px;
 
 		list-style: none;
-		&:not(:first-child) { border-top: 1px solid mix($color-page-border, $color-page, 50%); }
+		&:not(:first-child) { 
+			border-top: 1px solid $color-page-border;
+		}
 	}
 
 	em {
