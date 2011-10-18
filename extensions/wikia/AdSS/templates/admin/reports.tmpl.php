@@ -1,5 +1,10 @@
 <?php global $wgAdSSBillingThreshold; ?>
 <img style="float:right" width="<?php echo $w; ?>" height="<?php echo $h; ?>" src="http://chart.apis.google.com/chart?chxt=x,y&chbh=a&chs=<?php echo $w; ?>x<?php echo $h; ?>&cht=bvg&chco=A2C180&chd=t:<?php echo $d; ?>&chds=0,<?php echo $maxY; ?>&chm=N*cUSD0*,000000,0,-1,12&chxr=1,0,<?php echo $maxY; ?>&chxl=0:|<?php echo $xl0; ?>|&chtt=Daily+Income+(last+7+days)" />
+<?php if( $md != '' ): ?>
+	<img style="float:right" width="<?php echo $w; ?>" height="<?php echo $h; ?>" src="http://chart.apis.google.com/chart?chxt=x,y&chbh=a&chs=<?php echo $w; ?>x<?php echo $h; ?>&cht=bvg&chco=A2C180&chd=t:<?php echo $md; ?>&chds=0,<?php echo $mmaxY; ?>&chm=N*cUSD0*,000000,0,-1,12&chxr=1,0,<?php echo $mmaxY; ?>&chxl=0:|<?php echo $mxl0; ?>|&chtt=Monthly+Revenue" />
+<?php else: ?>
+	<i>Monthly Revenue graph not available - Not enough data.</i>
+<?php endif; ?>
 <table border="1" class="TablePager">
   <thead>
     <tr><th>User</th><th>Due</th><th>Last billed</th></tr>
