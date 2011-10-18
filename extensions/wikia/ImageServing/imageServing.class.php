@@ -15,6 +15,7 @@ class ImageServing {
 	private $proportion;
 	private $deltaY = 0;
 	private $db;
+	private $proportionString;
 
 	/**
 	 * @param $articles \type{\arrayof{\int}} List of articles ids to get images
@@ -28,8 +29,10 @@ class ImageServing {
 		if(!is_array($proportionOrHeight)) {
 			$height = (int) $proportionOrHeight;
 			$this->proportion = array("w" => $width, "h" => $height);
+			$this->proportionString = $width.":".$height;
 		} else {
 			$this->proportion = $proportionOrHeight;
+			$this->proportionString = implode(":", $proportionOrHeight);
 		}
 
 		$this->articles = array();
@@ -99,25 +102,25 @@ class ImageServing {
 			while ($row =  $db->fetchRow( $res ) ) {
 				$this->addArticleToList($row);
 			}
-
+			
 			if(empty($driver)) {
 				foreach($this->imageServingDrivers as $key => $value ){
 					if(!empty($this->articlesByNS[$key])) {
-						$driver = new $value($db, $this);
+						$driver = new $value($db, $this, $this->proportionString);
 						$driver->setArticlesList($this->articlesByNS[$key]);
 						unset($this->articlesByNS[$key]);
 						$out = $out + $driver->execute($n);
 					}
 				}
 
-				$driver = new ImageServingDriverMainNS($db, $this);
+				$driver = new ImageServingDriverMainNS($db, $this, $this->proportionString);
 				//rest of article in MAIN name spaces
 				foreach( $this->articlesByNS as $value ) {
 					$driver->setArticlesList( $value );
 					$out = $out + $driver->execute($n);
 				}
 			} else {
-				$driver = new $driver($db, $this);
+				$driver = new $driver($db, $this, $this->proportionString);
 				//rest of article in MAIN name spaces
 				foreach( $this->articlesByNS as $value ) {
 					$driver->setArticlesList( $value );
@@ -155,7 +158,7 @@ class ImageServing {
 	}
 
 	private function makeKey( $key ) {
-		return wfMemcKey("imageserving-article-details", $key, is_array($this->proportion)?implode(":",$this->proportion):$this->proportion);
+		return wfMemcKey("imageserving-article-details", $key, $this->proportionString);
 	}
 
 	/**
