@@ -21,7 +21,10 @@ $wgAutoloadClasses['StaffLog'] = $dir . 'StaffLog_body.php'; # Tell MediaWiki to
 $wgAutoloadClasses['StaffLogger'] = $dir . 'StaffLog.events.php';
 $wgExtensionMessagesFiles['StaffLog'] = $dir . 'StaffLog.i18n.php';
 $wgExtensionAliasesFiles['StaffLog'] = $dir . 'StaffLog.alias.php';
-$wgSpecialPages['StaffLog'] = 'StaffLog'; # Let MediaWiki know about your new special page.
+
+if ( !empty( $wgEnableStaffLogSpecialPage ) ) {
+	$wgSpecialPages['StaffLog'] = 'StaffLog'; # Let MediaWiki know about your new special page.
+}
 
 $wgLogRestrictions['StaffLog'] = 'StaffLog';
 
