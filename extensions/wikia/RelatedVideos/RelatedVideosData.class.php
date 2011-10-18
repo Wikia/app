@@ -70,7 +70,7 @@ class RelatedVideosData {
 		$targetTitle = F::build('Title', array($articleId), 'newFromId');
 		if (!$targetTitle->exists()) {
 			wfProfileOut( __METHOD__ );
-			return wfMsg('related-videos-error-unknown', 876463);
+			return wfMsg('related-videos-error-unknown', 876462);
 		}
 		
 		// check permission
@@ -179,7 +179,7 @@ class RelatedVideosData {
 		$targetTitle = F::build('Title', array($articleId), 'newFromId');
 		if (!$targetTitle->exists()) {
 			wfProfileOut( __METHOD__ );
-			return wfMsg('related-videos-error-unknown', 876463);
+			return wfMsg('related-videos-error-unknown', 876464);
 		}
 		
 		// check permission
