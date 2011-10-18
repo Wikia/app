@@ -13,7 +13,7 @@ class RelatedVideosService {
 	 * @param int $videoWidth Width of resulting video player, in pixels
 	 * @return Array 
 	 */
-	public function getRelatedVideoData( $articleId, $title, $source='', $videoWidth=VideoPage::DEFAULT_OASIS_VIDEO_WIDTH, $cityShort='life' ){
+	public function getRelatedVideoData( $articleId, $title, $source='', $videoWidth=VideoPage::DEFAULT_OASIS_VIDEO_WIDTH, $cityShort='life', $useMaster=0 ){
 
 		wfProfileIn( __METHOD__ );
 		$title = urldecode( $title );
@@ -33,10 +33,11 @@ class RelatedVideosService {
 					'RelatedVideos',
 					'getVideoData',
 					array(
-					    'width' => self::width,
-					    'title' => $title,
-					    'articleId' => $articleId,
-					    'cityShort' => $cityShort
+						'width'		=> self::width,
+						'title'		=> $title,
+						'articleId'	=> $articleId,
+						'cityShort'	=> $cityShort,
+						'useMaster'	=> $useMaster
 					)
 				)->getData();
 				$result['data']['external'] = 0;
@@ -46,6 +47,11 @@ class RelatedVideosService {
 
 		wfProfileOut( __METHOD__ );
 		return $result['data'];
+	}
+
+	public function getRelatedVideoDataFromMaster( $title, $source='', $videoWidth=VideoPage::DEFAULT_OASIS_VIDEO_WIDTH, $cityShort='life' ){
+
+		return $this->getRelatedVideoData( 0, $title, $source, $videoWidth, $cityShort, 1 );
 	}
 
 	public function getRelatedVideoDataFromTitle( $title, $source='', $videoWidth=VideoPage::DEFAULT_OASIS_VIDEO_WIDTH, $cityShort='life' ){

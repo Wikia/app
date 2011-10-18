@@ -23,7 +23,7 @@
 				if ( empty( $video['external'] ) ){
 					$ownerUrl = $video['ownerUrl'];
 					if ( !empty( $ownerUrl ) ) {
-						?><a href="<?=$video['ownerUrl'];?>" /><?=$video['owner'];?></a><?
+						?><a href="<?=$video['ownerUrl'];?>"><?=$video['owner'];?></a><?
 					} else {
 						echo $video['owner'];
 					}

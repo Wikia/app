@@ -23,21 +23,22 @@ class RelatedVideosData {
 			$videoPage = F::build( 'VideoPage', array( $title ) );
 			$videoPage->load($useMaster);
 			$data['external'] = false; // false means it is not set. Meaning values are 0 and 1.
-			$data['id'] = $title->getArticleID();
-			$data['description'] = $videoPage->getDescription();
-			$data['duration'] = $videoPage->getDuration();
-			$data['embedCode'] = $videoPage->getEmbedCode( $videoWidth, $autoplay, true, false, $cityShort );
-			$data['embedJSON'] = $videoPage->getJWPlayerJSON( $videoWidth, $autoplay, $cityShort );
-			$data['fullUrl'] = $title->getFullURL();
-			$data['prefixedUrl'] = $title->getPrefixedURL();
-			$data['provider'] = $videoPage->getProvider();
-			$data['thumbnailData'] = $videoPage->getThumbnailParams( $thumbnailWidth );
-			$data['title'] = $videoPage->getTitle()->getText();
-			$data['timestamp'] = $videoPage->getTimestamp();	//@todo for premium video, eventually use date published given by provider
+			$data['id']		= $title->getArticleID();
+			$data['description']	= $videoPage->getDescription();
+			$data['duration']	= $videoPage->getDuration();
+			$data['embedCode']	= $videoPage->getEmbedCode( $videoWidth, $autoplay, true, false, $cityShort );
+			$data['embedJSON']	= $videoPage->getJWPlayerJSON( $videoWidth, $autoplay, $cityShort );
+			$data['fullUrl']	= $title->getFullURL();
+			$data['prefixedUrl']	= $title->getPrefixedURL();
+			$data['provider']	= $videoPage->getProvider();
+			$data['thumbnailData']	= $videoPage->getThumbnailParams( $thumbnailWidth );
+			$data['title']		= $videoPage->getTitle()->getText();
+			$data['timestamp']	= $videoPage->getTimestamp();	//@todo for premium video, eventually use date published given by provider
 
 			$owner = '';
 			$ownerUrl = '';
 			$oArticle = F::build( 'Article', array( $title->getArticleID() ), 'newFromID' );
+
 			if( !empty( $oArticle ) ){
 				$owner = $oArticle->getUserText();
 				if (!empty($owner)) {

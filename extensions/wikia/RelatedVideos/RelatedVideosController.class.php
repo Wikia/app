@@ -8,7 +8,7 @@ class RelatedVideosController extends WikiaController {
 	}
 
 	public function getCarusel(){
-		if( Wikia::isMainPage() || !$this->app->wg->title->exists() ) {
+		if( Wikia::isMainPage() || ( !$this->app->wg->title instanceof Title ) || !$this->app->wg->title->exists() ) {
 			return false;
 		}
 		$relatedVideos = RelatedVideos::getInstance();
@@ -20,8 +20,8 @@ class RelatedVideosController extends WikiaController {
 		if ( !is_array( $videos ) ){ $videos = array(); }
 
 		$oLocalLists = RelatedVideosNamespaceData::newFromTargetTitle( F::app()->wg->title );
-		$oGlobalLists = RelatedVideosNamespaceData::newFromGeneralMessage();
-		
+		$oGlobalLists = RelatedVideosNamespaceData::newFromGeneralMessage();		
+
 		$oRelatedVideosService = F::build('RelatedVideosService');
 		$blacklist = array();
 		foreach( array( $oLocalLists, $oGlobalLists ) as $oLists ){
@@ -121,6 +121,7 @@ class RelatedVideosController extends WikiaController {
 		$videoArticleId = $this->getVal('articleId', 0);
 		$videoName = urldecode($this->getVal( 'title', '' ));
 		$width = $this->getVal( 'width', 0 );
+		$useMaster = $this->getVal( 'useMaster', 0 );
 		$videoWidth = $this->getVal( 'videoWidth', VideoPage::DEFAULT_OASIS_VIDEO_WIDTH );
 		$cityShort = $this->getVal( 'cityShort', 'life');
 		if ($videoArticleId) {
@@ -129,7 +130,7 @@ class RelatedVideosController extends WikiaController {
 		}
 		else {
 			$videoTitle = Title::newFromText( $videoName, NS_VIDEO );
-			$useMaster = false;
+			$useMaster = ( false || !empty( $useMaster ) );
 		}
 
 		$rvd = new RelatedVideosData();
