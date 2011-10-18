@@ -1784,7 +1784,7 @@ EOD;
 		$jwplayerData = array();
 		$jwplayerData['jwplayerjs'] = AssetsManager::getInstance()->getOneCommonURL( trim(self::$JWPLAYER_DIR . self::$JWPLAYER_JS, '/'), false );
 		$jwplayerData['player'] = AssetsManager::getInstance()->getOneCommonURL( trim(self::$JWPLAYER_DIR . self::$JWPLAYER_SWF, '/'), false );
-		$jwplayerData['playerId'] = 'player-'.$this->mId;
+		$jwplayerData['playerId'] = 'player-'.$this->mId.'-'.mt_rand();
 		$jwplayerData['plugins'] = array('gapro-1'=>array('accountid'=>self::VIDEO_GOOGLE_ANALYTICS_ACCOUNT_ID));
 		
                 $embed = "";
