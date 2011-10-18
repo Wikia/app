@@ -124,7 +124,7 @@ class ListusersData {
 		);
                 
 		$memkey = wfForeignMemcKey( $this->mCityId, null, "ludata", md5( implode(', ', $subMemkey) ) );
-                $cached = ""; #$wgMemc->get($memkey);
+                $cached = $wgMemc->get($memkey);
 		
 		if ( empty($cached) && !empty($this->mDBEnable) ) { 
 			/* db handle */
