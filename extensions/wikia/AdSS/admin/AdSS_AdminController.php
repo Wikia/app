@@ -82,13 +82,32 @@ class AdSS_AdminController {
 			$xl0[] = $row->billing_date;
 		}
 		$maxY = ceil( max( $d ) / 100 ) * 100;
-		
+
+		$ts = time();
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgAdSS_DBname );
+		$res = $dbr->select( 'billing', array( 'date( billing_timestamp ) as billing_date', 'sum(-billing_amount) as income' ), 'billing_ad_id > 0', __METHOD__, array( 'GROUP BY' => "billing_date HAVING billing_date BETWEEN '" . date('Y-m-01', $ts) . "' AND '" . date('Y-m-t', $ts) . "'", 'ORDER BY' => 'billing_date' ) );
+		$md = array();
+		$mxl0 = array();
+		foreach( $res as $row ) {
+			$md[] = $row->income;
+			$mxl0[] = $row->billing_date;
+		}
+		if( count( $md ) > 0 ) {
+			$mmaxY = ceil( max( $md ) / 100 ) * 100;
+		}
+		else {
+			$mmaxY = 0;
+		}
+
 		$tmpl = new EasyTemplate( $wgAdSS_templatesDir . '/admin' );
 		$tmpl->set( 'w', 500 );
 		$tmpl->set( 'h', 300 );
 		$tmpl->set( 'maxY', $maxY );
+		$tmpl->set( 'mmaxY', $mmaxY );
 		$tmpl->set( 'd', implode( ',', array_reverse( $d ) ) );
 		$tmpl->set( 'xl0', implode( '|', array_reverse( $xl0 ) ) );
+		$tmpl->set( 'md', implode( ',', array_reverse( $md ) ) );
+		$tmpl->set( 'mxl0', implode( '|', array_reverse( $mxl0 ) ) );
 
 		$dbr->freeResult( $res );
 		$res = $dbr->select(
@@ -108,8 +127,10 @@ class AdSS_AdminController {
 				);
 		$lines = array();
 		foreach( $res as $row ) {
+//var_dump($res);
+			$user = AdSS_User::newFromId( $row->billing_user_id );
 			$lines[] = array(
-					'user'       => AdSS_User::newFromId( $row->billing_user_id )->toString(),
+					'user'       => ( is_object( $user ) ? $user->toString() : "unknown" ),
 					'amount'     => $row->billing_balance,
 					'lastBilled' => $row->last_billed,
 					);
