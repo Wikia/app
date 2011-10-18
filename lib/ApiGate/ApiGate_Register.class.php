@@ -33,6 +33,7 @@ class ApiGate_Register {
 			$email_2 = self::getPost('email_2');
 			
 			// Validate the input.
+			$errorString = "";
 			if("$firstName$lastName" == ""){
 				$errorString .= "\n" . i18n( 'apigate-register-error-noname' );
 			}
@@ -97,7 +98,7 @@ class ApiGate_Register {
 
 		do {
 			$keyHash = sha1( mt_rand() );
-		} while( ApiGate_Reigster::keyExists( $keyHash ) );
+		} while( ApiGate_Register::keyExists( $keyHash ) );
 		
 		wfProfileOut( __METHOD__ );
 		return $keyHash;
