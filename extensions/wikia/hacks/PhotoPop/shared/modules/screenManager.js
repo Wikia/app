@@ -71,9 +71,7 @@ define.call(exports, function(){
 		
 		init: function(mute) {
 			this._barWrapperHeight = document.getElementById('PhotoPopWrapper').clientHeight;
-			if(mute) {
-				
-			}
+
 			this.addEventListener('prepareGameScreen', this.prepareGameScreen);
 			this.addEventListener('tileClicked', this.tileClicked);
 			this.addEventListener('answerDrawerButtonClicked', this.answerDrawerButtonClicked);
