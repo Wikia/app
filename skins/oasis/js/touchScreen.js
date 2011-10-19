@@ -15,12 +15,13 @@ touchImprovements = {
 		//global nav fix: first click opens nav,  second redirects to a hub
 		$( '#GlobalNavigation' ).delegate( 'li > a', 'click', function( event ) {
 			var next = $( this ).next();
-			if ( next.hasClass( 'subnav' ) && !next.hasClass('open') ) {
+			if ( !next.hasClass('open') ) {
 				event.preventDefault();
 				globalUls.removeClass('open');
 				next.addClass('open');
 			};
 		});
+		
 
 		//wiki nav fix: first click opens nav, second redirects to a desired page
 		$( '#WikiHeader' ).delegate( 'nav > ul > li > a', 'click', function() {
@@ -33,11 +34,12 @@ touchImprovements = {
 		});
 		
 		//user menu fix:
-		$( '#AccountNavigation' ).delegate( 'a', 'click', function( event ) {
-			var next = $( this ).next();
-			if ( next.hasClass( 'subnav' ) && !next.hasClass('open') ) {
+		$( '#AccountNavigation' ).delegate( 'li > a[accesskey="."]', 'click', function( event ) {
+			var next = $( this ).next( 'ul.subnav' );
+			alert(next);
+			if ( next && !next.hasClass('open') ) {
+				alert(next);
 				event.preventDefault();
-				$('#GlobalNavigation li > ul').removeClass('open');
 				next.addClass('open');
 			};
 		});
