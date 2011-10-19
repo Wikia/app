@@ -163,10 +163,6 @@ $color-admin-global-header: #f2f2f2;
 					height: 95px;
 					padding: 20px 3px 0;
 					width: 74px;
-					.set {
-						color: inherit;
-						text-decoration: none;
-					}
 					.representation {
 						@include border-radius(7px);
 						@include linear-gradient(darken($color-admin-icon-highlight, 2%), top, $color-admin-icon-highlight, 40%, $color-admin-icon-shadow, 100%);
@@ -232,6 +228,9 @@ $color-admin-global-header: #f2f2f2;
 					&:hover {
 						.representation {
 							@include linear-gradient($color-admin-icon-hover-shadow, top, $color-admin-icon-hover-highlight, 40%, $color-admin-icon-hover-shadow, 100%);
+						}
+						a {
+							text-decoration: underline;
 						}
 					}
 					&:active {
