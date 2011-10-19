@@ -22,7 +22,7 @@ $wgExtensionMessagesFiles['QuickStats'] = $dir . 'QuickStats.i18n.php';
 $app->registerSpecialPage('AdminDashboard', 'AdminDashboardSpecialPageController');
 
 // hooks
-$wgHooks[ 'AfterInitialize' ][] = 'AdminDashboardLogic::onAfterInitialize';
+$wgHooks[ 'BeforeInitialize' ][] = 'AdminDashboardLogic::onBeforeInitialize';
 
 $wgAvailableRights[] = 'admindashboard';
 
