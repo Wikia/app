@@ -131,14 +131,15 @@ define.call(exports, function(){
 			}, options.timeout);	
 		},
 		
-		prepareGameScreen: function(e, watermark) {
-			this.prepareMask(watermark);
+		prepareGameScreen: function(e, options) {
+			this.prepareMask(options.watermark);
 			this.hideContinue();
 			this.showScoreBar();
 			this.hideAnswerDrawer();//puts the drawer back in place
 			this.showAnswerDrawer();
 			this.hideEndGameScreen();//needs to hide previously shown final screen
 			this.updateScoreBar();//resets the scorebar
+			this.updateMuteButton(options.mute);
 		},
 		
 		roundStart: function(e, options) {
@@ -208,15 +209,8 @@ define.call(exports, function(){
 			//this.updateHudScore();
 		},
 		
-		muteButtonClicked: function(event, options) {
-			var button = options.button.getElementsByTagName('img');
-			if(options.mute) {
-				button[1].style.visibility = 'hidden';
-				button[0].style.visibility = 'visible';
-			} else {
-				button[0].style.visibility = 'hidden';
-				button[1].style.visibility = 'visible';
-			}
+		muteButtonClicked: function(event, mute) {
+			this.updateMuteButton(mute.mute);
 		},
 		
 		pauseButtonClicked: function(event, pause) {
@@ -439,6 +433,18 @@ define.call(exports, function(){
 		updateHudProgress: function(progress) {
 			document.getElementById('progress').getElementsByTagName('span')[0].innerHTML = progress;
 		},
+		
+		updateMuteButton: function(mute) {
+			var button = document.getElementById('muteButton').getElementsByTagName('img');
+			console.log('game:' + mute);
+			if(mute) {
+				button[0].style.visibility = 'hidden';
+				button[1].style.visibility = 'visible';
+			} else {
+				button[1].style.visibility = 'hidden';
+				button[0].style.visibility = 'visible';
+			}
+		},
 	
 		showAnswerDrawer: function(){
 			document.getElementById('answerDrawer').style.display = 'block';
@@ -485,7 +491,7 @@ define.call(exports, function(){
 			return this._parent.getElement();
 		},
 		
-		init: function() {
+		init: function(mute) {
 			setTimeout(
 				function(){
 					document.getElementById('sliderWrapper').style.bottom = 0;
@@ -496,11 +502,16 @@ define.call(exports, function(){
 			this.addEventListener('muteButtonClicked', this.muteButtonClicked);
 			
 			this._muteButton =  document.getElementById('button_volume').getElementsByTagName('img');
+			this.updateMuteButton(mute);
 		},
 		
-		muteButtonClicked: function(e, options) {
+		muteButtonClicked: function(e, mute) {
+			this.updateMuteButton(mute.mute);
+		},
+		
+		updateMuteButton: function(mute) {
 			var imgs = this._muteButton;
-			if(options.mute) {
+			if(mute) {
 				imgs[0].style.display = "none";
 				imgs[1].style.display = "block";
 			} else {

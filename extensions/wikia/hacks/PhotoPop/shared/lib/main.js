@@ -37,15 +37,18 @@
 			},
 			
 			initGameScreen = function(e , gameId){
-				screenManager.get('game').fire(
-					'prepareGameScreen',
-					games[gameId].watermark || imageServer.getAsset('watermark_default')
-				);
+
+				screenManager.get('game').fire('prepareGameScreen', {
+					watermark: games[gameId].watermark || imageServer.getAsset('watermark_default'),
+					mute: soundServer.getMute()
+				});
 
 				//highscore
 				if(!store.get('highScore_' + gameId)) store.set('highScore_' + gameId, 0);
 				
 				document.getElementById('highScore').getElementsByTagName('span')[0].innerHTML = store.get('highScore_' + gameId);
+				
+				
 				
 				if(gameId == 'tutorial')
 					screenManager.get('game').openModal({
@@ -115,25 +118,19 @@
 					{method: 'get'}
 				);
 				
-				screenManager.get('home').init();
+				screenManager.get('home').init(soundServer.getMute());
 				
 				var muteButton = document.getElementById('button_volume'),
 				imgs = muteButton.getElementsByTagName('img');
 				
-				if(store.get('mute')) {
-					soundServer.setMute(true);
-					imgs[0].style.display = "none";
-					imgs[1].style.display = "block";
-				}
-				
 				
 				muteButton.onclick = function(){
-					var mute = soundServer.getMute();
-					if(!mute) soundServer.play('pop');
-					screenManager.get('home').fire('muteButtonClicked', {mute: mute, button:this});	
-					soundServer.setMute(!mute);
-					store.set('mute', mute);
+					var mute = !soundServer.getMute();
 					
+					soundServer.setMute(mute);
+					soundServer.play('pop');
+					console.log("main:"+ mute);
+					screenManager.get('home').fire('muteButtonClicked', {mute: mute});	
 				}
 				document.getElementById('button_tutorial').onclick = function() {
 					runGame('tutorial');
@@ -304,10 +301,10 @@
 			},
 			
 			muteButtonClicked = function(e, button){
-				var mute = soundServer.getMute();
-				screenManager.get('game').fire('muteButtonClicked', {mute:mute, button: this});
-				soundServer.setMute(!mute);
-				store.set('mute', mute);
+				var mute = !soundServer.getMute();
+				screenManager.get('game').fire('muteButtonClicked', {mute: mute});
+				screenManager.get('home').fire('muteButtonClicked', {mute: mute});
+				soundServer.setMute(mute);
 			},
 			
 			pauseButtonClicked = function(e, pause) {
