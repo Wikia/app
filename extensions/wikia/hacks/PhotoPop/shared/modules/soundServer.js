@@ -10,7 +10,7 @@ define.call(exports, function(){
 		init: function(configSounds){
 			var prefix = ((titanium) ? '' : "extensions/wikia/hacks/PhotoPop/") + "shared/audio/",
 			path;
-			
+			mute = store.get('mute') || false;
 			for(var p in configSounds){
 				path = prefix + configSounds[p] + ".wav";
 				sounds[p] = (titanium) ? path : new Audio(path);
@@ -20,19 +20,23 @@ define.call(exports, function(){
 		play: function(sound) {
 			if(titanium)
 				Titanium.App.fireEvent('soundServer:play', {sound: sounds[sound]});
-			else if(sound == 'win' || sound == 'fail') {
-				for(var p in sounds) {
-					sounds[p].pause();
-					sounds[p].currentTime = 0;	
+			else {
+				if(sound == 'win' || sound == 'fail') {
+					for(var p in sounds) {
+						sounds[p].pause();
+						sounds[p].currentTime = 0;	
+					}
 				}
 				sounds[sound].play();
 			}
 		},
 		
 		setMute: function(flag) {
+			mute = flag;
 			for(var sound in sounds) {
-				sounds[sound].muted = flag;
+				sounds[sound].muted = mute;
 			}
+			store.set('mute', mute);
 		},
 		
 		getMute: function(){
