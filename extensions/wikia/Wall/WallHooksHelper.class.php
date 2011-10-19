@@ -274,8 +274,8 @@ class WallHooksHelper {
 				);
 				$app->wg->Out->addScript("<script type=\"{$app->wg->JsMimeType}\" src=\"/skins/common/jquery/jquery.timeago.js?{$app->wg->StyleVersion}\"></script>\n");
 				$app->wg->Out->addScript("<link rel=\"stylesheet\" type=\"text/css\" href=\"{$app->wg->ExtensionsPath}/wikia/Wall/css/WallNotificationsMonobook.css?{$app->wg->StyleVersion}\" />\n");
-				$app->wg->Out->addScript("<script type=\"{$app->wg->JsMimeType}\" src=\"{$app->wg->ExtensionsPath}/wikia/Wall/js/WallNotifications.js?{$app->wg->StyleVersion}\"></script>\n");
 			}
+			$app->wg->Out->addScript("<script type=\"{$app->wg->JsMimeType}\" src=\"{$app->wg->ExtensionsPath}/wikia/Wall/js/WallNotifications.js?{$app->wg->StyleVersion}\"></script>\n");
 		}
 		
 		return true;
@@ -686,7 +686,7 @@ class WallHooksHelper {
 	/**
 	 * @brief Adjusting recent changes for Wall 
 	 * 
-	 * @desc This method creates comment about deleted messages from message wall
+	 * @desc This method creates comment about deleted/restored message from message wall
 	 * 
 	 * @param ChangesList $list
 	 * @param string $actionText
@@ -702,21 +702,74 @@ class WallHooksHelper {
 			$app = F::app();
 			$helper = F::build('WallHelper', array());
 			$userText = $rc->getAttribute('rc_user_text');
-			
-			$articleId = $helper->getDeletedArticleId($rc->getTitle()->getText());
-			$articleTitleObj = F::build('Title', array($userText.'/'.$articleId, NS_USER_WALL), 'newFromText');
-			$articleTitleTxt = $app->wf->Msg('wall-recentchanges-deleted-reply-title');
-			
 			$wallTitleObj = F::build('Title', array(NS_USER_WALL, $userText), 'newFromText');
 			$wallUrl = ($wallTitleObj instanceof Title) ? $wallTitleObj->getLocalUrl() : '#';
-			$articleUrl = ($articleTitleObj instanceof Title) ? $articleTitleObj->getLocalUrl() : '#';
 			
-			$actionText = $app->wf->Msg('wall-recentchanges-delete', array(
-				$articleUrl,
-				$articleTitleTxt,
-				$wallUrl,
-				$userText,
-			));
+			$articleData = array('text_id' => '');
+			$articleId = $helper->getDeletedArticleId($rc->getTitle()->getText(), $articleData);
+			if( !empty($articleId) ) {
+				$articleTitleObj = F::build('Title', array($userText.'/'.$articleId, NS_USER_WALL), 'newFromText');
+				
+				if( empty($articleTitleTxt) ) {
+					$articleTitleTxt = $helper->getTitleTxtFromMetadata($helper->getDeletedArticleTitleTxt($articleData['text_id']));
+					$articleTitleTxt = empty($articleTitleTxt) ? $app->wf->Msg('wall-recentchanges-deleted-reply-title') : $articleTitleTxt;
+				}
+				
+				$articleUrl = ($articleTitleObj instanceof Title) ? $articleTitleObj->getLocalUrl() : '#';
+				
+				$actionText = $app->wf->Msg('wall-recentchanges-deleted-thread', array(
+					$articleUrl,
+					$articleTitleTxt,
+					$wallUrl,
+					$userText,
+				));
+			} else {
+			//if $articleId is empty that means message was restored
+				$wnEntity = F::build('WallNotificationEntity', array($rc->getAttribute('rc_id'), $app->wg->CityId), 'getByWikiAndRCId');
+				$articleTitleTxt = empty($wnEntity->data->thread_title) ? $app->wf->Msg('wall-recentchanges-deleted-reply-title') : $wnEntity->data->thread_title;
+				$articleUrl = empty($wnEntity->data->url) ? '#' : $wnEntity->data->url;
+				
+				$actionText = $app->wf->Msg('wall-recentchanges-restored-thread', array(
+					$articleUrl,
+					$articleTitleTxt,
+					$wallUrl,
+					$userText,
+				));
+			}
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * @brief Adjusting recent changes for Wall 
+	 * 
+	 * @desc This method decides rather put a log information about deletion or not
+	 * 
+	 * @param Article $article a referance to Article instance
+	 * @param LogPage $logPage a referance to LogPage instance
+	 * @param string $logType a referance to string with type of log
+	 * @param Title $title
+	 * @param string $reason
+	 * 
+	 * @return true because this is a hook
+	 * 
+	 * @author Andrzej 'nAndy' Lukaszewski
+	 */
+	public function onArticleDoDeleteArticleBeforeLogEntry($article, $logPage, $logType, $title, $reason) {
+		if( $title instanceof Title && $title->getNamespace() == NS_USER_WALL_MESSAGE ) {
+			$app = F::app();
+			$wm = F::build('WallMessage', array($title));
+			$parentObj = $wm->getTopParentObj();
+			
+			if( empty($parentObj) ) {
+			//thread message
+				$logPage->addEntry( 'delete', $title, $reason, array() );
+			} else {
+			//reply
+				//TODO: we should be able to tell if only the reply was deleted or whole thread
+				//if a thread do not put anything to log, otherwise add an entry
+			}
 		}
 		
 		return true;

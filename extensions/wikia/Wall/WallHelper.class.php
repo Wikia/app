@@ -336,17 +336,80 @@ class WallHelper {
 		return $wgParser->parse( $rawtext, $title, $wgOut->parserOptions())->getText();
 	}
 	
-	public function getDeletedArticleId($dbkey) {
-		// thread was deleted, ressurect it's ID from archives
+	/**
+	 * @brief Returns id of a deleted article
+	 * 
+	 * @brief Returns id of deleted article from table archive. If an article was restored then it returns false.
+	 * 
+	 * @param string $dbkey
+	 * @param array $optFields a referance with other data we'd like to recieve
+	 * 
+	 * @return int | boolean
+	 * 
+	 * @author Andrzej 'nAndy' Łukaszewski
+	 */
+	public function getDeletedArticleId($dbkey, &$optFields) {
 		$dbr = wfGetDB( DB_SLAVE );
+		
+		$fields = array('ar_page_id');
+		
+		if( is_array($optFields) ) {
+			if( isset($optFields['text_id']) ) {
+				$fields[] = 'ar_text_id';
+			}
+		}
 		
 		$row = $dbr->selectRow(
 			'archive',
-			array( 'ar_page_id' ),
+			$fields,
 			array( 'ar_title' => str_replace(' ', '_', $dbkey) ),
 			__METHOD__ 
 		);
 		
-		return $row->ar_page_id;
+		if( is_array($optFields) ) {
+			if( isset($optFields['text_id']) && !empty($row->ar_text_id) ) {
+				$optFields['text_id'] = $row->ar_text_id;
+			}
+		}
+		
+		return isset($row->ar_page_id) ? $row->ar_page_id : false;
+	}
+	
+	/**
+	 * @brief Gets old article's text
+	 * 
+	 * @desc Returns article's content from text table if fail it'll return empty string
+	 * 
+	 * @param integer $textId article's text id in text table
+	 */
+	public function getDeletedArticleTitleTxt($textId) {
+		$dbr = wfGetDB( DB_SLAVE );
+		
+		$row = $dbr->selectRow(
+			'text',
+			array('old_text', 'old_flags'),
+			array('old_id' => $textId),
+			__METHOD__ 
+		);
+		
+		if( !empty($row->old_text) && !empty($row->old_flags) ) {
+			$flags = explode(',', $row->old_flags);
+			if( in_array('gzip', $flags) ) {
+				return gzinflate(F::build('ExternalStore', array($row->old_text), 'fetchFromUrl'));
+			}
+		}
+		
+		return '';
+	}
+	
+	public function getTitleTxtFromMetadata($text) {
+		$pattern = '#<ac_metadata title="(.*)">(.*)</ac_metadata>#i';
+		preg_match_all($pattern, $text, $matches);
+		
+		if( !empty($matches[1][0]) ) {
+			return $matches[1][0];
+		}
+		
+		return '';
 	}
 }
