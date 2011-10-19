@@ -328,18 +328,25 @@
 			
 			paused = function() {
 				screenManager.get('game').fire('paused');
-				//screenManager.get('game').openModal({
-				//	name: 'pause',
-				//	html: 'Game is paused',
-				//	clickThrough: true,
-				//	closeOnClick: true
-				//});
 
 			},
 			
 			resumed = function() {
 				screenManager.get('game').fire('resumed');
-				//screenManager.get('game').closeModal();
+			},
+			
+			pauseButtonClicked = function(e, pause) {
+				if(!pause) {
+					screenManager.get('game').openModal({
+						name: 'pause',
+						html: 'Game paused',
+						clickThrough: false,
+						leaveBottomBar: true,
+						closeOnClick: false
+					});
+				} else {
+					screenManager.get('game').closeModal();
+				}
 			},
 			
 			timeIsLow = function() {
@@ -427,6 +434,7 @@
 				g.addEventListener('roundStart', roundStart);
 				g.addEventListener('paused', paused);
 				g.addEventListener('resumed', resumed);
+				g.addEventListener('pauseButtonClicked', pauseButtonClicked);
 				
 				g.prepareGame();
 			},
