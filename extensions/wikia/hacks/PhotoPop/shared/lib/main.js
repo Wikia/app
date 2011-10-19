@@ -39,7 +39,7 @@
 			initGameScreen = function(e , gameId){
 
 				screenManager.get('game').fire('prepareGameScreen', {
-					watermark: games[gameId].watermark || imageServer.getAsset('watermark_default'),
+					watermark: (games[gameId] && games[gameId].watermark) ? games[gameId].watermark : imageServer.getAsset('watermark_default'),
 					mute: soundServer.getMute()
 				});
 
