@@ -17,6 +17,7 @@ class RelatedVideosData {
 		wfProfileIn( __METHOD__ );
 
 		$data = array();
+
 		if ( empty( $title ) || !is_object( $title ) || !( $title instanceof Title ) || !$title->exists() ){
 			$data['error'] = wfMsg('related-videos-error-no-video-title');
 		} else {
@@ -37,8 +38,8 @@ class RelatedVideosData {
 
 			$owner = '';
 			$ownerUrl = '';
-			$oArticle = F::build( 'Article', array( $title->getArticleID() ), 'newFromID' );
-
+			$oArticle = F::build( 'Article', array( $title ) );
+			
 			if( !empty( $oArticle ) ){
 				$owner = $oArticle->getUserText();
 				if (!empty($owner)) {

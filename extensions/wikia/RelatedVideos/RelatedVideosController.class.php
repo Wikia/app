@@ -129,8 +129,7 @@ class RelatedVideosController extends WikiaController {
 		if ($videoArticleId) {
 			$videoTitle = Title::newFromID($videoArticleId, GAID_FOR_UPDATE);
 			$useMaster = true;
-		}
-		else {
+		} else {
 			$videoTitle = Title::newFromText( $videoName, NS_VIDEO );
 			$useMaster = ( false || !empty( $useMaster ) );
 		}
@@ -167,9 +166,9 @@ class RelatedVideosController extends WikiaController {
 		$retval = $rvd->addVideo($articleId, $url);
 		if (is_array($retval)) {
 			$rvs = F::build('RelatedVideosService');
-			$data = $rvs->getRelatedVideoData( $retval['articleId'], $retval['title'], $retval['external']);
+			$data = $rvs->getRelatedVideoDataFromMaster( $retval['articleId'], $retval['title'], $retval['external']);
 			$this->setVal('html', $this->app->renderView( 'RelatedVideos', 'getCaruselElement', array('video'=>$data, 'preloaded'=>1) ));
-			$this->setVal('error', null);
+			$this->setVal('error', isset( $data['error'] ) ? $data['error'] : null);
 		}
 		else {
 			$this->setVal('data', null);
