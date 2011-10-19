@@ -2,15 +2,8 @@ var WikiaTrackerQueue = {
 
 	trackFn: false,
 
-	log: function(msg) {
-		$().log(msg, 'wtq');
-	},
-
 	init: function() {
 		var queue = window._wtq;
-
-		this.log('init');
-		this.log(queue);
 
 		// set tracking function - queued items will be passed there
 		this.trackFn = $.proxy(WikiaTracker.track, WikiaTracker);

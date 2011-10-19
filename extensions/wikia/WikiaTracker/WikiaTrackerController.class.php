@@ -28,12 +28,14 @@ class WikiaTrackerController extends WikiaController {
 			"\n";
 
 		// debug
+		/**
 		$scripts .= Html::inlineScript(<<<JS
 _wtq.push('/1_wikia/foo/bar');
 _wtq.push(['/1_wikia/foo/bar', 'profil1']);
 _wtq.push([['1_wikia', 'user', 'foo', 'bar'], 'profil1']);
 JS
 );
+		**/
 
 		return true;
 	}
