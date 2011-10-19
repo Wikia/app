@@ -70,7 +70,7 @@ define.call(exports, {
 						+wgMessages['photopop-game-timeup']+
 				"</div>\
 				<div id='continue'>\
-					<span id='continueText'>"+wgMessages['photopop-game-continue']+"</span>\
+					<span id='continueText'></span>\
 					<img src='{{#image}}buttonSrc_contiunue{{/image}}'/>\
 				</div>\
 				<div id='answerDrawer'>\
@@ -111,13 +111,8 @@ define.call(exports, {
 	
 	gameSelector:
 		"<ul id='gamesList'>{{#games}}\
-			<li class='gameIcon' data-id='{{id}}' style='background-image:url(\"{{thumbnail}}\");'>\
-				{{#round}}<div id='saveInfo'>"
-					+wgMessages['photopop-game-round']+": {{round}}<br>"
-					+wgMessages['photopop-game-correct']+": {{correct}}<br>"
-					+wgMessages['photopop-game-points']+": {{roundPoints}}<br> "
-					+wgMessages['photopop-game-total']+":{{totalPoints}}<br/>\
-				</div>{{/round}}\
+			<li class='gameIcon {{#round}}resumeGame{{/round}}' data-id='{{id}}'>\
+				<img src='{{thumbnail}}'></img>\
 				<div class='gameName'>\
 					{{name}}\
 				</div>\
