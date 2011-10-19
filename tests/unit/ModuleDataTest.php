@@ -474,7 +474,7 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$this->assertRegExp("/User:{$userName}$/", $moduleData['personal_urls']['userpage']['href']);
 
 		// dropdown
-		$this->assertRegExp("/User_talk:{$userName}/", $moduleData['dropdown'][0]);
+		$this->assertRegExp("/(User_talk|Message_Wall):{$userName}/", $moduleData['dropdown'][0]);
 
 		// logout link
 		$this->assertRegExp('/Log out<\/a>$/', $moduleData['dropdown'][3]);
