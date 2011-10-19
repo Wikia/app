@@ -72,7 +72,7 @@ public class BlogArticleReskinTest extends EditPageBaseTest {
 
 		// verify saved blog post
 		
-		assertEquals(this.postTitle, session().getText("//header[@id='WikiaPageHeader']/h1"));
+		assertEquals(this.postTitle, session().getText("//div[@id='WikiaUserPagesHeader']/h1"));
 		
 		assertTrue(session().isTextPresent("test blog post --"));
 	}

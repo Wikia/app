@@ -139,7 +139,7 @@ public class EditPageBaseTest extends BaseTest {
 
 		// wait for modal to show up
 		waitForElement("//section[@id='EditPageDialog']");
-		waitForElement("//section[@id='EditPageDialog']//div[@class='WikiaArticle']");
+		waitForElement("//section[@id='EditPageDialog']//div[contains(@class,'WikiaArticle')]");
 
 		// check its content
 		assertTrue(session().isElementPresent("//section[@id='EditPageDialog']//h1[@class='pagetitle' and contains(text(),'" + pageTitle + "')]"));
