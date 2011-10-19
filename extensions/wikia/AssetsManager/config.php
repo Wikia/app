@@ -123,13 +123,15 @@ $config['oasis_extensions_js'] = array(
 	)
 );
 
+// Note: Owen moved getSiteJS call from both anon_js and user_js to OasisModule::loadJS
+// so that common.js is loaded last so it has less chance of breaking other things
+
 // Oasis anon JS
 $config['oasis_anon_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//skins/oasis/js/LatestActivity.js',
 		'//extensions/wikia/Interstitial/Exitstitial.js',
-		'#function_AssetsConfig::getSiteJS'
 	)
 );
 
@@ -139,7 +141,6 @@ $config['oasis_user_js'] = array(
 	'assets' => array(
 		'//skins/common/ajaxwatch.js',
 		'//extensions/wikia/ArticleAjaxLoading/ArticleAjaxLoading.js',
-		'#function_AssetsConfig::getSiteJS'
 	)
 );
 
