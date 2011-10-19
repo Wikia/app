@@ -19,11 +19,21 @@ var WikiaTrackerQueue = {
 		for (var i=0, len=queue.length; i<len; i++) {
 			this.pushCallback(queue[i]);
 		}
+
+		// and now replace _wtq.push with this.pushCallback
+		queue.push = $.proxy(function(item) {
+			this.pushCallback(item);
+		}, this);
 	},
 
-	pushCallback: function() {
-		$().log(arguments, 'wtq.push');
-		this.trackFn.call(this, arguments);
+	pushCallback: function(item) {
+		$().log(item, 'wtq.push');
+
+		if (!$.isArray(item)) {
+			item = [item];
+		}
+
+		this.trackFn.apply(this, item);
 	}
 
 };
