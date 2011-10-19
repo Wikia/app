@@ -389,8 +389,7 @@ define.call(exports, function(){
 		showContinue: function(text) {
 			var nextRoundStyle = document.getElementById('continue').style,
 			hudStyle = document.getElementById('hud').style;
-			
-			document.getElementById('continueText').innerText = wgMessages['photopop-game-continue'] + " " + text;
+			document.getElementById('continueText').innerHTML = wgMessages['photopop-game-continue'] + " " + text;
 			nextRoundStyle.right = '0%';
 			hudStyle.left = '100%';
 		},
