@@ -750,8 +750,12 @@ class SpecialConnect extends SpecialPage {
 		$wgOut->addHtml( $inject_html );
 
 		$titleObj = Title::newFromText( $this->mReturnTo );
-		$wgOut->redirect( $titleObj->getFullURL( $this->mReturnToQuery . "&fbconnected=1&cb=".rand(1,10000) ) );
-		
+		if (  ( !$titleObj instanceof Title ) || ( $titleObj->isSpecial("Userlogout") ) || ( $titleObj->isSpecial("Signup") ) || ( $titleObj->isSpecial("Connect") )  ) {
+			$titleObj = Title::newMainPage();
+			$wgOut->redirect( $titleObj->getFullURL( "fbconnected=1&cb=".rand(1,10000) ) );
+		} else {
+			$wgOut->redirect( $titleObj->getFullURL( $this->mReturnToQuery . "&fbconnected=1&cb=".rand(1,10000) ) );
+		}
 		wfProfileOut(__METHOD__);
 	}
 
