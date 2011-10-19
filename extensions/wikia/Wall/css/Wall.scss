@@ -419,20 +419,9 @@ $new_inputs_bg: mix($bubble_bg, $inputs_bg,20%);
 			width: 12px;
 		}
 	}
-		
-	.ChangeStyle {
-		 position: fixed;
-		 top: 50px;
-		 left: 50px;
-		 z-index: 100;
-		 line-height: normal;
-		 margin: 0px;
-		 padding: 0px;
-		 a { display: inline-block; width: 120px; margin: 5px; background: #d0d0e0; text-align: center; vertical-align: middle; }
-		 a:hover { text-decoration: none; background: #d0d0f0; }
-		 a.selected { background: #d0d0ff; }
-		 a i { font-size: 10px; color: #666; display: block; }
-	}
+	.stafflogo {
+		img { margin-bottom: 1px; margin-left: 3px; }
+	}	
 }
 
 #WallBrickHeader {
