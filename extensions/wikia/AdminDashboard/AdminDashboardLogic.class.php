@@ -44,6 +44,7 @@ class AdminDashboardLogic {
 				"AdSS",
 				"ApiExplorer",
 				"Chat",
+				"Code",
 				"Confirmemail",
 				"Connect",
 				"Contact",
