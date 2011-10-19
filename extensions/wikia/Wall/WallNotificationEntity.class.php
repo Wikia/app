@@ -31,8 +31,10 @@ class WallNotificationEntity {
 	
 	public static function createFromRC(RecentChange $RC, $wiki) {
 		$wn = F::build('WallNotificationEntity', array() );
-		$wn->loadDataFromRC($RC, $wiki);
-		return $wn;
+		if($wn->loadDataFromRC($RC, $wiki)) {
+			$wn->save();
+			return $wn;
+		}
 	}
 	
 	public static function getByWikiAndRCId($rc_id, $wikiId) {
@@ -72,6 +74,8 @@ class WallNotificationEntity {
 	}
 	
 	public function loadDataFromRC(RecentChange $RC, $wiki) {
+		$this->id = $RC->getAttribute('rc_id') . '_' .  $wiki;
+		
 		$title = $RC->getTitle();
 		
 		$ac = F::build('WallMessage', array($RC->getTitle()), 'newFromTitle' );
@@ -79,6 +83,13 @@ class WallNotificationEntity {
 
 		$walluser = $ac->getWallOwner();
 		$authoruser = $ac->getUser();
+		
+		if(empty($walluser)) {
+			error_log('WALL_NO_OWNER: (entityId)'.$this->id);
+			$this->data = null;
+			$this->data_noncached = null;
+			return;
+		}
 		
 		$this->data->wiki = $wiki;
 		$this->data->rc_id = $RC->getAttribute('rc_id');
@@ -124,7 +135,7 @@ class WallNotificationEntity {
 			$this->data->thread_title = $this->helper->shortenText($ac->getMetaTitle(), self::TITLE_MAX_LEN);
 		}
 		
-		$this->id = $RC->getAttribute('rc_id') . '_' .  $this->data->wiki;
+		return true;
 	}
 	
 	protected function buildId($wikiId, $RCid ) {
