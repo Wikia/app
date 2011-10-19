@@ -181,7 +181,7 @@ else {
 			$emails[] = new MailAddress( 'ops-automatic-l@wikia-inc.com' );			
 			UserMailer::sendWithAttachment( 
 				$emails , 
-				'FogBugz Operations Daily Report '.$dateToday->format( 'Y-d-m H:i:s' ), 
+				'FogBugz Operations Daily Report '.$dateToday->format( 'Y-m-d H:i:s' ), 
 				$attachment_dirs,
 				'ops-automatic-l@wikia-inc.com'
 			);
