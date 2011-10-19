@@ -79,6 +79,9 @@
 <!-- googleAnalytics -->
 <?= $googleAnalytics ?>
 
+<!-- RadiumOne -->
+<div class="RadiumOne" id="RadiumOne"></div>
+
 <?if( $jsAtBottom ):?>
 		<!--[if lt IE 8]>
 		<script src="<?= $wgStylePath ?>/common/json2.js"></script>

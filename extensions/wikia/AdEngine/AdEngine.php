@@ -14,16 +14,21 @@ $wgHooks["MakeGlobalVariablesScript"][] = "wfAdEngineSetupJSVars";
 function wfAdEngineSetupJSVars($vars) {
 	global $wgRequest, $wgNoExternals, $wgEnableAdsInContent, $wgEnableOpenXSPC,
 		$wgAdDriverCookieLifetime, $wgHighValueCountries, $wgDartCustomKeyValues, 
-		$wgUser, $wgEnableWikiAnswers, $wgAdDriverUseCookie, $wgAdDriverUseExpiryStorage;
+		$wgUser, $wgEnableWikiAnswers, $wgAdDriverUseCookie, $wgAdDriverUseExpiryStorage,
+		$wgCityId;
 
 	$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
 	$vars['wgNoExternals'] = $wgNoExternals;
 	$vars["wgEnableAdsInContent"] = $wgEnableAdsInContent;
 
 	// OpenX SPC (init in AdProviderOpenX.js)
+	$vars['wgEnableOpenXSPC'] = $wgEnableOpenXSPC;
+
+	// category/hub
 	$cat = AdEngine::getCachedCategory();
 	$vars["cityShort"] = $cat['short'];
-	$vars['wgEnableOpenXSPC'] = $wgEnableOpenXSPC;
+	$catInfo = HubService::getComscoreCategory($wgCityId);
+	$vars['cscoreCat'] = $catInfo->cat_name;
 
 	// AdDriver
 	$vars['wgAdDriverCookieLifetime'] = $wgAdDriverCookieLifetime;
