@@ -37,10 +37,12 @@ class PhotoPopSpecialPageController extends WikiaSpecialPageController {
 		
 		$category = trim( $this->request->getVal( 'category' ) );
 		$icon = trim( $this->request->getVal( 'icon' ) );
+		$watermark = trim( $this->request->getVal( 'watermark' ) );
 		$iconUrl = null;
 		$currentCategory = $this->wf->Msg( 'photpop-category-none' );
 		$currentCategoryUrl = null;
 		$currentIconUrl = $this->wf->BlankImgUrl();
+		$currentWatermarkUrl = $this->wf->BlankImgUrl();
 		$cat = null;
 		$message = null;
 		$errors = array(
@@ -62,6 +64,10 @@ class PhotoPopSpecialPageController extends WikiaSpecialPageController {
 			if ( !empty( $game->thumbnail ) ) {
 				$currentIconUrl = $game->thumbnail;
 			}
+			
+			if ( !empty( $game->watermark ) ) {
+				$currentWatermarkUrl = $game->watermark;
+			}
 		}
 		
 		if ( $this->request->wasPosted() ) {
@@ -79,17 +85,26 @@ class PhotoPopSpecialPageController extends WikiaSpecialPageController {
 				$iconUrl = $this->model->getIconUrl( $icon );
 				
 				if ( empty( $iconUrl ) ) {
-					$errors['icon'][] = $this->wf->Msg( 'photopop-error-icon-non-existing' );
+					$errors['icon'][] = $this->wf->Msg( 'photopop-error-file-non-existing' );
 				}
 			} else {
 				$errors['icon'][] = $this->wf->Msg( 'photopop-error-field-compulsory' );
 			}
 			
-			if ( empty( $errors['category'] ) && empty( $errors['icon'] ) ){
-				if ( $this->model->saveSettings( $this->wg->CityId, $category, $iconUrl ) !== false ) {
+			if ( !empty( $watermark ) ) {
+				$watermarkUrl = $this->model->getWatermarkUrl( $watermark );
+				
+				if ( empty( $watermark ) ) {
+					$errors['icon'][] = $this->wf->Msg( 'photopop-error-file-non-existing' );
+				}
+			}
+			
+			if ( empty( $errors['category'] ) && empty( $errors['icon'] )  && empty( $errors['watermark'] ) ){
+				if ( $this->model->saveSettings( $this->wg->CityId, $category, $iconUrl, $watermarkUrl ) !== false ) {
 					$currentCategory = $cat->getName();
 					$currentCategoryUrl = $cat->getTitle()->getLocalURL();
 					$currentIconUrl = $iconUrl;
+					$currentWatermarkUrl = $watermarkUrl;
 					$message = $this->wf->Msg( 'photopop-settings-saved' );
 				} else {
 					$errors['db'][] = $this->wf->Msg( 'photopop-error-db-error' );
@@ -99,9 +114,11 @@ class PhotoPopSpecialPageController extends WikiaSpecialPageController {
 		
 		$this->response->setVal( 'category', $category );
 		$this->response->setVal( 'icon', $icon );
+		$this->response->setVal( 'watermark', $watermark );
 		$this->response->setVal( 'currentCategory', $currentCategory );
 		$this->response->setVal( 'currentCategoryUrl', $currentCategoryUrl );
 		$this->response->setVal( 'currentIconUrl', $currentIconUrl );
+		$this->response->setVal( 'currentWatermarkUrl', $currentWatermarkUrl );
 		$this->response->setVal( 'errors', $errors );
 		$this->response->setVal( 'message', $message );
 		

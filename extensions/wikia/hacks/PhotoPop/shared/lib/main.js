@@ -18,7 +18,7 @@
 			gamesListLoader = new data.XDomainLoader(),
 			gameLoader = new data.XDomainLoader(),
 			selectedGame,
-			selectedGameIndex,
+			selectedGameId,
 			g,
 			Game = gameLogic.Game,
 			muteButton,
@@ -37,7 +37,10 @@
 			},
 			
 			initGameScreen = function(e , gameId){
-				screenManager.get('game').fire('prepareGameScreen', imageServer.getAsset('watermark_' + gameId));
+				screenManager.get('game').fire(
+					'prepareGameScreen',
+					games[gameId].watermark || imageServer.getAsset('watermark_default')
+				);
 
 				//highscore
 				if(!store.get('highScore_' + gameId)) store.set('highScore_' + gameId, 0);
@@ -57,7 +60,7 @@
 			loadSelectedGame = function(){
 				if(typeof selectedGame != 'undefined'){
 					gameLoader.load('http://' +
-							((config.settings.testDomain) ? selectedGame.dbName + '.' + config.settings.testDomain : selectedGame.domain) +
+							((config.settings.testDomain) ? selectedGame.id + '.' + config.settings.testDomain : selectedGame.domain) +
 							'/wikia.php?controller=PhotoPopController&method=getData&category=' +
 							encodeURIComponent(selectedGame.category) +
 							'&callback=?');
@@ -71,11 +74,12 @@
 					},
 					item;
 					
-					for(var x = 0, y = games.length; x < y; x++){
-						var game = games[x],
-						gameData = store.get(game.dbName);
+					for(var p in games){
+						var game = games[p],
+						gameData = store.get(game.id);
 						
-						game.index = x;
+						if(!game.thumbnail)
+							game.thumbnail = imageServer.getAsset('gameicon_default');
 						
 						if(gameData) {
 							game.round = gameData._currentRound;
@@ -83,9 +87,10 @@
 							game.totalPoints = gameData._totalPoints;
 							game.roundPoints = gameData._roundPoints;
 						}
-						templateVars.games.push(games[x]);
+						
+						templateVars.games.push(game);
 					}
-
+					
 					document.getElementById('sliderContent').innerHTML = Mustache.to_html(templates.gameSelector, templateVars);
 					
 					var gamesList = document.getElementById('gamesList').onclick = function(event){
@@ -232,7 +237,7 @@
 				var id = g.getId();
 				g.pause();
 				g = null;
-				selectedGame = games[selectedGameIndex];
+				selectedGame = games[selectedGameId];
 				runGame(selectedGame);
 			},
 			
@@ -350,15 +355,14 @@
 						_data:data
 					});
 				} else {
-					selectedGameIndex = target.getAttribute('data-idx');
-					selectedGame = games[selectedGameIndex];
-					var selectedDbName = selectedGame.dbName;
+					selectedGameId = target.getAttribute('data-id');
+					selectedGame = games[selectedGameId];
 					
-					if(g && g.getId() == selectedDbName) {
+					if(g && g.getId() == selectedGame.id) {
 						screenManager.get('game').show();		
 					} else {
 						if(g) g.fire('storeData');
-						gameData = store.get(selectedDbName);
+						gameData = store.get(selectedGame.id);
 						console.log(gameData);
 						//if there is already a game in localstorage start it from this data otherwise load a new one
 						(gameData)? newGame(gameData): loadSelectedGame();
@@ -367,7 +371,7 @@
 			},
 			
 			loadGame = function() {
-				var id = selectedGame.dbName,
+				var id = selectedGame.id,
 					data = [],
 					watermark = 'watermark_' + id,
 					correctLength = selectedGame.c.length,
@@ -482,7 +486,7 @@
 			gameLoader.addEventListener('error', onDataError);
 			
 			gamesListLoader.addEventListener('success', function(event, resp){
-				games = resp.response.items;
+				games = resp.response;
 				renderGamesList();
 			});
 			

@@ -18,8 +18,14 @@
 				border: 1px solid $color-page-border;
 				display: block;
 				height: 120px;
-				margin-left: 85px;
+				margin-left: 30px;
 				width: 120px;
+				
+				&.watermark{
+					background-color: #00396d;
+					height: 320px;
+					width: 480px;
+				}
 			}
 		}
 	}

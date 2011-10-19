@@ -3,7 +3,7 @@ var exports = exports || {};
 define.call(exports, {
 	settings: {
 		centralDomain: 'community.wikia.com',
-		testDomain: 'jolek.wikia-dev.com'//comment out or set to null/false before release
+		testDomain: 'federico.wikia-dev.com'//comment out or set to null/false before release
 	},
 	
 	images: {
@@ -26,21 +26,8 @@ define.call(exports, {
 		buttonSrc_resume: "button_resume",
 		buttonSrc_gameMute: "button_mute",
 		buttonSrc_gameUnmute: "button_unmute",
-		gameicon_trueblood: "gameicon_trueblood",
-		gameicon_glee: "gameicon_glee",
-		gameicon_lyrics: "gameicon_lyrics",
-		gameicon_muppet: "gameicon_muppet",
-		gameicon_dexter: "gameicon_dexter",
-		gameicon_futurama: "gameicon_futurama",
-		gameicon_twilight: "gameicon_twilight",
-		watermark_tutorial: "watermark_tutorial",
-		watermark_trueblood: "watermark_trueblood",
-		watermark_glee: "watermark_glee",
-		watermark_lyrics: "watermark_lyrics",
-		watermark_muppet: "watermark_muppet",
-		watermark_dexter: "watermark_dexter",
-		watermark_futurama: "watermark_futurama",
-		watermark_twilight: "watermark_twilight",
+		gameicon_default: "gameicon_default",
+		watermark_default: "watermark_default",
 		tutorial_1: 'tutorial_1.jpeg',
 		tutorial_2: 'tutorial_2.jpeg',
 		tutorial_3: 'tutorial_3.jpeg',

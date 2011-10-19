@@ -46,10 +46,10 @@ class PhotoPopModel extends WikiaModel{
 		$this->wf->profileIn( __METHOD__ );
 		
 		$cacheKey = $this->generateCacheKey( __METHOD__ );
-		$games = $this->loadFromCache( $cacheKey );
+		$ret = $this->loadFromCache( $cacheKey );
 		
-		if ( empty( $games ) ) {
-			$games = Array();
+		if ( empty( $ret ) ) {
+			$ret = Array();
 			$wikiFactoryRecommendVar = WikiFactory::getVarByName( self::WF_SWITCH_NAME, null );
 			
 			if ( !empty( $wikiFactoryRecommendVar ) ) {
@@ -63,10 +63,10 @@ class PhotoPopModel extends WikiaModel{
 						$wikiThemeSettings = WikiFactory::getVarValueByName( 'wgOasisThemeSettings', $wikiId);
 						
 						$game->name = ( !empty( $wikiThemeSettings[ 'wordmark-text' ] ) ) ? $wikiThemeSettings[ 'wordmark-text' ] : $wikiName;
-						$game->dbName = WikiFactory::IDtoDB( $wikiId );
+						$game->id = WikiFactory::IDtoDB( $wikiId );
 						$game->domain = str_replace('http://', '', WikiFactory::getVarValueByName( 'wgServer', $wikiId ));
 						
-						$games[] = $game;
+						$ret[$game->id] = $game;
 					}
 				}
 			} else {
@@ -74,10 +74,8 @@ class PhotoPopModel extends WikiaModel{
 				throw new WikiaException( 'WikiFactory variable \'' . self::WF_SWITCH_NAME . '\' not found' );
 			}
 			
-			$this->storeInCache( $cacheKey , $games );
+			$this->storeInCache( $cacheKey , $ret );
 		}
-		
-		$ret = $this->app->wf->paginateArray( $games, $limit, $batch );
 		
 		$this->app->wf->profileOut( __METHOD__ );
 		return $ret;
@@ -187,6 +185,39 @@ class PhotoPopModel extends WikiaModel{
 		return $contents;
 	}
 	
+	public function getWatermarkUrl( $titleName ){
+		$this->app->wf->profileIn( __METHOD__ );
+		
+		if ( empty( $titleName ) ) {
+			return null;
+		}
+		
+		$cacheKey = $this->generateCacheKey(
+			__METHOD__ .
+			//memcache doesn't like spaces in keys
+			":" . str_replace( ' ', '_', $titleName )
+		);
+		
+		$contents = $this->loadFromCache( $cacheKey );
+		
+		if ( empty( $contents ) ) {
+			$title = F::build( 'Title', array( $titleName, NS_FILE ), 'newFromText' );
+			
+			if ( $title instanceof Title && $title->exists() ) {
+				$file = $this->wf->FindFile($title);
+				
+				if ( !empty( $file ) ) {
+					$contents = $this->wf->ReplaceImageServer( $file->getFullUrl() );
+					$this->storeInCache( $cacheKey , $contents );
+				}
+			}
+		}
+		
+		$this->app->wf->profileOut( __METHOD__ );
+		
+		return $contents;
+	}
+	
 	public function getSettings( $wikiId ){
 		$gameSettings = WikiFactory::getVarValueByName( self::WF_SETTINGS_NAME, $wikiId );
 		$matches = array();
@@ -204,7 +235,7 @@ class PhotoPopModel extends WikiaModel{
 		return ( !empty( $game->category ) ) ? $game : null;
 	}
 	
-	public function saveSettings( $wikiId, $categoryName, $iconUrl ){
+	public function saveSettings( $wikiId, $categoryName, $iconUrl, $watermarkUrl ){
 		$this->app->wf->profileIn( __METHOD__ );
 		
 		$values = array();
@@ -216,6 +247,10 @@ class PhotoPopModel extends WikiaModel{
 		
 		if( !empty( $iconUrl ) ) {
 			$values[] = "thumbnail={$iconUrl}";
+		}
+		
+		if( !empty( $watermarkUrl ) ) {
+			$values[] = "watermark={$watermarkUrl}";
 		}
 		
 		if ( !empty( $values ) ) {

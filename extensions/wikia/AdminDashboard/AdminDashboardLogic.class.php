@@ -72,6 +72,7 @@ class AdminDashboardLogic {
 				"PageLayoutBuilderForm",
 				"Phalanx",
 				"PhalanxStats",
+				"PhotoPopSetup",
 				"Preferences",
 				"ScavengerHunt",
 				"Search",

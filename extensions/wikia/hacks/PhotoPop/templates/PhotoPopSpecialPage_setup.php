@@ -33,6 +33,19 @@
 		</ul>
 	<? endif ;?>
 	
+	<label for="gameWatermark"><?= $wf->Msg( 'photopop-setup-watermark-label' ) ;?></label>
+	<input type="text" name="watermark" id="gameWatermark" value="<?= $watermark ;?>"<?=
+		( !empty( $errors['watermark'] ) ) ? ' class="error"' : null;
+	?>placeholder="<?= $wf->Msg( 'photopop-setup-watermark-tip' ) ;?>"/>
+	
+	<? if ( !empty ( $errors['watermark'] ) ) :?>
+		<ul class="error">
+			<? foreach ( $errors['watermark'] as $error ) :?>
+				<li><?= $error ;?></li>
+			<? endforeach ;?>
+		</ul>
+	<? endif ;?>
+	
 	<input type="submit" value="<?= $wf->Msg( 'photopop-setup-submit-label' ) ;?>"/>
 </form>
 <div id="currentSettings">
@@ -49,6 +62,10 @@
 		<li>
 			<?= $wf->Msg( 'photopop-setup-icon-label' ) ;?>:
 			<img src="<?= $currentIconUrl ;?>"/>
+		</li>
+		<li>
+			<?= $wf->Msg( 'photopop-setup-watermark-label' ) ;?>:
+			<img class="watermark" src="<?= $currentWatermarkUrl ;?>"/>
 		</li>
 	</ul>
 </div>
