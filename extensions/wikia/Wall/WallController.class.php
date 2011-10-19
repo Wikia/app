@@ -84,11 +84,11 @@ class WallController extends ArticleCommentsModule {
 				array( 'ar_title' ),
 				array( 'ar_page_id' => $parts[1] ),
 				__METHOD__ );
-				
+			
 			$dbkey = $row->ar_title;
 			$msg_title = F::build('Title', array($dbkey, NS_USER_WALL_MESSAGE), 'newFromText' );
 			
-			$undelete_title = F::build('Title', array('Undelete',NS_SPECIAL), 'newFromText' );
+			$undelete_title = F::build('Title', array('Undelete', NS_SPECIAL), 'newFromText' );
 			$undelete_url = $undelete_title->getFullUrl();
 			$this->response->setVal( 'undeleteUrl', $undelete_url.'/'.$msg_title->getPrefixedText() );
 		}
