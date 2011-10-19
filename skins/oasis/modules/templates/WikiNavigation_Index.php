@@ -6,6 +6,7 @@ $firstChild = true;
 foreach ( array( $wikiaMenuNodes, $wikiMenuNodes ) as $menuNodes )
 if ( is_array($menuNodes) && isset($menuNodes[0]) && $showMenu) {
 	foreach ($menuNodes[0][ NavigationService::CHILDREN ] as $level0) {
+		if ($menuNodes[$level0][ NavigationService::TEXT ]) {
 ?>
 			<li<?php echo ($counter == 0 ) ? ' class="marked"' : '';
 				$counter++;
@@ -80,6 +81,7 @@ if ( is_array($menuNodes) && isset($menuNodes[0]) && $showMenu) {
 ?>
 			</li>
 <?php
+		}
 	}
 }
 ?>
