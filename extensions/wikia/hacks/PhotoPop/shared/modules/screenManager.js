@@ -175,6 +175,12 @@ define.call(exports, function(){
 					modalWrapper.style.pointerEvents = 'auto';
 				}
 				
+				if( options.leaveBottomBar ) {
+					modalWrapper.style.top = -24;
+				} else {
+					modalWrapper.style.top = 0;
+				}
+				
 				if(options.html) {
 					modal.innerHTML = options.html;
 				}
