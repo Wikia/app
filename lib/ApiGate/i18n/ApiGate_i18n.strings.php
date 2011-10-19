@@ -13,6 +13,9 @@ $messages = array();
  */
 $messages['en'] = array(
 	'apigate' => 'API Gate',
+	'apigate-mysql-error' => 'There was a db error with query<br/>\"$1\"<br/><br/>Error was: \"$2\"',
+	
+	'apigate-intro' => 'Welcome to the Control Panel for managing your API keys.  This panel will let you manage your contact-information (in case something goes wrong), see all of your API keys, and view usage statistics for each key.',
 
 	'apigate-register-title' => 'Get an API Key',
 	'apigate-register-heading' => 'Get an API Key',
@@ -26,6 +29,7 @@ $messages['en'] = array(
 	'apigate-register-error-noname' => 'Please enter your name.',
 	'apigate-register-error-invalid-email' => 'Please enter a valid email address.',
 	'apigate-register-error-email-doesnt-match' => 'Email addresses entered do not match.',
+	'apigate-register-error-mysql_error' => 'Error trying to save new API key to the database.',
 );
 
 /** Message documentation (Message documentation)
@@ -33,6 +37,7 @@ $messages['en'] = array(
  */
 $messages['qqq'] = array(
 	'apigate' => 'The name of the system. Used anywhere branding is needed.',
+	'apigate-intro' => 'This description is meant to be the first thing a user sees when they hit the control-panel page.',
 	'apigate-register-title' => "The title tag of the registration page.",
 	'apigate-register-heading' => "The top-level heading of the registration page.",
 	'apigate-register-name' => 'Heading of the Name fields in the registration form. Asterisk is to indicate that it is required.',

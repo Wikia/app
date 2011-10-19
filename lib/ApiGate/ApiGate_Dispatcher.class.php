@@ -17,12 +17,12 @@ class ApiGate_Dispatcher {
 	/**
 	 * Given an associative array of data and a template name renders the template with all of the data extract()ed to it.
 	 *
-	 * @param data - array - associative array of var names and their values. Will be passed to extract().
 	 * @param templateName - string - The name of the template, without extension or path. The file must be a .php file
 	 *                                in ApiGate/templates/. For example, "register" will load "ApiGate/templates/register.php".
+	 * @param data - array - associative array of var names and their values. Will be passed to extract().
 	 * @return string - the rendered output of the template (typically HTML).
 	 */
-	public static function renderTemplate( $data, $templateName ) {
+	public static function renderTemplate( $templateName, $data=array() ) {
 		extract( $data ); // turns		$data['name'] = "Sean";		into		$name == "Sean";
 
 		$templateFileName = dirname( __FILE__ ) . "/templates/$templateName.php";
