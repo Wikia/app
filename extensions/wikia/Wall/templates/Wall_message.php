@@ -24,7 +24,7 @@
 			<a href="<?= $user_author_url ?>" class="subtle"><?= $displayname2 ?></a>
 			<?php if( !empty($isStaff) ): ?> 
 				<span class="stafflogo">
-					<img src="<?= $wikiaEmblemUrl; ?>" title="<?php wfMsg('wall-message-staff-text'); ?>" alt="@wikia" />
+					<img src="<?= $wikiaEmblemUrl; ?>" title="<?= wfMsg('wall-message-staff-text'); ?>" alt="@wikia" />
 				</span>
 			<?php endif; ?>
 		</div>
