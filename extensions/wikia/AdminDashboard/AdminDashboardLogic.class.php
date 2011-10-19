@@ -36,7 +36,8 @@ class AdminDashboardLogic {
 		if (!$app->wg->User->isLoggedIn()) return false;
 		if (!$app->wg->User->isAllowed( 'admindashboard' )) return false;
 		if ($title && $title->isSpecialPage()) {
-			$alias = SpecialPage::resolveAlias($title->getDBKey());
+			$bits = explode( '/', $title->getDBkey(), 2 );
+			$alias = SpecialPage::resolveAlias($bits[0]);
 		
 			// NOTE: keep this list in alphabetical order
 			static $exclusionList = array(
@@ -99,7 +100,7 @@ class AdminDashboardLogic {
 	/**
 	 * Set global color profile long before the page loads.
 	 */
-	public function onAfterInitialize( &$title, &$article, &$output, &$user, $request, $mediaWiki ) {
+	public function onBeforeInitialize( &$title, &$article, &$output, &$user, $request, $mediaWiki ) {
 		global $wgTitle;
 		if(self::displayAdminDashboard(F::app(), $wgTitle)) {
 			$profile = SassColorProfile::getInstance();
