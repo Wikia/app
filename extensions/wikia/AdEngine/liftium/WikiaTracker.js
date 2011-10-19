@@ -31,10 +31,6 @@ var WikiaTracker = {
 		'UA-17475676-12':100, // liftium.errors
 		'UA-19473076-35':100 // ab.main
 	},
-	ABtests:{
-		'test1':['C', 'D'],
-		'test2':['A']
-	},
 	debugLevel:0,
 	_in_group_cache:{}
 	//_in_ab_cache:[] dont declare, leave undefined
@@ -222,9 +218,10 @@ WikiaTracker._abData = function() {
 		in_ab = this._in_ab_cache;
 		this.debug('abData from cache', 5); // FIXME NEF 7
 	} else {
-		for (var test in this.ABtests) {
-			for (var i in this.ABtests[test]) {
-				var group = this.ABtests[test][i];
+		var tests = WikiaTracker_config.ABtests || [];
+		for (var test in tests) {
+			for (var i in tests[test]) {
+				var group = tests[test][i];
 				this.debug('abData: ' + group, 5);
 				if (this.inGroup(group)) {
 					this.debug('AB test ' + test + ', group ' + group, 5);
@@ -241,7 +238,7 @@ WikiaTracker._abData = function() {
 WikiaTracker.AB = function(page) {
 	var ab = this._abData();
 	for (var i in ab) {
-		WikiaTracker.track('/' + ab[i] + page, 'ab.main');
+		this.track('/' + ab[i] + page, 'ab.main');
 	}
 
 	return true;

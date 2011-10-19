@@ -71,12 +71,7 @@ if ($(window).width() < 1010) {
 	}
 	WikiaTracker.trackGA(Liftium.buildTrackUrl([LiftiumOptions.pubid, 'AIC2', 'test5']), 'liftium.test');
 
-	if (WikiaTracker.inGroup('A')) {
-		WikiaTracker._track(Liftium.buildTrackUrl([LiftiumOptions.pubid, 'AIC2', 'testA']), 'UA-17475676-11', 100);
-	}
-	if (WikiaTracker.inGroup('B')) {
-		WikiaTracker._track(Liftium.buildTrackUrl([LiftiumOptions.pubid, 'AIC2', 'testB']), 'UA-17475676-11', 100);
-	}
+	WikiaTracker.AB('/' + Liftium.buildTrackUrl(['liftium', 'AIC2', 'testC']));
 
 	} else {
 		Liftium.d("AIC2: page too short", 3);
