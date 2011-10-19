@@ -111,7 +111,7 @@ define.call(exports, {
 	
 	gameSelector:
 		"<ul id='gamesList'>{{#games}}\
-			<li class='gameIcon' data-idx='{{index}}' background-image=url('{{thumbnail}}')>\
+			<li class='gameIcon' data-id='{{id}}' style='background-image:url(\"{{thumbnail}}\");'>\
 				{{#round}}<div id='saveInfo'>"
 					+wgMessages['photopop-game-round']+": {{round}}<br>"
 					+wgMessages['photopop-game-correct']+": {{correct}}<br>"
