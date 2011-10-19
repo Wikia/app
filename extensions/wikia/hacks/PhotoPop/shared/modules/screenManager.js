@@ -136,7 +136,7 @@ define.call(exports, function(){
 			this.hideAnswerDrawer();//puts the drawer back in place
 			this.showAnswerDrawer();
 			this.hideEndGameScreen();//needs to hide previously shown final screen
-			this.updateScoreBar();//resets the scorebar
+			this.updateScoreBar(100);//resets the scorebar
 			this.updateMuteButton(options.mute);
 		},
 		
