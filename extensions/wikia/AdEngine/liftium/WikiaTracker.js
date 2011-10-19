@@ -216,15 +216,16 @@ WikiaTracker._abData = function() {
 
 	if (typeof this._in_ab_cache != 'undefined') {
 		in_ab = this._in_ab_cache;
-		this.debug('abData from cache', 5); // FIXME NEF 7
+		this.debug('abData from cache', 7);
 	} else {
-		var tests = WikiaTracker_config.ABtests || [];
+		var tests = WikiaTracker_ABtests || [];
 		for (var test in tests) {
-			for (var i in tests[test]) {
+			this.debug('abData (test): ' + test, 9);
+			for (var i=0; i < tests[test].length; i++) {
 				var group = tests[test][i];
-				this.debug('abData: ' + group, 5);
+				this.debug('abData (group): ' + group, 9);
 				if (this.inGroup(group)) {
-					this.debug('AB test ' + test + ', group ' + group, 5);
+					this.debug('AB test: ' + test + ', group: ' + group, 5);
 					in_ab.push(test + '/' + group);
 				}
 			}
