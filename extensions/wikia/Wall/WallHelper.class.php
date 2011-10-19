@@ -434,5 +434,5 @@ class WallHelper {
 		
 		return '';
 	}
->>>>>>> .r43735
+
 }
