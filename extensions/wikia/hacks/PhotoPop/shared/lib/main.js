@@ -27,6 +27,7 @@
 			imagePreloaded = false,
 			maskShown = false,
 			highscore ={},
+			tutorialSteps = [],
 			
 			view = {
 				image: function() {
@@ -44,13 +45,13 @@
 				});
 
 				//highscore
-				if(!store.get('highScore_' + gameId)) store.set('highScore_' + gameId, 0);
+				//if(!store.get('highScore_' + gameId)) store.set('highScore_' + gameId, 0);
 				
-				document.getElementById('highScore').getElementsByTagName('span')[0].innerHTML = store.get('highScore_' + gameId);
+				//document.getElementById('highScore').getElementsByTagName('span')[0].innerHTML = store.get('highScore_' + gameId);
 				
 				
 				
-				if(gameId == 'tutorial')
+				if(gameId == 'tutorial' && !tutorialSteps['intro'])
 					screenManager.get('game').openModal({
 						name: 'intro',
 						html: wgMessages['photopop-game-tutorial-intro'],
@@ -58,6 +59,7 @@
 						clickThrough: false,
 						closeOnClick: true
 					});
+					tutorialSteps['intro'] = true;
 			},
 			
 			loadSelectedGame = function(){
@@ -156,7 +158,7 @@
 			},
 			
 			rightAnswerClicked = function(event, correct) {
-				if(g.getId() == 'tutorial') {
+				if(g.getId() == 'tutorial' && !tutorialSteps['continue']) {
 					screenManager.get('game').openModal({
 						name: 'continue',
 						html: wgMessages['photopop-game-tutorial-continue'],
@@ -164,6 +166,7 @@
 						clickThrough: false,
 						closeOnClick: true
 					});
+					tutorialSteps['continue'] = true;
 				}
 				soundServer.play('win');
 				screenManager.get('game').fire('rightAnswerClicked', correct);
@@ -172,7 +175,7 @@
 			answerDrawerButtonClicked = function() {
 				screenManager.get('game').fire('answerDrawerButtonClicked');
 				
-				if(g.getId() == 'tutorial') {
+				if(g.getId() == 'tutorial' && !tutorialSteps['drawer']) {
 					screenManager.get('game').openModal({
 						name: 'drawer',
 						html: wgMessages['photopop-game-tutorial-drawer'],
@@ -180,6 +183,7 @@
 						clickThrough: false,
 						fontSize: 'x-large',
 						closeOnClick: true});
+					tutorialSteps['drawer'] = true;
 				}
 			},
 			
@@ -287,7 +291,7 @@
 					soundServer.play('pop');
 					screenManager.get('game').fire('tileClicked', tile);
 
-					if( g.getId() == "tutorial" ) {
+					if( g.getId() == "tutorial" && !tutorialSteps['tile']) {
 						screenManager.get('game').openModal({
 							name: 'tile',
 							html: wgMessages['photopop-game-tutorial-tile'],
@@ -295,6 +299,7 @@
 							clickThrough: false,
 							closeOnClick: true,
 							triangle: 'right'});
+						tutorialSteps['tile'] = true;
 					}
 
 				}
@@ -305,10 +310,6 @@
 				screenManager.get('game').fire('muteButtonClicked', {mute: mute});
 				screenManager.get('home').fire('muteButtonClicked', {mute: mute});
 				soundServer.setMute(mute);
-			},
-			
-			pauseButtonClicked = function(e, pause) {
-				screenManager.get('game').fire('pauseButtonClicked', pause);	
 			},
 			
 			roundStart = function(e, options) {
@@ -327,10 +328,18 @@
 			
 			paused = function() {
 				screenManager.get('game').fire('paused');
+				//screenManager.get('game').openModal({
+				//	name: 'pause',
+				//	html: 'Game is paused',
+				//	clickThrough: true,
+				//	closeOnClick: true
+				//});
+
 			},
 			
 			resumed = function() {
 				screenManager.get('game').fire('resumed');
+				//screenManager.get('game').closeModal();
 			},
 			
 			timeIsLow = function() {
@@ -414,7 +423,6 @@
 				g.addEventListener('timeIsLow', timeIsLow);
 				g.addEventListener('endGame', endGame);
 				g.addEventListener('muteButtonClicked', muteButtonClicked);
-				g.addEventListener('pauseButtonClicked', pauseButtonClicked);
 				g.addEventListener('answersPrepared', answersPrepared);
 				g.addEventListener('roundStart', roundStart);
 				g.addEventListener('paused', paused);
