@@ -76,8 +76,9 @@ class WallNotifications {
 
 	public function addNotification(RecentChange $RC) {
 		$notif = F::build('WallNotificationEntity', array($RC, $this->app->wg->CityId), 'createFromRC');
-		$notif->save();
-		$this->notifyEveryone($notif);
+		if(!empty($notif)) {
+			$this->notifyEveryone($notif);
+		}
 	}
 
 	/*
