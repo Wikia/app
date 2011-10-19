@@ -18,10 +18,27 @@ if ( !function_exists( 'wfFounderEmailsInit' ) ) {
 	wfFounderEmailsInit();
 }
 
-FounderEmails::getInstance()->processEvents( 'daysPassed', true );
+if (isset($options['help'])) {
+	die("Usage: php maintenance.php [--event=(daysPassed/viewsDigest/completeDigest)] [--help] [--quiet]
+		--event			specific email event i.e. daysPassed, viewsDigest, completeDigest
+		--help			you are reading it right now
+		--quiet			do not print anything to output\n\n");
+}
 
-// Process events for any users that want the daily views digest
-FounderEmails::getInstance()->processEvents( 'viewsDigest', true);
+$events = array(
+	'daysPassed', 
+	'viewsDigest',    // Process events for any users that want the daily views digest
+	'completeDigest', // Process events for any users that want the complete digest
+);
 
-// Process events for any users that want the complete digest
-FounderEmails::getInstance()->processEvents( 'completeDigest', true);
+if (isset($options['event']) && in_array($options['event'], $events)) {
+	$events = array($options['event']);
+}
+	
+foreach ($events as $event) {
+	if (!isset($options['quiet'])) {
+		echo "Sending Founder Emails ($event).\n";
+	}
+	
+	FounderEmails::getInstance()->processEvents( $event, true );
+}
