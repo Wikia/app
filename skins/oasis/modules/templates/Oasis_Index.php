@@ -3,11 +3,11 @@
 <head>
 	<meta http-equiv="Content-Type" content="<?= $mimetype ?>; charset=<?= $charset ?>">
 	<meta name="viewport" content="width=1200">
-	
+
 	<?php if( !$showAllowRobotsMetaTag ): ?>
 		<meta name="robots" content="noindex, nofollow">
 	<?php endif; ?>
-	
+
 	<?= $headlinks ?>
 
 	<title><?= $pagetitle ?></title>
@@ -43,23 +43,20 @@
 	?>
 
 	<?= $globalVariablesScript ?>
-	
+
 	<?= $wikiaScriptLoader; /*needed for jsLoader and for the async loading of CSS files.*/ ?>
-	
+
 	<!-- Make IE recognize HTML5 tags. -->
 	<!--[if IE]>
 		<script>/*@cc_on'abbr article aside audio canvas details figcaption figure footer header hgroup mark menu meter nav output progress section summary time video'.replace(/\w+/g,function(n){document.createElement(n)})@*/</script>
 	<![endif]-->
 
-	<!-- Used for page load time tracking -->
-	<script>/*<![CDATA[*/
-		var wgNow = new Date();
-	/*]]>*/</script><?php
+	<?php
 		if( !$jsAtBottom ):?>
 			<!--[if lt IE 8]>
 			<script src="<?= $wgStylePath ?>/common/json2.js"></script>
 			<![endif]-->
-			
+
 			<!-- Combined JS files (StaticChute) and head scripts -->
 			<?= $jsFiles ;?>
 	<?endif;?>

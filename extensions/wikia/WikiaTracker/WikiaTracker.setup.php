@@ -12,4 +12,6 @@ $dir = dirname(__FILE__);
 $app = F::app();
 
 $app->registerClass('WikiaTrackerController', "$dir/WikiaTrackerController.class.php");
+
 $app->registerHook('MakeGlobalVariablesScript', 'WikiaTrackerController', 'onMakeGlobalVariablesScript');
+$app->registerHook('SkinGetHeadScripts', 'WikiaTrackerController', 'onSkinGetHeadScripts');

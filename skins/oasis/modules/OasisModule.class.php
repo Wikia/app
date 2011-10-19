@@ -114,6 +114,9 @@ class OasisModule extends Module {
 
 		$this->globalVariablesScript = Skin::makeGlobalVariablesScript(Module::getSkinTemplateObj()->data);
 
+		/* allow extensions to inject JS just after global JS variables - copied here from OutputPage.php */
+		wfRunHooks('SkinGetHeadScripts', array(&$this->globalVariablesScript));
+
 		// printable CSS (to be added at the bottom of the page)
 		// FIXME: move to renderPrintCSS() method
 		$StaticChute = new StaticChute('css');
@@ -262,10 +265,10 @@ class OasisModule extends Module {
 
 		// move JS files added by extensions to list of files to be loaded using WSL
 		$headscripts = $wgOut->getScript();
-		
+
 		// Load SiteJS / common.js separately, after all other js files (moved here from oasis_shared_js)
 		$headscripts .= "<script type=\"$wgJsMimeType\" src=\"".Title::newFromText('-')->getFullURL('action=raw&smaxage=0&gen=js&useskin=oasis')."\"></script>";
-		
+
 		// find <script> tags with src attribute
 		preg_match_all("#<script[^>]+src=\"([^\"]+)\"></script>#", $headscripts, $matches, PREG_SET_ORDER);
 		foreach($matches as $scriptSrc) {
