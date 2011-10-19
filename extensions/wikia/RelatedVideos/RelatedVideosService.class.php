@@ -38,7 +38,7 @@ class RelatedVideosService {
 						'articleId'	=> $articleId,
 						'cityShort'	=> $cityShort,
 						'useMaster'	=> $useMaster,
-						'videoHeight' => $videoHeight
+						'videoHeight'	=> $videoHeight
 					)
 				)->getData();
 				$result['data']['external'] = 0;
@@ -50,9 +50,9 @@ class RelatedVideosService {
 		return $result['data'];
 	}
 
-	public function getRelatedVideoDataFromMaster( $title, $source='', $videoWidth=VideoPage::DEFAULT_OASIS_VIDEO_WIDTH, $cityShort='life', $videoHeight='' ){
+	public function getRelatedVideoDataFromMaster( $articleId, $title, $source='', $videoWidth=VideoPage::DEFAULT_OASIS_VIDEO_WIDTH, $cityShort='life', $videoHeight='' ){
 
-		return $this->getRelatedVideoData( 0, $title, $source, $videoWidth, $cityShort, 1, $videoHeight );
+		return $this->getRelatedVideoData( $articleId, $title, $source, $videoWidth, $cityShort, 1, $videoHeight );
 	}
 
 	public function getRelatedVideoDataFromTitle( $title, $source='', $videoWidth=VideoPage::DEFAULT_OASIS_VIDEO_WIDTH, $cityShort='life', $videoHeight='' ){
