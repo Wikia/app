@@ -43,13 +43,15 @@ class WallHelper {
 	public function getTitle($namespace = null, $subpage = null, $user = null) {
 		$app = F::App();
 		
+		if( empty($namespace) ) {
+			$namespace2 = $this->getVal('namespace');
+		}
+		
 		if( empty($user) ) {
 			$user = $this->getUser();
 		}
-
+		
 		if( empty($namespace) ) {
-			$namespace2 = $this->getVal('namespace');
-
 			$this->title = F::build('Title', array($user->getName(), $namespace2), 'newFromText');
 			
 			return $this->title;
@@ -381,6 +383,8 @@ class WallHelper {
 	 * @desc Returns article's content from text table if fail it'll return empty string
 	 * 
 	 * @param integer $textId article's text id in text table
+	 * 
+	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public function getDeletedArticleTitleTxt($textId) {
 		$dbr = wfGetDB( DB_SLAVE );
@@ -402,8 +406,17 @@ class WallHelper {
 		return '';
 	}
 	
+	/**
+	 * @brief Extracts title of the message via regural expression
+	 * 
+	 * @desc Uses preg_match_all() and extracts title attribute value from given string; returns empty string if fails
+	 * 
+	 * @param string $text text which should have <ac_metadata title="A title of a message"> </ac_metadata> tag inside
+	 * 
+	 * @author Andrzej 'nAndy' Łukaszewski
+	 */
 	public function getTitleTxtFromMetadata($text) {
-		$pattern = '#<ac_metadata title="(.*)">(.*)</ac_metadata>#i';
+		$pattern = '#<ac_metadata title="([^"]*)">(.*)</ac_metadata>#i';
 		preg_match_all($pattern, $text, $matches);
 		
 		if( !empty($matches[1][0]) ) {
