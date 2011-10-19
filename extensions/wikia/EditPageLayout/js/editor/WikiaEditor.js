@@ -753,20 +753,12 @@
 
 		priority: -1,
 		ready: false,
-		queuedButtons: false,
-
-		mapping: false,
 
 		modeAwareCommands: {},
 		stateProxiedCommands: {},
 
 		beforeInit: function() {
-			this.queuedButtons = [];
-			this.mapping = {
-				'button': CKEDITOR.UI_BUTTON
-			};
 			this.editor.ui.addExternalProvider(this);
-			this.editor.on('uiAddElement',this.elementAdded,this);
 			this.editor.on('ck-themeLoaded',this.ckReady,this);
 
 			this.editor.on('uiBuildClickHandler',this.buildWysiwygClickHandler,this);
@@ -842,21 +834,8 @@
 		},
 
 		ckReady: function() {
-			this.addQueuedButtons();
 			this.ready = true;
 			this.editor.fire('uiExternalProviderReady',this.editor);
-		},
-
-		elementAdded: function( editor, name, def ) {
-			var ck = this.editor.ck,
-				ui = this.editor.ck.ui,
-				element = $.extend({},def);
-			if (!this.mapping[element.type]) {
-				return;
-			}
-
-			element.type = this.mapping[element.type];
-			this.addButton(element);
 		},
 
 		buildWysiwygClickHandler: function( editor, button ) {
@@ -865,23 +844,6 @@
 				button.clickwysiwyg = function() {
 					editor.ck.execCommand(button.ckcommand,button.clickdatawysiwyg);
 				};
-			}
-		},
-
-		addButton: function( element ) {
-			if (!this.ready){
-				this.editor.ck.ui.add(element.name,element.type,element);
-			}
-			else{
-				this.queuedButtons.push(element);
-			}
-		},
-
-		addQueuedButtons: function() {
-			var queue = this.queuedButtons;
-			this.queuedButtons = [];
-			for (var i=0;i<this.queuedButtons.length;i++){
-				this.addButton(this.queuedButtons[i]);
 			}
 		},
 
