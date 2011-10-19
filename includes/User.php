@@ -497,7 +497,7 @@ class User {
 			$user_name = $nt->getText();
 			wfRunHooks( 'UserNameLoadFromId', array( $user_name, &$s ) );
 		}
-		
+
 		/* wikia change */
 		if ( $s === false ) {
 			global $wgExternalAuthType;
@@ -2725,7 +2725,7 @@ class User {
 		}
 		// wikia change end
 
-		$dbw = wfGetDB( DB_MASTER );		
+		$dbw = wfGetDB( DB_MASTER );
 		$dbw->update( 'user',
 			array( /* SET */
 				'user_name' => $this->mName,
@@ -4105,4 +4105,12 @@ class User {
 
 		return $ret;
 	}
+
+	// wikia change begin - BugId:13289 (macbre)
+	// catch tries to cast User object to string
+	public function __toString() {
+		Wikia::logBacktrace(__METHOD__);
+		throw new Exception('Trying to convert User object to string');
+	}
+	// wikia change end
 }
