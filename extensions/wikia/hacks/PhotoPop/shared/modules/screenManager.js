@@ -226,12 +226,11 @@ define.call(exports, function(){
 			table = "",
 			tableWidth = screenElement.clientWidth,
 			tableHeight = screenElement.clientHeight,
-			rowHeight = tableHeight / rows,
-			colWidth = tableWidth / cols,
+			rowHeight = Math.floor(tableHeight / rows),
+			colWidth = Math.floor(tableWidth / cols),
 			offsetY = 0,
 			offsetX = 0,
 			self = this;
-			
 			
 			for(var row = 0; row < rows; row++) {
 				table += "<tr>"
@@ -242,24 +241,29 @@ define.call(exports, function(){
 				tilesWrapper.innerHTML = table;
 			}
 			
-			var trs = tilesWrapper.getElementsByTagName('tr');
+			var trs = tilesWrapper.getElementsByTagName('tr'),
+			lastCol = cols - 1,
+			lastRow = rows - 1;
 			
 			for(var i = 0; i < rows; i++) {
 				var tr = trs[i],
 				tds = tr.getElementsByTagName('td');
+				
 				tr.style.top = offsetY;
+				
 				for(var j = 0; j < cols; j++) {
 					var td = tds[j],
 					tdStyle = td.style;
 					tdStyle.backgroundImage = 'url(' + watermark + ')';
-					tdStyle.width = colWidth;
-					tdStyle.height = rowHeight;
+					tdStyle.width = (j == lastCol) ? tableWidth - (colWidth * j) : colWidth;
+					tdStyle.height = (i == lastRow) ? tableHeight - (rowHeight * i) : rowHeight;
 					tdStyle.backgroundPosition = '-'+ offsetX + 'px -' + offsetY + 'px';
 					tdStyle.left = offsetX;
-					offsetX += tableWidth / cols;
+					offsetX += colWidth;
 				}
+				
 				offsetX = 0;
-				offsetY += colWidth;
+				offsetY += rowHeight;
 			}
 			
 			document.getElementById('bgPic').style.display = "block";
