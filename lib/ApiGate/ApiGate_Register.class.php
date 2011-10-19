@@ -33,6 +33,7 @@ class ApiGate_Register {
 			$email_2 = self::getPost('email_2');
 			
 			// Validate the input.
+			$errorString = "";
 			if("$firstName$lastName" == ""){
 				$errorString .= "\n" . i18n( 'apigate-register-error-noname' );
 			}
@@ -45,12 +46,25 @@ class ApiGate_Register {
 
 			// If input was valid, attempt to create a key.
 			if($errorString == ""){
-		
-				// TODO: IMPLEMENT
-				// TODO: IMPLEMENT
+				// Create a new API key and store it to the database with the values provided.
+				$apiKey = self::generateKey();
+				$userId = ApiGate_Config::getUserId();
 
-				$data['apiKey'] = "APIKEYGOESHERE";
-				$didRegister = true; // TODO: MOVE THIS TO ONLY HAPPEN WHEN REGISTRATION ACTUALLY HAPPENS
+				// This is in library-code (not MediaWiki) so build the query by hand.
+				$dbw = ApiGate_Config::getMasterDb();
+				$queryString = "INSERT INTO /* ApiGate_Register::processPost() */". ApiGate::TABLE_KEYS ." (user_id, apiKey, email, firstName, lastName) VALUES (";
+				$queryString .= "'".mysql_real_escape_string( $userId, $dbw )."', ";
+				$queryString .= "'".mysql_real_escape_string( $apiKey, $dbw )."', ";
+				$queryString .= "'".mysql_real_escape_string( $email_1, $dbw )."', ";
+				$queryString .= "'".mysql_real_escape_string( $firstName, $dbw )."', ";
+				$queryString .= "'".mysql_real_escape_string( $lastName, $dbw )."')";
+				if( ApiGate::sendQuery($queryString, $dbw) ){
+					$data['apiKey'] = $apiKey;
+					$didRegister = true;
+				} else {
+					$errorString .= "\n". i18n( 'apigate-register-error-mysql_error' );
+					$errorString .= "\n<br/><br/>". mysql_error( $dbw );
+				}
 			}
 
 			if( $errorString != "" ) {
@@ -59,7 +73,7 @@ class ApiGate_Register {
 				$data['errorString'] = $errorString;
 			}
 		}
-	
+
 		return $didRegister;
 	} // end processPost()
 
@@ -67,5 +81,44 @@ class ApiGate_Register {
 	public static function getPost( $varName, $default='' ){
 		return ( isset($_POST[$varName]) ? $_POST[$varName] : $default );
 	} // end getPost()
+
+	/**
+	 * Returns a valid (and available API key) to be used in the system.
+	 *
+	 * Border-line irrelevant note: There is a potential race-condition that you
+	 * could get this key and store it to the database at approximately the same time as someone who generated the same key
+	 * (prior to you storing) but that should be approximately a one in 16^40 chance (unless you seed the PRNG with
+	 * a timestamp or something patently wrong like that) so I'm not going to spend time preventing that at the moment.
+	 *
+	 * Takes NO parameters and is static so that the generation isn't affected by state at all... the 
+	 * generation is supposed to be random and using any state from the user or registration object would
+	 * just reduce the entropy of the pseudo-random number generator.
+	 */
+	protected static function generateKey(){
+		wfProfileIn( __METHOD__ );
+
+		do {
+			$keyHash = sha1( mt_rand() );
+		} while( ApiGate_Register::keyExists( $keyHash ) );
+		
+		wfProfileOut( __METHOD__ );
+		return $keyHash;
+	} // end generateKey()
+	
+	/**
+	 * @param keyToTest - an API key which will be checked to see if it is already registered in the system.
+	 * @return bool - true if 'keyToTest' is a registered API key in the system, false if 'keyToTest' is NOT registered.
+	 */
+	protected static function keyExists( $keyToTest){
+		wfProfileIn( __METHOD__ );
+		$keyExists = false;
+
+		$queryString = "SELECT count(*) FROM ".ApiGate::TABLE_KEYS." WHERE apiKey='". mysql_real_escape_string( $keyToTest ) ."'";
+		$numKeys = ApiGate::simpleQuery( $queryString );
+		$keyExists = ($numKeys > 0);
+
+		wfProfileOut( __METHOD__ );
+		return $keyExists;
+	} // end keyExists()
 
 } // end class ApiGate_Register
