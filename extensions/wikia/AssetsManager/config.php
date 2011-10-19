@@ -75,6 +75,7 @@ $config['oasis_shared_js'] = array(
 		'//skins/oasis/js/tracker.js',
 		'//skins/common/jquery/jquery.wikia.modal.js',
 		'//extensions/wikia/AdEngine/liftium/WikiaTracker.js',
+		'//extensions/wikia/WikiaTracker/js/WikiaTrackerQueue.js',
 		'//skins/common/jquery/jquery.wikia.tracker.js',
 		'//skins/oasis/js/hoverMenu.js',
 		'//skins/oasis/js/PageHeader.js',
@@ -214,6 +215,7 @@ $config['theme_designer_js'] = array(
 	'assets' => array(
 		'#group_oasis_jquery',
 		'//extensions/wikia/AdEngine/liftium/WikiaTracker.js',
+		'//extensions/wikia/WikiaTracker/js/WikiaTrackerQueue.js',
 		'//skins/common/jquery/jquery.wikia.tracker.js',
 		'//skins/common/jquery/jquery-ui-1.8.14.custom.js',
 		'//extensions/wikia/ThemeDesigner/js/ThemeDesigner.js',
