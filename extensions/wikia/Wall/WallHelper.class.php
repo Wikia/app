@@ -245,7 +245,7 @@ class WallHelper {
 			else
 				$items[$i]['real-name'] = '';
 			$items[$i]['author'] = $data['username'];
-			$items[$i]['wall-comment'] = htmlspecialchars($this->shortenText($data['rawtext'])).'&nbsp;';
+			$items[$i]['wall-comment'] = $this->shortenText($this->strip_wikitext($data['rawtext'])).'&nbsp;';
 			$items[$i]['timestamp'] = $data['rawmwtimestamp'];
 			if(User::isIP( $data['username']) ) {
 				$items[$i]['user-profile-url'] = Skin::makeSpecialUrl('Contributions').'/'.$data['username'];
@@ -377,6 +377,15 @@ class WallHelper {
 		return isset($row->ar_page_id) ? $row->ar_page_id : false;
 	}
 	
+	public function strip_wikitext( $text ) {
+		$app = F::app();
+		$text = str_replace('*', '&asterix;', $text);
+		$text = $app->wg->Parser->parse($text, $app->wg->Title, $app->wg->Out->parserOptions())->getText();
+		$text = str_replace('&amp;asterix;', '*', $text);
+		$text = trim( strip_tags($text) );
+		return $text;
+	}
+	
 	/**
 	 * @brief Gets old article's text
 	 * 
@@ -425,4 +434,5 @@ class WallHelper {
 		
 		return '';
 	}
+>>>>>>> .r43735
 }

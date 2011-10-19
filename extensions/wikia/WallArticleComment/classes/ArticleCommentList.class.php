@@ -221,7 +221,8 @@ class ArticleCommentList {
 			}
 			// attach replies to comments
 			foreach( $subpages as $p0 => $level2 ) {
-				$pages[$helperArray[$p0]]['level2'] = array_reverse( $level2, true );
+				$idx = $helperArray[$p0];
+				$pages[$idx]['level2'] = array_reverse( $level2, true );
 			}
 
 			if( !empty( $wgArticleCommentsEnableVoting ) ) {
