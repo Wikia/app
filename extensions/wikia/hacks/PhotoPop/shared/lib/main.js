@@ -26,7 +26,7 @@
 			img = new Image(),
 			imagePreloaded = false,
 			maskShown = false,
-			highscore ={},
+			highscore = [],
 			tutorialSteps = [],
 			
 			view = {
@@ -433,11 +433,20 @@
 			
 			initHighscore = function(){
 				
-				highscore = store.get('highscore');
+				highscore = store.get('highscore') || [];
 				
-				highscore.sort(function(a,b) {
-					return a.score < b.score;
-				});
+				if(!highscore.length) {
+					var date = new Date();
+					for(var i=0;i<5;i++) {
+						highscore.push({
+							score: 1000,
+							date: date.getDate()-1 + '-' + (date.getMonth() + 1) + '-' + date.getFullYear(),
+							wiki: 'tutorial'
+						});
+					}
+					console.log(highscore);
+					store.set('highscore', highscore);
+				}
 				
 				document.getElementById('goBack').onclick = function() {
 					screenManager.get('home').show();
@@ -479,7 +488,7 @@
 			
 			//Init all screens
 			screenManager.get('home');
-			screenManager.get('highscore').init(soundServer.getMute());
+			screenManager.get('highscore').init();
 			screenManager.get('game').init();
 			
 			screenManager.get('game').addEventListener('maskDisplayed', maskDisplayed);
