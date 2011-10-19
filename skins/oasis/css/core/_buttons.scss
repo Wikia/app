@@ -142,7 +142,7 @@ This list-based button is used in the page header for edit/history/delete action
 			padding: 9px 9px 7px;
 			&:hover {
 				$dropdown-background: mix($color-buttons, $color-page, 20%);
-				@if lightness($color-page) < 50 {
+				@if $is-dark-wiki {
 					$dropdown-background: lighten($dropdown-background, 8%);
 				}
 				background-color: $dropdown-background;
@@ -218,7 +218,7 @@ This list-based button used for all additional actions
 				display: block;
 				&:hover {
 					$dropdown-background: mix($color-buttons, $color-page, 20%); 
-					@if lightness($color-page) < 50 { 
+					@if $is-dark-wiki { 
 						$dropdown-background: lighten($dropdown-background, 8%); 
 					} 
 					background-color: $dropdown-background !important;
