@@ -212,12 +212,17 @@ define.call(exports, function(){
 			var round = this._currentRound-1,
 			answers = this._data[round].answers,
 			correct = this._data[round].correct;
-			
-			answers.sort(function() {return Math.round(Math.random())-0.5});
+
+			answers = (function(o){
+				for(var j, x, i = o.length; i; j = parseInt(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+					return o;
+				})(answers);
+
 			this.fire('answersPrepared', {
 				answers:answers,
 				"class":Game.INCORRECT_CLASS_NAME
 			});
+
 			this._correctAnswer = 'answer' + answers.indexOf(correct);
 		},
 		
