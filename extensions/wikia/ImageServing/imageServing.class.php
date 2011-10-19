@@ -34,7 +34,6 @@ class ImageServing {
 			$this->proportion = $proportionOrHeight;
 			$this->proportionString = implode(":", $proportionOrHeight);
 		}
-
 		$this->articles = array();
 
 		if( is_array( $articles ) ) {
@@ -80,6 +79,7 @@ class ImageServing {
 			$this->articlesByNS = array();
 			foreach($articles as $key => $value) {
 				$mcValue = $this->memc->get( $this->makeKey($key) , null );
+				
 				if(!empty($mcValue)) {
 					unset($articles[$key]);
 					$this->addArticleToList($mcValue);

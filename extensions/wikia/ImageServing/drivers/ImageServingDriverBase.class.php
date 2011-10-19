@@ -15,7 +15,7 @@ abstract class ImageServingDriverBase {
 		$this->db = $db;
 		$this->proportion = $proportion;
 		//TODO: remove it
-		$this->imageServing = $imageServing; 
+		$this->imageServing = $imageServing;
 		$this->memc =  $this->app->getGlobal( 'wgMemc' ); 
 	}
 	
@@ -52,7 +52,7 @@ abstract class ImageServingDriverBase {
 		$dbOut = $this->formatResult($this->imagesList, $this->filterdOut, $limit);
 	
 		$this->storeInCache($dbOut);
-		
+
 		return $dbOut + $cacheOut['data'];
 	}
 	
@@ -100,7 +100,7 @@ abstract class ImageServingDriverBase {
 	
 	protected function loadFromCache($articles = array()) {
 		$out = array(); 
-		$articlesRest = array(); 
+		$articlesRest = array();
 		foreach ( $articles as $value ) {
 			$mcOut = $this->memc->get( $this->makeKey( $value ), null );
 			if(!empty($mcOut)) {
