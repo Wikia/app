@@ -14,7 +14,10 @@
 
 		editarea: false,
 		editbox: false,
-		editboxParentPadding: 0,
+
+		// contains any offset heights that will have an overall effect on the
+		// height of the editbox element.
+		editboxOffsetHeight: 0,
 		mode: false,
 		minPageHeight: 500,
 		rightrail: false,
@@ -44,20 +47,30 @@
 			if (this.enabled) {
 				this.delayedResize();
 			}
-			
-			if (!wgUserName) {
-				$('#EditPageEditor').css('margin-bottom', 10);
-			}
 		},
 
 		editboxReady: function(editor, editbox) {
+			var node,
+				footerHeight = $("#WikiaFooter").outerHeight(true) || 0,
+				offsetHeight = 0,
+				self = this;
+
 			this.editbox = editbox;
 
-			// add padding from textarea wrapper on permission error pages (BugId:10562)
-			var editboxParent = editbox.parent();
-			if (editboxParent) {
-				this.editboxParentPadding = editboxParent.outerHeight() - editboxParent.height();
+			// if there's no footer, add a 10px bottom margin to space the editor away from browser window
+			if (!footerHeight) {
+				this.editarea.css("padding-bottom", 10);
+				
 			}
+
+			// travel all the way up to the editor wrapper and remove any heights from margins/padding/borders
+			this.editbox.parentsUntil("#EditPageEditorWrapper").each(function() {
+				node = $(this);
+				offsetHeight += (node.outerHeight(true) - node.height());
+			});
+
+			// the 2 pixel subtraction is to compensate for a space at the bottom of the page.
+			this.editboxOffsetHeight = (offsetHeight + footerHeight) - 2;
 
 			this.delayedResize();
 		},
@@ -70,9 +83,8 @@
 		getHeightToFit: function(node) {
 			var topOffset = node.offset().top,
 				viewportHeight = $(window).height(),
-				footerHeight = $('#WikiaFooter').outerHeight(),
 				dimensions = {
-					nodeHeight: parseInt(viewportHeight - topOffset - this.editboxParentPadding - footerHeight - 1),
+					nodeHeight: parseInt(viewportHeight - topOffset - this.editboxOffsetHeight),
 					viewportHeight: viewportHeight
 				};
 
@@ -85,9 +97,6 @@
 				case 'editarea':
 					if (this.editbox && this.getHeightToFit(this.editbox).viewportHeight > this.minPageHeight) {
 						this.editbox.height(this.getHeightToFit(this.editbox).nodeHeight);
-						if (!wgUserName) {
-							$('#cke_contents_wpTextbox1').height(this.editbox.height() - 10);
-						}
 					}
 					break;
 
