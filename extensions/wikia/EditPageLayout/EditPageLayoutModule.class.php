@@ -34,6 +34,9 @@ class EditPageLayoutModule extends Module {
 		// page has one column
 		OasisModule::addBodyClass('oasis-one-column');
 
+		// adding 'editor' class as a CSS helper
+		OasisModule::addBodyClass('editor');
+
 		// render Oasis module
 		$this->html = F::app()->renderView( 'Oasis', 'Index', array('body' => $body) );
 	}
