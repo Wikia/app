@@ -23,8 +23,8 @@ define.call(exports, function(){
 			else {
 				if(sound == 'win' || sound == 'fail') {
 					for(var p in sounds) {
+						sounds[p].currentTime = 0;
 						sounds[p].pause();
-						sounds[p].currentTime = 0;	
 					}
 				}
 				sounds[sound].play();
