@@ -54,17 +54,21 @@ $color-page-border: mix($color-page, #000000, 80%);
 }
 
 // Buttons
-$color-button-highlight: desaturate(lighten($color-buttons, 15%), 25%);
+$color-button-highlight: lighten($color-buttons, 10%);
 $color-button-text: white;
 @if lightness($color-buttons) > 55 {
 	$color-button-text: black;
 }
-$color-secondary-button-highlight: $color-page;
-$color-secondary-button: mix($color-page, #000, 95%);
-$color-secondary-button-text: white;
-@if lightness($color-secondary-button) > 50 {
-	$color-secondary-button-text: #333;
+$color-secondary-button-highlight: mix($color-page, #FFFFFF, 94%);
+$color-secondary-button: mix($color-page, #000000, 90%);
+$color-secondary-button-border: mix($color-page, #000000, 80%);
+
+@if lightness($color-page) < 50 {
+	$color-secondary-button-highlight: lighten($color-page, 8%);
+	$color-secondary-button: lighten($color-page, 3%);
+	$color-secondary-button-border: lighten($color-page, 10%);
 }
+
 
 // Speech Bubbles (Article Comments, Wall)
 $color-speech-bubble: mix($color-text, $color-page, 5%);
