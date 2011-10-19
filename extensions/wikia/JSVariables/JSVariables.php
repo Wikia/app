@@ -85,8 +85,6 @@ function wfMakeGlobalVariablesScript($vars) {
 		$vars['wgDisableAnonymousEditing'] = false;
 	}
 
-	$vars['_gaq'] = array();
-
 	wfProfileOut(__METHOD__);
 
 	return true;
