@@ -100,8 +100,13 @@ class AvatarService extends Service {
 				wfProfileOut(__METHOD__);
 				return $avatarUrl;
 			}
-			
-			$avatarUrl = Masthead::newFromUser($user)->getThumbnail($avatarSize, true, $avoidUpscaling).'?cb='.$user->getOption('avatar_rev', 0);
+		
+			// fb#13710 don't add CB to default avatars	
+			$masthead = Masthead::newFromUser($user);
+			$avatarUrl = $masthead->getThumbnail($avatarSize, true, $avoidUpscaling);
+			if ( !$masthead->isDefault() ) {
+				$avatarUrl .= '?cb='.$user->getOption('avatar_rev', 0);
+			}
 			
 			$avatarsCache[$key] = $avatarUrl;
 		}
