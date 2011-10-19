@@ -151,8 +151,12 @@ body{
 	/*box-shadow:0px 0px 15px #555;
 	-webkit-box-shadow:0px 0px 15px #555;
 	-moz-box-shadow:0px 0px 15px #555;*/
-	height: 100px;
-	width: 100px;
+	height: 120px;
+	width: 120px;
+}
+
+.gameIcon.resumeGame {
+	box-shadow: 0 0 20px green;
 }
 
 #saveInfo {

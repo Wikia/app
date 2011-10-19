@@ -52,7 +52,7 @@ define.call(exports, function(){
 	GameScreen = my.Class({
 		
 		_barWrapperHeight: 0,
-		_tutorialSteps: ['tutorial', 'intro', 'tile', 'continue', 'drawer'],//[]
+		_tutorialSteps: [],
 
 		constructor: function(parent) {
 			console.log('Game Screen created');
@@ -356,7 +356,7 @@ define.call(exports, function(){
 				td.clicked = true;
 				if(next == tdLength) {
 					clearInterval(t);
-					self.showContinue('It\'s: ' + correct);
+					self.showContinue(correct);
 				}
 			}, 200);
 
@@ -396,7 +396,7 @@ define.call(exports, function(){
 			var nextRoundStyle = document.getElementById('continue').style,
 			hudStyle = document.getElementById('hud').style;
 			
-			document.getElementById('continueText').innerText = text || 'Next Round';
+			document.getElementById('continueText').innerText = wgMessages['photopop-game-continue'] + " " + text;
 			nextRoundStyle.right = '0%';
 			hudStyle.left = '100%';
 		},
@@ -417,8 +417,8 @@ define.call(exports, function(){
 			//TODO: reset whole game
 			document.getElementById('endGameOuterWrapper').style.display = 'block';
 
-			document.querySelector('#endGameSummary .summaryText_completion').innerHTML = wgMessages['photopop-game-yougot'] + ' ' + options.numCorrect + wgMessages['photopop-game-outof'] + ' ' + options.numTotal + ' ' + wgMessages['photopop-game-correct'];
-			document.querySelector('#endGameSummary .summaryText_score').innerHTML =  wgMessages['photopop-game-correct'] + ': ' + options.totalPoints;
+			document.querySelector('#endGameSummary .summaryText_completion').innerHTML = wgMessages['photopop-game-yougot'] + ' ' + options.numCorrect + ' ' + wgMessages['photopop-game-outof'] + ' ' + options.numTotal + ' ' + wgMessages['photopop-game-correct'];
+			document.querySelector('#endGameSummary .summaryText_score').innerHTML =  wgMessages['photopop-game-score'] + ': ' + options.totalPoints;
 		},
 		
 		hideEndGameScreen: function(){
