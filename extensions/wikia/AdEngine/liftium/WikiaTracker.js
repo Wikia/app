@@ -5,7 +5,8 @@ var WikiaTracker = {
 		'main.sampled':  'UA-2871474-1',
 		'main.unsampled':'UA-2871474-2',
 		'main.test':     'UA-2871474-3',
-
+		
+		'ab.main':'UA-19473076-35',
 		'liftium.beacon':'UA-17475676-5',
 		'liftium.beacon2':'UA-17475676-14',
 		'liftium.errors':'UA-17475676-12',
@@ -27,7 +28,12 @@ var WikiaTracker = {
 		'UA-2871474-3':1, // main.test
 		'UA-12241505-2':100, // lyrics.unsampled
 		'UA-17475676-16':100, // liftium.slot2
-		'UA-17475676-12':100 // liftium.errors
+		'UA-17475676-12':100, // liftium.errors
+		'UA-19473076-35':100 // ab.main
+	},
+	ABtests:{
+		'test1':['C', 'D'],
+		'test2':['A']
 	},
 	debugLevel:0,
 	_in_group_cache:{}
@@ -210,23 +216,18 @@ WikiaTracker.isTracked = function() {
 };
 
 WikiaTracker._abData = function() {
-	var tests = {
-		'test1':['C', 'D'],
-		'test2':['A']
-	};
-
 	var in_ab = [];
 
 	if (typeof this._in_ab_cache != 'undefined') {
 		in_ab = this._in_ab_cache;
 		this.debug('abData from cache', 5); // FIXME NEF 7
 	} else {
-		for (var test in tests) {
-			this.debug('abData: ' + test, 5);
-			for (var i in tests[test]) {
-				var group = tests[test][i];
+		for (var test in this.ABtests) {
+			for (var i in this.ABtests[test]) {
+				var group = this.ABtests[test][i];
 				this.debug('abData: ' + group, 5);
 				if (this.inGroup(group)) {
+					this.debug('AB test ' + test + ', group ' + group, 5);
 					in_ab.push(test + '/' + group);
 				}
 			}
@@ -240,7 +241,7 @@ WikiaTracker._abData = function() {
 WikiaTracker.AB = function(page) {
 	var ab = this._abData();
 	for (var i in ab) {
-		WikiaTracker.track('/' + ab[i] + page, 'main.test');
+		WikiaTracker.track('/' + ab[i] + page, 'ab.main');
 	}
 
 	return true;
