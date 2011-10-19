@@ -98,7 +98,7 @@ class AdminDashboardLogic {
 	/**
 	 * Set global color profile long before the page loads.
 	 */
-	public function onBeforeInitialize( &$title, &$article, &$output, &$user, $request, $mediaWiki ) {
+	public function onAfterInitialize( &$title, &$article, &$output, &$user, $request, $mediaWiki ) {
 		global $wgTitle;
 		if(self::displayAdminDashboard(F::app(), $wgTitle)) {
 			$profile = SassColorProfile::getInstance();
