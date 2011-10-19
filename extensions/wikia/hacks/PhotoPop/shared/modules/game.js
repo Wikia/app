@@ -124,7 +124,8 @@ define.call(exports, function(){
 				gameId: this.getId(),
 				image: this._data[this._currentRound-1].image,
 				totalPoints: this._totalPoints.getPoints(),
-				progress: this._currentRound + '/' + this._data.length
+				currentRound: this._currentRound,
+				numRounds: this._data.length
 			});
 			this.prepareAnswers();
 		},

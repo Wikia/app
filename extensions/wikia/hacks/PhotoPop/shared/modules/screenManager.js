@@ -52,7 +52,6 @@ define.call(exports, function(){
 	GameScreen = my.Class({
 		
 		_barWrapperHeight: 0,
-		_tutorialSteps: [],
 
 		constructor: function(parent) {
 			console.log('Game Screen created');
@@ -82,7 +81,6 @@ define.call(exports, function(){
 			this.addEventListener('wrongAnswerClicked', this.wrongAnswerClicked);
 			this.addEventListener('timerEvent', this.timerEvent);
 			this.addEventListener('muteButtonClicked', this.muteButtonClicked);
-			this.addEventListener('pauseButtonClicked', this.pauseButtonClicked);
 			this.addEventListener('answersPrepared', this.answersPrepared);
 			this.addEventListener('roundStart', this.roundStart);
 			this.addEventListener('tileClicked', this.tileClicked);
@@ -144,13 +142,11 @@ define.call(exports, function(){
 		
 		roundStart: function(e, options) {
 			this.showMask(options);
-			this.updateHudProgress(options.progress);
+			this.updateHudProgress(options.currentRound, options.numRounds);
 		},
 		
 		openModal: function(options) {
 			options = options || {};
-			
-			if(!this._tutorialSteps[options.name]) {
 			
 				var modalWrapper = document.getElementById('modalWrapper'),
 				modal = document.getElementById('modal'),
@@ -186,14 +182,12 @@ define.call(exports, function(){
 				}
 				
 				this.fire('modalOpened', {name: options.name});
-				this._tutorialSteps[options.name] = 1;
 				
 				if(options.closeOnClick) {
 					modalWrapper.onclick = function() {
 						self.closeModal();
 					}
 				}
-			}
 		},
 		
 		closeModal: function() {
@@ -211,10 +205,6 @@ define.call(exports, function(){
 		
 		muteButtonClicked: function(event, mute) {
 			this.updateMuteButton(mute.mute);
-		},
-		
-		pauseButtonClicked: function(event, pause) {
-			
 		},
 		
 		prepareMask: function( watermark, rows, cols ) {
@@ -362,7 +352,7 @@ define.call(exports, function(){
 					clearInterval(t);
 					self.showContinue(correct);
 				}
-			}, 200);
+			}, 100);
 
 		},
 		
@@ -377,11 +367,11 @@ define.call(exports, function(){
 				tds[next++].style.opacity = 1;
 				if(next == tdLength) {
 					clearInterval(t);
-					
+					console.log('done');
 					self.updateHudScore(options.totalPoints);
 					setTimeout(function() {self.fire('maskDisplayed');}, 400);
 				}
-			}, 100);
+			}, 50);
 		},
 		
 		hideAnswerDrawer: function(){
@@ -434,8 +424,8 @@ define.call(exports, function(){
 			document.getElementById('totalPoints').innerHTML = totalPoints;
 		},
 		
-		updateHudProgress: function(progress) {
-			document.getElementById('progress').getElementsByTagName('span')[0].innerHTML = progress;
+		updateHudProgress: function(currentRound, numRounds) {
+			document.getElementById('progress').getElementsByTagName('span')[0].innerHTML = currentRound + '/' + numRounds;
 		},
 		
 		updateMuteButton: function(mute) {

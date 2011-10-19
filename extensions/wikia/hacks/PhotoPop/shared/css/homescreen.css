@@ -233,15 +233,22 @@ body{
 	opacity: 0;
 }
 
+.bottomBar {
+	bottom: 0;
+	width:100%;
+	text-align:left;
+	background-color: rgba(0, 0, 0, 0.4);
+	height: 24px;
+	z-index:22;
+	-webkit-transition: all .5s  ease-in;
+	-moz-transition: all .5s  ease-in;
+}
+
 #continue{
-	bottom:0;
-	height:24px;
+	padding-top: 2px;
+	padding-bottom:2px;
 	cursor:pointer;
-	z-index:40;
 	right: 100%;
-	width: 100%;
-	-webkit-transition: right .5s  ease-in;
-	-moz-transition: right .5s  ease-in;
 }
 #continue img {
 	right: 0;
@@ -252,11 +259,8 @@ body{
 	color:#fff;
 }
 #continueText{
-	background-color:rgba(51,51,51,0.7);
-	cursor:pointer;
-	width: 100%;
-	height:100%;
 	line-height: 24px;
+	padding-left: 30px;
 }
 #timeUpText{
 	width:300px;
@@ -333,17 +337,9 @@ body{
 	z-index:24;
 }
 #hud{
-	bottom: 0;
-	width:100%;
-	text-align:left;
-	background-color: rgba(0, 0, 0, 0.4);
 	padding-left: 30px;
 	padding-top: 2px;
 	padding-bottom:2px;
-	height: 24px;
-	z-index:22;
-	-webkit-transition: left .5s  ease-in;
-	-moz-transition: left .5s  ease-in;
 }
 #home, #hud div a:hover{
 	width: 20px;

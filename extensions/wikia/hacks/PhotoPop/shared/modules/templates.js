@@ -69,7 +69,7 @@ define.call(exports, {
 				<div id='timeUpText'>"
 						+wgMessages['photopop-game-timeup']+
 				"</div>\
-				<div id='continue'>\
+				<div id='continue' class='bottomBar'>\
 					<span id='continueText'></span>\
 					<img src='{{#image}}buttonSrc_contiunue{{/image}}'/>\
 				</div>\
@@ -85,7 +85,7 @@ define.call(exports, {
 						<li id='answer3'></li>\
 					</ul>\
 				</div>\
-				<div id='hud'>\
+				<div id='hud' class='bottomBar'>\
 					<div id='home'>\
 						<img src='{{#image}}buttonSrc_home{{/image}}'/>\
 					</div>\
