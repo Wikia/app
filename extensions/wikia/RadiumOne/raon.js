@@ -8,7 +8,7 @@ var RadiumOne = {
 		if (window.wgIntegrateRadiumOne
 		|| $.inArray(window.cscoreCat, RadiumOne.enabledComscoreCats) != -1) {
 			// if no cookie, get pixel (which sets cookie)
-			if (document.cookie.indexOf( RadiumOne.cookieName+'=' ) == -1) {
+			if ($.cookies.get( RadiumOne.cookieName ) === null) {
 				new Image().src = RadiumOne.pixelUrl+Math.round(Math.random()*10000000);
 			}			
 		}
