@@ -1,3 +1,4 @@
+/*global WikiaTracker: true */
 var WikiaTrackerQueue = {
 
 	trackFn: false,
