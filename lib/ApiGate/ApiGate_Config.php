@@ -28,7 +28,6 @@
 
 // MediaWiki-specific wrapper to let us get the database connection using MediaWiki's normal connection and loadbalancing code.
 $dir = dirname( __FILE__ );
-#include "$dir/DatabaseConnectionWrapper.php";
 
 /**
  * Class for holding static functions related specifically to config (database connections, accessing current user-id, etc.).
