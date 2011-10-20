@@ -134,8 +134,6 @@ class SpecialApiGate extends SpecialPage {
 			$html .= $this->subpage_register();
 		}
 		
-		$html = ob_get_clean();
-
 		wfProfileOut( __METHOD__ );
 		return $html;
 	} // end subpage_landingPage()
