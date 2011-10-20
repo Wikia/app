@@ -343,7 +343,7 @@ class WallNotifications {
 		$dbData = $this->getBackupData($userId, $wikiId);
 		
 		foreach($dbData as $key => $value) {
-			$this->addNotificationToData($data, $value['unique_id'], $value['entity_key'], $value['author_id'], $value['is_read'], $value['is_reply']);
+			$this->addNotificationToData($data, $value['unique_id'], $value['entity_key'], $value['author_id'], $value['is_reply'], $value['is_read']);
 		}
 		
 		return $data;
