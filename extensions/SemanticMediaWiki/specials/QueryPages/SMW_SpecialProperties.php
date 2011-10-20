@@ -85,7 +85,7 @@ class SMWPropertiesPage extends SMWQueryPage {
 		if ( $result[0]->isUserDefined() && ( $result[1] <= 5 ) ) {
 			$errors[] = wfMsg( 'smw_propertyhardlyused' );
 		}
-		if ( $result[0]->isUserDefined() && $result[0]->getWikiPageValue()->getTitle()->exists() ) { // FIXME: this bypasses SMWDataValueFactory; ungood
+		if ( $result[0]->isUserDefined() && $result[0]->getWikiPageValue() && $result[0]->getWikiPageValue()->getTitle()->exists() ) { // FIXME: this bypasses SMWDataValueFactory; ungood
 			$types = smwfGetStore()->getPropertyValues( $result[0]->getWikiPageValue(), SMWPropertyValue::makeProperty( '_TYPE' ) );
 			if ( count( $types ) >= 1 ) {
 				$typestring = current( $types )->getLongHTMLText( $skin );
