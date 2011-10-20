@@ -418,7 +418,6 @@ class PartnerVideoHelper {
 		$name = preg_replace(Title::getTitleInvalidRegex(), ' ', $name);
 		// get rid of slashes. these are technically allowed in article
 		// titles, but they refer to subpages, which videos don't have
-		$name = str_replace('/', ' ', $name);
 		$name = str_replace('  ', ' ', $name);
 		
 		$name = substr($name, 0, VideoPage::MAX_TITLE_LENGTH);	// DB column Image.img_name has size 255
@@ -488,16 +487,16 @@ class PartnerVideoHelper {
 	protected static function sanitizeDataForPartnerVideo($provider, &$data) {
 		switch ($provider) {
 			case VideoPage::V_SCREENPLAY:
-				$data['titleName'] = str_replace('  ', ' ', str_replace('/', ' ', $data['titleName']) );
+				$data['titleName'] = str_replace('  ', ' ', $data['titleName'] );
 				if (!empty($data['description'])) {
-					$data['description'] = str_replace('  ', ' ', str_replace('/', ' ', $data['description']) );					
+					$data['description'] = str_replace('  ', ' ', $data['description'] );					
 				}
 				break;
 			case VideoPage::V_MOVIECLIPS:
-				$data['titleName'] = str_replace('  ', ' ', str_replace('/', ' ', $data['titleName']) );
+				$data['titleName'] = str_replace('  ', ' ', $data['titleName'] );
 				break;
 			case VideoPage::V_REALGRAVITY:
-				$data['clipTitle'] = str_replace('  ', ' ', str_replace('/', ' ', $data['clipTitle']) );
+				$data['clipTitle'] = str_replace('  ', ' ', $data['clipTitle'] );
 				break;
 			default:
 		}
