@@ -2643,8 +2643,12 @@ function logSoapFailure($origArtistSql, $origSongSql, $lookedForSql){
 		} else if(($numFails + 1) >= $NUM_FAILS_TO_SPOOL){
 			wfDebug("LWSOAP: Storing the failure in the database.\n");
 			$numFails += 1;
+
+			$dbw = wfGetDB( DB_MASTER );
+			$origSongSql = $dbw->strencode( $origSongSql );
+			$origArtistSql = $dbw->strencode( $origArtistSql );
+			$lookedForSql = $dbw->strencode( $lookedForSql );
 			$queryString = "INSERT INTO $tableName (request_artist,request_song, lookedFor, numRequests) VALUES ('$origArtistSql', '$origSongSql', '$lookedForSql', '$numFails') ON DUPLICATE KEY UPDATE numRequests=numRequests+$numFails";
-			$dbw = wfGetDB(DB_MASTER);
 			if($dbw->query($queryString)){
 				$dbw->commit();
 				wfDebug("LWSOAP: Stored in the database successfully.\n");
@@ -2683,7 +2687,7 @@ function requestStarted($funcName, $requestData){
 			$db = lw_connect();
 			$requestData = str_replace("'", "[&apos;]", $requestData);
 			$queryString = "INSERT INTO apiRequests (requestedThrough, requestedFunction, requestData, requestTime)";
-			$queryString.= " VALUES ('$REQUEST_TYPE', '$funcName', '$requestData', NOW())";
+			$queryString.= " VALUES ('$REQUEST_TYPE', '".mysql_real_escape_string($funcName, $db)."', '".mysql_real_escape_string($requestData, $db)."', NOW())";
 			if( mysql_query($queryString, $db ) ){
 				$retVal = mysql_insert_id( $db );
 			}
