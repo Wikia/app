@@ -214,6 +214,7 @@ class SpecialApiGate extends SpecialPage {
 		}
 
 // TODO: SWITCH TO USING ApiGate template.
+		ob_start();
 		if(count($keys) > 0){
 			print "<ul>";
 			foreach($keys as $apiKey){
