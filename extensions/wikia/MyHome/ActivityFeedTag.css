@@ -2,13 +2,13 @@
 	margin-left: 20px;
 }
 
-.activityfeed li {
+.activityfeed > li {
 	height: 1%;
 	list-style: none;
 	margin-bottom: 15px;
 }
 
-.activityfeed.shortlist li {
+.activityfeed.shortlist > li {
 	margin-bottom: 4px;
 }
 .activityfeed img.sprite {
