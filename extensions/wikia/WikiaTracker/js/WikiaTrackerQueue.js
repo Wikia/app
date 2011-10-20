@@ -4,7 +4,7 @@ var WikiaTrackerQueue = {
 	trackFn: false,
 
 	init: function() {
-		var queue = window._wtq,
+		var queue = window._wtq || [],
 			item;
 
 		// set tracking function - queued items will be passed there
