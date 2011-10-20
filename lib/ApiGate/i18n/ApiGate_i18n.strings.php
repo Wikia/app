@@ -15,7 +15,7 @@ $messages['en'] = array(
 	'apigate' => 'API Gate',
 	'apigate-mysql-error' => 'There was a db error with query<br/>\"$1\"<br/><br/>Error was: \"$2\"',
 	
-	'apigate-intro' => 'Welcome to the Control Panel for managing your API keys.  This panel will let you manage your contact-information (in case something goes wrong), see all of your API keys, and view usage statistics for each key.',
+	'apigate-intro' => 'Welcome to the Control Panel for managing your API keys.<br/><br/>This panel will let you control your contact-information (in case something goes wrong), see all of your API keys, and view usage statistics for each key.',
 
 	'apigate-register-title' => 'Get an API Key',
 	'apigate-register-heading' => 'Get an API Key',
