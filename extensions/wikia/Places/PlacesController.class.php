@@ -13,7 +13,7 @@ class PlaceController extends WikiaController {
 	}
 
 	public function placeFromModel( $oPlaceModel ){
-		$this->setVal( 'string', $oPlaceModel->getApiString() );
+		$this->setVal( 'url', $oPlaceModel->getApiString() );
 		$this->setVal( 'align', $oPlaceModel->getAlign() );
 		$this->setVal( 'width', $oPlaceModel->getWidth() );
 		$this->setVal( 'height', $oPlaceModel->getHeight() );
