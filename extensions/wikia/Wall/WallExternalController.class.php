@@ -105,9 +105,16 @@ class WallExternalController extends WikiaController {
 		}
 		
 		$ac = ArticleComment::newFromId($acStatus[1]->getId());
-		$ac->load(true);
-		$this->response->setVal('message', $this->app->renderView( 'WallController', 'message', array( 'new' => true, 'comment' => $ac ) ));
-		$this->app->wf->ProfileOut(__METHOD__);
+		if(!empty($ac)) {
+			$ac->load(true);
+			$this->response->setVal('message', $this->app->renderView( 'WallController', 'message', array( 'new' => true, 'comment' => $ac ) ));
+			$this->app->wf->ProfileOut(__METHOD__);
+		} else {
+			error_log('WALL_NOAC_ON_POST (acStatus)'.print_r($acStatus,1));
+			$this->response->setVal('status', false);
+			$this->app->wf->ProfileOut(__METHOD__);
+			return true;
+		}
 	}
 	
 	public function removeMessage() {
