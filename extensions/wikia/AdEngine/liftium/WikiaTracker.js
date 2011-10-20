@@ -33,8 +33,8 @@ var WikiaTracker = {
 	},
 	debugLevel:0,
 	_in_group_cache:{}
-	//_in_ab_cache:[] dont declare, leave undefined
-	//_beacon_hash_cache:0 dont declare, leave undefined
+	//_in_ab_cache:[] dont declare, leave undefined FIXME make it null and refactor accordingly
+	//_beacon_hash_cache:0 dont declare, leave undefined FIXME make it null and refactor
 };
 
 WikiaTracker.debug = function (msg, level, obj) {
