@@ -1,4 +1,20 @@
 <?php
+
+/**
+ * Places
+ *
+ * Provides <place> and <places> parser hooks and Special:Places
+ */
+
+$wgExtensionCredits['specialpage'][] = array(
+	'name' => 'Places',
+	'version' => '1.0',
+	'author' => array(
+		'Maciej Brencz',
+		'Jakub Kurcek' ),
+	'description-msg' => 'places-desc'
+);
+
 /**
  * @var WikiaApp
  */
