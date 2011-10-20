@@ -38,8 +38,8 @@ $app->registerClass('PlacesController', $dir . '/PlacesController.class.php');
  * models
  */
 
-$app->registerClass('PlacesModel', $dir . '/Models/PlacesModel.class.php');
-$app->registerClass('PlaceModel', $dir . '/Models/PlaceModel.class.php');
+$app->registerClass('PlacesModel', $dir . '/models/PlacesModel.class.php');
+$app->registerClass('PlaceModel', $dir . '/models/PlaceModel.class.php');
 
 /**
  * hooks

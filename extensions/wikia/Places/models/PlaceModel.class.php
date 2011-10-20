@@ -3,18 +3,22 @@ class PlaceModel {
 	private $align = 'right';
 	private $width = 200;
 	private $height = 200;
-	private $lan = 0;
-	private $lon = 0;
+	private $lat = 0.00;
+	private $lon = 0.00;
 	private $address = '';
+	private $zoom = 14;
 
-	public static function newFromAttributes( $array ){
+	public static function newFromAttributes( $array = null ){
 		$oModel = F::build( 'PlaceModel' );
-		foreach ( $array as $key => $val ){
-			$setter = 'set'.ucfirst( strtolower( $key ) );
-			if ( method_exists( 'PlaceModel', $setter ) ){
-				$oModel->$setter( $val );
+		if ( is_array( $array ) ){
+			foreach ( $array as $key => $val ){
+				$setter = 'set'.ucfirst( strtolower( $key ) );
+				if ( method_exists( 'PlaceModel', $setter ) ){
+					$oModel->$setter( $val );
+				}
 			}
 		}
+		return $oModel;
 	}
 
 	public function setAlign( $text ){
@@ -37,10 +41,10 @@ class PlaceModel {
 		}
 	}
 	
-	public function setLan( $float ){
+	public function setLat( $float ){
 		$float = (double) $float;
 		if ( !empty( $float ) ){
-			$this->lan = $float;
+			$this->lat = $float;
 		}
 	}
 
@@ -57,6 +61,13 @@ class PlaceModel {
 		}
 	}
 
+	public function setZoom( $int ){
+		$int = (int) $int;
+		if ( ( $int > 0 ) && ( $int < 21 ) ){
+			$this->zoom = $int;
+		}
+	}
+
 	public function getAlign(){
 		return $this->align;
 	}
@@ -69,8 +80,8 @@ class PlaceModel {
 		return $this->height;
 	}
 
-	public function getLan(){
-		return $this->lan;
+	public function getLat(){
+		return $this->lat;
 	}
 
 	public function getLon(){
@@ -79,5 +90,22 @@ class PlaceModel {
 	
 	public function getAddress(){
 		return $this->address;
+	}
+
+	public function getZoom(){
+		return $this->zoom;
+	}
+
+	// Logic
+
+	public function getApiString(){
+
+		$aParams = array();
+		$aParams['center'] = $this->getLat.','.$this->getLon;
+		$aParams['size'] = $this->getWidth.'x'.$this->getHeight;
+		$aParams['zoom'] = $this->getZoom;
+		$aParams['maptype'] = 'roadmap';
+		$sParams = http_build_query( $aParams );
+		return 'http://maps.googleapis.com/maps/api/staticmap?'.$sParams;
 	}
 }
