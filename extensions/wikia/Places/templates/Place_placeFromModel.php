@@ -1,0 +1,1 @@
+<img src="<?=$url;?>" style=" width:<?=$width;?>px; height:<?=$height;?>px; float:<?=$algn;?>" >
