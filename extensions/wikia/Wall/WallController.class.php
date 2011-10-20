@@ -88,9 +88,27 @@ class WallController extends ArticleCommentsModule {
 			$dbkey = $row->ar_title;
 			$msg_title = F::build('Title', array($dbkey, NS_USER_WALL_MESSAGE), 'newFromText' );
 			
-			$undelete_title = F::build('Title', array('Undelete', NS_SPECIAL), 'newFromText' );
-			$undelete_url = $undelete_title->getFullUrl();
-			$this->response->setVal( 'undeleteUrl', $undelete_url.'/'.$msg_title->getPrefixedText() );
+			if(empty($msg_title)) {
+				// try again from master
+				$dbr = wfGetDB( DB_MASTER );
+				$row = $dbr->selectRow( 'archive',
+					array( 'ar_title' ),
+					array( 'ar_page_id' => $parts[1] ),
+					__METHOD__ );
+				
+				$dbkey = $row->ar_title;
+				$msg_title = F::build('Title', array($dbkey, NS_USER_WALL_MESSAGE), 'newFromText' );
+			}
+			
+			if(empty($msg_title)) {
+				// give up, don't display undelete
+				error_log("WALL_NOTITLE_FROM_DBKEY (dbkey)".print_r($dbkey,1));
+				$canUndelete = false;			
+			} else {
+				$undelete_title = F::build('Title', array('Undelete', NS_SPECIAL), 'newFromText' );
+				$undelete_url = $undelete_title->getFullUrl();
+				$this->response->setVal( 'undeleteUrl', $undelete_url.'/'.$msg_title->getPrefixedText() );
+			}
 		}
 		$this->response->setVal( 'canUndelete', $canUndelete );
 	}	
