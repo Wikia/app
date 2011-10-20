@@ -39,7 +39,7 @@ h3.myhome-empty-message {
 	margin-left: 20px;
 }
 
-.activityfeed li {
+.activityfeed > li {
 	height: 1%;
 	margin-bottom: 25px;
 }

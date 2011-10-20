@@ -5,7 +5,7 @@
 /* overwriting Monoco-styling */
 .WikiaArticle ul.activityfeed { margin-left: 0; }
 .activityfeed {
-	li {
+	&>li {
 		padding-bottom: 7px;
 		padding-top: 10px;
 		margin-bottom: 0;
