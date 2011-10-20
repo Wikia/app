@@ -2102,63 +2102,6 @@ Liftium.trackEvent = function(page, profile) {
 	Liftium.beaconCall(url, false);
 };
 
-Liftium.trackEvent2 = function(page, profile) {  // FIXME NEF remove
-	// removed
-};
-
-/*
- * param mixed - {profile:'profile-id', sample:10|'10%'} or 'profile-id' or 10|'10%'
- */
-Liftium.trackEvent3 = function(page, param) { // FIXME NEF deprecated, remove
-	if (typeof page == "object") {
-		page = page.join("/");
-	}
-
-	page = '/' + LiftiumOptions.pubid + '/' + page;
-
-	if (typeof WikiaTracker != 'undefined') {
-
-	WikiaTracker.trackEvent3(page, param);
-
-	} else {
-		page = page + '/oups';
-		
-	var profile = 'UA-17475676-10';
-	var sample = 10;
-	if (!Liftium.e(param)) {
-		// {profile:'profile-id', sample:10|'10%'}
-		if (typeof param == 'object') {
-			if (!Liftium.e(param['profile'])) {
-				profile = param['profile'];
-				Liftium.d("Tracking (3) is using custom profile: " + profile, 7);
-			}
-			if (!Liftium.e(param['sample'])) {
-				sample = parseInt(param['sample']);
-				Liftium.d("Tracking (3) is using custom sample rate: " + sample, 7);
-			}
-		} else {
-			param = param.toString();
-			// 'profile-id'
-			if (param.search(/\d-\d/) != -1) {
-				profile = param;
-				Liftium.d("Tracking (3) is using custom profile: " + profile, 7);
-			// 10|'10%'
-			} else if (parseInt(param)) {
-				sample = parseInt(param);
-				Liftium.d("Tracking (3) is using custom sample rate: " + sample, 7);
-			}
-		}
-	}
-
-	Liftium.d("Track event (3): " + page + ', profile: ' + profile + ', sample: ' + sample, 1);
-
-	_gaq.push(['liftium._setAccount', profile]);
-	_gaq.push(['liftium._setSampleRate', sample]);
-	_gaq.push(['liftium._trackPageview', page]);
-
-	}
-};
-
 Liftium.buildTrackUrl = function(data) {
 	return data.join("/") + "/" +
 		[
