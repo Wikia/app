@@ -5,7 +5,7 @@ ArticleAjaxLoading = {
 	cache: {},
 	
 	track: function(str) {
-		WikiaTracker.track(str, 'UA-2871474-2'); // FIXME NEF switch to profile name, not id
+		$.tracker.byStr(str, true); // FIXME unsample when done
 	},
 
 	init: function() {

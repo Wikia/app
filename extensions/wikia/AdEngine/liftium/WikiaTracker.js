@@ -101,7 +101,7 @@ WikiaTracker.track = function(page, profile) {
 };
 
 WikiaTracker._track = function(page, profile, sample) {
-	this.debug(page + ' in ' + profile + ' at ' + sample + '%', 5);
+	this.debug(page + ' in ' + profile + ' at ' + sample + '%', 7);
 
 	_gaq.push(['WikiaTracker._setAccount', profile]);
 	_gaq.push(['WikiaTracker._setSampleRate', sample]);
