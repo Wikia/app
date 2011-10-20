@@ -28,13 +28,13 @@ $res = $dbw->select(
 foreach( $res as $row ) {
 	$user = AdSS_User::newFromId( $row->billing_user_id );
 	$amount = -$row->billing_balance;
-	echo "{$user->toString()} | $amount | {$row->last_billed} | ";
+	echo "USER: {$user->toString()} (ID:{$user->id}) | AMT: $amount | LAST BILLED: {$row->last_billed} | ------> ";
 
 	if( !$user->baid ) {
-		echo "failed - no billing agreement!\n";
+		echo "FAILED - no billing agreement!\n\n";
 		continue;
 	}
 
-	echo "user: ". $user->id . " billed! (amount:" . $amount . ")\n";
+	echo "BILLED!\n\n";
 }
 $dbw->freeResult( $res );
