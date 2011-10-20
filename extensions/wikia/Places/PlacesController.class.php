@@ -1,6 +1,6 @@
 <?php
 
-class PlacesController extends WikiaController {
+class PlaceController extends WikiaController {
 
 	public function __construct( WikiaApp $app ) {
 		$this->app = $app;
