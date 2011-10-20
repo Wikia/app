@@ -4,20 +4,19 @@ var WikiaTrackerQueue = {
 	trackFn: false,
 
 	init: function() {
-		var queue = window._wtq;
+		var queue = window._wtq,
+			item;
 
 		// set tracking function - queued items will be passed there
 		this.trackFn = $.proxy(WikiaTracker.track, WikiaTracker);
 
 		// move queued items to WikiaTracker
-		for (var i=0, len=queue.length; i<len; i++) {
-			this.pushCallback(queue[i]);
+		while ((item = queue.shift()) !== undefined) {
+			this.pushCallback(item);
 		}
 
 		// and now replace _wtq.push with this.pushCallback
-		queue.push = $.proxy(function(item) {
-			this.pushCallback(item);
-		}, this);
+		queue.push = $.proxy(this.pushCallback, this);
 	},
 
 	pushCallback: function(item) {
