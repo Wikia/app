@@ -23,7 +23,6 @@ var WikiaTracker = {
 	},
 	defaultRate:10,
 	profileRates:{
-		'UA-2871474-1':100, // main.sampled (FIXME temporary, remove)
 		'UA-2871474-2':100, // main.unsampled
 		'UA-2871474-3':1, // main.test
 		'UA-12241505-2':100, // lyrics.unsampled
@@ -61,30 +60,8 @@ WikiaTracker.debug = function (msg, level, obj) {
 	return true;
 };
 
-WikiaTracker.trackGA = function(page, profile) {
-	if (typeof page == 'object') { // TODO instanceof Array
-		page = page.join('/');
-	}
-	if (page.indexOf('/') != 0) {
-		page = '/' + page;
-	}
-
-	this.debug(page + ' in ' + profile, 3);
-
-	if (typeof profile == 'undefined') {
-		profile = 'default';
-	}
-
-	if (typeof this.profileAliases[profile] != 'undefined') {
-		profile = this.profileAliases[profile];
-	}
-	
-	var sample = this.defaultRate;
-	if (typeof this.profileRates[profile] != 'undefined') {
-		sample = this.profileRates[profile];
-	}
-
-	return this._track(page, profile, sample);
+WikiaTracker.trackGA = function(page, profile) { // FIXME NEF deprecated, remove
+	return false;
 };
 
 WikiaTracker.track = function(page, profile) {
@@ -110,7 +87,7 @@ WikiaTracker.track = function(page, profile) {
 		sample = this.profileRates[profile];
 	}
 
-	this.debug('sample rate is ' + sample, 5); // FIXME NEF 7
+	this.debug('sample rate is ' + sample, 7);
 
 	if (sample == 100) {
 		// just track it
@@ -124,7 +101,7 @@ WikiaTracker.track = function(page, profile) {
 };
 
 WikiaTracker._track = function(page, profile, sample) {
-	this.debug('(internal) ' + page + ' in ' + profile + ' at ' + sample + '%', 5);
+	this.debug(page + ' in ' + profile + ' at ' + sample + '%', 5);
 
 	_gaq.push(['WikiaTracker._setAccount', profile]);
 	_gaq.push(['WikiaTracker._setSampleRate', sample]);
@@ -140,14 +117,6 @@ WikiaTracker._track = function(page, profile, sample) {
 	_gaq.push(['WikiaTracker._trackPageview', page]);
 
 	return true;
-};
-
-WikiaTracker.trackEvent3 = function(page, param) { // FIXME NEF deprecated, remove
-	return false;
-};
-
-WikiaTracker._track2 = function(page, profile, sample) { // FIXME NEF deprecated, remove
-	return false;
 };
 
 WikiaTracker._simpleHash = function(s, tableSize) {
@@ -202,7 +171,7 @@ WikiaTracker.inGroup = function(group) {
 			return false;
 		}
 
-		this.debug('beacon_id: ' + window.beacon_id, 7);
+		this.debug('beacon_id: ' + window.beacon_id, 5);
 		beacon_hash = this._simpleHash(window.beacon_id, 100);
 		this.debug('beacon_hash: ' + beacon_hash, 5);
 
