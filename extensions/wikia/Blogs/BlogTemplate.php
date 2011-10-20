@@ -360,6 +360,7 @@ class BlogTemplateClass {
 	public static function parseTag( $input, $params, &$parser, $frame = null, $returnPlainData = false) {
 		global $wgTitle;
 		wfProfileIn( __METHOD__ );
+
 		/* parse input parameters */
 		if (is_null(self::$oTitle)) {
 			self::$oTitle = ( is_null($wgTitle) ) ? $parser->getTitle() : $wgTitle;
@@ -1320,6 +1321,7 @@ class BlogTemplateClass {
 				"iPageCount"		=> $iPageCount,
 				"iPage"			=> $iPage,
 				"iTotal"		=> $iTotal,
+				"iCount"		=> intval(self::$aOptions['count']),
 				"wgTitle"		=> self::$oTitle,
 				"pageOffsetName"	=> self::$pageOffsetName,
 				"wgExtensionsPath" 	=> $wgExtensionsPath,
@@ -1390,6 +1392,7 @@ class BlogTemplateClass {
 						$offset = $count * $offset;
 						/* set new value of offset */
 						$params['offset'] = $offset;
+						
 						/* run parser */
 						$result = self::parseTag( $input, $params, $wgParser );
 					}

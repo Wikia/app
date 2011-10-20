@@ -33,11 +33,11 @@ class Paginator extends Service{
 	 * @param   array  configuration
 	 * @return  Pagination
 	 */
-	public static function newFromArray( $aData, $iItemsPerPage = 8, $iDisplayedNeighbour = 3, $bCach = false, $sCacheKey = '' ){
-
+	public static function newFromArray( $aData, $iItemsPerPage = 8, $iDisplayedNeighbour = 3, $bCach = false, $sCacheKey = '', $maxItemsPerPage = 48 ){
 		$aConfig = array(
 			'itemsPerPage'		=> $iItemsPerPage,
-			'displayedNeighbours'	=> $iDisplayedNeighbour
+			'displayedNeighbours'	=> $iDisplayedNeighbour,
+			'maxItemsPerPage'	=> $maxItemsPerPage,
 		);
 		
 		return new Paginator( $aData, $aConfig, $bCach, $sCacheKey );
@@ -49,12 +49,16 @@ class Paginator extends Service{
 	 * @param   array  configuration
 	 * @return  void
 	 */
-	public function __construct( $aData, $aConfig = false, $bCach = false, $sCacheKey = ''  ){
-
+	public function __construct( $aData, $aConfig = false, $bCach = false, $sCacheKey = '' ){
+		$this->maxItemsPerPage = $aConfig['maxItemsPerPage'];
 		$this->enableCache = ( !empty( $bCach ) && !empty( $sCacheKey ) );
 		$this->cacheKey = $sCacheKey;
 		$this->setConfig( $aConfig );
 		$this->paginate( $aData );
+	}
+	
+	private function setMaxItemsPerPage($iMaxItemsPerPage) {
+		$this->maxItemsPerPage = $iMaxItemsPerPage;
 	}
 
 	private function setConfig ( $aConfig ){
@@ -78,7 +82,6 @@ class Paginator extends Service{
 	}
 
 	private function paginate( $aData ){
-		
 		if ( is_array($aData) ) {
 			if ( count($aData) > 0 ) {
 				$aPaginatedData = array_chunk( $aData, $this->config['itemsPerPage'] );

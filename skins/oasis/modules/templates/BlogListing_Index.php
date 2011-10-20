@@ -12,37 +12,36 @@
 			$title = Title::newFromText($post['title'], $post['namespace']);
 		?>
 			<li class="WikiaBlogListingPost">
-			<?= wfRenderModule('CommentsLikes', 'Index', array('comments' => $post['comments'], 'bubble' => true, 'title' => $title)); ?>
-
-			<h1><a href="<?= htmlspecialchars($title->getLocalUrl()) ?>"><?= htmlspecialchars(BlogTemplateClass::getSubpageText($title)) ?></a></h1>
-
-		<div class="author-details">
-			<?= $post['avatar'] ?>
-			<span><?= wfMsg('blog-by', $post['date'], Xml::element('a', array('href' => htmlspecialchars($post['userpage'])), $post['username'], false)) ?></span>
-		</div>
-
-		<blockquote>
-			<?php
-			// handle proper rendering of "read more"
-			$readMoreLink = Xml::openElement('span', array('class' => 'read-more')) .
-					Wikia::link($title, wfMsg('blog-readfullpost') . ' &gt;') .
-					Xml::closeElement('span');
-
-			// if blog post rendered text ends with </p>
-			if (!empty($post['readmore'])) {
-				if (substr($post['text'], -4) == '</p>') {
-					$post['text'] = substr($post['text'], 0, -4) . '<br>' . $readMoreLink . '</p>';
-				} else {
-					$post['text'] .=  '' .$readMoreLink;
-				}
-			} else {
-				$post['text'] .= '';
-			}
-
-			echo $post['text'];
-			?>
-		</blockquote>
-		</li>
+				<?= wfRenderModule('CommentsLikes', 'Index', array('comments' => $post['comments'], 'bubble' => true, 'title' => $title)); ?>
+	
+				<?= $post['avatar'] ?>
+				<div class="author-details">
+					<h1><a href="<?= htmlspecialchars($title->getLocalUrl()) ?>"><?= htmlspecialchars(BlogTemplateClass::getSubpageText($title)) ?></a></h1>
+					<span><?= wfMsg('blog-by', $post['date'], Xml::element('a', array('href' => htmlspecialchars($post['userpage'])), $post['username'], false)) ?></span>
+				</div>
+		
+				<blockquote>
+					<?php
+					// handle proper rendering of "read more"
+					$readMoreLink = Xml::openElement('span', array('class' => 'read-more')) .
+							Wikia::link($title, wfMsg('blog-readfullpost') . ' &gt;') .
+							Xml::closeElement('span');
+		
+					// if blog post rendered text ends with </p>
+					if (!empty($post['readmore'])) {
+						if (substr($post['text'], -4) == '</p>') {
+							$post['text'] = substr($post['text'], 0, -4) . '<br>' . $readMoreLink . '</p>';
+						} else {
+							$post['text'] .=  '' .$readMoreLink;
+						}
+					} else {
+						$post['text'] .= '';
+					}
+		
+					echo $post['text'];
+					?>
+				</blockquote>
+			</li>
 <?php
 		}
 ?>

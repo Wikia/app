@@ -1,29 +1,61 @@
-function wkBlogShowPage(offset) {
-	var wkBlogCurValue = $("#wk-blog-current-page").text();
-	var __offset = (!wkBlogCurValue) ? 0 : wkBlogCurValue; __offset = (__offset > 0) ? parseInt(__offset) - 1 : 0;
-	var wkBlogLoader = $("#wk_blogs_loader");
-	var wkBlogLoader2 = $("#wk_blogs_loader2");
-
-	if (wkBlogLoader) {
-		wkBlogLoader.html("<img src=\"http://images.wikia.com/common/skins/common/images/ajax.gif\">");
-		wkBlogLoader2.html("<img src=\"http://images.wikia.com/common/skins/common/images/ajax.gif\">");
-		offset = parseInt(__offset) + parseInt(offset);
-		var params = "&rsargs[0]=" + wgArticleId + "&rsargs[1]=" + wgNamespaceNumber + "&rsargs[2]=" + offset + "&rsargs[3]=" + (skin && skin == 'oasis' ? 'oasis' : 'monaco');
-		var baseurl = wgScript + "?action=ajax&rs=BlogTemplateClass::axShowCurrentPage" + params;
-		$.get( wgScript + "?action=ajax&rs=BlogTemplateClass::axShowCurrentPage" + params,
-			function(data) {
-				if(data) {
-					if(skin == 'oasis') {
+if(typeof blogInitialized == 'undefined') {
+	var blogInitialized = true;
+	
+	var BlogPaginator = {
+		isFree: true,
+		init: function() {
+			$().log('hi there');
+			BlogPaginator.n = $('.wk_blogs_pager .wikia-paginator');
+			BlogPaginator.n.live('click', function(evt) {
+				evt.preventDefault();
+				if(BlogPaginator.isFree) {
+					BlogPaginator.isFree = false;
+					var el = $(evt.target);
+					if(el.is('a') && !el.hasClass('active')) {
+						BlogPaginator.changePage(parseInt(el.data('page')) - 1);
+					}
+				}
+			});
+		},
+		// modified legacy code
+		changePage: function(offset) {
+			var wkBlogLoader = $(".wk_blogs_pager .wikia-paginator ul");
+			wkBlogLoader.append("<li><img src=\"http://images.wikia.com/common/skins/common/images/ajax.gif\"></li>");
+			var params = "&rsargs[0]=" + wgArticleId + "&rsargs[1]=" + wgNamespaceNumber + "&rsargs[2]=" + offset + "&rsargs[3]=oasis";
+			var baseurl = wgScript + "?action=ajax&rs=BlogTemplateClass::axShowCurrentPage" + params;
+			$().log(wgScript + "?action=ajax&rs=BlogTemplateClass::axShowCurrentPage" + params);
+			$.get( wgScript + "?action=ajax&rs=BlogTemplateClass::axShowCurrentPage" + params,
+				function(data) {
+					if(data) {
 						$(".wk_blogs_pager").remove();
 						$(".WikiaBlogListing").empty().append(data);
-					} else {
-						$("#wk_blogs_article").empty().append(data);
+						$('html, body').animate({scrollTop: $('body').offset().top}, 400);
 					}
-					$('html, body').animate({scrollTop: $('body').offset().top}, 400);
+					wkBlogLoader.html("");
+					BlogPaginator.isFree = true;
 				}
-				wkBlogLoader.html("");
-				wkBlogLoader2.html("");
+			);
+		}
+	};
+	
+	var blogPaginatorHandle = false;
+	
+	function initializeBlogPaginator() {
+		if(blogPaginatorHandle) {
+			clearInterval(blogPaginatorHandle);
+		}
+		var attempt = 30;
+		blogPaginatorHandle = setInterval(function() {
+			attempt--;
+			if(attempt < 0) {
+				clearInterval(blogPaginatorHandle);
 			}
-		);
+			if(typeof jQuery != 'undefined') {
+				clearInterval(blogPaginatorHandle);
+				BlogPaginator.init();
+			}
+		}, 500);
 	}
+	
+	initializeBlogPaginator();
 }

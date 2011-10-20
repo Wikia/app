@@ -54,22 +54,24 @@
 	}
 	h1 {
 		font-size: 22px;
-		margin-right: 90px;
+		margin: 0 90px 0 0;
 	}
 	.WikiaBlogListingPost {
 		border-bottom: 1px solid $color-page-border;
+		padding: 20px 0;
 	}
 	.commentslikes {
 		position: absolute;
 		right: 10px;
-		top: 0px;
+		top: 20px;
+	}
+	.avatar {
+		border: 1px solid $color-page-border;
+		float: left;
 	}
 	.author-details {
 		@include clearfix;
-		.avatar {
-			float: left;
-			padding-right: 5px;
-		}
+		margin: 0 0 10px 63px;
 		span {
 			display: block;
 			a, a:visited {
@@ -77,8 +79,11 @@
 			}
 		}
 	}
-	p .read-more {
-		margin: 0 20px;
+	p {
+		margin: 0;
+		.read-more {
+			margin: 0 20px;
+		}
 	}
 }
 
@@ -114,7 +119,7 @@
 		}
 	}
 	.commentslikes {
-		bottom: 11px;
+		bottom: 16px;
 		position: absolute;
 		right: 0px;
 		a {
@@ -130,6 +135,7 @@
 			@include clearfix;
 			border-top: solid 1px $color-page-border;
 			list-style: none;
+			padding: 10px 0;
 			position: relative;
 			&:first-child {
 				border: none;
@@ -137,10 +143,14 @@
 			h1,
 			details span,
 			.author-details span {
-				padding-left: 10px;
+				padding-left: 0;
 			}
 			h1 {
 				font-weight: bold;
+				margin: 0;
+			}
+			.author-details {
+				margin-left: 35px;
 			}
 		}
 	}
@@ -148,10 +158,6 @@
 		vertical-align: middle
 	}
 	h1 {
-		margin: {
-			left: 28px;
-			bottom: 0px;
-		}
 		padding-bottom: 0px;
 		a {
 			font-size: 12px;
@@ -170,17 +176,18 @@
 		top: -2px;
 	}
 
+	.avatar { // /** the avatar **/
+		float: left;
+		height: 25px;
+		margin: {
+			right: 1px;
+			top: 3px;
+		}
+		width: 25px;
+	}
+
 	details,
 	.author-details {
-		img { // /** the avatar **/
-			float: left;
-			height: 25px;
-			margin: {
-				right: 1px;
-				top: -15px;
-			}
-			width: 25px;
-		}
 		span { // /** the date **/
 			font-size: 10px;
 			a {
