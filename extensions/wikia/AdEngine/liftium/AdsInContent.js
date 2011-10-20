@@ -69,7 +69,6 @@ if ($(window).width() < 1010) {
 
 		_gaq.push(['liftium._trackPageview', '/999/' + Liftium.buildTrackUrl(['AIC2', 'test2'])]);
 	}
-	WikiaTracker.trackGA(Liftium.buildTrackUrl([LiftiumOptions.pubid, 'AIC2', 'test5']), 'liftium.test');
 
 	WikiaTracker.AB('/' + Liftium.buildTrackUrl(['liftium', 'AIC2', 'testC']));
 

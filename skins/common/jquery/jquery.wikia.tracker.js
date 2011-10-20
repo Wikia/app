@@ -320,18 +320,16 @@ jQuery.tracker.track = function(fakeurl, unsampled) {
 	}
 
 	$.tracker.trackStr('/1_' + skinname + '/' + username + '/' + fakeurl, 'UA-2871474-1');
+	//WikiaTracker.track('/1_' + skinname + '/' + username + '/' + fakeurl, 'main.sampled');
 	if (unsampled) {
 		WikiaTracker.track('/1_' + skinname + '/' + username + '/' + fakeurl, 'main.unsampled');
 	}
 	if(wgPrivateTracker) {
 		$.tracker.trackStr('/1_' + skinname + '/' + wgDB + '/' + username + '/' + fakeurl, 'UA-2871474-1');
+		//WikiaTracker.track('/1_' + skinname + '/' + username + '/' + fakeurl, 'main.sampled');
 		if (unsampled) {
 			WikiaTracker.track('/1_' + skinname + '/' + wgDB + '/' + username + '/' + fakeurl, 'main.unsampled');
 		}
-	}
-	var testGroupName = document.cookie.match(/wikia-ab=[^;]*name=(.*?)\//);
-	if(testGroupName) {
-		$.tracker.trackStr('/1_' + skinname + '/' + testGroupName[1] + '/' + username + '/' + fakeurl, 'UA-19473076-1');
 	}
 	WikiaTracker.AB('/1_' + skinname + '/' + username + '/' + fakeurl);
 };
