@@ -12,7 +12,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'author' => array(
 		'Maciej Brencz',
 		'Jakub Kurcek' ),
-	'description-msg' => 'places-desc'
+	'descriptionmsg' => 'places-desc'
 );
 
 /**
