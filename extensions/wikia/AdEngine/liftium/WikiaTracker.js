@@ -34,6 +34,7 @@ var WikiaTracker = {
 	debugLevel:0,
 	_in_group_cache:{}
 	//_in_ab_cache:[] dont declare, leave undefined
+	//_beacon_hash_cache:0 dont declare, leave undefined
 };
 
 WikiaTracker.debug = function (msg, level, obj) {
@@ -186,19 +187,29 @@ WikiaTracker.inGroup = function(group) {
 
 	if (typeof this._in_group_cache[group] != 'undefined') {
 		in_group = this._in_group_cache[group];
-		this.debug('inGroup from cache', 5); // FIXME NEF 7
+		this.debug('inGroup from cache', 7);
 	} else {
+		var beacon_hash = null;
+
+		if (typeof this._beacon_hash_cache != 'undefined') {
+			beacon_hash = this._beacon_hash_cache;
+			this.debug('beacon_hash from cache', 7)
+		} else {
+
 		if (typeof window.beacon_id == 'undefined') {
 			this.debug('beacon_id unavailable (yet?), bailing out', 3);
 			// TODO track it...
 			return false;
 		}
 
-		this.debug('beacon_id: ' + window.beacon_id, 5); // FIXME NEF 7
-		var hash = this._simpleHash(window.beacon_id, 100);
-		this.debug('beacon hashed: ' + hash, 5); // FIXME NEF 7
+		this.debug('beacon_id: ' + window.beacon_id, 7);
+		beacon_hash = this._simpleHash(window.beacon_id, 100);
+		this.debug('beacon_hash: ' + beacon_hash, 5);
 
-		in_group = this._inGroup(hash, group);
+			this._beacon_hash_cache = beacon_hash;		
+		}
+
+		in_group = this._inGroup(beacon_hash, group);
 		this._in_group_cache[group] = in_group;
 	}
 
@@ -238,7 +249,7 @@ WikiaTracker._abData = function() {
 
 WikiaTracker.AB = function(page) {
 	var ab = this._abData();
-	for (var i in ab) {
+	for (var i=0; i < ab.length; i++) {
 		this.track('/' + ab[i] + page, 'ab.main');
 	}
 
