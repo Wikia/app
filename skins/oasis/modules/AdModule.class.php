@@ -82,7 +82,7 @@ class AdModule extends Module {
 			} else if( BodyModule::isBlogPost() ) {
 				self::$config['TOP_RIGHT_BOXAD'] = true;
 				self::$config['TEST_TOP_RIGHT_BOXAD'] = true;
-			} else if (in_array($namespace, $wgExtraNamespaces)) {
+			} else if (array_key_exists($namespace, $wgExtraNamespaces)) {
 				self::$config['TOP_LEADERBOARD'] = true;
 			}
 		}
