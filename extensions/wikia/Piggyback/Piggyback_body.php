@@ -25,6 +25,10 @@ class Piggyback extends SpecialPage {
 			return;
 		}
 
+		if ( !empty( $par ) ) {
+			$wgRequest->setVal( 'target', $par );
+		}
+
 		$this->setHeaders();
 		$LoginForm = new PBLoginForm( $wgRequest );
 		if( $this->mAction == 'submitlogin' && $wgRequest->wasPosted() ) {

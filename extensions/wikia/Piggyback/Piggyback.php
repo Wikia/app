@@ -49,3 +49,21 @@ function PiggybackGoToParent( $user, $injected_html, $oldName ) {
 	}
 	return true;
 }
+
+$wgHooks['ContributionsToolLinks'][] = 'efPiggybackAddToolLinks';
+function efPiggybackAddToolLinks( $id, $nt, &$tools ) {
+	global $wgUser;
+
+	if ( !$wgUser->isAllowed( 'piggyback' ) ) {
+		return true;
+	}
+
+	$sk = $wgUser->getSkin();
+
+	$tools[] = $sk->linkKnown(
+		SpecialPage::getTitleFor( 'Piggyback', $nt->getDBkey() ),
+		'Piggyback'
+	);
+
+	return true;
+} 
