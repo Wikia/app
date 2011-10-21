@@ -16,13 +16,25 @@ class PlacesParserHookHandler {
 	static public function renderPlaceTag($content, array $attributes, Parser $parser, PPFrame $frame) {
 		wfProfileIn(__METHOD__);
 
+		// wrap data in a model object
+		$placeModel = F::build('PlaceModel', array($attributes), 'newFromAttributes');
+
+		// render parser hook
 		$html = F::app()->sendRequest(
 			'Places',
-			'placeFromAttributes',
+			'placeFromModel',
 			array(
-				'attributes'	=> $attributes
+				'model'	=> $placeModel
 			)
 		)->toString();
+
+		// get the current page title
+		$title = $parser->Title();
+
+		// store data in database
+		$storage = F::build('PlaceStorage', array($title->getArticleID()), 'newFromId');
+		$storage->setModel($placeModel);
+		$storage->store();
 
 		wfProfileOut(__METHOD__);
 		return $html;

@@ -47,6 +47,7 @@ $app->registerClass('PlacesController', $dir . '/PlacesController.class.php');
 
 $app->registerClass('PlacesModel', $dir . '/models/PlacesModel.class.php');
 $app->registerClass('PlaceModel', $dir . '/models/PlaceModel.class.php');
+$app->registerClass('PlaceStorage', $dir . '/models/PlaceStorage.class.php');
 
 /**
  * hooks
@@ -61,4 +62,9 @@ $app->registerHook('ParserFirstCallInit', 'PlacesParserHookHandler', 'PlacesSetu
  * messages
  */
 $app->registerExtensionMessageFile( 'Places', $dir . '/Places.i18n.php' );
+
+/**
+ * constructors
+ */
 F::addClassConstructor( 'PlacesController', array( 'app' => $app ) );
+F::addClassConstructor( 'PlaceStorage', array(), 'newFromId' );
