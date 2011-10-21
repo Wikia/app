@@ -380,7 +380,6 @@ class CreateWikiLocalJob extends Job {
 		$reason = wfMsgForContent('autocreatewiki-protect-reason');
 
 		$wgUser->addGroup( 'staff' );
-		$wgUser->addGroup( 'bot' );
 
 		foreach( $wgWikiaKeyPages as $pageName ) {
 			$title = Title::newFromText( $pageName );
@@ -402,7 +401,6 @@ class CreateWikiLocalJob extends Job {
 			}
 		}
 		$wgUser->removeGroup( "staff" );
-		$wgUser->removeGroup( "bot" );
 	}
 
 
