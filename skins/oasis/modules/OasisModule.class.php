@@ -160,15 +160,17 @@ class OasisModule extends Module {
 		// track page load time
 		$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'pagetime', array('oasis'));
 
-		// track browser height
-		$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'browser-height');
+		// track browser height TODO NEF no browser height tracking code anymore, remove
+		//$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'browser-height');
 
 		// record which varnish this page was served by
 		$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'varnish-stat');
 
-		$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'noads');
+		// TODO NEF not used, remove
+		//$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'noads');
 
-		$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'abtest');
+		// TODO NEF we dont do AB this way anymore, remove
+		//$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'abtest');
 
 		// Add important Gracenote analytics for reporting needed for licensing on LyricWiki.
 		if (43339 == $wgCityId){
