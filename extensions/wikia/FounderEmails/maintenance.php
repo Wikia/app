@@ -19,8 +19,9 @@ if ( !function_exists( 'wfFounderEmailsInit' ) ) {
 }
 
 if (isset($options['help'])) {
-	die("Usage: php maintenance.php [--event=(daysPassed/viewsDigest/completeDigest)] [--help] [--quiet]
+	die("Usage: php maintenance.php [--event=(daysPassed/viewsDigest/completeDigest)] [--wikiId=12345] [--help] [--quiet]
 		--event			specific email event i.e. daysPassed, viewsDigest, completeDigest
+		--wikiId		specific wiki id
 		--help			you are reading it right now
 		--quiet			do not print anything to output\n\n");
 }
@@ -34,11 +35,16 @@ $events = array(
 if (isset($options['event']) && in_array($options['event'], $events)) {
 	$events = array($options['event']);
 }
-	
+
+$wikiId = null;
+if (isset($options['wikiId']) && is_numeric($options['wikiId'])) {
+	$wikiId = $options['wikiId'];
+}
+
 foreach ($events as $event) {
 	if (!isset($options['quiet'])) {
 		echo "Sending Founder Emails ($event).\n";
 	}
 	
-	FounderEmails::getInstance()->processEvents( $event, true );
+	FounderEmails::getInstance()->processEvents( $event, true, $wikiId );
 }
