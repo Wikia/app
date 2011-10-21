@@ -6,7 +6,7 @@ class AdModule extends Module {
 	private static $slotsUseGetAd = array( 'HOME_INVISIBLE_TOP', 'INVISIBLE_TOP', 'INVISIBLE_1', 'INVISIBLE_2', 'HOME_TOP_RIGHT_BUTTON', 'TOP_RIGHT_BUTTON' );
 
 	private function configure() {
-		global $wgOut, $wgTitle, $wgContentNamespaces, $wgEnableFAST_HOME2, $wgEnableCorporatePageExt;
+		global $wgOut, $wgTitle, $wgContentNamespaces, $wgEnableFAST_HOME2, $wgEnableCorporatePageExt, $wgExtraNamespaces;
 
 		self::$config = array();
 
@@ -82,8 +82,8 @@ class AdModule extends Module {
 			} else if( BodyModule::isBlogPost() ) {
 				self::$config['TOP_RIGHT_BOXAD'] = true;
 				self::$config['TEST_TOP_RIGHT_BOXAD'] = true;
-			} else if (defined('NS_WIKIA_PLAYQUIZ') && $namespace == NS_WIKIA_PLAYQUIZ) {
-				self::$config['INVISIBLE_TOP'] = true;
+			} else if (in_array($namespace, $wgExtraNamespaces)) {
+				self::$config['TOP_LEADERBOARD'] = true;
 			}
 		}
 	}
