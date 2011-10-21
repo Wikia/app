@@ -109,15 +109,19 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 			switch( $daysToActivate ) {
 				case 0:
 					$dayName = 'DayZero';
+					$doProcess = true;
 					break;
 				case 3:
 					$dayName = 'DayThree';
+					$doProcess = false;
 					break;
 				case 10:
 					$dayName = 'DayTen';
+					$doProcess = false;
 					break;
 				default:
 					$dayName = 'DayZero';
+					$doProcess = true;
 			}
 			
 			$mainPage = wfMsgForContent( 'mainpage' );
@@ -140,7 +144,7 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 				$eventData['activateTime'] = 0;
 			}
 
-			$founderEmailObj->registerEvent( new FounderEmailsDaysPassedEvent( $eventData ), false );
+			$founderEmailObj->registerEvent( new FounderEmailsDaysPassedEvent( $eventData ), $doProcess );
 		}
 
 		wfProfileOut( __METHOD__ );
