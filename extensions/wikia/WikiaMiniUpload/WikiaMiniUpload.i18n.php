@@ -41,7 +41,7 @@ $messages['en'] = array(
 	'wmu-success' => '<h1>Success</h1>Your image has been inserted.',
 	'wmu-success-placeholder' => '<h1>Success</h1>',
 	'wmu-return' => 'Return to editing',
-	'wmu-back' => 'back',
+	'wmu-back' => 'Select another photo',
 	'wmu-close' => 'close',
 	'wmu-warn1' => 'You need to specify query first!',
 	'wmu-warn2' => 'You need to select file first!',
@@ -104,7 +104,7 @@ $messages['qqq'] = array(
 	'wmu-insert2' => 'Text of a submit button.',
 	'wmu-prev' => '{{Identical|Previous}}',
 	'wmu-next' => '{{Identical|Next}}',
-	'wmu-back' => '{{Identical|Back}}',
+	'wmu-back' => 'Select a different photo from the one already chosen.',
 	'wmu-close' => '{{Identical|Close}}',
 	'wmu-gallery' => '{{Identical|Gallery}}',
 );
