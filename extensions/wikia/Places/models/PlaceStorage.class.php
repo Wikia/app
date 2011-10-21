@@ -21,8 +21,8 @@ class PlaceStorage {
 		$this->model = $model;
 	}
 
-	public function getModel(PlaceModel $model) {
-		$this->model = $model;
+	public function getModel() {
+		return $this->model;
 	}
 
 	private function read() {

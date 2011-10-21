@@ -13,21 +13,24 @@
 
 class PlacesParserHookHandler {
 
-	static public function makePlace( $contents, $attributes, $parser ) {
+	static public function renderPlaceTag($content, array $attributes, Parser $parser, PPFrame $frame) {
+		wfProfileIn(__METHOD__);
 
-		return F::app()->sendRequest(
+		$html = F::app()->sendRequest(
 			'Places',
 			'placeFromAttributes',
 			array(
 				'attributes'	=> $attributes
 			)
 		)->toString();
+
+		wfProfileOut(__METHOD__);
+		return $html;
 	}
 
-	static public function placesSetup( &$parser ) {
-
-		$parser->setHook( 'place', 'PlacesParserHookHandler::makePlace' );
-		$parser->setHook( 'places', 'PlacesParserHookHandler::makePlaces' );
+	static public function placesSetup(Parser $parser) {
+		$parser->setHook( 'place', 'PlacesParserHookHandler::renderPlaceTag' );
+		$parser->setHook( 'places', 'PlacesParserHookHandler::renderPlacesTag' );
 
 		return true;
 	}
