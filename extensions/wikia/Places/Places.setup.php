@@ -53,7 +53,8 @@ $app->registerClass('PlaceStorage', $dir . '/models/PlaceStorage.class.php');
  * hooks
  */
 
-$app->registerHook('ParserFirstCallInit', 'PlacesParserHookHandler', 'PlacesSetup');
+$app->registerHook('ParserFirstCallInit', 'PlacesHookHandler', 'onParserFirstCallInit');
+$app->registerHook('BeforePageDisplay', 'PlacesHookHandler', 'onBeforePageDisplay');
 
 // for later
 // $app->registerHook('OutputPageMakeCategoryLinks', 'PlacesHookHandler', 'onOutputPageMakeCategoryLinks');
