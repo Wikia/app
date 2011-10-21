@@ -67,10 +67,11 @@ class NavigationService {
 	}
 
 	public function filterSpecialPages( $nodes, $filterInactiveSpecialPages ){
-		wfProfileIn( __METHOD__ );
 		if( !$filterInactiveSpecialPages ) {
 			return $nodes;
 		}
+
+		wfProfileIn( __METHOD__ );
 
 		// filters out every special page that is not defined
 		foreach( $nodes as $key => $node ){
