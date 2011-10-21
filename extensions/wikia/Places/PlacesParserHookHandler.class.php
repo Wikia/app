@@ -28,22 +28,12 @@ class PlacesParserHookHandler {
 			)
 		)->toString();
 
-		// get the current page title
-		$title = $parser->Title();
-
 		// store data in database
-		$storage = F::build('PlaceStorage', array($title->getArticleID()), 'newFromId');
+		$storage = F::build('PlaceStorage', array($parser->Title()), 'newFromTitle');
 		$storage->setModel($placeModel);
 		$storage->store();
 
 		wfProfileOut(__METHOD__);
 		return $html;
-	}
-
-	static public function placesSetup(Parser $parser) {
-		$parser->setHook( 'place', 'PlacesParserHookHandler::renderPlaceTag' );
-		$parser->setHook( 'places', 'PlacesParserHookHandler::renderPlacesTag' );
-
-		return true;
 	}
 }
