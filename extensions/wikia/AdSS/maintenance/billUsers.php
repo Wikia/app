@@ -60,11 +60,11 @@ foreach( $res as $row ) {
 }
 
 echo $log;
-$logFileName = '/tmp/billUsers-' . data( 'Y-m-d-H:i:s' );
+$logFileName = '/tmp/billUsers-' . date( 'Y-m-d-H:i:s' );
 
-//file_put_contents( $logFileName, $log );
-$file = fopen( $logFileName, 'w');
-fwrite( $file, $log );
-fclose( $file );
+file_put_contents( $logFileName, $log );
+//$file = fopen( $logFileName, 'w');
+//fwrite( $file, $log );
+//fclose( $file );
 
 $dbw->freeResult( $res );
