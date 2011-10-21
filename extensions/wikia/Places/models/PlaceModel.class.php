@@ -83,6 +83,13 @@ class PlaceModel {
 		return $this->lon;
 	}
 
+	public function getLatLon() {
+		return array(
+			'lat' => $this->getLat(),
+			'lon' => $this->getLon(),
+		);
+	}
+
 	public function getAddress(){
 		return $this->address;
 	}
@@ -93,8 +100,15 @@ class PlaceModel {
 
 	// Logic
 	public function getStaticMapUrl(){
+		$latLon = implode(',', $this->getLatLon());
+
+		// use SASS button color for marker
+		$colors = SassUtil::getOasisSettings();
+		$markerColor = '0x' . ltrim($colors['color-buttons'], '#');
+
 		$aParams = array(
-			'center' => $this->getLat().','.$this->getLon(),
+			'center' => $latLon,
+			'markers' => "color:{$markerColor}|{$latLon}",
 			'size' => $this->getWidth().'x'.$this->getHeight(),
 			'zoom' => $this->getZoom(),
 			'maptype' => 'roadmap',

@@ -82,10 +82,7 @@ class PlaceStorage {
 	public function store() {
 		wfProfileIn(__METHOD__);
 
-		$cords = array(
-			'lat' => $this->model->getLat(),
-			'lon' => $this->model->getLon(),
-		);
+		$cords = $this->model->getLatLon();
 
 		$dbw = $this->getDB(DB_MASTER);
 		$dbw->replace(self::WPP_TABLE, false /* $uniqueIndexes */, array(
