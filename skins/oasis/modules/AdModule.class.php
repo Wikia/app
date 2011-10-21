@@ -36,7 +36,7 @@ class AdModule extends Module {
 			self::$config['INVISIBLE_2'] = true;
 			self::$config['PREFOOTER_LEFT_BOXAD'] = true;
 			self::$config['PREFOOTER_RIGHT_BOXAD'] = true;
-			self::$config['HOME_INVISIBLE_TOP'] = true;
+			self::$config['HOME_INVISIBLE_TOP'] = false;	// skins used to be served from this slot, but are now served from TOP_LEADERBOARD with option dcopt=ist
 			if($wgEnableFAST_HOME2) {
 				self::$config['HOME_TOP_RIGHT_BOXAD'] = true;
 				self::$config['TEST_HOME_TOP_RIGHT_BOXAD'] = true;
@@ -56,7 +56,7 @@ class AdModule extends Module {
 				self::$config['LEFT_SKYSCRAPER_3'] = true;
 				self::$config['PREFOOTER_LEFT_BOXAD'] = true;
 				self::$config['PREFOOTER_RIGHT_BOXAD'] = true;
-				self::$config['INVISIBLE_TOP'] = true;
+				self::$config['INVISIBLE_TOP'] = false;	// skins used to be served from this slot, but are now served from TOP_LEADERBOARD with option dcopt=ist
 				self::$config['TOP_RIGHT_BUTTON'] = true;
 				self::$config['TOP_BUTTON'] = true;
 			} else if($namespace == NS_FILE) {
@@ -82,6 +82,8 @@ class AdModule extends Module {
 			} else if( BodyModule::isBlogPost() ) {
 				self::$config['TOP_RIGHT_BOXAD'] = true;
 				self::$config['TEST_TOP_RIGHT_BOXAD'] = true;
+			} else if ($namespace == NS_WIKIA_PLAYQUIZ) {
+				self::$config['INVISIBLE_TOP'] = true;
 			}
 		}
 	}
