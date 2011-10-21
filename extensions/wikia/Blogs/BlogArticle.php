@@ -254,27 +254,7 @@ class BlogArticle extends Article {
 	 */
 	static public function setProps( $page_id, Array $props ) {
 		wfProfileIn( __METHOD__ );
-		global $wgBlogsInWikiaProps;
 		$dbw = wfGetDB( DB_MASTER );
-		if(empty($wgBlogsInWikiaProps)) {
-			 //TODO: remove it after migration
-			foreach( $props as $sPropName => $sPropValue) {
-				$dbw->replace(
-					"page_props",
-					array(
-						"pp_page",
-						"pp_propname"
-					),
-					array(
-						"pp_page" => $page_id,
-						"pp_propname" => $sPropName,
-						"pp_value" => $sPropValue
-					),
-					__METHOD__
-				);
-				Wikia::log( __METHOD__, "save", "id: {$page_id}, key: {$sPropName}, value: {$sPropValue}" );
-			}
-		}
 
 		$replace = self::getPropsList();
 		foreach( $props as $sPropName => $sPropValue) {
@@ -295,25 +275,11 @@ class BlogArticle extends Article {
 	 */
 	static public function getProps( $page_id ) {
 		wfProfileIn( __METHOD__ );
-		global $wgBlogsInWikiaProps;
+
 		$return = array();
-		if(empty($wgBlogsInWikiaProps)) {
-			$dbr = wfGetDB( DB_SLAVE );
-			$res = $dbr->select(
-				array( "page_props" ),
-				array( "*" ),
-				array( "pp_page" => $page_id ),
-				__METHOD__
-			);
-			while( $row = $dbr->fetchObject( $res ) ) {
-				$return[ $row->pp_propname ] = $row->pp_value;
-			}
-			$dbr->freeResult( $res );
-		} else {
-			$types = self::getPropsList();
-			foreach( $types as $key => $value ) {
-				$return[$key] =  (int) wfGetWikiaPageProp($value, $page_id );
-			}
+		$types = self::getPropsList();
+		foreach( $types as $key => $value ) {
+			$return[$key] =  (int) wfGetWikiaPageProp($value, $page_id );
 		}
 
 		wfProfileOut( __METHOD__ );
