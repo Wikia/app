@@ -113,6 +113,7 @@ td.activityfeed-details-label {
 }
 
 .activityfeed-inserted-media li {
+	list-style: none;
 	border: solid 1px #ccc;
 	float: left;
 	margin: 4px 4px 4px 0;
