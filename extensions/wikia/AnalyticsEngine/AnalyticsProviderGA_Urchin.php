@@ -75,7 +75,8 @@ SCRIPT2;
 					return '<!-- Missing category name  for hub tracking event -->';
 				}
 				$hub = "/" . str_replace(' ', '_', $eventDetails['name']);
-				return '<script type="text/javascript">_gaq.push([\'_setAccount\', \'UA-288915-2\']);_gaq.push([\'_trackPageview\', \''.addslashes($hub).'\']);</script>';
+				return '<script type="text/javascript">_gaq.push([\'_setAccount\', \'UA-288915-2\']);_gaq.push([\'_trackPageview\', \''.addslashes($hub).'\']);</script>' .
+				       '<script type="text/javascript">_wtq.push([\'/pv/hub-UA-288915-2' . addslashes($hub) . '\', \'main.test\']);</script>';
 
 			case 'onewiki':
 				return $this->onewiki($eventDetails[0]);
@@ -83,17 +84,23 @@ SCRIPT2;
 			case 'pagetime':
 			 	return $this->pagetime($eventDetails[0]);
 
+			/* TODO NEF not used, remove
 			case 'noads':
 				return $this->noads();
+			*/
 
+			/* TODO NEF quantcast does not provide this info anymore
 			case 'female':
 				return $this->female();
+			*/ 
 
 			case "varnish-stat":
 				return $this->varnishstat();
 
+			/* TODO NEF we dont do AB this way anymore, remove
 			case "abtest":
 				return $this->abtest();
+			*/
 
 			default: return '<!-- Unsupported event for ' . __CLASS__ . ' -->';
 		}
@@ -120,10 +127,13 @@ if (typeof window.wgNow == "object"){
 	var slashtime = "/' . $skin . '/" + pageTime.toString().replace(/\./, "/");
 	_gaq.push([\'_setAccount\', \'UA-288915-42\']);
 	_gaq.push([\'_trackPageview\', slashtime]);
+	
+	_wtq.push([\'/pv/pagetime-UA-288915-42\' + slashtime, \'main.test\']);
 }
 </script>';
 	}
 
+	/* TODO NEF we dont do AB this way anymore, remove
 	private function abtest() {
 		return '<script type="text/javascript">
 var abtest_ua;
@@ -134,7 +144,9 @@ if(abtest_ua = document.cookie.match(/wikia-ab=[^;]*UA=(.*?)\//)) {
 </script>
 ';
 	}
+	*/
 
+	/* TODO NEF not used, remove
 	private function noads() {
 		return '<script type="text/javascript">
 if(document.cookie.match(/wikia-test=selected/)) {
@@ -146,6 +158,7 @@ if(document.cookie.match(/wikia-test=selected/)) {
 }
 </script>';
 	}
+	*/
 
 	private function varnishstat() {
 		return '<script type="text/javascript">
@@ -153,10 +166,13 @@ var varnish_server;
 if (varnish_server = document.cookie.match(/varnish-stat=([^;]+)/)) {
 	_gaq.push([\'_setAccount\', \'UA-288915-48\']);
 	_gaq.push([\'_trackPageview\', varnish_server[1]]);
+
+	_wtq.push([\'/pv/varnishstat-UA-288915-48\' + varnish_server[1], \'main.test\']);
 }
 </script>';
 		}
 
+	/* TODO NEF quantcast does not provide this info anymore, remove
 	private function female() {
 		return '<script type="text/javascript">
 if(document.cookie.match(/id%22%3A%222463/)) {
@@ -165,6 +181,7 @@ if(document.cookie.match(/id%22%3A%222463/)) {
 }
 </script>';
 	}
+	*/
 
 	private function lyrics() {
 		global $wgRequest;
@@ -183,9 +200,11 @@ if(document.cookie.match(/id%22%3A%222463/)) {
 		$ns = $wgTitle->getNamespace();
 
 		$out  = "<script type=\"text/javascript\">_gaq.push(['_setAccount', 'UA-12241505-1']);_gaq.push(['_trackPageview', '/GN2/".$ns."']);</script>\n"; // FIXME NEF turn off when -2 catches up
+		$out  = "<script type=\"text/javascript\">_wtq.push(['/GN2/".$ns."', 'lyrics.unsampled']);</script>\n";
 
 		if (in_array($ns, array(0, 220))) {
 			$out .= "<script type=\"text/javascript\">_gaq.push(['_setAccount', 'UA-12241505-1']);_gaq.push(['_trackPageview', '/GN4/".$ns."/".$wgTitle->getArticleID()."']);</script>\n"; // FIXME NEF turn off when -2 catches up
+			$out .= "<script type=\"text/javascript\">_wtq.push(['/GN4/".$ns."/".$wgTitle->getArticleID()."', 'lyrics.unsampled']);</script>\n";
 		}
 
 		return $out;
