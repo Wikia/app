@@ -82,7 +82,7 @@ class AdModule extends Module {
 			} else if( BodyModule::isBlogPost() ) {
 				self::$config['TOP_RIGHT_BOXAD'] = true;
 				self::$config['TEST_TOP_RIGHT_BOXAD'] = true;
-			} else if ($namespace == NS_WIKIA_PLAYQUIZ) {
+			} else if (defined('NS_WIKIA_PLAYQUIZ') && $namespace == NS_WIKIA_PLAYQUIZ) {
 				self::$config['INVISIBLE_TOP'] = true;
 			}
 		}
