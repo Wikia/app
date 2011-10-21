@@ -54,7 +54,7 @@ foreach( $res as $row ) {
 			$user->baid = null;
 			$user->save();
 		} else {
-			$log .= "FAILED - unknown reason\n";
+			$log .= "FAILED - unknown reason (" . $respArr['RESPMSG'] . ")\n";
 		}
 	}
 }
