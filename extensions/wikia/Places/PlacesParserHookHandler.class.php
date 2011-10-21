@@ -27,7 +27,15 @@ class PlacesParserHookHandler {
 				'model'	=> $placeModel
 			)
 		)->toString();
-
+		$html.= '<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>';
+		$html .= F::build('JSSnippets')->addToStack(
+			array(
+				'/extensions/wikia/Places/css/Places.css',
+				'/extensions/wikia/Places/js/Places.js'
+			),
+			array(),
+			'Places.init'
+		);
 		// store data in database
 		$storage = F::build('PlaceStorage', array($parser->Title()), 'newFromTitle');
 		$storage->setModel($placeModel);
