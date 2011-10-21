@@ -63,6 +63,11 @@ our $use_syslog  = 0;
 
 
 #
+# change new files group permissions (g+w)
+#
+umask(0002);
+
+#
 # print out 404 page
 #
 sub real404 {
