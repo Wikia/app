@@ -33,14 +33,14 @@ class PlaceModel {
 			$this->width = $int;
 		}
 	}
-	
+
 	public function setHeight( $int ){
 		$int = (int) $int;
 		if ( $int > 0 ){
 			$this->height = $int;
 		}
 	}
-	
+
 	public function setLat( $float ){
 		$float = (double) $float;
 		if ( !empty( $float ) ){
@@ -87,7 +87,7 @@ class PlaceModel {
 	public function getLon(){
 		return $this->lon;
 	}
-	
+
 	public function getAddress(){
 		return $this->address;
 	}
@@ -98,14 +98,19 @@ class PlaceModel {
 
 	// Logic
 
-	public function getApiString(){
-
-		$aParams = array();
-		$aParams['center'] = $this->getLat.','.$this->getLon;
-		$aParams['size'] = $this->getWidth.'x'.$this->getHeight;
-		$aParams['zoom'] = $this->getZoom;
-		$aParams['maptype'] = 'roadmap';
+	public function getStaticMapUrl(){
+		$aParams = array(
+			'center' => $this->getLat().','.$this->getLon(),
+			'size' => $this->getWidth().'x'.$this->getHeight(),
+			'zoom' => $this->getZoom(),
+			'maptype' => 'roadmap',
+			'sensor' => false,
+		);
 		$sParams = http_build_query( $aParams );
 		return 'http://maps.googleapis.com/maps/api/staticmap?'.$sParams;
+	}
+
+	public function getDistanceTo(PlaceModel $place) {
+
 	}
 }
