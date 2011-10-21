@@ -426,7 +426,6 @@
 	.wikia-infobox {
 		$cell-width: 225px;
 
-		@include linear-gradient(false, top, $color-module-highlight, 60%, $color-module-shadow, 100%);
 		border: 1px $color-page-border solid;
 		float: right;
 		line-height: 12px;
