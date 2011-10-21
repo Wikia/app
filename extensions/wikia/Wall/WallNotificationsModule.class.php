@@ -39,6 +39,10 @@ class WallNotificationsModule extends Module {
 	
 	public function executeNotification() {
 		$notify = $this->request->getVal('notify');
+		if(empty($notify['grouped'][0])) {
+			// do not render this notification, it's bugged
+			return false;
+		}
 		$data = $notify['grouped'][0]->data;
 		$authors = array();
 		foreach($notify['grouped'] as $notify_entity) {

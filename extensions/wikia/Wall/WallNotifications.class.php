@@ -38,18 +38,21 @@ class WallNotifications {
 		$unread = array();
 		foreach(array_reverse($list['notification']) as $listval) {	
 			if(!empty($listval)) {
-				if($list['relation'][ $listval ]['read']){
-					if(count($read) < $readSlice){
-						$read[] = array(
-							"grouped" => $this->groupEntity($list['relation'][ $listval ]['list']),
-							"count" => empty($list['relation'][ $listval ]['count']) ? count($list['relation'][ $listval ]['list']) : $list['relation'][ $listval ]['count'] 
-						);	
+				$grouped = $this->groupEntity($list['relation'][ $listval ]['list']);
+				if(!empty($grouped)) {
+					if($list['relation'][ $listval ]['read']){
+						if(count($read) < $readSlice){
+							$read[] = array(
+								"grouped" => $grouped,
+								"count" => empty($list['relation'][ $listval ]['count']) ? count($list['relation'][ $listval ]['list']) : $list['relation'][ $listval ]['count'] 
+							);	
+						}
+					} else {
+						$unread[] = array(
+							"grouped" => $grouped,
+							"count" => empty($list['relation'][ $listval ]['count']) ? count($list['relation'][ $listval ]['list']) : $list['relation'][ $listval ]['count']
+						);
 					}
-				} else {
-					$unread[] = array(
-						"grouped" => $this->groupEntity($list['relation'][ $listval ]['list']),
-						"count" => empty($list['relation'][ $listval ]['count']) ? count($list['relation'][ $listval ]['list']) : $list['relation'][ $listval ]['count']
-					);
 				}
 			}
 		}
@@ -67,9 +70,8 @@ class WallNotifications {
 		$grouped = array();
 		foreach(array_reverse($list) as $obj ) {
 			$notif = F::build('WallNotificationEntity', array($obj['entityKey']), 'getById');
-			//TODO: by user name
-			$grouped[] = $notif;
-					//if(count($grouped) == 3) break;
+			if(!empty($notif))
+				$grouped[] = $notif;
 		}
 		return $grouped;
 	}
