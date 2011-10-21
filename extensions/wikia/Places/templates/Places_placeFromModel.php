@@ -1,0 +1,1 @@
+<img src="<?=$url;?>" width="<?=$width;?>" height="<?=$height;?>" align="<?=$align;?>" />

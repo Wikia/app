@@ -4,6 +4,13 @@
  * Places
  *
  * Provides <place> and <places> parser hooks and Special:Places
+ *
+ * @author Jakub Kurcek <jakub at wikia-inc.com>
+ * @author Maciej Brencz <macbre at wikia-inc.com>
+ * @date 2010-10-11
+ * @copyright Copyright (C) 2010 Jakub Kurcek, Wikia Inc.
+ * @copyright Copyright (C) 2010 Maciej Brencz, Wikia Inc.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
 $wgExtensionCredits['specialpage'][] = array(

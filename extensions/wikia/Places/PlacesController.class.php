@@ -9,7 +9,9 @@ class PlacesController extends WikiaController {
 	public function placeFromAttributes(){
 		$attributes = $this->getVal('attributes', array());
 		$oPlaceModel = F::build( 'PlaceModel', array( $attributes ), 'newFromAttributes' );
-		$this->app->renderView( 'Places', 'placeFromModel', array( 'model' => $oPlaceModel ) );
+
+		$this->request->setVal('model', $oPlaceModel);
+		$this->forward( 'Places', 'placeFromModel');
 	}
 
 	public function placeFromModel(){
@@ -19,7 +21,7 @@ class PlacesController extends WikiaController {
 			$oPlaceModel = F::build('PlaceModel');
 		}
 
-		$this->setVal( 'url', $oPlaceModel->getApiString() );
+		$this->setVal( 'url', $oPlaceModel->getStaticMapUrl() );
 		$this->setVal( 'align', $oPlaceModel->getAlign() );
 		$this->setVal( 'width', $oPlaceModel->getWidth() );
 		$this->setVal( 'height', $oPlaceModel->getHeight() );
