@@ -247,14 +247,14 @@ class AchAwardingService {
 
 		if(count($this->mNewBadges) > 0) {
 			global $wgExternalSharedDB;
-
+			$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
+			// Doing replace instead of insert prevents dupes in case of slave lag or other errors
 			foreach($this->mNewBadges as $key => $val) {
 				$this->mNewBadges[$key]['user_id'] = $this->mUser->getId();
 				$this->mNewBadges[$key]['wiki_id'] = $this->mCityId;
+				$dbw->replace('ach_user_badges', null, $this->mNewBadges[$key], __METHOD__);
 			}
-
-			$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
-			$dbw->insert('ach_user_badges', $this->mNewBadges, __METHOD__);
+			
 			$dbw->commit();
 			
 			//notify the user only if he wants to be notified
