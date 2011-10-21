@@ -1,10 +1,10 @@
 <?php
 
 class UserProfilePageRailHelper {
-	
+
 	/**
 	 * @brief Hooks into GetRailModuleList
-	 * 
+	 *
 	 * @return boolean true
 	 */
 	public function onGetRailModuleList(&$modules) {
@@ -14,9 +14,10 @@ class UserProfilePageRailHelper {
 		$namespaces = $app->getGlobal( 'UPPNamespaces', array() );
 
 		if ( !in_array( $title->getNamespace(), $namespaces ) ) {
+			$app->wf->ProfileOut(__METHOD__);
 			return true;
 		}
-	
+
 		$response = $app->sendRequest(
 			'UserProfilePage',
 			'getUserFromTitle',
@@ -25,14 +26,14 @@ class UserProfilePageRailHelper {
 				'returnUser' => true
 			)
 		);
-		
+
 		$pageOwner = $response->getVal('user');
 		if( !$pageOwner->getOption('hidefollowedpages') && !$title->isSpecial('Following') && !$title->isSpecial('Contributions') ) {
 			$modules[1101] = array('FollowedPages', 'Index', array('showDeletedPages' => false));
 		}
-		
+
 		$app->wf->ProfileOut(__METHOD__);
 		return true;
 	}
-	
+
 }
