@@ -28,7 +28,6 @@ $res = $dbw->select(
 	);
 
 foreach( $res as $row ) {
-	echo $log;
 	$user = AdSS_User::newFromId( $row->billing_user_id );
 	$amount = -$row->billing_balance;
 	$log .= "USER: {$user->toString()} | AMT: $amount | LAST BILLED: {$row->last_billed} | --->";
@@ -60,5 +59,6 @@ foreach( $res as $row ) {
 	}
 }
 
+echo $log;
 file_put_contents( '/tmp/billUsers-' . data( 'Y-m-d-H:i:s' ), $log );
 $dbw->freeResult( $res );
