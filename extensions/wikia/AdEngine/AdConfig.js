@@ -22,6 +22,7 @@ AdConfig = {
 			case 'HOME_INVISIBLE_TOP':
 			case 'HOME_TOP_LEADERBOARD':
 			case 'HOME_TOP_RIGHT_BOXAD':
+			case 'INVISIBLE_MODAL':
 			case 'INVISIBLE_TOP':	// skin
 			case 'LEFT_SKYSCRAPER_2':
 			case 'MIDDLE_RIGHT_BOXAD':
@@ -156,6 +157,7 @@ AdConfig.DART = {
 	   'INCONTENT_LEADERBOARD_5': {'tile':8, 'loc': "middle"},
 	   'INVISIBLE_1': {'tile':10, 'loc': "invisible"},
 	   'INVISIBLE_2': {'tile':11, 'loc': "invisible"},
+	   'INVISIBLE_MODAL': {'tile':14, 'loc': "invisible"},
 	   'INVISIBLE_TOP': {'tile':13, 'loc': "invisible"},
 	   'LEFT_SKYSCRAPER_1': {'tile': 3, 'loc': "top"},
 	   'LEFT_SKYSCRAPER_2': {'tile': 3, 'loc': "middle"},

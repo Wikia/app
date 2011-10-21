@@ -1,11 +1,11 @@
 <div id="GamingCalendar">
-	<h1>Game Calendar</h1>
-
-	<div class="ad">
-		<div id="MODAL_VERTICAL_BANNER" class="wikia-ad noprint">
-			<?= AdEngine::getInstance()->getAd('MODAL_VERTICAL_BANNER', array('ghostwriter'=>true)); ?>
-		</div>
-	</div>
+	<h1>
+		<span class="title-wrapper">
+			<span class="gradient-wrapper">
+				<?= wfMsg('gamingcalendar-heading') ?>
+			</span>
+		</span>
+	</h1>
 
 	<div class="weeks">
 		<ul>
@@ -19,15 +19,9 @@
 	</div>
 
 	<div class="controls">
-		<div class="back">
-			<div class="back-month"><span>«</span></div>
-			<div class="back-week"><span>‹</span></div>
-		</div>
-		<div class="forward">
-			<div class="forward-month"><span>»</span></div>
-			<div class="forward-week"><span>›</span></div>
-		</div>
-		<div class="today">Today</div>
+		<a class="back-week wikia-button secondary">‹</a>
+		<a class="forward-week wikia-button secondary">›</a>
+		<a class="today wikia-button secondary"><?= wfMsg('gamingcalendar-today') ?></a>
 	</div>
 
    <script type="text/template" id="GamingCalendarWeekTemplate">
@@ -41,4 +35,10 @@
 			</div>
 			<div class="scroll-down"><img src="<?= $wgBlankImgUrl ?>" height="0" width="0"></div>
    </script>
+  
+   <div id="INVISIBLE_MODAL" class="wikia-ad noprint">
+<?= AdEngine::getInstance()->getAd('INVISIBLE_MODAL', array('ghostwriter'=>true)); ?>
+   </div>
 </div>
+<div id="GamingCalendarSkinLeft" class="GamingCalendarSkin GamingCalendarSkinLeft"><a href="" target="_blank"></a></div>
+<div id="GamingCalendarSkinRight" class="GamingCalendarSkin GamingCalendarSkinRight"><a href="" target="_blank"></a></div>

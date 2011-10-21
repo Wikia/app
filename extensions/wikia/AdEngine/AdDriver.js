@@ -420,6 +420,7 @@ AdDriver.adjustSlotDisplay = function(slotname) {
 AdDriver.canCallLiftium = function(slotname) {
 	switch (slotname) {	
 		case 'HOME_INVISIBLE_TOP':
+		case 'INVISIBLE_MODAL':
 		case 'INVISIBLE_TOP':
 		case 'MIDDLE_RIGHT_BOXAD':
 		case 'MODAL_VERTICAL_BANNER':

@@ -14,6 +14,7 @@ class AdProviderAdDriver implements iAdProvider {
 	}
 
 	public function getAd($slotname, $slot, $params = null) {
+
 		$out = '';
 		$extraClasses = '';
 		switch ($slotname) {
