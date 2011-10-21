@@ -36,9 +36,9 @@ foreach( $res as $row ) {
 		continue;
 	}
 
-	//$pp = new PaypalPaymentService( array_merge( $wgPayflowProCredentials, array( 'APIUrl' => $wgPayflowProAPIUrl, 'HTTPProxy' => $wgHTTPProxy ) ) );
+	$pp = new PaypalPaymentService( array_merge( $wgPayflowProCredentials, array( 'APIUrl' => $wgPayflowProAPIUrl, 'HTTPProxy' => $wgHTTPProxy ) ) );
 	$respArr = array();
-	$pmt_id = 0; //$pp->collectPayment( $user->baid, $amount, $respArr );
+	$pmt_id = $pp->collectPayment( $user->baid, $amount, $respArr );
 
 	if( $pmt_id ) {
 		$billing = new AdSS_Billing();
@@ -50,9 +50,9 @@ foreach( $res as $row ) {
 	} else {
 		if( $respArr['RESULT'] == 12 && $respArr['RESPMSG'] == 'Declined: 10201-Agreement was canceled' ) {
 			$log .= "FAILED - billing agreement canceled!\n";
-			//$pp->cancelBillingAgreement( $user->baid );
-			//$user->baid = null;
-			//$user->save();
+			$pp->cancelBillingAgreement( $user->baid );
+			$user->baid = null;
+			$user->save();
 		} else {
 			$log .= "FAILED - unknown reason\n";
 		}
