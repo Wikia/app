@@ -75,23 +75,23 @@ class ScribeEventProducer {
 		
 		if ( $oRevision instanceof Revision ) {
 			if ( is_null( $revision_id ) ) {
-				$revision_id 		= $oRevision->getId();
+				$revision_id = $oRevision->getId();
 			}
-			$page_id				= $oRevision->getPage();
-			$rev_timestamp	= $oRevision->getTimestamp();
-			$rev_text 			= $oRevision->getText();
-			$rev_size				= $oRevision->getSize();
+			$page_id = $oRevision->getPage();
+			$rev_timestamp = $oRevision->getTimestamp();
+			$rev_text = $oRevision->getText();
+			$rev_size = $oRevision->getSize();
 		} else {
-			$page_id 				= $oArticle->getID();
+			$page_id = $oArticle->getID();
 			if ( is_null( $revision_id ) ) {
-				$revision_id  = $oTitle->getLatestRevID(GAID_FOR_UPDATE);
+				$revision_id = $oTitle->getLatestRevID(GAID_FOR_UPDATE);
 			}
 			if ( empty( $page_id ) ) {
 				$pageId = $oTitle->getArticleID( GAID_FOR_UPDATE );
 			}
-			$rev_timestamp	= $oArticle->getTimestamp();
-			$rev_text				= $oTitle->getText();
-			$rev_size				= strlen( $rev_size );
+			$rev_timestamp = $oArticle->getTimestamp();
+			$rev_text = $oTitle->getText();
+			$rev_size = strlen( $rev_size );
 		}
 
 		$this->setPageId( $page_id ) ;
@@ -237,13 +237,13 @@ class ScribeEventProducer {
 		
 		return $this->buildEditPackage( $oArticle, $oUser, $oRevision );
 	}
-	
+						
 	public function setCityId ( $city_id ) { 
-		$this->mParams['city_id'] = $city_id; 
+		$this->mParams['cityId'] = $city_id; 
 	}
 	
 	public function setServerName ( $server_name ) {
-		$this->mParams['server_name'] = $server_name;
+		$this->mParams['serverName'] = $server_name;
 	}
 	
 	public function setHostname ( $hostname ) {
@@ -251,47 +251,47 @@ class ScribeEventProducer {
 	}
 	
 	public function setPageId ( $page_id ) { 
-		$this->mParams['page_id'] = $page_id; 
+		$this->mParams['pageId'] = $page_id; 
 	}
 	
 	public function setPageNamespace ( $page_namespace ) { 
-		$this->mParams['page_namespace'] = $page_namespace; 
+		$this->mParams['pageNamespace'] = $page_namespace; 
 	}
 	
 	public function setRevisionId ( $revision_id  ) { 
-		$this->mParams['revision_id'] = $revision_id;
+		$this->mParams['revId'] = $revision_id;
 	}
 	
 	public function setLogId ( $log_id  ) { 
-		$this->mParams['log_id'] = $log_id; 
+		$this->mParams['logId'] = $log_id; 
 	}
 	
 	public function setUserId ( $user_id ) { 
-		$this->mParams['user_id'] = $user_id; 
+		$this->mParams['userId'] = $user_id; 
 	}
 	
 	public function setUserIsBot ( $user_is_bot ) { 
-		$this->mParams['user_is_bot'] = intval( $user_is_bot ); 
+		$this->mParams['userIsBot'] = intval( $user_is_bot ); 
 	}
 	
 	public function setIsContent ( $is_content ) { 
-		$this->mParams['is_content'] = intval( $is_content ); 
+		$this->mParams['isContent'] = intval( $is_content ); 
 	}
 	
 	public function setIsRedirect ( $is_redirect ) { 
-		$this->mParams['is_redirect'] = intval( $is_redirect ); 
+		$this->mParams['isRedirect'] = intval( $is_redirect ); 
 	}
 	
 	public function setIP ( $ip ) { 
-		$this->mParams['user_ip'] = $ip; 
+		$this->mParams['userIp'] = $ip; 
 	}
 	
 	public function setRevisionTimestamp ( $revision_timestamp ) { 
-		$this->mParams['revision_timestamp'] = $revision_timestamp; 
+		$this->mParams['revTimestamp'] = $revision_timestamp; 
 	}
 	
 	public function setRevisionSize ( $size ) { 
-		$this->mParams['revision_size'] = $size; 
+		$this->mParams['revSize'] = $size; 
 	}
 	
 	public function setMediaType ( $oTitle ) { 
@@ -332,20 +332,20 @@ class ScribeEventProducer {
 			}
 		}
 
-		$this->mParams['media_type'] = $result; 
+		$this->mParams['mediaType'] = $result; 
 		$this->app->wf->ProfileOut( __METHOD__ );
 	}
 	
 	public function setImageLinks ( $image_links ) { 
-		$this->mParams['image_links'] = $image_links; 
+		$this->mParams['imageLinks'] = $image_links; 
 	}
 	
 	public function setVideoLinks ( $video_links ) { 
-		$this->mParams['video_links'] = $video_links; 
+		$this->mParams['videoLinks'] = $video_links; 
 	}
 	
 	public function setTotalWords ( $total_words ) { 
-		$this->mParams['total_Words'] = $total_words; 
+		$this->mParams['totalWords'] = $total_words; 
 	}
 	
 	public function setArchive ( $archive ) { 
@@ -353,7 +353,7 @@ class ScribeEventProducer {
 	}
 
 	public function setBeaconId ( $beacon_id ) {
-		$this->mParams['beacon_id'] = $beacon_id;
+		$this->mParams['beaconId'] = $beacon_id;
 	}
 	
 	public function sendLog() {
