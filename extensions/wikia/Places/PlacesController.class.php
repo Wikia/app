@@ -25,5 +25,8 @@ class PlacesController extends WikiaController {
 		$this->setVal( 'align', $oPlaceModel->getAlign() );
 		$this->setVal( 'width', $oPlaceModel->getWidth() );
 		$this->setVal( 'height', $oPlaceModel->getHeight() );
+		$this->setVal( 'lat', $oPlaceModel->getLat() );
+		$this->setVal( 'lon', $oPlaceModel->getLon() );
+		$this->setVal( 'zoom', $oPlaceModel->getZoom() );
 	}
 }
