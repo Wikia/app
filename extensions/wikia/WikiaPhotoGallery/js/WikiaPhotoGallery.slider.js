@@ -14,7 +14,7 @@ var WikiaPhotoGallerySlider = {
 
 	init: function(sliderId) {
 		this.sliderId = sliderId;
-
+		
 		//move spotlights
 		$('.wikiaPhotoGallery-slider-body').each(function() {
 			$(this).css('left', parseInt($(this).css('left')) - (620 * WikiaPhotoGallerySlider.initialImageId));
@@ -40,7 +40,11 @@ var WikiaPhotoGallerySlider = {
 
 		$('#wikiaPhotoGallery-slider-body-' + sliderId).css('display', 'block');
 
-		this.timer = setInterval(this.slideshow, 7000);
+		
+		//only slideshows with more than one item should animate
+		if ($('#wikiaPhotoGallery-slider-body-' + sliderId).find('ul').children().length > 1) {
+			this.timer = setInterval(this.slideshow, 7000);
+		}
 	},
 
 	scroll: function(nav) {
