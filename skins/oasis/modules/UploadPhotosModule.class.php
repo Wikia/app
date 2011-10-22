@@ -12,6 +12,7 @@ class UploadPhotosModule extends Module {
 	var $wgScriptPath;
 	var $wgEnableUploads;
 	var $wgBlankImgUrl;
+	var $wgStylePath;
 
 	public function executeIndex() {
 		wfProfileIn(__METHOD__);
