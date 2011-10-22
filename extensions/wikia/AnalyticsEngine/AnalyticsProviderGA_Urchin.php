@@ -25,28 +25,6 @@ class AnalyticsProviderGA_Urchin implements iAnalyticsProvider {
 		}
 
 		$script .= <<<SCRIPT2
-<script type="text/javascript">
-	function simpleHash(s, tableSize) {
-		var i, hash = 0;
-		for (i = 0; i < s.length; i++) {
-			hash += (s[i].charCodeAt() * (i+1));
-		}
-		return Math.abs(hash) % tableSize;
- 	}
-	var groupNo = simpleHash(window.beacon_id, 100);
-	var groups = {
-		all : { rangeStart: 0, rangeStop: 99, id: 'UA-1' },
-		A : { rangeStart: 20, rangeStop: 29, id: 'UA-2' },
-		B : { rangeStart: 30, rangeStop: 39, id: 'UA-3' },
-		N : { rangeStart: 80, rangeStop: 89, id: 'UA-8' }
-	};
-	function inGroup(group) {
-		if( groupNo >= group.rangeStart && groupNo <= group.rangeStop ) {
-			return true;
-		}
-		return false;
-	}
-</script>
 <script type="text/javascript" src="{$wgProto}://www.google-analytics.com/ga.js"></script>
 <script type="text/javascript">
 $setDomainName
@@ -54,6 +32,8 @@ _gaq.push(['_setSampleRate', '10']);
 urchinTracker = function() {
 	_gaq.push(['_setAccount', 'UA-2871474-1']);
 	_gaq.push(['_trackEvent', 'Error', 'FakeUrchinTrackerCalled']);
+
+	_wtq.push([\'/pv/fakeurchin-UA-2871474-1\', \'main.test\']);
 };
 </script>
 SCRIPT2;
@@ -70,6 +50,7 @@ SCRIPT2;
 			case AnalyticsEngine::EVENT_PAGEVIEW:
 				return '<script type="text/javascript">_gaq.push([\'_setAccount\', \'UA-288915-1\']);_gaq.push([\'_trackPageview\']);_gaq.push([\'_trackPageLoadTime\']);</script>';
 
+			// oasis is not calling this?!?
 			case 'hub':
 				if (empty($eventDetails['name'])){
 					return '<!-- Missing category name  for hub tracking event -->';
@@ -200,11 +181,11 @@ if(document.cookie.match(/id%22%3A%222463/)) {
 		$ns = $wgTitle->getNamespace();
 
 		$out  = "<script type=\"text/javascript\">_gaq.push(['_setAccount', 'UA-12241505-1']);_gaq.push(['_trackPageview', '/GN2/".$ns."']);</script>\n"; // FIXME NEF turn off when -2 catches up
-		$out  = "<script type=\"text/javascript\">_wtq.push(['/GN2/".$ns."', 'lyrics.unsampled']);</script>\n";
+		$out  = "<script type=\"text/javascript\">_wtq.push(['/GN2/".$ns."', 'lyrics.2']);</script>\n";
 
 		if (in_array($ns, array(0, 220))) {
 			$out .= "<script type=\"text/javascript\">_gaq.push(['_setAccount', 'UA-12241505-1']);_gaq.push(['_trackPageview', '/GN4/".$ns."/".$wgTitle->getArticleID()."']);</script>\n"; // FIXME NEF turn off when -2 catches up
-			$out .= "<script type=\"text/javascript\">_wtq.push(['/GN4/".$ns."/".$wgTitle->getArticleID()."', 'lyrics.unsampled']);</script>\n";
+			$out .= "<script type=\"text/javascript\">_wtq.push(['/GN4/".$ns."/".$wgTitle->getArticleID()."', 'lyrics.2']);</script>\n";
 		}
 
 		return $out;

@@ -19,13 +19,13 @@ var WikiaTracker = {
 		'liftium.test':'UA-17475676-11',
 		'liftium.varia':'UA-17475676-10',
 		'lyrics':'UA-12241505-1',
-		'lyrics.unsampled':'UA-12241505-2'
+		'lyrics.unsampled':'UA-12241505-2', // TODO remove, it's sampled now
+		'lyrics.2':'UA-12241505-2'
 	},
 	defaultRate:10,
 	profileRates:{
 		'UA-2871474-2':100, // main.unsampled
 		'UA-2871474-3':1, // main.test
-		'UA-12241505-2':100, // lyrics.unsampled
 		'UA-17475676-16':100, // liftium.slot2
 		'UA-17475676-12':100, // liftium.errors
 		'UA-19473076-35':100 // ab.main
