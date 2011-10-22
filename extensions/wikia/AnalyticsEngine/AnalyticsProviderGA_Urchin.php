@@ -48,7 +48,8 @@ SCRIPT2;
 				break;
 
 			case AnalyticsEngine::EVENT_PAGEVIEW:
-				return '<script type="text/javascript">_gaq.push([\'_setAccount\', \'UA-288915-1\']);_gaq.push([\'_trackPageview\']);_gaq.push([\'_trackPageLoadTime\']);</script>';
+				return '<script type="text/javascript">_gaq.push([\'_setAccount\', \'UA-288915-1\']);_gaq.push([\'_trackPageview\']);_gaq.push([\'_trackPageLoadTime\']);</script>' .
+				       '<script type="text/javascript">_wtq.push([\'AnalyticsEngine::EVENT_PAGEVIEW\', \'main.test\']);</script>';
 
 			// oasis is not calling this?!?
 			case 'hub':
@@ -94,7 +95,8 @@ SCRIPT2;
 		if (empty($wgGoogleAnalyticsAccount)){
 			return '<!-- No tracking for this wiki -->';
 		} else {
-			return '<script type="text/javascript">_gaq.push([\'_setAccount\', \''.addslashes($wgGoogleAnalyticsAccount).'\']);_gaq.push([\'_trackPageview\']);</script>';
+			return '<script type="text/javascript">_gaq.push([\'_setAccount\', \''.addslashes($wgGoogleAnalyticsAccount).'\']);_gaq.push([\'_trackPageview\']);</script>' .
+			       '<script type="text/javascript">_wtq.push([\'AnalyticsEngine::EVENT_PAGEVIEW\', \'' . addslashes($wgGoogleAnalyticsAccount) . '\']);</script>';
 		}
 	}
 

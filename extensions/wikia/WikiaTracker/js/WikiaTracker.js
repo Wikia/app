@@ -114,7 +114,14 @@ WikiaTracker._track = function(page, profile, sample) {
 	_gaq.push(['WikiaTracker._setCustomVar', 2, 'hub',  hub,  3]);
 	_gaq.push(['WikiaTracker._setCustomVar', 3, 'lang', lang, 3]);
 
+	if (page == '/AnalyticsEngine::EVENT_PAGEVIEW') {
+		_gaq.push(['WikiaTracker._trackPageview']);
+		_gaq.push(['WikiaTracker._trackPageLoadTime']);
+	} else {
+
 	_gaq.push(['WikiaTracker._trackPageview', page]);
+
+	}
 
 	return true;
 };
