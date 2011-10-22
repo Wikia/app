@@ -33,7 +33,7 @@ urchinTracker = function() {
 	_gaq.push(['_setAccount', 'UA-2871474-1']);
 	_gaq.push(['_trackEvent', 'Error', 'FakeUrchinTrackerCalled']);
 
-	_wtq.push([\'/pv/fakeurchin-UA-2871474-1\', \'main.test\']);
+	_wtq.push(['/pv/fakeurchin-UA-2871474-1', 'main.test']);
 };
 </script>
 SCRIPT2;
