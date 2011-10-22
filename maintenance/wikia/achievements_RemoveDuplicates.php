@@ -9,11 +9,9 @@
  *
  * @usage: SERVER_ID=177 php achievements_removeDuplicates.php --conf /usr/wikia/conf/current/wiki.factory/LocalSettings.php --aconf /usr/wikia/conf/current/AdminSettings.php
  */
-echo "foo";
 $options = array('help');
 @require_once( '../commandLine.inc' );
 global $IP, $wgCityId;
-echo "bar";
 
 echo( "Remove Duplicate Badges\n\n" );
 
@@ -33,10 +31,10 @@ $rows = $dbw->select('ach_user_badges',
 		array (),						// criteria = all wikis
 //		array( "wiki_id" => "413"),		// testing = one wiki
 		__METHOD__,
-		array("GROUP BY" => "user_id,badge_type_id, badge_lap, badge_level having dupes > 1"));
+		array("GROUP BY" => "wiki_id, user_id,badge_type_id, badge_lap, badge_level having dupes > 1"));
 
 $rowCount = $rows->numRows();
-
+print_pre($dbw);
 echo(": {$rowCount} duplicate badges to process\n\n");
 
 if($rowCount) {
