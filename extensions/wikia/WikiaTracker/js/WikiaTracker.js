@@ -19,7 +19,6 @@ var WikiaTracker = {
 		'liftium.test':'UA-17475676-11',
 		'liftium.varia':'UA-17475676-10',
 		'lyrics':'UA-12241505-1',
-		'lyrics.unsampled':'UA-12241505-2', // TODO remove, it's sampled now
 		'lyrics.2':'UA-12241505-2'
 	},
 	defaultRate:10,
