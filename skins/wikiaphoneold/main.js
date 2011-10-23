@@ -1,6 +1,6 @@
 function WikiaPhoneOldTracker(str) {
-	_gaq.push(['_setAccount', 'UA-2871474-1']);
-	_gaq.push(['_trackPageview', str]);
+	//_gaq.push(['_setAccount', 'UA-2871474-1']);
+	//_gaq.push(['_trackPageview', str]);
 }
 
 username = wgUserName == null ? 'anon' : 'user';
