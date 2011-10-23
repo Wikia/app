@@ -31,6 +31,7 @@ var WikiaTracker = {
 		'UA-19473076-35':100 // ab.main
 	},
 	debugLevel:0,
+	_beacon_unavailable_sent:false,
 	_in_group_cache:{}
 	//_in_ab_cache:[] dont declare, leave undefined FIXME make it null and refactor accordingly
 	//_beacon_hash_cache:0 dont declare, leave undefined FIXME make it null and refactor
@@ -176,7 +177,13 @@ WikiaTracker.inGroup = function(group) {
 
 		if (typeof window.beacon_id == 'undefined') {
 			this.debug('beacon_id unavailable (yet?), bailing out', 3);
-			// TODO track it...
+
+			// track if beacon is unavailable at this point, would be nasty
+			if (!this._beacon_unavailable_sent) {
+				this._track('/wikiatracker/beacon_unavailable', 'UA-2871474-2', 100);
+				this._beacon_unavailable_sent = true;
+			}
+
 			return false;
 		}
 
@@ -185,6 +192,12 @@ WikiaTracker.inGroup = function(group) {
 		this.debug('beacon_hash: ' + beacon_hash, 5);
 
 			this._beacon_hash_cache = beacon_hash;		
+
+			// track if beacon becomes available later, tweak call timing?
+			if (this._beacon_unavailable_sent) {
+				this._track('/wikiatracker/beacon_available', 'UA-2871474-2', 100);
+				this._beacon_unavailable_sent = false;
+			}
 		}
 
 		in_group = this._inGroup(beacon_hash, group);
