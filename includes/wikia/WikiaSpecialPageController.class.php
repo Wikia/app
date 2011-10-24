@@ -12,6 +12,12 @@
 class WikiaSpecialPageController extends WikiaController {
 	protected $specialPage = null;
 
+	const PAR = 'par';
+
+	public function getPar(){
+		return $this->getVal( self::PAR );
+	}
+
 	public function __construct( $name = '', $restriction = '', $listed = true, $function = false, $file = 'default', $includable = false ) {
 		$this->specialPage = F::build( 'SpecialPage', array( $name, $restriction, $listed, $function, $file, $includable ) );
 	}
