@@ -149,6 +149,9 @@ class WallNotificationEntity {
 
 		$RC = RecentChange::newFromId($RCId);
 		if(empty($RC)) {
+			// also cache failures not to make expensive database queries
+			// again and again for the same Entity
+			$this->save();
 			return;
 		}
 		
