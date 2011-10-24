@@ -70,8 +70,12 @@ class WallController extends ArticleCommentsModule {
 		$parts = explode('/', $this->app->wg->Title->getText());
 		$parent_title = F::build('Title', array($parts[0], NS_USER_WALL), 'newFromText' );
 		$user = F::build('User',array($parts[0]),'newFromName');
-		$user_displayname = $user->getRealName();
-		if(empty($user_displayname)) $user_displayname = $user->getName();
+                if(!empty( $user )) {
+                        $user_displayname = $user->getRealName();
+                        if(empty($user_displayname)) $user_displayname = $user->getName();
+                } else {
+                        $user_displayname = $parts[0];
+                }
 		
 		$this->response->setVal( 'wallOwner', $user_displayname);	
 		$this->response->setVal( 'wallUrl', $parent_title->getFullUrl() );
