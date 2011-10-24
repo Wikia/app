@@ -16,6 +16,11 @@
 		<input type="text" name="image" value="<?= htmlspecialchars($data['imageShort']) ?>">
 	</div>
 
+	<label><?= wfMsg('wikiaquiz-video-label') ?></label>	
+	<div class="video">
+		<input type="text" name="video" value="<?= htmlspecialchars($data['videoName']) ?>">
+	</div>
+
 	<label><?= wfMsg('wikiaquiz-explanation-label') ?></label>	
 	<div class="explanation">
 		<textarea name="explanation"><?= htmlspecialchars($data['explanation']) ?></textarea>
