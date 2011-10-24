@@ -1,7 +1,9 @@
 <? if (!empty($quizElement)) { ?>
 <section class="WikiaQuizArticle" data-id="<?= $quizElement->getId() ?>">
 <p>(in the quiz <a href="<?=$data['quizUrl']?>"><?= $data['quiz'] ?></a>)</p>
-<? if ($data['image']) { ?>
+<? if ($data['videoEmbedCode']) { ?>
+<?= $data['videoEmbedCode'] ?>
+<? } else if ($data['image']) { ?>
 <img src="<?= $data['image'] ?>" />
 <? } ?>
 <? if (is_array($data['answers'])) { ?>

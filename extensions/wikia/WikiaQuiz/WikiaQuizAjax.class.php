@@ -60,7 +60,6 @@ class WikiaQuizAjax {
 	static public function updateQuiz() {
 		wfProfileIn(__METHOD__);
 		
-
 		$wgRequest = F::app()->getGlobal('wgRequest');
 		$wgUser = F::app()->getGlobal('wgUser');
 
@@ -401,6 +400,7 @@ class WikiaQuizAjax {
 		}
 		$image = trim($request->getVal ('image'));
 		$explanation = trim($request->getVal ('explanation'));
+		$video = trim($request->getVal ('video'));
 		$answers = $request->getArray ('answer');  // array
 		$correctAnswer = trim($request->getVal( 'correct' ));
 		$answerImages = $request->getArray('answer-image');	// array
@@ -413,6 +413,13 @@ class WikiaQuizAjax {
 				return;
 			}
 			$content .= WikiaQuizElement::IMAGE_MARKER . $image . "\n";
+		}
+		if ($video) {
+			if (!self::isValidVideo($video)) {
+				$error = wfMsg('wikiaquiz-error-invalid-video', $video);
+				return;
+			}
+			$content .= WikiaQuizElement::VIDEO_MARKER . $video . "\n";
 		}
 		if ($explanation) {
 			$content .= WikiaQuizElement::EXPLANATION_MARKER . $explanation . "\n";
@@ -479,6 +486,22 @@ class WikiaQuizAjax {
 		
 		return true;
 		
+	}
+	
+	/**
+	 * @TODO support for video from repo
+	 * @param string $name
+	 * @return boolean
+	 */
+	private static function isValidVideo($name) {
+		$videoTitle = Title::newFromText($name, NS_VIDEO);
+		if ($videoTitle && $videoTitle->exists()) {
+			$videoPage = new VideoPage($videoTitle);
+			$videoPage->load();
+			return $videoPage->checkIfVideoExists();
+		}
+			
+		return false;
 	}
 	
 	private static function getCategoryText($title, $order='') {

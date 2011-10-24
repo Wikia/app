@@ -12,6 +12,11 @@
 	<div class="image">
 		<input type="text" name="image">
 	</div>
+	
+	<label><?= wfMsg('wikiaquiz-video-label') ?></label>	
+	<div class="image">
+		<input type="text" name="video">
+	</div>
 
 	<label><?= wfMsg('wikiaquiz-explanation-label') ?></label>	
 	<div class="explanation">

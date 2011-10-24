@@ -20,6 +20,9 @@ class WikiaQuizElement {
 	const IMAGE_MARKER = 'IMAGE:';
 	const TITLE_MARKER = 'TITLE:';
 	const EXPLANATION_MARKER = 'EXPLANATION:';
+	const VIDEO_MARKER = 'VIDEO:';
+	const VIDEOWIKI_MARKER = 'VIDEOWIKI:';
+	const VIDEO_WIDTH = 660;
 
 	private function __construct($quizElementId) {
 		$this->mData = null;
@@ -61,7 +64,6 @@ class WikiaQuizElement {
 		wfProfileIn(__METHOD__);
 
 		if (!$master) {
-			//@todo use memcache
 			$this->mData = $wgMemc->get($this->mMemcacheKey);
 		}
 
@@ -83,6 +85,9 @@ class WikiaQuizElement {
 			$imageSrc = '';
 			$imageShort = '';
 			$explanation = '';
+			$videoName = '';
+			$videoEmbedCode = '';
+			$isVideoExternal = false;
 			$quizName = '';	//@todo support multiple quizzes
 			$order = '';
 
@@ -106,6 +111,13 @@ class WikiaQuizElement {
 				}
 				elseif (substr($line, 0, strlen(self::EXPLANATION_MARKER)) == self::EXPLANATION_MARKER) {
 					$explanation = trim( substr($line, strlen(self::EXPLANATION_MARKER)) );
+				}
+				elseif (startsWith($line, self::VIDEO_MARKER)) {
+					$videoName = trim( substr($line, strlen(self::VIDEO_MARKER)) );
+				}
+				elseif (startsWith($line, self::VIDEOWIKI_MARKER)) {
+					$videoName = trim( substr($line, strlen(self::VIDEOWIKI_MARKER)) );
+					$isVideoExternal = true;
 				}
 				elseif (preg_match("/\[\[{$wgLang->getNsText(NS_CATEGORY)}\:(.+?)(\|(.+))*\]\]/", $line, $matches)) {
 					if (startsWith($matches[1], WikiaQuiz::QUIZ_CATEGORY_PREFIX)) {
@@ -144,6 +156,20 @@ class WikiaQuizElement {
 
 			$this->mQuizTitleObject = F::build('Title', array($quizName, NS_WIKIA_QUIZ), 'newFromText');
 			
+			if (!empty($videoName)) {
+				if (!$isVideoExternal) {
+					$videoTitle = Title::newFromText($videoName, NS_VIDEO);
+					if ($videoTitle && $videoTitle->exists()) {
+						$videoPage = new VideoPage($videoTitle);
+						$videoPage->load();
+						$videoEmbedCode = $videoPage->getEmbedCode(self::VIDEO_WIDTH, false, true);
+					}
+					else {
+						//@todo throw exception / return error
+					}
+				}
+			}
+			
 			$this->mData = array(
 				'creator' => $firstRev->mUser,
 				'created' => $firstRev->mTimestamp,
@@ -155,6 +181,8 @@ class WikiaQuizElement {
 				'image' => $imageSrc,
 				'imageShort' => $imageShort,
 				'explanation' => $explanation,
+			        'videoName' => $videoName,
+			        'videoEmbedCode' => $videoEmbedCode,
 				'quiz' => $quizName,
 				'quizUrl' => $this->mQuizTitleObject ? $this->mQuizTitleObject->getLocalUrl() : '',
 				'order' => $order,
