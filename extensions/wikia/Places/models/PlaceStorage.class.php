@@ -3,7 +3,7 @@
 class PlaceStorage {
 
 	const WPP_TABLE = 'page_wikia_props';
-	const CACHE_TTL = 604800; // a day
+	const CACHE_TTL = 604800; // a week
 
 	private $app;
 	private $memc;
@@ -103,9 +103,9 @@ class PlaceStorage {
 		$dbw = $this->getDB(DB_MASTER);
 		$cords = $this->model->getLatLon();
 
-		$this->app->wf->Debug(__METHOD__ . json_encode(array($this->initialCords, $cords)) . "\n");
+		#$this->app->wf->Debug(__METHOD__ . json_encode(array($this->initialCords, $cords)) . "\n");
 
-		// do database actions only if something has changed
+		// do database queries only if something has changed
 		if ($this->initialCords !== $cords) {
 			if ($this->model->isEmpty()) {
 				// model has no data - remove props entry
@@ -130,10 +130,10 @@ class PlaceStorage {
 				), __METHOD__);
 			}
 			$dbw->commit();
-		}
 
-		// update the cache
-		$this->memc->set($this->getMemcKey(), $cords, self::CACHE_TTL);
+			// update the cache
+			$this->memc->set($this->getMemcKey(), $cords, self::CACHE_TTL);
+		}
 
 		wfProfileOut(__METHOD__);
 	}
