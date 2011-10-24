@@ -613,6 +613,7 @@ class WikiaMiniUpload {
 			$success = false;
 
 			preg_match_all( '/' . $transl_v_t . '|' . $transl_i_t . '/si', $text, $matches, PREG_OFFSET_CAPTURE );
+
 			if( is_array( $matches ) && $box < count($matches[0]) ) {
 				$our_gallery = $matches[0][$box][0];
 				$gallery_split = explode( ':', $our_gallery );
@@ -654,7 +655,8 @@ class WikiaMiniUpload {
 			if ( $success ) {
 				header('X-screen-type: summary');
 			} else {
-				// todo signal failure
+				// failure signal opens js alert (BugId:4935)
+				// header('X-screen-type: error');
 			}
 		} else {
 			header('X-screen-type: summary');
