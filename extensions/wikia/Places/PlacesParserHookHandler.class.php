@@ -36,7 +36,47 @@ class PlacesParserHookHandler {
 				'model'	=> $placeModel
 			)
 		)->toString();
-		$html.= '<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>';
+
+		// add JS snippets code
+		$html .= self::getJSSnippet();
+
+		// add model to be stored in database
+		PlacesHookHandler::setModelToSave($placeModel);
+
+		wfProfileOut(__METHOD__);
+		return $html;
+	}
+
+	/**
+	 * Render <places> tag
+	 *
+	 * @param string $content tag content (will be ignored)
+	 * @param array $attributes tag attributes
+	 * @param Parser $parser MW parser instance
+	 * @param PPFrame $frame parent frame with the context
+	 * @return string HTML output of the tag
+	 */
+	static public function renderPlacesTag($content, array $attributes, Parser $parser, PPFrame $frame) {
+		wfProfileIn(__METHOD__);
+
+		// debug code !!!
+		$places = F::build('PlacesModel');
+		var_dump($places->getAll());
+
+		$html = '';
+
+		// add JS snippets code
+		$html .= self::getJSSnippet();
+
+		wfProfileOut(__METHOD__);
+		return $html;
+	}
+
+	/**
+	 * Get JavaScript code snippet to be loaded
+	 */
+	static private function getJSSnippet() {
+		$html = '<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>';
 		$html .= F::build('JSSnippets')->addToStack(
 			array(
 				'/extensions/wikia/Places/css/Places.css',
@@ -46,10 +86,6 @@ class PlacesParserHookHandler {
 			'Places.init'
 		);
 
-		// add model to be stored in database
-		PlacesHookHandler::setModelToSave($placeModel);
-
-		wfProfileOut(__METHOD__);
 		return $html;
 	}
 }
