@@ -60,9 +60,9 @@
 	</fieldset>
 	<fieldset class="favicon">
 		<h1><?= wfMsg('themedesigner-favicon-heading') ?></h1>
-		<form onsubmit="return AIM.submit(this, ThemeDesigner.wordmarkUploadCallback)" action="<?= $wgScriptPath ?>/index.php?action=ajax&rs=moduleProxy&moduleName=ThemeDesigner&actionName=FaviconUpload&outputType=html" method="POST" enctype="multipart/form-data">
+		<form onsubmit="return AIM.submit(this, ThemeDesigner.faviconUploadCallback)" action="<?= $wgScriptPath ?>/index.php?action=ajax&rs=moduleProxy&moduleName=ThemeDesigner&actionName=FaviconUpload&outputType=html" method="POST" enctype="multipart/form-data">
 			<input id="FaviconUploadFile" name="wpUploadFile" type="file" />
-			<input type="submit" value="<?= wfMsg( 'themedesigner-button-upload-wordmark' ) ?>" onclick="return ThemeDesigner.wordmarkUpload(event);"/>
+			<input type="submit" value="<?= wfMsg( 'themedesigner-button-upload-wordmark' ) ?>" />
 		</form>
 		
 		<div class="preview">
