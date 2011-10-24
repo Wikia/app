@@ -118,9 +118,13 @@ class SMWParseData {
 			self::getSMWData( $parser )->addPropertyObjectValue( $property, $result );
 
 			// Take note of the error for storage (do this here and not in storage, thus avoiding duplicates).
-			if ( !$result->isValid() ) {
-				self::getSMWData( $parser )->addPropertyObjectValue( SMWPropertyValue::makeProperty( '_ERRP' ), $property->getWikiPageValue() );
+			//** wikia change start - FB#13846 **/
+			$wikiPageValue = $property->getWikiPageValue();
+			
+			if ( $wikiPageValue instanceof SMWDataValue && !$result->isValid() ) {
+				self::getSMWData( $parser )->addPropertyObjectValue( SMWPropertyValue::makeProperty( '_ERRP' ), $wikiPageValue );
 			}
+			/** wikia change end **/
 		}
 
 		wfProfileOut( 'SMWParseData::addProperty (SMW)' );
