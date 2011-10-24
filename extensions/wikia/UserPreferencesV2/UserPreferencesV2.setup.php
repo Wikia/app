@@ -17,3 +17,8 @@ $app->registerClass('UserPreferencesV2', $dir . 'UserPreferencesV2.class.php');
 * hooks
 */
 $app->registerHook('GetPreferences', 'UserPreferencesV2', 'onGetPreferences');
+
+/**
+ * messages
+ */
+$app->registerExtensionMessageFile('UserPreferencesV2', $dir . '/UserPreferencesV2.i18n.php');
