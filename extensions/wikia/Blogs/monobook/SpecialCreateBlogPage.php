@@ -283,7 +283,8 @@ class CreateBlogPage extends SpecialBlogPage {
 	}
 
 	protected function renderForm() {
-		$this->mEditPage->showEditForm( array($this, 'renderFormHeader') );
+		if ($this->mEditPage instanceof EditPage)
+			$this->mEditPage->showEditForm( array($this, 'renderFormHeader') );
 		return true;
 	}
 
