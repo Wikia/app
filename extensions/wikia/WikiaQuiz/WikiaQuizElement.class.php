@@ -22,7 +22,7 @@ class WikiaQuizElement {
 	const EXPLANATION_MARKER = 'EXPLANATION:';
 	const VIDEO_MARKER = 'VIDEO:';
 	const VIDEOWIKI_MARKER = 'VIDEOWIKI:';
-	const VIDEO_WIDTH = 660;
+	const VIDEO_WIDTH = 560;
 
 	private function __construct($quizElementId) {
 		$this->mData = null;
