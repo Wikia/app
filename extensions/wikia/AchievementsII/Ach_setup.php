@@ -40,11 +40,18 @@ $wgExtensionCredits['other'][] = array(
 
 $dir = dirname(__FILE__).'/';
 
-// SPECIAL PAGES
-$wgSpecialPages['Platinum'] = 'SpecialPlatinum';
-$wgSpecialPages['Leaderboard'] = 'SpecialLeaderboard';
-$wgSpecialPages['AchievementsCustomize'] = 'SpecialAchievementsCustomize';
-$wgSpecialPages['AchievementsSharing'] = 'SpecialAchievementsSharing';
+// Michał Roszka (Mix) <michal@wikia-inc.com>
+// BugId:13865
+// 
+// Due to the fix of BugId:10474 (find below) I had to do the same thing
+// to disable special pages and remove them from Special:SpecialPages.
+if( !empty( $wgEnableAchievementsExt ) ) {
+    // SPECIAL PAGES
+    $wgSpecialPages['Platinum'] = 'SpecialPlatinum';
+    $wgSpecialPages['Leaderboard'] = 'SpecialLeaderboard';
+    $wgSpecialPages['AchievementsCustomize'] = 'SpecialAchievementsCustomize';
+    $wgSpecialPages['AchievementsSharing'] = 'SpecialAchievementsSharing';
+}
 
 $wgExtensionAliasesFiles ['AchievementsII'] = $dir.'AchievementsII.alias.php' ;
 
