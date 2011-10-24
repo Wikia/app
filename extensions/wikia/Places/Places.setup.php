@@ -40,6 +40,8 @@ $app->registerClass('PlacesParserHookHandler', $dir . '/PlacesParserHookHandler.
  */
 
 $app->registerClass('PlacesController', $dir . '/PlacesController.class.php');
+$app->registerClass('PlacesSpecialController', $dir . '/PlacesSpecialController.class.php');
+$app->registerSpecialPage('Places', 'PlacesSpecialController');
 
 /**
  * models
