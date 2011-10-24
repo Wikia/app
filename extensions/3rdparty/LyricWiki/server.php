@@ -2222,13 +2222,15 @@ function lw_getPage($pageTitle, &$finalName='', $debug=false, $page_namespace=NS
 			$page_id = $title->getArticleID();
 
 			$article = Article::newFromID($title->getArticleID());
-                        if(is_object($article)){
+			if( is_object($article) ){
 				if($article->isRedirect()){
 					$reTitle = $article->followRedirect(); // follows redirects recursively
 					$article = Article::newFromId($reTitle->getArticleID());
 				}
-				$finalName = $article->getTitle()->getDBkey();
-				$retVal = $article->getRawText();
+				if( is_object($article) ){
+					$finalName = $article->getTitle()->getDBkey();
+					$retVal = $article->getRawText();
+				}
 			}
 		}
 	}
