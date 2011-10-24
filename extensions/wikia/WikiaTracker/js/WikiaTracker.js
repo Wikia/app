@@ -5,6 +5,12 @@ var WikiaTracker = {
 		'main.sampled':  'UA-2871474-1',
 		'main.unsampled':'UA-2871474-2',
 		'main.test':     'UA-2871474-3',
+
+		'Wikia':         'UA-288915-1',
+		'Wikia.main':    'UA-288915-1',
+		'Wikia.hub':     'UA-288915-2',
+		'Wikia.pagetime':'UA-288915-42',		
+		'Wikia.varnish': 'UA-288915-48',
 		
 		'ab.main':'UA-19473076-35',
 		'liftium.beacon':'UA-17475676-5',

@@ -30,10 +30,10 @@ class AnalyticsProviderGA_Urchin implements iAnalyticsProvider {
 $setDomainName
 _gaq.push(['_setSampleRate', '10']);
 urchinTracker = function() {
-	_gaq.push(['_setAccount', 'UA-2871474-1']);
-	_gaq.push(['_trackEvent', 'Error', 'FakeUrchinTrackerCalled']);
+	//_gaq.push(['_setAccount', 'UA-2871474-1']);
+	//_gaq.push(['_trackEvent', 'Error', 'FakeUrchinTrackerCalled']);
 
-	_wtq.push(['/pv/fakeurchin-UA-2871474-1', 'main.test']);
+	_wtq.push(['/error/fakeurchin', 'main']);
 };
 </script>
 SCRIPT2;
@@ -48,8 +48,8 @@ SCRIPT2;
 				break;
 
 			case AnalyticsEngine::EVENT_PAGEVIEW:
-				return '<script type="text/javascript">_gaq.push([\'_setAccount\', \'UA-288915-1\']);_gaq.push([\'_trackPageview\']);_gaq.push([\'_trackPageLoadTime\']);</script>' .
-				       '<script type="text/javascript">_wtq.push([\'AnalyticsEngine::EVENT_PAGEVIEW\', \'main.test\']);</script>';
+				//return '<script type="text/javascript">_gaq.push([\'_setAccount\', \'UA-288915-1\']);_gaq.push([\'_trackPageview\']);_gaq.push([\'_trackPageLoadTime\']);</script>';
+				return '<script type="text/javascript">_wtq.push([\'AnalyticsEngine::EVENT_PAGEVIEW\', \'Wikia.main\']);</script>';
 
 			// oasis is not calling this?!?
 			case 'hub':
@@ -57,8 +57,8 @@ SCRIPT2;
 					return '<!-- Missing category name  for hub tracking event -->';
 				}
 				$hub = "/" . str_replace(' ', '_', $eventDetails['name']);
-				return '<script type="text/javascript">_gaq.push([\'_setAccount\', \'UA-288915-2\']);_gaq.push([\'_trackPageview\', \''.addslashes($hub).'\']);</script>' .
-				       '<script type="text/javascript">_wtq.push([\'/pv/hub-UA-288915-2' . addslashes($hub) . '\', \'main.test\']);</script>';
+				//return '<script type="text/javascript">_gaq.push([\'_setAccount\', \'UA-288915-2\']);_gaq.push([\'_trackPageview\', \''.addslashes($hub).'\']);</script>';
+				return '<script type="text/javascript">_wtq.push([\'' . addslashes($hub) . '\', \'Wikia.hub\']);</script>';
 
 			case 'onewiki':
 				return $this->onewiki($eventDetails[0]);
@@ -95,8 +95,8 @@ SCRIPT2;
 		if (empty($wgGoogleAnalyticsAccount)){
 			return '<!-- No tracking for this wiki -->';
 		} else {
-			return '<script type="text/javascript">_gaq.push([\'_setAccount\', \''.addslashes($wgGoogleAnalyticsAccount).'\']);_gaq.push([\'_trackPageview\']);</script>' .
-			       '<script type="text/javascript">_wtq.push([\'AnalyticsEngine::EVENT_PAGEVIEW\', \'' . addslashes($wgGoogleAnalyticsAccount) . '\']);</script>';
+			//return '<script type="text/javascript">_gaq.push([\'_setAccount\', \''.addslashes($wgGoogleAnalyticsAccount).'\']);_gaq.push([\'_trackPageview\']);</script>';
+			return '<script type="text/javascript">_wtq.push([\'AnalyticsEngine::EVENT_PAGEVIEW\', \'' . addslashes($wgGoogleAnalyticsAccount) . '\']);</script>';
 		}
 	}
 
@@ -108,10 +108,10 @@ if (typeof window.wgNow == "object"){
 	var ms = (now.getTime() - window.wgNow.getTime()) / 1000;
 	var pageTime = Math.floor(ms * 10) / 10; // Round to 1 decimal
 	var slashtime = "/' . $skin . '/" + pageTime.toString().replace(/\./, "/");
-	_gaq.push([\'_setAccount\', \'UA-288915-42\']);
-	_gaq.push([\'_trackPageview\', slashtime]);
+	//_gaq.push([\'_setAccount\', \'UA-288915-42\']);
+	//_gaq.push([\'_trackPageview\', slashtime]);
 	
-	_wtq.push([\'/pv/pagetime-UA-288915-42\' + slashtime, \'main.test\']);
+	_wtq.push([slashtime, \'Wikia.pagetime\']);
 }
 </script>';
 	}
@@ -147,10 +147,10 @@ if(document.cookie.match(/wikia-test=selected/)) {
 		return '<script type="text/javascript">
 var varnish_server;
 if (varnish_server = document.cookie.match(/varnish-stat=([^;]+)/)) {
-	_gaq.push([\'_setAccount\', \'UA-288915-48\']);
-	_gaq.push([\'_trackPageview\', varnish_server[1]]);
+	//_gaq.push([\'_setAccount\', \'UA-288915-48\']);
+	//_gaq.push([\'_trackPageview\', varnish_server[1]]);
 
-	_wtq.push([\'/pv/varnishstat-UA-288915-48\' + varnish_server[1], \'main.test\']);
+	_wtq.push([varnish_server[1], \'Wikia.varnish\']);
 }
 </script>';
 		}
@@ -182,8 +182,9 @@ if(document.cookie.match(/id%22%3A%222463/)) {
 
 		$ns = $wgTitle->getNamespace();
 
-		//$out  = "<script type=\"text/javascript\">_gaq.push(['_setAccount', 'UA-12241505-1']);_gaq.push(['_trackPageview', '/GN2/".$ns."']);</script>\n"; // FIXME NEF turn off when -2 catches up
-		$out  = "<script type=\"text/javascript\">_wtq.push(['/GN2/".$ns."', 'lyrics']);</script>\n";
+		$out = '';
+		//$out .= "<script type=\"text/javascript\">_gaq.push(['_setAccount', 'UA-12241505-1']);_gaq.push(['_trackPageview', '/GN2/".$ns."']);</script>\n"; // FIXME NEF turn off when -2 catches up
+		$out .= "<script type=\"text/javascript\">_wtq.push(['/GN2/".$ns."', 'lyrics']);</script>\n";
 
 		if (in_array($ns, array(0, 220))) {
 			//$out .= "<script type=\"text/javascript\">_gaq.push(['_setAccount', 'UA-12241505-1']);_gaq.push(['_trackPageview', '/GN4/".$ns."/".$wgTitle->getArticleID()."']);</script>\n"; // FIXME NEF turn off when -2 catches up
