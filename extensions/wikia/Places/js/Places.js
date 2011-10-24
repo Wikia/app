@@ -41,10 +41,10 @@ var Places = {
 			var lanSum = 0;
 			var latSum = 0;
 			
-			var maxLat = -10;
-			var maxLan = -10;
-			var minLat = 10;
-			var minLan = 10;
+			var maxLat = -181;
+			var maxLan = -181;
+			var minLat = 181;
+			var minLan = 181;
 
 			$.each( markers,
 				function(index, value) {
