@@ -76,11 +76,11 @@ class PlacesParserHookHandler {
 	 * Get JavaScript code snippet to be loaded
 	 */
 	static private function getJSSnippet() {
-		$html = '<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>';
-		$html .= F::build('JSSnippets')->addToStack(
+		$html = F::build('JSSnippets')->addToStack(
 			array(
 				'/extensions/wikia/Places/css/Places.css',
-				'/extensions/wikia/Places/js/Places.js'
+				'/extensions/wikia/Places/js/Places.js',
+				'http://maps.googleapis.com/maps/api/js?sensor=false&callback=$.noop',
 			),
 			array(),
 			'Places.init'
