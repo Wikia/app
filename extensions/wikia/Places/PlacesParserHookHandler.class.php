@@ -36,10 +36,9 @@ class PlacesParserHookHandler {
 			array(),
 			'Places.init'
 		);
-		// store data in database
-		$storage = F::build('PlaceStorage', array($parser->Title()), 'newFromTitle');
-		$storage->setModel($placeModel);
-		$storage->store();
+
+		// queue model to be stored  in database
+		PlacesHookHandler::setModelToSave($placeModel);
 
 		wfProfileOut(__METHOD__);
 		return $html;
