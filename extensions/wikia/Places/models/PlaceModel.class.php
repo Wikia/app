@@ -3,8 +3,8 @@ class PlaceModel {
 	private $align = 'right';
 	private $width = 200;
 	private $height = 200;
-	private $lat = 0.00;
-	private $lon = 0.00;
+	private $lat = false;
+	private $lon = false;
 	private $address = '';
 	private $zoom = 14;
 
@@ -43,11 +43,15 @@ class PlaceModel {
 	}
 
 	public function setLat( $float ){
-		$this->lat = (double) $float;
+		if (is_numeric($float)) {
+			$this->lat = (double) $float;
+		}
 	}
 
 	public function setLon( $float ){
-		$this->lon = (double) $float;
+		if (is_numeric($float)) {
+			$this->lon = (double) $float;
+		}
 	}
 
 	public function setAddress( $text ){
@@ -88,6 +92,10 @@ class PlaceModel {
 			'lat' => $this->getLat(),
 			'lon' => $this->getLon(),
 		);
+	}
+
+	public function isEmpty() {
+		return ($this->getLat() === false) || ($this->getLon() === false);
 	}
 
 	public function getAddress(){
