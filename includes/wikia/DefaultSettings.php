@@ -895,3 +895,9 @@ $wgEnableApiExplorerExt = true;
 $wgMaxLevelOneNavElements = 4;
 $wgMaxLevelTwoNavElements = 7;
 $wgMaxLevelThreeNavElements = 10;
+
+/**
+ * Extension for running multiple version of Mediawiki
+ */
+$wgUseMedusa = false;
+
