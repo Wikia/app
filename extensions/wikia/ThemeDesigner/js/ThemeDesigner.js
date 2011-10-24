@@ -431,7 +431,19 @@ var ThemeDesigner = {
 		}
 
 	},
-
+	
+	/**
+	 * Favicon upload callback
+	 */
+	faviconUploadCallback : {
+		onComplete: function(response) {
+			// update preview
+		}
+	},
+	
+	faviconUpload: function(e) {
+		// do validation
+	},
 
 	/**
 	 * Async callback for uploading background image

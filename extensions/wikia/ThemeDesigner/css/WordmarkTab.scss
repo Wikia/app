@@ -3,7 +3,7 @@
 
 .WordmarkTab {
 	.graphic {
-		padding-left: 40px;
+		padding: 0 15px;
 		.preview {
 			margin-top: 10px;
 			.wordmark {
@@ -47,5 +47,8 @@
 		left: 0;
 		position: absolute;
 		top: 0;
+	}
+	#WordMarkUploadFile {
+		width: 200px;
 	}
 }

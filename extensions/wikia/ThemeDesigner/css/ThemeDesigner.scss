@@ -170,7 +170,7 @@ fieldset {
 	border-left: 1px solid $color-borders;
 	float: left;
 	height: 165px;
-	margin: 15px;
+	margin: 15px 0 15px 15px;
 	&:first-child {
 		border-left: 0;
 	}
