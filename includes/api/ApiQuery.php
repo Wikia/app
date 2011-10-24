@@ -301,8 +301,13 @@ class ApiQuery extends ApiBase {
 	private function InstantiateModules( &$modules, $param, $moduleList ) {
 		$list = @$this->params[$param];
 		if ( !is_null ( $list ) )
-			foreach ( $list as $moduleName )
-				$modules[] = new $moduleList[$moduleName] ( $this, $moduleName );
+			foreach ( $list as $moduleName ) {
+                        	/* Wikia Change by Tomek  */
+				if(!empty($moduleList[$moduleName])){
+                        	        $modules[] = new $moduleList[$moduleName] ( $this, $moduleName );
+                        	}
+				/* End Wikia change by Tomek */
+			}
 	}
 
 	/**
