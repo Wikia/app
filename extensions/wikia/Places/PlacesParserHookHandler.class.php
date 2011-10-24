@@ -13,6 +13,15 @@
 
 class PlacesParserHookHandler {
 
+	/**
+	 * Render <place> tag
+	 *
+	 * @param string $content tag content (will be ignored)
+	 * @param array $attributes tag attributes
+	 * @param Parser $parser MW parser instance
+	 * @param PPFrame $frame parent frame with the context
+	 * @return string HTML output of the tag
+	 */
 	static public function renderPlaceTag($content, array $attributes, Parser $parser, PPFrame $frame) {
 		wfProfileIn(__METHOD__);
 
@@ -37,7 +46,7 @@ class PlacesParserHookHandler {
 			'Places.init'
 		);
 
-		// queue model to be stored  in database
+		// add model to be stored in database
 		PlacesHookHandler::setModelToSave($placeModel);
 
 		wfProfileOut(__METHOD__);
