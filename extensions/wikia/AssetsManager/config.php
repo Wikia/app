@@ -221,6 +221,7 @@ $config['theme_designer_js'] = array(
 		'//extensions/wikia/WikiaTracker/js/WikiaTrackerQueue.js',
 		'//skins/common/jquery/jquery.wikia.tracker.js',
 		'//skins/common/jquery/jquery-ui-1.8.14.custom.js',
+		'//common/jquery/jquery.wikia.tooltip.js',
 		'//extensions/wikia/ThemeDesigner/js/ThemeDesigner.js',
 		'//extensions/wikia/ThemeDesigner/js/aim.js',
 	)

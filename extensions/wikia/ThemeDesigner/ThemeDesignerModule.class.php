@@ -79,7 +79,9 @@ class ThemeDesignerModule extends Module {
 	}
 
 	public function executeWordmarkTab() {
-
+		$faviconTitle = Title::newFromText('Favicon.ico', NS_FILE);
+		$localFile = is_null( $faviconTitle ) ? null : wfLocalFile( $faviconTitle );
+		$this->faviconUrl = wfReplaceImageServer( $localFile->getUrl() );
 	}
 
 	public function executePicker() {
@@ -235,6 +237,11 @@ class ThemeDesignerModule extends Module {
 				}
 			}
 		}
+	}
+	
+	public function executeFaviconUpload() {
+		global $wgFavicon;
+		$this->faviconImageUrl = $wgFavicon;	//placeholder
 	}
 
 	public function executeBackgroundImageUpload() {

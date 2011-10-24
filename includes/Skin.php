@@ -207,7 +207,14 @@ class Skin extends Linker {
 		}
 
 		if( false !== $wgFavicon ) {
-			$out->addLink( array( 'rel' => 'shortcut icon', 'href' => str_replace('images.wikia.com', 'images1.wikia.nocookie.net', $wgFavicon) ) );
+			/* Wikia change begin - @author: hyun */
+			$out->addLink( 
+				array( 
+					'rel' => 'shortcut icon', 
+					'href' => wfReplaceImageServer($wgFavicon)
+				) 
+			);
+			/* Wikia change end */
 		}
 
 		# OpenSearch description link
