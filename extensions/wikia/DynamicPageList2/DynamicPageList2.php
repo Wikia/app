@@ -3160,7 +3160,7 @@ class DPL2ListMode {
 	var $aMultiSecSeparators = array();
 	var $iDominantSection = -1;
 
-	function DPL2ListMode($listmode, $secseparators, $multisecseparators, $inlinetext, $listattr = '', $itemattr = '',
+	function DPL2ListMode($listmode, $secseparators, $multisecseparators, $inlinetext, $listattr, $itemattr,
 						  $listseparators, $iOffset, $dominantSection) {
 		// default for inlinetext (if not in mode=userformat)
 		if (($listmode != 'userformat') && ($inlinetext == ''))

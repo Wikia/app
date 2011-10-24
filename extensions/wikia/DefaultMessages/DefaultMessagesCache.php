@@ -175,7 +175,7 @@ class DefaultMessagesCache {
 	 *
 	 * @param $code String: language to which load messages
 	 */
-	function load( $code = false, $useDB ) {
+	function load( $code = false, $useDB = true ) {
 		if ( !$this->mUseCache ) {
 			return true;
 		}

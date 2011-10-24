@@ -8,7 +8,7 @@
  *
  *
  * @author Steve Sanbeg
- * @copyright Copyright © 2006, Steve Sanbeg
+ * @copyright Copyright Â© 2006, Steve Sanbeg
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  *
  *
@@ -273,7 +273,7 @@ class DPL2Include
         }
     }
 
-    public static function includeHeading($parser, $page='', $sec='', $to='', &$sectionHeading, $recursionCheck=true, $maxLength=-1, $link='default')
+    public static function includeHeading($parser, $page, $sec, $to, &$sectionHeading, $recursionCheck=true, $maxLength=-1, $link='default')
     {
       $output=array();
       if (self::text($parser, $page, $title, $text) == false) {
@@ -285,7 +285,7 @@ class DPL2Include
     }
 
     //section inclusion - include all matching sections (return array)
-    public static function extractHeadingFromText($parser, $page, $title, $text, $sec='', $to='', &$sectionHeading, $recursionCheck=true, $maxLength=-1, $link='default') {
+    public static function extractHeadingFromText($parser, $page, $title, $text, $sec, $to, &$sectionHeading, $recursionCheck=true, $maxLength=-1, $link='default') {
 
       // create a link symbol (arrow, img, ...) in case we have to cut the text block to maxLength
       if      ($link=='default')                 $link = ' [['.$page.'#'.$sec.'|..&rarr;]]';
@@ -403,7 +403,7 @@ class DPL2Include
     // we return an array containing all occurences of the template call which match the condition "$mustMatch"
     // and do NOT match the condition "$mustNotMatch" (if specified)
     // we use a callback function to format retrieved parameters, accessible via $dpl->formatTemplateArg()
-    public static function includeTemplate($parser, $dpl, $dplNr, $article, $template1='', $template2='', $defaultTemplate, $mustMatch, $mustNotMatch)
+    public static function includeTemplate($parser, $dpl, $dplNr, $article, $template1, $template2, $defaultTemplate, $mustMatch, $mustNotMatch)
     {
         $page = $article->mTitle->getPrefixedText();
         $date = $article->myDate;
@@ -423,7 +423,7 @@ class DPL2Include
         $extractParm = array();
 
         // check if we want to extract parameters directly from the call
-        // in that case we won´t invoke template2 but will directly return the extracted parameters
+        // in that case we wonÂ´t invoke template2 but will directly return the extracted parameters
         // as a sequence of table columns;
         if (strlen($template2)>strlen($template1) && ($template2[strlen($template1)]==':')) {
             $extractParm = explode(':',substr($template2,strlen($template1)+1));
