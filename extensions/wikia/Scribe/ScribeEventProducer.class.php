@@ -45,6 +45,8 @@ class ScribeEventProducer {
 		$this->setHostname( wfHostname() );
 		$this->setBeaconId ( wfGetBeaconId() );
 		$this->setArchive( $archive );	
+		$this->setLanguage();
+		$this->setCategory();
 	}
 	
 	public function buildEditPackage( $oArticle, $oUser, $oRevision = null, $revision_id = null ) {
@@ -354,6 +356,17 @@ class ScribeEventProducer {
 
 	public function setBeaconId ( $beacon_id ) {
 		$this->mParams['beaconId'] = $beacon_id;
+	}
+	
+	public function setLanguage( $lang_code = '' ) {
+		if ( empty( $lang_code ) ) {
+			$lang_code = $this->app->wg->LanguageCode;
+		}
+		$this->mParams['languageId'] = WikiFactory::LangCodeToId($lang_code);
+	}
+	
+	public function setCategory() {
+		$this->mParams['categoryId'] = WikiFactory::getCategory( $this->app->wg->CityId );
 	}
 	
 	public function sendLog() {
