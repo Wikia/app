@@ -32,6 +32,9 @@ class PlacesHookHandler {
 			}
 		}
 
+		// debug code !!!
+		#$places = F::build('PlacesModel'); var_dump($places->getAll());
+
 		wfProfileOut(__METHOD__);
 		return true;
 	}

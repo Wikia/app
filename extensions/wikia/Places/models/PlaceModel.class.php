@@ -7,6 +7,7 @@ class PlaceModel {
 	private $lon = false;
 	private $address = '';
 	private $zoom = 14;
+	private $pageId = 0;
 
 	public static function newFromAttributes( $array = null ){
 		$oModel = F::build( 'PlaceModel' );
@@ -67,6 +68,13 @@ class PlaceModel {
 		}
 	}
 
+	public function setPageId( $int ){
+		$int = (int) $int;
+		if ( $int > 0 ){
+			$this->pageId= $int;
+		}
+	}
+
 	public function getAlign(){
 		return $this->align;
 	}
@@ -104,6 +112,10 @@ class PlaceModel {
 
 	public function getZoom(){
 		return $this->zoom;
+	}
+
+	public function getPageId(){
+		return $this->pageId;
 	}
 
 	// Logic
