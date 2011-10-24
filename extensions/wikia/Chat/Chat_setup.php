@@ -40,6 +40,17 @@ $wgRemoveGroups['sysop'][] = 'chatmoderator';
 $wgRemoveGroups['sysop'][] = 'bannedfromchat';
 $wgRemoveGroups['chatmoderator'][] = 'bannedfromchat';
 
+// Let staff & helpers change chatmod & banning status.
+$wgAddGroups['staff'][] = 'bannedfromchat';
+$wgAddGroups['staff'][] = 'chatmoderator';
+$wgRemoveGroups['staff'][] = 'bannedfromchat';
+$wgRemoveGroups['staff'][] = 'chatmoderator';
+ 
+$wgAddGroups['helper'][] = 'bannedfromchat';
+$wgAddGroups['helper'][] = 'chatmoderator';
+$wgRemoveGroups['helper'][] = 'bannedfromchat';
+$wgRemoveGroups['helper'][] = 'chatmoderator';
+
 // Attempt to do the permissions the other way (adding restriction instead of subtracting permission).
 // When in 'bannedfromchat' group, the 'chat' permission will be revoked
 // See http://www.mediawiki.org/wiki/Manual:$wgRevokePermissions
