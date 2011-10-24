@@ -65,7 +65,6 @@ class CategoryExhibitionSection {
 		switch ( $this->getSortType() ){
 			case 'alphabetical': return CategoryDataService::getAlphabetical( $sCategoryDBKey, $mNamespace, $negative );
 			case 'recentedits': return CategoryDataService::getRecentlyEdited( $sCategoryDBKey, $mNamespace, $negative );
-			case 'mostvisited': return CategoryDataService::getMostVisited( $sCategoryDBKey, $mNamespace, $negative );
 		}
 		return array();
 	}
