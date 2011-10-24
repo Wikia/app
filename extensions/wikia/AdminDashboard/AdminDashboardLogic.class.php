@@ -38,7 +38,7 @@ class AdminDashboardLogic {
 		if ($title && $title->isSpecialPage()) {
 			$bits = explode( '/', $title->getDBkey(), 2 );
 			$alias = SpecialPage::resolveAlias($bits[0]);
-		
+
 			// NOTE: keep this list in alphabetical order
 			static $exclusionList = array(
 				"AdSS",
@@ -76,6 +76,7 @@ class AdminDashboardLogic {
 				"Phalanx",
 				"PhalanxStats",
 				"PhotoPopSetup",
+				"Places",
 				"Preferences",
 				"ScavengerHunt",
 				"Search",
@@ -108,7 +109,7 @@ class AdminDashboardLogic {
 			$profile = SassColorProfile::getInstance();
 			$profile->setDualMode(true);
 		}
-		
+
 		return $output;
 	}
 
