@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * PlaceStorage
+ *
+ * Class is used to access (read & write) article's geo data stored in page_wikia_props table.
+ * PlaceModel class is used to encapsulate geo tag.
+ */
+
 class PlaceStorage {
 
 	const WPP_TABLE = 'page_wikia_props';
@@ -17,6 +24,12 @@ class PlaceStorage {
 	// initial value of geo tag (i.e. from the moment it was read from database)
 	private $initialCords;
 
+	/**
+	 * Construct PlaceStorage model instance
+	 *
+	 * @param WikiaApp $app Nirvava application instance
+	 * @param int $pageId article ID to build model for
+	 */
 	public function __construct(WikiaApp $app, $pageId) {
 		$this->app = $app;
 		$this->memc = $this->app->wg->Memc;
@@ -25,6 +38,12 @@ class PlaceStorage {
 		$this->model = F::build('PlaceModel');
 	}
 
+	/**
+	 * Return PlaceStorage model for article with given ID
+	 *
+	 * @param int $pageId article ID
+	 * @return PlaceStorage model object
+	 */
 	public static function newFromId($pageId) {
 		$instance = F::build('PlaceStorage', array('app' => F::app(), 'pageId' => $pageId));
 
@@ -33,22 +52,47 @@ class PlaceStorage {
 		return $instance;
 	}
 
+	/**
+	 * Return PlaceStorage model for given article
+	 *
+	 * @param Article $article article object
+	 * @return PlaceStorage model object
+	 */
 	public static function newFromArticle(Article $article) {
 		return self::newFromId($article->getID());
 	}
 
+	/**
+	 * Return PlaceStorage model for given title
+	 *
+	 * @param Title $title title object
+	 * @return PlaceStorage model object
+	 */
 	public static function newFromTitle(Title $title) {
 		return self::newFromId($title->getArticleID());
 	}
 
+	/**
+	 * Set place model to be stored
+	 *
+	 * @param PlaceModel $model model encapsulating geo tag
+	 */
 	public function setModel(PlaceModel $model) {
 		$this->model = $model;
 	}
 
+	/**
+	 * Return place model
+	 *
+	 * @return PlaceModel model encapsulating geo tag
+	 */
 	public function getModel() {
 		return $this->model;
 	}
 
+	/**
+	 * Read geo data from database / memcache when the storage object is constructed
+	 */
 	private function read() {
 		wfProfileIn(__METHOD__);
 
@@ -97,6 +141,11 @@ class PlaceStorage {
 		wfProfileOut(__METHOD__);
 	}
 
+	/**
+	 * Store geo data in database and refresh memcache entry.
+	 *
+	 * Database will not be updated if geo tag wasn't changed
+	 */
 	public function store() {
 		wfProfileIn(__METHOD__);
 
