@@ -75,7 +75,7 @@ class LocalMaintenanceTask extends BatchTask {
 				$retval = wfShellExec( $cmd, $status );
 				$this->addLog( $retval );
 
-				$cmd = sprintf( "SERVER_ID={$city_id} php {$IP}/maintenance/initStats.php --server={$server} --conf {$wgWikiaLocalSettingsPath} --aconf {$wgWikiaAdminSettingsPath} --use-master" );
+				$cmd = sprintf( "SERVER_ID={$city_id} php {$IP}/maintenance/initStats.php --server={$server} --conf {$wgWikiaLocalSettingsPath} --aconf {$wgWikiaAdminSettingsPath}" );
 				$this->addLog( "Running {$cmd}" );
 				$retval = wfShellExec( $cmd, $status );
 				$this->addLog( $retval );
