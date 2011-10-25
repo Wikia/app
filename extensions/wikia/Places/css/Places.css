@@ -2,11 +2,10 @@
 	height: 600px;
 }
 
-.placemap {
-	img {
-		cursor:pointer;
-	}
-	.geo {
-		display:none;
-	}
+.placemap img {
+	cursor:pointer;
+}
+
+.placemap .geo {
+	display:none;
 }
