@@ -283,6 +283,20 @@ $.loadModalJS = function(callback) {
 	);
 }
 
+$.loadGoogleMaps = function(callback) {
+	window.onGoogleMapsLoaded = function(){
+		if ( typeof callback == 'function' ){
+			callback()
+		}
+	}
+
+	$.loadLibrary('GoogleMaps',
+		'http://maps.googleapis.com/maps/api/js?sensor=false&callback=onGoogleMapsLoaded',
+		( window.google && typeof google.maps != 'undefined' ) ? typeof google.maps : 'undefined',
+		function(){}
+	);
+}
+
 /**
  * Loads library file if it's not already loaded and fires callback
  */
