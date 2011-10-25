@@ -3,9 +3,9 @@
 	echo F::build('JSSnippets')->addToStack(
 		array( 
 			'/extensions/wikia/Places/js/Places.js',
-			'http://maps.googleapis.com/maps/api/js?sensor=false&callback=$.noop'
 		),
-		array(),
-		'Places.displayDynamic'
+		array( '$.loadGoogleMaps'),
+		'Places.displayDynamic',
+		$markers
 	);
 ?>

@@ -138,6 +138,20 @@ class PlaceModel {
 		return 'http://maps.googleapis.com/maps/api/staticmap?'.$sParams;
 	}
 
+	public function getForMap(){
+
+		if ( $this->isEmpty() ){
+			return false;
+		};
+
+		$oTitle = F::build('Title', array( $this->getPageId() ), 'newFromID' );
+		return $oTitle->exists()
+			? array(	'lat' => $this->getLat(),
+					'lan' => $this->getLon(),
+					'label' => $oTitle->getText() )
+			: array();
+	}
+
 	public function getDistanceTo(PlaceModel $place) {
 
 	}

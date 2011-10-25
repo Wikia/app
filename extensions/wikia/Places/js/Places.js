@@ -27,27 +27,21 @@ var Places = {
 			}
 		});
 	},
-	displayDynamic: function( ){
+	displayDynamic: function( markers ){
 
-		var markers = [
-			{'lat': 1.23,	'lan': 1.001,	'label': '123123123'},
-			{'lat': 1,	'lan': 1.002,	'label': 'rwer'},
-			{'lat': 0.387,	'lan': -9.6123,	'label': 'asda12312dsa'},
-			{'lat': -1.387, 'lan': 2.6123,	'label': 'asasdasdsa'},
-			{'lat': 13.987, 'lan': 1.0123,	'label': 'as3434 222 sa'}
-		];
+		markers = markers || [];
 
 		if ( markers.length > 0 ){
 			var lanSum = 0;
 			var latSum = 0;
 			
-			var maxLat = -181;
-			var maxLan = -181;
-			var minLat = 181;
-			var minLan = 181;
+			var maxLat = -181.0;
+			var maxLan = -181.0;
+			var minLat = 181.0;
+			var minLan = 181.0;
 
 			$.each( markers,
-				function(index, value) {
+				function( index, value ) {
 					lanSum += value.lan;
 					latSum += value.lat;
 					if ( maxLat < value.lat ){ maxLat = value.lat }
@@ -77,14 +71,16 @@ var Places = {
 
 			var aMarker = [];
 			$.each( markers, function( index, value ){
-				aMarker.push(
-					new google.maps.Marker({
-						position: new google.maps.LatLng( value.lat, value.lan ),
-						map: map,
-						title: value.label
-					})
-				);
-			});			
+				if ( ( typeof value.lat != 'undefined' ) && ( typeof value.lat != 'undefined' ) && ( typeof value.label != 'undefined' ) ){
+					aMarker.push(
+						new google.maps.Marker({
+							position: new google.maps.LatLng( value.lat, value.lan ),
+							map: map,
+							title: value.label
+						})
+					);
+				}
+			});
 		}
 	}
 };
