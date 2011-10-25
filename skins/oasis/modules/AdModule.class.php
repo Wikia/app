@@ -62,6 +62,7 @@ class AdModule extends Module {
 			} else if($namespace == NS_FILE) {
 				// file/image page
 				self::$config['TOP_LEADERBOARD'] = true;
+				self::$config['TOP_RIGHT_BOXAD'] = true;
 				self::$config['TOP_BUTTON'] = true;
 			} else if($namespace == NS_SPECIAL && $wgTitle->isSpecial('Search')) {
 				// search results page
@@ -79,7 +80,17 @@ class AdModule extends Module {
 				self::$config['PREFOOTER_LEFT_BOXAD'] = true;
 				self::$config['PREFOOTER_RIGHT_BOXAD'] = true;
 				self::$config['TOP_BUTTON'] = true;
+			} else if($namespace == NS_PROJECT) {
+				self::$config['TOP_LEADERBOARD'] = true;
+				self::$config['TOP_RIGHT_BOXAD'] = true;
+			} else if($namespace == NS_FORUM) {
+				self::$config['TOP_LEADERBOARD'] = true;
+				self::$config['TOP_RIGHT_BOXAD'] = true;
+			} else if( BodyModule::isBlogListing() ) {
+				self::$config['TOP_LEADERBOARD'] = true;
+				self::$config['TOP_RIGHT_BOXAD'] = true;
 			} else if( BodyModule::isBlogPost() ) {
+				self::$config['TOP_LEADERBOARD'] = true;
 				self::$config['TOP_RIGHT_BOXAD'] = true;
 				self::$config['TEST_TOP_RIGHT_BOXAD'] = true;
 			} else if (array_key_exists($namespace, $wgExtraNamespaces)) {
