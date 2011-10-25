@@ -67,7 +67,7 @@ class WikiaSignupSpecialController extends WikiaSpecialPageController {
 	 * @details
 	 * @requestParam string username
 	 */
-	public function confirmEmailWidget() {
+	public function getEmailConfirmationMarketingModal() {
 	}
 	
 	/**

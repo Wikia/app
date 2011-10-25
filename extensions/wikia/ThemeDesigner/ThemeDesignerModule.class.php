@@ -201,93 +201,102 @@ class ThemeDesignerModule extends Module {
 	}
 
 	public function executeWordmarkUpload() {
-		global $wgRequest, $wgUser;
-		
 		$upload = new UploadWordmarkFromFile();
-
-		$upload->initializeFromRequest( $wgRequest );
-		$permErrors = $upload->verifyPermissions( $wgUser );
 		
-		if ( $permErrors !== true ) {
-			$this->errors = array( wfMsg( 'badaccess' ) );
-		} else {
-			$details = $upload->verifyUpload();
-	
-			if ( $details[ 'status' ] != UploadBase::OK ) {
-				$this->errors = array( $this->getUploadErrorMessage( $details ) );
-			} else {
-				$warnings = $upload->checkWarnings();
-	
-				if ( !empty( $warnings ) ) {
-					$this->errors = $this->getUploadWarningMessages( $warnings );
-				} else {
-					//save temp file
-					$status = $upload->performUpload();
-					
-					if( $status->isGood() ) {
-						$file = $upload->getLocalFile();
-						$this->wordmarkImageUrl = wfReplaceImageServer( $file->getUrl() );
-						$this->wordmarkImageName = $file->getName();
-					}
-					
-					// if wordmark url is not set then it means there was some problem
-					if ( empty( $this->wordmarkImageUrl ) || empty( $this->wordmarkImageName ) ) {
-						$this->errors = array( wfMsg( 'themedesigner-uknown-error' ) );
-					}
-				}
+		$status = $this->uploadImage($upload);
+		
+		if($status['status'] === 'uploadattempted' && $status['isGood']) {
+			$file = $upload->getLocalFile();
+			$this->wordmarkImageUrl = wfReplaceImageServer( $file->getUrl() );
+			$this->wordmarkImageName = $file->getName();
+			
+			// if wordmark url is not set then it means there was some problem
+			if ( empty( $this->wordmarkImageUrl ) || empty( $this->wordmarkImageName ) ) {
+				$this->errors = array( wfMsg( 'themedesigner-uknown-error' ) );
 			}
+		} else if ($status['status'] === 'error') {
+			$this->errors = $status['errors'];
 		}
+
 	}
 	
 	public function executeFaviconUpload() {
-		global $wgFavicon;
-		$this->faviconImageUrl = $wgFavicon;	//placeholder
+		$upload = new UploadFaviconFromFile();
+		
+		$this->faviconImageUrl = '';
+		
+		$status = $this->uploadImage($upload);
+		if($status['status'] === 'uploadattempted' && $status['isGood']) {
+			$file = $upload->getLocalFile();
+			$this->faviconImageUrl = wfReplaceImageServer( $file->getUrl() );
+			$this->faviconImageName = $file->getName();
+			
+			// if wordmark url is not set then it means there was some problem
+			if ( empty( $this->faviconImageUrl ) ) {
+				$this->errors = array( wfMsg( 'themedesigner-uknown-error' ) );
+			}
+		} else if ($status['status'] === 'error') {
+			$this->errors = $status['errors'];
+		}
 	}
 
 	public function executeBackgroundImageUpload() {
+		$upload = new UploadBackgroundFromFile();
+		
+		$status = $this->uploadImage($upload);
+		
+		if($status['status'] === 'uploadattempted' && $status['isGood']) {
+			$file = $upload->getLocalFile();
+			$this->backgroundImageUrl = wfReplaceImageServer( $file->getUrl() );
+			$this->backgroundImageName = $file->getName();
+			$this->backgroundImageAlign = $upload->getImageAlign();
+
+			//get cropped URL
+			$is = new ImageServing( null, 120, array( "w"=>"120", "h"=>"100" ) );
+			$this->backgroundImageThumb = wfReplaceImageServer( $file->getThumbUrl( $is->getCut( $file->width, $file->height, "origin" ) . "-" . $file->name ) );
+			
+			// if background image url is not set then it means there was some problem
+			if ( empty( $this->backgroundImageUrl ) ) {
+				$this->errors = array( wfMsg( 'themedesigner-uknown-error' ) );
+			}
+
+		} else if ($status['status'] === 'error') {
+			$this->errors = $status['errors'];
+		}
+		
+	}
+	
+	private function uploadImage($upload) {
 		global $wgRequest, $wgUser;
 		
-		$upload = new UploadBackgroundFromFile();
+		$uploadStatus = array("status" => "error");
 
 		$upload->initializeFromRequest( $wgRequest );
 		$permErrors = $upload->verifyPermissions( $wgUser );
 		
 		if ( $permErrors !== true ) {
-			$this->errors = array( wfMsg( 'badaccess' ) );
+			$uploadStatus["errors"] = array( wfMsg( 'badaccess' ) );
 		} else {
 			$details = $upload->verifyUpload();
 	
 			if ( $details[ 'status' ] != UploadBase::OK ) {
-				$this->errors = array( $this->getUploadErrorMessage( $details ) );
+				$uploadStatus["errors"] = array( $this->getUploadErrorMessage( $details ) );
 			} else {
 				$warnings = $upload->checkWarnings();
 	
 				if ( !empty( $warnings ) ) {
-					$this->errors = $this->getUploadWarningMessages( $warnings );
+					$uploadStatus["errors"] = $this->getUploadWarningMessages( $warnings );
 				} else {
-					$this->backgroundImageAlign = $upload->getImageAlign();
-	
-					//save temp file
 					//save temp file
 					$status = $upload->performUpload();
 					
-					if( $status->isGood() ) {
-						$file = $upload->getLocalFile();
-						$this->backgroundImageUrl = wfReplaceImageServer( $file->getUrl() );
-						$this->backgroundImageName = $file->getName();
-	
-						//get cropped URL
-						$is = new ImageServing( null, 120, array( "w"=>"120", "h"=>"100" ) );
-						$this->backgroundImageThumb = wfReplaceImageServer( $file->getThumbUrl( $is->getCut( $file->width, $file->height, "origin" ) . "-" . $file->name ) );
-					}
-	
-					// if background image url is not set then it means there was some problem
-					if ( empty( $this->backgroundImageUrl ) ) {
-						$this->errors = array( wfMsg( 'themedesigner-uknown-error' ) );
-					}
+					$uploadStatus["status"] = "uploadattempted";
+					$uploadStatus["isGood"] = $status->isGood();
 				}
 			}
 		}
+		
+		return $uploadStatus;
 	}
 
 	public function executeSaveSettings() {
