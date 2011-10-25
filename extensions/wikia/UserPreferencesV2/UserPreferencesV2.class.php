@@ -21,6 +21,42 @@ class UserPreferencesV2 {
 		unset($defaultPreferences['realname']);
 		unset($defaultPreferences['rememberpassword']);
 		unset($defaultPreferences['ccmeonemails']);
+		$defaultPreferences['username']['label-message'] = 'preverences-v2-username';
+		$defaultPreferences['usergroups']['label-message'] = 'preverences-v2-usergroups';
+		$defaultPreferences['gender']['label-message'] = 'preverences-v2-gender';
+		$defaultPreferences['gender']['help-message'] = '';
+		$defaultPreferences['password']['label-message'] = 'preverences-v2-password';
+		unset($defaultPreferences['emailaddress']);
+		unset($defaultPreferences['emailauthentication']);
+		unset($defaultPreferences['disablemail']);
+		unset($defaultPreferences['ccmeonemails']);
+		unset($defaultPreferences['enotifwatchlistpages']);
+		unset($defaultPreferences['enotifusertalkpages']);
+		unset($defaultPreferences['enotifminoredits']);
+		unset($defaultPreferences['enotifrevealaddr']);
+		unset($defaultPreferences['htmlemails']);
+		unset($defaultPreferences['marketingallowed']);
+		$defaultPreferences['oldsig']['label-message'] = 'preverences-v2-oldsig';
+		$defaultPreferences['nickname']['label-message'] = 'preverences-v2-nickname';
+		$defaultPreferences['fancysig']['label-message'] = 'preverences-v2-fancysig';
+		$defaultPreferences['fancysig']['help-message'] = '';
+		unset($defaultPreferences['showAds']);
+		unset($defaultPreferences['unsubscribed']);
+		$defaultPreferences['language']['section'] = 'personal/appearance';
+		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'language');
+		$defaultPreferences['date']['section'] = 'personal/appearance';
+		$defaultPreferences['date']['type'] = 'select';
+		$defaultPreferences['date']['label-message'] = 'preverences-v2-date';
+		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'date');
+		$defaultPreferences['timecorrection']['section'] = 'personal/appearance';
+		$defaultPreferences['timecorrection']['label-message'] = 'preverences-v2-time';
+		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'timecorrection');
+		$defaultPreferences['skin']['section'] = 'personal/appearance';
+		$defaultPreferences['skin']['type'] = 'select';
+		$defaultPreferences['skin']['label-message'] = 'preverences-v2-skin';
+		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'skin');
+		$defaultPreferences['myhomedisableredirect']['section'] = 'personal/appearance';
+		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'myhomedisableredirect');
 
 		//Tab 2: Appearance
 		unset($defaultPreferences['imagesize']);
@@ -32,6 +68,12 @@ class UserPreferencesV2 {
 		$defaultPreferences['wllimit']['help'] = '';
 
 		return true;
+	}
+	
+	public function moveToEndOfArray($array, $key) {
+		$temp[$key] = $array[$key];
+		unset($array[$key]);
+		return array_merge($array, $temp);
 	}
 
 }

@@ -3,7 +3,7 @@
 class SkinChooser {
 
 	public static function onGetPreferences($user, &$defaultPreferences) {
-		global $wgEnableAnswers, $wgForceSkin, $wgAdminSkin, $wgDefaultSkin, $wgDefaultSkin, $wgSkinPreviewPage, $wgSkipSkins, $wgSkipOldSkins;
+		global $wgEnableAnswers, $wgForceSkin, $wgAdminSkin, $wgDefaultSkin, $wgDefaultSkin, $wgSkinPreviewPage, $wgSkipSkins, $wgSkipOldSkins, $wgEnableUserPreferencesV2Ext;
 
 		// hide default MediaWiki skin fieldset
 		unset($defaultPreferences['skin']);		
@@ -63,7 +63,7 @@ class SkinChooser {
 		// display radio buttons for rest of skin
 		if(count($oldSkinNames) > 0) {
 			foreach($oldSkinNames as $skinKey => $skinVal) {
-				$previewlink = ' <a target="_blank" href="'.htmlspecialchars($previewLinkTemplate.$skinKey).'">'.$previewtext.'</a>';
+				$previewlink = $wgEnableUserPreferencesV2Ext ? '' : ' <a target="_blank" href="'.htmlspecialchars($previewLinkTemplate.$skinKey).'">'.$previewtext.'</a>';
 				$skins[$skinVal.$previewlink.($skinKey == $defaultSkinKey ? ' ('.wfMsg('default').')' : '')] = $skinKey;
 			}
 		}
