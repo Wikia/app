@@ -107,7 +107,10 @@ class PlaceStorage {
 				'propname' => array(WPP_PLACES_LATITUDE, WPP_PLACES_LONGITUDE),
 			), __METHOD__);
 
-			$cords = array();
+			$cords = array(
+				'lat' => false,
+				'lon' => false,
+			);
 
 			while($row = $res->fetchObject()) {
 				$value = (float) $row->props;
