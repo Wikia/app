@@ -62,6 +62,8 @@ class PlacesParserHookHandler {
 		// debug code !!!
 		$places = F::build('PlacesModel');
 		var_dump($places->getAll());
+		var_dump($places->getFromCategories('Budynki'));
+		var_dump($places->getFromCategories(array('Budynki', 'Stary Rynek')));
 
 		$html = '';
 
