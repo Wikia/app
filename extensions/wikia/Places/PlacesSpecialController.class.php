@@ -17,7 +17,6 @@ class PlacesSpecialController extends WikiaSpecialPageController {
 
 	public function index(){
 		$this->wg->Out->setPageTitle(wfMsg('places'));
-		$this->response->addAsset('extensions/wikia/Places/js/Places.js');
 		$sParam = $this->getPar();
 		$oTitle = F::build( 'Title', array( $sParam ), 'newFromText' );
 		if ( !empty( $oTitle ) && $oTitle->exists() ){
