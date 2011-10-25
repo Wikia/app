@@ -84,7 +84,11 @@ if(typeof jQuery.fn.wikiaTooltip === 'undefined'){
 					left: 0,
 					//disntance of the tooltip element's nearest side from the target element side specified in the side option,
 					//used only if position is auto
-					distance: 0
+					distance: 0,
+                                        // if set, don't let tooltip to be wider than this value
+                                        maxWidth: false,
+					// If set to true, tooltip will stay open while hovering over the message. 
+					hoverStay: false
 				},
 				options
 			);
@@ -118,6 +122,24 @@ if(typeof jQuery.fn.wikiaTooltip === 'undefined'){
 					'mouseenter.wikiaTooltip': jQuery.__wikiaTooltipOnMouseEnter,
 					'mouseleave.wikiaTooltip': jQuery.__wikiaTooltipOnMouseLeave
 				});
+                        
+                        // Timer functions for keeping message open when hovering over it. 
+                        if(defaultOptions.hoverStay){
+                            var timers = {
+                                handle: false,
+                                hideTip: function(){
+                                    $('.wikia-tooltip').hide();
+                                },
+                                setTime: function(){
+                                    this.handle = setTimeout(this.hideTip,300);
+                                },
+                                clearTime:function(){
+                                    clearTimeout(this.handle)
+                                }
+                            }
+                            
+                            requestor.data('timers',timers);
+                        }
 		}
 	}
 
@@ -128,8 +150,9 @@ if(typeof jQuery.fn.wikiaTooltip === 'undefined'){
 		var elm = $(this);
 		var options = elm.data('tooltip-options');
 		var tooltip = elm.data('tooltip-cached');
+                var timers = elm.data('timers');
 		var position = {};
-
+                
 		if(typeof tooltip === 'undefined'){
 			tooltip = elm.data('tooltip-value');
 
@@ -143,7 +166,10 @@ if(typeof jQuery.fn.wikiaTooltip === 'undefined'){
 				default:
 					//could use HTML5 details tag, but support for Monobook is preferred
 					tooltip = $('<div>' + tooltip.toString() + '</div>');
-					position['white-space'] = 'nowrap';
+					// If we're setting a width, we want to allow the text to wrap
+                                        if(!options.maxWidth){
+                                            position['white-space'] = 'nowrap';
+                                        }
 					$('body').append(tooltip);
 					break;
 			}
@@ -203,15 +229,38 @@ if(typeof jQuery.fn.wikiaTooltip === 'undefined'){
 			elm.data('tooltip-cached-position', globalPosition);
 			tooltip.css(position);
 		}
+                if(options.maxWidth){
+                    tooltip.css('width',options.maxWidth)
+                }
 
 		tooltip.show();
+                
+                // If hoverStay is set, clear timout for hiding message
+                // because we just hovered over the trigger element
+                if(options.hoverStay)
+                    timers.clearTime();
 	}
 
 	/*
 	 * shared callback for mouseleave event
 	 */
 	jQuery.__wikiaTooltipOnMouseLeave = function(){
-		$(this).data('tooltip-cached').hide();
+        var elm = $(this),
+            options = elm.data('tooltip-options'),
+            tooltip = elm.data('tooltip-cached'),
+            timers = elm.data('timers');
+            
+            // If hoverStay is set, start timeout for hiding message. 
+            if(options.hoverStay){
+                timers.setTime();
+                tooltip.mouseenter(function(){
+                    timers.clearTime()
+                }).mouseleave(function(){
+                    timers.setTime()
+                })
+            } else {
+                    tooltip.hide();			
+            }
 	}
 
 	/*

@@ -51,7 +51,7 @@ var ThemeDesigner = {
 		// init tooltips
 		$('.form-questionmark').wikiaTooltip(function(el){
 			return el.data('tooltip');
-		})
+		}, { hoverStay: true, maxWidth: '200', side: 'right', align: 'middle' })
 
 		// track page view
 		ThemeDesigner.track('open');
