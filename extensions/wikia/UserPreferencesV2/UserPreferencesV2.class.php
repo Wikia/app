@@ -65,9 +65,23 @@ class UserPreferencesV2 {
 		$defaultPreferences['htmlemails']['section'] = 'emailv2/emailv2';
 		$defaultPreferences['marketingallowed']['section'] = 'emailv2/emailv2';
 
-		//Tab 6: Followed pages
+		//Tab 3: Editing
 		$defaultPreferences['watchlistdays']['help'] = '';
 		$defaultPreferences['wllimit']['help'] = '';
+		unset($defaultPreferences['nowserver']);
+		unset($defaultPreferences['nowlocal']);
+		unset($defaultPreferences['underline']);
+		unset($defaultPreferences['stubthreshold']);
+		unset($defaultPreferences['highlightbroken']);
+		unset($defaultPreferences['toggle']);
+		unset($defaultPreferences['showtoc']);
+		unset($defaultPreferences['nocache']);
+		unset($defaultPreferences['showhiddencats']);
+		unset($defaultPreferences['showjumplinks']);
+		unset($defaultPreferences['justify']);
+		unset($defaultPreferences['numberheadings']);
+		$defaultPreferences['enablerichtext']['section'] = 'editing/editing-experience';
+		unset($defaultPreferences['disablelinksuggest']);
 
 		return true;
 	}
