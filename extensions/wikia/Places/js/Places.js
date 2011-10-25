@@ -1,3 +1,4 @@
+/*global google: true*/
 var Places = {
 	init: function() {
 		$('#WikiaMainContent').delegate( '.placemap img', 'click', Places.showModal );
@@ -30,14 +31,14 @@ var Places = {
 	displayDynamic: function( options ){
 
 		$().log( options, 'options' );
-		options = options || [];
+		options = options || {};
 		options.markers = options.markers || [];
 		options.center = options.center || false;
 		$().log( options.markers, 'markers' );
 		if ( options.markers.length > 0 ){
 			var lanSum = 0;
 			var latSum = 0;
-			
+
 			var maxLat = -181.0;
 			var maxLan = -181.0;
 			var minLat = 181.0;
@@ -52,7 +53,7 @@ var Places = {
 					if ( minLat > value.lat ){minLat = value.lat}
 					if ( minLan > value.lan ){minLan = value.lan}
 				}
-			)
+			);
 			$().log( options.center, 'center' );
 			if ( options.center != false ){
 
