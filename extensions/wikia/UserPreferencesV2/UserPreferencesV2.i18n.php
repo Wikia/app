@@ -14,4 +14,5 @@ $messages['en'] = array(
 	'preverences-v2-date' => 'Date:',
 	'preverences-v2-time' => 'Time:',
 	'preverences-v2-skin' => 'Layout:',
+	'prefs-emailv2' => 'Email',
 );
