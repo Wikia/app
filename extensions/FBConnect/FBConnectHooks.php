@@ -476,7 +476,7 @@ JS;
 	/**
 	 * Adds some info about the governing Facebook group to the header form of Special:ListUsers.
 	 */
-	static function SpecialListusersHeaderForm( &$pager, &$out ) {
+	static function SpecialListusersHeaderForm( $pager, &$out ) {
 		global $fbUserRightsFromGroup, $fbLogo;
 		if (!$fbUserRightsFromGroup) {
 			return true;
