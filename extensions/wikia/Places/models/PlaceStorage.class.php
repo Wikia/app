@@ -131,7 +131,7 @@ class PlaceStorage {
 		else {
 			$this->app->wf->Debug(__METHOD__ . " - memcache hit for #{$this->pageId}\n");
 		}
-
+		$cords['pageId'] = $this->pageId;
 		$this->setModel(F::build('PlaceModel', array($cords), 'newFromAttributes'));
 
 		// this will be checked in store() method

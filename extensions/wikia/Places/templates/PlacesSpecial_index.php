@@ -6,6 +6,6 @@
 		),
 		array( '$.loadGoogleMaps'),
 		'Places.displayDynamic',
-		$markers
+		array( 'markers' => $markers, 'center' => $center )
 	);
 ?>

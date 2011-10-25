@@ -27,11 +27,14 @@ var Places = {
 			}
 		});
 	},
-	displayDynamic: function( markers ){
+	displayDynamic: function( options ){
 
-		markers = markers || [];
-
-		if ( markers.length > 0 ){
+		$().log( options, 'options' );
+		options = options || [];
+		options.markers = options.markers || [];
+		options.center = options.center || false;
+		$().log( options.markers, 'markers' );
+		if ( options.markers.length > 0 ){
 			var lanSum = 0;
 			var latSum = 0;
 			
@@ -40,18 +43,29 @@ var Places = {
 			var minLat = 181.0;
 			var minLan = 181.0;
 
-			$.each( markers,
+			$.each( options.markers,
 				function( index, value ) {
 					lanSum += value.lan;
 					latSum += value.lat;
-					if ( maxLat < value.lat ){ maxLat = value.lat }
-					if ( maxLan < value.lan ){ maxLan = value.lan }
-					if ( minLat > value.lat ){ minLat = value.lat }
-					if ( minLan > value.lan ){ minLan = value.lan }
+					if ( maxLat < value.lat ){maxLat = value.lat}
+					if ( maxLan < value.lan ){maxLan = value.lan}
+					if ( minLat > value.lat ){minLat = value.lat}
+					if ( minLan > value.lan ){minLan = value.lan}
 				}
 			)
+			$().log( options.center, 'center' );
+			if ( options.center != false ){
 
-			var options = {
+				var latDistance = Math.max( Math.abs( maxLat - options.center.lat ), Math.abs( options.center.lat - minLat ) );
+				var lanDistance = Math.max( Math.abs( maxLan - options.center.lan ), Math.abs( options.center.lan - minLan ) );
+				minLat = options.center.lat - latDistance;
+				minLan = options.center.lan - lanDistance;
+				maxLat = options.center.lat + latDistance;
+				maxLan = options.center.lan + lanDistance;
+
+			}
+			$().log();
+			var mapConfig = {
 				'center': new google.maps.LatLng( 0, 0 ),
 				'mapTypeId': google.maps.MapTypeId.ROADMAP,
 				'zoom': 14
@@ -59,7 +73,7 @@ var Places = {
 
 			var map = new google.maps.Map(
 				document.getElementById("places-dynamic-map"),
-				options
+				mapConfig
 			);
 
 			map.fitBounds(
@@ -70,7 +84,7 @@ var Places = {
 			);
 
 			var aMarker = [];
-			$.each( markers, function( index, value ){
+			$.each( options.markers, function( index, value ){
 				if ( ( typeof value.lat != 'undefined' ) && ( typeof value.lat != 'undefined' ) && ( typeof value.label != 'undefined' ) ){
 					aMarker.push(
 						new google.maps.Marker({

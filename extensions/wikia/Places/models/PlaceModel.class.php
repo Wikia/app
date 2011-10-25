@@ -145,7 +145,7 @@ class PlaceModel {
 		};
 
 		$oTitle = F::build('Title', array( $this->getPageId() ), 'newFromID' );
-		return $oTitle->exists()
+		return ( !empty( $oTitle ) && $oTitle->exists() )
 			? array(	'lat' => $this->getLat(),
 					'lan' => $this->getLon(),
 					'label' => $oTitle->getText() )
