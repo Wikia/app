@@ -1,3 +1,4 @@
+<? //print_r($data); ?>
 <section id="WikiaQuiz" class="WikiaQuiz">
 	<div class="quiz-frame">
 	</div>
@@ -25,8 +26,11 @@
 		<?php
 		$numOfQuestions = count($data['elements']);
 		for ($i = 0; $i < $numOfQuestions; $i++) {
-			$q = $data['elements'][$i]; ?>
-			<li class="question-set">
+			$q = $data['elements'][$i]; 
+			$videoClass = ($q['videoName']) ? 'video' : '';
+			?>
+			
+			<li class="question-set <?= $videoClass ?>">
 				<div class="question-number">
 					<?= $i + 1 ?>
 				</div>
@@ -41,27 +45,57 @@
 						<?= $q['question'] ?>
 					</div>
 				</div>
+				<? if ($q['videoName'] && $q['videoEmbedCode']) { ?>
+				<div class="video">
+					<?= $q['videoEmbedCode'] ?>
+				</div>
+				<? } ?>
 				<ul class="answers">
-					<? $correctAnswerLabel = ''; ?>
-					<? foreach ($q['answers'] as $a) { ?>
-						<? if(!empty($a['correct'])) { $correctAnswerLabel = $a['text']; } ?>
+					<? 
+					$correctAnswerLabel = '';
+					$correctAnswerImage = '';
+					$explanationClass = '';
+
+					foreach ($q['answers'] as $a) { 
+						if ($q['videoName'] && $q['videoEmbedCode']) {
+							$type = 'video';
+						} else if ($a['image']) {
+							$type = 'image';
+						} else {
+							$type = 'text';
+						}
+						if(!empty($a['correct'])) { 
+							$correctAnswerLabel = $a['text']; 
+							if ($type == 'video' && !empty($a['image'])) {
+								$correctAnswerImage = $a['image'];
+								$explanationClass = 'video-image';
+							}
+						}
+					?>
 						<li class="answer" data-correct="<?= $a['correct'] ?>">
-							<? if (empty($a['image'])) { ?>
+							<? if ($type == 'text') {?>
 								<div class="representation text"><?= $a['text'] ?></div>
-							<? } else { ?>
+							<? } else if ($type == 'image') { ?>
 								<img class="representation" src="<?= $a['image'] ?>" height="155" width="155">
+								<p class="answer-label" data-label="<?= $a['text'] ?>"><?= $a['text'] ?></p>
+							<? } else if ($type == 'video') { ?>
+								<div class="representation"><?= $a['text'] ?></div>
 							<? } ?>
-							<p class="answer-label" data-label="<?= $a['text'] ?>"><?= empty($a['image']) ? '' : $a['text'] ?></p>
 							<div class="anchor-hack">&nbsp;</div>
 						</li>
 					<? } ?>
 				</ul>
-				<div class="explanation">
+				<div class="explanation <?= $explanationClass ?>">
 					<div class="answer-response quiz-bubble">
 					</div>
 					<div class="correct-answer">
 						<?= $correctAnswerLabel ?>
 					</div>
+					<? if ($correctAnswerImage) { ?>
+					<div class="correct-answer-image">
+						<img src="<?= $correctAnswerImage ?>">
+					</div>
+					<? } ?>
 					<div class="answer-explanation">
 						<?= $q['explanation'] ?>
 					</div>

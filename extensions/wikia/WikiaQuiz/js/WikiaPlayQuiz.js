@@ -74,7 +74,7 @@ var WikiaQuiz = {
 		}, 1000);
 	},
 	showQuiz: function() {
-		WikiaQuiz.ui.questions.add(WikiaQuiz.ui.countDown).animate({left:"-=800px"}, WikiaQuiz.animationTiming + 200);
+		WikiaQuiz.ui.questions.add(WikiaQuiz.ui.countDown).animate({left:"-=840px"}, WikiaQuiz.animationTiming + 200);
 	},
 	initializeQuestion: function(cq) {
 		WikiaQuiz.trackByStr('view/q'+WikiaQuiz.cqNum);
@@ -82,6 +82,7 @@ var WikiaQuiz = {
 		WikiaQuiz.ui.questionLabel = cq.find('.question-label, .question-image');
 		WikiaQuiz.ui.questionBubble = cq.find('.question-bubble');
 		WikiaQuiz.ui.answers = cq.find('.answers');
+		WikiaQuiz.ui.video = cq.find('.video');
 		WikiaQuiz.ui.allAnswers = cq.find('.answer');
 		WikiaQuiz.ui.allRepresentations = cq.find('.representation');
 		WikiaQuiz.ui.allAnswerLabels = cq.find('.answer-label');
@@ -108,10 +109,10 @@ var WikiaQuiz = {
 	},
 	showAnswers: function() {
 		WikiaQuiz.ui.questionLabel.fadeOut(WikiaQuiz.animationTiming);
-		WikiaQuiz.ui.questionBubble.animate({bottom:'360px'}, WikiaQuiz.animationTiming, function() {
+		WikiaQuiz.ui.questionBubble.animate({bottom:'440px'}, WikiaQuiz.animationTiming, function() {
 			WikiaQuiz.ui.answers.bind('click', WikiaQuiz.handleAnswerClick);
 		});
-		WikiaQuiz.ui.answers.fadeIn(WikiaQuiz.animationTiming);
+		WikiaQuiz.ui.answers.add(WikiaQuiz.ui.video).fadeIn(WikiaQuiz.animationTiming);
 	},
 	handleAnswerClick: function(evt) {
 		if(WikiaQuiz.answered) {
@@ -143,16 +144,33 @@ var WikiaQuiz = {
 	showSelection: function(answer) {
 		var r = answer.find('.representation');
 		if(r.length) {
-			var elementsToHide = WikiaQuiz.ui.allRepresentations.not(r).add(WikiaQuiz.ui.allAnswerLabels).add(WikiaQuiz.ui.questionBubble);
+			var elementsToHide = WikiaQuiz.ui.allRepresentations.not(r).add(WikiaQuiz.ui.allAnswerLabels).add(WikiaQuiz.ui.questionBubble).add(WikiaQuiz.ui.video);
 
 			var i = WikiaQuiz.ui.allAnswers.index(answer);
 			var left = (20 - (i * 190));
-			r.animate({
-				height:WikiaQuiz.imgScaleFactor,
-				width:WikiaQuiz.imgScaleFactor,
-				left: left,
-				top: -135
-				}, WikiaQuiz.animationTiming, function() {
+			
+			if (WikiaQuiz.cq.hasClass('video')) {
+				// skip animation
+				r.fadeOut(WikiaQuiz.animationTiming);
+				WikiaQuiz.showAnswer();
+			} else {
+				// do animation
+				r.animate({
+						height:WikiaQuiz.imgScaleFactor,
+						width:WikiaQuiz.imgScaleFactor,
+						left: left,
+						top: -135
+					}, 
+					WikiaQuiz.animationTiming, 
+					WikiaQuiz.showAnswer
+				);
+			}
+			elementsToHide.fadeOut(WikiaQuiz.animationTiming);
+			//WikiaQuiz.ui.explanation.fadeIn(WikiaQuiz.animationTiming);
+		}
+	},
+	
+	showAnswer: function() {
 					if(WikiaQuiz.correct) {
 						WikiaQuiz.ui.answerIndicator = WikiaQuiz.ui.correctIcon;
 						WikiaQuiz.sound.answerIndicator = WikiaQuiz.sound.correct;
@@ -167,11 +185,8 @@ var WikiaQuiz = {
 						WikiaQuiz.playSound(WikiaQuiz.sound.answerIndicator);
 					}, 100);
 					WikiaQuiz.ui.explanation.fadeIn(WikiaQuiz.animationTiming);
-				});
-			elementsToHide.fadeOut(WikiaQuiz.animationTiming);
-			//WikiaQuiz.ui.explanation.fadeIn(WikiaQuiz.animationTiming);
-		}
-	},
+				},
+				
 	handleNextClick: function(evt) {
 		WikiaQuiz.transition();
 	},
@@ -189,7 +204,7 @@ var WikiaQuiz = {
 	},
 	showEnd: function() {
 		WikiaQuiz.trackByStr('finalscore/'+WikiaQuiz.score);
-		var score = (WikiaQuiz.score / WikiaQuiz.totalQ) * 100;
+		var score = Math.floor((WikiaQuiz.score / WikiaQuiz.totalQ) * 100);
 		var scoreUI = $("#FinalScore");
 		scoreUI.find('.number').text(score);
 		if(score == 100) {
