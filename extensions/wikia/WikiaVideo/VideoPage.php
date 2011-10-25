@@ -962,7 +962,7 @@ EOD;
 				$ratio =  (40 / 35);
 				break;
 			case self::V_YOUTUBE:
-				$ratio =  (640 / 385);
+				$ratio =  (640 / 363);
 				break;
 			case self::V_SEVENLOAD:
 				$ratio =  (500 / 408);
@@ -1033,7 +1033,7 @@ EOD;
 				$ratio = "400 x 350";
 				break;
 			case self::V_YOUTUBE:
-				$ratio = "640 x 385";
+				$ratio = "640 x 363";
 				break;
 			case self::V_SEVENLOAD:
 				$ratio = "500 x 408";
