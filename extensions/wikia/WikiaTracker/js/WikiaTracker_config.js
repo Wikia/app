@@ -16,8 +16,8 @@
  */
 
 var WikiaTracker_ABtests = {
-	'test1':['C', 'D'], // ending 2011-10-31, nef
-	'test2':['A'] // ending 2011-10-31, nef
+	//'test1':['C', 'D'], // ending 2011-10-31, nef
+	//'test2':['A'] // ending 2011-10-31, nef
 };
 
 // PLEASE MAKE SURE LAST TEST LINE DOES NOT END WITH A COMMA!!!
