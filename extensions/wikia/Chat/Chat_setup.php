@@ -41,6 +41,18 @@ $wgRemoveGroups['sysop'][] = 'bannedfromchat';
 $wgRemoveGroups['chatmoderator'][] = 'bannedfromchat';
 
 // Let staff & helpers change chatmod & banning status.
+if( !is_array($wgAddGroups['staff']) ){
+	$wgAddGroups['staff'] = array();
+}
+if( !is_array($wgAddGroups['helper']) ){
+	$wgAddGroups['helper'] = array();
+}
+if( !is_array($wgRemoveGroups['staff']) ){
+	$wgRemoveGroups['staff'] = array();
+}
+if( !is_array($wgRemoveGroups['helper']) ){
+	$wgRemoveGroups['helper'] = array();
+}
 $wgAddGroups['staff'][] = 'bannedfromchat';
 $wgAddGroups['staff'][] = 'chatmoderator';
 $wgRemoveGroups['staff'][] = 'bannedfromchat';
