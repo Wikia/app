@@ -379,6 +379,7 @@ $dark-wiki: 1;
 				.explanation {
 					left: 50%;
 					margin-left: -200px;
+					padding-top: 40px;
 					right: auto;
 					
 					.correct-answer-image {
@@ -387,7 +388,7 @@ $dark-wiki: 1;
 						border: 5px solid white;
 						left: -80px;
 						position: absolute;
-						top: 95px;
+						top: 135px;
 						img {
 							height: 155px;
 							width: 155px;
@@ -465,7 +466,8 @@ $dark-wiki: 1;
 	.quiz-thanks {
 		display: none;
 		.thanks {
-			left: 100px;
+			left: 50%;
+			margin-left: -300px;
 			padding: 40px 0;
 			top: 75px;
 			width: 600px;
