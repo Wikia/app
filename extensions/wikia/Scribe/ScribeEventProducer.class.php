@@ -98,6 +98,7 @@ class ScribeEventProducer {
 
 		$this->setPageId( $page_id ) ;
 		$this->setPageNamespace( $oTitle->getNamespace() );
+		$this->setPageTitle( $oTitle->getDBkey() );
 		$this->setRevisionId( $revision_id );
 		$this->setUserId( $oUser->getId() );
 		$this->setUserIsBot( $oUser->isAllowed( 'bot' ) );
@@ -153,6 +154,7 @@ class ScribeEventProducer {
 		if ( $logid ) { 
 			$this->setPageId( $page_id ) ;
 			$this->setPageNamespace( $oTitle->getNamespace() );
+			$this->setPageTitle( $oTitle->getDBkey() );
 			$this->setRevisionId( $oArticle->getLatest() );
 			$this->setUserId( $oUser->getId() );
 			$this->setUserIsBot( $oUser->isAllowed( 'bot' ) );
@@ -258,6 +260,10 @@ class ScribeEventProducer {
 	
 	public function setPageNamespace ( $page_namespace ) { 
 		$this->mParams['pageNamespace'] = $page_namespace; 
+	}
+	
+	public function setPageTitle ( $title ) {
+		$this->mParams['pageTitle'] = $title;
 	}
 	
 	public function setRevisionId ( $revision_id  ) { 
