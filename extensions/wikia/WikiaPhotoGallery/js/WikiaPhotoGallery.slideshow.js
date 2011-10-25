@@ -1,21 +1,18 @@
 var WikiaPhotoGallerySlideshow = {
-	id: null,
-	hash: null,
 
 	log: function(msg) {
 		$().log(msg, 'WikiaPhotoGallery:Slideshow');
 	},
 
 	init: function(params) {
-		var slideshow = $('#' + params.id);
-		var hash = slideshow.attr('hash');
-		this.id = params.id;
-		this.hash = hash;
-
-		var item = slideshow.find('li').first();
+		var slideshow = $('#' + params.id),
+		hash = slideshow.attr('hash'),
+		item = slideshow.find('li').first();
+		
 		if (item.attr('title') != '') {
 			item.css('backgroundImage', 'url(' + item.attr('title') + ')');
 		}
+		
 		item.removeAttr('title');
 
 		slideshow.slideshow({
@@ -107,19 +104,16 @@ var WikiaPhotoGallerySlideshow = {
 
 	onPopOutClickFn: function(ev) {
 		var node = $(this),
-			slideshow = node.closest('wikia-slideshow');
-
+		slideshow = node.closest('.wikia-slideshow'),
+		nodeId = node.attr('id'),
+		// if user clicked on slideshow image, open popout on this image (index)
+		index = nodeId ? parseInt(nodeId.split('-').pop()) : 0,
+		isFromFeed = node.parent().hasClass('wikia-slideshow-from-feed'),
+		// tracking
+		fakeUrl = '/slideshow/basic';
+		
 		// stop slideshow animation
 		slideshow.trigger('stop');
-
-		// if user clicked on slideshow image, open popout on this image (index)
-		var nodeId = node.attr('id');
-		var index = nodeId ? parseInt(nodeId.split('-').pop()) : 0;
-
-		var isFromFeed = node.parent().hasClass('wikia-slideshow-from-feed');
-
-		// tracking
-		var fakeUrl = '/slideshow/basic';
 
 		if (node.hasClass('wikia-slideshow-popout')) {
 			// zoom icon clicked
@@ -147,10 +141,10 @@ var WikiaPhotoGallerySlideshow = {
 			//every image in feed slideshow has href - ctrl+click will lead to that page but by default - display popup
 			ev.preventDefault();
 		}
-
+		
 		// load popout
 		WikiaPhotoGalleryView.loadEditorJS(function() {
-			WikiaPhotoGallery.showSlideshowPopOut(WikiaPhotoGallerySlideshow.id, WikiaPhotoGallerySlideshow.hash, index, WikiaPhotoGalleryView.isViewPage(), isFromFeed);
+			WikiaPhotoGallery.showSlideshowPopOut(slideshow.attr('id'), slideshow.attr('hash'), index, WikiaPhotoGalleryView.isViewPage(), isFromFeed);
 		});
 	}
 };
