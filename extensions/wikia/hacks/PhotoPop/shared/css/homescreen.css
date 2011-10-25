@@ -241,7 +241,7 @@ body{
 	height: 24px;
 	z-index:22;
 	-webkit-transition: all .5s  ease-in;
-	-moz-transition: all .5s  ease-in;
+	-moz-transition: all.5s  ease-in;
 }
 
 #continue{
