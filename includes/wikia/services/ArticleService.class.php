@@ -24,10 +24,10 @@ class ArticleService extends Service {
 	public function getTextSnippet( $length = 100 ) {
 
 		wfProfileIn(__METHOD__);
-		
+
 		$wgParser = F::App()->wg->parser;
 		$wgContLang = F::App()->wg->contLang;
-		
+
 		// it may sometimes happen that the aricle is just not there
 		if ( is_null( $this->mArticle ) ) {
 			return '';
@@ -40,8 +40,8 @@ class ArticleService extends Service {
 			F::App()->wg->cityId
 		);
 
-		$cachedResult = self::MAX_CACHED_TEXT_LENGTH >= $length ? $oMemCache->get( $sKey ) : '';
-		if(empty($cachedResult)){
+		$cachedResult = self::MAX_CACHED_TEXT_LENGTH >= $length ? $oMemCache->get( $sKey ) : false;
+		if(!is_string($cachedResult)){
 			$content = $this->mArticle->getContent();
 			// Run hook to allow wikis to modify the content (ie: customize their snippets) before the stripping and length limitations are done.
 			wfRunHooks( 'ArticleService::getTextSnippet::beforeStripping', array( &$this->mArticle, &$content, $length ) );
@@ -78,7 +78,7 @@ class ArticleService extends Service {
 			$hooks = $wgParser->getTags();
 			$hooksRegExp = implode('|', array_map('preg_quote', $hooks));
 			$content = preg_replace('#<(' . $hooksRegExp . ')[^>]{0,}>(.*)<\/[^>]+>#', '', $content);
-			
+
 			$tmpParser = new Parser();
 			$content = $tmpParser->parse( $content,  $this->mArticle->getTitle(), new ParserOptions )->getText();
 
