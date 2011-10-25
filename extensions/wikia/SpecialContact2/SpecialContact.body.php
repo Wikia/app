@@ -5,7 +5,7 @@
  * @subpackage SpecialPage
  */
 class ContactForm extends SpecialPage {
-	var $mName, $mPassword, $mRetype, $mReturnto, $mCookieCheck, $mPosted;
+	var $mUserName, $mPassword, $mRetype, $mReturnto, $mCookieCheck, $mPosted;
 	var $mAction, $mCreateaccount, $mCreateaccountMail, $mMailmypassword;
 	var $mLoginattempt, $mRemember, $mEmail, $mBrowser;
 	var $err, $errInputs;
@@ -25,7 +25,7 @@ class ContactForm extends SpecialPage {
 		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/SpecialContact2/SpecialContact.scss'));
                 $extPath = F::app()->wg->extensionsPath;
                 F::app()->wg->out->addScript( "<script src=\"{$extPath}/wikia/SpecialContact2/SpecialContact.js\"></script>" );
-		$this->mName = null;
+		$this->mUserName = null;
 		$this->mRealName = null;
 		$this->mWhichWiki = null;
 		$this->mProblem = $wgRequest->getText( 'wpContactSubject' ); //subject
@@ -45,7 +45,7 @@ class ContactForm extends SpecialPage {
 			}
 			
 			#ubrfzy note: these were moved inside to (lazy) prevent some stupid bots
-			$this->mName = $wgRequest->getText( 'wpName' );
+			$this->mUserName = $wgRequest->getText( 'wpName' );
 			$this->mRealName = $wgRequest->getText( 'wpContactRealName' );
 			$this->mWhichWiki = $wgRequest->getText( 'wpContactWikiName' );
 			#sibject still handled outside of post check, because of existing hardcoded prefill links
@@ -112,9 +112,9 @@ class ContactForm extends SpecialPage {
 
 		//build common top of both emails
 		$m_shared = '';
-		$m_shared .= ( !empty($this->mRealName) )?( $this->mRealName ): ( (( !empty($this->mName) )?( $this->mName ): ('--')) );
+		$m_shared .= ( !empty($this->mRealName) )?( $this->mRealName ): ( (( !empty($this->mUserName) )?( $this->mUserName ): ('--')) );
 		$m_shared .= " ({$this->mEmail})";
-		$m_shared .= " ". (( !empty($this->mName) ) ? $this->mWhichWiki . "/wiki/User:" . urlencode(str_replace(" ", "_", $this->mName)) : $this->mWhichWiki) . "\n";
+		$m_shared .= " ". (( !empty($this->mUserName) ) ? $this->mWhichWiki . "/wiki/User:" . urlencode(str_replace(" ", "_", $this->mUserName)) : $this->mWhichWiki) . "\n";
 
 
 		//start wikia debug info, sent only to the internal email, not cc'd
@@ -280,7 +280,7 @@ class ContactForm extends SpecialPage {
 			//user mode
 
 			//we have user data, so use it, overriding any passed in from url
-			$this->mName = $wgUser->getName();
+			$this->mUserName = $wgUser->getName();
 			$this->mRealName = $wgUser->getRealName();
 			$this->mEmail = $wgUser->getEmail();
 
@@ -308,7 +308,7 @@ class ContactForm extends SpecialPage {
 			#try to pull a username using an ancient method
 			#-if this works, will fill name, but not cause lock
 			if( !empty($_COOKIE[$wgCookiePrefix.'UserName']) ) {
-				$this->mName = @$_COOKIE[$wgCookiePrefix.'UserName'];
+				$this->mUserName = @$_COOKIE[$wgCookiePrefix.'UserName'];
 			}
 
 			#anon mode, no locks
@@ -329,7 +329,7 @@ class ContactForm extends SpecialPage {
 		$titleObj = Title::makeTitle( NS_SPECIAL, 'Contact' . '/' . $sub );
 		$action = $titleObj->escapeLocalUrl( $q );
 
-		$encName = htmlspecialchars( $this->mName );
+		$encName = htmlspecialchars( $this->mUserName );
 		$encEmail = htmlspecialchars( $this->mEmail );
 		$encRealName = htmlspecialchars( $this->mRealName );
 		$encProblem = htmlspecialchars( $this->mProblem );
