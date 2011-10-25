@@ -50,7 +50,7 @@ public class SiteWideMessagesTest extends BaseTest {
 			// 404
 		}
 
-		assertTrue(session().isElementPresent("//div[contains(@id,'msg_')]/p[contains(text(),'" + uniqMessage + "')]"));
+		waitForElement("//div[contains(@id,'msg_')]/p[contains(text(),'" + uniqMessage + "')]");
 		try {
 			session().click("//div[contains(@id,'msg_')]/a");
 		} catch (SeleniumException se) {

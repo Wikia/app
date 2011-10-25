@@ -31,7 +31,7 @@ public class SharedHelpImagesTest extends BaseTest {
 		};
 
 		// basic check to see if shared help is displayed
-		assertTrue( session().isElementPresent("//div[@class='sharedHelp']") );
+		waitForElement("//div[@class='sharedHelp']");
 
 		// does the shared help article have any images at all?
 		assertTrue( session().isElementPresent("//div[@class='sharedHelp']//a[@class=\"image\"]") );
