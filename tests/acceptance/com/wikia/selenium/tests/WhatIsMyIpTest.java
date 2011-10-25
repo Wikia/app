@@ -16,6 +16,7 @@ public class WhatIsMyIpTest extends BaseTest {
 		openAndWait("index.php?title=Special:WhatIsMyIP");
 
 		// check what page you land on
+		waitForElement("//header[@id='WikiaPageHeader']/h1");
 		assertTrue(session().getLocation().contains("index.php?title=Special:WhatIsMyIP"));
 		assertEquals(session().getText("//header[@id='WikiaPageHeader']/h1"), "What is my IP");
 		// and invalid IP addresses

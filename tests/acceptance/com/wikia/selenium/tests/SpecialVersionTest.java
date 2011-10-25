@@ -11,6 +11,7 @@ public class SpecialVersionTest extends BaseTest {
 	public void testEnsureSpecialVersionPageDisplaysMediaWikiAndWikiaVersion() throws Throwable {
 		openAndWait("index.php?title=Special:Version");
 
+		waitForElement("//header[@id='WikiaPageHeader']/h1");
 		assertTrue(session().getLocation().contains("index.php?title=Special:Version"));
 		assertEquals(session().getText("//header[@id='WikiaPageHeader']/h1"), "Version");
 		assertEquals(session().getText("//header[@id='WikiaPageHeader']/h2"), "Special page");
