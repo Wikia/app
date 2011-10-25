@@ -2,8 +2,8 @@
 @import "../../../../skins/oasis/css/mixins/opacity";
 
 .WordmarkTab {
-	.graphic {
-		padding: 0 15px;
+	.graphic, .favicon{
+		padding: 0 14px;
 		.preview {
 			margin-top: 10px;
 			.wordmark {

@@ -31,6 +31,13 @@ body {
 	h2 {
 		font-size: 13px;
 	}
+	.form-questionmark {
+		background: url(/extensions/wikia/ThemeDesigner/images/question-light.png); /* TODO: Add as sprite? */
+		height: 12px;
+		width: 12px;
+		display: inline-block;
+	}
+
 }
 
 .Navigation {
@@ -170,7 +177,7 @@ fieldset {
 	border-left: 1px solid $color-borders;
 	float: left;
 	height: 165px;
-	margin: 15px 0 15px 15px;
+	margin: 15px 0 15px 14px;
 	&:first-child {
 		border-left: 0;
 	}
