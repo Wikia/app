@@ -14,7 +14,7 @@
 ini_set( "include_path", dirname(__FILE__)."/../" );
 $options = array('help');
 require_once( 'commandLine.inc' );
-global $IP, $wgCityId;
+global $IP, $wgCityId, $wgDBName;
 
 echo( "Update Achievements users ranking snapshots\n\n" );
 
@@ -36,6 +36,7 @@ if($wikiCount) {
 	
 	while($currentCity = $dbw->fetchObject($cityList)) {
 		$wgCityId = $currentCity->wiki_id;
+		$wgDBName = WikiFactory::IDtoDB($wgCityId);
 		Ach_TakeRankingSnapshot();
 	}
 
