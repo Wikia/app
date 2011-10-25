@@ -42,8 +42,10 @@ $messages['en'] = array(
 	'themedesigner-size' => 'size',
 	'themedesigner-button-save' => 'Save',
 	'themedesigner-upload-a-graphic' => 'upload a graphic',
-	'themedesigner-rules-wordmark' => 'up to 250x65 pixels (only .png files)',
-	'themedesigner-dont-use-a-graphic' => 'Don\'t use a graphic',
+	'themedesigner-rules-wordmark' => '.png files up to 250x65 pixels',
+        'themedesigner-rules-favicon' => 'Upload a 16x16 pixle .ico file. A favicon is a tiny icon that apears on your wiki\'s browser tab.',
+	'themedesigner-rules-favicon-learn-more-link' => 'Learn more.',
+        'themedesigner-dont-use-a-graphic' => 'Don\'t use a graphic',
 	'themedesigner-history-item' => '$1 by $2',
 	'themedesigner-button-change-text' => 'Change text',
 	'themedesigner-reason' => 'Theme Designer - save done by $1',
@@ -51,7 +53,8 @@ $messages['en'] = array(
 	'themedesigner-dimensions-error' => 'The image exceed the dimensions\' limits',
 	'themedesigner-type-error' => 'Incorrect file type',
 	'themedesugber-uknown-error' => 'An error has occurred, unfortunately we were not able to identify it, please try again',
-	'themedesigner-manual-upload-error' => 'Use Theme Designer to upload wordmark or wiki background'
+	'themedesigner-manual-upload-error' => 'Use Theme Designer to upload wordmark or wiki background',
+        'themedesigner-favicon-heading' => 'Favicon'
 );
 
 /** Message documentation (Message documentation)
@@ -70,6 +73,7 @@ $messages['qqq'] = array(
 	'themedesigner-medium' => '{{Identical|Medium}}',
 	'themedesigner-large' => '{{Identical|Large}}',
 	'themedesigner-tab-theme' => '{{Identical|Theme}}',
+        'themedesigner-rules-favicon-learn-more-link' => 'Learn more about favicons (link)',
 	'themedesigner-history-item' => 'Parameters:
 * $1 is "how long ago"
 * $2 is the author name',

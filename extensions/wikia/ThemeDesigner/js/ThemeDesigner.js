@@ -47,6 +47,11 @@ var ThemeDesigner = {
 		ThemeDesigner.toolBarInit();
 
 		ThemeDesigner.applySettings(false, false);
+		
+		// init tooltips
+		$('.form-questionmark').wikiaTooltip(function(el){
+			return el.data('tooltip');
+		})
 
 		// track page view
 		ThemeDesigner.track('open');

@@ -43,12 +43,11 @@
 	</fieldset>
 	<fieldset class="graphic">
 		<h1><?= wfMsg('themedesigner-graphic-wordmark') ?></h1>
-		<h2><?= wfMsg('themedesigner-upload-a-graphic') ?></h2>
-
-		<?= wfMsg('themedesigner-rules-wordmark') ?>
+		<h2><?= wfMsg('themedesigner-upload-a-graphic') ?> <span class="form-questionmark" data-tooltip="<?= wfMsg('themedesigner-rules-wordmark') ?>"></span></h2>
 
 		<form onsubmit="return AIM.submit(this, ThemeDesigner.wordmarkUploadCallback)" action="<?= $wgScriptPath ?>/index.php?action=ajax&rs=moduleProxy&moduleName=ThemeDesigner&actionName=WordmarkUpload&outputType=html" method="POST" enctype="multipart/form-data">
 			<input id="WordMarkUploadFile" name="wpUploadFile" type="file" />
+			<br />
 			<input type="submit" value="<?= wfMsg( 'themedesigner-button-upload-wordmark' ) ?>" onclick="return ThemeDesigner.wordmarkUpload(event);"/>
 		</form>
 
@@ -60,6 +59,10 @@
 	</fieldset>
 	<fieldset class="favicon">
 		<h1><?= wfMsg('themedesigner-favicon-heading') ?></h1>
+		<h2>
+			<?= wfMsg('themedesigner-upload-a-graphic') ?>
+			<span class="form-questionmark" data-tooltip="<?= wfMsg('themedesigner-rules-favicon') ?> &lt;a href='http://community.wikia.com/wiki/Help:Favicon' &gt; <?= wfMsg('themedesigner-rules-favicon-learn-more-link') ?>&lt;/a&gt;"></span>
+		</h2>
 		<form onsubmit="return AIM.submit(this, ThemeDesigner.faviconUploadCallback)" action="<?= $wgScriptPath ?>/index.php?action=ajax&rs=moduleProxy&moduleName=ThemeDesigner&actionName=FaviconUpload&outputType=html" method="POST" enctype="multipart/form-data">
 			<input id="FaviconUploadFile" name="wpUploadFile" type="file" />
 			<input type="submit" value="<?= wfMsg( 'themedesigner-button-upload-wordmark' ) ?>" />
