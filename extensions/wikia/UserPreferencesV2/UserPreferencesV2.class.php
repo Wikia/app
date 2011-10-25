@@ -26,22 +26,11 @@ class UserPreferencesV2 {
 		$defaultPreferences['gender']['label-message'] = 'preverences-v2-gender';
 		$defaultPreferences['gender']['help-message'] = '';
 		$defaultPreferences['password']['label-message'] = 'preverences-v2-password';
-		unset($defaultPreferences['emailaddress']);
-		unset($defaultPreferences['emailauthentication']);
-		unset($defaultPreferences['disablemail']);
-		unset($defaultPreferences['ccmeonemails']);
-		unset($defaultPreferences['enotifwatchlistpages']);
-		unset($defaultPreferences['enotifusertalkpages']);
-		unset($defaultPreferences['enotifminoredits']);
-		unset($defaultPreferences['enotifrevealaddr']);
-		unset($defaultPreferences['htmlemails']);
-		unset($defaultPreferences['marketingallowed']);
 		$defaultPreferences['oldsig']['label-message'] = 'preverences-v2-oldsig';
 		$defaultPreferences['nickname']['label-message'] = 'preverences-v2-nickname';
 		$defaultPreferences['fancysig']['label-message'] = 'preverences-v2-fancysig';
 		$defaultPreferences['fancysig']['help-message'] = '';
 		unset($defaultPreferences['showAds']);
-		unset($defaultPreferences['unsubscribed']);
 		$defaultPreferences['language']['section'] = 'personal/appearance';
 		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'language');
 		$defaultPreferences['date']['section'] = 'personal/appearance';
@@ -58,10 +47,23 @@ class UserPreferencesV2 {
 		$defaultPreferences['myhomedisableredirect']['section'] = 'personal/appearance';
 		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'myhomedisableredirect');
 
-		//Tab 2: Appearance
+		//Tab 2: Email
 		unset($defaultPreferences['imagesize']);
 		unset($defaultPreferences['thumbsize']);
 		unset($defaultPreferences['math']);
+		$defaultPreferences['unsubscribed']['section'] = 'emailv2/emailv2';
+		$defaultPreferences['emailaddress']['section'] = 'emailv2/emailv2';
+		$defaultPreferences['emailauthentication']['section'] = 'emailv2/emailv2';
+		$defaultPreferences['disablemail']['section'] = 'emailv2/emailv2';
+		$defaultPreferences['ccmeonemails']['type'] = 'toggle';
+		$defaultPreferences['ccmeonemails']['section'] = 'emailv2/emailv2';
+		$defaultPreferences['ccmeonemails']['label-message'] = 'tog-ccmeonemails';
+		$defaultPreferences['enotifwatchlistpages']['section'] = 'emailv2/emailv2';
+		$defaultPreferences['enotifusertalkpages']['section'] = 'emailv2/emailv2';
+		$defaultPreferences['enotifminoredits']['section'] = 'emailv2/emailv2';
+		$defaultPreferences['enotifrevealaddr']['section'] = 'emailv2/emailv2';
+		$defaultPreferences['htmlemails']['section'] = 'emailv2/emailv2';
+		$defaultPreferences['marketingallowed']['section'] = 'emailv2/emailv2';
 
 		//Tab 6: Followed pages
 		$defaultPreferences['watchlistdays']['help'] = '';

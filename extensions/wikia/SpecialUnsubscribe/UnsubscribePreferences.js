@@ -2,7 +2,7 @@ $(function() {
 	var toggle = $('#mw-input-unsubscribed');
 	var form = toggle.closest( 'form' );
 
-	var affectedInputs = '#mw-htmlform-email input[type="checkbox"], #mw-htmlform-wikiemail input[type="checkbox"], #mw-input-enotiffollowedpages, #mw-input-enotiffollowedminoredits, #mw-input-watchlistdigest';
+	var affectedInputs = '#mw-htmlform-email input[type="checkbox"], #mw-htmlform-wikiemail input[type="checkbox"], #mw-htmlform-emailv2 input[type="checkbox"], #mw-input-enotiffollowedpages, #mw-input-enotiffollowedminoredits, #mw-input-watchlistdigest';
 
 	function UnsubscribeTogglePreferences() {
 		var MailEnabled = !toggle.attr('checked');
