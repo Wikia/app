@@ -38,14 +38,13 @@
 
 		// apply filters
 		if (isset($filters['categories'])) {
-			// spaces are replaced by underscores (_) in cl_to
-			foreach($filters['categories'] as &$category) {
-				$category = str_replace(' ', '_', $category);
-			}
-
 			$tables[] = 'categorylinks';
 			$where[] = 'cl_from = page_id';
 			$where['cl_to'] = $filters['categories'];
+		}
+		else if (isset($filters['nearby'])) {
+			$lat = $filters['nearby']['lat'];
+			$lon = $filters['nearby']['lon'];
 		}
 
 		// perform the query
@@ -100,7 +99,7 @@
 	/**
 	 * Get geo data for all tagged articles from gives categorie(s)
 	 *
-	 * @param mixed $categories can be a single category (string) or an array of categories
+	 * @param mixed $categories single category (string) or an array of categories (without namespace prefix)
 	 * @return array set of PlaceModel objects
 	 */
 	public function getFromCategories($categories) {
@@ -108,6 +107,10 @@
 
 		if (is_string($categories)) {
 			$categories = array($categories);
+		}
+
+		foreach($categories as &$category) {
+			$category = str_replace(' ', '_', $category);
 		}
 
 		$models = $this->query(array(
@@ -118,8 +121,19 @@
 		return $models;
 	}
 
-	public function getNearby(PlaceModel $center) {
+	/**
+	 * Get geo data of all "nearby" articles (within given distance in kilometres)
+	 */
+	public function getNearby(PlaceModel $center, $distance = 10 /* km */) {
+		wfProfileIn(__METHOD__);
 
+		$models = $this->query(array(
+			'nearby' => $center->getLatLon(),
+			'distance' => intval($distance)
+		));
+
+		wfProfileOut(__METHOD__);
+		return $models;
 	}
 
 	public function getNearbyByTitle(Title $center) {

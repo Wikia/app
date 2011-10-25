@@ -62,6 +62,7 @@ class PlacesParserHookHandler {
 		// debug code !!!
 		$places = F::build('PlacesModel');
 		var_dump($places->getAll());
+		var_dump($places->getNearby(F::build('PlaceModel', array('lat' => 52.408893, 'lon' => 16.9335963), 'newFromAttributes')), 15 /* km */);
 		var_dump($places->getFromCategories('Budynki'));
 		var_dump($places->getFromCategories(array('Budynki', 'Stary Rynek')));
 
