@@ -26,7 +26,7 @@ class WikiaVideoTest extends PHPUnit_Framework_TestCase {
 	public function ratioProvider() {
 		return array(
 			array(VideoPage::V_METACAFE, 400, 350),
-			array(VideoPage::V_YOUTUBE, 640, 385),
+			array(VideoPage::V_YOUTUBE, 640, 363),
 			array(VideoPage::V_SEVENLOAD, 500, 408),
 			array(VideoPage::V_GAMEVIDEOS, 500, 319),
 			array(VideoPage::V_5MIN, 480, 401),
