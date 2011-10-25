@@ -1,7 +1,3 @@
-$(document).ready(function() {
-	touchImprovements.init();
-});
-
 touchImprovements = {
 	
 	init: function() {
@@ -44,3 +40,7 @@ touchImprovements = {
 		});
 	}
 };
+
+$(document).ready(function() {
+	touchImprovements.init();
+});
