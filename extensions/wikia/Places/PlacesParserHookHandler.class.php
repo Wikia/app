@@ -62,11 +62,12 @@ class PlacesParserHookHandler {
 		// debug code !!!
 		/**
 		$places = F::build('PlacesModel');
+		$title = F::build('Title', array('Zajezdnia tramwajowa przy ulicy Gajowej'), 'newFromText');
 		var_dump($places->getAll());
-		var_dump($places->getNearby(F::build('PlaceModel', array('lat' => 52.408893, 'lon' => 16.9335963), 'newFromAttributes')), 15);
-		var_dump($places->getNearbyByTitle(F::build('Title', array('Dworzec Letni'), 'newFromText')), 15);
+		var_dump($places->getNearbyByTitle($title, 15));
 		var_dump($places->getFromCategories('Budynki'));
 		var_dump($places->getFromCategories(array('Budynki', 'Stary Rynek')));
+		var_dump($places->getFromCategoriesByTitle($title));
 		**/
 
 		$html = '';

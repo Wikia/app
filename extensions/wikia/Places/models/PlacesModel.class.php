@@ -124,7 +124,36 @@
 	}
 
 	/**
+	 * Get geo data for articles from categories given title belongs to
+	 *
+	 * @param Title $title page title to get places from categories this title belongs to
+	 * @return array set of PlaceModel objects
+	 */
+	public function getFromCategoriesByTitle(Title $title) {
+		wfProfileIn(__METHOD__);
+
+		// get article categories
+		$dbr = $this->getDB();
+		$res = $dbr->select('categorylinks' , 'cl_to', array('cl_from' => $title->getArticleID()), __METHOD__);
+
+		$categories = array();
+
+		while($row = $res->fetchObject()) {
+			$categories[] = $row->cl_to;
+		}
+
+		$models = $this->query(array(
+			'categories' => $categories
+		));
+
+		wfProfileOut(__METHOD__);
+		return $models;
+	}
+
+	/**
 	 * Get geo data of all "nearby" articles (within given distance in kilometres)
+	 *
+	 * TODO: implement
 	 *
 	 * @param PlaceModel $center place to find nearby places for
 	 * @param int $distance define nearby distance (in km)
@@ -144,6 +173,8 @@
 
 	/**
 	 * Get geo data of all "nearby" articles (within given distance in kilometres)
+	 *
+	 * TODO: implement
 	 *
 	 * @param Title $title article title to find nearby places for
 	 * @param int $distance define nearby distance (in km)
