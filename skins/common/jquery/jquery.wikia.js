@@ -284,16 +284,19 @@ $.loadModalJS = function(callback) {
 }
 
 $.loadGoogleMaps = function(callback) {
-	window.onGoogleMapsLoaded = function(){
-		if ( typeof callback == 'function' ){
-			callback()
+	var isLoaded = (window.google && typeof google.maps != 'undefined') ? typeof google.maps : 'undefined';
+
+	window.onGoogleMapsLoaded = function() {
+		delete window.onGoogleMapsLoaded;
+		if (typeof callback === 'function') {
+			callback();
 		}
 	}
 
 	$.loadLibrary('GoogleMaps',
 		'http://maps.googleapis.com/maps/api/js?sensor=false&callback=onGoogleMapsLoaded',
-		( window.google && typeof google.maps != 'undefined' ) ? typeof google.maps : 'undefined',
-		function(){}
+		isLoaded,
+		function() {}
 	);
 }
 
@@ -899,7 +902,7 @@ jQuery.nirvana.postJson = function(controller, method, data, callback, onErrorCa
 }
 
 jQuery.nirvana.ajaxJson = function(controller, method, data, callback, onErrorCallback, requestType) {
-	
+
 		// data parameter can be omitted
 	if ( typeof data == 'function' ) {
 		callback = data;
@@ -931,8 +934,8 @@ jQuery.openPopup = function(url, name, moduleName, width, height) {
 			AjaxLogin.doSuccess = function() {
 				$('.modalWrapper').children().not('.close').not('.modalContent').not('h1').remove();
 				$('.modalContent').load(
-					wgServer + 
-					wgScript + 
+					wgServer +
+					wgScript +
 					'?action=ajax&rs=moduleProxy&moduleName=' + moduleName + '&actionName=AnonLoginSuccess&outputType=html'
 				);
 			}

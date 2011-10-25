@@ -45,6 +45,8 @@
 		else if (isset($filters['nearby'])) {
 			$lat = $filters['nearby']['lat'];
 			$lon = $filters['nearby']['lon'];
+
+			$this->app->wf->Debug(__METHOD__ . "::nearby - {$lat},{$lon}\n");
 		}
 
 		// perform the query
@@ -123,6 +125,10 @@
 
 	/**
 	 * Get geo data of all "nearby" articles (within given distance in kilometres)
+	 *
+	 * @param PlaceModel $center place to find nearby places for
+	 * @param int $distance define nearby distance (in km)
+	 * @return array set of PlaceModel objects
 	 */
 	public function getNearby(PlaceModel $center, $distance = 10 /* km */) {
 		wfProfileIn(__METHOD__);
@@ -136,8 +142,21 @@
 		return $models;
 	}
 
-	public function getNearbyByTitle(Title $center) {
+	/**
+	 * Get geo data of all "nearby" articles (within given distance in kilometres)
+	 *
+	 * @param Title $title article title to find nearby places for
+	 * @param int $distance define nearby distance (in km)
+	 * @return array set of PlaceModel objects
+	 */
+	public function getNearbyByTitle(Title $title, $distance = 10 /* km */) {
+		wfProfileIn(__METHOD__);
 
+		$storage = F::build('PlaceStorage', array($title), 'newFromTitle');
+		$models = $this->getNearby($storage->getModel(), $distance);
+
+		wfProfileOut(__METHOD__);
+		return $models;
 	}
 
 	private function getDB($type = DB_SLAVE) {
