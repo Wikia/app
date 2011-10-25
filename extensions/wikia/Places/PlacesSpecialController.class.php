@@ -22,28 +22,31 @@ class PlacesSpecialController extends WikiaSpecialPageController {
 		$oTitle = F::build( 'Title', array( $sParam ) );
 		if ( !empty( $oTitle ) && $oTitle->exists() ){
 			if ( $oTitle->getNamespace() == NS_CATEGORY ){
-				$this->forward( 'PlacesSpecial', 'placesForCategory');
+				$this->placesForCategory();
 			} else {
 				$this->center = $oTitle;
-				$this->forward( 'PlacesSpecial', 'allPlaces');
+				$this->allPlaces();
 			}
 		} else {
-			$this->forward( 'PlacesSpecial', 'allPlaces');
+			$this->allPlaces();
 		}
-	}
 
-	public function placesForCategory(){
-		$this->markers = array();
-		$this->forward( 'PlacesSpecial', 'displayMap');
-	}
-
-	public function allPlaces(){
-		$this->markers = array();
-		$this->forward( 'PlacesSpecial', 'displayMap');
-	}
-
-	public function displayMap(){
 		$this->setVal( 'center', $this->center );
 		$this->setVal( 'markers', $this->markers );
+	}
+
+	protected function placesForCategory(){
+		$this->markers = array();
+	}
+
+	protected function allPlaces(){
+		$placesModel = F::build( 'PlacesModel' );
+		$markers = $placesModel->getAll();
+		foreach( $markers as $oMarker ){
+			$aMapParams = $oMarker->getForMap();
+			if ( !empty( $aMapParams ) ){
+				$this->markers[] = $oMarker->getForMap();
+			}
+		}
 	}
 }
