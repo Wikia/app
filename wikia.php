@@ -2,6 +2,12 @@
 // Initialise common MW code
 require ( dirname( __FILE__ ) . '/includes/WebStart.php' );
 
+// This seems to be done by google translate
+if ( $_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+	header ( "HTTP/1.1 200", true, 200);
+	return;
+}
+
 if ( !empty( $wgEnableNirvanaAPI ) ){
 	$app = F::app();
 	
@@ -19,5 +25,5 @@ if ( !empty( $wgEnableNirvanaAPI ) ){
 	$response->sendHeaders();
 	$response->render();
 } else {
-	header( "HTTP/1.0 503 Service Unavailable", true, 503 );
+	header( "HTTP/1.1 503 Service Unavailable", true, 503 );
 }
