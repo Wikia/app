@@ -377,14 +377,16 @@ class RTEReverseParser {
 		$out = $data['wikitext'];
 
 		// extra fixes for different types of placeholders
-		switch($data['type']) {
-			case 'comment':
-				// FIXME: dirty fix for RT #83859
-				// assuming here that comments in wysiyg mode must be placed at the beginning of new line
-				if (self::isChildOf($node->parentNode, 'div')) {
-					$out = "\n{$out}";
-				}
-				break;
+		if (isset($data['type'])) {
+			switch($data['type']) {
+				case 'comment':
+					// FIXME: dirty fix for RT #83859
+					// assuming here that comments in wysiyg mode must be placed at the beginning of new line
+					if (self::isChildOf($node->parentNode, 'div')) {
+						$out = "\n{$out}";
+					}
+					break;
+			}
 		}
 
 		// protect HTML entities (RT #38844)

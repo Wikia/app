@@ -13,6 +13,9 @@
 
 class PlacesParserHookHandler {
 
+	// stores wikitextId to be used when rendering placeholder for RTE
+	static public $lastWikitextId;
+
 	/**
 	 * Render <place> tag
 	 *
@@ -28,17 +31,38 @@ class PlacesParserHookHandler {
 		// wrap data in a model object
 		$placeModel = F::build('PlaceModel', array($attributes), 'newFromAttributes');
 
+		// are we rendering for RTE?
+		$inRTE = !empty(F::app()->wg->RTEParserEnabled);
+
+		if ($inRTE) {
+			$wikitext = F::build('RTEData', array('wikitext', self::$lastWikitextId), 'get');
+
+			$data = array(
+				'wikitext' => $wikitext,
+				'placeholder' => 1,
+				'custom-placeholder' => 1,
+			);
+
+			$rteData = F::build('RTEData', array($data), 'convertDataToAttributes');
+		}
+		else {
+			$rteData = false;
+		}
+
 		// render parser hook
 		$html = F::app()->sendRequest(
 			'Places',
 			'placeFromModel',
 			array(
-				'model'	=> $placeModel
+				'model'	=> $placeModel,
+				'rteData' => $rteData,
 			)
 		)->toString();
 
 		// add JS snippets code
-		$html .= self::getJSSnippet();
+		if (!$inRTE) {
+			$html .= self::getJSSnippet();
+		}
 
 		// add model to be stored in database
 		PlacesHookHandler::setModelToSave($placeModel);

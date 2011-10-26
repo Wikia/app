@@ -16,6 +16,7 @@ class PlacesController extends WikiaController {
 
 	public function placeFromModel(){
 		$oPlaceModel = $this->getVal('model', null);
+		$rteData = $this->getVal('rteData', false);
 
 		if ( empty( $oPlaceModel ) ){
 			$oPlaceModel = F::build('PlaceModel');
@@ -28,5 +29,6 @@ class PlacesController extends WikiaController {
 		$this->setVal( 'lat', $oPlaceModel->getLat() );
 		$this->setVal( 'lon', $oPlaceModel->getLon() );
 		$this->setVal( 'zoom', $oPlaceModel->getZoom() );
+		$this->setVal( 'rteData', $rteData );
 	}
 }
