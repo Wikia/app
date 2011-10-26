@@ -71,4 +71,53 @@ class PlacesHookHandler {
 			return false;
 		}
 	}
+
+	static public function onEditPageBeforeEditToolbar($toolbar) {
+		$tooltipMsg = Xml::encodeJsVar(wfMsg('places-toolbar-button-tooltip'));
+		$promptMsg = Xml::encodeJsVar(wfMsg('places-toolbar-button-address'));
+
+		$apiKey = F::app()->wg->GoogleMapsKey;
+
+		// add toolbar button
+		// TODO: move to external file
+		$js = <<<JS
+
+window.mwEditButtons && window.mwEditButtons.push({
+	imageId: 'mw-editbutton-places',
+	imageFile: wgExtensionsPath + '/wikia/Places/images/button_place.png',
+	speedTip: {$tooltipMsg},
+	onclick: function(ev) {
+		ev.preventDefault();
+
+		var query = prompt({$promptMsg});
+		$().log(query, 'Places');
+
+		if (!query || query.length === 0) {
+			return;
+		}
+
+		$.getJSON("http://maps.google.com/maps/geo?output=json&q=" + encodeURIComponent(query) + "&key={$apiKey}&callback=?", function(data) {
+			$().log(data, 'Places');
+
+			if (data && data.Placemark && data.Placemark.length) {
+				var place = data.Placemark.shift(),
+					cords = place.Point.coordinates,
+					address = place.Point.address,
+					wikitext = '<places lat="' + cords[1].toFixed(6) + ' lon="' + cords[0].toFixed(6) + '" />';
+
+				$().log(address, 'Places');
+				$().log(wikitext, 'Places');
+
+				insertTags(wikitext, '' /* tagClose */, '' /* sampleText */);
+			}
+		});
+	}
+});
+
+JS;
+
+		$toolbar .= Html::inlineScript($js);
+
+		return true;
+	}
 }
