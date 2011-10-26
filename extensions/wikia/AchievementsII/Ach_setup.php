@@ -269,7 +269,7 @@ function AchAjax() {
 
 function Ach_UserPreferences( $user, &$preferences ) {
 	global $wgEnableUserPreferencesV2Ext;
-	$section = (!empty($wgEnableUserPreferencesV2Ext)) ? 'fbconnect-prefstext/fbconnect-event-prefstext' : 'misc';
+	$section = (!empty($wgEnableUserPreferencesV2Ext)) ? 'under-the-hood/advanced-displayv2' : 'misc';
 	
 	if( $user->isLoggedIn() ) {
 		wfLoadExtensionMessages( 'AchievementsII' );
