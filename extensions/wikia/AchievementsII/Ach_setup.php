@@ -273,7 +273,7 @@ function Ach_UserPreferences( $user, &$preferences ) {
 		$preferences['hidepersonalachievements'] = array(
 			'type' => 'toggle',
 			'label-message' => 'achievements-toggle-hide', // a system message
-			'section' => 'misc'
+			'section' => 'fbconnect-prefstext/fbconnect-event-prefstext'
 		);
 	}
 	
