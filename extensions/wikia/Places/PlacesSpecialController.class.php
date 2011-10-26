@@ -68,4 +68,15 @@ class PlacesSpecialController extends WikiaSpecialPageController {
 		$this->setVal( 'title', isset( $data['label'] ) ? $data['label'] : '' );
 		$this->setVal( 'url', isset( $data['articleUrl'] ) ? $data['articleUrl'] : '' );
 	}
+
+	public function getMarkersRelatedToCurrentTitle(){
+		$sTitle = $this->getVal('title', '');
+		$oTitle = F::build( 'Title', array( $sTitle ), 'newFromText' );
+		$oPlacesModel = F::build('PlacesModel');
+		$aMarkers = $oPlacesModel->getFromCategoriesByTitle( $oTitle );
+		$oMarker = F::build( 'PlaceStorage', array( $oTitle ), 'newFromTitle' )->getModel();
+		$this->setVal( 'center', $oMarker->getForMap() );
+		$this->prepareMarkers( $aMarkers );
+		$this->setVal( 'markers', $this->markers );
+	}
 }

@@ -12,25 +12,29 @@ var Places = {
 			'center': latlng,
 			'mapTypeId': google.maps.MapTypeId.ROADMAP
 		}
-		$.showModal( wgTitle, '<div id="places-modal-map" style="height:' + ( $(window).height() - 200 ) + 'px"></div>', {
-			'id': 'places-modal',
-			'width' : ( $(window).width() - 100 ),
-			'callback' : function () {
-				var map = new google.maps.Map(
-					document.getElementById("places-modal-map"),
-					options
-				);
-				var marker = new google.maps.Marker({
-					position: latlng,
-					map: map,
-					title: wgTitle
-				});
+
+		$.nirvana.postJson(
+			'PlacesSpecialController',
+			'getMarkersRelatedToCurrentTitle',
+			{
+				title: wgTitle,
+				format: 'json'
+			},
+			function( res ){
+				if ( res.center && res.markers ) {
+					$.showModal( wgTitle, '<div id="places-dynamic-map" style="height:' + ( $(window).height() - 200 ) + 'px"></div>', {
+						'id': 'places-modal',
+						'width' : ( $(window).width() - 100 ),
+						'callback' : function () {
+							Places.displayDynamic( res )
+						}
+					});
+				}
 			}
-		});
+		);
 	},
 	displayDynamic: function( options ){
-		
-		$().log( options, 'options' );
+
 		options = options || {};
 		options.markers = options.markers || [];
 		options.center = options.center || false;
@@ -65,7 +69,6 @@ var Places = {
 				maxLan = options.center.lan + lanDistance;
 
 			}
-			$().log();
 			var mapConfig = {
 				'center': new google.maps.LatLng( 0, 0 ),
 				'mapTypeId': google.maps.MapTypeId.ROADMAP,
@@ -105,6 +108,10 @@ var Places = {
 					google.maps.event.addListener( aMarker[ key ], 'click', function() {
 						aInfoWindow[ key ].open(map, aMarker[ key ] );
 					});
+
+					if ( options.center.label == value.label  ){
+						aInfoWindow[ key ].open(map, aMarker[ key ] );
+					}
 				}
 			});
 		}
