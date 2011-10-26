@@ -45,15 +45,15 @@
 		<h1><?= wfMsg('themedesigner-graphic-wordmark') ?></h1>
 		<h2><?= wfMsg('themedesigner-upload-a-graphic') ?> <span class="form-questionmark" data-tooltip="<?= wfMsg('themedesigner-rules-wordmark') ?>"></span></h2>
 
-		<form onsubmit="return AIM.submit(this, ThemeDesigner.wordmarkUploadCallback)" action="<?= $wgScriptPath ?>/index.php?action=ajax&rs=moduleProxy&moduleName=ThemeDesigner&actionName=WordmarkUpload&outputType=html" method="POST" enctype="multipart/form-data">
+		<form id="WordMarkUploadForm" onsubmit="return AIM.submit(this, ThemeDesigner.wordmarkUploadCallback)" action="<?= $wgScriptPath ?>/index.php?action=ajax&rs=moduleProxy&moduleName=ThemeDesigner&actionName=WordmarkUpload&outputType=html" method="POST" enctype="multipart/form-data">
 			<input id="WordMarkUploadFile" name="wpUploadFile" type="file" />
 			<br />
 			<input type="submit" value="<?= wfMsg( 'themedesigner-button-upload-wordmark' ) ?>" onclick="return ThemeDesigner.wordmarkUpload(event);"/>
 		</form>
 
 		<div class="preview">
-			<img src="<?= $wgBlankImgUrl ?>" class="wordmark">
 			<a href="#"><?= wfMsg('themedesigner-dont-use-a-graphic') ?></a>
+			<img src="<?= $wgBlankImgUrl ?>" class="wordmark">
 		</div>
 
 	</fieldset>

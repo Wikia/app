@@ -2,10 +2,22 @@
 @import "../../../../skins/oasis/css/mixins/opacity";
 
 .WordmarkTab {
+	fieldset {
+		width: 260px;
+	}
+	button, input[type='submit'] {
+		margin-top: 5px;
+	}
+	h2{
+		margin-bottom: 5px;
+	}
 	.graphic, .favicon{
-		padding: 0 14px;
+		padding: 0 15px;
 		.preview {
+			float: left;
 			margin-top: 10px;
+			position: relative;
+			width: auto;
 			.wordmark {
 				cursor: pointer;
 				&.selected {
@@ -15,17 +27,16 @@
 				}
 			}
 			a {
-				background: #EEE url(/extensions/wikia/ThemeDesigner/images/void_button.png) 50% 40px no-repeat; /* $wgCdnStylePath */
-				border: 1px solid #CCC;
 				color: #666;
 				display: none;
-				font-size: 11px;
-				height: 55px;
-				margin-left: 5px;
-				padding: 5px;
-				text-align: center;
-				vertical-align: top;
-				width: 55px;
+				padding:2px;
+				position: absolute;
+				right: 0;
+			}
+			&.active:hover {
+				a {
+					display: block;
+				}
 			}
 		}
 	}
@@ -47,8 +58,5 @@
 		left: 0;
 		position: absolute;
 		top: 0;
-	}
-	#WordMarkUploadFile {
-		width: 200px;
 	}
 }

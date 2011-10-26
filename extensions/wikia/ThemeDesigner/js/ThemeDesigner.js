@@ -25,11 +25,10 @@ var ThemeDesigner = {
 		// handle navigation clicks - switching between tabs
 		$("#Navigation a").click(ThemeDesigner.navigationClick);
 
-		// handle "Save" button clicks
-		$('#Toolbar').find(".save").click(ThemeDesigner.saveClick);
-
-		// handle "Cancel" button clicks
-		$('#Toolbar').find(".cancel").click(ThemeDesigner.cancelClick);
+		// handle "Save" and "Cancel" button clicks
+		$('#Toolbar').find(".save").click(ThemeDesigner.saveClick)
+                    .end()
+                    .find(".cancel").click(ThemeDesigner.cancelClick);
 
 		// init tabs
 		ThemeDesigner.themeTabInit();
@@ -50,6 +49,7 @@ var ThemeDesigner = {
 		
 		// init tooltips
 		$('.form-questionmark').wikiaTooltip(function(el){
+			// Pass tooltip text to wikiaTooltip 
 			return el.data('tooltip');
 		}, { hoverStay: true, maxWidth: '200', side: 'right', align: 'middle' })
 
@@ -176,9 +176,13 @@ var ThemeDesigner = {
 		});
 
 		//grapic wordmark button
-		$("#WordmarkTab").find(".graphic").find(".preview").find("a").click(function(event) {
+		$("#WordmarkTab .graphic .preview a").click(function(event) {
 			event.preventDefault();
 			ThemeDesigner.set("wordmark-type", "text");
+			$(this).next('img').attr('src','');
+                        
+			// Can't use js to clear file input value so reseting form
+			$('#WordMarkUploadForm')[0].reset();
 
 			ThemeDesigner.track('wordmark/nowordmark');
 		});
@@ -198,13 +202,12 @@ var ThemeDesigner = {
 	},
 
 	toolBarInit: function() {
-		// TODO: optimize jQuery selectors
 		$("#Toolbar .history").click(function() {
 			$(this).find("ul").css("display", "block");
 			ThemeDesigner.track('previous/click');
-		});
-		$("#Toolbar .history ul").mouseleave(function() { $(this).css("display", "none"); });
-		$("#Toolbar .history ul li").click(ThemeDesigner.revertToPreviousTheme);
+		}).find("ul").mouseleave(function() {
+			$(this).css("display", "none");
+                }).find("li").click(ThemeDesigner.revertToPreviousTheme);
 	},
 
 	showPicker: function(event, type) {
@@ -442,13 +445,9 @@ var ThemeDesigner = {
 	 */
 	faviconUploadCallback : {
 		onComplete: function(response) {
-			var response = JSON.parse(response);
-			$().log(response);
-			
-			ThemeDesigner.settings['favicon-image-url'] = response.faviconImageUrl;
-			ThemeDesigner.settings['favicon-image-name'] = response.faviconImageName;
-		
 			// update preview
+                        data = $.parseJSON(response);
+                        $('.favicon .preview img').attr('src',data.faviconImageUrl);
 		}
 	},
 	
@@ -631,13 +630,13 @@ var ThemeDesigner = {
 
 		if (ThemeDesigner.settings["wordmark-type"] == "graphic") {
 			$("#WordmarkTab").find(".graphic")
+                                .find(".preview").addClass("active")
 				.find(".wordmark").addClass("selected").end()
-				.find("a").css("display", "inline-block");
 			ThemeDesigner.wordmarkShield();
 		} else {
 			$("#WordmarkTab").find(".graphic")
+                                .find(".preview").removeClass("active")
 				.find(".wordmark").removeClass("selected").end()
-				.find("a").hide();
 			ThemeDesigner.wordmarkShield();
 		}
 
