@@ -213,8 +213,7 @@ class ThemeSettings {
 			}
 		}
 		
-		hyunbug($history);
-
+		
 		WikiFactory::setVarByName(self::WikiFactoryHistory, $cityId, $history, $reason);
 
 	}
