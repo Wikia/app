@@ -102,8 +102,8 @@ window.mwEditButtons && window.mwEditButtons.push({
 			if (data && data.Placemark && data.Placemark.length) {
 				var place = data.Placemark.shift(),
 					cords = place.Point.coordinates,
-					address = place.Point.address,
-					wikitext = '<places lat="' + cords[1].toFixed(6) + ' lon="' + cords[0].toFixed(6) + '" />';
+					address = place.address,
+					wikitext = '<place lat="' + cords[1].toFixed(6) + '" lon="' + cords[0].toFixed(6) + '" />';
 
 				$().log(address, 'Places');
 				$().log(wikitext, 'Places');
