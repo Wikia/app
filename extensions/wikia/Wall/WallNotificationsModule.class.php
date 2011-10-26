@@ -8,11 +8,15 @@ class WallNotificationsModule extends Module {
 		global $wgUser;
 		wfProfileIn(__METHOD__);
 		
-		$wn = F::build('WallNotifications', array());
+		if($wgUser->isLoggedIn()) {
 		
-		$this->response->addAsset('extensions/wikia/Wall/js/WallNotifications.js');
-		$this->response->addAsset('extensions/wikia/Wall/css/WallNotifications.scss');
-		
+			$wn = F::build('WallNotifications', array());
+			
+			$this->response->addAsset('extensions/wikia/Wall/js/WallNotifications.js');
+			$this->response->addAsset('extensions/wikia/Wall/css/WallNotifications.scss');
+				
+		}
+
 		$this->response->setVal('user', $wgUser);
 		
 		wfProfileOut(__METHOD__);
