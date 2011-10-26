@@ -256,3 +256,13 @@ WikiaTracker.AB = function(page) {
 
 	return true;
 };
+
+WikiaTracker.debugLevel = $.getUrlVar('wikiatracker_debug') || $.cookies.get('wikiatracker_debug') || 0;
+if ($.getUrlVar('wikiatracker_is_tracked') || $.cookies.get('wikiatracker_is_tracked')) {
+	WikiaTracker._in_group_cache['N'] = true;
+}
+var _temp_ab_group = $.getUrlVar('wikiatracker_ab_group') || $.cookies.get('wikiatracker_ab_group');
+if (_temp_ab_group) {
+	WikiaTracker._in_group_cache[_temp_ab_group] = true;
+	WikiaTracker._in_group_cache['N'] = true;
+}
