@@ -52,6 +52,10 @@ class UserPreferencesV2 {
 		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'myhomedisableredirect');
 		$defaultPreferences['showAds']['section'] = 'personal/appearance';
 		$defaultPreferences['showAds']['label-message'] = 'tog-showAdsv2';
+		$defaultPreferences['showAds']['type'] = 'select';
+		$adOptions[wfMsg('preferences-v2-showads-enable')] = true;
+		$adOptions[wfMsg('preferences-v2-showads-disable')] = false;
+		$defaultPreferences['showAds']['options'] = $adOptions;
 		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'showAds');
 
 		//Tab 2: Email
