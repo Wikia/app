@@ -6,7 +6,7 @@
 GlobalModal = {
 	init: function() {
 		var modal = $.getUrlVar('modal');
-		if (modal) {
+		if (modal) {	// modal takes precedence
 			var f = GlobalModal['show'+modal];
 			if(typeof f === 'function') {
 				f();

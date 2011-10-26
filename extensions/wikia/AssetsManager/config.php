@@ -88,7 +88,6 @@ $config['oasis_shared_js'] = array(
 		'//skins/oasis/js/Interlang.js',
 		'//skins/oasis/js/WikiaNotifications.js',
 		'//skins/oasis/js/Spotlights.js',
-		'//skins/oasis/js/GlobalModal.js',
 		'//skins/oasis/js/FirefoxFindFix.js',
 		'//skins/oasis/js/isTouchScreen.js',
 		'//skins/oasis/js/innerShiv.js',
@@ -121,6 +120,7 @@ $config['oasis_extensions_js'] = array(
 		'//extensions/wikia/PageLayoutBuilder/js/view.js', // TODO: load it on demand
 		'//extensions/wikia/JSMessages/js/JSMessages.js', // TODO: maybe move to jquery.wikia.js
 		'//extensions/wikia/GlobalNotification/GlobalNotification.js',
+		'//skins/oasis/js/GlobalModal.js',	// This needs to load last after all common extensions, please keep this last.
 	)
 );
 

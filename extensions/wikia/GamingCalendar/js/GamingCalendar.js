@@ -44,7 +44,15 @@ var GamingCalendar = {
 			$('.GamingCalendarModule h1').after(itemHTML);
         }, this));
 
-		$('.GamingCalendarModule').click(this.showCalendar);
+		$('.GamingCalendarModule').click(function(e) {
+			e.preventDefault();
+			GamingCalendar.showCalendar();
+		});
+		
+		var modal = $.getUrlVar('showGamingCalendar');
+		if(modal) {
+			GamingCalendar.showCalendar();
+		}
 	},
 
 	getCookieVal: function() {
@@ -89,8 +97,7 @@ var GamingCalendar = {
 		return template;
 	},
 
-	showCalendar: function(e) {
-		e.preventDefault();
+	showCalendar: function() {
 
 		GamingCalendar.track('calendar/open');
 
