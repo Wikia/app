@@ -40,7 +40,6 @@ class PlacesParserHookHandler {
 			$data = array(
 				'wikitext' => $wikitext,
 				'placeholder' => 1,
-				'custom-placeholder' => 1,
 			);
 
 			$rteData = F::build('RTEData', array($data), 'convertDataToAttributes');
@@ -66,6 +65,8 @@ class PlacesParserHookHandler {
 
 		// add model to be stored in database
 		PlacesHookHandler::setModelToSave($placeModel);
+
+		$html = self::cleanHTML($html);
 
 		wfProfileOut(__METHOD__);
 		return $html;
@@ -101,6 +102,19 @@ class PlacesParserHookHandler {
 
 		wfProfileOut(__METHOD__);
 		return $html;
+	}
+
+	/**
+	 * Remove whitespaces confusing MW parser
+	 *
+	 * @param string $html parser tag output to be cleaned up
+	 * @return string cleaned up HTML
+	 */
+	static private function cleanHTML($html) {
+		return strtr($html, array(
+			"\n" => '',
+			"\t" => '',
+		));
 	}
 
 	/**
