@@ -59,6 +59,7 @@ $app->registerHook('ParserFirstCallInit', 'PlacesHookHandler', 'onParserFirstCal
 $app->registerHook('BeforePageDisplay', 'PlacesHookHandler', 'onBeforePageDisplay');
 $app->registerHook('ArticleSaveComplete', 'PlacesHookHandler', 'onArticleSaveComplete');
 $app->registerHook('RTEUseDefaultPlaceholder', 'PlacesHookHandler', 'onRTEUseDefaultPlaceholder');
+$app->registerHook('EditPageBeforeEditToolbar', 'PlacesHookHandler', 'onEditPageBeforeEditToolbar');
 
 // for later
 // $app->registerHook('OutputPageMakeCategoryLinks', 'PlacesHookHandler', 'onOutputPageMakeCategoryLinks');
