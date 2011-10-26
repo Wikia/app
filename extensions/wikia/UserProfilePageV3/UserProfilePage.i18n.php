@@ -134,3 +134,7 @@ $messages['qqq'] = array(
 	'user-identity-box-aka-label' => 'Parameters:
 * $1 is the user\'s Real Name field entry, e.g. TOR aka Lucas Garczewski',
 );
+
+$messages['it'] = array(
+	'user-identity-box-edits-since-joining' => 'modifiche da quando è diventato membro della wiki<br/>i l$1',
+);
