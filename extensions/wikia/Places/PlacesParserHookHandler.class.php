@@ -111,9 +111,10 @@ class PlacesParserHookHandler {
 			array(
 				'/extensions/wikia/Places/css/Places.css',
 				'/extensions/wikia/Places/js/Places.js',
-				'http://maps.googleapis.com/maps/api/js?sensor=false&callback=$.noop',
 			),
-			array(),
+			array(
+				'$.loadGoogleMaps'
+			),
 			'Places.init'
 		);
 
