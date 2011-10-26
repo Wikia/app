@@ -88,7 +88,13 @@ class ArticleCommentInit {
 		wfProfileIn(__METHOD__);
 
 		//enable comments only on content namespaces (use $wgArticleCommentsNamespaces if defined)
-		$enable = in_array($title->getNamespace(), empty($wgArticleCommentsNamespaces) ? $wgContentNamespaces : $wgArticleCommentsNamespaces);
+		$enable = (
+			$title instanceof Title &&
+			in_array(
+				 $title->getNamespace(),
+				 empty( $wgArticleCommentsNamespaces ) ? $wgContentNamespaces : $wgArticleCommentsNamespaces
+			)
+		);
 
 		wfProfileOut(__METHOD__);
 		return $enable;
