@@ -284,7 +284,6 @@ $.loadModalJS = function(callback) {
 }
 
 $.loadGoogleMaps = function(callback) {
-	var isLoaded = (window.google && typeof google.maps != 'undefined') ? typeof google.maps : 'undefined';
 
 	window.onGoogleMapsLoaded = function() {
 		delete window.onGoogleMapsLoaded;
@@ -295,7 +294,7 @@ $.loadGoogleMaps = function(callback) {
 
 	$.loadLibrary('GoogleMaps',
 		'http://maps.googleapis.com/maps/api/js?sensor=false&callback=onGoogleMapsLoaded',
-		isLoaded,
+		typeof (window.google && google.maps),
 		function() {}
 	);
 }
