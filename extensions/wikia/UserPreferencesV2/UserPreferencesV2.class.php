@@ -101,6 +101,46 @@ class UserPreferencesV2 {
 			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'rows');
 		}
 
+		//Tab 4: Under the Hood
+		$defaultPreferences['rcdays']['section'] = 'under-the-hood/recent-changesv2';
+		$defaultPreferences['rcdays']['help'] = '';
+		$defaultPreferences['rclimit']['section'] = 'under-the-hood/recent-changesv2';
+		$defaultPreferences['rclimit']['help'] = '';
+		$defaultPreferences['rclimit']['help-message'] = '';
+		$defaultPreferences['usenewrc']['section'] = 'under-the-hood/recent-changesv2';
+		$defaultPreferences['hideminor']['section'] = 'under-the-hood/recent-changesv2';
+		$defaultPreferences['watchlistdays']['section'] = 'under-the-hood/followed-pagesv2';
+		$defaultPreferences['watchlistdays']['help'] = '';
+		$defaultPreferences['wllimit']['section'] = 'under-the-hood/followed-pagesv2';
+		$defaultPreferences['wllimit']['help'] = '';
+		$defaultPreferences['extendwatchlist']['section'] = 'under-the-hood/followed-pagesv2';
+		$defaultPreferences['watchlisthideminor']['section'] = 'under-the-hood/followed-pagesv2';
+		$defaultPreferences['watchlisthidebots']['section'] = 'under-the-hood/followed-pagesv2';
+		$defaultPreferences['watchlisthideown']['section'] = 'under-the-hood/followed-pagesv2';
+		$defaultPreferences['watchlisthideanons']['section'] = 'under-the-hood/followed-pagesv2';
+		$defaultPreferences['watchlisthideliu']['section'] = 'under-the-hood/followed-pagesv2';
+		$defaultPreferences['watchlisttoken']['section'] = 'under-the-hood/followed-pagesv2';
+		$defaultPreferences['searchlimit']['section'] = 'under-the-hood/searchv2';
+		$defaultPreferences['contextlines']['section'] = 'under-the-hood/searchv2';
+		$defaultPreferences['contextchars']['section'] = 'under-the-hood/searchv2';
+		$defaultPreferences['disablesuggest']['section'] = 'under-the-hood/searchv2';
+		$defaultPreferences['searcheverything']['section'] = 'under-the-hood/searchv2';
+		$defaultPreferences['searchnamespaces']['section'] = 'under-the-hood/searchv2';
+		$defaultPreferences['highlightbroken']['section'] = 'under-the-hood/advanced-displayv2';
+		$defaultPreferences['highlightbroken']['type'] = 'toggle';
+		$defaultPreferences['showtoc']['section'] = 'under-the-hood/advanced-displayv2';
+		$defaultPreferences['showtoc']['type'] = 'toggle';
+		$defaultPreferences['nocache']['section'] = 'under-the-hood/advanced-displayv2';
+		$defaultPreferences['nocache']['type'] = 'toggle';
+		$defaultPreferences['showhiddencats']['section'] = 'under-the-hood/advanced-displayv2';
+		$defaultPreferences['showhiddencats']['type'] = 'toggle';
+		$defaultPreferences['showjumplinks']['section'] = 'under-the-hood/advanced-displayv2';
+		$defaultPreferences['showjumplinks']['type'] = 'toggle';
+		$defaultPreferences['justify']['section'] = 'under-the-hood/advanced-displayv2';
+		$defaultPreferences['justify']['type'] = 'toggle';
+		$defaultPreferences['numberheadings']['section'] = 'under-the-hood/advanced-displayv2';
+		$defaultPreferences['numberheadings']['type'] = 'toggle';
+
 		return true;
 	}
 	

@@ -19,4 +19,9 @@ $messages['en'] = array(
 	'preferences-v2-redirect-enable' => 'Wiki Activity',
 	'preferences-v2-redirect-disable' => 'Main Page',
 	'prefs-monobookv2' => 'Monobook',
+	'prefs-under-the-hood' => 'Under the Hood',
+	'prefs-recent-changesv2' => 'Recent changes, histories, and logs',
+	'prefs-followed-pagesv2' => 'Followed pages feed',
+	'prefs-searchv2' => 'Search',
+	'prefs-advanced-displayv2' => 'Advanced display options',
 );
