@@ -431,9 +431,7 @@
 		line-height: 12px;
 
 		padding: {
-			bottom: 20px;
-			left: 17px;
-			right: 20px;
+			bottom: 10px;
 		}
 		margin: {
 			top: 0px;
@@ -443,7 +441,6 @@
 		}
 
 		@include bodytext;
-		border-collapse: collapse;
 		line-height: 15px;
 		width: $cell-width + 20 +2;
 
