@@ -214,7 +214,16 @@ class SiteStatsUpdate {
 		$dbw = wfGetDB( DB_MASTER );
 
 		$updates = '';
-
+		
+		# fix (bugId: 10928)
+		# if ( ss_good_article == 0 ) 
+		# update site_stats set ss_good_articles = ss_good_articles - 1 where ss_row_id = 1;
+		# result is: 18446744073709551615 
+		$oRow = $db->selectRow( 'site_stats', '*', false, __METHOD__ );		
+		$this->mViews = ( isset( $oRow->ss_total_views ) && ( $this->mViews + $oRow->ss_total_views ) < 0 ) ? 0 : $this->mViews;
+		$this->mEdits = ( isset( $oRow->ss_total_edits ) && ( $this->mEdits + $oRow->ss_total_edits ) < 0 ) ? 0 : $this->mEdits;
+		$this->mGood = ( isset( $oRow->ss_good_articles ) && ( $this->mGood + $oRow->ss_good_articles ) < 0 ) ? 0 : $this->mGood;
+		
 		$this->appendUpdate( $updates, 'ss_total_views', $this->mViews );
 		$this->appendUpdate( $updates, 'ss_total_edits', $this->mEdits );
 		$this->appendUpdate( $updates, 'ss_good_articles', $this->mGood );
