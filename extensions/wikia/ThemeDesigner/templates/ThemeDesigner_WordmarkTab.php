@@ -1,5 +1,6 @@
 <section id="WordmarkTab" class="WordmarkTab">
 	<fieldset class="text">
+        <span id="or">or</span>
 		<h1><?= wfMsg('themedesigner-text-wordmark') ?></h1>
 
 		<ul class="controls">
@@ -52,8 +53,9 @@
 		</form>
 
 		<div class="preview">
-			<a href="#"><?= wfMsg('themedesigner-dont-use-a-graphic') ?></a>
+			<span>Preview</span>
 			<img src="<?= $wgBlankImgUrl ?>" class="wordmark">
+			<a href="#"><?= wfMsg('themedesigner-dont-use-a-graphic') ?></a>
 		</div>
 
 	</fieldset>
@@ -63,13 +65,14 @@
 			<?= wfMsg('themedesigner-upload-a-graphic') ?>
 			<span class="form-questionmark" data-tooltip="<?= wfMsg('themedesigner-rules-favicon') ?> &lt;a href='http://community.wikia.com/wiki/Help:Favicon' &gt; <?= wfMsg('themedesigner-rules-favicon-learn-more-link') ?>&lt;/a&gt;"></span>
 		</h2>
-		<form onsubmit="return AIM.submit(this, ThemeDesigner.faviconUploadCallback)" action="<?= $wgScriptPath ?>/index.php?action=ajax&rs=moduleProxy&moduleName=ThemeDesigner&actionName=FaviconUpload&outputType=html" method="POST" enctype="multipart/form-data">
+		<form id="FaviconUploadForm" onsubmit="return AIM.submit(this, ThemeDesigner.faviconUploadCallback)" action="<?= $wgScriptPath ?>/index.php?action=ajax&rs=moduleProxy&moduleName=ThemeDesigner&actionName=FaviconUpload&outputType=html" method="POST" enctype="multipart/form-data">
 			<input id="FaviconUploadFile" name="wpUploadFile" type="file" />
 			<input type="submit" value="<?= wfMsg( 'themedesigner-button-upload-wordmark' ) ?>" />
 		</form>
 		
 		<div class="preview">
 			<img src="<?= $faviconUrl ?>">
+			<a href="#"><?= wfMsg('themedesigner-dont-use-a-graphic') ?></a>
 		</div>
 	</fieldset>
 </section>
