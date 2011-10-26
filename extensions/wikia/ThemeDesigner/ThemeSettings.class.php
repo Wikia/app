@@ -10,6 +10,7 @@ class ThemeSettings {
 
 	const WordmarkImageName = 'Wiki-wordmark.png';
 	const BackgroundImageName = 'Wiki-background';
+	const FaviconImageName = 'Favicon.ico';
 
 	private $defaultSettings;
 
@@ -104,6 +105,21 @@ class ThemeSettings {
 	public function saveSettings($settings, $cityId = null) {
 		global $wgCityId, $wgUser;
 		$cityId = empty($cityId) ? $wgCityId : $cityId;
+		
+		if(isset($settings['favicon-image-name']) && strpos($settings['favicon-image-name'], 'Temp_file_') === 0) {
+			$temp_file = new LocalFile(Title::newFromText($settings['favicon-image-name'], 6), RepoGroup::singleton()->getLocalRepo());
+			$file = new LocalFile(Title::newFromText(self::FaviconImageName, 6), RepoGroup::singleton()->getLocalRepo());
+			$file->upload($temp_file->getPath(), '', '');
+			$temp_file->delete('');
+
+			$settings['favicon-image-url'] = $file->getURL();
+			$settings['favicon-image-name'] = $file->getName();
+
+			$history = $file->getHistory(1);
+			if(count($history) == 1) {
+				$oldFaviconFile = array('url' => $history[0]->getURL(), 'name' => $history[0]->getArchiveName());
+			}
+		}
 
 		if(isset($settings['wordmark-image-name']) && strpos($settings['wordmark-image-name'], 'Temp_file_') === 0) {
 			$temp_file = new LocalFile(Title::newFromText($settings['wordmark-image-name'], 6), RepoGroup::singleton()->getLocalRepo());
@@ -176,6 +192,12 @@ class ThemeSettings {
 
 		if(count($history) > 1 ) {
 			for($i = 0; $i < count($history) - 1; $i++) {
+				if (isset($oldFaviconFile) && isset($history[$i]['settings']['favicon-image-name'])) {
+					if($history[$i]['settings']['favicon-image-name'] == self::FaviconImageName) {
+						$history[$i]['settings']['favicon-image-name'] = $oldFaviconFile['name'];
+						$history[$i]['settings']['favicon-image-url'] = $oldFaviconFile['url'];
+					}
+				}
 				if (isset($oldFile) && isset($history[$i]['settings']['wordmark-image-name'])) {
 					if($history[$i]['settings']['wordmark-image-name'] == self::WordmarkImageName) {
 						$history[$i]['settings']['wordmark-image-name'] = $oldFile['name'];
@@ -190,6 +212,8 @@ class ThemeSettings {
 				}
 			}
 		}
+		
+		hyunbug($history);
 
 		WikiFactory::setVarByName(self::WikiFactoryHistory, $cityId, $history, $reason);
 

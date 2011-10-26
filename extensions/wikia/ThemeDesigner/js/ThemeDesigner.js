@@ -442,6 +442,12 @@ var ThemeDesigner = {
 	 */
 	faviconUploadCallback : {
 		onComplete: function(response) {
+			var response = JSON.parse(response);
+			$().log(response);
+			
+			ThemeDesigner.settings['favicon-image-url'] = response.faviconImageUrl;
+			ThemeDesigner.settings['favicon-image-name'] = response.faviconImageName;
+		
 			// update preview
 		}
 	},

@@ -223,6 +223,8 @@ class ThemeDesignerModule extends Module {
 	public function executeFaviconUpload() {
 		$upload = new UploadFaviconFromFile();
 		
+		$this->errors = array();
+		$this->faviconImageName = '';
 		$this->faviconImageUrl = '';
 		
 		$status = $this->uploadImage($upload);
