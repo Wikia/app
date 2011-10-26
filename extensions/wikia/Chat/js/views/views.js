@@ -261,7 +261,13 @@ var NodeChatDiscussion = Backbone.View.extend({
 	},
 	
 	scrollToBottom: function() {
-		this.chatDiv.scrollTop(this.chatDiv.get(0).scrollHeight);	
+		// scroll after delay to allow text expansion (eg. emoteicons)
+		var forceScroll = this.forceScroll;
+		setTimeout( $.proxy( function() {
+			this.chatDiv.scrollTop(this.chatDiv.get(0).scrollHeight);
+			// restore forceScroll status (this should happen after text expansion)
+			this.forceScroll = forceScroll;
+		}, this), 0);
 	},
 	
 	userScroll: function() {
