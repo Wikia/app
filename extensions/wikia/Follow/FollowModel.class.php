@@ -93,11 +93,13 @@ class FollowModel {
 			if( $show_deleted_pages ) {
 				$out_data[$namespaces[ $row['wl_namespace'] ]][] = $row;
 			} else {
-				if( !$title->isDeletedQuick() ) {
+				if( $title->isKnown() ) {
 					$out_data[$namespaces[ $row['wl_namespace'] ]][] = $row;
 				}
 			}
+			
 		}
+
 		$con = " wl_user = ".intval($user_id)." and wl_namespace in (".implode(',', $namespaces_keys).")";
 
 		$res = $db->select(
