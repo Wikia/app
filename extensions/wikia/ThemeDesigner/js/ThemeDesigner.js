@@ -445,9 +445,18 @@ var ThemeDesigner = {
 	 */
 	faviconUploadCallback : {
 		onComplete: function(response) {
-			// update preview
-                        data = $.parseJSON(response);
-                        $('.favicon .preview img').attr('src',data.faviconImageUrl);
+			var response = JSON.parse(response);
+
+			if(response.errors && response.errors.length > 0) {
+
+				alert(response.errors.join("\n"));
+
+			} else {
+
+				ThemeDesigner.set("favicon-image-url", response.faviconImageUrl);
+			}
+
+			ThemeDesigner.track('favicon/upload');
 		}
 	},
 	
@@ -626,7 +635,10 @@ var ThemeDesigner = {
 		$("#wordmark-size").find('[value="' + ThemeDesigner.settings["wordmark-font-size"] + '"]').attr("selected", "selected");
 
 		// wordmark image
-		$("#WordmarkTab").find(".graphic").find(".wordmark").attr("src", ThemeDesigner.settings["wordmark-image-url"]);
+		$("#WordmarkTab .graphic .wordmark").attr("src", ThemeDesigner.settings["wordmark-image-url"]);
+
+		// favicon image
+                $("#WordmarkTab .favicon .preview img").attr("src", ThemeDesigner.settings["favicon-image-url"]);
 
 		if (ThemeDesigner.settings["wordmark-type"] == "graphic") {
 			$("#WordmarkTab").find(".graphic")
