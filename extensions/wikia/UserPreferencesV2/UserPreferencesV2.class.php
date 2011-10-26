@@ -57,6 +57,7 @@ class UserPreferencesV2 {
 		$adOptions[wfMsg('preferences-v2-showads-disable')] = false;
 		$defaultPreferences['showAds']['options'] = $adOptions;
 		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'showAds');
+		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'myhomedisableredirect');
 
 		//Tab 2: Email
 		unset($defaultPreferences['imagesize']);
