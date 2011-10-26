@@ -1,5 +1,4 @@
 var WikiaPhotoGallerySlideshow = {
-
 	log: function(msg) {
 		$().log(msg, 'WikiaPhotoGallery:Slideshow');
 	},
