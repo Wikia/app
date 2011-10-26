@@ -268,12 +268,15 @@ function AchAjax() {
 
 
 function Ach_UserPreferences( $user, &$preferences ) {
+	global $wgEnableUserPreferencesV2Ext;
+	$section = (!empty($wgEnableUserPreferencesV2Ext)) ? 'fbconnect-prefstext/fbconnect-event-prefstext' : 'misc';
+	
 	if( $user->isLoggedIn() ) {
 		wfLoadExtensionMessages( 'AchievementsII' );
 		$preferences['hidepersonalachievements'] = array(
 			'type' => 'toggle',
 			'label-message' => 'achievements-toggle-hide', // a system message
-			'section' => 'fbconnect-prefstext/fbconnect-event-prefstext'
+			'section' => $section
 		);
 	}
 	
