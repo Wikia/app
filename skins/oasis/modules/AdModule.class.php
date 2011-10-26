@@ -10,7 +10,7 @@ class AdModule extends Module {
 
 		self::$config = array();
 
-		if(!$wgOut->isArticle() && !$wgTitle->isSpecial('Search')){ // RT#74422 Run ads on search results page
+		if(!$wgOut->isArticle() && !$wgTitle->isSpecial('Search') && !$wgTitle->isSpecial('Leaderboard')){ // RT#74422 Run ads on search results page
 			return;
 		}
 		// Ads on corporate hub pages only
@@ -64,12 +64,17 @@ class AdModule extends Module {
 				self::$config['TOP_LEADERBOARD'] = true;
 				self::$config['TOP_RIGHT_BOXAD'] = true;
 				self::$config['TOP_BUTTON'] = true;
-			} else if($namespace == NS_SPECIAL && $wgTitle->isSpecial('Search')) {
-				// search results page
-				self::$config['TOP_LEADERBOARD'] = true;
-				self::$config['TOP_RIGHT_BOXAD'] = true;
-				self::$config['TEST_TOP_RIGHT_BOXAD'] = true;
-				self::$config['TOP_BUTTON'] = true;
+			} else if($namespace == NS_SPECIAL) {
+				if ($wgTitle->isSpecial('Search')) {
+					// search results page
+					self::$config['TOP_LEADERBOARD'] = true;
+					self::$config['TOP_RIGHT_BOXAD'] = true;
+					self::$config['TEST_TOP_RIGHT_BOXAD'] = true;
+					self::$config['TOP_BUTTON'] = true;
+				} else if($wgTitle->isSpecial('Leaderboard')) {
+					self::$config['TOP_LEADERBOARD'] = true;
+					self::$config['TOP_RIGHT_BOXAD'] = true;					
+				}
 			} else if($namespace == NS_CATEGORY) {
 				// category page
 				self::$config['TOP_LEADERBOARD'] = true;
