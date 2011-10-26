@@ -30,7 +30,6 @@ class UserPreferencesV2 {
 		$defaultPreferences['nickname']['label-message'] = 'preferences-v2-nickname';
 		$defaultPreferences['fancysig']['label-message'] = 'preferences-v2-fancysig';
 		$defaultPreferences['fancysig']['help-message'] = '';
-		unset($defaultPreferences['showAds']);
 		$defaultPreferences['language']['section'] = 'personal/appearance';
 		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'language');
 		$defaultPreferences['date']['section'] = 'personal/appearance';
@@ -44,8 +43,15 @@ class UserPreferencesV2 {
 		$defaultPreferences['skin']['type'] = 'select';
 		$defaultPreferences['skin']['label-message'] = 'preferences-v2-skin';
 		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'skin');
+		$redirectOptions[wfMsg('preferences-v2-redirect-enable')] = false;
+		$redirectOptions[wfMsg('preferences-v2-redirect-disable')] = true;
+		$defaultPreferences['myhomedisableredirect']['type'] = 'select';
+		$defaultPreferences['myhomedisableredirect']['options'] = $redirectOptions;
+		$defaultPreferences['myhomedisableredirect']['label-message'] = 'preferences-v2-myhomedisableredirect';
 		$defaultPreferences['myhomedisableredirect']['section'] = 'personal/appearance';
 		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'myhomedisableredirect');
+		$defaultPreferences['showAds']['section'] = 'personal/appearance';
+		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'showAds');
 
 		//Tab 2: Email
 		unset($defaultPreferences['imagesize']);

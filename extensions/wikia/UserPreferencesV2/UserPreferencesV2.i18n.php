@@ -15,4 +15,8 @@ $messages['en'] = array(
 	'preferences-v2-time' => 'Time:',
 	'preferences-v2-skin' => 'Layout:',
 	'prefs-emailv2' => 'Email',
+	'preferences-v2-myhomedisableredirect' => 'Landing page:',
+	'preferences-v2-redirect-enable' => 'Wiki Activity',
+	'preferences-v2-redirect-disable' => 'Main Page',
+	'prefs-monobookv2' => 'Monobook',
 );
