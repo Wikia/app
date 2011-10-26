@@ -78,7 +78,12 @@ function axWFactoryGetVariable() {
 	$city_id = $wgRequest->getVal("wiki");
 
 	$variable = WikiFactory::getVarById( $cv_id, $city_id );
-
+        
+        // BugId:3054
+        if ( empty( $variable ) ) {
+            return Wikia::json_encode( array( 'error' => true, 'message' => 'No such variable.' ) );
+        }
+        
 	$related = array();
 	$r_pages = array();
 	if (preg_match("/Related variables:(.*)$/", $variable->cv_description, $matches)) {
