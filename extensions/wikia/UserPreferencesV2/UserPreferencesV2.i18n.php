@@ -24,4 +24,5 @@ $messages['en'] = array(
 	'prefs-followed-pagesv2' => 'Followed pages feed',
 	'prefs-searchv2' => 'Search',
 	'prefs-advanced-displayv2' => 'Advanced display options',
+	'tog-highlightbrokenv2' => 'Format broken links',
 );
