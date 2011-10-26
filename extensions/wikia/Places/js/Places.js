@@ -29,7 +29,7 @@ var Places = {
 		});
 	},
 	displayDynamic: function( options ){
-
+		
 		$().log( options, 'options' );
 		options = options || {};
 		options.markers = options.markers || [];
@@ -85,15 +85,26 @@ var Places = {
 			);
 
 			var aMarker = [];
+			var aInfoWindow = [];
 			$.each( options.markers, function( index, value ){
-				if ( ( typeof value.lat != 'undefined' ) && ( typeof value.lat != 'undefined' ) && ( typeof value.label != 'undefined' ) ){
+				if ( ( typeof value.lat != 'undefined' ) && ( typeof value.lat != 'undefined' ) && ( typeof value.label != 'undefined' ) && ( typeof value.tooltip != 'undefined' ) ){
 					aMarker.push(
 						new google.maps.Marker({
-							position: new google.maps.LatLng( value.lat, value.lan ),
-							map: map,
-							title: value.label
+							position:	new google.maps.LatLng( value.lat, value.lan ),
+							map:		map,
+							title:		value.label
 						})
 					);
+					aInfoWindow.push(
+						new google.maps.InfoWindow({
+							content: value.tooltip,
+							maxWidth: 300
+						})
+					);
+					var key = aMarker.length - 1;
+					google.maps.event.addListener( aMarker[ key ], 'click', function() {
+						aInfoWindow[ key ].open(map, aMarker[ key ] );
+					});
 				}
 			});
 		}

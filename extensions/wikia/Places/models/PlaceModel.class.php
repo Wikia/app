@@ -143,12 +143,23 @@ class PlaceModel {
 		if ( $this->isEmpty() ){
 			return false;
 		};
-
+		
 		$oTitle = F::build('Title', array( $this->getPageId() ), 'newFromID' );
+
+		$imageServing = new ImageServing( array( $this->getPageId() ), 200, array( 'w' => 2, 'h' => 1 ) );
+		$images = $imageServing->getImages(1);
+		$imageUrl = '';
+		$snippet = '';
+		if ( isset( $images[$this->getPageId()] ) && isset( $images[$this->getPageId()][0] ) && isset( $images[$this->getPageId()][0]['url'] ) ){
+			$imageUrl = $images[$this->getPageId()][0]['url'];
+		}
 		return ( !empty( $oTitle ) && $oTitle->exists() )
 			? array(	'lat' => $this->getLat(),
 					'lan' => $this->getLon(),
-					'label' => $oTitle->getText() )
+					'label' => $oTitle->getText(),
+					'imageUrl' => $imageUrl,
+					'articleUrl' => $oTitle->getLocalUrl()
+				)
 			: array();
 	}
 
