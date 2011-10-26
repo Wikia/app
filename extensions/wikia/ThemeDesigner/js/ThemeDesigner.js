@@ -169,7 +169,7 @@ var ThemeDesigner = {
 		});
 
 		//graphic wordmark clicking
-		$("#WordmarkTab").find(".graphic").find(".preview").find(".wordmark").click(function() {
+		$("#WordmarkTab .graphic .preview .wordmark").click(function() {
 			ThemeDesigner.set("wordmark-type", "graphic");
 
 			ThemeDesigner.track('wordmark/choose');
@@ -179,10 +179,22 @@ var ThemeDesigner = {
 		$("#WordmarkTab .graphic .preview a").click(function(event) {
 			event.preventDefault();
 			ThemeDesigner.set("wordmark-type", "text");
-			$(this).next('img').attr('src','');
+			ThemeDesigner.set("wordmark-image-url", wgBlankImgUrl);
                         
 			// Can't use js to clear file input value so reseting form
 			$('#WordMarkUploadForm')[0].reset();
+
+			ThemeDesigner.track('wordmark/nowordmark');
+		});
+                
+                //remove favicon link
+		$("#WordmarkTab .favicon .preview a").click(function(event) {
+			event.preventDefault();
+			//ThemeDesigner.set("favicon-image-url", "");
+			//ThemeDesigner.set("favicon-type", "default");
+                        
+			// Can't use js to clear file input value so reseting form
+			$('#FaviconUploadForm')[0].reset();
 
 			ThemeDesigner.track('wordmark/nowordmark');
 		});
@@ -643,12 +655,12 @@ var ThemeDesigner = {
 		if (ThemeDesigner.settings["wordmark-type"] == "graphic") {
 			$("#WordmarkTab").find(".graphic")
                                 .find(".preview").addClass("active")
-				.find(".wordmark").addClass("selected").end()
+				.find(".wordmark").addClass("selected");
 			ThemeDesigner.wordmarkShield();
 		} else {
 			$("#WordmarkTab").find(".graphic")
                                 .find(".preview").removeClass("active")
-				.find(".wordmark").removeClass("selected").end()
+				.find(".wordmark").removeClass("selected");
 			ThemeDesigner.wordmarkShield();
 		}
 

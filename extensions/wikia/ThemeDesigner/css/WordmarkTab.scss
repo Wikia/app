@@ -1,9 +1,21 @@
 @import "../../../../skins/oasis/css/mixins/box-shadow";
 @import "../../../../skins/oasis/css/mixins/opacity";
 
+$previewheight: 65px;
+
 .WordmarkTab {
+	#or {
+		background: #FFF;
+		bottom: 1px;
+		display: block;
+		float: right;
+		position: relative;
+		right: -25px;
+		padding: 5px;
+	}	
 	fieldset {
 		width: 260px;
+		height: 175px;
 	}
 	button, input[type='submit'] {
 		margin-top: 5px;
@@ -11,13 +23,15 @@
 	h2{
 		margin-bottom: 5px;
 	}
-	.graphic, .favicon{
+	.graphic{
 		padding: 0 15px;
 		.preview {
-			float: left;
+			border: 1px solid #eaeaea;
+			color: #CCC;
+			height: $previewheight;
 			margin-top: 10px;
 			position: relative;
-			width: auto;
+			width: 250px;
 			.wordmark {
 				cursor: pointer;
 				&.selected {
@@ -27,15 +41,50 @@
 				}
 			}
 			a {
+				background: #FFF;
 				color: #666;
 				display: none;
 				padding:2px;
 				position: absolute;
 				right: 0;
+				top: 0;
 			}
-			&.active:hover {
+			span{
+				display: block;
+				text-align: center;
+				line-height: $previewheight;
+			}
+			&.active{
+				border: 0;
+				float: left;
+				width: auto;
+				span { 
+					display: none;
+				}
+				&:hover {
+					a {
+						display: block;
+					}
+				}
+			}
+		}
+	}
+	.favicon {
+		padding: 0 15px;
+		.preview {
+			margin-top: 10px;
+			img {
+				float: left;
+				margin-right: 5px; 
+			}
+			a {
+				background: #FFF;
+				color: #666;
+				display: none;	
+			}
+			&:hover {
 				a {
-					display: block;
+					display: inline;
 				}
 			}
 		}
