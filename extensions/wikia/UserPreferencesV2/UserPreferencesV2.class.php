@@ -51,6 +51,7 @@ class UserPreferencesV2 {
 		$defaultPreferences['myhomedisableredirect']['section'] = 'personal/appearance';
 		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'myhomedisableredirect');
 		$defaultPreferences['showAds']['section'] = 'personal/appearance';
+		$defaultPreferences['showAds']['label-message'] = 'tog-showAdsv2';
 		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'showAds');
 
 		//Tab 2: Email
@@ -58,8 +59,8 @@ class UserPreferencesV2 {
 		unset($defaultPreferences['thumbsize']);
 		unset($defaultPreferences['math']);
 		$defaultPreferences['unsubscribed']['section'] = 'emailv2/emailv2';
-		$defaultPreferences['emailaddress']['section'] = 'emailv2/emailv2';
-		$defaultPreferences['emailauthentication']['section'] = 'emailv2/emailv2';
+		$defaultPreferences['emailaddress']['section'] = 'emailv2/addressv2';
+		$defaultPreferences['emailauthentication']['section'] = 'emailv2/addressv2';
 		$defaultPreferences['disablemail']['section'] = 'emailv2/emailv2';
 		$defaultPreferences['ccmeonemails']['type'] = 'toggle';
 		$defaultPreferences['ccmeonemails']['section'] = 'emailv2/emailv2';
@@ -70,6 +71,14 @@ class UserPreferencesV2 {
 		$defaultPreferences['enotifrevealaddr']['section'] = 'emailv2/emailv2';
 		$defaultPreferences['htmlemails']['section'] = 'emailv2/emailv2';
 		$defaultPreferences['marketingallowed']['section'] = 'emailv2/emailv2';
+		$defaultPreferences['watchdefault']['section'] = 'emailv2/followed-pages-iv2';
+		$defaultPreferences['watchdefault']['label-message'] = 'preferences-v2-watchdefault';
+		$defaultPreferences['watchmoves']['section'] = 'emailv2/followed-pages-iv2';
+		$defaultPreferences['watchmoves']['label-message'] = 'preferences-v2-watchmoves';
+		$defaultPreferences['watchdeletion']['section'] = 'emailv2/followed-pages-iv2';
+		$defaultPreferences['watchdeletion']['label-message'] = 'preferences-v2-watchdeletion';
+		$defaultPreferences['watchcreations']['section'] = 'emailv2/followed-pages-iv2';
+		$defaultPreferences['watchcreations']['label-message'] = 'preferences-v2-watchcreations';
 
 		//Tab 3: Editing
 		$defaultPreferences['watchlistdays']['help'] = '';
@@ -147,10 +156,6 @@ class UserPreferencesV2 {
 		$defaultPreferences['numberheadings']['section'] = 'under-the-hood/advanced-displayv2';
 		$defaultPreferences['numberheadings']['type'] = 'toggle';
 		$defaultPreferences['numberheadings']['label-message'] = 'tog-numberheadings';
-		unset($defaultPreferences['watchdefault']);
-		unset($defaultPreferences['watchmoves']);
-		unset($defaultPreferences['watchdeletion']);
-		unset($defaultPreferences['watchcreations']);
 		unset($defaultPreferences['enotiffollowedpages']);
 		unset($defaultPreferences['enotiffollowedminoredits']);
 		unset($defaultPreferences['hidefollowedpages']);
