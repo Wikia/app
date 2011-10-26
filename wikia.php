@@ -1,12 +1,12 @@
 <?php
-// Initialise common MW code
-require ( dirname( __FILE__ ) . '/includes/WebStart.php' );
-
-// This seems to be done by google translate
+// This is from google translate, just return early.
 if ( $_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	header ( "HTTP/1.1 200", true, 200);
 	return;
 }
+
+// Initialise common MW code
+require ( dirname( __FILE__ ) . '/includes/WebStart.php' );
 
 if ( !empty( $wgEnableNirvanaAPI ) ){
 	$app = F::app();
