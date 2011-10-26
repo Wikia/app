@@ -113,15 +113,13 @@ WikiaTracker._track = function(page, profile, sample) {
 	_gaq.push(['WikiaTracker._setAccount', profile]);
 	_gaq.push(['WikiaTracker._setSampleRate', sample]);
 
-	_gaq.push(['WikiaTracker._setDomainName', window.wgCookieDomain]);
+	_gaq.push(['WikiaTracker._setDomainName', window.wgCookieDomain || '.wikia.com']);
 
-	var hub = window.wgCatId || 'unknown'; // FIXME expand cat id to name
-	var lang = window.wgContentLanguage || 'unknown';
-	var db = window.wgDBname || window.wgDB || 'unknown';
-
-	_gaq.push(['WikiaTracker._setCustomVar', 1, 'db',   db,   3]);
-	_gaq.push(['WikiaTracker._setCustomVar', 2, 'hub',  hub,  3]);
-	_gaq.push(['WikiaTracker._setCustomVar', 3, 'lang', lang, 3]);
+	_gaq.push(['WikiaTracker._setCustomVar', 1, 'db',    window.wgDBname || window.wgDB || 'unknown', 3]);
+	_gaq.push(['WikiaTracker._setCustomVar', 2, 'hub',   window.wgCatId || 'unknown', 3]);
+	_gaq.push(['WikiaTracker._setCustomVar', 3, 'lang',  window.wgContentLanguage || 'unknown', 3]);
+	_gaq.push(['WikiaTracker._setCustomVar', 4, 'skin',  window.skin || 'unknown', 3]);
+	_gaq.push(['WikiaTracker._setCustomVar', 5, 'user', (window.wgUserName == null) ? 'anon' : 'user', 3]);
 
 	if (page == '/AnalyticsEngine::EVENT_PAGEVIEW') {
 		_gaq.push(['WikiaTracker._trackPageview']);
