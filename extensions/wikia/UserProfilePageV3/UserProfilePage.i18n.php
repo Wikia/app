@@ -136,5 +136,5 @@ $messages['qqq'] = array(
 );
 
 $messages['it'] = array(
-	'user-identity-box-edits-since-joining' => 'modifiche da quando Ã¨ diventato membro della wiki<br/>i l$1',
+	'user-identity-box-edits-since-joining' => 'modifiche de quando Ã diventato membro della wiki<br />il $1',
 );
