@@ -147,31 +147,16 @@ class UserPreferencesV2 {
 		$defaultPreferences['numberheadings']['section'] = 'under-the-hood/advanced-displayv2';
 		$defaultPreferences['numberheadings']['type'] = 'toggle';
 		$defaultPreferences['numberheadings']['label-message'] = 'tog-numberheadings';
-
-
-
-unset($defaultPreferences['watchdefault']);
-unset($defaultPreferences['watchmoves']);
-unset($defaultPreferences['watchdeletion']);
-unset($defaultPreferences['watchcreations']);
-
-
-
-unset($defaultPreferences['enotiffollowedpages']);
-unset($defaultPreferences['enotiffollowedminoredits']);
-unset($defaultPreferences['hidefollowedpages']);
-unset($defaultPreferences['watchlistdigest']);
-
-
-
-
-unset($defaultPreferences['diffonly']);
-unset($defaultPreferences['norollbackdiff']);
-
-
-
-
-
+		unset($defaultPreferences['watchdefault']);
+		unset($defaultPreferences['watchmoves']);
+		unset($defaultPreferences['watchdeletion']);
+		unset($defaultPreferences['watchcreations']);
+		unset($defaultPreferences['enotiffollowedpages']);
+		unset($defaultPreferences['enotiffollowedminoredits']);
+		unset($defaultPreferences['hidefollowedpages']);
+		unset($defaultPreferences['watchlistdigest']);
+		unset($defaultPreferences['diffonly']);
+		unset($defaultPreferences['norollbackdiff']);
 
 		return true;
 	}
