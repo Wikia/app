@@ -420,6 +420,8 @@ var Wall = $.createClass(Object, {
 		$('.new-message .speech-bubble-message').css({'padding-bottom':45});
 		//if($(e.target).hasClass('title'))
 		//	$(e.target).css('line-height','170%');
+		if($(e.target).hasClass('body'))
+			$('.new-message textarea.body').css('font-size','13px');
 	},
 
 	postNewMessage_blur: function() {
@@ -430,6 +432,7 @@ var Wall = $.createClass(Object, {
 			$('#WallMessageSubmit').attr('disabled', 'disabled').hide();
 			$('#WallMessagePreview').attr('disabled', 'disabled').hide();
 			$('.new-message .speech-bubble-message').css({'padding-bottom':10});
+			$('.new-message textarea.body').css('font-size','14px');
 		}
 		/*if(!title) {
 			$('.new-message textarea.title:focus').css('line-height','normal');
@@ -532,8 +535,8 @@ var Wall = $.createClass(Object, {
 				
 				var editbuttons = $('<div class="edit-buttons"></div>');
 				$('<button class="wikia-button save-edit">'+$.msg('wall-button-save-changes')+'</button>').appendTo(editbuttons);
-				//$('<button class="wikia-button preview-edit secondary">'+$.msg('wall-button-to-preview-comment')+'</button>').appendTo(editbuttons);
-				//$('<button class="wikia-button cancel-preview-edit secondary" style="display: none;">'+$.msg('wall-button-to-cancel-preview')+'</button>').appendTo(editbuttons);
+				$('<button class="wikia-button preview-edit secondary">'+$.msg('wall-button-to-preview-comment')+'</button>').appendTo(editbuttons);
+				$('<button class="wikia-button cancel-preview-edit secondary" style="display: none;">'+$.msg('wall-button-to-cancel-preview')+'</button>').appendTo(editbuttons);
 				$('<button class="wikia-button cancel-edit secondary">'+$.msg('wall-button-cancel-changes')+'</button>').appendTo(editbuttons);
 				
 				
@@ -722,7 +725,7 @@ var Wall = $.createClass(Object, {
 		$(el).css({ 'margin-bottom': '40px'});
 		$('.speech-bubble-message', el).stop().css({'margin-left':'40px'});
 		$('.speech-bubble-avatar', el).show();
-		$('textarea',el).css('line-height','150%');
+		$('textarea',el).css('line-height','inherit');
 	},
 
 	reply_ChangeText: function(e) {
