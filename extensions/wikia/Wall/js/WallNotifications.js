@@ -44,6 +44,7 @@ var WallNotifications = $.createClass(Object, {
 			$.nirvana.sendRequest({
 				controller: 'WallNotificationsExternalController',
 				method: 'getUpdate',
+				format: 'json',
 				data: {
 					username: wgTitle
 				},
@@ -81,6 +82,7 @@ var WallNotifications = $.createClass(Object, {
 		$.nirvana.sendRequest({
 			controller: 'WallNotificationsExternalController',
 			method: 'markAllAsRead',
+			format: 'json',
 			data: {
 				username: wgTitle
 			},
