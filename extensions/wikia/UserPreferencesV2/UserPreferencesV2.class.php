@@ -88,6 +88,18 @@ class UserPreferencesV2 {
 		unset($defaultPreferences['numberheadings']);
 		$defaultPreferences['enablerichtext']['section'] = 'editing/editing-experience';
 		unset($defaultPreferences['disablelinksuggest']);
+		if ($user->mOptions['skin'] == 'monobook') {
+			$defaultPreferences['showtoolbar']['section'] = 'editing/monobookv2';
+			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'showtoolbar');
+			$defaultPreferences['previewontop']['section'] = 'editing/monobookv2';
+			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'previewontop');
+			$defaultPreferences['previewonfirst']['section'] = 'editing/monobookv2';
+			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'previewonfirst');
+			$defaultPreferences['cols']['section'] = 'editing/monobookv2';
+			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'cols');
+			$defaultPreferences['rows']['section'] = 'editing/monobookv2';
+			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'rows');
+		}
 
 		return true;
 	}
