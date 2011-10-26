@@ -1,3 +1,4 @@
+/* depends on raon.js */
 AdConfig = {
 	adSlotsRequiringJSInvocation: { HOME_INVISIBLE_TOP:1, INVISIBLE_TOP:1, INVISIBLE_1:1, INVISIBLE_2:1 },
 	geo: null, 
@@ -218,7 +219,8 @@ AdConfig.DART.getUrl = function(slotname, size, useIframe, adProvider) {
 		// TODO when we get better at search, support "kw" key-value
 		AdConfig.DART.getResolution() +
 		AdConfig.DART.getPrefooterStatus() +
-		AdConfig.DART.getQuantcastSegmentKV() +
+//		AdConfig.DART.getQuantcastSegmentKV() +	// wlee 2011/10/25: no need to pass to DART for now
+		RadiumOne.getDARTKeyValue() +
 		AdConfig.DART.getImpressionCount(slotname) +
 		AdConfig.DART.getPartnerKeywords() +
 		AdConfig.DART.getCategories() +
@@ -261,7 +263,8 @@ AdConfig.DART.getMobileUrl = function(slotname, size, useIframe, adProvider) {
 		// TODO when we get better at search, support "kw" key-value
 		AdConfig.DART.getResolution() +
 		AdConfig.DART.getPrefooterStatus() +
-		AdConfig.DART.getQuantcastSegmentKV() +
+//		AdConfig.DART.getQuantcastSegmentKV() +	// wlee 2011/10/25: no need to pass to DART for now
+		RadiumOne.getDARTKeyValue() +
 		AdConfig.DART.getImpressionCount(slotname) +
 		AdConfig.DART.getPartnerKeywords() +
 		AdConfig.DART.getCategories() +
