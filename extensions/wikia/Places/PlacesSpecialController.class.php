@@ -30,7 +30,6 @@ class PlacesSpecialController extends WikiaSpecialPageController {
 		} else {
 			$this->allPlaces();
 		}
-
 		$this->setVal( 'center', $this->center );
 		$this->setVal( 'markers', $this->markers );
 	}
@@ -49,8 +48,24 @@ class PlacesSpecialController extends WikiaSpecialPageController {
 		foreach( $aMarkers as $oMarker ){
 			$aMapParams = $oMarker->getForMap();
 			if ( !empty( $aMapParams ) ){
-				$this->markers[] = $oMarker->getForMap();
+				$tmpArray = array();
+				$tmpArray = $oMarker->getForMap();
+				$tmpArray['tooltip'] = $this->sendRequest(
+					'PlacesSpecialController',
+					'getMapSnippet',
+					array(
+					    'data' => $tmpArray
+					)
+				)->toString();
+				$this->markers[] = $tmpArray;
 			}
 		}
+	}
+
+	public function getMapSnippet(){
+		$data = $this->getVal( 'data' );
+		$this->setVal( 'imgUrl', isset( $data['imageUrl'] ) ? $data['imageUrl'] : '' );
+		$this->setVal( 'title', isset( $data['label'] ) ? $data['label'] : '' );
+		$this->setVal( 'url', isset( $data['articleUrl'] ) ? $data['articleUrl'] : '' );
 	}
 }
