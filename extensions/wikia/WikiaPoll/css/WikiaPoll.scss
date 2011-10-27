@@ -86,7 +86,7 @@ $color-poll-odd: mix($color-text, $color-page, 10%);
 		}
 	}
 	// vote button + number of votes
-	details {
+	.details {
 		@include clearfix;
 		line-height: 40px;
 		padding: 0 20px;
