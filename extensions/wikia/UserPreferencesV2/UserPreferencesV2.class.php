@@ -65,6 +65,7 @@ class UserPreferencesV2 {
 		unset($defaultPreferences['math']);
 		$defaultPreferences['unsubscribed']['section'] = 'emailv2/emailv2';
 		$defaultPreferences['emailaddress']['section'] = 'emailv2/addressv2';
+		$defaultPreferences['emailaddress']['label-message'] = 'preferences-v2-my-email-address';
 		$defaultPreferences['emailauthentication']['section'] = 'emailv2/addressv2';
 		$defaultPreferences['disablemail']['section'] = 'emailv2/emailv2';
 		$defaultPreferences['ccmeonemails']['type'] = 'toggle';
@@ -84,6 +85,16 @@ class UserPreferencesV2 {
 		$defaultPreferences['watchdeletion']['label-message'] = 'preferences-v2-watchdeletion';
 		$defaultPreferences['watchcreations']['section'] = 'emailv2/followed-pages-iv2';
 		$defaultPreferences['watchcreations']['label-message'] = 'preferences-v2-watchcreations';
+		// Move a bunch of settings down to reorder sections
+		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'unsubscribed');
+		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'disablemail');
+		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'ccmeonemails');
+		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'enotifwatchlistpages');
+		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'enotifusertalkpages');
+		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'enotifminoredits');
+		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'enotifrevealaddr');
+		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'htmlemails');
+		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'marketingallowed');
 
 		//Tab 3: Editing
 		$defaultPreferences['watchlistdays']['help'] = '';

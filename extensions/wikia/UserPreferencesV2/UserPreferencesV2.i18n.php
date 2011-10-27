@@ -34,4 +34,5 @@ $messages['en'] = array(
 	'preferences-v2-watchcreations' => 'Create',
 	'preferences-v2-showads-enable' => 'Show all ads',
 	'preferences-v2-showads-disable' => 'Don\'t show all ads',
+	'preferences-v2-my-email-address' => 'My email address:',
 );
