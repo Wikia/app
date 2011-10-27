@@ -11,7 +11,6 @@ class PlacesSpecialController extends WikiaSpecialPageController {
 	public $markers = array();
 
 	public function __construct() {
-		wfLoadExtensionMessages('Places');
 		parent::__construct('Places');
 	}
 
