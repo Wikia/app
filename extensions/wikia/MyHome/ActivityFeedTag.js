@@ -25,14 +25,10 @@ ActivityFeedTag.loadVideoPlayer = function(ev) {
 	ActivityFeedTag.videoPlayerLock = true;
 
 	ActivityFeedTag.ajax('getVideoPlayer', {'title': url}, function(res) {
-		// replace thumbnail with video preview
 		if (res.html) {
-			// open modal
-			desc = desc.replace(/_/g, ' ');
+			console.log(res);
 			$.loadModalJS(function() {
-				var html = '<div id="myhome-video-player" title="' + desc  +'">' + res.html + '</div>';
-				$("#positioned_elements").append(html);
-				$('#myhome-video-player').makeModal({
+				$.showModal(res.title, res.html, {
 					'id': 'myhome-video-player-popup',
 					'width': res.width
 				});
