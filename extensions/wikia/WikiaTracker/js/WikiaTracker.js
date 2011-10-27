@@ -9,9 +9,9 @@ var WikiaTracker = {
 		'Wikia':         'UA-288915-1',
 		'Wikia.main':    'UA-288915-1',
 		'Wikia.hub':     'UA-288915-2',
-		'Wikia.pagetime':'UA-288915-42',		
+		'Wikia.pagetime':'UA-288915-42',
 		'Wikia.varnish': 'UA-288915-48',
-		
+
 		'ab.main':'UA-19473076-35',
 		'liftium.beacon':'UA-17475676-5',
 		'liftium.beacon2':'UA-17475676-14',
@@ -36,8 +36,6 @@ var WikiaTracker = {
 		'UA-19473076-35':100 // ab.main
 	},
 	debugLevel:0,
-	_beacon_total_sent:false,
-	_beacon_unavailable_sent:false,
 	_in_group_cache:{}
 	//_in_ab_cache:[] dont declare, leave undefined FIXME make it null and refactor accordingly
 	//_beacon_hash_cache:0 dont declare, leave undefined FIXME make it null and refactor
@@ -88,7 +86,7 @@ WikiaTracker.track = function(page, profile) {
 	if (typeof this.profileAliases[profile] != 'undefined') {
 		profile = this.profileAliases[profile];
 	}
-	
+
 	var sample = this.defaultRate;
 	if (typeof this.profileRates[profile] != 'undefined') {
 		sample = this.profileRates[profile];
@@ -174,40 +172,20 @@ WikiaTracker.inGroup = function(group) {
 	} else {
 		var beacon_hash = null;
 
-		// track beacon total / baseline
-		if (!this._beacon_total_sent) {
-			this._track('/wikiatracker/beacon_total', 'UA-2871474-3', 1);
-			this._beacon_total_sent = true;
-		}
-
 		if (typeof this._beacon_hash_cache != 'undefined') {
 			beacon_hash = this._beacon_hash_cache;
 			this.debug('beacon_hash from cache', 7)
 		} else {
-
-		if (typeof window.beacon_id == 'undefined') {
-			this.debug('beacon_id unavailable (yet?), bailing out', 3);
-
-			// track if beacon is unavailable at this point, would be nasty
-			if (!this._beacon_unavailable_sent) {
-				this._track('/wikiatracker/beacon_unavailable', 'UA-2871474-3', 1);
-				this._beacon_unavailable_sent = true;
+			if (typeof window.beacon_id == 'undefined') {
+				this.debug('beacon_id unavailable (yet?), bailing out', 3);
+				return false;
 			}
 
-			return false;
-		}
+			this.debug('beacon_id: ' + window.beacon_id, 5);
+			beacon_hash = this._simpleHash(window.beacon_id, 100);
+			this.debug('beacon_hash: ' + beacon_hash, 5);
 
-		this.debug('beacon_id: ' + window.beacon_id, 5);
-		beacon_hash = this._simpleHash(window.beacon_id, 100);
-		this.debug('beacon_hash: ' + beacon_hash, 5);
-
-			this._beacon_hash_cache = beacon_hash;		
-
-			// track if beacon becomes available later, tweak call timing?
-			if (this._beacon_unavailable_sent) {
-				this._track('/wikiatracker/beacon_available', 'UA-2871474-3', 1);
-				this._beacon_unavailable_sent = false;
-			}
+			this._beacon_hash_cache = beacon_hash;
 		}
 
 		in_group = this._inGroup(beacon_hash, group);
@@ -245,7 +223,7 @@ WikiaTracker._abData = function() {
 		this._in_ab_cache = in_ab;
 	}
 
-	return in_ab;	
+	return in_ab;
 };
 
 WikiaTracker.AB = function(page) {
