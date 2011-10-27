@@ -74,6 +74,8 @@ $messages['en'] = array(
 	'protectedpagewarning-notice' => "'''Warning:''' This page has been locked so that only users with certain privileges can edit it. [More info]",
 	'titleprotectedwarning-notice' => "'''Warning:''' This page has been locked so that only some users can create it. [More info]",
 	'recreate-moveddeleted-warn-notice' => "'''Note:''' You are recreating a page that was previously deleted. [More info]",
+	'restore-edits-notice' => "Welcome back! We've restored some changes you had not published. <a class='notice-action restoreeditlink'>Delete my changes and start a new edit</a>",
+	'restore-edits-diff-notice' => "Welcome back! We've restored some changes you had not published. However, the page has been updated since then. Would you like to: <a class='notice-action restoreeditlink'>Delete my changes and start with the latest text</a> or <a class='notice-action difflink'>View a comparison of changes with the latest page</a>",
 
 	// "editing" preferences sections
 	'prefs-general' => 'General',
@@ -103,6 +105,8 @@ $messages['qqq'] = array(
 	'wikia-editor-modules-license-text' => 'Needs plural support.
 The first parameter is a placeholder for the license logo/image. The third parameter is the license name.',
 	'editpagelayout-edit-title' => 'This is a button label (tooltip). Should be translated as a verb phrase',
+	'restore-edits-notice' => 'Please preserve the HTML markup as it\'s used to bind functionality via JS',
+	'restore-edits-diff-notice' => 'Please preserve the HTML markup as it\'s used to bind functionality via JS'
 );
 
 /** Azerbaijani (Azərbaycanca)

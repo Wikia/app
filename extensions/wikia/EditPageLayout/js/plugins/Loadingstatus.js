@@ -84,6 +84,7 @@
 				this.el.show();
 			} else {
 				this.el.hide();
+				this.editor.fire('afterLoadingStatus');
 			}
 		}
 

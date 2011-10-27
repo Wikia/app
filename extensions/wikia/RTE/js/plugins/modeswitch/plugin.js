@@ -40,7 +40,7 @@ CKEDITOR.plugins.add('rte-modeswitch',
 		var editor = ev.editor,
 			content = editor.getData();
 
-				RTE.log('switching from "' + editor.mode +'" mode');
+		RTE.log('switching from "' + editor.mode +'" mode');
 
 		// BugId:1852 - error handling
 		var onError = function() {

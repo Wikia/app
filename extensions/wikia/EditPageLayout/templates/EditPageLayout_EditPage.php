@@ -63,7 +63,7 @@
 <?php
 	foreach ($notices as $hash => $notice) {
 ?>
-									<li data-hash="<?= $hash ?>"><?= $notice ?></li>
+									<li class="notice-item" data-hash="<?= $hash ?>"><?= $notice ?></li>
 <?php
 	}
 ?>
