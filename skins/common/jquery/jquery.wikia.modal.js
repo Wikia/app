@@ -323,7 +323,7 @@ $.fn.extend({
 		return $(document.body).hasClass('modalShown');
 	},
 	
-	getModal: function(){
+	getModalWrapper: function(){
 		return $('.modalWrapper');
 	}
 });
