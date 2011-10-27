@@ -26,7 +26,6 @@ ActivityFeedTag.loadVideoPlayer = function(ev) {
 
 	ActivityFeedTag.ajax('getVideoPlayer', {'title': url}, function(res) {
 		if (res.html) {
-			console.log(res);
 			$.loadModalJS(function() {
 				$.showModal(res.title, res.html, {
 					'id': 'myhome-video-player-popup',
