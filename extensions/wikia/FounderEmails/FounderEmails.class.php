@@ -209,7 +209,13 @@ class FounderEmails {
 
 		if ( !FounderEmailsEvent::isAnswersWiki() && in_array($wgUser->getId(), FounderEmails::getInstance()->getWikiAdminIds()) ) {
 			
-			$section = (empty($wgEnableUserPreferencesV2Ext)) ? 'personal/wikiemail' : 'emailv2/wikiemail';
+			if ( empty($wgEnableUserPreferencesV2Ext) ) {
+				$section = 'personal/wikiemail';
+				$prefVersion = '';
+			} else {
+				$section = 'emailv2/wikiemail';
+				$prefVersion = '-v2';
+			}
 			
 			// If we are in digest mode, grey out the individual email options
 			$disableEmailPrefs = $wgUser->getOption("founderemails-complete-digest-$wgCityId");
@@ -225,30 +231,30 @@ class FounderEmails {
 			$defaultPreferences["adoptionmails-label-$wgCityId"] = array(
 				'type' => 'info',
 				'label' => '',
-				'help' => wfMsg('wikiadoption-pref-label', $wgSitename),
+				'help' => wfMsg('wikiadoption-pref-label'.$prefVersion, $wgSitename),
 				'section' => $section,
 			);
 			$defaultPreferences["founderemails-joins-$wgCityId"] = array(
 				'type' => 'toggle',
-				'label-message' => array('founderemails-pref-joins', $wgSitename),
+				'label-message' => array('founderemails-pref-joins'.$prefVersion, $wgSitename),
 				'section' => $section,
 				'disabled' => $disableEmailPrefs,
 			);
 			$defaultPreferences["founderemails-edits-$wgCityId"] = array(
 				'type' => 'toggle',
-				'label-message' => array('founderemails-pref-edits', $wgSitename),
+				'label-message' => array('founderemails-pref-edits'.$prefVersion, $wgSitename),
 				'section' => $section,
 				'disabled' => $disableEmailPrefs,
 			);
 			$defaultPreferences["founderemails-views-digest-$wgCityId"] = array(
 				'type' => 'toggle',
-				'label-message' => array('founderemails-pref-views-digest', $wgSitename),
+				'label-message' => array('founderemails-pref-views-digest'.$prefVersion, $wgSitename),
 				'section' => $section,
 				'disabled' => $disableEmailPrefs,
 			);
 			$defaultPreferences["founderemails-complete-digest-$wgCityId"] = array(
 				'type' => 'toggle',
-				'label-message' => array('founderemails-pref-complete-digest', $wgSitename),
+				'label-message' => array('founderemails-pref-complete-digest'.$prefVersion, $wgSitename),
 				'section' => $section,
 			);
 		}

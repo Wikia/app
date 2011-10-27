@@ -347,6 +347,11 @@ You can always head over to wiki activity to view all of the exiting changes bei
 	'founderemails-pref-edits' => 'Email me when someone edits $1',
 	'founderemails-pref-views-digest' => 'Send me a daily email telling me how many times $1 was viewed',
 	'founderemails-pref-complete-digest' => 'Send me a daily digest of activity on $1',
+// founder emails preferences v2
+	'founderemails-pref-joins-v2' => '...someone joins',
+	'founderemails-pref-edits-v2' => '...someone edits',
+	'founderemails-pref-views-digest-v2' => '...a daily summary of total views is ready',
+	'founderemails-pref-complete-digest-v2' => '...a Daily Digest of joins, edits, and views is ready',
 );
 
 /** Message documentation (Message documentation)
