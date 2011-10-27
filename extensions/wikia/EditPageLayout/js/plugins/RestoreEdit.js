@@ -73,7 +73,7 @@
 		
 		closeModal: function(){
 			if($().isModalShown()){
-				$().getModal().closeModal();
+				$().getModalWrapper().closeModal();
 			}
 		}
 	});
