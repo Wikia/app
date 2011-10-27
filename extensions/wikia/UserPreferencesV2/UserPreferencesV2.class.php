@@ -63,20 +63,10 @@ class UserPreferencesV2 {
 		unset($defaultPreferences['imagesize']);
 		unset($defaultPreferences['thumbsize']);
 		unset($defaultPreferences['math']);
-		$defaultPreferences['unsubscribed']['section'] = 'emailv2/emailv2';
 		$defaultPreferences['emailaddress']['section'] = 'emailv2/addressv2';
 		$defaultPreferences['emailaddress']['label-message'] = 'preferences-v2-my-email-address';
 		$defaultPreferences['emailauthentication']['section'] = 'emailv2/addressv2';
-		$defaultPreferences['disablemail']['section'] = 'emailv2/emailv2';
-		$defaultPreferences['ccmeonemails']['type'] = 'toggle';
-		$defaultPreferences['ccmeonemails']['section'] = 'emailv2/emailv2';
-		$defaultPreferences['ccmeonemails']['label-message'] = 'tog-ccmeonemails';
-		$defaultPreferences['enotifwatchlistpages']['section'] = 'emailv2/emailv2';
-		$defaultPreferences['enotifusertalkpages']['section'] = 'emailv2/emailv2';
-		$defaultPreferences['enotifminoredits']['section'] = 'emailv2/emailv2';
-		$defaultPreferences['enotifrevealaddr']['section'] = 'emailv2/emailv2';
-		$defaultPreferences['htmlemails']['section'] = 'emailv2/emailv2';
-		$defaultPreferences['marketingallowed']['section'] = 'emailv2/emailv2';
+		
 		$defaultPreferences['watchdefault']['section'] = 'emailv2/followed-pages-iv2';
 		$defaultPreferences['watchdefault']['label-message'] = 'preferences-v2-watchdefault';
 		$defaultPreferences['watchmoves']['section'] = 'emailv2/followed-pages-iv2';
@@ -85,17 +75,36 @@ class UserPreferencesV2 {
 		$defaultPreferences['watchdeletion']['label-message'] = 'preferences-v2-watchdeletion';
 		$defaultPreferences['watchcreations']['section'] = 'emailv2/followed-pages-iv2';
 		$defaultPreferences['watchcreations']['label-message'] = 'preferences-v2-watchcreations';
-		// Move a bunch of settings down to reorder sections
-		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'unsubscribed');
-		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'disablemail');
-		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'ccmeonemails');
+		
+		$defaultPreferences['enotifwatchlistpages']['section'] = 'emailv2/email-me-v2';
+		$defaultPreferences['enotifwatchlistpages']['label-message'] = 'tog-enotifwatchlistpages-v2';
 		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'enotifwatchlistpages');
-		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'enotifusertalkpages');
+		$defaultPreferences['enotifminoredits']['section'] = 'emailv2/email-me-v2';
+		$defaultPreferences['enotifminoredits']['label-message'] = 'tog-enotifminoredits-v2';
 		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'enotifminoredits');
-		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'enotifrevealaddr');
-		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'htmlemails');
+		$defaultPreferences['enotifusertalkpages']['section'] = 'emailv2/email-me-v2';
+		$defaultPreferences['enotifusertalkpages']['label-message'] = 'tog-enotifusertalkpages-v2';
+		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'enotifusertalkpages');
+		$defaultPreferences['marketingallowed']['section'] = 'emailv2/email-me-v2';
+		$defaultPreferences['marketingallowed']['label-message'] = 'tog-marketingallowed-v2';
 		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'marketingallowed');
 
+		$defaultPreferences['htmlemails']['section'] = 'emailv2/email-advanced-v2';
+		$defaultPreferences['htmlemails']['label-message'] = 'tog-htmlemails-v2';
+		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'htmlemails');
+		$defaultPreferences['disablemail']['section'] = 'emailv2/email-advanced-v2';
+		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'disablemail');
+		$defaultPreferences['enotifrevealaddr']['section'] = 'emailv2/email-advanced-v2';
+		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'enotifrevealaddr');
+		if ( array_key_exists('watchlistdigestclear', $defaultPreferences) ) {
+			$defaultPreferences['watchlistdigestclear']['section'] = 'emailv2/email-advanced-v2';
+			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'watchlistdigestclear');
+		}
+
+		$defaultPreferences['unsubscribed']['section'] = 'emailv2/email-unsubscribe';
+		$defaultPreferences['unsubscribed']['label-message'] = 'unsubscribe-preferences-toggle-v2';
+		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'unsubscribed');
+		
 		//Tab 3: Editing
 		$defaultPreferences['watchlistdays']['help'] = '';
 		$defaultPreferences['wllimit']['help'] = '';
@@ -146,8 +155,11 @@ class UserPreferencesV2 {
 		$defaultPreferences['watchlisthideliu']['section'] = 'under-the-hood/followed-pagesv2';
 		$defaultPreferences['watchlisttoken']['section'] = 'under-the-hood/followed-pagesv2';
 		$defaultPreferences['searchlimit']['section'] = 'under-the-hood/searchv2';
+		$defaultPreferences['searchlimit']['label-message'] = 'resultsperpage-v2';
 		$defaultPreferences['contextlines']['section'] = 'under-the-hood/searchv2';
+		$defaultPreferences['contextlines']['label-message'] = 'contextlines-v2';
 		$defaultPreferences['contextchars']['section'] = 'under-the-hood/searchv2';
+		$defaultPreferences['contextchars']['label-message'] = 'contextchars-v2';
 		$defaultPreferences['disablesuggest']['section'] = 'under-the-hood/searchv2';
 		$defaultPreferences['searcheverything']['section'] = 'under-the-hood/searchv2';
 		$defaultPreferences['searchnamespaces']['section'] = 'under-the-hood/searchv2';
