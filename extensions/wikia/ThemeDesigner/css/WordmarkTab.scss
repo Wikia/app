@@ -2,6 +2,7 @@
 @import "../../../../skins/oasis/css/mixins/opacity";
 
 $previewheight: 65px;
+$previewwidth: 250px;
 
 .WordmarkTab {
 	#or {
@@ -31,7 +32,7 @@ $previewheight: 65px;
 			height: $previewheight;
 			margin-top: 10px;
 			position: relative;
-			width: 250px;
+			width: $previewwidth;
 			.wordmark {
 				cursor: pointer;
 				&.selected {
@@ -72,19 +73,37 @@ $previewheight: 65px;
 	.favicon {
 		padding: 0 15px;
 		.preview {
+			color: #CCC;
+			border: 1px solid #eaeaea;
+			display: block;
+			float: left;
 			margin-top: 10px;
+			height: 16px;
+			overflow: visible; 
+			width: 16px;
 			img {
 				float: left;
 				margin-right: 5px; 
+			}
+			span {
+				display: block;
+				margin-left: 21px;
 			}
 			a {
 				background: #FFF;
 				color: #666;
 				display: none;	
 			}
-			&:hover {
-				a {
-					display: inline;
+			&.active{
+				border: 0;
+				width: $previewwidth;
+				span{
+					display: none;
+				}
+				&:hover {
+					a {
+						display: block;
+					}
 				}
 			}
 		}
