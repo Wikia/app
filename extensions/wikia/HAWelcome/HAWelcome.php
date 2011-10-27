@@ -322,7 +322,10 @@ class HAWelcomeJob extends Job {
 
 						// if there are no active staff members, fall back to default staffers per language
 						if ( empty( $user ) ) {
-							$user = Wikia::staffForLang( $wgLanguageCode );
+							$staffUser = Wikia::staffForLang( $wgLanguageCode );
+							if ($staffUser instanceof User) {
+								$user = $staffUser->getId();
+							}
 						}
 
 						$this->mSysop = User::newFromId( $user );
