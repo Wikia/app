@@ -60,10 +60,10 @@ var ThemeDesigner = {
 	themeTabInit: function() {
 
 		var slideBy = ThemeDesigner.slideByDefaultWidth;
-		var slideMax = -Math.floor($("#ThemeTab .slider ul li").length / ThemeDesigner.slideByItems) * ThemeDesigner.slideByDefaultWidth;
+		var slideMax = -Math.floor($("#ThemeTab").find(".slider").find("ul").find("li").length / ThemeDesigner.slideByItems) * ThemeDesigner.slideByDefaultWidth;
 
 		// click handler for next and previous arrows in theme slider
-		$("#ThemeTab .previous, #ThemeTab .next").click(function(event) {
+		$("#ThemeTab.previous, #ThemeTab .next").click(function(event) {
 			event.preventDefault();
 			if (!ThemeDesigner.isSliding) {
 				var list = $("#ThemeTab .slider ul");
@@ -169,14 +169,14 @@ var ThemeDesigner = {
 		});
 
 		//graphic wordmark clicking
-		$("#WordmarkTab .graphic .preview .wordmark").click(function() {
+		$("#WordmarkTab").find(".graphic").find(".preview").find(".wordmark").click(function() {
 			ThemeDesigner.set("wordmark-type", "graphic");
 
 			ThemeDesigner.track('wordmark/choose');
 		});
 
 		//grapic wordmark button
-		$("#WordmarkTab .graphic .preview a").click(function(event) {
+		$("#WordmarkTab").find(".graphic").find(".preview").find("a").click(function(event) {
 			event.preventDefault();
 			ThemeDesigner.set("wordmark-type", "text");
 			ThemeDesigner.set("wordmark-image-url", wgBlankImgUrl);
@@ -187,16 +187,15 @@ var ThemeDesigner = {
 			ThemeDesigner.track('wordmark/nowordmark');
 		});
                 
-                //remove favicon link
-		$("#WordmarkTab .favicon .preview a").click(function(event) {
+        //remove favicon link
+		$("#WordmarkTab").find(".favicon").find(".preview").find("a").click(function(event) {
 			event.preventDefault();
-			//ThemeDesigner.set("favicon-image-url", "");
-			//ThemeDesigner.set("favicon-type", "default");
+			ThemeDesigner.set("favicon-image-url", wgBlankImgUrl);
                         
 			// Can't use js to clear file input value so reseting form
 			$('#FaviconUploadForm')[0].reset();
 
-			ThemeDesigner.track('wordmark/nowordmark');
+			ThemeDesigner.track('favicon/faviconwordmark');
 		});
 	},
 
@@ -526,6 +525,7 @@ var ThemeDesigner = {
 		event.preventDefault();
 		event.stopPropagation(); // don't fire "previous/click" tracking event
 		ThemeDesigner.settings = ThemeDesigner.history[$(this).index()]['settings'];
+		console.log(ThemeDesigner.settings)
 		ThemeDesigner.applySettings(true, true);
 
 		ThemeDesigner.track('previous/choose');
@@ -649,8 +649,6 @@ var ThemeDesigner = {
 		// wordmark image
 		$("#WordmarkTab .graphic .wordmark").attr("src", ThemeDesigner.settings["wordmark-image-url"]);
 
-		// favicon image
-		$("#WordmarkTab .favicon .preview img").attr("src", ThemeDesigner.settings["favicon-image-url"]);
 
 		if (ThemeDesigner.settings["wordmark-type"] == "graphic") {
 			$("#WordmarkTab").find(".graphic")
@@ -662,6 +660,15 @@ var ThemeDesigner = {
                                 .find(".preview").removeClass("active")
 				.find(".wordmark").removeClass("selected");
 			ThemeDesigner.wordmarkShield();
+		}
+
+		// favicon image
+		$("#WordmarkTab").find(".favicon").find(".preview").find("img").attr("src", ThemeDesigner.settings["favicon-image-url"]);
+
+		if(ThemeDesigner.settings["favicon-image-url"] == wgBlankImgUrl){
+			$("#WordmarkTab").find(".favicon").find(".preview").removeClass("active")
+		} else {
+			$("#WordmarkTab").find(".favicon").find(".preview").addClass("active")
 		}
 
 		if(reloadCSS) {

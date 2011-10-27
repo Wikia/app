@@ -71,6 +71,7 @@
 		</form>
 		
 		<div class="preview">
+			<span>Preview</span>
 			<img src="<?= $faviconUrl ?>">
 			<a href="#"><?= wfMsg('themedesigner-dont-use-a-graphic') ?></a>
 		</div>
