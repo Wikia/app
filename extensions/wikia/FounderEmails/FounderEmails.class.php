@@ -204,10 +204,12 @@ class FounderEmails {
 	}
 
 	public static function onGetPreferences($user, &$defaultPreferences) {
-		global $wgUser, $wgCityId, $wgSitename;
+		global $wgUser, $wgCityId, $wgSitename, $wgEnableUserPreferencesV2Ext;
 		wfProfileIn( __METHOD__ );
 
 		if ( !FounderEmailsEvent::isAnswersWiki() && in_array($wgUser->getId(), FounderEmails::getInstance()->getWikiAdminIds()) ) {
+			
+			$section = (empty($wgEnableUserPreferencesV2Ext)) ? 'personal/wikiemail' : 'emailv2/wikiemail';
 			
 			// If we are in digest mode, grey out the individual email options
 			$disableEmailPrefs = $wgUser->getOption("founderemails-complete-digest-$wgCityId");
@@ -224,30 +226,30 @@ class FounderEmails {
 				'type' => 'info',
 				'label' => '',
 				'help' => wfMsg('wikiadoption-pref-label', $wgSitename),
-				'section' => 'personal/wikiemail',
+				'section' => $section,
 			);
 			$defaultPreferences["founderemails-joins-$wgCityId"] = array(
 				'type' => 'toggle',
 				'label-message' => array('founderemails-pref-joins', $wgSitename),
-				'section' => 'personal/wikiemail',
+				'section' => $section,
 				'disabled' => $disableEmailPrefs,
 			);
 			$defaultPreferences["founderemails-edits-$wgCityId"] = array(
 				'type' => 'toggle',
 				'label-message' => array('founderemails-pref-edits', $wgSitename),
-				'section' => 'personal/wikiemail',
+				'section' => $section,
 				'disabled' => $disableEmailPrefs,
 			);
 			$defaultPreferences["founderemails-views-digest-$wgCityId"] = array(
 				'type' => 'toggle',
 				'label-message' => array('founderemails-pref-views-digest', $wgSitename),
-				'section' => 'personal/wikiemail',
+				'section' => $section,
 				'disabled' => $disableEmailPrefs,
 			);
 			$defaultPreferences["founderemails-complete-digest-$wgCityId"] = array(
 				'type' => 'toggle',
 				'label-message' => array('founderemails-pref-complete-digest', $wgSitename),
-				'section' => 'personal/wikiemail',
+				'section' => $section,
 			);
 		}
 
