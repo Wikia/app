@@ -130,7 +130,7 @@ class HAWelcomeJob extends Job {
 					$this->mSysop = $this->getLastSysop();
 					$gEG = $this->mSysop->getEffectiveGroups();
 					$isSysop = in_array('sysop', $gEG);
-					$isStaff = in_array('staff', $gEG);
+					$isStaff = in_array('staff', $gEG) || in_array( 'helper', $gEG );
 					unset($gEG);
 					$tmpTitle     = $wgTitle;
 					$sysopPage    = $this->mSysop->getUserPage()->getTalkPage();
@@ -687,7 +687,11 @@ class HAWelcomeTask extends BatchTask {
 	 * @return boolean - status of operation
 	 */
 	public function execute( $params = null ) {
-		global $IP, $wgWikiaLocalSettingsPath, $wgWikiaAdminSettingsPath;
+		global $IP, $wgWikiaLocalSettingsPath, $wgWikiaAdminSettingsPath, $wgMaxShellTime, $wgMaxShellMemory;
+
+		// temporary fix for wfShellExec
+		$wgMaxShellTime = 0;
+		$wgMaxShellMemory = 0;
 
 		$this->mTaskID = $params->task_id;
 		$this->mParams = unserialize( $params->task_arguments );
