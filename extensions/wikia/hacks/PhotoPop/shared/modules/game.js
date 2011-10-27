@@ -131,7 +131,7 @@ define.call(exports, function(){
 		},
 		
 		modalOpened: function() {
-			this.pause();	
+			this.handlePause(true, 'modalOpened');	
 		},
 		
 		prepareTiles: function() {
@@ -141,7 +141,7 @@ define.call(exports, function(){
 			
 			for(var i = 0; i < tdsLength; i++) {
 				tds[i].onclick = function() {
-					self.resume();
+					self.handlePause(false);
 					self.fire('tileClicked', this)
 				}
 			}
@@ -152,19 +152,13 @@ define.call(exports, function(){
 			document.getElementById('totalPoints').innerHTML = '0';
 
 			document.getElementById('pauseButton').onclick = function() {
-				var pause = self._pause;
-				self.fire('pauseButtonClicked', pause);
-				if(pause) {
-					self.resume();
-				} else {
-					self.pause();
-				}
+				self.handlePause(!self._pause, 'pauseButton');
 			};
 			document.getElementById('muteButton').onclick = function() {
 				self.fire('muteButtonClicked', this);
 			};
 			document.getElementById('home').onclick = function() {
-				self.pause();
+				self.handlePause(true, 'goHomeButton');
 				self.fire('goHome');
 			};
 		},
@@ -181,7 +175,7 @@ define.call(exports, function(){
 			var self = this,
 			answerList = document.getElementById('answerList').getElementsByTagName('li');
 			document.getElementById('answerButton').onclick = function() {
-				self.resume();
+				self.handlePause(false);
 				self.fire('answerDrawerButtonClicked');				
 			};
 			
@@ -190,7 +184,7 @@ define.call(exports, function(){
 					if(!this.clicked) {
 						if(this.id != self._correctAnswer) {
 							self._roundPoints.deductPoints(self._wrongAnswerPointDeduction);
-							self.resume();
+							self.handlePause(false);
 							self.fire('wrongAnswerClicked', {li: this, percent: self.getPercent()});
 						} else {
 							self._roundIsOver = true;
@@ -229,35 +223,34 @@ define.call(exports, function(){
 		prepareFinishScreen: function() {
 			var self = this;
 			document.getElementById('goHome').onclick = function() {
-				self.pause();
+				self.handlePause(true);
 				self.fire('goHome', true);
 			};
 			
 			document.getElementById('playAgain').onclick = function() {
-				self.pause();
+				self.handlePause(true);
 				self.fire('playAgain');
 			};
 			
 			document.getElementById('goToHighScores').onclick = function() {
-				self.pause();
+				self.handlePause(true);
 				self.fire('goToHighScores');
 			};
 			
 			document.getElementById('playAgain').style.visibility = (this._id == 'tutorial') ? 'hidden' : 'visible';
 		},
 		
-		pause: function() {
-			this._pause = true;
-			this._timer = null;
-			this.fire('paused');
-		},
-		
-		resume: function() {
-			if(this._pause) {
-				this._pause = false;
+		handlePause: function(state, caller) {
+			state = state || false;
+			this._pause = state;
+			console.log(state);
+			if(state) {
+				this._timer = null;
+			} else {
 				this.timer();
-				this.fire('resumed');
 			}
+			
+			this.fire('pause', {pause: state, caller: caller});
 		},
 		
 		timer: function() {
