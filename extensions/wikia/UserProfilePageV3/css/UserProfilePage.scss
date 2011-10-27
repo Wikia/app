@@ -62,6 +62,7 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 	clear: both;
 	padding: 0 15px;
 	position: relative;
+	min-height: 150px;
 	.masthead-avatar {
 		left: 15px;
 		position: absolute;
