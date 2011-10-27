@@ -47,7 +47,7 @@ var WikiaPoll = {
 
 		var answers = poll.find('ul'),
 			pollId = poll.attr('data-id'),
-			voteButton = poll.find('details > input');
+			voteButton = poll.find('.details > input');
 
 		// check voting status
 		this.hasVoted(pollId, function() {
