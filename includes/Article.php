@@ -3064,11 +3064,17 @@ class Article {
 		$this->mTitle->resetArticleID( 0 );
 
 		# Log the deletion, if the page was suppressed, log it at Oversight instead
+		
+		/** Wikia change begin - @author: Andrzej 'nAndy' Lukaszewski */
 		$logtype = $suppress ? 'suppress' : 'delete';
 		$log = new LogPage( $logtype );
-
-		# Make sure logging got through
-		$log->addEntry( 'delete', $this->mTitle, $reason, array() );
+		if( wfRunHooks('ArticleDoDeleteArticleBeforeLogEntry', array(&$this, &$log, &$logtype, $this->mTitle, $reason)) ) {
+		//hook takes care of logging
+		} else {
+			# Make sure logging got through
+			$log->addEntry( 'delete', $this->mTitle, $reason, array() );
+		}
+		/* Wikia change end */
 
 		$dbw->commit();
 
