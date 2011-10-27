@@ -36,8 +36,7 @@ class PlacesHookHandler {
 		return true;
 	}
 
-	static public function onArticleSaveComplete(&$article, &$user, $text, $summary,
- $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId, &$redirect) {
+	static public function onArticleSaveComplete(&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
  		wfProfileIn(__METHOD__);
 
 		$app = F::app();
