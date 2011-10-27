@@ -356,7 +356,13 @@ class AutomaticWikiAdoptionHelper {
 		global $wgSitename, $wgCityId, $wgEnableUserPreferencesV2Ext;
 		// Adoption preference is for wiki sysop and bureaucrat groups
 		if (in_array('sysop', $user->getGroups()) || in_array('bureaucrat', $user->getGroups())) {
-			$section = (empty($wgEnableUserPreferencesV2Ext)) ? 'personal/wikiemail' : 'emailv2/wikiemail';
+			if ( empty($wgEnableUserPreferencesV2Ext) ) {
+				$section = 'personal/wikiemail';
+				$prefVersion = '';
+			} else {
+				$section = 'emailv2/wikiemail';
+				$prefVersion = '-v2';
+			}
 			
 			$defaultPreferences["adoptionmails-label-$wgCityId"] = array(
 				'type' => 'info',
@@ -366,7 +372,7 @@ class AutomaticWikiAdoptionHelper {
 			);
 			$defaultPreferences["adoptionmails-$wgCityId"] = array(
 				'type' => 'toggle',
-				'label-message' => array('tog-adoptionmails', $wgSitename),
+				'label-message' => array('tog-adoptionmails'.$prefVersion, $wgSitename),
 				'section' => $section,
 			);
 		}
