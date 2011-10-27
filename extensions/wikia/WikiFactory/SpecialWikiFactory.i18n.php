@@ -134,6 +134,10 @@ $messages['en'] = array(
 
 	# new wikis graph metrics
 	'newwikisgraph' => 'New Wikis Graph',
+	'newwikisgraph-report-title' => 'wiki creations by day',
+	'newwikisgraph-wikis-created' => "wikis created",
+	'newwikisgraph-param-all' => 'All',
+	'newwikisgraph-param-other' => 'Other',
 );
 
 /** Message documentation (Message documentation)
