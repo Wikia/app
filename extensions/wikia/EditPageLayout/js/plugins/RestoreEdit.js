@@ -12,6 +12,8 @@
 			var self = this,
 				executed = 0;
 			
+			this.editor = editor;
+			
 			editor.bind('afterLoadingStatus', function(){
 				if(executed){
 					return;
@@ -74,6 +76,7 @@
 		closeModal: function(){
 			if($().isModalShown()){
 				$().getModalWrapper().closeModal();
+				this.editor.plugins.noticearea.dismissClicked(null, true);
 			}
 		}
 	});
