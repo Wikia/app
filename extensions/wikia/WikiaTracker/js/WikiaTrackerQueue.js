@@ -3,12 +3,18 @@ var WikiaTrackerQueue = {
 
 	// check beacon_id every second
 	POLL_INTERVAL: 1000,
+	POLL_LIMIT: 30,
 	pollIntervalId: false,
+	pollCounter: 0,
 
 	trackFn: false,
 
+	log: function(msg) {
+		$().log(msg, 'wtq');
+	},
+
 	init: function() {
-		$().log('init', 'wtq');
+		this.log('init');
 
 		// set tracking function - queued items will be passed there
 		this.trackFn = $.proxy(WikiaTracker.track, WikiaTracker);
@@ -20,13 +26,21 @@ var WikiaTrackerQueue = {
 
 	pollBeaconId: function() {
 		if (typeof window.beacon_id != 'undefined') {
-			clearInterval(this.pollIntervalId);
+			this.log('beacon_id has arrived');
 
-			$().log('beacon_id has arrived', 'wtq');
+			clearInterval(this.pollIntervalId);
 			this.moveQueue();
 		}
 		else {
-			$().log('beacon_id is not here yet...', 'wtq');
+			this.log('beacon_id is not here yet...');
+		}
+
+		// limit number of poll tries to POLL_LIMIT
+		this.pollCounter++;
+		if (this.pollCounter >= this.POLL_LIMIT) {
+			this.log('limit of ' + this.POLL_LIMIT + ' tries reached');
+
+			clearInterval(this.pollIntervalId);
 		}
 	},
 
