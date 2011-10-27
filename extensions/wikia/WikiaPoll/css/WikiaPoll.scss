@@ -115,7 +115,7 @@ $color-poll-odd: mix($color-text, $color-page, 10%);
 		}
 		// hide poll content
 		ul,
-		details {
+		.details {
 			visibility: hidden;
 		}
 	}
