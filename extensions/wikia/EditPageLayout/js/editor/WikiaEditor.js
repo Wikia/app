@@ -150,6 +150,7 @@
 				this.fire('initEditor',this,this.editorElement);
 				this.fire('initDom',this);
 				this.initialized = true;
+				this.fire('afterShow',this, this.editorElement);
 			}
 		},
 
@@ -190,7 +191,7 @@
 		constructor: function( editor ) {
 			WE.plugin.superclass.constructor.call(this);
 			this.editor = editor;
-			var autobind = {'initConfig':1,'beforeInit':1,'init':1,'initEditor':1,'initDom':1};
+			var autobind = {'initConfig':1,'beforeInit':1,'init':1,'initEditor':1,'initDom':1, 'afterShow' : 1};
 			for (var fn in autobind) {
 				if (typeof this[fn] == 'function') {
 					this.editor.on(fn,this[fn],this);
@@ -585,6 +586,7 @@
 		initEditor: function() {
 			this.editor.getEditorElement = this.proxy(this.getEditorElement);
 			this.editor.getContent = this.proxy(this.getContent);
+			this.editor.setContent = this.proxy(this.setContent);
 
 			var self = this,
 				cnt = this.editor.getEditorSpace() || this.editor.element;
@@ -617,7 +619,17 @@
 		},
 
 		getContent: function() {
-			return this.textarea.val();
+			return this.getEditorElement().val();
+		},
+		
+		setContent: function(val, datamode) {
+			if(datamode == 'wysiwyg'){
+				RTE.ajax('html2wiki', {html: val, title: window.wgPageName}, function(data) {
+					this.getEditorElement().val(data.wikitext);
+				});
+			} else {
+				this.getEditorElement().val(val);	
+			}
 		},
 
 		editorFocused: function() {
@@ -653,6 +665,7 @@
 			this.editor.ck = this.instance;
 			this.editor.getEditorElement = this.proxy(this.getEditorElement);
 			this.editor.getContent = this.proxy(this.getContent);
+			this.editor.setContent = this.proxy(this.setContent);
 
 			for (var i=0;i<this.proxyEvents.length;i++) {
 				(function(eventName){
@@ -730,6 +743,29 @@
 			return this.instance.getData();
 		},
 
+		setContent: function(content, datamode) {
+			switch (this.instance.mode) {
+				//TODO: in same case this swith is imposible  
+				case 'wysiwyg':
+					if(datamode != 'wysiwyg'){			
+						RTE.ajax('wiki2html', {wikitext: content, title: window.wgPageName}, $.proxy(function(data) {
+							this.instance.setData(data.html);
+						}, this));
+						return true;
+					}
+				break;
+				case 'source':
+					if(datamode == 'wysiwyg') {
+						RTE.ajax('html2wiki', {html: content, title: window.wgPageName}, $.proxy(function(data) {
+							this.instance.setData(data.wikitext);
+						}, this));			
+						return true;
+					}
+				break;
+			}
+			this.instance.setData(content);
+		},
+		
 		editorFocused: function() {
 			this.editor.fire('editorFocus',this.editor);
 		},

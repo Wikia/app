@@ -172,11 +172,11 @@
 			var editor = typeof RTE == 'object'? RTE.instance : false,
 				mode = editor ? editor.mode : 'mw';
 
-			params = $.extend(params, {
+			params = $.extend({
 				page: wgEditPageClass ? wgEditPageClass:"",
 				method: method,
-				mode: editor.mode
-			});
+				mode: editor.mode,
+			}, params);
 
 			var url = window.wgEditPageHandler.replace('$1', encodeURIComponent(window.wgEditedTitle));
 
@@ -450,7 +450,7 @@
 			var self = this;
 			this.renderDialog($.msg('editpagelayout-pageControls-changes'), {}, function(contentNode) {
 				self.getContent(function(content) {
-					extraData.content = content;
+					extraData.content = extraData.content || content;
 					extraData.section = parseInt($.getUrlVar('section') || 0);
 					self.ajax('diff',
 						extraData,

@@ -18,13 +18,17 @@
 		display: block;
 		border-top: 1px solid $color-epl-notices-border;
 		padding: 2px 20px;
-		height: 18px;
 		line-height: 18px;
-
+		
+		min-height: 18px;
+		/*RestoreEdit: make the short notices boxes adapt to the content*/
+		/*
+		height: 18px;
 		overflow: hidden;
 		white-space: nowrap;
 		-o-text-overflow: ellipsis;
 		text-overflow: ellipsis;
+		*/
 
 		&:first-child {
 			border-top-width: 0;
@@ -35,5 +39,15 @@
 		@include splotch;
 		position: absolute;
 		top: 6px;
+	}
+}
+
+/* needs to catch also elements in .modalWrapper, the only common denominator is body */
+.notice-action{
+	color: $color-links;
+	cursor: pointer;
+	
+	&:hover{
+		text-decoration: underline;
 	}
 }

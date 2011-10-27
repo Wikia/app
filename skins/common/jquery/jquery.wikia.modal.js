@@ -232,6 +232,7 @@ $.fn.extend({
 
 	closeModal: function() {
 		$(window).unbind(".modal" + this.attr('id'));
+		
 		this.animate({
 			top: this.offset()["top"] + 100,
 			opacity: 0
@@ -316,5 +317,13 @@ $.fn.extend({
 			.width(width)
 			.css('marginLeft', -wrapper.outerWidth() >> 1)
 			.log('resizeModal: #' + this.attr('id') + ' resized to ' + width + 'px');
+	},
+	
+	isModalShown: function(){
+		return $(document.body).hasClass('modalShown');
+	},
+	
+	getModal: function(){
+		return $('.modalWrapper');
 	}
 });
