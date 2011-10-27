@@ -13,7 +13,7 @@ if('' == $props['oname']) {
 	<tr id="VideoEmbedNameRow">
 		<th><?= wfMsg( 'vet-name' ) ?></th>
 		<td>
-			<input type="text" id="VideoEmbedName" name="wpVideoEmbedName" value="<?= $props['vname'] ?>" />
+			<input type="text" id="VideoEmbedName" name="wpVideoEmbedName" value="<?= htmlspecialchars($props['vname']) ?>" />
 		</td>
 		<td rowspan="5" >
 			<div id="VideoEmbedThumb" style="text-align: right; right: 15px">
