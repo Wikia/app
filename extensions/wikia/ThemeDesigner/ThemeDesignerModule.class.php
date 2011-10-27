@@ -79,9 +79,8 @@ class ThemeDesignerModule extends Module {
 	}
 
 	public function executeWordmarkTab() {
-		$faviconTitle = Title::newFromText('Favicon.ico', NS_FILE);
-		$localFile = is_null( $faviconTitle ) ? null : wfLocalFile( $faviconTitle );
-		$this->faviconUrl = wfReplaceImageServer( $localFile->getUrl() );
+		global $wgFavicon;
+		$this->faviconUrl = wfReplaceImageServer($wgFavicon);
 	}
 
 	public function executePicker() {

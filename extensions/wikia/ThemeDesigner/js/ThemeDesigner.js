@@ -464,7 +464,7 @@ var ThemeDesigner = {
 				alert(response.errors.join("\n"));
 
 			} else {
-
+				ThemeDesigner.set("favicon-image-name", response.faviconImageName);
 				ThemeDesigner.set("favicon-image-url", response.faviconImageUrl);
 			}
 
@@ -650,7 +650,7 @@ var ThemeDesigner = {
 		$("#WordmarkTab .graphic .wordmark").attr("src", ThemeDesigner.settings["wordmark-image-url"]);
 
 		// favicon image
-                $("#WordmarkTab .favicon .preview img").attr("src", ThemeDesigner.settings["favicon-image-url"]);
+		$("#WordmarkTab .favicon .preview img").attr("src", ThemeDesigner.settings["favicon-image-url"]);
 
 		if (ThemeDesigner.settings["wordmark-type"] == "graphic") {
 			$("#WordmarkTab").find(".graphic")
