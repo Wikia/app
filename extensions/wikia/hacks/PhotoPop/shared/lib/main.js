@@ -125,13 +125,11 @@
 				var muteButton = document.getElementById('button_volume'),
 				imgs = muteButton.getElementsByTagName('img');
 				
-				
 				muteButton.onclick = function(){
 					var mute = !soundServer.getMute();
 					
 					soundServer.setMute(mute);
 					soundServer.play('pop');
-					console.log("main:"+ mute);
 					screenManager.get('home').fire('muteButtonClicked', {mute: mute});	
 				}
 				document.getElementById('button_tutorial').onclick = function() {
@@ -211,7 +209,6 @@
 					highscore.sort(function(a,b) {
 						return a.score < b.score;
 					});
-					console.log(highscore);
 					highscore = highscore.slice(0, 5);
 				}
 				
@@ -236,7 +233,7 @@
 			
 			playAgain = function(){
 				var id = g.getId();
-				g.pause();
+				g.handlePause(true);
 				g = null;
 				selectedGame = games[selectedGameId];
 				runGame(selectedGame);
@@ -298,7 +295,8 @@
 							fade: true,
 							clickThrough: false,
 							closeOnClick: true,
-							triangle: 'right'});
+							triangle: 'right'
+						});
 						tutorialSteps['tile'] = true;
 					}
 
@@ -322,35 +320,34 @@
 				screenManager.get('game').fire('timeIsUp', options);
 			},
 			
-			timerEvent = function(event, percent) {
+			timerEvent = function(e, percent) {
 				screenManager.get('game').fire('timerEvent', percent);
 			},
 			
-			paused = function() {
-				screenManager.get('game').fire('paused');
-
-			},
-			
-			resumed = function() {
-				screenManager.get('game').fire('resumed');
-			},
-			
-			pauseButtonClicked = function(e, pause) {
-				if(!pause) {
-					screenManager.get('game').openModal({
-						name: 'pause',
-						html: 'Game paused',
-						clickThrough: false,
-						leaveBottomBar: true,
-						closeOnClick: false
-					});
+			pause = function(e, options) {
+				var pauseModal = ('pauseButton' == options.caller || 'goHomeButton' == options.caller);
+				
+				if(options.pause) {
+					screenManager.get('game').fire('paused');
+					if(pauseModal) {
+						screenManager.get('game').openModal({
+							name: 'pause',
+							html: 'Game paused',
+							clickThrough: false,
+							leaveBottomBar: true,
+							closeOnClick: false
+						});
+					}
 				} else {
-					screenManager.get('game').closeModal();
+					screenManager.get('game').fire('resumed');
+					if(pauseModal) {
+						screenManager.get('game').closeModal();
+					}
 				}
 			},
 			
 			timeIsLow = function() {
-				soundServer.play('timeLow')
+				soundServer.play('timeLow');
 			},
 			
 			onDataError = function(event, resp){
@@ -359,7 +356,6 @@
 			
 			runGame = function(target) {
 				var id, data, game;
-				console.log(g);
 				if(target == 'tutorial') {
 					id =  'tutorial';
 					data = config.tutorial;
@@ -376,7 +372,6 @@
 					} else {
 						if(g) g.fire('storeData');
 						gameData = store.get(selectedGame.id);
-						console.log(gameData);
 						//if there is already a game in localstorage start it from this data otherwise load a new one
 						(gameData)? newGame(gameData): loadSelectedGame();
 					}
@@ -432,9 +427,7 @@
 				g.addEventListener('muteButtonClicked', muteButtonClicked);
 				g.addEventListener('answersPrepared', answersPrepared);
 				g.addEventListener('roundStart', roundStart);
-				g.addEventListener('paused', paused);
-				g.addEventListener('resumed', resumed);
-				g.addEventListener('pauseButtonClicked', pauseButtonClicked);
+				g.addEventListener('pause', pause);
 				
 				g.prepareGame();
 			},
@@ -452,7 +445,6 @@
 							wiki: 'tutorial'
 						});
 					}
-					console.log(highscore);
 					store.set('highscore', highscore);
 				}
 				
