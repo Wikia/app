@@ -574,7 +574,7 @@ class WallHooksHelper {
 			$app = F::app();
 			
 			$wnEntity = F::build('WallNotificationEntity', array($rc->getAttribute('rc_id'), $app->wg->CityId), 'getByWikiAndRCId');
-			$messageWallPage = F::build('Title', array(NS_USER_WALL, $wnEntity->data->parent_username), 'makeTitle');
+			$messageWallPage = F::build('Title', array(NS_USER_WALL, $wnEntity->data->wall_username), 'makeTitle');
 			
 			$link = $wnEntity->data->url;
 			$title = $wnEntity->data->thread_title;
@@ -698,8 +698,10 @@ class WallHooksHelper {
 	 * @author Andrzej 'nAndy' Lukaszewski
 	 */
 	public function onChangesListInsertAction($list, $actionText, $s, $rc) {
-		if( $rc->getAttribute('rc_type') == RC_LOG && $rc->getAttribute('rc_namespace') == NS_USER_WALL_MESSAGE ) {
-			$app = F::app();
+		if( $rc->getAttribute('rc_type') == RC_LOG 
+		 && $rc->getAttribute('rc_namespace') == NS_USER_WALL_MESSAGE 
+		 && ($rc->getAttribute('rc_log_action') == 'delete' || $rc->getAttribute('rc_log_action') == 'restore') ) {
+		 	$app = F::app();
 			$helper = F::build('WallHelper', array());
 			$userText = $rc->getAttribute('rc_user_text');
 			$wallTitleObj = F::build('Title', array(NS_USER_WALL, $userText), 'newFromText');
@@ -707,38 +709,92 @@ class WallHooksHelper {
 			
 			$articleData = array('text_id' => '');
 			$articleId = $helper->getDeletedArticleId($rc->getTitle()->getText(), $articleData);
+			
 			if( !empty($articleId) ) {
 				$articleTitleObj = F::build('Title', array($userText.'/'.$articleId, NS_USER_WALL), 'newFromText');
+				$articleTitleTxt = $helper->getTitleTxtFromMetadata($helper->getDeletedArticleTitleTxt($articleData['text_id']));
 				
 				if( empty($articleTitleTxt) ) {
-					$articleTitleTxt = $helper->getTitleTxtFromMetadata($helper->getDeletedArticleTitleTxt($articleData['text_id']));
-					$articleTitleTxt = empty($articleTitleTxt) ? $app->wf->Msg('wall-recentchanges-deleted-reply-title') : $articleTitleTxt;
+				//deleted reply
+					$articleTitleTxt = $this->getParentTitleTxt($rc->getTitle());
+					$articleUrl = ($articleTitleObj instanceof Title) ? $articleTitleObj->getLocalUrl() : '#';
+					$actionText = $app->wf->Msg('wall-recentchanges-deleted-reply', array(
+						$articleUrl,
+						$articleTitleTxt,
+						$wallUrl,
+						$userText,
+					));
+				} else {
+				//deleted thread
+					$articleUrl = ($articleTitleObj instanceof Title) ? $articleTitleObj->getLocalUrl() : '#';
+					$actionText = $app->wf->Msg('wall-recentchanges-deleted-thread', array(
+						$articleUrl,
+						$articleTitleTxt,
+						$wallUrl,
+						$userText,
+					));
 				}
-				
-				$articleUrl = ($articleTitleObj instanceof Title) ? $articleTitleObj->getLocalUrl() : '#';
-				
-				$actionText = $app->wf->Msg('wall-recentchanges-deleted-thread', array(
-					$articleUrl,
-					$articleTitleTxt,
-					$wallUrl,
-					$userText,
-				));
 			} else {
-			//if $articleId is empty that means message was restored
 				$wnEntity = F::build('WallNotificationEntity', array($rc->getAttribute('rc_id'), $app->wg->CityId), 'getByWikiAndRCId');
 				$articleTitleTxt = empty($wnEntity->data->thread_title) ? $app->wf->Msg('wall-recentchanges-deleted-reply-title') : $wnEntity->data->thread_title;
 				$articleUrl = empty($wnEntity->data->url) ? '#' : $wnEntity->data->url;
 				
-				$actionText = $app->wf->Msg('wall-recentchanges-restored-thread', array(
+				$wfMsgOpts = array(
 					$articleUrl,
 					$articleTitleTxt,
 					$wallUrl,
 					$userText,
-				));
+				);
+				
+				if( $wnEntity->isMain() ) {
+					if( $rc->getAttribute('rc_log_action') == 'delete' ) {
+					//deleted thread page
+						$actionText = $app->wf->Msg('wall-recentchanges-deleted-thread', $wfMsgOpts);
+					}
+					
+					if( $rc->getAttribute('rc_log_action') == 'restore' ) {
+					//restored thread page
+						$actionText = $app->wf->Msg('wall-recentchanges-restored-thread', $wfMsgOpts);
+					}
+				} else {
+					if( $rc->getAttribute('rc_log_action') == 'delete' ) {
+					//deleted reply
+						$actionText = $app->wf->Msg('wall-recentchanges-deleted-reply', $wfMsgOpts);
+					}
+					
+					if( $rc->getAttribute('rc_log_action') == 'restore' ) {
+					//restored treply
+						$actionText = $app->wf->Msg('wall-recentchanges-restored-reply', $wfMsgOpts);
+					}
+				}
 			}
 		}
 		
 		return true;
+	}
+	
+	private function getParentTitleTxt($title) {
+		if( $title instanceof Title ) {
+			$app = F::app();
+			$helper = F::build('WallHelper', array());
+			
+			$wm = F::build('WallMessage', array($title));
+			$parentTitleTxt = $wm->getTopParentText($title->getText());
+			
+			$articleData = array('text_id' => '');
+			$articleId = $helper->getDeletedArticleId($parentTitleTxt, $articleData);
+			if( !empty($articleId) ) {
+			//parent article was deleted as well
+				$articleTitleTxt = $helper->getTitleTxtFromMetadata($helper->getDeletedArticleTitleTxt($articleData['text_id']));
+			} else {
+				$articleTitleTxt = 'parent article was not deleted | WallHooksHelper::getParentTitleTxt()';
+			}
+			$articleTitleTxt = empty($articleTitleTxt) ? $app->wf->Msg('wall-recentchanges-deleted-reply-title') : $articleTitleTxt;
+			
+			return $articleTitleTxt;
+		}
+		
+		return $app->wf->Msg('wall-recentchanges-deleted-reply-title');
 	}
 	
 	/**
@@ -767,8 +823,10 @@ class WallHooksHelper {
 				$logPage->addEntry( 'delete', $title, $reason, array() );
 			} else {
 			//reply
-				//TODO: we should be able to tell if only the reply was deleted or whole thread
-				//if a thread do not put anything to log, otherwise add an entry
+				if( !$parentObj->getTitle()->isDeletedQuick() ) {
+				//if its parent still exists only this reply is being deleted, so log about it
+					$logPage->addEntry( 'delete', $title, $reason, array() );
+				}
 			}
 		}
 		

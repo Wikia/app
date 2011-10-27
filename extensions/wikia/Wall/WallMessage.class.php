@@ -67,6 +67,10 @@ class WallMessage {
 			return null;
 	}
 	
+	public function getTopParentText($titleText) {
+		return $this->getArticleComment()->explodeParentTitleText($titleText);
+	}
+	
 	public function isWallOwner(User $user) {
 		$wallUser = $this->getWallOwner();
 		if(empty($wallUser)) {

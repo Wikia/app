@@ -1148,7 +1148,19 @@ class ArticleComment {
 	
 	public function getTopParent() {
 		$key = $this->mTitle->getDBkey();
-		$parts = explode('/@', $key);
+		
+		return $this->explodeParentTitleText($key);
+	}
+	
+	/**
+	 * @brief Explodes string got from Title::getText() and returns its parent's text if exists
+	 * 
+	 * @param string $titleText this is the text given from Title::getText()
+	 * 
+	 * @return string | null if given $titleText is a parent's one returns null
+	 */
+	public function explodeParentTitleText($titleText) {
+		$parts = explode('/@', $titleText);
 		
 		if(count($parts) < 3) return null;
 		
