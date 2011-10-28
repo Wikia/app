@@ -273,7 +273,7 @@ class VideoEmbedTool {
 
 		$embed_code = '';
 
-		if ($provider != VideoPage::V_WIKIAVIDEO) {
+		if ($provider != VideoPage::V_WIKIAVIDEO && $provider != VideoPage::V_LOCALVIDEO) {
 			if($name !== NULL) {
 				if($name == '') {
 					header('X-screen-type: error');
