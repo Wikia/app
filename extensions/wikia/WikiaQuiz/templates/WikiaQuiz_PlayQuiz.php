@@ -27,7 +27,7 @@
 		$numOfQuestions = count($data['elements']);
 		for ($i = 0; $i < $numOfQuestions; $i++) {
 			$q = $data['elements'][$i];
-			$videoClass = ($q['videoName']) ? 'video' : '';
+			$videoClass = isset($q['videoName']) ? 'video' : '';
 			?>
 
 			<li class="question-set <?= $videoClass ?>">
