@@ -118,16 +118,26 @@ class WallNotificationEntity {
 		
 		if(!empty($acParent)) {
 			$acParent->load();
-			$this->data->parent_username = $acParent->getUser()->getName();
-			$parent_realname = $acParent->getUser()->getRealName();
+			$parentUser = $acParent->getUser();
 			
-			$this->data->parent_displayname = empty($parent_realname) ? $this->data->parent_username:$parent_realname; 
+			if( $parentUser instanceof User ) {
+				$this->data->parent_username = $parentUser->getName();
+				$parent_realname = $parentUser->getRealName();
+				$this->data->parent_displayname = empty($parent_realname) ? $this->data->parent_username : $parent_realname; 
+				$this->data->parent_user_id = $acParent->getUser()->getId();
+			} else {
+			//parent was deleted and somehow reply stays in the system
+			//the only way I've reproduced it was: I deleted a thread
+			//then I went to Special:Log/delete and restored only its reply
+			//an edge case but it needs to be handled
+			//--nAndy
+				$this->data->parent_username = $this->data->parent_displayname = F::app()->wf->Msg('wn-a-wikia-contributor');
+				$this->data->parent_user_id = 0;
+			}
 			
-			$this->data->parent_user_id = $acParent->getUser()->getId();
 			$this->data->thread_title = $this->helper->shortenText($acParent->getMetaTitle(), self::TITLE_MAX_LEN);
 			$this->data_noncached->parent_title_dbkey = $acParent->getTitle()->getDBkey();
 			$this->data->parent_id = $acParent->getTitle()->getArticleId();
-			//$this->data->url = $acParent->getMessagePageUrl();
 			$this->data->url = $acParent->getMessagePageUrl();
 		} else {
 			$this->data->url = $ac->getMessagePageUrl();

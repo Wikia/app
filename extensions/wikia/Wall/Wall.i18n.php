@@ -79,6 +79,7 @@ $messages['en'] = array(
 	'wn-user3-reply-other-a-wall' => '$1 and $2 others replied to $3\'s message',
 	'wn-newmsg-onmywall' => '$1 left a new message on your Wall',
 	'wn-newmsg' => 'You left a new message on $1\'s Wall',
+	'wn-a-wikia-contributor' => 'A Wikia Contributor',
 	
 	'tog-enotifwallthread' => 'Email me when someone replies on a Message Wall thread I\'m following.',
 	'tog-enotifmywall' => 'Email me when somebody writes a new message on my Message Wall.',

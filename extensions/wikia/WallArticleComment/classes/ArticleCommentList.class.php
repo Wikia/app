@@ -221,8 +221,16 @@ class ArticleCommentList {
 			}
 			// attach replies to comments
 			foreach( $subpages as $p0 => $level2 ) {
-				$idx = $helperArray[$p0];
-				$pages[$idx]['level2'] = array_reverse( $level2, true );
+				if( !empty($helperArray[$p0]) ) {
+					$idx = $helperArray[$p0];
+					$pages[$idx]['level2'] = array_reverse( $level2, true );
+				} else {
+				//if its empty it's an error in our database
+				//someone removed a parent and left its children
+				//or someone removed parent and children and
+				//restored children or a child without restoring parent
+				//--nAndy
+				}
 			}
 
 			if( !empty( $wgArticleCommentsEnableVoting ) ) {
@@ -246,7 +254,7 @@ class ArticleCommentList {
 			$this->mCommentsAll = $pages;
 			
 			if(empty($this->mCommentId)) {
-				$wgMemc->set( $memckey, $this->mCommentsAll, 3600 );				
+				$wgMemc->set( $memckey, $this->mCommentsAll, 3600 );
 			}
 		}
 
