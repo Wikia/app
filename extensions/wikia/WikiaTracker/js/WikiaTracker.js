@@ -70,11 +70,8 @@ WikiaTracker.trackGA = function(page, profile) { // FIXME NEF deprecated, remove
 };
 
 WikiaTracker.track = function(page, profile) {
-	if (typeof page == 'object') { // TODO instanceof Array
+	if (typeof page != 'undefined' && page instanceof Array) {
 		page = page.join('/');
-	}
-	if (page.indexOf('/') != 0) {
-		page = '/' + page;
 	}
 
 	this.debug(page + ' in ' + profile, 3);
@@ -119,10 +116,14 @@ WikiaTracker._track = function(page, profile, sample) {
 	_gaq.push(['WikiaTracker._setCustomVar', 4, 'skin',  window.skin || 'unknown', 3]);
 	_gaq.push(['WikiaTracker._setCustomVar', 5, 'user', (window.wgUserName == null) ? 'anon' : 'user', 3]);
 
-	if (page == '/AnalyticsEngine::EVENT_PAGEVIEW') {
+	if (page == 'AnalyticsEngine::EVENT_PAGEVIEW') {
 		_gaq.push(['WikiaTracker._trackPageview']);
 		_gaq.push(['WikiaTracker._trackPageLoadTime']);
 	} else {
+
+	if (page.indexOf('/') != 0) {
+		page = '/' + page;
+	}
 
 	_gaq.push(['WikiaTracker._trackPageview', page]);
 
