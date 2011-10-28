@@ -9,8 +9,15 @@ var WikiaTrackerQueue = {
 
 	trackFn: false,
 
-	log: function(msg) {
-		$().log(msg, 'wtq');
+	log: function(msg, obj) {
+		msg = 'wtq: ' + msg;
+
+		if (typeof obj != 'undefined') {
+			WikiaTracker.debug(msg, 5, obj);
+		}
+		else {
+			WikiaTracker.debug(msg, 5);
+		}
 	},
 
 	init: function() {
@@ -78,7 +85,7 @@ var WikiaTrackerQueue = {
 	},
 
 	pushCallback: function(item) {
-		$().log(item, 'wtq.push');
+		this.log('push', item);
 
 		if (!$.isArray(item)) {
 			item = [item];
