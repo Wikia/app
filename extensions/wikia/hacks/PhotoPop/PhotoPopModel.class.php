@@ -32,9 +32,6 @@ class PhotoPopModel extends WikiaModel{
 	/*
 	 * @brief Gets a list of games (wikis) wikis through WikiFactory
 	 * 
-	 * @param integer $limit [OPTIONAL] the maximum number of results
-	 * @param int $batch [OPTIONAL] the batch of results, used only when $limit is passed in
-	 * 
 	 * @return array a paginated batch (see wfPaginateArray), each item is an hash with the following keys:
 	 * * string name wiki's name
 	 * * string domain wiki's domain
@@ -42,7 +39,7 @@ class PhotoPopModel extends WikiaModel{
 	 * 
 	 * @see wfPaginateArray
 	 */
-	public function getWikisList( $limit = null, $batch = 1 ){
+	public function getWikisList(){
 		$this->wf->profileIn( __METHOD__ );
 		
 		$cacheKey = $this->generateCacheKey( __METHOD__ );
