@@ -69,12 +69,12 @@ WikiaTracker.trackGA = function(page, profile) { // FIXME NEF deprecated, remove
 	return false;
 };
 
-WikiaTracker.track = function(page, profile) {
+WikiaTracker.track = function(page, profile, events) {
 	if (typeof page != 'undefined' && page instanceof Array) {
 		page = page.join('/');
 	}
 
-	this.debug(page + ' in ' + profile, 3);
+	this.debug(page + ' in ' + profile, 3, events);
 
 	if (typeof profile == 'undefined') {
 		profile = 'default';
@@ -99,10 +99,10 @@ WikiaTracker.track = function(page, profile) {
 		if (!this.isTracked()) { return false; }
 	}
 
-	return this._track(page, profile, 100);
+	return this._track(page, profile, 100, events);
 };
 
-WikiaTracker._track = function(page, profile, sample) {
+WikiaTracker._track = function(page, profile, sample, events) {
 	this.debug(page + ' in ' + profile + ' at ' + sample + '%', 7);
 
 	_gaq.push(['WikiaTracker._setAccount', profile]);
@@ -116,10 +116,17 @@ WikiaTracker._track = function(page, profile, sample) {
 	_gaq.push(['WikiaTracker._setCustomVar', 4, 'skin',  window.skin || 'unknown', 3]);
 	_gaq.push(['WikiaTracker._setCustomVar', 5, 'user', (window.wgUserName == null) ? 'anon' : 'user', 3]);
 
+	if (typeof events != 'undefined' && events instanceof Array) {
+		this.debug('...with events: ' + events.join('/'), 7);
+
+		events.unshift('WikiaTracker._trackEvent');
+		_gaq.push(events);
+	}
+
 	if (page == 'AnalyticsEngine::EVENT_PAGEVIEW') {
 		_gaq.push(['WikiaTracker._trackPageview']);
 		_gaq.push(['WikiaTracker._trackPageLoadTime']);
-	} else {
+	} else if (page != null) {
 
 	if (page.indexOf('/') != 0) {
 		page = '/' + page;

@@ -151,6 +151,9 @@ $config['wikiaphone_js'] = array(
 	'assets' => array(
 		'#group_oasis_jquery',
 		'//extensions/wikia/AdEngine/AdConfig.js',
+		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
+		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
+		'//extensions/wikia/WikiaTracker/js/WikiaTrackerQueue.js',
 		'//skins/wikiaphone/main.js'
 	)
 );
