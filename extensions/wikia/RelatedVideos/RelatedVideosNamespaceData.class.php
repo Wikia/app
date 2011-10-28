@@ -365,7 +365,7 @@ class RelatedVideosNamespaceData {
 			$summary = wfMsg( 'related-videos-updated', array( ucfirst(strtolower($list)) ) );
 		}
 
-		status = $article->doEdit($content, $summary, $this->exists() ? EDIT_UPDATE : EDIT_NEW, false, F::app()->wg->user);
+		$status = $article->doEdit($content, $summary, $this->exists() ? EDIT_UPDATE : EDIT_NEW, false, F::app()->wg->user);
 		$this->purge();	// probably unnecessary b/c a hook does this, but can't hurt
 
 		wfProfileOut( __METHOD__ );
