@@ -29,13 +29,12 @@ class RelatedVideos extends RelatedPages {
 	}
 
 	protected function afterGet( $pages, $limit ) {
-
 		wfProfileIn( __METHOD__ );
 		$this->pages = array();
 		$oRelatedVideosData =  F::build( 'RelatedVideosData' );
 		foreach( $pages as $pageId => $data ) {
-			$oTitle = F::build( 'Title', array( $data['title'] ), 'newFromText' );
-			$videoData = $oRelatedVideosData->getVideoData( $oTitle, $this->width );
+			$oRelatedVideosService = F::build('RelatedVideosService');
+			$videoData = $oRelatedVideosService->getRelatedVideoData( 0, $data['title'] );
 			if ( isset($videoData['timestamp']) && isset($videoData['id']) ){
 				$videoId = $videoData['timestamp'].'|'.$videoData['id'];
 				$this->pages[ $videoId ] = $videoData;
