@@ -45,7 +45,7 @@
 						<?= $q['question'] ?>
 					</div>
 				</div>
-				<? if ($q['videoName'] && $q['videoEmbedCode']) { ?>
+				<? if (isset($q['videoName']) && isset($q['videoEmbedCode'])) { ?>
 				<div class="video">
 					<?= $q['videoEmbedCode'] ?>
 				</div>
