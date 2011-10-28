@@ -286,7 +286,7 @@ class ScavengerHunt {
 		wfProfileIn(__METHOD__);
 
 		$games = F::build( 'ScavengerHuntGames' );
-		
+
 		$params = $games->getJSParamsForCurrent();
 		if( !empty( $params ) ){
 			foreach( $params as $key => $param ){
@@ -307,7 +307,7 @@ class ScavengerHunt {
 			return false;
 		}
 		$userId = F::app()->wg->user->getId();
-		return wfSharedMemcKey( 
+		return wfSharedMemcKey(
 				'ScavengerHuntUserProgress',
 				$userId,
 				( $userId > 0  ) ? 0 : wfGetBeaconId()
@@ -371,14 +371,12 @@ class ScavengerHunt {
 					( !empty( $email ) || empty( $reqEmail ) ) &&
 					( !empty( $answer ) || empty( $reqQuestion ) )
 				) {
-					$user = $this->app->getGlobal( 'wgUser' );
-					$entry = $games->getEntries()->newEntry();
-					$entry->setUserId( $user->getId() );
-					$entry->setName( $name );
-					$entry->setEmail( $email );
-					$entry->setAnswer( $answer );
+					$entry = F::build('EmailsStorage')->newEntry(EmailsStorage::SCAVENGER_HUNT);
+					$entry->setPageId($game->getId());
+					$entry->setEmail($email);
+					$entry->setFeedback($answer);
 
-					if ( $game->addEntry( $entry ) ) {
+					if ($entry->store()) {
 						$result = array(
 							'status' => true,
 							'goodbyeTitle' => $game->getGoodbyeTitle(),

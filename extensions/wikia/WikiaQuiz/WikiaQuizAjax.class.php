@@ -7,14 +7,14 @@ class WikiaQuizAjax {
 	 */
 	static public function createQuiz() {
 		wfProfileIn(__METHOD__);
-		
+
 		$wgRequest = F::app()->getGlobal('wgRequest');
 		$wgUser = F::app()->getGlobal('wgUser');
 
 		// create article in NS_WIKIA_QUIZ
 		$title = trim($wgRequest->getVal ('title'));
 		$title_object = F::build('Title', array($title, NS_WIKIA_QUIZ), 'newFromText');
-		
+
 		if (is_object ($title_object) && $title_object->exists() ) {
 			$res = array (
 				'success' => false,
@@ -24,7 +24,7 @@ class WikiaQuizAjax {
 			$res = array (
 				'success' => false,
 				'error' => wfRenderModule('Error', 'Index', array(wfMsg('wikiaquiz-error-invalid-quiz')))
-				);			
+				);
 		} else {	// create questions
 			$error = null;
 			$content = self::parseCreateEditQuizRequest($wgRequest, null, $error);
@@ -32,7 +32,7 @@ class WikiaQuizAjax {
 				$res = array (
 					'success' => false,
 					'error' => wfRenderModule('Error', 'Index', array($error))
-					);			
+					);
 			}
 			else {
 				$article = F::build('Article', array($title_object));
@@ -45,21 +45,21 @@ class WikiaQuizAjax {
 					'quizId' => $article->getID(),
 					'url'  => $title_object->getLocalUrl() ,
 					'title' => $title_object->getPrefixedText()
-					);				
+					);
 			}
 
 		}
-				
+
 		wfProfileOut(__METHOD__);
 		return $res;
 	}
-	
+
 	/**
 	 * Update quiz
 	 */
 	static public function updateQuiz() {
 		wfProfileIn(__METHOD__);
-		
+
 		$wgRequest = F::app()->getGlobal('wgRequest');
 		$wgUser = F::app()->getGlobal('wgUser');
 
@@ -72,7 +72,7 @@ class WikiaQuizAjax {
 			$res = array (
 				'success' => false,
 				'error' => wfRenderModule('Error', 'Index', array(wfMsg('wikiaquiz-error-invalid-quiz')))
-				);				
+				);
 		} else {
 			$error = null;
 			$content = self::parseCreateEditQuizRequest($wgRequest, $quiz, $error);
@@ -80,7 +80,7 @@ class WikiaQuizAjax {
 				$res = array (
 					'success' => false,
 					'error' => wfRenderModule('Error', 'Index', array($error))
-					);			
+					);
 			}
 			else {
 				$article = Article::newFromID($quizId);
@@ -92,15 +92,15 @@ class WikiaQuizAjax {
 					'quizId' => $article->getID(),
 					'url'  => $title_object->getLocalUrl() ,
 					'title' => $title_object->getPrefixedText()
-					);				
+					);
 			}
 
 		}
-				
+
 		wfProfileOut(__METHOD__);
 		return $res;
 	}
-	
+
 	/**
 	 * Create a new quiz eleemnt
 	 * @see WikiaQuizElement.class.php
@@ -124,7 +124,7 @@ class WikiaQuizAjax {
 			$res = array (
 				'success' => false,
 				'error' => wfRenderModule('Error', 'Index', array(wfMsg('wikiaquiz-error-invalid-question')))
-				);			
+				);
 		} else {
 			$error = null;
 			$content = self::parseCreateEditQuizArticleRequest($wgRequest, null, $error);
@@ -132,7 +132,7 @@ class WikiaQuizAjax {
 				$res = array (
 					'success' => false,
 					'error' => wfRenderModule('Error', 'Index', array($error))
-					);			
+					);
 			}
 			else {
 				$article = F::build('Article', array($title_object));
@@ -145,7 +145,7 @@ class WikiaQuizAjax {
 					'quizElementId' => $article->getID(),
 					'url'  => $title_object->getLocalUrl() ,
 					'question' => $title_object->getPrefixedText()
-					);				
+					);
 			}
 
 		}
@@ -171,11 +171,11 @@ class WikiaQuizAjax {
 //		$newTitle = $wgRequest->getVal ('question');
 //		$newTitleObject = F::build('Title', array($newTitle, NS_WIKIA_QUIZARTICLE), 'newFromText');
 //		if (is_object($newTitleObject)) {
-//			$newArticle = F::build('Article', array($newTitleObject));		
+//			$newArticle = F::build('Article', array($newTitleObject));
 //		}
-		
+
 		// validation
-//		if (is_object ($newTitleObject) && $newTitleObject->exists() 
+//		if (is_object ($newTitleObject) && $newTitleObject->exists()
 //		&& $newArticle->getID() != $quizElementId) {
 //			$res = array (
 //				'success' => false,
@@ -185,15 +185,15 @@ class WikiaQuizAjax {
 //			$res = array (
 //				'success' => false,
 //				'error' => wfRenderModule('Error', 'Index', array(wfMsg('wikiaquiz-error-invalid-question')))
-//				);	
+//				);
 //		} else {
-//			
+//
 //		}
 		if (empty($quizElement) || !$quizElement->exists()) {
 			$res = array (
 				'success' => false,
 				'error' => wfRenderModule('Error', 'Index', array(wfMsg('wikiaquiz-error-invalid-article')))
-				);				
+				);
 		} else {
 			$error = null;
 			$content = self::parseCreateEditQuizArticleRequest($wgRequest, $quizElement, $error);
@@ -201,7 +201,7 @@ class WikiaQuizAjax {
 				$res = array (
 					'success' => false,
 					'error' => wfRenderModule('Error', 'Index', array($error))
-					);			
+					);
 			}
 			else {
 				$article = Article::newFromID($quizElementId);
@@ -213,11 +213,11 @@ class WikiaQuizAjax {
 					'quizElementId' => $article->getID(),
 					'url'  => $title_object->getLocalUrl() ,
 					'question' => $title_object->getPrefixedText()
-					);				
+					);
 			}
 
 		}
-	
+
 		wfProfileOut(__METHOD__);
 		return $res;
 	}
@@ -225,7 +225,7 @@ class WikiaQuizAjax {
 	/**
 	 * checks for quizElement existing
 	 * returns contents of quizElement
-	 * 
+	 *
 	 * @param wgRequest quizElementId
 	 * @return array {exists, url, text}
 	 */
@@ -250,11 +250,11 @@ class WikiaQuizAjax {
 				'question' => $title_object->getPrefixedText(),
 				'content' => $article_object->getContent()
 			);
-		} 
+		}
 		wfProfileOut(__METHOD__);
 		return $res;
 	}
-	
+
 	private static function parseCreateEditQuizRequest(WebRequest $request, $quiz, &$error) {
 		$wgUser = F::app()->getGlobal('wgUser');
 		$wgLang = F::app()->getGlobal('wgLang');
@@ -269,13 +269,13 @@ class WikiaQuizAjax {
 		else {
 			$title = trim($request->getVal ('title'));
 		}
-		
+
 		// title screen text
 		$titleScreenText = trim($request->getVal ('titlescreentext'));
 		if ($titleScreenText) {
 			$quizContent .= WikiaQuiz::TITLESCREENTEXT_MARKER . $titleScreenText . "\n";
 		}
-		
+
 		// title screen images
 		$titleScreenImages = $request->getArray ('titlescreenimage');
 		foreach($titleScreenImages as $image) {
@@ -287,13 +287,13 @@ class WikiaQuizAjax {
 				$quizContent .= WikiaQuiz::IMAGE_MARKER . $image . "\n";
 			}
 		}
-		
+
 		// More Info heading
 		$moreInfoHeading = trim($request->getVal ('moreinfoheading'));
 		if ($moreInfoHeading) {
 			$quizContent .= WikiaQuiz::MOREINFOHEADING_MARKER . $moreInfoHeading . "\n";
 		}
-		
+
 		// More Info links
 		$moreInfoArticles = $request->getArray ('moreinfoarticle');
 		$moreInfoLinkTexts = $request->getArray ('moreinfolinktext');
@@ -312,7 +312,7 @@ class WikiaQuizAjax {
 						$error = wfMsg('wikiaquiz-error-invalid-article-with-details', $articleName);
 						return;
 
-					}					
+					}
 				}
 			}
 		}
@@ -334,22 +334,22 @@ class WikiaQuizAjax {
 				$article = F::build('Article', array($title_object));
 				$content = $article->getContent();
 				$newContent = null;
-				
+
 				$matches = null;
 				preg_match($patternCategory, $content, $matches);
 				if (isset($matches[2])) {
 					if ($matches[2] != $index) {
 						$replace = "[[".$wgLang->getNsText(NS_CATEGORY).":".WikiaQuiz::QUIZ_CATEGORY_PREFIX . $title."|".$index."]]";
-						$newContent = preg_replace($patternCategory, $replace, $content);						
+						$newContent = preg_replace($patternCategory, $replace, $content);
 					}
 				}
 				else {
 					// this category is new for this article. append to contents.
-					$newContent .= self::getCategoryText($title, $index);					
+					$newContent .= self::getCategoryText($title, $index);
 				}
-				
+
 				if ($newContent) {
-					$status = $article->doEdit($newContent, 'Quiz Question and Answers Updated', EDIT_UPDATE, false, $wgUser);				
+					$status = $article->doEdit($newContent, 'Quiz Question and Answers Updated', EDIT_UPDATE, false, $wgUser);
 				}
 			} else if ($title_object == null) {
 				$error = wfMsg('wikiaquiz-error-invalid-question');
@@ -357,13 +357,13 @@ class WikiaQuizAjax {
 			}
 			else {
 				// create question
-				$content = self::getCategoryText($title, $index);	
+				$content = self::getCategoryText($title, $index);
 				$article = F::build('Article', array($title_object));
 				$status = $article->doEdit($content, 'Quiz Article Created', EDIT_NEW, false, $wgUser);
 				//@todo check status
 			}
 		}
-		
+
 		if (!empty($quiz)) {
 			// remove old questions from quiz
 			$questionKeys = array_flip($questions);
@@ -376,17 +376,17 @@ class WikiaQuizAjax {
 							$title_object = F::build('Title', array($question, NS_WIKIA_QUIZARTICLE), 'newFromText');
 							$article = F::build('Article', array($title_object));
 							$content = $article->getContent();
-							$content = preg_replace($patternCategory, '', $content);						
-							$status = $article->doEdit($content, 'Quiz Question and Answers Updated', EDIT_UPDATE, false, $wgUser);				
+							$content = preg_replace($patternCategory, '', $content);
+							$status = $article->doEdit($content, 'Quiz Question and Answers Updated', EDIT_UPDATE, false, $wgUser);
 						}
-					}					
+					}
 				}
 			}
 		}
-		
+
 		return $quizContent;
 	}
-	
+
 	private static function parseCreateEditQuizArticleRequest(WebRequest $request, WikiaQuizElement $quizElement, &$error) {
 		if (!empty($quizElement)) {
 			$title = $quizElement->getTitle();
@@ -395,7 +395,7 @@ class WikiaQuizAjax {
 		}
 		else {
 			$order = '';
-			$title = trim($request->getVal ('question'));			
+			$title = trim($request->getVal ('question'));
 			$quiz = trim($request->getVal ('quiz'));
 		}
 		$image = trim($request->getVal ('image'));
@@ -423,15 +423,15 @@ class WikiaQuizAjax {
 		}
 		if ($explanation) {
 			$content .= WikiaQuizElement::EXPLANATION_MARKER . $explanation . "\n";
-		}	
+		}
 		if ($quiz) {
 			$content .= self::getCategoryText($quiz, $order);
 		}
 		else {
 			$error = wfMsg('wikiaquiz-error-invalid-quiz');
-			return;			
+			return;
 		}
-		
+
 		$answerExists = false;
 		$correctAnswerExists = false;
 		foreach ($answers as $index=>$answer) {
@@ -441,7 +441,7 @@ class WikiaQuizAjax {
 				$correctAnswerContent = "";
 				if ($index == $correctAnswer) {
 					if ($correctAnswerExists) {
-						$error = wfMsg('wikiaquiz-error-invalid-correct-answer');	
+						$error = wfMsg('wikiaquiz-error-invalid-correct-answer');
 						return;
 					}
 					else {
@@ -449,7 +449,7 @@ class WikiaQuizAjax {
 					}
 					$correctAnswerContent .= WikiaQuizElement::CORRECT_ANSWER_MARKER . ' ';
 				}
-				
+
 				$answerImageContent = "";
 				$answerImage = trim($answerImages[$index]);
 				if ($answerImage) {
@@ -459,35 +459,35 @@ class WikiaQuizAjax {
 					}
 					$answerImageContent .= WikiaQuizElement::ANSWER_IMAGE_MARKER . $answerImages[$index];
 				}
-				
+
 				$content .= WikiaQuizElement::ANSWER_MARKER . "$correctAnswerContent$answer$answerImageContent\n";
 			}
 		}
-		
+
 		if (!$answerExists) {
-			$error = wfMsg('wikiaquiz-error-missing-answers');	
+			$error = wfMsg('wikiaquiz-error-missing-answers');
 			return;
 		}
-		
+
 		if (!$correctAnswerExists) {
-			$error = wfMsg('wikiaquiz-error-invalid-correct-answer');	
-			return;			
+			$error = wfMsg('wikiaquiz-error-invalid-correct-answer');
+			return;
 		}
 
 		return $content;
 	}
-	
+
 	private static function isValidImage($filename) {
 		$fileTitle = Title::newFromText($filename, NS_FILE);
 		$image = wfFindFile($fileTitle);
 		if ( !is_object( $image ) || $image->height == 0 || $image->width == 0 ){
 			return false;
 		}
-		
+
 		return true;
-		
+
 	}
-	
+
 	/**
 	 * @TODO support for video from repo
 	 * @param string $name
@@ -511,8 +511,58 @@ class WikiaQuizAjax {
 			$text .= '|' . $order;
 		}
 		$text .= "]]\n";
-		
+
 		return $text;
 	}
-	
+
+	/**
+	 * Adds given email to the list and sends confirmation message
+	 */
+	public static function addEmail() {
+		global $wgRequest, $wgUser;
+
+		$ret = array(
+			'ok' => false,
+			'msg' => '',
+		);
+
+		$email = $wgRequest->getVal('email');
+		$token = $wgRequest->getVal('token');
+		$quizId = $wgRequest->getInt('quizid');
+
+		// validate token
+		if ($wgUser->matchEditToken($token, 'WikiaQuiz' /* $salt */)) {
+			// validate email
+			if (User::isValidEmailAddr($email)) {
+				$to = new MailAddress($email);
+				$from = new MailAddress(WikiaQuiz::EMAIL_SENDER);
+				$subject = wfMsg('wikiaquiz-game-email-subject');
+				$body = wfMsg('wikiaquiz-game-email-body');
+
+				// send an email
+				$result = UserMailer::send($to, $from, $subject, $body, null /* $replyto */, null /* $contentType */, WikiaQuiz::EMAIL_CATEGORY /* $category */);
+
+				if (!WikiError::isError($result)) {
+					$ret['ok'] = true;
+				}
+				else {
+					$ret['msg'] = wfMsg('wikiaquiz-game-email-error', $result->getMessage());
+				}
+
+				// store an email
+				$entry = F::build('EmailsStorage')->newEntry(EmailsStorage::QUIZ);
+				$entry->setPageId($quizId);
+				$entry->setEmail($email);
+				$ret['entryId'] = $entry->store();
+			}
+			else {
+				$ret['msg'] = wfMsg('wikiaquiz-game-email-valid-please');
+			}
+		}
+		else {
+			$ret['msg'] = wfMsg('wikiaquiz-game-email-token-mismatch');
+		}
+
+		return $ret;
+	}
 }
