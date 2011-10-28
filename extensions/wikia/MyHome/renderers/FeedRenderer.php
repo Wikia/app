@@ -543,7 +543,11 @@ class FeedRenderer {
 		}
 
 		// intro of new content
-		if (isset($row['intro'])) {
+		if (defined('NS_RELATED_VIDEOS') && isset( $row['ns'] ) && $row['ns'] == NS_RELATED_VIDEOS && isset( $row['relatedVideosDescription'] )) {
+			$RelatedVideosService = F::build('RelatedVideosService');
+			$html .= $RelatedVideosService->formatRelatedVideosRow($row['relatedVideosDescription']);
+			$row['comment'] = false;
+		} else if (isset($row['intro'])) {
 			// new blog post
 			if (defined('NS_BLOG_ARTICLE') && $row['ns'] == NS_BLOG_ARTICLE) {
 				$html .= self::formatDetailsRow('new-blog-post', self::formatIntro($row['intro']),false);
@@ -563,16 +567,12 @@ class FeedRenderer {
 				} else {
 					$html .= '';
 				}
-			}
-			// another new content
-			else {
+			} else {
+				// another new content
 				$html .= self::formatDetailsRow('new-page', self::formatIntro($row['intro']), false);
 			}
 		}
-		if (defined('NS_RELATED_VIDEOS') && $row['ns'] == NS_RELATED_VIDEOS && isset( $row['relatedVideosDescription'] )) {
-			$RelatedVideosService = F::build('RelatedVideosService');
-			$html .= $RelatedVideosService->formatRelatedVideosRow($row['relatedVideosDescription']);
-		}
+		
 
 		// section name
 		if (isset($row['section'])) {
