@@ -34,7 +34,7 @@ $dark-wiki: 1;
 	$dark-wiki: 0;
 }
 
-.quiz-bubble {	
+.quiz-bubble {
 	@include border-radius(10px);
 	@include box-shadow(0, 2px, 5px, #000);
 	@include linear-gradient($color-header, top, $bubble-color-alt, 0, $color-header, 100%);
@@ -44,7 +44,7 @@ $dark-wiki: 1;
 	padding: $bubble-padding;
 	position: absolute;
 	text-align: center;
-	
+
 	&:after {
 		bottom: -40px;
 		border: 20px solid transparent;
@@ -463,6 +463,24 @@ $dark-wiki: 1;
 			}
 		}
 	}
+	.quiz-email {
+ 		display: none;
+ 		.quiz-bubble {
+	 		left: 70px;
+			line-height: 32px;
+			padding: 50px 20px 0;
+			top: 50px;
+			width: 620px;
+			z-index: 20;
+			&:after {
+				display: none;
+			}
+	 		small {
+	 			display: block;
+	 			font-size: 12px;
+	 		}
+	 	}
+	}
 	.quiz-thanks {
 		display: none;
 		.thanks {
@@ -474,6 +492,10 @@ $dark-wiki: 1;
 			z-index: $base-z;
 			&:after {
 				left: 285px;
+			}
+			a {
+				color: $color-header-text;
+				text-decoration: underline;
 			}
 		}
 		.more-info {
@@ -509,10 +531,10 @@ $dark-wiki: 1;
 		}
 	}
 	.correct-icon {
-		background: url(/extensions/wikia/WikiaQuiz/images/correct.png) no-repeat;
+		background: url(/extensions/wikia/WikiaQuiz/images/correct.png) no-repeat; /* $wgCdnStylePath */
 	}
 	.wrong-icon {
-		background: url(/extensions/wikia/WikiaQuiz/images/wrong.png) no-repeat;
+		background: url(/extensions/wikia/WikiaQuiz/images/wrong.png) no-repeat; /* $wgCdnStylePath */
 	}
 	.mute-control {
 		bottom: 8px;
@@ -544,7 +566,7 @@ $dark-wiki: 1;
 		display: none;
 		height: 14px;
 		margin: 0 auto;
-		padding-top: 20px; 
+		padding-top: 20px;
 		width: 110px;
 		.indicator {
 			@include border-radius(7px);

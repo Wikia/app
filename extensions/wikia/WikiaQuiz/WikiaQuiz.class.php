@@ -21,6 +21,9 @@ class WikiaQuiz {
 	const MOREINFOLINK_MARKER = 'MOREINFOLINK:';
 	const MOREINFOLINK_TEXT_MARKER = '|';
 
+	const EMAIL_SENDER = 'entertainment@wikia-inc.com';
+	const EMAIL_CATEGORY = 'wikiaquiz';
+
 	private function __construct($quizId) {
 		$this->mData = null;
 		$this->mExists = false;
@@ -88,14 +91,14 @@ class WikiaQuiz {
 			$content = $article->getContent();
 
 			$lines = explode("\n", $content);
-			
+
 			foreach($lines as $line) {
 				if (startsWith($line, self::TITLESCREENTEXT_MARKER)) {
 					$titleScreenText = trim( substr($line, strlen(self::TITLESCREENTEXT_MARKER)) );
 				}
 				elseif (startsWith($line, self::IMAGE_MARKER)) {
 					$imageShort = trim( substr($line, strlen(self::IMAGE_MARKER)) );
-					$images[] = $this->getImageSrc($imageShort);					
+					$images[] = $this->getImageSrc($imageShort);
 					$imageShorts[] = $imageShort;
 				}
 				elseif (startsWith($line, self::MOREINFOHEADING_MARKER)) {
@@ -114,7 +117,7 @@ class WikiaQuiz {
 					$moreInfoLinks[] = array('article'=>$moreInfoChunks[0],
 								'url'=>$moreInfoUrl,
 								'text'=>isset($moreInfoChunks[1]) ? $moreInfoChunks[1] : '' );
-					
+
 				}
 			}
 
@@ -136,7 +139,7 @@ class WikiaQuiz {
 					$quizElement = WikiaQuizElement::newFromId($quizElementTitle->getArticleId());
 					$quizElements[] = $quizElement->getData();
 					$quizIterator->next();
-				}				
+				}
 			}
 
 			$this->mData = array(
@@ -160,7 +163,7 @@ class WikiaQuiz {
 		}
 
 		$this->mExists = true;
-		
+
 		wfProfileOut(__METHOD__);
 		return;
 	}
@@ -189,7 +192,7 @@ class WikiaQuiz {
 		}
 		return $this->mName;
 	}
-	
+
 	/**
 	 * Get quiz's title (does not include the mandatory category prefix)
 	 */
@@ -200,7 +203,7 @@ class WikiaQuiz {
 		return $this->mData['name'];
 	}
 
-	
+
 	/**
 	 * Get quiz's elemeents
 	 */
@@ -210,7 +213,7 @@ class WikiaQuiz {
 		}
 		return $this->mData['elements'];
 	}
-	
+
 	/**
 	 * Return true if current quizElement exists
 	 */
@@ -254,7 +257,7 @@ class WikiaQuiz {
 
 		wfProfileOut(__METHOD__);
 	}
-	
+
 	//@todo refactor this function and the version in WikiaQuizElement.class
 	private function getImageSrc($filename) {
 		$imageSrc = '';

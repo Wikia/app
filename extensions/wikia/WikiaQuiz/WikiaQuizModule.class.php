@@ -34,7 +34,7 @@ class WikiaQuizModule extends Module {
 	}
 
 	public function executePlayQuiz($params) {
-		global $wgUser, $wgOut, $wgRequest, $wgSiteName;
+		global $wgUser, $wgOut, $wgRequest, $wgSiteName, $wgTitle;
 
 		$this->data = $params['data'];
 
@@ -56,7 +56,7 @@ class WikiaQuizModule extends Module {
 
 		$this->username = $wgUser->getName();
 		$this->isAnonUser = $wgUser->isAnon();
-		
+
 		// render this array in PHP and encode it properly for JS
 		$this->quizVars = array(
 			'cadence' => array(
@@ -67,6 +67,14 @@ class WikiaQuizModule extends Module {
 			'correctLabel' => wfMsg('wikiaquiz-game-correct-label'),
 			'incorrectLabel' => wfMsg('wikiaquiz-game-incorrect-label'),
 		);
+
+		// prefill with user's email
+		$this->defaultEmail = $wgUser->isLoggedIn() ? $wgUser->getEmail() : '';
+
+		// use token to prevent direct requests to the backend for storing emails
+		$this->token = $wgUser->editToken('WikiaQuiz' /* $salt */);
+
+		$this->quizId = $wgTitle->getArticleId();
 	}
 
 	/**

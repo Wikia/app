@@ -121,12 +121,38 @@
 			<button class="continue"><?= wfMsg('wikiaquiz-game-continue-button') ?></button>
 		</div>
 	</div>
+	<div class="quiz-email">
+		<?php
+		// FIXME: why is it copy&pasted in this template several times?
+		?>
+		<img src="<?= $data['images'][0] ?>" class="title-image image1" height="205" width="205">
+		<img src="<?= $data['images'][1] ?>" class="title-image image2" height="250" width="250">
+		<img src="<?= $data['images'][2] ?>" class="title-image image3" height="205" width="205">
+		<div class="email quiz-bubble">
+			<?= wfMsg('wikiaquiz-game-provide-email') ?>
+			<form>
+				<input type="email" name="email" placeholder="<?= wfMsg('wikiaquiz-game-email-placeholder') ?>" value="<?= htmlspecialchars($defaultEmail) ?>" size="30" />
+				<input type="submit" class="continue" value="<?= wfMsg('wikiaquiz-game-email-button') ?>" />
+				<input type="hidden" name="token" value="<?= htmlspecialchars($token) ?>" />
+				<input type="hidden" name="quizid" value="<?= $quizId ?>" />
+				<small><?= wfMsg('wikiaquiz-game-email-valid-please') ?></small>
+			</form>
+		</div>
+		<div class="more-info">
+			<h2><?= $data['moreinfoheading'] ?></h2>
+			<ul>
+				<? foreach ($data['moreinfo'] as $line) { ?>
+					<li><a href="<?= $line['url'] ?>" target="_blank"><?= $line['text'] ?></a></li>
+				<? } ?>
+			</ul>
+		</div>
+	</div>
 	<div class="quiz-thanks">
 		<img src="<?= $data['images'][0] ?>" class="title-image image1" height="205" width="205">
 		<img src="<?= $data['images'][1] ?>" class="title-image image2" height="250" width="250">
 		<img src="<?= $data['images'][2] ?>" class="title-image image3" height="205" width="205">
 		<div class="thanks quiz-bubble">
-			<?= wfmsg('wikiaquiz-game-thanks') ?>
+			<?= wfMsgExt('wikiaquiz-game-thanks', array('parsemag', 'parseinline'), wfMsg('mainpage')) ?>
 		</div>
 		<div class="more-info">
 			<h2><?= $data['moreinfoheading'] ?></h2>

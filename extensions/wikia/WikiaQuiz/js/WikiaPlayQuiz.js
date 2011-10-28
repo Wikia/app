@@ -18,14 +18,15 @@ var WikiaQuiz = {
 		WikiaQuiz.qSet = $('#WikiaQuiz .questions .question-set');
 		WikiaQuiz.cqNum = 0;
 		WikiaQuiz.totalQ = WikiaQuiz.qSet.length;
-		WikiaQuiz.ui.titleScreen = $('#WikiaQuiz .title-screen');
+		WikiaQuiz.ui.titleScreen = $('#WikiaQuiz > .title-screen');
 		WikiaQuiz.ui.countDown = $('#CountDown');
 		WikiaQuiz.ui.countDownNumber = $('#CountDown .number');
 		WikiaQuiz.ui.countDownCadence = $('#CountDown .cadence');
 		WikiaQuiz.ui.startButton = $('#StartButton');
 		WikiaQuiz.ui.questions = $('#Questions');
-		WikiaQuiz.ui.endScreen = $('#WikiaQuiz .quiz-end');
-		WikiaQuiz.ui.thanksScreen = $('#WikiaQuiz .quiz-thanks');
+		WikiaQuiz.ui.endScreen = $('#WikiaQuiz > .quiz-end');
+		WikiaQuiz.ui.emailScreen = $('#WikiaQuiz > .quiz-email');
+		WikiaQuiz.ui.thanksScreen = $('#WikiaQuiz > .quiz-thanks');
 		WikiaQuiz.ui.progressBar = $('#ProgressBar');
 		WikiaQuiz.ui.progressBarIndicators = $('#ProgressBar .indicator');
 		WikiaQuiz.ui.correctIcon = $('#CorrectIcon');
@@ -51,6 +52,8 @@ var WikiaQuiz = {
 		// events
 		WikiaQuiz.ui.startButton.click(WikiaQuiz.handleStart);
 		WikiaQuiz.ui.muteToggle.click(WikiaQuiz.toggleSound);
+
+		$().log('init', 'WikiaQuiz');
 	},
 	handleStart: function() {
 		WikiaQuiz.trackByStr('start');
@@ -205,6 +208,7 @@ var WikiaQuiz = {
 			}
 		});
 	},
+	// show screen with user's score
 	showEnd: function() {
 		WikiaQuiz.trackByStr('finalscore/'+WikiaQuiz.score);
 		var score = Math.floor((WikiaQuiz.score / WikiaQuiz.totalQ) * 100);
@@ -216,14 +220,53 @@ var WikiaQuiz = {
 		WikiaQuiz.ui.progressBar.fadeOut(WikiaQuiz.animationTiming);
 		WikiaQuiz.ui.endScreen.fadeIn(WikiaQuiz.animationTiming, function() {
 			WikiaQuiz.playSound(WikiaQuiz.sound.applause);
+			// proceed to email screen when "Continue" is clicked
 			WikiaQuiz.ui.endScreen.find('.continue').click(function() {
-				WikiaQuiz.trackByStr('endscreen');
-				WikiaQuiz.ui.endScreen.fadeOut(WikiaQuiz.animationTiming, function() {
-					WikiaQuiz.ui.thanksScreen.fadeIn(WikiaQuiz.animationTiming, function() {
-						WikiaQuiz.ui.thanksScreen.find('.more-info').click(function() {
-							WikiaQuiz.trackByStr('moreinfo');
-						});
-					});
+				WikiaQuiz.showEmail();
+			});
+		});
+	},
+	// show screen with email field
+	showEmail: function() {
+		WikiaQuiz.trackByStr('emailscreen');
+		WikiaQuiz.ui.endScreen.fadeOut(WikiaQuiz.animationTiming);
+		WikiaQuiz.ui.emailScreen.fadeIn(WikiaQuiz.animationTiming, function() {
+			// submit an email and proceed to thank you screen
+			var emailForm =  WikiaQuiz.ui.emailScreen.find('form'),
+				submitButton = emailForm.children('input[type="submit"]');
+
+			emailForm.bind('submit', function(ev) {
+				ev.preventDefault();
+				submitButton.attr('disabled', true);
+
+				$.post(wgScript, {
+					action: 'ajax',
+					rs: 'WikiaQuizAjax',
+					method: 'addEmail',
+					email: emailForm.children('input[name="email"]').val(),
+					token: emailForm.children('input[name="token"]').val(),
+					quizid: emailForm.children('input[name="quizid"]').val()
+				}, function(data) {
+					submitButton.attr('disabled', false);
+
+					if (data.ok) {
+						WikiaQuiz.showThanks();
+					}
+					else {
+						alert(data.msg);
+					}
+				}, 'json');
+			});
+		});
+	},
+
+	// show thank you screen (the last one)
+	showThanks: function() {
+		WikiaQuiz.trackByStr('endscreen');
+		WikiaQuiz.ui.emailScreen.fadeOut(WikiaQuiz.animationTiming, function() {
+			WikiaQuiz.ui.thanksScreen.fadeIn(WikiaQuiz.animationTiming, function() {
+				WikiaQuiz.ui.thanksScreen.find('.more-info').click(function() {
+					WikiaQuiz.trackByStr('moreinfo');
 				});
 			});
 		});
@@ -243,6 +286,6 @@ var WikiaQuiz = {
 	}
 };
 
-window.onload = function() {
+$(function() {
 	WikiaQuiz.init();
-};
+});

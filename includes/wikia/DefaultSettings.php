@@ -377,6 +377,7 @@ include_once( "$IP/extensions/wikia/Scribe/SpecialScribeEvents.php" );
 include_once( "$IP/extensions/wikia/AssetsManager/AssetsManager_setup.php" );
 include_once( "$IP/extensions/wikia/JSSnippets/JSSnippets_setup.php" );
 include_once( "$IP/extensions/wikia/WikiaTracker/WikiaTracker.setup.php" );
+include_once( "$IP/extensions/wikia/EmailsStorage/EmailsStorage.setup.php" );
 
 /**
  * @name $wgSkipSkins
