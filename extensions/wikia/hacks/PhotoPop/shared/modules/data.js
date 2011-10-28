@@ -17,11 +17,11 @@ define.call(exports, {
 				url = url + ((url.indexOf('?') >= 0) ? '&' : '?') + 'format=json';
 				
 				Titanium.App.addEventListener('XDomainLoader:error', function(event){
-					that.fire('error', {url: url, error: event});
+					that.fire('error', {url: url, error: event.data});
 				});
 				
 				Titanium.App.addEventListener('XDomainLoader:success', function(event){
-					that.fire('success', {url: url, response: event});
+					that.fire('success', {url: url, response: event.data});
 				});
 				
 				Titanium.App.fireEvent('XDomainLoader:load', {url: url, options: options});
