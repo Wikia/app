@@ -166,14 +166,12 @@ class RelatedVideosNamespaceData {
 			);
 
 			wfDebug(__METHOD__ . ": loaded from scratch\n");
-			Wikia::log( __METHOD__, 'RelatedVideos', 'Not from cache' );
-
+			
 			// store it in memcache
 			F::app()->wg->memc->set($this->mMemcacheKey, $this->mData, self::CACHE_TTL);
 		}
 		else {
 			wfDebug(__METHOD__ . ": loaded from memcache\n");
-			Wikia::log( __METHOD__, 'RelatedVideos', 'From cache' );
 		}
 
 		$this->mExists = true;
@@ -263,9 +261,8 @@ class RelatedVideosNamespaceData {
 		$content = '';
 		$status = '';
 		$summary = '';
-		$this->load();	
+		$this->load();
 
-		
 		if ($list == self::WHITELIST_MARKER) {
 			// check Related Pages results for duplicate
 			// initialize categories of RelatedPages object
@@ -278,13 +275,13 @@ class RelatedVideosNamespaceData {
 				$categories[$shortCategoryTitle] = $articleTitle;
 			}
 			RelatedVideos::getInstance()->setCategories($categories);
-			
+
 			// get related videos
 			$relatedVideos = RelatedVideos::getInstance()->get(
 				$mainNsArticleId,
 				RelatedVideos::MAX_RELATEDVIDEOS
 				);
-			
+
 			// check for duplicate
 			foreach ($relatedVideos as $dateId=>$rvData) {
 				foreach ($entries as $newEntry) {
@@ -315,19 +312,18 @@ class RelatedVideosNamespaceData {
 			}
 			// no duplicate found. add!
 			$this->mData['lists'][$list] = array_merge($this->mData['lists'][$list], $entries);
-
-			// managing WikiActivity
-			$oTmpTitle = F::build( 'Title', array( $newEntry['title'], NS_VIDEO), 'newFromText');
-			if ( $oTmpTitle->exists() ){
-				if ( $list == self::WHITELIST_MARKER ){
-					$summary = wfMsg('related-videos-wiki-summary-whitelist', array( $oTmpTitle->getText(), $oTmpTitle->getFullText() ));
-				} else {
-					$summary = wfMsg('related-videos-wiki-summary-blacklist', array( $oTmpTitle->getText(), $oTmpTitle->getFullText() ));
-				}
-			}
 		}
 		else {
 			$this->mData['lists'][$list] = $entries;
+			$newEntry = end( $entries );
+		}
+
+		// managing WikiActivity
+		$oTmpTitle = F::build( 'Title', array( $newEntry['title'], NS_VIDEO), 'newFromText');
+		if ( $list == self::WHITELIST_MARKER ){
+			$summary = wfMsg('related-videos-wiki-summary-whitelist', array( $oTmpTitle->getText(), $oTmpTitle->getFullText() ));
+		} else {
+			$summary = wfMsg('related-videos-wiki-summary-blacklist', array( $oTmpTitle->getText(), $oTmpTitle->getFullText() ));
 		}
 		
 		// next, remove from other list
@@ -337,6 +333,7 @@ class RelatedVideosNamespaceData {
 		else {
 			$otherList = self::WHITELIST_MARKER;
 		}
+		
 		if (!empty($this->mData['lists'][$otherList])) {
 			foreach ($this->mData['lists'][$otherList] as $key=>&$entry) {
 				foreach ($entries as $newEntry) {
@@ -368,7 +365,7 @@ class RelatedVideosNamespaceData {
 			$summary = wfMsg( 'related-videos-updated', array( ucfirst(strtolower($list)) ) );
 		}
 
-		$status = $article->doEdit($content, $summary, $this->exists() ? EDIT_UPDATE : EDIT_NEW, false, F::app()->wg->user);
+		status = $article->doEdit($content, $summary, $this->exists() ? EDIT_UPDATE : EDIT_NEW, false, F::app()->wg->user);
 		$this->purge();	// probably unnecessary b/c a hook does this, but can't hurt
 
 		wfProfileOut( __METHOD__ );
