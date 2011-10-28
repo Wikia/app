@@ -3074,6 +3074,7 @@ class Article {
 			# Make sure logging got through
 			$log->addEntry( 'delete', $this->mTitle, $reason, array() );
 		}
+		
 		/* Wikia change end */
 
 		$dbw->commit();

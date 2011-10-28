@@ -360,7 +360,15 @@ class PageArchive {
 
 		if( trim( $comment ) != '' )
 			$reason .= wfMsgForContent( 'colon-separator' ) . $comment;
-		$log->addEntry( 'restore', $this->title, $reason );
+		
+		/** Wikia change begin - @author: Andrzej 'nAndy' Lukaszewski */
+		if( wfRunHooks('PageArchiveUndeleteBeforeLogEntry', array(&$this, &$log, &$this->title, $reason)) ) {
+		//hook takes care of logging
+		} else {
+			# Make sure logging got through
+			$log->addEntry( 'restore', $this->title, $reason );
+		}
+		/* Wikia change end */
 
 		wfRunHooks( 'UndeleteComplete', array(&$this->title, &$wgUser, $reason ) );
 
