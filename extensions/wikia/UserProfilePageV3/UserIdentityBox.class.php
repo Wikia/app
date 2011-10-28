@@ -34,6 +34,7 @@ class UserIdentityBox {
 		'chatmoderator' => 1,
 	);
 	
+	
 	/**
 	 * @param WikiaApp $app wikia appliacation object
 	 * @param User $user core user object
@@ -81,23 +82,22 @@ class UserIdentityBox {
 			$data['name'] = $userName;
 			$data['realName'] = $this->app->wf->Msg('user-identity-box-wikia-contributor');
 		} else {
-			$userStatsService = F::build('UserStatsService', array($userId));
-			$userStats = $userStatsService->getStats();
+			if(empty($this->userStats)) {
+				$userStatsService = F::build('UserStatsService', array($userId));
+				$this->userStats = $userStatsService->getStats();
+			}
 			
-			$iEdits = $userStats['edits'];
+			$iEdits = $this->userStats['edits'];
 			$iEdits = $data['edits'] = is_null($iEdits) ? 0 : intval($iEdits);
 			
 			//data depends on which wiki it is displayed
-			$data['registration'] = $userStats['date'];
+			$data['registration'] = $this->userStats['date'];
 			
 			$wikiId = $this->app->wg->CityId;
-			$hasUserEverEditedMastheadBefore = $this->hasUserEverEditedMasthead();
-			$hasUserEditedMastheadBeforeOnThisWiki = $this->hasUserEditedMastheadBefore($wikiId);
-			
+
 			$data['userPage'] = $this->user->getUserPage()->getFullURL();
 			
-			//data from user_properties table
-			if( $hasUserEditedMastheadBeforeOnThisWiki || ($iEdits > 0 && $hasUserEverEditedMastheadBefore) || $isEdit ) {
+			if( $isEdit || $this->shouldDisplayFullMasthead() ) {
 				$this->getDefaultData($data);
 			} else {
 				$this->getEmptyData($data);
@@ -158,8 +158,12 @@ class UserIdentityBox {
 					$data[$key] = $this->user->getOption(self::USER_PROPERTIES_PREFIX.$key);
 				}
 			}
-			
-			$data['realName'] = $this->user->getRealName();
+			$disabled = $this->user->getOption('disabled');
+			if(empty($disabled)) {
+				$data['realName'] = $this->user->getRealName();
+			} else {
+				$data['realName'] = '';
+			}
 		} else {
 			$data = array_merge_recursive($data, $memcData);
 		}
@@ -819,6 +823,27 @@ class UserIdentityBox {
 		
 		$this->app->wf->ProfileOut( __METHOD__ );
 		return false;
+	}
+	
+	public function shouldDisplayFullMasthead() {
+		$userId = $this->user->getId();
+		if(empty($this->userStats)) {
+			$userStatsService = F::build('UserStatsService', array($userId));
+			$this->userStats = $userStatsService->getStats();
+		}
+				
+		$iEdits = $this->userStats['edits'];
+		$iEdits = is_null($iEdits) ? 0 : intval($iEdits);
+		
+		$wikiId = $this->app->wg->CityId;
+		$hasUserEverEditedMastheadBefore = $this->hasUserEverEditedMasthead();
+		$hasUserEditedMastheadBeforeOnThisWiki = $this->hasUserEditedMastheadBefore($wikiId);
+			
+		if( $hasUserEditedMastheadBeforeOnThisWiki || ($iEdits > 0 && $hasUserEverEditedMastheadBefore) ) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 }
