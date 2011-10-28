@@ -18,7 +18,7 @@ define.call(exports, function(){
 		},
 		
 		play: function(sound) {
-			if(titanium)
+			if(titanium && !mute)
 				Titanium.App.fireEvent('soundServer:play', {sound: sounds[sound]});
 			else {
 				if(sound == 'win' || sound == 'fail') {

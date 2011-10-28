@@ -146,52 +146,58 @@ define.call(exports, function(){
 		openModal: function(options) {
 			options = options || {};
 			
-				var modalWrapper = document.getElementById('modalWrapper'),
-				modal = document.getElementById('modal'),
-				self = this;
-				
-				if(options.fontSize) {
-					modal.style.fontSize = options.fontSize;
+			var modalWrapper = document.getElementById('modalWrapper'),
+			modal = document.getElementById('modal'),
+			self = this;
+
+			if(options.fontSize) {
+				modal.style.fontSize = options.fontSize;
+			} else {
+				modal.style.fontSize = "x-large";
+			}
+			
+			if(options.fade) {
+				modal.classList.add('transition-all');
+			} else {
+				modal.classList.remove('transition-all');
+			}
+			
+			if(options.triangle) {
+				modal.classList.add('triangle');
+				modal.classList.add(options.triangle);
+			} else {
+				modal.classList.remove('triangle');
+			}
+			
+			modalWrapper.style.visibility = 'visible';
+			modal.style.opacity = 0.8;
+			
+			if( options.clickThrough ) {
+				modalWrapper.style.pointerEvents = 'none';
+				modal.style.pointerEvents = 'auto';
+			} else {
+				modalWrapper.style.pointerEvents = 'auto';
+			}
+			
+			if( options.leaveBottomBar ) {
+				modalWrapper.style.top = -24;
+			} else {
+				modalWrapper.style.top = 0;
+			}
+			
+			if(options.html) {
+				modal.innerHTML = options.html;
+			}
+			
+			this.fire('modalOpened', {name: options.name});
+			
+			if(options.closeOnClick) {
+				modalWrapper.onclick = function() {
+					self.closeModal();
 				}
-				
-				if(options.fade) {
-					modal.classList.add('transition-all');
-				} else {
-					modal.classList.remove('transition-all');
-				}
-				
-				if(options.triangle) {
-					modal.classList.add('triangle');
-					modal.classList.add(options.triangle);
-				}
-				
-				modalWrapper.style.visibility = 'visible';
-				modal.style.opacity = 0.8;
-				
-				if( options.clickThrough ) {
-					modalWrapper.style.pointerEvents = 'none';
-					modal.style.pointerEvents = 'auto';
-				} else {
-					modalWrapper.style.pointerEvents = 'auto';
-				}
-				
-				if( options.leaveBottomBar ) {
-					modalWrapper.style.top = -24;
-				} else {
-					modalWrapper.style.top = 0;
-				}
-				
-				if(options.html) {
-					modal.innerHTML = options.html;
-				}
-				
-				this.fire('modalOpened', {name: options.name});
-				
-				if(options.closeOnClick) {
-					modalWrapper.onclick = function() {
-						self.closeModal();
-					}
-				}
+			} else {
+				modalWrapper.onclick = null;
+			}
 		},
 		
 		closeModal: function() {
