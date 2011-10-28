@@ -208,16 +208,14 @@ class WallController extends ArticleCommentsModule {
 		}
 
 		$wallMessage = F::build('WallMessage', array($comment), 'newFromArticleComment' );
-	
 		$this->response->setVal('hide',  false);
-		
-		$data = $wallMessage->getData($this->wg->User);
+		$wallMessage->load();
 
 		$this->response->setVal('title', $this->getVal('title'));
 		
 		if( !$this->getVal('isreply') ) {
 			$this->response->setVal('feedtitle', htmlspecialchars($wallMessage->getMetaTitle()) );
-			$this->response->setVal('body', $data['text'] );
+			$this->response->setVal('body', $wallMessage->getText() );
 			$this->response->setVal('isreply', false ); 
 			
 			$wallMaxReplies = 4;
@@ -243,32 +241,45 @@ class WallController extends ArticleCommentsModule {
 				$this->response->setVal('hide',  true);
 			}
 			
-			$this->response->setVal('body', $data['text'] );
+			$this->response->setVal('body', $wallMessage->getText() );
 			$this->response->setVal('isreply', true );
 			$this->response->setVal('replies', false );
 		}
-		
-		$author_user = User::newFromName($data['author']->getName());
-		
-		$name     = $data['author']->getName();
+		//TODO: refactor it
+		$authorUser = User::newFromName($wallMessage->getUser()->getName());
 		// even tho $data['author'] is a User object already
 		// it's a cached object, and we need to make sure that we are
 		// using newest RealName
 		// cache invalidation in this case would require too many queries
-		if($author_user) {
-			$realname = $author_user->getRealName();
+		if($authorUser) {
+			$realname = $authorUser->getRealName();
+			$name = $authorUser->getName();
 		} else {
 			$realname = '';
+			$name = $wallMessage->getUser()->getName();
 		}
-		
+	
 		$this->response->setVal( 'id', $wallMessage->getTitle()->getArticleID());
 		$this->response->setVal( 'username', $name );
-		//$this->response->setVal( 'sig', $data['sig'] );
 		$this->response->setVal( 'realname', $realname );
-		$this->response->setVal( 'rawtimestamp', $data['rawtimestamp'] );
-		$this->response->setVal( 'iso_timestamp',  wfTimestamp(TS_ISO_8601, $data['rawmwtimestamp'] ));
-		$this->response->setVal( 'fmt_timestamp',  $this->wg->Lang->timeanddate($data['rawmwtimestamp']) );
 		
+		if($wallMessage->isEdited()) {
+			$this->response->setVal( 'iso_timestamp',  $wallMessage->getEditTime(TS_ISO_8601) );
+			$this->response->setVal( 'fmt_timestamp',  $this->wg->Lang->timeanddate( $wallMessage->getEditTime(TS_MW) ));  
+			$this->response->setVal( 'showEditedTS',  true );
+			$editorName = $wallMessage->getEditor()->getName();
+			$this->response->setVal( 'editorName', $editorName );
+			$editorUrl = F::build('Title', array($editorName, NS_USER), 'newFromText' )->getFullUrl();
+			$this->response->setVal( 'editorUrl',  $editorUrl);
+			$this->response->setVal( 'isEdited',  true);
+			$this->response->setVal( 'historyUrl', $wallMessage->getTitle()->getFullUrl('action=history') );
+		} else {
+			$this->response->setVal( 'showEditedTS',  false );
+			$this->response->setVal( 'iso_timestamp',  $wallMessage->getCreatTime(TS_ISO_8601) );
+			$this->response->setVal( 'fmt_timestamp',  $this->wg->Lang->timeanddate( $wallMessage->getCreatTime(TS_MW) ));
+			$this->response->setVal( 'isEdited',  false);
+		}
+
 		$this->response->setVal( 'fullpageurl', $this->helper->getMessagePageUrl($comment) );
 		$this->response->setVal( 'wgBlankImgUrl', $this->wg->BlankImgUrl );
 		$this->response->setVal( 'canEdit', $wallMessage->canEdit($this->wg->User) );
@@ -290,13 +301,13 @@ class WallController extends ArticleCommentsModule {
 
 		$url = F::build('Title', array($name, NS_USER), 'newFromText' )->getFullUrl();
 		
-		if($data['author']->getId() == 0) { // anynymous contributor
+		if($wallMessage->getUser()->getId() == 0) { // anynymous contributor
 			//$url = F::build('Title', array($name, NS_USER), 'newFromText' )->getFullUrl();
 			//$url = $this->app->wg->SpecialPages['Contributors']
-			$url = Skin::makeSpecialUrl('Contributions').'/'.$data['author']->getName();
+			$url = Skin::makeSpecialUrl('Contributions').'/'.$wallMessage->getUser()->getName();
 			
 			$displayname = wfMsg('oasis-anon-user');
-			$displayname2 = $data['author']->getName();
+			$displayname2 = $wallMessage->getUser()->getName();
 		}
 
 		$this->response->setVal( 'displayname',  $displayname );
@@ -304,19 +315,22 @@ class WallController extends ArticleCommentsModule {
 		
 		$this->response->setVal( 'user_author_url', $url);
 		
-		$isStaff = $data['author']->isAllowed('wallshowwikiaemblem');
+		//????????????????????????
+		$isStaff = $this->app->wg->User->isAllowed('wallshowwikiaemblem');
 		$this->response->setVal( 'isStaff', $isStaff );
 		if( $isStaff ) {
 			$wikiaEmblemUrl = $this->app->wf->ReplaceImageServer('http://images.wikia.com/wikia/images/e/e9/WikiaStaff.png');
 			$this->response->setVal( 'wikiaEmblemUrl', $wikiaEmblemUrl );
 		}
-		
 		wfProfileOut( __METHOD__ );
+	}
+	
+	public function parseText($text){
+		return $this->parserText($text);
 	}
 	
 	public function reply() {
 		$this->response->setVal('username', $this->wg->User->getName() );
-		
 		$this->checkAndSetAnonsEditing();
 	}
 	

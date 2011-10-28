@@ -611,6 +611,20 @@ var Wall = $.createClass(Object, {
 				$('.buttons').show();
 
 				//click tracking
+				var timestamp = $(bubble).find('.timestamp');
+				
+				var editor = timestamp.find('.username');
+				if(editor.exists()) {
+					timestamp.find('.username').html(data.username).attr('href', data.userUrl);					
+				} else {
+					timestamp.prepend($($.msg('wall-message-edited', data.userUrl, data.username, data.historyUrl)));
+				}
+				
+				timestamp.find('.timeago').attr('title', data.isotime).timeago();
+				timestamp.find('.timeago-fmt').html(data.fulltime);
+				
+				//$('.SpeechBubble .timestamp .permalink') 
+				
 				$.tracker.byStr('wall/message/edit/save_changes');
 			})
 		});

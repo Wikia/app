@@ -33,9 +33,12 @@
 		</div>
 
 		<div class="timestamp" style="clear:both">
+			<?php if($isEdited):?>
+				<? echo wfMsg('wall-message-edited', array('$1' => $editorUrl, '$2' => $editorName, '$3' => $historyUrl )); ?>
+			<?php endif; ?>
 			<a  href="<?= $fullpageurl; ?>" class="permalink" tabindex="-1">
-				<div class="timeago abstimeago" title="<?= $iso_timestamp ?>" alt="<?= $fmt_timestamp ?>">&nbsp;</div>
-				<div class="timeago-fmt"><?= $fmt_timestamp ?></div>
+				<span class="timeago abstimeago" title="<?= $iso_timestamp ?>" alt="<?= $fmt_timestamp ?>">&nbsp;</span>
+				<span class="timeago-fmt"><?= $fmt_timestamp ?></span>
 			</a>
 		</div>
 

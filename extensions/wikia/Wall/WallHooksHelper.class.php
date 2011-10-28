@@ -6,7 +6,6 @@ class WallHooksHelper {
 		$app = F::App();
 		$helper = F::build('WallHelper', array());
 		$title = $article->getTitle();
-		
 		if( $title->getNamespace() === NS_USER_WALL 
 			&& !$title->isSubpage() 
 		) {
@@ -20,6 +19,7 @@ class WallHooksHelper {
 		if( $title->getNamespace() == NS_USER_WALL_MESSAGE && !empty($parts[1]) ) {
 			// thread / message link in form of @comment-username-number
 			// needs converting to articleId
+		
 			$articleId = $title->getArticleId();
 			if($articleId == 0) {
 				$articleId = $helper->getDeletedArticleId($title->getText());
@@ -30,7 +30,6 @@ class WallHooksHelper {
 			return true;
 			
 		}
-		
 		if( $title->getNamespace() == NS_USER_WALL_MESSAGE && !$title->isSubpage() ) {
 			// is someone trying to use this namespace as talk page?
 			
@@ -405,7 +404,11 @@ class WallHooksHelper {
 	protected function doSelfRedirect() {
 		$app = F::App();
 		$title = $app->wg->Title;
-		
+
+		if($app->wg->Request->getVal('action') == 'history' || $app->wg->Request->getVal('action') == 'historysubmit') {
+			return true;
+		}
+
 		if( $title->getNamespace() === NS_USER_WALL ) {
 			$app->wg->Out->redirect($title->getLocalUrl(), 301);
 			$app->wg->Out->enableRedirects(false);

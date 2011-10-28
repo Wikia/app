@@ -24,6 +24,11 @@ class WallMessage {
 	public function canEdit(User $user){
 		return $this->isAuthor($user) || $user->isAllowed('walledit');
 	}
+	
+	public function doSaveComment($body, $user) {
+		$this->getArticleComment()->doSaveComment( $body, $user );
+		return $this->getArticleComment()->parseText($body);;
+	}
 
 	public function canDelete(User $user){
 		return $this->isWallOwner($user) || $user->isAllowed('walldelete');
@@ -31,6 +36,10 @@ class WallMessage {
 	 
 	public function getMetaTitle(){
 		return $this->getArticleComment()->getMetadata('title');
+	}
+	
+	public function setMetaTitle($title) {
+		return $this->getArticleComment()->setMetaData('title', $title);
 	}
 	
 	public function getWallOwner() {
@@ -88,9 +97,25 @@ class WallMessage {
 		return $this->getArticleComment()->mUser;
 	}
 	
-	public function getData(User $user) {
-		$data = $this->getArticleComment()->getData();
-		return $data; 
+	public function getText() {
+		return $this->getArticleComment()->getText();
+	}
+	
+	public function getCreatTime($format = TS_ISO_8601) {
+		return wfTimestamp($format, $this->getArticleComment()->mFirstRevision->getTimestamp());
+	}
+	
+	public function getEditor(){
+		$user = User::newFromId($this->getArticleComment()->mLastRevision->getUser());
+		return $user;		
+	}
+	
+	public function getEditTime($format){
+		return wfTimestamp($format, $this->getArticleComment()->mLastRevision->getTimestamp());		
+	}
+	
+	public function isEdited() {
+		return $this->getArticleComment()->mLastRevId != $this->getArticleComment()->mFirstRevId;
 	}
 	
 	public function isAuthor(User $user){
