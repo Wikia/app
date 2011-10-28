@@ -544,6 +544,7 @@ define.call(exports, function(){
 		},
 		
 		openHighscore: function(e, highscore) {
+			console.log(highscore);
 			var table = document.getElementById('highscoreScreen').getElementsByTagName('tbody')[0]
 			header = table.getElementsByTagName('tr')[0].innerHTML,
 				fragment = '';

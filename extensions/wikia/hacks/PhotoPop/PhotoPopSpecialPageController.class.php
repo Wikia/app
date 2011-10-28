@@ -32,6 +32,20 @@ class PhotoPopSpecialPageController extends WikiaSpecialPageController {
 		$this->forward( __CLASS__, 'setup' );
 	}
 	
+	private function getData($category){
+		$this->wf->profileIn( __METHOD__ );
+		
+		if ( empty( $category ) ) {
+			$this->wf->profileOut( __METHOD__ );
+			throw new WikiaException( 'Missing parameter: category' );
+		}
+
+		$result = $this->model->getGameContents( $category, 480, 320 );
+		$this->wf->profileOut( __METHOD__ );
+
+		return $result;
+	}
+	
 	public function setup() {
 		$this->wf->profileIn( __METHOD__ );
 		
@@ -50,6 +64,8 @@ class PhotoPopSpecialPageController extends WikiaSpecialPageController {
 			'icon' => array(),
 			'db' => array()
 		);
+		$rounds = null;
+		$images = array();
 		
 		$game = $this->model->getSettings( $this->wg->CityId );
 		
@@ -59,6 +75,7 @@ class PhotoPopSpecialPageController extends WikiaSpecialPageController {
 			if ( $cat instanceof Category ) {
 				$currentCategory = $cat->getName();
 				$currentCategoryUrl = $cat->getTitle()->getLocalURL();
+				$rounds = $this->getData($currentCategory);
 			}
 			
 			if ( !empty( $game->thumbnail ) ) {
@@ -76,7 +93,10 @@ class PhotoPopSpecialPageController extends WikiaSpecialPageController {
 				
 				if ( !( $cat instanceof Category && $cat->getID() !== false ) ) {
 					$errors['category'][] = $this->wf->Msg( 'photopop-error-category-non-existing' );
+				} else {
+					$rounds = $this->getData($cat->getName());
 				}
+				
 			} else {
 				$errors['category'][] = $this->wf->Msg( 'photopop-error-field-compulsory' );
 			}
@@ -119,9 +139,9 @@ class PhotoPopSpecialPageController extends WikiaSpecialPageController {
 		$this->response->setVal( 'currentCategoryUrl', $currentCategoryUrl );
 		$this->response->setVal( 'currentIconUrl', $currentIconUrl );
 		$this->response->setVal( 'currentWatermarkUrl', $currentWatermarkUrl );
+		$this->response->setVal( 'images', $rounds);
 		$this->response->setVal( 'errors', $errors );
 		$this->response->setVal( 'message', $message );
-		
 		$this->wf->profileOut( __METHOD__ );
 	}
 

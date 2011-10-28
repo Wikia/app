@@ -138,7 +138,7 @@
 				}
 				
 				document.getElementById('button_scores').onclick = function() {
-					initHighscore();
+					openHighscore();
 				}
 			},
 			
@@ -199,11 +199,13 @@
 
 				store.remove(g.getId());
 				g = null;
-
-				if(options.totalPoints > highscore[highscore.length-1].score) {
+				
+				var score = options.totalPoints;
+				
+				if(score > highscore[highscore.length-1].score) {
 					var date = new Date();
 					highscore.push({
-						score: options.totalPoints,
+						score: score,
 						date: date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear(),
 						wiki: options.gameId
 					});
@@ -213,18 +215,16 @@
 					highscore = highscore.slice(0, 5);
 				}
 				
-				if(options.totalPoints > highscore[0].score) {
-					document.getElementById('highScore').getElementsByTagName('span')[0].innerHTML = options.totalPoints;
+				if(score > highscore[0].score) {
+					document.getElementById('highScore').getElementsByTagName('span')[0].innerHTML = score;
 					screenManager.get('game').openModal({
 						name: 'highscore',
-						html: 'New highscore: ' + options.totalPoints + ' !',
-						fade: true,
+						html: 'New highscore: ' + score + ' !',
 						clickThrough: false,
 						closeOnClick: true
 					});
 				}
-				
-				
+
 				store.set('highscore', highscore);
 				
 				if(options.gameId == 'tutorial') {
@@ -233,11 +233,8 @@
 			},
 			
 			playAgain = function(){
-				var id = g.getId();
-				g.handlePause(true);
 				g = null;
-				selectedGame = games[selectedGameId];
-				runGame(selectedGame);
+				loadSelectedGame();
 			},
 			
 			goHome = function(e, gameFinished) {
@@ -415,7 +412,7 @@
 				g.addEventListener('initHomeScreen', initHomeScreen);
 				g.addEventListener('goHome', goHome);
 				g.addEventListener('playAgain', playAgain);
-				g.addEventListener('goToHighScores', initHighscore);
+				g.addEventListener('goToHighScores', openHighscore);
 				g.addEventListener('timeIsUp', timeIsUp);
 				g.addEventListener('wrongAnswerClicked', wrongAnswerClicked);
 				g.addEventListener('rightAnswerClicked', rightAnswerClicked);
@@ -436,7 +433,7 @@
 			initHighscore = function(){
 				
 				highscore = store.get('highscore') || [];
-				
+
 				if(!highscore.length) {
 					var date = new Date();
 					for(var i=0;i<5;i++) {
@@ -448,19 +445,17 @@
 					}
 					store.set('highscore', highscore);
 				}
-				
-				document.getElementById('goBack').onclick = function() {
-					screenManager.get('home').show();
-				}
-
-				screenManager.get('highscore').show();
+			},
+			
+			openHighscore = function() {
 				screenManager.get('highscore').fire('openHighscore', highscore);
+				screenManager.get('highscore').show();
 			};
 			
 			imageServer.init(config.images);
 			soundServer.init(config.sounds);
 			
-			highscore = store.get('highscore');
+			initHighscore();
 			
 			document.body.innerHTML = Mustache.to_html(templates.wrapper, view);
 			
@@ -495,6 +490,10 @@
 			screenManager.get('game').addEventListener('maskDisplayed', maskDisplayed);
 			screenManager.get('game').addEventListener('modalOpened', modalOpened);
 			screenManager.get('game').addEventListener('displayingMask', displayingMask);
+			
+			document.getElementById('goBack').onclick = function() {
+				screenManager.get('home').show();
+			}
 			
 			//init data loading
 			gamesListLoader.addEventListener('error', onDataError);
