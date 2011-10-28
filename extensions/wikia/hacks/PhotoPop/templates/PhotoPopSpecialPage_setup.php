@@ -69,3 +69,13 @@
 		</li>
 	</ul>
 </div>
+<div id="allImages">
+	<? if(isset($images)): ?>
+	<span><?= $wf->Msg( 'photopop-image-preview' ) ;?> (<?= count($images) ;?>)</span>
+		<? foreach($images as $image): ?>
+			<? if(isset($image->image)) : ?>
+				<a href="<?= $image->url ;?>" target="_BLANK"><img src="<?= $image->image ;?>" ></img><div><span><?= $image->text ;?></span></div></a>
+			<? endif; ?>
+		<? endforeach ;?>
+	<? endif; ?>
+</div>

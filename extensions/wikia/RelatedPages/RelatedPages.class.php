@@ -135,7 +135,6 @@ class RelatedPages {
 						$this->pushData( $data );
 					}
 				}
-
 				if (count($this->getData()) >= $limit) {
 					break;
 				}

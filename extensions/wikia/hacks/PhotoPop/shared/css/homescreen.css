@@ -360,7 +360,7 @@ body{
 #hud #progress {
 	width: 90px;
 	float: right;
-	margin-right: 10px;
+	margin-right: 30px;
 }
 #hud div{
 	color:#d3eaff;
