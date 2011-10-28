@@ -1,7 +1,5 @@
 var MobileSkin = {
 	GA: {
-		accountID: "UA-2871474-1",
-		samplingRate: '10',
 		userName: (wgUserName == null) ? 'anon' : 'user'
 	},
 	userType: (wgIsLogin == true) ? 'logged in' : 'anon',
@@ -11,7 +9,7 @@ var MobileSkin = {
 	b: null,
 	
 	track: function(category, action, label, intVal) {
-		var paramsArray = ['_trackEvent', category, action];
+		var paramsArray = [category, action];
 		
 		//optional parameters
 		if(label)
@@ -20,25 +18,15 @@ var MobileSkin = {
 		if(intVal)
 			paramsArray.push(intVal);
 		
-		_gaq.push(paramsArray);
+		_wtq.push([null, 'main.sampled', paramsArray]);
 	},
 	
 	init: function(){
 		//analytics
-		_gaq.push(
-			['_setSampleRate', MobileSkin.GA.samplingRate],
-			['_setAccount', MobileSkin.GA.accountID],
-			//custom vars, max 5 allowed
-			['_setCustomVar', 1, 'user type', MobileSkin.userType, 2],
-			['_setCustomVar', 2, 'skin', skin, 3],
-			['_setCustomVar', 3, 'hub', cityShort, 3],
-			['_setCustomVar', 4, 'wiki', wgDBname, 3],
-			['_setCustomVar', 5, 'visiting mainpage', wgIsMainpage.toString(), 3],
-			['_trackPageview', '/1_mobile/' + MobileSkin.GA.userName + '/view']
-		);
+		_wtq.push(['/1_mobile/' + MobileSkin.GA.userName + '/view', 'main.sampled']);
 		
 		if(wgPrivateTracker) {
-			_gaq.push(['_trackPageview', '/1_mobile/' + wgDB + '/' + MobileSkin.GA.userName + '/view']);
+			_wtq.push(['/1_mobile/' + wgDB + '/' + MobileSkin.GA.userName + '/view', 'main.sampled']);
 		}
  		
 		MobileSkin.track('pageview', 'view', wgPageName);
