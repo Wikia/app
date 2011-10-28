@@ -171,9 +171,11 @@ class WikiaRequest {
 	 * @param string $key
 	 * @param mixed $value
 	 * @param int $expire
+	 * @param string $path
+	 * @param string $domain
 	 */
-	public function setCookie( $key, $value, $expire ) {
-		setcookie( $key, $value, $expire );
+	public function setCookie( $key, $value, $expire, $path = '/', $domain = null ) {
+		setcookie( $key, $value, $expire, $path, $domain );
 	}
 
 	/**
