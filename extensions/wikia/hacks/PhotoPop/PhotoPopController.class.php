@@ -9,9 +9,11 @@ class PhotoPopController extends WikiaController {
 	const CACHE_MANIFEST_PATH = 'wikia.php?controller=PhotoPopAppCacheController&method=serveManifest&format=html';
 	
 	private $model;
+	private $isJSON;
 	
 	public function init(){
 		$this->model = F::build( 'PhotoPopModel' );
+		$this->isJSON = $this->response->getFormat() == WikiaResponse::FORMAT_JSON;
 	}
 	
 	/**
@@ -54,7 +56,8 @@ class PhotoPopController extends WikiaController {
 		
 		$callbackName = $this->request->getVal( 'callback' );
 		
-		if ( empty( $callbackName ) ) {
+		
+		if ( empty( $callbackName ) && !$this->isJSON ) {
 			$this->wf->profileOut( __METHOD__ );
 			throw new WikiaException( 'Missing parameter: callback' );
 		}
@@ -63,16 +66,13 @@ class PhotoPopController extends WikiaController {
 		$batch = $this->request->getInt( 'batch', 1 );
 		$result = $this->model->getWikisList( $limit, $batch );
 		
-		if ( empty( $callbackName ) ) {
-			$this->wf->profileOut( __METHOD__ );
-			throw new WikiaException( 'Missing parameter: callback' );
-		}
-		
-		$this->response->setVal( 'callbackName', $callbackName );
 		$this->response->setVal( 'jsonData', json_encode( $result ) );
 		$this->wf->profileOut( __METHOD__ );
 		
-		$this->forward( __CLASS__, 'jsonp', false );
+		if ( !$this->isJSON ) {
+			$this->response->setVal( 'callbackName', $callbackName );
+			$this->forward( __CLASS__, 'jsonp', false );
+		}
 	}
 	
 	public function getData(){
@@ -86,7 +86,7 @@ class PhotoPopController extends WikiaController {
 			throw new WikiaException( 'Missing parameter: category' );
 		}
 		
-		if ( empty( $callbackName ) ) {
+		if ( empty( $callbackName ) && !$this->isJSON ) {
 			$this->wf->profileOut( __METHOD__ );
 			throw new WikiaException( 'Missing parameter: callback' );
 		}
@@ -95,11 +95,13 @@ class PhotoPopController extends WikiaController {
 		$height = $this->request->getInt( 'height', 320 );
 		$result = $this->model->getGameContents( $category, $width, $height );
 		
-		$this->response->setVal( 'callbackName', $callbackName );
 		$this->response->setVal( 'jsonData', json_encode( $result ) );
 		
 		$this->wf->profileOut( __METHOD__ );
 		
-		$this->forward( __CLASS__, 'jsonp', false );
+		if ( !$this->isJSON ) {
+			$this->response->setVal( 'callbackName', $callbackName );
+			$this->forward( __CLASS__, 'jsonp', false );
+		}
 	}
 }
