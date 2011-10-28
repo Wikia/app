@@ -26,6 +26,7 @@ $messages['en'] = array(
 	'apigate-register-hint-email' => 'Email address',
 	'apigate-register-hint-confirm-email' => 'Confirm email',
 	'apigate-register-submit' => 'Submit',
+	'apigate-register-implicit-agreement' => 'By clicking the button, you agree to the Terms of Service.',
 	'apigate-register-error-noname' => 'Please enter your name.',
 	'apigate-register-error-invalid-email' => 'Please enter a valid email address.',
 	'apigate-register-error-email-doesnt-match' => 'Email addresses entered do not match.',
