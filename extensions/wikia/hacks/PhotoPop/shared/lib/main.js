@@ -68,8 +68,9 @@
 					gameLoader.load('http://' +
 							((config.settings.testDomain) ? selectedGame.id + '.' + config.settings.testDomain : selectedGame.domain) +
 							'/wikia.php?controller=PhotoPopController&method=getData&category=' +
-							encodeURIComponent(selectedGame.category) +
-							'&callback=?');
+							encodeURIComponent(selectedGame.category),
+							{method: 'get'}
+					);
 				}
 			},
 			
@@ -117,7 +118,7 @@
 			initHomeScreen = function(){
 				gamesListLoader.load(
 					'http://' + (config.settings.testDomain || config.settings.centralDomain) +
-					'/wikia.php?controller=PhotoPopController&method=listGames&callback=?',
+					'/wikia.php?controller=PhotoPopController&method=listGames',
 					{method: 'get'}
 				);
 				
