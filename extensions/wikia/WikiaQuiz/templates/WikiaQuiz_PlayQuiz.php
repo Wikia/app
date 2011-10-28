@@ -26,10 +26,10 @@
 		<?php
 		$numOfQuestions = count($data['elements']);
 		for ($i = 0; $i < $numOfQuestions; $i++) {
-			$q = $data['elements'][$i]; 
+			$q = $data['elements'][$i];
 			$videoClass = ($q['videoName']) ? 'video' : '';
 			?>
-			
+
 			<li class="question-set <?= $videoClass ?>">
 				<div class="question-number">
 					<?= $i + 1 ?>
@@ -51,21 +51,21 @@
 				</div>
 				<? } ?>
 				<ul class="answers">
-					<? 
+					<?
 					$correctAnswerLabel = '';
 					$correctAnswerImage = '';
 					$explanationClass = '';
 
-					foreach ($q['answers'] as $a) { 
-						if ($q['videoName'] && $q['videoEmbedCode']) {
+					foreach ($q['answers'] as $a) {
+						if (isset($q['videoName']) && isset($q['videoEmbedCode'])) {
 							$type = 'video';
-						} else if ($a['image']) {
+						} else if (isset($a['image'])) {
 							$type = 'image';
 						} else {
 							$type = 'text';
 						}
-						if(!empty($a['correct'])) { 
-							$correctAnswerLabel = $a['text']; 
+						if(!empty($a['correct'])) {
+							$correctAnswerLabel = $a['text'];
 							if ($type == 'video' && !empty($a['image'])) {
 								$correctAnswerImage = $a['image'];
 								$explanationClass = 'video-image';
