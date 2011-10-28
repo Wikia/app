@@ -65,6 +65,8 @@ $app->registerHook('ArticleCommentBeforeWatchlistAdd', 'WallHooksHelper', 'onArt
 
 $app->registerHook('ArticleDoDeleteArticleBeforeLogEntry', 'WallHooksHelper', 'onArticleDoDeleteArticleBeforeLogEntry');
 
+$app->registerHook('PageArchiveUndeleteBeforeLogEntry', 'WallHooksHelper', 'onPageArchiveUndeleteBeforeLogEntry');
+
 $app->registerHook('MakeGlobalVariablesScript', 'JSMessages', 'onMakeGlobalVariablesScript');
 $app->registerHook('SkinAfterBottomScripts', 'JSMessages', 'onSkinAfterBottomScripts');
 $app->registerHook('MessageCacheReplace', 'JSMessagesHelper', 'onMessageCacheReplace');

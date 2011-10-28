@@ -707,7 +707,7 @@ class WallHooksHelper {
 		 	$app = F::app();
 			$helper = F::build('WallHelper', array());
 			$userText = $rc->getAttribute('rc_user_text');
-			$wallTitleObj = F::build('Title', array(NS_USER_WALL, $userText), 'newFromText');
+			$wallTitleObj = F::build('Title', array($userText, NS_USER_WALL), 'newFromText');
 			$wallUrl = ($wallTitleObj instanceof Title) ? $wallTitleObj->getLocalUrl() : '#';
 			
 			$articleData = array('text_id' => '');
@@ -720,7 +720,12 @@ class WallHooksHelper {
 				if( empty($articleTitleTxt) ) {
 				//deleted reply
 					$articleTitleTxt = $this->getParentTitleTxt($rc->getTitle());
-					$articleUrl = ($articleTitleObj instanceof Title) ? $articleTitleObj->getLocalUrl() : '#';
+					
+					$wm = F::build('WallMessage', array($rc->getTitle()));
+					$wmParent = $wm->getTopParentObj();
+					$articleUrl = $wmParent->getMessagePageUrl();
+					$articleUrl = !empty($articleUrl) ? $articleUrl : '#';
+					
 					$actionText = $app->wf->Msg('wall-recentchanges-deleted-reply', array(
 						$articleUrl,
 						$articleTitleTxt,
@@ -739,7 +744,7 @@ class WallHooksHelper {
 				}
 			} else {
 				$wnEntity = F::build('WallNotificationEntity', array($rc->getAttribute('rc_id'), $app->wg->CityId), 'getByWikiAndRCId');
-				$articleTitleTxt = empty($wnEntity->data->thread_title) ? $app->wf->Msg('wall-recentchanges-deleted-reply-title') : $wnEntity->data->thread_title;
+				$articleTitleTxt = empty($wnEntity->data->thread_title) ? $this->getParentTitleTxt($rc->getTitle()) : $wnEntity->data->thread_title;
 				$articleUrl = empty($wnEntity->data->url) ? '#' : $wnEntity->data->url;
 				
 				$wfMsgOpts = array(
@@ -776,6 +781,17 @@ class WallHooksHelper {
 		return true;
 	}
 	
+	/**
+	 * @brief Getting the title of a message
+	 * 
+	 * @desc Callback method used in WallHooksHelper::onChangesListInsertAction() hook if deleted message was a reply
+	 * 
+	 * @param string $title
+	 * 
+	 * @return string
+	 * 
+	 * @author Andrzej 'nAndy' Lukaszewski
+	 */
 	private function getParentTitleTxt($title) {
 		if( $title instanceof Title ) {
 			$app = F::app();
@@ -790,7 +806,10 @@ class WallHooksHelper {
 			//parent article was deleted as well
 				$articleTitleTxt = $helper->getTitleTxtFromMetadata($helper->getDeletedArticleTitleTxt($articleData['text_id']));
 			} else {
-				$articleTitleTxt = 'parent article was not deleted | WallHooksHelper::getParentTitleTxt()';
+				$title = F::build('Title', array($parentTitleTxt, NS_USER_WALL_MESSAGE), 'newFromText');
+				$parentWallMsg = F::build('WallMessage', array($title));
+				$parentWallMsg->load();
+				$articleTitleTxt = $parentWallMsg->getMetaTitle();
 			}
 			$articleTitleTxt = empty($articleTitleTxt) ? $app->wf->Msg('wall-recentchanges-deleted-reply-title') : $articleTitleTxt;
 			
@@ -820,15 +839,56 @@ class WallHooksHelper {
 			$app = F::app();
 			$wm = F::build('WallMessage', array($title));
 			$parentObj = $wm->getTopParentObj();
+			$reason = ''; //we don't want any comment
 			
 			if( empty($parentObj) ) {
 			//thread message
 				$logPage->addEntry( 'delete', $title, $reason, array() );
 			} else {
 			//reply
+				$parentObj->load(true);
+				
 				if( !$parentObj->getTitle()->isDeletedQuick() ) {
 				//if its parent still exists only this reply is being deleted, so log about it
 					$logPage->addEntry( 'delete', $title, $reason, array() );
+				}
+			}
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * @brief Adjusting recent changes for Wall 
+	 * 
+	 * @desc This method decides rather put a log information about restored article or not
+	 * 
+	 * @param PageArchive $pageArchive a referance to Article instance
+	 * @param LogPage $logPage a referance to LogPage instance
+	 * @param Title $title a referance to Title instance
+	 * @param string $reason
+	 * 
+	 * @return true because this is a hook
+	 * 
+	 * @author Andrzej 'nAndy' Lukaszewski
+	 */
+	public function onPageArchiveUndeleteBeforeLogEntry($pageArchive, $logPage, $title, $reason) {
+		if( $title instanceof Title && $title->getNamespace() == NS_USER_WALL_MESSAGE ) {
+			$app = F::app();
+			$wm = F::build('WallMessage', array($title));
+			$parentObj = $wm->getTopParentObj();
+			$reason = ''; //we don't want any comment
+			
+			if( empty($parentObj) ) {
+			//thread message
+				$logPage->addEntry( 'restore', $title, $reason, array() );
+			} else {
+			//reply
+				$parentObj->load(true);
+				
+				if( !$parentObj->getTitle()->isDeletedQuick() ) {
+				//if its parent still exists only this reply is being restored, so log about it
+					$logPage->addEntry( 'restore', $title, $reason, array() );
 				}
 			}
 		}
