@@ -445,7 +445,7 @@ $wgHooks['WikiFactory::execute']     [] = "Wikia::switchDBToLightMode";
 $wgHooks['EmailConfirmed']           [] = "Wikia::isEmailConfirmedHook";
 //$wgHooks['IsTrustedProxy']         [] = "Wikia::trustInternalIps";
 //$wgHooks['RawPageViewBeforeOutput'][] = 'Wikia::rawPageViewBeforeOutput';
-$wgHooks['AllowNotifyOnPtageChange']  [] = "Wikia::allowNotifyOnPageChange";
+$wgHooks['AllowNotifyOnPageChange']  [] = "Wikia::allowNotifyOnPageChange";
 # changes in recentchanges (MultiLookup)
 $wgHooks['RecentChange_save']        [] = "Wikia::recentChangesSave";
 
