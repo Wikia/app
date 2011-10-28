@@ -66,12 +66,17 @@ class PhotoPopController extends WikiaController {
 		$batch = $this->request->getInt( 'batch', 1 );
 		$result = $this->model->getWikisList( $limit, $batch );
 		
-		$this->response->setVal( 'jsonData', json_encode( $result ) );
-		$this->wf->profileOut( __METHOD__ );
-		
 		if ( !$this->isJSON ) {
+			$this->response->setVal( 'jsonData', json_encode( $result ) );
 			$this->response->setVal( 'callbackName', $callbackName );
+			
+			$this->wf->profileOut( __METHOD__ );
+			
 			$this->forward( __CLASS__, 'jsonp', false );
+		} else {
+			$this->response->setVal( 'data', $result );
+			
+			$this->wf->profileOut( __METHOD__ );
 		}
 	}
 	
@@ -95,13 +100,17 @@ class PhotoPopController extends WikiaController {
 		$height = $this->request->getInt( 'height', 320 );
 		$result = $this->model->getGameContents( $category, $width, $height );
 		
-		$this->response->setVal( 'jsonData', json_encode( $result ) );
-		
-		$this->wf->profileOut( __METHOD__ );
-		
 		if ( !$this->isJSON ) {
+			$this->response->setVal( 'jsonData', json_encode( $result ) );
 			$this->response->setVal( 'callbackName', $callbackName );
+			
+			$this->wf->profileOut( __METHOD__ );
+			
 			$this->forward( __CLASS__, 'jsonp', false );
+		} else {
+			$this->response->setVal( 'data', $result );
+			
+			$this->wf->profileOut( __METHOD__ );
 		}
 	}
 }
