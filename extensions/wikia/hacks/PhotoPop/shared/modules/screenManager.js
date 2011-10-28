@@ -156,12 +156,6 @@ define.call(exports, function(){
 				modal.style.fontSize = "x-large";
 			}
 			
-			if(options.fade) {
-				modal.classList.add('transition-all');
-			} else {
-				modal.classList.remove('transition-all');
-			}
-			
 			if(options.triangle) {
 				modal.classList.add('triangle');
 				modal.classList.add(options.triangle);
@@ -259,6 +253,8 @@ define.call(exports, function(){
 					tdStyle.height = (i == lastRow) ? tableHeight - (rowHeight * i) : rowHeight;
 					tdStyle.backgroundPosition = '-'+ offsetX + 'px -' + offsetY + 'px';
 					tdStyle.left = offsetX;
+					tds[j].originalLeft = offsetX;
+					tds[j].originalHeight = tdStyle.height;
 					offsetX += colWidth;
 				}
 				
@@ -272,7 +268,7 @@ define.call(exports, function(){
 		
 		tileClicked: function(event, tile) {
 			tile.clicked = true;
-			tile.style.opacity = 0;
+			tile.style.height = 0;
 		},
 		
 		answerDrawerButtonClicked: function(event, options) {
@@ -356,7 +352,7 @@ define.call(exports, function(){
 			td,
 			t = setInterval(function() {
 				td = tds[next++];
-				td.style.opacity = 0;
+				td.style.left = "-400px";
 				td.clicked = true;
 				if(next == tdLength) {
 					clearInterval(t);
@@ -374,7 +370,9 @@ define.call(exports, function(){
 			self = this,
 			t = setInterval(function() {
 				tds[next].clicked = false;
-				tds[next++].style.opacity = 1;
+				tds[next].style.left = tds[next].originalLeft;
+				tds[next].style.height = tds[next].originalHeight
+				next++;
 				if(next == tdLength) {
 					clearInterval(t);
 					console.log('done');
@@ -458,7 +456,6 @@ define.call(exports, function(){
 			
 			timeUpTextStyle.zIndex = 40;
 			timeUpTextStyle.margin = '-50px 0 0 -150px';
-			timeUpTextStyle.opacity = 1;
 		},
 		
 		hideTimeUp: function(correct) {
@@ -466,8 +463,7 @@ define.call(exports, function(){
 			self = this;
 			
 			timeUpTextStyle.zIndex = 0;
-			timeUpTextStyle.margin = '50px 0 0 -150px';
-			timeUpTextStyle.opacity = 0;
+			timeUpTextStyle.margin = '350px 0 0 -150px';
 			
 			setTimeout(function() {
 				self.revealAll(document.getElementById(correct).innerHTML);

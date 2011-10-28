@@ -500,8 +500,8 @@ body{
 }
 #tilesWrapper tr td {
 	background-color: #00396d;
-	-webkit-transition: opacity .3s ease-out;
-	-moz-transition: opacity .3s ease-out;
+	-webkit-transition: all .3s ease-out;
+	-moz-transition: all .3s ease-out;
 }
 /** END-GAME SCREEN-OVERLAY - END **/
 
