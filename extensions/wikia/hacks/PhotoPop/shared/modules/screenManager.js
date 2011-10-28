@@ -347,11 +347,13 @@ define.call(exports, function(){
 		revealAll: function(correct) {
 			var tds = document.getElementsByTagName('td'),
 			tdLength = tds.length,
+			tdArray = Array.prototype.slice.call(tds),
 			next = 0,
 			self = this,
-			td,
-			t = setInterval(function() {
-				td = tds[next++];
+			td;
+			tdArray.shuffle();
+			var t = setInterval(function() {
+				td = tdArray[next++];
 				td.style.left = "-400px";
 				td.clicked = true;
 				if(next == tdLength) {
@@ -365,13 +367,15 @@ define.call(exports, function(){
 		showMask: function(options) {
 			this.fire('displayingMask', options);
 			var tds = document.getElementsByTagName('td'),
-			tdLength = tds.length,
+			tdArray = Array.prototype.slice.call(tds),
+			tdLength = tds.length;
 			next = 0,
-			self = this,
-			t = setInterval(function() {
-				tds[next].clicked = false;
-				tds[next].style.left = tds[next].originalLeft;
-				tds[next].style.height = tds[next].originalHeight
+			self = this;
+			tdArray.shuffle();
+			var t = setInterval(function() {
+				tdArray[next].clicked = false;
+				tdArray[next].style.left = tdArray[next].originalLeft;
+				tdArray[next].style.height = tdArray[next].originalHeight
 				next++;
 				if(next == tdLength) {
 					clearInterval(t);
