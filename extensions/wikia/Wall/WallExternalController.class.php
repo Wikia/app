@@ -152,15 +152,28 @@ class WallExternalController extends WikiaController {
 			$newtitle = $this->wf->msg('wall-default-title') . ' ' . $name;
 		}
 		
-		$ac = ArticleComment::newFromId($msgid);
-		$ac->load();
-		//TODO: validate title ???
-		$ac->setMetaData( 'title', $newtitle);
-		$ac->doSaveComment( $newbody, $this->wg->User );
+		$title = F::build('Title', array( $msgid ), 'newFromId');
+		$wallMessage = F::build('WallMessage', array($title), 'newFromTitle');
+		
+		$wallMessage->load();
+
+		$wallMessage->setMetaTitle( $newtitle );
+		$text = $wallMessage->doSaveComment( $newbody, $this->wg->User );
+		 
+		$this->response->setVal('isotime', wfTimestamp(TS_ISO_8601) );
+		$this->response->setVal('fulltime', $this->wg->Lang->timeanddate( wfTimestamp(TS_MW) ) );
+		
+		$this->response->setVal('username', $this->wg->User->getName());
+		
+		$editorUrl = F::build('Title', array( $this->wg->User->getName(), NS_USER), 'newFromText' )->getFullUrl();
+		
+		$this->response->setVal('userUrl', $editorUrl);
+		
+		$this->response->setVal( 'historyUrl', $wallMessage->getTitle()->getFullUrl('action=history') );
 		
 		$this->response->setVal('status', true  );
 		$this->response->setVal('title', $newtitle);
-		$this->response->setVal('body', $ac->parseText( $newbody ));
+		$this->response->setVal('body', $text );
 		return true;
 	}
 		

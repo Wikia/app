@@ -11,7 +11,7 @@ $messages['en'] = array(
 	'wall-message-unfollow' => 'Unfollow',
 	'wall-message-following' => 'Following',
 	'wall-message-follow' => 'Follow',
-
+	'wall-message-edited' => '<a href="$3" >Edited by</a> <a class="username" href="$1">$2</a>',
 	'wall-message-mywall' => 'My Wall',
 	'wall-message-elseswall' => "$1's Wall",
 

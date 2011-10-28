@@ -74,6 +74,7 @@ $app->registerHook('GetRailModuleList', 'WallRailHelper', 'onGetRailModuleList')
 F::build('JSMessages')->registerPackage('Wall', array(
 	'wall-notifications',
 	'wall-message-follow',
+	'wall-message-edited',
 	'wall-message-following',
 	'wall-message-unfollow',
 	'wall-button-to-submit-comment-no-topic',
