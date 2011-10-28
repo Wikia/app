@@ -1,3 +1,4 @@
+/*global WikiaTracker_ABtests: true */
 var WikiaTracker = {
 	profileAliases:{
 		'default':       'UA-2871474-1',
@@ -65,10 +66,6 @@ WikiaTracker.debug = function (msg, level, obj) {
 	return true;
 };
 
-WikiaTracker.trackGA = function(page, profile) { // FIXME NEF deprecated, remove
-	return false;
-};
-
 WikiaTracker.track = function(page, profile, events) {
 	if (typeof page != 'undefined' && page instanceof Array) {
 		page = page.join('/');
@@ -127,13 +124,11 @@ WikiaTracker._track = function(page, profile, sample, events) {
 		_gaq.push(['WikiaTracker._trackPageview']);
 		_gaq.push(['WikiaTracker._trackPageLoadTime']);
 	} else if (page != null) {
+		if (page.indexOf('/') != 0) {
+			page = '/' + page;
+		}
 
-	if (page.indexOf('/') != 0) {
-		page = '/' + page;
-	}
-
-	_gaq.push(['WikiaTracker._trackPageview', page]);
-
+		_gaq.push(['WikiaTracker._trackPageview', page]);
 	}
 
 	return true;
