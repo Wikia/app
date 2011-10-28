@@ -896,5 +896,16 @@ class WallHooksHelper {
 		return true;
 	}
 	
+	public function onXmlNamespaceSelectorAfterGetFormattedNamespaces($namespaces, $selected, $all, $element_name, $label) {
+		if( defined('NS_USER_WALL') && defined('NS_USER_WALL_MESSAGE') ) {
+			if( isset($namespaces[NS_USER_WALL]) && isset($namespaces[NS_USER_WALL_MESSAGE]) ) {
+				unset($namespaces[NS_USER_WALL], $namespaces[NS_USER_WALL_MESSAGE]);
+				$namespaces[NS_USER_WALL_MESSAGE] = F::app()->wf->Msg('wall-recentchanges-namespace-selector-message-wall');
+			}
+		}
+		
+		return true;
+	}
+	
 }
 ?>

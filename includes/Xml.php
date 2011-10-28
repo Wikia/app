@@ -120,6 +120,11 @@ class Xml {
 	public static function namespaceSelector( $selected = '', $all = null, $element_name = 'namespace', $label = null ) {
 		global $wgContLang;
 		$namespaces = $wgContLang->getFormattedNamespaces();
+		
+		/** Wikia change begin - @author: Andrzej 'nAndy' Lukaszewski */
+		wfRunHooks('XmlNamespaceSelectorAfterGetFormattedNamespaces', array(&$namespaces, $selected, $all, $element_name, $label));
+		/** Wikia change end */
+		
 		$options = array();
 
 		// Godawful hack... we'll be frequently passed selected namespaces

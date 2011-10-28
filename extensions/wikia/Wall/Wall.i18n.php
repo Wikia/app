@@ -99,7 +99,8 @@ $messages['en'] = array(
 	'wall-recentchanges-restored-thread' => ' restored thread "<a href="$1" class="new">$2</a>" from <a href="$3">$4\'s wall</a>',
 	'wall-recentchanges-restored-reply' => ' restored reply on "<a href="$1" class="new">$2</a>" from <a href="$3">$4\'s wall</a>',
 	'wall-recentchanges-deleted-reply-title' => 'A reply on message wall',
-	
+	'wall-recentchanges-namespace-selector-message-wall' => 'Message Wall',
+
 	'wall-message-not-found' => 'This message could not be found. If you see this error please contact Wikia at [[Special:Contact]] and provide as much details as possible about how this bug can be reproduced. Thank You!',
 
 	'wall-message-staff-text' => 'This user is a member of Wikia staff',
