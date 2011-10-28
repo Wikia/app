@@ -28,6 +28,7 @@ class VideoPage extends Article {
 	const V_MOVIECLIPS = 22;
 	const V_REALGRAVITY = 23;
 	const V_WIKIAVIDEO = 24;
+	const V_LOCALVIDEO = 25;
 
 	const SCREENPLAY_MEDIUM_JPEG_BITRATE_ID = 267;	// 250x200
 	const SCREENPLAY_LARGE_JPEG_BITRATE_ID = 382;	// 480x360
@@ -621,7 +622,7 @@ EOD;
 	// recognize which supported provider we have from a given real life url
 	// extract all the necessary data from this url
 	public function parseUrl($url, $load = true) { // TODO: Consider renaming to loadFromURL
-		global $wgContLang, $wgWikiaVideoRepoPath;
+		global $wgContLang, $wgWikiaVideoRepoPath, $wgServer;
 		
 		$provider = '';
 		$id = '';
@@ -940,12 +941,35 @@ EOD;
 			$url = trim($url, '/');
 			$parsed = explode( "/", $url );
 			if( is_array( $parsed ) ) {
-				$videoTitleAndNS = array_pop( $parsed );
-				$videoTitle = substr($videoTitleAndNS, strlen($wgContLang->getNsText(NS_VIDEO).':'));
-				$this->mProvider = $provider;
-				$this->mId = $videoTitle;
-				$this->mData = array();
-				return true;
+				$idxNsVideo = strpos($url, $wgContLang->getNsText(NS_VIDEO).':');
+				if ($idxNsVideo !== false) {
+					$idxQueryStr = strpos($url, '?');
+					$startIdx = $idxNsVideo + strlen($wgContLang->getNsText(NS_VIDEO).':');
+					$videoTitle = substr($url, $startIdx, ($idxQueryStr !== false) ? $idxQueryStr-$startIdx : strlen($url));
+					$this->mProvider = $provider;
+					$this->mId = $videoTitle;
+					$this->mData = array();
+					return true;
+				}
+			}
+		}
+
+		$text = strpos( strtolower($url), $wgServer );
+		if ( false !== $text ) { // Local video
+			$provider = self::V_LOCALVIDEO;
+			$url = trim($url, '/');
+			$parsed = explode( "/", $url );
+			if( is_array( $parsed ) ) {
+				$idxNsVideo = strpos($url, $wgContLang->getNsText(NS_VIDEO).':');
+				if ($idxNsVideo !== false) {
+					$idxQueryStr = strpos($url, '?');
+					$startIdx = $idxNsVideo + strlen($wgContLang->getNsText(NS_VIDEO).':');
+					$videoTitle = substr($url, $startIdx, ($idxQueryStr !== false) ? $idxQueryStr-$startIdx : strlen($url));
+					$this->mProvider = $provider;
+					$this->mId = $videoTitle;
+					$this->mData = array();
+					return true;
+				}
 			}
 		}
 				
@@ -1016,6 +1040,7 @@ EOD;
 				}
 				break;
 			case self::V_WIKIAVIDEO:
+			case self::V_LOCALVIDEO:
 				// not applicable
 				break;
 			default:
@@ -1092,6 +1117,7 @@ EOD;
 				}				
 				break;
 			case self::V_WIKIAVIDEO:
+			case self::V_LOCALVIDEO:
 				// not applicable
 				break;
 			default:
@@ -1210,6 +1236,14 @@ EOD;
 					$this->mVideoName = $videoData['title'];
 				}
 				break;
+			case self::V_LOCALVIDEO:
+				$rvs = new RelatedVideosService();
+				$videoData = $rvs->getRelatedVideoData(0, $this->mId, false);
+				$exists = !empty($videoData['title']);
+				if ($exists) {
+					$this->mVideoName = $videoData['title'];
+				}
+				break;
 			default:
 				break;
 		}
@@ -1263,6 +1297,7 @@ EOD;
 			case self::V_REALGRAVITY:
 				return 'http://www.realgravity.com';
 			case self::V_WIKIAVIDEO:
+			case self::V_LOCALVIDEO:
 				// not applicable
 				return;
 			default:
@@ -1415,6 +1450,7 @@ EOD;
 				break;
 			// do not allow these providers to be saved
 			case self::V_WIKIAVIDEO:
+			case self::V_LOCALVIDEO:
 				return;
 			default:
 				$metadata = '';
@@ -1928,7 +1964,15 @@ EOD;
 				// load the real Video Page referred to by this object,
 				// and get the embed code from there
 				$rvs = new RelatedVideosService();
-				$videoData = $rvs->getRelatedVideoData(0, $this->mId, true, $width, '');	// fifth param is empty to suppress ads
+				$videoData = $rvs->getRelatedVideoData(0, $this->mId, true, $width, '', 0, '', $useJWPlayer);	// fifth param is empty to suppress ads
+				$embed = $videoData['embedCode'];
+				return $embed;
+				break;
+			case self::V_LOCALVIDEO:
+				// load the real Video Page referred to by this object,
+				// and get the embed code from there
+				$rvs = new RelatedVideosService();
+				$videoData = $rvs->getRelatedVideoData(0, $this->mId, false, $width, '', 0, '', $useJWPlayer);	// fifth param is empty to suppress ads
 				$embed = $videoData['embedCode'];
 				return $embed;
 				break;
@@ -2275,6 +2319,7 @@ $wgWikiaVideoProviders = array(
 		VideoPage::V_MOVIECLIPS => 'MovieClips Inc.',
 		VideoPage::V_REALGRAVITY => 'RealGravity'
 		// don't need V_WIKIAVIDEO
+		// don't need V_LOCALVIDEO
 		);
 
 class VideoHistoryList {

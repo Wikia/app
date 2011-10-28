@@ -82,7 +82,7 @@ class RelatedVideosController extends WikiaController {
 					'getVideoHtml',
 					array(
 						 'videoHtml' => $videoHtml,
-						 'embedUrl' => empty( $result['external'] ) ? '' : $result['fullUrl']
+						 'embedUrl' => $result['fullUrl']
 					)
 				)
 			 );
@@ -125,6 +125,7 @@ class RelatedVideosController extends WikiaController {
 		$videoWidth = $this->getVal( 'videoWidth', VideoPage::DEFAULT_OASIS_VIDEO_WIDTH );
 		$videoHeight = $this->getVal( 'videoHeight', '' );
 		$cityShort = $this->getVal( 'cityShort', 'life');
+		$useJWPlayer = $this->getVal( 'useJWPlayer', true );
 		if ($videoArticleId) {
 			$videoTitle = Title::newFromID($videoArticleId, GAID_FOR_UPDATE);
 			$useMaster = true;
@@ -134,7 +135,7 @@ class RelatedVideosController extends WikiaController {
 		}
 
 		$rvd = new RelatedVideosData();
-		$videoData = $rvd->getVideoData( $videoTitle, $width, $videoWidth, true, $useMaster, $cityShort, $videoHeight );
+		$videoData = $rvd->getVideoData( $videoTitle, $width, $videoWidth, true, $useMaster, $cityShort, $videoHeight, $useJWPlayer );
 		$this->setVal( 'data', $videoData );
 	}
 
