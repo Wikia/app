@@ -51,7 +51,7 @@
 				
 				
 				
-				if(gameId == 'tutorial' && !tutorialSteps['intro'])
+				if(gameId == 'tutorial' && !tutorialSteps['intro']) {
 					screenManager.get('game').openModal({
 						name: 'intro',
 						html: wgMessages['photopop-game-tutorial-intro'],
@@ -60,6 +60,7 @@
 						closeOnClick: true
 					});
 					tutorialSteps['intro'] = true;
+				}
 			},
 			
 			loadSelectedGame = function(){
