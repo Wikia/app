@@ -34,7 +34,7 @@ define.call(exports, {
 						that.fire('success', {url: url, response: data});
 					}
 				});
-			//}
+			}
 		}
 	})
 });
