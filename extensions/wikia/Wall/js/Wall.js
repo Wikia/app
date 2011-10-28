@@ -60,8 +60,8 @@ var Wall = $.createClass(Object, {
 		$('#Wall .edit-message').live('click', this.proxy(this.editMessage));
 		$('#Wall .cancel-edit').live('click', this.proxy(this.cancelEdit));
 		$('#Wall .save-edit').live('click', this.proxy(this.saveEdit));
-		$('#Wall .preview-edit').live('click', this.proxy(this.previewEdit));
-		$('#Wall .cancel-preview-edit').live('click', this.proxy(this.cancelPreviewEdit));
+		//$('#Wall .preview-edit').live('click', this.proxy(this.previewEdit));
+		//$('#Wall .cancel-preview-edit').live('click', this.proxy(this.cancelPreviewEdit));
 		
 		// Pagination
 		$('.Pagination a').live('click', this.proxy(this.switchPage));
