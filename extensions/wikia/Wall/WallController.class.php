@@ -252,7 +252,7 @@ class WallController extends ArticleCommentsModule {
 		// using newest RealName
 		// cache invalidation in this case would require too many queries
 		if($authorUser) {
-			$realname = $authorUser->getRealName();
+			$realname = $this->getRealNameForUser($authorUser);
 			$name = $authorUser->getName();
 		} else {
 			$realname = '';
@@ -398,6 +398,15 @@ class WallController extends ArticleCommentsModule {
 			return false;
 		} else {
 			return $this->app->wg->Parser->parse($article->getContent(), $pageTitle, new ParserOptions($this->wg->User))->getText();
+		}
+	}
+	
+	private function getRealNameForUser($user) {
+		$uib = F::build('UserIdentityBox', array($this->app, $user, 0));
+		if( $uib->shouldDisplayFullMasthead() ) {
+			return $user->getRealName();
+		} else {
+			return '';
 		}
 	}
 } // end class Wall

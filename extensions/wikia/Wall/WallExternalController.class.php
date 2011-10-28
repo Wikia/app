@@ -57,13 +57,7 @@ class WallExternalController extends WikiaController {
 		//$title = $helper->shortenText($title);
 		$body = $helper->getParsedText($body, $oTitle);
 		
-		$displayname = $this->wg->User->getRealName();
-		if(empty($displayname))  {
-			$displayname  = $this->wg->User->getName();
-			$displayname2 = '';
-		} else {
-			$displayname2 = $this->wg->User->getName();
-		}
+		list( $displayname, $displayname2 ) = $this->getDisplayName();
 
 		$this->response->setVal('displayname',$displayname);
 		$this->response->setVal('displayname2',$displayname2);
@@ -142,14 +136,14 @@ class WallExternalController extends WikiaController {
 	}
 
 	public function editMessageSave() {
+		$helper = F::build('WallHelper', array());
+		
 		$msgid = $this->request->getVal('msgid');
 		$newtitle = trim($this->request->getVal('newtitle'));
 		$newbody = $this->request->getVal('newbody');
 		
 		if( empty($newtitle) ) {
-			$name = $this->wg->User->getRealName();
-			if (empty($name)) $name = $this->wg->User->getName();
-			$newtitle = $this->wf->msg('wall-default-title') . ' ' . $name;
+			$newtitle = $helper->getDefaultTitle();
 		}
 		
 		$title = F::build('Title', array( $msgid ), 'newFromId');
@@ -200,6 +194,16 @@ class WallExternalController extends WikiaController {
 		$this->response->setVal('message', $this->app->renderView( 'WallController', 'message', array( 'comment' => $ac, 'isreply' => true ) ));
 	}
 	
-
+	private function getDisplayName() {
+		$displayname = $this->wg->User->getRealName();
+		if(empty($displayname))  {
+			$displayname  = $this->wg->User->getName();
+			$displayname2 = '';
+		} else {
+			$displayname2 = $this->wg->User->getName();
+		}
+		return array( $displayname, $displayname2 );
+		
+	}
 	
 } // end class Wall
