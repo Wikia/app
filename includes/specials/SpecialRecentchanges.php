@@ -39,6 +39,7 @@ class SpecialRecentChanges extends SpecialPage {
 		$opts->add( 'categories', '' );
 		$opts->add( 'categories_any', false );
 		$opts->add( 'tagfilter', '' );
+		
 		return $opts;
 	}
 
@@ -94,6 +95,7 @@ class SpecialRecentChanges extends SpecialPage {
 			$feedFormat = $wgRequest->getVal( 'feed' );
 			$this->rcOptions = $feedFormat ? $this->feedSetup() : $this->setup( $this->rcSubpage );
 		}
+		
 		return $this->rcOptions;
 	}
 
@@ -465,6 +467,7 @@ class SpecialRecentChanges extends SpecialPage {
 		$panel[] = '<hr />';
 
 		$extraOpts = $this->getExtraOptions( $opts );
+		
 		$extraOptsCount = count( $extraOpts );
 		$count = 0;
 		$submit = ' ' . Xml::submitbutton( wfMsg( 'allpagessubmit' ) );
