@@ -453,6 +453,12 @@
 				screenManager.get('highscore').show();
 			};
 			
+			Array.prototype.shuffle = function() {
+				var s = [];
+				while(this.length) s.push(this.splice(Math.floor(Math.random() * this.length), 1)[0]);
+				while(s.length) this.push(s.pop());
+			};
+			
 			imageServer.init(config.images);
 			soundServer.init(config.sounds);
 			
