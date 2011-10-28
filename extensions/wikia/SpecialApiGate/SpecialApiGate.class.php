@@ -65,11 +65,10 @@ class SpecialApiGate extends SpecialPage {
 					$wgOut->setArticleRelated( false );
 					$wgOut->enableClientCache( false );
 
-					$mainSectionHtml .= wfMsg('apigate-nologintext') . "<br/><br/><button type='button' data-id='login' class='ajaxLogin'>" . wfMsg('apigate-login-button') . "</button>";
+					$mainSectionHtml .= $this->getLoginBoxHtml();
 				} else {
 					$mainSectionHtml .= $this->subpage_register();
 				}
-
 				break;
 			case $this->SUBPAGE_ALL_KEYS:
 				$mainSectionHtml .= $this->subpage_allKeys();
@@ -104,6 +103,18 @@ class SpecialApiGate extends SpecialPage {
 
 		wfProfileOut( __METHOD__ );
 	} // end execute()
+
+	private function getLoginBoxHtml(){
+		return wfMsg('apigate-nologintext') . "<br/><br/><div style='width:100%;text-align:center;'><button type='button' data-id='login' class='ajaxLogin'>" . wfMsg('apigate-login-button') . "</button></div>";
+	} // end getLoginBoxHtml()
+	
+	/**
+	 * Given a string of html, returns that same html wrapped inside of a div which is styled as a sub-module
+	 * which is a standalone box for rendering in the main column of this page.
+	 */
+	private function wrapHtmlInModuleBox( $html ){
+		return "<div class='sub_module'>$html</div>";
+	} // end wrapHtmlInModuleBox()
 
 	/**
 	 * State-dependent dashboard for when you hit Special:ApiGate with no subpage specified.
@@ -145,7 +156,7 @@ class SpecialApiGate extends SpecialPage {
 
 		// Users must be logged in to get an API key
 		if( !$wgUser->isLoggedIn() ){
-			$html .= wfMsg('apigate-nologintext') . "<br/><br/><button type='button' data-id='login' class='ajaxLogin'>" . wfMsg('apigate-login-button') . "</button>";
+			$html .= "<br/>".$this->wrapHtmlInModuleBox( $this->getLoginBoxHtml() );
 		} else {
 			$data = array('firstName' => '', 'lastName' => '', 'email_1' => '', 'email_2' => '', 'errorString' => '');
 
@@ -228,6 +239,8 @@ print "No API keys for current user yet."; // TODO: CHANGE TO i18n MESSAGE w/lin
 		}
 		
 		$html = ob_get_clean();
+
+		$html = "<br/>".$this->wrapHtmlInModuleBox( $html );
 
 		wfProfileOut( __METHOD__ );
 		return $html;
