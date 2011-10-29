@@ -9,24 +9,25 @@ define.call(exports, {
 		load: function(url, options){
 			this.fire('beforeLoad', {url: url});
 			
+			var that = this;
 			options = options || {};
 			options.method = options.method || 'get';
-			var that = this;
+			url += ((url.indexOf('?') >= 0) ? '&' : '?')
 			
 			if(typeof Titanium != 'undefined'){
-				url = url + ((url.indexOf('?') >= 0) ? '&' : '?') + 'format=json';
+				url += 'format=json';
 				
 				Titanium.App.addEventListener('XDomainLoader:error', function(event){
 					that.fire('error', {url: url, error: event.data});
 				});
 				
 				Titanium.App.addEventListener('XDomainLoader:success', function(event){
-					that.fire('success', {url: url, response: event.data});
+					that.fire('success', {url: url, response: JSON.parse(event.data).data});
 				});
 				
 				Titanium.App.fireEvent('XDomainLoader:load', {url: url, options: options});
 			}else{
-				url = url + ((url.indexOf('?') >= 0) ? '&' : '?') + 'callback=?';
+				url += 'callback=?';
 				
 				reqwest({
 					url: url,
