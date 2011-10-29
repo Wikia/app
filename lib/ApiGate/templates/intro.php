@@ -1,3 +1,4 @@
 <div class='sub_module'>
-	<?= i18n( 'apigate-intro' ); ?>
+	<h2><?= i18n( 'apigate-intro-header', $username ); ?></h2>
+	<?= i18n( 'apigate-intro', $username ); ?>
 </div>

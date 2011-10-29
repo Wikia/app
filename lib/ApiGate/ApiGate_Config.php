@@ -6,6 +6,13 @@
  * This is the configuration file for API Gate.
  */
 
+/** SETTINGS THAT MUST BE CUSTOMIZED **/
+	$APIGATE_CONTACT_EMAIL = "api@wikia.com";
+	
+	global $wgScriptPath;
+	$APIGATE_LINK_ROOT = str_replace("$1", "Special:ApiGate", $wgArticlePath);
+/** /SETTINGS THAT MUST BE CUSTOMIZED **/
+ 
 
 /** HEADERS **/
 	// Expected & understood by Fastly (a CDN that has worked with API Gate) to indicate that this result requires a valid API key in the request.
