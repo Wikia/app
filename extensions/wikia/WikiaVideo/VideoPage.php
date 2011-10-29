@@ -1972,7 +1972,7 @@ EOD;
 				// load the real Video Page referred to by this object,
 				// and get the embed code from there
 				$rvs = new RelatedVideosService();
-				$videoData = $rvs->getRelatedVideoData(0, $this->mId, false, $width, '', 0, '', $useJWPlayer);	// fifth param is empty to suppress ads
+				$videoData = $rvs->getRelatedVideoData(0, $this->mId, false, $width, '', 0, '', $useJWPlayer, $autoplay);	// fifth param is empty to suppress ads
 				$embed = $videoData['embedCode'];
 				return $embed;
 				break;
