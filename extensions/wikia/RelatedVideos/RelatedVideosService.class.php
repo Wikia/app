@@ -13,7 +13,7 @@ class RelatedVideosService {
 	 * @param int $videoWidth Width of resulting video player, in pixels
 	 * @return Array 
 	 */
-	public function getRelatedVideoData( $articleId, $title, $source='', $videoWidth=VideoPage::DEFAULT_OASIS_VIDEO_WIDTH, $cityShort='life', $useMaster=0, $videoHeight='', $useJWPlayer=true ){
+	public function getRelatedVideoData( $articleId, $title, $source='', $videoWidth=VideoPage::DEFAULT_OASIS_VIDEO_WIDTH, $cityShort='life', $useMaster=0, $videoHeight='', $useJWPlayer=true, $autoplay=true ){
 
 		wfProfileIn( __METHOD__ );
 		$title = urldecode( $title );
@@ -23,7 +23,7 @@ class RelatedVideosService {
 			if ( !empty( $source ) ){
 				$url = F::app()->wg->wikiaVideoRepoPath;
 				if ( !empty( $url ) ){
-					$url.='wikia.php?controller=RelatedVideos&method=getVideoData&width='.self::width.'&videoWidth='.$videoWidth.'&title='.urlencode($title).'&articleId='.$articleId.'&cityShort='.$cityShort.'&videoHeight='.$videoHeight.'&useJWPlayer='.$useJWPlayer.'&format=json';
+					$url.='wikia.php?controller=RelatedVideos&method=getVideoData&width='.self::width.'&videoWidth='.$videoWidth.'&title='.urlencode($title).'&articleId='.$articleId.'&cityShort='.$cityShort.'&videoHeight='.$videoHeight.'&useJWPlayer='.$useJWPlayer.'&autoplay='.$autoplay.'&format=json';
 				}
 				$httpResponse = Http::post( $url );
 				$result = json_decode( $httpResponse, true );
@@ -40,7 +40,8 @@ class RelatedVideosService {
 						'cityShort'	=> $cityShort,
 						'useMaster'	=> $useMaster,
 						'videoHeight'	=> $videoHeight,
-					        'useJWPlayer'	=> $useJWPlayer
+					        'useJWPlayer'	=> $useJWPlayer,
+					        'autoplay'	=> $autoplay
 					)
 				)->getData();
 				$result['data']['external'] = 0;
