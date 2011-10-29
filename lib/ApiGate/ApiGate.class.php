@@ -214,6 +214,34 @@ class ApiGate{
 		wfProfileOut( __METHOD__ );
 		return $apiKeys;
 	} // end getKeysByUserId()
+	
+	/**
+	 * @param userId - user id to use to search for associated api keys.
+	 * @return array - array of API keys and their nicknames (empty array if there are no keys associated with that user-id). Each
+	 *                 element of the array is an associative array with two keys: "apiKey" and "nick". If the key does not have an explicit nickname,
+	 *                 the nickname will be 
+	 */
+	public static function getKeysAndNicknamesByUserId( $userId ) {
+		wfProfileIn( __METHOD__ );
+		
+		$apiKeys = array();
+		
+		$dbr = ApiGate_Config::getSlaveDb();
+		$queryString = "SELECT apiKey FROM ".ApiGate::TABLE_KEYS." WHERE user_id='". mysql_real_escape_string( $userId, $dbr ). "'";
+		if( $result = mysql_query( $queryString, $dbr ) ){
+			if(($numRows = mysql_num_rows($result)) && ($numRows > 0)){
+				for($cnt=0; $cnt<$numRows; $cnt++){
+					$apiKeys[] = mysql_result($result, $cnt, "apiKey");
+				}
+			}
+		} else {
+			$errorString = i18n( 'apigate-mysql-error', $queryString, mysql_error( $dbr ) );
+			print ApiGate_Dispatcher::renderTemplate( "error", array('message' => $errorString));
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $apiKeys;
+	} // end getKeysAndNicknamesByUserId()
 
 	/**
 	 * Sends a WRITE query (usually an insert/update/delete) and returns true on success false on failure.

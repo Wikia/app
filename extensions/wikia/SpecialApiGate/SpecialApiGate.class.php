@@ -98,7 +98,7 @@ class SpecialApiGate extends SpecialPage {
 		// End the main column and add the right-rail.
 		$wgOut->addWikiText("<mainpage-endcolumn />
 							<mainpage-rightcolumn-start />
-							{{MenuRail}}
+							{{MenuRail2}}
 							<mainpage-endcolumn />");
 
 		wfProfileOut( __METHOD__ );
@@ -126,13 +126,14 @@ class SpecialApiGate extends SpecialPage {
 	 */
 	public function subpage_landingPage( $data = array() ){
 		wfProfileIn( __METHOD__ );
+		global $wgUser;
 		$html = "";
 
 		// TODO: FIXME: Could this be extracted to all be inside of one template in API Gate (index.php template).  We're not doing any funky logic here.
 		// TODO: FIXME: Could this be extracted to all be inside of one template in API Gate (index.php template).  We're not doing any funky logic here.
 
 		// Show intro-blurb.
-		$html .= ApiGate_Dispatcher::renderTemplate( "intro" );
+		$html .= ApiGate_Dispatcher::renderTemplate( "intro", array( "username" => $wgUser->getName() ) );
 
 		// If the user has at least one API key, show the userKeys subpage.
 		$userId = ApiGate_Config::getUserId();
@@ -223,24 +224,14 @@ class SpecialApiGate extends SpecialPage {
 		if($keys == null){
 			$keys = ApiGate::getKeysByUserId( $userId );
 		}
-
-// TODO: SWITCH TO USING ApiGate template.
-		ob_start();
-		if(count($keys) > 0){
-			print "<ul>";
-			foreach($keys as $apiKey){
-				print "<li>$apiKey</li>\n";
-			}
-			print "</ul>\n";
-		} else {
-// TODO: message & link to register
-print "No API keys for current user yet."; // TODO: CHANGE TO i18n MESSAGE w/link!
-// TODO: message & link to register
-		}
 		
-		$html = ob_get_clean();
+		// TODO: GET NICKNAMES FOR THE KEYS
 
-		$html = "<br/>".$this->wrapHtmlInModuleBox( $html );
+		$data = array(
+			'userId' => $userId,
+			'keys' => $keys,
+		);
+		$html =  ApiGate_Dispatcher::renderTemplate( "userKeys", $data );
 
 		wfProfileOut( __METHOD__ );
 		return $html;

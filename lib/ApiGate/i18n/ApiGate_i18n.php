@@ -17,15 +17,19 @@ $i18nDir = dirname(__FILE__);
 require "$i18nDir/ApiGate_i18n.strings.php";
 
 // For now, just wrap MediaWiki's i18n functions.
-function i18n( $msgName ) {
+function i18n( $msgName, $data=null ) {
 	wfProfileIn( __METHOD__ );
 
 	if( function_exists( 'wfMsg' ) ) {
-		$retVal = wfMsg( $msgName );
+		if($data === null){
+			$retVal = wfMsg( $msgName );
+		} else {
+			$retVal = wfMsg( $msgName, $data );
+		}
 	} else {
 		$retVal = "<ApiGate - $msgName>";
 	}
-	
+
 	wfProfileOut( __METHOD__ );
 	return $retVal;
 } // end i18n()
