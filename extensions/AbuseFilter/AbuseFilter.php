@@ -89,9 +89,11 @@ $wgAbuseFilterAvailableActions = array( 'flag', 'throttle', 'warn', 'disallow', 
 $wgAbuseFilterConditionLimit = 1000;
 
 // Disable filters if they match more than X edits, constituting more than Y% of the last Z edits, if they have been changed in the last S seconds
-$wgAbuseFilterEmergencyDisableThreshold = 0.05;
-$wgAbuseFilterEmergencyDisableCount = 2;
-$wgAbuseFilterEmergencyDisableAge = 86400; // One day.
+/* Wikia Change Begin */
+if ( !isset( $wgAbuseFilterEmergencyDisableThreshold ) ) $wgAbuseFilterEmergencyDisableThreshold = 0.05;
+if ( !isset( $wgAbuseFilterEmergencyDisableCount ) ) $wgAbuseFilterEmergencyDisableCount = 2;
+if ( !isset( $wgAbuseFilterEmergencyDisableAge ) ) $wgAbuseFilterEmergencyDisableAge = 86400; // One day.
+/* Wikia Change End */
 
 // Abuse filter parser class
 $wgAbuseFilterParserClass = 'AbuseFilterParser';
