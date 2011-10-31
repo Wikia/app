@@ -14,7 +14,7 @@ define.call(exports, [
 		var sounds = {},
 		mute = false,
 		isApp = Wikia.Platform.is('app'),
-		prefix = ((isApp) ? '' : "extensions/wikia/hacks/PhotoPop/") + "shared/audio/",
+		prefix = ((isApp) ? '' : "extensions/wikia/PhotoPop/") + "shared/audio/",
 		path,
 		audioFiles = settings.sounds;
 

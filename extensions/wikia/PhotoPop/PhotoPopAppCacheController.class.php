@@ -16,7 +16,7 @@ class PhotoPopAppCacheController extends WikiaController {
 		}
 		
 		$files = array();
-		$basePath = "extensions/wikia/hacks/PhotoPop/";
+		$basePath = "extensions/wikia/PhotoPop/";
 		$dirs = array('shared/audio', 'shared/images');
 		
 		foreach( $dirs as $dir ) {

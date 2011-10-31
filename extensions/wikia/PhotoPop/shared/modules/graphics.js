@@ -4,7 +4,7 @@ define.call(exports, ['modules/settings'], function(settings){
 
 	var images = {},
 	isApp = typeof Titanium != 'undefined',
-	prefix = (isApp) ? '' : 'extensions/wikia/hacks/PhotoPop/',
+	prefix = (isApp) ? '' : 'extensions/wikia/PhotoPop/',
 	graphics = settings.images,
 	preload, imagePath, ext;
 
