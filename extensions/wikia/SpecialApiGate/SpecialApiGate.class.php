@@ -137,9 +137,9 @@ class SpecialApiGate extends SpecialPage {
 
 		// If the user has at least one API key, show the userKeys subpage.
 		$userId = ApiGate_Config::getUserId();
-		$keys = ApiGate::getKeysByUserId( $userId );
+		$keysAndNicks = ApiGate::getKeysAndNicknamesByUserId( $userId );
 		if( count($keys) > 0 ){
-			$html .= $this->subpage_userKeys( $userId, $keys );
+			$html .= $this->subpage_userKeys( $userId, $keysAndNicks );
 		} else {
 			// If the user doesn't have any keys yet, show the registration form front-and-center.
 // TODO: TEST THAT THE FORM-PROCESSING WORKS EVEN WHEN NOT ON THE /register SUBPAGE.
@@ -211,25 +211,24 @@ class SpecialApiGate extends SpecialPage {
 	 *
 	 * @param userId - mixed - (optional) userId of the user whose keys should be shown. If null or not provided, then it will use
 	 *                 the currently logged in user.
-	 * @param keys - array - (optional) array of keys for the user.  If provided, this will be assumed to be the correct list of keys
+	 * @param keysAndNicks - array - (optional) array of keys and key nicknames for the user in the format provided by ApiGate::getKeysAndNicknamesByUserId.
+	 *               If provided, this will be assumed to be the correct list of keys
 	 *               so they will not be looked up from the database using the userId provided (or the default user as described in userId's
 	 *               param documentation above.
 	 */
-	public function subpage_userKeys( $userId=null, $keys=null ){
+	public function subpage_userKeys( $userId=null, $keysAndNicks=null ){
 		wfProfileIn( __METHOD__ );
 
 		if($userId == null){
 			$userId = ApiGate_Config::getUserId();
 		}
-		if($keys == null){
-			$keys = ApiGate::getKeysByUserId( $userId );
+		if($keysAndNicks == null){
+			$keysAndNicks = ApiGate::getKeysAndNicknamesByUserId( $userId );
 		}
-		
-		// TODO: GET NICKNAMES FOR THE KEYS
 
 		$data = array(
 			'userId' => $userId,
-			'keys' => $keys,
+			'keysAndNicks' => $keysAndNicks,
 		);
 		$html =  ApiGate_Dispatcher::renderTemplate( "userKeys", $data );
 

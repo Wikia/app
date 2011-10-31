@@ -1,13 +1,14 @@
 <div class='sub_module'>
 	<?= i18n( 'apigate-userkeys-intro' ) ?>
 <?php
-	if(count($keys) > 0){
+	if(count($keysAndNicks) > 0){
 		?><ul><?php
 		global $APIGATE_LINK_ROOT;
-		foreach($keys as $apiKey){
-			// TODO: Use nicknames if available.
-			// TODO: Use nicknames if available.
-			?><li><a href='<?= $APIGATE_LINK_ROOT."/key?apiKey=$apiKey" ?>'><?= $apiKey ?></a></li><?php
+		foreach($keysAndNicks as $keyData){
+			$apiKey = $keyData['apiKey'];
+			$nickName = $keyData['nickName'];
+
+			?><li><a href='<?= $APIGATE_LINK_ROOT."/key?apiKey=$apiKey" ?>'><?= $nickName ?></a></li><?php
 		}
 		?></ul><?php
 	} else {
