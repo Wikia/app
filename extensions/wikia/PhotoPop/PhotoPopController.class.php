@@ -39,16 +39,16 @@ class PhotoPopController extends WikiaController {
 
 		//TODO: move to AssetsManager package
 		$this->response->setVal( 'scripts', array(
-			AssetsManager::getInstance()->getOneCommonURL( "extensions/wikia/hacks/PhotoPop/shared/lib/mustache.js" ),
-			AssetsManager::getInstance()->getOneCommonURL( "extensions/wikia/hacks/PhotoPop/shared/lib/my.class.js" ),
-			AssetsManager::getInstance()->getOneCommonURL( "extensions/wikia/hacks/PhotoPop/shared/lib/store.js" ),
-			AssetsManager::getInstance()->getOneCommonURL( "extensions/wikia/hacks/PhotoPop/shared/lib/observable.js" ),
-			AssetsManager::getInstance()->getOneCommonURL( "extensions/wikia/hacks/PhotoPop/shared/lib/reqwest.js" ),
-			AssetsManager::getInstance()->getOneCommonURL( "extensions/wikia/hacks/PhotoPop/shared/lib/classlist.js" ),
-			AssetsManager::getInstance()->getOneCommonURL( "extensions/wikia/hacks/PhotoPop/shared/lib/wikia.js" ),
-			AssetsManager::getInstance()->getOneCommonURL( "extensions/wikia/hacks/PhotoPop/shared/lib/require.js" ) . '" data-main="' . $this->wg->ExtensionsPath . '/wikia/hacks/PhotoPop/shared/lib/main'
+			AssetsManager::getInstance()->getOneCommonURL( "extensions/wikia/PhotoPop/shared/lib/mustache.js" ),
+			AssetsManager::getInstance()->getOneCommonURL( "extensions/wikia/PhotoPop/shared/lib/my.class.js" ),
+			AssetsManager::getInstance()->getOneCommonURL( "extensions/wikia/PhotoPop/shared/lib/store.js" ),
+			AssetsManager::getInstance()->getOneCommonURL( "extensions/wikia/PhotoPop/shared/lib/observable.js" ),
+			AssetsManager::getInstance()->getOneCommonURL( "extensions/wikia/PhotoPop/shared/lib/reqwest.js" ),
+			AssetsManager::getInstance()->getOneCommonURL( "extensions/wikia/PhotoPop/shared/lib/classlist.js" ),
+			AssetsManager::getInstance()->getOneCommonURL( "extensions/wikia/PhotoPop/shared/lib/wikia.js" ),
+			AssetsManager::getInstance()->getOneCommonURL( "extensions/wikia/PhotoPop/shared/lib/require.js" ) . '" data-main="' . $this->wg->ExtensionsPath . '/wikia/PhotoPop/shared/lib/main'
 		) );
-		$this->response->setVal( 'cssLink', AssetsManager::getInstance()->getOneCommonURL( "extensions/wikia/hacks/PhotoPop/shared/css/homescreen.css" ) );
+		$this->response->setVal( 'cssLink', AssetsManager::getInstance()->getOneCommonURL( "extensions/wikia/PhotoPop/shared/css/homescreen.css" ) );
 	}
 
 	public function listGames(){

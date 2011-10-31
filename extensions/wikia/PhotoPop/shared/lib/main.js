@@ -1,6 +1,6 @@
 (function(){
 	require.config({
-		baseUrl: (Wikia.Platform.is('app')) ? 'shared/' : 'extensions/wikia/hacks/PhotoPop/shared/'
+		baseUrl: (Wikia.Platform.is('app')) ? 'shared/' : 'extensions/wikia/PhotoPop/shared/'
 	});
 
 	require([
