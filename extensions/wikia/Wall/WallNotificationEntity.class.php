@@ -29,16 +29,16 @@ class WallNotificationEntity {
 	 *	Public Interface
 	 */
 	
-	public static function createFromRC(RecentChange $RC, $wiki) {
+	public static function createFromRev(Revision $rev, $wiki) {
 		$wn = F::build('WallNotificationEntity', array() );
-		if($wn->loadDataFromRC($RC, $wiki)) {
+		if($wn->loadDataFromRev($rev, $wiki)) {
 			$wn->save();
 			return $wn;
 		}
 	}
 	
-	public static function getByWikiAndRCId($rc_id, $wikiId) {
-		return F::build('WallNotificationEntity', array($rc_id.'_'.$wikiId), 'getById');
+	public static function getByWikiAndRevId($RevId, $wikiId) {
+		return F::build('WallNotificationEntity', array($RevId.'_'.$wikiId), 'getById');
 	}
 	
 	public static function getById($id) {
@@ -73,12 +73,12 @@ class WallNotificationEntity {
 		return $this->id;
 	}
 	
-	public function loadDataFromRC(RecentChange $RC, $wiki) {
-		$this->id = $RC->getAttribute('rc_id') . '_' .  $wiki;
+	public function loadDataFromRev(Revision $rev, $wiki) {
+		$this->id = $rev->getId(). '_' .  $wiki;
 		
-		$title = $RC->getTitle();
+		$title = $rev->getTitle();
 		
-		$ac = F::build('WallMessage', array($RC->getTitle()), 'newFromTitle' );
+		$ac = F::build('WallMessage', array($rev->getTitle()), 'newFromTitle' );
 		$ac->load();
 
 		$walluser = $ac->getWallOwner();
@@ -92,8 +92,8 @@ class WallNotificationEntity {
 		}
 		
 		$this->data->wiki = $wiki;
-		$this->data->rc_id = $RC->getAttribute('rc_id');
-		$this->data->timestamp = $RC->getAttribute('rc_timestamp');
+		$this->data->rev_id = $rev->getId();
+		$this->data->timestamp = $rev->getTimestamp();
 		
 		$msg_author_realname = $authoruser->getRealName();
 		$this->data->msg_author_id = $authoruser->getId();
@@ -154,18 +154,18 @@ class WallNotificationEntity {
 
 	function recreateFromDB() {
 		$explodedId = explode('_', $this->id);
-		$RCId = $explodedId[0];
+		$RevId = $explodedId[0];
 		$wikiId = $explodedId[1];
 
-		$RC = RecentChange::newFromId($RCId);
-		if(empty($RC)) {
+		$rev = Revision::newFromId($RevId);
+		if(empty($rev)) {
 			// also cache failures not to make expensive database queries
 			// again and again for the same Entity
 			$this->save();
 			return;
 		}
 		
-		$this->loadDataFromRC($RC, $wikiId);
+		$this->loadDataFromRev($rev, $wikiId);
 		$this->save();
 	} 
 	
@@ -181,7 +181,7 @@ class WallNotificationEntity {
 	 * Helper functions
 	 */
 	public function getMemcKey() {
-		return F::App()->runFunction( 'wfSharedMemcKey', __CLASS__, "v18", $this->id, 'notification' );
+		return F::App()->runFunction( 'wfSharedMemcKey', __CLASS__, "v21", $this->id, 'notification' );
 	}
 
 	public function getCache() {
