@@ -1,1 +1,0 @@
-<?= $callbackName ;?> && <?= $callbackName ;?>(<?= $jsonData ;?>);
