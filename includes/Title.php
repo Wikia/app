@@ -3576,17 +3576,9 @@ class Title {
 	 * @return \type{\bool} TRUE or FALSE
 	 */
 	public function isAlwaysKnown() {
-		/** Wikia Change @author Andrzej 'nAndy' Łukaszewski */
-		$result = false;
-		if( wfRunHooks( 'TitleIsAlwaysKnown', array($this, &$result)) ) {
-			return $result;
-		}
-		/** End of Wikia Change */
-		
 		if( $this->mInterwiki != '' ) {
 			return true;  // any interwiki link might be viewable, for all we know
 		}
-		
 		switch( $this->mNamespace ) {
 			case NS_MEDIA:
 			case NS_FILE:

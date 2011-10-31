@@ -922,11 +922,24 @@ class WallHooksHelper {
 	 * 
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	public function onTitleIsAlwaysKnown($title, $result) {
-		if( !empty(F::app()->wg->EnableWallExt) && ($title->mNamespace == NS_USER_WALL || $title->mNamespace == NS_USER_WALL_MESSAGE) ) {
-			$result = true;
+	public function onLinkBegin($skin, $target, $text, $customAttribs, $query, $options, $ret) {
+		// paranoia
+		if( !($target instanceof Title) ) {
+			return true;
 		}
 		
+		$namespace = $target->getNamespace();
+		if( !empty(F::app()->wg->EnableWallExt) && ($namespace == NS_USER_WALL || $namespace == NS_USER_WALL_MESSAGE) ) {
+			// remove "broken" assumption/override
+			$brokenKey = array_search('broken', $options);
+			if ( $brokenKey !== false ) {
+				unset($options[$brokenKey]);
+			}
+		
+			// make the link "blue"
+			$options[] = 'known';
+		}
+	
 		return true;
 	}
 	
