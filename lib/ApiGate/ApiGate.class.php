@@ -218,8 +218,8 @@ class ApiGate{
 	/**
 	 * @param userId - user id to use to search for associated api keys.
 	 * @return array - array of API keys and their nicknames (empty array if there are no keys associated with that user-id). Each
-	 *                 element of the array is an associative array with two keys: "apiKey" and "nick". If the key does not have an explicit nickname,
-	 *                 the nickname will be 
+	 *                 element of the array is an associative array with two keys: "apiKey" and "nickName". If the key does not have an explicit nickname,
+	 *                 the apiKey will be put into the nickName field (so the calling code can always count on a nickName being present).
 	 */
 	public static function getKeysAndNicknamesByUserId( $userId ) {
 		wfProfileIn( __METHOD__ );
@@ -227,11 +227,17 @@ class ApiGate{
 		$apiKeys = array();
 		
 		$dbr = ApiGate_Config::getSlaveDb();
-		$queryString = "SELECT apiKey FROM ".ApiGate::TABLE_KEYS." WHERE user_id='". mysql_real_escape_string( $userId, $dbr ). "'";
+		$queryString = "SELECT apiKey,nickName FROM ".ApiGate::TABLE_KEYS." WHERE user_id='". mysql_real_escape_string( $userId, $dbr ). "'";
 		if( $result = mysql_query( $queryString, $dbr ) ){
 			if(($numRows = mysql_num_rows($result)) && ($numRows > 0)){
 				for($cnt=0; $cnt<$numRows; $cnt++){
-					$apiKeys[] = mysql_result($result, $cnt, "apiKey");
+					$apiKey = mysql_result($result, $cnt, "apiKey");
+					$nickName = mysql_result($result, $cnt, "nickName");
+					$nickName = ($nickName=="" ? $apiKey : $nickName); // use apiKey as default if no nickName provided
+					$apiKeys[] = array(
+						"apiKey" => $apiKey,
+						"nickName" => $nickName,
+					);
 				}
 			}
 		} else {
