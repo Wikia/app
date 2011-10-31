@@ -72,7 +72,7 @@ $app->registerHook('ArticleCommentBeforeWatchlistAdd', 'WallHooksHelper', 'onArt
 $app->registerHook('GetRailModuleList', 'WallRailHelper', 'onGetRailModuleList');
 
 //handmade links to message wall adjusting
-$app->registerHook('TitleIsAlwaysKnown', 'WallHooksHelper', 'onTitleIsAlwaysKnown');
+$app->registerHook('LinkBegin', 'WallHooksHelper', 'onLinkBegin');
 
 $app->registerHook('MakeGlobalVariablesScript', 'JSMessages', 'onMakeGlobalVariablesScript');
 $app->registerHook('SkinAfterBottomScripts', 'JSMessages', 'onSkinAfterBottomScripts');
