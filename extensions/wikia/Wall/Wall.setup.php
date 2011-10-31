@@ -53,6 +53,7 @@ $app->registerHook('SkinSubPageSubtitleAfterTitle', 'WallHooksHelper', 'onSkinSu
 $app->registerHook('SkinTemplateContentActions', 'WallHooksHelper', 'onSkinTemplateContentActions');
 $app->registerHook('PageHeaderIndexAfterActionButtonPrepared', 'WallHooksHelper', 'onPageHeaderIndexAfterActionButtonPrepared');
 
+//recent changes adjusting
 $app->registerHook('AC_RecentChange_Save', 'WallHooksHelper', 'onRecentChangeSave');
 $app->registerHook('ChangesListInsertFlags', 'WallHooksHelper', 'onChangesListInsertFlags');
 $app->registerHook('ChangesListInsertArticleLink', 'WallHooksHelper', 'onChangesListInsertArticleLink');
@@ -60,20 +61,22 @@ $app->registerHook('ChangesListInsertDiffHist', 'WallHooksHelper', 'onChangesLis
 $app->registerHook('ChangesListInsertRollback', 'WallHooksHelper', 'onChangesListInsertRollback');
 $app->registerHook('ChangesListInsertAction', 'WallHooksHelper', 'onChangesListInsertAction');
 $app->registerHook('ChangesListInsertComment', 'WallHooksHelper', 'onChangesListInsertComment');
+$app->registerHook('ArticleDoDeleteArticleBeforeLogEntry', 'WallHooksHelper', 'onArticleDoDeleteArticleBeforeLogEntry');
+$app->registerHook('PageArchiveUndeleteBeforeLogEntry', 'WallHooksHelper', 'onPageArchiveUndeleteBeforeLogEntry');
+$app->registerHook('XmlNamespaceSelectorAfterGetFormattedNamespaces', 'WallHooksHelper', 'onXmlNamespaceSelectorAfterGetFormattedNamespaces');
 
+//watchlist
 $app->registerHook('ArticleCommentBeforeWatchlistAdd', 'WallHooksHelper', 'onArticleCommentBeforeWatchlistAdd');
 
-$app->registerHook('ArticleDoDeleteArticleBeforeLogEntry', 'WallHooksHelper', 'onArticleDoDeleteArticleBeforeLogEntry');
+//right rail adjusting
+$app->registerHook('GetRailModuleList', 'WallRailHelper', 'onGetRailModuleList');
 
-$app->registerHook('PageArchiveUndeleteBeforeLogEntry', 'WallHooksHelper', 'onPageArchiveUndeleteBeforeLogEntry');
-
-$app->registerHook('XmlNamespaceSelectorAfterGetFormattedNamespaces', 'WallHooksHelper', 'onXmlNamespaceSelectorAfterGetFormattedNamespaces');
+//handmade links to message wall adjusting
+$app->registerHook('TitleIsAlwaysKnown', 'WallHooksHelper', 'onTitleIsAlwaysKnown');
 
 $app->registerHook('MakeGlobalVariablesScript', 'JSMessages', 'onMakeGlobalVariablesScript');
 $app->registerHook('SkinAfterBottomScripts', 'JSMessages', 'onSkinAfterBottomScripts');
 $app->registerHook('MessageCacheReplace', 'JSMessagesHelper', 'onMessageCacheReplace');
-
-$app->registerHook('GetRailModuleList', 'WallRailHelper', 'onGetRailModuleList');
 
 F::build('JSMessages')->registerPackage('Wall', array(
 	'wall-notifications',

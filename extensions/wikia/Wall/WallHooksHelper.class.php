@@ -896,12 +896,35 @@ class WallHooksHelper {
 		return true;
 	}
 	
+	/**
+	 * @brief Adjusting select box with namespaces on RecentChanges page
+	 * 
+	 * @author Andrzej 'nAndy' Łukaszewski
+	 */
 	public function onXmlNamespaceSelectorAfterGetFormattedNamespaces($namespaces, $selected, $all, $element_name, $label) {
 		if( defined('NS_USER_WALL') && defined('NS_USER_WALL_MESSAGE') ) {
 			if( isset($namespaces[NS_USER_WALL]) && isset($namespaces[NS_USER_WALL_MESSAGE]) ) {
 				unset($namespaces[NS_USER_WALL], $namespaces[NS_USER_WALL_MESSAGE]);
 				$namespaces[NS_USER_WALL_MESSAGE] = F::app()->wf->Msg('wall-recentchanges-namespace-selector-message-wall');
 			}
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * @brief Changing all links to Message Wall to blue links
+	 * 
+	 * @param Title $title
+	 * @param boolean $result
+	 * 
+	 * @return true -- because it's a hook
+	 * 
+	 * @author Andrzej 'nAndy' Łukaszewski
+	 */
+	public function onTitleIsAlwaysKnown($title, $result) {
+		if( !empty(F::app()->wg->EnableWallExt) && ($title->mNamespace == NS_USER_WALL || $title->mNamespace == NS_USER_WALL_MESSAGE) ) {
+			$result = true;
 		}
 		
 		return true;
