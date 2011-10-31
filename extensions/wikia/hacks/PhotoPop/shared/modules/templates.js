@@ -22,17 +22,17 @@ define.call(exports, {
 						</div>\
 					</div>\
 					<div id='sliderContent' data-scroll='x'>\
-						<span class='progress'>"+wgMessages['photopop-game-loading']+"</span>\
+						<span class='progress'>"+Wikia.i18n.Msg('photopop-game-loading')+"</span>\
 					</div>\
 				</div>\
 			</div>\
 			<div id='highscoreScreen' class='screen'>\
-				<h1>"+wgMessages['photopop-game-highscores']+"</h1>\
+				<h1>"+Wikia.i18n.Msg('photopop-game-highscores')+"</h1>\
 				<table><tr>\
 				<th> </th>\
-				<th>"+wgMessages['photopop-game-wiki']+"</th>\
-				<th>"+wgMessages['photopop-game-date']+"</th>\
-				<th>"+wgMessages['photopop-game-score']+"</th>\
+				<th>"+Wikia.i18n.Msg('photopop-game-wiki')+"</th>\
+				<th>"+Wikia.i18n.Msg('photopop-game-date')+"</th>\
+				<th>"+Wikia.i18n.Msg('photopop-game-score')+"</th>\
 				<tr></table>\
 				<div id='goBack'>\
 					<img src='{{#image}}buttonSrc_home{{/image}}'/>\
@@ -48,7 +48,7 @@ define.call(exports, {
 				<div id='endGameOuterWrapper'>\
 					<div id='endGameInnerWrapper'>\
 						<div id='highScore'>\
-							"+wgMessages['photopop-game-highscore']+": <span>0</span>\
+							"+Wikia.i18n.Msg('photopop-game-highscore')+": <span>0</span>\
 						</div>\
 						<div id='summaryWrapper'>\
 							<div id='endGameSummary'>\
@@ -66,9 +66,7 @@ define.call(exports, {
 						</div>\
 					</div>\
 				</div>\
-				<div id='timeUpText'>"
-						+wgMessages['photopop-game-timeup']+
-				"</div>\
+				<div id='timeUpText'>"+Wikia.i18n.Msg('photopop-game-timeup')+"</div>\
 				<div id='continue' class='bottomBar'>\
 					<span id='continueText'></span>\
 					<img src='{{#image}}buttonSrc_contiunue{{/image}}'/>\
@@ -90,7 +88,7 @@ define.call(exports, {
 						<img src='{{#image}}buttonSrc_home{{/image}}'/>\
 					</div>\
 					<div id='score'>\
-						"+wgMessages['photopop-game-points']+": <span id='roundPoints'>0</span> "+wgMessages['photopop-game-total']+": <span id='totalPoints'>0</span>\
+						"+Wikia.i18n.Msg('photopop-game-points')+": <span id='roundPoints'>0</span> "+Wikia.i18n.Msg('photopop-game-total')+": <span id='totalPoints'>0</span>\
 					</div>\
 					<div id='muteButton'>\
 						<img src='{{#image}}buttonSrc_gameMute{{/image}}'>\

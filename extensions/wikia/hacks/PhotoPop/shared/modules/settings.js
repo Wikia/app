@@ -1,10 +1,8 @@
 var exports = exports || {};
 
 define.call(exports, {
-	settings: {
-		centralDomain: 'community.wikia.com',
-		testDomain: 'federico.wikia-dev.com'//comment out or set to null/false before release
-	},
+	centralDomain: 'community.wikia.com',
+	testDomain: 'federico.wikia-dev.com',//comment out or set to null/false before release
 	
 	images: {
 		PHOTOPOP_LOGO: "logo_photopop",

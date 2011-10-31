@@ -1,26 +1,25 @@
 (function(){
-	var isApp = (typeof Titanium != 'undefined'),
-	prefix = (isApp) ? 'shared/' : '../';
+	var prefix = (Wikia.Platform.is('app')) ? 'shared/' : '../';
 	
 	require([
-			prefix + "modules/configServer",
+			prefix + "modules/settings",
 			prefix + "modules/templates",
-			prefix + "modules/imageServer",
-			prefix + "modules/soundServer",
-			prefix + "modules/game",
-			prefix + "modules/screenManager",
+			prefix + "modules/graphics",
+			prefix + "modules/audio",
+			prefix + "modules/games",
+			prefix + "modules/screens",
 			prefix + "modules/data"
 		],
 		
-		function(config, templates, imageServer, soundServer, gameLogic, screenManager, data) {
-			var tutorialPlayed = true, //store.get('tutorialPlayed') || true,//false,
-			games,
+		function(settings, templates, graphics, audio, games, screens, data) {
+			var tutorialPlayed = true, //store.get('tutorialPlayed') || false,
+			gamesData,
 			gamesListLoader = new data.XDomainLoader(),
 			gameLoader = new data.XDomainLoader(),
 			selectedGame,
 			selectedGameId,
-			g,
-			Game = gameLogic.Game,
+			currentGame,
+			Game = games.Game,
 			muteButton,
 			imgPath,
 			img = new Image(),
@@ -28,65 +27,61 @@
 			maskShown = false,
 			highscore = [],
 			tutorialSteps = [],
-			
 			view = {
 				image: function() {
 					return function(text, render) {
-						return imageServer.getAsset(text);
+						return graphics.getAsset(text);
 					}
 				}
-			},
+			};
 			
-			initGameScreen = function(e , gameId){
-
-				screenManager.get('game').fire('prepareGameScreen', {
-					watermark: (games[gameId] && games[gameId].watermark) ? games[gameId].watermark : imageServer.getAsset('watermark_default'),
-					mute: soundServer.getMute()
+			function initGameScreen(event, gameId){
+				screens.get('game').fire('prepareGameScreen', {
+					watermark: (gamesData[gameId] && gamesData[gameId].watermark) ? gamesData[gameId].watermark : graphics.getAsset('watermark_default'),
+					mute: audio.getMute()
 				});
-
+				
 				//highscore
 				//if(!store.get('highScore_' + gameId)) store.set('highScore_' + gameId, 0);
 				
 				//document.getElementById('highScore').getElementsByTagName('span')[0].innerHTML = store.get('highScore_' + gameId);
 				
-				
-				
 				if(gameId == 'tutorial' && !tutorialSteps['intro']) {
-					screenManager.get('game').openModal({
+					screens.get('game').openModal({
 						name: 'intro',
-						html: wgMessages['photopop-game-tutorial-intro'],
+						html: Wikia.i18n.Msg('photopop-game-tutorial-intro'),
 						fade: true,
 						clickThrough: false,
 						closeOnClick: true
 					});
 					tutorialSteps['intro'] = true;
 				}
-			},
+			}
 			
-			loadSelectedGame = function(){
+			function loadSelectedGame(){
 				if(typeof selectedGame != 'undefined'){
 					gameLoader.load('http://' +
-							((config.settings.testDomain) ? selectedGame.id + '.' + config.settings.testDomain : selectedGame.domain) +
+							((settings.testDomain) ? selectedGame.id + '.' + settings.testDomain : selectedGame.domain) +
 							'/wikia.php?controller=PhotoPopController&method=getData&category=' +
 							encodeURIComponent(selectedGame.category),
 							{method: 'get'}
 					);
 				}
-			},
+			}
 			
-			renderGamesList = function(){
-				if(typeof games != 'undefined'){
+			function renderGamesList(){
+				if(typeof gamesData != 'undefined'){
 					var templateVars = {
 						games: []
 					},
 					item;
 					
-					for(var p in games){
-						var game = games[p],
+					for(var p in gamesData){
+						var game = gamesData[p],
 						gameData = store.get(game.id);
 						
 						if(!game.thumbnail)
-							game.thumbnail = imageServer.getAsset('gameicon_default');
+							game.thumbnail = graphics.getAsset('gameicon_default');
 						
 						if(gameData) {
 							game.round = gameData._currentRound;
@@ -113,112 +108,113 @@
 						}
 					}
 				}
-			},
+			}
 			
-			initHomeScreen = function(){
+			function initHomeScreen(){
 				gamesListLoader.load(
-					'http://' + (config.settings.testDomain || config.settings.centralDomain) +
+					'http://' + (settings.testDomain || settings.centralDomain) +
 					'/wikia.php?controller=PhotoPopController&method=listGames',
 					{method: 'get'}
 				);
 				
-				screenManager.get('home').init(soundServer.getMute());
+				screens.get('home').init(audio.getMute());
 				
 				var muteButton = document.getElementById('button_volume'),
 				imgs = muteButton.getElementsByTagName('img');
 				
 				muteButton.onclick = function(){
-					var mute = !soundServer.getMute();
-					
-					soundServer.setMute(mute);
-					soundServer.play('pop');
-					screenManager.get('home').fire('muteButtonClicked', {mute: mute});	
-				}
-				document.getElementById('button_tutorial').onclick = function() {
-					runGame('tutorial');
-				}
+					audio.toggleMute();
+					audio.play('pop');
+					screens.get('home').fire('muteButtonClicked', {mute: audio.getMute()});
+				};
 				
-				document.getElementById('button_scores').onclick = function() {
+				document.getElementById('button_tutorial').onclick = function(){
+					runGame('tutorial');
+				};
+				
+				document.getElementById('button_scores').onclick = function(){
 					openHighscore();
-				}
-			},
+				};
+			}
 			
-			//event handlers
-			modalOpened = function(e, options) {
-				g.fire('modalOpened', options);	
-			},
+			function modalOpened(event, options){
+				currentGame.fire('modalOpened', options);	
+			}
 			
-			wrongAnswerClicked = function(event, options) {
-				screenManager.get('game').fire('wrongAnswerClicked', {
+			function wrongAnswerClicked(event, options){
+				screens.get('game').fire('wrongAnswerClicked', {
 					"class" : Game.INCORRECT_CLASS_NAME,
 					li: options.li,
 					percent: options.percent
 				});
-				soundServer.play('wrongAnswer');
-			},
+				audio.play('wrongAnswer');
+			}
 			
-			rightAnswerClicked = function(event, correct) {
-				if(g.getId() == 'tutorial' && !tutorialSteps['continue']) {
-					screenManager.get('game').openModal({
+			function rightAnswerClicked(event, correct){
+				if(currentGame.getId() == 'tutorial' && !tutorialSteps['continue']) {
+					screens.get('game').openModal({
 						name: 'continue',
-						html: wgMessages['photopop-game-tutorial-continue'],
+						html: Wikia.i18n.Msg('photopop-game-tutorial-continue'),
 						fade: true,
 						clickThrough: false,
 						closeOnClick: true
 					});
 					tutorialSteps['continue'] = true;
 				}
-				soundServer.play('win');
-				screenManager.get('game').fire('rightAnswerClicked', correct);
-			},
+				audio.play('win');
+				screens.get('game').fire('rightAnswerClicked', correct);
+			}
 			
-			answerDrawerButtonClicked = function() {
-				screenManager.get('game').fire('answerDrawerButtonClicked');
+			function answerDrawerButtonClicked(){
+				screens.get('game').fire('answerDrawerButtonClicked');
 				
-				if(g.getId() == 'tutorial' && !tutorialSteps['drawer']) {
-					screenManager.get('game').openModal({
+				if(currentGame.getId() == 'tutorial' && !tutorialSteps['drawer']){
+					screens.get('game').openModal({
 						name: 'drawer',
-						html: wgMessages['photopop-game-tutorial-drawer'],
+						html: Wikia.i18n.Msg('photopop-game-tutorial-drawer'),
 						fade: true,
 						clickThrough: false,
 						fontSize: 'x-large',
-						closeOnClick: true});
+						closeOnClick: true
+					});
+					
 					tutorialSteps['drawer'] = true;
 				}
-			},
+			}
 			
-			answersPrepared = function(e, options) {
-				screenManager.get('game').fire('answersPrepared', options);	
-			},
+			function answersPrepared(event, options){
+				screens.get('game').fire('answersPrepared', options);
+			}
 			
-			continueClicked = function() {
-				screenManager.get('game').fire('continueClicked');
-			},
+			function continueClicked(){
+				screens.get('game').fire('continueClicked');
+			}
 			
-			endGame = function(e, options) {
-				screenManager.get('game').fire('endGame', options);
-
-				store.remove(g.getId());
-				g = null;
+			function endGame(event, options){
+				screens.get('game').fire('endGame', options);
+				store.remove(currentGame.getId());
+				currentGame = null;
 				
 				var score = options.totalPoints;
 				
-				if(score > highscore[highscore.length-1].score) {
+				if(score > highscore[highscore.length-1].score){
 					var date = new Date();
 					highscore.push({
 						score: score,
 						date: date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear(),
 						wiki: options.gameId
 					});
+					
 					highscore.sort(function(a,b) {
 						return a.score < b.score;
 					});
+					
 					highscore = highscore.slice(0, 5);
 				}
 				
 				if(score > highscore[0].score) {
 					document.getElementById('highScore').getElementsByTagName('span')[0].innerHTML = score;
-					screenManager.get('game').openModal({
+					screens.get('game').openModal({
 						name: 'highscore',
 						html: 'New highscore: ' + score + ' !',
 						clickThrough: false,
@@ -231,27 +227,27 @@
 				if(options.gameId == 'tutorial') {
 					store.set('tutorialPlayed', true);
 				}
-			},
+			}
 			
-			playAgain = function(){
-				g = null;
+			function playAgain(){
+				currentGame = null;
 				loadSelectedGame();
-			},
+			}
 			
-			goHome = function(e, gameFinished) {
+			function goHome(event, gameFinished){
+				if(!gameFinished && currentGame.getId() != 'tutorial')
+					currentGame.fire('storeData');
 				
-				if(!gameFinished && g.getId() != 'tutorial') g.fire('storeData');
-				
-				screenManager.get('game').fire('goHomeClicked', gameFinished);
-				screenManager.get('home').show();
-			},
+				screens.get('game').fire('goHomeClicked', gameFinished);
+				screens.get('home').show();
+			}
 			
-			displayingMask = function(e, options) {
+			function displayingMask(event, options){
 				//preloading an image
-				img.src = (g.getId() == 'tutorial') ? imageServer.getAsset(options.image) : options.image;
+				img.src = (currentGame.getId() == 'tutorial') ? graphics.getAsset(options.image) : options.image;
 				
-				if(g.getId() != 'tutorial'){
-					screenManager.get('game').openModal({
+				if(currentGame.getId() != 'tutorial'){
+					screens.get('game').openModal({
 						name: 'Loading Image',
 						html: 'Loading image...<br /> Please wait.',
 						fade: false,
@@ -260,76 +256,86 @@
 					});
 				}
 				
-				screenManager.get('game').getElement().style.pointerEvents = 'none';
-			},
+				screens.get('game').getElement().style.pointerEvents = 'none';
+			}
 			
-			maskDisplayed = function() {
+			function maskDisplayed(){
 				document.getElementById('bgPic').getElementsByTagName('img')[0].src = img.src;
 				maskShown = true;
 				manageInteraction();
-			},
+			}
 			
-			imageLoaded = function() {
+			function imageLoaded(){
 				imagePreloaded = true;
 				manageInteraction();
-			},
+			}
 			
-			manageInteraction = function() {
-				if(maskShown && imagePreloaded) {
-					if(g.getId() != 'tutorial') screenManager.get('game').closeModal();
-					screenManager.get('game').getElement().style.pointerEvents = 'auto';
+			function imageLoadError() {
+				screens.get('game').openModal({
+					name: 'tile',
+					html: Wikia.i18n.Msg('photopop-game-image-load-error'),
+					fade: true,
+					clickThrough: false,
+					closeOnClick: true
+				});
+			}
+			
+			function manageInteraction(){
+				if(maskShown && imagePreloaded){
+					if(currentGame.getId() != 'tutorial') screens.get('game').closeModal();
+					screens.get('game').getElement().style.pointerEvents = 'auto';
 					imagePreloaded = maskShown = false;
 				}
-			},
+			}
 			
-			tileClicked = function(event, tile) {
-				if(!tile.clicked) {
-					soundServer.play('pop');
-					screenManager.get('game').fire('tileClicked', tile);
-
-					if( g.getId() == "tutorial" && !tutorialSteps['tile']) {
-						screenManager.get('game').openModal({
+			function tileClicked(event, tile){
+				if(!tile.clicked){
+					audio.play('pop');
+					screens.get('game').fire('tileClicked', tile);
+					
+					if(currentGame.getId() == "tutorial" && !tutorialSteps['tile']){
+						screens.get('game').openModal({
 							name: 'tile',
-							html: wgMessages['photopop-game-tutorial-tile'],
+							html: Wikia.i18n.Msg('photopop-game-tutorial-tile'),
 							fade: true,
 							clickThrough: false,
 							closeOnClick: true,
 							triangle: 'right'
 						});
+						
 						tutorialSteps['tile'] = true;
 					}
-
 				}
-			},
+			}
 			
-			muteButtonClicked = function(e, button){
-				var mute = !soundServer.getMute();
-				screenManager.get('game').fire('muteButtonClicked', {mute: mute});
-				screenManager.get('home').fire('muteButtonClicked', {mute: mute});
-				soundServer.setMute(mute);
-			},
+			function muteButtonClicked(event, button){
+				var mute = audio.toggleMute();
+				screens.get('game').fire('muteButtonClicked', {mute: mute});
+				screens.get('home').fire('muteButtonClicked', {mute: mute});
+			}
 			
-			roundStart = function(e, options) {
-				screenManager.get('game').show().getElement().style.pointerEvents = 'none';
-				screenManager.get('game').fire('roundStart', options);	
-			},
+			function roundStart(event, options) {
+				screens.get('game').show().getElement().style.pointerEvents = 'none';
+				screens.get('game').fire('roundStart', options);
+			}
 			
-			timeIsUp = function(e, options){
-				soundServer.play('fail');
-				screenManager.get('game').fire('timeIsUp', options);
-			},
+			function timeIsUp(event, options){
+				audio.play('fail');
+				screens.get('game').fire('timeIsUp', options);
+			}
 			
-			timerEvent = function(e, percent) {
-				screenManager.get('game').fire('timerEvent', percent);
-			},
+			function timerEvent(event, percent){
+				screens.get('game').fire('timerEvent', percent);
+			}
 			
-			pause = function(e, options) {
+			function pause(event, options){
 				var pauseModal = ('pauseButton' == options.caller || 'goHomeButton' == options.caller);
 				
-				if(options.pause) {
-					screenManager.get('game').fire('paused');
-					if(pauseModal) {
-						screenManager.get('game').openModal({
+				if(options.pause){
+					screens.get('game').fire('paused');
+					
+					if(pauseModal){
+						screens.get('game').openModal({
 							name: 'pause',
 							html: 'Game paused',
 							clickThrough: false,
@@ -337,196 +343,187 @@
 							closeOnClick: false
 						});
 					}
-				} else {
-					screenManager.get('game').fire('resumed');
-					if(pauseModal) {
-						screenManager.get('game').closeModal();
-					}
+				}else{
+					screens.get('game').fire('resumed');
+					
+					if(pauseModal)
+						screens.get('game').closeModal();
 				}
-			},
+			}
 			
-			timeIsLow = function() {
-				soundServer.play('timeLow');
-			},
+			function timeIsLow(){
+				audio.play('timeLow');
+			}
 			
-			onDataError = function(event, resp){
+			function onDataError(event, resp){
 				alert('Error loading ' + resp.url + ': ' + resp.error.toString());
-			},
+			}
 			
-			runGame = function(target) {
+			function runGame(target){
 				var id, data, game;
 				if(target == 'tutorial') {
 					id =  'tutorial';
-					data = config.tutorial;
+					data = settings.tutorial;
 					newGame({
 						_id:id,
 						_data:data
 					});
 				} else {
 					selectedGameId = target.getAttribute('data-id');
-					selectedGame = games[selectedGameId];
+					selectedGame = gamesData[selectedGameId];
 					
-					if(g && g.getId() == selectedGame.id) {
-						screenManager.get('game').show();		
+					if(currentGame && currentGame.getId() == selectedGame.id) {
+						screens.get('game').show();		
 					} else {
-						if(g) g.fire('storeData');
+						if(currentGame) currentGame.fire('storeData');
 						gameData = store.get(selectedGame.id);
 						//if there is already a game in localstorage start it from this data otherwise load a new one
 						(gameData)? newGame(gameData): loadSelectedGame();
 					}
 				}
-			},
+			}
 			
-			loadGame = function() {
+			function loadGame(){
 				var id = selectedGame.id,
-					data = [],
-					watermark = 'watermark_' + id,
-					correctLength = selectedGame.c.length,
-					wrongLength = selectedGame.w.length;
+				data = [],
+				watermark = 'watermark_' + id,
+				correctLength = selectedGame.c.length,
+				wrongLength = selectedGame.w.length,
+				a,b,c,d;
 				
+				for(var i = 0, l = Game.ROUND_LENGTH;i < l; i++){
+					a = Math.floor(Math.random() * correctLength);
+					b = Math.floor(Math.random() * correctLength);
+					c = Math.floor(Math.random() * wrongLength);
+					d = Math.floor(Math.random() * wrongLength);
+					
+					data.push({
+						image: selectedGame.c[a].image,
+						answers: [
+							selectedGame.c[a].text,
+							selectedGame.c[b].text,
+							selectedGame.w[c].text,
+							selectedGame.w[d].text,
+						],
+						correct: selectedGame.c[a].text
+					});
+				}
 				
-					for(var i = 0, l = Game.ROUND_LENGTH;i < l; i++) {
-						
-						var a = Math.floor(Math.random() * correctLength),
-						b = Math.floor(Math.random() * correctLength),
-						c = Math.floor(Math.random() * wrongLength),
-						d = Math.floor(Math.random() * wrongLength);
-						
-						data.push({
-							image: selectedGame.c[a].image,
-							answers: [
-								selectedGame.c[a].text,
-								selectedGame.c[b].text,
-								selectedGame.w[c].text,
-								selectedGame.w[d].text,
-							],
-							correct: selectedGame.c[a].text
-							});
-					}
 				newGame({_id:id, _data:data});
-			},
+			}
 			
-			newGame = function(gameData) {
-				g = new Game(gameData);
+			function newGame(gameData){
+				currentGame = new Game(gameData);
 				
-				g.addEventListener('initGameScreen', initGameScreen);
-				g.addEventListener('initHomeScreen', initHomeScreen);
-				g.addEventListener('goHome', goHome);
-				g.addEventListener('playAgain', playAgain);
-				g.addEventListener('goToHighScores', openHighscore);
-				g.addEventListener('timeIsUp', timeIsUp);
-				g.addEventListener('wrongAnswerClicked', wrongAnswerClicked);
-				g.addEventListener('rightAnswerClicked', rightAnswerClicked);
-				g.addEventListener('answerDrawerButtonClicked', answerDrawerButtonClicked);
-				g.addEventListener('continueClicked', continueClicked);
-				g.addEventListener('tileClicked', tileClicked);
-				g.addEventListener('timerEvent', timerEvent);
-				g.addEventListener('timeIsLow', timeIsLow);
-				g.addEventListener('endGame', endGame);
-				g.addEventListener('muteButtonClicked', muteButtonClicked);
-				g.addEventListener('answersPrepared', answersPrepared);
-				g.addEventListener('roundStart', roundStart);
-				g.addEventListener('pause', pause);
+				currentGame.addEventListener('initGameScreen', initGameScreen);
+				currentGame.addEventListener('initHomeScreen', initHomeScreen);
+				currentGame.addEventListener('goHome', goHome);
+				currentGame.addEventListener('playAgain', playAgain);
+				currentGame.addEventListener('goToHighScores', openHighscore);
+				currentGame.addEventListener('timeIsUp', timeIsUp);
+				currentGame.addEventListener('wrongAnswerClicked', wrongAnswerClicked);
+				currentGame.addEventListener('rightAnswerClicked', rightAnswerClicked);
+				currentGame.addEventListener('answerDrawerButtonClicked', answerDrawerButtonClicked);
+				currentGame.addEventListener('continueClicked', continueClicked);
+				currentGame.addEventListener('tileClicked', tileClicked);
+				currentGame.addEventListener('timerEvent', timerEvent);
+				currentGame.addEventListener('timeIsLow', timeIsLow);
+				currentGame.addEventListener('endGame', endGame);
+				currentGame.addEventListener('muteButtonClicked', muteButtonClicked);
+				currentGame.addEventListener('answersPrepared', answersPrepared);
+				currentGame.addEventListener('roundStart', roundStart);
+				currentGame.addEventListener('pause', pause);
 				
-				g.prepareGame();
-			},
+				currentGame.prepareGame();
+			}
 			
-			initHighscore = function(){
-				
+			function initHighscore(){
 				highscore = store.get('highscore') || [];
-
-				if(!highscore.length) {
+				
+				if(!highscore.length){
 					var date = new Date();
-					for(var i=0;i<5;i++) {
+					
+					for(var i = 0; i < 5; i++){
 						highscore.push({
 							score: 1000,
 							date: date.getDate()-1 + '-' + (date.getMonth() + 1) + '-' + date.getFullYear(),
 							wiki: 'tutorial'
 						});
 					}
+					
 					store.set('highscore', highscore);
 				}
-			},
-			
-			openHighscore = function() {
-				screenManager.get('highscore').fire('openHighscore', highscore);
-				screenManager.get('highscore').show();
-			};
-			
-			Array.prototype.shuffle = function() {
-				var s = [];
-				while(this.length) s.push(this.splice(Math.floor(Math.random() * this.length), 1)[0]);
-				while(s.length) this.push(s.pop());
-			};
-			
-			imageServer.init(config.images);
-			soundServer.init(config.sounds);
-			
-			initHighscore();
-			
-			document.body.innerHTML = Mustache.to_html(templates.wrapper, view);
-			
-			img.onload = function() {
-				imageLoaded();
-			};
-			
-			img.onerror = function() {
-				screenManager.get('game').openModal({
-					name: 'tile',
-					html: wgMessages['photopop-game-image-load-error'],
-					fade: true,
-					clickThrough: false,
-					closeOnClick: true});
-			};
-			
-			screenManager.addEventListener('show', function(event, data){
-				var names = screenManager.getScreenIds();
-				
-				for(var i = 0, l = names.length; i < l; i++) {
-					if(data.id != names[i]) {
-						screenManager.get(names[i]).hide();
-					}
-				}
-			});
-			
-			//Init all screens
-			screenManager.get('home');
-			screenManager.get('highscore').init();
-			screenManager.get('game').init();
-			
-			screenManager.get('game').addEventListener('maskDisplayed', maskDisplayed);
-			screenManager.get('game').addEventListener('modalOpened', modalOpened);
-			screenManager.get('game').addEventListener('displayingMask', displayingMask);
-			
-			document.getElementById('goBack').onclick = function() {
-				screenManager.get('home').show();
 			}
 			
-			//init data loading
-			gamesListLoader.addEventListener('error', onDataError);
-			gameLoader.addEventListener('error', onDataError);
+			function openHighscore(){
+				screens.get('highscore').fire('openHighscore', highscore);
+				screens.get('highscore').show();
+			}
 			
-			gamesListLoader.addEventListener('success', function(event, resp){
-				games = resp.response;
+			function screenShown(event, data){
+				var names = screens.getScreenIds(),
+				i,
+				l;
+				
+				for(i = 0, l = names.length; i < l; i++){
+					if(data.id != names[i]) {
+						screens.get(names[i]).hide();
+					}
+				}
+			}
+			
+			function gameListLoaded(event, resp){
+				gamesData = resp.response;
 				renderGamesList();
-			});
+			}
 			
-			gameLoader.addEventListener('success', function(event, obj){
-				var item;
+			function gameLoaded(event, obj){
+				var item, x, y;
 				selectedGame.c = new Array();
 				selectedGame.w = new Array();
 				
-				for(var x = 0, y = obj.response.length; x < y; x++){
+				for(x = 0, y = obj.response.length; x < y; x++){
 					item = obj.response[x];
 					selectedGame[(typeof item.image != 'undefined') ? 'c' : 'w'].push(item);
 				}
 				
 				loadGame(selectedGame);
-			});
+			}
+			
+			graphics.init(settings.images);
+			audio.init(settings.sounds);
+			initHighscore();
+			
+			document.body.innerHTML = Mustache.to_html(templates.wrapper, view);
+			
+			img.onload = imageLoaded;
+			img.onerror = imageLoadError;
+			
+			screens.addEventListener('show', screenShown);
+			
+			//Init all screens
+			screens.get('home');
+			screens.get('highscore').init();
+			screens.get('game').init();
+			
+			screens.get('game').addEventListener('maskDisplayed', maskDisplayed);
+			screens.get('game').addEventListener('modalOpened', modalOpened);
+			screens.get('game').addEventListener('displayingMask', displayingMask);
+			
+			document.getElementById('goBack').onclick = function(){
+				screens.get('home').show();
+			};
+			
+			//init data loading
+			gamesListLoader.addEventListener('error', onDataError);
+			gamesListLoader.addEventListener('success', gameListLoaded);
+			
+			gameLoader.addEventListener('error', onDataError);
+			gameLoader.addEventListener('success', gameLoaded);
 			
 			if(!tutorialPlayed){
-				runGame('tutorial');			
-			} else {
+				runGame('tutorial');
+			}else{
 				initHomeScreen();
 			};
 		}
