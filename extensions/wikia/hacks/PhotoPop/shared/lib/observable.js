@@ -12,6 +12,8 @@ function Observe(obj){
 	 * @public
 	 */
 	obj.fire = function (event, data){
+		event = this.getEventName(event);
+		
 		var x, y,
 		callbacks = this._callbacks[event];
 		
@@ -35,6 +37,7 @@ function Observe(obj){
 	};
 	
 	obj.addEventListener = function(event, callback, options){
+		event = this.getEventName(event);
 		options = options || {};
 		
 		var stack = (options.oneTime) ? '_oneTimeCallbacks' : '_callbacks';
@@ -44,6 +47,7 @@ function Observe(obj){
 	};
 	
 	obj.removeEventListener = function(event, callback){
+		event = this.getEventName(event);
 		var x, y;
 		
 		for(x = 0, y = this._callbacks[event].length; x < y; x++){
@@ -55,5 +59,23 @@ function Observe(obj){
 			if(this._oneTimeCallbacks[event][x] === callback)
 				this._oneTimeCallbacks[event].splice(x, 1);
 		}
+	};
+	
+	obj.getEventName = function(event){
+		if(typeof event == 'object'){
+			var key = [],
+			value;
+			
+			for(var p in event){
+				value = event[p];
+				
+				if(value && typeof value != 'function' && typeof value != 'object')
+					key.push();
+			}
+			
+			return  key.join(':');
+		}
+		
+		return event;
 	};
 }

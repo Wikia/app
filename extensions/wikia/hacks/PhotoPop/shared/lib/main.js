@@ -14,7 +14,7 @@
 		],
 
 		function(settings, templates, graphics, audio, games, screens, data) {
-			var tutorialPlayed = true, //store.get('tutorialPlayed') || false,
+			var tutorialPlayed = false,// data.storage.get('tutorialPlayed') || false,
 			gamesData,
 			gamesListLoader = new data.XDomainLoader(),
 			gameLoader = new data.XDomainLoader(),

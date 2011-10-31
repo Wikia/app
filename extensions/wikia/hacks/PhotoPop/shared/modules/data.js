@@ -8,19 +8,41 @@ define.call(exports, function(){
 			var that = this;
 			
 			if(Wikia.Platform.is('app')){
-				Titanium.App.addEventListener('Store:stored', function(event){
+				Titanium.App.addEventListener('Storage:stored', function(event){
 					that.fire('set', {key: event.key, value: event.value});
+					that.fire({name: 'set', key: event.key}, {key: event.key, value: event.value});
+				});
+				
+				Titanium.App.addEventListener('Storage:fetched', function(event){
+					that.fire('get', {key: event.key, value: JSON.parse(event.value)});
+					that.fire({name: 'get', key: event.key}, {key: event.key, value: event.value});
 				});
 			}
 		},
 		
 		set: function(key, value){
 			if(Wikia.Platform.is('app'))
-				Titanium.App.fireEvent('Store:set', {key: key, value: value});
+				Titanium.App.fireEvent('Storage:set', {key: key, value: JSON.stringify(value)});
 			else{
 				store.set(key, value);
 				this.fire('set', {key: key, value: value});
+				this.fire({name: 'set', key: key}, {key: key, value: value});
 			}
+		},
+		
+		get: function(key){
+			if(Wikia.Platform.is('app'))
+				Titanium.App.fireEvent('Storage:get', {key: key});
+			else{
+				var value = store.get(key);
+				
+				this.fire('get', {key: key, value: value});
+				this.fire({name: 'get', key: key}, {key: key, value: value});
+			}
+		},
+		
+		getEvent: function(eventName, key){
+			return eventName + ':' + key;
 		}
 	}),
 	XDomainLoader = my.Class({
