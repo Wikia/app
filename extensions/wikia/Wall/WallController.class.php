@@ -254,10 +254,13 @@ class WallController extends ArticleCommentsModule {
 		if($authorUser) {
 			$realname = $this->getRealNameForUser($authorUser);
 			$name = $authorUser->getName();
+			$isStaff = $authorUser->isAllowed('wallshowwikiaemblem');
 		} else {
 			$realname = '';
 			$name = $wallMessage->getUser()->getName();
+			$isStaff = false;
 		}
+		$this->response->setVal( 'isStaff', $isStaff );
 	
 		$this->response->setVal( 'id', $wallMessage->getTitle()->getArticleID());
 		$this->response->setVal( 'username', $name );
@@ -315,13 +318,6 @@ class WallController extends ArticleCommentsModule {
 		
 		$this->response->setVal( 'user_author_url', $url);
 		
-		//????????????????????????
-		$isStaff = $this->app->wg->User->isAllowed('wallshowwikiaemblem');
-		$this->response->setVal( 'isStaff', $isStaff );
-		if( $isStaff ) {
-			$wikiaEmblemUrl = $this->app->wf->ReplaceImageServer('http://images.wikia.com/wikia/images/e/e9/WikiaStaff.png');
-			$this->response->setVal( 'wikiaEmblemUrl', $wikiaEmblemUrl );
-		}
 		wfProfileOut( __METHOD__ );
 	}
 	
