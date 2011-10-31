@@ -1,0 +1,165 @@
+<?php
+/**
+ * Michał Roszka (Mix) <michal@wikia-inc.com>
+ * 
+ * A script populating the noreptemp.spamwikis table with the current data.
+ * 
+ * Usage:
+ * 
+ * SERVER_ID=177 php CommunityQuiz.php --conf /usr/wikia/conf/current/wiki.factory/LocalSettings.php
+ * or
+ * SERVER_ID=177 php CommunityQuiz.php --conf /usr/wikia/conf/current/wiki.factory/LocalSettings.php --date=1978-08-21
+ */
+$dir = realpath( dirname( __FILE__ ) . '/../' );
+include "{$dir}/commandLine.inc";
+
+class CommunityQuiz {
+    /**
+     * The length of the time period.
+     */
+    const LENGTH_DAYS = 1;
+    /**
+     * Criteria: Revisions range.  Wikis from the of the range won't be included in the report.
+     */
+    const MIN_REVISIONS = 10;
+    const MAX_REVISIONS = 50;
+    /**
+     * Criteria: Revisions have to be made on at least MIN_DAYS different days.
+     */
+    const MIN_DAYS = 2;
+    /**
+     * DB handle
+     */
+    private $dbObj;
+    /**
+     * The start of the time period.
+     */
+    private $date;
+    /**
+     * Output data
+     */
+    private $output = array();
+    /**
+     * The constructor
+     */
+    public function __construct( DatabaseMysql $dbObj, $date ) {
+        $this->dbObj = $dbObj;
+        $this->date = $date;
+        return null;
+    }
+    /**
+     * The main method, fetches some information on wikis created within a given time period.
+     */
+    public function execute() {
+        // Get a list of wikis created within a given time period.
+        $res = $this->dbObj->select(
+                array( 'wikicities.city_list' ),
+                array( 'city_url', 'city_dbname', 'city_founding_user' ),
+                array( 'city_created BETWEEN \'' . $this->date . ' 00:00:00\' AND DATE_ADD( \'' . $this->date . ' 00:00:00\', INTERVAL ' . self::LENGTH_DAYS . ' DAY )' ),
+                __METHOD__,
+                array( 'ORDER BY city_id ASC')
+        );
+
+        // Empty set, terminate.
+        if ( 0 == $this->dbObj->numRows( $res ) ) {
+            echo "No wikis found.\n";
+            return null;
+        }
+        
+        // Get some meaningful information on each wiki.
+        while ( $oRow = $this->dbObj->fetchObject( $res ) ) {
+            // Connect to the wiki's DB
+            $tmpDbObj = F::app()->wf->getDb( DB_SLAVE, array(), $oRow->city_dbname );
+            // Revisions made by the founder.
+            $revisions = $tmpDbObj->selectRow(
+                    'revision',
+                    'count(1) as cnt',
+                    array( 'rev_user' => $oRow->city_founding_user ),
+                    __METHOD__,
+                    array()
+            );
+            if ( is_object( $revisions ) ) {
+                // Does the founder meet the criteria?
+                if ( self::MIN_REVISIONS <= $revisions->cnt && self::MAX_REVISIONS >= $revisions->cnt ) {
+                    
+                    $tmp = new StdClass;
+                    $tmp->url = $oRow->city_url;
+                    $tmp->founder_id = $oRow->city_founding_user;
+                    $tmp->founder_edits = $revisions->cnt;
+                    
+                    // Revisions have to be made on at least MIN_DAYS different days.
+                    $tmp->founder_single_day = true;
+                    $revisions = $tmpDbObj->select(
+                            'revision',
+                            'DISTINCT DATE( rev_timestamp ) AS date',
+                            array( 'rev_user' => $oRow->city_founding_user ),
+                            __METHOD__,
+                            array( "LIMIT {self::MIN_DAYS}" )
+                    );
+                    if ( is_object( $revisions ) && self::MIN_DAYS == $tmpDbObj->numRows( $revisions ) ) {
+                        $tmp->founder_single_day = false;
+                    }
+                    
+                    // Get some additional information on the founder.
+                    $user = $this->dbObj->selectRow(
+                            array( 'wikicities.user' ),
+                            array( 'user_name', 'user_real_name', 'user_email' ),
+                            array( 'user_id' => $oRow->city_founding_user ),
+                            __METHOD__,
+                            array()
+                    );
+                    
+                    if ( is_object( $user ) ) {
+                        $tmp->founder_name = $user->user_name;
+                        $tmp->founder_real_name = $user->user_real_name;
+                        $tmp->founder_email = $user->user_email;
+                    } else {
+                        $tmp->founder_name = 'unknown';
+                        $tmp->founder_real_name = 'unknown';
+                        $tmp->founder_email = 'unknown';
+                    }
+                    
+                    $this->output[] = $tmp;
+                    unset( $tmp );
+                }
+            }
+            $tmpDbObj->close();
+        }
+        // Output as CSV
+        echo "\"#\",\"URL\",\"Edits\",\"Multiple days\",\"Founder ID\",\"Founder name\",\"Founder real name\",\"Founder email\"\n";
+        foreach ( $this->output as $k => $v ) {
+            printf(
+                    "\"%d\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\"\n",
+                    $k,
+                    $v->url,
+                    $v->founder_edits,
+                    (int) $v->founder_single_day,
+                    $v->founder_id,
+                    $v->founder_name,
+                    $v->founder_real_name,
+                    $v->founder_email
+            );
+        }
+	return null;
+    }
+}
+
+// the work...
+if ( !isset( $options['date'] ) ) {
+    $date = date('Y-m-d');
+} else {
+    $matches = array();
+    if ( !preg_match( '/^(\d{4})-(\d{2})-(\d{2})$/', $options['date'], $matches ) ) {
+        echo "Invalid date format. YYYY-MM-DD expected.\n";
+        exit( 1 );
+    }
+    if ( !checkdate( $matches[2], $matches[3], $matches[1] ) ) {
+        echo "Invalid YYYY-MM-DD date.\n";
+        exit( 1 );
+    }
+    $date = $options['date'];
+}
+
+$d = new CommunityQuiz( F::app()->wf->getDb( DB_SLAVE, array(), 'wikicities' ), $date );
+$d->execute();
+exit( 0 );
