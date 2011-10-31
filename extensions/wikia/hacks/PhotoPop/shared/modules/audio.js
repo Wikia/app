@@ -7,13 +7,18 @@ define.call(exports, [
 
 	function(data, settings){
 
+		data.storage.addEventListener({name: "get", key: "mute"}, function(event) {
+			mute = event.value || false;
+		});
+
 		var sounds = {},
 		mute = false,
 		isApp = Wikia.Platform.is('app'),
 		prefix = ((isApp) ? '' : "extensions/wikia/hacks/PhotoPop/") + "shared/audio/",
 		path,
-		mute = store.get('mute') || false,
 		audioFiles = settings.sounds;
+
+		data.storage.get('mute')
 
 		for(var p in audioFiles){
 			path = prefix + audioFiles[p] + ".wav";
