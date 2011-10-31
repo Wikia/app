@@ -14,7 +14,7 @@
 		],
 
 		function(settings, templates, graphics, audio, games, screens, data) {
-			var tutorialPlayed = false,// data.storage.get('tutorialPlayed') || false,
+			var tutorialPlayed,
 			gamesData,
 			gamesListLoader = new data.XDomainLoader(),
 			gameLoader = new data.XDomainLoader(),
@@ -37,10 +37,50 @@
 				}
 			};
 
+			document.body.innerHTML = Mustache.to_html(templates.wrapper, view);
+
+			initHighscore();
+
+			img.onload = imageLoaded;
+			img.onerror = imageLoadError;
+
+			screens.addEventListener('show', screenShown);
+			screens.get('game').addEventListener('maskDisplayed', maskDisplayed);
+			screens.get('game').addEventListener('modalOpened', modalOpened);
+			screens.get('game').addEventListener('displayingMask', displayingMask);
+
+			//init data loading
+			gamesListLoader.addEventListener('error', onDataError);
+			gamesListLoader.addEventListener('success', gameListLoaded);
+
+			gameLoader.addEventListener('error', onDataError);
+			gameLoader.addEventListener('success', gameLoaded);
+
+			//Init all screens
+			screens.get('home').init(audio.getMute());
+			screens.get('highscore').init();
+			screens.get('game').init();
+
+			initHomeScreen();
+
+			data.storage.addEventListener({name: 'get', key: 'tutorialPlayed'}, function(event, options) {
+				tutorialPlayed = false;//options.value || false;
+
+				if(!tutorialPlayed) {
+					runGame('tutorial');
+				}
+			});
+
+			data.storage.get('tutorialPlayed');
+
 			function initGameScreen(event, gameId){
 				screens.get('game').fire('prepareGameScreen', {
-					watermark: (gamesData[gameId] && gamesData[gameId].watermark) ? gamesData[gameId].watermark : graphics.getAsset('watermark_default'),
-					mute: audio.getMute()
+					watermark: (gamesData &&
+						    gamesData[gameId] &&
+						    gamesData[gameId].watermark) ?
+						gamesData[gameId].watermark : graphics.getAsset('watermark_default'),
+						mute: audio.getMute()
+
 				});
 
 				//highscore
@@ -58,6 +98,10 @@
 					});
 					tutorialSteps['intro'] = true;
 				}
+
+				document.getElementById('goBack').onclick = function(){
+					screens.get('home').show();
+				};
 			}
 
 			function loadSelectedGame(){
@@ -119,15 +163,11 @@
 					{method: 'get'}
 				);
 
-				screens.get('home').init(audio.getMute());
-
-				var muteButton = document.getElementById('button_volume'),
-				imgs = muteButton.getElementsByTagName('img');
-
-				muteButton.onclick = function(){
-					audio.toggleMute();
+				document.getElementById('button_volume').onclick = function(){
+					var mute = audio.toggleMute();
 					audio.play('pop');
-					screens.get('home').fire('muteButtonClicked', {mute: audio.getMute()});
+					screens.get('home').fire('muteButtonClicked', {mute: mute});
+					screens.get('game').fire('muteButtonClicked', {mute: mute});
 				};
 
 				document.getElementById('button_tutorial').onclick = function(){
@@ -364,11 +404,9 @@
 			function runGame(target){
 				var id, data, game;
 				if(target == 'tutorial') {
-					id =  'tutorial';
-					data = settings.tutorial;
 					newGame({
-						_id:id,
-						_data:data
+						_id: 'tutorial',
+						_data:settings.tutorial.shuffle()
 					});
 				} else {
 					selectedGameId = target.getAttribute('data-id');
@@ -488,42 +526,8 @@
 					selectedGame[(typeof item.image != 'undefined') ? 'c' : 'w'].push(item);
 				}
 
-				loadGame(selectedGame);
+				loadGame();
 			}
-
-			initHighscore();
-			document.body.innerHTML = Mustache.to_html(templates.wrapper, view);
-
-			img.onload = imageLoaded;
-			img.onerror = imageLoadError;
-
-			screens.addEventListener('show', screenShown);
-
-			//Init all screens
-			screens.get('home');
-			screens.get('highscore').init();
-			screens.get('game').init();
-
-			screens.get('game').addEventListener('maskDisplayed', maskDisplayed);
-			screens.get('game').addEventListener('modalOpened', modalOpened);
-			screens.get('game').addEventListener('displayingMask', displayingMask);
-
-			document.getElementById('goBack').onclick = function(){
-				screens.get('home').show();
-			};
-
-			//init data loading
-			gamesListLoader.addEventListener('error', onDataError);
-			gamesListLoader.addEventListener('success', gameListLoaded);
-
-			gameLoader.addEventListener('error', onDataError);
-			gameLoader.addEventListener('success', gameLoaded);
-
-			if(!tutorialPlayed){
-				runGame('tutorial');
-			}else{
-				initHomeScreen();
-			};
 		}
 	);
 })();
