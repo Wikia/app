@@ -20,7 +20,7 @@ if ( is_array($menuNodes) && isset($menuNodes[0]) && $showMenu) {
 			foreach ($menuNodes[$level0][ NavigationService::CHILDREN ] as $level1) {
 ?>
 					<li>
-						<a class="subnav-2a"<? if($menuNodes[$level1][ NavigationService::TEXT ] == 'Chat'): ?> onclick="$.openPopup('/wiki/Special:Chat','wikiachat','ChatRail',600,600); event.preventDefault();"<? endif; ?><?= empty( $menuNodes[$level1][ NavigationService::SPECIAL ] ) ? '' : ' data-extra="'.$menuNodes[$level1][ NavigationService::SPECIAL ].'"' ?> href="<?= $menuNodes[$level1][ NavigationService::HREF ] ?>"><?= $menuNodes[$level1][ NavigationService::TEXT ] ?></a>
+						<a class="subnav-2a"<? if($menuNodes[$level1][ NavigationService::TEXT ] == 'Chat'): ?> onclick="$.openPopup('/wiki/Special:Chat','wikiachat','ChatRail',600,600); event.preventDefault();"<? endif; ?><?= empty( $menuNodes[$level1][ NavigationService::SPECIAL ] ) ? '' : ' data-extra="'.$menuNodes[$level1][ NavigationService::SPECIAL ].'"' ?> href="<?= $menuNodes[$level1][ NavigationService::HREF ] ?>" <?php if( strpos($menuNodes[$level1][ NavigationService::HREF ], 'Special:Random') !== false ):?>accesskey="x"<?php endif; ?>><?= $menuNodes[$level1][ NavigationService::TEXT ] ?></a>
 <?php
 				if (isset($menuNodes[$level1][ NavigationService::CHILDREN ])) {
 ?>
