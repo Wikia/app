@@ -1,12 +1,12 @@
 var soundServer = {
-	
+
 	sounds: {},
-	
+
 	mute: false,
-	
+
 	init: function(counfigSounds) {
 		var 	path = "extensions/wikia/hacks/PhotoPop/audio/";
-			
+
 		soundServer.sounds = {
 			"win": new Audio(path + counfigSounds.win + ".wav" ),
 			"fail": new Audio(path + counfigSounds.fail + ".wav" ),
@@ -15,10 +15,10 @@ var soundServer = {
 			"wrongAnswer": new Audio(path + counfigSounds.wrongAnswer + ".wav" )
 		}
 	},
-	
+
 	play: function(sound) {
 		if(!soundServer.mute) {
-			soundServer.sounds[sound].play();		
+			soundServer.sounds[sound].play();
 		}
 
 	}

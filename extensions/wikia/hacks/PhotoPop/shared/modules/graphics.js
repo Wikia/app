@@ -1,29 +1,25 @@
 var exports = exports || {};
 
-define.call(exports, function(){
-	
+define.call(exports, ['modules/settings'], function(settings){
+
 	var images = {},
-	isApp = typeof Titanium != 'undefined';
-	
+	isApp = typeof Titanium != 'undefined',
+	prefix = (isApp) ? '' : 'extensions/wikia/hacks/PhotoPop/',
+	graphics = settings.images,
+	preload, imagePath, ext;
+
+	for(var prop in graphics){
+		preload = new Image();
+		imagePath = graphics[prop];
+		ext = (imagePath.indexOf('.jpeg') >= 0 || imagePath.indexOf('.png') >= 0 || imagePath.indexOf('.gif') >= 0) ? '' : '.png';
+		preload.src = images[prop] = prefix + "shared/images/" + graphics[prop] + ext;
+	}
+
 	return {
-		init: function(configImages) {
-			var preload,
-			prefix = (isApp) ? '' : 'extensions/wikia/hacks/PhotoPop/',
-			imagePath,
-			ext;
-			
-			for(var prop in configImages){
-				preload = new Image();
-				imagePath = configImages[prop];
-				ext = (imagePath.indexOf('.jpeg') >= 0 || imagePath.indexOf('.png') >= 0 || imagePath.indexOf('.gif') >= 0) ? '' : '.png';
-				preload.src = images[prop] = prefix + "shared/images/" + configImages[prop] + ext;
-			}
-		},
-		
 		getAsset: function(image) {
 			return  images[image];
 		},
-		
+
 		getPicture: function(gameId, image){
 			var prefix = (isApp) ? '/' + gameId + '/' + image : image;
 		}
