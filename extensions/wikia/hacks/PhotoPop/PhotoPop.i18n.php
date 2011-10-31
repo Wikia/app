@@ -25,16 +25,16 @@ $messages['en'] = array(
 	'photopop-error-db-error' => 'An error occurred, settings were not saved',
 	'photopop-settings-saved' => 'Settings have been saved',
 	'photopop-image-preview' => 'Preview of images: ',
-	
+
 	//game
 	'photopop-game-round' => 'Round',
 	'photopop-game-correct' => 'Correct',
-	'photopop-game-points' => 'Points',
-	'photopop-game-total' => 'Total',
-	'photopop-game-score' => 'Score',
+	'photopop-game-points' => 'points',
+	'photopop-game-total' => 'total',
+	'photopop-game-score' => 'score',
 	'photopop-game-wiki' => 'Wiki',
 	'photopop-game-date' => 'Date',
-	'photopop-game-timeup' => 'Time\'s Up!',
+	'photopop-game-timeup' => 'time\'s up!',
 	'photopop-game-please-wait' => 'Please wait',
 	'photopop-game-loading-image' => 'Loading image...',
 	'photopop-game-loading' => 'Loading...',
@@ -43,13 +43,13 @@ $messages['en'] = array(
 	'photopop-game-continue' => 'It\'s:',
 	'photopop-game-yougot' => 'You got',
 	'photopop-game-outof' => 'out of',
-	'photopop-game-progress' => 'Progress',
+	'photopop-game-progress' => 'progress',
 	'photopop-game-image-load-error' => 'Image could not be loaded. We\'re sorry',
 	'photopop-game-tutorial-intro' => 'Tap the screen to take a peek of the mystery image underneath.',
 	'photopop-game-tutorial-continue' => 'After the answer is revealed tap the "next" button to continue on to a new image.',
 	'photopop-game-tutorial-drawer' => 'The fewer peek you take, the fewer guesses you make, and the less time you take, the bigger your score!',
 	'photopop-game-tutorial-tile' => 'Tap the "answer" button to make your guess.',
-	
+
 	//old
 	'photopop' => 'Photo Pop game',
 	'photopop-title-tag-homescreen' => 'Photo Pop',
@@ -202,4 +202,3 @@ $messages['sv'] = array(
 	'photopop-endgame-score-summary' => 'poäng: $1',
 	'photopop-tutorial-text' => 'Tryck på skärmen för att avslöja en dold bild. Tryck sedan på pilen för att gissa vad den är.',
 );
-

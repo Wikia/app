@@ -8,19 +8,19 @@ define.call(exports, {
 					<img id='logoPhotopop' src='{{#image}}PHOTOPOP_LOGO{{/image}}'/><br/>\
 					<img id='logoWikia' src='{{#image}}POWERED_BY_LOGO{{/image}}'>\
 				</div>\
-				<div id='sliderWrapper' class='composite transition-all'>\
 					<div id='buttonWrapper'>\
-						<div id='button_scores'>\
+						<div class='button' id='button_scores'>\
 							<img src='{{#image}}buttonSrc_scores{{/image}}'/>\
 						</div>\
-						<div id='button_tutorial'>\
+						<div class='button' id='button_tutorial'>\
 							<img src='{{#image}}buttonSrc_tutorial{{/image}}'/>\
 						</div>\
-						<div id='button_volume'>\
+						<div class='button' id='button_volume'>\
 							<img class='on' src='{{#image}}buttonSrc_volumeOn{{/image}}'/>\
 							<img class='off' src='{{#image}}buttonSrc_volumeOff{{/image}}'/>\
 						</div>\
 					</div>\
+				<div id='sliderWrapper' class='composite transition-all'>\
 					<div id='sliderContent' data-scroll='x'>\
 						<span class='progress'>"+Wikia.i18n.Msg('photopop-game-loading')+"</span>\
 					</div>\
@@ -106,7 +106,7 @@ define.call(exports, {
 			</div>\
 			</div>\
 		</div>",
-	
+
 	gameSelector:
 		"<ul id='gamesList'>{{#games}}\
 			<li class='gameIcon {{#round}}resumeGame{{/round}}' data-id='{{id}}'>\
