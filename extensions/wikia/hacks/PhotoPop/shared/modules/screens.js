@@ -54,7 +54,7 @@ define.call(exports, function(){
 		_barWrapperHeight: 0,
 
 		constructor: function(parent) {
-			console.log('Game Screen created');
+			Wikia.log('screens: Game screen created');
 			Observe(this);
 			this._parent = parent;
 		},
@@ -90,7 +90,7 @@ define.call(exports, function(){
 			this.addEventListener('goHomeClicked', this.goHomeClicked);
 		},
 		
-		goHomeClicked: function(e, gameFinished) {
+		goHomeClicked: function(event, gameFinished) {
 			if(gameFinished) {
 				//this.prepareGameScreen();
 			}
@@ -106,7 +106,7 @@ define.call(exports, function(){
 			document.getElementById('pauseButton').getElementsByTagName('img')[0].style.visibility = 'visible';
 		},
 		
-		endGame: function(e, options) {
+		endGame: function(event, options) {
 			this.showEndGameScreen(options);
 		},
 		
@@ -116,7 +116,7 @@ define.call(exports, function(){
 			this.hideContinue();
 		},
 		
-		timeIsUp: function(e, options) {
+		timeIsUp: function(event, options) {
 			var self = this;
 			this.hideAnswerDrawer();
 			this.hideScoreBar();
@@ -127,7 +127,7 @@ define.call(exports, function(){
 			}, options.timeout);	
 		},
 		
-		prepareGameScreen: function(e, options) {
+		prepareGameScreen: function(event, options) {
 			this.prepareMask(options.watermark);
 			this.hideContinue();
 			this.showScoreBar();
@@ -138,7 +138,7 @@ define.call(exports, function(){
 			this.updateMuteButton(options.mute);
 		},
 		
-		roundStart: function(e, options) {
+		roundStart: function(event, options) {
 			this.showMask(options);
 			this.updateHudProgress(options.currentRound, options.numRounds);
 		},
@@ -289,7 +289,7 @@ define.call(exports, function(){
 			}
 		},
 		
-		answersPrepared: function(e, options) {
+		answersPrepared: function(event, options) {
 			var answerList = document.getElementById('answerList').getElementsByTagName('li'),
 			answerListLength = answerList.length;
 			
@@ -379,7 +379,7 @@ define.call(exports, function(){
 				next++;
 				if(next == tdLength) {
 					clearInterval(t);
-					console.log('done');
+					Wikia.log('games: showMask done');
 					self.updateHudScore(options.totalPoints);
 					setTimeout(function() {self.fire('maskDisplayed');}, 400);
 				}
@@ -401,7 +401,7 @@ define.call(exports, function(){
 		showContinue: function(text) {
 			var nextRoundStyle = document.getElementById('continue').style,
 			hudStyle = document.getElementById('hud').style;
-			document.getElementById('continueText').innerHTML = wgMessages['photopop-game-continue'] + " " + text;
+			document.getElementById('continueText').innerHTML = Wikia.i18n.Msg('photopop-game-continue') + " " + text;
 			nextRoundStyle.right = '0%';
 			hudStyle.left = '100%';
 		},
@@ -422,8 +422,8 @@ define.call(exports, function(){
 			//TODO: reset whole game
 			document.getElementById('endGameOuterWrapper').style.display = 'block';
 
-			document.querySelector('#endGameSummary .summaryText_completion').innerHTML = wgMessages['photopop-game-yougot'] + ' ' + options.numCorrect + ' ' + wgMessages['photopop-game-outof'] + ' ' + options.numTotal + ' ' + wgMessages['photopop-game-correct'];
-			document.querySelector('#endGameSummary .summaryText_score').innerHTML =  wgMessages['photopop-game-score'] + ': ' + options.totalPoints;
+			document.querySelector('#endGameSummary .summaryText_completion').innerHTML = Wikia.i18n.Msg('photopop-game-yougot') + ' ' + options.numCorrect + ' ' + Wikia.i18n.Msg('photopop-game-outof') + ' ' + options.numTotal + ' ' + Wikia.i18n.Msg('photopop-game-correct');
+			document.querySelector('#endGameSummary .summaryText_score').innerHTML =  Wikia.i18n.Msg('photopop-game-score') + ': ' + options.totalPoints;
 		},
 		
 		hideEndGameScreen: function(){
@@ -441,7 +441,7 @@ define.call(exports, function(){
 		
 		updateMuteButton: function(mute) {
 			var button = document.getElementById('muteButton').getElementsByTagName('img');
-			console.log('game:' + mute);
+			Wikia.log('games: mute - ' + mute);
 			if(mute) {
 				button[0].style.visibility = 'hidden';
 				button[1].style.visibility = 'visible';
@@ -479,7 +479,7 @@ define.call(exports, function(){
 	HomeScreen = my.Class({
 		
 		constructor: function(parent) {
-			console.log('Home Screen created');
+			Wikia.log('games: Home screen created');
 			Observe(this);
 			this._parent = parent;
 		},
@@ -508,7 +508,7 @@ define.call(exports, function(){
 			this.updateMuteButton(mute);
 		},
 		
-		muteButtonClicked: function(e, mute) {
+		muteButtonClicked: function(event, mute) {
 			this.updateMuteButton(mute.mute);
 		},
 		
@@ -528,7 +528,7 @@ define.call(exports, function(){
 	HighscoreScreen = my.Class({
 		
 		constructor: function(parent) {
-			console.log('Highscore Screen created');
+			Wikia.log('games: Highscore screen created');
 			Observe(this);
 			this._parent = parent;
 		},
@@ -547,8 +547,8 @@ define.call(exports, function(){
 			this.addEventListener('openHighscore', this.openHighscore);
 		},
 		
-		openHighscore: function(e, highscore) {
-			console.log(highscore);
+		openHighscore: function(event, highscore) {
+			Wikia.log('games: Highscore - ' + highscore);
 			var table = document.getElementById('highscoreScreen').getElementsByTagName('tbody')[0]
 			header = table.getElementsByTagName('tr')[0].innerHTML,
 				fragment = '';

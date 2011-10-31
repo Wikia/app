@@ -65,8 +65,26 @@ var Wikia = {};
 		}
 	};
 	
+	ns.i18n = {
+		setup: function(data){
+			if(Wikia.Platform.is('app'))
+				wgMessages = data;
+		},
+		
+		Msg: function(messageId){
+			return wgMessages[messageId] || ('[' + messageId + ']'); 
+		}
+	};
+	
+	ns.log = function(msg){
+		if(Wikia.Platform.is('app'))
+			Titanium.API.debug(msg);
+		else if(console && console.log)
+			console.log(msg);
+	}
+	
 	/**
-	 * XPlatform and platform-specific fixes
+	 * XPlatform/platform-specific fixes and polyfills
 	 */
 	
 	if(Wikia.Platform.is('app', 'ios')){
@@ -74,4 +92,16 @@ var Wikia = {};
 			return 'app://Resources/' + url;
 		};
 	}
+	
+	Array.prototype.shuffle = function() {
+		var s = [];
+		
+		while(this.length){
+			s.push(this.splice(Math.floor(Math.random() * this.length), 1)[0]);
+		}
+		
+		while(s.length){
+			this.push(s.pop());
+		}
+	};
 })(Wikia);
