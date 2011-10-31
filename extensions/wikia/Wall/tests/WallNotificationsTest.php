@@ -24,7 +24,7 @@ class WallNotificationsTest extends PHPUnit_Framework_TestCase
 		$notification->data->title_id = 555;
 		
 		$notification
-			->expects($this->exactly(2))
+			->expects($this->once())
 			->method('isMain')
 			->will($this->returnValue(true));
 
@@ -54,7 +54,7 @@ class WallNotificationsTest extends PHPUnit_Framework_TestCase
 		$notification->data_noncached->parent_title_dbkey = 'dbkey';
 		
 		$notification
-			->expects($this->exactly(2))
+			->expects($this->once())
 			->method('isMain')
 			->will($this->returnValue(false));
 
