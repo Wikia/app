@@ -6,24 +6,26 @@
 	 * Notice area handling
 	 */
 	WE.plugins.noticearea = $.createClass(WE.plugin,{
-
+		
+		requires: ['spaces'],
+		
 		visible: false,
 		itemClass: 'notice-item',
 		itemActionClass: 'notice-action',
 		dataAttr: 'data-hash',
 		totalItemsCount: 0,
 
-		beforeInit: function(){
-			this.editor.on('notice',this.proxy(this.add));
-			this.editor.on('editorClick', this.proxy(this.dismissClicked));
+		beforeInit: function(editor){
+			editor.on('notice',this.proxy(this.add));
+			editor.on('editorClick', this.proxy(this.dismissClicked));
 		},
 
-		initDom: function(){
+		initDom: function(editor){
 			var self = this;
 
-			self.el = self.editor.getSpace('notices-short');
-			self.ul = self.el.children('ul').first();
-			self.htmlEl = self.editor.getSpace('notices-html');
+			self.el = editor.getSpace('notices-short');
+			self.ul = self.el.find('ul').first();
+			self.htmlEl = editor.getSpace('notices-html');
 			
 			self.notificationsLink = $('#NotificationsLink > a')
 				.click(self.proxy(self.areaClicked));
@@ -218,7 +220,7 @@
 			}
 		},
 
-		dismissClicked: function(sourceElement, hideSplotch) {
+		dismissClicked: function(sourceElement, hideSplotch){
 			var self = this,
 				notices = self.getNotice(sourceElement) || self.getAllNotices(),
 				clean = function(){

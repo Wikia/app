@@ -54,9 +54,9 @@
 					editor.setContent(old.data.con, old.data.mode);
 					
 					if(old.data.rev == wgRevisionId){
-						editor.plugins.noticearea.add($.msg('restore-edits-notice'));
+						editor.fire('notice', $.msg('restore-edits-notice'));
 					}else{
-						editor.plugins.noticearea.add($.msg('restore-edits-diff-notice'));
+						editor.fire('notice', $.msg('restore-edits-diff-notice'));
 					}		
 					//attaching handlers for the short notices
 					var editorEl = $('#EditPageEditor');
