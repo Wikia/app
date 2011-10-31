@@ -136,8 +136,20 @@ class WallHooksHelper {
 			
 			if( $title->getNamespace() === NS_USER_WALL ) {
 				$userPageTitle = $helper->getTitle(NS_USER);
-				
+				$contentActionsOld = $contentActions;
+		
 				$contentActions = array();
+				
+				if($app->wg->User->getName() != $title->getBaseText()){
+					if(isset($contentActionsOld['watch'])){
+						$contentActions['watch'] = $contentActionsOld['watch'];
+					}
+					
+					if(isset($contentActionsOld['unwatch'])){
+						$contentActions['unwatch'] = $contentActionsOld['unwatch'];
+					}
+				}
+				
 				if( $userPageTitle instanceof Title ) {
 					$contentActions['user-profile'] = array(
 						'class' => false,
@@ -545,7 +557,7 @@ class WallHooksHelper {
 	public function onChangesListInsertFlags($list, $flags, $rc) {
 		if( $rc->getAttribute('rc_type') == RC_NEW && $rc->getAttribute('rc_namespace') == NS_USER_WALL_MESSAGE ) {
 			$app = F::app();
-			$wnEntity = F::build('WallNotificationEntity', array($rc->getAttribute('rc_id'), $app->wg->CityId), 'getByWikiAndRCId');
+			$wnEntity = F::build('WallNotificationEntity', array($rc->getAttribute('rev_id'), $app->wg->CityId), 'getByWikiAndRevId');
 			
 			if( !empty($wnEntity->data->parent_id) ) {
 			//we don't need flags if this is a reply on a message wall
@@ -576,7 +588,7 @@ class WallHooksHelper {
 		if(($rc->getAttribute('rc_type') == RC_NEW || $rc->getAttribute('rc_type') == RC_EDIT) && $rc->getAttribute('rc_namespace') == NS_USER_WALL_MESSAGE ) {
 			$app = F::app();
 			
-			$wnEntity = F::build('WallNotificationEntity', array($rc->getAttribute('rc_id'), $app->wg->CityId), 'getByWikiAndRCId');
+			$wnEntity = F::build('WallNotificationEntity', array($rc->getAttribute('rc_this_oldid'), $app->wg->CityId), 'getByWikiAndRevId');
 			$messageWallPage = F::build('Title', array(NS_USER_WALL, $wnEntity->data->wall_username), 'makeTitle');
 			
 			$link = $wnEntity->data->url;
@@ -658,7 +670,7 @@ class WallHooksHelper {
 	public function onChangesListInsertComment($list, $comment, $s, $rc) {
 		if(($rc->getAttribute('rc_type') == RC_NEW || $rc->getAttribute('rc_type') == RC_EDIT) && $rc->getAttribute('rc_namespace') == NS_USER_WALL_MESSAGE ) {
 			$app = F::app();
-			$wnEntity = F::build('WallNotificationEntity', array($rc->getAttribute('rc_id'), $app->wg->CityId), 'getByWikiAndRCId');
+			$wnEntity = F::build('WallNotificationEntity', array($rc->getAttribute('rc_this_oldid'), $app->wg->CityId), 'getByWikiAndRCId');
 			
 			//this is innocent hack -- we didn't know where char(127) came from in rc_params
 			//but it stopped us from unserializing rc_params if anyone knows where those chars 
@@ -743,7 +755,7 @@ class WallHooksHelper {
 					));
 				}
 			} else {
-				$wnEntity = F::build('WallNotificationEntity', array($rc->getAttribute('rc_id'), $app->wg->CityId), 'getByWikiAndRCId');
+				$wnEntity = F::build('WallNotificationEntity', array($rc->getAttribute('rc_this_oldid'), $app->wg->CityId), 'getByWikiAndRevId');
 				$articleTitleTxt = empty($wnEntity->data->thread_title) ? $this->getParentTitleTxt($rc->getTitle()) : $wnEntity->data->thread_title;
 				$articleUrl = empty($wnEntity->data->url) ? '#' : $wnEntity->data->url;
 				

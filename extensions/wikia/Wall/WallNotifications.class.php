@@ -77,7 +77,8 @@ class WallNotifications {
 	}
 
 	public function addNotification(RecentChange $RC) {
-		$notif = F::build('WallNotificationEntity', array($RC, $this->app->wg->CityId), 'createFromRC');
+		$rev = Revision::newFromId($RC->getAttribute('rc_this_oldid'));
+		$notif = F::build('WallNotificationEntity', array($rev, $this->app->wg->CityId), 'createFromRev');
 		if(!empty($notif)) {
 			$this->notifyEveryone($notif);
 		}
@@ -89,9 +90,14 @@ class WallNotifications {
 	
 	public function notifyEveryone($notification) {
 		$users = array();
-		if(!$notification->isMain()){
-			$users = $this->getWatchlist($notification->data_noncached->parent_title_dbkey);
+		
+		if(empty($notification->data_noncached) || empty($notification->data_noncached->parent_title_dbkey)) {
+			$title = "";
+		} else {
+			$title = $notification->data_noncached->parent_title_dbkey;
 		}
+		
+		$users = $this->getWatchlist($notification->data->wall_username, $title);
 	
 		//FB:#11089
 		$users[$notification->data->wall_userid] = $notification->data->wall_userid;
@@ -136,14 +142,16 @@ class WallNotifications {
 		return true;
 	}
 
-	protected function getWatchlist($titleDbkey) {
+	protected function getWatchlist($name, $titleDbkey) {
 		//TODO: add some caching
+		$userTitle = Title::newFromText( $name, NS_USER_WALL );
+		
 		$dbw = $this->getLocalDB(true);
 		$res = $dbw->select( array( 'watchlist' ),
 			array( 'wl_user' ),
 			array(
-				'wl_title' => $titleDbkey,
-				'wl_namespace' => NS_USER_WALL_MESSAGE
+				'wl_title' => array($titleDbkey, $userTitle->getDBkey() ),
+				'wl_namespace' => array(NS_USER_WALL, NS_USER_WALL_MESSAGE)
 			), __METHOD__
 		);
 		
@@ -420,6 +428,6 @@ class WallNotifications {
 	}
 	
 	public function getKey( $userId, $wikiId ){
-		return $this->app->runFunction( 'wfSharedMemcKey', __CLASS__, $userId, $wikiId. '_29' );
+		return $this->app->runFunction( 'wfSharedMemcKey', __CLASS__, $userId, $wikiId. 'v21' );
 	}
 }
