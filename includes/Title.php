@@ -3576,27 +3576,35 @@ class Title {
 	 * @return \type{\bool} TRUE or FALSE
 	 */
 	public function isAlwaysKnown() {
+		/** Wikia Change @author Andrzej 'nAndy' Łukaszewski */
+		$result = false;
+		if( wfRunHooks( 'TitleIsAlwaysKnown', array($this, &$result)) ) {
+			return $result;
+		}
+		/** End of Wikia Change */
+		
 		if( $this->mInterwiki != '' ) {
 			return true;  // any interwiki link might be viewable, for all we know
 		}
+		
 		switch( $this->mNamespace ) {
-		case NS_MEDIA:
-		case NS_FILE:
-			return wfFindFile( $this );  // file exists, possibly in a foreign repo
-		case NS_SPECIAL:
-			return SpecialPage::exists( $this->getDBkey() );  // valid special page
-		case NS_MAIN:
-			return $this->mDbkeyform == '';  // selflink, possibly with fragment
-		case NS_MEDIAWIKI:
-			// If the page is form Mediawiki:message/lang, calling wfMsgWeirdKey causes
-			// the full l10n of that language to be loaded. That takes much memory and
-			// isn't needed. So we strip the language part away.
-			// Also, extension messages which are not loaded, are shown as red, because
-			// we don't call MessageCache::loadAllMessages.
-			list( $basename, /* rest */ ) = explode( '/', $this->mDbkeyform, 2 );
-			return wfMsgWeirdKey( $basename );  // known system message
-		default:
-			return false;
+			case NS_MEDIA:
+			case NS_FILE:
+				return wfFindFile( $this );  // file exists, possibly in a foreign repo
+			case NS_SPECIAL:
+				return SpecialPage::exists( $this->getDBkey() );  // valid special page
+			case NS_MAIN:
+				return $this->mDbkeyform == '';  // selflink, possibly with fragment
+			case NS_MEDIAWIKI:
+				// If the page is form Mediawiki:message/lang, calling wfMsgWeirdKey causes
+				// the full l10n of that language to be loaded. That takes much memory and
+				// isn't needed. So we strip the language part away.
+				// Also, extension messages which are not loaded, are shown as red, because
+				// we don't call MessageCache::loadAllMessages.
+				list( $basename, /* rest */ ) = explode( '/', $this->mDbkeyform, 2 );
+				return wfMsgWeirdKey( $basename );  // known system message
+			default:
+				return false;
 		}
 	}
 
