@@ -37,42 +37,6 @@
 				}
 			};
 
-			document.body.innerHTML = Mustache.to_html(templates.wrapper, view);
-
-			initHighscore();
-
-			img.onload = imageLoaded;
-			img.onerror = imageLoadError;
-
-			screens.addEventListener('show', screenShown);
-			screens.get('game').addEventListener('maskDisplayed', maskDisplayed);
-			screens.get('game').addEventListener('modalOpened', modalOpened);
-			screens.get('game').addEventListener('displayingMask', displayingMask);
-
-			//init data loading
-			gamesListLoader.addEventListener('error', onDataError);
-			gamesListLoader.addEventListener('success', gameListLoaded);
-
-			gameLoader.addEventListener('error', onDataError);
-			gameLoader.addEventListener('success', gameLoaded);
-
-			//Init all screens
-			screens.get('home').init(audio.getMute());
-			screens.get('highscore').init();
-			screens.get('game').init();
-
-			initHomeScreen();
-
-			data.storage.addEventListener({name: 'get', key: 'tutorialPlayed'}, function(event, options) {
-				tutorialPlayed = options.value || tutorialPlayed;
-
-				if(!tutorialPlayed) {
-					runGame('tutorial');
-				}
-			});
-
-			data.storage.get('tutorialPlayed');
-
 			function initGameScreen(event, gameId){
 				screens.get('game').fire('prepareGameScreen', {
 					watermark: (gamesData &&
@@ -528,6 +492,45 @@
 
 				loadGame();
 			}
+			
+			/**
+			 * init
+			 */
+			document.body.innerHTML = Mustache.to_html(templates.wrapper, view);
+
+			initHighscore();
+
+			img.onload = imageLoaded;
+			img.onerror = imageLoadError;
+
+			screens.addEventListener('show', screenShown);
+			screens.get('game').addEventListener('maskDisplayed', maskDisplayed);
+			screens.get('game').addEventListener('modalOpened', modalOpened);
+			screens.get('game').addEventListener('displayingMask', displayingMask);
+
+			//init data loading
+			gamesListLoader.addEventListener('error', onDataError);
+			gamesListLoader.addEventListener('success', gameListLoaded);
+
+			gameLoader.addEventListener('error', onDataError);
+			gameLoader.addEventListener('success', gameLoaded);
+
+			//Init all screens
+			screens.get('home').init(audio.getMute());
+			screens.get('highscore').init();
+			screens.get('game').init();
+
+			initHomeScreen();
+
+			data.storage.addEventListener({name: 'get', key: 'tutorialPlayed'}, function(event, options) {
+				tutorialPlayed = options.value || tutorialPlayed;
+
+				if(!tutorialPlayed) {
+					runGame('tutorial');
+				}
+			});
+
+			data.storage.get('tutorialPlayed');
 		}
 	);
 })();
