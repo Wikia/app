@@ -19,10 +19,48 @@ CREATE TABLE apiGate_keys (
 -- TODO: DO WE NEED THIS TABLE FOR ANYTHING IF WE'RE USING ANOTHER SYSTEM FOR USER_IDs?
 DROP TABLE IF EXISTS apiGate_users (
 	id INT(11) NOT NULL AUTOINCREMENT, -- If you are using a separate system for the auth (and just trying API Gate to those accounts, then force-set this id.
-	
-	
-	
+
 	PRIMARY KEY(id),
 );
 
--- TODO: STATS
+----
+-- STATS
+-- These won't all be kept indefinitely, for example the hourly stats will probably be rolled up into daily numbers
+-- and deleted every week or so.
+----
+
+DROP TABLE IF EXISTS apiGate_stats_hourly;
+CREATE TABLE apiGate_stats_hourly (
+	apiKey VARCHAR(255) NOT NULL,
+	startOfPeriod DATETIME,
+	hits BIGINT DEFAULT 0,
+
+	UNIQUE KEY (apiKey, startOfPeriod)
+);
+
+DROP TABLE IF EXISTS apiGate_stats_daily;
+CREATE TABLE apiGate_stats_daily (
+	apiKey VARCHAR(255) NOT NULL,
+	startOfPeriod DATETIME,
+	hits BIGINT DEFAULT 0,
+
+	UNIQUE KEY (apiKey, startOfPeriod)
+);
+
+DROP TABLE IF EXISTS apiGate_stats_weekly;
+CREATE TABLE apiGate_stats_weekly (
+	apiKey VARCHAR(255) NOT NULL,
+	startOfPeriod DATETIME,
+	hits BIGINT DEFAULT 0,
+	
+	UNIQUE KEY (apiKey, startOfPeriod)
+);
+
+DROP TABLE IF EXISTS apiGate_stats_monthly;
+CREATE TABLE apiGate_stats_monthly (
+	apiKey VARCHAR(255) NOT NULL,
+	startOfPeriod DATETIME,
+	hits BIGINT DEFAULT 0,
+	
+	UNIQUE KEY (apiKey, startOfPeriod)
+);

@@ -43,6 +43,17 @@ $dir = dirname( __FILE__ );
  */
 class ApiGate_Config{
 
+	/**
+	 * ApiGate has the concept of an admin of the system, whereas MediaWiki just assigns rights to users in given groups.  This function
+	 * offers the bridge between ApiGate and any other permissions-management system.
+	 *
+	 * Function must return true if there is a user logged in and that user is an administrator of this ApiGate deployment.
+	 */
+	public static function isAdmin(){
+		global $wgUser;
+		return $wgUser->isAllowed( 'apigate_admin' );
+	} // end isAdmin()
+
 	public static function getSlaveDb(){
 		global $wgExternalSharedDB;
 		wfProfileIn( __METHOD__ );

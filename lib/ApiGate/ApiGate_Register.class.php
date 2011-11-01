@@ -59,6 +59,7 @@ class ApiGate_Register {
 				$queryString .= "'".mysql_real_escape_string( $firstName, $dbw )."', ";
 				$queryString .= "'".mysql_real_escape_string( $lastName, $dbw )."')";
 				if( ApiGate::sendQuery($queryString, $dbw) ){
+					ApiGate::sendQuery("COMMIT"); // MediaWiki was randomly not saving the row without this.
 					$data['apiKey'] = $apiKey;
 					$didRegister = true;
 				} else {

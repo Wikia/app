@@ -4,7 +4,7 @@
  * SponsorshipDashboard
  * @author Jakub "Szeryf" Kurcek
  *
- * Returns chart basing on report object
+ * Returns chart based on report object
  */
 
 class SponsorshipDashboardOutputChart extends SponsorshipDashboardOutputFormatter {

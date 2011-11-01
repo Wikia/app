@@ -35,7 +35,10 @@ $messages['en'] = array(
 	
 	'apigate-userkeys-intro' => 'Click on your keys below to view usage statistics for each key or edit your contact information (in case something goes wrong).',
 	'apigate-userkeys-footer' => 'If you have any questions regarding our APIs, please contact us at $1. We would be happy to help out.',
-
+	
+	'apigate-adminlinks-header' => 'Administrator Links',
+	'apigate-adminlinks-veiwkeys' => 'View table of each individual key',
+	'apigate-adminlinks-veiwaggregate' => 'View aggregate stats',
 );
 
 /** Message documentation (Message documentation)

@@ -223,9 +223,9 @@ class ApiGate{
 	 */
 	public static function getKeysAndNicknamesByUserId( $userId ) {
 		wfProfileIn( __METHOD__ );
-		
+
 		$apiKeys = array();
-		
+
 		$dbr = ApiGate_Config::getSlaveDb();
 		$queryString = "SELECT apiKey,nickName FROM ".ApiGate::TABLE_KEYS." WHERE user_id='". mysql_real_escape_string( $userId, $dbr ). "'";
 		if( $result = mysql_query( $queryString, $dbr ) ){
