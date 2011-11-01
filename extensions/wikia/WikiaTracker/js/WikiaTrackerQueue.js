@@ -37,7 +37,7 @@ var WikiaTrackerQueue = {
 			WikiaTracker._track('/wikiatracker/beacon_total', 'UA-2871474-3', 1);
 		}
 
-		if (typeof window.beacon_id != 'undefined') {
+		if (typeof window.beacon_id != 'undefined' || WikiaTracker.isTracked()) {
 			if (this.pollCounter > 1) {
 				this.log('beacon_id has arrived');
 				WikiaTracker._track('/wikiatracker/beacon_available/' + (this.pollCounter * this.POLL_INTERVAL), 'UA-2871474-3', 1);
