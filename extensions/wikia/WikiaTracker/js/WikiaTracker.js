@@ -37,10 +37,14 @@ var WikiaTracker = {
 		'UA-19473076-35':100 // ab.main
 	},
 	debugLevel:0,
+	_groups:{A:80, B:81, C:82, D:83, E:84, F:85, G:86, H:87, I:88, J:89, N:[80, 89], O:13},
+	_user_group_cache:null,
 	_in_group_cache:{}
 	//_in_ab_cache:[] dont declare, leave undefined FIXME make it null and refactor accordingly
 	//_beacon_hash_cache:0 dont declare, leave undefined FIXME make it null and refactor
 };
+
+// FIXME refactor inGroup / userGroup / isTracked, it should be much simpler now
 
 WikiaTracker.debug = function (msg, level, obj) {
 	if (!this.debugLevel){
@@ -107,9 +111,13 @@ WikiaTracker._track = function(page, profile, sample, events) {
 
 	_gaq.push(['WikiaTracker._setDomainName', window.wgCookieDomain || '.wikia.com']);
 
-	_gaq.push(['WikiaTracker._setCustomVar', 1, 'db',    window.wgDBname || window.wgDB || 'unknown', 3]);
-	_gaq.push(['WikiaTracker._setCustomVar', 2, 'hub',   window.wgCatId || 'unknown', 3]);
-	_gaq.push(['WikiaTracker._setCustomVar', 3, 'lang',  window.wgContentLanguage || 'unknown', 3]);
+	//_gaq.push(['WikiaTracker._setCustomVar', 1, 'db',    window.wgDBname || window.wgDB || 'unknown', 3]);
+	//_gaq.push(['WikiaTracker._setCustomVar', 2, 'hub',   window.wgCatId || 'unknown', 3]);
+	//_gaq.push(['WikiaTracker._setCustomVar', 3, 'lang',  window.wgContentLanguage || 'unknown', 3]);
+	var wiki = 'db=' + (window.wgDBname || window.wgDB || 'unknown') + ';hub=' + (window.wgCatId || 'unknown') + ';lang=' + (window.wgContentLanguage || 'unknown');
+	_gaq.push(['WikiaTracker._setCustomVar', 1, 'wiki',  wiki, 3]);
+	
+	_gaq.push(['WikiaTracker._setCustomVar', 3, 'AB',    this._userGroup() || 'unknown', 3]);
 	_gaq.push(['WikiaTracker._setCustomVar', 4, 'skin',  window.skin || 'unknown', 3]);
 	_gaq.push(['WikiaTracker._setCustomVar', 5, 'user', (window.wgUserName == null) ? 'anon' : 'user', 3]);
 
@@ -143,27 +151,33 @@ WikiaTracker._simpleHash = function(s, tableSize) {
  };
 
 WikiaTracker._inGroup = function(hash_id, group_id) {
-	// TODO rethink group schema, get rid of start/stop?
-	var groups = {
-		A : { rangeStart: 80, rangeStop: 80, id: 'UA-A' },
-		B : { rangeStart: 81, rangeStop: 81, id: 'UA-B' },
-		C : { rangeStart: 82, rangeStop: 82, id: 'UA-C' },
-		D : { rangeStart: 83, rangeStop: 83, id: 'UA-D' },
-		E : { rangeStart: 84, rangeStop: 84, id: 'UA-E' },
-		F : { rangeStart: 85, rangeStop: 85, id: 'UA-F' },
-		G : { rangeStart: 86, rangeStop: 86, id: 'UA-G' },
-		H : { rangeStart: 87, rangeStop: 87, id: 'UA-H' },
-		I : { rangeStart: 88, rangeStop: 88, id: 'UA-I' },
-		J : { rangeStart: 89, rangeStop: 89, id: 'UA-J' },
-		N : { rangeStart: 80, rangeStop: 89, id: 'UA-N' },
-		O : { rangeStart: 13, rangeStop: 13, id: 'UA-O' }
-	};
-
-		if( groups[group_id].rangeStart <= hash_id && hash_id <= groups[group_id].rangeStop ) {
+	var g = this._groups[group_id] || -1;
+	if (g instanceof Array) {
+		if (g[0] <= hash_id && hash_id <= g[1]) {
 			return true;
 		}
+	} else {
+		if (g == hash_id) {
+			return true;
+		}
+	}
 
 	return false;
+};
+
+WikiaTracker._userGroup = function() {
+	if (this._user_group_cache) {
+		return this._user_group_cache;
+	}
+
+	for (i in this._groups) {
+		if (this.inGroup(i)) {
+			this._user_group_cache = i;
+			return i;
+		}
+	}
+	
+	return null;
 };
 
 WikiaTracker.inGroup = function(group) {
