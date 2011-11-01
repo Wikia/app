@@ -20,8 +20,12 @@ define.call(exports, ['modules/settings'], function(settings){
 			return  images[image];
 		},
 
-		getPicture: function(gameId, image){
-			var prefix = (isApp) ? '/' + gameId + '/' + image : image;
+		getPicture: function(image){
+			if(Wikia.Platform.is('app')) {
+				return image;
+			} else {
+				return image;
+			}
 		}
 	};
 });

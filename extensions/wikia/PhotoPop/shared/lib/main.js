@@ -250,7 +250,7 @@
 
 			function displayingMask(event, options){
 				//preloading an image
-				img.src = (currentGame.getId() == 'tutorial') ? graphics.getAsset(options.image) : options.image;
+				img.src = (currentGame.getId() == 'tutorial') ? graphics.getAsset(options.image) : graphics.getPicture(options.image);
 
 				if(currentGame.getId() != 'tutorial'){
 					screens.get('game').openModal({
@@ -492,7 +492,7 @@
 
 				loadGame();
 			}
-			
+
 			/**
 			 * init
 			 */
