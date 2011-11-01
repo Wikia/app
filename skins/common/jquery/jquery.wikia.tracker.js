@@ -335,13 +335,13 @@ jQuery.tracker.track = function(fakeurl, unsampled) {
 };
 
 jQuery.tracker.trackEvent = function(category, action, opt_label, opt_value) {
-	var gaqArgs = ['_trackEvent'], logStr = Array.prototype.join.call(arguments, '/');
+	var gaqArgs = [], logStr = Array.prototype.join.call(arguments, '/');
 
 	for (var i=0; i < arguments.length; i++) {
 		gaqArgs.push(arguments[i]);
 	}
 
-	_gaq.push(['_setAccount', 'UA-2871474-1'], gaqArgs);
+	WikiaTracker.track(null, 'main.sampled', gaqArgs);
 	$().log(logStr, 'tracker [event]');
 };
 
