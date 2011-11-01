@@ -15,7 +15,7 @@
 			this.editor = editor;
 			
 			editor.bind('afterLoadingStatus', function(){
-				if(executed){
+				if(executed || (typeof wgRevisionId == 'undefined') ){
 					return;
 				}
 				
