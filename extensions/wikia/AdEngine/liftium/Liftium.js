@@ -1829,8 +1829,7 @@ Liftium.reportError = function (msg, type) {
 	
 	if(type == 'onerror') {
 
-		_gaq.push(['_setAccount', 'UA-2871474-1']);
-		_gaq.push(['_trackEvent', 'Error', 'JS', msg]);
+		WikiaTracker.track(null, 'main.sampled', ['Error', 'JS', msg]);
 
 	} else {
 
