@@ -38,7 +38,6 @@ function Observe(obj){
 
 	obj.addEventListener = function(event, callback, options){
 		event = this.getEventName(event);
-		console.log("addEventn - " + event);
 		options = options || {};
 
 		var stack = (options.oneTime) ? '_oneTimeCallbacks' : '_callbacks';
@@ -71,11 +70,12 @@ function Observe(obj){
 				value = event[p];
 
 				if(value && typeof value != 'function' && typeof value != 'object')
-					key.push();
+					key.push(value);
 			}
 
-			return  key.join(':');
+			event = key.join(':');
 		}
+		
 		return event;
 	};
 }

@@ -6,20 +6,22 @@ define.call(exports, [
 		],
 
 	function(data, settings){
-
-		data.storage.addEventListener({name: "get", key: "mute"}, function(event) {
-			mute = event.value || false;
-		});
-
 		var sounds = {},
 		mute = false,
 		isApp = Wikia.Platform.is('app'),
 		prefix = ((isApp) ? '' : "extensions/wikia/PhotoPop/") + "shared/audio/",
 		path,
 		audioFiles = settings.sounds;
-
-		data.storage.get('mute')
-
+		
+		function getMute(){
+			return mute;
+		}
+		
+		data.storage.addEventListener({name: "get", key: "mute"}, function(event) {
+			mute = event.value || false;
+		});
+		data.storage.get('mute');
+		
 		for(var p in audioFiles){
 			path = prefix + audioFiles[p] + ".wav";
 			sounds[p] = (isApp) ? path : new Audio(path);
@@ -28,7 +30,7 @@ define.call(exports, [
 		return {
 			play: function(sound) {
 				if(isApp)
-					Titanium.App.fireEvent('sounds:play', {sound: sounds[sound], mute: mute});
+					Titanium.App.fireEvent('sounds:play', {sound: sounds[sound], mute: getMute()});
 				else{
 					if(sound == 'win' || sound == 'fail'){
 						for(var p in sounds){
