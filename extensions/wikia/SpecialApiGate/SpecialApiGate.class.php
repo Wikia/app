@@ -13,10 +13,12 @@
  * @ingroup SpecialPage
  */
 class SpecialApiGate extends SpecialPage {
+	// TODO: REFACTOR: Is there any reason these aren't consts?
 	private $SUBPAGE_NONE = ""; // basically, the main dashboard
 	private $SUBPAGE_CHECK_KEY = "checkKey";
 	private $SUBPAGE_REGISTER = "register";
 	private $SUBPAGE_ALL_KEYS = "allKeys";
+	private $SUBPAGE_AGGREGATE_STATS = "aggregateStats";
 	private $SUBPAGE_USER_KEYS = "userKeys";
 	private $SUBPAGE_KEY = "key";
 	const API_WIKI_CITYID = "97439";
@@ -73,15 +75,18 @@ class SpecialApiGate extends SpecialPage {
 			case $this->SUBPAGE_ALL_KEYS:
 				$mainSectionHtml .= $this->subpage_allKeys();
 				break;
+			case $this->SUBPAGE_AGGREGATE_STATS:
+				$mainSectionHtml .= $this->subpage_aggregateStats();
+				break;
 			case $this->SUBPAGE_USER_KEYS:
 				$mainSectionHtml .= $this->subpage_userKeys();
 				break;
 			case $this->SUBPAGE_KEY:
 				// Module for key info (it's a form)
-				$mainSectionHtml .= $this->subpage_keyInfo();
+				$mainSectionHtml .= $this->subpage_keyInfo( $apiKey );
 
 				// Module for stats (we don't have stats yet so this should just say that for now)
-				$mainSectionHtml .= $this->subpage_keyStats();
+				$mainSectionHtml .= $this->subpage_keyStats( $apiKey );
 
 				break;
 			case $this->SUBPAGE_NONE:
@@ -105,7 +110,8 @@ class SpecialApiGate extends SpecialPage {
 	} // end execute()
 
 	private function getLoginBoxHtml(){
-		return wfMsg('apigate-nologintext') . "<br/><br/><div style='width:100%;text-align:center;'><button type='button' data-id='login' class='ajaxLogin'>" . wfMsg('apigate-login-button') . "</button></div>";
+		$html = wfMsg('apigate-nologintext') . "<br/><br/><div style='width:100%;text-align:center;'><button type='button' data-id='login' class='ajaxLogin'>" . wfMsg('apigate-login-button') . "</button></div>";
+		return $this->wrapHtmlInModuleBox( $html );
 	} // end getLoginBoxHtml()
 	
 	/**
@@ -126,26 +132,41 @@ class SpecialApiGate extends SpecialPage {
 	 */
 	public function subpage_landingPage( $data = array() ){
 		wfProfileIn( __METHOD__ );
-		global $wgUser;
+		global $wgUser, $APIGATE_LINK_ROOT;
 		$html = "";
 
-		// TODO: FIXME: Could this be extracted to all be inside of one template in API Gate (index.php template).  We're not doing any funky logic here.
-		// TODO: FIXME: Could this be extracted to all be inside of one template in API Gate (index.php template).  We're not doing any funky logic here.
+		// TODO: Could this be extracted to all be inside of one template in API Gate (index.php template).  We're not doing any funky logic here, are we (just need to chyeck that the subpages aren't)?
+		// TODO: Could this be extracted to all be inside of one template in API Gate (index.php template).  We're not doing any funky logic here, are we (just need to chyeck that the subpages aren't)?
 
 		// Show intro-blurb.
 		$html .= ApiGate_Dispatcher::renderTemplate( "intro", array( "username" => $wgUser->getName() ) );
+		$html .= "<br/>";
 
 		// If the user has at least one API key, show the userKeys subpage.
 		$userId = ApiGate_Config::getUserId();
 		$keysAndNicks = ApiGate::getKeysAndNicknamesByUserId( $userId );
-		if( count($keys) > 0 ){
+		if( count($keysAndNicks) > 0 ){
 			$html .= $this->subpage_userKeys( $userId, $keysAndNicks );
 		} else {
 			// If the user doesn't have any keys yet, show the registration form front-and-center.
-// TODO: TEST THAT THE FORM-PROCESSING WORKS EVEN WHEN NOT ON THE /register SUBPAGE.
 			$html .= $this->subpage_register();
 		}
-		
+
+		// If this is an admin, show links to Admin subpages.
+		if ( ApiGate_Config::isAdmin() ) {
+			$links = array(
+				array(
+					"text" => wfMsg('apigate-adminlinks-viewkeys'),
+					"href" => "$APIGATE_LINK_ROOT/{$this->SUBPAGE_ALL_KEYS}",
+				),
+				array(
+					"text" => wfMsg('apigate-adminlinks-viewaggregate'),
+					"href" => "$APIGATE_LINK_ROOT/{$this->SUBPAGE_AGGREGATE_STATS}",
+				),
+			);
+			$html .= "<br/><br/>" . ApiGate_Dispatcher::renderTemplate( "adminLinks", array( "links" => $links ) );
+		}
+
 		wfProfileOut( __METHOD__ );
 		return $html;
 	} // end subpage_landingPage()
@@ -157,7 +178,7 @@ class SpecialApiGate extends SpecialPage {
 
 		// Users must be logged in to get an API key
 		if( !$wgUser->isLoggedIn() ){
-			$html .= "<br/>".$this->wrapHtmlInModuleBox( $this->getLoginBoxHtml() );
+			$html .= "<br/>".$this->getLoginBoxHtml();
 		} else {
 			$data = array('firstName' => '', 'lastName' => '', 'email_1' => '', 'email_2' => '', 'errorString' => '');
 
@@ -178,32 +199,37 @@ class SpecialApiGate extends SpecialPage {
 
 			include "$API_GATE_DIR/ApiGate_Register.class.php";
 			$registered = ApiGate_Register::processPost( $data );
-			if( $registered ) { // TODO: Not portable. This works well here, but more work would need to be done for API Gate to have a good default behvaior.
+			if( $registered ) {
+				// TODO: Not portable. This works well here to just show the module on this specialpage, but more work would need to be done for API Gate to have a good default behvaior.
+
 				// Display a success message containing the new key.
 				$msg = wfMsgExt( 'apigate-register-success', array('parse'), array( $data['apiKey'] ) );
 				$msg .= "<br/><br/>" . wfMsgExt( 'apigate-register-success-return', array('parse'), array() );
 				$html .=  ApiGate_Dispatcher::renderTemplate( "success", array('message' => $msg) );
-
-				// TODO: I'm not sure I like this.  It makes the URL different from what's shown.  Perhaps get rid of it?
-				// $html .= $this->subpage_landingPage( $data );
-
 			} else {
 				$html .=  ApiGate_Dispatcher::renderTemplate( "register", $data );
 			}
 		}
+		$html = $this->wrapHtmlInModuleBox( $html );
 
 		wfProfileOut( __METHOD__ );
 		return $html;
 	}
 
 	public function subpage_allKeys(){
-	
+
 		// TODO: IMPLEMENT
 		// TODO: IMPLEMENT
 
-	
 	} // end subpage_allKeys()
-	
+
+	public function subpage_aggregateStats(){
+
+		// TODO: IMPLEMENT
+		// TODO: IMPLEMENT
+
+	} // end subpage_aggregateStats()
+
 	/**
 	 * Shows a small module of the API keys for the user provided.  If no user is provided, uses the currently logged in user.
 	 *

@@ -4,7 +4,7 @@
  * SponsorshipDashboard
  * @author Jakub "Szeryf" Kurcek
  *
- * Main switch fo Sponsorship Dashboard
+ * Main switch for Sponsorship Dashboard
  */
 
 class SponsorshipDashboard extends SpecialPage {
