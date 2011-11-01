@@ -14,7 +14,7 @@
 		],
 
 		function(settings, templates, graphics, audio, games, screens, data) {
-			var tutorialPlayed,
+			var tutorialPlayed = false,
 			gamesData,
 			gamesListLoader = new data.XDomainLoader(),
 			gameLoader = new data.XDomainLoader(),
@@ -64,7 +64,7 @@
 			initHomeScreen();
 
 			data.storage.addEventListener({name: 'get', key: 'tutorialPlayed'}, function(event, options) {
-				tutorialPlayed = false;//options.value || false;
+				tutorialPlayed = options.value || tutorialPlayed;
 
 				if(!tutorialPlayed) {
 					runGame('tutorial');
