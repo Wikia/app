@@ -1,9 +1,7 @@
 /*global WikiaTracker: true */
 var WikiaTrackerQueue = {
-
-	// check beacon_id every second
-	POLL_INTERVAL: 1000,
-	POLL_LIMIT: 30,
+	POLL_INTERVAL: 500, // in msec
+	POLL_LIMIT: 20,
 	pollIntervalId: false,
 	pollCounter: 0,
 
@@ -36,12 +34,14 @@ var WikiaTrackerQueue = {
 
 		// track the first check for beaconId
 		if (this.pollCounter == 1) {
-			this.trackBeacon('total');
+			WikiaTracker._track('/wikiatracker/beacon_total', 'UA-2871474-3', 1);
 		}
 
 		if (typeof window.beacon_id != 'undefined') {
-			this.log('beacon_id has arrived');
-			this.trackBeacon('available/' + this.pollCounter);
+			if (this.pollCounter > 1) {
+				this.log('beacon_id has arrived');
+				WikiaTracker._track('/wikiatracker/beacon_available/' + (this.pollCounter * this.POLL_INTERVAL), 'UA-2871474-3', 1);
+			}
 
 			// stop polling
 			clearInterval(this.pollIntervalId);
@@ -54,21 +54,16 @@ var WikiaTrackerQueue = {
 
 			// first polling failed
 			if (this.pollCounter == 1) {
-				this.trackBeacon('unavailable');
+				WikiaTracker._track('/wikiatracker/beacon_unavailable', 'UA-2871474-3', 1);
 			}
 		}
 
 		// limit number of polling tries to POLL_LIMIT
 		if (this.pollCounter >= this.POLL_LIMIT) {
 			this.log('limit of ' + this.POLL_LIMIT + ' tries reached');
-			this.trackBeacon('timeout');
 
 			clearInterval(this.pollIntervalId);
 		}
-	},
-
-	trackBeacon: function(ev) {
-		WikiaTracker._track('/wikiatracker/beacon_' + ev, 'UA-2871474-3', 1);
 	},
 
 	// move queued items to WikiaTracker
