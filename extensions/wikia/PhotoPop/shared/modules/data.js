@@ -45,6 +45,7 @@ define.call(exports, function(){
 			return eventName + ':' + key;
 		}
 	}),
+	
 	XDomainLoader = my.Class({
 		_onReadCache: null,
 		_id: null,
@@ -56,12 +57,10 @@ define.call(exports, function(){
 
 			if(Wikia.Platform.is('app')){
 				that._id = (Math.random() * Math.random()).toString();
-
-				Titanium.App.addEventListener('XDomainLoader:readCache:' + that._id, function(event){
-					Wikia.log('data: read data from cache for ' + event.url + ' - ' + event.data);
-
+				
+				Titanium.App.addEventListener('XDomainLoader:complete:' + that._id, function(event){
 					var needsRequest = true;
-
+					
 					//Android will pass undefined, iOS null, YAY for consistency!
 					if(typeof event.data != 'undefined' && event.data !== null){
 						try{
@@ -72,7 +71,9 @@ define.call(exports, function(){
 						}
 					}
 
-					if(needsRequest)
+					if(needsRequest && event.source == 'web')
+						alert('Error, invalid response from ' + event.url);
+					else if(needsRequest)
 						that._sendRequest(event.url, event.options);
 					else
 						that.fire('success', {url: event.url, response: data});
@@ -94,10 +95,10 @@ define.call(exports, function(){
 					that.fire('error', {url: url, error: err});
 				},
 				success: function(data){
-					if(Wikia.Platform.is('app'))
+					if(Wikia.Platform.is('app')){
 						Titanium.App.fireEvent('XDomainLoader:success', {url: url, response: data, options: options, id: that._id});
-
-					that.fire('success', {url: url, response: data});
+					}else
+						that.fire('success', {url: url, response: data});
 				}
 			});
 		},
