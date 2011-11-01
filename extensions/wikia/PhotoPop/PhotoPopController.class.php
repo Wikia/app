@@ -12,6 +12,10 @@ class PhotoPopController extends WikiaController {
 	private $isJSON;
 
 	public function init(){
+		if ( empty ( $this->wg->AllowPhotoPopGame ) ){
+			throw new WikiaException('Playing PhotoPop is not possible from this wiki');
+		}
+		
 		$this->model = F::build( 'PhotoPopModel' );
 		$this->isJSON = $this->response->getFormat() == WikiaResponse::FORMAT_JSON;
 	}
