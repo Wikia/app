@@ -69,7 +69,7 @@ function wfMakeGlobalVariablesScript($vars) {
 	$vars['wgYUIPackageURL'] = $yuiUrl;
 
 	// macbre: get revision ID of current article
-	if ( $wgTitle->isContentPage() && !is_null($wgArticle)) {
+	if ( ( $wgTitle->isContentPage() || $wgTitle->isTalkPage() ) && !is_null($wgArticle)) {
 		$vars['wgRevisionId'] = !empty($wgArticle->mRevision) ? $wgArticle->mRevision->getId() : intval($wgArticle->mLatest);
 	}
 
