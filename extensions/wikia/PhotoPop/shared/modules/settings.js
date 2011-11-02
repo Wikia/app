@@ -3,6 +3,9 @@ var exports = exports || {};
 define.call(exports, {
 	centralDomain: 'community.wikia.com',
 	testDomain: 'jolek.wikia-dev.com',//comment out or set to null/false before release
+	sharedAudioPath: "shared/audio/",
+	webAudioPath: "audio/",
+	webPrefix: "extensions/wikia/PhotoPop/",
 
 	images: {
 		PHOTOPOP_LOGO: "logo_photopop",
@@ -40,10 +43,6 @@ define.call(exports, {
 		timeLow: "CountdowntoBlastOff",
 		wrongAnswer: "tubePop"
 	},
-
-	sharedAudioPath: "shared/audio/",
-	webAudioPath: "audio/",
-	webPrefix: "extensions/wikia/PhotoPop/",
 
 	tutorial:[
 		{
