@@ -4,21 +4,24 @@
 	<strong class="bigFont"><?= isset( $title ) ? $title : '' ?></strong>
 	<?= isset( $description ) ? $description : '' ?>
 </div>
-<div class="sponsorship-dashboard-actions">
-	<?
-		$dropdown = array(
-			array("href" => "#", "text" => wfMsg('sponsorship-dashboard-download-chart')), 
-			array("href" => $path, "text" => wfMsg('sponsorship-dashboard-download-csv'))
-		); 
-	?>
-	<?= wfRenderModule('MenuButton', 
-			'Index', 
-			array(
-				'action' => array("href" => "#", "text" => wfMsg('sponsorship-dashboard-download')), 
-				'dropdown' => $dropdown
-			)
-		) ?>
-</div>
+<?php
+if( !empty( $showActionsButton ) ){ ?>
+	<div class="sponsorship-dashboard-actions">
+		<?
+			$dropdown = array(
+				array("href" => "#", "text" => wfMsg('sponsorship-dashboard-download-chart')), 
+				array("href" => $path, "text" => wfMsg('sponsorship-dashboard-download-csv'))
+			); 
+		?>
+		<?= wfRenderModule('MenuButton', 
+				'Index', 
+				array(
+					'action' => array("href" => "#", "text" => wfMsg('sponsorship-dashboard-download')), 
+					'dropdown' => $dropdown
+				)
+			) ?>
+	</div>
+<?php } ?>
 <div class="sponsorship-dashboard-panel">
 	<div class="sponsorship-dashboard-panel-body">
 		<div id="placeholder<?= $number ?>" class="placeholder" ></div>
