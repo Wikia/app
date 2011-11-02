@@ -27,7 +27,7 @@
 		$numOfQuestions = count($data['elements']);
 		for ($i = 0; $i < $numOfQuestions; $i++) {
 			$q = $data['elements'][$i];
-			$videoClass = isset($q['videoName']) ? 'video' : '';
+			$videoClass = !empty($q['videoName']) ? 'video' : '';
 			?>
 
 			<li class="question-set <?= $videoClass ?>">
@@ -45,7 +45,7 @@
 						<?= $q['question'] ?>
 					</div>
 				</div>
-				<? if (isset($q['videoName']) && isset($q['videoEmbedCode'])) { ?>
+				<? if (!empty($q['videoName']) && !empty($q['videoEmbedCode'])) { ?>
 				<div class="video">
 					<?= $q['videoEmbedCode'] ?>
 				</div>
@@ -57,9 +57,9 @@
 					$explanationClass = '';
 
 					foreach ($q['answers'] as $a) {
-						if (isset($q['videoName']) && isset($q['videoEmbedCode'])) {
+						if (!empty($q['videoName']) && !empty($q['videoEmbedCode'])) {
 							$type = 'video';
-						} else if (isset($a['image'])) {
+						} else if (!empty($a['image'])) {
 							$type = 'image';
 						} else {
 							$type = 'text';
