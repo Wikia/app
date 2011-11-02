@@ -347,7 +347,6 @@
 		?>
 		<input type="submit" name="enable" value="<?= $enabled ? wfMsg('scavengerhunt-button-disable') : wfMsg('scavengerhunt-button-enable') ?>">
 		<input type="submit" name="delete" value="<?= wfMsg('scavengerhunt-button-delete') ?>">
-		<input type="submit" name="export" value="<?= wfMsg('scavengerhunt-button-export') ?>">
 		<input type="hidden" name="prevEnabled" value="<?= (int)$enabled ?>">
 		<?php
 		}

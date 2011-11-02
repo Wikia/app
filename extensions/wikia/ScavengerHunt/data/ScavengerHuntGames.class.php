@@ -10,10 +10,6 @@ class ScavengerHuntGames {
 		$this->app = $app;
 	}
 
-	public function getEntries() {
-		return WF::build('ScavengerHuntEntries');
-	}
-
 	public function getCurrentWikiId() {
 		return $this->app->getGlobal('wgCityId');
 	}
@@ -59,7 +55,7 @@ class ScavengerHuntGames {
 		}
 
 		if ( $raw ) return $row;
-		
+
 		$game = $this->newGameFromRow($row);
 
 		return $game;
@@ -84,45 +80,6 @@ class ScavengerHuntGames {
 
 		return $this->newGameFromRow( $row );
 	}
-
-//	public function findHereById( $id, $readWrite = false, $where = array() ) {
-//		return $this->findById($id, $readWrite, array_merge(array(
-//			'wiki_id' => $this->getCurrentWikiId(),
-//		)));
-//	}
-
-//	public function findHereEnabledById( $id, $readWrite = false, $where = array() ) {
-//		return $this->findEnabledById($id, $readWrite, array_merge(array(
-//			'wiki_id' => $this->getCurrentWikiId(),
-//		)));
-//	}
-
-//	public function findAllByWikiId( $wikiId, $where = array() ) {
-//		$where = array_merge($where, array(
-//			'wiki_id' => (int)$wikiId,
-//		));
-//
-//		$db = $this->getDb();
-//		$set = $db->select(
-//			array( self::GAMES_TABLE_NAME ),
-//			array( 'game_id', 'wiki_id', 'game_name', 'game_is_enabled', 'game_data' ),
-//			$where,
-//			__METHOD__
-//		);
-//
-//		$games = array();
-//		while( $row = $set->fetchObject( $set ) ) {
-//			$games[] = $this->newGameFromRow($row);
-//		}
-//
-//		return $games;
-//	}
-//
-//	public function findAllEnabledByWikiId( $wikiId ) {
-//		return $this->findAllByWikiId($wikiId, array(
-//			'game_is_enabled' => 1,
-//		));
-//	}
 
 	public function findAll( $where = array() ) {
 		self::log( 'performance', __METHOD__ );
@@ -305,13 +262,13 @@ class ScavengerHuntGames {
 
 	protected function clearCache( $oldGame, $newGame ) {
 		$this->clearIndexCache();
-		
+
 		if ( (!$oldGame || !$oldGame->isEnabled()) && (!$newGame || !$newGame->isEnabled()) ) {
 			// no squid purges required - game not enabled
 			return;
 		}
 		$titles = array();
-		
+
 		foreach( array( $oldGame, $newGame ) as $game ){
 			if ( !empty( $game ) ) {
 				$this	->getCache()
