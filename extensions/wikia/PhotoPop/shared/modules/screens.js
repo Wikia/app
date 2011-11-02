@@ -181,7 +181,7 @@ define.call(exports, function(){
 
 			var divs = tilesWrapper.getElementsByTagName('div');
 
-			for(var j,i = 0; i < numTiles; i++,j++) {
+			for(var j,i = 0; i < numTiles; i++) {
 				var div = divs[i],
 				divStyle = div.style;
 
@@ -192,9 +192,9 @@ define.call(exports, function(){
 				divStyle.backgroundPosition = '-'+ offsetX + 'px -' + offsetY + 'px';
 				divStyle.left = div.originalLeft = offsetX;
 				offsetX += colWidth;
-				if((i+1) % cols == 0) {
 
-					offsetX = j = 0;
+				if((i+1) % cols == 0) {
+					offsetX = 0;
 					offsetY += rowHeight;
 				}
 			}
@@ -284,16 +284,16 @@ define.call(exports, function(){
 		},
 
 		revealAll: function(correct) {
-			var tds = document.getElementsByTagName('td'),
-			tdLength = tds.length,
+			var divs = document.getElementById('tilesWrapper').getElementsByTagName('div'),
+			divsLength = divs.length,
 			next = 0,
 			self = this,
-			td,
+			div,
 			t = setInterval(function() {
-				td = tds[next++];
-				td.style.left = "-400px";
-				td.clicked = true;
-				if(next == tdLength) {
+				div = divs[next++];
+				div.style.left = "-400px";
+				div.clicked = true;
+				if(next == divsLength) {
 					clearInterval(t);
 					self.showContinue(correct);
 				}
@@ -306,20 +306,20 @@ define.call(exports, function(){
 			if(options.currentRound == 1) {
 				this.fire('maskDisplayed')
 			} else {
-				var tds = document.getElementsByTagName('td'),
-				tdArray = Array.prototype.slice.call(tds),
-				tdLength = tds.length;
+				var divs = document.getElementById('tilesWrapper').getElementsByTagName('div'),
+				divsArray = Array.prototype.slice.call(divs),
+				divsLength = divsArray.length;
 				next = 0,
 				self = this;
 
-				tdArray.shuffle();
+				divsArray.shuffle();
 
 				var t = setInterval(function() {
-					tdArray[next].clicked = false;
-					tdArray[next].style.left = tdArray[next].originalLeft;
-					tdArray[next].style.height = tdArray[next].originalHeight
+					divsArray[next].clicked = false;
+					divsArray[next].style.left = divsArray[next].originalLeft;
+					divsArray[next].style.height = divsArray[next].originalHeight
 					next++;
-					if(next == tdLength) {
+					if(next == divsLength) {
 						clearInterval(t);
 						Wikia.log('games: showMask done');
 						self.updateHudScore(options.totalPoints);
@@ -345,7 +345,7 @@ define.call(exports, function(){
 		showContinue: function(text) {
 			var nextRoundStyle = document.getElementById('continue').style,
 			hudStyle = document.getElementById('hud').style;
-			document.getElementById('continueText').innerHTML = Wikia.i18n.Msg('photopop-game-continue') + " " + text;
+			document.getElementById('continueText').innerHTML = text;
 			nextRoundStyle.right = '0%';
 			hudStyle.left = '100%';
 		},
