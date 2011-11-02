@@ -41,6 +41,13 @@ var Wall = $.createClass(Object, {
 				this.track('new_message/subject_field');
 			}));
 		$('#WallMessageBody')
+			.keydown(function(e) {
+				if ( event.which == 9 && event.shiftKey ) {
+					e.preventDefault();
+					$('#WallMessageTitle').focus();
+					return false;
+				}
+			 })
 			.autoResize(this.settings.new_body)
 			.click(this.proxy(function() {
 				this.track('new_message/body');
@@ -126,7 +133,7 @@ var Wall = $.createClass(Object, {
 		var element = $(e.target);
 		var button = element.closest('.SpeechBubble')
 			.find('button#WallMessageSubmit,.save-edit,.replyButton').first();
-		if(e.keyCode == 9) {
+		if(e.keyCode == 9 && !event.shiftKey) {
 			if(element.attr('id') != 'WallMessageTitle' && !element.hasClass('title')) {
 				button.focus();
 				e.preventDefault();
