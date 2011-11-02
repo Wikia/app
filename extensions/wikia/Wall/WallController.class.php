@@ -70,45 +70,27 @@ class WallController extends ArticleCommentsModule {
 		$parts = explode('/', $this->app->wg->Title->getText());
 		$parent_title = F::build('Title', array($parts[0], NS_USER_WALL), 'newFromText' );
 		$user = F::build('User',array($parts[0]),'newFromName');
-                if(!empty( $user )) {
-                        $user_displayname = $user->getRealName();
-                        if(empty($user_displayname)) $user_displayname = $user->getName();
-                } else {
-                        $user_displayname = $parts[0];
-                }
+		if(!empty( $user )) {
+			$user_displayname = $user->getRealName();
+			if(empty($user_displayname)) $user_displayname = $user->getName();
+		} else {
+			$user_displayname = $parts[0];
+		}
 		
 		$this->response->setVal( 'wallOwner', $user_displayname);	
 		$this->response->setVal( 'wallUrl', $parent_title->getFullUrl() );
 		
 		$canUndelete = $this->app->wg->User->isAllowed( 'browsearchive' );
-		
+
 		if($canUndelete) {
-			$dbr = wfGetDB( DB_SLAVE );
-			$row = $dbr->selectRow( 'archive',
-				array( 'ar_title' ),
-				array( 'ar_page_id' => $parts[1] ),
-				__METHOD__ );
+			$dbkey = $this->helper->getDbkeyFromArticleId_forDeleted( $parts[1] );
 			
-			$dbkey = $row->ar_title;
-			$msg_title = F::build('Title', array($dbkey, NS_USER_WALL_MESSAGE), 'newFromText' );
-			
-			if(empty($msg_title)) {
-				// try again from master
-				$dbr = wfGetDB( DB_MASTER );
-				$row = $dbr->selectRow( 'archive',
-					array( 'ar_title' ),
-					array( 'ar_page_id' => $parts[1] ),
-					__METHOD__ );
-				
-				$dbkey = $row->ar_title;
-				$msg_title = F::build('Title', array($dbkey, NS_USER_WALL_MESSAGE), 'newFromText' );
-			}
-			
-			if(empty($msg_title)) {
+			if(empty($dbkey)) {
 				// give up, don't display undelete
 				error_log("WALL_NOTITLE_FROM_DBKEY (dbkey)".print_r($dbkey,1));
 				$canUndelete = false;			
 			} else {
+				$msg_title = F::build('Title', array($dbkey, NS_USER_WALL_MESSAGE), 'newFromText' );
 				$undelete_title = F::build('Title', array('Undelete', NS_SPECIAL), 'newFromText' );
 				$undelete_url = $undelete_title->getFullUrl();
 				$this->response->setVal( 'undeleteUrl', $undelete_url.'/'.$msg_title->getPrefixedText() );

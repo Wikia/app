@@ -377,6 +377,71 @@ class WallHelper {
 		return isset($row->ar_page_id) ? $row->ar_page_id : false;
 	}
 	
+	public function getDbkeyFromArticleId_forDeleted($articleId) {
+		$dbkey = null;
+
+		$dbr = wfGetDB( DB_SLAVE );
+		$row = $dbr->selectRow( 'archive',
+			array( 'ar_title' ),
+			array( 'ar_page_id' => $articleId ),
+			__METHOD__ );
+		
+		if(!empty($row)) $dbkey = $row->ar_title;
+		
+		if(empty($dbkey)) {
+			// try again from master
+			$dbr = wfGetDB( DB_MASTER );
+			$row = $dbr->selectRow( 'archive',
+				array( 'ar_title' ),
+				array( 'ar_page_id' => $articleId ),
+				__METHOD__ );
+			
+			if(!empty($row)) $dbkey = $row->ar_title;
+		}
+		
+		return $dbkey;
+	}
+
+	public function getDbkeyFromArticleId_forExisting($articleId) {
+		$dbkey = null;
+
+		$dbr = wfGetDB( DB_SLAVE );
+		$row = $dbr->selectRow( 'page',
+			array( 'page_title' ),
+			array( 'page_id' => $articleId ),
+			__METHOD__ );
+		
+		if(!empty($row)) $dbkey = $row->page_title;
+		
+		if(empty($dbkey)) {
+			// try again from master
+			$dbr = wfGetDB( DB_MASTER );
+			$row = $dbr->selectRow( 'page',
+				array( 'page_title' ),
+				array( 'page_id' => $articleId ),
+				__METHOD__ );
+			
+			if(!empty($row)) $dbkey = $row->page_title;
+		}
+		
+		return $dbkey;
+	}
+	public function getDbkeyFromArticleId($articleId) {
+		$dbkey = getDbkeyFromArticleId_forExisting($articleId);
+		if(empty($dbkey)) {
+			$dbkey = getDbkeyFromArticleId_forDeleted($articleId);
+		}
+		return $dbkey;
+	}
+	
+	public function isDbkeyFromWall($wall_owner, $dbkey) {
+		$wall_owner = str_replace( ' ' , '_' , $wall_owner );
+		$lookFor = $wall_owner . '/@comment-';
+		if (substr($dbkey,0,strlen($lookFor)) == $lookFor)
+			return true;
+		return false;
+	}
+		
 	public function strip_wikitext( $text ) {
 		$app = F::app();
 		$text = str_replace('*', '&asterix;', $text);

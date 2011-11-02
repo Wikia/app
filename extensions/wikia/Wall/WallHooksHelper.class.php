@@ -42,22 +42,32 @@ class WallHooksHelper {
 			&& !empty($parts[1]) 
 			&& intval($parts[1]) > 0
 		) {
-		//message wall index - brick page
+			//message wall index - brick page
 			$outputDone = true;
 			
-			// ugly hack to check if article comment still exists
-			$ac = ArticleComment::newFromId($parts[1]);
-			//$title = F::build('Title', array($parts[0], NS_USER_WALL), 'newFromText' );
-			if(!empty($ac) ) {
-				$app->wg->SuppressPageHeader = true;
-				$app->wg->WallBrickHeader = $parts[1];
-				$app->wg->Out->addHTML($app->renderView('WallController', 'index',  array('filterid' => $parts[1],  'title' => $title)));
+			$dbkey = $helper->getDbkeyFromArticleId_forExisting( $parts[1] );
+			$fromDeleted = false;
+			if(empty($dbkey)) {
+				$fromDeleted = true;
+				$dbkey = $helper->getDbkeyFromArticleId_forDeleted( $parts[1] );
+			}
+			
+			if(empty($dbkey) || !$helper->isDbkeyFromWall($parts[0], $dbkey) ) {
+				// no dbkey or not from wall, redirect to wall
+				$app->wg->Out->redirect($this->getWallTitle()->getFullUrl(), 301);
+				return true;
 			} else {
-				$app->wg->SuppressPageHeader = true;
-				$app->wg->Out->addHTML($app->renderView('WallController', 'messageDeleted', array( 'title' =>wfMsg( 'wall-deleted-msg-pagetitle' ) ) ));
-				$app->wg->Out->setPageTitle( wfMsg( 'wall-deleted-msg-pagetitle' ) );
-				$app->wg->Out->setHTMLTitle( wfMsg( 'errorpagetitle' ) );
-				//$app->wg->Out->showErrorPage( 'wall-deleted-msg-pagetitle', 'wall-deleted-msg-text', array( '$1'=>'<a href="/Message_Wall:USERNAME">USERNAME\'s Wall</a>') );
+				// article exists or existed
+				if($fromDeleted) {
+					$app->wg->SuppressPageHeader = true;
+					$app->wg->Out->addHTML($app->renderView('WallController', 'messageDeleted', array( 'title' =>wfMsg( 'wall-deleted-msg-pagetitle' ) ) ));
+					$app->wg->Out->setPageTitle( wfMsg( 'wall-deleted-msg-pagetitle' ) );
+					$app->wg->Out->setHTMLTitle( wfMsg( 'errorpagetitle' ) );
+				} else {
+					$app->wg->SuppressPageHeader = true;
+					$app->wg->WallBrickHeader = $parts[1];
+					$app->wg->Out->addHTML($app->renderView('WallController', 'index',  array('filterid' => $parts[1],  'title' => $title)));
+				}
 			}
 			
 			return true;
