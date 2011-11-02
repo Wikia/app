@@ -7,11 +7,9 @@ class WikiNavigationModule extends Module {
 
 	private $service;
 
-	const WIKIA_GLOBAL_MESSAGE = 'Wikia-navigation-global';
+	const WIKIA_GLOBAL_VARIABLE = 'wgOasisGlobalNavigation';
 	const WIKIA_LOCAL_MESSAGE = 'Wikia-navigation-local';
 	const WIKI_LOCAL_MESSAGE = 'Wiki-navigation';
-
-	const MESSAGING_WIKI_ID = 4036;
 
 	const CACHE_TTL = 10800; // 3 hours
 
@@ -29,10 +27,10 @@ class WikiNavigationModule extends Module {
 		$this->previewMessage = $request->getVal('msgName', false);
 		$this->previewWikitext = $request->getVal('wikitext');
 
-		// render global wikia navigation
+		// render global wikia navigation ("On the Wiki" menu)
 		$this->wikiaMenuNodes =
 			$this->parseMenu(
-				self::WIKIA_GLOBAL_MESSAGE,
+				self::WIKIA_GLOBAL_VARIABLE,
 				array(
 					1,
 					$this->wg->maxLevelTwoNavElements,
@@ -48,7 +46,7 @@ class WikiNavigationModule extends Module {
 			}
 		}
 
-		// render local wikia navigation
+		// render local wikia navigation (additional items for "On the Wiki" menu)
 		if ( $nodesCount > 0 && $nodesCount < $this->wg->maxLevelThreeNavElements ){
 			$this->wikiaMenuLocalNodes =
 				$this->parseMenu(
@@ -64,7 +62,7 @@ class WikiNavigationModule extends Module {
 			$this->wikiaMenuLocalNodes = array();
 		}
 
-		// render local navigation
+		// render local navigation (more tabs)
 		$this->wikiMenuNodes =
 			$this->parseMenu(
 				self::WIKI_LOCAL_MESSAGE,
@@ -77,16 +75,19 @@ class WikiNavigationModule extends Module {
 	}
 
 	/**
-	 * Parse given menu message
+	 * Parse given menu
 	 *
-	 * Use either MW message or wikitext from preview mode
+	 * Use either MediaWiki message / WikiFactory variable or wikitext from preview mode
 	 *
-	 * @param string $menuName name of the message to be used
+	 * @param string $menuName name of the message / variable to be used
 	 * @param array $maxChildrenAtLevel maximum nesting information
 	 * @param bool $filterInactiveSpecialPages filter inactive special pages?
 	 * @return array menu nodes
 	 */
-	private function parseMenu($menuName, $maxChildrenAtLevel, $filterInactiveSpecialPages = false) {
+	private function parseMenu($menuName, Array $maxChildrenAtLevel, $filterInactiveSpecialPages = false) {
+		global $wgMemc;
+		wfProfileIn(__METHOD__);
+
 		$inPreviewMode = ($this->previewMessage === $menuName);
 
 		if ($inPreviewMode) {
@@ -94,20 +95,38 @@ class WikiNavigationModule extends Module {
 			$nodes = $this->service->parseText(
 				$this->previewWikitext,
 				$maxChildrenAtLevel,
-				$filterInactiveSpecialPages
-			);
-		}
-		else {
-			// get menu content from the message
-			$nodes = $this->service->parseMessage(
-				$menuName,
-				$maxChildrenAtLevel,
-				self::CACHE_TTL,
 				true /* $forContent */,
 				$filterInactiveSpecialPages
 			);
 		}
+		else {
+			switch($menuName) {
+				case self::WIKIA_GLOBAL_VARIABLE:
+					// get menu content from Wiki Factory variable
+					$nodes = $this->service->parseVariable(
+						$menuName,
+						$maxChildrenAtLevel,
+						self::CACHE_TTL,
+						true /* $forContent */,
+						$filterInactiveSpecialPages
+					);
+					break;
 
+				case self::WIKIA_LOCAL_MESSAGE:
+				case self::WIKI_LOCAL_MESSAGE:
+				default:
+					// get menu content from the message
+					$nodes = $this->service->parseMessage(
+						$menuName,
+						$maxChildrenAtLevel,
+						self::CACHE_TTL,
+						true /* $forContent */,
+						$filterInactiveSpecialPages
+					);
+			}
+		}
+
+		wfProfileOut(__METHOD__);
 		return $nodes;
 	}
 
@@ -151,7 +170,7 @@ HEADER;
 	 * @param Array $vars list of global JS variables
 	 * @return bool return true
 	 */
-	public static function onEditPageMakeGlobalVariablesScript($vars) {
+	public static function onEditPageMakeGlobalVariablesScript(Array $vars) {
 		global $wgTitle;
 
 		if (self::isWikiNavMessage($wgTitle)) {
@@ -159,39 +178,6 @@ HEADER;
 		}
 
 		return true;
-	}
-
-	/**
-	 * Check edit permission for wiki nav messages (edit, move and delete)
-	 *
-	 * @param Title $title page to check permission for
-	 * @param User $user current user
-	 * @param string $action action to be performed
-	 * @param bool $result permission
-	 * @return bool return true
-	 */
-	public static function onUserCan(Title $title, User $user, $action, &$result ) {
-		if (!self::isWikiNavMessage($title) || !in_array($action, array('move', 'move-target', 'edit', 'delete'))) {
-			return true;
-		}
-
-		// get the right name to edit a given wiki nav message
-		// TODO: consider allowing an edit of global one only on messaging and disabling edit of local one on messaging
-		switch($title->getText()) {
-			case self::WIKIA_GLOBAL_MESSAGE:
-				$rightName = 'wikianavglobal';
-				break;
-
-			case self::WIKIA_LOCAL_MESSAGE:
-				$rightName = 'wikianavlocal';
-				break;
-
-			default:
-				$rightName = 'editinterface';
-				break;
-		}
-
-		return $user->isAllowed($rightName);
 	}
 
 	/**
@@ -217,9 +203,33 @@ HEADER;
 	}
 
 	/**
+	 * Clear local wikinav cache when local version of global menu
+	 * is modified using WikiFactory
+	 *
+	 * @param string $cv_name WF variable name
+	 * @param int $city_id wiki ID
+	 * @param mixed $value new variable value
+	 * @return bool return true
+	 */
+	public static function onWikiFactoryChanged($cv_name , $city_id, $value) {
+		global $wgMemc;
+
+		if ($cv_name == self::WIKIA_GLOBAL_VARIABLE) {
+			$service = new NavigationService();
+			$memcKey = $service->getMemcKey(self::WIKIA_GLOBAL_VARIABLE, $city_id);
+
+			wfDebug(__METHOD__ . ": purging the cache for wiki #{$city_id}\n");
+
+			$wgMemc->delete($memcKey);
+		}
+
+		return true;
+	}
+
+	/**
 	 * Check if given title refers to one of three wiki nav messages
 	 */
 	private static function isWikiNavMessage(Title $title) {
-		return ($title->getNamespace() == NS_MEDIAWIKI) && in_array($title->getText(), array(self::WIKIA_GLOBAL_MESSAGE, self::WIKIA_LOCAL_MESSAGE, self::WIKI_LOCAL_MESSAGE));
+		return ($title->getNamespace() == NS_MEDIAWIKI) && in_array($title->getText(), array(self::WIKIA_LOCAL_MESSAGE, self::WIKI_LOCAL_MESSAGE));
 	}
 }
