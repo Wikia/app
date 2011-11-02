@@ -113,6 +113,11 @@ var Wall = $.createClass(Object, {
 		
 		$("#Wall textarea").live('keydown', this.proxy(this.focusButton) );
 		
+		this.seenCommentStart = {}; // user saw start of a thread (within browser window)
+		this.seenCommentEnd = {};   // user saw end of a thread (within browser window)
+		this.seenCommentSend = {};   // mark after sending (no repeats)
+		$(document).scroll( this.proxy(this.scrollEvent) );
+		
 		$().log(this.username, "Wall username");
 	},
 
@@ -850,6 +855,38 @@ var Wall = $.createClass(Object, {
 				//click tracking
 				this.track('wall/message/delete');
 			})
+		});
+	},
+	
+	scrollEvent: function(e) {
+		var window_start = $(document).scrollTop();
+		var window_end = window_start + $(window).height();
+		if(window_start + 100 > window_end) window_end = window_start + 100; 
+		var wall = this;
+		$('ul.comments > li').each( function() {
+			var comment_start = $(this).offset().top;
+			var comment_end =  comment_start + $(this).height();
+			var comment_id = $(this).attr('data-id');
+			//$().log( comment_start + ':' + comment_end + ' in ' + window_start + ':' + window_end);
+			
+			if(comment_start >= window_start && comment_start <= window_end) {
+				wall.seenCommentStart[ comment_id ] = true;
+			}
+			if(comment_end >= window_start && comment_end <= window_end) {
+				wall.seenCommentEnd[ comment_id ] = true;
+			}
+				
+			if(comment_id in wall.seenCommentStart && comment_id in wall.seenCommentEnd && !(comment_id in wall.seenCommentSend)) {
+				wall.seenCommentSend[ comment_id ] = true;
+				$.nirvana.sendRequest({
+					controller: 'WallNotificationsExternalController',
+					method: 'markAsRead',
+					format: 'json',
+					data: { id: comment_id },
+					callback: function() {}
+				});
+			}
+			
 		});
 	},
 	
