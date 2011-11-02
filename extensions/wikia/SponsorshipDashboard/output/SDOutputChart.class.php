@@ -14,6 +14,7 @@ class SponsorshipDashboardOutputChart extends SponsorshipDashboardOutputFormatte
 	public $popularCityHubs;
 	public $fromYear = 2000;
 	public $groupId = 0;
+	public $showActionsButton = true;
 
 	protected $actualDate;
 
@@ -37,6 +38,7 @@ class SponsorshipDashboardOutputChart extends SponsorshipDashboardOutputFormatte
 		$wgOut->setHTMLTitle( wfMsg( 'sponsorship-dashboard-report-page-title', $this->report->name ) );
 		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboard.scss' ) );
 
+		// TODO: REFACTOR: Use Nirvana instead of EasyTemplate.
 		$oTmpl = F::build( 'EasyTemplate', array( ( dirname( __FILE__ )."/templates/" ) ) );
 		if ( count( $this->report->reportSources ) == 0  ) {
 
@@ -87,7 +89,8 @@ class SponsorshipDashboardOutputChart extends SponsorshipDashboardOutputFormatte
 									? $wgTitle->getFullURL().'/'.$this->groupId.'/'.$this->report->id.'/csv'
 									: $wgTitle->getFullURL().'/admin/CSVReport/'.$this->report->id,
 					'monthly'		=> $this->report->frequency == SponsorshipDashboardDateProvider::SD_FREQUENCY_MONTH,
-					'fromYear'		=> $this->fromYear
+					'fromYear'		=> $this->fromYear,
+					'showActionsButton' => $showActionsButton
 				)
 			);
 
