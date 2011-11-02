@@ -53,6 +53,10 @@ class WikiaApiQueryCategoryIntersection extends ApiQueryGeneratorBase {
 	 */
 	private function getCategoryIntersection( $resultPageSet = null ) {
 		wfProfileIn( __METHOD__ );
+		
+		// We need to set something as requiring an API key to test that with Fastly.  Since I don't think anyone external is using this function
+		// and it technically could be resource intensive if someone outside wikia tried to run this code (and didn't have SSDs), this function is it!
+		header( 'X-Requires-ApiKey: 1' );
 
 		$params = $this->extractRequestParams();
 
