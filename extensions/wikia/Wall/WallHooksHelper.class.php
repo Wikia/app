@@ -264,9 +264,7 @@ class WallHooksHelper {
 		
 		if( !empty($personalUrls['mytalk']) ) {
 			unset($personalUrls['mytalk']);
-		}
-		
-		$personalUrls['mywall']['text'] = $app->wf->Msg('wall-message-wall');
+		}	
 		
 		$userWallTitle = $this->getWallTitle();
 		
@@ -275,6 +273,7 @@ class WallHooksHelper {
 		}
 		
 		if($app->wg->User->isLoggedIn()) {
+			$personalUrls['mywall']['text'] = $app->wf->Msg('wall-message-wall');
 			if($app->wg->User->getSkin()->getSkinName() == 'monobook') {
 				$personalUrls['wall-notifications'] = array(
 					'text'=>$app->wf->Msg('wall-notifications'),
