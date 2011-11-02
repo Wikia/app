@@ -22,6 +22,13 @@ class WallNotificationsExternalController extends WikiaController {
 		$this->getUpdateInternal($wn);
 		return true;
 	}
+
+	public function markAsRead() {
+		$id = $this->request->getVal('id');
+		$wn = F::build('WallNotifications', array());
+		$wn->markRead( $this->wg->User->getId(), $this->wg->CityId, $id );
+		return true;
+	}
 	
 	private function getUpdateInternal($wn) {
 		$all = $wn->getNotifications( $this->wg->User->getId(), $this->wg->CityId );

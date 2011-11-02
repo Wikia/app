@@ -272,18 +272,17 @@ class WallHooksHelper {
 		
 		F::build('JSMessages')->enqueuePackage('Wall', JSMessages::EXTERNAL);
 		
-		if( !empty($personalUrls['mytalk']) ) {
-			unset($personalUrls['mytalk']);
-		}
+		//if( !empty($personalUrls['mytalk']) ) {
+		//	unset($personalUrls['mytalk']);
+		//}
 		
-		$userWallTitle = $this->getWallTitle();
-		
-		if( $userWallTitle instanceof Title ) {
-			$personalUrls['mywall']['href'] = $userWallTitle->getLocalUrl();
-		}
 		
 		if($app->wg->User->isLoggedIn()) {
-			$personalUrls['mywall']['text'] = $app->wf->Msg('wall-message-wall');
+			$userWallTitle = $this->getWallTitle();	
+			if( $userWallTitle instanceof Title ) {
+				$personalUrls['mytalk']['href'] = $userWallTitle->getLocalUrl();
+			}
+			$personalUrls['mytalk']['text'] = $app->wf->Msg('wall-message-wall');
 			if($app->wg->User->getSkin()->getSkinName() == 'monobook') {
 				$personalUrls['wall-notifications'] = array(
 					'text'=>$app->wf->Msg('wall-notifications'),
