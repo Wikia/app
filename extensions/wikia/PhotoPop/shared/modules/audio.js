@@ -39,7 +39,7 @@ define.call(exports, [
 		return {
 			play: function(sound) {
 				if(isApp)
-					Titanium.App.fireEvent('sounds:play', {sound: sounds[sound], mute: getMute()});
+					Titanium.App.fireEvent('audio:play', {sound: sounds[sound], mute: getMute()});
 				else{
 					if(sound == 'win' || sound == 'fail'){
 						for(var p in sounds){
@@ -63,7 +63,7 @@ define.call(exports, [
 			},
 
 			getMute: function(){
-				return mute;
+				return (mute == true);
 			},
 
 			toggleMute: function(){

@@ -16,15 +16,15 @@ define.call(exports, ['modules/settings'], function(settings){
 	}
 
 	return {
-		getAsset: function(image) {
-			return  images[image];
+		getAsset: function(id) {
+			return  images[id];
 		},
 
-		getPicture: function(image){
+		getPicture: function(path){
 			if(Wikia.Platform.is('app')) {
-				return image;
+				return path;
 			} else {
-				return image;
+				return path;
 			}
 		}
 	};

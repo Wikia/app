@@ -87,7 +87,10 @@ define.call(exports, ['modules/settings'],function(settings){
 							needsRequest = true;
 						}
 					}
-
+					
+					//if(event.images != null)
+						
+				
 					if(needsRequest && event.source == 'web')
 						alert('Error, invalid response from ' + event.url);
 					else if(needsRequest)
