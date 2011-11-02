@@ -134,7 +134,7 @@
 				<input type="email" name="email" placeholder="<?= wfMsg('wikiaquiz-game-email-placeholder') ?>" value="<?= htmlspecialchars($defaultEmail) ?>" size="30" />
 				<input type="submit" class="continue" value="<?= wfMsg('wikiaquiz-game-email-button') ?>" />
 				<input type="hidden" name="token" value="<?= htmlspecialchars($token) ?>" />
-				<input type="hidden" name="quizid" value="<?= $quizId ?>" />
+				<input type="hidden" name="quizid" value="<?= intval($data['id']) ?>" />
 				<small><?= wfMsg('wikiaquiz-game-email-valid-please') ?></small>
 			</form>
 		</div>

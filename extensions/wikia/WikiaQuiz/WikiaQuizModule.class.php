@@ -73,8 +73,6 @@ class WikiaQuizModule extends Module {
 
 		// use token to prevent direct requests to the backend for storing emails
 		$this->token = $wgUser->editToken('WikiaQuiz' /* $salt */);
-
-		$this->quizId = $wgTitle->getArticleId();
 	}
 
 	/**
