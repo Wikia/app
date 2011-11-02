@@ -34,10 +34,27 @@ define.call(exports, ['modules/settings'],function(settings){
 			if(Wikia.Platform.is('app'))
 				Titanium.App.fireEvent('Storage:get', {key: key});
 			else{
-				var value = store.get(key);
+				var value;
+				try {
+					value = store.get(key);
+				} catch(err) {
+					Wikia.log(err)
+					value = null;
+				}
 
 				this.fire('get', {key: key, value: value});
 				this.fire({name: 'get', key: key}, {key: key, value: value});
+			}
+		},
+
+		remove: function(key) {
+			if(Wikia.Platform.is('app'))
+				Titanium.App.fireEvent('Storage:remove', {key: key});
+			else{
+				store.remove(key);
+
+				this.fire('remove');
+				this.fire({name: 'remove', key: key});
 			}
 		},
 
@@ -45,7 +62,7 @@ define.call(exports, ['modules/settings'],function(settings){
 			return eventName + ':' + key;
 		}
 	}),
-	
+
 	XDomainLoader = my.Class({
 		_onReadCache: null,
 		_id: null,
@@ -57,10 +74,10 @@ define.call(exports, ['modules/settings'],function(settings){
 
 			if(Wikia.Platform.is('app')){
 				that._id = (Math.random() * Math.random()).toString();
-				
+
 				Titanium.App.addEventListener('XDomainLoader:complete:' + that._id, function(event){
 					var needsRequest = true;
-					
+
 					//Android will pass undefined, iOS null, YAY for consistency!
 					if(typeof event.data != 'undefined' && event.data !== null){
 						try{

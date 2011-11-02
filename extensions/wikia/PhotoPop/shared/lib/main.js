@@ -58,6 +58,7 @@
 					});
 					tutorialSteps['intro'] = true;
 				}
+				screens.get('game').fire('muteButtonClicked', {mute: audio.getMute()});
 			}
 
 			function loadSelectedGame(){
@@ -145,6 +146,8 @@
 				document.getElementById('goBack').onclick = function(){
 					screens.get('home').show();
 				};
+
+				screens.get('home').fire('muteButtonClicked', {mute: audio.getMute()});
 			}
 
 			function modalOpened(event, options){
@@ -206,35 +209,30 @@
 			function endGame(event, options){
 				screens.get('game').fire('endGame', options);
 
-				store.remove(currentGame.getId());
+				data.storage.remove(currentGame.getId());
 				currentGame = null;
 
 				var score = options.totalPoints;
-				if(highscore) {
-					if(score > highscore[highscore.length-1].score){
-						var date = new Date();
-						highscore.push({
-							score: score,
-							date: date.getDate() + '-' + Wikia.i18n.Msg('photopop-game-month-'+ date.getMonth()) + '-' + date.getFullYear(),
-							wiki: options.gameId
-						});
 
-						highscore.sort(function(a,b) {
-							return a.score < b.score;
-						});
-
-						highscore = highscore.slice(0, 5);
-					}
-				}
-
-				if(!highscore || score > highscore[0].score) {
-					document.getElementById('highScore').getElementsByTagName('span')[0].innerHTML = score;
-					screens.openModal({
-						name: 'highscore',
-						html: Wikia.i18n.Msg('photopop-game-new-highscore') + score + ' !',
-						clickThrough: false,
-						closeOnClick: true
+				if(highscore.length < 5 || score > highscore[highscore.length-1].score){
+					var date = new Date();
+					highscore.push({
+						score: score,
+						date: [date.getDate(),date.getMonth(),date.getFullYear()],
+						wiki: options.gameId
 					});
+
+					highscore.sort(function(a,b) {
+						return a.score < b.score;
+					});
+
+					highscore = highscore.slice(0, 5);
+				}
+				var highscoreSpan = document.getElementById('highScore').getElementsByTagName('span')[0];
+				if(highscore.length == 0 || (highscore.length && score > highscore[0].score)) {
+					highscoreSpan.innerHTML = score;
+				} else if(highscore.length) {
+					highscoreSpan.innerHTML = highscore[0].score;
 				}
 
 				data.storage.set('highscore', highscore);
@@ -460,8 +458,8 @@
 			function initHighscore(){
 				data.storage.addEventListener({name: 'get', key: 'highscore'}, function(event, options) {
 					highscore = options.value || highscore;
-					if(highscore) {
-						document.getElementById('highScore').getElementsByTagName('span')[0].innerHTML = '200';//highscore[0].score;
+					if(highscore && highscore.length) {
+						document.getElementById('highScore').getElementsByTagName('span')[0].innerHTML = highscore[0].score;
 					}
 				});
 
@@ -524,9 +522,9 @@
 			gameLoader.addEventListener('success', gameLoaded);
 
 			//Init all screens
-			screens.get('home').init(audio.getMute());
 			screens.get('highscore').init();
 			screens.get('game').init();
+			screens.get('home').init();
 
 			initHomeScreen();
 
@@ -545,29 +543,16 @@
 			//		screens.closeModal();
 			//	}
 			//
-			//	}, 400);
+			//}, 400);
 
 
 			data.storage.addEventListener({name: 'get', key: 'tutorialPlayed'}, function(event, options) {
 				tutorialPlayed = options.value || tutorialPlayed;
 
-				if(!tutorialPlayed) {
-					runGame('tutorial');
-				}
+				if(!tutorialPlayed) runGame('tutorial');
 			});
 
 			data.storage.get('tutorialPlayed');
-
-			data.storage.addEventListener({name: 'get', key: 'mute'}, function(event, options) {
-				var mute = (options.value)?true:mute;
-
-				audio.setMute(mute);
-
-				screens.get('game').fire('muteButtonClicked', {mute: mute});
-				screens.get('home').fire('muteButtonClicked', {mute: mute});
-			});
-
-			data.storage.get('mute');
 		}
 	);
 })();
