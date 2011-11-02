@@ -1851,9 +1851,6 @@ Liftium.reportError = function (msg, type) {
 	Liftium.d("Yikes. Liftium.reportError has an error");
   }
 };
-if (LiftiumOptions.error_beacon !== false ){
-	window.onerror = Liftium.catchError;
-}
 
 
 Liftium.errorMessage = function (e) {
@@ -2525,6 +2522,11 @@ if (typeof wgNow != "undefined") { /* wgNow is not defined on exitstitials FIXME
 Liftium.startTime = Liftium.now.getTime();
 Liftium.debugLevel = Liftium.getRequestVal('liftium_debug', 0) || Liftium.cookie("liftium_debug");
 Liftium.maxHopTime = Liftium.getRequestVal('liftium_timeout', 0) || Liftium.cookie("liftium_timeout") || 1800000;
+
+LiftiumOptions.error_beacon = !Liftium.debugLevel && !Liftium.getRequestVal('liftium_onerror', 0) && !Liftium.cookie("liftium_onerror");
+if (LiftiumOptions.error_beacon !== false ){
+	window.onerror = Liftium.catchError;
+}
 
 } // \if (typeof Liftium == "undefined" ) 
 
