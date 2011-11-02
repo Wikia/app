@@ -52,7 +52,7 @@ $messages['en'] = array(
 	'wikiaquiz-game-congratulations-anon' => 'Great job!',
 	'wikiaquiz-game-your-score' => 'YOUR SCORE IS',
 	'wikiaquiz-game-continue-button' => 'Continue',
-	'wikiaquiz-game-thanks' => 'Thanks for your entry! We\'ll shoot you an email shortly. In the meantime explore [[$1|{{SITENAME}}]]',
+	'wikiaquiz-game-thanks' => 'Thanks for playing!',
 	'wikiaquiz-game-provide-email' => 'Please enter your email',
 	'wikiaquiz-game-email-placeholder' => 'yourname@youremail.com',
 	'wikiaquiz-game-email-button' => 'Send me free stuff',
@@ -517,7 +517,7 @@ $messages['ko'] = array(
 	'wikiaquiz-facebook-creative' => '{{SITENAME}}에서 $1 퀴즈를 진행해보세요.',
 );
 
-/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (Kurdî (latînî))
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -756,7 +756,7 @@ $messages['nl'] = array(
 	'wikiaquiz-facebook-creative' => 'Doe mee aan "$1" op {{SITENAME}}',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian (bokmål) (Norsk (bokmål))
  * @author Audun
  */
 $messages['no'] = array(
