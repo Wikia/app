@@ -503,7 +503,7 @@ body{
 	left:-2px;
 	z-index:21;
 }
-#tilesWrapper tr td {
+#tilesWrapper div {
 	background-color: #00396d;
 	-webkit-transition: all .3s ease-out;
 	-moz-transition: all .3s ease-out;

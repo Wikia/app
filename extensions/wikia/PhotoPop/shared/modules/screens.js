@@ -169,44 +169,34 @@ define.call(exports, function(){
 			tableHeight = screenElement.clientHeight,
 			rowHeight = Math.floor(tableHeight / rows),
 			colWidth = Math.floor(tableWidth / cols),
-			offsetY = 0,
-			offsetX = 0,
-			self = this;
+			offsetY = offsetX = 0,
+			self = this,
+			numTiles = rows * cols;
 
-			for(var row = 0; row < rows; row++) {
-				table += "<tr>"
-				for(var col = 0; col < cols; col++) {
-					table += "<td id='tile" + row + "_" + col + "'></td>"
-				}
-				table += "</tr>";
-				tilesWrapper.innerHTML = table;
+			for(var i = 0; i < numTiles; i++) {
+				table += "<div id='tile-" + i + "'></div>"
 			}
 
-			var trs = tilesWrapper.getElementsByTagName('tr'),
-			lastCol = cols - 1,
-			lastRow = rows - 1;
+			tilesWrapper.innerHTML = table;
 
-			for(var i = 0; i < rows; i++) {
-				var tr = trs[i],
-				tds = tr.getElementsByTagName('td');
+			var divs = tilesWrapper.getElementsByTagName('div');
 
-				tr.style.top = offsetY;
+			for(var j,i = 0; i < numTiles; i++,j++) {
+				var div = divs[i],
+				divStyle = div.style;
 
-				for(var j = 0; j < cols; j++) {
-					var td = tds[j],
-					tdStyle = td.style;
-					tdStyle.backgroundImage = 'url(' + watermark + ')';
-					tdStyle.width = (j == lastCol) ? tableWidth - (colWidth * j) : colWidth;
-					tdStyle.height = (i == lastRow) ? tableHeight - (rowHeight * i) : rowHeight;
-					tdStyle.backgroundPosition = '-'+ offsetX + 'px -' + offsetY + 'px';
-					tdStyle.left = offsetX;
-					tds[j].originalLeft = offsetX;
-					tds[j].originalHeight = tdStyle.height;
-					offsetX += colWidth;
+				divStyle.top = div.originalTop = offsetY;
+				divStyle.backgroundImage = 'url(' + watermark + ')';
+				divStyle.width = div.originalWidth = colWidth;
+				divStyle.height = div.originalHeight = rowHeight;
+				divStyle.backgroundPosition = '-'+ offsetX + 'px -' + offsetY + 'px';
+				divStyle.left = div.originalLeft = offsetX;
+				offsetX += colWidth;
+				if((i+1) % cols == 0) {
+
+					offsetX = j = 0;
+					offsetY += rowHeight;
 				}
-
-				offsetX = 0;
-				offsetY += rowHeight;
 			}
 
 			document.getElementById('bgPic').style.display = "block";

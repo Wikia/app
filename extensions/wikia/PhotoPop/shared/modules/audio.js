@@ -9,26 +9,32 @@ define.call(exports, [
 		var sounds = {},
 		mute = false,
 		isApp = Wikia.Platform.is('app'),
-		prefix = ((isApp) ? '' : "extensions/wikia/PhotoPop/") + "shared/audio/",
+		checkAudioSupport = new Audio(),
+		prefix = (isApp) ? settings.sharedAudioPath : settings.webPrefix + ((checkAudioSupport.canPlayType('audio/mpeg')) ? settings.sharedAudioPath : settings.webAudioPath),
 		path,
-		audioFiles = settings.sounds;
+		audioFiles = settings.sounds,
+		ext = (function() {
+			if(isApp || checkAudioSupport.canPlayType('audio/mpeg')) {
+				return '.mp3';
+			} else if (checkAudioSupport.canPlayType('audio/ogg')) {
+				return '.ogg';
+			} else {
+				return '.wav';
+			}})();
 
 		function getMute(){
 			return mute;
 		}
 
-		for(var p in audioFiles){
-			path = prefix + audioFiles[p] + ".mp3";
-			sounds[p] = (isApp) ? path : new Audio(path);
-		}
-
-		data.storage.addEventListener({name: "get", key: "mute"}, function(event, options) {
-			mute = options.value || mute;
-			for(var sound in sounds){
-				sounds[sound].muted = mute;
-			}
+		data.storage.addEventListener({name: "get", key: "mute"}, function(event) {
+			mute = event.value || false;
 		});
 		data.storage.get('mute');
+
+		for(var p in audioFiles){
+			path = prefix + audioFiles[p] + ext;
+			sounds[p] = (isApp) ? path : new Audio(path);
+		}
 
 		return {
 			play: function(sound) {
@@ -47,12 +53,13 @@ define.call(exports, [
 
 			setMute: function(flag) {
 				mute = flag;
-				data.storage.set('mute', flag);
 
 				for(var sound in sounds){
-					sounds[sound].muted = flag;
+					sounds[sound].muted = mute;
 				}
-				return flag;
+
+				data.storage.set('mute', mute);
+				return mute;
 			},
 
 			getMute: function(){
