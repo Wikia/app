@@ -76,7 +76,7 @@ class ScribeEventProducer {
 		$oTitle = $oArticle->getTitle();
 		
 		if ( $oRevision instanceof Revision ) {
-			if ( is_null( $revision_id ) ) {
+			if ( empty( $revision_id ) ) {
 				$revision_id = $oRevision->getId();
 			}
 			$page_id = $oRevision->getPage();
@@ -85,7 +85,7 @@ class ScribeEventProducer {
 			$rev_size = $oRevision->getSize();
 		} else {
 			$page_id = $oArticle->getID();
-			if ( is_null( $revision_id ) ) {
+			if ( empty( $revision_id ) ) {
 				$revision_id = $oTitle->getLatestRevID(GAID_FOR_UPDATE);
 			}
 			if ( empty( $page_id ) ) {
