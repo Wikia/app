@@ -560,8 +560,8 @@ var Wall = $.createClass(Object, {
 				
 				var editbuttons = $('<div class="edit-buttons"></div>');
 				$('<button class="wikia-button save-edit">'+$.msg('wall-button-save-changes')+'</button>').appendTo(editbuttons);
-				$('<button class="wikia-button preview-edit secondary">'+$.msg('wall-button-to-preview-comment')+'</button>').appendTo(editbuttons);
-				$('<button class="wikia-button cancel-preview-edit secondary" style="display: none;">'+$.msg('wall-button-to-cancel-preview')+'</button>').appendTo(editbuttons);
+				//$('<button class="wikia-button preview-edit secondary">'+$.msg('wall-button-to-preview-comment')+'</button>').appendTo(editbuttons);
+				//$('<button class="wikia-button cancel-preview-edit secondary" style="display: none;">'+$.msg('wall-button-to-cancel-preview')+'</button>').appendTo(editbuttons);
 				$('<button class="wikia-button cancel-edit secondary">'+$.msg('wall-button-cancel-changes')+'</button>').appendTo(editbuttons);
 				
 				
