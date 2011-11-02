@@ -81,28 +81,13 @@
 
 					for(var p in gamesData){
 						var game = gamesData[p];
-
-						data.storage.addEventListener({name: 'get', key: game.id}, function(event, options) {
-							gameData = options.value;
-
-							if(!game.thumbnail)
+						
+						if(!game.thumbnail)
 								game.thumbnail = graphics.getAsset('gameicon_default');
-
-							if(gameData) {
-								game.round = gameData._currentRound;
-								game.correct = gameData._numCorrect;
-								game.totalPoints = gameData._totalPoints;
-								game.roundPoints = gameData._roundPoints;
-							}
-
-							templateVars.games.push(game);
-						});
-
-						data.storage.get(game.id);
-
-
+						
+						templateVars.games.push(game);
 					}
-
+					
 					document.getElementById('sliderContent').innerHTML = Mustache.to_html(templates.gameSelector, templateVars);
 
 					var gamesList = document.getElementById('gamesList').onclick = function(event){
