@@ -17,7 +17,7 @@ class CommunityQuiz {
     /**
      * The length of the time period.
      */
-    const LENGTH_DAYS = 1;
+    const LENGTH_DAYS = 11;
     /**
      * Criteria: Revisions range.  Wikis from the of the range won't be included in the report.
      */
@@ -50,13 +50,13 @@ class CommunityQuiz {
         // Get a list of wikis created within a given time period.
         $res = $this->dbObj->select(
                 array( 'wikicities.city_list' ),
-                array( 'city_url', 'city_dbname', 'city_founding_user' ),
+                array( 'city_url', 'city_dbname', 'city_founding_user', 'DATE(city_created) AS city_created' ),
                 array(
                     'city_lang' => 'en',
                     'city_created BETWEEN \'' . $this->date . ' 00:00:00\' AND DATE_ADD( \'' . $this->date . ' 00:00:00\', INTERVAL ' . self::LENGTH_DAYS . ' DAY )'
                 ),
                 __METHOD__,
-                array( 'ORDER BY city_id ASC')
+                array( 'ORDER BY city_created ASC')
         );
 
         // Empty set, terminate.
@@ -83,6 +83,7 @@ class CommunityQuiz {
                     
                     $tmp = new StdClass;
                     $tmp->url = $oRow->city_url;
+		    $tmp->created = $oRow->city_created;
                     $tmp->founder_id = $oRow->city_founding_user;
                     $tmp->founder_edits = $revisions->cnt;
                     
@@ -125,11 +126,12 @@ class CommunityQuiz {
             $tmpDbObj->close();
         }
         // Output as CSV
-        echo "\"#\",\"URL\",\"Edits\",\"Days active\",\"Founder ID\",\"Founder name\",\"Founder real name\",\"Founder email\"\n";
+        echo "\"#\",\"Created\",\"URL\",\"Edits\",\"Days active\",\"Founder ID\",\"Founder name\",\"Founder real name\",\"Founder email\"\n";
         foreach ( $this->output as $k => $v ) {
             printf(
-                    "\"%d\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\"\n",
+                    "\"%d\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\"\n",
                     $k,
+		    $v->created,
                     $v->url,
                     $v->founder_edits,
                     $v->founder_days_active,
