@@ -33,7 +33,7 @@ function wfOasisSetup() {
 	$wgHooks['UploadComplete'][] = 'LatestPhotosModule::onImageUploadComplete';
 	$wgHooks['FileUpload'][] = 'LatestPhotosModule::onImageUpload';
 	$wgHooks['SpecialMovepageAfterMove'][] = 'LatestPhotosModule::onImageRenameCompleated';
-	$wgHooks['userCan'][] = 'WikiNavigationModule::onUserCan';
+	$wgHooks['WikiFactoryChanged'][] = 'WikiNavigationModule::onWikiFactoryChanged';
 
 	// confirmations
 	$wgHooks['ArticleDeleteComplete'][] = 'NotificationsModule::addPageDeletedConfirmation';
@@ -249,13 +249,3 @@ $wgExtensionCredits['other'][] = array(
 	'version' => '1.0',
 	'author' => array('Władysław Bodzek'),
 );
-
-// TODO: move to CommonSettings.php once merged with trunk
-$wgAvailableRights[] = 'wikianavglobal';
-$wgAvailableRights[] = 'wikianavlocal';
-
-$wgGroupPermissions['*']['wikianavglobal'] = false;
-$wgGroupPermissions['*']['wikianavlocal'] = false;
-
-$wgGroupPermissions['staff']['wikianavglobal'] = true;
-$wgGroupPermissions['staff']['wikianavlocal'] = true;

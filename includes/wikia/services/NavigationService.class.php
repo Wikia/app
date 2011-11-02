@@ -11,6 +11,10 @@ class NavigationService {
 	const TEXT = 'text';
 	const SPECIAL = 'specialAttr';
 
+	const TYPE_MESSAGE = 'message';
+	const TYPE_VARIABLE = 'variable';
+
+	const COMMUNITY_WIKI_ID = 177;
 
 	private $biggestCategories;
 	private $lastExtraIndex = 1000;
@@ -24,49 +28,119 @@ class NavigationService {
 
 	private $forContent = false;
 
-	public function getMemcKey($messageName) {
-		return wfMemcKey(__CLASS__, $messageName, self::version);
+	/**
+	 * Return memcache key used for given message / variable
+	 *
+	 * City ID can be specified to return key for different wiki
+	 *
+	 * @param string $name message / variable name
+	 * @param int cityId city ID (false - default to current wiki)
+	 * @return string memcache key
+	 */
+	public function getMemcKey($messageName, $cityId = false) {
+		global $wgCityId;
+		$cityId = (is_numeric($cityId)) ? $cityId : $wgCityId;
+
+		$messageName = str_replace(' ', '_', $messageName);
+
+		return implode(':', array(__CLASS__, intval($cityId), $messageName, self::version));
 	}
 
 	/**
 	 * @author: Inez Korczyński
 	 */
-	public function parseMessage($messageName, $maxChildrenAtLevel = array(), $duration = 3600, $forContent = false, $filterInactiveSpecialPages = false ) {
+	public function parseMessage($messageName, Array $maxChildrenAtLevel = array(), $duration = 3600, $forContent = false, $filterInactiveSpecialPages = false ) {
+		wfProfileIn( __METHOD__ );
+
+		$nodes = $this->parseHelper(self::TYPE_MESSAGE, $messageName, $maxChildrenAtLevel, $duration, $forContent, $filterInactiveSpecialPages);
+
+		wfProfileOut( __METHOD__ );
+		return $nodes;
+	}
+
+	public function parseVariable($variableName, Array $maxChildrenAtLevel = array(), $duration = 3600, $forContent = false, $filterInactiveSpecialPages = false ) {
+		wfProfileIn( __METHOD__ );
+
+		$nodes = $this->parseHelper(self::TYPE_VARIABLE, $variableName, $maxChildrenAtLevel, $duration, $forContent, $filterInactiveSpecialPages);
+
+		wfProfileOut( __METHOD__ );
+		return $nodes;
+	}
+
+	/**
+	 * Parse wikitext from given "source" - either MediaWiki message or WikiFactory variable
+	 *
+	 * @param string $type source type
+	 * @param string $source name of message / variable to be parsed
+	 * @param array $maxChildrenAtLevel allowed number of items on each menu level
+	 * @param int $duration cache duration
+	 * @param boolean $forContent use content language when parsing messages?
+	 * @param boolean $filterInactiveSpecialPages ignore item linking to not existing special pages?
+	 * @return array parsed menu wikitext
+	 */
+	private function parseHelper($type, $source, Array $maxChildrenAtLevel = array(), $duration = 3600, $forContent = false, $filterInactiveSpecialPages = false ) {
 		wfProfileIn( __METHOD__ );
 		global $wgLang, $wgContLang, $wgMemc;
 
 		$this->forContent = $forContent;
+		$useCache = ($wgLang->getCode() == $wgContLang->getCode()) || $this->forContent;
 
-		$useCache = $wgLang->getCode() == $wgContLang->getCode();
-
-		if($useCache || $this->forContent ) {
-			$cacheKey = $this->getMemcKey($messageName);
+		if($useCache) {
+			$cacheKey = $this->getMemcKey($source);
 			$nodes = $wgMemc->get($cacheKey);
 		}
+		else {
+			$nodes = null;
+		}
 
-		if(empty($nodes)) {
-			$text = $this->forContent ? wfMsgForContent($messageName) : wfMsg($messageName);
-			$nodes = $this->parseText($text, $maxChildrenAtLevel, $filterInactiveSpecialPages);
+		if(!is_array($nodes)) {
+			wfProfileIn( __METHOD__  . '::miss');
 
-			if($useCache || $this->forContent ) {
+			// get wikitext from given source
+			switch($type) {
+				case self::TYPE_MESSAGE:
+					$text = $this->forContent ? wfMsgForContent($source) : wfMsg($source);
+					break;
+
+				case self::TYPE_VARIABLE:
+					// try to use "local" value
+					$text = F::app()->getGlobal($source);
+
+					// fallback to WikiFactory value from community (city id 177)
+					if (!is_string($text)) {
+						$text = WikiFactory::getVarValueByName($source, self::COMMUNITY_WIKI_ID);
+					}
+					break;
+			}
+
+			// and parse it
+			$nodes = $this->parseText($text, $maxChildrenAtLevel, $forContent, $filterInactiveSpecialPages);
+
+			if($useCache) {
 				$wgMemc->set($cacheKey, $nodes, $duration);
 			}
+
+			wfProfileOut( __METHOD__  . '::miss');
 		}
 
 		wfProfileOut( __METHOD__ );
 		return $nodes;
 	}
 
-	public function parseText($text, $maxChildrenAtLevel = array(), $filterInactiveSpecialPages = false) {
+	public function parseText($text, Array $maxChildrenAtLevel = array(), $forContent = false, $filterInactiveSpecialPages = false) {
+		wfProfileIn( __METHOD__ );
+
 		$lines = explode("\n", $text);
+		$this->forContent = $forContent;
 
 		$nodes = $this->parseLines($lines, $maxChildrenAtLevel);
-		$nodes = $this->filterSpecialPages( $nodes, $filterInactiveSpecialPages );
+		$nodes = $this->filterSpecialPages($nodes, $filterInactiveSpecialPages);
 
+		wfProfileOut( __METHOD__ );
 		return $nodes;
 	}
 
-	public function filterSpecialPages( $nodes, $filterInactiveSpecialPages ){
+	private function filterSpecialPages( $nodes, $filterInactiveSpecialPages ){
 		if( !$filterInactiveSpecialPages ) {
 			return $nodes;
 		}
@@ -239,6 +313,7 @@ class NavigationService {
 	 * @author: Inez Korczyński
 	 */
 	private function handleExtraWords(&$node, &$nodes) {
+		wfProfileIn( __METHOD__ );
 
 		$originalLower = strtolower($node[ self::ORIGINAL ]);
 
@@ -291,6 +366,8 @@ class NavigationService {
 				}
 			}
 		}
+
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**

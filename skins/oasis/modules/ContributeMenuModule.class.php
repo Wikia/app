@@ -17,7 +17,6 @@ class ContributeMenuModule extends Module {
 		// menu items linking to special pages
 		$specialPagesLinks = array(
 			'Upload' => 'oasis-navigation-v2-add-photo',
-			//'WikiaVideoAdd' => 'oasis-button-add-video',
 			'CreatePage' => 'oasis-navigation-v2-create-page',
 			'WikiActivity' => 'oasis-button-wiki-activity',
 		);
@@ -41,13 +40,6 @@ class ContributeMenuModule extends Module {
 			$this->dropdownItems['wikinavedit'] = array(
 				'text' => wfMsg('oasis-navigation-v2-edit-this-menu'),
 				'href' => Title::newFromText(WikiNavigationModule::WIKI_LOCAL_MESSAGE, NS_MEDIAWIKI)->getLocalURL('action=edit'),
-			);
-		}
-
-		if($wgUser->isAllowed('wikianavlocal')) {
-			$this->dropdownItems['wikinavlocaledit'] = array(
-				'text' => wfMsg('oasis-button-edit-wikia-local-menu'),
-				'href' => Title::newFromText(WikiNavigationModule::WIKIA_GLOBAL_MESSAGE, NS_MEDIAWIKI)->getLocalURL('action=edit'),
 			);
 		}
 	}
