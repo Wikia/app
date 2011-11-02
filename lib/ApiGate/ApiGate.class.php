@@ -125,7 +125,8 @@ class ApiGate{
 		// Based on the response-code, set the headers and give a reasonable human-readable error-message.
 		switch( $responseCode ){ // in numerical order except for 200 since that's the default (so it goes at the end)
 			case ApiGate::HTTP_STATUS_UNAUTHORIZED:
-				header("Status: 401 Unauthorized");
+				//header("Status: 401 Unauthorized"); // Fast CGI need status.  TODO: Have a way to detect if this is Fast CGI or not and choose the correct header type.
+				header("HTTP/1.0: 401 Unauthorized");
 				if( empty($apiKey) ){
 					print "Unauthorized: No API key was found. Please provide an API key to use this API.\n"; // TODO: i18n ?
 				} else {
@@ -134,18 +135,18 @@ class ApiGate{
 			break;
 
 			case ApiGate::HTTP_STATUS_FORBIDDEN:
-				header("Status: 403 Forbidden");
+				header("HTTP/1.0: 403 Forbidden");
 				print "Forbidden. Your API key is not authorized to make this request."; // TODO: i18n
 			break;
 				
 			case ApiGate::HTTP_STATUS_LIMIT_EXCEEDED:
-				header("Status: 509 Bandwidth Limit Exceeded");
+				header("HTTP/1.0: 509 Bandwidth Limit Exceeded");
 				print "This API key has been disabled because the request-rate was too high. Please contact support for more information or to re-enable."; // TODO: i18n ?
 			break;
 
 			case ApiGate::HTTP_STATUS_OK:
 			default:
-				header("Status: 200 OK");
+				header("HTTP/1.0: 200 OK");
 				print "OK"; // TODO: i18n
 			break;
 		}
