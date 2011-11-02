@@ -34,37 +34,7 @@ define.call(exports, {
 					<td>"+Wikia.i18n.Msg('photopop-game-wiki')+"</td>\
 					<td>"+Wikia.i18n.Msg('photopop-game-date')+"</td>\
 					<td>"+Wikia.i18n.Msg('photopop-game-score')+"</td>\
-				</tr>\
-				<tr>\
-					<td></td>\
-					<td></td>\
-					<td></td>\
-					<td></td>\
-				</tr>\
-				<tr>\
-					<td></td>\
-					<td></td>\
-					<td></td>\
-					<td></td>\
-				</tr>\
-				<tr>\
-					<td></td>\
-					<td></td>\
-					<td></td>\
-					<td></td>\
-				</tr>\
-				<tr>\
-					<td></td>\
-					<td></td>\
-					<td></td>\
-					<td></td>\
-				</tr>\
-				<tr>\
-					<td></td>\
-					<td></td>\
-					<td></td>\
-					<td></td>\
-				</tr>\
+</tr><tr><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td></tr>\
 				</table>\
 				<div id='goBack'>\
 					<img src='{{#image}}buttonSrc_home{{/image}}'/>\
@@ -133,7 +103,7 @@ define.call(exports, {
 						Progress: <span>0/0</span>\
 					</div>\
 				</div>\
-				<table id='tilesWrapper'></table>\
+				<div id='tilesWrapper'></div>\
 			</div>\
 			</div>\
 			<div id='modalWrapper'><div id='modal'>\

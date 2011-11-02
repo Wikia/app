@@ -41,6 +41,10 @@ define.call(exports, {
 		wrongAnswer: "tubePop"
 	},
 
+	sharedAudioPath: "shared/audio/",
+	webAudioPath: "audio/",
+	webPrefix: "extensions/wikia/PhotoPop/",
+
 	tutorial:[
 		{
 			image: 'tutorial_1',
