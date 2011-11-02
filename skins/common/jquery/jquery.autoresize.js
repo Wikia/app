@@ -58,7 +58,7 @@
                 updateSize = function() {
 					
                     // Prepare the clone:
-                    clone.height(0).val($(this).val()).scrollTop(10000);
+                    clone.height(0).width(textarea.outerWidth()).val($(this).val()).scrollTop(10000);
 					
                     // Find the height of text:
                     var scrollTop = Math.max(clone.scrollTop(), origHeight) + settings.extraSpace,
