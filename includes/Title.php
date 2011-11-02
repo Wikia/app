@@ -2651,6 +2651,7 @@ class Title {
 			}
 		}
 
+		/** Wikia Change Begin **/
 		// if this is a site css or js purge it as well
 		global $wgUseSiteJs, $wgUseSiteCss, $wgAllowUserJs;
 		global $wgSquidMaxage, $wgJsMimeType;
@@ -2690,6 +2691,7 @@ class Title {
 
 		// purge Special:RecentChanges too
 		$urls[] = SpecialPage::getTitleFor('RecentChanges')->getInternalURL();
+		/** Wikia Change End **/
 
 		return $urls;
 	}
