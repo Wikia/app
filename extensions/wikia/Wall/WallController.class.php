@@ -282,13 +282,13 @@ class WallController extends ArticleCommentsModule {
 			$this->response->setVal( 'fmt_timestamp',  $this->wg->Lang->timeanddate( $wallMessage->getCreatTime(TS_MW) ));
 			$this->response->setVal( 'isEdited',  false);
 		}
-
+		
 		$this->response->setVal( 'fullpageurl', $this->helper->getMessagePageUrl($comment) );
 		$this->response->setVal( 'wgBlankImgUrl', $this->wg->BlankImgUrl );
 		$this->response->setVal( 'canEdit', $wallMessage->canEdit($this->wg->User) );
 		$this->response->setVal( 'canDelete',$wallMessage->canDelete($this->wg->User) );
 		
-		if($this->wg->User->getId() > 0 && !$wallMessage->isWallOwner($this->wg->User)) {
+		if($this->wg->User->getId() > 0 && !$wallMessage->isWallOwner($this->wg->User) && !$wallMessage->isWallWatched($this->wg->User) ) {
 			$this->response->setVal( 'showFallowButton', true );
 		} else {
 			$this->response->setVal( 'showFallowButton', false );

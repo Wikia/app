@@ -1,5 +1,7 @@
 $(document).ready(function() {
-	var wall = new Wall();
+	if($('#Wall').exists()) {
+		var wall = new Wall();		
+	}
 });
 
 //var global_hide = 0;
@@ -13,6 +15,10 @@ var Wall = $.createClass(Object, {
 		this.settings.edit_body = this.settings.new_body;
 		this.settings.reply = {minFocus:100, minContent: 100, limit: 9999, limitEmpty: 30, extraSpace: 30};
 		
+		$("#WikiaArticle").bind('afterWatching', this.proxy(this.onWallWatch));
+		
+		$("#WikiaArticle").bind('afterUnwatching', this.proxy(this.onWallUnwatch) );
+	
 		// Submit new wall post
 		$('.wall-require-login').live('click', this.proxy(this.onAfterAjaxLogin));
 		$('.wall-reply-require-login').live('click', this.proxy(this.onAfterAjaxLogin));
@@ -107,6 +113,13 @@ var Wall = $.createClass(Object, {
 		return $.proxy(func, this);
 	},
 	
+	onWallWatch: function(e) {
+		$('.SpeechBubble .follow.wikia-button').fadeOut();
+	},
+	
+	onWallUnwatch: function(e) {
+		$('.SpeechBubble .follow.wikia-button').fadeIn();
+	},
 	
 	//hack for safari tab index
 	focusButton: function(e) {
@@ -574,7 +587,7 @@ var Wall = $.createClass(Object, {
 		$('.buttons').show();
 		
 		//click tracking
-		$.tracker.byStr('wall/message/edit/cancel');
+		this.track('wall/message/edit/cancel');
 	},
 	
 	saveEdit: function(e) {
@@ -625,7 +638,7 @@ var Wall = $.createClass(Object, {
 				
 				//$('.SpeechBubble .timestamp .permalink') 
 				
-				$.tracker.byStr('wall/message/edit/save_changes');
+				this.track('wall/message/edit/save_changes');
 			})
 		});
 	},
@@ -785,41 +798,52 @@ var Wall = $.createClass(Object, {
 
 	confirmDelete: function(e) {
 		e.preventDefault();
-
-		var isreply = $(e.target).closest('.SpeechBubble').attr('is-reply');
+		var target = $(e.target);
+		var isreply = target.closest('.SpeechBubble').attr('is-reply');
 		var msg;
 		if(isreply) {
 			msg = $.msg('wall-delete-confirm');
 		} else {
 			msg = $.msg('wall-delete-confirm-thread');
 		}
-		$.confirm({
-			title: $.msg('wall-delete-title'),
-			content: msg,
-			cancelMsg: $.msg('wall-delete-confirm-cancel'),
-			okMsg: $.msg('wall-delete-confirm-ok'),
-			onOk: function() {
-				var msg = $(e.target).closest('li.message');
-				var id = msg.attr('data-id');
-				$.nirvana.sendRequest({
-					controller: 'WallExternalController',
-					method: 'removeMessage',
-					format: 'json',
-					data: {
-						msgid: id,
-						username: this.username
-					},
-					callback: function(data) {
-						if( data.status ) msg.fadeOut('fast', function() { msg.remove(); });
-						//click tracking
-						$.tracker.byStr('wall/message/delete');
-					}
-
-				});
+		
+		var wallMsg = target.closest('li.message');
+		var id = wallMsg.attr('data-id');
+		
+		if(window.skin && window.skin == "monobook") {
+			var answer = confirm(msg);
+			if(answer){
+				this.doDelete(id, wallMsg);
 			}
-
+		} else {
+			$.confirm({
+				title: $.msg('wall-delete-title'),
+				content: msg,
+				cancelMsg: $.msg('wall-delete-confirm-cancel'),
+				okMsg: $.msg('wall-delete-confirm-ok'),
+				onOk: this.proxy(function() {
+					this.doDelete(id, wallMsg );
+				})
+	
+			});
+		}
+	},
+	
+	doDelete: function(id, msg){
+		$.nirvana.sendRequest({
+			controller: 'WallExternalController',
+			method: 'removeMessage',
+			format: 'json',
+			data: {
+				msgid: id,
+				username: this.username
+			},
+			callback: this.proxy(function(data) {
+				if( data.status ) msg.fadeOut('fast', function() { msg.remove(); });
+				//click tracking
+				this.track('wall/message/delete');
+			})
 		});
-		e.preventDefault();
 	},
 	
 	track: function(url) {

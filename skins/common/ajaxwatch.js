@@ -110,11 +110,19 @@ wgAjaxWatch.processResult = function(request) {
 		wgAjaxWatch.setLinkText(wgAjaxWatch.unwatchMsg);
 		wgAjaxWatch.setLinkID("ca-unwatch");
 		wgAjaxWatch.setHref( 'unwatch' );
+		
+		var event = jQuery.Event("afterWatching");
+		$("#WikiaArticle").trigger(event);
+		
 	} else if( response.match(/^<u#>/) ) {
 		wgAjaxWatch.watching = false;
 		wgAjaxWatch.setLinkText(wgAjaxWatch.watchMsg);
 		wgAjaxWatch.setLinkID("ca-watch");
 		wgAjaxWatch.setHref( 'watch' );
+		
+		var event = jQuery.Event("afterUnwatching");
+		$("#WikiaArticle").trigger(event);
+		
 	} else {
 		// Either we got a <err#> error code or it just plain broke.
 		window.location.href = wgAjaxWatch.watchLinks[0].href;

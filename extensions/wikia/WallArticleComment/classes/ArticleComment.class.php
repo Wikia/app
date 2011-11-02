@@ -316,7 +316,7 @@ class ArticleComment {
 
 			//due to slave lag canEdit() can return false negative - we are hiding it by CSS and force showing by JS
 			if ( $wgUser->isLoggedIn() && $commentingAllowed && !ArticleCommentInit::isFbConnectionNeeded() ) {
-				$display = $this->canEdit() ? '' : ' style="display:none"';
+				$display = $this->canEdit() ? 'test=' : ' style="display:none"';
 				$img = '<img class="edit-pencil sprite" alt="" src="' . $wgBlankImgUrl . '" width="16" height="16" />';
 				$buttons[] = "<span class='edit-link'$display>" . $img . '<a href="#comment' . $articleId . '" class="article-comm-edit" id="comment' . $articleId . '">' . wfMsg('article-comments-edit') . '</a></span>';
 			}
@@ -495,8 +495,9 @@ class ArticleComment {
 
 		$res = false;
 		$isAuthor = false;
-		if ( $this->mUser ) {
-			$isAuthor = $this->mUser->getId() == $wgUser->getId() && !$wgUser->isAnon();
+
+		if ( $this->mFirstRevision ) {
+			$isAuthor = $this->mFirstRevision->getId() == $wgUser->getId() && !$wgUser->isAnon();
 		}
 		
 		$canEdit =
@@ -506,7 +507,7 @@ class ArticleComment {
 		
 		$isAllowed = $wgUser->isAllowed('commentedit');
 
-		$res = ( $this->isAuthor($wgUser) || $isAllowed ) && $canEdit;
+		$res = $isAuthor || ( $isAllowed && $canEdit );
 
 		return $res;
 	}

@@ -10,12 +10,10 @@
 	</div>
 	<blockquote class="speech-bubble-message">
 		<? if(!$isreply): ?>
-			<?php if($showFallowButton): ?>
-				<?php if($isWatched): ?>	
-					<a data-iswatched="1" class="follow wikia-button"><?= wfMsg('wall-message-following'); ?></a>
-				<?php else: ?>	
-					<a data-iswatched="0" class="follow wikia-button secondary"><?= wfMsg('wall-message-follow'); ?></a>
-				<?php endif;?>
+			<?php if($isWatched): ?>	
+				<a <?php if(!$showFallowButton): ?>style="display:none"<?php endif;?> data-iswatched="1" class="follow wikia-button"><?= wfMsg('wall-message-following'); ?></a>
+			<?php else: ?>	
+				<a <?php if(!$showFallowButton): ?>style="display:none"<?php endif;?> data-iswatched="0" class="follow wikia-button secondary"><?= wfMsg('wall-message-follow'); ?></a>
 			<?php endif;?>
 			<div class="msg-title"><a href="<?= $fullpageurl; ?>"><? echo $feedtitle ?></a></div>
 		<? endif; ?>

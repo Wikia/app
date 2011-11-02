@@ -95,3 +95,11 @@
 	left: 0px;
 	background: none;
 }
+
+.SpeechBubble.message .timestamp{
+	float: left;
+}
+
+.SpeechBubble.message .buttons{
+	text-align: right;
+}

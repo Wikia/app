@@ -43,13 +43,17 @@ class WallMessage {
 	}
 	
 	public function getWallOwner() {
-		$wall_owner = User::newFromName($this->getArticleComment()->getArticleTitle()->getBaseText(), false);
+		$wall_owner = User::newFromName($this->getWallTitle()->getBaseText(), false);
 		if(empty($wall_owner)) {
 			error_log('EMPTY_WALL_OWNER: (id)'. $this->getArticleComment()->getArticleTitle()->getArticleID());
 			error_log('EMPTY_WALL_OWNER: (basetext)'. $this->getArticleComment()->getArticleTitle()->getBaseText());
 			error_log('EMPTY_WALL_OWNER: (fulltext)'. $this->getArticleComment()->getArticleTitle()->getFullText());
 		}
 		return $wall_owner;
+	}
+	
+	public function getWallTitle(){
+		return $this->getArticleComment()->getArticleTitle(); 
 	}
 	
 	public function getArticleTitle(){ 
@@ -120,6 +124,10 @@ class WallMessage {
 	
 	public function isAuthor(User $user){
 		return $this->getArticleComment()->isAuthor($user);
+	}
+	
+	public function isWallWatched(User $user) {
+		return $user->isWatched( $this->getWallTitle() );
 	}
 	
 	public function isWatched(User $user) {
