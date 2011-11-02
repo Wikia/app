@@ -222,7 +222,10 @@ var WikiaQuiz = {
 			WikiaQuiz.playSound(WikiaQuiz.sound.applause);
 			// proceed to email screen when "Continue" is clicked
 			WikiaQuiz.ui.endScreen.find('.continue').click(function() {
-				WikiaQuiz.showEmail();
+				/* Skipping the email screen for now. This feature wasn't fully communicated to sales solutions.
+				 * WikiaQuiz.showEmail();
+				 */
+				WikiaQuiz.showThanks();
 			});
 		});
 	},
@@ -263,7 +266,12 @@ var WikiaQuiz = {
 	// show thank you screen (the last one)
 	showThanks: function() {
 		WikiaQuiz.trackByStr('endscreen');
-		WikiaQuiz.ui.emailScreen.fadeOut(WikiaQuiz.animationTiming, function() {
+		/* Skipping the email screen for now. This feature wasn't fully communicated to sales solutions.
+		 * Replace fadeout of emailScreen with endScreen.
+		 * WikiaQuiz.ui.emailScreen.fadeOut(WikiaQuiz.animationTiming, function() {
+		 */
+		WikiaQuiz.ui.endScreen.fadeOut(WikiaQuiz.animationTiming, function() {
+
 			WikiaQuiz.ui.thanksScreen.fadeIn(WikiaQuiz.animationTiming, function() {
 				WikiaQuiz.ui.thanksScreen.find('.more-info').click(function() {
 					WikiaQuiz.trackByStr('moreinfo');
