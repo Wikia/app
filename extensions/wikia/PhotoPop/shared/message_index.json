@@ -20,5 +20,9 @@
 	"photopop-game-tutorial-intro",
 	"photopop-game-tutorial-continue",
 	"photopop-game-tutorial-drawer",
-	"photopop-game-tutorial-tile"
+	"photopop-game-tutorial-tile",
+	"photopop-game-new-highscore",
+	"photopop-game-loading-image",
+	"photopop-game-paused",
+	"photopop-game-loading-assets"
 ]

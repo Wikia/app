@@ -2,8 +2,8 @@ var exports = exports || {};
 
 define.call(exports, {
 	centralDomain: 'community.wikia.com',
-	testDomain: 'federico.wikia-dev.com',//comment out or set to null/false before release
-	
+	testDomain: 'jolek.wikia-dev.com',//comment out or set to null/false before release
+
 	images: {
 		PHOTOPOP_LOGO: "logo_photopop",
 		POWERED_BY_LOGO: "logo_wikia",
@@ -32,7 +32,7 @@ define.call(exports, {
 		tutorial_4: 'tutorial_4.jpeg',
 		tutorial_5: 'tutorial_5.jpeg'
 	},
-	
+
 	sounds: {
 		fail: "Sad-Trombone",
 		pop: "FingerPlop4",
@@ -40,7 +40,7 @@ define.call(exports, {
 		timeLow: "CountdowntoBlastOff",
 		wrongAnswer: "tubePop"
 	},
-	
+
 	tutorial:[
 		{
 			image: 'tutorial_1',

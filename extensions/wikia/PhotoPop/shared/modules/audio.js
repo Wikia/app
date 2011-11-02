@@ -12,18 +12,18 @@ define.call(exports, [
 		prefix = ((isApp) ? '' : "extensions/wikia/PhotoPop/") + "shared/audio/",
 		path,
 		audioFiles = settings.sounds;
-		
+
 		function getMute(){
 			return mute;
 		}
-		
+
 		data.storage.addEventListener({name: "get", key: "mute"}, function(event) {
 			mute = event.value || false;
 		});
 		data.storage.get('mute');
-		
+
 		for(var p in audioFiles){
-			path = prefix + audioFiles[p] + ".wav";
+			path = prefix + audioFiles[p] + ".mp3";
 			sounds[p] = (isApp) ? path : new Audio(path);
 		}
 

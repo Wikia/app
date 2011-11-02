@@ -67,6 +67,7 @@ body{
 
 #homeScreen{
 	background: #00396D;
+	box-shadow: black 0 0 20px inset;
 	background-image: url("shared/imagesphotopop_background_tile.png");
 	background-image: url("../images/photopop_background_tile.png");
 }
@@ -238,9 +239,9 @@ body{
 	width:100%;
 	text-align:left;
 	background-color: rgba(0, 0, 0, 0.4);
-	background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.4) 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.4))); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.4) 100%); /* Chrome10+,Safari5.1+ */
+	background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.8))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.8) 100%); /* Chrome10+,Safari5.1+ */
 	height: 24px;
 	z-index:22;
 	-webkit-transition: all .5s  ease-in;
@@ -318,6 +319,7 @@ body{
 
 #scoreBarWrapper{
 	position:absolute;
+	box-shadow: black 0px 0px 15px inset;
 	left: 0;
 	top: 0;
 	height: 100%;
@@ -516,23 +518,28 @@ body{
 	left: 0;
 	height: 100%;
 	width: 100%;
-	z-index: 99;
+	z-index: 9999999999;
+	text-align: center;
+}
+
+#modalWrapper:before {
+	content: '';
+	display: inline-block;
+	height: 100%;
+	vertical-align: middle;
+	margin-right: -0.25em;
 }
 
 #modal {
-	position:absolute;
+	display: inline-block;
+	vertical-align: middle;
 	color: #00396D;
-	font-size: xx-large;
+	font-size: x-large;
 	padding: 10px;
-	top: 50%;
-	left: 50%;
-	width: 250px;
-	margin-left: -125px;
-	height: 150px;
-	margin-top: -75px;
-	opacity: 0;
+	opacity: .8;
 	background-color: white;
 	border-radius: 15px;
+	max-width: 70%;
 }
 
 #modal.triangle:after {
@@ -558,31 +565,61 @@ body{
 	border-right-color: white;
 	border-width: 30px 30px 30px 0;
 	left: -40px;
+}
 
+#jobProgress {
+	display: none;
+}
+
+#jobProgress.visible {
+	display: block;
+}
+
+#progressBarWrapper {
+	width: 80%;
+	min-width: 200px;
+	height: 30px;
+	margin: 30px auto;
+}
+
+#progressBar {
+	height: 100%;
+	width: 0;
+	float: left;
+	background: rgb(169,3,41); /* Old browsers */
+	background: -moz-linear-gradient(top, rgba(169,3,41,1) 0%, rgba(143,2,34,1) 44%, rgba(109,0,25,1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(169,3,41,1)), color-stop(44%,rgba(143,2,34,1)), color-stop(100%,rgba(109,0,25,1))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, rgba(169,3,41,1) 0%,rgba(143,2,34,1) 44%,rgba(109,0,25,1) 100%); /* Chrome10+,Safari5.1+ */
+	opacity: .9;
+	border-radius: 5px;
 }
 
 /**highscore**/
 #highscoreScreen {
 	background-color: #00396D;
 	display: none;
-
+	box-shadow: black 0 0 20px inset;
+	background-image: url("shared/imagesphotopop_background_tile.png");
+	background-image: url("../images/photopop_background_tile.png");
 }
 
 #highscoreScreen h1 {
 	color: white;
 	text-align: center;
 	margin: 0;
+	padding: 10px;
 }
 
 #highscoreScreen table {
-	width: 100%;
+	width: 90%;
+	margin: 10px auto;
 }
 
 #goBack {
 	position: absolute;
 	bottom: 0;
 	left: 0;
-	padding: 5px;
+	padding: 10px;
 }
 
 #highscoreScreen tr {
@@ -592,5 +629,9 @@ body{
 }
 
 #highscoreScreen tr:first-of-type {
-	color: green;
+	color: #89C440;
+}
+
+#highscoreScreen tr:nth-of-type(even) {
+	background-color: rgb(0, 80, 120);
 }
