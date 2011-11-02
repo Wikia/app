@@ -75,7 +75,7 @@ define.call(exports, function(){
 			return this._parent.getElement();
 		},
 
-		init: function(mute) {
+		init: function() {
 			this._barWrapperHeight = document.getElementById('PhotoPopWrapper').clientHeight;
 
 			this.addEventListener('prepareGameScreen', this.prepareGameScreen);
@@ -296,20 +296,18 @@ define.call(exports, function(){
 		revealAll: function(correct) {
 			var tds = document.getElementsByTagName('td'),
 			tdLength = tds.length,
-			tdArray = Array.prototype.slice.call(tds),
 			next = 0,
 			self = this,
-			td;
-			tdArray.shuffle();
-			var t = setInterval(function() {
-				td = tdArray[next++];
+			td,
+			t = setInterval(function() {
+				td = tds[next++];
 				td.style.left = "-400px";
 				td.clicked = true;
 				if(next == tdLength) {
 					clearInterval(t);
 					self.showContinue(correct);
 				}
-			}, 50);
+			}, 5);
 
 		},
 
@@ -337,7 +335,7 @@ define.call(exports, function(){
 						self.updateHudScore(options.totalPoints);
 						setTimeout(function() {self.fire('maskDisplayed');}, 400);
 					}
-				}, 100);
+				}, 1);
 			}
 
 		},
@@ -498,17 +496,19 @@ define.call(exports, function(){
 		openHighscore: function(event, highscore) {
 			Wikia.log('games: Highscore - ' + highscore);
 			var trs = document.getElementById('highscoreScreen').getElementsByTagName('tr');
-			if(highscore) {
+			if(highscore.length > 0) {
 				for(var i = 0, l = highscore.length; i < l; i++ ) {
 					var tr = trs[i+1],
-					tds = tr.getElementsByTagName('td');
+					tds = tr.getElementsByTagName('td'),
+					date = highscore[i].date;
+
 					tds[0].innerHTML = (i+1);
 					tds[1].innerHTML = highscore[i].wiki;
-					tds[2].innerHTML = highscore[i].date;
+					tds[2].innerHTML = date[0] + ' ' + Wikia.i18n.Msg('photopop-game-month-'+ date[1]) + ' ' + date[2];
 					tds[3].innerHTML = highscore[i].score;
 				};
 			} else {
-				trs[1].getElementsByTagName('td')[2].innerHTML = "No Data. Play a game!"
+				trs[1].getElementsByTagName('td')[2].innerHTML = Wikia.i18n.Msg('photopop-game-no-highscore');
 			}
 
 		}

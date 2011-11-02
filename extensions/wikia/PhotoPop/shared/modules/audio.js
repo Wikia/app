@@ -17,15 +17,18 @@ define.call(exports, [
 			return mute;
 		}
 
-		data.storage.addEventListener({name: "get", key: "mute"}, function(event) {
-			mute = event.value || false;
-		});
-		data.storage.get('mute');
-
 		for(var p in audioFiles){
 			path = prefix + audioFiles[p] + ".mp3";
 			sounds[p] = (isApp) ? path : new Audio(path);
 		}
+
+		data.storage.addEventListener({name: "get", key: "mute"}, function(event, options) {
+			mute = options.value || mute;
+			for(var sound in sounds){
+				sounds[sound].muted = mute;
+			}
+		});
+		data.storage.get('mute');
 
 		return {
 			play: function(sound) {
@@ -44,13 +47,12 @@ define.call(exports, [
 
 			setMute: function(flag) {
 				mute = flag;
+				data.storage.set('mute', flag);
 
 				for(var sound in sounds){
-					sounds[sound].muted = mute;
+					sounds[sound].muted = flag;
 				}
-
-				data.storage.set('mute', mute);
-				return mute;
+				return flag;
 			},
 
 			getMute: function(){

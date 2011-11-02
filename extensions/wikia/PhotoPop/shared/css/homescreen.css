@@ -615,23 +615,28 @@ body{
 	margin: 10px auto;
 }
 
-#goBack {
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	padding: 10px;
-}
-
 #highscoreScreen tr {
 	color: white;
 	font-size: x-large;
 	text-align: center;
+	height: 28px;
 }
 
 #highscoreScreen tr:first-of-type {
 	color: #89C440;
 }
+#highscoreScreen td:first-of-type {
+	width: 20px;
+}
+
 
 #highscoreScreen tr:nth-of-type(even) {
-	background-color: rgb(0, 80, 120);
+	background-color: rgba(0, 80, 120, 0.4);
+}
+
+#goBack {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	padding: 15px;
 }

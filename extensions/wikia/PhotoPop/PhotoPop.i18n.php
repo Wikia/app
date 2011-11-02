@@ -64,7 +64,9 @@ $messages['en'] = array(
 	'photopop-game-month-8' => 'Sep',
 	'photopop-game-month-9' => 'Oct',
 	'photopop-game-month-10' => 'Nov',
-	'photopop-game-month-11' => 'Dec'
+	'photopop-game-month-11' => 'Dec',
+	'photopop-game-no-highscore' => 'No highscores'
+
 );
 
 /** Message documentation (Message documentation) */
