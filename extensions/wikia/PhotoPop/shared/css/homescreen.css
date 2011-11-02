@@ -499,8 +499,6 @@ body{
 #tilesWrapper {
 	height: 100%;
 	width: 100%;
-	top:-2px;
-	left:-2px;
 	z-index:21;
 }
 #tilesWrapper div {

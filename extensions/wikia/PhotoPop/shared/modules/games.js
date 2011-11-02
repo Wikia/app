@@ -135,12 +135,12 @@ define.call(exports, ['modules/data'], function(data){
 		},
 
 		prepareTiles: function() {
-			var tds = document.getElementsByTagName('td'),
-			tdsLength = tds.length,
+			var divs = document.getElementById('tilesWrapper').getElementsByTagName('div'),
+			divsLength = divs.length,
 			self = this;
 
-			for(var i = 0; i < tdsLength; i++) {
-				tds[i].onclick = function() {
+			for(var i = 0; i < divsLength; i++) {
+				divs[i].onclick = function() {
 					self.handlePause(false);
 					self.fire('tileClicked', this)
 				}
