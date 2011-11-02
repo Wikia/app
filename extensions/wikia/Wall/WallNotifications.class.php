@@ -77,6 +77,7 @@ class WallNotifications {
 	}
 
 	public function addNotification(RecentChange $RC) {
+		
 		$rev = Revision::newFromId($RC->getAttribute('rc_this_oldid'));
 		$notif = F::build('WallNotificationEntity', array($rev, $this->app->wg->CityId), 'createFromRev');
 		if(!empty($notif)) {
@@ -428,6 +429,6 @@ class WallNotifications {
 	}
 	
 	public function getKey( $userId, $wikiId ){
-		return $this->app->runFunction( 'wfSharedMemcKey', __CLASS__, $userId, $wikiId. 'v21' );
+		return $this->app->runFunction( 'wfSharedMemcKey', __CLASS__, $userId, $wikiId. 'v20' );
 	}
 }

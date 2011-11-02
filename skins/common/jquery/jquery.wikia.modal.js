@@ -113,7 +113,9 @@ $.fn.extend({
 		wrapper.log('makeModal: #' + id);
 
 		// hide ads
-		$.hideAds();
+		if($.hideAds) {
+			$.hideAds();			
+		}
 
 		// get rid of tooltip - remove title attr
 		this.removeAttr('title');

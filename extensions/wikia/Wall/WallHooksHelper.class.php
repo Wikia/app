@@ -140,7 +140,7 @@ class WallHooksHelper {
 		
 				$contentActions = array();
 				
-				if($app->wg->User->getName() != $title->getBaseText()){
+				if($app->wg->User->getName() != $title->getBaseText() && !$title->isSubpage()){
 					if(isset($contentActionsOld['watch'])){
 						$contentActions['watch'] = $contentActionsOld['watch'];
 					}

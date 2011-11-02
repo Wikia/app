@@ -176,7 +176,7 @@
 			if (is_null(self::$skinData)) {
 				global $wgSkin;
 				self::$skinData = array(
-					'content_actions' => $wgSkin->buildContentActions(),
+					'content_actions' => $wgSkin->buildContentActionUrls(),
 					'nav_urls' => $wgSkin->buildNavUrls(),
 				);
 			}
