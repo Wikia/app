@@ -1,7 +1,7 @@
 <?php
 
 class AnalyticsProviderExelate implements iAnalyticsProvider {
-	function getSetupHtml() {
+	function getSetupHtml($params=array()) {
 		return null;
 	}
 

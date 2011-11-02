@@ -5,7 +5,7 @@ class AnalyticsProviderComscore implements iAnalyticsProvider {
 	private static $COMSCORE_KEYWORD_KEYNAME = 'comscorekw';
 	private static $PARTNER_ID = 6177433;
 
-	function getSetupHtml(){
+	function getSetupHtml($params=array()){
 		return null;
 	}
 

@@ -90,12 +90,18 @@ class SkinWikiaApp extends SkinTemplate {
 		global $wgCityId, $wgRightsUrl;
 		
 		$data = '';
+	
+		// Comscore
+		$data .= AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
+		
+		// Quantcast
+		$data .= AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW, array(), array('extraLabels'=>array('mobileapp')));
 		
 		// load Google Analytics code
 		$data .= AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
 
 		// onewiki GA
-		$data .= AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId));
+		$data .= AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId));		
 		
 		return $data;
 	}

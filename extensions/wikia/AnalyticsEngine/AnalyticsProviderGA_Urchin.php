@@ -2,7 +2,7 @@
 
 class AnalyticsProviderGA_Urchin implements iAnalyticsProvider {
 
-	public function getSetupHtml(){
+	public function getSetupHtml($params=array()){
 		global $wgProto;
 
 		static $called = false;
