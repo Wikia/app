@@ -264,7 +264,7 @@ class WallHooksHelper {
 		
 		if( !empty($personalUrls['mytalk']) ) {
 			unset($personalUrls['mytalk']);
-		}	
+		}
 		
 		$userWallTitle = $this->getWallTitle();
 		
