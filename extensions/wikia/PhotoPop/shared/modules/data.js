@@ -1,6 +1,6 @@
 var exports = exports || {};
 
-define.call(exports, function(){
+define.call(exports, ['modules/settings'],function(settings){
 	var Storage = my.Class({
 		constructor: function(){
 			Observe(this);

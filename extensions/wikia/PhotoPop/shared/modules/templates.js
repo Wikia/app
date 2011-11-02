@@ -28,18 +28,50 @@ define.call(exports, {
 			</div>\
 			<div id='highscoreScreen' class='screen'>\
 				<h1>"+Wikia.i18n.Msg('photopop-game-highscores')+"</h1>\
-				<table><tr>\
-				<th> </th>\
-				<th>"+Wikia.i18n.Msg('photopop-game-wiki')+"</th>\
-				<th>"+Wikia.i18n.Msg('photopop-game-date')+"</th>\
-				<th>"+Wikia.i18n.Msg('photopop-game-score')+"</th>\
-				<tr></table>\
+				<table>\
+				<tr>\
+					<td></td>\
+					<td>"+Wikia.i18n.Msg('photopop-game-wiki')+"</td>\
+					<td>"+Wikia.i18n.Msg('photopop-game-date')+"</td>\
+					<td>"+Wikia.i18n.Msg('photopop-game-score')+"</td>\
+				</tr>\
+				<tr>\
+					<td></td>\
+					<td></td>\
+					<td></td>\
+					<td></td>\
+				</tr>\
+				<tr>\
+					<td></td>\
+					<td></td>\
+					<td></td>\
+					<td></td>\
+				</tr>\
+				<tr>\
+					<td></td>\
+					<td></td>\
+					<td></td>\
+					<td></td>\
+				</tr>\
+				<tr>\
+					<td></td>\
+					<td></td>\
+					<td></td>\
+					<td></td>\
+				</tr>\
+				<tr>\
+					<td></td>\
+					<td></td>\
+					<td></td>\
+					<td></td>\
+				</tr>\
+				</table>\
 				<div id='goBack'>\
 					<img src='{{#image}}buttonSrc_home{{/image}}'/>\
 				</div>\</div>\
 			<div id='gameScreen' class='screen'>\
 				<div id='scoreBarWrapper'>\
-				<div id='scoreBar'></div>\
+				<div id='scoreBar' class='transition-all'></div>\
 			</div>\
 			<div id='bgWrapper'>\
 				<div id='bgPic'><img/></div>\
@@ -102,9 +134,15 @@ define.call(exports, {
 					</div>\
 				</div>\
 				<table id='tilesWrapper'></table>\
-				<div id='modalWrapper'><div id='modal'></div></div>\
 			</div>\
 			</div>\
+			<div id='modalWrapper'><div id='modal'>\
+				<span id='modalText'></span>\
+				<div id='jobProgress'>\
+					<span id='currentValue'></span>/<span id='totalValue'></span>\
+					<div id='progressBarWrapper'><div id='progressBar'></div></div>\
+				</div>\
+			</div></div>\
 		</div>",
 
 	gameSelector:

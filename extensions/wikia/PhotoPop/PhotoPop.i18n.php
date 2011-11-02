@@ -31,7 +31,7 @@ $messages['en'] = array(
 	'photopop-game-correct' => 'Correct',
 	'photopop-game-points' => 'points',
 	'photopop-game-total' => 'total',
-	'photopop-game-score' => 'score',
+	'photopop-game-score' => 'Score',
 	'photopop-game-wiki' => 'Wiki',
 	'photopop-game-date' => 'Date',
 	'photopop-game-timeup' => 'time\'s up!',
@@ -49,6 +49,22 @@ $messages['en'] = array(
 	'photopop-game-tutorial-continue' => 'After the answer is revealed tap the "next" button to continue on to a new image.',
 	'photopop-game-tutorial-drawer' => 'The fewer peek you take, the fewer guesses you make, and the less time you take, the bigger your score!',
 	'photopop-game-tutorial-tile' => 'Tap the "answer" button to make your guess.',
+	'photopop-game-new-highscore' => 'New highscore',
+	'photopop-game-loading-image' => 'Loading image... <br />Please wait',
+	'photopop-game-paused' => 'Game paused',
+	'photopop-game-loading-assets' => 'Loading game assets',
+	'photopop-game-month-0' => 'Jan',
+	'photopop-game-month-1' => 'Feb',
+	'photopop-game-month-2' => 'Mar',
+	'photopop-game-month-3' => 'Apr',
+	'photopop-game-month-4' => 'May',
+	'photopop-game-month-5' => 'Jun',
+	'photopop-game-month-6' => 'Jul',
+	'photopop-game-month-7' => 'Aug',
+	'photopop-game-month-8' => 'Sep',
+	'photopop-game-month-9' => 'Oct',
+	'photopop-game-month-10' => 'Nov',
+	'photopop-game-month-11' => 'Dec'
 );
 
 /** Message documentation (Message documentation) */

@@ -39,6 +39,11 @@ define.call(exports, function(){
 		},
 
 		show: function(){
+			if(document.getElementById('modalWrapper').screen) {
+				this._manager.reopenModal();
+			} else {
+				this._manager.hideModal();
+			}
 			this._domElement.style.display = this._origDisplay;
 			this._manager.fire('show', {id: this._screenId});
 			return this;
@@ -47,6 +52,7 @@ define.call(exports, function(){
 		getElement: function(){
 			return this._domElement;
 		}
+
 	}),
 
 	GameScreen = my.Class({
@@ -141,65 +147,6 @@ define.call(exports, function(){
 		roundStart: function(event, options) {
 			this.showMask(options);
 			this.updateHudProgress(options.currentRound, options.numRounds);
-		},
-
-		openModal: function(options) {
-			options = options || {};
-
-			var modalWrapper = document.getElementById('modalWrapper'),
-			modal = document.getElementById('modal'),
-			self = this;
-
-			if(options.fontSize) {
-				modal.style.fontSize = options.fontSize;
-			} else {
-				modal.style.fontSize = "x-large";
-			}
-
-			if(options.triangle) {
-				modal.classList.add('triangle');
-				modal.classList.add(options.triangle);
-			} else {
-				modal.classList.remove('triangle');
-			}
-
-			modalWrapper.style.visibility = 'visible';
-			modal.style.opacity = 0.8;
-
-			if( options.clickThrough ) {
-				modalWrapper.style.pointerEvents = 'none';
-				modal.style.pointerEvents = 'auto';
-			} else {
-				modalWrapper.style.pointerEvents = 'auto';
-			}
-
-			if( options.leaveBottomBar ) {
-				modalWrapper.style.top = -24;
-			} else {
-				modalWrapper.style.top = 0;
-			}
-
-			if(options.html) {
-				modal.innerHTML = options.html;
-			}
-
-			this.fire('modalOpened', {name: options.name});
-
-			if(options.closeOnClick) {
-				modalWrapper.onclick = function() {
-					self.closeModal();
-				}
-			} else {
-				modalWrapper.onclick = null;
-			}
-		},
-
-		closeModal: function() {
-			var modalWrapper = document.getElementById('modalWrapper'),
-			modal = document.getElementById('modal');
-			modal.classList.remove('triangle');
-			modal.style.opacity = 0;
-			modalWrapper.style.visibility = 'hidden';
 		},
 
 		timerEvent: function(event, percent) {
@@ -305,7 +252,7 @@ define.call(exports, function(){
 			li.className = options["class"];
 			li.clicked = true;
 			this.updateScoreBar(options.percent);
-			this.updateHudScore();
+			//this.updateHudScore();
 		},
 
 		rightAnswerClicked: function(event, correct) {
@@ -333,6 +280,8 @@ define.call(exports, function(){
 
 			scoreBarStyle.height = barHeight;
 			scoreBarStyle.backgroundColor = 'rgb('+fgr+', '+fgg+', '+fgb+')';
+			//incase we want to have gradient on scoreBar
+			//scoreBarStyle.background = '-webkit-linear-gradient(left, rgba('+fgr+', '+fgg+', '+fgb+',.5) 0%, rgba('+fgr+', '+fgg+', '+fgb+',1) 50%, rgba('+fgr+', '+fgg+', '+fgb+',.5) 100%)';
 		},
 
 		hideScoreBar: function() {
@@ -366,24 +315,31 @@ define.call(exports, function(){
 
 		showMask: function(options) {
 			this.fire('displayingMask', options);
-			var tds = document.getElementsByTagName('td'),
-			tdArray = Array.prototype.slice.call(tds),
-			tdLength = tds.length;
-			next = 0,
-			self = this;
-			tdArray.shuffle();
-			var t = setInterval(function() {
-				tdArray[next].clicked = false;
-				tdArray[next].style.left = tdArray[next].originalLeft;
-				tdArray[next].style.height = tdArray[next].originalHeight
-				next++;
-				if(next == tdLength) {
-					clearInterval(t);
-					Wikia.log('games: showMask done');
-					self.updateHudScore(options.totalPoints);
-					setTimeout(function() {self.fire('maskDisplayed');}, 400);
-				}
-			}, 100);
+			if(options.currentRound == 1) {
+				this.fire('maskDisplayed')
+			} else {
+				var tds = document.getElementsByTagName('td'),
+				tdArray = Array.prototype.slice.call(tds),
+				tdLength = tds.length;
+				next = 0,
+				self = this;
+
+				tdArray.shuffle();
+
+				var t = setInterval(function() {
+					tdArray[next].clicked = false;
+					tdArray[next].style.left = tdArray[next].originalLeft;
+					tdArray[next].style.height = tdArray[next].originalHeight
+					next++;
+					if(next == tdLength) {
+						clearInterval(t);
+						Wikia.log('games: showMask done');
+						self.updateHudScore(options.totalPoints);
+						setTimeout(function() {self.fire('maskDisplayed');}, 400);
+					}
+				}, 100);
+			}
+
 		},
 
 		hideAnswerDrawer: function(){
@@ -541,16 +497,20 @@ define.call(exports, function(){
 
 		openHighscore: function(event, highscore) {
 			Wikia.log('games: Highscore - ' + highscore);
-			var table = document.getElementById('highscoreScreen').getElementsByTagName('tbody')[0]
-			header = table.getElementsByTagName('tr')[0].innerHTML,
-				fragment = '';
-
-			for(var i = 0, l = highscore.length; i < l; i++ ) {
-				var row = '<tr><td>'+(i+1)+'.</td><td>' + highscore[i].wiki + '</td><td>' + highscore[i].date + '</td><td>' + highscore[i].score + '</td></tr>';
-				fragment += row;
+			var trs = document.getElementById('highscoreScreen').getElementsByTagName('tr');
+			if(highscore) {
+				for(var i = 0, l = highscore.length; i < l; i++ ) {
+					var tr = trs[i+1],
+					tds = tr.getElementsByTagName('td');
+					tds[0].innerHTML = (i+1);
+					tds[1].innerHTML = highscore[i].wiki;
+					tds[2].innerHTML = highscore[i].date;
+					tds[3].innerHTML = highscore[i].score;
+				};
+			} else {
+				trs[1].getElementsByTagName('td')[2].innerHTML = "No Data. Play a game!"
 			}
 
-			table.innerHTML = header + fragment;
 		}
 	}),
 
@@ -562,6 +522,96 @@ define.call(exports, function(){
 
 		get: function(id){
 			return screens[id] = screens[id] || new Screen(id, this);
+		},
+
+		openModal: function(options, screen) {
+			options = options || {};
+
+			var modalWrapper = document.getElementById('modalWrapper'),
+			modal = document.getElementById('modal'),
+			self = this,
+			html;
+
+			if(options.fontSize) {
+				modal.style.fontSize = options.fontSize;
+			} else {
+				modal.style.fontSize = "x-large";
+			}
+
+			if(options.triangle) {
+				modal.classList.add('triangle');
+				modal.classList.add(options.triangle);
+			} else {
+				modal.classList.remove('triangle');
+			}
+
+
+			if( options.clickThrough ) {
+				modalWrapper.style.pointerEvents = 'none';
+				modal.style.pointerEvents = 'auto';
+			} else {
+				modalWrapper.style.pointerEvents = 'auto';
+			}
+
+			if( options.leaveBottomBar ) {
+				modalWrapper.style.top = -24;
+			} else {
+				modalWrapper.style.top = 0;
+			}
+
+			if(options.html) {
+				document.getElementById('modalText').innerHTML = options.html;
+			} else {
+				document.getElementById('modalText').innerHTML = "";
+			}
+
+			if(options.progress) {
+				document.getElementById('jobProgress').classList.add('visible');
+				document.getElementById('sliderWrapper').style.bottom = -200;
+			} else {
+				document.getElementById('jobProgress').classList.remove('visible');
+			}
+
+			modalWrapper.style.visibility = 'visible';
+			modalWrapper.state = true;
+
+			this.fire('modalOpened', {name: options.name});
+
+			if(options.closeOnClick) {
+				modalWrapper.onclick = function() {
+					self.closeModal();
+				}
+			} else {
+				modalWrapper.onclick = null;
+			}
+		},
+
+		closeModal: function() {
+			var modalWrapper = document.getElementById('modalWrapper'),
+			modal = document.getElementById('modal');
+			modal.classList.remove('triangle');
+			document.getElementById('modalText').innerHTML = "";
+			modalWrapper.style.visibility = 'hidden';
+			modalWrapper.screen = false;
+		},
+
+		updateModalProgress: function(value, total) {
+			if(value <= total) {
+				document.getElementById('currentValue').innerHTML = value;
+				document.getElementById('totalValue').innerHTML = total;
+				document.getElementById('progressBar').style.width = document.getElementById('progressBarWrapper').offsetWidth / (total/value);
+				document.getElementById('sliderWrapper').style.bottom = (-200 + (value/total)*200) | 0;
+			} else {
+
+			}
+		},
+
+		reopenModal: function() {
+			document.getElementById('modalWrapper').style.visibility = 'visible';
+		},
+
+		hideModal: function() {
+			document.getElementById('modalWrapper').style.visibility = 'hidden';
 		},
 
 		getScreenIds: function() {

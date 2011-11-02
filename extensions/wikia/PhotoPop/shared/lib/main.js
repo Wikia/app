@@ -23,6 +23,7 @@
 			currentGame,
 			Game = games.Game,
 			muteButton,
+			mute = false,
 			imgPath,
 			img = new Image(),
 			imagePreloaded = false,
@@ -47,13 +48,8 @@
 
 				});
 
-				//highscore
-				//if(!store.get('highScore_' + gameId)) store.set('highScore_' + gameId, 0);
-
-				//document.getElementById('highScore').getElementsByTagName('span')[0].innerHTML = store.get('highScore_' + gameId);
-
 				if(gameId == 'tutorial' && !tutorialSteps['intro']) {
-					screens.get('game').openModal({
+					screens.openModal({
 						name: 'intro',
 						html: Wikia.i18n.Msg('photopop-game-tutorial-intro'),
 						fade: true,
@@ -62,10 +58,6 @@
 					});
 					tutorialSteps['intro'] = true;
 				}
-
-				document.getElementById('goBack').onclick = function(){
-					screens.get('home').show();
-				};
 			}
 
 			function loadSelectedGame(){
@@ -87,20 +79,27 @@
 					item;
 
 					for(var p in gamesData){
-						var game = gamesData[p],
-						gameData = store.get(game.id);
+						var game = gamesData[p];
 
-						if(!game.thumbnail)
-							game.thumbnail = graphics.getAsset('gameicon_default');
+						data.storage.addEventListener({name: 'get', key: game.id}, function(event, options) {
+							gameData = options.value;
 
-						if(gameData) {
-							game.round = gameData._currentRound;
-							game.correct = gameData._numCorrect;
-							game.totalPoints = gameData._totalPoints;
-							game.roundPoints = gameData._roundPoints;
-						}
+							if(!game.thumbnail)
+								game.thumbnail = graphics.getAsset('gameicon_default');
 
-						templateVars.games.push(game);
+							if(gameData) {
+								game.round = gameData._currentRound;
+								game.correct = gameData._numCorrect;
+								game.totalPoints = gameData._totalPoints;
+								game.roundPoints = gameData._roundPoints;
+							}
+
+							templateVars.games.push(game);
+						});
+
+						data.storage.get(game.id);
+
+
 					}
 
 					document.getElementById('sliderContent').innerHTML = Mustache.to_html(templates.gameSelector, templateVars);
@@ -135,19 +134,27 @@
 				};
 
 				document.getElementById('button_tutorial').onclick = function(){
+					screens.closeModal();
 					runGame('tutorial');
 				};
 
 				document.getElementById('button_scores').onclick = function(){
 					openHighscore();
 				};
+
+				document.getElementById('goBack').onclick = function(){
+					screens.get('home').show();
+				};
 			}
 
 			function modalOpened(event, options){
-				currentGame.fire('modalOpened', options);
+				if(currentGame) {
+					currentGame.fire('modalOpened', options);
+				}
 			}
 
 			function wrongAnswerClicked(event, options){
+				console.log(options);
 				screens.get('game').fire('wrongAnswerClicked', {
 					"class" : Game.INCORRECT_CLASS_NAME,
 					li: options.li,
@@ -158,7 +165,7 @@
 
 			function rightAnswerClicked(event, correct){
 				if(currentGame.getId() == 'tutorial' && !tutorialSteps['continue']) {
-					screens.get('game').openModal({
+					screens.openModal({
 						name: 'continue',
 						html: Wikia.i18n.Msg('photopop-game-tutorial-continue'),
 						fade: true,
@@ -175,7 +182,7 @@
 				screens.get('game').fire('answerDrawerButtonClicked');
 
 				if(currentGame.getId() == 'tutorial' && !tutorialSteps['drawer']){
-					screens.get('game').openModal({
+					screens.openModal({
 						name: 'drawer',
 						html: Wikia.i18n.Msg('photopop-game-tutorial-drawer'),
 						fade: true,
@@ -198,40 +205,42 @@
 
 			function endGame(event, options){
 				screens.get('game').fire('endGame', options);
+
 				store.remove(currentGame.getId());
 				currentGame = null;
 
 				var score = options.totalPoints;
+				if(highscore) {
+					if(score > highscore[highscore.length-1].score){
+						var date = new Date();
+						highscore.push({
+							score: score,
+							date: date.getDate() + '-' + Wikia.i18n.Msg('photopop-game-month-'+ date.getMonth()) + '-' + date.getFullYear(),
+							wiki: options.gameId
+						});
 
-				if(score > highscore[highscore.length-1].score){
-					var date = new Date();
-					highscore.push({
-						score: score,
-						date: date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear(),
-						wiki: options.gameId
-					});
+						highscore.sort(function(a,b) {
+							return a.score < b.score;
+						});
 
-					highscore.sort(function(a,b) {
-						return a.score < b.score;
-					});
-
-					highscore = highscore.slice(0, 5);
+						highscore = highscore.slice(0, 5);
+					}
 				}
 
-				if(score > highscore[0].score) {
+				if(!highscore || score > highscore[0].score) {
 					document.getElementById('highScore').getElementsByTagName('span')[0].innerHTML = score;
-					screens.get('game').openModal({
+					screens.openModal({
 						name: 'highscore',
-						html: 'New highscore: ' + score + ' !',
+						html: Wikia.i18n.Msg('photopop-game-new-highscore') + score + ' !',
 						clickThrough: false,
 						closeOnClick: true
 					});
 				}
 
-				store.set('highscore', highscore);
+				data.storage.set('highscore', highscore);
 
 				if(options.gameId == 'tutorial') {
-					store.set('tutorialPlayed', true);
+					data.storage.set('tutorialPlayed', true);
 				}
 			}
 
@@ -251,22 +260,22 @@
 			function displayingMask(event, options){
 				//preloading an image
 				img.src = (currentGame.getId() == 'tutorial') ? graphics.getAsset(options.image) : graphics.getPicture(options.image);
+				screens.get('game').getElement().style.pointerEvents = 'none';
+			}
+
+			function maskDisplayed(){
+				document.getElementById('bgPic').getElementsByTagName('img')[0].src = img.src;
 
 				if(currentGame.getId() != 'tutorial'){
-					screens.get('game').openModal({
+					screens.openModal({
 						name: 'Loading Image',
-						html: 'Loading image...<br /> Please wait.',
+						html: Wikia.i18n.Msg('photopop-game-loading-image'),
 						fade: false,
 						clickThrough: false,
 						closeOnClick: false
 					});
 				}
 
-				screens.get('game').getElement().style.pointerEvents = 'none';
-			}
-
-			function maskDisplayed(){
-				document.getElementById('bgPic').getElementsByTagName('img')[0].src = img.src;
 				maskShown = true;
 				manageInteraction();
 			}
@@ -277,7 +286,7 @@
 			}
 
 			function imageLoadError() {
-				screens.get('game').openModal({
+				screens.openModal({
 					name: 'tile',
 					html: Wikia.i18n.Msg('photopop-game-image-load-error'),
 					fade: true,
@@ -288,7 +297,7 @@
 
 			function manageInteraction(){
 				if(maskShown && imagePreloaded){
-					if(currentGame.getId() != 'tutorial') screens.get('game').closeModal();
+					if(currentGame.getId() != 'tutorial') screens.closeModal();
 					screens.get('game').getElement().style.pointerEvents = 'auto';
 					imagePreloaded = maskShown = false;
 				}
@@ -300,7 +309,7 @@
 					screens.get('game').fire('tileClicked', tile);
 
 					if(currentGame.getId() == "tutorial" && !tutorialSteps['tile']){
-						screens.get('game').openModal({
+						screens.openModal({
 							name: 'tile',
 							html: Wikia.i18n.Msg('photopop-game-tutorial-tile'),
 							fade: true,
@@ -341,9 +350,9 @@
 					screens.get('game').fire('paused');
 
 					if(pauseModal){
-						screens.get('game').openModal({
+						screens.openModal({
 							name: 'pause',
-							html: 'Game paused',
+							html: Wikia.i18n.Msg('photopop-game-paused'),
 							clickThrough: false,
 							leaveBottomBar: true,
 							closeOnClick: false
@@ -353,7 +362,7 @@
 					screens.get('game').fire('resumed');
 
 					if(pauseModal)
-						screens.get('game').closeModal();
+						screens.closeModal();
 				}
 			}
 
@@ -366,7 +375,6 @@
 			}
 
 			function runGame(target){
-				var id, data, game;
 				if(target == 'tutorial') {
 					newGame({
 						_id: 'tutorial',
@@ -380,9 +388,17 @@
 						screens.get('game').show();
 					} else {
 						if(currentGame) currentGame.fire('storeData');
-						gameData = store.get(selectedGame.id);
-						//if there is already a game in localstorage start it from this data otherwise load a new one
-						(gameData)? newGame(gameData): loadSelectedGame();
+						var gameData = null;
+
+						data.storage.addEventListener({name: 'get', key: selectedGame.id}, function(event, options) {
+							gameData = options.value || gameData;
+							//if there is already a game in localstorage start it from this data otherwise load a new one
+							(gameData)? newGame(gameData): loadSelectedGame();
+						});
+
+						data.storage.get(selectedGame.id);
+
+
 					}
 				}
 			}
@@ -442,21 +458,14 @@
 			}
 
 			function initHighscore(){
-				highscore = store.get('highscore') || [];
-
-				if(!highscore.length){
-					var date = new Date();
-
-					for(var i = 0; i < 5; i++){
-						highscore.push({
-							score: 1000,
-							date: date.getDate()-1 + '-' + (date.getMonth() + 1) + '-' + date.getFullYear(),
-							wiki: 'tutorial'
-						});
+				data.storage.addEventListener({name: 'get', key: 'highscore'}, function(event, options) {
+					highscore = options.value || highscore;
+					if(highscore) {
+						document.getElementById('highScore').getElementsByTagName('span')[0].innerHTML = '200';//highscore[0].score;
 					}
+				});
 
-					store.set('highscore', highscore);
-				}
+				data.storage.get('highscore');
 			}
 
 			function openHighscore(){
@@ -465,10 +474,9 @@
 			}
 
 			function screenShown(event, data){
-				var names = screens.getScreenIds(),
-				i,l;
+				var names = screens.getScreenIds();
 
-				for(i = 0, l = names.length; i < l; i++){
+				for(var i = 0, l = names.length; i < l; i++){
 					if(data.id != names[i]) {
 						screens.get(names[i]).hide();
 					}
@@ -522,6 +530,24 @@
 
 			initHomeScreen();
 
+			//screens.openModal({
+			//	name: 'pause',
+			//	html: Wikia.i18n.Msg('photopop-game-loading-assets'),
+			//	progress: true
+			//});
+			//
+			//var i = 0;
+			//var t = setInterval(function() {
+			//	if(i <= 30) {
+			//		screens.updateModalProgress(i++, 30);
+			//	} else {
+			//		t = null;
+			//		screens.closeModal();
+			//	}
+			//
+			//	}, 400);
+
+
 			data.storage.addEventListener({name: 'get', key: 'tutorialPlayed'}, function(event, options) {
 				tutorialPlayed = options.value || tutorialPlayed;
 
@@ -531,6 +557,17 @@
 			});
 
 			data.storage.get('tutorialPlayed');
+
+			data.storage.addEventListener({name: 'get', key: 'mute'}, function(event, options) {
+				var mute = (options.value)?true:mute;
+
+				audio.setMute(mute);
+
+				screens.get('game').fire('muteButtonClicked', {mute: mute});
+				screens.get('home').fire('muteButtonClicked', {mute: mute});
+			});
+
+			data.storage.get('mute');
 		}
 	);
 })();
