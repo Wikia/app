@@ -80,7 +80,9 @@ class WallNotificationEntity {
 		
 		$ac = F::build('WallMessage', array($rev->getTitle()), 'newFromTitle' );
 		$ac->load();
-
+		
+		$app = F::app();
+		
 		$walluser = $ac->getWallOwner();
 		$authoruser = $ac->getUser();
 		
@@ -95,11 +97,17 @@ class WallNotificationEntity {
 		$this->data->rev_id = $rev->getId();
 		$this->data->timestamp = $rev->getTimestamp();
 		
-		$msg_author_realname = $authoruser->getRealName();
-		$this->data->msg_author_id = $authoruser->getId();
-		$this->data->msg_author_username = $authoruser->getName();
-
-		$this->data->msg_author_displayname = empty($msg_author_realname) ?  $this->data->msg_author_username:$msg_author_realname;
+		if( $authoruser instanceof User ) {
+			$msg_author_realname = $authoruser->getRealName();
+			$this->data->msg_author_id = $authoruser->getId();
+			$this->data->msg_author_username = $authoruser->getName();
+			$this->data->msg_author_displayname = empty($msg_author_realname) ?  $this->data->msg_author_username:$msg_author_realname;
+		} else {
+		//annon
+			$this->data->msg_author_displayname = $app->wf->Msg('oasis-anon-user');
+			$this->data->msg_author_username = $authoruser->getName();
+			$this->data->msg_author_id = 0;
+		}
 		
 		$this->data->wall_username = $walluser->getName();
 		$wall_realname = $walluser->getRealName();
@@ -116,7 +124,7 @@ class WallNotificationEntity {
 		$this->data->thread_title = '';
 		$this->data_non_cached->parent_title_dbkey = '';
 		
-		if(!empty($acParent)) {
+		if( !empty($acParent) ) {
 			$acParent->load();
 			$parentUser = $acParent->getUser();
 			
@@ -131,7 +139,7 @@ class WallNotificationEntity {
 			//then I went to Special:Log/delete and restored only its reply
 			//an edge case but it needs to be handled
 			//--nAndy
-				$this->data->parent_username = $this->data->parent_displayname = F::app()->wf->Msg('wn-a-wikia-contributor');
+				$this->data->parent_username = $this->data->parent_displayname = $app->wf->Msg('oasis-anon-user');
 				$this->data->parent_user_id = 0;
 			}
 			
