@@ -24,10 +24,6 @@ class CommunityQuiz {
     const MIN_REVISIONS = 10;
     const MAX_REVISIONS = 50;
     /**
-     * Criteria: Revisions have to be made on at least MIN_DAYS different days.
-     */
-    const MIN_DAYS = 2;
-    /**
      * DB handle
      */
     private $dbObj;
@@ -55,7 +51,10 @@ class CommunityQuiz {
         $res = $this->dbObj->select(
                 array( 'wikicities.city_list' ),
                 array( 'city_url', 'city_dbname', 'city_founding_user' ),
-                array( 'city_created BETWEEN \'' . $this->date . ' 00:00:00\' AND DATE_ADD( \'' . $this->date . ' 00:00:00\', INTERVAL ' . self::LENGTH_DAYS . ' DAY )' ),
+                array(
+                    'city_lang' => 'en',
+                    'city_created BETWEEN \'' . $this->date . ' 00:00:00\' AND DATE_ADD( \'' . $this->date . ' 00:00:00\', INTERVAL ' . self::LENGTH_DAYS . ' DAY )'
+                ),
                 __METHOD__,
                 array( 'ORDER BY city_id ASC')
         );
@@ -88,16 +87,16 @@ class CommunityQuiz {
                     $tmp->founder_edits = $revisions->cnt;
                     
                     // Revisions have to be made on at least MIN_DAYS different days.
-                    $tmp->founder_single_day = true;
+                    $tmp->founder_days_active = 0;
                     $revisions = $tmpDbObj->select(
                             'revision',
                             'DISTINCT DATE( rev_timestamp ) AS date',
                             array( 'rev_user' => $oRow->city_founding_user ),
                             __METHOD__,
-                            array( "LIMIT {self::MIN_DAYS}" )
+                            array()
                     );
-                    if ( is_object( $revisions ) && self::MIN_DAYS == $tmpDbObj->numRows( $revisions ) ) {
-                        $tmp->founder_single_day = false;
+                    if ( is_object( $revisions ) ) {
+                        $tmp->founder_days_active = $tmpDbObj->numRows( $revisions );
                     }
                     
                     // Get some additional information on the founder.
@@ -126,14 +125,14 @@ class CommunityQuiz {
             $tmpDbObj->close();
         }
         // Output as CSV
-        echo "\"#\",\"URL\",\"Edits\",\"Multiple days\",\"Founder ID\",\"Founder name\",\"Founder real name\",\"Founder email\"\n";
+        echo "\"#\",\"URL\",\"Edits\",\"Days active\",\"Founder ID\",\"Founder name\",\"Founder real name\",\"Founder email\"\n";
         foreach ( $this->output as $k => $v ) {
             printf(
                     "\"%d\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\"\n",
                     $k,
                     $v->url,
                     $v->founder_edits,
-                    (int) $v->founder_single_day,
+                    $v->founder_days_active,
                     $v->founder_id,
                     $v->founder_name,
                     $v->founder_real_name,
