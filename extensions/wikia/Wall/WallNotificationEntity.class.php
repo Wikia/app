@@ -105,7 +105,6 @@ class WallNotificationEntity {
 		} else {
 		//annon
 			$this->data->msg_author_displayname = $app->wf->Msg('oasis-anon-user');
-			$this->data->msg_author_username = $authoruser->getName();
 			$this->data->msg_author_id = 0;
 		}
 		
