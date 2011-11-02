@@ -4,7 +4,7 @@ class AnalyticsProviderQuantServe implements iAnalyticsProvider {
 
 	private $account = 'p-8bG6eLqkH6Avk';
 
-	function getSetupHtml(){
+	function getSetupHtml($params=array()){
 		global $wgProto;
 
 		static $called = false;
@@ -16,13 +16,15 @@ class AnalyticsProviderQuantServe implements iAnalyticsProvider {
 
 		$hostPrefix = ($wgProto == 'https') ? 'https://secure' : 'http://edge';
 
+		$extraLabels = !empty($params['extraLabels']) ? ','.implode(',', $params['extraLabels']) : '';
+		
 		return  '<script type="text/javascript" src="' . $hostPrefix . '.quantserve.com/quant.js"></script>' . "\n" .
 			"<script type=\"text/javascript\">/*<![CDATA[*/
 			try {
 				_qoptions = { qacct: '{$this->account}' };
 				if (cityShort != 'undefined' && cityShort) {
 					_qoptions.labels = cityShort;
-					if (wgDartCustomKeyValues != 'undefined' && wgDartCustomKeyValues) {
+					if (window.wgDartCustomKeyValues) {
 						var keyValues = wgDartCustomKeyValues.split(';');
 						for (var i=0; i<keyValues.length; i++) {
 							var keyValue = keyValues[i].split('=');
@@ -31,6 +33,7 @@ class AnalyticsProviderQuantServe implements iAnalyticsProvider {
 							}
 						}
 					}
+					_qoptions.labels += '".$extraLabels."';
 				}
 			} catch (e){
 				// Fall back to old way.

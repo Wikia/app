@@ -112,6 +112,12 @@ class SkinWikiaphone extends SkinTemplate {
 		
 		$data .= '<script>var MobileSkinData = {showtext: "'.wfMsg("mobile-show").'", hidetext:"'.wfMsg("mobile-hide").'"};</script>';
 		
+		// Comscore
+		$data .= AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
+		
+		// Quantcast
+		$data .= AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW, array(), array('extraLabels'=>array('mobilebrowser')));
+		
 		// load Google Analytics code
 		$data .= AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
 		

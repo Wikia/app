@@ -5,7 +5,7 @@ $wgExtensionCredits['other'][] = array(
 );
 
 interface iAnalyticsProvider {
-	public function getSetupHtml();
+	public function getSetupHtml($params=array());
 	public function trackEvent($eventName, $eventDetails=array());
 }
 
@@ -20,7 +20,7 @@ class AnalyticsEngine {
 
 	private $providers = array('GAT', 'GA_Urchin', 'QuantServe', 'MessageQueue');
 
-	static public function track($provider, $event, $eventDetails=array()){
+	static public function track($provider, $event, $eventDetails=array(), $setupParams=array()){
 		global $wgDevelEnvironment;
 		global $wgNoExternals, $wgRequest;
 		global $wgBlockedAnalyticsProviders;
@@ -47,7 +47,7 @@ class AnalyticsEngine {
 		}
 
 		$out = "<!-- Start for $provider, $event -->\n";
-		$out .= $AP->getSetupHtml();
+		$out .= $AP->getSetupHtml($setupParams);
 		$out .= $AP->trackEvent($event, $eventDetails) . "\n";
 		return $out;
 	}
