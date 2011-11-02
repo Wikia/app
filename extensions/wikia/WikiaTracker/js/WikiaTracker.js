@@ -170,7 +170,7 @@ WikiaTracker._userGroup = function() {
 		return this._user_group_cache;
 	}
 
-	for (i in this._groups) {
+	for (var i in this._groups) {
 		if (this.inGroup(i)) {
 			this._user_group_cache = i;
 			return i;
