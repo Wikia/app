@@ -37,8 +37,6 @@ $app->registerClass('SpecialScavengerHunt', "$dir/SpecialScavengerHunt.php");
 $app->registerClass('ScavengerHuntGame', "$dir/data/ScavengerHuntGame.class.php");
 $app->registerClass('ScavengerHuntGames', "$dir/data/ScavengerHuntGames.class.php");
 $app->registerClass('ScavengerHuntGameArticle', "$dir/data/ScavengerHuntGameArticle.class.php");
-$app->registerClass('ScavengerHuntEntry', "$dir/data/ScavengerHuntEntry.class.php");
-$app->registerClass('ScavengerHuntEntries', "$dir/data/ScavengerHuntEntries.class.php");
 $app->registerClass('ScavengerHuntFormController', "$dir/ScavengerHuntFormController.class.php");
 $app->registerClass('ScavengerHuntController', "$dir/ScavengerHuntController.class.php");
 
@@ -55,7 +53,6 @@ $app->registerHook('OpenGraphMeta:beforeCustomFields', 'ScavengerHunt', 'onOpenG
 
 // constuctors
 F::addClassConstructor( 'ScavengerHuntGames', array( 'app' => $app ) );
-F::addClassConstructor( 'ScavengerHuntEntries', array( 'app' => $app ) );
 F::addClassConstructor( 'ScavengerHuntGame', array( 'app' => $app, 'id' => 0 ) );
 
 // XXX: standard MW constructors - needed to be moved to global place

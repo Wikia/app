@@ -146,17 +146,6 @@ class SpecialScavengerHunt extends SpecialPage {
 						);
 						$this->out->redirect( $this->mTitle->getFullUrl() );
 						return;
-					} else if ($this->request->getVal('export')) {
-						/*
-						$entries = $game->listEntries();
-
-						$csvService = new CsvService();
-						$csvService->output($headers, $entries);
-						*/
-
-						$this->printEntriesAsCsv($game);
-
-						return;
 					}
 				}
 				// no "break" on purpose
@@ -521,38 +510,6 @@ class SpecialScavengerHunt extends SpecialPage {
 
 		wfProfileOut(__METHOD__);
 		return $vars;
-	}
-
-	protected function printEntriesAsCsv( ScavengerHuntGame $game ) {
-		$csv = new CsvService();
-		// print header
-		$csv->printHeaders('game_entries.csv');
-		$csv->printRow(array(
-			'Name',
-			'Email',
-			'Answer',
-		));
-
-		$startId = 0;
-		$limit = 501;
-		while ($entries = $game->listEntries($startId, $limit)) {
-			$rows = array();
-			$entriesInLoop = min(count($entries), $limit-1);
-			for ($i=0;$i<$entriesInLoop;$i++) {
-				$entry = $entries[$i];
-				$rows[] = array(
-					$entry->getName(),
-					$entry->getEmail(),
-					$entry->getAnswer(),
-				);
-			}
-			$csv->printRows($rows);
-			if (count($entries) < $limit) {
-				break;
-			} else {
-				$startId = $entries[$limit-1]->getEntryId();
-			}
-		}
 	}
 }
 

@@ -56,7 +56,7 @@ class ScavengerHuntGame {
 	protected $progressBarExitSprite = array();
 	protected $progressBarHintLabel = array();
 
-	
+
 	public function __construct( WikiaApp $app, $id = 0 ) {
 		$this->startPopupSprite =
 		$this->finishPopupSprite =
@@ -89,20 +89,6 @@ class ScavengerHuntGame {
 		return F::build( 'GlobalTitle', array( $this->landingTitle ), 'explodeURL' );
 	}
 
-//	public function getStartingClueImageOffset() {
-//		return array(
-//			'top' => $this->startingClueImageTopOffset,
-//			'left' => $this->startingClueImageLeftOffset,
-//		);
-//	}
-//
-//	public function getEntryFormImageOffset() {
-//		return array(
-//			'top' => $this->entryFormImageTopOffset,
-//			'left' => $this->entryFormImageLeftOffset,
-//		);
-//	}
-//
 	public function getGoodbyeImageOffset() {
 		return array(
 			'top' => $this->goodbyeImageTopOffset,
@@ -140,7 +126,7 @@ class ScavengerHuntGame {
 	public function setSpriteImg( $image ) { $this->spriteImg = $image; }
 	public function setFacebookImg( $image ) { $this->facebookImg = $image; }
 	public function setFacebookDescription( $description ) { $this->facebookDescription = $description; }
-	
+
 	public function getId() { return $this->id; }
 	public function getWikiId() { return $this->wikiId; }
 	public function isEnabled() { return $this->isEnabled; }
@@ -192,7 +178,7 @@ class ScavengerHuntGame {
 	}
 
 	public function getDataNonArrayProperties(){
-		return array ( 'clueColor', 'clueFont', 'clueSize', 'name', 'hash', 'landingTitle', 'landingArticleName', 'landingArticleWikiId', 
+		return array ( 'clueColor', 'clueFont', 'clueSize', 'name', 'hash', 'landingTitle', 'landingArticleName', 'landingArticleWikiId',
 			'landingButtonText', 'landingButtonX', 'landingButtonY', 'startingClueTitle', 'facebookImg', 'facebookDescription',
 			'startingClueText', 'startingClueButtonText', 'startingClueButtonTarget', 'entryFormTitle', 'entryFormText', 'entryFormButtonText',
 			'entryFormQuestion', 'goodbyeTitle', 'goodbyeText', 'goodbyeImage', 'spriteImg', 'entryFormEmail', 'entryFormUsername' );
@@ -200,7 +186,7 @@ class ScavengerHuntGame {
 
 	public function getDataArrayProperties(){
 		return array( 'startPopupSprite', 'finishPopupSprite', 'progressBarBackgroundSprite', 'progressBarExitSprite' ,'progressBarHintLabel' );
-		
+
 	}
 
 	public function getData() {
@@ -237,7 +223,7 @@ class ScavengerHuntGame {
 			'clueColor', 'clueFont', 'clueSize', 'landingTitle', 'landingArticleName', 'landingArticleWikiId', 'landingButtonText',
 			'startingClueText', 'startingClueButtonText', 'startingClueButtonTarget', 'articles',
 			'entryFormTitle', 'entryFormText', 'entryFormButtonText', 'landingButtonX', 'landingButtonY',
-			'entryFormImage', 'entryFormQuestion', 	'goodbyeTitle', 'goodbyeText', 'goodbyeImage', 
+			'entryFormImage', 'entryFormQuestion', 	'goodbyeTitle', 'goodbyeText', 'goodbyeImage',
 			'spriteImg', 'startPopupSprite', 'finishPopupSprite', 'progressBarBackgroundSprite',
 			'progressBarExitSprite', 'progressBarHintLabel', 'entryFormEmail', 'entryFormUsername',
 			'facebookImg', 'facebookDescription');
@@ -269,11 +255,11 @@ class ScavengerHuntGame {
 		}
 
 		$this->resetHash();
-		
+
 	}
 
 	public function setAllFromRequest( $request ){
-		
+
 	}
 
 	/** BASIC OPERATIONS **/
@@ -345,29 +331,5 @@ class ScavengerHuntGame {
 			$articleURL[] = $article->getTitle();
 		}
 		return $articleURL;
-	}
-
-	protected function getEntries() {
-		return $this->games->getEntries( $this );
-	}
-
-	/** ENTRIES MANAGEMENT **/
-	public function addEntry( ScavengerHuntEntry $entry ) {
-		if ($this->getId() == 0) {
-			return false;
-		}
-
-		$entry->setGameId($this->getId());
-		$entries = $this->getEntries();
-		return $entries->save($entry);
-	}
-
-	public function listEntries( $startId = 0, $limit = -1 ) {
-		if ($this->getId() == 0) {
-			return array();
-		}
-
-		$entries = $this->getEntries();
-		return $entries->findAllByGameId( $this->getId(), $startId, $limit );
 	}
 }
