@@ -17,7 +17,7 @@ class CommunityQuiz {
     /**
      * The length of the time period.
      */
-    const LENGTH_DAYS = 11;
+    const LENGTH_DAYS = 20;
     /**
      * Criteria: Revisions range.  Wikis from the of the range won't be included in the report.
      */
@@ -103,7 +103,7 @@ class CommunityQuiz {
                     // Get some additional information on the founder.
                     $user = $this->dbObj->selectRow(
                             array( 'wikicities.user' ),
-                            array( 'user_name', 'user_real_name', 'user_email' ),
+                            array( 'user_name', 'user_real_name', 'user_email', 'user_email_authenticated' ),
                             array( 'user_id' => $oRow->city_founding_user ),
                             __METHOD__,
                             array()
@@ -119,8 +119,15 @@ class CommunityQuiz {
                         $tmp->founder_email = 'unknown';
                     }
                     
-                    $this->output[] = $tmp;
-                    unset( $tmp );
+                    // Filter out non-email confirmed users
+                    if ( empty( $user->user_email_authenticated ) ) {
+                        unset( $tmp );
+                    }
+                    
+                    if ( isset( $tmp ) ) {
+                        $this->output[] = $tmp;
+                        unset( $tmp );
+                    }
                 }
             }
             $tmpDbObj->close();
