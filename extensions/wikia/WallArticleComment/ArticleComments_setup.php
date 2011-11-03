@@ -39,7 +39,7 @@ $wgAutoloadClasses['ArticleCommentList'] = "$dir/classes/ArticleCommentList.clas
 $wgAutoloadClasses['ArticleCommentsAjax'] = "$dir/classes/ArticleCommentsAjax.class.php";
 $wgAutoloadClasses['ArticleCommentsModule'] = "$dir/modules/ArticleCommentsModule.class.php";
 
-$wgExtensionMessagesFiles['ArticleComments'] = dirname(__FILE__) . '/ArticleComments.i18n.php';
+$wgExtensionMessagesFiles['ArticleComments'] = dirname(__FILE__) . '../ArticleComments/ArticleComments.i18n.php';
 
 $wgAvailableRights[] = 'commentmove';
 $wgAvailableRights[] = 'commentedit';
