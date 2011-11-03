@@ -3069,8 +3069,6 @@ class Article {
 		$logtype = $suppress ? 'suppress' : 'delete';
 		$log = new LogPage( $logtype );
 		if( wfRunHooks('ArticleDoDeleteArticleBeforeLogEntry', array(&$this, &$log, &$logtype, $this->mTitle, $reason)) ) {
-		//hook takes care of logging
-		} else {
 			# Make sure logging got through
 			$log->addEntry( 'delete', $this->mTitle, $reason, array() );
 		}
