@@ -44,13 +44,14 @@ define.call(exports, function(){
 
 		show: function(){
 			var modalWrapper = document.getElementById('modalWrapper');
-			this._manager._current = this._screenId;
+			this._manager._currentId = this._screenId;
+			
+			if(Wikia.Platform.is('app'))
+				Titanium.App.fireEvent('ScreenManager:showScreen', {id: this._screenId});
 			
 			if(this._screenId == 'game' && modalWrapper.state && !modalWrapper.isProgress) {
-				Wikia.log('REOPEN');
 				this._manager.reopenModal();
 			} else if(!modalWrapper.isProgress){
-				Wikia.log('CLOSE ' + this._manager._isProgress);
 				this._manager.hideModal();
 			}
 			
@@ -535,7 +536,7 @@ define.call(exports, function(){
 		_progressTotal: null,
 		_progressStatus: 0,
 		_isProgress: false,
-		_current: null,
+		_currentId: null,
 		
 		constructor: function(){
 			Observe(this);
@@ -653,8 +654,8 @@ define.call(exports, function(){
 			return this._isProgress;
 		},
 		
-		getCurrent: function(){
-			return this._current;
+		getCurrentId: function(){
+			return this._currentId;
 		}
 	});
 

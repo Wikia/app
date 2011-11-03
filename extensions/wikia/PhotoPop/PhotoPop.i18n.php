@@ -68,9 +68,9 @@ $messages['en'] = array(
 	'photopop-game-no-highscore' => 'No highscores',
 	'photopop-game-error-text' => 'An error occurred, please try again.',
 	'photopop-game-error-network-text' => 'There seems to be noconnection to the internet, please turn on your wi-fi or mobile connection.',
-	'photopop-game-download-progress-text' => 'Downloading game data...',
-	'photopop-game-download-error-text' => 'An error occurred while downloading the game data, please try again.',
-
+	'photopop-game-download-progress-text' => 'Downloading game...',
+	'photopop-game-update-progress-text' => 'Updating game...',
+	'photopop-game-download-error-text' => 'An error occurred while downloading the game data, please try again.'
 );
 
 /** Message documentation (Message documentation) */
