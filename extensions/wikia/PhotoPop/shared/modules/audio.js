@@ -26,8 +26,8 @@ define.call(exports, [
 			return mute;
 		}
 
-		data.storage.addEventListener({name: "get", key: "mute"}, function(event) {
-			mute = event.value || false;
+		data.storage.addEventListener({name: "get", key: "mute"}, function(event, options) {
+			mute = options.value || false;
 		});
 		data.storage.get('mute');
 

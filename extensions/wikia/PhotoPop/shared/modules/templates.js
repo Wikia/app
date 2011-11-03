@@ -41,7 +41,7 @@ define.call(exports, {
 				</div>\</div>\
 			<div id='gameScreen' class='screen'>\
 				<div id='scoreBarWrapper'>\
-				<div id='scoreBar' class='transition-all'></div>\
+				<div id='scoreBar'></div>\
 			</div>\
 			<div id='bgWrapper'>\
 				<div id='bgPic'><img/></div>\
@@ -54,7 +54,7 @@ define.call(exports, {
 						</div>\
 						<div id='summaryWrapper'>\
 							<div id='endGameSummary'>\
-								<h1>Finished</h1>\
+								<h1>"+Wikia.i18n.Msg('photopop-game-finished')+"</h1>\
 								<div class='summaryTextWrapper'>\
 									<div class='summaryText_completion'></div>\
 									<div class='summaryText_score'></div>\
@@ -89,8 +89,8 @@ define.call(exports, {
 					<div id='home'>\
 						<img src='{{#image}}buttonSrc_home{{/image}}'/>\
 					</div>\
-					<div id='score'>\
-						"+Wikia.i18n.Msg('photopop-game-points')+": <span id='roundPoints'>0</span> "+Wikia.i18n.Msg('photopop-game-total')+": <span id='totalPoints'>0</span>\
+					<div id='score'>"
+						+Wikia.i18n.Msg('photopop-game-score')+": <span id='totalPoints'>0</span>\
 					</div>\
 					<div id='muteButton'>\
 						<img src='{{#image}}buttonSrc_gameMute{{/image}}'>\
@@ -99,8 +99,8 @@ define.call(exports, {
 						<img src='{{#image}}buttonSrc_resume{{/image}}'>\
 						<img src='{{#image}}buttonSrc_pause{{/image}}'>\
 					</div>\
-					<div id='progress'>\
-						Progress: <span>0/0</span>\
+					<div id='progress'>"
+						+Wikia.i18n.Msg('photopop-game-progress')+" <span>0/0</span>\
 					</div>\
 				</div>\
 				<div id='tilesWrapper'></div>\
