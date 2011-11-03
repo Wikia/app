@@ -65,7 +65,11 @@ $messages['en'] = array(
 	'photopop-game-month-9' => 'Oct',
 	'photopop-game-month-10' => 'Nov',
 	'photopop-game-month-11' => 'Dec',
-	'photopop-game-no-highscore' => 'No highscores'
+	'photopop-game-no-highscore' => 'No highscores',
+	'photopop-game-error-text' => 'An error occurred, please try again.',
+	'photopop-game-error-network-text' => 'There seems to be noconnection to the internet, please turn on your wi-fi or mobile connection.',
+	'photopop-game-download-progress-text' => 'Downloading game data...',
+	'photopop-game-download-error-text' => 'An error occurred while downloading the game data, please try again.',
 
 );
 

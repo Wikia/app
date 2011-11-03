@@ -31,6 +31,10 @@ define.call(exports, function(){
 			};
 			return this;
 		},
+		
+		getId: function(){
+			return this._screenId;
+		},
 
 		hide: function(){
 			this._domElement.style.display = 'none';
@@ -39,11 +43,17 @@ define.call(exports, function(){
 		},
 
 		show: function(){
-			if(this._screenId == 'game' && document.getElementById('modalWrapper').state) {
+			var modalWrapper = document.getElementById('modalWrapper');
+			this._manager._current = this._screenId;
+			
+			if(this._screenId == 'game' && modalWrapper.state && !modalWrapper.isProgress) {
+				Wikia.log('REOPEN');
 				this._manager.reopenModal();
-			} else if(!this._manager._isProgress){
+			} else if(!modalWrapper.isProgress){
+				Wikia.log('CLOSE ' + this._manager._isProgress);
 				this._manager.hideModal();
 			}
+			
 			this._domElement.style.display = this._origDisplay;
 			this._manager.fire('show', {id: this._screenId});
 			return this;
@@ -522,7 +532,11 @@ define.call(exports, function(){
 	}),
 
 	ScreenManager = my.Class({
-
+		_progressTotal: null,
+		_progressStatus: 0,
+		_isProgress: false,
+		_current: null,
+		
 		constructor: function(){
 			Observe(this);
 		},
@@ -532,6 +546,7 @@ define.call(exports, function(){
 		},
 
 		openModal: function(options) {
+			Wikia.log('PROGRESS OPNENED: ' + options.progress);
 			options = options || {};
 
 			var modalWrapper = document.getElementById('modalWrapper'),
@@ -572,10 +587,12 @@ define.call(exports, function(){
 				document.getElementById('modalText').innerHTML = "";
 			}
 
-			if(options.progress) {
+			if(options.progress){
+				this._progressTotal = options.total || 100;
+				this._progressStatus = 0;
+				modalWrapper.isProgress = true;
 				document.getElementById('jobProgress').classList.add('visible');
-				document.getElementById('sliderWrapper').style.bottom = -200;
-			} else {
+			}else{
 				document.getElementById('jobProgress').classList.remove('visible');
 			}
 
@@ -600,16 +617,16 @@ define.call(exports, function(){
 			document.getElementById('modalText').innerHTML = "";
 			modalWrapper.style.visibility = 'hidden';
 			modalWrapper.state = false;
+			modalWrapper.isProgress = false;
 		},
 
-		updateModalProgress: function(value, total) {
-			if(value <= total) {
-				document.getElementById('currentValue').innerHTML = value;
-				document.getElementById('totalValue').innerHTML = total;
-				document.getElementById('progressBar').style.width = document.getElementById('progressBarWrapper').offsetWidth / (total/value);
-				document.getElementById('sliderWrapper').style.bottom = (-200 + (value/total)*200) | 0;
-			} else {
-
+		updateModalProgress: function() {
+			this._progressStatus++;
+			
+			if(this._progressStatus <= this._progressTotal) {
+				document.getElementById('currentValue').innerHTML = this._progressStatus;
+				document.getElementById('totalValue').innerHTML = this._progressTotal;
+				document.getElementById('progressBar').style.width = document.getElementById('progressBarWrapper').offsetWidth / (this._progressTotal/this._progressStatus);
 			}
 		},
 
@@ -629,6 +646,15 @@ define.call(exports, function(){
 			}
 
 			return names;
+		},
+		
+		showsProgress: function(){
+			Wikia.log('PROGRESSS ' + this._isProgress);
+			return this._isProgress;
+		},
+		
+		getCurrent: function(){
+			return this._current;
 		}
 	});
 

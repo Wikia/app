@@ -2,7 +2,7 @@ var exports = exports || {};
 
 define.call(exports, {
 	centralDomain: 'community.wikia.com',
-	testDomain: 'jolek.wikia-dev.com',//comment out or set to null/false before release
+	testDomain: 'federico.wikia-dev.com',//comment out or set to null/false before release
 	sharedAudioPath: "shared/audio/",
 	webAudioPath: "audio/",
 	webPrefix: "extensions/wikia/PhotoPop/",
