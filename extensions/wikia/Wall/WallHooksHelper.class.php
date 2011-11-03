@@ -2,6 +2,26 @@
 class WallHooksHelper {
 	const RC_WALL_COMMENTS_MAX_LEN = 50;
 	
+	public function onBlockIpCompleteWatch($name, $title ) {
+		$app = F::App();  
+		$watchTitle = Title::makeTitle( NS_USER_WALL, $name );
+		$app->wg->User->addWatch( $watchTitle );
+		return true;
+	}
+
+	public function onUserIsBlockedFrom($user, $title, &$blocked, &$allowUsertalk) {
+	
+		if ( !$user->mHideName && $allowUsertalk && $title->getNamespace() == NS_USER_WALL_MESSAGE ) {
+			$wm =  F::build('WallMessage', array($title), 'newFromTitle');
+		  	if($wm->getWallOwner()->getName() === $user->getName()){
+		  		$blocked = false;	
+		  		wfDebug( __METHOD__ . ": self-user wall page, ignoring any blocks\n" );
+		  	}
+		}
+		
+		return true;
+	}
+	
 	public function onArticleViewHeader(&$article, &$outputDone, &$useParserCache) {
 		$app = F::App();
 		$helper = F::build('WallHelper', array());
@@ -678,7 +698,7 @@ class WallHooksHelper {
 	public function onChangesListInsertComment($list, $comment, $s, $rc) {
 		if(($rc->getAttribute('rc_type') == RC_NEW || $rc->getAttribute('rc_type') == RC_EDIT) && $rc->getAttribute('rc_namespace') == NS_USER_WALL_MESSAGE ) {
 			$app = F::app();
-			$wnEntity = F::build('WallNotificationEntity', array($rc->getAttribute('rc_this_oldid'), $app->wg->CityId), 'getByWikiAndRCId');
+			$wnEntity = F::build('WallNotificationEntity', array($rc->getAttribute('rc_this_oldid'), $app->wg->CityId), 'getByWikiAndRevId');
 			
 			//this is innocent hack -- we didn't know where char(127) came from in rc_params
 			//but it stopped us from unserializing rc_params if anyone knows where those chars 
@@ -873,6 +893,7 @@ class WallHooksHelper {
 					$logPage->addEntry( 'delete', $title, $reason, array() );
 				}
 			}
+			return false;
 		}
 		
 		return true;
