@@ -3068,11 +3068,14 @@ class Article {
 		/** Wikia change begin - @author: Andrzej 'nAndy' Lukaszewski */
 		$logtype = $suppress ? 'suppress' : 'delete';
 		$log = new LogPage( $logtype );
-		if( wfRunHooks('ArticleDoDeleteArticleBeforeLogEntry', array(&$this, &$log, &$logtype, $this->mTitle, $reason)) ) {
-			# Make sure logging got through
+		
+		/* Wikia change begin - @author: Andrzej 'nAndy' Lukaszewski */
+		$hookAddedLogEntry = false;
+		wfRunHooks('ArticleDoDeleteArticleBeforeLogEntry', array(&$this, &$log, &$logtype, $this->mTitle, $reason, &$hookAddedLogEntry));
+		if( !$hookAddedLogEntry ) {
+		//if hook above didn't log anything log it as default
 			$log->addEntry( 'delete', $this->mTitle, $reason, array() );
 		}
-		
 		/* Wikia change end */
 
 		$dbw->commit();
