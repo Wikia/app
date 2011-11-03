@@ -141,7 +141,7 @@
 				}
 			}
 
-			function wrongAnswerClicked(event, options
+			function wrongAnswerClicked(event, options){
 				screens.get('game').fire('wrongAnswerClicked', {
 					"class" : Game.INCORRECT_CLASS_NAME,
 					li: options.li,
