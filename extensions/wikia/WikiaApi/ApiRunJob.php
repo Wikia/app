@@ -111,7 +111,7 @@ class ApiRunJob extends ApiBase {
 	}
 
 	/**
-	 * check how many different jobs still exists in queue
+	 * check how many jobs still exists in queue
 	 *
 	 * @access private
 	 *
@@ -119,22 +119,15 @@ class ApiRunJob extends ApiBase {
 	 */
 	private function checkQueue() {
 
-		// select job_cmd, count(*) as howmany from job group by job_cmd;
-		$dbr = wfGetDB( DB_SLAVE );
-		$sth = $dbr->select(
-			"job",
-			array( "job_cmd", "count(*) as howmany" ),
-			array(),
-			__METHOD__,
-			array( "GROUP BY" => "job_cmd" )
-		);
-
-		$result = array();
 		$total = 0;
-		while( $row = $dbr->fetchObject( $sth) ) {
-			$total += $row->howmany;
-			$result[ $row->job_cmd ] = $row->howmany;
-		}
+
+		$dbr = wfGetDB( DB_SLAVE, 'vslow' );
+		$total = $dbr->estimateRowCount(
+			"job",
+			"*",
+			"",
+			__METHOD__
+		);
 
 		$result[ "total" ] = $total;
 
