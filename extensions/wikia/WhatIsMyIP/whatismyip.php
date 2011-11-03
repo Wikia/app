@@ -25,7 +25,7 @@ if (!defined('MEDIAWIKI'))
 
 $dir = dirname(__FILE__) . '/';
 $wgAutoloadClasses['WhatIsMyIP'] = $dir . 'whatismyip.php'; # Tell MediaWiki to load the extension body.
-$wgExtensionMessagesFiles['WhatIsMyIP'] = $dir . 'whatismyip.i18n.php';
+$wgExtensionMessagesFiles['WhatIsMyIP'] = $dir . 'WhatIsMyIP.i18n.php';
 
 extAddSpecialPage( $dir . 'whatismyip_body.php', 'WhatIsMyIP', 'WhatIsMyIP' );
 
