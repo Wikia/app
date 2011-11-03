@@ -86,6 +86,9 @@
 
 						if(!game.thumbnail)
 								game.thumbnail = graphics.getAsset('gameicon_default');
+						
+						//remove photopop naming from games
+						game.label = game.name.replace(/photopop/ig, '');
 
 						templateVars.games.push(game);
 					}

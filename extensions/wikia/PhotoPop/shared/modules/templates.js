@@ -120,7 +120,7 @@ define.call(exports, {
 			<li class='gameIcon {{#round}}resumeGame{{/round}}' data-id='{{id}}'>\
 				<img src='{{thumbnail}}'></img>\
 				<div class='gameName'>\
-					{{name}}\
+					{{label}}\
 				</div>\
 			</li>\
 		{{/games}}</ul>"
