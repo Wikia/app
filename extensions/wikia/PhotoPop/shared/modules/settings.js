@@ -1,8 +1,8 @@
 var exports = exports || {};
 
 define.call(exports, {
-	centralDomain: 'muppetphotopop.wikia.com',
-	//testDomain: 'jolek.wikia-dev.com',//comment out or set to null/false before release
+	centralDomain: 'twilightphotopop.wikia.com',//'community.wikia.com',
+	//testDomain: 'federico.wikia-dev.com',//comment out or set to null/false before release
 	sharedAudioPath: "shared/audio/",
 	webAudioPath: "audio/",
 	webPrefix: "extensions/wikia/PhotoPop/",
