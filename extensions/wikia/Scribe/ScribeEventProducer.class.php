@@ -93,7 +93,7 @@ class ScribeEventProducer {
 			}
 			$rev_timestamp = $oArticle->getTimestamp();
 			$rev_text = $oTitle->getText();
-			$rev_size = strlen( $rev_size );
+			$rev_size = strlen( $rev_text );
 		}
 
 		$this->setPageId( $page_id ) ;
