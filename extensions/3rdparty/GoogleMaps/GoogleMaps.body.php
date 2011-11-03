@@ -198,8 +198,7 @@ JAVASCRIPT;
         }
 
 		// output the 'rtl' setting
-		$isRTLString = $this->mLanguage->isRTL() ? 'true' : 'false';
-		$options['rtl'] = $isRTLString;
+		$options['rtl'] = $this->mLanguage->isRTL();
 
 		// add JSON encoded options
 		$optionsEncoded = json_encode($options);
