@@ -362,6 +362,10 @@ class PageArchive {
 			$reason .= wfMsgForContent( 'colon-separator' ) . $comment;
 		
 		/** Wikia change begin - @author: Andrzej 'nAndy' Lukaszewski */
+                /**
+                 * $var = false;
+                 * Pass $var to as a reference to the wfRunHooks below and then check for it's value and call $log->addEntry if necessary.
+                 */
 		if( wfRunHooks('PageArchiveUndeleteBeforeLogEntry', array(&$this, &$log, &$this->title, $reason)) ) {
 		//hook takes care of logging
 		} else {
