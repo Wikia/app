@@ -178,7 +178,7 @@ function CategorySelectSetupVars($vars) {
  *
  * @author Inez Korczyński
  */
-function CategorySelectGetCategories($inline = false) {
+function CategorySelectGetCategories() {
 	global $wgMemc, $wgCityId;
 
 	wfProfileIn(__METHOD__);
@@ -206,10 +206,8 @@ function CategorySelectGetCategories($inline = false) {
 		$wgMemc->set($key, $out, 86400);
 	}
 
-	if (!$inline) {
-		$out = new AjaxResponse($out);
-		$out->setCacheDuration(60 * 60);
-	}
+	$out = new AjaxResponse($out);
+	$out->setCacheDuration(60 * 60);
 
 	wfProfileOut(__METHOD__);
 
