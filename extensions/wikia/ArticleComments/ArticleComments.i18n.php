@@ -59,6 +59,7 @@ Wikia
 <li>Want to control which emails you receive? <a href="{{fullurl:Special:Preferences}}">Update your Preferences<a>.</li>
 </ul>
 </p>',
+	'article-comments-rc-wall-messages' => 'Wall',
 );
 
 /** Afrikaans (Afrikaans)
@@ -1587,3 +1588,6 @@ $messages['zh-hans'] = array(
 	'article-comments-next-page' => '下一页',
 );
 
+$messages['qqq'] = array( 
+	'article-comments-rc-wall-messages' => 'shown in recent changes when there is a block of actions on a message wall (message wall extension uses some of article comments mechanisms)', 
+); 
