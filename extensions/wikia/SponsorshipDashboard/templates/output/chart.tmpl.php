@@ -131,7 +131,8 @@ $jsParams = array(
 );
 ?>
 <script id="source<?= $number ?>" language="javascript" type="text/javascript">
-SponsorshipDashboard.init(
+var sd = new SponsorshipDashboard();
+sd.init(
 <?= Wikia::json_encode($jsParams) ?>
 );
 </script>

@@ -7,10 +7,11 @@
  *
  * Date provider class control proper date settings for series object.
  *
- * TODO: These should implement some interface (or, more likely, extend some base-class) & that should be documented (at least commented).
  * NOTE: 'Gapi' is short for "Google API" which is used here because one of the sources is Google Analytics which expects a specific date format.
  *
- * WARNING: Hourly and Weekly reports are still experimental.
+ * NOTE: Not all sources can use all frequencies (only Database source currently supports all of them).
+ *
+ * TODO: Please refactor & clean this up ^_^
  */
 
 
