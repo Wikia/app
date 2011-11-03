@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright © 2008-2010 Garrett Brown <http://www.mediawiki.org/wiki/User:Gbruin>
+ * Copyright ï¿½ 2008-2010 Garrett Brown <http://www.mediawiki.org/wiki/User:Gbruin>
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -40,7 +40,7 @@ class FBConnectXFBML {
 	 * function that simply redirects to parserHook(), filling in the missing
 	 * $tag argument with the $tag provided to createParserHook.
 	 */
-	static function parserHook($text, $args, &$parser, $tag = '' ) {
+	static function parserHook($text, $args, $parser, $tag = '' ) {
 		global $fbAllowFacebookImages;
 		switch ($tag) {
 			case '':
@@ -101,7 +101,7 @@ class FBConnectXFBML {
 	 * that function, but I had no way of knowing which tag provoked the function.
 	 */
 	static function createParserHook($tag) {
-		$args = '$text,$args,&$parser';
+		$args = '$text,$args,$parser';
 		$code = 'return FBConnectXFBML::parserHook($text,$args,$parser,\''.$tag.'\');';
 		return create_function($args, $code);
 	}
