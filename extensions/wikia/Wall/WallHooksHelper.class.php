@@ -869,12 +869,13 @@ class WallHooksHelper {
 	 * @param string $logType a referance to string with type of log
 	 * @param Title $title
 	 * @param string $reason
+	 * @param boolean $hookAddedLogEntry set it to true if you don't want Article::doDeleteArticle() to add a log entry
 	 * 
 	 * @return true because this is a hook
 	 * 
 	 * @author Andrzej 'nAndy' Lukaszewski
 	 */
-	public function onArticleDoDeleteArticleBeforeLogEntry($article, $logPage, $logType, $title, $reason) {
+	public function onArticleDoDeleteArticleBeforeLogEntry($article, $logPage, $logType, $title, $reason, $hookAddedLogEntry) {
 		if( $title instanceof Title && $title->getNamespace() == NS_USER_WALL_MESSAGE ) {
 			$app = F::app();
 			$wm = F::build('WallMessage', array($title));
@@ -893,7 +894,8 @@ class WallHooksHelper {
 					$logPage->addEntry( 'delete', $title, $reason, array() );
 				}
 			}
-			return false;
+			
+			$hookAddedLogEntry = true;
 		}
 		
 		return true;
@@ -908,12 +910,13 @@ class WallHooksHelper {
 	 * @param LogPage $logPage a referance to LogPage instance
 	 * @param Title $title a referance to Title instance
 	 * @param string $reason
+	 * @param boolean $hookAddedLogEntry set it to true if you don't want Article::doDeleteArticle() to add a log entry
 	 * 
 	 * @return true because this is a hook
 	 * 
 	 * @author Andrzej 'nAndy' Lukaszewski
 	 */
-	public function onPageArchiveUndeleteBeforeLogEntry($pageArchive, $logPage, $title, $reason) {
+	public function onPageArchiveUndeleteBeforeLogEntry($pageArchive, $logPage, $title, $reason, $hookAddedLogEntry) {
 		if( $title instanceof Title && $title->getNamespace() == NS_USER_WALL_MESSAGE ) {
 			$app = F::app();
 			$wm = F::build('WallMessage', array($title));
