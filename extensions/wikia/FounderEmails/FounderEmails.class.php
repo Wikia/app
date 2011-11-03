@@ -106,19 +106,17 @@ class FounderEmails {
 	public function getFoundersWithPreference( $prefPrefix ) {
 		wfProfileIn( __METHOD__ );
 
+		$prefixLength = strlen($prefPrefix) + 2;
 		$db = wfGetDB(DB_SLAVE, array(), 'wikicities');
 		$cityList = array();
 		$oRes = $db->select (
-			array ('city_list' , 'wikicities.user_properties'), 
-			array ('city_id', 'up_property'), 
+			array ('wikicities.user_properties'), 
+			array ("distinct substring(up_property, $prefixLength) city_id"), 
 			array ( 
-					'city_founding_user = up_user',  
 					"up_property like '$prefPrefix-%'", 
 					'up_value' => 1) 
 		);
-		// Filter out any preferences for founders of more than one wiki
 		while ( $oRow = $db->fetchObject ( $oRes )) {
-			if ($oRow->up_property == "$prefPrefix-{$oRow->city_id}") 
 				$cityList[] = $oRow->city_id; 		
 		}
 		wfProfileOut( __METHOD__ );		
