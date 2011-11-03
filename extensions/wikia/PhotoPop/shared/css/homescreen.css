@@ -139,6 +139,7 @@ body{
 #slidercontent > ul{
 	list-style: none;
 	margin: 0, auto;
+	padding: 0;
 }
 
 .gameIcon {
@@ -150,9 +151,9 @@ body{
 	cursor: pointer;
 }
 .gameIcon img{
-	-webkit-box-shadow: black 0 0 20px;
-	-moz-box-shadow: black 0 0 20px;
-	box-shadow: black 0 0 20px;
+	-webkit-box-shadow: rgba(0,0,0,0.5) 0 0 10px;
+	-moz-box-shadow: rgba(0,0,0,0.5) 0 0 10px;
+	box-shadow: rgba(0,0,0,0.5) 0 0 10px;
 	height: 120px;
 	width: 120px;
 	margin-bottom: 5px;

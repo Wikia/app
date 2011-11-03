@@ -31,6 +31,7 @@
 			highscore = [],
 			tutorialSteps = [],
 			choosenCorrectPictures = [],
+			homeInitialized = false,
 			view = {
 				image: function() {
 					return function(text, render) {
@@ -107,33 +108,33 @@
 			}
 
 			function initHomeScreen(){
-				gamesListLoader.load(
-					'http://' + (settings.testDomain || settings.centralDomain) +
-					'/wikia.php?controller=PhotoPopController&method=listGames',
-					{method: 'get'}
-				);
+				if(!homeInitialized) {
+					gamesListLoader.load(
+						'http://' + (settings.testDomain || settings.centralDomain) +
+						'/wikia.php?controller=PhotoPopController&method=listGames',
+						{method: 'get'}
+					);
 
-				document.getElementById('button_volume').onclick = function(){
-					var mute = audio.toggleMute();
-					audio.play('pop');
-					screens.get('home').fire('muteButtonClicked', {mute: mute});
-					screens.get('game').fire('muteButtonClicked', {mute: mute});
-				};
+					document.getElementById('button_volume').onclick = function(){
+						var mute = audio.toggleMute();
+						audio.play('pop');
+						screens.get('home').fire('muteButtonClicked', {mute: mute});
+						screens.get('game').fire('muteButtonClicked', {mute: mute});
+					};
 
-				document.getElementById('button_tutorial').onclick = function(){
-					screens.closeModal();
-					runGame('tutorial');
-				};
+					document.getElementById('button_tutorial').onclick = function(){
+						screens.closeModal();
+						runGame('tutorial');
+					};
 
-				document.getElementById('button_scores').onclick = function(){
-					openHighscore();
-				};
+					document.getElementById('button_scores').onclick = function(){
+						openHighscore();
+					};
 
-				document.getElementById('goBack').onclick = function(){
-					screens.get('home').show();
-				};
-
-				screens.get('home').fire('muteButtonClicked', {mute: audio.getMute()});
+					Wikia.log('homie');
+					screens.get('home').fire('muteButtonClicked', {mute: audio.getMute()});
+					homeInitialized = true;
+				}
 			}
 
 			function modalOpened(event, options){
@@ -222,9 +223,9 @@
 
 				data.storage.set('highscore', highscore);
 
-				if(options.gameId == 'tutorial') {
+				if(options.gameId == 'tutorial')
 					data.storage.set('tutorialPlayed', true);
-				}
+
 			}
 
 			function playAgain(){
@@ -235,6 +236,8 @@
 			function goHome(event, gameFinished){
 				if(!gameFinished && currentGame.getId() != 'tutorial')
 					currentGame.fire('storeData');
+
+				initHomeScreen();
 
 				screens.get('game').fire('goHomeClicked', gameFinished);
 				screens.get('home').show();
@@ -356,7 +359,7 @@
 
 			function onDataError(event, resp){
 				alert(Wikia.i18n.Msg('photopop-game-request-error'));
-				
+
 				if(screens.getCurrent().getId() != 'home')
 						screens.get('home').show();
 			}
@@ -394,56 +397,57 @@
 				}
 			}
 
-			function chooseRandomPicture(val, max, correct) {
-				var nextRandom = val;
-
-				while(nextRandom == val) {
-
-					nextRandom = Math.floor(Math.random() * max);
-					if(correct) {
-						for(var i = 0; i < choosenCorrectPictures.length; i++) {
-							if(nextRandom == choosenCorrectPictures[i]) {
-								nextRandom = val;
-							}
-						}
-					}
-				}
-
-				if(correct) {
-					choosenCorrectPictures.push(nextRandom)
-				}
-				return nextRandom;
-			}
-
 			function loadGame(){
 				var id = selectedGame.id,
 				data = [],
 				watermark = 'watermark_' + id,
-				correctLength = selectedGame.c.length,
-				wrongLength = selectedGame.w.length,
+				correctAnswers = selectedGame.c.slice(),
+				getCorrectAnswers = function(){return correctAnswers},
+				correctAnswersLength = correctAnswers.length,
+				allAnswers = (selectedGame.w)?selectedGame.c.concat(selectedGame.w):selectedGame.c,
+				allAnswersLength = allAnswers.length,
+				getAllAnswers = function() {return allAnswers},
+				getAllChoosen = function() {return choosenAllAnswers},
 				a,b,c,d;
 
-				choosenCorrectPictures = [];
-
 				for(var i = 0, l = Game.ROUND_LENGTH;i < l; i++){
-					a = chooseRandomPicture(-1, correctLength, true);
-					b = chooseRandomPicture(a, correctLength);
-					c = chooseRandomPicture(-1, wrongLength);
-					d = chooseRandomPicture(c, wrongLength);
+					choosenAllAnswers = [];
+					a = chooseRandomPicture(true);
+					b = chooseRandomPicture();
+					c = chooseRandomPicture();
+					d = chooseRandomPicture();
 
 					data.push({
-						image: selectedGame.c[a].image,
+						image: a.image,
 						answers: [
-							selectedGame.c[a].text,
-							selectedGame.c[b].text,
-							selectedGame.w[c].text,
-							selectedGame.w[d].text,
+							a.text,
+							b.text,
+							c.text,
+							d.text,
 						],
-						correct: selectedGame.c[a].text
+						correct: a.text
 					});
 				}
-Wikia.log(choosenCorrectPictures);
 				newGame({_id:id, _data:data});
+
+				function chooseRandomPicture(correct) {
+					var picture;
+					if(correct) {
+						getCorrectAnswers().shuffle();
+						picture = getCorrectAnswers().pop();
+					} else {
+						var randId;
+						do{
+							randId = Math.floor(Math.random()*allAnswersLength);
+
+						} while(getAllChoosen().contains(randId));
+
+						getAllChoosen().push(randId);
+						picture = getAllAnswers()[randId];
+
+					}
+					return picture;
+				}
 			}
 
 			function newGame(gameData){
@@ -472,6 +476,11 @@ Wikia.log(choosenCorrectPictures);
 			}
 
 			function initHighscore(){
+				document.getElementById('goBack').onclick = function(){
+					initHomeScreen();
+					screens.get('home').show();
+				};
+
 				data.storage.addEventListener({name: 'get', key: 'highscore'}, function(event, options) {
 					highscore = options.value || highscore;
 					if(highscore && highscore.length) {
@@ -520,11 +529,9 @@ Wikia.log(choosenCorrectPictures);
 			 */
 			document.body.innerHTML = Mustache.to_html(templates.wrapper, view);
 
-			initHighscore();
-
 			img.onload = imageLoaded;
 			img.onerror = imageLoadError;
-			
+
 			if(Wikia.Platform.is('app')){
 				Titanium.App.addEventListener('XDomainLoader:showProgress', function(event){
 					screens.openModal({
@@ -534,27 +541,27 @@ Wikia.log(choosenCorrectPictures);
 						total: event.total
 					});
 				});
-				
+
 				Titanium.App.addEventListener('XDomainLoader:updateProgress', function(event){
 					screens.updateModalProgress();
 				});
-				
+
 				Titanium.App.addEventListener('XDomainLoader:hideProgress', function(){
 					screens.closeModal();
 				});
-				
+
 				Titanium.App.addEventListener('ScreenManager:back', function(event){
 					if(games.getCurrentId() != 'tutorial' || screens.getCurrentId() != 'game')
 						screens.closeModal();
-					
+
 					if(screens.getCurrentId() == 'game' && games.getCurrentId() != 'tutorial')
 						pause('pause', {caller:'goHomeButton'});
-					
+
 					if(screens.getCurrentId() != 'home' && (games.getCurrentId() != 'tutorial' || event.force))
 						screens.get('home').show();
 				});
 			}
-			
+
 			screens.addEventListener('show', screenShown);
 			screens.get('game').addEventListener('maskDisplayed', maskDisplayed);
 			screens.get('game').addEventListener('modalOpened', modalOpened);
@@ -572,12 +579,16 @@ Wikia.log(choosenCorrectPictures);
 			screens.get('game').init();
 			screens.get('home').init();
 
-			initHomeScreen();
+			initHighscore();
 
 			data.storage.addEventListener({name: 'get', key: 'tutorialPlayed'}, function(event, options) {
 				tutorialPlayed = options.value || tutorialPlayed;
 
-				if(!tutorialPlayed) runGame('tutorial');
+				if(!tutorialPlayed)
+					runGame('tutorial');
+				else
+					initHomeScreen();
+
 			});
 
 			data.storage.get('tutorialPlayed');
