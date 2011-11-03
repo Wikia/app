@@ -57,20 +57,20 @@ class SponsorshipDashboardDateProviderHour extends SponsorshipDashboardDateProvi
 	}
 */
 	protected function formatDateByTimestamp($timeStamp){
-		return date("Y-m-d ga", $timeStamp);
+		return date("Y-m-d H:00", $timeStamp);
 	}
 
 	public function getMobileDateString( $forWhere = false ){
-		return ( $forWhere ) ? "DATE_FORMAT( ts, '%Y%m%d %g%a' )" : "DATE_FORMAT( ts, '%Y-%m-%d %g%a' )";
+		return ( $forWhere ) ? "DATE_FORMAT( ts, '%Y%m%d %H:00' )" : "DATE_FORMAT( ts, '%Y-%m-%d %H:00' )";
 	}
 
 	function getEndDate(){
-		return date( "Y-m-d ga", mktime(date("H")-1, 0, 0, date( "m" ), date( "d" ), date( "Y" )));
+		return date( "Y-m-d H:00", mktime(date("H")-1, 0, 0, date( "m" ), date( "d" ), date( "Y" )));
 	}
 
 	function getStartDate(){
 		$startTime = ( !empty( $dateUnits ) ) ? mktime(date("H")-$dateUnits, 0, 0, date( "m" ), date( "d" ), date( "Y" )) : strtotime( SponsorshipDashboardDateProvider::SD_START_DATE );
-		return date( "Y-m-d ga", $startTime );
+		return date( "Y-m-d H:00", $startTime );
 	}	
 } // end SponsorshipDashboardDateProviderDay
 
