@@ -205,7 +205,11 @@ define.call(exports, function(){
 
 		tileClicked: function(event, tile) {
 			tile.clicked = true;
-			tile.style.height = 0;
+			if(Wikia.Platform.is('app')) {
+				tile.style.display = 'none';
+			} else {
+				tile.style.height = 0;
+			}
 		},
 
 		answerDrawerButtonClicked: function(event, options) {
@@ -214,27 +218,41 @@ define.call(exports, function(){
 			imgs = button.getElementsByTagName('img');
 
 			if (buttonClassList.contains('closed')) {
-				imgs[0].style.opacity = 0;
-				imgs[1].style.opacity = 1;
+				imgs[0].style.visibility = 'hidden';
+				imgs[1].style.visibility = 'visible';
 				buttonClassList.remove('closed');
 				document.getElementById('answerDrawer').style.right = 0;
 			} else {
-				imgs[1].style.opacity = 0;
-				imgs[0].style.opacity = 1;
+				imgs[1].style.visibility = 'hidden';
+				imgs[0].style.visibility = 'visible';
 				buttonClassList.add('closed');
-				document.getElementById('answerDrawer').style.right = -225;
+				document.getElementById('answerDrawer').style.right = -document.getElementById('answerDrawer').offsetWidth+20;
 			}
 		},
 
 		answersPrepared: function(event, options) {
-			var answerList = document.getElementById('answerList').getElementsByTagName('li'),
-			answerListLength = answerList.length;
+			var answers = document.getElementById('answerList'),
+			answerList = answers.getElementsByTagName('li'),
+			answerListLength = answerList.length,
+			answerDrawer = document.getElementById('answerDrawer'),
+			answerButton = document.getElementById('answerButton');
 
 			for(var i = 0; i < answerListLength; i++) {
 				answerList[i].clicked = false;
 				answerList[i].innerHTML = options.answers[i];
 				answerList[i].classList.remove(options['class']);
 			}
+
+			setTimeout(function() {
+				var width = document.getElementById('answerList').offsetWidth;
+
+				document.getElementById('answerDrawer').style.width = width+20;
+				document.getElementById('answerDrawer').style.right = -width;
+				document.getElementById('answerButton').style.right = width;
+								Wikia.log(width);
+			},100);
+
+
 		},
 
 		wrongAnswerClicked: function(event, options) {
@@ -308,7 +326,7 @@ define.call(exports, function(){
 			} else {
 				var divs = document.getElementById('tilesWrapper').getElementsByTagName('div'),
 				divsArray = Array.prototype.slice.call(divs),
-				divsLength = divsArray.length;
+				divsLength = divsArray.length,
 				next = 0,
 				self = this;
 
@@ -317,7 +335,12 @@ define.call(exports, function(){
 				var t = setInterval(function() {
 					divsArray[next].clicked = false;
 					divsArray[next].style.left = divsArray[next].originalLeft;
-					divsArray[next].style.height = divsArray[next].originalHeight
+					if(Wikia.Platform.is('app')) {
+						divsArray[next].style.display = 'block';
+					} else {
+						divsArray[next].style.height = divsArray[next].originalHeight;
+					}
+
 					next++;
 					if(next == divsLength) {
 						clearInterval(t);
@@ -338,8 +361,8 @@ define.call(exports, function(){
 			answerDrawerStyle.right = -225;
 
 			answerButton.classList.add('closed');
-			answerButton.getElementsByTagName('img')[1].style.opacity = 0;
-			answerButton.getElementsByTagName('img')[0].style.opacity = 1;
+			answerButton.getElementsByTagName('img')[1].style.visibility = 'hidden';
+			answerButton.getElementsByTagName('img')[0].style.visibility = 'visible';
 		},
 
 		showContinue: function(text) {
