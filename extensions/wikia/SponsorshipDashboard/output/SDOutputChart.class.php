@@ -15,8 +15,16 @@ class SponsorshipDashboardOutputChart extends SponsorshipDashboardOutputFormatte
 	public $fromYear = 2000;
 	public $groupId = 0;
 	public $showActionsButton = true;
+	public $chartNumericId = 1; // So that multiple charts can be on the same page, each chart needs a unique numeric id
 
 	protected $actualDate;
+	
+	public function  __construct() {
+		parent::__construct();
+		static $nextChartId = 1; // this var will count up as Charts are initialized
+
+		$this->chartNumericId = $nextId++;
+	}
 
 	// const TEMPLATE_TEASER_CHART = 'teaser';
 	const TEMPLATE_CHART_INFOONLY = 'chart_info';
@@ -84,7 +92,7 @@ class SponsorshipDashboardOutputChart extends SponsorshipDashboardOutputFormatte
 					'ticks'			=> $ticks,
 					'fullTicks'		=> $fullTicks,
 					'hiddenSeries'		=> Wikia::json_encode($this->hiddenSeries),
-					'number'		=> 1,
+					'number'		=> $this->chartNumericId,
 					'path'			=> !empty( $this->groupId )
 									? $wgTitle->getFullURL().'/'.$this->groupId.'/'.$this->report->id.'/csv'
 									: $wgTitle->getFullURL().'/admin/CSVReport/'.$this->report->id,
