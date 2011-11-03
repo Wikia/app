@@ -516,24 +516,6 @@
 
 			initHomeScreen();
 
-			//screens.openModal({
-			//	name: 'pause',
-			//	html: Wikia.i18n.Msg('photopop-game-loading-assets'),
-			//	progress: true
-			//});
-			//
-			//var i = 0;
-			//var t = setInterval(function() {
-			//	if(i <= 30) {
-			//		screens.updateModalProgress(i++, 30);
-			//	} else {
-			//		t = null;
-			//		screens.closeModal();
-			//	}
-			//
-			//}, 400);
-
-
 			data.storage.addEventListener({name: 'get', key: 'tutorialPlayed'}, function(event, options) {
 				tutorialPlayed = options.value || tutorialPlayed;
 
