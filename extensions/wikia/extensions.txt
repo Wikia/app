@@ -94,7 +94,7 @@ Founder Emails
 ignored = founderemails-email-footer-line3
 
 Founder Progress Bar
-optional = founderprogressbar-commcentral-visit-url, founderprogressbar-user-add5-url
+optional = founderprogressbar-commcentral-visit-url, founderprogressbar-user-add5-url, founderprogressbar-gallery-add-url
 
 Game Guides
 
@@ -211,7 +211,6 @@ Related Video
 file = RelatedVideo/i18n/RelatedVideo.i18n.php
 
 Related Videos
-file = RelatedVideos/RelatedVideos.i18n.php
 
 RTE - Base
 file = RTE/i18n/RTE.i18n.php
@@ -318,8 +317,6 @@ file = WhereIsExtension/SpecialWhereIsExtension.i18n.php
 
 Wikia Irc Gateway
 ignored = ircgate-channellist
-
-Wikia Labs
 
 Wikia Mini Upload
 
