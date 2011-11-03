@@ -23,7 +23,7 @@ class SponsorshipDashboardOutputChart extends SponsorshipDashboardOutputFormatte
 		parent::__construct();
 		static $nextChartId = 1; // this var will count up as Charts are initialized
 
-		$this->chartNumericId = $nextId++;
+		$this->chartNumericId = $nextChartId++;
 	}
 
 	// const TEMPLATE_TEASER_CHART = 'teaser';
