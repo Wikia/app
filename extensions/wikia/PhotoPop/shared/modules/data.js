@@ -9,21 +9,25 @@ define.call(exports, ['modules/settings'],function(settings){
 
 			if(Wikia.Platform.is('app')){
 				Titanium.App.addEventListener('Storage:stored', function(event){
-					that.fire('set', {key: event.key, value: event.value});
-					that.fire({name: 'set', key: event.key}, {key: event.key, value: event.value});
+					var value = JSON.stringify(event.value);
+					that.fire('set', {key: event.key, value: value});
+					that.fire({name: 'set', key: event.key}, {key: event.key, value: value});
 				});
 
 				Titanium.App.addEventListener('Storage:fetched', function(event){
-					that.fire('get', {key: event.key, value: JSON.parse(event.value)});
-					that.fire({name: 'get', key: event.key}, {key: event.key, value: event.value});
+					var value = JSON.parse(event.value);
+					
+					that.fire('get', {key: event.key, value: value});
+					that.fire({name: 'get', key: event.key}, {key: event.key, value: value});
 				});
 			}
 		},
 
 		set: function(key, value){
-			if(Wikia.Platform.is('app'))
-				Titanium.App.fireEvent('Storage:set', {key: key, value: JSON.stringify(value)});
-			else{
+			if(Wikia.Platform.is('app')){
+				value = JSON.stringify(value);
+				Titanium.App.fireEvent('Storage:set', {key: key, value: value});
+			}else{
 				store.set(key, value);
 				this.fire('set', {key: key, value: value});
 				this.fire({name: 'set', key: key}, {key: key, value: value});

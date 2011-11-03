@@ -89,7 +89,6 @@ define.call(exports, ['modules/data'], function(data){
 		},
 
 		prepareGame: function(){
-			Wikia.log('games: Starting game - ' + this.getId());
 			this.fire('initGameScreen', this.getId());
 			this.prepareAnswerDrawer();
 			this.prepareContinueView();
@@ -240,9 +239,7 @@ define.call(exports, ['modules/data'], function(data){
 		handlePause: function(state, caller) {
 			state = state || false;
 			this._pause = state;
-
-			Wikia.log('games: state - ' + state);
-
+			
 			if(state) {
 				this._timer = null;
 			} else {

@@ -60,7 +60,6 @@ define.call(exports, function(){
 		_barWrapperHeight: 0,
 
 		constructor: function(parent) {
-			Wikia.log('screens: Game screen created');
 			Observe(this);
 			this._parent = parent;
 		},
@@ -249,7 +248,6 @@ define.call(exports, function(){
 				document.getElementById('answerDrawer').style.width = width+20;
 				document.getElementById('answerDrawer').style.right = -width;
 				document.getElementById('answerButton').style.right = width;
-								Wikia.log(width);
 			},100);
 
 
@@ -344,7 +342,6 @@ define.call(exports, function(){
 					next++;
 					if(next == divsLength) {
 						clearInterval(t);
-						Wikia.log('games: showMask done');
 						self.updateHudScore(options.totalPoints);
 						setTimeout(function() {self.fire('maskDisplayed');}, 400);
 					}
@@ -408,7 +405,7 @@ define.call(exports, function(){
 
 		updateMuteButton: function(mute) {
 			var button = document.getElementById('muteButton').getElementsByTagName('img');
-			Wikia.log('games: mute - ' + mute);
+			
 			if(mute) {
 				button[0].style.visibility = 'hidden';
 				button[1].style.visibility = 'visible';
@@ -446,7 +443,6 @@ define.call(exports, function(){
 	HomeScreen = my.Class({
 
 		constructor: function(parent) {
-			Wikia.log('games: Home screen created');
 			Observe(this);
 			this._parent = parent;
 		},

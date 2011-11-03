@@ -141,8 +141,7 @@
 				}
 			}
 
-			function wrongAnswerClicked(event, options){
-				console.log(options);
+			function wrongAnswerClicked(event, options
 				screens.get('game').fire('wrongAnswerClicked', {
 					"class" : Game.INCORRECT_CLASS_NAME,
 					li: options.li,
@@ -376,6 +375,10 @@
 						data.storage.addEventListener({name: 'get', key: selectedGame.id}, function(event, options) {
 							gameData = options.value || gameData;
 							//if there is already a game in localstorage start it from this data otherwise load a new one
+							
+							/*if(typeof gameData == 'string')
+								gameData = JSON.parse(gameData);*/
+							
 							(gameData)? newGame(gameData): loadSelectedGame();
 						});
 
