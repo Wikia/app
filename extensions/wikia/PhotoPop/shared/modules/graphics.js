@@ -21,8 +21,8 @@ define.call(exports, ['modules/settings'], function(settings){
 		},
 
 		getPicture: function(path){
-			if(Wikia.Platform.is('app')) {
-				return path;
+			if(Wikia.Platform.is('app')){
+				return window.dataPath + '/' + path.replace(/[:\/%-]/g, '_');
 			} else {
 				return path;
 			}
