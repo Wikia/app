@@ -211,18 +211,16 @@ body{
 	position:relative;
 	float:right;
 	height: 250px;
-	width: 250px;
 	color:#215B68;
 	background-color:rgba(137, 196, 64, 0.9);
 	border-radius: 15px 0 0 15px;
 	z-index:29;
-	right:-225px;
 	-webkit-transition: right .3s ease-in-out;
 	-moz-transition: right .3s ease-in-out;
 }
+
 #answerButton{
 	top:50%;
-	right: 230px;
 	cursor:pointer;
 	z-index:100;
 	margin-top:-20px;
@@ -230,24 +228,42 @@ body{
 	height: 40px;
 }
 
-#answerButton img:nth-of-type(2) {
-	opacity: 0;
+#answerButton img:last-of-type {
+	visibility: hidden;
+}
+#answerList{
+	height:100%;
+	list-style-type:none;
+	right: 0;
 }
 
-.bottomBar {
-	bottom: 0;
-	width:100%;
-	text-align:left;
-	background-color: rgba(0, 0, 0, 0.4);
-	background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.8))); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.8) 100%); /* Chrome10+,Safari5.1+ */
-	height: 24px;
-	z-index:22;
-	-webkit-transition: all .5s  ease-in;
-	-moz-transition: all.5s  ease-in;
+#answerList li{
+	height: 25%;
+	color: #215B68;
+	border-bottom: 1px solid #fff;
+	line-height: 62.5px;
+	overflow:hidden;
+	cursor:pointer;
+	position: static;
+	text-align: center;
+	padding: 0 20px;
+	white-space: nowrap;
+}
+#answerList li.incorrect{
+	color:white;
+	/* GRADIENT BACKGROUND  Props to http://ie.microsoft.com/testdrive/graphics/cssgradientbackgroundmaker/default.html */
+	background-image: -ms-linear-gradient(top, #B60000 32%, #D72828 47%, #B60000 83%);
+	background-image: -moz-linear-gradient(top, #B60000 32%, #D72828 47%, #B60000 83%);
+	background-image: -o-linear-gradient(top, #B60000 32%, #D72828 47%, #B60000 83%);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(.32, #B60000), color-stop(.47, #D72828), color-stop(.83, #B60000));
+	background-image: -webkit-linear-gradient(top, #B60000 32%, #D72828 47%, #B60000 83%);
+	background-image: linear-gradient(top, #B60000 32%, #D72828 47%, #B60000 83%);
 }
 
+#answerList li:last-child{
+	border-bottom:0px;
+}
+/** ANSWER DRAWER - END **/
 #continue{
 	padding-top: 2px;
 	padding-bottom:2px;
@@ -284,38 +300,6 @@ body{
 	-webkit-transition: all 1s ease-out;
 	-moz-transition:all 1s ease-out;
 }
-#answerList{
-	height:100%;
-	width:230px;
-	list-style-type:none;
-	right: 0;
-}
-
-#answerList li{
-	height: 25%;
-	color: #215B68;
-	border-bottom: 1px solid #fff;
-	line-height: 62.5px;
-	overflow:hidden;
-	cursor:pointer;
-	position: static;
-	text-align: center;
-}
-#answerList li.incorrect{
-	color:white;
-	/* GRADIENT BACKGROUND  Props to http://ie.microsoft.com/testdrive/graphics/cssgradientbackgroundmaker/default.html */
-	background-image: -ms-linear-gradient(top, #B60000 32%, #D72828 47%, #B60000 83%);
-	background-image: -moz-linear-gradient(top, #B60000 32%, #D72828 47%, #B60000 83%);
-	background-image: -o-linear-gradient(top, #B60000 32%, #D72828 47%, #B60000 83%);
-	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(.32, #B60000), color-stop(.47, #D72828), color-stop(.83, #B60000));
-	background-image: -webkit-linear-gradient(top, #B60000 32%, #D72828 47%, #B60000 83%);
-	background-image: linear-gradient(top, #B60000 32%, #D72828 47%, #B60000 83%);
-}
-
-#answerList li:last-child{
-	border-bottom:0px;
-}
-/** ANSWER DRAWER - END **/
 
 #scoreBarWrapper{
 	position:absolute;
@@ -341,66 +325,60 @@ body{
 	border-radius:3px;
 	z-index:24;
 }
-#hud{
-	padding-left: 30px;
+
+/** BOTTOM BAR **/
+.bottomBar {
+	bottom: 0;
+	width:100%;
+	text-align:left;
+	background-color: rgba(0, 0, 0, 0.4);
+	background: -moz-linear-gradient(top, transparent 0%, rgba(0,0,0,0.6) 60%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,transparent), color-stop(60%,rgba(0,0,0,0.6)));
+	background: -webkit-linear-gradient(top, transparent 0%,rgba(0,0,0,0.6) 60%);
+	background: -o-linear-gradient(top, transparent 0%, rgba(0,0,0,0.6) 60%);
+	height: 30px;
+	z-index:22;
+	-webkit-transition: all .5s  ease-in;
+	-moz-transition: all.5s  ease-in;
+	-o-transition: all.5s  ease-in;
 	padding-top: 2px;
 	padding-bottom:2px;
+	color:#d3eaff;
+	line-height: 35px;
 }
-#home, #hud div a:hover{
-	width: 20px;
-	height: 20px;
-	padding-right: 15px;
-	background-color:transparent;
-}
-
-#score {
-	width: auto;
-	margin-left: 30px;
+#hud #home {
+	left: 25px;
+	top: 5px
 }
 
-#score span {
-	position:static;
+#hud #score {
+	left: 100px
 }
 
 #hud #progress {
-	width: 90px;
-	float: right;
-	margin-right: 30px;
-}
-#hud div{
-	color:#d3eaff;
-	position:static;
-	float:left;
-	width:auto;
-	line-height: 24px;
-}
-#hud span{
-	margin-left:2px;
-	color:rgba(137, 196, 64, 0.9);
-
+	right: 110px;
 }
 
 #hud #pauseButton {
-	width: 25px;
-	height: 25px;
-	margin-right: 10px;
-	float: right;
-}
+	padding: 8px;
+	right: 40px;
+	width: 30px;
+	height: 20px;}
 
-#hud img {
-	height: 24px;
+#hud #muteButton {
+	padding: 5px;
+	right: 0;
+	width: 30px;
+	height: 20px;
+}
+#hud span{
+	color:rgba(137, 196, 64, 0.9);
+	position: static;
 }
 
 #pauseButton img:last-of-type,
 #muteButton img:last-of-type {
 	visibility: hidden;
-}
-
-#hud #muteButton {
-	width: 25px;
-	height: 25px;
-	margin-right: 40px;
-	float: right;
 }
 
 .transparent{
@@ -505,6 +483,8 @@ body{
 	background-color: #00396d;
 	-webkit-transition: all .3s ease-out;
 	-moz-transition: all .3s ease-out;
+	-o-transition: all .3s ease-out;
+	transition: all .3s ease-out;
 }
 /** END-GAME SCREEN-OVERLAY - END **/
 
