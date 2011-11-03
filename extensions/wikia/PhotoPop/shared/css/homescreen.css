@@ -240,7 +240,7 @@ body{
 #answerList li{
 	height: 25%;
 	color: #215B68;
-	border-bottom: 1px solid #fff;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 	line-height: 62.5px;
 	overflow:hidden;
 	cursor:pointer;
@@ -477,7 +477,7 @@ body{
 #tilesWrapper {
 	height: 100%;
 	width: 100%;
-	z-index:21;
+	z-index: 21;
 }
 #tilesWrapper div {
 	background-color: #00396d;
@@ -547,6 +547,7 @@ body{
 
 #jobProgress {
 	display: none;
+	font-size: large;
 }
 
 #jobProgress.visible {
@@ -564,10 +565,13 @@ body{
 	height: 100%;
 	width: 0;
 	float: left;
-	background: rgb(169,3,41); /* Old browsers */
-	background: -moz-linear-gradient(top, rgba(169,3,41,1) 0%, rgba(143,2,34,1) 44%, rgba(109,0,25,1) 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(169,3,41,1)), color-stop(44%,rgba(143,2,34,1)), color-stop(100%,rgba(109,0,25,1))); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top, rgba(169,3,41,1) 0%,rgba(143,2,34,1) 44%,rgba(109,0,25,1) 100%); /* Chrome10+,Safari5.1+ */
+	background: rgb(201,222,150); /* Old browsers */
+	background: -moz-linear-gradient(top, rgba(201,222,150,1) 0%, rgba(138,182,107,1) 44%, rgba(57,130,53,1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(201,222,150,1)), color-stop(44%,rgba(138,182,107,1)), color-stop(100%,rgba(57,130,53,1))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, rgba(201,222,150,1) 0%,rgba(138,182,107,1) 44%,rgba(57,130,53,1) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, rgba(201,222,150,1) 0%,rgba(138,182,107,1) 44%,rgba(57,130,53,1) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, rgba(201,222,150,1) 0%,rgba(138,182,107,1) 44%,rgba(57,130,53,1) 100%); /* IE10+ */
+	background: linear-gradient(top, rgba(201,222,150,1) 0%,rgba(138,182,107,1) 44%,rgba(57,130,53,1) 100%); /* W3C */
 	opacity: .9;
 	border-radius: 5px;
 }

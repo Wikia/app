@@ -39,9 +39,9 @@ define.call(exports, function(){
 		},
 
 		show: function(){
-			if(document.getElementById('modalWrapper').screen) {
+			if(this._screenId == 'game' && document.getElementById('modalWrapper').state) {
 				this._manager.reopenModal();
-			} else {
+			} else if(!this._manager._isProgress){
 				this._manager.hideModal();
 			}
 			this._domElement.style.display = this._origDisplay;
@@ -180,7 +180,7 @@ define.call(exports, function(){
 
 			var divs = tilesWrapper.getElementsByTagName('div');
 
-			for(var j,i = 0; i < numTiles; i++) {
+			for(var i = 0; i < numTiles; i++) {
 				var div = divs[i],
 				divStyle = div.style;
 
@@ -533,7 +533,7 @@ define.call(exports, function(){
 			return screens[id] = screens[id] || new Screen(id, this);
 		},
 
-		openModal: function(options, screen) {
+		openModal: function(options) {
 			options = options || {};
 
 			var modalWrapper = document.getElementById('modalWrapper'),
@@ -601,7 +601,7 @@ define.call(exports, function(){
 			modal.classList.remove('triangle');
 			document.getElementById('modalText').innerHTML = "";
 			modalWrapper.style.visibility = 'hidden';
-			modalWrapper.screen = false;
+			modalWrapper.state = false;
 		},
 
 		updateModalProgress: function(value, total) {
