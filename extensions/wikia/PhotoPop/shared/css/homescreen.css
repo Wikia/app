@@ -139,7 +139,7 @@ body{
 #slidercontent > ul{
 	list-style: none;
 	margin: 0, auto;
-	padding: 0;
+	padding: 10px;
 }
 
 .gameIcon {
@@ -371,7 +371,7 @@ body{
 }
 
 #hud #progress {
-	left: 140px;
+	left: 160px;
 }
 
 #hud #pauseButton {
@@ -631,6 +631,12 @@ body{
 }
 #highscoreScreen td:first-of-type {
 	width: 20px;
+}
+
+#highscoreScreen td {
+	font-size: .8em;
+	font-weight: 100;
+	line-height: 1.6em;
 }
 
 

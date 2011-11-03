@@ -131,7 +131,6 @@
 						openHighscore();
 					};
 
-					Wikia.log('homie');
 					screens.get('home').fire('muteButtonClicked', {mute: audio.getMute()});
 					homeInitialized = true;
 				}

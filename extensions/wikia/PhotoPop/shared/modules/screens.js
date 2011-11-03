@@ -107,9 +107,7 @@ define.call(exports, function(){
 		},
 
 		goHomeClicked: function(event, gameFinished) {
-			if(gameFinished) {
-				//this.prepareGameScreen();
-			}
+
 		},
 
 		resumed: function() {
@@ -161,7 +159,6 @@ define.call(exports, function(){
 
 		timerEvent: function(event, percent) {
 			this.updateScoreBar(percent);
-			//this.updateHudScore();
 		},
 
 		muteButtonClicked: function(event, mute) {
@@ -182,12 +179,13 @@ define.call(exports, function(){
 			offsetY = offsetX = 0,
 			self = this,
 			numTiles = rows * cols;
+			if(tilesWrapper.innerHTML == '') {
+				for(var i = 0; i < numTiles; i++) {
+					table += "<div id='tile-" + i + "'></div>"
+				}
 
-			for(var i = 0; i < numTiles; i++) {
-				table += "<div id='tile-" + i + "'></div>"
+				tilesWrapper.innerHTML = table;
 			}
-
-			tilesWrapper.innerHTML = table;
 
 			var divs = tilesWrapper.getElementsByTagName('div');
 
@@ -201,6 +199,7 @@ define.call(exports, function(){
 				divStyle.height = div.originalHeight = rowHeight;
 				divStyle.backgroundPosition = '-'+ offsetX + 'px -' + offsetY + 'px';
 				divStyle.left = div.originalLeft = offsetX;
+
 				offsetX += colWidth;
 
 				if((i+1) % cols == 0) {
@@ -520,7 +519,7 @@ define.call(exports, function(){
 					tds = tr.getElementsByTagName('td'),
 					date = highscore[i].date;
 
-					tds[0].innerHTML = (i+1);
+					tds[0].innerHTML = (i+1) + '.';
 					tds[1].innerHTML = highscore[i].wiki;
 					tds[2].innerHTML = date[0] + ' ' + Wikia.i18n.Msg('photopop-game-month-'+ date[1]) + ' ' + date[2];
 					tds[3].innerHTML = highscore[i].score;
