@@ -935,6 +935,8 @@ class WallHooksHelper {
 					$logPage->addEntry( 'restore', $title, $reason, array() );
 				}
 			}
+			
+			$hookAddedLogEntry = true;
 		}
 		
 		return true;
