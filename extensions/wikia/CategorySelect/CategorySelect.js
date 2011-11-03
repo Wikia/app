@@ -545,7 +545,6 @@ function initAutoComplete() {
 	if(!autoCompleteLoaded){
 		// grab categoryArray var
 		$.getScript(wgServer + wgScriptPath + '?action=ajax&rs=CategorySelectGetCategories', function(data){
-			console.log(categoryArray)
 			$.loadYUI(function() {
 				// Init datasource
 				var oDataSource = getCategoriesDataSource();
