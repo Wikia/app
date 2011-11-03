@@ -30,6 +30,7 @@
 			maskShown = false,
 			highscore = [],
 			tutorialSteps = [],
+			choosenCorrectPictures = [],
 			view = {
 				image: function() {
 					return function(text, render) {
@@ -81,13 +82,13 @@
 
 					for(var p in gamesData){
 						var game = gamesData[p];
-						
+
 						if(!game.thumbnail)
 								game.thumbnail = graphics.getAsset('gameicon_default');
-						
+
 						templateVars.games.push(game);
 					}
-					
+
 					document.getElementById('sliderContent').innerHTML = Mustache.to_html(templates.gameSelector, templateVars);
 
 					var gamesList = document.getElementById('gamesList').onclick = function(event){
@@ -278,6 +279,7 @@
 			}
 
 			function manageInteraction(){
+				if(img.complete) imagePreloaded = true;
 				if(maskShown && imagePreloaded){
 					if(currentGame.getId() != 'tutorial') screens.closeModal();
 					screens.get('game').getElement().style.pointerEvents = 'auto';
@@ -326,7 +328,7 @@
 			}
 
 			function pause(event, options){
-				var pauseModal = ('pauseButton' == options.caller || 'goHomeButton' == options.caller);
+				var pauseModal = ('pauseButton' == options.caller || ('goHomeButton' == options.caller && !currentGame.getId() != 'tutorial'));
 
 				if(options.pause){
 					screens.get('game').fire('paused');
@@ -375,10 +377,10 @@
 						data.storage.addEventListener({name: 'get', key: selectedGame.id}, function(event, options) {
 							gameData = options.value || gameData;
 							//if there is already a game in localstorage start it from this data otherwise load a new one
-							
+
 							/*if(typeof gameData == 'string')
 								gameData = JSON.parse(gameData);*/
-							
+
 							(gameData)? newGame(gameData): loadSelectedGame();
 						});
 
@@ -389,6 +391,27 @@
 				}
 			}
 
+			function chooseRandomPicture(val, max, correct) {
+				var nextRandom = val;
+
+				while(nextRandom == val) {
+
+					nextRandom = Math.floor(Math.random() * max);
+					if(correct) {
+						for(var i = 0; i < choosenCorrectPictures.length; i++) {
+							if(nextRandom == choosenCorrectPictures[i]) {
+								nextRandom = val;
+							}
+						}
+					}
+				}
+
+				if(correct) {
+					choosenCorrectPictures.push(nextRandom)
+				}
+				return nextRandom;
+			}
+
 			function loadGame(){
 				var id = selectedGame.id,
 				data = [],
@@ -397,11 +420,13 @@
 				wrongLength = selectedGame.w.length,
 				a,b,c,d;
 
+				choosenCorrectPictures = [];
+
 				for(var i = 0, l = Game.ROUND_LENGTH;i < l; i++){
-					a = Math.floor(Math.random() * correctLength);
-					b = Math.floor(Math.random() * correctLength);
-					c = Math.floor(Math.random() * wrongLength);
-					d = Math.floor(Math.random() * wrongLength);
+					a = chooseRandomPicture(-1, correctLength, true);
+					b = chooseRandomPicture(a, correctLength);
+					c = chooseRandomPicture(-1, wrongLength);
+					d = chooseRandomPicture(c, wrongLength);
 
 					data.push({
 						image: selectedGame.c[a].image,
@@ -414,7 +439,7 @@
 						correct: selectedGame.c[a].text
 					});
 				}
-
+Wikia.log(choosenCorrectPictures);
 				newGame({_id:id, _data:data});
 			}
 
