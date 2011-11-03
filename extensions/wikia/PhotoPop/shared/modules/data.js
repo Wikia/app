@@ -91,8 +91,8 @@ define.call(exports, ['modules/settings'],function(settings){
 						}
 					}
 					
-					//if(event.images != null)
-						
+					Wikia.log('DATA-------- ' + data);
+					Wikia.log('NEEDSREQUEST-------- ' + needsRequest);
 				
 					if(needsRequest && event.source == 'web')
 						alert('Error, invalid response from ' + event.url);
@@ -107,27 +107,21 @@ define.call(exports, ['modules/settings'],function(settings){
 		_sendRequest: function(url, options){
 			var that = this;
 			options = options || {};
-
-			Wikia.log('data: sending request to ' + url);
-			if(window.online || !Wikia.Platform.is('app')){
-				reqwest({
-					url: url + ((url.indexOf('?') >= 0) ? '&' : '?') + 'callback=?',
-					type: 'jsonp',
-					method: options.method || 'get',
-					error: function(err){
-						that.fire('error', {url: url, error: err});
-					},
-					success: function(data){
-						if(Wikia.Platform.is('app')){
-							Titanium.App.fireEvent('XDomainLoader:success', {url: url, response: data, options: options, id: that._id});
-						}else
-							that.fire('success', {url: url, response: data});
-					}
-				});
-			}else{
-				Titanium.fireEvent('Network:fail');
-				that.fire('error', {url: url, error: err});
-			}
+			
+			reqwest({
+				url: url + ((url.indexOf('?') >= 0) ? '&' : '?') + 'callback=?',
+				type: 'jsonp',
+				method: options.method || 'get',
+				error: function(err){
+					that.fire('error', {url: url, error: err});
+				},
+				success: function(data){
+					if(Wikia.Platform.is('app')){
+						Titanium.App.fireEvent('XDomainLoader:success', {url: url, response: data, options: options, id: that._id});
+					}else
+						that.fire('success', {url: url, response: data});
+				}
+			});
 		},
 
 		load: function(url, options){

@@ -2,7 +2,7 @@ var exports = exports || {};
 //TODO: Create animation managment system
 
 define.call(exports, ['modules/data'], function(data){
-	var currentGame = null;
+	var currentGameId = null;
 
 	var Points = my.Class( {
 
@@ -55,7 +55,7 @@ define.call(exports, ['modules/data'], function(data){
 
 			this._id = options._id;
 			this._numCorrect = options._numCorrect || 0;
-			this._currentRound = ((currentGame == this._id) ? options._currentRound : --options._currentRound) || 0;
+			this._currentRound = ((currentGameId == this._id) ? options._currentRound : --options._currentRound) || 0;
 			this._totalPoints = options._totalPoints? new Points(options._totalPoints): new Points();
 			this._data = options._data || [];
 			this._roundPoints = options._roundPoints? new Points(options._roundPoints): new Points(Game.MAX_POINTS_PER_ROUND);
@@ -122,7 +122,7 @@ define.call(exports, ['modules/data'], function(data){
 			this._timer = null;
 			this._roundIsOver = false;
 
-			currentGame = this.getId();
+			currentGameId = this.getId();
 
 			this.fire('roundStart', {
 				gameId: this.getId(),
@@ -284,6 +284,10 @@ define.call(exports, ['modules/data'], function(data){
 	});
 
 	return {
+		getCurrentId: function(){
+			return currentGameId;
+		},
+		
 		Game: Game
 	};
 });

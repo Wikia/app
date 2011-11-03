@@ -529,7 +529,7 @@ Wikia.log(choosenCorrectPictures);
 				Titanium.App.addEventListener('XDomainLoader:showProgress', function(event){
 					screens.openModal({
 						name: 'Loading data',
-						html: Wikia.i18n.Msg('photopop-game-download-progress-text'),
+						html: Wikia.i18n.Msg((event.update) ? 'photopop-game-update-progress-text' : 'photopop-game-download-progress-text'),
 						progress: true,
 						total: event.total
 					});
@@ -540,11 +540,17 @@ Wikia.log(choosenCorrectPictures);
 				});
 				
 				Titanium.App.addEventListener('XDomainLoader:hideProgress', function(){
-					setTimeout(function(){screens.closeModal()}, 2000);
+					screens.closeModal();
 				});
 				
 				Titanium.App.addEventListener('ScreenManager:back', function(event){
-					if(screens.getCurrent().getId() != 'home')
+					if(games.getCurrentId() != 'tutorial' || screens.getCurrentId() != 'game')
+						screens.closeModal();
+					
+					if(screens.getCurrentId() == 'game' && games.getCurrentId() != 'tutorial')
+						pause('pause', {caller:'goHomeButton'});
+					
+					if(screens.getCurrentId() != 'home' && (games.getCurrentId() != 'tutorial' || event.force))
 						screens.get('home').show();
 				});
 			}

@@ -67,6 +67,8 @@ body{
 
 #homeScreen{
 	background: #00396D;
+	-webkit-box-shadow: black 0 0 20px inset;
+	-moz-box-shadow: black 0 0 20px inset;
 	box-shadow: black 0 0 20px inset;
 	background-image: url("shared/imagesphotopop_background_tile.png");
 	background-image: url("../images/photopop_background_tile.png");
@@ -136,23 +138,29 @@ body{
 
 #slidercontent > ul{
 	list-style: none;
+	margin: 0, auto;
 }
 
 .gameIcon {
 	padding: 5px;
 	text-align: center;
 	font-weight: bold;
-	box-shadow: black 0 0 20px;
-	float: left;
+	/*float: left;*/
+	display: inline-block;
 	cursor: pointer;
 }
 .gameIcon img{
-	border: 1px solid #555;
+	-webkit-box-shadow: black 0 0 20px;
+	-moz-box-shadow: black 0 0 20px;
+	box-shadow: black 0 0 20px;
 	height: 120px;
 	width: 120px;
+	margin-bottom: 5px;
 }
 
 .gameIcon.resumeGame {
+	-webkit-box-shadow: black 0 0 20px;
+	-moz-box-shadow: black 0 0 20px;
 	box-shadow: 0 0 20px green;
 }
 
@@ -304,6 +312,8 @@ body{
 
 #scoreBarWrapper{
 	position:absolute;
+	-webkit-box-shadow: black 0 0 15px inset;
+	-moz-box-shadow: black 0 0 15px inset;
 	box-shadow: black 0px 0px 15px inset;
 	left: 0;
 	top: 0;
@@ -515,9 +525,12 @@ body{
 	color: #00396D;
 	font-size: x-large;
 	padding: 10px;
-	opacity: .8;
+	opacity: .9;
 	background-color: white;
 	border-radius: 15px;
+	-webkit-box-shadow: black 0 0 20px;
+	-moz-box-shadow: black 0 0 20px;
+	box-shadow: black 0 0 20px;
 	max-width: 70%;
 }
 
@@ -581,6 +594,8 @@ body{
 #highscoreScreen {
 	background-color: #00396D;
 	display: none;
+	-webkit-box-shadow: black 0 0 20px inset;
+	-moz-box-shadow: black 0 0 20px inset;
 	box-shadow: black 0 0 20px inset;
 	background-image: url("shared/imagesphotopop_background_tile.png");
 	background-image: url("../images/photopop_background_tile.png");
