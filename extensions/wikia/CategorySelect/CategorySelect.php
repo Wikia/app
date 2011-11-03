@@ -557,7 +557,7 @@ function CategorySelectGenerateHTMLforEditRaw($categories, $text = '') {
 function CategorySelectGenerateHTMLforEdit($formId = '') {
 	global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgCategorySelectMetaData;
 
-	$wgOut->addScript("<script type=\"text/javascript\">var formId = '$formId';".CategorySelectGetCategories(true)."</script>");
+	$wgOut->addScript("<script type=\"text/javascript\">var formId = '$formId';</script>");
 	$wgOut->addScript("<script type=\"text/javascript\" src=\"$wgExtensionsPath/wikia/CategorySelect/CategorySelect.js?$wgStyleVersion\"></script>");
 
 	// use SCSS file for Oasis

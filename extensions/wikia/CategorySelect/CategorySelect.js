@@ -540,25 +540,33 @@ function getCategoriesDataSource() {
 }
 
 // TODO: PORT AWAY FROM YUI
+var autoCompleteLoaded = false;
 function initAutoComplete() {
-	$.loadYUI(function() {
-		// Init datasource
-		var oDataSource = getCategoriesDataSource();
-
-		// Init AutoComplete object and assign datasource object to it
-		oAutoComp = new YAHOO.widget.AutoComplete('csCategoryInput', 'csSuggestContainer', oDataSource);
-		oAutoComp.autoHighlight = false;
-		oAutoComp.queryDelay = 0;
-		oAutoComp.highlightClassName = 'CSsuggestHover';
-		//fix for some ff problem
-		oAutoComp._selectText = function() {};
-		oAutoComp.queryMatchContains = true;
-		oAutoComp.itemSelectEvent.subscribe(submitAutoComplete);
-		oAutoComp.containerCollapseEvent.subscribe(collapseAutoComplete);
-		oAutoComp.containerExpandEvent.subscribe(expandAutoComplete);
-		//do not show delayed ajax suggestion when user already added the category
-		oAutoComp.doBeforeExpandContainer = function (elTextbox, elContainer, sQuery, aResults) {return elTextbox.value != '';};
-	});
+	if(!autoCompleteLoaded){
+		// grab categoryArray var
+		$.getScript(wgServer + wgScriptPath + '?action=ajax&rs=CategorySelectGetCategories', function(data){
+			console.log(categoryArray)
+			$.loadYUI(function() {
+				// Init datasource
+				var oDataSource = getCategoriesDataSource();
+		
+				// Init AutoComplete object and assign datasource object to it
+				oAutoComp = new YAHOO.widget.AutoComplete('csCategoryInput', 'csSuggestContainer', oDataSource);
+				oAutoComp.autoHighlight = false;
+				oAutoComp.queryDelay = 0;
+				oAutoComp.highlightClassName = 'CSsuggestHover';
+				//fix for some ff problem
+				oAutoComp._selectText = function() {};
+				oAutoComp.queryMatchContains = true;
+				oAutoComp.itemSelectEvent.subscribe(submitAutoComplete);
+				oAutoComp.containerCollapseEvent.subscribe(collapseAutoComplete);
+				oAutoComp.containerExpandEvent.subscribe(expandAutoComplete);
+				//do not show delayed ajax suggestion when user already added the category
+				oAutoComp.doBeforeExpandContainer = function (elTextbox, elContainer, sQuery, aResults) {return elTextbox.value != '';};
+			});
+			autoCompleteLoaded = true;
+		});
+	}
 }
 
 // BugId:11168
@@ -682,7 +690,7 @@ function csCancel() {
 initCatSelectForEdit = function() {
 	$.loadJQueryUI(function() {
 		initHandlers();
-		initAutoComplete();
+		$('#csCategoryInput').focus(initAutoComplete);
 		initSourceModeSuggest();
 		initializeDragAndDrop();
 		initializeCategories();
