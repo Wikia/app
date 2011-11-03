@@ -249,6 +249,42 @@ class ApiGate{
 		wfProfileOut( __METHOD__ );
 		return $apiKeys;
 	} // end getKeysAndNicknamesByUserId()
+	
+	/**
+	 * Returns an array of all keys and nicknames in the system (with optional limit & offset).
+	 * This data should not be displayed to end-users other than admins.
+	 */
+	public static function getAllKeysAndNicknames( $limit="", $offset=""){
+		wfProfileIn( __METHOD__ );
+
+		$apiKeys = array();
+
+		$dbr = ApiGate_Config::getSlaveDb();
+		$queryString = "SELECT apiKey,nickName FROM ".ApiGate::TABLE_KEYS;
+		if($limit != ""){
+			$offsetStr = (($offset == "") ? "" : ",".mysql_real_escape_string( $offset, $dbr ) );
+			$queryString .= " LIMIT='".mysql_real_escape_string( $limit, $dbr )."$offsetStr'";
+		}
+		if( $result = mysql_query( $queryString, $dbr ) ){
+			if(($numRows = mysql_num_rows($result)) && ($numRows > 0)){
+				for($cnt=0; $cnt<$numRows; $cnt++){
+					$apiKey = mysql_result($result, $cnt, "apiKey");
+					$nickName = mysql_result($result, $cnt, "nickName");
+					$nickName = ($nickName=="" ? $apiKey : $nickName); // use apiKey as default if no nickName provided
+					$apiKeys[] = array(
+						"apiKey" => $apiKey,
+						"nickName" => $nickName,
+					);
+				}
+			}
+		} else {
+			$errorString = i18n( 'apigate-mysql-error', $queryString, mysql_error( $dbr ) );
+			print ApiGate_Dispatcher::renderTemplate( "error", array('message' => $errorString));
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $apiKeys;
+	} // end getAllKeysAndNicknames()
 
 	/**
 	 * Sends a WRITE query (usually an insert/update/delete) and returns true on success false on failure.

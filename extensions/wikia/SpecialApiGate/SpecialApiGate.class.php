@@ -43,6 +43,7 @@ class SpecialApiGate extends SpecialPage {
 // TODO: Make sure that all subpages (EXCEPT checkKey!) redirect to Api wiki if they're on another wiki (needed for that right-rail template to work & still be community editable - including the images on it).
 // TODO: Make sure that all subpages (EXCEPT checkKey!) redirect to Api wiki if they're on another wiki (needed for that right-rail template to work & still be community editable - including the images on it).
 
+		$useTwoColLayout = true; // main column & right rail on most forms, but no columns for chart pages since SponsorshipDashboard charts are too wide (and not resizable yet).
 		$mainSectionHtml = "";
 		$apiKey = $wgRequest->getVal( 'apiKey' );
 		switch($subpage){
@@ -76,12 +77,15 @@ class SpecialApiGate extends SpecialPage {
 				$mainSectionHtml .= $this->subpage_allKeys();
 				break;
 			case $this->SUBPAGE_AGGREGATE_STATS:
+				$useTwoColLayout = false; // use full width so that the charts fit
 				$mainSectionHtml .= $this->subpage_aggregateStats();
 				break;
 			case $this->SUBPAGE_USER_KEYS:
 				$mainSectionHtml .= $this->subpage_userKeys();
 				break;
 			case $this->SUBPAGE_KEY:
+				$useTwoColLayout = false; // use full width so that the charts fit
+
 				// Module for key info (it's a form)
 				$mainSectionHtml .= $this->subpage_keyInfo( $apiKey );
 
@@ -94,17 +98,23 @@ class SpecialApiGate extends SpecialPage {
 				$mainSectionHtml .= $this->subpage_landingPage();
 				break;
 		}
-		$wgOut->addHTML( "<div id='specialApiGateMainSection'><div class='module'>
-			<div style='margin:auto;width:400px;background-color:white'>
-				\n$mainSectionHtml\n
-			</div>
-		</div></div>" );
+		
+		// If this is the two-column layout, wrap the extra markup around it.
+		if( $useTwoColLayout ){
+			$wgOut->addHTML( "<div id='specialApiGateMainSection'><div class='module'>
+				<div style='margin:auto;width:400px;background-color:white'>
+					\n$mainSectionHtml\n
+				</div>
+			</div></div>" );
 
-		// End the main column and add the right-rail.
-		$wgOut->addWikiText("<mainpage-endcolumn />
-							<mainpage-rightcolumn-start />
-							{{MenuRail2}}
-							<mainpage-endcolumn />");
+			// End the main column and add the right-rail.
+			$wgOut->addWikiText("<mainpage-endcolumn />
+								<mainpage-rightcolumn-start />
+								{{MenuRail2}}
+								<mainpage-endcolumn />");
+		} else {
+			$wgOut->addHTML( $mainSectionHtml );
+		}
 
 		wfProfileOut( __METHOD__ );
 	} // end execute()
@@ -164,7 +174,7 @@ class SpecialApiGate extends SpecialPage {
 					"href" => "$APIGATE_LINK_ROOT/{$this->SUBPAGE_AGGREGATE_STATS}",
 				),
 			);
-			$html .= "<br/><br/>" . ApiGate_Dispatcher::renderTemplate( "adminLinks", array( "links" => $links ) );
+			$html .= "<br/>" . ApiGate_Dispatcher::renderTemplate( "adminLinks", array( "links" => $links ) );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -216,11 +226,29 @@ class SpecialApiGate extends SpecialPage {
 		return $html;
 	}
 
+	/**
+	 * Subpage which shows admins some very brief stats on each API key so that they can rate-limit or just see
+	 * which apps are interesting.
+	 */
 	public function subpage_allKeys(){
+		wfProfileIn( __METHOD__ );
+		global $wgRequest;
 
-		// TODO: IMPLEMENT
-		// TODO: IMPLEMENT
+		if ( ApiGate_Config::isAdmin() ) {
+			$limit = 100;
+			$offset = $wgRequest->getVal( 'offset', '' ); // for pagination
+			$keysAndNicks = ApiGate::getAllKeysAndNicknames( $limit, $offset );
 
+			$html .=  ApiGate_Dispatcher::renderTemplate( "listKeys", array('keysAndNicks' => $keysAndNicks) );
+		} else {
+
+			// TODO: IMPLEMENT
+			// TODO: IMPLEMENT
+
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $this->wrapHtmlInModuleBox( $html );
 	} // end subpage_allKeys()
 
 	public function subpage_aggregateStats(){
@@ -263,17 +291,43 @@ class SpecialApiGate extends SpecialPage {
 	} // end subpage_userKeys()
 
 	public function subpage_keyInfo( $apiKey ){
+		wfProfileIn( __METHOD__ );
+		$html = "";
 
 		// TODO: IMPLEMENT
 		// TODO: IMPLEMENT
 
+		wfProfileOut( __METHOD__ );
+		return $html;
 	} // end subpage_keyInfo()
 
+	/**
+	 * Displays usage stats (as interactive javscript charts) for a specific API key.  Re-uses
+	 * some of our SponsorshipDashboard code, so it's not reusable by ApiGate and isn't very customizable
+	 * yet, but using SD saved a TON by getting us a decent amount of features in almost no time.
+	 *
+	 * The calling code is responsible for checking whether the user should be allowed to see the html
+	 * that this function returns.
+	 *
+	 * @param apiKey - string - api key whose usage stats should be shown.
+	 * @param html - string - the html for showing the charts of stats. Can be thrown right into wgOut.
+	 */
 	public function subpage_keyStats( $apiKey ){
+		wfProfileIn( __METHOD__ );
 
-		// TODO: IMPLEMENT
-		// TODO: IMPLEMENT
+		global $wgCacheBuster;
+		$period = "daily";
+		$uniqueMemCacheKey = "ApiGate:KeyStats:$apiKey:$period:$wgCacheBuster";
 
+		// TODO: Get this from ApiGate? Might be hacky since SponsorshipDashboard's charting requires specific column names.
+		$queryString = "SELECT hits as number, DATE(startOfPeriod) as creation_date FROM apiGate_stats_$period WHERE apiKey='$apiKey' ORDER BY startOfPeriod";
+
+		$lineName = "LINE NAME"; // TODO: i18n
+		$chartName = "CHART NAME"; // TODO: i18n
+		$html = SpecialApiGate::getChartHtmlByQuery( $queryString, $uniqueMemCacheKey, $lineName, $chartName );
+
+		wfProfileOut( __METHOD__ );
+		return $html;
 	} // end subpage_keyStats()
 
 	/**
@@ -327,5 +381,57 @@ class SpecialApiGate extends SpecialPage {
 		wfProfileOut( __METHOD__ );
 		return $showLink;
 	} // end shouldShowUserLink()
+
+	/**
+	 * Returns HTML for a SponsorshipDashboard chart of the data that queryString gets from the database.
+	 *
+	 * The query is expected to return "number" and "creation_date" fields in each row.
+	 *
+	 * @param queryString - string - query to run whose 'number' and 'creation_date' fields will be charted.
+	 * @param uniqueMemCacheKey - string - key under which the processed results of the query will be cached.
+	 * @param lineName - string - the name of the line of data which will be generated by the query (charts could have many lines in some cases).
+	 * @param chartName - string - the name of the whole chart.
+	 */
+	public static function getChartHtmlByQuery( $queryString, $uniqueMemCacheKey, $lineName, $chartName ){
+		wfProfileIn( __METHOD__ );
+
+		//lets create data source
+		$oSource = F::build( 'SponsorshipDashboardSourceDatabase' , array( $uniqueMemCacheKey ) );
+
+		// this name will be displayed in on a chart
+		$oSource->serieName = $lineName;
+
+		// configure the soruce ( source config depends on source type )
+		$dbr = wfGetDB( DB_SLAVE, array(), F::app()->wg->externalSharedDB );
+		$oSource->setDatabase( $dbr );
+		$oSource->setQuery( $queryString );
+
+		// so we have the source, lets configure the report object
+		$oReport = F::build( 'SponsorshipDashboardReport' );
+		$oReport->name = $chartName;
+
+		// this shows how many steps will be displayed on chart ( counting backwards from now )
+		$oReport->setLastDateUnits( 30 );
+		// lest choose the time resolution
+		$oReport->frequency = SponsorshipDashboardDateProvider::SD_FREQUENCY_DAY;
+
+		// then pass ready source to report ( you can pass many sources )
+		$oReport->tmpSource = $oSource;
+		$oReport->acceptSource();
+
+		$oReport->setId( 0 );
+		$oReport->lockSources();
+
+		// now is the time for making output. There are chart, raw and table outputs.
+		$oOutput = F::build( 'SponsorshipDashboardOutputChart' );
+		$oOutput->showActionsButton = false;
+		$oOutput->set( $oReport );
+
+		// to get HTML just call
+		$html = $oOutput->getHTML();
+		
+		wfProfileOut( __METHOD__ );
+		return $html;
+	} // end getChartHtmlByQuery()
 
 } // end class SpecialApiGate
