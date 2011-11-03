@@ -37,8 +37,8 @@ $messages['en'] = array(
 	'apigate-userkeys-footer' => 'If you have any questions regarding our APIs, please contact us at $1. We would be happy to help out.',
 	
 	'apigate-adminlinks-header' => 'Administrator Links',
-	'apigate-adminlinks-veiwkeys' => 'View table of each individual key',
-	'apigate-adminlinks-veiwaggregate' => 'View aggregate stats',
+	'apigate-adminlinks-viewkeys' => 'View table of each individual key',
+	'apigate-adminlinks-viewaggregate' => 'View aggregate stats',
 );
 
 /** Message documentation (Message documentation)
