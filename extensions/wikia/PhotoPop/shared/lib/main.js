@@ -249,7 +249,7 @@
 			function maskDisplayed(){
 				document.getElementById('bgPic').getElementsByTagName('img')[0].src = img.src;
 
-				if(currentGame.getId() != 'tutorial'){
+				if(currentGame.getId() != 'tutorial' && !Wikia.Platform.is('app')){
 					screens.openModal({
 						name: 'Loading Image',
 						html: Wikia.i18n.Msg('photopop-game-loading-image'),
@@ -355,7 +355,10 @@
 			}
 
 			function onDataError(event, resp){
-				alert('Error loading ' + resp.url + ': ' + resp.error.toString());
+				alert(Wikia.i18n.Msg('photopop-game-request-error'));
+				
+				if(screens.getCurrent().getId() != 'home')
+						screens.get('home').show();
 			}
 
 			function runGame(target){
@@ -521,7 +524,31 @@ Wikia.log(choosenCorrectPictures);
 
 			img.onload = imageLoaded;
 			img.onerror = imageLoadError;
-
+			
+			if(Wikia.Platform.is('app')){
+				Titanium.App.addEventListener('XDomainLoader:showProgress', function(event){
+					screens.openModal({
+						name: 'Loading data',
+						html: Wikia.i18n.Msg('photopop-game-download-progress-text'),
+						progress: true,
+						total: event.total
+					});
+				});
+				
+				Titanium.App.addEventListener('XDomainLoader:updateProgress', function(event){
+					screens.updateModalProgress();
+				});
+				
+				Titanium.App.addEventListener('XDomainLoader:hideProgress', function(){
+					setTimeout(function(){screens.closeModal()}, 2000);
+				});
+				
+				Titanium.App.addEventListener('ScreenManager:back', function(event){
+					if(screens.getCurrent().getId() != 'home')
+						screens.get('home').show();
+				});
+			}
+			
 			screens.addEventListener('show', screenShown);
 			screens.get('game').addEventListener('maskDisplayed', maskDisplayed);
 			screens.get('game').addEventListener('modalOpened', modalOpened);

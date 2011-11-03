@@ -25,8 +25,7 @@ define.call(exports, ['modules/settings'],function(settings){
 
 		set: function(key, value){
 			if(Wikia.Platform.is('app')){
-				value = JSON.stringify(value);
-				Titanium.App.fireEvent('Storage:set', {key: key, value: value});
+				Titanium.App.fireEvent('Storage:set', {key: key, value: JSON.stringify(value)});
 			}else{
 				store.set(key, value);
 				this.fire('set', {key: key, value: value});
@@ -110,21 +109,25 @@ define.call(exports, ['modules/settings'],function(settings){
 			options = options || {};
 
 			Wikia.log('data: sending request to ' + url);
-
-			reqwest({
-				url: url + ((url.indexOf('?') >= 0) ? '&' : '?') + 'callback=?',
-				type: 'jsonp',
-				method: options.method || 'get',
-				error: function(err){
-					that.fire('error', {url: url, error: err});
-				},
-				success: function(data){
-					if(Wikia.Platform.is('app')){
-						Titanium.App.fireEvent('XDomainLoader:success', {url: url, response: data, options: options, id: that._id});
-					}else
-						that.fire('success', {url: url, response: data});
-				}
-			});
+			if(window.online || !Wikia.Platform.is('app')){
+				reqwest({
+					url: url + ((url.indexOf('?') >= 0) ? '&' : '?') + 'callback=?',
+					type: 'jsonp',
+					method: options.method || 'get',
+					error: function(err){
+						that.fire('error', {url: url, error: err});
+					},
+					success: function(data){
+						if(Wikia.Platform.is('app')){
+							Titanium.App.fireEvent('XDomainLoader:success', {url: url, response: data, options: options, id: that._id});
+						}else
+							that.fire('success', {url: url, response: data});
+					}
+				});
+			}else{
+				Titanium.fireEvent('Network:fail');
+				that.fire('error', {url: url, error: err});
+			}
 		},
 
 		load: function(url, options){
