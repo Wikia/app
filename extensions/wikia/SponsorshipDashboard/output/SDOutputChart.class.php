@@ -15,7 +15,7 @@ class SponsorshipDashboardOutputChart extends SponsorshipDashboardOutputFormatte
 	public $fromYear = 2000;
 	public $groupId = 0;
 	public $showActionsButton = true;
-	public $chartNumericId = 1; // So that multiple charts can be on the same page, each chart needs a unique numeric id
+	public $chartNumericId; // So that multiple charts can be on the same page, each chart needs a unique numeric id
 
 	protected $actualDate;
 	
