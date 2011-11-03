@@ -9,7 +9,7 @@ $app->registerClass('ScribeEventProducerController', $dir . '/ScribeEventProduce
 $app->registerHook('ArticleSaveComplete', 'ScribeEventProducerController', 'onSaveComplete' );
 $app->registerHook('NewRevisionFromEditComplete', 'ScribeEventProducerController', 'onSaveRevisionComplete' );
 $app->registerHook('ArticleDeleteComplete', 'ScribeEventProducerController', 'onDeleteComplete' );
-$app->registerHook('ArticleUndelete', 'ScribeEventProducerController', 'onAarticleUndelete' );
+$app->registerHook('ArticleUndelete', 'ScribeEventProducerController', 'onArticleUndelete' );
 $app->registerHook('TitleMoveComplete', 'ScribeEventProducerController', 'onMoveComplete' ); 
 
 F::addClassConstructor( 'ScribeEventProducer', array( 'app' => $app ) );
