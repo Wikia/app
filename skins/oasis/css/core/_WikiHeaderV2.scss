@@ -157,6 +157,13 @@
 					border: 1px solid transparent;
 					margin: 2px 0px 0px 3px;
 					height: 25px;
+					> .chevron {
+						@include opacity(50);
+						border-top-color: $color-button-text;
+						height: 4px;
+						margin: 0 0 3px 5px;
+						vertical-align: bottom;
+					}
 				}
 				&.marked2 {
 					a.subnav-2a {
@@ -168,6 +175,10 @@
 						@include border-radius( 0px );
 						@include border-radius-ne( 3px );
 						@include border-radius-nw( 3px );
+						> .chevron {
+							@include opacity(100);
+							border-top-color: $color-text;
+						}
 					}
 				}
 			}
@@ -295,7 +306,7 @@
 					}
 				}
 			}
-			> .drop img {
+			> .drop > .chevron {
 				height: 4px;
 				vertical-align: bottom;
 			}
@@ -307,9 +318,6 @@
 			background: none;
 			@include linear-gradient(darken($color-secondary-button, 4%), top, darken($color-secondary-button-highlight, 4%), 35%, darken($color-secondary-button, 4%), 65%);
 		}
-	}
-	.chevron {
-		border-top-color: $color-text;
 	}
 }
 
