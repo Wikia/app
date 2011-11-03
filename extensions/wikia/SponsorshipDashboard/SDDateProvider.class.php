@@ -21,41 +21,7 @@ class SponsorshipDashboardDateProviderHour extends SponsorshipDashboardDateProvi
 		return SponsorshipDashboardDateProvider::SD_FREQUENCY_HOUR;
 	}
 	
-	// TODO: Google API doesn't have hours... so we can remove these (if nothing crashes when we comment them out).
-	/*public function getGapiEndDate(){
-		return date( "Y-m-d ga", mktime(date("H")-1, 0, 0, date( "m" ), date( "d" ), date( "Y" )));
-	}
-
-	public function getGapiStartDate( $dateUnits = 0 ){
-		$startTime = ( !empty( $dateUnits ) ) ? mktime(date("H")-$dateUnits, 0, 0, date( "m" ), date( "d" ), date( "Y" )) : strtotime( SponsorshipDashboardDateProvider::SD_START_DATE );
-		return date( "Y-m-d ga", $startTime );
-	}
-
-	public function getGapiDateFromResult( $result ){
-		$hour = 0; // Gape has no result->getHour()
-		$resultTime = mktime($hour, 0, 0, $result->getMonth(), $result->getDay(), $result->getYear());
-		return date( "Y-m-d ga", $resultTime );
-	}
-
-	public function getGapiSamplingDateFromResult( $result ){
-		return mktime( $result->getHour(), 0, 0, $result->getMonth(), $result->getDay(), $result->getYear() );
-	}
-
-	public function getGapiSortingDate(){
-		return array( '-hour', '-day', '-month', '-year' );
-	}
-
-	public function getGapiDateDimensionsTable(){
-		return array( 'hour', 'day', 'month', 'year' );
-	}
-	*/
-
-	// Override the parent function to give a prettier format
-/*	public static function formatDate($year=0, $month=0, $day=0, $hour=0, $minute=0, $second=0){
-		$timeStamp = mktime($hour, $minute, $second, $month, $day, $year)
-		return date("Y-m-d ga", $timeStamp);
-	}
-*/
+	// Overriding parent to provide a slightly more aesthetic format (since seconds and exact-minutes aren't needed).
 	protected function formatDateByTimestamp($timeStamp){
 		return date("Y-m-d H:00", $timeStamp);
 	}
@@ -80,6 +46,11 @@ class SponsorshipDashboardDateProviderDay extends SponsorshipDashboardDateProvid
 
 	public function getType(){
 		return SponsorshipDashboardDateProvider::SD_FREQUENCY_DAY;
+	}
+	
+	// Overriding parent to provide a slightly more aesthetic format
+	protected function formatDateByTimestamp($timeStamp){
+		return date("Y-m-d", $timeStamp);
 	}
 	
 	public function getGapiEndDate(){
@@ -131,6 +102,11 @@ class SponsorshipDashboardDateProviderMonth extends SponsorshipDashboardDateProv
 	public function getType(){
 		return SponsorshipDashboardDateProvider::SD_FREQUENCY_MONTH;
 	}
+	
+	// Overriding parent to provide a slightly more aesthetic format
+	protected function formatDateByTimestamp($timeStamp){
+		return date("Y-m", $timeStamp);
+	}
 
 	public function getGapiEndDate(){
 		return date("Y-m-d", mktime(0, 0, 0, date( "m" ), 0, date( "Y" )));
@@ -179,6 +155,11 @@ class SponsorshipDashboardDateProviderYear extends SponsorshipDashboardDateProvi
 
 	public function getType(){
 		return SponsorshipDashboardDateProvider::SD_FREQUENCY_YEAR;
+	}
+	
+	// Overriding parent to provide a slightly more aesthetic format
+	protected function formatDateByTimestamp($timeStamp){
+		return date("Y", $timeStamp);
 	}
 
 	public function getGapiEndDate(){
