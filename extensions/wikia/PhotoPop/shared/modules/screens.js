@@ -31,7 +31,7 @@ define.call(exports, function(){
 			};
 			return this;
 		},
-		
+
 		getId: function(){
 			return this._screenId;
 		},
@@ -45,16 +45,16 @@ define.call(exports, function(){
 		show: function(){
 			var modalWrapper = document.getElementById('modalWrapper');
 			this._manager._currentId = this._screenId;
-			
+
 			if(Wikia.Platform.is('app'))
 				Titanium.App.fireEvent('ScreenManager:showScreen', {id: this._screenId});
-			
+
 			if(this._screenId == 'game' && modalWrapper.state && !modalWrapper.isProgress) {
 				this._manager.reopenModal();
 			} else if(!modalWrapper.isProgress){
 				this._manager.hideModal();
 			}
-			
+
 			this._domElement.style.display = this._origDisplay;
 			this._manager.fire('show', {id: this._screenId});
 			return this;
@@ -324,7 +324,7 @@ define.call(exports, function(){
 					clearInterval(t);
 					self.showContinue(correct);
 				}
-			}, 5);
+			}, 120);
 
 		},
 
@@ -354,8 +354,8 @@ define.call(exports, function(){
 						self.updateHudScore(options.totalPoints);
 						setTimeout(function() {self.fire('maskDisplayed');}, 400);
 					}
-				}, 1);
-			
+				}, 70);
+
 
 		},
 
@@ -537,7 +537,7 @@ define.call(exports, function(){
 		_progressStatus: 0,
 		_isProgress: false,
 		_currentId: null,
-		
+
 		constructor: function(){
 			Observe(this);
 		},
@@ -623,7 +623,7 @@ define.call(exports, function(){
 
 		updateModalProgress: function() {
 			this._progressStatus++;
-			
+
 			if(this._progressStatus <= this._progressTotal) {
 				document.getElementById('currentValue').innerHTML = this._progressStatus;
 				document.getElementById('totalValue').innerHTML = this._progressTotal;
@@ -648,12 +648,12 @@ define.call(exports, function(){
 
 			return names;
 		},
-		
+
 		showsProgress: function(){
 			Wikia.log('PROGRESSS ' + this._isProgress);
 			return this._isProgress;
 		},
-		
+
 		getCurrentId: function(){
 			return this._currentId;
 		}

@@ -120,5 +120,6 @@ F::build( 'JSMessages' )->registerPackage( 'PhotoPop', array(
 	"photopop-game-month-10",
 	"photopop-game-month-11",
 	"photopop-game-no-highscore",
-	"photopop-game-error-text"
+	"photopop-game-error-text",
+	"photopop-game-finished"
 ) );
