@@ -56,7 +56,7 @@ class SponsorshipDashboardDateProviderHour extends SponsorshipDashboardDateProvi
 		return date("Y-m-d ga", $timeStamp);
 	}
 */
-	protected static function formatDateByTimestamp($timeStamp){
+	protected function formatDateByTimestamp($timeStamp){
 		return date("Y-m-d ga", $timeStamp);
 	}
 
@@ -248,14 +248,14 @@ class SponsorshipDashboardDateProvider {
 	 *
 	 * Can be overridden by subclasses
 	 */
-	public static function formatDate($year=0, $month=0, $day=0, $hour=0, $minute=0, $second=0){
+	public function formatDate($year=0, $month=0, $day=0, $hour=0, $minute=0, $second=0){
 		$timeStamp = mktime($hour, $minute, $second, $month, $day, $year);
-		return self::formatDateByTimestamp( $timeStamp );
+		return $this->formatDateByTimestamp( $timeStamp );
 	}
-	public static function formatDateByString($timeString){
-		return self::formatDateByTimestamp( strtotime( $timeString) );
+	public function formatDateByString($timeString){
+		return $this->formatDateByTimestamp( strtotime( $timeString) );
 	}
-	protected static function formatDateByTimestamp($timeStamp){
+	protected function formatDateByTimestamp($timeStamp){
 		return date("Y-m-d H:i:s", $timeStamp);
 	}
 }
