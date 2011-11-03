@@ -9,6 +9,6 @@ $messages = array();
  * English
  */
 $messages['en'] = array(
-    'gamingcalendar-heading' => 'Game Calendar',
+    'gamingcalendar-heading' => 'Game calendar',
     'gamingcalendar-today' => 'Today',
 );
