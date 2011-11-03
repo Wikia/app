@@ -90,7 +90,7 @@ class SponsorshipDashboardOutputChart extends SponsorshipDashboardOutputFormatte
 									: $wgTitle->getFullURL().'/admin/CSVReport/'.$this->report->id,
 					'monthly'		=> $this->report->frequency == SponsorshipDashboardDateProvider::SD_FREQUENCY_MONTH,
 					'fromYear'		=> $this->fromYear,
-					'showActionsButton' => $showActionsButton
+					'showActionsButton' => $this->showActionsButton
 				)
 			);
 
