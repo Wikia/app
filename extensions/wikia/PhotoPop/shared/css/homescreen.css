@@ -87,18 +87,16 @@ body{
 }
 
 #logoPhotopop{
-	margin:auto;
 	display:block;
-	width: 70%;
-	left: 10px;
 	position: absolute;
-	top: 30px;
+	top: 29px;
+	left: 31px;
 }
 
-#logoWikia{
+#logoWikia {
 	position: absolute;
-	left: 200px;
-	top: 5px;
+	left: 297px;
+	top: 23px;
 }
 
 #sliderWrapper{
@@ -111,12 +109,12 @@ body{
 
 #buttonWrapper{
 	position: absolute;
-	right: 0;
-	top: 0;
+	right: 5px;
+	top: 5px;
 }
 
 .button {
-	margin: 5px;
+	margin: 8px;
 }
 
 #button_volume .off{
@@ -144,20 +142,23 @@ body{
 	padding: 5px;
 	text-align: center;
 	font-weight: bold;
+	box-shadow: black 0 0 20px;
 	float: left;
 	cursor: pointer;
 }
 .gameIcon img{
 	border: 1px solid #555;
-	/*box-shadow:0px 0px 15px #555;
-	-webkit-box-shadow:0px 0px 15px #555;
-	-moz-box-shadow:0px 0px 15px #555;*/
 	height: 120px;
 	width: 120px;
 }
 
 .gameIcon.resumeGame {
 	box-shadow: 0 0 20px green;
+}
+
+.gameIcon .gameName {
+	color: #00396D;
+	font-weight: 600;
 }
 
 #saveInfo {

@@ -2,6 +2,8 @@ var exports = exports || {};
 //TODO: Create animation managment system
 
 define.call(exports, ['modules/data'], function(data){
+	var currentGame = null;
+
 	var Points = my.Class( {
 
 		_points: 0,
@@ -51,14 +53,15 @@ define.call(exports, ['modules/data'], function(data){
 
 			Observe(this);
 
+			this._id = options._id;
 			this._numCorrect = options._numCorrect || 0;
-			this._currentRound = --options._currentRound || 0;
+			this._currentRound = ((currentGame == this._id) ? options._currentRound : --options._currentRound) || 0;
 			this._totalPoints = options._totalPoints? new Points(options._totalPoints): new Points();
 			this._data = options._data || [];
 			this._roundPoints = options._roundPoints? new Points(options._roundPoints): new Points(Game.MAX_POINTS_PER_ROUND);
 			this._numRounds = options._data.length;
 
-			this._id = options._id;
+
 
 			this._timerPointDeduction = Math.round((Game.MAX_POINTS_PER_ROUND / ((Game.MAX_SECONDS_PER_ROUND*1000) / Game.UPDATE_INTERVAL_MILLIS)));
 			this._wrongAnswerPointDeduction = Math.round((Game.MAX_POINTS_PER_ROUND * (Game.PERCENT_DEDUCTION_WRONG_GUESS / 100)));
@@ -118,6 +121,8 @@ define.call(exports, ['modules/data'], function(data){
 			this._pause = true;
 			this._timer = null;
 			this._roundIsOver = false;
+
+			currentGame = this.getId();
 
 			this.fire('roundStart', {
 				gameId: this.getId(),
@@ -239,7 +244,7 @@ define.call(exports, ['modules/data'], function(data){
 		handlePause: function(state, caller) {
 			state = state || false;
 			this._pause = state;
-			
+
 			if(state) {
 				this._timer = null;
 			} else {

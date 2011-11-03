@@ -319,9 +319,7 @@ define.call(exports, function(){
 
 		showMask: function(options) {
 			this.fire('displayingMask', options);
-			if(options.currentRound == 1) {
-				this.fire('maskDisplayed')
-			} else {
+
 				var divs = document.getElementById('tilesWrapper').getElementsByTagName('div'),
 				divsArray = Array.prototype.slice.call(divs),
 				divsLength = divsArray.length,
@@ -346,7 +344,7 @@ define.call(exports, function(){
 						setTimeout(function() {self.fire('maskDisplayed');}, 400);
 					}
 				}, 1);
-			}
+			
 
 		},
 
@@ -405,7 +403,7 @@ define.call(exports, function(){
 
 		updateMuteButton: function(mute) {
 			var button = document.getElementById('muteButton').getElementsByTagName('img');
-			
+
 			if(mute) {
 				button[0].style.visibility = 'hidden';
 				button[1].style.visibility = 'visible';
