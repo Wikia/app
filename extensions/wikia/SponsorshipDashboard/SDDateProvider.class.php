@@ -3,7 +3,7 @@
 /**
  * SponsorshipDashboard
  * @author Jakub "Szeryf" Kurcek
- * @author Sean Colombo
+ * @contributor Sean Colombo
  *
  * Date provider class control proper date settings for series object.
  *
@@ -15,14 +15,15 @@
 
 
 /** HOUR **/
-class SponsorshipDashboardDateProviderHour {
+class SponsorshipDashboardDateProviderHour extends SponsorshipDashboardDateProvider {
 
 	public function getType(){
 		return SponsorshipDashboardDateProvider::SD_FREQUENCY_HOUR;
 	}
 	
-	public function getGapiEndDate(){
-		return date( "Y-m-d ga", mktime(0, 0, 0, date( "m" ), date( "d" )-1, date( "Y" )));
+	// TODO: Google API doesn't have hours... so we can remove these (if nothing crashes when we comment them out).
+	/*public function getGapiEndDate(){
+		return date( "Y-m-d ga", mktime(date("H")-1, 0, 0, date( "m" ), date( "d" ), date( "Y" )));
 	}
 
 	public function getGapiStartDate( $dateUnits = 0 ){
@@ -31,13 +32,9 @@ class SponsorshipDashboardDateProviderHour {
 	}
 
 	public function getGapiDateFromResult( $result ){
-		$aDate = array();
-		$aDate[] = $result->getYear();
-		$aDate[] = $result->getMonth();
-		$aDate[] = $result->getDay();
-		$aDate[] = $result->getHour();
-
-		return implode( '-', $aDate );
+		$hour = 0; // Gape has no result->getHour()
+		$resultTime = mktime($hour, 0, 0, $result->getMonth(), $result->getDay(), $result->getYear());
+		return date( "Y-m-d ga", $resultTime );
 	}
 
 	public function getGapiSamplingDateFromResult( $result ){
@@ -51,23 +48,35 @@ class SponsorshipDashboardDateProviderHour {
 	public function getGapiDateDimensionsTable(){
 		return array( 'hour', 'day', 'month', 'year' );
 	}
+	*/
+
+	// Override the parent function to give a prettier format
+/*	public static function formatDate($year=0, $month=0, $day=0, $hour=0, $minute=0, $second=0){
+		$timeStamp = mktime($hour, $minute, $second, $month, $day, $year)
+		return date("Y-m-d ga", $timeStamp);
+	}
+*/
+	protected static function formatDateByTimestamp($timeStamp){
+		return date("Y-m-d ga", $timeStamp);
+	}
 
 	public function getMobileDateString( $forWhere = false ){
 		return ( $forWhere ) ? "DATE_FORMAT( ts, '%Y%m%d %g%a' )" : "DATE_FORMAT( ts, '%Y-%m-%d %g%a' )";
 	}
 
 	function getEndDate(){
-		return $this->getGapiEndDate();
+		return date( "Y-m-d ga", mktime(date("H")-1, 0, 0, date( "m" ), date( "d" ), date( "Y" )));
 	}
 
 	function getStartDate(){
-		return $this->getGapiStartDate();
+		$startTime = ( !empty( $dateUnits ) ) ? mktime(date("H")-$dateUnits, 0, 0, date( "m" ), date( "d" ), date( "Y" )) : strtotime( SponsorshipDashboardDateProvider::SD_START_DATE );
+		return date( "Y-m-d ga", $startTime );
 	}	
 } // end SponsorshipDashboardDateProviderDay
 
  
 /** DAY **/
-class SponsorshipDashboardDateProviderDay {
+class SponsorshipDashboardDateProviderDay extends SponsorshipDashboardDateProvider {
 
 	public function getType(){
 		return SponsorshipDashboardDateProvider::SD_FREQUENCY_DAY;
@@ -117,7 +126,7 @@ class SponsorshipDashboardDateProviderDay {
 } // end SponsorshipDashboardDateProviderDay
 
  /** MONTH **/
-class SponsorshipDashboardDateProviderMonth {
+class SponsorshipDashboardDateProviderMonth extends SponsorshipDashboardDateProvider {
 
 	public function getType(){
 		return SponsorshipDashboardDateProvider::SD_FREQUENCY_MONTH;
@@ -166,7 +175,7 @@ class SponsorshipDashboardDateProviderMonth {
 } // end SponsorshipDashboardDateProviderMonth
 
 /** YEAR **/
-class SponsorshipDashboardDateProviderYear {
+class SponsorshipDashboardDateProviderYear extends SponsorshipDashboardDateProvider {
 
 	public function getType(){
 		return SponsorshipDashboardDateProvider::SD_FREQUENCY_YEAR;
@@ -232,5 +241,21 @@ class SponsorshipDashboardDateProvider {
 		}
 
 		return new $className();
+	}
+
+	/**
+	 * Returns a formatted date with as many or as few of the possible time-periods provided.
+	 *
+	 * Can be overridden by subclasses
+	 */
+	public static function formatDate($year=0, $month=0, $day=0, $hour=0, $minute=0, $second=0){
+		$timeStamp = mktime($hour, $minute, $second, $month, $day, $year);
+		return self::formatDateByTimestamp( $timeStamp );
+	}
+	public static function formatDateByString($timeString){
+		return self::formatDateByTimestamp( strtotime( $timeString) );
+	}
+	protected static function formatDateByTimestamp($timeStamp){
+		return date("Y-m-d H:i:s", $timeStamp);
 	}
 }

@@ -6,6 +6,8 @@
  */
 class SponsorshipDashboardSourceDatabase extends SponsorshipDashboardSource {
 
+	const SD_SOURCE_TYPE = 'Database';
+
 	var $mDatabase = null;
 	var $sQuery = '';
 	var $sName = '';
@@ -95,6 +97,7 @@ class SponsorshipDashboardSourceDatabase extends SponsorshipDashboardSource {
 			
 			while ( $row = $res->fetchObject( $res ) ) {
 				$sDate = $row->creation_date;
+				$sDate = $this->frequency->formatDateByString( $sDate );
 				$this->dataAll[ $sDate ][ 'date' ] = $sDate;
 				$this->dataAll[ $sDate ][ 'a'.md5( $this->serieName ) ] = $row->number;
 			}
@@ -139,6 +142,10 @@ class SponsorshipDashboardSourceDatabase extends SponsorshipDashboardSource {
 			$frequency,
 			array(
 			    SponsorshipDashboardDateProvider::SD_FREQUENCY_DAY,
+				SponsorshipDashboardDateProvider::SD_FREQUENCY_HOUR,
+				SponsorshipDashboardDateProvider::SD_FREQUENCY_WEEK,
+				SponsorshipDashboardDateProvider::SD_FREQUENCY_MONTH,
+				SponsorshipDashboardDateProvider::SD_FREQUENCY_YEAR,
 			)
 		);
 	}
