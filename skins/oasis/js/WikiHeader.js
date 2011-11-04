@@ -55,6 +55,11 @@ var WikiHeader = {
 				}
 			}
 		});
+
+		if (
+			( (wgPageName == "MediaWiki:Wiki-navigation") || (wgPageName == "MediaWiki:Wikia-navigation-global") )
+			&& (wgAction == "edit")
+		) $('#wpSave').hide();
 	},
 
 	mouseover: function(event) {
@@ -236,6 +241,7 @@ var WikiHeaderV2 = {
 					menu.css('visibility', 'hidden').show();
 				}
 
+/*				
 				// loop through each menu item and remove it if doesn't fit into the first row
 				items.each(function() {
 					var item = $(this),
@@ -250,6 +256,7 @@ var WikiHeaderV2 = {
 							itemsRemoved++;
 						}
 				});
+*/
 
 				if (i > 0 ) {
 					menu.css('visibility', 'visible').hide();
@@ -387,6 +394,39 @@ var WikiHeaderV2 = {
 	positionNav: function() {
 		//This runs once. Sets the proper top position of the subnav. Can't be calculated earlier because custom font loading can adjust wiki nav height.
 		WikiHeaderV2.navtop = WikiHeaderV2.nav.height() - 7;
+	},
+	
+	firstMenuValidator: function() {
+		var widthLevelFirst = 0, returnVal = true; 
+		$.each($('.ArticlePreview #WikiHeader > nav > ul > li'), function(menuItemKey, menuItem) {
+			widthLevelFirst += $(menuItem).width();
+		});
+		if (widthLevelFirst > 580) {
+			alert($.msg('oasis-navigation-v2-level1-validation'));
+			$('.preview .modalToolbar #publish').remove();
+			returnVal = false;
+		}
+		return returnVal;
+	},
+	
+	secondMenuValidator: function() {
+		var widthLevelSecond = 0, returnVal = true;
+		$.each($('.ArticlePreview #WikiHeader .subnav-2'), function(parentMenuItemKey, parentMenuItem) {
+			$(parentMenuItem).show(1, function() {
+				$.each($(parentMenuItem).children('li'), function(menuItemKey, menuItem) {
+					widthLevelSecond += $(menuItem).width();
+				});
+				if (widthLevelSecond > 720) {
+					alert($.msg('oasis-navigation-v2-level2-validation'));
+					$('.preview .modalToolbar #publish').remove();
+					returnVal = false;
+				}
+				widthLevelSecond = 0;
+				$(parentMenuItem).hide();
+			});
+		});
+		$('.ArticlePreview #WikiHeader .marked .subnav-2').show();
+		return returnVal;
 	}
 };
 
@@ -406,6 +446,10 @@ $(function() {
 			// don't style wiki nav like article content
 			previewNode.removeClass('WikiaArticle');
 			WikiHeaderV2.init();
+			$.getMessages('Oasis-navigation-v2', function() {
+				WikiHeaderV2.firstMenuValidator();
+				WikiHeaderV2.secondMenuValidator();
+			});
 		});
 	}
 });
