@@ -41,6 +41,10 @@ var UserProfilePage = {
 		
 		$('#WikiaUserPagesHeader .tabs-container').click(UserProfilePage.trackNavTabs);
 
+		// for touch devices (without hover state) make sure that Edit is always
+		// visible
+		if ( $().isTouchscreen() )
+			$('#userIdentityBoxEdit').show();
 	},
 	
 	renderLightbox: function(tabName) {
