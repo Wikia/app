@@ -231,6 +231,7 @@ var WikiHeaderV2 = {
 		});
 
 		// remove level 2 items not fitting into one row
+		if (!isValidator) {
 		var itemsRemoved = 0;
 
 		WikiHeaderV2.subnav2.each(function(i) {
@@ -241,22 +242,20 @@ var WikiHeaderV2 = {
 					menu.css('visibility', 'hidden').show();
 				}
 
-				if (!isValidator) {
-					// loop through each menu item and remove it if doesn't fit into the first row
-					items.each(function() {
-						var item = $(this),
-							pos = item.position();
+				// loop through each menu item and remove it if doesn't fit into the first row
+				items.each(function() {
+					var item = $(this),
+						pos = item.position();
 
-							if (pos.top === 0) {
-								// don't check next items
-								return false;
-							}
-							else {
-								item.remove();
-								itemsRemoved++;
-							}
-					});
-				}
+						if (pos.top === 0) {
+							// don't check next items
+							return false;
+						}
+						else {
+							item.remove();
+							itemsRemoved++;
+						}
+				});
 
 				if (i > 0 ) {
 					menu.css('visibility', 'visible').hide();
@@ -265,6 +264,7 @@ var WikiHeaderV2 = {
 
  		if (itemsRemoved > 0) {
 			WikiHeaderV2.log('items removed: ' + itemsRemoved);
+		}
 		}
 	},
 
@@ -402,7 +402,6 @@ var WikiHeaderV2 = {
 			widthLevelFirst += $(menuItem).width();
 		});
 		if (widthLevelFirst > 580) {
-			alert($.msg('oasis-navigation-v2-level1-validation'));
 			$('.preview .modalToolbar #publish').remove();
 			returnVal = false;
 		}
@@ -412,18 +411,16 @@ var WikiHeaderV2 = {
 	secondMenuValidator: function() {
 		var widthLevelSecond = 0, returnVal = true;
 		$.each($('.ArticlePreview #WikiHeader .subnav-2'), function(parentMenuItemKey, parentMenuItem) {
-			$(parentMenuItem).show(1, function() {
-				$.each($(parentMenuItem).children('li'), function(menuItemKey, menuItem) {
-					widthLevelSecond += $(menuItem).width();
-				});
-				if (widthLevelSecond > 720) {
-					alert($.msg('oasis-navigation-v2-level2-validation'));
-					$('.preview .modalToolbar #publish').remove();
-					returnVal = false;
-				}
-				widthLevelSecond = 0;
-				$(parentMenuItem).hide();
+			$(parentMenuItem).show();
+			$.each($(parentMenuItem).children('li'), function(menuItemKey, menuItem) {
+				widthLevelSecond += $(menuItem).width();
 			});
+			if (widthLevelSecond > 720) {
+				$('.preview .modalToolbar #publish').remove();
+				returnVal = false;
+			}
+			widthLevelSecond = 0;
+			$(parentMenuItem).hide();
 		});
 		$('.ArticlePreview #WikiHeader .marked .subnav-2').show();
 		return returnVal;
@@ -447,8 +444,17 @@ $(function() {
 			previewNode.removeClass('WikiaArticle');
 			WikiHeaderV2.init(true);
 			$.getMessages('Oasis-navigation-v2', function() {
-				WikiHeaderV2.firstMenuValidator();
-				WikiHeaderV2.secondMenuValidator();
+				var firstMenuValid = WikiHeaderV2.firstMenuValidator();
+				var secondMenuValid = WikiHeaderV2.secondMenuValidator();
+				if (!firstMenuValid && !secondMenuValid) {
+					alert($.msg('oasis-navigation-v2-level12-validation'));
+				}
+				else if (!firstMenuValid) {
+					alert($.msg('oasis-navigation-v2-level1-validation'));
+				}
+				else if (!secondMenuValid) {
+					alert($.msg('oasis-navigation-v2-level2-validation'));
+				}
 			});
 		});
 	}
