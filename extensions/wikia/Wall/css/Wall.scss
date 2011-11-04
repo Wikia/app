@@ -25,6 +25,9 @@ $new_inputs_bg: mix($bubble_bg, $inputs_bg,20%);
 	$inputs_bg_f: lighten($color-page, 10%);
 	$bubble_bg: mix($color-buttons, $color-page, 30%);
 	$new_inputs_bg: mix($bubble_bg, $inputs_bg,30%);
+	@if lightness($bubble_bg) < 30 {
+		$bubble_bg: mix($color-buttons, $color-page, 40%);
+	}
 }
 
 /*

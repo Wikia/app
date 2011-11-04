@@ -185,6 +185,9 @@ class WallNotifications {
 		//TODO: transaction !!!
 		
 		$updateDBlist = array(); // we will update database AFTER unlocking
+		
+		$wasUnread = false; // function returns True if in fact there was unread
+							// notification
 
 		$memcSync = $this->getCache($userId, $wikiId);
 		do {
@@ -200,14 +203,17 @@ class WallNotifications {
 				
 				foreach($ids as $value) {
 					if(!empty($data['relation'][ $value])) {
-						$data['relation'][ $value ]['read'] = true;	
-						foreach($data['relation'][ $value ]['list'] as $val) {
-							$entityKey = $val['entityKey'];
-							$updateDBlist[] = array(
-										'user_id' => $userId,
-										'wiki_id' => $wikiId,
-										'entity_key' => $entityKey
-							);
+						if($data['relation'][ $value ]['read'] == false) {
+							$wasUnread = true;
+							$data['relation'][ $value ]['read'] = true;	
+							foreach($data['relation'][ $value ]['list'] as $val) {
+								$entityKey = $val['entityKey'];
+								$updateDBlist[] = array(
+											'user_id' => $userId,
+											'wiki_id' => $wikiId,
+											'entity_key' => $entityKey
+								);
+							}
 						}
 					}			
 				}
@@ -222,6 +228,8 @@ class WallNotifications {
 		foreach($updateDBlist as $value) {
 			$this->getDB(true)->update('wall_notification' , array('is_read' =>  1 ), $value, __METHOD__ );
 		}
+		
+		return $wasUnread;
 	}
 
 	protected function addNotificationLinkInternal($userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply ) {

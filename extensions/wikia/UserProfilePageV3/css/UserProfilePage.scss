@@ -18,6 +18,9 @@ $color-masthead: $color-page;
 @if lightness($color-page) < 50 {
 	$y-user-profile-masthead-links-icon: 0;
 	$color-masthead: mix($color-buttons, $color-page, 30%); /* logic from Wall */
+	@if lightness($color-masthead) < 30 {
+		$color-masthead: mix($color-buttons, $color-page, 40%); /* logic from Wall */
+	}
 }
 
 $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%), 40%);
