@@ -26,7 +26,7 @@ class RegexBlockData
 
     public function __construct() {
         $this->mTable = REGEXBLOCK_TABLE;
-        $this->mStatsTable = REGEXBLOCK_STATS_TABLE;
+        $this->mStatsTable = WIKIA_REGEXBLOCK_STATS_TABLE;
         $this->mNbrResults = 0;
     }    
     
@@ -108,7 +108,7 @@ class RegexBlockData
         return $blockers_array;
     }
 
-    public function getBlockersData($current = "", $username = "", $limit, $offset) {
+    public function getBlockersData($current, $username, $limit, $offset) {
         global $wgExternalSharedDB, $wgLang, $wgUser;
 
         wfProfileIn( __METHOD__ );
