@@ -22,6 +22,12 @@ $messages['en'] = array(
 	'apigate-register-success-return' => "Return to the [[Special:ApiGate|API Gate landing page]] to see your new dashboard.",
 	'apigate-userlink' => "API Control Panel",
 	
+	'apigate-chart-metric-requests' => "Requests",
+	'apigate-chart-name-hourly' => "Requests - Hourly",
+	'apigate-chart-name-daily' => "Requests - Daily",
+	'apigate-chart-name-weekly' => "Requests - Weekly",
+	'apigate-chart-name-monthly' => "Requests - Monthly",
+	
 );
 
 /** Message documentation (Message documentation)
