@@ -128,7 +128,8 @@ class ApiRunJob extends ApiBase {
 			"",
 			__METHOD__
 		);
-
+		;
+		$wgMemc->set( wfMemcKey( 'SiteStats', 'jobs' ), $total, 3600 );
 		$result[ "total" ] = $total;
 
 		return $result;
