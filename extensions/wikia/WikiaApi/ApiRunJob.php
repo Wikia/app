@@ -119,7 +119,7 @@ class ApiRunJob extends ApiBase {
 	 */
 	private function checkQueue() {
 
-		global $wgMemc;
+		global $wgMemc, $wgApiRunJobsPerRequest;
 
 		$total = 0;
 
@@ -130,7 +130,14 @@ class ApiRunJob extends ApiBase {
 			"",
 			__METHOD__
 		);
-		;
+
+		#
+		# check again using count if $total near working value
+		#
+		if( $total < $wgApiRunJobsPerRequest ) {
+			$total = $dbr->selectField( 'job', 'COUNT(*)', '', __METHOD__ );
+		}
+
 		$wgMemc->set( wfMemcKey( 'SiteStats', 'jobs' ), $total, 3600 );
 		$result[ "total" ] = $total;
 
