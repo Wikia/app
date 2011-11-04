@@ -13,11 +13,13 @@
 class ApiGate{
 	// Status codes that we use. Commented out the status codes that we don't use yet but are likely to soon.
 	const HTTP_STATUS_OK = 200;
-	const HTTP_STATUS_UNAUTHORIZED = 401;
-	const HTTP_STATUS_FORBIDDEN = 403;
+	const HTTP_STATUS_UNAUTHORIZED = 401; // when there is no key provided (but should be) or the key is invalid (a bad format, or just isn't an actual key in the database).
+	const HTTP_STATUS_FORBIDDEN = 403; // when an api key makes a request to a function that it is not allowed to use.
 	//const HTTP_STATUS_IM_A_TEAPOT = 418; // not sure what this will come in use for ;)
 	//const HTTP_STATUS_INSUFFICIENT_STORAGE = 507; // would come in handy for APIs which have per-key or per-user storage limits on accounts.
-	const HTTP_STATUS_LIMIT_EXCEEDED = 509; // bandwidth exceeded code. closest to rate-limiting.
+	
+	// TODO: Do we need separate codes for rate-limiting and for when an admin blocks them?
+	const HTTP_STATUS_LIMIT_EXCEEDED = 509; // bandwidth exceeded code. closest to rate-limiting. this is what the user will see when they have been blocked by automatic rate-limiting or manually by an admin.
 
 	const TABLE_KEYS = "apiGate_keys";
 	const TABLE_USERS = "apiGate_users";
@@ -64,10 +66,23 @@ class ApiGate{
 		// HARDCODED FOR DEBUGGING.  An "apiKey" of 509 (which wouldn't be an actual API key) will return a status-code of 509 for testing/debugging.
 		if($apiKey == "509"){
 			$retVal = ApiGate::HTTP_STATUS_LIMIT_EXCEEDED;
+		} else if($apiKey == ""){
+			// TODO: If the API gets to a point where the auth is always required, uncomment this.
+			//$retVal = ApiGate::HTTP_STATUS_UNAUTHORIZED;
+		} else {
+			// Find if the API key is in the database and is enabled.
+			$dbr = ApiGate_Config::getSlaveDb();
+			$queryString = "SELECT enabled FROM ".ApiGate::TABLE_KEYS." WHERE apiKey='".mysql_real_escape_string( $apiKey, $dbr )."'";
+			$enabled = ApiGate::simpleQuery( $queryString );
+			if($enabled === ""){
+				// The API key was not in the database.
+				$retVal = ApiGate::HTTP_STATUS_UNAUTHORIZED;
+			} else if($enabled === "0"){
+				$retVal = ApiGate::HTTP_STATUS_LIMIT_EXCEEDED;
+			} else {
+				$retVal = ApiGate::HTTP_STATUS_OK;
+			}
 		}
-
-		// TODO: IMPLEMENT
-		// TODO: IMPLEMENT
 
 		wfProfileOut( __METHOD__ );
 		return $retVal;
