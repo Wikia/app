@@ -420,7 +420,7 @@ function wfRegexBlockUpdateStats ($user, $user_ip, $blocker, $match, $blckid) {
 
     $dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
     $dbw->insert(
-        REGEXBLOCK_STATS_TABLE,
+        WIKIA_REGEXBLOCK_STATS_TABLE,
         array(
             'stats_id'          => 'null',
             'stats_blckby_id'   => $blckid,
