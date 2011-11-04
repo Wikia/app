@@ -1,0 +1,30 @@
+/*
+Document   : infobox
+Created on : Nov 3, 2011, 12:41:29 PM
+Author     : wlee
+*/
+@import "../../../../../skins/oasis/css/mixins/opacity";
+
+.jwplayer-infobox {
+	
+	cursor: pointer;
+	display: none;
+	margin: 10px 0 0 10px;
+	
+	.jwplayer-infobox-background {
+		@include opacity(60);
+		background: black;
+		height: 100%;
+		position: absolute;
+		width: 100%;
+	}
+	
+	.jwplayer-infobox-content {
+		color: #dddddd;
+		font-size: 17px;
+		font-weight: bold;
+		line-height: 23px;
+		padding: 5px 15px 10px;
+		position: relative;		
+	}
+}
