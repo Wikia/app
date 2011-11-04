@@ -1,9 +1,6 @@
-var MeeboBar = {
-	enabledComscoreCats: [],
-	
+var MeeboBar = {	
 	init: function () {
-		if (window.wgIntegrateMeebo
-		|| $.inArray(window.cscoreCat, MeeboBar.enabledComscoreCats) != -1) {
+		if (window.wgEnableMeeboExt && !window.wgUserName) {
 window.Meebo||function(c){function p(){return["<",i,' onload="var d=',g,";d.getElementsByTagName('head')[0].",
 j,"(d.",h,"('script')).",k,"='//cim.meebo.com/cim?iv=",a.v,"&",q,"=",c[q],c[l]?
 "&"+l+"="+c[l]:"",c[e]?"&"+e+"="+c[e]:"","'\"></",i,">"].join("")}var f=window,
