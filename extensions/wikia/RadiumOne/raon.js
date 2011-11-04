@@ -1,7 +1,7 @@
 var RadiumOne = {
 	containerId: 'RadiumOne',
 	cookieName: 'raon',
-	enabledComscoreCats: ['Lifestyle'],
+	enabledComscoreCats: ['Lifestyle', 'Entertainment'],
 	pixelUrl: 'http://rs.gwallet.com/r1/pixel/x2073r',
 	
 	init: function() {
