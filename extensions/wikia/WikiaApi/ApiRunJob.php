@@ -76,6 +76,7 @@ class ApiRunJob extends ApiBase {
 		}
 
 		$result = array();
+		$done = 0;
 		foreach( range( 0, $this->maxJobs ) as $counter ) {
 			if( isset( $params[ "type" ] ) ) {
 				$job = Job::pop_type( $params[ "type" ] );
@@ -96,6 +97,7 @@ class ApiRunJob extends ApiBase {
 					"status" => $job->toString(),
 					"error" => $job->error
 				);
+				$done++;
 			}
 			else {
 				// there's no job in queue, finish loop, release request
@@ -103,6 +105,7 @@ class ApiRunJob extends ApiBase {
 			}
 		}
 
+		$result[ "done" ]  = $done;
 		$result[ "left" ]  = $this->checkQueue();
 
 		$this->getResult()->addValue( null, $this->getModuleName(), $result );
