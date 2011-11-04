@@ -137,7 +137,7 @@ class ApiRunJob extends ApiBase {
 		#
 		# check again using count if $total near working value
 		#
-		if( $total < $wgApiRunJobsPerRequest ) {
+		if( $total < $wgApiRunJobsPerRequest || $done == 0 ) {
 			$total = $dbr->selectField( 'job', 'COUNT(*)', '', __METHOD__ );
 		}
 
