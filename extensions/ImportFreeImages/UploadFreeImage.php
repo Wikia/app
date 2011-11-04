@@ -119,11 +119,12 @@ class UploadFreeImage extends UploadFromUrl {
 		$info = $ifi->getPhotoInfo( $id );
 		
 		$name_wiki = wfEscapeWikiText( $info['owner']['username'] );
+		$nsid_wiki = wfEscapeWikiText( $info['owner']['nsid'] );
 		if ( $ifi->creditsTemplate ) {
 			$owner_wiki = wfEscapeWikiText( $info['owner']['realname'] );
 			$id_wiki = wfEscapeWikiText( $id );
 			$caption = "{{" . $ifi->creditsTemplate . intval( $info['license'] ) . 
-				"|1=$id_wiki|2=$owner_wiki|3=$name_wiki}}";
+				"|1=$id_wiki|2=$owner_wiki|3=$name_wiki|4=$nsid_wiki}}";
 		} else {
 			// TODO: this is totally wrong: The whole message should be configurable, we shouldn't include arbitrary templates
 			// additionally, the license information is not correct (we are not guaranteed to get "CC by 2.0" images only)
