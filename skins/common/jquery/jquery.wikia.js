@@ -441,6 +441,12 @@ jQuery.fn.isChrome = function() {
 	return false;
 };
 
+jQuery.fn.isTouchscreen = function() {
+	if (document.createElement( 'div' ).hasOwnProperty('ontouchstart'))
+		return true;
+	return false;
+}
+
 /**
  * Tests whether first element in current collection is a child of node matching selector provided
  *
