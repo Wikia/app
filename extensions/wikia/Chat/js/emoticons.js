@@ -37,6 +37,12 @@ WikiaEmoticons.doReplacements = function(text, emoticonMapping){
 
 	var imgUrlsByRegexString = emoticonMapping.getImgUrlsByRegexString();
 	for(var regexString in imgUrlsByRegexString){
+		/*
+		 * empty string for emote icons crash Chat
+		 * so ignore them
+		 */
+		if(regexString == '') continue;
+		
 		imgSrc = imgUrlsByRegexString[regexString];
 		imgSrc = imgSrc.replace(/"/g, "%22"); // prevent any HTML-injection
 		
