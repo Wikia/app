@@ -72,10 +72,10 @@
 			<form id="userData" name="userData">
 				<div class="column">
 					<label><?= wfMsg('user-identity-box-about-name'); ?></label>
-					<input type="text" name="name" value="<?= htmlentities($user['realName'], ENT_COMPAT, 'UTF-8'); ?>">
+					<input type="text" name="name" value="<?= strip_tags($user['realName']); ?>">
 
 					<label><?= wfMsg('user-identity-box-about-location'); ?></label>
-					<input type="text" name="location" value="<?= htmlentities($user['location'], ENT_COMPAT, 'UTF-8'); ?>">
+					<input type="text" name="location" value="<?= strip_tags($user['location']); ?>">
 
 					<label><?= wfMsg('user-identity-box-about-birthday'); ?></label>
 					<select id="userBDayMonth" name="month">
@@ -97,10 +97,10 @@
 					</select>
 					
 					<label><?= wfMsg('user-identity-box-about-occupation'); ?></label>
-					<input type="text" name="occupation" value="<?= htmlentities($user['occupation'], ENT_COMPAT, 'UTF-8'); ?>">
+					<input type="text" name="occupation" value="<?= strip_tags($user['occupation']); ?>">
 					
 					<label><?= wfMsg('user-identity-box-about-gender'); ?></label>
-					<input type="text" name="gender" value="<?= htmlentities($user['gender'], ENT_COMPAT, 'UTF-8'); ?>">
+					<input type="text" name="gender" value="<?= strip_tags($user['gender']); ?>">
 				</div>
 				
 				<div class="column">
@@ -117,11 +117,11 @@
 					<? endif; ?>
 					
 					<label><?= wfMsg('user-identity-box-about-website'); ?></label>
-					<input type="text" name="website" value="<?= htmlentities($user['website'], ENT_COMPAT, 'UTF-8'); ?>">
+					<input type="text" name="website" value="<?= strip_tags($user['website']); ?>">
 					
 					<label><?= wfMsg('user-identity-box-about-tweet'); ?></label>
 					<span class="tweet-at">@</span>
-					<input type="text" name="twitter" value="<?= htmlentities($user['twitter'], ENT_COMPAT, 'UTF-8'); ?>">
+					<input type="text" name="twitter" value="<?= strip_tags($user['twitter']); ?>">
 					
 					<label><?= wfMsg('user-identity-box-about-fav-wikis'); ?></label>
 					<a class="favorite-wikis-refresh wikia-chiclet-button" href="#"><img src="<?= $wgBlankImgUrl ?>"></a>

@@ -359,6 +359,7 @@ class UserProfilePageController extends WikiaController {
 
 		$user = F::build('User', array($this->getVal('userId')), 'newFromId');
 		$isAllowed = ( $this->app->wg->User->isAllowed('editprofilev3') || intval($user->getId()) === intval($this->app->wg->User->getId()) );
+		
 		$userData = json_decode($this->getVal('data'));
 
 		$status = 'error';
