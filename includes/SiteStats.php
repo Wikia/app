@@ -147,7 +147,7 @@ class SiteStats {
 				if ($hit == 1) {
 					$hit = 0;
 				}
-				$wgMemc->set( $key, $hit, 300 );
+				$wgMemc->set( $key, $hit, 3600 );
 			}
 			self::$jobs = $hit;
 		}
