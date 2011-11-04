@@ -442,8 +442,13 @@ jQuery.fn.isChrome = function() {
 };
 
 jQuery.fn.isTouchscreen = function() {
-	if (document.createElement( 'div' ).hasOwnProperty('ontouchstart'))
-		return true;
+	if ( $.browser.msie &&  parseInt($.browser.version, 10) < 8 ) {
+		return false;
+	}	
+
+	if (document.createElement( 'div' ).hasOwnProperty('ontouchstart')){
+		return true; 
+	}
 	return false;
 }
 
