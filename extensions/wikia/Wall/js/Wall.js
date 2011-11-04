@@ -113,10 +113,15 @@ var Wall = $.createClass(Object, {
 		
 		$("#Wall textarea").live('keydown', this.proxy(this.focusButton) );
 		
+		/*
+		 * commented out - functionality temporary taken out (mark msg as read when scrolling)
+		 */
+		/*
 		this.seenCommentStart = {}; // user saw start of a thread (within browser window)
 		this.seenCommentEnd = {};   // user saw end of a thread (within browser window)
 		this.seenCommentSend = {};   // mark after sending (no repeats)
 		$(document).scroll( this.proxy(this.scrollEvent) );
+		*/
 		
 		$().log(this.username, "Wall username");
 	},
