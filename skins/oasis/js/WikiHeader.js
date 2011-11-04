@@ -173,7 +173,7 @@ var WikiHeaderV2 = {
 		$().log(msg, 'WikiHeaderV2');
 	},
 
-	init: function() {
+	init: function(isValidator) {
 		//Variables
 		WikiHeaderV2.nav = $('header.WikiHeaderRestyle').children('nav');
 		WikiHeaderV2.subnav2 = WikiHeaderV2.nav.find('.subnav-2');
@@ -241,22 +241,22 @@ var WikiHeaderV2 = {
 					menu.css('visibility', 'hidden').show();
 				}
 
-/*				
-				// loop through each menu item and remove it if doesn't fit into the first row
-				items.each(function() {
-					var item = $(this),
-						pos = item.position();
+				if (!isValidator) {
+					// loop through each menu item and remove it if doesn't fit into the first row
+					items.each(function() {
+						var item = $(this),
+							pos = item.position();
 
-						if (pos.top === 0) {
-							// don't check next items
-							return false;
-						}
-						else {
-							item.remove();
-							itemsRemoved++;
-						}
-				});
-*/
+							if (pos.top === 0) {
+								// don't check next items
+								return false;
+							}
+							else {
+								item.remove();
+								itemsRemoved++;
+							}
+					});
+				}
 
 				if (i > 0 ) {
 					menu.css('visibility', 'visible').hide();
@@ -445,7 +445,7 @@ $(function() {
 		$(window).bind('EditPageAfterRenderPreview', function(ev, previewNode) {
 			// don't style wiki nav like article content
 			previewNode.removeClass('WikiaArticle');
-			WikiHeaderV2.init();
+			WikiHeaderV2.init(true);
 			$.getMessages('Oasis-navigation-v2', function() {
 				WikiHeaderV2.firstMenuValidator();
 				WikiHeaderV2.secondMenuValidator();
