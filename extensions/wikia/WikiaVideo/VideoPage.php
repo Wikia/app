@@ -54,11 +54,13 @@ class VideoPage extends Article {
 	private static $JWPLAYER_DIR = '/extensions/wikia/JWPlayer/';
 	private static $JWPLAYER_JS = 'jwplayer.js';
 	private static $JWPLAYER_SWF = 'player.swf';
+	private static $JWPLAYER_JS_PLUGINS_DIR = 'plugins/js/';
 	
 	// ad.tag must be initialized somewhere in this class!
 	private static $JWPLAYER_GOOGIMA_DATA = 
 		array('ad.tag'=>'', 'ad.position'=>'pre', 'ad.bandwidth'=>'high',
 			'admessagedynamic'=>'Your video will play in XX seconds', 'admessagedynamickey'=>'XX',
+			//'allowadskip'=>'true', 'allowadskippastseconds'=>5,	// wlee 11/1/11: do not skip ads yet
 			'scaled_ads'=>'false'
 			);
 
@@ -1821,7 +1823,10 @@ EOD;
 		$jwplayerData['jwplayerjs'] = AssetsManager::getInstance()->getOneCommonURL( trim(self::$JWPLAYER_DIR . self::$JWPLAYER_JS, '/'), false );
 		$jwplayerData['player'] = AssetsManager::getInstance()->getOneCommonURL( trim(self::$JWPLAYER_DIR . self::$JWPLAYER_SWF, '/'), false );
 		$jwplayerData['playerId'] = 'player-'.$this->mId.'-'.mt_rand();
-		$jwplayerData['plugins'] = array('gapro-1'=>array('accountid'=>self::VIDEO_GOOGLE_ANALYTICS_ACCOUNT_ID));
+		$jwplayerData['plugins'] = array('gapro-1'=>array('accountid'=>self::VIDEO_GOOGLE_ANALYTICS_ACCOUNT_ID), (self::$JWPLAYER_DIR.self::$JWPLAYER_JS_PLUGINS_DIR .'infobox.js')=>array('title'=>htmlspecialchars($this->mTitle->getText())));
+//		$wikiaSkinZip = $width < 450 ? 'wikia-small.zip' : 'wikia.zip';	// wlee 11/4/11: Design wants small players to have big skin
+		$wikiaSkinZip = 'wikia.zip';
+		$jwplayerData['skin'] = AssetsManager::getInstance()->getOneCommonURL( trim(self::$JWPLAYER_DIR . '/skins/wikia/'.$wikiaSkinZip, '/'), false );
 		
                 $embed = "";
 		$code = 'standard';
@@ -1844,6 +1849,7 @@ EOD;
 				if ($useJWPlayer) {
 					$code = 'custom';
 					$jwplayerData['file'] = $url;
+					$jwplayerData['plugins']['hd-2'] = array();
 				}
 				break;
 			case self::V_SEVENLOAD:
@@ -1907,7 +1913,7 @@ EOD;
 				$jwplayerData['provider'] = 'video';
 
 				if ($this->mData[1]) {
-					$jwplayerData['plugins']['hd-1'] = array('file'=>$jwplayerData['hdfile'], 'state'=>'false');  // when player embedded in action=render page, the file URL is automatically linkified. prevent this behavior
+					$jwplayerData['plugins']['hd-2'] = array('file'=>$jwplayerData['hdfile'], 'state'=>'false');  // when player embedded in action=render page, the file URL is automatically linkified. prevent this behavior
 				}
 				
 				// preroll
@@ -1996,7 +2002,9 @@ EOD;
 				. (!empty($jwplayerData['provider']) ? '"provider": "' . $jwplayerData['provider'] . '",' : '')
 				. '"autostart": "' . ($autoplay ? 'true' : 'false') . '",'
 				. '"stretching": "uniform",'
-				. '"controlbar.position": "over",';
+				. '"controlbar.position": "over",'
+				. '"dock": false,'
+				. '"skin": "' . $jwplayerData['skin'] . '",';
 			$sJSON .= '"plugins": {';
 			$pluginTexts = array();
 			foreach ($jwplayerData['plugins'] as $plugin=>$options) {
@@ -2022,9 +2030,10 @@ EOD;
 				. '}';
 			
 			$embed  = '<div id="'.$jwplayerData['playerId'].'"></div>'
-				. '<script type="text/javascript" src="'.$jwplayerData['jwplayerjs'].'"></script>'
-				. ' <script type="text/javascript">'
-				. 'jwplayer("'.$jwplayerData['playerId'].'").setup('.$sJSON.');'
+				. '<script type="text/javascript">'
+				. 'wgAfterContentAndJS.push( function() {'
+				. '	$.getScript("'.$jwplayerData['jwplayerjs'].'", function() { jwplayer("'.$jwplayerData['playerId'].'").setup('.$sJSON.'); });'
+				. '});'
 				. '</script>';
 		}
 
