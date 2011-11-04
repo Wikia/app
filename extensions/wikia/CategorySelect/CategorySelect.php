@@ -200,7 +200,11 @@ function CategorySelectGetCategories() {
 		while($row = $dbr->fetchObject($res)) {
 			$categories[] = str_replace('_', ' ', addslashes($row->cat_title));
 		}
+		
 		$out = 'var categoryArray = ["'.join('","', $categories).'"];';
+		// TODO: refactor CategorySelect.js to receive object 
+		// via ajax rather than variable via $.getScript
+		//$out = join(',', $categories); // categoryArray 
 
 		// Cache for a day
 		$wgMemc->set($key, $out, 86400);
