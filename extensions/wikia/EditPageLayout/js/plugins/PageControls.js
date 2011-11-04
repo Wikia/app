@@ -175,7 +175,7 @@
 			params = $.extend({
 				page: wgEditPageClass ? wgEditPageClass:"",
 				method: method,
-				mode: editor.mode,
+				mode: editor.mode
 			}, params);
 
 			var url = window.wgEditPageHandler.replace('$1', encodeURIComponent(window.wgEditedTitle));
