@@ -55,13 +55,13 @@ class ExternalStoreDB {
 		$path = explode( '/', $url );
 		$cluster  = $path[2];
 		$id	  = $path[3];
-		$query = wfArrrayToCgi( array(
+		$query = wfArrayToCGI( array(
 			"action" => "blob",
 			"blobid" => $id,
 			"cluster" => $cluster
 		));
 
-		$url = sprint( "%s/api.php?%s", $app->getGlobal( "wgServer" ), $query );
+		$url = sprintf( "%s/api.php?%s", $app->getGlobal( "wgServer" ), $query );
 
 		wfProfileOut( __METHOD__ );
 
