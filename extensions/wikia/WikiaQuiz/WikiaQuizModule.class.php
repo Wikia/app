@@ -51,7 +51,7 @@ class WikiaQuizModule extends Module {
 		$wgOut->addMeta('property:og:type', 'game');
 		$wgOut->addMeta('property:og:url', $wgRequest->getFullRequestURL());
 		$wgOut->addMeta('property:og:site_name', $wgSiteName);
-		$wgOut->addMeta('property:og:description', strip_tags( wfMsg('wikiaquiz-facebook-creative', $this->data['titlescreentext'])) );
+		$wgOut->addMeta('property:og:description', wfMsg('wikiaquiz-facebook-creative', strip_tags($this->data['titlescreentext'])));
 		$wgOut->addMeta('property:og:image', $this->wordmarkUrl);
 
 		$this->username = $wgUser->getName();
