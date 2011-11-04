@@ -899,5 +899,6 @@ $wgMaxLevelThreeNavElements = 10;
 /**
  * Extension for running multiple version of Mediawiki
  */
-$wgUseMedusa = false;
-
+if( !isset( $wgUseMedusa ) ) {
+	$wgUseMedusa = false;
+}
