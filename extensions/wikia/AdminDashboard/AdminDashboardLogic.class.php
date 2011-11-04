@@ -43,6 +43,7 @@ class AdminDashboardLogic {
 			static $exclusionList = array(
 				"AdSS",
 				"ApiExplorer",
+				"ApiGate",
 				"Chat",
 				"Code",
 				"Confirmemail",
