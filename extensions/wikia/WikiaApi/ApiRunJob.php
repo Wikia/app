@@ -105,8 +105,7 @@ class ApiRunJob extends ApiBase {
 			}
 		}
 
-		$result[ "done" ]  = $done;
-		$result[ "left" ]  = $this->checkQueue();
+		$result[ "left" ]  = $this->checkQueue( $done );
 
 		$this->getResult()->addValue( null, $this->getModuleName(), $result );
 
@@ -116,11 +115,12 @@ class ApiRunJob extends ApiBase {
 	/**
 	 * check how many jobs still exists in queue
 	 *
+	 * @param integer $done - how much jobs is already done
 	 * @access private
 	 *
 	 * @return Array
 	 */
-	private function checkQueue() {
+	private function checkQueue( $done  ) {
 
 		global $wgMemc, $wgApiRunJobsPerRequest;
 
@@ -143,6 +143,7 @@ class ApiRunJob extends ApiBase {
 
 		$wgMemc->set( wfMemcKey( 'SiteStats', 'jobs' ), $total, 3600 );
 		$result[ "total" ] = $total;
+		$result[ "done" ] = $done;
 
 		return $result;
 	}
