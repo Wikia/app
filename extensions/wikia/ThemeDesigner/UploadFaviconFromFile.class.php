@@ -15,13 +15,7 @@ class UploadFaviconFromFile extends UploadFromFile {
 		if ( $details[ 'status' ] == self::OK ){ 
 			// check file type (just by extension)
 			
-			if ( $this->checkFileExtension( $this->mFinalExtension, array( 'ico' ) ) ) {
-				$imageSize = getimagesize( $this->getTempPath() );
-
-				if($imageSize[0] != 16 || $imageSize[1] != 16) {
-					$details[ 'status' ] = self::FILEDIMENSIONS_ERROR;
-				}
-			} else {
+			if ( !$this->checkFileExtension( $this->mFinalExtension, array( 'ico' ) ) ) {
 				$details[ 'status' ] = self::FILETYPE_ERROR;
 			}
 		}
