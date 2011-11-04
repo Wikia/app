@@ -188,6 +188,7 @@ $messages['en'] = array(
 $messages['qqq'] = array(
 	'chat-whos-here' => 'Regards users that are in a chat room. The parameter gives the total count.',
 	'chat-user-manu-give-chat-mod' => 'ChatMod = chat moderator',
+	'chat-edit-count' => '$1 is the number of edits made by the user',
 );
 
 /** Afrikaans (Afrikaans)
