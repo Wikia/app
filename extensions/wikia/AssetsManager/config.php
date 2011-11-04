@@ -105,6 +105,7 @@ $config['oasis_extensions_js'] = array(
 		'//extensions/wikia/ImageLightbox/ImageLightbox.js',
 		'//extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
 		'//extensions/FBConnect/fbconnect.js',
+		'//extensions/wikia/Meebo/meebo.js',
 		'//extensions/wikia/RadiumOne/raon.js',
 		'//extensions/wikia/AdEngine/AdConfig.js',
 		'//extensions/wikia/AdEngine/AdEngine.js',
