@@ -137,12 +137,19 @@ class SiteStats {
 
 	static function jobs() {
 		if ( !isset( self::$jobs ) ) {
-			$dbr = wfGetDB( DB_SLAVE, 'vslow' );
-			self::$jobs = $dbr->selectField( 'job', 'COUNT(*)', '', __METHOD__ );
-			/* Zero rows still do single row read for row that doesn't exist, but people are annoyed by that */
-			if (self::$jobs == 1) {
-				self::$jobs = 0;
+			global $wgMemc;
+			$key = wfMemcKey( 'SiteStats', 'jobs' );
+			$hit = $wgMemc->get( $key );
+			if ( !$hit ) {
+				$dbr = wfGetDB( DB_SLAVE, 'vslow' );
+				$hit = $dbr->selectField( 'job', 'COUNT(*)', '', __METHOD__ );
+				/* Zero rows still do single row read for row that doesn't exist, but people are annoyed by that */
+				if ($hit == 1) {
+					$hit = 0;
+				}
+				$wgMemc->set( $key, $hit, 300 );
 			}
+			self::$jobs = $hit;
 		}
 		return self::$jobs;
 	}
