@@ -119,6 +119,8 @@ class ApiRunJob extends ApiBase {
 	 */
 	private function checkQueue() {
 
+		global $wgMemc;
+
 		$total = 0;
 
 		$dbr = wfGetDB( DB_SLAVE, 'vslow' );
