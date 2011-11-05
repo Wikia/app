@@ -37,8 +37,9 @@ class ApiGate{
 	public static function banKey( $apiKey, $reason ){
 		wfProfileIn( __METHOD__ );
 
-		// TODO: IMPLEMENT
-		// TODO: IMPLEMENT
+		// TODO: IMPLEMENT (make sure to flip the enabled to false and ALSO record the event in the ban log).
+		//$queryString = "SELECT enabled FROM ".ApiGate::TABLE_KEYS." WHERE apiKey='".mysql_real_escape_string( $apiKey, $dbr )."'";
+		// TODO: IMPLEMENT (make sure to flip the enabled to false and ALSO record the event in the ban log).
 		
 		self::purgeKey( $apiKey );
 		
@@ -237,22 +238,28 @@ class ApiGate{
 	 *                 element of the array is an associative array with two keys: "apiKey" and "nickName". If the key does not have an explicit nickname,
 	 *                 the apiKey will be put into the nickName field (so the calling code can always count on a nickName being present).
 	 */
-	public static function getKeysAndNicknamesByUserId( $userId ) {
+	public static function getKeyDataByUserId( $userId ) {
 		wfProfileIn( __METHOD__ );
 
 		$apiKeys = array();
 
 		$dbr = ApiGate_Config::getSlaveDb();
-		$queryString = "SELECT apiKey,nickName FROM ".ApiGate::TABLE_KEYS." WHERE user_id='". mysql_real_escape_string( $userId, $dbr ). "'";
+		$queryString = "SELECT * FROM ".ApiGate::TABLE_KEYS." WHERE user_id='". mysql_real_escape_string( $userId, $dbr ). "'";
 		if( $result = mysql_query( $queryString, $dbr ) ){
 			if(($numRows = mysql_num_rows($result)) && ($numRows > 0)){
 				for($cnt=0; $cnt<$numRows; $cnt++){
 					$apiKey = mysql_result($result, $cnt, "apiKey");
+					$enabled = (mysql_result($result, $cnt, "enabled") === "1");
 					$nickName = mysql_result($result, $cnt, "nickName");
 					$nickName = ($nickName=="" ? $apiKey : $nickName); // use apiKey as default if no nickName provided
+					$userId = mysql_result($result, $cnt, "user_id");
+					$userName = ApiGate_Config::getUserNameById( $userId );
 					$apiKeys[] = array(
 						"apiKey" => $apiKey,
 						"nickName" => $nickName,
+						"userId" => $userId,
+						"userName" => $userName,
+						"enabled" => $enabled
 					);
 				}
 			}
@@ -263,32 +270,40 @@ class ApiGate{
 
 		wfProfileOut( __METHOD__ );
 		return $apiKeys;
-	} // end getKeysAndNicknamesByUserId()
+	} // end getKeyDataByUserId()
 	
 	/**
-	 * Returns an array of all keys and nicknames in the system (with optional limit & offset).
-	 * This data should not be displayed to end-users other than admins.
+	 * Returns an array of all keys in the system and their associated data(nicknames, whether they're enabled or not, etc.) in the system (with optional limit & offset).
+	 *
+	 * This data should NOT be displayed to end-users other than admins.
 	 */
-	public static function getAllKeysAndNicknames( $limit="", $offset=""){
+	public static function getAllKeyData( $limit="", $offset=""){
 		wfProfileIn( __METHOD__ );
 
 		$apiKeys = array();
 
 		$dbr = ApiGate_Config::getSlaveDb();
-		$queryString = "SELECT apiKey,nickName FROM ".ApiGate::TABLE_KEYS;
+		$queryString = "SELECT apiKey,nickName,enabled,user_id FROM ".ApiGate::TABLE_KEYS;
 		if($limit != ""){
 			$offsetStr = (($offset == "") ? "" : ",".mysql_real_escape_string( $offset, $dbr ) );
-			$queryString .= " LIMIT='".mysql_real_escape_string( $limit, $dbr )."$offsetStr'";
+			$queryString .= " LIMIT ".mysql_real_escape_string( $limit, $dbr )."$offsetStr";
 		}
 		if( $result = mysql_query( $queryString, $dbr ) ){
 			if(($numRows = mysql_num_rows($result)) && ($numRows > 0)){
 				for($cnt=0; $cnt<$numRows; $cnt++){
 					$apiKey = mysql_result($result, $cnt, "apiKey");
+					$enabled = (mysql_result($result, $cnt, "enabled") === "1");
 					$nickName = mysql_result($result, $cnt, "nickName");
 					$nickName = ($nickName=="" ? $apiKey : $nickName); // use apiKey as default if no nickName provided
+					$userId = mysql_result($result, $cnt, "user_id");
+					$userName = ApiGate_Config::getUserNameById( $userId );
+
 					$apiKeys[] = array(
 						"apiKey" => $apiKey,
 						"nickName" => $nickName,
+						"enabled" => $enabled,
+						"userId" => $userId,
+						"userName" => $userName,
 					);
 				}
 			}
@@ -299,7 +314,7 @@ class ApiGate{
 
 		wfProfileOut( __METHOD__ );
 		return $apiKeys;
-	} // end getAllKeysAndNicknames()
+	} // end getAllKeyData()
 
 	/**
 	 * Sends a WRITE query (usually an insert/update/delete) and returns true on success false on failure.

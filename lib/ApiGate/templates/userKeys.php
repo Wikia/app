@@ -1,14 +1,18 @@
 <div class='sub_module'>
 	<?= i18n( 'apigate-userkeys-intro' ) ?>
 <?php
-	if(count($keysAndNicks) > 0){
+	if(count($keyData) > 0){
 		?><ul><?php
 		global $APIGATE_LINK_ROOT;
-		foreach($keysAndNicks as $keyData){
-			$apiKey = $keyData['apiKey'];
-			$nickName = $keyData['nickName'];
+		foreach($keyData as $key){
+			$apiKey = $key['apiKey'];
+			$nickName = $key['nickName'];
 
-			?><li><a href='<?= $APIGATE_LINK_ROOT."/key?apiKey=$apiKey" ?>'><?= $nickName ?></a></li><?php
+			$enabled = $key['enabled'];
+			$liClass = ($enabled ? "" : " class='disabled'");
+			$disabledText = ($enabled ? "" : " (".i18n( 'apigate-userkeys-disabled' ).")");
+			
+			?><li<?= $liClass ?>><a href='<?= $APIGATE_LINK_ROOT."/key?apiKey=$apiKey" ?>'><?= $nickName ?></a><?= $disabledText ?></li><?php
 		}
 		?></ul><?php
 	} else {
