@@ -17,14 +17,16 @@ $i18nDir = dirname(__FILE__);
 require "$i18nDir/ApiGate_i18n.strings.php";
 
 // For now, just wrap MediaWiki's i18n functions.
-function i18n( $msgName, $data=null ) {
+function i18n( $msgName, $data=null, $data2=null ) { // TODO: There is a better way to do arbitrary numbers of params, right?
 	wfProfileIn( __METHOD__ );
 
 	if( function_exists( 'wfMsg' ) ) {
 		if($data === null){
 			$retVal = wfMsg( $msgName );
-		} else {
+		} else if($data2 === null){
 			$retVal = wfMsg( $msgName, $data );
+		} else {
+			$retVal = wfMsg( $msgName, $data, $data2 );
 		}
 	} else {
 		$retVal = "<ApiGate - $msgName>";

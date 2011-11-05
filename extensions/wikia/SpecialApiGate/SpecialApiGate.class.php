@@ -34,9 +34,14 @@ class SpecialApiGate extends SpecialPage {
 		global $wgOut, $wgRequest, $IP, $wgUser, $API_GATE_DIR;
 		wfProfileIn( __METHOD__ );
 
+		// NOTE: We can't include CSS from the /lib directry (there is no symlink to /lib from the document-root on the apaches). We'll have to separate the CSS later when we can.
+		//global $wgStyleVersion;
+		//$wgOut->addStyle('../lib/ApiGate/css/apiGate.css?'.$wgStyleVersion ); // since this is outside of wgExtensionsPath, it doesn't have the cachebuster embedded in it automatically
+		global $wgExtensionsPath;
+		$wgOut->addStyle( $wgExtensionsPath . '/wikia/SpecialApiGate/css/apiGate.css', 'screen' );
 
 		$wgOut->setPagetitle( wfMsg('apigate') );
-		
+
 		// Box the main content of the text into a left-column so that a custom menu can be put on the right (below).
 		$wgOut->addWikiText( "<mainpage-leftcolumn-start />");
 
@@ -102,9 +107,7 @@ class SpecialApiGate extends SpecialPage {
 		// If this is the two-column layout, wrap the extra markup around it.
 		if( $useTwoColLayout ){
 			$wgOut->addHTML( "<div id='specialApiGateMainSection'><div class='module'>
-				<div style='margin:auto;width:400px;background-color:white'>
-					\n$mainSectionHtml\n
-				</div>
+				\n$mainSectionHtml\n
 			</div></div>" );
 
 			// End the main column and add the right-rail.
@@ -120,7 +123,7 @@ class SpecialApiGate extends SpecialPage {
 	} // end execute()
 
 	private function getLoginBoxHtml(){
-		$html = wfMsg('apigate-nologintext') . "<br/><br/><div style='width:100%;text-align:center;'><button type='button' data-id='login' class='ajaxLogin'>" . wfMsg('apigate-login-button') . "</button></div>";
+		$html = wfMsg('apigate-nologintext') . "<br/><br/><button type='button' data-id='login' class='ajaxLogin'>" . wfMsg('apigate-login-button') . "</button>";
 		return $this->wrapHtmlInModuleBox( $html );
 	} // end getLoginBoxHtml()
 	
@@ -144,37 +147,48 @@ class SpecialApiGate extends SpecialPage {
 		wfProfileIn( __METHOD__ );
 		global $wgUser, $APIGATE_LINK_ROOT;
 		$html = "";
+		
+		if( !$wgUser->isLoggedIn() ){
+			global $wgOut;
+			$wgOut->setPageTitle( wfMsg( 'apigate-nologin' ) );
+			$wgOut->setHTMLTitle( wfMsg( 'errorpagetitle' ) );
+			$wgOut->setRobotPolicy( 'noindex,nofollow' );
+			$wgOut->setArticleRelated( false );
+			$wgOut->enableClientCache( false );
 
-		// TODO: Could this be extracted to all be inside of one template in API Gate (index.php template).  We're not doing any funky logic here, are we (just need to chyeck that the subpages aren't)?
-		// TODO: Could this be extracted to all be inside of one template in API Gate (index.php template).  We're not doing any funky logic here, are we (just need to chyeck that the subpages aren't)?
-
-		// Show intro-blurb.
-		$html .= ApiGate_Dispatcher::renderTemplate( "intro", array( "username" => $wgUser->getName() ) );
-		$html .= "<br/>";
-
-		// If the user has at least one API key, show the userKeys subpage.
-		$userId = ApiGate_Config::getUserId();
-		$keysAndNicks = ApiGate::getKeysAndNicknamesByUserId( $userId );
-		if( count($keysAndNicks) > 0 ){
-			$html .= $this->subpage_userKeys( $userId, $keysAndNicks );
+			$html .= $this->getLoginBoxHtml();
 		} else {
-			// If the user doesn't have any keys yet, show the registration form front-and-center.
-			$html .= $this->subpage_register();
-		}
+			// TODO: Could this be extracted to all be inside of one template in API Gate (index.php template).  We're not doing any funky logic here, are we (just need to chyeck that the subpages aren't)?
+			// TODO: Could this be extracted to all be inside of one template in API Gate (index.php template).  We're not doing any funky logic here, are we (just need to chyeck that the subpages aren't)?
 
-		// If this is an admin, show links to Admin subpages.
-		if ( ApiGate_Config::isAdmin() ) {
-			$links = array(
-				array(
-					"text" => wfMsg('apigate-adminlinks-viewkeys'),
-					"href" => "$APIGATE_LINK_ROOT/{$this->SUBPAGE_ALL_KEYS}",
-				),
-				array(
-					"text" => wfMsg('apigate-adminlinks-viewaggregate'),
-					"href" => "$APIGATE_LINK_ROOT/{$this->SUBPAGE_AGGREGATE_STATS}",
-				),
-			);
-			$html .= "<br/>" . ApiGate_Dispatcher::renderTemplate( "adminLinks", array( "links" => $links ) );
+			// Show intro-blurb.
+			$html .= ApiGate_Dispatcher::renderTemplate( "intro", array( "username" => $wgUser->getName() ) );
+			$html .= "<br/>";
+
+			// If the user has at least one API key, show the userKeys subpage.
+			$userId = ApiGate_Config::getUserId();
+			$keyData = ApiGate::getKeyDataByUserId( $userId );
+			if( count($keyData) > 0 ){
+				$html .= $this->subpage_userKeys( $userId, $keyData );
+			} else {
+				// If the user doesn't have any keys yet, show the registration form front-and-center.
+				$html .= $this->subpage_register();
+			}
+
+			// If this is an admin, show links to Admin subpages.
+			if ( ApiGate_Config::isAdmin() ) {
+				$links = array(
+					array(
+						"text" => wfMsg('apigate-adminlinks-viewkeys'),
+						"href" => "$APIGATE_LINK_ROOT/{$this->SUBPAGE_ALL_KEYS}",
+					),
+					array(
+						"text" => wfMsg('apigate-adminlinks-viewaggregate'),
+						"href" => "$APIGATE_LINK_ROOT/{$this->SUBPAGE_AGGREGATE_STATS}",
+					),
+				);
+				$html .= "<br/>" . ApiGate_Dispatcher::renderTemplate( "adminLinks", array( "links" => $links ) );
+			}
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -234,21 +248,25 @@ class SpecialApiGate extends SpecialPage {
 		wfProfileIn( __METHOD__ );
 		global $wgRequest;
 
+		$html = "";
 		if ( ApiGate_Config::isAdmin() ) {
 			$limit = 100;
 			$offset = $wgRequest->getVal( 'offset', '' ); // for pagination
-			$keysAndNicks = ApiGate::getAllKeysAndNicknames( $limit, $offset );
+			$keyData = ApiGate::getAllKeyData( $limit, $offset );
 
-			$html .=  ApiGate_Dispatcher::renderTemplate( "listKeys", array('keysAndNicks' => $keysAndNicks) );
+			$html .=  ApiGate_Dispatcher::renderTemplate( "listKeys", array('keyData' => $keyData) );
 		} else {
 
 			// TODO: IMPLEMENT
 			// TODO: IMPLEMENT
+		//	$errorString = i18n( 'apigate-mysql-error', $queryString, mysql_error( $dbr ) );
+		//	print ApiGate_Dispatcher::renderTemplate( "error", array('message' => $errorString));
+		//	//$html = $this->wrapHtmlInModuleBox( $html );
 
 		}
 
 		wfProfileOut( __METHOD__ );
-		return $this->wrapHtmlInModuleBox( $html );
+		return $html;
 	} // end subpage_allKeys()
 
 	public function subpage_aggregateStats(){
@@ -265,24 +283,24 @@ class SpecialApiGate extends SpecialPage {
 	 *
 	 * @param userId - mixed - (optional) userId of the user whose keys should be shown. If null or not provided, then it will use
 	 *                 the currently logged in user.
-	 * @param keysAndNicks - array - (optional) array of keys and key nicknames for the user in the format provided by ApiGate::getKeysAndNicknamesByUserId.
+	 * @param keyData - array - (optional) array of keys and key nicknames for the user in the format provided by ApiGate::getKeyDataByUserId.
 	 *               If provided, this will be assumed to be the correct list of keys
 	 *               so they will not be looked up from the database using the userId provided (or the default user as described in userId's
 	 *               param documentation above.
 	 */
-	public function subpage_userKeys( $userId=null, $keysAndNicks=null ){
+	public function subpage_userKeys( $userId=null, $keyData=null ){
 		wfProfileIn( __METHOD__ );
 
 		if($userId == null){
 			$userId = ApiGate_Config::getUserId();
 		}
-		if($keysAndNicks == null){
-			$keysAndNicks = ApiGate::getKeysAndNicknamesByUserId( $userId );
+		if($keyData == null){
+			$keyData = ApiGate::getKeyDataByUserId( $userId );
 		}
 
 		$data = array(
 			'userId' => $userId,
-			'keysAndNicks' => $keysAndNicks,
+			'keyData' => $keyData,
 		);
 		$html =  ApiGate_Dispatcher::renderTemplate( "userKeys", $data );
 
@@ -317,6 +335,8 @@ class SpecialApiGate extends SpecialPage {
 		global $wgCacheBuster;
 		$html = "";
 
+		// TODO: When API Gate has its own charting, use that instead of this SponsorshipDashboard-dependent code.
+
 		$metricName = wfMsg( 'apigate-chart-metric-requests' );
 		$chartName = wfMsg( 'apigate-chart-name-hourly' );
 		$html .= $this->getChartHtmlByPeriod( $apiKey, "hourly", $metricName, $chartName );
@@ -324,8 +344,9 @@ class SpecialApiGate extends SpecialPage {
 		$chartName = wfMsg( 'apigate-chart-name-daily' );
 		$html .= $this->getChartHtmlByPeriod( $apiKey, "daily", $metricName, $chartName );
 
-		$chartName = wfMsg( 'apigate-chart-name-weekly' );
-		$html .= $this->getChartHtmlByPeriod( $apiKey, "weekly", $metricName, $chartName );
+		// This chart seems like overkill to display it w/all the other charts on the page. Daily/monthly seem good to start with. Might remove the concept of weekly stats from API Gate entirely.
+		//$chartName = wfMsg( 'apigate-chart-name-weekly' );
+		//$html .= $this->getChartHtmlByPeriod( $apiKey, "weekly", $metricName, $chartName );
 		
 		$chartName = wfMsg( 'apigate-chart-name-monthly' );
 		$html .= $this->getChartHtmlByPeriod( $apiKey, "monthly", $metricName, $chartName );

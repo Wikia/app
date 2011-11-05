@@ -1,5 +1,5 @@
 <div class='sub_module'>
-	<h2><?= i18n( 'apigate-adminlinks-header' ); ?></h2>
+	<h3><?= i18n( 'apigate-adminlinks-header' ); ?></h3>
 	<ul>
 	<?php
 		foreach($links as $link){?>

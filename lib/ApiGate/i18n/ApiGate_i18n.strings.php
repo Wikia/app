@@ -15,7 +15,7 @@ $messages['en'] = array(
 	'apigate' => 'API Gate',
 	'apigate-mysql-error' => 'There was a db error with query<br/>\"$1\"<br/><br/>Error was: \"$2\"',
 	
-	'apigate-intro-header' => 'Welcome to the API Control Panel, $1',
+	'apigate-intro-header' => 'Welcome to the API Control Panel, $1!',
 	'apigate-intro' => 'You will always be able to access this page by logging into your Wikia account and selecting "API Control Panel" in the user drop-down menu on the top, right corner of any page on Wikia or by going to api.wikia.com/Special:ApiGate.',
 
 	'apigate-register-title' => 'Get an API Key',
@@ -35,10 +35,16 @@ $messages['en'] = array(
 	
 	'apigate-userkeys-intro' => 'Click on your keys below to view usage statistics for each key or edit your contact information (in case something goes wrong).',
 	'apigate-userkeys-footer' => 'If you have any questions regarding our APIs, please contact us at $1. We would be happy to help out.',
-	
+	'apigate-userkeys-disabled' => 'disabled',
+
 	'apigate-adminlinks-header' => 'Administrator Links',
 	'apigate-adminlinks-viewkeys' => 'View table of each individual key',
 	'apigate-adminlinks-viewaggregate' => 'View aggregate stats',
+	
+	'apigate-listkeys-th-keyname' => 'Key Nickname',
+	'apigate-listkeys-th-apikey' => 'API Key',
+	'apigate-listkeys-th-username' => 'Username',
+	'apigate-listkeys-th-disabled' => 'Disabled',
 );
 
 /** Message documentation (Message documentation)

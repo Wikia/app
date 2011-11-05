@@ -19,10 +19,24 @@ CREATE TABLE apiGate_keys (
 -- Creates table for users this can be tied directly
 -- to the user id of another system if you just want to grant API keys to existing users.
 -- TODO: DO WE NEED THIS TABLE FOR ANYTHING IF WE'RE USING ANOTHER SYSTEM FOR USER_IDs?
-DROP TABLE IF EXISTS apiGate_users (
+DROP TABLE IF EXISTS apiGate_users;
+CREATE TABLE apiGate_users (
 	id INT(11) NOT NULL AUTOINCREMENT, -- If you are using a separate system for the auth (and just trying API Gate to those accounts, then force-set this id.
 
 	PRIMARY KEY(id),
+);
+
+---- ----
+-- Table for recording a log of when API keys were banned and un-banned so that the accidental or temporary bans can be
+-- easily reverted as needed and aren't confused with intentional and/or permanent bans.
+---- ----
+DROP TABLE IF EXISTS apiGate_banLog;
+CREATE TABLE apiGate_banLog (
+	apiKey VARCHAR(255) NOT NULL,
+	action VARCHAR(255) NOT NULL, -- what was done to the key (disabled/enabled/banned/rate-limited/etc.)
+	createdOn TIMESTAMP, -- creation time of this log entry, not of anything else
+
+	reason TEXT -- a human-readable explanation of the reasoning of the ban/unban/whatever. this should make sure to mention whether it was manual or automatic.
 );
 
 ----

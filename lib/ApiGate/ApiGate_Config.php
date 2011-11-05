@@ -82,6 +82,27 @@ class ApiGate_Config{
 	} // end getUserId()
 	
 	/**
+	 * TODO: ApiGate should have some default for this which just returns the userId, and an overriding implementation should decide on its own
+	 * if it wants to make this do-able.  If ApiGate has its own system for creating users, then the default should be to get the username from the
+	 * apiGate_users table's username field.
+	 *
+	 * @param - string - The user id from the apiGate_keys.user_id field.  This deployment of ApiGate should override it 
+	 * @param - string - The username of the user with id 'userId' in the system (in our case, the Wikia userName). If no match is found, the userId will be used as the username.
+	 */
+	public static function getUserNameById( $userId ){
+		wfProfileIn( __METHOD__ );
+
+		$userName = $userId;
+		$userObj = User::newFromId( $userId );
+		if( is_object( $userObj ) ){
+			$userName= $userObj->getName();
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $userName;
+	} // end getUserNameById()
+	
+	/**
 	 * Extracts the mConn mysql database resource from a MediaWiki database object.  The mConn
 	 * is protected... but we really want to access it ;)
 	 */
