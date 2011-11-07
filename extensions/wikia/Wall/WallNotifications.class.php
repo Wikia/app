@@ -104,7 +104,7 @@ class WallNotifications {
 		$users[$notification->data->wall_userid] = $notification->data->wall_userid;
 		
 		if(!empty($users[$notification->data->msg_author_id])){
-			unset($users[$notification->data->msg_author_id]);	
+			unset($users[$notification->data->msg_author_id]);
 		} 
 
 		$title = Title::newFromText($notification->data->wall_username. '/' . $notification->data->title_id, NS_USER_WALL );
