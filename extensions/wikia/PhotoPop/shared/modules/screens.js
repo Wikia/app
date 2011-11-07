@@ -314,12 +314,17 @@ define.call(exports, function(){
 
 		revealAll: function(correct) {
 			var divs = document.getElementById('tilesWrapper').getElementsByTagName('div'),
+			divsArray = Array.prototype.slice.call(divs),
 			divsLength = divs.length,
 			next = 0,
 			self = this,
 			div,
+			t;
+			
+			divsArray.shuffle();
+			
 			t = setInterval(function() {
-				div = divs[next++];
+				div = divsArray[next++];
 				div.style.left = "-400px";
 				div.clicked = true;
 				if(next == divsLength) {
