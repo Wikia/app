@@ -8,7 +8,7 @@ var WallNotifications = $.createClass(Object, {
 		setTimeout( this.proxy( this.updateLoop ), 300);
 		//setInterval( this.proxy( this.updateLoop ), 5000);
 		
-		$('#WallNotifications').hover( this.proxy( this.updateLoop ) );
+		$('#WallNotifications').mouseenter( this.proxy( this.updateLoop ) );
 		
 		if($('.wall-notifications-monobook').length > 0) {
 			$('.wall-notifications-monobook').first()
@@ -36,6 +36,7 @@ var WallNotifications = $.createClass(Object, {
 		if( this.monobook === false ) {
 			$('#WallNotifications .bubbles').trackClick('wall/notifications/dropdown_open');
 		}
+		
 	},
 	
 	updateLoop: function() {
@@ -50,7 +51,7 @@ var WallNotifications = $.createClass(Object, {
 				},
 				callback: this.proxy(function(data) {
 					this.updateHtml(data);
-					this.updateInProgress = false;
+					setTimeout( this.proxy( function() {this.updateInProgress = false; } ), 10000 );
 				})
 			});
 		}

@@ -254,10 +254,20 @@ var Wall = $.createClass(Object, {
 	},	
 
 	loadMore: function(e) {
-		//$(e.target).closest('li').hide();
+		e.preventDefault();
+
 		$(e.target).closest('ul').find('li.SpeechBubble').show();
 		$(e.target).closest('.load-more').remove();
-		e.preventDefault();
+		
+		var comment_id = $(e.target).closest('li.message').attr('data-id');
+		$.nirvana.sendRequest({
+			controller: 'WallNotificationsExternalController',
+			method: 'markAsRead',
+			format: 'json',
+			data: { id: comment_id },
+			callback: function(data) { }
+		});
+			
 	},
 
 	/*
@@ -559,6 +569,14 @@ var Wall = $.createClass(Object, {
 			format: 'json',
 			data: data,
 			callback: this.proxy(function(data) {
+				if(data.status == false && data.forcereload == true) {
+					var url = window.location.href;
+					if (url.indexOf('#') >= 0) {
+						url = url.substring( 0, url.indexOf('#') );
+					}
+					window.location.href = url + '?reload=' + Math.floor(Math.random()*999);
+				}
+				
 				var bubble = $('.speech-bubble-message',msg).first();
 				
 				var beforeedit = bubble.html();

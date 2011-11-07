@@ -26,7 +26,9 @@ class WallNotificationsExternalController extends WikiaController {
 	public function markAsRead() {
 		$id = $this->request->getVal('id');
 		$wn = F::build('WallNotifications', array());
-		$wn->markRead( $this->wg->User->getId(), $this->wg->CityId, $id );
+		$ret = $wn->markRead( $this->wg->User->getId(), $this->wg->CityId, $id );
+		$this->response->setVal('wasUnread', $ret);
+		
 		return true;
 	}
 	
