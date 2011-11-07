@@ -129,7 +129,7 @@ class WallExternalController extends WikiaController {
 		
 		$ac = ArticleComment::newFromId($msgid);
 		
-		if(empty($ac) || 1) {
+		if(empty($ac)) {
 			// most likely scenario - can't create AC, because message was already
 			// deleted before we tried to edit it
 			// client(javascript) should reload user's page
