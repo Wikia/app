@@ -1,6 +1,6 @@
 <section id="WordmarkTab" class="WordmarkTab">
 	<fieldset class="text">
-        <span id="or">or</span>
+        <span id="or"><?= wfMsg('themedesigner-or') ?></span>
 		<h1><?= wfMsg('themedesigner-text-wordmark') ?></h1>
 
 		<ul class="controls">
