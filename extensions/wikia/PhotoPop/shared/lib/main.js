@@ -29,6 +29,7 @@
 			imagePreloaded = false,
 			maskShown = false,
 			highscore = [],
+			eventListenersAdded= false,
 			tutorialSteps = [],
 			choosenCorrectPictures = [],
 			homeInitialized = false,
@@ -459,26 +460,28 @@
 			}
 
 			function newGame(gameData){
+				currentGame = null;
 				currentGame = new Game(gameData);
-
-				currentGame.addEventListener('initGameScreen', initGameScreen);
-				currentGame.addEventListener('initHomeScreen', initHomeScreen);
-				currentGame.addEventListener('goHome', goHome);
-				currentGame.addEventListener('playAgain', playAgain);
-				currentGame.addEventListener('goToHighScores', openHighscore);
-				currentGame.addEventListener('timeIsUp', timeIsUp);
-				currentGame.addEventListener('wrongAnswerClicked', wrongAnswerClicked);
-				currentGame.addEventListener('rightAnswerClicked', rightAnswerClicked);
-				currentGame.addEventListener('answerDrawerButtonClicked', answerDrawerButtonClicked);
-				currentGame.addEventListener('continueClicked', continueClicked);
-				currentGame.addEventListener('tileClicked', tileClicked);
-				currentGame.addEventListener('timerEvent', timerEvent);
-				currentGame.addEventListener('timeIsLow', timeIsLow);
-				currentGame.addEventListener('endGame', endGame);
-				currentGame.addEventListener('muteButtonClicked', muteButtonClicked);
-				currentGame.addEventListener('answersPrepared', answersPrepared);
-				currentGame.addEventListener('roundStart', roundStart);
-				currentGame.addEventListener('pause', pause);
+				if(!eventListenersAdded) {
+					currentGame.addEventListener('initGameScreen', initGameScreen);
+					currentGame.addEventListener('initHomeScreen', initHomeScreen);
+					currentGame.addEventListener('goHome', goHome);
+					currentGame.addEventListener('playAgain', playAgain);
+					currentGame.addEventListener('goToHighScores', openHighscore);
+					currentGame.addEventListener('timeIsUp', timeIsUp);
+					currentGame.addEventListener('wrongAnswerClicked', wrongAnswerClicked);
+					currentGame.addEventListener('rightAnswerClicked', rightAnswerClicked);
+					currentGame.addEventListener('answerDrawerButtonClicked', answerDrawerButtonClicked);
+					currentGame.addEventListener('continueClicked', continueClicked);
+					currentGame.addEventListener('tileClicked', tileClicked);
+					currentGame.addEventListener('timerEvent', timerEvent);
+					currentGame.addEventListener('timeIsLow', timeIsLow);
+					currentGame.addEventListener('endGame', endGame);
+					currentGame.addEventListener('muteButtonClicked', muteButtonClicked);
+					currentGame.addEventListener('answersPrepared', answersPrepared);
+					currentGame.addEventListener('roundStart', roundStart);
+					currentGame.addEventListener('pause', pause);
+				}
 
 				currentGame.prepareGame();
 			}

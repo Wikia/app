@@ -143,6 +143,7 @@ define.call(exports, function(){
 		},
 
 		prepareGameScreen: function(event, options) {
+			Wikia.log('WTF');
 			this.prepareMask(options.watermark);
 			this.hideContinue();
 			this.showScoreBar();
@@ -181,11 +182,11 @@ define.call(exports, function(){
 			offsetY = offsetX = 0,
 			self = this,
 			numTiles = rows * cols;
+
 			if(tilesWrapper.innerHTML == '') {
 				for(var i = 0; i < numTiles; i++) {
 					table += "<div id='tile-" + i + "'></div>"
 				}
-
 				tilesWrapper.innerHTML = table;
 			}
 
@@ -201,7 +202,6 @@ define.call(exports, function(){
 				divStyle.height = div.originalHeight = rowHeight;
 				divStyle.backgroundPosition = '-'+ offsetX + 'px -' + offsetY + 'px';
 				divStyle.left = div.originalLeft = offsetX;
-
 				offsetX += colWidth;
 
 				if((i+1) % cols == 0) {
