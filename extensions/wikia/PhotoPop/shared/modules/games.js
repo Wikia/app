@@ -125,7 +125,7 @@ define.call(exports, ['modules/data'], function(data){
 			this._roundIsOver = false;
 
 			currentGameId = this.getId();
-Wikia.log(this._firstRound);
+
 			this.fire('roundStart', {
 				gameId: this.getId(),
 				image: this._data[this._currentRound-1].image,
