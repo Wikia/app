@@ -67,8 +67,8 @@ define.call(exports, function(){
 	}),
 
 	GameScreen = my.Class({
-
 		_barWrapperHeight: 0,
+		_firstTileClicked: true,
 
 		constructor: function(parent) {
 			Observe(this);
@@ -152,6 +152,7 @@ define.call(exports, function(){
 		},
 
 		roundStart: function(event, options) {
+			this._firstTileClicked = true;
 			this.showMask(options);
 			this.updateHudProgress(options.currentRound, options.numRounds);
 		},
@@ -218,13 +219,26 @@ define.call(exports, function(){
 			} else {
 				tile.style.height = 0;
 			}
+			
+			if(this._firstTileClicked){
+				this._firstTyle = false;
+				setTimeout(this.slideAnswerDrawerIn,100);
+			}
 		},
-
+		
+		slideAnswerDrawerIn: function(){
+			var width = document.getElementById('answerList').offsetWidth;
+			
+			document.getElementById('answerDrawer').style.width = width+20;
+			document.getElementById('answerDrawer').style.right = -width;
+			document.getElementById('answerButton').style.right = width;
+		},
+		
 		answerDrawerButtonClicked: function(event, options) {
 			var button = document.getElementById('answerButton'),
 			buttonClassList = button.classList,
 			imgs = button.getElementsByTagName('img');
-
+			
 			if (buttonClassList.contains('closed')) {
 				imgs[0].style.visibility = 'hidden';
 				imgs[1].style.visibility = 'visible';
@@ -250,16 +264,6 @@ define.call(exports, function(){
 				answerList[i].innerHTML = options.answers[i];
 				answerList[i].classList.remove(options['class']);
 			}
-
-			setTimeout(function() {
-				var width = document.getElementById('answerList').offsetWidth;
-
-				document.getElementById('answerDrawer').style.width = width+20;
-				document.getElementById('answerDrawer').style.right = -width;
-				document.getElementById('answerButton').style.right = width;
-			},100);
-
-
 		},
 
 		wrongAnswerClicked: function(event, options) {
