@@ -348,10 +348,10 @@ body{
 	width:100%;
 	text-align:left;
 	background-color: rgba(0, 0, 0, 0.4);
-	background: -moz-linear-gradient(top, transparent 0%, rgba(0,0,0,0.6) 60%);
+	/*background: -moz-linear-gradient(top, transparent 0%, rgba(0,0,0,0.6) 60%);
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,transparent), color-stop(60%,rgba(0,0,0,0.6)));
 	background: -webkit-linear-gradient(top, transparent 0%,rgba(0,0,0,0.6) 60%);
-	background: -o-linear-gradient(top, transparent 0%, rgba(0,0,0,0.6) 60%);
+	background: -o-linear-gradient(top, transparent 0%, rgba(0,0,0,0.6) 60%);*/
 	height: 30px;
 	z-index:22;
 	-webkit-transition: all .5s  ease-in;

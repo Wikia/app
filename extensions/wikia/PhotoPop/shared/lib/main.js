@@ -556,9 +556,11 @@
 					if(games.getCurrentId() != 'tutorial' || screens.getCurrentId() != 'game')
 						screens.closeModal();
 
-					if(screens.getCurrentId() == 'game' && games.getCurrentId() != 'tutorial')
-						pause('pause', {caller:'goHomeButton'});
-
+					if(screens.getCurrentId() == 'game' && games.getCurrentId() != 'tutorial'){
+						currentGame.handlePause(true, 'goHomeButon');
+						goHome('goHome', false);
+					}
+					
 					if(screens.getCurrentId() != 'home' && (games.getCurrentId() != 'tutorial' || event.force))
 						screens.get('home').show();
 				});
