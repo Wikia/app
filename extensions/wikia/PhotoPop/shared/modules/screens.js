@@ -217,37 +217,37 @@ define.call(exports, function(){
 		tileClicked: function(event, tile) {
 			if(this._clickableTiles){
 				tile.clicked = true;
-				
+
 				if(Wikia.Platform.is('app')) {
 					tile.style.display = 'none';
 				} else {
 					tile.style.height = 0;
 				}
-				
+
 				if(this._firstTileClicked){
 					this._firstTyle = false;
 					setTimeout(this.slideAnswerDrawerIn,100);
 				}
 			}
 		},
-		
+
 		canClickTiles: function(){
 			return this._clickableTiles;
 		},
-		
+
 		slideAnswerDrawerIn: function(){
 			var width = document.getElementById('answerList').offsetWidth;
-			
+
 			document.getElementById('answerDrawer').style.width = width+20;
 			document.getElementById('answerDrawer').style.right = -width;
 			document.getElementById('answerButton').style.right = width;
 		},
-		
+
 		answerDrawerButtonClicked: function(event, options) {
 			var button = document.getElementById('answerButton'),
 			buttonClassList = button.classList,
 			imgs = button.getElementsByTagName('img');
-			
+
 			if (buttonClassList.contains('closed')) {
 				imgs[0].style.visibility = 'hidden';
 				imgs[1].style.visibility = 'visible';
@@ -323,7 +323,7 @@ define.call(exports, function(){
 
 		revealAll: function(correct) {
 			this._clickableTiles = false;
-			
+
 			var divs = document.getElementById('tilesWrapper').getElementsByTagName('div'),
 			divsArray = Array.prototype.slice.call(divs),
 			divsLength = divs.length,
@@ -331,9 +331,9 @@ define.call(exports, function(){
 			self = this,
 			div,
 			t;
-			
+
 			divsArray.shuffle();
-			
+
 			t = setInterval(function() {
 				div = divsArray[next++];
 				div.style.left = "-400px";
@@ -349,13 +349,19 @@ define.call(exports, function(){
 
 		showMask: function(options) {
 			this.fire('displayingMask', options);
-
-				var divs = document.getElementById('tilesWrapper').getElementsByTagName('div'),
+			var divs = document.getElementById('tilesWrapper').getElementsByTagName('div'),
 				divsArray = Array.prototype.slice.call(divs),
 				divsLength = divsArray.length,
 				next = 0,
 				self = this;
 
+			if(options.firstRound) {
+				this.updateHudScore(options.totalPoints);
+				for(var i = 0; i < divsLength; i++) {
+					divsArray[i].clicked = false;
+				}
+				this.fire('maskDisplayed');
+			} else {
 				divsArray.shuffle();
 
 				var t = setInterval(function() {
@@ -371,9 +377,10 @@ define.call(exports, function(){
 					if(next == divsLength) {
 						clearInterval(t);
 						self.updateHudScore(options.totalPoints);
-						setTimeout(function() {self.fire('maskDisplayed');}, 400);
+						setTimeout(function() {self.fire('maskDisplayed');}, 100);
 					}
 				}, 70);
+			}
 
 
 		},

@@ -47,7 +47,8 @@
 						    gamesData[gameId] &&
 						    gamesData[gameId].watermark) ?
 						gamesData[gameId].watermark : graphics.getAsset('watermark_default'),
-						mute: audio.getMute()
+						mute: audio.getMute(),
+						initGame: true
 
 				});
 
@@ -297,10 +298,10 @@
 					clickThrough: false,
 					closeOnClick: true
 				});
+
 			}
 
 			function manageInteraction(){
-				//if(img.complete) imagePreloaded = true;
 				if(maskShown && imagePreloaded){
 					if(currentGame.getId() != 'tutorial') screens.closeModal();
 					screens.get('game').getElement().style.pointerEvents = 'auto';
@@ -409,10 +410,7 @@
 
 							(gameData)? newGame(gameData): loadSelectedGame();
 						});
-
 						data.storage.get(selectedGame.id);
-
-
 					}
 				}
 			}
