@@ -687,7 +687,16 @@ class ArticleComment {
 			$parentArticle = Article::newFromID($parentId);
 			if(empty($parentArticle)) {
 				$parentTitle = Title::newFromID($parentId, GAID_FOR_UPDATE);
-				$parentArticle = new Article($parentTitle);
+				// it's possible for Title to be empty at this point
+				// if article was removed in the meantime
+				// (for eg. when replying on Wall from old browser session
+				//  to non-existing thread)
+				// it's fine NOT to create Article in that case
+				if(!empty($parentTitle)) {
+					$parentArticle = new Article($parentTitle);
+				}
+				
+				// if $parentTitle is empty the logging below will be executed
 			}
 			//FB#2875 (log data for further debugging)
 			if (is_null($parentArticle)) {
