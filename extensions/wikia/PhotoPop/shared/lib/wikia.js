@@ -14,7 +14,15 @@ var Wikia = {};
 	isIPhone = /iPhone/i.test(ua),
 	isIPod = /iPod/i.test(ua),
 	isAndroid = /Android/i.test(ua),
-	isDesktop = !isApp && !(isIPad || isIPhone || isIPod || isAndroid);
+	isDesktop = !isApp && !(isIPad || isIPhone || isIPod || isAndroid),
+	clickEvent;
+	
+	try{
+		if(document.createElement( 'div' ).hasOwnProperty('ontouchstart'))
+			clickEvent = 'ontouchstart';
+	}catch(err){}
+	
+	clickEvent = clickEvent || 'click';
 
 	/**
 	 * @public
@@ -62,6 +70,10 @@ var Wikia = {};
 			}
 
 			return result;
+		},
+		
+		getClickEvent: function(){
+			return clickEvent;
 		}
 	};
 
