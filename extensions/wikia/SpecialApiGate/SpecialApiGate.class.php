@@ -4,7 +4,18 @@
  * @date 20111001
  *
  * Special page to wrap API Gate
- * @TODO: Better description
+ *
+ * API Gate is a library (written at Wikia, but intended NOT to be MediaWiki-specific) which
+ * allows for creation and management of API keys.  It allows administrators to ban keys, and
+ * provides basic charts of request rates for each key.  This special page is just meant as a
+ * MediaWiki wrapper for the ApiGate functionality.
+ *
+ * In addition to this extension, the /lib/ApiGate/ApiGate_Config.php file is used as a bridge
+ * to let ApiGate work with our MediaWiki deployment.
+ *
+ * WARNING: Since it was much faster, we currently depend on the charting in SponsorshipDashboard
+ * which is partially written to be re-used but hasn't fully been separated yet. Therefore,
+ * DO NOT DISABLE SponsorshipDashboard ON THE API WIKI! (or pages with charts will fatal-error).
  *
  * @ingroup SpecialPage
  */
@@ -54,7 +65,7 @@ class SpecialApiGate extends SpecialPage {
 			case self::SUBPAGE_CHECK_KEY:
 
 				// TODO: LATER Fill this out so that we can do per-method permissions (there can probably be a static helper-function in ApiGate to assist).
-				$requestData = array(); 
+				$requestData = array();
 
 				// Will output headers and a descriptive body-message.
 				ApiGate::isRequestAllowed_endpoint( $apiKey, $requestData );
@@ -125,7 +136,7 @@ class SpecialApiGate extends SpecialPage {
 		$html = wfMsg('apigate-nologintext') . "<br/><br/><button type='button' data-id='login' class='ajaxLogin'>" . wfMsg('apigate-login-button') . "</button>";
 		return $this->wrapHtmlInModuleBox( $html );
 	} // end getLoginBoxHtml()
-	
+
 	/**
 	 * Given a string of html, returns that same html wrapped inside of a div which is styled as a sub-module
 	 * which is a standalone box for rendering in the main column of this page.
@@ -228,7 +239,7 @@ class SpecialApiGate extends SpecialPage {
 				// Display a success message containing the new key.
 				$msg = wfMsgExt( 'apigate-register-success', array('parse'), array( $data['apiKey'] ) );
 				$msg .= "<br/><br/>" . wfMsgExt( 'apigate-register-success-return', array('parse'), array() );
-				$html .=  ApiGate_Dispatcher::renderTemplate( "success", array('message' => $msg) );
+				$html .=  ApiGate_Dispatcher::renderTemplate( "info", array('message' => $msg) ); // product wanted this to be normal style, not success-style.
 			} else {
 				$html .=  ApiGate_Dispatcher::renderTemplate( "register", $data );
 			}

@@ -1,9 +1,9 @@
 <div class='sub_module'>
 	<?= i18n( 'apigate-userkeys-intro' ) ?>
 <?php
+	global $APIGATE_LINK_ROOT, $APIGATE_CONTACT_EMAIL;
 	if(count($keyData) > 0){
 		?><ul><?php
-		global $APIGATE_LINK_ROOT;
 		foreach($keyData as $key){
 			$apiKey = $key['apiKey'];
 			$nickName = $key['nickName'];
@@ -25,8 +25,8 @@
 ?>
 
 	<?php
-	global $APIGATE_CONTACT_EMAIL;
+	$registerLink = $APIGATE_LINK_ROOT."/register";
 	$emailLink = "<a href='mailto:$APIGATE_CONTACT_EMAIL'>$APIGATE_CONTACT_EMAIL</a>";
-	print i18n( 'apigate-userkeys-footer', $emailLink );
+	print i18n( 'apigate-userkeys-footer', $registerLink, $emailLink );
 	?>
 </div>
