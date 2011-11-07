@@ -91,7 +91,7 @@ class SMWPropertiesPage extends SMWQueryPage {
 				$typestring = current( $types )->getLongHTMLText( $skin );
 			}
 			$proplink = $skin->makeKnownLinkObj( $result[0]->getWikiPageValue()->getTitle(), $result[0]->getWikiValue() );
-		} elseif ( $result[0]->isUserDefined() ) {
+		} elseif ( $result[0]->isUserDefined() && $result[0]->getWikiPageValue() ) { // wikia change
 			$errors[] = wfMsg( 'smw_propertylackspage' );
 			$proplink = $skin->makeBrokenLinkObj( $result[0]->getWikiPageValue()->getTitle(), $result[0]->getWikiValue(), 'action=view' );
 		} else { // predefined property
