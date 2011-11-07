@@ -122,20 +122,24 @@ class PhotoPopModel extends WikiaModel{
 				}
 
 				$resp = $this->app->sendRequest( 'ImageServingController', 'index', array( 'ids' => array_keys( $articles ), 'height' => $imageHeight, 'width' => $imageWidth, 'count' => 1 ) );
-
-				$images = $resp->getVal( 'result' );
-
-				foreach ( $articles as $id => $item ) {
-					if ( !empty( $images[$id][0]['url'] ) ) {
-						$url = $images[$id][0]['url'];
-						//images are not available on devbox and we need to test the game with real images!
-						$item->image = ( $this->wg->DevelEnvironment ) ? preg_replace('#http://[^/]+/#i', 'http://images.wikia.com/', $url) : $url;
+				
+				if( $resp->getVal( 'status' ) == 'error' ) {
+					error_log( 'PHOTOPOP error requesting images: ' . $resp->getVal( 'result' ) );
+				} else {
+					$images = $resp->getVal( 'result' );
+	
+					foreach ( $articles as $id => $item ) {
+						if ( !empty( $images[$id][0]['url'] ) ) {
+							$url = $images[$id][0]['url'];
+							//images are not available on devbox and we need to test the game with real images!
+							$item->image = ( $this->wg->DevelEnvironment ) ? preg_replace('#http://[^/]+/#i', 'http://images.wikia.com/', $url) : $url;
+						}
+	
+						$contents[] = $item;
 					}
-
-					$contents[] = $item;
+	
+					$this->storeInCache( $cacheKey , $contents );
 				}
-
-				$this->storeInCache( $cacheKey , $contents );
 			} else {
 				$this->wf->profileOut( __METHOD__ );
 				throw new WikiaException( "No data for '{$categoryName}'" );
