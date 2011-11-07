@@ -183,6 +183,7 @@ $messages['en'] = array(
 	'oasis-navigation-v2-level1-validation' => 'Oops! Your Level 1 menu is too wide. Please shorten the items to fit. Thanks!',
 	'oasis-navigation-v2-level2-validation' => 'Oops! Your Level 2 menu is too wide. Please shorten the items to fit. Thanks!',
 	'oasis-navigation-v2-level12-validation' => 'Oops! Your Level 1 and Level 2 menus are too wide. Please edit them to fit.',
+	'oasis-navigation-v2-validation-next' => 'Next',
 	'wikia-navigation-global' => "*<nowiki>On the Wiki</nowiki>
 **Special:WikiActivity|Wiki Activity
 **Special:Random|Random Page
