@@ -294,9 +294,11 @@
 			}
 
 			function tileClicked(event, tile){
-				if(!tile.clicked){
+				var gameScreen = screens.get('game');
+				
+				if(gameScreen.canClickTiles() && !tile.clicked){
 					audio.play('pop');
-					screens.get('game').fire('tileClicked', tile);
+					gameScreen.fire('tileClicked', tile);
 
 					if(currentGame.getId() == "tutorial" && !tutorialSteps['tile']){
 						screens.openModal({

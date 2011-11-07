@@ -69,6 +69,7 @@ define.call(exports, function(){
 	GameScreen = my.Class({
 		_barWrapperHeight: 0,
 		_firstTileClicked: true,
+		_clickableTiles: true,
 
 		constructor: function(parent) {
 			Observe(this);
@@ -213,17 +214,24 @@ define.call(exports, function(){
 		},
 
 		tileClicked: function(event, tile) {
-			tile.clicked = true;
-			if(Wikia.Platform.is('app')) {
-				tile.style.display = 'none';
-			} else {
-				tile.style.height = 0;
+			if(this._clickableTiles){
+				tile.clicked = true;
+				
+				if(Wikia.Platform.is('app')) {
+					tile.style.display = 'none';
+				} else {
+					tile.style.height = 0;
+				}
+				
+				if(this._firstTileClicked){
+					this._firstTyle = false;
+					setTimeout(this.slideAnswerDrawerIn,100);
+				}
 			}
-			
-			if(this._firstTileClicked){
-				this._firstTyle = false;
-				setTimeout(this.slideAnswerDrawerIn,100);
-			}
+		},
+		
+		canClickTiles: function(){
+			return this._clickableTiles;
 		},
 		
 		slideAnswerDrawerIn: function(){
@@ -313,6 +321,8 @@ define.call(exports, function(){
 		},
 
 		revealAll: function(correct) {
+			this._clickableTiles = false;
+			
 			var divs = document.getElementById('tilesWrapper').getElementsByTagName('div'),
 			divsArray = Array.prototype.slice.call(divs),
 			divsLength = divs.length,
@@ -330,6 +340,7 @@ define.call(exports, function(){
 				if(next == divsLength) {
 					clearInterval(t);
 					self.showContinue(correct);
+					self._clickableTiles = true;
 				}
 			}, 120);
 
