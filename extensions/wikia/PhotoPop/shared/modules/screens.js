@@ -97,7 +97,6 @@ define.call(exports, function(){
 			this.addEventListener('muteButtonClicked', this.muteButtonClicked);
 			this.addEventListener('answersPrepared', this.answersPrepared);
 			this.addEventListener('roundStart', this.roundStart);
-			this.addEventListener('tileClicked', this.tileClicked);
 			this.addEventListener('timeIsUp', this.timeIsUp);
 			this.addEventListener('continueClicked', this.continueClicked);
 			this.addEventListener('endGame', this.endGame);
