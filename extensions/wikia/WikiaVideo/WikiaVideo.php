@@ -476,40 +476,53 @@ $wgHooks['ArticleFromTitle'][] = 'WikiaVideoArticleFromTitle';
 function WikiaVideoArticleFromTitle($title, $article) {
 	global $wgRequest, $wgEnableParserCache;
 
-	$token = '/';
+	$embedArgs = array('align', 'caption', 'thumb', 'width');
 
 	if(NS_VIDEO == $title->getNamespace()) {
 		// overloading subpages to encode query string parameters
 		// i.e. Video:Foo/width=480px&caption=Hello World
-		$parts = explode($token, $title->getFullText());
-		if (sizeof($parts) > 1) {
-			$wgEnableParserCache = false;
-			$vars = array();
-			$possibleQueryString = array_pop($parts);
-			if (strpos($possibleQueryString, '=')) {
-				// we have a query string. set request vars
-				// and create new Title (minus query string)
-
-				parse_str($possibleQueryString, $vars);
-
-				if (get_magic_quotes_gpc()) {
-					foreach ($vars as &$var) {
-						$var = stripslashes($var);	
-					}
-				}
-
-				$allVars = array_merge($wgRequest->getValues(), $vars);
-				foreach ($allVars as $key=>$val) {
-					$wgRequest->setVal($key, $val);
-				}
-
-				$newTitle = Title::newFromText(implode($token, $parts), $title->getNamespace());
-				if (!is_null($newTitle)) {
-					$title = $newTitle;
-				}								
+		
+		// search for the first occurrence of a query string arg and param
+		// split the full title into title and query string on that occurrence
+		$titleText = $title->getFullText();
+		$firstArgPos = strlen($titleText)+1;
+		foreach ($embedArgs as $arg) {
+			$argPos = strpos($titleText, '/'.$arg.'=');
+			if ($argPos !== false && $argPos < $firstArgPos) {
+				$firstArgPos = $argPos+1;	// $argPos is where the '/' is
 			}
 		}
+		if ($firstArgPos < strlen($titleText)) {
+			$queryStr = substr($titleText, $firstArgPos);
+		}
+		$titleTextNoQS = substr($titleText, 0, $firstArgPos-1);
+		
+		if (!empty($queryStr)) {
+			// we have a query string. set request vars
+			// and create new Title (minus query string)
+			$wgEnableParserCache = false;
+			$vars = array();
+			parse_str($queryStr, $vars);
 
+			if (get_magic_quotes_gpc()) {
+				foreach ($vars as &$var) {
+					$var = stripslashes($var);	
+				}
+			}
+
+			$allVars = array_merge($wgRequest->getValues(), $vars);
+			foreach ($allVars as $key=>$val) {
+				$wgRequest->setVal($key, $val);
+			}
+			
+		}
+		
+		$newTitle = Title::newFromText($titleTextNoQS, $title->getNamespace());
+		if (!is_null($newTitle)) {
+			$title = $newTitle;
+		}								
+		
+		
 		$article = new VideoPage($title);		
 	}
 	return true;
