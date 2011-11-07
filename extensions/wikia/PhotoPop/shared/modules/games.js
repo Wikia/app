@@ -94,6 +94,7 @@ define.call(exports, ['modules/data'], function(data){
 		},
 
 		prepareGame: function(){
+						
 			this.fire('initGameScreen', this.getId());
 			this.prepareAnswerDrawer();
 			this.prepareContinueView();
