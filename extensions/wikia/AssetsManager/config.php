@@ -78,6 +78,7 @@ $config['oasis_shared_js'] = array(
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaTrackerQueue.js',
 		'//skins/common/jquery/jquery.wikia.tracker.js',
+		'//skins/oasis/js/innerShiv.js',
 		'//skins/oasis/js/hoverMenu.js',
 		'//skins/oasis/js/PageHeader.js',
 		'//skins/oasis/js/Search.js',
@@ -90,7 +91,6 @@ $config['oasis_shared_js'] = array(
 		'//skins/oasis/js/Spotlights.js',
 		'//skins/oasis/js/FirefoxFindFix.js',
 		'//skins/oasis/js/isTouchScreen.js',
-		'//skins/oasis/js/innerShiv.js',
 	)
 );
 
