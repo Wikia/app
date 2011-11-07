@@ -66,6 +66,22 @@
 
 			function loadSelectedGame(){
 				if(typeof selectedGame != 'undefined'){
+					//in the app be sure that the aspect is landscape
+					/*
+					var width = '',
+					height = '';
+					
+					if(Wikia.Platform.is('app')){
+						if(screen.width > screen.height){
+							width = screen.width;
+							height = screen.height;
+						}else{
+							height = screen.width;
+							width = screen.height;
+						}
+					}
+					*/
+					
 					gameLoader.load('http://' +
 							((settings.testDomain) ? selectedGame.id + '.' + settings.testDomain : selectedGame.domain) +
 							'/wikia.php?controller=PhotoPopController&method=getData&category=' +

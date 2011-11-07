@@ -132,6 +132,7 @@ define.call(exports, function(){
 
 		timeIsUp: function(event, options) {
 			var self = this;
+			this._clickableTiles = false;
 			this.hideAnswerDrawer();
 			this.hideScoreBar();
 			this.showTimeUp();
@@ -175,8 +176,8 @@ define.call(exports, function(){
 			table = "",
 			tableWidth = screenElement.clientWidth,
 			tableHeight = screenElement.clientHeight,
-			rowHeight = Math.floor(tableHeight / rows),
-			colWidth = Math.floor(tableWidth / cols),
+			rowHeight = Math.ceil(tableHeight / rows),
+			colWidth = Math.ceil(tableWidth / cols),
 			offsetY = offsetX = 0,
 			self = this,
 			numTiles = rows * cols;
@@ -537,7 +538,7 @@ define.call(exports, function(){
 					date = highscore[i].date;
 
 					tds[0].innerHTML = (i+1) + '.';
-					tds[1].innerHTML = highscore[i].wiki;
+					tds[1].innerHTML = highscore[i].wiki.replace(/photopop/ig, '');
 					tds[2].innerHTML = date[0] + ' ' + Wikia.i18n.Msg('photopop-game-month-'+ date[1]) + ' ' + date[2];
 					tds[3].innerHTML = highscore[i].score;
 				};
