@@ -34,7 +34,7 @@ $messages['en'] = array(
 	'apigate-register-error-mysql_error' => 'Error trying to save new API key to the database.',
 	
 	'apigate-userkeys-intro' => 'Click on your keys below to view usage statistics for each key or edit your contact information (in case something goes wrong).',
-	'apigate-userkeys-footer' => 'If you have any questions regarding our APIs, please contact us at $1. We would be happy to help out.',
+	'apigate-userkeys-footer' => 'If you need another key and want to track it in this account, please <a href="$1">create another key</a> while you are logged in to this account.<br/><br/>If you have any questions regarding our APIs, please contact us at $2. We would be happy to help out.',
 	'apigate-userkeys-disabled' => 'disabled',
 
 	'apigate-adminlinks-header' => 'Administrator Links',
