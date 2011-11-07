@@ -32,6 +32,7 @@
 			tutorialSteps = [],
 			choosenCorrectPictures = [],
 			homeInitialized = false,
+			clickEvent = Wikia.Platform.getClickEvent(),
 			view = {
 				image: function() {
 					return function(text, render) {
@@ -95,7 +96,7 @@
 
 					document.getElementById('sliderContent').innerHTML = Mustache.to_html(templates.gameSelector, templateVars);
 
-					var gamesList = document.getElementById('gamesList').onclick = function(event){
+					var gamesList = document.getElementById('gamesList')[clickEvent] = function(event){
 						event = event || window.event;
 						var target = event.target || event.srcElement;
 
@@ -118,19 +119,19 @@
 						{method: 'get'}
 					);
 
-					document.getElementById('button_volume').onclick = function(){
+					document.getElementById('button_volume')[clickEvent] = function(){
 						var mute = audio.toggleMute();
 						audio.play('pop');
 						screens.get('home').fire('muteButtonClicked', {mute: mute});
 						screens.get('game').fire('muteButtonClicked', {mute: mute});
 					};
 
-					document.getElementById('button_tutorial').onclick = function(){
+					document.getElementById('button_tutorial')[clickEvent] = function(){
 						screens.closeModal();
 						runGame('tutorial');
 					};
 
-					document.getElementById('button_scores').onclick = function(){
+					document.getElementById('button_scores')[clickEvent] = function(){
 						openHighscore();
 					};
 
@@ -478,7 +479,7 @@
 			}
 
 			function initHighscore(){
-				document.getElementById('goBack').onclick = function(){
+				document.getElementById('goBack')[clickEvent] = function(){
 					initHomeScreen();
 					screens.get('home').show();
 				};

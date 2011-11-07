@@ -548,7 +548,8 @@ define.call(exports, function(){
 			var modalWrapper = document.getElementById('modalWrapper'),
 			modal = document.getElementById('modal'),
 			self = this,
-			html;
+			html,
+			clickEvent = Wikia.Platform.getClickEvent();
 
 			if(options.fontSize) {
 				modal.style.fontSize = options.fontSize;
@@ -598,11 +599,11 @@ define.call(exports, function(){
 			this.fire('modalOpened', {name: options.name});
 
 			if(options.closeOnClick) {
-				modalWrapper.onclick = function() {
+				modalWrapper[clickEvent] = function() {
 					self.closeModal();
 				}
 			} else {
-				modalWrapper.onclick = null;
+				modalWrapper[clickEvent] = null;
 			}
 		},
 

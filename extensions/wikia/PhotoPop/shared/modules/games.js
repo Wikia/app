@@ -2,7 +2,8 @@ var exports = exports || {};
 //TODO: Create animation managment system
 
 define.call(exports, ['modules/data'], function(data){
-	var currentGameId = null;
+	var currentGameId = null,
+	clickEvent = Wikia.Platform.getClickEvent();
 
 	var Points = my.Class( {
 
@@ -142,9 +143,9 @@ define.call(exports, ['modules/data'], function(data){
 			var divs = document.getElementById('tilesWrapper').getElementsByTagName('div'),
 			divsLength = divs.length,
 			self = this;
-
+			
 			for(var i = 0; i < divsLength; i++) {
-				divs[i].onclick = function() {
+				divs[i][clickEvent] = function() {
 					self.handlePause(false);
 					self.fire('tileClicked', this)
 				}
@@ -153,15 +154,16 @@ define.call(exports, ['modules/data'], function(data){
 
 		prepareHud: function() {
 			var self = this;
+			
 			document.getElementById('totalPoints').innerHTML = '0';
 
-			document.getElementById('pauseButton').onclick = function() {
+			document.getElementById('pauseButton')[clickEvent] = function() {
 				self.handlePause(!self._pause, 'pauseButton');
 			};
-			document.getElementById('muteButton').onclick = function() {
+			document.getElementById('muteButton')[clickEvent] = function() {
 				self.fire('muteButtonClicked', this);
 			};
-			document.getElementById('home').onclick = function() {
+			document.getElementById('home')[clickEvent] = function() {
 				self.handlePause(true, 'goHomeButton');
 				self.fire('goHome');
 			};
@@ -169,7 +171,7 @@ define.call(exports, ['modules/data'], function(data){
 
 		prepareContinueView: function() {
 			var self = this;
-			document.getElementById('continue').onclick = function() {
+			document.getElementById('continue')[clickEvent] = function() {
 				self.nextRound();
 				self.fire('continueClicked');
 			}
@@ -178,13 +180,13 @@ define.call(exports, ['modules/data'], function(data){
 		prepareAnswerDrawer: function() {
 			var self = this,
 			answerList = document.getElementById('answerList').getElementsByTagName('li');
-			document.getElementById('answerButton').onclick = function() {
+			document.getElementById('answerButton')[clickEvent] = function() {
 				self.handlePause(false);
 				self.fire('answerDrawerButtonClicked');
 			};
 
 			for(var i = 0; i < 4; i++) {
-				answerList[i].onclick = function() {
+				answerList[i][clickEvent] = function() {
 					if(!this.clicked) {
 						if(this.id != self._correctAnswer) {
 							self._roundPoints.deductPoints(self._wrongAnswerPointDeduction);
@@ -223,17 +225,17 @@ define.call(exports, ['modules/data'], function(data){
 
 		prepareFinishScreen: function() {
 			var self = this;
-			document.getElementById('goHome').onclick = function() {
+			document.getElementById('goHome')[clickEvent] = function() {
 				self.handlePause(true);
 				self.fire('goHome', true);
 			};
 
-			document.getElementById('playAgain').onclick = function() {
+			document.getElementById('playAgain')[clickEvent] = function() {
 				self.handlePause(true);
 				self.fire('playAgain');
 			};
 
-			document.getElementById('goToHighScores').onclick = function() {
+			document.getElementById('goToHighScores')[clickEvent] = function() {
 				self.handlePause(true);
 				self.fire('goToHighScores');
 			};
