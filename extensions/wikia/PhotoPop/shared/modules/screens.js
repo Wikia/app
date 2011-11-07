@@ -356,7 +356,6 @@ define.call(exports, function(){
 				self = this;
 
 			if(options.firstRound) {
-				this.updateHudScore(options.totalPoints);
 				for(var i = 0; i < divsLength; i++) {
 					divsArray[i].clicked = false;
 				}
