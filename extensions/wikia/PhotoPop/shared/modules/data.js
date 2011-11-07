@@ -122,9 +122,8 @@ define.call(exports, ['modules/settings'],function(settings){
 		},
 
 		load: function(url, options){
-			Wikia.log('data: loading ' + url);
 			this.fire('beforeLoad', {url: url, options: options});
-
+			
 			if(Wikia.Platform.is('app'))
 				Titanium.App.fireEvent('XDomainLoader:load', {url: url, options: options, id: this._id});
 			else

@@ -81,6 +81,9 @@ body{
 	position: relative;
 	margin: 0 auto;
 	overflow: hidden;
+	background: #00396D;
+	background-image: url("shared/imagesphotopop_background_tile.png");
+	background-image: url("../images/photopop_background_tile.png");
 }
 
 #logoWrapper{
