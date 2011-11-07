@@ -265,6 +265,10 @@ var WikiHeaderV2 = {
  		if (itemsRemoved > 0) {
 			WikiHeaderV2.log('items removed: ' + itemsRemoved);
 		}
+		
+			$('#EditPageRail .buttons #wpPreview').text(
+				$.msg('oasis-navigation-v2-validation-next')
+			);
 		}
 	},
 
