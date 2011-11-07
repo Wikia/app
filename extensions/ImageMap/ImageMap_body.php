@@ -269,7 +269,8 @@ class ImageMap {
 		# Add a surrounding div, remove the default link to the description page
 		$anchor = $imageNode->parentNode;
 		$parent = $anchor->parentNode;
-		$div = $parent->insertBefore( new DOMElement( 'div' ), $anchor );
+		if ($parent instanceof DOMDocument) $div = $parent->insertBefore( new DOMElement( 'div' ), $anchor );
+		else Wikia::log (__METHOD__, false, 'debuging fb14418 '.print_r($anchor, true)); //debuging fb14418
 		if ( $defaultLinkAttribs ) {
 			$defaultAnchor = $div->appendChild( new DOMElement( 'a' ) );
 			foreach ( $defaultLinkAttribs as $name => $value ) {
@@ -290,7 +291,7 @@ class ImageMap {
 		}
 
 		$imageParent->appendChild( $imageNode->cloneNode( true ) );
-		$parent->removeChild( $anchor );
+		if ($parent instanceof DOMDocument) $parent->removeChild( $anchor );
 
 		# Determine whether a "magnify" link is present
 		$xpath = new DOMXPath( $domDoc );
