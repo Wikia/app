@@ -253,8 +253,7 @@
 			}
 
 			function goHome(event, gameFinished){
-				if(!gameFinished && currentGame.getId() != 'tutorial')
-					currentGame.fire('storeData');
+				if(!gameFinished && currentGame.getId() === 'tutorial') currentGame.fire('storeData');
 
 				initHomeScreen();
 
@@ -565,13 +564,15 @@
 					if(games.getCurrentId() != 'tutorial' || screens.getCurrentId() != 'game')
 						screens.closeModal();
 
-					if(screens.getCurrentId() == 'game' && games.getCurrentId() != 'tutorial'){
+					if(screens.getCurrentId() == 'game'){
 						currentGame.handlePause(true, 'goHomeButon');
 						goHome('goHome', false);
 					}
 
-					if(screens.getCurrentId() != 'home' && (games.getCurrentId() != 'tutorial' || event.force))
+					if(screens.getCurrentId() == 'highscore') {
+						initHomeScreen();
 						screens.get('home').show();
+					}
 				});
 			}
 
