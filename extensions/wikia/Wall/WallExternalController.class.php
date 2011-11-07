@@ -128,6 +128,17 @@ class WallExternalController extends WikiaController {
 		$msgid = $this->request->getVal('msgid');
 		
 		$ac = ArticleComment::newFromId($msgid);
+		
+		if(empty($ac) || 1) {
+			// most likely scenario - can't create AC, because message was already
+			// deleted before we tried to edit it
+			// client(javascript) should reload user's page
+			
+			$this->response->setVal('status', false);
+			$this->response->setVal('forcereload', true);
+			return true;			
+		}
+		
 		$ac->load();
 		$data = $ac->getData();
 		$this->response->setVal('wikitext', $data['rawtext']  );
@@ -192,6 +203,13 @@ class WallExternalController extends WikiaController {
 		
 		$ac = ArticleComment::newFromId($acStatus[1]->getId());
 		$this->response->setVal('message', $this->app->renderView( 'WallController', 'message', array( 'comment' => $ac, 'isreply' => true ) ));
+		
+			
+		// after successfully posting a reply		
+		// remove notification for this thread (if user is following it)
+		$wn = F::build('WallNotifications', array());
+		$wn->markRead( $this->wg->User->getId(), $this->wg->CityId, $this->request->getVal('parent') );		
+		
 	}
 	
 	private function getDisplayName() {
