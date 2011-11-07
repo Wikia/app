@@ -70,7 +70,7 @@
 					/*
 					var width = '',
 					height = '';
-					
+
 					if(Wikia.Platform.is('app')){
 						if(screen.width > screen.height){
 							width = screen.width;
@@ -81,7 +81,7 @@
 						}
 					}
 					*/
-					
+
 					gameLoader.load('http://' +
 							((settings.testDomain) ? selectedGame.id + '.' + settings.testDomain : selectedGame.domain) +
 							'/wikia.php?controller=PhotoPopController&method=getData&category=' +
@@ -103,7 +103,7 @@
 
 						if(!game.thumbnail)
 								game.thumbnail = graphics.getAsset('gameicon_default');
-						
+
 						//remove photopop naming from games
 						game.label = game.name.replace(/photopop/ig, '');
 
@@ -217,34 +217,34 @@
 				data.storage.remove(currentGame.getId());
 				currentGame = null;
 
-				var score = options.totalPoints;
-
-				if(highscore.length < 5 || score > highscore[highscore.length-1].score){
-					var date = new Date();
-					highscore.push({
-						score: score,
-						date: [date.getDate(),date.getMonth(),date.getFullYear()],
-						wiki: options.gameId
-					});
-
-					highscore.sort(function(a,b) {
-						return a.score < b.score;
-					});
-
-					highscore = highscore.slice(0, 5);
-				}
-				var highscoreSpan = document.getElementById('highScore').getElementsByTagName('span')[0];
-				if(highscore.length == 0 || (highscore.length && score > highscore[0].score)) {
-					highscoreSpan.innerHTML = score;
-				} else if(highscore.length) {
-					highscoreSpan.innerHTML = highscore[0].score;
-				}
-
-				data.storage.set('highscore', highscore);
-
-				if(options.gameId == 'tutorial')
+				if(options.gameId == 'tutorial') {
 					data.storage.set('tutorialPlayed', true);
+				} else {
+					var score = options.totalPoints;
 
+					if(highscore.length < 5 || score > highscore[highscore.length-1].score){
+						var date = new Date();
+						highscore.push({
+							score: score,
+							date: [date.getDate(),date.getMonth(),date.getFullYear()],
+							wiki: options.gameId
+						});
+
+						highscore.sort(function(a,b) {
+							return a.score < b.score;
+						});
+
+						highscore = highscore.slice(0, 5);
+					}
+					var highscoreSpan = document.getElementById('highScore').getElementsByTagName('span')[0];
+					if(highscore.length == 0 || (highscore.length && score > highscore[0].score)) {
+						highscoreSpan.innerHTML = score;
+					} else if(highscore.length) {
+						highscoreSpan.innerHTML = highscore[0].score;
+					}
+
+					data.storage.set('highscore', highscore);
+				}
 			}
 
 			function playAgain(){
@@ -301,7 +301,7 @@
 			}
 
 			function manageInteraction(){
-				if(img.complete) imagePreloaded = true;
+				//if(img.complete) imagePreloaded = true;
 				if(maskShown && imagePreloaded){
 					if(currentGame.getId() != 'tutorial') screens.closeModal();
 					screens.get('game').getElement().style.pointerEvents = 'auto';
@@ -311,7 +311,7 @@
 
 			function tileClicked(event, tile){
 				var gameScreen = screens.get('game');
-				
+
 				if(gameScreen.canClickTiles() && !tile.clicked){
 					audio.play('pop');
 					gameScreen.fire('tileClicked', tile);
@@ -422,53 +422,43 @@
 				var id = selectedGame.id,
 				data = [],
 				watermark = 'watermark_' + id,
-				correctAnswers = selectedGame.c.slice(),
-				getCorrectAnswers = function(){return correctAnswers},
+				correctAnswers = selectedGame.c.slice().shuffle(),
 				correctAnswersLength = correctAnswers.length,
-				allAnswers = (selectedGame.w)?selectedGame.c.concat(selectedGame.w):selectedGame.c,
+				//concatenate correct answers with wrong to have array with possible answers if wrong is empty use only correct ones
+				allAnswers = (selectedGame.w)?selectedGame.c.concat(selectedGame.w).slice():selectedGame.c.slice(),
 				allAnswersLength = allAnswers.length,
-				getAllAnswers = function() {return allAnswers},
-				getAllChoosen = function() {return choosenAllAnswers},
-				a,b,c,d;
+				choosenAllAnswers = [],
+				randId, item, correct;
 
-				for(var i = 0, l = Game.ROUND_LENGTH;i < l; i++){
-					choosenAllAnswers = [];
-					a = chooseRandomPicture(true);
-					b = chooseRandomPicture();
-					c = chooseRandomPicture();
-					d = chooseRandomPicture();
+				for(var i = 0, l = Game.ROUND_LENGTH;i < l && i < correctAnswersLength; i++){
+					choosenAllAnswers = [], j = 4;
+
+					while(j--) {
+						if(j === 3) {
+							correct = correctAnswers.shift();
+						} else {
+							randId = Math.floor(Math.random()*allAnswersLength);
+							//check if the aswer is already there or is undefined or is the same as correct one
+							//then choose another one
+							while(choosenAllAnswers.contains(item = allAnswers[randId]) || !item || item.id === correct.id) {
+								(allAnswersLength === randId)?randId++:randId--;
+							};
+							choosenAllAnswers.push(item);
+						}
+					}
 
 					data.push({
-						image: a.image,
+						image: correct.image,
 						answers: [
-							a.text,
-							b.text,
-							c.text,
-							d.text,
+							correct.text,
+							choosenAllAnswers[0].text,
+							choosenAllAnswers[1].text,
+							choosenAllAnswers[2].text,
 						],
-						correct: a.text
+						correct: correct.text
 					});
 				}
 				newGame({_id:id, _data:data});
-
-				function chooseRandomPicture(correct) {
-					var picture;
-					if(correct) {
-						getCorrectAnswers().shuffle();
-						picture = getCorrectAnswers().pop();
-					} else {
-						var randId;
-						do{
-							randId = Math.floor(Math.random()*allAnswersLength);
-
-						} while(getAllChoosen().contains(randId));
-
-						getAllChoosen().push(randId);
-						picture = getAllAnswers()[randId];
-
-					}
-					return picture;
-				}
 			}
 
 			function newGame(gameData){
@@ -579,7 +569,7 @@
 						currentGame.handlePause(true, 'goHomeButon');
 						goHome('goHome', false);
 					}
-					
+
 					if(screens.getCurrentId() != 'home' && (games.getCurrentId() != 'tutorial' || event.force))
 						screens.get('home').show();
 				});

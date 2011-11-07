@@ -16,13 +16,13 @@ var Wikia = {};
 	isAndroid = /Android/i.test(ua),
 	isDesktop = !isApp && !(isIPad || isIPhone || isIPod || isAndroid),
 	clickEvent;
-	
+
 	try{
 		if(document.createElement( 'div' ).hasOwnProperty('ontouchstart'))
 			clickEvent = 'ontouchstart';
 	}catch(err){}
-	
-	clickEvent = clickEvent || 'click';
+
+	clickEvent = clickEvent || 'onmousedown';
 
 	/**
 	 * @public
@@ -71,7 +71,7 @@ var Wikia = {};
 
 			return result;
 		},
-		
+
 		getClickEvent: function(){
 			return clickEvent;
 		}
