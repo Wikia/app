@@ -48,6 +48,7 @@ define.call(exports, ['modules/data'], function(data){
 		_pause: true,
 		_timer: null,
 		_correctAnswer: '',
+		_firstRound: true,
 
 		constructor: function(options){
 			options = options || {};
@@ -124,14 +125,17 @@ define.call(exports, ['modules/data'], function(data){
 			this._roundIsOver = false;
 
 			currentGameId = this.getId();
-
+Wikia.log(this._firstRound);
 			this.fire('roundStart', {
 				gameId: this.getId(),
 				image: this._data[this._currentRound-1].image,
 				totalPoints: this._totalPoints.getPoints(),
 				currentRound: this._currentRound,
-				numRounds: this._data.length
+				numRounds: this._data.length,
+				firstRound: this._firstRound
 			});
+
+			this._firstRound = false;
 			this.prepareAnswers();
 		},
 
@@ -143,7 +147,7 @@ define.call(exports, ['modules/data'], function(data){
 			var divs = document.getElementById('tilesWrapper').getElementsByTagName('div'),
 			divsLength = divs.length,
 			self = this;
-			
+
 			for(var i = 0; i < divsLength; i++) {
 				divs[i][clickEvent] = function() {
 					self.handlePause(false);
@@ -154,7 +158,7 @@ define.call(exports, ['modules/data'], function(data){
 
 		prepareHud: function() {
 			var self = this;
-			
+
 			document.getElementById('totalPoints').innerHTML = '0';
 
 			document.getElementById('pauseButton')[clickEvent] = function() {
@@ -289,7 +293,7 @@ define.call(exports, ['modules/data'], function(data){
 		getCurrentId: function(){
 			return currentGameId;
 		},
-		
+
 		Game: Game
 	};
 });
