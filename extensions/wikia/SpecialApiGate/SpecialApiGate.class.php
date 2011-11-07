@@ -13,14 +13,13 @@
  * @ingroup SpecialPage
  */
 class SpecialApiGate extends SpecialPage {
-	// TODO: REFACTOR: Is there any reason these aren't consts?
-	private $SUBPAGE_NONE = ""; // basically, the main dashboard
-	private $SUBPAGE_CHECK_KEY = "checkKey";
-	private $SUBPAGE_REGISTER = "register";
-	private $SUBPAGE_ALL_KEYS = "allKeys";
-	private $SUBPAGE_AGGREGATE_STATS = "aggregateStats";
-	private $SUBPAGE_USER_KEYS = "userKeys";
-	private $SUBPAGE_KEY = "key";
+	const SUBPAGE_NONE = ""; // basically, the main dashboard
+	const SUBPAGE_CHECK_KEY = "checkKey";
+	const SUBPAGE_REGISTER = "register";
+	const SUBPAGE_ALL_KEYS = "allKeys";
+	const SUBPAGE_AGGREGATE_STATS = "aggregateStats";
+	const SUBPAGE_USER_KEYS = "userKeys";
+	const SUBPAGE_KEY = "key";
 	const API_WIKI_CITYID = "97439";
 
 	public function __construct() {
@@ -52,7 +51,7 @@ class SpecialApiGate extends SpecialPage {
 		$mainSectionHtml = "";
 		$apiKey = $wgRequest->getVal( 'apiKey' );
 		switch($subpage){
-			case $this->SUBPAGE_CHECK_KEY:
+			case self::SUBPAGE_CHECK_KEY:
 
 				// TODO: LATER Fill this out so that we can do per-method permissions (there can probably be a static helper-function in ApiGate to assist).
 				$requestData = array(); 
@@ -64,7 +63,7 @@ class SpecialApiGate extends SpecialPage {
 				exit;
 
 				break;
-			case $this->SUBPAGE_REGISTER:
+			case self::SUBPAGE_REGISTER:
 				// Users must be logged in to get an API key
 				if( !$wgUser->isLoggedIn() ){
 					$wgOut->setPageTitle( wfMsg( 'apigate-nologin' ) );
@@ -78,17 +77,17 @@ class SpecialApiGate extends SpecialPage {
 					$mainSectionHtml .= $this->subpage_register();
 				}
 				break;
-			case $this->SUBPAGE_ALL_KEYS:
+			case self::SUBPAGE_ALL_KEYS:
 				$mainSectionHtml .= $this->subpage_allKeys();
 				break;
-			case $this->SUBPAGE_AGGREGATE_STATS:
+			case self::SUBPAGE_AGGREGATE_STATS:
 				$useTwoColLayout = false; // use full width so that the charts fit
 				$mainSectionHtml .= $this->subpage_aggregateStats();
 				break;
-			case $this->SUBPAGE_USER_KEYS:
+			case self::SUBPAGE_USER_KEYS:
 				$mainSectionHtml .= $this->subpage_userKeys();
 				break;
-			case $this->SUBPAGE_KEY:
+			case self::SUBPAGE_KEY:
 				$useTwoColLayout = false; // use full width so that the charts fit
 
 				// Module for key info (it's a form)
@@ -98,7 +97,7 @@ class SpecialApiGate extends SpecialPage {
 				$mainSectionHtml .= $this->subpage_keyStats( $apiKey );
 
 				break;
-			case $this->SUBPAGE_NONE:
+			case self::SUBPAGE_NONE:
 			default:
 				$mainSectionHtml .= $this->subpage_landingPage();
 				break;
@@ -180,11 +179,11 @@ class SpecialApiGate extends SpecialPage {
 				$links = array(
 					array(
 						"text" => wfMsg('apigate-adminlinks-viewkeys'),
-						"href" => "$APIGATE_LINK_ROOT/{$this->SUBPAGE_ALL_KEYS}",
+						"href" => "$APIGATE_LINK_ROOT/".self::SUBPAGE_ALL_KEYS,
 					),
 					array(
 						"text" => wfMsg('apigate-adminlinks-viewaggregate'),
-						"href" => "$APIGATE_LINK_ROOT/{$this->SUBPAGE_AGGREGATE_STATS}",
+						"href" => "$APIGATE_LINK_ROOT/".self::SUBPAGE_AGGREGATE_STATS,
 					),
 				);
 				$html .= "<br/>" . ApiGate_Dispatcher::renderTemplate( "adminLinks", array( "links" => $links ) );
