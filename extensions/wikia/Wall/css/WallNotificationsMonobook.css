@@ -13,6 +13,11 @@
 	position: relative
 }
 
+#pt-wall-notifications .wall-notifications-monobook .count {
+	padding-left: 5px;
+}
+
+
 #wall-notifications-markasread {
 	text-align: center;
 }
