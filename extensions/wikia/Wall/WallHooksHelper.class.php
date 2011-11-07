@@ -749,9 +749,17 @@ class WallHooksHelper {
 			$userText = $rc->getAttribute('rc_user_text');
 			$wallTitleObj = F::build('Title', array($userText, NS_USER_WALL), 'newFromText');
 			$wallUrl = ($wallTitleObj instanceof Title) ? $wallTitleObj->getLocalUrl() : '#';
+			$rcTitle = $rc->getTitle();
+			
+			if( !($rcTitle instanceof Title) ) {
+			//in theory it shouldn't happen but it did once on my devbox
+			//and I couldn't reproduce it and trac why it had happened
+				error_log("WALL_NOTITLE_FROM_RC " . print_r($rc, true));
+				return true;
+			}
 			
 			$articleData = array('text_id' => '');
-			$articleId = $helper->getDeletedArticleId($rc->getTitle()->getText(), $articleData);
+			$articleId = $helper->getDeletedArticleId($rcTitle->getText(), $articleData);
 			
 			if( !empty($articleId) ) {
 				$articleTitleObj = F::build('Title', array($userText.'/'.$articleId, NS_USER_WALL), 'newFromText');
@@ -759,9 +767,9 @@ class WallHooksHelper {
 				
 				if( empty($articleTitleTxt) ) {
 				//deleted reply
-					$articleTitleTxt = $this->getParentTitleTxt($rc->getTitle());
+					$articleTitleTxt = $this->getParentTitleTxt($rcTitle);
 					
-					$wm = F::build('WallMessage', array($rc->getTitle()));
+					$wm = F::build('WallMessage', array($rcTitle));
 					$wmParent = $wm->getTopParentObj();
 					$articleUrl = $wmParent->getMessagePageUrl();
 					$articleUrl = !empty($articleUrl) ? $articleUrl : '#';
@@ -784,7 +792,15 @@ class WallHooksHelper {
 				}
 			} else {
 				$wnEntity = F::build('WallNotificationEntity', array($rc->getAttribute('rc_this_oldid'), $app->wg->CityId), 'getByWikiAndRevId');
-				$articleTitleTxt = empty($wnEntity->data->thread_title) ? $this->getParentTitleTxt($rc->getTitle()) : $wnEntity->data->thread_title;
+				
+				if( !($wnEntity instanceof WallNotificationEntity) ) {
+				//deleted a reply and restored -- everything works fine on wall
+				//but in recent changes we recived fatal error
+					error_log("WALL_NOWALLNOTIFICATIONENTITY " . print_r($rc, true));
+					return true;
+				}
+				
+				$articleTitleTxt = empty($wnEntity->data->thread_title) ? $this->getParentTitleTxt($rcTitle) : $wnEntity->data->thread_title;
 				$articleUrl = empty($wnEntity->data->url) ? '#' : $wnEntity->data->url;
 				
 				$wfMsgOpts = array(
@@ -847,9 +863,14 @@ class WallHooksHelper {
 				$articleTitleTxt = $helper->getTitleTxtFromMetadata($helper->getDeletedArticleTitleTxt($articleData['text_id']));
 			} else {
 				$title = F::build('Title', array($parentTitleTxt, NS_USER_WALL_MESSAGE), 'newFromText');
-				$parentWallMsg = F::build('WallMessage', array($title));
-				$parentWallMsg->load();
-				$articleTitleTxt = $parentWallMsg->getMetaTitle();
+				
+				if( $title instanceof Title ) {
+					$parentWallMsg = F::build('WallMessage', array($title));
+					$parentWallMsg->load(true);
+					$articleTitleTxt = $parentWallMsg->getMetaTitle();
+				} else {
+					$articleTitleTxt = $app->wf->Msg('wall-recentchanges-deleted-reply-title');
+				}
 			}
 			$articleTitleTxt = empty($articleTitleTxt) ? $app->wf->Msg('wall-recentchanges-deleted-reply-title') : $articleTitleTxt;
 			
