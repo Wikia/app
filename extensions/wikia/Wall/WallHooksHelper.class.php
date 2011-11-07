@@ -754,7 +754,7 @@ class WallHooksHelper {
 			if( !($rcTitle instanceof Title) ) {
 			//in theory it shouldn't happen but it did once on my devbox
 			//and I couldn't reproduce it and trac why it had happened
-				error_log("WALL_NOTITLE_FROM_RC " . print_r($rc, true));
+				Wikia::log(__METHOD__, false, "WALL_NOTITLE_FROM_RC " . print_r($rc, true));
 				return true;
 			}
 			
@@ -796,7 +796,7 @@ class WallHooksHelper {
 				if( !($wnEntity instanceof WallNotificationEntity) ) {
 				//deleted a reply and restored -- everything works fine on wall
 				//but in recent changes we recived fatal error
-					error_log("WALL_NOWALLNOTIFICATIONENTITY " . print_r($rc, true));
+					Wikia::log(__METHOD__, false, "WALL_NOWALLNOTIFICATIONENTITY " . print_r($rc, true));
 					return true;
 				}
 				
