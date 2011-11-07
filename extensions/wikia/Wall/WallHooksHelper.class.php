@@ -791,17 +791,13 @@ class WallHooksHelper {
 					));
 				}
 			} else {
-				$wnEntity = F::build('WallNotificationEntity', array($rc->getAttribute('rc_this_oldid'), $app->wg->CityId), 'getByWikiAndRevId');
+				$parts = explode('/@', $rcTitle->getText());
+				$isThread = ( count($parts) === 2 ) ? true : false;
 				
-				if( !($wnEntity instanceof WallNotificationEntity) ) {
-				//deleted a reply and restored -- everything works fine on wall
-				//but in recent changes we recived fatal error
-					Wikia::log(__METHOD__, false, "WALL_NOWALLNOTIFICATIONENTITY " . print_r($rc, true));
-					return true;
-				}
-				
-				$articleTitleTxt = empty($wnEntity->data->thread_title) ? $this->getParentTitleTxt($rcTitle) : $wnEntity->data->thread_title;
-				$articleUrl = empty($wnEntity->data->url) ? '#' : $wnEntity->data->url;
+				$articleTitleTxt = $this->getParentTitleTxt($rcTitle);
+				$wm = F::build('WallMessage', array($rcTitle));
+				$articleUrl = $wm->getMessagePageUrl();
+				$articleUrl = !empty($articleUrl) ? $articleUrl : '#';
 				
 				$wfMsgOpts = array(
 					$articleUrl,
@@ -810,7 +806,7 @@ class WallHooksHelper {
 					$userText,
 				);
 				
-				if( $wnEntity->isMain() ) {
+				if( $isThread ) {
 					if( $rc->getAttribute('rc_log_action') == 'delete' ) {
 					//deleted thread page
 						$actionText = $app->wf->Msg('wall-recentchanges-deleted-thread', $wfMsgOpts);
