@@ -491,7 +491,6 @@ define.call(exports, function(){
 	HighscoreScreen = my.Class({
 
 		constructor: function(parent) {
-			Wikia.log('games: Highscore screen created');
 			Observe(this);
 			this._parent = parent;
 		},
@@ -511,7 +510,6 @@ define.call(exports, function(){
 		},
 
 		openHighscore: function(event, highscore) {
-			Wikia.log('games: Highscore - ' + highscore);
 			var trs = document.getElementById('highscoreScreen').getElementsByTagName('tr');
 			if(highscore.length > 0) {
 				for(var i = 0, l = highscore.length; i < l; i++ ) {
@@ -546,7 +544,6 @@ define.call(exports, function(){
 		},
 
 		openModal: function(options) {
-			Wikia.log('PROGRESS OPNENED: ' + options.progress);
 			options = options || {};
 
 			var modalWrapper = document.getElementById('modalWrapper'),
@@ -649,7 +646,6 @@ define.call(exports, function(){
 		},
 
 		showsProgress: function(){
-			Wikia.log('PROGRESSS ' + this._isProgress);
 			return this._isProgress;
 		},
 

@@ -90,9 +90,6 @@ define.call(exports, ['modules/settings'],function(settings){
 							needsRequest = true;
 						}
 					}
-					
-					Wikia.log('DATA-------- ' + data);
-					Wikia.log('NEEDSREQUEST-------- ' + needsRequest);
 				
 					if(needsRequest && event.source == 'web')
 						alert('Error, invalid response from ' + event.url);
