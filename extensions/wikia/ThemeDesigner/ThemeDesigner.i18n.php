@@ -3,6 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'themedesigner-or' => 'or',
 	'themedesigner-desc' => 'Allows wiki administrators to design a theme for a wiki',
 	'themedesigner-title' => 'Wikia Theme Designer',
 	'themedesigner-background' => 'Background',
@@ -63,6 +64,7 @@ $messages['en'] = array(
  * @author The Evil IP address
  */
 $messages['qqq'] = array(
+	'themedesigner-or' => '"or", as in, either Text Wordmark *or* Graphic Wordmark',
 	'themedesigner-desc' => '{{desc}}',
 	'themedesigner-page' => '{{Identical|Page}}',
 	'themedesigner-color' => '{{Identical|Color}}',
