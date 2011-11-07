@@ -1,5 +1,18 @@
-var MeeboBar = {	
+var MeeboBar = {
+	network: '',
+	
 	init: function () {
+		switch (window.cscoreCat) {
+			case 'Entertainment':
+				MeeboBar.network = 'wikia_entertainment';
+				break;
+			case 'Gaming':
+				MeeboBar.network = 'wikia_gaming';
+				break;
+			default:
+				MeeboBar.network = 'wikia_lifestyles';
+		}
+		
 		if (window.wgEnableMeeboExt && !window.wgUserName) {
 window.Meebo||function(c){function p(){return["<",i,' onload="var d=',g,";d.getElementsByTagName('head')[0].",
 j,"(d.",h,"('script')).",k,"='//cim.meebo.com/cim?iv=",a.v,"&",q,"=",c[q],c[l]?
@@ -14,7 +27,7 @@ m.insertBefore(n,m.firstChild).id="meebo";b.frameBorder="0";b.name=b.id="meebo-i
 b.allowTransparency="true";v[j](b);try{b.contentWindow[g].open()}catch(w){c[e]=
 d[e];o="javascript:var d="+g+".open();d.domain='"+d.domain+"';";b[k]=o+"void(0);"}try{var t=
 b.contentWindow[g];t.write(p());t.close()}catch(x){b[k]=o+'d.write("'+p().replace(/"/g,
-'\\"')+'");d.close();'}a.T(1)}({network:"wikia"});
+'\\"')+'");d.close();'}a.T(1)}({network:MeeboBar.network});
 Meebo('domReady');
 		}
 	}
