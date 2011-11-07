@@ -23,7 +23,7 @@ if ( is_array($menuNodes) && isset($menuNodes[0]) && $showMenu) {
 					$hasChildNodes = isset($menuNode1[ NavigationService::CHILDREN ]);
 ?>
 					<li>
-						<a class="subnav-2a"<? if($menuNode1[ NavigationService::TEXT ] == 'Chat'): ?> onclick="$.openPopup('/wiki/Special:Chat','wikiachat','ChatRail',600,600); event.preventDefault();"<? endif; ?><?= empty( $menuNode1[ NavigationService::SPECIAL ] ) ? '' : ' data-extra="'.$menuNode1[ NavigationService::SPECIAL ].'"' ?> href="<?= $menuNode1[ NavigationService::HREF ] ?>" <?php if( strpos($menuNode1[ NavigationService::HREF ], 'Special:Random') !== false ):?>accesskey="x"<?php endif; ?>><?= $menuNode1[ NavigationService::TEXT ] ?><?php if($hasChildNodes):?><img src="<?= wfBlankImgUrl() ?>" class="chevron"><?php endif; ?></a>
+						<a class="subnav-2a"<? if($menuNode1[ NavigationService::TEXT ] == 'Chat'): ?> onclick="$.openPopup('/wiki/Special:Chat','wikiachat','ChatRail',600,600); event.preventDefault();"<? endif; ?><?= empty( $menuNode1[ NavigationService::SPECIAL ] ) ? '' : ' data-extra="'.$menuNode1[ NavigationService::SPECIAL ].'"' ?> href="<?= $menuNode1[ NavigationService::HREF ] ?>"><?= $menuNode1[ NavigationService::TEXT ] ?><?php if($hasChildNodes):?><img src="<?= wfBlankImgUrl() ?>" class="chevron"><?php endif; ?></a>
 <?php
 					if ($hasChildNodes) {
 ?>

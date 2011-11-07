@@ -16,21 +16,34 @@ class ContributeMenuModule extends Module {
 
 		// menu items linking to special pages
 		$specialPagesLinks = array(
-			'Upload' => 'oasis-navigation-v2-add-photo',
-			'CreatePage' => 'oasis-navigation-v2-create-page',
-			'WikiActivity' => 'oasis-button-wiki-activity',
+			'Upload' => array(
+				'label' => 'oasis-navigation-v2-add-photo'
+			),
+			'CreatePage' => array(
+				'label' => 'oasis-navigation-v2-create-page'
+			),
+			'WikiActivity' => array(
+				'label' => 'oasis-button-wiki-activity',
+				'accesskey' => 'g',
+			)
 		);
 
-		foreach ($specialPagesLinks as $specialPageName => $linkMessage) {
+		foreach ($specialPagesLinks as $specialPageName => $link) {
 			$specialPageTitle = SpecialPage::getTitleFor( $specialPageName );
 			if (!$specialPageTitle instanceof Title) {
 				continue;
 			}
 
-			$this->dropdownItems[strtolower($specialPageName)] = array(
-				'text' => wfMsg($linkMessage),
+			$attrs = array(
+				'text' => wfMsg($link['label']),
 				'href' =>  $specialPageTitle->getLocalURL(),
 			);
+
+			if (isset($link['accesskey'])) {
+				$attrs['accesskey'] = $link['accesskey'];
+			}
+
+			$this->dropdownItems[strtolower($specialPageName)] = $attrs;
 		}
 
 		// show menu edit links
