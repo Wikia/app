@@ -102,7 +102,7 @@ class PhotoPopSpecialPageController extends WikiaSpecialPageController {
 			}
 			
 			if ( !empty( $icon ) ) {
-				$iconUrl = $this->model->getIconUrl( $icon );
+				$iconUrl = $this->model->getImageUrl( $icon );
 				
 				if ( empty( $iconUrl ) ) {
 					$errors['icon'][] = $this->wf->Msg( 'photopop-error-file-non-existing' );
@@ -112,7 +112,7 @@ class PhotoPopSpecialPageController extends WikiaSpecialPageController {
 			}
 			
 			if ( !empty( $watermark ) ) {
-				$watermarkUrl = $this->model->getWatermarkUrl( $watermark );
+				$watermarkUrl = $this->model->getImageUrl( $watermark );
 				
 				if ( empty( $watermark ) ) {
 					$errors['icon'][] = $this->wf->Msg( 'photopop-error-file-non-existing' );

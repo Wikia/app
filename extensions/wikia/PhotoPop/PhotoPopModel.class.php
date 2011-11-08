@@ -12,23 +12,11 @@ class PhotoPopModel extends WikiaModel{
 	const GAME_ICON_WIDTH = 120;
 	const GAME_ICON_HEIGHT = 120;
 	const MEMCHACHE_KEY_PREFIX = 'PhotoPop';
-	const CACHE_DURATION = 86400;//24h
+	const MEMCACHE_GLOBAL_KEY_TOKEN = 'listWikis';
+	const CACHE_DURATION = 14400;//4h
 	const CATEGORY_RESULTS_LIMIT = 0;//no limits for now
-	const ENABLE_CACHE = false;//use for debugging purposes
-
-	//TODO: temporary, remove when the list of games will be retrieved from WF
-	//dbName => categoryName
-	private $gamesData = array(
-		'trueblood' => "Characters",
-		'glee' => "Characters",
-		'lyricwiki' => "Albums_released_in_2011",
-		'muppet' => "The_Muppets_Characters",
-		'dexter' => "Characters",
-		'futurama' => "Characters",
-		'trueblood' => "Characters",
-		'twilightsaga' => "Twilight_Characters"
-	);
-
+	const ENABLE_CACHE = true;//use for debugging purposes
+	
 	/*
 	 * @brief Gets a list of games (wikis) wikis through WikiFactory
 	 *
@@ -42,7 +30,7 @@ class PhotoPopModel extends WikiaModel{
 	public function getWikisList(){
 		$this->wf->profileIn( __METHOD__ );
 
-		$cacheKey = $this->generateCacheKey( __METHOD__ );
+		$cacheKey = $this->getGlobalCacheKey( self::MEMCACHE_GLOBAL_KEY_TOKEN );
 		$ret = $this->loadFromCache( $cacheKey );
 
 		if ( empty( $ret ) ) {
@@ -95,12 +83,7 @@ class PhotoPopModel extends WikiaModel{
 	public function getGameContents( $categoryName, $imageWidth, $imageHeight ) {
 		$this->app->wf->profileIn( __METHOD__ );
 
-		$cacheKey = $this->generateCacheKey(
-			__METHOD__ .
-			//memcache doesn't like spaces in keys
-			":" . str_replace( ' ', '_', $categoryName )
-		);
-
+		$cacheKey = $this->wf->memcKey( __METHOD__, $categoryName );
 		$contents = $this->loadFromCache( $cacheKey );
 
 		if ( empty( $contents ) ) {
@@ -122,16 +105,19 @@ class PhotoPopModel extends WikiaModel{
 				}
 
 				$resp = $this->app->sendRequest( 'ImageServingController', 'index', array( 'ids' => array_keys( $articles ), 'height' => $imageHeight, 'width' => $imageWidth, 'count' => 1 ) );
+				$val = $resp->getVal( 'result' );
 				
 				if( $resp->getVal( 'status' ) == 'error' ) {
-					error_log( 'PHOTOPOP error requesting images: ' . $resp->getVal( 'result' ) );
+					$this->app->wf->profileOut( __METHOD__ );
+					throw new WikiaException( 'Fetching images error: ' . $val );
 				} else {
-					$images = $resp->getVal( 'result' );
+					$images = $val;
 	
 					foreach ( $articles as $id => $item ) {
 						if ( !empty( $images[$id][0]['url'] ) ) {
 							$url = $images[$id][0]['url'];
-							//images are not available on devbox and we need to test the game with real images!
+							//most of productionimages are not available on devbox
+							//this enables testing the game with real images
 							$item->image = ( $this->wg->DevelEnvironment ) ? preg_replace('#http://[^/]+/#i', 'http://images.wikia.com/', $url) : $url;
 						}
 	
@@ -150,67 +136,21 @@ class PhotoPopModel extends WikiaModel{
 		return $contents;
 	}
 
-	public function getIconUrl( $titleName ){
+	public function getImageUrl( $titleName ){
 		$this->app->wf->profileIn( __METHOD__ );
 
 		if ( empty( $titleName ) ) {
 			return null;
 		}
 
-		$cacheKey = $this->generateCacheKey(
-			__METHOD__ .
-			//memcache doesn't like spaces in keys
-			":" . str_replace( ' ', '_', $titleName )
-		);
+		$title = F::build( 'Title', array( $titleName, NS_FILE ), 'newFromText' );
+		$contents = null;
 
-		$contents = $this->loadFromCache( $cacheKey );
+		if ( $title instanceof Title && $title->exists() ) {
+			$file = $this->wf->FindFile($title);
 
-		if ( empty( $contents ) ) {
-			$title = F::build( 'Title', array( $titleName, NS_FILE ), 'newFromText' );
-
-			if ( $title instanceof Title && $title->exists() ) {
-				$id = $title->getArticleId();
-				$resp = $this->app->sendRequest( 'ImageServingController', 'index', array( 'ids' => array( $id ), 'height' => self::GAME_ICON_HEIGHT, 'width' => self::GAME_ICON_WIDTH, 'count' => 1 ) );
-
-				$images = $resp->getVal( 'result' );
-
-				if ( !empty( $images[$id][0]['url'] ) ) {
-					$contents = $images[$id][0]['url'];
-					$this->storeInCache( $cacheKey , $contents );
-				}
-			}
-		}
-
-		$this->app->wf->profileOut( __METHOD__ );
-
-		return $contents;
-	}
-
-	public function getWatermarkUrl( $titleName ){
-		$this->app->wf->profileIn( __METHOD__ );
-
-		if ( empty( $titleName ) ) {
-			return null;
-		}
-
-		$cacheKey = $this->generateCacheKey(
-			__METHOD__ .
-			//memcache doesn't like spaces in keys
-			":" . str_replace( ' ', '_', $titleName )
-		);
-
-		$contents = $this->loadFromCache( $cacheKey );
-
-		if ( empty( $contents ) ) {
-			$title = F::build( 'Title', array( $titleName, NS_FILE ), 'newFromText' );
-
-			if ( $title instanceof Title && $title->exists() ) {
-				$file = $this->wf->FindFile($title);
-
-				if ( !empty( $file ) ) {
-					$contents = $this->wf->ReplaceImageServer( $file->getFullUrl() );
-					$this->storeInCache( $cacheKey , $contents );
-				}
+			if ( !empty( $file ) ) {
+				$contents = $this->wf->ReplaceImageServer( $file->getFullUrl() );
 			}
 		}
 
@@ -220,6 +160,8 @@ class PhotoPopModel extends WikiaModel{
 	}
 
 	public function getSettings( $wikiId ){
+		$this->app->wf->profileIn( __METHOD__ );
+		
 		$gameSettings = WikiFactory::getVarValueByName( self::WF_SETTINGS_NAME, $wikiId );
 		$matches = array();
 		$game = new stdClass();
@@ -234,6 +176,8 @@ class PhotoPopModel extends WikiaModel{
 		}
 
 		return ( !empty( $game->category ) ) ? $game : null;
+		
+		$this->app->wf->profileOut( __METHOD__ );
 	}
 
 	public function saveSettings( $wikiId, $categoryName, $iconUrl, $watermarkUrl ){
@@ -256,6 +200,9 @@ class PhotoPopModel extends WikiaModel{
 
 		if ( !empty( $values ) ) {
 			$ret = WikiFactory::setVarByName( self::WF_SETTINGS_NAME, $wikiId, implode( '|', $values ), "Updating PhotoPop settings" );
+			
+			//force the list of wikis' cache to be rebuilt next time
+			$this->wg->memc->delete( $this->getGlobalCacheKey( self::MEMCACHE_GLOBAL_KEY_TOKEN ) );
 		}
 
 		$this->app->wf->profileOut( __METHOD__ );
@@ -263,31 +210,9 @@ class PhotoPopModel extends WikiaModel{
 		return $ret;
 	}
 
-	/**
-	 *@brief Reads the messages' indexes to pass to JSMessages initialization
-	 *from a JSON file which is shared with the mobile app code
-	 */
-	public function getMessageIndexes(){
-		$this->app->wf->profileIn( __METHOD__ );
-
-		//using the cachebuster in the key to be able to
-		//update this cache if/when needed by just pushing
-		//a cb++
-		$cacheKey = $this->generateCacheKey( __METHOD__ . $this->wg->StyleVersion );
-		$contents = $this->loadFromCache( $cacheKey );
-
-		if ( empty( $contents ) ) {
-			$contents = json_decode( file_get_contents( dirname( __FILE__ ) . '/shared/message_index.json' ) );
-			$this->storeInCache( $cacheKey , $contents );
-		}
-
-		$this->app->wf->profileOut( __METHOD__ );
-
-		return $contents;
-	}
-
-	private function generateCacheKey( $token ){
-		return $this->wf->memcKey( $token );
+	private function getGlobalCacheKey( $token ){
+		//using wfForeignMemcKey to get  global key that can be accessed/purged from wherever
+		return $this->wf->ForeignMemcKey( '', self::MEMCHACHE_KEY_PREFIX, $token );
 	}
 
 	private function loadFromCache( $key ){
