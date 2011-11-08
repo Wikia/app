@@ -788,7 +788,7 @@ class UserProfilePageController extends WikiaController {
 			$title = F::build('Title', array($title), 'newFromText');
 		}
 
-		if ( $title->isRedirect() ) {
+		if ( $title instanceof Title && $title->isRedirect() ) {
 			$article = new Article( $title );
 			$redirect = Title::newFromRedirectRecurse( $article->getContent() );
 			if ( $redirect instanceof Title ) {
