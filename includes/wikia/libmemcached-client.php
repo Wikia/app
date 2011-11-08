@@ -6,6 +6,8 @@ class MWLibMemcached {
 	const COMPRESSED = 2;
 	const COMPRESSION_SAVINGS = 0.20;
 	
+	const KEY_PREFIX = 'lm-';
+	
 	
 	/**
 	 * Command statistics
@@ -69,6 +71,7 @@ class MWLibMemcached {
 	 */
 	public function add( $key, $val, $exp = 0 ) {
 		@$this->stats['add']++;
+		$this->prefixKeys($key);
 		return $this->getMemcachedObject()->add($key,$val,$exp);
 	}
 	
@@ -82,6 +85,7 @@ class MWLibMemcached {
 	 */
 	public function decr( $key, $amt = 1 ) {
 		@$this->stats['decr']++;
+		$this->prefixKeys($key);
 		return $this->getMemcachedObject()->decrement($key,$amt);
 	}
 	
@@ -95,6 +99,7 @@ class MWLibMemcached {
 	 */
 	public function delete( $key, $time = 0 ) {
 		@$this->stats['delete']++;
+		$this->prefixKeys($key);
 		return $this->getMemcachedObject()->delete($key,$time);
 	}
 	
@@ -130,6 +135,7 @@ class MWLibMemcached {
 	 */
 	public function get( $key ) {
 		@$this->stats['get']++;
+		$this->prefixKeys($key);
 		return $this->getMemcachedObject()->get($key);
 	}
 	
@@ -142,7 +148,8 @@ class MWLibMemcached {
 	 */
 	public function get_multi( $keys ) {
 		@$this->stats['get_multi']++;
-		return $this->getMemcachedObject()->getMulti($keys);
+		$this->prefixKeys($key);
+		return $this->unprefixKeys( $this->getMemcachedObject()->getMulti($keys) );
 	}
 	
 	/**
@@ -155,6 +162,7 @@ class MWLibMemcached {
 	 */
 	public function incr( $key, $amt = 1 ) {
 		@$this->stats['incr']++;
+		$this->prefixKeys($key);
 		return $this->getMemcachedObject()->increment($key,$amt);
 	}
 	
@@ -169,6 +177,7 @@ class MWLibMemcached {
 	 */
 	public function replace( $key, $value, $exp = 0 ) {
 		@$this->stats['replace']++;
+		$this->prefixKeys($key);
 		return $this->getMemcachedObject()->replace($key,$value,$exp);
 	}
 	
@@ -204,6 +213,7 @@ class MWLibMemcached {
 	 */
 	public function set( $key, $value, $exp = 0 ) {
 		@$this->stats['set']++;
+		$this->prefixKeys($key);
 		return $this->getMemcachedObject()->set($key,$value,$exp);
 	}
 	
@@ -309,6 +319,27 @@ class MWLibMemcached {
 	
 	protected function freeMemcachedObject() {
 		$this->memcached = null;
+	}
+	
+	protected function prefixKeys( &$keys ) {
+		if (is_array($keys)) {
+			$keys = array_map(array($this,'prefixKeys'), $keys);
+		} else {
+			$keys = self::KEY_PREFIX . $keys;
+		}
+		return $keys;
+	}
+	
+	protected function unprefixKeys( &$multi ) {
+		$l = strlen(self::KEY_PREFIX);
+		$data = array();
+		foreach ($multi as $k => $v) {
+			if (substr($k,0,$l) == self::KEY_PREFIX) {
+				$k = substr($k,$l);
+			}
+			$data[$k] = $v;
+		}
+		return $data;
 	}
 	
 }
