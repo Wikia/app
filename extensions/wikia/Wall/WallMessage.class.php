@@ -271,6 +271,10 @@ class WallMessage {
 		return $this->getArticleComment()->doDeleteComment( $reason, $suppress );
 	}
 	
+	public function getThreadHistory() {
+		var_dump($this->getArticleTitle()->getFullURL() );
+	}
+	
 	protected function getArticleComment() {
 		if(empty($this->articleComment)) {
 			$this->articleComment = ArticleComment::newFromTitle($this->title);
