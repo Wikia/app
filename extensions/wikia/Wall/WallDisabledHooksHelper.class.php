@@ -12,6 +12,8 @@ class WallDisabledHooksHelper {
 	 * and don't check how the code works for wall disabled.
 	 * 
 	 * @param string $dbkey
+	 * 
+	 * @return boolean
 	 */
 	private function isDbkeyFromWall($dbkey) {
 		$lookFor = explode( '\@' ,$dbkey);
@@ -23,19 +25,20 @@ class WallDisabledHooksHelper {
 	}
 	
 	/**
-	 * @brief Redirects any attempts of editing anything in NS_USER_WALL namespace
-	 * 
-	 * @return true
+	 * @brief Allows to edit or not archived talk pages and its subpages
 	 * 
 	 * @author Andrzej 'nAndy' Łukaszewski
+	 * 
+	 * @return boolean true -- because it's a hook
 	 */
-	public function onAlternateEdit($editPage) {
+	public function onAfterEditPermissionErrors($permErrors, $title, $removeArray) {
 		$app = F::App();
-		$title = $app->wg->Title;
 		
 		if( empty($app->wg->EnableWallExt) && $this->isDbkeyFromWall($title->getText()) ) {
-			$app->wg->Out->redirect($title->getLocalUrl(), 301);
-			$app->wg->Out->enableRedirects(false);
+			$permErrors[] = array(
+				0 => 'protectedpagetext',
+				1 => 'archived'
+			);
 		}
 		
 		return true;

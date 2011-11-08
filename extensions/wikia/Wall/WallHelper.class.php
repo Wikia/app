@@ -472,8 +472,4 @@ class WallHelper {
 		return '';
 	}
 	
-	public function isGreeting() {
-		return false;
-	}
-	
 }
