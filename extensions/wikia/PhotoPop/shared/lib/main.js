@@ -14,8 +14,7 @@
 		],
 
 		function(settings, templates, graphics, audio, games, screens, data) {
-			var tutorialPlayed = false,
-			gamesData,
+			var gamesData,
 			gamesListLoader = new data.XDomainLoader(),
 			gameLoader = new data.XDomainLoader(),
 			selectedGame,
@@ -30,7 +29,6 @@
 			maskShown = false,
 			highscore = [],
 			tutorialSteps = [],
-			homeInitialized = false,
 			clickEvent = Wikia.Platform.getClickEvent(),
 			view = {
 				image: function() {
@@ -127,7 +125,6 @@
 			}
 
 			function initHomeScreen(){
-				if(!homeInitialized) {
 					gamesListLoader.load(
 						'http://' + (settings.testDomain || settings.centralDomain) +
 						'/wikia.php?controller=PhotoPopController&method=listGames',
@@ -151,8 +148,6 @@
 					};
 
 					screens.get('home').fire('muteButtonClicked', {mute: audio.getMute()});
-					homeInitialized = true;
-				}
 			}
 
 			function modalOpened(event, options){
@@ -216,9 +211,7 @@
 				data.storage.remove(currentGame.getId());
 				currentGame = null;
 
-				if(options.gameId == 'tutorial') {
-					data.storage.set('tutorialPlayed', true);
-				} else {
+				if(options.gameId !== 'tutorial') {
 					var score = options.totalPoints;
 
 					if(highscore.length < 5 || score > highscore[highscore.length-1].score){
@@ -254,15 +247,13 @@
 			function goHome(event, gameFinished){
 				if(!gameFinished && currentGame.getId() !== 'tutorial') currentGame.fire('storeData');
 
-				initHomeScreen();
-
 				screens.get('game').fire('goHomeClicked', gameFinished);
 				screens.get('home').show();
 			}
 
 			function displayingMask(event, options){
 				//preloading an image
-				img.src = (currentGame.getId() == 'tutorial') ? graphics.getAsset(options.image) : graphics.getPicture(options.image);
+				img.src = (currentGame.getId() === 'tutorial') ? graphics.getAsset(options.image) : graphics.getPicture(options.image);
 				screens.get('game').getElement().style.pointerEvents = 'none';
 			}
 
@@ -486,7 +477,6 @@
 
 			function initHighscore(){
 				document.getElementById('goBack')[clickEvent] = function(){
-					initHomeScreen();
 					screens.get('home').show();
 				};
 
@@ -538,6 +528,8 @@
 			 */
 			document.body.innerHTML = Mustache.to_html(templates.wrapper, view);
 
+			initHomeScreen();
+
 			img.onload = imageLoaded;
 			img.onerror = imageLoadError;
 
@@ -569,7 +561,6 @@
 					}
 
 					if(screens.getCurrentId() == 'highscore') {
-						initHomeScreen();
 						screens.get('home').show();
 					}
 				});
@@ -593,18 +584,6 @@
 			screens.get('home').init();
 
 			initHighscore();
-
-			data.storage.addEventListener({name: 'get', key: 'tutorialPlayed'}, function(event, options) {
-				tutorialPlayed = options.value || tutorialPlayed;
-
-				if(!tutorialPlayed)
-					runGame('tutorial');
-				else
-					initHomeScreen();
-
-			}, {oneTime: true});
-
-			data.storage.get('tutorialPlayed');
 		}
 	);
 })();
