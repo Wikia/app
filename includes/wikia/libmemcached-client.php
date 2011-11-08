@@ -291,6 +291,7 @@ class MWLibMemcached {
 			// the line above sets the next 2 options automatically
 			//$memcached->setOption(Memcached::OPT_HASH,Memcached::HASH_MD5);
 			//$memcached->setOption(Memcached::OPT_DISTRIBUTION,Memcached::DISTRIBUTION_CONSISTENT);
+			$memcached->setOption(Memcached::OPT_SERIALIZER,Memcached::SERIALIZER_IGBINARY);
 			$memcached->setOption(Memcached::OPT_COMPRESSION,$this->compression);
 			$memcached->setOption(Memcached::OPT_BINARY_PROTOCOL,$this->binary);
 			$memcached->setOption(Memcached::OPT_CONNECT_TIMEOUT,10);
