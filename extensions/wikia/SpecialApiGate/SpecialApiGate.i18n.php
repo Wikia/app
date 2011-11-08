@@ -14,11 +14,13 @@ $messages = array();
 
 $messages['en'] = array(
 	'apigate' => 'API Gate',
+	'apigate-h1' => 'API Control Panel',
 	'apigate-desc' => 'API Gate is an Open Source API Key Management system that is being used to manage access to the Wikia API.',
 	'apigate-nologin' => 'Please Log in',
 	'apigate-nologintext' => 'In order to get an API key, you must log in to a Wikia account.  After login, you will be able to track the API keys for all of your applications in one place - the API Control Panel.',
 	'apigate-login-button' => 'Log in',
-	'apigate-register-success' => "Registration successful!<br><br/>Your new API key is '<big><strong>$1</strong></big>'<br/><br/>You can see the key at any time by coming back to [[Special:ApiGate]] (there is a link in the User menu on the top-right of the page).",
+	'apigate-register-success-heading' => 'Registration successful!',
+	'apigate-register-success' => "Your new API key is '<big><strong>$1</strong></big>'<br/><br/>You can see the key at any time by coming back to [[Special:ApiGate]] (there is a link in the User menu on the top-right of the page).",
 	'apigate-register-success-return' => "Return to the [[Special:ApiGate|API Gate landing page]] to see your new dashboard.",
 	'apigate-userlink' => "API Control Panel",
 	
@@ -27,7 +29,6 @@ $messages['en'] = array(
 	'apigate-chart-name-daily' => "Requests - Daily",
 	'apigate-chart-name-weekly' => "Requests - Weekly",
 	'apigate-chart-name-monthly' => "Requests - Monthly",
-	
 );
 
 /** Message documentation (Message documentation)
