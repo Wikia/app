@@ -427,15 +427,16 @@ class WallHooksHelper {
 	protected function doSelfRedirect() {
 		$app = F::App();
 		$title = $app->wg->Title;
-
+		
 		if($app->wg->Request->getVal('action') == 'history' || $app->wg->Request->getVal('action') == 'historysubmit') {
 			return true;
 		}
-
+		
 		if( $title->getNamespace() === NS_USER_WALL ) {
 			$app->wg->Out->redirect($title->getLocalUrl(), 301);
 			$app->wg->Out->enableRedirects(false);
 		}
+		
 		if( $title->getNamespace() === NS_USER_WALL_MESSAGE ) {
 			$parts = explode( '/', $title->getText() );
 		
@@ -747,7 +748,7 @@ class WallHooksHelper {
 			if( !empty($articleId) ) {
 			//the thread/reply was deleted
 			//but in RC the entry can be about
-			//its deletion or restore
+			//its deletion or restoration
 				$articleTitleObj = F::build('Title', array($userText.'/'.$articleId, NS_USER_WALL), 'newFromText');
 				$articleTitleTxt = $helper->getTitleTxtFromMetadata($helper->getDeletedArticleTitleTxt($articleData['text_id']));
 				
@@ -768,7 +769,7 @@ class WallHooksHelper {
 			} else {
 			//the thread/reply was restored
 			//but in RC the entry can be about
-			//its deletion or restore
+			//its deletion or restoration
 				$parts = explode('/@', $rcTitle->getText());
 				$isThread = ( count($parts) === 2 ) ? true : false;
 				
