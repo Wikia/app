@@ -405,10 +405,10 @@ class WallHelper {
 		}
 		return $dbkey;
 	}
-	
+
 	public function isDbkeyFromWall($dbkey) {
 		$lookFor = explode( '\@' ,$dbkey);
-		if (count($lookFor) > 0){
+		if (count($lookFor) > 1){
 			return true;
 		}
 		return false;
