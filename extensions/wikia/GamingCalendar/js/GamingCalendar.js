@@ -93,9 +93,7 @@ var GamingCalendar = {
 		template = template.replace('##moreInfoUrl##', item.moreInfoUrl);
 		var orderPhrase = 'Pre-order now';
 		var now = new Date();
-		if (now.getUTCFullYear() >= date.getUTCFullYear()
-		&& now.getUTCMonth() >= date.getUTCMonth()
-		&& now.getUTCDate() >= date.getUTCDate()) {
+		if (now >= date) {
 			orderPhrase = 'Available now';
 		}
 		template = template.replace('##preorderLink##', item.preorderUrl ? '<a href="'+item.preorderUrl+'" class="game-pre-order" target="_blank">'+orderPhrase+'</a>' : '');
