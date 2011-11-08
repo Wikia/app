@@ -21,4 +21,4 @@ $dir = dirname(__FILE__);
 
 $app->registerClass('WallDisabledHooksHelper', $dir . '/WallDisabledHooksHelper.class.php');
 
-$app->registerHook('AlternateEdit', 'WallDisabledHooksHelper', 'onAlternateEdit');
+$app->registerHook('AfterEditPermissionErrors', 'WallDisabledHooksHelper', 'onAfterEditPermissionErrors');
