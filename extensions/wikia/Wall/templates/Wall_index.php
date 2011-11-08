@@ -1,3 +1,6 @@
+<div class="WallGreeing" >
+<?php echo $greeting ?> 
+</div>
 <div class="Wall" id="Wall">
 	<?php if($showNewMessage): ?>
 		<?= $app->renderView( 'WallController', 'newMessage' ); ?>

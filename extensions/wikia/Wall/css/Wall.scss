@@ -520,3 +520,10 @@ body.skin-monobook {
 	}
 	
 }
+
+.WallGreeing {
+	@include clearfix;
+	h2 .editsection {
+		display: none;
+	}
+}

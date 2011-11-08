@@ -21,9 +21,13 @@ $dir = dirname(__FILE__);
 
 define( "NS_USER_WALL", 1200 );
 define( "NS_USER_WALL_MESSAGE", 1201 );
+define( "NS_USER_WALL_MESSAGE_GREETING", 1202 );
 
 $wgExtraNamespaces[ NS_USER_WALL ] = "Message_Wall";
-$wgExtraNamespaces[ NS_USER_WALL_MESSAGE ] = "Message_Wall_Message";
+
+$wgExtraNamespaces[ NS_USER_WALL_MESSAGE ] = "Thread";
+$wgExtraNamespaces[ NS_USER_WALL_MESSAGE_GREETING ] = "Message_Wall_Greeting";
+
 $wgNamespacesWithSubpages[ NS_USER_WALL ] = true;
 
 $app->registerClass('WallController', $dir . '/WallController.class.php');
@@ -52,6 +56,8 @@ $app->registerHook('UserPagesHeaderModuleAfterGetTabs', 'WallHooksHelper', 'onUs
 $app->registerHook('SkinSubPageSubtitleAfterTitle', 'WallHooksHelper', 'onSkinSubPageSubtitleAfterTitle');
 $app->registerHook('SkinTemplateContentActions', 'WallHooksHelper', 'onSkinTemplateContentActions');
 $app->registerHook('PageHeaderIndexAfterActionButtonPrepared', 'WallHooksHelper', 'onPageHeaderIndexAfterActionButtonPrepared');
+$app->registerHook('BlockIpCompleteWatch', 'WallHooksHelper', 'onBlockIpCompleteWatch');
+$app->registerHook('UserIsBlockedFrom', 'WallHooksHelper', 'onUserIsBlockedFrom');
 
 //recent changes adjusting
 $app->registerHook('AC_RecentChange_Save', 'WallHooksHelper', 'onRecentChangeSave');
@@ -64,6 +70,8 @@ $app->registerHook('ChangesListInsertComment', 'WallHooksHelper', 'onChangesList
 $app->registerHook('ArticleDoDeleteArticleBeforeLogEntry', 'WallHooksHelper', 'onArticleDoDeleteArticleBeforeLogEntry');
 $app->registerHook('PageArchiveUndeleteBeforeLogEntry', 'WallHooksHelper', 'onPageArchiveUndeleteBeforeLogEntry');
 $app->registerHook('XmlNamespaceSelectorAfterGetFormattedNamespaces', 'WallHooksHelper', 'onXmlNamespaceSelectorAfterGetFormattedNamespaces');
+$app->registerHook('getUserPermissionsErrors', 'WallHooksHelper', 'onGetUserPermissionsErrors');
+$app->registerHook('ComposeCommonBodyMail', 'WallHooksHelper', 'onComposeCommonBodyMail' );
 
 //watchlist
 $app->registerHook('ArticleCommentBeforeWatchlistAdd', 'WallHooksHelper', 'onArticleCommentBeforeWatchlistAdd');

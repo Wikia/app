@@ -16,15 +16,6 @@ class WallHelper {
 	public function getArchiveSubPageText() {
 		return wfMsg('wall-user-talk-archive-page-title');
 	}
-	
-	//TODO: remove getMessagePageUrl and use one from WallMessage class
-	public function getMessagePageUrl(ArticleComment $comment) {
-		return $comment->getArticleTitle()->getFullUrl().'/'.$comment->getTitle()->getArticleId();
-	}
-
-	public function getWallPageUrl(ArticleComment $comment) {
-		return $comment->getArticleTitle()->getFullUrl();
-	}
 		
 	/**
 	 * @brief Gets and returns user's talk page's content
@@ -112,12 +103,11 @@ class WallHelper {
 		$item['wall-comment'] = $res['rc_params']['intro'];
 		$item['article-id'] = $title->getArticleID();
 		
-		$ac = new ArticleComment($title);
-		$ac->load();
-		$parent = $ac->getTopParentObj();
+		$wmessage = F::build('WallMessage', array($title) );
+		$parent = $wmessage->getTopParentObj();
 
-		$item['wall-url'] = $this->getWallPageUrl($ac);
-		$wmessage = F::build('WallMessage', array($title,$ac) );
+		$item['wall-url'] = $wmessage->getWallPageUrl();
+		
 		$owner = $wmessage->getWallOwner();
 		if($realname = $owner->getRealName())
 			$item['wall-owner'] = $realname;
@@ -126,17 +116,18 @@ class WallHelper {
 		
 		if( empty($parent) ) {
 		//parent
-			if(isset($ac->mMetadata['title'])) // TODO FIXME
-				$item['title'] = $ac->mMetadata['title'];
+			$metaTitle = $wmessage->getMetaTitle();
+			if( !empty($metaTitle) ) // TODO FIXME
+				$item['title'] = $wmessage->getMetaTitle();
 			else
 				$item['title'] = wfMsg('wall-no-title');
-			$item['url'] = $this->getMessagePageUrl($ac);
+			$item['url'] = $wmessage->getMessagePageUrl();
 			$res['title'] = 'message-wall-thread-'.urlencode($item['title']).'#'.$title->getArticleID();
 		} else {
 		//child
 			$parent->load();
 			$title = wfMsg('wall-no-title'); // in case metadata does not include title field
-			if(isset($parent->mMetadata['title'])) $title = $parent->mMetadata['title'];
+			if(isset($parent->mMetadata['title'])) $title = $wmessage->getMetaTitle();
 			$this->mapParentData($item, $parent, $title);
 			$res['title'] = 'message-wall-thread-'.urlencode($title).'#'.$parent->getTitle()->getArticleID();
 		}
@@ -158,11 +149,14 @@ class WallHelper {
 		$app = F::app();
 		$app->wf->ProfileIn(__METHOD__);
 		
-		if(isset($parent->mMetadata['title'])) 
-			$item['title'] = $parent->mMetadata['title'];
-		else
-			$item['title'] = wfMsg('wall-no-title');;
-		$item['url'] = $this->getMessagePageUrl($parent);
+		$metaTitle = $parent->getMetaTitle();
+		
+		if(!empty($metaTitle)){
+			$item['title'] = $metaTitle;
+		}else{
+			$item['title'] = wfMsg('wall-no-title');
+		}
+		$item['url'] = $parent->getMessagePageUrl();
 		
 		$parentTitle = $parent->getTitle();
 		if( $parentTitle instanceof Title ) {
@@ -402,43 +396,21 @@ class WallHelper {
 		return $dbkey;
 	}
 
-	public function getDbkeyFromArticleId_forExisting($articleId) {
-		$dbkey = null;
-
-		$dbr = wfGetDB( DB_SLAVE );
-		$row = $dbr->selectRow( 'page',
-			array( 'page_title' ),
-			array( 'page_id' => $articleId ),
-			__METHOD__ );
-		
-		if(!empty($row)) $dbkey = $row->page_title;
-		
-		if(empty($dbkey)) {
-			// try again from master
-			$dbr = wfGetDB( DB_MASTER );
-			$row = $dbr->selectRow( 'page',
-				array( 'page_title' ),
-				array( 'page_id' => $articleId ),
-				__METHOD__ );
-			
-			if(!empty($row)) $dbkey = $row->page_title;
-		}
-		
-		return $dbkey;
-	}
 	public function getDbkeyFromArticleId($articleId) {
-		$dbkey = getDbkeyFromArticleId_forExisting($articleId);
+		$title = Title::newFromId($articleId);
 		if(empty($dbkey)) {
 			$dbkey = getDbkeyFromArticleId_forDeleted($articleId);
+		} else {
+			return $title->getDBkey();
 		}
 		return $dbkey;
 	}
 	
-	public function isDbkeyFromWall($wall_owner, $dbkey) {
-		$wall_owner = str_replace( ' ' , '_' , $wall_owner );
-		$lookFor = $wall_owner . '/@comment-';
-		if (substr($dbkey,0,strlen($lookFor)) == $lookFor)
+	public function isDbkeyFromWall($dbkey) {
+		$lookFor = explode( '\@' ,$dbkey);
+		if (count($lookFor) > 0){
 			return true;
+		}
 		return false;
 	}
 		

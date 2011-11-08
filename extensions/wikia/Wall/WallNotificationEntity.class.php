@@ -188,7 +188,7 @@ class WallNotificationEntity {
 	 * Helper functions
 	 */
 	public function getMemcKey() {
-		return F::App()->runFunction( 'wfSharedMemcKey', __CLASS__, "v21", $this->id, 'notification' );
+		return F::App()->runFunction( 'wfSharedMemcKey', __CLASS__, "v22", $this->id, 'notification' );
 	}
 
 	public function getCache() {

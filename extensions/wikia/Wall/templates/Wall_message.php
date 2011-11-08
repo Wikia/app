@@ -1,4 +1,4 @@
-<li class="SpeechBubble message" data-id="<? echo $id ?>" is-reply="<?= $isreply == true ?>" <? if($hide):?> style="display:none" <? endif;?> >
+<li class="SpeechBubble message" id="<? echo $linkid ?>" data-id="<? echo $id ?>" is-reply="<?= $isreply == true ?>" <? if($hide):?> style="display:none" <? endif;?> >
 	<div class="speech-bubble-avatar">
 		<a href="/wiki/User:<?= $username ?>">
 			<? if(!$isreply): ?>

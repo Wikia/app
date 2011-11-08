@@ -294,14 +294,14 @@ class IPBlockForm {
 				</tr>"
 			);
 		}
-
+		global $wgEnableWallExt;
 		# Watchlist their user page? (Only if user is logged in)
 		if( $wgUser->isLoggedIn() ) {
 			$wgOut->addHTML("
 			<tr id='wpEnableWatchUser'>
 				<td>&nbsp;</td>
 				<td class='mw-input'>" .
-					Xml::checkLabel( wfMsg( 'ipbwatchuser' ),
+					Xml::checkLabel( wfMsg( /* Wikia Change */  empty($wgEnableWallExt) ? 'ipbwatchuser':'wall-ipbwatchuser' ),
 						'wpWatchUser', 'wpWatchUser', $this->BlockWatchUser,
 						array( 'tabindex' => '11' ) ) . "
 				</td>
@@ -316,7 +316,7 @@ class IPBlockForm {
 				<tr id='wpAllowUsertalkRow'>
 					<td>&nbsp;</td>
 					<td class='mw-input'>" .
-						Xml::checkLabel( wfMsg( 'ipballowusertalk' ),
+						Xml::checkLabel( wfMsg(/* Wikia Change */ empty($wgEnableWallExt) ? 'ipballowusertalk':'wall-ipballowusertalk' ) ,
 							'wpAllowUsertalk', 'wpAllowUsertalk', $this->BlockAllowUsertalk,
 							array( 'tabindex' => '12' ) ) . "
 					</td>
@@ -514,7 +514,10 @@ class IPBlockForm {
 
 			# Only show watch link when this is no range block
 			if( $this->BlockWatchUser && $block->mRangeStart == $block->mRangeEnd ) {
-				$wgUser->addWatch( Title::makeTitle( NS_USER, $this->BlockAddress ) );
+				/* Wikia Change by Tomek */
+				$watchTitle = Title::makeTitle( NS_USER, $this->BlockAddress );
+				$wgUser->addWatch( $watchTitle );
+				wfRunHooks( 'BlockIpCompleteWatch', array( $this->BlockAddress, $watchTitle ) );
 			}
 
 			# Block constructor sanitizes certain block options on insert
