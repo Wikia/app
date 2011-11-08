@@ -104,6 +104,9 @@ $messages['en'] = array(
 	'wall-message-not-found' => 'This message could not be found. If you see this error please contact Wikia at [[Special:Contact]] and provide as much details as possible about how this bug can be reproduced. Thank You!',
 
 	'wall-message-staff-text' => 'This user is a member of Wikia staff',
+
+	'wall-ipballowusertalk' => "Allow this user to post on their own Message Wall while blocked", 
+	'wall-ipbwatchuser' => "Watch this user's profile and follow their Message Wall",
 );
 
 $messages['qqq'] = array(

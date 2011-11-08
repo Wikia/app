@@ -73,9 +73,8 @@ class WallExternalController extends WikiaController {
 		
 		$this->response->setVal('status', true);
 		
-		$userPageTitle = F::build('Title', array($this->request->getVal('username'), NS_USER_WALL), 'newFromText');
-		
-		$title = $this->helper->strip_wikitext($this->request->getVal('messagetitle', null));
+
+		$titleMeta = $this->helper->strip_wikitext($this->request->getVal('messagetitle', null));
 		$body = $this->request->getVal('body', null);
 		
 		$helper = F::build('WallHelper', array());
@@ -84,31 +83,24 @@ class WallExternalController extends WikiaController {
 			$title = $helper->getDefaultTitle();
 		}
 		
-		if( empty($body) || empty($userPageTitle) ) {
+		if( empty($body) ) {
 			$this->response->setVal('status', false);
 			$this->app->wf->ProfileOut(__METHOD__);
 			return true;
 		}
+
+		$wallMessage = F::build('WallMessage', array($body, $this->request->getVal('username'), $this->wg->User, $titleMeta), 'buildNewMessageAndPost'); 
 		
-		$acStatus = F::build('ArticleComment', array($body, $this->wg->User, $userPageTitle, false, array('title' => $title) ), 'doPost');
-		
-		if($acStatus === false) {
-			$this->response->setVal('status', false);
-			$this->app->wf->ProfileOut(__METHOD__);
-			return true;
-		}
-		
-		$ac = ArticleComment::newFromId($acStatus[1]->getId());
-		if(!empty($ac)) {
-			$ac->load(true);
-			$this->response->setVal('message', $this->app->renderView( 'WallController', 'message', array( 'new' => true, 'comment' => $ac ) ));
-			$this->app->wf->ProfileOut(__METHOD__);
-		} else {
+		if( $wallMessage === false ) {
 			error_log('WALL_NOAC_ON_POST (acStatus)'.print_r($acStatus,1));
 			$this->response->setVal('status', false);
 			$this->app->wf->ProfileOut(__METHOD__);
 			return true;
 		}
+		
+		$wallMessage->load(true);
+		$this->response->setVal('message', $this->app->renderView( 'WallController', 'message', array( 'new' => true, 'comment' => $wallMessage ) ));
+		$this->app->wf->ProfileOut(__METHOD__);
 	}
 	
 	public function removeMessage() {
@@ -182,27 +174,25 @@ class WallExternalController extends WikiaController {
 		return true;
 	}
 		
-	//TODO: fix this c&p
 	public function replyToMessage() {
 		$this->response->setVal('status', true);
 		
-		$title = F::build('Title', array($this->request->getVal('username'), NS_USER_WALL), 'newFromText');
+		$parentTitle = F::build('Title', array( $this->request->getVal('parent') ), 'newFromId');
 		
-		if(empty($title)) {
+		if(empty($parentTitle)) {
 			$this->response->setVal('status', false);
 			return true;
 		}
+	
+		$wallMessage = F::build('WallMessage', array($parentTitle), 'newFromTitle');
+		$reply = $wallMessage->addNewReply($this->request->getVal('body'), $this->wg->User);
 		
-		$helper = F::build('WallHelper', array());
-		$acStatus = F::build('ArticleComment', array($this->request->getVal('body'), $this->wg->User, $title, $this->request->getVal('parent') ), 'doPost');
-		
-		if($acStatus === false) {
+		if($reply === false) {
 			$this->response->setVal('status', false);
 			return true;	
 		}
-		
-		$ac = ArticleComment::newFromId($acStatus[1]->getId());
-		$this->response->setVal('message', $this->app->renderView( 'WallController', 'message', array( 'comment' => $ac, 'isreply' => true ) ));
+
+		$this->response->setVal('message', $this->app->renderView( 'WallController', 'message', array( 'comment' => $reply, 'isreply' => true ) ));
 		
 			
 		// after successfully posting a reply		

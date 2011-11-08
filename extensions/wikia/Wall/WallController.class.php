@@ -50,10 +50,21 @@ class WallController extends ArticleCommentsModule {
 			}
 			
 			$this->response->setVal('renderUserTalkArchiveAnchor', false);
+			$this->response->setVal('greeting', '');
 		} else {
 			$this->response->setVal('showNewMessage', true);
 			$this->response->setVal('condenseMessage', true);
 			$this->response->setVal('renderUserTalkArchiveAnchor', true);
+			
+			$greeting = F::build('Title', array($title->getText(), NS_USER_WALL_MESSAGE_GREETING), 'newFromText' );
+
+			if($greeting->exists()) {
+				$article = F::build( 'Article', array($greeting));
+				$article->getParserOptions();
+				$article->mParserOptions->setIsPreview(true); //create parser option
+				$article->mParserOptions->setEditSection(false);
+				$this->response->setVal('greeting', $article->getParserOutput()->getText());
+			}
 		}	
 		
 		$this->response->setVal('title', $title);
@@ -70,27 +81,45 @@ class WallController extends ArticleCommentsModule {
 		$parts = explode('/', $this->app->wg->Title->getText());
 		$parent_title = F::build('Title', array($parts[0], NS_USER_WALL), 'newFromText' );
 		$user = F::build('User',array($parts[0]),'newFromName');
-		if(!empty( $user )) {
-			$user_displayname = $user->getRealName();
-			if(empty($user_displayname)) $user_displayname = $user->getName();
-		} else {
-			$user_displayname = $parts[0];
-		}
+                if(!empty( $user )) {
+                        $user_displayname = $user->getRealName();
+                        if(empty($user_displayname)) $user_displayname = $user->getName();
+                } else {
+                        $user_displayname = $parts[0];
+                }
 		
 		$this->response->setVal( 'wallOwner', $user_displayname);	
 		$this->response->setVal( 'wallUrl', $parent_title->getFullUrl() );
 		
 		$canUndelete = $this->app->wg->User->isAllowed( 'browsearchive' );
-
+		
 		if($canUndelete) {
-			$dbkey = $this->helper->getDbkeyFromArticleId_forDeleted( $parts[1] );
+			$dbr = wfGetDB( DB_SLAVE );
+			$row = $dbr->selectRow( 'archive',
+				array( 'ar_title' ),
+				array( 'ar_page_id' => $parts[1] ),
+				__METHOD__ );
 			
-			if(empty($dbkey)) {
+			$dbkey = $row->ar_title;
+			$msg_title = F::build('Title', array($dbkey, NS_USER_WALL_MESSAGE), 'newFromText' );
+			
+			if(empty($msg_title)) {
+				// try again from master
+				$dbr = wfGetDB( DB_MASTER );
+				$row = $dbr->selectRow( 'archive',
+					array( 'ar_title' ),
+					array( 'ar_page_id' => $parts[1] ),
+					__METHOD__ );
+				
+				$dbkey = $row->ar_title;
+				$msg_title = F::build('Title', array($dbkey, NS_USER_WALL_MESSAGE), 'newFromText' );
+			}
+			
+			if(empty($msg_title)) {
 				// give up, don't display undelete
 				error_log("WALL_NOTITLE_FROM_DBKEY (dbkey)".print_r($dbkey,1));
 				$canUndelete = false;			
 			} else {
-				$msg_title = F::build('Title', array($dbkey, NS_USER_WALL_MESSAGE), 'newFromText' );
 				$undelete_title = F::build('Title', array('Undelete', NS_SPECIAL), 'newFromText' );
 				$undelete_url = $undelete_title->getFullUrl();
 				$this->response->setVal( 'undeleteUrl', $undelete_url.'/'.$msg_title->getPrefixedText() );
@@ -129,10 +158,12 @@ class WallController extends ArticleCommentsModule {
 		$wallUrl = $this->request->getVal('wallUrl');
 		
 		$this->content = $this->getUserTalkContent($subpageName);
-		
+					
 		if( $this->content === false && !empty($wallUrl) ) {
 		//the subpages did not exist before
-			$this->app->wg->Out->redirect($wallUrl, 301);
+			if(!$this->helper->isGreeting($this->app->wg->Title) ) {
+				$this->app->wg->Out->redirect($wallUrl, 301);
+			}
 		}
 	}
 	
@@ -184,15 +215,19 @@ class WallController extends ArticleCommentsModule {
 		wfProfileIn( __METHOD__ );
 		$comment = $this->request->getVal('comment');
 
-		if(!($comment instanceof ArticleComment)) {
+		if(!(($comment instanceof ArticleComment) || ($comment instanceof WallMessage) )) {
 			$this->forward( $this->response->getControllerName(), 'message_error');
 			return;
 		}
-
-		$wallMessage = F::build('WallMessage', array($comment), 'newFromArticleComment' );
 		$this->response->setVal('hide',  false);
-		$wallMessage->load();
+		
+		if(($comment instanceof ArticleComment)) {
+			$wallMessage = F::build('WallMessage', array($comment), 'newFromArticleComment' );	
+		} else {
+			$wallMessage = $comment;
+		}
 
+		$wallMessage->load();
 		$this->response->setVal('title', $this->getVal('title'));
 		
 		if( !$this->getVal('isreply') ) {
@@ -217,6 +252,8 @@ class WallController extends ArticleCommentsModule {
 			}
 			$this->response->setVal('isWatched', $wallMessage->isWatched($this->wg->User) || $this->request->getVal('new', false));
 			$this->response->setVal('replies', $replies ); 
+			
+			$this->response->setVal('linkid', '');
 		} else {
 			$showFrom = $this->request->getVal('repliesNumber') - $this->request->getVal('showRepliesNumber');
 			if( $showFrom > $this->request->getVal('current') ){
@@ -226,6 +263,8 @@ class WallController extends ArticleCommentsModule {
 			$this->response->setVal('body', $wallMessage->getText() );
 			$this->response->setVal('isreply', true );
 			$this->response->setVal('replies', false );
+			
+			$this->response->setVal('linkid', $wallMessage->getPageUrlPostFix() );
 		}
 		//TODO: refactor it
 		$authorUser = User::newFromName($wallMessage->getUser()->getName());
@@ -265,7 +304,7 @@ class WallController extends ArticleCommentsModule {
 			$this->response->setVal( 'isEdited',  false);
 		}
 		
-		$this->response->setVal( 'fullpageurl', $this->helper->getMessagePageUrl($comment) );
+		$this->response->setVal( 'fullpageurl', $wallMessage->getMessagePageUrl() );
 		$this->response->setVal( 'wgBlankImgUrl', $this->wg->BlankImgUrl );
 		$this->response->setVal( 'canEdit', $wallMessage->canEdit($this->wg->User) );
 		$this->response->setVal( 'canDelete',$wallMessage->canDelete($this->wg->User) );
@@ -336,8 +375,8 @@ class WallController extends ArticleCommentsModule {
 			}
 			
 			$this->response->setVal( 'wallUrl', $wallMessage->getWallUrl() );
+			$this->response->setVal( 'messageTitle', $wallMessage->getMetaTitle() );
 		}
-		$this->response->setVal( 'messageTitle', $wallMessage->getMetaTitle() );
 	}
 	
 	/**

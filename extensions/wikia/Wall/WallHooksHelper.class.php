@@ -1,4 +1,5 @@
 <?php
+
 class WallHooksHelper {
 	const RC_WALL_COMMENTS_MAX_LEN = 50;
 	
@@ -26,6 +27,7 @@ class WallHooksHelper {
 		$app = F::App();
 		$helper = F::build('WallHelper', array());
 		$title = $article->getTitle();
+		
 		if( $title->getNamespace() === NS_USER_WALL 
 			&& !$title->isSubpage() 
 		) {
@@ -34,45 +36,22 @@ class WallHooksHelper {
 			$app->wg->Out->addHTML($app->renderView('WallController', 'index', array( 'title' => $article->getTitle() ) ));
 		}
 		
-		$parts = explode( '/', $title->getText() );
-		
-		if( $title->getNamespace() == NS_USER_WALL_MESSAGE && !empty($parts[1]) ) {
-			// thread / message link in form of @comment-username-number
-			// needs converting to articleId
-		
-			$articleId = $title->getArticleId();
-			if($articleId == 0) {
-				$articleId = $helper->getDeletedArticleId($title->getText());
-			}
-			$title = F::build('Title', array($parts[0].'/'.$articleId, NS_USER_WALL), 'newFromText');
-			$app->wg->Out->redirect($title->getFullUrl(), 301);
-			$app->wg->Out->enableRedirects(false);
-			return true;
-			
-		}
-		if( $title->getNamespace() == NS_USER_WALL_MESSAGE && !$title->isSubpage() ) {
-			// is someone trying to use this namespace as talk page?
-			
-			$this->doSelfRedirect();
-			return true;
-		}
-		
-		if( $title->getNamespace() === NS_USER_WALL 
-			&& $title->isSubpage() 
-			&& !empty($parts[1]) 
-			&& intval($parts[1]) > 0
+		if( $title->getNamespace() === NS_USER_WALL_MESSAGE 
+			&& intval($title->getText()) > 0
 		) {
 			//message wall index - brick page
 			$outputDone = true;
 			
-			$dbkey = $helper->getDbkeyFromArticleId_forExisting( $parts[1] );
-			$fromDeleted = false;
-			if(empty($dbkey)) {
+			$mainTitle = Title::newFromId($title->getText());
+			if(empty($mainTitle)) {
+				$dbkey = $helper->getDbkeyFromArticleId_forDeleted($title->getText());
 				$fromDeleted = true;
-				$dbkey = $helper->getDbkeyFromArticleId_forDeleted( $parts[1] );
+			} else {
+				$dbkey = $mainTitle->getDBkey();
+				$fromDeleted = false;
 			}
 			
-			if(empty($dbkey) || !$helper->isDbkeyFromWall($parts[0], $dbkey) ) {
+			if(empty($dbkey) || !$helper->isDbkeyFromWall($dbkey) ) {
 				// no dbkey or not from wall, redirect to wall
 				$app->wg->Out->redirect($this->getWallTitle()->getFullUrl(), 301);
 				return true;
@@ -84,9 +63,11 @@ class WallHooksHelper {
 					$app->wg->Out->setPageTitle( wfMsg( 'wall-deleted-msg-pagetitle' ) );
 					$app->wg->Out->setHTMLTitle( wfMsg( 'errorpagetitle' ) );
 				} else {
+					$messageTitle = Title::newFromText($dbkey, NS_USER_WALL_MESSAGE );
+					$wallMessage = F::build('WallMessage', array($messageTitle), 'newFromTitle' ); 
 					$app->wg->SuppressPageHeader = true;
-					$app->wg->WallBrickHeader = $parts[1];
-					$app->wg->Out->addHTML($app->renderView('WallController', 'index',  array('filterid' => $parts[1],  'title' => $title)));
+					$app->wg->WallBrickHeader = $title->getText();
+					$app->wg->Out->addHTML($app->renderView('WallController', 'index',  array('filterid' => $title->getText(),  'title' => $wallMessage->getWallTitle() )));
 				}
 			}
 			
@@ -104,6 +85,8 @@ class WallHooksHelper {
 			return true;
 		}
 		
+		$parts = explode('/', $title->getText());
+
 		if( $title->getNamespace() === NS_USER_TALK 
 			&& $title->isSubpage() 
 			&& !empty($parts[0]) 
@@ -116,7 +99,7 @@ class WallHooksHelper {
 			$app->wg->Out->redirect($title->getFullUrl(), 301);
 			return true;
 		}
-		
+
 		if( $title->getNamespace() === NS_USER_WALL 
 			&& $title->isSubpage() 
 			&& !empty($app->wg->EnableWallExt) 
@@ -760,15 +743,15 @@ class WallHooksHelper {
 			
 			$articleData = array('text_id' => '');
 			$articleId = $helper->getDeletedArticleId($rcTitle->getText(), $articleData);
-			
-			if( !empty($articleId) ) {
+
+			if(  $rc->getAttribute('rc_log_type') != 'delete') {
 				$articleTitleObj = F::build('Title', array($userText.'/'.$articleId, NS_USER_WALL), 'newFromText');
 				$articleTitleTxt = $helper->getTitleTxtFromMetadata($helper->getDeletedArticleTitleTxt($articleData['text_id']));
 				
 				if( empty($articleTitleTxt) ) {
 				//deleted reply
 					$articleTitleTxt = $this->getParentTitleTxt($rcTitle);
-					
+			
 					$wm = F::build('WallMessage', array($rcTitle));
 					$wmParent = $wm->getTopParentObj();
 					$articleUrl = $wmParent->getMessagePageUrl();
@@ -791,13 +774,13 @@ class WallHooksHelper {
 					));
 				}
 			} else {
-				$parts = explode('/@', $rcTitle->getText());
-				$isThread = ( count($parts) === 2 ) ? true : false;
+				$wm = F::build('WallMessage', array($rc->getTitle()), 'newFromTitle');
 				
+				$articleTitleTxt = empty($wnEntity->data->thread_title) ? $this->getParentTitleTxt($rc->getTitle()) : $wnEntity->data->thread_title;
+				$articleUrl = $rc->getTitle()->getFullUrl();
+
 				$articleTitleTxt = $this->getParentTitleTxt($rcTitle);
-				$wm = F::build('WallMessage', array($rcTitle));
 				$articleUrl = $wm->getMessagePageUrl();
-				$articleUrl = !empty($articleUrl) ? $articleUrl : '#';
 				
 				$wfMsgOpts = array(
 					$articleUrl,
@@ -806,7 +789,7 @@ class WallHooksHelper {
 					$userText,
 				);
 				
-				if( $isThread ) {
+				if( $wm->isMain() ) {
 					if( $rc->getAttribute('rc_log_action') == 'delete' ) {
 					//deleted thread page
 						$actionText = $app->wf->Msg('wall-recentchanges-deleted-thread', $wfMsgOpts);
@@ -848,7 +831,7 @@ class WallHooksHelper {
 		if( $title instanceof Title ) {
 			$app = F::app();
 			$helper = F::build('WallHelper', array());
-			
+
 			$wm = F::build('WallMessage', array($title));
 			$parentTitleTxt = $wm->getTopParentText($title->getText());
 			
@@ -1005,6 +988,38 @@ class WallHooksHelper {
 	
 		return true;
 	}
+	
+	/**
+	 * getUserPermissionsErrors -  control access to articles in the namespace NS_USER_WALL_MESSAGE_GREETING
+	 *
+	 * @author Tomek Odrobny
+	 *
+	 * @access public
+	 */
+	public function onGetUserPermissionsErrors( &$title, &$user, $action, &$result ) {
+		
+		if( $title->getNamespace() == NS_USER_WALL_MESSAGE_GREETING ) {
+			$result = array();
+			
+			$parts = explode('/', $title->getText());
+			$username = empty($parts[0]) ? '':$parts[0]; 
+			
+			if( $user->isAllowed('walledit') || $user->getName() == $username   ) {
+				$result = null;
+				return true;
+			} else {
+				$result = array('badaccess-group0');
+				return false;
+			}
+		}
+		$result = null;
+		return true;
+	}
+	
+	
+	public function onComposeCommonBodyMail($title, &$keys, &$body, $editor) {
+		return true;
+	} 
 	
 }
 ?>

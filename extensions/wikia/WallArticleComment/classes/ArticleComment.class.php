@@ -557,13 +557,13 @@ class ArticleComment {
 	 *
 	 * @return String
 	 */
-	public function doSaveComment( $text, $user, $title = null, $commentId = 0 ) {
+	public function doSaveComment( $text, $user, $title = null, $commentId = 0, $force = false ) {
 		global $wgMemc, $wgTitle;
 		wfProfileIn( __METHOD__ );
 
 		$res = array();
 		$this->load(true);
-		if ( $this->canEdit() && !ArticleCommentInit::isFbConnectionNeeded() ) {
+		if ( $force || ($this->canEdit() && !ArticleCommentInit::isFbConnectionNeeded()) ) {
 
 			if ( wfReadOnly() ) {
 				wfProfileOut( __METHOD__ );
@@ -1171,7 +1171,7 @@ class ArticleComment {
 	 */
 	public function explodeParentTitleText($titleText) {
 		$parts = explode('/@', $titleText);
-		
+
 		if(count($parts) < 3) return null;
 		
 		return $parts[0] . '/@' . $parts[1];

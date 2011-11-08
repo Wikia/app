@@ -5,10 +5,56 @@
 class WallMessage {
 	protected $articleComment;
 	protected $title;
+	protected $order = 0;
 	
 	function __construct(Title $title, $articleComment = null) {
 		$this->title = $title;
 		$this->articleComment = $articleComment;
+	}
+	
+	static public function buildNewMessageAndPost($body, $userWall, $user, $metaTitle = '', $parent = false){
+		
+		if($userWall instanceof Title ){
+			$userPageTitle = $userWall;
+		} else {
+			$userPageTitle = F::build('Title', array($userWall , NS_USER_WALL), 'newFromText');
+		}
+		
+		if(empty($userPageTitle)  ) {
+			return false;			
+		}
+		if($parent === false) {
+			$acStatus = F::build('ArticleComment', array($body, $user, $userPageTitle, false , array('title' => $metaTitle) ), 'doPost');	
+		} else {
+			$acStatus = F::build('ArticleComment', array($body, $user, $userPageTitle, $parent->getTitle()->getArticleId() , array('title' => $metaTitle) ), 'doPost');
+		}
+		
+		if($acStatus === false) {
+			return false;
+		}
+		
+		$ac = ArticleComment::newFromId($acStatus[1]->getId());
+		
+		if(empty($ac)) {
+			return false;
+		}
+		
+		$class = new WallMessage( $ac->getTitle(), $ac );
+		
+		if($parent === false) {//$db = DB_SLAVE
+			$class->setOrderId( 1 );
+		} else {
+			$count = $parent->getOrderId( true );
+			if(is_numeric($count)){
+				$count++;
+				$parent->setOrderId( $count );
+				$class->setOrderId( $count );				
+			}
+		}
+		
+		//Build data for sweet url ? id#number_of_comment 
+		
+		return $class;
 	}
 	
 	static public function newFromTitle(Title $title) {
@@ -21,13 +67,39 @@ class WallMessage {
 		return $class;
 	}
 	
+	//TODO: add some cache
+	public function setOrderId($val = 1) {
+		wfSetWikiaPageProp(WPP_WALL_COUNT,  $this->getTitle()->getArticleId(),  $val);
+		$this->order = $val;
+		return $val;	
+	}
+	
+	//TODO: add some cache	
+	public function getOrderId($for_update = false) {
+		if($for_update) {
+			return wfGetWikiaPageProp(WPP_WALL_COUNT, $this->getTitle()->getArticleId(), DB_MASTER);	
+		}
+		
+		if($this->order != 0) {
+			return $this->order;
+		}
+		
+		return wfGetWikiaPageProp(WPP_WALL_COUNT, $this->getTitle()->getArticleId());
+	}
+	
+	public function addNewReply($body, $user) {
+		return self::buildNewMessageAndPost($body, $this->getWallTitle(), $user, '', $this );
+	}
+	
 	public function canEdit(User $user){
 		return $this->isAuthor($user) || $user->isAllowed('walledit');
 	}
 	
 	public function doSaveComment($body, $user) {
-		$this->getArticleComment()->doSaveComment( $body, $user );
-		return $this->getArticleComment()->parseText($body);;
+		if($this->canEdit($user)){
+			$this->getArticleComment()->doSaveComment( $body, $user, null, 0, true );			
+		}
+		return $this->getArticleComment()->parseText($body);
 	}
 
 	public function canDelete(User $user){
@@ -41,15 +113,25 @@ class WallMessage {
 	public function setMetaTitle($title) {
 		return $this->getArticleComment()->setMetaData('title', $title);
 	}
+
+	public function getWallOwnerName() {
+		$parts = explode( '/', $this->getWallTitle()->getText() );
+		return $parts[0];
+	}
 	
 	public function getWallOwner() {
-		$wall_owner = User::newFromName($this->getWallTitle()->getBaseText(), false);
+		$parts = explode( '/', $this->getWallTitle()->getText() );
+		$wall_owner = User::newFromName(  $parts[0], false);
 		if(empty($wall_owner)) {
 			error_log('EMPTY_WALL_OWNER: (id)'. $this->getArticleComment()->getArticleTitle()->getArticleID());
 			error_log('EMPTY_WALL_OWNER: (basetext)'. $this->getArticleComment()->getArticleTitle()->getBaseText());
 			error_log('EMPTY_WALL_OWNER: (fulltext)'. $this->getArticleComment()->getArticleTitle()->getFullText());
 		}
 		return $wall_owner;
+	}
+	
+	public function getWallPageUrl() {
+		return $this->getWallTitle()->getFullUrl();
 	}
 	
 	public function getWallTitle(){
@@ -60,8 +142,38 @@ class WallMessage {
 		return $this->getArticleComment()->getArticleTitle();
 	}
 	
+	public function getPageUrlPostFix() {
+		if($this->isMain()){
+			return '';
+		} else {
+			$order = $this->getOrderId();
+			if($order != null) {
+				return $order;
+			} else {
+				return $this->getArticleId();	
+			}
+		}
+		return '';
+	}
+	
 	public function getMessagePageUrl() {
-		return $this->getWallUrl().'/'.$this->getArticleComment()->getTitle()->getArticleId();
+		if($this->isMain()){
+			$id = $this->getArticleId();
+		} else {
+			$topParent = $this->getTopParentObj();
+			$id = $topParent->getArticleId();
+		}
+		$postFix = $this->getPageUrlPostFix();
+		if(!empty($postFix)) {
+			$postFix = '#'.$postFix;
+		}
+		$title = Title::newFromText($id, NS_USER_WALL_MESSAGE);
+	
+		return $title->getFullUrl().$postFix;
+	}
+	
+	public function getArticleId() {
+		return $this->getArticleComment()->getTitle()->getArticleId();
 	}
 	
 	public function getWallUrl() {
@@ -70,14 +182,23 @@ class WallMessage {
 	
 	public function getTopParentObj(){
 		$obj = $this->getArticleComment()->getTopParentObj();
-		
-		if(empty($obj)) {
+ 
+		if(empty($obj)  ) {
 			return null;
 		}
-		if($obj instanceof ArticleComment)
+		if($obj instanceof ArticleComment){
 			return WallMessage::newFromArticleComment($obj);
-		else
+		} else {
 			return null;
+		}
+	}
+	
+	public function isMain() {
+		$top = $this->getTopParentObj();
+		if(empty($top)) {
+			return true;
+		}
+		return false;
 	}
 	
 	public function getTopParentText($titleText) {

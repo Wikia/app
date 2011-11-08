@@ -107,7 +107,7 @@ class WallNotifications {
 			unset($users[$notification->data->msg_author_id]);
 		} 
 
-		$title = Title::newFromText($notification->data->wall_username. '/' . $notification->data->title_id, NS_USER_WALL );
+		$title = Title::newFromId($notification->data->title_id);
 		$this->sendEmails($title, $notification->data->msg_author_id, array_keys($users), $notification->isMain(), $notification->data->wall_userid );
 		$this->addNotificationLinks($users, $notification);
 	}
@@ -437,6 +437,6 @@ class WallNotifications {
 	}
 	
 	public function getKey( $userId, $wikiId ){
-		return $this->app->runFunction( 'wfSharedMemcKey', __CLASS__, $userId, $wikiId. 'v20' );
+		return $this->app->runFunction( 'wfSharedMemcKey', __CLASS__, $userId, $wikiId. 'v21' );
 	}
 }
