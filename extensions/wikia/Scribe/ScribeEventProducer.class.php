@@ -161,6 +161,7 @@ class ScribeEventProducer {
 			$this->setIsContent( $oTitle->isContentPage() );
 			$this->setIsRedirect( $oTitle->isRedirect() );
 			$this->setRevisionTimestamp( wfTimestamp( TS_DB, $oArticle->getTimestamp() ) );
+			$this->setLogId( $logid );
 		}	
 
 		$this->app->wf->ProfileOut( __METHOD__ );
