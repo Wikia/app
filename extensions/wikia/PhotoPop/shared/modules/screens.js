@@ -353,7 +353,15 @@ define.call(exports, function(){
 
 			if(options.firstRound) {
 				for(var i = 0; i < divsLength; i++) {
-					divsArray[i].clicked = false;
+					var div = divsArray[i];
+
+					div.clicked = false;
+					div.style.left = div.originalLeft;
+					if(Wikia.Platform.is('app')) {
+						div.style.display = 'block';
+					} else {
+						div.style.height = div.originalHeight;
+					}
 				}
 				this.fire('maskDisplayed');
 			} else {
