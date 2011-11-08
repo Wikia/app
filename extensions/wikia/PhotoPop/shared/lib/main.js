@@ -388,9 +388,10 @@
 
 			function runGame(target){
 				if(target == 'tutorial') {
+					tutorialSteps = [];
 					newGame({
 						_id: 'tutorial',
-						_data:settings.tutorial.shuffle()
+						_data:settings.tutorial
 					});
 				} else {
 					selectedGameId = target.getAttribute('data-id');
