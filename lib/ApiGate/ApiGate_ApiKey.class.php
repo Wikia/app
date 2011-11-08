@@ -17,8 +17,11 @@ class ApiGate_ApiKey {
 	private $reasonBanned = null; // lazy-loaded. Null if not loaded. If loaded and empty, it will be an empty-string.
 	
 	public function getApiKey(){return $this->apiKey;}
-	public function isEnabled(){return $this->enabled;}
 	public function getNickName(){return $this->nickName;}
+	public function isEnabled(){return $this->enabled;}
+	public function getFirstName(){return $this->firstName;}
+	public function getLastName(){return $this->lastName;}
+	public function getEmail(){return $this->email;}
 
 	/**
 	 * Tries to mutate this object to have all the traits of the apiKey defined in the parameters (as loaded from the

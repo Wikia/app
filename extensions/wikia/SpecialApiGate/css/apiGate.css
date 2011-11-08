@@ -12,6 +12,9 @@ table.apiKeys tr{
 table.apiKeys td, table.apiKeys th{
 	border:1px solid #000;
 }
+.status.enabled{
+	color:#080;
+}
 .disabled{
 	background-color:#fcc;
 	font-style:oblique;
