@@ -88,11 +88,6 @@ AdDriver.getAdProviderForSpecialCase = function(slotname) {
 
 AdDriver.isHighValue = function(slotname) {
 	if (AdConfig.isHighValueSlot(slotname)) {
-		// FogBugz 9915: temporarily override country setting for TOP_BUTTON
-		if (slotname == 'TOP_BUTTON') {
-			return true;
-		}
-
 		// FogBugz 9953: Liftium.geo may have country data when AdConfig.geo does not
 		// Read from Liftium.geo first
 		if (Liftium.geo) {
@@ -406,7 +401,9 @@ AdDriver.adjustSlotDisplay = function(slotname) {
 			// above ad, and center ad
 			if (($('#'+slotname).height() >= 0 && $('#'+slotname).height() < AdDriver.standardLeaderboardMinHeight) // expandable leaderboard, minimized state
 			|| $('#'+slotname).height() > AdDriver.standardLeaderboardMaxHeight) { // jumbo leaderboard or expandable leaderboard, maximized state
-				$('#'+slotname).css({'padding-top': 0, 'margin': '0 auto', 'width': 980});
+				$('#'+slotname).addClass('jumbo-leaderboard');
+				$('#WikiaTopAds').removeClass('WikiaTopButtonLeft WikiaTopButtonRight');
+				AdDriverDelayedLoader.removeItemsBySlotname('TOP_BUTTON');
 			}
 			return true;
 			break;
@@ -432,7 +429,6 @@ AdDriver.canCallLiftium = function(slotname) {
 		case 'INVISIBLE_TOP':
 		case 'MIDDLE_RIGHT_BOXAD':
 		case 'MODAL_VERTICAL_BANNER':
-		case 'TOP_BUTTON':
 			return false;
 			break;
 	}
@@ -530,6 +526,20 @@ AdDriverDelayedLoader.appendItem = function(adDriverItem) {
 
 AdDriverDelayedLoader.prependItem = function(adDriverItem) {
 	AdDriverDelayedLoader.adDriverItems.unshift(adDriverItem);
+}
+
+AdDriverDelayedLoader.removeItemsBySlotname = function(slotname) {
+	// iterate through AdDriverDelayedLoader.adDriverItems and look for
+	// items to remove. Remove the highest index first
+	var itemIdxs = [];
+	for (var i=0; i < AdDriverDelayedLoader.adDriverItems.length; i++) {
+		if (slotname == AdDriverDelayedLoader.adDriverItems[i].slotname) {
+			itemIdxs.unshift(i);
+		}
+	}
+	for (var i=0; i < itemIdxs.length; i++) {
+		AdDriverDelayedLoader.adDriverItems.splice(itemIdxs[i], 1);
+	}
 }
 
 AdDriverDelayedLoader.callDART = function() {
