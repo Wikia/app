@@ -42,7 +42,7 @@ var Wall = $.createClass(Object, {
 			}));
 		$('#WallMessageBody')
 			.keydown(function(e) {
-				if ( event.which == 9 && event.shiftKey ) {
+				if ( e.which == 9 && e.shiftKey ) {
 					e.preventDefault();
 					$('#WallMessageTitle').focus();
 					return false;
@@ -143,7 +143,7 @@ var Wall = $.createClass(Object, {
 		var element = $(e.target);
 		var button = element.closest('.SpeechBubble')
 			.find('button#WallMessageSubmit,.save-edit,.replyButton').first();
-		if(e.keyCode == 9 && !event.shiftKey) {
+		if(e.keyCode == 9 && !e.shiftKey) {
 			if(element.attr('id') != 'WallMessageTitle' && !element.hasClass('title')) {
 				button.focus();
 				e.preventDefault();
