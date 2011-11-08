@@ -14,6 +14,11 @@
 }
 #HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD, #CORP_TOP_LEADERBOARD {
 	padding: 20px 0 0;
+	&.jumbo-leaderboard {
+		margin: 0 auto; 
+		padding-top: 0;
+		width: 980px;
+	}
 }
 #TOP_LEADERBOARD .jumbo {
 	margin-top: -20px;

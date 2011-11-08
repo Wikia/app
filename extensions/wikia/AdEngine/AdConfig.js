@@ -30,7 +30,6 @@ AdConfig = {
 			case 'MODAL_VERTICAL_BANNER':
 			case 'TEST_HOME_TOP_RIGHT_BOXAD':
 			case 'TEST_TOP_RIGHT_BOXAD':
-			case 'TOP_BUTTON':
 			case 'TOP_LEADERBOARD':
 			case 'TOP_RIGHT_BOXAD':
 				return true;

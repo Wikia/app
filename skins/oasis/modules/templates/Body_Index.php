@@ -21,7 +21,7 @@
 			echo '<div class="WikiaMainPageBanner">';
 		}
 		if ($wgEnableTopButton) {
-			echo '<div class="WikiaTopAds'.$topAdsExtraClasses.'">';
+			echo '<div class="WikiaTopAds'.$topAdsExtraClasses.'" id="WikiaTopAds">';
 		}
 		if ($wgEnableCorporatePageExt) {
 			echo wfRenderModule('Ad', 'Index', array('slotname' => 'CORP_TOP_LEADERBOARD'));
