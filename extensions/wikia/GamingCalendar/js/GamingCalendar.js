@@ -82,17 +82,24 @@ var GamingCalendar = {
 			template = template.replace('##expanded##', 'unselected');
 		}
 
-		template = template.replace('##gameTitle##', item.gameTitle);
-		template = template.replace('##description##', item.description);
-		template = template.replace('##imageSrc##', item.image.src);
-		template = template.replace('##moreInfoUrl##', item.moreInfoUrl);
-		template = template.replace('##preorderLink##', item.preorderUrl ? '<a href="'+item.preorderUrl+'" class="game-pre-order" target="_blank">Pre-order now</a>' : '');
-		template = template.replace('##systems##', item.systems.join(', '));
-
 		var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 		var date = new Date(item.releaseDate * 1000); // miliseconds!
 		template = template.replace('##month##', months[date.getUTCMonth()]);
 		template = template.replace('##day##', date.getUTCDate());
+
+		template = template.replace('##gameTitle##', item.gameTitle);
+		template = template.replace('##description##', item.description);
+		template = template.replace('##imageSrc##', item.image.src);
+		template = template.replace('##moreInfoUrl##', item.moreInfoUrl);
+		var orderPhrase = 'Pre-order now';
+		var now = new Date();
+		if (now.getUTCFullYear() >= date.getUTCFullYear()
+		&& now.getUTCMonth() >= date.getUTCMonth()
+		&& now.getUTCDate() >= date.getUTCDate()) {
+			orderPhrase = 'Available now';
+		}
+		template = template.replace('##preorderLink##', item.preorderUrl ? '<a href="'+item.preorderUrl+'" class="game-pre-order" target="_blank">'+orderPhrase+'</a>' : '');
+		template = template.replace('##systems##', item.systems.join(', '));
 
 		return template;
 	},
