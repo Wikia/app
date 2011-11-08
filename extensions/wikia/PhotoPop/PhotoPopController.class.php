@@ -35,7 +35,8 @@ class PhotoPopController extends WikiaController {
 	}
 
 	public function index() {
-		$this->response->setVal( 'appCacheManifestPath', self::CACHE_MANIFEST_PATH . "&cb={$this->wg->CacheBuster}" );//$this->wg->StyleVersion
+		//AppCache disabled for now, it generates more problems than expected
+		//$this->response->setVal( 'appCacheManifestPath', self::CACHE_MANIFEST_PATH . "&cb={$this->wg->CacheBuster}" );//$this->wg->StyleVersion
 
 		F::build('JSMessages')->enqueuePackage('PhotoPop', JSMessages::INLINE);
 
