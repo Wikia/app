@@ -50,7 +50,7 @@ class SpecialApiGate extends SpecialPage {
 		global $wgExtensionsPath;
 		$wgOut->addStyle( $wgExtensionsPath . '/wikia/SpecialApiGate/css/apiGate.css', 'screen' );
 
-		$wgOut->setPagetitle( wfMsg('apigate') );
+		$wgOut->setPagetitle( wfMsg('apigate-h1') );
 
 		// Box the main content of the text into a left-column so that a custom menu can be put on the right (below).
 		$wgOut->addWikiText( "<mainpage-leftcolumn-start />");
@@ -99,14 +99,25 @@ class SpecialApiGate extends SpecialPage {
 				$mainSectionHtml .= $this->subpage_userKeys();
 				break;
 			case self::SUBPAGE_KEY:
-				$useTwoColLayout = false; // use full width so that the charts fit
+				$apiKeyObject = ApiGate_ApiKey::newFromDb( $apiKey );
+				if( is_object($apiKeyObject) ){
+					// Determine if the current user can view this key (they must either own it or be an ApiGate admin).
+					if($apiKeyObject->canBeViewedByCurrentUser()){
+						$useTwoColLayout = false; // use full width so that the charts fit
 
-				// Module for key info (it's a form)
-				$mainSectionHtml .= $this->subpage_keyInfo( $apiKey );
+						// Module for key info (it's a form)
+						$mainSectionHtml .= $this->subpage_keyInfo( $apiKeyObject );
 
-				// Module for stats (we don't have stats yet so this should just say that for now)
-				$mainSectionHtml .= $this->subpage_keyStats( $apiKey );
-
+						// Module for stats (we don't have stats yet so this should just say that for now)
+						$mainSectionHtml .= $this->subpage_keyStats( $apiKey );
+					} else {
+		// TODO: ERROR MESSAGE THAT YOU'RE NOT AUTHORIZED TO VIEW THE KEY
+		// TODO: ERROR MESSAGE THAT YOU'RE NOT AUTHORIZED TO VIEW THE KEY
+					}
+				} else {
+		// TODO: ERROR MESSAGE THAT THE KEY WAS NOT FOUND IN THE DB
+		// TODO: ERROR MESSAGE THAT THE KEY WAS NOT FOUND IN THE DB
+				}
 				break;
 			case self::SUBPAGE_NONE:
 			default:
@@ -237,8 +248,9 @@ class SpecialApiGate extends SpecialPage {
 				// TODO: Not portable. This works well here to just show the module on this specialpage, but more work would need to be done for API Gate to have a good default behvaior.
 
 				// Display a success message containing the new key.
-				$msg = wfMsgExt( 'apigate-register-success', array('parse'), array( $data['apiKey'] ) );
-				$msg .= "<br/><br/>" . wfMsgExt( 'apigate-register-success-return', array('parse'), array() );
+				$msg = "<h3>".wfMsg( 'apigate-register-success-heading' )."</h3>";
+				$msg .= wfMsgExt( 'apigate-register-success', array('parse'), array( $data['apiKey'] ) );
+				$msg .= wfMsgExt( 'apigate-register-success-return', array('parse'), array() );
 				$html .=  ApiGate_Dispatcher::renderTemplate( "info", array('message' => $msg) ); // product wanted this to be normal style, not success-style.
 			} else {
 				$html .=  ApiGate_Dispatcher::renderTemplate( "register", $data );
@@ -318,12 +330,20 @@ class SpecialApiGate extends SpecialPage {
 		return $html;
 	} // end subpage_userKeys()
 
-	public function subpage_keyInfo( $apiKey ){
+	/**
+	 * Displays the detailed info about an API key and allows editing of it.  Also, if
+	 * a key has been banned, this will show the explanation.
+	 *
+	 * This function does not check permissions, that is left to the calling-code.
+	 */
+	public function subpage_keyInfo( $apiKeyObject ){
 		wfProfileIn( __METHOD__ );
 		$html = "";
 
-		// TODO: IMPLEMENT
-		// TODO: IMPLEMENT
+		// TODO: Process form updates if they were submitted.
+		// TODO: Process form updates if they were submitted.
+
+		$html .=  ApiGate_Dispatcher::renderTemplate( "key", array("apiKeyObject" => $apiKeyObject) );
 
 		wfProfileOut( __METHOD__ );
 		return $html;
