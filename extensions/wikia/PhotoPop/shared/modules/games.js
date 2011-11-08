@@ -63,8 +63,6 @@ define.call(exports, ['modules/data'], function(data){
 			this._roundPoints = options._roundPoints? new Points(options._roundPoints): new Points(Game.MAX_POINTS_PER_ROUND);
 			this._numRounds = options._data.length;
 
-
-
 			this._timerPointDeduction = Math.round((Game.MAX_POINTS_PER_ROUND / ((Game.MAX_SECONDS_PER_ROUND*1000) / Game.UPDATE_INTERVAL_MILLIS)));
 			this._wrongAnswerPointDeduction = Math.round((Game.MAX_POINTS_PER_ROUND * (Game.PERCENT_DEDUCTION_WRONG_GUESS / 100)));
 
@@ -94,7 +92,6 @@ define.call(exports, ['modules/data'], function(data){
 		},
 
 		prepareGame: function(){
-						
 			this.fire('initGameScreen', this.getId());
 			this.prepareAnswerDrawer();
 			this.prepareContinueView();

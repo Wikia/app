@@ -29,9 +29,7 @@
 			imagePreloaded = false,
 			maskShown = false,
 			highscore = [],
-			eventListenersAdded= false,
 			tutorialSteps = [],
-			choosenCorrectPictures = [],
 			homeInitialized = false,
 			clickEvent = Wikia.Platform.getClickEvent(),
 			view = {
@@ -50,7 +48,6 @@
 						gamesData[gameId].watermark : graphics.getAsset('watermark_default'),
 						mute: audio.getMute(),
 						initGame: true
-
 				});
 
 				if(gameId == 'tutorial' && !tutorialSteps['intro']) {
@@ -255,7 +252,7 @@
 			}
 
 			function goHome(event, gameFinished){
-				if(!gameFinished && currentGame.getId() === 'tutorial') currentGame.fire('storeData');
+				if(!gameFinished && currentGame.getId() !== 'tutorial') currentGame.fire('storeData');
 
 				initHomeScreen();
 
@@ -292,6 +289,9 @@
 			}
 
 			function imageLoadError() {
+				data.storage.remove(currentGame.getId());
+				currentGame = null;
+				screens.get('home').show();
 				screens.openModal({
 					name: 'tile',
 					html: Wikia.i18n.Msg('photopop-game-image-load-error'),
@@ -387,6 +387,7 @@
 			}
 
 			function runGame(target){
+
 				if(target == 'tutorial') {
 					tutorialSteps = [];
 					newGame({
@@ -396,7 +397,6 @@
 				} else {
 					selectedGameId = target.getAttribute('data-id');
 					selectedGame = gamesData[selectedGameId];
-
 					if(currentGame && currentGame.getId() == selectedGame.id) {
 						screens.get('game').show();
 					} else {
@@ -406,12 +406,11 @@
 						data.storage.addEventListener({name: 'get', key: selectedGame.id}, function(event, options) {
 							gameData = options.value || gameData;
 							//if there is already a game in localstorage start it from this data otherwise load a new one
-
 							/*if(typeof gameData == 'string')
 								gameData = JSON.parse(gameData);*/
 
 							(gameData)? newGame(gameData): loadSelectedGame();
-						});
+						}, {oneTime: true});
 						data.storage.get(selectedGame.id);
 					}
 				}
@@ -461,28 +460,26 @@
 			}
 
 			function newGame(gameData){
-				currentGame = null;
 				currentGame = new Game(gameData);
-				if(!eventListenersAdded) {
-					currentGame.addEventListener('initGameScreen', initGameScreen);
-					currentGame.addEventListener('initHomeScreen', initHomeScreen);
-					currentGame.addEventListener('goHome', goHome);
-					currentGame.addEventListener('playAgain', playAgain);
-					currentGame.addEventListener('goToHighScores', openHighscore);
-					currentGame.addEventListener('timeIsUp', timeIsUp);
-					currentGame.addEventListener('wrongAnswerClicked', wrongAnswerClicked);
-					currentGame.addEventListener('rightAnswerClicked', rightAnswerClicked);
-					currentGame.addEventListener('answerDrawerButtonClicked', answerDrawerButtonClicked);
-					currentGame.addEventListener('continueClicked', continueClicked);
-					currentGame.addEventListener('tileClicked', tileClicked);
-					currentGame.addEventListener('timerEvent', timerEvent);
-					currentGame.addEventListener('timeIsLow', timeIsLow);
-					currentGame.addEventListener('endGame', endGame);
-					currentGame.addEventListener('muteButtonClicked', muteButtonClicked);
-					currentGame.addEventListener('answersPrepared', answersPrepared);
-					currentGame.addEventListener('roundStart', roundStart);
-					currentGame.addEventListener('pause', pause);
-				}
+
+				currentGame.addEventListener('initGameScreen', initGameScreen);
+				currentGame.addEventListener('initHomeScreen', initHomeScreen);
+				currentGame.addEventListener('goHome', goHome);
+				currentGame.addEventListener('playAgain', playAgain);
+				currentGame.addEventListener('goToHighScores', openHighscore);
+				currentGame.addEventListener('timeIsUp', timeIsUp);
+				currentGame.addEventListener('wrongAnswerClicked', wrongAnswerClicked);
+				currentGame.addEventListener('rightAnswerClicked', rightAnswerClicked);
+				currentGame.addEventListener('answerDrawerButtonClicked', answerDrawerButtonClicked);
+				currentGame.addEventListener('continueClicked', continueClicked);
+				currentGame.addEventListener('tileClicked', tileClicked);
+				currentGame.addEventListener('timerEvent', timerEvent);
+				currentGame.addEventListener('timeIsLow', timeIsLow);
+				currentGame.addEventListener('endGame', endGame);
+				currentGame.addEventListener('muteButtonClicked', muteButtonClicked);
+				currentGame.addEventListener('answersPrepared', answersPrepared);
+				currentGame.addEventListener('roundStart', roundStart);
+				currentGame.addEventListener('pause', pause);
 
 				currentGame.prepareGame();
 			}
@@ -605,7 +602,7 @@
 				else
 					initHomeScreen();
 
-			});
+			}, {oneTime: true});
 
 			data.storage.get('tutorialPlayed');
 		}
