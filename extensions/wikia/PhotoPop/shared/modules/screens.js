@@ -143,7 +143,6 @@ define.call(exports, function(){
 		},
 
 		prepareGameScreen: function(event, options) {
-			Wikia.log('WTF');
 			this.prepareMask(options.watermark);
 			this.hideContinue();
 			this.showScoreBar();

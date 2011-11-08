@@ -16,7 +16,7 @@ define.call(exports, ['modules/settings'],function(settings){
 
 				Titanium.App.addEventListener('Storage:fetched', function(event){
 					var value = JSON.parse(event.value);
-					
+
 					that.fire('get', {key: event.key, value: value});
 					that.fire({name: 'get', key: event.key}, {key: event.key, value: value});
 				});
@@ -90,7 +90,7 @@ define.call(exports, ['modules/settings'],function(settings){
 							needsRequest = true;
 						}
 					}
-				
+
 					if(needsRequest && event.source == 'web')
 						alert('Error, invalid response from ' + event.url);
 					else if(needsRequest)
@@ -104,7 +104,7 @@ define.call(exports, ['modules/settings'],function(settings){
 		_sendRequest: function(url, options){
 			var that = this;
 			options = options || {};
-			
+
 			reqwest({
 				url: url + ((url.indexOf('?') >= 0) ? '&' : '?') + 'callback=?',
 				type: 'jsonp',
@@ -123,7 +123,7 @@ define.call(exports, ['modules/settings'],function(settings){
 
 		load: function(url, options){
 			this.fire('beforeLoad', {url: url, options: options});
-			
+
 			if(Wikia.Platform.is('app'))
 				Titanium.App.fireEvent('XDomainLoader:load', {url: url, options: options, id: this._id});
 			else

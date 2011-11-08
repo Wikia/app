@@ -32,6 +32,7 @@ function Observe(obj){
 
 			for(x = 0, y = callbacks.length; x < y; x++){
 				callbacks[x].call(this, event, data);
+				callbacks.splice(x, 1);
 			}
 		}
 	};
@@ -50,15 +51,20 @@ function Observe(obj){
 		event = this.getEventName(event);
 		var x, y;
 
-		for(x = 0, y = this._callbacks[event].length; x < y; x++){
-			if(this._callbacks[event][x] === callback)
-				this._callbacks[event].splice(x, 1);
+		if(this._callbacks[event]) {
+			for(x = 0, y = this._callbacks[event].length; x < y; x++){
+				if(this._callbacks[event][x] === callback)
+					this._callbacks[event].splice(x, 1);
+			}
 		}
 
-		for(x = 0, y = this._oneTimeCallbacks[event].length; x < y; x++){
-			if(this._oneTimeCallbacks[event][x] === callback)
-				this._oneTimeCallbacks[event].splice(x, 1);
+		if(this._oneTimeCallbacks[event]) {
+			for(x = 0, y = this._oneTimeCallbacks[event].length; x < y; x++){
+				if(this._oneTimeCallbacks[event][x] === callback)
+					this._oneTimeCallbacks[event].splice(x, 1);
+			}
 		}
+
 	};
 
 	obj.getEventName = function(event){
@@ -75,7 +81,7 @@ function Observe(obj){
 
 			event = key.join(':');
 		}
-		
+
 		return event;
 	};
 }
