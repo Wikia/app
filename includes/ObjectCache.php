@@ -52,14 +52,13 @@ function &wfGetCache( $inputType ) {
 
 	if ( $type == CACHE_MEMCACHED ) {
 		if ( !array_key_exists( CACHE_MEMCACHED, $wgCaches ) ) {
-			// Wikia change begin - author: wladek
+			// Wikia change - author: wladek
 			// add configuration variable for memcached class name (see fb#14979)
 			global $wgMemCachedClass;
 			$wgCaches[CACHE_MEMCACHED] = new $wgMemCachedClass(
 				array('persistant' => $wgMemCachedPersistent, 'compress_threshold' => 1500 ) );
 			$wgCaches[CACHE_MEMCACHED]->set_servers( $wgMemCachedServers );
 			$wgCaches[CACHE_MEMCACHED]->set_debug( $wgMemCachedDebug );
-			// Wikia change end
 		}
 		$cache =& $wgCaches[CACHE_MEMCACHED];
 	} elseif ( $type == CACHE_ACCEL ) {
