@@ -14,10 +14,10 @@ class WallHooksHelper {
 	
 		if ( !$user->mHideName && $allowUsertalk && $title->getNamespace() == NS_USER_WALL_MESSAGE ) {
 			$wm =  F::build('WallMessage', array($title), 'newFromTitle');
-		  	if($wm->getWallOwner()->getName() === $user->getName()){
-		  		$blocked = false;	
-		  		wfDebug( __METHOD__ . ": self-user wall page, ignoring any blocks\n" );
-		  	}
+			if($wm->getWallOwner()->getName() === $user->getName()){
+				$blocked = false;
+				wfDebug( __METHOD__ . ": self-user wall page, ignoring any blocks\n" );
+			}
 		}
 		
 		return true;
@@ -743,72 +743,67 @@ class WallHooksHelper {
 			
 			$articleData = array('text_id' => '');
 			$articleId = $helper->getDeletedArticleId($rcTitle->getText(), $articleData);
-
-			if(  $rc->getAttribute('rc_log_type') != 'delete') {
+			
+			if( !empty($articleId) ) {
+			//the thread/reply was deleted
+			//but in RC the entry can be about
+			//its deletion or restore
 				$articleTitleObj = F::build('Title', array($userText.'/'.$articleId, NS_USER_WALL), 'newFromText');
 				$articleTitleTxt = $helper->getTitleTxtFromMetadata($helper->getDeletedArticleTitleTxt($articleData['text_id']));
 				
 				if( empty($articleTitleTxt) ) {
-				//deleted reply
+				//reply
 					$articleTitleTxt = $this->getParentTitleTxt($rcTitle);
-			
+					
 					$wm = F::build('WallMessage', array($rcTitle));
 					$wmParent = $wm->getTopParentObj();
 					$articleUrl = $wmParent->getMessagePageUrl();
 					$articleUrl = !empty($articleUrl) ? $articleUrl : '#';
-					
-					$actionText = $app->wf->Msg('wall-recentchanges-deleted-reply', array(
-						$articleUrl,
-						$articleTitleTxt,
-						$wallUrl,
-						$userText,
-					));
+					$isThread = false;
 				} else {
-				//deleted thread
+				//thread
 					$articleUrl = ($articleTitleObj instanceof Title) ? $articleTitleObj->getLocalUrl() : '#';
-					$actionText = $app->wf->Msg('wall-recentchanges-deleted-thread', array(
-						$articleUrl,
-						$articleTitleTxt,
-						$wallUrl,
-						$userText,
-					));
+					$isThread = true;
 				}
 			} else {
-				$wm = F::build('WallMessage', array($rc->getTitle()), 'newFromTitle');
+			//the thread/reply was restored
+			//but in RC the entry can be about
+			//its deletion or restore
+				$parts = explode('/@', $rcTitle->getText());
+				$isThread = ( count($parts) === 2 ) ? true : false;
 				
-				$articleTitleTxt = empty($wnEntity->data->thread_title) ? $this->getParentTitleTxt($rc->getTitle()) : $wnEntity->data->thread_title;
-				$articleUrl = $rc->getTitle()->getFullUrl();
-
 				$articleTitleTxt = $this->getParentTitleTxt($rcTitle);
+				$wm = F::build('WallMessage', array($rcTitle));
 				$articleUrl = $wm->getMessagePageUrl();
+				$articleUrl = !empty($articleUrl) ? $articleUrl : $rcTitle->getFullUrl();
+			}
+			
+			$wfMsgOpts = array(
+				$articleUrl,
+				$articleTitleTxt,
+				$wallUrl,
+				$userText,
+			);
+			
+			if( $isThread ) {
+				if( $rc->getAttribute('rc_log_action') == 'delete' ) {
+				//deleted thread page
+					$actionText = $app->wf->Msg('wall-recentchanges-deleted-thread', $wfMsgOpts);
+				}
 				
-				$wfMsgOpts = array(
-					$articleUrl,
-					$articleTitleTxt,
-					$wallUrl,
-					$userText,
-				);
+				if( $rc->getAttribute('rc_log_action') == 'restore' ) {
+				//restored thread page
+					$actionText = $app->wf->Msg('wall-recentchanges-restored-thread', $wfMsgOpts);
+				}
+			} else {
+				if( $rc->getAttribute('rc_log_action') == 'delete' ) {
+				//deleted reply
+					$actionText = $app->wf->Msg('wall-recentchanges-deleted-reply', $wfMsgOpts);
+				}
 				
-				if( $wm->isMain() ) {
-					if( $rc->getAttribute('rc_log_action') == 'delete' ) {
-					//deleted thread page
-						$actionText = $app->wf->Msg('wall-recentchanges-deleted-thread', $wfMsgOpts);
-					}
-					
-					if( $rc->getAttribute('rc_log_action') == 'restore' ) {
-					//restored thread page
-						$actionText = $app->wf->Msg('wall-recentchanges-restored-thread', $wfMsgOpts);
-					}
-				} else {
-					if( $rc->getAttribute('rc_log_action') == 'delete' ) {
-					//deleted reply
-						$actionText = $app->wf->Msg('wall-recentchanges-deleted-reply', $wfMsgOpts);
-					}
-					
-					if( $rc->getAttribute('rc_log_action') == 'restore' ) {
-					//restored treply
-						$actionText = $app->wf->Msg('wall-recentchanges-restored-reply', $wfMsgOpts);
-					}
+				if( $rc->getAttribute('rc_log_action') == 'restore' ) {
+				//restored reply
+					$actionText = $app->wf->Msg('wall-recentchanges-restored-reply', $wfMsgOpts);
 				}
 			}
 		}
