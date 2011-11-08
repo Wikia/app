@@ -691,6 +691,7 @@
 			this.editor.setMode(mode,this.loading);
 			this.editor.setState(this.editor.states.IDLE);
 
+			console.log('click event registered');
 			this.getEditbox().click(this.proxy(this.editorClicked));
 
 			this.loading = false;
@@ -744,6 +745,7 @@
 		},
 
 		setContent: function(content, datamode) {
+			console.log('serContent called');
 			switch (this.instance.mode) {
 				//TODO: in same case this swith is imposible  
 				case 'wysiwyg':
