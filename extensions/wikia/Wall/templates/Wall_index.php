@@ -1,5 +1,5 @@
-<div class="WallGreeing" >
-<?php echo $greeting ?> 
+<div class="WallGreeting" >
+	<?= $greeting ?>
 </div>
 <div class="Wall" id="Wall">
 	<?php if($showNewMessage): ?>
