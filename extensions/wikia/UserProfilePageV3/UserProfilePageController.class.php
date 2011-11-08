@@ -83,7 +83,7 @@ class UserProfilePageController extends WikiaController {
 
 		$this->setRequest( new WikiaRequest($this->app->wg->Request->getValues()) );
 		$user = $this->getUserFromTitle();
-		
+
 		$userIdentityBox = F::build('UserIdentityBox', array($this->app, $user, self::MAX_TOP_WIKIS));
 		$isUserPageOwner = (!$user->isAnon() && $user->getId() == $sessionUser->getId()) ? true : false;
 
@@ -786,6 +786,14 @@ class UserProfilePageController extends WikiaController {
 		
 		if( !empty($title) && is_string($title) && strpos($title, ':') !== false ) {
 			$title = F::build('Title', array($title), 'newFromText');
+		}
+
+		if ( $title->isRedirect() ) {
+			$article = new Article( $title );
+			$redirect = Title::newFromRedirectRecurse( $article->getContent() );
+			if ( $redirect instanceof Title ) {
+				$title = $redirect;
+			}
 		}
 		
 		$user = null;
