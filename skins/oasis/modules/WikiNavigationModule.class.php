@@ -47,6 +47,7 @@ class WikiNavigationModule extends Module {
 		}
 
 		// render local wikia navigation (additional items for "On the Wiki" menu)
+		/* // commented because of fb15033
 		if ( $nodesCount > 0 && $nodesCount < $this->wg->maxLevelThreeNavElements ){
 			$this->wikiaMenuLocalNodes =
 				$this->parseMenu(
@@ -61,6 +62,7 @@ class WikiNavigationModule extends Module {
 		} else {
 			$this->wikiaMenuLocalNodes = array();
 		}
+		*/
 
 		// render local navigation (more tabs)
 		$this->wikiMenuNodes =
