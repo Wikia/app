@@ -121,6 +121,7 @@ $wgAutoloadClasses['WikiaException'] = "$IP/includes/wikia/WikiaException.php";
 $wgAutoloadClasses['WikiaSkinMonoBook'] = "$IP/skins/wikia/WikiaMonoBook.php";
 $wgAutoloadClasses['PaginationController'] = "$IP/includes/wikia/services/PaginationController.class.php";
 $wgAutoloadClasses['MemcacheSync'] = "$IP/includes/wikia/MemcacheSync.class.php";
+$wgAutoloadClasses['MWLibMemcached'] = "$IP/includes/wikia/libmemcached-client.php";
 
 
 //AutomaticWikiAdoption
@@ -902,3 +903,13 @@ $wgMaxLevelThreeNavElements = 10;
 if( !isset( $wgUseMedusa ) ) {
 	$wgUseMedusa = false;
 }
+
+/**
+ * Memcached class name
+ */
+$wgMemCachedClass = 'MemCachedClientforWiki';
+
+/**
+ * Extra configuration options for memcached when using libmemcached/pecl-memcached
+ */
+$wgLibMemCachedOptions = array();
