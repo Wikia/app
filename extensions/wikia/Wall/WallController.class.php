@@ -57,13 +57,15 @@ class WallController extends ArticleCommentsModule {
 			$this->response->setVal('renderUserTalkArchiveAnchor', true);
 			
 			$greeting = F::build('Title', array($title->getText(), NS_USER_WALL_MESSAGE_GREETING), 'newFromText' );
-
-			if($greeting->exists()) {
+			
+			if( $greeting->exists() ) {
 				$article = F::build( 'Article', array($greeting));
 				$article->getParserOptions();
 				$article->mParserOptions->setIsPreview(true); //create parser option
 				$article->mParserOptions->setEditSection(false);
 				$this->response->setVal('greeting', $article->getParserOutput()->getText());
+			} else {
+				$this->response->setVal('greeting', '');
 			}
 		}	
 		
