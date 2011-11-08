@@ -225,7 +225,7 @@ define.call(exports, function(){
 				}
 
 				if(this._firstTileClicked){
-					this._firstTyle = false;
+					this._firstTileClicked = false;
 					setTimeout(this.slideAnswerDrawerIn,100);
 				}
 			}
@@ -264,9 +264,7 @@ define.call(exports, function(){
 		answersPrepared: function(event, options) {
 			var answers = document.getElementById('answerList'),
 			answerList = answers.getElementsByTagName('li'),
-			answerListLength = answerList.length,
-			answerDrawer = document.getElementById('answerDrawer'),
-			answerButton = document.getElementById('answerButton');
+			answerListLength = answerList.length;
 
 			for(var i = 0; i < answerListLength; i++) {
 				answerList[i].clicked = false;
@@ -280,7 +278,6 @@ define.call(exports, function(){
 			li.className = options["class"];
 			li.clicked = true;
 			this.updateScoreBar(options.percent);
-			//this.updateHudScore();
 		},
 
 		rightAnswerClicked: function(event, correct) {
