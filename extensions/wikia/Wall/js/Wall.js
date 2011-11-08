@@ -499,7 +499,7 @@ var Wall = $.createClass(Object, {
 		e.preventDefault();
 		
 		var el = $(e.target).closest('.message');
-		var isreply = el.attr('is-reply');
+		var isreply = el.attr('data-is-reply');
 		el = $('.speech-bubble-message',el).first();
 		
 		var topic = null;
@@ -554,7 +554,7 @@ var Wall = $.createClass(Object, {
 
 		var msg = $(e.target).closest('li.message');
 		var id = msg.attr('data-id');
-		var isreply = msg.attr('is-reply');
+		var isreply = msg.attr('data-is-reply');
 		
 		 
 		var data = {
@@ -628,7 +628,7 @@ var Wall = $.createClass(Object, {
 	saveEdit: function(e) {
 		var msg = $(e.target).closest('li.message');
 		var id = msg.attr('data-id');
-		var isreply = msg.attr('is-reply');
+		var isreply = msg.attr('data-is-reply');
 		var newtitle = $('.msg-title textarea.title',msg).val();
 		var newbody = $('.msg-body textarea.body',msg).val();
 		
@@ -834,7 +834,7 @@ var Wall = $.createClass(Object, {
 	confirmDelete: function(e) {
 		e.preventDefault();
 		var target = $(e.target);
-		var isreply = target.closest('.SpeechBubble').attr('is-reply');
+		var isreply = target.closest('.SpeechBubble').attr('data-is-reply');
 		var msg;
 		if(isreply) {
 			msg = $.msg('wall-delete-confirm');
