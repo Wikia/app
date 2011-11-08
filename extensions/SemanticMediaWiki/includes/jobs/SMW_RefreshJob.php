@@ -43,6 +43,11 @@ class SMWRefreshJob extends Job {
 			return true;
 		}
 		
+		if ( !is_object( $this->title ) ) {
+			wfProfileOut( 'SMWRefreshJob::run (SMW)' );
+			return true;			
+		}
+		
 		$run = array_key_exists( 'run', $this->params ) ? $this->params['run']:1;
 		$spos = $this->params['spos'];
 		$namespaces = ( ( $this->params['rc'] > 1 ) && ( $run == 1 ) ) ? array( SMW_NS_PROPERTY, SMW_NS_TYPE ):false;
