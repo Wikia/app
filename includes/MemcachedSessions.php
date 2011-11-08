@@ -80,13 +80,16 @@ function memsess_gc( $maxlifetime ) {
 function &getMemc() {
 	global $wgSessionMemCachedServers, $wgMemc, $wgSessionMemc;
 	global $wgMemCachedPersistent, $wgMemCachedDebug;
+	global $wgMemCachedClass;
 
-	if( !empty( $wgSessionMemCachedServers ) && is_array( $wgSessionMemCachedServers ) && class_exists( 'MemcachedClientforWiki' ) ) {
-		if( !empty( $wgSessionMemc ) && is_object( $wgSessionMemc ) && $wgSessionMemc instanceof MemCachedClientforWiki ) {
+	// Wikia change - author: wladek
+	// add configuration variable for memcached class name (see fb#14979)
+	if( !empty( $wgSessionMemCachedServers ) && is_array( $wgSessionMemCachedServers ) && class_exists( $wgMemCachedClass ) ) {
+		if( !empty( $wgSessionMemc ) && is_object( $wgSessionMemc ) && $wgSessionMemc instanceof $wgMemCachedClass ) {
 			return $wgSessionMemc;
 		}
 		else {
-			$wgSessionMemc = new MemCachedClientforWiki(
+			$wgSessionMemc = new $wgMemCachedClass(
 				array( 'persistant' => $wgMemCachedPersistent, 'compress_threshold' => 1500 ) );
 			$wgSessionMemc->set_servers( $wgSessionMemCachedServers );
 			$wgSessionMemc->set_debug( $wgMemCachedDebug );

@@ -15,11 +15,12 @@ class MWLibMemcached {
 	 */
 	var $stats;
 	
-	protected $stats;
 	protected $servers;
 	protected $debug;
 	protected $persistent;
 	
+	protected $compression = true;
+	protected $binary = true;
 	
 	/**
 	 * Memcache initializer
@@ -235,9 +236,11 @@ class MWLibMemcached {
 	 */
 	public function set_servers( $list ) {
 		$servers = array();
-		foreach ($list as $srv) {
-			list( $host, $port ) = explode(':',$srv);
-			$servers[] = array( $host, $port, 1 );
+		if (is_array($list)) {
+			foreach ($list as $srv) {
+				list( $host, $port ) = explode(':',$srv);
+				$servers[] = array( $host, $port, 1 );
+			}
 		}
 		if ($servers !== $this->servers) {
 			$this->servers = $servers;
@@ -278,8 +281,8 @@ class MWLibMemcached {
 			// the line above sets the next 2 options automatically
 			//$memcached->setOption(Memcached::OPT_HASH,Memcached::HASH_MD5);
 			//$memcached->setOption(Memcached::OPT_DISTRIBUTION,Memcached::DISTRIBUTION_CONSISTENT);
-			$memcached->setOption(Memcached::OPT_COMPRESSION,$options['compression']);
-			$memcached->setOption(Memcached::OPT_BINARY_PROTOCOL,$options['binary']);
+			$memcached->setOption(Memcached::OPT_COMPRESSION,$this->compression);
+			$memcached->setOption(Memcached::OPT_BINARY_PROTOCOL,$this->binary);
 			$memcached->setOption(Memcached::OPT_CONNECT_TIMEOUT,10);
 			$memcached->setOption(Memcached::OPT_SERVER_FAILURE_LIMIT,2);
 			$memcached->setOption(Memcached::OPT_SEND_TIMEOUT,$this->timeout);
@@ -296,7 +299,7 @@ class MWLibMemcached {
 			}
 			
 			// add servers if required
-			if (!count($mw->getServerList())) {
+			if (!count($memcached->getServerList())) {
 				$memcached->addServers($this->servers);
 			}
 			$this->memcached = $memcached;
