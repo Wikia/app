@@ -79,7 +79,10 @@ class MultiDeleteTask extends BatchTask {
 
 		$pre_wikis = array();
 		if ( !empty($wikis) ) {
-			$pre_wikis = explode( ",", $wikis );
+			$pre_wikis = explode( "\n", $wikis );
+			foreach ( $pre_wikis as $k => $v ) {
+				$pre_wikis[$k] = trim( $v, ' ,' );
+			}
 		}
 
 		$wikiList = $this->fetchWikis($pre_wikis, $lang, $cat, $selwikia);
