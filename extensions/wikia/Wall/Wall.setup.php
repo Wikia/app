@@ -91,6 +91,7 @@ $app->registerHook('MessageCacheReplace', 'JSMessagesHelper', 'onMessageCacheRep
 
 F::build('JSMessages')->registerPackage('Wall', array(
 	'wall-notifications',
+	'wall-notifications-reminder',
 	'wall-message-follow',
 	'wall-message-edited',
 	'wall-message-following',

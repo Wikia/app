@@ -80,6 +80,9 @@ class WallController extends ArticleCommentsModule {
 	}
 
 	public function messageDeleted() {
+		/*
+		 * Title no longer includes Username
+		 * 
 		$parts = explode('/', $this->app->wg->Title->getText());
 		$parent_title = F::build('Title', array($parts[0], NS_USER_WALL), 'newFromText' );
 		$user = F::build('User',array($parts[0]),'newFromName');
@@ -89,14 +92,20 @@ class WallController extends ArticleCommentsModule {
 		} else {
 			$user_displayname = $parts[0];
 		}
+		 */
+		$id = $this->app->wg->Title->getText();
+		$user = $this->helper->getUserFromArticleId_forDeleted( $id );
+		$user_displayname = $user->getRealName();
+		if(empty($user_displayname)) $user_displayname = $user->getName();
 		
+		$wallTitle = Title::newFromText( $user->getName(), NS_USER_WALL );
 		$this->response->setVal( 'wallOwner', $user_displayname);	
-		$this->response->setVal( 'wallUrl', $parent_title->getFullUrl() );
+		$this->response->setVal( 'wallUrl', $wallTitle->getFullURL() );
 		
 		$canUndelete = $this->app->wg->User->isAllowed( 'browsearchive' );
 		
 		if($canUndelete) {
-			$dbkey = $this->helper->getDbkeyFromArticleId_forDeleted( $parts[1] ); 
+			$dbkey = $this->helper->getDbkeyFromArticleId_forDeleted( $id ); 
 			
 			if(empty($dbkey)) {
 				// give up, don't display undelete
@@ -257,7 +266,7 @@ class WallController extends ArticleCommentsModule {
 		// using newest RealName
 		// cache invalidation in this case would require too many queries
 		if($authorUser) {
-			$realname = $this->getRealNameForUser($authorUser);
+			$realname = $authorUser->getRealName();
 			$name = $authorUser->getName();
 			$isStaff = $authorUser->isAllowed('wallshowwikiaemblem');
 		} else {
@@ -362,7 +371,9 @@ class WallController extends ArticleCommentsModule {
 			$this->response->setVal( 'messageTitle', $wallMessage->getMetaTitle() );
 
 			// for debugging put history directly in thread
-			//$this->response->setVal( 'history', $wallMessage->getThreadHistory() );
+			global $wgDevelEnvironment;
+			if(!empty($wgDevelEnvironment))
+				$this->response->setVal( 'history', $wallMessage->getThreadHistory() );
 
 		}
 	}
@@ -406,7 +417,7 @@ class WallController extends ArticleCommentsModule {
 		}
 	}
 	
-	private function getRealNameForUser($user) {
+	private function getRealNameForUser($user) { // no longer used
 		$uib = F::build('UserIdentityBox', array($this->app, $user, 0));
 		if( $uib->shouldDisplayFullMasthead() ) {
 			return $user->getRealName();

@@ -12,4 +12,7 @@
 			</ul>
 		</li>
 	</ul>
+	<div id="WallNotificationsReminder">
+		<a><?= wfMsg('wall-notifications-reminder', '?') ?></a>
+	</div>
 <? endif; ?>
