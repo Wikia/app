@@ -954,8 +954,8 @@ class ArticleCommentList {
 			} else {
 				$messageKey = 'article-comments-rc-comment';
 		}
-
-			$articlelink = wfMsgExt($messageKey, array('parseinline'), str_replace('_', ' ', $title->getPrefixedText()));
+			$articleId = $title->getArticleId();
+			$articlelink = wfMsgExt($messageKey, array('parseinline'), $title->getFullURL("permalink=$articleId#comm-$articleId"),  $titleMainArticle->getText());
 		}
 		return true;
 	}
