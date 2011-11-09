@@ -19,7 +19,7 @@
 		<?
 			$owner = $video['owner'];
 			if ( !empty( $owner ) ){
-				echo wfMsg('related-videos-added-by');
+				echo wfMsg('related-videos-added-by') . " ";
 				if ( empty( $video['external'] ) ){
 					$ownerUrl = $video['ownerUrl'];
 					if ( !empty( $ownerUrl ) ) {
