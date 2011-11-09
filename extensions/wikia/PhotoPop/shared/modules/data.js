@@ -5,9 +5,10 @@ define.call(exports, ['modules/settings'],function(settings){
 		constructor: function(){
 			Observe(this);
 
-			var that = this;
-
 			if(Wikia.Platform.is('app')){
+
+				var that = this;
+
 				Titanium.App.addEventListener('Storage:stored', function(event){
 					var value = JSON.stringify(event.value);
 					that.fire('set', {key: event.key, value: value});
@@ -15,7 +16,7 @@ define.call(exports, ['modules/settings'],function(settings){
 				});
 
 				Titanium.App.addEventListener('Storage:fetched', function(event){
-					var value = JSON.parse(event.value);
+					var value = (event.value)?JSON.parse(event.value):"";
 
 					that.fire('get', {key: event.key, value: value});
 					that.fire({name: 'get', key: event.key}, {key: event.key, value: value});

@@ -78,7 +78,6 @@
 						}
 					}
 					*/
-
 					gameLoader.load('http://' +
 							((settings.testDomain) ? selectedGame.id + '.' + settings.testDomain : selectedGame.domain) +
 							'/wikia.php?controller=PhotoPopController&method=getData&category=' +
@@ -253,7 +252,13 @@
 
 			function displayingMask(event, options){
 				//preloading an image
-				img.src = (currentGame.getId() === 'tutorial') ? graphics.getAsset(options.image) : graphics.getPicture(options.image);
+				var imgSrc = (currentGame.getId() === 'tutorial') ? graphics.getAsset(options.image) : graphics.getPicture(options.image);
+				//if img is already there don't reload it
+				if(img.src.indexOf(imgSrc) !== -1) {
+					imageLoaded();
+				} else {
+					img.src = imgSrc;
+				}
 				screens.get('game').getElement().style.pointerEvents = 'none';
 			}
 
@@ -280,16 +285,20 @@
 			}
 
 			function imageLoadError() {
-				data.storage.remove(currentGame.getId());
-				currentGame = null;
-				screens.get('home').show();
-				screens.openModal({
-					name: 'tile',
-					html: Wikia.i18n.Msg('photopop-game-image-load-error'),
-					fade: true,
-					clickThrough: false,
-					closeOnClick: true
-				});
+				//'this' reffers to img
+				if(this.src !== "") {
+					data.storage.remove(currentGame.getId());
+					currentGame = null;
+					screens.get('home').show();
+					screens.openModal({
+						name: 'tile',
+						html: Wikia.i18n.Msg('photopop-game-image-load-error'),
+						fade: true,
+						clickThrough: false,
+						closeOnClick: true
+					});
+				}
+
 
 			}
 
@@ -355,7 +364,8 @@
 							html: Wikia.i18n.Msg('photopop-game-paused'),
 							clickThrough: false,
 							leaveBottomBar: true,
-							closeOnClick: false
+							closeOnClick: false,
+							dim: true
 						});
 					}
 				}else{
@@ -378,7 +388,6 @@
 			}
 
 			function runGame(target){
-
 				if(target == 'tutorial') {
 					tutorialSteps = [];
 					newGame({
@@ -388,21 +397,20 @@
 				} else {
 					selectedGameId = target.getAttribute('data-id');
 					selectedGame = gamesData[selectedGameId];
+
 					if(currentGame && currentGame.getId() == selectedGame.id) {
 						screens.get('game').show();
 					} else {
 						if(currentGame) currentGame.fire('storeData');
 						var gameData = null;
 
-						data.storage.addEventListener({name: 'get', key: selectedGame.id}, function(event, options) {
-							gameData = options.value || gameData;
+						data.storage.addEventListener({name: 'get', key: selectedGameId}, function(event, options) {
+							var gameData = options.value || gameData;
 							//if there is already a game in localstorage start it from this data otherwise load a new one
-							/*if(typeof gameData == 'string')
-								gameData = JSON.parse(gameData);*/
-
 							(gameData)? newGame(gameData): loadSelectedGame();
 						}, {oneTime: true});
-						data.storage.get(selectedGame.id);
+
+						data.storage.get(selectedGameId);
 					}
 				}
 			}
