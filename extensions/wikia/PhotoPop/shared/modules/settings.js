@@ -29,6 +29,7 @@ define.call(exports, {
 		buttonSrc_gameUnmute: "button_unmute",
 		gameicon_default: "gameicon_default",
 		watermark_default: "watermark_default",
+		background: "photopop_background_tile",
 		tutorial_1: 'tutorial_1.jpeg',
 		tutorial_2: 'tutorial_2.jpeg',
 		tutorial_3: 'tutorial_3.jpeg',
