@@ -217,11 +217,6 @@ function createUserLogin(){
 		return $response;
 	}
 
-	# temporary.  remove after oasis public beta
-	#$wgUser->setOption("skin", "oasis");
-	#$wgUser->saveSettings();
-	# end temp
-
 	$response->addText(json_encode(array('status' => "OK")));
 	return $response;
 }
