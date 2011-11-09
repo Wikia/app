@@ -1,3 +1,36 @@
+/**
+ * @brief Internal Wikia tracking set up by Garth Webb
+ *
+ * @param string event Name of event
+ * @param object data Extra parameters to track
+ *
+ * @author Christian
+ */
+jQuery.internalTrack = function(event, data) {
+	// Require an event argument
+	if (!event) {
+		return;
+	}
+	
+	// Set up params object - this should stay in sync with /extensions/wikia/Track/Track.php
+	var params = {
+		'event': event,
+		'c': wgCityId,
+		'x': wgDB,
+		'a': wgArticleId,
+		'lc': wgContentLanguage,
+		'n': wgNamespaceNumber,
+		'beacon': (typeof beacon_id != 'undefined') ? beacon_id : ''
+	};
+	
+	// Add data object to params object
+	$.extend(params, data);
+
+	// Make request	
+	$.get('http://a.wikia-beacon.com/__track/event', params);
+}
+
+
 // Port of getTarget and resolveTextNode function (altogether) from YUI Event lib
 // @author: Inez
 // TODO: Move it to some more general place because it is not realted only to tracking
