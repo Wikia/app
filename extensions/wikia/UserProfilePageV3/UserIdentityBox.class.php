@@ -385,7 +385,7 @@ class UserIdentityBox {
 		//checking if user is blocked globally
 		$isBlocked = $this->user->getBlockId();
 		
-		if( empty($isBlocked) ) {
+		if( $isBlocked === false ) {
 			$data['blocked'] = false;
 			
 			if( true !== $this->isFounder() ) {
