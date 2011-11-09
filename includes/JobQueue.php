@@ -78,7 +78,9 @@ abstract class Job {
 		$title = Title::makeTitleSafe( $namespace, $dbkey );
 		$job = Job::factory( $row->job_cmd, $title, Job::extractBlob( $row->job_params ), $row->job_id );
 
-		$dbw->delete( 'job', $job->insertFields(), __METHOD__ );
+		$fields = $this->insertFields();
+		unset( $fields['job_id'] );
+		$dbw->delete( 'job', $fields, __METHOD__ );
 		$dbw->commit();
 
 		wfProfileOut( __METHOD__ );
@@ -170,7 +172,9 @@ abstract class Job {
 		// Remove any duplicates it may have later in the queue
 		// Deadlock prone section
 		$dbw->begin();
-		$dbw->delete( 'job', $job->insertFields(), __METHOD__ );
+		$fields = $this->insertFields();
+		unset( $fields['job_id'] );
+		$dbw->delete( 'job', $fields, __METHOD__ );
 		$dbw->commit();
 
 		wfProfileOut( __METHOD__ );
