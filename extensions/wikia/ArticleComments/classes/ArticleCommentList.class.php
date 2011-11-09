@@ -924,15 +924,16 @@ class ArticleCommentList {
 
 		if (MWNamespace::isTalk($rcNamespace) && ArticleComment::isTitleComment($title)) {
 			$parts = ArticleComment::explode($rcTitle);
-
+			
 			$titleMainArticle = Title::newFromText($parts['title'], MWNamespace::getSubject($rcNamespace));
-
+			
 			if ((defined('NS_BLOG_ARTICLE') && $rcNamespace == NS_BLOG_ARTICLE) ||
 				defined('NS_BLOG_ARTICLE_TALK') && $rcNamespace == NS_BLOG_ARTICLE_TALK ) {
 				$messageKey = 'article-comments-rc-blog-comment';
 			} else {
 				$messageKey = 'article-comments-rc-comment';
-		}
+			}
+			
 			$articleId = $title->getArticleId();
 			$articlelink = wfMsgExt($messageKey, array('parseinline'), $title->getFullURL("permalink=$articleId#comm-$articleId"),  $titleMainArticle->getText());
 		}
