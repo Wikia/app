@@ -272,7 +272,39 @@ class WallMessage {
 	}
 	
 	public function getThreadHistory() {
-		var_dump($this->getArticleTitle()->getFullURL() );
+		global $wfGetDB;
+		$ac = $this->getArticleComment();
+		$wallTitle = $this->getWallTitle();
+		$acList = ArticleCommentList::newFromTitle($wallTitle);
+		var_dump( $this->getArticleId() );
+		$acList->setId( $this->getArticleId() );
+		$acListRaw = $acList->getCommentList();
+		
+		$ids = array();
+		$dbkeys = array();
+		
+		foreach( $acListRaw as $key => $val ) {
+			$title = Title::NewFromId( $key );
+			$ids[] = $key;
+			$dbkeys[] = $title->getDbKey();
+			foreach( $val['level2'] as $key2 => $val2 ) {
+				$title = Title::newFromId( $key2 );
+				if(!empty($title))
+					$dbkeys[] = $title->getDbKey();
+			}
+			$ids = array_keys( $val['level2'] );
+		}
+
+		var_dump( $ids );
+		var_dump( $dbkeys );
+
+		
+		$dbr = wfGetDB( DB_SLAVE );
+		$res = $dbr->select( 'revision', array('rev_id', 'rev_page', 'rev_user', 'rev_user_text', 'rev_timestamp', 'rev_parent_id'), array('rev_page'=>$ids), __METHOD__ );
+		foreach ( $res as $row ) {
+			var_dump($row);
+		}
+		
 	}
 	
 	protected function getArticleComment() {

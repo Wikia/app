@@ -407,7 +407,7 @@ class WallHelper {
 	}
 
 	public function isDbkeyFromWall($dbkey) {
-		$lookFor = explode( '\@' ,$dbkey);
+		$lookFor = explode( '/@' ,$dbkey);
 		if (count($lookFor) > 1){
 			return true;
 		}
