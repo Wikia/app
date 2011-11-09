@@ -16,7 +16,7 @@ class WallDisabledHooksHelper {
 	 * @return boolean
 	 */
 	private function isDbkeyFromWall($dbkey) {
-		$lookFor = explode( '\@' ,$dbkey);
+		$lookFor = explode( '/@' ,$dbkey);
 		if (count($lookFor) > 1) {
 			return true;
 		}
