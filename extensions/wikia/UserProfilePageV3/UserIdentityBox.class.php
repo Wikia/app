@@ -288,11 +288,15 @@ class UserIdentityBox {
 	 * 
 	 * @return string empty string if text was blocked; given text otherwise
 	 */
-	private function doPhalanxFilter($text) {
+	private function doPhalanxFilter($text, $type = null) {
 		$this->app->wf->ProfileIn( __METHOD__ );
 		
 		if( !empty($this->app->wg->EnablePhalanxExt) && !empty($text) ) {
-			$filters = Phalanx::getFromFilter(Phalanx::TYPE_CONTENT);
+			if( is_null($type) ) {
+				$type = Phalanx::TYPE_CONTENT;
+			}
+			
+			$filters = Phalanx::getFromFilter($type);
 			
 			foreach($filters as $filter) {
 				$result = Phalanx::isBlocked($text, $filter);
@@ -382,8 +386,15 @@ class UserIdentityBox {
 	private function getUserGroup(&$data) {
 		$this->app->wf->ProfileIn( __METHOD__ );
 		
-		//checking if user is blocked globally
-		$isBlocked = $this->user->getBlockId();
+		//blocked locally
+		$isBlocked = $this->user->isBlocked();
+		
+		$userName = $this->user->getName();
+		if( $isBlocked === false && !empty($this->app->wg->EnablePhalanxExt) && !empty($userName) ) {
+		//blocked globally
+			$userName = $this->doPhalanxFilter($userName, Phalanx::TYPE_USER);
+			$isBlocked = ( empty($userName) ) ? true : false;
+		}
 		
 		if( $isBlocked === false ) {
 			$data['blocked'] = false;
