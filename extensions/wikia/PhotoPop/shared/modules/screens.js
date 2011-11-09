@@ -604,9 +604,15 @@ define.call(exports, function(){
 			}
 
 			if( options.leaveBottomBar ) {
-				modalWrapper.style.top = -24;
+				modalWrapper.style.zIndex = 30;
 			} else {
-				modalWrapper.style.top = 0;
+				modalWrapper.style.zIndex = 35;
+			}
+
+			if(options.dim) {
+				modalWrapper.style.backgroundColor = "rgba(0,0,0,.5)";
+			} else {
+				modalWrapper.style.backgroundColor = "";
 			}
 
 			if(options.html) {

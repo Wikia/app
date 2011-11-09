@@ -356,7 +356,7 @@ body{
 	background: -webkit-linear-gradient(top, transparent 0%,rgba(0,0,0,0.6) 60%);
 	background: -o-linear-gradient(top, transparent 0%, rgba(0,0,0,0.6) 60%);*/
 	height: 30px;
-	z-index:22;
+	z-index:31;
 	-webkit-transition: all .5s  ease-in;
 	-moz-transition: all.5s  ease-in;
 	-o-transition: all.5s  ease-in;
@@ -499,6 +499,7 @@ body{
 	height: 100%;
 	width: 100%;
 	z-index: 21;
+	background-repeat: no-repeat;
 }
 #tilesWrapper div {
 	background-color: #00396d;
@@ -517,7 +518,7 @@ body{
 	left: 0;
 	height: 100%;
 	width: 100%;
-	z-index: 9999999999;
+	z-index: 30;
 	text-align: center;
 }
 

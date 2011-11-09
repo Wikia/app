@@ -13,10 +13,8 @@ function Observe(obj){
 	 */
 	obj.fire = function (event, data){
 		event = this.getEventName(event);
-
 		var x, y,
 		callbacks = this._callbacks[event];
-
 		if(callbacks instanceof Array){
 			data = data || null;
 
@@ -26,7 +24,6 @@ function Observe(obj){
 		}
 
 		callbacks = this._oneTimeCallbacks[event];
-
 		if(callbacks instanceof Array){
 			data = data || null;
 
@@ -40,7 +37,6 @@ function Observe(obj){
 	obj.addEventListener = function(event, callback, options){
 		event = this.getEventName(event);
 		options = options || {};
-
 		var stack = (options.oneTime) ? '_oneTimeCallbacks' : '_callbacks';
 
 		this[stack][event] = this[stack][event] || [];
