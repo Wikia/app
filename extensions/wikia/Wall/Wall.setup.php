@@ -82,6 +82,9 @@ $app->registerHook('GetRailModuleList', 'WallRailHelper', 'onGetRailModuleList')
 //handmade links to message wall adjusting
 $app->registerHook('LinkBegin', 'WallHooksHelper', 'onLinkBegin');
 
+//saving user talk archive redirects to user talk archive
+$app->registerHook('ArticleSaveComplete', 'WallHooksHelper', 'onArticleSaveComplete');
+
 $app->registerHook('MakeGlobalVariablesScript', 'JSMessages', 'onMakeGlobalVariablesScript');
 $app->registerHook('SkinAfterBottomScripts', 'JSMessages', 'onSkinAfterBottomScripts');
 $app->registerHook('MessageCacheReplace', 'JSMessagesHelper', 'onMessageCacheReplace');

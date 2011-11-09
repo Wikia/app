@@ -73,7 +73,7 @@ class WallHooksHelper {
 			
 			return true;
 		}
-
+		
 		if( $title->getNamespace() === NS_USER_TALK 
 			&& !$title->isSubpage() 
 		) {
@@ -81,12 +81,12 @@ class WallHooksHelper {
 			$outputDone = true;
 			
 			$app->wg->request->setVal('dontGetUserFromSession', true);
-			$app->wg->Out->redirect($this->getWallTitle()->getFullUrl().'/'.$helper->getArchiveSubPageText(), 301);
+			$app->wg->Out->redirect($this->getWallTitle()->getFullUrl(), 301);
 			return true;
 		}
 		
 		$parts = explode('/', $title->getText());
-
+		
 		if( $title->getNamespace() === NS_USER_TALK 
 			&& $title->isSubpage() 
 			&& !empty($parts[0]) 
@@ -99,7 +99,7 @@ class WallHooksHelper {
 			$app->wg->Out->redirect($title->getFullUrl(), 301);
 			return true;
 		}
-
+		
 		if( $title->getNamespace() === NS_USER_WALL 
 			&& $title->isSubpage() 
 			&& !empty($app->wg->EnableWallExt) 
@@ -1016,6 +1016,26 @@ class WallHooksHelper {
 	public function onComposeCommonBodyMail($title, &$keys, &$body, $editor) {
 		return true;
 	} 
+	
+	public function onArticleSaveComplete($article, $user, $text, $summary, $minoredit, $watchthis, $sectionanchor, $flags, $revision, $status, $baseRevId) {
+		$app = F::app();
+		$title = $article->getTitle();
+		
+		if( !empty($app->wg->EnableWallExt) 
+		 && $title instanceof Title 
+		 && $title->getNamespace() === NS_USER_TALK 
+		 && !$title->isSubpage() ) 
+		{
+		//user talk page was edited -> redirect to user talk archive
+			$helper = F::build('WallHelper', array());
+			
+			$app->wg->request->setVal('dontGetUserFromSession', true);
+			$app->wg->Out->redirect($this->getWallTitle()->getFullUrl().'/'.$helper->getArchiveSubPageText(), 301);
+			$app->wg->Out->enableRedirects(false);
+		}
+		
+		return true;
+	}
 	
 }
 ?>
