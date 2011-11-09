@@ -1127,19 +1127,14 @@ jQuery.nirvana.sendRequest = function(attr) {
 		throw "Only Json and Html format are allowed";
 	}
 
-	data = $.extend( data, {
-		controller: attr.controller,
-		method: attr.method,
-		format: format
-	});
-
 	$().log(data, 'request to nirvana');
 
 	$.ajax({
                 url: wgScriptPath + '/wikia.php?' + $.param({
                         // fb#13222 Verbose fatal error reports for wikis.php
                         controller: attr.controller,
-                        method: attr.method
+                        method: attr.method,
+						format: format
                 }),
 		dataType: format,
 		type: type,
