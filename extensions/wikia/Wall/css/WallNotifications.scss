@@ -164,3 +164,29 @@
 		right: 0px;
 	}
 }
+
+#WallNotificationsReminder {
+	@include border-radius(3px);
+	@include box-shadow(0px, 2px, 5px, darken($color-page,12%));
+	background: $color-page;
+	border: 1px solid $color-page-border;
+	@if lightness($color-page) < 50 {
+		@include box-shadow(0px, 2px, 5px, darken($color-page,7%));
+		background: $color-module-background;
+		border: 1px solid $color-page-border;
+	}
+	position: fixed;
+	top: 20px;
+	right: 20px;
+	border: 1px solid $color-page-border;
+	color: $color-links;
+	padding: 10px;
+	display: none;
+	span {
+		width: 1em;
+		overflow: hidden;
+	}
+	a {
+		cursor: pointer;
+	}
+}

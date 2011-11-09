@@ -6,4 +6,7 @@
 	<span class="Title">
 		<?php echo  $messageTitle;?>
 	</span>
+	<? if(!empty($history)): ?>
+		<div class="History" style="margin-left: 20px;"><?= $history ?></div>
+	<? endif; ?>
 </div>

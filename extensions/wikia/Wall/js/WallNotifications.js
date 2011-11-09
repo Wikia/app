@@ -35,6 +35,18 @@ var WallNotifications = $.createClass(Object, {
 		
 		if( this.monobook === false ) {
 			$('#WallNotifications .bubbles').trackClick('wall/notifications/dropdown_open');
+
+			// notifications reminder
+			$(document).scroll( this.proxy( this.documentScroll ) );
+			$('#WallNotificationsReminder a').click( function() {
+				var destination = 0;
+				if($.browser.msie) {
+					$("html:not(:animated),body:not(:animated)").css({ scrollTop: destination-20});
+				} else {
+					$("html:not(:animated),body:not(:animated)").animate({ scrollTop: destination-20}, 500 );
+				}
+				$('#WallNotificationsReminder').stop().fadeOut(200);
+			});
 		}
 		
 	},
@@ -129,6 +141,35 @@ var WallNotifications = $.createClass(Object, {
 		$('.unread_notification').click(this.proxy(function(){
 			this.track('wall/notifications/unread');
 		}));
+	},
+	
+	documentScroll: function() {
+		var reminderVisible = $('#WallNotificationsReminder').is(':visible');
+		var notificationsVisible = $('#WallNotifications .subnav').hasClass('show');
+		if( !reminderVisible && !notificationsVisible ) {
+			var unreadCount = parseInt($('#bubbles_count').html());
+			if( $(document).scrollTop() > 100 && this.getLastSeenCount() != unreadCount ) {
+				this.setLastSeenCount(unreadCount);
+				if( unreadCount > 0 ) {
+					var msg = $.msg('wall-notifications-reminder', unreadCount);
+					$('#WallNotificationsReminder a').html(msg);
+					$('#WallNotificationsReminder')
+						.fadeIn(500)
+						.animate({'opacity':1}, 3000)
+						.fadeOut(500);
+				}
+			}
+		}
+	},
+	
+	getLastSeenCount: function() {
+		var val = $.cookies.get( 'wall_notifications_last_count' );
+		if(val != undefined && parseInt(val) > 0)
+			return val;
+		return 0;
+	},
+	setLastSeenCount: function(val) {
+		$.cookies.set( 'wall_notifications_last_count', val);
 	},
 	
 	proxy: function(func) {
