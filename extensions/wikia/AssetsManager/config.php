@@ -91,6 +91,7 @@ $config['oasis_shared_js'] = array(
 		'//skins/oasis/js/Spotlights.js',
 		'//skins/oasis/js/FirefoxFindFix.js',
 		'//skins/oasis/js/isTouchScreen.js',
+		'//skins/oasis/js/tabs.js',
 	)
 );
 
