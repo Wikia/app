@@ -1823,9 +1823,16 @@ EOD;
 		$jwplayerData['jwplayerjs'] = AssetsManager::getInstance()->getOneCommonURL( trim(self::$JWPLAYER_DIR . self::$JWPLAYER_JS, '/'), false );
 		$jwplayerData['player'] = AssetsManager::getInstance()->getOneCommonURL( trim(self::$JWPLAYER_DIR . self::$JWPLAYER_SWF, '/'), false );
 		$jwplayerData['playerId'] = 'player-'.$this->mId.'-'.mt_rand();
-		$jwplayerData['plugins'] = array('gapro-1'=>array('accountid'=>self::VIDEO_GOOGLE_ANALYTICS_ACCOUNT_ID), (self::$JWPLAYER_DIR.self::$JWPLAYER_JS_PLUGINS_DIR .'infobox.js')=>array('title'=>htmlspecialchars($this->mTitle->getText())));
-//		$wikiaSkinZip = $width < 450 ? 'wikia-small.zip' : 'wikia.zip';	// wlee 11/4/11: Design wants small players to have big skin
-		$wikiaSkinZip = 'wikia.zip';
+		$jwplayerData['plugins'] = array('gapro-1'=>array('accountid'=>self::VIDEO_GOOGLE_ANALYTICS_ACCOUNT_ID), 'timeslidertooltipplugin-2'=>array(), (self::$JWPLAYER_DIR.self::$JWPLAYER_JS_PLUGINS_DIR .'infobox.js')=>array('title'=>htmlspecialchars($this->mTitle->getText())));
+		if ($width < 330) {
+			$wikiaSkinZip = 'wikia-small.zip';
+		}
+		elseif ($width >= 660) {
+			$wikiaSkinZip = 'wikia.zip';			
+		}
+		else {
+			$wikiaSkinZip = 'wikia-medium.zip';			
+		}
 		$jwplayerData['skin'] = AssetsManager::getInstance()->getOneCommonURL( trim(self::$JWPLAYER_DIR . '/skins/wikia/'.$wikiaSkinZip, '/'), false );
 		
                 $embed = "";
