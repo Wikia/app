@@ -124,29 +124,33 @@
 			}
 
 			function initHomeScreen(){
-					gamesListLoader.load(
-						'http://' + (settings.testDomain || settings.centralDomain) +
-						'/wikia.php?controller=PhotoPopController&method=listGames',
-						{method: 'get'}
-					);
+				var home = screens.get('home');
 
-					document.getElementById('button_volume')[clickEvent] = function(){
-						var mute = audio.toggleMute();
-						audio.play('pop');
-						screens.get('home').fire('muteButtonClicked', {mute: mute});
-						screens.get('game').fire('muteButtonClicked', {mute: mute});
-					};
+				home.getElement().style.backgroundImage = "url(" + graphics.getAsset('background') + ")";
 
-					document.getElementById('button_tutorial')[clickEvent] = function(){
-						screens.closeModal();
-						runGame('tutorial');
-					};
+				gamesListLoader.load(
+					'http://' + (settings.testDomain || settings.centralDomain) +
+					'/wikia.php?controller=PhotoPopController&method=listGames',
+					{method: 'get'}
+				);
 
-					document.getElementById('button_scores')[clickEvent] = function(){
-						openHighscore();
-					};
+				document.getElementById('button_volume')[clickEvent] = function(){
+					var mute = audio.toggleMute();
+					audio.play('pop');
+					screens.get('home').fire('muteButtonClicked', {mute: mute});
+					screens.get('game').fire('muteButtonClicked', {mute: mute});
+				};
 
-					screens.get('home').fire('muteButtonClicked', {mute: audio.getMute()});
+				document.getElementById('button_tutorial')[clickEvent] = function(){
+					screens.closeModal();
+					runGame('tutorial');
+				};
+
+				document.getElementById('button_scores')[clickEvent] = function(){
+					openHighscore();
+				};
+
+				home.fire('muteButtonClicked', {mute: audio.getMute()});
 			}
 
 			function modalOpened(event, options){
@@ -484,6 +488,9 @@
 			}
 
 			function initHighscore(){
+
+				screens.get('highscore').getElement().style.backgroundImage = "url(" + graphics.getAsset('background') + ")";
+
 				document.getElementById('goBack')[clickEvent] = function(){
 					screens.get('home').show();
 				};
@@ -564,7 +571,7 @@
 						screens.closeModal();
 
 					if(screens.getCurrentId() == 'game'){
-						currentGame.handlePause(true, 'goHomeButon');
+						currentGame.handlePause(true, 'goHomeButton');
 						goHome('goHome', false);
 					}
 
