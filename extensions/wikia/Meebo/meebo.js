@@ -1,3 +1,4 @@
+/* depends on geo.js */
 var MeeboBar = {
 	network: '',
 	
@@ -13,7 +14,9 @@ var MeeboBar = {
 				MeeboBar.network = 'wikia_lifestyles';
 		}
 		
-		if (window.wgEnableMeeboExt && !window.wgUserName) {
+		var geoData = Geo.getGeoData();
+		
+		if (window.wgEnableMeeboExt && !window.wgUserName && geoData.country == 'US') {
 window.Meebo||function(c){function p(){return["<",i,' onload="var d=',g,";d.getElementsByTagName('head')[0].",
 j,"(d.",h,"('script')).",k,"='//cim.meebo.com/cim?iv=",a.v,"&",q,"=",c[q],c[l]?
 "&"+l+"="+c[l]:"",c[e]?"&"+e+"="+c[e]:"","'\"></",i,">"].join("")}var f=window,
