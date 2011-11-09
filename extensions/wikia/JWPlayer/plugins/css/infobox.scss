@@ -22,15 +22,13 @@ Author     : wlee
 	
 	.jwplayer-infobox-content {
 		color: #dddddd;
-		font-size: 17px;
+		font-size: 14px;
 		font-weight: bold;
-		line-height: 23px;
+		line-height: 18px;
 		padding: 5px;
 		position: relative;
 		text-align: left;
 		&.small {
-			font-size: 14px;
-			line-height: 18px;
 			overflow: hidden;
 			text-overflow: ellipsis;
 			white-space: nowrap;
