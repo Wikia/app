@@ -305,6 +305,18 @@ class EditPageLayoutHelper {
 	}
 
 	/**
+	 * Set global color profile long before the page loads.
+	 */
+	public function onBeforeInitialize( &$title, &$article, &$output, &$user, $request, $mediaWiki ) {
+		if (BodyModule::isEditPage()) {
+			$profile = SassColorProfile::getInstance();
+			$profile->setDualMode(true);
+		}
+
+		return $output;
+	}
+
+	/**
 	 * Modify HTML after edit page textarea
 	 *
 	 * @param $editPage EditPage edit page instance

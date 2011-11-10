@@ -60,7 +60,6 @@
 			// if there's no footer, add a 10px bottom margin to space the editor away from browser window
 			if (!footerHeight) {
 				this.editarea.css("padding-bottom", 10);
-				
 			}
 
 			// travel all the way up to the editor wrapper and remove any heights from margins/padding/borders
@@ -69,8 +68,8 @@
 				offsetHeight += (node.outerHeight(true) - node.height());
 			});
 
-			// the 2 pixel subtraction is to compensate for a space at the bottom of the page.
-			this.editboxOffsetHeight = (offsetHeight + footerHeight) - 2;
+			// The -1 is for editpage-editarea top border, which for some reason isn't be counted
+			this.editboxOffsetHeight = (offsetHeight + footerHeight - 1);
 
 			this.delayedResize();
 		},
