@@ -17,7 +17,7 @@ $(function(){
 		var tabBodyId = $(this).data('tabbody-id');
 		if( $('#'+tabBodyId).length > 0) {
 			// Unselect previously-selected tab
-			$(this).closest('ul').find('selected').removeClass('selected');
+			$(this).closest('ul').find('.selected').removeClass('selected');
 
 			// Select the tab that was clicked
 			$(this).closest('li').addClass('selected');
