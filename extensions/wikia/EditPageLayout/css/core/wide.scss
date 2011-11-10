@@ -29,35 +29,31 @@
 			}
 		}
 	}
-	#EditPageEditor {
-		padding-right: 0;
-	}
 }
 
 .editpage-sourcewidemode.mode-source {
-
 	#EditPageMain {
-		width: $width-outside - $width-rail-epl ;  // remove right rail "indent"
+		width: $width-outside - $width-rail-epl;  // remove right rail "indent"
+	}
+
+	#EditPageEditor {
+		padding-right: 12px;
 	}
 
 	/* vertical bar with an arrow to show/hide the rail */
 	.editpage-widemode-trigger {
-		background-color: $color-epl-gradient-dark;
-		border-bottom: solid 1px $color-epl-trigger-border;
-		border-left: solid 1px $color-epl-trigger-border;
 		bottom: 0;
 		cursor: pointer;
 		display: block;
-		margin-left: 1px;
 		position: absolute;
-		right: $width-rail-epl ;
+		right: $width-rail-epl;
 		top: 0;
-		width: 7px;
+		width: 10px;
 		z-index: 1;
 
 		.arrow {
 			border: 0 solid transparent;
-			border-left-color: $color-epl-module-header;
+			border-left-color: $color-text;
 			border-width: 4px 0 4px 4px;
 			height: 0;
 			left: 50%;
@@ -77,7 +73,7 @@
 			.arrow {
 				border-width: 4px 4px 4px 0;
 				border-left-color: transparent;
-				border-right-color: $color-epl-module-header;
+				border-right-color: $color-text;
 			}
 		}
 		.rail-auto-height {
@@ -85,12 +81,6 @@
 		}
 		label[for="wpSummary"] {
 			display: none !important; // Yeah, this is lame, but the #EditPage selectors need to be refactored to .EditPage as to not clobber specificity.
-		}
-	}
-
-	&.editpage-sourcewidemode-off {
-		#EditPageEditor {
-			padding-right: 7px;
 		}
 	}
 
@@ -112,7 +102,7 @@
 			}
 		}
 		#EditPageMain {
-			width: $width-outside - 6;  // added: -6
+			width: $width-outside;// - 10;
 		}
 		#EditPageToolbar {
 			margin-right: -6px;

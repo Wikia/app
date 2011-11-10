@@ -1,9 +1,11 @@
+// Fixme: this adds an additional request on every load
 @import url('/extensions/wikia/CategorySelect/CategorySelect.css');
-@import "../../../skins/oasis/css/core/color";
-@import "../../../skins/oasis/css/mixins/yui-suggest";
 
-@import "../EditPageLayout/css/mixins/constants";
-@import "../EditPageLayout/css/mixins/helpers";
+@import "../../../skins/oasis/css/core/color";
+@import "../../../skins/oasis/css/mixins/border-radius";
+@import "../../../skins/oasis/css/mixins/yui-suggest";
+@import "../../../skins/oasis/css/mixins/edit-page";
+@import "../../../skins/oasis/css/modules/EditPageLayout";
 
 /* edit mode - CategorySelect module */
 #csMainContainer.csEditMode {
@@ -13,52 +15,45 @@
 		width: $width-epl-module-input;
 		.yui-ac-content {
 			border-top: medium none !important; /* used to override yui with !important */
-			border-bottom: solid 1px $color-epl-inputs-borders !important;
-			border-left: solid 1px $color-epl-inputs-borders !important;
-			border-right: solid 1px $color-epl-inputs-borders !important;
+			border-bottom: solid 1px $color-epl-input-border !important;
+			border-left: solid 1px $color-epl-input-border !important;
+			border-right: solid 1px $color-epl-input-border !important;
 			width: $width-epl-module-input + 4 !important;
 		}
 		#csHintContainer {
 			width: $width-epl-module-input - 4;
 			border-top: medium none;
-			border-bottom: solid 1px $color-epl-inputs-borders;
-			border-left: solid 1px $color-epl-inputs-borders;
-			border-right: solid 1px $color-epl-inputs-borders;
+			border-bottom: solid 1px $color-epl-input-border;
+			border-left: solid 1px $color-epl-input-border;
+			border-right: solid 1px $color-epl-input-border;
 			z-index: 999;
 		}
 	}
 	#csItemsContainerDiv {
-		background: #fff;
-		border: solid 1px #cacaca;
-		margin-top: 4px;
+		@include epl-textfield;
+		margin-top: 10px;
 		height: 22px * 4;
+		width: $width-epl-module-input - 10;
 		overflow: auto;
-		padding: 4px;
-		width: 246px;
 		*position: relative; // IE7
 		ul {
 			margin: 0;
 		}
 		.CSitem {
 			clear: both;
+			color: $color-text;
 			line-height: 22px;
 			margin: 0;
 			&:hover {
-				background-color: #cce5ff;
+				background-color: $color-epl-hover;
 			}
 		}
 	}
 	#csCategoryInput {
 		@include epl-textfield;
-		background: #fff;
-		border: solid 1px $color-epl-inputs-borders;
-		color: black;
-		font-style: normal;
-		line-height: 16px;
-		width: 250px;
-
+		width: $width-epl-module-input - 10;
 		&[disabled] {
-			background: #d4d4d4;
+			opacity: 0.2;
 		}
 	}
 }
@@ -76,5 +71,5 @@
 
 #csSuggestContainer {
 	@include yui-suggest;
-	width: 250px;
+	width: $width-epl-module-input - 10;
 }

@@ -117,7 +117,7 @@
 .CSitem {
 	background: #9Cf;
 	border: 1px solid #82add8;
-	color: #000 !important;
+	color: #000;
 	cursor: default;
 	display: block;
 	float: left;

@@ -15,8 +15,12 @@ head {
 	background: $color-page;
 	color: $color-text;
 	padding-left: 6px;
-	overflow-y: scroll;
+	overflow-y: auto;
 	margin-bottom: 35px;
+	
+	a {
+		color: $color-links;
+	}
 }
 
 /**

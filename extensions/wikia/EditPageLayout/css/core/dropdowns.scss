@@ -1,8 +1,9 @@
 #EditPage {
 	.cke_panel_dropdown {
-		@include box-shadow(0,0,8px,$color-epl-gradient-border);
-		background-color: #fff;
-		border: solid 1px #cacaca;
+		@include box-shadow(0, 0, 8px, $color-epl-gradient-border);
+		color: $color-text;
+		background-color: $color-epl-button;
+		border: solid 1px $color-epl-button-border;
 		z-index: 300;
 		.module {
 			margin-left: 0;
@@ -24,9 +25,9 @@
 		}
 		a {
 			@include border-radius(4px);
-			background-color: #fff;
-			border: solid 1px #cacaca;
-			color: #333;
+			background-color: $color-epl-button;
+			border: solid 1px $color-epl-button-border;
+			color: $color-text;
 			cursor: default;
 			display: inline-block;
 			float: left;
@@ -47,8 +48,7 @@
 				width: 60px;
 			}
 			&:hover {
-				@include linear-gradient(mix($color-epl-gradient-light,#f2f2f2,50%), top, $color-epl-gradient-light, 0%, #f2f2f2, 100%);
-				text-decoration: none;
+				@include gradient-button-hover;
 			}
 		}
 		.cke_icon, .cke_label {
@@ -57,9 +57,10 @@
 		&.cke_opened {
 			a,
 			a:hover {
-				@include box-shadow(0,0,8px,$color-epl-gradient-border);
-				background-color: #fff;
+				@include box-shadow(0, 0, 8px, $color-epl-gradient-border);
+				background-color: $color-epl-gradient-light;
 				background-image: none; // remove linear-gradient effect
+				color: $color-text;
 			}
 		}
 
@@ -69,10 +70,9 @@
 			width: 0;
 			height: 0;
 			margin: 0 7px 0 2px;
-
 			border: 0 solid transparent;
 			border-width: 4px 4px 0;
-			border-top-color: black;
+			border-top-color: $color-text;
 		}
 		&.cke_opened .cke_openbutton {
 			border-width: 0 4px 4px;
@@ -85,9 +85,9 @@
 .cke_skin_wikia {
 	.cke_panel.cke_rcombopanel {
 		@include border-radius(4px);
-		@include box-shadow(0,0,8px,$color-epl-gradient-border);
+		@include box-shadow(0, 0, 8px, $color-epl-gradient-border);
 		@include gradient-module;
-		border: solid 1px #cacaca;
+		border: solid 1px $color-epl-button-border;
 		position: relative;
 		top: -15px;
 		iframe {

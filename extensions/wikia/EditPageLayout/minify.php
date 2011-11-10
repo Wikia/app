@@ -1,6 +1,7 @@
 <?php
 /*
  * This script generates sprites used in edit pages
+ * Run like: sudo SERVER_ID=177 php minify.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php --aconf /usr/wikia/docroot/wiki.factory/AdminSettings.php
  */
 
 ini_set('include_path', dirname(__FILE__).'/../../../maintenance');

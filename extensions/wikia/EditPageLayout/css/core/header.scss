@@ -1,6 +1,6 @@
 #EditPageHeader {
-	@include gradient-header;
-	border-bottom: 1px solid #cbc9ca;
+	background-color: $color-epl-header;
+	border-bottom: 1px solid $color-page-border;
 	height: $height-epl-header;
 	padding-left: 20px;
 	position: relative;
@@ -44,7 +44,7 @@
 		padding: 0;
 		zoom: 1; // ie
 		> a {
-			color: $color-epl-header-links;
+			color: $color-links;
 		}
 		.hiddenTitle {
 			display: none;
@@ -79,7 +79,7 @@
 	position: absolute;
 	right: 21px;
 	> a {
-		color: $color-epl-header-links;
+		color: $color-links;
 	}
 }
 
@@ -90,7 +90,7 @@
 	position: absolute;
 	right: 21px;
 	> a {
-		color: $color-epl-header-links;
+		color: $color-links;
 
 		// splotch
 		> span {

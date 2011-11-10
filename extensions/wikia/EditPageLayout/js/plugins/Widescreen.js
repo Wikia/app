@@ -53,7 +53,6 @@
 
 			// adjust bar height and position
 			var cssTop = toolbar.offset().top + toolbar.outerHeight(true) - this.trigger.offsetParent().offset().top;
-			cssTop += 2; // go below toolbar border
 
 			this.trigger.css('top', cssTop);
 

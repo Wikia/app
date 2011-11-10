@@ -1,12 +1,10 @@
 #EditPage {
-
 	.module {
-		@include box-shadow(-2px,2px,2px,$color-epl-gradient-shadow,false,0);
-		margin-left: -10px;
+		@include box-shadow(-2px, 2px, 2px, $color-epl-gradient-shadow, false, 0);
 		> h3 {
 			@include gradient-module-header;
 			@include clearfix;
-			color: $color-epl-module-header;
+			color: $color-text;
 			cursor: pointer;
 			font-size: 14px;
 			font-weight: bold;
@@ -18,12 +16,12 @@
 				border-width: 6px;
 				float: right;
 				&.collapse {
-					border-bottom-color: #6fa7cc;
+					border-bottom-color: $color-text;
 					border-top-color: transparent;
 					margin-top: 0;
 				}
 				&.expand {
-					border-top-color: #6fa7cc;
+					border-top-color: $color-text;
 					margin-top: 6px;
 				}
 			}
@@ -31,7 +29,7 @@
 
 		> .module_content {
 			@include gradient-module;
-			color: $color-epl-text-color;
+			color: $color-epl-text-secondary;
 			padding: 10px 20px 20px 20px;
 		}
 	}
@@ -39,6 +37,7 @@
 	    max-height: 30px;
     	overflow: hidden;
 	}
+
 	// page controls
 	.module_page_controls {
 		#wpSummaryLabel { 
@@ -75,11 +74,9 @@
 			@include epl-textfield;
 			height: 27px;
 			line-height: 15px;
-			margin: 5px 0 10px 0;
-			padding: 7px 8px;
+			margin: 5px 0;
 			resize: none; /* remove resize grip in Webkit / Fx4 */
 			font-style: normal;
-			color: black;
 		}
 
 		.buttons {
@@ -134,7 +131,7 @@
 	.module_templates {
 		.text-links {
 			> .tmpl_other {
-				border-right: solid 1px #C6C6C6;
+				border-right: solid 1px $color-epl-input-border;
 				display: inline;
 				margin-right: 10px;
 				padding-right: 10px;
@@ -152,12 +149,11 @@
 		}
 		// source mode
 		textarea {
+			@include epl-textfield;
 			@include epl-editorarea;
-			border: solid 1px #cacaca;
-			margin-top: 4px;
-			padding: 2px;
+			margin-top: 10px;
+			width: $width-epl-module-input - 10;
 			resize: none;
-			width: 250px;
 		}
 	}
 
@@ -172,7 +168,7 @@
 	}
 	// more generic selector to make it being applied on main pages
 	.cke_license {
-		color: #898989;
+		color: $color-epl-text-secondary;
 		font-size: 9px;
 		line-height: 18px;
 		position: relative;
@@ -186,16 +182,16 @@
 			top: 50%;
 			width: 20px;
 			&.icon1 {
-				@include sprite-edit-page-full('cc_by_new',18px,18px);
+				@include sprite-edit-page-full('cc_by_new', 18px, 18px);
 				left: 0;
 			}
 			&.icon2 {
-				@include sprite-edit-page-full('cc_logo_circle',18px,18px);
+				@include sprite-edit-page-full('cc_logo_circle', 18px, 18px);
 				left: 25px;
 			}
 		}
 		> a {
-			color: $color-epl-links;
+			color: $color-links;
 		}
 	}
 
@@ -208,7 +204,7 @@
 				font-size: 12px;
 				padding: 4px 0;
 				> a {
-					color: $color-epl-links;
+					color: $color-links;
 					cursor: pointer;
 					&:hover {
 						text-decoration: underline;
@@ -217,5 +213,4 @@
 			}
 		}
 	}
-
 }

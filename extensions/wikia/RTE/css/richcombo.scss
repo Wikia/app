@@ -3,8 +3,11 @@
  */
 
 @import "../../../../skins/oasis/css/mixins/bodytext";
+@import "../../../../skins/oasis/css/mixins/edit-page";
+@import "../../../../skins/oasis/css/mixins/gradient";
 @import "../../../../skins/oasis/css/core/color";
 @import "../../../../skins/oasis/css/core/layout";
+@import "../../../../skins/oasis/css/modules/EditPageLayout";
 @import "../ckeditor/_source/skins/wikia/panel";
 
 html.cke_skin_wikia_container {
@@ -34,7 +37,7 @@ ul.cke_panel_list {
 		> a:hover,
 		> a:focus,
 		> a:active {
-			background-color: #e6f0fb;
+			@include gradient-button-hover;
 			border: none;
 		}
 
@@ -46,7 +49,7 @@ ul.cke_panel_list {
 		h5,
 		h6,
 		pre {
-			color: #333;
+			color: $color-text;
 			font-weight: normal;
 			margin: 0;
 			padding: 0;
