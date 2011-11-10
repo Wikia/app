@@ -7,7 +7,8 @@
  */
 class PhotoPopController extends WikiaController {
 	//const CACHE_MANIFEST_PATH = 'wikia.php?controller=PhotoPopAppCacheController&method=serveManifest&format=html';
-
+	const JS_MESSAGES_PACKAGE = 'PhotoPop';
+	
 	private $model;
 	private $isJSON;
 
@@ -36,11 +37,15 @@ class PhotoPopController extends WikiaController {
 		//AppCache disabled for now, it generates more problems than expected
 		//$this->response->setVal( 'appCacheManifestPath', self::CACHE_MANIFEST_PATH . "&cb={$this->wg->CacheBuster}" );//$this->wg->StyleVersion
 
-		F::build('JSMessages')->enqueuePackage('PhotoPop', JSMessages::INLINE);
-
-		$this->globalVariablesScript = Skin::makeGlobalVariablesScript('');
-
-		//TODO: move to AssetsManager package
+		//Minimize the output size, we don't need all the global variables being exported in MW
+		$jsMsg = F::build('JSMessages');
+		$jsMsg->enqueuePackage( self::JS_MESSAGES_PACKAGE, JSMessages::INLINE );
+		$jsVars = array(
+			'wgCacheBuster' => $this->wg->CacheBuster,
+			'wgMessages' => $jsMsg->getPackages( array ( self::JS_MESSAGES_PACKAGE ) )
+		);
+		
+		$this->response->setVal( 'globalVariablesScript', Skin::makeVariablesScript($jsVars) );
 		$this->response->setVal( 'scripts', AssetsManager::getInstance()->getGroupCommonURL( 'photopop' ) );
 		$this->response->setVal( 'dataMain', $this->wg->ExtensionsPath . '/wikia/PhotoPop/shared/lib/main');
 		$this->response->setVal( 'cssLink', AssetsManager::getInstance()->getOneCommonURL( "extensions/wikia/PhotoPop/shared/css/homescreen.css" ) );
