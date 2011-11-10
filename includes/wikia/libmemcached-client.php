@@ -24,6 +24,8 @@ class MWLibMemcached {
 	protected $compression = true;
 	protected $binary = true;
 	
+	protected $cache = array();
+	
 	/**
 	 * Memcache initializer
 	 *
@@ -53,6 +55,7 @@ class MWLibMemcached {
 	public function add( $key, $val, $exp = 0 ) {
 		@$this->stats['add']++;
 		$this->prefixKeys($key);
+		unset($this->cache[$key]);
 		return $this->getMemcachedObject()->add($key,$val,$exp);
 	}
 	
@@ -67,6 +70,7 @@ class MWLibMemcached {
 	public function decr( $key, $amt = 1 ) {
 		@$this->stats['decr']++;
 		$this->prefixKeys($key);
+		unset($this->cache[$key]);
 		return $this->getMemcachedObject()->decrement($key,$amt);
 	}
 	
@@ -81,6 +85,7 @@ class MWLibMemcached {
 	public function delete( $key, $time = 0 ) {
 		@$this->stats['delete']++;
 		$this->prefixKeys($key);
+		unset($this->cache[$key]);
 		return $this->getMemcachedObject()->delete($key,$time);
 	}
 	
@@ -117,7 +122,9 @@ class MWLibMemcached {
 	public function get( $key ) {
 		@$this->stats['get']++;
 		$this->prefixKeys($key);
-		return $this->getMemcachedObject()->get($key);
+		$value = $this->getMemcachedObject()->get($key);
+		$this->cache[$key] = $value;
+		return $value;
 	}
 	
 	/**
@@ -144,6 +151,7 @@ class MWLibMemcached {
 	public function incr( $key, $amt = 1 ) {
 		@$this->stats['incr']++;
 		$this->prefixKeys($key);
+		unset($this->cache[$key]);
 		return $this->getMemcachedObject()->increment($key,$amt);
 	}
 	
@@ -159,6 +167,7 @@ class MWLibMemcached {
 	public function replace( $key, $value, $exp = 0 ) {
 		@$this->stats['replace']++;
 		$this->prefixKeys($key);
+		$this->cache[$key] = $value;
 		return $this->getMemcachedObject()->replace($key,$value,$exp);
 	}
 	
@@ -195,6 +204,7 @@ class MWLibMemcached {
 	public function set( $key, $value, $exp = 0 ) {
 		@$this->stats['set']++;
 		$this->prefixKeys($key);
+		$this->cache[$key] = $value;
 		return $this->getMemcachedObject()->set($key,$value,$exp);
 	}
 	
@@ -260,6 +270,8 @@ class MWLibMemcached {
 	
 	protected function getMemcachedObject() {
 		if (!$this->memcached) {
+			// clear the cache
+			$this->cache = array();
 			// create the Memcached object
 			if ($this->persistent) {
 				$memcached = new Memcached($this->getPersistentId());
