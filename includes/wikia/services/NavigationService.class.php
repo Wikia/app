@@ -38,12 +38,19 @@ class NavigationService {
 	 * @return string memcache key
 	 */
 	public function getMemcKey($messageName, $cityId = false) {
-		global $wgCityId;
-		$cityId = (is_numeric($cityId)) ? $cityId : $wgCityId;
+		global $wgCityId, $wgDBname;
+
+		// use cityID for production wikis
+		$wikiId = (is_numeric($cityId)) ? $cityId : intval($wgCityId);
+
+		// fix for internal and staff (BugId:15149)
+		if ($wikiId == 0) {
+			$wikiId = $wgDBname;
+		}
 
 		$messageName = str_replace(' ', '_', $messageName);
 
-		return implode(':', array(__CLASS__, intval($cityId), $messageName, self::version));
+		return implode(':', array(__CLASS__, $wikiId, $messageName, self::version));
 	}
 
 	/**
