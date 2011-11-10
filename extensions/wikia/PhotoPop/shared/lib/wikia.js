@@ -99,11 +99,16 @@ var Wikia = {};
 	 * XPlatform/platform-specific fixes and polyfills
 	 */
 
-	if(Wikia.Platform.is('app', 'ios')){
+	
 		window.requireJsGetUrl = function(url){
-			return 'app://Resources/' + url;
+			if(Wikia.Platform.is('app', 'ios')){
+				return 'app://Resources/' + url;
+			}else if(Wikia.Platform.is('web')){
+				return  url + '?cb=' + (wgCacheBuster || (Math.random() * 100001));
+			}
+			
+			return url;
 		};
-	}
 
 	Array.prototype.shuffle = function() {
 		var s = [];
