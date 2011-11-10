@@ -107,14 +107,14 @@ class SpecialApiGate extends SpecialPage {
 
 						// Use standard tabs (from UI Style Guide)
 						ob_start();
-						?><ul class='tabs'>
-							<li class='selected'><a data-tabbody-id='apiGate_keyInfo'><?= wfMsg('apigate-tab-keyinfo') ?></a></li>
-							<li><a data-tabbody-id='apiGate_keyStats'><?= wfMsg('apigate-tab-keystats') ?></a></li>
+						?><ul class="tabs">
+							<li class="selected" data-tab="apiGate_keyInfo"><a href="#"><?= wfMsg('apigate-tab-keyinfo') ?></a></li>
+							<li data-tab="apiGate_keyStats"><a href="#"><?= wfMsg('apigate-tab-keystats') ?></a></li>
 						</ul>
-						<div id='apiGate_keyInfo' class='tabBody selected'>
+						<div id="apiGate_keyInfo" data-tab-body="apiGate_keyInfo" class="tabBody selected">
 							<?= $this->subpage_keyInfo( $apiKeyObject ); ?>
 						</div>
-						<div id='apiGate_keyStats' class='tabBody'>
+						<div id="apiGate_keyStats" data-tab-body="apiGate_keyStats" class="tabBody">
 							<?= $this->subpage_keyStats( $apiKey ); ?>
 						</div>
 						<?php
