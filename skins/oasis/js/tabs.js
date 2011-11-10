@@ -12,12 +12,12 @@
  * from the clicked UL and hide the elements matching those ids.
  */
 $(function(){
-	$('ul.tabs li a').click(function( evt ){
+	$('.tabs a').click(function( evt ){
 		// Before hiding existing body, verify that there is a new body to switch to.
 		var tabBodyId = $(this).data('tabbody-id');
 		if( $('#'+tabBodyId).length > 0) {
 			// Unselect previously-selected tab
-			$(this).closest('ul').find('li').removeClass('selected');
+			$(this).closest('ul').find('selected').removeClass('selected');
 
 			// Select the tab that was clicked
 			$(this).closest('li').addClass('selected');
