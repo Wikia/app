@@ -195,7 +195,7 @@
 #								echo " checked='checked'";
 #							}
 							echo " />";
-							echo "<label for='swm-lang-$lang'>$lang</label>";
+							echo "<label for='swm-lang-$lang'>$lang</label><br />";
 						}
 						echo "<input type='checkbox' name='mLang[]' id='swm-lang-other' class='swm-lang-checkbox' value='other'";
 						if (isset($formData['mLang']) && in_array( "other", $formData['mLang'] ) ) {
