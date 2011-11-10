@@ -471,17 +471,17 @@ abstract class DatabaseBase {
 			wfDebug( __METHOD__.": Writes done: $sql\n" );
 			$this->mDoneWrites = true;
 		}
-		
+
 		# <Wikia>
 		if ( $is_writeable && $wgDBReadOnly ) {
 			if ( isset( $wgProfiler ) ) {
 				wfProfileOut( $queryProf );
 				wfProfileOut( $totalProf );
-			}	
+			}
 			wfDebugLog( 'database', "DB readonly mode: $sql" );
-			return false;		
+			return false;
 		}
-		# </Wikia>	
+		# </Wikia>
 
 		# Add a comment for easy SHOW PROCESSLIST interpretation
 		#if ( $fname ) {
@@ -496,13 +496,7 @@ abstract class DatabaseBase {
 				$userName = '';
 			}
 
-			/* Wikia change begin - @author: Marooned */
-			/* add URL to log, DO NOT use any wgObject here! */
-			// back to whiteboard, use wfGetCurrentUrl()
-			$url = "";
-
-			$commentedSql = preg_replace('/\s/', " /* $fname $userName URL:$url */ ", $sql, 1);
-			/* Wikia change end */
+			$commentedSql = preg_replace('/\s/', " /* $fname $userName */ ", $sql, 1);
 		#} else {
 		#	$commentedSql = $sql;
 		#}
@@ -2738,7 +2732,7 @@ class DBQueryError extends DBError {
 		for ($i=0;$i<8;$i++) {
 			$uniqueId .= $pool[rand(0,strlen($pool)-1)];
 		}
-		
+
 		global $wgShowSQLErrors, $wgDBname;
 		$uri  = $_SERVER[ 'SERVER_NAME' ] . $_SERVER[ 'REQUEST_URI' ];
 		$qry  = $_SERVER[ 'QUERY_STRING' ];
