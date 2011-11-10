@@ -355,6 +355,11 @@ Liftium.callInjectedIframeAd = function (sizeOrSlot, iframeElement){
 	// this is a(n ugly?) shortcut, the right name would be slotname's parent div
 	var placement = iframeElement.id.replace(/_iframe$/, "");
 	WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "slot", sizeOrSlot + "_" + placement]), 'liftium.slot');
+	
+	var track_string = Liftium.buildTrackUrl([LiftiumOptions.pubid, "slot", sizeOrSlot + "_" + placement]);
+	if (track_string.indexOf('unknown') != -1) {
+		_wtq.push([null, 'liftium.varia', ['error', 'fb_15045', track_string]]);
+	}
 
 	var t = Liftium.getNextTag(slotname);
 	if (!t) {
