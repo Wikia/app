@@ -74,7 +74,7 @@ SCRIPT1;
 		$backtrace = debug_backtrace();
 		$class = $backtrace[1]['class'];
 		$func  = $backtrace[1]['function'];
-		$line  = $backtrace[1]['line'];
+		$line  = !empty($backtrace[1]['line']) ? $backtrace[1]['line'] : '?';
 		$param['caller'] = "$class::$func:$line";
 		$param['type'] = urlencode($event_type);
 

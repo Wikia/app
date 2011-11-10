@@ -41,6 +41,7 @@ $wgHooks['SearchShowHit'][] = 'SolrResult::showHit';
 $wgHooks['SpecialSearchBoxExtraRefinements'][] = 'SolrSearch::renderExtraRefinements';
 $wgHooks['SpecialSearchPagerParams'][] = 'SolrSearch::addPagerParams';
 $wgHooks['SpecialSearchShortDialog'][] = 'SolrSearch::onSpecialSearchShortDialog';
+$wgHooks['SpecialSearchIsgomatch'][] = 'SolrSearch::onSpecialSearchIsgomatch';
 
 if( !empty($wgEnableWikiaImageOneBoxInSearch) ) {
 	$wgHooks['SpecialSearchResults'][] = 'ImageOneBox::examineSearchResults';
