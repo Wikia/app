@@ -109,7 +109,6 @@ define.call(exports, {
 			<div id='modalWrapper'><div id='modal'>\
 				<span id='modalText'></span>\
 				<div id='jobProgress'>\
-					<span id='currentValue'></span>/<span id='totalValue'></span>\
 					<div id='progressBarWrapper'><div id='progressBar'></div></div>\
 				</div>\
 			</div></div>\

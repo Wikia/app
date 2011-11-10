@@ -15,8 +15,8 @@
 
 		function(settings, templates, graphics, audio, games, screens, data) {
 			var gamesData,
-			gamesListLoader = new data.XDomainLoader(),
-			gameLoader = new data.XDomainLoader(),
+			gamesListLoader = new data.XDomainLoader('getGamesList'),
+			gameLoader = new data.XDomainLoader('getImages'),
 			selectedGame,
 			selectedGameId,
 			currentGame,
@@ -263,6 +263,7 @@
 				} else {
 					img.src = imgSrc;
 				}
+
 				screens.get('game').getElement().style.pointerEvents = 'none';
 			}
 
@@ -301,9 +302,10 @@
 						clickThrough: false,
 						closeOnClick: true
 					});
+					if(Wikia.Platform.is('isApp')) {
+						Titanium.App.fireEvent('Image:error', {id:'getImages'});
+					}
 				}
-
-
 			}
 
 			function manageInteraction(){
