@@ -83,7 +83,7 @@ define.call(exports, ['modules/settings'],function(settings){
 					var needsRequest = true;
 
 					//Android will pass undefined, iOS null, YAY for consistency!
-					if(typeof event.data != 'undefined' && event.data !== null){
+					if(typeof event.data != 'undefined' && event.data !== null && event.data != ""){
 						try{
 							var data = JSON.parse(event.data);
 							needsRequest = false;
