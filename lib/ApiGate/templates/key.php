@@ -22,22 +22,26 @@
 				if($apiKeyObject->isEnabled()){
 					$statusClass = "enabled";
 					$statusMsg = i18n('apigate-keyinfo-status-enabled');
-					$reason = "<br/>";
 				} else {
 					$statusClass = "disabled";
 					$statusMsg = i18n('apigate-keyinfo-status-disabled');
+				}
+
+				// Display the status to users or a mutable form if this is an Admin.
+				$statusHtml = "<span class='status $statusClass'>$statusMsg</span>";
+				print i18n( 'apigate-keyinfo-status', $statusHtml );
+				
+				// If the key is disabled, show the user why.
+				if(!$apiKeyObject->isEnabled()){
 					$reasonBanned = $apiKeyObject->getReasonBanned();
 					$reasonBanned = ($reasonBanned == null ? i18n('apigate-keyinfo-no-reason-found') : $apiKeyObject->getReasonBanned() );
-					$reason = "<br/><div class='reasonBanned'>\n" . i18n('apigate-keyinfo-reason-disabled', $reasonBanned) . "\n</div>\n";
+					print "<div class='reasonDisabled'>\n" . i18n('apigate-keyinfo-reason-disabled', $reasonBanned) . "\n<br/>\n";
 				}
-				
-				// Display the status to users or a mutable form if this is an Admin.
-				if(ApiGate_Config::isAdmin()){
-					
-					print $reason;
-				} else {
-					$statusHtml = "<span class='status $statusClass'>$statusMsg</span>";
-					print i18n( 'apigate-keyinfo-status', $statusHtml );
+
+				// Always display the full banlog to admins if there are any events in it.
+				if(ApiGate_Config::isAdmin() && ($apiKeyObject->getReasonBanned() !== null)){
+					print "<div class='banLog'>\n" . i18n('apigate-keyinfo-banlog-heading') . "\n<br/>\n";
+					print $apiKeyObject->getBanLogHtml()."</div>\n";
 				}
 			?>
 			<br/>
