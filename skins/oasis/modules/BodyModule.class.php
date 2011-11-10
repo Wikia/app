@@ -59,7 +59,7 @@ class BodyModule extends Module {
 		global $wgRequest;
 		return !empty(self::$onEditPage) ||
 			!is_null($wgRequest->getVal('diff')) /* diff pages - RT #69931 */ ||
-			in_array($wgRequest->getVal('action', 'view'), array('edit' /* view source page */, 'formedit' /* SMW edit pages */, 'history' /* history pages */));
+			in_array($wgRequest->getVal('action', 'view'), array('edit' /* view source page */, 'formedit' /* SMW edit pages */, 'history' /* history pages */, 'submit' /* conflicts, etc */));
 	}
 
 	/**
