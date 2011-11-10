@@ -25,6 +25,7 @@ ol.tabs {
 			padding: 6px 12px 3px;
 			position: relative;
 			top: 1px;
+			cursor: pointer;
 			&:hover {
 				background-color: $color-tab-hover-background;
 				padding-bottom: 2px;
@@ -46,6 +47,7 @@ ol.tabs {
 			background: $color-page;
 			color: $color-text;
 			font-weight: bold;
+			cursor: text;
 			&:hover {
 				background-color: $color-page;
 				padding-bottom: 3px;
@@ -118,4 +120,11 @@ ol.tabs {
 	.ui-tabs-hide {
 		display: none !important;
 	}
+}
+
+.tabBody {
+	display:none;
+}
+.tabBody.selected{
+	display:block;
 }

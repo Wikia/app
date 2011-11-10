@@ -12,7 +12,7 @@
  * from the clicked UL and hide the elements matching those ids.
  */
 $(function(){
-	$('ul.tabs li a').click(function(){
+	$('ul.tabs li a').click(function( evt ){
 		// Before hiding existing body, verify that there is a new body to switch to.
 		var tabBodyId = $(this).data('tabbody-id');
 		if( $('#'+tabBodyId).length > 0) {
@@ -25,6 +25,8 @@ $(function(){
 			// Hide the current tab-body and show the next one.
 			$('.tabBody').removeClass('selected');
 			$('#'+tabBodyId).addClass('selected');
+			
+			evt.preventDefault();
 		} else {
 			$().log("Tried to switch to tab but could not find its tab-body with id: \""+tabBodyId+"\"");
 		}
