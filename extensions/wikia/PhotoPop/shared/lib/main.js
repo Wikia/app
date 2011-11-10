@@ -82,7 +82,7 @@
 							((settings.testDomain) ? selectedGame.id + '.' + settings.testDomain : selectedGame.domain) +
 							'/wikia.php?controller=PhotoPopController&method=getData&category=' +
 							encodeURIComponent(selectedGame.category),
-							{method: 'get'}
+							{method: 'get', gameId: selectedGame.id}
 					);
 				}
 			}
@@ -302,8 +302,8 @@
 						clickThrough: false,
 						closeOnClick: true
 					});
-					if(Wikia.Platform.is('isApp')) {
-						Titanium.App.fireEvent('Image:error', {id:'getImages'});
+					if(Wikia.Platform.is('app')) {
+						Titanium.App.fireEvent('Image:error', {id:'getImages', gameId: selectedGame.id});
 					}
 				}
 			}

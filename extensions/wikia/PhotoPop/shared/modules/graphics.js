@@ -31,9 +31,9 @@ define.call(exports, ['modules/settings'], function(settings){
 					fileName = fileName.substr(length - 256);
 				}
 
-				path = window.dataPath + '/' + fileName.replace(/[:\/\%-]/g, '_');
-				Titanium.App.fireEvent("Image:load", {imgSrc: path, id: 'getImages'});
-				return path;
+				fileName = window.dataPath + '/' + fileName.replace(/[:\/\%-]/g, '_');
+				Titanium.App.fireEvent("Image:load", {imgSrc: fileName, id: 'getImages'});
+				return fileName;
 			} else {
 				return path;
 			}
