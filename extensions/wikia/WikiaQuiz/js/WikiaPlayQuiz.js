@@ -290,7 +290,7 @@ var WikiaQuiz = {
 		WikiaQuiz.trackByStr('mute/'+WikiaQuiz.isMuted);
 	},
 	trackByStr: function(str) {
-		$.tracker.byStr(WikiaQuiz.trackerUrlPrefix+str);
+		$.tracker.byStr(WikiaQuiz.trackerUrlPrefix+str, true);
 	}
 };
 

@@ -143,7 +143,7 @@ var CreateWikiaQuizArticle = {
 	},
 
 	track: function(fakeUrl) {
-		window.jQuery.tracker.byStr('quiz' + fakeUrl);
+		window.jQuery.tracker.byStr('quiz' + fakeUrl, true);
 	}
 };
 
