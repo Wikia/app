@@ -5,7 +5,7 @@
 		<?= $globalVariablesScript ;?>
 		<title>Photo Pop - Wikia</title>
 		<? foreach($scripts as $item) :?>
-			<script src="<?= $item ;?>"></script>
+			<script src="<?= $item ;?>" data-main="<?= $dataMain ;?>"></script>
 		<? endforeach ;?>
 	</head>
 	<body>

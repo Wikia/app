@@ -12,10 +12,6 @@ class PhotoPopController extends WikiaController {
 	private $isJSON;
 
 	public function init(){
-		if ( empty ( $this->wg->AllowPhotoPopGame ) ){
-			throw new WikiaException('Playing PhotoPop is not possible from this wiki');
-		}
-		
 		$this->model = F::build( 'PhotoPopModel' );
 		$this->isJSON = $this->response->getFormat() == WikiaResponse::FORMAT_JSON;
 	}
@@ -35,6 +31,8 @@ class PhotoPopController extends WikiaController {
 	}
 
 	public function index() {
+		$this->checkGameAllowed();
+		
 		//AppCache disabled for now, it generates more problems than expected
 		//$this->response->setVal( 'appCacheManifestPath', self::CACHE_MANIFEST_PATH . "&cb={$this->wg->CacheBuster}" );//$this->wg->StyleVersion
 
@@ -43,16 +41,8 @@ class PhotoPopController extends WikiaController {
 		$this->globalVariablesScript = Skin::makeGlobalVariablesScript('');
 
 		//TODO: move to AssetsManager package
-		$this->response->setVal( 'scripts', array(
-			AssetsManager::getInstance()->getOneCommonURL( "extensions/wikia/PhotoPop/shared/lib/mustache.js" ),
-			AssetsManager::getInstance()->getOneCommonURL( "extensions/wikia/PhotoPop/shared/lib/my.class.js" ),
-			AssetsManager::getInstance()->getOneCommonURL( "extensions/wikia/PhotoPop/shared/lib/store.js" ),
-			AssetsManager::getInstance()->getOneCommonURL( "extensions/wikia/PhotoPop/shared/lib/observable.js" ),
-			AssetsManager::getInstance()->getOneCommonURL( "extensions/wikia/PhotoPop/shared/lib/reqwest.js" ),
-			AssetsManager::getInstance()->getOneCommonURL( "extensions/wikia/PhotoPop/shared/lib/classlist.js" ),
-			AssetsManager::getInstance()->getOneCommonURL( "extensions/wikia/PhotoPop/shared/lib/wikia.js" ),
-			AssetsManager::getInstance()->getOneCommonURL( "extensions/wikia/PhotoPop/shared/lib/require.js" ) . '" data-main="' . $this->wg->ExtensionsPath . '/wikia/PhotoPop/shared/lib/main'
-		) );
+		$this->response->setVal( 'scripts', AssetsManager::getInstance()->getGroupCommonURL( 'photopop' ) );
+		$this->response->setVal( 'dataMain', $this->wg->ExtensionsPath . '/wikia/PhotoPop/shared/lib/main');
 		$this->response->setVal( 'cssLink', AssetsManager::getInstance()->getOneCommonURL( "extensions/wikia/PhotoPop/shared/css/homescreen.css" ) );
 	}
 
@@ -86,8 +76,10 @@ class PhotoPopController extends WikiaController {
 	}
 
 	public function getData(){
+		$this->checkGameAllowed();
+		
 		$this->wf->profileIn( __METHOD__ );
-
+		
 		$category = trim( $this->request->getVal( 'category' ) );
 		$callbackName = $this->request->getVal( 'callback' );
 
@@ -116,6 +108,12 @@ class PhotoPopController extends WikiaController {
 			$this->response->setVal( 'data', $result );
 
 			$this->wf->profileOut( __METHOD__ );
+		}
+	}
+	
+	private function checkGameAllowed(){
+		if ( empty ( $this->wg->AllowPhotoPopGame ) ){
+			throw new WikiaException('Playing PhotoPop is not allowed from this wiki');
 		}
 	}
 }

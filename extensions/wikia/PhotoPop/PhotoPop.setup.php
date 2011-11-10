@@ -62,7 +62,9 @@ $app->wg->set( 'wgAutoloadClasses', "{$dir}/PhotoPopAppCacheController.class.php
 /**
  * special pages
  */
-$app->registerSpecialPage('PhotoPopSetup', 'PhotoPopSpecialPageController');
+if ( !empty ( $app->wg->AllowPhotoPopGame ) ){
+	$app->registerSpecialPage('PhotoPopSetup', 'PhotoPopSpecialPageController');
+}
 
 /**
  * message files
