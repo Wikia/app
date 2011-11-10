@@ -23,6 +23,7 @@ class ApiGate{
 
 	const TABLE_KEYS = "apiGate_keys";
 	const TABLE_USERS = "apiGate_users";
+	const TABLE_BANLOG = "apiGate_banLog";
 
 	/**
 	 * Calling this funcction will ban the API key from all apiKey-required api calls.
