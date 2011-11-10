@@ -6,8 +6,6 @@ class MWLibMemcached {
 	const COMPRESSED = 2;
 	const COMPRESSION_SAVINGS = 0.20;
 	
-	const KEY_PREFIX = 'lm-';
-	
 	
 	/**
 	 * Command statistics
@@ -15,7 +13,9 @@ class MWLibMemcached {
 	 * @var     array
 	 * @access  public
 	 */
-	var $stats;
+	public $stats;
+	
+	protected $keyPrefix = 'lm-';
 	
 	protected $servers;
 	protected $debug;
@@ -38,25 +38,6 @@ class MWLibMemcached {
 		$this->debug = @$args['debug'];
 		$this->persistent = $args['persistant'];
 		$this->set_servers( @$args['servers'] ); 
-		return;
-		// stub
-		$this->set_servers( @$args['servers'] );
-		$this->_debug = @$args['debug'];
-		$this->stats = array();
-		$this->_compress_threshold = @$args['compress_threshold'];
-		$this->_persistant = array_key_exists( 'persistant', $args ) ? ( @$args['persistant'] ) : false;
-		$this->_compress_enable = true;
-		$this->_have_zlib = function_exists( 'gzcompress' );
-	
-		$this->_cache_sock = array();
-		$this->_host_dead = array();
-		$this->_dupe_cache = array();
-	
-		$this->_timeout_seconds = 0;
-		$this->_timeout_microseconds = $wgMemCachedTimeout;
-	
-		$this->_connect_timeout = 0.01;
-		$this->_connect_attempts = 2;
 	}
 	
 	/**
@@ -107,7 +88,7 @@ class MWLibMemcached {
 	 * Disconnects all connected sockets
 	 */
 	public function disconnect_all() {
-		throw new Exception("Not implemented");
+		// not supported in pecl-memcached
 	}
 	
 	/**
@@ -116,14 +97,14 @@ class MWLibMemcached {
 	 * @param   boolean  $enable  TRUE to enable, FALSE to disable
 	 */
 	public function enable_compress( $enable ) {
-		throw new Exception("Not implemented");
+		// we should not change this setting
 	}
 	
 	/**
 	 * Forget about all of the dead hosts
 	 */
 	public function forget_dead_hosts() {
-		throw new Exception("Not implemented");
+		// not supported in pecl-memcached
 	}
 	
 	/**
@@ -223,7 +204,7 @@ class MWLibMemcached {
 	 * @param   integer  $thresh  Threshold to compress if larger than
 	 */
 	public function set_compress_threshold( $thresh ) {
-		throw new Exception("Not implemented");
+		// we should not change this setting
 	}
 	
 	/**
@@ -265,7 +246,7 @@ class MWLibMemcached {
 	 * @param   integer  $microseconds  Number of microseconds
 	 */
 	public function set_timeout( $seconds, $microseconds ) {
-		throw new Exception("Not implemented");
+		// we don't support changing this setting
 	}
 	
 	
@@ -326,16 +307,16 @@ class MWLibMemcached {
 		if (is_array($keys)) {
 			$keys = array_map(array($this,'prefixKeys'), $keys);
 		} else {
-			$keys = self::KEY_PREFIX . $keys;
+			$keys = $this->keyPrefix . $keys;
 		}
 		return $keys;
 	}
 	
 	protected function unprefixKeys( &$multi ) {
-		$l = strlen(self::KEY_PREFIX);
+		$l = strlen($this->keyPrefix);
 		$data = array();
 		foreach ($multi as $k => $v) {
-			if (substr($k,0,$l) == self::KEY_PREFIX) {
+			if (substr($k,0,$l) == $this->keyPrefix) {
 				$k = substr($k,$l);
 			}
 			$data[$k] = $v;
