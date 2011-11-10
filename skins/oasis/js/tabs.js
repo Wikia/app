@@ -4,12 +4,6 @@
  * @date 20111109
  * Standard functionality for js tab-switching amongst content
  * that is already loaded into the HTML (tab-bodies just get hidden/shown).
- *
- * NOTE: since there is no nesting of tabBodies inside of a wrapper, this does
- * create the limitation at the moment that there can only be one set of tabs per page.
- * If we want to remove that implementation, we can make a performance tradeoff and instead
- * of hiding every .tabBody before switching, we can just get all of the data-tabbody-id's
- * from the clicked UL and hide the elements matching those ids.
  */
 $(function(){
 	$('.tabs a').click(function( evt ){
