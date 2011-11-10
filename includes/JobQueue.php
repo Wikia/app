@@ -172,7 +172,7 @@ abstract class Job {
 		// Remove any duplicates it may have later in the queue
 		// Deadlock prone section
 		$dbw->begin();
-		$fields = $this->insertFields();
+		$fields = $job->insertFields();
 		unset( $fields['job_id'] );
 		$dbw->delete( 'job', $fields, __METHOD__ );
 		$dbw->commit();
