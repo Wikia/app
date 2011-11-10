@@ -184,6 +184,16 @@ class WallHelper {
 		if( !is_null($parentId) ) {
 			$parent = F::build('ArticleComment', array($parentId), 'newFromId');
 			
+			if( !($parent instanceof ArticleComment) ) {
+			//this should never happen
+				Wikia::log(__METHOD__, false, 'No ArticleComment instance article id: '.$parentId);
+				
+				return array(
+					'count' => $commentsCount,
+					'comments' => $comments,
+				);
+			}
+			
 			$commentList = F::build('ArticleCommentList', array(($parent->getTitle())), 'newFromTitle');
 			$commentList->setId($parentId);
 			$data = $commentList->getData();
