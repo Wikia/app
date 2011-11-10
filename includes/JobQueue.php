@@ -78,7 +78,7 @@ abstract class Job {
 		$title = Title::makeTitleSafe( $namespace, $dbkey );
 		$job = Job::factory( $row->job_cmd, $title, Job::extractBlob( $row->job_params ), $row->job_id );
 
-		$fields = $this->insertFields();
+		$fields = $job->insertFields();
 		unset( $fields['job_id'] );
 		$dbw->delete( 'job', $fields, __METHOD__ );
 		$dbw->commit();
@@ -283,7 +283,7 @@ abstract class Job {
 		/**
 		 * @author Piotr Molski (moli)
 		 * trap for BugId: 11897
-		 */		
+		 */
 		if ( ! $this->title instanceof Title ) {
 			$log = "MOLI JOB@invalid title: " . $this->command . " . params: " . print_r( $this->params, true ) . "\n";
 			error_log( $log );
