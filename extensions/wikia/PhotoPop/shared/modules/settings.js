@@ -1,7 +1,7 @@
 var exports = exports || {};
 
 define.call(exports, {
-	centralDomain: 'twilightphotopop.wikia.com',//'community.wikia.com',
+	centralDomain: 'community.wikia.com',
 	//testDomain: 'federico.wikia-dev.com',//comment out or set to null/false before release
 	sharedAudioPath: "shared/audio/",
 	webAudioPath: "audio/",
@@ -31,10 +31,7 @@ define.call(exports, {
 		watermark_default: "watermark_default",
 		background: "photopop_background_tile",
 		tutorial_1: 'tutorial_1.jpeg',
-		tutorial_2: 'tutorial_2.jpeg',
-		tutorial_3: 'tutorial_3.jpeg',
-		tutorial_4: 'tutorial_4.jpeg',
-		tutorial_5: 'tutorial_5.jpeg'
+		tutorial_2: 'tutorial_2.jpeg'
 	},
 
 	sounds: {

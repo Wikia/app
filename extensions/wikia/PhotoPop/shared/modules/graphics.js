@@ -22,7 +22,16 @@ define.call(exports, ['modules/settings'], function(settings){
 
 		getPicture: function(path){
 			if(Wikia.Platform.is('app')){
-				return window.dataPath + '/' + path.replace(/[:\/%-]/g, '_');
+				//mirrors mapUrlToFile in /modules/photoPop.js (mobile app repo)
+				var fileName = path.substr(path.lastIndexOf('\/') + 1),
+				length = fileName.length;
+				
+				//iOS doesn't support filenames longer than 256 characters'
+				if(length > 256){
+					fileName = fileName.substr(length - 256);
+				}
+				
+				return window.dataPath + '/' + fileName.replace(/[:\/\%-]/g, '_');
 			} else {
 				return path;
 			}

@@ -249,3 +249,17 @@ $config['yui'] = array(
 		'//skins/common/yui_extra/carousel-min.js',
 	)
 );
+
+$config['photopop'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/PhotoPop/shared/lib/mustache.js',
+		'//extensions/wikia/PhotoPop/shared/lib/my.class.js',
+		'//extensions/wikia/PhotoPop/shared/lib/store.js',
+		'//extensions/wikia/PhotoPop/shared/lib/observable.js',
+		'//extensions/wikia/PhotoPop/shared/lib/reqwest.js',
+		'//extensions/wikia/PhotoPop/shared/lib/classlist.js',
+		'//extensions/wikia/PhotoPop/shared/lib/wikia.js',
+		'//extensions/wikia/PhotoPop/shared/lib/require.js'
+	)
+);
