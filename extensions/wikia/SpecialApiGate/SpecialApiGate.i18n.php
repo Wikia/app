@@ -23,7 +23,10 @@ $messages['en'] = array(
 	'apigate-register-success' => "Your new API key is '<big><strong>$1</strong></big>'<br/><br/>You can see the key at any time by coming back to [[Special:ApiGate]] (there is a link in the User menu on the top-right of the page).",
 	'apigate-register-success-return' => "Return to the [[Special:ApiGate|API Gate landing page]] to see your new dashboard.",
 	'apigate-userlink' => "API Control Panel",
-	
+
+	'apigate-tab-keyinfo' => "Key Info",
+	'apigate-tab-keystats' => "Usage Stats",
+
 	'apigate-chart-metric-requests' => "Requests",
 	'apigate-chart-name-hourly' => "Requests - Hourly",
 	'apigate-chart-name-daily' => "Requests - Daily",

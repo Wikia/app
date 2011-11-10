@@ -105,11 +105,20 @@ class SpecialApiGate extends SpecialPage {
 					if($apiKeyObject->canBeViewedByCurrentUser()){
 						$useTwoColLayout = false; // use full width so that the charts fit
 
-						// Module for key info (it's a form)
-						$mainSectionHtml .= $this->subpage_keyInfo( $apiKeyObject );
-
-						// Module for stats (we don't have stats yet so this should just say that for now)
-						$mainSectionHtml .= $this->subpage_keyStats( $apiKey );
+						// Use standard tabs (from UI Style Guide)
+						ob_start();
+						?><ul class='tabs'>
+							<li class='selected'><a data-tabbody-id='apiGate_keyInfo'><?= wfMsg('apigate-tab-keyinfo') ?></a></li>
+							<li><a data-tabbody-id='apiGate_keyStats'><?= wfMsg('apigate-tab-keystats') ?></a></li>
+						</ul>
+						<div id='apiGate_keyInfo' class='tabBody selected'>
+							<?= $this->subpage_keyInfo( $apiKeyObject ); ?>
+						</div>
+						<div id='apiGate_keyStats' class='tabBody'>
+							<?= $this->subpage_keyStats( $apiKey ); ?>
+						</div>
+						<?php
+						$mainSectionHtml .= ob_get_clean();
 					} else {
 		// TODO: ERROR MESSAGE THAT YOU'RE NOT AUTHORIZED TO VIEW THE KEY
 		// TODO: ERROR MESSAGE THAT YOU'RE NOT AUTHORIZED TO VIEW THE KEY
@@ -251,7 +260,7 @@ class SpecialApiGate extends SpecialPage {
 				$msg = "<h3>".wfMsg( 'apigate-register-success-heading' )."</h3>";
 				$msg .= wfMsgExt( 'apigate-register-success', array('parse'), array( $data['apiKey'] ) );
 				$msg .= wfMsgExt( 'apigate-register-success-return', array('parse'), array() );
-				$html .=  ApiGate_Dispatcher::renderTemplate( "info", array('message' => $msg) ); // product wanted this to be normal style, not success-style.
+				$html .=  ApiGate_Dispatcher::renderTemplate( "info", array('message' => $msg) ); // intentionally normal style, not success-style.
 			} else {
 				$html .=  ApiGate_Dispatcher::renderTemplate( "register", $data );
 			}
@@ -367,14 +376,17 @@ class SpecialApiGate extends SpecialPage {
 
 		// TODO: When API Gate has its own charting, use that instead of this SponsorshipDashboard-dependent code.
 
-		$metricName = wfMsg( 'apigate-chart-metric-requests' );
-		$chartName = wfMsg( 'apigate-chart-name-hourly' );
-		$html .= $this->getChartHtmlByPeriod( $apiKey, "hourly", $metricName, $chartName );
+		// Will just show daily and monthly to users for now (and hourly will just be for admins to detect anything weird).
+		if( ApiGate_Config::isAdmin() ){
+			$metricName = wfMsg( 'apigate-chart-metric-requests' );
+			$chartName = wfMsg( 'apigate-chart-name-hourly' );
+			$html .= $this->getChartHtmlByPeriod( $apiKey, "hourly", $metricName, $chartName );
+		}
 		
 		$chartName = wfMsg( 'apigate-chart-name-daily' );
 		$html .= $this->getChartHtmlByPeriod( $apiKey, "daily", $metricName, $chartName );
 
-		// This chart seems like overkill to display it w/all the other charts on the page. Daily/monthly seem good to start with. Might remove the concept of weekly stats from API Gate entirely.
+		// This chart seems like overkill to display it w/all the other charts on the page. Hourly/daily/monthly seem good to start with. Might remove the concept of weekly stats from API Gate entirely.
 		//$chartName = wfMsg( 'apigate-chart-name-weekly' );
 		//$html .= $this->getChartHtmlByPeriod( $apiKey, "weekly", $metricName, $chartName );
 		

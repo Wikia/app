@@ -17,8 +17,11 @@ table.apiKeys td, table.apiKeys th{
 }
 .disabled{
 	background-color:#fcc;
-	font-style:oblique;
+	font-style:italic;
 }
-
+.reasonBanned{
+	background-color:#ccc;
+	font-style:italic;
+}
 
 /** Custom SpecialApiGate-specific CSS that only applies to the way Wikia is wrapping ApiGate **/

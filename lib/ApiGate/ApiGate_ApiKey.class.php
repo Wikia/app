@@ -22,6 +22,26 @@ class ApiGate_ApiKey {
 	public function getFirstName(){return $this->firstName;}
 	public function getLastName(){return $this->lastName;}
 	public function getEmail(){return $this->email;}
+	
+	/**
+	 * Lazy-loads and returns the reason that this key is disabled. If the key is NOT disabled, then this will return null.
+	 *
+	 * If the key is banned, but no reason could be found, then this will return an empty string.
+	 */
+	public function getReasonBanned(){
+		$reason = null;
+		if(!$this->isEnabled()){
+			if($this->reasonBanned == null){
+				$queryString = "SELECT reason FROM ".ApiGate::TABLE_BANLOG." WHERE apiKey='{$this->getApiKey()}'";
+				$queryString.= " ORDER BY createdOn DESC LIMIT 1";
+				$this->reasonBanned = ApiGate::simpleQuery( $queryString );
+				$reason = $this->reasonBanned;
+			} else {
+				$reason = $this->reasonBanned;
+			}
+		}
+		return $reason;
+	} // end getReasonBanned()
 
 	/**
 	 * Tries to mutate this object to have all the traits of the apiKey defined in the parameters (as loaded from the

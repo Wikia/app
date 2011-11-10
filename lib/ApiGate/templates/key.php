@@ -1,14 +1,10 @@
 <div class='sub_module'>
 	<?php
-		// TODO: Create the i18n strings
-		// TODO: Create the i18n strings
-
-		// TODO: Highlight the nickname & apiKey if disabled
+		// Highlight the nickname & apiKey if disabled
 		$keyClass = "";
 		if( !$apiKeyObject->isEnabled() ){
 			$keyClass = " class='disabled'";
 		}
-		// TODO: Highlight the nickname & apiKey if disabled
 	?>
 	<form method="post" action="">
 		<div>
@@ -26,16 +22,24 @@
 				if($apiKeyObject->isEnabled()){
 					$statusClass = "enabled";
 					$statusMsg = i18n('apigate-keyinfo-status-enabled');
+					$reason = "<br/>";
 				} else {
 					$statusClass = "disabled";
 					$statusMsg = i18n('apigate-keyinfo-status-disabled');
+					$reasonBanned = $apiKeyObject->getReasonBanned();
+					$reasonBanned = ($reasonBanned == null ? i18n('apigate-keyinfo-no-reason-found') : $apiKeyObject->getReasonBanned() );
+					$reason = "<br/><div class='reasonBanned'>\n" . i18n('apigate-keyinfo-reason-disabled', $reasonBanned) . "\n</div>\n";
 				}
-				$statusHtml = "<span class='status $statusClass'>$statusMsg</span>";
-				print i18n( 'apigate-keyinfo-status', $statusHtml );
 				
-				// TODO: If disabled, show the 'reason' value (make ApiGate_ApiKey lazy-load that so it just shows up through an accessor).
-				// TODO: If disabled, show the 'reason' value (make ApiGate_ApiKey lazy-load that so it just shows up through an accessor).
-			?><br/>
+				// Display the status to users or a mutable form if this is an Admin.
+				if(ApiGate_Config::isAdmin()){
+					
+					print $reason;
+				} else {
+					$statusHtml = "<span class='status $statusClass'>$statusMsg</span>";
+					print i18n( 'apigate-keyinfo-status', $statusHtml );
+				}
+			?>
 			<br/>
 			<?= i18n( 'apigate-keyinfo-name' ); ?><br/>
 			<input type='text' name='firstName' value='<?= $apiKeyObject->getFirstName() ?>' style='width:192px'/>
