@@ -85,12 +85,11 @@ class CommunityMessages {
 		$title = $wikiActivity->getTitle();
 		if( $title instanceof Title ) {
 			$wikiActivityUrl = $title->getFullUrl();
-		}
-		
-		if( isset($wikiActivityUrl) ) {
-			$msg = wfMsg('communitymessages-notice-msg-url', array($wikiActivityUrl));
+			$msg = XML::element('a', array('href' => $wikiActivityUrl),  wfMsg('communitymessages-notice-msg'));
 		} else {
-			$msg = wfMsg('communitymessages-notice-msg');
+		//should never happen
+			Wikia::log(__METHOD__, false, 'No title class instance found. Does Special:WikiActivity exist?');
+			return true;
 		}
 
 		// macbre: add an easy way for Oasis to show it's own notification for community messages
