@@ -76,14 +76,22 @@ class CommunityMessages {
 			}
 		}
 
-		wfLoadExtensionMessages('CommunityMessages');
-
 		if ($msgs != '') {
 			$msgs .= '<br/>';
 		}
 
 		// render message
-		$msg = wfMsgExt('communitymessages-notice-msg', array('parseinline'));
+		$wikiActivity = new SpecialPage('WikiActivity');
+		$title = $wikiActivity->getTitle();
+		if( $title instanceof Title ) {
+			$wikiActivityUrl = $title->getFullUrl();
+		}
+		
+		if( isset($wikiActivityUrl) ) {
+			$msg = wfMsg('communitymessages-notice-msg-url', array($wikiActivityUrl));
+		} else {
+			$msg = wfMsg('communitymessages-notice-msg');
+		}
 
 		// macbre: add an easy way for Oasis to show it's own notification for community messages
 		wfRunHooks('CommunityMessages::showMessage', array(&$msg));
