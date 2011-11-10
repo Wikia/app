@@ -120,12 +120,12 @@ class SpecialApiGate extends SpecialPage {
 						<?php
 						$mainSectionHtml .= ob_get_clean();
 					} else {
-		// TODO: ERROR MESSAGE THAT YOU'RE NOT AUTHORIZED TO VIEW THE KEY
-		// TODO: ERROR MESSAGE THAT YOU'RE NOT AUTHORIZED TO VIEW THE KEY
+	// TODO: ERROR MESSAGE THAT YOU'RE NOT AUTHORIZED TO VIEW THE KEY
+	// TODO: ERROR MESSAGE THAT YOU'RE NOT AUTHORIZED TO VIEW THE KEY
 					}
 				} else {
-		// TODO: ERROR MESSAGE THAT THE KEY WAS NOT FOUND IN THE DB
-		// TODO: ERROR MESSAGE THAT THE KEY WAS NOT FOUND IN THE DB
+	// TODO: ERROR MESSAGE THAT THE KEY WAS NOT FOUND IN THE DB
+	// TODO: ERROR MESSAGE THAT THE KEY WAS NOT FOUND IN THE DB
 				}
 				break;
 			case self::SUBPAGE_NONE:
@@ -133,7 +133,7 @@ class SpecialApiGate extends SpecialPage {
 				$mainSectionHtml .= $this->subpage_landingPage();
 				break;
 		}
-		
+
 		// If this is the two-column layout, wrap the extra markup around it.
 		if( $useTwoColLayout ){
 			$wgOut->addHTML( "<div id='specialApiGateMainSection'><div class='module'>

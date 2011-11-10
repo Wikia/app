@@ -35,6 +35,7 @@ CREATE TABLE apiGate_banLog (
 	apiKey VARCHAR(255) NOT NULL,
 	action VARCHAR(255) NOT NULL, -- what was done to the key (disabled/enabled/banned/rate-limited/etc.)
 	createdOn TIMESTAMP, -- creation time of this log entry, not of anything else
+	username VARCHAR(255) DEFAULT NULL, -- the person (or null if automated) who did the action
 
 	reason TEXT -- a human-readable explanation of the reasoning of the ban/unban/whatever. this should make sure to mention whether it was manual or automatic.
 );
