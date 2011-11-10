@@ -70,7 +70,7 @@ define.call(exports, function(){
 		_barWrapperHeight: 0,
 		_firstTileClicked: true,
 		_clickableTiles: true,
-		_isApp: Wikia.Platform.is('app'),
+		_isApp: false,
 
 		STATIC: {
 			NUM_OF_ROWS: 4,
@@ -81,8 +81,9 @@ define.call(exports, function(){
 			Observe(this);
 			this._parent = parent;
 
-			this._numTiles = GameScreen.NUM_OF_ROWS * GameScreen.NUM_OF_COLS;
+			this._isApp = Wikia.Platform.is('app');
 
+			this._numTiles = GameScreen.NUM_OF_ROWS * GameScreen.NUM_OF_COLS;
 			this._tilesWrapper =  document.getElementById('tilesWrapper');
 			this._screenElement = document.getElementById('PhotoPopWrapper');
 
