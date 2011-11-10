@@ -1,0 +1,84 @@
+@mixin gradient-toolbar {
+	@include linear-gradient($color-page, top, $color-page, 50%, $color-epl-gradient-border, 100%);
+}
+
+@mixin gradient-button-hover {
+	@include linear-gradient($color-epl-hover, top, $color-epl-hover, 0%, $color-epl-button, 50%, $color-epl-hover, 100%);
+	text-decoration: none;
+}
+
+@mixin gradient-separator {
+    @include linear-gradient($color-epl-separator, top, $color-epl-separator-secondary, 0%, $color-epl-separator, 10%, $color-epl-separator, 90%, $color-epl-separator-secondary, 100%);
+}
+
+@mixin gradient-module {
+	@include linear-gradient(mix($color-epl-gradient-light, $color-epl-gradient-module-dark, 50%), top, $color-epl-gradient-light, 60%, $color-epl-gradient-module-dark, 100%);
+}
+
+@mixin gradient-module-header {
+	@include linear-gradient($color-epl-input, top, $color-epl-gradient-light, 30%, $color-epl-gradient-dark, 100%);
+}
+
+@mixin button-icon-resize-square( $width, $height ) {
+	height: $height;
+	width: $width;
+	margin: floor(( 26px - $height ) / 2)  floor(( 26px - $width ) / 2);
+}
+
+@mixin button-icon-resize( $width, $height ) {
+	height: $height;
+	width: $width;
+	margin: floor(( 26px - $height ) / 2) 5px;
+}
+
+@mixin epl-textfield {
+	@include border-radius(4px);
+	background-color: $color-epl-page-secondary;
+	color: $color-epl-text-secondary;
+	border: 1px solid $color-epl-input-border;
+	display: block;
+	font-family: inherit;
+	font-size: 12px;
+	font-style: italic;
+	line-height: 23px;
+	padding: 5px;
+	width: $width-epl-module-input;
+
+	&::-webkit-input-placeholder {
+		font-style: italic;
+		color: $color-epl-text-secondary;
+	}
+
+	&:-moz-placeholder {
+		font-style: italic;
+		color: $color-epl-text-secondary;
+	}
+
+	&.placeholder {
+		font-style: italic;
+		color: $color-epl-text-secondary;
+	}
+}
+
+// styling for edit area and category select source mode
+@mixin epl-editorarea {
+	font-family: Consolas, "Eupheima UCAS", Ayuthaya, Menlo, monospace;
+	font-size: 13.5px;
+	width: 100%;
+}
+
+// copied from Chat.scss
+@mixin splotch {
+	@include border-radius(10px);
+	@include linear-gradient($color-epl-splotch-background, top, $color-epl-splotch-highlight, 0, $color-epl-splotch-background, 50%, $color-epl-splotch-highlight, 100%);
+	background-clip: padding-box;
+	border: 1px solid white;
+	color: white;
+	display: inline-block;
+	font-size: 9px;
+	height: 12px;
+	line-height: 13px;
+	min-width: 8px;
+	padding: 0 2px;
+	text-align: center;
+}

@@ -1,0 +1,73 @@
+/*
+ * the colors, duke, the colors!
+ */
+
+// Notices
+$color-epl-notices-background: #ffffc6; // yellow
+$color-epl-notices-border: #c4c1a2; // darker yellow
+$color-epl-notices-color: #3a3a3a; // dark grey
+
+// Splotch
+$color-epl-splotch-background: #dc0d0e; // red
+$color-epl-splotch-highlight: #e63031; // lighter red
+
+// Widths and heights
+$height-epl-header: 45px;
+$width-epl-module-input: 252px;
+$width-rail-epl: 304px; // BugId:7247
+
+// Hard coded stuff
+$sprite-suffix: "light";
+$color-epl-header: #f2f2f2;
+
+@if $is-dark-wiki {
+	$sprite-suffix: "dark";
+	$color-epl-header: #2f2f2f;
+}
+
+// Light theme
+$color-epl-header-top: lighten($color-epl-header, 5%);
+$color-epl-header-bottom: darken($color-epl-header, 5%);
+$color-epl-header-secondary: lighten($color-epl-header, 11%);
+$color-epl-border: darken($color-page, 20%);
+$color-epl-hover: darken($color-page, 2%);
+$color-epl-page-secondary: $color-page;
+$color-epl-text-secondary: lighten($color-text, 25%);
+$color-epl-separator: darken($color-page, 20%);
+$color-epl-separator-secondary: lighten($color-epl-separator, 12%);
+$color-epl-intro: lighten($color-epl-header, 2%);
+$color-epl-intro-button: $color-page;
+$color-epl-toolbar-active: $color-module-highlight;
+$color-epl-toolbar-inactive: darken($color-module-shadow, 10%);
+$color-epl-toolbar-border: darken($color-page, 20%);
+$color-epl-button: darken($color-page, 2%);
+$color-epl-button-active: darken($color-epl-button, 5%);
+$color-epl-button-border: darken($color-epl-button, 20%);
+$color-epl-input: darken($color-epl-button, 3%);
+$color-epl-input-shadow: darken($color-epl-button, 31%);
+$color-epl-input-border: darken($color-epl-button, 22%);
+$color-epl-gradient-solid: darken($color-page, 5%);
+
+@if $is-dark-wiki {
+	$color-epl-gradient-solid: $color-page;
+}
+
+$color-epl-gradient-dark: darken($color-epl-gradient-solid, 5%);
+$color-epl-gradient-light: lighten($color-epl-gradient-solid, 2%);
+$color-epl-gradient-border: darken($color-epl-gradient-solid, 5%);
+$color-epl-gradient-module-dark: mix($color-epl-gradient-light, $color-epl-gradient-dark, 20%);
+$color-epl-gradient-shadow: darken($color-epl-gradient-solid, 5%);
+
+@if $is-dark-wiki {
+	$color-epl-border: lighten($color-page, 20%);
+	$color-epl-hover: darken($color-page, 8%);
+	$color-epl-page-secondary: darken($color-page, 3%);
+	$color-epl-separator: darken($color-page, 5%);
+	$color-epl-separator-secondary: darken($color-epl-separator, 5%);
+	$color-epl-intro: darken($color-epl-header, 2%);
+	$color-epl-toolbar-active: $color-page;
+	$color-epl-toolbar-inactive: lighten($color-module-shadow, 10%);
+	$color-epl-toolbar-border: darken($color-page, 10%);
+	$color-epl-button-border: lighten($color-epl-button, 8%);
+	$color-epl-input-border: lighten($color-page, 22%);
+}
