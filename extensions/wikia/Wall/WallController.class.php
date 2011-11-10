@@ -371,9 +371,9 @@ class WallController extends ArticleCommentsModule {
 			$this->response->setVal( 'messageTitle', $wallMessage->getMetaTitle() );
 
 			// for debugging put history directly in thread
-			global $wgDevelEnvironment;
-			if(!empty($wgDevelEnvironment))
-				$this->response->setVal( 'history', $wallMessage->getThreadHistory() );
+			//global $wgDevelEnvironment;
+			//if(!empty($wgDevelEnvironment))
+			//	$this->response->setVal( 'history', $wallMessage->getThreadHistory() );
 
 		}
 	}
