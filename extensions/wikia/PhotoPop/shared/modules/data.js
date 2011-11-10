@@ -16,7 +16,7 @@ define.call(exports, ['modules/settings'],function(settings){
 				});
 
 				Titanium.App.addEventListener('Storage:fetched', function(event){
-					var value = (event.value)?JSON.parse(event.value):"";
+					var value = (event.value === null && event.value === "")?JSON.parse(event.value):event.value;
 
 					that.fire('get', {key: event.key, value: value});
 					that.fire({name: 'get', key: event.key}, {key: event.key, value: value});
@@ -71,13 +71,13 @@ define.call(exports, ['modules/settings'],function(settings){
 		_onReadCache: null,
 		_id: null,
 
-		constructor: function(){
+		constructor: function(loaderId){
 			Observe(this);
 
 			var that = this;
 
 			if(Wikia.Platform.is('app')){
-				that._id = (Math.random() * Math.random()).toString();
+				that._id = loaderId || (Math.random() * Math.random()).toString();
 
 				Titanium.App.addEventListener('XDomainLoader:complete:' + that._id, function(event){
 					var needsRequest = true;

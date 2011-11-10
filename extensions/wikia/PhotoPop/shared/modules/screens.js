@@ -70,10 +70,35 @@ define.call(exports, function(){
 		_barWrapperHeight: 0,
 		_firstTileClicked: true,
 		_clickableTiles: true,
+		_isApp: Wikia.Platform.is('app'),
+
+		STATIC: {
+			NUM_OF_ROWS: 4,
+			NUM_OF_COLS: 6
+		},
 
 		constructor: function(parent) {
 			Observe(this);
 			this._parent = parent;
+
+			this._numTiles = GameScreen.NUM_OF_ROWS * GameScreen.NUM_OF_COLS;
+
+			this._tilesWrapper =  document.getElementById('tilesWrapper');
+			this._screenElement = document.getElementById('PhotoPopWrapper');
+
+			var table = "";
+			if(this._tilesWrapper.innerHTML == '') {
+				for(var i = 0; i < this._numTiles; i++) {
+					table += "<div id='tile-" + i + "'></div>"
+				}
+				this._tilesWrapper.innerHTML = table;
+			}
+
+			this._tileDivs = document.getElementById('tilesWrapper').getElementsByTagName('div');
+			this._tileDivsArray = Array.prototype.slice.call(this._tileDivs);
+			this._tileDivsLength = this._tileDivsArray.length;
+
+
 		},
 
 		show: function() {
@@ -103,11 +128,6 @@ define.call(exports, function(){
 			this.addEventListener('endGame', this.endGame);
 			this.addEventListener('paused', this.paused);
 			this.addEventListener('resumed', this.resumed);
-			this.addEventListener('goHomeClicked', this.goHomeClicked);
-		},
-
-		goHomeClicked: function(event, gameFinished) {
-
 		},
 
 		resumed: function() {
@@ -121,6 +141,7 @@ define.call(exports, function(){
 		},
 
 		endGame: function(event, options) {
+			this.resetMask();
 			this.showEndGameScreen(options);
 		},
 
@@ -167,31 +188,17 @@ define.call(exports, function(){
 			this.updateMuteButton(mute.mute);
 		},
 
-		prepareMask: function( watermark, rows, cols ) {
-			rows = rows || 4;
-			cols = cols || 6;
-
-			var tilesWrapper = document.getElementById('tilesWrapper'),
-			screenElement = document.getElementById('PhotoPopWrapper'),
-			table = "",
+		prepareMask: function(watermark) {
+			var screenElement = this._screenElement,
 			tableWidth = screenElement.clientWidth,
 			tableHeight = screenElement.clientHeight,
-			rowHeight = Math.ceil(tableHeight / rows),
-			colWidth = Math.ceil(tableWidth / cols),
+			rowHeight = Math.ceil(tableHeight / GameScreen.NUM_OF_ROWS),
+			colWidth = Math.ceil(tableWidth / GameScreen.NUM_OF_COLS),
 			offsetY = offsetX = 0,
 			self = this,
-			numTiles = rows * cols;
+			divs = this._tileDivs;
 
-			if(tilesWrapper.innerHTML == '') {
-				for(var i = 0; i < numTiles; i++) {
-					table += "<div id='tile-" + i + "'></div>"
-				}
-				tilesWrapper.innerHTML = table;
-			}
-
-			var divs = tilesWrapper.getElementsByTagName('div');
-
-			for(var i = 0; i < numTiles; i++) {
+			for(var i = 0; i < this._numTiles; i++) {
 				var div = divs[i],
 				divStyle = div.style;
 
@@ -203,7 +210,7 @@ define.call(exports, function(){
 				divStyle.left = div.originalLeft = offsetX;
 				offsetX += colWidth;
 
-				if((i+1) % cols == 0) {
+				if((i+1) % GameScreen.NUM_OF_COLS == 0) {
 					offsetX = 0;
 					offsetY += rowHeight;
 				}
@@ -217,7 +224,7 @@ define.call(exports, function(){
 			if(this._clickableTiles){
 				tile.clicked = true;
 
-				if(Wikia.Platform.is('app')) {
+				if(this._isApp) {
 					tile.style.display = 'none';
 				} else {
 					tile.style.height = 0;
@@ -320,9 +327,8 @@ define.call(exports, function(){
 		revealAll: function(correct) {
 			this._clickableTiles = false;
 
-			var divs = document.getElementById('tilesWrapper').getElementsByTagName('div'),
-			divsArray = Array.prototype.slice.call(divs),
-			divsLength = divs.length,
+			var divsArray = this._tileDivsArray,
+			divsLength = this._tileDivsLength,
 			next = 0,
 			self = this,
 			div,
@@ -343,44 +349,56 @@ define.call(exports, function(){
 
 		},
 
+		resetMask: function() {
+			var divsArray = this._tileDivsArray,
+			divsLength = this._tileDivsLength,
+			isApp = this._isApp;
+
+			for(var i = 0; i < divsLength; i++) {
+				var div = divsArray[i],
+				divStyle = div.style;
+
+				div.clicked = false;
+
+				divStyle.left = div.originalLeft;
+				if(isApp) {
+					divStyle.display = 'block';
+				} else {
+					divStyle.height = div.originalHeight;
+				}
+			}
+		},
+
 		showMask: function(options) {
 			this.fire('displayingMask', options);
-			var divs = document.getElementById('tilesWrapper').getElementsByTagName('div'),
-				divsArray = Array.prototype.slice.call(divs),
-				divsLength = divsArray.length,
-				next = 0,
-				self = this;
+			var divsArray = this._tileDivsArray,
+			divsLength = this._tileDivsLength,
+			next = 0,
+			self = this,
+			isApp = this._isApp;
+
+			self.updateHudScore(options.totalPoints);
 
 			if(options.firstRound) {
-				for(var i = 0; i < divsLength; i++) {
-					var div = divsArray[i];
-
-					div.clicked = false;
-					div.style.left = div.originalLeft;
-					if(Wikia.Platform.is('app')) {
-						div.style.display = 'block';
-					} else {
-						div.style.height = div.originalHeight;
-					}
-				}
+				this.resetMask();
 				this.fire('maskDisplayed');
 			} else {
 				divsArray.shuffle();
-
 				var t = setInterval(function() {
-					divsArray[next].clicked = false;
-					divsArray[next].style.left = divsArray[next].originalLeft;
-					if(Wikia.Platform.is('app')) {
-						divsArray[next].style.display = 'block';
+					var div = divsArray[next++],
+					divStyle = div.style;
+
+					div.clicked = false;
+					divStyle.left = div.originalLeft;
+					if(isApp) {
+						divStyle.display = 'block';
 					} else {
-						divsArray[next].style.height = divsArray[next].originalHeight;
+						divStyle.height = div.originalHeight;
 					}
 
-					next++;
 					if(next == divsLength) {
 						clearInterval(t);
-						self.updateHudScore(options.totalPoints);
-						setTimeout(function() {self.fire('maskDisplayed');}, 100);
+						setTimeout(function() {self.fire('maskDisplayed');}, 200);
 					}
 				}, 70);
 			}
@@ -658,8 +676,6 @@ define.call(exports, function(){
 			this._progressStatus++;
 
 			if(this._progressStatus <= this._progressTotal) {
-				document.getElementById('currentValue').innerHTML = this._progressStatus;
-				document.getElementById('totalValue').innerHTML = this._progressTotal;
 				document.getElementById('progressBar').style.width = document.getElementById('progressBarWrapper').offsetWidth / (this._progressTotal/this._progressStatus);
 			}
 		},
