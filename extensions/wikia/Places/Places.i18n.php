@@ -1,11 +1,12 @@
 <?php
+
 $messages = array();
 
 $messages['en'] = array(
 	'places' => 'Places on this wiki',
-	'places-desc' => 'Provides <nowiki><place> and <places></nowiki> parser hooks for geo tagging articles and [[Special:Places|map of all tagged articles]]',
-	'places-toolbar-button-tooltip' => 'Click to add geo tag to this article',
-	'places-toolbar-button-address' => 'Please provide address to use as a geo tag for this article',
+	'places-desc' => 'Provides <nowiki><place> and <places></nowiki> parser hooks for geo tagging pages and a [[Special:Places|map of all tagged pages]]',
+	'places-toolbar-button-tooltip' => 'Click to add geo tag to this page',
+	'places-toolbar-button-address' => 'Please provide address to use as a geo tag for this page',
 );
 
 $messages['pl'] = array(

@@ -1,12 +1,14 @@
 <?php
+
 $messages = array();
+
 $messages['en'] = array(
-    'specialspamwikis-pagetitle' => 'Spam Wikis',
+    'specialspamwikis-pagetitle' => 'Spam wikis',
     'specialspamwikis-close' => 'Close',
     'specialspamwikis-wiki' => 'Wiki',
     'specialspamwikis-created' => 'Created',
     'specialspamwikis-founder' => 'Founder',
-    'specialspamwikis-email' => 'Email',
+    'specialspamwikis-email' => 'E-mail addres',
     'specialspamwikis-criteria' => 'Criteria',
     'specialspamwikis-count' => '$1 {{PLURAL:$1|wiki|wikis}}',
     'specialspamwikis-record-pager' => 'Showing <strong>$1</strong> to <strong>$2</strong> of <strong>$3</strong> wikis',
@@ -30,5 +32,5 @@ $messages['en'] = array(
     'specialspamwikis-spamwikis-percent' => '% of all',
     'specialspamwikis-spamwikis-founders' => 'Amount',
     'specialspamwikis-spamwikis-per-founder' => 'avg. spam wikis per founder',
-    'specialspamwikis-spam-users' => 'Spamming Users',
+    'specialspamwikis-spam-users' => 'Spamming users',
 );
