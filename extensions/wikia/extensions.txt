@@ -26,8 +26,8 @@ ignored = header_questionmark_pre, badWords, qa-featured-sites
 Article Comments
 
 Auto Create Wiki
-optional = autocreatewiki-reminder-subject
-ignored = requestwiki-filter-language, autocreatewiki-tagline, autocreatewiki-language-top-list
+optional = autocreatewiki-reminder-subject, autocreatewiki-language-top-list
+ignored = requestwiki-filter-language, autocreatewiki-tagline
 
 Auto Hubs Pages
 
@@ -177,7 +177,7 @@ Oasis
 optional = oasis-latest-photos-single, oasis-corporatefooter-hub-Entertainment-link, oasis-corporatefooter-hub-Gaming-link, oasis-corporatefooter-hub-Lifestyle-link
 optional = oasis-corporatefooter-hub-Food and Drink-link
 ignored = wiki-navigation, categoryblacklist, photosblacklist, oasis-button-random-page-tooltip
-ignored = oasis-button-wiki-activity-tooltip
+ignored = oasis-button-wiki-activity-tooltip, wikia-navigation-global
 
 Our 404 Handler
 file = Our404Handler/SpecialOur404Handler.i18n.php
