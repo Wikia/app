@@ -122,6 +122,9 @@ class MWLibMemcached {
 	public function get( $key ) {
 		@$this->stats['get']++;
 		$this->prefixKeys($key);
+		if (array_key_exists($key,$this->cache)) {
+			return $this->cache[$key];
+		}
 		$value = $this->getMemcachedObject()->get($key);
 		$this->cache[$key] = $value;
 		return $value;
@@ -137,7 +140,8 @@ class MWLibMemcached {
 	public function get_multi( $keys ) {
 		@$this->stats['get_multi']++;
 		$this->prefixKeys($key);
-		return $this->unprefixKeys( $this->getMemcachedObject()->getMulti($keys) );
+		$null = null;
+		return $this->unprefixKeys( $this->getMemcachedObject()->getMulti($keys,$null,Memcached::GET_PRESERVE_ORDER) );
 	}
 	
 	/**
