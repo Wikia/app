@@ -474,6 +474,7 @@ $messages['br'] = array(
 /** German (Deutsch)
  * @author Claudia Hattitten
  * @author George Animal
+ * @author Kghbln
  * @author LWChris
  */
 $messages['de'] = array(
@@ -673,7 +674,7 @@ $messages['de'] = array(
 	'sponsorship-dashboard-from-checkbox-show-trends' => 'als Trends anzeigen',
 	'sponsorship-dashboard-table-collumn-date' => 'Datum',
 	'sponsorship-dashboard-users-error' => 'Benutzer $1 nicht gefunden. Konto nicht erstellt.',
-	'sponsorship-dashobard-not-allowed' => 'Es ist dir nicht gestattet, auf diese Seite zuzugreifen',
+	'sponsorship-dashobard-not-allowed' => 'Du hast nicht die erforderliche Berechtigung, um diese Seite aufrufen zu können.',
 	'sponsorship-dashboard-download-csv' => 'CSV-Datei herunterladen',
 	'sponsorship-dashboard-save-as-new' => 'Neu speichern',
 	'sponsorship-dashboard-source-global' => 'Daten für alle Wikis',
@@ -686,9 +687,10 @@ $messages['de'] = array(
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author Claudia Hattitten
+ * @author Kghbln
  */
 $messages['de-formal'] = array(
-	'sponsorship-dashobard-not-allowed' => 'Es ist Ihnen nicht gestattet, auf diese Seite zuzugreifen',
+	'sponsorship-dashobard-not-allowed' => 'Sie haben nicht die erforderliche Berechtigung, um diese Seite aufrufen zu können.',
 );
 
 /** Spanish (Español)
@@ -1344,6 +1346,14 @@ $messages['fr'] = array(
  * @author Toliño
  */
 $messages['gl'] = array(
+	'sponsorship-dashboard' => '[[Special:SponsorshipDashboard|Páxina epecial]] para os datos de medida relativos aos patrocinios',
+	'sponsorship-dashboard-serie-A' => 'Total de editores rexistrados no mes actual (todos os espazos de nomes)',
+	'sponsorship-dashboard-serie-B' => 'Total de editores rexistrados no mes actual (espazos de nomes de contido)',
+	'sponsorship-dashboard-serie-C' => 'Número de editores rexistrados que editaron máis de 5 veces durante o mes actual (espazos de nomes de contido)',
+	'sponsorship-dashboard-serie-D' => 'Número de editores rexistrados que editaron máis de 100 veces durante o mes actual (espazos de nomes de contido)',
+	'sponsorship-dashboard-serie-E' => 'Número de artigos en todos os espazos de nomes de contido',
+	'sponsorship-dashboard-serie-F' => 'Novos artigos ao día no mes actual',
+	'sponsorship-dashboard-serie-G' => 'Número de edicións en artigos nos espazos de nomes de contido',
 	'sponsorship-dashboard-serie-H' => 'Imaxes - Ligadas',
 	'sponsorship-dashboard-serie-I' => 'Imaxes - Cargadas',
 	'sponsorship-dashboard-serie-J' => 'Vídeos - Incorporados',
@@ -1463,6 +1473,7 @@ $messages['gl'] = array(
 	'sponsorship-dashboard-editor-Groups' => 'Grupos',
 	'sponsorship-dashboard-user-type-0' => 'Usuario de Wikia',
 	'sponsorship-dashboard-user-type-1' => 'Usuario con ligazóns patrocinadas',
+	'sponsorship-dashboard-report-no-source' => 'Non se seleccionou ningunha das fontes de datos. O informe aparecerá como páxina de descrición.',
 	'sponsorship-dashboard-report-data-source' => 'Fontes de datos',
 	'sponsorship-dashboard-report-description' => 'Descrición',
 	'sponsorship-dashboard-report-title' => 'Título',
@@ -1492,6 +1503,8 @@ $messages['gl'] = array(
 	'sponsorship-dashboard-source-additional-dimension' => 'Dimensión adicional',
 	'sponsorship-dashboard-source-none' => '-- ningún --',
 	'sponsorship-dashboard-source-default' => '-- predeterminado --',
+	'sponsorship-dashboard-source-in-case-of-empty' => 'en caso de mostrar os resultados baleiros',
+	'sponsorship-dashboard-source-leave-empty' => '(déixeo en branco para agochar os resultados baleiros)',
 	'sponsorship-dashboard-source-wikis' => 'Wikis',
 	'sponsorship-dashboard-source-main-wiki' => 'Wiki principal',
 	'sponsorship-dashboard-source-list' => 'Lista',
@@ -1503,6 +1516,10 @@ $messages['gl'] = array(
 	'sponsorship-dashboard-report-data-sources' => 'Fontes de datos',
 	'sponsorship-dashboard-mobile-serie-' => 'calquera',
 	'sponsorship-dashboard-report-new-source-mobile' => 'Mobile',
+	'sponsorship-dashboard-mobile-serie-list_category_contents' => 'lista dos contidos da categoría',
+	'sponsorship-dashboard-mobile-serie-list_games' => 'lista de xogos',
+	'sponsorship-dashboard-mobile-serie-list_wiki_contents' => 'lista de contidos do wiki',
+	'sponsorship-dashboard-mobile-serie-local_search' => 'procura local',
 	'sponsorship-dashboard-mobile-serie-android' => 'Android',
 	'sponsorship-dashboard-mobile-serie-iphone' => 'iPhone',
 	'sponsorship-dashboard-mobile-serie-undefined' => 'non identificado',
@@ -1511,15 +1528,21 @@ $messages['gl'] = array(
 	'sponsorship-dashboard-source-OS' => 'Sistema operativo',
 	'sponsorship-dashboard-source-App' => 'Aplicación',
 	'sponsorship-dashboard-report-name' => 'Nome do informe',
+	'sponsorship-dashboard-source-wiki-app-id' => 'nome da base de datos do wiki',
 	'sponsorship-dashboard-source-serie-name' => 'nome',
+	'sponsorship-dashboard-source-gapi-force-account' => 'ID da conta do Google Analytics',
 	'sponsorship-dashboard-source-query' => 'Opcións',
 	'sponsorship-dashboard-source-gapi-url' => 'Secuencia de filtro',
 	'sponsorship-dashboard-source-gapi-name' => 'Título da fonte',
+	'sponsorship-dashboard-default-page-title' => 'Wikia Metrics - Taboleiro de patrocinios',
+	'sponsorship-dashboard-report-page-title' => 'Wikia Metrics - $1',
 	'sponsorship-dashboard-cachedate-label' => 'datos xerados: $1',
 	'sponsorship-dashboard-other-options' => 'Outras opcións',
 	'sponsorship-dashboard-download-chart' => 'Descargar a gráfica en .png',
 	'sponsorship-dashboard-from-checkbox-show-trends' => 'mostrar como tendencias',
 	'sponsorship-dashboard-table-collumn-date' => 'Data',
+	'sponsorship-dashboard-users-error' => 'Non se atopou o usuario $1. A conta non está creada.',
+	'sponsorship-dashobard-not-allowed' => 'Non ten permiso para acceder a esta páxina',
 	'sponsorship-dashboard-download-csv' => 'Descargar o ficheiro CSV',
 	'sponsorship-dashboard-save-as-new' => 'Gardar como novo',
 	'sponsorship-dashboard-source-global' => 'datos para todos os wikis',
@@ -2006,6 +2029,7 @@ $messages['mk'] = array(
 	'sponsorship-dashboard-editor-Groups' => 'Групи',
 	'sponsorship-dashboard-user-type-0' => 'КорисникНаВикија',
 	'sponsorship-dashboard-user-type-1' => 'Корисник на СпонзорираниВрски',
+	'sponsorship-dashboard-empty-description' => '$1',
 	'sponsorship-dashboard-report-no-source' => 'Немате одбрано извор на податоци. Извештајот ќе се прикаже како страница за опис.',
 	'sponsorship-dashboard-report-data-source' => 'Извори на податоци',
 	'sponsorship-dashboard-report-description' => 'Опис',
@@ -2981,6 +3005,11 @@ $messages['sr-ec'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'sponsorship-dashboard-serie-H' => 'Bilder - Länkade',
+	'sponsorship-dashboard-serie-I' => 'Bilder - Uppladdade',
+	'sponsorship-dashboard-serie-J' => 'Videor - Inbäddade',
+	'sponsorship-dashboard-serie-K' => 'Videor - Uppladdade',
+	'sponsorship-dashboard-serie-organic' => 'Sökmotorer',
 	'sponsorship-dashboard-serie-content-article' => 'sidor',
 	'sponsorship-dashboard-serie-blog-comments' => 'Bloggkommentarer',
 	'sponsorship-dashboard-serie-general-edits' => '1+ allmänna redigeringar',
@@ -3001,13 +3030,20 @@ $messages['sv'] = array(
 	'sponsorship-dashboard-serie-namespace-Special' => 'Specialsidor',
 	'sponsorship-dashboard-serie-namespace-Talk' => 'Diskussionssidor',
 	'sponsorship-dashboard-serie-namespace-User' => 'Användarsidor',
+	'sponsorship-dashboard-serie-namespace-User_talk' => 'Användardiskussionssidor',
 	'sponsorship-dashboard-serie-namespace-Project' => 'Projektsidor',
+	'sponsorship-dashboard-serie-namespace-Project_talk' => 'Projektdiskussionssidor',
 	'sponsorship-dashboard-serie-namespace-File' => 'Filsidor',
+	'sponsorship-dashboard-serie-namespace-File_talk' => 'Fildiskussionssidor',
 	'sponsorship-dashboard-serie-namespace-MediaWiki' => 'MediaWiki-sidor',
+	'sponsorship-dashboard-serie-namespace-MediaWiki_talk' => 'MediaWiki-diskussionsidor',
 	'sponsorship-dashboard-serie-namespace-Template' => 'Mallsidor',
 	'sponsorship-dashboard-serie-namespace-Template_talk' => 'Malldiskussionssidor',
 	'sponsorship-dashboard-serie-namespace-Help' => 'Hjälpsidor',
+	'sponsorship-dashboard-serie-namespace-Help_talk' => 'Hjälpdiskussionssidor',
 	'sponsorship-dashboard-serie-namespace-Category' => 'Kategorisidor',
+	'sponsorship-dashboard-serie-namespace-Category_talk' => 'Kategoridiskussionssidor',
+	'sponsorship-dashboard-serie-namespace-Top_10_list' => 'Kategoridiskussionssidor',
 	'sponsorship-dashboard-serie-namespace-User_blog_comment' => 'Användarbloggkommentarer',
 	'sponsorship-dashboard-serie-namespace-User_blog' => 'Användarbloggsidor',
 	'sponsorship-dashboard-description-interests' => 'Wikis dina användare också besöker',

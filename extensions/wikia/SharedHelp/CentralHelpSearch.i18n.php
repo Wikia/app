@@ -29,6 +29,30 @@ $messages['gl'] = array(
 	'centralhelpsearch-placeholder' => 'Procurar na axuda&hellip;',
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'centralhelpsearch-desc' => 'Permitter le inclusion de un formulario pro cercar in le adjuta del Centro del Communitate',
+	'centralhelpsearch-placeholder' => 'Cercar adjuta&hellip;',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author Aldnonymous
+ */
+$messages['id'] = array(
+	'centralhelpsearch-desc' => 'Perbolehkan masuknya formulir untuk pencarian bantuan komunitas pusat',
+	'centralhelpsearch-placeholder' => 'Cari Bantuan ...',
+);
+
+/** Italian (Italiano)
+ * @author Leviathan 89
+ */
+$messages['it'] = array(
+	'centralhelpsearch-desc' => "Permetti l'inclusione di un form per cercare su Community Central Help",
+	'centralhelpsearch-placeholder' => 'Cerca aiuto&hellip;',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */

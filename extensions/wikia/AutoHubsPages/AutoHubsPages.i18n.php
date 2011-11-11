@@ -268,7 +268,7 @@ $messages['ia'] = array(
 	'unhide' => 'Revelar',
 	'hub-blog-header' => 'Top $1 de articulos',
 	'hub-hotspot-header' => 'Paginas popular',
-	'hub-topusers-header' => 'Top $1 de usatores',
+	'hub-topusers-header' => 'Redactor principal iste septimana sur le wikis de $1',
 	'hub-featured' => 'Wikis popular de $1',
 	'hub-header' => 'Wikis de $1',
 	'hub-hotspot-info' => 'Le paginas le plus popular de iste septimana, rangiate per numero de contributores.',
@@ -394,7 +394,7 @@ $messages['nl'] = array(
 $messages['no'] = array(
 	'unhide' => 'Vis',
 	'hub-blog-header' => 'Topp $1 poster',
-	'hub-hotspot-header' => 'Hot Spots',
+	'hub-hotspot-header' => 'Populære områder',
 	'hub-topusers-header' => 'Toppredaktører denne uken på $1-wikier',
 	'hub-featured' => 'Topp $1 wikier',
 	'hub-header' => '$ wikier',
@@ -529,7 +529,7 @@ $messages['ru'] = array(
 $messages['sr-ec'] = array(
 	'unhide' => 'Откриј',
 	'hub-hotspot-header' => 'Вруће тачке',
-	'hub-topusers-header' => 'Топ $1 корисника',
+	'hub-topusers-header' => 'Најбољи уредник ове недеље на $1 викија',
 	'hub-featured' => 'Топ $1 викија',
 	'hub-header' => '$1 викије',
 	'hub-blog-comments' => '{{PLURAL:$1|један коментар|$1 коментара|$1 коментара}}',
@@ -562,7 +562,7 @@ $messages['sv'] = array(
 	'hub-hide-feed' => 'Göm feed',
 	'hub-show-feed' => 'Visa feed',
 	'hub-contributors-info' => 'Dessa är veckans toppanvändare, rangordnade efter flest redigeringar.',
-	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|redaktör|redaktörer}}</span>',
+	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|redigerare|redigerare}}</span>',
 );
 
 /** Tamil (தமிழ்)

@@ -738,10 +738,10 @@ $messages['sr-ec'] = array(
 	'protectsite-allowall' => 'Сви корисници',
 	'protectsite-allowusersysop' => 'Уписани корисници и администратори',
 	'protectsite-allowsysop' => 'Само администратори',
-	'protectsite-createpage' => 'Дозволи стварање страница од стране',
-	'protectsite-edit' => 'Дозволи уређивање страница од стране',
-	'protectsite-move' => 'Дозволи преусмеравање страница од стране',
-	'protectsite-timeout' => 'Време истека:',
+	'protectsite-createpage' => 'Дозволи стварање страница од',
+	'protectsite-edit' => 'Дозволи уређивање страница од',
+	'protectsite-move' => 'Дозволи премештање страница од',
+	'protectsite-timeout' => 'Истиче:',
 	'protectsite-maxtimeout' => 'Највише:',
 	'protectsite-comment' => 'Коментар:',
 	'protectsite-ucomment' => 'Скини заштиту са коментара:',
@@ -774,6 +774,7 @@ $messages['sv'] = array(
 	'protectsite-until' => 'Skyddad till:',
 	'protectsite-protect' => 'Skydda',
 	'protectsite-unprotect' => 'Oskyddad',
+	'protectsite-nologs' => 'visa inte i loggar',
 );
 
 /** Swahili (Kiswahili)

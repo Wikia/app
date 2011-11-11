@@ -164,9 +164,20 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'unsubscribe' => 'Cancelar a subscrición',
+	'unsubscribe-badaccess' => 'Sentímolo, esta páxina non se pode empregar directamente. Siga a ligazón que se atopa no seu correo electrónico.',
+	'unsubscribe-badtoken' => 'Sentímolo, houbo un problema co pase de seguridade.',
+	'unsubscribe-bademail' => 'Sentímolo, houbo un problema co correo electrónico.',
+	'unsubscribe-badtime' => 'Sentímolo, a ligazón caducou. Use unha ligazón que teña menos de 7 días de antigüidade.',
+	'unsubscribe-nousers' => 'Non atopamos ningún usuario con ese enderezo de correo electrónico.',
+	'unsubscribe-noconfusers' => 'Non atopamos ningún usuario confirmado con ese enderezo de correo electrónico.',
 	'unsubscribe-confirm-legend' => 'Confirmar',
+	'unsubscribe-confirm-text' => 'Quere cancelar a subscrición de todas as contas con <code>$1</code>?',
 	'unsubscribe-confirm-button' => 'Si, estou seguro',
+	'unsubscribe-working' => 'Cancelando a subscrición {{PLURAL:$1|dunha conta|de $1 contas}} para $2',
+	'unsubscribe-working-problem' => 'problema ao cargar a información do usuario: $1',
 	'unsubscribe-working-done' => 'Completo.',
+	'unsubscribe-preferences-toggle' => 'Cancelar a subscrición de todos os correos electrónicos de Wikia (desmarque isto para acceder ás opcións embaixo)',
+	'unsubscribe-preferences-notice' => 'Os correos electrónicos desactiváronse para a súa conta. Visite a lapela de perfil de usuario para reactivalos.',
 );
 
 /** Hungarian (Magyar)
@@ -294,7 +305,7 @@ $messages['nl'] = array(
 	'unsubscribe-confirm-button' => 'Ja, ik weet het zeker',
 	'unsubscribe-working' => 'Bezig met het uitschrijven van {{PLURAL:$1|een gebruiker|$1 gebruikers}} voor $2',
 	'unsubscribe-working-problem' => 'probleem bij het laden van de gebruikersgegevens voor: $1',
-	'unsubscribe-working-done' => 'Afgerond.',
+	'unsubscribe-working-done' => 'Voltooid.',
 	'unsubscribe-preferences-toggle' => 'Afmelden voor alle e-mails van Wikia (vink dit uit dit voor toegang tot de instellingen hieronder)',
 	'unsubscribe-preferences-notice' => 'E-mails zijn uitgeschakeld voor uw gebruiker. Ga naar het gebruikersprofiel om e-mailberichten opnieuw in te schakelen.',
 );

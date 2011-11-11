@@ -261,15 +261,15 @@ $messages['ko'] = array(
 $messages['mk'] = array(
 	'activityindicator-message' => 'Вчитувам...',
 	'window-wikis-title' => 'Водичи за игри',
-	'window-wikis-wikilist-search-hint' => 'Нашите водечки игри',
+	'window-wikis-wikilist-search-hint' => 'Пребарајте ги нашите Водечки игри',
 	'window-category-load-batch' => 'Повеќе',
 	'window-article-button-close' => 'Затвори',
 	'window-article-button-back' => 'Назад',
 	'window-article-menu-search-label' => 'Пребарување',
 	'window-article-menu-dashboard-label' => 'Содржина на водичот',
 	'window-article-menu-cancel-label' => 'Откажи',
-	'searchview-no-results' => 'Нема пронајдено резулати за „%s“',
-	'searchview-button-back-list' => 'Назад кон списокот',
+	'searchview-no-results' => 'Не пронајдов резулати за „%s“',
+	'searchview-button-back-list' => 'Назад на списокот',
 	'searchview-button-back-article' => 'Назад на статијата',
 	'searchbar-hint' => 'Пребарај %s...',
 	'alert-download-updated-wikis-message' => 'Списокот на водичи на располагање ќе биде дополнет.',
@@ -311,9 +311,9 @@ $messages['ms'] = array(
  * @author Vicky Carlsson <vicky(at)wikia-inc.com>
  */
 $messages['nl'] = array(
-	'activityindicator-message' => 'Bezig met laden...',
+	'activityindicator-message' => 'Bezig met laden…',
 	'window-wikis-title' => 'Wikia Game Guides',
-	'window-wikis-wikilist-search-hint' => 'Zoek onze Top Games...',
+	'window-wikis-wikilist-search-hint' => 'Bekijk onze topgames...',
 	'window-category-load-batch' => 'Meer',
 	'window-article-button-close' => 'Sluit',
 	'window-article-button-back' => 'Terug',
@@ -384,6 +384,16 @@ $messages['pl'] = array(
 	'error-json-parse' => 'Aplikacja otrzymała błędne dane z serwera.\\nSpróbuj ponownie.',
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'window-article-button-close' => 'تړل',
+	'window-article-menu-search-label' => 'پلټنه',
+	'window-article-menu-cancel-label' => 'ناګارل',
+	'alert-download-updated-wikis-button-ok' => 'ښه',
+);
+
 /** Portuguese (Português)
  * @author Hamilton Abreu
  */
@@ -407,6 +417,32 @@ $messages['pt'] = array(
 	'error-no-connection' => 'Não está disponível nenhuma ligação à internet.\\nTente novamente, por favor.',
 	'error-server' => 'Desculpe, os nossos servidores responderam com um erro.\\nTente novamente, por favor.',
 	'error-json-parse' => 'Desculpe, houve um problema com os dados recebidos dos nossos servidores.\\nTente novamente, por favor.',
+);
+
+/** Russian (Русский)
+ * @author Byulent
+ * @author Kuzura
+ */
+$messages['ru'] = array(
+	'activityindicator-message' => 'Загрузка...',
+	'window-wikis-title' => 'Wikia Game Guides',
+	'window-wikis-wikilist-search-hint' => 'Поиск в Top Games...',
+	'window-category-load-batch' => 'Более',
+	'window-article-button-close' => 'Закрыть',
+	'window-article-button-back' => 'Назад',
+	'window-article-menu-search-label' => 'Поиск',
+	'window-article-menu-dashboard-label' => 'Содержание руководства',
+	'window-article-menu-cancel-label' => 'Отмена',
+	'searchview-no-results' => 'Нет результатов для "%s"',
+	'searchview-button-back-list' => 'Назад к списку',
+	'searchview-button-back-article' => 'Вернуться к статье',
+	'searchbar-hint' => 'Поиск  %s...',
+	'alert-download-updated-wikis-message' => 'Список доступных руководств будет обновлен.',
+	'alert-download-updated-wikis-button-ok' => 'OK',
+	'error-update-required' => 'Доступно и требуется обновление для этого приложения.',
+	'error-no-connection' => 'Нет подключения к Интернету. \\nПовторите попытку.',
+	'error-server' => 'Сервер отвечает ошибкой. \\nПовторите попытку.',
+	'error-json-parse' => 'Существует проблема с отправкой данных на наши сервера, извините. \\nПожалуйста, попытайтесь снова.',
 );
 
 /** Swedish (Svenska)

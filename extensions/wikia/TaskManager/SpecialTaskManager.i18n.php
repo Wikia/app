@@ -158,12 +158,15 @@ $messages['ia'] = array(
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author Aldnonymous
  * @author Farras
  */
 $messages['id'] = array(
 	'taskmanager' => 'Tampilkan dan kelola tugas latar belakang',
 	'taskmanager_title' => 'Tampilkan dan kelola tugas latar belakang',
 	'taskmanager_tasklist' => 'Kembali ke Daftar Tugas',
+	'right-taskmanager' => 'Dapat menampilkan latar belakang tugas',
+	'right-taskmanager-action' => 'Dapat mengatur latar belakang tugas',
 );
 
 /** Italian (Italiano)

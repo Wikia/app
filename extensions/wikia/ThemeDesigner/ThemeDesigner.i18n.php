@@ -75,7 +75,7 @@ $messages['qqq'] = array(
 	'themedesigner-medium' => '{{Identical|Medium}}',
 	'themedesigner-large' => '{{Identical|Large}}',
 	'themedesigner-tab-theme' => '{{Identical|Theme}}',
-        'themedesigner-rules-favicon-learn-more-link' => 'Learn more about favicons (link)',
+	'themedesigner-rules-favicon-learn-more-link' => 'Learn more about favicons (link)',
 	'themedesigner-history-item' => 'Parameters:
 * $1 is "how long ago"
 * $2 is the author name',
@@ -123,8 +123,8 @@ $messages['af'] = array(
 	'themedesigner-size' => 'grootte',
 	'themedesigner-button-save' => 'Stoor',
 	'themedesigner-upload-a-graphic' => "laai 'n beeld",
-	'themedesigner-rules-wordmark' => 'tot 250 x 65 pikels (slegs PNG-lêers)',
-	'themedesigner-dont-use-a-graphic' => "Moenie 'n beeld gebruik nie",
+	'themedesigner-rules-wordmark' => "Laai 'n .png-lêer met 250 x 65 of minder pikels op.",
+	'themedesigner-dont-use-a-graphic' => 'skrap',
 	'themedesigner-history-item' => '$1 deur $2',
 	'themedesigner-button-change-text' => 'Verander teks',
 	'themedesigner-size-error' => 'Foutiewe lêergrootte',
@@ -160,7 +160,7 @@ $messages['az'] = array(
 	'themedesigner-history-item' => '$1 tərəfindən $2',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author Jim-by
  */
 $messages['be-tarask'] = array(
@@ -266,6 +266,7 @@ $messages['bs'] = array(
 
 /** Catalan (Català)
  * @author BroOk
+ * @author CuBaN VeRcEttI
  */
 $messages['ca'] = array(
 	'themedesigner-desc' => 'Permet als administradors del wiki dissenyar un tema per a un wiki',
@@ -282,7 +283,9 @@ $messages['ca'] = array(
 	'themedesigner-small' => 'Petit',
 	'themedesigner-medium' => 'Mitjà',
 	'themedesigner-large' => 'Gran',
-	'themedesigner-tile-background' => 'fons de rajoles',
+	'themedesigner-tile-background' => 'mosaic',
+	'themedesigner-fix-background' => 'fixar',
+	'themedesigner-transparency' => 'transparència',
 	'themedesigner-tab-theme' => 'Tema',
 	'themedesigner-tab-customize' => 'Personalitzar',
 	'themedesigner-tab-wordmark' => 'Logotip',
@@ -309,11 +312,12 @@ $messages['ca'] = array(
 	'themedesigner-dont-use-a-graphic' => 'No utilitzeu un gràfic',
 	'themedesigner-history-item' => '$1 de $2',
 	'themedesigner-button-change-text' => 'Canvia el text',
-	'themedesigner-reason' => 'Theme Designer - guardat de $1',
+	'themedesigner-reason' => 'Dissenyador de Temes - guardat de $1',
 	'themedesigner-size-error' => 'Mida del fitxer incorrecta',
 	'themedesigner-dimensions-error' => 'La imatge supera els límits de les dimensions',
 	'themedesigner-type-error' => 'Tipus de fitxer incorrecte',
 	'themedesugber-uknown-error' => "S'ha produït un error, per desgràcia no hem estat capaços d'identificar-lo, si us plau provi una altra vegada",
+	'themedesigner-manual-upload-error' => 'Utilitza el Dissenyador de Temes per a pujar un logo o uns fons per al teu wiki',
 );
 
 /** Czech (Česky)
@@ -436,6 +440,7 @@ $messages['en-gb'] = array(
 /** Spanish (Español)
  * @author Absay
  * @author Bola
+ * @author CuBaN VeRcEttI
  * @author Danke7
  * @author Fitoschido
  * @author Locos epraix
@@ -457,7 +462,7 @@ $messages['es'] = array(
 	'themedesigner-small' => 'Pequeño',
 	'themedesigner-medium' => 'Mediano',
 	'themedesigner-large' => 'Grande',
-	'themedesigner-tile-background' => 'fondo en mosaico',
+	'themedesigner-tile-background' => 'mosaico',
 	'themedesigner-tab-theme' => 'Tema',
 	'themedesigner-tab-customize' => 'Personalizar',
 	'themedesigner-tab-wordmark' => 'Wordmark',
@@ -596,7 +601,7 @@ $messages['fr'] = array(
 	'themedesigner-tab-wordmark' => 'Symbole',
 	'themedesigner-preview-mode' => 'Mode de prévisualisation...',
 	'themedesigner-previous-versions' => 'Versions précédentes',
-	'themedesigner-button-save-im-done' => 'Enregistrer, j’ai fini',
+	'themedesigner-button-save-im-done' => 'Enregistrer, j’ai terminé',
 	'themedesigner-button-cancel' => 'Annuler',
 	'themedesigner-pick-a-color' => 'Sélectionnez une couleur',
 	'themedesigner-enter-your-own' => 'Saisissez la vôtre',
@@ -629,6 +634,7 @@ $messages['fr'] = array(
  * @author Toliño
  */
 $messages['gl'] = array(
+	'themedesigner-or' => 'ou',
 	'themedesigner-desc' => 'Permite aos administradores deseñar o tema visual do wiki',
 	'themedesigner-title' => 'Deseñador de temas visuais de Wikia',
 	'themedesigner-background' => 'Fondo',
@@ -668,8 +674,10 @@ $messages['gl'] = array(
 	'themedesigner-size' => 'tamaño',
 	'themedesigner-button-save' => 'Gardar',
 	'themedesigner-upload-a-graphic' => 'cargar un gráfico',
-	'themedesigner-rules-wordmark' => 'ata 250x65 píxeles (só ficheiros .png)',
-	'themedesigner-dont-use-a-graphic' => 'Non usar un gráfico',
+	'themedesigner-rules-wordmark' => 'Cargar un ficheiro .png de 250x65 píxeles ou menos.',
+	'themedesigner-rules-favicon' => 'Cargar un ficheiro .ico de 16x16 píxeles. Estes logos son as iconas pequenas que aparecen na lapela do navegador.',
+	'themedesigner-rules-favicon-learn-more-link' => 'Máis información.',
+	'themedesigner-dont-use-a-graphic' => 'eliminar',
 	'themedesigner-history-item' => '$1 por $2',
 	'themedesigner-button-change-text' => 'Cambiar o texto',
 	'themedesigner-reason' => 'Deseñador de temas visuais; gardado por $1',
@@ -678,6 +686,7 @@ $messages['gl'] = array(
 	'themedesigner-type-error' => 'Tipo de ficheiro incorrecto',
 	'themedesugber-uknown-error' => 'Houbo un erro. Por desgraza, non fomos capaces de identificalo. Inténteo de novo',
 	'themedesigner-manual-upload-error' => 'Use o Deseñador de temas visuais para cargar un logo ou o fondo do wiki',
+	'themedesigner-favicon-heading' => 'Logo',
 );
 
 /** Hungarian (Magyar)
@@ -738,7 +747,9 @@ $messages['ia'] = array(
 	'themedesigner-small' => 'Micre',
 	'themedesigner-medium' => 'Medie',
 	'themedesigner-large' => 'Grande',
-	'themedesigner-tile-background' => 'fundo in tegulas',
+	'themedesigner-tile-background' => 'tegula',
+	'themedesigner-fix-background' => 'fixe',
+	'themedesigner-transparency' => 'transparentia',
 	'themedesigner-tab-theme' => 'Thema',
 	'themedesigner-tab-customize' => 'Personalisar',
 	'themedesigner-tab-wordmark' => 'Logotypo',
@@ -761,8 +772,10 @@ $messages['ia'] = array(
 	'themedesigner-size' => 'dimension',
 	'themedesigner-button-save' => 'Salveguardar',
 	'themedesigner-upload-a-graphic' => 'incargar un graphico',
-	'themedesigner-rules-wordmark' => 'usque a 250×65 pixels (files .png solmente)',
-	'themedesigner-dont-use-a-graphic' => 'Non usar un graphico',
+	'themedesigner-rules-wordmark' => 'Incarga un file .png que es 250 × 65 pixels o minus.',
+	'themedesigner-rules-favicon' => 'Incarga un file .ico de 16 × 16 pixels. Un favicon es un micre icone que appare in le scheda de navigator de tu wiki.',
+	'themedesigner-rules-favicon-learn-more-link' => 'Lege plus.',
+	'themedesigner-dont-use-a-graphic' => 'remover',
 	'themedesigner-history-item' => '$1 per $2',
 	'themedesigner-button-change-text' => 'Cambiar texto',
 	'themedesigner-reason' => 'Designator de apparentias – salveguardate per $1',
@@ -771,6 +784,7 @@ $messages['ia'] = array(
 	'themedesigner-type-error' => 'Typo de file incorrecte',
 	'themedesugber-uknown-error' => 'Un error occurreva. Regrettabilemente nos non succedeva a identificar lo. Per favor reproba.',
 	'themedesigner-manual-upload-error' => 'Usa le designator de apparentias pro incargar un marca de parola o un fundo pro le wiki.',
+	'themedesigner-favicon-heading' => 'Favicon',
 );
 
 /** Ingush (ГІалгІай Ğalğaj)
@@ -878,7 +892,7 @@ $messages['km'] = array(
 	'themedesugber-uknown-error' => 'មានបញ្ហាកើតឡើង ដោយយើងមិនដឹងថាមកពីមូលហេតុអ្វី។ សូមសាកល្បងម្ដងទៀត',
 );
 
-/** Kurdish (Latin script) (Kurdî (latînî))
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -907,6 +921,7 @@ $messages['lb'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
+	'themedesigner-or' => 'или',
 	'themedesigner-desc' => 'Им овозможува на вики-администраторите ликовно да го уредат изгледот на викито',
 	'themedesigner-title' => 'Ликовен уредник на Викија',
 	'themedesigner-background' => 'Позадина',
@@ -946,8 +961,10 @@ $messages['mk'] = array(
 	'themedesigner-size' => 'големина',
 	'themedesigner-button-save' => 'Зачувај',
 	'themedesigner-upload-a-graphic' => 'подигни графика',
-	'themedesigner-rules-wordmark' => 'до 250x65 пиксели (само .png податотеки)',
-	'themedesigner-dont-use-a-graphic' => 'Не користи графика',
+	'themedesigner-rules-wordmark' => 'Подигнете .png податотека со највеќе 250 x 65 пиксели.',
+	'themedesigner-rules-favicon' => "Подигнете податотека во форматот .ico со димензии од 16 x 16 пиксели. Адресната икона (англ. ''favicon'') е ситна иконка што се јавува во адресната лента на викито.",
+	'themedesigner-rules-favicon-learn-more-link' => 'Дознајте повеќе.',
+	'themedesigner-dont-use-a-graphic' => 'отстрани',
 	'themedesigner-history-item' => '$1 од $2',
 	'themedesigner-button-change-text' => 'Измени текст',
 	'themedesigner-reason' => 'Ликовен уредник - зачувал: $1',
@@ -956,6 +973,7 @@ $messages['mk'] = array(
 	'themedesigner-type-error' => 'Неправилен тип на податотека',
 	'themedesugber-uknown-error' => 'Се појави грешка. Нажалост, не бевме во можност да ја утврдиме. Обидете се повторно.',
 	'themedesigner-manual-upload-error' => 'Користете го Ликовниот уредник за да подигнете жиг или вики-позадина',
+	'themedesigner-favicon-heading' => 'Адресна икона',
 );
 
 /** Mongolian (Монгол)
@@ -969,6 +987,7 @@ $messages['mn'] = array(
  * @author Anakmalaysia
  */
 $messages['ms'] = array(
+	'themedesigner-or' => 'atau',
 	'themedesigner-desc' => 'Membolekan pentadbir wiki mereka bentuk tema untuk wiki',
 	'themedesigner-title' => 'Pereka Tema Wikia',
 	'themedesigner-background' => 'Latar belakang',
@@ -991,7 +1010,7 @@ $messages['ms'] = array(
 	'themedesigner-tab-wordmark' => 'Tanda kata',
 	'themedesigner-preview-mode' => 'Mod Pratonton...',
 	'themedesigner-previous-versions' => 'Versi dahulu',
-	'themedesigner-button-save-im-done' => 'Simpan (dah siap)',
+	'themedesigner-button-save-im-done' => 'Simpan, saya dah siap',
 	'themedesigner-button-cancel' => 'Batalkan',
 	'themedesigner-pick-a-color' => 'Pilih warna',
 	'themedesigner-enter-your-own' => 'Taipkan sendiri',
@@ -1008,8 +1027,10 @@ $messages['ms'] = array(
 	'themedesigner-size' => 'saiz',
 	'themedesigner-button-save' => 'Simpan',
 	'themedesigner-upload-a-graphic' => 'muat naik grafik',
-	'themedesigner-rules-wordmark' => 'maks. 250x65 piksel (fail .png sahaja)',
-	'themedesigner-dont-use-a-graphic' => 'Jangan gunakan grafik',
+	'themedesigner-rules-wordmark' => 'Muat naik fail .png yang besarnya 250 x 65 piksel ke bawah.',
+	'themedesigner-rules-favicon' => 'Muat naik fail .iko 16x16 piksel. Favikon merupakan ikon kecil yang muncul pada tab pelayar wiki anda.',
+	'themedesigner-rules-favicon-learn-more-link' => 'Ketahui lebih lanjut.',
+	'themedesigner-dont-use-a-graphic' => 'buang',
 	'themedesigner-history-item' => '$1 oleh $2',
 	'themedesigner-button-change-text' => 'Ubah teks',
 	'themedesigner-reason' => 'Pereka Tema – disimpan oleh $1',
@@ -1018,6 +1039,7 @@ $messages['ms'] = array(
 	'themedesigner-type-error' => 'Jenis fail tidak betul',
 	'themedesugber-uknown-error' => 'Ada ralat, tetapi kami tidak dapat mengenal pastinya; sila cuba lagi',
 	'themedesigner-manual-upload-error' => 'Gunakan Pereka Tema untuk memuat naik tanda kata atau latar belakang wiki',
+	'themedesigner-favicon-heading' => 'Favikon',
 );
 
 /** Burmese (မြန်မာဘာသာ)
@@ -1054,8 +1076,10 @@ $messages['mzn'] = array(
  * @author McDutchie
  * @author SPQRobin
  * @author Siebrand
+ * @author Tjcool007
  */
 $messages['nl'] = array(
+	'themedesigner-or' => 'of',
 	'themedesigner-desc' => 'Staat wikibeheerders toe een thema voor een wiki te ontwerpen',
 	'themedesigner-title' => 'Wikia Themaontwerper',
 	'themedesigner-background' => 'Achtergrond',
@@ -1095,8 +1119,10 @@ $messages['nl'] = array(
 	'themedesigner-size' => 'grootte',
 	'themedesigner-button-save' => 'Opslaan',
 	'themedesigner-upload-a-graphic' => 'afbeelding uploaden',
-	'themedesigner-rules-wordmark' => 'tot 250 x 65 pixels (alleen PNG-bestanden)',
-	'themedesigner-dont-use-a-graphic' => 'Geen afbeelding gebruiken',
+	'themedesigner-rules-wordmark' => 'Upload een .png bestand van 250 x 65 pixels of minder.',
+	'themedesigner-rules-favicon' => 'Upload een ico-bestand van 16 x 16 pixels. Een favicon is een klein icoon dat wordt weergegeven in het tabblad van een browser.',
+	'themedesigner-rules-favicon-learn-more-link' => 'Meer lezen.',
+	'themedesigner-dont-use-a-graphic' => 'verwijderen',
 	'themedesigner-history-item' => '$1 door $2',
 	'themedesigner-button-change-text' => 'Tekst wijzigen',
 	'themedesigner-reason' => 'Uiterlijk ontwerpen - opgeslagen door $1',
@@ -1105,13 +1131,15 @@ $messages['nl'] = array(
 	'themedesigner-type-error' => 'Onjuist bestandstype',
 	'themedesugber-uknown-error' => 'Er is helaas een onbekende fout opgetreden. Probeer het opnieuw.',
 	'themedesigner-manual-upload-error' => 'Gebruik de Themaontwerper om een woordmerk of wiki achtergrond te uploaden.',
+	'themedesigner-favicon-heading' => 'Favicon',
 );
 
-/** Norwegian (bokmål) (Norsk (bokmål))
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
 $messages['no'] = array(
+	'themedesigner-or' => 'eller',
 	'themedesigner-desc' => 'Lar wiki-administratorer utforme et tema for en wiki',
 	'themedesigner-title' => 'Wikia-temautformer',
 	'themedesigner-background' => 'Bakgrunn',
@@ -1151,8 +1179,9 @@ $messages['no'] = array(
 	'themedesigner-size' => 'størrelse',
 	'themedesigner-button-save' => 'Lagre',
 	'themedesigner-upload-a-graphic' => 'last opp en grafikk',
-	'themedesigner-rules-wordmark' => 'opptil 250x65 piksler (kun .png-filer)',
-	'themedesigner-dont-use-a-graphic' => 'Ikke bruk en grafikk',
+	'themedesigner-rules-wordmark' => 'Last opp en .png-fil som er  250 x 65 piksler eller mindre',
+	'themedesigner-rules-favicon-learn-more-link' => 'Lær mer.',
+	'themedesigner-dont-use-a-graphic' => 'fjern',
 	'themedesigner-history-item' => '$1 av $2',
 	'themedesigner-button-change-text' => 'Skift tekst',
 	'themedesigner-reason' => 'Temautformer - lagring gjort av $1',
@@ -1161,6 +1190,7 @@ $messages['no'] = array(
 	'themedesigner-type-error' => 'Feil filtype',
 	'themedesugber-uknown-error' => 'En feil har oppstått, og vi var desverre ikke i stand til å identifisere den. Vennligst prøv igjen',
 	'themedesigner-manual-upload-error' => 'Bruk Temautformeren for å laste opp en logo eller bakgrunn for wikien',
+	'themedesigner-favicon-heading' => 'Favicon',
 );
 
 /** Deitsch (Deitsch) */
@@ -1172,6 +1202,7 @@ $messages['pdc'] = array(
  * @author Cloudissimo
  * @author Sovq
  * @author Sp5uhe
+ * @author Wladekb
  */
 $messages['pl'] = array(
 	'themedesigner-desc' => 'Pozwala administratorom edytować motyw graficzny wiki.',
@@ -1189,6 +1220,8 @@ $messages['pl'] = array(
 	'themedesigner-medium' => 'Średnia',
 	'themedesigner-large' => 'Duża',
 	'themedesigner-tile-background' => 'tło',
+	'themedesigner-fix-background' => 'nieruchomy',
+	'themedesigner-transparency' => 'przezroczystość',
 	'themedesigner-tab-theme' => 'Motyw',
 	'themedesigner-tab-customize' => 'Dostosuj',
 	'themedesigner-tab-wordmark' => 'Logo tekstowe',
@@ -1458,8 +1491,10 @@ $messages['ru'] = array(
 	'themedesigner-size' => 'размер',
 	'themedesigner-button-save' => 'Сохранить',
 	'themedesigner-upload-a-graphic' => 'загрузить',
-	'themedesigner-rules-wordmark' => 'не более 250x65 пикселов (только .png файлы)',
-	'themedesigner-dont-use-a-graphic' => 'Не использовать изображение',
+	'themedesigner-rules-wordmark' => 'Загружайте файлы .png размером не более 250x65 пикселей.',
+	'themedesigner-rules-favicon' => 'Загрузите файл .ico, размером 16x16 пикселей. Фавикон - это значок слева от url вашей вики в адресной строке вашего браузера.',
+	'themedesigner-rules-favicon-learn-more-link' => 'Узнать больше.',
+	'themedesigner-dont-use-a-graphic' => 'удалить',
 	'themedesigner-history-item' => '$1 — $2',
 	'themedesigner-button-change-text' => 'Изменить текст',
 	'themedesigner-reason' => 'Конструктор тем - сохранить $1',
@@ -1468,9 +1503,10 @@ $messages['ru'] = array(
 	'themedesigner-type-error' => 'Неверный тип файла',
 	'themedesugber-uknown-error' => 'Произошла ошибка, к сожалению мы не смогли идентифицировать его, пожалуйста, попробуйте снова',
 	'themedesigner-manual-upload-error' => 'Использовать Конструктор тем для загрузки логотипа и фонового изображения на вики',
+	'themedesigner-favicon-heading' => 'Фавикон',
 );
 
-/** Serbian (Cyrillic script) (Српски (ћирилица))
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -1492,7 +1528,7 @@ $messages['sr-ec'] = array(
 	'themedesigner-button-save-im-done' => 'Сачувај',
 	'themedesigner-button-cancel' => 'Откажи',
 	'themedesigner-pick-a-color' => 'Изаберите боју',
-	'themedesigner-color-name-or-hex-code' => 'Назив боје или хекс кôд',
+	'themedesigner-color-name-or-hex-code' => 'Назив боје или хекс-кода',
 	'themedesigner-button-ok' => 'У реду',
 	'themedesigner-pick-an-image' => 'Изаберите слику',
 	'themedesigner-dont-use-a-background' => 'Не користите позадину',
@@ -1527,11 +1563,17 @@ $messages['sv'] = array(
 	'themedesigner-buttons' => 'knappar',
 	'themedesigner-links' => 'länkar',
 	'themedesigner-header' => 'header',
+	'themedesigner-text-wordmark' => 'Textlogotyp',
+	'themedesigner-graphic-wordmark' => 'Bildlogotyp',
 	'themedesigner-small' => 'Liten',
 	'themedesigner-medium' => 'Medium',
 	'themedesigner-large' => 'Stor',
+	'themedesigner-tile-background' => 'ruta',
+	'themedesigner-fix-background' => 'fix',
+	'themedesigner-transparency' => 'genomskinlighet',
 	'themedesigner-tab-theme' => 'Tema',
 	'themedesigner-tab-customize' => 'Anpassa',
+	'themedesigner-tab-wordmark' => 'Logotyp',
 	'themedesigner-preview-mode' => 'Förhandsgranskningsläge...',
 	'themedesigner-previous-versions' => 'Tidigare versioner',
 	'themedesigner-button-save-im-done' => 'Spara, jag är klar',
@@ -1550,13 +1592,17 @@ $messages['sv'] = array(
 	'themedesigner-font' => 'teckensnitt',
 	'themedesigner-size' => 'storlek',
 	'themedesigner-button-save' => 'Spara',
+	'themedesigner-upload-a-graphic' => 'ladda upp en bild',
 	'themedesigner-rules-wordmark' => 'upp till 250x65 pixlar (endast .png filer)',
+	'themedesigner-dont-use-a-graphic' => 'Använd inte en bild',
 	'themedesigner-history-item' => '$1 av $2',
 	'themedesigner-button-change-text' => 'Ändra text',
+	'themedesigner-reason' => 'Temadesigner - sparad av $1',
 	'themedesigner-size-error' => 'Fel filstorlek',
 	'themedesigner-dimensions-error' => 'Bilden överskrider måttets gränser',
 	'themedesigner-type-error' => 'Fel filtyp',
 	'themedesugber-uknown-error' => 'Ett fel har uppstått, tyvärr kunde vi inte identifiera det, försök igen',
+	'themedesigner-manual-upload-error' => 'Använd temadesignern för att ladda upp logotyp eller wiki-bakgrund',
 );
 
 /** Telugu (తెలుగు)
@@ -1707,7 +1753,7 @@ $messages['vi'] = array(
 	'themedesugber-uknown-error' => 'Lỗi đã xảy ra, tiếc là chúng tôi không thể xác định nó, xin vui lòng thử lại',
 );
 
-/** Simplified Chinese (中文(简体))
+/** Simplified Chinese (‪中文(简体)‬)
  * @author Hydra
  */
 $messages['zh-hans'] = array(

@@ -23,6 +23,12 @@ $messages['en'] = array(
 	'communitymessages-notice-msg' => 'Community Messages has been updated.',
 );
 
+/** Message documentation (Message documentation) */
+$messages['qqq'] = array(
+	'communitymessages-desc' => 'A description of this extension',
+	'communitymessages-notice-msg' => 'A message about updating Community Messages',
+);
+
 /** Asturian (Asturianu)
  * @author Xuacu
  */
@@ -283,7 +289,3 @@ $messages['vi'] = array(
 	'communitymessages-notice-msg' => 'Thông điệp cộng đồng đã được cập nhật',
 );
 
-$messages['qqq'] = array(
-	'communitymessages-desc' => 'A description of this extension',
-	'communitymessages-notice-msg' => 'A message about updating Community Messages',
-);

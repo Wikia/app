@@ -62,6 +62,22 @@ Wikia
 	'article-comments-rc-wall-messages' => 'Wall',
 );
 
+/** Message documentation (Message documentation) */
+$messages['qqq'] = array(
+	'article-comments-rc-wall-messages' => 'shown in recent changes when there is a block of actions on a message wall (message wall extension uses some of article comments mechanisms)',
+);
+
+/** толышә зывон (толышә зывон)
+ * @author Гусейн
+ */
+$messages['tly'] = array(
+	'article-comments-cancel' => 'Ләғв кардеј',
+	'article-comments-delete' => 'рәдд кардеј',
+	'article-comments-edit' => 'сәрост кардеј',
+	'article-comments-history' => 'тарых',
+	'article-comments-prev-page' => 'Ныва.',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
@@ -113,7 +129,7 @@ $messages['bar'] = array(
 	'article-comments-comments' => 'Kómmentar ($1)',
 	'article-comments-post' => 'An Kómmentar obgeem',
 	'article-comments-cancel' => 'Obbrechen',
-	'article-comments-delete' => 'leschen',
+	'article-comments-delete' => 'léschen',
 	'article-comments-edit' => 'werkeln',
 	'article-comments-history' => 'Versiónen',
 	'article-comments-error' => 'Da Kómmentar hod néd gspeicherd wern kenner',
@@ -127,6 +143,7 @@ $messages['bar'] = array(
 	'article-comments-login' => 'Zum Kómmentirn <a href="$1">åmöden</a>.',
 	'article-comments-toc-item' => 'Kómmentare',
 	'article-comments-comment-cannot-add' => 'Du kåst an Kómmentar zum Artiké dazuadoah.',
+	'article-comments-vote' => 'Obstimmer',
 	'article-comments-reply' => 'Åntworten',
 	'article-comments-show-all' => 'Olle Kómmentare zoang',
 	'article-comments-prev-page' => 'Vurherige',
@@ -464,13 +481,16 @@ $messages['fa'] = array(
 );
 
 /** Finnish (Suomi)
+ * @author Tm T
  * @author Tofu II
  */
 $messages['fi'] = array(
 	'article-comments-anonymous' => 'Anonyymi käyttäjä',
 	'article-comments-comments' => 'Kommentit ($1)',
 	'article-comments-post' => 'Lähetä kommentti',
+	'article-comments-cancel' => 'Peruuta',
 	'article-comments-delete' => 'poista',
+	'article-comments-edit' => 'muokkaa',
 	'article-comments-history' => 'historiasta',
 	'article-comments-undeleted-comment' => 'Kommenttia ei poistettu blogisivulta $1',
 	'article-comments-rc-comment' => 'Artikkelin kommentti (<span class="plainlinks">[$1 $2]</span>)',
@@ -594,6 +614,7 @@ Wikia
 <li>Quere controlar os correos electrónicos que recibe? <a href="{{fullurl:Special:Preferences}}">Actualice as súas preferencias<a>.</li>
 </ul>
 </p>',
+	'article-comments-rc-wall-messages' => 'Muro',
 );
 
 /** Hungarian (Magyar)
@@ -674,6 +695,29 @@ Wikia
 <li>Vole determinar qual emails tu recipe? <a href="{{fullurl:Special:Preferences}}">Actualisa tu preferentias<a>.</li>
 </ul>
 </p>',
+	'article-comments-rc-wall-messages' => 'Muro',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author Aldnonymous
+ */
+$messages['id'] = array(
+	'article-comments-anonymous' => 'Pengguna anonim',
+	'article-comments-comments' => 'Komentar ($1)',
+	'article-comments-post' => 'Kirim komentar',
+	'article-comments-cancel' => 'Batalkan',
+	'article-comments-delete' => 'hapus',
+	'article-comments-edit' => 'sunting',
+	'article-comments-history' => 'versi',
+	'article-comments-error' => 'Komentar tidak dapat disimpan',
+	'article-comments-undeleted-comment' => 'Batalkan hapus komentar untuk halaman blog $1',
+	'article-comments-toc-item' => 'Komentar',
+	'article-comments-comment-cannot-add' => 'Anda tidak dapat menambahkan komentar ke artikel',
+	'article-comments-vote' => 'Memberikan suara',
+	'article-comments-reply' => 'Balas',
+	'article-comments-show-all' => 'Perlihatkan semua komentar',
+	'article-comments-prev-page' => 'Sebelumnya',
+	'article-comments-next-page' => 'Selanjutnya',
 );
 
 /** Ingush (ГІалгІай Ğalğaj)
@@ -686,14 +730,60 @@ $messages['inh'] = array(
 	'article-comments-history' => 'искар',
 );
 
-/** Italian (Italiano) */
+/** Italian (Italiano)
+ * @author Leviathan 89
+ */
 $messages['it'] = array(
 	'article-comments-anonymous' => 'Utente anonimo',
 	'article-comments-comments' => 'Commenti ($1)',
 	'article-comments-post' => 'Lascia un commento',
+	'article-comments-cancel' => 'Annulla',
 	'article-comments-delete' => 'Cancella',
+	'article-comments-edit' => 'modifica',
+	'article-comments-history' => 'cronologia',
+	'article-comments-error' => 'Il commento non è stato salvato',
 	'article-comments-undeleted-comment' => 'Commenti non cancellati della pagina $1',
-	'article-comments-login' => '<a href="$1">Accedi per lasciare un commenti</a>',
+	'article-comments-rc-comment' => 'Commento dell\'articolo (<span class="plainlinks">[$1 $2]</span>)',
+	'article-comments-rc-comments' => 'Commenti articolo ([[$1]])',
+	'article-comments-fblogin' => 'Per favore <a href="$1" rel="nofollow">accedi a Facebook</a> per commentare su questa wiki!',
+	'article-comments-fbconnect' => 'Per favore <a href="$1">connetti questo account a Facebook</a> per commentare!',
+	'article-comments-rc-blog-comment' => 'Commento blog (<span class="plainlinks">[$1 $2]</span>)',
+	'article-comments-rc-blog-comments' => 'Commenti blog ([[$1]])',
+	'article-comments-login' => 'Per favore <a href="$1">accedi</a> per postare un commento su questa wiki.',
+	'article-comments-toc-item' => 'Commenti',
+	'article-comments-comment-cannot-add' => "Non puoi commentare l'articolo",
+	'article-comments-reply' => 'Rispondi',
+	'article-comments-show-all' => 'Mostra tutti i commenti',
+	'article-comments-prev-page' => 'Prec',
+	'article-comments-next-page' => 'Succ',
+	'article-comments-page-spacer' => '&#160...&#160',
+	'article-comments-delete-reason' => "L'articolo / commento padre è stato cancellato.",
+	'article-comments-empty-comment' => "Non puoi inserire un commento vuoto. <a href='$1'>Vuoi cancellarlo invece?</a>",
+	'enotif_subject_article_comment' => '$PAGEEDITOR ha commentato su "$PAGETITLE" su {{SITENAME}}',
+	'enotif_body_article_comment' => 'Caro $WATCHINGUSERNAME,
+
+$PAGEEDITOR ha commentato su "$PAGETITLE".
+
+Per vedere il commento, seguire il link qui sotto:
+$PAGETITLE_URL
+
+Per favore continua a visitare e contribuire spesso...
+
+Wikia',
+	'enotif_body_article_comment-HTML' => '<p>Caro $WATCHINGUSERNAME,
+<br /><br />
+$PAGEEDITOR ha commentato su "$PAGETITLE".
+<br /><br />
+Per vedere il commento, seguire il link: <a href="$PAGETITLE_URL">$PAGETITLE</a>
+<br /><br />
+Per favore continua a visitare e contribuire spesso...
+<br /><br />
+Wikia
+<br /><hr />
+<ul>
+<li>Vuoi scegliere quali e-mail ricevere? <a href="{{fullurl:Special:Preferences}}">Aggiorna le tue preferenze<a>...</a> </a></li>
+</ul>
+</p>',
 );
 
 /** Japanese (日本語)
@@ -899,6 +989,7 @@ $PAGEEDITOR коментираше на „$PAGETITLE“.
 <li>Сакате да определите кои пораки да ги добивате? <a href="{{fullurl:Special:Preferences}}">Изменете си ги нагодувањата<a>.</li>
 </ul>
 </p>',
+	'article-comments-rc-wall-messages' => 'Ѕид',
 );
 
 /** Malayalam (മലയാളം)
@@ -976,6 +1067,7 @@ Wikia
 <li>Nak kawal emel mana yang anda terima? <a href="{{fullurl:Special:Preferences}}">Kemaskini Keutamaan anda<a>.</li>
 </ul>
 </p>',
+	'article-comments-rc-wall-messages' => 'Tembok',
 );
 
 /** Mazanderani (مازِرونی)
@@ -1043,6 +1135,7 @@ Wikia
 <li>Wilt u bepalen welke e-mails u ontvangt? <a href="{{fullurl:{{ns:special}}:Preferences}}">Pas dan uw Voorkeuren<a> aan.</li>
 </ul>
 </p>',
+	'article-comments-rc-wall-messages' => 'Muur',
 );
 
 /** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
@@ -1122,6 +1215,7 @@ Wikia
 <li>Vil du kontrollere hva slags e-post du mottar? <a href="{{fullurl:Special:Preferences}}">Oppdater innstillingene dine<a>.</li>
 </ul>
 </p>',
+	'article-comments-rc-wall-messages' => 'Vegg',
 );
 
 /** Polish (Polski)
@@ -1188,11 +1282,15 @@ Wikia
 $messages['ps'] = array(
 	'article-comments-anonymous' => 'ورکنومی کارن',
 	'article-comments-comments' => 'تبصرې ($1)',
+	'article-comments-cancel' => 'ناګارل',
 	'article-comments-delete' => 'ړنګول',
 	'article-comments-edit' => 'سمول',
 	'article-comments-history' => 'پېښليک',
+	'article-comments-toc-item' => 'تبصرې',
 	'article-comments-reply' => 'ځوابول',
 	'article-comments-show-all' => 'ټولې تبصرې ښکاره کول',
+	'article-comments-prev-page' => 'پخوانی',
+	'article-comments-next-page' => 'راتلونکی',
 );
 
 /** Portuguese (Português)
@@ -1365,6 +1463,7 @@ $messages['ru'] = array(
 	'article-comments-delete-reason' => 'Родительская статьи / родительский комментарий был удален',
 	'article-comments-empty-comment' => "Вы не можете добавить пустой комментарий. <a href='$1'>Удалить его?</a>",
 	'enotif_subject_article_comment' => '$PAGEEDITOR прокомментировал "$ PAGETITLE" на {{SITENAME}}',
+	'article-comments-rc-wall-messages' => 'Обсудить',
 );
 
 /** Sinhala (සිංහල)
@@ -1431,6 +1530,7 @@ Wikia
 <li>Vill du kontrollera vilka e-postmeddelanden du får? <a href="{{fullurl:Special:Preferences}}">Uppdatera dina inställningar.<a>.</li>
 </ul>
 </p>',
+	'article-comments-rc-wall-messages' => 'Vägg',
 );
 
 /** Telugu (తెలుగు)
@@ -1588,6 +1688,3 @@ $messages['zh-hans'] = array(
 	'article-comments-next-page' => '下一页',
 );
 
-$messages['qqq'] = array( 
-	'article-comments-rc-wall-messages' => 'shown in recent changes when there is a block of actions on a message wall (message wall extension uses some of article comments mechanisms)', 
-); 

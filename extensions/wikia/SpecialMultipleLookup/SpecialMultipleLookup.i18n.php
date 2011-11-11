@@ -358,7 +358,7 @@ $messages['ia'] = array(
 	'multilookup' => 'Cerca multiple',
 	'multilookupstitle' => 'Cerca multiple',
 	'multilookupselectuser' => 'Cerca contos usate desde le mesme adresse IP in multiple wikis',
-	'multilookupgo' => 'Ir',
+	'multilookupgo' => 'Va',
 	'multilookupnotspecify' => 'Tu non ha ancora specificate un adresse IP',
 	'multilookupnext' => 'sequente',
 	'multilookupprevious' => 'precedente',
@@ -737,6 +737,7 @@ $messages['ro'] = array(
 );
 
 /** Russian (Русский)
+ * @author Eleferen
  * @author Kuzura
  * @author Lockal
  * @author Александр Сигачёв
@@ -759,6 +760,7 @@ $messages['ru'] = array(
 	'multilookuplistwikiainfo' => 'Список вики, статьи которых были отредактированы участниками с IP: <b>$1</b>',
 	'multilookupinvaliduser' => '<p class="error">IP «<b>$1</b>» не существует. Проверьте указанный IP на возможные опечатки.</p>',
 	'multilookuplastedit' => 'Последняя правка с этого IP-адреса:',
+	'multilookupwikidbname' => 'Название базы данных',
 	'multilookupwikiurl' => 'URL',
 	'multilookupwikititle' => 'Заголовок',
 	'multilookupwikioptions' => 'Параметры',
@@ -772,7 +774,7 @@ $messages['ru'] = array(
  * @author Verlor
  */
 $messages['sr-ec'] = array(
-	'multilookupgo' => 'Пређи',
+	'multilookupgo' => 'Иди',
 	'multilookupnotspecify' => 'Још увек нисте унели IP адресу.',
 	'multilookupnext' => 'следеће',
 	'multilookupprevious' => 'претходно',
@@ -783,7 +785,7 @@ $messages['sr-ec'] = array(
 	'multilookupdetails' => 'Прикажи детаље',
 	'multilookuplastedit' => 'Последња измена с ове IP адресе:',
 	'multilookupwikidbname' => 'Име базе',
-	'multilookupwikiurl' => 'URL адреса',
+	'multilookupwikiurl' => 'Адреса',
 	'multilookupwikititle' => 'Наслов',
 	'multilookupwikioptions' => 'Поставке',
 	'multilookuplastedithdr' => 'Последња измена',
@@ -791,6 +793,7 @@ $messages['sr-ec'] = array(
 
 /** Swedish (Svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'multilookupgo' => 'Gå',
@@ -801,6 +804,7 @@ $messages['sv'] = array(
 	'multilookupinvalidresults' => 'Ogiltiga resultat!',
 	'multilookupnoresultfound' => 'Inga resultat hittades!',
 	'multilookupwiki' => 'Wiki',
+	'multilookuplink' => 'Bidragslänkar',
 	'multilookupdetails' => 'Se detaljer',
 	'multilookuplistwikiainfo' => 'Lista över wikier där sidor redigerades av användare från IP-adress <b>$1</b>',
 	'multilookupinvaliduser' => '<p class="error">IP-adressen "<b>$1</b>" finns inte. Kontrollera given IP-adress för eventuella stavfel.</p>',

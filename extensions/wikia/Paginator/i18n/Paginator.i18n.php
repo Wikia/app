@@ -185,6 +185,14 @@ $messages['no'] = array(
 	'paginator-back' => 'Tilbake',
 );
 
+/** Polish (Polski)
+ * @author Shareif
+ */
+$messages['pl'] = array(
+	'paginator-next' => 'Dalej',
+	'paginator-back' => 'Wstecz',
+);
+
 /** Piedmontese (Piemontèis) */
 $messages['pms'] = array(
 	'paginator-next' => 'Anans',

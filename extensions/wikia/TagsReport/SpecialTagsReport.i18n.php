@@ -248,6 +248,7 @@ $messages['ia'] = array(
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author Aldnonymous
  * @author Irwangatot
  */
 $messages['id'] = array(
@@ -499,10 +500,16 @@ $messages['sr-ec'] = array(
 
 /** Swedish (Svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'tagsreport' => 'Taggrapport',
+	'tagsreporttitle' => 'Taggrapport',
+	'tagsreportselecttag' => 'Välj tagg:',
 	'tagsreportgo' => 'Visa',
+	'tagsreportnotspecify' => 'Du har inte valt någon speciell tagg ännu',
 	'tagsreportnoresults' => 'Inga resultat hittades',
+	'tagsreportmainnspace' => 'Huvud',
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|sida|sidor}})',
 	'tagsreportpagesfound' => 'Hittade <strong>$1</strong> {{PLURAL:$1|sida|sidor}}, som innehåller speciella taggar (DPL, YouTube, etc.)',
 	'tagsreportgenerated' => 'Skapad den $1, $2',

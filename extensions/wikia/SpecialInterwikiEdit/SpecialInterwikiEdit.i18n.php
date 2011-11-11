@@ -134,6 +134,19 @@ $messages['es'] = array(
 	'iwedit-success' => '<p>El vínculo se creado correctamente.</p>',
 );
 
+/** Persian (فارسی)
+ * @author Mjbmr
+ */
+$messages['fa'] = array(
+	'interwikiedit' => 'ویرایشگر میان‌ویکی',
+	'iwedit-title' => 'ویرایشگر میان‌ویکی',
+	'iwedit-language-interwikis' => 'فقط میان‌ویکی‌های زبان',
+	'iwedit-all-interwikis' => 'همهٔ میان‌ویکی‌ها',
+	'iwedit-update' => 'به روز رسانی',
+	'iwedit-error' => '<p>خطایی رخ داده است.</p>',
+	'iwedit-success' => '<p>ایجاد پیوند موفق بود.</p>',
+);
+
 /** Finnish (Suomi)
  * @author Centerlink
  */
@@ -209,9 +222,11 @@ $messages['ia'] = array(
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author Aldnonymous
  * @author Irwangatot
  */
 $messages['id'] = array(
+	'interwikiedit' => 'Interwiki Editor',
 	'iwedit-title' => 'Penyunting interwiki',
 	'iwedit-language-interwikis' => 'hanya interwiki bahasa',
 	'iwedit-all-interwikis' => 'semua interwiki',
@@ -429,8 +444,10 @@ $messages['sr-ec'] = array(
 
 /** Swedish (Svenska)
  * @author Sertion
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'interwikiedit' => 'Interwiki-redigerare',
 	'iwedit-title' => 'Interwikiredigerare',
 	'iwedit-language-interwikis' => 'bara språkinterwikis',
 	'iwedit-all-interwikis' => 'alla interwikis',

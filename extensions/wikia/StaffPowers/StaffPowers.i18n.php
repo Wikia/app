@@ -32,9 +32,10 @@ Gebruik asseblief die [[Special:Contact|kontakblad]] om enige probleme rakende o
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Alexknight12
  */
 $messages['ar'] = array(
-	'staffpowers-ipblock-aborted' => 'منع موظفي ويكيا غير ممكن. الرجاء إستعمال [[خاص:Contact]] للإبلاغ عن أي قضايا أو مشاكل مع الموظفين لدينا.',
+	'staffpowers-ipblock-aborted' => 'منع موظفي ويكيا غير ممكن. يرجى استخدام [[خاص:Contact]] للإبلاغ عن أي قضايا أو مشاكل مع الموظفين لدينا.',
 );
 
 /** Azerbaijani (Azərbaycanca)

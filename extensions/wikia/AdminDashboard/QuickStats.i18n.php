@@ -25,6 +25,18 @@ $messages['qqq'] = array(
 	'quickstats-date-format' => 'Follow this guide: http://php.net/manual/en/function.date.php.',
 );
 
+/** толышә зывон (толышә зывон)
+ * @author Гусейн
+ */
+$messages['tly'] = array(
+	'quickstats-header-date' => 'Тарых',
+	'quickstats-header-views' => 'Тәмшо кардеј',
+	'quickstats-header-edits' => 'Дәгишон',
+	'quickstats-header-photos' => 'Шикилон',
+	'quickstats-header-likes' => 'Хош омејдә',
+	'quickstats-number-shortening' => '$1K',
+);
+
 /** Azerbaijani (Azərbaycanca)
  * @author Cekli829
  * @author Melikov Memmed
@@ -36,6 +48,21 @@ $messages['az'] = array(
 	'quickstats-header-edits' => 'Redaktələr',
 	'quickstats-header-photos' => 'Şəkillər',
 	'quickstats-totals-label' => 'Yekunu',
+	'quickstats-number-shortening' => '$1K',
+);
+
+/** Catalan (Català)
+ * @author CuBaN VeRcEttI
+ */
+$messages['ca'] = array(
+	'quickstats-header-label' => 'Estadístiques ràpides',
+	'quickstats-header-date' => 'Data',
+	'quickstats-header-views' => 'Visites',
+	'quickstats-header-edits' => 'Edicions',
+	'quickstats-header-photos' => 'Fotos',
+	'quickstats-header-likes' => 'Gustos',
+	'quickstats-totals-label' => 'Totals',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Veure més estadístiques]]',
 	'quickstats-number-shortening' => '$1K',
 );
 
@@ -60,6 +87,36 @@ $messages['de'] = array(
 $messages['eo'] = array(
 	'quickstats-header-date' => 'Dato',
 	'quickstats-header-edits' => 'Redaktoj',
+);
+
+/** Spanish (Español)
+ * @author Bola
+ */
+$messages['es'] = array(
+	'quickstats-header-label' => 'Estadísticas rápidas',
+	'quickstats-header-date' => 'Fecha',
+	'quickstats-header-views' => 'Páginas vistas',
+	'quickstats-header-edits' => 'Ediciones',
+	'quickstats-header-photos' => 'Imágenes',
+	'quickstats-header-likes' => 'Me gusta',
+	'quickstats-totals-label' => 'Total',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Ver más estadísticas]]',
+	'quickstats-number-shortening' => '$1m',
+);
+
+/** Finnish (Suomi)
+ * @author VezonThunder
+ */
+$messages['fi'] = array(
+	'quickstats-header-label' => 'Pikatilastot',
+	'quickstats-header-date' => 'Päivämäärä',
+	'quickstats-header-views' => 'Latauksia',
+	'quickstats-header-edits' => 'Muokkauksia',
+	'quickstats-header-photos' => 'Kuvia',
+	'quickstats-header-likes' => 'Tykkäyksiä',
+	'quickstats-totals-label' => 'Yhteensä',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Katso lisää tilastoja]]',
+	'quickstats-number-shortening' => '$1k',
 );
 
 /** French (Français)
@@ -107,6 +164,21 @@ $messages['ia'] = array(
 	'quickstats-number-shortening' => '$1K',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Aldnonymous
+ */
+$messages['id'] = array(
+	'quickstats-header-label' => 'Statistik Cepat',
+	'quickstats-header-date' => 'Tanggal',
+	'quickstats-header-views' => 'Dilihat',
+	'quickstats-header-edits' => 'Suntingan',
+	'quickstats-header-photos' => 'Foto',
+	'quickstats-header-likes' => 'Suka',
+	'quickstats-totals-label' => 'Total',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|See more stats]]',
+	'quickstats-number-shortening' => '$1K',
+);
+
 /** Japanese (日本語)
  * @author Tommy6
  */
@@ -118,6 +190,15 @@ $messages['ja'] = array(
 	'quickstats-header-photos' => '新規画像数',
 	'quickstats-totals-label' => '合計',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|さらに詳しい統計をみる]]',
+);
+
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+ * @author Gomada
+ */
+$messages['ku-latn'] = array(
+	'quickstats-header-date' => 'Dîrok',
+	'quickstats-header-photos' => 'Wêne',
+	'quickstats-totals-label' => 'Hemû',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -210,6 +291,17 @@ $messages['pl'] = array(
 	'quickstats-number-shortening' => '$1K',
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'quickstats-header-date' => 'نېټه',
+	'quickstats-header-views' => 'کتنې',
+	'quickstats-header-edits' => 'سمونونه',
+	'quickstats-header-photos' => 'انځورونه',
+	'quickstats-totals-label' => 'ټولټال',
+);
+
 /** Brazilian Portuguese (Português do Brasil)
  * @author Giro720
  */
@@ -236,6 +328,19 @@ $messages['ru'] = array(
 	'quickstats-totals-label' => 'Итого',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Ещё статистика]]',
 	'quickstats-number-shortening' => '$1K',
+);
+
+/** Sinhala (සිංහල)
+ * @author බිඟුවා
+ */
+$messages['si'] = array(
+	'quickstats-header-label' => 'ඉක්මන් තොරතුර',
+	'quickstats-header-date' => 'දිනය',
+	'quickstats-header-views' => 'නැරඹුම්',
+	'quickstats-header-edits' => 'සංස්කරණ',
+	'quickstats-header-photos' => 'රූප',
+	'quickstats-header-likes' => 'වගේ',
+	'quickstats-totals-label' => 'සියල්ල',
 );
 
 /** Swedish (Svenska)

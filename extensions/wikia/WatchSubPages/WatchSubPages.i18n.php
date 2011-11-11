@@ -39,6 +39,14 @@ $messages['br'] = array(
 	'tog-watchlistsubpages' => 'Heuliañ ispajennoù',
 );
 
+/** Catalan (Català)
+ * @author Gemmaa
+ */
+$messages['ca'] = array(
+	'wikia-watchsubpages-desc' => 'Auto seguint per a subpàgines',
+	'tog-watchlistsubpages' => 'Seguir subpàgines',
+);
+
 /** Czech (Česky)
  * @author Mormegil
  */

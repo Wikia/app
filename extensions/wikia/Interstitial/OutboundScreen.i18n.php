@@ -335,6 +335,10 @@ $messages['sr-ec'] = array(
  */
 $messages['sv'] = array(
 	'outbound-screen-login-text' => '[[Special:UserLogin/signup|Skapa ett nytt konto]] eller [[Special:UserLogin|logga in på ditt existerande konto]] för att hoppa över denna sida i framtiden.',
+	'outbound-screen-already-logged-in-no-link' => 'Det inte finns någon destination.
+Det finns ingenting att se här!
+
+Skulle du vilja gå till [[{{MediaWiki:Mainpage}}|Huvudsidan]] eller kanske en [[Special:Random|slumpsida]]?',
 	'outbound-screen-you-are-leaving' => 'Du lämnar nu Wikia.',
 );
 

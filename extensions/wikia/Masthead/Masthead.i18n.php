@@ -109,6 +109,36 @@ Diwallit, hollek eo an avataroù. Lemel avatar un implijer en deus un efed war W
 	'right-removeavatar' => 'Lemel avatarioù implijerien',
 );
 
+/** Catalan (Català)
+ * @author CuBaN VeRcEttI
+ */
+$messages['ca'] = array(
+	'blog-avatar-removeavatar' => 'Esborrar avatar',
+	'blog-avatar-goto-userpage' => "Anar a la pàgina d'usuari",
+	'blog-avatar-edit' => 'Canviar',
+	'blog-avatar-delete' => 'Esborrar',
+	'prefs-avatarupload' => 'Avatar',
+	'blog-avatar-choose-avatar' => 'Tria un nou avatar',
+	'blog-avatar-upload-avatar' => 'Puja un nou avatar',
+	'blog-avatar-nouser' => 'No es pot trobar aquest usuari!',
+	'blog-avatar-cannot-remove' => "No es poden esborrar els avatars de l'usuari seleccionat!",
+	'blog-avatar-remove-info' => "Aquesta pàgina et permet esborrar un avatar d'un usuari. Escriu el nom exacte a la caixa corresponent i prem \"Cercar\".
+Si us plau, recorda que els avatars són globals - esborrant l'avatar d'un usuari s'esborrarà a tota Wikia.",
+	'blog-avatar-getuser' => 'Cercar',
+	'blog-avatar-remove-confirm' => "Estàs segur que vols esborrar l'avatar?",
+	'blog-avatar-error-nofile' => 'Si us plau, tria un arxiu del teu ordinador',
+	'blog-avatar-error-size' => "L'arxiu pujat és massa gran, la mida permesa és de fins a $1 Kb.",
+	'blog-avatar-error-cantwrite' => 'No es pot desar el fitxer',
+	'blog-avatar-changed-log' => 'Avatar afegit o canviat',
+	'blog-avatar-removed-log' => "Esborrats avatars de l'usuari $1",
+	'blog-avatar-save-info' => 'Si vols desar els canvis <a href="#prefcontrol">veu cap al final</a> i prem el botó "{{int: Saveprefs}}"',
+	'masthead-edits-since' => 'edicions des del',
+	'useravatar-log' => "Registre d'avatars d'usuari",
+	'blog-avatar-alt' => "Registre d'addicions o esborrats d'avatars d'usuari",
+	'removeuseravatar' => "Esborrar avatar d'usuari",
+	'right-removeavatar' => "Esborrar els avatars d'usuari",
+);
+
 /** Chechen (Нохчийн)
  * @author Sasan700
  */
@@ -187,6 +217,7 @@ $messages['de-formal'] = array(
 
 /** Spanish (Español)
  * @author Crazymadlover
+ * @author CuBaN VeRcEttI
  * @author Mor
  */
 $messages['es'] = array(
@@ -211,7 +242,7 @@ Por favor, recuerda que los avatares son globales - borrando el avatar de un usu
 	'blog-avatar-save-info' => 'Si quieres guardar los cambios <a href="#prefcontrol">ve al final</a> y presiona el botón de "Guardar"',
 	'masthead-edits-since' => 'ediciones desde el',
 	'useravatar-log' => 'Registro de avatares de usuario',
-	'blog-avatar-alt' => 'Registros de adiciones o remociones de avatar de usuario',
+	'blog-avatar-alt' => 'Registros de adiciones o borrados de avatar de usuario',
 	'removeuseravatar' => 'Borrar avatar de usuario',
 	'right-removeavatar' => 'Quitar los avatares de usuario',
 );
@@ -227,6 +258,7 @@ $messages['fa'] = array(
 
 /** Finnish (Suomi)
  * @author Crt
+ * @author Tm T
  */
 $messages['fi'] = array(
 	'blog-avatar-removeavatar' => 'Poista avatar',
@@ -247,9 +279,13 @@ Muista, että avatarit ovat jaettuja – poistamalla käyttäjän avatarin poist
 	'blog-avatar-error-size' => 'Lähetetty tiedosto on liian iso. Suurin sallittu koko on $1 KB.',
 	'blog-avatar-error-cantwrite' => 'Tiedoston tallennus ei onnistu.',
 	'blog-avatar-changed-log' => 'Avatar lisätty tai vaihdettu',
+	'blog-avatar-removed-log' => 'Poistettu käyttäjän $1 avatarit',
 	'blog-avatar-save-info' => 'Jos haluat tallentaa asetukset – <a href="#prefcontrol">siirry alas</a> ja napsauta painiketta ”{{int:saveprefs}}”.',
+	'masthead-edits-since' => 'muokkausta alkaen',
+	'useravatar-log' => 'Käyttäjäavatarloki',
 	'blog-avatar-alt' => 'Avatar',
 	'removeuseravatar' => 'Poista käyttäjän avatar',
+	'right-removeavatar' => 'Poistaa käyttäjien avatareja',
 );
 
 /** French (Français)
@@ -617,7 +653,7 @@ Vennligst husk at avatarer er globale - å fjerne en brukers avatar fjerner den 
 	'blog-avatar-error-cantwrite' => 'Kunne ikke lagre filen',
 	'blog-avatar-changed-log' => 'La til eller endret avatar',
 	'blog-avatar-removed-log' => 'Fjernet $1s avatarer',
-	'blog-avatar-save-info' => 'Hvis du vil lagre endringene <a href="#prefcontrol">gå til bunnen</a> og trykk på "{{int:saveprefs}}"-knappen',
+	'blog-avatar-save-info' => 'Hvis du vil lagre endringene <a href="#prefcontrol">gå til bunnen</a> og trykk på «{{int:saveprefs}}»-knappen',
 	'masthead-edits-since' => 'redigeringer siden',
 	'useravatar-log' => 'Brukers avatarlogg',
 	'blog-avatar-alt' => 'Logger over brukeravatar-tillegg eller -fjerninger',
@@ -625,7 +661,10 @@ Vennligst husk at avatarer er globale - å fjerne en brukers avatar fjerner den 
 	'right-removeavatar' => 'Fjern brukers avatarer',
 );
 
-/** Polish (Polski) */
+/** Polish (Polski)
+ * @author Sovq
+ * @author Wyvek
+ */
 $messages['pl'] = array(
 	'blog-avatar-removeavatar' => 'Usuń avatar',
 	'blog-avatar-goto-userpage' => 'Idź do strony użytkownika',
@@ -638,13 +677,18 @@ $messages['pl'] = array(
 	'blog-avatar-cannot-remove' => 'Nie można usunąć avataru wybranego użytkownika!',
 	'blog-avatar-remove-info' => 'Ta strona pozwala ci usunąć avatar. Wybierz dokładną nazwę użytkownika w polu, po czym naciśnij „Szukaj”.<br />Pamiętaj, że avatary są globalne – jeśli zmienisz go tutaj, stanie się to samo na innych Wikiach.',
 	'blog-avatar-getuser' => 'Znajdź',
+	'blog-avatar-remove-confirm' => 'Czy na pewno chcesz usunąć avatar?',
 	'blog-avatar-error-nofile' => 'Proszę wybrać plik na dysku.',
 	'blog-avatar-error-size' => 'Przesłany plik jest zbyt duży, dozwolony rozmiar to $1 KB.',
 	'blog-avatar-error-cantwrite' => 'Wystąpił błąd, który uniemożliwia zapisanie pliku.',
 	'blog-avatar-changed-log' => 'zmiana lub dodanie avatara',
+	'blog-avatar-removed-log' => 'Usunięto awatary $1',
 	'blog-avatar-save-info' => 'Jeśli chcesz zapisać zmiany, <a href="#prefcontrol">idź na dół strony</a> i naciśnij „Zapisz”.',
 	'masthead-edits-since' => 'Zmiany od',
+	'useravatar-log' => 'Log awatarów użytkownika',
 	'blog-avatar-alt' => 'Avatar',
+	'removeuseravatar' => 'Usuń avatar użytkownika',
+	'right-removeavatar' => 'Usuń avatary użytkowników',
 );
 
 /** Piedmontese (Piemontèis)
@@ -803,7 +847,7 @@ $messages['si'] = array(
 $messages['sr-ec'] = array(
 	'blog-avatar-removeavatar' => 'Уклони сличицу',
 	'blog-avatar-goto-userpage' => 'Пређи на корисничку страницу',
-	'blog-avatar-edit' => 'Промени',
+	'blog-avatar-edit' => 'Измени',
 	'blog-avatar-delete' => 'Обриши',
 	'prefs-avatarupload' => 'Корисничка сличица',
 	'blog-avatar-choose-avatar' => 'Изабери нову сличицу',
@@ -826,6 +870,7 @@ $messages['sv'] = array(
 	'blog-avatar-goto-userpage' => 'Gå till användarsida',
 	'blog-avatar-edit' => 'Ändra',
 	'blog-avatar-delete' => 'Radera',
+	'prefs-avatarupload' => 'Avatar',
 	'blog-avatar-choose-avatar' => 'Välj en ny avatar',
 	'blog-avatar-upload-avatar' => 'Ladda upp en ny avatar',
 	'blog-avatar-nouser' => 'Kan inte hitta denna användare!',
@@ -834,7 +879,14 @@ $messages['sv'] = array(
 	'blog-avatar-remove-confirm' => 'Är du säker på att du vill ta bort avatar?',
 	'blog-avatar-error-nofile' => 'Var god välj en fil från din dator',
 	'blog-avatar-error-size' => 'Uppladdad fil är för stor, tillåten storlek är upp till $1 kB.',
+	'blog-avatar-error-cantwrite' => 'Kunde inte att spara fil',
+	'blog-avatar-changed-log' => 'Lade till eller ändrade avatar',
+	'blog-avatar-removed-log' => 'Tog bort $1s avatarer',
+	'blog-avatar-save-info' => 'Om du vill spara ändringarna <a href="#prefcontrol">går du längst ned</a> och trycker på knappen "{{int:saveprefs}}"',
 	'masthead-edits-since' => 'redigeringar sedan',
+	'useravatar-log' => 'Användaravatarslogg',
+	'removeuseravatar' => 'Ta bort användarens avatar',
+	'right-removeavatar' => 'Ta bort användaravatarer',
 );
 
 /** Swahili (Kiswahili) */

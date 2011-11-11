@@ -45,10 +45,12 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
+ * @author Nemo bis
  * @author Umherirrender
  */
 $messages['qqq'] = array(
 	'categoryselect-desc' => '{{desc}}',
+	'categoryselect-code-view-placeholder' => "This is the message shown in the category form in the source mode of the editor. The link doesn't exist, it's just an example text to show how to add the category.",
 	'categoryselect-button-save' => '{{Identical|Save}}',
 	'categoryselect-button-cancel' => '{{Identical|Cancel}}',
 );
@@ -112,6 +114,32 @@ $messages['as'] = array(
 $messages['az'] = array(
 	'categoryselect-button-save' => 'Qeyd et',
 	'categoryselect-button-cancel' => 'Ləğv et',
+);
+
+/** Bavarian (Boarisch)
+ * @author Mucalexx
+ */
+$messages['bar'] = array(
+	'categoryselect-desc' => "Stöd a Ówerflächen zur da Vawoitung voh da Kategorie in am Artiké zur Vafygung, óne daas ma'n gaunzen Artiké beorweiten muass.",
+	'categoryselect-code-view' => 'Quöjtext',
+	'categoryselect-visual-view' => 'Graafische Auhsicht',
+	'categoryselect-infobox-caption' => 'Kategorie-Ópziónen',
+	'categoryselect-infobox-category' => 'Gib an Naum voh da Kategorie auh:',
+	'categoryselect-infobox-sortkey' => 'Dua dén Artiké in da Kategorie „$1“ unter fóigendm Naum einé:',
+	'categoryselect-addcategory-button' => 'Kategorie dazuadoah',
+	'categoryselect-addcategory-edit' => 'A Kategorie dazuadoah',
+	'categoryselect-suggest-hint' => 'Mid da Eihgobtasten beénden',
+	'categoryselect-tooltip' => "'''Neich!''' Unser Kategorieauswoi-Leisten. Prówiers aus óder lies dé [[Help:KategorieAuswahl|Hüfe]] fyr weiderne Informaziónen",
+	'categoryselect-unhandled-syntax' => "Néd unterstytzde Syntax gfunden - A Wexel in d' graafische Auhsicht is néd méglé.",
+	'categoryselect-edit-summary' => 'Kategorie dazuadoah',
+	'categoryselect-empty-name' => 'Kategorie-Naum (der Tei vur |)',
+	'categoryselect-button-save' => 'Speichern',
+	'categoryselect-button-cancel' => 'Obbrechen',
+	'categoryselect-error-not-exist' => 'Der Artiké [id=$1] existird néd.',
+	'categoryselect-error-user-rights' => 'Koane ausreichenden Benutzerrechtt.',
+	'categoryselect-error-db-locked' => 'Dé Daatenbaunk is im Móment grod gsperrd.',
+	'categoryselect-edit-abort' => 'Deih vasuachte Änderrung is durch a Aufhänger voh aner Daweiterrung obbrochen worn.',
+	'tog-disablecategoryselect' => 'Vaoahfochts Kategorisiern ausschoiden',
 );
 
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
@@ -192,12 +220,14 @@ $messages['cs'] = array(
 );
 
 /** German (Deutsch)
+ * @author Inkowik
  * @author Jan Luca
  * @author LWChris
  */
 $messages['de'] = array(
 	'categoryselect-desc' => 'Stellt eine Oberfläche zur Verwaltung der Kategorien in einem Artikel ohne Bearbeitung des ganzen Artikels zur Verfügung.',
 	'categoryselect-code-view' => 'Quelltext',
+	'categoryselect-code-view-placeholder' => 'Hier Kategorie hinzufügen, z. B. [[Kategorie:Name]]',
 	'categoryselect-visual-view' => 'Grafische Ansicht',
 	'categoryselect-infobox-caption' => 'Kategorie-Optionen',
 	'categoryselect-infobox-category' => 'Gib den Namen der Kategorie an:',
@@ -281,24 +311,31 @@ $messages['fa'] = array(
 
 /** Finnish (Suomi)
  * @author Crt
+ * @author Tm T
  * @author Tofu II
+ * @author VezonThunder
  */
 $messages['fi'] = array(
+	'categoryselect-desc' => 'Tarjoaa käyttöliittymän artikkelin luokkien hallitsemiselle ilman koko artikkelin muokkaamista',
 	'categoryselect-code-view' => 'Näytä koodi',
+	'categoryselect-code-view-placeholder' => 'Lisää luokkia tässä, esim. [[Luokka:Nimi]]',
 	'categoryselect-visual-view' => 'Näytä visuaalisena',
 	'categoryselect-infobox-caption' => 'Luokan asetukset',
 	'categoryselect-infobox-category' => 'Syötä luokan nimi:',
 	'categoryselect-infobox-sortkey' => 'Aakkosta tämä artikkeli "$1" luokkasivulle nimellä:',
 	'categoryselect-addcategory-button' => 'Lisää luokka',
+	'categoryselect-addcategory-edit' => 'Lisää luokka',
 	'categoryselect-suggest-hint' => 'Paina Enter, kun olet valmis',
-	'categoryselect-tooltip' => "'''Uusi!''' Luokan lisäystyökalurivi. Testaa sitä tai katso [[Help:CategorySelect|ohjesta]] lisätietoa.",
-	'categoryselect-unhandled-syntax' => 'Käsittelemätön syntaksi havaittu - visuaalisen moodin takaisin kytkentä on mahdotonta.',
+	'categoryselect-tooltip' => "'''Uusi!''' Luokan lisäystyökalurivi. Testaa sitä tai katso [[Help:CategorySelect|ohjeesta]] lisätietoa.",
+	'categoryselect-unhandled-syntax' => 'Käsittelemätön syntaksi havaittu - palaaminen visuaaliseen tilaan ei mahdollista.',
 	'categoryselect-edit-summary' => 'Luokkien lisääminen',
 	'categoryselect-empty-name' => 'Syötä luokan nimi (osa ennen |)',
 	'categoryselect-button-save' => 'Tallenna',
 	'categoryselect-button-cancel' => 'Peruuta',
 	'categoryselect-error-not-exist' => 'Artikkelia [id=$1] ei ole olemassa.',
-	'tog-disablecategoryselect' => 'peru luokkien lisäys',
+	'categoryselect-error-user-rights' => 'Käyttöoikeusvirhe.',
+	'categoryselect-error-db-locked' => 'Tietokanta on lukittu.',
+	'tog-disablecategoryselect' => 'Poista luokkamoduuli käytöstä (koskee vain, jos visuaalisessa tilassa muokkaaminen on poistettu käytöstä)',
 );
 
 /** French (Français)
@@ -309,6 +346,7 @@ $messages['fi'] = array(
 $messages['fr'] = array(
 	'categoryselect-desc' => "Fournit une interface permettant de gérer les catégories d'un article sans avoir à éditer tout l'article.",
 	'categoryselect-code-view' => 'Voir le code',
+	'categoryselect-code-view-placeholder' => 'Ajoutez les catégories ici, par exemple [[Category:Name]]',
 	'categoryselect-visual-view' => 'Vue visuelle',
 	'categoryselect-infobox-caption' => 'Options de la catégorie',
 	'categoryselect-infobox-category' => 'Ecrivez le nom de la catégorie :',
@@ -326,7 +364,7 @@ $messages['fr'] = array(
 	'categoryselect-error-user-rights' => 'Erreur de droits utilisateur.',
 	'categoryselect-error-db-locked' => 'La base de données est verrouillée.',
 	'categoryselect-edit-abort' => "La modification que vous avez essayé de faire a été arrêtée par un crochet d'une extension",
-	'tog-disablecategoryselect' => 'Désactiver le balisage des catégories',
+	'tog-disablecategoryselect' => "Désactiver le module des catégories (valable uniquement si l'édition en mode visuel a été désactivée)",
 );
 
 /** Galician (Galego)
@@ -335,7 +373,7 @@ $messages['fr'] = array(
 $messages['gl'] = array(
 	'categoryselect-desc' => 'Proporciona unha interface para xestionar as categorías dos artigos sen editar todo o artigo.',
 	'categoryselect-code-view' => 'Vista do código',
-	'categoryselect-code-view-placeholder' => 'Engadir categorías aquí, por exemplo, [[Categoría:Nome]]',
+	'categoryselect-code-view-placeholder' => 'Engadir categorías aquí, por exemplo, [[Category:Name]]',
 	'categoryselect-visual-view' => 'Vista visual',
 	'categoryselect-infobox-caption' => 'Opcións de categoría',
 	'categoryselect-infobox-category' => 'Escriba o nome da categoría:',
@@ -393,6 +431,7 @@ $messages['hu'] = array(
 $messages['ia'] = array(
 	'categoryselect-desc' => 'Provide un interfacie pro gerer le categorias in un articulo sin modificar tote le articulo.',
 	'categoryselect-code-view' => 'Vista de codice',
+	'categoryselect-code-view-placeholder' => 'Adder categorias hic, p.ex. [[Category:Nomine]]',
 	'categoryselect-visual-view' => 'Vista graphic',
 	'categoryselect-infobox-caption' => 'Optiones de categoria',
 	'categoryselect-infobox-category' => 'Entra le nomine del categoria:',
@@ -410,20 +449,23 @@ $messages['ia'] = array(
 	'categoryselect-error-user-rights' => 'Error de derectos de usator.',
 	'categoryselect-error-db-locked' => 'Le base de datos es blocate.',
 	'categoryselect-edit-abort' => 'Le modification que tu tentava facer ha essite abortate per un extension.',
-	'tog-disablecategoryselect' => 'Disactivar selection de categorias',
+	'tog-disablecategoryselect' => 'Disactivar le modulo Categoria (applicabile solmente si le modification in modo visual ha essite disactivate)',
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author Aldnonymous
  * @author Irwangatot
  */
 $messages['id'] = array(
 	'categoryselect-desc' => 'Menyediakan sebuah antarmuka untuk mengelola kategori dalam artikel tanpa mengedit seluruh artikel.',
 	'categoryselect-code-view' => 'Tampilan kode',
+	'categoryselect-code-view-placeholder' => 'Tambahkan Kategori di sini, misalnya [[Category:Name]]',
 	'categoryselect-visual-view' => 'Tampilan visual',
 	'categoryselect-infobox-caption' => 'Pilihan kategori',
 	'categoryselect-infobox-category' => 'Memberikan nama kategori:',
 	'categoryselect-infobox-sortkey' => 'Penyusunan artikel ini menurut abjad pada kategori "$1" dengan nama:',
 	'categoryselect-addcategory-button' => 'Menambah kategori',
+	'categoryselect-addcategory-edit' => 'Menambahkan kategori',
 	'categoryselect-suggest-hint' => 'Tekan Enter jika sudah selesai',
 	'categoryselect-tooltip' => "'''Baru!''' Peralatan tag Kategori. Cobalah atau lihat [[Help:CategorySelect|Bantuan]] untuk mempelajari lebih lanjut",
 	'categoryselect-unhandled-syntax' => 'terdeteksi sintaks tidak tertangani - beralih kembali ke modus visual tidak memungkinkan.',
@@ -435,7 +477,7 @@ $messages['id'] = array(
 	'categoryselect-error-user-rights' => 'Kesalahan hak pengguna.',
 	'categoryselect-error-db-locked' => 'Basis data dikunci.',
 	'categoryselect-edit-abort' => 'Perubahan yang coba Anda lakukan dibatalkan oleh suatu ekstensi kaitan.',
-	'tog-disablecategoryselect' => 'Nonaktifkan Kategori Tagging',
+	'tog-disablecategoryselect' => 'Nonaktifkan Kategori Tagging( hanya berlaku jika modus visual telah dinonaktifkan)',
 );
 
 /** Igbo (Igbo)
@@ -447,14 +489,31 @@ $messages['ig'] = array(
 );
 
 /** Italian (Italiano)
+ * @author Leviathan 89
  * @author Minerva Titani
  */
 $messages['it'] = array(
+	'categoryselect-desc' => "Fornisce un'interfaccia per la gestione delle categorie negli articoli senza modificare l'intera pagina",
+	'categoryselect-code-view' => 'Modalità codice',
+	'categoryselect-code-view-placeholder' => 'Aggiungere le categorie qui, ad esempio [[Categoria:Nome]]',
+	'categoryselect-visual-view' => 'Modalità visuale',
+	'categoryselect-infobox-caption' => 'Opzioni categoria',
+	'categoryselect-infobox-category' => 'Fornire il nome della categoria:',
+	'categoryselect-infobox-sortkey' => 'Alfabetizzare questo articolo nella categoria "$1" sotto il nome:',
 	'categoryselect-addcategory-button' => 'Aggiungi categoria',
+	'categoryselect-addcategory-edit' => 'Aggiungi una categoria',
 	'categoryselect-suggest-hint' => 'Premi INVIO quando hai fatto',
+	'categoryselect-tooltip' => "'''Novità!''' Barra per il tagging categoria. Provala o cerca [[Help:CategorySelect|aiuto]] per saperne di più",
+	'categoryselect-unhandled-syntax' => 'Sintassi non gestita rilevata - passaggio alla modalità visuale impossibile',
+	'categoryselect-edit-summary' => 'Categorie aggiunte',
+	'categoryselect-empty-name' => 'Fornire il nome della categoria (parte prima di |)',
 	'categoryselect-button-save' => 'Salva',
 	'categoryselect-button-cancel' => 'Annulla',
+	'categoryselect-error-not-exist' => "L'articolo [id=$1] non esiste.",
+	'categoryselect-error-user-rights' => "Errore nei diritti dell'utente.",
 	'categoryselect-error-db-locked' => 'Database bloccato.',
+	'categoryselect-edit-abort' => "La modifica che si sta tentando di fare è stata interrotta da un problema dell'estensione",
+	'tog-disablecategoryselect' => 'Disabilita il modulo Categoria (si applica solo se la modalità visuale è stata disabilitata)',
 );
 
 /** Japanese (日本語)
@@ -480,7 +539,7 @@ $messages['ja'] = array(
 	'categoryselect-error-user-rights' => '利用者権限のエラーです。',
 	'categoryselect-error-db-locked' => 'データベースがロックされています',
 	'categoryselect-edit-abort' => '拡張機能のフックによって、修正が中断されました',
-	'tog-disablecategoryselect' => 'カテゴリタグ付け機能を無効にする',
+	'tog-disablecategoryselect' => 'カテゴリタグ付け機能を無効にする（ビジュアルモードでの編集を無効にしている場合にのみ適用）',
 );
 
 /** Kannada (ಕನ್ನಡ)
@@ -494,9 +553,11 @@ $messages['kn'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
+	'categoryselect-code-view-placeholder' => "Hei d'Kategorien derbäisetzen, z. Bsp. [[Category:Numm]]",
 	'categoryselect-infobox-caption' => 'Optioune vun der Kategorie',
 	'categoryselect-addcategory-button' => 'Kategorie derbäisetzen',
 	'categoryselect-addcategory-edit' => 'Eng Kategorie derbäisetzen',
+	'categoryselect-suggest-hint' => "Dréckt 'Enter' wann Dir fäerdeg sidd",
 	'categoryselect-edit-summary' => 'Kategorien derbäisetzen',
 	'categoryselect-button-save' => 'Späicheren',
 	'categoryselect-button-cancel' => 'Ofbriechen',
@@ -580,11 +641,13 @@ $messages['ms'] = array(
 
 /** Dutch (Nederlands)
  * @author McDutchie
+ * @author SPQRobin
  * @author Siebrand
  */
 $messages['nl'] = array(
 	'categoryselect-desc' => 'Biedt een interface voor het beheren van categorieën in een pagina zonder de hele pagina te bewerken',
 	'categoryselect-code-view' => 'Wikitekstweergave',
+	'categoryselect-code-view-placeholder' => 'Categorieën hier toevoegen, bijv. [[Category:Name]]',
 	'categoryselect-visual-view' => 'Visuele weergave',
 	'categoryselect-infobox-caption' => 'Categoriemogelijkheden',
 	'categoryselect-infobox-category' => 'Geef de naam van een categorie op:',
@@ -604,7 +667,7 @@ Terugschakelen naar visuele weergave is niet mogelijk.',
 	'categoryselect-error-user-rights' => 'Fout in de gebruikersrechten.',
 	'categoryselect-error-db-locked' => 'De database is geblokkeerd.',
 	'categoryselect-edit-abort' => 'De wijziging die u probeerde te maken is afgebroken door een uitbreidingshook',
-	'tog-disablecategoryselect' => 'Categorielabels uitschakelen',
+	'tog-disablecategoryselect' => 'Categoriemodule uitschakelen (alleen van toepassing als bewerken in visuele modus is uitgeschakeld)',
 );
 
 /** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
@@ -760,6 +823,7 @@ $messages['ro'] = array(
 );
 
 /** Russian (Русский)
+ * @author DCamer
  * @author Kuzura
  * @author Lockal
  * @author Александр Сигачёв
@@ -767,6 +831,7 @@ $messages['ro'] = array(
 $messages['ru'] = array(
 	'categoryselect-desc' => 'Предоставляет интерфейс для управления категориями в статье без редактирования всей статьи.',
 	'categoryselect-code-view' => 'Просмотр кода',
+	'categoryselect-code-view-placeholder' => 'Укажите тут категорий, например, [[Категория:Название]].',
 	'categoryselect-visual-view' => 'Визуальный просмотр',
 	'categoryselect-infobox-caption' => 'Настройки категории',
 	'categoryselect-infobox-category' => 'Укажите имя категории:',
@@ -784,7 +849,7 @@ $messages['ru'] = array(
 	'categoryselect-error-user-rights' => 'Ошибка прав участника.',
 	'categoryselect-error-db-locked' => 'База данных заблокирована.',
 	'categoryselect-edit-abort' => 'Изменение, которые вы пытались сделать, прервано обработчиком расширения',
-	'tog-disablecategoryselect' => 'Отключить Category Taging',
+	'tog-disablecategoryselect' => 'Отключить модуль категорий (применяется только при отключенном редактировании в визуальном режиме)',
 );
 
 /** Slovenian (Slovenščina)
@@ -828,6 +893,8 @@ $messages['sv'] = array(
 	'categoryselect-addcategory-button' => 'Lägg till kategori',
 	'categoryselect-addcategory-edit' => 'Lägg till en kategori',
 	'categoryselect-suggest-hint' => 'Tryck Enter när du är klar',
+	'categoryselect-tooltip' => "'''Nytt!''' Verktygsfält för kategoritaggning. Prova den eller se [[Help:CategorySelect|hjälp]] för att läsa mer",
+	'categoryselect-unhandled-syntax' => 'Ohanterad syntax upptäcktes - omöjligt att växla tillbaka till visuellt läge.',
 	'categoryselect-edit-summary' => 'Lägg till kategorier',
 	'categoryselect-empty-name' => 'Ange kategorinamn (del innan |)',
 	'categoryselect-button-save' => 'Spara',
@@ -835,6 +902,7 @@ $messages['sv'] = array(
 	'categoryselect-error-not-exist' => 'Artikel [id=$1] finns inte.',
 	'categoryselect-error-user-rights' => 'Fel om användarrättigheter.',
 	'categoryselect-error-db-locked' => 'Databasen är låst.',
+	'categoryselect-edit-abort' => 'Ändringen du försökte göra avbröts av en förlängningskrok',
 	'tog-disablecategoryselect' => 'Inaktivera kategorimodul (gäller endast om redigering i visuellt läge har inaktiverats)',
 );
 

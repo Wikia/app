@@ -176,6 +176,14 @@ $messages['sr-ec'] = array(
 	'scribeeventsrecords' => 'Белешке',
 );
 
+/** Swedish (Svenska)
+ * @author WikiPhoenix
+ */
+$messages['sv'] = array(
+	'scribe-desc' => '[[Special:Scribeevents|Verktyg]] för att söka efter en viss sidrubrik över wikis',
+	'scribeevents' => 'Senaste händelser',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */

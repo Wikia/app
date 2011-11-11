@@ -42,12 +42,13 @@ Wikia maak outomaties rugsteunkopieë van alle wiki's.",
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Alexknight12
  */
 $messages['ar'] = array(
 	'dump-database' => 'مقالب قاعدة البيانات',
 	'dump-database-info' => 'يمكن استخدام مقالب قاعدة البيانات على سبيل الإحتياط الشخصي (ويكيا تنتج نسخا احطياطية منفصلة لكل الويكيات تلقائيا) أو للصيانة عبر البوتات.',
 	'dump-database-curr-pages' => 'الصفحات الحالية',
-	'dump-database-curr-pages-info' => '(من الأفضل إستعمال بوت لهذه النسخة)',
+	'dump-database-curr-pages-info' => '(من الأفضل استخدام بوت لهذه النسخة)',
 	'dump-database-full-pages' => 'الصفحات الحالية و التاريخ',
 	'dump-database-full-pages-info' => '(تحذير: هذا الملف كبير جدا)',
 	'dump-database-request' => 'طلب تحديث',
@@ -123,6 +124,24 @@ $messages['bs'] = array(
 	'dump-database-curr-pages' => 'Trenutne stranice',
 	'dump-database-request' => 'Zahtjevaj ažuriranje',
 	'dump-database-request-submit' => 'Pošalji zahtjev',
+);
+
+/** Catalan (Català)
+ * @author Gemmaa
+ */
+$messages['ca'] = array(
+	'dump-database' => 'Abocadors de base de dades',
+	'dump-database-info' => 'Abocadors de base de dades pot ser utilitzat com una còpia de seguretat personal (Wikia produeix separat les còpies de seguretat de tots els wikis automàticament) o per a robots de manteniment',
+	'dump-database-curr-pages' => 'pàgines actuals',
+	'dump-database-curr-pages-info' => "(Aquesta versió és en general millor per a l'ús de bot)",
+	'dump-database-full-pages' => 'Actuals pàgines i història',
+	'dump-database-full-pages-info' => '(Advertència: aquest fitxer pot ser molt gran)',
+	'dump-database-request' => "Sol·licitud d'una actualització",
+	'dump-database-request-info' => '(Abocadors són generalment es genera setmanal)',
+	'dump-database-request-submit' => 'Enviar sol·licitud',
+	'dump-database-request-already-submitted' => "L'abocador ' han demanat recentment (fa menys de 7 dies)",
+	'dump-database-request-requested' => "Sol·licitud d'abocador de base de dades enviat",
+	'dump-database-info-more' => 'Si us plau, <a href="http://community.wikia.com/wiki/Help:Database_download">veure</a> per a més informació',
 );
 
 /** Czech (Česky)
@@ -227,6 +246,7 @@ $messages['eu'] = array(
 /** Finnish (Suomi)
  * @author Centerlink
  * @author Crt
+ * @author VezonThunder
  */
 $messages['fi'] = array(
 	'dump-database' => 'Tietokantavedokset',
@@ -238,6 +258,7 @@ $messages['fi'] = array(
 	'dump-database-request' => 'Pyydä päivitystä',
 	'dump-database-request-info' => '(Vedokset luodaan yleensä viikoittain)',
 	'dump-database-request-submit' => 'Lähetä pyyntö',
+	'dump-database-request-already-submitted' => 'Vedosta on pyydetty lähiaikoina (alle 7 päivää sitten)',
 	'dump-database-request-requested' => 'Pyyntö tietokantavedoksesta lähetetty',
 	'dump-database-info-more' => '<a href="http://community.wikia.com/wiki/Help:Database_download">Katso lisätietoja</a>',
 );

@@ -346,8 +346,10 @@ $messages['sr-ec'] = array(
 
 /** Swedish (Svenska)
  * @author Sertion
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'sharefeature-desc' => 'Tillåter användare att länka till sidor från populära webbplatser',
 	'sf-link' => 'Dela den här artikeln',
 	'sf-link-popup' => 'Dela den här artikeln',
 	'sf-link-tooltip' => 'Dela den här artikeln med dina vänner',

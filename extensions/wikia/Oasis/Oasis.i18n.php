@@ -194,14 +194,17 @@ $messages['en'] = array(
 /** Message documentation (Message documentation)
  * @author Hamilton Abreu
  * @author McDutchie
+ * @author Nemo bis
  * @author Siebrand
  * @author Verdy p
  */
 $messages['qqq'] = array(
 	'oasis-home' => "This refers to the wiki's main page title shown on the top of the page.",
+	'oasis-more' => 'Included in the activity minibox in the sidebar beside articles.',
 	'oasis-related-video-by-5min' => '"5min Video" is a web site name. See http://www.5min.com/',
 	'oasis-latest-photos-by' => 'Should probably have parameters.',
 	'oasis-latest-photos-posted-in' => 'Needs parameter?',
+	'oasis-latest-photos-more-dotdotdot' => 'Appears on the file description page after the list of pages which include the file, if too long.',
 	'oasis-page-header-edited-by' => '* $1 is the time span since the last edit of the page, eg. "3 days ago"
 * $2 is the username of the last editor',
 	'oasis-page-header-edited' => '$1 is the time span since the last edit of the page, eg. "3 days ago"',
@@ -230,10 +233,16 @@ Example:
 	'oasis-member-since' => 'Possible timestamp In that case needs platting into time and date.',
 	'oasis-toolbar-devinfo' => 'This [[Thread:Translating talk:Wikia/About Wikia:Oasis-toolbar-devinfo/en/reply|means]] "Information for the developer".',
 	'oasis-comments-showing-most-recent' => 'Probably should use plural and may need rewording.',
+	'oasis-comments-added-by' => 'Comments footer.
+Parameters:
+* $1: date,
+* $2: author.',
 	'oasis-anon-user' => 'This message is shown whenever an anonymous user comments on a blog post.
 Example:
 * 7 hours ago by A Wikia contributor',
-	'oasis-section-edit-alt' => 'Parameters:
+	'oasis-section-edit-alt' => 'Appears as a tooltip on the section edit link.
+
+Parameters:
 * $1 is a section title.',
 	'oasis-pages-on-wiki-header' => 'This message appears on the header of the main page, besides the amount of pages on the wiki
 Parameters:
@@ -1039,19 +1048,31 @@ $messages['fa'] = array(
 
 /** Finnish (Suomi)
  * @author Nike
+ * @author Tm T
  * @author Tofu II
  */
 $messages['fi'] = array(
+	'oasis-more' => 'Katso lisää >',
 	'oasis-mytools' => 'Omat työkalut',
+	'oasis-follow' => 'Seuraa',
+	'oasis-share' => 'Jaa',
+	'oasis-like' => 'Tykkää',
 	'oasis-edit-protected-article' => 'Kirjaudu sisään muokataksesi',
 	'oasis-button-random-page' => 'Satunnainen sivu',
+	'oasis-button-random-wiki' => 'Satunnainen wiki',
+	'oasis-button-wiki-activity-watchlist' => 'Vain seuratut sivut',
+	'oasis-activity-watchlist-login' => 'Sinun täytyy kirjautua sisään nähdäksesi vain seuratut sivut',
 	'oasis-latest-photos-header' => '<em>{{FORMATNUM:$1}}</em><span class="$2">{{PLURAL:$1|kuva tässä wikissä|kuvat tässä wikissä}}</span>',
+	'oasis-latest-photos-more' => 'Katso lisää >',
 	'oasis-latest-photos-inner-message' => 'Katso kaikki kuvat',
+	'oasis-latest-photos-more-dotdotdot' => 'lisää...',
 	'oasis-global-nav-create-wiki' => 'Perusta wiki',
 	'oasis-page-header-talk' => 'Keskustelu',
 	'oasis-page-header-back-to-file' => 'Takaisin tiedostoon',
 	'oasis-page-header-preview' => '<strong>Esikatselu:</strong> $1',
 	'oasis-confirmation-comment-deleted' => 'Kommentti on poistettu.',
+	'oasis-random-wiki' => 'Satunnainen wiki',
+	'oasis-add-photo' => 'Lisää kuva',
 	'oasis-add-page' => 'Lisää sivu',
 	'oasis-latest-activity-new-details' => '$1 loi tämän $2',
 	'oasis-latest-activity-edit-details' => '$1 muokkasi tätä $2',
@@ -1140,6 +1161,12 @@ $messages['fr'] = array(
 	'oasis-member-since' => 'Membre depuis le $1',
 	'oasis-edits-counter' => '$1 <sup>{{PLURAL:$1|modification effectuée|modifications effectuées}}</sup>',
 	'oasis-edit-saved' => 'Votre modification a été enregistrée !',
+	'oasis-button-contribute-tooltip' => 'Participer',
+	'oasis-button-add-video' => 'Ajouter une vidéo',
+	'oasis-button-create-page' => 'Ajouter une page',
+	'oasis-button-add-photo' => 'Ajouter une image',
+	'oasis-button-edit-wikia-local-menu' => 'Modifier le menu Wikia local',
+	'oasis-button-edit-wikia-global-menu' => 'Modifier le menu Wikia global',
 	'oasis-toolbar-edit-title' => 'Personnaliser la barre d’outils',
 	'oasis-toolbar-edit-toolbar-list' => 'Liste de la barre d’outils',
 	'oasis-toolbar-edit-reset-defaults' => 'réinitialiser',
@@ -1201,6 +1228,12 @@ $messages['fr'] = array(
 	'oasis-related-categories' => 'Catégories apparentées',
 	'corporatelandingpage-trivia-title' => 'Wikia Trivia',
 	'corporatelandingpage-trivia-description' => 'Testez vos connaissances et gagnez un lot de prix de Wikia !',
+	'oasis-navigation-v2-create-page' => 'Ajouter une page',
+	'oasis-navigation-v2-edit-page' => 'Modifier cette page',
+	'oasis-navigation-v2-add-photo' => 'Ajouter une image',
+	'oasis-navigation-v2-edit-wikia-local-menu' => 'Modifier le menu Wikia local',
+	'oasis-navigation-v2-edit-wikia-global-menu' => 'Modifier le menu Wikia global',
+	'oasis-navigation-v2-edit-this-menu' => 'Modifier la navigation du wiki',
 );
 
 /** Galician (Galego)
@@ -1277,6 +1310,12 @@ $messages['gl'] = array(
 	'oasis-member-since' => 'Membro desde $1',
 	'oasis-edits-counter' => '$1 <sup>{{PLURAL:$1|edición feita|edicións feitas}}</sup>',
 	'oasis-edit-saved' => 'Gardouse a súa edición!',
+	'oasis-button-contribute-tooltip' => 'Contribuír',
+	'oasis-button-add-video' => 'Engadir o vídeo',
+	'oasis-button-create-page' => 'Engadir a páxina',
+	'oasis-button-add-photo' => 'Engadir a imaxe',
+	'oasis-button-edit-wikia-local-menu' => 'Editar o menú local de Wikia',
+	'oasis-button-edit-wikia-global-menu' => 'Editar o menú global de Wikia',
 	'oasis-toolbar-edit-title' => 'Personalizar a barra de ferramentas',
 	'oasis-toolbar-edit-toolbar-list' => 'Lista da barra de ferramentas',
 	'oasis-toolbar-edit-reset-defaults' => 'restablecer os valores por defecto',
@@ -1334,6 +1373,16 @@ $messages['gl'] = array(
 	'oasis-related-categories' => 'Categorías relacionadas',
 	'corporatelandingpage-trivia-title' => 'Curiosidades de Wikia',
 	'corporatelandingpage-trivia-description' => 'Poña a proba os seus coñecementos e gañe un paquete de premios de Wikia!',
+	'oasis-navigation-v2-create-page' => 'Engadir unha páxina',
+	'oasis-navigation-v2-edit-page' => 'Editar esta páxina',
+	'oasis-navigation-v2-add-photo' => 'Engadir unha foto',
+	'oasis-navigation-v2-edit-wikia-local-menu' => 'Editar o menú local de Wikia',
+	'oasis-navigation-v2-edit-wikia-global-menu' => 'Editar o menú global de Wikia',
+	'oasis-navigation-v2-edit-this-menu' => 'Editar a navegación do wiki',
+	'oasis-navigation-v2-level1-validation' => 'Vaites! O seu menú de nivel 1 é largo de máis. Acurte os elementos para que caiba. Grazas!',
+	'oasis-navigation-v2-level2-validation' => 'Vaites! O seu menú de nivel 2 é largo de máis. Acurte os elementos para que caiba. Grazas!',
+	'oasis-navigation-v2-level12-validation' => 'Vaites! Os seus menús de nivel 1 e 2 son largos de máis. Acurte os elementos para que caiban. Grazas!',
+	'oasis-navigation-v2-validation-next' => 'Seguinte',
 );
 
 /** Hebrew (עברית)
@@ -1587,6 +1636,7 @@ $messages['ia'] = array(
 	'oasis-page-header-subtitle-forum' => 'Pagina de foro',
 	'oasis-page-header-subtitle-special-wikiactivity' => 'Vider tote le activitate >',
 	'oasis-search-results-from' => 'Lista de resultatos ab: $1',
+	'oasis-search-results-from-all-wikis' => 'Monstra resultatos de tote Wikia',
 	'oasis-user-page-change-avatar' => 'Cambiar de avatar',
 	'oasis-content-picture-added-by' => 'Addite per $1',
 	'oasis-confirmation-page-deleted' => '"$1" ha essite delite. ([[Special:Undelete/$1|restaurar]])',
@@ -1596,6 +1646,13 @@ $messages['ia'] = array(
 	'oasis-notification-youhavenewmessages' => 'Tu ha $1.',
 	'oasis-member-since' => 'Membro depost $1',
 	'oasis-edits-counter' => '$1 <sup>{{PLURAL:$1|modification|modificationes}} facite</sup>',
+	'oasis-edit-saved' => 'Tu modification ha essite salveguardate!',
+	'oasis-button-contribute-tooltip' => 'Contribuer',
+	'oasis-button-add-video' => 'Adder video',
+	'oasis-button-create-page' => 'Adder pagina',
+	'oasis-button-add-photo' => 'Adder imagine',
+	'oasis-button-edit-wikia-local-menu' => 'Modificar le menu local de Wikia',
+	'oasis-button-edit-wikia-global-menu' => 'Modificar le menu global de Wikia',
 	'oasis-toolbar-edit-title' => 'Personalisar instrumentario',
 	'oasis-toolbar-edit-toolbar-list' => 'Lista de instrumentarios',
 	'oasis-toolbar-edit-reset-defaults' => 'usar predefinitiones',
@@ -1632,6 +1689,7 @@ $messages['ia'] = array(
 	'oasis-latest-activity-new-details' => 'create per $1 $2',
 	'oasis-latest-activity-edit-details' => 'modificate per $1 $2',
 	'oasis-latest-activity-delete-details' => 'delite per $1 $2',
+	'oasis-edit-this-menu' => 'Modificar iste menu',
 	'oasis-interlang-show-all' => '... vider totes >',
 	'oasis-interlang-languages' => 'Linguas:',
 	'imageseo-featured-on' => 'Utilisate in: ',
@@ -1652,6 +1710,174 @@ $messages['ia'] = array(
 	'oasis-related-categories' => 'Categorias connexe',
 	'corporatelandingpage-trivia-title' => 'Wikia Trivia',
 	'corporatelandingpage-trivia-description' => 'Prova tu cognoscentia de trivialitates e gania un pacco de premios ab Wikia!',
+	'oasis-navigation-v2-create-page' => 'Adder un pagina',
+	'oasis-navigation-v2-edit-page' => 'Modificar iste pagina',
+	'oasis-navigation-v2-add-photo' => 'Adder un photo',
+	'oasis-navigation-v2-edit-wikia-local-menu' => 'Modificar le menu local de Wikia',
+	'oasis-navigation-v2-edit-wikia-global-menu' => 'Modificar le menu global de Wikia',
+	'oasis-navigation-v2-edit-this-menu' => 'Modificar le navigation del wiki',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author Aldnonymous
+ */
+$messages['id'] = array(
+	'oasis-home' => 'Utama',
+	'oasis-more' => 'Lihat lebih>',
+	'oasis-mytools' => 'Peralatanku',
+	'oasis-follow' => 'Ikuti',
+	'oasis-share' => 'Bagikan',
+	'oasis-like' => 'Suka',
+	'oasis-edit-protected-article' => 'Login untuk menyunting',
+	'oasis-button-random-page' => 'Halaman sembarang',
+	'oasis-button-wiki-activity' => 'Aktivitas Wiki',
+	'oasis-button-wiki-activity-feed' => 'Lihat semua aktivitas',
+	'oasis-button-wiki-activity-watchlist' => 'Hanya halaman yang diikuti',
+	'oasis-latest-photos-more' => 'Lihat lebih>',
+	'oasis-latest-photos-inner-message' => 'Lihat semua foto',
+	'oasis-latest-photos-by' => 'oleh',
+	'oasis-latest-photos-more-dotdotdot' => 'selebihnya...',
+	'oasis-global-nav-create-wiki' => 'Memulai wiki',
+	'oasis-page-header-talk' => 'Bicara',
+	'oasis-page-header-add-topic' => 'Bagian baru',
+	'oasis-page-header-edit-profile' => 'Sunting profil',
+);
+
+/** Italian (Italiano)
+ * @author Leviathan 89
+ */
+$messages['it'] = array(
+	'oasis-more' => 'Altro →',
+	'oasis-follow' => 'Segui',
+	'oasis-edit-protected-article' => 'Accedi per modificare',
+	'oasis-button-random-page' => 'Pagina casuale',
+	'oasis-button-random-wiki' => 'Wiki a caso',
+	'oasis-button-wiki-activity-feed' => 'Vedi altre attività →',
+	'oasis-button-wiki-activity-watchlist' => ' Solo pagine seguite',
+	'oasis-activity-watchlist-login' => 'Devi accedere per vedere solo le tue pagine seguite',
+	'oasis-activity-header' => 'Attività recente',
+	'oasis-related-video-header' => 'Video correlati',
+	'oasis-related-video-by-5min' => 'da 5min Video',
+	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span class="$2">{{PLURAL:$1|pagina su questa wiki|pagine su questa wiki}}</span>',
+	'oasis-latest-photos-header' => '<em>{{FORMATNUM:$1}}</em><span class="$2">{{PLURAL:$1|immagine su questa wiki|immagini su questa wiki}}</span>',
+	'oasis-latest-photos-more' => 'Altro →',
+	'oasis-latest-photos-inner-message' => 'Vedi tutte le foto',
+	'oasis-latest-photos-empty' => 'Chiunque può contribuire a rendere questa wiki sorpendente<br /><span>Aggiungi una foto!</span>',
+	'oasis-latest-photos-by' => 'da',
+	'oasis-latest-photos-posted-in' => 'Aggiunta in',
+	'oasis-latest-photos-more-dotdotdot' => 'altro...',
+	'oasis-global-nav-create-wiki' => 'Crea una wiki',
+	'oasis-page-header-no-comments-tooltip' => 'Sii il primo a discutere di questa pagina',
+	'oasis-page-header-comments' => '{{PLURAL:$1|Commento|Commenti}}',
+	'oasis-page-header-comments-k' => '$1 mila',
+	'oasis-page-header-comments-m' => '$1 mln',
+	'oasis-page-header-talk' => 'Discussione',
+	'oasis-page-header-edited-by' => 'Modificato $1 da $2',
+	'oasis-page-header-edited' => 'Modificato $1',
+	'oasis-page-header-read-more' => 'Leggi di più: $1',
+	'oasis-page-header-history-link' => 'Vedi la cronologia completa',
+	'oasis-page-header-back-to-article' => 'Torna alla pagina',
+	'oasis-page-header-back-to-template' => 'Torna al template',
+	'oasis-page-header-back-to-mediawiki' => 'Torna alla pagina MediaWiki',
+	'oasis-page-header-back-to-category' => 'Torna alla Categoria',
+	'oasis-page-header-back-to-file' => 'Torna al File',
+	'oasis-page-header-back-to-video' => 'Torna al Video',
+	'oasis-page-header-add-topic' => 'Aggiungi argomento',
+	'oasis-page-header-edit-profile' => 'Modifica profilo',
+	'oasis-page-header-editing' => '<strong>Stai modificando:</strong> $1',
+	'oasis-page-header-editing-section' => '<strong>Stai modificando:</strong> $1 (sezione)',
+	'oasis-page-header-preview' => '<strong>Anteprima:</strong> $1',
+	'oasis-page-header-changes' => '<strong>Cambiamenti:</strong> $1',
+	'oasis-page-header-diff' => '<strong>Cambiamenti:</strong> $1',
+	'oasis-page-header-history' => '<strong>Cronologia:</strong> $1',
+	'oasis-anon-header' => 'Collaboratore non registrato <small>$1</small>',
+	'oasis-preview-confirmation' => 'Modalità anteprima: nessuna modifica è stata ancora salvata! Scorri la pagina per proseguire.',
+	'oasis-badge-notification' => 'Hai appena guadagnato il " $2 badge " $3',
+	'oasis-badge-notification-see-more' => 'Scopri altri badge che puoi guadagnare!',
+	'oasis-page-header-subtitle-mediawiki' => 'Pagina MediaWiki',
+	'oasis-page-header-subtitle-special' => 'Pagina speciale',
+	'oasis-page-header-subtitle-template' => 'Pagina template',
+	'oasis-page-header-subtitle-category' => 'Pagina di categoria',
+	'oasis-page-header-subtitle-forum' => 'Forum',
+	'oasis-page-header-subtitle-special-wikiactivity' => 'Vedi altre attività →',
+	'oasis-search-results-from' => 'Risultati da: $1',
+	'oasis-search-results-from-all-wikis' => 'Risultati da tutta Wikia',
+	'oasis-user-page-change-avatar' => 'Cambia avatar',
+	'oasis-content-picture-added-by' => 'Aggiunto da $1',
+	'oasis-confirmation-page-deleted' => '"$1" è stato cancellato. ([[Special:Undelete/$1|ripristina]])',
+	'oasis-confirmation-comment-deleted' => 'Il commento è stato cancellato.',
+	'oasis-confirmation-page-undeleted' => 'Questa pagina è stata ripristinata.',
+	'oasis-confirmation-user-logout' => 'Ti sei disconnesso.',
+	'oasis-notification-youhavenewmessages' => 'Hai $1.',
+	'oasis-member-since' => 'Membro dal $1',
+	'oasis-edits-counter' => '$1 <sup>{{PLURAL:$1|modifica|modifiche}} fatte</sup>',
+	'oasis-edit-saved' => 'La tua modifica è stata salvata!',
+	'oasis-button-contribute-tooltip' => 'Contribuisci',
+	'oasis-button-add-video' => 'Aggiungi video',
+	'oasis-button-create-page' => 'Aggiungi pagina',
+	'oasis-button-add-photo' => 'Aggiungi immagine',
+	'oasis-button-edit-wikia-local-menu' => 'Modifica il menù Wikia locale',
+	'oasis-button-edit-wikia-global-menu' => 'Modifica il menù Wikia globale',
+	'oasis-toolbar-edit-title' => 'Personalizza la barra degli strumenti',
+	'oasis-toolbar-edit-toolbar-list' => 'Elenco barra degli strumenti',
+	'oasis-toolbar-edit-reset-defaults' => 'ripristina valori predefiniti',
+	'oasis-toolbar-edit-find-a-tool' => 'Trova uno strumento',
+	'oasis-toolbar-edit-advanced-tools' => '[[Help:MyTools|lista di strumenti avanzati]]',
+	'oasis-toolbar-edit-search-for-tool' => 'Cerca uno strumento',
+	'oasis-toolbar-edit-popular-tools' => 'Strumenti popolari',
+	'oasis-toolbar-edit-hide-tools' => 'Nascondi strumenti',
+	'oasis-toolbar-edit-save' => 'Salva',
+	'oasis-toolbar-edit-cancel' => 'Annulla',
+	'oasis-toolbar-edit-rename-item' => 'Rinomina elemento',
+	'oasis-toolbar-for-admins-only' => 'Questo strumento può essere utilizzato dagli amministratori della wiki',
+	'oasis-toolbar-not-enabled-here' => 'Questo strumento non è disponibile su questa wiki.',
+	'oasis-toolbar-more' => 'altro&hellip;',
+	'oasis-toolbar-customize' => 'Personalizza',
+	'oasis-toolbar-devinfo' => 'Informazioni per gli sviluppatori',
+	'oasis-comments-header' => '$1 {{PLURAL:$1|commento|commenti}}',
+	'oasis-comments-showing-most-recent' => 'Visualizzando {{PLURAL:$1|il $1 più recente|i $1 più recenti}}',
+	'oasis-comments-anonymous-prompt' => 'Utente anonimo<br /> <a href="#" class="ajaxLogin">Accedere?</a>',
+	'oasis-comments-show-all' => 'Mostra tutti',
+	'oasis-comments-added-by' => '$1 da $2',
+	'oasis-random-wiki' => 'Wiki a caso',
+	'oasis-add-photo' => 'Carica una foto',
+	'oasis-anon-user' => 'Collaboratore non registrato',
+	'oasis-create-page' => 'Crea una nuova pagina su questa wiki',
+	'oasis-add-page' => 'Crea una pagina',
+	'oasis-section-edit' => 'Modifica',
+	'oasis-section-edit-alt' => 'Modifica la sezione $1',
+	'oasis-popular-blogs-title' => 'Blog popolari',
+	'oasis-spotlights-rail-title' => 'Di più da',
+	'oasis-spotlights-footer-title' => 'Nella rete Wikia',
+	'oasis-pages-on-wiki-header' => 'Pagine su $1',
+	'oasis-latest-activity-new-details' => 'creato da $1 $2',
+	'oasis-latest-activity-edit-details' => 'modificato da $1 $2',
+	'oasis-latest-activity-delete-details' => 'cancellato da $1 $2',
+	'oasis-edit-this-menu' => 'Modifica questo menù',
+	'oasis-interlang-show-all' => '...mostra tutti →',
+	'oasis-interlang-languages' => 'Lingue:',
+	'imageseo-featured-on' => 'Aggiunto su:',
+	'imageseo-featured-more' => 'altro...',
+	'oasis-editpage-readonlywarning' => '<h2>Scusateci!</h2>
+<p>Al momento non puoi modificare questa pagina. Dovremmo essere attivi di nuovo fra poco. Ecco cosa sta accadendo:<br /><em>$1</em></p>
+<p>Per favore controlla <a href="http://twitter.com/wikia">Twitter</a> o <a href="http://facebook.com/wikia">Facebook</a> per maggiori informazioni.</p>',
+	'oasis-upload-photos-title' => 'Carica una foto sulla wiki',
+	'oasis-upload-photos-more-options' => 'Più opzioni',
+	'oasis-upload-photos-fewer-options' => 'Meno opzioni',
+	'oasis-upload-photos-force' => 'Carica comunque',
+	'oasis-upload-photos-caption' => 'Didascalia',
+	'oasis-modal-error-headline' => 'Per favore correggi i seguenti errori',
+	'oasis-skip-to-content' => 'Vai al contenuto',
+	'oasis-skip-to-wiki-navigation' => 'Vai alla navigazione della wiki',
+	'oasis-skip-to-site-navigation' => 'Vai alla navigazione del sito',
+	'oasis-wiki-navigation' => 'Navigazione di $1',
+	'oasis-related-categories' => 'Categorie correlate',
+	'oasis-navigation-v2-create-page' => 'Crea una pagina',
+	'oasis-navigation-v2-edit-page' => 'Modifica questa pagina',
+	'oasis-navigation-v2-add-photo' => 'Carica una foto',
+	'oasis-navigation-v2-edit-wikia-local-menu' => 'Modifica il menù Wikia locale',
+	'oasis-navigation-v2-edit-wikia-global-menu' => 'Modifica il menù Wikia globale',
+	'oasis-navigation-v2-edit-this-menu' => 'Modifica la navigazione della wiki',
 );
 
 /** Japanese (日本語)
@@ -1949,7 +2175,7 @@ $messages['mk'] = array(
 	'oasis-button-wiki-activity-watchlist' => 'Само следени страници',
 	'oasis-activity-watchlist-login' => 'За да ги гледате само следените страници, ќе треба прво да се најавите.',
 	'oasis-activity-header' => 'Скорешни вики-активности',
-	'oasis-related-video-header' => 'Поврзани снимки',
+	'oasis-related-video-header' => 'Поврзани видеа',
 	'oasis-related-video-by-5min' => 'по 5-мин. снимка',
 	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span class="$2">{{PLURAL:$1|страница на ова вики|страници на ова вики}}</span>',
 	'oasis-latest-photos-header' => '<em>{{FORMATNUM:$1}}</em><span class="$2">{{PLURAL:$1|слика на ова вики|слики на ова вики}}</span>',
@@ -2079,6 +2305,10 @@ $messages['mk'] = array(
 	'oasis-navigation-v2-edit-wikia-local-menu' => 'Уреди локално мени на Викија',
 	'oasis-navigation-v2-edit-wikia-global-menu' => 'Уреди локално мени на Викија',
 	'oasis-navigation-v2-edit-this-menu' => 'Уреди ја Навигацијата по викито',
+	'oasis-navigation-v2-level1-validation' => 'Упс! Менито од I степен е прешироко. Скратете ги ставките. Благодариме!',
+	'oasis-navigation-v2-level2-validation' => 'Упс! Менито од II степен е прешироко. Скратете ги ставките. Благодариме!',
+	'oasis-navigation-v2-level12-validation' => 'Упс! Мениjata од I и II степен се прешироки. Прилагодете ги.',
+	'oasis-navigation-v2-validation-next' => 'Следно',
 );
 
 /** Malayalam (മലയാളം)
@@ -2276,6 +2506,10 @@ $messages['ms'] = array(
 	'oasis-navigation-v2-edit-wikia-local-menu' => 'Sunting menu Wikia setempat',
 	'oasis-navigation-v2-edit-wikia-global-menu' => 'Sunting menu Wikia sejagat',
 	'oasis-navigation-v2-edit-this-menu' => 'Sunting Pandu Arah Wiki',
+	'oasis-navigation-v2-level1-validation' => 'Menu Tahap 1 anda terlalu lebar. Sila pendekkan butiran-butiran supaya muat.',
+	'oasis-navigation-v2-level2-validation' => 'Menu Tahap 2 anda terlalu lebar. Sila pendekkan butiran-butiran supaya muat.',
+	'oasis-navigation-v2-level12-validation' => 'Maaf, menu Tahap 1 dan Tahap 2 anda terlalu luas. Sila sunting supaya muat.',
+	'oasis-navigation-v2-validation-next' => 'Berikutnya',
 );
 
 /** Burmese (မြန်မာဘာသာ)
@@ -2294,6 +2528,13 @@ $messages['my'] = array(
 	'oasis-page-header-talk' => 'ဆွေးနွေးရန်',
 	'oasis-page-header-read-more' => 'ဆက်လက်ဖက်ရန် : $1',
 	'oasis-page-header-add-topic' => 'အကြောင်းအရာအသစ် ထပ်ထည့်ရန်',
+);
+
+/** Mazanderani (مازِرونی)
+ * @author محک
+ */
+$messages['mzn'] = array(
+	'oasis-page-header-subtitle-mediawiki' => 'مدیاویکی صفحه',
 );
 
 /** Dutch (Nederlands)
@@ -2372,6 +2613,12 @@ Scroll naar beneden om door te gaan met bewerken.',
 	'oasis-member-since' => 'Lid sinds $1',
 	'oasis-edits-counter' => '$1 <sup>gemaakte {{PLURAL:$1|bewerking|bewerkingen}}</sup>',
 	'oasis-edit-saved' => 'Uw bewerking is opgeslagen',
+	'oasis-button-contribute-tooltip' => 'Bijdragen',
+	'oasis-button-add-video' => 'Video toevoegen',
+	'oasis-button-create-page' => 'Pagina toevoegen',
+	'oasis-button-add-photo' => 'Afbeelding toevoegen',
+	'oasis-button-edit-wikia-local-menu' => 'Lokale Wikiamenu bewerken',
+	'oasis-button-edit-wikia-global-menu' => 'Globale Wikiamenu bewerken',
 	'oasis-toolbar-edit-title' => 'Werkbalk aanpassen',
 	'oasis-toolbar-edit-toolbar-list' => 'Werkbalklijst',
 	'oasis-toolbar-edit-reset-defaults' => 'standaardinstellingen gebruiken',
@@ -2429,6 +2676,16 @@ Scroll naar beneden om door te gaan met bewerken.',
 	'oasis-related-categories' => 'Verwante categorieën',
 	'corporatelandingpage-trivia-title' => 'Wikia trivia',
 	'corporatelandingpage-trivia-description' => 'Toets uw triviakennis en win een prijzenpakket van Wikia!',
+	'oasis-navigation-v2-create-page' => 'Pagina toevoegen',
+	'oasis-navigation-v2-edit-page' => 'Deze pagina bewerken',
+	'oasis-navigation-v2-add-photo' => 'Afbeelding toevoegen',
+	'oasis-navigation-v2-edit-wikia-local-menu' => 'Lokale Wikiamenu bewerken',
+	'oasis-navigation-v2-edit-wikia-global-menu' => 'Globale Wikiamenu bewerken',
+	'oasis-navigation-v2-edit-this-menu' => 'Wikinavigatie bewerken',
+	'oasis-navigation-v2-level1-validation' => 'Uw menu voor niveau 1 is te breed. Kort de items in zodat het past.',
+	'oasis-navigation-v2-level2-validation' => 'Uw menu voor niveau 2 is te breed. Kort de items in zodat het past.',
+	'oasis-navigation-v2-level12-validation' => "Uw menu's voor niveau 1 en 2 zijn te breed. Kort de items in zodat het past.",
+	'oasis-navigation-v2-validation-next' => 'Volgende',
 );
 
 /** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
@@ -2591,12 +2848,14 @@ $messages['no'] = array(
 	'oasis-navigation-v2-edit-wikia-local-menu' => 'Rediger lokal Wikia-meny',
 	'oasis-navigation-v2-edit-wikia-global-menu' => 'Rediger global Wikia-meny',
 	'oasis-navigation-v2-edit-this-menu' => 'Rediger wiki-navigasjonen',
+	'oasis-navigation-v2-validation-next' => 'Neste',
 );
 
 /** Polish (Polski)
  * @author Anoon6
  * @author Cloudissimo
  * @author Sp5uhe
+ * @author Wyvek
  */
 $messages['pl'] = array(
 	'oasis-home' => 'Strona główna',
@@ -2626,6 +2885,8 @@ $messages['pl'] = array(
 	'oasis-global-nav-create-wiki' => 'Utwórz wiki',
 	'oasis-page-header-no-comments-tooltip' => 'Rozpocznij dyskusję jako pierwszy',
 	'oasis-page-header-comments' => '{{PLURAL:$1|Komentarz|Komentarze}}',
+	'oasis-page-header-comments-k' => '$1tys',
+	'oasis-page-header-comments-m' => '$1mln',
 	'oasis-page-header-talk' => 'Dyskusja',
 	'oasis-page-header-edited-by' => 'Edytowane $1 przez $2',
 	'oasis-page-header-edited' => 'Edytowane $1',
@@ -2656,6 +2917,7 @@ $messages['pl'] = array(
 	'oasis-page-header-subtitle-forum' => 'Strona forum',
 	'oasis-page-header-subtitle-special-wikiactivity' => 'Zobacz pełną aktywność >',
 	'oasis-search-results-from' => 'Pokaż wyniki z $1',
+	'oasis-search-results-from-all-wikis' => 'Wyniki wyszukiwania dla wszystkich stron na Wikia',
 	'oasis-user-page-change-avatar' => 'Zmień portret',
 	'oasis-content-picture-added-by' => 'Dodane przez $1',
 	'oasis-confirmation-page-deleted' => 'Usunięto „$1”. ([[Special:Undelete/$1|odtwórz]])',
@@ -2665,6 +2927,13 @@ $messages['pl'] = array(
 	'oasis-notification-youhavenewmessages' => 'Masz $1.',
 	'oasis-member-since' => 'Użytkownik od $1',
 	'oasis-edits-counter' => '$1 <sup>{{PLURAL:$1|edycja|edycje|edycji}}</sup>',
+	'oasis-edit-saved' => 'Twoja edycja została zapisana!',
+	'oasis-button-contribute-tooltip' => 'Wkład',
+	'oasis-button-add-video' => 'Dodaj wideo',
+	'oasis-button-create-page' => 'Dodaj stronę',
+	'oasis-button-add-photo' => 'Dodaj plik',
+	'oasis-button-edit-wikia-local-menu' => 'Edytuj lokalne menu Wikii',
+	'oasis-button-edit-wikia-global-menu' => 'Edytuj globalne menu Wikii',
 	'oasis-toolbar-edit-title' => 'Dostosuj pasek narzędzi',
 	'oasis-toolbar-edit-toolbar-list' => 'Lista',
 	'oasis-toolbar-edit-reset-defaults' => 'przywróć domyślne',
@@ -2680,6 +2949,7 @@ $messages['pl'] = array(
 	'oasis-toolbar-not-enabled-here' => 'To narzędzie jest nie dostępne na tej wiki.',
 	'oasis-toolbar-more' => 'więcej&hellip;',
 	'oasis-toolbar-customize' => 'Dostosuj',
+	'oasis-toolbar-devinfo' => 'Informacje dla Developerów',
 	'oasis-comments-header' => '$1 {{PLURAL:$1|komentarz|komentarze|komentarzy}}',
 	'oasis-comments-showing-most-recent' => 'Wyświetlono $1 {{PLURAL:$1|najnowszą|najnowsze|najnowszych}}',
 	'oasis-comments-anonymous-prompt' => 'Użytkownik anonimowy<br /> <a href="#">Chcesz się zalogować?</a>',
@@ -2714,6 +2984,19 @@ $messages['pl'] = array(
 	'oasis-upload-photos-force' => 'Prześlij mimo wszystko',
 	'oasis-upload-photos-caption' => 'Podpis',
 	'oasis-modal-error-headline' => 'Proszę poprawić następujące błędy',
+	'oasis-skip-to-content' => 'Przejdź do Treści',
+	'oasis-skip-to-wiki-navigation' => 'Przejdź do Nawigacji Wiki',
+	'oasis-skip-to-site-navigation' => 'Przejdź do Nawigacji Strony',
+	'oasis-wiki-navigation' => 'Nawigacja $1',
+	'oasis-related-categories' => 'Kategorie pokrewne',
+	'corporatelandingpage-trivia-title' => 'Quizy',
+	'corporatelandingpage-trivia-description' => 'Przetestuj swoją wiedzę i wygaj nagrody z Wikia!',
+	'oasis-navigation-v2-create-page' => 'Dodaj stronę',
+	'oasis-navigation-v2-edit-page' => 'Edytuj tę stronę',
+	'oasis-navigation-v2-add-photo' => 'Dodaj zdjęcie',
+	'oasis-navigation-v2-edit-wikia-local-menu' => 'Edytuj lokalne menu Wikii',
+	'oasis-navigation-v2-edit-wikia-global-menu' => 'Edytuj globalne menu Wikii',
+	'oasis-navigation-v2-edit-this-menu' => 'Edytuj nawigację',
 );
 
 /** Piedmontese (Piemontèis)
@@ -2745,11 +3028,19 @@ $messages['ps'] = array(
 	'oasis-page-header-subtitle-forum' => 'د فورم مخ',
 	'oasis-notification-youhavenewmessages' => 'تاسې $1 لرۍ.',
 	'oasis-member-since' => 'له $1 راهيسې غړی دی',
+	'oasis-button-contribute-tooltip' => 'ونډه اخيستل',
+	'oasis-button-add-video' => 'ويډيو ورګډول',
+	'oasis-button-create-page' => 'مخ ورګډول',
+	'oasis-button-add-photo' => 'انځور ورګډول',
+	'oasis-toolbar-edit-save' => 'خوندي کول',
+	'oasis-toolbar-edit-cancel' => 'ناګارل',
 	'oasis-comments-show-all' => 'ټول ښکاره کول',
 	'oasis-add-photo' => 'يو انځور ورګډول',
 	'oasis-add-page' => 'مخ ورګډول',
 	'oasis-section-edit' => 'سمول',
 	'oasis-interlang-languages' => 'ژبې:',
+	'oasis-navigation-v2-edit-page' => 'همدا مخ سمول',
+	'oasis-navigation-v2-add-photo' => 'يو انځور ورګډول',
 );
 
 /** Portuguese (Português)
@@ -3127,6 +3418,7 @@ $messages['ru'] = array(
 	'oasis-edit-this-menu' => 'Править это меню',
 	'oasis-interlang-show-all' => '... см. все >',
 	'oasis-interlang-languages' => 'Языки:',
+	'imageseo-featured-on' => 'Опубликовано в:',
 	'imageseo-featured-more' => 'больше ...',
 	'oasis-editpage-readonlywarning' => '<h2>Извините!</h2>
 <p>Вы не можете править страницу в данный момент. Викия будет перезапущена в ближайшее время. Вот что происходит сейчас:<br /><em>$1</em></p>
@@ -3167,7 +3459,7 @@ $messages['sr-ec'] = array(
 	'oasis-button-wiki-activity-feed' => 'Прикажи целу активност >',
 	'oasis-button-wiki-activity-watchlist' => 'Само праћене странице',
 	'oasis-activity-watchlist-login' => 'Морате бити пријављени да бисте видели праћене странице.',
-	'oasis-activity-header' => 'Скорашња активност на викији',
+	'oasis-activity-header' => 'Скорашње активности',
 	'oasis-related-video-header' => 'Сродни видео снимци',
 	'oasis-related-video-by-5min' => 'од 5мин видео',
 	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span class="$2">{{PLURAL:$1|страница на викији|странице на викији|страница на викији}}</span>',
@@ -3258,8 +3550,8 @@ $messages['sv'] = array(
 	'oasis-like' => 'Gilla',
 	'oasis-edit-protected-article' => 'Logga in för att redigera',
 	'oasis-button-random-page' => 'Slumpmässig sida',
-	'oasis-button-random-wiki' => 'Slumpmässig Wiki',
-	'oasis-button-wiki-activity' => 'Wiki Aktivitet',
+	'oasis-button-random-wiki' => 'Slumpmässig wiki',
+	'oasis-button-wiki-activity' => 'Wiki-aktivitet',
 	'oasis-button-wiki-activity-feed' => 'Se all aktivitet >',
 	'oasis-button-wiki-activity-watchlist' => 'endast Bevakade Sidor',
 	'oasis-activity-watchlist-login' => 'Du måste logga in för att se dina bevakade sidor.',
@@ -3377,9 +3669,9 @@ $messages['sv'] = array(
 	'oasis-upload-photos-caption' => 'Bildtext',
 	'oasis-modal-error-headline' => 'Var god rätta följande fel',
 	'oasis-skip-to-content' => 'Hoppa till innehåll',
-	'oasis-skip-to-wiki-navigation' => 'Hoppa till Wiki-navigation',
-	'oasis-skip-to-site-navigation' => 'Hoppa till sidnavigation',
-	'oasis-wiki-navigation' => '$1-navigation',
+	'oasis-skip-to-wiki-navigation' => 'Hoppa till Wiki-navigering',
+	'oasis-skip-to-site-navigation' => 'Hoppa till sidnavigering',
+	'oasis-wiki-navigation' => '$1-navigering',
 	'oasis-related-categories' => 'Relaterade kategorier',
 	'corporatelandingpage-trivia-title' => 'Wikia-trivia',
 	'corporatelandingpage-trivia-description' => 'Testa dina trivia-kunskaper och vinn ett prispaket från Wikia!',
@@ -3388,7 +3680,7 @@ $messages['sv'] = array(
 	'oasis-navigation-v2-add-photo' => 'Lägg till ett foto',
 	'oasis-navigation-v2-edit-wikia-local-menu' => 'Redigera lokal Wikia-meny',
 	'oasis-navigation-v2-edit-wikia-global-menu' => 'Redigera global Wikia-meny',
-	'oasis-navigation-v2-edit-this-menu' => 'Redigera Wiki-navigation',
+	'oasis-navigation-v2-edit-this-menu' => 'Redigera Wiki-navigering',
 );
 
 /** Telugu (తెలుగు)
@@ -3558,7 +3850,7 @@ $messages['vi'] = array(
 	'oasis-button-random-wiki' => 'Wiki ngẫu nhiên',
 	'oasis-button-wiki-activity' => 'Hoạt động của Wiki',
 	'oasis-button-wiki-activity-feed' => 'Xem tất cả các hoạt động >',
-	'oasis-button-wiki-activity-watchlist' => 'Chỉ các trang theo dõi',
+	'oasis-button-wiki-activity-watchlist' => ' Chỉ các trang theo dõi',
 	'oasis-activity-watchlist-login' => 'Bạn cần phải đăng nhập để xem các trang bạn theo dõi.',
 	'oasis-activity-header' => 'Hoạt động Wiki gần đây',
 	'oasis-related-video-header' => 'Đoạn phim liên quan',
@@ -3616,6 +3908,10 @@ $messages['vi'] = array(
 	'oasis-member-since' => 'Thành viên từ $1',
 	'oasis-edits-counter' => '$1 <sup>{{PLURAL:$1|sửa đổi|sửa đổi}}</sup>',
 	'oasis-edit-saved' => 'Sửa đổi của bạn đã được lưu!',
+	'oasis-button-contribute-tooltip' => 'Đóng góp',
+	'oasis-button-add-video' => 'Thêm đoạn phim',
+	'oasis-button-create-page' => 'Tạo trang',
+	'oasis-button-add-photo' => 'Thêm hình ảnh',
 	'oasis-toolbar-edit-title' => 'Tùy chỉnh thanh công cụ',
 	'oasis-toolbar-edit-toolbar-list' => 'Danh sách công cụ',
 	'oasis-toolbar-edit-reset-defaults' => 'thiết lập lại mặc định',
@@ -3639,7 +3935,7 @@ $messages['vi'] = array(
 	'oasis-comments-added-by' => '$1 bởi $2',
 	'oasis-random-wiki' => 'Wiki ngẫu nhiên',
 	'oasis-add-photo' => 'Thêm hình ảnh',
-	'oasis-anon-user' => 'một thành viên Wikia vô danh',
+	'oasis-anon-user' => 'một người dùng vô danh',
 	'oasis-create-page' => 'Tạo một trang mới trên wiki này',
 	'oasis-add-page' => 'Tạo trang',
 	'oasis-section-edit' => 'sửa',
@@ -3674,6 +3970,7 @@ $messages['vi'] = array(
 	'oasis-navigation-v2-create-page' => 'Tạo trang',
 	'oasis-navigation-v2-edit-page' => 'Sửa đổi trang này',
 	'oasis-navigation-v2-add-photo' => 'Thêm hình ảnh',
+	'oasis-navigation-v2-edit-this-menu' => 'Sửa đổi Danh mục Wiki',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

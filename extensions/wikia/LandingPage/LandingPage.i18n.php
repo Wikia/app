@@ -222,6 +222,10 @@ $messages['mk'] = array(
 	'landingpage-readfaq' => 'Имате прашања? Прочитајте ја страницата за ЧПП &gt;',
 	'landingpage-text' => 'На Викија можете да <strong>се поврзете со луѓето</strong> што имаат исти <strong>страсти и интереси</strong> како вас. Пронајдете си група, давајте коментари, правете уредувања; можете дури и да <strong>започнете сопствена страница</strong> и заедница.',
 	'landingpage-buttons-learn-more' => 'Дознајте повеќе &gt;',
+	'landingpage-language-links' => '* English|en
+* Español|es
+* Deutsch|de
+* Français|fr',
 	'landingpage-buttons-about-wikia-url' => 'http://community.wikia.com/wiki/About_Wikia?uselang=mk',
 );
 
@@ -354,6 +358,7 @@ $messages['sv'] = array(
 	'landingpage' => 'Välkommen till Wikia',
 	'landingpage-start-exploring' => 'Redo att börja utforska?',
 	'landingpage-readfaq' => 'Frågor? Se vår FAQ &gt;',
+	'landingpage-text' => 'På Wikia kan du <strong>ansluta dig till människor</strong> som delar dina <strong>känslor och intressen</strong>. Hitta din grupp, gör kommentarer och redigeringar, t.o.m. <strong>starta din egen webbplats</strong> och gemenskap.',
 	'landingpage-buttons-learn-more' => 'Läs mer &gt;',
 );
 

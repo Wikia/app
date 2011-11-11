@@ -83,7 +83,7 @@ Wikia
 *Evit cheñch penndibaboù kemenn ho roll evezhiañ, kit da welet http://www.wikia.com/wiki/Special:Penndibaboù
 *Evit merkañ holl bajennoù an diverradenn sizhuniek-mañ evel lennet, grit gant an dibarzh zo evit se en ivinell "Roll evezhiañ" war ho pajenn penndibaboù',
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 evezhiadenn{{PLURAL:$2||}})',
-	'globalwatchlist-no-page-found' => "N'eo bet kavet pajenn ebet.",
+	'globalwatchlist-no-page-found' => 'Pajenn ebet kavet.',
 	'globalwatchlist-no-blog-page-found' => "N'eo bet kavet pajenn blog ebet.",
 );
 
@@ -761,6 +761,26 @@ $3
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'tog-watchlistdigest' => 'Skicka en sammanfattning av bevakningslistan för veckan via e-post',
+	'globalwatchlist-see-more' => 'Var god kontrollera din lokala bevakningslista för fler ändringar',
+	'globalwatchlist-digest-email-subject' => 'Veckans sammandrag',
+	'globalwatchlist-digest-email-body' => 'Kära $1,
+
+Detta är en lista över sidor på din bevakningslista på Wikia, som har redigerats sedan du senast besökte den.
+
+$2
+
+
+Detta är en lista över bloggsidor på din bevakningslista på Wikia som har redigerats eller kommenterats sedan du senast besökte den.
+
+$3
+
+Var god besök och redigera ofta...
+
+Wikia
+
+* För att ändra dina inställningar för meddelanden angående bevakningslistan, var god besök http://www.wikia.com/wiki/Special:Preferences
+* För att markera alla sidor från denna veckosammanfattning som besöktes, se alternativet fliken "Bevakningslista" i dina inställningar',
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|kommentar|kommentarer}})',
 	'globalwatchlist-no-page-found' => 'Ingen sida hittades.',
 	'globalwatchlist-no-blog-page-found' => 'Ingen bloggsida hittades.',

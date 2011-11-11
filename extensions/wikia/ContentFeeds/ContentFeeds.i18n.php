@@ -275,6 +275,14 @@ $messages['pms'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => "Eror: Ël còrp ëd la pàgina a l'é obligatòri",
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'contentfeeds-firstfewarticles-tag-title' => 'سرليک',
+	'contentfeeds-firstfewarticles-tag-next' => 'راتلونکی',
+);
+
 /** Portuguese (Português) */
 $messages['pt'] = array(
 	'contentfeeds-desc' => 'Fornece informação actualizada através de vários elementos ou "feeds"',

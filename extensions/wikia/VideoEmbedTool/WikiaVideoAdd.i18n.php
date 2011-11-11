@@ -22,6 +22,13 @@ $messages['qqq'] = array(
 	'wva-add' => '{{Identical|Add}}',
 );
 
+/** толышә зывон (толышә зывон)
+ * @author Гусейн
+ */
+$messages['tly'] = array(
+	'wva-add' => 'Зијод кардеј',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
@@ -111,11 +118,20 @@ $messages['br'] = array(
 );
 
 /** Catalan (Català)
+ * @author Gemmaa
  * @author Paucabot
  */
 $messages['ca'] = array(
+	'wva-success' => "Pàgina de vídeo de  $1  s'afegia reeixidament.",
+	'wva-success-replaced' => 'Pàgina de vídeo de  $1  va ser substituït amb èxit.',
+	'wva-failure' => 'Si us plau proporcionar els paràmetres vàlids.',
+	'wva-name' => 'Escriviu el nom:',
 	'wva-url' => 'Introduïu la URL:',
 	'wva-add' => 'Afegeix',
+	'wva-title' => "De pressa afegir des d'URL de vídeo",
+	'wva-notlogged' => "Vostè necessita connectar-se o inscriure's per inserir vídeos.",
+	'wva-notallowed' => 'No es pot inserir vídeos en aquest wiki.',
+	'wva-protected' => 'Aquest vídeo està protegit.',
 );
 
 /** Czech (Česky)

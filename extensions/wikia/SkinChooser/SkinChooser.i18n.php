@@ -59,6 +59,17 @@ $messages['es'] = array(
 	'site-layout' => 'Diseños del sitio',
 );
 
+/** Finnish (Suomi)
+ * @author Crt
+ * @author Tm T
+ */
+$messages['fi'] = array(
+	'skinchooser-desc' => 'Mahdollistaa ulkoasun valinnan käyttäjän asetuksissa',
+	'skinchooser-customcss' => 'Mukautettua ulkoasua varten valitse yllä olevasta valikosta "mukautettu" ja määritä CSS-tyylit sivulla [[MediaWiki:Monaco.css]].',
+	'new-look' => 'Wikian uusi ulkoasu',
+	'site-layout' => 'Sivuston ulkoasut',
+);
+
 /** French (Français)
  * @author Iketsi
  * @author Verdy p
@@ -197,6 +208,7 @@ $messages['pt-br'] = array(
  */
 $messages['ru'] = array(
 	'skinchooser-desc' => 'Позволяет участникам выбирать оболочки в личных настройках',
+	'site-layout' => 'Оформления сайта',
 );
 
 /** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)

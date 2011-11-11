@@ -64,9 +64,10 @@ $messages['es'] = array(
 
 /** Finnish (Suomi)
  * @author Centerlink
+ * @author VezonThunder
  */
 $messages['fi'] = array(
-	'tog-disablelinksuggest' => 'Älä näytä linkkiehdotusta',
+	'tog-disablelinksuggest' => 'Älä näytä linkkiehdotusta lähdekooditilassa',
 );
 
 /** French (Français)
@@ -101,7 +102,7 @@ $messages['he'] = array(
  * @author Michawiki
  */
 $messages['hsb'] = array(
-	'tog-disablelinksuggest' => 'Žadyn wotkazowy namjet pokazać',
+	'tog-disablelinksuggest' => 'Žadyn wotkazowy namjet w modusu žórłoweho koda pokazać',
 );
 
 /** Hungarian (Magyar)
@@ -119,6 +120,7 @@ $messages['ia'] = array(
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author Aldnonymous
  * @author Bennylin
  */
 $messages['id'] = array(
@@ -127,9 +129,10 @@ $messages['id'] = array(
 
 /** Italian (Italiano)
  * @author Civvì
+ * @author Leviathan 89
  */
 $messages['it'] = array(
-	'tog-disablelinksuggest' => 'Non mostrare link suggeriti',
+	'tog-disablelinksuggest' => 'Non mostrare i link suggeriti nel codice sorgente',
 );
 
 /** Japanese (日本語)
@@ -234,7 +237,7 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
-	'tog-disablelinksuggest' => 'د تړنې وړانديز مه ښکاره کوه',
+	'tog-disablelinksuggest' => 'د تړنې وړانديز د سرچينې په بڼه مه ښکاره کوه',
 );
 
 /** Portuguese (Português)

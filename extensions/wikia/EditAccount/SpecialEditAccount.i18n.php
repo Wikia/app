@@ -405,6 +405,7 @@ $messages['fa'] = array(
  * @author Crt
  * @author Jack Phoenix <jack@countervandalism.net>
  * @author Nike
+ * @author Tm T
  */
 $messages['fi'] = array(
 	'editaccount' => 'Muokkaa käyttäjätunnuksia',
@@ -420,6 +421,7 @@ $messages['fi'] = array(
 	'editaccount-label-email' => 'Aseta uusi sähköpostiosoite',
 	'editaccount-label-pass' => 'Aseta uusi salasana',
 	'editaccount-label-realname' => 'Aseta uusi oikea nimi',
+	'editaccount-label-clearunsub' => 'Tilaus lopetettu',
 	'editaccount-submit-email' => 'Tallenna sähköpostiosoite',
 	'editaccount-submit-pass' => 'Tallenna salasana',
 	'editaccount-submit-realname' => 'Tallenna oikea nimi',
@@ -626,6 +628,7 @@ $messages['ia'] = array(
 	'editaccount-submit-pass' => 'Salveguardar contrasigno',
 	'editaccount-submit-realname' => 'Salveguardar nomine real',
 	'editaccount-submit-clearunsub' => 'Rader cancellation de subscription',
+	'editaccount-submit-cleardisable' => 'Reactivar',
 	'editaccount-submit-close' => 'Clauder conto',
 	'editaccount-usage-close' => 'Tu pote equalmente disactivar un conto de usator per cryptar le contrasigno e remover le adresse de e-mail. Nota que iste datos essera irrecuperabilemente perdite.',
 	'editaccount-warning-close' => '<b>Attention!</b> Tu es super le puncto de disactivar permanentemente le conto del usator <b>$1</b>. Isto es irreversibile. Es tu secur de voler facer isto?',
@@ -635,6 +638,7 @@ $messages['ia'] = array(
 	'editaccount-success-pass' => 'Contrasigno del conto $1 cambiate con successo.',
 	'editaccount-success-realname' => 'Nomine real del conto $1 cambiate con successo.',
 	'editaccount-success-unsub' => 'Le indicator de cancellation de subscription ha essite radite pro le conto $1.',
+	'editaccount-success-disable' => 'Le conto $1 non plus es disactivate.',
 	'editaccount-success-close' => 'Conto $1 disactivate con successo.',
 	'editaccount-error-email' => 'Le adresse de e-mail non ha essite cambiate. Reproba o contacta le equipa technic.',
 	'editaccount-error-pass' => 'Le contrasigno non ha essite cambiate. Reproba o contacta le equipa technic.',
@@ -642,6 +646,7 @@ $messages['ia'] = array(
 	'editaccount-error-close' => 'Un problema occurreva durante le clausura del conto. Reproba o contacta le equipa technic.',
 	'editaccount-invalid-email' => '"$1" non es un adresse de e-mail valide!',
 	'editaccount-nouser' => 'Le conto "$1" non existe!',
+	'editaccount-remove-avatar-fail' => 'Problema durante le elimination automatic del avatar.',
 	'editaccount-log' => 'Registro de contos de usator',
 	'editaccount-log-header' => 'Iste pagina lista le cambios facite al preferentias de usator per le personal de Wikia.',
 	'editaccount-log-entry-email' => 'cambiava le adresse de e-mail del usator $2',
@@ -653,14 +658,60 @@ $messages['ia'] = array(
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author Aldnonymous
  * @author Irwangatot
  */
 $messages['id'] = array(
+	'editaccount' => 'Menyunting akun',
+	'editaccount-desc' => 'Perbolehkan anggota staff untuk mengelola informasi akun pengguna',
+	'editaccount-title' => 'Khusus: SuntingAkun',
+	'editaccount-frame-manage' => 'Menyunting akun',
 	'editaccount-frame-usage' => 'Catatan',
+	'editaccount-usage' => 'Cache data pengguna terpisah untuk tiap-tiap wiki. Ketika Anda me-reset Kata sandi atau e-mail, chace akan ditangkap hanya pada wiki ini saja. Silahkan arahkan pengguna ke wiki ini untuk log in dengan kata sandi yang baru untuk menghindari masalah cache.',
+	'editaccount-label-select' => 'Pilih akun pengguna',
+	'editaccount-submit-account' => 'Kelola akun',
+	'editaccount-frame-account' => 'Menyunting akun pengguna: $1',
+	'editaccount-frame-close' => 'Menonaktifkan akun pengguna: $1',
+	'editaccount-label-email' => 'Menetapkan alamat e-mail baru',
+	'editaccount-label-pass' => 'Mengatur kata sandi baru',
+	'editaccount-label-realname' => 'Menetapkan nama baru',
+	'editaccount-label-clearunsub' => 'Berhenti berlangganan',
+	'editaccount-submit-email' => 'Simpan alamat e-mail',
+	'editaccount-submit-pass' => 'Simpan kata sandi',
+	'editaccount-submit-realname' => 'Simpan nama asli',
+	'editaccount-submit-clearunsub' => 'Hapus yang tidak berlangganan',
+	'editaccount-submit-cleardisable' => 'Hilangkan nonaktifkan bendera',
+	'editaccount-submit-close' => 'Tutup akun',
+	'editaccount-usage-close' => 'Anda juga dapat menonaktifkan account pengguna dengan mengacak kata sandinya dan menghapus alamat e-mail. Catatan data yang hilang tidak dapat dikembalikan.',
+	'editaccount-warning-close' => '<b>Hati-hati!</b> Anda akan menonaktifkan akun pengguna  <b> $1 </b> secara permanen. Tindakan ini tidak dapat dikembalikan. Apakah yakin anda mau melakukannya?',
+	'editaccount-status' => 'Pesan status',
+	'editaccount-success-email' => 'Berhasil mengubah alamat e-mail akun  $1  ke $2 .',
+	'editaccount-success-email-blank' => 'Berhasil menghapus alamat e-mail account  $1 .',
+	'editaccount-success-pass' => 'Berhasil mengubah kata sandi untuk akun  $1 .',
+	'editaccount-success-realname' => 'Berhasil mengubah nama untuk akun  $1 .',
+	'editaccount-success-unsub' => 'Berhasil menghapus berhenti berlangganan bit ke akun $1',
+	'editaccount-success-disable' => 'Berhasil menghapus nonaktif bit untuk akun $1',
+	'editaccount-success-close' => 'Berhasil menonakltifkan akun $1',
+	'editaccount-error-email' => 'E-mail tidak berubah. Coba lagi atau hubungi tim Tech.',
+	'editaccount-error-pass' => 'Kata sandi tidak berubah. Coba lagi atau hubungi tim Tech.',
+	'editaccount-error-realname' => 'Nama asli tidak berubah. Coba lagi atau hubungi tim Tech.',
+	'editaccount-error-close' => 'Masalah terjadi ketika menutup account. Coba lagi atau hubungi tim Tech.',
+	'editaccount-invalid-email' => '" $1 " bukanlah alamat e-mail yang valid!',
+	'editaccount-nouser' => 'Akun " $1 "tidak ada!',
+	'editaccount-remove-avatar-fail' => 'Masalah dalam hapus otomatis avatar.',
+	'editaccount-log' => 'Catatan akun pengguna',
+	'editaccount-log-header' => 'Halaman ini berisi daftar perubahan yang dibuat untuk informasi pengguna oleh staf Wikia.',
+	'editaccount-log-entry-email' => 'mengubah alamat e-mail untuk pengguna $2',
+	'editaccount-log-entry-pass' => 'mengubah kata sandi untuk user $2',
+	'editaccount-log-entry-realname' => 'mengubah nama asli untuk pengguna$2',
+	'editaccount-log-entry-close' => 'menonaktifkan akun $2',
+	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;"> Akun ini telah dinonaktifkan secara global oleh Wikia. </div>',
+	'right-editaccount' => 'Menyunting informasi pengguna lain',
 );
 
 /** Italian (Italiano)
  * @author HalphaZ
+ * @author Leviathan 89
  * @author Pietrodn
  */
 $messages['it'] = array(
@@ -701,7 +752,7 @@ $messages['it'] = array(
 	'editaccount-log-entry-pass' => "Password dell'utente $2 cambiata",
 	'editaccount-log-entry-realname' => "Nome reale dell'utente $2 cambiato",
 	'editaccount-log-entry-close' => 'Account $2 disabilitato',
-	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em"> Questo account è stato disattivato. </div>',
+	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Questo account è stato globalmente disattivato da Wikia.</div>',
 	'right-editaccount' => 'Modifica le preferenze degli altri utenti',
 );
 

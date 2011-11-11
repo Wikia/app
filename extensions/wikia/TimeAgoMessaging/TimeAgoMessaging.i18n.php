@@ -59,13 +59,14 @@ $messages['ca'] = array(
 
 /** Czech (Česky)
  * @author Dontlietome7
+ * @author Mormegil
  */
 $messages['cs'] = array(
 	'timeagomessaging-desc' => 'Poskytuje i18n pro zásuvný modul jquery.timeago.js',
 	'timeago-day' => 'před {{PLURAL:$1|dnem|$1 dny}}',
 	'timeago-hour' => 'před {{PLURAL:$1|hodinou|$1 hodinami}}',
 	'timeago-minute' => 'před {{PLURAL:$1|1 minutou|$1 minutami}}',
-	'timeago-second' => 'před 1 minutou',
+	'timeago-second' => 'před minutou',
 );
 
 /** German (Deutsch)
@@ -141,6 +142,16 @@ $messages['ia'] = array(
 	'timeago-hour' => '{{PLURAL:$1|un hora|$1 horas}} retro',
 	'timeago-minute' => '{{PLURAL:$1|un minuta|$1 minutas}} retro',
 	'timeago-second' => 'un minuta retro',
+);
+
+/** Italian (Italiano)
+ * @author Leviathan 89
+ */
+$messages['it'] = array(
+	'timeago-day' => '{{PLURAL:$1|un giorno|$1 giorni}} fa',
+	'timeago-hour' => "{{PLURAL:$1|un'ora|$1 ore}} fa",
+	'timeago-minute' => '{{PLURAL:$1|un minuto|$1 minuti}} fa',
+	'timeago-second' => 'un minuto fa',
 );
 
 /** Japanese (日本語)

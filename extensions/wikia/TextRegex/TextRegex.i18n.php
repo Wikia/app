@@ -768,7 +768,7 @@ $messages['sr-ec'] = array(
 	'textregex-addedby-user' => 'додао/-ла $1 у $2',
 	'textregex-remove-url' => '[{{SERVER}}$1&id=$2 уклони]',
 	'textregex-unblock-succ' => 'Приступ је враћен',
-	'textregex-block-succ' => 'Приступ је забрањен',
+	'textregex-block-succ' => 'Блокирање је успело',
 	'textregex-unblock-message' => "Израз '''$1''' је уклоњен са списка непожељних фраза.",
 	'textregex-block-message' => "Израз '''$1''' је додат на списак непожељних фраза.",
 	'textregex-regex-block' => 'Забрањена фраза:',

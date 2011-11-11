@@ -55,6 +55,14 @@ $messages['ia'] = array(
 	'campfire-licensed-under' => 'Sub licentia $1',
 );
 
+/** Italian (Italiano)
+ * @author Leviathan 89
+ */
+$messages['it'] = array(
+	'campfire-page-header' => '$1 da $2',
+	'campfire-licensed-under' => 'Sotto licenza $1',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */

@@ -357,8 +357,14 @@ $messages['ru'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'batchuserrights-desc' => 'Tillåter att lägga till en eller flera användare i en grupp i en handling',
+	'batchuserrights-names' => 'Användarnamn som ska läggas till denna grupp (en per rad):',
 	'batchuserrights-single-progress-update' => 'Lade till {{PLURAL:$1|grupp|grupperna}} till <strong>$2</strong>.',
+	'batchuserrights-add-groups' => 'Lägger till {{PLURAL:$1|en användare|$1 användare}} till följande {{PLURAL:$2|grupp|grupper}}: <strong>$3</strong>.',
 	'batchuserrights-userload-error' => "Kunde inte läsa in användaren \"'''\$1'''\".",
+	'batchuserrights-no-groups' => 'Du valde inte några grupper.
+Detta kommer inte att uppnå någonting.
+Resten av sidan kommer att tillåtas att köras bara så att du lätt kan se om några av användarnamnen inte kunde läsas in.',
 );
 
 /** Tagalog (Tagalog)

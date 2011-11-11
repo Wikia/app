@@ -259,6 +259,13 @@ $messages['pms'] = array(
 	'loggernoresult' => 'Gnun arzultà trovà',
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'loggergo' => 'ښکاره کول',
+);
+
 /** Portuguese (Português)
  * @author Hamilton Abreu
  * @author Waldir
@@ -317,6 +324,8 @@ $messages['sr-ec'] = array(
  */
 $messages['sv'] = array(
 	'loggerselectlogname' => 'Välj loggnamn:',
+	'loggerrecordswithpercent' => "'''$1''' poster ('''$2''' procent färdigt)",
+	'loggerrecords' => '$1 poster',
 	'loggergo' => 'Visa',
 	'loggernoresult' => 'Inga resultat hittades',
 );

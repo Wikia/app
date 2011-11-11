@@ -54,10 +54,11 @@ $messages['bg'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Y-M D
  */
 $messages['br'] = array(
-	'main-tab-discover' => 'Dizoloiñ',
+	'main-tab-discover' => 'Dizoleiñ',
 	'main-tab-personal' => 'Ma Wikia',
 	'main-tab-search' => 'Klask',
 	'main-tab-offline' => 'Ezlinenn',
@@ -248,6 +249,14 @@ $messages['no'] = array(
 	'tab-discover-no-network-dialog-close-button' => 'OK',
 	'tab-search-loading-message' => 'Søker...',
 	'browser-loading-message' => 'Laster inn...',
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'main-tab-search' => 'پلټل',
+	'tab-discover-no-network-dialog-close-button' => 'ښه',
 );
 
 /** Portuguese (Português)

@@ -169,12 +169,23 @@ $messages['fr'] = array(
  * @author Xanocebreiro
  */
 $messages['gl'] = array(
+	'partner-feed-achievements-leaderboard' => 'Taboleiro de logros dos wikis',
+	'partner-feed-earned-badges' => 'Insignias gañadas recentemente nun wiki específico',
+	'partner-feed-recent-blog-posts' => 'Entradas de blogue recentes relacionadas cunha promoción',
+	'partner-feed-latest-images' => 'Galería das últimas imaxes cargadas',
+	'partner-feed-hotcontent' => 'Portal de contidos populares clasificados por número de editores',
+	'partner-feed-recent-blog-comments' => 'Comentarios recentes relacionados cunha entrada de blogue especificada.',
 	'partner-feed-recent-changes' => 'Cambios recentes',
+	'partnerfeed' => 'Fonte de novas adicional',
+	'error-no-article' => 'Erro: Parámetro "artigo" non pasado',
 	'feed-title-blogposts' => 'Entradas de blogue recentes',
 	'feed-title-recent-badges' => 'Insignias recentes',
 	'feed-title-recent-images' => 'Imaxes recentes',
 	'feed-title-leaderboard' => 'Taboleiro de logros',
+	'feed-main-title' => 'Fonte de novas adicional de Wikia',
 	'all-blog-posts' => 'todas as categorías',
+	'blog-posts-from-listing' => 'desde a lista: $1',
+	'feed-title-hot-content' => 'Contido popular - $1',
 	'feed-title-blogcomments' => 'Comentario sobre $1',
 	'feed-title-recentchanges' => 'Cambios recentes',
 );
@@ -236,7 +247,13 @@ $messages['la'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
+	'partner-feed-latest-images' => 'Galerie vun de rezente Biller déi eropgeluede goufen',
 	'partner-feed-recent-changes' => 'Rezent Ännerungen',
+	'feed-title-recent-badges' => 'Rezent Badger',
+	'feed-title-recent-images' => 'Rezent Biller',
+	'all-blog-posts' => 'all Kategorien',
+	'feed-title-blogcomments' => 'Bemierkungen iwwer $1',
+	'feed-title-recentchanges' => 'Rezent Ännerungen',
 );
 
 /** Macedonian (Македонски)
@@ -469,11 +486,15 @@ $messages['sr-ec'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'partner-feed-recent-changes' => 'Senaste ändringar',
 	'feed-title-blogposts' => 'Senaste blogginlägg',
 	'feed-title-recent-badges' => 'Senaste emblem',
 	'feed-title-recent-images' => 'Senaste bilder',
 	'all-blog-posts' => 'alla kategorier',
+	'blog-posts-from-listing' => 'från lista: $1',
+	'feed-title-hot-content' => 'Hett innehåll - $1',
 	'feed-title-blogcomments' => 'Kommentarer till $1',
+	'feed-title-recentchanges' => 'Senaste ändringar',
 );
 
 /** Telugu (తెలుగు)

@@ -45,6 +45,13 @@ Artikel '''$1''' kon nie gevind word nie.
 $messages['ast'] = array(
 	'our404handler' => "Error 404: ¡Nun s'alcuentra la páxina!",
 	'our404handler-oops' => "Estes nun son les páxines que busques. Sal d'equí, por favor.",
+	'message404' => "'''Sentímoslo muncho, pero por dalgún motivu la páxina que pidisti nun esiste.'''
+
+Nun se pudo alcontrar l'artículu \"'''\$1'''\".
+
+* Pues intentalo col artículu \"[[\$2]]\"
+* Pues usar el cuadru de gueta del llau izquierdu de la páxina
+* Pa dir a la páxina principal d'esti sitiu web, calca nel enllaz: [{{SERVER}} {{SITENAME}}]",
 );
 
 /** Azerbaijani (Azərbaycanca)
@@ -682,7 +689,7 @@ $messages['sl'] = array(
  * @author Verlor
  */
 $messages['sr-ec'] = array(
-	'our404handler' => 'Грешка 404: страница није пронађена!',
+	'our404handler' => 'Грешка 404: страница није пронађена',
 	'our404handler-oops' => 'Ово нису странице које тражите. Наставите даље с претрагом.',
 	'message404' => "'''Заиста нам је жао, али страница коју тражите не постоји.'''
 

@@ -151,12 +151,17 @@ $messages['fa'] = array(
 
 /** Finnish (Suomi)
  * @author Crt
+ * @author Nike
+ * @author VezonThunder
  */
 $messages['fi'] = array(
+	'search-desc' => 'Wikian-laajuinen hakukone, joka käyttää Solr-taustaosaa',
 	'wikiasearch-titles-only' => 'Etsi vain sivujen otsikoista',
 	'wikiasearch-system-error-msg' => 'Hakua ei voitu suorittaa loppuun järjestelmävirheen takia',
 	'wikiasearch-search-this-wiki' => 'Etsi vain Wikia Centralista',
 	'wikiasearch-search-wikia' => 'Etsi Wikiasta',
+	'wikiasearch-image-results' => 'Kuvatulokset haulla ”$1”',
+	'wikiasearch-search-all-wikia' => 'Hae koko Wikiasta',
 );
 
 /** French (Français)
@@ -240,18 +245,22 @@ $messages['ia'] = array(
 	'wikiasearch-search-this-wiki' => 'Cercar solmente in Wikia Central',
 	'wikiasearch-search-wikia' => 'Cercar in Wikia',
 	'wikiasearch-image-results' => 'Resultatos de imagines pro "$1"',
+	'wikiasearch-search-all-wikia' => 'Cercar in tote Wikia',
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author Aldnonymous
  * @author Farras
  * @author Irwangatot
  */
 $messages['id'] = array(
+	'search-desc' => 'Mesin pencari Cross-Wikia dengan menggunakan Solr backend',
 	'wikiasearch-titles-only' => 'Cari hanya dalam judul halaman',
 	'wikiasearch-system-error-msg' => 'Karena kesalahan sistem, pencarian anda tidak dapat diselesaikan',
 	'wikiasearch-search-this-wiki' => 'Cari hanya Wikia Central',
 	'wikiasearch-search-wikia' => 'Pencarian Wikia',
 	'wikiasearch-image-results' => 'Hasil Pencarian Gambar untuk "$1"',
+	'wikiasearch-search-all-wikia' => 'Cari di semua Wikia',
 );
 
 /** Igbo (Igbo)
@@ -267,6 +276,7 @@ $messages['ig'] = array(
 /** Italian (Italiano)
  * @author Beta16
  * @author Gianfranco
+ * @author Leviathan 89
  * @author Pietrodn
  */
 $messages['it'] = array(
@@ -276,6 +286,7 @@ $messages['it'] = array(
 	'wikiasearch-search-this-wiki' => 'Cerca sono in Wikia Central',
 	'wikiasearch-search-wikia' => 'Cerca in Wikia',
 	'wikiasearch-image-results' => 'Risultati immagini per "$1"',
+	'wikiasearch-search-all-wikia' => 'Cerca in tutta Wikia',
 );
 
 /** Japanese (日本語)
@@ -292,7 +303,7 @@ $messages['ja'] = array(
 	'wikiasearch-search-all-wikia' => 'すべてのウィキアから検索',
 );
 
-/** Jamaican Creole English (Patios)
+/** Jamaican Creole English (Patois)
  * @author Yocahuna
  */
 $messages['jam'] = array(
@@ -518,12 +529,13 @@ $messages['sr-ec'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
-	'search-desc' => 'Kryss-Wikia sökmotor använder Solr backend',
+	'search-desc' => 'Kryss-Wikias sökmotor som använder bakgrundsfunktionen Solr',
 	'wikiasearch-titles-only' => 'Sök endast i sidtitlar',
 	'wikiasearch-system-error-msg' => 'På grund av ett systemfel kunde sökningen inte slutföras',
 	'wikiasearch-search-this-wiki' => 'Sök endast på Wikia Central',
 	'wikiasearch-search-wikia' => 'Sök Wikia',
 	'wikiasearch-image-results' => 'Bildresultat för "$1"',
+	'wikiasearch-search-all-wikia' => 'Sök på hela Wikia',
 );
 
 /** Tamil (தமிழ்)

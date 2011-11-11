@@ -96,6 +96,7 @@ Skryf die tweede afdeling van u bladsy hier.',
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Alexknight12
  * @author OsamaK
  */
 $messages['ar'] = array(
@@ -124,7 +125,7 @@ $messages['ar'] = array(
 	'createpage-error-article-spam' => 'عذرا، عنوان المقالة تم رفضه من قبل فلتر الإزعاج لدينا.
 الرجاء اختيار عنوان آخر.',
 	'createpage-error-article-blocked' => 'آسف، أنت غير قادر على إنشاء ذلك المقال حاليا.',
-	'tog-createpagedefaultblank' => 'إستخدم الصفحة الفارغة إفتراضيا لإنشاء مقالة جديدة',
+	'tog-createpagedefaultblank' => 'استخدم الصفحة الفارغة افتراضيا لإنشاء صفحة جديدة',
 	'tog-createpagepopupdisabled' => 'تعطيل إنبثاق منشئ الصفحات',
 	'newpagelayout' => '[[ملف:Placeholder|يسار|300بك]]
 قم بكتابة الفقرة الأولى من المقالة هنا.
@@ -259,6 +260,7 @@ Escriu la segona secció de la pàgina aquí.',
 );
 
 /** German (Deutsch)
+ * @author Inkowik
  * @author LWChris
  * @author The Evil IP address
  */
@@ -473,7 +475,7 @@ $messages['fr'] = array(
 	'createpage-desc' => 'Permet de créer une nouvelle page en utilisant l’éditeur WYSIWYG de Wikia',
 	'createpage-sp-title' => 'Créer un nouvel article',
 	'createpage_title' => 'Créer une nouvelle page',
-	'createpage_title_caption' => 'Titre :',
+	'createpage_title_caption' => 'Titre',
 	'createpage_enter_text' => 'Texte :',
 	'createpage_empty_title_error' => 'Titre requis',
 	'createpage_empty_article_body_error' => "Texte de l'article requis",
@@ -493,7 +495,7 @@ $messages['fr'] = array(
 	'createpage-error-article-spam' => 'Désolé, le titre de la page a été rejeté par notre filtre anti-spam. Veuillez utiliser un nom différent.',
 	'createpage-error-article-blocked' => 'Désolé, vous ne pouvez créer cet article en ce moment.',
 	'tog-createpagedefaultblank' => 'Utiliser une page vierge par défaut pour créer une nouvelle page',
-	'tog-createpagepopupdisabled' => 'Désactiver la fenêtre surgissante de création de page',
+	'tog-createpagepopupdisabled' => 'Désactiver la popup « Créer un nouvel article »',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
 Écrivez le premier paragraphe de votre article ici.
 
@@ -626,7 +628,7 @@ $messages['ia'] = array(
 	'createpage-desc' => 'Permitte crear un nove pagina con le editor WYSIWYG de Wikia',
 	'createpage-sp-title' => 'Crear un nove articulo',
 	'createpage_title' => 'Crear un nove articulo',
-	'createpage_title_caption' => 'Titulo:',
+	'createpage_title_caption' => 'Titulo',
 	'createpage_enter_text' => 'Texto:',
 	'createpage_empty_title_error' => 'Un titulo es obligatori',
 	'createpage_empty_article_body_error' => 'Texto de articulo es obligatori',
@@ -650,7 +652,7 @@ Tu pote visitar <a href="$1">$2</a>, o renominar tu pagina.',
 Per favor usa un altere titulo.',
 	'createpage-error-article-blocked' => 'Pardono, tu non pote crear iste articulo in iste momento.',
 	'tog-createpagedefaultblank' => 'Usa un pagina blanc como standard pro le creation de nove paginas',
-	'tog-createpagepopupdisabled' => 'Disactivar le pop-up pro crear paginas',
+	'tog-createpagepopupdisabled' => 'Disactivar le pop-up "Crear un nove articulo"',
 	'newpagelayout' => '[[File:Placeholder|right|300px|Spatio reservate]]
 Scribe hic le prime paragrapho de tu articulo.
 
@@ -664,20 +666,59 @@ Scribe hic le secunde section de tu articulo.',
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author Aldnonymous
  * @author Irwangatot
  */
 $messages['id'] = array(
-	'createpage_title_caption' => 'Judul:',
+	'createpage-desc' => 'Memungkinkan untuk membuat halaman baru menggunakan editor WYSIWYG Wikia',
+	'createpage-sp-title' => 'Buat halaman baru',
+	'createpage_title' => 'Buat halaman baru',
+	'createpage_title_caption' => 'Judul',
+	'createpage_enter_text' => 'Teks:',
+	'createpage_empty_title_error' => 'Judul diperlukan',
+	'createpage_empty_article_body_error' => 'Teks halaman dibutuhkan',
+	'createpage_invalid_title_error' => 'Judul tidak sah',
+	'createpage_article_already_exists' => 'Halaman dengan nama yang sudah ada.
+Silakan Pilih nama yang berbeda.',
+	'createpage_spam' => 'Maaf, suntingan anda tidak dapat disimpan',
+	'createpage_cant_edit' => 'Tidak dapat menyunting',
+	'createpage-dialog-title' => 'Buat halaman baru',
+	'createpage-dialog-message1' => 'Selamat, Anda membuat sebuah halaman baru!',
+	'createpage-dialog-message2' => 'Nama apa yang ingin Anda berikan?',
+	'createpage-dialog-choose' => 'Pilih rancangan halaman',
+	'createpage-dialog-format' => 'rancangan standar',
+	'createpage-dialog-blank' => 'Halaman kosong',
+	'createpage-error-empty-title' => 'Silakan menulis judul halaman Anda',
+	'createpage-error-invalid-title' => 'Maaf, halaman judul ini tidak sah.
+Gunakan judul yang berbeda.',
+	'createpage-error-article-exists' => 'Halaman dengan judul yang sama sudah ada.
+Anda dapat pergi ke <a href="$1">$2</a>, atau merubah nama halaman Anda',
+	'createpage-error-article-spam' => 'Maaf, halaman judul ini ditolak oleh filter spam kami.
+Gunakan judul yang berbeda.',
+	'createpage-error-article-blocked' => 'Maaf, Anda tidak dapat membuat halaman saat ini.',
+	'tog-createpagedefaultblank' => 'Gunakan halaman kosong sebagai default untuk membuat sebuah halaman baru',
+	'tog-createpagepopupdisabled' => 'Nonaktifkan "Buat artikel baru" pop-up dialog',
+	'newpagelayout' => '[[File:Placeholder|right|300px]]
+Tulis paragraf pertama dari halaman Anda di sini.
+
+ == Bagian judul ==
+
+Tulis bagian pertama dari halaman Anda di sini.
+
+ == Bagian judul ==
+
+Tulis bagian kedua dari halaman Anda di sini.',
 );
 
 /** Italian (Italiano)
  * @author HalphaZ
+ * @author Leviathan 89
  */
 $messages['it'] = array(
 	'createpage-desc' => "Permette di creare una nuova pagina utilizzando l'editor WYSIWYG di Wikia",
 	'createpage-sp-title' => 'Crea un nuovo articolo',
 	'createpage_title' => 'Crea un nuovo articolo',
-	'createpage_title_caption' => 'Titolo:',
+	'createpage_title_caption' => 'Titolo',
 	'createpage_enter_text' => 'Testo:',
 	'createpage_empty_title_error' => 'Titolo necessario',
 	'createpage_empty_article_body_error' => "Testo dell'articolo richiesto",
@@ -701,7 +742,7 @@ Puoi andare a <a href="$1">$2</a> , o rinominare la tua pagina',
 Usa un titolo diverso.",
 	'createpage-error-article-blocked' => 'Spiacente, non puoi creare questo articolo in questo momento.',
 	'tog-createpagedefaultblank' => 'Utilizza una pagina vuota come default per la creazione di una nuova pagina',
-	'tog-createpagepopupdisabled' => 'Disattiva il pop-up Crea pagina',
+	'tog-createpagepopupdisabled' => 'Disabilita la finestra pop-up "Crea nuova pagina"',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
 Scrivi qui il primo paragrafo del tuo articolo.
 
@@ -891,7 +932,7 @@ Soraty eto ny fizarana faharoan'ny pejinao.",
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
-	'createpage-desc' => 'Овозможува создавање на нови страници со уредувачот со директен преглед',
+	'createpage-desc' => 'Овозможува создавање на нови страници со уредникот WYSIWYG',
 	'createpage-sp-title' => 'Создавање на нова статија',
 	'createpage_title' => 'Создај нова статија',
 	'createpage_title_caption' => 'Наслов',
@@ -982,13 +1023,14 @@ Isikan bahagian kedua laman anda di sini.',
 
 /** Dutch (Nederlands)
  * @author McDutchie
+ * @author SPQRobin
  * @author Siebrand
  */
 $messages['nl'] = array(
 	'createpage-desc' => "Maakt het mogelijk nieuwe pagina's aan te maken met Wikia's WYSIWYG-tekstverwerker",
 	'createpage-sp-title' => 'Nieuwe pagina aanmaken',
 	'createpage_title' => 'Nieuwe pagina aanmaken',
-	'createpage_title_caption' => 'Paginanaam:',
+	'createpage_title_caption' => 'Paginanaam',
 	'createpage_enter_text' => 'Tekst:',
 	'createpage_empty_title_error' => 'Een paginanaam is verplicht',
 	'createpage_empty_article_body_error' => 'Paginatekst is verplicht',
@@ -1013,7 +1055,7 @@ U kunt naar "<a href="$1">$2</a>" gaan of uw pagina anders noemen',
 Kies alstublieft een andere paginanaam.',
 	'createpage-error-article-blocked' => "Sorry, maar u kunt op het moment geen nieuwe pagina's aanmaken.",
 	'tog-createpagedefaultblank' => 'Lege pagina als standaard nieuwe pagina gebruiken',
-	'tog-createpagepopupdisabled' => 'Pop-up voor pagina aanmaken uitschakelen',
+	'tog-createpagepopupdisabled' => 'Pop-up voor "Pagina aanmaken" uitschakelen',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
 Schrijf hier de eerste alinea van uw pagina.
 
@@ -1149,7 +1191,7 @@ Możesz przejść do <a href="$1">$2</a>, lub zmienić nazwę strony',
 Podaj inny tytuł.',
 	'createpage-error-article-blocked' => 'Nie można utworzyć strony w tej chwili.',
 	'tog-createpagedefaultblank' => 'Domyślnie twórz nowe strony puste',
-	'tog-createpagepopupdisabled' => 'Wyłącz wyskakujące okno tworzenia nowej strony',
+	'tog-createpagepopupdisabled' => 'Wyłącz wyskakujące okno tworzenia nowego artykułu',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
 Tutaj umieść treść pierwszego paragrafu.
 
@@ -1213,7 +1255,7 @@ Ch'a scriva ambelessì la sconda session ëd sò artìcol.",
 $messages['ps'] = array(
 	'createpage-sp-title' => 'يوه نوې ليکنه ليکل',
 	'createpage_title' => 'يوه نوې ليکنه ليکل',
-	'createpage_title_caption' => 'سرليک:',
+	'createpage_title_caption' => 'سرليک',
 	'createpage_enter_text' => 'متن:',
 	'createpage_invalid_title_error' => 'ناسم سرليک',
 	'createpage-dialog-title' => 'يوه نوې ليکنه ليکل',
@@ -1465,7 +1507,7 @@ $messages['sr-ec'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
-	'createpage-desc' => "Allows to create a new page using Wikia's WYSIWYG editor",
+	'createpage-desc' => 'Låter att skapa en ny sida med hjälp av Wikias WYSIWYG-redigerare',
 	'createpage-sp-title' => 'Skapa en ny sida',
 	'createpage_title' => 'Skapa en ny sida',
 	'createpage_title_caption' => 'Titel',
@@ -1492,7 +1534,7 @@ Du kan gå till <a href="$1">$2</a>, eller byta namn på din sida',
 Använd en annan titel.',
 	'createpage-error-article-blocked' => 'Tyvärr kan du inte skapa den sidan just nu.',
 	'tog-createpagedefaultblank' => 'Använd en tom sida som standard för att skapa en ny sida',
-	'tog-createpagepopupdisabled' => 'Inaktivera Skapa Sida pop-up',
+	'tog-createpagepopupdisabled' => 'Inaktivera "Skapa en ny artikel"-dialog',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
 Skriv det första stycket på din sida här.
 

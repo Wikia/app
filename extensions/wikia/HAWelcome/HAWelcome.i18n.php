@@ -407,19 +407,20 @@ Por favor, deixe unha mensaxe [[$2|na miña páxina de conversa]] se quere que l
 
 Por favor, deixe unha mensaxe [[\$2|na miña páxina de conversa]] se quere que lle axude con algunha cousa! \$3",
 	'welcome-message-log' => 'benvida ao novo colaborador',
-	'welcome-message-user-staff' => '
-==Benvida==
+	'welcome-message-user-staff' => '==Benvida==
 
-Ola, benvido(a) a {{SITENAME}}! Grazas pola súa edición na páxina "[[:$1]]".
+Ola, dámoslle a benvida a {{SITENAME}}! Grazas pola súa edición na páxina "[[:$1]]".
 
 Se necesita axuda e non hai administradores locais aquí, quizais queira
 visitar os [[wikia:Forum:Community Central Forum|foros no wiki central
 da comunidade]] $3',
 	'welcome-message-anon-staff' => "==Benvida==
 
-Ola, benvido(a) a {{SITENAME}}. Grazas pola súa edición na páxina \"[[:\$1]]\".
+Ola, dámoslle a benvida a {{SITENAME}}.
+Grazas pola súa edición na páxina \"[[:\$1]]\".
 
-'''Por favor, [[Special:Userlogin|rexístrese e cree unha conta de usuario]]'''. É un xeito doado de manter baixo control as súas achegas e axuda á comunicación co resto da comunidade.
+'''Por favor, [[Special:UserLogin|rexístrese e cree unha conta de usuario]]'''.
+É un xeito doado de manter baixo control as súas achegas e axuda á comunicación co resto da comunidade.
 
 Se necesita axuda e non hai administradores locais aquí, quizais queira visitar os [[wikia:Forum:Community Central Forum|foros no wiki central da comunidade]] \$3",
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|foro de axuda]] | [[w:sblog|blogue]])</small>',
@@ -1197,7 +1198,25 @@ Hej, välkommen till {{SITENAME}}. Tack för din ändring till [[:$1]] sidan.
 
 Lämna ett meddelande på [[$2|min diskussionssida]] om jag kan hjälpa till med något! $3",
 	'welcome-message-log' => 'välkomna nya bidragsgivare',
+	'welcome-message-user-staff' => '==Välkommen==
+
+Hej och välkommen till {{SITENAME}}! Tack för att du redigerade sidan [[:$1]].
+
+Om du behöver hjälp, och det inte finns några lokala administratörer här, kan du
+besöka [[wikia:Forum:Community Central Forum|forumen på Community
+Central Wiki]] $3',
+	'welcome-message-anon-staff' => "==Välkommen==
+
+Hej, välkommen till {{SITENAME}}.
+Tack för att du redigerade sidan [[:$1]].
+
+
+'''[[Special:UserLogin|Var god logga in och skapa ett användarnamn]]'''.
+Det är ett enkelt sätt att hålla reda på alla dina bidrag och hjälper dig att kommunicera med resten av gemenskapen.
+
+Om du behöver hjälp, och det inte finns några lokala administratörer här, kan du besöka [[wikia:Forum:Community Central Forum|forumen på Community Central Wiki]] $3",
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|hjälpforum]] | [[w:sblog|blogg]])</small>',
+	'hawelcomeedit' => 'HAWelcomeEdit',
 );
 
 /** Thai (ไทย)
