@@ -1,12 +1,16 @@
 <?php
+global $wgHooks, $wgExtensionCredits;
+
 $wgExtensionCredits['other'][] = array(
 	'name' => 'Track',
 	'author' => 'Garth Webb',
 	'description' => 'A class to help track events and pageviews for wikia'
 );
 
+$wgHooks['MakeGlobalVariablesScript'][] = 'Track::addGlobalVars';
+
 class Track {
-	const BASE_URL = 'http://a.wikia-beacon.com/__onedot';
+	const BASE_URL = 'http://a.wikia-beacon.com/__track';
 
 	private function getURL ($type=null, $param=null) {
 		global $wgCityId, $wgContLanguageCode, $wgDBname, $wgDBcluster, $wgUser, $wgArticle, $wgTitle, $wgAdServerTest;
@@ -78,11 +82,17 @@ SCRIPT1;
 		$param['caller'] = "$class::$func:$line";
 		$param['type'] = urlencode($event_type);
 
-		$url = Track::getURL('event', $param);
+		$url = Track::getURL('special', $param);
 		if (Http::get($url) !== false) {
 			return true;
 		} else {
 			return false;
 		}
+	}
+
+	public function addGlobalVars($vars) {
+		global $wgUser;
+		$vars['trackID'] = $wgUser->getId() ? $wgUser->getId() : 0;
+		return true;
 	}
 }
