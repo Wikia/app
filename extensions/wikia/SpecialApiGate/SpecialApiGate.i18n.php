@@ -32,6 +32,7 @@ $messages['en'] = array(
 	'apigate-chart-name-daily' => "Requests - Daily",
 	'apigate-chart-name-weekly' => "Requests - Weekly",
 	'apigate-chart-name-monthly' => "Requests - Monthly",
+	'apigate-hourly-admin-only' => "<center><em>note: Hourly chart is only displayed to API Gate admins</em></center>\n",
 );
 
 /** Message documentation (Message documentation)

@@ -31,10 +31,12 @@ $messages['en'] = array(
 	'apigate-register-submit' => 'Submit',
 	'apigate-register-implicit-agreement' => 'By clicking the button, you agree to the Terms of Service.',
 	'apigate-register-error-noname' => 'Please enter your name.',
-	'apigate-register-error-invalid-email' => 'Please enter a valid email address.',
-	'apigate-register-error-email-doesnt-match' => 'Email addresses entered do not match.',
 	'apigate-register-error-mysql_error' => 'Error trying to save new API key to the database.',
-	
+
+	// Error messages (sometimes shared between different templates for the same data - eg: register and keyinfo pages).
+	'apigate-error-invalid-email' => 'Please enter a valid email address.',
+	'apigate-error-email-doesnt-match' => 'Email addresses entered do not match.',
+
 	// For the module which lists all keys for a user
 	'apigate-userkeys-intro' => 'Click on your keys below to view usage statistics for each key or edit your contact information (in case something goes wrong).',
 	'apigate-userkeys-footer' => 'If you need another key and want to track it in this account, please <a href="$1">create another key</a> while you are logged in to this account.<br/><br/>If you have any questions regarding our APIs, please contact us at $2. We would be happy to help out.',
@@ -54,6 +56,7 @@ $messages['en'] = array(
 	'apigate-keyinfo-name' => 'Name',
 	'apigate-keyinfo-email' => 'Email',
 	'apigate-keyinfo-submit' => 'Update',
+	'apigate-keyinfo-err-email-mismatch' => 'Email addresses entered did not match each other.',
 
 	// Admin-links module
 	'apigate-adminlinks-header' => 'Administrator Links',

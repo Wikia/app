@@ -108,8 +108,8 @@ class SpecialApiGate extends SpecialPage {
 						// Use standard tabs (from UI Style Guide)
 						ob_start();
 						?><ul class="tabs">
-							<li class="selected" data-tab="apiGate_keyInfo"><a href="#"><?= wfMsg('apigate-tab-keyinfo') ?></a></li>
-							<li data-tab="apiGate_keyStats"><a href="#"><?= wfMsg('apigate-tab-keystats') ?></a></li>
+							<li class="selected" data-tab="apiGate_keyInfo"><a><?= wfMsg('apigate-tab-keyinfo') ?></a></li>
+							<li data-tab="apiGate_keyStats"><a><?= wfMsg('apigate-tab-keystats') ?></a></li>
 						</ul>
 						<div id="apiGate_keyInfo" data-tab-body="apiGate_keyInfo" class="tabBody selected">
 							<?= $this->subpage_keyInfo( $apiKeyObject ); ?>
@@ -347,12 +347,14 @@ class SpecialApiGate extends SpecialPage {
 	 */
 	public function subpage_keyInfo( $apiKeyObject ){
 		wfProfileIn( __METHOD__ );
+		global $wgRequest;
 		$html = "";
 
-		// TODO: Process form updates if they were submitted.
-		// TODO: Process form updates if they were submitted.
+		// Process any updates if they were posted.
+		$errorString = ApiGate_ApiKey::processPost();
+		$apiKeyObject->reloadFromDb(); // key may have been changed while processing the post... reload it from the database
 
-		$html .=  ApiGate_Dispatcher::renderTemplate( "key", array("apiKeyObject" => $apiKeyObject) );
+		$html .=  ApiGate_Dispatcher::renderTemplate( "key", array("apiKeyObject" => $apiKeyObject, "errorString" => $errorString) );
 
 		wfProfileOut( __METHOD__ );
 		return $html;
@@ -374,10 +376,12 @@ class SpecialApiGate extends SpecialPage {
 		global $wgCacheBuster;
 		$html = "";
 
-		// TODO: When API Gate has its own charting, use that instead of this SponsorshipDashboard-dependent code.
+		// TODO: LATER: When API Gate has its own charting, use that instead of this SponsorshipDashboard-dependent code.
 
 		// Will just show daily and monthly to users for now (and hourly will just be for admins to detect anything weird).
 		if( ApiGate_Config::isAdmin() ){
+			$html .= wfMsg('apigate-hourly-admin-only')."<br/><br/>\n"; // to avoid confusion, mention on the page that only admins see the hourly graph
+
 			$metricName = wfMsg( 'apigate-chart-metric-requests' );
 			$chartName = wfMsg( 'apigate-chart-name-hourly' );
 			$html .= $this->getChartHtmlByPeriod( $apiKey, "hourly", $metricName, $chartName );

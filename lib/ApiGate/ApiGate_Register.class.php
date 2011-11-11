@@ -26,22 +26,22 @@ class ApiGate_Register {
 	public static function processPost( &$data ){
 		$didRegister = false;
 
-		if( isset($_POST['formName']) && ($_POST['formName'] == "apiGate_register") ){
-			$firstName = self::getPost('firstName');
-			$lastName = self::getPost('lastName');
-			$email_1 = self::getPost('email_1');
-			$email_2 = self::getPost('email_2');
+		if( ApiGate::getPost('formName') == "apiGate_register" ){
+			$firstName = ApiGate::getPost('firstName');
+			$lastName = ApiGate::getPost('lastName');
+			$email_1 = ApiGate::getPost('email_1');
+			$email_2 = ApiGate::getPost('email_2');
 			
 			// Validate the input.
 			$errorString = "";
 			if("$firstName$lastName" == ""){
 				$errorString .= "\n" . i18n( 'apigate-register-error-noname' );
 			}
-			if( preg_match('/^[a-z0-9._%+-]+@(?:[a-z0-9\-]+\.)+[a-z]{2,4}$/i', $email_1) === 0 ){
-				$errorString .= "\n". i18n( 'apigate-register-error-invalid-email' );
+			if( !ApiGate::isValidEmail( $email_1 ) ){
+				$errorString .= "\n". i18n( 'apigate-error-invalid-email' );
 			}
 			if($email_1 != $email_2){
-				$errorString .= "\n". i18n( 'apigate-register-error-email-doesnt-match' );
+				$errorString .= "\n". i18n( 'apigate-error-email-doesnt-match' );
 			}
 
 			// If input was valid, attempt to create a key.
@@ -58,12 +58,12 @@ class ApiGate_Register {
 				$queryString .= "'".mysql_real_escape_string( $email_1, $dbw )."', ";
 				$queryString .= "'".mysql_real_escape_string( $firstName, $dbw )."', ";
 				$queryString .= "'".mysql_real_escape_string( $lastName, $dbw )."')";
-				if( ApiGate::sendQuery($queryString, $dbw) ){
+				if( ApiGate::sendQuery($queryString) ){
 					ApiGate::sendQuery("COMMIT"); // MediaWiki was randomly not saving the row without this.
 					$data['apiKey'] = $apiKey;
 					$didRegister = true;
 				} else {
-					$errorString .= "\n". i18n( 'apigate-register-error-mysql_error' );
+					$errorString .= "\n". i18n( 'apigate-mysql-error' );
 					$errorString .= "\n<br/><br/>". mysql_error( $dbw );
 				}
 			}
@@ -77,11 +77,6 @@ class ApiGate_Register {
 
 		return $didRegister;
 	} // end processPost()
-
-	// TODO: Move to a util class or something
-	public static function getPost( $varName, $default='' ){
-		return ( isset($_POST[$varName]) ? $_POST[$varName] : $default );
-	} // end getPost()
 
 	/**
 	 * Returns a valid (and available API key) to be used in the system.
