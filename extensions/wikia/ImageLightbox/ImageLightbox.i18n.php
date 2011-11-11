@@ -99,6 +99,38 @@ $1
 	'lightbox-share-email-error-login' => 'Um E-Mails zu senden, müssen Sie sich anmelden',
 );
 
+/** Finnish (Suomi)
+ * @author Nike
+ * @author VezonThunder
+ */
+$messages['fi'] = array(
+	'lightbox_details_tooltip' => 'Näytä kuvan tiedot',
+	'lightbox-forum' => 'Foorumi',
+	'lightbox-standard-link' => 'Tavallinen linkki',
+	'lightbox-blog-link' => 'Blogilinkki',
+	'lightbox-send' => 'Lähetä',
+	'lightbox-share-description' => 'Kuva sivulla $1 {{GRAMMAR:inessive|$2}}',
+	'lightbox-share-email-subject' => '$1 on lähettänyt sinulle kuvan Wikiassa',
+	'lightbox-share-email-body' => 'Hei,
+
+Joku halusi näyttää sinulle kuvan Wikiassa. Katso se täältä:
+
+$1
+
+- Wikia-tiimi',
+	'lightbox-share-button-email' => 'Sähköposti',
+	'lightbox-share-button-www' => 'Jaa',
+	'lightbox-share-button-embed' => 'Upota',
+	'lightbox-share-email-label' => 'Lähetä kuva sähköpostitse ystävälle',
+	'lightbox-share-email-ok-caption' => 'Vahvistus',
+	'lightbox-share-email-ok-content' => '{{PLURAL:$1|Sähköposti|Sähköpostit}} lähetettiin.',
+	'lightbox-share-email-error-caption' => 'Virhe',
+	'lightbox-share-email-error-content' => 'Virhe lähetettäessä {{PLURAL:$1|sähköpostia|sähköposteja}}.
+Tiedot: $2',
+	'lightbox-share-email-error-login' => 'Sähköpostien lähettäminen vaatii sisäänkirjautumisen',
+	'lightbox-share-email-error-noaddress' => 'Osoitteita ei ole määritetty.',
+);
+
 /** French (Français)
  * @author Wyz
  */
@@ -159,6 +191,70 @@ $1
 Detalles: $2',
 	'lightbox-share-email-error-login' => 'Para enviar correos ten que rexistrarse',
 	'lightbox-share-email-error-noaddress' => 'Non se especificou ningún enderezo.',
+);
+
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'lightbox_details_tooltip' => 'Vider detalios del photo',
+	'lightbox-forum' => 'Foro',
+	'lightbox-standard-link' => 'Ligamine standard',
+	'lightbox-blog-link' => 'Ligamine de blog',
+	'lightbox-send' => 'Inviar',
+	'lightbox-share-description' => 'Photo in $1 sur $2',
+	'lightbox-share-email-subject' => '$1 te ha inviate un photo in Wikia',
+	'lightbox-share-email-body' => 'Salute,
+
+Qualcuno vole monstrar te un photo in Wikia. Jecta un oculo:
+
+$1
+
+- Le equipa de Wikia',
+	'lightbox-share-button-email' => 'E-mail',
+	'lightbox-share-button-www' => 'Divider',
+	'lightbox-share-button-embed' => 'Incorporar',
+	'lightbox-share-email-label' => 'Inviar iste imagine per e-mail a un amico',
+	'lightbox-share-email-ok-caption' => 'Confirmation',
+	'lightbox-share-email-ok-content' => '{{PLURAL:$1|Un message|Messages}} de e-mail ha essite inviate.',
+	'lightbox-share-email-error-caption' => 'Error',
+	'lightbox-share-email-error-content' => 'Error durante le invio de {{PLURAL:$1|un message|messages}} de e-mail.
+Detalios: $2',
+	'lightbox-share-email-error-login' => 'Pro inviar messages de e-mail es necessari aperir session',
+	'lightbox-share-email-error-noaddress' => 'Nulle adresse ha essite specificate.',
+);
+
+/** Japanese (日本語)
+ * @author Tommy6
+ */
+$messages['ja'] = array(
+	'lightbox_details_tooltip' => '画像の詳細を見る',
+	'lightbox-forum' => 'フォーラム',
+	'lightbox-standard-link' => '標準リンク',
+	'lightbox-blog-link' => 'ブログリンク',
+	'lightbox-send' => '送信',
+	'lightbox-share-description' => '$2 のページ $1 の画像',
+	'lightbox-share-email-subject' => '$1 がウィキア上であなたに画像を送信しました',
+	'lightbox-share-email-body' => 'こんにちは、
+
+どなたかが、あなたに見せたいウィキア上の画像の紹介メッセージを送信しました。
+
+次のURLをチェックしてみてください:
+$1
+
+- ウィキア',
+	'lightbox-share-button-email' => 'メール',
+	'lightbox-share-button-www' => '共有',
+	'lightbox-share-button-embed' => '埋め込み',
+	'lightbox-share-email-label' => 'この画像をメールで友人に送信',
+	'lightbox-share-email-ok-caption' => '確認',
+	'lightbox-share-email-ok-content' => 'メールを送信しました。',
+	'lightbox-share-email-error-caption' => 'エラー',
+	'lightbox-share-email-error-content' => 'メールの送信でエラーが発生しました。
+
+詳細: $2',
+	'lightbox-share-email-error-login' => 'メールを送信するにはログインする必要があります',
+	'lightbox-share-email-error-noaddress' => 'メールアドレスが指定されていません',
 );
 
 /** Macedonian (Македонски)
@@ -285,6 +381,32 @@ Detaljer: $2',
 	'lightbox-share-email-error-noaddress' => 'Ingen adresse har blitt spesifisert.',
 );
 
+/** Polish (Polski)
+ * @author Sovq
+ */
+$messages['pl'] = array(
+	'lightbox_details_tooltip' => 'Pokaż szczegóły zdjęcia',
+	'lightbox-forum' => 'Forum',
+	'lightbox-send' => 'Wyślij',
+	'lightbox-share-description' => 'Zdjęcie na stronie $1 na $2',
+	'lightbox-share-email-subject' => '$1 wysłał ci zdjęcie na Wikia',
+	'lightbox-share-button-email' => 'E-mail',
+	'lightbox-share-button-www' => 'Podziel się',
+	'lightbox-share-button-embed' => 'Osadź',
+	'lightbox-share-email-label' => 'Wyślij ten obraz do znajomego',
+	'lightbox-share-email-ok-caption' => 'Potwierdzenie',
+	'lightbox-share-email-error-caption' => 'Błąd',
+	'lightbox-share-email-error-login' => 'Aby wysyłać e-maile musisz się zalogować',
+	'lightbox-share-email-error-noaddress' => 'Adresy nie zostały określone.',
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'lightbox-share-button-email' => 'برېښليک',
+);
+
 /** Russian (Русский)
  * @author Kuzura
  */
@@ -327,6 +449,13 @@ $messages['sv'] = array(
 	'lightbox-send' => 'Skicka',
 	'lightbox-share-description' => 'Foto på $1 på $2',
 	'lightbox-share-email-subject' => '$1 har skickat ett foto till dig på Wikia',
+	'lightbox-share-email-body' => 'Hej,
+
+Någon ville visa dig ett foto på Wikia. Kolla in det:
+
+$1
+
+- Wikia-teamet',
 	'lightbox-share-button-email' => 'E-post',
 	'lightbox-share-button-www' => 'Dela',
 	'lightbox-share-button-embed' => 'Bädda in',

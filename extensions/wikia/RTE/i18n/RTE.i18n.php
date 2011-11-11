@@ -118,7 +118,7 @@ $messages['ca'] = array(
 	'rte-edgecase-redirect' => 'Redirecció',
 	'rte-edgecase-templateintable' => 'Una taula amb una plantilla anomenada en la definició',
 	'rte-edgecase-unclosed-tags' => 'Etiquetes HTML sense tancar',
-	'enablerichtexteditor' => "Habilitar l'Editor de text enriquit",
+	'enablerichtexteditor' => "Permetre l'edició en mode visual (a més del codi font)",
 	'rte-enablerichtexteditormessage' => 'Editor de text enriquit habilitat!',
 	'rte-first-run-notice' => "Hem fet algunes millores en l'editor. Per obtenir més informació [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news llegir l'anunci].",
 	'prefs-rte' => 'Editor de text enriquit',
@@ -149,6 +149,7 @@ $messages['cs'] = array(
 );
 
 /** German (Deutsch)
+ * @author Inkowik
  * @author LWChris
  * @author The Evil IP address
  */
@@ -167,7 +168,7 @@ $messages['de'] = array(
 	'rte-edgecase-redirect' => 'eine Weiterleitung',
 	'rte-edgecase-templateintable' => 'Eine Tabelle mit einem Vorlagenaufruf im Definitionsabschnitt',
 	'rte-edgecase-unclosed-tags' => 'nicht geschlossener HTML-Tag',
-	'enablerichtexteditor' => 'Grafischen Editor aktivieren',
+	'enablerichtexteditor' => 'Grafischen Editor aktivieren (zusätzlich zum Quelltextmodus)',
 	'rte-enablerichtexteditormessage' => "'''Der grafische Editor wurde für dieses Benutzerkonto aktiviert!'''
 
 * Probiere den neuen Editor doch aus, indem du deine [{{fullurl:Special:MyPage|action=edit}} Benutzerseite bearbeitest].
@@ -240,7 +241,7 @@ $messages['fr'] = array(
 	'rte-edgecase-redirect' => 'redirection',
 	'rte-edgecase-templateintable' => 'un tableau avec un appel de modèle dans sa définition',
 	'rte-edgecase-unclosed-tags' => 'balise HTML non fermée',
-	'enablerichtexteditor' => 'Activer le nouvel éditeur',
+	'enablerichtexteditor' => 'Activer l’édition en mode visuel (en complément du mode source)',
 	'rte-enablerichtexteditormessage' => 'Éditeur de texte enrichi activé !',
 	'rte-first-run-notice' => "Nous avons apporté quelques améliorations à l'éditeur. Pour en savoir plus, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news lisez l'annonce].",
 	'prefs-rte' => 'Éditeur de texte enrichi',
@@ -288,7 +289,7 @@ $messages['ia'] = array(
 	'rte-edgecase-redirect' => 'redirection',
 	'rte-edgecase-templateintable' => 'un tabella con un appello de patrono in su definition',
 	'rte-edgecase-unclosed-tags' => 'etiquetta HTML non claudite',
-	'enablerichtexteditor' => 'Activar le editor de texto inricchite',
+	'enablerichtexteditor' => 'Permitter modification in modo visual (in addition al modo codice fonte)',
 	'rte-enablerichtexteditormessage' => 'Le editor de texto inricchite es active!',
 	'rte-first-run-notice' => 'Nos ha facite qualque meliorationes al editor. Pro saper plus, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news lege le annuncio].',
 	'prefs-rte' => 'Editor de texto inricchite',
@@ -402,7 +403,7 @@ $messages['nl'] = array(
 	'rte-edgecase-redirect' => 'doorverwijzing',
 	'rte-edgecase-templateintable' => 'een tabel met een verwijzing naar een sjabloon in de definitie',
 	'rte-edgecase-unclosed-tags' => 'Geopend HTML label',
-	'enablerichtexteditor' => 'Uitgebreide tekstverwerker inschakelen',
+	'enablerichtexteditor' => 'Uitgebreide tekstverwerker inschakelen (in aanvulling op broncodemodus)',
 	'rte-enablerichtexteditormessage' => 'De uitgebreide tekstverwerker is ingeschakeld.',
 	'rte-first-run-notice' => 'We hebben een aantal verbeteringen gemaakt aan de tekstverwerker. [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news Lees ook de aankondiging].',
 	'prefs-rte' => 'Uitgebreide tekstverwerker',
@@ -583,6 +584,7 @@ $messages['sr-ec'] = array(
 
 /** Swedish (Svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'rte-edgecase-comment' => 'HTML-kommentarer',
@@ -592,7 +594,7 @@ $messages['sv'] = array(
 	'rte-edgecase-syntax' => 'inte tillåten syntax',
 	'rte-edgecase-image-with-link' => 'bild med en länk i beskrivningen',
 	'rte-edgecase-redirect' => 'omdirigera',
-	'enablerichtexteditor' => 'Aktivera Rich Text Editor',
+	'enablerichtexteditor' => 'Aktivera redigering i visuellt läge (utöver källäge)',
 	'rte-enablerichtexteditormessage' => 'Rich Text Editor aktiverat!',
 	'rte-first-run-notice' => 'Vi har gjort den del förbättringar om redigeraren. Om du vill veta mer, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news läs nyheten].',
 );

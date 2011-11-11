@@ -153,10 +153,22 @@ $messages['eu'] = array(
 
 /** Persian (فارسی)
  * @author BlueDevil
+ * @author Mjbmr
  */
 $messages['fa'] = array(
+	'cloakcheck' => 'بررسی واجد شرایط بودن پنهان‌ساز آی‌آر‌سی (IRC cloak)',
 	'cloakcheck-form-username' => 'نام کاربری:',
+	'cloakcheck-form-check' => 'بررسی نام کاربری',
+	'cloakcheck-form-check-self' => 'بررسی واجد شرایط بودن پنهان‌ساز آی‌آر‌سی (IRC cloak)',
+	'cloakcheck-process-empty' => 'نام کاربری نباید خالی باشد.',
+	'cloakcheck-process-notexist' => 'نام کاربری وجود ندارد.',
 	'cloakcheck-process-username' => 'نام کاربری: $1',
+	'cloakcheck-process-accountage-yes' => 'حساب کاربری به اندازهٔ کافی قدیمی است.',
+	'cloakcheck-process-accountage-no' => 'حساب کاربری بیش از حد جدید است.',
+	'cloakcheck-process-emailconf-yes' => 'نشانی پست الکترونیکی تایید شد.',
+	'cloakcheck-process-emailconf-no' => 'نشانی پست الکترونیکی تایید نشده است.',
+	'cloakcheck-process-edits-yes' => 'کاربر به اندازهٔ کافی ویرایش دارد.',
+	'cloakcheck-process-edits-no' => 'کاربر به اندازهٔ کافی ویرایش ندارد.',
 );
 
 /** Finnish (Suomi)

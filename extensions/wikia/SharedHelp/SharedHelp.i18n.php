@@ -228,8 +228,10 @@ $messages['ru'] = array(
 
 /** Swedish (Svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'sharedhelp-desc' => 'Tar sidor från [[w:c:Help|Hjälp-Wikia]] och infogar dem i namnområdet {{ns:help}} på denna wiki',
 	'sharedhelp-autotalkcreate-summary' => 'Diskussionssidan skapas automatiskt',
 );
 

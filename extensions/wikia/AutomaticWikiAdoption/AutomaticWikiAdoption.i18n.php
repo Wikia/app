@@ -211,7 +211,7 @@ Wenn du Hilfe bei der Betreuung des Wikis benötigst, kannst du in der <a href="
 	'wikiadoption-mail-second-subject' => '#WIKINAME wird bald zur Adoption freigegeben',
 	'wikiadoption-mail-second-content' => 'Hallo $1!
 
-Oje, es ist schon fast 60 Tage her, seit ein Administrator auf #WIKINAME aktiv gewesen ist. Es ist wichtig, dass Administratoren regelmäßig vorbeikommen und zum Wiki beitragen, damit das Wiki weiterhin rund läuft.
+Oje, es ist schon fast 30 Tage her, seit ein Administrator auf #WIKINAME aktiv gewesen ist. Es ist wichtig, dass Administratoren regelmäßig vorbeikommen und zum Wiki beitragen, damit das Wiki weiterhin rund läuft.
 
 Da es schon so lange her ist, seit einer der derzeitigen Administratoren sich hat blicken lassen, wird #WIKINAME zur Adoption durch andere Benutzer freigegeben.
 
@@ -219,7 +219,7 @@ Das Wikia-Team
 
 Klicke auf den folgenden Link, um Änderungen an dieser Liste abzubestellen: $3.',
 	'wikiadoption-mail-second-content-HTML' => 'Hallo $1!<br /><br />
-Oje, es ist schon fast 60 Tage her, seit ein Administrator auf #WIKINAME aktiv gewesen ist. Es ist wichtig, dass Administratoren regelmäßig vorbeikommen und zum Wiki beitragen, damit das Wiki weiterhin rund läuft.<br /><br />
+Oje, es ist schon fast 30 Tage her, seit ein Administrator auf #WIKINAME aktiv gewesen ist. Es ist wichtig, dass Administratoren regelmäßig vorbeikommen und zum Wiki beitragen, damit das Wiki weiterhin rund läuft.<br /><br />
 
 Da es schon so lange her ist, seit einer der derzeitigen Administratoren sich hat blicken lassen, wird #WIKINAME zur Adoption durch andere Benutzer freigegeben.<br /><br />
 
@@ -229,7 +229,7 @@ Das Wikia-Team<br /><br />
 	'wikiadoption-mail-adoption-subject' => '#WIKINAME wurde adoptiert',
 	'wikiadoption-mail-adoption-content' => 'Hallo $1,
 
-#WIKINAME wurde adoptiert!  Wikis können adoptiert werden, wenn keiner der derzeitigen Administratoren für mindestens 60 Tage aktiv gewesen ist.
+#WIKINAME wurde adoptiert!  Wikis können adoptiert werden, wenn keiner der derzeitigen Administratoren für mindestens 30 Tage aktiv gewesen ist.
 
 Der #WIKINAME adoptierende Benutzer hat nun Bürokraten- und Administratorstatus. Mach dir keine Sorgen - du bist immer noch ein Administrator, und du kannst jederzeit wieder dazustoßen und mitmachen.
 
@@ -237,7 +237,7 @@ Das Wikia-Team
 
 Klicke auf den folgenden Link, um Änderungen an dieser Liste abzubestellen: $3.',
 	'wikiadoption-mail-adoption-content-HTML' => 'Hallo $1,<br /><br />
-#WIKINAME wurde adoptiert!  Wikis können adoptiert werden, wenn keiner der derzeitigen Administratoren für mindestens 60 Tage aktiv gewesen ist.<br /><br />
+#WIKINAME wurde adoptiert!  Wikis können adoptiert werden, wenn keiner der derzeitigen Administratoren für mindestens 30 Tage aktiv gewesen ist.<br /><br />
 Der #WIKINAME adoptierende Benutzer hat nun Bürokraten- und Administratorstatus. Mach dir keine Sorgen - du bist immer noch ein Administrator, und du kannst jederzeit wieder dazustoßen und mitmachen.<br /><br />
 Das Wikia-Team<br /><br />
 <small>Du kannst Änderungen an dieser Liste <a href="$3">abbestellen</a>.</small>',
@@ -309,7 +309,7 @@ Puedes <a href="$3">cancelar tu suscripción</a> para futuros cambios de esta li
 	'wikiadoption-mail-second-subject' => '#WIKINAME pronto se pondrá en adopción',
 	'wikiadoption-mail-second-content' => 'Hola $1,
 
-¡Oh, no! Han pasado un par 60 días desde que hemos visto a un administrador activo en #WIKINAME. Es importante tener administradores activos para la comunidad así la wiki puede continuar trabajando sin problemas.
+¡Oh, no! Han pasado un par 30 días desde que hemos visto a un administrador activo en #WIKINAME. Es importante tener administradores activos para la comunidad así la wiki puede continuar trabajando sin problemas.
 
 Ya que han pasado muchos días desde que editó el último administrador activo, #WIKINAME se ofrecerá ahora para su adopción a otros editores.
 
@@ -317,7 +317,7 @@ El Equipo de Wikia
 
 Haz clic en el siguiente enlace para cancelar tu suscripción de esta lista: $3.',
 	'wikiadoption-mail-second-content-HTML' => 'Hola $1,<br /><br />
-¡Oh, no! Han pasado un par 60 días desde que hemos visto a un administrador activo en #WIKINAME. Es importante tener administradores activos para la comunidad así la wiki puede continuar trabajando sin problemas.<br /><br />
+¡Oh, no! Han pasado un par 30 días desde que hemos visto a un administrador activo en #WIKINAME. Es importante tener administradores activos para la comunidad así la wiki puede continuar trabajando sin problemas.<br /><br />
 Ya que han pasado muchos días desde que editó el último administrador activo, #WIKINAME se ofrecerá ahora para su adopción a otros editores.<br /><br />
 El Equipo de Wikia<br /><br />
 
@@ -325,7 +325,7 @@ Puedes <a href="$3">cancelar</a> tu suscripción de esta lista.',
 	'wikiadoption-mail-adoption-subject' => '#WIKINAME ha sido adoptado',
 	'wikiadoption-mail-adoption-content' => 'Hola $1,
 
-#WIKINAME ha sido adoptado. Las wikis están disponibles para ser adoptadas cuando no hay administradores activos por 60 días o más.
+#WIKINAME ha sido adoptado. Las wikis están disponibles para ser adoptadas cuando no hay administradores activos por 30 días o más.
 
 El usuario que adoptó #WIKINAME ahora tiene los cargos de burócrata y administrador. No te preocupes, aún sigues manteniendo tus cargos en esta wiki y eres bienvenido a regresar en cualquier momento.
 
@@ -333,7 +333,7 @@ El Equipo de Wikia
 
 Haz clic en el siguiente enlace para cancelar tu suscripción de la lista: $3.',
 	'wikiadoption-mail-adoption-content-HTML' => 'Hola $1,<br /><br />
-#WIKINAME ha sido adoptado. Las wikis están disponibles para ser adoptadas cuando no hay administradores activos por 60 días o más.<br /><br />
+#WIKINAME ha sido adoptado. Las wikis están disponibles para ser adoptadas cuando no hay administradores activos por 30 días o más.<br /><br />
 El usuario que adoptó #WIKINAME ahora tiene los cargos de burócrata y administrador. No te preocupes, aún sigues manteniendo tus cargos en esta wiki y eres bienvenido a regresar en cualquier momento.<br /><br />
 <b>El Equipo de Wikia</b><br /><br />
 Puedes <a href="$3">cancelar</a> tu suscripción de esta lista.',
@@ -431,7 +431,7 @@ Vous pouvez <a href="$3">vous désabonner</a> des mises à jour de cette liste.'
 	'wikiadoption-mail-second-subject' => '#WIKINAME sera bientôt placé à l’adoption',
 	'wikiadoption-mail-second-content' => 'Bonjour $1,
 
-Oh non ! Cela fait presque 60 jours qu’il n’y a eu aucun administrateur actif sur #WIKINAME. Il est important que des administrateurs apparaissent régulièrement et y contribuent afin que le wiki puisse continuer à fonctionner sans problème.
+Oh non ! Cela fait presque 30 jours qu’il n’y a eu aucun administrateur actif sur #WIKINAME. Il est important que des administrateurs apparaissent régulièrement et y contribuent afin que le wiki puisse continuer à fonctionner sans problème.
 
 Puisque cela fait tant de jours qu’aucun des administrateurs actuels n’est apparu, #WIKINAME sera maintenant offert à l’adoption par d’autres contributeurs.
 
@@ -439,7 +439,7 @@ L’équipe Wikia
 
 Vous pouvez vous désabonner des mises à jour de cette liste ici : $3.',
 	'wikiadoption-mail-second-content-HTML' => 'Bonjour $1,<br /><br />
-Oh non ! Cela fait pratiquement 60 jours qu’il n’y a eu aucun administrateur actif sur #WIKINAME. Il est important que des administrateurs apparaissent régulièrement et contribuent afin que le wiki puisse continuer de fonctionner sans problème.<br /><br />
+Oh non ! Cela fait pratiquement 30 jours qu’il n’y a eu aucun administrateur actif sur #WIKINAME. Il est important que des administrateurs apparaissent régulièrement et contribuent afin que le wiki puisse continuer de fonctionner sans problème.<br /><br />
 
 Puisque cela fait tant de jours qu’aucun administrateur actif n’est apparu, #WIKINAME sera maintenant offert à l’adoption aux autres contributeurs.<br /><br />
 
@@ -449,7 +449,7 @@ Vous pouvez <a href="$3">vous désabonner</a> des mises à jour de cette liste.'
 	'wikiadoption-mail-adoption-subject' => '#WIKINAME a été adopté',
 	'wikiadoption-mail-adoption-content' => 'Bonjour $1,
 
-#WIKINAME a été adopté. Les wikis sont placés à l’adoption lorsque aucun des administrateurs actuels n’y a été actif durant 60 jours ou plus.
+#WIKINAME a été adopté. Les wikis sont placés à l’adoption lorsque aucun des administrateurs actuels n’y a été actif durant 30 jours ou plus.
 
 L’utilisateur qui a adopté #WIKINAME y aura maintenant les statuts de bureaucrate et administrateur. Ne vous inquiétez pas, vous conserverez aussi votre statut d’administrateur sur ce wiki et vous restez bienvenu pour y retourner et continuer d’y contribuer à tout moment !
 
@@ -458,7 +458,7 @@ L’équipe Wikia
 Vous pouvez vous désabonner des mises à jour de cette liste ici : $3.',
 	'wikiadoption-mail-adoption-content-HTML' => 'Bonjour $1,<br /><br />
 
-#WIKINAME a été adopté ! Les wikis sont placés à l’adoption lorsque aucun des administrateurs actuels n’y ont été actifs pendant 60 jours ou plus.<br /><br />
+#WIKINAME a été adopté ! Les wikis sont placés à l’adoption lorsque aucun des administrateurs actuels n’y ont été actifs pendant 30 jours ou plus.<br /><br />
 
 L’utilisateur ayant adopté #WIKINAME y aura maintenant les statuts de bureaucrate et administrateur. Ne vous inquiétez pas, vous conserverez votre statut d’administrateur sur ce wiki et vous restez bienvenu pour y retourner et continuer d’y contribuer à tout moment !<br /><br />
 
@@ -490,18 +490,100 @@ Outils très utiles :
  */
 $messages['gl'] = array(
 	'wikiadoption' => 'Adopción de wiki automática',
-	'wikiadoption-desc' => 'Unha extensión AutomaticWikiAdoption para MediaWiki',
+	'wikiadoption-desc' => 'Unha extensión de adopción de wiki automática para MediaWiki',
 	'wikiadoption-header' => 'Adoptar este wiki',
 	'wikiadoption-button-adopt' => 'Si, quero adoptar {{SITENAME}}!',
 	'wikiadoption-adopt-inquiry' => 'Descubra máis!',
+	'wikiadoption-description' => '$1, listo para adoptar {{SITENAME}}?
+<br /><br />
+{{SITENAME}} non ten ningún administrador activo desde hai tempo, e estamos á procura dun novo líder para axudar a que os contidos e a comunidade do wiki medren! Dado que é un dos que colaboraron activamente en {{SITENAME}}, preguntámonos se lle gustaría o cargo.
+<br /><br />
+Ao adoptar este wiki, converterase en administrador e burócrata e recibirá as ferramentas que necesita para xestionar o wiki. Tamén terá a posibilidade de dar permisos de administrador a outros usuarios para que axuden, borren, revertan vandalismos e movan e protexan páxinas.
+<br /><br />
+Está preparado para dar os seguntes pasos e axudar a {{SITENAME}}?',
 	'wikiadoption-know-more-header' => 'Quere descubrir máis?',
+	'wikiadoption-know-more-description' => 'Bótelle unha ollada a estas ligazóns para obter máis información. E, por suposto, síntase libre de poñerse en contacto con nós se ten algunha pregunta!',
 	'wikiadoption-adoption-successed' => 'Parabéns! Agora xa é un administrador deste wiki!',
+	'wikiadoption-adoption-failed' => 'Sentímolo. Intentamos convertelo en administración, pero non o conseguimos. [http://community.wikia.com/Special:Contact Póñase en contacto con nós] e intentaremos axudalo.',
 	'wikiadoption-not-allowed' => 'Sentímolo. Nestes intres non pode adoptar este wiki.',
 	'wikiadoption-not-enough-edits' => 'Vaites! Necesita facer máis de 10 edicións para adoptar o wiki.',
+	'wikiadoption-adopted-recently' => 'Vaites! Recentemente adoptou outro wiki. Terá que agardar un tempo antes de poder adoptar un novo wiki.',
 	'wikiadoption-log-reason' => 'Adopción de wiki automática',
+	'wikiadoption-notification' => '{{SITENAME}} está listo para a adopción. Está interesado en converterse no líder? Adopte este wiki para comezar! $2',
 	'wikiadoption-mail-first-subject' => 'Levamos sen velo bastante tempo',
+	'wikiadoption-mail-first-content' => 'Ola $1:
+
+Hai un par de semanas que non vemos un administrador en #WIKINAME. Os administradores son unha parte esencial de #WIKINAME e é importante que teñan unha presenza regular. Se non hai administradores activos durante un longo período de tempo, este wiki pode prepararse para a adopción co fin de permitir que outro usuario sexa o administrador.
+
+Se necesita axuda para coidar o wiki, tamén pode permitir que outros membros da comunidade sexan administradores visitando $2. Agardamos velo por #WIKINAME axiña!
+
+O equipo de Wikia
+
+Pode cancelar a subscrición á lista de cambios aquí: $3',
+	'wikiadoption-mail-first-content-HTML' => 'Ola $1:<br /><br />
+
+Hai un par de semanas que non vemos un administrador en #WIKINAME. Os administradores son unha parte esencial de #WIKINAME e é importante que teñan unha presenza regular. Se non hai administradores activos durante un longo período de tempo, este wiki pode prepararse para a adopción co fin de permitir que outro usuario sexa o administrador.<br /><br />
+
+Se necesita axuda para coidar o wiki, tamén pode permitir que outros membros da comunidade sexan administradores visitando <a href="$2">a xestión dos dereitos de usuario</a>. Agardamos velo por #WIKINAME axiña!<br /><br />
+
+O equipo de Wikia<br /><br />
+
+Pode <a href="$3">cancelar a subscrición</a> á lista de cambios.',
+	'wikiadoption-mail-second-subject' => '#WIKINAME estará listo para a adopción en breve',
+	'wikiadoption-mail-second-content' => 'Ola $1:
+Por desgraza, hai case 60 días que non hai un administrador activo en #WIKINAME. É importante que os administradores aparezan e colaboren regularmente de xeito que o wiki poida continuar funcionando sen problemas.
+
+Dado que non houbo administradores activos durante moitos días, #WIKINAME ofrecerá a súa adopción aos outros editores.
+
+O equipo de Wikia
+
+Pode cancelar a subscrición á lista de cambios aquí: $3',
+	'wikiadoption-mail-second-content-HTML' => 'Ola $1:<br /><br />
+Por desgraza, hai case 60 días que non hai un administrador activo en #WIKINAME. É importante que os administradores aparezan e colaboren regularmente de xeito que o wiki poida continuar funcionando sen problemas.<br /><br />
+
+Dado que non houbo administradores activos durante moitos días, #WIKINAME ofrecerá a súa adopción aos outros editores.<br /><br />
+
+O equipo de Wikia<br /><br />
+
+Pode <a href="$3">cancelar a subscrición</a> á lista de cambios.',
 	'wikiadoption-mail-adoption-subject' => 'Adoptaron #WIKINAME',
+	'wikiadoption-mail-adoption-content' => 'Ola $1:
+
+#WIKINAME foi adoptado. Os wikis están dispoñibles para a súa adopción cando ningún dos administradores mostrou actividade en 60 días ou máis.
+
+O usuario que adoptou #WIKINAME terá dereitos de administrador e burócrata. Non se preocupe, seguirá tendo dereitos de administrador neste wiki e agardamos que regrese e continúe colaborando cando queira!
+
+O equipo de Wikia
+
+Pode cancelar a subscrición á lista de cambios aquí: $3',
+	'wikiadoption-mail-adoption-content-HTML' => 'Ola $1:<br /><br />
+
+#WIKINAME foi adoptado. Os wikis están dispoñibles para a súa adopción cando ningún dos administradores mostrou actividade en 60 días ou máis.<br /><br />
+
+O usuario que adoptou #WIKINAME terá dereitos de administrador e burócrata. Non se preocupe, seguirá tendo dereitos de administrador neste wiki e agardamos que regrese e continúe colaborando cando queira!<br /><br />
+
+O equipo de Wikia<br /><br />
+
+Pode <a href="$3">cancelar a subscrición</a> á lista de cambios.',
+	'tog-adoptionmails' => 'Enviádeme un correo electrónico se $1 está dispoñible para a adopción por parte doutros usuarios',
+	'tog-adoptionmails-v2' => '...se o wiki está dispoñible para a adopción por parte doutros usuarios',
+	'wikiadoption-pref-label' => 'A modificación destas preferencias afectará soamente os correos electrónicos de $1.',
 	'wikiadoption-welcome-header' => 'Parabéns! Adoptou {{SITENAME}}!',
+	'wikiadoption-welcome-body' => 'Xa é burócrata deste wiki. Cos seus novos dereitos agora ten acceso a todas as ferramentas que axudarán a xestionar {{SITENAME}}.
+<br /><br />
+A cousa máis importante que pode facer para axudar a que {{SITENAME}} siga medrando é continuar editando.
+<br /><br />
+Se non hai administradores activos nun wiki, este pode prepararse para a súa adopción, así que sería bo revisar o wiki con frecuencia.
+<br /><br />
+Ferramentas de axuda:
+<br /><br />
+[[Special:ThemeDesigner|Deseñador de temas visuais]]
+<br />
+[[Special:LayoutBuilder|Creador de deseños de páxinas]]
+<br />
+[[Special:ListUsers|Lista de usuarios]]
+<br />
+[[Special:UserRights|Xestionar os dereitos]]',
 );
 
 /** Hungarian (Magyar)
@@ -599,6 +681,7 @@ Le equipa de Wikia<br /><br />
 
 Tu pote <a href="$3">cancellar le subscription</a> a cambios in iste lista.',
 	'tog-adoptionmails' => 'Inviar me e-mail si $1 devenira disponibile pro adoption per altere usatores',
+	'tog-adoptionmails-v2' => '...si le wiki devenira disponibile pro adoption per altere usatores',
 	'wikiadoption-pref-label' => 'Modificar iste preferentias influentiara solmente le messages de e-mail ab $1.',
 	'wikiadoption-welcome-header' => 'Felicitationes! Tu ha adoptate {{SITENAME}}!',
 	'wikiadoption-welcome-body' => 'Tu es ora bureaucrate in iste wiki. Con tu nove stato, tu ha recipite accesso a tote le instrumentos que te adjutara a gerer {{SITENAME}}.
@@ -717,6 +800,7 @@ $messages['mk'] = array(
 
 Можете да се <a href="$3">отпишете</a> од известувања за промените на списоков.',
 	'tog-adoptionmails' => 'Извести ме по е-пошта ако $1 стане достапно за посвојување',
+	'tog-adoptionmails-v2' => '...ако викито се ослободи за посвојување од други корисници',
 	'wikiadoption-pref-label' => 'Измените во овие нагодувања ќе важат само за -пошта од $1.',
 	'wikiadoption-welcome-header' => 'Честитаме! Го посвоивте викито {{SITENAME}}!',
 	'wikiadoption-welcome-body' => 'Сега сте бирократ на ова вики. Со новиот статус, сега имате пристап до сите алатки што ви се потребни за да раководите со {{SITENAME}}.
@@ -793,7 +877,7 @@ Anda boleh <a href="$3">berhenti melanggan</a> perubahan pada senarai ini.',
 	'wikiadoption-mail-second-subject' => '#WIKINAME akan ditawarkan untuk diambil alih nanti',
 	'wikiadoption-mail-second-content' => 'Apa khabar $1,
 
-Sudah hampir 60 hari sejak kali terakhir ada pentadbir yang aktif di #WIKINAME. Adalah penting untuk pentadbir kerap hadir dan menyumbang supaya wiki ini terus berjalan lancar.
+Alamak! Sudah hampir 60 hari sejak kali terakhir ada pentadbir yang aktif di #WIKINAME. Adalah penting untuk pentadbir kerap hadir dan menyumbang supaya wiki ini terus berjalan lancar.
 
 Memandangkan sudah berapa lama sejak hadirnya seorang pentadbir semasa, maka #WIKINAME kini akan ditawarkan untuk diambil alih oleh pentadbir lain. 
 
@@ -802,7 +886,7 @@ Pasukan Wikia
 Anda boleh berhenti melanggan perubahan pada senarai ini di sini: $3',
 	'wikiadoption-mail-second-content-HTML' => 'Apa khabar $1,<br /><br />
 
-Sudah hampir 60 hari sejak kali terakhir ada pentadbir yang aktif di #WIKINAME. Adalah penting untuk pentadbir kerap hadir dan menyumbang supaya wiki ini terus berjalan lancar.<br /><br />
+Alamak! Sudah hampir 60 hari sejak kali terakhir ada pentadbir yang aktif di #WIKINAME. Adalah penting untuk pentadbir kerap hadir dan menyumbang supaya wiki ini terus berjalan lancar.<br /><br />
 
 Memandangkan sudah berapa lama sejak hadirnya seorang pentadbir semasa, maka #WIKINAME kini akan ditawarkan untuk diambil alih oleh pentadbir lain. <br /><br />
 
@@ -814,7 +898,7 @@ Anda boleh <a href="$3">berhenti melanggan</a> perubahan pada senarai ini.',
 
 #WIKINAME telah diambil alih. Wiki akan disediakan untuk diambil alih apabila tiadanya pentadbir semasa yang aktif selama 60 hari atau lebih.
 
-Pengguna yang mengambil alih #WIKINAME kini akan mendapat status birokrat dan pentadbir. Jangan bimbang kerana anda masih mengekalkan status pentadbir di wiki ini, dan anda boleh kembali ke situ pada bila-bila masa sahaja.
+Pengguna yang mengambil alih #WIKINAME kini akan mendapat status birokrat dan pentadbir. Jangan bimbang kerana anda masih mengekalkan status pentadbir di wiki ini, dan anda boleh kembali ke situ pada bila-bila masa sahaja!
 
 Pasukan Wikia
 
@@ -829,6 +913,7 @@ Pasukan Wikia<br /><br />
 
 Anda boleh <a href="$3">berhenti melanggan</a> perubahan pada senarai ini.',
 	'tog-adoptionmails' => 'E-mel kepada saya jika $1 akan dibuka kepada pengguna lain untuk mengambil alih',
+	'tog-adoptionmails-v2' => '...jika wiki ini akan dibuka kepada pengguna lain untuk mengambil alih',
 	'wikiadoption-pref-label' => 'Penukaran keutamaan ini akan hanya mempengaruhi e-mel dari $1.',
 	'wikiadoption-welcome-header' => 'Tahniah! Anda telah mengambil alih {{SITENAME}}!',
 	'wikiadoption-welcome-body' => 'Anda sudah menjadi birokrat di wiki ini. Dengan status baru anda, anda kini boleh mencapai semua peralatan yang akan membantu anda menguruskan {{SITENAME}}.
@@ -896,7 +981,7 @@ Klik op de volgende verwijzing om u <a href="$3">uit te schrijven</a> van wijzig
 	'wikiadoption-mail-second-subject' => '#WIKINAME wordt binnenkort voor adoptie opgegeven',
 	'wikiadoption-mail-second-content' => 'Hallo $1,
 
-Het is al weer dertig dagen geleden dat we een beheerder op #WIKINAME hebben gezien. Het is belangrijk dat beheerders regelmatig aanwezig zijn en dat ze bijdragen zodat de wiki soepel kan lopen.
+Het is al weer zestig dagen geleden dat we een beheerder op #WIKINAME hebben gezien. Het is belangrijk dat beheerders regelmatig aanwezig zijn en dat ze bijdragen zodat de wiki soepel kan lopen.
 
 Omdat er zo lang geen beheerder actief is geweest, komt #WIKINAME nu beschikbaar voor adoptie door andere gebruikers.
 
@@ -904,7 +989,7 @@ Het Wikia-team
 
 Klik op de volgende verwijzing om u uit te schrijven van wijzigingen op deze lijst: $3.',
 	'wikiadoption-mail-second-content-HTML' => 'Hallo $1,<br /><br />
-Het is al weer dertig dagen geleden dat we een beheerder op #WIKINAME hebben gezien. Het is belangrijk dat beheerders regelmatig aanwezig zijn en dat ze bijdragen zodat de wiki soepel kan lopen.<br /><br />
+Het is al weer zestig dagen geleden dat we een beheerder op #WIKINAME hebben gezien. Het is belangrijk dat beheerders regelmatig aanwezig zijn en dat ze bijdragen zodat de wiki soepel kan lopen.<br /><br />
 
 Omdat er zo lang geen beheerder actief is geweest, komt #WIKINAME nu beschikbaar voor adoptie door andere gebruikers.<br /><br />
 
@@ -914,7 +999,7 @@ Klik op de volgende verwijzing om u <a href="$3">unsubscribe</a>uit te schrijven
 	'wikiadoption-mail-adoption-subject' => '#WIKINAME is geadopteerd',
 	'wikiadoption-mail-adoption-content' => 'Hallo $1,
 
-#WIKINAME is geadopteerd! Wikis zijn beschikbaar voor adoptie waar geen huidige beheerder minstens 60 dagen actief is.
+#WIKINAME is geadopteerd! Wikis zijn beschikbaar voor adoptie waar geen huidige beheerder minstens zestig dagen actief is.
 
 De adopterende gebruiker van #WIKINAME zal nu bureaucraat- en beheerderrechten hebben. Vrees niet, u bent nog steeds beheerder en u bent nog steeds op ieder moment van harte welkom om terug te keren en opnieuw bij te dragen!
 
@@ -923,7 +1008,7 @@ Het Wikia-team
 U kunt zich van wijzigingen op deze lijst uitschrijven: $3.',
 	'wikiadoption-mail-adoption-content-HTML' => 'Hallo $1,<br /><br />
 
-#WIKINAME is geadopteerd! Wikis zijn beschikbaar voor adoptie waar geen huidige beheerder minstens 60 dagen actief is.<br /><br />
+#WIKINAME is geadopteerd! Wikis zijn beschikbaar voor adoptie waar geen huidige beheerder minstens zestig dagen actief is.<br /><br />
 
 De adopterende gebruiker van #WIKINAME zal nu bureaucraat- en beheerderrechten hebben. Vrees niet, u bent nog steeds beheerder en u bent nog steeds op ieder moment van harte welkom om terug te keren en opnieuw bij te dragen!<br /><br />
 
@@ -931,6 +1016,7 @@ Het Wikia-team<br /><br />
 
 U kunt zich van wijzigingen op deze lijst <a href="$3">uitschrijven</a>.',
 	'tog-adoptionmails' => 'Mij e-mailen als $1 door andere gebruikers geadopteerd kan worden',
+	'tog-adoptionmails-v2' => '... als de wiki beschikbaar komt om door andere gebruikers te worden geadopteerd',
 	'wikiadoption-pref-label' => 'Het wijzigen van deze voorkeuren heeft alleen invloed op e-mails van $1.',
 	'wikiadoption-welcome-header' => 'Gefeliciteerd! U hebt {{SITENAME}} geadopteerd!',
 	'wikiadoption-welcome-body' => 'U bent nu bureaucraat op deze wiki. Met uw nieuwe status hebt u nu de beschikking over alle hulpmiddelen die u nodig hebt om {{SITENAME}} te beheren.<br /><br />
@@ -1109,6 +1195,7 @@ Wikia-teamet<br /><br />
 
 Du kan <a href="$3">avslutte abonnementet</a> på endringer fra denne listen.',
 	'tog-adoptionmails' => 'Send meg en e-post hvis $1 blir tilgjengelig for adopsjon av andre brukere',
+	'tog-adoptionmails-v2' => '... hvis wikien blir tilgjengelig for adopsjon av andre brukere',
 	'wikiadoption-pref-label' => 'Å endre disse innstillingene vil bare påvirke e-poster fra $1.',
 	'wikiadoption-welcome-header' => 'Gratulerer! Du har adoptert {{SITENAME}}!',
 	'wikiadoption-welcome-body' => 'Du er nå en byråkrat på denne wikien. Med din nye status har du nå tilgang til alle verktøyene som vil hjelpe deg å håndtere {{SITENAME}}.
@@ -1139,7 +1226,7 @@ $messages['pl'] = array(
 	'wikiadoption-adoption-successed' => 'Gratulacje! Jesteś teraz administratorem na tej wiki!',
 	'wikiadoption-mail-second-content' => 'Witaj $1,
 
-Minęło 60 dni od momentu, gdy aktywny był administrator na wiki $WIKINAME. Regularna obecność administratorów jest ważna dla poprawnego rozwoju wiki.
+Minęło 30 dni od momentu, gdy aktywny był administrator na wiki $WIKINAME. Regularna obecność administratorów jest ważna dla poprawnego rozwoju wiki.
 
 Ponieważ minęło tak wiele dni od pojawienia się aktualnego administratora, $WIKINAME zostanie zaproponowana do adopcji innym edytorom.
 
@@ -1213,7 +1300,7 @@ Pode <a href="$3">cancelar a subscrição</a> de alterações a esta lista.',
 	'wikiadoption-mail-adoption-subject' => 'A #WIKINAME foi adoptada',
 	'wikiadoption-mail-adoption-content' => 'Olá $1,
 
-A #WIKINAME foi adoptada. As wikis ficam disponíveis para adopção que nenhum dos administradores está activo durante 60 ou mais dias.
+A #WIKINAME foi adoptada. As wikis ficam disponíveis para adopção que nenhum dos administradores está activo durante 30 ou mais dias.
 
 O utilizador que adoptou a #WIKINAME terá agora o estatuto de burocrata e administrador. Não se preocupe; manterá o seu estatuto de administrador nesta wiki e esperamos que regresse e continue a sua colaboração quando puder!
 
@@ -1221,7 +1308,7 @@ A Equipa da Wikia
 
 Para cancelar a subscrição de alterações a esta lista, clique o seguinte link: $3',
 	'wikiadoption-mail-adoption-content-HTML' => 'Olá $1,<br /><br />
-A #WIKINAME foi adoptada. As wikis ficam disponíveis para adopção que nenhum dos administradores está activo durante 60 ou mais dias.<br /><br />
+A #WIKINAME foi adoptada. As wikis ficam disponíveis para adopção que nenhum dos administradores está activo durante 30 ou mais dias.<br /><br />
 
 O utilizador que adoptou a #WIKINAME terá agora o estatuto de burocrata e administrador. Não se preocupe; manterá o seu estatuto de administrador nesta wiki e esperamos que regresse e continue a sua colaboração quando puder!<br /><br />
 
@@ -1313,7 +1400,7 @@ Pode <a href="$3">cancelar a subscrição</a> de alterações a esta lista.',
 	'wikiadoption-mail-adoption-subject' => 'A #WIKINAME foi adotada',
 	'wikiadoption-mail-adoption-content' => 'Olá $1,
 
-A #WIKINAME foi adotada. As wikis ficam disponíveis para adoção quando nenhum dos administradores está ativo durante 60 ou mais dias.
+A #WIKINAME foi adotada. As wikis ficam disponíveis para adoção quando nenhum dos administradores está ativo durante 30 ou mais dias.
 
 O utilizador que adotou a #WIKINAME terá agora o estatuto de burocrata e administrador. Não se preocupe; manterá o seu estatuto de administrador nesta wiki e esperamos que regresse e continue a sua colaboração quando puder!
 
@@ -1321,7 +1408,7 @@ A Equipa da Wikia
 
 Para cancelar a subscrição de alterações a esta lista, clique o seguinte link: $3',
 	'wikiadoption-mail-adoption-content-HTML' => 'Olá $1,<br /><br />
-A #WIKINAME foi adotada. As wikis ficam disponíveis para adopção quando nenhum dos administradores está ativo durante 60 ou mais dias.<br /><br />
+A #WIKINAME foi adotada. As wikis ficam disponíveis para adopção quando nenhum dos administradores está ativo durante 30 ou mais dias.<br /><br />
 
 O utilizador que adotou a #WIKINAME terá agora o estatuto de burocrata e administrador. Não se preocupe; manterá o seu estatuto de administrador nesta wiki e esperamos que regresse e continue a sua colaboração quando puder!<br /><br />
 
@@ -1396,7 +1483,7 @@ $messages['ru'] = array(
 	'wikiadoption-mail-second-subject' => '#WIKINAME скоро будет выставлена для принятия',
 	'wikiadoption-mail-second-content' => 'Привет $1,
 
-Ах нет! Прошло уже 60 дней с тех пор, как мы видели Вас на #WIKINAME. Администраторы являются неотъемлемой частью #WIKINAME и очень важно, чтобы они регулярно присутствовали на вики.
+Ах нет! Прошло уже 30 дней с тех пор, как мы видели Вас на #WIKINAME. Администраторы являются неотъемлемой частью #WIKINAME и очень важно, чтобы они регулярно присутствовали на вики.
 
 Так как прошло слишком много дней, а текущий администратор так и не появился, #WIKINAME будет предложено принять другому редактору.
 
@@ -1406,7 +1493,7 @@ $messages['ru'] = array(
 	'wikiadoption-mail-adoption-subject' => '#WIKINAME была принята',
 	'wikiadoption-mail-adoption-content' => 'Привет, $1.
 
-#WIKINAME была принята! Вики может быть отдана другому участнику, если ни один из текущих администраторов не будет проявлять активности в течение 60 дней и более.
+#WIKINAME была принята! Вики может быть отдана другому участнику, если ни один из текущих администраторов не будет проявлять активности в течение 30 дней и более.
 
 Участник, который принял #WIKINAME, получил статус бюрократа и администратора. Не беспокойтесь, вы тоже сохраните свой статус администратора, и мы будем рады, если вы вернётесь и продолжите редактировать!
 
@@ -1414,6 +1501,7 @@ $messages['ru'] = array(
 
 Кликните по ссылке, чтобы отписаться от изменений в этом списке: $3.',
 	'tog-adoptionmails' => 'Мой e-mail, если $1 станет доступной для принятия другим участникам',
+	'tog-adoptionmails-v2' => '...если вики станет доступной для автоматического принятие другими участниками',
 	'wikiadoption-pref-label' => 'Изменение этих настроек влияет только на электронные письма от $1',
 	'wikiadoption-welcome-header' => 'Поздравляем! Вы приняли {{SITENAME}}!',
 	'wikiadoption-welcome-body' => 'инструментам, которые помогут вам управлять {{SITENAME}}.
@@ -1454,6 +1542,13 @@ $messages['sv'] = array(
 	'wikiadoption-header' => 'Adoptera den här wikin',
 	'wikiadoption-button-adopt' => 'Ja, jag vill adoptera {{SITENAME}}!',
 	'wikiadoption-adopt-inquiry' => 'Lär dig mer!',
+	'wikiadoption-description' => '$1, redo att adoptera {{SITENAME}}?
+<br /><br />
+Det har inte funnits en aktiv administratör på {{SITENAME}} på en stund, och vi letar efter en ny ledare för att hjälpa denna wikis innehåll och gemenskap att växa! Som en av bidragsgivarna på {{SITENAME}} undrar vi om du vill ha jobbet.
+<br /><br />
+Genom att adoptera wikin, befordras du till administratör och byråkrat som ger dig de verktyg du behöver för att hantera wikins gemenskap och innehåll. Du kommer även kunna skapa andra administratörer för att hjälpa till, ta bort, återställa, flytta och skydda sidor.
+<br /><br />
+Är du redo att ta nästa steg för att hjälpa {{SITENAME}}?',
 	'wikiadoption-know-more-header' => 'Vill du veta mer?',
 	'wikiadoption-know-more-description' => 'Kolla dessa länkar för mer information. Och naturligtvis är du välkommen att kontakta oss om du har några frågor!',
 	'wikiadoption-adoption-successed' => 'Grattis! Du är nu en administratör på denna wiki!',
@@ -1464,6 +1559,15 @@ $messages['sv'] = array(
 	'wikiadoption-log-reason' => 'Automatisk Wiki-Adoption',
 	'wikiadoption-notification' => '{{SITENAME}} är tillgänglig för adoption! Intressant att bli en ledare här? Adoptera denna wiki för att komma igång! $2',
 	'wikiadoption-mail-first-subject' => 'Vi har inte sett dig på ett tag',
+	'wikiadoption-mail-first-content' => 'Hej $1,
+
+Det har varit ett par veckor sen vi såg en administratör på #WIKINAME. Administratörer är en väsentlig del av #WIKINAME och det är viktigt att de är närvarande regelbundet. Om det inte finns några aktiva medlemmar administratörer under en lång period, kan denna wiki läggas ut för adoption för att låta en annan aktiv användare att bli en administratör.
+
+Om du behöver hjälp med att sköta din wiki, kan du tillåta andra medlemmar i din gemenskap att bli administratörer genom att gå till $2. Hoppas att vi syns på #WIKINAME snart!
+
+Wikia-teamet
+
+Du kan avbryta prenumerationen från ändringar på denna lista här: $3',
 	'wikiadoption-mail-first-content-HTML' => 'Hej $1,<br /><br />
 
 Det har varit ett par veckor sen vi såg en administratör på #WIKINAME. Administratörer är en väsentlig del av #WIKINAME och det är viktigt att de är närvarande regelbundet. Om det inte finns några aktiva medlemmar administratörer under en lång period, kan denna wiki läggas ut för adoption för att låta en annan aktiv användare att bli en administratör.<br /><br />
@@ -1472,7 +1576,7 @@ Om du behöver hjälp med att sköta din wiki, kan du tillåta andra medlemmar i
 
 <b>Wikia-teamet</b><br /><br />
 
-Du kan <a href="$3">avbryta prenumerationen</a> från ändringar av denna lista.',
+Du kan <a href="$3">avbryta prenumerationen</a> från ändringar på denna lista.',
 	'wikiadoption-mail-second-subject' => '#WIKINAME kommer att sättas upp för adoption snart',
 	'wikiadoption-mail-second-content' => 'Hej $1,
 
@@ -1484,7 +1588,7 @@ Wikia-teamet
 
 Du kan avbryta din prenumeration på ändringar för denna lista här: $3.',
 	'wikiadoption-mail-second-content-HTML' => 'Hej $1,<br /><br />
-Åh nej! Det har nästan gått 60 dagar sedan det var en aktiv administratör på #WIKINAME. Det är viktig att administratörer regelbundet dyker upp och bidrar så att wikin kan ska fungera väl. <br /><br />
+Åh nej! Det har nästan gått 30 dagar sedan det var en aktiv administratör på #WIKINAME. Det är viktig att administratörer regelbundet dyker upp och bidrar så att wikin kan ska fungera väl. <br /><br />
 
 Eftersom det är så många dagar sedan en närvarande administratör var där, kommer #WIKINAME att erbjudas för adoption till andra redigerare. <br /><br />
 
@@ -1494,7 +1598,7 @@ Du kan <a href="$3">avbryta prenumerationen</a> från ändringar av denna lista.
 	'wikiadoption-mail-adoption-subject' => '#WIKINAME har adopterats',
 	'wikiadoption-mail-adoption-content' => 'Hej $1,
 
-#WIKINAME har adopterats. Wikis finns tillgängliga för att adopteras när ingen av de närvarande administratörerna är aktiv i 60 dagar eller fler.
+#WIKINAME har adopterats. Wikis finns tillgängliga för att adopteras när ingen av de närvarande administratörerna är aktiv i 30 dagar eller fler.
 
 Den adopterande användaren av #WIKINAME kommer nu ha byråkrat- och administrationsstatus. Oroa dig inte, du kommer också att behålla din administrationsstatus på denna wiki och är välkommen att återvända och fortsätta bidra när som helst!
 
@@ -1503,7 +1607,7 @@ Wikia-teamet
 Klicka på följande länk för att avsluta prenumerationen på ändringar i denna lista: $3.',
 	'wikiadoption-mail-adoption-content-HTML' => 'Hej $1,<br /><br />
 
-#WIKINAME har adopterats. Wikis finns tillgängliga för att adopteras när ingen av de närvarande administratörerna är aktiv i 60 dagar eller fler.<br /><br />
+#WIKINAME har adopterats. Wikis finns tillgängliga för att adopteras när ingen av de närvarande administratörerna är aktiv i 30 dagar eller fler.<br /><br />
 
 Den adopterande användaren av #WIKINAME kommer nu ha byråkrat- och administrationsstatus. Oroa dig inte, du kommer också att behålla din administrationsstatus på denna wiki och är välkommen att återvända och fortsätta bidra när som helst!<br /><br />
 
@@ -1511,8 +1615,24 @@ Wikia-teamet<br /><br />
 
 Du kan <a href="$3">avbryta prenumerationen</a> på ändringar i denna lista.',
 	'tog-adoptionmails' => 'Skicka ett e-post till mig om $1 kommer att bli tillgänglig för andra användare att adoptera',
+	'tog-adoptionmails-v2' => '...om wikin kommer att bli tillgänglig för andra användare att adoptera',
 	'wikiadoption-pref-label' => 'Att ändra dessa inställningar kommer bara påverkar e-post från $1.',
 	'wikiadoption-welcome-header' => 'Gratulerar! Du har adopterat {{SITENAME}}!',
+	'wikiadoption-welcome-body' => 'Du är du en byråkrat på denna wiki. Med din nya status du nu har tillgång till alla verktyg som hjälper dig hantera {{SITENAME}}.
+<br /><br />
+Den viktigaste saken du kan göra för att hjälpa {{SITENAME}} att växa är att fortsätta redigera.
+<br /><br />
+Om det inte finns någon aktiv administratör på en wiki kan den sättas upp för adoption så se till att kolla in wikin ofta.
+<br /><br />
+Användbara verktyg:
+<br /><br />
+[[Special:ThemeDesigner|Temadesigner]]
+<br />
+[[Special:LayoutBuilder|Sidlayout-byggare]]
+<br />
+[[Special:ListUsers|Användarlista]]
+<br />
+[[Special:UserRights|Hantera rättigheter]]',
 );
 
 /** Telugu (తెలుగు)

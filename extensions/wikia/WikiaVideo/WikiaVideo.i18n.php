@@ -161,15 +161,25 @@ $messages['bs'] = array(
 );
 
 /** Catalan (Català)
+ * @author Gemmaa
  * @author Paucabot
  */
 $messages['ca'] = array(
+	'wikiavideo-reverted' => 'El vídeo  $1  es tornat amb èxit. Torni a  $2 .',
 	'wikiavideo-unreverted' => 'No teniu permís per a revertir $1.',
 	'wikiavideo-added' => "s'ha afegit el vídeo $1",
+	'wikiavideo-updated' => 'Video Actualitzat [[ $1 ]]',
 	'wikiavideo-back' => 'Enrere',
 	'wikiavideo-create' => 'Afegir vídeo',
+	'wikiavideo-replace' => 'Reemplaçar vídeo',
 	'wikiavideo-category' => 'Vídeos',
 	'wikiavideo-links' => 'Enllaços',
+	'wikiavideo-placeholder' => 'Marcador de posició',
+	'wikiavideo-gallery-template' => "Aquesta galeria de vídeo és dins d'una plantilla i no és editable de la mode de vista. Si us plau, editar la plantilla adequada.",
+	'wikiavideo-not-supported' => 'Aquesta pell no és compatible amb vídeos inserting del mode de vista en les galeries.',
+	'wikiavideo-deleted-old' => "La versió de ' ' [ $1  $2 ] ' ' de  $4 ,  $3  s'ha suprimit.",
+	'wikiavideo-intro-old' => "Voleu suprimir la versió de ' ' [ $1  $5 ] ' ' com de [ $4  $3 ,  $2 ].",
+	'wikiavideo-details' => '$1( $2  {{PLURAL:$2| pixel|pixels}}, proveïdor: <a href="<span class=" notranslate"="">$3 "class ="extern"target ="_ blank"> $4 </a>)',
 );
 
 /** Czech (Česky)
@@ -230,7 +240,7 @@ $messages['de'] = array(
 	'wikiavideo-not-supported' => 'Dieses Skin unterstützt kein Einfügen von Videos in Galerien vom Ansichtsmodus aus.',
 	'wikiavideo-deleted-old' => "Die Version von '''[$1 $2]''' vom $4, $3 wurde gelöscht.",
 	'wikiavideo-intro-old' => "Du löschst die Version von '''[$1 $5]''' vom [$4 $3, $2].",
-	'wikiavideo-details' => '$1 ($2 Pixel, Anbieter: <a href="$3" class="external" target="_blank">$4</a>)',
+	'wikiavideo-details' => '$1 ($2 {{PLURAL:$2|Pixel|Pixel}}, Anbieter: <a href="$3" class="external" target="_blank">$4</a>)',
 );
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)
@@ -409,7 +419,7 @@ $messages['ia'] = array(
 	'wikiavideo-not-supported' => 'Iste apparentia non supporta le insertion de videos in galerias ex le modo de visualisation.',
 	'wikiavideo-deleted-old' => "Le version de '''[$1 $2]''' del $3 a $4 ha essite delite.",
 	'wikiavideo-intro-old' => "Tu es al puncto de deler le version de '''[$1 $5]''' del [$4 $3 a $2].",
-	'wikiavideo-details' => '$1 ($2 pixels, fornitor: <a href="$3" class="external" target="_blank">$4</a>)',
+	'wikiavideo-details' => '$1 ($2 {{PLURAL:$2|pixel|pixels}}, fornitor: <a href="$3" class="external" target="_blank">$4</a>)',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -774,7 +784,7 @@ $messages['ru'] = array(
 	'wikiavideo-not-supported' => 'Эта тема оформления не поддерживает вставку видео в галерею в режиме просмотра.',
 	'wikiavideo-deleted-old' => "Версия '''[$1 $2]''' от $4 $3 была удалена.",
 	'wikiavideo-intro-old' => "Вы удаляете версию '''[$1 $5]''' от [$4 $3, $2].",
-	'wikiavideo-details' => '$1 ($2 пикселей, провайдер: <a href="$3" class="external" target="_blank">$4</a>)',
+	'wikiavideo-details' => '$1 ($2 {{PLURAL:$2|пиксель|пикселя|пикселей}}, провайдер: <a href="$3" class="external" target="_blank">$4</a>)',
 );
 
 /** Sinhala (සිංහල)
@@ -799,6 +809,8 @@ $messages['sl'] = array(
 	'wikiavideo-replace' => 'Zamenjaj videoposnetek',
 	'wikiavideo-category' => 'Videoposnetki',
 	'wikiavideo-links' => 'Povezave',
+	'wikiavideo-placeholder' => 'Prostornik',
+	'wikiavideo-gallery-template' => 'Ta galerija videoposnetkov se nahaja znotraj predloge in je ni mogoče urediti iz načina pogleda. Prosimo, uredite ustrezno predlogo.',
 	'wikiavideo-deleted-old' => "Različica '''[$1 $2]''' z dne $4, $3 je izbrisana.",
 	'wikiavideo-intro-old' => "Brišete različico '''[$1 $5]''' z dne [$4 $3, $2].",
 	'wikiavideo-details' => '$1 ($2 {{PLURAL:$2|slikovna pika|slikovni piki|slikovne pike|slikovnih pik}}, ponudnik: <a href="$3" class="external" target="_blank">$4</a>)',
@@ -845,7 +857,7 @@ $messages['sv'] = array(
 	'wikiavideo-not-supported' => 'Detta skal har inte stöd för att sätta in videor från visningsläget i gallerier.',
 	'wikiavideo-deleted-old' => "Versionen av '''[$1 $2]''' från $4, $3 har raderats.",
 	'wikiavideo-intro-old' => "Du håller på att radera versionen av '''[$1 $5]''' från [$4 $3, $2].",
-	'wikiavideo-details' => '$1 ($2 pixlar, leverantör: <a href="$3" class="external" target="_blank">$4</a>)',
+	'wikiavideo-details' => '$1 ($2 {{PLURAL:$2|pixel|pixlar}}, leverantör: <a href="$3" class="external" target="_blank">$4</a>)',
 );
 
 /** Telugu (తెలుగు)

@@ -197,11 +197,37 @@ $messages['ia'] = array(
 	'category-exhibition-display-new' => 'Monstrar como exhibition de categorias',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Aldnonymous
+ */
+$messages['id'] = array(
+	'category-exhibition-sorttype' => 'Menyortir jenis:',
+	'category-exhibition-alphabetical' => 'Abjad',
+	'category-exhibition-mostvisited' => 'Paling sering dikunjungi',
+	'category-exhibition-recentedits' => 'Baru-baru ini diedit',
+	'category-exhibition-page-header' => 'Artikel dalam kategori " $1 "',
+	'category-exhibition-subcategories-header' => 'Subkategori',
+	'category-exhibition-media-header' => 'Media dalam kategori " $1 "',
+	'category-exhibition-blogs-header' => 'Postingan blog',
+	'category-exhibition-display-old' => 'Tampilan daftar kategori',
+	'category-exhibition-display-new' => 'Pameran tampilan Kategori',
+);
+
 /** Italian (Italiano)
+ * @author Leviathan 89
  * @author Minerva Titani
  */
 $messages['it'] = array(
+	'category-exhibition-sorttype' => 'Tipo di ordinamento:',
+	'category-exhibition-alphabetical' => 'Alfabetico',
 	'category-exhibition-mostvisited' => 'Più visitate',
+	'category-exhibition-recentedits' => 'Modificati recentemente',
+	'category-exhibition-page-header' => 'Pagine nella categoria "$1"',
+	'category-exhibition-subcategories-header' => 'Sottocategorie',
+	'category-exhibition-media-header' => 'File nella categoria "$1"',
+	'category-exhibition-blogs-header' => 'Blog',
+	'category-exhibition-display-old' => 'Visualizzazione elenco categoria',
+	'category-exhibition-display-new' => 'Vista Esibizione Categoria',
 );
 
 /** Japanese (日本語)
@@ -392,6 +418,7 @@ $messages['sr-ec'] = array(
 
 /** Swedish (Svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'category-exhibition-sorttype' => 'Sortering:',
@@ -403,6 +430,7 @@ $messages['sv'] = array(
 	'category-exhibition-media-header' => 'Media i kategori "$1"',
 	'category-exhibition-blogs-header' => 'Blogg-inlägg',
 	'category-exhibition-display-old' => 'Kategori-listvyn',
+	'category-exhibition-display-new' => 'Visning av kategoriutställning',
 );
 
 /** Telugu (తెలుగు)

@@ -95,9 +95,11 @@ $messages['ig'] = array(
 );
 
 /** Italian (Italiano)
+ * @author Leviathan 89
  * @author Pietrodn
  */
 $messages['it'] = array(
+	'slidertag-desc' => 'Fornisce un modo generico agli utenti per aggiunggere sliders',
 	'slidertag-featured-wikis' => 'Wiki in primo piano',
 );
 
@@ -180,6 +182,13 @@ $messages['pt-br'] = array(
 $messages['ru'] = array(
 	'slidertag-desc' => 'Предоставляет возможность участникам добавлять избранный слайдеры',
 	'slidertag-featured-wikis' => 'Избранные вики',
+);
+
+/** Swedish (Svenska)
+ * @author WikiPhoenix
+ */
+$messages['sv'] = array(
+	'slidertag-featured-wikis' => 'Utvalda wikis',
 );
 
 /** Tagalog (Tagalog)

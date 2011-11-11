@@ -23,6 +23,13 @@ $messages['ast'] = array(
 	'categorygalleries-desc' => 'Amuesa una galería de páxines nes páxines de categoría',
 );
 
+/** Bavarian (Boarisch)
+ * @author Mucalexx
+ */
+$messages['bar'] = array(
+	'categorygalleries-desc' => "Zoagt da'raa Seiten-Galarie auf Kategorieseiten",
+);
+
 /** Breton (Brezhoneg)
  * @author Fohanno
  */

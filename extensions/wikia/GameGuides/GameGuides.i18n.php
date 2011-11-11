@@ -152,6 +152,13 @@ $messages['ru'] = array(
 	'wikiagameguides-desc' => 'Модули мобильного приложения Wikia Game Guides',
 );
 
+/** Swedish (Svenska)
+ * @author WikiPhoenix
+ */
+$messages['sv'] = array(
+	'wikiagameguides-desc' => 'Moduler för Wikias spelguides-app',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */

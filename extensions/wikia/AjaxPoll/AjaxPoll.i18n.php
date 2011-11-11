@@ -103,6 +103,19 @@ $messages['cs'] = array(
 	'ajaxpoll-submitting' => 'Prosím čekejte, Váš hlas se zpracovává...',
 );
 
+/** Welsh (Cymraeg)
+ * @author Pwyll
+ */
+$messages['cy'] = array(
+	'ajaxpoll-percentVotes' => "$1%&nbsp; o'r holl bleidleisiau",
+	'ajaxpoll-thankyou' => 'Diolch am eich pleidlais!',
+	'ajaxpoll-error' => "Cafwyd problem tra'n prosesu eich pleidlais. Triwch eto, os gwelwch yn dda.",
+	'ajaxpoll-summary' => 'Crëwyd y bleidlais am $1 ar $2, ac mae $3 o bobl wedi pleidleisio hyd yn hyn.',
+	'ajaxpoll-submit' => 'Pleidleisiwch!',
+	'ajaxpoll-closed' => "Mae'r bleidlais bellach ar gau. Mwynhewch y canlyniadau.",
+	'ajaxpoll-submitting' => "Arhoswch os gwelwch yn dda, yn cyflwyno'ch pleidlais...",
+);
+
 /** German (Deutsch)
  * @author Claudia Hattitten
  * @author LWChris
@@ -536,6 +549,7 @@ $messages['ru'] = array(
  * @author බිඟුවා
  */
 $messages['si'] = array(
+	'ajaxpoll-thankyou' => 'ඔබගේ ඡන්දයට ස්තුතියි!',
 	'ajaxpoll-submit' => 'ඡන්දය දෙන්න!',
 );
 
@@ -560,7 +574,7 @@ $messages['sv'] = array(
 	'ajaxpoll-percentVotes' => '$1%&nbsp;av alla röster',
 	'ajaxpoll-thankyou' => 'Tack för din röst!',
 	'ajaxpoll-error' => 'Det uppstod ett problem med bearbetningen av din röst, var god försök igen.',
-	'ajaxpoll-summary' => 'Röstningen skapades kl. $1 den $2, och hittills har $3 personer röstat.',
+	'ajaxpoll-summary' => 'Röstningen skapades den $2 kl. $1, och hittills har $3 personer röstat.',
 	'ajaxpoll-submit' => 'Rösta!',
 	'ajaxpoll-closed' => 'Röstningen är nu stängd. Njut av resultaten.',
 	'ajaxpoll-submitting' => 'Du skickar in din röst, var god vänta...',

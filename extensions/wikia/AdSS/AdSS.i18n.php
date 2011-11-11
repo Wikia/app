@@ -180,6 +180,7 @@ Wikia Team',
 );
 
 /** Message documentation (Message documentation)
+ * @author Aldnonymous
  * @author Purodha
  * @author Siebrand
  */
@@ -197,6 +198,7 @@ A share is a stake in the total volume of sponsored links for a site. The size o
 
 Parameters:
 * $1 is a price in a currency.',
+	'adss-form-page-plan-header' => 'link and page will use indonesian language on bbc-latn',
 	'adss-form-banner-plan-header' => 'A share is a stake in the total volume of sponsored links for a site. The size of a share may go up or down depending on how many others buy shares, see also {{msg-wikia|adss-form-site-premium-plan-description}}',
 	'adss-form-banner-plan-description' => 'A share is a stake in the total volume of sponsored links for a site. The size of a share may go up or down depending on how many others buy shares, see also {{msg-wikia|adss-form-site-premium-plan-description}}',
 	'adss-form-banner-plan-price' => 'A share is a stake in the total volume of sponsored links for a site. The size of a share may go up or down depending on how many others buy shares, see also {{msg-wikia|adss-form-site-premium-plan-description}}
@@ -230,6 +232,39 @@ Parameters:
 	'adss-no-shares' => '"#" is an abbreviation of "number of".
 
 A share is a stake in the total volume of sponsored links for a site. The size of a share may go up or down depending on how many others buy shares.',
+);
+
+/** толышә зывон (толышә зывон)
+ * @author Гусейн
+ */
+$messages['tly'] = array(
+	'adss-form-email' => 'Шымә е-номә унвон',
+	'adss-form-password' => 'Шымә парол:',
+	'adss-form-login-link' => 'Ыштәни едаштеј',
+	'adss-button-edit' => 'Сәрост кардеј',
+	'adss-button-login' => 'Ыштәни едаштеј',
+	'adss-button-buy-now' => 'Есәт һырије',
+	'adss-button-save' => 'Огәте',
+	'adss-button-cancel' => 'Ләғв кардеј',
+	'adss-button-yes' => 'Бәле',
+	'adss-button-no' => 'Не',
+	'adss-per-site' => 'Һәммәј сәһифон',
+	'adss-cancel' => 'Ләғв кардеј',
+	'adss-canceled' => 'Ләғв кардә быә',
+	'adss-wikia' => 'Викиа',
+	'adss-price' => 'Ғыјмәт',
+	'adss-created' => 'Офәјә быә',
+	'adss-fee' => 'Һәх',
+	'adss-description' => 'Тәсвир',
+	'adss-amount' => '$$1',
+);
+
+/** Batak Toba (Batak Toba)
+ * @author Aldnonymous
+ */
+$messages['bbc-latn'] = array(
+	'adss-ad-default-text' => 'Sonma klik',
+	'adss-form-page-plan-header' => 'Tuhor tautan tu holan halaman on',
 );
 
 /** Afrikaans (Afrikaans)
@@ -966,8 +1001,10 @@ $messages['eo'] = array(
 
 /** Spanish (Español)
  * @author Absay
+ * @author Bola
  * @author Crazymadlover
  * @author Fitoschido
+ * @author Rodrigo Molinero
  * @author VegaDark
  */
 $messages['es'] = array(
@@ -978,15 +1015,15 @@ $messages['es'] = array(
 	'adss-ad-default-text' => '¡Clic aquí!',
 	'adss-ad-default-desc' => 'Compra un enlace patrocinado y la descripción para tu sitio web en esta página. Date prisa, ¡los pocos lotes de patrocinio se venden rápido!',
 	'adss-form-header' => 'Diseña tu publicidad',
-	'adss-form-url' => 'URL del sitio wed del patrocinio (tu sitio web):',
-	'adss-form-linktext' => 'Texto que deseas mostrar en el enlace:',
-	'adss-form-additionaltext' => 'Texto que se muestra bajo tu enlace:',
+	'adss-form-url' => 'URL de destino',
+	'adss-form-linktext' => 'Título del anuncio',
+	'adss-form-additionaltext' => 'Descripción del anuncio',
 	'adss-form-type' => 'Tipo de patrocinio:',
 	'adss-form-page' => 'Página a patrocinar:',
 	'adss-form-banner' => 'Sube tu publicidad aquí:',
 	'adss-form-price' => 'Cantidad de patrocinio:',
 	'adss-form-shares' => 'Número de acciones',
-	'adss-form-email' => 'Tu dirección de correo electrónico:',
+	'adss-form-email' => 'Tu dirección de correo electrónico',
 	'adss-form-password' => 'Tu contraseña:',
 	'adss-form-login-link' => 'Inicia sesión',
 	'adss-form-login-desc' => '¿Tienes una contraseña? ¡$1 para ahorrar tiempo y comprar la publicidad con un solo clic!',
@@ -1002,11 +1039,13 @@ $messages['es'] = array(
 	'adss-form-pick-plan-errormsg' => 'Debes seleccionar un plan',
 	'adss-form-pick-plan' => 'Escoge tu plan',
 	'adss-form-site-plan-header' => 'Compra un enlace a través de toda la wiki',
-	'adss-form-site-plan-description' => 'Consigue tus enlaces en toda la wiki por un bajo precio.
+	'adss-form-site-plan-header-ribbon' => 'Más barato',
+	'adss-form-site-plan-description' => 'Pon tus enlaces en {{SITENAME}} por un bajo precio.
 
 1 acción equivale actualmente a un $1% de los enlaces patrocinados en {{SITENAME}} y cuestan solamente $2. Puedes cancelarlo en cualquier momento.',
 	'adss-form-site-plan-price' => '$1 por una acción',
 	'adss-form-site-premium-plan-header' => 'Compra 4 enlaces de oferta por el precio de 3',
+	'adss-form-site-premium-plan-header-ribbon' => 'La mejor oferta',
 	'adss-form-site-premium-plan-description' => 'Consigue enlaces de oferta en {{SITENAME}} por un precio bajo y obtiene aún más visibilidad por la compra de más patrocinios.
 
 1 acción actualmente equivale a $1% de enlaces patrocinados en {{SITENAME}}. ¡Con esta opción estás comprando cuatro acciones por el precio de tres! Puedes cancelarlo en cualquier momento.',
@@ -1018,6 +1057,7 @@ $messages['es'] = array(
 	'adss-form-banner-plan-description' => 'Consigue una acción de los anuncios en toda la wiki por un bajo precio.',
 	'adss-form-banner-plan-price' => '$1 por una acción de los anuncios',
 	'adss-form-hub-plan-header' => 'Compra un enlace patrocinado en todos los $1 wikis',
+	'adss-form-hub-plan-header-ribbon' => 'Tráfico Más Alto',
 	'adss-form-hub-plan-description' => 'Obtiene enlaces patrocinados en todos los (más de $2) $1 wikis por un bajo precio.
 
 Esto te permite llegar a más público al mostrar tu anuncio en otros wikis del mismo hub.',
@@ -1034,6 +1074,11 @@ Esto te permite llegar a más público al mostrar tu anuncio en otros wikis del 
 	'adss-form-or' => '- o -',
 	'adss-form-thanks' => 'Has completado la compra. Su anuncio ha sido comprado y dentro de 48 horas entrará en funcionamiento después de activación manual.',
 	'adss-form-buy-another' => '¿Quieres comprar un segundo anuncio ahora? [[Special:AdSS|Clic aquí]]',
+	'adss-form-tooltip-clickurl' => 'Esta es la URL para los usuarios de página específicos que harán click sobre dicha URL.  Puedes usar dicha URL para hallar por medio de bitly o Google Analytics',
+	'adss-form-tooltip-displayurl' => 'Esta URL será mostrada debajo de tu Ad Description',
+	'adss-form-tooltip-adtitle' => 'Crear un título para tu anuncio que sea distintivo, conciso y cautivador.',
+	'adss-form-tooltip-addesc' => 'En la descripción del anuncio es donde puedes explicar el valor de tu producto o servicio. Destaca tus cualidades únicas, ofertas especiales y promociones.',
+	'adss-form-tooltip-email' => 'Este email es nuestra forma de contactar con usted. No será mostrado en el anuncio.',
 	'adss-upsell-header' => 'Oferta especial de una vez',
 	'adss-upsell-text' => '¡Consigue tu primer mes gratis en el anuncio que acabas de comprar!<br />
 ¡Convierte tu anuncio en una suscripción trimestral ahora<br />y paga $$1 en lugar de $$2 (33% de descuento)!',
@@ -1058,6 +1103,7 @@ Esto te permite llegar a más público al mostrar tu anuncio en otros wikis del 
 	'adss-preview-header' => 'Vista previa',
 	'adss-preview-prompt' => 'Aquí está como tu patrocinio se verá - haz click en "Editar" para regresar y hacer cambios, o "Grabar" para guardarlo e ir a PayPal.',
 	'adss-click-here' => 'Clic aquí',
+	'adss-paypal-item-type-site-premium-name' => 'Enlaces patrocinados (mejor valor)',
 	'adss-paypal-redirect' => '$1 si no eres redirigido a PayPal dentro de 5 segundos.',
 	'adss-paypal-error' => 'No ha sido posible realizar el pago a través de PayPal en este momento. Por favor, inténtelo de nuevo más tarde.
 
@@ -1124,6 +1170,8 @@ y te enviaremos la contraseña a tu correo electrónico en un archivo.
 
 -- 
 Equipo de Wikia',
+	'adss-email-us' => 'Envíanos un email a [mailto:sponsoredlinks@wikia-inc.com sponsoredlinks@wikia-inc.com] si requiere más información',
+	'adss-faq' => 'Preguntas más frecuentes',
 );
 
 /** Basque (Euskara)
@@ -1597,6 +1645,7 @@ $messages['gl'] = array(
 	'adss-sponsor-links' => 'Ligazóns patrocinadas en Wikia',
 	'adss-ad-header' => '<h2>Ligazóns externas patrocinadas</h2>',
 	'adss-ad-default-text' => 'Prema aquí!',
+	'adss-ad-default-desc' => 'Merque unha ligazón patrocinada e unha descrición para o seu sitio nesta páxina. Apure, os poucos lotes de patrocinio véndense rápido!',
 	'adss-form-header' => 'Deseñe o seu anuncio',
 	'adss-form-url' => 'URL de clic',
 	'adss-form-linktext' => 'Texto do anuncio',
@@ -1615,27 +1664,57 @@ $messages['gl'] = array(
 	'adss-form-usd-per-month' => '$1 dólar estadounidense ao mes',
 	'adss-form-usd-per-quarter' => '$1$ por trimestre',
 	'adss-form-usd-per-year' => '$$1 ao ano',
+	'adss-form-auth-errormsg' => 'Ou ben o seu enderezo de correo electrónico ou ben o contrasinal é incorrecto.',
 	'adss-form-field-empty-errormsg' => 'Este campo non pode estar baleiro',
 	'adss-form-non-existent-title-errormsg' => 'Esta páxina non existe',
 	'adss-form-banner-upload-errormsg' => 'Cómpre seleccionar unha imaxe para cargar',
 	'adss-form-pick-plan-errormsg' => 'Ten que seleccionar un plan',
 	'adss-form-pick-plan' => 'Escolla un paquete de anuncios',
 	'adss-form-site-plan-header' => 'Comprar unha ligazón en todo o wiki',
+	'adss-form-site-plan-header-ribbon' => 'O máis barato',
+	'adss-form-site-plan-description' => '* Obteña ligazóns patrocinadas en {{SITENAME}} a baixo prezo.
+
+* Actualmente unha acción é igual ao $1% das ligazóns patrocinadas de {{SITENAME}} e custa só $2. Pode cancelar en calquera momento.',
 	'adss-form-site-plan-price' => '$1 por unha acción',
+	'adss-form-site-premium-plan-header' => 'Merque 4 ligazóns patrocinadas polo prezo de 3',
+	'adss-form-site-premium-plan-header-ribbon' => 'O mellor prezo',
+	'adss-form-site-premium-plan-description' => '* Obteña ligazóns patrocinadas en {{SITENAME}} e consiga aínda máis visibilidade mercando a granel.
+
+* Actualmente unha acción é igual ao $1% das ligazóns patrocinadas de {{SITENAME}}. Con esta opción está comprando catro accións polo prezo de tres! Pode cancelar en calquera momento.',
 	'adss-form-site-premium-plan-price' => 'Só $1 por catro accións!',
 	'adss-form-page-plan-header' => 'Comprar unha ligazón soamente nunha páxina',
+	'adss-form-page-plan-description' => 'Isto permite incluír unha mensaxe personalizada na mellor páxina para o seu produto por só $1; pode cancelar en calquera momento.',
 	'adss-form-page-plan-price' => '1 ligazón custa $1',
+	'adss-form-banner-plan-header' => 'Merque unha acción dos carteis de 728x90 da parte superior do wiki',
+	'adss-form-banner-plan-description' => 'Obteña unha acción dos carteis que aparecen por todo o sitio a baixo prezo.',
+	'adss-form-banner-plan-price' => '$1 por unha acción dos carteis',
 	'adss-form-hub-plan-header' => 'Comprar unha ligazón patrocinada no conxunto de $1 wikis',
+	'adss-form-hub-plan-header-ribbon' => 'O maior tráfico',
+	'adss-form-hub-plan-description' => '* Obteña ligazóns patrocinadas no conxuntos dos wikis $1 (máis de $2) a baixo prezo.
+
+* Isto permite chegar a unha maior audiencia mostrando o seu anuncio noutros sitios da mesma temática.',
 	'adss-form-hub-plan-price' => '$1 por unha acción',
 	'adss-form-reviews-page-year-plan-header' => 'Patrocinio anual',
+	'adss-form-reviews-page-year-plan-description' => 'Pode mercar unha ligazón<br />desde esta análise de actividades<br />para a súa empresa',
 	'adss-form-reviews-page-year-plan-price' => 'Aforre máis: por $1',
 	'adss-form-reviews-page-month-plan-header' => 'Patrocinio mensual',
+	'adss-form-reviews-page-month-plan-description' => 'Pode mercar unha ligazón<br />desde esta análise de actividades<br />para a súa empresa',
 	'adss-form-reviews-page-month-plan-price' => 'Aforre un 50%: por $1',
 	'adss-form-reviews-page-day-plan-header' => 'Patrocinar esta empresa',
+	'adss-form-reviews-page-day-plan-description' => 'Pode mercar unha ligazón<br />desde esta análise de actividades<br />para a súa empresa',
 	'adss-form-reviews-page-day-plan-price' => 'Por só $1',
 	'adss-form-or' => '- ou -',
 	'adss-form-thanks' => 'Finalizou a súa compra. O seu anuncio comezará a aparecer despois da aprobación (nas vindeiras 48 horas, a miúdo menos).',
+	'adss-form-buy-another' => 'Quere mercar un segundo anuncio agora? [[Special:AdSS|Prema aquí]]',
+	'adss-form-tooltip-clickurl' => 'Este é o enderezo URL ata o que chegarán os usuarios que preman no cartel. Pode empregar este enderezo para facer o seguimento a través do bitly ou do Google Analytics.',
+	'adss-form-tooltip-displayurl' => 'Este enderezo URL aparecerá debaixo da descrición do seu anuncio.',
+	'adss-form-tooltip-adtitle' => 'Cree un título distinto, conciso e cativador para o seu anuncio.',
+	'adss-form-tooltip-addesc' => 'A descrición do anuncio é onde explica o valor do seu produto ou servizo. Destaque as súas calidades únicas, ofertas especiais e promocións.',
+	'adss-form-tooltip-email' => 'Este enderezo de correo electrónico é o noso punto de contacto con vostede. Non se mostrará no anuncio.',
+	'adss-form-modal-title' => 'Indo ao PayPal para facer a compra',
 	'adss-upsell-header' => 'Oferta especial limitada',
+	'adss-upsell-text' => 'Consiga o seu primeiro mes gratis no anuncio que acaba de mercar!<br />
+Convirta o seu anuncio nunha subscrición trimestral agora<br />e pague $$1 en lugar de $$2 (33% de desconto)!',
 	'adss-upsell-yes' => 'Si, quero!',
 	'adss-upsell-no' => 'Non, grazas',
 	'adss-upsell-thanks' => 'Grazas por elixir a oferta!',
@@ -1653,9 +1732,20 @@ $messages['gl'] = array(
 	'adss-button-yes' => 'Si',
 	'adss-button-no' => 'Non',
 	'adss-buy-another' => 'Mercar outro anuncio!',
+	'adss-edit-thanks' => 'Gardáronse os cambios no seu anuncio e serán efectivos despois da aprobación manual (nas vindeiras 48 horas).',
 	'adss-preview-header' => 'Vista previa',
 	'adss-preview-prompt' => 'Así aparecerá o seu patrocinio; prema sobre "Editar" para volver e facer algún cambio ou sobre "Gardar" para deixalo como esta e ir ao PayPal.',
 	'adss-click-here' => 'Prema aquí',
+	'adss-paypal-item-type-site-name' => 'Ligazóns patrocinadas (o máis barato)',
+	'adss-paypal-item-type-site-premium-name' => 'Ligazóns patrocinadas (o mellor prezo)',
+	'adss-paypal-item-type-hub-name' => 'Ligazóns patrocinadas (o maior tráfico)',
+	'adss-paypal-redirect' => '$1 se non é redirixido ao PayPal en 5 segundos.',
+	'adss-paypal-error' => 'Foi imposible realizar o pagamento ao PayPal nestes intres. Inténteo de novo máis tarde.
+
+Volver a [[Special:AdSS|{{int:Adss}}]].',
+	'adss-error' => 'Houbo un erro. Inténteo de novo máis tarde.
+
+Volver a [[Special:AdSS|{{int:Adss}}]].',
 	'adss-per-site' => 'Todas as páxinas',
 	'adss-per-hub' => 'Centro de actividade',
 	'adss-per-page' => 'Unha soa páxina',
@@ -1682,7 +1772,11 @@ $messages['gl'] = array(
 	'adss-created' => 'Creado',
 	'adss-your-balance' => 'Saldo debido:',
 	'adss-your-billing-agreement' => 'Acordo de facturación do PayPal:',
+	'adss-no-billing-agreement' => 'Non hai ningún acordo do PayPal válido. Volva crear o seu acordo de facturación para manter os seus anuncios.',
 	'adss-create-billing-agreement' => 'Crear un acordo de facturación',
+	'adss-cancel-billing-agreement-confirmation' => 'Está seguro de querer cancelar o seu acordo de facturación? Os seus anuncios deixarán de funcionar sen un acordo de facturación do PayPal válido.',
+	'adss-billing-agreement-created' => 'O acordo de facturación creouse correctamente (BAID=$1). Volver [[Special:AdSS/manager/billing|ao taboleiro]].',
+	'adss-billing-agreement-canceled' => 'O acordo de facturación cancelouse correctamente. Volver [[Special:AdSS/manager/billing|ao taboleiro]].',
 	'adss-paypal-payment' => 'Pagamento PayPal',
 	'adss-adss-fee' => 'Taxas de AdSS',
 	'adss-adss-refund' => 'Reembolso de AdSS',
@@ -1693,7 +1787,26 @@ $messages['gl'] = array(
 	'adss-amount' => '$1$',
 	'adss-cancel-confirmation' => 'Está seguro de querer borrar este anuncio?',
 	'adss-welcome-subject' => '[AdSS] Grazas polo seu patrocinio!',
+	'adss-welcome-body' => 'Ola:
+
+Parabéns, a súa conta está configurada e os seus anuncios empezarán a
+aparecer nas vindeiras 48 horas. Pode acceder usando os detalles presentados
+a continuación para comprobar o texto dos seus anuncios, mercar anuncios
+adicionais ou revisar a súa factura. As facturas de Wikia envíanse a través
+do PayPal cada vez que gaste $$4 ou máis.
+
+URL: $1
+Nome de usuario: $2
+Contrasinal: $3
+
+Garde o seu contrasinal nun lugar seguro. Se o perde, pode poñerse en
+contacto co servizo ao cliente en: http://www.wikia.com/wiki/Special:Contact
+e enviarémoslle o contrasinal ao seu enderezo de correo nun ficheiro.
+
+--
+O equipo de Wikia',
 	'adss-more-information' => 'Máis información',
+	'adss-email-us' => 'Envíenos un correo electrónico a [mailto:sponsoredlinks@wikia-inc.com sponsoredlinks@wikia-inc.com] se necesita máis información.',
 	'adss-faq' => 'Preguntas máis frecuentes',
 );
 
@@ -1967,6 +2080,66 @@ Le equipa de Wikia',
 	'adss-faq' => 'Folio a questiones',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Aldnonymous
+ */
+$messages['id'] = array(
+	'adss-desc' => 'Iklan Swalayan',
+	'adss' => 'IklanSS',
+	'adss-sponsor-links' => 'Link-link yang disponsori di Wikia',
+	'adss-ad-header' => '<h2>External sponsor links</h2>',
+	'adss-ad-default-text' => 'Klik di sini!',
+	'adss-ad-default-desc' => 'Beli tautan bersponsor dan deskripsi untuk website anda di halaman ini. Bergegaslah, beberapa sponsor menjual cepat!',
+	'adss-form-header' => 'Buat iklan Anda',
+	'adss-form-url' => 'Rasio Klik per tayang URL',
+	'adss-form-linktext' => 'Judul Iklan',
+	'adss-form-additionaltext' => 'Deskripsi Iklan',
+	'adss-form-type' => 'Jenis sponsor',
+	'adss-form-page' => 'Halaman ke sponsor:',
+	'adss-form-banner' => 'Upload banner Anda di sini:',
+	'adss-form-price' => 'Jumlah sponsor:',
+	'adss-form-shares' => 'Jumlah saham:',
+	'adss-form-email' => 'Alamat e-mail Anda',
+	'adss-form-password' => 'Kata sandi Anda:',
+	'adss-form-login-link' => 'Masuk',
+	'adss-form-login-desc' => 'Punya kata sandi? $1 untuk menghemat waktu Anda dan membeli iklan dengan hanya satu klik!',
+	'adss-form-usd-per-day' => '$$1 per hari',
+	'adss-form-usd-per-week' => '$$1 per minggu',
+	'adss-form-usd-per-month' => '$$1 per bulan',
+	'adss-form-usd-per-quarter' => '$$1  per tiga bulan',
+	'adss-form-usd-per-year' => '$$1 per tahun',
+	'adss-form-auth-errormsg' => 'Salah satu dari e-mail atau kata sandi anda salah',
+	'adss-form-field-empty-errormsg' => 'Bagian ini tidak boleh kosong',
+	'adss-form-non-existent-title-errormsg' => 'Halaman ini tidak ada',
+	'adss-form-banner-upload-errormsg' => 'Anda harus memilih sebuah gambar untuk diunggah',
+	'adss-form-pick-plan-errormsg' => 'Anda harus memilih rancangan',
+	'adss-form-pick-plan' => 'Pilih paket iklan',
+	'adss-form-site-plan-header' => 'Membeli Link yang disponsori di seluruh wiki',
+	'adss-form-site-plan-header-ribbon' => 'Termurah',
+	'adss-form-site-plan-description' => ' *Dapatkan tautan yang disponsori di {{SITENAME}} untuk satu harga rendah.
+
+ * 1 saham saat ini sama dengan  $1 % tautan yang di sponsori {{SITENAME}} dengan hanya seharga  $2 . Anda dapat membatalkannya setiap saat.',
+	'adss-form-site-plan-price' => '$1 untuk untuk satu saham',
+	'adss-form-site-premium-plan-header' => 'Membeli 4 tautan yang disponsori dengan harga 3',
+	'adss-form-site-premium-plan-header-ribbon' => 'harga terbaik',
+	'adss-form-site-premium-plan-description' => '* Dapatkan tautan Sponsor  pada {{SITENAME}} dan dapatkan eksposur yang lebih dengan membeli dalam jumlah besar! N! N! 
+
+*! 1 saham saat ini sama dengan $1 % tautan yang di sponsori oleh{{SITENAME}}. Dengan opsi ini Anda membeli empat saham pada harga tiga! Anda dapat membatalkan kapan saja.',
+	'adss-form-site-premium-plan-price' => 'Hanya $1 untuk empat saham!',
+	'adss-form-page-plan-header' => 'Beli tautan hanya pada satu halaman',
+	'adss-form-page-plan-description' => 'Hal ini memungkinkan Anda menargetkan pesan khusus ke halaman terbaik untuk produk Anda dengan hanya $1 , dan Anda dapat membatalkannya kapan saja.',
+	'adss-form-page-plan-price' => '$1 untuk satu tautan',
+	'adss-form-banner-plan-header' => 'Beli saham dari spanduk grafis 728x90 di bagian atas wiki',
+	'adss-form-banner-plan-description' => 'Mendapatkan saham dari banner berjalan di situs untuk harga rendah.',
+	'adss-form-banner-plan-price' => '$1 untuk satu saham dari spanduk',
+	'adss-form-hub-plan-header' => 'Beli link yang di sponsori di seluruh $1 wiki',
+	'adss-form-hub-plan-header-ribbon' => 'Lalu Lintas Tertinggi',
+	'adss-form-hub-plan-price' => '$1 untuk satu saham',
+	'adss-form-reviews-page-year-plan-header' => 'Tahunan sponsor',
+	'adss-form-thanks' => 'Anda menyelesaikan pembelian Anda.  Iklan Anda muncul setelah disetujui (dalam waktu 48 jam, biasanya kurang).',
+	'adss-form-buy-another' => 'Ingin membeli iklan ke 2 sekarang?  [[Special:AdSS|Click here]]',
+);
+
 /** Igbo (Igbo)
  * @author Ukabia
  */
@@ -2135,8 +2308,10 @@ Jangk retuur noh [[Special:AdSS|{{int:Adss}}]].',
 
 /** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
+ * @author Gomada
  */
 $messages['ku-latn'] = array(
+	'adss-ad-default-text' => 'Vir bitikîne!',
 	'adss-form-password' => 'Şîfreya te:',
 	'adss-form-usd-per-day' => 'rojê $$1',
 	'adss-form-usd-per-week' => 'hefteyê $$1',
@@ -2157,6 +2332,7 @@ $messages['ku-latn'] = array(
 	'adss-per-site' => 'Hêmû rûpel',
 	'adss-close' => 'Bigre',
 	'adss-cancel' => 'Betal bike',
+	'adss-no-permission' => 'Destûr nîne',
 	'adss-canceled' => 'Hate betalkirin',
 );
 
@@ -2763,7 +2939,7 @@ wachtwoord toe op het bij ons geregistreerd staande e-mailadres.
 Het Wikia-team',
 	'adss-more-information' => 'Meer informatie',
 	'adss-email-us' => 'E-mail ons op [mailto:sponsoredlinks@wikia-inc.com sponsoredlinks@wikia-inc.com] als u meer informatie wilt.',
-	'adss-faq' => 'Veelgestelde vragen',
+	'adss-faq' => 'Veel gestelde vragen',
 );
 
 /** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
@@ -3087,16 +3263,19 @@ Torné a [[Special:AdSS|{{int:Adss}}]].",
  */
 $messages['ps'] = array(
 	'adss-ad-default-text' => 'دلته وټوکۍ!',
-	'adss-form-email' => 'ستاسې برېښليک پته:',
+	'adss-form-email' => 'ستاسې برېښليک پته',
 	'adss-form-password' => 'ستاسې پټنوم:',
 	'adss-form-login-link' => 'ننوتل',
 	'adss-form-usd-per-day' => '$$1 په هرې ورځ کې',
 	'adss-form-usd-per-week' => '$$1 په هرې مياشت کې',
 	'adss-form-non-existent-title-errormsg' => 'پدې نوم مخ نشته!',
+	'adss-upsell-yes' => 'هو، زه يې غواړم!',
+	'adss-upsell-no' => 'نه، مننه',
 	'adss-button-preview' => 'مخليدنه',
 	'adss-button-edit' => 'سمول',
 	'adss-button-login' => 'ننوتل',
 	'adss-button-select' => 'ټاکل',
+	'adss-button-buy-now' => 'همدا اوس پېرل',
 	'adss-button-save' => 'خوندي کول',
 	'adss-button-cancel' => 'ناګارل',
 	'adss-button-yes' => 'هو',
@@ -3114,6 +3293,8 @@ $messages['ps'] = array(
 	'adss-ad' => 'خبرتيا',
 	'adss-status' => 'دريځ',
 	'adss-created' => 'جوړ شو',
+	'adss-timestamp' => 'وخت ټاپه',
+	'adss-more-information' => 'نور مالومات',
 );
 
 /** Portuguese (Português)
@@ -3551,7 +3732,10 @@ $messages['roa-tara'] = array(
 );
 
 /** Russian (Русский)
+ * @author Adata80
+ * @author DCamer
  * @author Eleferen
+ * @author Engineering
  * @author Exlex
  * @author Kuzura
  * @author Lvova
@@ -3565,15 +3749,15 @@ $messages['ru'] = array(
 	'adss-ad-default-text' => 'Щелкните здесь!',
 	'adss-ad-default-desc' => 'Купите спонсорскую ссылку и опишите ваш сайт на этой странице. Действуйте быстро, потому что несколько спонсорских слотов продаются очень быстро!',
 	'adss-form-header' => 'Дизайн вашего объявления',
-	'adss-form-url' => 'Адрес веб-сайта спонсора (ваш веб-сайт):',
-	'adss-form-linktext' => 'Текст, который будет отображаться в ссылке:',
-	'adss-form-additionaltext' => 'Текст, который будет отображаться под вашей ссылкой:',
+	'adss-form-url' => 'Ссылка для перехода',
+	'adss-form-linktext' => 'Название объявление',
+	'adss-form-additionaltext' => 'Описание объявления',
 	'adss-form-type' => 'Вид спонсорства:',
 	'adss-form-page' => 'Страница, которую вы желаете спонсировать:',
-	'adss-form-banner' => 'Ваш баннер:',
+	'adss-form-banner' => 'Добавить баннер:',
 	'adss-form-price' => 'Сумма спонсорского взноса:',
 	'adss-form-shares' => 'Количество акций:',
-	'adss-form-email' => 'Ваш адрес электронной почты:',
+	'adss-form-email' => 'Ваш адрес электронной почты',
 	'adss-form-password' => 'Ваш пароль:',
 	'adss-form-login-link' => 'Представьтесь',
 	'adss-form-login-desc' => 'Имеете пароль? $1, чтобы сэкономить ваше время и купить объявление всего за один клик!',
@@ -3587,28 +3771,50 @@ $messages['ru'] = array(
 	'adss-form-non-existent-title-errormsg' => 'Этой страницы не существует',
 	'adss-form-banner-upload-errormsg' => 'Вы должны выбрать изображение для загрузки',
 	'adss-form-pick-plan-errormsg' => 'Вы должны выбрать план!',
-	'adss-form-pick-plan' => 'Выберите ваш план',
+	'adss-form-pick-plan' => 'Выберите пакет объявлений',
 	'adss-form-site-plan-header' => 'Купите перекрёстную ссылку через всю вики',
-	'adss-form-site-plan-description' => 'Получите ссылки работающие на всей вики по единой низкой цене. 
+	'adss-form-site-plan-header-ribbon' => 'Самый дешевый',
+	'adss-form-site-plan-description' => '* Получите спонсорские ссылки на {{SITENAME}} по единой низкой цене. 
 
-1 акция равна $1% спонсорских ссылок {{SITENAME}} и стоит всего $2. Вы в любое время можете отменить это.',
+* 1 акция равна $1% спонсорских ссылок {{SITENAME}} и стоит всего $2. Вы в любое время можете отменить это.',
 	'adss-form-site-plan-price' => '$1 за одну акцию',
-	'adss-form-site-premium-plan-header' => 'Купите перекрёстную премиум-ссылку через всю вики',
+	'adss-form-site-premium-plan-header' => 'Купите 4 спонсорские ссылки по цене 3',
 	'adss-form-site-premium-plan-header-ribbon' => 'Лучшее значение',
-	'adss-form-site-premium-plan-description' => 'Получите ссылки работающие на всей вики по единой низкой цене и получите ещё большую выдержку, покупая больше акций. 
+	'adss-form-site-premium-plan-description' => '* Получите спонсорские ссылки на {{SITENAME}} и получите ещё большую выдержку, покупая больше акций. 
 
-1 акция равна $1% рекламных ссылок {{SITENAME}}. С помощью этой опции вы покупаете четыре акции по цене трех! Вы в любое время можете отменить это.',
+* 1 акция равна $1% рекламных ссылок {{SITENAME}}. С помощью этой опции вы покупаете четыре акции по цене трех! Вы в любое время можете отменить это.',
 	'adss-form-site-premium-plan-price' => 'Только $1 за четыре акции!',
-	'adss-form-page-plan-header' => 'Покупайте ссылки только на этой странице',
+	'adss-form-page-plan-header' => 'Купить ссылку на одну страницу',
 	'adss-form-page-plan-description' => 'Это даст вам специальное сообщение на лучших страницах, для вашего продукта всего за $1, и вы в любое время можете отменить это.',
 	'adss-form-page-plan-price' => '$1 за одну ссылку',
-	'adss-form-banner-plan-header' => 'Купите баннер в верхней части каждой страницы',
-	'adss-form-banner-plan-price' => '$1 за один баннер',
+	'adss-form-banner-plan-header' => 'Купить акцию от баннера размером 728x90 в верхней части вики',
+	'adss-form-banner-plan-description' => 'Получите акции от баннеров, на всём сайта по единой низкой цене.',
+	'adss-form-banner-plan-price' => '$1 за одну акцию от баннера',
 	'adss-form-hub-plan-header' => 'Купить рекламную ссылку для всех $1 вики',
-	'adss-form-or' => '- или -',
-	'adss-form-thanks' => 'Благодарим за спонсорскую помощь! Ваше объявление было принято и будет пущено в ротацию после ручной проверки (в течении 48 часов).
+	'adss-form-hub-plan-header-ribbon' => 'Высокий трафик',
+	'adss-form-hub-plan-description' => '* Получить спонсорские ссылки для всех (более  $2) $1 вики по единой низкой цене.
 
-Перейти и [[Special:AdSS|купить]] другую рекламу!',
+ * Позволяет собрать большую аудиторию, показывая ваше объявление на других вики в том же концентраторе.',
+	'adss-form-hub-plan-price' => '$1 за одну акцию',
+	'adss-form-reviews-page-year-plan-header' => 'Ежегодное спонсорство',
+	'adss-form-reviews-page-year-plan-description' => 'Вы можете купить ссылки<br />из этого обзора<br />для вашего бизнеса',
+	'adss-form-reviews-page-year-plan-price' => 'Сэкономьте больше: за $1',
+	'adss-form-reviews-page-month-plan-header' => 'Ежемесячное спонсорство',
+	'adss-form-reviews-page-month-plan-description' => 'Вы можете купить ссылки<br />из этого обзора<br />для вашего бизнеса',
+	'adss-form-reviews-page-month-plan-price' => 'Сэкономьте 50%: за $1',
+	'adss-form-reviews-page-day-plan-header' => 'Спонсор этого бизнеса',
+	'adss-form-reviews-page-day-plan-description' => 'Вы можете купить ссылки<br />из этого обзора<br />для вашего бизнеса',
+	'adss-form-reviews-page-day-plan-price' => 'Только для $1',
+	'adss-form-or' => '- или -',
+	'adss-form-thanks' => 'Вам завершили свою покупку! Ваше объявление будет скоро принято (в течение 48 часов, обычно меньше).',
+	'adss-form-buy-another' => 'Хотите приобрести 2 объявления?  [[Special:AdSS|Нажмите здесь]].',
+	'adss-form-tooltip-clickurl' => 'Это URL-адрес конкретной страницы, по которой пользователи будут проходить. Можно использовать данный URL-адрес для отслеживания через bitly или Google Analytics.',
+	'adss-form-tooltip-displayurl' => 'Этот URL-адрес будет отображаться под описанием вашего объявления.',
+	'adss-form-tooltip-adtitle' => 'Создайте заголовок для вашего объявления — внятный, сжатый и увлекательный.',
+	'adss-form-tooltip-addesc' => 'Описание объявления, здесь вы можете объяснить значение вашего продукта или услуги. Выделите уникальные качества, специальные предложения и акции.',
+	'adss-form-tooltip-email' => 'Этот адрес электронной почты является нашей точкой контакта с вами. Он не будет отображаться в объявлении.',
+	'adss-upsell-yes' => 'Да, я хочу это!',
+	'adss-upsell-no' => 'Нет, спасибо',
 	'adss-button-preview' => 'Предпросмотр',
 	'adss-button-edit' => 'Править',
 	'adss-button-login' => 'Войти',
@@ -3657,8 +3863,11 @@ $messages['ru'] = array(
 	'adss-paypal-payment' => 'Платёж PayPal',
 	'adss-adss-fee' => 'Оплата AdSS',
 	'adss-fee' => 'Оплата',
+	'adss-paid' => 'Оплачено',
 	'adss-timestamp' => 'Дата/время',
 	'adss-description' => 'Описание',
+	'adss-more-information' => 'Больше информации',
+	'adss-faq' => 'Часто задаваемые вопросы',
 );
 
 /** Sinhala (සිංහල)
@@ -3745,22 +3954,38 @@ $messages['sv'] = array(
 	'adss-form-site-plan-price' => '$1 för en aktie',
 	'adss-form-site-premium-plan-header' => 'Köp 4 Sponsrade Länkar till priset av 3',
 	'adss-form-site-premium-plan-header-ribbon' => 'Bästa värde',
-	'adss-form-site-premium-plan-description' => 'Få Sponsrade Länkar på {{SITENAME}} och få ännu mer exponering genom att köpa i stora partier.
+	'adss-form-site-premium-plan-description' => '* Få sponsrade länkar på {{SITENAME}} och få ännu mer exponering genom att köpa i stora partier.
 
-1 aktie är för närvarande lika med $1% av {{SITENAME}} sponsrade länkar. Med det här alternativet kan du köpa fyra aktier till priset av tre! Du kan avbryta när som helst.',
+* En aktie är för närvarande lika med $1 % av {{SITENAME}}s sponsrade länkar. Med det här alternativet kan du köpa fyra aktier till priset av tre! Du kan avbryta när som helst.',
 	'adss-form-site-premium-plan-price' => 'Endast $1 för fyra aktier!',
 	'adss-form-page-plan-header' => 'Köp en länk på en enda sida',
 	'adss-form-page-plan-price' => '$1 för en länk',
+	'adss-form-banner-plan-price' => '$1 för en aktie i banners',
 	'adss-form-hub-plan-header' => 'Köp en sponsrad länk över alla $1-wikis',
+	'adss-form-hub-plan-header-ribbon' => 'Högst trafik',
+	'adss-form-hub-plan-description' => '* Få sponsrade länkar på alla (över $2) $1 wikis för ett lågt pris.
+
+* Detta låter dig nå en större publik genom att visa din annons på andra wikis i samma hub.',
 	'adss-form-hub-plan-price' => '$1 för en aktie',
+	'adss-form-reviews-page-year-plan-header' => 'Årlig sponsring',
+	'adss-form-reviews-page-year-plan-description' => 'Du kan köpa en länk<br />från denna branschgranskning<br />till din bransch',
 	'adss-form-reviews-page-year-plan-price' => 'Spara mer: för $1',
+	'adss-form-reviews-page-month-plan-header' => 'Månatlig sponsring',
+	'adss-form-reviews-page-month-plan-description' => 'Du kan köpa en länk<br />från denna branschgranskning<br />till din bransch',
 	'adss-form-reviews-page-month-plan-price' => 'Spara 50 %: för $1',
 	'adss-form-reviews-page-day-plan-header' => 'Sponsra denna verksamhet',
+	'adss-form-reviews-page-day-plan-description' => 'Du kan köpa en länk<br />från denna branschgranskning<br />till din bransch',
 	'adss-form-reviews-page-day-plan-price' => 'För endast $1',
 	'adss-form-or' => '- eller -',
 	'adss-form-thanks' => 'Du har slutfört ditt köp! Din annons kommer att släppas live efter ett manuellt godkännande (inom 48 timmar, vanligtvis mindre).',
 	'adss-form-buy-another' => 'Vill du köpa en andra annons nu? [[Special:AdSS|Klicka här]]',
 	'adss-form-tooltip-displayurl' => 'Denna URL kommer att visas under din annonsbeskrivning.',
+	'adss-form-tooltip-adtitle' => 'Skapa en rubrik för din annons som är tydlig, kortfattad och fängslande.',
+	'adss-form-tooltip-email' => 'Denna e-postadress är vår kontaktpunkt med dig. Den kommer inte att visas i annonsen.',
+	'adss-form-modal-title' => 'Går till PayPal för att betala ut',
+	'adss-upsell-header' => 'Speciellt engångserbjudande',
+	'adss-upsell-text' => 'Få din första månad gratis på den annons som du precis har köpt!<br />
+Konvertera din annons till en kvartalsvis prenumeration nu<br />och betala $$1 istället för $$2 (33 % rabatt)!',
 	'adss-upsell-yes' => 'Ja, jag vill det!',
 	'adss-upsell-no' => 'Nej tack',
 	'adss-upsell-thanks' => 'Tack för att du valde erbjudandet!',
@@ -3783,6 +4008,7 @@ $messages['sv'] = array(
 	'adss-preview-prompt' => 'Här är hur din sponsring kommer att se ut - klicka på "{{int:adss-button-edit}}" för att gå tillbaka och göra ändringar, eller "{{int:adss-button-save-pay}}" för att spara den och gå till PayPal.',
 	'adss-click-here' => 'Klicka här',
 	'adss-paypal-item-type-site-name' => 'Sponsrade länkar (billigaste)',
+	'adss-paypal-item-type-site-premium-name' => 'Sponsrade länkar (Bästa värde)',
 	'adss-paypal-item-type-hub-name' => 'Sponsrade länkar (högst trafik)',
 	'adss-paypal-redirect' => '$1 om du inte omdirigeras till PayPal inom 5 sekunder.',
 	'adss-paypal-error' => 'Kunde inte skapa PayPal betalning den här gången. Försök igen senare. 

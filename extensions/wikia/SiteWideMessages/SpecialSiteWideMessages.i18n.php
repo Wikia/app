@@ -1126,9 +1126,17 @@ $messages['ia'] = array(
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author Aldnonymous
  * @author Irwangatot
  */
 $messages['id'] = array(
+	'sitewidemessages' => 'Pesan umum situs',
+	'swm-page-title-editor' => 'Pesan umum situs :: Editor',
+	'swm-page-title-preview' => 'Pesan umum situs :: Pratinjau',
+	'swm-page-title-send' => 'Pesan umum situs :: Kirim',
+	'swm-page-title-sent' => 'Pesan umum situs :: Terkirim',
+	'swm-page-title-dismiss' => 'Pesan umum situs :: Singkirkan',
+	'swm-page-title-list' => 'Pesan umum situs :: Daftar',
 	'swm-label-preview' => 'Pratayang',
 	'swm-label-edit' => 'Sunting',
 	'swm-label-remove' => 'Hapus',
@@ -1140,17 +1148,21 @@ $messages['id'] = array(
 	'swm-label-expiration' => 'Waktu kedaluwarsa',
 	'swm-label-mode-wikis-all' => 'Semua wiki',
 	'swm-label-mode-wikis-hub' => 'Hub Dipilih',
+	'swm-label-mode-wikis-cluster' => 'Gugus terpilih',
 	'swm-label-mode-wikis-wiki' => 'Wiki dipilih',
 	'swm-label-mode-users-all' => 'Semua pengguna',
 	'swm-label-mode-users-active' => 'Pengguna aktif',
 	'swm-label-mode-users-group' => 'Pengguna bagian dari kelompok',
+	'swm-label-mode-users-group-hint' => '<i> Memilih grup dari drop down atau tulis tangan secara manual untuk menulis ulang pilihan drop down></i>',
 	'swm-label-mode-users-user' => 'Pengguna terpilih',
+	'swm-label-mode-users-user-hint' => '<i>Pilihan ini mengabaikan pilihan di dalam kelompok "Wiki".</i>',
 	'swm-label-content' => 'Isi',
 	'swm-label-comment' => 'Komentar',
 	'swm-label-dismissed' => 'Dikeluarkan',
 	'swm-label-language' => 'Bahasa',
 	'swm-button-lang-checkall' => '[ Pilih semua ]',
 	'swm-button-lang-checknone' => '[ Tidak dimilih ]',
+	'swm-taskmanager-hint' => '<i>Perhatikan bahwa beberapa opsi yang memakan lebih banyak waktu dan akan menambah daftar antri di TaskManager.</i>',
 	'swm-button-preview' => '[ Pratayang ]',
 	'swm-button-send' => '[ Kirim ]',
 	'swm-button-save' => '[ Simpan ]',
@@ -1161,10 +1173,27 @@ $messages['id'] = array(
 	'swm-days' => 'tak pernah, jam, jam, hari, hari',
 	'swm-expire-info' => 'Pesan ini akan berakhir pada $1.',
 	'swm-link-dismiss' => 'abaikan pesan ini',
+	'swm-dismiss-content' => '<p>Pesan disingkirkan.</p><p>%s</p>',
 	'swm-list-no-messages' => 'Tidak ada pesan.',
 	'swm-list-table-id' => 'ID',
 	'swm-list-table-sender' => 'Pengirim',
 	'swm-list-table-wiki' => 'Wiki',
+	'swm-list-table-recipient' => 'Penerima',
+	'swm-list-table-group' => 'Grup',
+	'swm-list-table-expire' => 'Berakhir',
+	'swm-list-table-date' => 'Tanggal dikirim',
+	'swm-list-table-removed' => 'Dihapus',
+	'swm-list-table-content' => 'Konten',
+	'swm-list-table-tools' => 'Alat-alat',
+	'swm-list-table-lang' => 'Bahasa',
+	'swm-yes' => 'Ya',
+	'swm-no' => 'Tidak',
+	'swm-error-no-such-wiki' => 'Wiki yang dicari tidak ada!',
+	'swm-error-no-such-user' => 'Pengguna yang dimaksud tidak ditemukan',
+	'swm-error-empty-message' => 'Masukkan isi pesan.',
+	'swm-error-long-message' => 'Pesan terbatas untuk 500 karakter.',
+	'swm-error-empty-group' => 'Masukkan nama grup.',
+	'swm-lang-other' => 'semua bahasa yang tersisa',
 );
 
 /** Igbo (Igbo)
@@ -1772,6 +1801,7 @@ $messages['ps'] = array(
 	'swm-label-mode-users-all' => 'ټول کارنان',
 	'swm-label-mode-users-active' => 'فعاله کارنان',
 	'swm-label-mode-users-user' => 'ټاکلی کارن',
+	'swm-label-content' => 'منځپانګه',
 	'swm-label-comment' => 'تبصره',
 	'swm-label-language' => 'ژبه',
 	'swm-button-preview' => '[ مخليدنه]',
@@ -1950,6 +1980,7 @@ $messages['ro'] = array(
 );
 
 /** Russian (Русский)
+ * @author Eleferen
  * @author Lockal
  * @author Александр Сигачёв
  */
@@ -1972,6 +2003,7 @@ $messages['ru'] = array(
 	'swm-label-expiration' => 'Время истечения',
 	'swm-label-mode-wikis-all' => 'Все вики',
 	'swm-label-mode-wikis-hub' => 'Выбранный хаб',
+	'swm-label-mode-wikis-cluster' => 'Выбранный кластер',
 	'swm-label-mode-wikis-wiki' => 'Выбранная вики',
 	'swm-label-mode-users-all' => 'Все участники',
 	'swm-label-mode-users-active' => 'Активные участники',
@@ -2029,6 +2061,7 @@ $messages['sl'] = array(
 );
 
 /** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Nikola Smolenski
  * @author Rancher
  * @author Verlor
  */
@@ -2039,7 +2072,7 @@ $messages['sr-ec'] = array(
 	'swm-label-sent' => 'Пошаљи',
 	'swm-label-list' => 'Списак',
 	'swm-label-recipient' => 'Примаоци',
-	'swm-label-recipient-wikis' => 'Викије',
+	'swm-label-recipient-wikis' => 'Викији',
 	'swm-label-recipient-users' => 'Корисници',
 	'swm-label-expiration' => 'Време истека',
 	'swm-label-mode-wikis-all' => 'Све викије',
@@ -2105,7 +2138,7 @@ $messages['sv'] = array(
 	'swm-label-mode-users-all' => 'Alla användare',
 	'swm-label-mode-users-active' => 'Aktiva användare',
 	'swm-label-mode-users-group' => 'Användare som tillhör gruppen',
-	'swm-label-mode-users-group-hint' => '<i>Välj en grupp från rullgardinsmenyn eller skriv namnet för hand för att överskriva valet i rullgardinsmenyn.</i>',
+	'swm-label-mode-users-group-hint' => '<i>Välj en grupp från rullgardinsmenyn eller skriv namnet för hand för att skriva över valet i rullgardinsmenyn.</i>',
 	'swm-label-mode-users-user' => 'Vald användare',
 	'swm-label-mode-users-user-hint' => '<i>Det här alternativet ignorerar markeringen i gruppen "Wikis".</i>',
 	'swm-label-content' => 'Innehåll',
@@ -2136,6 +2169,7 @@ $messages['sv'] = array(
 	'swm-yes' => 'Ja',
 	'swm-no' => 'Nej',
 	'swm-error-no-such-wiki' => 'Det finns ingen sådan wiki!',
+	'swm-error-no-such-user' => 'Det angivna användarnamnet finns inte.',
 	'swm-error-long-message' => 'Meddelanden är begränsade till 500 tecken.',
 	'swm-error-empty-group' => 'Ange namnet på gruppen.',
 	'swm-lang-other' => 'alla återstående språk',

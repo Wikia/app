@@ -11,6 +11,13 @@ $messages['en'] = array(
 	'huluvideopanel-title' => '{{SITENAME}} Hulu Videos'
 );
 
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'huluvideopanel-title' => 'Videoioù Hulu {{SITENAME}}',
+);
+
 /** German (Deutsch)
  * @author Tiin
  */
@@ -30,6 +37,20 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'huluvideopanel-title' => 'Vídeos Hulu de {{SITENAME}}',
+);
+
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'huluvideopanel-title' => 'Videos Hulu de {{SITENAME}}',
+);
+
+/** Italian (Italiano)
+ * @author Leviathan 89
+ */
+$messages['it'] = array(
+	'huluvideopanel-title' => '{{SITENAME}} Video Hulu',
 );
 
 /** Macedonian (Македонски)
@@ -58,5 +79,12 @@ $messages['nl'] = array(
  */
 $messages['no'] = array(
 	'huluvideopanel-title' => 'Hulu-videoer på {{SITENAME}}',
+);
+
+/** Swedish (Svenska)
+ * @author WikiPhoenix
+ */
+$messages['sv'] = array(
+	'huluvideopanel-title' => 'Hulu-videor på {{SITENAME}}',
 );
 

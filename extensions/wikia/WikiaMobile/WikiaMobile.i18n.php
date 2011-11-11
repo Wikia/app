@@ -60,6 +60,20 @@ $messages['br'] = array(
 	'wikiamobile-explore' => 'Ergerzhout',
 );
 
+/** Catalan (Català)
+ * @author Gemmaa
+ */
+$messages['ca'] = array(
+	'wikiamobile-search' => 'Cerca',
+	'wikiamobile-search-wiki' => 'Wikia',
+	'wikiamobile-search-wikia' => 'Wikia',
+	'wikiamobile-login' => 'Inici de sessió',
+	'wikiamobile-password' => 'Contrasenya',
+	'wikiamobile-login-submit' => 'Iniciar sessió',
+	'wikiamobile-menu' => 'Menú',
+	'wikiamobile-explore' => 'Explorar',
+);
+
 /** German (Deutsch)
  * @author Tiin
  */
@@ -110,6 +124,20 @@ $messages['gl'] = array(
 	'wikiamobile-password' => 'Contrasinal',
 	'wikiamobile-login-submit' => 'Rexistro',
 	'wikiamobile-menu' => 'Menú',
+	'wikiamobile-explore' => 'Explorar',
+);
+
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'wikiamobile-search' => 'Cercar',
+	'wikiamobile-search-wiki' => 'Wiki',
+	'wikiamobile-search-wikia' => 'Wikia',
+	'wikiamobile-login' => 'Aperir session',
+	'wikiamobile-password' => 'Contrasigno',
+	'wikiamobile-login-submit' => 'Aperir session',
+	'wikiamobile-menu' => 'Menu',
 	'wikiamobile-explore' => 'Explorar',
 );
 

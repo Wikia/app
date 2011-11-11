@@ -59,6 +59,14 @@ $messages['ia'] = array(
 	'globalnotification-general-ajax-failure' => 'Le navigator non poteva connecter a Wikia. Reproba plus tarde.',
 );
 
+/** Italian (Italiano)
+ * @author Leviathan 89
+ */
+$messages['it'] = array(
+	'globalnotification-desc' => 'Visualizza le notifiche di sistema per eventi quali guasti AJAX',
+	'globalnotification-general-ajax-failure' => 'Il browser non riesce a connettersi a Wikia. Riprovare più tardi.',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -105,5 +113,13 @@ $messages['pt'] = array(
  */
 $messages['ru'] = array(
 	'globalnotification-general-ajax-failure' => 'Браузер не смог подключиться к Викия. Попробуйте еще раз позже.',
+);
+
+/** Swedish (Svenska)
+ * @author WikiPhoenix
+ */
+$messages['sv'] = array(
+	'globalnotification-desc' => 'Visar systemmeddelanden för händelser som AJAX-fel',
+	'globalnotification-general-ajax-failure' => 'Webbläsaren kunde inte ansluta till Wikia. Försök igen senare.',
 );
 

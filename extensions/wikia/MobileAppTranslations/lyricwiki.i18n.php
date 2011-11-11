@@ -342,10 +342,18 @@ $messages['gl'] = array(
 	'about-heading' => 'LyricWiki',
 	'about-credits' => 'por %s',
 	'about-heading-tips' => 'Procurando',
+	'about-tips-0' => 'Empece escribindo o nome dun artista para que a función de autocompletar faga as suxestións.',
+	'about-tips-1' => 'As imaxes da páxina principal son as 9 cancións do momento no iTunes.',
 	'about-heading-licensing' => 'Dereitos de autor',
+	'about-licensing-0' => 'Esta aplicación é legal ao 100%. As compensación páganse aos propietarios dos dereitos de autor das cancións a través de Gracenote, igual que na páxina web LyricWiki.',
 	'about-heading-feedback' => 'Comentarios',
+	'about-feedback-0' => 'Quere dicirnos algo sobre a aplicación? Envíe un correo electrónico a: %s',
 	'about-heading-rate' => 'Valore a aplicación!',
+	'about-rate-0-android' => 'Se lle gusta a aplicación, déalle unha valoración de 5 estrelas no Android Market!',
+	'about-rate-0-ios' => 'Se lle gusta a aplicación, déalle unha valoración de 5 estrelas na App Store!',
+	'gracenote-takedown' => 'Vaites! Desafortunadamente, non temos licenza para mostrar a letra desta canción ao completo nestes intres (isto pasa en menos do 1% das nosas cancións). Inténteo de novo a vindeira semana.',
 	'lyrics-artist-byline' => 'por %s',
+	'ringtone-matcher-by-song' => 'Enviar o ton %s ao seu móbil',
 );
 
 /** Interlingua (Interlingua)
@@ -691,13 +699,46 @@ $messages['pl'] = array(
 	'ringtone-matcher-by-song' => 'Wyślij %s jako dzwonek na Twój telefon',
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'app-tab-search' => 'پلټل',
+	'app-tab-about' => 'په اړه',
+	'app-nonetwork-dialog-close-button' => 'ښه',
+	'search-go' => 'ورځه!',
+	'login-username-hint' => 'کارن-نوم',
+	'login-password-hint' => 'پټنوم',
+	'login-submit-button' => 'ننوتل',
+);
+
 /** Russian (Русский)
+ * @author Byulent
  * @author Lvova
  */
 $messages['ru'] = array(
+	'app-loading' => 'Загрузка...',
+	'app-tab-search' => 'Поиск',
+	'app-tab-about' => 'О программе',
+	'app-tab-browse' => 'A..Z',
+	'app-tab-sotd' => 'SotD',
 	'app-async-error-title' => 'Ой',
+	'app-async-error-message' => 'Временные проблемы с подключением. Пожалуйста, повторите попытку позже.',
+	'app-nonetwork-dialog-title' => 'Подключение недоступно',
+	'app-nonetwork-dialog-message' => 'Сетевое соединение не обнаружено',
+	'app-nonetwork-dialog-close-button' => 'OK',
+	'search-go' => 'Искать!',
+	'search-no-match-found' => 'Совпадений не найдено.',
+	'search-no-match-found-query' => 'Поиск: %s',
+	'search-results-title' => 'Результаты поиска: %s',
+	'login-label' => 'Вход в LyricWiki',
 	'login-username-hint' => 'Имя участника',
 	'login-password-hint' => 'Пароль',
+	'login-submit-button' => 'Вход',
+	'about-heading' => 'LyricWiki',
+	'about-heading-tips' => 'Поиск',
+	'about-tips-0' => 'Начните набирать имя исполнителя, чтобы увидеть варианты.',
+	'about-heading-licensing' => 'Авторские права',
 );
 
 /** Swedish (Svenska)

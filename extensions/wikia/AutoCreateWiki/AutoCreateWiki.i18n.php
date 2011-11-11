@@ -234,6 +234,7 @@ $messages['af'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Alexknight12
  */
 $messages['ar'] = array(
 	'autocreatewiki' => 'أنشئ ويكي جديدة',
@@ -268,7 +269,7 @@ $messages['ar'] = array(
 	'autocreatewiki-info-realname' => 'إذا إخترت أن تزود هذه المعلومة فستستعمل في إعطائك الشكر على عملك.',
 	'autocreatewiki-info-birthdate' => 'ويكيا تطلب من جميع المستخدمين تقديم تاريخ الولادة الحقيقي على حد سواء وذلك كاجراء وقائي كوسيلة للحفاظ على سلامة الموقع مع الامتثال للقوانين الاتحادية.',
 	'autocreatewiki-info-blurry-word' => 'لمساعدة في حماية ضد إنشاء الحساب الآلي ، يرجى كتابة كلمة الباهتة التي تشاهدها في هذا المجال.',
-	'autocreatewiki-info-terms-agree' => 'عن طريق إنشاء ويكي و حساب مستخدم، أنت توافق على <a href="http://www.wikia.com/wiki/Terms_of_use">شروط إستخدام ويكيا</a>',
+	'autocreatewiki-info-terms-agree' => 'عن طريق إنشاء ويكي و حساب مستخدم، أنت توافق على <a href="http://www.wikia.com/wiki/Terms_of_use">شروط استخدام ويكيا</a>',
 	'autocreatewiki-info-staff-username' => '<b>للموظفين فقط:</b> هذا المستخدم المحدد سيكون مدرجا كمؤسس.',
 	'autocreatewiki-limit-day' => 'لقد تجاوزت عدد ويكيا الأقصى لإنشاء الويكيات في هذا اليوم($1).',
 	'autocreatewiki-limit-creation' => 'لقد تجاوزت الحد الأقصى لعدد من إنشاء ويكي في 24 ساعة ($1).',
@@ -551,6 +552,13 @@ $messages['cs'] = array(
 	'autocreatewiki-info-blurry-word' => 'Z důvodu ochrany před strojovým zakládáním účtů napiště slovo, které vidíte rozmazané v tomto poli.',
 );
 
+/** Welsh (Cymraeg)
+ * @author Pwyll
+ */
+$messages['cy'] = array(
+	'autocreatewiki' => 'Creu wiki newydd',
+);
+
 /** German (Deutsch)
  * @author Claudia Hattitten
  * @author LWChris
@@ -703,6 +711,7 @@ indem du <a href="$2">$2</a> besuchst.</p>
  * @author Claudia Hattitten
  * @author LWChris
  * @author The Evil IP address
+ * @author Umherirrender
  */
 $messages['de-formal'] = array(
 	'autocreatewiki' => 'Ein neues Wiki erstellen',
@@ -723,8 +732,8 @@ $messages['de-formal'] = array(
 	'autocreatewiki-limit-creation' => 'Sie haben die maximale Anzahl an Wikis überschritten, die in 24 Stunden erstellt werden können ($1).',
 	'autocreatewiki-empty-field' => 'Füllen Sie bitte dieses Feld aus.',
 	'autocreatewiki-name-taken' => 'Ein Wiki mit dieser Adresse existiert bereits. Werden Sie unter <a href="http://$1.wikia.com">http://$1.wikia.com</a> aktiv oder wählen sie eine andere Adresse.',
-	'autocreatewiki-name-too-short' => 'Dieser Name ist zu kurz, bitte wählen Sie einen mit mindestens 3 Buchstaben.',
-	'autocreatewiki-name-too-long' => 'Dieser Name ist zu lang. Bitte wählen Sie einen Namen mit maximal 50 Zeichen.',
+	'autocreatewiki-name-too-short' => 'Diese Adresse ist zu kurz, bitte wählen Sie eine Adresse mit mindestens 3 Buchstaben.',
+	'autocreatewiki-name-too-long' => 'Diese Adresse ist zu lang. Bitte wählen Sie eine Adresse mit maximal 50 Zeichen.',
 	'autocreatewiki-similar-wikis' => 'Unten sind die Wikis zu diesem Thema, die bereits erstellt wurden. Wir schlagen vor, dass Sie sich dort beteiligen.',
 	'autocreatewiki-blocked-username' => 'Sie dürfen kein Benutzerkonto anlegen.',
 	'autocreatewiki-user-notloggedin' => 'Ihr Konto wurde erstellt aber nicht eingeloggt!',
@@ -1749,6 +1758,7 @@ Isto es un projecto totalmente nove, dunque per favor scribe nos si tu ha alcun 
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author Aldnonymous
  * @author Farras
  * @author Irwangatot
  */
@@ -1921,7 +1931,7 @@ $messages['it'] = array(
 	'autocreatewiki' => 'Crea un nuovo wiki',
 	'autocreatewiki-page-title-default' => 'Crea una nuova wiki',
 	'autocreatewiki-birthdate' => 'Data di nascita:',
-	'autocreatewiki-create-account' => 'Crealo ora',
+	'autocreatewiki-create-account' => 'Crea un accout',
 	'autocreatewiki-error' => 'errore',
 	'autocreatewiki-haveaccount-question' => 'Hai già un account Wikia?',
 	'autocreatewiki-info-email-address' => 'Il tuo indirizzo e-mail non viene mai mostrato ad alcun utente di Wikia.',
@@ -2465,6 +2475,7 @@ $3
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Нови викија',
 	'newwikisstart' => 'Прикажи викија со почеток во:',
+	'autocreatewiki-reminder-subject' => '{{SITENAME}}',
 	'autocreatewiki-reminder-body' => 'Почитуван(а) $1:
 
 Ви го честитаме започнувањето на вашето ново вики, {{SITENAME}}! Можете да се навратите и да додавате уште нешта на викито со посета на страницата $2.
@@ -2705,7 +2716,7 @@ $messages['nl'] = array(
 	'autocreatewiki-info-realname' => 'Geef uw naam op zodat deze gebruikt kan worden om u erkenning te geven voor uw werk.',
 	'autocreatewiki-info-birthdate' => 'Wikia vraagt aan alle gebruikers om hun echte geboortedatum op te geven voor veiligheid maar ook om de integriteit van de site aan de federale regels te laten voldoen.',
 	'autocreatewiki-info-blurry-word' => 'Om het automatisch aanmaken van gebruikers tegen te gaan moet u het wazige woord dat u in dit veld ziet invoeren.',
-	'autocreatewiki-info-terms-agree' => 'Door een wiki en een gebruiker aan te maken accepteert u de <a href="http://www.wikia.com/wiki/Terms_of_use">gebruikersvoorwaarden van Wikia</a>.',
+	'autocreatewiki-info-terms-agree' => 'Door een wiki en een gebruiker aan te maken accepteert u de <a href="http://www.wikia.com/wiki/Terms_of_use">gebruiksvoorwaarden van Wikia</a>.',
 	'autocreatewiki-info-staff-username' => '<b>Alleen voor stafleden:</b> de aangegeven gebruiker wordt vermeld als de oprichter.',
 	'autocreatewiki-title-template' => '$1 wiki',
 	'autocreatewiki-limit-day' => "Wikia heeft het maximum aantal nieuwe wiki's voor vandaag ($1) overschreden.",
@@ -3870,6 +3881,7 @@ $3
 );
 
 /** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Nikola Smolenski
  * @author Rancher
  * @author Verlor
  * @author Жељко Тодоровић
@@ -3901,9 +3913,9 @@ $messages['sr-ec'] = array(
 	'autocreatewiki-busy-username' => 'Корисничко име је заузето.',
 	'autocreatewiki-blocked-username' => 'Не можете направити налог.',
 	'autocreatewiki-user-notloggedin' => 'Ваш налог је отворен, али нисте пријављени!',
-	'autocreatewiki-empty-language' => 'Изаберите језик ове викије.',
+	'autocreatewiki-empty-language' => 'Изаберите језик овог викија.',
 	'autocreatewiki-empty-category' => 'Изаберите категорију.',
-	'autocreatewiki-empty-wikiname' => 'Назив викије не може остати празно.',
+	'autocreatewiki-empty-wikiname' => 'Назив викија не може остати празан.',
 	'autocreatewiki-empty-username' => 'Корисничко име не може остати празно.',
 	'autocreatewiki-empty-password' => 'Лозинка не може остати празна.',
 	'autocreatewiki-empty-retype-password' => 'Лозинка за потврђивање не може остати празна.',

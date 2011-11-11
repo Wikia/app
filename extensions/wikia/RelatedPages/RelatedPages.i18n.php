@@ -93,6 +93,14 @@ $messages['es'] = array(
 	'wikiarelatedpages-heading' => 'Leer más',
 );
 
+/** Finnish (Suomi)
+ * @author VezonThunder
+ */
+$messages['fi'] = array(
+	'wikiarelatedpages-desc' => 'Lisää sivuille luettelon samankaltaisista sivuista',
+	'wikiarelatedpages-heading' => 'Lue lisää',
+);
+
 /** French (Français)
  * @author Peter17
  */

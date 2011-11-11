@@ -493,12 +493,15 @@ $messages['sr-ec'] = array(
 
 /** Swedish (Svenska)
  * @author Sertion
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'mostvisitedpages' => 'Sidor med flest besök',
 	'mostvisitedpagessearchtext' => 'Artikelns namn:',
 	'mostvisitedpagessearchbtn' => 'sök',
 	'mostvisitedpageslatest' => 'under de senaste $1 minuterna',
+	'mostvisitedpageslatestlink' => 'Se senast besökta sidor',
+	'mostvisitedpagesalllink' => 'Se mest besökta sidor',
 );
 
 /** Tamil (தமிழ்)

@@ -32,6 +32,18 @@ $messages['br'] = array(
 	'wikipayment-paypal-profile-name' => 'Wiki paet',
 );
 
+/** Catalan (Català)
+ * @author Gemmaa
+ */
+$messages['ca'] = array(
+	'wikipayment-desc' => 'Permet el pagament per wiki per impossibilitar els anuncis.',
+	'wikipayment-paypal-redirect' => 'Redirigint a PayPal, espereu-vos &hellip;',
+	'wikipayment-paypal-error' => 'Error de pagament de PayPal (codi:  $1 )',
+	'wikipayment-paypal-return-ok' => 'Èxit de pagament de PayPal',
+	'wikipayment-paypal-return-cancel' => 'Pagament PayPal cancel. lat',
+	'wikipayment-paypal-profile-name' => 'Pagat Wiki',
+);
+
 /** Czech (Česky)
  * @author Dontlietome7
  */

@@ -264,6 +264,7 @@ $messages['pt-br'] = array(
  */
 $messages['ru'] = array(
 	'interstitial-skip-ad' => 'Пропустить эту рекламу',
+	'interstitial-link-away' => 'Здесь ничего увидеть нельзя!<br/><br/>Вы хотите перейти к [[{{MediaWiki:Mainpage}}|Заглавной странице]] или возможно [[Special:Random|случайной странице]]?',
 	'exitstitial-register' => '<a href="#" class="register">Зарегистрироваться</a> или <a href="#" class="login">войти</a>, чтобы пропустить рекламу.',
 	'exitstitial-button' => 'Пропустить эту рекламу',
 );
@@ -283,6 +284,7 @@ $messages['sr-ec'] = array(
 $messages['sv'] = array(
 	'interstitial-default-campaign-code' => 'Wikia älskar dig!',
 	'interstitial-skip-ad' => 'Hoppa över denna annons',
+	'interstitial-already-logged-in-no-link' => 'Du redan är inloggad och det inte finns någon destination inställd.',
 	'interstitial-link-away' => 'Det finns ingenting att se här!<br /><br />Vill du gå till [[{{MediaWiki:Mainpage}}|Huvudsidan]] eller kanske en [[Special:Random|slumpartad sida]]?',
 	'exitstitial-register' => '<a href="#" class="register">Registrera</a> eller <a href="#" class="login">Logga in</a> för att hoppa över annonser.',
 	'exitstitial-button' => 'Hoppa över denna annons',

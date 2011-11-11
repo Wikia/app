@@ -355,6 +355,7 @@ $messages['mk'] = array(
 	'sponsorpage-desc' => 'Им овозможува на корисниците да купуваат спонзорства за страници',
 	'sponsor-header' => '<h2>Надворешни врски на спонзори</h2>',
 	'sponsor-msg' => '<li><a href="$1" rel="nofollow">Спонзорирајте ја оваа страница</a></li>',
+	'sponsor-template' => '<li><a href="http://$1" rel="nofollow">$2</a><br />$3</li>',
 	'sponsor-preview-prompt' => 'Вака ќе изгледа вашет оспонзорство - кликнете на „Уреди“ за да се вратите и направите промени, или на „Зачувај“ за да го зачувате и да прејдете на PayPal.',
 	'sponsor-preview-errors' => 'Се јавија грешки во поднесеното:',
 	'sponsor-form-url' => 'URL-адреса на спонзорското мрежно место (вашето мреж. место):',
@@ -583,6 +584,8 @@ $messages['ru'] = array(
  * @author Dbc334
  */
 $messages['sl'] = array(
+	'sponsorpage-desc' => 'Omogoča uporabnikom nakup sponzorstva strani',
+	'sponsor-header' => '<h2>Zunanje sponzorske povezave</h2>',
 	'sponsor-msg' => '<li><a href="$1" rel="nofollow">Sponzorirajte to stran</a></li>',
 	'sponsor-preview-errors' => 'V vašem obrazcu so napake:',
 	'sponsor-form-url' => 'URL sponzorske spletne strani (vaše spletne strani):',
@@ -611,10 +614,11 @@ $messages['sr-ec'] = array(
 
 /** Swedish (Svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'sponsorpage-desc' => 'Tillåter användare att köpa sponsring för sidor',
-	'sponsor-header' => '<h2>Externa Sponsorlänkar</h2>',
+	'sponsor-header' => '<h2>Externa sponsorlänkar</h2>',
 	'sponsor-msg' => '<li><a href="$1" rel="nofollow">Sponsra denna sida</a></li>',
 	'sponsor-preview-prompt' => 'Såhär kommer din sponsring att se ut - klicka på "Redigera" för att gå tillbaka och göra ändringar, eller "Spara" för att spara den och gå till PayPal.',
 	'sponsor-preview-errors' => 'Det finns fel i din ansökan:',

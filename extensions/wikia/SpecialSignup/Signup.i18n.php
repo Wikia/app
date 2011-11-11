@@ -66,6 +66,13 @@ $messages['es'] = array(
 	'signup' => 'Registrarse',
 );
 
+/** Persian (فارسی)
+ * @author Mjbmr
+ */
+$messages['fa'] = array(
+	'signup' => 'ثبت نام',
+);
+
 /** French (Français)
  * @author Wyz
  */

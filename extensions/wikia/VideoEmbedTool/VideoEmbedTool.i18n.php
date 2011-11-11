@@ -80,13 +80,14 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Crt
  * @author EugeneZelenko
  * @author LWChris
  * @author McDutchie
  * @author Siebrand
  */
 $messages['qqq'] = array(
-	'vet-upload-btn' => '{{Identical|Go}}Upload button text.',
+	'vet-upload-btn' => '{{Identical|Next}}Upload button text.',
 	'vet-find-btn' => '{{Identical|Search}}',
 	'vet-flickr-inf' => ' Maybe "free videos" is meant here?',
 	'vet-insert' => '{{Identical|Insert}}',
@@ -553,6 +554,7 @@ $messages['de'] = array(
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author LWChris
+ * @author Umherirrender
  */
 $messages['de-formal'] = array(
 	'vet-notlogged' => 'Melden Sie sich an oder registrieren Sie sich, um Videos einzubinden',
@@ -570,7 +572,7 @@ $messages['de-formal'] = array(
 ''Siehe auch das [[Special:Log/upload|Datei-Logbuch]] und die [[Special:ImageList|Liste aller hochgeladenen Dateien]].''",
 	'vet-notallowed' => 'Sie können in diesem Wiki keine Videos einbinden',
 	'vet-title' => 'Fügen Sie ein Video in den Artikel ein',
-	'vet-main-info' => '<i>Suchen Sie nach einem Video oder geben Sie die Video-URL einer der unterstützten Seiten an</i>',
+	'vet-main-info' => '<i>Geben Sie die vollständige URL von einer der unterstützten Websites ein</i>',
 	'vet-page-success' => 'Die Video-Seite wurde aktualisiert. Sie müssen ggf. den Server-Cache per purge leeren um die Änderung zu sehen.',
 	'vet-no-preview' => 'Sie können aus dem Vorschaumodus kein Video hinzufügen',
 );
@@ -683,9 +685,10 @@ $messages['fi'] = array(
 	'vet-find' => 'Etsi video',
 	'vet-thiswiki' => 'Tämä wiki',
 	'vet-flickr' => 'Flickr',
-	'vet-upload-btn' => 'Siirry',
+	'vet-upload-btn' => 'Seuraava',
 	'vet-name' => 'Nimi',
 	'vet-size' => 'Koko',
+	'vet-thumbnail' => 'Pienoiskuva',
 	'vet-width' => 'Leveys',
 	'vet-update' => 'Päivitä video',
 	'vet-back' => 'takaisin',
@@ -1385,7 +1388,7 @@ $messages['mk'] = array(
 	'vet-details-inf' => '<h1>Податоци за податотеката</h1>Назначете име за оваа видеоснимка. Треба да биде описно.',
 	'vet-name' => 'Име',
 	'vet-license' => 'Лиценца',
-	'vet-details-inf2' => 'Нагодувања за приказ на видеоснимки',
+	'vet-details-inf2' => 'Нагодувања на приказот на видеоснимки',
 	'vet-size' => 'Големина',
 	'vet-thumbnail' => 'Минијатура',
 	'vet-fullsize' => 'Во полна големина ($1x$2px)',
@@ -2131,6 +2134,7 @@ $messages['ro'] = array(
 
 /** Russian (Русский)
  * @author Eleferen
+ * @author Kaganer
  * @author Kuzura
  * @author Lockal
  * @author Александр Сигачёв
@@ -2226,9 +2230,9 @@ $messages['sr-ec'] = array(
 	'vet-upload' => 'Пуна URL адреса',
 	'vet-notlogged' => 'Пријавите се или отворите налог да бисте убацили видео снимак',
 	'vet-find' => 'Пронађи видео снимак',
-	'vet-thiswiki' => 'Ова викија',
+	'vet-thiswiki' => 'Овај вики',
 	'vet-flickr' => 'Фликр',
-	'vet-upload-btn' => 'Пређи',
+	'vet-upload-btn' => 'Следеће',
 	'vet-find-btn' => 'Претражи',
 	'vet-conflict-inf' => '<h1>Видео снимак под тим називом већ постоји.</h1>Шта желите да урадите са <b>$1</b>?',
 	'vet-rename' => 'Преименуј видео снимак',

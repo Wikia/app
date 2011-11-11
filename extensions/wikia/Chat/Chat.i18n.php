@@ -181,14 +181,18 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Aldnonymous
  * @author Claudia Hattitten
  * @author Lloffiwr
  * @author Sean Colombo
+ * @author VezonThunder
  */
 $messages['qqq'] = array(
+	'chat-inlinealert-a-made-b-chatmod' => '$1 is user name when "he" make other user ($2) to become moderator. (account upgrade)',
 	'chat-whos-here' => 'Regards users that are in a chat room. The parameter gives the total count.',
-	'chat-user-manu-give-chat-mod' => 'ChatMod = chat moderator',
 	'chat-edit-count' => '$1 is the number of edits made by the user',
+	'chat-member-since' => '$1 tells both the month and the year, month abbreviated. E.g. "Apr 2008".',
+	'chat-user-manu-give-chat-mod' => 'ChatMod = chat moderator',
 );
 
 /** Afrikaans (Afrikaans)
@@ -424,10 +428,12 @@ $messages['es'] = array(
 	'chat-no-login-text' => 'Inicia sesión para chatear.',
 	'chat-default-topic' => 'Bienvenido al chat de $1',
 	'chat-user-joined' => '$1 ha entrado al chat.',
+	'chat-read-only' => 'El chat está temporalmente deshabilitado mientras el wiki está en modo de lectura.',
 	'chat-user-parted' => '$1 ha salido del chat.',
 	'chat-user-blocked' => '$1 ha bloqueado a $2.',
 	'chat-user-allow' => '$1 ha permitido a $2.',
 	'chat-user-was-kickbanned' => '$1 fue bloqueado y expulsado.',
+	'chat-user-permanently-disconnected' => 'Te has desconectado, comprueba tu conexión a internet y actualiza la ventana del navegador',
 	'chat-inlinealert-a-made-b-chatmod' => '$1 ha hecho a <strong>$2</strong> un moderador del chat.',
 	'chat-err-connected-from-another-browser' => 'Te has conectado de otro navegador. Esta conexión se cerrará.',
 	'chat-err-communicating-with-mediawiki' => 'Error al comunicarse con el servidor MediaWiki.',
@@ -461,6 +467,63 @@ Por favor, contáctalo para más información.',
 	'chat-user-manu-private-allow' => 'Permitir mensajes privados',
 	'chat-user-manu-private-close' => 'Cerrar sala privada',
 	'chat-private-headline' => 'Chat privado con $1',
+	'right-chatmoderator' => 'Puede banear y expulsar usuarios del [[Help:Chat|Chat]]',
+	'group-chatmoderator' => 'Moderadores del chat',
+	'group-chatmoderator-member' => 'Moderador del chat',
+	'group-bannedfromchat' => 'Baneados del chat',
+	'group-bannedfromchat-member' => 'Baneado del chat',
+);
+
+/** Finnish (Suomi)
+ * @author Nike
+ * @author VezonThunder
+ */
+$messages['fi'] = array(
+	'chat-no-login' => 'Chatin käyttö vaatii sisäänkirjautumisen.',
+	'chat-no-login-text' => 'Ole hyvä ja kirjaudu sisään käyttääksesi chattia.',
+	'chat-default-topic' => 'Tervetuloa {{GRAMMAR:genitive|$1}} chattiin',
+	'chat-user-joined' => '$1 on liittynyt chattiin.',
+	'chat-read-only' => 'Chat on tilapäisesti poissa käytöstä wikin ollessa vain luku -tilassa.',
+	'chat-user-parted' => '$1 on poistunut chatista.',
+	'chat-user-blocked' => '$1 on estänyt käyttäjän $2.',
+	'chat-user-allow' => '$1 on sallinut käyttäjän $2.',
+	'chat-user-was-kickbanned' => '$1 sai chat-eston.',
+	'chat-user-permanently-disconnected' => 'Yhteys on katkaistu. Tarkista Internet-yhteytesi ja päivitä selainikkunasi.',
+	'chat-inlinealert-a-made-b-chatmod' => '$1 on tehnyt käyttäjästä $2 chat-valvojan.',
+	'chat-err-connected-from-another-browser' => 'Olet muodostanut yhteyden toisesta selaimesta. Tämä yhteys suljetaan.',
+	'chat-err-communicating-with-mediawiki' => 'Virhe tiedonvälityksessä MediaWiki-palvelimen kanssa.',
+	'chat-ban-cant-ban-moderator' => 'Et voi estää toista chat-valvojaa.',
+	'chat-ban-already-banned' => '$1 on jo estetty tämän wikin chatissa.',
+	'chat-ban-you-need-permission' => 'Sinulla ei ole käyttöoikeutta $1, joka vaaditaan käyttäjän estämiseen.',
+	'chat-missing-required-parameter' => "'$1' vaaditaan, mutta se puuttui pyynnöstä.",
+	'chat-err-already-chatmod' => 'Virhe: "$1" on jo ryhmässä "$2".',
+	'chat-err-no-permission-to-add-chatmod' => 'Virhe: Sinulla ei ole oikeutta lisätä ryhmää "$1" tälle käyttäjälle.',
+	'chat-userrightslog-a-made-b-chatmod' => '$1 ylensi käyttäjän $2 tämän wikin chat-valvojaksi.',
+	'chat-you-are-banned' => 'Käyttöoikeusvirhe.',
+	'chat-you-are-banned-text' => 'Valitettavasti sinulla ei ole oikeutta käyttää chattia tässä wikissä. Jos arvelet tämän johtuvan virheestä tai haluaisit, että oikeutta harkittaisiin uudelleen, ota yhteys ylläpitäjään.',
+	'chat-room-is-not-on-this-wiki' => 'Chat-huone, johon yrität päästä, ei näytä olevan olemassa tässä wikissä.',
+	'chat-kick-log-reason' => '$1 antoi sinulle chat-eston tässä wikissä. Ole hyvä ja ota yhteyttä häneen saadaksesi lisätietoa.',
+	'chat-headline' => '{{GRAMMAR:genitive|$1}} chat',
+	'chat-start-a-chat' => 'Käynnistä chat',
+	'chat-whos-here' => 'Läsnä ($1)',
+	'chat-join-the-chat' => 'Liity chattiin',
+	'chat-edit-count' => '{{PLURAL:$1|1 muokkaus|$1 muokkausta}}',
+	'chat-member-since' => 'Liittynyt: $1',
+	'chat-great-youre-logged-in' => 'Hienoa! Olet kirjautunut sisään.',
+	'chat-user-manu-profile' => 'Käyttäjäprofiili',
+	'chat-user-manu-contribs' => 'Muokkaukset',
+	'chat-user-manu-private' => 'Yksityisviesti',
+	'chat-user-manu-give-chat-mod' => 'Anna valvoja-asema',
+	'chat-user-manu-kickban' => 'Estä',
+	'chat-user-manu-private-block' => 'Estä yksityisviestit',
+	'chat-user-manu-private-allow' => 'Salli yksityisviestit',
+	'chat-user-manu-private-close' => 'Sulje yksityishuone',
+	'chat-private-headline' => 'Yksityinen chat käyttäjän $1 kanssa',
+	'right-chatmoderator' => 'Voi antaa käyttäjille [[Help:Chat|chat]]-estoja',
+	'group-chatmoderator' => 'Chat-valvojat',
+	'group-chatmoderator-member' => 'chat-valvoja',
+	'group-bannedfromchat' => 'Estetty chatista',
+	'group-bannedfromchat-member' => 'chatista estetty',
 );
 
 /** French (Français)
@@ -531,13 +594,26 @@ $messages['gl'] = array(
 	'chat-no-login-text' => 'Acceda ao sistema para chatear.',
 	'chat-default-topic' => 'Benvido ao chat $1',
 	'chat-user-joined' => '$1 uniuse ao chat.',
+	'chat-read-only' => 'O chat non está dispoñible temporalmente debido a que o wiki está en modo de só lectura.',
 	'chat-user-parted' => '$1 deixou a conversación.',
 	'chat-user-blocked' => '$1 bloqueou a $2.',
 	'chat-user-allow' => '$1 autorizou a $2.',
 	'chat-user-was-kickbanned' => '$1 foi bloqueado.',
+	'chat-user-permanently-disconnected' => 'Está desconectado; comprobe a súa conexión á internet e refresque a ventá do navegador',
+	'chat-inlinealert-a-made-b-chatmod' => '$1 converteu a <strong>$2</strong> en moderador do chat.',
 	'chat-err-connected-from-another-browser' => 'Conectouse desde outro navegador. Esta conexión vai pecharse.',
 	'chat-err-communicating-with-mediawiki' => 'Erro na comunicación co servidor MediaWiki.',
+	'chat-ban-cant-ban-moderator' => 'Non pode expulsar outro moderador do chat.',
+	'chat-ban-already-banned' => '$1 xa foi expulsado do chat neste wiki.',
+	'chat-ban-you-need-permission' => 'Non ten permisos de $1, necesarios para expulsar un usuario.',
+	'chat-missing-required-parameter' => 'Cómpre "$1", pero non se atopou na solicitude.',
+	'chat-err-already-chatmod' => 'Erro: "$1" xa está no grupo "$2".',
+	'chat-err-no-permission-to-add-chatmod' => 'Erro: Non ten permisos para engadir este usuario ao grupo "$1".',
+	'chat-userrightslog-a-made-b-chatmod' => '$1 fixo unha proposta para converter a $2 en moderador do chat neste wiki.',
 	'chat-you-are-banned' => 'Erro de permisos.',
+	'chat-you-are-banned-text' => 'Sentímolo, non ten os permisos necesarios para conversar neste wiki. Se cre que foi un erro ou quere que esta decisión sexa reconsiderada, póñase en contacto cun administrador.',
+	'chat-room-is-not-on-this-wiki' => 'Semella que a sala de conversa á que intenta entrar non existe neste wiki.',
+	'chat-kick-log-reason' => 'Expulsado do chat deste wiki por $1. Póñase en contacto con este usuario para obter máis información.',
 	'chat-headline' => 'Chat $1',
 	'chat-live' => 'En vivo!',
 	'chat-start-a-chat' => 'Iniciar un chat',
@@ -545,13 +621,21 @@ $messages['gl'] = array(
 	'chat-join-the-chat' => 'Únase ao chat',
 	'chat-edit-count' => '$1 edicións',
 	'chat-member-since' => 'Membro desde $1',
+	'chat-great-youre-logged-in' => 'Ben! Está conectado.',
 	'chat-user-manu-profile' => 'Perfil do usuario',
 	'chat-user-manu-contribs' => 'Contribucións',
 	'chat-user-manu-private' => 'Mensaxe privada',
+	'chat-user-manu-give-chat-mod' => 'Dar os dereitos de moderador do chat',
+	'chat-user-manu-kickban' => 'Expulsar',
 	'chat-user-manu-private-block' => 'Bloquear as mensaxes privadas',
 	'chat-user-manu-private-allow' => 'Permitir as mensaxes privadas',
-	'group-chatmoderator' => 'Moderadores da conversa',
-	'group-chatmoderator-member' => 'Moderador da conversa',
+	'chat-user-manu-private-close' => 'Pechar a sala privada',
+	'chat-private-headline' => 'Conversa privada con $1',
+	'right-chatmoderator' => 'Pode expulsar usuarios do [[Help:Chat|chat]]',
+	'group-chatmoderator' => 'Moderadores do chat',
+	'group-chatmoderator-member' => 'Moderador do chat',
+	'group-bannedfromchat' => 'Expulsado do chat',
+	'group-bannedfromchat-member' => 'Expulsado do chat',
 );
 
 /** Hungarian (Magyar)
@@ -580,10 +664,12 @@ $messages['ia'] = array(
 	'chat-no-login-text' => 'Per favor aperi session pro chattar.',
 	'chat-default-topic' => 'Benvenite al chat de $1',
 	'chat-user-joined' => '$1 ha entrate in le chat.',
+	'chat-read-only' => 'Le chat es temporarimente indisponibile durante que le wiki es in modo de lectura sol.',
 	'chat-user-parted' => '$1 ha quitate le chat.',
 	'chat-user-blocked' => '$1 ha blocate $2.',
 	'chat-user-allow' => '$1 ha permittite $2.',
 	'chat-user-was-kickbanned' => '$1 ha essite ejectate e bannite.',
+	'chat-user-permanently-disconnected' => 'Tu ha essite disconnectite. Verifica le connexion a internet e refresca le fenestra del navigator.',
 	'chat-inlinealert-a-made-b-chatmod' => '$1 ha facite <strong>$2</strong> moderator del chat.',
 	'chat-err-connected-from-another-browser' => 'Tu te ha connectite ab un altere navigator. Iste connexion essera claudite.',
 	'chat-err-communicating-with-mediawiki' => 'Error durante le communication con le servitor MediaWiki.',
@@ -617,14 +703,84 @@ Per favor contacta le pro plus informationes.',
 	'chat-user-manu-private-allow' => 'Permitter messages private',
 	'chat-user-manu-private-close' => 'Clauder sala private',
 	'chat-private-headline' => 'Chat private con $1',
+	'right-chatmoderator' => 'Pote ejectar/bannir usatores del [[Help:Chat|chat]]',
+	'group-chatmoderator' => 'Moderatores del chat',
+	'group-chatmoderator-member' => 'Moderator del chat',
+	'group-bannedfromchat' => 'Bannite del chat',
+	'group-bannedfromchat-member' => 'Bannite del chat',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author Aldnonymous
+ */
+$messages['id'] = array(
+	'chat-no-login' => 'Anda harus login untuk chatting.',
+	'chat-no-login-text' => 'Silahkan login untuk chatting.',
+	'chat-default-topic' => 'Selamat datang di $1 chatting',
+	'chat-read-only' => 'Chat sementara tidak tersedia saat wiki berada pada mode baca-saja.',
+	'chat-user-parted' => '$1 telah meninggalkan obrolan.',
+	'chat-user-blocked' => '$1 telah memblokir  $2 .',
+	'chat-user-allow' => '$1 telah memperbolehkan $2 .',
+	'chat-user-was-kickbanned' => '$1telah di kickban.',
+	'chat-user-permanently-disconnected' => 'Koneksi Anda terputus, periksa koneksi internet anda dan refresh jendela browser Anda',
+	'chat-inlinealert-a-made-b-chatmod' => '$1telah <strong> $2 </strong> moderator chatting.',
+	'chat-err-connected-from-another-browser' => 'Anda telah terhubung dari browser lain. Hubungan ini akan ditutup.',
+	'chat-err-communicating-with-mediawiki' => 'Kesalahan terjadi saat terhubung dengan MediaWiki server.',
+	'chat-ban-cant-ban-moderator' => 'Anda tidak bisa menendang/ban Moderator chatting yang lain.',
+	'chat-ban-already-banned' => '$1sudah dilarang dari chatting di wiki ini.',
+	'chat-ban-you-need-permission' => 'Anda tidak memiliki  $1  izin yang diperlukan untuk menendang/ban pengguna.',
 );
 
 /** Italian (Italiano)
+ * @author Leviathan 89
  * @author Minerva Titani
  */
 $messages['it'] = array(
+	'chat-desc' => '[[Special:Chat|Chat dal vivo]]',
 	'chat-no-login' => 'Devi effettuare il login per chattare.',
 	'chat-no-login-text' => 'Per favore effettua il login per chattare.',
+	'chat-default-topic' => 'Benvenuto nella chat di $1',
+	'chat-user-joined' => '$1 è entrato nella chat.',
+	'chat-read-only' => 'La chat è momentaneamente non disponibile mentre la wiki è in modalità solo lettura.',
+	'chat-user-parted' => '$1 ha lasciato la chat.',
+	'chat-user-blocked' => '$1 ha bloccato $2.',
+	'chat-user-allow' => '$1 ha permesso $2.',
+	'chat-user-was-kickbanned' => '$1 è stato bannato.',
+	'chat-user-permanently-disconnected' => 'Ti sei disconnesso, controlla la tua connessione Internet e ricarica la pagina',
+	'chat-inlinealert-a-made-b-chatmod' => '$1 ha fatto <strong>$2</strong> un moderatore della chat.',
+	'chat-err-connected-from-another-browser' => 'Ti sei connesso da un altro browser. Questa connessione verrà terminata.',
+	'chat-err-communicating-with-mediawiki' => 'Errore di comunicazione con il server MediaWiki.',
+	'chat-ban-cant-ban-moderator' => 'Non puoi bannare un altro moderatore della chat.',
+	'chat-ban-already-banned' => '$1 è già stato bannato dalla chat di questa wiki.',
+	'chat-ban-you-need-permission' => "Non hai l'autorizzazione $1 che è necessaria per bannare un utente.",
+	'chat-missing-required-parameter' => '"$1" è necessario, ma non è stata trovato nella richiesta.',
+	'chat-err-already-chatmod' => 'Errore: "$1" è già nel gruppo "$2".',
+	'chat-err-no-permission-to-add-chatmod' => 'Errore: Non hai i permessi per aggiungere il gruppo "$1" a questo utente.',
+	'chat-userrightslog-a-made-b-chatmod' => '$1 ha promosso $2 moderatore della chat di questa wiki.',
+	'chat-you-are-banned' => 'Permessi non sufficienti.',
+	'chat-you-are-banned-text' => "Siamo spiacenti, non hai l'autorizzazione ad accedere alla chat di questa wiki. Se ritieni che ci sia un errore o vuoi richiedere di essere riconsiderato, contatta un'amministratore.",
+	'chat-room-is-not-on-this-wiki' => 'La chat a cui stai tentando di accedere sembra che non esista su questa wiki.',
+	'chat-kick-log-reason' => 'Bannato dalla chat di questa wiki da $1. Per favore contattalo per maggiori informazioni.',
+	'chat-start-a-chat' => 'Inizia una Chat',
+	'chat-whos-here' => "Chi c'è qui ($1)",
+	'chat-join-the-chat' => 'Entra in Chat',
+	'chat-edit-count' => '$1 modifiche',
+	'chat-member-since' => 'Membro dal $1',
+	'chat-great-youre-logged-in' => 'Fantastico! Ti sei connesso.',
+	'chat-user-manu-profile' => 'Profilo utente',
+	'chat-user-manu-contribs' => 'Contributi',
+	'chat-user-manu-private' => 'Messaggio privato',
+	'chat-user-manu-give-chat-mod' => 'Rendi Moderatore della Chat',
+	'chat-user-manu-kickban' => 'Banna',
+	'chat-user-manu-private-block' => 'Blocca messaggi privati',
+	'chat-user-manu-private-allow' => 'Consenti messaggi privati',
+	'chat-user-manu-private-close' => 'Chiudi Chat Privata',
+	'chat-private-headline' => 'Chat privata con $1',
+	'right-chatmoderator' => 'Può cacciare/bannare gli utenti della [[Help:Chat|Chat]]',
+	'group-chatmoderator' => 'Moderatori della chat',
+	'group-chatmoderator-member' => 'Moderatore chat',
+	'group-bannedfromchat' => 'Bannato dalla chat',
+	'group-bannedfromchat-member' => 'Bannato dalla chat',
 );
 
 /** Japanese (日本語)
@@ -737,20 +893,19 @@ $messages['mk'] = array(
 	'chat-user-blocked' => '$1 го блокираше корисникот $2.',
 	'chat-user-allow' => '$1 го прими корисникот $2.',
 	'chat-user-was-kickbanned' => 'Корисникот $1 е исфрлен и пристапот му е забранет.',
-	'chat-user-permanently-disconnected' => 'Исклучени сте. Проверете си ја врската со интернет и превчитајте го прелистувачот',
-	'chat-inlinealert-a-made-b-chatmod' => '$1 го/ја назначи <strong>$2</strong> за модератор на разговорите.',
+	'chat-user-permanently-disconnected' => 'Исклучени сте. Проверете си ја врската со интернет и превчитајте ја страницата во прелистувачот',
+	'chat-inlinealert-a-made-b-chatmod' => '$1 го назначи корисникот <strong>$2</strong> за модератор на разговорите.',
 	'chat-err-connected-from-another-browser' => 'Се поврзавте од друг прелистувач. Оваа врска ќе се затвори.',
 	'chat-err-communicating-with-mediawiki' => 'Грешка при општењето со опслужувачот на МедијаВики.',
 	'chat-ban-cant-ban-moderator' => 'Не можете да исфрлите/забраните пристап на друг модератор.',
 	'chat-ban-already-banned' => 'На корисникот $1 веќе му е забранет пристапот до разговорот на ова вики.',
 	'chat-ban-you-need-permission' => 'Ја немате дозволата за $1, што е потребна за исфрлање на корисници и забранување на пристап.',
-	'chat-missing-required-parameter' => 'Задолжително треба „$1“, но не пронајдов такво нешто во барањето.',
-	'chat-err-already-chatmod' => 'Грешка: „$1“ веќе припаѓа на групата „$2“.',
+	'chat-missing-required-parameter' => 'Се бара „$1“, но не пронајдов такво нешто.',
+	'chat-err-already-chatmod' => 'Грешка: „$1“ веќе членува во групата „$2“.',
 	'chat-err-no-permission-to-add-chatmod' => 'Грешка: Немате дозвола да ја додадете групата „$1“ кон овој корисник.',
-	'chat-userrightslog-a-made-b-chatmod' => '$1 го/ја унапреди $2 во модератор на разговорите на ова вики.',
+	'chat-userrightslog-a-made-b-chatmod' => '$1 го унапреди корисникот $2 во модератор на разговорите на ова вики.',
 	'chat-you-are-banned' => 'Грешка во дозволите.',
-	'chat-you-are-banned-text' => 'Забрането ви е да разговарате на ова вики.
-Ако сметате дека ова е направено по грешка или сакате да се преиспита одлуката, обратете се кај администратор.',
+	'chat-you-are-banned-text' => 'Забрането ви е да разговарате на ова вики. Доколку сметате дека ова е направено по грешка или сакате да се преиспита одлуката, обратете се кај администратор.',
 	'chat-room-is-not-on-this-wiki' => 'Собата за разговор што сакате да ја пристапите не постои на ова вики.',
 	'chat-kick-log-reason' => 'Исфрлен од/има забранет пристап до разговорот на ова вики од страна на $1. За повеќе информации, обратете се кај тој корисник.',
 	'chat-headline' => 'Разговор — $1',
@@ -770,12 +925,12 @@ $messages['mk'] = array(
 	'chat-user-manu-private-allow' => 'Дозволи приватни пораки',
 	'chat-user-manu-private-close' => 'Затвори приватна соба',
 	'chat-private-headline' => 'Приватен разговор со $1',
-	'right-chatmoderator' => 'Може да исфрла/забранува корисници од [[Help:Chat|Разговор]]',
+	'right-chatmoderator' => 'Може да исфрла/забранува корисници од [[Help:Chat|разговор]]',
 	'group-chatmoderator' => 'Модератори на разговорот',
 	'group-chatmoderator-member' => 'Модератор на разговорот',
 	'grouppage-chatmoderator' => 'w:c:community:Help:Chat',
-	'group-bannedfromchat' => 'ЗабранетиОдРазговор',
-	'group-bannedfromchat-member' => 'ЗабранетиОдРазговор',
+	'group-bannedfromchat' => 'Забранети во разговорот',
+	'group-bannedfromchat-member' => 'Забранети во разговорот',
 	'grouppage-bannedfromchat' => 'w:c:community:Help:Chat',
 );
 
@@ -840,6 +995,7 @@ Sila hubungi mereka untuk penjelasan lanjut.',
 	'grouppage-chatmoderator' => 'w:c:community:Help:Chat',
 	'group-bannedfromchat' => 'DilarangBersembang',
 	'group-bannedfromchat-member' => 'DilarangBersembang',
+	'grouppage-bannedfromchat' => 'w:c:community:Help:Chat',
 );
 
 /** Dutch (Nederlands)
@@ -970,6 +1126,7 @@ Vennligst kontakt dem for mer informasjon.',
 /** Polish (Polski)
  * @author Anoon6
  * @author Cloudissimo
+ * @author Nandy
  * @author Sp5uhe
  * @author Woytecr
  */
@@ -982,14 +1139,24 @@ $messages['pl'] = array(
 	'chat-read-only' => 'Czat jest niedostępny ponieważ wiki jest w trybie tylko do odczytu.',
 	'chat-user-parted' => '$1 opuścił czat.',
 	'chat-user-blocked' => '$1 zablokował $2.',
+	'chat-user-allow' => '$1 pozwolił $2',
 	'chat-user-was-kickbanned' => '$1 został wyrzucony z czatu.',
+	'chat-user-permanently-disconnected' => 'Rozłączono, sprawdź swoje połączenie z Internetem i odśwież okno przeglądarki',
+	'chat-inlinealert-a-made-b-chatmod' => '$1 upowarznił <strong>$2</strong> moderatorem czatu.',
 	'chat-err-connected-from-another-browser' => 'Połączyłeś się z innej przeglądarki. To połączenie zostanie zamknięte.',
 	'chat-err-communicating-with-mediawiki' => 'Wystąpił błąd podczas komunikacji z serwerem MediaWiki.',
+	'chat-ban-cant-ban-moderator' => 'Nie możesz wyrzucić/zablokować innego moderatora czatu.',
+	'chat-ban-already-banned' => '$1 nie ma już dostępu do czatu na tej wiki.',
+	'chat-ban-you-need-permission' => 'Nie masz $1 uprawnienia, które upoważnia do wyrzucania/blokowania użytkowników na czacie.',
+	'chat-missing-required-parameter' => '$1 jest wymagane ale nie może zostać znalezione w żądaniu.',
+	'chat-err-already-chatmod' => 'Błąd: "$1" jest już w "$2" grupie.',
+	'chat-err-no-permission-to-add-chatmod' => 'Błąd: Nie masz uprawnień do dodawania "$1" grupy do tego użytkownika.',
 	'chat-userrightslog-a-made-b-chatmod' => '$1 awansował $2 na moderatora czatu tej wiki.',
 	'chat-you-are-banned' => 'Błąd uprawnień.',
 	'chat-you-are-banned-text' => 'Niestety, nie masz uprawnień do korzystania z czatu na tej wiki. Jeśli uważasz, że wynikło to z powodu błędu lub powinno być ponownie rozpatrzone, skontaktuj się z administratorem.',
 	'chat-room-is-not-on-this-wiki' => 'Chatroom, do którego próbujesz dołączyć wydaje się nie istnieć na tej wiki.',
 	'chat-kick-log-reason' => 'Wyrzucony z czatu przez $1. Prosimy o kontakt z nimi w celu uzyskania dalszych informacji.',
+	'chat-headline' => '$1 Czat',
 	'chat-live' => 'Na żywo!',
 	'chat-start-a-chat' => 'Rozpocznij czat',
 	'chat-whos-here' => 'Obecnych ($1)',
@@ -1017,7 +1184,11 @@ $messages['pl'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'chat-headline' => '$1 بانډار',
 	'chat-live' => 'ژوندی!',
+	'chat-start-a-chat' => 'بانډار پيلول',
+	'chat-edit-count' => '$1 سمونونه',
+	'chat-user-manu-contribs' => 'ونډې',
 );
 
 /** Portuguese (Português)

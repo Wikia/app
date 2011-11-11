@@ -119,6 +119,16 @@ Please visit and edit often...
 </p>'
 );
 
+/** толышә зывон (толышә зывон)
+ * @author Гусейн
+ */
+$messages['tly'] = array(
+	'oasis-wikiafollowedpages-special-seeall' => 'Һәммәј нишо дој >',
+	'wikiafollowedpages-special-seeall' => 'Һәммәј нишо дој >',
+	'wikiafollowedpages-special-delete-tooltip' => 'Ым сәһифә рәдд кәрдеј',
+	'wikiafollowedpages-userpage-hide' => 'нијо кардеј',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
@@ -749,6 +759,7 @@ $messages['fa'] = array(
 
 /** Finnish (Suomi)
  * @author Nike
+ * @author Tm T
  * @author Tofu II
  */
 $messages['fi'] = array(
@@ -760,6 +771,7 @@ $messages['fi'] = array(
 	'wikiafollowedpages-special-heading-media' => 'Kuvat ja videot ($1)',
 	'wikiafollowedpages-special-namespace' => '($1 sivu)',
 	'wikiafollowedpages-special-title' => 'Seuratut sivut',
+	'follow-categoryadd-summary' => 'Sivu lisätty luokkaan',
 );
 
 /** French (Français)
@@ -1383,8 +1395,10 @@ $messages['ku-latn'] = array(
  */
 $messages['lb'] = array(
 	'follow-desc' => 'Verbesserunge vun der Iwwerwaachungslëscht',
+	'prefs-basic' => 'Grond-Optiounen',
 	'wikiafollowedpages-special-heading-category' => 'Kategorien ($1)',
 	'wikiafollowedpages-special-heading-article' => 'Artikelen ($1)',
+	'wikiafollowedpages-special-heading-forum' => 'Rubriken am Forum ($1)',
 	'wikiafollowedpages-special-heading-project' => 'Projetssäiten ($1)',
 	'wikiafollowedpages-special-heading-user' => 'Benotzersäiten ($1)',
 	'wikiafollowedpages-special-heading-templates' => 'Schabloune-Säiten ($1)',
@@ -1398,7 +1412,9 @@ $messages['lb'] = array(
 	'wikiafollowedpages-special-title' => 'Iwwerwaachte Säiten',
 	'wikiafollowedpages-special-delete-tooltip' => 'Dës Säit ewechhuelen',
 	'wikiafollowedpages-special-hidden-unhide' => 'Dës Lëscht net méi verstoppen.',
+	'wikiafollowedpages-special-blog-by' => 'vum $1',
 	'wikiafollowedpages-masthead' => 'Iwwerwaachte Säiten',
+	'wikiafollowedpages-following' => 'Iwwerwaachen',
 	'wikiafollowedpages-special-title-userbar' => 'Iwwerwaachte Säiten',
 	'prefs-wikiafollowedpages-prefs-advanced' => 'Erweidert Optiounen',
 	'prefs-wikiafollowedpages-prefs-watchlist' => 'Nëmmen Iwwerwaachungslëscht',
@@ -1939,6 +1955,13 @@ Vennligst kom på besøk og rediger ofte...
 <li>Vil du kontrollere hva slags e-post du får? Gå til <a href="{{fullurl:{{ns:special}}:Preferences}}">Brukerinnstillinger</a></li>
 </ul>
 </p>',
+);
+
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'wikiafollowedpages-userpage-more' => 'Mehner',
 );
 
 /** Polish (Polski)
@@ -2512,7 +2535,7 @@ $messages['sv'] = array(
 	'wikiafollowedpages-special-heading-mediawiki' => 'MediaWiki-sidor ($1)',
 	'wikiafollowedpages-special-heading-media' => 'Bilder och videoklipp ($1)',
 	'wikiafollowedpages-special-namespace' => '($1 sida)',
-	'wikiafollowedpages-special-empty' => 'Den här användarens lista på bevakade sidor är tom.
+	'wikiafollowedpages-special-empty' => 'Din lista på bevakade sidor är tom.
 Lägg till sidor i denna lista genom att klicka på "{{int:watch}}" överst på en sida.',
 	'wikiafollowedpages-special-anon' => 'Vänligen [[Special:Signup|logga in]] för att skapa eller visa din lista på bevakade sidor.',
 	'oasis-wikiafollowedpages-special-seeall' => 'Se alla >',

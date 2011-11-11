@@ -99,6 +99,14 @@ $messages['qqq'] = array(
 	'right-renameuser' => '{{doc-right}}',
 );
 
+/** толышә зывон (толышә зывон)
+ * @author Гусейн
+ */
+$messages['tly'] = array(
+	'userrenametool-confirm-yes' => 'Бәле',
+	'userrenametool-confirm-no' => 'Не',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  * @author SPQRobin
@@ -536,6 +544,22 @@ $messages['bn'] = array(
 	'userrenametool-log' => '{{PLURAL:$1|1 সম্পাদনা|$1 সম্পাদনাসমূহ}}। কারণ: $2',
 	'userrenametool-move-log' => 'যখন ব্যবহারকারী "[[User:$1|$1]]" থেকে "[[User:$2|$2]]" তে নামান্তরিত হবে তখন সয়ঙ্ক্রিয়ভাবে পাতা সরিয়ে নেওয়া হয়েছে',
 	'right-renameuser' => 'ব্যবহারকারীদের পুনরায় নাম দাও',
+);
+
+/** Tibetan (བོད་ཡིག)
+ * @author Freeyak
+ */
+$messages['bo'] = array(
+	'userrenametool' => 'སྤྱོད་མིའི་མིང་བརྗེ་བ།',
+	'renameuser' => 'སྤྱོད་མིང་བསྐྱར་འདོགས།',
+	'userrenametool-old' => 'ད་ཡོད་སྤྱོད་མིང་།',
+	'userrenametool-new' => 'སྤྱོད་མིའི་མིང་གསར་བ།',
+	'userrenametool-reason' => 'སྤྱོད་མིང་བརྗེ་བའི་རྒྱུ་མཚན།',
+	'userrenametool-warnings' => 'ཉེན་བརྡ།',
+	'userrenametool-confirm' => 'ལགས་སོ། སྤྱོད་མིང་བསྐྱར་འདོགས་བྱོས།',
+	'userrenametool-confirm-intro' => 'འདི་བྱེད་པ་སེམས་ཐག་ཡིན་ནམ།',
+	'userrenametool-confirm-yes' => 'ཡིན།',
+	'userrenametool-confirm-no' => 'མིན།',
 );
 
 /** Breton (Brezhoneg)
@@ -1352,13 +1376,17 @@ $messages['ga'] = array(
  * @author Toliño
  */
 $messages['gl'] = array(
+	'userrenametool' => 'Mudar o nome dun usuario',
 	'renameuser' => 'Mudar o nome do usuario',
+	'userrenametool-warning' => '<strong>Lea a seguinte información detidamente:</strong><p>Antes de mudar o nome dun usuario, asegúrese de que <strong>toda a información é correcta</strong> e de que <strong>o usuario sabe que pode levar algo de tempo completar o proceso</strong>.
+<br />Lembre que debido a algúns factores externos a primeira parte do proceso <strong>pode resultar nunha páxina baleira</strong>, que non significa que o proceso non se completase correctamente.</p><p>Pode seguir o progreso do proceso a través do [[Special:Stafflog|rexistro]]; ademais, <strong>o sistema enviará un correo electrónico en canto se complete o proceso</strong>.</p>',
 	'userrenametool-desc' => "Engade unha [[Special:UserRenameTool|páxina especial]] para renomear un usuario (cómpre ter o dereito de ''renomear usuarios'') e procesar todos os datos relacionados",
 	'userrenametool-old' => 'Nome de usuario actual:',
 	'userrenametool-new' => 'Novo nome de usuario:',
 	'userrenametool-reason' => 'Razón para mudar o nome:',
 	'userrenametool-move' => 'Mover as páxinas de usuario e de conversa (xunto coas subpáxinas) ao novo nome',
 	'userrenametool-reserve' => 'Reservar o nome de usuario vello para un uso posterior',
+	'userrenametool-notify-renamed' => 'Enviar un correo electrónico ao usuario ao rematar',
 	'userrenametool-warnings' => 'Avisos:',
 	'userrenametool-confirm' => 'Si, renomear este usuario',
 	'userrenametool-submit' => 'Mudar o nome de usuario',
@@ -1367,9 +1395,32 @@ $messages['gl'] = array(
 	'userrenametool-errorinvalid' => 'O nome de usuario "<nowiki>$1</nowiki>" non é válido.',
 	'userrenametool-errorinvalidnew' => 'O nome de usuario "<nowiki>$1</nowiki>" non é válido.',
 	'userrenametool-errortoomany' => 'O usuario "<nowiki>$1</nowiki>" ten {{PLURAL:$2|unha contribución|$2 contribucións}}; mudar o nome dun usuario con máis {{PLURAL:$3|dunha contribución|de $3 contribucións}} podería afectar negativamente ao rendemento do sitio.',
+	'userrenametool-errorprocessing' => 'O proceso de cambio de nome do usuario <nowiki>$1</nowiki> a <nowiki>$2</nowiki> xa está en curso.',
+	'userrenametool-errorblocked' => 'O usuario <nowiki>$1</nowiki> foi bloqueado por <nowiki>$2</nowiki> con este motivo: $3.',
+	'userrenametool-errorlocked' => 'O usuario <nowiki>$1</nowiki> está bloqueado.',
+	'userrenametool-errorbot' => 'O usuario <nowiki>$1</nowiki> é un bot.',
 	'userrenametool-error-request' => 'Houbo un problema coa recepción da solicitude.
 Volva atrás e inténteo de novo.',
 	'userrenametool-error-same-user' => 'Non pode mudar o nome dun usuario ao mesmo nome que tiña antes.',
+	'userrenametool-error-extension-abort' => 'Unha extensión impediu o proceso de cambio de nome.',
+	'userrenametool-error-cannot-rename-account' => 'Houbo un erro ao mudar o nome á conta de usuario na base de datos global.',
+	'userrenametool-error-cannot-create-block' => 'Houbo un erro ao crear o rexistro de inicio de sesión.',
+	'userrenametool-warn-repeat' => 'Atención! Ao usuario "<nowiki>$1</nowiki>" xa se lle mudou o nome por "<nowiki>$2</nowiki>".
+Continúe o proceso só se necesita actualizar información que falte.',
+	'userrenametool-warn-table-missing' => 'A táboa "<nowiki>$2</nowiki>" non existe na base de datos "<nowiki>$1</nowiki>".',
+	'userrenametool-info-started' => '$1 comezou a mudar o nome: $2 a $3 (rexistros: $4).
+Motivo: "$5".',
+	'userrenametool-info-finished' => '$1 rematou de mudar o nome: $2 a $3 (rexistros: $4).
+Motivo: "$5".',
+	'userrenametool-info-failed' => '$1 FALLOU ao mudar o nome: $2 a $3 (rexistros: $4).
+Motivo: "$5".',
+	'userrenametool-info-wiki-finished' => '$1 mudou o nome de $2 a $3 o $4.
+Motivo: "$5".',
+	'userrenametool-info-wiki-finished-problems' => '$1 mudou o nome de $2 a $3 o $4 con erros.
+Motivo: "$5".',
+	'userrenametool-info-in-progress' => 'O proceso de cambio de nome está en curso.
+O resto farase en segundo plano.
+Recibirá unha notificación a través do correo electrónico en canto remate.',
 	'userrenametool-success' => 'O usuario "<nowiki>$1</nowiki>" mudou o nome a "<nowiki>$2</nowiki>"',
 	'userrenametool-confirm-intro' => 'Está seguro de querer facelo?',
 	'userrenametool-confirm-yes' => 'Si',
@@ -1377,6 +1428,9 @@ Volva atrás e inténteo de novo.',
 	'userrenametool-page-exists' => 'A páxina "$1" xa existe e non pode ser sobrescrita automaticamente.',
 	'userrenametool-page-moved' => 'A páxina "$1" foi movida a "$2".',
 	'userrenametool-page-unmoved' => 'A páxina "$1" non pode ser movida a "$2".',
+	'userrenametool-finished-email-subject' => 'Proceso de cambio de nome completado por [$1]',
+	'userrenametool-finished-email-body-text' => 'Completouse o proceso de mover "<nowiki>$1</nowiki>" a "<nowiki>$2</nowiki>"',
+	'userrenametool-finished-email-body-html' => 'Completouse o proceso de mover "<nowiki>$1</nowiki>" a "<nowiki>$2</nowiki>"',
 	'userrenametool-logpage' => 'Rexistro de usuarios que mudaron o nome',
 	'userrenametool-logpagetext' => 'Este é un rexistro dos cambios nos nomes de usuario.',
 	'userrenametool-logentry' => 'mudou o nome de "$1" a "$2"',
@@ -1698,10 +1752,12 @@ Tu recipera notification via e-mail quando isto es complete.',
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author Aldnonymous
  * @author IvanLanin
  * @author Rex
  */
 $messages['id'] = array(
+	'userrenametool' => 'Ganti nama pengguna',
 	'renameuser' => 'Penggantian nama pengguna',
 	'userrenametool-desc' => "Mengganti nama pengguna (perlu hak akses ''renameuser'')",
 	'userrenametool-old' => 'Nama sekarang:',
@@ -1709,6 +1765,7 @@ $messages['id'] = array(
 	'userrenametool-reason' => 'Alasan penggantian nama:',
 	'userrenametool-move' => 'Pindahkan halaman pengguna dan pembicaraannya (berikut subhalamannya) ke nama baru',
 	'userrenametool-reserve' => 'Cadangkan nama pengguna lama sehingga tidak dapat digunakan lagi',
+	'userrenametool-notify-renamed' => 'Kirim surel saat pergantian nama pengguna selesai',
 	'userrenametool-warnings' => 'Peringatan:',
 	'userrenametool-confirm' => 'Ya, ganti nama pengguna tersebut',
 	'userrenametool-submit' => 'Simpan',
@@ -1719,10 +1776,15 @@ $messages['id'] = array(
 Penggantian nama pengguna dengan lebih dari $3 {{PLURAL:$3|kontribusi|kontribusi}} dapat menurunkan kinerja situs.',
 	'userrenametool-error-request' => 'Ada masalah dalam pemrosesan permintaan. Silakan kembali dan coba lagi.',
 	'userrenametool-error-same-user' => 'Anda tak dapat mengganti nama pengguna sama seperti asalnya.',
+	'userrenametool-error-extension-abort' => 'Pertambahan menghalangi proses mengubah nama',
 	'userrenametool-success' => 'Pengguna "<nowiki>$1</nowiki>" telah diganti namanya menjadi "<nowiki>$2</nowiki>"',
+	'userrenametool-confirm-intro' => 'Apakah anda yankin mau melakukan ini?',
+	'userrenametool-confirm-yes' => 'Ya',
+	'userrenametool-confirm-no' => 'Tidak',
 	'userrenametool-page-exists' => 'Halaman $1 telah ada dan tidak dapat ditimpa secara otomatis.',
 	'userrenametool-page-moved' => 'Halaman $1 telah dipindah ke $2.',
 	'userrenametool-page-unmoved' => 'Halaman $1 tidak dapat dipindah ke $2.',
+	'userrenametool-finished-email-subject' => 'Proses perubahan nama selesai untuk [$1]',
 	'userrenametool-logpage' => 'Log penggantian nama pengguna',
 	'userrenametool-logpagetext' => 'Di bawah ini adalah log penggantian nama pengguna',
 	'userrenametool-logentry' => 'telah mengganti nama $1 menjadi "$2"',

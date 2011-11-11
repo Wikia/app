@@ -113,6 +113,18 @@ $messages['ia'] = array(
 	'right-stafflog' => 'Pote vider le registro del personal',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Aldnonymous
+ */
+$messages['id'] = array(
+	'stafflog-desc' => 'Logging terpusat untuk staf',
+	'stafflog' => 'StaffLog',
+	'stafflog-blockmsg' => '$1 $2 mencoba untuk memblokir pengguna staf $3 di wiki $4 . Alasan: $5',
+	'stafflog-piggybackloginmsg' => '$1 mendukung - pengguna $2 login sebagai $3',
+	'stafflog-piggybacklogoutmsg' => '$1 mendukung - pengguna $2 logout akun $3',
+	'right-stafflog' => 'Dapat melihat stafflog',
+);
+
 /** Luxembourgish (Lëtzebuergesch) */
 $messages['lb'] = array(
 	'stafflog-desc' => 'Zentraliséiert Logge vun de Staff-Mataarbechter',
@@ -167,6 +179,13 @@ $messages['no'] = array(
 	'right-stafflog' => 'Kan vise ledelsesloggen',
 );
 
+/** Polish (Polski)
+ * @author Nandy
+ */
+$messages['pl'] = array(
+	'stafflog-blockmsg' => '$1 $2 próbował zablokować użytkownika z grupy Staff $3 na wiki $4. Powód: $5',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt
@@ -203,13 +222,15 @@ $messages['pt-br'] = array(
 
 /** Russian (Русский)
  * @author DCamer
+ * @author Eleferen
  */
 $messages['ru'] = array(
 	'stafflog-desc' => 'Централизованное ведение журнала для сотрудников',
 	'stafflog' => 'Журнал сотрудника',
 	'stafflog-blockmsg' => '$2 ($1) попытался заблокировать сотрудника $3 на вики $4. Причина: $5',
 	'stafflog-piggybackloginmsg' => 'Вход $1 — участник $2 представился как $3',
-	'stafflog-piggybacklogoutmsg' => 'Выход $1 - участник $2 завершил сеанс учётной записи $3',
+	'stafflog-piggybacklogoutmsg' => 'Выход $1 — участник $2 завершил сеанс учётной записи $3',
+	'right-stafflog' => 'Может просматривать журнал сотрудника',
 );
 
 /** Swedish (Svenska)

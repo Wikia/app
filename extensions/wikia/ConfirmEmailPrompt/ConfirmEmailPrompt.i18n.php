@@ -26,6 +26,22 @@ $messages['de'] = array(
 	'confirmemailprompt-error' => 'Ist das deine E-Mail-Adresse: <strong>$1</strong>? [[$2|Bestätige sie]] oder [[$3|ändere sie]].',
 );
 
+/** Spanish (Español)
+ * @author DJ Nietzsche
+ */
+$messages['es'] = array(
+	'confirmemailprompt-desc' => 'Muestra un mensaje de advertencia si el usuario tiene una dirección de correo electrónico no confirmada',
+	'confirmemailprompt-error' => '¿Es esta su dirección de correo electrónico?: <strong>$1</strong> ? [[$2| Confirmarla]] o [[$3|cambiarla]].',
+);
+
+/** Finnish (Suomi)
+ * @author VezonThunder
+ */
+$messages['fi'] = array(
+	'confirmemailprompt-desc' => 'Näyttää varoituksen, jos käyttäjällä on vahvistamaton sähköpostiosoite',
+	'confirmemailprompt-error' => 'Onko tämä sähköpostiosoitteesi: <strong>$1</strong>? [[$2|Vahvista se]] tai [[$3|muuta sitä]].',
+);
+
 /** French (Français)
  * @author Wyz
  */
@@ -40,6 +56,22 @@ $messages['fr'] = array(
 $messages['gl'] = array(
 	'confirmemailprompt-desc' => 'Mostra unha mensaxe de advertencia se o usuario ten un enderezo de correo electrónico non confirmado',
 	'confirmemailprompt-error' => 'É este o seu enderezo de correo electrónico: <strong>$1</strong>? [[$2|Confírmeo]] ou [[$3|modifíqueo]].',
+);
+
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'confirmemailprompt-desc' => 'Presenta un aviso si un usator ha un adresse de e-mail non confirmate',
+	'confirmemailprompt-error' => 'Es iste le adresse de e-mail tue: <strong>$1</strong>? [[$2|Confirma lo]] o [[$3|cambia lo]].',
+);
+
+/** Italian (Italiano)
+ * @author Leviathan 89
+ */
+$messages['it'] = array(
+	'confirmemailprompt-desc' => "Visualizza una notifica se l'utente ha un indirizzo e-mail non confermato",
+	'confirmemailprompt-error' => 'È questa la tua e-mail: <strong>$1</strong>? [[$2|Confermala]] o [[$3|cambiala]].',
 );
 
 /** Macedonian (Македонски)
@@ -83,10 +115,20 @@ $messages['pl'] = array(
 );
 
 /** Russian (Русский)
+ * @author DCamer
  * @author Kuzura
  */
 $messages['ru'] = array(
+	'confirmemailprompt-desc' => 'Отображает предупреждающее сообщение, если у пользователя не подтвержден адрес электронной почты.',
 	'confirmemailprompt-error' => 'Это ваш адрес электронной почты: <strong>$1</strong>? [[$2|подтвердить его]] или [[$3|изменить его]].',
+);
+
+/** Swedish (Svenska)
+ * @author WikiPhoenix
+ */
+$messages['sv'] = array(
+	'confirmemailprompt-desc' => 'Visar ett varningsmeddelande om en användare har en obekräftad e-postadress',
+	'confirmemailprompt-error' => 'Är detta din e-postadress: <strong>$1</strong>? [[$2|Bekräfta den]] eller [[$3|ändra den]].',
 );
 
 /** Vietnamese (Tiếng Việt)

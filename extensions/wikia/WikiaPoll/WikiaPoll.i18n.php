@@ -301,6 +301,26 @@ $messages['ia'] = array(
 	'wikiapoll-error-invalid-title' => 'Le texto del question es invalide.',
 );
 
+/** Italian (Italiano)
+ * @author Leviathan 89
+ */
+$messages['it'] = array(
+	'wikiapoll-desc' => 'Fornisce un modo semplice per creare e gestire sondaggi',
+	'wikiapoll-people-voted' => '{{PLURAL:$1|$1 persona ha|$1 persone hanno}} votato',
+	'wikiapoll-question' => '$1?',
+	'wikiapoll-thanks-for-vote' => 'Grazie!',
+	'wikiapoll-vote' => 'Vota!',
+	'wikiapoll-votes' => '{{PLURAL:$1|$1 voto|$1 voti}}',
+	'wikiapoll-createpoll-headline' => 'Crea sondaggio',
+	'wikiapoll-editpoll-headline' => 'Modifica sondaggio',
+	'wikiapoll-question-label' => 'Domanda',
+	'wikiapoll-addnewitem-label' => 'Aggiungi nuovo elemento',
+	'wikiapoll-cancel-label' => 'Annulla',
+	'wikiapoll-publish-label' => 'Pubblica',
+	'wikiapoll-error-duplicate' => 'Un sondaggio con quel nome esiste già.',
+	'wikiapoll-error-invalid-title' => 'Il testo della domanda non è valido.',
+);
+
 /** Latin (Latina)
  * @author Rsa23899
  */
@@ -330,6 +350,7 @@ $messages['mk'] = array(
 	'wikiapoll-thanks-for-vote' => 'Благодариме!',
 	'wikiapoll-vote' => 'Гласај!',
 	'wikiapoll-votes' => '{{PLURAL:$1|$1 глас|$1 гласа}}',
+	'wikiapoll-question-mark-after' => '?',
 	'wikiapoll-createpoll-headline' => 'Создај анкета',
 	'wikiapoll-editpoll-headline' => 'Уреди анкета',
 	'wikiapoll-question-label' => 'Прашање',
@@ -523,6 +544,26 @@ $messages['ru'] = array(
 	'wikiapoll-error-invalid-title' => 'Текст вопроса является недопустимым.',
 );
 
+/** Slovak (Slovenčina)
+ * @author Pitr2311
+ */
+$messages['sk'] = array(
+	'wikiapoll-desc' => 'Poskytuje jednoduchý spôsob, ako vytvoriť a spravovať ankety',
+	'wikiapoll-people-voted' => '{{PLURAL:$1|$1 človek hlasoval|$1 ľudia hlasovali|$1 ľudí hlasovalo}}',
+	'wikiapoll-question' => '$1?',
+	'wikiapoll-thanks-for-vote' => 'Ďakujeme!',
+	'wikiapoll-vote' => 'Hlasovať!',
+	'wikiapoll-votes' => '{{PLURAL:$1|$1 hlas|$1 hlasy|$1 hlasov}}',
+	'wikiapoll-createpoll-headline' => 'Vytvoriť anketu',
+	'wikiapoll-editpoll-headline' => 'Upraviť anketu',
+	'wikiapoll-question-label' => 'Otázka',
+	'wikiapoll-addnewitem-label' => 'Pridať novú položku',
+	'wikiapoll-cancel-label' => 'Zrušiť',
+	'wikiapoll-publish-label' => 'Publikovať',
+	'wikiapoll-error-duplicate' => 'Anketa s týmto názvom už existuje.',
+	'wikiapoll-error-invalid-title' => 'Text otázky nie je správny.',
+);
+
 /** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  */
@@ -551,10 +592,13 @@ $messages['sv'] = array(
 	'wikiapoll-thanks-for-vote' => 'Tack!',
 	'wikiapoll-vote' => 'Rösta!',
 	'wikiapoll-votes' => '{{PLURAL:$1|$1 röst|$1 röster}}',
+	'wikiapoll-createpoll-headline' => 'Skapa omröstning',
+	'wikiapoll-editpoll-headline' => 'Redigera omröstning',
 	'wikiapoll-question-label' => 'Fråga',
 	'wikiapoll-addnewitem-label' => 'Lägg till ett nytt objekt',
 	'wikiapoll-cancel-label' => 'Avbryt',
 	'wikiapoll-publish-label' => 'Publicera',
+	'wikiapoll-error-duplicate' => 'En omröstning med det namnet finns redan.',
 	'wikiapoll-error-invalid-title' => 'Frågetexten är ogiltig.',
 );
 

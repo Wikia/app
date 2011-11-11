@@ -94,8 +94,11 @@ $messages['fa'] = array(
 	'randomwiki' => 'ویکی تصادفی',
 );
 
-/** Finnish (Suomi) */
+/** Finnish (Suomi)
+ * @author VezonThunder
+ */
 $messages['fi'] = array(
+	'randomwiki-desc' => 'Antaa käyttäjien tutkia satunnaista wikiä',
 	'randomwiki' => 'Satunnainen wiki',
 );
 

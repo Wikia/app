@@ -217,6 +217,14 @@ $messages['pt-br'] = array(
 	'cacheepoch-no-wf' => 'O WikiFactory não está ativado nesta wiki. Não é possível alterar a wgCacheEpoch.',
 );
 
+/** Swedish (Svenska)
+ * @author WikiPhoenix
+ */
+$messages['sv'] = array(
+	'cacheepoch-submit' => 'Uppdatera värdet',
+	'cacheepoch-not-updated' => 'Misslyckades att uppdatera wgCacheEpoch.',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */

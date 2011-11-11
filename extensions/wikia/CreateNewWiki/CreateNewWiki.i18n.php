@@ -303,6 +303,7 @@ Hizivait dre PayPal evit kaout ur wiki nevez ouzhpenn evit $4.95 ar miz nemetken
  * @author Claudia Hattitten
  * @author George Animal
  * @author LWChris
+ * @author Quedel
  * @author Tiin
  */
 $messages['de'] = array(
@@ -373,6 +374,8 @@ Upgrade mit PayPal um ein werbefreies Wiki für nur $4,95 pro Monat zu bekommen!
 	'cnw-error-blocked-header' => 'Konto gesperrt',
 	'cnw-error-blocked' => 'Du wurdest von $1 gesperrt. Die Begründung lautet: $2. (Block-ID zu Referenzzwecken: $3)',
 	'cnw-error-torblock' => 'Das Erstellen von Wikis über das Tor-Netzwerk ist nicht erlaubt.',
+	'cnw-error-bot' => 'Wir haben festgestellt, dass dies wahrscheinlich ein Bot-Account ist. Wenn wir damit falsch liegen, kontaktiere uns bitte mit dem Hinweis, dass wir dich fälschlicherweise als Bot festgestellt haben. Dann können wir dir helfen. [http://www.wikia.com/Special:Contact/general Kontaktformular]',
+	'cnw-error-bot-header' => 'Du wurdest als Bot identifiziert.',
 );
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)
@@ -475,8 +478,12 @@ $messages['fa'] = array(
 
 /** Finnish (Suomi)
  * @author Tofu II
+ * @author VezonThunder
  */
 $messages['fi'] = array(
+	'cnw-next' => 'Seuraava',
+	'cnw-back' => 'Takaisin',
+	'cnw-or' => 'tai',
 	'cnw-name-wiki-label' => 'Nimeä wikisi',
 	'cnw-desc-wiki-submit-error' => 'Valitse luokka',
 	'cnw-upgrade-now' => 'Päivitä nyt',
@@ -556,6 +563,8 @@ Mettez à niveau via Paypal pour obtenir un wiki sans publicité pour seulement 
 	'cnw-error-blocked-header' => 'Compte bloqué',
 	'cnw-error-blocked' => 'Vous avez été bloqué par $1. La raison invoquée était : $2. (ID de blocage pour référence : $3)',
 	'cnw-error-torblock' => "Créer des wikis via le réseau Tor n'est pas autorisé.",
+	'cnw-error-bot' => 'Nous avons détecté que vous pouvez être un robot. Si nous nous sommes trompés, veuillez nous contacter en indiquant que vous avez été pris à tort pour un robot, nous vous aiderons alors à créer votre wiki : [http://www.wikia.com/Special:Contact/general Nous contacter].',
+	'cnw-error-bot-header' => 'Vous avez été détecté comme étant un robot',
 );
 
 /** Galician (Galego)
@@ -568,9 +577,11 @@ $messages['gl'] = array(
 	'cnw-or' => 'ou',
 	'cnw-title' => 'Crear un novo wiki',
 	'cnw-name-wiki-headline' => 'Comezar un wiki',
+	'cnw-name-wiki-creative' => 'Wikia é o mellor sitio para construír unha páxina web e facer medrar unha comunidade ao redor do tema que lle gusta.',
 	'cnw-name-wiki-label' => 'Déalle un nome ao seu wiki',
 	'cnw-name-wiki-wiki' => 'Wiki',
 	'cnw-name-wiki-domain-label' => 'Déalle un enderezo ao seu wiki',
+	'cnw-name-wiki-submit-error' => 'Vaites! Ten que encher as dúas caixas superiores para poder continuar.',
 	'cnw-login' => 'Rexistro',
 	'cnw-signup' => 'Crear unha conta',
 	'cnw-signup-prompt' => 'Necesita unha conta?',
@@ -579,30 +590,56 @@ $messages['gl'] = array(
 	'cnw-call-to-login' => 'Acceder ao sistema',
 	'cnw-auth-headline' => 'Rexistro',
 	'cnw-auth-headline2' => 'Rexistrarse',
+	'cnw-auth-creative' => 'Acceda á súa conta para continuar a construción do seu wiki.',
+	'cnw-auth-signup-creative' => 'Necesitará unha conta para continuar a construción do seu wiki.<br />Tardará soamente un minuto en completar o rexistro!',
 	'cnw-auth-facebook-signup' => 'Rexístrese co Facebook',
 	'cnw-auth-facebook-login' => 'Acceda co Facebook',
 	'cnw-desc-headline' => 'De que vai o seu wiki?',
 	'cnw-desc-creative' => 'Describa o seu tema',
 	'cnw-desc-placeholder' => 'Isto aparecerá na páxina principal do seu wiki.',
 	'cnw-desc-tip1' => 'Suxestión',
+	'cnw-desc-tip1-creative' => 'Use este espazo para contar á xente de que vai o wiki nunha ou dúas oracións',
 	'cnw-desc-tip2' => 'Consello',
+	'cnw-desc-tip2-creative' => 'Dea aos visitantes algúns detalles específicos sobre o tema',
 	'cnw-desc-tip3' => 'Consello de experto',
+	'cnw-desc-tip3-creative' => 'Faga saber á xente que poden axudar a que medre o wiki editando e engadindo páxinas',
 	'cnw-desc-choose' => 'Seleccione unha categoría',
-	'cnw-desc-select-one' => 'Seleccione un',
-	'cnw-desc-default-lang' => 'O seu wiki estará en $1',
+	'cnw-desc-select-one' => 'Seleccione unha',
+	'cnw-desc-default-lang' => 'O seu wiki será en $1',
 	'cnw-desc-change-lang' => 'cambiar',
 	'cnw-desc-lang' => 'Lingua',
 	'cnw-desc-wiki-submit-error' => 'Seleccione unha categoría',
 	'cnw-theme-headline' => 'Escolla un tema visual',
+	'cnw-theme-creative' => 'Escolla un dos temas visuais que hai a continuación; verá unha vista previa do tema cando o seleccione.',
+	'cnw-theme-instruction' => 'Tamén pode deseñar o seu propio tema visual máis tarde indo ata "As miñas ferramentas".',
 	'cnw-upgrade-headline' => 'Quere realizar a actualización?',
+	'cnw-upgrade-creative' => 'Se actualiza a Wikia Plus poderá eliminar os anuncios de <span class="wiki-name"></span>, unha oferta única dispoñible para os novos fundadores.',
+	'cnw-upgrade-marketing' => 'Wikia Plus é a solución ideal para:<ul>
+<li>Wikis profesionais</li>
+<li>Organizacións sen fins de lucro</li>
+<li>Familias</li>
+<li>Escolas</li>
+<li>Proxectos persoais</li>
+</ul>
+Faga a actualización a través do PayPal para conseguir un wiki libre de anuncios por 4,95$ ao mes!',
 	'cnw-upgrade-now' => 'Actualizar agora',
 	'cnw-upgrade-decline' => 'Non, grazas. Quero continuar ata o meu wiki',
 	'cnw-welcome-headline' => 'Parabéns! Creouse $1',
+	'cnw-welcome-instruction1' => 'Prema no botón que hai a continuación para comezar a engadir páxinas ao seu wiki.',
+	'cnw-welcome-instruction2' => 'Verá este botón ao longo do wiki; úseo cada vez que queira engadir unha nova páxina.',
+	'cnw-welcome-help' => 'Atope respostas, consellos e máis cousas na <a href="http://community.wikia.com">central da comunidade</a>.',
+	'cnw-error-general' => 'Algo foi mal durante a creación do seu wiki. Inténteo de novo máis tarde.',
 	'cnw-error-general-heading' => 'Erro durante a creación do novo wiki',
 	'cnw-error-database' => 'Erro na base de datos: $1',
 	'cnw-badword-header' => 'Vaites!',
+	'cnw-badword-msg' => 'Por favor, abstéñase de empregar palabras groseiras na descrición do seu wiki: $1',
 	'cnw-error-wiki-limit-header' => 'Alcanzouse o límite de wikis',
+	'cnw-error-wiki-limit' => 'Desculpe, hai un límite que impide crear máis de $1 wikis ao día. Agarde 24 horas antes de crear outro wiki.',
 	'cnw-error-blocked-header' => 'Conta bloqueada',
+	'cnw-error-blocked' => 'Foi bloqueado por $1. A razón que deu foi: $2. (ID do bloqueo para referencia: $3)',
+	'cnw-error-torblock' => 'Non está permitido crear wikis a través da rede Tor.',
+	'cnw-error-bot' => 'Detectamos que pode ser un bot. Se estamos equivocados, póñase en contacto con nós indicando que foi detectado de xeito erróneo como un bot e axudarémolo a crear o seu wiki: [http://www.wikia.com/Special:Contact/general Contacte con nós]',
+	'cnw-error-bot-header' => 'Detectamos que é un bot',
 );
 
 /** Hebrew (עברית)
@@ -770,10 +807,16 @@ Compra le actualisation per PayPal pro obtener un wiki sin publicitate pro solme
 	'cnw-welcome-help' => 'Trova responsas, consilios e plus in <a href="http://community.wikia.com">le centro del communitate</a>.',
 	'cnw-error-general' => 'Qualcosa errava durante le creation de tu wiki. Per favor reproba plus tarde.',
 	'cnw-error-general-heading' => 'Error de creation de nove wiki',
+	'cnw-error-database' => 'Error del base de datos: $1',
 	'cnw-badword-header' => 'Stop!',
 	'cnw-badword-msg' => 'Salute, per favor abstine te de usar le sequente parolas improprie o bannite in le description de tu wiki: $1',
 	'cnw-error-wiki-limit-header' => 'Limite de wikis attingite',
 	'cnw-error-wiki-limit' => 'Salute, tu es limitate al creation de $1 wikis per die. Attende 24 horas ante de crear un altere wiki.',
+	'cnw-error-blocked-header' => 'Conto blocate',
+	'cnw-error-blocked' => '$1 te ha blocate, specificante le motivo: $2. (Le ID del blocada pro referentia: $3)',
+	'cnw-error-torblock' => 'Le creation de wikis via le rete Tor non es permittite.',
+	'cnw-error-bot' => 'Nos ha detegite que tu pote esser un robot. Si nos ha facite un error, per favor contacta nos indicante que tu ha essite detegite falsemente como robot, e nos te adjutara a crear tu wiki: [http://www.wikia.com/Special:Contact/general Contactar nos]',
+	'cnw-error-bot-header' => 'Tu ha essite detegite como robot',
 );
 
 /** Ingush (ГІалгІай Ğalğaj)
@@ -1185,6 +1228,8 @@ Schaf uw upgrade aan via PayPal. Geen advertenties voor maar $4,95 per maand!",
 	'cnw-error-blocked-header' => 'Gebruiker geblokkeerd',
 	'cnw-error-blocked' => 'U bent geblokkeerd door $1. De reden die gegeven is: $2. (Blokkadenummer voor referentie: $3)',
 	'cnw-error-torblock' => "Wiki's aanmaken via het Tor Network is niet toegestaan.",
+	'cnw-error-bot' => 'We denken dat u wellicht een geautomatiseerd programma bent. Als deze aanname onjuist is, neem dan alstublieft [http://www.wikia.com/Special:Contact/general contact met ons op], en geef aan waarop u denk dat u onterecht bent aangemerkt als een robot. Dit stelt ons in staat u verder te helpen met het aanmaken van uw wiki.',
+	'cnw-error-bot-header' => 'U bent geïdentificeerd als een geautomatiseerd proces',
 );
 
 /** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
@@ -1319,6 +1364,7 @@ $messages['pl'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'cnw-next' => 'راتلونکی',
 	'cnw-or' => 'يا',
 	'cnw-title' => 'يو نوی ويکي جوړول',
 	'cnw-name-wiki-headline' => 'يو ويکي پيلول',
@@ -1685,11 +1731,16 @@ Uppgradera via PayPal för att få en reklamfri wiki för endast $4,95 per måna
 	'cnw-welcome-help' => 'Hitta svar, råd och mer på <a href="http://community.wikia.com">Community Central</a> .',
 	'cnw-error-general' => 'Någonting gick fel när du skapade din wiki. Var god försök igen senare.',
 	'cnw-error-general-heading' => 'Skapa ny Wiki-fel',
+	'cnw-error-database' => 'Databasfel: $1',
 	'cnw-badword-header' => 'Hallå där',
 	'cnw-badword-msg' => 'Hej, var god avstå från att använda dessa grova eller fula ord i beskrivningen av din wiki: $1',
 	'cnw-error-wiki-limit-header' => 'Wiki-gräns nådd',
 	'cnw-error-wiki-limit' => 'Hej, du är begränsad till $1 skapelser av wikis per dag. Vänta 24 timmar innan du skapar en annan wiki.',
 	'cnw-error-blocked-header' => 'Konto blockerat',
+	'cnw-error-blocked' => 'Du har blivit blockerad av $1. Anledningen var:  $2. (Blockerings-ID för referens: $3)',
+	'cnw-error-torblock' => 'Skapa wikis via Tor-nätverket är inte tillåtet.',
+	'cnw-error-bot' => 'Vi har upptäckt att du kan vara en bot. Om vi gjort ett misstag, kontakta oss och beskriv att du har felaktigt identifierats som en bot, och vi kommer att hjälpa dig med att skapa din wiki: [http://www.wikia.com/Special:Contact/general Kontakta oss]',
+	'cnw-error-bot-header' => 'Du har identifierats som en bot',
 );
 
 /** Telugu (తెలుగు)

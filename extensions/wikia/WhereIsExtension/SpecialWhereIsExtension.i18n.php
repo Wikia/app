@@ -126,12 +126,21 @@ $messages['br'] = array(
 );
 
 /** Catalan (Català)
+ * @author Gemmaa
  * @author Paucabot
  */
 $messages['ca'] = array(
 	'whereisextension' => "Extensió ''Where is''",
 	'whereisextension-submit' => 'Cerca',
+	'whereisextension-list' => 'Llista dels wikis amb criteris coincident',
+	'whereisextension-isset' => "s'estableix a",
 	'whereisextension-filter' => 'Filtre',
+	'whereisextension-all-groups' => 'Tots els grups',
+	'whereisextension-name-contains' => 'nom de la variable conté',
+	'whereisextension-search-like-value' => 'Com:',
+	'whereisextension-search-type' => 'Tipus:',
+	'whereisextension-search-type-bool' => 'Booleà',
+	'whereisextension-search-type-full' => 'Com',
 );
 
 /** Sorani (کوردی) */
