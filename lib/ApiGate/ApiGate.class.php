@@ -359,4 +359,18 @@ class ApiGate{
 		return $retVal;
 	} // end simpleQuery()
 
+	/**
+	 * Helper-function to grab a posted value with an optional default value (which itself defaults to empty-string).
+	 */
+	public static function getPost( $varName, $default='' ){
+		return ( isset($_POST[$varName]) ? $_POST[$varName] : $default );
+	} // end getPost()
+	
+	/**
+	 * Returns true if the string passed in is a valid format to be an email addr.
+	 */
+	public static function isValidEmail( $emailAddr ){
+		return ( preg_match('/^[a-z0-9._%+-]+@(?:[a-z0-9\-]+\.)+[a-z]{2,4}$/i', $emailAddr) !== 0 );
+	} // end isValidEmail()
+
 } // end class ApiGate

@@ -8,7 +8,8 @@
 	?>
 	<form method="post" action="">
 		<div>
-			<input type='hidden' name='formName' value='apiGate_updateKeyInfo'/>
+			<input type='hidden' name='formName' value='apiGate_apiKey_updateKeyInfo'/>
+			<input type='hidden' name='apiKey' value='<?= $apiKeyObject->getApiKey() ?>'/>
 			<?php
 				if( !empty($errorString ) ) {
 					?><div class='error'><?= $errorString ?></div><?php
@@ -19,6 +20,8 @@
 			<br/>
 			<span<?= $keyClass ?>><?= i18n( 'apigate-keyinfo-apiKey', $apiKeyObject->getApiKey() ); ?></span><br/>
 			<?php
+				/** Section for whether key is enabled and any associated ban messages / ban-logs. **/
+
 				if($apiKeyObject->isEnabled()){
 					$statusClass = "enabled";
 					$statusMsg = i18n('apigate-keyinfo-status-enabled');
@@ -35,7 +38,7 @@
 				if(!$apiKeyObject->isEnabled()){
 					$reasonBanned = $apiKeyObject->getReasonBanned();
 					$reasonBanned = ($reasonBanned == null ? i18n('apigate-keyinfo-no-reason-found') : $apiKeyObject->getReasonBanned() );
-					print "<div class='reasonDisabled'>\n" . i18n('apigate-keyinfo-reason-disabled', $reasonBanned) . "\n<br/>\n";
+					print "<div class='reasonDisabled'>\n" . i18n('apigate-keyinfo-reason-disabled', $reasonBanned) . "\n</div>\n";
 				}
 
 				// Always display the full banlog to admins if there are any events in it.
