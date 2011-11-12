@@ -31,7 +31,7 @@ class SponsorshipDashboardOutputChart extends SponsorshipDashboardOutputFormatte
 	const TEMPLATE_CHART = 'chart';
 	const TEMPLATE_CHART_EMPTY = 'chart_empty';
 
-	public function getHTML() {
+	public function getHTML( $setHtmlTitle=true ) {
 
 		wfProfileIn( __METHOD__ );
 		$wgTitle = $this->App->getGlobal('wgTitle');
@@ -43,7 +43,9 @@ class SponsorshipDashboardOutputChart extends SponsorshipDashboardOutputFormatte
 		$this->report->loadSources();
 		$aData = $this->getChartData();
 
-		$wgOut->setHTMLTitle( wfMsg( 'sponsorship-dashboard-report-page-title', $this->report->name ) );
+		if($setHtmlTitle){
+			$wgOut->setHTMLTitle( wfMsg( 'sponsorship-dashboard-report-page-title', $this->report->name ) );
+		}
 		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboard.scss' ) );
 
 		// TODO: REFACTOR: Use Nirvana instead of EasyTemplate.
