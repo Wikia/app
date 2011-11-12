@@ -22,18 +22,27 @@
 			<?php
 				/** Section for whether key is enabled and any associated ban messages / ban-logs. **/
 
-				if($apiKeyObject->isEnabled()){
-					$statusClass = "enabled";
-					$statusMsg = i18n('apigate-keyinfo-status-enabled');
+				// Display the status to users (as a mutable form if this is an Admin).
+				if(ApiGate_Config::isAdmin()){
+					$enabledSelected = ($apiKeyObject->isEnabled() ? " selected='selected'" : "" );
+					$disabledSelected = ($apiKeyObject->isEnabled() ? "" : " selected='selected'" );
+					$statusHtml = "<select name='enabled'>\n";
+					$statusHtml .= "<option value='1'$enabledSelected>".i18n('apigate-keyinfo-status-enabled')."</option>\n";
+					$statusHtml .= "<option value='0'$disabledSelected>".i18n('apigate-keyinfo-status-disabled')."</option>\n";
+					$statusHtml .= "</select> - ";
+					$statusHtml .= i18n( 'apigate-keyinfo-status-reasonforchange', "<input type='text' name='reason'/>" );
 				} else {
-					$statusClass = "disabled";
-					$statusMsg = i18n('apigate-keyinfo-status-disabled');
+					if($apiKeyObject->isEnabled()){
+						$statusClass = "enabled";
+						$statusMsg = i18n('apigate-keyinfo-status-enabled');
+					} else {
+						$statusClass = "disabled";
+						$statusMsg = i18n('apigate-keyinfo-status-disabled');
+					}
+					$statusHtml = "<span class='status $statusClass'>$statusMsg</span>";
 				}
-
-				// Display the status to users or a mutable form if this is an Admin.
-				$statusHtml = "<span class='status $statusClass'>$statusMsg</span>";
 				print i18n( 'apigate-keyinfo-status', $statusHtml );
-				
+
 				// If the key is disabled, show the user why.
 				if(!$apiKeyObject->isEnabled()){
 					$reasonBanned = $apiKeyObject->getReasonBanned();
@@ -42,7 +51,7 @@
 				}
 
 				// Always display the full banlog to admins if there are any events in it.
-				if(ApiGate_Config::isAdmin() && ($apiKeyObject->getReasonBanned() !== null)){
+				if( ApiGate_Config::isAdmin() ){
 					print "<div class='banLog'>\n" . i18n('apigate-keyinfo-banlog-heading') . "\n<br/>\n";
 					print $apiKeyObject->getBanLogHtml()."</div>\n";
 				}

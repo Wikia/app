@@ -81,6 +81,8 @@ class ApiGate_Config{
 		return $wgUser->getId();
 	} // end getUserId()
 	
+	public static function getUsername(){return self::getUserNameById( self::getUserId() );}
+	
 	/**
 	 * TODO: ApiGate should have some default for this which just returns the userId, and an overriding implementation should decide on its own
 	 * if it wants to make this do-able.  If ApiGate has its own system for creating users, then the default should be to get the username from the
