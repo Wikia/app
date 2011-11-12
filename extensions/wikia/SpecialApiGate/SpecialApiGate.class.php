@@ -533,7 +533,7 @@ class SpecialApiGate extends SpecialPage {
 		$oOutput->set( $oReport );
 
 		// to get HTML just call
-		$html = $oOutput->getHTML();
+		$html = $oOutput->getHTML( false ); // false stops it from setting the HTML <title> tag
 
 		wfProfileOut( __METHOD__ );
 		return $html;
