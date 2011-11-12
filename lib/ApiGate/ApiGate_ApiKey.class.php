@@ -15,6 +15,7 @@ class ApiGate_ApiKey {
 	private $firstName;
 	private $lastName;
 	private $reasonBanned = null; // lazy-loaded. Null if not loaded. If loaded and empty, it will be an empty-string.
+	private $loadNextBanLogFromMaster = false;
 	
 	public function getApiKey(){return $this->apiKey;}
 	public function getApiKeySqlSafe(){return mysql_real_escape_string($this->getApiKey(), ApiGate_Config::getSlaveDb());}
@@ -50,10 +51,16 @@ class ApiGate_ApiKey {
 	 */
 	public function getBanLogHtml(){
 		$html = "";
-		$dbr = ApiGate_Config::getSlaveDb();
+		
+		if( $this->loadNextBanLogFromMaster ){
+			$db = ApiGate_Config::getMasterDb();
+			$this->loadNextBanLogFromMaster = false;
+		} else {
+			$db = ApiGate_Config::getSlaveDb();
+		}
 		$queryString = "SELECT createdOn,action,username,reason FROM ".ApiGate::TABLE_BANLOG." WHERE apiKey='{$this->getApiKeySqlSafe()}'";
 		$queryString.= " ORDER BY createdOn DESC";
-		if( $result = mysql_query( $queryString, $dbr ) ){
+		if( $result = mysql_query( $queryString, $db ) ){
 			if(($numRows = mysql_num_rows($result)) && ($numRows > 0)){
 				$html .= "<ul>\n";
 				for($cnt=0; $cnt<$numRows; $cnt++){
@@ -70,7 +77,8 @@ class ApiGate_ApiKey {
 			}
 		} else {
 // TODO: PRINT SQL ERROR
-print "Error loading ban-log with query:<br/>$queryString<br/>mysql_error: ".mysql_error($dbr)."<br/>\n";
+print "Error loading ban-log with query:<br/>$queryString<br/>mysql_error: ".mysql_error($db)."<br/>\n";
+// TODO: PRINT SQL ERROR
 		}
 
 		if( $html == "" ){
@@ -81,21 +89,24 @@ print "Error loading ban-log with query:<br/>$queryString<br/>mysql_error: ".mys
 	} // end getBanLogHtml()
 
 	public function reloadFromDb(){
-		$this->loadFromDb( $this->getApiKey() );
+		$this->loadFromDb( $this->getApiKey(), true );
+		$this->loadNextBanLogFromMaster = true ;
 	} // end reloadFromDb()
 
 	/**
 	 * Tries to mutate this object to have all the traits of the apiKey defined in the parameters (as loaded from the
 	 * database).
 	 *
+	 * @param apiKey - string - the API key to load from the API Gate database.
+	 * @param useMaster - boolean - if true, this will use the master database to load the data (useful if you've made changes to the key on the exact same pageload).
 	 * @return boolean - true if the key was found & loaded, false if the key was not found in the database.
 	 */
-	public function loadFromDb( $apiKey ){
+	public function loadFromDb( $apiKey, $useMaster=false ){
 		$wasLoaded = false;
 
-		$dbr = ApiGate_Config::getSlaveDb();
-		$queryString = "SELECT * FROM ".ApiGate::TABLE_KEYS." WHERE apiKey='". mysql_real_escape_string($apiKey, $dbr) ."'";
-		if( $result = mysql_query( $queryString, $dbr ) ){
+		$db = ($useMaster ? ApiGate_Config::getMasterDb() : ApiGate_Config::getSlaveDb());
+		$queryString = "SELECT * FROM ".ApiGate::TABLE_KEYS." WHERE apiKey='". mysql_real_escape_string($apiKey, $db) ."'";
+		if( $result = mysql_query( $queryString, $db ) ){
 			if(($numRows = mysql_num_rows($result)) && ($numRows > 0)){
 				for($cnt=0; $cnt<$numRows; $cnt++){
 					$this->apiKey = $apiKey;
@@ -163,9 +174,6 @@ print "Error loading ban-log with query:<br/>$queryString<br/>mysql_error: ".mys
 					$email_1 = ApiGate::getPost('email_1');
 					$email_2 = ApiGate::getPost('email_2');
 					
-					// TODO: If this is an admin, also allow changing of the enabled/disabled field from this form.
-					// TODO: If this is an admin, also allow changing of the enabled/disabled field from this form.
-
 					// Validate input (should be same business logic as ApiGate_Register::processPost().
 					// TODO: REFACTOR: these rules to be in one function called from both here and from the registration form and which just modifies the errorString.
 					if("$firstName$lastName" == ""){
@@ -186,6 +194,27 @@ print "Error loading ban-log with query:<br/>$queryString<br/>mysql_error: ".mys
 						$queryString .= ", firstName='".mysql_real_escape_string( $firstName, $dbw )."'";
 						$queryString .= ", lastName='".mysql_real_escape_string( $lastName, $dbw )."'";
 						$queryString .= ", email='".mysql_real_escape_string( $email_1, $dbw )."'";
+
+						// If this is an admin, also allow changing of the enabled/disabled field from this form.
+						if( ApiGate_Config::isAdmin() ){
+							$enabled = intval( ApiGate::getPost('enabled') );
+							
+							$setToEnabled = ($enabled !== 0);
+							// If there was a change, update the log and apply it.
+							if( $setToEnabled != $apiKeyObject->isEnabled() ){
+								$queryString .= ", enabled='$enabled'";
+
+								$reason = ApiGate::getPost('reason');
+								$logQuery = "INSERT INTO ".ApiGate::TABLE_BANLOG." (apiKey, action, username, reason) VALUES (";
+								$logQuery .= "'".$apiKeyObject->getApiKeySqlSafe()."'";
+								$logQuery .= ", '".($setToEnabled?"enabled":"disabled")."'";
+								$logQuery .= ", '". mysql_real_escape_string( ApiGate_Config::getUsername(), $dbw ) ."'";
+								$logQuery .= ", 'MANUAL CHANGE: ". mysql_real_escape_string( $reason, $dbw )."'";
+								$logQuery .= ")";
+								ApiGate::sendQuery( $logQuery );
+							}
+						}
+
 						$queryString .= " WHERE apiKey='{$apiKeyObject->getApiKeySqlSafe()}'";
 						if( ApiGate::sendQuery( $queryString ) ){
 							ApiGate::sendQuery("COMMIT"); // MediaWiki was randomly not saving some rows without this (the registration queries, so I'm assuming it's the same everywhere).
