@@ -217,7 +217,7 @@ $smwgIgnoreQueryErrors = true; // Should queries be executed even if some errors
 $smwgQSubcategoryDepth = 10;  // Restrict level of sub-category inclusion (steps within category hierarchy)
 $smwgQSubpropertyDepth = 10;  // Restrict level of sub-property inclusion (steps within property hierarchy)
                               // (Use 0 to disable hierarchy-inferencing in queries)
-$smwgQEqualitySupport = SMW_EQ_SOME; // Evaluate #redirects as equality between page names, with possible
+if ( empty( $smwgQEqualitySupport ) ) $smwgQEqualitySupport = SMW_EQ_SOME; // Evaluate #redirects as equality between page names, with possible
                                      // performance-relevant restrictions depending on the storage engine
   // $smwgQEqualitySupport = SMW_EQ_FULL; // Evaluate #redirects as equality between page names in all cases
   // $smwgQEqualitySupport = SMW_EQ_NONE; // Never evaluate #redirects as equality between page names
