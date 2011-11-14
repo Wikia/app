@@ -1,0 +1,38 @@
+var WikiaLogger = {
+	level:0,
+	groups:[],
+	_enabled_cache:false
+};
+
+WikiaLogger.log = function(msg, level, group) {
+	if (!this._enabled_cache) {
+		return false;
+	}
+
+	if (typeof msg == 'undefined' || typeof level == 'undefined' || typeof group == 'undefined') {
+		return false;
+	}
+
+	if (level > this.level) {
+		return false;
+	}
+
+	if (this.groups.indexOf(group) == -1) {
+		return false;
+	}
+
+	$().log(msg, group);
+	return true;
+};
+
+WikiaLogger.init = function() {
+	this.level = parseInt($.getUrlVar('log_level') || $.cookies.get('log_level')) || 0;
+	this.groups = ($.getUrlVar('log_group') || $.cookies.get('log_group') || '').replace(' ', '').replace('|', ',').split(',') || [];
+	
+	if (this.level > 0 && this.groups.length > 0) {
+		$().log('initialized at level ' + this.level + ' for ' + this.groups.join(', '), 'WikiaLogger.g');
+		this._enabled_cache = true;
+	}
+};
+
+WikiaLogger.init();
