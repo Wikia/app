@@ -940,22 +940,34 @@ class ArticleCommentList {
 		$rcTitle = $rc->getAttribute('rc_title');
 		$rcNamespace = $rc->getAttribute('rc_namespace');
 		$title = Title::newFromText($rcTitle, $rcNamespace);
-
-		if (MWNamespace::isTalk($rcNamespace) && ArticleComment::isTitleComment($title)) {
+		
+		if( MWNamespace::isTalk($rcNamespace) && ArticleComment::isTitleComment($title) ) {
 			$parts = ArticleComment::explode($rcTitle);
 			
 			$titleMainArticle = Title::newFromText($parts['title'], MWNamespace::getSubject($rcNamespace));
 			
-			if ((defined('NS_BLOG_ARTICLE') && $rcNamespace == NS_BLOG_ARTICLE) ||
-				defined('NS_BLOG_ARTICLE_TALK') && $rcNamespace == NS_BLOG_ARTICLE_TALK ) {
-				$messageKey = 'article-comments-rc-blog-comment';
+			//fb#15143
+			if( $titleMainArticle instanceof Title ) {
+				if( (defined('NS_BLOG_ARTICLE') && $rcNamespace == NS_BLOG_ARTICLE) 
+				  || defined('NS_BLOG_ARTICLE_TALK') && $rcNamespace == NS_BLOG_ARTICLE_TALK ) {
+					$messageKey = 'article-comments-rc-blog-comment';
+				} else {
+					$messageKey = 'article-comments-rc-comment';
+				}
+				
+				$articleId = $title->getArticleId();
+				$articlelink = wfMsgExt($messageKey, array('parseinline'), $title->getFullURL("permalink=$articleId#comm-$articleId"),  $titleMainArticle->getText());
 			} else {
-				$messageKey = 'article-comments-rc-comment';
+			//it should never happened because $rcTitle is never empty,
+			//ArticleComment::explode() always returns an array with not-empty 'title' element,
+			//(both files: ArticleComments/classes/ArticleComments.class.php 
+			//and WallArticleComment/classes/ArticleComments.class.php have 
+			//the same definition of explode() method)
+			//and static constructor newFromText() should create a Title instance for $parts['title']
+				Wikia::log( __METHOD__, false, 'WALL_ARTICLE_COMMENT_ERROR: no main article title: '.print_r($parts, true).' namespace: '.$rcNamespace );
 			}
-			
-			$articleId = $title->getArticleId();
-			$articlelink = wfMsgExt($messageKey, array('parseinline'), $title->getFullURL("permalink=$articleId#comm-$articleId"),  $titleMainArticle->getText());
 		}
+		
 		return true;
 	}
 
