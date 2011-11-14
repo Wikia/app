@@ -852,7 +852,7 @@ class Wikia {
 	 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
 	 *
 	 * @param String $method     -- use __METHOD__
-	 * @param String $sub        -- if more in one method; default false
+	 * @param String $sub        -- sub-section name (if more than one in same method); default false
 	 * @param String $message    -- additional message; default false
 	 * @param Boolean $always    -- skip checking of $wgErrorLog and write log (or not); default false
 	 * @param Boolean $timestamp -- write timestamp before line; default false
@@ -863,6 +863,7 @@ class Wikia {
 
 		$method = $sub ? $method . "-" . $sub : $method;
 		if( $wgDevelEnvironment || $wgErrorLog || $always ) {
+			// Currently this goes to syslog1's /var/log/httpd-info.log
 			error_log( $method . ":{$wgDBname}/{$wgCityId}:" . $message );
 		}
 		/**
