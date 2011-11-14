@@ -3073,7 +3073,7 @@ class Article {
 		$hookAddedLogEntry = false;
 		wfRunHooks('ArticleDoDeleteArticleBeforeLogEntry', array(&$this, &$log, &$logtype, $this->mTitle, $reason, &$hookAddedLogEntry));
 		if( !$hookAddedLogEntry ) {
-		//if hook above didn't log anything log it as default
+			//if hook above didn't log anything log it as default
 			$log->addEntry( 'delete', $this->mTitle, $reason, array() );
 		}
 		/* Wikia change end */
