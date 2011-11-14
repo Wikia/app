@@ -41,6 +41,9 @@ class EditPageLayoutHelper {
 		// use "reskined" edit page layout
 		$this->fullScreen = $fullScreen;
 		if ($fullScreen) {
+			// All editors get dual mode
+			$this->setDualMode();
+
 			// set Oasis entry-point
 			Wikia::setVar('OasisEntryModuleName', 'EditPageLayout');
 		}
@@ -305,15 +308,11 @@ class EditPageLayoutHelper {
 	}
 
 	/**
-	 * Set global color profile long before the page loads.
+	 * Set dual mode for the editor (light/dark theming).
 	 */
-	public function onBeforeInitialize( &$title, &$article, &$output, &$user, $request, $mediaWiki ) {
-		if (BodyModule::isEditPage()) {
-			$profile = SassColorProfile::getInstance();
-			$profile->setDualMode(true);
-		}
-
-		return $output;
+	public function setDualMode() {
+		$profile = SassColorProfile::getInstance();
+		$profile->setDualMode(true);
 	}
 
 	/**
