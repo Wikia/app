@@ -56,7 +56,6 @@ $app->registerHook('EditForm:AfterDisplayingTextbox', 'EditPageLayoutHelper', 'o
 $app->registerHook('EditForm:BeforeDisplayingTextbox', 'EditPageLayoutHelper', 'onBeforeDisplayingTextbox');
 $app->registerHook('GetPreferences', 'EditPageLayoutHelper', 'onGetPreferences');
 $app->registerHook('LogEventsListShowLogExtract', 'EditPageLayoutHelper', 'onLogEventsListShowLogExtract');
-//$app->registerHook('BeforeInitialize', 'EditPageLayoutHelper', 'onBeforeInitialize');
 
 // messages
 $app->registerExtensionMessageFile('EditPageLayout', $dir . '/EditPageLayout.i18n.php');
