@@ -472,6 +472,12 @@
 				}
 				text-align: left;
 			}
+			// sections separator
+			.wikia-infobox-section-header {
+				border-top: 1px $color-page-border solid;
+				margin-top: 7px;
+				padding-top: 20px;
+			}
 		}
 
 		.wikia-infobox-image {
@@ -488,16 +494,6 @@
 
 		.wikia-infobox-caption { padding-bottom /*\**/: 10px\9 } // /** dirty IE hack, affects all versions till 8**/
 
-		// sections separator
-		.wikia-infobox-section {
-			th:first-child {
-				div {
-					border-top: 1px $color-page-border solid;
-					margin-top: 7px;
-					padding-top: 20px;
-				}
-			}
-		}
 	}
 }
 
