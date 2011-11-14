@@ -183,7 +183,7 @@ class WallHelper {
 		$app = F::app();
 		$app->wf->ProfileIn(__METHOD__);
 		
-		$comments = array($parentId);
+		$comments = array();
 		$commentsCount = 0;
 		
 		if( !is_null($parentId) ) {
