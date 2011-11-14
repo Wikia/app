@@ -213,12 +213,15 @@ var ThemeDesigner = {
 	},
 
 	toolBarInit: function() {
-		$("#Toolbar .history").click(function() {
-			$(this).find("ul").css("display", "block");
-			ThemeDesigner.track('previous/click');
-		}).find("ul").mouseleave(function() {
-			$(this).css("display", "none");
-                }).find("li").click(ThemeDesigner.revertToPreviousTheme);
+		$("#Toolbar .history")
+			.click(function() {
+				$(this).find("ul").css("display", "block");
+				ThemeDesigner.track('previous/click');
+			})
+			.find("ul").mouseleave(function() {
+				$(this).css("display", "none");
+			})
+			.find("li").click(ThemeDesigner.revertToPreviousTheme);
 	},
 
 	showPicker: function(event, type) {
@@ -674,8 +677,15 @@ var ThemeDesigner = {
 		if(reloadCSS) {
 
 			$().log('applySettings, reloadCSS');
+			
+			var settingsToLoad = ThemeDesigner.settings;
 
-			var sassUrl = $.getSassCommonURL('/skins/oasis/css/oasis.scss', ThemeDesigner.settings);
+			if (ThemeDesigner.settings['background-image-url']) {
+				$().log('Loading old background from history: ' + ThemeDesigner.settings['background-image-url']);
+				settingsToLoad['background-image'] = ThemeDesigner.settings['background-image-url'];
+			}
+
+			var sassUrl = $.getSassCommonURL('/skins/oasis/css/oasis.scss', settingsToLoad);
 			document.getElementById('PreviewFrame').contentWindow.ThemeDesignerPreview.loadSASS(sassUrl);
 		}
 
