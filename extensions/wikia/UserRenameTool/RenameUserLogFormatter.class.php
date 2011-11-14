@@ -7,7 +7,7 @@
  * @licence GNU General Public Licence 3.0 or later
  */
 class RenameUserLogFormatter {
-	static protected function getCommunityUser( $name, $noRedirect = false ) {
+	static public function getCommunityUser( $name, $noRedirect = false ) {
 		if (is_int($name))
 			$name = User::whoIs($name);
 		$title = GlobalTitle::newFromText($name, NS_USER, COMMUNITY_CENTRAL_CITY_ID);
@@ -24,7 +24,7 @@ class RenameUserLogFormatter {
 		)),"#{$taskId}",false);
 	}
 
-	static protected function getCityLink( $cityId ) {
+	static public function getCityLink( $cityId ) {
 		global $wgCityId, $wgSitename;
 		$domains = WikiFactory::getDomains( $cityId );
 		if ($wgCityId == $cityId) {
