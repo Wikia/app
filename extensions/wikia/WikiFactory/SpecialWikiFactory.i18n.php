@@ -57,6 +57,7 @@ $messages['en'] = array(
 	"closewiki-return" => "Back to $1",
 	'wikifactory-button-saveparse' => "Parse &amp; Save changes",
 	'wikifactory-button-save' => 'Save changes',
+        'wikifactory-public-status-change-default-reason' => 'Status changed from the Domains tab.',
 // metrics
 	"awc-metrics-language-top-list" => "de,en,es,fr,it,ja,pl,pt,pt-br,zh",
 	"awc-metrics-wikis" => "Display Wikis",

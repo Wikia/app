@@ -1498,7 +1498,7 @@ class WikiFactory {
 
 		wfProfileIn( __METHOD__ );
 
-		wfRunHooks( 'WikiFactoryPublicStatusChange', array( &$city_public, &$city_id ) );
+		wfRunHooks( 'WikiFactoryPublicStatusChange', array( &$city_public, &$city_id, $reason ) );
 
 		$update = array( 
 			"city_public" => $city_public,

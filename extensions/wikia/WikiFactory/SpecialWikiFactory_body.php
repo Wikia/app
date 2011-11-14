@@ -521,7 +521,7 @@ class WikiFactoryPage extends SpecialPage {
      */
 	private function doUpdateDomains( &$request ) {
 		$action = $request->getText( "wpAction", null );
-		$reason = $request->getText( "wpReason", "" );
+		$reason = $request->getText( "wpReason", wfMsg( 'wikifactory-public-status-change-default-reason' ) );
 		$message = "";
 		switch( $action ) {
 			case "status":

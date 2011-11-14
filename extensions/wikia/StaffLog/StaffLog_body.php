@@ -3,11 +3,20 @@
 class StaffLog extends SpecialPage
 {
 	var $request;
+        private $aTypes = array( 'piggyback', 'wikifactor' );
+        
 	function __construct(){
 		global $wgRequest;
 		$this->request = &$wgRequest;
 		parent::__construct( "stafflog","stafflog");
 		wfLoadExtensionMessages( 'StaffLog' );
+                $this->aTypes = array(
+                    '' => '',
+                    'block' => wfMsg( 'stafflog-filter-type-block' ),
+                    'piggyback' => wfMsg( 'stafflog-filter-type-piggyback' ),
+                    'renameuser' => wfMsg( 'stafflog-filter-type-renameuser' ),
+                    'wikifactor' => wfMsg( 'stafflog-filter-type-wikifactory' )
+                );
 	}
 	
 
@@ -21,7 +30,31 @@ class StaffLog extends SpecialPage
 		}
 
 		$pager = new StaffLoggerPager( "" );
+                
+                $sTypesDropDown = XML::openElement( 'select', array( 'name' => 'type', 'id' => 'StaffLogFilterType' ) );
+                
+                foreach ( $this->aTypes as $k => $v) {
+                    $sTypesDropDown .= XML::option( $v, $k, ( $k == $this->request->getText( 'type', '' ) ) );
+                }
+                
+                $sTypesDropDown .= XML::closeElement( 'select' );
+                
 		$wgOut->addHTML(
+                        XML::openElement( 'form', array( 'method' => 'get', 'action' => $this->getTitle()->getLocalURL() ) ) .
+                        XML::openElement( 'fieldset' ) .
+                        XML::element( 'legend', null, wfMsg( 'stafflog-filter-label' ), false ) .
+                        XML::inputLabel(
+                                wfMsg('stafflog-filter-user'),
+                                'user',
+                                'StaffLogFilterUser',
+                                false,
+                                htmlspecialchars( $this->request->getText( 'user', '' ), ENT_QUOTES, 'UTF-8' )
+                        ) .
+                        XML::label( wfMsg( 'stafflog-filter-type' ), 'StaffLogFilterType' ) . ' ' .
+                        $sTypesDropDown . ' ' .
+                        XML::submitButton( wfMsg( 'stafflog-filter-apply' ) ) .
+                        XML::closeElement( 'fieldset' ) .
+                        XML::closeElement( 'form' ) .
 			XML::openElement( 'div', array('class' => 'mw-spcontent') ) .
 			$pager->getNavigationBar() .
 			'<ul>' . $pager->getBody() . '</ul>' .
@@ -46,10 +79,23 @@ class StaffLoggerPager extends ReverseChronologicalPager {
 			}
 			$this->mOffset = $from;
 		}
+                
+                // filtering by type and by user name
+                $this->aConds = array();
+
+                $sType = $this->mRequest->getText( 'type', '' );
+                if ( !empty( $sType ) ) {
+                    $this->aConds['slog_type'] = $sType;
+                }
+                
+                $sUser = $this->mRequest->getText( 'user', '' );
+                if ( !empty( $sUser ) ) {
+                    $this->aConds['slog_user_name'] = $sUser;
+                }
 	}
 	
 	function getQueryInfo() {
-		return array(
+                $aOut = array(
 			'tables' => array( 'wikiastaff_log' ),
 			'fields' => array(	'slog_user_name',
 								'slog_user_namedst',
@@ -64,6 +110,10 @@ class StaffLoggerPager extends ReverseChronologicalPager {
 			//'conds' => array( 'cat_pages > 0' ), 
 			'options' => array( 'USE INDEX' => 'slog_time' ),
 		);
+                if ( !empty( $this->aConds ) ) {
+                    $aOut['conds'] = $this->aConds;
+                }
+                return $aOut;
 	}
 
 	function getIndexField() {
@@ -123,6 +173,9 @@ class StaffLoggerPager extends ReverseChronologicalPager {
 							  $linker->userLink($result->slog_user, $result->slog_user_name),
 							  $linker->userLink($result->slog_userdst, $result->slog_user_namedst)));
 				break;
+                        case 'wikifactor':
+                            $out = $time . ' ' . $result->slog_comment;
+                            break;
 			default:
 				$out = "";
 				wfRunHooks('StaffLog::formatRow',array($result->slog_type,$result,$time,$linker,&$out));

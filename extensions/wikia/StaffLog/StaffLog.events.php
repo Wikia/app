@@ -23,7 +23,8 @@ class StaffLogger {
 		global $wgHooks;
 		$wgHooks['BlockIpStaffPowersCancel'][] = 'StaffLogger::eventlogBlockIp';
 		$wgHooks['PiggybackLogOut'][] = 'StaffLogger::eventlogPiggybackLogOut';
-		$wgHooks['PiggybackLogIn'][] = 'StaffLogger::eventlogPiggybackLogIn'; 
+		$wgHooks['PiggybackLogIn'][] = 'StaffLogger::eventlogPiggybackLogIn';
+                $wgHooks['WikiFactoryPublicStatusChange'][] = 'StaffLogger::eventlogWFPublicStatusChange';
 	}
 
 	static public function eventlogPiggybackLogIn($user,$userdst) {
@@ -40,5 +41,19 @@ class StaffLogger {
 		self::log("block","block",$user->getID(),$user->getName(),$block->mUser,$block->mAddress,$block->mReason);
 		return true;
 	}
+        
+        static public function eventlogWFPublicStatusChange( $cityStatus, $cityId, $reason ) {
+            global $wgUser;
+            $comment = wfMsgForContent(
+                    'stafflog-wiki-status-change',
+                    RenameUserLogFormatter::getCommunityUser( $wgUser->getName() ),
+                    RenameUserLogFormatter::getCityLink( $cityId ),
+                    $cityStatus,
+                    $reason
+            );
+            // sadly, $type and $action have 10-character limit, hence 'wikifactor' and 'pubstatus'.
+            self::log( 'wikifactor', 'pubstatus', $wgUser->getID(), $wgUser->getName(), '', '',  $comment );
+            return true;
+        }
 }
 StaffLogger::setupStafflog();
