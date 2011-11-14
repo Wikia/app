@@ -121,6 +121,11 @@ Liftium.buildChain = function(slotname) {
 		return false;
 	}
 
+	if (typeof top.wgEnableAdMeldAPIClient != 'undefined' && top.wgEnableAdMeldAPIClient) {
+		Liftium.d('Calling AdMeldAPIClient.adjustLiftiumChain for ' + size, 3);
+		top.AdMeldAPIClient.adjustLiftiumChain(Liftium.config.sizes[size]);
+	}
+
 	Liftium.setAdjustedValues(Liftium.config.sizes[size]);
 
 	// Sort the chain. Done client side for better caching and randomness
