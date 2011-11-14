@@ -117,19 +117,23 @@ class WallHelper {
 		if( empty($parent) ) {
 		//parent
 			$metaTitle = $wmessage->getMetaTitle();
-			if( !empty($metaTitle) ) // TODO FIXME
-				$item['title'] = $wmessage->getMetaTitle();
-			else
-				$item['title'] = wfMsg('wall-no-title');
+			if( !empty($metaTitle) ) {
+				$item['title'] = $metaTitle;
+			} else {
+				$wmessage->load();
+				$metaTitle = $wmessage->getMetaTitle();
+				$item['title'] = empty($metaTitle) ? wfMsg('wall-no-title') : $metaTitle;
+			}
+			
 			$item['url'] = $wmessage->getMessagePageUrl();
-			$res['title'] = 'message-wall-thread-'.urlencode($item['title']).'#'.$title->getArticleID();
+			$res['title'] = 'message-wall-thread-#'.$title->getArticleID();
 		} else {
 		//child
 			$parent->load();
 			$title = wfMsg('wall-no-title'); // in case metadata does not include title field
-			if(isset($parent->mMetadata['title'])) $title = $wmessage->getMetaTitle();
+			if( isset($parent->mMetadata['title']) ) $title = $wmessage->getMetaTitle();
 			$this->mapParentData($item, $parent, $title);
-			$res['title'] = 'message-wall-thread-'.urlencode($title).'#'.$parent->getTitle()->getArticleID();
+			$res['title'] = 'message-wall-thread-#'.$parent->getTitle()->getArticleID();
 		}
 		
 		$app->wf->ProfileOut(__METHOD__);
@@ -151,9 +155,9 @@ class WallHelper {
 		
 		$metaTitle = $parent->getMetaTitle();
 		
-		if(!empty($metaTitle)){
+		if( !empty($metaTitle) ) {
 			$item['title'] = $metaTitle;
-		}else{
+		} else {
 			$item['title'] = wfMsg('wall-no-title');
 		}
 		$item['url'] = $parent->getMessagePageUrl();
@@ -179,8 +183,9 @@ class WallHelper {
 		$app = F::app();
 		$app->wf->ProfileIn(__METHOD__);
 		
-		$comments = array();
+		$comments = array($parentId);
 		$commentsCount = 0;
+		
 		if( !is_null($parentId) ) {
 			$parent = F::build('ArticleComment', array($parentId), 'newFromId');
 			
@@ -194,7 +199,7 @@ class WallHelper {
 				);
 			}
 			
-			$commentList = F::build('ArticleCommentList', array(($parent->getTitle())), 'newFromTitle');
+			$commentList = F::build('ArticleCommentList', array($parent->getTitle()), 'newFromTitle');
 			$commentList->setId($parentId);
 			$data = $commentList->getData();
 			
@@ -239,23 +244,28 @@ class WallHelper {
 		$items = array();
 		$i = 0;
 		foreach($comments as $comment) {
-			$data = $comment->getData(false, null, 30);
-			
-			$items[$i]['avatar'] = $data['avatarSmall'];
-			$items[$i]['user-profile-url'] = $data['userurl'];
-			$user = User::newFromName($data['author']->getName());
-			if($user)
-				$items[$i]['real-name'] = $user->getRealName();
-			else
-				$items[$i]['real-name'] = '';
-			$items[$i]['author'] = $data['username'];
-			$items[$i]['wall-comment'] = $this->shortenText($this->strip_wikitext($data['rawtext'])).'&nbsp;';
-			$items[$i]['timestamp'] = $data['rawmwtimestamp'];
-			if(User::isIP( $data['username']) ) {
-				$items[$i]['user-profile-url'] = Skin::makeSpecialUrl('Contributions').'/'.$data['username'];
-				$items[$i]['real-name'] = wfMsg('oasis-anon-user');
+			if( $comment instanceof ArticleComment ) {
+				$data = $comment->getData(false, null, 30);
+				
+				$items[$i]['avatar'] = $data['avatarSmall'];
+				$items[$i]['user-profile-url'] = $data['userurl'];
+				$user = User::newFromName($data['author']->getName());
+				if($user)
+					$items[$i]['real-name'] = $user->getRealName();
+				else
+					$items[$i]['real-name'] = '';
+				$items[$i]['author'] = $data['username'];
+				$items[$i]['wall-comment'] = $this->shortenText($this->strip_wikitext($data['rawtext'])).'&nbsp;';
+				$items[$i]['timestamp'] = $data['rawmwtimestamp'];
+				if(User::isIP( $data['username']) ) {
+					$items[$i]['user-profile-url'] = Skin::makeSpecialUrl('Contributions').'/'.$data['username'];
+					$items[$i]['real-name'] = wfMsg('oasis-anon-user');
+				}
+				$i++;
+			} else {
+			//just in-case: all elements of $comments are should be instances of ArticleComments
+				Wikia::log(__METHOD__, false, 'WALL_HELPER_ERROR: an element is not ArticleComments instance: '.print_r($comment, true) );
 			}
-			$i++;
 		}
 		unset($data);
 		
