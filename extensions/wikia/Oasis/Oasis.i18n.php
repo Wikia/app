@@ -184,11 +184,7 @@ $messages['en'] = array(
 	'oasis-navigation-v2-level2-validation' => 'Oops! Your Level 2 menu is too wide. Please shorten the items to fit. Thanks!',
 	'oasis-navigation-v2-level12-validation' => 'Oops! Your Level 1 and Level 2 menus are too wide. Please edit them to fit.',
 	'oasis-navigation-v2-validation-next' => 'Next',
-	'wikia-navigation-global' => "*<nowiki>On the Wiki</nowiki>
-**Special:WikiActivity|Wiki Activity
-**Special:Random|Random Page
-**Special:NewFiles|New Photos
-**Special:Chat|Chat",
+	'on-the-wiki' => 'On the Wiki',
 );
 
 /** Message documentation (Message documentation)
@@ -265,6 +261,7 @@ Example output: edited by Avatar 3 hours ago',
 
 Example output: deleted by Avatar 3 hours ago',
 	'oasis-wiki-navigation' => '[[Thread:Support/About Wikia:Oasis-wiki-navigation/en|Parameter $1 is the name of the wiki, e.g. "Muppet Wiki".]]',
+	'on-the-wiki' => 'Name of the first tab of wiki navigation menu',
 );
 
 /** Afrikaans (Afrikaans)
@@ -2997,6 +2994,7 @@ $messages['pl'] = array(
 	'oasis-navigation-v2-edit-wikia-local-menu' => 'Edytuj lokalne menu Wikii',
 	'oasis-navigation-v2-edit-wikia-global-menu' => 'Edytuj globalne menu Wikii',
 	'oasis-navigation-v2-edit-this-menu' => 'Edytuj nawigację',
+	'on-the-wiki' => 'Na Wiki',
 );
 
 /** Piedmontese (Piemontèis)
