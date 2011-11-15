@@ -72,6 +72,7 @@ var UploadPhotos = {
 
 				var license = $(this).val();
 				if(license == ""){
+					// user selected first option or a disabled option
 					$(this).attr('selectedIndex', 0);
 					UploadPhotos.wpLicenseTarget.html("");
 					return;
