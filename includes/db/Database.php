@@ -531,6 +531,7 @@ abstract class DatabaseBase {
 
 		# Try reconnecting if the connection was lost
 		if ( false === $ret && $this->wasErrorReissuable() ) {
+			$oldTrxLevel = $this->mTrxLevel;
 			# Transaction is gone, like it or not
 			$this->mTrxLevel = 0;
 			wfDebug( "Connection lost, reconnecting...\n" );
@@ -540,6 +541,8 @@ abstract class DatabaseBase {
 				$sqlx = strtr( $sqlx, "\t\n", '  ' );
 				global $wgRequestTime;
 				$elapsed = round( microtime(true) - $wgRequestTime, 3 );
+				Wikia::log(__METHOD__."[reconnect1] srv={$this->mServer} db={$this->mDBname} trx=$oldTrxLevel uri={$_SERVER['QUERY_STRING']}");
+				Wikia::log(__METHOD__."[reconnect2] sql=$sqlx");
 				wfLogDBError( "Connection lost and reconnected after {$elapsed}s, query: $sqlx\n" );
 				$ret = $this->doQuery( $commentedSql );
 			} else {
