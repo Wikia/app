@@ -11,6 +11,33 @@ class ContactForm extends SpecialPage {
 	var $err, $errInputs;
 	var $secDat;
 
+	var $customForms = array(
+		'account-issue' => array(
+			'format' => "User reports a problem with his account (%s) on this wiki:\n%s\n\nDescription of issue:\n%s",
+			'vars' => array( 'wpUserName', 'wpWiki', 'wpDescription' ),
+		),
+
+		'close-account' => array(
+			'format' => "User requested his account \"%s\" to be disabled.\n\nhttp://community.wikia.com/wiki/Special:EditAccount/%s",
+			'vars' => array( 'wpUserName' ),
+		),
+
+		'rename-account' => array(
+			'format' => "User requested his username to be changed from \"%s\" to \"%s\".\n\nhttp://community.wikia.com/wiki/Special:UserRenameTool",
+			'vars' => array( 'wpUserName', 'wpUserNameNew' ),
+		),
+
+		'bad-ad' => array(
+			'format' => "User reports a problem with ad visible here:\n%s\n\nDescription of the problem:\n%s",
+			'vars' => array( 'wpUserName', 'wpWiki', 'wpDescription' ),
+		),
+
+		'bug' => array(
+			'format' => "User %s reports a problem with feature \"%s\".\n\nURL to problem page:\n%s\n\nDescription of issue:\n\n%s",
+			'vars' => array( 'wpUserName', 'wpWiki', 'wpDescription' ),
+		)
+	);
+
 	function  __construct() {
 		parent::__construct( "Contact" , '' /*restriction*/);
 		wfLoadExtensionMessages("ContactForm2");
@@ -19,9 +46,8 @@ class ContactForm extends SpecialPage {
 	function execute( $par ) {
 		global $wgLang, $wgAllowRealName, $wgRequest;
 		global $wgOut, $wgExtensionsPath, $wgStyleVersion;
-		global $wgUser;
+		global $wgUser, $wgCaptchaClass;
 
-		//$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/SpecialContact/SpecialContact.css?{$wgStyleVersion}");
 		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/SpecialContact2/SpecialContact.scss'));
 		$extPath = F::app()->wg->extensionsPath;
 		F::app()->wg->out->addScript( "<script src=\"{$extPath}/wikia/SpecialContact2/SpecialContact.js\"></script>" );
@@ -36,10 +62,10 @@ class ContactForm extends SpecialPage {
 		$this->mBrowser = $wgRequest->getText( 'wpBrowser' );
 		$this->mCCme = $wgRequest->getCheck( 'wgCC' );
 
-		if( $this->mPosted && ('submit' == $this->mAction ) ) {
+		if( $this->mPosted ) {
 			
-			if( !$wgUser->isLoggedIn() ){
-				$captchaObj = new FancyCaptcha();
+			if( $wgUser->isAnon() && class_exists( $wgCaptchaClas ) ){
+				$captchaObj = new $wgCaptchaClass();
 				$captchaObj->retrieveCaptcha();
 				$info = $captchaObj->retrieveCaptcha();
 			}
@@ -49,7 +75,19 @@ class ContactForm extends SpecialPage {
 			$this->mRealName = $wgRequest->getText( 'wpContactRealName' );
 			$this->mWhichWiki = $wgRequest->getText( 'wpContactWikiName' );
 			#sibject still handled outside of post check, because of existing hardcoded prefill links
-			$this->mProblemDesc = $wgRequest->getText( 'wpContactDesc' ); //body
+			
+			// handle custom forms
+			if ( !empty( $par ) && array_key_exists( $par, $this->customForms ) ) {
+				foreach ( $this->customForms[$par]['vars'] as $var ) {
+					$args[] = $wgRequest->getVal( $var );
+				}
+
+				$messageText = vsprintf( $this->customForms[$par]['format'], $args );
+
+				$this->mProblemDesc = $messageText;
+			} else {
+				$this->mProblemDesc = $wgRequest->getText( 'wpContactDesc' ); //body
+			}
 
 			#malformed email?
 			if (!User::isValidEmailAddr($this->mEmail)) {
@@ -65,7 +103,7 @@ class ContactForm extends SpecialPage {
 			
 			#captcha
 			if(!$wgUser->isLoggedIn()){ // logged in users don't need the captcha (RT#139647)
-				if(!( !empty($info) &&  $captchaObj->keyMatch( $wgRequest->getVal('wpCaptchaWord'), $info )))  {
+				if( class_exists( $wgCaptchaClass ) && !( !empty($info) &&  $captchaObj->keyMatch( $wgRequest->getVal('wpCaptchaWord'), $info )))  {
 					$this->err[].= wfMsg('specialcontact-captchafail');
 					$this->errInputs['wpCaptchaWord'] = true; 
 				}
@@ -101,7 +139,7 @@ class ContactForm extends SpecialPage {
 	 */
 	function processCreation() {
 		global $wgUser, $wgOut, $wgCityId, $wgSpecialContactEmail;
-		global $wgLanguageCode;
+		global $wgLanguageCode, $wgRequest;
 
 		// If not configured, fall back to a default just in case.
 		$wgSpecialContactEmail = (empty($wgSpecialContactEmail)?"community@wikia.com":$wgSpecialContactEmail);
@@ -151,7 +189,18 @@ class ContactForm extends SpecialPage {
 
 		#to us, from user
 		$subject = wfMsg('specialcontact-mailsub') . (( !empty($this->mProblem) )? ' - ' . $this->mProblem : '');
-		$error = UserMailer::send( $mail_community, $mail_user, $subject, $body, $mail_user, null, 'SpecialContact' );
+
+		$screenshot = $wgRequest->getFileTempname( 'wpScreenshot' );
+
+		if ( !empty( $screenshot ) ) {
+			$body .= "\n\nScreenshot attached.";
+
+			$error = UserMailer::sendWithAttachment( $mail_community, $subject, array( $wgRequest->getFileTempname( 'wpScreenshot' ) ), $mail_user, $mail_user, $body );
+		} else {
+			die( 'no screenshot' );
+			$error = UserMailer::send( $mail_community, $mail_user, $subject, $body, $mail_user, null, 'SpecialContact' );
+		}
+
 		if (WikiError::isError($error)) {
 			$errors .= "\n" . $error->getMessage();
 		}

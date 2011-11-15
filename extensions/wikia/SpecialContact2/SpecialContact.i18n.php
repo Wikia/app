@@ -173,7 +173,7 @@ If you prefer to use regular e-mail or have attachments, you can contact us at [
 	'specialcontact-noform-footer' => "'''Does this page answer your question?''' If not, please feel free to [[Special:contact/general|contact us]] to discuss your issue further. Remember you can always check out our '''[[w:c:help|help pages]]''', [[w:c:community:Blog:Wikia_Staff_Blog|staff blog]]  or post on our '''[[w:c:community:Forum:Community_Central_Forum|community help forums]]'''. If you are looking for admin help and advice, stop by [[w:c:community:Admin_Central:Main_Page|Founder & Admin Central]].",
 
 	/* form */
-	'specialcontact-username' => 'Username',
+	'specialcontact-username' => 'Please enter your username',
 	'specialcontact-wikiname' => 'Which wiki',
 	'specialcontact-realname' => 'Your name',
 	'specialcontact-yourmail' => 'Your email',
@@ -187,6 +187,20 @@ If you prefer to use regular e-mail or have attachments, you can contact us at [
 	'specialcontact-captchainfo' => 'Please enter the text in the image.',
 	'specialcontact-captchatitle' => 'Blurry word',
 	'specialcontact-formtitle' => 'Contact Wikia Support Staff',
+	'specialcontact-label-screenshot' => 'Did you take a screenshot? If so, please upload here.',
+	'specialcontact-label-ba-ad-description' => 'Please describe the problem with the ad',
+	'specialcontact-label-bad-ad-link' => 'Please provide a link to the page where you saw the bad ad',
+	'specialcontact-label-bug-link' => 'Please provide a link to the page where you are having the problem',
+	'specialcontact-label-bug-feature' => 'What feature is this related to?',
+	'specialcontact-label-bug-description' => 'Please describe the problem you are having',	
+	'specialcontact-label-close-account-confirm' => 'Do you confirm that you want to disable your account at this time?',	
+	'specialcontact-label-close-account-read-help' => 'Have you read the [[Help:Close_my_account|help page on closing your account]]?',
+	'specialcontact-label-account-issue-description' => 'Please provide a detailed description of the issue you are having.',	
+	'specialcontact-label-rename-newusername' => 'Please enter the new username',
+	'specialcontact-label-rename-account-confirm' => 'You confirm that you the spelling and punctuation for your new name is correct?',
+	'specialcontact-lable-rename-account-read-help' => 'Have you read the [[Help:Changing your username|help page on renaming your account]] and understand you can rename your account only once?',
+	'specialcountact-form-header' => 'Contact Wikia',
+
 	/* errors */
 	'specialcontact-nomessage' => 'Please fill in a message',
 	'specialcontact-captchafail' =>	'Incorrect or missing confirmation code.',
