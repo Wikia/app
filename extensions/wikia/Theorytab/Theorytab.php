@@ -31,7 +31,7 @@ $wgNamespacesWithSubpages[NS_MAIN] = true;
 $wgHooks['SkinTemplateTabs'][] = 'efTheoryTabHook';
 
 // add a tab on the article page
-function efTheoryTabHook(&$skin , &$content_actions ) {
+function efTheoryTabHook( $skin , &$content_actions ) {
 	global $wgTitle;
 
 	wfLoadExtensionMessages('Theorytab');
@@ -46,10 +46,10 @@ function efTheoryTabHook(&$skin , &$content_actions ) {
 
 
 //create the theory tab for regular articles in NS_MAIN namespace
-if ( $wgTitle->getNamespace() == NS_MAIN 
+if ( $wgTitle->getNamespace() == NS_MAIN
      && $wgTitle->getArticleId() !== Title::newMainPage()->getArticleId()
      && strstr($wgTitle->getLocalUrl(''),$tTheory) == FALSE ) {
-  
+
   $content_actions['TheoryTab'] = array(
     'class' => "",
     'text'  => $tTheoryTabName,
@@ -58,9 +58,9 @@ if ( $wgTitle->getNamespace() == NS_MAIN
 
 //If already on the theory page, make a tab for the parent article.
   } else if ( strstr($wgTitle->getLocalUrl(''),$tTheory) == TRUE
-     && $wgTitle->getNamespace() == 0 
+     && $wgTitle->getNamespace() == 0
      && $wgTitle->getArticleId() !== Title::newMainPage()->getArticleId() ) {
-  
+
   $tMain = substr_replace ($tMain, '', -(strlen($tTheory)));
   $content_actions['TheoryTab'] = array(
     'class' => "",
