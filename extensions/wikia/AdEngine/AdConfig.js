@@ -225,7 +225,7 @@ AdConfig.DART.getUrl = function(slotname, size, useIframe, adProvider) {
 		AdConfig.DART.getCategories() +
 		AdConfig.DART.getLocKV(slotname) +
 		AdConfig.DART.getDcoptKV(slotname) +
-		((typeof wgEnableAdMeldAPIClient != 'undefined' && wgEnableAdMeldAPIClient) ? AdMeldAPIClient.getParamForDART(slotname) : 'admeld=-1;') +
+		((typeof wgEnableAdMeldAPIClient != 'undefined' && wgEnableAdMeldAPIClient) ? AdMeldAPIClient.getParamForDART(slotname) : '') +
 		mtfIFPath +
 		'src=' + src + ';' +
 		'sz=' + size + ';' +
