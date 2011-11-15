@@ -448,8 +448,8 @@ AdConfig.DART.getHostnamePrefix = function (hostname) {
 }
 
 AdConfig.DART.getTitle = function(){
-	if (typeof wgPageName != 'undefined' && wgPageName) {
-		return "wpage=" + encodeURIComponent(wgPageName) + ";";
+	if (window.wgPageName) {
+		return "wpage=" + encodeURIComponent(wgPageName.toLowerCase()) + ";";	// DFP lowercases values of keys
 	} else {
 		return "";
 	}
