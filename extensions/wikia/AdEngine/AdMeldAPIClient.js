@@ -1,13 +1,13 @@
 var AdMeldAPIClient = {
 	sizes:[], // filled in by init() based on slots
 	slots:{
-		'TOP_RIGHT_BOXAD':      {size:'300x250', ad:null, pixels: null},
-		//'HOME_TOP_RIGHT_BOXAD': {size:'300x250', ad:null, pixels: null}, use s/HOME_// instead
-		'TOP_LEADERBOARD':      {size:'728x90',  ad:null, pixels: null},
-		//'HOME_TOP_LEADERBOARD': {size:'728x90',  ad:null, pixels: null}, use s/HOME_// instead
-		'LEFT_SKYSCRAPER_2':    {size:'160x600', ad:null, pixels: null},
-		'PREFOOTER_LEFT_BOXAD': {size:'300x250', ad:null, pixels: null},
-		'PREFOOTER_RIGHT_BOXAD':{size:'300x250', ad:null, pixels: null}
+		'TOP_RIGHT_BOXAD':      {size:'300x250', placement:'test_atf',       ad:null, pixels: null},
+		//'HOME_TOP_RIGHT_BOXAD': {                                                               }, use s/HOME_// instead
+		'TOP_LEADERBOARD':      {size:'728x90',  placement:'test_atf',       ad:null, pixels: null},
+		//'HOME_TOP_LEADERBOARD': {                                                               }, use s/HOME_// instead
+		'LEFT_SKYSCRAPER_2':    {size:'160x600', placement:'test_btf_right', ad:null, pixels: null},
+		'PREFOOTER_LEFT_BOXAD': {size:'300x250', placement:'test_btf_left',  ad:null, pixels: null},
+		'PREFOOTER_RIGHT_BOXAD':{size:'300x250', placement:'test_btf_right', ad:null, pixels: null}
 	}
 };
 
@@ -56,14 +56,24 @@ AdMeldAPIClient.getBid = function(slotname) {
 AdMeldAPIClient.init = function() {
 	this.log('init', 1);
 	
-	var url = top.wgServer + top.wgArticlePath.replace('$1', top.wgPageName);
+	var page = top.wgServer + top.wgArticlePath.replace('$1', top.wgPageName);
 
 	for (var slot in this.slots) {
 		this.log('ask for ' + slot + ' bid', 5);
-		$.ajax({url:'http://tag.admeld.com/ad/json?publisher_id=525&site_id=wikia&placement=ros&size=' + this.slots[slot].size + '&url=' + url + '&callback=AdMeldAPIClient.callback&container=' + slot, dataType:'jsonp'});
+		var s = this.slots[slot];
+		this.log(s, 9);
+		var url = 'http://tag.admeld.com/ad/json?publisher_id=' + 525 +
+					'&site_id=' + 'wikia' +
+					'&placement=' + s.placement +
+					'&size=' + s.size +
+					'&url=' + page +
+					'&callback=' + 'AdMeldAPIClient.callback' + 
+					'&container=' + slot;
+		this.log('calling ' + url, 7);
+		$.ajax({url:url, dataType:'jsonp'});
 		// TODO track the time
 
-		this.sizes.push(this.slots[slot].size); // comes handy later on
+		this.sizes.push(s.size); // comes handy later on
 	}
 };
 
