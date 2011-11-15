@@ -1,4 +1,4 @@
-LandingPage = {
+var LandingPage = {
 	track: function(url) {
 		$.tracker.byStr('landingpage/' + url);
 	},
@@ -7,7 +7,8 @@ LandingPage = {
 		var self = LandingPage;
 
 		$('#WikiaArticle').children('.LandingPage').click(function(ev) {
-			var node = $(ev.target);
+			var node = $(ev.target),
+				itemIndex;
 
 			// go to the parent node when image is clicked
 			if (node.is('img')) {
@@ -25,7 +26,7 @@ LandingPage = {
 			}
 			// three buttons
 			else if (node.hasParent('.LandingPageButtons')) {
-				var itemIndex = node.parent().index();
+				itemIndex = node.parent().index();
 
 				switch(itemIndex) {
 					case 0:
@@ -43,7 +44,7 @@ LandingPage = {
 			}
 			// social icons
 			else if (node.hasParent('.LandingPageLinks')) {
-				var itemIndex = node.parent().index();
+				itemIndex = node.parent().index();
 
 				switch(itemIndex) {
 					case 0:
