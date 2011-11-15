@@ -69,6 +69,9 @@ body {
 		padding: 1px 0;
 		zoom: 1; // ie
 
+		> a {
+			outline: none;
+		}
 		&:first-child {
 			margin-left: 0;
 		}
@@ -213,12 +216,21 @@ body {
 		border: 1px solid $color-epl-gradient-border;
 		margin: 10px 0;
 		padding: 5px;
+
+		table {
+			.diff-addedline,
+			.diff-context,
+			.diff-deletedline {
+				color: $color-epl-notices-color;
+			}
+		}
 	}
 	#myedit {
 		background-color: $color-epl-header-secondary;
 		border: 1px solid $color-epl-gradient-border;
 		color: $color-text;
-		padding: 5px;
+		padding: 10px;
+
 		> textarea {
 			background-color: $color-epl-page-secondary;
 			color: $color-text;
