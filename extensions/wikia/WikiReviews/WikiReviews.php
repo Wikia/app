@@ -24,16 +24,15 @@ $wgHooks['PageHeaderIndexAfterExecute'][] = 'wfWikiReviewsRemoveEditButton';
 function wfWikiReviewsTitleCheck() {
 	global $wgTitle, $wgRequest;
 	$action = $wgRequest->getVal( 'action', 'view' );
-	return ( $action == 'view' ) 
+	return ( $action == 'view' )
 		&& ( $wgTitle->getNamespace() == NS_MAIN )
 		&& !$wgTitle->equals( Title::newMainPage() );
 }
 
 // add CSS
 function wfWikiReviewsAddStyle( &$out, &$sk ) {
-	global $wgExtensionsPath, $wgStyleVersion;
 	if( wfWikiReviewsTitleCheck() ) {
-		$out->addStyle( AssetsManager::getInstance()->getSassCommonURL("$wgExtensionsPath/wikia/WikiReviews/WikiReviews.scss"));
+		$out->addStyle( AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/WikiReviews/WikiReviews.scss'));
 	}
 	return true;
 }
