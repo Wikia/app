@@ -23,7 +23,7 @@ function keymarkExtension( $parser ) {
 }
 
 # The callback function for converting the input text to HTML output
-function renderKeypage( $input, $argv ) {
+function renderKeypage( $input, $argv, &$parser ) {
     # $argv is an array containing any arguments passed to the
     # extension like <example argument="foo" bar>..
     # Put this on the sandbox page:  (works in MediaWiki 1.5.5)
