@@ -148,7 +148,7 @@ class SendGridPostback extends UnlistedSpecialPage {
 		while( $row = $dbr->fetchObject( $res ) ) {
 			$user = User::newFromId( $row->user_id );
 			if (!$user) {
-				next;
+				continue;
 			}
 			$user->invalidateEmail();
 			$user->saveSettings();
