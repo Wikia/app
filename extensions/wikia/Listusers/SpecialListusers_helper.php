@@ -510,8 +510,9 @@ class ListusersData {
 				$lastrev = $revRow->rev_id;
 			}
 
-			$dbw->insert(
+			$dbw->replace(
 				$this->mTable,
+				array( 'wiki_id', 'user_id', 'user_name' ),
 				array(
 					"wiki_id"        => $this->mCityId,
 					"user_id"        => $user_id,
