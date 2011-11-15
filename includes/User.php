@@ -3045,29 +3045,6 @@ class User {
 			}
 		}
 
-		# Wikia - login fallback functionallity - needs review and maybe move to separated extension
-		global $wgLoginLocalFallback;
-		if($wgLoginLocalFallback){
-			$creds = $this->oldCredentialsFromName($this->mName);
-			if( empty( $creds ) || 0 == $creds['id'] ) {
-				return false;
-			}
-			if( self::comparePasswords( $creds['pass'], $password, $creds['id'] ) ) {
-				$this->mPassword = self::oldCrypt($password, $this->mId);
-				$this->setToken();
-				$this->saveSettings();
-				return true;
-			} elseif ( function_exists( 'iconv' ) ) {
-				$old_ep = self::oldCrypt(iconv('UTF-8', 'WINDOWS-1252', $password), $old_id);
-				if(0 == strcmp($old_ep, $this->mPassword)){
-					$this->mPassword = self::oldCrypt(iconv('UTF-8', 'WINDOWS-1252', $password), $this->mId);
-					$this->setToken();
-					$this->saveSettings();
-					return true;
-				}
-			}
-		}
-
 		return false;
 	}
 
@@ -3788,36 +3765,6 @@ class User {
 		}
 		// edit count in user cache too
 		$this->invalidateCache();
-	}
-
-	# Wikia
-	function oldCredentialsFromName( $name ) {
-		global $wgDBname;
-
-		// Make sure no funky chars in user name.
-		$fname = "User::oldCredentialsFromName";
-		$nt = Title::newFromText( $name );
-		if(is_null($nt)){
-			//Illegal name
-			return null;
-		}
-
-		// We want to check the original user database,
-		// not the shared user database in wikicities.
-		$oldusertable = "`$wgDBname`.`user`";
-		$dbr =& wfGetDB ( DB_SLAVE );
-		$s = $dbr->selectRow($oldusertable, array('user_id', 'user_password' ), array('user_name' => $nt->getText()), $fname);
-
-		if($s === false){
-			return 0;
-		} else {
-			return array( 'id' => $s->user_id, 'pass' => $s->user_password );
-		}
-	}
-
-	# Wikia
-	function encryptPasswordId($id, $p) {
-		return wfEncryptPassword($id, $p);
 	}
 
 	/**
