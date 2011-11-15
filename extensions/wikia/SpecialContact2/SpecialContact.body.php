@@ -15,26 +15,31 @@ class ContactForm extends SpecialPage {
 		'account-issue' => array(
 			'format' => "User reports a problem with his account (%s) on this wiki:\n%s\n\nDescription of issue:\n%s",
 			'vars' => array( 'wpUserName', 'wpWiki', 'wpDescription' ),
+			'subject' => "Account issue: %s",
 		),
 
 		'close-account' => array(
 			'format' => "User requested his account \"%s\" to be disabled.\n\nhttp://community.wikia.com/wiki/Special:EditAccount/%s",
 			'vars' => array( 'wpUserName' ),
+			'subject' => 'Disable account: %s',
 		),
 
 		'rename-account' => array(
 			'format' => "User requested his username to be changed from \"%s\" to \"%s\".\n\nhttp://community.wikia.com/wiki/Special:UserRenameTool",
 			'vars' => array( 'wpUserName', 'wpUserNameNew' ),
+			'subject' => 'Rename account: %s',
 		),
 
 		'bad-ad' => array(
 			'format' => "User reports a problem with ad visible here:\n%s\n\nDescription of the problem:\n%s",
 			'vars' => array( 'wpUserName', 'wpWiki', 'wpDescription' ),
+			'subject' => 'Bad ad report by %s at %s',
 		),
 
 		'bug' => array(
 			'format' => "User %s reports a problem with feature \"%s\".\n\nURL to problem page:\n%s\n\nDescription of issue:\n\n%s",
 			'vars' => array( 'wpUserName', 'wpWiki', 'wpDescription' ),
+			'subject' => 'Bug report by %s at %s',
 		)
 	);
 
@@ -85,6 +90,9 @@ class ContactForm extends SpecialPage {
 				$messageText = vsprintf( $this->customForms[$par]['format'], $args );
 
 				$this->mProblemDesc = $messageText;
+
+				// set subject
+				$this->mProblem = vsprintf( $this->customForms[$par]['subject'], array( $wgRequest->getText( 'wpUserName' ), $wgRequest->getText( 'wpWiki' ) ) );
 			} else {
 				$this->mProblemDesc = $wgRequest->getText( 'wpContactDesc' ); //body
 			}
