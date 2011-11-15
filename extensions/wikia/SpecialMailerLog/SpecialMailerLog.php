@@ -154,7 +154,7 @@ class SpecialMailerLog extends UnlistedSpecialPage {
 		$dbr_user = wfGetDB( DB_SLAVE );
 
 		if (array_key_exists($email, self::$link_cache)) {
-			$user_url = $link_cache[$row->dst];
+			$user_url = $link_cache[$email];
 		} else {
 			$s = $dbr_user->selectRow( 'user', array( 'user_id' ), array( 'user_email' => $email ), __METHOD__ );
 			if ($s) {
