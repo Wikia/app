@@ -3926,7 +3926,7 @@ class User {
 			}
 
 			$res = $dbr->select(
-				'`user_properties`',
+				'user_properties',
 				'*',
 				array( 'up_user' => $this->getId() ),
 				__METHOD__
@@ -3998,8 +3998,8 @@ class User {
 		}
 
 		$dbw->begin();
-		$dbw->delete( '`user_properties`', array( 'up_user' => $this->getId() ), __METHOD__ );
-		$dbw->insert( '`user_properties`', $insert_rows, __METHOD__ );
+		$dbw->delete( 'user_properties', array( 'up_user' => $this->getId() ), __METHOD__ );
+		$dbw->insert( 'user_properties', $insert_rows, __METHOD__ );
 		$dbw->commit();
 
 		if ( $extuser ) {
