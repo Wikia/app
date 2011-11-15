@@ -9,7 +9,6 @@ class AssetsManagerServer {
 	public static function serve($request) {
 
 		try {
-
 			switch($request->getText('type')) {
 				case 'one':
 					$builder = new AssetsManagerOneBuilder($request);
@@ -28,10 +27,10 @@ class AssetsManagerServer {
 			}
 
 		} catch (Exception $e) {
-
+			// HTTP 501 is not "grabbed" by the Varnish
+			header('HTTP/1.1 501 Not Implemented');
 			echo $e->getMessage();
 			return;
-
 		}
 
 		$headers = array();
