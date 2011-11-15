@@ -541,8 +541,8 @@ abstract class DatabaseBase {
 				$sqlx = strtr( $sqlx, "\t\n", '  ' );
 				global $wgRequestTime;
 				$elapsed = round( microtime(true) - $wgRequestTime, 3 );
-				Wikia::log(__METHOD__."[reconnect1] srv={$this->mServer} db={$this->mDBname} trx=$oldTrxLevel uri={$_SERVER['QUERY_STRING']}");
-				Wikia::log(__METHOD__."[reconnect2] sql=$sqlx");
+				Wikia::log(__METHOD__,false,"[reconnect1] srv={$this->mServer} db={$this->mDBname} trx=$oldTrxLevel uri={$_SERVER['QUERY_STRING']}",true);
+				Wikia::log(__METHOD__,false,"[reconnect2] sql=$sqlx",true);
 				wfLogDBError( "Connection lost and reconnected after {$elapsed}s, query: $sqlx\n" );
 				$ret = $this->doQuery( $commentedSql );
 			} else {
