@@ -14,9 +14,9 @@ $SpecialContactSecMap[] = array(
 $SpecialContactSecMap[] = array(
 	'headerMsg' => 'account',
 	'links' => array(
-		array('link'=>'account-issue',  'form'=>true),
-		array('link'=>'close-account',  'form'=>true),
-		array('link'=>'rename-account', 'form'=>true),
+		array('link'=>'account-issue',  'form'=> 'account-issue' ),
+		array('link'=>'close-account',  'form'=> 'close-account' ),
+		array('link'=>'rename-account', 'form'=> 'rename-account' ),
 		array('link'=>'blocked' ),
 	)
 );
@@ -26,8 +26,8 @@ $SpecialContactSecMap[] = array(
 	'links' => array(
 		'using-wikia',
 		array('link'=>'feedback', 'form'=>true),
-		array('link'=>'bug',      'form'=>true),
-		array('link'=>'bad-ad',   'form'=>true),
+		array('link'=>'bug',      'form'=> 'bug-report' ),
+		array('link'=>'bad-ad',   'form'=> 'bad-ad' ),
 	)
 );
 
