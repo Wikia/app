@@ -364,7 +364,7 @@ class WallHelper {
 	 * 
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	public function getDeletedArticleId($dbkey, &$optFields) {
+	public function getArticleId_forDeleted($dbkey, &$optFields) {
 		$dbr = wfGetDB( DB_SLAVE );
 		
 		$fields = array('ar_page_id');
@@ -415,7 +415,7 @@ class WallHelper {
 		
 		return $dbkey;
 	}
-
+	
 	public function getUserFromArticleId_forDeleted($articleId) {
 		/*
 		 * This is ugly way of doing that
