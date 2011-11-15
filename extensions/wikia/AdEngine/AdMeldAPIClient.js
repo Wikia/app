@@ -140,7 +140,18 @@ AdMeldAPIClient.getLiftiumTier = function(bid) {
 
 AdMeldAPIClient.getParamForDART = function(slotname) {
 	this.log('getParamForDART ' + slotname, 5);
-	return 'admeld=' + this.getBid(slotname) + ';';
+	return 'admeld=' + this.roundBidForDART(this.getBid(slotname)) + ';';
+};
+
+AdMeldAPIClient.roundBidForDART = function(bid) {
+	this.log('roundBidForDART ' + bid, 5);
+	
+	if (bid > 5) bid = 5;
+	
+	bid = Math.round(bid*10)/10; // round to x.x
+	bid = bid.toFixed(2); // store as x.x0
+	
+	return bid;
 };
 
 if (typeof wgEnableAdMeldAPIClient != 'undefined' && wgEnableAdMeldAPIClient) {
