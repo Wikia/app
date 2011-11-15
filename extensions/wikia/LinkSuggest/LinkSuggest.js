@@ -18,9 +18,12 @@ YAHOO.lang.extend(YAHOO.example.AutoCompleteTextArea, YAHOO.widget.AutoComplete,
 		if ((v.keyCode == 221)) { //double brackets
 			var text = oSelf._elTextbox.value.replace(/\r/g, "");
 			var caret = oSelf.getCaret(oSelf._elTextbox);
+			/**
+			// macbre: what is i variable???
                         if(text.charAt(i) == "]") {
 				oSelf._toggleContainer(false);
                         }
+			**/
 		}
 
 		if(v.keyCode== 27) {
@@ -340,7 +343,7 @@ YAHOO.lang.extend(YAHOO.example.AutoCompleteTextArea, YAHOO.widget.AutoComplete,
 		var charInLine = 0;
 		var lastSpaceInLine = 0;
 
-		for(i = 0; i < caret; i++) {
+		for(var i = 0; i < caret; i++) {
 			charInLine++;
 			if(text.charAt(i) == " ") {
 				lastSpaceInLine = charInLine;
@@ -360,7 +363,7 @@ YAHOO.lang.extend(YAHOO.example.AutoCompleteTextArea, YAHOO.widget.AutoComplete,
 		}
 
 		var nextSpace = 0;
-		for(j = caret; j < caret + lineLength; j++) {
+		for(var j = caret; j < caret + lineLength; j++) {
 			if(text.charAt(j) == " " || text.charAt(j) == "\n" || caret == text.length) {
 				nextSpace = j;
 				break;
