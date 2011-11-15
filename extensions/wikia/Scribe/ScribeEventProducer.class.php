@@ -89,7 +89,7 @@ class ScribeEventProducer {
 				$revision_id = $oTitle->getLatestRevID(GAID_FOR_UPDATE);
 			}
 			if ( empty( $page_id ) ) {
-				$pageId = $oTitle->getArticleID( GAID_FOR_UPDATE );
+				$page_id = $oTitle->getArticleID( GAID_FOR_UPDATE );
 			}
 			$rev_timestamp = $oArticle->getTimestamp();
 			$rev_text = $oTitle->getText();
