@@ -14,6 +14,7 @@ var UploadPhotos = {
 		if(evt) {
 			evt.preventDefault();
 		}
+		
 		$.get(wgScript, {
 			action: 'ajax',
 			rs: 'moduleProxy',
@@ -41,6 +42,8 @@ var UploadPhotos = {
 			UploadPhotos.overrideinput = UploadPhotos.override.find("input");
 			UploadPhotos.ajaxwait = UploadPhotos.d.find(".ajaxwait");
 			UploadPhotos.dfcache = {};
+			UploadPhotos.wpLicense = $('#wpLicense');
+			UploadPhotos.wpLicenseTarget = $('#mw-license-preview');
 
 			// event handlers
 			UploadPhotos.filepath.change(UploadPhotos.filePathSet);
@@ -65,6 +68,28 @@ var UploadPhotos = {
 				}
 				UploadPhotos.dftimer = setTimeout(UploadPhotos.destFileSet, 500);
 			});
+			UploadPhotos.wpLicense.change(function() {
+
+				var license = $(this).val();
+				if(license == ""){
+					$(this).attr('selectedIndex', 0);
+					UploadPhotos.wpLicenseTarget.html("");
+					return;
+				}
+
+				var title = UploadPhotos.destfile.val();
+				if ( !title ) title = 'File:Sample.jpg';
+				
+				var url = wgScriptPath + '/api' + wgScriptExtension
+					+ '?action=parse&text={{' + encodeURIComponent( license ) + '}}'
+					+ '&title=' + encodeURIComponent( title ) 
+					+ '&prop=text&pst&format=json';
+
+				$.get(url, function(data) {
+					UploadPhotos.wpLicenseTarget.html(data.parse.text['*']);
+				}, "json");			
+			});
+			
 			$.tracker.byStr('action/uploadphoto/dialog');
 		});
 		if (!UploadPhotos.libinit) {

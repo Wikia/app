@@ -17,7 +17,7 @@ class UploadPhotosModule extends Module {
 	public function executeIndex() {
 		wfProfileIn(__METHOD__);
 
-		$licenses = new Licenses(array('id' => 'wpLicense', 'name' => 'wpLicense'));
+		$licenses = new Licenses(array('id' => 'wpLicense', 'name' => 'License'));
 		$this->licensesHtml = $licenses->getInputHTML(null);
 
 		wfProfileOut(__METHOD__);

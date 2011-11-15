@@ -14,6 +14,7 @@
 				<label for="wpDestFile"><?= wfMsg('filename') ?>:</label><input type="text" name="wpDestFile" size="60" autocomplete="off"><br>
 				<label for="wpUploadDescription"><?= wfMsg('oasis-upload-photos-caption') ?>:</label><textarea name="wpUploadDescription"></textarea><br>
 				<label for="wpLicense"><?= wfMsg('license') ?></label><?= $licensesHtml ?><br>
+				<div id="mw-license-preview"></div>
 				<div class="toggles">
 					<label><input type="checkbox" name="wpWatchthis" checked=""><?= wfMsg('watchthisupload') ?></label>
 					<label><input type="checkbox" name="wpIgnoreWarning"><?= wfMsg('ignorewarnings') ?></label>
