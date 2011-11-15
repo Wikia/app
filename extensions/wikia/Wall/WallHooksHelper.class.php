@@ -730,10 +730,11 @@ class WallHooksHelper {
 		 && ($rc->getAttribute('rc_log_action') == 'delete' || $rc->getAttribute('rc_log_action') == 'restore') ) {
 		 	$app = F::app();
 			$helper = F::build('WallHelper', array());
+			$rcTitle = $rc->getTitle();
+			
 			$userText = $rc->getAttribute('rc_user_text');
 			$wallTitleObj = F::build('Title', array($userText, NS_USER_WALL), 'newFromText');
 			$wallUrl = ($wallTitleObj instanceof Title) ? $wallTitleObj->getLocalUrl() : '#';
-			$rcTitle = $rc->getTitle();
 			
 			if( !($rcTitle instanceof Title) ) {
 			//in theory it shouldn't happen but it did once on my devbox
@@ -749,7 +750,7 @@ class WallHooksHelper {
 			//the thread/reply was deleted
 			//but in RC the entry can be about
 			//its deletion or restoration
-				$articleTitleObj = F::build('Title', array($userText.'/'.$articleId, NS_USER_WALL), 'newFromText');
+				$articleTitleObj = F::build('Title', array($articleId, NS_USER_WALL_MESSAGE), 'newFromText');
 				$articleTitleTxt = $helper->getTitleTxtFromMetadata($helper->getDeletedArticleTitleTxt($articleData['text_id']));
 				
 				if( empty($articleTitleTxt) ) {
@@ -760,6 +761,10 @@ class WallHooksHelper {
 					$wmParent = $wm->getTopParentObj();
 					$articleUrl = $wmParent->getMessagePageUrl();
 					$articleUrl = !empty($articleUrl) ? $articleUrl : '#';
+					$wallOwnerName = $wm->getWallOwnerName();
+					$userText = empty($wallOwnerName) ? $userText : $wallOwnerName;
+					$wallPageUrl = $wm->getWallPageUrl();
+					$wallUrl = empty($wallPageUrl) ? $wallUrl : $wallPageUrl;
 					$isThread = false;
 				} else {
 				//thread
@@ -827,7 +832,7 @@ class WallHooksHelper {
 		if( $title instanceof Title ) {
 			$app = F::app();
 			$helper = F::build('WallHelper', array());
-
+			
 			$wm = F::build('WallMessage', array($title));
 			$parentTitleTxt = $wm->getTopParentText($title->getText());
 			
