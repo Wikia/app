@@ -744,7 +744,7 @@ class WallHooksHelper {
 			}
 			
 			$articleData = array('text_id' => '');
-			$articleId = $helper->getDeletedArticleId($rcTitle->getText(), $articleData);
+			$articleId = $helper->getArticleId_forDeleted($rcTitle->getText(), $articleData);
 			
 			if( !empty($articleId) ) {
 			//the thread/reply was deleted
@@ -769,6 +769,14 @@ class WallHooksHelper {
 				} else {
 				//thread
 					$articleUrl = ($articleTitleObj instanceof Title) ? $articleTitleObj->getLocalUrl() : '#';
+					
+					$parts = explode('/@', $rcTitle->getText());
+					if( !empty($parts[0]) ) {
+						$userText =  $parts[0];
+						$wallTitleObj = F::build('Title', array($userText, NS_USER_WALL), 'newFromText');
+						$wallUrl = ($wallTitleObj instanceof Title) ? $wallTitleObj->getLocalUrl() : '#';
+					}
+					
 					$isThread = true;
 				}
 			} else {
@@ -782,6 +790,10 @@ class WallHooksHelper {
 				$wm = F::build('WallMessage', array($rcTitle));
 				$articleUrl = $wm->getMessagePageUrl();
 				$articleUrl = !empty($articleUrl) ? $articleUrl : $rcTitle->getFullUrl();
+				$wallOwnerName = $wm->getWallOwnerName();
+				$userText = empty($wallOwnerName) ? $userText : $wallOwnerName;
+				$wallPageUrl = $wm->getWallPageUrl();
+				$wallUrl = empty($wallPageUrl) ? $wallUrl : $wallPageUrl;
 			}
 			
 			$wfMsgOpts = array(
@@ -834,10 +846,17 @@ class WallHooksHelper {
 			$helper = F::build('WallHelper', array());
 			
 			$wm = F::build('WallMessage', array($title));
-			$parentTitleTxt = $wm->getTopParentText($title->getText());
+			$titleText = $title->getText();
+			$parentTitleTxt = $wm->getTopParentText($titleText);
+			if( is_null($parentTitleTxt) ) {
+				$parts = explode('/@', $titleText);
+				if( count($parts) > 1 ) {
+					$parentTitleTxt = $parts[0] . '/@' . $parts[1];
+				}
+			}
 			
 			$articleData = array('text_id' => '');
-			$articleId = $helper->getDeletedArticleId($parentTitleTxt, $articleData);
+			$articleId = $helper->getArticleId_forDeleted($parentTitleTxt, $articleData);
 			if( !empty($articleId) ) {
 			//parent article was deleted as well
 				$articleTitleTxt = $helper->getTitleTxtFromMetadata($helper->getDeletedArticleTitleTxt($articleData['text_id']));
