@@ -1130,12 +1130,13 @@ jQuery.nirvana.sendRequest = function(attr) {
 	$().log(data, 'request to nirvana');
 
 	$.ajax({
-                url: wgScriptPath + '/wikia.php?' + $.param({
-                        // fb#13222 Verbose fatal error reports for wikis.php
-                        controller: attr.controller,
-                        method: attr.method,
-						format: format
-                }),
+		url: wgScriptPath + '/wikia.php?' + $.param({
+			//Iowa strips out POST parameters, Nirvana requires these to be set
+			//so we're passing them in the GET part of the request
+			controller: attr.controller,
+			method: attr.method,
+			format: format
+		}),
 		dataType: format,
 		type: type,
 		data: data,
