@@ -915,7 +915,7 @@ $wgMemCachedClass = 'MemCachedClientforWiki';
 $wgLibMemCachedOptions = array();
 
 /**
- * it's default value without 'user_properties'
+ * 'user_properties' table is not shared on our platform
  */
 if( isset( $wgSharedTables[ 'user_properties' ] ) ) {
 	unset( $wgSharedTables[ 'user_properties' ] );
