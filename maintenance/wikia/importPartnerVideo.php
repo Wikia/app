@@ -6,7 +6,7 @@
 ////// Author: William Lee (wlee@wikia-inc.com)  //////
 ///////////////////////////////////////////////////////
 
-$optionsWithArgs = array( 'u', 'f', 'r', 'p', 'c' );
+$optionsWithArgs = array( 'u', 'f', 'c' );
 
 ini_set( "include_path", dirname(__FILE__)."/.." );
 require_once( 'commandLine.inc' );
@@ -20,8 +20,6 @@ Usage: php importPartnerVideo.php [options...] <partner>
 Options:
   -u <user>         Username
   -f <filename>     Screenplay: Import video from specified file instead of API. MovieClips: file containing MC ID's to import.
-  -r <remoteuser>   Remote username
-  -p <password>     Remote password
   -c <categories>   Additional categories to apply to video pages, delimited by tilde (~)
   -d                Debug mode
   -o                Parse mode (does not create articles)
@@ -37,8 +35,6 @@ EOT;
 
 $userName = isset( $options['u'] ) ? $options['u'] : 'Maintenance script';
 $filename = isset( $options['f'] ) ? $options['f'] : null;
-$remoteUser = isset( $options['r'] ) ? $options['r'] : null;
-$remotePassword = isset( $options['p'] ) ? $options['p'] : null;
 $addlCategories = isset( $options['c'] ) ? explode('~', $options['c']) : null;
 $debug = isset($options['d']);
 $parseOnly = isset($options['o']);
@@ -59,9 +55,7 @@ if (!empty($filename)) {
 	}
 }
 else {
-	if (!$remoteUser || !$remotePassword) {
-		die("must provide username and password\n");
-	}
+	die("Missing filename\n");
 }
 
 $provider = strtolower($args[0]);
@@ -87,16 +81,7 @@ if ($filename) {
 	}
 }
 else {
-	switch ($provider) {
-		case VideoPage::V_SCREENPLAY:
-			$file = PartnerVideoHelper::downloadScreenplayFeed();
-			break;
-		default:
-			$file = @Http::get( $url );
-			if ($file === false) {
-				die("Error reading URL $url\n");
-			}
-	}
+	// unsupported
 }
 
 PartnerVideoHelper::getInstance()->importFromPartner($provider, $file);
