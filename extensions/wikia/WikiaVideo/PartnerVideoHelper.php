@@ -2,9 +2,7 @@
 
 class PartnerVideoHelper {
 
-	private static $SCREENPLAY_FTP_HOST = 'ftp.screenplayinc.com';
-	private static $SCREENPLAY_REMOTE_FILE = 'feed.zip';
-	private static $SCREENPLAY_FEED_FILE = 'feed.xml';
+	private static $SCREENPLAY_FEED_URL = 'https://secure.totaleclips.com/WebServices/GetDataFeed.aspx?customerId=$1&username=$2&password=$3&startDate=$4&endDate=$5';
 	private static $MOVIECLIPS_VIDEOS_LISTING_FOR_MOVIE_URL = 'http://api.movieclips.com/v2/movies/$1/videos';
 	private static $MOVIECLIPS_XMLNS = 'http://api.movieclips.com/schemas/2010';
 	private static $REALGRAVITY_API_KEY = '4bd3e310-9c30-012e-b52b-12313d017962';
@@ -15,7 +13,13 @@ class PartnerVideoHelper {
 	
 	private static $CLIP_TYPE_BLACKLIST = array( VideoPage::V_SCREENPLAY => array('trailerType'=>'Home Video', 'trailerVersion'=>'Trailer') );
 	
+	private static $PARTNER_VIDEO_INGESTION_DATA_VARNAME = 'wgPartnerVideoIngestionData';
+	private static $PARTNER_VIDEO_INGEESTION_DATA_FIELDS = array('keyphrases', 'movieclipsIds');
+	
 	protected static $instance;
+	
+	const CACHE_KEY = 'partnervideoingestion';
+	const CACHE_EXPIRY = 3600;
 
 	public static function getInstance() {
 		if (!self::$instance) {
@@ -24,48 +28,35 @@ class PartnerVideoHelper {
 
 		return self::$instance;
 	}
+	
+	private static function initScreenplayFeedUrl($startDate, $endDate) {
+		global $remoteUser, $remotePassword, $wgScreenplayApiConfig;
+		
+		$url = str_replace('$1', $wgScreenplayApiConfig['customerId'], self::$SCREENPLAY_FEED_URL );
+		$url = str_replace('$2', $remoteUser, $url);
+		$url = str_replace('$3', $remotePassword, $url);
+		$url = str_replace('$4', $startDate, $url);
+		$url = str_replace('$5', $endDate, $url);
+		return $url;
+	}
 
-	public static function downloadScreenplayFeed() {
-		global $remoteUser, $remotePassword, $wgHTTPProxy;
-		// Screenplay uses a zipped xml file. Retrieve from
-		// ftp server, unzip, and open.
 
-		print("Connecting to " . self::$SCREENPLAY_FTP_HOST . " as $remoteUser...\n");
+	public function downloadScreenplayFeed($startDate, $endDate) {
+		global $remoteUser, $remotePassword, $parseOnly;
 
-		// must use cURL because of the http proxy
-		$curl = curl_init();
-		curl_setopt($curl, CURLOPT_PROXY, $wgHTTPProxy);
-		curl_setopt($curl, CURLOPT_URL, "ftp://$remoteUser:$remotePassword@".self::$SCREENPLAY_FTP_HOST."/".self::$SCREENPLAY_REMOTE_FILE);
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($curl, CURLOPT_BINARYTRANSFER, true);
-		$localFile = self::$TEMP_DIR . '/screenplay.' . date("Ymd") . '.zip';
-		$result = curl_exec($curl);	
-		curl_close($curl);
-		file_put_contents($localFile, $result);	// wlee: this uses memory less efficiently than
-							// CURLOPT_FILE. However, in my testing,
-							// CURLOPT_FILE saved incomplete files!
-		if (!$result) die("Couldn't connect to " . self::$SCREENPLAY_FTP_HOST . "\n");
-		unset($result);
+		$url = self::initScreenplayFeedUrl($startDate, $endDate);
 
-		print("Downloaded " . self::$SCREENPLAY_REMOTE_FILE . " to $localFile...\n");
+		$info = array();
+		!$parseOnly && print("Connecting to $url...\n");
 
-		// unzip	
-		$feedFile = '';	
-		$zip = new ZipArchive;
-		if ($zip->open($localFile) === true) {
-			$zip->extractTo(self::$TEMP_DIR);
-			$zip->close();
-			$feedFile = file_get_contents(self::$TEMP_DIR.'/'.self::$SCREENPLAY_FEED_FILE);
-		}
-		else {
-			die(self::zipFileErrMsg($zip)."\n");
+		$xmlContent = $this->getUrlContent($url);
+
+		if (!$xmlContent) {
+			print("ERROR: problem downloading content!\n");
+			return 0;
 		}
 
-		if (!$feedFile) {
-			die("could not open or read " . self::$SCREENPLAY_FEED_FILE . " in $localFile\n");
-		}
-
-		return $feedFile;	
+		return $xmlContent;	
 	}
 
 	public static function zipFileErrMsg($errno) {
@@ -104,25 +95,41 @@ class PartnerVideoHelper {
 		return 'Zip File Function error: unknown';
 	}
 
-	public function importFromPartner($provider, $file) {
-		global $parseOnly;
+	public function importFromPartner($provider, $file, $params=array()) {
+		global $parseOnly, $addlCategories;
 		
 		$numCreated = 0;
 
 		switch ($provider) {
 			case VideoPage::V_SCREENPLAY:
-				$numCreated = $this->importFromScreenplay($file);
+				$numCreated = $this->importFromScreenplay($file, $params);
 				break;
 			case VideoPage::V_MOVIECLIPS:
-				$ids = self::getApiQueryTermsFromFileContents($file);
-				foreach ($ids as $id) {
-					$numCreated += $this->importFromMovieClips($id);
+				if (!empty($params['movieclipsidsCategories'])) {
+					foreach ($params['movieclipsidsCategories'] as $id=>$categories) {
+						$addlCategories = $categories;
+						$numCreated += $this->importFromMovieClips($id);
+					}
+				}
+				else {
+					$ids = self::getApiQueryTermsFromFileContents($file);					
+					foreach ($ids as $id) {
+						$numCreated += $this->importFromMovieClips($id);
+					}
 				}
 				break;
 			case VideoPage::V_REALGRAVITY:
-				$keywords = self::getApiQueryTermsFromFileContents($file);
-				foreach ($keywords as $keyword) {
-					$numCreated += $this->importFromRealgravity($keyword);
+				if (!empty($params['keyphrasesCategories'])) {
+					foreach ($params['keyphrasesCategories'] as $keyphrase=>$categories) {
+						$addlCategories = $categories;
+						$numCreated += $this->importFromRealgravity($keyphrase);
+					}
+				}
+				else {
+					$keywords = self::getApiQueryTermsFromFileContents($file);
+					foreach ($keywords as $keyword) {
+						$numCreated += $this->importFromRealgravity($keyword);
+					}					
 				}
 				break;
 			default:
@@ -131,9 +138,34 @@ class PartnerVideoHelper {
 		!$parseOnly && print "Created $numCreated articles!\n\n";
 	}
 
-	public function importFromScreenplay($file) {
-		global $parseOnly, $debug;
+	/**
+	 * Try to find keyphrase in the subject. A keyphrase could be 
+	 * "harry potter". A keyphrase is present in the subject if "harry" and
+	 * "potter" are present.
+	 * @param string $subject
+	 * @param string $keyphrase
+	 * @return boolean 
+	 */
+	protected function isKeyphraseInString($subject, $keyphrase) {
+		$keyphraseFound = false;
+		$keywords = explode(' ', $keyphrase);
+		$keywordMissing = false;
+		foreach ($keywords as $keyword) {
+			if (stripos($subject, $keyword) === false) {
+				$keywordMissing = true;
+				break;
+			}
+		}
+		if (!$keywordMissing) {
+			$keyphraseFound = true;
+		}
 		
+		return $keyphraseFound;
+	}
+	
+	public function importFromScreenplay($file, $params=array()) {
+		global $parseOnly, $debug, $addlCategories;
+
 		$articlesCreated = 0;
 
 		$doc = new DOMDocument( '1.0', 'UTF-8' );
@@ -144,6 +176,20 @@ class PartnerVideoHelper {
 		for ($i=0; $i<$numTitles; $i++) {
 			$title = $titles->item($i);
 			$titleName = html_entity_decode( $title->getElementsByTagName('TitleName')->item(0)->textContent );
+
+			if (!empty($params['keyphrasesCategories'])) {
+				$addlCategories = array();
+				foreach ($params['keyphrasesCategories'] as $keyphrase=>$categories) {
+					if ($this->isKeyphraseInString($titleName, $keyphrase)) {
+						$addlCategories = array_merge($addlCategories, $categories);
+					}		
+				}
+				if (empty($addlCategories)) {
+//					print("Skipping $titleName. Title does not contain any keyphrases.\n");
+					continue;
+				}
+			}
+			
 			$year = $title->getElementsByTagName('Year')->item(0)->textContent;
 			$clips = $title->getElementsByTagName('Clip');
 			$numClips = $clips->length;
@@ -351,11 +397,16 @@ class PartnerVideoHelper {
 	}
 	
 	private static function initRealgravityVideosApiUrl($keyword, $page=1) {
+		global $startDate, $endDate;
+		
 		$url = str_replace('$1', self::$REALGRAVITY_API_KEY, self::$REALGRAVITY_VIDEOS_URL );
 		$url = str_replace('$2', self::$REALGRAVITY_PROVIDER_IDS['MACHINIMA'], $url);
 		$url = str_replace('$3', urlencode($keyword), $url);
 		$url = str_replace('$4', self::$REALGRAVITY_PAGE_SIZE, $url);
 		$url = str_replace('$5', $page, $url);
+		if ($startDate && $endDate) {
+			$url .= '&date_range=' . $startDate . '..' . $endDate;
+		}
 		return $url;
 	}
 	
@@ -594,5 +645,81 @@ class PartnerVideoHelper {
 		}
 
 		return 0;
+	}
+	
+	protected function getPartnerVideoIngestionDataFromSource() {
+		global $wgExternalSharedDB, $wgMemc;
+		
+		
+		$memcKey = wfMemcKey( self::CACHE_KEY );
+		$aWikis = $wgMemc->get( $memcKey );
+		if ( !empty( $aWikis ) ) {
+			return $aWikis;
+		}
+
+		$aWikis = array();
+		
+		// fetch data from DB
+		// note: as of 2011/11, this function is referred to by only one
+		// calling function, a script that is run once per day. No need 
+		// to memcache result yet.
+		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+		
+		$aTables = array(
+			'city_variables',
+			'city_variables_pool',
+			'city_list',
+		);
+		$varName = mysql_real_escape_string(self::$PARTNER_VIDEO_INGESTION_DATA_VARNAME);
+		$aWhere = array('city_id = cv_city_id', 'cv_id = cv_variable_id');
+		
+		$aWhere[] = "cv_value is not null";	
+		
+		$aWhere[] = "cv_name = '$varName'";
+
+
+		$oRes = $dbr->select(
+			$aTables,
+			array('city_id', 'cv_value'),
+			$aWhere,
+			__METHOD__,
+			array('ORDER BY' => 'city_sitename')
+		);
+
+		while ($oRow = $dbr->fetchObject($oRes)) {
+			$aWikis[$oRow->city_id] = unserialize($oRow->cv_value);
+		}
+		$dbr->freeResult( $oRes );
+		
+		$wgMemc->set( $memcKey, $aWikis, self::CACHE_EXPIRY );
+
+		return $aWikis;
+	}
+	
+	public function getPartnerVideoIngestionData() {
+		$data = array();
+		
+		// merge data from datasource into a data structure keyed by 
+		// partner API search keywords. Value is an array of categories
+		// relevant to wikis
+		$rawData = $this->getPartnerVideoIngestionDataFromSource();
+		foreach ($rawData as $cityId=>$cityData) {
+			if (is_array($cityData)) {
+				foreach (self::$PARTNER_VIDEO_INGEESTION_DATA_FIELDS as $field) {
+					if (!empty($cityData[$field]) && is_array($cityData[$field])) {
+						foreach ($cityData[$field] as $fieldVal) {
+							if (!empty($data[$field][$fieldVal]) && is_array($data[$field][$fieldVal])) {
+								$data[$field][$fieldVal] = array_merge($data[$field][$fieldVal], $cityData['categories']);
+							}
+							else {
+								$data[$field][$fieldVal] = $cityData['categories'];
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		return $data;
 	}
 }
