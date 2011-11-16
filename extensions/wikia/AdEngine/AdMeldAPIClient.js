@@ -17,6 +17,15 @@ AdMeldAPIClient.log = function(msg, level) {
 	}
 };
 
+AdMeldAPIClient.track = function(data, profile) {
+	profile = profile || 'admeldapiclient';
+	this.log('track ' + data.join('/') + ' in ' + profile, 6);
+	
+	data = ['admeldapiclient'].concat(data);
+
+	WikiaTracker.track(data.join('/'), 'liftium.' + profile, data);	
+};
+
 AdMeldAPIClient.getAd = function(slotname) {
 	this.log('getAd ' + slotname, 5);
 
@@ -30,7 +39,7 @@ AdMeldAPIClient.getAd = function(slotname) {
 		return this.slots[slotname].ad.creative;
 	} catch(e) {
 		this.log('Error in getAd ' + slotname + ', returning null', 3);
-		// FIXME track it
+		this.track(['error', 'get_ad', slotname], 'error');
 		return null;
 	}
 };
@@ -48,7 +57,7 @@ AdMeldAPIClient.getBid = function(slotname) {
 		return this.slots[slotname].ad.bid;
 	} catch(e) {
 		this.log('Error in getBid ' + slotname + ', returning -1', 3);
-		// FIXME track it
+		this.track(['error', 'get_bid', slotname], 'error');
 		return -1;
 	}
 };
@@ -70,10 +79,14 @@ AdMeldAPIClient.init = function() {
 					'&callback=' + 'AdMeldAPIClient.callback' + 
 					'&container=' + slot;
 		this.log('calling ' + url, 7);
+		this.track(['call', slot]);
 		$.ajax({url:url, dataType:'jsonp'});
-		// TODO track the time
+		this.slots[slot].url = url;
+		this.slots[slot].timer = new Date();
 
-		this.sizes.push(s.size); // comes handy later on
+		if (this.sizes.indexOf(s.size) == -1) {
+			this.sizes.push(s.size);
+		}
 	}
 };
 
@@ -82,17 +95,20 @@ AdMeldAPIClient.callback = function(data) {
 
 	try {
 		var slot = data.ad.container;
-		this.log('callback ' + slot, 5);
-		
-		// TODO track the time
+		var time = -1; // TODO
+		this.log('callback ' + slot + ' after ' + time + ' ms', 5);
+		this.track(['callback', slot, time]);
 
 		this.slots[slot].ad = data.ad;
 		this.slots[slot].pixels = data.pixels;
-		
-		this.slots[slot].ad.bid = (this.slots[slot].ad.bid * 0.875).toFixed(2); // adjust magic for Kyle
+
+		var bid = this.slots[slot].ad.bid;
+		this.track(['bid', slot, bid.toFixed(3)]);
+
+		this.slots[slot].ad.bid = (bid * 0.875).toFixed(2); // adjust magic for Kyle
 	} catch(e) {
 		this.log('Error in callback', 3);
-		// TODO track it
+		this.track(['error', 'callback'], 'error');
 	}
 };
 
@@ -108,6 +124,7 @@ AdMeldAPIClient.adjustLiftiumChain = function(tags) {
 		this.log('adjustLiftiumChain ' + tags[0].size, 5);
 	} catch (e) {
 		this.log('Error in adjustLiftiumChain', 3)
+		this.track(['error', 'adjust_liftium_chain'], 'error');
 	}
 	
 	for (var i = 0; i < tags.length; i++) {
@@ -128,6 +145,7 @@ AdMeldAPIClient.adjustLiftiumChain = function(tags) {
 			tags[i].tier=tier; // not t, change the original in place
 			tags[i].value=bid; // not t, change the original in place
 			this.log('AdMeld tag #' + t.tag_id + ' adjusted to tier ' + tier + ', value $' + bid, 5);
+			this.track(['liftium', t.tag_id, tier, bid]);
 		}
 	}
 	
@@ -150,7 +168,11 @@ AdMeldAPIClient.getLiftiumTier = function(bid) {
 
 AdMeldAPIClient.getParamForDART = function(slotname) {
 	this.log('getParamForDART ' + slotname, 5);
-	return 'admeld=' + this.roundBidForDART(this.getBid(slotname)) + ';';
+
+	var bid = this.roundBidForDART(this.getBid(slotname));
+	this.track(['dart', slotname, bid]);
+
+	return 'admeld=' + bid + ';';
 };
 
 AdMeldAPIClient.roundBidForDART = function(bid) {

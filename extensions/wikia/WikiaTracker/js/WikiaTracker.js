@@ -14,8 +14,10 @@ var WikiaTracker = {
 		'Wikia.varnish': 'UA-288915-48',
 
 		'ab.main':'UA-19473076-35',
+		'liftium.admeldapiclient':'UA-17475676-18',
 		'liftium.beacon':'UA-17475676-5',
 		'liftium.beacon2':'UA-17475676-14',
+		'liftium.error':'UA-17475676-12',
 		'liftium.errors':'UA-17475676-12',
 		'liftium.hop':'UA-17475676-8',
 		'liftium.init':'UA-17475676-4',
