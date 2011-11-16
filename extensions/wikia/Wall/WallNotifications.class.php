@@ -107,14 +107,14 @@ class WallNotifications {
 			unset($users[$notification->data->msg_author_id]);
 		} 
 
-		$title = Title::newFromId($notification->data->title_id);
+		$title = Title::newFromText($notification->data->wall_username. '/' . $notification->data->title_id, NS_USER_WALL ); 
 		$this->sendEmails($title, $notification->data->msg_author_id, array_keys($users), $notification->isMain(), $notification->data->wall_userid );
 		$this->addNotificationLinks($users, $notification);
 	}
 	
 	protected function sendEmails($title, $msg_author_id, $watchers, $isMain, $wallOwnerId) {
 		$enotif = new EmailNotification();
-		
+
 		$watchersOut = array();
 		foreach($watchers as $val){
 			$watcher = User::newFromId($val);
