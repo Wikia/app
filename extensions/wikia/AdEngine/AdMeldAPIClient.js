@@ -6,7 +6,7 @@ var AdMeldAPIClient = {
 		'TOP_LEADERBOARD':      {size:'728x90',  placement:'test_atf',       ad:null, pixels: null},
 		//'HOME_TOP_LEADERBOARD': {                                                               }, use s/HOME_// instead
 		'LEFT_SKYSCRAPER_2':    {size:'160x600', placement:'test_btf_right', ad:null, pixels: null},
-		'PREFOOTER_LEFT_BOXAD': {size:'300x250', placement:'test_btf_left',  ad:null, pixels: null},
+		'PREFOOTER_LEFT_BOXAD': {size:'300x250', placement:'test_btf',       ad:null, pixels: null},
 		'PREFOOTER_RIGHT_BOXAD':{size:'300x250', placement:'test_btf_right', ad:null, pixels: null}
 	}
 };
