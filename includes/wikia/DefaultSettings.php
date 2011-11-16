@@ -919,9 +919,8 @@ $wgLibMemCachedOptions = array();
  */
 if( in_array( 'user_properties', $wgSharedTables ) ) {
 	foreach( $wgSharedTables as $key => $value ) {
- 		if( $value == 'user_properties' ) {
-			unset(	$wgSharedTables[ $key ] );
-			}
+		if( $value == 'user_properties' ) {
+			unset( $wgSharedTables[ $key ] );
+		}
 	}
 }
-
