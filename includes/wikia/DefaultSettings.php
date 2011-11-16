@@ -913,3 +913,10 @@ $wgMemCachedClass = 'MemCachedClientforWiki';
  * Extra configuration options for memcached when using libmemcached/pecl-memcached
  */
 $wgLibMemCachedOptions = array();
+
+/**
+ * it's default value without 'user_properties'
+ */
+if( isset( $wgSharedTables[ 'user_properties' ] ) ) {
+	unset( $wgSharedTables[ 'user_properties' ] );
+}
