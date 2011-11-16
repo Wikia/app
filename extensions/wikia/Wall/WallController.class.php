@@ -151,12 +151,13 @@ class WallController extends ArticleCommentsModule {
 		$wallUrl = $this->request->getVal('wallUrl');
 		
 		$this->content = $this->getUserTalkContent($subpageName);
-					
+		
 		if( $this->content === false && !empty($wallUrl) ) {
 		//the subpages did not exist before
-			if(!$this->helper->isGreeting($this->app->wg->Title) ) {
+			//commented this because it caused fatal error fb#15508 -- so this is a quick fix
+			//if( !$this->helper->isGreeting($this->app->wg->Title) ) {
 				$this->app->wg->Out->redirect($wallUrl, 301);
-			}
+			//}
 		}
 	}
 	
