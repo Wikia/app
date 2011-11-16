@@ -1232,7 +1232,7 @@ EOD;
 				break;
 			case self::V_WIKIAVIDEO:
 				$rvs = new RelatedVideosService();
-				$videoData = $rvs->getRelatedVideoData(0, $this->mId, true);
+				$videoData = $rvs->getRelatedVideoData( array( 'articleId' => 0, 'title' => $this->mId, 'source' => true ));
 				$exists = !empty($videoData['title']);
 				if ($exists) {
 					$this->mVideoName = $videoData['title'];
@@ -1240,7 +1240,7 @@ EOD;
 				break;
 			case self::V_LOCALVIDEO:
 				$rvs = new RelatedVideosService();
-				$videoData = $rvs->getRelatedVideoData(0, $this->mId, false);
+				$videoData = $rvs->getRelatedVideoData( array( 'articleId' => 0, 'title' => $this->mId, 'source' => false ) );
 				$exists = !empty($videoData['title']);
 				if ($exists) {
 					$this->mVideoName = $videoData['title'];
@@ -1977,7 +1977,7 @@ EOD;
 				// load the real Video Page referred to by this object,
 				// and get the embed code from there
 				$rvs = new RelatedVideosService();
-				$videoData = $rvs->getRelatedVideoData(0, $this->mId, true, $width, '', 0, '', $useJWPlayer);	// fifth param is empty to suppress ads
+				$videoData = $rvs->getRelatedVideoData( array( 'articleId' => 0, 'title' => $this->mId, 'source' => true ), $width, '', 0, '', $useJWPlayer);	// fifth param is empty to suppress ads
 				$embed = $videoData['embedCode'];
 				return $embed;
 				break;
@@ -1985,7 +1985,7 @@ EOD;
 				// load the real Video Page referred to by this object,
 				// and get the embed code from there
 				$rvs = new RelatedVideosService();
-				$videoData = $rvs->getRelatedVideoData(0, $this->mId, false, $width, '', 0, '', $useJWPlayer, $autoplay);	// fifth param is empty to suppress ads
+				$videoData = $rvs->getRelatedVideoData( array( 'articleId' => 0, 'title' => $this->mId, 'source' => false ), $width, '', 0, '', $useJWPlayer, $autoplay);	// fifth param is empty to suppress ads
 				$embed = $videoData['embedCode'];
 				return $embed;
 				break;

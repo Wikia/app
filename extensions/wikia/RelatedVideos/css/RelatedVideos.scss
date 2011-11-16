@@ -116,7 +116,7 @@ $color-related-videos-background: darken($color-page, 20%);
 				margin: 35px -9px;
 			}
 			&.left{
-				left: 638px;
+				left: 633px;
 				.chevron {
 					border-color: transparent transparent transparent $color-buttons;
 					margin: 35px 4px;
@@ -177,8 +177,42 @@ $color-related-videos-background: darken($color-page, 20%);
 							font-size: 11px;
 							line-height: 14px;
 							background-color: black;
-							padding: 2px 4px;
+							padding: 1px 4px 1px 6px;
 							@include border-radius(4px);
+						}
+						.new {
+							position: absolute;
+							left: 0px;
+							top: 0px;
+							color: $color-button-text;
+							font-size: 11px;
+							line-height: 14px;
+							padding: 1px 4px 1px 6px;
+							background-color: $color-buttons;
+							&:before {
+								content: '';
+								position: absolute;
+								height: 0px;
+								width: 0px;
+								border-width: 8px;
+								border-style: solid;
+								border-color: transparent transparent $color-buttons transparent;
+								right: -8px;
+								top: 0px;
+								visibility: visible;
+							}
+							&:after {
+								content: '';
+								position: absolute;
+								height: 0px;
+								width: 0px;
+								border-width: 8px;
+								border-style: solid;
+								border-color: $color-buttons transparent transparent transparent;
+								right: -8px;
+								top: 0px;
+								visibility: visible;
+							}
 						}
 						.playButton {
 							@include opacity(30);

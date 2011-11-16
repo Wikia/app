@@ -8,7 +8,8 @@
 		} else {
 			$duration = 0;
 		}
-		if( !empty( $duration ) ){  ?><div class="timer"><?=$duration;?></div><? } ?>
+		if( !empty( $duration ) ){  ?><div class="timer"><?=$duration;?></div><? }
+		if( !empty( $video['isNew'] ) ){  ?><div class="new"><?=wfMsg('related-videos-video-is-new');?><div  class="newRibbon" ></div></div><? } ?>
 		<div class="playButton"></div>
 		<img data-src="<?=$video['thumbnailData']['thumb'];?>" src="<?=( $preloaded ) ? $video['thumbnailData']['thumb'] : wfBlankImgUrl();?>" style="height:<?=$video['thumbnailData']['height'];?>px; width:<?=$video['thumbnailData']['width'];?>px;" />
 	</a>
@@ -20,7 +21,7 @@
 			$owner = $video['owner'];
 			if ( !empty( $owner ) ){
 				echo wfMsg('related-videos-added-by') . " ";
-				if ( empty( $video['external'] ) ){
+				if ( empty( $video['external'] ) || isset( $video['externalByUser'] ) ){
 					$ownerUrl = $video['ownerUrl'];
 					if ( !empty( $ownerUrl ) ) {
 						?><a href="<?=$video['ownerUrl'];?>"><?=$video['owner'];?></a><?

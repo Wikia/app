@@ -91,6 +91,9 @@ class ArticleService extends Service {
 			// experimental: remove <th> tags
 			$content = preg_replace('#<th[^>]*>(.*?)<\/th>#s', '', $content);
 
+			// experimental: remove <figure> tags
+			$content = preg_replace('#<figure[^>]*>(.*?)<\/figure>#s', '', $content);
+
 			// remove HTML tags
 			$content = trim(strip_tags($content));
 

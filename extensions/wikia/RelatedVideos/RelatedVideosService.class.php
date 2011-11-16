@@ -3,6 +3,7 @@
 class RelatedVideosService {
 
 	const memcKeyPrefix = 'RelatedVideosService';
+	const memcVersion = 1;
 	const width = 160;
 
 	/**
@@ -13,7 +14,11 @@ class RelatedVideosService {
 	 * @param int $videoWidth Width of resulting video player, in pixels
 	 * @return Array 
 	 */
-	public function getRelatedVideoData( $articleId, $title, $source='', $videoWidth=VideoPage::DEFAULT_OASIS_VIDEO_WIDTH, $cityShort='life', $useMaster=0, $videoHeight='', $useJWPlayer=true, $autoplay=true ){
+	public function getRelatedVideoData( $params, $videoWidth = VideoPage::DEFAULT_OASIS_VIDEO_WIDTH, $cityShort='life', $useMaster=0, $videoHeight='', $useJWPlayer=true, $autoplay=true ){
+
+		$title = isset( $params['title'] ) ? $params['title'] : '';
+		$articleId = isset( $params['articleId'] ) ? $params['articleId'] : 0;
+		$source = isset( $params['source'] ) ? $params['source'] : '';
 
 		wfProfileIn( __METHOD__ );
 		$title = urldecode( $title );
@@ -44,23 +49,57 @@ class RelatedVideosService {
 					        'autoplay'	=> $autoplay
 					)
 				)->getData();
+				
 				$result['data']['external'] = 0;
 			}
-			$this->saveToCache( $title, $source, $videoWidth, $cityShort, $result );
-		} else Wikia::log( __METHOD__, 'RelatedVideos', 'From cache' );
+			// just to be sure and to be able to work cross devbox.
+			if ( !isset( $result['data']['arrayId'] ) ){
+				$result['data']['arrayId'] = $result['data']['external'].'|'.$result['data']['id'];
+			}
 
+			$this->saveToCache( $title, $source, $videoWidth, $cityShort, $result );
+		} else {
+			Wikia::log( __METHOD__, 'RelatedVideos', 'From cache' );
+		}
+
+		// add local data
+		$result['data'] = $this->extendVideoByLocalParams( $result['data'], $params );
 		wfProfileOut( __METHOD__ );
 		return $result['data'];
 	}
 
-	public function getRelatedVideoDataFromMaster( $articleId, $title, $source='', $videoWidth=VideoPage::DEFAULT_OASIS_VIDEO_WIDTH, $cityShort='life', $videoHeight='' ){
+	public function getRelatedVideoDataFromMaster( $params, $videoWidth=VideoPage::DEFAULT_OASIS_VIDEO_WIDTH, $cityShort='life', $videoHeight='' ){
 
-		return $this->getRelatedVideoData( $articleId, $title, $source, $videoWidth, $cityShort, 1, $videoHeight );
+		return $this->getRelatedVideoData( $params, $videoWidth, $cityShort, 1, $videoHeight );
 	}
 
-	public function getRelatedVideoDataFromTitle( $title, $source='', $videoWidth=VideoPage::DEFAULT_OASIS_VIDEO_WIDTH, $cityShort='life', $videoHeight='' ){
+	public function getRelatedVideoDataFromTitle( $params, $videoWidth=VideoPage::DEFAULT_OASIS_VIDEO_WIDTH, $cityShort='life', $videoHeight='' ){
 
-		return $this->getRelatedVideoData( 0, $title, $source, $videoWidth, $cityShort, 0, $videoHeight );
+		$params['articleId'] = 0;
+		return $this->getRelatedVideoData( $params, $videoWidth, $cityShort, 0, $videoHeight );
+	}
+
+	private function extendVideoByLocalParams( $videoData, $localParams ){
+
+		if ( isset( $localParams['isNewDate'] ) && !empty( $localParams['isNewDate'] ) ){
+			$newDate = date( 'YmdHis', mktime( 0, 0, 0, date( 'm' ), date( 'd' ) - 5, date( 'Y' ) ) );
+			$videoData['isNew'] = ( (int)$localParams['isNewDate'] > $newDate ) ? 1 : 0;
+		} else {
+			$videoData['isNew'] = 0;
+		}
+
+		$videoData['date'] = isset( $localParams['date'] ) ? $localParams['date'] : $videoData['timestamp'];
+
+		if ( isset( $localParams['userName'] ) && !empty( $localParams['userName'] ) ){
+			$oUser = F::build( 'User', array( $localParams['userName'] ), 'newFromName' );
+			$oUser->load();
+			if ( is_object( $oUser ) && ( $oUser->getID() > 0 ) ) {
+				$videoData['externalByUser'] = 1;
+				$videoData['owner'] = $oUser->getName();
+				$videoData['ownerUrl'] = $oUser->getUserPage()->getFullURL();
+			}
+		}
+		return $videoData;
 	}
 
 	public function getMemcKey( $title, $source, $videoWidth, $cityShort ) {
@@ -68,12 +107,11 @@ class RelatedVideosService {
 		if( empty( $source ) ){
 			$video = Title::newFromText( $title, NS_VIDEO );
 			if ($video instanceof Title && $video->exists() ) {
-				return F::app()->wf->memcKey( $video->getArticleID(), F::app()->wg->wikiaVideoRepoDBName, $videoWidth, $cityShort, self::memcKeyPrefix );					
+				return F::app()->wf->memcKey( $video->getArticleID(), F::app()->wg->wikiaVideoRepoDBName, $videoWidth, $cityShort, self::memcKeyPrefix, self::memcVersion );
 			}
-			
 			return '';
 		} else {
-			return F::app()->wf->sharedMemcKey( md5( $title ), F::app()->wg->wikiaVideoRepoDBName, $videoWidth, $cityShort, self::memcKeyPrefix );
+			return F::app()->wf->sharedMemcKey( md5( $title ), F::app()->wg->wikiaVideoRepoDBName, $videoWidth, $cityShort, self::memcKeyPrefix, self::memcVersion );
 		}
 	}
 
@@ -95,6 +133,7 @@ class RelatedVideosService {
 	}
 
 	public function isTitleRelatedVideos($title) {
+
 		if (!($title instanceof Title)) {
 			return false;
 		}
@@ -105,6 +144,7 @@ class RelatedVideosService {
 	}
 
 	public function editWikiActivityParams($title, $res, $item){
+
 		if ( $this->isTitleRelatedVideos( $title ) ){
 			$oTitle =  Title::newFromText( $title->getText(), NS_MAIN );
 			$item['title'] = $oTitle->getText();
@@ -117,6 +157,7 @@ class RelatedVideosService {
 	}
 
 	public function createWikiActivityParams($title, $res, $item){
+
 		if ( $this->isTitleRelatedVideos( $title ) ){
 			$oTitle =  Title::newFromText( $title->getText(), NS_MAIN );
 			$item['title'] = $oTitle->getText();
@@ -128,6 +169,7 @@ class RelatedVideosService {
 	}
 
 	private function parseSummary( $text ){
+
 		$app = F::app();
 		// empty title is requred for parsing, otherwise it will not work.
 		// cannot use wfMsgExt due to FogBugzId:12901

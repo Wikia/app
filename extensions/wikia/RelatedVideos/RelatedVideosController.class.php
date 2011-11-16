@@ -8,6 +8,7 @@ class RelatedVideosController extends WikiaController {
 	}
 
 	public function getCarusel(){
+
 		if( Wikia::isMainPage() || ( !$this->app->wg->title instanceof Title ) || !$this->app->wg->title->exists() ) {
 			return false;
 		}
@@ -17,42 +18,45 @@ class RelatedVideosController extends WikiaController {
 			RelatedVideos::MAX_RELATEDVIDEOS
 		);
 
-		if ( !is_array( $videos ) ){ $videos = array(); }
+		if ( !is_array( $videos ) ){ 
+			$videos = array();
+		}
 
 		$oLocalLists = RelatedVideosNamespaceData::newFromTargetTitle( F::app()->wg->title );
 		$oGlobalLists = RelatedVideosNamespaceData::newFromGeneralMessage();		
 
 		$oRelatedVideosService = F::build('RelatedVideosService');
 		$blacklist = array();
-		foreach( array( $oLocalLists, $oGlobalLists ) as $oLists ){
+		foreach( array( $oGlobalLists, $oLocalLists ) as $oLists ){
 			if ( !empty( $oLists ) && $oLists->exists() ){
 				$data = $oLists->getData();
 				if ( isset(  $data['lists'] ) && isset( $data['lists']['WHITELIST'] ) ) {
 					foreach( $data['lists']['WHITELIST'] as $page ){
-						$videoData = $oRelatedVideosService->getRelatedVideoData( 0, $page['title'], $page['source'] );
-						if ( isset( $videoData['timestamp'] ) && isset( $videoData['id'] ) ){
-							$videoId = $videoData['timestamp'].'|'.$videoData['id'];
-							$videos[ $videoId ] = $videoData;
-						}
+						$videoData = $oRelatedVideosService->getRelatedVideoData( $page );
+						$videos[$videoData['arrayId']] = $videoData;
 					}
 					foreach( $data['lists']['BLACKLIST'] as $page ){
-						$videoData = $oRelatedVideosService->getRelatedVideoData( 0, $page['title'], $page['source'] );
-						if ( isset( $videoData['timestamp'] ) && isset( $videoData['id'] ) ){
-							$videoId = $videoData['timestamp'].'|'.$videoData['id'];
-							$blacklist[ $videoId ] = $videoData;
-						}
+						$videoData = $oRelatedVideosService->getRelatedVideoData( $page );
+						$blacklist[$videoData['arrayId']] = $videoData;
 					}
 				}
 			}
 		}
+
+		
 		foreach( $blacklist as $key => $blElement ){
 			unset( $videos[ $key ] );
 		}
 
-		ksort( $videos );
+		uasort( $videos, array( $this, 'sortByDate') );
 		$videos = array_reverse( $videos, true );
 
 		$this->setVal( 'videos', $videos );
+	}
+
+	public function sortByDate( $a, $b ){
+
+		return strnatcmp( $a['date'], $b['date'] );
 	}
 
 	public function getVideo(){
@@ -64,7 +68,7 @@ class RelatedVideosController extends WikiaController {
 		$videoHeight = $this->getVal('videoHeight');
 
 		$oRelatedVideosService = F::build('RelatedVideosService');
-		$result = $oRelatedVideosService->getRelatedVideoDataFromTitle( $title, $external, VideoPage::DEFAULT_OASIS_VIDEO_WIDTH, $cityShort, $videoHeight );
+		$result = $oRelatedVideosService->getRelatedVideoDataFromTitle( array( 'title' => $title, 'source' => $external ), VideoPage::DEFAULT_OASIS_VIDEO_WIDTH, $cityShort, $videoHeight );
 		if ( isset( $result['error'] ) ){
 			$this->setVal( 'error', $result['error'] );
 		} else {
@@ -94,6 +98,7 @@ class RelatedVideosController extends WikiaController {
 	}
 
 	public function getVideoHtml(){
+
 		$videoHtml = $this->getVal( 'videoHtml' );
 		$embedUrl = $this->getVal( 'embedUrl' );
 
@@ -106,10 +111,10 @@ class RelatedVideosController extends WikiaController {
 	 */
 	public function getLists() {
 
-		$titleStr = $this->request->getVal('title', null);
-		$title = Title::newFromText($titleStr, NS_RELATED_VIDEOS);
+		$titleStr = $this->request->getVal( 'title', null );
+		$title = Title::newFromText( $titleStr, NS_RELATED_VIDEOS );
 		$relatedVideosNSData = RelatedVideosNamespaceData::newFromTitle($title);
-		$this->setVal('data', $relatedVideosNSData->getData());
+		$this->setVal( 'data', $relatedVideosNSData->getData() );
 	}
 
 	/*
@@ -117,8 +122,8 @@ class RelatedVideosController extends WikiaController {
 	 */
 
 	public function getVideoData() {
-		
-		$videoArticleId = $this->getVal('articleId', 0);
+
+		$videoArticleId = $this->getVal( 'articleId', 0 );
 		$videoName = urldecode($this->getVal( 'title', '' ));
 		$width = $this->getVal( 'width', 0 );
 		$useMaster = $this->getVal( 'useMaster', 0 );
@@ -127,15 +132,16 @@ class RelatedVideosController extends WikiaController {
 		$cityShort = $this->getVal( 'cityShort', 'life');
 		$useJWPlayer = $this->getVal( 'useJWPlayer', true );
 		$autoplay = $this->getVal( 'autoplay', true );
-		if ($videoArticleId) {
-			$videoTitle = Title::newFromID($videoArticleId, GAID_FOR_UPDATE);
+
+		if ( $videoArticleId ) {
+			$videoTitle = Title::newFromID( $videoArticleId, GAID_FOR_UPDATE );
 			$useMaster = true;
 		} else {
 			$videoTitle = Title::newFromText( $videoName, NS_VIDEO );
 			$useMaster = ( false || !empty( $useMaster ) );
 		}
 
-		$rvd = new RelatedVideosData();
+		$rvd = F::build('RelatedVideosData');
 		$videoData = $rvd->getVideoData( $videoTitle, $width, $videoWidth, $autoplay, $useMaster, $cityShort, $videoHeight, $useJWPlayer );
 		$this->setVal( 'data', $videoData );
 	}
@@ -150,7 +156,7 @@ class RelatedVideosController extends WikiaController {
 	}
 
 	public function getAddVideoModal(){
-		
+
 		$this->setVal( 'html', $this->app->renderView( 'RelatedVideos', 'addVideoModalText' ) );
 		$this->setVal( 'title',	wfMsg('related-videos-add-video-to-this-page') );
 	}
@@ -161,36 +167,33 @@ class RelatedVideosController extends WikiaController {
 	
 	public function addVideo() {
 
-		$url = urldecode($this->getVal('url', ''));
-		$articleId = $this->getVal('articleId', '');
-		$rvd = F::build('RelatedVideosData');
-		$retval = $rvd->addVideo($articleId, $url);
-		if (is_array($retval)) {
-			$rvs = F::build('RelatedVideosService');
-			$data = $rvs->getRelatedVideoDataFromMaster( $retval['articleId'], $retval['title'], $retval['external']);
-			$this->setVal('html', $this->app->renderView( 'RelatedVideos', 'getCaruselElement', array('video'=>$data, 'preloaded'=>1) ));
-			$this->setVal('error', isset( $data['error'] ) ? $data['error'] : null);
+		$url = urldecode( $this->getVal( 'url', '' ) );
+		$articleId = $this->getVal( 'articleId', '' );
+		$rvd = F::build( 'RelatedVideosData' );
+		$retval = $rvd->addVideo( $articleId, $url );
+		if ( is_array( $retval ) ) {
+			$rvs = F::build( 'RelatedVideosService' );
+			$data = $rvs->getRelatedVideoDataFromMaster( $retval );
+			$this->setVal( 'html', $this->app->renderView( 'RelatedVideos', 'getCaruselElement', array( 'video' => $data, 'preloaded' => 1 ) ));
+			$this->setVal( 'error', isset( $data['error'] ) ? $data['error'] : null);
+		} else {
+			$this->setVal( 'data', null );
+			$this->setVal( 'error', $retval );
 		}
-		else {
-			$this->setVal('data', null);
-			$this->setVal('error', $retval);
-		}
-
 	}
 	
 	public function removeVideo() {
 		
-		$articleId = $this->getVal('articleId', '');
-		$title = urldecode($this->getVal('title', ''));
-		$external = $this->getVal('external', 0);
-		$rvd = F::build('RelatedVideosData');
-		$retval = $rvd->removeVideo($articleId, $title, $external);
-		if (is_string($retval)) {
-			$this->setVal('error', $retval);
+		$articleId = $this->getVal( 'articleId', '' );
+		$title = urldecode( $this->getVal( 'title', '' ) );
+		$external = $this->getVal( 'external', 0 );
+		$rvd = F::build( 'RelatedVideosData' );
+		$retval = $rvd->removeVideo( $articleId, $title, $external );
+		if ( is_string( $retval ) ) {
+			$this->setVal( 'error', $retval );
 		}
 		else {
-			$this->setVal('error', null);
+			$this->setVal( 'error', null );
 		}
-		
 	}
 }
