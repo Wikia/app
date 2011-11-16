@@ -9,7 +9,7 @@ class WallHooksHelper {
 		$app->wg->User->addWatch( $watchTitle );
 		return true;
 	}
-
+	
 	public function onUserIsBlockedFrom($user, $title, &$blocked, &$allowUsertalk) {
 	
 		if ( !$user->mHideName && $allowUsertalk && $title->getNamespace() == NS_USER_WALL_MESSAGE ) {
@@ -218,7 +218,7 @@ class WallHooksHelper {
 	 * 
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	public function onBeforePageHistory($article) {
+	public function onBeforePageHistory(&$article) {
 		$this->doSelfRedirect();
 		
 		return true;
@@ -231,7 +231,7 @@ class WallHooksHelper {
 	 * 
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	public function onBeforePageProtect($article) {
+	public function onBeforePageProtect(&$article) {
 		$this->doSelfRedirect();
 		
 		return true;
@@ -244,7 +244,7 @@ class WallHooksHelper {
 	 * 
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	public function onBeforePageUnprotect($article) {
+	public function onBeforePageUnprotect(&$article) {
 		$this->doSelfRedirect();
 		
 		return true;
@@ -257,7 +257,7 @@ class WallHooksHelper {
 	 * 
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	public function onBeforePageDelete($article) {
+	public function onBeforePageDelete(&$article) {
 		$this->doSelfRedirect();
 		
 		return true;
@@ -270,7 +270,7 @@ class WallHooksHelper {
 	 * 
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	public function onPersonalUrls($personalUrls, $title) {
+	public function onPersonalUrls(&$personalUrls, &$title) {
 		$app = F::App();
 		
 		F::build('JSMessages')->enqueuePackage('Wall', JSMessages::EXTERNAL);
@@ -310,7 +310,7 @@ class WallHooksHelper {
 	 * 
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	public function onUserPagesHeaderModuleAfterGetTabs($tabs, $namespace, $userName) {
+	public function onUserPagesHeaderModuleAfterGetTabs(&$tabs, $namespace, $userName) {
 		$app = F::App();
 		
 		$app->wg->request->setVal('dontGetUserFromSession', true);
@@ -354,7 +354,7 @@ class WallHooksHelper {
 	 * 
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	public function onPageHeaderIndexAfterActionButtonPrepared($action, $dropdown, $ns, $skin) {
+	public function onPageHeaderIndexAfterActionButtonPrepared(&$action, &$dropdown, $ns, $skin) {
 		$app = F::App();
 		$helper = F::build('WallHelper', array());
 		
@@ -498,7 +498,7 @@ class WallHooksHelper {
 	 * 
 	 * @return boolean true -- because it's a hook
 	 */
-	public function onAfterEditPermissionErrors($permErrors, $title, $removeArray) {
+	public function onAfterEditPermissionErrors(&$permErrors, $title, $removeArray) {
 		$app = F::App();
 		$canEdit = $app->wg->User->isAllowed('editwallarchivedpages');
 		
@@ -523,7 +523,7 @@ class WallHooksHelper {
 	 * 
 	 * @return true because this is a hook
 	 */
-	public function onSkinTemplateContentActions($contentActions) {
+	public function onSkinTemplateContentActions(&$contentActions) {
 		$app = F::app();
 		
 		if( !empty($app->wg->EnableWallExt) && $app->wg->Title instanceof Title ) {
@@ -566,7 +566,7 @@ class WallHooksHelper {
 	 * 
 	 * @author Andrzej 'nAndy' Lukaszewski
 	 */
-	public function onChangesListInsertFlags($list, $flags, $rc) {
+	public function onChangesListInsertFlags(&$list, &$flags, $rc) {
 		if( $rc->getAttribute('rc_type') == RC_NEW && $rc->getAttribute('rc_namespace') == NS_USER_WALL_MESSAGE ) {
 			$app = F::app();
 			$wnEntity = F::build('WallNotificationEntity', array($rc->getAttribute('rev_id'), $app->wg->CityId), 'getByWikiAndRevId');
@@ -596,7 +596,7 @@ class WallHooksHelper {
 	 * 
 	 * @author Andrzej 'nAndy' Lukaszewski
 	 */
-	public function onChangesListInsertArticleLink($list, $articleLink, $s, $rc, $unpatrolled, $watched) {
+	public function onChangesListInsertArticleLink(&$list, &$articleLink, &$s, &$rc, $unpatrolled, $watched) {
 		if(($rc->getAttribute('rc_type') == RC_NEW || $rc->getAttribute('rc_type') == RC_EDIT) && $rc->getAttribute('rc_namespace') == NS_USER_WALL_MESSAGE ) {
 			$app = F::app();
 			
@@ -635,7 +635,7 @@ class WallHooksHelper {
 	 * 
 	 * @author Andrzej 'nAndy' Lukaszewski
 	 */
-	public function onChangesListInsertDiffHist($list, $articleLink, $s, $rc, $unpatrolled) {
+	public function onChangesListInsertDiffHist(&$list, &$articleLink, &$s, &$rc, $unpatrolled) {
 		if( !empty($rc->mAttribs['rc_namespace']) && $rc->mAttribs['rc_namespace'] == NS_USER_WALL_MESSAGE ) {
 			$s = '';
 		}
@@ -657,7 +657,7 @@ class WallHooksHelper {
 	 * 
 	 * @author Andrzej 'nAndy' Lukaszewski
 	 */
-	public function onChangesListInsertRollback($list, $s, $rollbackLink, $rc) {
+	public function onChangesListInsertRollback(&$list, &$s, &$rollbackLink, $rc) {
 		if( !empty($rc->mAttribs['rc_namespace']) && $rc->mAttribs['rc_namespace'] == NS_USER_WALL_MESSAGE ) {
 			$rollbackLink = '';
 		}
@@ -679,7 +679,7 @@ class WallHooksHelper {
 	 * 
 	 * @author Andrzej 'nAndy' Lukaszewski
 	 */
-	public function onChangesListInsertComment($list, $comment, $s, $rc) {
+	public function onChangesListInsertComment($list, &$comment, &$s, &$rc) {
 		if(($rc->getAttribute('rc_type') == RC_NEW || $rc->getAttribute('rc_type') == RC_EDIT) && $rc->getAttribute('rc_namespace') == NS_USER_WALL_MESSAGE ) {
 			$app = F::app();
 			$wnEntity = F::build('WallNotificationEntity', array($rc->getAttribute('rc_this_oldid'), $app->wg->CityId), 'getByWikiAndRevId');
@@ -724,7 +724,7 @@ class WallHooksHelper {
 	 * 
 	 * @author Andrzej 'nAndy' Lukaszewski
 	 */
-	public function onChangesListInsertAction($list, $actionText, $s, $rc) {
+	public function onChangesListInsertAction($list, &$actionText, &$s, &$rc) {
 		if( $rc->getAttribute('rc_type') == RC_LOG 
 		 && $rc->getAttribute('rc_namespace') == NS_USER_WALL_MESSAGE 
 		 && ($rc->getAttribute('rc_log_action') == 'delete' || $rc->getAttribute('rc_log_action') == 'restore') ) {
@@ -895,7 +895,7 @@ class WallHooksHelper {
 	 * 
 	 * @author Andrzej 'nAndy' Lukaszewski
 	 */
-	public function onArticleDoDeleteArticleBeforeLogEntry($article, $logPage, $logType, $title, $reason, $hookAddedLogEntry) {
+	public function onArticleDoDeleteArticleBeforeLogEntry(&$article, &$logPage, &$logType, $title, $reason, &$hookAddedLogEntry) {
 		if( $title instanceof Title && $title->getNamespace() == NS_USER_WALL_MESSAGE ) {
 			$app = F::app();
 			$wm = F::build('WallMessage', array($title));
@@ -936,7 +936,7 @@ class WallHooksHelper {
 	 * 
 	 * @author Andrzej 'nAndy' Lukaszewski
 	 */
-	public function onPageArchiveUndeleteBeforeLogEntry($pageArchive, $logPage, $title, $reason, $hookAddedLogEntry) {
+	public function onPageArchiveUndeleteBeforeLogEntry(&$pageArchive, &$logPage, &$title, $reason, &$hookAddedLogEntry) {
 		if( $title instanceof Title && $title->getNamespace() == NS_USER_WALL_MESSAGE ) {
 			$app = F::app();
 			$wm = F::build('WallMessage', array($title));
@@ -967,7 +967,7 @@ class WallHooksHelper {
 	 * 
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	public function onXmlNamespaceSelectorAfterGetFormattedNamespaces($namespaces, $selected, $all, $element_name, $label) {
+	public function onXmlNamespaceSelectorAfterGetFormattedNamespaces(&$namespaces, $selected, $all, $element_name, $label) {
 		if( defined('NS_USER_WALL') && defined('NS_USER_WALL_MESSAGE') ) {
 			if( isset($namespaces[NS_USER_WALL]) && isset($namespaces[NS_USER_WALL_MESSAGE]) ) {
 				unset($namespaces[NS_USER_WALL], $namespaces[NS_USER_WALL_MESSAGE]);
@@ -988,7 +988,7 @@ class WallHooksHelper {
 	 * 
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	public function onLinkBegin($skin, $target, $text, $customAttribs, $query, $options, $ret) {
+	public function onLinkBegin($skin, $target, &$text, &$customAttribs, &$query, &$options, &$ret) {
 		// paranoia
 		if( !($target instanceof Title) ) {
 			return true;
@@ -1041,7 +1041,7 @@ class WallHooksHelper {
 		return true;
 	} 
 	
-	public function onArticleSaveComplete($article, $user, $text, $summary, $minoredit, $watchthis, $sectionanchor, $flags, $revision, $status, $baseRevId) {
+	public function onArticleSaveComplete(&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
 		$app = F::app();
 		$title = $article->getTitle();
 		
