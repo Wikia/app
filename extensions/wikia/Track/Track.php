@@ -12,9 +12,12 @@ $wgHooks['MakeGlobalVariablesScript'][] = 'Track::addGlobalVars';
 class Track {
 	const BASE_URL = 'http://a.wikia-beacon.com/__track';
 
-	private function getURL ($type=null, $param=null) {
+	private function getURL ($type=null, $name=null, $param=null) {
 		global $wgCityId, $wgContLanguageCode, $wgDBname, $wgDBcluster, $wgUser, $wgArticle, $wgTitle, $wgAdServerTest;
-		$url = Track::BASE_URL.($type ? "/$type" : '').'?'.
+		$url = Track::BASE_URL.
+			($type ? "/$type" : '').
+			($name ? "/$name" : '').	
+			'?'.
 			'c='.$wgCityId.'&amp;'.
 			'lc='.$wgContLanguageCode.'&amp;'.
 			'lid='.WikiFactory::LangCodeToId($wgContLanguageCode).'&amp;'.
@@ -34,16 +37,8 @@ class Track {
 		return $url;
 	}
 
-	public function getViewURL ($param=null) {
-		return Track::getURL('', $param);
-	}
-
-	public function getEventURL ($param=null) {
-		return Track::getURL('views', $param);
-	}
-
-	public function getJS ($type=null, $param=null) {
-		$url = Track::getURL($type, $param);
+	public function getViewJS ($param=null) {
+		$url = Track::getURL('view', '', $param);
 
 		$script = <<<SCRIPT1
 <noscript><img src="$url" width="1" height="1" border="0" alt="" /></noscript>
@@ -66,23 +61,14 @@ SCRIPT1;
 		return $script;
 	}
 
-	public function getViewJS ($param=null) {
-		return Track::getJS('', $param);
-	}
-
-	public function getEventJS ($param=null) {
-		return Track::getJS('event', $param);
-	}
-
 	public function event ($event_type, $param=null) {
 		$backtrace = debug_backtrace();
 		$class = $backtrace[1]['class'];
 		$func  = $backtrace[1]['function'];
 		$line  = !empty($backtrace[1]['line']) ? $backtrace[1]['line'] : '?';
 		$param['caller'] = "$class::$func:$line";
-		$param['type'] = urlencode($event_type);
 
-		$url = Track::getURL('special', $param);
+		$url = Track::getURL('special', urlencode($event_type), $param);
 		if (Http::get($url) !== false) {
 			return true;
 		} else {
