@@ -759,7 +759,7 @@ class WallHooksHelper {
 					
 					$wm = F::build('WallMessage', array($rcTitle));
 					$wmParent = $wm->getTopParentObj();
-					$articleUrl = $wmParent->getMessagePageUrl();
+					$articleUrl = !empty($wmParent) ? $wmParent->getMessagePageUrl():null;
 					$articleUrl = !empty($articleUrl) ? $articleUrl : '#';
 					$wallOwnerName = $wm->getWallOwnerName();
 					$userText = empty($wallOwnerName) ? $userText : $wallOwnerName;
