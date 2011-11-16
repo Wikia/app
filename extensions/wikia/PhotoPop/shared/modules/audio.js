@@ -41,12 +41,6 @@ define.call(exports, [
 				if(isApp)
 					Titanium.App.fireEvent('audio:play', {sound: sounds[sound], mute: getMute()});
 				else{
-					if(sound == 'win' || sound == 'fail'){
-						for(var p in sounds){
-							sounds[p].currentTime = 0;
-							sounds[p].pause();
-						}
-					}
 					sounds[sound].play();
 				}
 			},
