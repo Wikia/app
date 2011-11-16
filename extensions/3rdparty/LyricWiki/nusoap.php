@@ -2612,12 +2612,12 @@ class soap_server extends nusoap_base {
 		// if we got nothing back. this might be ok (echoVoid)
 		if(isset($this->methodreturn) && ($this->methodreturn != '' || is_bool($this->methodreturn))) {
 			// if fault
-			if(get_class($this->methodreturn) == 'soap_fault'){
+			if(is_object($this->methodreturn) && get_class($this->methodreturn) == 'soap_fault'){
 				$this->debug('got a fault object from method');
 				$this->fault = $this->methodreturn;
 				return;
 			// if return val is soapval object
-			} elseif(get_class($this->methodreturn) == 'soapval'){
+			} elseif(is_object($this->methodreturn) && get_class($this->methodreturn) == 'soapval'){
 				$this->debug('got a soapval object from method');
 				$return_val = $this->methodreturn->serialize();
 			// returned other
