@@ -7,6 +7,10 @@ WikiaSearchApp = {
 	track: function(url) {
 		$.tracker.byStr('module/search/' + url);
 	},
+	
+	trackInternal: function(event, params) {
+		$.internalTrack(event, params);
+	},
 
 	init : function() {
 		WikiaSearchApp.searchForm = $('#WikiaSearch');
@@ -52,6 +56,10 @@ WikiaSearchApp = {
 				serviceUrl: wgServer + wgScript + '?action=ajax&rs=getLinkSuggest&format=json',
 				onSelect: function(v, d) {
 					WikiaSearchApp.track('suggest');
+					WikiaSearchApp.trackInternal('search_start_suggest', {
+						'sterm': encodeURIComponent(v.replace(/ /g, '_')),
+						'rver': 0
+					});
 					window.location.href = wgArticlePath.replace(/\$1/, encodeURIComponent(v.replace(/ /g, '_')));
 				},
 				appendTo: '#WikiaSearch',
