@@ -129,8 +129,7 @@ class SolrSearch extends SearchEngine implements SearchErrorReporting {
 	}
 
 	public static function onSpecialSearchIsgomatch( $title, $term ) {
-		//tmp disabled
-		//Track::event( 'search_start', array( 'term' => $term, 'rver' => 0 ) );
+		Track::event( 'search_start_gomatch', array( 'sterm' => $term, 'rver' => 0 ) );
 		return true;
 	}
 
@@ -253,12 +252,11 @@ class SolrSearchSet extends SearchResultSet {
 		$resultCount = count($resultDocs);
 		$totalHits = $response->response->numFound;
 
-		if( empty( $offset ) ) {
-			//tmp disabled
-			//Track::event( 'search_start', array( 'term' => $query, 'rver' => $relevancyFunctionId ) );
-		}
-
 		$resultSet = new SolrSearchSet( $query, $resultDocs, $resultSnippets, $resultSuggestions, $resultCount, $offset, $relevancyFunctionId, $totalHits, $crossWikiaSearch );
+
+		if( empty( $offset ) ) {
+			Track::event( ( !empty( $resultCount ) ? 'search_start' : 'search_start_nomatch' ), array( 'sterm' => $query, 'rver' => $relevancyFunctionId ) );
+		}
 
 		wfProfileOut( $fname );
 		return $resultSet;
