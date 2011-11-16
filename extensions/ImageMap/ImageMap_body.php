@@ -269,7 +269,7 @@ class ImageMap {
 		# Add a surrounding div, remove the default link to the description page
 		$anchor = $imageNode->parentNode;
 		$parent = $anchor->parentNode;
-		if ($parent instanceof DOMDocument) $div = $parent->insertBefore( new DOMElement( 'div' ), $anchor );
+		if ($parent instanceof DOMElement) $div = $parent->insertBefore( new DOMElement( 'div' ), $anchor );
 		else return self::error( 'imagemap_no_parent' );
 		if ( $defaultLinkAttribs ) {
 			$defaultAnchor = $div->appendChild( new DOMElement( 'a' ) );
@@ -291,7 +291,7 @@ class ImageMap {
 		}
 
 		$imageParent->appendChild( $imageNode->cloneNode( true ) );
-		if ($parent instanceof DOMDocument) $parent->removeChild( $anchor );
+		if ($parent instanceof DOMElement) $parent->removeChild( $anchor );
 
 		# Determine whether a "magnify" link is present
 		$xpath = new DOMXPath( $domDoc );
