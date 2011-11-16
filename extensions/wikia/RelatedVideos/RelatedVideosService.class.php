@@ -5,6 +5,7 @@ class RelatedVideosService {
 	const memcKeyPrefix = 'RelatedVideosService';
 	const memcVersion = 1;
 	const width = 160;
+	const howLongVideoIsNew = 5;
 
 	/**
 	 * Get data for displaying and playing a Related Video
@@ -82,7 +83,7 @@ class RelatedVideosService {
 	private function extendVideoByLocalParams( $videoData, $localParams ){
 
 		if ( isset( $localParams['isNewDate'] ) && !empty( $localParams['isNewDate'] ) ){
-			$newDate = date( 'YmdHis', mktime( 0, 0, 0, date( 'm' ), date( 'd' ) - 5, date( 'Y' ) ) );
+			$newDate = date( 'YmdHis', mktime( 0, 0, 0, date( 'm' ), date( 'd' ) - self::howLongVideoIsNew, date( 'Y' ) ) );
 			$videoData['isNew'] = ( (int)$localParams['isNewDate'] > $newDate ) ? 1 : 0;
 		} else {
 			$videoData['isNew'] = 0;
