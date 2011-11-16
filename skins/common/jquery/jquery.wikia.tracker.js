@@ -14,7 +14,6 @@ jQuery.internalTrack = function(event, data) {
 	
 	// Set up params object - this should stay in sync with /extensions/wikia/Track/Track.php
 	var params = {
-		'type': event,
 		'c': wgCityId,
 		'x': wgDB,
 		'a': wgArticleId,
@@ -28,7 +27,7 @@ jQuery.internalTrack = function(event, data) {
 	$.extend(params, data);
 
 	// Make request	
-	$.get('http://a.wikia-beacon.com/__track/special', params);
+	$.get('http://a.wikia-beacon.com/__track/special/' + event, params);
 }
 
 
