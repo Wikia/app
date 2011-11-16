@@ -291,7 +291,7 @@ class ImageMap {
 		}
 
 		$imageParent->appendChild( $imageNode->cloneNode( true ) );
-		if ($parent instanceof DOMElement) $parent->removeChild( $anchor );
+		$parent->removeChild( $anchor );
 
 		# Determine whether a "magnify" link is present
 		$xpath = new DOMXPath( $domDoc );
