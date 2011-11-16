@@ -16,6 +16,7 @@ $messages['en'] = array(
 	'imagemap_invalid_image'        => 'Error: image is invalid or non-existent',
 	'imagemap_bad_image'            => 'Error: image is blacklisted on this page',
 	'imagemap_no_link'              => 'Error: no valid link was found at the end of line $1',
+	'imagemap_no_parent'            => 'Error: Missing wrapper',
 	'imagemap_invalid_title'        => 'Error: invalid title in link at line $1',
 	'imagemap_missing_coord'        => 'Error: not enough coordinates for shape at line $1',
 	'imagemap_unrecognised_shape'   => 'Error: unrecognised shape at line $1, each line must start with one of: default, rect, circle or poly',

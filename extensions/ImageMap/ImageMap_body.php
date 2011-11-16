@@ -270,7 +270,7 @@ class ImageMap {
 		$anchor = $imageNode->parentNode;
 		$parent = $anchor->parentNode;
 		if ($parent instanceof DOMDocument) $div = $parent->insertBefore( new DOMElement( 'div' ), $anchor );
-		else Wikia::log (__METHOD__, false, 'debuging fb14418 '.print_r($anchor, true)); //debuging fb14418
+		else return self::error( 'imagemap_no_parent' );
 		if ( $defaultLinkAttribs ) {
 			$defaultAnchor = $div->appendChild( new DOMElement( 'a' ) );
 			foreach ( $defaultLinkAttribs as $name => $value ) {
