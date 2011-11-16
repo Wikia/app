@@ -40,11 +40,12 @@ CREATE TABLE apiGate_banLog (
 	reason TEXT -- a human-readable explanation of the reasoning of the ban/unban/whatever. this should make sure to mention whether it was manual or automatic.
 );
 
-----
+----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
 -- STATS
--- These won't all be kept indefinitely, for example the hourly stats will probably be rolled up into daily numbers
--- and deleted every week or so.
-----
+-- These won't all be kept indefinitely, for example the hourly stats
+-- will probably be rolled up into daily numbers and deleted every week
+-- or so.
+----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
 
 DROP TABLE IF EXISTS apiGate_stats_hourly;
 CREATE TABLE apiGate_stats_hourly (
@@ -64,17 +65,6 @@ CREATE TABLE apiGate_stats_daily (
 	UNIQUE KEY (apiKey, startOfPeriod)
 );
 
--- Seems like overkill when we have daily & monthly.
--- TODO: REMOVE THIS IF WE END UP NOT USING WEEKLY ANYWHERE.
---DROP TABLE IF EXISTS apiGate_stats_weekly;
---CREATE TABLE apiGate_stats_weekly (
---	apiKey VARCHAR(255) NOT NULL,
---	startOfPeriod DATETIME,
---	hits BIGINT DEFAULT 0,
---	
---	UNIQUE KEY (apiKey, startOfPeriod)
---);
-
 DROP TABLE IF EXISTS apiGate_stats_monthly;
 CREATE TABLE apiGate_stats_monthly (
 	apiKey VARCHAR(255) NOT NULL,
@@ -82,4 +72,34 @@ CREATE TABLE apiGate_stats_monthly (
 	hits BIGINT DEFAULT 0,
 	
 	UNIQUE KEY (apiKey, startOfPeriod)
+);
+
+----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
+-- Aggregate stats
+-- Total across all keys and API requests that don't have a key - some
+-- requests may not require keys.
+----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
+
+DROP TABLE IF EXISTS apiGate_statsTotals_hourly;
+CREATE TABLE apiGate_statsTotals_hourly (
+	startOfPeriod DATETIME,
+	hits BIGINT DEFAULT 0,
+
+	PRIMARY KEY (startOfPeriod)
+);
+
+DROP TABLE IF EXISTS apiGate_statsTotals_daily;
+CREATE TABLE apiGate_statsTotals_daily (
+	startOfPeriod DATETIME,
+	hits BIGINT DEFAULT 0,
+
+	PRIMARY KEY (startOfPeriod)
+);
+
+DROP TABLE IF EXISTS apiGate_statsTotals_monthly;
+CREATE TABLE apiGate_statsTotals_monthly (
+	startOfPeriod DATETIME,
+	hits BIGINT DEFAULT 0,
+	
+	PRIMARY KEY (startOfPeriod)
 );
