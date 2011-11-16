@@ -73,14 +73,13 @@ class WallExternalController extends WikiaController {
 		
 		$this->response->setVal('status', true);
 		
-
 		$titleMeta = $this->helper->strip_wikitext($this->request->getVal('messagetitle', null));
 		$body = $this->request->getVal('body', null);
 		
 		$helper = F::build('WallHelper', array());
-
-		if( empty($title) ) {
-			$title = $helper->getDefaultTitle();
+		
+		if( empty($titleMeta) ) {
+			$titleMeta = $helper->getDefaultTitle();
 		}
 		
 		if( empty($body) ) {
@@ -88,7 +87,7 @@ class WallExternalController extends WikiaController {
 			$this->app->wf->ProfileOut(__METHOD__);
 			return true;
 		}
-
+		
 		$wallMessage = F::build('WallMessage', array($body, $this->request->getVal('username'), $this->wg->User, $titleMeta), 'buildNewMessageAndPost'); 
 		
 		if( $wallMessage === false ) {
