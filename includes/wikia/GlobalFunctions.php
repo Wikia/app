@@ -116,12 +116,14 @@ function print_pre($param, $return = 0)
 function wfReplaceImageServer( $url, $timestamp = false ) {
 	global $wgImagesServers, $wgAkamaiLocalVersion,  $wgAkamaiGlobalVersion, $wgDevBoxImageServerOverride, $wgDBname;
 
+
 	// Override image server location for Wikia development environment
 	// This setting should be images.developerName.wikia-dev.com or perhaps "localhost"
 	if (!empty($wgDevBoxImageServerOverride)) {
 		$url = str_replace("devbox", $wgDBname, $url);   // this will pull images from override wiki instead of devbox
 	}
 
+	wfDebug( __METHOD__ . ": requested url $url\n" );
 	if(substr(strtolower($url), -4) != '.ogg' && isset($wgImagesServers) && is_int($wgImagesServers)) {
 		if(strlen($url) > 7 && substr($url,0,7) == 'http://') {
 			$hash = sha1($url);
