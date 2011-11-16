@@ -445,7 +445,7 @@ class SpecialPageLayoutBuilder extends SpecialCustomEditPage {
 				)
 			);
 
-		if(PageLayoutBuilderSpecialPage::isDraft($self->mArticle)) {
+		if(self::isDraft($self->mArticle)) {
 			$buttons_out['draft'] = XML::element(
 				"input",
 				array(
