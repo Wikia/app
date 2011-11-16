@@ -119,7 +119,7 @@ class PdfHandler extends ImageHandler {
 		$cmd .= " | " . wfEscapeShellArg( $wgPdfPostProcessor );
 		$cmd .= " -depth 8 -resize {$width} - ";
 		$cmd .= wfEscapeShellArg( $dstPath ) . ")";
-		$cmd .= " 2>&1";
+		$cmd .= " 2>&1 > /dev/null"; // Wikia: prevent error msgs from breaking file
 
 		wfProfileIn( 'PdfHandler' );
 		wfDebug( __METHOD__.": $cmd\n" );
@@ -217,4 +217,9 @@ class PdfHandler extends ImageHandler {
 		return $data['text'][$page-1];
 	}
 
+	/* wikia change begin */
+	function getTransform( $image, $dstPath, $dstUrl, $params ) {
+		return $this->doTransform( $image, $dstPath, $dstUrl, $params, 0 /* do the transform now */ );
+	}
+	/* wikia change end */
 }
