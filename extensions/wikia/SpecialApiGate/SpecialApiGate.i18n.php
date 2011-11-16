@@ -19,6 +19,9 @@ $messages['en'] = array(
 	'apigate-nologin' => 'Please Log in',
 	'apigate-nologintext' => 'In order to get an API key, you must log in to a Wikia account.  After login, you will be able to track the API keys for all of your applications in one place - the API Control Panel.',
 	'apigate-login-button' => 'Log in',
+	
+	'apigate-backtomain' => '&lt; Back to API Control Panel',
+	
 	'apigate-register-success-heading' => 'Registration successful!',
 	'apigate-register-success' => "Your new API key is '<big><strong>$1</strong></big>'<br/><br/>You can see the key at any time by coming back to [[Special:ApiGate]] (there is a link in the User menu on the top-right of the page).",
 	'apigate-register-success-return' => "Return to the [[Special:ApiGate|API Gate landing page]] to see your new dashboard.",
@@ -40,6 +43,7 @@ $messages['en'] = array(
  */
 $messages['qqq'] = array(
 	'apigate-desc' => '{{desc}}',
+	'apigate-backtomain' => 'Text that appears in the "breadcrumb"-like link on the top of each subpage, linking back to the main landing page.',
 	'apigate-userlink' => 'The text that will appear in the dropdown menu of userlinks on the top-right of the page in the Oasis skin (Wikia).',
 );
 

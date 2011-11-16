@@ -75,6 +75,8 @@ class SpecialApiGate extends SpecialPage {
 
 				break;
 			case self::SUBPAGE_REGISTER:
+				$mainSectionHtml .= $this->getBreadcrumbHtml();
+			
 				// Users must be logged in to get an API key
 				if( !$wgUser->isLoggedIn() ){
 					$wgOut->setPageTitle( wfMsg( 'apigate-nologin' ) );
@@ -89,16 +91,21 @@ class SpecialApiGate extends SpecialPage {
 				}
 				break;
 			case self::SUBPAGE_ALL_KEYS:
+				$mainSectionHtml .= $this->getBreadcrumbHtml();
 				$mainSectionHtml .= $this->subpage_allKeys();
 				break;
 			case self::SUBPAGE_AGGREGATE_STATS:
 				$useTwoColLayout = false; // use full width so that the charts fit
+				$mainSectionHtml .= $this->getBreadcrumbHtml();
 				$mainSectionHtml .= $this->subpage_aggregateStats();
 				break;
 			case self::SUBPAGE_USER_KEYS:
+				$mainSectionHtml .= $this->getBreadcrumbHtml();
 				$mainSectionHtml .= $this->subpage_userKeys();
 				break;
 			case self::SUBPAGE_KEY:
+// TODO: Extract this into a subpage_key() function? 
+				$mainSectionHtml .= $this->getBreadcrumbHtml();
 				$apiKeyObject = ApiGate_ApiKey::newFromDb( $apiKey );
 				if( is_object($apiKeyObject) ){
 					// Determine if the current user can view this key (they must either own it or be an ApiGate admin).
@@ -151,6 +158,15 @@ class SpecialApiGate extends SpecialPage {
 
 		wfProfileOut( __METHOD__ );
 	} // end execute()
+	
+	/**
+	 * Returns HTML (as a string) for the "breadcrumb" links which in the case of this SpecialPage will
+	 * just be links from the subpages back to the main Control Panel.
+	 */
+	private function getBreadcrumbHtml(){
+		global $APIGATE_LINK_ROOT;
+		return "<small><a href='$APIGATE_LINK_ROOT'>". wfMsg('apigate-backtomain') ."</a></small><br/>";
+	} // end getBreadcrumbHtml()
 
 	private function getLoginBoxHtml(){
 		$html = wfMsg('apigate-nologintext') . "<br/><br/><button type='button' data-id='login' class='ajaxLogin'>" . wfMsg('apigate-login-button') . "</button>";
@@ -269,7 +285,7 @@ class SpecialApiGate extends SpecialPage {
 
 		wfProfileOut( __METHOD__ );
 		return $html;
-	}
+	} // end subpage_register()
 
 	/**
 	 * Subpage which shows admins some very brief stats on each API key so that they can rate-limit or just see
@@ -288,11 +304,11 @@ class SpecialApiGate extends SpecialPage {
 			$html .=  ApiGate_Dispatcher::renderTemplate( "listKeys", array('keyData' => $keyData) );
 		} else {
 
-			// TODO: IMPLEMENT
-			// TODO: IMPLEMENT
-		//	$errorString = i18n( 'apigate-mysql-error', $queryString, mysql_error( $dbr ) );
-		//	print ApiGate_Dispatcher::renderTemplate( "error", array('message' => $errorString));
-		//	//$html = $this->wrapHtmlInModuleBox( $html );
+	// TODO: IMPLEMENT
+	// TODO: IMPLEMENT
+	//	$errorString = i18n( 'apigate-mysql-error', $queryString, mysql_error( $dbr ) );
+	//	print ApiGate_Dispatcher::renderTemplate( "error", array('message' => $errorString));
+	//	//$html = $this->wrapHtmlInModuleBox( $html );
 
 		}
 
@@ -300,11 +316,32 @@ class SpecialApiGate extends SpecialPage {
 		return $html;
 	} // end subpage_allKeys()
 
+	/**
+	 * Displays the total stats of all requests to the API.
+	 */
 	public function subpage_aggregateStats(){
+		wfProfileIn( __METHOD__ );
 
-		// TODO: IMPLEMENT
-		// TODO: IMPLEMENT
+		$html = "";
+		if ( ApiGate_Config::isAdmin() ) {
+			$metricName = wfMsg( 'apigate-chart-metric-requests' );
 
+			$apiKey = ""; // won't be used in the query anyway
+			$chartName = wfMsg( 'apigate-chart-name-hourly' );
+			$html .= $this->getChartHtmlByPeriod( $apiKey, "hourly", $metricName, $chartName, true );
+
+			$chartName = wfMsg( 'apigate-chart-name-daily' );
+			$html .= $this->getChartHtmlByPeriod( $apiKey, "daily", $metricName, $chartName, true );
+
+			$chartName = wfMsg( 'apigate-chart-name-monthly' );
+			$html .= $this->getChartHtmlByPeriod( $apiKey, "monthly", $metricName, $chartName, true );
+		} else {
+// TODO: ERROR MESSAGE
+// TODO: ERROR MESSAGE
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $html;
 	} // end subpage_aggregateStats()
 
 	/**
@@ -378,22 +415,19 @@ class SpecialApiGate extends SpecialPage {
 
 		// TODO: LATER: When API Gate has its own charting, use that instead of this SponsorshipDashboard-dependent code.
 
+		$metricName = wfMsg( 'apigate-chart-metric-requests' );
+
 		// Will just show daily and monthly to users for now (and hourly will just be for admins to detect anything weird).
 		if( ApiGate_Config::isAdmin() ){
 			$html .= wfMsg('apigate-hourly-admin-only')."<br/><br/>\n"; // to avoid confusion, mention on the page that only admins see the hourly graph
 
-			$metricName = wfMsg( 'apigate-chart-metric-requests' );
 			$chartName = wfMsg( 'apigate-chart-name-hourly' );
 			$html .= $this->getChartHtmlByPeriod( $apiKey, "hourly", $metricName, $chartName );
 		}
-		
+
 		$chartName = wfMsg( 'apigate-chart-name-daily' );
 		$html .= $this->getChartHtmlByPeriod( $apiKey, "daily", $metricName, $chartName );
 
-		// This chart seems like overkill to display it w/all the other charts on the page. Hourly/daily/monthly seem good to start with. Might remove the concept of weekly stats from API Gate entirely.
-		//$chartName = wfMsg( 'apigate-chart-name-weekly' );
-		//$html .= $this->getChartHtmlByPeriod( $apiKey, "weekly", $metricName, $chartName );
-		
 		$chartName = wfMsg( 'apigate-chart-name-monthly' );
 		$html .= $this->getChartHtmlByPeriod( $apiKey, "monthly", $metricName, $chartName );
 
@@ -458,13 +492,14 @@ class SpecialApiGate extends SpecialPage {
 	/**
 	 * Returns the HTML for the chart of apiKey requests per time-period provided.
 	 *
-	 * @param apiKey - string - 
+	 * @param apiKey - string - the api key to track. ignored if these are aggregate stats.
 	 * @param period - string - period of time type {hourly, daily, weekly, monthly}.
 	 * @param uniqueMemCacheKey - string - key under which the processed results of the query will be cached.
 	 * @param metricName - string - the name of the line of data which will be generated by the query (charts could have many lines in some cases).
 	 * @param chartName - string - the name of the whole chart.
+	 * @param aggregate - boolean - if true, then the apiKey will be ignored and the stats will be pulled from the aggregate stats table for the period.
 	 */
-	public function getChartHtmlByPeriod( $apiKey, $period, $metricName, $chartName ){
+	public function getChartHtmlByPeriod( $apiKey, $period, $metricName, $chartName, $aggregate=false ){
 		wfProfileIn( __METHOD__ );
 
 		global $wgCacheBuster;
@@ -478,7 +513,14 @@ class SpecialApiGate extends SpecialPage {
 				$frequency = SponsorshipDashboardDateProvider::SD_FREQUENCY_DAY;
 		}
 
-		$queryString = "SELECT hits as number, startOfPeriod as creation_date FROM apiGate_stats_$period WHERE apiKey='$apiKey' ORDER BY startOfPeriod";
+		if( $aggregate ){
+			$tablePrefix = "apiGate_statsTotals_";
+			$whereClause = "";
+		} else {
+			$tablePrefix = "apiGate_stats_";
+			$whereClause = " WHERE apiKey='$apiKey'";
+		}
+		$queryString = "SELECT hits as number, startOfPeriod as creation_date FROM $tablePrefix$period$whereClause ORDER BY startOfPeriod";
 		$html = SpecialApiGate::getChartHtmlByQuery( $queryString, $frequency, $uniqueMemCacheKey, $metricName, $chartName );
 
 		wfProfileOut( __METHOD__ );

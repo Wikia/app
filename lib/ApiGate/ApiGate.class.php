@@ -6,8 +6,6 @@
  * This class contains static functions for dealing with very simple requests
  * that are designed to be easily called from external code (ie: whatever framework
  * is using ApiGate inside of it).
- *
- * TODO: Solve how to do the i18n both here and in MediaWiki gracefully.
  */
 
 class ApiGate{
