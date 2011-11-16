@@ -13,21 +13,22 @@ class RelatedVideosNamespaceData {
 	private $oParser;
 	private $oParserOptions;
 	private $oFakeTitle;
+	public	$entries;
 
 	const CACHE_TTL = 86400;
-	const CACHE_VER = 5;
+	const CACHE_VER = 9;
 	const VIDEOWIKI_MARKER = 'VW:';
 	const BLACKLIST_MARKER = 'BLACKLIST';
 	const WHITELIST_MARKER = 'WHITELIST';
 	const VIDEO_MARKER = '* ';
 	const GLOBAL_RV_LIST = 'RelatedVideosGlobalList';
 	
-	private function __construct($id, Title $title=null) {
+	private function __construct( $id, Title $title = null ) {
 		$this->mId = $id;
-		$this->mTitle = ($title ? $title : null);
+		$this->mTitle = ( $title ? $title : null );
 		$this->mData = null;
-		$this->mExists = ($id > 0);
-		$this->mMemcacheKey = wfMemcKey('relatedVideosNSData', 'data', F::app()->wg->wikiaVideoRepoDBName, $id, self::CACHE_VER);
+		$this->mExists = ( $id > 0);
+		$this->mMemcacheKey = wfMemcKey( 'relatedVideosNSData', 'data', F::app()->wg->wikiaVideoRepoDBName, $id, self::CACHE_VER );
 
 		wfDebug(__METHOD__ . ": relatedVideosNS article ID #{$id}\n");
 	}
@@ -72,11 +73,11 @@ class RelatedVideosNamespaceData {
 			return;
 		}
 
-		$article = F::build('Article', array($title));		
-		$status = $article->doEdit('', 'Article created', EDIT_NEW, false, F::app()->wg->user);
+		$article = F::build( 'Article', array( $title ) );
+		$status = $article->doEdit( '', 'Article created', EDIT_NEW, false, F::app()->wg->user);
 		
 		wfProfileOut( __METHOD__ );
-		return self::newFromTitle($article->getTitle());
+		return self::newFromTitle( $article->getTitle() );
 	}
 	
 	public function getId() {
@@ -130,37 +131,40 @@ class RelatedVideosNamespaceData {
 			// parse wikitext with RelatedVideos NS data (stored as wikitext list)
 			$content = $article->getContent();
 
-			$lines = explode("\n", $content);
+			$lines = explode( "\n", $content );
 			$lists = array();
 			$lists[ self::BLACKLIST_MARKER ] = array();
 			$lists[ self::WHITELIST_MARKER ] = array();
 			$mode = '';
 			foreach($lines as $line) {
-				$line = trim($line);
+				$line = trim( $line );
 				
-				if (strtoupper($line) == self::BLACKLIST_MARKER) {
+				if ( strtoupper( $line ) == self::BLACKLIST_MARKER ) {
 					$mode = self::BLACKLIST_MARKER;
-				}
-				elseif (strtoupper($line) == self::WHITELIST_MARKER) {
+				} elseif ( strtoupper( $line ) == self::WHITELIST_MARKER ) {
 					$mode = self::WHITELIST_MARKER;
-				}
-				elseif (startsWith($line, self::VIDEO_MARKER)) {
-					$line = substr($line, strlen(self::VIDEO_MARKER));
+				} elseif ( startsWith( $line, self::VIDEO_MARKER ) ) {
+					$line = substr( $line, strlen( self::VIDEO_MARKER ) );
 					
 					$isFromVideoWiki = false;
-					$title = $line;
-					if (startsWith($line, self::VIDEOWIKI_MARKER)) {
-						$title = substr($line, strlen(self::VIDEOWIKI_MARKER));
+					$aLine	= explode( "|", $line );
+
+					$title		= $aLine[0];
+					$user		= isset( $aLine[1] ) ? $aLine[1] : '';
+					$date		= isset( $aLine[2] ) ? $aLine[2] : '';
+					$isNewDate	= isset( $aLine[3] ) ? $aLine[3] : '';
+
+					if ( startsWith( $title, self::VIDEOWIKI_MARKER ) ) {
+						$title = substr( $title, strlen( self::VIDEOWIKI_MARKER ) );
 						$isFromVideoWiki = true;
 					}
 					
-					if ($mode) {
-						$lists[$mode][] = $this->createEntry($title, $isFromVideoWiki);
+					if ( $mode ) {
+						$lists[ $mode ][] = $this->createEntry( $title, $isFromVideoWiki, $user, $date, $isNewDate );
 					}
 				}
 			}
-				
-			
+
 			$this->mData = array(
 				'lists' => $lists,
 			);
@@ -216,7 +220,14 @@ class RelatedVideosNamespaceData {
 			if ($videoData['source'] == F::app()->wg->WikiaVideoRepoDBName) {
 				$text .= self::VIDEOWIKI_MARKER;
 			}
-			$text .= $videoData['title'] . "\n";
+			$text .= $videoData['title'];
+			$text .= '|';
+			$text .= isset( $videoData['userName'] ) ? $videoData['userName'] : '';
+			$text .= '|';
+			$text .= isset( $videoData['date'] ) ? (int)$videoData['date'] : '';
+			$text .= '|';
+			$text .= isset( $videoData['isNewDate'] ) ? (int)$videoData['isNewDate'] : '';
+			$text .= "\n";
 		}
 		wfProfileOut( __METHOD__ );
 		return $text;
@@ -247,7 +258,7 @@ class RelatedVideosNamespaceData {
 		wfDebug(__METHOD__ . ": purged RelatedVideos NS article #{$this->mId}\n");
 		wfProfileOut(__METHOD__);
 	}
-	
+
 	/**
 	 * Add entries to specified list, and remove them from the other list
 	 * @param string $list BLACKLIST_MARKER or WHITELIST_MARKER
@@ -262,6 +273,12 @@ class RelatedVideosNamespaceData {
 		$status = '';
 		$summary = '';
 		$this->load();
+
+		if ($list == self::WHITELIST_MARKER) {
+			$otherList = self::BLACKLIST_MARKER;
+		} else {
+			$otherList = self::WHITELIST_MARKER;
+		}
 
 		if ($list == self::WHITELIST_MARKER) {
 			// check Related Pages results for duplicate
@@ -292,7 +309,32 @@ class RelatedVideosNamespaceData {
 				}
 			}
 		}
-		
+
+		// check if video is already on any list ( to get NEW Video data and user name )
+		foreach( array( self::WHITELIST_MARKER, self::BLACKLIST_MARKER ) as $sList ) {
+			if (!empty($this->mData['lists'][$sList])) {
+				foreach ($this->mData['lists'][$sList] as $entry) {
+					foreach ($entries as $key => $newEntry) {
+						if ( $newEntry['title'] == $entry['title']
+						&& $newEntry['source'] == $entry['source'] ) {
+							$entries[ $key ][ 'isNewDate' ] = isset( $entry[ 'isNewDate' ] ) ? (int)$entry[ 'date' ] : '';
+						}
+					}
+				}
+			}
+		}
+
+		foreach ($entries as $key => $newEntry) {
+			$entries[ $key ][ 'userName' ] = F::app()->wg->user->getName();
+			$entries[ $key ][ 'date' ] = date('YmdHis');
+
+			if ( empty( $newEntry[ 'isNewDate' ] ) ){
+				$entries[ $key ][ 'isNewDate' ] = date('YmdHis');
+			} else {
+				$entries[ $key ][ 'isNewDate' ] = $newEntry[ 'isNewDate' ];
+			}
+		}
+
 		// first, add to this list
 		if (!empty($this->mData['lists'][$list])) {
 			foreach ($this->mData['lists'][$list] as $entry) {
@@ -311,9 +353,8 @@ class RelatedVideosNamespaceData {
 				}
 			}
 			// no duplicate found. add!
-			$this->mData['lists'][$list] = array_merge($this->mData['lists'][$list], $entries);
-		}
-		else {
+			$this->mData['lists'][$list] = array_merge( $this->mData['lists'][$list], $entries );
+		} else {
 			$this->mData['lists'][$list] = $entries;
 			$newEntry = end( $entries );
 		}
@@ -325,17 +366,11 @@ class RelatedVideosNamespaceData {
 		} else {
 			$summary = wfMsg('related-videos-wiki-summary-blacklist', array( $oTmpTitle->getText(), $oTmpTitle->getFullText() ));
 		}
-		
+
 		// next, remove from other list
-		if ($list == self::WHITELIST_MARKER) {
-			$otherList = self::BLACKLIST_MARKER;
-		}
-		else {
-			$otherList = self::WHITELIST_MARKER;
-		}
-		
+
 		if (!empty($this->mData['lists'][$otherList])) {
-			foreach ($this->mData['lists'][$otherList] as $key=>&$entry) {
+			foreach ($this->mData['lists'][$otherList] as $key => $entry) {
 				foreach ($entries as $newEntry) {
 					if ($newEntry['title'] == $entry['title']
 					&& $newEntry['source'] == $entry['source']) {
@@ -345,16 +380,14 @@ class RelatedVideosNamespaceData {
 			}
 			$this->mData['lists'][$otherList] = array_values($this->mData['lists'][$otherList]);
 		}
-		
+
 		$content = $this->serialize();
-		
-		if ($this->mId) {
-			$title = F::build('Title', array($this->mId), 'newFromID');
-		}
-		elseif ($this->mTitle) {
+
+		if ( $this->mId ) {
+			$title = F::build( 'Title', array( $this->mId ), 'newFromID' );
+		} elseif ( $this->mTitle ) {
 			$title = $this->mTitle;
-		}
-		else {
+		} else {
 			wfProfileOut( __METHOD__ );
 			return wfMsg('related-videos-error-unknown', 76543);
 		}
@@ -362,26 +395,34 @@ class RelatedVideosNamespaceData {
 		$article = F::build('Article', array($title));
 
 		if ( empty( $summary )){
-			$summary = wfMsg( 'related-videos-updated', array( ucfirst(strtolower($list)) ) );
+			$summary = wfMsg( 'related-videos-updated', array( ucfirst( strtolower( $list ) ) ) );
 		}
-
-		$status = $article->doEdit($content, $summary, $this->exists() ? EDIT_UPDATE : EDIT_NEW, false, F::app()->wg->user);
+		$this->entries = $entries;
+		$status = $article->doEdit( $content, $summary, $this->exists() ? EDIT_UPDATE : EDIT_NEW, false, F::app()->wg->user);
 		$this->purge();	// probably unnecessary b/c a hook does this, but can't hurt
 
 		wfProfileOut( __METHOD__ );
 		return $status;
 	}
-	
-	public function createEntry($title, $isFromVideoWiki) {
+
+	public function createEntry( $title, $isFromVideoWiki, $user = '', $date = '', $newData = '' ) {
 
 		wfProfileIn( __METHOD__ );
 		$entry = array();
-		if (startsWith($title, F::app()->wg->Lang->getNsText(NS_VIDEO))) {
-			$title = substr($title, strlen(F::app()->wg->Lang->getNsText(NS_VIDEO).':'));
+		if ( startsWith( $title, F::app()->wg->Lang->getNsText( NS_VIDEO ) ) ) {
+			$title = substr( $title, strlen( F::app()->wg->Lang->getNsText( NS_VIDEO ).':' ) );
 		}
 		$entry['title'] = $title;
-		$entry['source'] = ($isFromVideoWiki ? F::app()->wg->WikiaVideoRepoDBName : '');
-
+		$entry['source'] = ( $isFromVideoWiki ? F::app()->wg->WikiaVideoRepoDBName : '' );
+		if ( !empty( $user ) ){
+			$entry['userName'] = $user;
+		}
+		if ( !empty( $date ) ){
+			$entry['date'] = $date;
+		}
+		if ( !empty( $newData ) ){
+			$entry['isNewDate'] = $newData;
+		}
 		wfProfileOut( __METHOD__ );
 		return $entry;
 	}

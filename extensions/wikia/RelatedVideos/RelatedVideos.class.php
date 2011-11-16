@@ -33,11 +33,10 @@ class RelatedVideos extends RelatedPages {
 		$this->pages = array();
 		$oRelatedVideosData =  F::build( 'RelatedVideosData' );
 		foreach( $pages as $pageId => $data ) {
-			$oRelatedVideosService = F::build('RelatedVideosService');
-			$videoData = $oRelatedVideosService->getRelatedVideoData( 0, $data['title'] );
-			if ( isset($videoData['timestamp']) && isset($videoData['id']) ){
-				$videoId = $videoData['timestamp'].'|'.$videoData['id'];
-				$this->pages[ $videoId ] = $videoData;
+			$oRelatedVideosService = F::build( 'RelatedVideosService' );
+			$videoData = $oRelatedVideosService->getRelatedVideoData( 0, $data );
+			if ( isset( $videoData[ 'timestamp' ] ) && isset( $videoData['id'] ) ){
+				$this->pages[ $videoData['arrayId'] ] = $videoData;
 				if ( count( $this->pages ) >= $limit) {
 					break;
 				}

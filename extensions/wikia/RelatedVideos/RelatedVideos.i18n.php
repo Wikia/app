@@ -37,7 +37,8 @@ $messages['en'] = array(
 	'related-videos-tooltip-embed' => 'Paste this URL in the video embed tool',
 	'related-videos-beta-feature' => 'beta',
 	'related-videos-repo-name' => 'Wikia Video Library',
-	'related-videos-embed-text' => 'Embed code'
+	'related-videos-embed-text' => 'Embed code',
+	'related-videos-video-is-new' => 'New',
 );
 
 /** Interlingua (Interlingua)

@@ -5,9 +5,9 @@ class RelatedVideosData {
 	protected static $theInstance = null;
 	protected static $memcKeyPrefix = 'RelatedVideosData';
 	protected static $memcTtl = 86400;
-	protected static $memcVer = 11;
+	protected static $memcVer = 12;
 	protected $memcKey;
-	
+
 	function __construct() {
 		
 	}
@@ -17,13 +17,12 @@ class RelatedVideosData {
 		wfProfileIn( __METHOD__ );
 
 		$data = array();
-
 		if ( empty( $title ) || !is_object( $title ) || !( $title instanceof Title ) || !$title->exists() ){
-			$data['error'] = wfMsg('related-videos-error-no-video-title');
+			$data['error'] = wfMsg( 'related-videos-error-no-video-title' );
 		} else {
 			$videoPage = F::build( 'VideoPage', array( $title ) );
 			$videoPage->load($useMaster);
-			$data['external'] = false; // false means it is not set. Meaning values are 0 and 1.
+			$data['external']	= false; // false means it is not set. Meaning values are 0 and 1.
 			$data['id']		= $title->getArticleID();
 			$data['description']	= $videoPage->getDescription();
 			$data['duration']	= $videoPage->getDuration();
@@ -51,12 +50,14 @@ class RelatedVideosData {
 			}
 			$data['owner'] = $owner;
 			$data['ownerUrl'] = $ownerUrl;
+			$data['arrayId'] = $data['external'].'|'.$data['id'];
 		}
+
 		wfProfileOut( __METHOD__ );
 		return $data;
 	}
 	
-	public function addVideo($articleId, $url) {
+	public function addVideo( $articleId, $url ) {
 
 		wfProfileIn( __METHOD__ );
 		if ( empty( $articleId ) ){
@@ -74,18 +75,19 @@ class RelatedVideosData {
 			wfProfileOut( __METHOD__ );
 			return wfMsg('related-videos-error-unknown', 876462);
 		}
-		
+
 		// check permission
 		$permErrors = $targetTitle->getUserPermissionsErrors( 'edit', F::app()->wg->user );
 		if ($permErrors) {
 			wfProfileOut( __METHOD__ );
 			return wfMsg('related-videos-error-permission-article');
 		}
-		
+
 		// create temp VideoPage to parse URL
-		$tempname = 'Temp_video_' . F::app()->wg->user->getID() . '_'.rand(0, 1000);
-		$temptitle = Title::makeTitle( NS_VIDEO, $tempname );
-		$video = new VideoPage( $temptitle );
+		$tempname = 'Temp_video_' . F::app()->wg->user->getID() . '_'.rand(0, 1000); // FIXME: use normal empty title;
+		$temptitle = F::build( 'Title', array( NS_VIDEO, $tempname ), 'makeTitle' );
+		$video = F::build( 'VideoPage', array( $temptitle ) );
+
 		if( !$video->parseUrl( $url ) ) {
 			wfProfileOut( __METHOD__ );
 			return wfMsg( 'related-videos-add-video-error-bad-url' );
@@ -103,12 +105,14 @@ class RelatedVideosData {
 
 		// check if video already exists on this wiki. If not, create 
 		// new VideoPage
-		$videoTitle = $this->sanitizeTitle($videoName);
-		if(is_null($videoTitle)) {
+		$videoTitle = $this->sanitizeTitle( $videoName );
+
+		if( is_null( $videoTitle ) ) {
 			wfProfileOut( __METHOD__ );
 			return wfMsg ( 'related-videos-add-video-error-bad-name' );
 		}
-		if($videoTitle->exists()) {
+
+		if( $videoTitle->exists() ) {
 			$videoPageId = $videoTitle->getArticleID();
 			// no need to create video page
 		} else {
@@ -121,19 +125,23 @@ class RelatedVideosData {
 				return wfMsg( 'related-videos-add-video-error-permission-video' );
 			}
 
-			$video = new VideoPage( $videoTitle );
+			$video = F::build( 'VideoPage', array( $videoTitle ) );
 			$video->loadFromPars( $videoProvider, $videoId, $videoMetadata );
 			$video->setName( $videoName );
 			$video->save();
 			$videoPageId = $video->getTitle()->getArticleID();
 		}
-		
+
 		// add to article's whitelist
-		$rvn = F::build('RelatedVideosNamespaceData', array($targetTitle), 'newFromTargetTitle');
-		$entry = $rvn->createEntry($videoTitle->getText(), $videoProvider == VideoPage::V_WIKIAVIDEO);
-		$retval = $rvn->addToList( RelatedVideosNamespaceData::WHITELIST_MARKER, array($entry), $articleId );
-		if (is_object($retval)) {
-			if ($retval->ok) {
+		$rvn = F::build( 'RelatedVideosNamespaceData', array( $targetTitle ), 'newFromTargetTitle' );
+		$entry = $rvn->createEntry( $videoTitle->getText(), $videoProvider == VideoPage::V_WIKIAVIDEO );
+		$retval = $rvn->addToList( RelatedVideosNamespaceData::WHITELIST_MARKER, array( $entry ), $articleId );
+		if ( is_array( $rvn->entries ) ){
+			$entry = end( $rvn->entries );
+		}
+		if ( is_object( $retval ) ) {
+			if ( $retval->ok ) {
+				$data = $entry;
 				$data['articleId'] = $videoPageId;
 				$data['title'] = $videoTitle->getText();
 				$data['external'] = $videoProvider == VideoPage::V_WIKIAVIDEO;
@@ -145,11 +153,12 @@ class RelatedVideosData {
 			}
 		}
 		wfProfileOut( __METHOD__ );
+
 		return $retval;		
 	}
-	
+
 	protected function sanitizeTitle($name) {
-		
+
 		wfProfileIn( __METHOD__ );
 		// sanitize title
 		$name = preg_replace(Title::getTitleInvalidRegex(), ' ', $name);
@@ -157,9 +166,9 @@ class RelatedVideosData {
 		// titles, but they refer to subpages, which videos don't have
 		$name = str_replace('/', ' ', $name);
 		$name = str_replace('  ', ' ', $name);
-		
+
 		$name = substr($name, 0, VideoPage::MAX_TITLE_LENGTH);	// DB column Image.img_name has size 255
-		
+
 		wfProfileOut( __METHOD__ );
 		return Title::makeTitleSafe(NS_VIDEO, $name);		
 	}
@@ -200,10 +209,12 @@ class RelatedVideosData {
 
 		// check video exists
 		$rvs = F::build('RelatedVideosService');
-		$data = $rvs->getRelatedVideoData( 0, $entry['title'], $entry['source'] );
-		if (empty($data['title'])) {
+		
+		$entry['articleId'] = 0;
+		$data = $rvs->getRelatedVideoData( $entry );
+		if ( empty( $data['title'] ) ) {
 			wfProfileOut( __METHOD__ );
-			return wfMsg('related-videos-remove-video-error-nonexisting');
+			return wfMsg( 'related-videos-remove-video-error-nonexisting' );
 		}
 
 		$retval = $rvn->addToList( RelatedVideosNamespaceData::BLACKLIST_MARKER, array($entry), $articleId );
