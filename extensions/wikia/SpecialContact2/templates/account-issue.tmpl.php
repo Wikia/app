@@ -1,6 +1,6 @@
 <?= wfMsgExt( 'specialcontact-intro-account-issue', array( 'parse' ) ) ?>
 
-<h2><?= wfMsg( 'specialcountact-form-header' ) ?></h2>
+<h2><?= wfMsg( 'specialcontact-form-header' ) ?></h2>
 
 <form id="contactform" method="post" action="" enctype="multipart/form-data">
 

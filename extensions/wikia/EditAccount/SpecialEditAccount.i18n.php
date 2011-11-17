@@ -49,6 +49,8 @@ $messages['en'] = array(
 	'editaccount-invalid-email' => '"$1" is not a valid e-mail address!',
 	'editaccount-nouser' => 'Account "$1" does not exist!',
 	'editaccount-remove-avatar-fail' => 'Problem auto-removing avatar.',
+	'editaccount-requested' => 'Note: User has requested an account closure',
+	'editaccount-not-requested' => 'CAUTION: User has not requested an account closure',
 	# logging
 	'editaccount-log' => 'User accounts log',
 	'editaccount-log-header' => 'This page lists changes made to user information by Wikia Staff.',
