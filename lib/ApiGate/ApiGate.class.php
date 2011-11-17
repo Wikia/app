@@ -36,9 +36,9 @@ class ApiGate{
 	public static function banKey( $apiKey, $reason ){
 		wfProfileIn( __METHOD__ );
 
-		// TODO: IMPLEMENT (make sure to flip the enabled to false and ALSO record the event in the ban log).
+		// TODO: SWC: IMPLEMENT (make sure to flip the enabled to false and ALSO record the event in the ban log).
 		//$queryString = "SELECT enabled FROM ".ApiGate::TABLE_KEYS." WHERE apiKey='".mysql_real_escape_string( $apiKey, $dbr )."'";
-		// TODO: IMPLEMENT (make sure to flip the enabled to false and ALSO record the event in the ban log).
+		// TODO: SWC: IMPLEMENT (make sure to flip the enabled to false and ALSO record the event in the ban log).
 		
 		self::purgeKey( $apiKey );
 		
@@ -67,7 +67,7 @@ class ApiGate{
 		if($apiKey == "509"){
 			$retVal = ApiGate::HTTP_STATUS_LIMIT_EXCEEDED;
 		} else if($apiKey == ""){
-			// TODO: If the API gets to a point where the auth is always required, uncomment this.
+			// TODO: SWC: If the API gets to a point where the auth is always required, uncomment this.
 			//$retVal = ApiGate::HTTP_STATUS_UNAUTHORIZED;
 		} else {
 			// Find if the API key is in the database and is enabled.
@@ -143,26 +143,26 @@ class ApiGate{
 				//header("Status: 401 Unauthorized"); // Fast CGI need status.  TODO: Have a way to detect if this is Fast CGI or not and choose the correct header type.
 				header("HTTP/1.0: 401 Unauthorized");
 				if( empty($apiKey) ){
-					print "Unauthorized: No API key was found. Please provide an API key to use this API.\n"; // TODO: i18n ?
+					print "Unauthorized: No API key was found. Please provide an API key to use this API.\n"; // TODO: SWC: i18n ?
 				} else {
-					print "Unauthorized: Invalid API key.  The API key found was: \"$apiKey\" but that is invalid.  Please provide a valid API key."; // TODO: i18n ?
+					print "Unauthorized: Invalid API key.  The API key found was: \"$apiKey\" but that is invalid.  Please provide a valid API key."; // TODO: SWC: i18n ?
 				}
 			break;
 
 			case ApiGate::HTTP_STATUS_FORBIDDEN:
 				header("HTTP/1.0: 403 Forbidden");
-				print "Forbidden. Your API key is not authorized to make this request."; // TODO: i18n
+				print "Forbidden. Your API key is not authorized to make this request."; // TODO: SWC: i18n
 			break;
 				
 			case ApiGate::HTTP_STATUS_LIMIT_EXCEEDED:
 				header("HTTP/1.0: 509 Bandwidth Limit Exceeded");
-				print "This API key has been disabled because the request-rate was too high. Please contact support for more information or to re-enable."; // TODO: i18n ?
+				print "This API key has been disabled because the request-rate was too high. Please contact support for more information or to re-enable."; // TODO: SWC: i18n ?
 			break;
 
 			case ApiGate::HTTP_STATUS_OK:
 			default:
 				header("HTTP/1.0: 200 OK");
-				print "OK"; // TODO: i18n
+				print i18n( 'apigate-checkkey-ok' );
 			break;
 		}
 
@@ -180,8 +180,8 @@ class ApiGate{
 
 		header( "{$APIGATE_HEADER_REQUIRES_API}: 1" );
 
-		// TODO: LATER: For users who DON'T use the proxy method, there should probably be a call to isRequestAllowed() and a handling of the failure case.
-		// TODO: LATER: For users who DON'T use the proxy method, there should probably be a call to isRequestAllowed() and a handling of the failure case.
+		// TODO: SWC: LATER: For users who DON'T use the proxy method, there should probably be a call to isRequestAllowed() and a handling of the failure case.
+		// TODO: SWC: LATER: For users who DON'T use the proxy method, there should probably be a call to isRequestAllowed() and a handling of the failure case.
 
  		wfProfileOut( __METHOD__ );
 	} // end requiresApiKey()
@@ -196,11 +196,11 @@ class ApiGate{
 	 *
 	 * @param apiKey - string - the API key to purge from caches as needed.
 	 */
-	private static function purgeKey( $apiKey ){
+	protected static function purgeKey( $apiKey ){
 		wfProfileIn( __METHOD__ );
 
-		// TODO: If your implementation needs to purge something after a ban, extend this class and override this method.
-		// TODO: If your implementation needs to purge something after a ban, extend this class and override this method.
+		// NOTE: If your implementation needs to purge something after a ban, extend this class and override this method.
+		// NOTE: If your implementation needs to purge something after a ban, extend this class and override this method.
 
 		wfProfileOut( __METHOD__ );
 	} // end purgeKey()
@@ -223,8 +223,7 @@ class ApiGate{
 				}
 			}
 		} else {
-			$errorString = i18n( 'apigate-mysql-error', $queryString, mysql_error( $dbr ) );
-			print ApiGate_Dispatcher::renderTemplate( "error", array('message' => $errorString));
+			ApiGate::queryError($queryString, $dbr);
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -263,8 +262,7 @@ class ApiGate{
 				}
 			}
 		} else {
-			$errorString = i18n( 'apigate-mysql-error', $queryString, mysql_error( $dbr ) );
-			print ApiGate_Dispatcher::renderTemplate( "error", array('message' => $errorString));
+			ApiGate::queryError($queryString, $dbr);
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -307,8 +305,7 @@ class ApiGate{
 				}
 			}
 		} else {
-			$errorString = i18n( 'apigate-mysql-error', $queryString, mysql_error( $dbr ) );
-			print ApiGate_Dispatcher::renderTemplate( "error", array('message' => $errorString));
+			ApiGate::queryError($queryString, $dbr);
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -349,13 +346,27 @@ class ApiGate{
 				}
 			}
 		} else {
-			$errorString = i18n( 'apigate-mysql-error', $queryString, mysql_error( $dbr ) );
-			print ApiGate_Dispatcher::renderTemplate( "error", array('message' => $errorString));
+			ApiGate::queryError($queryString, $dbr);
 		}
 
 		wfProfileOut( __METHOD__ );
 		return $retVal;
 	} // end simpleQuery()
+	
+	/**
+	 * Prints a mysql error.
+	 */
+	public static function queryError( $queryString, $db ){
+		$errorString = i18n( 'apigate-mysql-error', $queryString, mysql_error( $db ) );
+		ApiGate::printError( $errorString );
+	} // end queryError()
+	
+	/**
+	 * Prints the provided error string inside of some standard HTML for errors in the system.
+	 */
+	public static function printError( $errorString ){
+		print ApiGate_Dispatcher::renderTemplate( "error", array('message' => $errorString));
+	} // end printError()
 
 	/**
 	 * Helper-function to grab a posted value with an optional default value (which itself defaults to empty-string).

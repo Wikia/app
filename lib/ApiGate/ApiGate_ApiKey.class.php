@@ -76,9 +76,7 @@ class ApiGate_ApiKey {
 				$html .= "</ul>\n";
 			}
 		} else {
-// TODO: PRINT SQL ERROR
-print "Error loading ban-log with query:<br/>$queryString<br/>mysql_error: ".mysql_error($db)."<br/>\n";
-// TODO: PRINT SQL ERROR
+			ApiGate::queryError($queryString, $db);
 		}
 
 		if( $html == "" ){
@@ -175,7 +173,7 @@ print "Error loading ban-log with query:<br/>$queryString<br/>mysql_error: ".mys
 					$email_2 = ApiGate::getPost('email_2');
 					
 					// Validate input (should be same business logic as ApiGate_Register::processPost().
-					// TODO: REFACTOR: these rules to be in one function called from both here and from the registration form and which just modifies the errorString.
+					// TODO: SWC: REFACTOR: these rules to be in one function called from both here and from the registration form and which just modifies the errorString.
 					if("$firstName$lastName" == ""){
 						$errorString .= "\n" . i18n( 'apigate-register-error-noname' );
 					}
@@ -205,6 +203,10 @@ print "Error loading ban-log with query:<br/>$queryString<br/>mysql_error: ".mys
 								$queryString .= ", enabled='$enabled'";
 
 								$reason = ApiGate::getPost('reason');
+
+// TODO: SWC: USE THE ApiGate::banKey function().
+// TODO: SWC: USE THE ApiGate::banKey function().
+
 								$logQuery = "INSERT INTO ".ApiGate::TABLE_BANLOG." (apiKey, action, username, reason) VALUES (";
 								$logQuery .= "'".$apiKeyObject->getApiKeySqlSafe()."'";
 								$logQuery .= ", '".($setToEnabled?"enabled":"disabled")."'";
@@ -224,12 +226,12 @@ print "Error loading ban-log with query:<br/>$queryString<br/>mysql_error: ".mys
 						}
 					}
 				} else {
-	// TODO: ERROR MESSSAGE THAT YOU CAN'T EDIT THIS KEY
-	// TODO: ERROR MESSSAGE THAT YOU CAN'T EDIT THIS KEY
+	// TODO: SWC: ERROR MESSSAGE THAT YOU CAN'T EDIT THIS KEY
+	// TODO: SWC: ERROR MESSSAGE THAT YOU CAN'T EDIT THIS KEY
 				}
 			} else {
-	// TODO: ERROR MESSAGE THAT THE KEY COULD NOT BE FOUND
-	// TODO: ERROR MESSAGE THAT THE KEY COULD NOT BE FOUND
+	// TODO: SWC: ERROR MESSAGE THAT THE KEY COULD NOT BE FOUND
+	// TODO: SWC: ERROR MESSAGE THAT THE KEY COULD NOT BE FOUND
 			}
 		}
 		

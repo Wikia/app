@@ -55,8 +55,8 @@ class SpecialApiGate extends SpecialPage {
 		// Box the main content of the text into a left-column so that a custom menu can be put on the right (below).
 		$wgOut->addWikiText( "<mainpage-leftcolumn-start />");
 
-// TODO: Make sure that all subpages (EXCEPT checkKey!) redirect to Api wiki if they're on another wiki (needed for that right-rail template to work & still be community editable - including the images on it).
-// TODO: Make sure that all subpages (EXCEPT checkKey!) redirect to Api wiki if they're on another wiki (needed for that right-rail template to work & still be community editable - including the images on it).
+// TODO: SWC: Make sure that all subpages (EXCEPT checkKey!) redirect to Api wiki if they're on another wiki (needed for that right-rail template to work & still be community editable - including the images on it).
+// TODO: SWC: Make sure that all subpages (EXCEPT checkKey!) redirect to Api wiki if they're on another wiki (needed for that right-rail template to work & still be community editable - including the images on it).
 
 		$useTwoColLayout = true; // main column & right rail on most forms, but no columns for chart pages since SponsorshipDashboard charts are too wide (and not resizable yet).
 		$mainSectionHtml = "";
@@ -64,7 +64,7 @@ class SpecialApiGate extends SpecialPage {
 		switch($subpage){
 			case self::SUBPAGE_CHECK_KEY:
 
-				// TODO: LATER Fill this out so that we can do per-method permissions (there can probably be a static helper-function in ApiGate to assist).
+				// TODO: LATER: Fill this out so that we can do per-method permissions (there can probably be a static helper-function in ApiGate to assist).
 				$requestData = array();
 
 				// Will output headers and a descriptive body-message.
@@ -104,7 +104,7 @@ class SpecialApiGate extends SpecialPage {
 				$mainSectionHtml .= $this->subpage_userKeys();
 				break;
 			case self::SUBPAGE_KEY:
-// TODO: Extract this into a subpage_key() function? 
+// TODO: SWC: Extract this into a subpage_key() function? 
 				$mainSectionHtml .= $this->getBreadcrumbHtml();
 				$apiKeyObject = ApiGate_ApiKey::newFromDb( $apiKey );
 				if( is_object($apiKeyObject) ){
@@ -127,12 +127,12 @@ class SpecialApiGate extends SpecialPage {
 						<?php
 						$mainSectionHtml .= ob_get_clean();
 					} else {
-	// TODO: ERROR MESSAGE THAT YOU'RE NOT AUTHORIZED TO VIEW THE KEY
-	// TODO: ERROR MESSAGE THAT YOU'RE NOT AUTHORIZED TO VIEW THE KEY
+	// TODO: SWC: ERROR MESSAGE THAT YOU'RE NOT AUTHORIZED TO VIEW THE KEY
+	// TODO: SWC: ERROR MESSAGE THAT YOU'RE NOT AUTHORIZED TO VIEW THE KEY
 					}
 				} else {
-	// TODO: ERROR MESSAGE THAT THE KEY WAS NOT FOUND IN THE DB
-	// TODO: ERROR MESSAGE THAT THE KEY WAS NOT FOUND IN THE DB
+	// TODO: SWC: ERROR MESSAGE THAT THE KEY WAS NOT FOUND IN THE DB
+	// TODO: SWC: ERROR MESSAGE THAT THE KEY WAS NOT FOUND IN THE DB
 				}
 				break;
 			case self::SUBPAGE_NONE:
@@ -204,8 +204,8 @@ class SpecialApiGate extends SpecialPage {
 
 			$html .= $this->getLoginBoxHtml();
 		} else {
-			// TODO: Could this be extracted to all be inside of one template in API Gate (index.php template).  We're not doing any funky logic here, are we (just need to chyeck that the subpages aren't)?
-			// TODO: Could this be extracted to all be inside of one template in API Gate (index.php template).  We're not doing any funky logic here, are we (just need to chyeck that the subpages aren't)?
+			// TODO: SWC: Could this be extracted to all be inside of one template in API Gate (index.php template).  We're not doing any funky logic here, are we (just need to chyeck that the subpages aren't)?
+			// TODO: SWC: Could this be extracted to all be inside of one template in API Gate (index.php template).  We're not doing any funky logic here, are we (just need to chyeck that the subpages aren't)?
 
 			// Show intro-blurb.
 			$html .= ApiGate_Dispatcher::renderTemplate( "intro", array( "username" => $wgUser->getName() ) );
@@ -304,11 +304,9 @@ class SpecialApiGate extends SpecialPage {
 			$html .=  ApiGate_Dispatcher::renderTemplate( "listKeys", array('keyData' => $keyData) );
 		} else {
 
-	// TODO: IMPLEMENT
-	// TODO: IMPLEMENT
-	//	$errorString = i18n( 'apigate-mysql-error', $queryString, mysql_error( $dbr ) );
-	//	print ApiGate_Dispatcher::renderTemplate( "error", array('message' => $errorString));
-	//	//$html = $this->wrapHtmlInModuleBox( $html );
+	// TODO: SWC: ERROR MESSAGE that ONLY ADMINS CAN SEE THIS SUBPAGE
+	// TODO: SWC: ERROR MESSAGE that ONLY ADMINS CAN SEE THIS SUBPAGE
+	//ApiGate::printError 
 
 		}
 
@@ -336,8 +334,8 @@ class SpecialApiGate extends SpecialPage {
 			$chartName = wfMsg( 'apigate-chart-name-monthly' );
 			$html .= $this->getChartHtmlByPeriod( $apiKey, "monthly", $metricName, $chartName, true );
 		} else {
-// TODO: ERROR MESSAGE
-// TODO: ERROR MESSAGE
+// TODO: SWC: ERROR MESSAGE
+// TODO: SWC: ERROR MESSAGE
 		}
 
 		wfProfileOut( __METHOD__ );
