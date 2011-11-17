@@ -41,6 +41,7 @@ $messages['en'] = array(
 	// Error messages (sometimes shared between different templates for the same data - eg: register and keyinfo pages).
 	'apigate-error-invalid-email' => 'Please enter a valid email address.',
 	'apigate-error-email-doesnt-match' => 'Email addresses entered do not match.',
+	'apigate-error-keyaccess-denied' => 'Either the API key \"$1\" could not be found in the database or you do not have access to view this key\'s profile information and statistics.',
 
 	// For the module which lists all keys for a user
 	'apigate-userkeys-intro' => 'Click on your keys below to view usage statistics for each key or edit your contact information (in case something goes wrong).',

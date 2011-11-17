@@ -171,7 +171,7 @@ class ApiGate_ApiKey {
 					$lastName = ApiGate::getPost('lastName');
 					$email_1 = ApiGate::getPost('email_1');
 					$email_2 = ApiGate::getPost('email_2');
-					
+
 					// Validate input (should be same business logic as ApiGate_Register::processPost().
 					// TODO: SWC: REFACTOR: these rules to be in one function called from both here and from the registration form and which just modifies the errorString.
 					if("$firstName$lastName" == ""){
@@ -226,12 +226,13 @@ class ApiGate_ApiKey {
 						}
 					}
 				} else {
-	// TODO: SWC: ERROR MESSSAGE THAT YOU CAN'T EDIT THIS KEY
-	// TODO: SWC: ERROR MESSSAGE THAT YOU CAN'T EDIT THIS KEY
+					ApiGate::printError( i18n('apigate-error-keyaccess-denied', $apiKey) );
 				}
 			} else {
-	// TODO: SWC: ERROR MESSAGE THAT THE KEY COULD NOT BE FOUND
-	// TODO: SWC: ERROR MESSAGE THAT THE KEY COULD NOT BE FOUND
+				// NOTE: This message which says essentially "not found or you don't have access" is intentionally vauge.
+				// If we had access-denied and key-not-found be different errors, attackers could just iterate through a bunch of possibilities
+				// until they found a key that exists & then they could spoof as being that app.
+				ApiGate::printError( i18n('apigate-error-keyaccess-denied', $apiKey) );
 			}
 		}
 		
