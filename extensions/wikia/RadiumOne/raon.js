@@ -15,8 +15,12 @@ var RadiumOne = {
 	},
 	
 	getDARTKeyValue: function () {
-		var value = $.cookies.get(RadiumOne.cookieName) || 0;
-		var kv = 'ro='+value+';';
+		var kv = '';
+		if (window.wgIntegrateRadiumOne
+		|| $.inArray(window.cscoreCat, RadiumOne.enabledComscoreCats) != -1) {
+			var value = $.cookies.get(RadiumOne.cookieName) || 0;
+			kv = 'ro='+value+';';
+		}
 		return kv;
 	}
 	
