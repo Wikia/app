@@ -18,10 +18,17 @@ CREATE TABLE apiGate_keys (
 
 -- Creates table for users this can be tied directly
 -- to the user id of another system if you just want to grant API keys to existing users.
--- TODO: DO WE NEED THIS TABLE FOR ANYTHING IF WE'RE USING ANOTHER SYSTEM FOR USER_IDs?
+-- NOTE: WE DON'T USE THIS TABLE AT WIKIA. IT WOULD ONLY BE USED ON IMPLEMENTATIONS WHICH DON'T HAVE THEIR OWN CONCEPT OF USERS ALREADY.
+-- THERE IS CURRENTLY NO CODE IMPLEMENTING THE CREATION/MANAGEMENT OF THIS CONCEPT OF A LOCAL (RATHER THAN EXTERNAL) USER YET.
 DROP TABLE IF EXISTS apiGate_users;
 CREATE TABLE apiGate_users (
 	id INT(11) NOT NULL AUTOINCREMENT, -- If you are using a separate system for the auth (and just trying API Gate to those accounts, then force-set this id.
+	username VARCHAR(255) NOT NULL,
+	
+	-- Account-level info so that the per-key stuff can prepopulate with this (businesses might override per-key though).
+	email TINYTEXT NOT NULL,
+	firstName VARCHAR(255) NOT NULL,
+	lastName VARCHAR(255) NOT NULL,
 
 	PRIMARY KEY(id),
 );

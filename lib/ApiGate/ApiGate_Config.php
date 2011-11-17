@@ -20,7 +20,7 @@
 
 	// Recommended that each app override this for clarity.  Example value (follows a widely used convention): "X-Wikia-API-Key".
 	//$APIGATE_HEADER_API_KEY = "X-ApiGate-API-Key";
-	$APIGATE_HEADER_API_KEY = "X-Wikia-API-Key"; // TODO: Can we separate Wikia's default config from 
+	$APIGATE_HEADER_API_KEY = "X-Wikia-API-Key"; // TODO: Can we separate Wikia's default config from ApiGate's default config easily?
 /** /HEADERS **/
 
 

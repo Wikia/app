@@ -13,6 +13,7 @@ $messages = array();
  */
 $messages['en'] = array(
 	'apigate' => 'API Gate',
+	'apigate-checkkey-ok' => 'OK',
 	'apigate-mysql-error' => 'There was a db error with query<br/>\"$1\"<br/><br/>Error was: \"$2\"',
 	
 	// Intro module on the main API Gate landing page
@@ -76,6 +77,7 @@ $messages['en'] = array(
  */
 $messages['qqq'] = array(
 	'apigate' => 'The name of the system. Used anywhere branding is needed.',
+	'apigate-checkkey-ok' => 'The plaintext returned as the body of a checkKey request when we determine the key is okay.',
 	'apigate-intro' => 'This description is meant to be the first thing a user sees when they hit the control-panel page.',
 	'apigate-keyinfo-status-reasonforchange' => 'The text that prompts an Admin to enter a reason that they are changing a key\'s status',
 	'apigate-register-title' => "The title tag of the registration page.",
