@@ -443,7 +443,7 @@ function WikiaVideo_makeVideo( $title, $options, $sk, $wikitext = '', $plc_templ
 
 		if(empty($align)) {
 			if($thumb) {
-				$align = 'right';
+				$align = '';
 			} else {
 				$align = 'vetnone';
 			}
