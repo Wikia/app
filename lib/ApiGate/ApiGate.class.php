@@ -143,20 +143,20 @@ class ApiGate{
 				//header("Status: 401 Unauthorized"); // Fast CGI need status.  TODO: Have a way to detect if this is Fast CGI or not and choose the correct header type.
 				header("HTTP/1.0: 401 Unauthorized");
 				if( empty($apiKey) ){
-					print "Unauthorized: No API key was found. Please provide an API key to use this API.\n"; // TODO: SWC: i18n ?
+					print i18n('apigate-checkkey-no-apikey-found');
 				} else {
-					print "Unauthorized: Invalid API key.  The API key found was: \"$apiKey\" but that is invalid.  Please provide a valid API key."; // TODO: SWC: i18n ?
+					print i18n('apigate-checkkey-invalid-apikey', $apiKey);
 				}
 			break;
 
 			case ApiGate::HTTP_STATUS_FORBIDDEN:
 				header("HTTP/1.0: 403 Forbidden");
-				print "Forbidden. Your API key is not authorized to make this request."; // TODO: SWC: i18n
+				print i18n( 'apigate-checkkey-forbidden' );
 			break;
-				
+
 			case ApiGate::HTTP_STATUS_LIMIT_EXCEEDED:
 				header("HTTP/1.0: 509 Bandwidth Limit Exceeded");
-				print "This API key has been disabled because the request-rate was too high. Please contact support for more information or to re-enable."; // TODO: SWC: i18n ?
+				print i18n( 'apigate-checkkey-limit-exceeded' );
 			break;
 
 			case ApiGate::HTTP_STATUS_OK:
