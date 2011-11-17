@@ -3,7 +3,7 @@
 class RelatedVideosService {
 
 	const memcKeyPrefix = 'RelatedVideosService';
-	const memcVersion = 1;
+	const memcVersion = 10;
 	const width = 160;
 	const howLongVideoIsNew = 5;
 
