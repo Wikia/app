@@ -43,12 +43,12 @@ function wfSpecialSearch( $par = '' ) {
 		|| !is_null( $wgRequest->getVal( 'searchx' )) )
 	{
 		$searchPage->showResults( $search );
-		// Wikia change: /Begin - include tracking js code (ADi)
-		$wgOut->addScriptFile( $wgExtensionsPath . "/wikia/Search/Search.tracking.js" );
-		// Wikia change: /End
 	} else {
 		$searchPage->goResult( $search );
 	}
+	// Wikia change: /Begin - include tracking js code (ADi)
+	$wgOut->addScriptFile( $wgExtensionsPath . "/wikia/Search/Search.tracking.js" );
+	// Wikia change: /End
 }
 
 /**
