@@ -575,8 +575,8 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		);
 
 		$module = Module::get('MenuButton', 'Index', $data);
-		$moduleData	= $module->getData(); var_dump($moduleData);
-		$moduleHtml = $module->toString(); var_dump($moduleHtml);
+		$moduleData	= $module->getData();
+		$moduleHtml = $module->toString();
 
 		$this->assertEquals($data['name'], $moduleData['actionName']);
 		$this->assertRegExp('/^<img /', $moduleData['icon']);
