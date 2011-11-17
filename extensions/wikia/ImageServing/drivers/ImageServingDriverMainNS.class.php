@@ -56,7 +56,8 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 					__METHOD__,
 					array ('LIMIT' => ($this->maxCount + 1))
 				);
-
+				#something goes wrong
+				if ( empty( $result ) ) continue;
 				# skip images which are too popular
 				if ($result->numRows() > $this->maxCount ) continue;
 				# check image table
