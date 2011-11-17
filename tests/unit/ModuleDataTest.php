@@ -512,7 +512,7 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 
 	function testGlobalHeaderModule() {
 		$moduleData = Module::get('GlobalHeader')->getData();
-		
+
 		$this->assertRegExp('/^http:\/\/www.wikia.com\/Special:CreateWiki/', $moduleData['createWikiUrl']);
 		$this->assertRegExp('/wikia.com\//', $moduleData['centralUrl']);
 		$this->assertType('array', $moduleData['menuNodes']);
@@ -554,25 +554,36 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 	}
 
 	function testMenuButtonModule() {
+		global $wgTitle;
+
 		$data = array(
-			'action' => 'url',
+			'action' => array(
+				'text' => 'Edit',
+				'href' => $wgTitle->getEditURL(),
+			),
 			'name' => 'edit',
 			'image' => MenuButtonModule::EDIT_ICON,
 			'dropdown' => array(
-				'move' => array(),
-				'protect' => array(),
-				'delete' => array(),
-				'foo' => array(),
+				'move' => array(
+					'text' => 'Move'
+				),
+				'foo' => array(
+					'accesskey' => 'a',
+					'text' => 'Foo,'
+				),
 			),
 		);
 
-		$moduleData = Module::get('MenuButton', 'Index', $data)->getData();
+		$module = Module::get('MenuButton', 'Index', $data);
+		$moduleData	= $module->getData(); var_dump($moduleData);
+		$moduleHtml = $module->toString(); var_dump($moduleHtml);
 
-		$this->assertEquals($data['action'], $moduleData['action']);
 		$this->assertEquals($data['name'], $moduleData['actionName']);
 		$this->assertRegExp('/^<img /', $moduleData['icon']);
 		$this->assertEquals(array_keys($data['dropdown']), array_keys($moduleData['dropdown']));
 		$this->assertEquals('m', $moduleData['dropdown']['move']['accesskey']);
+
+		$this->assertContains('accesskey="a"', $moduleHtml);
 	}
 
 	function testPageHeaderModule() {
