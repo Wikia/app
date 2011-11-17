@@ -132,6 +132,7 @@ var WallNotifications = $.createClass(Object, {
 				$('#bubbles_count').html('');
 				$('.bubbles').removeClass('reddot');
 			}
+			$('#WallNotificationsReminder a').html(data.reminder);
 		}
 		
 		$('.read_notification').click(this.proxy(function(){
@@ -152,7 +153,6 @@ var WallNotifications = $.createClass(Object, {
 				this.setLastSeenCount(unreadCount);
 				if( unreadCount > 0 ) {
 					var msg = $.msg('wall-notifications-reminder', unreadCount);
-					$('#WallNotificationsReminder a').html(msg);
 					$('#WallNotificationsReminder')
 						.fadeIn(500)
 						.animate({'opacity':1}, 3000)
