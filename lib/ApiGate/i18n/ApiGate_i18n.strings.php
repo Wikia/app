@@ -14,6 +14,10 @@ $messages = array();
 $messages['en'] = array(
 	'apigate' => 'API Gate',
 	'apigate-checkkey-ok' => 'OK',
+	'apigate-checkkey-no-apikey-found' => 'Unauthorized: No API key was found. Please provide an API key to use this API.\n',
+	'apigate-checkkey-invalid-apikey' => 'Unauthorized: Invalid API key.  The API key found was: \"$1\" but that is invalid.  Please provide a valid API key.',
+	'apigate-checkkey-forbidden' => 'Forbidden. Your API key is not authorized to make this request.',
+	'apigate-checkkey-limit-exceeded' => 'This API key has been disabled because the request-rate was too high. Please contact support for more information or to re-enable.',
 	'apigate-mysql-error' => 'There was a db error with query<br/>\"$1\"<br/><br/>Error was: \"$2\"',
 	
 	// Intro module on the main API Gate landing page
