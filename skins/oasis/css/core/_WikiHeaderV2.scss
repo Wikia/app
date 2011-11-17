@@ -1,7 +1,7 @@
 .WikiHeaderRestyle {
 
 	$color-level-3rd: mix($color-buttons, $color-page, 20%);
-	@if lightness($color-page) < 50 {
+	@if $is-dark-wiki {
 		$color-level-3rd: lighten($color-level-3rd, 8%);
 	}
 
