@@ -8,7 +8,7 @@
 class GameGuidesController extends WikiaController {
 	const API_VERSION = 1;
 	const API_REVISION = 6;
-	const API_MINOR_REVISION = 0;
+	const API_MINOR_REVISION = 1;
 	const APP_NAME = 'GameGuides';
 	const SKIN_NAME = 'wikiaapp';
 	
@@ -47,6 +47,7 @@ class GameGuidesController extends WikiaController {
 		foreach( $result as $key => $value ){
 			$this->setVal( $key, $value );
 		}
+		
 		
 		$this->wf->profileOut( __METHOD__ );
 	}

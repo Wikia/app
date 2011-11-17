@@ -51,14 +51,14 @@ class GameGuidesModel{
 				
 				foreach( $recommendedIds as $wikiId ) {
 					$wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wikiId );
-					//$wikiGames = WikiFactory::getVarValueByName( 'wgWikiTopics', $wikiId );
+					$wikiGames = WikiFactory::getVarValueByName( 'wgWikiTopics', $wikiId );
 					$wikiDomain = str_replace('http://', '', WikiFactory::getVarValueByName( 'wgServer', $wikiId ));
 					$wikiThemeSettings = WikiFactory::getVarValueByName( 'wgOasisThemeSettings', $wikiId);
 					//$wikiLogo = WikiFactory::getVarValueByName( "wgLogo", $wikiId );
 					
 					$games[] = Array(
 						'name' => ( !empty( $wikiThemeSettings[ 'wordmark-text' ] ) ) ? $wikiThemeSettings[ 'wordmark-text' ] : $wikiName,
-						//'wikiGames' => ( !empty( $wikiGames ) ) ? $wikiGames : '',
+						'games' => ( !empty( $wikiGames ) ) ? $wikiGames : '',
 						'color' => ( !empty( $wikiThemeSettings[ 'wordmark-color' ] ) ) ? $wikiThemeSettings[ 'wordmark-color' ] : '#0049C6',
 						'backgroundColor' => ( !empty( $wikiThemeSettings[ 'color-page' ] ) ) ? $wikiThemeSettings[ 'color-page' ] : '#FFFFFF',
 						'domain' => $wikiDomain,
