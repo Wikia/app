@@ -342,7 +342,8 @@
 							}
 						}).
 						css({
-							height: options.height || ($(window).height() - 250)
+							height: options.height || ($(window).height() - 250),
+							overflow: 'auto'
 						});
 
 					if (typeof callback == 'function') {
@@ -418,43 +419,28 @@
 						extraData.section = window.wgEditPageSection;
 					}
 
-					self.ajax('preview', extraData, function(data) {
+					self.ajax('preview',
+						extraData,
+						function(data) {
+							// innerShiv is IE < 9 fix (BugId: 11294)
+							contentNode.html(innerShiv(data.html));
 
-						// We have to put the preview contents in an iframe so we can inject the original theme colors into it
-						// No, I don't like this anymore than you do.
-						$(contentNode).html(
-							$('<iframe frameBorder="0">').load(function(event) {
-								var iframeDoc = self.getIframeDocument(event.target);
+							// move "edit" link to the right side of heading names
+							contentNode.find('.editsection').each(function() {
+								$(this).appendTo($(this).next());
+							});
 
-								// Write contents to iframe
-								// Yes, this has to be a write, because there is no other way to get a doctype in there
-								iframeDoc.write(
-									'<!DOCTYPE html>' +
-									'<html>' +
-										'<head>' +
-											'<link rel="stylesheet" type="text/css" href="' + $.getSassCommonURL('/extensions/wikia/RTE/css/content.scss', sassParamsOriginal) + '" />' +
-											'<script>var JSSnippetsStack = [];</script>' +
-											'<!--[if IE]>' +
-												'<script>/*@cc_on\'abbr article aside audio canvas details figcaption figure footer header hgroup mark menu meter nav output progress section summary time video\'.replace(/\\w+/g,function(n){document.createElement(n)})@*/</script>' +
-											'<![endif]-->' +
-										'</head>' +
-										'<body id="bodyContent" class="WikiaArticle">' + data.html + '</body>' +
-									'</html>'
-								);
-							})
-						);
+							// add summary
+							if (typeof data.summary != 'undefined') {
+								$('<div>', {id: "EditPagePreviewEditSummary"}).
+									width(width - 150).
+									appendTo(contentNode.parent()).
+									html(data.summary);
+							}
 
-						// add summary
-						if (typeof data.summary != 'undefined') {
-							$('<div>', {id: "EditPagePreviewEditSummary"}).
-								width(width - 150).
-								appendTo(contentNode.parent()).
-								html(data.summary);
-						}
-
-						// fire an event once preview is rendered
-						$(window).trigger('EditPageAfterRenderPreview', [contentNode]);
-					});
+							// fire an event once preview is rendered
+							$(window).trigger('EditPageAfterRenderPreview', [contentNode]);
+						});
 				});
 			});
 		},
@@ -501,26 +487,8 @@
 					callback(editor.getData());
 					return;
 			}
-		},
-
-		/**
-		 * Get the inner document from an iframe
-		 *
-		 * @author kflorence
-		 */
-		getIframeDocument: function(iframe) {
-		
-			// In IE the document may not be accessible yet, resulting
-			// in an error. A workaround for this is to force the iframe
-			// to be ready by setting its source again.
-			try {
-				iframe.contentWindow.document;
-			} catch(e) {
-				iframe.src = iframe.src;
-			}
-			
-			return iframe.contentWindow.document;
 		}
+
 	});
 
 })(this,jQuery);
