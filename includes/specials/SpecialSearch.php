@@ -91,7 +91,7 @@ class SpecialSearch {
 		# Try to go to page as entered.
 		$t = Title::newFromText( $term );
 		# If the string cannot be used to create a title
-		if( is_null( $t ) ) {
+		if( is_null( $t ) || ( $t->getNamespace() != NS_MAIN && $t->getNamespace() != NS_CATEGORY )  ) {
 			return $this->showResults( $term );
 		}
 		# If there's an exact or very near match, jump right there.
