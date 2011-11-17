@@ -424,7 +424,7 @@
 						// No, I don't like this anymore than you do.
 						$(contentNode).html(
 							$('<iframe frameBorder="0">').load(function(event) {
-								var iframeDoc = self.getIframeDocument(event.target); // this function is in skins/oasis/common.js
+								var iframeDoc = self.getIframeDocument(event.target);
 
 								// Write contents to iframe
 								// Yes, this has to be a write, because there is no other way to get a doctype in there
