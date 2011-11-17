@@ -1,6 +1,5 @@
-//The worst CSS code I've seen and its ... mine, Jakub Olek
-//all the importants are used as I have to override inline styles for IPad
-//yes, I am ashamed...
+//fixes for touch screen devices
+//Jakub Olek
 
 #labelFor_wpRemember2Ajax {
 	position: relative;
@@ -23,7 +22,7 @@ input {
 //fixes for register form
 #wpName2, #wpEmail, #uselang, #wpBirthYear {
 	position: absolute !important;
-	left: 35px !important; 
+	left: 35px !important;
 }
 #wpBirthMonth {
 	position: absolute !important;
@@ -51,31 +50,6 @@ input {
 			position: relative;
 			top: -60px;
 		}
-	}
-}
-
-//position lightbox 
-#lightbox {
-	margin-left: 0 !important;
-	left: 1% !important;
-}
-
-//extend wikia main content to full available width with wikia-rail, itll take whole page if there is no wikia-rail
-#WikiaMainContent {
-	min-width: 68%;
-}
-.WikiaPageContentWrapper {
-	width: 100% !important;
-}
-.WikiaPageBackground {
-	width: 100% !important;
-}
-
-// make page 100% wide 
-#WikiaHeader, #WikiaPage {
-	width: 100%;
-	.banner-corner-left, .banner-corner-right {
-		display: none;
 	}
 }
 
@@ -119,4 +93,3 @@ input {
 		}
 	}
 }
-

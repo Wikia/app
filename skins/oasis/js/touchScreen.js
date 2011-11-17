@@ -1,24 +1,20 @@
 touchImprovements = {
-	
+
 	init: function() {
-		
+
 		//onload scroll to main content
-		var wikiaMainContent = $('#WikiaMainContent').offset(),
-		wikiUls = $('#WikiHeader nav > ul > li > ul'),
+		var wikiUls = $('#WikiHeader nav > ul > li > ul'),
 		globalUls = $('#GlobalNavigation li > ul');
-		
-		window.scrollTo(0, wikiaMainContent.top);
 
 		//global nav fix: first click opens nav,  second redirects to a hub
 		$('#GlobalNavigation').delegate('li > a', 'click', function(event) {
 			var next = $(this).next();
 			if (!next.hasClass('open')) {
 				event.preventDefault();
-				globalUls.removeClass('open'); 
+				globalUls.removeClass('open');
 				next.addClass('open');
 			};
 		});
-		
 
 		//wiki nav fix: first click opens nav, second redirects to a desired page
 		$('#WikiHeader').delegate('nav > ul > li > a', 'click', function(event) {
@@ -29,7 +25,7 @@ touchImprovements = {
 				subnav.addClass('open');
 			};
 		});
-		
+
 		//user menu fix:
 		$('#AccountNavigation').delegate('li > a[accesskey="."]', 'click', function(event) {
 			var next = $(this).next('ul.subnav');
@@ -41,6 +37,4 @@ touchImprovements = {
 	}
 };
 
-$(document).ready(function() {
-	touchImprovements.init();
-});
+$(touchImprovements.init);
