@@ -82,7 +82,7 @@ AdMeldAPIClient.init = function() {
 		this.track(['call', slot]);
 		$.ajax({url:url, dataType:'jsonp'});
 		this.slots[slot].url = url;
-		this.slots[slot].timer = new Date();
+		this.slots[slot].timer = (new Date).getTime();
 
 		if (this.sizes.indexOf(s.size) == -1) {
 			this.sizes.push(s.size);
@@ -95,21 +95,39 @@ AdMeldAPIClient.callback = function(data) {
 
 	try {
 		var slot = data.ad.container;
-		var time = -1; // TODO
-		this.log('callback ' + slot + ' after ' + time + ' ms', 5);
-		this.track(['callback', slot, time]);
-
 		this.slots[slot].ad = data.ad;
 		this.slots[slot].pixels = data.pixels;
+	} catch(e) {
+		this.log('Error in callback, broken ad', 3);
+		this.track(['error', 'callback', 'ad'], 'error');
+		return false;
+	}
 
+	try {
+		var time = (new Date).getTime() - this.slots[slot].timer;
+		this.log('callback ' + slot + ' after ' + time + ' ms', 5);
+		this.slots[slot].timer = time;
+
+		if (time > 5000) time = 5000;
+		time = (time/1000).toFixed(1); // store as x.x sec
+		this.track(['callback', slot, time]);
+	} catch(e) {
+		this.log('Error in callback, broken timer', 3);
+		this.track(['error', 'callback', 'timer'], 'error');
+	}
+
+	try {
 		var bid = this.slots[slot].ad.bid;
 		this.track(['bid', slot, bid.toFixed(3)]);
 
 		this.slots[slot].ad.bid = (bid * 0.875).toFixed(2); // adjust magic for Kyle
 	} catch(e) {
-		this.log('Error in callback', 3);
-		this.track(['error', 'callback'], 'error');
+		this.log('Error in callback, broken bid', 3);
+		this.track(['error', 'callback', 'bid'], 'error');
+		return false;
 	}
+	
+	return true;
 };
 
 // based on Liftium.setAdjustedValues
