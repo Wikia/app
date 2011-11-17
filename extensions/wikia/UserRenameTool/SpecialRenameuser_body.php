@@ -51,7 +51,7 @@ class SpecialRenameuser extends SpecialPage {
 		}
 
 		// Get the request data
-		$oldusername = $wgRequest->getText( 'oldusername' );
+		$oldusername = $wgRequest->getText( 'oldusername', $par );
 		$newusername = $wgRequest->getText( 'newusername' );
 		$reason = $wgRequest->getText( 'reason' );
 		$token = $wgUser->editToken();
@@ -77,6 +77,15 @@ class SpecialRenameuser extends SpecialPage {
 			$errors = $process->getErrors();
 			if ($status) {
 				$infos[] = wfMsgForContent('userrenametool-info-in-progress');
+			}
+		}
+
+		if ( !empty( $oldusername ) ) {
+			$olduser = User::newFromName( $oldusername );
+			if ( $olduser->getOption( 'requested-rename', 0 ) ) {
+				$infos[] = wfMsg( 'userrenametool-requested-rename', $oldusername );
+			} else {
+				$errors[] = wfMsg( 'userrenametool-did-not-request-rename', $oldusername );
 			}
 		}
 

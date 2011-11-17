@@ -5,7 +5,7 @@
  * @subpackage SpecialPage
  */
 class ContactForm extends SpecialPage {
-	var $mUserName, $mPassword, $mRetype, $mReturnto, $mCookieCheck, $mPosted;
+	var $mUserName, $mPassword, $mRetype, $mReturnto, $mCookieCheck;
 	var $mAction, $mCreateaccount, $mCreateaccountMail, $mMailmypassword;
 	var $mLoginattempt, $mRemember, $mEmail, $mBrowser;
 	var $err, $errInputs;
@@ -20,14 +20,16 @@ class ContactForm extends SpecialPage {
 
 		'close-account' => array(
 			'format' => "User requested his account \"%s\" to be disabled.\n\nhttp://community.wikia.com/wiki/Special:EditAccount/%s",
-			'vars' => array( 'wpUserName' ),
+			'vars' => array( 'wpUserName', 'wpUserName' ),
 			'subject' => 'Disable account: %s',
+			'markuser' => 'requested-closure',
 		),
 
 		'rename-account' => array(
-			'format' => "User requested his username to be changed from \"%s\" to \"%s\".\n\nhttp://community.wikia.com/wiki/Special:UserRenameTool",
-			'vars' => array( 'wpUserName', 'wpUserNameNew' ),
+			'format' => "User requested his username to be changed from \"%s\" to \"%s\".\n\nhttp://community.wikia.com/wiki/Special:UserRenameTool?oldusername=%s&newusername=%s",
+			'vars' => array( 'wpUserName', 'wpUserNameNew', 'wpUserName', 'wpUserNameNew' ),
 			'subject' => 'Rename account: %s',
+			'markuser' => 'requested-rename',
 		),
 
 		'bad-ad' => array(
@@ -61,13 +63,12 @@ class ContactForm extends SpecialPage {
 		$this->mWhichWiki = null;
 		$this->mProblem = $wgRequest->getText( 'wpContactSubject' ); //subject
 		$this->mProblemDesc = null;
-		$this->mPosted = $wgRequest->wasPosted();
 		$this->mAction = $wgRequest->getVal( 'action' );
 		$this->mEmail = $wgRequest->getText( 'wpEmail' );
 		$this->mBrowser = $wgRequest->getText( 'wpBrowser' );
 		$this->mCCme = $wgRequest->getCheck( 'wgCC' );
 
-		if( $this->mPosted ) {
+		if( $wgRequest->wasPosted() ) {
 			
 			if( $wgUser->isAnon() && class_exists( $wgCaptchaClas ) ){
 				$captchaObj = new $wgCaptchaClass();
@@ -80,11 +81,22 @@ class ContactForm extends SpecialPage {
 			$this->mRealName = $wgRequest->getText( 'wpContactRealName' );
 			$this->mWhichWiki = $wgRequest->getText( 'wpContactWikiName' );
 			#sibject still handled outside of post check, because of existing hardcoded prefill links
+
+			if ( $wgUser->isLoggedIn() && ( $wgUser->getName() !== $wgRequest->getText( 'wpUserName' ) ) ) {
+				$wgOut->showErrorPage( 'specialcontact-error-title', 'specialcontact-error-message' );
+				return;
+			}
 			
 			// handle custom forms
 			if ( !empty( $par ) && array_key_exists( $par, $this->customForms ) ) {
 				foreach ( $this->customForms[$par]['vars'] as $var ) {
 					$args[] = $wgRequest->getVal( $var );
+				}
+
+				if ( !empty( $this->customForms[$par]['markuser'] ) ) {
+					// notify relevant extension that a request has been made
+					$wgUser->setOption( $this->customForms[$par]['markuser'], 1 );
+					$wgUser->saveSettings();
 				}
 
 				$messageText = vsprintf( $this->customForms[$par]['format'], $args );
@@ -205,7 +217,6 @@ class ContactForm extends SpecialPage {
 
 			$error = UserMailer::sendWithAttachment( $mail_community, $subject, array( $wgRequest->getFileTempname( 'wpScreenshot' ) ), $mail_user, $mail_user, $body );
 		} else {
-			die( 'no screenshot' );
 			$error = UserMailer::send( $mail_community, $mail_user, $subject, $body, $mail_user, null, 'SpecialContact' );
 		}
 
@@ -442,7 +453,7 @@ class ContactForm extends SpecialPage {
 
 		$oTmpl->set_vars( $vars );
 
-		if( $this->secDat['form'] === true ) {
+		if( $this->secDat['form'] === true || ( $wgUser->isAnon() && !empty( $this->secDat['reqlogin'] ) ) ) {
 			$wgOut->addHTML( $oTmpl->execute("form") );
 		} else {
 			$wgOut->addHTML( $oTmpl->execute( $this->secDat['form'] ) );
@@ -523,6 +534,8 @@ class ContactForm extends SpecialPage {
 
 						if( !empty($entry['form']) ) { $this->secDat['form'] = $entry['form']; }
 						else { $this->secDat['form'] = false; }
+
+						$this->secDat['reqlogin'] = empty( $entry['reqlogin'] ) ? false : $entry['reqlogin'];
 
 					} else {
 						$this->secDat = array('link'=>$link, 'msg'=>$link, 'form'=>false);

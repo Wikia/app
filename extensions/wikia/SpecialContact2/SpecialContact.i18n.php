@@ -193,17 +193,22 @@ If you prefer to use regular e-mail or have attachments, you can contact us at [
 	'specialcontact-label-bug-link' => 'Please provide a link to the page where you are having the problem',
 	'specialcontact-label-bug-feature' => 'What feature is this related to?',
 	'specialcontact-label-bug-description' => 'Please describe the problem you are having',	
-	'specialcontact-label-close-account-confirm' => 'Do you confirm that you want to disable your account at this time?',	
-	'specialcontact-label-close-account-read-help' => 'Have you read the [[Help:Close_my_account|help page on closing your account]]?',
+	'specialcontact-label-close-account-confirm' => 'I confirm that I want to disable my Wikia account',	
+	'specialcontact-label-close-account-read-help' => 'I have read the [[Help:Close_my_account|help page on closing your account]]',
 	'specialcontact-label-account-issue-description' => 'Please provide a detailed description of the issue you are having.',	
 	'specialcontact-label-rename-newusername' => 'Please enter the new username',
-	'specialcontact-label-rename-account-confirm' => 'You confirm that you the spelling and punctuation for your new name is correct?',
-	'specialcontact-lable-rename-account-read-help' => 'Have you read the [[Help:Changing your username|help page on renaming your account]] and understand you can rename your account only once?',
-	'specialcountact-form-header' => 'Contact Wikia',
+	'specialcontact-label-rename-account-confirm' => 'I confirm that the spelling and punctuation for my new name is correct',
+	'specialcontact-lable-rename-account-read-help' => 'I have read the [[Help:Changing your username|help page on renaming my account]]',
+	'specialcontact-form-header' => 'Contact Wikia',
+	'specialcontact-logged-in-as' => 'You are logged in as $1. [[$2|Not you?]]',
+	'specialcontact-mail-on-file' => 'Your e-mail is set to $1. [[Special:Preferences|Do you wish to change it?]]',
 
 	/* errors */
 	'specialcontact-nomessage' => 'Please fill in a message',
 	'specialcontact-captchafail' =>	'Incorrect or missing confirmation code.',
+	'specialcontact-error-title' => 'Contact Form Error',
+	'specialcontact-error-message' => 'Something went wrong while submitting your form. Please try again later.',
+
 	/* email */
 	'specialcontact-mailsub' => 'Wikia Support',
 	'specialcontact-mailsubcc' => 'Copy of Wikia Contact Mail',

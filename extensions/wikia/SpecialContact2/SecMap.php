@@ -15,8 +15,8 @@ $SpecialContactSecMap[] = array(
 	'headerMsg' => 'account',
 	'links' => array(
 		array('link'=>'account-issue',  'form'=> 'account-issue' ),
-		array('link'=>'close-account',  'form'=> 'close-account' ),
-		array('link'=>'rename-account', 'form'=> 'rename-account' ),
+		array('link'=>'close-account',  'form'=> 'close-account', 'reqlogin' => true ),
+		array('link'=>'rename-account', 'form'=> 'rename-account', 'reqlogin' => true ),
 		array('link'=>'blocked' ),
 	)
 );

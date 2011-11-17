@@ -20,6 +20,8 @@ $messages['en'] = array(
 	'userrenametool-reserve' => 'Block the old username from future use',
 	'userrenametool-notify-renamed' => 'Send e-mail to renamed user when done',
 	'userrenametool-warnings' => 'Warnings:',
+	'userrenametool-requested-rename' => 'User $1 requested a rename',
+	'userrenametool-did-not-request-rename' => 'User $1 did not request a rename',
 	'userrenametool-confirm' => 'Yes, rename the user',
 	'userrenametool-submit' => 'Change username',
 
