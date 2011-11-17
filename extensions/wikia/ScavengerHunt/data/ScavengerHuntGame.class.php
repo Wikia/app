@@ -209,7 +209,7 @@ class ScavengerHuntGame {
 		$this->hash = date('YmdGis');
 	}
 
-	public function setData( $data ) {
+	public function setData( Array $data ) {
 		foreach ($this->getDataProperties() as $varName)
 			if (array_key_exists($varName, $data))
 				$this->$varName = $data[$varName];

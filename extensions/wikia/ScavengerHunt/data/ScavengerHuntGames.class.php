@@ -62,7 +62,7 @@ class ScavengerHuntGames {
 	}
 
 	public function findEnabledById( $id, $readWrite = false ) {
-		$key = wfSharedMemcKey( 'ScavengerHuntGameIndex', $id, ( $readWrite ? 1 : 0 ) );
+		$key = wfSharedMemcKey( 'ScavengerHuntGameIndex', $id, ( $readWrite ? 1 : 0 ), 1 );
 		$row = $this->getCache()->get( $key );
 		if ( empty( $row ) ){
 			$row = $this->findById(
@@ -72,10 +72,9 @@ class ScavengerHuntGames {
 				true
 			);
 			self::log( 'performance', __METHOD__ );
-			$this->getCache()->set( $key, serialize( $row ), self::CACHE_TTL );
+			$this->getCache()->set( $key, $row, self::CACHE_TTL );
 		} else {
 			self::log( 'performance(cached)', __METHOD__ );
-			$row = unserialize( $row );
 		}
 
 		return $this->newGameFromRow( $row );
@@ -134,7 +133,10 @@ class ScavengerHuntGames {
 		$game->setWikiId( $row->wiki_id );
 		$game->setName( $row->game_name );
 		$game->setEnabled( $row->game_is_enabled );
-		$game->setData($data);
+
+		if (is_array($data)) {
+			$game->setData($data);
+		}
 
 		return $game;
 	}
