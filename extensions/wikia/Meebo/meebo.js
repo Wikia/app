@@ -31,6 +31,7 @@ b.allowTransparency="true";v[j](b);try{b.contentWindow[g].open()}catch(w){c[e]=
 d[e];o="javascript:var d="+g+".open();d.domain='"+d.domain+"';";b[k]=o+"void(0);"}try{var t=
 b.contentWindow[g];t.write(p());t.close()}catch(x){b[k]=o+'d.write("'+p().replace(/"/g,
 '\\"')+'");d.close();'}a.T(1)}({network:MeeboBar.network});
+Meebo.disableSharePageButton=true;
 Meebo('domReady');
 		}
 	}
