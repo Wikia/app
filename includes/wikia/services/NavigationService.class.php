@@ -16,6 +16,9 @@ class NavigationService {
 
 	const COMMUNITY_WIKI_ID = 177;
 
+	// magic word used to force given menu item to not be turned into a link (BugId:15189)
+	const NOLINK = '__NOLINK__';
+
 	private $biggestCategories;
 	private $lastExtraIndex = 1000;
 	private $extraWordsMap = array(
@@ -267,10 +270,18 @@ class NavigationService {
 		$lineArr[0] = trim($lineArr[0], '[]');
 
 		if(count($lineArr) == 2 && $lineArr[1] != '') {
+			// * Foo|Bar - links with label
 			$link = trim(wfMsgForContent($lineArr[0]));
 			$desc = trim($lineArr[1]);
 		} else {
+			// * Foo
 			$link = $desc = trim($lineArr[0]);
+
+			// handle __NOLINK__ magic words (BugId:15189)
+			if (substr($link, 0, 10) == self::NOLINK) {
+				$link = $desc = substr($link, 10);
+				$doNotLink = true;
+			}
 		}
 
 		$text = $this->forContent ? wfMsgForContent( $desc ) : wfMsg( $desc );
@@ -283,28 +294,33 @@ class NavigationService {
 			$link = $lineArr[0];
 		}
 
-		if(preg_match( '/^(?:' . wfUrlProtocols() . ')/', $link )) {
-			$href = $link;
-		} else {
-			if(empty($link)) {
-				$href = '#';
-			} else if($link{0} == '#') {
-				$href = '#';
+		if (empty($doNotLink)) {
+			if(preg_match( '/^(?:' . wfUrlProtocols() . ')/', $link )) {
+				$href = $link;
 			} else {
-				$title = Title::newFromText($link);
-				if(is_object($title)) {
-					$href = $title->fixSpecialName()->getLocalURL();
-					$pos = strpos($link, '#');
-					if ($pos !== false) {
-						$sectionUrl = substr($link, $pos+1);
-						if ($sectionUrl !== '') {
-							$href .= '#'.$sectionUrl;
-						}
-					}
-				} else {
+				if(empty($link)) {
 					$href = '#';
+				} else if($link{0} == '#') {
+					$href = '#';
+				} else {
+					$title = Title::newFromText($link);
+					if(is_object($title)) {
+						$href = $title->fixSpecialName()->getLocalURL();
+						$pos = strpos($link, '#');
+						if ($pos !== false) {
+							$sectionUrl = substr($link, $pos+1);
+							if ($sectionUrl !== '') {
+								$href .= '#'.$sectionUrl;
+							}
+						}
+					} else {
+						$href = '#';
+					}
 				}
 			}
+		}
+		else {
+			$href = '#';
 		}
 
 		wfProfileOut( __METHOD__ );
