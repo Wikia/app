@@ -22,6 +22,8 @@ $messages['en'] = array(
 	
 	'apigate-backtomain' => '&lt; Back to API Control Panel',
 	
+	'apigate-error-admins-only' => 'Sorry, only API administrators are authorized to view this data.',
+
 	'apigate-register-success-heading' => 'Registration successful!',
 	'apigate-register-success' => "Your new API key is '<big><strong>$1</strong></big>'<br/><br/>You can see the key at any time by coming back to [[Special:ApiGate]] (there is a link in the User menu on the top-right of the page).",
 	'apigate-register-success-return' => "Return to the [[Special:ApiGate|API Gate landing page]] to see your new dashboard.",
@@ -44,6 +46,7 @@ $messages['en'] = array(
 $messages['qqq'] = array(
 	'apigate-desc' => '{{desc}}',
 	'apigate-backtomain' => 'Text that appears in the "breadcrumb"-like link on the top of each subpage, linking back to the main landing page.',
+	'apigate-error-admins-only' => 'Displayed if someone tries to view a module which they are not allowed to view because they are not an API Gate admin. Note that since this is on a module-by-module basis, there may be multiple instances of this on a single page.',
 	'apigate-userlink' => 'The text that will appear in the dropdown menu of userlinks on the top-right of the page in the Oasis skin (Wikia).',
 );
 

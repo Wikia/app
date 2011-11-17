@@ -67,7 +67,7 @@ class ApiGate{
 		if($apiKey == "509"){
 			$retVal = ApiGate::HTTP_STATUS_LIMIT_EXCEEDED;
 		} else if($apiKey == ""){
-			// TODO: SWC: If the API gets to a point where the auth is always required, uncomment this.
+			// TODO: If the API gets to a point where the auth is always required, uncomment this.
 			//$retVal = ApiGate::HTTP_STATUS_UNAUTHORIZED;
 		} else {
 			// Find if the API key is in the database and is enabled.
@@ -180,8 +180,7 @@ class ApiGate{
 
 		header( "{$APIGATE_HEADER_REQUIRES_API}: 1" );
 
-		// TODO: SWC: LATER: For users who DON'T use the proxy method, there should probably be a call to isRequestAllowed() and a handling of the failure case.
-		// TODO: SWC: LATER: For users who DON'T use the proxy method, there should probably be a call to isRequestAllowed() and a handling of the failure case.
+		// TODO: LATER: For users who DON'T use the proxy method, there should probably be a call to isRequestAllowed() and a handling of the failure case.
 
  		wfProfileOut( __METHOD__ );
 	} // end requiresApiKey()

@@ -127,12 +127,13 @@ class SpecialApiGate extends SpecialPage {
 						<?php
 						$mainSectionHtml .= ob_get_clean();
 					} else {
-	// TODO: SWC: ERROR MESSAGE THAT YOU'RE NOT AUTHORIZED TO VIEW THE KEY
-	// TODO: SWC: ERROR MESSAGE THAT YOU'RE NOT AUTHORIZED TO VIEW THE KEY
+						ApiGate::printError( i18n('apigate-error-keyaccess-denied', $apiKey) );
 					}
 				} else {
-	// TODO: SWC: ERROR MESSAGE THAT THE KEY WAS NOT FOUND IN THE DB
-	// TODO: SWC: ERROR MESSAGE THAT THE KEY WAS NOT FOUND IN THE DB
+					// NOTE: This message which says essentially "not found or you don't have access" is intentionally vauge.
+					// If we had access-denied and key-not-found be different errors, attackers could just iterate through a bunch of possibilities
+					// until they found a key that exists & then they could spoof as being that app.
+					ApiGate::printError( i18n('apigate-error-keyaccess-denied', $apiKey) );
 				}
 				break;
 			case self::SUBPAGE_NONE:
@@ -303,11 +304,7 @@ class SpecialApiGate extends SpecialPage {
 
 			$html .=  ApiGate_Dispatcher::renderTemplate( "listKeys", array('keyData' => $keyData) );
 		} else {
-
-	// TODO: SWC: ERROR MESSAGE that ONLY ADMINS CAN SEE THIS SUBPAGE
-	// TODO: SWC: ERROR MESSAGE that ONLY ADMINS CAN SEE THIS SUBPAGE
-	//ApiGate::printError 
-
+			ApiGate::printError( i18n('apigate-error-admins-only') );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -334,8 +331,7 @@ class SpecialApiGate extends SpecialPage {
 			$chartName = wfMsg( 'apigate-chart-name-monthly' );
 			$html .= $this->getChartHtmlByPeriod( $apiKey, "monthly", $metricName, $chartName, true );
 		} else {
-// TODO: SWC: ERROR MESSAGE
-// TODO: SWC: ERROR MESSAGE
+			ApiGate::printError( i18n('apigate-error-admins-only') );
 		}
 
 		wfProfileOut( __METHOD__ );
