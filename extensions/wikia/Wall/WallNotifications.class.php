@@ -437,6 +437,6 @@ class WallNotifications {
 	}
 	
 	public function getKey( $userId, $wikiId ){
-		return $this->app->runFunction( 'wfSharedMemcKey', __CLASS__, $userId, $wikiId. 'v21' );
+		return $this->app->runFunction( 'wfSharedMemcKey', __CLASS__, $userId, $wikiId. 'v22' );
 	}
 }
