@@ -15,10 +15,18 @@ var SharingToolbar = {
 
 		$(window).bind('scroll', $.proxy(this.onScroll, this));
 		this.toolbarNode.children('.email-link').bind('click', this.onEmailClick);
+
+		// FIX ME if facebook api provides the functionality to run code after iframe render
+		setTimeout(function(){
+			$('#SharingToolbar').css(
+				'width',
+				$('#SharingToolbar div').children().eq(2).width()
+			);
+		}, 10000);
 	},
 	onScroll: function() {
 		if ($(window).scrollTop() >= this.contributeOffsetTop) {
-			this.toolbarNode.addClass('fixed').css('margin-left', (this.pageWidth/2) + 7 + 'px');
+			this.toolbarNode.addClass('fixed');
 		}
 		else {
 			this.toolbarNode.removeClass('fixed');
