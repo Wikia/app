@@ -1,14 +1,5 @@
-//variables:
-$arrowcolor: grey;
-$openMenuLength: 500px;
-$menuBackgroundColor: #555;
-$menuSecondColor: #333;
-$footerBackground: #CCF;
-
-//testing area
-
-
-//end of testing area
+@import "variables.scss";
+@import "MainPage.scss";
 
 //navigation
 #navigation {
@@ -152,7 +143,7 @@ html {
   cursor: pointer;
 
   body {
-    background-color: #EEE;
+    background-color: $page-background-color;
     color: #222;
     margin: 0;
     -webkit-text-size-adjust:none;
@@ -284,6 +275,7 @@ html {
 
 #WikiaPage {
 	padding: 2px;
+	overflow-x: hidden;
 }
 
 #WikiaMainContent{
@@ -360,24 +352,6 @@ html {
     }
   }
   div{
-    &.main-page-tag-rcs{
-      float: none;
-      clear: none;
-      width: auto;
-      position: static;
-    }
-    
-    &.main-page-tag-lcs{
-      float: none;
-      width: auto;
-      position: static;
-      margin-right: auto !important;/* is an inline style, no other way to force that, sorry ;) */
-      
-      &>div{
-        margin-right: auto !important;/* is an inline style, no other way to force that, sorry ;) */
-      }
-    }
-    
     //temporary fix for slideshows
     &.wikia-slideshow-wrapper{
       width: auto !important;
@@ -416,6 +390,7 @@ ul {
   list-style-type: none;
 }
 
+/*
 @media ( min-width: 321px ),( orientation: landscape ) {
 
 }
@@ -423,3 +398,4 @@ ul {
 @media ( max-width: 320px ),( orientation: portrait ) {
 
 }
+*/
