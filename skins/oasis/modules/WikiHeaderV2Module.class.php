@@ -16,6 +16,8 @@ class WikiHeaderV2Module extends Module {
 	var $displaySearch;
 
 	public function executeIndex() {
+		OasisModule::addBodyClass('wikinav2');
+
 		$themeSettings = new ThemeSettings();
 		$settings = $themeSettings->getSettings();
 

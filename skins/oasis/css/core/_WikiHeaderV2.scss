@@ -5,6 +5,8 @@
 		$color-level-3rd: lighten($color-level-3rd, 8%);
 	}
 
+	$WikiNavWidth: $width-outside - 271px;
+	
 	min-height: 69px;
 	margin: 0 0 3px;
 	padding: 10px 10px 9px;
@@ -53,7 +55,7 @@
 		left: 275px;
 		position: absolute;
 		top: 10px;
-		width: 724px - 150px /* spacing for contribute button (BugId:12490) */;
+		width: $WikiNavWidth - 155px /* 155px is a spacing for contribute button (BugId:12490) */;
 		z-index: 3;
 		>h1 {
 			display: none;
@@ -78,12 +80,13 @@
 			&:first-child a {
 				border-left: 1px solid transparent;
 			}
-			a {
+			> a {
 				margin: 0px;
 				border-top: 1px solid transparent;
 				border-left: 1px solid mix($color-text, $color-page, 20%);
 				color: $color-text;
 				display: block;
+				outline: none;
 				padding: 1px 15px 0px 15px;
 				position: relative;
 			}
@@ -149,7 +152,7 @@
 			left: 0;
 			position: absolute;
 			top: 33px;
-			width: 729px;
+			width: $WikiNavWidth;
 			background-color: transparent;
 			li {
 				background-color: transparent;
@@ -231,18 +234,18 @@
 		}
 	}
 	.navbackground {
+		background-color: $color-buttons;
+		height: 32px;
+		margin-top:1px;
 		left: 0;
 		position: absolute;
 		top: 32px;
-		width: 729px;
-		height: 32px;
-		background-color: $color-buttons;
-		margin-top:1px;
+		width: $WikiNavWidth;
 		div {
-			height: 1px;
-			width: 100%;
 			background-color: $color-button-highlight;
+			height: 1px;
 			margin-top: 1px;
+			width: 100%;
 		}
 		img {
 			border-color: darken( $color-buttons, 10% ) transparent transparent darken( $color-buttons, 10% );

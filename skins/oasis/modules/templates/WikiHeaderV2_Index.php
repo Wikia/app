@@ -27,5 +27,7 @@
 			<?= Wikia::specialPageLink('Random', 'randompage', array('accesskey' => 'x')) ?>
 	</div>
 	<img class="shadow-mask" src="<?= $wgBlankImgUrl ?>" width="0" height="0">
+
+	<? echo wfRenderModule('SharingToolbar'); ?>
 </header>
 <?= $displaySearch ? '<div class="adm-dash-search">'.wfRenderModule('Search').'</div>' : '' ?>

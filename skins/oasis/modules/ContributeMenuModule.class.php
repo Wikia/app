@@ -20,7 +20,8 @@ class ContributeMenuModule extends Module {
 				'label' => 'oasis-navigation-v2-add-photo'
 			),
 			'CreatePage' => array(
-				'label' => 'oasis-navigation-v2-create-page'
+				'label' => 'oasis-navigation-v2-create-page',
+				'class' => 'createpage',
 			),
 			'WikiActivity' => array(
 				'label' => 'oasis-button-wiki-activity',
@@ -41,6 +42,10 @@ class ContributeMenuModule extends Module {
 
 			if (isset($link['accesskey'])) {
 				$attrs['accesskey'] = $link['accesskey'];
+			}
+
+			if (isset($link['class'])) {
+				$attrs['class'] = $link['class'];
 			}
 
 			$this->dropdownItems[strtolower($specialPageName)] = $attrs;

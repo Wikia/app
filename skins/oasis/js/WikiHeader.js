@@ -56,10 +56,9 @@ var WikiHeader = {
 			}
 		});
 
-		if (
-			( (wgPageName == "MediaWiki:Wiki-navigation") || (wgPageName == "MediaWiki:Wikia-navigation-global") )
-			&& (wgAction == "edit")
-		) $('#wpSave').hide();
+		if ( (window.wgIsWikiNavMessage) && (wgAction == "edit") ) {
+			$('#wpSave').hide();
+		}
 	},
 
 	mouseover: function(event) {
@@ -156,11 +155,10 @@ var WikiHeader = {
 		//This runs once. Sets the proper top position of the subnav. Can't be calculated earlier because custom font loading can adjust wiki nav height.
 		WikiHeader.navtop = WikiHeader.nav.height();
 	}
-
 };
 
 $(function() {
-	WikiHeader.init()
+	WikiHeader.init();
 });
 
 // v2
@@ -232,39 +230,39 @@ var WikiHeaderV2 = {
 
 		// remove level 2 items not fitting into one row
 		if (!isValidator) {
-		var itemsRemoved = 0;
+			var itemsRemoved = 0;
 
-		WikiHeaderV2.subnav2.each(function(i) {
-			var menu = $(this),
-				items = menu.children('li').reverse();
+			WikiHeaderV2.subnav2.each(function(i) {
+				var menu = $(this),
+					items = menu.children('li').reverse();
 
-				if (i > 0 ) {
-					menu.css('visibility', 'hidden').show();
-				}
+					if (i > 0 ) {
+						menu.css('visibility', 'hidden').show();
+					}
 
-				// loop through each menu item and remove it if doesn't fit into the first row
-				items.each(function() {
-					var item = $(this),
-						pos = item.position();
+					// loop through each menu item and remove it if doesn't fit into the first row
+					items.each(function() {
+						var item = $(this),
+							pos = item.position();
 
-						if (pos.top === 0) {
-							// don't check next items
-							return false;
-						}
-						else {
-							item.remove();
-							itemsRemoved++;
-						}
-				});
+							if (pos.top === 0) {
+								// don't check next items
+								return false;
+							}
+							else {
+								item.remove();
+								itemsRemoved++;
+							}
+					});
 
-				if (i > 0 ) {
-					menu.css('visibility', 'visible').hide();
-				}
-		});
+					if (i > 0 ) {
+						menu.css('visibility', 'visible').hide();
+					}
+			});
 
- 		if (itemsRemoved > 0) {
-			WikiHeaderV2.log('items removed: ' + itemsRemoved);
-		}
+			if (itemsRemoved > 0) {
+				WikiHeaderV2.log('items removed: ' + itemsRemoved);
+			}
 		}
 	},
 
@@ -365,10 +363,11 @@ var WikiHeaderV2 = {
 	},
 
 	showSubNavL3: function(parent) {
-		$(parent).addClass('marked2');
 		var subnav = $(parent).children('ul');
 
 		if (subnav.exists()) {
+			$(parent).addClass('marked2');
+
 			WikiHeaderV2.isDisplayed = true;
 			subnav.css('top', WikiHeaderV2.navtop).show();
 			$.hideAds();
@@ -395,9 +394,9 @@ var WikiHeaderV2 = {
 		//This runs once. Sets the proper top position of the subnav. Can't be calculated earlier because custom font loading can adjust wiki nav height.
 		WikiHeaderV2.navtop = WikiHeaderV2.nav.height() - 7;
 	},
-	
+
 	firstMenuValidator: function() {
-		var widthLevelFirst = 0, returnVal = true; 
+		var widthLevelFirst = 0, returnVal = true;
 		$.each($('.ArticlePreview #WikiHeader > nav > ul > li'), function(menuItemKey, menuItem) {
 			widthLevelFirst += $(menuItem).width();
 		});
@@ -407,13 +406,13 @@ var WikiHeaderV2 = {
 		}
 		return returnVal;
 	},
-	
+
 	secondMenuValidator: function() {
 		var widthLevelSecond = 0, returnVal = true;
 		$.each($('.ArticlePreview #WikiHeader .subnav-2'), function(parentMenuItemKey, parentMenuItem) {
 			$(parentMenuItem).show();
 			$.each($(parentMenuItem).children('li'), function(menuItemKey, menuItem) {
-				widthLevelSecond += $(menuItem).width();
+					widthLevelSecond += $(menuItem).width();
 			});
 			if (widthLevelSecond > 720) {
 				$('.preview .modalToolbar #publish').remove();

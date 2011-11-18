@@ -299,6 +299,30 @@ $.loadGoogleMaps = function(callback) {
 	);
 }
 
+$.loadFacebookAPI = function(callback) {
+	$.loadLibrary('Facebook API',
+		window.fbScript || '//connect.facebook.net/en_US/all.js',
+		typeof window.FB,
+		callback
+	);
+}
+
+$.loadGooglePlusAPI = function(callback) {
+	$.loadLibrary('Google Plus API',
+		'//apis.google.com/js/plusone.js',
+		typeof (window.gapi && window.gapi.plusone),
+		callback
+	);
+}
+
+$.loadTwitterAPI = function(callback) {
+	$.loadLibrary('Twitter API',
+		'//platform.twitter.com/widgets.js',
+		typeof (window.twttr && window.twttr.widgets),
+		callback
+	);
+}
+
 /**
  * Loads library file if it's not already loaded and fires callback
  */
