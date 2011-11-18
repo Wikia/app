@@ -1,0 +1,35 @@
+/**
+ * MainPage tag
+ */
+
+#WikiaMainContent{
+	.main-page-tag-rcs, .main-page-tag-lcs{
+		float: none;
+		width: auto;
+		position: static;
+		
+		&>div>table{
+			& tr{
+				display:block;
+				width: 100%;
+				
+				&>td{
+					display: inline-block;
+					width: auto;
+				}
+			}
+		}
+	}
+	
+	.main-page-tag-rcs{
+		clear: none;
+	}
+		
+	.main-page-tag-lcs{
+			margin-right: auto !important;/* is an inline style, no other way to force that, sorry ;) */
+			
+			&>div{
+				margin-right: auto !important;/* is an inline style, no other way to force that, sorry ;) */
+			}
+    }
+}
