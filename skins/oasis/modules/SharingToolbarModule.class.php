@@ -131,6 +131,7 @@ class SharingToolbarModule extends Module {
 			);
 		}
 
+		$this->response->setVal('result', $res);
 		wfProfileOut(__METHOD__);
 		return $res;
 	}

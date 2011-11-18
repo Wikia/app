@@ -59,7 +59,9 @@ var SharingToolbar = {
 								addresses: $('#shareEmailModal #lightbox-share-email-text').val(),
 								messageId: 1
 							},
-							callback: function() {}
+							callback: function(result) {
+								$.showModal(result.result['info-caption'], result.result['info-content']);
+							}
 						});
 					});
 				}
