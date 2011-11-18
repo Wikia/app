@@ -131,7 +131,7 @@
 			}
 			color: $color-text;
 			&:visited, &:active { color: $color-text; }
-			time, .timeago { color: $color-gray-text; }
+			time, .timeago { color: $color-alternate-text; }
 			.msg-title { font-weight: bold; font-size: 12px; }
 		}
 		&:before {

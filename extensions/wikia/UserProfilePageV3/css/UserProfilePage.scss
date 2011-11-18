@@ -195,9 +195,9 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 			}
 		}
 		.zero {
-			color: $color-gray-text;
+			color: $color-alternate-text;
 			.icon {
-				background-color: $color-gray-text;
+				background-color: $color-alternate-text;
 			}
 		}
 	}	
@@ -205,7 +205,7 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 	.wikis {
 		margin-top: 13px;
 		span {
-			color: $color-gray-text;
+			color: $color-alternate-text;
 			float: left;
 			font-weight: bold;
 			margin-right: 10px;
@@ -239,7 +239,7 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 			}
 		}
 		span {
-			color: $color-gray-text;
+			color: $color-alternate-text;
 			font-size: 12px;
 			font-weight: bold;
 			text-transform: uppercase;
