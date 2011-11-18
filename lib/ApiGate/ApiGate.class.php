@@ -24,28 +24,6 @@ class ApiGate{
 	const TABLE_BANLOG = "apiGate_banLog";
 
 	/**
-	 * Calling this funcction will ban the API key from all apiKey-required api calls.
-	 *
-	 * The reason will be recorded & displayed to the user on their error page.
-	 *
-	 * @param apiKey - string - the API key that should be banned.
-	 * @param reason - string - a human-readable string explaning why they were banned (this will be shown to
-	 *                          the owner of the key so that they can figure out what went wrong).
-	 * @return void
-	 */
-	public static function banKey( $apiKey, $reason ){
-		wfProfileIn( __METHOD__ );
-
-		// TODO: SWC: IMPLEMENT (make sure to flip the enabled to false and ALSO record the event in the ban log).
-		//$queryString = "SELECT enabled FROM ".ApiGate::TABLE_KEYS." WHERE apiKey='".mysql_real_escape_string( $apiKey, $dbr )."'";
-		// TODO: SWC: IMPLEMENT (make sure to flip the enabled to false and ALSO record the event in the ban log).
-		
-		self::purgeKey( $apiKey );
-		
-		wfProfileOut( __METHOD__ );
-	} // end banKey()
-
-	/**
 	 * Checks to see if the API Key is valid and allowed to make calls (ie: is not banned).
 	 *
 	 * If more specific checking is needed (method-specific), use ApiGate::isRequestAllowed() instead. Please
@@ -191,7 +169,7 @@ class ApiGate{
 	 * When that key gets banned, this page needs to be purged, so code which uses ApiGate in conjunction with Fastly will override this method with
 	 * code that will purge this Fastly page.
 	 *
-	 * Among other things, this method is called by ApiGate::banKey() after the ban takes place.
+	 * Among other things, this method is called by  teh functionality to ban keys, after the ban takes place.
 	 *
 	 * @param apiKey - string - the API key to purge from caches as needed.
 	 */
@@ -199,6 +177,9 @@ class ApiGate{
 		wfProfileIn( __METHOD__ );
 
 		// NOTE: If your implementation needs to purge something after a ban, extend this class and override this method.
+		
+		// TODO: SWC: Purge Fastly!
+		
 		// NOTE: If your implementation needs to purge something after a ban, extend this class and override this method.
 
 		wfProfileOut( __METHOD__ );
@@ -355,17 +336,28 @@ class ApiGate{
 	/**
 	 * Prints a mysql error.
 	 */
-	public static function queryError( $queryString, $db ){
+	public static function queryError( $queryString, $db, $returnAsString=false ){
 		$errorString = i18n( 'apigate-mysql-error', $queryString, mysql_error( $db ) );
-		ApiGate::printError( $errorString );
+		if($returnAsString){
+			return ApiGate::getErrorHtml( $errorString );
+		} else {
+			ApiGate::printError( $errorString );
+		}
 	} // end queryError()
 	
 	/**
 	 * Prints the provided error string inside of some standard HTML for errors in the system.
 	 */
 	public static function printError( $errorString ){
-		print ApiGate_Dispatcher::renderTemplate( "error", array('message' => $errorString));
+		print ApiGate::getErrorHtml( $errorString );
 	} // end printError()
+	
+	/**
+	 * Returns a string containing the error message inside of some standard HTML for errors in the system.
+	 */
+	public static function getErrorHtml( $errorString ){
+		ApiGate_Dispatcher::renderTemplate( "error", array('message' => $errorString));
+	} // end getErrorHtml()
 
 	/**
 	 * Helper-function to grab a posted value with an optional default value (which itself defaults to empty-string).

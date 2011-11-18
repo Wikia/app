@@ -76,7 +76,7 @@ class ApiGate_ApiKey {
 				$html .= "</ul>\n";
 			}
 		} else {
-			ApiGate::queryError($queryString, $db);
+			$html .= ApiGate::queryError($queryString, $db, true /* return as string */);
 		}
 
 		if( $html == "" ){
@@ -204,9 +204,6 @@ class ApiGate_ApiKey {
 
 								$reason = ApiGate::getPost('reason');
 
-// TODO: SWC: USE THE ApiGate::banKey function().
-// TODO: SWC: USE THE ApiGate::banKey function().
-
 								$logQuery = "INSERT INTO ".ApiGate::TABLE_BANLOG." (apiKey, action, username, reason) VALUES (";
 								$logQuery .= "'".$apiKeyObject->getApiKeySqlSafe()."'";
 								$logQuery .= ", '".($setToEnabled?"enabled":"disabled")."'";
@@ -214,6 +211,9 @@ class ApiGate_ApiKey {
 								$logQuery .= ", 'MANUAL CHANGE: ". mysql_real_escape_string( $reason, $dbw )."'";
 								$logQuery .= ")";
 								ApiGate::sendQuery( $logQuery );
+								
+								// Purge the remote cache of this key's validity (for example, Fastly's cached call to check if the key is allowed to access the API).
+								ApiGate::purgeKey( $apiKey );
 							}
 						}
 
@@ -226,13 +226,13 @@ class ApiGate_ApiKey {
 						}
 					}
 				} else {
-					ApiGate::printError( i18n('apigate-error-keyaccess-denied', $apiKey) );
+					$errorString .= ApiGate::getErrorHtml( i18n('apigate-error-keyaccess-denied', $apiKey) );
 				}
 			} else {
 				// NOTE: This message which says essentially "not found or you don't have access" is intentionally vauge.
 				// If we had access-denied and key-not-found be different errors, attackers could just iterate through a bunch of possibilities
 				// until they found a key that exists & then they could spoof as being that app.
-				ApiGate::printError( i18n('apigate-error-keyaccess-denied', $apiKey) );
+				$errorString .= ApiGate::getErrorHtml( i18n('apigate-error-keyaccess-denied', $apiKey) );
 			}
 		}
 		
