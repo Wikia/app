@@ -465,15 +465,9 @@ jQuery.fn.isChrome = function() {
 	return false;
 };
 
+// https://github.com/Modernizr/Modernizr/issues/84
 jQuery.fn.isTouchscreen = function() {
-	if ( $.browser.msie &&  parseInt($.browser.version, 10) < 8 ) {
-		return false;
-	}	
-
-	if (document.createElement( 'div' ).hasOwnProperty('ontouchstart')){
-		return true; 
-	}
-	return false;
+	return ('ontouchstart' in window);
 }
 
 /**
