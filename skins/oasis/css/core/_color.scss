@@ -24,11 +24,10 @@ $is-dark-wiki: false;
 	
 }
 
-// Gray text (aka Alternate text, because it is not really gray)
-// TODO: rename this variable
-$color-gray-text: mix($color-page, #000000, 50%);
+// Alternate text (used for secondary information, less important)
+$color-alternate-text: mix($color-page, #000000, 50%);
 @if $is-dark-wiki {
-	$color-gray-text: mix($color-page, #ffffff, 50%);
+	$color-alternate-text: mix($color-page, #ffffff, 50%);
 }
 
 // GlobalHeader

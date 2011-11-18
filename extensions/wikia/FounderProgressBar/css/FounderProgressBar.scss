@@ -70,7 +70,7 @@ $color-founder-progress-list-border-shadow: #e2e2e2;
 				margin: 0;
 			}
 			.list-toggle {
-				color: $color-gray-text;
+				color: $color-alternate-text;
 				font-size: 11px;
 				font-style: italic;
 				.hide-full-list {
@@ -146,7 +146,7 @@ $color-founder-progress-list-border-shadow: #e2e2e2;
 						position: relative;
 						text-align: right;
 						.skip {
-							color: $color-gray-text;
+							color: $color-alternate-text;
 							left: 0;
 							position: absolute;
 							top: 5px;
@@ -199,7 +199,7 @@ $color-founder-progress-list-border-shadow: #e2e2e2;
 			padding-left: 5px;
 			&:before {
 				border: 6px solid transparent;
-				border-right: 6px solid $color-gray-text;
+				border-right: 6px solid $color-alternate-text;
 				content: "";
 				display: block;
 				float: left;
@@ -297,7 +297,7 @@ $color-founder-progress-list-border-shadow: #e2e2e2;
 			}
 			&.completed .activity-label,
 			&.locked .activity-label {
-				color: $color-gray-text;
+				color: $color-alternate-text;
 			}
 			&.locked .activity-label {
 				color: $color-founder-progress-list-border-shadow;
@@ -347,7 +347,7 @@ $color-founder-progress-list-border-shadow: #e2e2e2;
 							top: 10px;
 						}
 						.skip {
-							color: $color-gray-text;
+							color: $color-alternate-text;
 						}
 					}
 					em {
