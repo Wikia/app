@@ -5,7 +5,7 @@ class RelatedVideosService {
 	const memcKeyPrefix = 'RelatedVideosService';
 	const memcVersion = 10;
 	const width = 160;
-	const howLongVideoIsNew = 5;
+	const howLongVideoIsNew = 3;
 
 	/**
 	 * Get data for displaying and playing a Related Video

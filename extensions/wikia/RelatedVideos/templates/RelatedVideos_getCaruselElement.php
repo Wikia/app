@@ -1,5 +1,10 @@
+<?
+	$elementHeight = 90;
+	$maxDescriptionLength = 45;
+
+?>
 <div class="item">
-	<a class="video-thumbnail video-play" href="<?=$video['fullUrl'];?>" data-ref="<?=$video['prefixedUrl'];?>" data-external="<?=$video['external'];?>" >
+	<a class="video-thumbnail video-play" style="height:<?=$elementHeight; ?>px" href="<?=$video['fullUrl'];?>" data-ref="<?=$video['prefixedUrl'];?>" data-external="<?=$video['external'];?>" >
 		<?
 		if ( !empty( $video['duration'] ) ) {
 			$mins = floor ($video['duration'] / 60);
@@ -11,10 +16,13 @@
 		if( !empty( $duration ) ){  ?><div class="timer"><?=$duration;?></div><? }
 		if( !empty( $video['isNew'] ) ){  ?><div class="new"><?=wfMsg('related-videos-video-is-new');?><div  class="newRibbon" ></div></div><? } ?>
 		<div class="playButton"></div>
-		<img data-src="<?=$video['thumbnailData']['thumb'];?>" src="<?=( $preloaded ) ? $video['thumbnailData']['thumb'] : wfBlankImgUrl();?>" style="height:<?=$video['thumbnailData']['height'];?>px; width:<?=$video['thumbnailData']['width'];?>px;" />
+		<img data-src="<?=$video['thumbnailData']['thumb'];?>" src="<?=( $preloaded ) ? $video['thumbnailData']['thumb'] : wfBlankImgUrl();?>" style="margin-top:<?= floor( ( $elementHeight - $video['thumbnailData']['height'] ) / 2 ); ?>px; height:<?=$video['thumbnailData']['height'];?>px; width:<?=$video['thumbnailData']['width'];?>px;" />
 	</a>
 	<div class="description">
-		<?=$video['title'];?>
+		<?=( strlen( $video['title'] ) > $maxDescriptionLength )
+			? substr( $video['title'], 0, $maxDescriptionLength).'&#8230;'
+			: $video['title'];
+		?>
 	</div>
 	<div class="info">
 		<?
