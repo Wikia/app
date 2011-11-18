@@ -21,9 +21,15 @@ AdMeldAPIClient.track = function(data, profile) {
 	profile = profile || 'admeldapiclient';
 	this.log('track ' + data.join('/') + ' in ' + profile, 6);
 	
-	data = ['admeldapiclient'].concat(data);
+	data[0] = 'admeldapiclient/' + data[0];
 
-	WikiaTracker.track(data.join('/'), 'liftium.' + profile, data);	
+	var event = data;
+	if (event.length > 3) {
+		event = [event[0], event[1], event.slice(2).join('/')];		
+	}
+	this.log('event: [' + event.join(', ') + ']', 6);
+
+	WikiaTracker.track(data.join('/'), 'liftium.' + profile, event);	
 };
 
 AdMeldAPIClient.getAd = function(slotname) {
