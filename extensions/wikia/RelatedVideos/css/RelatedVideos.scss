@@ -319,8 +319,8 @@ $color-related-videos-background: darken($color-page, 20%);
 #relatedvideos-add-video {
 
 	input {
-		line-height: 25px;
-		height: 25px;
+		line-height: 20px;
+		height: 20px;
 		font-size:14px;
 		font-family: Helvetica, Arial, sans-serif;
 		padding: 1px 1px 1px 5px;
@@ -371,7 +371,7 @@ $color-related-videos-background: darken($color-page, 20%);
 		margin-top: 0px;
 	}
 	.embedCode {
-		margin-top: 10px;
+		margin-top: 18px;
 		input {
 			line-height: 25px;
 			height: 25px;
@@ -379,9 +379,11 @@ $color-related-videos-background: darken($color-page, 20%);
 			font-family: Helvetica, Arial, sans-serif;
 			padding: 1px 1px 1px 5px;
 			text-decoration: none;
-			background-color: mix( #FFFFFF, $color-page, 75% );
-			border-color: mix( #FFFFFF, $color-page, 65% );
+			background-color: mix( $color-page, #FFFFFF, 95% );
 			width: 650px;
+		}
+		input:focus {
+			background-color: mix( $color-page, #FFFFFF, 90% );
 		}
 	}
 	.embedHtml {

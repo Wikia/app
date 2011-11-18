@@ -4,7 +4,7 @@ var RelatedVideos = {
 	videoPlayerLock:	false,
 	maxRooms:		1,
 	currentRoom:		1,
-	modalWidth:		660,
+	modalWidth:		666,
 	alreadyLoggedIn:	false,
 	heightThreshold:	600,	
 	playerHeight:           371,
