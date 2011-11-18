@@ -63,7 +63,7 @@ var ThemeDesigner = {
 		var slideMax = -Math.floor($("#ThemeTab").find(".slider").find("ul").find("li").length / ThemeDesigner.slideByItems) * ThemeDesigner.slideByDefaultWidth;
 
 		// click handler for next and previous arrows in theme slider
-		$("#ThemeTab.previous, #ThemeTab .next").click(function(event) {
+		$("#ThemeTab .previous, #ThemeTab .next").click(function(event) {
 			event.preventDefault();
 			if (!ThemeDesigner.isSliding) {
 				var list = $("#ThemeTab .slider ul");
