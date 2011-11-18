@@ -34,15 +34,7 @@ class ApiGate_Register {
 			
 			// Validate the input.
 			$errorString = "";
-			if("$firstName$lastName" == ""){
-				$errorString .= "\n" . i18n( 'apigate-register-error-noname' );
-			}
-			if( !ApiGate::isValidEmail( $email_1 ) ){
-				$errorString .= "\n". i18n( 'apigate-error-invalid-email' );
-			}
-			if($email_1 != $email_2){
-				$errorString .= "\n". i18n( 'apigate-error-email-doesnt-match' );
-			}
+			$errorString = ApiGate_Register::validateNameAndEmail( $firstName, $lastName, $email_1, $email_2, $errorString );
 
 			// If input was valid, attempt to create a key.
 			if($errorString == ""){
@@ -77,6 +69,30 @@ class ApiGate_Register {
 
 		return $didRegister;
 	} // end processPost()
+
+	/**
+	 * Validates the human name and email address fields for changing key information.  This is used by
+	 * both the registration and Key Info module, so it's extracted here so that the business-logic rules
+	 * only live in one place.
+	 *
+	 * Any errors will be appended to 'errorString' and returned.
+	 */
+	public static function validateNameAndEmail( $firstName, $lastName, $email_1, $email_2, $errorString ){
+		wfProfileIn( __METHOD__ );
+
+		if("$firstName$lastName" == ""){
+			$errorString .= "\n" . i18n( 'apigate-register-error-noname' );
+		}
+		if( !ApiGate::isValidEmail( $email_1 ) ){
+			$errorString .= "\n". i18n( 'apigate-error-invalid-email' );
+		}
+		if($email_1 != $email_2){
+			$errorString .= "\n". i18n( 'apigate-error-email-doesnt-match' );
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $errorString;
+	} // end validateNameAndEmail()
 
 	/**
 	 * Returns a valid (and available API key) to be used in the system.

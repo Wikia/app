@@ -120,6 +120,24 @@ class ApiGate_Config{
 
 		wfProfileOut( __METHOD__ );
 		return $value;
-	}
+	} // end extractDbConnection()
+
+	/**
+	 * Purges the API key passed in.  This is in config so that each implementation can
+	 * override it as needed.  This particular implmentation is MediaWiki-specific.
+	 */
+	public static function purgeKey( $apiKey ){
+		global $wgUseSquid, $wgServer;
+		wfProfileIn( __METHOD__ );
+
+		if ( $wgUseSquid ) {
+			// Send purge to Fastly so that it re-checks the auth on the next API request.
+			$title = $wgServer."/api.php?checkKey=$apiKey";
+			$update = SquidUpdate::newSimplePurge( $title );
+			$update->doUpdate();
+		}
+
+		wfProfileOut( __METHOD__ );
+	} // end purgeKey()
 	
 } // end class ApiGate_Config

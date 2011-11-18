@@ -166,8 +166,8 @@ class ApiGate{
 	/**
 	 * If this installation of API Gate is using the proxy system (as opposed to running inline), then this method will purge any
 	 * caches of key-state for the provided key. For instance, Fastly caches a page which says whether an API key is valid & within its rate-limit.
-	 * When that key gets banned, this page needs to be purged, so code which uses ApiGate in conjunction with Fastly will override this method with
-	 * code that will purge this Fastly page.
+	 * When that key gets banned, this page needs to be purged, so code which uses ApiGate in conjunction with Fastly will implement the code that
+	 * will purge this Fastly page inside of its ApiGate_Config::purgeKey() function.
 	 *
 	 * Among other things, this method is called by  teh functionality to ban keys, after the ban takes place.
 	 *
@@ -176,11 +176,8 @@ class ApiGate{
 	protected static function purgeKey( $apiKey ){
 		wfProfileIn( __METHOD__ );
 
-		// NOTE: If your implementation needs to purge something after a ban, extend this class and override this method.
-		
-		// TODO: SWC: Purge Fastly!
-		
-		// NOTE: If your implementation needs to purge something after a ban, extend this class and override this method.
+		// NOTE: If your implementation needs to purge something after a ban, implement that in ApiGate_Config::purgeKey().
+		ApiGate_Config::purgeKey( $apiKey );
 
 		wfProfileOut( __METHOD__ );
 	} // end purgeKey()

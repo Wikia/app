@@ -173,16 +173,7 @@ class ApiGate_ApiKey {
 					$email_2 = ApiGate::getPost('email_2');
 
 					// Validate input (should be same business logic as ApiGate_Register::processPost().
-					// TODO: SWC: REFACTOR: these rules to be in one function called from both here and from the registration form and which just modifies the errorString.
-					if("$firstName$lastName" == ""){
-						$errorString .= "\n" . i18n( 'apigate-register-error-noname' );
-					}
-					if( !ApiGate::isValidEmail( $email_1 ) ){
-						$errorString .= "\n". i18n( 'apigate-error-invalid-email' );
-					}
-					if($email_1 != $email_2){
-						$errorString .= "\n". i18n( 'apigate-error-email-doesnt-match' );
-					}
+					$errorString = ApiGate_Register::validateNameAndEmail( $firstName, $lastName, $email_1, $email_2, $errorString );
 
 					// If there were no errors, update the key info in the database.
 					if($errorString == ""){
