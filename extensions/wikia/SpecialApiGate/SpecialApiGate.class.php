@@ -41,7 +41,7 @@ class SpecialApiGate extends SpecialPage {
 	 * @param $subpage Mixed: string if any subpage provided, else null
 	 */
 	public function execute( $subpage ) {
-		global $wgOut, $wgRequest, $IP, $wgUser, $API_GATE_DIR;
+		global $wgOut, $wgRequest, $IP, $wgUser, $API_GATE_DIR, $wgCityId;
 		wfProfileIn( __METHOD__ );
 
 		// NOTE: We can't include CSS from the /lib directry (there is no symlink to /lib from the document-root on the apaches). We'll have to separate the CSS later when we can.
@@ -56,7 +56,9 @@ class SpecialApiGate extends SpecialPage {
 		$wgOut->addWikiText( "<mainpage-leftcolumn-start />");
 
 // TODO: SWC: Make sure that all subpages (EXCEPT checkKey!) redirect to Api wiki if they're on another wiki (needed for that right-rail template to work & still be community editable - including the images on it).
-// TODO: SWC: Make sure that all subpages (EXCEPT checkKey!) redirect to Api wiki if they're on another wiki (needed for that right-rail template to work & still be community editable - including the images on it).
+//		if( $wgCityId != WIKIA_CITYID_APIWIKI ){
+
+//		}
 
 		$useTwoColLayout = true; // main column & right rail on most forms, but no columns for chart pages since SponsorshipDashboard charts are too wide (and not resizable yet).
 		$mainSectionHtml = "";
@@ -104,37 +106,8 @@ class SpecialApiGate extends SpecialPage {
 				$mainSectionHtml .= $this->subpage_userKeys();
 				break;
 			case self::SUBPAGE_KEY:
-// TODO: SWC: Extract this into a subpage_key() function? 
 				$mainSectionHtml .= $this->getBreadcrumbHtml();
-				$apiKeyObject = ApiGate_ApiKey::newFromDb( $apiKey );
-				if( is_object($apiKeyObject) ){
-					// Determine if the current user can view this key (they must either own it or be an ApiGate admin).
-					if($apiKeyObject->canBeViewedByCurrentUser()){
-						$useTwoColLayout = false; // use full width so that the charts fit
-
-						// Use standard tabs (from UI Style Guide)
-						ob_start();
-						?><ul class="tabs">
-							<li class="selected" data-tab="apiGate_keyInfo"><a><?= wfMsg('apigate-tab-keyinfo') ?></a></li>
-							<li data-tab="apiGate_keyStats"><a><?= wfMsg('apigate-tab-keystats') ?></a></li>
-						</ul>
-						<div id="apiGate_keyInfo" data-tab-body="apiGate_keyInfo" class="tabBody selected">
-							<?= $this->subpage_keyInfo( $apiKeyObject ); ?>
-						</div>
-						<div id="apiGate_keyStats" data-tab-body="apiGate_keyStats" class="tabBody">
-							<?= $this->subpage_keyStats( $apiKey ); ?>
-						</div>
-						<?php
-						$mainSectionHtml .= ob_get_clean();
-					} else {
-						ApiGate::printError( i18n('apigate-error-keyaccess-denied', $apiKey) );
-					}
-				} else {
-					// NOTE: This message which says essentially "not found or you don't have access" is intentionally vauge.
-					// If we had access-denied and key-not-found be different errors, attackers could just iterate through a bunch of possibilities
-					// until they found a key that exists & then they could spoof as being that app.
-					ApiGate::printError( i18n('apigate-error-keyaccess-denied', $apiKey) );
-				}
+				$mainSectionHtml .= $this->subpage_key( $apiKey );
 				break;
 			case self::SUBPAGE_NONE:
 			default:
@@ -205,8 +178,7 @@ class SpecialApiGate extends SpecialPage {
 
 			$html .= $this->getLoginBoxHtml();
 		} else {
-			// TODO: SWC: Could this be extracted to all be inside of one template in API Gate (index.php template).  We're not doing any funky logic here, are we (just need to chyeck that the subpages aren't)?
-			// TODO: SWC: Could this be extracted to all be inside of one template in API Gate (index.php template).  We're not doing any funky logic here, are we (just need to chyeck that the subpages aren't)?
+			// TODO: Could this be extracted to all be inside of one template in API Gate (index.php template).  We're not doing any funky logic here, are we (just need to chyeck that the subpages aren't)?
 
 			// Show intro-blurb.
 			$html .= ApiGate_Dispatcher::renderTemplate( "intro", array( "username" => $wgUser->getName() ) );
@@ -304,7 +276,7 @@ class SpecialApiGate extends SpecialPage {
 
 			$html .=  ApiGate_Dispatcher::renderTemplate( "listKeys", array('keyData' => $keyData) );
 		} else {
-			ApiGate::printError( i18n('apigate-error-admins-only') );
+			$html .= ApiGate::getErrorHtml( i18n('apigate-error-admins-only') );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -331,7 +303,7 @@ class SpecialApiGate extends SpecialPage {
 			$chartName = wfMsg( 'apigate-chart-name-monthly' );
 			$html .= $this->getChartHtmlByPeriod( $apiKey, "monthly", $metricName, $chartName, true );
 		} else {
-			ApiGate::printError( i18n('apigate-error-admins-only') );
+			$html .= ApiGate::getErrorHtml( i18n('apigate-error-admins-only') );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -369,6 +341,46 @@ class SpecialApiGate extends SpecialPage {
 		wfProfileOut( __METHOD__ );
 		return $html;
 	} // end subpage_userKeys()
+
+	/**
+	 * Displays the page with key information and statistics (one tab each).
+	 */
+	public function subpage_key( $apiKey ){
+		wfProfileIn( __METHOD__ );
+
+		$apiKeyObject = ApiGate_ApiKey::newFromDb( $apiKey );
+		ob_start();
+		if( is_object($apiKeyObject) ){
+			// Determine if the current user can view this key (they must either own it or be an ApiGate admin).
+			if($apiKeyObject->canBeViewedByCurrentUser()){
+				$useTwoColLayout = false; // use full width so that the charts fit
+
+				// Use standard tabs (from UI Style Guide)
+				?><ul class="tabs">
+					<li class="selected" data-tab="apiGate_keyInfo"><a><?= wfMsg('apigate-tab-keyinfo') ?></a></li>
+					<li data-tab="apiGate_keyStats"><a><?= wfMsg('apigate-tab-keystats') ?></a></li>
+				</ul>
+				<div id="apiGate_keyInfo" data-tab-body="apiGate_keyInfo" class="tabBody selected">
+					<?= $this->subpage_keyInfo( $apiKeyObject ); ?>
+				</div>
+				<div id="apiGate_keyStats" data-tab-body="apiGate_keyStats" class="tabBody">
+					<?= $this->subpage_keyStats( $apiKey ); ?>
+				</div>
+				<?php
+			} else {
+				ApiGate::printError( i18n('apigate-error-keyaccess-denied', $apiKey) );
+			}
+		} else {
+			// NOTE: This message which says essentially "not found or you don't have access" is intentionally vauge.
+			// If we had access-denied and key-not-found be different errors, attackers could just iterate through a bunch of possibilities
+			// until they found a key that exists & then they could spoof as being that app.
+			ApiGate::printError( i18n('apigate-error-keyaccess-denied', $apiKey) );
+		}
+		$html .= ob_get_clean();
+
+		wfProfileOut( __METHOD__ );
+		return $html;
+	} // end subpage_key()
 
 	/**
 	 * Displays the detailed info about an API key and allows editing of it.  Also, if
