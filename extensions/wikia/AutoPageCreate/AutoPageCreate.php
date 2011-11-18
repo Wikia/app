@@ -81,6 +81,8 @@ function wfAutoPageCreateViewPage( $article, $out, &$text  ) {
 
 	switch( $ns ) {
 		case NS_MEDIAWIKI:
+                // BugId:15387 - Let's skip user pages too.
+                case NS_USER:
 			$retval = true;
 		case NS_CATEGORY:
 		case NS_HELP:
@@ -101,6 +103,7 @@ function wfAutoPageCreateViewPage( $article, $out, &$text  ) {
 			} else {
 				switch( $ns ) {
 					case NS_USER:
+                                                break;
 						// RT #48042
 						if ( $title->isSubpage() ) {
 							$overlayMsgKey = false;
