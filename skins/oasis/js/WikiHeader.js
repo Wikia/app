@@ -10,18 +10,24 @@ var WikiHeader = {
 
 		//Variables
 		WikiHeader.nav = $("header.WikiHeader").children("nav");
+		WikiHeader.navLI = WikiHeader.nav.children("ul").children("li");
 		WikiHeader.subnav = WikiHeader.nav.find(".subnav");
 		WikiHeader.mouseoverTimerRunning = false;
 
 		WikiHeader.positionNav();
 
 		//Events
-		WikiHeader.nav.children("ul").children("li")
-			.hover(WikiHeader.mouseover, WikiHeader.mouseout)
+		WikiHeader.navLI
 			.children("a").focus(function(){
                                 WikiHeader.hideNav();
 				WikiHeader.showSubNav($(this).parent("li"));
 			});
+
+		if(!$().isTouchscreen()) {
+			WikiHeader.navLI.hover(WikiHeader.mouseover, WikiHeader.mouseout);
+		} else {
+			WikiHeader.navLI.click(WikiHeader.click);
+		}
 
 		//Accessibility Events
 		//Show when any inner anchors are in focus
@@ -59,6 +65,17 @@ var WikiHeader = {
 		if ( (window.wgIsWikiNavMessage) && (wgAction == "edit") ) {
 			$('#wpSave').hide();
 		}
+	},
+
+	click: function(event) {
+		var subnav = $(this).children('.subnav');
+		if (subnav.length && !subnav.hasClass('opened')) {
+			event.preventDefault();
+			WikiHeader.hideNav();
+			WikiHeader.showSubNav(event.currentTarget);
+			WikiHeader.subnav.removeClass('opened');
+			subnav.addClass('opened');
+		};
 	},
 
 	mouseover: function(event) {
@@ -174,26 +191,32 @@ var WikiHeaderV2 = {
 	init: function(isValidator) {
 		//Variables
 		WikiHeaderV2.nav = $('header.WikiHeaderRestyle').children('nav');
+		WikiHeaderV2.navLI = WikiHeaderV2.nav.children('ul').children('li');
 		WikiHeaderV2.subnav2 = WikiHeaderV2.nav.find('.subnav-2');
+		WikiHeaderV2.subnav2LI = WikiHeaderV2.subnav2.children('li');
 		WikiHeaderV2.subnav3 = WikiHeaderV2.nav.find('.subnav-3');
 
 		WikiHeaderV2.positionNav();
 
 		//Events
-		WikiHeaderV2.nav.children('ul').children('li')
+		WikiHeaderV2.navLI
 			.click(WikiHeaderV2.mouseclickL1)
-			.hover(WikiHeaderV2.mouseoverL1, WikiHeaderV2.mouseoutL1)
 			.children('a').focus(function(){
 				WikiHeaderV2.showSubNavL2($(this).parent('li'));
 			});
 
-		WikiHeaderV2.subnav2.children('li')
+		WikiHeaderV2.subnav2LI
 			.click(WikiHeaderV2.mouseclickL2)
-			.hover(WikiHeaderV2.mouseoverL2, WikiHeaderV2.mouseoutL2)
 			.children('a').focus(function(){
 				WikiHeaderV2.hideNavL3();
 				WikiHeaderV2.showSubNavL3($(this).parent('li'));
 			});
+
+		//Apply a hover state if the device is not touch enabled
+		if(!$().isTouchscreen()) {
+			WikiHeaderV2.navLI.hover(WikiHeaderV2.mouseoverL1, WikiHeaderV2.mouseoutL1);
+			WikiHeaderV2.subnav2LI.hover(WikiHeaderV2.mouseoverL2, WikiHeaderV2.mouseoutL2);
+		}
 
 		//Accessibility Events
 		//Show when any inner anchors are in focus
