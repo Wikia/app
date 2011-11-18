@@ -57,19 +57,18 @@
 
 			this.editbox = editbox;
 
-			// if there's no footer, add a 10px bottom margin to space the editor away from browser window
 			if (!footerHeight) {
-				this.editarea.css("padding-bottom", 10);
+				this.editarea.addClass("noFooter");
 			}
 
 			// travel all the way up to the editor wrapper and remove any heights from margins/padding/borders
-			this.editbox.parentsUntil("#EditPageEditorWrapper").each(function() {
+			this.editbox.parentsUntil("#EditPageEditorWrapper").andSelf().each(function() {
 				node = $(this);
 				offsetHeight += (node.outerHeight(true) - node.height());
 			});
 
-			// The -1 is for editpage-editarea top border, which for some reason isn't be counted
-			this.editboxOffsetHeight = (offsetHeight + footerHeight - 1);
+			// The -1 is for editpage-editarea top border, which for some reason isn't being counted
+			this.editboxOffsetHeight = (offsetHeight + footerHeight) - 1;
 
 			this.delayedResize();
 		},

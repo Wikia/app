@@ -62,8 +62,13 @@
 
 // styling for edit area and category select source mode
 @mixin epl-editorarea {
+	display: block; // Webkit treats textareas as inline elements. Fixes BugId:12664
 	font-family: Consolas, "Eupheima UCAS", Ayuthaya, Menlo, monospace;
 	font-size: 13.5px;
+	margin: 0;
+	outline: none;
+	padding: 2px;
+	resize: none; // No resize grip for Webkit / FF4
 	width: 100%;
 }
 
