@@ -16,16 +16,6 @@ touchImprovements = {
 			};
 		});
 
-		//wiki nav fix: first click opens nav, second redirects to a desired page
-		$('#WikiHeader').delegate('nav > ul > li > a', 'click', function(event) {
-			var subnav = $(this).next('ul');
-			if (subnav.length && !subnav.hasClass('open')) {
-				event.preventDefault();
-				wikiUls.removeClass('open');
-				subnav.addClass('open');
-			};
-		});
-
 		//user menu fix:
 		$('#AccountNavigation').delegate('li > a[accesskey="."]', 'click', function(event) {
 			var next = $(this).next('ul.subnav');
