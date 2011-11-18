@@ -268,14 +268,14 @@ var WikiHeaderV2 = {
 						var item = $(this),
 							pos = item.position();
 
-							if (pos.top === 0) {
-								// don't check next items
-								return false;
-							}
-							else {
-								item.remove();
-								itemsRemoved++;
-							}
+						if (pos.top === 0) {
+							// don't check next items
+							return false;
+						}
+						else {
+							item.remove();
+							itemsRemoved++;
+						}
 					});
 
 					if (i > 0 ) {
@@ -419,32 +419,54 @@ var WikiHeaderV2 = {
 	},
 
 	firstMenuValidator: function() {
-		var widthLevelFirst = 0, returnVal = true;
-		$.each($('.ArticlePreview #WikiHeader > nav > ul > li'), function(menuItemKey, menuItem) {
-			widthLevelFirst += $(menuItem).width();
+		var widthLevelFirst = 0,
+			returnVal = true,
+			maxWidth = $('#WikiaPage').width() - 420,
+			menuNodes = $('.ArticlePreview #WikiHeader > nav > ul > li');
+
+		menuNodes.reverse().each(function() {
+			var item = $(this),
+				pos = item.position();
+
+			if (pos.top === 0) {
+				// don't check next items
+				return false;
+			}
+			else {
+				$('#publish').remove();
+				returnVal = false;
+				WikiHeaderV2.log('menu level #1 not valid');
+			}
 		});
-		if (widthLevelFirst > 580) {
-			$('.preview .modalToolbar #publish').remove();
-			returnVal = false;
-		}
+
 		return returnVal;
 	},
 
 	secondMenuValidator: function() {
-		var widthLevelSecond = 0, returnVal = true;
-		$.each($('.ArticlePreview #WikiHeader .subnav-2'), function(parentMenuItemKey, parentMenuItem) {
-			$(parentMenuItem).show();
-			$.each($(parentMenuItem).children('li'), function(menuItemKey, menuItem) {
-					widthLevelSecond += $(menuItem).width();
+		var widthLevelSecond = 0,
+			returnVal = true,
+			maxWidth = $('#WikiaPage').width() - 280,
+			menuNodes = $('.ArticlePreview #WikiHeader .subnav-2');
+
+		$.each(menuNodes, function() {
+			var menu = $(this);
+
+			menu.show();
+			$.each(menu.children('li'), function() {
+				widthLevelSecond += $(this).width();
 			});
-			if (widthLevelSecond > 720) {
-				$('.preview .modalToolbar #publish').remove();
+			menu.hide();
+
+			if (widthLevelSecond > maxWidth) {
+				$('#publish').remove();
 				returnVal = false;
+				WikiHeaderV2.log('menu level #2 not valid');
 			}
 			widthLevelSecond = 0;
-			$(parentMenuItem).hide();
+
 		});
-		$('.ArticlePreview #WikiHeader .marked .subnav-2').show();
+		// show the first submenu
+		menuNodes.eq(0).show();
 		return returnVal;
 	}
 };
@@ -454,10 +476,13 @@ $(function() {
 
 	// modify preview dialog
 	if (window.wgIsWikiNavMessage) {
+		// preload messages
+		$.getMessages('Oasis-navigation-v2');
+
 		// modify size of preview modal
 		$(window).bind('EditPageRenderPreview', function(ev, options) {
 			options.height = 300;
-			options.width = 729 + 32 /* padding */;
+			options.width = ($('#WikiaPage').width() - 271) /* menu width */ + 32 /* padding */;
 		});
 
 		// setup menu in preview mode
@@ -465,22 +490,20 @@ $(function() {
 			// don't style wiki nav like article content
 			previewNode.removeClass('WikiaArticle');
 			WikiHeaderV2.init(true);
-			$.getMessages('Oasis-navigation-v2', function() {
-				var firstMenuValid = WikiHeaderV2.firstMenuValidator();
-				var secondMenuValid = WikiHeaderV2.secondMenuValidator();
-				if (!firstMenuValid && !secondMenuValid) {
-					alert($.msg('oasis-navigation-v2-level12-validation'));
-				}
-				else if (!firstMenuValid) {
-					alert($.msg('oasis-navigation-v2-level1-validation'));
-				}
-				else if (!secondMenuValid) {
-					alert($.msg('oasis-navigation-v2-level2-validation'));
-				}
-			});
+			var firstMenuValid = WikiHeaderV2.firstMenuValidator(),
+				secondMenuValid = WikiHeaderV2.secondMenuValidator();
+			if (!firstMenuValid && !secondMenuValid) {
+				alert($.msg('oasis-navigation-v2-level12-validation'));
+			}
+			else if (!firstMenuValid) {
+				alert($.msg('oasis-navigation-v2-level1-validation'));
+			}
+			else if (!secondMenuValid) {
+				alert($.msg('oasis-navigation-v2-level2-validation'));
+			}
 		});
 
-		$('#EditPageRail .buttons #wpPreview').text(
+		$('#wpPreview').text(
 			$.msg('oasis-navigation-v2-validation-next')
 		);
 	}
