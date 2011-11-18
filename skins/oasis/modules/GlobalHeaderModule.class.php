@@ -10,25 +10,26 @@ class GlobalHeaderModule extends Module {
 
 	var $centralUrl;
 	var $createWikiUrl;
-	var $createWikiText;
 	var $menuNodes;
 
 	public function executeIndex() {
-		global $wgLangToCentralMap, $wgContLang, $wgCityId, $wgLang;
+		global $wgLangToCentralMap, $wgCityId, $wgLang;
 		global $wgEnableWallExt;
 		
 		$this->wgEnableWallExt = $wgEnableWallExt;
 		
-		$wikiLang = $wgLang->getCode();
-		
-		// generate link to hompage; bugId:7452
-		$this->centralUrl = 'http://www.wikia.com/Wikia';
+		$userLang = $wgLang->getCode();
+
+		// generate link to hompage
+		if ( !empty( $wgLangToCentralMap[$userLang] ) ) {
+			$this->centralUrl = $wgLangToCentralMap[$userLang];
+		} else {
+			$this->centralUrl = 'http://www.wikia.com/Wikia';
+		}
 
 		// generate link to AutoWikiCreate
-		$userlang = ($wikiLang == 'en') ? '' : "?uselang=$wikiLang";
-		$this->createWikiUrl = "http://www.wikia.com/Special:CreateWiki{$userlang}";
-		$this->createWikiText = wfMsgHtml('oasis-global-nav-create-wiki');
-
+		$langQuery = ($userLang == 'en') ? '' : "?uselang=$userLang";
+		$this->createWikiUrl = "http://www.wikia.com/Special:CreateWiki{$langQuery}";
 
 		// global navigation menu
 		$category = WikiFactory::getCategory($wgCityId);
