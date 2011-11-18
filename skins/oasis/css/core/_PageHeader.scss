@@ -72,9 +72,9 @@
 	}
 	.mainpage-tally {
 		float: right;
-		padding: 1px 0;
 		margin-right: 10px;
-		span {
+		padding: 1px 0;
+		> span {
 			float: left;
 		}
 	}
@@ -86,6 +86,43 @@
 		padding: 0 10px;
 	}
 }
+
+// WikiaNav - begin
+.wikinav2 {
+	.WikiaPageHeader {
+		border-bottom: solid 1px $color-page-border;
+		padding-bottom: 7px;
+		padding-right: 175px;
+		margin-bottom: 10px;
+
+		> .comments {
+			margin: 2px 10px 0 10px;
+		}
+
+		> .tally {
+			position: absolute;
+			right: 0;
+			top: 0;
+			&.mainpage-tally {
+				position: static;
+			}
+		}
+	}
+	&.oasis-one-column {
+		.WikiaPageHeader {
+			margin-right: 330px;
+		}
+		.WikiaSearchHeader {
+			position: absolute;
+			right: 10px;
+			top: 0;
+			width: 300px;
+		}
+	}
+}
+// WikiaNav - end
+
+// main page
 .oasis-one-column .WikiaPageHeader {
 	padding-right: 320px;
 	position: relative;

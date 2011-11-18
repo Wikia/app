@@ -121,7 +121,7 @@ class BodyModule extends Module {
 	 */
 	public static function getUserPagesNamespaces() {
 		global $wgEnableWallExt;
-		
+
 		$namespaces = array(NS_USER);
 		if( empty($wgEnableWallExt) ) {
 			$namespaces[] = NS_USER_TALK;
@@ -375,6 +375,15 @@ class BodyModule extends Module {
 			$railModuleList[1430] = array('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BUTTON'));
 		}
 
+		// WikiNav v2 - begin
+		// TODO: remove once it's enabled sitewide
+		global $wgOasisNavV2;
+		if (!empty($wgOasisNavV2)) {
+			// remove PagesOnWiki module
+			unset($railModuleList[1450]);
+		}
+		// WikiNav v2 - end
+
 		wfRunHooks( 'GetRailModuleList', array( &$railModuleList ) );
 
 		wfProfileOut(__METHOD__);
@@ -429,7 +438,7 @@ class BodyModule extends Module {
 			$this->headerModuleName = 'UserPagesHeader';
 			// is this page a blog post?
 			if( self::isBlogPost() ) {
-				$this->headerModuleAction = 'BlogPost';	
+				$this->headerModuleAction = 'BlogPost';
 			}
 			// is this page a blog listing?
 			else if (self::isBlogListing()) {
@@ -523,27 +532,27 @@ class BodyModule extends Module {
 				// for user subpages add link to theirs talk pages
 				case NS_USER:
 					$talkPage = $wgTitle->getTalkPage();
-	
+
 					// get number of revisions for talk page
 					$service = new PageStatsService($wgTitle->getArticleId());
 					$comments = $service->getCommentsCount();
-	
+
 					// render comments bubble
 					$bubble = wfRenderModule('CommentsLikes', 'Index', array('comments' => $comments, 'bubble' => true));
-	
+
 					$this->subtitle .= ' | ';
 					$this->subtitle .= $bubble;
 					$this->subtitle .= Wikia::link($talkPage);
 					break;
-	
+
 				case NS_USER_TALK:
 					$subjectPage = $wgTitle->getSubjectPage();
-	
+
 					$this->subtitle .= ' | ';
 					$this->subtitle .= Wikia::link($subjectPage);
 					break;
-	}
-}
+			}
+		}
 
 		if ($wgEnableTopButton) {
 			if (strtolower($wgTopButtonPosition) == 'right') {
@@ -558,9 +567,9 @@ class BodyModule extends Module {
 		}
 
 	}
-	
 
-	
+
+
 }
 
 BodyModule::$CORPORATE_LANDING_PAGE_TITLE_METADATA =

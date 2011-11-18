@@ -91,10 +91,10 @@ class FBConnectHooks {
 	public static function BeforePageDisplay( &$out, &$sk ) {
 		global $wgVersion, $fbLogo, $fbScript, $fbExtensionScript,
 			$fbIncludeJquery, $fbScriptEnableLocales, $wgJsMimeType,
-			$wgStyleVersion, $wgScriptPath, $wgUser, $wgTitle;
+			$wgStyleVersion, $wgScriptPath, $wgUser, $wgTitle, $wgNoExternals;
 
 		if($wgTitle->getArticleID() > 0) {
-			$images = new ImageServing(array($wgTitle->getArticleId()), 100, array( 'w' => 1, 'h' => 1 ));			
+			$images = new ImageServing(array($wgTitle->getArticleId()), 100, array( 'w' => 1, 'h' => 1 ));
 			$image = $images->getImages(1);
 			if(!empty($image)) {
 				$out->addLink(
@@ -102,8 +102,8 @@ class FBConnectHooks {
 						'rel' => 'image_src',
 						'href' => $image[$wgTitle->getArticleId()][0]['url']
 					)
-				);		
-			}			
+				);
+			}
 		}
 
 		if( !in_array( get_class( $wgUser->getSkin() ), array( 'SkinWikiaphone', 'SkinWikiaApp' ) ) ){
@@ -130,6 +130,19 @@ class FBConnectHooks {
 			// Inserts list of global JavaScript variables if necessary
 			if (self::MGVS_hack( $mgvs_script )) {
 				$out->addInlineScript( $mgvs_script );
+			}
+
+			// macbre: lazy load JavaScript Facebook API
+			if (empty($wgNoExternals)) {
+				$out->addHTML(
+					F::build('JSSnippets')->addToStack(
+						array(),
+						array(
+							'$.loadFacebookAPI'
+						),
+						'window.onFBloaded'
+					)
+				);
 			}
 
 			// Add a Facebook logo to the class .mw-fblink
@@ -186,15 +199,10 @@ STYLE;
 		wfProfileIn(__METHOD__);
 
 		if( !empty($fbScript) && empty($wgNoExternals) && ( !in_array( $skin->getSkinName(), array( 'wikiaphone', 'wikiaapp' ) ) ) ){
-			$js = <<<JS
-
+			$js = <<<HTML
 <!-- Facebook integration -->
 <div id="fb-root"></div>
-<script type="$wgJsMimeType">
-	$.getScript("$fbScript", window.onFBloaded);
-</script>
-
-JS;
+HTML;
 
 			$scripts .= $js;
 		}
@@ -240,10 +248,11 @@ JS;
 	 * to retain backward compatability.
 	 */
 	public static function MakeGlobalVariablesScript( &$vars ) {
-		global $wgTitle, $fbAppId, $fbUseMarkup, $fbLogo, $wgRequest, $wgLang;
+		global $wgTitle, $fbScript, $fbAppId, $fbUseMarkup, $fbLogo, $wgRequest, $wgLang;
 
 		$thisurl = $wgTitle->getPrefixedURL();
 		$vars['fbAppId'] = $fbAppId;
+		$vars['fbScript'] = $fbScript;
 		#$vars['fbLoggedIn'] = FBConnect::$api->user() ? true : false;
 		$vars['fbUseMarkup'] = $fbUseMarkup;
 		$vars['fbLogo'] = $fbLogo ? true : false;

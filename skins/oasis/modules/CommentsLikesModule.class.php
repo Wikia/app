@@ -150,6 +150,7 @@ class CommentsLikesModule extends Module {
 			$this->commentsBubble = !empty($data['bubble']);
 		}
 
+		if ($this->wg->OasisNavV2) $this->getResponse()->getView()->setTemplatePath( dirname( __FILE__ ) .'/templates/CommentsLikes_IndexV2.php' );
 		wfProfileOut(__METHOD__);
 	}
 }

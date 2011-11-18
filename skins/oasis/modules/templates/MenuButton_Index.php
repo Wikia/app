@@ -3,7 +3,7 @@
 		if (empty($dropdown)) {
 			// render simple edit button
 ?>
-<a accesskey="e" href="<?= htmlspecialchars($action['href']) ?>" class="<?= $class ?>" data-id="<?= $actionName ?>"><?= $icon ?> <?= htmlspecialchars($action['text']) ?></a>
+<a accesskey="e" href="<?= htmlspecialchars($action['href']) ?>" class="<?= $class ?>" data-id="<?= $actionName ?>"><?= $icon ?> <?= htmlspecialchars($action['text']) ?><?= $action['html'] ?></a>
 <?php
 		}
 		// render edit button with dropdown
@@ -32,24 +32,22 @@
 	</span>
 	<ul>
 <?php
-		foreach($dropdown as $key => $item) {
-			// render accesskeys
-			if (isset($item['accesskey'])) {
-				$accesskey = ' accesskey="' . $item['accesskey'] . '"';
-			}
-			else {
-				$accesskey = '';
-			}
+			foreach($dropdown as $key => $item) {
+				// render accesskeys
+				if (isset($item['accesskey'])) {
+					$accesskey = ' accesskey="' . $item['accesskey'] . '"';
+				}
+				else {
+					$accesskey = '';
+				}
 
-			$href = isset($item['href']) ? htmlspecialchars($item['href']) : '#';
+				$href = isset($item['href']) ? htmlspecialchars($item['href']) : '#';
 ?>
 		<li>
-			<a href="<?= $href ?>"<?= $accesskey ?> data-id="<?= $key ?>" <?= empty($item['id']) ? '' : 'id="'.$item['id'].'"' ?>>
-				<?= htmlspecialchars($item['text']) ?>
-			</a>
+			<a href="<?= $href ?>"<?= $accesskey ?> data-id="<?= $key ?>"<?= empty($item['id']) ? '' : ' id="'.$item['id'].'"' ?><?= empty($item['class']) ? '' : ' class="'.$item['class'].'"' ?>><?=htmlspecialchars($item['text']) ?></a>
 		</li>
 <?php
-		}
+			}
 ?>
 	</ul>
 </nav>

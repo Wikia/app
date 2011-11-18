@@ -185,6 +185,18 @@ $messages['en'] = array(
 	'oasis-navigation-v2-level12-validation' => 'Oops! Your Level 1 and Level 2 menus are too wide. Please edit them to fit.',
 	'oasis-navigation-v2-validation-next' => 'Next',
 	'on-the-wiki' => 'On the Wiki',
+
+	#sharing toolbar e-mail
+	'oasis-sharing-toolbar-mail-subject' => '$1 has sent you a link on Wikia',
+	'oasis-sharing-toolbar-mail-body' => 'Hi.
+
+$1 sent you this page from $2 on Wikia:
+
+$3
+
+Enjoy!
+
+- The Wikia team',
 );
 
 /** Message documentation (Message documentation)

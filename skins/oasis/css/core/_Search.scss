@@ -2,7 +2,7 @@
 	@include clearfix;
 	margin-bottom: 10px;
 	position: relative;
-	
+
 	input[type="text"] {
 		@include input-field;
 		background: lighten($color-page, 5%);
@@ -34,7 +34,7 @@
 	input[type="submit"] {
 		display: none;
 	}
-	
+
 	.autocomplete {
 		@include menu-regular;
 		margin-top: 2px;
@@ -50,3 +50,14 @@
 		}
 	}
 }
+
+// WikiaNav - begin
+.wikinav2 {
+	.WikiaRail > .WikiaSearch,
+	.WikiaSearchHeader > .WikiaSearch {
+		border-bottom: solid 1px $color-page-border;
+		padding-bottom: 12px;
+		margin-bottom: 9px;
+	}
+}
+// WikiaNav - end>>>>>>> .merge-right.r45123

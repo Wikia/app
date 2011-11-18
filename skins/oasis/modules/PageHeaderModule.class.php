@@ -191,7 +191,7 @@ class PageHeaderModule extends Module {
 
 		// page namespace
 		$ns = $wgTitle->getNamespace();
-		
+
 		/** start of wikia changes @author nAndy */
 		$this->isWallEnabled = (!empty($wgEnableWallExt) && $ns == NS_USER_WALL);
 		/** end of wikia changes */
@@ -204,7 +204,7 @@ class PageHeaderModule extends Module {
 
 		// dropdown actions
 		$this->dropdown = $this->getDropdownActions();
-		
+
 		/** start of wikia changes @author nAndy */
 		wfRunHooks( 'PageHeaderIndexAfterActionButtonPrepared', array(&$this->action, &$this->dropdown, $ns, $skin) );
 		/** end of wikia changes */
@@ -262,10 +262,10 @@ class PageHeaderModule extends Module {
 			// mainpage?
 			if (ArticleAdLogic::isMainPage()) {
 				$this->isMainPage = true;
-
-				// number of pages on this wiki
-				$this->total = SiteStats::articles();
 			}
+
+			// number of pages on this wiki
+			$this->total = SiteStats::articles();
 		}
 
 		// remove namespaces prefix from title
@@ -451,6 +451,7 @@ class PageHeaderModule extends Module {
 		// force AjaxLogin popup for "Add a page" button (moved from the template)
 		$this->loginClass = !empty($this->wgDisableAnonymousEditing) ? ' require-login' : '';
 
+		if ($this->wg->OasisNavV2) $this->getResponse()->getView()->setTemplatePath( dirname( __FILE__ ) .'/templates/PageHeader_IndexV2.php' );
 		wfProfileOut(__METHOD__);
 	}
 
@@ -478,7 +479,7 @@ class PageHeaderModule extends Module {
 		$isDiff = !is_null($wgRequest->getVal('diff')); // RT #69931
 		$isEdit = in_array($action, array('edit', 'submit'));
 		$isHistory = $action == 'history';
-		
+
 		/** start of wikia changes @author nAndy */
 		$this->isHistory = $isHistory;
 		$this->isUserTalkArchiveModeEnabled = (!empty($wgEnableWallExt) && $ns == NS_USER_TALK);

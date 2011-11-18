@@ -203,6 +203,7 @@ $wgAutoloadClasses['EditPageModule'] = $IP.'/skins/oasis/modules/EditPageModule.
 $wgAutoloadClasses['HuluVideoPanelModule'] = $IP.'/skins/oasis/modules/HuluVideoPanelModule.class.php';
 $wgAutoloadClasses['ContributeMenuModule'] = $IP.'/skins/oasis/modules/ContributeMenuModule.class.php';
 $wgAutoloadClasses['WikiNavigationModule'] = $IP.'/skins/oasis/modules/WikiNavigationModule.class.php';
+$wgAutoloadClasses['SharingToolbarModule'] = $IP.'/skins/oasis/modules/SharingToolbarModule.class.php';
 
 $wgAutoloadClasses['UploadPhotosModule'] = $IP.'/skins/oasis/modules/UploadPhotosModule.class.php';
 $wgAutoloadClasses['WikiaTempFilesUpload'] = $IP.'/includes/wikia/WikiaTempFilesUpload.class.php';
@@ -378,6 +379,7 @@ include_once( "$IP/extensions/wikia/AssetsManager/AssetsManager_setup.php" );
 include_once( "$IP/extensions/wikia/JSSnippets/JSSnippets_setup.php" );
 include_once( "$IP/extensions/wikia/WikiaTracker/WikiaTracker.setup.php" );
 include_once( "$IP/extensions/wikia/EmailsStorage/EmailsStorage.setup.php" );
+include_once( "$IP/extensions/wikia/ShareButtons/ShareButtons.setup.php" );
 
 /**
  * @name $wgSkipSkins

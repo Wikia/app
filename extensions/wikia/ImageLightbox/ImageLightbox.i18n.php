@@ -21,6 +21,8 @@ $1
 	'lightbox-share-button-www' => 'Share',
 	'lightbox-share-button-embed' => 'Embed',
 	'lightbox-share-email-label' => 'Email this image to a friend',
+	'lightbox-share-email-page-label' => 'Email this page to a friend',
+	'lightbox-share-email-page-label-address' => 'Email address',
 	'lightbox-share-email-ok-caption' => 'Confirmation',
 	'lightbox-share-email-ok-content' => '{{PLURAL:$1|Email has|Emails have}} been sent.',
 	'lightbox-share-email-error-caption' => 'Error',
