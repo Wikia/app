@@ -103,7 +103,6 @@ function wfAutoPageCreateViewPage( $article, $out, &$text  ) {
 			} else {
 				switch( $ns ) {
 					case NS_USER:
-                                                break;
 						// RT #48042
 						if ( $title->isSubpage() ) {
 							$overlayMsgKey = false;
