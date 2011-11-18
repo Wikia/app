@@ -7,12 +7,13 @@
 	background-color: $share-background-color;
 	padding: 3px;
 	position: absolute;
-	right: -68px;
+	left: $width-outside + 8px;
 	top: 10px;
 	width: 55px;
 	&.fixed {
 		left: 50%;
 		position: fixed;
+		margin-left: ($width-outside/2) + 7px;
 	}
 	.wikia-button {
 		font-size: 11px;
