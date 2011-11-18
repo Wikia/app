@@ -194,7 +194,7 @@ function CategorySelectGetCategories() {
 			array('cat_pages > 0'),
 			__METHOD__,
 			array('ORDER BY' => 'cat_pages DESC',
-			      'LIMIT'    => '1000'));
+			      'LIMIT'    => '10000'));
 
 		$categories = array();
 		while($row = $dbr->fetchObject($res)) {
