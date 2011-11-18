@@ -41,7 +41,7 @@ class SpecialApiGate extends SpecialPage {
 	 * @param $subpage Mixed: string if any subpage provided, else null
 	 */
 	public function execute( $subpage ) {
-		global $wgOut, $wgRequest, $IP, $wgUser, $API_GATE_DIR, $wgCityId;
+		global $wgOut, $wgRequest, $IP, $wgUser, $API_GATE_DIR, $wgCityId, $WIKIA_CITYID_APIWIKI;
 		wfProfileIn( __METHOD__ );
 
 		// NOTE: We can't include CSS from the /lib directry (there is no symlink to /lib from the document-root on the apaches). We'll have to separate the CSS later when we can.
@@ -55,10 +55,11 @@ class SpecialApiGate extends SpecialPage {
 		// Box the main content of the text into a left-column so that a custom menu can be put on the right (below).
 		$wgOut->addWikiText( "<mainpage-leftcolumn-start />");
 
-// TODO: SWC: Make sure that all subpages (EXCEPT checkKey!) redirect to Api wiki if they're on another wiki (needed for that right-rail template to work & still be community editable - including the images on it).
-//		if( $wgCityId != WIKIA_CITYID_APIWIKI ){
-
-//		}
+		// Make sure that all subpages (EXCEPT checkKey!) redirect to Api wiki if they're on another wiki (needed for that right-rail template to work & still be community editable - including the images on it).
+		if( ($subpage != self::SUBPAGE_CHECK_KEY) && ($wgCityId != $WIKIA_CITYID_APIWIKI) ){
+			global $APIGATE_API_WIKI_SPECIAL_PAGE;
+			$wgOut->redirect( $APIGATE_API_WIKI_SPECIAL_PAGE );
+		}
 
 		$useTwoColLayout = true; // main column & right rail on most forms, but no columns for chart pages since SponsorshipDashboard charts are too wide (and not resizable yet).
 		$mainSectionHtml = "";
