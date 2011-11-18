@@ -147,6 +147,12 @@ class ArticleComment {
 				}
 			}
 			
+			if( $this->mFirstRevId == 0 || $this->mLastRevId == 0 ) {
+				// assume article is bogus, threat as if it doesn't exist
+				wfProfileOut( __METHOD__ );
+				return false;
+			}
+			
 			$memckey = wfMemcKey( 'articlecomment', 'basedata', $this->mLastRevId );
 			$acData = $wgMemc->get($memckey);
 			
