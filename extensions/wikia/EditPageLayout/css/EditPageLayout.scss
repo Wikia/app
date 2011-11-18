@@ -29,11 +29,6 @@ body {
 	}
 }
 
-#wpTextbox1 {
-	resize: none; /* remove resize grip in Webkit / Fx4 */
-	width: 99%;
-}
-
 #WikiaPage {
 	border-bottom: none;
 	margin: 0 auto;
@@ -63,7 +58,6 @@ body {
 		background-color: $color-epl-toolbar-active;
 		border: 1px solid $color-page-border;
 		border-bottom: 0;
-		cursor: pointer;
 		display: inline-block;
 		margin-left: 3px;
 		padding: 1px 0;
@@ -71,6 +65,7 @@ body {
 
 		> a {
 			outline: none;
+			cursor: pointer;
 		}
 		&:first-child {
 			margin-left: 0;
@@ -204,11 +199,15 @@ body {
 
 #EditPageEditor {
 	position: relative;
+	
+	&.noFooter {
+		margin-bottom: 10px;
+	}
+
 	// source mode tweak
 	textarea {
 		@include epl-editorarea;
 		border: 0;
-		margin: 0;
 	}
 	#diff {
 		@include bodytext;
