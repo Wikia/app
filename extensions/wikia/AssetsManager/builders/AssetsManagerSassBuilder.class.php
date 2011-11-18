@@ -39,7 +39,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 
 		$sassResult = shell_exec($escapedCmd);
 		if ($sassResult != '') {
-			Wikia::log(__METHOD__, false, "commandline error: " . $sassResult, true /* $always */);
+			Wikia::log(__METHOD__, false, "commandline error: " . $sassResult. " -- Full commandline was: $escapedCmd", true /* $always */);
 			Wikia::log(__METHOD__, false, "Full commandline was: {$escapedCmd}", true /* $always */);
 			Wikia::log(__METHOD__, false, AssetsManager::getRequestDetails(), true /* $always */);
 			unlink($tempOutFile);
