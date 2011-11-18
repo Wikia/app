@@ -27,10 +27,10 @@ class Chat {
 	 */
 	static public function banUser($userNameToKickBan, &$doKickAnyway=false, $kickingUser){
 		wfProfileIn( __METHOD__ );
-		
+	
 		$errorMsg = "";
 		$PERMISSION_TO_KICKBAN = "chatmoderator";
-		if( $kickingUser->isAllowed( $PERMISSION_TO_KICKBAN ) ){
+		if( ($userToKickBan instanceof User) && $kickingUser->isAllowed( $PERMISSION_TO_KICKBAN ) ){
 			$userToKickBan = User::newFromName($userNameToKickBan);
 			if( $userToKickBan->isAllowed( $PERMISSION_TO_KICKBAN ) ){
 				$errorMsg .= wfMsg('chat-ban-cant-ban-moderator')."\n";
