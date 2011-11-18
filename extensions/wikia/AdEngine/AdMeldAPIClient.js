@@ -12,8 +12,8 @@ var AdMeldAPIClient = {
 };
 
 AdMeldAPIClient.log = function(msg, level) {
-	if (typeof WikiaLogger != 'undefined') {
-		WikiaLogger.log(msg, level, 'AdMeldAPIClient');
+	if (typeof top.WikiaLogger != 'undefined') {
+		top.WikiaLogger.log(msg, level, 'AdMeldAPIClient');
 	}
 };
 
@@ -210,6 +210,6 @@ AdMeldAPIClient.roundBidForDART = function(bid) {
 	return bid;
 };
 
-if (typeof wgEnableAdMeldAPIClient != 'undefined' && wgEnableAdMeldAPIClient) {
-	AdMeldAPIClient.init();
+if (typeof top.wgEnableAdMeldAPIClient != 'undefined' && top.wgEnableAdMeldAPIClient) {
+	top.AdMeldAPIClient.init();
 }
