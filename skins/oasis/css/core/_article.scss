@@ -49,7 +49,7 @@
 
 	a.new,
 	a.new:visited {
-		color: #cc2200;
+		color: $color-broken-links;
 	}
 
 	b, strong {
@@ -251,6 +251,14 @@
 			padding-right: 23px;
 		}
 	}
+
+	.mw_metadata {
+		th, td {
+			background-color: transparent;
+			border: 1px solid $color-page-border;
+		}
+	}
+
 	// highlight selected reference (ported from Vector skin)
 	.references > li:target {
 		background-color: mix($color-page, $color-links, 85%);
