@@ -90,7 +90,7 @@ AdMeldAPIClient.init = function() {
 		this.slots[slot].url = url;
 		this.slots[slot].timer = (new Date).getTime();
 
-		if (this.sizes.indexOf(s.size) == -1) {
+		if ($.inArray(s.size, this.sizes) == -1) {
 			this.sizes.push(s.size);
 		}
 	}
