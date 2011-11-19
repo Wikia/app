@@ -45,11 +45,10 @@ class Track {
 <script type="text/javascript">
 	var beaconCookie;
 	if (! beaconCookie) {
-		var startIdx = document.cookie.indexOf('wikia_beacon_id');
-		if (startIdx != -1) {
-			startIdx = startIdx+16; // Advance past the '='
-			var endIdx = document.cookie.indexOf(';', startIdx);
-			beaconCookie = document.cookie.substr(startIdx, endIdx-startIdx);
+		var beacon_rx = new RegExp("wikia_beacon_id=([A-Za-z0-9_-]{10})");
+		var result = beacon_rx.exec(document.cookie);
+		if (result) {
+			beaconCookie = result[1];
 		}
 	}
 
