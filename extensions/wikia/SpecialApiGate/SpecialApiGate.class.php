@@ -350,6 +350,7 @@ class SpecialApiGate extends SpecialPage {
 		wfProfileIn( __METHOD__ );
 
 		$apiKeyObject = ApiGate_ApiKey::newFromDb( $apiKey );
+		$html = "";
 		ob_start();
 		if( is_object($apiKeyObject) ){
 			// Determine if the current user can view this key (they must either own it or be an ApiGate admin).
