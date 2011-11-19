@@ -195,7 +195,7 @@ Phalanx
 ignored = phalanx-expire-durations
 
 Photo Pop
-optional = photopop-progress-numbers
+file = PhotoPop/PhotoPop.i18n.php
 
 Piggyback
 
