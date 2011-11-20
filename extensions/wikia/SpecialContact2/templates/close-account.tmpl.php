@@ -8,7 +8,7 @@
 
 <?= wfMsgExt( 'specialcontact-logged-in-as', array( 'parse' ), $encName, 'link' ) ?>
 
-<?= wfMsgExt( 'specialcontact-email-on-file', array( 'parse' ), $encEmail, 'link' ) ?>
+<?= wfMsgExt( 'specialcontact-mail-on-file', array( 'parse' ), $encEmail, 'link' ) ?>
 
 <p>
 <input type="checkbox" name="wpReadHelp" required />

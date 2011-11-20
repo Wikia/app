@@ -19,15 +19,15 @@ class ContactForm extends SpecialPage {
 		),
 
 		'close-account' => array(
-			'format' => "User requested his account \"%s\" to be disabled.\n\nhttp://community.wikia.com/wiki/Special:EditAccount/%s",
-			'vars' => array( 'wpUserName', 'wpUserName' ),
+			'format' => "User requested account \"%s\" to be disabled.\n\nhttp://community.wikia.com/wiki/Special:EditAccount/%s",
+			'vars' => array( 'wpUserName', 'wpUrlencUserName' ),
 			'subject' => 'Disable account: %s',
 			'markuser' => 'requested-closure',
 		),
 
 		'rename-account' => array(
 			'format' => "User requested his username to be changed from \"%s\" to \"%s\".\n\nhttp://community.wikia.com/wiki/Special:UserRenameTool?oldusername=%s&newusername=%s",
-			'vars' => array( 'wpUserName', 'wpUserNameNew', 'wpUserName', 'wpUserNameNew' ),
+			'vars' => array( 'wpUserName', 'wpUserNameNew', 'wpUrlencUserName', 'wpUrlencUserNameNew' ),
 			'subject' => 'Rename account: %s',
 			'markuser' => 'requested-rename',
 		),
@@ -78,6 +78,9 @@ class ContactForm extends SpecialPage {
 			
 			#ubrfzy note: these were moved inside to (lazy) prevent some stupid bots
 			$this->mUserName = $wgRequest->getText( 'wpName' );
+			$wgRequest->setVal( 'wpUrlencUserName', urlencode( $wgRequest->getText( 'wpUserName' ) ) );
+			$wgRequest->setVal( 'wpUrlencUserNameNew', urlencode( $wgRequest->getText( 'wpUserNameNew' ) ) );
+
 			$this->mRealName = $wgRequest->getText( 'wpContactRealName' );
 			$this->mWhichWiki = $wgRequest->getText( 'wpContactWikiName' );
 			#sibject still handled outside of post check, because of existing hardcoded prefill links

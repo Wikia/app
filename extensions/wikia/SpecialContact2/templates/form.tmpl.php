@@ -57,6 +57,11 @@ if ( !empty($err) ) {
 	print "<textarea ". $eclass['wpContactDesc'] ." tabindex='" . ($tabindex++) . "' name=\"wpContactDesc\" rows=\"10\" cols=\"60\">{$encProblemDesc}</textarea>";
 ?>
 
+<p>
+<label for="wpScreenshot"><?= wfMsg( 'specialcontact-label-screenshot' ) ?></label>
+<input name="wpScreenshot" type="file" accept="image/*" />
+</p>
+
 <?php	
 if( !$isLoggedIn ) {
 	print '<p class="contactformcaption">'  . wfMsg( 'specialcontact-captchatitle' ) . "</p>\n";
