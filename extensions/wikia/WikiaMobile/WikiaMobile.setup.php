@@ -31,6 +31,7 @@ $app->wg->append(
 /**
  * classes
  */
+$app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileHooks.class.php", 'WikiaMobileHooks' );
 
 /**
  * services
@@ -61,6 +62,7 @@ $app->wg->set( 'wgExtensionMessagesFiles', "{$dir}/WikiaMobile.i18n.php", 'Wikia
 /**
  * hooks
  */
+$app->registerHook( 'OutputPageParserOutput', 'WikiaMobileHooks', 'onOutputPageParserOutput' );
 
 /*
  * settings
