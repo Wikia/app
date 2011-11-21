@@ -14,7 +14,7 @@ $wgDBdevboxUser = 'devbox';
 $wgDBdevboxPass = 'devbox';
 $wgDBdevboxServer1 = 'dev-db-a1';
 $wgDBdevboxServer2 = 'dev-db-b1';
-$databaseDirectories = array ("database_A", "database_B", "database_C");
+$databaseDirectories = array ("database_A", "database_B", "database_C", "database_D");
 
 $USAGE =
 	"Usage:\tphp getDatabase.php -c [cluser A,B,C] [ -l [config] ] [-f [dbname] | -i [filename] | -?]\n" .
