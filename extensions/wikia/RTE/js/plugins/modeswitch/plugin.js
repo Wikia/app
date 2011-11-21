@@ -103,8 +103,9 @@ CKEDITOR.plugins.add('rte-modeswitch',
 						return;
 					}
 
-					editor.setMode('wysiwyg');
+					// set data first and then set mode to avoid duplicated iframe inclusion and WysiwygModeReady event triggering (BugId:15655)
 					editor.setData(data.html);
+					editor.setMode('wysiwyg');
 
 					// RT #84586: update instanceId
 					RTE.instanceId = data.instanceId;
