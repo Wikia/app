@@ -18,14 +18,21 @@ var WikiaTrackerQueue = {
 		}
 	},
 
+	// simple replacement for $.proxy in jQuery-free environment
+	proxy: function(fn, scope) {
+		return function() {
+			return fn.apply(scope, arguments);
+		};
+	},
+
 	init: function() {
 		this.log('init');
 
 		// set tracking function - queued items will be passed there
-		this.trackFn = $.proxy(WikiaTracker.track, WikiaTracker);
+		this.trackFn = this.proxy(WikiaTracker.track, WikiaTracker);
 
 		// check whether beacon_id exists every POLL_INTERVAL ms
-		this.pollIntervalId = setInterval($.proxy(this.pollBeaconId, this), this.POLL_INTERVAL);
+		this.pollIntervalId = setInterval(this.proxy(this.pollBeaconId, this), this.POLL_INTERVAL);
 		this.pollBeaconId();
 	},
 
@@ -76,13 +83,13 @@ var WikiaTrackerQueue = {
 		}
 
 		// and now replace _wtq.push with this.pushCallback
-		queue.push = $.proxy(this.pushCallback, this);
+		queue.push = this.proxy(this.pushCallback, this);
 	},
 
 	pushCallback: function(item) {
 		this.log('push', item);
 
-		if (!$.isArray(item)) {
+		if (!(item instanceof Array)) {
 			item = [item];
 		}
 

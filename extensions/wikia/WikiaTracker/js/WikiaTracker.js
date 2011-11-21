@@ -1,4 +1,4 @@
-/*global WikiaTracker_ABtests: true */
+/*global WikiaTracker_ABtests: true, _gaq: true, console: true */
 var WikiaTracker = {
 	profileAliases:{
 		'default':       'UA-2871474-1',
@@ -118,7 +118,7 @@ WikiaTracker._track = function(page, profile, sample, events) {
 	//_gaq.push(['WikiaTracker._setCustomVar', 3, 'lang',  window.wgContentLanguage || 'unknown', 3]);
 	var wiki = 'db=' + (window.wgDBname || window.wgDB || 'unknown') + ';hub=' + (window.wgCatId || 'unknown') + ';lang=' + (window.wgContentLanguage || 'unknown');
 	_gaq.push(['WikiaTracker._setCustomVar', 1, 'wiki',  wiki, 3]);
-	
+
 	_gaq.push(['WikiaTracker._setCustomVar', 3, 'AB',    this._userGroup() || 'unknown', 3]);
 	_gaq.push(['WikiaTracker._setCustomVar', 4, 'skin',  window.skin || 'unknown', 3]);
 	_gaq.push(['WikiaTracker._setCustomVar', 5, 'user', (window.wgUserName == null) ? 'anon' : 'user', 3]);
@@ -178,7 +178,7 @@ WikiaTracker._userGroup = function() {
 			return i;
 		}
 	}
-	
+
 	return null;
 };
 
