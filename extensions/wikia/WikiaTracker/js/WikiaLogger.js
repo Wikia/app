@@ -26,9 +26,11 @@ WikiaLogger.log = function(msg, level, group) {
 };
 
 WikiaLogger.init = function() {
-	this.level = parseInt($.getUrlVar('log_level') || $.cookies.get('log_level')) || 0;
-	this.groups = ($.getUrlVar('log_group') || $.cookies.get('log_group') || '').replace(' ', '').replace('|', ',').split(',') || [];
-	
+	if (typeof jQuery == 'function') {
+		this.level = parseInt($.getUrlVar('log_level') || $.cookies.get('log_level')) || this.level;
+		this.groups = ($.getUrlVar('log_group') || $.cookies.get('log_group') || '').replace(' ', '').replace('|', ',').split(',');
+	}
+
 	if (this.level > 0 && this.groups.length > 0) {
 		$().log('initialized at level ' + this.level + ' for ' + this.groups.join(', '), 'WikiaLogger.g');
 		this._enabled_cache = true;
