@@ -210,6 +210,6 @@ AdMeldAPIClient.roundBidForDART = function(bid) {
 	return bid;
 };
 
-if (typeof top.wgEnableAdMeldAPIClient != 'undefined' && top.wgEnableAdMeldAPIClient) {
+if (!(top.wgUserName && !top.wgUserShowAds) && typeof top.wgEnableAdMeldAPIClient != 'undefined' && top.wgEnableAdMeldAPIClient) {
 	top.AdMeldAPIClient.init();
 }
