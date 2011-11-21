@@ -15,7 +15,7 @@ if( !defined( 'MEDIAWIKI' ) )
  */
 F::build("JSSnippets")->setFilters("wikiamobile");
 		
-class SkinWikiamobile extends SkinTemplate {
+class SkinWikiaMobile extends SkinTemplate {
 	private $app;
 
 	function __construct() {
