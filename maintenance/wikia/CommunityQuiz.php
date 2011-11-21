@@ -174,7 +174,6 @@ class CommunityQuiz {
 }
 
 // the work...
-/*
 if ( !isset( $options['date'] ) ) {
     $date = date('Y-m-d');
 } else {
@@ -188,9 +187,8 @@ if ( !isset( $options['date'] ) ) {
         exit( 1 );
     }
     $date = $options['date'];
-}*/
+}
 
-// $d = new CommunityQuiz( F::app()->wf->getDb( DB_SLAVE, array(), 'wikicities' ), $date );
-$d = new CommunityQuiz( F::app()->wf->getDb( DB_SLAVE, array(), 'wikicities' ), '' );
+$d = new CommunityQuiz( F::app()->wf->getDb( DB_SLAVE, array(), 'wikicities' ), $date );
 $d->execute();
 exit( 0 );
