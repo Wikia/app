@@ -1,4 +1,4 @@
-/*global WikiaTracker_ABtests: true, _gaq: true, console: true */
+/*global WikiaLogger: true, WikiaTracker_ABtests: true, _gaq: true */
 var WikiaTracker = {
 	profileAliases:{
 		'default':       'UA-2871474-1',
@@ -38,7 +38,6 @@ var WikiaTracker = {
 		'UA-17475676-12':100, // liftium.errors
 		'UA-19473076-35':100 // ab.main
 	},
-	debugLevel:0,
 	_groups:{A:80, B:81, C:82, D:83, E:84, F:85, G:86, H:87, I:88, J:89, N:[80, 89], O:13},
 	_user_group_cache:null,
 	_in_group_cache:{}
@@ -47,29 +46,9 @@ var WikiaTracker = {
 };
 
 // FIXME refactor inGroup / userGroup / isTracked, it should be much simpler now
-
 WikiaTracker.debug = function (msg, level, obj) {
-	if (!this.debugLevel){
-		return false;
-	} else if (level > this.debugLevel){
-		return false;
-	}
-
-	// Firebug enabled
-	if (typeof console == "object" && console.dir){
-		console.log("WikiaTracker: " + msg);
-		if (arguments.length > 2){
-			console.dir(obj);
-		}
-	// Default console, available on IE 8+, FF 3+ Safari 4+
-	} else if (typeof console == "object" && console.log){
-		console.log("WikiaTracker: " + msg);
-		if (arguments.length > 2){
-			console.log(obj);
-		}
-	}
-
-	return true;
+	return WikiaLogger.log(msg, level, 'tracker') &&
+		(typeof obj != 'undefined') ? WikiaLogger.log(obj, level, 'tracker') : true;
 };
 
 WikiaTracker.track = function(page, profile, events) {
@@ -255,7 +234,6 @@ WikiaTracker.AB = function(page) {
 };
 
 if (typeof jQuery == 'function') {
-	WikiaTracker.debugLevel = $.getUrlVar('wikiatracker_debug') || $.cookies.get('wikiatracker_debug') || WikiaTracker.debugLevel;
 	if ($.getUrlVar('wikiatracker_is_tracked') || $.cookies.get('wikiatracker_is_tracked')) {
 		WikiaTracker._in_group_cache['N'] = true;
 	}
