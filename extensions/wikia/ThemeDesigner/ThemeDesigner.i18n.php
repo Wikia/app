@@ -44,7 +44,7 @@ $messages['en'] = array(
 	'themedesigner-button-save' => 'Save',
 	'themedesigner-upload-a-graphic' => 'upload a graphic',
 	'themedesigner-rules-wordmark' => 'Upload a .png file that is 250 x 65 pixels or less.',
-        'themedesigner-rules-favicon' => 'Upload a 16x16 pixel .ico file. A favicon is a tiny icon that apears on your wiki\'s browser tab.',
+        'themedesigner-rules-favicon' => 'Upload a 16x16 pixel .ico file. A favicon is a tiny icon that appears on your wiki\'s browser tab.',
 	'themedesigner-rules-favicon-learn-more-link' => 'Learn more.',
         'themedesigner-dont-use-a-graphic' => 'remove',
 	'themedesigner-history-item' => '$1 by $2',
@@ -160,7 +160,7 @@ $messages['az'] = array(
 	'themedesigner-history-item' => '$1 tərəfindən $2',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author Jim-by
  */
 $messages['be-tarask'] = array(
@@ -892,7 +892,7 @@ $messages['km'] = array(
 	'themedesugber-uknown-error' => 'មានបញ្ហាកើតឡើង ដោយយើងមិនដឹងថាមកពីមូលហេតុអ្វី។ សូមសាកល្បងម្ដងទៀត',
 );
 
-/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (Kurdî (latînî))
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -1134,7 +1134,7 @@ $messages['nl'] = array(
 	'themedesigner-favicon-heading' => 'Favicon',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian (bokmål) (Norsk (bokmål))
  * @author Audun
  * @author Nghtwlkr
  */
@@ -1506,7 +1506,7 @@ $messages['ru'] = array(
 	'themedesigner-favicon-heading' => 'Фавикон',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (Српски (ћирилица))
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -1753,7 +1753,7 @@ $messages['vi'] = array(
 	'themedesugber-uknown-error' => 'Lỗi đã xảy ra, tiếc là chúng tôi không thể xác định nó, xin vui lòng thử lại',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (中文(简体))
  * @author Hydra
  */
 $messages['zh-hans'] = array(
