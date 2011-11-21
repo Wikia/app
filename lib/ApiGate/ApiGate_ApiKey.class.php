@@ -173,6 +173,8 @@ class ApiGate_ApiKey {
 					$email_2 = ApiGate::getPost('email_2');
 
 					// Validate input (should be same business logic as ApiGate_Register::processPost().
+					global $API_GATE_DIR;
+					include_once "$API_GATE_DIR/ApiGate_Register.class.php";
 					$errorString = ApiGate_Register::validateNameAndEmail( $firstName, $lastName, $email_1, $email_2, $errorString );
 
 					// If there were no errors, update the key info in the database.

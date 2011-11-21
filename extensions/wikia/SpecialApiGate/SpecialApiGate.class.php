@@ -241,7 +241,7 @@ class SpecialApiGate extends SpecialPage {
 			$data['email_1'] = $wgUser->getEmail();
 			$data['email_2'] = $data['email_1'];
 
-			include "$API_GATE_DIR/ApiGate_Register.class.php";
+			include_once "$API_GATE_DIR/ApiGate_Register.class.php";
 			$registered = ApiGate_Register::processPost( $data );
 			if( $registered ) {
 				// TODO: Not portable. This works well here to just show the module on this specialpage, but more work would need to be done for API Gate to have a good default behvaior.
