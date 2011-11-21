@@ -1,3 +1,4 @@
+/*global console: true, opera: true */
 var WikiaLogger = {
 	level:0,
 	groups:[],
@@ -21,9 +22,18 @@ WikiaLogger.log = function(msg, level, group) {
 		return false;
 	}
 
-	$().log(msg, group);
+	this._log(msg, group);
 	return true;
 };
+
+WikiaLogger._log = function(msg, group) {
+	if (typeof console != 'undefined') {
+		console.log((typeof msg != 'object' ? '%s: %s' : '%s: %o'), group, msg);
+	}
+	else if (typeof opera != 'undefined') {
+		opera.postError(group + ': ' + msg);
+	}
+}
 
 WikiaLogger.init = function() {
 	if (typeof jQuery == 'function') {
@@ -32,7 +42,7 @@ WikiaLogger.init = function() {
 	}
 
 	if (this.level > 0 && this.groups.length > 0) {
-		$().log('initialized at level ' + this.level + ' for ' + this.groups.join(', '), 'WikiaLogger.g');
+		this._log('initialized at level ' + this.level + ' for ' + this.groups.join(', '), 'WikiaLogger.g');
 		this._enabled_cache = true;
 	}
 };
