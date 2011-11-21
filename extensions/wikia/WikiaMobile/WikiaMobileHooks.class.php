@@ -11,10 +11,10 @@ class WikiaMobileHooks extends WikiaObject{
 			$text = $parserOutput->getText();
 			
 			//remove inline styling
-			$text = reg_replace('/style=(\'|")[^"\']*(\'|")/im', '', $text);
+			$text = preg_replace('/style=(\'|")[^"\']*(\'|")/im', '', $text);
 			
 			//remove image sizes
-			//$text = reg_replace('/(width|height)=(\'|")[^"\']*(\'|")/im', '', $text);
+			//$text = preg_replace('/(width|height)=(\'|")[^"\']*(\'|")/im', '', $text);
 			
 			$parserOutput->setText( $text );
 		}
