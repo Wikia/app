@@ -634,8 +634,7 @@ class ExtParserFunctions {
 		if ( intval($inLength) == 0 ) {
 			$result = mb_substr( $inStr, $inStart );
 		} else {
-			$inStart = intval( $inStart );
-			$result = mb_substr( $inStr, $inStart, $inLength );
+			$result = mb_substr( $inStr, intval( $inStart ), intval( $inLength ) );
 		}
 
 		wfProfileOut( __METHOD__ );
