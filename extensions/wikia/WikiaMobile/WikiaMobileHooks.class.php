@@ -7,7 +7,7 @@
 class WikiaMobileHooks extends WikiaObject{
 	public function onOutputPageParserOutput( &$out, $parserOutput ){
 		//cleanup page output from unwanted stuff
-		if ( get_class( $this->wg->User->getSkin() ) == 'SkinWikiamobile' ) {
+		if ( get_class( $this->wg->User->getSkin() ) == 'SkinWikiaMobile' ) {
 			$text = $parserOutput->getText();
 			
 			//remove inline styling
