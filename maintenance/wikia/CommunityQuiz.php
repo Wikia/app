@@ -17,11 +17,11 @@ class CommunityQuiz {
     /**
      * The length of the time period.
      */
-    const LENGTH_DAYS = 20;
+    const LENGTH_DAYS = 7;
     /**
      * Criteria: Revisions range.  Wikis from the of the range won't be included in the report.
      */
-    const MIN_REVISIONS = 10;
+    const MIN_REVISIONS = 5;
     const MAX_REVISIONS = 50;
     /**
      * DB handle
@@ -64,9 +64,22 @@ class CommunityQuiz {
             echo "No wikis found.\n";
             return null;
         }
-        
+
         // Get some meaningful information on each wiki.
         while ( $oRow = $this->dbObj->fetchObject( $res ) ) {
+            // How many wikis has the user created?
+            $oneWiki = $this->dbObj->selectRow(
+                    array( 'wikicities.city_list' ),
+                    array( 'count(1) AS cnt' ),
+                    array( 'city_founding_user' => $oRow->city_founding_user ),
+                    __METHOD__,
+                    array()
+            );
+            // Ignore users who created more than one wiki
+            if ( 1 < $oneWiki->cnt ) {
+                continue;
+            }
+
             // Connect to the wiki's DB
             $tmpDbObj = F::app()->wf->getDb( DB_SLAVE, array(), $oRow->city_dbname );
             // Revisions made by the founder.
@@ -78,56 +91,64 @@ class CommunityQuiz {
                     array()
             );
             if ( is_object( $revisions ) ) {
-                // Does the founder meet the criteria?
-                if ( self::MIN_REVISIONS <= $revisions->cnt && self::MAX_REVISIONS >= $revisions->cnt ) {
-                    
-                    $tmp = new StdClass;
-                    $tmp->url = $oRow->city_url;
-		    $tmp->created = $oRow->city_created;
-                    $tmp->founder_id = $oRow->city_founding_user;
-                    $tmp->founder_edits = $revisions->cnt;
-                    
-                    // Revisions have to be made on at least MIN_DAYS different days.
-                    $tmp->founder_days_active = 0;
-                    $revisions = $tmpDbObj->select(
-                            'revision',
-                            'DISTINCT DATE( rev_timestamp ) AS date',
-                            array( 'rev_user' => $oRow->city_founding_user ),
-                            __METHOD__,
-                            array()
-                    );
-                    if ( is_object( $revisions ) ) {
-                        $tmp->founder_days_active = $tmpDbObj->numRows( $revisions );
-                    }
-                    
-                    // Get some additional information on the founder.
-                    $user = $this->dbObj->selectRow(
-                            array( 'wikicities.user' ),
-                            array( 'user_name', 'user_real_name', 'user_email', 'user_email_authenticated' ),
-                            array( 'user_id' => $oRow->city_founding_user ),
-                            __METHOD__,
-                            array()
-                    );
-                    
-                    if ( is_object( $user ) ) {
-                        $tmp->founder_name = $user->user_name;
-                        $tmp->founder_real_name = $user->user_real_name;
-                        $tmp->founder_email = $user->user_email;
-                    } else {
-                        $tmp->founder_name = 'unknown';
-                        $tmp->founder_real_name = 'unknown';
-                        $tmp->founder_email = 'unknown';
-                    }
-                    
-                    // Filter out non-email confirmed users
-                    if ( empty( $user->user_email_authenticated ) ) {
-                        unset( $tmp );
-                    }
-                    
-                    if ( isset( $tmp ) ) {
-                        $this->output[] = $tmp;
-                        unset( $tmp );
-                    }
+		// skip users who made self::MIN_REVISIONS revisions or less
+		if ( self::MIN_REVISIONS >= $revisions->cnt ) {
+			$tmpDbObj->close();
+			continue;
+		}
+                
+                $tmp = new StdClass;
+                $tmp->url = $oRow->city_url;
+                $tmp->created = $oRow->city_created;
+                $tmp->founder_id = $oRow->city_founding_user;
+                $tmp->founder_edits = $revisions->cnt;
+                
+                // Revisions have to be made on at least MIN_DAYS different days.
+                $tmp->founder_days_active = 0;
+                $revisions = $tmpDbObj->select(
+                        'revision',
+                        'DISTINCT DATE( rev_timestamp ) AS date',
+                        array( 'rev_user' => $oRow->city_founding_user ),
+                        __METHOD__,
+                        array()
+                );
+                
+                if ( is_object( $revisions ) ) {
+                    $tmp->founder_days_active = $tmpDbObj->numRows( $revisions );
+                }
+                
+		if ( 2 > $tmp->founder_days_active ) {
+			$tmpDbObj->close();
+			continue;
+		}
+                
+                // Get some additional information on the founder.
+                $user = $this->dbObj->selectRow(
+                        array( 'wikicities.user' ),
+                        array( 'user_name', 'user_real_name', 'user_email', 'user_email_authenticated' ),
+                        array( 'user_id' => $oRow->city_founding_user ),
+                        __METHOD__,
+                        array()
+                );
+
+                if ( is_object( $user ) ) {
+                    $tmp->founder_name = $user->user_name;
+                    $tmp->founder_real_name = $user->user_real_name;
+                    $tmp->founder_email = $user->user_email;
+                } else {
+                    $tmp->founder_name = 'unknown';
+                    $tmp->founder_real_name = 'unknown';
+                    $tmp->founder_email = 'unknown';
+                }
+
+                // Filter out non-email confirmed users
+                if ( empty( $user->user_email_authenticated ) ) {
+                    unset( $tmp );
+                }
+
+                if ( isset( $tmp ) ) {
+                    $this->output[] = $tmp;
+                    unset( $tmp );
                 }
             }
             $tmpDbObj->close();
@@ -153,6 +174,7 @@ class CommunityQuiz {
 }
 
 // the work...
+/*
 if ( !isset( $options['date'] ) ) {
     $date = date('Y-m-d');
 } else {
@@ -166,8 +188,9 @@ if ( !isset( $options['date'] ) ) {
         exit( 1 );
     }
     $date = $options['date'];
-}
+}*/
 
-$d = new CommunityQuiz( F::app()->wf->getDb( DB_SLAVE, array(), 'wikicities' ), $date );
+// $d = new CommunityQuiz( F::app()->wf->getDb( DB_SLAVE, array(), 'wikicities' ), $date );
+$d = new CommunityQuiz( F::app()->wf->getDb( DB_SLAVE, array(), 'wikicities' ), '' );
 $d->execute();
 exit( 0 );
