@@ -18,8 +18,8 @@ class MWLibMemcached {
 	protected $keyPrefix = 'lm-';
 	
 	protected $servers;
-	protected $debug;
-	protected $persistent;
+	protected $debug = false;
+	protected $persistent = false;
 	
 	protected $compression = true;
 	protected $binary = true;
@@ -38,7 +38,7 @@ class MWLibMemcached {
 		$this->timeout = intval( $wgMemCachedTimeout / 1000 );
 		$this->stats = array();
 		$this->debug = @$args['debug'];
-		$this->persistent = $args['persistant'];
+//		$this->persistent = $args['persistant'];
 		$this->set_servers( @$args['servers'] ); 
 	}
 	
@@ -56,6 +56,7 @@ class MWLibMemcached {
 		@$this->stats['add']++;
 		$this->prefixKeys($key);
 		unset($this->cache[$key]);
+//		xxlog("MEMC ADD    $key ".xxcl()."\n");
 		return $this->getMemcachedObject()->add($key,$val,$exp);
 	}
 	
@@ -71,7 +72,8 @@ class MWLibMemcached {
 		@$this->stats['decr']++;
 		$this->prefixKeys($key);
 		unset($this->cache[$key]);
-		return $this->getMemcachedObject()->decrement($key,$amt);
+		$value = $this->getMemcachedObject()->decrement($key,$amt);
+		return isset($value) ? $value : null;
 	}
 	
 	/**
@@ -86,6 +88,7 @@ class MWLibMemcached {
 		@$this->stats['delete']++;
 		$this->prefixKeys($key);
 		unset($this->cache[$key]);
+//		xxlog("MEMC DEL    $key ".xxcl()."\n");
 		return $this->getMemcachedObject()->delete($key,$time);
 	}
 	
@@ -123,10 +126,24 @@ class MWLibMemcached {
 		@$this->stats['get']++;
 		$this->prefixKeys($key);
 		if (array_key_exists($key,$this->cache)) {
+//			xxlog("MEMC GET[C] $key ".xxcl()."\n");
 			return $this->cache[$key];
 		}
 		$value = $this->getMemcachedObject()->get($key);
-		$this->cache[$key] = $value;
+		switch ($this->getMemcachedObject()->getResultCode()) {
+			case Memcached::RES_NOTFOUND:
+				// key doesn't exist
+//				xxlog("MEMC GET[M] $key ".xxcl()."\n");
+				return null;
+			case Memcached::RES_SUCCESS:
+				// value has been found
+				$this->cache[$key] = $value;
+//				xxlog("MEMC GET[H] $key ".xxcl()."\n");
+				return $value;
+			default:
+				// error accessing server
+				return false;
+		}
 		return $value;
 	}
 	
@@ -173,7 +190,8 @@ class MWLibMemcached {
 		@$this->stats['incr']++;
 		$this->prefixKeys($key);
 		unset($this->cache[$key]);
-		return $this->getMemcachedObject()->increment($key,$amt);
+		$value = $this->getMemcachedObject()->increment($key,$amt);
+		return isset($value) ? $value : null;
 	}
 	
 	/**
@@ -189,7 +207,9 @@ class MWLibMemcached {
 		@$this->stats['replace']++;
 		$this->prefixKeys($key);
 		$this->cache[$key] = $value;
-		return $this->getMemcachedObject()->replace($key,$value,$exp);
+//		xxlog("MEMC REPL   $key ".xxcl()."\n");
+		$value = $this->getMemcachedObject()->replace($key,$value,$exp);
+		return $value;
 	}
 	
 	/**
@@ -226,6 +246,7 @@ class MWLibMemcached {
 		@$this->stats['set']++;
 		$this->prefixKeys($key);
 		$this->cache[$key] = $value;
+//		xxlog("MEMC SET    $key ".xxcl()."\n");
 		return $this->getMemcachedObject()->set($key,$value,$exp);
 	}
 	
@@ -314,7 +335,7 @@ class MWLibMemcached {
 			$memcached->setOption(Memcached::OPT_RECV_TIMEOUT,$this->timeout);
 			$memcached->setOption(Memcached::OPT_POLL_TIMEOUT,$this->timeout);
 // 			$memcached->setOption();
-				
+			
 			// allow settings override in configuration (eg. enable igbinary serializer)
 			global $wgLibMemCachedOptions;
 			if (is_array($wgLibMemCachedOptions)) {
@@ -334,6 +355,7 @@ class MWLibMemcached {
 	
 	protected function freeMemcachedObject() {
 		$this->memcached = null;
+		$this->cache = array();
 	}
 	
 	protected function prefixKeys( &$keys ) {
@@ -358,4 +380,6 @@ class MWLibMemcached {
 	}
 	
 }
+
+ini_set('memcached.compression_type','zlib');
 
