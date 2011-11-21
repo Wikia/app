@@ -1,5 +1,9 @@
 jQuery.getSassCommonURL = function(scssFilePath, params) {
-	return wgCdnRootUrl + wgAssetsManagerQuery.replace('%1$s', 'sass').replace('%4$d', wgStyleVersion).replace('%3$s', escape($.param(params ? params : sassParams))).replace('%2$s', scssFilePath);
+	return wgCdnRootUrl + wgAssetsManagerQuery.
+		replace('%1$s', 'sass').
+		replace('%2$s', scssFilePath).
+		replace('%3$s', encodeURIComponent($.param(params ? params : sassParams))).
+		replace('%4$d', wgStyleVersion);
 }
 
 //see http://jamazon.co.uk/web/2008/07/21/jquerygetscript-does-not-cache
@@ -17,6 +21,7 @@ jQuery.getScript = function(url, callback, failureFn) {
 					callback();
 				}
 				catch(e) {
+					// TODO: is this fallback still needed? consider using promise pattern
 					eval(xhr);
 					callback();
 					$().log('eval() fallback applied for ' + url, 'getScript');
@@ -835,11 +840,11 @@ jQuery.getResources = function(resources, callback) {
 **/
 
 jQuery.md5 = function (string) {
-	
+
 	function RotateLeft(lValue, iShiftBits) {
 		return (lValue<<iShiftBits) | (lValue>>>(32-iShiftBits));
 	}
- 
+
 	function AddUnsigned(lX,lY) {
 		var lX4,lY4,lX8,lY8,lResult;
 		lX8 = (lX & 0x80000000);
@@ -860,32 +865,32 @@ jQuery.md5 = function (string) {
 			return (lResult ^ lX8 ^ lY8);
 		}
  	}
- 
+
  	function F(x,y,z) { return (x & y) | ((~x) & z); }
  	function G(x,y,z) { return (x & z) | (y & (~z)); }
  	function H(x,y,z) { return (x ^ y ^ z); }
 	function I(x,y,z) { return (y ^ (x | (~z))); }
- 
+
 	function FF(a,b,c,d,x,s,ac) {
 		a = AddUnsigned(a, AddUnsigned(AddUnsigned(F(b, c, d), x), ac));
 		return AddUnsigned(RotateLeft(a, s), b);
 	};
- 
+
 	function GG(a,b,c,d,x,s,ac) {
 		a = AddUnsigned(a, AddUnsigned(AddUnsigned(G(b, c, d), x), ac));
 		return AddUnsigned(RotateLeft(a, s), b);
 	};
- 
+
 	function HH(a,b,c,d,x,s,ac) {
 		a = AddUnsigned(a, AddUnsigned(AddUnsigned(H(b, c, d), x), ac));
 		return AddUnsigned(RotateLeft(a, s), b);
 	};
- 
+
 	function II(a,b,c,d,x,s,ac) {
 		a = AddUnsigned(a, AddUnsigned(AddUnsigned(I(b, c, d), x), ac));
 		return AddUnsigned(RotateLeft(a, s), b);
 	};
- 
+
 	function ConvertToWordArray(string) {
 		var lWordCount;
 		var lMessageLength = string.length;
@@ -908,7 +913,7 @@ jQuery.md5 = function (string) {
 		lWordArray[lNumberOfWords-1] = lMessageLength>>>29;
 		return lWordArray;
 	};
- 
+
 	function WordToHex(lValue) {
 		var WordToHexValue="",WordToHexValue_temp="",lByte,lCount;
 		for (lCount = 0;lCount<=3;lCount++) {
@@ -918,15 +923,15 @@ jQuery.md5 = function (string) {
 		}
 		return WordToHexValue;
 	};
- 
+
 	function Utf8Encode(string) {
 		string = string.replace(/\r\n/g,"\n");
 		var utftext = "";
- 
+
 		for (var n = 0; n < string.length; n++) {
- 
+
 			var c = string.charCodeAt(n);
- 
+
 			if (c < 128) {
 				utftext += String.fromCharCode(c);
 			}
@@ -939,25 +944,25 @@ jQuery.md5 = function (string) {
 				utftext += String.fromCharCode(((c >> 6) & 63) | 128);
 				utftext += String.fromCharCode((c & 63) | 128);
 			}
- 
+
 		}
- 
+
 		return utftext;
 	};
- 
+
 	var x=Array();
 	var k,AA,BB,CC,DD,a,b,c,d;
 	var S11=7, S12=12, S13=17, S14=22;
 	var S21=5, S22=9 , S23=14, S24=20;
 	var S31=4, S32=11, S33=16, S34=23;
 	var S41=6, S42=10, S43=15, S44=21;
- 
+
 	string = Utf8Encode(string);
- 
+
 	x = ConvertToWordArray(string);
- 
+
 	a = 0x67452301; b = 0xEFCDAB89; c = 0x98BADCFE; d = 0x10325476;
- 
+
 	for (k=0;k<x.length;k+=16) {
 		AA=a; BB=b; CC=c; DD=d;
 		a=FF(a,b,c,d,x[k+0], S11,0xD76AA478);
@@ -1029,9 +1034,9 @@ jQuery.md5 = function (string) {
 		c=AddUnsigned(c,CC);
 		d=AddUnsigned(d,DD);
 	}
- 
+
 	var temp = WordToHex(a)+WordToHex(b)+WordToHex(c)+WordToHex(d);
- 
+
 	return temp.toLowerCase();
 }
 
@@ -1044,7 +1049,7 @@ jQuery.md5 = function (string) {
  * example 2: uniqid('foo');
  * returns 2: 'fooa30285b1cd361'
  * example 3: uniqid('bar', true);
- * returns 3: 'bara20285b23dfd1.31879087' 
+ * returns 3: 'bara20285b23dfd1.31879087'
 */
 jQuery.uniqueId = function(prefix, more_entropy) {
     if (typeof prefix == 'undefined') {
