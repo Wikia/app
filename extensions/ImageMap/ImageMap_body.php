@@ -269,7 +269,7 @@ class ImageMap {
 		# Add a surrounding div, remove the default link to the description page
 		$anchor = $imageNode->parentNode;
 		$parent = $anchor->parentNode;
-		if ($parent instanceof DOMElement) $div = $parent->insertBefore( new DOMElement( 'div' ), $anchor );
+		if (($parent instanceof DOMElement) || ($parent instanceof DOMDocument)) $div = $parent->insertBefore( new DOMElement( 'div' ), $anchor );
 		else return self::error( 'imagemap_no_parent' );
 		if ( $defaultLinkAttribs ) {
 			$defaultAnchor = $div->appendChild( new DOMElement( 'a' ) );
