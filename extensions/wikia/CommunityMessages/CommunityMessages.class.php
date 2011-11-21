@@ -81,22 +81,12 @@ class CommunityMessages {
 		}
 
 		// render message
-		$wikiActivity = new SpecialPage('WikiActivity');
-		$title = $wikiActivity->getTitle();
-		if( $title instanceof Title ) {
-			$wikiActivityUrl = $title->getFullUrl();
-			$msg = XML::element('a', array('href' => $wikiActivityUrl),  wfMsgExt('communitymessages-notice-msg', array( 'parseinline', 'content' )));
-		} else {
-		//should never happen
-			Wikia::log(__METHOD__, false, 'No title class instance found. Does Special:WikiActivity exist?');
-			return true;
+		if( SpecialPage::exists( 'WikiActivity' ) ) {
+			$msg = wfMsgExt('communitymessages-notice-msg', array( 'parseinline', 'content' ));
 		}
 
 		// macbre: add an easy way for Oasis to show it's own notification for community messages
 		wfRunHooks('CommunityMessages::showMessage', array(&$msg));
-
-		// add to user messages
-		//$msgs .= $msg; # don't show this message in Monaco (RT #73911)
 
 		return true;
 	}
