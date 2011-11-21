@@ -208,8 +208,8 @@ class WallController extends ArticleCommentsModule {
 	public function message() {
 		wfProfileIn( __METHOD__ );
 		$comment = $this->request->getVal('comment');
-
-		if(!(($comment instanceof ArticleComment) || ($comment instanceof WallMessage) )) {
+		
+		if( !(($comment instanceof ArticleComment) || ($comment instanceof WallMessage)) || $comment->getTitle()->mLatestID == 0 ) {
 			$this->forward( $this->response->getControllerName(), 'message_error');
 			return;
 		}
