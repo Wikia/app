@@ -85,7 +85,7 @@ class CommunityMessages {
 		$title = $wikiActivity->getTitle();
 		if( $title instanceof Title ) {
 			$wikiActivityUrl = $title->getFullUrl();
-			$msg = XML::element('a', array('href' => $wikiActivityUrl),  wfMsg('communitymessages-notice-msg'));
+			$msg = XML::element('a', array('href' => $wikiActivityUrl),  wfMsgExt('communitymessages-notice-msg', array( 'parseinline', 'content' )));
 		} else {
 		//should never happen
 			Wikia::log(__METHOD__, false, 'No title class instance found. Does Special:WikiActivity exist?');
