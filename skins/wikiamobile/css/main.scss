@@ -1,5 +1,6 @@
 @import "variables.scss";
 @import "MainPage.scss";
+@import "zepto.modal.scss";
 
 //navigation
 #navigation {
@@ -12,25 +13,25 @@
   color: #777;
   -webkit-tap-highlight-color: rgba( 0,0,0,0 );
   -webkit-focus-ring-color: rgba( 0,0,0,0 );
-  
+
   #navigationWordMark {
     height: 50px;
   }
-  
+
   #openNavigationContent {
     display: none;
   }
-  
+
   &.open {
     padding-bottom: 5px;
-    
+
     .arrow {
       border-top: none;
       border-bottom: 8px solid $arrowcolor;
       border-left: 8px solid rgba( 0, 0, 0, 0 );
       border-right: 8px solid rgba( 0, 0, 0, 0 );
     }
-    
+
     #openNavigationContent {
       display: block;
 
@@ -49,21 +50,21 @@
           opacity: 1;
           padding: 15px 0;
         }
-        
+
         input {
           margin: 5px;
           -webkit-border-radius: 4px;
           height: 25px;
         }
       }
-      
+
       #menuTab {
         ul {
           list-style-type: none;
           margin: 0 auto;
           padding: 0;
           width: 100%;
-          
+
           li {
             width: 100%;
             padding: 10px 0;
@@ -72,29 +73,29 @@
           }
         }
       }
-      
+
       #searchTab {
         input[type='search'] {
           width: 50%;
         }
-        
+
         select {
           width: 20%;
         }
-        
+
         input[type='submit'] {
           width: 20%;
         }
       }
-      
+
       #exploreTab {
 
       }
-      
+
       #loginTab {
         form {
           text-align: center;
-          
+
           input {
             width: 95%;
           }
@@ -102,7 +103,7 @@
       }
     }
   }
-  
+
   #openToggle {
     position: absolute;
     right: 0;
@@ -111,13 +112,13 @@
     z-index: 9999;
     border-left: 1px solid rgba( 130, 130, 130, 0.6 );
   }
-  
+
   #navigationMenu {
     list-style-type: none;
     float: left;
     margin: 0 auto;
     padding: 0;
-    
+
     li {
       display: inline;
       padding: 5px 7px 10px 7px;
@@ -130,7 +131,7 @@
       }
     }
   }
-  
+
   ::-webkit-input-placeholder {
     color: grey;
   }
@@ -147,7 +148,7 @@ html {
     color: #222;
     margin: 0;
     -webkit-text-size-adjust:none;
-    
+
     //images
     .thumb {
       width: 95%;
@@ -156,13 +157,13 @@ html {
       border: 1px solid grey;
       -webkit-border-radius: 6px;
       -webkit-box-shadow: 0 0 10px grey;
-      
+
       .thumbinner {
         width: 100% !important;
         text-align: center;
         margin: 4px auto;
       }
-      
+
       img {
           width: 90%;
           height: auto;
@@ -171,7 +172,7 @@ html {
     h1 {
       border-bottom: 1px solid grey;
     }
-    
+
     .arrow {
       font-size: 0;
       line-height: 0;
@@ -192,19 +193,19 @@ html {
   background-color: $footerBackground;
   -webkit-box-shadow: inset 0 10px 20px #333;
   text-align: center;
-  
+
   #wikiaLogo {
     margin-top: 20px;
     height: 40px;
     width: auto;
   }
-  
+
   ul {
     list-style: none;
     padding: 5px;
     margin: 2px;
     width: 90%;
-    
+
     li {
       width: 30%;
       display: inline;
@@ -219,7 +220,7 @@ html {
   width: 100%;
   height: 50px;
   z-index: 99999;
-  
+
   #adWrapper {
     opacity: 1;
     width: 100%;
@@ -228,11 +229,11 @@ html {
     color: white;
     -webkit-transition: all 0.5s;
     z-index: 9999;
-    
+
     &.up {
       position: absolute;
       bottom: 0;
-      
+
       &.hidden {
         opacity: 0;
         bottom: -200px;
@@ -261,7 +262,7 @@ html {
 
 #article-comments {
   display: none;
-  
+
   &.open {
     display: block;
   }
@@ -286,23 +287,23 @@ html {
   font-size: medium;
   padding-bottom: 20px;
   z-index: 10;
-  
+
   //fixes for fluid content
   div > div > div, embed, .tvetnone {
 	width: 100% !important;
   }
-  
+
   //end of fluiding thead content
   a.buttonify {
     display: inline-block;
     padding: 5px;
   }
-  
+
   & > h2, #article-comments-counter-header {
       width: 100%;
       padding: 5px;
       border-bottom: 1px solid grey;
-      
+
       &.open{
         .arrow {
           border-top: none;
@@ -311,31 +312,31 @@ html {
           border-right: 8px solid rgba( 0, 0, 0, 0 );
         }
       }
-      
+
       .arrow {
         position: relative;
         right: 30px;
         float: right;
       }
   }
-  
+
   .editsection {
     display: none;
   }
-  
+
   .articleSection {
     display: none;
-    
+
     &.open {
       display: block;
     }
   }
-  
+
   table#toc {
     display: none;
     //TODO: get rid of TOC
   }
-  
+
   .infobox {
     border: 1px solid grey;
     border-radius: 6px;
@@ -344,7 +345,7 @@ html {
     width: 95% !important;
     float: none !important;
     -webkit-box-shadow: 0 0 5px grey;
-    
+
     tr:nth-of-type(n+3) td b {
       background-color: #AAA;
       display: block;
@@ -355,7 +356,7 @@ html {
     //temporary fix for slideshows
     &.wikia-slideshow-wrapper{
       width: auto !important;
-      
+
       div.wikia-slideshow-images-wrapper {
         ul {
           &.wikia-slideshow-images {
@@ -369,14 +370,14 @@ html {
   .searchresults, .search-types {
     ul {
       padding: 3px;
-      
+
       li {
         border: 1px solid #e3e3e3;
         border-radius: 6px;
         margin: 5px 3px;
         padding: 3px;
         -webkit-box-shadow: 0 0 8px #e4e4e4;
-        
+
         a {
           display: block;
           width: 100%;
