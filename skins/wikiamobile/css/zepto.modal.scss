@@ -1,0 +1,76 @@
+#modalWrapper {
+	position:absolute;
+	top:0;
+	left:0;
+	height: 100%;
+	width: 100%;
+	visibility: hidden;
+	overflow: hidden;
+	-webkit-tap-highlight-color: rgba( 0,0,0,0 );
+	-webkit-focus-ring-color: rgba( 0,0,0,0 );
+	&.modalShown {
+		visibility: visible;
+	}
+}
+
+#modalTopBar {
+	width: 100%;
+	height: 30px;
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: rgba(0,0,0,.8);
+	-webkit-transition: top .5s ease-in;
+	&.hidden {
+		top: -31px;
+	}
+}
+
+#modalTitle {
+	text-align:center;
+	margin: 0;
+	padding: 0;
+	color: white;
+	border: 0;
+	font-size: x-large;
+}
+
+#modalContent {
+	padding: 2px;
+}
+
+#modalFooter {
+	width: 100%;
+	height: auto;
+	max-height: 100px;
+	margin: 0;
+	padding: 2px;
+	background-color: rgba(0,0,0,.8);
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	color: white;
+	-webkit-transition: all .5s ease-in;
+	display: none;
+	&.hidden {
+		bottom: -101px;
+	}
+}
+
+#modalClose {
+	position: absolute;
+	right: 1px;
+	top: 1px;
+	width: 25px;
+	height: 25px;
+	background-image: url('/skins/wikiamobile/images/icon_close.png');
+	background-repeat: no-repeat;
+	background-position: center;
+	opacity: .5;
+	-webkit-transition: top .5s ease-in;
+	&.hidden {
+		top: -31px;
+	}
+}

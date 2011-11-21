@@ -117,7 +117,7 @@ $config['oasis_extensions_js'] = array(
 		'//extensions/wikia/AdEngine/AdProviderOpenX.js',
 		'//extensions/wikia/AdEngine/LazyLoadAds.js',
 		'//extensions/wikia/AdEngine/ghost/gw-11.6.7/lib/gw.min.js',
-		'//extensions/wikia/QuantcastSegments/qcs.js', 
+		'//extensions/wikia/QuantcastSegments/qcs.js',
 		'//extensions/wikia/ApertureAudience/Aperture.js',
 		'//extensions/wikia/AdEngine/liftium/Liftium.js',
 		'//extensions/wikia/AdEngine/liftium/Wikia.js',
@@ -180,9 +180,10 @@ $config['skeleskin_js'] = array(
 $config['wikiamobile_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//skins/common/zepto/zepto-0.7.js',
+		'//skins/common/zepto/zepto-0.8.js',
 		'//skins/wikiamobile/js/zepto.wikiamobile.js',
 		'//skins/common/zepto/zepto.getcss.js',
+		'//skins/wikiamobile/js/zepto.modal.js',
 		'//skins/common/zepto/orientation.js',
 		'//skins/wikiamobile/js/main.js',
 		'//extensions/wikia/JSSnippets/js/JSSnippetsMobile.js'
