@@ -93,12 +93,12 @@ class SharingToolbarModule extends Module {
 			);
 			$messagesBodyArray = array(
 				wfMsg('lightbox-share-email-body', $linkStd),
-				wfMsg(
+				wfMsgExt(
 					'oasis-sharing-toolbar-mail-body',
+					array('parsemag'),
 					array(
 						"$1" => $wgUser->getName(),
-						"$2" => $linkStd,
-						"$3" => $linkStd
+						"$2" => $linkStd
 					)
 				)
 			);
