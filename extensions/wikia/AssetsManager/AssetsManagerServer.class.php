@@ -23,6 +23,8 @@ class AssetsManagerServer {
 					break;
 
 				default:
+					Wikia::log(__METHOD__, false, "Unknown type: {$_SERVER['REQUEST_URI']}", true /* $always */);
+					Wikia::log(__METHOD__, false, AssetsManager::getRequestDetails(), true /* $always */);
 					throw new Exception('Unknown type.');
 			}
 
