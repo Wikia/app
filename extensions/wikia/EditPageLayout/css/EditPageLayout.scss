@@ -346,7 +346,7 @@ body {
 			display: none;
 			&.module_page_controls {
 				@include gradient-module;
-@include clearfix;
+				@include clearfix;
 				display: block;
 				height: 300px;
 				> .module_content {
