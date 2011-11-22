@@ -429,7 +429,8 @@ class WikiFactory {
 		wfProfileIn( __METHOD__ );
 		$city_id = false;
 
-		$oMemc = wfGetCache( CACHE_MEMCACHED );
+		global $wgWikiFactoryCacheType;
+		$oMemc = wfGetCache( $wgWikiFactoryCacheType );
 		$domains = $oMemc->get( self::getDomainKey( $domain ) );
 
 		if( isset($domains["id"]) ){
@@ -834,7 +835,8 @@ class WikiFactory {
 		 * first read WF Cache for city_id -- maybe value is already stored
 		 * in memcached?
 		 */
-		$oMemc = wfGetCache( CACHE_MEMCACHED );
+		global $wgWikiFactoryCacheType;
+		$oMemc = wfGetCache( $wgWikiFactoryCacheType );
 		if( !$master ) {
 			$variables = $oMemc->get( self::getVarsKey( $city_id ) );
 			$value = isset( $variables[ "data" ][ $cv_name ] )
@@ -964,7 +966,8 @@ class WikiFactory {
 			return false;
 		}
 
-		$oMemc = wfGetCache( CACHE_MEMCACHED );
+		global $wgWikiFactoryCacheType;
+		$oMemc = wfGetCache( $wgWikiFactoryCacheType );
 		$memkey = self::getWikiaCacheKey( $id );
 		$cached = ( empty($master) ) ? $oMemc->get( $memkey ) : null;
 		if ( empty($cached) || !is_object( $cached ) ) {
@@ -1005,7 +1008,8 @@ class WikiFactory {
 			return false;
 		}
 
-		$oMemc = wfGetCache( CACHE_MEMCACHED );
+		global $wgWikiFactoryCacheType;
+		$oMemc = wfGetCache( $wgWikiFactoryCacheType );
 		$memkey = self::getWikiaDBCacheKey( $city_dbname );
 		$cached = ( empty($master) ) ? $oMemc->get( $memkey ) : null;
 		if ( empty($cached) || !is_object( $cached ) ) {
@@ -2266,7 +2270,8 @@ class WikiFactory {
 		/**
 		 * it is called in CommonExtensions.php so wgMemc is not initialized there
 		 */
-		$oMemc = wfGetCache( CACHE_MEMCACHED );
+		global $wgWikiFactoryCacheType;
+		$oMemc = wfGetCache( $wgWikiFactoryCacheType );
 		$memkey = sprintf("%s:%d", __METHOD__, intval($city_id));
 		$cached = $oMemc->get($memkey);
 		if ( empty($cached) ) {

@@ -687,6 +687,7 @@ $wgAutoloadClasses[ "RiakClient" ] = "{$IP}/lib/riak/riak.php";
 $wgAutoloadClasses[ "RiakCache"  ] = "{$IP}/includes/wikia/RiakCache.php";
 $wgAutoloadClasses[ "ExternalStoreRiak"  ] = "{$IP}/includes/wikia/ExternalStoreRiak.php";
 $wgSolidCacheType = CACHE_MEMCACHED;
+$wgWikiFactoryCacheType = CACHE_MEMCACHED;
 
 /*
  * @name $wgWikiaHideImportsFromIrc
