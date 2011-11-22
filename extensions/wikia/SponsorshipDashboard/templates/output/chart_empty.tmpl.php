@@ -2,7 +2,7 @@
 <!-- MAIN-PAGE -->
 
 	<p id="sponsorship-dashboard-nodata" ><?
-		echo wfMsg('sponsorship-dashboard-empty-chart');
+		echo $emptyChartMsg;
 	?></p>
 
 <!-- END OF MAIN-PAGE -->

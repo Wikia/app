@@ -32,6 +32,7 @@ $messages['en'] = array(
 	'apigate-tab-keyinfo' => "Key Info",
 	'apigate-tab-keystats' => "Usage Stats",
 
+	'apigate-chart-empty' => "We're currently working on retrieving stats for you. Please hang tight and check back later.",
 	'apigate-chart-metric-requests' => "Requests",
 	'apigate-chart-name-hourly' => "Requests - Hourly",
 	'apigate-chart-name-daily' => "Requests - Daily",
