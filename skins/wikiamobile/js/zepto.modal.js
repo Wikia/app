@@ -5,7 +5,7 @@
 	$._timer =  null;
 	$._caption = false;
 
-	$.createModal =  function() {
+	$._createModal =  function() {
 		var modal = '<div id="modalWrapper">\
 				<div id="modalTopBar"></div>\
 				<div id="modalClose"></div>\
@@ -22,6 +22,7 @@
 		this._modalContent = $('#modalContent');
 		this._modalFooter = $('#modalFooter');
 		this._allToHide = this._modalTopBar.add(this._modalClose).add(this._modalFooter);
+		this._thePage = $('#navigation, #WikiaPage, #wikiaFooter, #leftPane');
 
 
 		$(document.body).delegate('#modalClose', 'click', function() {
@@ -36,7 +37,7 @@
 	};
 
 	$.openModal =  function(options) {
-		if(!this._modalCreated) this.createModal();
+		if(!this._modalCreated) this._createModal();
 		options = options || {};
 
 		if(options.html) {
@@ -56,7 +57,7 @@
 
 		this._position = pageYOffset;
 
-		$('#navigation, #WikiaPage, #wikiaFooter, #leftPane').hide();
+		this._thePage.hide();
 		this._modal.addClass('modalShown');
 		this._resetTimeout();
 	};
@@ -84,8 +85,8 @@
 			var modal = this._modal;
 			modal.removeClass('modalShown');
 			this._allToHide.removeClass('hidden');
-			$('#navigation, #WikiaPage, #wikiaFooter, #leftPane').show();
-			window.scrollTo( 0, this._position );
+			this._thePage.show();
+			window.scrollTo(0, this._position);
 			this._position = 1;
 			clearTimeout(this._timer);
 		}

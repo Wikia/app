@@ -57,6 +57,7 @@ var WikiaMobile = {
 	},
 
 	init: function() {
+		var position;
 
 		//I'm using delegate on document.body as it's been proved to be the fastest option
 		$( document.body ).delegate( '#openToggle', 'click', function() {
@@ -107,7 +108,7 @@ var WikiaMobile = {
 			};
 			showAll.toggleClass( 'collapsed' );
 		});
-		var position;
+
 		$( document.body ).delegate( '#WikiaPage', 'swipeLeft', function() {
 			position = pageYOffset;
 			$( '#wikiaFooter, #navigation, #WikiaPage' ).css( 'display', 'none' );
