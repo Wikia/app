@@ -503,8 +503,9 @@ $(function() {
 			}
 		});
 
-		$('#wpPreview').text(
-			$.msg('oasis-navigation-v2-validation-next')
+		$('#wpPreview').parent().removeClass('secondary');
+		$('#EditPageRail .module_page_controls .module_content .buttons').append(
+			'<div class="preview-validator-desc">' + $.msg('oasis-navigation-v2-validation-caption') + '</div>'
 		);
 	}
 });
