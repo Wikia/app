@@ -184,6 +184,7 @@ $messages['en'] = array(
 	'oasis-navigation-v2-level2-validation' => 'Oops! Your Level 2 menu is too wide. Please shorten the items to fit. Thanks!',
 	'oasis-navigation-v2-level12-validation' => 'Oops! Your Level 1 and Level 2 menus are too wide. Please edit them to fit.',
 	'oasis-navigation-v2-validation-next' => 'Next',
+	'oasis-navigation-v2-validation-caption' => 'Preview will check for menu errors. If ok, you can Publish from the Preview screen. If not, a Back button will allow you to continue editing.',
 	'on-the-wiki' => 'On the Wiki',
 
 	#sharing toolbar e-mail
