@@ -464,6 +464,30 @@
 				newGame({_id:id, _data:data});
 			}
 
+			function trackStats(event, data){
+				//TODO: remove all unsampled tracking when and if this gets popular
+				switch(event){
+					case 'roundEnd':
+						WikiaTracker.track('/photopop/round_played/' + data.currentRound, 'main.unsampled');
+						WikiaTracker.track('/photopop/round_played/' + data.currentRound, 'main.sampled');
+						
+						WikiaTracker.track('/photopop/' + data.gameId + '/round_played/' + data.currentRound, 'main.unsampled');
+						WikiaTracker.track('/photopop/' + data.gameId + '/round_played/' + data.currentRound, 'main.sampled');
+						
+						Wikia.log('Playing: round n. ' + data.currentRound + ' in ' + data.gameId);
+						break;
+					case 'startGame':
+						WikiaTracker.track('/photopop/game_selected', 'main.unsampled');
+						WikiaTracker.track('/photopop/game_selected', 'main.sampled');
+						
+						WikiaTracker.track('/photopop/' + data.gameId + '/game_selected', 'main.unsampled');
+						WikiaTracker.track('/photopop/' + data.gameId + '/game_selected', 'main.sampled');
+						
+						Wikia.log('Game selected: ' + data.gameId);
+						break;
+				}
+			}
+
 			function newGame(gameData){
 				currentGame = new Game(gameData);
 
@@ -484,6 +508,12 @@
 				currentGame.addEventListener('muteButtonClicked', muteButtonClicked);
 				currentGame.addEventListener('answersPrepared', answersPrepared);
 				currentGame.addEventListener('roundStart', roundStart);
+				
+				if(Wikia.Platform.is('web')){
+					currentGame.addEventListener('roundEnd', trackStats);
+					currentGame.addEventListener('startGame', trackStats);
+				}
+				
 				currentGame.addEventListener('pause', pause);
 
 				currentGame.prepareGame();
@@ -543,7 +573,9 @@
 			/**
 			 * init
 			 */
-			document.body.innerHTML = Mustache.to_html(templates.wrapper, view);
+			var gameWrapper = document.getElementById('gameWrapper') || document.body;
+			
+			gameWrapper.innerHTML = Mustache.to_html(templates.wrapper, view);
 
 			initHomeScreen();
 
