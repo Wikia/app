@@ -25,7 +25,8 @@ class Track {
 			'y='.$wgDBcluster.'&amp;'.
 			'u='.$wgUser->getID().'&amp;'.
 			'a='.(is_object($wgArticle) ? $wgArticle->getID() : null).'&amp;'.
-			'n='.$wgTitle->getNamespace(). (!empty($wgAdServerTest) ? '&amp;db_test=1' : '');
+			($wgTitle ? 'n='.$wgTitle->getNamespace() : '').
+			(!empty($wgAdServerTest) ? '&amp;db_test=1' : '');
 
 		// Handle any parameters passed to us
 		if ($param) {
