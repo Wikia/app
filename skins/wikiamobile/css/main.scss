@@ -2,6 +2,11 @@
 @import "MainPage.scss";
 @import "zepto.modal.scss";
 
+a {
+	color: #55ACE1;
+	text-decoration: none;
+}
+
 //navigation
 #navigation {
   width: 100%;
@@ -145,29 +150,29 @@ html {
 
   body {
     background-color: $page-background-color;
-    color: #222;
+    color: #848484;
     margin: 0;
-    -webkit-text-size-adjust:none;
+    -webkit-text-size-adjust: none;
 
     //images
     .thumb {
-      width: 95%;
-      margin: 3px auto;
-      background-color: #EEE;
-      border: 1px solid grey;
-      -webkit-border-radius: 6px;
-      -webkit-box-shadow: 0 0 10px grey;
+	text-align: center;
+	margin: 5px;
 
-      .thumbinner {
-        width: 100% !important;
-        text-align: center;
-        margin: 4px auto;
-      }
+	.thumbinner {
+		display: inline-block;
+	}
 
-      img {
-          width: 90%;
-          height: auto;
-      }
+	.thumbcaption {
+		color: #444;
+		border: 1px solid #E3E3E3;
+		padding: 0 5px;
+		margin-top: -5px;
+		box-shadow: 0 0 10px #DDD;
+		-webkit-box-sizing: border-box;
+		box-sizing: border-box;
+		line-height: 2em;
+	}
     }
     h1 {
       border-bottom: 1px solid grey;
@@ -289,16 +294,20 @@ html {
   z-index: 10;
 
   //fixes for fluid content
-  div > div > div, embed, .tvetnone {
+  div > div > div, .tvetnone {
 	width: 100% !important;
   }
 
-  //end of fluiding thead content
-  a.buttonify {
-    display: inline-block;
-    padding: 5px;
+  object, embed {
+	width: 60% !important;
+	height: 200px;
   }
 
+  .tvetnone {
+	text-align: center;
+  }
+
+  //end of fluiding thead content
   & > h2, #article-comments-counter-header {
       width: 100%;
       padding: 5px;
