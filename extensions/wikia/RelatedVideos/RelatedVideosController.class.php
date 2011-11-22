@@ -133,6 +133,7 @@ class RelatedVideosController extends WikiaController {
 		$cityShort = $this->getVal( 'cityShort', 'life');
 		$useJWPlayer = $this->getVal( 'useJWPlayer', true );
 		$autoplay = $this->getVal( 'autoplay', true );
+		$inAjaxReponse = $this->getVal('inAjaxResponse');
 
 		if ( $videoArticleId ) {
 			$videoTitle = Title::newFromID( $videoArticleId, GAID_FOR_UPDATE );
@@ -144,7 +145,7 @@ class RelatedVideosController extends WikiaController {
 		}
 
 		$rvd = F::build('RelatedVideosData');
-		$videoData = $rvd->getVideoData( $videoTitle, $width, $videoWidth, $autoplay, $useMaster, $cityShort, $videoHeight, $useJWPlayer );
+		$videoData = $rvd->getVideoData( $videoTitle, $width, $videoWidth, $autoplay, $useMaster, $cityShort, $videoHeight, $useJWPlayer, $inAjaxReponse );
 		$this->setVal( 'data', $videoData );
 	}
 
