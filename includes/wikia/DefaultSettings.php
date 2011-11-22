@@ -121,7 +121,8 @@ $wgAutoloadClasses['WikiaException'] = "$IP/includes/wikia/WikiaException.php";
 $wgAutoloadClasses['WikiaSkinMonoBook'] = "$IP/skins/wikia/WikiaMonoBook.php";
 $wgAutoloadClasses['PaginationController'] = "$IP/includes/wikia/services/PaginationController.class.php";
 $wgAutoloadClasses['MemcacheSync'] = "$IP/includes/wikia/MemcacheSync.class.php";
-$wgAutoloadClasses['MWLibMemcached'] = "$IP/includes/wikia/libmemcached-client.php";
+$wgAutoloadClasses['LibmemcachedBagOStuff'] = "$IP/includes/wikia/LibmemcachedBagOStuff.php";
+$wgAutoloadClasses['LibmemcachedSessionHandler'] = "$IP/includes/wikia/LibmemcachedSessionHandler.php";
 
 
 //AutomaticWikiAdoption
