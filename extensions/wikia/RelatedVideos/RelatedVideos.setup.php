@@ -17,6 +17,7 @@ $app->registerClass('RelatedVideosElement', $dir . '/models/RelatedVideos.model.
 $app->registerClass('RelatedVideosData', $dir . '/RelatedVideosData.class.php');
 $app->registerClass('RelatedVideosService', $dir. '/RelatedVideosService.class.php');
 $app->registerClass('RelatedVideosNamespaceData', $dir . '/RelatedVideosNamespaceData.class.php');
+$app->registerClass('RelatedVideosEmbededData', $dir . '/RelatedVideosEmbededData.class.php');
 
 /**
  * controllers

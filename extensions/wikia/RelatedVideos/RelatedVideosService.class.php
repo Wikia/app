@@ -50,11 +50,15 @@ class RelatedVideosService {
 					        'autoplay'	=> $autoplay
 					)
 				)->getData();
-				
 				$result['data']['external'] = 0;
+			}
+
+			if ( isset( $result['data']['error']) ){
+				return array();
 			}
 			// just to be sure and to be able to work cross devbox.
 			if ( !isset( $result['data']['arrayId'] ) ){
+				if ( !isset( $result['data']['id'] ) ) return array();
 				$result['data']['arrayId'] = $result['data']['external'].'|'.$result['data']['id'];
 			}
 

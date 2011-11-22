@@ -23,26 +23,28 @@ class RelatedVideosController extends WikiaController {
 		}
 
 		$oLocalLists = RelatedVideosNamespaceData::newFromTargetTitle( F::app()->wg->title );
-		$oGlobalLists = RelatedVideosNamespaceData::newFromGeneralMessage();		
+		$oEmbededVideosLists = RelatedVideosEmbededData::newFromTitle( F::app()->wg->title );
+		$oGlobalLists = RelatedVideosNamespaceData::newFromGeneralMessage();
 
 		$oRelatedVideosService = F::build('RelatedVideosService');
 		$blacklist = array();
-		foreach( array( $oGlobalLists, $oLocalLists ) as $oLists ){
+		foreach( array( $oGlobalLists, $oEmbededVideosLists, $oLocalLists ) as $oLists ){
 			if ( !empty( $oLists ) && $oLists->exists() ){
 				$data = $oLists->getData();
 				if ( isset(  $data['lists'] ) && isset( $data['lists']['WHITELIST'] ) ) {
 					foreach( $data['lists']['WHITELIST'] as $page ){
 						$videoData = $oRelatedVideosService->getRelatedVideoData( $page );
-						$videos[$videoData['arrayId']] = $videoData;
+						if ( isset( $videoData['arrayId'] ) )
+							$videos[$videoData['arrayId']] = $videoData;
 					}
 					foreach( $data['lists']['BLACKLIST'] as $page ){
 						$videoData = $oRelatedVideosService->getRelatedVideoData( $page );
-						$blacklist[$videoData['arrayId']] = $videoData;
+						if ( isset( $videoData['arrayId'] ) )
+							$blacklist[$videoData['arrayId']] = $videoData;
 					}
 				}
 			}
 		}
-
 		
 		foreach( $blacklist as $key => $blElement ){
 			unset( $videos[ $key ] );
@@ -120,7 +122,6 @@ class RelatedVideosController extends WikiaController {
 	/*
 	 * for getting videos localy and cross wiki
 	 */
-
 	public function getVideoData() {
 
 		$videoArticleId = $this->getVal( 'articleId', 0 );
@@ -138,6 +139,7 @@ class RelatedVideosController extends WikiaController {
 			$useMaster = true;
 		} else {
 			$videoTitle = Title::newFromText( $videoName, NS_VIDEO );
+			// var_dump( $videoTitle );
 			$useMaster = ( false || !empty( $useMaster ) );
 		}
 
