@@ -68,6 +68,11 @@
 	.oasis-one-column & {
 		width: $width-outside;
 	}
+
+	a.new,
+	a.new:visited {
+		color: #CC2200;
+	}
 }
 
 .WikiaArticleCategories {
