@@ -9,5 +9,7 @@
 		<? endforeach ;?>
 	</head>
 	<body>
+		<div id="gameWrapper"></div>
+		<?= $trackingCode ;?>
 	</body>
 </html>

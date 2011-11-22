@@ -93,6 +93,9 @@ define.call(exports, ['modules/data'], function(data){
 
 		prepareGame: function(){
 			this.fire('initGameScreen', this.getId());
+			this.fire('startGame', {
+				gameId: this.getId()
+			});
 			this.prepareAnswerDrawer();
 			this.prepareContinueView();
 			this.prepareFinishScreen();
@@ -154,7 +157,16 @@ define.call(exports, ['modules/data'], function(data){
 			}
 		},
 
-		prepareHud: function() {
+		endRound: function(){
+			this.fire('roundEnd', {
+				gameId: this.getId(),
+				totalPoints: this._totalPoints.getPoints(),
+				currentRound: this._currentRound,
+				numRounds: this._data.length
+			});
+		},
+
+		prepareHud: function(){
 			var self = this;
 
 			document.getElementById('totalPoints').innerHTML = '0';
@@ -203,6 +215,7 @@ define.call(exports, ['modules/data'], function(data){
 							self._totalPoints.addPoints(self._roundPoints.getPoints());
 							self._roundPoints.setPoints(0);
 							self.fire('rightAnswerClicked', this.innerHTML);
+							self.endRound();
 						}
 					}
 
@@ -270,6 +283,7 @@ define.call(exports, ['modules/data'], function(data){
 								timeout: Game.TIME_UP_NOTIFICATION_DURATION_MILLIS,
 								correct: self._correctAnswer
 							});
+							self.endRound();
 						} else if(!self._roundIsOver){
 							self._roundPoints.deductPoints(self._timerPointDeduction);
 							self.fire('timerEvent', self.getPercent());

@@ -265,6 +265,10 @@ $config['photopop'] = array(
 		'//extensions/wikia/PhotoPop/shared/lib/reqwest.js',
 		'//extensions/wikia/PhotoPop/shared/lib/classlist.js',
 		'//extensions/wikia/PhotoPop/shared/lib/wikia.js',
-		'//extensions/wikia/PhotoPop/shared/lib/require.js'
+		'//extensions/wikia/PhotoPop/shared/lib/require.js',
+		'//extensions/wikia/WikiaTracker/js/WikiaLogger.js',
+		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
+		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
+		'//extensions/wikia/WikiaTracker/js/WikiaTrackerQueue.js'
 	)
 );
