@@ -64,8 +64,12 @@ class InterwikiDispatcher extends UnlistedSpecialPage {
 		$cacheKey = wfSharedMemcKey( __METHOD__ . ':' . $sName );
 
 		$cachedValue = $wgMemc->get( $cacheKey );
-		if( !is_null( $cachedValue) ) {
-			return $cachedValue;
+		if( is_int( $cachedValue ) ) {
+			if ($cachedValue > 0) {
+				return $cachedValue;
+			} else {
+				return false;
+			}
 		}
 
 		$DBr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
@@ -80,12 +84,12 @@ class InterwikiDispatcher extends UnlistedSpecialPage {
 
 		if ($row = $DBr->FetchObject($dbResult)) {
 			$DBr->FreeResult($dbResult);
-			$wgMemc->set( $cacheKey, $row->city_id, self::IS_WIKI_EXISTS_CACHE_TTL );
-			return $row->city_id;
+			$wgMemc->set( $cacheKey, intval( $row->city_id ), self::IS_WIKI_EXISTS_CACHE_TTL );
+			return intval( $row->city_id );
 		}
 		else {
 			$DBr->FreeResult($dbResult);
-			$wgMemc->set( $cacheKey, false, self::IS_WIKI_EXISTS_CACHE_TTL );
+			$wgMemc->set( $cacheKey, 0, self::IS_WIKI_EXISTS_CACHE_TTL );
 			return false;
 		}
 	}
