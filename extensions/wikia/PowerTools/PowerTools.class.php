@@ -26,12 +26,6 @@ class PowerTools {
 		$article->doDelete();
 		$article->mTitle->updateTitleProtection( 'sysop', '', 'infinity' );
 
-		// TODO: make this Oasis-agnostic
-		NotificationsModule::addConfirmation( wfMsgExt('oasis-confirmation-page-deleted', array('parseinline'), $article->mTitle->getPrefixedText() ) );
-
-		// redirect to main page
-		$wgOut->redirect(Title::newMainPage()->getFullUrl( array( 'cb' => rand( 1, 1000 ) ) ));
-
 		return false;
 	}
 }
