@@ -22,10 +22,11 @@
 		?>
 	</div>
 
-	<div style="position: absolute; top: -1000px">
-			<?= Wikia::specialPageLink('Watchlist', 'watchlist', array('accesskey' => 'l')) ?>
-			<?= Wikia::specialPageLink('Random', 'randompage', array('accesskey' => 'x')) ?>
-	</div>
+	<div style="position: absolute; top: -1000px"><?php
+			echo Wikia::specialPageLink('Watchlist', 'watchlist', array('accesskey' => 'l'));
+			echo Wikia::specialPageLink('Random', 'randompage', array('accesskey' => 'x'));
+			echo Wikia::specialPageLink('RecentChanges', 'recentchanges', array('accesskey' => 'r'));
+	?></div>
 	<img class="shadow-mask" src="<?= $wgBlankImgUrl ?>" width="0" height="0">
 
 	<? echo wfRenderModule('SharingToolbar'); ?>

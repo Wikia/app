@@ -10,7 +10,9 @@ class ContributeMenuModule extends Module {
 		if (isset($this->content_actions['edit'])) {
 			$this->dropdownItems['edit'] = array(
 				'text' => wfMsg('oasis-navigation-v2-edit-page'),
-				'href' => $this->content_actions['edit']['href']
+				'href' => $this->content_actions['edit']['href'],
+				// don't use MenuButton module magic to get accesskey for this item (BugId:15698)
+				'accesskey' => false,
 			);
 		}
 
