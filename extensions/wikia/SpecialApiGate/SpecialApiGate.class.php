@@ -580,6 +580,7 @@ class SpecialApiGate extends SpecialPage {
 		// now is the time for making output. There are chart, raw and table outputs.
 		$oOutput = F::build( 'SponsorshipDashboardOutputChart' );
 		$oOutput->showActionsButton = false;
+		$oOutput->emptyChartMsg = wfMsg( 'apigate-chart-empty' );
 		$oOutput->set( $oReport );
 
 		// to get HTML just call
