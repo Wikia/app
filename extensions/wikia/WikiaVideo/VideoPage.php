@@ -29,6 +29,9 @@ class VideoPage extends Article {
 	const V_REALGRAVITY = 23;
 	const V_WIKIAVIDEO = 24;
 	const V_LOCALVIDEO = 25;
+	
+	const YOUTUBE_FEEDS_VIDEOS_URL = 'http://gdata.youtube.com/feeds/videos';
+	const XMLNS_YT = 'http://gdata.youtube.com/schemas/2007';
 
 	const SCREENPLAY_MEDIUM_JPEG_BITRATE_ID = 267;	// 250x200
 	const SCREENPLAY_LARGE_JPEG_BITRATE_ID = 382;	// 480x360
@@ -1857,11 +1860,28 @@ EOD;
 				$embed = '<embed ' . $auto . ' src="' . $url . '" width="' . $width . '" height="' . $height . '" wmode="transparent"" allowFullScreen="true" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash"></embed>';
                                 break;
                         case self::V_YOUTUBE:
-				$url = 'http://www.youtube.com/v/' . $this->mId . '&enablejsapi=1&fs=1' . ($autoplay ? '&autoplay=1' : '') . ( !empty( $this->mData[0] ) ? '&hd=1' : '');
+				$hd = false;
+				// mData either has mId (string), related (string), duration (int), description (string), hd (int), noembed (int)
+				// or mId, duration, description, hd, noembed
+				$this->getYoutubeData();
+				if (sizeof($this->mData) >= 6) {
+					if (!empty($this->mData[4])) {
+						$hd = true;
+					} 	
+				}
+				elseif (sizeof($this->mData) >= 5) {
+					if (!empty($this->mData[3])) {
+						$hd = true;
+					}
+				}
+				
+				$url = 'http://www.youtube.com/v/' . $this->mId . '&enablejsapi=1&fs=1' . ($autoplay ? '&autoplay=1' : '') . ( !empty($hd) ? '&hd=1' : '');
 				if ($useJWPlayer) {
 					$code = 'custom';
 					$jwplayerData['file'] = $url;
-					$jwplayerData['plugins']['hd-2'] = array();
+					if ($hd) {
+						$jwplayerData['plugins']['hd-2'] = array();
+					}
 				}
 				break;
 			case self::V_SEVENLOAD:
@@ -2232,6 +2252,70 @@ EOD;
 		$wgOut->addHTML( $s );
 	}
 	
+	private function getYoutubeData() {
+		// We are using a non-standard version of the API for 
+		// getting details for a single video. This is because this
+		// version returns a proper RSS feed. YouTube's recommended
+		// version (https://gdata.youtube.com/feeds/api/videos/<id>) 
+		// does not return a proper RSS feed, which means we can't use 
+		// SimplePie to parse it!
+		
+		if (sizeof($this->mData) >= 6) {	// mData has mId, the four fields below, and maybe the "related" value
+			// we already got the data
+			return;
+		}
+		else {
+			if (sizeof($this->mData) >= 2) {
+				// mData could have mId (string), related (string), duration (int)
+				// or mId (string), duration (int)
+				// Truncate after mId (and related, if it exists)
+				if (is_numeric($this->mData[1])) {
+					// mData[1] is duration
+					$this->mData = array_slice($this->mData, 0, 1);
+				}
+				else {
+					// assume mData[1] is related and mData[2] is duration
+					$this->mData = array_slice($this->mData, 0, 2);
+				}
+			}
+		}
+		
+		$file = @Http::get( self::YOUTUBE_FEEDS_VIDEOS_URL."?vq=" . $this->mId, FILE_TEXT );
+		if ($file) {
+			$feed = new SimplePie();
+			$feed->set_raw_data($file);
+			$feed->init();
+			$feed->handle_content_type();
+			if ($feed->error()) {
+				return;
+			}
+
+			foreach ($feed->get_items() as $key=>$item) {
+				if ($item->get_id() == self::YOUTUBE_FEEDS_VIDEOS_URL.'/'.$this->mId) {
+					if ($enclosure = $item->get_enclosure()) {
+						// duration
+						$duration = $enclosure->get_duration();
+						$this->mData[] = $duration;
+
+						// description
+						$description = $enclosure->get_description();
+						$this->mData[] = html_entity_decode($description);
+
+						// hd?
+						$hdTags = $item->get_item_tags(self::XMLNS_YT, 'hd');
+						$this->mData[] = !empty($hdTags) ? 1 : 0;
+						
+						// noembed?
+						$noembedTags = $item->get_item_tags(self::XMLNS_YT, 'noembed');
+						$this->mData[] = !empty($noembedTags) ? 1 : 0;
+					}
+				}
+			}
+		}		
+		
+		return;
+	}
+	
 	function getDuration() {
 		switch ($this->mProvider) {
 			case self::V_SCREENPLAY:
@@ -2250,39 +2334,20 @@ EOD;
 				}
 				break;
 			case self::V_YOUTUBE:
-				if (sizeof($this->mData) >= 2) {	// duration could be last element in data
-					$duration = array_pop($this->mData);
+				$this->getYoutubeData();
+				// mData either has mId (string), related (string), duration (int), description (string), hd (int), noembed (int)
+				// or mId, duration, description, hd, noembed
+				if (sizeof($this->mData) >= 6) {
+					if (is_numeric($this->mData[2]) && $this->mData[2] > 0) {
+						return $this->mData[2];
+					} 	
 				}
-				if (!empty($duration) && is_numeric($duration) && $duration > 0) {
-					return $duration;
-				}
-				else {	// get duration from YouTube API
-					// We are using a non-standard version of the API for 
-					// getting details for a single video. This is because this
-					// version returns a proper RSS feed. YouTube's recommended
-					// version (https://gdata.youtube.com/feeds/api/videos/<id>) does not return a proper RSS feed, which
-					// means we can't use SimplePie to parse it!
-					$file = @Http::get( "http://gdata.youtube.com/feeds/videos?vq=" . $this->mId, FILE_TEXT );
-					if ($file) {
-						$feed = new SimplePie();
-						$feed->set_raw_data($file);
-						$feed->init();
-						$feed->handle_content_type();
-						if ($feed->error()) {
-							return '';
-						}
-
-						foreach ($feed->get_items() as $key=>$item) {
-							if ($enclosure = $item->get_enclosure()) {
-								$duration = $enclosure->get_duration();
-								// save data
-								$this->mData[] = $duration;
-								$this->save();
-								return $duration;
-							}
-						}
+				elseif (sizeof($this->mData) >= 5) {
+					if (is_numeric($this->mData[1]) && $this->mData[1] > 0) {
+						return $this->mData[1];
 					}
 				}
+				return '';
 				break;
 			default:
 				// duration unknown
@@ -2294,6 +2359,22 @@ EOD;
 	
 	function getDescription() {
 		switch ($this->mProvider) {
+			case self::V_YOUTUBE:
+				// mData either has mId (string), related (string), duration (int), description (string), hd (int), noembed (int)
+				// or mId, duration, description, hd, noembed
+				$this->getYoutubeData();
+				if (sizeof($this->mData) >= 6) {
+					if (!empty($this->mData[3])) {
+						return $this->mData[3];
+					} 	
+				}
+				elseif (sizeof($this->mData) >= 5) {
+					if (!empty($this->mData[2])) {
+						return $this->mData[2];
+					}
+				}
+				return '';
+				break;
 			case self::V_SCREENPLAY:
 				// no description
 				break;
