@@ -18,9 +18,15 @@ var SharingToolbar = {
 
 		// FIX ME if facebook api provides the functionality to run code after iframe render
 		setTimeout(function(){
+			var maxWidth = 0, elementWidth = 0;
+			var nodes = document.getElementById('SharingToolbar').childNodes;
+			for(var i=0; i<nodes.length; i++) {
+				elementWidht = parseInt(0 + $(nodes[i]).width());
+				if (elementWidht > maxWidth) maxWidth = elementWidht;
+			}
 			$('#SharingToolbar').css(
 				'width',
-				$('#SharingToolbar div').children().eq(2).width()
+				maxWidth
 			);
 		}, 10000);
 	},
