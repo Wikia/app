@@ -190,13 +190,9 @@ $messages['en'] = array(
 	#sharing toolbar e-mail
 	'oasis-sharing-toolbar-mail-subject' => '$1 has sent you a link on Wikia',
 	'oasis-sharing-toolbar-mail-body' => 'Hi.
-
-$1 sent you this page from $2 on Wikia:
-
-$3
-
+$1 sent you this page from {{SITENAME}} on Wikia:
+      $2
 Enjoy!
-
 - The Wikia team',
 );
 
