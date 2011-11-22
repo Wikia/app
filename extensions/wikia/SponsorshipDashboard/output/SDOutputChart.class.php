@@ -16,6 +16,7 @@ class SponsorshipDashboardOutputChart extends SponsorshipDashboardOutputFormatte
 	public $groupId = 0;
 	public $showActionsButton = true;
 	public $chartNumericId; // So that multiple charts can be on the same page, each chart needs a unique numeric id
+	public $emptyChartMsg;
 
 	protected $actualDate;
 	
@@ -24,6 +25,7 @@ class SponsorshipDashboardOutputChart extends SponsorshipDashboardOutputFormatte
 		static $nextChartId = 1; // this var will count up as Charts are initialized
 
 		$this->chartNumericId = $nextChartId++;
+		$this->emptyChartMsg = wfMsg('sponsorship-dashboard-empty-chart');
 	}
 
 	// const TEMPLATE_TEASER_CHART = 'teaser';
@@ -72,6 +74,11 @@ class SponsorshipDashboardOutputChart extends SponsorshipDashboardOutputFormatte
 		} elseif ( ( !isset ( $aData['ticks'] ) || !isset ( $aData['serie'] ) || !isset ( $aData['fullTicks'] ) ||
 			empty ( $aData['ticks'] ) || empty ( $aData['serie'] ) || empty ( $aData['fullTicks'] ) ) )
 		{
+			$oTmpl->set_vars(
+				array(
+					'emptyChartMsg' => $this->emptyChartMsg,
+				)
+			);
 			return $oTmpl->execute( '../../templates/output/'.self::TEMPLATE_CHART_EMPTY );
 		} else {
 
