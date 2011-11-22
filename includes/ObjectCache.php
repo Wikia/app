@@ -101,10 +101,14 @@ function &wfGetCache( $inputType ) {
 	/* Wikia change begin - @author: eloy */
 	if( defined( "CACHE_LIBMEMCACHED" ) ) {
 		if ( $type == CACHE_LIBMEMCACHED ) {
-			if ( !array_key_exists( CACHE_RIAK, $wgCaches ) ) {
-				$wgCaches[ CACHE_RIAK ] = new RiakCache;
+			if ( !array_key_exists( CACHE_LIBMEMCACHED, $wgCaches ) ) {
+				$wgCaches[ CACHE_LIBMEMCACHED ] = new LibmemcachedBagOStuff(array(
+					'servers' => $wgMemCachedServers,
+					'debug' => $wgMemCachedDebug,
+					'persistent' => $wgMemCachedPersistent,
+				));
 			}
-			$cache =& $wgCaches[ CACHE_RIAK ];
+			$cache =& $wgCaches[ CACHE_LIBMEMCACHED ];
 		}
 	}
 	/* Wikia change end */
