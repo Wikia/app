@@ -64,7 +64,7 @@ class InterwikiDispatcher extends UnlistedSpecialPage {
 		$cacheKey = wfSharedMemcKey( __METHOD__ . ':' . $sName );
 
 		$cachedValue = $wgMemc->get( $cacheKey );
-		if( is_int( $cachedValue ) ) {
+		if( is_numeric( $cachedValue ) ) {
 			if ($cachedValue > 0) {
 				return $cachedValue;
 			} else {
