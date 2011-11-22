@@ -201,7 +201,8 @@ class WikiFactoryHub {
 		}
 
 		wfProfileIn( __METHOD__ );
-		$oMemc = wfGetCache( CACHE_MEMCACHED );
+		global $wgWikiFactoryCacheType;
+		$oMemc = wfGetCache( $wgWikiFactoryCacheType );
 		$memkey = sprintf("%s", __METHOD__);
 		$cached = $oMemc->get($memkey);
 		if ( empty($cached) ) {

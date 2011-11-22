@@ -253,7 +253,8 @@ class WikiFactoryLoader {
 		/**
 		 * local cache, change to CACHE_ACCEL for local
 		 */
-		$oMemc = wfGetCache( CACHE_MEMCACHED );
+		global $wgWikiFactoryCacheType;
+		$oMemc = wfGetCache( $wgWikiFactoryCacheType );
 
 		if( empty( $this->mAlwaysFromDB ) ) {
 			/**
