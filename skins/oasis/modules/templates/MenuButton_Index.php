@@ -2,8 +2,14 @@
 	if (is_array($action) && !empty($action)) {
 		if (empty($dropdown)) {
 			// render simple edit button
+			if (isset($action['accesskey'])) {
+				$accesskey = ($action['accesskey'] !== false) ? (' accesskey="' . $item['accesskey'] . '"') : '';
+			}
+			else {
+				$accesskey = ' accesskey="e"';
+			}
 ?>
-<a accesskey="e" href="<?= htmlspecialchars($action['href']) ?>" class="<?= $class ?>" data-id="<?= $actionName ?>"><?= $icon ?> <?= htmlspecialchars($action['text']) ?><?= $action['html'] ?></a>
+<a<?= $accesskey ?> href="<?= htmlspecialchars($action['href']) ?>" class="<?= $class ?>" data-id="<?= $actionName ?>"><?= $icon ?> <?= htmlspecialchars($action['text']) ?><?= $action['html'] ?></a>
 <?php
 		}
 		// render edit button with dropdown
@@ -34,7 +40,7 @@
 <?php
 			foreach($dropdown as $key => $item) {
 				// render accesskeys
-				if (isset($item['accesskey'])) {
+				if (!empty($item['accesskey'])) {
 					$accesskey = ' accesskey="' . $item['accesskey'] . '"';
 				}
 				else {

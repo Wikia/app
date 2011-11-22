@@ -110,7 +110,7 @@ class MenuButtonModule extends Module {
 			foreach($this->dropdown as $key => &$item) {
 				$accesskey = MenuButtonModule::accessKey($key);
 
-				if ($accesskey != false) {
+				if ($accesskey != false && !isset($item['accesskey'])) {
 					$item['accesskey'] = $accesskey;
 				}
 			}

@@ -16,9 +16,11 @@
 				'text' => $text,
 				'html' => '<span class="commentsbubble">'.$formattedComments.'</span>',
 				'href' => $commentsLink,
+				// don't use MenuButton module magic to get accesskey for this item (BugId:15698)
+				'accesskey' => false,
 			),
 			'name' => 'comment',
-			'class' => 'comments secondary'
+			'class' => 'comments secondary',
 		));
 	}
 ?>
