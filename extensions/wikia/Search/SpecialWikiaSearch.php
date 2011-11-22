@@ -291,10 +291,7 @@ STOP;
 
 		// show number of results
 		if ( $num > 0 ) {
-			if ( $totalNum > 0 ){
-				$top = wfMsgExt('showingresultstotal', array( 'parseinline' ),
-					$this->offset+1, $this->offset+$num, $totalNum, $num );
-			} elseif ( $num >= $this->limit ) {
+			if ( $num >= $this->limit ) {
 				$top = wfShowingResults( $this->offset, $this->limit );
 			} else {
 				$top = wfShowingResultsNum( $this->offset, $this->limit, $num );
