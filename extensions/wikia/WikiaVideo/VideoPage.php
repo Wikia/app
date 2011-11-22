@@ -1825,7 +1825,7 @@ EOD;
 	}
 
 	// return embed code for the particular video per provider
-        public function getEmbedCode( $width = 300, $autoplay = false, $useJWPlayer = false, $asJSON = false, $cityShort='life', $height='' ) {
+        public function getEmbedCode( $width = 300, $autoplay = false, $useJWPlayer = false, $asJSON = false, $cityShort='life', $height='', $inAjaxResponse=false ) {
 		// init jwplayer vars
 		$jwplayerData = array();
 		$jwplayerData['jwplayerjs'] = AssetsManager::getInstance()->getOneCommonURL( trim(self::$JWPLAYER_DIR . self::$JWPLAYER_JS, '/'), false );
@@ -2002,7 +2002,7 @@ EOD;
 				// load the real Video Page referred to by this object,
 				// and get the embed code from there
 				$rvs = new RelatedVideosService();
-				$videoData = $rvs->getRelatedVideoData( array( 'articleId' => 0, 'title' => $this->mId, 'source' => true ), $width, '', 0, '', $useJWPlayer);	// fifth param is empty to suppress ads
+				$videoData = $rvs->getRelatedVideoData( array( 'articleId' => 0, 'title' => $this->mId, 'source' => true ), $width, '', 0, '', $useJWPlayer, $autoplay, $inAjaxResponse);	// fifth param is empty to suppress ads
 				$embed = $videoData['embedCode'];
 				return $embed;
 				break;
@@ -2010,7 +2010,7 @@ EOD;
 				// load the real Video Page referred to by this object,
 				// and get the embed code from there
 				$rvs = new RelatedVideosService();
-				$videoData = $rvs->getRelatedVideoData( array( 'articleId' => 0, 'title' => $this->mId, 'source' => false ), $width, '', 0, '', $useJWPlayer, $autoplay);	// fifth param is empty to suppress ads
+				$videoData = $rvs->getRelatedVideoData( array( 'articleId' => 0, 'title' => $this->mId, 'source' => false ), $width, '', 0, '', $useJWPlayer, $autoplay, $inAjaxResponse);	// fifth param is empty to suppress ads
 				$embed = $videoData['embedCode'];
 				return $embed;
 				break;
@@ -2063,9 +2063,9 @@ EOD;
 			
 			$embed  = '<div id="'.$jwplayerData['playerId'].'"></div>'
 				. '<script type="text/javascript">'
-				. 'wgAfterContentAndJS.push( function() {'
+				. (empty($inAjaxResponse) ? 'wgAfterContentAndJS.push( function() {' : '')
 				. '	$.getScript("'.$jwplayerData['jwplayerjs'].'", function() { jwplayer("'.$jwplayerData['playerId'].'").setup('.$sJSON.'); });'
-				. '});'
+				. (empty($inAjaxResponse) ? '});' : '')
 				. '</script>';
 		}
 

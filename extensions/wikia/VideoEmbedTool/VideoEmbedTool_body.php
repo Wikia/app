@@ -178,7 +178,7 @@ class VideoEmbedTool {
 		$props['vname'] = $title->getText();
 
 		$props['metadata'] = implode( ",", $video->getData() );
-		$props['code'] = $video->getEmbedCode( VIDEO_PREVIEW, false, false, $props['provider'] == VideoPage::V_SCREENPLAY );
+		$props['code'] = $video->getEmbedCode( VIDEO_PREVIEW, false, false, $props['provider'] == VideoPage::V_SCREENPLAY, '', '', true );
 		$props['href'] = $title->getPrefixedText();
 
 		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
@@ -219,7 +219,7 @@ class VideoEmbedTool {
 			$props['metadata'] = '';
 		}
 		
-		$props['code'] = $video->getEmbedCode( VIDEO_PREVIEW, false, false );
+		$props['code'] = $video->getEmbedCode( VIDEO_PREVIEW, false, false, $props['provider'] == VideoPage::V_SCREENPLAY, '', '', true );
 		$props['oname'] = '';
 
 		return $this->detailsPage($props);
@@ -322,7 +322,7 @@ class VideoEmbedTool {
 							} else {
 								$props['metadata'] = '';
 							}
-							$props['code'] = $video->getEmbedCode( VIDEO_PREVIEW, false, false, $props['provider'] == VideoPage::V_SCREENPLAY );
+							$props['code'] = $video->getEmbedCode( VIDEO_PREVIEW, false, false, $props['provider'] == VideoPage::V_SCREENPLAY, '', '', true );
 							$props['oname'] = $name;
 
 							return $this->detailsPage($props);

@@ -729,8 +729,11 @@ function VET_displayDetails(responseText) {
 	VET_width = null;
 	$G('VideoEmbedBack').style.display = 'inline';
 
-	$G('VideoEmbed' + VET_curScreen).innerHTML = responseText;
-
+	// wlee: responseText could include <script>. Use jQuery to parse
+	// and execute this script
+	//$G('VideoEmbed' + VET_curScreen).innerHTML = responseText;
+	$('#VideoEmbed' + VET_curScreen).html(responseText);
+	
 	if($G('VideoEmbedThumb')) {
 		VET_orgThumbSize = null;
 		var image = $G('VideoEmbedThumb').firstChild;
