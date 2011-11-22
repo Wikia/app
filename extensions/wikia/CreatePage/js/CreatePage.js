@@ -30,7 +30,7 @@ var CreatePage = {
 		}
 
 		// Ignore middle-click. BugId:12544
-		if (e.which == 2) {
+		if (e && e.which == 2) {
 			return;
 		}
 
