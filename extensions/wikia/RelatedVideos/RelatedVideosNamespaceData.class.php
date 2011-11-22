@@ -1,18 +1,14 @@
 <?php
 
-/**
- * This class represents RelatedVideos data for an article that is stored in the namspace NS_RELATED_VIDEOS.
- */
-
 class RelatedVideosNamespaceData {
 
-	private $mData;
-	private $mId;
-	private $mExists;
-	private $mMemcacheKey;
-	private $oParser;
-	private $oParserOptions;
-	private $oFakeTitle;
+	protected $mData;
+	protected $mId;
+	protected $mExists;
+	protected $mMemcacheKey;
+	protected $oParser;
+	protected $oParserOptions;
+	protected $oFakeTitle;
 	public	$entries;
 
 	const CACHE_TTL = 86400;
@@ -23,7 +19,7 @@ class RelatedVideosNamespaceData {
 	const VIDEO_MARKER = '* ';
 	const GLOBAL_RV_LIST = 'RelatedVideosGlobalList';
 	
-	private function __construct( $id, Title $title = null ) {
+	protected function __construct( $id, Title $title = null ) {
 		$this->mId = $id;
 		$this->mTitle = ( $title ? $title : null );
 		$this->mData = null;
@@ -109,7 +105,7 @@ class RelatedVideosNamespaceData {
 	/**
 	 * Load RelatedVideos NS article data (try to use cache layer)
 	 */
-	private function load( $master = false ) {
+	protected function load( $master = false ) {
 		global $wgMemc;
 		
 		wfProfileIn(__METHOD__);
@@ -130,7 +126,6 @@ class RelatedVideosNamespaceData {
 
 			// parse wikitext with RelatedVideos NS data (stored as wikitext list)
 			$content = $article->getContent();
-
 			$lines = explode( "\n", $content );
 			$lists = array();
 			$lists[ self::BLACKLIST_MARKER ] = array();
@@ -187,7 +182,7 @@ class RelatedVideosNamespaceData {
 	/**
 	 * Make contents for RelatedVideosNamespace article out of mData
 	 */
-	private function serialize() {
+	protected function serialize() {
 
 		wfProfileIn( __METHOD__ );
 		$text = '';
@@ -211,7 +206,7 @@ class RelatedVideosNamespaceData {
 	 * @param Array $list
 	 * @return string wikitext
 	 */
-	private function serializeList(Array $list) {
+	protected function serializeList(Array $list) {
 
 		wfProfileIn( __METHOD__ );
 		$text = '';
@@ -405,7 +400,7 @@ class RelatedVideosNamespaceData {
 		return $status;
 	}
 
-	public function createEntry( $title, $isFromVideoWiki, $user = '', $date = '', $newData = '' ) {
+	public function createEntry( $title, $isFromVideoWiki = false, $user = '', $date = '', $newData = '' ) {
 
 		wfProfileIn( __METHOD__ );
 		$entry = array();
