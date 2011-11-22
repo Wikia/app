@@ -363,7 +363,7 @@ $dark-wiki: 1;
 						}
 						.answer-label {
 							margin-top: 0;
-						}						
+						}
 						&.hover .representation {
 							@include transform-scale(1);
 							@include box-shadow(0, 0, 5px, #333);
@@ -381,7 +381,7 @@ $dark-wiki: 1;
 					margin-left: -200px;
 					padding-top: 40px;
 					right: auto;
-					
+
 					.correct-answer-image {
 						@include box-shadow(0, 2px, 10px, #000, false, -5px);
 						@include linear-gradient($color-buttons, top, mix($color-buttons, #fff, 60%), 0, $color-buttons, 100%);
@@ -480,6 +480,20 @@ $dark-wiki: 1;
 	 			font-size: 12px;
 	 		}
 	 	}
+	 	.more-info {
+			margin-top: 320px;
+			position: relative;
+			text-align: center;
+			z-index: $base-z;
+			h2 {
+				border-bottom: none;
+			}
+			ul {
+				li {
+					margin: 10px 0;
+				}
+			}
+		}
 	}
 	.quiz-thanks {
 		display: none;
@@ -496,20 +510,6 @@ $dark-wiki: 1;
 			a {
 				color: $color-header-text;
 				text-decoration: underline;
-			}
-		}
-		.more-info {
-			margin-top: 320px;
-			position: relative;
-			text-align: center;
-			z-index: $base-z;
-			h2 {
-				border-bottom: none;
-			}
-			ul {
-				li {
-					margin: 10px 0;
-				}
 			}
 		}
 		.title-image {
