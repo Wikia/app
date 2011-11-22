@@ -52,10 +52,7 @@ function &wfGetCache( $inputType ) {
 
 	if ( $type == CACHE_MEMCACHED ) {
 		if ( !array_key_exists( CACHE_MEMCACHED, $wgCaches ) ) {
-			// Wikia change - author: wladek
-			// add configuration variable for memcached class name (see fb#14979)
-			global $wgMemCachedClass;
-			$wgCaches[CACHE_MEMCACHED] = new $wgMemCachedClass(
+			$wgCaches[CACHE_MEMCACHED] = new MemCachedClientforWiki(
 				array('persistant' => $wgMemCachedPersistent, 'compress_threshold' => 1500 ) );
 			$wgCaches[CACHE_MEMCACHED]->set_servers( $wgMemCachedServers );
 			$wgCaches[CACHE_MEMCACHED]->set_debug( $wgMemCachedDebug );
@@ -101,6 +98,17 @@ function &wfGetCache( $inputType ) {
 	}
 	/* Wikia change end */
 
+	/* Wikia change begin - @author: eloy */
+	if( defined( "CACHE_LIBMEMCACHED" ) ) {
+		if ( $type == CACHE_LIBMEMCACHED ) {
+			if ( !array_key_exists( CACHE_RIAK, $wgCaches ) ) {
+				$wgCaches[ CACHE_RIAK ] = new RiakCache;
+			}
+			$cache =& $wgCaches[ CACHE_RIAK ];
+		}
+	}
+	/* Wikia change end */
+	
 	if ( $cache === false ) {
 		if ( !array_key_exists( CACHE_NONE, $wgCaches ) ) {
 			$wgCaches[CACHE_NONE] = new FakeMemCachedClient;

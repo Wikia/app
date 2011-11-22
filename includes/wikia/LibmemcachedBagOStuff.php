@@ -20,6 +20,9 @@ class LibmemcachedBagOStuff extends BagOStuff {
 	
 	protected $cache = array();
 	
+	protected $uniqueId;
+	protected $memcached;
+	
 	/**
 	 * Memcache initializer
 	 *
@@ -31,7 +34,8 @@ class LibmemcachedBagOStuff extends BagOStuff {
 		global $wgMemCachedTimeout;
 		$this->timeout = intval( $wgMemCachedTimeout / 1000 );
 		$this->stats = array();
-		$this->persistent = $args['persistant'];
+		$this->persistent = $args['persistent'];
+		$this->uniqueId = uniqid('',true);
 		
 		// setup servers list
 		$list = $args['servers'];
@@ -43,6 +47,9 @@ class LibmemcachedBagOStuff extends BagOStuff {
 			}
 		}
 		$this->servers = $servers;
+		
+		// build memcached object
+		$this->getMemcachedObject();
 	}
 	
 	/**
@@ -58,8 +65,7 @@ class LibmemcachedBagOStuff extends BagOStuff {
 	public function add( $key, $val, $exp = 0 ) {
 		$this->prefixKeys($key);
 		unset($this->cache[$key]);
-//		xxlog("MEMC ADD    $key ".xxcl()."\n");
-		return $this->getMemcachedObject()->add($key,$val,$exp);
+		return $this->memcached->add($key,$val,$exp);
 	}
 	
 	/**
@@ -73,8 +79,8 @@ class LibmemcachedBagOStuff extends BagOStuff {
 	public function decr( $key, $amt = 1 ) {
 		$this->prefixKeys($key);
 		unset($this->cache[$key]);
-		$value = $this->getMemcachedObject()->decrement($key,$amt);
-		return isset($value) ? $value : null;
+		$value = $this->memcached->decrement($key,$amt);
+		return is_int($value) ? $value : null; // FIXME: compatibility with MWMemcached
 	}
 	
 	/**
@@ -88,8 +94,7 @@ class LibmemcachedBagOStuff extends BagOStuff {
 	public function delete( $key, $time = 0 ) {
 		$this->prefixKeys($key);
 		unset($this->cache[$key]);
-//		xxlog("MEMC DEL    $key ".xxcl()."\n");
-		return $this->getMemcachedObject()->delete($key,$time);
+		return $this->memcached->delete($key,$time);
 	}
 	
 	
@@ -103,22 +108,21 @@ class LibmemcachedBagOStuff extends BagOStuff {
 	public function get( $key ) {
 		$this->prefixKeys($key);
 		if (array_key_exists($key,$this->cache)) {
-//			xxlog("MEMC GET[C] $key ".xxcl()."\n");
 			return $this->cache[$key];
 		}
 		
-		$value = $this->getMemcachedObject()->get($key);
+		$value = $this->memcached->get($key);
 		
 		
-		switch ($this->getMemcachedObject()->getResultCode()) {
+		switch ($this->memcached->getResultCode()) {
 			case Memcached::RES_NOTFOUND:
 				// key doesn't exist
-//				xxlog("MEMC GET[M] $key ".xxcl()."\n");
+				// FIXME: compatibility with MWMemcached rather than BagOStuff
+				// some part of the code relies on this (eg. InterwikiDispatcher)
 				return null;
 			case Memcached::RES_SUCCESS:
 				// value has been found
 				$this->cache[$key] = $value;
-//				xxlog("MEMC GET[H] $key ".xxcl()."\n");
 				return $value;
 			default:
 				// error accessing server
@@ -135,7 +139,6 @@ class LibmemcachedBagOStuff extends BagOStuff {
 	 * @return  array
 	 */
 	public function get_multi( $keys ) {
-		@$this->stats['get_multi']++;
 		$this->prefixKeys($keys);
 		
 		$values = array();
@@ -149,7 +152,7 @@ class LibmemcachedBagOStuff extends BagOStuff {
 		}
 		
 		if (count($keys2) > 0) {
-			$values2 = $this->getMemcachedObject()->getMulti($keys);
+			$values2 = $this->memcached->getMulti($keys);
 			
 			$this->cache = array_merge( $this->cache, $values2 );
 			$values = array_merge( $values, $values2 );
@@ -167,11 +170,10 @@ class LibmemcachedBagOStuff extends BagOStuff {
 	 * @return  integer  New key value?
 	 */
 	public function incr( $key, $amt = 1 ) {
-		@$this->stats['incr']++;
 		$this->prefixKeys($key);
 		unset($this->cache[$key]);
-		$value = $this->getMemcachedObject()->increment($key,$amt);
-		return isset($value) ? $value : null;
+		$value = $this->memcached->increment($key,$amt);
+		return is_int($value) ? $value : null; // FIXME: compatibility with MWMemcached
 	}
 	
 	/**
@@ -184,32 +186,10 @@ class LibmemcachedBagOStuff extends BagOStuff {
 	 * @return  boolean
 	 */
 	public function replace( $key, $value, $exp = 0 ) {
-		@$this->stats['replace']++;
 		$this->prefixKeys($key);
 		$this->cache[$key] = $value;
-//		xxlog("MEMC REPL   $key ".xxcl()."\n");
-		$value = $this->getMemcachedObject()->replace($key,$value,$exp);
+		$value = $this->memcached->replace($key,$value,$exp);
 		return $value;
-	}
-	
-	/**
-	 * Passes through $cmd to the memcache server connected by $sock; returns
-	 * output as an array (null array if no output)
-	 *
-	 * NOTE: due to a possible bug in how PHP reads while using fgets(), each
-	 *       line may not be terminated by a \r\n.  More specifically, my testing
-	 *       has shown that, on FreeBSD at least, each line is terminated only
-	 *       with a \n.  This is with the PHP flag auto_detect_line_endings set
-	 *       to falase (the default).
-	 *
-	 * @param   resource $sock    Socket to send command on
-	 * @param   string   $cmd     Command to run
-	 *
-	 * @return  array    Output array
-	 * @access  public
-	 */
-	function run_command( $sock, $cmd ) {
-		throw new Exception("Not implemented");
 	}
 	
 	/**
@@ -223,18 +203,48 @@ class LibmemcachedBagOStuff extends BagOStuff {
 	 * @return  boolean  TRUE on success
 	 */
 	public function set( $key, $value, $exp = 0 ) {
-		@$this->stats['set']++;
 		$this->prefixKeys($key);
 		$this->cache[$key] = $value;
-//		xxlog("MEMC SET    $key ".xxcl()."\n");
-		return $this->getMemcachedObject()->set($key,$value,$exp);
+		return $this->memcached->set($key,$value,$exp);
 	}
+
+	public function lock( $key, $timeout = 0 ) {
+		$this->prefixKeys($key);
+		$lockKey = $this->getLockKey($key);
+		$cas = null;
+		$value = $this->memcached->getByKey($key,$lockKey,null,$cas);
+
+		if ($value && $value != $this->uniqueId) {
+			// someone else holds the lock
+			return false;
+		}
+
+		if ($value !== false) { // key exists - use cas
+			return $this->memcached->casByKey($cas,$key,$lockKey,$this->uniqueId,$timeout);
+		} else { // key doesn't exist - use add
+			return $this->memcached->addByKey($key,$lockKey,$this->uniqueId,$timeout);
+		}
+	}
+	
+	public function unlock( $key ) {
+		$this->prefixKeys($key);
+		$lockKey = $this->getLockKey($key);
+		$cas = null;
+		$value = $this->memcached->getByKey($key,$lockKey,null,$cas);
+		if ($value && $value == $this->uniqueId) {
+			return $this->memcached->casByKey($cas,$key,$lockKey,'',1); // 1 - doesn't need to persist
+		}
+		return false;
+	}
+	
 	
 	
 	
 	// NON-PUBLIC PART
 	
-	protected $memcached;
+	protected function getLockKey( $key ) {
+		return $key . ':--lock';
+	}
 	
 	protected function getPersistentId() {
 		return md5(serialize($this->servers));
@@ -293,6 +303,9 @@ class LibmemcachedBagOStuff extends BagOStuff {
 	}
 	
 	protected function unprefixKeys( &$multi ) {
+		if (empty($this->keyPrefix)) {
+			return $multi;
+		}
 		$l = strlen($this->keyPrefix);
 		$data = array();
 		foreach ($multi as $k => $v) {
@@ -303,11 +316,5 @@ class LibmemcachedBagOStuff extends BagOStuff {
 		}
 		return $data;
 	}
-
-
-
-
-
-
 
 }

@@ -675,6 +675,12 @@ $wgRiakDefaultNode = "default";
  */
 $wgRiakSessionNode = "default";
 
+/**
+ * libmemcached related stuff
+ */
+define( "CACHE_LIBMEMCACHED", 11 );
+$wgSessionsInLibmemcached = false;
+
 
 $wgAutoloadClasses[ "RiakClient" ] = "{$IP}/lib/riak/riak.php";
 $wgAutoloadClasses[ "RiakCache"  ] = "{$IP}/includes/wikia/RiakCache.php";
