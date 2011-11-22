@@ -288,7 +288,7 @@ class FounderEmails {
 	/* stats methods */
 	
 	public function getPageViews ( $cityID ) {
-		global $wgStatsDB, $wgStatsDBEnabled;
+		global $wgStatsDB, $wgStatsDBEnabled, $wgDevelEnvironment;
 		wfProfileIn( __METHOD__ );
 		
 		$today = date( 'Ymd', strtotime('-1 day') );
@@ -297,14 +297,23 @@ class FounderEmails {
 		if ( !empty( $wgStatsDBEnabled ) ) {
 			$db = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
 
-			$oRow = $db->selectRow( 
-				array( 'page_views_wikia' ), 
-				array( 'pv_views as cnt' ),
-				array( 'pv_city_id' => $cityID, 'pv_use_date' => $today),
-				__METHOD__
-			);
+			if ( $wgDevelEnvironment ) {	// for testing
+				$oRow = $db->selectRow( 
+					array( 'page_views' ),
+					array( 'pv_views as cnt' ),
+					array( 'pv_city_id' => $cityID, 'pv_use_date' => $today),
+					__METHOD__
+				);
+			} else {
+				$oRow = $db->selectRow( 
+					array( 'google_analytics.pageviews' ),
+					array( 'pageviews as cnt' ),
+					array( 'city_id' => $cityID, 'date' => $today),
+					__METHOD__
+				);
+			}
 			// Only returns one row, this is just for convenience
-			$views = ( isset( $oRow->cnt ) ) ? $oRow->cnt : 0;
+			$views = ( isset( $oRow->cnt ) ) ? $oRow->cnt*10 : 0;
 		}
 		
 		wfProfileOut( __METHOD__ );		
