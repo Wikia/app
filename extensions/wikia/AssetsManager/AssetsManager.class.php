@@ -192,7 +192,7 @@ class AssetsManager {
 		return sprintf($wgAssetsManagerQuery,
 			/* 1 */ $type,
 			/* 2 */ $oid,
-			/* 3 */ urlencode(http_build_query($params)),
+			/* 3 */ !empty($params) ? urlencode(http_build_query($params)) : '-',
 			/* 4 */ $this->mCacheBuster);
 	}
 
