@@ -30,8 +30,8 @@ class Chat {
 	
 		$errorMsg = "";
 		$PERMISSION_TO_KICKBAN = "chatmoderator";
+		$userToKickBan = User::newFromName($userNameToKickBan);
 		if( ($userToKickBan instanceof User) && $kickingUser->isAllowed( $PERMISSION_TO_KICKBAN ) ){
-			$userToKickBan = User::newFromName($userNameToKickBan);
 			if( $userToKickBan->isAllowed( $PERMISSION_TO_KICKBAN ) ){
 				$errorMsg .= wfMsg('chat-ban-cant-ban-moderator')."\n";
 			} else {
