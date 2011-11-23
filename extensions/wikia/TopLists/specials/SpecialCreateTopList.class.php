@@ -140,9 +140,7 @@ class SpecialCreateTopList extends SpecialPage {
 					foreach ( $itemsNames as $index => $itemName ) {
 						$lcName = strtolower( $itemName );
 						$index++;//index 0 refers to the empty template item in the form
-						if ( strpos( $itemName, '/' ) !== false ) {
-							$errors[ "item_{$index}" ] = array( wfMsg( 'toplists-error-backslash-not-allowed' ) );
-						} elseif ( in_array( $lcName, $alreadyProcessed) ) {
+						if ( in_array( $lcName, $alreadyProcessed) ) {
 							$errors[ "item_{$index}" ] = array( wfMsg( 'toplists-error-duplicated-entry' ) );
 						} else {
 							$alreadyProcessed[] = $lcName;
