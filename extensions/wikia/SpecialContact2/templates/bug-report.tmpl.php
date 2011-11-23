@@ -6,11 +6,10 @@
 <input name="wpEmail" type="hidden" value="<?= $encEmail ?>" />
 <input name="wpUserName" type="hidden" value="<?= $encName ?>" />
 
-<?php if ( $isLoggedIn ) { ?>
-<?= wfMsgExt( 'specialcontact-logged-in-as', array( 'parse' ), $encName ) ?>
-
-<?= wfMsgExt( 'specialcontact-mail-on-file', array( 'parse' ), $encEmail ) ?>
-<?php } ?>
+<?php if ( $isLoggedIn ) {
+	echo wfMsgExt( 'specialcontact-logged-in-as', array( 'parse' ), $encName );
+	echo wfMsgExt( 'specialcontact-mail-on-file', array( 'parse' ), $encEmail );
+} ?>
 
 <p>
 <label for="wpWiki"><?= wfMsg( 'specialcontact-label-bug-link' ) ?></label>
