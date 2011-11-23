@@ -162,6 +162,7 @@ class ChatAjax {
 		
 		$retVal = array();
 		$userToBan = $wgRequest->getVal('userToBan');
+
 		if(empty($userToBan)){
 			$retVal["error"] = wfMsg('chat-missing-required-parameter', 'usertoBan');
 		} else {
@@ -171,7 +172,7 @@ class ChatAjax {
 			} else {
 				$doKickAnyway = false; // might get changed by reference
 				$result = Chat::banUser($userToBan, $doKickAnyway, $kickingUser);
-				$retVal["doKickAnyway"] = ($doKickAnyway?"1":"0");	
+				$retVal["doKickAnyway"] = ($doKickAnyway? 1:0);	
 			}
 			if($result === true){
 				$retVal["success"] = true;
