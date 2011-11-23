@@ -142,15 +142,12 @@ class FeedRenderer {
 		switch($row['type']) {
 			case 'new':
 				switch($row['ns']) {
-					// blog post
-					case 500:
+					case NS_BLOG_ARTICLE:
 						$msgType = 'posted';
 						break;
 
-					// blog comment
-					case 501:
-					// message wall
-					case 1001:
+					case NS_BLOG_ARTICLE_TALK:
+					case NS_USER_WALL_MESSAGE:
 						$msgType = 'comment';
 						break;
 
