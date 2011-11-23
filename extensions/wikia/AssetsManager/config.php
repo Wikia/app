@@ -94,6 +94,7 @@ $config['oasis_shared_js'] = array(
 		'//skins/oasis/js/isTouchScreen.js',
 		'//skins/oasis/js/tabs.js',
 		'//skins/oasis/js/SharingToolbar.js',
+		'//skins/oasis/js/ContributeMenu.js',
 	)
 );
 
