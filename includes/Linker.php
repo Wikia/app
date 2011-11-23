@@ -645,7 +645,7 @@ class Linker {
 
 		/* Wikia change begin - @author: Marooned */
 		/* Images SEO project */
-		if (Wikia::isOasis()) {
+		if (Wikia::isOasis() || Wikia::isWikiaMobile()) {
 			$wrapperId = preg_replace('/[^a-z0-9_]/i', '-', Sanitizer::escapeId($title->getText()));
 			$s = "<figure class=\"thumb t{$fp['align']} thumbinner\" style=\"width:{$outerWidth}px;\">";
 		} else {
@@ -682,7 +682,7 @@ class Linker {
 		}
 		/* Wikia change begin - @author: Marooned, Federico "Lox" Lucignano */
 		/* Images SEO project */
-		if (Wikia::isOasis()) {
+		if (Wikia::isOasis() || Wikia::isWikiaMobile()) {
 			$s .= $zoomicon;
 
 			if( !empty( $fp[ 'caption' ] ) ) $s .= '<figcaption class="thumbcaption">' . $fp['caption'] . '</figcaption>';
@@ -741,7 +741,7 @@ class Linker {
 					$nofollow = array('rel' => "nofollow" );
 				}
 				// wikia changes end
-
+				
 				wfProfileOut( __METHOD__ );
 				return Html::element( 'a', array(
 					'href' => $href,
@@ -948,11 +948,11 @@ class Linker {
 	 */
 	function userTalkLink( $userId, $userText ) {
 		global $wgEnableWallExt;
-		
+
 		if( !empty($wgEnableWallExt) ) {
 			$messageWallPage = Title::makeTitle( NS_USER_WALL, $userText );
 			$link = $this->link(
-				$messageWallPage, 
+				$messageWallPage,
 				wfMsgHtml( 'wall-message-wall-short' ),
 				array(),
 				array(),

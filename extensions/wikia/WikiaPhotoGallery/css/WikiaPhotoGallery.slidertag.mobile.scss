@@ -102,7 +102,7 @@ $descriptionTextColor: #FFF;
 	right: 0;
 }
 
-@media ( orientation: landscape ) {
+@media screen and (min-width: 321px) and ( orientation: landscape ) {
 
 	.WikiaPhotoGalleryPreview {
 		width: 470px;
@@ -149,7 +149,7 @@ $descriptionTextColor: #FFF;
 	}
 }
 
-@media (min-width: 481px) {
+@media screen and (min-width: 481px) {
 	.WikiaPhotoGalleryPreview {
 		width: 480px;
 		height: 330px;
@@ -160,7 +160,7 @@ $descriptionTextColor: #FFF;
 	}
 }
 
-@media (min-width: 481px) and ( orientation: landscape ) {
+@media screen and (min-width: 481px) and ( orientation: landscape ) {
 	.WikiaPhotoGalleryPreview {
 		height: 262px;
 		.wikiaPhotoGallery-slider-body {
@@ -170,7 +170,7 @@ $descriptionTextColor: #FFF;
 }
 
 
-@media ( min-width: 769px ) {
+@media screen and ( min-width: 769px ) {
 	.WikiaPhotoGalleryPreview {
 		width: 660px;
 		height: 430px;
@@ -181,7 +181,7 @@ $descriptionTextColor: #FFF;
 	}
 }
 
-@media (min-width: 769px) and ( orientation: landscape ) {
+@media screen and (min-width: 769px) and ( orientation: landscape ) {
 	.WikiaPhotoGalleryPreview {
 		height: 360px;
 		.wikiaPhotoGallery-slider-body {
@@ -189,4 +189,3 @@ $descriptionTextColor: #FFF;
 		}
 	}
 }
-

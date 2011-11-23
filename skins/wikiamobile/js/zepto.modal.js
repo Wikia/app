@@ -4,11 +4,12 @@
 	$._position = 1;
 	$._timer =  null;
 	$._caption = false;
+	$._hideBarsAfter = 5500;
 
 	$._createModal =  function() {
 		var modal = '<div id="modalWrapper">\
 				<div id="modalTopBar"></div>\
-				<div id="modalClose"></div>\
+				<div id="modalClose">&times;</div>\
 				<div id="modalContent"></div>\
 				<div id="modalFooter"></div>\
 			</div>',
@@ -22,7 +23,7 @@
 		this._modalContent = $('#modalContent');
 		this._modalFooter = $('#modalFooter');
 		this._allToHide = this._modalTopBar.add(this._modalClose).add(this._modalFooter);
-		this._thePage = $('#navigation, #WikiaPage, #wikiaFooter, #leftPane');
+		this._thePage = $('#navigation, #WikiaPage, #wikiaFooter');
 
 
 		$(document.body).delegate('#modalClose', 'click', function() {
@@ -70,13 +71,14 @@
 		clearTimeout(this._timer);
 		this._timer = setTimeout(function() {
 			allToHide.addClass('hidden');
-		}, 3500);
+		}, this._hideBarsAfter);
 	};
 
 	$.closeModal =  function() {
 		if(this._modalCreated) {
 			this.hideModal();
-			this._allToHide.html('');
+			this._modalContent.html('');
+			this._modalFooter.html('');
 		}
 	};
 

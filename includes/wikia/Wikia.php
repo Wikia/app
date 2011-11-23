@@ -1401,6 +1401,23 @@ class Wikia {
 	}
 
 	/**
+	 * Returns true if the currently set skin is WikiaMobile.  Do not call this before the skin
+	 * has been set on wgUser.
+	 */
+	public static function isWikiaMobile(){
+		wfProfileIn( __METHOD__ );
+		global $wgUser;
+		static $isWikiaMobile = null;
+
+		if (is_null($isWikiaMobile)) {
+			$isWikiaMobile = (get_class($wgUser->getSkin()) == 'SkinWikiaMobile');
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $isWikiaMobile;
+	}
+
+	/**
 	 * Returns true. Replace UNSUBSCRIBEURL with message and link to Special::Unsubscribe page
 	 */
 	static public function ComposeMail( /*MailAddress*/ $to, /*String*/&$body, /*String*/&$subject ) {
