@@ -20,7 +20,7 @@ class Signup extends SpecialPage {
 			}			
 		} */
 		
-		$form->executeAsPage(false,"");
+		$form->executeAsPage();
 	}
 
 	static function TrackingOnSuccess (&$out) {

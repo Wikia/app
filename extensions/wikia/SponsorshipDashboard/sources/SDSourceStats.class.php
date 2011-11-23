@@ -271,7 +271,7 @@ class SponsorshipDashboardSourceStats extends SponsorshipDashboardSource {
 
 			try {
 				$tmpSerieNames = @unserialize( $aParams[ self::SD_PARAMS_STATS_SERIES_NAMES ] );
-			} catch ( MyException $e) {
+			} catch ( MWException $e) {
 				$tmpSerieNames = false;
 			}
 
