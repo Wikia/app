@@ -3,6 +3,14 @@
 <h2><?= wfMsg( 'specialcontact-form-header' ) ?></h2>
 
 <form id="contactform" method="post" action="" enctype="multipart/form-data">
+<input name="wpEmail" type="hidden" value="<?= $encEmail ?>" />
+<input name="wpUserName" type="hidden" value="<?= $encName ?>" />
+
+<?php if ( $isLoggedIn ) { ?>
+<?= wfMsgExt( 'specialcontact-logged-in-as', array( 'parse' ), $encName ) ?>
+
+<?= wfMsgExt( 'specialcontact-mail-on-file', array( 'parse' ), $encEmail ) ?>
+<?php } ?>
 
 <p>
 <label for="wpWiki"><?= wfMsg( 'specialcontact-label-bug-link' ) ?></label>
