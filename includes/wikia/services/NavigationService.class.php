@@ -236,7 +236,7 @@ class NavigationService {
 					$node[ self::PARENT_INDEX ] = $parentIndex;
 					$node[ self::DEPTH ] = $depth;
 
-					$this->handleExtraWords($node, $nodes);
+					$this->handleExtraWords($node, $nodes, $depth);
 
 					$nodes[$node[ self::PARENT_INDEX ]][ self::CHILDREN ][] = $i+1;
 					$nodes[$i+1] = $node;
@@ -335,7 +335,7 @@ class NavigationService {
 	/**
 	 * @author: Inez Korczyński
 	 */
-	private function handleExtraWords(&$node, &$nodes) {
+	private function handleExtraWords(&$node, &$nodes, $depth) {
 		wfProfileIn( __METHOD__ );
 
 		$originalLower = strtolower($node[ self::ORIGINAL ]);
@@ -360,10 +360,7 @@ class NavigationService {
 			foreach($data as $key => $val) {
 				$title = Title::newFromId($val);
 				if(is_object($title)) {
-					$node[ self::CHILDREN ][] = $this->lastExtraIndex;
-					$nodes[$this->lastExtraIndex][ self::TEXT ] = $title->getText();
-					$nodes[$this->lastExtraIndex][ self::HREF ] = $title->getLocalUrl();
-					$this->lastExtraIndex++;
+					$this->addChildNode($node, $nodes, $title->getText(), $title->getLocalUrl());
 				}
 			}
 
@@ -381,16 +378,24 @@ class NavigationService {
 				//http://bugs.php.net/bug.php?id=46322 count(false) == 1
 				if (!empty($data)) {
 					foreach($data as $val) {
-						$node[ self::CHILDREN ][] = $this->lastExtraIndex;
-						$nodes[$this->lastExtraIndex][ self::TEXT ] = $val[ self::TEXT ];
-						$nodes[$this->lastExtraIndex][ self::HREF ] = $val['url'];
-						$this->lastExtraIndex++;
+						$this->addChildNode($node, $nodes, $val[ self::TEXT ], $val['url']);
 					}
 				}
 			}
 		}
 
 		wfProfileOut( __METHOD__ );
+		return true;
+	}
+
+	/**
+	 * Add menu item as a child of given node
+	 */
+	private function addChildNode(&$node, &$nodes, $text, $url) {
+		$node[ self::CHILDREN ][] = $this->lastExtraIndex;
+		$nodes[$this->lastExtraIndex][ self::TEXT ] = $text;
+		$nodes[$this->lastExtraIndex][ self::HREF ] = $url;
+		$this->lastExtraIndex++;
 	}
 
 	/**
