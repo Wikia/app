@@ -248,4 +248,23 @@ class NavigationServiceTest extends PHPUnit_Framework_TestCase {
 		}
 
 	}
+
+	function testParseErrors() {
+		global $wgOasisNavV2;
+		if (empty($wgOasisNavV2)) {
+			$this->markTestSkipped();
+			return;
+		}
+
+		$service = new NavigationService();
+		$this->assertEmpty($service->getErrors());
+
+		// magic words are not allowed on level #1
+		$nodes = $service->parseText("*#category1");
+		$this->assertTrue(count($service->getErrors()) == 1);
+
+		// magic words are  allowed on level #2
+		$nodes = $service->parseText("*foo\n**#category1");
+		$this->assertEmpty($service->getErrors());
+ 	}
 }
