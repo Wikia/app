@@ -294,7 +294,7 @@ html {
   z-index: 10;
 
   //fixes for fluid content
-  div > div > div, .tvetnone {
+  .tvetnone {
 	width: 100% !important;
   }
 
