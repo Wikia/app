@@ -328,6 +328,31 @@
 			background: none;
 			@include linear-gradient(darken($color-secondary-button, 4%), top, darken($color-secondary-button-highlight, 4%), 35%, darken($color-secondary-button, 4%), 65%);
 		}
+
+		.share-button {
+			padding: 1px 18px 0 9px;
+			position: relative;
+			.share-dot {
+				background-color: $color-buttons;
+				display: block;
+				height: 7px;
+				position: absolute;
+				right: 7px;
+				top: 7px;
+				width: 7px;
+				@include border-radius(7px);
+				@include box-shadow(0px, 0px, 4px, $color-buttons);
+			}
+			.share-pixel {
+				background-color: mix($color-buttons, #fff, 70%);
+				display: block;
+				height: 2px;
+				position: absolute;
+				right: 10px;
+				top: 9px;
+				width: 2px;
+			}
+		}
 	}
 }
 

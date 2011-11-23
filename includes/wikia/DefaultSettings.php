@@ -203,6 +203,7 @@ $wgAutoloadClasses['PagesOnWikiModule'] = $IP.'/skins/oasis/modules/PagesOnWikiM
 $wgAutoloadClasses['EditPageModule'] = $IP.'/skins/oasis/modules/EditPageModule.class.php';
 $wgAutoloadClasses['HuluVideoPanelModule'] = $IP.'/skins/oasis/modules/HuluVideoPanelModule.class.php';
 $wgAutoloadClasses['ContributeMenuModule'] = $IP.'/skins/oasis/modules/ContributeMenuModule.class.php';
+$wgAutoloadClasses['ShareButtonModule'] = $IP.'/skins/oasis/modules/ShareButtonModule.class.php';
 $wgAutoloadClasses['WikiNavigationModule'] = $IP.'/skins/oasis/modules/WikiNavigationModule.class.php';
 $wgAutoloadClasses['SharingToolbarModule'] = $IP.'/skins/oasis/modules/SharingToolbarModule.class.php';
 
