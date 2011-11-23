@@ -156,9 +156,9 @@ HEADER;
 	 * @return bool return true
 	 */
 	public static function onEditPageMakeGlobalVariablesScript(Array $vars) {
-		global $wgTitle;
+		global $wgTitle, $wgOasisNavV2;
 
-		if (self::isWikiNavMessage($wgTitle)) {
+		if (self::isWikiNavMessage($wgTitle) && !empty($wgOasisNavV2)) {
 			$vars['wgIsWikiNavMessage'] = true;
 		}
 
