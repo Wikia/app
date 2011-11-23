@@ -19,11 +19,11 @@ var WikiaMobile = {
 
 	handleAds: function() {
 		var hideOnTimeout = setTimeout( function() {
-			$( window ).unbind( 'touchend' );
+			$( window ).unbind( 'touchstart' );
 			WikiaMobile.moveAd();
 		}, 15000 );
 
-		$( document.body ).one( 'touchend', function() {
+		$( document.body ).one( 'touchstart', function() {
 			if ( hideOnTimeout ) clearTimeout( hideOnTimeout );
 			WikiaMobile.moveAd();
 		});
@@ -40,9 +40,9 @@ var WikiaMobile = {
 			var element = content[i];
 			if ( element.nodeName === 'H2' ) {
 				if ( firstH2 ) {
-					mainContent += '<button id="showAll" class="collapsed">Show All</button>' + element.outerHTML + '<section class=\"articleSection\">';
+					mainContent += element.outerHTML + '<section class="articleSection">';
 				} else {
-					mainContent += '</section>' + element.outerHTML + '<section class=\"articleSection\">';
+					mainContent += '</section>' + element.outerHTML + '<section class="articleSection">';
 				}
 				firstH2 = false;
 			} else if ( element.nodeName === 'OBJECT' ) {
@@ -88,25 +88,11 @@ var WikiaMobile = {
 			}
 		});
 
-		$( '#WikiaMainContent > h2' ).append( '<span class=\"arrow\"></span>' );
+		$( '#WikiaMainContent > h2' ).append( '<span class=\"chevron\"></span>' );
 
 		$( document.body ).delegate( '#WikiaMainContent > h2', 'click', function() {
 			$(this).toggleClass('open').next().toggleClass('open');
 
-		});
-
-		$( document.body ).delegate( '#showAll', 'click', function() {
-			var showAll = $( '#showAll' ),
-				articleSection = $( '.articleSection' );
-
-			if ( showAll.hasClass( 'collapsed' ) ) {
-				articleSection.addClass( 'open' );
-				showAll.text( 'Hide All' );
-			} else {
-				articleSection.removeClass( 'open' );
-				showAll.text( 'Show All' );
-			};
-			showAll.toggleClass( 'collapsed' );
 		});
 
 		$( document.body ).delegate( '#WikiaPage', 'swipeLeft', function() {
@@ -121,12 +107,22 @@ var WikiaMobile = {
 			position = 1;
 			$( '#leftPane' ).css( { 'display': 'none', 'opacity': '0' } );
 		});
+
+		$( document.body ).delegate( '.thumb', 'click', function(event) {
+			event.preventDefault();
+			var thumb = $(this);
+
+			$.openModal({
+				html: '<div class="fullScreenImage" style=background-image:url("' + thumb.children('.image').first().attr('href') + '")></div>' ,
+				caption: thumb.children('.thumbcaption').html()
+			})
+		});
 	}
 }
 
 $(function() {
 	WikiaMobile.hideURLBar();
 	WikiaMobile.wrapArticles();
-	WikiaMobile.handleAds();
+	//WikiaMobile.handleAds();
 	WikiaMobile.init();
 });

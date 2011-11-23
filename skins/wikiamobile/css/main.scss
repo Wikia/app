@@ -156,22 +156,20 @@ html {
 
     //images
     .thumb {
+	display: block;
 	text-align: center;
 	margin: 5px;
 
-	.thumbinner {
-		display: inline-block;
-	}
-
 	.thumbcaption {
+		display: block;
 		color: #444;
 		border: 1px solid #E3E3E3;
-		padding: 0 5px;
-		margin-top: -5px;
+		padding: 10px 5px;
+		margin: -5px auto 0 auto;
 		box-shadow: 0 0 10px #DDD;
 		-webkit-box-sizing: border-box;
 		box-sizing: border-box;
-		line-height: 2em;
+		max-width: 300px;
 	}
     }
     h1 {
@@ -234,16 +232,6 @@ html {
     color: white;
     -webkit-transition: all 0.5s;
     z-index: 9999;
-
-    &.up {
-      position: absolute;
-      bottom: 0;
-
-      &.hidden {
-        opacity: 0;
-        bottom: -200px;
-      }
-    }
   }
 }
 
@@ -312,20 +300,24 @@ html {
       width: 100%;
       padding: 5px;
       border-bottom: 1px solid grey;
+      color: #55ACE1;
+      font-weight: normal;
 
       &.open{
-        .arrow {
-          border-top: none;
-          border-bottom: 8px solid $arrowcolor;
-          border-left: 8px solid rgba( 0, 0, 0, 0 );
-          border-right: 8px solid rgba( 0, 0, 0, 0 );
+        .chevron {
+		background-image: url("/skins/wikiamobile/images/close_chev.png");
         }
       }
 
-      .arrow {
+      .chevron {
         position: relative;
         right: 30px;
         float: right;
+	width: 30px;
+	height: 30px;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-image: url("/skins/wikiamobile/images/open_chev.png");
       }
   }
 
