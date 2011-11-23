@@ -11,10 +11,10 @@ var WikiaButtons = {
 		//Events
 		WikiaButtons.add(WikiaButtons.menuButtons);
 	},
-	
+
 	add: function( e, opts ) {
 		 var defaults = {
-		  click: WikiaButtons.click 
+		  click: WikiaButtons.click
 		 };
 		 var s = $.extend({},defaults,opts||{});
 		 e .unbind('.wikiabutton')
@@ -23,7 +23,7 @@ var WikiaButtons = {
 		  .bind('mouseleave.wikiabutton',WikiaButtons.mouseout)
 		  .bind('click.wikiabutton',s.click);
 	},
-	
+
 	setup: function() {
 		//This function is run only once per button
 		$(this).data('menu', $(this).find("ul"));
@@ -42,10 +42,8 @@ var WikiaButtons = {
 
 					menu.css("min-width", width);
 				}
-				$().log(this);
-				
+
 				$(this).toggleClass("active");
-				$().log(this);
 			}
 		}
 		else{
@@ -56,11 +54,11 @@ var WikiaButtons = {
 
 	clickToggle: function(event) {
 		var m = $('>li>ul',$(this));
-		if (m.length == 0 || $.contains(m[0],event.target))	
+		if (m.length == 0 || $.contains(m[0],event.target))
 			return;
 		$(this).toggleClass("active");
 	},
-	
+
 	mouseover: function() {
 
 		//Stop mouseout timer if running
