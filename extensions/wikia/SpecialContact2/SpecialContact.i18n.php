@@ -200,7 +200,7 @@ If you prefer to use regular e-mail or have attachments, you can contact us at [
 	'specialcontact-label-rename-account-confirm' => 'I confirm that the spelling and punctuation for my new name is correct',
 	'specialcontact-lable-rename-account-read-help' => 'I have read the [[Help:Changing your username|help page on renaming my account]]',
 	'specialcontact-form-header' => 'Contact Wikia',
-	'specialcontact-logged-in-as' => 'You are logged in as $1. [[Special:Logout|Not you?]]',
+	'specialcontact-logged-in-as' => 'You are logged in as $1. [[Special:UserLogout|Not you?]]',
 	'specialcontact-mail-on-file' => 'Your e-mail is set to $1. [[Special:Preferences|Do you wish to change it?]]',
 
 	/* errors */
