@@ -433,7 +433,6 @@ var WikiHeaderV2 = {
 				return false;
 			}
 			else {
-				$('#publish').remove();
 				returnVal = false;
 				WikiHeaderV2.log('menu level #1 not valid');
 			}
@@ -458,7 +457,6 @@ var WikiHeaderV2 = {
 			menu.hide();
 
 			if (widthLevelSecond > maxWidth) {
-				$('#publish').remove();
 				returnVal = false;
 				WikiHeaderV2.log('menu level #2 not valid');
 			}
@@ -491,15 +489,27 @@ $(function() {
 			previewNode.removeClass('WikiaArticle');
 			WikiHeaderV2.init(true);
 			var firstMenuValid = WikiHeaderV2.firstMenuValidator(),
-				secondMenuValid = WikiHeaderV2.secondMenuValidator();
+				secondMenuValid = WikiHeaderV2.secondMenuValidator(),
+				menuParseError = !!previewNode.find('nav > ul').attr('data-parse-errors'),
+				errorMessages = [];
+
+			if (menuParseError) {
+				errorMessages.push($.msg('oasis-navigation-v2-magic-word-validation'));
+			}
+
 			if (!firstMenuValid && !secondMenuValid) {
-				alert($.msg('oasis-navigation-v2-level12-validation'));
+				errorMessages.push($.msg('oasis-navigation-v2-level12-validation'));
 			}
 			else if (!firstMenuValid) {
-				alert($.msg('oasis-navigation-v2-level1-validation'));
+				errorMessages.push($.msg('oasis-navigation-v2-level1-validation'));
 			}
 			else if (!secondMenuValid) {
-				alert($.msg('oasis-navigation-v2-level2-validation'));
+				errorMessages.push($.msg('oasis-navigation-v2-level2-validation'));
+			}
+
+			if (errorMessages.length > 0) {
+				$('#publish').remove();
+				alert(errorMessages.join("\n\n"));
 			}
 		});
 
