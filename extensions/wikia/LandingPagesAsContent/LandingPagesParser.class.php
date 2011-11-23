@@ -40,7 +40,7 @@ class LandingPagesParser {
 	}
 	
 	public function onArticleFromTitle( &$title, &$article ) {
-		if( $title->exists() ){
+		if( $title->exists() &&  $title->getNamespace() !=  NS_FILE && $title->getNamespace() !=  NS_CATEGORY ){
 			$key = $this->generateCacheKey( $title->getArticleId() );
 			$this->switches = $this->app->wg->memc->get( $key );
 			
