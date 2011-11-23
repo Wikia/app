@@ -1,10 +1,202 @@
+//dependencies
 @import "variables.scss";
-@import "MainPage.scss";
+@import "main_page.scss";
+@import "infobox.scss";
+@import "images.scss";
+@import "footer.scss";
 @import "zepto.modal.scss";
 
+//mixins
+@import "mixins/transition.scss";
+
+html {
+	border: none;
+	padding: 0;
+	margin: 0;
+	//cursor: pointer;
+}
+
+body {
+    background-color: $page-background-color;
+    color: $page-text-color;
+	font-family: helvetica, android, sans-serif;
+    margin: 0;
+	
+	//avoid webkit's automatic text adjustment
+    -webkit-text-size-adjust: none;
+}
+
+#WikiaMainContentHeader {
+	border-bottom: 1px solid $box-border-color;
+	padding: $page-padding;
+	
+	h1{
+		margin:0;
+		padding:0;
+	}
+}
+
+.arrow {
+	font-size: 0;
+	line-height: 0;
+	width: 0;
+	display: block;
+	border-bottom: none;
+	border-top: 8px solid $arrowcolor;
+	border-left: 8px solid rgba( 0, 0, 0, 0 );
+	border-right: 8px solid rgba( 0, 0, 0, 0 );
+}
+
+ul {
+  list-style-type: none;
+}
+
 a {
-	color: #55ACE1;
+	color: $link-color;
 	text-decoration: none;
+}
+
+//ads
+#adPlace {
+  width: 100%;
+  height: 50px;
+  z-index: $top-layer-z-index;
+
+  #adWrapper {
+    opacity: 1;
+    width: 100%;
+    height: 50px;
+    background-color: red;
+    color: white;
+    @include transition(all 0.5s);
+    z-index: $top-layer-z-index + 1;
+  }
+}
+
+#showAll{
+	width: 100px;
+	height: 40px;
+}
+
+#leftPane {
+	@include transition(all 0.5s);
+	background-color: #494949;
+	color: #C6C6C6;
+	display: none;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	opacity: 0;
+}
+
+#article-comments {
+	display: none;
+	
+	&.open {
+		display: block;
+	}
+}
+
+#WikiaArticleComments {
+	.controls {
+		display: none;
+	}
+}
+
+#WikiaPage {
+	overflow-x: hidden;
+}
+
+#WikiaMainContent{
+  font-size: medium;
+  padding: $page-padding;
+  z-index: 10;
+
+  //fixes for fluid content
+  .tvetnone {
+	width: 100% !important;
+	text-align: center;
+  }
+
+  //end of fluiding thead content
+  & > h2, #article-comments-counter-header {
+      padding: 5px;
+      border-bottom: 1px solid grey;
+      color: #55ACE1;
+      font-weight: normal;
+
+      &.open{
+        .chevron {
+		background-image: url("/skins/wikiamobile/images/close_chev.png");
+        }
+      }
+
+      .chevron {
+        position: relative;
+        right: 30px;
+        float: right;
+		cursor: pointer;
+		width: 30px;
+		height: 30px;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-image: url("/skins/wikiamobile/images/open_chev.png");
+      }
+  }
+
+  .editsection {
+    display: none;
+  }
+
+  .articleSection {
+    display: none;
+
+    &.open {
+      display: block;
+    }
+  }
+
+  table#toc {
+    display: none;
+    //TODO: get rid of TOC
+  }
+  
+  div{
+    //temporary fix for slideshows
+    &.wikia-slideshow-wrapper{
+      width: auto !important;
+
+      div.wikia-slideshow-images-wrapper {
+        ul {
+          &.wikia-slideshow-images {
+            width: auto !important;/* is an inline style, no other way to force that, sorry ;) */
+            height: auto !important;/* is an inline style, no other way to force that, sorry ;) */
+          }
+        }
+      }
+    }
+  }
+  
+  .searchresults, .search-types {
+    ul {
+      padding: 3px;
+
+      li {
+        border: 1px solid #e3e3e3;
+        border-radius: 6px;
+        margin: 5px 3px;
+        padding: 3px;
+        -webkit-box-shadow: 0 0 8px #e4e4e4;
+
+        a {
+          display: block;
+          width: 100%;
+        }
+      }
+    }
+  }
 }
 
 //navigation
@@ -48,7 +240,7 @@ a {
         overflow: hidden;
         opacity: 0;
         clear: both;
-        -webkit-transition: opacity 0.4s ease;
+        @include transition(opacity 0.4s ease);
 
         &.openTab {
           height: auto;
@@ -140,256 +332,6 @@ a {
   ::-webkit-input-placeholder {
     color: grey;
   }
-}
-
-html {
-  border: none;
-  padding: 0;
-  margin: 0;
-  cursor: pointer;
-
-  body {
-    background-color: $page-background-color;
-    color: #848484;
-    margin: 0;
-    -webkit-text-size-adjust: none;
-
-    //images
-    .thumb {
-	display: block;
-	text-align: center;
-	margin: 5px;
-
-	.thumbcaption {
-		display: block;
-		color: #444;
-		border: 1px solid #E3E3E3;
-		padding: 10px 5px;
-		margin: -5px auto 0 auto;
-		box-shadow: 0 0 10px #DDD;
-		-webkit-box-sizing: border-box;
-		box-sizing: border-box;
-		max-width: 300px;
-	}
-    }
-    h1 {
-      border-bottom: 1px solid grey;
-    }
-
-    .arrow {
-      font-size: 0;
-      line-height: 0;
-      width: 0;
-      display: block;
-      border-bottom: none;
-      border-top: 8px solid $arrowcolor;
-      border-left: 8px solid rgba( 0, 0, 0, 0 );
-      border-right: 8px solid rgba( 0, 0, 0, 0 );
-    }
-  }
-}
-
-//Footer
-#wikiaFooter {
-  width: 100%;
-  height: 170px;
-  background-color: $footerBackground;
-  -webkit-box-shadow: inset 0 10px 20px #333;
-  text-align: center;
-
-  #wikiaLogo {
-    margin-top: 20px;
-    height: 40px;
-    width: auto;
-  }
-
-  ul {
-    list-style: none;
-    padding: 5px;
-    margin: 2px;
-    width: 90%;
-
-    li {
-      width: 30%;
-      display: inline;
-      padding: 5px;
-      margin: 0;
-    }
-  }
-}
-
-//ads
-#adPlace {
-  width: 100%;
-  height: 50px;
-  z-index: 99999;
-
-  #adWrapper {
-    opacity: 1;
-    width: 100%;
-    height: 50px;
-    background-color: red;
-    color: white;
-    -webkit-transition: all 0.5s;
-    z-index: 9999;
-  }
-}
-
-#showAll{
-	width: 100px;
-	height: 40px;
-}
-
-#leftPane {
-	-webkit-transition: all 0.5s ;
-	background-color: #494949;
-	color: #C6C6C6;
-	display: none;
-	width: 100%;
-	height: 100%;
-	position: absolute;
-	top: 0;
-	left: 0;
-	opacity: 0;
-}
-
-#article-comments {
-  display: none;
-
-  &.open {
-    display: block;
-  }
-}
-
-#WikiaArticleComments {
-  .controls {
-    display: none;
-  }
-}
-
-#WikiaPage {
-	padding: 2px;
-	overflow-x: hidden;
-}
-
-#WikiaMainContent{
-  //REALESE THE HELL: overflow used here for a demo reason the page now has static width what on mobile device is desiered
-  //shoudnt be done on production site as it is a workaround on to wide content
-  //overflow: hidden;
-  width: 100%;
-  font-size: medium;
-  padding-bottom: 20px;
-  z-index: 10;
-
-  //fixes for fluid content
-  .tvetnone {
-	width: 100% !important;
-  }
-
-  object, embed {
-	width: 60% !important;
-	height: 200px;
-  }
-
-  .tvetnone {
-	text-align: center;
-  }
-
-  //end of fluiding thead content
-  & > h2, #article-comments-counter-header {
-      width: 100%;
-      padding: 5px;
-      border-bottom: 1px solid grey;
-      color: #55ACE1;
-      font-weight: normal;
-
-      &.open{
-        .chevron {
-		background-image: url("/skins/wikiamobile/images/close_chev.png");
-        }
-      }
-
-      .chevron {
-        position: relative;
-        right: 30px;
-        float: right;
-	width: 30px;
-	height: 30px;
-	background-position: center;
-	background-repeat: no-repeat;
-	background-image: url("/skins/wikiamobile/images/open_chev.png");
-      }
-  }
-
-  .editsection {
-    display: none;
-  }
-
-  .articleSection {
-    display: none;
-
-    &.open {
-      display: block;
-    }
-  }
-
-  table#toc {
-    display: none;
-    //TODO: get rid of TOC
-  }
-
-  .infobox {
-    border: 1px solid grey;
-    border-radius: 6px;
-    margin: 0 auto;
-    background-color: #DDD;
-    width: 95% !important;
-    float: none !important;
-    -webkit-box-shadow: 0 0 5px grey;
-
-    tr:nth-of-type(n+3) td b {
-      background-color: #AAA;
-      display: block;
-      width: 100%;
-    }
-  }
-  div{
-    //temporary fix for slideshows
-    &.wikia-slideshow-wrapper{
-      width: auto !important;
-
-      div.wikia-slideshow-images-wrapper {
-        ul {
-          &.wikia-slideshow-images {
-            width: auto !important;/* is an inline style, no other way to force that, sorry ;) */
-            height: auto !important;/* is an inline style, no other way to force that, sorry ;) */
-          }
-        }
-      }
-    }
-  }
-  .searchresults, .search-types {
-    ul {
-      padding: 3px;
-
-      li {
-        border: 1px solid #e3e3e3;
-        border-radius: 6px;
-        margin: 5px 3px;
-        padding: 3px;
-        -webkit-box-shadow: 0 0 8px #e4e4e4;
-
-        a {
-          display: block;
-          width: 100%;
-        }
-      }
-    }
-  }
-}
-//most places don't need list-style-type
-ul {
-  list-style-type: none;
 }
 
 /*

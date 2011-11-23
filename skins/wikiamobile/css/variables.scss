@@ -3,13 +3,22 @@
  */
 
 //base colors
-$page-background-color: #FFFFFF;
+$page-background-color: #FFF;
+$page-text-color: #3A3A3A;
+$footer-background-color: #CCF;
+$link-color: #55ACE1;
+$box-border-color: #E3E3E3;
+$shadow-color: #DDD;
+
+//layout
+$page-padding: 10px;
+
+//z-index
+$top-layer-z-index: 2000000;
+$highest-z-index: 1000000;
 
 //navigation
 $arrowcolor: grey;
 $openMenuLength: 500px;
 $menuBackgroundColor: #555;
 $menuSecondColor: #333;
-
-//footer
-$footerBackground: #CCF;
