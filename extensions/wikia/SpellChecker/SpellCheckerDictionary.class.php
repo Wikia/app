@@ -128,6 +128,7 @@ class SpellCheckerDictionary {
 		$ret = false;
 
 		if ($this->isLoaded()) {
+			$suggestions = array();
 			$ret = enchant_dict_quick_check($this->dict, $word, $suggestions);
 
 			// return suggestions if word is misspelled
