@@ -125,6 +125,7 @@ class MenuButtonModule extends Module {
 		// modify URLs (BugId:9494)
 		if ($promptLogin &&
 			$this->actionName != 'source' /* don't modify "view source" links - BugId:9494 */ &&
+			$this->actionName != 'shareButton' &&
 			isset($this->action['href']) /* BugId:12613 */) {
 				$signUpTitle = SpecialPage::getTitleFor('SignUp');
 				$loginUrl = $this->createLoginURL(!empty($this->dropdown) ? 'action=edit' : '');

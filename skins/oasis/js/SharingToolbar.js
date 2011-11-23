@@ -15,6 +15,7 @@ var SharingToolbar = {
 
 		$(window).bind('scroll', $.proxy(this.onScroll, this));
 		this.toolbarNode.children('.email-link').bind('click', this.onEmailClick);
+		$('.WikiHeaderRestyle .share-button').bind('click', $.proxy(this.toolbarToggle, this));
 
 		// FIX ME if facebook api provides the functionality to run code after iframe render
 		setTimeout(function(){
@@ -85,6 +86,10 @@ var SharingToolbar = {
 				}
 			}
 		);
+	},
+	toolbarToggle: function(e) {
+		$(e.target).toggleClass('share-enabled');
+		this.toolbarNode.toggle();
 	}
 }
 

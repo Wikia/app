@@ -333,7 +333,6 @@
 			padding: 1px 18px 0 9px;
 			position: relative;
 			.share-dot {
-				background-color: $color-buttons;
 				display: block;
 				height: 7px;
 				position: absolute;
@@ -343,14 +342,19 @@
 				@include border-radius(7px);
 				@include box-shadow(0px, 0px, 4px, $color-buttons);
 			}
-			.share-pixel {
-				background-color: mix($color-buttons, #fff, 70%);
-				display: block;
-				height: 2px;
-				position: absolute;
-				right: 10px;
-				top: 9px;
-				width: 2px;
+			&.share-enabled {
+				.share-dot {
+					background-color: $color-buttons;
+				}
+				.share-pixel {
+					background-color: mix($color-buttons, #fff, 70%);
+					display: block;
+					height: 2px;
+					position: absolute;
+					right: 10px;
+					top: 9px;
+					width: 2px;
+				}
 			}
 		}
 	}
