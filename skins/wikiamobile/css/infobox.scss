@@ -1,0 +1,32 @@
+#WikiaMainContent{
+	table{
+		&.infobox {
+			border: 1px solid $box-border-color;
+			margin: 0 auto;
+			width: 100%;
+			float: none;
+			box-shadow: 0 0 10px $shadow-color;
+			padding: 8px;
+			
+			th {
+				text-align: left;
+			}
+			
+			td{
+				padding: 2px;
+				
+				&[colspan='2']{
+					text-align: center;
+					padding: 0;
+					
+					b{
+						display: block;
+						width: 100%;
+						margin: 12px 0 15px;
+						border-bottom: 1px solid $box-border-color;
+					}
+				}
+			}
+		}
+	}
+}
