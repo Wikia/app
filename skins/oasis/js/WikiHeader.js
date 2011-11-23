@@ -188,6 +188,10 @@ var WikiHeaderV2 = {
 		$().log(msg, 'WikiHeaderV2');
 	},
 
+	track: function(url) {
+		$.tracker.byStr('wikiheader/wikinav/' + url);
+	},
+
 	init: function(isValidator) {
 		//Variables
 		WikiHeaderV2.nav = $('header.WikiHeaderRestyle').children('nav');
@@ -307,6 +311,21 @@ var WikiHeaderV2 = {
 			WikiHeaderV2.activeL1 = this;
 			WikiHeaderV2.showSubNavL2(this);
 		}
+
+		// click tracking
+		var node = $(event.target);
+
+		if (node.is('a')) {
+			if (node.hasClass('subnav-2a')) {
+				WikiHeaderV2.track('lvl2/click');
+			}
+			else if (node.hasClass('subnav-3a')) {
+				WikiHeaderV2.track('lvl3/click');
+			}
+			else {
+				WikiHeaderV2.track('lvl1/click');
+			}
+		}
 	},
 
 	mouseoverL1: function(event) {
@@ -381,7 +400,7 @@ var WikiHeaderV2 = {
 		if (subnav.exists()) {
 			subnav.show();
 
-			$.tracker.byStr('wikiheader/wikinav/lvl2/open');
+			WikiHeaderV2.track('lvl2/open');
 		}
 	},
 
@@ -395,7 +414,7 @@ var WikiHeaderV2 = {
 			subnav.css('top', WikiHeaderV2.navtop).show();
 			$.hideAds();
 
-			$.tracker.byStr('wikiheader/wikinav/lvl3/open');
+			WikiHeaderV2.track('lvl3/open');
 		}
 	},
 
