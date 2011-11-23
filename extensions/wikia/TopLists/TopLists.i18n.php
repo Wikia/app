@@ -37,7 +37,6 @@ $messages['en'] = array(
 	'toplists-error-add-item-anon' => 'Anonymous users are not allowed to add items to lists. Please <a class="ajaxLogin" id="login" href="$1">Log in</a> or <a class="ajaxLogin" id="signup" href="$2">register a new account</a>.',
 	'toplists-error-add-item-permission' => 'Permission error: Your account has not been granted the right to create new items.',
 	'toplists-error-add-item-list-not-exists' => 'The "$1" Top 10 list does not exist.',
-	'toplists-error-backslash-not-allowed' => 'The "/" character is not allowed in the title of a Top 10 list.',
 	'toplists-upload-error-unknown' => 'An error occurred while processing the upload request. Please try again.', 
 
 	//editor
