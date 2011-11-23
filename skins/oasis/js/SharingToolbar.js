@@ -22,6 +22,10 @@ var SharingToolbar = {
 			var nodes = document.getElementById('SharingToolbar').childNodes;
 			for(var i=0; i<nodes.length; i++) {
 				elementWidth = parseInt(0 + $(nodes[i]).width());
+				if (parseInt(0 + $(nodes[i]).width()) > parseInt(0 + $(nodes[i]).children().width())) {
+					elementWidth = parseInt(0 + $(nodes[i]).width());
+				}
+				else elementWidth = parseInt(0 + $(nodes[i]).children().width());
 				if (elementWidth > maxWidth) maxWidth = elementWidth;
 			}
 			$('#SharingToolbar').css(
