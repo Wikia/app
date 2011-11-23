@@ -21,7 +21,7 @@ class NeueWebsiteHooks {
 	 * @param array $params: atrributions
 	 * @param Object $parser: Wiki Parser object
 	 */
-	static public function renderRelated( $input, $params, &$parser ) {
+	static public function renderRelated( $input, $params, $parser ) {
 		global $wgTitle;
 
 		wfProfileIn( __METHOD__ );
