@@ -52,7 +52,7 @@ class SpecialSponsor extends SpecialPage {
 					if($check === true){
 						$wgOut->addWikiMsg('sponsor-preview-prompt');
 						$wgOut->addHTML($ad->OutPutHTML());
-						$wgOut->addHTML($this->makeHiddenForm($ad));
+						$wgOut->addHTML($this->makeHiddenForm());
 					}else{
 						$wgOut->addHTML('<div>');
 						$wgOut->addWikiMsg('sponsor-preview-errors');
