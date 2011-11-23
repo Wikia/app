@@ -7,6 +7,7 @@ if( !defined( 'MEDIAWIKI' ) ) {
 
 $wgAutoloadClasses['SuperDeduper'] = $IP . '/../answers/SuperDeduper.php';
 $wgAutoloadClasses['EvenMoreSuperDeduper'] = $IP . '/../answers/EvenMoreSuperDeduper.php';
+$wgAutoloadClasses['AwesomeDeduper'] = $IP . '/../answers/AwesomeDeduper.php';
 $wgAutoloadClasses['ApiSuperDeduper'] = dirname(__FILE__) . '/ApiSuperDeduper.php';
 
 $wgAPIModules['superdeduper'] = 'ApiSuperDeduper';
