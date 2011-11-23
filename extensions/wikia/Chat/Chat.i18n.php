@@ -3,6 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'chat' => 'Chat',
 	'chat-desc' => '[[Special:Chat|Live chat]]',
 	'chat-no-login' => 'You must be logged in to chat.',
 	'chat-no-login-text' => 'Please login to chat.',
@@ -33,7 +34,7 @@ $messages['en'] = array(
 	'chat-err-no-permission-to-add-chatmod' => "Error: You do not have permission to add the \"$1\" group to this user.",
 	'chat-userrightslog-a-made-b-chatmod' => "$1 promoted $2 to be a chat moderator on this wiki.",
 
-	
+
 	'chat-you-are-banned' => 'Permissions error.',
 	// TODO: link to list of admins
 	'chat-you-are-banned-text' => 'Sorry, you do not have permission to chat on this wiki.  If you think this was a mistake or would like to be reconsidered, please contact an administrator.',
@@ -69,7 +70,7 @@ $messages['en'] = array(
 	'group-bannedfromchat' => 'Banned from chat',
 	'group-bannedfromchat-member' => 'Banned from chat',
 	'grouppage-bannedfromchat' => 'w:c:community:Help:Chat',
-	
+
 	// Emoticons
 	'emoticons' => '* http://images2.wikia.nocookie.net/__cb20110904035827/central/images/7/79/Emoticon_angry.png
 ** (angry)
