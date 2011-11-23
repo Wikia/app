@@ -1,4 +1,4 @@
-		<ul>
+		<ul<?= !empty($parseErrors) ? ' data-parse-errors="true"' : '' ?>>
 <?php
 $counter = 0;
 $firstChild = true;

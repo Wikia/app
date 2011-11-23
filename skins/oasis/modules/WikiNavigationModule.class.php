@@ -8,7 +8,6 @@ class WikiNavigationModule extends Module {
 	private $service;
 
 	const WIKIA_GLOBAL_VARIABLE = 'wgOasisGlobalNavigation';
-	const WIKIA_LOCAL_MESSAGE = 'Wikia-navigation-local';
 	const WIKI_LOCAL_MESSAGE = 'Wiki-navigation';
 
 	const CACHE_TTL = 10800; // 3 hours
@@ -46,24 +45,6 @@ class WikiNavigationModule extends Module {
 			}
 		}
 
-		// render local wikia navigation (additional items for "On the Wiki" menu)
-		/* // commented because of fb15033
-		if ( $nodesCount > 0 && $nodesCount < $this->wg->maxLevelThreeNavElements ){
-			$this->wikiaMenuLocalNodes =
-				$this->parseMenu(
-					self::WIKIA_LOCAL_MESSAGE,
-					array(
-						$this->wg->maxLevelTwoNavElements - $nodesCount,
-						$this->wg->maxLevelThreeNavElements,
-						0
-					),
-					true
-				);
-		} else {
-			$this->wikiaMenuLocalNodes = array();
-		}
-		*/
-
 		// render local navigation (more tabs)
 		$this->wikiMenuNodes =
 			$this->parseMenu(
@@ -74,6 +55,9 @@ class WikiNavigationModule extends Module {
 					$this->wg->maxLevelThreeNavElements
 				)
 			);
+
+		// report wiki nav parse errors (BugId:15240)
+		$this->parseErrors = $this->service->getErrors();
 	}
 
 	/**
@@ -114,7 +98,6 @@ class WikiNavigationModule extends Module {
 					);
 					break;
 
-				case self::WIKIA_LOCAL_MESSAGE:
 				case self::WIKI_LOCAL_MESSAGE:
 				default:
 					// get menu content from the message
@@ -229,9 +212,9 @@ HEADER;
 	}
 
 	/**
-	 * Check if given title refers to one of three wiki nav messages
+	 * Check if given title refers to wiki nav messages
 	 */
 	private static function isWikiNavMessage(Title $title) {
-		return ($title->getNamespace() == NS_MEDIAWIKI) && in_array($title->getText(), array(self::WIKIA_LOCAL_MESSAGE, self::WIKI_LOCAL_MESSAGE));
+		return ($title->getNamespace() == NS_MEDIAWIKI) && ($title->getText() == self::WIKI_LOCAL_MESSAGE);
 	}
 }

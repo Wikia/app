@@ -31,6 +31,11 @@ class NavigationService {
 
 	private $forContent = false;
 
+	// list of errors encountered when parsing the wikitext
+	private $errors = array();
+
+	const ERR_MAGIC_WORD_IN_LEVEL_1 = 1;
+
 	/**
 	 * Return memcache key used for given message / variable
 	 *
@@ -54,6 +59,15 @@ class NavigationService {
 		$messageName = str_replace(' ', '_', $messageName);
 
 		return implode(':', array(__CLASS__, $wikiId, $messageName, self::version));
+	}
+
+	/**
+	 * Return list of errors encountered when parsing the wikitext
+	 *
+	 * @return array list of errors
+	 */
+	public function getErrors() {
+		return $this->errors;
 	}
 
 	/**
@@ -142,6 +156,8 @@ class NavigationService {
 
 		$lines = explode("\n", $text);
 		$this->forContent = $forContent;
+
+		$this->errors = array();
 
 		$nodes = $this->parseLines($lines, $maxChildrenAtLevel);
 		$nodes = $this->filterSpecialPages($nodes, $filterInactiveSpecialPages);
@@ -236,12 +252,17 @@ class NavigationService {
 					$node[ self::PARENT_INDEX ] = $parentIndex;
 					$node[ self::DEPTH ] = $depth;
 
-					$this->handleExtraWords($node, $nodes, $depth);
+					$ret = $this->handleExtraWords($node, $nodes, $depth);
 
-					$nodes[$node[ self::PARENT_INDEX ]][ self::CHILDREN ][] = $i+1;
-					$nodes[$i+1] = $node;
-					$lastDepth = $node[ self::DEPTH ];
-					$i++;
+					if ($ret === false) {
+						$this->errors[self::ERR_MAGIC_WORD_IN_LEVEL_1] = true;
+					}
+					else {
+						$nodes[$node[ self::PARENT_INDEX ]][ self::CHILDREN ][] = $i+1;
+						$nodes[$i+1] = $node;
+						$lastDepth = $node[ self::DEPTH ];
+						$i++;
+					}
 				}
 			}
 		}
@@ -334,13 +355,22 @@ class NavigationService {
 
 	/**
 	 * @author: Inez Korczyński
+	 *
+	 * Return false when given submenu should not be added in a given place
 	 */
 	private function handleExtraWords(&$node, &$nodes, $depth) {
+		global $wgOasisNavV2;
 		wfProfileIn( __METHOD__ );
 
 		$originalLower = strtolower($node[ self::ORIGINAL ]);
 
 		if(substr($originalLower, 0, 9) == '#category') {
+			// ignore magic words in Level 1 (BugId:15240)
+			if (!empty($wgOasisNavV2) && $depth == 1) {
+				wfProfileOut(__METHOD__);
+				return false;
+			}
+
 			$param = trim(substr($node[ self::ORIGINAL ], 9), '#');
 
 			if(is_numeric($param)) {
@@ -377,6 +407,12 @@ class NavigationService {
 				$data = DataProvider::$fname();
 				//http://bugs.php.net/bug.php?id=46322 count(false) == 1
 				if (!empty($data)) {
+					// ignore magic words in Level 1 (BugId:15240)
+					if (!empty($wgOasisNavV2) && $depth == 1) {
+						wfProfileOut(__METHOD__);
+						return false;
+					}
+
 					foreach($data as $val) {
 						$this->addChildNode($node, $nodes, $val[ self::TEXT ], $val['url']);
 					}
