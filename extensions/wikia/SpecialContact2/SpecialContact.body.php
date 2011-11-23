@@ -40,7 +40,7 @@ class ContactForm extends SpecialPage {
 
 		'bug' => array(
 			'format' => "User %s reports a problem with feature \"%s\".\n\nURL to problem page:\n%s\n\nDescription of issue:\n\n%s",
-			'vars' => array( 'wpUserName', 'wpWiki', 'wpDescription' ),
+			'vars' => array( 'wpUserName', 'wpFeature', 'wpWiki', 'wpDescription' ),
 			'subject' => 'Bug report by %s at %s',
 		)
 	);
@@ -70,7 +70,7 @@ class ContactForm extends SpecialPage {
 
 		if( $wgRequest->wasPosted() ) {
 			
-			if( $wgUser->isAnon() && class_exists( $wgCaptchaClas ) ){
+			if( $wgUser->isAnon() && class_exists( $wgCaptchaClass ) ){
 				$captchaObj = new $wgCaptchaClass();
 				$captchaObj->retrieveCaptcha();
 				$info = $captchaObj->retrieveCaptcha();
