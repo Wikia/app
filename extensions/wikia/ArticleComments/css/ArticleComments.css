@@ -166,6 +166,11 @@ a.article-comm-reply {
 	padding: 0 20px;
 }
 
+
+.speech-bubble-message:hover .tools{
+	visibility: visible;
+}
+
 .tools {
 	visibility: hidden;
 }

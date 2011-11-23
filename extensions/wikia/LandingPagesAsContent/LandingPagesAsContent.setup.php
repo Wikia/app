@@ -54,7 +54,7 @@ define('__INTERLANGTOP__', '__INTERLANGTOP__');
  */
 $app->registerHook( 'LanguageGetMagic', 'LandingPagesParser', 'onLanguageGetMagicHook' );
 $app->registerHook( 'InternalParseBeforeLinks', 'LandingPagesParser', 'onInternalParseBeforeLinksHook' );
-$app->registerHook( 'ArticleFromTitle', 'LandingPagesParser', 'onArticleFromTitle' );
+//$app->registerHook( 'ArticleFromTitle', 'LandingPagesParser', 'onArticleFromTitle' );
 $app->registerHook( 'ArticlePurge', 'LandingPagesParser', 'onArticlePurge' );
 $app->registerHook( 'ArticleSaveComplete', 'LandingPagesParser', 'onArticleSaveComplete' );
 
