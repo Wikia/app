@@ -91,7 +91,7 @@ class SpecialSearch {
 		# Try to go to page as entered.
 		$t = Title::newFromText( $term );
 		# If the string cannot be used to create a title
-		if( is_null( $t ) )  ) {
+		if( is_null( $t ) ) {
 			return $this->showResults( $term );
 		}
 		$searchWithNamespace = $t->getNamespace() != 0 ? true : false;
