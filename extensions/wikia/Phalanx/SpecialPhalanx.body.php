@@ -158,7 +158,7 @@ class PhalanxPager extends ReverseChronologicalPager {
 		$html = '<li id="phalanx-block-' . $row->p_id . '">';
 
 		$html .= '<b>' . htmlspecialchars( $row->p_text ) . '</b> (' ;
-		#TODO: these arent i18n'd, but do they really need to be?
+
 		$html .= $row->p_regex ? 'regex' : 'plain';
 		if( $row->p_case ) {
 			$html .= ',case';
