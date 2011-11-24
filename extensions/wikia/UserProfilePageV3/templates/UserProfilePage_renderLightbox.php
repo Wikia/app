@@ -72,11 +72,11 @@
 			<form id="userData" name="userData">
 				<div class="column">
 					<label><?= wfMsg('user-identity-box-about-name'); ?></label>
-					<input type="text" name="name" value="<?= strip_tags($user['realName']); ?>">
-
+					<input type="text" name="name" value="<?= strip_tags($user['realName']); ?>" maxlength="<?= $charLimits['name']; ?>" />
+					
 					<label><?= wfMsg('user-identity-box-about-location'); ?></label>
-					<input type="text" name="location" value="<?= strip_tags($user['location']); ?>">
-
+					<input type="text" name="location" value="<?= strip_tags($user['location']); ?>" maxlength="<?= $charLimits['location']; ?>" />
+					
 					<label><?= wfMsg('user-identity-box-about-birthday'); ?></label>
 					<select id="userBDayMonth" name="month">
 						<option value="0">--</option>
@@ -97,10 +97,10 @@
 					</select>
 					
 					<label><?= wfMsg('user-identity-box-about-occupation'); ?></label>
-					<input type="text" name="occupation" value="<?= strip_tags($user['occupation']); ?>">
+					<input type="text" name="occupation" value="<?= strip_tags($user['occupation']); ?>" maxlength="<?= $charLimits['occupation']; ?>" />
 					
 					<label><?= wfMsg('user-identity-box-about-gender'); ?></label>
-					<input type="text" name="gender" value="<?= strip_tags($user['gender']); ?>">
+					<input type="text" name="gender" value="<?= strip_tags($user['gender']); ?>" maxlength="<?= $charLimits['gender']; ?>" />
 				</div>
 				
 				<div class="column">

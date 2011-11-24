@@ -11,11 +11,23 @@ class UserIdentityBox {
 	 * @var integer
 	 */
 	const PAGE_WIKIA_PROPS_PROPNAME = 10;
+	
+	/**
+	 * Prefixes to memc keys etc.
+	 */
 	const USER_PROPERTIES_PREFIX = 'UserProfilePagesV3_';
 	const USER_EDITED_MASTHEAD_PROPERTY = 'UserProfilePagesV3_mastheadEdited_';
 	const USER_FIRST_MASTHEAD_EDIT_DATE_PROPERTY = 'UserProfilePagesV3_mastheadEditDate_';
 	const USER_MASTHEAD_EDITS_WIKIS = 'UserProfilePagesV3_mastheadEditsWikis_';
 	const USER_EVER_EDITED_MASTHEAD = 'UserProfilePagesV3_mastheadEditedEver';
+	
+	/**
+	 * Char limits for user's input fields
+	 */
+	const USER_NAME_CHAR_LIMIT = 100;
+	const USER_LOCATION_CHAR_LIMIT = 200;
+	const USER_OCCUPATION_CHAR_LIMIT = 200;
+	const USER_GENDER_CHAR_LIMIT = 200;
 	
 	private $user = null;
 	private $app = null;
@@ -236,7 +248,24 @@ class UserIdentityBox {
 					//phalanx filtering; bugId:10233
 					$data->$option = $this->doPhalanxFilter($data->$option);
 					
-					//if( in_array($option, array('gender', 'birthday')) ) { -- just an example how can it be used later
+					//char limit added; bugId:15593
+					if( in_array($option, array('name', 'location', 'occupation', 'gender')) ) {
+						switch($option) {
+							case 'name':
+								$data->$option = mb_substr($data->$option, 0, self::USER_NAME_CHAR_LIMIT);
+								break;
+							case 'location':
+								$data->$option = mb_substr($data->$option, 0, self::USER_LOCATION_CHAR_LIMIT);
+								break;
+							case 'occupation':
+								$data->$option = mb_substr($data->$option, 0, self::USER_OCCUPATION_CHAR_LIMIT);
+								break;
+							case 'gender':
+								$data->$option = mb_substr($data->$option, 0, self::USER_GENDER_CHAR_LIMIT);
+								break;
+						}
+					}
+					
 					if( $option === 'gender' ) {
 						$this->user->setOption(self::USER_PROPERTIES_PREFIX.$option, $data->$option);
 					} else {

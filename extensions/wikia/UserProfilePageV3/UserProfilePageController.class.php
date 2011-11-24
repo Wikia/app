@@ -293,28 +293,28 @@ class UserProfilePageController extends WikiaController {
 	 */
 	public function renderLightbox() {
 		$this->app->wf->ProfileIn( __METHOD__ );
-
+		
 		$selectedTab = $this->getVal('tab');
 		$userId = $this->getVal('userId');
 		$sessionUser = $this->wg->User;
-
+		
 		$tabs = array(
 			array( 'id' => 'avatar', 'name' => 'Avatar' ),
 			array( 'id' => 'about', 'name' => 'About Me' ),
 			//array( 'id' => 'interview', 'name' => 'User Interview' ), //not yet --nAndy, 2011-06-15
 		);
-
+		
 		$this->renderAvatarLightbox($userId);
 		$this->renderAboutLightbox($userId);
-
+		
 		$this->setVal( 'tabs', $tabs );
 		$this->setVal( 'selectedTab', $selectedTab );
 		$this->setVal( 'isUserPageOwner', ( ( $userId == $sessionUser->getId() ) ? true : false ) );
-
+		
 		$this->setVal( 'wgBlankImgUrl', $this->wg->BlankImgUrl );
-
+		
 		$this->setVal( 'facebookPrefsLink', Skin::makeSpecialUrl('Preferences'));
-
+		
 		$this->app->wf->ProfileOut( __METHOD__ );
 	}
 
@@ -748,19 +748,26 @@ class UserProfilePageController extends WikiaController {
 	 */
 	private function renderAboutLightbox($userId) {
 		$this->app->wf->ProfileIn( __METHOD__ );
-
+		
 		$user = F::build('User', array($userId), 'newFromId');
-
+		
 		$userIdentityBox = F::build('UserIdentityBox', array($this->app, $user, self::MAX_TOP_WIKIS));
 		$userData = $userIdentityBox->setData(true);
-
+		
 		$this->setVal('user', $userData);
 		$this->setVal( 'fbConnectButton', '<fb:login-button perms="user_about_me,user_birthday,user_location,user_work_history,user_website" onlogin="UserProfilePage.fbConnect();">'.$this->app->wf->Msg('user-identity-box-connect-to-fb').'</fb:login-button>' );
-
+		
+		$this->setVal('charLimits', array(
+			'name' => UserIdentityBox::USER_NAME_CHAR_LIMIT,
+			'location' => UserIdentityBox::USER_LOCATION_CHAR_LIMIT,
+			'occupation' => UserIdentityBox::USER_OCCUPATION_CHAR_LIMIT,
+			'gender' => UserIdentityBox::USER_GENDER_CHAR_LIMIT,
+		));
+		
 		if( !empty($userData['birthday']['month']) ) {
 			$this->setVal('days', cal_days_in_month( CAL_GREGORIAN, $userData['birthday']['month'], 2000 /* leap year */ ) );
 		}
-
+		
 		$this->app->wf->ProfileOut( __METHOD__ );
 	}
 			
