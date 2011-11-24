@@ -2,7 +2,7 @@
 
 class NavigationService {
 
-	const version = '0.01';
+	const version = '0.02';
 	const ORIGINAL = 'original';
 	const PARENT_INDEX = 'parentIndex';
 	const CHILDREN = 'children';
@@ -10,6 +10,7 @@ class NavigationService {
 	const HREF = 'href';
 	const TEXT = 'text';
 	const SPECIAL = 'specialAttr';
+	const CANONICAL_NAME = 'canonicalName';
 
 	const TYPE_MESSAGE = 'message';
 	const TYPE_VARIABLE = 'variable';
@@ -174,7 +175,7 @@ class NavigationService {
 		wfProfileIn( __METHOD__ );
 
 		// filters out every special page that is not defined
-		foreach( $nodes as $key => $node ){
+		foreach( $nodes as $key => &$node ){
 			if (
 				isset( $node[ self::ORIGINAL ] ) &&
 				stripos( $node[ self::ORIGINAL ], 'special:' ) === 0
@@ -187,6 +188,10 @@ class NavigationService {
 					unset( $nodes[ $node[ self::PARENT_INDEX ] ][ self::CHILDREN ][$inParentKey] );
 					// remove node
 					unset( $nodes[ $key ] );
+				}
+				else {
+					// store special page canonical name for click tracking
+					$node[ self::CANONICAL_NAME ] = $specialPageName;
 				}
 			}
 		}
