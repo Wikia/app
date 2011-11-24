@@ -6,6 +6,7 @@ var WikiaTracker = {
 		'main.sampled':  'UA-2871474-1',
 		'main.unsampled':'UA-2871474-2',
 		'main.test':     'UA-2871474-3',
+		'main.private':  'UA-2871474-4',
 
 		'Wikia':         'UA-288915-1',
 		'Wikia.main':    'UA-288915-1',
