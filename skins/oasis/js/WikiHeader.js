@@ -321,6 +321,7 @@ var WikiHeaderV2 = {
 			if (typeof canonicalName != 'undefined') {
 				WikiHeaderV2.track('lvl2/' + canonicalName);
 
+				// handle special cases
 				switch(canonicalName) {
 					case 'chat':
 						$.openPopup(wgArticlePath.replace('$1', 'Special:Chat'), 'wikiachat', 'ChatRail', 600, 600);
