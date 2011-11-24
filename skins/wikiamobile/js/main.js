@@ -79,33 +79,25 @@ var WikiaMobile = {
 		var position;
 
 		//I'm using delegate on document.body as it's been proved to be the fastest option
-		$( document.body ).delegate( '#openToggle', 'click', function() {
-			$( '#navigation').toggleClass( 'open' );
-		});
+		//$( document.body ).delegate( '#openToggle', 'click', function() {
+		//	$( '#navigation').toggleClass( 'open' );
+		//});
 
 		$( document.body ).delegate( '#article-comments-counter-header', 'click', function() {
 			$( '#article-comments').toggleClass( 'open' );
 		});
 
-		$( document.body ).delegate( '#searchScope', 'change', function() {
-			if ( $( '#searchScope' ).val() == 'wiki' ) {
-				$( '#searchForm' ).attr( 'action', 'index.php?useskin=wikiamobile');
-			} else {
-				$( '#searchForm' ).attr( 'action', 'http://community.wikia.com/wiki/index.php?useskin=wikiamobile' );
-			}
-		})
-
-		$( document.body ).delegate( '#navigationMenu > li', 'click', function() {
-			if ( !( $( this ).hasClass( 'openMenu' ) ) ) {
-
-				$( '#navigationMenu > li' ).removeClass( 'openMenu' );
-				$( this ).addClass( 'openMenu' );
-
-				tab = "#" + $( this ).text().toLowerCase() + "Tab";
-				$( '#openNavigationContent > div.navigationTab' ).removeClass( 'openTab' );
-				$( tab ).addClass( 'openTab' );
-			}
-		});
+		//$( document.body ).delegate( '#navigationMenu > li', 'click', function() {
+		//	if ( !( $( this ).hasClass( 'openMenu' ) ) ) {
+		//
+		//		$( '#navigationMenu > li' ).removeClass( 'openMenu' );
+		//		$( this ).addClass( 'openMenu' );
+		//
+		//		tab = "#" + $( this ).text().toLowerCase() + "Tab";
+		//		$( '#openNavigationContent > div.navigationTab' ).removeClass( 'openTab' );
+		//		$( tab ).addClass( 'openTab' );
+		//	}
+		//});
 
 		$( '#WikiaMainContent > h2' ).append( '<span class=\"chevron\"></span>' );
 
@@ -141,6 +133,12 @@ var WikiaMobile = {
 				caption: thumb.children('.thumbcaption').html(),
 				toHide: '.changeImageButton'
 			})
+		});
+
+		$(document.body).delegate('#searchToggle', 'click', function(event) {
+			$('#navigationWordMark').hide();
+			$('#navigationSearch').show().addClass('open');
+			$(this).addClass('open');
 		});
 	}
 }
