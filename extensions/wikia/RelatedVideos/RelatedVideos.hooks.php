@@ -7,25 +7,29 @@ class RelatedVideosHookHandler {
 	private $count = 0;
 	 
 	public function onOutputPageBeforeHTML( &$out, &$text ) {
+		wfProfileIn(__METHOD__);
+
 		if( $out->isArticle() && F::app()->wg->request->getVal( 'diff' ) === null && ( F::app()->wg->title->getNamespace() == NS_MAIN ) ) {
 			$text .= F::app()->sendRequest('RelatedVideosController', 'getCarusel')->toString();
 		}
+
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 
 	public function onBeforePageDisplay( $out, $skin ) {
-		global $wgExtensionsPath, $wgUser, $wgStylePath, $wgStyleVersion;
-
 		wfProfileIn(__METHOD__);
-		$skinName = get_class( $wgUser->getSkin() );
+		
+		$skinName = get_class( F::app()->wg->user->getSkin() );
 		if ($skinName == 'SkinOasis') {
-			$out->addScript( "<script src=\"$wgStylePath/common/jquery/jquery.wikia.tooltip.js?{$wgStyleVersion}\"></script>");
+			$out->addScript( '<script src="' . F::app()->wg->stylePath . '/common/jquery/jquery.wikia.tooltip.js?' . F::app()->wg->styleVersion . '"></script>');
 			$out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'skins/oasis/css/modules/WikiaTooltip.scss' ) );
 		}
 		
-		$out->addScript( '<script src="' . $wgExtensionsPath . '/wikia/RelatedVideos/js/RelatedVideos.js"></script>' );
-		$out->addScript( '<script src="' . $wgExtensionsPath . '/wikia/JWPlayer/jwplayer.js"></script>' );
+		$out->addScript( '<script src="' . F::app()->wg->extensionsPath . '/wikia/RelatedVideos/js/RelatedVideos.js"></script>' );
+		$out->addScript( '<script src="' . F::app()->wg->extensionsPath . '/wikia/JWPlayer/jwplayer.js"></script>' );
 		$out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/RelatedVideos/css/RelatedVideos.scss' ) );
+
 		wfProfileOut(__METHOD__);
 		return true;
 	}
@@ -41,12 +45,10 @@ class RelatedVideosHookHandler {
 	public static function onArticleSaveComplete(&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
 		wfProfileIn(__METHOD__);
 
-		wfDebug(__METHOD__ . "\n");
-
 		$title = $article->getTitle();
 
-		if (!empty($title)) {
-			switch ($title->getNamespace()) {
+		if ( !empty( $title ) ) {
+			switch ( $title->getNamespace() ) {
 				case NS_RELATED_VIDEOS:
 					$relatedVideosNSData = RelatedVideosNamespaceData::newFromTitle($title);
 					$relatedVideosNSData->purge();
@@ -56,14 +58,40 @@ class RelatedVideosHookHandler {
 						if ( $title->getText() == RelatedVideosNamespaceData::GLOBAL_RV_LIST ){
 							$relatedVideosNSData = RelatedVideosNamespaceData::newFromTitle($title);
 							$relatedVideosNSData->purge();
-
 						}
 					}
-					break;
+				break;
 			}
-
 		}
 			
+		wfProfileOut(__METHOD__);
+		return true;
+	}
+
+	/**
+	 * Entry for adding parser magic words
+	 */
+	static public function onLanguageGetMagic( &$magicWords, $langCode ){
+		wfProfileIn(__METHOD__);
+
+		$magicWords[ 'RELATEDVIDEOS_POSITION' ] = array( 0, '__RELATEDVIDEOS__' );
+
+		wfProfileOut(__METHOD__);
+		return true;
+	}
+
+	/**
+	 * Entry for removing the magic words from displayed text
+	 */
+	static public function onInternalParseBeforeLinks( &$parser, &$text, &$strip_state ) {
+		wfProfileIn(__METHOD__);
+
+		if ( empty( F::app()->wg->RTEParserEnabled ) ) {
+			$oMagicWord = MagicWord::get('RELATEDVIDEOS_POSITION');
+			$text = $oMagicWord->replace('<span data-placeholder="RelatedVideosModule"></span>', $text, 1 );
+			$text = $oMagicWord->replace( '', $text );
+		}
+
 		wfProfileOut(__METHOD__);
 		return true;
 	}
