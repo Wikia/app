@@ -7,7 +7,8 @@
  */
 class WikiaMobileBodyService extends WikiaService {
 	public function index() {
-		$bodyContent = $this->getVal( 'bodyText', '');
+		$bodyContent = $this->getVal( 'bodyText', '' );
+		$categoryLinks = $this->getVal( 'categoryLinks', '' );
 		$afterBodyHtml = '';
 		$afterContentHookText;
 		
@@ -23,6 +24,14 @@ class WikiaMobileBodyService extends WikiaService {
 		
 		$this->pageHeaderContent = $this->sendRequest( 'WikiaMobilePageHeaderService', 'index' )->toString();
 		$this->bodyContent = $bodyContent;
+		$this->response->setVal(
+			'categoryLinks',
+			$this->sendRequest(
+				'WikiaMobileArticleCategoriesService',
+				'index',
+				array( 'categoryLinks' => $categoryLinks )
+			)->toString()
+		);
 		$this->afterBodyContent = $afterBodyHtml;
 		$this->afterContentHookText = $afterContentHookText;
 	}

@@ -58,20 +58,24 @@ class WikiaMobileService extends WikiaService {
 			$jsFiles .= "<script type=\"{$this->wg->JsMimeType}\" src=\"$src\"></script>\n";
 		}
 		
-		$this->appCacheManifestPath = ( $this->wg->DevelEnvironment && !$this->wg->Request->getBool( 'appcache' ) ) ? null : self::CACHE_MANIFEST_PATH . "&{$this->wg->StyleVersion}";
+		//AppCache will be disabled for the first several releases
+		//$this->appCacheManifestPath = ( $this->wg->DevelEnvironment && !$this->wg->Request->getBool( 'appcache' ) ) ? null : self::CACHE_MANIFEST_PATH . "&{$this->wg->StyleVersion}";
 		$this->mimeType = $this->templateObject->data['mimetype'];
 		$this->charSet = $this->templateObject->data['charset'];
 		$this->showAllowRobotsMetaTag = !$this->wg->DevelEnvironment;
-		$this->globalVariablesScript = Skin::makeGlobalVariablesScript($this->templateObject->data['skinname']);
+		$this->globalVariablesScript = Skin::makeGlobalVariablesScript( $this->templateObject->data['skinname'] );
 		$this->pageTitle = $this->wg->Out->getPageTitle();
 		$this->cssLinks = $cssFiles;
 		$this->headLinks = $this->wg->Out->getHeadLinks();
 		$this->languageCode = $this->templateObject->data['lang'];
 		$this->languageDirection = $this->templateObject->data['dir'];
 		$this->wikiaNavigation = $this->sendRequest( 'WikiaMobileNavigationService', 'index' )->toString();
-		$this->pageContent = $this->sendRequest( 'WikiaMobileBodyService', 'index', array( 'bodyText' => $this->templateObject->data['bodytext'] ))->toString();
+		$this->pageContent = $this->sendRequest( 'WikiaMobileBodyService', 'index', array(
+			'bodyText' => $this->templateObject->data['bodytext'],
+			'categoryLinks' => $this->templateObject->data['catlinks']
+		) )->toString();
 		$this->leftPaneContent = $this->sendRequest( 'WikiaMobileLeftPaneService', 'index' )->toString();
-		$this->wikiaFooter = $this->sendRequest( 'WikiaMobileFooterService', 'index')->toString();
+		$this->wikiaFooter = $this->sendRequest( 'WikiaMobileFooterService', 'index' )->toString();
 		$this->jsFiles = $jsFiles;
 		$this->bottomscripts = $bottomscripts;
 	}
