@@ -33,6 +33,11 @@ if ( empty( $wgRelatedVideosPartialRelease ) ){
 	// $app->registerHook('OutputPageMakeCategoryLinks', 'RelatedVideosController', 'onOutputPageMakeCategoryLinks');
 	$app->registerHook('OutputPageMakeCategoryLinks', 'RelatedVideosHookHandler', 'onOutputPageMakeCategoryLinks');
 	$app->registerHook('BeforePageDisplay', 'RelatedVideosHookHandler', 'onBeforePageDisplay' );
+
+	define('RELATEDVIDEOS_POSITION', 'RELATEDVIDEOS_POSITION');
+	$app->registerHook('LanguageGetMagic', 'RelatedVideosHookHandler', 'onLanguageGetMagic' );
+	$app->registerHook('InternalParseBeforeLinks', 'RelatedVideosHookHandler', 'onInternalParseBeforeLinks' );
+
 }
 $app->registerHook('ArticleSaveComplete', 'RelatedVideosHookHandler', 'onArticleSaveComplete');
 
