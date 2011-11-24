@@ -1,7 +1,7 @@
 <?php
 
 class MessageGroupStatistics {
-	public static function forLanguage( $code, $mode ) {
+	public static function forLanguage( $code, $mode = null ) {
                 # Fetch from database
                 $dbr = wfGetDB( DB_SLAVE );
 
@@ -22,7 +22,7 @@ class MessageGroupStatistics {
 				continue;
 			}
 			if ( empty ( $mode ) ) {
-				$stats[$id] = self::forItem( $id, $code, $mode );
+				$stats[$id] = self::forItem( $id, $code );
 			}
 		}
 

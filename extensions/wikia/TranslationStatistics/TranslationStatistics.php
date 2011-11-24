@@ -21,6 +21,9 @@ $wgAutoloadClasses['SpecialTranslationStats'] = $dir . 'SpecialTranslationStats.
 $wgAutoloadClasses['SpecialGroupStats'] = $dir . 'SpecialGroupStats.body.php';
 //$wgAutoloadClasses['SpecialNewTranslationStats'] = $dir . 'SpecialTranslationStats.php';
 $wgAutoloadClasses['PHPlot'] = $dir . 'phplot.php';
+$wgAutoloadClasses['TranslateUtils'] = $dir . 'TranslateUtils.php';
+$wgAutoloadClasses['JsSelectToInput'] = $dir . 'utils/JsSelectToInput.php';
+$wgAutoloadClasses['FCFontFinder'] = $dir . 'utils/Font.php';
 
 // Attach hooks
 $wgHooks['ArticleSaveComplete'][] = 'MessageGroupStats::invalidateCache';

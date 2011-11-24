@@ -170,11 +170,11 @@ class PageImporterTask extends BatchTask {
 		if( !is_numeric( $iTaskID ) || !is_numeric( $sTargetWikiID ) || is_null( $sTargetWikiID ) ) {
 			$aFormData = array();
 			$aFormData["values"] = array(
-                "task-source-task-id" => $taskId,
+                "task-source-task-id" => $iTaskID,
                 "task-target-wiki" => $sTargetWiki
             );
 
-			if(!is_numeric($taskId)) {
+			if(!is_numeric($iTaskID)) {
 				$aFormData["errors"]["task-source-task-id"] = "This field must not be empty and must be integer.";
 			}
 			if(!is_numeric( $sTargetWikiID ) || is_null( $sTargetWikiID ) ) {
