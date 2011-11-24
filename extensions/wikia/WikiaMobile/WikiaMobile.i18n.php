@@ -17,7 +17,8 @@ $messages['en'] = array(
 	'wikiamobile-password' => 'Password',
 	'wikiamobile-login-submit' => 'Login',
 	'wikiamobile-menu' => 'Menu',
-	'wikiamobile-explore' => 'Explore'
+	'wikiamobile-explore' => 'Explore',
+	'wikiamobile-article-categories' => 'Categories'
 );
 
 /** Afrikaans (Afrikaans)

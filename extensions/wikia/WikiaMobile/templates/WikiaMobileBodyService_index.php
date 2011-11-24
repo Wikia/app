@@ -1,6 +1,7 @@
 <section id="WikiaPage">
 	<?= $pageHeaderContent ;?>
 	<article id="WikiaMainContent"><?= $bodyContent ;?></article>
+	<?= $categoryLinks ;?>
 	<footer id="WikiaMainContentFooter"><?= $afterContentHookText ;?></footer>
-	<aside id="WikiaAfterBodyContent"><?= $afterBodyContent ;?></aside>
+	<? if ( !empty( $afterBodyContent ) ) :?><aside id="WikiaAfterBodyContent"><?= $afterBodyContent ;?></aside><? endif ;?>
 </section>
