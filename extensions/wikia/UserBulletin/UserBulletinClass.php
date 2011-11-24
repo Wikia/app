@@ -69,7 +69,7 @@ class UserBulletin {
 		global $wgUser;
 		
 		$dbr =& wfGetDB( DB_MASTER );
-		$s = $dbr->selectRow( '`user_bulletin`', array( 'ub_user_id' ), array( 'ub_id' => $ub_id, 'ub_user_id' => $wgUser->getID() ), $fname );
+		$s = $dbr->selectRow( '`user_bulletin`', array( 'ub_user_id' ), array( 'ub_id' => $ub_id, 'ub_user_id' => $wgUser->getID() ), __METHOD__ );
 		if ( $s !== false ) {
 			return true;
 		}

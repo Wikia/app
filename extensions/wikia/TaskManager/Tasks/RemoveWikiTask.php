@@ -116,13 +116,14 @@ class RemoveWikiTask extends BatchTask {
         # "task-export" - checkbox, export articles to parent
         # "task-p-wiki" - name of parent wiki
         $bExport = $wgRequest->getCheck( "task-export" );
-        $sCWiki = self::normalizeName( $wgRequest->getText( "task-c-wiki" ));
+        $sCWiki = CloseWikiTask::normalizeName( $wgRequest->getText( "task-c-wiki" ));
+        $sPWiki = CloseWikiTask::normalizeName( $wgRequest->getText( "task-p-wiki" ));
 
         #--- check if closed wiki is valid
-        $iCWikiId = self::checkWiki( $sCWiki );
+        $iCWikiId = CloseWikiTask::checkWiki( $sCWiki );
 
         #--- check if parent wiki is valid
-        $iPWikiId = self::checkWiki( $sPWiki );
+        $iPWikiId = CloseWikiTask::checkWiki( $sPWiki );
 
         if (empty($iCWikiId) || (empty($iPWikiId) && $bExport === true) ) {
             $aFormData = array();

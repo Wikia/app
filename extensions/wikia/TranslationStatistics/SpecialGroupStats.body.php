@@ -53,7 +53,7 @@ class SpecialGroupStats extends SpecialPage {
 		}
 
 		if ( empty( $this->mLanglist ) ) {
-			$data['total'] = MessageGroupStatistics::forGroup( $this->mGroup, $this->mMode );
+			$data['total'] = MessageGroupStatistics::forGroup( $this->mGroup );
 		} else {
 			foreach( $this->mLanglist as $lang ) {
 				$data['total'][$lang] = MessageGroupStatistics::forItem( $this->mGroup, $lang );
