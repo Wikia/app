@@ -481,7 +481,7 @@ class AchConfig {
 
 	public function getRequiredEvents($badgeTypeId, $badge_lap = null) {
 		if($badgeTypeId == BADGE_LUCKYEDIT) {
-			$events = 1000 * $badge_lap;
+			$events = 1000 * ( $badge_lap + 1 );
 		}
 		elseif($badgeTypeId == BADGE_CAFFEINATED) {
 			$events = 100;
