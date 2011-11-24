@@ -8,7 +8,7 @@
 		margin: 5px;
 
 		.thumbcaption {
-			border: 1px solid $box-border-color;
+			border: 1px solid $border-color;
 			box-shadow: 0 0 10px $shadow-color;
 			@include box-sizing(border-box);
 			display: block;
