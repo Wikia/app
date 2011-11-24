@@ -2,6 +2,7 @@
 @import "variables.scss";
 @import "main_page.scss";
 @import "infobox.scss";
+@import "sections.scss";
 @import "images.scss";
 @import "footer.scss";
 @import "zepto.modal.scss";
@@ -21,6 +22,8 @@ body {
     background-color: $page-background-color;
     color: $page-text-color;
 	font-family: helvetica, android, sans-serif;
+	font-size: medium;
+	line-height: 25px;
     margin: 0;
 
 	//avoid webkit's automatic text adjustment
@@ -28,7 +31,7 @@ body {
 }
 
 #WikiaMainContentHeader {
-	border-bottom: 1px solid $box-border-color;
+	border-bottom: 1px solid $border-color;
 	padding: $page-padding;
 
 	h1{
@@ -111,9 +114,7 @@ a {
 }
 
 #WikiaMainContent{
-  font-size: medium;
   padding: $page-padding;
-  z-index: 10;
 
   //fixes for fluid content
   .tvetnone {
@@ -122,42 +123,6 @@ a {
   }
 
   //end of fluiding thead content
-  & > h2, #article-comments-counter-header {
-      padding: 5px;
-      border-bottom: 1px solid grey;
-      color: #55ACE1;
-      font-weight: normal;
-
-      &.open{
-        .chevron {
-		background-image: url("/skins/wikiamobile/images/close_chev.png");
-        }
-      }
-
-      .chevron {
-        position: relative;
-        right: 30px;
-        float: right;
-		cursor: pointer;
-		width: 30px;
-		height: 30px;
-		background-position: center;
-		background-repeat: no-repeat;
-		background-image: url("/skins/wikiamobile/images/open_chev.png");
-      }
-  }
-
-  .editsection {
-    display: none;
-  }
-
-  .articleSection {
-    display: none;
-
-    &.open {
-      display: block;
-    }
-  }
 
   table#toc {
     display: none;
@@ -199,12 +164,3 @@ a {
     }
   }
 }
-/*
-@media ( min-width: 321px ),( orientation: landscape ) {
-
-}
-
-@media ( max-width: 320px ),( orientation: portrait ) {
-
-}
-*/
