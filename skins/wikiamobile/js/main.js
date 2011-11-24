@@ -1,13 +1,31 @@
 var WikiaMobile = {
 
+	allImages: [],
+
 	hideURLBar: function() {
 		if ( $.os.android || $.os.ios || $.os.webos ) {
 		//slide up the addressbar on webkit mobile browsers for maximum reading area
 		//setTimeout is necessary to make it work on ios...
-		  setTimeout( function() {
+		setTimeout( function() {
 		  	if (!pageYOffset) window.scrollTo( 0, 1 );
-		  	}, 10 );
+		}, 10 );
 		}
+	},
+
+	getAllImages: function() {
+		console.time('getAllImages');
+		var allImages = WikiaMobile.allImages,
+			number = 0;
+		$('.thumb').each(function() {
+			var image = [], self = $(this);
+			image[0] = self.find('.image').attr('href');
+			image[1] = self.find('.thumbcaption').html();
+			image[2] = number;
+			self.find('.image').data('number', number++)
+			allImages.push(image);
+		});
+		console.timeEnd('getAllImages');
+		console.log(WikiaMobile.allImages);
 	},
 
 	moveAd: function() {
@@ -30,20 +48,21 @@ var WikiaMobile = {
 	},
 
 	wrapArticles: function() {
-		var content = $( '#WikiaMainContent' ).contents(),
+		var wikiaMainContent = $( '#WikiaMainContent' ),
+			content = wikiaMainContent.contents(),
 			mainContent = '',
 			firstH2 = true,
 			video = 1;
+
 		//Im using here plain javascript as Zepto.js does not provide me with real contents method
 		//I end up creating simple contents method that returns JS Object instead of Zepto ones
-		for( var i = 0; i < content.length; i++ ) {
+		for( var i = 0, l = content.length; i < l; i++ ) {
 			var element = content[i];
 			if ( element.nodeName === 'H2' ) {
-				if ( firstH2 ) {
-					mainContent += element.outerHTML + '<section class="articleSection">';
-				} else {
-					mainContent += '</section>' + element.outerHTML + '<section class="articleSection">';
+				if ( !firstH2 ) {
+					mainContent += '</section>';
 				}
+				mainContent += element.outerHTML + '<section class="articleSection">';
 				firstH2 = false;
 			} else if ( element.nodeName === 'OBJECT' ) {
 				mainContent += '<a href="'+ element.data +'">Video #'+ video++ +'</a>';
@@ -52,7 +71,7 @@ var WikiaMobile = {
 			}
 		};
 		mainContent += '</section>';
-		document.getElementById('WikiaMainContent').innerHTML = mainContent;
+		wikiaMainContent.html(mainContent);
 
 	},
 
@@ -110,11 +129,17 @@ var WikiaMobile = {
 
 		$( document.body ).delegate( '.thumb', 'click', function(event) {
 			event.preventDefault();
-			var thumb = $(this);
+			var thumb = $(this),
+				image = thumb.children('.image').first();
 
 			$.openModal({
-				html: '<div class="fullScreenImage" style=background-image:url("' + thumb.children('.image').first().attr('href') + '")></div>' ,
-				caption: thumb.children('.thumbcaption').html()
+				html: '<div class="changeImageButton" id="previousImage"></div><div class="fullScreenImage" data-number='+
+					image.data('number')+
+					' style=background-image:url("'+
+					image.attr('href')+
+					'")></div><div class="changeImageButton" id="nextImage"></div>',
+				caption: thumb.children('.thumbcaption').html(),
+				toHide: '.changeImageButton'
 			})
 		});
 	}
@@ -123,6 +148,7 @@ var WikiaMobile = {
 $(function() {
 	WikiaMobile.hideURLBar();
 	WikiaMobile.wrapArticles();
+	WikiaMobile.getAllImages();
 	//WikiaMobile.handleAds();
 	WikiaMobile.init();
 });

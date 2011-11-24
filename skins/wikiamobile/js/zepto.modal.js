@@ -34,7 +34,65 @@
 			that._resetTimeout();
 		});
 
+
+		//handling next/previous image in lightbox
+		$(document.body).delegate('#nextImage', 'click', function() {
+			$._nextImage($(this).prev());
+		});
+
+		$(document.body).delegate('#previousImage', 'click', function() {
+			that._previousImage($(this).next());
+		});
+
+		$(document.body).delegate('.fullScreenImage', 'swipeLeft', function() {
+			$._nextImage($(this));
+		});
+
+		$(document.body).delegate('.fullScreenImage', 'swipeRight', function() {
+			that._previousImage($(this));
+		});
+
 		this._modalCreated = true;
+	};
+
+	$._nextImage = function(imagePlace) {
+		var nextImageNumber = parseInt(imagePlace.data('number')) + 1;
+
+		if(WikiaMobile.allImages.length <= nextImageNumber) {
+			nextImageNumber = 0;
+		}
+		this.changeImage(nextImageNumber, imagePlace);
+	};
+
+	$._previousImage = function(imagePlace) {
+		var previousImageNamber = parseInt(imagePlace.data('number')) - 1;
+
+		if(previousImageNamber < 0) {
+			previousImageNamber = WikiaMobile.allImages.length-1;
+		}
+		this.changeImage(previousImageNamber, imagePlace);
+	};
+
+	$.changeImage = function(imageNumber, fullScreen) {
+		var image = WikiaMobile.allImages[imageNumber];
+
+		fullScreen.css('background-image','url("' + image[0] + '")');
+		fullScreen.data('number', imageNumber);
+
+		this._showCaption(image[1]);
+
+		fullScreen.next().css('background-image','url("' + preload[0] + '")');;
+	};
+
+	$._showCaption = function(caption) {
+		if(caption) {
+			this._modalFooter.show();
+			this._modalFooter.html(caption);
+			this._caption = true;
+		} else {
+			this._caption = false;
+			this._modalFooter.hide();
+		}
 	};
 
 	$.openModal =  function(options) {
@@ -47,13 +105,21 @@
 			this._modalContent.html('No Content provided');
 		}
 
-		if(options.caption) {
-			this._modalFooter.show();
-			this._modalFooter.html(options.caption);
-			this._caption = true;
+		this._showCaption(options.caption);
+
+		if(options.toHide) {
+			var toHide = options.toHide;
+			if(typeof toHide == 'string') {
+				this._toHide = $(toHide);
+			} else if(toHide instanceof Array) {
+				for(var i = 0, l = toHide.length; i < l; i++) {
+					this._toHide.add(toHide[i]);
+				}
+			}  else {
+				this._toHide = null;
+			}
 		} else {
-			this._caption = false;
-			this._modalFooter.hide();
+			this._toHide = null;
 		}
 
 		this._position = pageYOffset;
@@ -64,13 +130,16 @@
 	};
 
 	$._resetTimeout = function() {
-		var allToHide = this._allToHide;
+		var allToHide = this._allToHide,
+		toHide = this._toHide || false;
 
 		allToHide.removeClass('hidden');
+		if(toHide) toHide.removeClass('hidden');
 
 		clearTimeout(this._timer);
 		this._timer = setTimeout(function() {
 			allToHide.addClass('hidden');
+			if(toHide) toHide.addClass('hidden');
 		}, this._hideBarsAfter);
 	};
 
