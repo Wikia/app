@@ -88,7 +88,7 @@ var AjaxLogin = {
 		function(e) {
 			return AjaxLogin.tabOrderHack(e, '#wpLoginAndConnectCombo');
 		});
-		
+
 		//MW 1.16 merge change, original: $('#wpLoginattemptAjax')
 		$('#wpLoginattempt').attr('tabindex', parseInt($('#wpRemember1Ajax').attr('tabindex')) + 101).click( this.clickLogIn );
 
@@ -110,6 +110,12 @@ var AjaxLogin = {
 		if( (typeof isAutoCreateWiki != 'undefined') && isAutoCreateWiki ) {
 			realoadAutoCreateForm();
 			return ;
+		}
+
+		// macbre: store selector of node to be clicked when page is reloaded (BugId:15911)
+		if (typeof AjaxLogin.clickAfterLogin == 'string') {
+			$.storage.set('AjaxLoginClickAfterLogin', AjaxLogin.clickAfterLogin);
+			$().log(AjaxLogin.clickAfterLogin + ' will be clicked', 'AjaxLogin');
 		}
 
 		// macbre: call custom function (if provided by any extension)
@@ -162,7 +168,7 @@ var AjaxLogin = {
 				if((typeof wgReturnToQuery != 'undefined') && (wgReturnToQuery.length > 0)){
 					destUrl += "&" + wgReturnToQuery;
 				}
-				
+
 				window.location.href = destUrl;
 			} else {
 				AjaxLogin.doReload();
@@ -184,7 +190,7 @@ var AjaxLogin = {
 		if(ev) {
 			ev.preventDefault();
 		}
-		
+
 		AjaxLogin.action = 'login';
 		AjaxLogin.form.submit();
 	},
@@ -216,7 +222,7 @@ var AjaxLogin = {
 		var formId = AjaxLogin.form.id;
 
 		$(ev.target).ajaxError(function() {
-			// Ajax/network connectivity error message should be here 
+			// Ajax/network connectivity error message should be here
 			// (need method/design from UI styleguide team)
 			// For now, just unblock the form fields
 			AjaxLogin.displayReason($.msg('comboajaxlogin-ajaxerror'));
@@ -267,7 +273,7 @@ var AjaxLogin = {
 			case 'WrongPass':
 				AjaxLogin.blockLoginForm(false);
 				$('#wpPassword1').attr('value', '').focus();
-				
+
 			case 'Throttled':
 				AjaxLogin.blockLoginForm(false);
 

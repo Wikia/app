@@ -216,4 +216,14 @@ $(function() {
 			}
 		});
 	}
+
+	// macbre: store selector of node to be clicked when page is reloaded (BugId:15911)
+	var clickAfterLogin = $.storage.get('AjaxLoginClickAfterLogin');
+
+	if (typeof clickAfterLogin == 'string') {
+		$().log('clicking ' + clickAfterLogin, 'AjaxLogin');
+		$(clickAfterLogin).click();
+
+		$.storage.del('AjaxLoginClickAfterLogin');
+	}
 });
