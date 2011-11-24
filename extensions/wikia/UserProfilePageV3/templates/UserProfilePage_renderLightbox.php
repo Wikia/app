@@ -81,19 +81,22 @@
 					<select id="userBDayMonth" name="month">
 						<option value="0">--</option>
 						<?php
-						$selectedMonth = isset($user['birthday']['month']) ? $user['birthday']['month'] : 0;
+						$selectedMonth = isset($user['birthday']['month']) ? intval($user['birthday']['month']) : 0;
 						for( $i = 1; $i < 13; $i++ ) {
-							echo Xml::option( F::app()->wg->Lang->getMonthName( $i ), $i, $selectedMonth === $i );
+							echo Xml::option( F::app()->wg->Lang->getMonthName($i), $i, $selectedMonth === $i );
 						}
 						?>
 					</select>
 					<select id="userBDayDay" name="day">
 						<option value="0">--</option>
-						<? if( !empty($days) ): ?>
-							<? for($i = 1; $i <= $days; $i++): ?>
-								<option value="<?= $i; ?>" <? if( isset($user['birthday']['day']) && intval($user['birthday']['day']) === $i):?>selected="selected"<? endif; ?>><?= $i; ?></option>
-							<? endfor; ?>
-						<? endif; ?>
+						<?php
+						if( !empty($days) ) {
+							$selectedDay = isset($user['birthday']['day']) ? intval($user['birthday']['day']) : 0;
+							for($i = 1; $i <= $days; $i++) {
+								echo Xml::option( $i, $i, $selectedDay === $i );
+							}
+						} 
+						?>
 					</select>
 					
 					<label><?= wfMsg('user-identity-box-about-occupation'); ?></label>
