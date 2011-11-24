@@ -425,7 +425,7 @@ function embedYouTube_url2nvid($url)
 	return $id;
 }
 
-function embedNicovideo($input, $argv, &$parser)
+function embedNicovideo($input, $argv, $parser)
 {
 	$nvid = '';
 	$width  = $width_max  = 640;
