@@ -111,7 +111,7 @@ var RelatedVideos = {
 				};
 				AjaxLogin.close = function() {
 					$('#AjaxLoginBoxWrapper').closeModal();
-					$(window).scrollTop( $('#RelatedVideos').offset().top + 100 );
+					$( window ).scrollTop( $('#RelatedVideos').offset().top + 100 );
 				}
 			}, false, message );
 		} else {

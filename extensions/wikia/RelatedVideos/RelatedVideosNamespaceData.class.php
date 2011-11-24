@@ -312,7 +312,7 @@ class RelatedVideosNamespaceData {
 					foreach ($entries as $key => $newEntry) {
 						if ( $newEntry['title'] == $entry['title']
 						&& $newEntry['source'] == $entry['source'] ) {
-							$entries[ $key ][ 'isNewDate' ] = isset( $entry[ 'isNewDate' ] ) ? (int)$entry[ 'date' ] : '';
+							$entries[ $key ][ 'isNewDate' ] = isset( $entry[ 'isNewDate' ] ) ? 1 : '';
 						}
 					}
 				}
@@ -323,10 +323,14 @@ class RelatedVideosNamespaceData {
 			$entries[ $key ][ 'userName' ] = F::app()->wg->user->getName();
 			$entries[ $key ][ 'date' ] = date('YmdHis');
 
-			if ( empty( $newEntry[ 'isNewDate' ] ) ){
-				$entries[ $key ][ 'isNewDate' ] = date('YmdHis');
+			if ( $list == self::BLACKLIST_MARKER ) {
+				$entries[ $key ][ 'isNewDate' ] = 1;
 			} else {
-				$entries[ $key ][ 'isNewDate' ] = $newEntry[ 'isNewDate' ];
+				if ( empty( $newEntry[ 'isNewDate' ] ) ){
+					$entries[ $key ][ 'isNewDate' ] = date('YmdHis');
+				} else {
+					$entries[ $key ][ 'isNewDate' ] = $newEntry[ 'isNewDate' ];
+				}
 			}
 		}
 
