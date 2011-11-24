@@ -564,6 +564,8 @@ class FeedRenderer {
 				} else {
 					$html .= '';
 				}
+                        } else if ( $row['ns'] == NS_USER_TALK ) { // BugId:15648
+                                $html = '';
 			} else {
 				// another new content
 				$html .= self::formatDetailsRow('new-page', self::formatIntro($row['intro']), false);
