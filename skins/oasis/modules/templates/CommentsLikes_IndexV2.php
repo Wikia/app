@@ -16,8 +16,8 @@
 				'text' => $text,
 				'html' => '<span class="commentsbubble">'.$formattedComments.'</span>',
 				'href' => $commentsLink,
-				// don't use MenuButton module magic to get accesskey for this item (BugId:15698)
-				'accesskey' => false,
+				// don't use MenuButton module magic to get accesskey for this item (BugId:15698 / 15685)
+				'accesskey' => wfMsg('accesskey-ca-talk'),
 			),
 			'name' => 'comment',
 			'class' => 'comments secondary',

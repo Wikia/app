@@ -144,7 +144,10 @@ class CommentsLikesModule extends Module {
 			// get source of comments number (comments / talk page revisions)
 			$this->commentsEnabled = $this->checkArticleComments();
 
-			$this->commentsAccesskey = ' accesskey="t"';
+			// pass accesskey => false to this module to disable accesskey attribute (BugId:15685)
+			if (!isset($data['accesskey']) || $data['accesskey'] !== false) {
+				$this->commentsAccesskey = ' accesskey="t"';
+			}
 
 			// render comments count as just a bubble
 			$this->commentsBubble = !empty($data['bubble']);
