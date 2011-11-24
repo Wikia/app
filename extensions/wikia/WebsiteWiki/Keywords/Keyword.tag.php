@@ -13,7 +13,7 @@ function keymarkExtension( $parser ) {
 }
 
 # The callback function for converting the input text to HTML output
-function renderKeypage( $input, $argv, &$parser ) {
+function renderKeypage( $input, $argv, $parser ) {
 	global $wgContLang;
 
 	$tokens   = explode( ",", trim( html_entity_decode( $input, ENT_QUOTES, "UTF-8" ) ) );
