@@ -375,7 +375,7 @@ class DataFeedProvider {
 		global $wgContentNamespaces, $wgEnableWallExt;
 
 		$item = array('type' => 'new');
-
+                
 		if (in_array($res['ns'], $wgContentNamespaces)
 		|| $res['ns'] == 110
 		|| $res['ns'] == NS_PROJECT
@@ -392,7 +392,9 @@ class DataFeedProvider {
 				$parts = ArticleComment::explode($res['title']);
 				$item['title'] = $parts['title'];
 			}
-
+                } else if ( $res['ns'] == NS_USER_TALK ) {  // BugId:15648
+                    $item['title'] = $res['title'];
+                    $item['url'] = $title->getLocalUrl();
 		} else if (defined('NS_BLOG_ARTICLE') && $res['ns'] == NS_BLOG_ARTICLE && class_exists('ArticleComment')) {
 
 			$parts = ArticleComment::explode($res['title']);
