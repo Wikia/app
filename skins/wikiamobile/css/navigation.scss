@@ -1,9 +1,12 @@
+//dependencies
+@import "variables.scss";
+
 //mixins
 @import "mixins/linear-gradient.scss";
 
 #navigation {
 	width: 100%;
-	min-height: 50px;
+	height: 50px;
 	background-color: $menuBackgroundColor;
 	@include linear-gradient(top, rgba( 25, 25, 25, 1 ), rgba( 55, 55, 55, 1 ));
 	-webkit-box-shadow: 0 0 10px black;
@@ -34,18 +37,32 @@
 			top: 5px;
 			border-right: 1px solid grey;
 		}
+		&.open {
+			outline: 1px solid $searchOpenBorder;
+			background-color: $searchOpenBackground;
+			&:before {
+				width: 0;
+				border: 0;
+			}
+		}
 	}
 
 	#navigationSearch {
 		display: none;
 		width: 100%;
-		height: 50px%;
+		height: 50px;
 	}
 
 	#searchForm input {
 		position: absolute;
 		left: 0;
 		right: 51px;
+		border: 0;
+		font-size: large;
+		color: $link-color;
+		max-height: 100%;
+		box-sizing: content-box;
+		padding: 12px;
 	}
 
 }
