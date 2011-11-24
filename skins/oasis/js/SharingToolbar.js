@@ -49,7 +49,10 @@ var SharingToolbar = {
 		lightboxSend = node.attr('data-lightboxSend'),
 		lightboxShareEmailLabelAddress = node.attr('data-lightboxShareEmailLabelAddress');
 		if ( !window.wgIsLogin && window.wgComboAjaxLogin ) {
-			showComboAjaxForPlaceHolder(false, "");
+			showComboAjaxForPlaceHolder(false, "", function() {
+				// show email modal when the page reloads (BugId:15911)
+				AjaxLogin.clickAfterLogin = '#SharingToolbar .email-link';
+			});
 			return false;
 		}
 		else {
