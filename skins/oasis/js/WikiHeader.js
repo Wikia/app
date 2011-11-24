@@ -316,14 +316,28 @@ var WikiHeaderV2 = {
 		var node = $(event.target);
 
 		if (node.is('a')) {
-			if (node.hasClass('subnav-2a')) {
-				WikiHeaderV2.track('lvl2/click');
-			}
-			else if (node.hasClass('subnav-3a')) {
-				WikiHeaderV2.track('lvl3/click');
+			var canonicalName = node.attr('data-canonical');
+
+			if (typeof canonicalName != 'undefined') {
+				WikiHeaderV2.track('lvl2/' + canonicalName);
+
+				switch(canonicalName) {
+					case 'chat':
+						$.openPopup(wgArticlePath.replace('$1', 'Special:Chat'), 'wikiachat', 'ChatRail', 600, 600);
+						event.preventDefault();
+						break;
+				}
 			}
 			else {
-				WikiHeaderV2.track('lvl1/click');
+				if (node.hasClass('subnav-2a')) {
+					WikiHeaderV2.track('lvl2/click');
+				}
+				else if (node.hasClass('subnav-3a')) {
+					WikiHeaderV2.track('lvl3/click');
+				}
+				else {
+					WikiHeaderV2.track('lvl1/click');
+				}
 			}
 		}
 	},
