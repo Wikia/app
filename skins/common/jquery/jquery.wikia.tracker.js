@@ -352,19 +352,19 @@ jQuery.tracker.track = function(fakeurl, unsampled) {
 		return;
 	}
 
-	//$.tracker.trackStr('/1_' + skinname + '/' + username + '/' + fakeurl, 'UA-2871474-1');
-	WikiaTracker.track('/1_' + skinname + '/' + username + '/' + fakeurl, 'main.sampled');
+	var str = ['1_' + skinname, username, fakeurl].join('/');
+
+	WikiaTracker.track(str, 'main.sampled');
 	if (unsampled) {
-		WikiaTracker.track('/1_' + skinname + '/' + username + '/' + fakeurl, 'main.unsampled');
+		WikiaTracker.track(str, 'main.unsampled');
 	}
 	if(wgPrivateTracker) {
-		//$.tracker.trackStr('/1_' + skinname + '/' + wgDB + '/' + username + '/' + fakeurl, 'UA-2871474-1');
-		WikiaTracker.track('/1_' + skinname + '/' + username + '/' + fakeurl, 'main.sampled');
+		WikiaTracker.track(wgDB + '/' + str, 'main.private');
 		if (unsampled) {
-			WikiaTracker.track('/1_' + skinname + '/' + wgDB + '/' + username + '/' + fakeurl, 'main.unsampled');
+			WikiaTracker.track(wgDB + '/' + str, 'main.unsampled');
 		}
 	}
-	WikiaTracker.AB('/1_' + skinname + '/' + username + '/' + fakeurl);
+	WikiaTracker.AB(str);
 };
 
 jQuery.tracker.trackEvent = function(category, action, opt_label, opt_value) {
