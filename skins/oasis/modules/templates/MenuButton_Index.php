@@ -3,7 +3,7 @@
 		if (empty($dropdown)) {
 			// render simple edit button
 			if (isset($action['accesskey'])) {
-				$accesskey = ($action['accesskey'] !== false) ? (' accesskey="' . $item['accesskey'] . '"') : '';
+				$accesskey = ($action['accesskey'] !== false) ? (' accesskey="' . $action['accesskey'] . '"') : '';
 			}
 			else {
 				$accesskey = ' accesskey="e"';

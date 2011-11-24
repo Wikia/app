@@ -46,7 +46,7 @@ var CorporateHub = {
 		// track pageview
 		this.track('pv/' + wgPageName);
 
-		// track clicks
+		// track clicks (BugId:15672)
 		$('#WikiaPage').bind('click', $.proxy(this.onClick, this));
 	}
 }

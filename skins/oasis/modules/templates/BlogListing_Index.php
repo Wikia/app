@@ -3,7 +3,7 @@
 	if (strpos($blogListingClass, 'WikiaBlogListingBox') !== false) { ?>
 	<?= Wikia::specialPageLink('CreateBlogPage', 'blog-create-post-label', 'wikia-button', 'blank.gif', 'blog-create-post-label', 'sprite blog') ?>
 	<h3>
-		<?= $title ?> 
+		<?= $title ?>
 	</h3>
 	<?php } // end BlogListingBox header ?>
 	<ul>
@@ -12,21 +12,21 @@
 			$title = Title::newFromText($post['title'], $post['namespace']);
 		?>
 			<li class="WikiaBlogListingPost">
-				<?= wfRenderModule('CommentsLikes', 'Index', array('comments' => $post['comments'], 'bubble' => true, 'title' => $title)); ?>
-	
+				<?= wfRenderModule('CommentsLikes', 'Index', array('comments' => $post['comments'], 'bubble' => true, 'title' => $title, 'accesskey' => false)); ?>
+
 				<?= $post['avatar'] ?>
 				<div class="author-details">
 					<h1><a href="<?= htmlspecialchars($title->getLocalUrl()) ?>"><?= htmlspecialchars(BlogTemplateClass::getSubpageText($title)) ?></a></h1>
 					<span><?= wfMsg('blog-by', $post['date'], Xml::element('a', array('href' => htmlspecialchars($post['userpage'])), $post['username'], false)) ?></span>
 				</div>
-		
+
 				<blockquote>
 					<?php
 					// handle proper rendering of "read more"
 					$readMoreLink = Xml::openElement('span', array('class' => 'read-more')) .
 							Wikia::link($title, wfMsg('blog-readfullpost') . ' &gt;') .
 							Xml::closeElement('span');
-		
+
 					// if blog post rendered text ends with </p>
 					if (!empty($post['readmore'])) {
 						if (substr($post['text'], -4) == '</p>') {
@@ -37,7 +37,7 @@
 					} else {
 						$post['text'] .= '';
 					}
-		
+
 					echo $post['text'];
 					?>
 				</blockquote>
