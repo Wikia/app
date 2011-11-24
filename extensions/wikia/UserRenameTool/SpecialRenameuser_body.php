@@ -5,9 +5,6 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit( 1 );
 }
 
-# Add messages
-wfLoadExtensionMessages( 'UserRenameTool' );
-
 /**
  * Special page allows authorised users to rename
  * user accounts
