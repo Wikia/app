@@ -63,15 +63,12 @@ if ( !empty($err) ) {
 </p>
 
 <?php	
-if( !$isLoggedIn ) {
-	print '<p class="contactformcaption">'  . wfMsg( 'specialcontact-captchatitle' ) . "</p>\n";
-	print "<table><tr>";
-	print "<td style='width:200px;'><input ". $eclass['wpCaptchaWord'] ." type='text' id='wpCaptchaWord' name='wpCaptchaWord' value='' /><br/>
-			<span class='captchDesc'>".wfMsg('specialcontact-captchainfo')."</span>
-			<input type='hidden' value='". $captchaIndex ."' id='wpCaptchaId' name='wpCaptchaId'></td>\n";
-	print "<td><img class='contactCaptch' height='50' src='". $captchaUrl ."' /></td>\n";
-	print "</tr></table>\n";
-	print "<br/>\n";
+if( !$isLoggedIn && (isset($captchaForm)) ) {
+	echo "<div class='captcha'>" .
+	wfMsg( 'specialcontact-captchatitle' ) .
+	$captchaForm .
+	wfMsg( 'specialcontact-captchainfo' ) .
+	"</div>\n";
 }
 ?>
 <p><?php print "<input tabindex='" . ($tabindex++) . "' type='submit' value=\"". wfMsg( 'specialcontact-mail' ) ."\" />"; ?></p>

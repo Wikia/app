@@ -341,7 +341,7 @@ class ContactForm extends SpecialPage {
 	function ShowContactForm( $sub = null ) {
 		global $wgUser, $wgOut, $wgLang;
 		global $wgDBname, $wgAllowRealName;
-		global $wgServer, $wgSitename;
+		global $wgServer, $wgSitename, $wgCaptchaClass;
 
 		$wgOut->setPageTitle(
 			wfMsg('specialcontact-sectitle', wfMsg('specialcontact-sectitle-'.$sub))
@@ -386,13 +386,6 @@ class ContactForm extends SpecialPage {
 			$user_readonly = false;
 			$name_readonly = false;
 			$mail_readonly = false;
-
-			/* captchas only for anon */
-			$captchaObj = new FancyCaptcha();
-			$captcha = $captchaObj->pickImage();
-			$captchaIndex = $captchaObj->storeCaptcha( $captcha );
-			$titleObj = SpecialPage::getTitleFor( 'Captcha/image' );
-			$captchaUrl = $titleObj->getLocalUrl( 'wpCaptchaId=' . urlencode( $captchaIndex ) );
 		}
 
 		$q = 'action=submit';
@@ -444,10 +437,10 @@ class ContactForm extends SpecialPage {
 			$vars[ 'hasEmail' ] = $wgUser->getEmail();
 			$vars[ 'hasEmailConf' ] = $wgUser->isEmailConfirmed();
 		}
-		else {
+		elseif (class_exists($wgCaptchaClass)) {
 			#anon
-			$vars[ 'captchaUrl' ] = $captchaUrl;
-			$vars[ 'captchaIndex' ] = $captchaIndex;
+			$wgCaptcha = new $wgCaptchaClass();
+			$vars[ 'captchaForm' ] = $wgCaptcha->getForm();
 		}
 	
 		if( !empty( $this->err ) ) {
