@@ -136,9 +136,17 @@ var WikiaMobile = {
 		});
 
 		$(document.body).delegate('#searchToggle', 'click', function(event) {
-			$('#navigationWordMark').hide();
-			$('#navigationSearch').show().addClass('open');
-			$(this).addClass('open');
+			var self = $(this);
+			if(self.hasClass('open')) {
+				$('#navigationWordMark').show();
+				$('#navigationSearch').hide().removeClass('open');
+				self.removeClass('open');
+			} else {
+				$('#navigationWordMark').hide();
+				$('#navigationSearch').show().addClass('open');
+				self.addClass('open');
+			}
+
 		});
 	}
 }
