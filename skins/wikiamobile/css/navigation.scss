@@ -1,0 +1,51 @@
+//mixins
+@import "mixins/linear-gradient.scss";
+
+#navigation {
+	width: 100%;
+	min-height: 50px;
+	background-color: $menuBackgroundColor;
+	@include linear-gradient(top, rgba( 25, 25, 25, 1 ), rgba( 55, 55, 55, 1 ));
+	-webkit-box-shadow: 0 0 10px black;
+	color: #777;
+	position: relative;
+	-webkit-tap-highlight-color: rgba( 0,0,0,0 );
+	-webkit-focus-ring-color: rgba( 0,0,0,0 );
+
+	#navigationWordMark {
+		height: 50px;
+	}
+
+	#searchToggle {
+		position: absolute;
+		right: 0;
+		width: 50px;
+		top: 0;
+		height: 100%;
+		background-repeat: no-repeat;
+		background-position: center;
+		background-image: url('/skins/wikiamobile/images/search.png');
+		&:before {
+			content: "";
+			height: 80%;
+			width: 1px;
+			background-color: black;
+			position: absolute;
+			top: 5px;
+			border-right: 1px solid grey;
+		}
+	}
+
+	#navigationSearch {
+		display: none;
+		width: 100%;
+		height: 50px%;
+	}
+
+	#searchForm input {
+		position: absolute;
+		left: 0;
+		right: 51px;
+	}
+
+}
