@@ -11,12 +11,15 @@
 			border: 1px solid $box-border-color;
 			box-shadow: 0 0 10px $shadow-color;
 			@include box-sizing(border-box);
-			line-height: 2em;
 			display: block;
 			color: $page-text-color;
 			padding: 10px 5px;
 			margin: -5px auto 0 auto;
 			max-width: 300px;
+		}
+
+		.thumbimage {
+			max-width: 100%;
 		}
     }
 }
