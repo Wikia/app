@@ -217,7 +217,7 @@ class HomePageList {
 		return $html;
 	}
 
-	function homepage_new_questions_tag($input, $argv, &$parser) {
+	function homepage_new_questions_tag($input, $argv, $parser) {
 		global $wgParserCacheExpireTime;
 		$wgParserCacheExpireTime = self::CACHE_EXPIRE;
 
@@ -229,7 +229,7 @@ class HomePageList {
 		return self::_homepage_questions("homepage_new_questions", $title, /* ignore cache */ $is_ajax);
 	}
 
-	function homepage_recently_answered_questions_tag($input, $argv, &$parser) {
+	function homepage_recently_answered_questions_tag($input, $argv, $parser) {
 		global $wgParserCacheExpireTime;
 		$wgParserCacheExpireTime = self::CACHE_EXPIRE;
 

@@ -19,7 +19,7 @@ function wfPvXcodeParser( $parser ) {
 	return true;
 }
 
-function PvXparser( $input, $argv, &$parser )
+function PvXparser( $input, $argv, $parser )
 {
 	global $wgServer;
 
