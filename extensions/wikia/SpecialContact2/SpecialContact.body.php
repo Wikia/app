@@ -77,7 +77,7 @@ class ContactForm extends SpecialPage {
 			}
 			
 			#ubrfzy note: these were moved inside to (lazy) prevent some stupid bots
-			$this->mUserName = $wgRequest->getText( 'wpName' );
+			$this->mUserName = $wgRequest->getText( 'wpUserName' );
 			$wgRequest->setVal( 'wpUrlencUserName', urlencode( $wgRequest->getText( 'wpUserName' ) ) );
 			$wgRequest->setVal( 'wpUrlencUserNameNew', urlencode( $wgRequest->getText( 'wpUserNameNew' ) ) );
 
@@ -405,7 +405,7 @@ class ContactForm extends SpecialPage {
 		
 		# pre calc if these fields are 'errors' or not
 		$eclass = array();
-		$fields = array( 'wpContactWikiName', 'wpName', 'wpContactRealName',
+		$fields = array( 'wpContactWikiName', 'wpUserName', 'wpContactRealName',
 					'wpEmail', 'wpContactSubject', 'wpContactDesc', 'wpCaptchaWord' );
 		foreach( $fields as $f )
 		{

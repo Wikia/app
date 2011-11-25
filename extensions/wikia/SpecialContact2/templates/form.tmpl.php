@@ -22,9 +22,9 @@ if ( !empty($err) ) {
 <p class="contactformcaption"><?php echo wfMsg( 'specialcontact-username' ); ?></p>
 <?php
 	if( empty($user_readonly) ) :
-		print "<input ". $eclass['wpName'] ."  tabindex='" . ($tabindex++) . "' type='text' name=\"wpName\" value=\"{$encName}\" size='40' />";
+		print "<input ". $eclass['wpUserName'] ."  tabindex='" . ($tabindex++) . "' type='text' name=\"wpUserName\" value=\"{$encName}\" size='40' />";
 	else :
-		print "{$encName} <input type=\"hidden\" name=\"wpName\" value=\"{$encName}\" />".
+		print "{$encName} <input type=\"hidden\" name=\"wpUserName\" value=\"{$encName}\" />".
 				" &nbsp;<span style=\"\" id='contact-not-me'><i><a href=\"{$logoutURL}\">(". wfMsg( 'specialcontact-notyou', $encName ) .")</a></i></span>";
 	endif;
 ?>
