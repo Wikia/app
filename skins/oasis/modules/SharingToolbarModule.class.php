@@ -51,17 +51,17 @@ class SharingToolbarModule extends Module {
 		global $wgRequest, $wgTitle, $wgNoReplyAddress, $wgUser, $wgNoReplyAddress;
 		wfProfileIn(__METHOD__);
 		$user = $wgUser->getId();
-		
+
 		if (empty($user)) {
 			$res = array(
-					'result' => 0,
 					'info-caption' => wfMsg('lightbox-share-email-error-caption'),
 					'info-content' => wfMsg('lightbox-share-email-error-login')
 			);
+			$this->response->setVal('result', $res);
 			wfProfileOut(__METHOD__);
 			return $res;
 		}
-		
+
 		$addresses = $wgRequest->getVal('addresses');
 		$countMails = 0;
 		if (!empty($addresses) && !$wgUser->isBlockedFromEmailuser() ) {
@@ -69,7 +69,7 @@ class SharingToolbarModule extends Module {
 			$countMails = count($addresses);
 
 			$res = array(
-				'result' => 1,
+				'success' => true,
 				'info-caption' => wfMsg('lightbox-share-email-ok-caption'),
 				'info-content' => wfMsgExt('lightbox-share-email-ok-content', array('parsemag'), $countMails)
 			);
@@ -117,7 +117,6 @@ class SharingToolbarModule extends Module {
 				);
 				if (WikiError::isError($result)) {
 					$res = array(
-						'result' => 0,
 						'info-caption' => wfMsg('lightbox-share-email-error-caption'),
 						'info-content' => wfMsgExt('lightbox-share-email-error-content', array('parsemag'), $countMails, $result->toString())
 					);
@@ -125,7 +124,6 @@ class SharingToolbarModule extends Module {
 			}
 		} else {
 			$res = array(
-				'result' => 0,
 				'info-caption' => wfMsg('lightbox-share-email-error-caption'),
 				'info-content' => wfMsgExt('lightbox-share-email-error-content', array('parsemag'), $countMails, wfMsg('lightbox-share-email-error-noaddress'))
 			);

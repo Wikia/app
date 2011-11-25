@@ -68,15 +68,16 @@ var SharingToolbar = {
 		$.showModal(
 			lightboxShareEmailLabel,
 			'<label>'+lightboxShareEmailLabelAddress+'<br/>'
-			+'<input type="text" id="lightbox-share-email-text" /><br />'
-			+'<input type="button" value="'+lightboxSend+'" id="lightbox-share-email-button" />'
-			+'<img src="'+stylepath+'/common/images/ajax.gif" class="throbber" style="display:none" /></label>',
+			+'<input type="text" id="lightbox-share-email-text" /></label>'
+			+'<input type="button" value="'+lightboxSend+'" id="lightbox-share-email-button" />',
 			{
 				id: 'shareEmailModal',
 				width: 690,
 				showCloseButton: true,
 				callback: function() {
-					$('#lightbox-share-email-button').click(function() {
+					$('#lightbox-share-email-button').click(function(ev) {
+						var button = $(this).prop('disabled', true);
+
 						$.nirvana.sendRequest({
 							controller: 'SharingToolbarModule',
 							method: 'sendMail',
@@ -86,8 +87,16 @@ var SharingToolbar = {
 								addresses: $('#shareEmailModal #lightbox-share-email-text').val(),
 								messageId: 1
 							},
-							callback: function(result) {
-								$.showModal(result.result['info-caption'], result.result['info-content']);
+							callback: function(data) {
+								var result = data.result;
+								$.showModal(result['info-caption'], result['info-content']);
+
+								button.prop('disabled', false);
+
+								// close email modal when share is successful (BugId:16061)
+								if (result.success) {
+									$('#shareEmailModal').closeModal();
+								}
 							}
 						});
 					});
