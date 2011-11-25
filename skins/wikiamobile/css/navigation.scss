@@ -3,20 +3,24 @@
 
 //mixins
 @import "mixins/linear-gradient.scss";
+@import "mixins/box-sizing.scss";
 
 #navigation {
-	width: 100%;
-	height: 50px;
-	background-color: $menuBackgroundColor;
-	@include linear-gradient(top, rgba( 25, 25, 25, 1 ), rgba( 55, 55, 55, 1 ));
-	-webkit-box-shadow: 0 0 10px black;
-	color: #777;
 	position: relative;
+	height: 50px;
+	padding: 2px 5px;
+	background-color: $menuBackgroundColor;
+	@include linear-gradient($navBarColorFirst, $navBarColorSecond);
+	@include box-shadow(0 0 10px black);
+	@include box-sizing(content-box);
 	-webkit-tap-highlight-color: rgba( 0,0,0,0 );
 	-webkit-focus-ring-color: rgba( 0,0,0,0 );
 
 	#navigationWordMark {
 		height: 50px;
+		line-height: 50px;
+		font-size: xx-large;
+		color: $navBarWordmarkText;
 	}
 
 	#searchToggle {
@@ -61,7 +65,8 @@
 		font-size: large;
 		color: $link-color;
 		max-height: 100%;
-		box-sizing: content-box;
+		@include box-sizing(content-box);
+		border-radius: 0;
 		padding: 12px;
 	}
 

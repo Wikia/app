@@ -99,6 +99,12 @@
 	}
 }
 
+.justOneImage {
+	.changeImageButton {
+		display:none;
+	}
+}
+
 #nextImage {
 	right: 0;
 	background-image:url('/skins/wikiamobile/images/chevron-right.png');

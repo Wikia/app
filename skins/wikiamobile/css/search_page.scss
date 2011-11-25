@@ -1,0 +1,21 @@
+#mw-search-top-table, .mw-search-formheader {
+	display: none;
+}
+.searchresults, .search-types {
+	ul {
+		padding: 3px;
+
+		li {
+			border: 1px solid #e3e3e3;
+			border-radius: 6px;
+			margin: 5px 3px;
+			padding: 3px;
+			@include box-shadow(0 0 8px #e4e4e4);
+
+		a {
+			display: block;
+			width: 100%;
+		}
+		}
+	}
+}

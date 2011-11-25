@@ -26,21 +26,20 @@
 		this._thePage = $('#navigation, #WikiaPage, #wikiaFooter');
 
 
-		$(document.body).delegate('#modalClose', 'click', function() {
+		$(document.body).delegate('#modalClose', WikiaMobile._clickevent , function() {
 			that.closeModal();
 		});
 
-		$(document.body).delegate('#modalWrapper', 'click', function() {
+		$(document.body).delegate('#modalWrapper', WikiaMobile._clickevent, function() {
 			that._resetTimeout();
 		});
 
-
 		//handling next/previous image in lightbox
-		$(document.body).delegate('#nextImage', 'click', function() {
+		$(document.body).delegate('#nextImage', WikiaMobile._clickevent, function() {
 			$._nextImage($(this).prev());
 		});
 
-		$(document.body).delegate('#previousImage', 'click', function() {
+		$(document.body).delegate('#previousImage', WikiaMobile._clickevent, function() {
 			that._previousImage($(this).next());
 		});
 
@@ -80,8 +79,6 @@
 		fullScreen.data('number', imageNumber);
 
 		this._showCaption(image[1]);
-
-		fullScreen.next().css('background-image','url("' + preload[0] + '")');;
 	};
 
 	$._showCaption = function(caption) {

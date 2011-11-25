@@ -1,7 +1,9 @@
-@mixin linear-gradient($direction, $colorStart, $colorEnd){
-	background-image: -moz-linear-gradient($direction, $colorStart, $colorEnd);
-	background-image: -webkit-linear-gradient($direction, $colorStart, $colorEnd);
-	background-image: -o-linear-gradient($direction, $colorStart, $colorEnd);
-	background-image: linear-gradient($direction, $colorStart, $colorEnd);
-	background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0,$colorStart), color-stop(1,$colorEnd));
+@mixin linear-gradient($from, $to){
+	background-color: $from;
+	background-image: -moz-linear-gradient($from, $to);
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from($from), to($to));
+	background-image: -webkit-linear-gradient($from, $to);
+	background-image: -o-linear-gradient($from, $to);
+	background-image: linear-gradient($from, $to);
 }
+
