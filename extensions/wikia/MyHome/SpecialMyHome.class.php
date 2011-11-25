@@ -1,6 +1,6 @@
 <?php
 
-class SpecialMyHome extends SpecialPage {
+class SpecialMyHome extends RestrictedSpecialPages {
 
 	function __construct() {
 		wfLoadExtensionMessages('MyHome');
