@@ -545,6 +545,9 @@ $(function() {
 				$('#publish').remove();
 				alert(errorMessages.join("\n\n"));
 			}
+			previewNode.find('nav > ul a').click(function() {
+				if ($(this).attr('href') == '#') return false;
+			});
 		});
 
 		$('#wpPreview').parent().removeClass('secondary');
