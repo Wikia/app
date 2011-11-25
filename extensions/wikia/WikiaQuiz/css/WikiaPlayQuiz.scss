@@ -480,20 +480,6 @@ $dark-wiki: 1;
 	 			font-size: 12px;
 	 		}
 	 	}
-	 	.more-info {
-			margin-top: 320px;
-			position: relative;
-			text-align: center;
-			z-index: $base-z;
-			h2 {
-				border-bottom: none;
-			}
-			ul {
-				li {
-					margin: 10px 0;
-				}
-			}
-		}
 	}
 	.quiz-thanks {
 		display: none;
@@ -514,6 +500,20 @@ $dark-wiki: 1;
 		}
 		.title-image {
 			@include opacity(20);
+		}
+	}
+	.more-info {
+		margin-top: 320px;
+		position: relative;
+		text-align: center;
+		z-index: $base-z;
+		h2 {
+			border-bottom: none;
+		}
+		ul {
+			li {
+				margin: 10px 0;
+			}
 		}
 	}
 	.correct-icon, .wrong-icon {
