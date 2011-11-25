@@ -72,7 +72,7 @@ class UserIdentityBox {
 	 * 
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	public function setData($isEdit = false) {
+	public function getData($isEdit = false) {
 		$this->app->wf->ProfileIn( __METHOD__ );
 		
 		$userName = $this->user->getName();

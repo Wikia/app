@@ -99,7 +99,7 @@ class UserProfilePageController extends WikiaController {
 //		when i called getBlockedStatus() on them
 			$sessionUser = $user;
 		}
-		$userData = $userIdentityBox->setData();
+		$userData = $userIdentityBox->getData();
 
 		$this->setVal( 'zeroStateCssClass', ($userData['showZeroStates']) ? 'zero-state' : '');
 
@@ -674,7 +674,7 @@ class UserProfilePageController extends WikiaController {
 			$localPath = $this->getLocalPath($user);
 			$errorNo = $oAvatarObj->uploadByUrl($url);
 			$userIdentityBox = F::build('UserIdentityBox', array($this->app, $user, self::MAX_TOP_WIKIS));
-			$userData = $userIdentityBox->setData();
+			$userData = $userIdentityBox->getData();
 			$userData['avatar'] = $localPath;
 			$userIdentityBox->saveUserData($userData);
 		} else {
@@ -752,7 +752,7 @@ class UserProfilePageController extends WikiaController {
 		$user = F::build('User', array($userId), 'newFromId');
 		
 		$userIdentityBox = F::build('UserIdentityBox', array($this->app, $user, self::MAX_TOP_WIKIS));
-		$userData = $userIdentityBox->setData(true);
+		$userData = $userIdentityBox->getData(true);
 		
 		$this->setVal('user', $userData);
 		$this->setVal( 'fbConnectButton', '<fb:login-button perms="user_about_me,user_birthday,user_location,user_work_history,user_website" onlogin="UserProfilePage.fbConnect();">'.$this->app->wf->Msg('user-identity-box-connect-to-fb').'</fb:login-button>' );
