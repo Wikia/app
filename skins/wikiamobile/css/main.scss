@@ -8,6 +8,7 @@
 @import "footer.scss";
 @import "zepto.modal.scss";
 @import "navigation.scss";
+@import "search_page.scss";
 
 //mixins
 @import "mixins/transition.scss";
@@ -20,15 +21,15 @@ html {
 }
 
 body {
-    background-color: $page-background-color;
-    color: $page-text-color;
+	background-color: $page-background-color;
+	color: $page-text-color;
 	font-family: helvetica, android, sans-serif;
 	font-size: medium;
 	line-height: 25px;
-    margin: 0;
+	margin: 0;
 
 	//avoid webkit's automatic text adjustment
-    -webkit-text-size-adjust: none;
+	-webkit-text-size-adjust: none;
 }
 
 #WikiaMainContentHeader {
@@ -53,34 +54,12 @@ body {
 }
 
 ul {
-  list-style-type: none;
+	list-style-type: none;
 }
 
 a {
 	color: $link-color;
 	text-decoration: none;
-}
-
-//ads
-#adPlace {
-  width: 100%;
-  height: 50px;
-  z-index: $top-layer-z-index;
-
-  #adWrapper {
-    opacity: 1;
-    width: 100%;
-    height: 50px;
-    background-color: red;
-    color: white;
-    @include transition(all 0.5s);
-    z-index: $top-layer-z-index + 1;
-  }
-}
-
-#showAll{
-	width: 100px;
-	height: 40px;
 }
 
 #leftPane {
@@ -115,53 +94,43 @@ a {
 }
 
 #WikiaMainContent{
-  padding: $page-padding;
+	padding: $page-padding;
 
-  //fixes for fluid content
-  .tvetnone {
-	width: 100% !important;
-	text-align: center;
-  }
+	//fixes for fluid content
+	.tvetnone {
+		width: 100% !important;
+		text-align: center;
+	}
 
-  //end of fluiding thead content
+	//end of fluiding thead content
 
-  table#toc {
-    display: none;
-    //TODO: get rid of TOC
-  }
+	table#toc {
+		display: none;
+		//TODO: get rid of TOC
+	}
 
-  div{
-    //temporary fix for slideshows
-    &.wikia-slideshow-wrapper{
-      width: auto !important;
+	div{
+		//temporary fix for slideshows
+		&.wikia-slideshow-wrapper{
+			width: auto;
 
-      div.wikia-slideshow-images-wrapper {
-        ul {
-          &.wikia-slideshow-images {
-            width: auto !important;/* is an inline style, no other way to force that, sorry ;) */
-            height: auto !important;/* is an inline style, no other way to force that, sorry ;) */
-          }
-        }
-      }
-    }
-  }
+			div.wikia-slideshow-images-wrapper ul.wikia-slideshow-images {
+				width: auto;
+				height: auto;
+			}
+		}
+	}
+}
 
-  .searchresults, .search-types {
-    ul {
-      padding: 3px;
+.chevron {
+	float: right;
+	width: 30px;
+	height: 30px;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-image: url("/skins/wikiamobile/images/open_chev.png");
+}
 
-      li {
-        border: 1px solid #e3e3e3;
-        border-radius: 6px;
-        margin: 5px 3px;
-        padding: 3px;
-        -webkit-box-shadow: 0 0 8px #e4e4e4;
-
-        a {
-          display: block;
-          width: 100%;
-        }
-      }
-    }
-  }
+.open .chevron {
+	background-image: url("/skins/wikiamobile/images/close_chev.png");
 }

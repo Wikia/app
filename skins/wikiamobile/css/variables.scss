@@ -28,5 +28,17 @@ $footerBackground: #3d3d3d;
 $footerTextColor: #DDD;
 
 //navigation
+$navBarColorFirst: get_command_line_param("color-page", #FFF);
+$navBarColorSecond: white;
+$navBarWordmarkText: black;
+@if( lightness($navBarColorFirst) < 50 ) {
+	$navBarColorSecond: lighten($navBarColorFirst, 40%);
+	$navBarWordmarkText: lighten($navBarColorFirst, 80%);
+
+} @else {
+	$navBarColorSecond: darken($navBarColorFirst, 40%);
+	$navBarWordmarkText: darken($navBarColorFirst, 80%);
+}
 $searchOpenBackground: #474747;
 $searchOpenBorder: #878787;
+
