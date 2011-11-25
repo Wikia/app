@@ -1,4 +1,10 @@
-<?= wfMsgExt( 'specialcontact-intro-account-issue', array( 'parse' ) ) ?>
+<?php
+if ( !empty($err) ) {
+        print $err;
+}
+
+echo wfMsgExt( 'specialcontact-intro-account-issue', array( 'parse' ) );
+?>
 
 <h2><?= wfMsg( 'specialcontact-form-header' ) ?></h2>
 
