@@ -2,6 +2,11 @@ var SharingToolbar = {
 	pageWidth: 0,
 	toolbarNode: false,
 	contributeOffsetTop: 0,
+
+	track: function(url) {
+		$.tracker.byStr('/wikiheader/wikinav/' + url);
+	},
+
 	init: function() {
 		this.toolbarNode = $('#SharingToolbar');
 
@@ -91,8 +96,12 @@ var SharingToolbar = {
 		);
 	},
 	toolbarToggle: function(e) {
-		$(e.target).toggleClass('share-enabled');
+		var button = $(e.target);
+		button.toggleClass('share-enabled');
 		this.toolbarNode.toggle();
+
+		// click tracking
+		this.track(button.hasClass('share-enabled') ? 'share-activate' : 'share-deactivate');
 	}
 }
 
