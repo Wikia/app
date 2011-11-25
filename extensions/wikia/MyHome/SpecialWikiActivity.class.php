@@ -1,6 +1,6 @@
 <?php
 
-class SpecialWikiActivity extends SpecialPage {
+class SpecialWikiActivity extends UnlistedSpecialPage {
 	var $activeTab;
 	var $classWatchlist;
 	var $loggedIn;
