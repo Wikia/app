@@ -20,6 +20,7 @@ class WikiaQuizElement {
 	const IMAGE_MARKER = 'IMAGE:';
 	const TITLE_MARKER = 'TITLE:';
 	const EXPLANATION_MARKER = 'EXPLANATION:';
+	const REQUIRE_EMAIL_MARKER = 'REQUIREEMAIL:';
 	const VIDEO_MARKER = 'VIDEO:';
 	const VIDEOWIKI_MARKER = 'VIDEOWIKI:';
 	const VIDEO_WIDTH = 560;
@@ -85,6 +86,7 @@ class WikiaQuizElement {
 			$imageSrc = '';
 			$imageShort = '';
 			$explanation = '';
+			$requireEmail = false;
 			$videoName = '';
 			$videoEmbedCode = '';
 			$isVideoExternal = false;
@@ -146,8 +148,9 @@ class WikiaQuizElement {
 						);
 					}
 				}
-				else {
-					continue;
+				elseif (substr($line, 0, strlen(self::REQUIRE_EMAIL_MARKER)) == self::REQUIRE_EMAIL_MARKER) {
+					$line = substr($line, strlen(self::REQUIRE_EMAIL_MARKER));
+					$requireEmail = ($line == 'true');
 				}
 			}
 
@@ -155,7 +158,7 @@ class WikiaQuizElement {
 			$params = array();
 
 			$this->mQuizTitleObject = F::build('Title', array($quizName, NS_WIKIA_QUIZ), 'newFromText');
-			
+
 			if (!empty($videoName)) {
 				if (!$isVideoExternal) {
 					$videoTitle = Title::newFromText($videoName, NS_VIDEO);
@@ -169,7 +172,7 @@ class WikiaQuizElement {
 					}
 				}
 			}
-			
+
 			$this->mData = array(
 				'creator' => $firstRev->mUser,
 				'created' => $firstRev->mTimestamp,
@@ -181,8 +184,9 @@ class WikiaQuizElement {
 				'image' => $imageSrc,
 				'imageShort' => $imageShort,
 				'explanation' => $explanation,
-			        'videoName' => $videoName,
-			        'videoEmbedCode' => $videoEmbedCode,
+				'requireEmail' => $requireEmail,
+				'videoName' => $videoName,
+				'videoEmbedCode' => $videoEmbedCode,
 				'quiz' => $quizName,
 				'quizUrl' => $this->mQuizTitleObject ? $this->mQuizTitleObject->getLocalUrl() : '',
 				'order' => $order,
@@ -260,15 +264,15 @@ class WikiaQuizElement {
 
 		return $this->mData['title'];
 	}
-	
+
 	public function getQuizTitle() {
 		if (is_null($this->mData)) {
 			$this->load();
 		}
 
-		return $this->mData['quiz'];		
+		return $this->mData['quiz'];
 	}
-	
+
 	/**
 	 * Return quizElement's order in quiz
 	 */
@@ -277,7 +281,7 @@ class WikiaQuizElement {
 			$this->load();
 		}
 
-		return $this->mData['order'];		
+		return $this->mData['order'];
 	}
 
 	/**
@@ -307,14 +311,14 @@ class WikiaQuizElement {
 			$dbw = wfGetDB(DB_MASTER);
 			$dbw->commit();
 		}
-		
+
 		// purge cached quiz
 		if (empty($this->mQuizTitleObject)) {
 			$this->load();
 		}
 		if (!empty($this->mQuizTitleObject)) {
 			$quizArticle = F::build('WikiaQuizIndexArticle', array($this->mQuizTitleObject));
-			$quizArticle->doPurge();		
+			$quizArticle->doPurge();
 		}
 		else {
 			// should never get to this point
