@@ -422,7 +422,7 @@ class UserIdentityBox {
 		if( $isBlocked === false && !empty($this->app->wg->EnablePhalanxExt) && !empty($userName) ) {
 		//blocked globally
 			$userName = $this->doPhalanxFilter($userName, Phalanx::TYPE_USER);
-			$isBlocked = ( empty($userName) ) ? true : false;
+			$isBlocked = ( empty($userName) && !$this->user->isAllowed('phalanxexempt') ) ? true : false;
 		}
 		
 		if( $isBlocked === false ) {
