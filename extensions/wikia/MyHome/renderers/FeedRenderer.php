@@ -147,12 +147,15 @@ class FeedRenderer {
 						break;
 
 					case NS_BLOG_ARTICLE_TALK:
-					case NS_USER_WALL_MESSAGE:
 						$msgType = 'comment';
 						break;
 
 					// content NS
 					default:
+						if ( defined( NS_USER_WALL_MESSAGE ) && $row['ns'] == NS_USER_WALL_MESSAGE ){
+							$msgType = 'comment';
+							break;
+						}
 						if (!empty($row['articleComment'])) {
 							$msgType = 'article-comment-created';
 						} else {
