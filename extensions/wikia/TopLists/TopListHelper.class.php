@@ -199,7 +199,7 @@ class TopListHelper {
 		$title = $article->getTitle();
 
 		if( ( $title->getNamespace() == NS_TOPLIST ) && !$title->isSubpage() ) {
-			$list = TopList::newFromTitle( $title );
+			$list = TopList::newFromTitle( $title, true );
 			$list ->removeItems();
 		}
 

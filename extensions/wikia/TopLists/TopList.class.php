@@ -37,17 +37,25 @@ class TopList extends TopListBase {
 	 * Factory method
 	 *
 	 * @param Title $title a Title class instance for the article
+	 * @param boolean $skipPhalanxCheck a flag informs to check Phalanx or not
 	 *
 	 * @return mixed a TopList instance, false in case $title is not in the NS_TOPLIST namespace
 	 */
-	static public function newFromTitle( Title $title ) {
+	static public function newFromTitle( Title $title, $skipPhalanxCheck = false ) {
 		global $wgMemc;
+		
+		//FB#16388: we don't need to check Phalanx blocks while deleting
+		if( !$skipPhalanxCheck ) {
+			//FB#8083: blocked titles are not being filtered, this should be handled automatically by Phalanx though...
+			$notPhalanxBlocked = TitleBlock::checkTitle($title);
+		} else {
+			$notPhalanxBlocked = true;
+		}
 		
 		if (
 			$title->getNamespace() == NS_TOPLIST &&
 			!$title->isSubpage() &&
-			//FB#8083: blocked titles are not being filtered, this should be handled automatically by Phalanx though...
-			TitleBlock::checkTitle( $title )
+			$notPhalanxBlocked
 		) {
 			$list = new self();
 			$list->mTitle = $title;
