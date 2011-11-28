@@ -8,7 +8,7 @@
 		<meta http-equiv="Content-Type" content="<?= $mimeType ;?>; charset=<?= $charSet ;?>"/>
 		<meta name="HandheldFriendly" content="true" />
 		<meta name="MobileOptimized" content="width" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />	
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<link rel="alternate" media="handeld" href="" />
 		<script>var JSSnippetsStack = [];</script>

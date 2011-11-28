@@ -1,6 +1,7 @@
 var WikiaMobile = (function() {
 
 	var allImages = [],
+	//position,
 
 	getImages = function() {
 		return allImages;
@@ -64,8 +65,6 @@ var WikiaMobile = (function() {
 	},
 
 	init = function() {
-		var position;
-
 		WikiaMobile._clickevent = ('ontouchstart' in window)?'tap':'click';
 
 		wrapArticles();
@@ -134,12 +133,20 @@ var WikiaMobile = (function() {
 				$('#navigationWordMark').show();
 				$('#navigationSearch').hide().removeClass('open');
 				self.removeClass('open');
+				$('#searchInput').val('');
 			} else {
 				$('#navigationWordMark').hide();
 				$('#navigationSearch').show().addClass('open');
 				self.addClass('open');
 			}
 
+		});
+
+		$(document.body).delegate('#WikiaPage', this._clickevent, function(event) {
+			$('#navigationWordMark').show();
+			$('#navigationSearch').hide().removeClass('open');
+			$('#searchToggle').removeClass('open');
+			$('#searchInput').val('');
 		});
 	};
 
