@@ -1,5 +1,7 @@
 /* depends on jquery */
+/* depends on geo.js */
 VisualDNAAAT = {
+	activeCountries: ['US','UK','GB'],
 	apiKey: 'wikia',
 	method: 'reportPageView',
 	init: function() {
@@ -14,5 +16,10 @@ VisualDNAAAT = {
 }
 
 if (window.wgIntegrateVisualDNAAAT) {
-	VisualDNAAAT.init();
+	if (window.Geo) {
+		var geoData = Geo.getGeoData();
+		if ($.inArray(geoData['country'], VisualDNAAAT.activeCountries) > -1) {
+			VisualDNAAAT.init();			
+		}
+	}
 }
