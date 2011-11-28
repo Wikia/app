@@ -57,7 +57,7 @@
 	$._nextImage = function(imagePlace) {
 		var nextImageNumber = parseInt(imagePlace.data('number')) + 1;
 
-		if(WikiaMobile.allImages.length <= nextImageNumber) {
+		if(WikiaMobile.getImages().length <= nextImageNumber) {
 			nextImageNumber = 0;
 		}
 		this.changeImage(nextImageNumber, imagePlace);
@@ -67,13 +67,13 @@
 		var previousImageNamber = parseInt(imagePlace.data('number')) - 1;
 
 		if(previousImageNamber < 0) {
-			previousImageNamber = WikiaMobile.allImages.length-1;
+			previousImageNamber = WikiaMobile.getImages().length-1;
 		}
 		this.changeImage(previousImageNamber, imagePlace);
 	};
 
 	$.changeImage = function(imageNumber, fullScreen) {
-		var image = WikiaMobile.allImages[imageNumber];
+		var image = WikiaMobile.getImages()[imageNumber];
 
 		fullScreen.css('background-image','url("' + image[0] + '")');
 		fullScreen.data('number', imageNumber);

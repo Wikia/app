@@ -1,8 +1,12 @@
-var WikiaMobile = {
+var WikiaMobile = (function() {
 
-	allImages: [],
+	var allImages = [],
 
-	hideURLBar: function() {
+	getImages = function() {
+		return allImages;
+	},
+
+	hideURLBar = function() {
 		if ( $.os.android || $.os.ios || $.os.webos ) {
 		//slide up the addressbar on webkit mobile browsers for maximum reading area
 		//setTimeout is necessary to make it work on ios...
@@ -12,9 +16,8 @@ var WikiaMobile = {
 		}
 	},
 
-	getAllImages: function() {
-		var allImages = WikiaMobile.allImages,
-		number = 0;
+	getAllImages = function() {
+		var number = 0;
 		$('.thumb').each(function() {
 			var image = [],
 			self = $(this);
@@ -26,26 +29,7 @@ var WikiaMobile = {
 		if(allImages.length <= 1) $('body').addClass('justOneImage');
 	},
 
-	moveAd: function() {
-		$( '#adWrapper' ).addClass( 'hidden' );
-		setTimeout( function() {
-			$( '#adWrapper' ).removeClass( 'hidden up' );
-		}, 600);
-	},
-
-	handleAds: function() {
-		var hideOnTimeout = setTimeout( function() {
-			$( window ).unbind( 'touchstart' );
-			WikiaMobile.moveAd();
-		}, 15000 );
-
-		$( document.body ).one( 'touchstart', function() {
-			if ( hideOnTimeout ) clearTimeout( hideOnTimeout );
-			WikiaMobile.moveAd();
-		});
-	},
-
-	wrapArticles: function() {
+	wrapArticles = function() {
 		var wikiaMainContent = $( '#WikiaMainContent' ),
 			content = wikiaMainContent.contents(),
 			mainContent = '',
@@ -79,10 +63,14 @@ var WikiaMobile = {
 
 	},
 
-	init: function() {
+	init = function() {
 		var position;
 
-		this._clickevent = ('ontouchstart' in window)?'tap':'click';
+		WikiaMobile._clickevent = ('ontouchstart' in window)?'tap':'click';
+
+		wrapArticles();
+		hideURLBar();
+		getAllImages();
 
 		//I'm using delegate on document.body as it's been proved to be the fastest option
 		//$( document.body ).delegate( '#openToggle', 'click', function() {
@@ -153,13 +141,14 @@ var WikiaMobile = {
 			}
 
 		});
+	};
+
+	return {
+		init: init,
+		getImages: getImages
 	}
-}
+})();
 
 $(function() {
-	WikiaMobile.hideURLBar();
-	WikiaMobile.wrapArticles();
-	WikiaMobile.getAllImages();
-	//WikiaMobile.handleAds();
 	WikiaMobile.init();
 });
