@@ -1,0 +1,26 @@
+#WikiaMainContent{
+	object, embed{
+		display: block;
+		margin: 5px auto;
+		width: 320px;
+		height: 195px;
+	}
+}
+
+@media screen and (min-width: 481px) {
+	#WikiaMainContent{
+		object, embed{
+			width: 480px;
+			height: 292px;
+		}
+	}
+}
+
+@media screen and ( min-width: 769px ) {
+	#WikiaMainContent{
+		object, embed{
+			width: 640px;
+			height: 390px;
+		}
+	}
+}

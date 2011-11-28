@@ -1,0 +1,6 @@
+@mixin section-title{
+	border-bottom: 1px solid $border-color;
+	color: $section-text-color;
+	font-size: $section-title-font-size;
+	padding: $section-title-padding;
+}
