@@ -152,7 +152,7 @@ class FeedRenderer {
 
 					// content NS
 					default:
-						if ( defined( NS_USER_WALL_MESSAGE ) && $row['ns'] == NS_USER_WALL_MESSAGE ){
+						if ( defined( 'NS_USER_WALL_MESSAGE' ) && $row['ns'] == NS_USER_WALL_MESSAGE ){
 							$msgType = 'comment';
 							break;
 						}
