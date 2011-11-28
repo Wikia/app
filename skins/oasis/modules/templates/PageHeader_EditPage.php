@@ -1,4 +1,4 @@
-<div id="WikiaPageHeader" class="WikiaPageHeader">
+<div id="WikiaPageHeader" class="WikiaPageHeader WikiaPageHeaderDiffHistory">
 	<?php
 	if( !empty($isHistory) && !empty($isUserTalkArchiveModeEnabled) ) { ?>
 		<?= wfRenderModule('CommentsLikes', 'Index', array('comments' => $comments, 'likes' => $likes)); ?>

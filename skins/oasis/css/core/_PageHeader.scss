@@ -112,6 +112,10 @@
 		.WikiaPageHeader {
 			margin-right: 330px;
 			padding-right: 175px;
+			&.WikiaPageHeaderDiffHistory {
+				margin-right: 10px;
+				padding-right: 320px;
+			}
 		}
 		.WikiaSearchHeader {
 			position: absolute;
