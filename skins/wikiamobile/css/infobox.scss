@@ -4,7 +4,6 @@
 	table{
 		&.infobox {
 			border: 1px solid $border-color;
-			margin: 0 auto;
 			width: 100%;
 			float: none;
 			@include box-shadow(0 0 10px $shadow-color);
