@@ -92,6 +92,9 @@ class RefreshLinksJob2 extends Job {
 		if( php_sapi_name() != 'cli' ) {
 			$jobs = array();
 			foreach ( $titles as $title ) {
+				if ( is_null( $title ) ) {
+					continue;
+				}
 				$jobs[] = new RefreshLinksJob( $title, '' );
 			}
 			Job::batchInsert( $jobs );
