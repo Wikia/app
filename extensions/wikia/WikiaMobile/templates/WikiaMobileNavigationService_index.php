@@ -6,7 +6,7 @@
 	 }?>
 	 <div id="navigationSearch">
 		<form id="searchForm" action="index.php?useskin=wikiamobile" method="post">
-			<input type="search" name="search" placeholder="<?= $wf->MsgExt( 'wikiamobile-search', array( 'parseinline' ) ); ?>..." required="required" />
+			<input id="searchInput" type="search" name="search" placeholder="<?= $wf->MsgExt( 'wikiamobile-search', array( 'parseinline' ) ); ?>..." required="required" />
 		</form>
 	 </div>
 	<div id="searchToggle"></div>

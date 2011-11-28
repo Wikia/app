@@ -9,18 +9,18 @@
 			@include box-shadow(0 0 10px $shadow-color);
 			padding: 8px;
 			font-size: small;
-			
+
 			th {
 				text-align: left;
 			}
-			
+
 			td{
 				padding: 0 6px;
-				
+
 				&[colspan='2']{
 					text-align: center;
 					padding: 0;
-					
+
 					b{
 						display: block;
 						width: 100%;

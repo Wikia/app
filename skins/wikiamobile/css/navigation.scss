@@ -44,6 +44,7 @@
 		&.open {
 			outline: 1px solid $searchOpenBorder;
 			background-color: $searchOpenBackground;
+
 			&:before {
 				width: 0;
 				border: 0;
@@ -57,17 +58,21 @@
 		height: 50px;
 	}
 
-	#searchForm input {
+	#searchInput {
 		position: absolute;
-		left: 0;
-		right: 51px;
+		left: 3px;
+		top: 10px;
+		right: 54px;
 		border: 0;
 		font-size: large;
+		border-radius: 20px;
+		padding: 5px;
+	}
+	::-webkit-input-placeholder {
 		color: $link-color;
-		max-height: 100%;
-		@include box-sizing(content-box);
-		border-radius: 0;
-		padding: 12px;
+	}
+	:-moz-placeholder {
+		color: $link-color;
 	}
 
 }
