@@ -1,5 +1,9 @@
+//mixins
+@import "mixins/section-title.scss";
+
 h1, h2, h3{
 	font-weight: normal;
+	margin: $section-title-margin;
 }
 
 #WikiaMainContent{
@@ -10,9 +14,7 @@ h1, h2, h3{
 	}
 
 	& > h2, #article-comments-counter-header{
-		padding: 5px;
-		border-bottom: 1px solid $border-color;
-		color: $section-text-color;
+		@include section-title;
 	}
 
 	.editsection {

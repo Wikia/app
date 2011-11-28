@@ -11,7 +11,7 @@ class WikiaMobileArticleCategoriesService extends WikiaService {
 		
 		//MW1.16 always returns non empty $catlinks
 		//TODO: remove since we're on 1.17+?
-		if (strpos($this->catlinks, ' catlinks-allhidden\'></div>') !== false) {
+		if (strpos($categoryLinks, ' catlinks-allhidden\'></div>') !== false) {
 			$categoryLinks = '';
 		}
 		
