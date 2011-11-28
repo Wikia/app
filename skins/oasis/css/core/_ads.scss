@@ -35,7 +35,7 @@
 	&.WikiaTopButtonLeft {
 		#CORP_TOP_LEADERBOARD, #HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD {
 			float: right;
-			margin: 0 10px 0 10px;
+			margin: 0 10px 0 0;
 			padding: 0;
 		}
 		#TOP_BUTTON {
@@ -46,7 +46,7 @@
 	&.WikiaTopButtonRight {
 		#CORP_TOP_LEADERBOARD, #HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD {
 			float: left;
-			margin: 0 10px 0 10px;
+			margin: 0 0 0 10px;
 			padding: 0;
 		}
 		#TOP_BUTTON {
