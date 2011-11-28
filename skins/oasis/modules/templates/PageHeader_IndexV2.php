@@ -19,7 +19,7 @@
 	if (!is_null($total)) {
 ?>
 	<div class="tally">
-		<?= wfMsgExt('oasis-total-articles-mainpage', array( 'parsemag' ), $total, 'fixedwidth' ) ?>
+		<?= wfMsgExt('oasis-total-articles-mainpage', array( 'parsemag' ), $total ) ?>
 	</div>
 <?php
 	}
