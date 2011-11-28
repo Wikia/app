@@ -122,6 +122,30 @@ a {
 	}
 }
 
+.printfooter {
+	display: none;
+}
+
+nav.RelatedPagesModule {
+	ul {
+		margin:0;
+		padding:0;
+		text-align: center;
+	}
+	li {
+		position: relative;
+		height: 105px;
+		width: 200px;
+		margin: 0 auto;
+	}
+	.more {
+		position: absolute;
+		background-color: rgba(0, 0, 0, .5);
+		top: 75px;
+		width: 100%;
+	}
+}
+
 .chevron {
 	float: right;
 	width: 30px;
