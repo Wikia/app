@@ -52,7 +52,8 @@ var SharingToolbar = {
 		var node = $(this),
 		lightboxShareEmailLabel = node.attr('data-lightboxShareEmailLabel'),
 		lightboxSend = node.attr('data-lightboxSend'),
-		lightboxShareEmailLabelAddress = node.attr('data-lightboxShareEmailLabelAddress');
+		lightboxShareEmailLabelAddress = node.attr('data-lightboxShareEmailLabelAddress'),
+		lightboxCancel = node.attr('data-lightboxcancel');
 		if ( !window.wgIsLogin && window.wgComboAjaxLogin ) {
 			showComboAjaxForPlaceHolder(false, "", function() {
 				// show email modal when the page reloads (BugId:15911)
@@ -61,23 +62,20 @@ var SharingToolbar = {
 			return false;
 		}
 		else {
-			SharingToolbar.showEmailModal(lightboxShareEmailLabel, lightboxSend, lightboxShareEmailLabelAddress);
+			SharingToolbar.showEmailModal(lightboxShareEmailLabel, lightboxSend, lightboxShareEmailLabelAddress, lightboxCancel);
 		}
 	},
-	showEmailModal: function(lightboxShareEmailLabel, lightboxSend, lightboxShareEmailLabelAddress) {
-		$.showModal(
+	showEmailModal: function(lightboxShareEmailLabel, lightboxSend, lightboxShareEmailLabelAddress, lightboxCancel) {
+		$.showCustomModal(
 			lightboxShareEmailLabel,
 			'<label>'+lightboxShareEmailLabelAddress+'<br/>'
-			+'<input type="text" id="lightbox-share-email-text" /></label>'
-			+'<input type="button" value="'+lightboxSend+'" id="lightbox-share-email-button" />',
+			+'<input type="text" id="lightbox-share-email-text" /></label>',
 			{
 				id: 'shareEmailModal',
 				width: 690,
 				showCloseButton: true,
-				callback: function() {
-					$('#lightbox-share-email-button').click(function(ev) {
-						var button = $(this).prop('disabled', true);
-
+				buttons: [
+					{id:'ok', defaultButton:true, message:lightboxSend, handler:function(){
 						$.nirvana.sendRequest({
 							controller: 'SharingToolbarModule',
 							method: 'sendMail',
@@ -90,17 +88,15 @@ var SharingToolbar = {
 							callback: function(data) {
 								var result = data.result;
 								$.showModal(result['info-caption'], result['info-content']);
-
-								button.prop('disabled', false);
-
 								// close email modal when share is successful (BugId:16061)
 								if (result.success) {
 									$('#shareEmailModal').closeModal();
 								}
 							}
 						});
-					});
-				}
+					}},
+					{id:'cancel', message:'Cancel', handler:function(){$('#shareEmailModal').hideModal();}}
+				]
 			}
 		);
 	},
