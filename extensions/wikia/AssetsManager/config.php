@@ -161,6 +161,7 @@ $config['wikiaphone_js'] = array(
 		'#group_oasis_jquery',
 		'//extensions/wikia/RadiumOne/raon.js',
 		'//extensions/wikia/AdEngine/AdConfig.js',
+		'//extensions/wikia/WikiaTracker/js/WikiaLogger.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaTrackerQueue.js',
