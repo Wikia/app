@@ -2,6 +2,10 @@
 	display: none;
 }
 .searchresults, .search-types {
+	p:first-child {
+		display: none;
+	}
+
 	ul {
 		padding: 3px;
 

@@ -148,6 +148,12 @@ var WikiaMobile = (function() {
 			$('#searchToggle').removeClass('open');
 			$('#searchInput').val('');
 		});
+
+		$(document.body).delegate('table', this._clickevent, function(event) {
+			$.openModal({
+				html: this.outerHTML
+			})
+		})
 	};
 
 	return {
