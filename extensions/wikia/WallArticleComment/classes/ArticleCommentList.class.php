@@ -764,26 +764,26 @@ class ArticleCommentList {
 	 */
 	static public function setHeaderBlockGroup(&$oChangeList, &$header, Array /*of oRCCacheEntry*/ &$oRCCacheEntryArray) {
 		global $wgLang, $wgContLang, $wgEnableGroupedArticleCommentsRC, $wgEnableWallExt;
-
+		
 		if ( empty($wgEnableGroupedArticleCommentsRC) ) {
 			return true;
 		}
-
+		
 		$oRCCacheEntry = null;
 		if ( !empty($oRCCacheEntryArray) ) {
 			$oRCCacheEntry = $oRCCacheEntryArray[0];
 		}
-
+		
 		if ( !is_null($oRCCacheEntry) ) {
 			$oTitle = $oRCCacheEntry->getTitle();
 			$namespace = $oTitle->getNamespace();
-
+		
 			if ( !is_null($oTitle) && MWNamespace::isTalk($oTitle->getNamespace()) && ArticleComment::isTitleComment($oTitle)) {
 				$parts = ArticleComment::explode($oTitle->getFullText());
-
+				
 				if ($parts['title'] != '') {
 					$cnt = count($oRCCacheEntryArray);
-
+					
 					$userlinks = array();
 					foreach ( $oRCCacheEntryArray as $id => $oRCCacheEntry ) {
 			 			$u = $oRCCacheEntry->userlink;
@@ -792,7 +792,7 @@ class ArticleCommentList {
 						}
 						$userlinks[$u]++;
 					}
-
+					
 					$users = array();
 					foreach( $userlinks as $userlink => $count) {
 						$text = $userlink;
@@ -802,28 +802,26 @@ class ArticleCommentList {
 						}
 						array_push( $users, $text );
 					}
-
-					wfLoadExtensionMessages('ArticleComments');
+					
 					$cntChanges = wfMsgExt( 'nchanges', array( 'parsemag', 'escape' ), $wgLang->formatNum( $cnt ) );
 					$title = Title::newFromText($parts['title']);
 					$namespace = $title->getNamespace();
 					$title = Title::newFromText($title->getText(), MWNamespace::getSubject($namespace));
-
+					
 					if ((defined('NS_BLOG_ARTICLE') && $namespace == NS_BLOG_ARTICLE) ||
 						defined('NS_BLOG_ARTICLE_TALK') && $namespace == NS_BLOG_ARTICLE_TALK ) {
 						$messageKey = 'article-comments-rc-blog-comments';
-					} else if( !empty($wgEnableWallExt) && $namespace == NS_USER_WALL_MESSAGE ) {
-						$messageKey = 'article-comments-rc-wall-messages';
 					} else {
 						$messageKey = 'article-comments-rc-comments';
 					}
-
+					
 					$vars = array (
 							'cntChanges'	=> $cntChanges,
 							'hdrtitle' 		=> wfMsgExt($messageKey, array('parseinline'), $title->getPrefixedText()),
 							'inx'			=> $oChangeList->rcCacheIndex,
 							'users'			=> $users
-						);
+					);
+					
 					$header = wfRenderPartial('ArticleComments', 'RCHeaderBlock', $vars);
 				}
 			}

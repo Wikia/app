@@ -16,6 +16,13 @@ class WallController extends ArticleCommentsModule {
 	
 	public function init() {
 		$this->helper = F::build('WallHelper', array());
+		$this->sortingOptionsText = array(
+			'nt' => $this->app->wf->Msg( 'wall-sorting-newest-threads' ),
+			'ot' => $this->app->wf->Msg( 'wall-sorting-oldest-threads' ),
+			'nr' => $this->app->wf->Msg( 'wall-sorting-newest-replies' ),
+			'ma' => $this->app->wf->Msg( 'wall-sorting-most-active' ),
+			//'a' => $this->app->wf->Msg( 'wall-sorting-archived' )
+		);
 	}
 
 	public function index() {
@@ -35,15 +42,19 @@ class WallController extends ArticleCommentsModule {
 		};
 
 		$filterid = $this->request->getVal('filterid', null);
-		$this->getCommentsData($title, $page, $wallMessagesPerPage, $filterid);
-		
+		if(!empty($filterid)) {
+			$this->getThread($filterid);
+		} else {
+			$this->getThreads($title, $page, $wallMessagesPerPage);
+		}
+
 		if( !empty($filterid) ) {
 			$this->response->setVal('showNewMessage', false);
 			$this->response->setVal('condenseMessage', false);
 			
-			if( count($this->commentListRaw) > 0 ) {
+			if( count($this->threads) > 0 ) {
 				$wn = F::build('WallNotifications', array());
-				foreach($this->commentListRaw as $key => $val ){
+				foreach($this->threads as $key => $val ){
 					$all = $wn->markRead( $this->wg->User->getId(), $this->wg->CityId, $key );
 					break;
 				}
@@ -51,6 +62,14 @@ class WallController extends ArticleCommentsModule {
 			
 			$this->response->setVal('renderUserTalkArchiveAnchor', false);
 			$this->response->setVal('greeting', '');
+
+			$title = F::build('Title', array($filterid), 'newFromId' );
+			if(!empty($title) && $title->exists() && $title->getNamespace() == NS_USER_WALL_MESSAGE ) {
+				$wallMessage = F::build('WallMessage', array($title), 'newFromTitle' );
+				$wallMessage->load();
+				$this->app->wg->Out->setPageTitle( $wallMessage->getMetaTitle() );
+			}
+
 		} else {
 			$this->response->setVal('showNewMessage', true);
 			$this->response->setVal('condenseMessage', true);
@@ -69,14 +88,16 @@ class WallController extends ArticleCommentsModule {
 			}
 		}	
 		
+		$this->response->setVal('sortingOptions', $this->getSortingOptions() );
+		$this->response->setVal('sortingSelected', $this->getSortingSelectedText() );
+		
 		$this->response->setVal('title', $title);
-		$this->response->setVal('totalItems', $this->countComments);
 		
+		$this->response->setVal('totalItems', $this->countComments );
 		$this->response->setVal('itemsPerPage', $wallMessagesPerPage); 
-		//TODO: use request insted of wg
-		$this->response->setVal('showPager', ($this->countComments > $wallMessagesPerPage) );
-		
+		$this->response->setVal('showPager', ($this->countComments > $wallMessagesPerPage) );	
 		$this->response->setVal('currentPage', $page ); 
+		
 	}
 
 	public function messageDeleted() {
@@ -195,6 +216,7 @@ class WallController extends ArticleCommentsModule {
 		$this->response->setVal('wall_username', $wall_username);
 		
 		$this->checkAndSetAnonsEditing();
+		$this->checkAndSetUserBlockedStatus( $this->helper->getUser() );
 	}
 	
 	public function loadMore() {	
@@ -208,8 +230,8 @@ class WallController extends ArticleCommentsModule {
 	public function message() {
 		wfProfileIn( __METHOD__ );
 		$comment = $this->request->getVal('comment');
-		
-		if( !(($comment instanceof ArticleComment) || ($comment instanceof WallMessage)) || $comment->getTitle()->mLatestID == 0 ) {
+
+		if(	!(($comment instanceof ArticleComment) || ($comment instanceof WallMessage)) || ($comment->getTitle()->mLatestID == 0) ) {
 			$this->forward( $this->response->getControllerName(), 'message_error');
 			return;
 		}
@@ -220,7 +242,7 @@ class WallController extends ArticleCommentsModule {
 		} else {
 			$wallMessage = $comment;
 		}
-
+		
 		$wallMessage->load();
 		$this->response->setVal('title', $this->getVal('title'));
 		
@@ -230,9 +252,9 @@ class WallController extends ArticleCommentsModule {
 			$this->response->setVal('isreply', false ); 
 			
 			$wallMaxReplies = 4;
-			if(!empty($this->app->wg->wgWallMaxReplies)){
-				$wallMaxReplies = $this->app->wg->wgWallMaxReplies;
-			};
+			if( !empty($this->app->wg->WallMaxReplies) ) {
+				$wallMaxReplies = $this->app->wg->WallMaxReplies;
+			}
 			
 			$replies = $this->getVal('replies');
 			$repliesCount = count($replies);
@@ -261,11 +283,11 @@ class WallController extends ArticleCommentsModule {
 			$this->response->setVal('linkid', $wallMessage->getPageUrlPostFix() );
 		}
 		//TODO: refactor it
-		$authorUser = User::newFromName($wallMessage->getUser()->getName());
 		// even tho $data['author'] is a User object already
 		// it's a cached object, and we need to make sure that we are
 		// using newest RealName
 		// cache invalidation in this case would require too many queries
+		$authorUser = User::newFromName($wallMessage->getUser()->getName());
 		if($authorUser) {
 			$realname = $authorUser->getRealName();
 			$name = $authorUser->getName();
@@ -343,6 +365,7 @@ class WallController extends ArticleCommentsModule {
 	public function reply() {
 		$this->response->setVal('username', $this->wg->User->getName() );
 		$this->checkAndSetAnonsEditing();
+		$this->checkAndSetUserBlockedStatus( $this->helper->getUser() );
 	}
 	
 	public function brickHeader() {
@@ -365,12 +388,14 @@ class WallController extends ArticleCommentsModule {
 			if( $wallMessage->getWallOwner()->getId() == $this->wg->User->getId() ) {
 				$this->response->setVal( 'wallName', wfMsg('wall-message-mywall') );
 			} else {
-				$this->response->setVal( 'wallName', wfMsg('wall-message-elseswall', $wallMessage->getWallOwner()->getName()));
+				$wallOwner = $wallMessage->getWallOwner()->getRealName();
+				if(empty($wallOwner)) $wallMessage->getWallOwner()->getName();
+				$this->response->setVal( 'wallName', wfMsg('wall-message-elseswall', $wallOwner));
 			}
 			
 			$this->response->setVal( 'wallUrl', $wallMessage->getWallUrl() );
 			$this->response->setVal( 'messageTitle', $wallMessage->getMetaTitle() );
-
+			
 			// for debugging put history directly in thread
 			//global $wgDevelEnvironment;
 			//if(!empty($wgDevelEnvironment))
@@ -391,6 +416,56 @@ class WallController extends ArticleCommentsModule {
 		} else {
 			$this->response->setVal('loginToEditProtectedPage', false);
 		}
+	}
+
+	protected function checkAndSetUserBlockedStatus($wallOwner = null) {
+		$user = $this->app->wg->User;
+		
+		if( $user->isBlocked() || $user->isBlockedGlobally() ) {
+			if(	!empty($wallOwner) &&
+				$wallOwner->getName() == $this->wg->User->getName() &&
+				!(empty($user->mAllowUsertalk)) ) {
+					
+				// user is blocked, but this is his wall and he was not blocked
+				// from user talk page	
+				$this->response->setVal('userBlocked', false);
+			} else {
+				$this->response->setVal('userBlocked', true);
+			}
+		} else {
+			$this->response->setVal('userBlocked', false);
+		}
+		
+	}
+	
+	protected function getSortingOptions() {
+		$title = $this->request->getVal('title', $this->app->wg->Title);
+		
+		$output = array();
+		
+		$selected = $this->getSortingSelected();
+		
+		foreach($this->sortingOptionsText as $id=>$option) {
+			$href = $title->getFullURL( array( 'sort' => $id ) );
+			if( $id == $selected )
+				$output[] = array( 'id' => $id, 'text'=>$option, 'href' => $href, 'selected' => true );
+			else
+				$output[] = array( 'id' => $id, 'text'=>$option, 'href' => $href );
+		} 
+				
+		return $output;
+	}
+
+	protected function getSortingSelected() {
+		$selected = $this->app->wg->request->getVal('sort');
+		if( empty($selected) || !array_key_exists( $selected, $this->sortingOptionsText ) ) {
+		 	$selected = 'nt';
+		}
+		 return $selected;
+	}
+	protected function getSortingSelectedText() {
+		$selected = $this->getSortingSelected();
+		return $this->sortingOptionsText[ $selected ];
 	}
 	
 	/**
@@ -426,4 +501,37 @@ class WallController extends ArticleCommentsModule {
 			return '';
 		}
 	}
+	
+	public function getThreads($title, $page, $perPage = null) {
+		wfProfileIn(__METHOD__);
+
+		$wall = F::build('Wall', array(($title)), 'newFromTitle');
+		if(!empty($perPage)) {
+			$wall->setMaxPerPage($perPage);
+		}
+		
+		$wall->setSorting($this->getSortingSelected() );
+		
+		$this->threads = $wall->getThreads($page);
+
+		$this->countComments = $wall->getThreadCount();
+		
+		$this->title = $this->wg->Title;
+		
+		wfProfileOut(__METHOD__);
+	}
+
+	public function getThread($filterid) {
+		wfProfileIn(__METHOD__);
+
+		$wallthread = F::build('WallThread', array($filterid), 'newFromId');
+		
+		$this->threads = array( $filterid => $wallthread );
+		
+		$this->title = $this->wg->Title;
+		
+		wfProfileOut(__METHOD__);
+	}
+	
+	
 } // end class Wall

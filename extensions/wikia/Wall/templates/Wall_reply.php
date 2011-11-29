@@ -1,3 +1,4 @@
+<? if( $userBlocked === false ): ?>
 <li class="SpeechBubble new-reply">
 	<div class="speech-bubble-avatar">
 		<?= AvatarService::renderAvatar($username, 30) ?>
@@ -18,3 +19,4 @@
 		<div class="loadingAjax"></div>
 	</div>
 </li>
+<? endif; ?>

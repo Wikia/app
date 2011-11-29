@@ -566,7 +566,7 @@ class ArticleComment {
 	public function doSaveComment( $text, $user, $title = null, $commentId = 0, $force = false ) {
 		global $wgMemc, $wgTitle;
 		wfProfileIn( __METHOD__ );
-
+		
 		$res = array();
 		$this->load(true);
 		if ( $force || ($this->canEdit() && !ArticleCommentInit::isFbConnectionNeeded()) ) {
@@ -628,6 +628,7 @@ class ArticleComment {
 	
 	static protected function doSaveAsArticle($text, $article, $user, $metadata = array() ) {
 		$result = null;
+
 		$editPage = new EditPage( $article );
 		$editPage->edittime = $article->getTimestamp();
 		$editPage->textbox1 = self::removeMetadataTag($text);
@@ -640,7 +641,15 @@ class ArticleComment {
 		
 		$bot = $user->isAllowed('bot');
 			//this function calls Article::onArticleCreate which clears cache for article and it's talk page
+			
+		global $wgUser; 
+		$userTmp = $wgUser;
+		$wgUser = $user;
+		
 		$retval = $editPage->internalAttemptSave( $result, $bot );
+		
+		$wgUser = $userTmp;
+		
 		return $retval;
 	}
 	

@@ -19,27 +19,21 @@ $wgExtensionCredits['specialpage'][] = array(
 
 $dir = dirname(__FILE__);
 
-define( "NS_USER_WALL", 1200 );
-define( "NS_USER_WALL_MESSAGE", 1201 );
-define( "NS_USER_WALL_MESSAGE_GREETING", 1202 );
 
-$wgExtraNamespaces[ NS_USER_WALL ] = "Message_Wall";
-
-$wgExtraNamespaces[ NS_USER_WALL_MESSAGE ] = "Thread";
-$wgExtraNamespaces[ NS_USER_WALL_MESSAGE_GREETING ] = "Message_Wall_Greeting";
+include($dir . '/WallNamespaces.php');
 
 $wgNamespacesWithSubpages[ NS_USER_WALL ] = true;
 
+$app->registerClass('Wall', $dir . '/Wall.class.php');
+$app->registerClass('WallThread', $dir . '/WallThread.class.php');
+$app->registerClass('WallMessage', $dir . '/WallMessage.class.php');
 $app->registerClass('WallController', $dir . '/WallController.class.php');
 $app->registerClass('WallExternalController', $dir . '/WallExternalController.class.php');
-$app->registerClass('WallHelper', $dir . '/WallHelper.class.php');
 $app->registerClass('WallHooksHelper', $dir . '/WallHooksHelper.class.php');
-$app->registerClass('WallNotifications', $dir . '/WallNotifications.class.php');
-$app->registerClass('WallNotificationEntity', $dir . '/WallNotificationEntity.class.php');
-$app->registerClass('WallNotificationsModule', $dir . '/WallNotificationsModule.class.php');
-$app->registerClass('WallNotificationsExternalController', $dir . '/WallNotificationsExternalController.class.php');
-$app->registerClass('WallMessage', $dir . '/WallMessage.class.php');
 $app->registerClass('WallRailHelper', $dir . '/WallRailHelper.class.php');
+$app->registerClass('WallHelper', $dir . '/WallHelper.class.php');
+
+include($dir . '/WallNotifications.setup.php');
 
 $app->registerExtensionMessageFile('Wall', $dir . '/Wall.i18n.php');
 
@@ -59,6 +53,8 @@ $app->registerHook('PageHeaderIndexAfterActionButtonPrepared', 'WallHooksHelper'
 $app->registerHook('BlockIpCompleteWatch', 'WallHooksHelper', 'onBlockIpCompleteWatch');
 $app->registerHook('UserIsBlockedFrom', 'WallHooksHelper', 'onUserIsBlockedFrom');
 
+$app->registerHook('AllowNotifyOnPageChange', 'WallHooksHelper', 'onAllowNotifyOnPageChange');
+
 //recent changes adjusting
 $app->registerHook('AC_RecentChange_Save', 'WallHooksHelper', 'onRecentChangeSave');
 $app->registerHook('ChangesListInsertFlags', 'WallHooksHelper', 'onChangesListInsertFlags');
@@ -70,11 +66,15 @@ $app->registerHook('ChangesListInsertComment', 'WallHooksHelper', 'onChangesList
 $app->registerHook('ArticleDoDeleteArticleBeforeLogEntry', 'WallHooksHelper', 'onArticleDoDeleteArticleBeforeLogEntry');
 $app->registerHook('PageArchiveUndeleteBeforeLogEntry', 'WallHooksHelper', 'onPageArchiveUndeleteBeforeLogEntry');
 $app->registerHook('XmlNamespaceSelectorAfterGetFormattedNamespaces', 'WallHooksHelper', 'onXmlNamespaceSelectorAfterGetFormattedNamespaces');
+$app->registerHook('ChangesListHeaderBlockGroup', 'WallHooksHelper', 'onChangesListHeaderBlockGroup');
+
 $app->registerHook('getUserPermissionsErrors', 'WallHooksHelper', 'onGetUserPermissionsErrors');
 $app->registerHook('ComposeCommonBodyMail', 'WallHooksHelper', 'onComposeCommonBodyMail' );
 
 //watchlist
 $app->registerHook('ArticleCommentBeforeWatchlistAdd', 'WallHooksHelper', 'onArticleCommentBeforeWatchlistAdd');
+$app->registerHook('WatchArticle', 'WallHooksHelper', 'onWatchArticle');
+$app->registerHook('UnwatchArticle', 'WallHooksHelper', 'onUnwatchArticle');
 
 //right rail adjusting
 $app->registerHook('GetRailModuleList', 'WallRailHelper', 'onGetRailModuleList');
@@ -106,7 +106,9 @@ F::build('JSMessages')->registerPackage('Wall', array(
 	'wall-delete-confirm-ok',
 	'wall-delete-title',
 	'wall-button-to-cancel-preview',
-	'wall-button-to-preview-comment'
+	'wall-button-to-preview-comment',
+	'wall-button-done-source',
+	'wall-message-source'
 ));
 
 /**

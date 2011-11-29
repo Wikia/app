@@ -94,6 +94,7 @@ class WallNotificationEntity {
 		}
 		
 		$this->data->wiki = $wiki;
+		$this->data->wikiname = $app->wg->sitename;
 		$this->data->rev_id = $rev->getId();
 		$this->data->timestamp = $rev->getTimestamp();
 		
@@ -101,7 +102,11 @@ class WallNotificationEntity {
 			$msg_author_realname = $authoruser->getRealName();
 			$this->data->msg_author_id = $authoruser->getId();
 			$this->data->msg_author_username = $authoruser->getName();
-			$this->data->msg_author_displayname = empty($msg_author_realname) ?  $this->data->msg_author_username:$msg_author_realname;
+			if($authoruser->getId() > 0) {
+				$this->data->msg_author_displayname = empty($msg_author_realname) ?  $this->data->msg_author_username:$msg_author_realname;	
+			} else {
+				$this->data->msg_author_displayname = $app->wf->Msg('oasis-anon-user');	
+			}
 		} else {
 		//annon
 			$this->data->msg_author_displayname = $app->wf->Msg('oasis-anon-user');
@@ -123,6 +128,8 @@ class WallNotificationEntity {
 		$this->data->thread_title = '';
 		$this->data_non_cached->parent_title_dbkey = '';
 		
+		$this->data_non_cached->msg_text = $ac->getText();
+		
 		if( !empty($acParent) ) {
 			$acParent->load();
 			$parentUser = $acParent->getUser();
@@ -130,7 +137,11 @@ class WallNotificationEntity {
 			if( $parentUser instanceof User ) {
 				$this->data->parent_username = $parentUser->getName();
 				$parent_realname = $parentUser->getRealName();
-				$this->data->parent_displayname = empty($parent_realname) ? $this->data->parent_username : $parent_realname; 
+				if($parentUser->getId() > 0) {
+					$this->data->parent_displayname = empty($parent_realname) ? $this->data->parent_username : $parent_realname;
+				} else {
+					$this->data->parent_displayname = $app->wf->Msg('oasis-anon-user');
+				}
 				$this->data->parent_user_id = $acParent->getUser()->getId();
 			} else {
 			//parent was deleted and somehow reply stays in the system

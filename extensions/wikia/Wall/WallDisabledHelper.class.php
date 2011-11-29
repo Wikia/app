@@ -6,7 +6,7 @@ class WallDisabledHooksHelper {
 	
 	/** @brief Allows to edit or not archived talk pages and its subpages
 	 * 
-	 * @author Andrzej 'nAndy' Łukaszewski
+	 * @author Andrzej 'nAndy' Åukaszewski
 	 * 
 	 * @return boolean true -- because it's a hook
 	 */
@@ -38,7 +38,7 @@ class WallDisabledHooksHelper {
 	 * 
 	 * @return boolean true
 	 * 
-	 * @author Andrzej 'nAndy' Łukaszewski
+	 * @author Andrzej 'nAndy' Åukaszewski
 	 */
 	public function onWikiFactoryChanged($varName, $wikiId, $value) {
 		$value = (bool) $value;
@@ -59,28 +59,6 @@ class WallDisabledHooksHelper {
 				//the copy follows task has been fired before
 				//we want to copy follows only when wall was 
 				//enabled by the first time
-			}
-		}
-		
-		return true;
-	}
-	
-	public function onUserRetrieveNewTalks( &$user, &$talks ) {
-		$userId = $user->getId();
-		
-		// ignore anons
-		if( $userId > 0 ) {
-			$userName = $user->getName();
-			$wn = F::build( 'WallNotifications' );
-		
-			$counts = $wn->getCounts( $userId, false );
-			
-			foreach($counts as $wikiData) {
-				if($wikiData['unread'] > 0) {
-					$link = GlobalTitle::newFromText( $userName, NS_USER_WALL, $wikiData['id'] );
-					$talks[ $wikiData['id'] ] =
-						array( 'wiki' => $wikiData['sitename'], 'link' => $link->getFullURL() );
-				}
 			}
 		}
 		
@@ -143,3 +121,4 @@ class WallDisabledHooksHelper {
 	}
 	
 }
+

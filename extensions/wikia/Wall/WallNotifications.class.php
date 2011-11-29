@@ -23,9 +23,12 @@ class WallNotifications {
 	 * Public Interface
 	 */
 	
-	public function getNotifications($userId, $wikiId, $readSlice = 5) {
+	public function getWikiNotifications($userId, $wikiId, $readSlice = 5) {
 		/* if since == null, get all notifications */	
 		/* possibly ignore $wiki at one point and fetch notifications from all wikis */
+		
+		// ignore read notifications for other wikis than the current one
+		if( $this->app->wg->CityId != $wikiId ) $readSlice = 0;
 		
 		$memcSync = $this->getCache($userId, $wikiId);
 		$list = $this->getData($memcSync, $userId, $wikiId);
@@ -57,6 +60,17 @@ class WallNotifications {
 			}
 		}
 		
+		// we are only ever asked for notifications for Wikis that are on WikiList
+		// so if there are no unread notifications for that Wiki it should not
+		// be on that list (this will save us some work for checking & fetching
+		// notifications that are in fact, empty, since current Wiki is
+		// an exception and is always checked this works for read notification
+		// as well)
+		if( count($unread) == 0 ) {
+			$this->remWikiFromList( $userId, $wikiId );
+		}
+		
+		
 		$out = array(
 			'unread'=> $unread,
 			'unread_count' => count($unread),
@@ -64,6 +78,106 @@ class WallNotifications {
 			'read_count' => count($read)
 		);
 		return $out; 
+	}
+
+	public function getCounts($userId, $forceCurrentWiki = true) {
+		$wikiList = $this->getWikiList($userId, $forceCurrentWiki);
+		
+		$output = array();
+		
+		foreach($wikiList as $wiki) {
+			$wiki['unread'] = $this->getCount($userId, $wiki['id']);
+			
+			// show only Wikis with unread notifications
+			// current Wiki is an exception (show always)
+			if( $wiki['unread'] > 0 || $wiki['id'] == $this->app->wg->CityId )
+				$output[] = $wiki;
+		}
+		return $output;
+	}
+	
+	private function getCount($userId, $wikiId) {
+		// fixme
+		// should not to do the whole work of WikiNotifications
+		$notifs = $this->getWikiNotifications($userId, $wikiId);
+		return $notifs['unread_count'];
+	}
+	
+	private function getWikiList($userId, $forceCurrentWiki = true) {
+		// $forceCurrentWiki = true - always return current wiki as part of the list
+		// $forceCurrentWiki = false - return only wikis that ever recived notifications
+		
+		$key = $this->getKey($userId, 'LIST');
+		$val = $this->app->getGlobal('wgMemc')->get($key);
+		
+		if(empty($val)) {
+			$val = $this->loadWikiListFromDB($userId);
+			$this->app->getGlobal('wgMemc')->set($key, $val);
+		}
+
+		// make sure that current Wiki is on the list, as first entry, sort the rest
+		asort($val);
+		if($forceCurrentWiki === true) {
+			unset($val[ $this->app->wg->CityId ]);
+			$output = array( array( 'id' => $this->app->wg->CityId, 'sitename' => $this->app->wg->sitename) );
+		} else {
+			$output = array();
+		}
+		foreach($val as $wikiId => $wikiSitename) {
+			$output[] = array( 'id' => $wikiId, 'sitename' => $wikiSitename);
+		}
+		return $output;
+			
+	}
+	
+	private function addWikiToList($userId, $wikiId, $wikiSitename) {
+		$key = $this->getKey($userId, 'LIST');
+		$val = $this->app->getGlobal('wgMemc')->get($key);
+		
+		if(empty($val)) {
+			$val = $this->loadWikiListFromDB($userId);
+		}
+		
+		$val[$wikiId] = $wikiSitename;
+		
+		$this->app->getGlobal('wgMemc')->set($key, $val);
+		
+	}
+
+	private function remWikiFromList($userId, $wikiId) {
+		// TODO / FIXME
+		// Currently there is a race condition in WikiList.
+		// Access to memcache key is not synchronized,
+		// waiting for new memcache implementation code
+		// that supports update-if-key-did-not-change
+		
+		$key = $this->getKey($userId, 'LIST');
+		$val = $this->app->getGlobal('wgMemc')->get($key);
+		
+		if(empty($val)) {
+			// removing Wiki from list is just speed optimization
+			// if list is not cached in memory there is no
+			// need to recreate it from DB
+		} else {
+			unset( $val[$wikiId] );
+			$this->app->getGlobal('wgMemc')->set($key, $val);
+		}
+	}
+	
+	private function loadWikiListFromDB($userId) {
+		$db = $this->getDB(false);
+		$res = $db->select('wall_notification',
+			array('distinct wiki_id'),
+			array(
+				'user_id' => $userId,
+			),
+			__METHOD__
+		);
+		$output = array();
+		while($row = $db->fetchRow($res)) {
+			$output[ $row['wiki_id'] ] = $sitename = WikiFactory::getWikiByID( $row['wiki_id'] )->city_title;
+		}
+		return $output;
 	}
 	
 	protected function groupEntity($list){
@@ -104,43 +218,111 @@ class WallNotifications {
 		$users[$notification->data->wall_userid] = $notification->data->wall_userid;
 		
 		if(!empty($users[$notification->data->msg_author_id])){
-			unset($users[$notification->data->msg_author_id]);
+			unset($users[$notification->data->msg_author_id]);	
 		} 
 
 		$title = Title::newFromText($notification->data->wall_username. '/' . $notification->data->title_id, NS_USER_WALL ); 
-		$this->sendEmails($title, $notification->data->msg_author_id, array_keys($users), $notification->isMain(), $notification->data->wall_userid );
+		$this->sendEmails(array_keys($users), $notification );
 		$this->addNotificationLinks($users, $notification);
 	}
 	
-	protected function sendEmails($title, $msg_author_id, $watchers, $isMain, $wallOwnerId) {
-		$enotif = new EmailNotification();
+	protected function createKeyForMailNotification($watcher, $notification) {
+		$key = 'mail-notification-';
 
+		if($notification->isMain()) {
+			$key .= 'new-';
+			if($watcher == $notification->data->wall_userid ) {
+				$key .= 'your';
+			} else {
+				$key .= 'someone';
+			}
+		} else {
+			$key .= 'reply-';
+			
+			if( $watcher == $notification->data->parent_user_id ) {
+				$key .= 'your';
+			} elseif( $notification->data->msg_author_id == $notification->data->parent_user_id && $notification->data->msg_author_id != 0 ) {
+				$key .= 'his';
+			} else {
+				$key .= 'someone';
+			}	
+		}
+		return $key;
+	}
+	
+	protected function sendEmails($watchers, $notification) {
 		$watchersOut = array();
+		
+		$text = strip_tags($notification->data_non_cached->msg_text, '<p><br>');
+		$text = substr($text,0,3000).( strlen($text) > 3000 ? '...':'');
+				
+		$textNoHtml = preg_replace('#<br\s*/?>#i', "\n", $text);
+		$textNoHtml = trim(preg_replace('#</?p\s*/?>#i', "\n", $textNoHtml));
+		$textNoHtml = substr($textNoHtml,0,3000).( strlen($textNoHtml) > 3000 ? '...':'');
+				
 		foreach($watchers as $val){
 			$watcher = User::newFromId($val);
 			if( $watcher->getId() != 0 && ($watcher->getOption('enotifwallthread') )
-				|| ($watcher->getOption('enotifmywall') && $wallOwnerId == $watcher->getId())
-			) {		
-				$watchersOut[] = $val; 	
+				|| ($watcher->getOption('enotifmywall') && $notification->data->wall_userid == $watcher->getId())
+			) {
+				$key = $this->createKeyForMailNotification( $watcher->getId(), $notification );
+				
+				$watcherName = $watcher->getRealName();
+				if(empty($watcherName)) {
+					$watcherName = $watcher->getName();	
+				}
+				
+				if( $notification->data->msg_author_username == $notification->data->msg_author_displayname) {
+					$author_signature = $notification->data->msg_author_username;
+				} else {
+					$author_signature = $notification->data->msg_author_displayname . '(' . $notification->data->msg_author_username . ')';
+				}
+
+				$data = array(
+					'$WATCHER' => $watcherName,
+					'$WIKI' => $notification->data->wikiname,
+					'$PARENT_AUTHOR_NAME' => (empty($notification->data->parent_displayname) ? '':$notification->data->parent_displayname),
+					'$AUTHOR_NAME' => $notification->data->msg_author_displayname,
+					'$AUTHOR' => $notification->data->msg_author_username,
+					'$AUTHOR_SIGNATURE' => $author_signature,
+					'$MAIL_SUBJECT' => wfMsg('mail-notification-subject', array(
+						'$1' => $notification->data->thread_title,
+						'$2' => $notification->data->wikiname
+					)),
+					'$METATITLE' => $notification->data->thread_title,
+					'$MESSAGE_LINK' =>  $notification->data->url,
+					'$MESSAGE_NO_HTML' =>  $textNoHtml,
+					'$MESSAGE_HTML' =>  $text,
+				);
+				$this->sendEmail($watcher, $key, $data);
 			}
 		}
-
-		//$article = Article::newFromId( $title_id );
-		$editor = User::newFromId( $msg_author_id );
-		if(empty($title) || empty($editor)) {
-			return false;
-		}
 		
-		$enotif->notifyOnPageChange( $editor, $title,
-			wfTimestampNow(),
-			'',
-			false,
-			false,
-			'wallmessage',
-			array(
-				'watchers' => $watchersOut
-		));		
 		return true;
+	}
+	
+	protected function sendEmail($watcher, $key, $data ) {
+		$from = new MailAddress( $this->app->wg->PasswordSender, 'Wikia' );
+		$replyTo = new MailAddress ( $this->app->wg->NoReplyAddress );
+		
+		$keys = array_keys($data);
+		$values =  array_values($data);
+
+		$subject = wfMsgForContent($key);
+		
+		
+		$text = wfMsgForContent('mail-notification-body');
+		
+		$subject = str_replace($keys, $values, $subject );
+		
+		$keys[] = '$SUBJECT';
+		$values[] = $subject;
+		$data['$SUBJECT'] = $subject; 
+		$html = wfRenderPartial('WallExternal', 'mail', array( 'data' => $data));
+		$text = str_replace($keys, $values, $text );
+		
+		
+		return $watcher->sendMail( $data['$MAIL_SUBJECT'], $text, $from, $replyTo, 'WallNotification', $html );
 	}
 
 	protected function getWatchlist($name, $titleDbkey) {
@@ -167,6 +349,7 @@ class WallNotifications {
 	protected function addNotificationLinks(Array $userIds, $notification) {
 		foreach($userIds as $userId) {
 			$this->addNotificationLink($userId, $notification);
+			$this->addWikiToList($userId, $this->app->wg->CityId, $this->app->wg->sitename);
 		}
 	}
 
@@ -182,8 +365,6 @@ class WallNotifications {
 	}
 	
 	public function markRead($userId, $wikiId, $id = 0, $ts = 0) {
-		//TODO: transaction !!!
-		
 		$updateDBlist = array(); // we will update database AFTER unlocking
 		
 		$wasUnread = false; // function returns True if in fact there was unread
@@ -232,6 +413,13 @@ class WallNotifications {
 		return $wasUnread;
 	}
 
+	public function markReadAllWikis( $userId ) {
+		$list = $this->getWikiList( $userId );
+		foreach( $list as $wikiData ) {
+			$this->markRead( $userId, $wikiData['id'] );
+		}
+	}
+
 	protected function addNotificationLinkInternal($userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply ) {
 		if($userId < 1) {
 			return true;
@@ -269,18 +457,25 @@ class WallNotifications {
 		$data['notification'][] = $uniqueId;
 		
 		if(isset($data['relation'][ $uniqueId ]['last']) && $data['relation'][ $uniqueId ]['last'] > -1) {
-			$data['notification'][ $data['relation'][$uniqueId ]['last'] ] = null;
+			// $data['notification'][ $data['relation'][$uniqueId ]['last'] ] = null;
+			
+			// remove previous element from the list (to keep proper ordering)
+			unset( $data['notification'][ $data['relation'][$uniqueId ]['last'] ] );
 		}
 
 		if(empty($data['relation'][ $uniqueId ]['list']) || $data['relation'][ $uniqueId ]['read'] ) {
+			// this is new Notification (new thread), so create some basic structure for it
 			$data['relation'][ $uniqueId ]['list'] = array();
 			$data['relation'][ $uniqueId ]['count'] = 0;
 			$data['relation'][ $uniqueId ]['read'] = false;
 		}
 
+		// if there is no count for this Thread notification, create it
 		if(empty($data['relation'][ $uniqueId ]['count'])) $data['relation'][ $uniqueId ]['count'] = count($data['relation'][ $uniqueId ]['list']);
 		
-
+		// keep track of where we are references in Notifications list, so that
+		// we can remove that entry and readd it at the end, should the new
+		// notification for that thread come in (to keep proper order)
 		$data['relation'][ $uniqueId ]['last'] = count($data['notification']) - 1;
 
 		
