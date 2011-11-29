@@ -3,10 +3,12 @@
  *
  * @param string event Name of event
  * @param object data Extra parameters to track
+ * @param object callbackSuccess callback function on success (optional)
+ * @param object callbackError callback function on failure (optional)
  *
  * @author Christian
  */
-jQuery.internalTrack = function(event, data) {
+jQuery.internalTrack = function(event, data, callbackSuccess, callbackError) {
 	// Require an event argument
 	if (!event) {
 		return;
@@ -26,8 +28,17 @@ jQuery.internalTrack = function(event, data) {
 	// Add data object to params object
 	$.extend(params, data);
 
-	// Make request	
-	$.get('http://a.wikia-beacon.com/__track/special/' + event, params);
+	// Make request
+	//$.get('http://a.wikia-beacon.com/__track/special/' + event, params, callback);
+	$.ajax({
+		cache: false,
+		timeout: 3000,
+		dataType: "script",
+		url: 'http://a.wikia-beacon.com/__track/special/' + event,
+		data: params,
+		error: callbackError,
+		success: callbackSuccess
+	});
 }
 
 
