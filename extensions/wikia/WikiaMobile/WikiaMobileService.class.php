@@ -89,7 +89,9 @@ class WikiaMobileService extends WikiaService {
 			'bodyText' => $this->templateObject->data['bodytext'],
 			'categoryLinks' => $this->templateObject->data['catlinks']
 		) )->toString();
-		$this->wikiaFooter = $this->sendRequest( 'WikiaMobileFooterService', 'index' )->toString();
+		$this->wikiaFooter = $this->sendRequest( 'WikiaMobileFooterService', 'index', array(
+			'copyrightLink' => $this->templateObject->data['copyright']
+		))->toString();
 		$this->jsBodyFiles = $jsBodyFiles;
 		$this->bottomscripts = $bottomscripts;
 

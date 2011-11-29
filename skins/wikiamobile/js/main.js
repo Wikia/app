@@ -83,7 +83,7 @@ var WikiaMobile = (function() {
 	init = function() {
 		WikiaMobile._clickevent = ('ontouchstart' in window)?'tap':'click';
 
-		var body = document.body,
+		var body = $(document.body),
 		navigationWordMark = $('#navigationWordMark'),
 		navigationSearch = $('#navigationSearch'),
 		searchToggle = $('#searchToggle'),
@@ -114,7 +114,7 @@ var WikiaMobile = (function() {
 		//	$( '#navigation').toggleClass( 'open' );
 		//});
 
-		$(body).delegate( '#article-comments-counter-header', 'tap', function() {
+		body.delegate( '#article-comments-counter-header', 'tap', function() {
 			$( '#article-comments').toggleClass( 'open' );
 		});
 
@@ -132,7 +132,7 @@ var WikiaMobile = (function() {
 
 		$( '#WikiaMainContent > h2' ).append( '<span class=\"chevron\"></span>' );
 
-		$(body).delegate( '#WikiaMainContent > h2, #WikiaArticleCategories > h1', this._clickevent, function() {
+		body.delegate( '#WikiaMainContent > h2, #WikiaArticleCategories > h1', this._clickevent, function() {
 			$(this).toggleClass('open').next().toggleClass('open');
 		});
 
@@ -149,7 +149,7 @@ var WikiaMobile = (function() {
 		//	$( '#leftPane' ).css( { 'display': 'none', 'opacity': '0' } );
 		//});
 
-		$(body).delegate( '.infobox img', this._clickevent, function(event) {
+		body.delegate( '.infobox img', this._clickevent, function(event) {
 			event.preventDefault();
 			var thumb = $(this),
 				image = thumb.parents('.image');
@@ -163,7 +163,7 @@ var WikiaMobile = (function() {
 			})
 		});
 
-		$(body).delegate( '.thumb', this._clickevent, function(event) {
+		body.delegate( '.thumb', this._clickevent, function(event) {
 			event.preventDefault();
 			var thumb = $(this),
 				image = thumb.children('.image').first();
@@ -179,7 +179,7 @@ var WikiaMobile = (function() {
 			})
 		});
 
-		$(body).delegate('#searchToggle', this._clickevent, function(event) {
+		body.delegate('#searchToggle', this._clickevent, function(event) {
 			var self = $(this);
 			if(self.hasClass('open')) {
 				navigationWordMark.show();
@@ -194,20 +194,26 @@ var WikiaMobile = (function() {
 
 		});
 
-		$(body).delegate('#WikiaPage', this._clickevent, function(event) {
+		body.delegate('#WikiaPage', this._clickevent, function(event) {
 			navigationWordMark.show();
 			navigationSearch.hide().removeClass('open');
 			searchToggle.removeClass('open');
 			searchInput.val('');
 		});
 
-		$(body).delegate('.tooBigTable', this._clickevent, function(event) {
+		body.delegate('.tooBigTable', this._clickevent, function(event) {
 			event.preventDefault();
 			$.openModal({
 				addClass: 'wideTable',
 				html: this.outerHTML
 			})
-		})
+		});
+		
+		$('#fullSiteSwitch').bind('click', function(event){
+			event.preventDefault();
+			Wikia.CookieCutter.set('mobilefullsite', 'true');
+			location.reload();
+		});
 	};
 
 	return {
