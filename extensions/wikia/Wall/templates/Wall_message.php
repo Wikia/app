@@ -64,21 +64,6 @@
 				</div>
 			<? endif; ?>
 		</div>
-		<?php //TODO: This is hack for now unification buttons for all skins ASAP!!! ?>
-		<?php if( $canEdit || $canDelete ): ?>
-		<div class="buttons-moonbook">
-			<!-- only show this if it's user's own message --> 
-			<span class="tools">
-				<?php if( $canDelete ): ?>
-					<img src="<?= $wgBlankImgUrl ?>" class="sprite-small delete"><a href="#" class="delete-message"><?= wfMsg('wall-message-delete'); ?></a>
-				<?php endif; ?>
-					
-				<?php if( $canEdit ): ?>
-					<img src="<?= $wgBlankImgUrl ?>" class="sprite edit-pencil"><a href="#" class="edit-message"><?= wfMsg('wall-message-edit'); ?></a>
-				<?php endif; ?>
-			</span>
-		</div>
-		<?php endif; ?>
 	</blockquote>
 	<? if(!$isreply): ?>
 		<ul class="replies">

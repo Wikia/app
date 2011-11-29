@@ -103,6 +103,8 @@ class StaticChute {
 			'common/jquery/jquery.wikia.js',
 			'common/jquery/jquery.timeago.js',
 		
+			'common/jquery/jquery.store.js',
+		
 			'common/wikibits.js',
 			'common/ajax.js',
 			'common/ajaxwatch.js',
@@ -119,6 +121,7 @@ class StaticChute {
 			'../extensions/wikia/AdEngine/ghost/gw-2010.10.4/lib/gw.js',
 			'../extensions/wikia/GlobalNotification/GlobalNotification.js',
 			'../extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
+			'../extensions/wikia/WikiaTracker/js/WikiaLogger.js',
 			'../extensions/wikia/WikiaTracker/js/WikiaTracker.js',
 			'../extensions/wikia/WikiaTracker/js/WikiaTrackerQueue.js',
 		);
