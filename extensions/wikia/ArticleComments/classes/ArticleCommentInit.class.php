@@ -12,7 +12,7 @@ class ArticleCommentInit {
 			$title = $wgTitle;
 		}
 
-		if (is_null(self::$enable)) {
+		if (is_null(self::$enable) && !empty($title)) {
 			self::$enable = self::ArticleCommentCheckTitle($title);
 
 			if (self::$enable && !is_null($wgRequest->getVal('diff'))) {

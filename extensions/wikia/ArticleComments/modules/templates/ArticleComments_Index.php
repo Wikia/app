@@ -8,7 +8,7 @@
 	 /*see RT#64641*/  /*see RT#65179*/  /*see RT#68572 */
 	if ( $countCommentsNested > 1 && $countCommentsNested <= 200 && $countComments > $commentsPerPage ) {
 	?>
-		<li><a href="<?= $wgTitle->getFullURL("showall=1") ?>"><?= wfMsg('oasis-comments-show-all') ?></a></li>
+		<li><a href="<?= $title->getFullURL("showall=1") ?>"><?= wfMsg('oasis-comments-show-all') ?></a></li>
 	<?php } ?>
 	</ul>
 	<h1 id="article-comments-counter-header"><?= wfMsgExt('oasis-comments-header', array('parsemag'), $countCommentsNestedFormatted) ?></h1>
@@ -21,15 +21,7 @@
 
 		<div class="session">
 			<?php
-				// Fail gracefully (use default avatar) for NY code.
-				if(empty($avatar)){
-					$avatarUserName = "";
-					$isLoggedIn = true;
-				} else {
-					$avatarUserName = $avatar->getUserName();
-					$isLoggedIn = $avatar->mUser->isLoggedIn();
-				}
-				echo AvatarService::renderAvatar($avatarUserName, 50);
+				echo $avatar;
 
 				if ($isLoggedIn) {
 				// FIXME: wfMsg this
@@ -41,13 +33,13 @@
 			?>
 		</div>
 
-		<form action="<?= $wgTitle->getFullURL() ?>" method="post" id="article-comm-form" class="article-comm-form" >
-			<input type="hidden" name="wpArticleId" value="<?= $wgTitle->getArticleId() ?>" />
+		<form action="<?= $title->getFullURL() ?>" method="post" class="article-comm-form" id="article-comm-form">
+			<input type="hidden" name="wpArticleId" value="<?= $title->getArticleId() ?>" />
 			<textarea name="wpArticleComment" id="article-comm"></textarea>
 			<? if (!$isReadOnly) { ?>
 				<input type="submit" name="wpArticleSubmit" id="article-comm-submit" class="wikia-button" value="<?= wfMsg('article-comments-post') ?>" />
 			<? } ?>
-			<img src="<?= $wgStylePath ?>/common/images/ajax.gif" class="throbber" />
+			<img src="<?= $ajaxicon ?>" class="throbber" />
 		</form>
 	<?php
 	} else {
@@ -67,9 +59,7 @@
 	}
 
 	if ($countComments) {
-	if ($countComments) {		
-		echo '<div class="article-comments-pagination upper-pagination">'. $data['pagination']->getBarHTML('#') .'</div>';
-	}
+		echo '<div class="article-comments-pagination upper-pagination"><div>' . $pagination . '</div></div>';
 	}
 
 	echo wfRenderPartial('ArticleComments', 'CommentList', array('commentListRaw' => $commentListRaw, 'page' => $page, 'useMaster' => false));
@@ -77,8 +67,8 @@
 	?>
 
 <?php
-	if ($countComments) {		
-		echo '<div class="article-comments-pagination">'. $data['pagination']->getBarHTML('#') .'</div>';
+	if ($countComments) {
+		echo '<div class="article-comments-pagination"><div>' . $pagination . '</div></div>';
 	}
 ?>
 	</div>
