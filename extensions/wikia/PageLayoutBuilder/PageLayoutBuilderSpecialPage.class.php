@@ -493,7 +493,7 @@ class SpecialPageLayoutBuilder extends SpecialCustomEditPage {
 	 * @access public
 	 *
 	 */
-	static public function onArticleRollbackComplete(&$article, $user, $revision) {
+	static public function onArticleRollbackComplete($article, $user, $revision) {
 		if($revision->getTitle()->getNamespace() != NS_PLB_LAYOUT) {
 			return true;
 		}
