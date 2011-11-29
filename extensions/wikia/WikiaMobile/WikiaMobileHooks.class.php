@@ -21,4 +21,10 @@ class WikiaMobileHooks extends WikiaObject{
 		
 		return true;
 	}
+	
+	public function onParserLimitReport( $parser, &$limitReport ){
+		//strip out some unneeded content to lower the size of the output
+		$limitReport = null;
+		return true;
+	}
 }
