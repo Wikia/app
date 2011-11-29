@@ -47,6 +47,13 @@ class SharingToolbarModule extends Module {
 		}
 	}
 
+	public function executeShareButton() {
+		if (!$this->canBeShown()) {
+			// don't render the toolbar
+			return false;
+		}
+	}
+
 	public function executeSendMail() {
 		global $wgRequest, $wgTitle, $wgNoReplyAddress, $wgUser, $wgNoReplyAddress;
 		wfProfileIn(__METHOD__);

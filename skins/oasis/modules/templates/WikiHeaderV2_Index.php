@@ -19,7 +19,7 @@
 		<?php
 			// render "Contribute" menu
 			echo wfRenderModule('ContributeMenu');
-			echo wfRenderModule('ShareButton');
+			echo wfRenderModule('SharingToolbar', 'ShareButton');
 		?>
 	</div>
 
