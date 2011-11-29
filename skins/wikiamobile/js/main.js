@@ -1,38 +1,52 @@
-var WikiaMobile = (function(){
+var WikiaMobile = (function() {
 
-	var allImages = [];
+	var allImages = [],
+	deviceWidth,
+	deviceHeight,
+	//position,
 
-	function getImages(){
+	getImages = function() {
 		return allImages;
-	}
+	},
 
-	function hideURLBar(){
-		if($.os.android || $.os.ios || $.os.webos){
-			//slide up the addressbar on webkit mobile browsers for maximum reading area
-			//setTimeout is necessary to make it work on ios...
-			setTimeout( function() {
-				if(!pageYOffset)
-					window.scrollTo(0, 1);
-			}, 10 );
-		}
-	}
+	//slide up the addressbar on webkit mobile browsers for maximum reading area
+	//setTimeout is necessary to make it work on ios...
+	hideURLBar = function() {
+		setTimeout( function() {
+		  	if (!pageYOffset) window.scrollTo( 0, 1 );
+		}, 1 );
+	},
 
-	function getAllImages() {
-		var number = 0;
+	handleTables = function() {
+		var tables = $('table').not('.infobox');
+		tables.each(function() {
+			$(this).addClass('tooBigTable');
+		});
+	},
+
+	getAllImages = function() {
+		var number = 0,
+		image = [];
+
+		image[0] = $('.infobox .image').data('number' , number++).attr('href');
+		allImages.push(image);
+
 		$('.thumb').each(function() {
-			var image = [],
-			self = $(this);
+			var self = $(this);
+			image = [];
 
 			image[0] = self.find('.image').data('number', number++).attr('href');
 			image[1] = self.find('.thumbcaption').html();
 			allImages.push(image);
 		});
-		
-		if(allImages.length <= 1)
-			$('body').addClass('justOneImage');
-	}
+		if(allImages.length <= 1) $('body').addClass('justOneImage');
+	},
 
-	function wrapArticles(){
+	getDeviceResolution = function() {
+		return [deviceWidth, deviceHeight];
+	},
+
+	wrapArticles = function() {
 		var wikiaMainContent = $( '#WikiaMainContent' ),
 			content = wikiaMainContent.contents(),
 			mainContent = '',
@@ -44,7 +58,6 @@ var WikiaMobile = (function(){
 		for( var i = 0, l = content.length; i < l; i++ ) {
 			var element = content[i],
 			open = false;
-			
 			if ( element.nodeName === 'H2' ) {
 				if ( !firstH2 ) {
 					open = false;
@@ -62,18 +75,32 @@ var WikiaMobile = (function(){
 				mainContent += (!element.outerHTML)?element.textContent:element.outerHTML;
 			}
 		};
-
-		if(!open)
-			mainContent += '</section>';
-
+		if(!open) mainContent += '</section>';
 		wikiaMainContent.html(mainContent);
-	}
 
-	function init(){
-		WikiaMobile._clickevent = ('ontouchstart' in window) ? 'tap' : 'click';
+	},
+
+	init = function() {
+		WikiaMobile._clickevent = ('ontouchstart' in window)?'tap':'click';
+
+		var body = document.body,
+		navigationWordMark = $('#navigationWordMark'),
+		navigationSearch = $('#navigationSearch'),
+		searchToggle = $('#searchToggle'),
+		searchInput = $('#searchInput');
+
+
+			if($.os.ios) {
+				deviceWidth = screen.width - 44;
+				deviceHeight = screen.height - 44;
+			} else {
+				deviceWidth = window.innerWidth;
+				deviceHeight = window.innerHeight;
+			}
 
 		wrapArticles();
 		hideURLBar();
+		handleTables();
 		getAllImages();
 
 		//I'm using delegate on document.body as it's been proved to be the fastest option
@@ -81,7 +108,7 @@ var WikiaMobile = (function(){
 		//	$( '#navigation').toggleClass( 'open' );
 		//});
 
-		$( document.body ).delegate( '#article-comments-counter-header', 'tap', function() {
+		$(body).delegate( '#article-comments-counter-header', 'tap', function() {
 			$( '#article-comments').toggleClass( 'open' );
 		});
 
@@ -99,7 +126,7 @@ var WikiaMobile = (function(){
 
 		$( '#WikiaMainContent > h2' ).append( '<span class=\"chevron\"></span>' );
 
-		$( document.body ).delegate( '#WikiaMainContent > h2, #WikiaArticleCategories > h1', this._clickevent, function() {
+		$(body).delegate( '#WikiaMainContent > h2, #WikiaArticleCategories > h1', this._clickevent, function() {
 			$(this).toggleClass('open').next().toggleClass('open');
 		});
 
@@ -116,7 +143,21 @@ var WikiaMobile = (function(){
 		//	$( '#leftPane' ).css( { 'display': 'none', 'opacity': '0' } );
 		//});
 
-		$( document.body ).delegate( '.thumb', this._clickevent, function(event) {
+		$(body).delegate( '.infobox img', this._clickevent, function(event) {
+			event.preventDefault();
+			var thumb = $(this),
+				image = thumb.parents('.image');
+
+			$.openModal({
+				html: '<div class="changeImageButton" id="previousImage"></div><div class="fullScreenImage" data-number='+1+
+					' style=background-image:url("'+
+					image.attr('href')+
+					'")></div><div class="changeImageButton" id="nextImage"></div>',
+				toHide: '.changeImageButton'
+			})
+		});
+
+		$(body).delegate( '.thumb', this._clickevent, function(event) {
 			event.preventDefault();
 			var thumb = $(this),
 				image = thumb.children('.image').first();
@@ -132,30 +173,32 @@ var WikiaMobile = (function(){
 			})
 		});
 
-		$(document.body).delegate('#searchToggle', this._clickevent, function(event) {
+		$(body).delegate('#searchToggle', this._clickevent, function(event) {
 			var self = $(this);
 			if(self.hasClass('open')) {
-				$('#navigationWordMark').show();
-				$('#navigationSearch').hide().removeClass('open');
+				navigationWordMark.show();
+				navigationSearch.hide().removeClass('open');
 				self.removeClass('open');
-				$('#searchInput').val('');
+				searchInput.val('');
 			} else {
-				$('#navigationWordMark').hide();
-				$('#navigationSearch').show().addClass('open');
+				navigationWordMark.hide();
+				navigationSearch.show().addClass('open');
 				self.addClass('open');
 			}
 
 		});
 
-		$(document.body).delegate('#WikiaPage', this._clickevent, function(event) {
-			$('#navigationWordMark').show();
-			$('#navigationSearch').hide().removeClass('open');
-			$('#searchToggle').removeClass('open');
-			$('#searchInput').val('');
+		$(body).delegate('#WikiaPage', this._clickevent, function(event) {
+			navigationWordMark.show();
+			navigationSearch.hide().removeClass('open');
+			searchToggle.removeClass('open');
+			searchInput.val('');
 		});
 
-		$(document.body).delegate('table', this._clickevent, function(event) {
+		$(body).delegate('.tooBigTable', this._clickevent, function(event) {
+			event.preventDefault();
 			$.openModal({
+				addClass: 'wideTable',
 				html: this.outerHTML
 			})
 		})
@@ -163,7 +206,8 @@ var WikiaMobile = (function(){
 
 	return {
 		init: init,
-		getImages: getImages
+		getImages: getImages,
+		getDeviceResolution: getDeviceResolution
 	}
 })();
 

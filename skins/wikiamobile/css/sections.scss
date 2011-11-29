@@ -27,5 +27,10 @@ h1, h2, h3{
 		&.open {
 			display: block;
 		}
+
+		ul {
+			//there is already a padding so if this is not 0 it gets way top big
+			padding: 0;
+		}
 	}
 }

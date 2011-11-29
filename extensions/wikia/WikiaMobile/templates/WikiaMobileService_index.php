@@ -22,7 +22,6 @@
 		<?= $wikiaNavigation ;?>
 		<?= $pageContent ;?>
 		<?= $wikiaFooter ;?>
-		<?= $leftPaneContent ;?>
 		<?= $jsBodyFiles ;?>
 		<?= $quantcastTracking ;?>
 		<?= $comscoreTracking ;?>
