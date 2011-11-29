@@ -15,33 +15,19 @@ var RadiumOne = {};
 		return -1;
 	}
 	
-	function fetchCookieVal(offset) {
-		var endstr = document.cookie.indexOf(";", offset);
-
-		if(endstr == -1)
-			endstr = document.cookie.length;
-
-		return unescape(document.cookie.substring(offset, endstr));
-	}
-	
-	function getCookie(name){
-		var arg = name + "=",
-		alen = arg.length,
-		clen = document.cookie.length,
-		i = 0;
-
-		while(i < clen){
-			var j = i + alen;
-			if(document.cookie.substring(i, j) == arg)
-				return fetchCookieVal(j);
-
-			i = document.cookie.indexOf(" ", i) + 1;
-
-			if(i == 0)
-				break; 
+	function getCookie(cookieName){
+		var cookies = {},
+			pair, name, value,
+			separated = document.cookie.split(';');
+		
+		for(var i = 0; i < separated.length; i = i + 1){
+			pair = separated[i].split( '=' );
+			name = pair[0].replace( /^\s*/, '' ).replace( /\s*$/, '' );
+			value = decodeURIComponent( pair[1] );
+			cookies[name] = value;
 		}
-
-		return null;
+		
+		return (typeof cookies[cookieName] !== 'undefined' ) ? cookies[cookieName] : null;
 	}
 	
 	ns.containerId = 'RadiumOne';
