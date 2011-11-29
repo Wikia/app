@@ -31,7 +31,8 @@ class WikiaMobileService extends WikiaService {
 	
 	public function index() {
 		$bottomscripts = '';
-		$jsFiles = '';
+		$jsBodyFiles = '';
+		$jsHeadFiles = '';
 		$cssFiles = '';
 		$tmpOut = new OutputPage();
 		
@@ -51,13 +52,24 @@ class WikiaMobileService extends WikiaService {
 		//force skin main CSS file to be the first so it will be always overridden by other files
 		$cssFiles .= "<link rel=\"stylesheet\" href=\"" . AssetsManager::getInstance()->getSassCommonURL( 'skins/wikiamobile/css/main.scss' ) . "\"/>";
 		$cssFiles .= $tmpOut->buildCssLinks();
-		
-		$srcs = AssetsManager::getInstance()->getGroupCommonURL('wikiamobile_js');
+
+		$srcs = AssetsManager::getInstance()->getGroupCommonURL('wikiamobile_js_head');
 		//TODO: add scripts from $wgOut as needed
 		foreach ( $srcs as $src ) {
-			$jsFiles .= "<script type=\"{$this->wg->JsMimeType}\" src=\"$src\"></script>\n";
+			$jsHeadFiles .= "<script type=\"{$this->wg->JsMimeType}\" src=\"$src\"></script>\n";
 		}
-		
+
+		//Scripts are splitted in batches to not cross the 25Kb un-gizipped cap for caching on mobile browsers
+		$srcs = array_merge(
+			AssetsManager::getInstance()->getGroupCommonURL('wikiamobile_js_body_core'),
+			AssetsManager::getInstance()->getGroupCommonURL('wikiamobile_js_body_platform')
+		);
+
+		//TODO: add scripts from $wgOut as needed
+		foreach ( $srcs as $src ) {
+			$jsBodyFiles .= "<script type=\"{$this->wg->JsMimeType}\" src=\"$src\"></script>\n";
+		}
+
 		//AppCache will be disabled for the first several releases
 		//$this->appCacheManifestPath = ( $this->wg->DevelEnvironment && !$this->wg->Request->getBool( 'appcache' ) ) ? null : self::CACHE_MANIFEST_PATH . "&{$this->wg->StyleVersion}";
 		$this->mimeType = $this->templateObject->data['mimetype'];
@@ -67,6 +79,7 @@ class WikiaMobileService extends WikiaService {
 		$this->pageTitle = $this->wg->Out->getPageTitle();
 		$this->cssLinks = $cssFiles;
 		$this->headLinks = $this->wg->Out->getHeadLinks();
+		$this->jsHeadFiles = $jsHeadFiles;
 		$this->languageCode = $this->templateObject->data['lang'];
 		$this->languageDirection = $this->templateObject->data['dir'];
 		$this->wikiaNavigation = $this->sendRequest( 'WikiaMobileNavigationService', 'index' )->toString();
@@ -77,7 +90,18 @@ class WikiaMobileService extends WikiaService {
 		) )->toString();
 		$this->leftPaneContent = $this->sendRequest( 'WikiaMobileLeftPaneService', 'index' )->toString();
 		$this->wikiaFooter = $this->sendRequest( 'WikiaMobileFooterService', 'index' )->toString();
-		$this->jsFiles = $jsFiles;
+		$this->jsBodyFiles = $jsBodyFiles;
 		$this->bottomscripts = $bottomscripts;
+		
+		//tracking
+		$this->quantcastTracking = AnalyticsEngine::track(
+			'QuantServe',
+			AnalyticsEngine::EVENT_PAGEVIEW,
+			array(),
+			array( 'extraLabels'=> array( 'mobilebrowser' ) )
+		);
+		$this->comscoreTracking = AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
+		$this->gaTracking = AnalyticsEngine::track( 'GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW );
+		$this->gaOneWikiTracking = AnalyticsEngine::track( 'GA_Urchin', 'onewiki', array( $this->wg->CityId ) );
 	}
 }

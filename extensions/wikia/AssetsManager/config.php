@@ -179,17 +179,37 @@ $config['skeleskin_js'] = array(
 	)
 );
 
-//WikiaMobile JS
-$config['wikiamobile_js'] = array(
+//WikiaMobile JS, loaded at the top of the page in the head section
+$config['wikiamobile_js_head'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/RadiumOne/raon.js',
+		'//extensions/wikia/AdEngine/AdConfig.js'
+	)
+);
+
+//WikiaMobile JS, loaded at the bottom of the page in the body section
+$config['wikiamobile_js_body_core'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//skins/common/zepto/zepto-0.8.js',
-		'//skins/wikiamobile/js/zepto.wikiamobile.js',
 		'//skins/common/zepto/zepto.getcss.js',
-		'//skins/wikiamobile/js/zepto.modal.js',
 		'//skins/common/zepto/orientation.js',
+		'//skins/wikiamobile/js/zepto.wikiamobile.js',
+		'//skins/wikiamobile/js/zepto.modal.js'
+	)
+);
+
+//WikiaMobile JS, loaded at the bottom of the page in the body section
+$config['wikiamobile_js_body_platform'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
 		'//skins/wikiamobile/js/main.js',
-		'//extensions/wikia/JSSnippets/js/JSSnippetsMobile.js'
+		'//extensions/wikia/JSSnippets/js/JSSnippetsMobile.js',
+		'//extensions/wikia/WikiaTracker/js/WikiaLogger.js',
+		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
+		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
+		'//extensions/wikia/WikiaTracker/js/WikiaTrackerQueue.js'
 	)
 );
 
