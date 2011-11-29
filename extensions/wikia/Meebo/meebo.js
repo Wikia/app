@@ -1,6 +1,7 @@
 /* depends on geo.js */
 var MeeboBar = {
 	network: '',
+	prohibitedDBnames: { 'fallout': 1 },
 	
 	init: function () {
 		switch (window.cscoreCat) {
@@ -14,9 +15,6 @@ var MeeboBar = {
 				MeeboBar.network = 'wikia_lifestyles';
 		}
 		
-		var geoData = Geo.getGeoData();
-		
-		if (window.wgEnableMeeboExt && !window.wgUserName && geoData.country == 'US') {
 window.Meebo||function(c){function p(){return["<",i,' onload="var d=',g,";d.getElementsByTagName('head')[0].",
 j,"(d.",h,"('script')).",k,"='//cim.meebo.com/cim?iv=",a.v,"&",q,"=",c[q],c[l]?
 "&"+l+"="+c[l]:"",c[e]?"&"+e+"="+c[e]:"","'\"></",i,">"].join("")}var f=window,
@@ -33,8 +31,19 @@ b.contentWindow[g];t.write(p());t.close()}catch(x){b[k]=o+'d.write("'+p().replac
 '\\"')+'");d.close();'}a.T(1)}({network:MeeboBar.network});
 Meebo.disableSharePageButton=true;
 Meebo('domReady');
-		}
 	}
 };
 
-MeeboBar.init();
+if (window.wgEnableMeeboExt) {
+	if (!window.wgUserName) {
+		if (window.skin == 'oasis') {
+		$().log(MeeboBar.prohibitedDBnames);
+			if (!(window.wgDBname in MeeboBar.prohibitedDBnames)) {
+				var geoData = Geo.getGeoData();
+				if (geoData.country == 'US') {
+					MeeboBar.init();
+				}
+			}
+		}
+	}
+}
