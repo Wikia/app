@@ -22,23 +22,6 @@ var SharingToolbar = {
 		this.toolbarNode.children('.email-link').bind('click', this.onEmailClick);
 		$('.WikiHeaderRestyle .share-button').bind('click', $.proxy(this.toolbarToggle, this));
 
-		// FIX ME if facebook api provides the functionality to run code after iframe render
-		setTimeout(function(){
-			var maxWidth = 0, elementWidth = 0;
-			var nodes = document.getElementById('SharingToolbar').childNodes;
-			for(var i=0; i<nodes.length; i++) {
-				elementWidth = parseInt(0 + $(nodes[i]).width());
-				if (parseInt(0 + $(nodes[i]).width()) > parseInt(0 + $(nodes[i]).children().width())) {
-					elementWidth = parseInt(0 + $(nodes[i]).width());
-				}
-				else elementWidth = parseInt(0 + $(nodes[i]).children().width());
-				if (elementWidth > maxWidth) maxWidth = elementWidth;
-			}
-			$('#SharingToolbar').css(
-				'width',
-				maxWidth
-			);
-		}, 10000);
 	},
 	onScroll: function() {
 		if ($(window).scrollTop() >= this.contributeOffsetTop) {
@@ -100,13 +83,35 @@ var SharingToolbar = {
 			}
 		);
 	},
+	checkWidth: function() {
+		var maxWidth = 0, elementWidth = 0, node = null, nodes = $('#SharingToolbar').children();
+		$.each(nodes, function(key, value) { 
+			node = $(value);
+			elementWidth = parseInt(0 + node.outerWidth());
+			if (parseInt(0 + node.outerWidth()) > parseInt(0 + node.children().outerWidth())) {
+				elementWidth = parseInt(0 + node.outerWidth());
+			}
+			else elementWidth = parseInt(0 + node.children().outerWidth());
+			if (elementWidth > maxWidth) maxWidth = elementWidth;
+		});
+		$('#SharingToolbar').css(
+			'width',
+			maxWidth
+		);
+	},
 	toolbarToggle: function(e) {
 		var button = $(e.target);
 		button.toggleClass('share-enabled');
 		this.toolbarNode.toggle();
 
-		// click tracking
-		this.track(button.hasClass('share-enabled') ? 'share-activate' : 'share-deactivate');
+		// click tracking and width checking
+		if (button.hasClass('share-enabled')) {
+			this.track('share-activate');
+			this.checkWidth();
+		}
+		else {
+			this.track('share-deactivate');
+		}
 	}
 }
 
