@@ -1,4 +1,4 @@
-w$(function() {
+$(function() {
 	var wall_notifications = new WallNotifications();
 });
 
