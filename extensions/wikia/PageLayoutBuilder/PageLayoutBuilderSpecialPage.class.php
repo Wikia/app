@@ -502,4 +502,16 @@ class SpecialPageLayoutBuilder extends SpecialCustomEditPage {
 		PageLayoutBuilderModel::saveElementList($revision->getTitle()->getArticleId(), $out->mPlbFormElements);
 		return true;
 	}
+	
+	/**
+	 * isDraft - checks whether this layout is a draft
+	 *
+	 * @author Tomek Odrobny
+	 *
+	 * @access public
+	 *
+	*/
+	public static function isDraft($article) {
+		return ($article->getId() == 0 || PageLayoutBuilderModel::layoutIsNoPublish($article->getId()));
+	}
 }
