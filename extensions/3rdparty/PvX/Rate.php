@@ -48,7 +48,7 @@ function wfRate() {
 			
 		}
 
-		public static function rateAction( $action, Article &$article ) 
+		public static function rateAction( $action, Article $article ) 
 		{
 			global $wgOut, $wgUser, $wgRequest, $wgTitle;
 			

@@ -166,7 +166,7 @@ function embedYouTube_url2gvid($url)
 	return $id;
 }
 
-function embedGoogleVideo($input, $argv, &$parser)
+function embedGoogleVideo($input, $argv, $parser)
 {
 	$gvid   = '';
 	$width  = $width_max  = 400;
@@ -210,7 +210,7 @@ function embedYouTube_url2aovid($url)
 	return $id;
 }
 
-function embedArchiveOrgVideo($input, $argv, &$parser)
+function embedArchiveOrgVideo($input, $argv, $parser)
 {
 	$aovid   = '';
 	$width  = $width_max  = 320;
@@ -254,7 +254,7 @@ function embedYouTube_url2aoaid($url)
 	return $id;
 }
 
-function embedArchiveOrgAudio($input, $argv, &$parser)
+function embedArchiveOrgAudio($input, $argv, $parser)
 {
 	$aoaid   = '';
 	$width  = $width_max  = 400;
@@ -298,7 +298,7 @@ function embedYouTube_url2weid($url)
 	return $id;
 }
 
-function embedWeGame($input, $argv, &$parser)
+function embedWeGame($input, $argv, $parser)
 {
 	$weid   = '';
 	$width  = $width_max  = 488;
@@ -348,7 +348,7 @@ function embedYouTube_url2tgid($input)
 	return array($tid, $gid);
 }
 
-function embedTangler($input, $argv, &$parser)
+function embedTangler($input, $argv, $parser)
 {
 	$tid = $gid = '';
 
@@ -384,7 +384,7 @@ function embedYouTube_url2gtid($url)
 	return $id;
 }
 
-function embedGametrailers($input, $argv, &$parser)
+function embedGametrailers($input, $argv, $parser)
 {
 	$gtid   = '';
 	$width  = $width_max  = 480;
@@ -472,7 +472,7 @@ function embedYouTube_url2ggid($url)
 	return $id;
 }
 
-function embedGoGreenTube($input, $argv, &$parser)
+function embedGoGreenTube($input, $argv, $parser)
 {
 	$ggid = '';
 	$width  = $width_max  = 432;
@@ -511,7 +511,7 @@ function embedYouTube_url2cvid($url)
 	return $id;
 }
 
-function embedCrispyGamer($input, $argv, &$parser)
+function embedCrispyGamer($input, $argv, $parser)
 {
 	$cvid = '';
 
@@ -532,7 +532,7 @@ function embedCrispyGamer($input, $argv, &$parser)
 
 // Embed longtail video, given its key (as 'vid' attribute of <longtail> tag).
 // example: <longtail vid='8YVNhJJj'/>
-function embedLongtailVideo($input, $argv, &$parser)
+function embedLongtailVideo($input, $argv, $parser)
 {
 	if (!empty($argv['vid'])){
 		$vid = $argv['vid'];
