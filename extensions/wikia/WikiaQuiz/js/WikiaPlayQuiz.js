@@ -151,7 +151,7 @@ var WikiaQuiz = {
 
 			var i = WikiaQuiz.ui.allAnswers.index(answer);
 			var left = (20 - (i * 190));
-			
+
 			if (WikiaQuiz.cq.hasClass('video')) {
 				// skip animation
 				r.fadeOut(WikiaQuiz.animationTiming);
@@ -163,8 +163,8 @@ var WikiaQuiz = {
 						width:WikiaQuiz.imgScaleFactor,
 						left: left,
 						top: -135
-					}, 
-					WikiaQuiz.animationTiming, 
+					},
+					WikiaQuiz.animationTiming,
 					WikiaQuiz.showAnswer
 				);
 			}
@@ -172,7 +172,7 @@ var WikiaQuiz = {
 			//WikiaQuiz.ui.explanation.fadeIn(WikiaQuiz.animationTiming);
 		}
 	},
-	
+
 	showAnswer: function() {
 		if(WikiaQuiz.correct) {
 			WikiaQuiz.ui.answerIndicator = WikiaQuiz.ui.correctIcon;
@@ -183,16 +183,16 @@ var WikiaQuiz = {
 		}
 
 		WikiaQuiz.ui.nextButton.bind('click', WikiaQuiz.handleNextClick);
-		
+
 		var css = (WikiaQuiz.cq.hasClass('video')) ? {top: 50, left: 120} : {top: 25, left: 25};
 		WikiaQuiz.ui.answerIndicator.css(css).removeClass('effect');
-		
+
 		setTimeout(function() {
 			WikiaQuiz.playSound(WikiaQuiz.sound.answerIndicator);
 		}, 100);
 		WikiaQuiz.ui.explanation.fadeIn(WikiaQuiz.animationTiming);
 	},
-				
+
 	handleNextClick: function(evt) {
 		WikiaQuiz.transition();
 	},
@@ -222,10 +222,11 @@ var WikiaQuiz = {
 			WikiaQuiz.playSound(WikiaQuiz.sound.applause);
 			// proceed to email screen when "Continue" is clicked
 			WikiaQuiz.ui.endScreen.find('.continue').click(function() {
-				/* Skipping the email screen for now. This feature wasn't fully communicated to sales solutions.
-				 * WikiaQuiz.showEmail();
-				 */
-				WikiaQuiz.showThanks();
+				if (window.WikiaQuizEmailRequired) {
+					WikiaQuiz.showEmail();
+				} else {
+					WikiaQuiz.showThanks();
+				}
 			});
 		});
 	},
@@ -266,12 +267,8 @@ var WikiaQuiz = {
 	// show thank you screen (the last one)
 	showThanks: function() {
 		WikiaQuiz.trackByStr('endscreen');
-		/* Skipping the email screen for now. This feature wasn't fully communicated to sales solutions.
-		 * Replace fadeout of emailScreen with endScreen.
-		 * WikiaQuiz.ui.emailScreen.fadeOut(WikiaQuiz.animationTiming, function() {
-		 */
-		WikiaQuiz.ui.endScreen.fadeOut(WikiaQuiz.animationTiming, function() {
 
+		(window.WikiaQuizEmailRequired ? WikiaQuiz.ui.emailScreen : WikiaQuiz.ui.endScreen).fadeOut(WikiaQuiz.animationTiming, function() {
 			WikiaQuiz.ui.thanksScreen.fadeIn(WikiaQuiz.animationTiming, function() {
 				WikiaQuiz.ui.thanksScreen.find('.more-info').click(function() {
 					WikiaQuiz.trackByStr('moreinfo');

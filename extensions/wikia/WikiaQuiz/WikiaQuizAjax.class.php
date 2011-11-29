@@ -257,7 +257,7 @@ class WikiaQuizAjax {
 
 	private static function parseCreateEditQuizRequest(WebRequest $request, $quiz, &$error) {
 		$wgUser = F::app()->getGlobal('wgUser');
-		$wgLang = F::app()->getGlobal('wgLang');
+		$wgLang = F::app()->getGlobal('wgContLang');
 
 		// parse quiz fields
 		$quizContent = '';
@@ -292,6 +292,11 @@ class WikiaQuizAjax {
 		$moreInfoHeading = trim($request->getVal ('moreinfoheading'));
 		if ($moreInfoHeading) {
 			$quizContent .= WikiaQuiz::MOREINFOHEADING_MARKER . $moreInfoHeading . "\n";
+		}
+
+		// Are emails required?
+		if ($request->getCheck('requireemail')) {
+			$quizContent .= WikiaQuiz::REQUIRE_EMAIL_MARKER . "true\n";
 		}
 
 		// More Info links
@@ -500,12 +505,12 @@ class WikiaQuizAjax {
 			$videoPage->load();
 			return $videoPage->checkIfVideoExists();
 		}
-			
+
 		return false;
 	}
-	
+
 	private static function getCategoryText($title, $order='') {
-		$wgLang = F::app()->getGlobal('wgLang');
+		$wgLang = F::app()->getGlobal('wgContLang');
 		$text = '[[' .  $wgLang->getNsText(NS_CATEGORY) . ':' . WikiaQuiz::QUIZ_CATEGORY_PREFIX . $title;
 		if ($order) {
 			$text .= '|' . $order;

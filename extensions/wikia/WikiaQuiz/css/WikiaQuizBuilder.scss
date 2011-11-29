@@ -98,6 +98,9 @@ $color-quiz-label: lighten($color-text, 30%);
 			display: none;
 		}
 	}
+	.requireemail {
+		display: block;
+	}
 }
 
 .modalContent .CreateWikiaQuizArticle {

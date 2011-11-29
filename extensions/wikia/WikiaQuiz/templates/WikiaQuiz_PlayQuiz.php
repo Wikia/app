@@ -187,7 +187,7 @@
 	<fb:like class="fblike" href="" send="true" width="530" show_faces="true" font="" height="75" action="recommend"></fb:like>
 </div>
 <script>
-	var WikiaQuizVars = <?= json_encode($quizVars) ?>;
+	var WikiaQuizVars = <?= json_encode($quizVars) ?>, WikiaQuizEmailRequired = <?= !empty($data['requireEmail']) ? 'true' : 'false' ?>;
 </script>
 <audio id="SoundAnswerCorrect" src="<?= $wgExtensionsPath ?>/wikia/WikiaQuiz/sounds/correct.ogg" preload="auto"></audio>
 <audio id="SoundAnswerWrong" src="<?= $wgExtensionsPath ?>/wikia/WikiaQuiz/sounds/wrong.ogg" preload="auto"></audio>

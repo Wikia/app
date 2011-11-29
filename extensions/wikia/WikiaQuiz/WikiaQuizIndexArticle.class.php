@@ -18,13 +18,20 @@ class WikiaQuizIndexArticle extends Article {
 	 * Render Quiz namespace page
 	 */
 	public function view() {
-		global $wgOut, $wgUser, $wgTitle, $wgJsMimeType, $wgExtensionsPath;
+		global $wgOut, $wgUser, $wgTitle, $wgRequest;
 		wfProfileIn(__METHOD__);
-		
+
 		wfLoadExtensionMessages('WikiaQuiz');
 
 		// let MW handle basic stuff
 		parent::view();
+
+		// don't override history pages
+		$action = $wgRequest->getVal('action');
+		if (in_array($action, array('history', 'historysubmit'))) {
+			wfProfileOut(__METHOD__);
+			return;
+		}
 
 		// quiz doesn't exist
 		if (!$wgTitle->exists() || empty($this->mQuiz)) {
@@ -58,7 +65,7 @@ class WikiaQuizIndexArticle extends Article {
 		if (!empty($this->mQuiz)) {
 			$this->mQuiz->purge();
 		}
-		
+
 		// purge QuizPlay article
 		$quizPlayTitle = F::build('Title', array($this->getTitle()->getText(), NS_WIKIA_PLAYQUIZ), 'newFromText');
 		$quizPlayArticle = F::build('Article', array($quizPlayTitle));
