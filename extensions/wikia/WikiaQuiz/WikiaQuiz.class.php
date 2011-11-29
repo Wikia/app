@@ -65,7 +65,7 @@ class WikiaQuiz {
 		wfProfileIn(__METHOD__);
 
 		if (!$master) {
-			#$this->mData = $wgMemc->get($this->mMemcacheKey);
+			$this->mData = $wgMemc->get($this->mMemcacheKey);
 		}
 
 		if (empty($this->mData)) {
