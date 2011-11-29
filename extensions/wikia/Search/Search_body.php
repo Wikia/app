@@ -156,6 +156,18 @@ class SolrSearchSet extends SearchResultSet {
 		return $query;
 	}
 
+	public static function getABTestMode( Array $modes, $percent = 10 ) {
+		$diceRoll = mt_rand(1, 100);
+		$abRange = count($modes) * $percent;
+
+		if( $diceRoll > $abRange ) {
+			return false;
+		}
+		else {
+			return $modes[ ( $diceRoll % count($modes) ) ];
+		}
+	}
+
 	/**
 	 * Contact the solr search server and return a wrapper
 	 * object with the set of results. Results may be cached.
@@ -167,7 +179,7 @@ class SolrSearchSet extends SearchResultSet {
 	 * @access public
 	 */
 	public static function newFromQuery( $query, $queryFields, $namespaces = array(), $limit = 20, $offset = 0, $crossWikiaSearch = false ) {
-		global $wgSolrHost, $wgSolrPort, $wgCityId, $wgErrorLog, $wgSolrDebugWikiId;
+		global $wgSolrHost, $wgSolrPort, $wgCityId, $wgErrorLog, $wgSolrDebugWikiId, $wgWikiaSearchABTestModes, $wgWikiaSearchABTestEnabled;
 
 		$fname = 'SolrSearchSet::newFromQuery';
 		wfProfileIn( $fname );
