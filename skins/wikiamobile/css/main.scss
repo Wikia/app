@@ -65,14 +65,14 @@ a {
 }
 
 #article-comments {
-	display: none;
-
 	&.open {
 		display: block;
 	}
 }
 
 #WikiaArticleComments {
+	display: none;
+	
 	.controls {
 		display: none;
 	}
@@ -83,7 +83,7 @@ a {
 }
 
 #WikiaMainContent{
-	padding: $page-padding;
+	padding: $page-padding $page-padding 0 $page-padding;
 	@include box-sizing(content-box);
 	//fixes for fluid content
 	.tvetnone {
@@ -113,24 +113,8 @@ a {
 }
 
 .RelatedPagesModule {
-	ul {
-		margin:0;
-		padding:0;
-		text-align: center;
-	}
-	li {
-		position: relative;
-		height: 135px;
-		width: 200px;
-		margin: 0 auto;
-	}
-	.more {
-		position: absolute;
-		background-color: rgba(0, 0, 0, .5);
-		bottom: 0;
-		left:0;
-		width: 100%;
-	}
+	//TODO: fix styling rendering and then remove this
+	display:none;
 }
 
 .chevron {

@@ -71,7 +71,7 @@ var WikiaMobile = (function() {
 			} else if(element.nodeName == "NAV") {
 				mainContent += '</section>' + element.outerHTML;
 				open = false;
-			}else {
+			}else if(element.nodeName != '#comment'){
 				mainContent += (!element.outerHTML)?element.textContent:element.outerHTML;
 			}
 		};
