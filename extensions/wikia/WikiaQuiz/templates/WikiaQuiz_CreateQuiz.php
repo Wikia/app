@@ -1,39 +1,44 @@
 <div class="CreateWikiaQuiz" id="CreateWikiaQuiz">
 
 	<h1><?= wfMsg('wikiaquiz-createquiz-headline') ?></h1>
-	
+
 	<form>
-		
-	<label><?= wfMsg('wikiaquiz-title-label') ?></label>	
+
+	<label><?= wfMsg('wikiaquiz-title-label') ?></label>
 	<div class="title">
 		<input type="text" name="title">
 	</div>
 
-	<label><?= wfMsg('wikiaquiz-titlescreentext-label') ?></label>	
+	<label><?= wfMsg('wikiaquiz-titlescreentext-label') ?></label>
 	<div class="titlescreentext">
 		<input type="text" name="titlescreentext">
 	</div>
 
-	<label><?= wfMsg('wikiaquiz-titlescreenimages-label') ?></label>	
+	<label><?= wfMsg('wikiaquiz-titlescreenimages-label') ?></label>
 	<div class="titlescreenimages">
 		<div><input type="text" name="titlescreenimage[]"></div>
 		<div><input type="text" name="titlescreenimage[]"></div>
 		<div><input type="text" name="titlescreenimage[]"></div>
 	</div>
 
-	<label><?= wfMsg('wikiaquiz-moreinfoheading-label') ?></label>	
+	<label><?= wfMsg('wikiaquiz-moreinfoheading-label') ?></label>
 	<div class="moreinfoheading">
 		<input type="text" name="moreinfoheading">
 	</div>
 
-	<label><?= wfMsg('wikiaquiz-moreinfolinks-label') ?></label>	
+	<label class="requireemail">
+		<input type="checkbox" name="requireemail">
+		<?= wfMsg('wikiaquiz-requireemail-label') ?>
+	</label>
+
+	<label><?= wfMsg('wikiaquiz-moreinfolinks-label') ?></label>
 	<div class="moreinfolinks">
 		<div><label><?= wfMsg('wikiaquiz-moreinfoarticle-label') ?></label><input type="text" name="moreinfoarticle[]"><label><?= wfMsg('wikiaquiz-moreinfolinktext-label') ?></label><input type="text" name="moreinfolinktext[]"></div>
 		<div><label><?= wfMsg('wikiaquiz-moreinfoarticle-label') ?></label><input type="text" name="moreinfoarticle[]"><label><?= wfMsg('wikiaquiz-moreinfolinktext-label') ?></label><input type="text" name="moreinfolinktext[]"></div>
 		<div><label><?= wfMsg('wikiaquiz-moreinfoarticle-label') ?></label><input type="text" name="moreinfoarticle[]"><label><?= wfMsg('wikiaquiz-moreinfolinktext-label') ?></label><input type="text" name="moreinfolinktext[]"></div>
 	</div>
 
-	<label><?= wfMsg('wikiaquiz-questions-label') ?></label>	
+	<label><?= wfMsg('wikiaquiz-questions-label') ?></label>
 	<ul>
 		<li class="new-item">
 			<label class="order">#0</label>
@@ -60,15 +65,15 @@
 			<img src="<?= $wgBlankImgUrl ?>" class="sprite drag">
 		</li>
 	</ul>
-	
+
 	<div class="add-new">
 		<a href="#" class="wikia-button secondary">+</a><?= wfMsg('wikiaquiz-addnewitem-label') ?>
 	</div>
-	
+
 	<div class="toolbar">
 		<input type="button" value="<?= wfMsg('wikiaquiz-cancel-label') ?>" class="cancel secondary">
 		<input type="button" value="<?= wfMsg('wikiaquiz-publish-label') ?>" class="create">
 	</div>
-	
+
 	</form>
 </div>

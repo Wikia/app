@@ -18,13 +18,20 @@ class WikiaQuizArticle extends Article {
 	 * Render Quiz namespace page
 	 */
 	public function view() {
-		global $wgOut, $wgTitle;
+		global $wgOut, $wgTitle, $wgRequest;
 		wfProfileIn(__METHOD__);
-		
+
 		wfLoadExtensionMessages('WikiaQuiz');
 
 		// let MW handle basic stuff
 		parent::view();
+
+		// don't override history pages
+		$action = $wgRequest->getVal('action');
+		if (in_array($action, array('history', 'historysubmit'))) {
+			wfProfileOut(__METHOD__);
+			return;
+		}
 
 		// poll doesn't exist
 		if (!$wgTitle->exists() || empty($this->mQuizElement)) {

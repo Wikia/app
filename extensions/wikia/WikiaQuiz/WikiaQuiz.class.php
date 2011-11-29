@@ -13,10 +13,11 @@ class WikiaQuiz {
 	private $mQuizId;
 
 	const CACHE_TTL = 86400;
-	const CACHE_VER = 5;
+	const CACHE_VER = 7;
 	const QUIZ_CATEGORY_PREFIX = 'Quiz_';
 	const TITLESCREENTEXT_MARKER = 'TITLESCREENTEXT:';
 	const IMAGE_MARKER = 'IMAGE:';
+	const REQUIRE_EMAIL_MARKER = 'REQUIREEMAIL:';
 	const MOREINFOHEADING_MARKER = 'MOREINFOHEADING:';
 	const MOREINFOLINK_MARKER = 'MOREINFOLINK:';
 	const MOREINFOLINK_TEXT_MARKER = '|';
@@ -64,7 +65,7 @@ class WikiaQuiz {
 		wfProfileIn(__METHOD__);
 
 		if (!$master) {
-			$this->mData = $wgMemc->get($this->mMemcacheKey);
+			#$this->mData = $wgMemc->get($this->mMemcacheKey);
 		}
 
 		if (empty($this->mData)) {
@@ -115,9 +116,13 @@ class WikiaQuiz {
 						$moreInfoUrl = $title->getFullUrl();
 					}
 					$moreInfoLinks[] = array('article'=>$moreInfoChunks[0],
-								'url'=>$moreInfoUrl,
-								'text'=>isset($moreInfoChunks[1]) ? $moreInfoChunks[1] : '' );
-
+						'url'=>$moreInfoUrl,
+						'text'=>isset($moreInfoChunks[1]) ? $moreInfoChunks[1] : ''
+					);
+				}
+				elseif (startsWith($line, self::REQUIRE_EMAIL_MARKER)) {
+					$line = substr($line, strlen(self::REQUIRE_EMAIL_MARKER));
+					$requireEmail = ($line == 'true');
 				}
 			}
 
@@ -145,6 +150,7 @@ class WikiaQuiz {
 			$this->mData = array(
 				'id' => $this->mQuizId,
 				'name' => $titleText,
+				'requireEmail' => !empty($requireEmail),
 				'elements' => $quizElements,
 				'titlescreentext' => $titleScreenText,
 				'images' => $images,
