@@ -38,9 +38,6 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 }
 
 .Wall {
-	.buttons-moonbook {
-		display:none;
-	}
 	/* Indenting for posts and replies */
 	.comments {
 		margin-left: 0;
@@ -80,6 +77,7 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 		}
 		ul.replies > li { // replies only
 			position: relative;
+			clear: both; /* without it replies on Monobook are looking baaad */
 			&:first-child:before {
 				content: '';
 				position: absolute;
