@@ -67,7 +67,12 @@ class ArticleCommentInit {
 		}
 
 		//blog listing? (eg: User:Name instead of User:Name/Blog_name) - do not show comments
-		if ($enable && defined('NS_BLOG_ARTICLE') && $title->getNamespace() == NS_BLOG_ARTICLE && strpos($title->getText(), '/') === false) {
+		if (
+			$enable && defined('NS_BLOG_ARTICLE') &&
+			$title instanceof Title &&
+			$title->getNamespace() == NS_BLOG_ARTICLE &&
+			strpos($title->getText(), '/') === false
+		) {
 			$enable = false;
 		}
 
