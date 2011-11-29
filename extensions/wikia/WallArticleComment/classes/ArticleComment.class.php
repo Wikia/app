@@ -169,11 +169,18 @@ class ArticleComment {
 			// get revision objects
 			if ( $this->mFirstRevId ) {
 				$this->mFirstRevision = Revision::newFromId( $this->mFirstRevId );
-				if ($this->mLastRevId == $this->mFirstRevId) {
-					// save one db query by just setting them to the same revision object
-					$this->mLastRevision = $this->mFirstRevision;
+				if ( !empty( $this->mFirstRevision ) && is_object( $this->mFirstRevision ) && ( $this->mFirstRevision instanceof Revision ) ) { // fix for FB:15198
+					if ($this->mLastRevId == $this->mFirstRevId) {
+						// save one db query by just setting them to the same revision object
+						$this->mLastRevision = $this->mFirstRevision;
+					} else {
+						$this->mLastRevision = Revision::newFromId( $this->mLastRevId );
+						if ( empty( $this->mLastRevision ) || !is_object( $this->mLastRevision ) || !( $this->mLastRevision instanceof Revision ) ) {
+							$return = false;
+						}
+					}
 				} else {
-					$this->mLastRevision = Revision::newFromId( $this->mLastRevId );
+					$result = false;
 				}
 			} else {
 				$result = false;
@@ -503,7 +510,7 @@ class ArticleComment {
 		$isAuthor = false;
 
 		if ( $this->mFirstRevision ) {
-			$isAuthor = $this->mFirstRevision->getId() == $wgUser->getId() && !$wgUser->isAnon();
+			$isAuthor = $this->mFirstRevision->getUser( Revision::RAW ) == $wgUser->getId() && !$wgUser->isAnon();
 		}
 		
 		$canEdit =
@@ -730,6 +737,10 @@ class ArticleComment {
 		 * because we save different tile via Ajax request TODO: fix it !! 
 		 */
 		$wgTitle = $commentTitle;
+		
+		if( !($commentTitle instanceof Title) ) {
+			return false;
+		}
 
 		/**
 		 * add article using EditPage class (for hooks)
