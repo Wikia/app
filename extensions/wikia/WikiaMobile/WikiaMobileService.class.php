@@ -70,6 +70,7 @@ class WikiaMobileService extends WikiaService {
 		$this->languageCode = $this->templateObject->data['lang'];
 		$this->languageDirection = $this->templateObject->data['dir'];
 		$this->wikiaNavigation = $this->sendRequest( 'WikiaMobileNavigationService', 'index' )->toString();
+		$this->advert = $this->sendRequest( 'WikiaMobileAdService', 'index' )->toString();
 		$this->pageContent = $this->sendRequest( 'WikiaMobileBodyService', 'index', array(
 			'bodyText' => $this->templateObject->data['bodytext'],
 			'categoryLinks' => $this->templateObject->data['catlinks']

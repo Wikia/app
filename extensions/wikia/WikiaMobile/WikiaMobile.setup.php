@@ -22,7 +22,7 @@ $app->wg->append(
 		"description" => "Mobile Skin for Wikia",
 		"author" => array(
 			'Federico "Lox" Lucignano <federico(at)wikia-inc.com>',
-			'Jakub Olek <bukaj.kelo(at)gmail.com>'
+			'Jakub Olek <jakubolek(at)wikia-inc.com>'
 		)
 	),
 	'other'
@@ -49,7 +49,7 @@ $app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileLeftPaneService.class.php
  * controllers
  */
 $app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileAppCacheController.class.php", 'WikiaMobileAppCacheController' );
-$app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileDialogController.class.php", 'WikiaMobileDialogController' );
+
 /**
  * special pages
  */
