@@ -18,7 +18,10 @@ $messages['en'] = array(
 	'wikiamobile-login-submit' => 'Login',
 	'wikiamobile-menu' => 'Menu',
 	'wikiamobile-explore' => 'Explore',
-	'wikiamobile-article-categories' => 'Categories'
+	'wikiamobile-article-categories' => 'Categories',
+	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Lifestyle]]',
+	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|Entertainment]]',
+	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Gaming]]'
 );
 
 /** Afrikaans (Afrikaans)
