@@ -111,7 +111,7 @@ $config['oasis_extensions_js'] = array(
 		'//extensions/FBConnect/fbconnect.js',
 		'//extensions/wikia/Geo/geo.js',
 		'//extensions/wikia/Meebo/meebo.js',
-		'//skins/common/cookiecutter.js',
+		'//skins/common/wikia/cookiecutter.js',
 		'//extensions/wikia/RadiumOne/raon.js',
 		'//extensions/wikia/VisualDNA/vdnaaat.js',
 		'//extensions/wikia/AdEngine/AdMeldAPIClient.js',
@@ -160,7 +160,7 @@ $config['wikiaphone_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'#group_oasis_jquery',
-		'//skins/common/cookiecutter.js',
+		'//skins/common/wikia/cookiecutter.js',
 		'//extensions/wikia/RadiumOne/raon.js',
 		'//extensions/wikia/AdEngine/AdConfig.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaLogger.js',
@@ -185,7 +185,7 @@ $config['skeleskin_js'] = array(
 $config['wikiamobile_js_head'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//skins/common/cookiecutter.js',
+		'//skins/common/wikia/cookiecutter.js',
 		'//extensions/wikia/RadiumOne/raon.js',
 		'//extensions/wikia/AdEngine/AdConfig.js'
 	)
