@@ -1,16 +1,17 @@
 #EditPageToolbar {
 	@include box-shadow(0, 4px, 2px, $color-epl-gradient-shadow, false, 0);
+	@include linear-gradient($color-epl-gradient, top, $color-epl-gradient-light, 50%, $color-epl-gradient-dark, 100%);
 	@include clearfix;
-	@include gradient-toolbar;
 	padding: 0 15px;
 	position: relative;
-	border-bottom: solid 1px $color-epl-toolbar-border;
+	border-bottom: solid 1px $color-page-border;
+
 	.cke_buttons {
 		@include clearfix;
 		display: block;
 		padding: 5px 0;
 		&.cke_toolbar_format_expanded {
-			border-top: solid 1px $color-epl-toolbar-border;
+			border-top: solid 1px $color-page-border;
 			padding-top: 5px;
 		}
 	}
@@ -59,10 +60,10 @@
 
 	.cke_toolbar_widescreen {
 		@include clearfix;
-		border-top: solid 1px $color-epl-toolbar-border;
+		border-top: solid 1px $color-page-border;
 		padding-top: 5px;
 		.cke_toolbar_insert {
-			border-right: solid 1px $color-epl-toolbar-border;
+			border-right: solid 1px $color-page-border;
 			float: left;
 			margin-top: 5px;
 			padding: 0 5px 0 0;
@@ -85,7 +86,7 @@
 
 	// buttons separator
 	.cke_separator {
-		@include gradient-separator;
+		@include linear-gradient($color-epl-separator, top, $color-epl-separator-tips, 0%, $color-epl-separator, 10%, $color-epl-separator, 90%, $color-epl-separator-tips, 100%);
 		display: inline-block;
 		float: left;
 		height: 30px;

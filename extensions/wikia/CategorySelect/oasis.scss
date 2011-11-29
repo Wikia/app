@@ -4,8 +4,12 @@
 @import "../../../skins/oasis/css/core/color";
 @import "../../../skins/oasis/css/mixins/border-radius";
 @import "../../../skins/oasis/css/mixins/yui-suggest";
-@import "../../../skins/oasis/css/mixins/edit-page";
-@import "../../../skins/oasis/css/modules/EditPageLayout";
+
+// Fixme: including styles from EditPageLayout is pretty janky.
+// When we refactor common colors/mixins into skins/oasis these should be removed.
+@import "../EditPageLayout/css/core/colors";
+@import "../EditPageLayout/css/core/dimensions";
+@import "../EditPageLayout/css/mixins/inputs";
 
 /* edit mode - CategorySelect module */
 #csMainContainer.csEditMode {
@@ -60,7 +64,7 @@
 
 /* Oasis fixes */
 .csViewMode #csButtonsContainer {
-	background-color: mix($color-buttons, $color-page, 5%);
+	background-color: $color-epl-page-secondary;
 	border-top: solid 1px $color-page;
 	margin: 25px -15px -12px;
 	text-align: right;

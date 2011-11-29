@@ -10,6 +10,7 @@
 			height: 26px;
 			margin: 0 5px;
 			width: 26px;
+
 			&:hover {
 				@include gradient-button-hover;
 			}
@@ -33,7 +34,7 @@
 		}
 		&.cke_on {
 			> a {
-				@include box-shadow(-1px, 1px, 2px, $color-epl-input-shadow, true);
+				@include box-shadow(-1px, 1px, 2px, $color-epl-button-shadow, true);
 				background-color: $color-epl-button-active;
 				border-top-color: $color-epl-button-border;
 				border-right-color: $color-epl-button-border;

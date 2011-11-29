@@ -22,10 +22,6 @@
 		padding: 10px 5px;
 		white-space: nowrap;
 		&:hover {
-			$color-tools-nav: mix($color-buttons, $color-page, 20%);
-			@if lightness($color-page) < 50 {
-				$color-tools-nav: lighten($color-tools-nav, 8%);
-			}
 			background-color: $color-tools-nav;
 			text-decoration: none;
 		}

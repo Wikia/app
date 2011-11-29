@@ -41,9 +41,6 @@ class EditPageLayoutHelper {
 		// use "reskined" edit page layout
 		$this->fullScreen = $fullScreen;
 		if ($fullScreen) {
-			// All editors get dual mode
-			$this->setDualMode();
-
 			// set Oasis entry-point
 			Wikia::setVar('OasisEntryModuleName', 'EditPageLayout');
 		}
@@ -308,14 +305,6 @@ class EditPageLayoutHelper {
 	}
 
 	/**
-	 * Set dual mode for the editor (light/dark theming).
-	 */
-	public function setDualMode() {
-		$profile = SassColorProfile::getInstance();
-		$profile->setDualMode(true);
-	}
-
-	/**
 	 * Modify HTML after edit page textarea
 	 *
 	 * @param $editPage EditPage edit page instance
@@ -370,5 +359,4 @@ class EditPageLayoutHelper {
 			'extensions/wikia/EditPageLayout/js/modules/ToolbarWidescreen.js',
 		);
 	}
-
 }

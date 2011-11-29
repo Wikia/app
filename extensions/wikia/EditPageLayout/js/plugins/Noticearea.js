@@ -34,8 +34,11 @@
 			self.notificationsAreaSplotch = self.el.children('.splotch').first();
 			
 			if(!self.notificationsLinkSplotch.exists()){
-				self.notificationsLinkSplotch = $('<span/>').hide();
-				self.notificationsLink.first().prepend(self.notificationsLinkSplotch);
+				self.notificationsLink.first().prepend(self.notificationsLinkSplotch = $('<span/>'));
+
+				// Fixes BugId:16528 - If we hide the span before it's added to the DOM
+				// it gets an incorrect 'olddisplay' data value which breaks styles
+				self.notificationsLinkSplotch.hide();
 			}
 			
 			self.html = self.htmlEl.html();

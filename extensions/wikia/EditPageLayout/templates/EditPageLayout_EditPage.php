@@ -43,7 +43,7 @@
 			<section id="EditPage">
 				<div id="EditPageMain">
 					<div id="EditPageToolbar" class="editpage-toolbar" data-space-type="toolbar"></div>
-					<div id="EditPageEditorWrapper" data-space-type="editor">
+					<div id="EditPageEditorWrapper" class="<?= empty($editPagePreloads) ? 'noPreloads' : 'hasPreloads' ?>" data-space-type="editor">
 						<div id="EditPageEditor" class="editpage-content">
 							<!-- basic support for users with JS disabled -->
 							<noscript><style>

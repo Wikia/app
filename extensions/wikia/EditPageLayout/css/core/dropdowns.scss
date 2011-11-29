@@ -1,6 +1,6 @@
 #EditPage {
 	.cke_panel_dropdown {
-		@include box-shadow(0, 0, 8px, $color-epl-gradient-border);
+		@include box-shadow(0, 0, 8px, $color-page-border);
 		color: $color-text;
 		background-color: $color-epl-button;
 		border: solid 1px $color-epl-button-border;
@@ -14,7 +14,7 @@
 	.cke_panelbutton, .cke_modulebutton {
 		float: left;
 	}
-
+		
 	// Rich combo, module buttons
 	.cke_rcombo, .cke_panelbutton, .cke_modulebutton {
 		&.cke_opened {
@@ -57,7 +57,7 @@
 		&.cke_opened {
 			a,
 			a:hover {
-				@include box-shadow(0, 0, 8px, $color-epl-gradient-border);
+				@include box-shadow(0, 0, 8px, $color-page-border);
 				background-color: $color-epl-gradient-light;
 				background-image: none; // remove linear-gradient effect
 				color: $color-text;
@@ -85,7 +85,7 @@
 .cke_skin_wikia {
 	.cke_panel.cke_rcombopanel {
 		@include border-radius(4px);
-		@include box-shadow(0, 0, 8px, $color-epl-gradient-border);
+		@include box-shadow(0, 0, 8px, $color-page-border);
 		@include gradient-module;
 		border: solid 1px $color-epl-button-border;
 		position: relative;

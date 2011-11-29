@@ -37,6 +37,12 @@ $color-header-text: white;
 }
 $color-menu-highlight: mix($color-links, $color-page, 20%);
 
+// Tools Menu
+$color-tools-nav: mix($color-buttons, $color-page, 20%);
+@if lightness($color-page) < 50 {
+	$color-tools-nav: lighten($color-tools-nav, 8%);
+}
+
 // Modules
 /* Rail modules now use solid colors, but there are still components that use the module highlight and shadow vars */
 $color-module-background: $color-page;

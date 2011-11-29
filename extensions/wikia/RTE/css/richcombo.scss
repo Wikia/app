@@ -2,12 +2,9 @@
  * Style CKeditor's combo panel
  */
 
-@import "../../../../skins/oasis/css/mixins/bodytext";
-@import "../../../../skins/oasis/css/mixins/edit-page";
-@import "../../../../skins/oasis/css/mixins/gradient";
 @import "../../../../skins/oasis/css/core/color";
 @import "../../../../skins/oasis/css/core/layout";
-@import "../../../../skins/oasis/css/modules/EditPageLayout";
+@import "../../../../skins/oasis/css/mixins/bodytext";
 @import "../ckeditor/_source/skins/wikia/panel";
 
 html.cke_skin_wikia_container {
@@ -16,6 +13,10 @@ html.cke_skin_wikia_container {
 
 .cke_panel_grouptitle {
 	display: none;
+}
+
+body.cke_panel_frame {
+	background-color: $color-page;
 }
 
 ul.cke_panel_list {
@@ -30,6 +31,7 @@ ul.cke_panel_list {
 
 		> a {
 			border: none;
+			outline: none;
 			padding: 0 5px;
 		}
 
@@ -37,7 +39,7 @@ ul.cke_panel_list {
 		> a:hover,
 		> a:focus,
 		> a:active {
-			@include gradient-button-hover;
+			background-color: $color-tools-nav;
 			border: none;
 		}
 

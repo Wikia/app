@@ -14,10 +14,12 @@ $color-founder-progress-header-highlight: $color-module-highlight;
 $color-founder-progress-header-highlight-alternate: darken($color-module-highlight, 2%);
 $color-founder-progress-header-shadow-alternate: darken($color-module-highlight, 9%);
 $color-founder-progress-header-shadow: $color-module-shadow;
+$color-founder-progress-indicator-arrow: mix($color-page, #000, 95%);
 $color-founder-progress-header-text: $color-text;
 $color-founder-progress-text-alternate: $color-text;
 $color-founder-progress-list-border-shadow: #e2e2e2;
-@if lightness($color-page) < 50 {
+@if $is-dark-wiki {
+	$color-founder-progress-indicator-arrow: mix($color-page, #FFF, 90%);
 	$color-founder-progress-list-border-shadow: #333;
 }
 
@@ -55,7 +57,7 @@ $color-founder-progress-list-border-shadow: #e2e2e2;
 			}
 		}
 		header {
-			background-color: $color-founder-progress-header-shadow;
+			background-color: $color-founder-progress-indicator-arrow;
 			height: 63px;
 			padding: 7px 20px 0 0;
 			position: absolute;
@@ -81,7 +83,7 @@ $color-founder-progress-list-border-shadow: #e2e2e2;
 				border: 35px solid transparent;
 				border-right-style: solid;
 				border-right-width: 18px;
-				border-right-color: $color-founder-progress-header-shadow;
+				border-right-color: $color-founder-progress-indicator-arrow;
 				content: "";
 				height: 0;
 				left: -53px;
@@ -298,9 +300,6 @@ $color-founder-progress-list-border-shadow: #e2e2e2;
 			&.completed .activity-label,
 			&.locked .activity-label {
 				color: $color-alternate-text;
-			}
-			&.locked .activity-label {
-				color: $color-founder-progress-list-border-shadow;
 			}
 			.activity-checkmark {
 				background-image: url(/extensions/wikia/AdminDashboard/images/icons.png);	/* $wgCdnStylePath */
