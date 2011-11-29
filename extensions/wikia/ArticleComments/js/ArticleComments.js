@@ -16,7 +16,6 @@ var ArticleComments = {
 				$('.article-comm-history', this).live('click', ArticleComments.linkHistory);
 				$('.article-comm-reply', this).live('click', ArticleComments.reply);
 				/*$('.SpeechBubble', this).live('mouseover', function() {
-				$('.SpeechBubble', this).live('mouseover', function() {
 					$(this).find('.tools').css('visibility', 'visible');
 				});
 				$('.SpeechBubble', this).live('mouseout', function() {
@@ -29,8 +28,8 @@ var ArticleComments = {
 			$('#article-comments').delegate('.article-comm-edit', 'click', ArticleComments.edit);
 			$('#article-comments').delegate('.article-comm-history', 'click', ArticleComments.linkHistory);
 			$('#article-comments').delegate('.article-comm-reply', 'click', ArticleComments.reply);
-			$('#article-comments').delegate('.SpeechBubble', 'mouseover',  function(){$(this).find('.tools').css('visibility', 'visible');});
-			$('#article-comments').delegate('.SpeechBubble', 'mouseout',  function(){$(this).find('.tools').css('visibility', 'hidden');});
+			/*$('#article-comments').delegate('.SpeechBubble', 'mouseover',  function(){$(this).find('.tools').css('visibility', 'visible');});
+			$('#article-comments').delegate('.SpeechBubble', 'mouseout',  function(){$(this).find('.tools').css('visibility', 'hidden');});*/
 		}
 		$('#article-comm-fbMonit').mouseenter( function() {$('#fbCommentMessage').fadeIn( 'slow' )});
 		$('#article-comm-fbMonit').mouseleave( function() {$('#fbCommentMessage').fadeOut( 'slow' )});
@@ -295,7 +294,7 @@ var ArticleComments = {
 	setPage: function(e) {
 		ArticleComments.log('begin: setPage');
 		e.preventDefault();
-		var page = parseInt($(this).data('page'));
+		var page = parseInt($(this).attr('page'));
 
 		var trackingPage = page;
 		var id = $(this).attr('id');
@@ -343,14 +342,7 @@ var ArticleComments = {
 	},
 
 	addHover: function() {
-		$('.article-comments-pagination a')
-			.bind('click', ArticleComments.setPage)
-			.not('.active')
-			.hover(function() {
-				$(this).addClass('accent');
-			}, function() {
-				$(this).removeClass('accent');
-			});
+		$('.article-comments-pagination-link').bind('click', ArticleComments.setPage).not('.article-comments-pagination-link-active, #article-comments-pagination-link-prev, #article-comments-pagination-link-next').hover(function() {$(this).addClass('accent');}, function() {$(this).removeClass('accent');});
 	},
 
 	changeOrder: function() {

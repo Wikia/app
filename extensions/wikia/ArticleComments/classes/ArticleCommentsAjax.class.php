@@ -54,11 +54,12 @@ class ArticleCommentsAjax {
 		}
 
 		$comment = ArticleComment::newFromId( $commentId );
-		
-		if ( !empty( $comment ) ) {
+		if ( $comment ) {
 			$comment->load(true);
 			if ( $comment->canEdit() ) {
-				$response = $comment->doSaveComment( $wgRequest, $wgUser, $title );
+				$text = $wgRequest->getText('wpArticleComment', false);
+				$commentId = $wgRequest->getText('id', false);
+				$response = $comment->doSaveComment( $text, $wgUser, $title, $commentId );
 				if ( $response !== false ) {
 					$status = $response[0];
 					$article = $response[1];
@@ -104,8 +105,7 @@ class ArticleCommentsAjax {
 		 * edit comment
 		 */
 		$comment = ArticleComment::newFromId( $commentId );
-		
-		if ( !empty( $comment ) ) {
+		if ( $comment ) {
 			$comment->load(true);
 			if ( $comment->canEdit() ) {
 				$result['error'] = 0;
@@ -186,7 +186,7 @@ class ArticleCommentsAjax {
 			return $result;
 		}
 
-		$response = ArticleComment::doPost( $wgRequest, $wgUser, $title, $parentId );
+		$response = ArticleComment::doPost( $wgRequest->getText('wpArticleComment', false), $wgUser, $title, $parentId );
 		//RT#44830
 		if ($title->getNamespace() == NS_USER_TALK &&
 		 $response !== false &&
@@ -199,29 +199,8 @@ class ArticleCommentsAjax {
 		}
 
 		if ( $response !== false ) {
-			$status = $response[0];
-			$article = $response[1];
-			ArticleComment::doAfterPost($status, $article);
 
 			$listing = ArticleCommentList::newFromTitle($title);
-
-			// old code
-			// $comments = $listing->getCommentPages(true, false);
-			
-			// new code
-			global $wgMemc;
-			
-			$wgMemc->set( wfMemcKey( 'articlecomment', 'comm', $title->getArticleId(), 'v1' ), null);
-			// make sure our comment list is refreshed from the master RT#141861
-			$listing->getCommentList(true);
-
-			// BugID: 2483 purge the parent article when new comment is posted
-			$parts = explode( '/', $wgTitle->getText() );
-			$parentTitle = Title::newFromText($parts[0]);
-			if ($parentTitle) {
-				$parentTitle->invalidateCache();
-				$parentTitle->purgeSquid();
-			}
 			
 			$addedComment = ArticleComment::newFromArticle($response[1]);
 			
@@ -289,9 +268,7 @@ class ArticleCommentsAjax {
 			$listing = ArticleCommentList::newFromTitle($title);
 			$comments = $listing->getCommentPages(false, $page);
 			$text = wfRenderPartial('ArticleComments', 'CommentList', array('commentListRaw' => $comments, 'page' => $page, 'useMaster' => false));
-			$paginator = Paginator::newFromArray( $listing->getCountAll(), 25 );
-			$paginator->setActivePage($page === false ? 1 : $page - 1);
-			$pagination = $paginator->getBarHTML('#');
+			$pagination = $listing->doPagination($listing->getCountAll(), count($comments), $page === false ? 1 : $page, $title);
 		}
 
 		$result = array('error' => $error, 'text' => $text, 'pagination' => $pagination);

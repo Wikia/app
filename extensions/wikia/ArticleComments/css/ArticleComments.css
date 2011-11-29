@@ -47,10 +47,6 @@
 	padding: 12px 0;
 }
 
-#article-comments .comment-avatar {
-	float: left;
-}
-
 #article-comments blockquote {
 	margin-top: 0px;
 	margin-left: 65px;
@@ -97,7 +93,6 @@ div.article-comment strong {
 	font-weight: 700;
 }
 
-.article-comments .comment-avatar,
 div.article-comm-input-avatar {
 	float: left;
 }
