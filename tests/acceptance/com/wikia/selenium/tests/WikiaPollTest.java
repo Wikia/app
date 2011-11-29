@@ -34,7 +34,7 @@ public class WikiaPollTest extends BaseTest {
 
 		// cast vote
 		session().click("//section[@class='WikiaPoll']/form/ul[@class='vote']/li[1]/label/input");
-		session().click("//section[@class='WikiaPoll']/form/details/input");
+		session().click("//section[@class='WikiaPoll']/form//input[@type='submit']");
 		waitForElement("//section[@class='WikiaPoll']/form/ul[@class='results']");
 
 		// clean up
