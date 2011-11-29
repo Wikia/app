@@ -1,7 +1,7 @@
 /* depends on geo.js */
 var MeeboBar = {
 	network: '',
-	prohibitedDBnames: { 'fallout': 1 },
+	prohibitedDBnames: { 'fallout': 1, 'answers': 1 },
 	
 	init: function () {
 		switch (window.cscoreCat) {
