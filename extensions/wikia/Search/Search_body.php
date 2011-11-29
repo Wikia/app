@@ -267,7 +267,7 @@ class SolrSearchSet extends SearchResultSet {
 		$resultSet = new SolrSearchSet( $query, $resultDocs, $resultSnippets, $resultSuggestions, $resultCount, $offset, $relevancyFunctionId, $totalHits, $crossWikiaSearch );
 
 		if( empty( $offset ) ) {
-			Track::event( ( !empty( $resultCount ) ? 'search_start' : 'search_start_nomatch' ), array( 'sterm' => $query, 'rver' => $relevancyFunctionId ) );
+			Track::event( ( !empty( $resultCount ) ? 'search_start' : 'search_start_nomatch' ), array( 'sterm' => $query, 'rver' => $relevancyFunctionId, 'stype' => ( $crossWikiaSearch ? 'intra' : 'inter' ) ) );
 		}
 
 		wfProfileOut( $fname );
