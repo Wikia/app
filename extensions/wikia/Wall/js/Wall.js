@@ -330,7 +330,11 @@ var Wall = $.createClass(Object, {
 				$('#WallMessageBody').val("").trigger('blur');
 				$('#WallMessageTitle').val("").trigger('blur');
 				var newmsg = $(data['message']);
-				WikiaButtons.init(newmsg);
+				
+				if(window.skin && window.skin != "monobook") {
+					WikiaButtons.init(newmsg);
+				}
+				
 				$('#Wall .comments').prepend(newmsg);
 				if(!$.browser.msie) { // IE is too slow for that (even IE8)
 					newmsg.hide()
@@ -647,7 +651,10 @@ var Wall = $.createClass(Object, {
 		bubble.first().html(beforeedit);
 		$('.buttons' ,msg).show();
 		
-		WikiaButtons.init(bubble);
+		if(window.skin && window.skin != "monobook") {
+			WikiaButtons.init(bubble);
+		}
+		
 		//click tracking
 		this.track('wall/message/edit/cancel');
 	},
@@ -695,7 +702,9 @@ var Wall = $.createClass(Object, {
 				timestamp.find('.timeago').attr('title', data.isotime).timeago();
 				timestamp.find('.timeago-fmt').html(data.fulltime);
 				
-				WikiaButtons.init(msg);
+				if(window.skin && window.skin != "monobook") {
+					WikiaButtons.init(msg);
+				}
 				
 				//$('.SpeechBubble .timestamp .permalink') 
 				$('.buttons' ,msg).show();
@@ -772,7 +781,11 @@ var Wall = $.createClass(Object, {
 				//this.replyShrink($(e.target).closest('.SpeechBubble'), true);
 				main.find('textarea').val("").trigger('blur');
 				var newmsg = $($(data['message'])).insertBefore(main.find('ul li.new-reply')).hide().fadeIn('slow');
-				WikiaButtons.init(newmsg);
+				
+				if(window.skin && window.skin != "monobook") {
+					WikiaButtons.init(newmsg);
+				}
+				
 				//$('<div class="highlight"></div>').appendTo(newmsg);//.fadeTo(0,0.05).fadeTo(1000, 0.05).fadeOut(3000);
 				$('.timeago',newmsg).timeago();
 				//$('.SpeechBubble[data-id='+main.attr('data-id')+']:after',newmsg.parent()).css('opacity',1).animate({opacity:'0'},2000);
