@@ -457,12 +457,22 @@ class WallController extends ArticleCommentsModule {
 	}
 
 	protected function getSortingSelected() {
-		$selected = $this->app->wg->request->getVal('sort');
+		$selected = $this->wg->request->getVal('sort');
+
+		if(empty($selected)) {
+			$selected = $this->request->getCookie('wall_sort');
+		} else {
+			$this->request->setCookie('wall_sort', $selected, 0);
+		}
+		
 		if( empty($selected) || !array_key_exists( $selected, $this->sortingOptionsText ) ) {
 		 	$selected = 'nt';
 		}
-		 return $selected;
+		
+		return $selected;
 	}
+	
+	
 	protected function getSortingSelectedText() {
 		$selected = $this->getSortingSelected();
 		return $this->sortingOptionsText[ $selected ];
