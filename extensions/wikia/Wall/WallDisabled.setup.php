@@ -25,6 +25,7 @@ $app->registerClass('WallCopyFollowsTask', $dir . '/WallCopyFollowsTask.class.ph
 // Notifications are required on NonWall Wikis in order to show proper
 // lower-left corner notification bubbles from Wall Wikis
 $app->registerClass('WallHelper', $dir . '/WallHelper.class.php');
+$app->registerClass('WallMessage', $dir . '/WallMessage.class.php');
 include($dir . '/WallNotifications.setup.php');
 
 
