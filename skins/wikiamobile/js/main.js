@@ -1,23 +1,23 @@
-var WikiaMobile = (function() {
+var WikiaMobile = (function(){
 
-	var allImages = [],
-	//position,
+	var allImages = [];
 
-	getImages = function() {
+	function getImages(){
 		return allImages;
-	},
+	}
 
-	hideURLBar = function() {
-		if ( $.os.android || $.os.ios || $.os.webos ) {
-		//slide up the addressbar on webkit mobile browsers for maximum reading area
-		//setTimeout is necessary to make it work on ios...
-		setTimeout( function() {
-		  	if (!pageYOffset) window.scrollTo( 0, 1 );
-		}, 10 );
+	function hideURLBar(){
+		if($.os.android || $.os.ios || $.os.webos){
+			//slide up the addressbar on webkit mobile browsers for maximum reading area
+			//setTimeout is necessary to make it work on ios...
+			setTimeout( function() {
+				if(!pageYOffset)
+					window.scrollTo(0, 1);
+			}, 10 );
 		}
-	},
+	}
 
-	getAllImages = function() {
+	function getAllImages() {
 		var number = 0;
 		$('.thumb').each(function() {
 			var image = [],
@@ -27,10 +27,12 @@ var WikiaMobile = (function() {
 			image[1] = self.find('.thumbcaption').html();
 			allImages.push(image);
 		});
-		if(allImages.length <= 1) $('body').addClass('justOneImage');
-	},
+		
+		if(allImages.length <= 1)
+			$('body').addClass('justOneImage');
+	}
 
-	wrapArticles = function() {
+	function wrapArticles(){
 		var wikiaMainContent = $( '#WikiaMainContent' ),
 			content = wikiaMainContent.contents(),
 			mainContent = '',
@@ -42,6 +44,7 @@ var WikiaMobile = (function() {
 		for( var i = 0, l = content.length; i < l; i++ ) {
 			var element = content[i],
 			open = false;
+			
 			if ( element.nodeName === 'H2' ) {
 				if ( !firstH2 ) {
 					open = false;
@@ -59,13 +62,15 @@ var WikiaMobile = (function() {
 				mainContent += (!element.outerHTML)?element.textContent:element.outerHTML;
 			}
 		};
-		if(!open) mainContent += '</section>';
+
+		if(!open)
+			mainContent += '</section>';
+
 		wikiaMainContent.html(mainContent);
+	}
 
-	},
-
-	init = function() {
-		WikiaMobile._clickevent = ('ontouchstart' in window)?'tap':'click';
+	function init(){
+		WikiaMobile._clickevent = ('ontouchstart' in window) ? 'tap' : 'click';
 
 		wrapArticles();
 		hideURLBar();
