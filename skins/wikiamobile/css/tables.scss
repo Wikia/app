@@ -1,8 +1,24 @@
-table {
-	background-color: rgba(0,0,0,.2);
-	width: 200%;
+@import "mixins/box-shadow.scss";
+
+#WikiaMainContent {
+	.tooBigTable {
+
+	}
 }
 
-.modalContent {
-	
+#modalWrapper.wideTable {
+		overflow: visible;
+
+		#modalContent {
+			background-color: white;
+		}
+}
+
+@media (orientation:landscape) and (min-width:321px){
+	#WikiaMainContent {
+		.tooBigTable:before {
+		
+		}
+
+	}
 }

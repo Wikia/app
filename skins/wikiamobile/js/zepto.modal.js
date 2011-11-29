@@ -13,6 +13,9 @@
 				<div id="modalContent"></div>\
 				<div id="modalFooter"></div>\
 			</div>',
+		resolution = WikiaMobile.getDeviceResolution(),
+		height,
+		width,
 		that = this;
 
 		$('body').append(modal);
@@ -25,6 +28,20 @@
 		this._allToHide = this._modalTopBar.add(this._modalClose).add(this._modalFooter);
 		this._thePage = $('#navigation, #WikiaPage, #wikiaFooter');
 
+		if($.os.ios && window.orientation != 0) {
+			height = resolution[0];
+			width = resolution[1];
+		} else {
+			height = resolution[1];
+			width = resolution[0];
+		}
+
+		$('head').append("<style>#modalWrapper{min-height:"+height+"px;max-height:100%;}</style>");
+
+		//hide adress bar on orientation change
+		window.onorientationchange = function() {
+				window.scrollTo( 0, 1 );
+		}
 
 		$(document.body).delegate('#modalClose', WikiaMobile._clickevent , function() {
 			that.closeModal();
@@ -96,6 +113,12 @@
 		if(!this._modalCreated) this._createModal();
 		options = options || {};
 
+		if(options.addClass) {
+			this._modal.addClass(options.addClass);
+		} else {
+			this._modal.attr('class', '');
+		}
+
 		if(options.html) {
 			this._modalContent.html(options.html);
 		} else {
@@ -145,6 +168,7 @@
 			this.hideModal();
 			this._modalContent.html('');
 			this._modalFooter.html('');
+			this._modal.attr('class', '');
 		}
 	};
 
