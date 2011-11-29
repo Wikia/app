@@ -8,19 +8,28 @@
 @import "../../../../skins/oasis/css/mixins/opacity";
 @import "../../../../skins/oasis/css/mixins/wordmark";
 @import "../../../../skins/oasis/css/mixins/yui-suggest";
-@import "../../../../skins/oasis/css/mixins/edit-page";
-@import "../../../../skins/oasis/css/modules/EditPageLayout";
 
-@import "mixins/sprite-edit-page"; // icons
+// Colors
+@import "core/colors";
 
-@import "core/buttons"; // buttons (icons + states)
-@import "core/dropdowns"; // dropdowns (rcombo)
-@import "core/header"; // edit page header (wordmark, page title, help link)
+// Mixins
+@import "mixins/button-resize";
+@import "mixins/gradients";
+@import "mixins/inputs";
+@import "mixins/splotch";
+@import "mixins/sprite-edit-page";
+
+// Core
+@import "core/buttons";
+@import "core/dimensions";
+@import "core/dropdowns";
+@import "core/header";
 @import "core/modals";
-@import "core/modules"; // module-specific
-@import "core/notices"; // edit page notices
-@import "core/toolbar"; // toolbar
-@import "core/wide"; // wide mode related stuff
+@import "core/modules";
+@import "core/notices";
+@import "core/tabs";
+@import "core/toolbar";
+@import "core/wide";
 
 body {
 	padding: 0;
@@ -44,45 +53,6 @@ body {
 #WikiaHeader {
 	nav:before {
 		background: none;
-	}
-}
-
-#EditPageTabs {
-	bottom: -1px;
-	position: absolute;
-	right: $width-rail-epl;
-	.cke_button {
-		@include border-radius(5px);
-		@include border-radius-se(0);
-		@include border-radius-sw(0);
-		background-color: $color-epl-toolbar-active;
-		border: 1px solid $color-page-border;
-		border-bottom: 0;
-		display: inline-block;
-		margin-left: 3px;
-		padding: 1px 0;
-		zoom: 1; // ie
-
-		> a {
-			outline: none;
-			cursor: pointer;
-		}
-		&:first-child {
-			margin-left: 0;
-		}
-		&.cke_off {
-			background-color: $color-epl-toolbar-inactive;
-			border-bottom: 1px solid $color-page-border;
-			padding-bottom: 0;
-		}
-		> a:hover {
-			text-decoration: none;
-		}
-		.cke_label {
-			display: inline-block;
-			font-size: 11px;
-			padding: 3px 6px;
-		}
 	}
 }
 
@@ -112,14 +82,20 @@ body {
 }
 
 #EditPageRail {
+	@include box-shadow(-2px, 2px, 2px, $color-epl-gradient-shadow, false, 0);
+	background-color: $color-epl-page-tertiary;
+	border-left: 1px solid $color-page-border;
 	float: right;
-	position: relative;
+	margin-left: -1px;
 	width: $width-rail-epl;
 
+	// Make sure the box shadow of #EditPageRail is layered on top of #EditPageMain
+	position: relative;
+	z-index: 2;
+
 	.rail-auto-height {
-		*z-index: 1;
-		position: relative;
-		overflow-x: hidden;
+		position: relative; // IE 7 needs this
+		overflow: hidden;
 
 		> * {
 			width: $width-rail-epl;
@@ -129,10 +105,16 @@ body {
 
 #EditPageEditorWrapper {
 	padding-left: 10px;
+	
+	&.hasPreloads {
+		.editpage-editarea {
+			border-top: 1px solid $color-page-border;
+		}
+	}
 }
 
 .editpage-intro {
-	border-color: $color-epl-gradient-border;
+	border-color: $color-page-border;
 	border-style: solid;
 	border-width: 0 1px 1px 1px;
 	margin-bottom: 10px;
@@ -146,7 +128,7 @@ body {
 		// preload content
 		> div {
 			@include bodytext;
-			background-color: $color-epl-intro;
+			background-color: $color-epl-page-tertiary;
 			color: $color-text;
 			padding: 5px;
 		}
@@ -172,7 +154,7 @@ body {
 	// expand link
 	> .expand {
 		@include opacity(80);
-		background-color: $color-epl-intro-button;
+		background-color: $color-page;
 		bottom: 5px;
 		color: $color-links;
 		cursor: pointer;
@@ -200,6 +182,10 @@ body {
 	
 	&.noFooter {
 		margin-bottom: 10px;
+		
+		.editpage-editarea {
+			border-bottom: 1px solid $color-page-border;
+		}
 	}
 
 	// source mode tweak
@@ -207,10 +193,11 @@ body {
 		@include epl-editorarea;
 		border: 0;
 	}
+
 	#diff {
 		@include bodytext;
 		background-color: $color-epl-header-secondary;
-		border: 1px solid $color-epl-gradient-border;
+		border: 1px solid $color-page-border;
 		margin: 10px 0;
 		padding: 5px;
 
@@ -222,9 +209,10 @@ body {
 			}
 		}
 	}
+
 	#myedit {
 		background-color: $color-epl-header-secondary;
-		border: 1px solid $color-epl-gradient-border;
+		border: 1px solid $color-page-border;
 		color: $color-text;
 		padding: 10px;
 
@@ -235,18 +223,24 @@ body {
 			resize: none;
 		}
 	}
-	.cke_skin_wikia {
-		.cke_contents iframe,
-		.cke_source {
+
+	// wrapper for edit area
+	.editpage-editarea {
+		border-color: $color-page-border;
+		border-style: solid;
+		border-width: 0 1px;
+		position: relative;
+		
+		textarea {
 			color: $color-text;
 			background-color: $color-page;
 		}
+
+		.cke_browser_ie7 iframe {
+			width: 99.5% !important; // override element style
+		}
 	}
-	// wrapper for edit area
-	.editpage-editarea {
-		border: 1px solid $color-epl-gradient-border;
-		position: relative;
-	}
+
 	.editpage-loading-indicator {
 
 		.loading-background, .loading-message {

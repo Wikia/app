@@ -312,7 +312,7 @@ var FounderProgressBar = {
 		var c = FounderProgressBar.c;
 		var centerX = FounderProgressBar.outerRadius + FounderProgressBar.separation;
 		var centerY = FounderProgressBar.outerRadius;
-		c.fillStyle = FounderProgressBar.sections-- > 1 ? "#6aa8d1" : "#e6e6e6";
+		c.fillStyle = FounderProgressBar.sections-- > 1 ? sassParams['color-buttons'] : "rgba(0,0,0,.1)";
 		c.moveTo(FounderProgressBar.outerRadius + FounderProgressBar.separation, FounderProgressBar.outerRadius - FounderProgressBar.innerRadius);
 		c.beginPath();
 		c.lineTo(FounderProgressBar.outerRadius + FounderProgressBar.separation, 0);
@@ -330,7 +330,7 @@ var FounderProgressBar = {
 		var centerX = FounderProgressBar.outerRadius + FounderProgressBar.separation;
 		var centerY = FounderProgressBar.outerRadius;
 		var p = 1 + FounderProgressBar.sections;
-		c.fillStyle = "#6aa8d1";
+		c.fillStyle = sassParams['color-buttons'];
 		c.moveTo(FounderProgressBar.outerRadius + FounderProgressBar.separation, FounderProgressBar.outerRadius - FounderProgressBar.innerRadius);
 		c.beginPath();
 		c.lineTo(FounderProgressBar.outerRadius + FounderProgressBar.separation, 0);

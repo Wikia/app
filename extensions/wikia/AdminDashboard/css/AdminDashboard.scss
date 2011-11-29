@@ -15,36 +15,53 @@ $admin-dashboard-content-width: 690px;
 $admin-dashboard-header-height: 40px;
 $base-z: 5;
 
-$color-admin-page: $color-page;
+// What mix color should be used to "darken" and "lighten"?
+$color-admin-dark-mix: #000;
+$color-admin-light-mix: #FFF;
+
 $color-admin-text: $color-text;
-$color-admin-tab-inactive: darken($color-module-shadow, 10%);
-$color-admin-tab-active: $color-module-highlight;
+$color-admin-tab-inactive: mix($color-page, $color-admin-dark-mix, 85%);
+$color-admin-tab-active: $color-page;
 $color-admin-rail-header: $color-text;
 $color-admin-rail-border: $color-page-border;
 $color-admin-header-highlight: $color-module-highlight;
 $color-admin-header-shadow: $color-module-shadow;
 $color-admin-header-text: $color-text;
-$color-admin-header-text-alternate: lighten($color-links, 20%);
-$color-admin-header-box-shadow: darken($color-module-shadow, 6%);
+$color-admin-header-text-alternate: mix($color-links, $color-admin-light-mix, 80%);
+$color-admin-header-box-shadow: mix($color-page, $color-admin-dark-mix, 90%);
 $color-admin-content-highlight: $color-module-highlight;
 $color-admin-content-shadow: $color-module-shadow;
 $color-admin-icon-highlight: $color-module-highlight;
 $color-admin-icon-shadow: $color-module-shadow;
 $color-admin-icon-border: $color-page-border;
-$color-admin-icon-hover-highlight: darken($color-module-highlight, 6%);
-$color-admin-icon-hover-shadow: darken($color-module-shadow, 6%);
-$color-admin-icon-active-highlight: darken($color-admin-icon-hover-highlight, 6%);
+$color-admin-icon-hover-highlight: mix($color-page, $color-admin-dark-mix, 96%);
+$color-admin-icon-hover-shadow: mix($color-page, $color-admin-dark-mix, 90%);
+$color-admin-icon-active-highlight: mix($color-page, $color-admin-dark-mix, 90%);
 $color-admin-article-border: $color-page-border;
 $color-admin-article-box-shadow: $color-admin-icon-shadow;
-$color-admin-global-header: #f2f2f2;
+$color-admin-global-header: mix($color-page, $color-buttons, 65%);
+$color-admin-global-header-shadow: darken($color-admin-global-header, 5%);
+@if lightness($color-admin-global-header) < 75 {
+	$color-admin-global-header-shadow: darken($color-admin-global-header, 3%);
+}
+$color-totals: $color-alternate-text;
+$color-totals-text: white;
 @if $is-dark-wiki {
-	$color-admin-tab-inactive: lighten($color-module-shadow, 20%);
-	$color-admin-tab-active: $color-admin-page;
-	$color-admin-global-header: #2f2f2f;
+	$color-totals-text: black;	
+}
+
+$color-admin-global-header-text: white;
+@if lightness($color-admin-global-header) > 75 {
+	$color-admin-global-header-text: black;
+}
+
+@if $is-dark-wiki {
+	$color-admin-tab-inactive: mix($color-page, $color-admin-light-mix, 90%);
 }
 
 .AdminDashboardHeader {
-	background-color: $color-admin-global-header;
+	@include box-shadow(0, -4px, 2px, $color-admin-global-header-shadow, true, 0);
+	background: $color-admin-global-header;
 	border-bottom: 1px solid $color-page-border;
 	border-top: 1px solid $color-page-border;
 	height: $admin-dashboard-header-height;
@@ -60,7 +77,7 @@ $color-admin-global-header: #f2f2f2;
 			margin-right: 20px;
 		}
 		a {
-			color: $color-text;
+			color: $color-links;
 			text-decoration: none;
 		}
 	}
@@ -282,7 +299,6 @@ $color-admin-global-header: #f2f2f2;
 // Oasis overwrites
 .WikiaArticle {
 	@include box-shadow(1px, 1px, 1px, $color-admin-article-box-shadow);
-	background-color: $color-admin-page;
 	border-bottom: 1px solid $color-admin-article-border;
 	border-right: 1px solid $color-admin-article-border;
 	float: left;
@@ -298,13 +314,6 @@ $color-admin-global-header: #f2f2f2;
 	}
 	fieldset {
 		border: solid 1px $color-links;
-	}
-}
-
-.WikiaPage {
-	color: $color-admin-text;
-	.WikiaPageBackground {
-		background-color: $color-admin-page;
 	}
 }
 
@@ -351,10 +360,6 @@ $color-admin-global-header: #f2f2f2;
 }
 
 
-$color-quick-stats-date: #a1a1a1;
-@if $is-dark-wiki {
-	$color-quick-stats-date: #6a6a6a;
-}
 .QuickStatsWidget {
 	/* make this reusable later */
 	/* ng -> not global */
@@ -363,7 +368,7 @@ $color-quick-stats-date: #a1a1a1;
 		border: 1px solid $color-admin-rail-border; /* ng */
 		th, td {
 			&:first-child {
-				color: $color-quick-stats-date;	/* ng */
+				color: $color-alternate-text;	/* ng */
 			}
 		}
 		thead {
@@ -373,14 +378,14 @@ $color-quick-stats-date: #a1a1a1;
 		}
 		.totals {
 			td {
-				background: $color-admin-page; /* ng */
+				background: $color-page; /* ng */
 				color: $color-text;	/* ng */
 				&:first-child {
 					.pointer {
-						background: $color-quick-stats-date;	/* ng */
-						color: $color-text;	/* ng */
+						background: $color-totals;	/* ng */
+						color: $color-totals-text;	/* ng */
 						&:before {
-							border-left: 10px solid $color-quick-stats-date;	/* ng */
+							border-left: 10px solid $color-alternate-text;	/* ng */
 						}
 					}
 				}

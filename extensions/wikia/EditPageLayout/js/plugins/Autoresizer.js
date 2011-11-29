@@ -67,8 +67,7 @@
 				offsetHeight += (node.outerHeight(true) - node.height());
 			});
 
-			// The -1 is for editpage-editarea top border, which for some reason isn't being counted
-			this.editboxOffsetHeight = (offsetHeight + footerHeight) - 1;
+			this.editboxOffsetHeight = (offsetHeight + footerHeight);
 
 			this.delayedResize();
 		},
@@ -105,8 +104,9 @@
 			}
 
 			// set height of right rail (BugId:7498)
+			// make sure it's the same height as #EditPageMain (BugId:16542)
 			if (this.rightrail) {
-				this.rightrail.height(this.getHeightToFit(this.rightrail).nodeHeight);
+				this.rightrail.height($('#EditPageMain').height());
 			}
 		}
 	});

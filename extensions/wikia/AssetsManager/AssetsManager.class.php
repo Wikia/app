@@ -41,11 +41,6 @@ class AssetsManager {
 			$params['hd'] = 1;
 		}
 
-		// Include global variable to the original sass params (before overrides) if on an edit page
-		if(BodyModule::isEditPage()) {
-			$vars['sassParamsOriginal'] = SassUtil::getOasisSettings(true);
-		}
-
 		$vars['sassParams'] = $params;
 		$vars['wgAssetsManagerQuery'] = $wgAssetsManagerQuery;
 		$vars['wgCdnRootUrl'] = $wgCdnRootUrl;

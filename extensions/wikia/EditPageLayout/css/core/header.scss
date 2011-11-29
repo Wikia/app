@@ -1,4 +1,5 @@
 #EditPageHeader {
+	@include box-shadow(0, -4px, 2px, $color-epl-header-shadow, true, 0);
 	background-color: $color-epl-header;
 	border-bottom: 1px solid $color-page-border;
 	height: $height-epl-header;
@@ -10,7 +11,7 @@
 	> .wordmark {
 		@include wordmark;
 		@include clearfix;
-		color: $color-links;
+		color: $color-epl-header-text;
 		display: inline-block;
 		float: left;
 		height: $height-epl-header;
@@ -29,7 +30,7 @@
 		}
 	}
 	> h2 {
-		color: $color-text;
+		color: $color-epl-header-text;
 		font-size: 14px;
 		line-height: 21px;
 		// BugId:7024 - override per-wiki custom CSS
@@ -44,7 +45,7 @@
 		padding: 0;
 		zoom: 1; // ie
 		> a {
-			color: $color-links;
+			color: $color-epl-header-text;
 		}
 		.hiddenTitle {
 			display: none;
@@ -75,11 +76,11 @@
 /* Need [Help]? */
 #HelpLink {
 	bottom: 25px;
-	color: $color-text;
+	color: $color-epl-header-text;
 	position: absolute;
 	right: 21px;
 	> a {
-		color: $color-links;
+		color: $color-epl-header-text;
 	}
 }
 
@@ -90,11 +91,12 @@
 	position: absolute;
 	right: 21px;
 	> a {
-		color: $color-links;
+		color: $color-epl-header-text;
 
 		// splotch
 		> span {
 			@include splotch;
+			margin-right: 5px;
 		}
 	}
 }

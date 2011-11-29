@@ -36,8 +36,8 @@
 		width: $width-outside - $width-rail-epl;  // remove right rail "indent"
 	}
 
-	#EditPageEditor {
-		padding-right: 12px;
+	#EditPageEditorWrapper {
+		padding-right: 10px;
 	}
 
 	/* vertical bar with an arrow to show/hide the rail */
@@ -87,6 +87,9 @@
 	/* right rail adjustments */
 	&.editpage-sourcewidemode-on {
 		#EditPageRail {
+			@include clear-box-shadow;
+			background-color: transparent;
+			border-left: 0;
 			height: 39px !important; /* bugid: 9207 */
 			position: absolute;
 			top: 0;

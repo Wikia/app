@@ -1,6 +1,11 @@
 #EditPage {
 	.module {
-		@include box-shadow(-2px, 2px, 2px, $color-epl-gradient-shadow, false, 0);
+		@include box-shadow(0, 2px, 2px, $color-epl-gradient-shadow, false, 0);
+
+		&.module_page_controls {
+			@include clear-box-shadow;
+		}
+
 		> h3 {
 			@include gradient-module-header;
 			@include clearfix;
@@ -9,17 +14,21 @@
 			font-size: 14px;
 			font-weight: bold;
 			padding: 8px 20px;
+
 			> span {
 				float: left;
 			}
+
 			> .chevron {
 				border-width: 6px;
 				float: right;
+
 				&.collapse {
 					border-bottom-color: $color-text;
 					border-top-color: transparent;
 					margin-top: 0;
 				}
+
 				&.expand {
 					border-top-color: $color-text;
 					margin-top: 6px;
@@ -33,6 +42,7 @@
 			padding: 10px 20px 20px 20px;
 		}
 	}
+
 	.module_license div.module_content{
 	    max-height: 30px;
     	overflow: hidden;
@@ -76,7 +86,6 @@
 			line-height: 15px;
 			margin: 5px 0;
 			resize: none; /* remove resize grip in Webkit / Fx4 */
-			font-style: normal;
 		}
 
 		.buttons {
@@ -165,6 +174,7 @@
 			background: none;
 		}
 	}
+
 	// more generic selector to make it being applied on main pages
 	.cke_license {
 		color: $color-epl-text-secondary;

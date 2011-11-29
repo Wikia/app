@@ -13,7 +13,7 @@ window.RTE = {
 		baseFloatZIndex: 20000001, // $zTop from _layout.scss
 		bodyClass: 'WikiaArticle',
 		bodyId: 'bodyContent',
-		contentsCss: $.getSassCommonURL('/extensions/wikia/RTE/css/content.scss', sassParamsOriginal),
+		contentsCss: $.getSassCommonURL('/extensions/wikia/RTE/css/content.scss', sassParams),
 		coreStyles_bold: {element: 'b', overrides: 'strong'},
 		coreStyles_italic: {element: 'i', overrides: 'em'},
 		customConfig: '',

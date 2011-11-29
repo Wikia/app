@@ -12,7 +12,7 @@ class SassUtil {
 	 *  - theme designer ($wgOasisThemeSettings)
 	 *  - theme chosen using usetheme URL param
 	 */
-	public static function getOasisSettings($forceOriginal = false) {
+	public static function getOasisSettings() {
 		global $wgOasisThemes, $wgContLang;
 		wfProfileIn(__METHOD__);
 
@@ -43,43 +43,18 @@ class SassUtil {
 			}
 		}
 
-		$dualMode = false;
-		$overrideSettings = array();
-
-		// Get dual mode colors
-		if (!$forceOriginal) {
-			$dualMode = SassColorProfile::getInstance()->isDualMode();
-		}
-
-		// theme override by Wikia.  The override is determined by original user setting
-		// override should not carry over from other getOasisSettings requests, thus it is merged with static oasisSettings instead of saving into oasisSettings
-		if($dualMode) {
-			if(self::isThemeDark($oasisSettings)) {
-				$overrideSettings['color-buttons'] = '#C4C4C4';
-				$overrideSettings['color-links'] = '#70B8FF';
-				$overrideSettings['color-page'] = '#3A3A3A';
-			} else {
-				$overrideSettings['color-buttons'] = '#006CB0';
-				$overrideSettings['color-links'] = '#006CB0';
-				$overrideSettings['color-page'] = '#FFFFFF';
-			}
-		}
-
-		// Merge dual theme overrides with original settings
-		$overrideSettings = array_merge($oasisSettings, $overrideSettings);
-
 		// RT:70673
-		foreach ($overrideSettings as $key => $val) {
+		foreach ($oasisSettings as $key => $val) {
 			if(!empty($val)) {
-				$overrideSettings[$key] = trim($val);
+				$oasisSettings[$key] = trim($val);
 			}
 		}
 
-		wfDebug(__METHOD__ . ': ' . Wikia::json_encode($overrideSettings) . "\n");
+		wfDebug(__METHOD__ . ': ' . Wikia::json_encode($oasisSettings) . "\n");
 
 		wfProfileOut(__METHOD__);
 		
-		return $overrideSettings;
+		return $oasisSettings;
 	}
 
 	/**
@@ -216,39 +191,4 @@ class SassUtil {
 		return array($H, $S, $L);
 	}
 
-}
-
-/**
- * SassColorProfile singleton
- * Keeps state of color profile to load later down the road
- * @author Hyun Lim
- */
-class SassColorProfile {
-	private $isDualMode = false;
-	private static $instance = null;
-	
-	private function __construct() {
-		$this->isDualMode = false;
-	}
-	
-	public static function getInstance(){
-		if(self::$instance == null){
-			self::$instance = new SassColorProfile();
-		}
-		return self::$instance;
-	}
-	
-	/**
-	 * One way switch.  Once set to true, it cannot be set to false.
-	 */
-	public function setDualMode($dualMode) {
-		if(!$this->isDualMode && $dualMode) {
-			$this->isDualMode = true;
-		}	
-	}
-	
-	public function isDualMode() {
-		return $this->isDualMode;
-	}
-	
 }

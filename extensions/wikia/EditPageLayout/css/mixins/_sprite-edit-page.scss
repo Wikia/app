@@ -16,56 +16,56 @@
 		$image-width: 14px;
 		$image-height: 16px;
 	}
-	// @autosprite-image-details: addlink-dark.png@98,0,d62fb91c7b3007348a8a052cf0113669
+	// @autosprite-image-details: addlink-dark.png@98,0,bdd90978ae1ad4a3bfb47ad323ae641b
 	@if $imageName == 'addlink-dark' {
 		$image-x: 98px;
 		$image-y: 0px;
 		$image-width: 16px;
 		$image-height: 16px;
 	}
-	// @autosprite-image-details: addlink-light.png@126,0,bdd90978ae1ad4a3bfb47ad323ae641b
+	// @autosprite-image-details: addlink-light.png@126,0,d62fb91c7b3007348a8a052cf0113669
 	@if $imageName == 'addlink-light' {
 		$image-x: 126px;
 		$image-y: 0px;
 		$image-width: 16px;
 		$image-height: 16px;
 	}
-	// @autosprite-image-details: aligncenter-dark.png@154,0,780afc0ac370ee118ac02e7a3e0903e9
+	// @autosprite-image-details: aligncenter-dark.png@154,0,0cb3140ecb532013e9659a2508ce39e9
 	@if $imageName == 'aligncenter-dark' {
 		$image-x: 154px;
 		$image-y: 0px;
 		$image-width: 12px;
 		$image-height: 11px;
 	}
-	// @autosprite-image-details: aligncenter-light.png@178,0,0cb3140ecb532013e9659a2508ce39e9
+	// @autosprite-image-details: aligncenter-light.png@178,0,780afc0ac370ee118ac02e7a3e0903e9
 	@if $imageName == 'aligncenter-light' {
 		$image-x: 178px;
 		$image-y: 0px;
 		$image-width: 12px;
 		$image-height: 11px;
 	}
-	// @autosprite-image-details: alignleft-dark.png@202,0,56ba4b882814eccff4dddb31a366579b
+	// @autosprite-image-details: alignleft-dark.png@202,0,05aaf9aad3240bee5752ed37c9feb9b3
 	@if $imageName == 'alignleft-dark' {
 		$image-x: 202px;
 		$image-y: 0px;
 		$image-width: 12px;
 		$image-height: 12px;
 	}
-	// @autosprite-image-details: alignleft-light.png@226,0,05aaf9aad3240bee5752ed37c9feb9b3
+	// @autosprite-image-details: alignleft-light.png@226,0,56ba4b882814eccff4dddb31a366579b
 	@if $imageName == 'alignleft-light' {
 		$image-x: 226px;
 		$image-y: 0px;
 		$image-width: 12px;
 		$image-height: 12px;
 	}
-	// @autosprite-image-details: alignright-dark.png@250,0,33de186c5d3b859ed089a3c0e3073c5c
+	// @autosprite-image-details: alignright-dark.png@250,0,e814493c02df6edef126d9fc67bb870b
 	@if $imageName == 'alignright-dark' {
 		$image-x: 250px;
 		$image-y: 0px;
 		$image-width: 12px;
 		$image-height: 11px;
 	}
-	// @autosprite-image-details: alignright-light.png@274,0,e814493c02df6edef126d9fc67bb870b
+	// @autosprite-image-details: alignright-light.png@274,0,33de186c5d3b859ed089a3c0e3073c5c
 	@if $imageName == 'alignright-light' {
 		$image-x: 274px;
 		$image-y: 0px;
@@ -79,28 +79,28 @@
 		$image-width: 18px;
 		$image-height: 18px;
 	}
-	// @autosprite-image-details: bold-dark.png@328,0,794f53099732a12e7fc9f0f790d6f29d
+	// @autosprite-image-details: bold-dark.png@328,0,cde9cc3be281305e9c9916592b93cd74
 	@if $imageName == 'bold-dark' {
 		$image-x: 328px;
 		$image-y: 0px;
 		$image-width: 11px;
 		$image-height: 13px;
 	}
-	// @autosprite-image-details: bold-light.png@351,0,cde9cc3be281305e9c9916592b93cd74
+	// @autosprite-image-details: bold-light.png@351,0,794f53099732a12e7fc9f0f790d6f29d
 	@if $imageName == 'bold-light' {
 		$image-x: 351px;
 		$image-y: 0px;
 		$image-width: 11px;
 		$image-height: 13px;
 	}
-	// @autosprite-image-details: carrot-dark.png@374,0,6ade92048389386bc9fe205844a258ad
+	// @autosprite-image-details: carrot-dark.png@374,0,52891b6e447fc33311e48001d2b02b67
 	@if $imageName == 'carrot-dark' {
 		$image-x: 374px;
 		$image-y: 0px;
 		$image-width: 10px;
 		$image-height: 7px;
 	}
-	// @autosprite-image-details: carrot-light.png@396,0,52891b6e447fc33311e48001d2b02b67
+	// @autosprite-image-details: carrot-light.png@396,0,6ade92048389386bc9fe205844a258ad
 	@if $imageName == 'carrot-light' {
 		$image-x: 396px;
 		$image-y: 0px;
@@ -156,28 +156,28 @@
 		$image-width: 23px;
 		$image-height: 23px;
 	}
-	// @autosprite-image-details: indent-dark.png@650,0,689b57dbd984a0a0bdfa35bafa324060
+	// @autosprite-image-details: indent-dark.png@650,0,7d57c97a09ab6bdd24989ebc9975f448
 	@if $imageName == 'indent-dark' {
 		$image-x: 650px;
 		$image-y: 0px;
 		$image-width: 16px;
 		$image-height: 15px;
 	}
-	// @autosprite-image-details: indent-light.png@678,0,7d57c97a09ab6bdd24989ebc9975f448
+	// @autosprite-image-details: indent-light.png@678,0,689b57dbd984a0a0bdfa35bafa324060
 	@if $imageName == 'indent-light' {
 		$image-x: 678px;
 		$image-y: 0px;
 		$image-width: 16px;
 		$image-height: 15px;
 	}
-	// @autosprite-image-details: italic-dark.png@706,0,64d67c548de52ea2bbe3bd908e10f867
+	// @autosprite-image-details: italic-dark.png@706,0,9de6c65a9964f37554a782d876927949
 	@if $imageName == 'italic-dark' {
 		$image-x: 706px;
 		$image-y: 0px;
 		$image-width: 5px;
 		$image-height: 13px;
 	}
-	// @autosprite-image-details: italic-light.png@723,0,9de6c65a9964f37554a782d876927949
+	// @autosprite-image-details: italic-light.png@723,0,64d67c548de52ea2bbe3bd908e10f867
 	@if $imageName == 'italic-light' {
 		$image-x: 723px;
 		$image-y: 0px;
@@ -205,28 +205,28 @@
 		$image-width: 9px;
 		$image-height: 9px;
 	}
-	// @autosprite-image-details: ordered-dark.png@816,0,b4fbca992573ced1e0f4924c0e72b396
+	// @autosprite-image-details: ordered-dark.png@816,0,d2e96f2e389d4da8dac1fb9d4e7caa32
 	@if $imageName == 'ordered-dark' {
 		$image-x: 816px;
 		$image-y: 0px;
 		$image-width: 16px;
 		$image-height: 16px;
 	}
-	// @autosprite-image-details: ordered-light.png@844,0,d2e96f2e389d4da8dac1fb9d4e7caa32
+	// @autosprite-image-details: ordered-light.png@844,0,b4fbca992573ced1e0f4924c0e72b396
 	@if $imageName == 'ordered-light' {
 		$image-x: 844px;
 		$image-y: 0px;
 		$image-width: 16px;
 		$image-height: 16px;
 	}
-	// @autosprite-image-details: outdent-dark.png@872,0,dd5be4e259cac4c0d15a6ae5ee11d328
+	// @autosprite-image-details: outdent-dark.png@872,0,793fd30c2dcdbbfea304b1ffa6f1f383
 	@if $imageName == 'outdent-dark' {
 		$image-x: 872px;
 		$image-y: 0px;
 		$image-width: 16px;
 		$image-height: 15px;
 	}
-	// @autosprite-image-details: outdent-light.png@900,0,793fd30c2dcdbbfea304b1ffa6f1f383
+	// @autosprite-image-details: outdent-light.png@900,0,dd5be4e259cac4c0d15a6ae5ee11d328
 	@if $imageName == 'outdent-light' {
 		$image-x: 900px;
 		$image-y: 0px;
@@ -275,14 +275,14 @@
 		$image-width: 10px;
 		$image-height: 8px;
 	}
-	// @autosprite-image-details: redo-dark.png@1123,0,06bb7dd469207f10ee1febaf5599b8f5
+	// @autosprite-image-details: redo-dark.png@1123,0,a344b92eac5a0948a507370471e8848c
 	@if $imageName == 'redo-dark' {
 		$image-x: 1123px;
 		$image-y: 0px;
 		$image-width: 16px;
 		$image-height: 14px;
 	}
-	// @autosprite-image-details: redo-light.png@1151,0,a344b92eac5a0948a507370471e8848c
+	// @autosprite-image-details: redo-light.png@1151,0,06bb7dd469207f10ee1febaf5599b8f5
 	@if $imageName == 'redo-light' {
 		$image-x: 1151px;
 		$image-y: 0px;
@@ -296,14 +296,14 @@
 		$image-width: 18px;
 		$image-height: 18px;
 	}
-	// @autosprite-image-details: signature-dark.png@1209,0,a861f170dae140f8b48c1189432642fa
+	// @autosprite-image-details: signature-dark.png@1209,0,db7a4aa86c423b9c057633fdbf5a142b
 	@if $imageName == 'signature-dark' {
 		$image-x: 1209px;
 		$image-y: 0px;
 		$image-width: 25px;
 		$image-height: 22px;
 	}
-	// @autosprite-image-details: signature-light.png@1246,0,db7a4aa86c423b9c057633fdbf5a142b
+	// @autosprite-image-details: signature-light.png@1246,0,a861f170dae140f8b48c1189432642fa
 	@if $imageName == 'signature-light' {
 		$image-x: 1246px;
 		$image-y: 0px;
@@ -324,18 +324,18 @@
 		$image-width: 41px;
 		$image-height: 32px;
 	}
-	// @autosprite-image-details: strike-dark.png@1391,0,94f4db6f50b855f972c7913bd2845291
+	// @autosprite-image-details: strike-dark.png@1391,0,c53de58f14cc024ba7562b8b7182ee22
 	@if $imageName == 'strike-dark' {
 		$image-x: 1391px;
 		$image-y: 0px;
-		$image-width: 26px;
+		$image-width: 22px;
 		$image-height: 13px;
 	}
-	// @autosprite-image-details: strike-light.png@1429,0,c53de58f14cc024ba7562b8b7182ee22
+	// @autosprite-image-details: strike-light.png@1425,0,94f4db6f50b855f972c7913bd2845291
 	@if $imageName == 'strike-light' {
-		$image-x: 1429px;
+		$image-x: 1425px;
 		$image-y: 0px;
-		$image-width: 22px;
+		$image-width: 26px;
 		$image-height: 13px;
 	}
 	// @autosprite-image-details: switch.png@1463,0,edd02b9a42dc9b20af95f0f30b8a3bc4
@@ -359,42 +359,42 @@
 		$image-width: 11px;
 		$image-height: 12px;
 	}
-	// @autosprite-image-details: underline-dark.png@1550,0,6f4f2cf9f270462dc3fbe68c8256981d
+	// @autosprite-image-details: underline-dark.png@1550,0,9d194dccfd9b5c7553adc2bc1a2dd6a0
 	@if $imageName == 'underline-dark' {
 		$image-x: 1550px;
 		$image-y: 0px;
 		$image-width: 13px;
 		$image-height: 19px;
 	}
-	// @autosprite-image-details: underline-light.png@1575,0,9d194dccfd9b5c7553adc2bc1a2dd6a0
+	// @autosprite-image-details: underline-light.png@1575,0,6f4f2cf9f270462dc3fbe68c8256981d
 	@if $imageName == 'underline-light' {
 		$image-x: 1575px;
 		$image-y: 0px;
 		$image-width: 13px;
 		$image-height: 19px;
 	}
-	// @autosprite-image-details: undo-dark.png@1600,0,3bab099197f9e63d71faf54d5e415b30
+	// @autosprite-image-details: undo-dark.png@1600,0,3566f9179a0355abd55f1ebf12bd97be
 	@if $imageName == 'undo-dark' {
 		$image-x: 1600px;
 		$image-y: 0px;
 		$image-width: 16px;
 		$image-height: 14px;
 	}
-	// @autosprite-image-details: undo-light.png@1628,0,3566f9179a0355abd55f1ebf12bd97be
+	// @autosprite-image-details: undo-light.png@1628,0,3bab099197f9e63d71faf54d5e415b30
 	@if $imageName == 'undo-light' {
 		$image-x: 1628px;
 		$image-y: 0px;
 		$image-width: 16px;
 		$image-height: 14px;
 	}
-	// @autosprite-image-details: unordered-dark.png@1656,0,d1c2eb74b2ec44b64d7a2424383b2d9e
+	// @autosprite-image-details: unordered-dark.png@1656,0,d3e3b6f2971e93187c4ec497b5a7bb7e
 	@if $imageName == 'unordered-dark' {
 		$image-x: 1656px;
 		$image-y: 0px;
 		$image-width: 16px;
 		$image-height: 15px;
 	}
-	// @autosprite-image-details: unordered-light.png@1684,0,d3e3b6f2971e93187c4ec497b5a7bb7e
+	// @autosprite-image-details: unordered-light.png@1684,0,d1c2eb74b2ec44b64d7a2424383b2d9e
 	@if $imageName == 'unordered-light' {
 		$image-x: 1684px;
 		$image-y: 0px;

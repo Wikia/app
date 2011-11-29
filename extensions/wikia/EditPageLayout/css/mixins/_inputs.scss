@@ -1,0 +1,41 @@
+@mixin epl-textfield {
+	@include border-radius(4px);
+
+	background-color: $color-epl-input;
+	border: 1px solid $color-epl-input-border;
+	color: $color-text;
+	display: block;
+	font-family: inherit;
+	font-size: 12px;
+	line-height: 23px;
+	padding: 5px;
+	width: $width-epl-module-input;
+
+	// Placeholder text
+	&::-webkit-input-placeholder {
+		font-style: italic;
+		color: $color-epl-text-secondary;
+	}
+
+	&:-moz-placeholder {
+		font-style: italic;
+		color: $color-epl-text-secondary;
+	}
+
+	&.placeholder {
+		font-style: italic;
+		color: $color-epl-text-secondary;
+	}
+}
+
+// styling for edit area and category select source mode
+@mixin epl-editorarea {
+	display: block; // Webkit treats textareas as inline elements. Fixes BugId:12664
+	font-family: Consolas, "Eupheima UCAS", Ayuthaya, Menlo, monospace;
+	font-size: 13.5px;
+	margin: 0;
+	padding: 0;
+	outline: none;
+	resize: none; // No resize grip for Webkit / FF4
+	width: 100%;
+}
