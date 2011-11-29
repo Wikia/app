@@ -1,47 +1,19 @@
 var RadiumOne = {};
 
 (function(ns){
-	var indexOf = Array.prototype.indexOf;
-	
-	function inArray(elem, array){
-		if(indexOf)
-			return indexOf.call(array, elem);
-
-		for(var i = 0, length = array.length; i < length; i++){
-			if(array[i] === elem)
-				return i;
-		}
-
-		return -1;
-	}
-	
-	function getCookie(cookieName){
-		var cookies = {},
-			pair, name, value,
-			separated = document.cookie.split(';');
-		
-		for(var i = 0; i < separated.length; i = i + 1){
-			pair = separated[i].split( '=' );
-			name = pair[0].replace( /^\s*/, '' ).replace( /\s*$/, '' );
-			value = decodeURIComponent( pair[1] );
-			cookies[name] = value;
-		}
-		
-		return (typeof cookies[cookieName] !== 'undefined' ) ? cookies[cookieName] : null;
-	}
-	
 	ns.containerId = 'RadiumOne';
 	ns.cookieName = 'raon';
-	ns.enabledComscoreCats = ['Lifestyle', 'Entertainment'];
+	ns.enabledComscoreCats = {'Lifestyle': 1, 'Entertainment': 1};
 	ns.pixelUrl = 'http://rs.gwallet.com/r1/pixel/x2073r';
 	
 	ns.init = function(){
-		if (window.wgIntegrateRadiumOne
-		|| inArray(window.cscoreCat, RadiumOne.enabledComscoreCats) != -1) {
+		if(
+			window.wgIntegrateRadiumOne ||
+			(window.cscoreCat in RadiumOne.enabledComscoreCats)
+		){
 			// if no cookie, get pixel (which sets cookie)
-			if (getCookie( RadiumOne.cookieName ) === null) {
+			if(Wikia.CookieCutter.get(RadiumOne.cookieName) === null)
 				new Image().src = RadiumOne.pixelUrl+Math.round(Math.random()*10000000);
-			}			
 		}
 	};
 	
@@ -51,9 +23,9 @@ var RadiumOne = {};
 
 		if(
 			window.wgIntegrateRadiumOne ||
-			inArray(window.cscoreCat, RadiumOne.enabledComscoreCats) != -1
-		) {
-			value = getCookie(RadiumOne.cookieName) || 0;
+			(window.cscoreCat in RadiumOne.enabledComscoreCats)
+		){
+			value = Wikia.CookieCutter.get(RadiumOne.cookieName) || 0;
 			kv = 'ro='+value+';';
 		}
 
