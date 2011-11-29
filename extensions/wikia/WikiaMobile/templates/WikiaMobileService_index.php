@@ -17,6 +17,7 @@
 		<?= $globalVariablesScript ;?>
 	</head>
 	<body>
+		<?= $advert ;?>
 		<?= $wikiaNavigation ;?>
 		<?= $pageContent ;?>
 		<?= $wikiaFooter ;?>
