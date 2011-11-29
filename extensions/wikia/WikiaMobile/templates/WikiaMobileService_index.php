@@ -15,6 +15,7 @@
 		<?= $headLinks ;?>
 		<?= $cssLinks ;?>
 		<?= $globalVariablesScript ;?>
+		<?= $jsHeadFiles ;?>
 	</head>
 	<body>
 		<?= $advert ;?>
@@ -22,6 +23,10 @@
 		<?= $pageContent ;?>
 		<?= $wikiaFooter ;?>
 		<?= $leftPaneContent ;?>
-		<?= $jsFiles ;?>
+		<?= $jsBodyFiles ;?>
+		<?= $quantcastTracking ;?>
+		<?= $comscoreTracking ;?>
+		<?= $gaTracking ;?>
+		<?= $gaOneWikiTracking ;?>
 	</body>
 </html>
