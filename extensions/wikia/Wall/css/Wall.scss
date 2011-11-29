@@ -38,6 +38,9 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 }
 
 .Wall {
+	.buttons-moonbook {
+		display:none;
+	}
 	/* Indenting for posts and replies */
 	.comments {
 		margin-left: 0;
@@ -595,6 +598,12 @@ body.skin-monobook {
 			margin-left: 50px;
 		}
 		.comments .message li { &:before, &:after { display: none; } }
+		.buttons-moonbook{
+			display:block;
+		}
+		.buttons {
+			display: none;
+		}
 	}
 	
 }

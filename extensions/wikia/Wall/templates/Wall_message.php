@@ -36,46 +36,42 @@
 				<span class="timeago abstimeago" title="<?= $iso_timestamp ?>" alt="<?= $fmt_timestamp ?>">&nbsp;</span>
 				<span class="timeago-fmt"><?= $fmt_timestamp ?></span>
 			</a>
-			
-			<div class="buttons">
-				<div data-delay='50' class="wikia-menu-button contribute secondary"> 
-					<?= wfMsg('wall-message-more');?>
-					<span class="drop">
-						<img class="chevron"  src="<?=f::app()->getGlobal('wgBlankImgUrl'); ?>" >
-					</span>
-					<ul style="min-width: 95px;">
-						<? if( $canEdit ): ?>
-							<li>
-								<a href="#" class="edit-message"><?= wfMsg('wall-message-edit'); ?></a> 
-							</li>
-						<? endif; ?>
-						<? if( $canDelete ): ?>
-							<li>
-								<a href="#" class="delete-message"> <?= wfMsg('wall-message-delete'); ?> </a>
-							</li>
-						<? endif; ?>
-						<li>
-							<a href="#" class="source-message"> <?= wfMsg('wall-message-source'); ?> </a>
-						</li>
-					</ul>
+			<? if( $canEdit || $canDelete ): ?>
+				<div class="buttons">
+					<div data-delay='50' class="wikia-menu-button contribute secondary"> 
+						<?= wfMsg('wall-message-more');?>
+						<span class="drop">
+							<img class="chevron"  src="<?=f::app()->getGlobal('wgBlankImgUrl'); ?>" >
+						</span>
+						
+						<ul style="min-width: 95px;">
+								<? if( $canEdit ): ?>
+									<li>
+										<a href="#" class="edit-message"><?= wfMsg('wall-message-edit'); ?></a> 
+									</li>
+								<? endif; ?>
+								<? if( $canDelete ): ?>
+									<li>
+										<a href="#" class="delete-message"> <?= wfMsg('wall-message-delete'); ?> </a>
+									</li>
+								<? endif; ?>
+							
+					<?php /*		<li>
+								<a href="#" class="source-message"> <?= wfMsg('wall-message-source'); ?> </a>
+							</li> */ ?>
+						</ul>
+					</div>
 				</div>
-			</div>
+			<? endif; ?>
 		</div>
-	<?php /*
-		<div class="buttons">
+		<?php //TODO: This is hack for now unification buttons for all skins ASAP!!! ?>
+		<div class="buttons-moonbook">
 			<!-- only show this if it's user's own message --> 
-			
 				<span class="tools">
-					
 						<img src="<?= $wgBlankImgUrl ?>" class="sprite-small delete"><a href="#" class="delete-message"><?= wfMsg('wall-message-delete'); ?></a>
-					
-					
-						<img src="<?= $wgBlankImgUrl ?>" class="sprite edit-pencil"><a href="#" class="edit-message"><?= wfMsg('wall-message-edit'); ?></a>
-								
+						<img src="<?= $wgBlankImgUrl ?>" class="sprite edit-pencil"><a href="#" class="edit-message"><?= wfMsg('wall-message-edit'); ?></a>				
 				</span>
 		</div>
-		
-		*/ ?>
 	</blockquote>
 	<? if(!$isreply): ?>
 		<ul class="replies">
