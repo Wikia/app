@@ -179,27 +179,19 @@ class SkinChooser {
 	public static function onGetSkin($user) {
 		global $wgCookiePrefix, $wgCookieExpiration, $wgCookiePath, $wgCookieDomain, $wgCookieSecure, $wgDefaultSkin, $wgDefaultTheme;
 		global $wgVisitorSkin, $wgVisitorTheme, $wgOldDefaultSkin, $wgSkinTheme, $wgOut, $wgForceSkin, $wgRequest, $wgHomePageSkin, $wgTitle;
-		global $wgAdminSkin, $wgSkipSkins, $wgArticle, $wgRequest, $wgDevelEnvironment;
+		global $wgAdminSkin, $wgSkipSkins, $wgArticle, $wgRequest, $wgDevelEnvironment, $wgEnableWikiaMobile;
 		$isOasisPublicBeta = $wgDefaultSkin == 'oasis';
 		
 		wfProfileIn(__METHOD__);
 		
-		/*
-		 * This is needed by skeleskin project for development reasons and will be removed on completion
-		 * Please contact the Mobile Team for further information
-		 */
-		if( $wgRequest->getVal('useskin') == 'skeleskin' && $wgDevelEnvironment ) {
+		//allow showing wikiaphone on wikis where WikiaMobile is enabled for functionality comparison and testing
+		//will be removed on Dec 7th 2011
+		if( $wgRequest->getVal('useskin') == 'wikiaphone' && !empty( $wgEnableWikiaMobile ) ) {
 			$user->mSkin = &Skin::newFromKey(  $wgRequest->getVal('useskin') );
 			wfProfileOut(__METHOD__);
 			return false;	
 		}
 
-		if( $wgRequest->getVal('useskin') == 'wikiamobile' && $wgDevelEnvironment ) {
-			$user->mSkin = &Skin::newFromKey(  $wgRequest->getVal('useskin') );
-			wfProfileOut(__METHOD__);
-			return false;	
-		}
-		
 		/**
 		 * check headers sent by varnish, if X-Skin is send force skin
 		 * @author eloy, requested by artur
@@ -207,6 +199,12 @@ class SkinChooser {
 		if( function_exists( 'apache_request_headers' ) ) {
 			$headers = apache_request_headers();
 			if( isset( $headers[ "X-Skin" ] ) && in_array( $headers[ "X-Skin" ], array( "monobook", "oasis", "wikia", "wikiaphone", "wikiaapp" ) ) ) {
+				//FB#16417 - for the first release bind wikiaphone to wikiamobile via a WF variable
+				//TODO: remove after Ad performance test ends and WikiaMobile will be the default (FB#16582)
+				if ( !empty( $wgEnableWikiaMobile ) && $headers[ "X-Skin" ] == 'wikiaphone' ) {
+					$headers[ "X-Skin" ] = 'wikiamobile';
+				}
+				
 				$user->mSkin = &Skin::newFromKey( $headers[ "X-Skin" ] );
 				wfProfileOut(__METHOD__);
 				return false;
@@ -335,15 +333,16 @@ class SkinChooser {
 		if( $userSkin == 'smartphone' ){
 			$userSkin = 'wikiaphone';
 		}
-		
-		//SkeleSkin is a devbox-only experiment
-		if( $userSkin == 'skeleskin' && !$wgDevelEnvironment ){
+
+		//WikiaMobile is a devbox-only for now
+		if( $userSkin == 'wikiamobile' && !$wgEnableWikiaMobile ){
 			$userSkin = 'wikiaphone';
 		}
-		
-		//WikiaMobile is a devbox-only for now
-		if( $userSkin == 'wikiamobile' && !$wgDevelEnvironment ){
-			$userSkin = 'wikiaphone';
+
+		//FB#16417 - for the first release bind wikiaphone to wikiamobile via a WF variable
+		//TODO: remove after Ad performance test ends and WikiaMobile will be the default (FB#16582)
+		if ( !empty( $wgEnableWikiaMobile ) && $userSkin == 'wikiaphone' ) {
+			$userSkin = 'wikiamobile';
 		}
 
 		$user->mSkin = &Skin::newFromKey($userSkin);
