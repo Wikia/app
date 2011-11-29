@@ -94,8 +94,14 @@ var WikiaMobile = (function() {
 				deviceWidth = screen.width - 44;
 				deviceHeight = screen.height - 44;
 			} else {
-				deviceWidth = window.innerWidth;
-				deviceHeight = window.innerHeight;
+				if(window.orientation == 0) {
+					deviceWidth = window.innerWidth;
+					deviceHeight = window.innerHeight;
+				} else {
+					deviceWidth = window.innerHeight + 53;
+					deviceHeight = window.innerWidth;
+				}
+
 			}
 
 		wrapArticles();

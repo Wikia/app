@@ -28,19 +28,34 @@
 		this._allToHide = this._modalTopBar.add(this._modalClose).add(this._modalFooter);
 		this._thePage = $('#navigation, #WikiaPage, #wikiaFooter');
 
+			height = resolution[1];
+			width = resolution[0];
+
+
 		if($.os.ios && window.orientation != 0) {
 			height = resolution[0];
 			width = resolution[1];
+
 		} else {
 			height = resolution[1];
 			width = resolution[0];
 		}
 
-		$('head').append("<style>#modalWrapper{min-height:"+height+"px;max-height:100%;}</style>");
+		if(window.orientation == 0) {
+			$("#modalWrapper").css({"min-height":height+"px"});
+		} else {
+			$("#modalWrapper").css({"min-height":width+"px"});
+		}
 
 		//hide adress bar on orientation change
 		window.onorientationchange = function() {
-				window.scrollTo( 0, 1 );
+				if(window.orientation == 0) {
+					$("#modalWrapper").css({"min-height":height+"px"});
+				} else {
+					$("#modalWrapper").css({"min-height":width+"px"});
+				}
+
+				setTimeout(function() {window.scrollTo( 0, 1 );},100);
 		}
 
 		$(document.body).delegate('#modalClose', WikiaMobile._clickevent , function() {
