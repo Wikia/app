@@ -84,6 +84,9 @@ $wgHooks['HAWelcomeGetPrefixText'][] = 'ArticleCommentInit::HAWelcomeGetPrefixTe
 // special::movepage
 $wgHooks['SpecialMovepageAfterMove'][] = 'ArticleComment::moveComments';
 
+
+$wgHooks['ParserFirstCallInit'][] = 'ArticleComment::metadataParserInit';
+
 // Ajax dispatcher
 $wgAjaxExportList[] = 'ArticleCommentsAjax';
 function ArticleCommentsAjax() {
