@@ -72,7 +72,7 @@ class WallDisabledHooksHelper {
 		if( $userId > 0 ) {
 			$userName = $user->getName();
 			$wn = F::build( 'WallNotifications' );
-		
+			
 			$counts = $wn->getCounts( $userId, false );
 			
 			foreach($counts as $wikiData) {

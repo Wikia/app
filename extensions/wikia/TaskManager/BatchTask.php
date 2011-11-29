@@ -400,6 +400,7 @@ abstract class BatchTask {
 		global $wgUser, $wgExternalSharedDB, $wgWikicitiesReadOnly;
 
 		wfProfileIn( __METHOD__ );
+		
 		if(!$wgWikicitiesReadOnly){
 			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB ); 
 			$dbw->insert(

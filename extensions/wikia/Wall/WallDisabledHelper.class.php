@@ -6,7 +6,7 @@ class WallDisabledHooksHelper {
 	
 	/** @brief Allows to edit or not archived talk pages and its subpages
 	 * 
-	 * @author Andrzej 'nAndy' Åukaszewski
+	 * @author Andrzej 'nAndy' Lukaszewski
 	 * 
 	 * @return boolean true -- because it's a hook
 	 */
@@ -38,7 +38,7 @@ class WallDisabledHooksHelper {
 	 * 
 	 * @return boolean true
 	 * 
-	 * @author Andrzej 'nAndy' Åukaszewski
+	 * @author Andrzej 'nAndy' Lukaszewski
 	 */
 	public function onWikiFactoryChanged($varName, $wikiId, $value) {
 		$value = (bool) $value;
