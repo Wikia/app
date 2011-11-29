@@ -3,9 +3,14 @@ var WikiaButtons = {
 		delay: 350
 	},
 
-	init: function() {
+	init: function(limit) {
 		//Variables
-		WikiaButtons.menuButtons = $(".wikia-menu-button");
+		if(typeof limit == 'object') {
+			WikiaButtons.menuButtons = $(".wikia-menu-button", limit);	
+		} else {
+			WikiaButtons.menuButtons = $(".wikia-menu-button");
+		}
+		
 		WikiaButtons.timer = null;
 
 		//Events
@@ -60,18 +65,21 @@ var WikiaButtons = {
 	},
 
 	mouseover: function() {
-
 		//Stop mouseout timer if running
 		clearTimeout(WikiaButtons.timer);
-
 	},
 
 	mouseout: function(event) {
-
 		//Delay before hiding menu
+		var dalay = $(event.target).closest('.wikia-menu-button').attr('data-delay');
+	
+		if((typeof dalay) != 'string') {
+			dalay = WikiaButtons.settings.delay;
+		}		
+		
 		WikiaButtons.timer = setTimeout(function() {
 			$(event.currentTarget).removeClass("active");
-		}, WikiaButtons.settings.delay);
+		}, dalay);
 
 	}
 

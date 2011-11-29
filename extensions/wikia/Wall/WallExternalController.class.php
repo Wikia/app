@@ -20,7 +20,15 @@ class WallExternalController extends WikiaController {
 		$title = F::build('Title', array($this->request->getVal('username'), NS_USER_WALL ), 'newFromText');
 		$this->response->setVal( 'html', $this->app->renderView( 'WallController', 'index', array('title' => $title, 'page' => $this->request->getVal('page', 1) ) ));
 	}
-
+	/*
+	 * 
+	 * Use for external testing of mail template
+	 *  http://www.communitycarenc.org/elements/media/images/under-construction.jpg ;)
+	 */
+	public function mail() {
+		
+	}
+	
 	public function switchWatch() {
 		$this->response->setVal('status', false);
 		$isWatched = $this->request->getVal('isWatched');

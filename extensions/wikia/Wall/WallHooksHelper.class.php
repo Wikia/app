@@ -695,13 +695,24 @@ class WallHooksHelper {
 				$content = $wh->shortenText($params->intro, self::RC_WALL_COMMENTS_MAX_LEN);
 			}
 			
-			if( empty($wnEntity->data->parent_id) ) {
-				$link = $wnEntity->data->url;
-				$link = '<a href="'.$link.'">'.$app->wf->Msg('wall-user-wall-link-text', array($wnEntity->data->wall_username)).'</a>';
+			$hideenhanced = $app->wg->Request->getVal('hideenhanced');
+			if( empty($hideenhanced) ) {
+			//grouped recent changes
+				$msgUrl = $wnEntity->data->url;
+				$msgTitle = $wnEntity->data->thread_title;
 				
-				$comment = ($rc->getAttribute('rc_type') == RC_NEW) ? $app->wf->Msg('wall-recentchanges-comment-new-message', array($content)) : $app->wf->Msg('wall-recentchanges-edit');
+				if( empty($wnEntity->data->parent_id) ) {
+					$comment = ($rc->getAttribute('rc_type') == RC_NEW) ? $app->wf->Msg('wall-recentchanges-comment-new-message-group', array($content, $msgUrl, $msgTitle)) : $app->wf->Msg('wall-recentchanges-edit');
+				} else {
+					$comment = ($rc->getAttribute('rc_type') == RC_NEW) ? $app->wf->Msg('wall-recentchanges-new-reply-group', array($content, $msgUrl, $msgTitle)) : $app->wf->Msg('wall-recentchanges-edit');
+				}
 			} else {
-				$comment = ($rc->getAttribute('rc_type') == RC_NEW) ? $app->wf->Msg('wall-recentchanges-new-reply', array($content)) : $app->wf->Msg('wall-recentchanges-edit');
+			//regural view of recent changes (without groups)
+				if( empty($wnEntity->data->parent_id) ) {
+					$comment = ($rc->getAttribute('rc_type') == RC_NEW) ? $app->wf->Msg('wall-recentchanges-comment-new-message', array($content)) : $app->wf->Msg('wall-recentchanges-edit');
+				} else {
+					$comment = ($rc->getAttribute('rc_type') == RC_NEW) ? $app->wf->Msg('wall-recentchanges-new-reply', array($content)) : $app->wf->Msg('wall-recentchanges-edit');
+				}
 			}
 			
 			$comment = ' <span class="comment">'.$comment.'</span>';
@@ -783,7 +794,7 @@ class WallHooksHelper {
 			//the thread/reply was restored
 			//but in RC the entry can be about
 			//its deletion or restoration
-				$parts = explode('/@', $rcTitle->getText());
+			$parts = explode('/@', $rcTitle->getText());
 				$isThread = ( count($parts) === 2 ) ? true : false;
 				
 				$articleTitleTxt = $this->getParentTitleTxt($rcTitle);
@@ -979,6 +990,76 @@ class WallHooksHelper {
 	}
 	
 	/**
+	 * @brief Adjusting title of a block group on RecentChanges page
+	 * 
+	 * @param ChangeList $oChangeList
+	 * @param string $header
+	 * @param array $oRCCacheEntryArray
+	 * 
+	 * @author Andrzej 'nAndy' Łukaszewski
+	 */
+	public function onChangesListHeaderBlockGroup(&$oChangeList, &$header, Array /*of oRCCacheEntry*/ &$oRCCacheEntryArray) {
+		$oRCCacheEntry = null;
+		
+		if ( !empty($oRCCacheEntryArray) ) {
+			$oRCCacheEntry = $oRCCacheEntryArray[0];
+			$oTitle = $oRCCacheEntry->getTitle();
+			
+			if( $oTitle instanceof Title ) {
+				$namespace = $oTitle->getNamespace();
+				
+				if( $namespace === NS_USER_WALL_MESSAGE ) {
+					$wm = F::build('WallMessage', array($oTitle));
+					$wallOwnerObj = $wm->getWallOwner();
+					
+					$wallOwner = wfMsg('oasis-anon-user');
+					//if( $wallOwnerObj instanceof User && $wallOwnerObj->getId() > 0 ) {
+					if( $wallOwnerObj instanceof User ) {
+						$wallOwner = $wallOwnerObj->getName();
+					}
+					
+					$app = F::app();
+					
+					if ( !is_null($oRCCacheEntry) ) {
+						$cnt = count($oRCCacheEntryArray);
+						$cntChanges = wfMsgExt( 'nchanges', array( 'parsemag', 'escape' ), $app->wg->Lang->formatNum( $cnt ) );
+						
+						$userlinks = array();
+						foreach( $oRCCacheEntryArray as $id => $oRCCacheEntry ) {
+				 			$u = $oRCCacheEntry->userlink;
+							if( !isset($userlinks[$u]) ) {
+								$userlinks[$u] = 0;
+							}
+							$userlinks[$u]++;
+						}
+						
+						$users = array();
+						foreach( $userlinks as $userlink => $count) {
+							$text = $userlink;
+							$text .= $app->wg->ContLang->getDirMark();
+							if( $count > 1 ) {
+								$text .= ' (' . $app->wg->Lang->formatNum($count) . '×)';
+							}
+							array_push($users, $text);
+						}
+						
+						$vars = array (
+							'cntChanges'	=> $cntChanges,
+							'hdrtitle'		=> wfMsgExt('wall-recentchanges-wall-group', array('parseinline'), $wallOwner),
+							'inx'			=> $oChangeList->rcCacheIndex,
+							'users'			=> $users
+						);
+						
+						$header = wfRenderPartial('Wall', 'renderRCHeaderBlock', $vars);
+					}
+				}
+			}
+		}
+		
+		return true;
+	}
+	
+	/**
 	 * @brief Changing all links to Message Wall to blue links
 	 * 
 	 * @param Title $title
@@ -1059,6 +1140,63 @@ class WallHooksHelper {
 		}
 		
 		return true;
+	}
+	
+	public function onAllowNotifyOnPageChange( $editor, $title ) {
+		if($title->getNamespace() == NS_USER_WALL  || $title->getNamespace() == NS_USER_WALL_MESSAGE || $title->getNamespace() == NS_USER_WALL_MESSAGE_GREETING){
+			return false;	
+		}	
+		return true;
+	}
+	public function onWatchArticle(&$user, &$article) {
+		$app = F::app();
+		$title = $article->getTitle();
+		
+		if( !empty($app->wg->EnableWallExt) && $this->isWallMainPage($title) ) {
+			$this->processActionOnWatchlist($user, $title->getText(), 'add');
+		}
+		
+		return true;
+	}
+	
+	public function onUnwatchArticle(&$user, &$article) {
+		$app = F::app();
+		$title = $article->getTitle();
+		
+		if( !empty($app->wg->EnableWallExt) && $this->isWallMainPage($title) ) {
+			$this->processActionOnWatchlist($user, $title->getText(), 'remove');
+		}
+		
+		return true;
+	}
+	
+	private function isWallMainPage($title) {
+		if( $title->getNamespace() == NS_USER_WALL && strpos($title->getText(), '/') === false ) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	private function processActionOnWatchlist($user, $followedUserName, $action) {
+		$watchTitle = Title::newFromText($followedUserName, NS_USER);
+		
+		if( $watchTitle instanceof Title ) {
+			$wl = new WatchedItem;
+			$wl->mTitle = $watchTitle;
+			$wl->id = $user->getId();
+			$wl->ns = $watchTitle->getNamespace();
+			$wl->ti = $watchTitle->getDBkey();
+			
+			if( $action === 'add' ) {
+				$wl->addWatch();
+			} elseif( $action === 'remove' ) {
+				$wl->removeWatch();
+			}
+		} else {
+		//just-in-case -- it shouldn't happen but if it does we want to know about it
+			Wikia::log( __METHOD__, false, 'WALL_HOOK_ERROR: No title instance while syncing follows. User name: '.$followedUserName);
+		}
 	}
 	
 }

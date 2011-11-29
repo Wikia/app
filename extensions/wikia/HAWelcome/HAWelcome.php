@@ -112,6 +112,7 @@ class HAWelcomeJob extends Job {
 		if( !in_array( $sysop, array( "@disabled", "-" ) ) ) {
 			$tmpUser = $wgUser;
 			$wgUser  = User::newFromName( self::WELCOMEUSER );
+			
 			$flags = 0;
 			$bot_message = trim( wfMsgForContent( "welcome-bot" ) );
 			if( ($bot_message == '@bot') || ($wgUser && $wgUser->isAllowed( 'bot' )) ) {
@@ -140,14 +141,13 @@ class HAWelcomeJob extends Job {
 					$welcomeMsg  = false;
 					$talkArticle = new Article( $talkPage, 0 );
 
-					if( ! $talkArticle->exists() ) {
+					if( !self::isPosted($talkArticle, $this->mUser) ) {
 						if( $this->mAnon ) {
 							if( $this->isEnabled( "message-anon" ) ) {
 								if( $isStaff && !$isSysop ) {
-									$key = "welcome-message-anon-staff";
-								}
-								else {
-									$key = "welcome-message-anon";
+									$key = $this->getMessageKey("anon-staff");
+								} else {
+									$key = $this->getMessageKey("anon");
 								}
 								$welcomeMsg = wfMsgExt( $key, array("parsemag", "content"),
 								array(
@@ -186,10 +186,10 @@ class HAWelcomeJob extends Job {
 
 							if( $this->isEnabled( "message-user" ) ) {
 								if( $isStaff && !$isSysop ) {
-									$key = "welcome-message-user-staff";
+									$key = $this->getMessageKey("user-staff");
 								}
 								else {
-									$key = "welcome-message-user";
+									$key = $this->getMessageKey("user");
 								}
 								$welcomeMsg = wfMsgExt( $key, array("parsemag", "content"),
 								array(
@@ -205,7 +205,14 @@ class HAWelcomeJob extends Job {
 						}
 						if( $welcomeMsg ) {
 							$wgTitle = $talkPage; /** is it necessary there? **/
-							$talkArticle->doEdit( $welcomeMsg, wfMsgForContent( "welcome-message-log" ), $flags );
+							//we posting it on talk page even when we have message wall
+							
+							//hack for notification problem
+							global $wgCityId, $wgServer;
+							
+							$wgServer = WikiFactory::getVarValueByName('wgServer', $wgCityId );
+
+							$this->doPost($talkArticle, $flags,  wfMsgForContent( "welcome-message-log" ), $welcomeMsg,  $this->mSysop,  $this->mUser, $flags);
 						}
 					}
 					$wgTitle = $tmpTitle;
@@ -222,6 +229,90 @@ class HAWelcomeJob extends Job {
 		wfProfileOut( __METHOD__ );
 
 		return true;
+	}
+	
+	
+	/**
+	 * 
+	 * create message for talk page / wall 
+	 * 
+	 * @param unknown_type $postFix
+	 */
+	
+	public function getMessageKey($postFix) {
+		global $wgEnableWallExt;
+		$prefix = "welcome-message-";
+		if(!empty($wgEnableWallExt)) {
+			$prefix .= 'wall-';
+		}
+		return $prefix.$postFix;
+	}
+	
+	
+	/**
+	 * 
+	 * Post message on talk page or wall 
+	 * 
+	 * @access public
+	 *
+	 * @return Status
+	 * 
+	 */
+	
+	public function doPost( $talkArticle, $flags, $title, $message, $from, $to ) {
+		global $wgEnableWallExt, $wgMemc;
+		
+		$key = wfMemcKey( "HAWelcome-isPosted", $to->getName());
+		
+		if(!empty($wgEnableWallExt)) {
+			$wallMessage = F::build('WallMessage', array($message, $to->getName(), $from, $title), 'buildNewMessageAndPost');
+			if( $wallMessage === false ) {
+				return false;
+			}
+
+		} else {
+			$talkArticle->doEdit( $message, wfMsgForContent( "welcome-message-log" ), $flags );
+		}
+
+		if($to->getId() > 0) {
+			$to->setOption("HAWelcome", "1");
+			$to->saveSettings();	
+		}
+		
+		$wgMemc->set( $key, true );
+		return false;
+	}
+	
+	
+	public static function isPosted( $talk, $user ) {
+		global $wgMemc, $wgEnableWallExt; 
+		
+		$key = wfMemcKey( "HAWelcome-isPosted", $user->getName());
+	
+		$isPosted = $wgMemc->get( $key, false );
+		if($isPosted) {
+			return true;
+		}
+		
+		if(!empty($user) && $user->getId() > 0) {
+			$userOption = $user->getOption("HAWelcome" );
+			if($userOption == 1) {
+				$wgMemc->set( $key, true );
+				return true;
+			}	
+		}
+
+		if(!empty($wgEnableWallExt)) {
+			if(WallHelper::haveMsg($user)) {
+				$wgMemc->set( $key, true );
+				return true;
+			}
+		}
+		
+		$talkExists = $talk->exists();
+		$wgMemc->set( $key, $talkExists );
+		
+		return $talkExists;
 	}
 
 	/**
@@ -439,7 +530,7 @@ class HAWelcomeJob extends Job {
 					$talkPage = $wgUser->getUserPage()->getTalkPage();
 					if( $talkPage ) {
 						$talkArticle = new Article( $talkPage, 0 );
-						if( !$talkArticle->exists( ) ) {
+						if( !self::isPosted( $talkArticle, $wgUser ) ) {
 							$welcomeJob = new HAWelcomeJob(
 								$Title,
 								array(

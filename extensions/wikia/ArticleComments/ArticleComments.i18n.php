@@ -59,7 +59,6 @@ Wikia
 <li>Want to control which emails you receive? <a href="{{fullurl:Special:Preferences}}">Update your Preferences<a>.</li>
 </ul>
 </p>',
-	'article-comments-rc-wall-messages' => 'Wall',
 );
 
 /** Message documentation (Message documentation) */

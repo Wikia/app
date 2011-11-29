@@ -6,7 +6,7 @@
 			</div>
 			<ul class="subnav">
 				<li class="notifications-header">
-					<?= wfMsg('wall-notifications') ?>
+					<span><?= wfMsg('wall-notifications-all') ?></span>
 				</li>
 				<li class="notifications-empty"><?= wfMsg('wall-notifications-loading') ?></li>
 			</ul>

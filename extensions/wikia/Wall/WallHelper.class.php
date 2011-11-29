@@ -188,7 +188,7 @@ class WallHelper {
 		
 		if( !is_null($parentId) ) {
 			$parent = F::build('ArticleComment', array($parentId), 'newFromId');
-			
+
 			if( !($parent instanceof ArticleComment) ) {
 			//this should never happen
 				Wikia::log(__METHOD__, false, 'No ArticleComment instance article id: '.$parentId);
@@ -200,6 +200,7 @@ class WallHelper {
 			}
 			
 			$commentList = F::build('ArticleCommentList', array($parent->getTitle()), 'newFromTitle');
+
 			$commentList->setId($parentId);
 			$data = $commentList->getData();
 			
@@ -523,5 +524,12 @@ class WallHelper {
 		
 		return '';
 	}
+
 	
+	
+	public function haveMsg($user) {
+		$title = Title::newFromText( $user->getName(),  NS_USER_WALL );
+		$comments = ArticleCommentList::newFromTitle($title);
+		return $comments->getCountAll() > 0;
+	}
 }

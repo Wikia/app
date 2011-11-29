@@ -1,3 +1,4 @@
+<? if( $userBlocked === false ): ?>
 <div class="SpeechBubble new-message post">
 	<div class="speech-bubble-avatar">
 		<?= AvatarService::renderAvatar($username, 50) ?>
@@ -24,3 +25,4 @@
 		<div class="loadingAjax"></div>
 	</blockquote>
 </div>
+<? endif; ?>

@@ -7,6 +7,11 @@
 	right: 0;
 	position: absolute;
 	border: 1px solid gray;
+	width: 250px;
+}
+
+#wall-notifications-dropdown * {
+	text-transform: none !important;
 }
 
 #pt-wall-notifications {
@@ -21,7 +26,29 @@
 #wall-notifications-markasread {
 	text-align: center;
 }
-#wall-notifications-dropdown ul#wall-notifications-inner { padding: 0; }
+#wall-notifications-dropdown ul#wall-notifications-inner { padding: 0; width: 250px; }
+#wall-notifications-inner .notifications-wiki-header {
+	z-index: 1;
+	background: black;
+	color: white;
+	font-size: 14px;
+	line-height: 20px;
+	text-align: left;
+}
+#wall-notifications-inner .notifications-wiki-count-container { float: right; }
+#wall-notifications-inner .notifications-wiki-count-container .notifications-wiki-count {
+	border-radius: 15px;
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
+	background: red;
+	font-size: 12px;
+	text-align: center;
+	display: inline-block;
+	padding: 0px 4px 0px 4px;
+	line-height: 14px;
+	margin-top: 2px;
+	margin-right: 5px;
+} 
 #wall-notifications-inner a { display: block; padding: 0; }
 #wall-notifications-inner ul {	padding: 0;	margin: 0; }
 #wall-notifications-inner li {	padding: 0; margin: 0; display: list-item; position: relative; }
@@ -49,18 +76,18 @@
 #wall-notifications-inner	.avatar { position: absolute; }
 
 #wall-notifications-inner .notification {
-	width: 200px;
+	width: 190px;
 	display: inline-block;
 	white-space: normal;
 	font-size: 10px;
 	line-height: 1.5em;
 	text-align: left;
-	text-transform: none;
 }
 #wall-notifications-inner .notification:hover { text-decoration: underline; }
 #wall-notifications-inner .notification .timeago { display: block; font-size: 10px; }
 #wall-notifications-inner .unread_notification { font-weight: bold; }
 #wall-notifications-inner .read_notification { font-weight: normal; }
+#wall-notifications-inner > li { width: 100%; }
 #wall-notifications-inner li,
 #wall-notifications-inner a {
 	cursor: pointer;
@@ -68,6 +95,24 @@
 #wall-notifications-inner li:not(:first-child) {
 	border-top: 1px solid gray !important;
 }
+
+#wall-notifications-inner .notifications-for-wiki .chevron {
+	border-style: solid;
+	border-width: 4px;
+	width: 0;
+	vertical-align: middle;
+}	
+
+#wall-notifications-inner .notifications-for-wiki .chevron
+	{ border-color: transparent transparent transparent white; float: right; margin: 6px 7px 0px 8px;}
+#wall-notifications-inner .notifications-for-wiki .notifications-for-wiki-list
+	{ display: none; }
+
+#wall-notifications-inner .notifications-for-wiki.show .chevron
+ 	{ border-color: white transparent transparent transparent; margin: 8px 10px 0px 5px;}
+#wall-notifications-inner .notifications-for-wiki.show .notifications-for-wiki-list
+	{ display: block; }
+
 
 #wall-notifications-markasread { cursor: pointer; }
 
@@ -77,11 +122,10 @@
 	padding-left: 10px;
 	cursor: default;
 	text-align: left;
-	text-transform: none;
 }
 #wall-notifications-markasread {
 	cursor: pointer; 
-	text-align: center;
+	text-align: right;
 	position: absolute;
 	top: 0px;
 	right: 0px;
@@ -89,7 +133,13 @@
 	font-size: 11px;
 	padding-right: 10px; 
 }
-#wall-notifications-markasread:hover { text-decoration: underline; }
+#wall-notifications-markasread * { padding-left: 5px; padding-right: 5px; cursor: pointer; }
+#wall-notifications-markasread *:hover { text-decoration: underline; cursor: pointer; }
+#wall-notifications-markasread-sub-opts
+	{ display: none; } 
+#wall-notifications-markasread-sub.disabled { opacity: 0.5; cursor: default; }
+#wall-notifications-markasread-sub.disabled:hover { background: none !important; text-decoration: none; }
+
 
 #wall-notifications-dropdown:before {
 	content: '';

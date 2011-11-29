@@ -9,6 +9,7 @@ $(document).ready(function() {
 var Wall = $.createClass(Object, {
 	constructor: function() {
 		this.settings = {};
+		this.hoverTimer = {};
 		this.settings.new_title = {min: 30, minFocus:30, minContent: 30, limit: 300, limitEmpty: 30, extraSpace: 15};
 		this.settings.new_body = {minFocus:100, minContent: 100, limit: 9999, limitEmpty: 70, extraSpace: 30};
 		this.settings.edit_title = {min: 30, minFocus:30, minContent: 30, limit: 300, limitEmpty: 30, extraSpace: 0};
@@ -65,9 +66,10 @@ var Wall = $.createClass(Object, {
 		$('.replyButton').live('click', this.proxy(this.replyToMessage));
 		$('.replyPreview').live('click', this.proxy(this.replyToMessagePreview));
 		$('.replyPreviewCancel').live('click', this.proxy(this.replyToMessagePreviewCancel));
-
+		
 		// Delete
 		$('#Wall .delete-message').live('click', this.proxy(this.confirmDelete));
+		$('#Wall .source-message').live('click', this.proxy(this.viewSource));
 
 		// Edit
 		$('#Wall .edit-message').live('click', this.proxy(this.editMessage));
@@ -123,6 +125,16 @@ var Wall = $.createClass(Object, {
 		$(document).scroll( this.proxy(this.scrollEvent) );
 		*/
 		
+		// sorting menu
+		$('.SortingSelected').click( function(e) {
+				$(e.target).closest('.SortingMenu').children('.SortingList').show();
+		} );
+
+		$('.SortingList').mouseleave( function(e) {
+				$(e.target).closest('.SortingList').hide();
+		} );
+		
+		
 		$().log(this.username, "Wall username");
 	},
 
@@ -140,10 +152,10 @@ var Wall = $.createClass(Object, {
 	
 	//hack for safari tab index
 	focusButton: function(e) {
-		var element = $(e.target);
-		var button = element.closest('.SpeechBubble')
-			.find('button#WallMessageSubmit,.save-edit,.replyButton').first();
 		if(e.keyCode == 9 && !e.shiftKey) {
+			var element = $(e.target);
+			var button = element.closest('.SpeechBubble')
+				.find('button#WallMessageSubmit,.save-edit,.replyButton').first();
 			if(element.attr('id') != 'WallMessageTitle' && !element.hasClass('title')) {
 				button.focus();
 				e.preventDefault();
@@ -318,6 +330,7 @@ var Wall = $.createClass(Object, {
 				$('#WallMessageBody').val("").trigger('blur');
 				$('#WallMessageTitle').val("").trigger('blur');
 				var newmsg = $(data['message']);
+				WikiaButtons.init(newmsg);
 				$('#Wall .comments').prepend(newmsg);
 				if(!$.browser.msie) { // IE is too slow for that (even IE8)
 					newmsg.hide()
@@ -547,16 +560,23 @@ var Wall = $.createClass(Object, {
 	},
 
 	editMessage: function(e) {
-		e.preventDefault();
-		
-		var buttons = $('.buttons');
-		buttons.hide();
-
+		e.preventDefault();	
+		this.editOrSource(e, 'edit');
+	},
+	
+	viewSource: function(e) {
+		e.preventDefault();	
+		this.editOrSource(e, 'source');
+	},
+	
+	editOrSource: function(e, mode) {
 		var msg = $(e.target).closest('li.message');
 		var id = msg.attr('data-id');
 		var isreply = msg.attr('data-is-reply');
-		
 		 
+		$('.buttons' ,msg).hide();
+		msg.find('.wikia-menu-button').removeClass("active");
+		
 		var data = {
 			'msgid': id,
 			'isreply': isreply,
@@ -582,14 +602,18 @@ var Wall = $.createClass(Object, {
 				var beforeedit = bubble.html();
 				
 				var editbuttons = $('<div class="edit-buttons"></div>');
-				$('<button class="wikia-button save-edit">'+$.msg('wall-button-save-changes')+'</button>').appendTo(editbuttons);
-				//$('<button class="wikia-button preview-edit secondary">'+$.msg('wall-button-to-preview-comment')+'</button>').appendTo(editbuttons);
-				//$('<button class="wikia-button cancel-preview-edit secondary" style="display: none;">'+$.msg('wall-button-to-cancel-preview')+'</button>').appendTo(editbuttons);
-				$('<button class="wikia-button cancel-edit secondary">'+$.msg('wall-button-cancel-changes')+'</button>').appendTo(editbuttons);
+				if(mode != 'source') {
+					$('<button class="wikia-button save-edit">'+$.msg('wall-button-save-changes')+'</button>').appendTo(editbuttons);
+					//$('<button class="wikia-button preview-edit secondary">'+$.msg('wall-button-to-preview-comment')+'</button>').appendTo(editbuttons);
+					//	$('<button class="wikia-button cancel-preview-edit secondary" style="display: none;">'+$.msg('wall-button-to-cancel-preview')+'</button>').appendTo(editbuttons);
+					$('<button class="wikia-button cancel-edit secondary">'+$.msg('wall-button-cancel-changes')+'</button>').appendTo(editbuttons);
+					$('.msg-title',msg).first().html('<textarea class="title">'+$('.msg-title a',msg).html()+'</textarea>');
+				} else {
+					$('<button class="wikia-button cancel-edit">'+$.msg('wall-button-done-source')+'</button>').appendTo(editbuttons);					
+					$('.edited-by',msg).append($('<span class="sourceview subtle">'+$.msg('wall-message-source')+'</span>')); 	
+				}
 				
-				
-				$('.msg-title',msg).first().html('<textarea class="title">'+$('.msg-title a',msg).html()+'</textarea>');
-				$('.msg-body',msg).first().html('<textarea class="body">'+data.wikitext+'</textarea>');
+				$('.msg-body',msg).first().html('<textarea  ' + (mode == 'source' ? 'disabled="disabled"':'') + ' class="body">'+data.wikitext+'</textarea>');
 				$('.follow',msg).hide();
 				$('textarea.title',msg).first()
 					.keydown(function(e) { if(e.which == 13) { return false; }})
@@ -606,7 +630,7 @@ var Wall = $.createClass(Object, {
 		});
 
 	},
-
+	
 	cancelEdit: function(e) {
 		e.preventDefault();
 		
@@ -616,11 +640,14 @@ var Wall = $.createClass(Object, {
 		
 		var beforeedit = $('.before-edit',msg).html();
 		
-		/* restore html to state from before edit */
-		$('.speech-bubble-message',msg).first().html(beforeedit);
-		//$('.buttons',msg).first().show();
-		$('.buttons').show();
+		$('.sourceview',msg).remove();
 		
+		/* restore html to state from before edit */
+		var bubble = $('.speech-bubble-message',msg);
+		bubble.first().html(beforeedit);
+		$('.buttons' ,msg).show();
+		
+		WikiaButtons.init(bubble);
 		//click tracking
 		this.track('wall/message/edit/cancel');
 	},
@@ -654,9 +681,6 @@ var Wall = $.createClass(Object, {
 
 				$('.msg-title',msg).first().html(data.title);
 				$('.msg-body',msg).first().html(data.body);
-								
-				//$('.buttons',msg).first().show();
-				$('.buttons').show();
 
 				//click tracking
 				var timestamp = $(bubble).find('.timestamp');
@@ -671,8 +695,10 @@ var Wall = $.createClass(Object, {
 				timestamp.find('.timeago').attr('title', data.isotime).timeago();
 				timestamp.find('.timeago-fmt').html(data.fulltime);
 				
-				//$('.SpeechBubble .timestamp .permalink') 
+				WikiaButtons.init(msg);
 				
+				//$('.SpeechBubble .timestamp .permalink') 
+				$('.buttons' ,msg).show();
 				this.track('wall/message/edit/save_changes');
 			})
 		});
@@ -746,6 +772,7 @@ var Wall = $.createClass(Object, {
 				//this.replyShrink($(e.target).closest('.SpeechBubble'), true);
 				main.find('textarea').val("").trigger('blur');
 				var newmsg = $($(data['message'])).insertBefore(main.find('ul li.new-reply')).hide().fadeIn('slow');
+				WikiaButtons.init(newmsg);
 				//$('<div class="highlight"></div>').appendTo(newmsg);//.fadeTo(0,0.05).fadeTo(1000, 0.05).fadeOut(3000);
 				$('.timeago',newmsg).timeago();
 				//$('.SpeechBubble[data-id='+main.attr('data-id')+']:after',newmsg.parent()).css('opacity',1).animate({opacity:'0'},2000);
@@ -814,15 +841,6 @@ var Wall = $.createClass(Object, {
 			var el = $(e.target).closest('.SpeechBubble');
 			$('button', el ).hide();
 			$(el).css({ 'margin-bottom': '0px'});
-			/*if(global_hide==0) setTimeout(function() { $('.speech-bubble-message', el).css({'margin-left':'0px'});}, 150);
-			if(global_hide==1) setTimeout(function() { $('.speech-bubble-message', el).animate({'margin-left':'0px'},100);}, 150);
-			if(global_hide==2) $('.speech-bubble-message', el).animate({'margin-left':'0px'},150);
-			if(global_hide==3) {
-				$('.speech-bubble-message', el).css({'margin-left':'0px'});
-				$('textarea', el).stop().css({'height':'30px'});
-				$('.speech-bubble-avatar', el).stop().hide();
-				setTimeout(function() { $('textarea', el).stop().css({'height':'30px'});}, 0);
-			}*/
 			$('.speech-bubble-message', el).animate({'margin-left':'0px'},150);
 			$('.speech-bubble-avatar', el)
 				.css('position','absolute')

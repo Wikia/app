@@ -17,6 +17,11 @@ define("DB_DPL", 3);
 define('NS_FORUM', 110);
 define('NS_FORUM_TALK', 111);
 
+
+/**
+ * Defines for Wall namespace
+ */
+
 /*
  * wikia page props type
  *

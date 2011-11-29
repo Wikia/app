@@ -369,7 +369,7 @@ class ChangesList {
 			array(&$this, &$articlelink, &$s, &$rc, $unpatrolled, $watched) );
 		/** End of Wikia change */
 
-		$s .= " $articlelink";
+		$s .= ' '.$articlelink;
 	}
 
 	public function insertTimestamp( &$s, $rc ) {
@@ -1029,6 +1029,7 @@ class EnhancedChangesList extends ChangesList {
 				if( $this->isDeleted($rcObj,Revision::DELETED_TEXT) )
 					$link = '<span class="history-deleted">'.$link.'</span> ';
 			}
+			
 			$r .= $link . '</span>';
 
 			if ( !$rc_type == RC_LOG || $rc_type == RC_NEW ) {

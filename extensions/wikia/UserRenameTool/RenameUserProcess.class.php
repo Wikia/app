@@ -758,6 +758,9 @@ class RenameUserProcess {
 			if (defined('NS_USER_WIKI'))
 				$allowedNamespaces = array_merge( $allowedNamespaces, array( NS_USER_WIKI, /*NS_USER_WIKI_TALK*/ 201, NS_USER_PROFILE ));
 			
+			if (defined('NS_USER_WALL'))
+				$allowedNamespaces = array_merge( $allowedNamespaces, array( NS_USER_WALL, NS_USER_WALL_MESSAGE, NS_USER_WALL_MESSAGE_GREETING ));
+
 			$oldKey = $oldTitle->getDBkey();
 			$pages = $dbw->select(
 				'page',

@@ -7,20 +7,14 @@
 
 $roundness: 2px;
 $roundness_inputs: 0px;
-//$bubble_bg: saturation(lighten($color-links, 40%), 70%);
-//$bubble_bg: hsl(hue($color-links), 30%, 93%);
-//$loadmore_bg: hsl(hue($color-links), 30%, 96%);
-//$loadmore_bg_h: hsl(hue($color-links), 30%, 97%);
 
 $separators: mix($color-page-border,$color-page,50%);
 
-//$bubble_bg: desaturate(mix($color-links, $color-page, 9%),10%);
 $inputs_bg: lighten($color-page, 3%);
 $inputs_bg_f: lighten($color-page, 6%);
 $bubble_bg: mix($color-buttons, $color-page, 15%);
 $new_inputs_bg: mix($bubble_bg, $inputs_bg,20%);
-@if lightness($color-page) < 50 {
-  //$bubble_bg: mix($color-links, $color-page, 7%);
+@if $is-dark-wiki {
 	$inputs_bg: lighten($color-page, 5%);
 	$inputs_bg_f: lighten($color-page, 10%);
 	$bubble_bg: mix($color-buttons, $color-page, 30%);
@@ -30,17 +24,9 @@ $new_inputs_bg: mix($bubble_bg, $inputs_bg,20%);
 	}
 }
 
-/*
-.WikiaRail .module, .WikiaRail #RIGHT_SKYSCRAPER {
-	box-shadow: 0px 2px 5px darken($color-page,12%) !important;
-	background-image: none !important;
-	border: 1px solid mix($color-page,$color-page-border,25%);
-	@if lightness($color-page) < 50 {
-		border: 1px solid mix($color-page,$color-page-border,50%);
-		background: mix($color-page,$color-page-border,75%);
-		box-shadow: 0px 2px 5px darken($color-page,7%) !important;
-	}
-}*/
+/* IE7 targeted hacks */
+html>body #Wall textarea { *width: 96%; }
+html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9999px; }
 
 #WikiaArticle.WikiaArticle {
 	padding-left: 15px;
@@ -55,11 +41,19 @@ $new_inputs_bg: mix($bubble_bg, $inputs_bg,20%);
 	/* Indenting for posts and replies */
 	.comments {
 		margin-left: 0;
-		.SpeechBubble { 
+		.speech-bubble-message:hover {
+			.buttons {
+				display: block;
+			}
+		} 
+		.SpeechBubble {
+			.buttons {
+				display: none;
+			} 
 			margin: 0;
 			margin-bottom: 20px;
 			padding-top: 5px;
-			position: relative;
+			position: relative;			
 			.highlight {
 				position: absolute;
 				top: 0; left: 0; width: 100%; height: 100%;
@@ -77,11 +71,11 @@ $new_inputs_bg: mix($bubble_bg, $inputs_bg,20%);
 			//.speech-bubble-message { line-height: 150%; }
 			.msg-body textarea { font-size: 13px; height: 100px; }
 			> ul { margin-left: 75px; }
-			border-top: 1px solid $separators;
+			border: none; // -top: 1px solid $separators;
 			padding-top: 12px;
 			margin-bottom: 0px;
 		}
-		ul.replies > li.SpeechBubble { // replies only
+		ul.replies > li { // replies only
 			position: relative;
 			&:first-child:before {
 				content: '';
@@ -116,19 +110,16 @@ $new_inputs_bg: mix($bubble_bg, $inputs_bg,20%);
 	}
 	
 	.speech-bubble-message { padding: 5px 10px 0px 8px; }
-	//.speech-bubble-message p { margin: 0.5em 0 0.5em 0 !important; }
 	.speech-bubble-message p:first-child { margin-top: 0 !important; }
 	.speech-bubble-message p:last-child { margin-bottom: 0 !important; }
 	
 	/* only messages, not replies */
 	ul.comments > li.message {
-		border-top: 1px solid $separators;
+		border-bottom: 1px solid $separators;
 		padding-top: 20px;
-		margin-bottom: 30px;
+		padding-bottom: 30px;
 	  & > .speech-bubble-message {
 			@include border-radius($roundness);
-			//@include box-shadow(0,0,6px,$bubble_bg);
-			//background: #e4edf6;
 			background: $bubble_bg;
 			border: none;
 			padding: 10px 20px 10px 20px;
@@ -143,6 +134,7 @@ $new_inputs_bg: mix($bubble_bg, $inputs_bg,20%);
 			}
 			.edited-by { margin-top: 6px;  }
 		}
+		&:last-child { border-bottom: none; }
 	}
 	
 	/* inputs on page */
@@ -156,9 +148,6 @@ $new_inputs_bg: mix($bubble_bg, $inputs_bg,20%);
 		border: none;
 		outline: none;
 		width: 100%;
-		//line-height: normal;
-		//line-height: 170%;
-		//padding: 3px 5px;
 		line-height: inherit;
 		padding: 7px 10px 7px 10px;
 		resize: none;
@@ -168,7 +157,6 @@ $new_inputs_bg: mix($bubble_bg, $inputs_bg,20%);
 		font-size: 13px;
 		&:focus { background: $inputs_bg_f; color: $color-text; }
 		&:focus { @include box-shadow(0px, 0px, 4px, mix($color-buttons,$color-page,100%) ); }
-		//&.body { line-height: 150%; }
 	}
 	.new-message textarea{ 
 		background: $new_inputs_bg;
@@ -183,9 +171,11 @@ $new_inputs_bg: mix($bubble_bg, $inputs_bg,20%);
 	ul.comments > li.message > .speech-bubble-message textarea.title { font-size: 18px; font-weight: bold; }
 
 	/* only replies */
-	ul.comments > li.message li.message {
-		//border-bottom: 1px solid #f4f4f4;
+	ul.comments > li.message ul.replies > li {
+		border-top: 1px solid $separators;
 		margin-right: 16px;
+	}
+	ul.comments > li.message li.message {
 		.speech-bubble-message {
 			background: none;
 			border: none;
@@ -225,11 +215,6 @@ $new_inputs_bg: mix($bubble_bg, $inputs_bg,20%);
 			&:after {
 				border-color: $bubble_bg $bubble_bg transparent transparent;
 			}
-/*			textarea {
-				&:focus {
-					@include box-shadow(0px, 0px, 6px, $color-links);
-				}
-			}*/
 		}
 
 		.no-title-container {
@@ -366,6 +351,14 @@ $new_inputs_bg: mix($bubble_bg, $inputs_bg,20%);
 		button { margin: 0 5px 10px 5px; }
 		.wikia-button { float: right; }
 	}
+	.speech-bubble-message .buttons {
+		.wikia-menu-button { padding-left: 8px; font-size: 10px; line-height: 17px; vertical-align: middle; height: 17px; }
+		ul {
+			list-style: none; margin: 0; padding: 0;
+			li { padding: 0; margin: 0; }
+			li a { padding: 12px; font-size: 11px; }
+		}
+	}
 	
 	/* element used to hide original wikitext before edit starts */
 	.before-edit { display: none }
@@ -431,7 +424,92 @@ $new_inputs_bg: mix($bubble_bg, $inputs_bg,20%);
 	}
 	.stafflogo {
 		img { margin-bottom: 1px; margin-left: 3px; }
-	}	
+	}
+	
+	.SortingBar {
+		display: block;
+		background: darken( $color-page, 3% );
+		@if $is-dark-wiki {
+			background: lighten( $color-page, 3% );
+		}
+		text-align: right;
+		height: 25px;
+		font-size: 11px;
+		border-top: 1px solid $separators;
+		.SortingMenu {
+			display: inline-block;
+			position: relative;
+			width: auto;
+			top: 1px;
+			margin-right: 3px;
+			text-align: center;
+			.SortingSelected {
+				@include border-radius(3px);
+				display: inline-block;
+				font-weight: bold;
+				color: $color-page-border;
+				line-height: 19px;
+				vertical-align: center;
+				margin: 1px;
+				padding-left: 10px; padding-right: 10px;
+				width: auto;
+				cursor: pointer;
+				&:hover {
+					margin: 0px;
+					color: #3a3a3a;
+					border: 1px solid darken( $color-page, 5% );
+					background: $color-page;
+					@if $is-dark-wiki {
+						color: #ffffff;
+						border: 1px solid lighten( $color-page, 5% );
+					}
+				}
+				
+			}
+			.SortingList {
+				@include border-radius(3px);
+				@include box-shadow(1px, 2px, 10px, #777 ); 
+				list-style: none;
+				display: none;
+				position: absolute;
+				top: -7px;
+				right: -4px;
+				width: auto;
+				background: $color-page;
+				z-index: 1;
+				@if $is-dark-wiki {
+					@include box-shadow(1px, 2px, 10px, #000 ); 
+				}
+				li { 
+					list-style: none;
+					&:hover {
+						background: mix($color-buttons, $color-page, 15%) !important;
+						@if $is-dark-wiki {
+							background: mix($color-buttons, $color-page, 30%) !important;
+						}
+					}
+					&.current {
+						font-weight: bold;
+					}
+					a {
+						cursor: pointer;
+						line-height: 31px;
+						text-align: left;
+						padding: 0 15px 0 15px;
+						white-space:nowrap;
+						display: block;
+						width: 100%;
+						height: 100%;
+						color: $color-text;
+						&:hover { text-decoration: none; }
+					}
+				}
+				//&:hover { display: block; }
+			}
+			//&:hover .SortingList { display: block; }
+		}
+	}
+		
 }
 
 #WallBrickHeader {

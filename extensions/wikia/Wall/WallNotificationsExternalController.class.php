@@ -10,16 +10,29 @@ class WallNotificationsExternalController extends WikiaController {
 		$this->helper = F::build('WallHelper', array());
 	}
 	
-	public function getUpdate() {
+	public function getUpdateCounts() {
 		$wn = F::build('WallNotifications', array());
-		$this->getUpdateInternal($wn);
+		$this->getUpdateCountsInternal($wn);
+		return true;
+	}
+
+	public function getUpdateWiki() {
+		$id = $this->request->getVal('wikiId');
+		$wn = F::build('WallNotifications', array());
+		$this->getUpdateWikiInternal($wn, $id);
 		return true;
 	}
 
 	public function markAllAsRead() {
+		$forceAll = $this->request->getVal('forceAll');
 		$wn = F::build('WallNotifications', array());
-		$wn->markRead( $this->wg->User->getId(), $this->wg->CityId );
-		$this->getUpdateInternal($wn);
+		$ret = $wn->markRead( $this->wg->User->getId(), $this->wg->CityId );
+		if($ret === false || $forceAll == 'FORCE') {
+			error_log( print_r( 'are we here?', 1 ) );
+			error_log( print_r( $ret, 1 ) );
+			$ret = $wn->markReadAllWikis( $this->wg->User->getId() );
+		}
+		$this->getUpdateCountsInternal($wn);
 		return true;
 	}
 
@@ -28,20 +41,31 @@ class WallNotificationsExternalController extends WikiaController {
 		$wn = F::build('WallNotifications', array());
 		$ret = $wn->markRead( $this->wg->User->getId(), $this->wg->CityId, $id );
 		$this->response->setVal('wasUnread', $ret);
+		$this->response->setVal('status', true);
 		
 		return true;
 	}
 	
-	private function getUpdateInternal($wn) {
-		$all = $wn->getNotifications( $this->wg->User->getId(), $this->wg->CityId );
-		//$this->response->setVal('abc',print_r($all,1));
-		//$all = array_slice($all, 0, 5);
-		//error_log(print_r($all,1));
+	private function getUpdateCountsInternal($wn) {
+		$all = $wn->getCounts( $this->wg->User->getId() );
+
+		$sum = 0;
+		foreach($all as $wiki) { $sum += $wiki['unread']; }
 		
-		//wfRenderModule('WallNotifications')
-		$this->response->setVal('html', $this->app->renderView( 'WallNotifications', 'Update', array('notifications'=>$all) ));
-		$this->response->setVal('count', $all['unread_count'] );
+		$this->response->setVal('html', $this->app->renderView( 'WallNotifications', 'Update', array('notificationCounts'=>$all, 'count'=>$sum) ));
+		$this->response->setVal('count', $sum);
+		$this->response->setVal('reminder', $this->app->wf->MsgExt( 'wall-notifications-reminder', array('parsemag'), $sum ) );
 		$this->response->setVal('reminder', $this->app->wf->MsgExt( 'wall-notifications-reminder', array('parsemag'), $all['unread_count'] ) );
+		$this->response->setVal('status', true);
+	}
+
+	private function getUpdateWikiInternal($wn, $wikiId) {
+		$all = $wn->getWikiNotifications( $this->wg->User->getId(), $wikiId );
+
+		$this->response->setVal('html', $this->app->renderView( 'WallNotifications', 'UpdateWiki', array('notifications'=>$all) ));
+
+		$this->response->setVal('unread', $all[ 'unread_count' ] );
+		
 		$this->response->setVal('status', true);
 	}
 

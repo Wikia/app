@@ -2709,7 +2709,7 @@ class User {
 			// gather everything we know about request
 			global $wgCommandLineMode;
 			$log = "MOLI TRAP@devbox: ";
-			if( $wgCommandLineMode ) {
+			if( $wgCommandLineMode && !empty($argv)) {
 				$log .= $argv[ 0 ];
 				openlog( "trap", LOG_PID | LOG_PERROR, LOG_LOCAL6 );
 				syslog( LOG_WARNING, "$log");

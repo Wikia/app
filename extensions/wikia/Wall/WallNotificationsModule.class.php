@@ -25,15 +25,32 @@ class WallNotificationsModule extends Module {
 	public function executeUpdate() {
 		wfProfileIn(__METHOD__);
 		
-		$all = $this->request->getVal('notifications');
+		$notificationCounts = $this->request->getVal('notificationCounts');
+		$this->response->setVal('notificationCounts', $notificationCounts);
+
+		$unreadCount = $this->request->getVal('count');
+		$this->response->setVal('count', $unreadCount);
+
 		
-		//var_dump($all);
+		$this->response->setVal('user', $this->wg->User);
+		
+		
+		//$duration = 60; // one minute
+		//$this->response->setHeader('X-Pass-Cache-Control', 'public, max-age=' . $duration);
+		
+		wfProfileOut(__METHOD__);
+	}
+
+	public function executeUpdateWiki() {
+		wfProfileIn(__METHOD__);
+		
+		$all = $this->request->getVal('notifications');
 		
 		$this->response->setVal('user', $this->wg->User);
 		
 		$this->response->setVal('unread', $all['unread']);
 		$this->response->setVal('read', $all['read']);
-		$this->response->setVal('count', $all['unread_count']);
+		//$this->response->setVal('count', $all['unread_count']);
 		
 		//$duration = 60; // one minute
 		//$this->response->setHeader('X-Pass-Cache-Control', 'public, max-age=' . $duration);
@@ -51,7 +68,7 @@ class WallNotificationsModule extends Module {
 		$authors = array();
 		foreach($notify['grouped'] as $notify_entity) {
 			//$authors[] = $notify_entity->data->msg_author_displayname;
-			$authors[] = $notify_entity->data->msg_author_username;
+			$authors[] = $notify_entity->data->msg_author_displayname;
 		}
 		
 		$my_name = $this->wg->User->getName();
@@ -61,14 +78,14 @@ class WallNotificationsModule extends Module {
 		
 		if(!$notify['grouped'][0]->isMain()) {
 			//$params[] = $data->msg_author_displayname;
-			$params[] = $this->getDisplayname($data->msg_author_username);
+			$params[] = $this->getDisplayname($data->msg_author_displayname);
 			
 			$user_count = 1;// 1 = 1 user,
 							// 2 = 2 users,
 							// 3 = more than 2 users
 			
 			if(count($authors) == 2)     { $user_count = 2; $params['$1'] = $this->getDisplayname( $authors[1] ); }
-			elseif(count($authors) > 2 ) { $user_count = 3; $params['$'.(count($params)+1)] = $notify['count']; }
+			elseif(count($authors) > 2 ) { $user_count = 3; /*$params['$'.(count($params)+1)] = $notify['count'];*/ }
 			
 			$reply_by = 'other'; // who replied?
 							   // you = same as person receiving notification
@@ -77,7 +94,7 @@ class WallNotificationsModule extends Module {
 			
 			if( $data->parent_username == $my_name ) $reply_by = 'you';
 			elseif ( in_array($data->parent_username, $authors) ) $reply_by = 'self';
-			else $params['$'.(count($params)+1)] =$this->getDisplayname( $data->parent_username );
+			else $params['$'.(count($params)+1)] =$this->getDisplayname( $data->parent_displayname );
 			
 			$whos_wall = 'a'; // on who's wall was the message written?
 								   // your  = on message author's wall
@@ -88,7 +105,7 @@ class WallNotificationsModule extends Module {
 			elseif( $data->wall_username != $data->parent_username && !in_array($data->wall_username, $authors) ) {
 				$whos_wall = 'other';
 				//$params['$'.(count($params)+1)] = $data->wall_displayname;
-				$params['$'.(count($params)+1)] = $this->getDisplayname($data->wall_username);
+				$params['$'.(count($params)+1)] = $this->getDisplayname($data->wall_displayname);
 			}
 			
 			$msgid = "wn-user$user_count-reply-$reply_by-$whos_wall-wall";
@@ -96,15 +113,15 @@ class WallNotificationsModule extends Module {
 			if( $data->wall_username == $my_name) {
 				$msgid = 'wn-newmsg-onmywall';
 				//$params['$'.(count($params)+1)] = $data->msg_author_displayname;
-				$params['$'.(count($params)+1)] = $this->getDisplayname($data->msg_author_username);
+				$params['$'.(count($params)+1)] = $this->getDisplayname($data->msg_author_displayname);
 			} else if( $data->msg_author_username != $my_name ) {
 				$msgid = 'wn-newmsg-on-followed-wall';
-				$params['$'.(count($params)+1)] = $this->getDisplayname($data->msg_author_username);
-				$params['$'.(count($params)+1)] = $this->getDisplayname($data->wall_username);
+				$params['$'.(count($params)+1)] = $this->getDisplayname($data->msg_author_displayname);
+				$params['$'.(count($params)+1)] = $this->getDisplayname($data->wall_displayname);
 			} else {
 				$msgid = 'wn-newmsg';
 				//$params['$'.(count($params)+1)] = $data->wall_displayname;
-				$params['$'.(count($params)+1)] = $this->getDisplayname($data->wall_username);
+				$params['$'.(count($params)+1)] = $this->getDisplayname($data->wall_displayname);
 			}
 		}
 		
