@@ -73,6 +73,9 @@ foreach ($providers as $provider) {
 
 	// get WikiFactory data
 	$ingestionData = PartnerVideoHelper::getInstance()->getPartnerVideoIngestionData();
+	if (empty($ingestionData)) {
+		die("No ingestion data found in wikicities. Aborting.");
+	}
 
 	// open file
 	$file = '';
