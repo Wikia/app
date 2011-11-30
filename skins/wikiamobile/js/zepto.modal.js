@@ -31,7 +31,7 @@
 
 		//hide adress bar on orientation change
 		window.onorientationchange = function() {
-				window.scrollTo( 0, 1 );
+				if(pageYOffset == 0) window.scrollTo( 0, 1 );
 		}
 
 		$(document.body).delegate('#modalClose', WikiaMobile._clickevent , function() {
