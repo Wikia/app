@@ -123,9 +123,9 @@ a {
 	height: 30px;
 	background-position: center;
 	background-repeat: no-repeat;
-	background-image: url("/skins/wikiamobile/images/open_chev.png");
+	background-image: url("/skins/wikiamobile/images/open_chev.png");/* $wgCdnStylePath */
 }
 
 .open .chevron {
-	background-image: url("/skins/wikiamobile/images/close_chev.png");
+	background-image: url("/skins/wikiamobile/images/close_chev.png");/* $wgCdnStylePath */
 }

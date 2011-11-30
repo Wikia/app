@@ -111,11 +111,11 @@
 
 #nextImage {
 	right: 0;
-	background-image:url('/skins/wikiamobile/images/chevron-right.png');
+	background-image:url('/skins/wikiamobile/images/chevron-right.png');/* $wgCdnStylePath */
 }
 
 #previousImage {
 	left: 0;
-	background-image:url('/skins/wikiamobile/images/chevron-left.png');
+	background-image:url('/skins/wikiamobile/images/chevron-left.png');/* $wgCdnStylePath */
 
 }
