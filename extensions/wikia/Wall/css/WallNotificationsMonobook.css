@@ -35,7 +35,7 @@
 	line-height: 20px;
 	text-align: left;
 }
-#wall-notifications-inner .notifications-wiki-count-container { float: right; }
+#wall-notifications-inner .notifications-wiki-count-container { position: absolute;  right: 20px; }
 #wall-notifications-inner .notifications-wiki-count-container .notifications-wiki-count {
 	border-radius: 15px;
 	-moz-border-radius: 15px;
@@ -104,7 +104,7 @@
 }	
 
 #wall-notifications-inner .notifications-for-wiki .chevron
-	{ border-color: transparent transparent transparent white; float: right; margin: 6px 7px 0px 8px;}
+	{ border-color: transparent transparent transparent white; margin: 6px 7px 0px 8px; position: absolute; right: 0px; }
 #wall-notifications-inner .notifications-for-wiki .notifications-for-wiki-list
 	{ display: none; }
 
@@ -134,7 +134,7 @@
 	padding-right: 10px; 
 }
 #wall-notifications-markasread * { padding-left: 5px; padding-right: 5px; cursor: pointer; }
-#wall-notifications-markasread *:hover { text-decoration: underline; cursor: pointer; }
+#wall-notifications-markasread span:hover { text-decoration: underline; cursor: pointer; }
 #wall-notifications-markasread-sub-opts
 	{ display: none; } 
 #wall-notifications-markasread-sub.disabled { opacity: 0.5; cursor: default; }
