@@ -1,5 +1,5 @@
 <table width="100%" style="font: 18px normal Helvetica, Arial;"
-	cellpadding="20">
+	cellpadding="10">
 	<tr>
 		<td>
 		<table align="center" bgcolor="ffffff" cellpadding="0" cellspacing="0"
@@ -32,7 +32,7 @@
 							<tr>
 								<td width="17">&nbsp;</td>
 								<td>
-								<table cellpadding="13" cellspacing="0" width="100%">
+								<table cellpadding="7" cellspacing="0" width="100%">
 									<tr>
 										<td style="color: #2c85d5; font-size: 20px; font-weight: bold">
 											<?php echo wfMsgForContent('mail-notification-html-greeting', array('$1' => $data['$WATCHER'] ) ); ?>
@@ -53,28 +53,27 @@
 											<?php echo $data['$MESSAGE_HTML']; ?>
 										</td>
 									</tr>
-									
-										<tr>
-											<td><a href="<?php echo $data['$MESSAGE_LINK']; ?>" style="text-decoration: none">
-											<table style="background-color: #2C85D5;" cellpadding="0" cellspacing="0" height="39">
-												<tr valign="middle" align="center">
-													<td height="39" width="5"
-														background="http://images4.wikia.nocookie.net/wikianewsletter/images/5/55/Ctaleft.png"></td>
-													<td style="color: #fff; font-size: 14px; padding: 0 10px;"
-														background="http://images2.wikia.nocookie.net/wikianewsletter/images/5/53/Ctacenter.png">
-														<?php echo wfMsgForContent('mail-notification-html-button'); ?>
-													</td>
-													<td height="39" width="5"
-														background="http://images3.wikia.nocookie.net/wikianewsletter/images/e/e4/Ctaright.png"></td>
-												</tr>
-											</table>
-											</a></td>
-										</tr>
-									
 									<tr>
 										<td style="color: #3a3a3a; font-size: 14px; line-height: 20px">
 											<?php echo wfMsgForContent('mail-notification-html-signature', array( '$1' => $data['$AUTHOR_NAME'],'$2' => $data['$AUTHOR'] )); ?>
 										</td>
+									</tr>
+									
+									<tr>
+										<td><a href="<?php echo $data['$MESSAGE_LINK']; ?>" style="text-decoration: none">
+										<table style="background-color: #2C85D5;" cellpadding="0" cellspacing="0" height="39">
+											<tr valign="middle" align="center">
+												<td height="39" width="5"
+													background="http://images4.wikia.nocookie.net/wikianewsletter/images/5/55/Ctaleft.png"></td>
+												<td style="color: #fff; font-size: 14px; padding: 0 10px;"
+													background="http://images2.wikia.nocookie.net/wikianewsletter/images/5/53/Ctacenter.png">
+													<?php echo wfMsgForContent('mail-notification-html-button'); ?>
+												</td>
+												<td height="39" width="5"
+													background="http://images3.wikia.nocookie.net/wikianewsletter/images/e/e4/Ctaright.png"></td>
+											</tr>
+										</table>
+										</a></td>
 									</tr>
 								</table>
 								</td>
