@@ -26,7 +26,7 @@ class UploadBackgroundFromFile extends UploadFromFile {
 				// check if file is correct file size
 				$imageFileSize = filesize( $tempPath );
 
-				if ( $imageFileSize <= self::FIESIZE_LIMIT ) {
+				if ( $imageFileSize <= self::FILESIZE_LIMIT ) {
 
 					// center image if wider than 1050, otherwise left align
 					$imageSize = getimagesize( $tempPath )
