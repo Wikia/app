@@ -1,5 +1,4 @@
-<table width="100%" style="font: 18px normal Helvetica, Arial;"
-	cellpadding="10">
+<table width="100%" style="font: 18px normal Helvetica, Arial;" cellpadding="10">
 	<tr>
 		<td>
 		<table align="center" bgcolor="ffffff" cellpadding="0" cellspacing="0"
@@ -24,7 +23,7 @@
 								<td width="30">&nbsp;</td>
 							</tr>
 						</table>
-
+						
 						<table cellpadding="0" cellspacing="0" width="100%">
 							<tr>
 								<td colspan="3" height="10" style="font-size: 1px">&nbsp;</td>
@@ -80,7 +79,7 @@
 								<td width="17">&nbsp;</td>
 							</tr>
 						</table>
-
+						
 						<!-- content end -->
 						<table cellpadding="0" cellspacing="0" width="100%"
 							style="background: #f6f6f6">
@@ -98,7 +97,7 @@
 								</td>
 							</tr>
 						</table>
-
+						
 						</td>
 					</tr>
 				</table>
@@ -109,7 +108,7 @@
 				<td bgcolor="88c440" height="5" colspan="3" style="font-size: 1px">&nbsp;</td>
 			</tr>
 		</table>
-
+		
 		</td>
 	</tr>
 </table>

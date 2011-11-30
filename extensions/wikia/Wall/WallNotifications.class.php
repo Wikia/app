@@ -255,11 +255,11 @@ class WallNotifications {
 		
 		$text = strip_tags($notification->data_non_cached->msg_text, '<p><br>');
 		$text = substr($text,0,3000).( strlen($text) > 3000 ? '...':'');
-				
+		
 		$textNoHtml = preg_replace('#<br\s*/?>#i', "\n", $text);
 		$textNoHtml = trim(preg_replace('#</?p\s*/?>#i', "\n", $textNoHtml));
 		$textNoHtml = substr($textNoHtml,0,3000).( strlen($textNoHtml) > 3000 ? '...':'');
-				
+		
 		foreach($watchers as $val){
 			$watcher = User::newFromId($val);
 			if( $watcher->getId() != 0 && ($watcher->getOption('enotifwallthread') )
@@ -277,7 +277,7 @@ class WallNotifications {
 				} else {
 					$author_signature = $notification->data->msg_author_displayname . '(' . $notification->data->msg_author_username . ')';
 				}
-
+				
 				$data = array(
 					'$WATCHER' => $watcherName,
 					'$WIKI' => $notification->data->wikiname,
@@ -294,6 +294,7 @@ class WallNotifications {
 					'$MESSAGE_NO_HTML' =>  $textNoHtml,
 					'$MESSAGE_HTML' =>  $text,
 				);
+				
 				$this->sendEmail($watcher, $key, $data);
 			}
 		}
@@ -307,20 +308,18 @@ class WallNotifications {
 		
 		$keys = array_keys($data);
 		$values =  array_values($data);
-
-		$subject = wfMsgForContent($key);
 		
+		$subject = wfMsgForContent($key);
 		
 		$text = wfMsgForContent('mail-notification-body');
 		
-		$subject = str_replace($keys, $values, $subject );
+		$subject = str_replace($keys, $values, $subject);
 		
 		$keys[] = '$SUBJECT';
 		$values[] = $subject;
 		$data['$SUBJECT'] = $subject; 
-		$html = wfRenderPartial('WallExternal', 'mail', array( 'data' => $data));
-		$text = str_replace($keys, $values, $text );
-		
+		$html = wfRenderPartial('WallExternal', 'mail', array('data' => $data));
+		$text = str_replace($keys, $values, $text);
 		
 		return $watcher->sendMail( $data['$MAIL_SUBJECT'], $text, $from, $replyTo, 'WallNotification', $html );
 	}

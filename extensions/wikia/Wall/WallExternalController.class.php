@@ -198,9 +198,8 @@ class WallExternalController extends WikiaController {
 			$this->response->setVal('status', false);
 			return true;	
 		}
-
-		$this->response->setVal('message', $this->app->renderView( 'WallController', 'message', array( 'comment' => $reply, 'isreply' => true ) ));
 		
+		$this->response->setVal('message', $this->app->renderView( 'WallController', 'message', array( 'comment' => $reply, 'isreply' => true ) ));
 			
 		// after successfully posting a reply		
 		// remove notification for this thread (if user is following it)
