@@ -64,7 +64,7 @@
 					</div>
 				</div>
 				<?php //TODO: This is hack for now unification buttons for all skins ASAP!!! ?> 
-				<div class="buttons-moonbook"> 
+				<div class="buttons-monobook"> 
 					<!-- only show this if it's user's own message -->  
 					<span class="tools"> 
 						<?php if( $canDelete ): ?> 

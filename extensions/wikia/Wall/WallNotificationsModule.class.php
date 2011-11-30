@@ -67,8 +67,9 @@ class WallNotificationsModule extends Module {
 		$data = $notify['grouped'][0]->data;
 		$authors = array();
 		foreach($notify['grouped'] as $notify_entity) {
-			//$authors[] = $notify_entity->data->msg_author_displayname;
-			$authors[] = $notify_entity->data->msg_author_displayname;
+			$authors[] = array(
+				'displayname' => $notify_entity->data->msg_author_displayname,
+				'username' => $notify_entity->data->msg_author_username );
 		}
 		
 		$my_name = $this->wg->User->getName();

@@ -47,6 +47,9 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 			}
 		} 
 		.SpeechBubble {
+			.buttons-monobook{
+				display: none;
+			}
 			.buttons {
 				display: none;
 			} 
@@ -75,6 +78,7 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 			padding-top: 12px;
 			margin-bottom: 0px;
 		}
+		
 		ul.replies > li { // replies only
 			position: relative;
 			clear: both; /* without it replies on Monobook are looking baaad */
@@ -596,7 +600,7 @@ body.skin-monobook {
 			margin-left: 50px;
 		}
 		.comments .message li { &:before, &:after { display: none; } }
-		.buttons-moonbook{
+		.buttons-monobook{
 			display:block;
 		}
 		.buttons {

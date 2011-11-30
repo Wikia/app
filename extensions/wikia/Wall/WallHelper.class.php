@@ -524,8 +524,6 @@ class WallHelper {
 		
 		return '';
 	}
-
-	
 	
 	public function haveMsg($user) {
 		$title = Title::newFromText( $user->getName(),  NS_USER_WALL );

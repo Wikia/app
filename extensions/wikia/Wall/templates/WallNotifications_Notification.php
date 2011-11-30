@@ -7,7 +7,7 @@
 		<div class="avatars">
 			<?php foreach($authors as $key => $author): ?>
 				<div class="avatars_<?php echo count($authors); ?>_<?php echo $key + 1 ?>">	
-					<?= AvatarService::renderAvatar($author, 30 - (count($authors) - 1)*2 ) ?>
+					<?= AvatarService::renderAvatar($author['username'], 30 - (count($authors) - 1)*2 ) ?>
 				</div>
 			<?php endforeach; ?>
 		</div>
