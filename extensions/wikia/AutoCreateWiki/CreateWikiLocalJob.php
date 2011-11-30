@@ -485,13 +485,14 @@ class CreateWikiLocalJob extends Job {
 	private function changeStarterContributions( ) {
                 
 		wfProfileIn( __METHOD__ );
+                $dbw = wfGetDB( DB_MASTER );
                 
                 /**
                  * BugId:15644 - We want to change contributions only for
                  * revisions created during the starter import - (timestamp not
                  * greater than the timestamp of the latest starter revision.
                  */
-                $sConds = '*';
+                $sConds = array();
 
                 /**
                  * determine the timestamp of the latest starter revision
@@ -502,24 +503,21 @@ class CreateWikiLocalJob extends Job {
                     if ( is_object( $oStarterDb ) ) {
                         $oLatestChange = $oStarterDb->selectRow(
                             array( 'revision' ),
-                            array( 'rev_timestamp' ),
+                            array( 'max(rev_timestamp) AS rev_timestamp' ),
                             array(),
                             __METHOD__,
-                            array(
-                                'ORDER BY rev_timestamp DESC',
-                                'LIMIT 1'
-                            )
+                            array()
                         );
 
                         if ( is_object( $oLatestChange ) ) {
-                            $sConds = "rev_timestamp <= {$oLatestChange->rev_timestamp}";
+                            $sConds = array( 'rev_timestamp <= ' . $dbw->addQuotes( $oLatestChange->rev_timestamp ) );
                         }
                         
                         $oStarterDb->close();
                     }
                 }
                 
-                Wikia::log( __METHOD__, 'info', "{about to change rev_user and rev_user_text in revisions older than {$sConds}" );
+                Wikia::log( __METHOD__, 'info', "about to change rev_user and rev_user_text in revisions older than {$sConds}" );
 
 		/**
 		 * check if we are connected to local db
@@ -527,12 +525,13 @@ class CreateWikiLocalJob extends Job {
 		 */
 		$contributor = User::newFromName(self::DEFAULT_USER);
 
-		$dbw = wfGetDB( DB_MASTER );
+		
 		$dbw->update(
 			"revision",
 			array(
 				"rev_user"      => $contributor->getId(),
-				"rev_user_text" => $contributor->getName()
+				"rev_user_text" => $contributor->getName(),
+                                'rev_timestamp = date_format(now(), "%Y%m%d%H%i%S")'
 			),
 			$sConds,
 			__METHOD__
