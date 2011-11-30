@@ -61,10 +61,7 @@ class WikiaMobileService extends WikiaService {
 		}
 
 		//Scripts are splitted in batches to not cross the 25Kb un-gizipped cap for caching on mobile browsers
-		$srcs = array_merge(
-			AssetsManager::getInstance()->getGroupCommonURL('wikiamobile_js_body_core'),
-			AssetsManager::getInstance()->getGroupCommonURL('wikiamobile_js_body_platform')
-		);
+		$srcs = AssetsManager::getInstance()->getGroupCommonURL( 'wikiamobile_js_body' );
 
 		//TODO: add scripts from $wgOut as needed
 		foreach ( $srcs as $src ) {

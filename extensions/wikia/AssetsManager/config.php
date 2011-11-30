@@ -185,6 +185,7 @@ $config['skeleskin_js'] = array(
 $config['wikiamobile_js_head'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
+		'//skins/common/zepto/zepto-0.8.js',
 		'//skins/common/wikia/cookiecutter.js',
 		'//extensions/wikia/RadiumOne/raon.js',
 		'//extensions/wikia/AdEngine/AdConfig.js'
@@ -192,21 +193,13 @@ $config['wikiamobile_js_head'] = array(
 );
 
 //WikiaMobile JS, loaded at the bottom of the page in the body section
-$config['wikiamobile_js_body_core'] = array(
+$config['wikiamobile_js_body'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//skins/common/zepto/zepto-0.8.js',
 		'//skins/common/zepto/zepto.getcss.js',
 		'//skins/common/zepto/orientation.js',
 		'//skins/wikiamobile/js/zepto.wikiamobile.js',
-		'//skins/wikiamobile/js/zepto.modal.js'
-	)
-);
-
-//WikiaMobile JS, loaded at the bottom of the page in the body section
-$config['wikiamobile_js_body_platform'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
+		'//skins/wikiamobile/js/zepto.modal.js',
 		'//skins/wikiamobile/js/main.js',
 		'//extensions/wikia/JSSnippets/js/JSSnippetsMobile.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaLogger.js',
