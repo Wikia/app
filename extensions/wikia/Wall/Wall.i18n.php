@@ -125,12 +125,12 @@ $messages['en'] = array(
 	'wall-ipbwatchuser' => "Watch this user's profile and follow their Message Wall",
 //* mail message *//
 
-	'mail-notification-new-someone' => '$AUTHOR_NAME wrote a new message on $WIKI',
-	'mail-notification-new-your' => '$AUTHOR_NAME left you a new message on $WIKI',
+	'mail-notification-new-someone' => '$AUTHOR_NAME wrote a new message on $WIKI.',
+	'mail-notification-new-your' => '$AUTHOR_NAME left you a new message on $WIKI.',
 
-	'mail-notification-reply-your' => '$AUTHOR_NAME replied to your message on $WIKI',
-	'mail-notification-reply-his' => '$AUTHOR_NAME replied to a message on $WIKI',
-	'mail-notification-reply-someone' => '$AUTHOR_NAME replied to $PARENT_AUTHOR_NAME\'s message on $WIKI',
+	'mail-notification-reply-your' => '$AUTHOR_NAME replied to your message on $WIKI.',
+	'mail-notification-reply-his' => '$AUTHOR_NAME replied to a message on $WIKI.',
+	'mail-notification-reply-someone' => '$AUTHOR_NAME replied to $PARENT_AUTHOR_NAME\'s message on $WIKI.',
 
 	'mail-notification-html-greeting' => 'Hi $1,',
 	'mail-notification-html-button' => 'See the conversation',

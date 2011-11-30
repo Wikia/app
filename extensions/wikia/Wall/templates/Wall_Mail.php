@@ -1,5 +1,5 @@
 <table width="100%" style="font: 18px normal Helvetica, Arial;"
-	cellpadding="20">
+	cellpadding="7">
 	<tr>
 		<td>
 		<table align="center" bgcolor="ffffff" cellpadding="0" cellspacing="0"
@@ -32,7 +32,7 @@
 							<tr>
 								<td width="17">&nbsp;</td>
 								<td>
-								<table cellpadding="13" cellspacing="0" width="100%">
+								<table cellpadding="7" cellspacing="0" width="100%">
 									<tr>
 										<td style="color: #2c85d5; font-size: 17px; font-weight: bold">
 											greeting
@@ -44,6 +44,9 @@
 									<tr>
 										<td style="color: #3a3a3a; font-size: 14px; line-height: 20px">
 										<?= $content ?></td>
+									</tr>
+									<tr>
+										<td style="color: #3a3a3a; font-size: 14px; line-height: 20px"><?= $signature ?></td>
 									</tr>
 									<? if (!empty($buttonUrl)) { ?>
 										<tr>
@@ -61,9 +64,6 @@
 											</a></td>
 										</tr>
 									<? } ?>
-									<tr>
-										<td style="color: #3a3a3a; font-size: 14px; line-height: 20px"><?= $signature ?></td>
-									</tr>
 								</table>
 								</td>
 								<td width="17">&nbsp;</td>
