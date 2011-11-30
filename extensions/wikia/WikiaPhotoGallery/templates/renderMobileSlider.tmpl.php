@@ -2,14 +2,14 @@
 	<div class="wikiaPhotoGallery-slider-body" id="wikiaPhotoGallery-slider-body-<?= $sliderId ?>">
 		<ul>
 		<?php
-		$readMore = wfMsg('galery-slider-read-more');
-
 		foreach ( $images as $key => $val ) {
 			?><li class="wikiaPhotoGallery-slider-<?=$key; ?>" id="wikiaPhotoGallery-slider-<?= $sliderId; ?>-<?= $key ?>"><?php
 				if ( !empty( $val['imageLink'] ) ){
 					echo "<a href='{$val['imageLink']}'>";
 				}?>
-				<img <?= ($key)?'data-':'' ?>src='<?=$val['imageUrl']?>' <?= ($key)?"src='../../skins/wikiamobile/images/loading_big.gif'":''; ?> class='wikiaPhotoGallery-slider'>
+				<?php
+					echo "<img class=wikiaPhotoGallery-slider data-src={$val['imageUrl']} src=../../skins/wikiamobile/images/loading_big.gif>";
+				?>
 				<?php
 					if (!empty( $val['imageLink'] )){
 						echo '</a>';
