@@ -85,7 +85,7 @@ class WallNotificationsModule extends Module {
 							// 2 = 2 users,
 							// 3 = more than 2 users
 			
-			if(count($authors) == 2)     { $user_count = 2; $params['$1'] = $this->getDisplayname( $authors[1] ); }
+			if(count($authors) == 2)     { $user_count = 2; $params['$1'] = $this->getDisplayname( $authors[1]['displayname'] ); }
 			elseif(count($authors) > 2 ) { $user_count = 3; /*$params['$'.(count($params)+1)] = $notify['count'];*/ }
 			
 			$reply_by = 'other'; // who replied?
@@ -140,7 +140,7 @@ class WallNotificationsModule extends Module {
 	}
 
 	private function getDisplayname($username) {
-		if(User::isIP($username)) return wfMsg('oasis-anon-user');
+		if( User::isIP($username) ) return wfMsg('oasis-anon-user');
 		return $username;
 	}
 }
