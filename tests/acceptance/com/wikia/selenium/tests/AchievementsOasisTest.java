@@ -19,6 +19,7 @@ public class AchievementsOasisTest extends BaseTest {
 		openAndWait("wiki/User:" + getTestConfig().getString("ci.user.regular.username"));
 
 		// check for elements
+		waitForElement("//div[contains(@class,'AchievementsModule')]");
 		assertTrue(session().isElementPresent("//div[contains(@class,'AchievementsModule')]"));
 		assertTrue(session().isElementPresent("//ul[@class='badges-icons badges']/li[@class='badge-0']"));
 	}

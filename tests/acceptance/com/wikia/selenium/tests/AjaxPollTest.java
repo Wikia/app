@@ -9,7 +9,7 @@ import static org.testng.AssertJUnit.assertEquals;
 
 public class AjaxPollTest extends BaseTest {
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI", "verified"})
 	public void testAjaxPoll() throws Exception {
 		String uniqId = "Wikia test poll #" + UUID.randomUUID();
 		String pollContent = "\n" + uniqId + "\nAnswer 1\nAnswer 2\nAnswer n\n";
@@ -27,8 +27,7 @@ public class AjaxPollTest extends BaseTest {
 		session().click( radioToClick );
 		session().click("axPollSubmit" + pollId);
 		waitForElementNotVisible("pollSubmittingInfo" + pollId);
-		session().open("index.php?title=WikiaAutomatedTest&action=purge");
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("index.php?title=WikiaAutomatedTest&action=purge");
 		assertEquals("1", session().getText("wpPollVote" + pollId + "-3"));
 		assertEquals("1", session().getText("wpPollTotal" + pollId));
 
