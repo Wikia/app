@@ -311,13 +311,10 @@ var WallNotifications = $.createClass(Object, {
 		$('.timeago',wikiLi).timeago();
 		
 		// hijack links for other wikis - open them in new window
-		/*
+
 		if( wikiId != this.currentWikiId ) {
-			$('a', wikiEl).click( function(e) {
-				e.preventDefault();
-				window.open( $(e.target).closest('a').attr('href') );
-			});
-		}*/
+			$('a', wikiEl).attr('target', '_new');
+		}
 		
 		$('.read_notification').click(this.proxy(function(){
 			this.track('wall/notifications/read');
