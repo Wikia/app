@@ -1011,6 +1011,7 @@ class WallHooksHelper {
 				if( $namespace === NS_USER_WALL_MESSAGE ) {
 					$wm = F::build('WallMessage', array($oTitle));
 					$wallOwnerObj = $wm->getWallOwner();
+					$wallUrl = $wm->getWallPageUrl();
 					
 					$wallOwner = wfMsg('oasis-anon-user');
 					//if( $wallOwnerObj instanceof User && $wallOwnerObj->getId() > 0 ) {
@@ -1045,7 +1046,7 @@ class WallHooksHelper {
 						
 						$vars = array (
 							'cntChanges'	=> $cntChanges,
-							'hdrtitle'		=> wfMsgExt('wall-recentchanges-wall-group', array('parseinline'), $wallOwner),
+							'hdrtitle'		=> wfMsg('wall-recentchanges-wall-group', array($wallUrl, $wallOwner)),
 							'inx'			=> $oChangeList->rcCacheIndex,
 							'users'			=> $users
 						);
