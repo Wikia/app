@@ -7,7 +7,8 @@ import static org.testng.AssertJUnit.assertTrue;
 
 public class SiteProtectTest extends BaseTest {
 
-	@Test(groups={"CI", "verified"})
+	//BugId: 10385
+	@Test(groups={"CI", "broken"})
 	public void testProtectSite() throws Exception {
 		// Protect the site
 		loginAsStaff();
@@ -30,7 +31,8 @@ public class SiteProtectTest extends BaseTest {
 		assertTrue(session().isTextPresent("You do not have permission to edit this page"));
 	}
 
-	@Test(groups={"CI", "verified"},dependsOnMethods="testProtectSite", alwaysRun=true)
+	//BugId: 10385
+	@Test(groups={"CI", "broken"},dependsOnMethods="testProtectSite", alwaysRun=true)
 	public void testUnprotectSite() throws Exception {
 		// Unprotect the site
 		loginAsStaff();
@@ -42,7 +44,8 @@ public class SiteProtectTest extends BaseTest {
 		// Verify
 		openAndWait("index.php?title=WikiaAutomatedTest&action=edit");
 		if(isOasis()){
-			assertEquals("Editing: WikiaAutomatedTest", session().getText("//article/div[@id='WikiaPageHeader']/h1"));
+			assertEquals("Editing", session().getText("//header[@id='EditPageHeader']//h2"));
+			assertEquals("WikiaAutomatedTest", session().getText("//header[@id='EditPageHeader']//h1"));
 		} else {
 			assertEquals("Editing WikiaAutomatedTest", session().getText("//div[@id='article']/h1"));
 		}
