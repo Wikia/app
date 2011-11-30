@@ -1,5 +1,13 @@
-<aside class="<?= $class ?>" id="<?= $id ?>" hash="<?= $hash ?>">
-	<img class="placeholderImg" src='http://mobini.pl/upload/files/129/524/971/435/051/921_Picture_of_theday_m.jpg'>
+<aside class=<?= $class ?> id=<?= $id ?> hash=<?= $hash ?>
+		<?php
+		echo "data-image-count=".count($images);
+		foreach ( $images as $key => $val) {
+			echo " data-slideshow-image-id-".$key."=".$val;
+		}
+		?>
+	>
+
+	<img class=placeholderImg src="<?=$images[0]?>">
 	<footer>
 		<div>
 			<img src="<?= $magnifyClipSrc ?>">

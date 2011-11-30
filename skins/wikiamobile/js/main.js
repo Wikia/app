@@ -28,8 +28,10 @@ var WikiaMobile = (function() {
 		var number = 0,
 		image = [];
 
-		image[0] = $('.infobox .image').data('number' , number++).attr('href');
-		allImages.push(image);
+		if(image[0] = $('.infobox .image').data('number' , number).attr('href')) {
+			allImages.push(image);
+			number++;
+		}
 
 		$('.thumb').each(function() {
 			var self = $(this);
@@ -38,6 +40,18 @@ var WikiaMobile = (function() {
 			image[0] = self.find('.image').data('number', number++).attr('href');
 			image[1] = self.find('.thumbcaption').html();
 			allImages.push(image);
+		});
+		$('.wikia-slideshow').each(function() {
+			var slideshow = $(this),
+			length = slideshow.data('number', number++).data('image-count');
+
+
+			for(var i = 0; i < length;i++) {
+				image = [];
+				image[0] = slideshow.data('slideshow-image-id-' + i);
+				image[1] = "Slideshow image #" + (i+1);
+				allImages.push(image);
+			}
 		});
 		if(allImages.length <= 1) $('body').addClass('justOneImage');
 	},
@@ -89,20 +103,16 @@ var WikiaMobile = (function() {
 		searchToggle = $('#searchToggle'),
 		searchInput = $('#searchInput');
 
-
-			if($.os.ios) {
-				deviceWidth = screen.width - 44;
-				deviceHeight = screen.height - 44;
-			} else {
-				if(window.orientation == 0) {
-					deviceWidth = window.innerWidth;
-					deviceHeight = window.innerHeight;
-				} else {
-					deviceWidth = window.innerHeight + 53;
-					deviceHeight = window.innerWidth;
-				}
-
-			}
+		if($.os.ios) {
+			deviceWidth = screen.width - 32;
+			deviceHeight = screen.height - 44;
+		} else if(window.orientation == 0) {
+			deviceWidth = screen.width;
+			deviceHeight = screen.height + 53;
+		} else {
+			deviceWidth = screen.height + 53;
+			deviceHeight = screen.width;
+		}
 
 		wrapArticles();
 		hideURLBar();
@@ -176,7 +186,7 @@ var WikiaMobile = (function() {
 					'")></div><div class="changeImageButton" id="nextImage"></div>',
 				caption: thumb.children('.thumbcaption').html(),
 				toHide: '.changeImageButton'
-			})
+			});
 		});
 
 		body.delegate('#searchToggle', this._clickevent, function(event) {
@@ -208,11 +218,24 @@ var WikiaMobile = (function() {
 				html: this.outerHTML
 			})
 		});
-		
+
 		$('#fullSiteSwitch').bind('click', function(event){
 			event.preventDefault();
 			Wikia.CookieCutter.set('mobilefullsite', 'true');
 			location.reload();
+		});
+
+		body.delegate('.wikia-slideshow',this._clickevent, function(event) {
+			event.preventDefault();
+			$.openModal({
+				html: '<div class="changeImageButton" id="previousImage"></div><div class="fullScreenImage" data-number='+
+					$(this).data('number')+
+					' style=background-image:url("'+
+					$(this).find('img').attr('src')+
+					'")></div><div class="changeImageButton" id="nextImage"></div>',
+				toHide: '.changeImageButton',
+				caption: "Slideshow image #1"
+			});
 		});
 	};
 
