@@ -36,7 +36,7 @@
 	<span class="drop">
 		<img src="<?= $wgBlankImgUrl ?>" class="chevron">
 	</span>
-	<ul>
+	<ul class="WikiaMenuElement">
 <?php
 			foreach($dropdown as $key => $item) {
 				// render accesskeys
