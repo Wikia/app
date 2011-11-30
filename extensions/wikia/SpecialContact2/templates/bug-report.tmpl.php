@@ -18,8 +18,8 @@ echo wfMsgExt( 'specialcontact-intro-bug', array( 'parse' ) );
 } ?>
 
 <p>
-<label for="wpWiki"><?= wfMsg( 'specialcontact-label-bug-link' ) ?></label>
-<input name="wpWiki" />
+<label for="wpContactWikiName"><?= wfMsg( 'specialcontact-label-bug-link' ) ?></label>
+<input name="wpContactWikiName" />
 </p>
 
 <p>
