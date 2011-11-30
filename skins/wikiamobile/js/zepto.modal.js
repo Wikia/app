@@ -7,13 +7,13 @@
 	$._hideBarsAfter = 5500;
 
 	$._createModal =  function() {
-		var modal = '<div id="modalWrapper">\
+		var resolution = WikiaMobile.getDeviceResolution(),
+		modal = '<div id="modalWrapper">\
 				<div id="modalTopBar"></div>\
 				<div id="modalClose">&times;</div>\
 				<div id="modalContent"></div>\
 				<div id="modalFooter"></div>\
-			</div>',
-		resolution = WikiaMobile.getDeviceResolution(),
+			</div><style>#modalWrapper{min-height:'+resolution[1]+'px;}@media only screen and (orientation:landscape) and (min-width: 321px){#modalWrapper{min-height:'+resolution[0]+'px;}}</style>',
 		that = this;
 
 		$('body').append(modal);
@@ -25,9 +25,6 @@
 		this._modalFooter = $('#modalFooter');
 		this._allToHide = this._modalTopBar.add(this._modalClose).add(this._modalFooter);
 		this._thePage = $('#navigation, #WikiaPage, #wikiaFooter');
-
-		$('head').append('<style>#modalWrapper{min-height:'+resolution[1]+'px;}@media(orientation:landscape){#modalWrapper{min-height:'+resolution[0]+'px;}}</style>')
-
 
 		//hide adress bar on orientation change
 		window.onorientationchange = function() {
