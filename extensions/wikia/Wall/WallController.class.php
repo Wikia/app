@@ -390,7 +390,10 @@ class WallController extends ArticleCommentsModule {
 				$this->response->setVal( 'wallName', wfMsg('wall-message-mywall') );
 			} else {
 				$wallOwner = $wallMessage->getWallOwner()->getRealName();
-				if(empty($wallOwner)) $wallMessage->getWallOwner()->getName();
+				if(empty($wallOwner)){ 
+					$wallOwner = $wallMessage->getWallOwner()->getName();
+				}
+				
 				$this->response->setVal( 'wallName', wfMsg('wall-message-elseswall', $wallOwner));
 			}
 			
