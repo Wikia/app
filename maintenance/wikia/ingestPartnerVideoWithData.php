@@ -35,8 +35,11 @@ EOT;
 }
 
 $userName = isset( $options['u'] ) ? $options['u'] : 'Maintenance script';
-$startDateTS = isset( $options['s'] ) ? $options['s'] : null;
-$endDateTS = isset( $options['e'] ) ? $options['e'] : null;
+$now = date_create();
+$endDateTS = isset( $options['e'] ) ? $options['e'] : date_timestamp_get($now);
+$di = new DateInterval('P1D');
+date_sub($now, $di); // for some reason, this subtracts twice the date interval!
+$startDateTS = isset( $options['s'] ) ? $options['s'] : date_timestamp_get($now);
 $debug = isset($options['d']);
 $parseOnly = isset($options['o']);
 
