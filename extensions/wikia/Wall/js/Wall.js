@@ -578,7 +578,7 @@ var Wall = $.createClass(Object, {
 		var id = msg.attr('data-id');
 		var isreply = msg.attr('data-is-reply');
 		 
-		$('.buttons' ,msg).hide();
+		$('.buttons' ,msg).first().hide();
 		msg.find('.wikia-menu-button').removeClass("active");
 		
 		var data = {
@@ -649,7 +649,7 @@ var Wall = $.createClass(Object, {
 		/* restore html to state from before edit */
 		var bubble = $('.speech-bubble-message',msg);
 		bubble.first().html(beforeedit);
-		$('.buttons' ,msg).show();
+		$('.buttons' ,msg).first().show();
 		
 		if(window.skin && window.skin != "monobook") {
 			WikiaButtons.init(bubble);
@@ -707,7 +707,7 @@ var Wall = $.createClass(Object, {
 				}
 				
 				//$('.SpeechBubble .timestamp .permalink') 
-				$('.buttons' ,msg).show();
+				$('.buttons' ,msg).first().show();
 				this.track('wall/message/edit/save_changes');
 			})
 		});

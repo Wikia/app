@@ -54,6 +54,7 @@ $app->registerHook('BlockIpCompleteWatch', 'WallHooksHelper', 'onBlockIpComplete
 $app->registerHook('UserIsBlockedFrom', 'WallHooksHelper', 'onUserIsBlockedFrom');
 
 $app->registerHook('AllowNotifyOnPageChange', 'WallHooksHelper', 'onAllowNotifyOnPageChange');
+$app->registerHook('GetPreferences', 'WallHooksHelper', 'onGetPreferences');
 
 //recent changes adjusting
 $app->registerHook('AC_RecentChange_Save', 'WallHooksHelper', 'onRecentChangeSave');
@@ -116,6 +117,7 @@ F::build('JSMessages')->registerPackage('Wall', array(
  */
 
 $wgDefaultUserOptions['enotifwallthread'] = true;
+$wgDefaultUserOptions['wallshowsource'] = false;
 $wgDefaultUserOptions['enotifmywall'] = true;
  
 $userProfileNamespaces = array();

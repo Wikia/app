@@ -1199,5 +1199,18 @@ class WallHooksHelper {
 		}
 	}
 	
+	public function onGetPreferences( $user, &$preferences ) {
+		$app = F::app();
+		
+		if( $user->isLoggedIn() ) {						
+			$preferences['wallshowsource'] = array(
+				'type' => 'toggle',
+				'label-message' => 'wallshowsource-toggle', // a system message
+				'section' => 'misc/wall'
+			);
+		}
+
+		return true;
+	}	
 }
 ?>

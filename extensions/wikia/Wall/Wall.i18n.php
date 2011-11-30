@@ -187,7 +187,10 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 ___________________________________________<br>
 * Find help and advice on Community Central: http://community.wikia.com
 * Want to receive fewer messages from us? You can unsubscribe or change
-your email preferences here: http://community.wikia.com/Special:Preferences'
+your email preferences here: http://community.wikia.com/Special:Preferences',
+
+	'prefs-wall' => 'Wall',
+	'wallshowsource-toggle' => 'Enable View source on Message Wall posts'
 );
 
 $messages['qqq'] = array(

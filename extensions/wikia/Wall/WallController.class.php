@@ -324,6 +324,7 @@ class WallController extends ArticleCommentsModule {
 		$this->response->setVal( 'wgBlankImgUrl', $this->wg->BlankImgUrl );
 		$this->response->setVal( 'canEdit', $wallMessage->canEdit($this->wg->User) );
 		$this->response->setVal( 'canDelete',$wallMessage->canDelete($this->wg->User) );
+		$this->response->setVal( 'showViewSource',$this->wg->User->getOption('wallshowsource', false) );
 		
 		if($this->wg->User->getId() > 0 && !$wallMessage->isWallOwner($this->wg->User) && !$wallMessage->isWallWatched($this->wg->User) ) {
 			$this->response->setVal( 'showFallowButton', true );
