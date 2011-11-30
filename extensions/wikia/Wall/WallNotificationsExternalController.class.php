@@ -1,6 +1,8 @@
 <?php
 
 class WallNotificationsExternalController extends WikiaController {
+	const WALL_WIKI_NAME_MAX_LEN = 32;
+	
 	var $helper;
 	public function __construct() {
 		$this->app = F::app();
@@ -47,10 +49,18 @@ class WallNotificationsExternalController extends WikiaController {
 	}
 	
 	private function getUpdateCountsInternal($wn) {
+		$app = F::app();
 		$all = $wn->getCounts( $this->wg->User->getId() );
 
 		$sum = 0;
-		foreach($all as $wiki) { $sum += $wiki['unread']; }
+		foreach($all as $k => $wiki) { 
+			$sum += $wiki['unread'];
+			$wikiSitename = $wiki['sitename'];
+			
+			if( mb_strlen($wikiSitename) > self::WALL_WIKI_NAME_MAX_LEN ) {
+				$all[$k]['sitename'] = $app->wg->Lang->truncate($wikiSitename, (self::WALL_WIKI_NAME_MAX_LEN - 3) );
+			}
+		}
 		
 		$this->response->setVal('html', $this->app->renderView( 'WallNotifications', 'Update', array('notificationCounts'=>$all, 'count'=>$sum) ));
 		$this->response->setVal('count', $sum);
