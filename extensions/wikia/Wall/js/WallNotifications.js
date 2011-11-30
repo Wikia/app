@@ -342,6 +342,8 @@ var WallNotifications = $.createClass(Object, {
 						.fadeOut(500);
 				}
 			}
+		} else if( reminderVisible && $(document).scrollTop() == 0) {
+			$('#WallNotificationsReminder').hide();
 		}
 	},
 	
