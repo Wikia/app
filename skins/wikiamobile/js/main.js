@@ -3,6 +3,7 @@ var WikiaMobile = (function() {
 	var allImages = [],
 	deviceWidth,
 	deviceHeight,
+	realWidth,
 	//position,
 
 	getImages = function() {
@@ -18,9 +19,11 @@ var WikiaMobile = (function() {
 	},
 
 	handleTables = function() {
-		var tables = $('table').not('.infobox');
+		var tables = $('table');
 		tables.each(function() {
-			$(this).addClass('tooBigTable');
+			if(this.offsetWidth > realWidth) {
+				$(this).addClass('tooBigTable');
+			}
 		});
 	},
 
@@ -28,7 +31,7 @@ var WikiaMobile = (function() {
 		var number = 0,
 		image = [];
 
-		if(image[0] = $('.infobox .image').data('number' , number).attr('href')) {
+		if(image[0] = $('.infobox .image').data('number', number).attr('href')) {
 			allImages.push(image);
 			number++;
 		}
@@ -103,9 +106,14 @@ var WikiaMobile = (function() {
 		searchToggle = $('#searchToggle'),
 		searchInput = $('#searchInput');
 
+		realWidth = screen.width
+
 		if($.os.ios) {
-			deviceWidth = screen.width - 32;
-			deviceHeight = screen.height - 44;
+			deviceWidth = 268;
+			deviceHeight = 436;
+			if(window.orientation != 0) {
+				realWidth = screen.height;
+			}
 		} else if(window.orientation == 0) {
 			deviceWidth = screen.width;
 			deviceHeight = screen.height + 53;
@@ -165,7 +173,8 @@ var WikiaMobile = (function() {
 				image = thumb.parents('.image');
 
 			$.openModal({
-				html: '<div class="changeImageButton" id="previousImage"></div><div class="fullScreenImage" data-number='+1+
+				html: '<div class="changeImageButton" id="previousImage"></div><div class="fullScreenImage" data-number='+
+					image.data('number')+
 					' style=background-image:url("'+
 					image.attr('href')+
 					'")></div><div class="changeImageButton" id="nextImage"></div>',

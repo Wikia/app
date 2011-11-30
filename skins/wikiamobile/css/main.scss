@@ -84,7 +84,7 @@ a {
 
 #WikiaMainContent{
 	padding: $page-padding $page-padding 0 $page-padding;
-	@include box-sizing(content-box);
+	@include box-sizing(border-box);
 	//fixes for fluid content
 	.tvetnone {
 		width: 100% !important;
