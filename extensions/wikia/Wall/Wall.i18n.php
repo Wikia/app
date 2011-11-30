@@ -123,7 +123,8 @@ $messages['en'] = array(
 
 	'wall-ipballowusertalk' => "Allow this user to post on their own Message Wall while blocked", 
 	'wall-ipbwatchuser' => "Watch this user's profile and follow their Message Wall",
-//* mail message *//
+	
+	/* Mail message */
 
 	'mail-notification-new-someone' => '$AUTHOR_NAME wrote a new message on $WIKI.',
 	'mail-notification-new-your' => '$AUTHOR_NAME left you a new message on $WIKI.',
@@ -160,13 +161,13 @@ $messages['en'] = array(
 
 'mail-notification-body' => 'Hi $WATCHER,
 	
-$SUBJECT.
+$SUBJECT
 			
 $METATITLE
 		
 $MESSAGE_NO_HTML
 			
--- $AUTHOR_SIGNATURE
+-- $AUTHOR
 
 See the conversation($MESSAGE_LINK)
  
@@ -188,7 +189,8 @@ ___________________________________________<br>
 * Find help and advice on Community Central: http://community.wikia.com
 * Want to receive fewer messages from us? You can unsubscribe or change
 your email preferences here: http://community.wikia.com/Special:Preferences',
-
+	
+	/* Preferences */
 	'prefs-wall' => 'Wall',
 	'wallshowsource-toggle' => 'Enable View source on Message Wall posts'
 );
