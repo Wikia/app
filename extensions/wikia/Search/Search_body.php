@@ -188,33 +188,65 @@ class SolrSearchSet extends SearchResultSet {
 
 		$sanitizedQuery = self::sanitizeQuery($query);
 
-		$relevancyFunctionId = 2;
-		$params = array(
-			'fl' => 'title,canonical,url,host,bytes,words,ns,lang,indexed,created,views,wid,revcount,backlinks,wikititle,wikiarticles,wikipages,activeusers', // fields we want to fetch back
-			'qf' => $queryFields,
-			'bf' => 'scale(map(views,10000,100000000,10000),0,10)^20', // force view count to maximum threshold of 10k (make popular articles a level playing field, otherwise main/top pages always win) and scale all views to same scale
-			'bq' => '(*:* -html:(' . $sanitizedQuery . '))^20', // boost the inverse set of the content matches again, to make content-only matches at the bottom but still sorted by match
-			'qt' => 'dismax',
-			'pf' => '', // override defaults
-			'mm' => '100%', // "must match" - how many of query clauses (e.g. words) must match
-			'ps' => '',
-			'tie' => 1, // make it combine all scores instead of picking best match
-			'hl' => 'true',
-			'hl.fl' => 'html,title', // highlight field
-			'hl.snippets' => '2', // number of snippets per field
-			'hl.fragsize' => '150', // snippet size in characters
-			'hl.simple.pre' => '<span class="searchmatch">',
-			'hl.simple.post' => '</span>',
-			'f.html.hl.alternateField' => 'html',
-			'f.html.hl.maxAlternateFieldLength' => 300,
-			'indent' => 1,
-			'fq' => '',
-			/* ADi: tmp disabled due to performance reasons (RT: #63941)
-			'spellcheck' => 'true',
-			'spellcheck.collate' => 'true',
-			*/
-			'timeAllowed' => 2500
-		);
+		$ABTestMode = false;
+		if( !empty( $wgWikiaSearchABTestEnabled ) ) {
+			$ABTestMode = self::getABTestMode( $wgWikiaSearchABTestModes );
+		}
+
+		if(!$ABTestMode) {
+			$relevancyFunctionId = 2;
+			$params = array(
+				'fl' => 'title,canonical,url,host,bytes,words,ns,lang,indexed,created,views,wid,revcount,backlinks,wikititle,wikiarticles,wikipages,activeusers', // fields we want to fetch back
+				'qf' => $queryFields,
+				'bf' => 'scale(map(views,10000,100000000,10000),0,10)^20', // force view count to maximum threshold of 10k (make popular articles a level playing field, otherwise main/top pages always win) and scale all views to same scale
+				'bq' => '(*:* -html:(' . $sanitizedQuery . '))^20', // boost the inverse set of the content matches again, to make content-only matches at the bottom but still sorted by match
+				'qt' => 'dismax',
+				'pf' => '', // override defaults
+				'mm' => '100%', // "must match" - how many of query clauses (e.g. words) must match
+				'ps' => '',
+				'tie' => 1, // make it combine all scores instead of picking best match
+				'hl' => 'true',
+				'hl.fl' => 'html,title', // highlight field
+				'hl.snippets' => '2', // number of snippets per field
+				'hl.fragsize' => '150', // snippet size in characters
+				'hl.simple.pre' => '<span class="searchmatch">',
+				'hl.simple.post' => '</span>',
+				'f.html.hl.alternateField' => 'html',
+				'f.html.hl.maxAlternateFieldLength' => 300,
+				'indent' => 1,
+				'fq' => '',
+				/* ADi: tmp disabled due to performance reasons (RT: #63941)
+				'spellcheck' => 'true',
+				'spellcheck.collate' => 'true',
+				*/
+				'timeAllowed' => 2500
+			);
+		}
+		else {
+			switch($ABTestMode) {
+				case 'AB_VANILLA':
+					$relevancyFunctionId = 4;
+					$params = array(
+						'fl' => 'title,canonical,url,host,bytes,words,ns,lang,indexed,created,views,wid,revcount,backlinks,wikititle,wikiarticles,wikipages,activeusers', // fields we want to fetch back
+						'qf' => $queryFields,
+						'qt' => 'dismax',
+						'hl' => 'true',
+						'hl.fl' => 'html,title', // highlight field
+						'hl.snippets' => '2', // number of snippets per field
+						'hl.fragsize' => '150', // snippet size in characters
+						'hl.simple.pre' => '<span class="searchmatch">',
+						'hl.simple.post' => '</span>',
+						'f.html.hl.alternateField' => 'html',
+						'f.html.hl.maxAlternateFieldLength' => 300,
+						'indent' => 1,
+						'timeAllowed' => 2500
+					);
+					break;
+				default:
+					// error !?
+					$relevancyFunctionId = 11;
+			}
+		}
 
 		if( $crossWikiaSearch ) {
 			$params['bf'] = 'scale(map(views,100000,100000000,100000),0,100)^10 map(backlinks,100,500,100)^2';

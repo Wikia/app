@@ -52,7 +52,7 @@ if( !empty($wgEnableWikiaImageOneBoxInSearch) ) {
 if( empty( $wgWikiaSearchABTestEnabled ) ) {
 	$wgWikiaSearchABTestEnabled = false;
 }
-$wgWikiaSearchABTestModes = array( 'AB_VANILLA', 'AB_INDEXTANK' );
+$wgWikiaSearchABTestModes = array( 'AB_VANILLA'/*, 'AB_INDEXTANK'*/ );
 
 // classes
 $wgAutoloadClasses['SolrSearch'] = $dir . 'Search_body.php';
