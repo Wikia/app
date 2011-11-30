@@ -36,7 +36,7 @@
 				<span class="timeago abstimeago" title="<?= $iso_timestamp ?>" alt="<?= $fmt_timestamp ?>">&nbsp;</span>
 				<span class="timeago-fmt"><?= $fmt_timestamp ?></span>
 			</a>
-			<? if( $canEdit || $canDelete ): ?>
+			<? if( $canEdit || $canDelete || $showViewSource ): ?>
 				<div class="buttons">
 					<div data-delay='50' class="wikia-menu-button contribute secondary"> 
 						<?= wfMsg('wall-message-more');?>
@@ -55,28 +55,30 @@
 										<a href="#" class="delete-message"> <?= wfMsg('wall-message-delete'); ?> </a>
 									</li>
 								<? endif; ?>
-							
-					<?php /*		<li>
-								<a href="#" class="source-message"> <?= wfMsg('wall-message-source'); ?> </a>
-							</li> */ ?>
+								<? if( $showViewSource ): ?>
+									<li>
+										<a href="#" class="source-message"> <?= wfMsg('wall-message-source'); ?> </a>
+									</li>
+								<? endif; ?>
 						</ul>
 					</div>
 				</div>
-			<? endif; ?>
-			<?php //TODO: This is hack for now unification buttons for all skins ASAP!!! ?> 
-			<?php if( $canEdit || $canDelete ): ?> 
-			<div class="buttons-moonbook"> 
-				<!-- only show this if it's user's own message -->  
-				<span class="tools"> 
-					<?php if( $canDelete ): ?> 
-						<img src="<?= $wgBlankImgUrl ?>" class="sprite-small delete"><a href="#" class="delete-message"><?= wfMsg('wall-message-delete'); ?></a> 
-					<?php endif; ?> 
-					
-					<?php if( $canEdit ): ?> 
-						<img src="<?= $wgBlankImgUrl ?>" class="sprite edit-pencil"><a href="#" class="edit-message"><?= wfMsg('wall-message-edit'); ?></a> 
-					<?php endif; ?> 
-				</span> 
-			</div> 
+				<?php //TODO: This is hack for now unification buttons for all skins ASAP!!! ?> 
+				<div class="buttons-moonbook"> 
+					<!-- only show this if it's user's own message -->  
+					<span class="tools"> 
+						<?php if( $canDelete ): ?> 
+							<img src="<?= $wgBlankImgUrl ?>" class="sprite-small delete"><a href="#" class="delete-message"><?= wfMsg('wall-message-delete'); ?></a> 
+						<?php endif; ?> 
+						
+						<?php if( $canEdit ): ?> 
+							<img src="<?= $wgBlankImgUrl ?>" class="sprite edit-pencil"><a href="#" class="edit-message"><?= wfMsg('wall-message-edit'); ?></a> 
+						<?php endif; ?> 
+						<? if( $showViewSource ): ?>
+							<a href="#" class="source-message"> <?= wfMsg('wall-message-source'); ?> </a>
+						<? endif; ?>
+					</span> 
+				</div> 
 			<?php endif; ?> 
 		</div>
 	</blockquote>
