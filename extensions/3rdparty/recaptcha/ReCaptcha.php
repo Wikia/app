@@ -97,7 +97,7 @@ class ReCaptcha extends SimpleCaptcha {
          * Called on all edit page saves. (EditFilter events)
          * @return boolean - true if page save should continue, false if should display Captcha widget.
          */
-        function confirmEdit( &$editPage, $newtext, $section ) {
+        function confirmEdit( $editPage, $newtext, $section ) {
                 if( $this->shouldCheck( $editPage, $newtext, $section ) ) {
 
                         if (!isset($_POST['recaptcha_response_field'])) {
