@@ -14,7 +14,7 @@ class ContactForm extends SpecialPage {
 	var $customForms = array(
 		'account-issue' => array(
 			'format' => "User reports a problem with his account (%s) on this wiki:\n%s\n\nDescription of issue:\n%s",
-			'vars' => array( 'wpUserName', 'wpWiki', 'wpDescription' ),
+			'vars' => array( 'wpUserName', 'wpContactWikiName', 'wpDescription' ),
 			'subject' => "Account issue: %s",
 		),
 
@@ -34,13 +34,13 @@ class ContactForm extends SpecialPage {
 
 		'bad-ad' => array(
 			'format' => "User reports a problem with ad visible here:\n%s\n\nDescription of the problem:\n%s",
-			'vars' => array( 'wpUserName', 'wpWiki', 'wpDescription' ),
+			'vars' => array( 'wpUserName', 'wpContactWikiName', 'wpDescription' ),
 			'subject' => 'Bad ad report by %s at %s',
 		),
 
 		'bug' => array(
 			'format' => "User %s reports a problem with feature \"%s\".\n\nURL to problem page:\n%s\n\nDescription of issue:\n\n%s",
-			'vars' => array( 'wpUserName', 'wpFeature', 'wpWiki', 'wpDescription' ),
+			'vars' => array( 'wpUserName', 'wpFeature', 'wpContactWikiName', 'wpDescription' ),
 			'subject' => 'Bug report by %s at %s',
 		)
 	);
@@ -53,7 +53,7 @@ class ContactForm extends SpecialPage {
 	function execute( $par ) {
 		global $wgLang, $wgAllowRealName, $wgRequest;
 		global $wgOut, $wgExtensionsPath, $wgStyleVersion;
-		global $wgUser, $wgCaptchaClass;
+		global $wgUser, $wgCaptchaClass, $wgServer;
 
 		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/SpecialContact2/SpecialContact.scss'));
 		$extPath = F::app()->wg->extensionsPath;
@@ -82,7 +82,7 @@ class ContactForm extends SpecialPage {
 			$wgRequest->setVal( 'wpUrlencUserNameNew', urlencode( $wgRequest->getText( 'wpUserNameNew' ) ) );
 
 			$this->mRealName = $wgRequest->getText( 'wpContactRealName' );
-			$this->mWhichWiki = $wgRequest->getText( 'wpContactWikiName' );
+			$this->mWhichWiki = $wgRequest->getText( 'wpContactWikiName', $wgServer );
 			#sibject still handled outside of post check, because of existing hardcoded prefill links
 
 			if ( $wgUser->isLoggedIn() && ( $wgUser->getName() !== $wgRequest->getText( 'wpUserName' ) ) ) {
@@ -107,7 +107,7 @@ class ContactForm extends SpecialPage {
 				$this->mProblemDesc = $messageText;
 
 				// set subject
-				$this->mProblem = vsprintf( $this->customForms[$par]['subject'], array( $wgRequest->getText( 'wpUserName' ), $wgRequest->getText( 'wpWiki' ) ) );
+				$this->mProblem = vsprintf( $this->customForms[$par]['subject'], array( $wgRequest->getText( 'wpUserName' ), $this->mWhichWiki ) );
 			} else {
 				$this->mProblemDesc = $wgRequest->getText( 'wpContactDesc' ); //body
 			}

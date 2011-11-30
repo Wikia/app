@@ -21,8 +21,8 @@ echo wfMsgExt( 'specialcontact-intro-account-issue', array( 'parse' ) );
 </p>
 
 <p>
-<label for="wpWiki"><?= wfMsg( 'specialcontact-wikiname' ) ?></label>
-<input name="wpWiki" />
+<label for="wpContactWikiName"><?= wfMsg( 'specialcontact-wikiname' ) ?></label>
+<input name="wpContactWikiName" />
 </p>
 
 <p>

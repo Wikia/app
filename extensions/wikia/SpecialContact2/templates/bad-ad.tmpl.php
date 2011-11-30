@@ -12,8 +12,8 @@ echo wfMsgExt( 'specialcontact-intro-bad-ad', array( 'parse' ) );
 <input hidden="wpContactCategory" value="bad-ad" />
 
 <p>
-<label for="wpWiki"><?= wfMsg( 'specialcontact-label-bad-ad-link' ) ?></label>
-<input name="wpWiki" />
+<label for="wpContactWikiName"><?= wfMsg( 'specialcontact-label-bad-ad-link' ) ?></label>
+<input name="wpContactWikiName" />
 </p>
 
 <p>
