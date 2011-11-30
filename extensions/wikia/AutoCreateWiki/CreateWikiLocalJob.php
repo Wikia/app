@@ -483,8 +483,43 @@ class CreateWikiLocalJob extends Job {
 	 *
 	 */
 	private function changeStarterContributions( ) {
-
+                
 		wfProfileIn( __METHOD__ );
+                
+                /**
+                 * BugId:15644 - We want to change contributions only for
+                 * revisions created during the starter import - (timestamp not
+                 * greater than the timestamp of the latest starter revision.
+                 */
+                $sConds = '*';
+
+                /**
+                 * determine the timestamp of the latest starter revision
+                 */
+                if ( !empty( $this->mParams->sDbStarter ) ) {
+                    $oStarterDb = F::app()->wf->getDb( DB_SLAVE, array(), $this->mParams->sDbStarter );
+                    
+                    if ( is_object( $oStarterDb ) ) {
+                        $oLatestChange = $oStarterDb->selectRow(
+                            array( 'revision' ),
+                            array( 'rev_timestamp' ),
+                            array(),
+                            __METHOD__,
+                            array(
+                                'ORDER BY rev_timestamp DESC',
+                                'LIMIT 1'
+                            )
+                        );
+
+                        if ( is_object( $oLatestChange ) ) {
+                            $sConds = "rev_timestamp <= {$oLatestChange->rev_timestamp}";
+                        }
+                        
+                        $oStarterDb->close();
+                    }
+                }
+                
+                Wikia::log( __METHOD__, 'info', "{about to change rev_user and rev_user_text in revisions older than {$sConds}" );
 
 		/**
 		 * check if we are connected to local db
@@ -499,7 +534,7 @@ class CreateWikiLocalJob extends Job {
 				"rev_user"      => $contributor->getId(),
 				"rev_user_text" => $contributor->getName()
 			),
-			'*', /* mean all */
+			$sConds,
 			__METHOD__
 		);
 		$rows = $dbw->affectedRows();
