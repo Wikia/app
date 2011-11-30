@@ -73,7 +73,7 @@ var WallNotifications = $.createClass(Object, {
 					username: wgTitle
 				},
 				callback: this.proxy(function(data) {
-					if(data.status != true) return;
+					if(data.status != true || data.html == '') return;
 					this.updateCountsHtml(data);
 					
 					// if we already have data for some Wikis, show it
@@ -277,9 +277,17 @@ var WallNotifications = $.createClass(Object, {
 				wikiId: wikiId
 			},
 			callback: this.proxy(function(data) {
-				if(data.status != true) return;
+				if(data.status != true || data.html == '') return;
 				this.updateWikiHtml(wikiId, data);
 				this.notificationsCache[ wikiId ] = data;
+			}),
+			onErrorCallback: this.proxy(function(jqXHR, textStatus, errorThrown) {
+				if( jqXHR !== undefined && jqXHR.status !== undefined && jqXHR.status == 501) {
+					var data = {};
+					data.html = '<li class="notifications-empty">' + $.msg('wall-notifications-wall-disabled') + '</li>';
+					this.updateWikiHtml(wikiId, data);
+					this.notificationsCache[ wikiId ] = data;
+				}
 			})
 		});
 		
@@ -303,12 +311,13 @@ var WallNotifications = $.createClass(Object, {
 		$('.timeago',wikiLi).timeago();
 		
 		// hijack links for other wikis - open them in new window
+		/*
 		if( wikiId != this.currentWikiId ) {
 			$('a', wikiEl).click( function(e) {
 				e.preventDefault();
 				window.open( $(e.target).closest('a').attr('href') );
 			});
-		}
+		}*/
 		
 		$('.read_notification').click(this.proxy(function(){
 			this.track('wall/notifications/read');

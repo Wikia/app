@@ -56,6 +56,7 @@ $messages['en'] = array(
 	'wall-notifications-empty' => 'There are no notifications',
 	'wall-notifications-loading' => 'Loading notifications',
 	'wall-notifications-reminder' => 'You have <span>$1</span> unread {{PLURAL:$1|notification|notifications}}',
+	'wall-notifications-wall-disabled' => 'Message Wall has been disabled on this Wiki. Unable to load notifications.',
 		
 	'wn-user1-reply-you-your-wall' => '$1 replied to your message on your Wall',
 	'wn-user2-reply-you-your-wall' => '$1 and $2 replied to your message on your Wall',
