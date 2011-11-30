@@ -1208,9 +1208,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		}
 
 		$slideshowHtml .= F::build('JSSnippets')->addToStack(
-			array(
-				'/extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slideshow.placeholder.scss'
-			),
+			array( '/extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slideshow.placeholder.scss' ),
 			array(),
 			'',
 			array('id' => $id, 'extension' => 'slideshow'),
