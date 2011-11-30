@@ -14,7 +14,7 @@
 			<?= $username ?>
 			<img class="chevron" src="<?= $wgBlankImgUrl; ?>">
 		</a>
-		<ul class="subnav">
+		<ul class="subnav WikiaMenuElement">
 <?php
 		foreach($dropdown as $link) {
 ?>
