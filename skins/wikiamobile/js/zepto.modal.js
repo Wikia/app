@@ -14,8 +14,6 @@
 				<div id="modalFooter"></div>\
 			</div>',
 		resolution = WikiaMobile.getDeviceResolution(),
-		height,
-		width,
 		that = this;
 
 		$('body').append(modal);
@@ -28,34 +26,12 @@
 		this._allToHide = this._modalTopBar.add(this._modalClose).add(this._modalFooter);
 		this._thePage = $('#navigation, #WikiaPage, #wikiaFooter');
 
-			height = resolution[1];
-			width = resolution[0];
+		$('head').append('<style>#modalWrapper{min-height:'+resolution[1]+'px;}@media(orientation:landscape){#modalWrapper{min-height:'+resolution[0]+'px;}}</style>')
 
-
-		if($.os.ios && window.orientation != 0) {
-			height = resolution[0];
-			width = resolution[1];
-
-		} else {
-			height = resolution[1];
-			width = resolution[0];
-		}
-
-		if(window.orientation == 0) {
-			$("#modalWrapper").css({"min-height":height+"px"});
-		} else {
-			$("#modalWrapper").css({"min-height":width+"px"});
-		}
 
 		//hide adress bar on orientation change
 		window.onorientationchange = function() {
-				if(window.orientation == 0) {
-					$("#modalWrapper").css({"min-height":height+"px"});
-				} else {
-					$("#modalWrapper").css({"min-height":width+"px"});
-				}
-
-				setTimeout(function() {window.scrollTo( 0, 1 );},100);
+				window.scrollTo( 0, 1 );
 		}
 
 		$(document.body).delegate('#modalClose', WikiaMobile._clickevent , function() {

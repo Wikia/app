@@ -1,14 +1,19 @@
 @import "mixins/box-shadow.scss";
+@import "mixins/box-sizing.scss";
 
 #WikiaMainContent{
 	table{
 		&.infobox {
 			border: 1px solid $border-color;
-			width: 100%;
-			float: none;
 			@include box-shadow(0 0 10px $shadow-color);
-			padding: 8px;
 			font-size: small;
+			padding: 8px;
+			width: 100%;
+
+			img {
+				max-width: 100%;
+				height: auto;
+			}
 
 			th {
 				text-align: left;

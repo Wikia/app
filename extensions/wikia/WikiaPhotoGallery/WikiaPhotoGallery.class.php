@@ -934,7 +934,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		global $wgBlankImgUrl, $wgStylePath;
 
 		wfProfileIn(__METHOD__);
-		
+
 		// don't render empty slideshows
 		if (empty($this->mImages)) {
 			wfProfileOut(__METHOD__);
@@ -974,29 +974,34 @@ class WikiaPhotoGallery extends ImageGallery {
 				'id' => $id,
 			),
 			$this->mAttribs );
-		
+
 		//renderSlideshow for WikiaMobile
 		if( $sk->skinname == "wikiamobile" ) {
-			
-			$img = wfFindFile( $this->mImages[0][0], false );
-			$thumb = $img->transform( array('width'=>'480','height'=>'320') );
 			$counter = count($this->mImages);
+			$images = array();
+			foreach($this->mImages as $key => $val) {
+				$img = wfFindFile( $val[0], false );
+				array_push($images, $img->transform( array("width" => "320", "height" => "480") )->url);
+			}
+
+
+			//$thumb = $img->transform( array('width'=>'480','height'=>'320') );
+
 
 			$template = new EasyTemplate(dirname(__FILE__) . '/templates');
 			$template->set_vars(array(
 				'class' => 'wikia-slideshow',
 				'id' => $id,
 				'hash' => $this->mData['hash'],
-				'images' => $this->mImages,
+				'images' => $images,
 				'caption' => $this->mCaption,
-				'placeholderImg' => $thumb,
 				'magnifyClipSrc' => "{$wgStylePath}/common/images/magnify-clip.png",
 				'counterValue' => wfMsg('wikiaPhotoGallery-slideshow-view-number', '1', $counter)
 			));
 			$slideshowHtml = $template->render('renderMobileSlideshow');
-			
+
 		} else {
-			
+
 		$slideshowHtml = Xml::openElement('div', $attribs);
 
 		// render slideshow caption
@@ -1023,6 +1028,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		));
 
 		$index = 0;
+
 		foreach ($this->mImages as $p => $pair) {
 			$nt = $pair[0];
 			$text = $pair[1];
@@ -1039,7 +1045,6 @@ class WikiaPhotoGallery extends ImageGallery {
 			if (is_object($img) && ($nt->getNamespace() == NS_FILE)) {
 				$thumbParams = WikiaPhotoGalleryHelper::getThumbnailDimensions($img, $params['width'], $params['height'], $this->mCrop);
 			}
-
 			$caption = $linkOverlay = '';
 
 			// render caption overlay
@@ -1085,6 +1090,8 @@ class WikiaPhotoGallery extends ImageGallery {
 				'title' => null
 			);
 
+
+
 			if ( $nt->getNamespace() != NS_FILE || !$img ) {
 				# We're dealing with a non-image, spit out the name and be done with it.
 				$thumbHtml = "\n\t\t\t".'<a class="image broken-image new" style="line-height: '.( $this->mHeights ).'px;">'
@@ -1112,6 +1119,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				. $caption
 				. $linkOverlay
 				. '</li>';
+
 
 			$index++;
 
@@ -1183,10 +1191,10 @@ class WikiaPhotoGallery extends ImageGallery {
 		// close slideshow wrapper
 		$slideshowHtml .= Xml::closeElement('div');
 		$slideshowHtml .= Xml::closeElement('div');
-		
+
 		// output JS to init slideshow
 		$width = "{$params['width']}px";
-		
+
 		$slideshowHtml .= F::build('JSSnippets')->addToStack(
 			array(
 				'/skins/common/jquery/jquery-slideshow-0.4.js',
@@ -1201,15 +1209,14 @@ class WikiaPhotoGallery extends ImageGallery {
 
 		$slideshowHtml .= F::build('JSSnippets')->addToStack(
 			array(
-				'/extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slideshow.placeholder.scss',
-				'/extensions/wikia/WikiaMobile/js/MobileDialog.js'
+				'/extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slideshow.placeholder.scss'
 			),
 			array(),
-			'MobileDialog.init',
+			'',
 			array('id' => $id, 'extension' => 'slideshow'),
 			'wikiamobile'
 		);
-		
+
 		wfProfileOut(__METHOD__);
 		return $slideshowHtml;
 	} // renderSlideshow()
@@ -1228,9 +1235,9 @@ class WikiaPhotoGallery extends ImageGallery {
 			wfProfileOut(__METHOD__);
 			return '';
 		}
-		
+
 		$skin = $this->getSkin();
-		
+
 		// setup image serving for "big" images
 		$imagesDimensions = array(
 			'w' => WikiaPhotoGalleryHelper::SLIDER_MIN_IMG_WIDTH,
@@ -1288,7 +1295,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		}
 
 		$html = '';
-		
+
 		//check if we have something to show (images might not match required sizes)
 		if ( count( $out ) ) {
 			$template = new EasyTemplate(dirname(__FILE__) . '/templates');
@@ -1300,7 +1307,7 @@ class WikiaPhotoGallery extends ImageGallery {
 			));
 
 			if( $skin->skinname == "wikiamobile") {
-				$html = $template->render('renderMobileSlider');	
+				$html = $template->render('renderMobileSlider');
 			} else {
 				$html = $template->render('renderSlider');
 			}
@@ -1315,7 +1322,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				'WikiaPhotoGallerySlider.init',
 				array($this->mData['id'])
 			);
-			
+
 			$html .= F::build('JSSnippets')->addToStack(
 				array(
 					'/extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slidertag.mobile.scss',
