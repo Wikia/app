@@ -213,10 +213,10 @@ AdMeldAPIClient.roundBidForDART = function(bid) {
 	return bid;
 };
 
-if (!(top.wgUserName && !top.wgUserShowAds) && typeof top.wgEnableAdMeldAPIClient != 'undefined' && top.wgEnableAdMeldAPIClient) {
+if (!(top.wgUserName && !top.wgUserShowAds) && top.wgEnableAdMeldAPIClient) {
 	top.AdMeldAPIClient.init();
 
-	if (typeof top.wgEnableAdMeldAPIClientPixels != 'undefined' && top.wgEnableAdMeldAPIClientPixels) {
+	if (top.wgEnableAdMeldAPIClientPixels) {
 		top.AdMeldAPIClient.enable_pixels = true;
 	}
 }
