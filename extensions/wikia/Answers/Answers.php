@@ -605,7 +605,7 @@ function wfCategoryPageWithAds(&$cat){
 class CategoryWithAds extends CategoryViewer{
 
 	function doCategoryQuery() {
-		$dbr = wfGetDB( DB_SLAVE, 'category' );
+		$dbr = wfGetDB( DB_SLAVE, 'vslow' );
 		if( $this->from != '' ) {
 			$pageCondition = 'cl_sortkey >= ' . $dbr->addQuotes( $this->from );
 			$this->flip = false;
