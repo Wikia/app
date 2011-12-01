@@ -225,7 +225,8 @@ class PartnerFeed extends SpecialPage {
 
 			// If blog listing does not exit treats parameter as empty;
 			$sListing = $wgRequest->getVal( 'listing' );
-			if ( !empty( $sListing ) && !Title::newFromText( $sListing, 502 )->exists() ){
+			$title = Title::newFromText( $sListing );
+			if ( !empty( $sListing ) && ($title == null || !$title->exists() )){
 				unset($sListing);
 			};
 
