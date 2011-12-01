@@ -8,14 +8,17 @@ $wgExtensionCredits['other'][] = array(
 $wgHooks['MakeGlobalVariablesScript'][] = 'Meebo::onMakeGlobalVariablesScript';
 
 class Meebo {
+	private static $PROHIBITED_DBNAMES = array('fallout', 'answers');
 	public static function onMakeGlobalVariablesScript( &$vars ) {
-		global $wgEnableMeeboExt;
+		global $wgEnableMeeboExt, $wgDBname;
 		wfProfileIn( __METHOD__ );
 
 		global $wgRequest, $wgNoExternals;
 		$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
 
-		$vars['wgEnableMeeboExt'] = $wgEnableMeeboExt && !$wgNoExternals;
+		if ($wgEnableMeeboExt && !$wgNoExternals && array_search($wgDBname, self::$PROHIBITED_DBNAMES) === FALSE) {
+			$vars['wgEnableMeeboExt'] = true;
+		}
 
 		wfProfileOut( __METHOD__ );
 		return true;
