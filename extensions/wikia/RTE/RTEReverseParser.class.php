@@ -667,7 +667,7 @@ class RTEReverseParser {
 			}
 
 			// does paragraph has only style=""margin-left:80px;" ? - style added by CKeditor when doing indent/outdent
-			if (preg_match('#^margin\\-left:[\s\d]+px;$#', $style)) {
+			if (preg_match('#^margin\\-left:[\s\d]+px;$#', trim($style))) {
 				// parse "margin-left" style attribute
 				$indentLevel = self::getIndentationLevel($node);
 				if ($indentLevel) {
