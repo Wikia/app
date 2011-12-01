@@ -622,6 +622,7 @@ class UserIdentityBox {
 			
 			if( !empty($editcounts) ) array_multisort($editcounts, SORT_DESC, $topWikis);
 			
+			$this->app->wf->ProfileOut( __METHOD__ );
 			return array_slice($topWikis, 0, $this->topWikisLimit, true);
 		}
 		
