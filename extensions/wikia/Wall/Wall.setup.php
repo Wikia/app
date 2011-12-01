@@ -107,6 +107,8 @@ F::build('JSMessages')->registerPackage('Wall', array(
 	'wall-delete-confirm-cancel',
 	'wall-delete-confirm-ok',
 	'wall-delete-title',
+	'wall-delete-error-title',
+	'wall-delete-error-content',
 	'wall-button-to-cancel-preview',
 	'wall-button-to-preview-comment',
 	'wall-button-done-source',

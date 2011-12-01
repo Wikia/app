@@ -113,6 +113,12 @@ class WallExternalController extends WikiaController {
 	public function removeMessage() {
 		//TODO: remember to delete all replies in a thread when msg id deleted
 		$title = F::build('Title', array( $this->request->getVal('msgid') ), 'newFromId');
+		if( !($title instanceof Title) ) {
+			// if this is invalid Title it means that the article no longer exists
+			// or we received wrong ArticleId in AJAX request
+			$this->response->setVal('status', false);
+			return true;			
+		}
 		$ac =  F::build('WallMessage', array($title), 'newFromTitle');
 		$ac->load(true);
 		$result = !empty($ac) && $ac->canDelete($this->wg->User) && $ac->doDeleteComment(wfMsgForContent('wall-delete-reason'), false, true);
