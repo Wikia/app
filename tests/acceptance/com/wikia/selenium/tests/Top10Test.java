@@ -66,7 +66,7 @@ public class Top10Test extends BaseTest {
 		session().waitForPageToLoad(this.getTimeout());
 		assertTrue(session().getLocation().contains("wiki/Top_10_list"));
 	}
-	//Test to verify because of phalanx problems
+	//Test to verify because of phalanx problems, ask TOR
 	//@Test(groups={"envProduction", "CI"}) 
 	public void testCreateListWithInvalidData() throws Exception {
 		openAndWait("wiki/Special:CreateTopList");
@@ -78,6 +78,8 @@ public class Top10Test extends BaseTest {
 		
 		assertTrue("The page you wanted to save was blocked by the spam filter", session().getLocation().contains("wiki/Special:CreateTopList"));
 		
+		//It is possible to add in the related page field BLOCKED_TITLE
+		
 		session().type("list_name", TOP10_LIST_NAME + (new Date()).toString());
 		session().type("related_article_name", BLOCKED_TITLE + " " + (new Date()).toString());
 		session().click("//input[@value='Create list']");
@@ -85,6 +87,8 @@ public class Top10Test extends BaseTest {
 		
 		assertTrue("The page you wanted to save was blocked by the spam filter", session().getLocation().contains("wiki/Special:CreateTopList"));
 
+		//It is possible to add in the item fields BLOCKED_TITLE
+		
 		session().type("related_article_name", "");
 		session().type("//form[@id='toplist-editor']//div[@class='ItemName']/input", BLOCKED_TITLE + " " + (new Date()).toString());
 		session().click("//input[@value='Create list']");
@@ -306,7 +310,7 @@ public class Top10Test extends BaseTest {
 	    assertTrue(session().isTextPresent("Anonymous users are not allowed to add items to lists."));
 	    
 	}
-	//Add ticket
+	//Check code and verify,wait for Nandy to see why you have to be staff to delete top10 list
 	//@Test(groups={"envProduction", "CI"})
 	public void testDeleteTopList() throws Exception {
 		session().open("wiki/Special:CreateTopList");
@@ -327,6 +331,8 @@ public class Top10Test extends BaseTest {
 	    session().waitForPageToLoad(this.getTimeout());	
 	    session().click("//input[@value='Delete page']");
 	    session().waitForPageToLoad(this.getTimeout());	
+	    
+	    assertTrue(session().isTextPresent("has been deleted."));
 	    
 	    try {
 	    	openAndWait("wiki/Top_10_List:" + name.replace(" ", "_"));
@@ -365,67 +371,62 @@ public class Top10Test extends BaseTest {
 		// @todo check that just created top list does not have an image
 	}
 	
-	//to be finished
-	//@Test(groups={"envProduction", "CI"})
+	
+	@Test(groups={"envProduction", "CI","verified"})
 	public void testSlashAtItemName() throws Exception {
-		String name = TOP10_LIST_NAME + (new Date()).toString();
-		String name2 = TOP10_ARTICLE_1 + (new Date()).toString();
+		String name = TOP10_LIST_NAME + (new Date()).toString();;
+		String name2 = TOP10_ARTICLE_1 + (new Date()).toString();;
 		String special = TOP10_ARTICLE_5 + (new Date()).toString();
 		String special2 = TOP10_ARTICLE_6 + (new Date()).toString();
 		
 		openAndWait("wiki/Special:CreateTopList");
 		waitForElement("list_name");
 		session().type("list_name", name);		
-		session().type("//ul[@class='ItemsList ui-sortable']/li[2]/div[2]/input", special);
-		session().click("//input[@value='Create list']");
+		session().type("//form[@id='toplist-editor']/ul[contains(@class, 'ItemsList')]/li[2]//input", special);
+		session().type("//form[@id='toplist-editor']/ul[contains(@class, 'ItemsList')]/li[3]//input", special2);
+		clickAndWait("//input[@value='Create list']");
 		
-		session().waitForPageToLoad(this.getTimeout());		
-		assertTrue(session().getLocation().contains("wiki/Top_10_list"));
-		
+		assertTrue(session().getLocation().contains("wiki/Top_10_list"));		
 		assertTrue(session().isTextPresent(name));
-		
-		session().click("//nav[@class='wikia-menu-button']//a[@data-id='move']");
-		session().waitForPageToLoad(this.getTimeout());
+				
+		clickAndWait("//nav[@class='wikia-menu-button']//a[@data-id='move']");
 		
 		assertTrue(session().getLocation().contains("wiki/Special:MovePage"));
 		assertTrue(session().isTextPresent(name));
-		session().type("//*[@id='wpNewTitle']", name2);		
-		session().click("//input[@id='toplist-new-item-name']");
-		session().waitForPageToLoad(this.getTimeout());		
-		
-				
-		assertTrue(session().isTextPresent(name2));
-		assertTrue(session().isTextPresent(special));
-		
-		session().click("/html/body/section[2]/div[2]/article/header/nav/a");
-		session().waitForPageToLoad(this.getTimeout());
-		
-		assertTrue(session().getLocation().contains("wiki/Special:EditTopList"));
-		assertTrue(session().isTextPresent(name2));
-		
-		session().click("/html/body/section[2]/div[2]/article/div/form/ul/li[2]/div[3]/a/img");
-		assertFalse(session().isTextPresent(special));
-		session().click("/html/body/section[2]/div[2]/article/div/form/div[5]/input[@value='Rename page']");
-		
-		session().waitForPageToLoad(this.getTimeout());
-		
-		session().click("/html/body/section[2]/div[2]/article/header/nav/a");
-		session().waitForPageToLoad(this.getTimeout());
-		
-		session().type("//ul[@class='ItemsList ui-sortable']/li[2]/div[2]/input", special2);
-		session().click("/html/body/section[2]/div[2]/article/div/form/div[5]/input");
-		session().waitForPageToLoad(this.getTimeout());
+		name2 = session().getValue("//form[@id='movepage']//td[@class='mw-input']/input") + " renamed";
+		session().type("//form[@id='movepage']//td[@class='mw-input']/input", name2);		
+		clickAndWait("//table[@id='mw-movepage-table']//td[@class='mw-submit']/input");
 		
 		assertTrue(session().getLocation().contains("wiki/Top_10_list"));
-		assertTrue(session().isTextPresent(special2));
 		
-		session().click("/html/body/section[2]/div[2]/article/header/nav/ul/li[4]/a??");
-		session().waitForPageToLoad(this.getTimeout());
+		assertTrue(session().isTextPresent(name2));		
+		assertTrue(session().isTextPresent("/"));
+		assertTrue(session().isTextPresent("/ 2"));
 		
-		session().click("//*[@id='wpConfirmB']");
-		session().waitForPageToLoad(this.getTimeout());
+		clickAndWait("//nav[@class='wikia-menu-button']/a[@data-id='edit']");
 		
+		assertTrue(session().getLocation().contains("wiki/Special:EditTopList"));
+		
+		
+		session().click("//form[@id='toplist-editor']//li[2]/div[3]/a[@title='Remove item']");
+		assertFalse(session().isTextPresent("/ 2"));
+		clickAndWait("//form[@id='toplist-editor']//div[@class='FormButtons']/input");
+		
+		assertTrue(session().getLocation().contains("wiki/Top_10_list"));
+		assertFalse(session().isTextPresent("#2"));		
+	
+		logout();
+		
+		loginAsStaff();		
+		
+		openAndWait("wiki/" + name2.replace(" ", "_"));
+		
+		clickAndWait("//nav[@class='wikia-menu-button']//a[@data-id='delete']");
+		
+		
+		clickAndWait("//form[@id='deleteconfirm']//td[@class='mw-submit']/input");
 		assertTrue(session().isTextPresent("has been deleted"));
+		
 		
 				
 		
