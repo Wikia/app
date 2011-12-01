@@ -13,7 +13,7 @@
 	}
 
 	// comments & like button
-	if( empty($isMainPage) && !$isWallEnabled ) {
+	if( !$isWallEnabled ) {
 		echo wfRenderModule('CommentsLikes', 'Index', array('comments' => $comments, 'likes' => $likes));
 	}
 
