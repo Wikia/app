@@ -1,7 +1,6 @@
 /* depends on geo.js */
 var MeeboBar = {
 	network: '',
-	prohibitedDBnames: { 'fallout': 1, 'answers': 1 },
 	
 	init: function () {
 		switch (window.cscoreCat) {
@@ -37,8 +36,7 @@ Meebo('domReady');
 if (window.wgEnableMeeboExt) {
 	if (!window.wgUserName) {
 		if (window.skin == 'oasis') {
-		$().log(MeeboBar.prohibitedDBnames);
-			if (!(window.wgDBname in MeeboBar.prohibitedDBnames)) {
+			if (window.wgAction == 'view') {
 				var geoData = Geo.getGeoData();
 				if (geoData.country == 'US') {
 					MeeboBar.init();
