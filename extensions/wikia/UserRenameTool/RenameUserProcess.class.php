@@ -553,18 +553,9 @@ class RenameUserProcess {
 		$this->addLog("Broadcasting hook: {$hookName}");
 		wfRunHooks($hookName, array($this->mUserId, $this->mOldUsername, $this->mNewUsername));
 
-		//rename the user account across clusters in which the user has a copy of his account data
-		$clusters = array();
-		// We should process first cluster even if no wiki touched in this cluster 
-		$clusters[RenameUserHelper::CLUSTER_DEFAULT] = true;
-		
-		foreach($wikiIDs as $wikiID){
-			$clusterName = RenameUserHelper::getCityCluster($wikiID);
-			$clusters[$clusterName] = true;
-		}
-		
-		$clusters = array_keys($clusters);
-		
+		//rename the user account across clusters
+		$clusters = WikiFactory::getClusters();
+				
 		foreach ($clusters as $clusterName) {
 			if(!$this->renameAccount($clusterName)){
 				$this->addLog("Renaming user account on cluster {$clusterName} resulted in a failure.");
