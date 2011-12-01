@@ -4,7 +4,7 @@
 	$._position = 1;
 	$._timer =  null;
 	$._caption = false;
-	$._hideBarsAfter = 5500;
+	$._hideBarsAfter = 2500;
 
 	$._createModal =  function() {
 		var resolution = WikiaMobile.getDeviceResolution(),
@@ -18,13 +18,14 @@
 
 		$('body').append(modal);
 
-		this._modal = $('#modalWrapper');
-		this._modalClose = $('#modalClose');
-		this._modalTopBar = $('#modalTopBar');
-		this._modalContent = $('#modalContent');
-		this._modalFooter = $('#modalFooter');
-		this._allToHide = this._modalTopBar.add(this._modalClose).add(this._modalFooter);
-		this._thePage = $('#navigation, #WikiaPage, #wikiaFooter');
+		that._modal = $('#modalWrapper');
+		that._modalClose = $('#modalClose');
+		that._modalTopBar = $('#modalTopBar');
+		that._modalContent = $('#modalContent');
+		that._modalFooter = $('#modalFooter');
+		that._wikiaAdPlace = $('#WikiaAdPlace');
+		that._allToHide = this._modalTopBar.add(this._modalClose).add(this._modalFooter);
+		that._thePage = $('body').children().not('#modalWrapper,style,script');
 
 		//hide adress bar on orientation change
 		window.onorientationchange = function() {
@@ -45,6 +46,14 @@
 		});
 
 		$(document.body).delegate('#previousImage', WikiaMobile._clickevent, function() {
+			that._previousImage($(this).next());
+		});
+
+		$(document.body).delegate('#nextImage', 'swipeLeft', function() {
+			$._nextImage($(this).prev());
+		});
+
+		$(document.body).delegate('#previousImage', 'swipeRight', function() {
 			that._previousImage($(this).next());
 		});
 
@@ -131,7 +140,7 @@
 		}
 
 		this._position = pageYOffset;
-
+		this._wikiaAdPlace.css('pointer-events','none');
 		this._thePage.hide();
 		this._modal.addClass('modalShown');
 		this._resetTimeout();
@@ -162,13 +171,18 @@
 
 	$.hideModal = function() {
 		if(this._modalCreated) {
-			var modal = this._modal;
+			var modal = this._modal,
+			wikiaAdPlace = this._wikiaAdPlace;
+
 			modal.removeClass('modalShown');
 			this._allToHide.removeClass('hidden');
 			this._thePage.show();
+			clearTimeout(this._timer);
 			window.scrollTo(0, this._position);
 			this._position = 1;
-			clearTimeout(this._timer);
+			setTimeout(function() {
+				wikiaAdPlace.css('pointer-events','auto');
+			},100);
 		}
 	};
 

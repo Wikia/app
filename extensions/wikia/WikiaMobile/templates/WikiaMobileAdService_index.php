@@ -1,1 +1,3 @@
-<?= $adSlot ?>
+<aside id="WikiaAdPlace">
+	<?= $adSlot ?>
+</aside>

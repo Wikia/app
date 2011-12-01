@@ -12,6 +12,7 @@
 	width: 100%;
 	visibility: hidden;
 	overflow: hidden;
+	z-index: $highest-z-index + 1000;
 	-webkit-tap-highlight-color: rgba( 0,0,0,0 );
 	-webkit-focus-ring-color: rgba( 0,0,0,0 );
 
@@ -28,7 +29,7 @@
 	position: fixed;
 	top: 0;
 	left: 0;
-	z-index: $highest-z-index;
+	z-index: $highest-z-index + 1001;
 	background-color: rgba(0,0,0,.8);
 	@include transition(top .5s ease-in);
 
@@ -62,7 +63,7 @@
 	bottom: 0;
 	left: 0;
 	color: white;
-	z-index: $highest-z-index;
+	z-index: $highest-z-index + 1001;
 	@include transition(all .5s ease-in);
 	display: none;
 
@@ -82,7 +83,7 @@
 	@include transition(top .5s ease-in);
 	font-size: xx-large;
 	color: white;
-	z-index: $highest-z-index + 1;
+	z-index: $highest-z-index + 1002;
 
 	&.hidden {
 		top: -31px;
