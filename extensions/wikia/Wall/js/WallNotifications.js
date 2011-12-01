@@ -330,9 +330,10 @@ var WallNotifications = $.createClass(Object, {
 		var notificationsVisible = $('#WallNotifications .subnav').hasClass('show');
 		if( !reminderVisible && !notificationsVisible ) {
 			var unreadCount = parseInt($('#bubbles_count').html());
-			if( $(document).scrollTop() > 100 && this.getLastSeenCount() != unreadCount ) {
+			var lastCount = this.getLastSeenCount()
+			if( $(document).scrollTop() > 100 && lastCount != unreadCount ) {
 				this.setLastSeenCount(unreadCount);
-				if( unreadCount > 0 ) {
+				if( unreadCount > 0 && lastCount == 0 ) {
 					$('#WallNotificationsReminder')
 						.fadeIn(500)
 						.animate({'opacity':1}, 3000)
