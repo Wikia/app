@@ -381,6 +381,7 @@ $color-related-videos-background: darken($color-page, 20%);
 			text-decoration: none;
 			background-color: mix( $color-page, #FFFFFF, 95% );
 			width: 650px;
+			color: $color-text;
 		}
 		input:focus {
 			background-color: mix( $color-page, #FFFFFF, 90% );
