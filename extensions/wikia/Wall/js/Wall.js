@@ -905,7 +905,13 @@ var Wall = $.createClass(Object, {
 				username: this.username
 			},
 			callback: this.proxy(function(data) {
-				if( data.status ) msg.fadeOut('fast', function() { msg.remove(); });
+				if( data.status ) {
+					if( data.status == true ) {
+						msg.fadeOut('fast', function() { msg.remove(); });
+					} else {
+						$.showModal($.msg('wall-delete-error-title'), $.msg('wall-delete-error-content'));
+					}
+				}
 				//click tracking
 				this.track('wall/message/delete');
 			})

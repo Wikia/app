@@ -47,6 +47,8 @@ $messages['en'] = array(
 	'wall-delete-confirm-thread' => 'Are you sure you want to delete this message? Doing so will delete all responses.',
 	'wall-delete-confirm-ok' => 'Yes, Delete',
 	'wall-delete-confirm-cancel' => 'Cancel',
+	'wall-delete-error-title' => 'Error',
+	'wall-delete-error-content' => 'Message was deleted previously and it no longer exists.',
 	
 	'wall-notifications' => 'Notifications',
 	'wall-notifications-all' => 'All Notifications',
