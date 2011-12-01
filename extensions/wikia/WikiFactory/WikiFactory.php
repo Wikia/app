@@ -2636,4 +2636,44 @@ class WikiFactory {
 		return "wikifactory:wikia:db:v1:{$city_dbname}";
 	}
 
+	/**
+	 * getClusters
+	 *
+	 * Gets list of all database clusters
+	 *
+	 * @static
+	 * @access public
+	 *
+	 * @param
+	 *
+	 */
+
+	static public function getClusters() {
+		global $wgMemc;
+		wfProfileIn( __METHOD__ );
+		
+		$key = "wikifactory:clusters";
+		$clusters = $wgMemc->get( $key );
+		if( !is_array( $clusters ) ) {
+
+			$dbr = self::db( DB_SLAVE );
+			$oRes = $dbr->select(
+				array( "city_list" ),
+				array( "IFNULL(city_cluster,'c1') as cluster" ),
+				'',
+				__METHOD__,
+				array( "GROUP BY" => "city_cluster" )
+			);
+			
+			while( $oRow = $dbr->fetchObject( $oRes ) ) {
+				$clusters[] = strtolower( $oRow->cluster );
+			}
+			$dbr->freeResult( $oRes );
+
+			$wgMemc->set( $key, $clusters, 60*60*12 );
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $clusters;
+	}
 };
