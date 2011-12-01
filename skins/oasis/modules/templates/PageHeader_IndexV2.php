@@ -13,7 +13,9 @@
 	}
 
 	// comments & like button
-	echo wfRenderModule('CommentsLikes', 'Index', array('comments' => $comments, 'likes' => $likes));
+	if( empty($isMainPage) && !$isWallEnabled ) {
+		echo wfRenderModule('CommentsLikes', 'Index', array('comments' => $comments, 'likes' => $likes));
+	}
 
 	// "pages on this wiki" counter
 	if (!is_null($total)) {

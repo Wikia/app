@@ -150,7 +150,7 @@ class WallHooksHelper {
 			if( $title->getNamespace() === NS_USER_WALL ) {
 				$userPageTitle = $helper->getTitle(NS_USER);
 				$contentActionsOld = $contentActions;
-		
+				
 				$contentActions = array();
 				
 				if($app->wg->User->getName() != $title->getBaseText() && !$title->isSubpage()){
@@ -269,6 +269,7 @@ class WallHooksHelper {
 	 * @return true
 	 * 
 	 * @author Andrzej 'nAndy' Łukaszewski
+	 * @author Piotrek Bablok
 	 */
 	public function onPersonalUrls(&$personalUrls, &$title) {
 		$app = F::App();
