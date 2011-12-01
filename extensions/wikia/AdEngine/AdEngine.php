@@ -20,8 +20,8 @@ function wfAdEngineSetupJSVars($vars) {
 	$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
 	$vars['wgNoExternals'] = $wgNoExternals;
 	$vars["wgEnableAdsInContent"] = $wgEnableAdsInContent;
-	$vars["wgEnableAdMeldAPIClient"] = $wgEnableAdMeldAPIClient;
-	$vars["wgEnableAdMeldAPIClientPixels"] = $wgEnableAdMeldAPIClientPixels;
+	if ($wgEnableAdMeldAPIClient)       $vars["wgEnableAdMeldAPIClient"] = $wgEnableAdMeldAPIClient;
+	if ($wgEnableAdMeldAPIClientPixels) $vars["wgEnableAdMeldAPIClientPixels"] = $wgEnableAdMeldAPIClientPixels;
 
 	// OpenX SPC (init in AdProviderOpenX.js)
 	$vars['wgEnableOpenXSPC'] = $wgEnableOpenXSPC;
