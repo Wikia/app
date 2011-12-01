@@ -19,6 +19,7 @@ import com.thoughtworks.selenium.SeleniumException;
 import static com.thoughtworks.selenium.grid.tools.ThreadSafeSeleniumSessionStorage.session;
 import static org.testng.AssertJUnit.assertTrue;
 import static org.testng.AssertJUnit.assertFalse;
+import static org.testng.AssertJUnit.assertEquals;
 
 /**
  * To enable the extension used by this test, in LocalSettings.php or WikiFactory, set:
@@ -45,19 +46,22 @@ public class ArticleCommentTest extends BaseTest {
 	 * create the page with some default text.
 	 */
 	private void openOrCreatePage(String pageName) throws Exception {
+		boolean exists = false;
 		try{
-			session().open(pageName);
-			session().waitForPageToLoad(this.getTimeout());
+			openAndWait(pageName);
+			if (!session().isTextPresent("This page needs content")) {
+				exists = true;
+			}
 		} catch(SeleniumException e){
-			session().open(pageName + "&action=edit");
-			session().waitForPageToLoad(this.getTimeout());
+		}
+		
+		if (!exists) {
+			openAndWait(pageName + "&action=edit");
 			waitForElement("wpTextbox1");
 			waitForElement("wpSave");
 			doEdit("Test page content");
-			session().click("wpSave");
-			session().waitForPageToLoad(this.getTimeout());
-			session().open(pageName);
-			session().waitForPageToLoad(this.getTimeout());
+			clickAndWait("wpSave");
+			openAndWait(pageName);
 		}
 	}
 
@@ -67,23 +71,30 @@ public class ArticleCommentTest extends BaseTest {
 	 */
 	private void openOrCreateBlogPage(String username, String blogPostName) throws Exception {
 		String pageName = "index.php?title=User_blog:"+username+"/"+blogPostName;
+		boolean exists = true;
 		try{
-			session().open(pageName);
-		} catch(SeleniumException e){
-			// Page might not exist yet.
-			loginAsStaff();
-			session().open("index.php?title=Special:CreateBlogPage");
-			session().waitForPageToLoad(this.getTimeout());
-			waitForElement("wpTextbox1");
-			waitForElement("wpSave");
-			session().type("blogPostTitle", blogPostName);
-			doEdit("Test page content");
-			session().click("wpSave");
-			session().waitForPageToLoad(this.getTimeout());
-			session().open(pageName);
+			openAndWait(pageName);
+			if (session().isTextPresent("There is currently no text in this page") || session().isTextPresent("This page needs content")) {
+				exists = false;
+			}
+		} catch(SeleniumException e) {
+			exists = false;
 		}
 
-		session().waitForPageToLoad(this.getTimeout());
+		// Page might not exist yet.
+		if (!exists) {
+			loginAsStaff();
+			openAndWait("index.php?title=Special:CreateBlogPage");
+			waitForElement("wpTextbox1");
+			waitForElement("wpSave");
+			waitForElement("wpTitle");
+			session().type("wpTitle", blogPostName);
+			session().click("//section[@id='HiddenFieldsDialog']//*[@id='ok']");
+			waitForElementNotPresent("//section[@id='HiddenFieldsDialog']");
+			doEdit("Test page content");
+			clickAndWait("wpSave");
+			openAndWait(pageName);
+		}
 	}
 
 	private void addComment(String commentContent) throws Exception {
@@ -91,49 +102,46 @@ public class ArticleCommentTest extends BaseTest {
 		session().click("article-comm-submit");
 
 		waitForElement("//ul[@id='article-comments-ul']" +
-						"/li[1 and contains(@class,'article-comments-li')]" +
+						"/li[1 and contains(@class,'SpeechBubble')]" +
 						"//div[@class='article-comm-text']" +
 						"/p[contains(text(), '" + commentContent + "')]");
 	}
 
 	private void addReply(String replyContent) throws Exception {
 		session().click("//ul[@id='article-comments-ul']" +
-			"/li[1 and contains(@class,'article-comments-li')]" +
+			"/li[1 and contains(@class,'SpeechBubble')]" +
 			"//a[contains(@class, 'article-comm-reply')]");
 		waitForElement("//ul[@id='article-comments-ul']" +
-			"/li[1 and contains(@class,'article-comments-li')]" +
+			"/li[1 and contains(@class,'SpeechBubble')]" +
 			"//textarea[@name='wpArticleReply']");
 
 		session().type("//ul[@id='article-comments-ul']" +
-			"/li[1 and contains(@class,'article-comments-li')]" +
+			"/li[1 and contains(@class,'SpeechBubble')]" +
 			"//textarea[@name='wpArticleReply']", replyContent);
 
 		session().click("//ul[@id='article-comments-ul']" +
-			"/li[1 and contains(@class,'article-comments-li')]" +
+			"/li[1 and contains(@class,'SpeechBubble')]" +
 			"//input[@name='wpArticleSubmit' and @value='Post comment']");
 
 		waitForElement("//ul[@id='article-comments-ul']" +
-			"/ul[@class='sub-comments']/li[1 and contains(@class,'article-comments-li')]" +
+			"/ul[@class='sub-comments']/li[1 and contains(@class,'SpeechBubble')]" +
 			"//div[@class='article-comm-text']" +
 			"/p[contains(text(), '" + replyContent + "')]");
 	}
 
 	// tests for article comments
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI", "verified"})
 	public void testa1CommentSection() throws Exception {
-		//System.out.println("Starting testa1CommentSection...");
-		session().open(articlePath);
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait(articlePath);
 
 		assertTrue(session().isElementPresent("WikiaArticleComments"));
 	}
 
-	@Test(groups={"CI"})
+	// BugId: 16719
+	@Test(groups={"CI", "broken"})
 	public void testb2ShowAllComments() throws Exception {
-		//System.out.println("Starting testb2ShowAllComments...");
-		session().open(articlePath);
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait(articlePath);
 
 		// adding (articleCommentsMaxPerPage + 1) comments
 		for (int i = 0; i < articleCommentsMaxPerPage + 1; i++)
@@ -143,59 +151,49 @@ public class ArticleCommentTest extends BaseTest {
 		session().waitForPageToLoad(this.getTimeout());
 		
 		String location = session().getLocation();
-		//System.out.println(location);
-		session().open(location);
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait(location);
 		
 		assertTrue(session().isElementPresent("//div[contains(@class,'article-comments-pagination')]//a"));
 
-		session().click("link=Show all");
-		session().waitForPageToLoad(this.getTimeout());
+		clickAndWait("link=Show all");
 
+		assertEquals(26, session().getXpathCount("//ul[@id='article-comments-ul']/li[1 and contains(@class,'SpeechBubble')]"));
 		assertFalse(session().isElementPresent("//div[contains(@class,'article-comments-pagination')]//a"));
 	}
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI", "verified"})
 	public void testc3NumberOfComments() throws Exception {
-		//System.out.println("Starting testc3NumberOfComments...");
-		session().open(articlePath + "&showall=1");
+		openAndWait(articlePath + "&showall=1");
 
 		String commentContent = "test comment: " + new Date().toString();
 		addComment(commentContent);
 
-		Number numberOfComments = session().getXpathCount("//li[contains(@class,'article-comments-li')]");
-		//System.out.println("Counted comments: " + numberOfComments);
+		Number numberOfComments = session().getXpathCount("//ul[@id='article-comments-ul']/li[1 and contains(@class,'SpeechBubble')]");
 
 		String articleCommentHeader = session().getText("//h1[@id='article-comments-counter-header']");
-		//System.out.println("Article comment header: " + articleCommentHeader);
 
 		String stringToCompare = numberOfComments + " comments";
-		assertTrue(articleCommentHeader.equals(stringToCompare));
+		assertEquals(articleCommentHeader, stringToCompare);
 	}
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI", "verified"})
 	public void testd4AddComment() throws Exception {
-		//System.out.println("Starting testd4AddComment...");
-		session().open(articlePath);
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait(articlePath);
 
 		String commentContent = "test comment: " + new Date().toString();
 		addComment(commentContent);
 	}
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI", "verified"})
 	public void testf6EditButtonPresence() throws Exception {
-		//System.out.println("Starting testf6EditButtonPresence...");
 		loginAsRegular();
 
-		session().open(articlePath + "&showall=1");
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait(articlePath + "&showall=1");
 
 		String commentContent = "test comment: " + new Date().toString();
 		addComment(commentContent);
 
 		Number numberOfComments = session().getXpathCount("//li[contains(@class,'article-comments-li')]");
-		//System.out.println("Counted comments: " + numberOfComments);
 
 		for (int i = 1; i < numberOfComments.intValue() + 1; i++) {
 			String commentId = session().getAttribute("//ul[@id='article-comments-ul']" +
@@ -206,7 +204,6 @@ public class ArticleCommentTest extends BaseTest {
 				assertFalse(session().isVisible("//li[@id='" + commentId + "']//span[@class='tools']"));
 				assertTrue(session().isElementPresent("//li[@id='" + commentId + "']//span[@class='tools']" +
 						"/span[@class='edit-link']/a[@class='article-comm-edit']"));
-				//System.out.println(commentId + ": edit button present");
 			}
 			else {
 				assertFalse(session().isElementPresent("//li[@id='" + commentId + "']//a[@class='article-comm-edit']"));
@@ -214,13 +211,11 @@ public class ArticleCommentTest extends BaseTest {
 		}
 	}
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI", "verified"})
 	public void testg7EditArticleComment() throws Exception {
-		//System.out.println("Starting testg7EditArticleComment...");
 		loginAsRegular();
 
-		session().open(articlePath);
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait(articlePath);
 
 		String commentContent = "test comment: " + new Date().toString();
 		addComment(commentContent);
@@ -238,17 +233,16 @@ public class ArticleCommentTest extends BaseTest {
 		session().click("//ul[@id='article-comments-ul']/li[1]//input[@name='wpArticleSubmit']");
 
 		waitForElement("//ul[@id='article-comments-ul']" +
-						"/li[1 and contains(@class,'article-comments-li')]" +
+						"/li[1 and contains(@class,'SpeechBubble')]" +
 						"//div[@class='article-comm-text']" +
 						"/p[contains(text(), 'edit(" + commentContent + ")')]");
 	}
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI", "verified"})
 	public void testh8StaffEditArticleCommentPart1() throws Exception {
 		loginAsRegular();
 
-		session().open(articlePath);
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait(articlePath);
 		
 		this.location = session().getLocation();
 
@@ -268,16 +262,15 @@ public class ArticleCommentTest extends BaseTest {
 		session().click("//ul[@id='article-comments-ul']/li[1]//input[@name='wpArticleSubmit']");
 
 		waitForElement("//ul[@id='article-comments-ul']" +
-						"/li[1 and contains(@class,'article-comments-li')]" +
+						"/li[1 and contains(@class,'SpeechBubble')]" +
 						"//div[@class='article-comm-text']" +
 						"/p[contains(text(), 'edit(" + this.commentContent + ")')]");
 	}
 	
-	@Test(groups={"CI"},dependsOnMethods={"testh8StaffEditArticleCommentPart1"})
+	@Test(groups={"CI", "verified"},dependsOnMethods={"testh8StaffEditArticleCommentPart1"})
 	public void testh8StaffEditArticleCommentPart2() throws Exception {
 		loginAsStaff();
-		session().open(this.location);
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait(this.location);
 
 		session().click("//ul[@id='article-comments-ul']/li[1]" +
 				"//a[@class='article-comm-edit']");
@@ -289,14 +282,13 @@ public class ArticleCommentTest extends BaseTest {
 		session().click("//ul[@id='article-comments-ul']/li[1]//input[@name='wpArticleSubmit']");
 
 		waitForElement("//ul[@id='article-comments-ul']" +
-						"/li[1 and contains(@class,'article-comments-li')]" +
+						"/li[1 and contains(@class,'SpeechBubble')]" +
 						"//div[@class='article-comm-text']" +
 						"/p[contains(text(), 'edit(" + this.commentContent + ")')]");
 	}
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI","verified"})
 	public void testi9HistoryButton() throws Exception {
-		//System.out.println("Starting testi9HistoryButton...");
 		loginAsRegular();
 		
 		String pageToUse = "index.php?title=Test_3";
@@ -315,7 +307,7 @@ public class ArticleCommentTest extends BaseTest {
 		session().click("//ul[@id='article-comments-ul']/li[1]//input[@name='wpArticleSubmit']");
 
 		waitForElement("//ul[@id='article-comments-ul']" +
-						"/li[1 and contains(@class,'article-comments-li')]" +
+						"/li[1 and contains(@class,'SpeechBubble')]" +
 						"//div[@class='article-comm-text']" +
 						"/p[contains(text(), 'edit(" + commentContent + ")')]");
 
@@ -323,23 +315,17 @@ public class ArticleCommentTest extends BaseTest {
 
 		logout();
 
-		session().open(pageToUse);
-		session().waitForPageToLoad(this.getTimeout());
-
+		openAndWait(pageToUse);
 
 		assertTrue(session().isElementPresent("//ul[@id='article-comments-ul']/li[1]//a[@class='article-comm-history']"));
 	}
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI", "verified"})
 	public void testj10ReplyTwice() throws Exception {
-		//System.out.println("Starting testj10ReplyTwice...");
 		loginAsRegular();
 
-		session().open(articlePath);
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait(articlePath);
 		
-		//System.out.println(session().getLocation());
-
 		String commentContent = "test comment: " + new Date().toString();
 		addComment(commentContent);
 
@@ -347,25 +333,21 @@ public class ArticleCommentTest extends BaseTest {
 		addReply("reply 2");
 	}
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI", "verified"})
 	public void testk11DeleteComment() throws Exception {
-		//System.out.println("Starting testk11DeleteComment...");
 		loginAsStaff();
 
-		session().open(articlePath);
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait(articlePath);
 		waitForElement("article-comm");
 
 		String commentContent = "test comment: " + new Date().toString();
 		addComment(commentContent);
 
-		session().click("//ul[@id='article-comments-ul']" +
-				"/li[1 and contains(@class, 'article-comments-li')]" +
+		clickAndWait("//ul[@id='article-comments-ul']" +
+				"/li[1 and contains(@class, 'SpeechBubble')]" +
 				"//a[@class='article-comm-delete']");
-		session().waitForPageToLoad(this.getTimeout());
 
-		session().click("wpConfirmB");
-		session().waitForPageToLoad(this.getTimeout());
+		clickAndWait("wpConfirmB");
 
 		// check if the comment was deleted
 		assertFalse(session().isElementPresent("//ul[@id='article-comments-ul']" +
@@ -373,13 +355,11 @@ public class ArticleCommentTest extends BaseTest {
 				"//p[contains(text(), '" + commentContent + "')]"));
 	}
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI", "verified"})
 	public void testl12DeleteCascadeComment() throws Exception {
-		//System.out.println("Starting testl12DeleteCascadeComment...");
 		loginAsStaff();
 
-		session().open(articlePath);
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait(articlePath);
 		waitForElement("article-comm");
 
 		String commentContent = "test comment: " + new Date().toString();
@@ -387,13 +367,11 @@ public class ArticleCommentTest extends BaseTest {
 		addReply("reply 1(" + commentContent + ")");
 		addReply("reply 2(" + commentContent + ")");
 
-		session().click("//ul[@id='article-comments-ul']" +
-				"/li[1 and contains(@class,'article-comments-li')]" +
+		clickAndWait("//ul[@id='article-comments-ul']" +
+				"/li[1 and contains(@class,'SpeechBubble')]" +
 				"//a[@class='article-comm-delete']");
-		session().waitForPageToLoad(this.getTimeout());
 
-		session().click("wpConfirmB");
-		session().waitForPageToLoad(this.getTimeout());
+		clickAndWait("wpConfirmB");
 
 		// check if the comment and replies were deleted
 		assertTrue(!session().isElementPresent("//ul[@id='article-comments-ul']" +
@@ -405,10 +383,8 @@ public class ArticleCommentTest extends BaseTest {
 	}
 
 	// tests for blog pages comments
-	@Test(groups={"CI"})
+	@Test(groups={"CI", "verified"})
 	public void testn14CommentSection() throws Exception {
-		//System.out.println("Starting testn14CommentSection...");
-		
 		loginAsStaff();
 		openOrCreateBlogPage(getTestConfig().getString("ci.user.wikiastaff.username"), blogPostName);
 
@@ -416,13 +392,12 @@ public class ArticleCommentTest extends BaseTest {
 
 	}
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI", "broken"})
 	public void testo15ShowAllComments() throws Exception {
-		//System.out.println("Starting testo15ShowAllComments...");
 		openOrCreateBlogPage(getTestConfig().getString("ci.user.wikiastaff.username"), blogPostName);
 		waitForElement("article-comm");
 		
-		Number numberOfComments = session().getXpathCount("//li[contains(@class,'article-comments-li')]");
+		Number numberOfComments = session().getXpathCount("//li[contains(@class,'SpeechBubble')]");
 		
 		if (numberOfComments.intValue() <= articleCommentsMaxPerPage) {
 			for (int i = 0; i < articleCommentsMaxPerPage + 1; i++) {
@@ -435,38 +410,32 @@ public class ArticleCommentTest extends BaseTest {
 
 		assertTrue(session().isElementPresent("//div[contains(@class, 'article-comments-pagination')]//a"));
 
-		session().click("link=Show all");
-		session().waitForPageToLoad(this.getTimeout());
+		clickAndWait("link=Show all");
 		assertFalse(session().isElementPresent("//div[contains(@class, 'article-comments-pagination')]//a"));
 	}
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI", "verified"})
 	public void testp16NumberOfComments() throws Exception {
-		//System.out.println("Starting testp16NumberOfComments...");
-		
 		openOrCreateBlogPage(getTestConfig().getString("ci.user.wikiastaff.username"), blogPostName);
 
-		session().open("/wiki/User_blog:" + getTestConfig().getString("ci.user.wikiastaff.username") + "/" + blogPostName + "?showall=1");
+		openAndWait("/wiki/User_blog:" + getTestConfig().getString("ci.user.wikiastaff.username") + "/" + blogPostName + "?showall=1");
 
-		Number numberOfComments = session().getXpathCount("//ul[@id='article-comments-ul']//li[contains(@class, 'article-comments-li')]");
-//		System.out.println("Counted comments: " + numberOfComments);
+		Number numberOfComments = session().getXpathCount("//ul[@id='article-comments-ul']//li[contains(@class, 'SpeechBubble')]");
 
 		if (numberOfComments.intValue() == 0) {
 			String commentContent = "test comment: " + new Date().toString();
 			addComment(commentContent);
-			numberOfComments = session().getXpathCount("//ul[@id='article-comments-ul']//li[contains(@class, 'article-comments-li')]");
+			numberOfComments = session().getXpathCount("//ul[@id='article-comments-ul']//li[contains(@class, 'SpeechBubble')]");
 		}
 
 		String articleCommentHeader = session().getText("//h1[@id='article-comments-counter-header']");
-//		System.out.println("Article comment header: " + articleCommentHeader);
 
 		String stringToCompare = numberOfComments + " comments";
-		assertTrue(articleCommentHeader.equals(stringToCompare));
+		assertEquals(articleCommentHeader, stringToCompare);
 	}
 		
-	@Test(groups={"CI"})
+	@Test(groups={"CI", "verified"})
 	public void testq17AddComment() throws Exception {
-		//System.out.println("Starting testq17AddComment...");
 		openOrCreateBlogPage(getTestConfig().getString("ci.user.wikiastaff.username"), blogPostName);
 		waitForElement("article-comm");
 
@@ -474,34 +443,30 @@ public class ArticleCommentTest extends BaseTest {
 		addComment(commentContent);
 
 		assertTrue(session().isElementPresent("//ul[@id='article-comments-ul']" +
-			"/li[contains(@class, 'article-comments-li')]//p[contains(text(), '" + commentContent + "')]"));
+			"/li[contains(@class, 'SpeechBubble')]//p[contains(text(), '" + commentContent + "')]"));
 	}
 
-	@Test
+	@Test(groups={"CI", "verified"})
 	public void pre19EditButtonPresence() throws Exception {
 		loginAsStaff();
 		openOrCreateBlogPage(getTestConfig().getString("ci.user.wikiastaff.username"), blogPostName_1);
 		logout();
 	}
 
-	@Test(groups={"CI"}, dependsOnMethods={"pre19EditButtonPresence"})
+	@Test(groups={"CI", "verified"}, dependsOnMethods={"pre19EditButtonPresence"})
 	public void tests19EditButtonPresence() throws Exception {
-		//System.out.println("Starting tests19EditButtonPresence...");
-
 		// Re-open in showall mode.
 		loginAsRegular();
-		session().open("/wiki/User_blog:WikiaStaff/Blog_post_number_1?showall=1");
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("/wiki/User_blog:WikiaStaff/Blog_post_number_1?showall=1");
 
-		Number numberOfComments = session().getXpathCount("//ul[@id='article-comments-ul']//li[contains(@class, 'article-comments-li')]");
+		Number numberOfComments = session().getXpathCount("//ul[@id='article-comments-ul']//li[contains(@class, 'SpeechBubble')]");
 
 		if (numberOfComments.intValue() == 0) {
 			String commentContent = "test comment: " + new Date().toString();
 			addComment(commentContent);
 		}
 
-		numberOfComments = session().getXpathCount("//ul[@id='article-comments-ul']//li[contains(@class, 'article-comments-li')]");
-		//System.out.println("Counted comments: " + numberOfComments);
+		numberOfComments = session().getXpathCount("//ul[@id='article-comments-ul']//li[contains(@class, 'SpeechBubble')]");
 
 		for (int i = 1; i < numberOfComments.intValue() + 1; i++) {
 			String commentId = session().getAttribute("//ul[@id='article-comments-ul']" +
@@ -514,7 +479,6 @@ public class ArticleCommentTest extends BaseTest {
 
 				assertTrue(session().isElementPresent("//li[@id='" + commentId + "']//span[@class='tools']" +
 						"/span[@class='edit-link']/a[@class='article-comm-edit']"));
-				//System.out.println(commentId + ": edit button present");
 			}
 
 			else {
@@ -523,9 +487,8 @@ public class ArticleCommentTest extends BaseTest {
 		}
 	}
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI", "verified"})
 	public void testt20EditBlogComment() throws Exception {
-		//System.out.println("Starting testt20EditBlogComment...");
 		loginAsRegular();
 
 		openOrCreateBlogPage(getTestConfig().getString("ci.user.wikiastaff.username"), blogPostName);
@@ -547,13 +510,11 @@ public class ArticleCommentTest extends BaseTest {
 						"/p[contains(text(), 'edit(" + commentContent + ")')]");
 	}
 
-	@Test(groups={"CI"},dependsOnMethods={"testt20EditBlogComment"})
+	@Test(groups={"CI", "verified"},dependsOnMethods={"testt20EditBlogComment"})
 	public void testu21StaffEditBlogComment() throws Exception {
-		//System.out.println("Starting testu21StaffEditBlogComment...");
 		loginAsStaff();
 
-		session().open("/wiki/User_blog:" + getTestConfig().getString("ci.user.wikiastaff.username") + "/" + blogPostName + "?showall=1");
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("/wiki/User_blog:" + getTestConfig().getString("ci.user.wikiastaff.username") + "/" + blogPostName + "?showall=1");
 
 		String id = session().getAttribute("//ul[@id='article-comments-ul']/li[1]@id");
 		String commentContent = "test comment: " + new Date().toString();
@@ -571,18 +532,15 @@ public class ArticleCommentTest extends BaseTest {
 			"/p[contains(text(), 'staff edit(" + commentContent + ")')]");
 	}
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI", "verified"})
 	public void testv22HistoryButton() throws Exception {
-		//System.out.println("Starting testv22HistoryButton...");
-
 		loginAsRegular();
 
 		// Ensure it exists
 		openOrCreateBlogPage(getTestConfig().getString("ci.user.wikiastaff.username"), blogPostName);
 
 		// Revisit it
-		session().open("/wiki/User_blog:" + getTestConfig().getString("ci.user.wikiastaff.username") + "/" + blogPostName);
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("/wiki/User_blog:" + getTestConfig().getString("ci.user.wikiastaff.username") + "/" + blogPostName);
 
 		String commentContent = "test comment: " + new Date().toString();
 		addComment(commentContent);
@@ -597,20 +555,17 @@ public class ArticleCommentTest extends BaseTest {
 
 		logout();
 
-		session().open("/wiki/User_blog:" + getTestConfig().getString("ci.user.wikiastaff.username") + "/" + blogPostName);
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("/wiki/User_blog:" + getTestConfig().getString("ci.user.wikiastaff.username") + "/" + blogPostName);
 
 		assertTrue(session().isElementPresent("//ul[@id='article-comments-ul']/li[1]//a[@class='article-comm-history']"));
 	}
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI", "verified"})
 	public void testw23ReplyTwice() throws Exception {
-		//System.out.println("Starting testw23ReplyTwice...");
-		
 		loginAsRegular();
 
 		openOrCreateBlogPage(getTestConfig().getString("ci.user.wikiastaff.username"), blogPostName);
-		session().waitForPageToLoad(this.getTimeout());
+		waitForElement("article-comm");
 
 		String commentContent = "test comment: " + new Date().toString();
 		addComment(commentContent);
@@ -619,9 +574,8 @@ public class ArticleCommentTest extends BaseTest {
 		addReply("reply 2");
 	}
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI", "verified"})
 	public void testx24DeleteComment() throws Exception {
-		//System.out.println("Starting testx24DeleteComment...");
 		loginAsStaff();
 
 		openOrCreateBlogPage(getTestConfig().getString("ci.user.wikiastaff.username"), blogPostName);
@@ -630,23 +584,19 @@ public class ArticleCommentTest extends BaseTest {
 		String commentContent = "test comment: " + new Date().toString();
 		addComment(commentContent);
 
-		session().click("//ul[@id='article-comments-ul']" +
-			"/li[1 and contains(@class, 'article-comments-li')]" +
+		clickAndWait("//ul[@id='article-comments-ul']" +
+			"/li[1 and contains(@class, 'SpeechBubble')]" +
 			"//a[@class='article-comm-delete']");
-		session().waitForPageToLoad(this.getTimeout());
 
-		session().click("wpConfirmB");
-		session().waitForPageToLoad(this.getTimeout());
+		clickAndWait("wpConfirmB");
 
-		session().open("/wiki/User_blog:" + getTestConfig().getString("ci.user.wikiastaff.username") + "/" + blogPostName);
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("/wiki/User_blog:" + getTestConfig().getString("ci.user.wikiastaff.username") + "/" + blogPostName);
 
 		assertFalse(session().isElementPresent("//ul[@id='article-comments-ul']//p[contains(text(), '" + commentContent + "')]"));
 	}
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI", "verified"})
 	public void testy25DeleteCascadeComment() throws Exception {
-		//System.out.println("Starting testy25DeleteCascadeComment...");
 		loginAsStaff();
 
 		openOrCreateBlogPage(getTestConfig().getString("ci.user.wikiastaff.username"), blogPostName);
@@ -656,21 +606,17 @@ public class ArticleCommentTest extends BaseTest {
 		addReply("reply 1(" + commentContent + ")");
 		addReply("reply 2(" + commentContent + ")");
 
-		session().click("//ul[@id='article-comments-ul']" +
-				"/li[1 and contains(@class, 'article-comments-li')]" +
+		clickAndWait("//ul[@id='article-comments-ul']" +
+				"/li[1 and contains(@class, 'SpeechBubble')]" +
 				"//a[@class='article-comm-delete']");
-		session().waitForPageToLoad(this.getTimeout());
 
-		session().click("wpConfirmB");
-		session().waitForPageToLoad(this.getTimeout());
+		clickAndWait("wpConfirmB");
 
-		session().open("/wiki/User_blog:" + getTestConfig().getString("ci.user.wikiastaff.username") + "/" + blogPostName);
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("/wiki/User_blog:" + getTestConfig().getString("ci.user.wikiastaff.username") + "/" + blogPostName);
 
 		// check if the comment and replies were deleted
 		assertFalse(session().isTextPresent(commentContent));
 		assertFalse(session().isTextPresent("reply 1(" + commentContent + ")"));
 		assertFalse(session().isTextPresent("reply 2(" + commentContent + ")"));
 	}
-
 }
