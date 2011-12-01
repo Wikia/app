@@ -121,7 +121,7 @@ class SolrSearch extends SearchEngine implements SearchErrorReporting {
 		if( !empty( $wgEnableCrossWikiaSearchOption ) ) {
 			$out .= "<p>";
 			$out .= Xml::check( 'crossWikiaSearch', $wgRequest->getCheck('crossWikiaSearch'), array( 'value' => '1', 'id' => 'crossWikiaSearch' ) );
-			$out .= wfMsg( 'wikiasearch-search-all-wikia' );
+			$out .= Xml::label( 'crossWikiaSearch',  wfMsg( 'wikiasearch-search-all-wikia' ) );
 			$out .= "</p>";
 		}
 
