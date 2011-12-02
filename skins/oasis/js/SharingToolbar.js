@@ -83,20 +83,26 @@ var SharingToolbar = {
 		);
 	},
 	checkWidth: function() {
-		var maxWidth = 0, elementWidth = 0, node = null, nodes = $('#SharingToolbar').children();
+		var maxWidth = 0,
+			nodes = $('#SharingToolbar').children();
+
 		$.each(nodes, function(key, value) {
-			node = $(value);
-			elementWidth = parseInt(0 + node.outerWidth());
+			var node = $(value),
+				elementWidth = parseInt(0 + node.outerWidth());
+
 			if (parseInt(0 + node.outerWidth()) > parseInt(0 + node.children().outerWidth())) {
 				elementWidth = parseInt(0 + node.outerWidth());
 			}
-			else elementWidth = parseInt(0 + node.children().outerWidth());
-			if (elementWidth > maxWidth) maxWidth = elementWidth;
+			else {
+				elementWidth = parseInt(0 + node.children().outerWidth());
+			}
+
+			if (elementWidth > maxWidth) {
+				maxWidth = elementWidth;
+			}
 		});
-		$('#SharingToolbar').css(
-			'width',
-			maxWidth
-		);
+
+		$('#SharingToolbar').css('width', maxWidth);
 	},
 	toolbarToggle: function(ev) {
 		var button = $(this),
