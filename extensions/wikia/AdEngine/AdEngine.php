@@ -131,6 +131,8 @@ class AdEngine {
 		'diablo',
 		'blind'
 	);
+	
+	private $adProviders = array();
 
 	protected function __construct($slots = null) {
 		if (!empty($slots)){
@@ -349,7 +351,7 @@ class AdEngine {
 	}
 
 	// Logic for hiding/displaying ads should be here, not in the skin.
-	private function getAdProvider($slotname) {
+	public function getAdProvider($slotname) {
 		global $wgShowAds, $wgUser, $wgLanguageCode, $wgNoExternals;
 
 
@@ -360,50 +362,58 @@ class AdEngine {
 		 * is a boolean for whether or not to log it as an error
 		 */
 
+		if (!empty($this->adProviders[$slotname])) {
+			return $this->adProviders[$slotname];
+		}
+
 		// First handle error conditions
 		if (!empty($wgNoExternals)){
-			return new AdProviderNull('Externals (including ads) are not allowed right now.');
+			$this->adProviders[$slotname] = new AdProviderNull('Externals (including ads) are not allowed right now.');
 
 		} else if (empty($this->slots[$slotname])) {
-			return new AdProviderNull('Unrecognized slot', false);
+			$this->adProviders[$slotname] = new AdProviderNull('Unrecognized slot', false);
 
 		} else if ($this->slots[$slotname]['enabled'] == 'No'){
-			return new AdProviderNull("Slot is disabled", false);
+			$this->adProviders[$slotname] = new AdProviderNull("Slot is disabled", false);
 
 		// As long as they are enabled via config, spotlights are always displayed...
 		} else if ( AdEngine::getInstance()->getAdType($slotname) == 'spotlight' ){
-			return $this->getProviderFromId($this->slots[$slotname]['provider_id']);
+			$this->adProviders[$slotname] = $this->getProviderFromId($this->slots[$slotname]['provider_id']);
 
 		// Now some toggles based on preferences and logged in/out
 		} else if (! ArticleAdLogic::isMandatoryAd($slotname) &&
 			     empty($_GET['showads']) && $wgShowAds == false ){
-			return new AdProviderNull('$wgShowAds set to false', false);
+			$this->adProviders[$slotname] = new AdProviderNull('$wgShowAds set to false', false);
 
 		} else if (! ArticleAdLogic::isMandatoryAd($slotname) && empty($_GET['showads']) &&
 			   is_object($wgUser) && $wgUser->isLoggedIn() && !$wgUser->getOption('showAds') ){
-			return new AdProviderNull('User is logged in', false);
+			$this->adProviders[$slotname] = new AdProviderNull('User is logged in', false);
 
 		} else if (!empty($_GET['forceProviderid'])){
 			// For debugging, allow ad providers to be forced
-			return $this->getProviderFromId($_GET['forceProviderid']);
+			$this->adProviders[$slotname] = $this->getProviderFromId($_GET['forceProviderid']);
 
 		// Special case for this type of ad. Not in Athena
 		} else if ($slotname == 'RIGHT_SKYSCRAPER_1'){
-			return $this->getProviderFromId($this->slots[$slotname]['provider_id']);
+			$this->adProviders[$slotname] = $this->getProviderFromId($this->slots[$slotname]['provider_id']);
 
 		// All of the errors and toggles are handled, now switch based on language
 		} else {
 
 			if (! in_array($wgLanguageCode, AdProviderGoogle::getSupportedLanguages())){
 				// Google's TOS prevents serving ads for some languages
-				return new AdProviderNull("Unsupported language for Google Adsense ($wgLanguageCode)", false);
+				$this->adProviders[$slotname] = new AdProviderNull("Unsupported language for Google Adsense ($wgLanguageCode)", false);
 			} else {
-			 	return $this->getProviderFromId($this->slots[$slotname]['provider_id']);
+			 	$this->adProviders[$slotname] = $this->getProviderFromId($this->slots[$slotname]['provider_id']);
 			}
 		}
 
 		// Should never happen, but be sure that an AdProvider object is always returned.
-		return new AdProviderNull('Logic error in ' . __METHOD__, true);
+		if (empty($this->adProviders[$slotname])) {
+			$this->adProviders[$slotname] = new AdProviderNull('Logic error in ' . __METHOD__, true);
+		}
+		
+		return $this->adProviders[$slotname];
 	}
 
 
