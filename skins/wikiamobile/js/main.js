@@ -132,7 +132,7 @@ var WikiaMobile = (function() {
 		//	$( '#navigation').toggleClass( 'open' );
 		//});
 
-		body.delegate( '#article-comments-counter-header', 'tap', function() {
+		body.delegate( '#article-comments-counter-header', this._clickevent, function() {
 			$( '#article-comments').toggleClass( 'open' );
 		});
 
@@ -148,7 +148,7 @@ var WikiaMobile = (function() {
 		//	}
 		//});
 
-		$( '#WikiaMainContent > h2' ).append( '<span class=\"chevron\"></span>' );
+		$( '#WikiaMainContent > h2, #article-comments-counter-header' ).append( '<span class=\"chevron\"></span>' );
 
 		body.delegate( '#WikiaMainContent > h2, #WikiaArticleCategories > h1', this._clickevent, function() {
 			$(this).toggleClass('open').next().toggleClass('open');
@@ -247,7 +247,7 @@ var WikiaMobile = (function() {
 				caption: "Slideshow image #1"
 			});
 		});
-	};
+	}
 
 	return {
 		init: init,

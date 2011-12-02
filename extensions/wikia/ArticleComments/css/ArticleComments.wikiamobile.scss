@@ -1,12 +1,32 @@
-#article-comments {
+@import "../../../../skins/wikiamobile/css/variables.scss";
+@import "../../../../skins/wikiamobile/css/mixins/section-title.scss";
+
+.comments, .load-more {
+	display:none;
+
 	&.open {
 		display: block;
 	}
 }
 
+
+
 #WikiaArticleComments {
-	
-/*	.controls {
-		display: none;
-	}*/
+	padding: 10px;
+
+	#article-comments-counter-header {
+		@include section-title;
+		font-size: medium;
+		text-transform:uppercase;
+	}
+
+	.load-more {
+		width: 110%;
+		background-color: #E3E3E3;
+		height: 50px;
+		text-align: center;
+		vertical-align: middle;
+		position: relative;
+		margin: -10px;
+	}
 }
