@@ -19,7 +19,7 @@ var WikiaMobile = (function() {
 	},
 
 	handleTables = function() {
-		var tables = $('table');
+		var tables = $('table').not('table table');
 		tables.each(function() {
 			if(this.offsetWidth > realWidth) {
 				$(this).addClass('tooBigTable');
@@ -114,7 +114,7 @@ var WikiaMobile = (function() {
 			if(window.orientation != 0) {
 				realWidth = screen.height;
 			}
-		} else if(window.orientation == 0) {
+		} else if(window.orientation == 0 || window.orientation == 180) {
 			deviceWidth = screen.width;
 			deviceHeight = screen.height + 53;
 		} else {
@@ -167,38 +167,38 @@ var WikiaMobile = (function() {
 		//	$( '#leftPane' ).css( { 'display': 'none', 'opacity': '0' } );
 		//});
 
-		body.delegate( '.infobox img', this._clickevent, function(event) {
+		$('.infobox img').bind(this._clickevent, function(event) {
 			event.preventDefault();
 			var thumb = $(this),
 				image = thumb.parents('.image');
 
 			$.openModal({
-				html: '<div class="changeImageButton" id="previousImage"></div><div class="fullScreenImage" data-number='+
+				html: '<div class="changeImageButton" id="previousImage"><div class="changeImageChevron"></div></div><div class="fullScreenImage" data-number='+
 					image.data('number')+
 					' style=background-image:url("'+
 					image.attr('href')+
-					'")></div><div class="changeImageButton" id="nextImage"></div>',
+					'")></div><div class="changeImageButton" id="nextImage"><div class="changeImageChevron"></div></div>',
 				toHide: '.changeImageButton'
 			})
 		});
 
-		body.delegate( '.thumb', this._clickevent, function(event) {
+		$('.thumb').bind(this._clickevent, function(event) {
 			event.preventDefault();
 			var thumb = $(this),
 				image = thumb.children('.image').first();
 
 			$.openModal({
-				html: '<div class="changeImageButton" id="previousImage"></div><div class="fullScreenImage" data-number='+
+				html: '<div class="changeImageButton" id="previousImage"><div class="changeImageChevron"></div></div><div class="fullScreenImage" data-number='+
 					image.data('number')+
 					' style=background-image:url("'+
 					image.attr('href')+
-					'")></div><div class="changeImageButton" id="nextImage"></div>',
+					'")></div><div class="changeImageButton" id="nextImage"><div class="changeImageChevron"></div></div>',
 				caption: thumb.children('.thumbcaption').html(),
 				toHide: '.changeImageButton'
 			});
 		});
 
-		body.delegate('#searchToggle', this._clickevent, function(event) {
+		$('#searchToggle').bind(this._clickevent, function(event) {
 			var self = $(this);
 			if(self.hasClass('open')) {
 				navigationWordMark.show();
@@ -213,11 +213,12 @@ var WikiaMobile = (function() {
 
 		});
 
-		body.delegate('#WikiaPage', this._clickevent, function(event) {
+		$('#WikiaPage').bind(this._clickevent, function(event) {
 			navigationWordMark.show();
 			navigationSearch.hide().removeClass('open');
 			searchToggle.removeClass('open');
 			searchInput.val('');
+			$('iframe').closest('body > div, #WikiaAdPlace > div').add('#trion_toolbar_padding').remove();
 		});
 
 		body.delegate('.tooBigTable', this._clickevent, function(event) {
@@ -237,11 +238,11 @@ var WikiaMobile = (function() {
 		body.delegate('.wikia-slideshow',this._clickevent, function(event) {
 			event.preventDefault();
 			$.openModal({
-				html: '<div class="changeImageButton" id="previousImage"></div><div class="fullScreenImage" data-number='+
+				html: '<div class="changeImageButton" id="previousImage"><div class="changeImageChevron"></div></div><div class="fullScreenImage" data-number='+
 					$(this).data('number')+
 					' style=background-image:url("'+
 					$(this).find('img').attr('src')+
-					'")></div><div class="changeImageButton" id="nextImage"></div>',
+					'")></div><div class="changeImageButton" id="nextImage"><div class="changeImageChevron"></div></div>',
 				toHide: '.changeImageButton',
 				caption: "Slideshow image #1"
 			});

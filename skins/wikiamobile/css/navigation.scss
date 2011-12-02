@@ -21,6 +21,8 @@
 		line-height: 50px;
 		font-size: xx-large;
 		color: $navBarWordmarkText;
+		max-height: 50px;
+		max-width: 80%;
 	}
 
 	#searchToggle {
@@ -36,10 +38,10 @@
 			content: "";
 			height: 80%;
 			width: 1px;
-			background-color: black;
+			background-color: $dividerColorFirst;
 			position: absolute;
 			top: 5px;
-			border-right: 1px solid grey;
+			border-right: 1px solid $dividerColorSecond;
 		}
 		&.open {
 			outline: 1px solid $searchOpenBorder;
