@@ -36,7 +36,7 @@ var WikiaMobile = (function() {
 			number++;
 		}
 
-		$('.thumb').each(function() {
+		$('figure').each(function() {
 			var self = $(this);
 			image = [];
 
@@ -182,7 +182,7 @@ var WikiaMobile = (function() {
 			})
 		});
 
-		$('.thumb').bind(this._clickevent, function(event) {
+		$('figure').bind(this._clickevent, function(event) {
 			event.preventDefault();
 			var thumb = $(this),
 				image = thumb.children('.image').first();
