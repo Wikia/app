@@ -146,7 +146,19 @@ class ArticleCommentInit {
 
 		if (self::ArticleCommentCheck()) {
 			global $wgUser;
-			if ( !in_array( get_class( $wgUser->getSkin() ), array(
+			
+			if ( Wikia::isWikiaMobile() ) {
+				$out->addHTML( F::build( 'JSSnippets' )->addToStack(
+					array(
+						'/extensions/wikia/ArticleComments/js/ArticleComments.wikiamobile.js',
+						'/extensions/wikia/ArticleComments/css/ArticleComments.wikiamobile.scss'
+					),
+					array(),
+					null,
+					array(),
+					'wikiamobile'
+				) );
+			} elseif ( !in_array( get_class( $wgUser->getSkin() ), array(
 				'SkinMonaco',
 				'SkinAnswers',
 				'SkinOasis',

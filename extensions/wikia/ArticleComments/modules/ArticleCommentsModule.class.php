@@ -21,9 +21,19 @@ class ArticleCommentsModule extends WikiaService {
 			}
 		
 			$this->getCommentsData($this->wg->Title, (int)$this->wg->request->getVal( 'page', 1 ));
+			
+			if ( Wikia::isWikiaMobile() ) {
+				$this->forward( __CLASS__, 'WikiaMobileIndex', false );
+			}
 		}
 
 		wfProfileOut(__METHOD__);
+	}
+	
+	public function executeWikiaMobileIndex(){
+		/** render WikiaMobile template**/
+		$this->response->setVal( 'showMore', $this->countComments > $this->commentsPerPage );
+		$this->response->setVal( 'pagesCount', ceil( $this->countComments / $this->commentsPerPage ) );
 	}
 	
 	public function getCommentsData($title, $page, $perPage = null, $filterid = null) {
