@@ -1,32 +1,77 @@
-@import "../../../../skins/wikiamobile/css/variables.scss";
 @import "../../../../skins/wikiamobile/css/mixins/section-title.scss";
+@import "../../../../skins/wikiamobile/css/variables.scss";
 
-.comments, .load-more {
-	display:none;
-
-	&.open {
-		display: block;
-	}
-}
-
-
-
-#WikiaArticleComments {
-	padding: 10px;
-
+#WikiaArticleComments{
+	padding: $page-padding;
+	
 	#article-comments-counter-header {
 		@include section-title;
 		font-size: medium;
 		text-transform:uppercase;
 	}
-
+	
+	#article-comments-ul{
+		margin: 0;
+		padding: 0;
+		list-type: none;
+		
+		.SpeechBubble{
+			border-top: 1px solid $border-color;
+			padding: $page-padding 0;
+			
+			&:fist-of-type{
+				border-top: none;
+			}
+			
+			.speech-bubble-message{
+				margin: 0;
+				
+				.article-comm-text{
+					p{
+						margin: 0;
+						padding: 0;
+					}
+					
+					.edited-by{
+						color: $page-text-alternate-color;
+						font-size: small;
+						
+						a{
+							color: $page-text-alternate-color;
+						}
+					}
+				}
+			}
+			
+			.speech-bubble-avatar{
+				float: left;
+				margin-right: $page-padding;
+			}
+			
+			.buttons{
+				display: none;
+			}
+		}
+	}
+	
 	.load-more {
-		width: 110%;
 		background-color: #E3E3E3;
 		height: 50px;
+		line-height: 50px;
 		text-align: center;
 		vertical-align: middle;
-		position: relative;
-		margin: -10px;
+		color: $link-color;
+		margin-top: $page-padding;
+		font-size: medium;
+		font-weight: bold;
+		border-radius: 10px;
+	}
+	
+	#article-comments-ul, .load-more{
+		display: none;
+		
+		&.open{
+			display:block;
+		}
 	}
 }
