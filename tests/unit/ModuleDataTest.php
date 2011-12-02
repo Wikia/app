@@ -522,14 +522,6 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 			$this->assertType('array', $moduleData['menuNodes'][0]);
 	}
 
-	function testHistoryDropdownModule() {
-		$revisions = array('foo', 'bar');
-		$moduleData = Module::get('HistoryDropdown', 'Index', array('revisions' => $revisions))->getData();
-
-		$this->assertType('array', $moduleData['content_actions']);
-		$this->assertEquals($revisions, $moduleData['revisions']);
-	}
-
 	function testHotSpotsModule() {
 		$moduleData = Module::get('HotSpots', 'Index')->getData();
 		// No edits means no hot spots to test

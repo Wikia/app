@@ -30,6 +30,7 @@ class ArticleService extends Service {
 
 		// it may sometimes happen that the aricle is just not there
 		if ( is_null( $this->mArticle ) ) {
+			wfProfileOut(__METHOD__);
 			return '';
 		}
 

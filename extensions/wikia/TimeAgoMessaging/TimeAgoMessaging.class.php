@@ -2,6 +2,9 @@
 
 class TimeAgoMessaging {
 
+	const VERSION = 2;
+	const TTL = 86400;
+
 	/**
 	 * Add inline JS with i18n messages for jquery.timeago.js
 	 */
@@ -18,16 +21,16 @@ class TimeAgoMessaging {
 		wfProfileIn(__METHOD__);
 
 		$lang = $wgLang->getCode();
-		$memcKey = wfMemcKey('timeago', 'i18n', $lang);
+		$memcKey = wfMemcKey('timeago', 'i18n', $lang, self::VERSION);
 
 		$messages = $wgMemc->get($memcKey);
 
 		if (empty($messages)) {
-			wfLoadExtensionMessages('TimeAgoMessaging');
 			wfDebug(__METHOD__ . ": lang '{$lang}'\n");
 
 			$messages = array();
 			$keys = array(
+				'month',
 				'day',
 				'hour',
 				'minute',
@@ -53,7 +56,7 @@ class TimeAgoMessaging {
 
 			unset($messages['second']);
 
-			$wgMemc->set($memcKey, $messages, 86400);
+			$wgMemc->set($memcKey, $messages, self::TTL);
 		}
 
 		wfProfileOut(__METHOD__);

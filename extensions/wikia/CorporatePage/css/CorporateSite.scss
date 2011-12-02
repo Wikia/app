@@ -650,3 +650,25 @@ section.SalesSupportModule {
 body.mainpage #WikiaArticleBottomAd {
 	display: none;
 }
+
+// /** BlogsInHubs: What's Hot **/
+#hub-hot-news {
+	.details {
+		border-bottom: solid 1px $color-headline-border;
+	}
+	h2 {
+		border-bottom: none;
+		margin-bottom: 0;
+	}
+	blockquote {
+		@include clearfix;
+		margin: 8px 0px;
+		vertical-align: top;
+		img {
+			margin-right: 10px;
+		}
+		.snippetImage {
+			float: left;
+		}
+	}
+}

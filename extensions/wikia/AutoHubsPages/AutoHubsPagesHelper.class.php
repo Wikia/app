@@ -215,8 +215,8 @@ class AutoHubsPagesHelper{
 			return $wgHubsPages[$wgContLanguageCode][strtolower($title->getUserCaseDBKey())]['langcode'];
 		}
 
+		wfProfileOut( __METHOD__ );
 		return $wgContLanguageCode;
-
 	}
 
 	/*
@@ -252,6 +252,7 @@ class AutoHubsPagesHelper{
 			return $wgHubsPages[$wgContLanguageCode][strtolower($title->getUserCaseDBKey())]['site'];
 		}
 
+		wfProfileOut( __METHOD__ );
 		return 'wikia';
 	}
 

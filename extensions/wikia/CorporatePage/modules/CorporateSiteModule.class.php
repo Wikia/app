@@ -17,12 +17,11 @@ class CorporateSiteModule extends Module {
 	var $hidetopwikis;
 	var $hidetopblogs;
 	var $hidetopeditors;
-	
+
 	var $wgLang;
 
-// These are just templates
-
-// FIXME: refactor the common functionality out of these
+	// These are just templates
+	// FIXME: refactor the common functionality out of these
 	public function executeTopHubWikis() {
 		global $wgUser, $wgTitle;
 
@@ -57,7 +56,7 @@ class CorporateSiteModule extends Module {
 		$tag_id = AutoHubsPagesHelper::getHubIdFromTitle($wgTitle);
 
 		$temp = $datafeeds->getTopUsers($tag_id, $lang, 5);
-		
+
 		foreach ($temp['value'] as &$value) {
 			$value['avatar'] = AvatarService::renderAvatar($value['username'], 33);
 		}
