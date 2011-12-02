@@ -1,7 +1,8 @@
 <?php
 
 class ModuleDataTest extends PHPUnit_Framework_TestCase {
-
+	private $wgDevelEnv;
+	
 	// initialize skin only once
 	public static function setUpBeforeClass() {
 		global $wgTitle, $wgUser, $wgForceSkin, $wgOut;
@@ -23,13 +24,15 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 	}
 
 	protected function setUp() {
-		global $wgUser;
+		global $wgUser, $wgDevelEnvironment;
 		$this->wgUser = $wgUser;
+		$this->wgDevelEnv = $wgDevelEnvironment;
 	}
 
 	protected function tearDown() {
-		global $wgUser;
+		global $wgUser, $wgDevelEnvironment;
 		$wgUser = $this->wgUser;
+		$wgDevelEnvironment = $this->wgDevelEnv;
 
 		F::unsetInstance('User');
 	}

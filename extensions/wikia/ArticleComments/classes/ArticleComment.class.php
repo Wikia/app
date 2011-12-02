@@ -806,14 +806,11 @@ class ArticleComment {
 				wfGetDB(DB_MASTER)->commit();
 				break;
 			default:
-				//TODO: review - why using wgDevelEnvironment?
-				$wgDevelEnvironment = true;
 				$userId = $wgUser->getId();
 				Wikia::log( __METHOD__, 'error', "No article created. Status: {$status}; DB: {$wgDBname}; User: {$userId}" );
 				$text  = false;
 				$error = true;
 				$message = wfMsg('article-comments-error');
-				$wgDevelEnvironment = false; // TODO: FIXME: is this right or do we want to set this to the original value?
 		}
 
 		$res = array(

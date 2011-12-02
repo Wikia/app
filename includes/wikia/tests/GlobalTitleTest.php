@@ -1,5 +1,21 @@
 <?php
 class GlobalTitleTest extends PHPUnit_Framework_TestCase {
+	private $wgDevelEnv;
+	
+	function setUp() {
+		parent::setUp();
+		
+		global $wgDevelEnvironment;
+		$this->wgDevelEnv = $wgDevelEnvironment;
+		$wgDevelEnvironment = false;
+	}
+	
+	function tearDown() {
+		global $wgDevelEnvironment;
+		$wgDevelEnvironment = $this->wgDevelEnv;
+		
+		parent::tearDown();
+	}
 
 	function testNewFromText1() {
 		$title = GlobalTitle::newFromText( "Test", NS_MAIN, 177 );
