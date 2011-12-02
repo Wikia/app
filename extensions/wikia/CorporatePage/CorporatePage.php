@@ -6,7 +6,6 @@ $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'CorporatePage',
 	'author' => 'Tomasz Odrobny',
 	'description' => 'global page for wikia.com',
-	'descriptionmsg' => 'myextension-desc',
 	'version' => '1.0.0',
 );
 
@@ -19,10 +18,15 @@ if ( !isset( $wgCorporatePageRedirectWiki ) ) {
 
 $wgAutoloadClasses['CorporatePageHelper']  = $dir . 'CorporatePageHelper.class.php';
 $wgAutoloadClasses['CorporateSiteModule'] = $dir . 'modules/CorporateSiteModule.class.php';
+$wgAutoloadClasses['BlogsInHubsModule'] = $dir . 'modules/BlogsInHubsModule.class.php';
+$wgAutoloadClasses['BlogsInHubsService'] = $dir . 'services/BlogsInHubsService.class.php';
 
-$wgExtensionMessagesFiles['CorporatePage'] = $dir . 'CorporatePage.i18n.php'; 
+$wgExtensionMessagesFiles['CorporatePage'] = $dir . 'CorporatePage.i18n.php';
 $wgHooks['MakeGlobalVariablesScript'][] = 'CorporatePageHelper::jsVars';
 $wgHooks['ArticleFromTitle'][] = 'CorporatePageHelper::ArticleFromTitle';
 $wgHooks['ArticleSaveComplete'][] = 'CorporatePageHelper::clearMessageCache';
 $wgHooks['OutputPageCheckLastModified'][] = 'CorporatePageHelper::forcePageReload';
 $wgAjaxExportList[] = 'CorporatePageHelper::blockArticle';
+
+$app = F::app();
+$app->registerHook('MessageCacheReplace', 'BlogsInHubsService', 'onMessageCacheReplace');

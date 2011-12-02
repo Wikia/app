@@ -70,10 +70,10 @@ class AutoHubsPagesArticle extends Article {
 
 	// overwrite view, display tag page
 	public function view() {
-		global $wgOut, $wgScriptPath, $wgSkin;
+		global $wgOut, $wgTitle;
 
 		wfLoadExtensionMessages('AutoHubsPages');
-		
+
 		$data = $this->prepareData();
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars(array(
@@ -81,6 +81,9 @@ class AutoHubsPagesArticle extends Article {
 		));
 		$wgOut->setHTMLTitle( wfMsg('hub-header', $data['title']) ); // does not add a h1, this is done later
 		if (Wikia::isOasis()) {
+			$hubName = $wgTitle->getText();
+
+			$wgOut->addHTML(wfRenderModule('BlogsInHubs', 'HotNews', array('hubName' => $hubName)));
 			$wgOut->addHTML(wfRenderModule('CorporateSite', 'TopHubWikis'));
 			parent::view();
 		} else {
@@ -93,7 +96,7 @@ class AutoHubsPagesArticle extends Article {
 	public function hasViewableContent () {
 		return true;
 	}
-	
+
 	/**
 	 * static entry point for hook
 	 *

@@ -191,7 +191,6 @@ $wgAutoloadClasses['SpotlightsModule'] = $IP.'/skins/oasis/modules/SpotlightsMod
 $wgAutoloadClasses['MenuButtonModule'] = $IP.'/skins/oasis/modules/MenuButtonModule.class.php';
 $wgAutoloadClasses['CommentsLikesModule'] = $IP.'/skins/oasis/modules/CommentsLikesModule.class.php';
 $wgAutoloadClasses['BlogListingModule'] = $IP.'/skins/oasis/modules/BlogListingModule.class.php';
-$wgAutoloadClasses['HistoryDropdownModule'] = $IP.'/skins/oasis/modules/HistoryDropdownModule.class.php';
 $wgAutoloadClasses['NotificationsModule'] = $IP.'/skins/oasis/modules/NotificationsModule.class.php';
 $wgAutoloadClasses['LatestEarnedBadgesModule'] = $IP.'/extensions/wikia/AchievementsII/modules/LatestEarnedBadgesModule.class.php';
 $wgAutoloadClasses['HotSpotsModule'] = $IP.'/skins/oasis/modules/HotSpotsModule.class.php';

@@ -2,7 +2,7 @@
 /**
  * TimeAgoMessaging
  *
- * Provides ability to localise messages used by jquery.timeago.js (RT #69946)
+ * Provides ability to localize messages used by jquery.timeago.js (RT #69946)
  *
  * @author Maciej Brencz (Macbre) <macbre at wikia-inc.com>
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later

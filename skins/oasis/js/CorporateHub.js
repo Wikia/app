@@ -42,12 +42,33 @@ var CorporateHub = {
 			}
 		}
 	},
+	trackClick: function(ev) {
+		var node = $(ev.target);
+		if (node.hasParent('h2')) {
+			this.track('hot-news/blog-title');
+		}
+		else if (node.hasClass('author')) {
+			this.track('hot-news/author');
+		}
+		else if (node.hasClass('wikiname')) {
+			this.track('hot-news/wiki');
+		}
+		else if (node.hasParent('.snippet')) {
+			this.track('hot-news/more');
+		}
+		else if (node.hasParent('.snippetImage')) {
+			this.track('hot-news/photo');
+		}
+	},
 	init: function() {
 		// track pageview
 		this.track('pv/' + wgPageName);
 
 		// track clicks (BugId:15672)
 		$('#WikiaPage').bind('click', $.proxy(this.onClick, this));
+		//BlogsInHubs: What's Hot
+		$('.timeago').timeago();
+		$('#hub-hot-news').bind('click', $.proxy(this.trackClick, this));
 	}
 }
 

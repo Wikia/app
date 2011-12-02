@@ -4,7 +4,7 @@ class ApiService extends Service {
 	/**
 	 * Simple wrapper for calling MW API
 	 */
-	static function call($params) {
+	static function call(Array $params) {
 		wfProfileIn(__METHOD__);
 
 		$res = false;
@@ -18,5 +18,53 @@ class ApiService extends Service {
 
 		wfProfileOut( __METHOD__ );
 		return $res;
+	}
+
+	/**
+	 * Do cross-wiki API call
+	 *
+	 * @param string database name
+	 * @param array API query parameters
+	 * @return mixed API response
+	 */
+	static function foreignCall($dbname, Array $params) {
+		wfProfileIn(__METHOD__);
+		$hostName = self::getHostByDbName($dbname);
+
+		// format API URL
+		$params['format'] = 'json';
+
+		$parts = array();
+		foreach($params as $key => $value) {
+			$parts[] = urlencode($key) . '=' . urlencode($value);
+		}
+
+		$url = "{$hostName}/api.php?" . implode('&', $parts);
+		wfDebug(__METHOD__ . ": {$url}\n");
+
+		// send request and parse response
+		$resp = Http::get($url);
+		$res = json_decode($resp, true /* $assoc */);
+
+		wfProfileOut(__METHOD__);
+		return $res;
+	}
+
+	/**
+	 * Get domain for a wiki using given database name
+	 *
+	 * @param string database name
+	 * @return string HTTP domain
+	 */
+	private static function getHostByDbName($dbname) {
+		global $wgDevelEnvironment, $wgDevelEnvironmentName;
+		if (!empty($wgDevelEnvironment)) {
+			$hostName = "http://{$dbname}.{$wgDevelEnvironmentName}.wikia-dev.com";
+		}
+		else {
+			$hostName = WikiFactory::DBtoDomain($dbname);
+		}
+
+		return rtrim($hostName, '/');
 	}
 }

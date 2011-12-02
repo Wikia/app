@@ -330,4 +330,17 @@ class CorporatePageHelper{
 		wfProfileOut(__METHOD__);
 		return true;
 	}
+
+	/**
+ 	 * Get hot blog post for a given hub
+	 * 
+	 * @param string hub name to get blog post for
+	 * @return mixed blog post data or false when there's no blog post chosen
+ 	 */
+ 	public static function getHotNews($hubName) {
+ 		wfProfileIn(__METHOD__);
+		
+ 		wfProfileOut(__METHOD__);
+		return $data;
+ 	}
 }

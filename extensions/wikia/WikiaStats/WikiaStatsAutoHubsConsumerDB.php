@@ -62,12 +62,12 @@ class WikiaStatsAutoHubsConsumerDB {
 		wfProfileIn( __METHOD__ );
 
 		if ( empty($data) ) {
-			wfProfileOut( __METHOD__ );			
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
 		if ( empty($this->dbEnabled) ) {
-			wfProfileOut( __METHOD__ );			
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
@@ -99,12 +99,12 @@ class WikiaStatsAutoHubsConsumerDB {
 		wfProfileIn( __METHOD__ );
 
 		if ( empty($data) ) {
-			wfProfileOut( __METHOD__ );			
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
 		if ( empty($this->dbEnabled) ) {
-			wfProfileOut( __METHOD__ );			
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
@@ -136,12 +136,12 @@ class WikiaStatsAutoHubsConsumerDB {
 		wfProfileIn( __METHOD__ );
 
 		if ( empty($data) ) {
-			wfProfileOut( __METHOD__ );			
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
 		if ( empty($this->dbEnabled) ) {
-			wfProfileOut( __METHOD__ );			
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
@@ -173,10 +173,10 @@ class WikiaStatsAutoHubsConsumerDB {
 		wfProfileIn( __METHOD__ );
 
 		if ( empty($this->dbEnabled) ) {
-			wfProfileOut( __METHOD__ );			
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
-		
+
 		$table_to_clear = array(
 			'tags_top_users' => array('col' => 'tu_date', 'exp' => 7),
 			'tags_top_articles' => array('col' => 'ta_date', 'exp' => 3),
@@ -204,7 +204,7 @@ class WikiaStatsAutoHubsConsumerDB {
 		global $wgMemc, $wgContLang;
 
 		wfProfileIn( __METHOD__ );
-			
+
 		$mcKey = wfSharedMemcKey( "auto_hubs", "blogs", $tag_id, $lang, $limit, $per_wiki );
 
 		if( !$force_reload ) {
@@ -214,12 +214,12 @@ class WikiaStatsAutoHubsConsumerDB {
 				return $out;
 			}
 		}
-		
+
 		if ( empty($this->dbEnabled) ) {
-			wfProfileOut( __METHOD__ );			
+			wfProfileOut( __METHOD__ );
 			return array("value" => array(), "age" => time());
 		}
-				
+
 		$tag_id = (int) $tag_id;
 		$conditions = array( 'tag_id' => $tag_id, 'city_lang' => $lang );
 		// CorporatePage extension needs to get a list of staff blogs, and only has a list of page_ids
@@ -288,10 +288,10 @@ class WikiaStatsAutoHubsConsumerDB {
 		}
 
 		if ( empty($this->dbEnabled) ) {
-			wfProfileOut( __METHOD__ );			
+			wfProfileOut( __METHOD__ );
 			return array("value" => array(), "age" => time());
 		}
-		
+
 		$tag_id = (int) $tag_id;
                 $where = array(
                     'tag_id' => $tag_id,
@@ -355,10 +355,10 @@ class WikiaStatsAutoHubsConsumerDB {
 		}
 
 		if ( empty($this->dbEnabled) ) {
-			wfProfileOut( __METHOD__ );			
+			wfProfileOut( __METHOD__ );
 			return array("value" => array(), "age" => time());
 		}
-		
+
 		$tag_id = (int) $tag_id;
 		$limit = 40;
 		$lang_id = WikiFactory::LangCodeToId($lang);
@@ -472,15 +472,16 @@ class WikiaStatsAutoHubsConsumerDB {
 		if( !$force_reload ) {
 			$out = $wgMemc->get($mcKey);
 			if( !empty($out) ) {
+				wfProfileOut( __METHOD__ );
 				return $out;
 			}
 		}
 
 		if ( empty($this->dbEnabled) ) {
-			wfProfileOut( __METHOD__ );			
+			wfProfileOut( __METHOD__ );
 			return array("value" => array(), "age" => time());
 		}
-		
+
 		$tag_id = (int) $tag_id;
 		$res = $this->dbs->select(
 			array( 'specials.summary_tags_top_users' ),
@@ -522,7 +523,7 @@ class WikiaStatsAutoHubsConsumerDB {
 				$out[$key]['userpage'] = $pageUrl;
 			}
 		}
-		
+
 		$out = array("value" => $out, "age" => time());
 		$wgMemc->set( $mcKey, $out,60*60 );
 		wfProfileOut( __METHOD__ );
@@ -543,10 +544,10 @@ class WikiaStatsAutoHubsConsumerDB {
 		}
 
 		if ( empty($this->dbEnabled) ) {
-			wfProfileOut( __METHOD__ );			
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
-		
+
 		$oUser = User::newFromId( $user_id );
 		if ( !$oUser instanceof User ) {
 			wfProfileOut( __METHOD__ );
@@ -879,7 +880,7 @@ class WikiaStatsAutoHubsConsumerDB {
 		if ( empty($this->dbEnabled) ) {
 			return true;
 		}
-				
+
 		$this->dbs->begin();
 		$delete_date = date("Y-m-d", mktime(0, 0, 0, date("m")  , date("d") - $date_col['exp'], date("Y")));
 
@@ -904,7 +905,7 @@ class WikiaStatsAutoHubsConsumerDB {
 		if ( empty($this->dbEnabled) ) {
 			return 0;
 		}
-				
+
 		$this->dbs->begin();
 		$this->dbs->insert('tags_stats_filter',
 			array(
@@ -968,7 +969,7 @@ class WikiaStatsAutoHubsConsumerDB {
 		if ( empty($this->dbEnabled) ) {
 			return $out;
 		}
-		
+
 		while ( $row = $this->dbs->fetchRow( $res ) ) {
 			if ($type == 'blog' ) {
 				$row = array_merge($row, $this->getBlogInfoByApi($row['wikiurl'], $row['page_id']));
@@ -1064,7 +1065,7 @@ class WikiaStatsAutoHubsConsumerDB {
 
 			$wgMemc->set($mcKey,$data);
 		}
-		
+
 		return $data;
 	}
 

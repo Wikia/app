@@ -25,6 +25,8 @@ $messages['en'] = array(
 	'hub-show-feed' => 'Show Feed',
 	'hub-contributors-info' => 'These are the top users this week, ranked by most edits.',
 	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|editor|editors}}</span>',
+	'hub-hot-news' => 'What\'s Hot',
+	'hub-hot-news-post-details' => 'By $1 on $2 $3',
 );
 
 /** Message documentation (Message documentation)
@@ -48,6 +50,10 @@ $messages['qqq'] = array(
 * $1 is the number of edit points.',
 	'hub-editors' => 'Parameters:
 * $1 is the number of editors.',
+	'hub-hot-news-post-details' => 'Parameters:
+* $1 is the username linked to userprofile.
+* $2 is the wikiname linked to wiki main page.
+* $3 is the publish date.',
 );
 
 /** Afrikaans (Afrikaans)

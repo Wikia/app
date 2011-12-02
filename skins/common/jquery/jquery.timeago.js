@@ -1,5 +1,5 @@
 /*
- * timeago: a jQuery plugin, version: 0.8.2 (2010-02-16)
+ * timeago: a jQuery plugin, version: 0.9.3 (2011-01-21)
  * @requires jQuery v1.2.3 or later
  *
  * Timeago is a jQuery plugin that makes it easy to support automatically
@@ -11,13 +11,17 @@
  * Licensed under the MIT:
  * http://www.opensource.org/licenses/mit-license.php
  *
- * Copyright (c) 2008-2010, Ryan McGeary (ryanonjavascript -[at]- mcgeary [*dot*] org)
+ * Copyright (c) 2008-2011, Ryan McGeary (ryanonjavascript -[at]- mcgeary [*dot*] org)
  */
 (function($) {
   $.timeago = function(timestamp) {
-    if (timestamp instanceof Date) return inWords(timestamp);
-    else if (typeof timestamp == "string") return inWords($.timeago.parse(timestamp));
-    else return inWords($.timeago.datetime(timestamp));
+    if (timestamp instanceof Date) {
+      return inWords(timestamp);
+    } else if (typeof timestamp === "string") {
+      return inWords($.timeago.parse(timestamp));
+    } else {
+      return inWords($.timeago.datetime(timestamp));
+    }
   };
   var $t = $.timeago;
 
@@ -30,29 +34,28 @@
         prefixFromNow: null,
         suffixAgo: "ago",
         suffixFromNow: "from now",
-        ago: null, // DEPRECATED, use suffixAgo
-        fromNow: null, // DEPRECATED, use suffixFromNow
-        seconds: "a minute",
-        minute: "a minute",
+        seconds: "less than a minute",
+        minute: "about a minute",
         minutes: "%d minutes",
-        hour: "an hour",
-        hours: "%d hours",
+        hour: "about an hour",
+        hours: "about %d hours",
         day: "a day",
         days: "%d days",
-        month: "a month",
+        month: "about a month",
         months: "%d months",
-        year: "a year",
-        years: "%d years"
+        year: "about a year",
+        years: "%d years",
+        numbers: []
       }
     },
     inWords: function(distanceMillis) {
       var $l = this.settings.strings;
       var prefix = $l.prefixAgo;
-      var suffix = $l.suffixAgo || $l.ago;
+      var suffix = $l.suffixAgo;
       if (this.settings.allowFuture) {
         if (distanceMillis < 0) {
           prefix = $l.prefixFromNow;
-          suffix = $l.suffixFromNow || $l.fromNow;
+          suffix = $l.suffixFromNow;
         }
         distanceMillis = Math.abs(distanceMillis);
       }
@@ -62,6 +65,12 @@
       var hours = minutes / 60;
       var days = hours / 24;
       var years = days / 365;
+
+      function substitute(stringOrFunction, number) {
+        var string = $.isFunction(stringOrFunction) ? stringOrFunction(number, distanceMillis) : stringOrFunction;
+        var value = ($l.numbers && $l.numbers[number]) || number;
+        return string.replace(/%d/i, value);
+      }
 
       var words = seconds < 45 && substitute($l.seconds, Math.round(seconds)) ||
         seconds < 90 && substitute($l.minute, 1) ||
@@ -79,14 +88,15 @@
     },
     parse: function(iso8601) {
       var s = $.trim(iso8601);
+      s = s.replace(/\.\d\d\d+/,""); // remove milliseconds
       s = s.replace(/-/,"/").replace(/-/,"/");
       s = s.replace(/T/," ").replace(/Z/," UTC");
-      s = s.replace(/([\+-]\d\d)\:?(\d\d)/," $1$2"); // -04:00 -> -0400
+      s = s.replace(/([\+\-]\d\d)\:?(\d\d)/," $1$2"); // -04:00 -> -0400
       return new Date(s);
     },
     datetime: function(elem) {
       // jQuery's `is()` doesn't play well with HTML5 in IE
-      var isTime = $(elem).get(0).tagName.toLowerCase() == "time"; // $(elem).is("time");
+      var isTime = $(elem).get(0).tagName.toLowerCase() === "time"; // $(elem).is("time");
       var iso8601 = isTime ? $(elem).attr("datetime") : $(elem).attr("title");
       return $t.parse(iso8601);
     }
@@ -106,35 +116,21 @@
   function refresh() {
     var data = prepareData(this);
     if (!isNaN(data.datetime)) {
-      if($(this).hasClass('abstimeago') && $(this).attr('alt')) {
-      	var one_day = 1000*60*60*24;
-      	if( ( distance(data.datetime) )/one_day > 7 )
-      		$(this).text( $(this).attr('alt') );
-      	else
-      		$(this).text( inWords(data.datetime) );
-      } else 
-      	$(this).text(inWords(data.datetime));
+      $(this).text(inWords(data.datetime));
     }
     return this;
   }
 
   function prepareData(element) {
-	  element = $(element);
-	  if (!element.data("timeago")) {
-		  var datetime = $t.datetime(element);
-		  //      don't put old, cached, incorrect time in title
-		  //      var text = $.trim(element.text());
-		  //      if (text.length > 0) element.attr("title", text);
-
-		  // RT#70400: don't render dates older then "maxdiff"
-		  var maxdiff = parseInt(element.data('maxdiff'));
-		  if ((maxdiff > 0) && (distance(datetime) > maxdiff)) {
-				datetime = 'null';
-		  }
-
-		  element.data("timeago", { datetime: datetime });
-	  }
-	  return element.data("timeago");
+    element = $(element);
+    if (!element.data("timeago")) {
+      element.data("timeago", { datetime: $t.datetime(element) });
+      var text = $.trim(element.text());
+      if (text.length > 0) {
+        element.attr("title", text);
+      }
+    }
+    return element.data("timeago");
   }
 
   function inWords(date) {
@@ -145,20 +141,15 @@
     return (new Date().getTime() - date.getTime());
   }
 
-  function substitute(stringOrFunction, value) {
-    var string = $.isFunction(stringOrFunction) ? stringOrFunction(value) : stringOrFunction;
-    return string.replace(/%d/i, value);
-  }
-
   // fix for IE6 suckage
   document.createElement("abbr");
   document.createElement("time");
 
   // Wikia - start
   // RT #69946
-  if (typeof wgTimeAgoi18n != 'undefined') {
+  if (window.wgTimeAgoi18n) {
     $.extend($.timeago.settings.strings, wgTimeAgoi18n);
 	$.timeago.settings.strings.suffixAgo = '';
   }
   // Wikia - end
-})(jQuery);
+}(jQuery));
