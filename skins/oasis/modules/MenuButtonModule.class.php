@@ -120,12 +120,11 @@ class MenuButtonModule extends Module {
 		}
 
 		// prompt for login to edit?
-		$promptLogin = !$wgTitle->userCan( 'edit' ) && $wgUser->isAnon();
+		$promptLogin = !$wgTitle->userCan( 'edit' );
 
-		// modify URLs (BugId:9494)
+		// modify edit URL if the action is edit
 		if ($promptLogin &&
-			$this->actionName != 'source' /* don't modify "view source" links - BugId:9494 */ &&
-			$this->actionName != 'shareButton' &&
+			$this->actionName != 'edit' &&
 			isset($this->action['href']) /* BugId:12613 */) {
 				$signUpTitle = SpecialPage::getTitleFor('SignUp');
 				$loginUrl = $this->createLoginURL(!empty($this->dropdown) ? 'action=edit' : '');
