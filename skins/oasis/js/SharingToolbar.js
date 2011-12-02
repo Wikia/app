@@ -20,8 +20,7 @@ var SharingToolbar = {
 
 		$(window).bind('scroll', $.proxy(this.onScroll, this));
 		this.toolbarNode.children('.email-link').bind('click', this.onEmailClick);
-		$('.WikiHeaderRestyle .share-button').bind('click', $.proxy(this.toolbarToggle, this));
-
+		$('.WikiHeaderRestyle .share-button').bind('click', this.toolbarToggle);
 	},
 	onScroll: function() {
 		if ($(window).scrollTop() >= this.contributeOffsetTop) {
@@ -85,7 +84,7 @@ var SharingToolbar = {
 	},
 	checkWidth: function() {
 		var maxWidth = 0, elementWidth = 0, node = null, nodes = $('#SharingToolbar').children();
-		$.each(nodes, function(key, value) { 
+		$.each(nodes, function(key, value) {
 			node = $(value);
 			elementWidth = parseInt(0 + node.outerWidth());
 			if (parseInt(0 + node.outerWidth()) > parseInt(0 + node.children().outerWidth())) {
@@ -99,18 +98,22 @@ var SharingToolbar = {
 			maxWidth
 		);
 	},
-	toolbarToggle: function(e) {
-		var button = $(e.target);
+	toolbarToggle: function(ev) {
+		var button = $(this),
+			self = SharingToolbar;
+
+		ev.preventDefault();
+
 		button.toggleClass('share-enabled');
-		this.toolbarNode.toggle();
+		self.toolbarNode.toggle();
 
 		// click tracking and width checking
 		if (button.hasClass('share-enabled')) {
-			this.track('share-activate');
-			this.checkWidth();
+			self.track('share-activate');
+			self.checkWidth();
 		}
 		else {
-			this.track('share-deactivate');
+			self.track('share-deactivate');
 		}
 	}
 }
