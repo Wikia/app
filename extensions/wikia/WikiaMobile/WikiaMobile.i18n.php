@@ -19,6 +19,8 @@ $messages['en'] = array(
 	'wikiamobile-menu' => 'Menu',
 	'wikiamobile-explore' => 'Explore',
 	'wikiamobile-article-categories' => 'Categories',
+	
+	//footer
 	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Lifestyle]]',
 	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|Entertainment]]',
 	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Gaming]]'

@@ -34,6 +34,8 @@ $messages['en'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'The parent article / parent comment has been deleted.',
 	'article-comments-empty-comment' => "You can't post an empty comment. <a href='$1'>Delete it instead?</a>",
+	'wikiamobile-article-comments-header' => 'Comments ($1)',
+	'wikiamobile-article-comments-more' => 'Load more',
 	'enotif_subject_article_comment' => '$PAGEEDITOR has commented on "$PAGETITLE" on {{SITENAME}}',
 	'enotif_body_article_comment' => 'Dear $WATCHINGUSERNAME,
 
