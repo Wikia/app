@@ -124,7 +124,7 @@ class MenuButtonModule extends Module {
 
 		// modify edit URL if the action is edit
 		if ($promptLogin &&
-			$this->actionName != 'edit' &&
+			$this->actionName == 'edit' &&
 			isset($this->action['href']) /* BugId:12613 */) {
 				$signUpTitle = SpecialPage::getTitleFor('SignUp');
 				$loginUrl = $this->createLoginURL(!empty($this->dropdown) ? 'action=edit' : '');
