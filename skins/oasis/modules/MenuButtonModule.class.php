@@ -119,13 +119,10 @@ class MenuButtonModule extends Module {
 			$this->class = 'wikia-menu-button';
 		}
 
-		// prompt for login to edit?
-		$promptLogin = !$wgTitle->userCan( 'edit' );
-
 		// modify edit URL if the action is edit
-		if ($promptLogin &&
-			$this->actionName == 'edit' &&
-			isset($this->action['href']) /* BugId:12613 */) {
+		if ( $this->actionName == 'edit' &&
+			isset($this->action['href']) /* BugId:12613 */ &&
+			!$wgTitle->userCan( 'edit' ) ) {
 				$signUpTitle = SpecialPage::getTitleFor('SignUp');
 				$loginUrl = $this->createLoginURL(!empty($this->dropdown) ? 'action=edit' : '');
 
