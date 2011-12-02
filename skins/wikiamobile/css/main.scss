@@ -129,3 +129,20 @@ a {
 .open .chevron {
 	background-image: url("/skins/wikiamobile/images/close_chev.png");/* $wgCdnStylePath */
 }
+
+.loader {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 50px;
+	height: 50px;
+	margin: -25px 0 0 -25px;
+	-webkit-animation: rotate 1s infinite linear;
+}
+
+@-webkit-keyframes rotate {
+	100% {
+		-webkit-transform: rotate(360deg);
+	}
+}
+
