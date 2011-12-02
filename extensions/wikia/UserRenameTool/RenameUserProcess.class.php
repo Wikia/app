@@ -487,7 +487,8 @@ class RenameUserProcess {
 				'rename_user_id' => $this->mUserId,
 				'rename_old_name' => $this->mOldUsername,
 				'rename_new_name' => $this->mNewUsername,
-				'reason' => $this->mReason
+				'reason' => $this->mReason,
+                                'tasks' => array()
 			),
 			TASK_STARTED
 		);
