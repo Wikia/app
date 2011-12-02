@@ -32,11 +32,11 @@
 				if(pageYOffset == 0) window.scrollTo( 0, 1 );
 		}
 
-		$(document.body).delegate('#modalClose', WikiaMobile._clickevent , function() {
+		$('#modalClose').bind(WikiaMobile._clickevent , function() {
 			that.closeModal();
 		});
 
-		$(document.body).delegate('#modalWrapper', WikiaMobile._clickevent, function() {
+		$('#modalWrapper').bind(WikiaMobile._clickevent, function() {
 			that._resetTimeout();
 		});
 

@@ -5,8 +5,8 @@
 //base colors
 $page-background-color: #FFF;
 $page-text-color: #3A3A3A;
-$link-color: #55ACE1;
-$section-text-color: #55ACE1;
+$link-color: #006CB0;
+$section-text-color: #006CB0;
 $border-color: #E3E3E3;
 $shadow-color: #DDD;
 
@@ -47,3 +47,5 @@ $navBarWordmarkText: black;
 $searchOpenBackground: #474747;
 $searchOpenBorder: #878787;
 
+$dividerColorFirst: mix($navBarColorFirst, #000000, 80%);
+$dividerColorSecond: darken($navBarColorFirst, 20%);

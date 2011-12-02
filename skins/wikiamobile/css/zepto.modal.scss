@@ -110,13 +110,27 @@
 	}
 }
 
+.changeImageChevron {
+	bottom: 50%;
+	border-width: 10px;
+	border-style: solid;
+	position: absolute;
+}
+
 #nextImage {
 	right: 0;
-	background-image:url('/skins/wikiamobile/images/chevron-right.png');/* $wgCdnStylePath */
+	.changeImageChevron {
+		border-color: transparent transparent transparent #006CB0;
+		right: 10px;
+	}
 }
+
 
 #previousImage {
 	left: 0;
-	background-image:url('/skins/wikiamobile/images/chevron-left.png');/* $wgCdnStylePath */
+	.changeImageChevron {
+		border-color: transparent #006CB0 transparent transparent;
+		left: 10px;
+	}
 
 }
