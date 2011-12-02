@@ -4,6 +4,7 @@ class AdModule extends Module {
 
 	private static $config;
 	private static $slotsUseGetAd = array( 'HOME_INVISIBLE_TOP', 'INVISIBLE_TOP', 'INVISIBLE_1', 'INVISIBLE_2', 'HOME_TOP_RIGHT_BUTTON', 'TOP_RIGHT_BUTTON' );
+	private static $slotsDisplayShinyAdSelfServe = array( 'CORP_TOP_RIGHT_BOXAD', 'HOME_TOP_RIGHT_BOXAD', 'TEST_TOP_RIGHT_BOXAD', 'TOP_RIGHT_BOXAD' );
 
 	private function configure() {
 		global $wgOut, $wgTitle, $wgContentNamespaces, $wgEnableFAST_HOME2, $wgEnableCorporatePageExt, $wgExtraNamespaces;
@@ -110,12 +111,21 @@ class AdModule extends Module {
 	public $ad;
 
 	public function executeIndex(array $params) {
+		global $wgShinyAdsSelfServeUrl;
 
 		if(self::$config === null) {
 			$this->configure();
 		}
 
 		$this->slotname = $params['slotname'];
+		$this->selfServeUrl = null;
+		if ($wgShinyAdsSelfServeUrl) {
+			if (array_search($this->slotname, self::$slotsDisplayShinyAdSelfServe) !== FALSE) {
+				if (!(AdEngine::getInstance()->getAdProvider($this->slotname) instanceof AdProviderNull)) {	// will we show an ad?
+					$this->selfServeUrl = $wgShinyAdsSelfServeUrl;
+				}
+			}
+		}
 
 		if(isset(self::$config[$this->slotname])) {
 			if (AdEngine::getInstance()->getProviderNameForSlotname($this->slotname) == 'AdDriver') {
