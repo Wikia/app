@@ -148,12 +148,20 @@ class UserProfilePageController extends WikiaController {
 		$canDelete = $sessionUser->isAllowed('deleteprofilev3');
 		$isUserPageOwner = ($user instanceof User && !$user->isAnon() && $user->getId() == $sessionUser->getId()) ? true : false;
 
+		$editQuery = array( 'action' => 'edit' );
+
+		// check if this is an older version of the page
+		$oldid = $this->app->wg->request->getInt( 'oldid', 0 );
+		if ( $oldid ) {
+			$editQuery['oldid'] = $oldid;
+		}
+
 		$actionButtonArray = array();
 		if( $namespace == NS_USER ) {
 		//profile page
 			$actionButtonArray = array(
 				'action' => array(
-					'href' => $this->title->getLocalUrl(array('action' => 'edit')),
+					'href' => $this->title->getLocalUrl( $editQuery ),
 					'text' => $this->wf->Msg('user-action-menu-edit-profile'),
 				),
 				'image' => MenuButtonModule::EDIT_ICON,
@@ -166,10 +174,10 @@ class UserProfilePageController extends WikiaController {
 			if( $title instanceof Title ) {
 			//sometimes title isn't created, i've tried to reproduce it on my devbox and i couldn't
 			//checking if $title is instance of Title is a quick fix -- if it isn't no action button will be shown
-				if( $isUserPageOwner ) {
+				if( $isUserPageOwner || $this->app->wg->request->getVal( 'oldid' ) ) {
 					$actionButtonArray = array(
 						'action' => array(
-							'href' => $this->title->getLocalUrl(array('action' => 'edit')),
+							'href' => $this->title->getLocalUrl( $editQuery ),
 							'text' => $this->wf->Msg('user-action-menu-edit'),
 						),
 						'image' => MenuButtonModule::EDIT_ICON,
@@ -178,14 +186,14 @@ class UserProfilePageController extends WikiaController {
 				} else {
 					$actionButtonArray = array(
 						'action' => array(
-							'href' => $title->getLocalUrl(array('action' => 'edit', 'section' => 'new')),
+							'href' => $title->getLocalUrl( array_merge( $editQuery, array( 'section' => 'new' ) ) ),
 							'text' => $this->wf->Msg('user-action-menu-leave-message'),
 						),
 						'image' => MenuButtonModule::MESSAGE_ICON,
 						'name' => 'leavemessage',
 						'dropdown' => array(
 							'edit' => array(
-								'href' => $this->title->getFullUrl(array('action' => 'edit')),
+								'href' => $this->title->getFullUrl( $editQuery ),
 								'text' => $this->wf->Msg('user-action-menu-edit'),
 							)
 						),
