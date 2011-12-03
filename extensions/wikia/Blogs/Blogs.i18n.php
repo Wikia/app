@@ -2334,7 +2334,7 @@ $messages['ms'] = array(
 	'create-blog-categories-textinput' => 'Buka kategori baru',
 	'create-blog-categories-submit' => 'Hantar',
 	'create-blog-save' => 'Simpan laman',
-	'create-blog-preview' => 'Paparkan pratonton',
+	'create-blog-preview' => 'Paparkan pralihat',
 	'create-blog-updated' => 'Kiriman blog dicipta/dikemaskini.',
 	'create-blog-permission-denied' => 'Ralat ketika menyimpan laman blog: Izin ditolak',
 	'create-blog-article-already-exists' => 'Nama itu sudah dipakai oleh kiriman blog lain, sila pilih nama yang lain',
@@ -2343,7 +2343,7 @@ $messages['ms'] = array(
 	'create-blog-listing-form-info' => 'Laman senarai blog digunakan untuk mengumpulkan senarai blog daripada berbagai-bagai pengarang ke dalam satu laman.
 Cipta laman senarai blog untuk kategori-kategori seperti "Barack Obama", "Cereka Peminat" ataupun gabungkan berbilang kategori.',
 	'create-blog-listing-page-title' => 'Tajuk laman senarai blog',
-	'create-blog-listing-preview' => 'Pratonton',
+	'create-blog-listing-preview' => 'Pralihat',
 	'create-blog-listing-authors' => 'Dapatkan kiriman blog yang dicipta oleh pengarang-pengarang ini (pisahkan dengan tanda koma)',
 	'create-blog-listing-blog-post-categories-title' => 'Dapatkan kiriman blog daripada kategori-kategori ini',
 	'create-blog-listing-page-categories-title' => 'Letakkan laman senarai blog ini kepada kategori-kategori ini',
@@ -2704,6 +2704,7 @@ $messages['or'] = array(
  */
 $messages['pdc'] = array(
 	'blog-comments' => 'Aamaerickinge',
+	'blog-comment-delete' => 'lesche',
 );
 
 /** Pälzisch (Pälzisch) */
@@ -2712,6 +2713,7 @@ $messages['pfl'] = array(
 );
 
 /** Polish (Polski)
+ * @author Sovq
  * @author Sp5uhe
  * @author Woytecr
  */
@@ -2727,6 +2729,7 @@ $messages['pl'] = array(
 	'create-blog-post-recent-listing-title' => 'Ostatnie wpisy',
 	'create-blog-post-recent-listing-log' => 'Artykuły utworzone dla ostatnich wpisów w pamiętniku',
 	'create-blog-post-title' => 'Utwórz nowy wpis w pamiętniku',
+	'create-blog-post-title-edit' => 'Edytuj wpis na blogu',
 	'create-blog-form-title' => 'Co to jest wpis w pamiętniku?',
 	'create-blog-form-post-text' => 'Treść pamiętnika',
 	'create-blog-form-info' => 'Wpisy w pamiętniku to świetny sposób na opublikowanie wiadomości, opinii i pomysłów udostępnianych społeczności.',
@@ -3571,6 +3574,7 @@ Skapa blogg-listor för kategorier som "Barack Obama", "Fan Fiction", eller komb
 	'blog-create-next-label' => 'Skapa ny bloggartikel',
 	'blog-create-listing-label' => 'Skapa blogglista',
 	'blog-refresh-label' => 'Uppdatera',
+	'blog-widgets-label' => 'Instrumentpanel för gränssnittskomponenter',
 	'blog-listing-zero-other' => 'Denna användare har inte skrivit några blogg-inlägg ännu!',
 	'blog-listing-created' => 'Blogglistsida skapades',
 	'blog-userblog' => '$1s blogg',

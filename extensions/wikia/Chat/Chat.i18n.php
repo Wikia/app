@@ -1005,6 +1005,7 @@ Sila hubungi mereka untuk penjelasan lanjut.',
  * @author Tjcool007
  */
 $messages['nl'] = array(
+	'chat' => 'Chatten',
 	'chat-desc' => '[[Special:Chat|Livechat]]',
 	'chat-no-login' => 'U moet aangemeld zijn om deel te nemen aan de chat.',
 	'chat-no-login-text' => 'Meld u aan om deel te nemen aan de chat.',
@@ -1240,6 +1241,7 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Aristóbulo
+ * @author Pedroca cerebral
  */
 $messages['pt-br'] = array(
 	'chat-desc' => '[[Special:Chat|Bate-Papo]]',
@@ -1247,10 +1249,12 @@ $messages['pt-br'] = array(
 	'chat-no-login-text' => 'Por favor faça o login para o bate-papo.',
 	'chat-default-topic' => 'Bem-vindo ao $1 bate-papo',
 	'chat-user-joined' => '$1 entrou no chat.',
+	'chat-read-only' => 'O chat está temporariamente indisponível porque a wiki está em modo de leitura.',
 	'chat-user-parted' => '$1 saiu do chat.',
 	'chat-user-blocked' => '$1 bloqueou $2.',
 	'chat-user-allow' => '$1 permitiu $2.',
 	'chat-user-was-kickbanned' => '$1 foi banido.',
+	'chat-user-permanently-disconnected' => 'Você está desconectado. Verifique sua conexão com a internet e atualize a janela de seu navegador',
 	'chat-inlinealert-a-made-b-chatmod' => '$1 tornou <strong>$2</strong> moderador do chat.',
 	'chat-err-connected-from-another-browser' => 'Ligou-se a partir de outro browser. Esta ligação será fechada.',
 	'chat-err-communicating-with-mediawiki' => 'Erro de comunicação com o servidor do MediaWiki.',
@@ -1264,6 +1268,23 @@ $messages['pt-br'] = array(
 	'chat-you-are-banned' => 'Erro de permissões.',
 	'chat-you-are-banned-text' => 'Desculpe, mas você não tem permissões para usar a sala de conversação nesta wiki. Se acredita que a falta de permissões resulta de um erro ou pretende que o assunto seja reconsiderado, contate um administrador, por favor.',
 	'chat-room-is-not-on-this-wiki' => 'A sala de conversação onde você está tentando entrar não parece existir nesta wiki.',
+	'chat-kick-log-reason' => 'Banido da sala de conversação desta wiki por $1. Contate o usuário para mais detalhes.',
+	'chat-headline' => 'Chat da $1',
+	'chat-live' => 'Ao vivo!',
+	'chat-start-a-chat' => 'Iniciar uma conversa',
+	'chat-whos-here' => 'Participantes ($1)',
+	'chat-join-the-chat' => 'Entrar no Chat',
+	'chat-edit-count' => '$1 edições',
+	'chat-member-since' => 'Membro desde $1',
+	'chat-great-youre-logged-in' => 'Ótimo! Está conectado.',
+	'chat-user-manu-profile' => 'Perfil do usuário',
+	'chat-user-manu-contribs' => 'Contribuições',
+	'chat-user-manu-private' => 'Mensagem privada',
+	'chat-user-manu-give-chat-mod' => 'Dar estatuto de Moderador',
+	'chat-user-manu-kickban' => 'Expulsar',
+	'chat-user-manu-private-block' => 'Bloquear mensagens privadas',
+	'chat-user-manu-private-allow' => 'Permitir mensagens privadas',
+	'chat-user-manu-private-close' => 'Fechar sala privada',
 );
 
 /** Romanian (Română)

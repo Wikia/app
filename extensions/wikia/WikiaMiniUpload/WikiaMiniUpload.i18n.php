@@ -707,6 +707,7 @@ $messages['cy'] = array(
 /** German (Deutsch)
  * @author Inkowik
  * @author LWChris
+ * @author Sebastian Wallroth
  * @author Tiin
  */
 $messages['de'] = array(
@@ -748,7 +749,7 @@ $messages['de'] = array(
 	'wmu-success' => '<h1>Bild eingefügt</h1>Das von dir ausgesuchte Bild wurde erfolgreich in den Artikel eingefügt.',
 	'wmu-success-placeholder' => '<h1>Erfolg</h1>',
 	'wmu-return' => 'Zurück zur Bearbeitung',
-	'wmu-back' => 'zurück',
+	'wmu-back' => 'Wählen Sie ein anderes Foto',
 	'wmu-close' => 'schließen',
 	'wmu-warn1' => 'Du musst zuerst einen Suchbegriff eingeben!',
 	'wmu-warn2' => 'Du musst zuerst eine Datei auswählen!',
@@ -1065,7 +1066,7 @@ $messages['fr'] = array(
 	'wmu-success' => '<h1>Succès</h1>Votre image a été insérée.',
 	'wmu-success-placeholder' => '<h1>Succès</h1>',
 	'wmu-return' => 'Revenir à la modification',
-	'wmu-back' => 'Retour',
+	'wmu-back' => 'Sélectionner une autre image',
 	'wmu-close' => 'fermer',
 	'wmu-warn1' => "Vous devez d'abord spécifier ce que vous recherchez !",
 	'wmu-warn2' => "Vous devez d'abord sélectionner un fichier !",
@@ -1171,7 +1172,7 @@ $messages['gl'] = array(
 	'wmu-gallery-btn2' => 'Inserir a galería no artigo',
 	'wmu-no-preview' => 'Non pode engadir unha imaxe ao artigo no modo de vista previa',
 	'wmu-no-protect' => 'Esta páxina está protexida, non pode engadir imaxes nela',
-	'wmu-no-rights' => 'Non ten os permisos necesarios para engadir imaxes nesta páxina',
+	'wmu-no-rights' => 'Non ten os permisos necesarios para engadir imaxes a esta páxina',
 	'wmu-more-options' => 'Máis opcións',
 	'wmu-fewer-options' => 'Menos opcións',
 	'wmu-replace-default-caption' => 'substituír o pé de foto por defecto',
@@ -1481,6 +1482,7 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Fryed-peach
  * @author Tommy6
  */
 $messages['ja'] = array(
@@ -1523,7 +1525,7 @@ $messages['ja'] = array(
 記事に画像を挿入しました。',
 	'wmu-success-placeholder' => '<h1>成功しました</h1>',
 	'wmu-return' => '編集画面に戻る',
-	'wmu-back' => '戻る',
+	'wmu-back' => '別の画像を選択',
 	'wmu-close' => '閉じる',
 	'wmu-warn1' => '検索する語を入力してください',
 	'wmu-warn2' => 'アップロードする画像を選択してください',
@@ -1739,7 +1741,7 @@ $messages['ms'] = array(
 	'wmu-licensing' => 'Perlesenan',
 	'wmu-details-inf2' => '<h1>Pilihan rencana</h1>Pilih cara anda membentangkan fail ini dalam laman anda.',
 	'wmu-size' => 'Saiz',
-	'wmu-thumbnail' => 'Imej ringkas',
+	'wmu-thumbnail' => 'Gambar kenit',
 	'wmu-fullsize' => 'Saiz penuh ($1x$2px)',
 	'wmu-width' => 'Lebar',
 	'wmu-layout' => 'Bentangan',
@@ -1769,7 +1771,7 @@ $messages['ms'] = array(
 	'wmu-filetype-incorrect' => 'Bahan yang dimuat naik ini ada sambungan fail yang tidak betul',
 	'wmu-hide-license-msg' => 'sorokkan teks lesen',
 	'wmu-show-license-msg' => 'paparkan teks lesen',
-	'wmu-max-thumb' => 'melebihi saiz imej ringkas maksimum, kembali ke saiz asalnya',
+	'wmu-max-thumb' => 'melebihi saiz gambar kenit maksimum, kembali ke saiz asalnya',
 	'wmu-notallowed' => 'Anda tidak boleh memuat naik gambar dalam wiki ini',
 	'wmu-readonly' => 'Anda tidak boleh memuat naik gambar, kerana wiki ini berada dalam keadaan baca sahaja.',
 	'wmu-placeholder' => 'Pemegang tempat',
@@ -1781,12 +1783,12 @@ $messages['ms'] = array(
 	'wmu-gallery-success' => 'Anda telah membubuh gambar ke dalam galeri baru. Klik di bawah untuk menambahkan lagi gambar atau menyisipkan galeri',
 	'wmu-gallery-btn1' => 'Bubuh gambar lain',
 	'wmu-gallery-btn2' => 'Sisipkan galeri ke dalam laman',
-	'wmu-no-preview' => 'Anda tidak boleh menambahkan imej dari laman dalam mod pratonton',
+	'wmu-no-preview' => 'Anda tidak boleh menambahkan imej dari laman dalam mod pralihat',
 	'wmu-no-protect' => 'Laman ini dilindungi, anda tidak boleh menambah gambar ke dalamnya',
 	'wmu-no-rights' => 'Anda tidak dibenarkan membubuh gambar ke dalam laman ini',
 	'wmu-more-options' => 'Lagi pilihan',
 	'wmu-fewer-options' => 'Kurang pilihan',
-	'wmu-replace-default-caption' => 'ganti kapsyen tersedia',
+	'wmu-replace-default-caption' => 'ganti kapsyen asali',
 	'wmu-appearance-in-article' => 'Penampilan dalam Rencana',
 	'wmu-alignment' => 'Penjajaran',
 	'wmu-file-protected' => 'Imej ini dilindungi.',
@@ -2511,7 +2513,7 @@ $messages['sv'] = array(
 	'wmu-success' => '<h1>Succé</h1>Dina bilder har lagts till.',
 	'wmu-success-placeholder' => '<h1>Succé</h1>',
 	'wmu-return' => 'Återgå till redigering',
-	'wmu-back' => 'tillbaka',
+	'wmu-back' => 'Välj ett annat foto',
 	'wmu-close' => 'stäng',
 	'wmu-warn1' => 'Du måste ange en fråga först!',
 	'wmu-warn2' => 'Du måste välja en fil först!',

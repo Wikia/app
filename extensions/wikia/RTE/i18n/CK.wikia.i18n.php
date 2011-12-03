@@ -321,6 +321,7 @@ $messages['bg'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Y-M D
  */
 $messages['br'] = array(
@@ -374,6 +375,7 @@ $messages['br'] = array(
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Dilemel ar skeudennaoueg ?',
 	'rte-ck-photoGallery-tooltip' => 'Ur skeudennaoueg eo.',
 	'rte-ck-photoGallery-tooltipSlideshow' => "Ur c'hinnig luc'hvannoù eo.",
+	'rte-ck-poll-poll' => 'Sontadeg',
 	'rte-ck-signature-add' => 'Ouzhpennañ ho sinadur',
 	'rte-ck-signature-label' => 'Sinadur',
 	'rte-ck-table-alignNotSet' => 'Nann-termenet',
@@ -403,6 +405,7 @@ $messages['br'] = array(
 	'rte-ck-videoPlaceholder-confirmDeleteTitle' => "Dilemel al lec'hienn evit ur video ?",
 	'rte-ck-videoPlaceholder-tooltip' => "Miret eo al lec'hienn-mañ evit ur video.",
 	'rte-ck-widescreen-toggle' => 'Gweredekaat/diweredekaat ar skramm leun',
+	'rte-ck-format-tag_p' => 'Testenn normal',
 );
 
 /** Catalan (Català)
@@ -1261,6 +1264,43 @@ $messages['inh'] = array(
 	'rte-ck-link-error-title' => 'ГӀалат',
 );
 
+/** Italian (Italiano)
+ * @author Minerva Titani
+ */
+$messages['it'] = array(
+	'rte-ck-justify-center' => 'Allinea al centro',
+	'rte-ck-link-add' => 'Inserisci link',
+	'rte-ck-link-error-badPageTitle' => 'Per favore inserisci il titolo di una pagina.',
+	'rte-ck-link-error-badUrl' => 'Questo URL non è valido: per favore controlla che sia corretto.',
+	'rte-ck-link-error-title' => 'Errore',
+	'rte-ck-link-external-linkText' => 'Testo del link',
+	'rte-ck-link-external-numberedLink' => 'Crea un link numerato (per es. "[1]")',
+	'rte-ck-link-external-tab' => 'Link esterno',
+	'rte-ck-link-external-url' => 'URL',
+	'rte-ck-link-internal-linkText' => 'Testo del link',
+	'rte-ck-link-internal-pageName' => 'Titolo della pagina',
+	'rte-ck-link-internal-tab' => 'Link interno',
+	'rte-ck-link-title' => 'Crea o modifica un link',
+	'rte-ck-link-label-target' => 'Pagina da linkare o URL',
+	'rte-ck-link-label-display' => 'Testo da visualizzare',
+	'rte-ck-link-label-internal' => 'A una pagina della wiki',
+	'rte-ck-link-label-external' => 'A un link esterno',
+	'rte-ck-link-status-checking' => 'Controllo dello stato',
+	'rte-ck-link-status-exists' => 'Pagina esistente',
+	'rte-ck-link-status-notexists' => 'Pagina inesistente',
+	'rte-ck-link-status-external' => 'Link esterno',
+	'rte-ck-media-delete' => 'rimuovi',
+	'rte-ck-media-edit' => 'modifica',
+	'rte-ck-modeSwitch-toSource' => 'Codice sorgente',
+	'rte-ck-modeSwitch-toWysiwyg' => 'Visuale',
+	'rte-ck-format-tag_p' => 'Testo normale',
+	'rte-ck-format-tag_pre' => 'Codice (testo preformattato)',
+	'rte-ck-format-tag_h2' => 'Titolo 2',
+	'rte-ck-format-tag_h3' => 'Titolo 3',
+	'rte-ck-format-tag_h4' => 'Titolo 4',
+	'rte-ck-format-tag_h5' => 'Titolo 5',
+);
+
 /** Japanese (日本語)
  * @author Tommy6
  */
@@ -1656,10 +1696,10 @@ $messages['ms'] = array(
 	'rte-ck-templateEditor-dialog-mostFrequentlyUsed' => 'Paling kerap digunakan',
 	'rte-ck-templateEditor-dialog-search' => 'Cari templat',
 	'rte-ck-templateEditor-editor-chooseAnotherTpl' => 'Pilih templat lain',
-	'rte-ck-templateEditor-editor-intro' => 'Tukar nilai-nilai di sebelah kiri dan klik untuk pratonton. Selepas siap menyunting, klik "OK".',
+	'rte-ck-templateEditor-editor-intro' => 'Tukar nilai-nilai di sebelah kiri dan klik untuk pralihat. Selepas siap menyunting, klik "OK".',
 	'rte-ck-templateEditor-editor-parameters' => 'Parameter',
-	'rte-ck-templateEditor-editor-previewButton' => 'Pratonton',
-	'rte-ck-templateEditor-editor-previewTitle' => 'Pratonton',
+	'rte-ck-templateEditor-editor-previewButton' => 'Pralihat',
+	'rte-ck-templateEditor-editor-previewTitle' => 'Pralihat',
 	'rte-ck-templateEditor-editor-viewTemplate' => '(lihat laman templat – membuka tetingkap baru)',
 	'rte-ck-templateEditor-usedTemplates-title' => 'Senarai templat yang digunakan',
 	'rte-ck-templateEditor-title' => 'Alat penyunting templat',
@@ -1715,7 +1755,7 @@ $messages['nl'] = array(
 	'rte-ck-hoverPreview-template-notExisting' => 'Dit sjabloon bestaat niet!',
 	'rte-ck-hoverPreview-video-notExisting' => 'Deze video bestaat niet.',
 	'rte-ck-image-add' => 'Afbeelding toevoegen',
-	'rte-ck-image-photo' => 'Foto',
+	'rte-ck-image-photo' => 'Afbeelding',
 	'rte-ck-image-confirmDelete' => 'Weet u zeker dat u de afbeelding van deze pagina wilt verwijderen?',
 	'rte-ck-image-confirmDeleteTitle' => 'Deze afbeelding verwijderen?',
 	'rte-ck-imagePlaceholder-confirmDelete' => 'Weet u zeker dat u de reservering voor de afbeelding van deze pagina wilt verwijderen?',
@@ -1942,6 +1982,7 @@ $messages['no'] = array(
  */
 $messages['pdc'] = array(
 	'rte-ck-hoverPreview-comment-title' => 'Aamaericking',
+	'rte-ck-hoverPreview-delete' => 'lesche',
 );
 
 /** Pälzisch (Pälzisch) */
@@ -1952,6 +1993,7 @@ $messages['pfl'] = array(
 /** Polish (Polski)
  * @author Holek
  * @author Sp5uhe
+ * @author TOR
  */
 $messages['pl'] = array(
 	'rte-ck-bucket-textAppearance' => 'Wygląd tekstu',
@@ -1998,8 +2040,8 @@ $messages['pl'] = array(
 	'rte-ck-link-status-external' => 'Link zewnętrzny',
 	'rte-ck-media-delete' => 'usuń',
 	'rte-ck-media-edit' => 'zmień',
-	'rte-ck-modeSwitch-toSource' => 'Przełącz w tryb źródłowy',
-	'rte-ck-modeSwitch-toWysiwyg' => 'Przełącz w tryb WYSIWYG',
+	'rte-ck-modeSwitch-toSource' => 'Tryb źródłowy',
+	'rte-ck-modeSwitch-toWysiwyg' => 'Tryb wizualny',
 	'rte-ck-photoGallery-confirmDelete' => 'Czy na pewno chcesz usunąć galerię z tej strony?',
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Usunąć galerię?',
 	'rte-ck-photoGallery-tooltip' => 'To jest galeria.',

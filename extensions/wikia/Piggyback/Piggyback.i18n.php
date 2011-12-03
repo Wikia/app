@@ -301,6 +301,7 @@ $messages['ru'] = array(
 
 /** Swedish (Svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'piggyback-otherusername' => 'Annat användarnamn:',
@@ -309,6 +310,7 @@ Användarnamn är skriftlägeskänsliga.
 Kontrollera stavningen.',
 	'piggyback-wronguser' => '$1 är inte ditt användarnamn',
 	'piggyback-loginprompt' => 'Vänligen ange ditt användarnamn och lösenord.',
+	'piggyback-firstlogout' => 'Var god logga ut tillbaka till ditt konto.',
 );
 
 /** Telugu (తెలుగు) */

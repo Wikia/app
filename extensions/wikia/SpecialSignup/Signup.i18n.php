@@ -85,7 +85,7 @@ $messages['fr'] = array(
  * @author Toliño
  */
 $messages['gl'] = array(
-	'signup-desc' => 'Engade o pseudónimo [[{{#Special:Signup}}]] para [[{{#Special:UserLogin}}/signup]]',
+	'signup-desc' => 'Engade o pseudónimo [[{{#Special:Signup}}]] en [[{{#Special:UserLogin}}/signup]]',
 	'signup' => 'Crear unha conta',
 );
 

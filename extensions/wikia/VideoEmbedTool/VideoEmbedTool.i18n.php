@@ -827,8 +827,8 @@ $messages['gl'] = array(
 	'vet-thiswiki2' => 'Vídeos deste wiki ($1 {{PLURAL:$1|resultado|resultados}})',
 	'vet-success' => '<h1>Feito</h1>',
 	'vet-return' => 'Volver ao modo de edición',
-	'vet-back' => 'volver',
-	'vet-close' => 'pechar',
+	'vet-back' => 'Volver',
+	'vet-close' => 'Pechar',
 	'vet-warn1' => 'Ten que especificar a pescuda primeiro!',
 	'vet-warn2' => 'Proporcione o enderezo URL do vídeo que lle gustaría engadir',
 	'vet-warn3' => 'Proporcione o nome do vídeo que lle gustaría engadir',
@@ -1469,14 +1469,14 @@ $messages['ms'] = array(
 	'vet-conflict-inf' => '<h1>Alamak, nama itu sudah dipakai oleh video lain.</h1>Anda nak buat apa dengan <b>$1</b>?',
 	'vet-rename' => 'Tukar nama video',
 	'vet-existing' => 'Gunakan video sedia ada',
-	'vet-overwrite' => 'Tulis ganti video sedia anda dengan gambar anda',
+	'vet-overwrite' => 'Gantikan video sedia ada dengan video anda',
 	'vet-insert' => 'Sisipkan',
 	'vet-details-inf' => '<h1>Butiran fail</h1>Berikan nama yang deskriptif kepada video ini.',
 	'vet-name' => 'Nama',
 	'vet-license' => 'Lesen',
 	'vet-details-inf2' => 'Pilihan paparan video',
 	'vet-size' => 'Saiz',
-	'vet-thumbnail' => 'Imej ringkas',
+	'vet-thumbnail' => 'Gambar kenit',
 	'vet-fullsize' => 'Saiz penuh ( $1 x $2 px)',
 	'vet-width' => 'Lebar',
 	'vet-layout' => 'Tataletak',
@@ -1510,11 +1510,11 @@ $messages['ms'] = array(
 	'vet-hide-message' => 'sorokkan pesanan',
 	'vet-hide-license-msg' => 'sorokkan teks lesen',
 	'vet-show-license-msg' => 'tunjukkan teks lesen',
-	'vet-max-thumb' => 'melebihi had saiz imej ringkas maksimum, dipulihkan ke saiz asal',
+	'vet-max-thumb' => 'melebihi had saiz gambar kenit maksimum, dipulihkan ke saiz asal',
 	'vet-notallowed' => 'Anda tidak boleh menyisipkan video di wiki ini.',
 	'vet-title' => 'Sisipkan video pada rencana anda',
 	'vet-supported' => 'Laman video yang disokong:',
-	'vet-preview' => '<i>Pratonton ini tidak mengikut skala</i>',
+	'vet-preview' => '<i>Pralihat ini tidak mengikut skala</i>',
 	'vet-bad-url' => 'URL yang diberikan tidak sah',
 	'vet-non-existing' => 'Video yang diberikan tidak wujud',
 	'vet-main-info' => '<i>Taipkan URL penuh dari mana-mana tapak yang disokong</i>',
@@ -1523,7 +1523,7 @@ $messages['ms'] = array(
 	'vet-added-from-gallery' => 'video disisipkan dari galeri video',
 	'vet-see-all' => 'semua',
 	'vet-bad-search' => 'Ralat ketika memuatkan pertanyaan carian.',
-	'vet-no-preview' => 'Anda tidak boleh menambahkan video daripada rencana dalam mod pratonton.',
+	'vet-no-preview' => 'Anda tidak boleh menambahkan video daripada rencana dalam mod pralihat.',
 	'vet-single-success' => 'Video berjaya diletakkan dalam rencana ini.',
 	'vet-gallery-create-success' => 'Galeri video disisipkan pada rencana ini.',
 	'vet-gallery-add-success' => 'Video telah dimasukkan ke dalam galeri video dalam rencana ini.',
@@ -2047,6 +2047,7 @@ $messages['pt'] = array(
 /** Brazilian Portuguese (Português do Brasil)
  * @author Giro720
  * @author Luckas Blade
+ * @author Pedroca cerebral
  */
 $messages['pt-br'] = array(
 	'vet-upload' => 'URL completa',
@@ -2093,6 +2094,7 @@ $messages['pt-br'] = array(
 	'vet-imagebutton' => 'Inserir vídeos',
 	'vet-license-cc' => 'Licenciado sob os termos da licença Creative Commons - Atribuição - Partilha nos Mesmos Termos 3.0',
 	'vet-name-incorrect' => 'O nome deste vídeo contém caracteres inválidos',
+	'vet-description' => 'Escreva a URL completa de qualquer um dos sites suportados. Ver',
 	'vet-uploadtext' => "'''Este formulário permite-lhe carregar e incorporar arquivos nas páginas de forma rápida.'''
 
 ''Veja também o [[Special:Log/upload|registro de uploads]] e uma [[Special:ImageList|lista de todos os arquivos carregados]].''",

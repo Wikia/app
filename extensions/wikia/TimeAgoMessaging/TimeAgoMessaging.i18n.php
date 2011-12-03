@@ -196,6 +196,7 @@ $messages['nl'] = array(
 	'timeago-day' => '{{PLURAL:$1|een dag|$1 dagen}} geleden',
 	'timeago-hour' => '{{PLURAL:$1|een uur|$1 uur}} geleden',
 	'timeago-minute' => '{{PLURAL:$1|een minuut|$1 minuten}} geleden',
+	'timeago-month' => '{{PLURAL:$1|een maand|$1 maanden}} geleden',
 	'timeago-second' => 'een minuut geleden',
 );
 

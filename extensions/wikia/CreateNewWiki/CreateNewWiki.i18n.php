@@ -1125,7 +1125,7 @@ $messages['ms'] = array(
 	'cnw-desc-lang' => 'Bahasa',
 	'cnw-desc-wiki-submit-error' => 'Sila pilih kategori',
 	'cnw-theme-headline' => 'Pilih tema',
-	'cnw-theme-creative' => 'Pilih tema di bawah. Anda boleh melihat pratonton untuk setiap tema yang anda pilih.',
+	'cnw-theme-creative' => 'Pilih tema di bawah. Anda boleh melihat pralihat untuk setiap tema yang anda pilih.',
 	'cnw-theme-instruction' => 'Anda boleh mereka tema anda lain kali dengan menggunakan "Alatan Saya".',
 	'cnw-upgrade-headline' => 'Nak naik taraf?',
 	'cnw-upgrade-creative' => 'Jika anda naik taraf ke Wikia Plus, anda boleh gugurkan iklan dari <span class="wiki-name"></span>, tawaran sekali sahaja buat pengasas baru.',
@@ -1336,28 +1336,79 @@ Oppgrader gjennom PayPal for å få en reklamefri wiki til kun $4,95 per måned!
 );
 
 /** Polish (Polski)
+ * @author Sovq
  * @author Woytecr
  */
 $messages['pl'] = array(
+	'createnewwiki-desc' => '[[Special:CreateNewWiki|Kreator tworzenia wiki]]',
 	'cnw-next' => 'Następny',
 	'cnw-back' => 'Wstecz',
 	'cnw-or' => 'lub',
 	'cnw-title' => 'Utwórz nową Wiki',
 	'cnw-name-wiki-headline' => 'Uruchom Wiki',
+	'cnw-name-wiki-creative' => 'Wikia to najlepsze miejsce do budowania własnej wiki i tworzenia społeczności wokół tego co kochasz.',
+	'cnw-name-wiki-label' => 'Nazwij swoją wiki',
 	'cnw-name-wiki-wiki' => 'Wiki',
+	'cnw-name-wiki-domain-label' => 'Nadal adres swojej wiki',
+	'cnw-name-wiki-submit-error' => 'Opps! Musisz wypełnić oba pola aby przejść dalej',
 	'cnw-login' => 'Zaloguj',
 	'cnw-signup' => 'Utwórz konto',
+	'cnw-signup-prompt' => 'Założyć konto?',
+	'cnw-call-to-signup' => 'Zarejestruj się',
 	'cnw-login-prompt' => 'Posiadasz już konto?',
+	'cnw-call-to-login' => 'Zaloguj się',
 	'cnw-auth-headline' => 'Zaloguj się',
 	'cnw-auth-headline2' => 'Zarejestruj się',
+	'cnw-auth-creative' => 'Zaloguj się aby kontynuować tworzenie swojej wiki',
+	'cnw-auth-signup-creative' => 'Potrzebujesz konta aby kontynuować.<br />Zajmie to tylko kilka chwil!',
 	'cnw-auth-facebook-signup' => 'Zarejestruj się poprzez Facebooka',
 	'cnw-auth-facebook-login' => 'Zaloguj się poprzez Facebooka',
+	'cnw-desc-headline' => 'O czym jest Twoja wiki?',
+	'cnw-desc-creative' => 'Opisz temat Twojej wiki',
+	'cnw-desc-placeholder' => 'To pojawi się na stronie głównej Twojej wiki',
+	'cnw-desc-tip1' => 'Wskazówka',
+	'cnw-desc-tip1-creative' => 'Użyj tego pola aby powiedzieć innym o swojej wiki w kilku zdaniach',
 	'cnw-desc-tip2' => 'Psst',
+	'cnw-desc-tip2-creative' => 'Podziel się z innymi szczegółami o Twojej wiki',
+	'cnw-desc-tip3' => 'Wskazówka',
+	'cnw-desc-tip3-creative' => 'Daj innym znać, że mogą pomóc tej wiki rosnąć poprzez edytowanie i dodawanie stron',
 	'cnw-desc-choose' => 'Wybierz kategorię',
 	'cnw-desc-select-one' => 'Wybierz',
+	'cnw-desc-default-lang' => 'Twoja wiki będzie w języku $1',
 	'cnw-desc-change-lang' => 'zmień',
 	'cnw-desc-lang' => 'Język',
 	'cnw-desc-wiki-submit-error' => 'Proszę wybrać kategorię',
+	'cnw-theme-headline' => 'Wybierz motyw',
+	'cnw-theme-creative' => 'Wybierz jeden z poniższych motywów aby zobaczyć podgląd i zdecydować o wyborze.',
+	'cnw-theme-instruction' => 'Możesz także zaprojektować motyw później, korzystając z menu "Moje narzędzia".',
+	'cnw-upgrade-headline' => 'Czy chcesz uaktualnić?',
+	'cnw-upgrade-creative' => 'Uaktualnienie do Wikia Plus umożliwia usunięcie reklam z <span class="wiki-name"> </span>, jest jednorazową ofertą skierowaną do nowych założycieli wiki.',
+	'cnw-upgrade-marketing' => 'Wikia Plus jest idealną propozycją dla:<ul>
+<li>Profesjonalnych wiki</li>
+<li>Organizacji non-profit</li>
+<li>Rodzin</li>
+<li>Szkół</li>
+<li>Osobistych projektów</li>
+</ul>
+Uaktualnij poprzez PayPal aby utworzyć wiki wolną od reklam za jedyne $4.95 na miesiąc!',
+	'cnw-upgrade-now' => 'Uaktualnij teraz',
+	'cnw-upgrade-decline' => 'Nie, dziękuję, przejdź dalej',
+	'cnw-welcome-headline' => 'Gratulacje! $1 została utworzona',
+	'cnw-welcome-instruction1' => 'Kliknij na poniższy przycisk aby zacząć dodawanie stron do Twojej wiki',
+	'cnw-welcome-instruction2' => 'Znajdziesz ten przycisk w wielu miejscach na Twojej wiki, użyj go, jeżeli chcesz dodać nową stronę.',
+	'cnw-welcome-help' => 'Znajdź odpowiedzi, porady i więcej na <a href="http://community.wikia.com">Community Central</a>',
+	'cnw-error-general' => 'Coś poszło nie tak podczas tworzenia wiki. Proszę spróbuj ponownie później.',
+	'cnw-error-general-heading' => 'Błąd kreatora wiki',
+	'cnw-error-database' => 'Błąd bazy danych:$1',
+	'cnw-badword-header' => 'Uwaga',
+	'cnw-badword-msg' => 'Witaj, proszę nie używaj tych niedozwolonych słów w opisie wiki: $1',
+	'cnw-error-wiki-limit-header' => 'Osiągnięto limit wiki',
+	'cnw-error-wiki-limit' => 'Możesz utworzyć tylko $1 wiki dziennie. Zaczekaj 24 godziny aby utworzyć inną wiki.',
+	'cnw-error-blocked-header' => 'Konto zablokowane',
+	'cnw-error-blocked' => 'Użytkownik został zablokowany przez  $1 . Jako przyczynę podano:  $2 . (ID blokady:  $3 )',
+	'cnw-error-torblock' => 'Tworzenie wiki za pośrednictwem Tor Network nie jest dozwolone.',
+	'cnw-error-bot' => 'Wykryto, że to konto może być botem. Jeżeli popełniono błąd, proszę daj nam znać: [http://www.wikia.com/Special:Contact/general Kontakt]',
+	'cnw-error-bot-header' => 'Zostałeś zidentyfikowany jako bot',
 );
 
 /** Pashto (پښتو)

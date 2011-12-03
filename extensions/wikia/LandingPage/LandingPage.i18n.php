@@ -357,6 +357,7 @@ $messages['sr-ec'] = array(
 $messages['sv'] = array(
 	'landingpage' => 'Välkommen till Wikia',
 	'landingpage-start-exploring' => 'Redo att börja utforska?',
+	'landingpage-start-exploring-text' => 'Sök efter ditt favoritämne eller bläddra igenom några gemenskapsfavoriter nedan.',
 	'landingpage-readfaq' => 'Frågor? Se vår FAQ &gt;',
 	'landingpage-text' => 'På Wikia kan du <strong>ansluta dig till människor</strong> som delar dina <strong>känslor och intressen</strong>. Hitta din grupp, gör kommentarer och redigeringar, t.o.m. <strong>starta din egen webbplats</strong> och gemenskap.',
 	'landingpage-buttons-learn-more' => 'Läs mer &gt;',

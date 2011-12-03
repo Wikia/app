@@ -1954,24 +1954,23 @@ $3 Wikia Community Team <http://www.wikia.com/wiki/User:$4>',
 	'autocreatewiki-welcometalk' => "== Benvenuto! ==
 Ciao \$1 -- siamo molto contenti di avere '''\$4''' nella nostra Wikia community!   Grazie per la tua collaborazione! Ti vogliamo dare alcuni suggerimenti per aiutarti a mettere in moto la tua wiki.
 
-
-=== '''I tuoi primi quattro passi:''' ===
+=== '''I tuoi primi quattro passi''' ===
 1. '''Crea la tua [[Utente:\$1|Pagina Utente]]''' - è il posto per parlare di te stesso e farti conoscere (e fare pratica!)
 
-2. '''Aggiungi un logo''' - impara come su [[w:c:help:Help:Logo|come creare un logo]], e poi <span class=\"plainlinks\">[[Speciale:Carica/Wiki.png|clicca qui]]</span> per aggiungerlo alla tua wiki.<div style=\"border: 1px solid black; margin: 0px 0px 5px 10px; padding: 5px; float: right; width: 25%;\"><center>Crea un articolo per questa wiki:</center>
-   <createbox>
-width=30
+2. '''Aggiungi un logo''' - impara [[w:c:aiuto:Aiuto:Theme_Designer|come creare un logo]], e poi <span class=\"plainlinks\">[[Speciale:Carica/Wiki.png|clicca qui]]</span> per aggiungerlo alla tua wiki.
+<div style=\"border: 1px solid black; margin: 0px 0px 5px 10px; padding: 5px; float: right; width: 30%;\"><center>Crea un articolo per questa wiki:</center><createbox>
+width=20
 </createbox></div>
+
 3. '''Crea i tuoi primi 10 articoli''' - usa il campo sulla destra per creare la pagine, iniziando con poche righe per ogni articolo.
 
 4. '''Modifica la pagina principale''' - clicca sul logo e raggiungi la pagina principale. Ricordati di aggiungere dei link interni ([[come questo]]) per raggiungere le nuove pagine che hai appena creato.
-
 
 Dopo aver seguito tutti i passi sei già a buon punto! La tua wiki deve sembrare attiva ed aperta ai nuovi utenti. Puoi sempre chiedere ai tuoi amici di aiutarti, oppure invitare nuove persone a creare nuovi articoli o modificare quelli già esistenti.
 
 Più pagine e link vengono creati e più velocemente la tua wiki diventerà popolare. I visitatori che cercheranno \"\$4\" saranno in grado di trovarlo facilmente.
 
-Per qualunque altre domanda, puoi leggere le [[Help:Contents|pagine di aiuto]], oppure spedirci un'e-mail attraverso il nostro [[Special:Contact|modulo dei contatti]]. Non dimenticare di controllare le altre wiki su [[wikia:Wikia|Wikia]] per idee, template, layout e molto altro!
+Per qualunque altre domanda, puoi leggere le [[w:c:Aiuto:Aiuto_Wiki|pagine di aiuto]], oppure spedirci un'e-mail attraverso il nostro [[Special:Contact|modulo dei contatti]]. Non dimenticare di controllare le altre wiki su [[wikia:Wikia|Wikia]] per idee, template, layout e molto altro!
 
 Buona fortuna, [[User:\$2|\$3]] <staff />",
 );
@@ -2557,7 +2556,7 @@ $messages['ms'] = array(
 	'autocreatewiki-info-topic' => 'Isikan keterangan ringkas seperti "Star Wars" atau "Filem".',
 	'autocreatewiki-info-category-default' => 'Ini akan membantu pengunjung mencari wiki anda.',
 	'autocreatewiki-info-category-answers' => 'Ini akan membantu pengunjung mencari tapak Jawapan anda.',
-	'autocreatewiki-info-language' => 'Inilah bahasa tersedia untuk pengunjung wiki anda.',
+	'autocreatewiki-info-language' => 'Inilah yang akan menjadi bahasa yang asali bagi para pengunjung wiki anda.',
 	'autocreatewiki-info-email-address' => 'Alamat emel anda tidak akan ditunjukkan kepada sesiapa di Wikia.',
 	'autocreatewiki-info-realname' => 'Jika anda memilih untuk menyatakannya, ini akan digunakan untuk memperakui anda atas kerja anda.',
 	'autocreatewiki-info-birthdate' => 'Wikia mewajibkan semua pengguna memeberikan tarikh lahir sebenar mereka sebagai langkah berjaga-jaga serta kaedah memelihara keutuhan tapak supaya mematuhi peraturan persekutuan.',
@@ -2601,10 +2600,10 @@ Sila pilih yang sewajarnya dari senarai juntai bawah.',
 	'autocreatewiki-errordefault' => 'Proses belum selesai ...',
 	'autocreatewiki-step1' => 'Folder gambar sedang dicipta ...',
 	'autocreatewiki-step2' => 'Pangkalan data sedang dicipta ...',
-	'autocreatewiki-step3' => 'Maklumat tersedia sedang ditetapkan dalam pangkalan data ...',
-	'autocreatewiki-step4' => 'Gambar dan logo tersedia sedang disalin ...',
-	'autocreatewiki-step5' => 'Pembolehubah tersedia sedang ditetapkan dalam pangkalan data ...',
-	'autocreatewiki-step6' => 'Jadual tersedia sedang ditetapkan dalam pangkalan data ...',
+	'autocreatewiki-step3' => 'Maklumat asali sedang ditetapkan dalam pangkalan data ...',
+	'autocreatewiki-step4' => 'Gambar dan logo asali sedang disalin ...',
+	'autocreatewiki-step5' => 'Pembolehubah asali sedang ditetapkan dalam pangkalan data ...',
+	'autocreatewiki-step6' => 'Jadual asali sedang ditetapkan dalam pangkalan data ...',
 	'autocreatewiki-step7' => 'Pemula bahasa sedang dicipta ...',
 	'autocreatewiki-step8' => 'Kumpulan pengguna dan kategori sedang dicipta ...',
 	'autocreatewiki-step9' => 'Pembolehubah ditetapkan untuk wiki baru ...',
@@ -2615,8 +2614,8 @@ Sila pilih yang sewajarnya dari senarai juntai bawah.',
 	'autocreatewiki-welcometalk-log' => 'Mesej Selamat Datang',
 	'autocreatewiki-regex-error-comment' => 'digunakan dalam wiki $1 (seluruh teks: $2)',
 	'autocreatewiki-step2-error' => 'Pangkalan data wujud!',
-	'autocreatewiki-step3-error' => 'Maklumat tersedia tidak dapat ditetapkan dalam pangkalan data!',
-	'autocreatewiki-step6-error' => 'Jadual tersedia tidak dapat ditetapkan dalam pangkalan data!',
+	'autocreatewiki-step3-error' => 'Maklumat asali tidak dapat ditetapkan dalam pangkalan data!',
+	'autocreatewiki-step6-error' => 'Jadual asali tidak dapat ditetapkan dalam pangkalan data!',
 	'autocreatewiki-step7-error' => 'Pangkalan data pemula untuk bahasa tidak dapat disalin!',
 	'autocreatewiki-protect-reason' => 'Sebahagian antara muka rasmi',
 	'autocreatewiki-welcomesubject' => '$1 telah dicipta!',

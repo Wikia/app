@@ -79,6 +79,13 @@ $messages['gl'] = array(
 	'categorygalleries-desc' => 'Mostrar unha galería de páxinas nas páxinas das categorías',
 );
 
+/** Hungarian (Magyar)
+ * @author Dj
+ */
+$messages['hu'] = array(
+	'categorygalleries-desc' => 'Lap-galériák megjelenítése a kategória lapokon',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */

@@ -182,6 +182,7 @@ $messages['sr-ec'] = array(
 $messages['sv'] = array(
 	'scribe-desc' => '[[Special:Scribeevents|Verktyg]] för att söka efter en viss sidrubrik över wikis',
 	'scribeevents' => 'Senaste händelser',
+	'scribeeventsrecords' => 'Poster',
 );
 
 /** Tagalog (Tagalog)

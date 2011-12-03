@@ -135,9 +135,14 @@ $messages['gl'] = array(
 
 /** Hungarian (Magyar)
  * @author Dani
+ * @author Dj
  */
 $messages['hu'] = array(
+	'logger-desc' => 'Háttérben futó parancsfájlok naplózása',
+	'logger' => 'Háttér naplózó',
+	'loggertitle' => 'Háttér naplózó',
 	'loggerselectlogname' => 'Válaszd ki a napló nevét:',
+	'loggerrecordswithpercent' => "'''$1''' naplóz ('''$2''' százalék kész)",
 	'loggerrecords' => '$1 rekord',
 	'loggergo' => 'Megjelenítés',
 	'loggernoresult' => 'Nincs találat',

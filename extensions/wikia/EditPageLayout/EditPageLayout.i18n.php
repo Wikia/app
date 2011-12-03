@@ -472,6 +472,22 @@ $messages['es'] = array(
 	'tog-forceeditsummary' => 'Alertar al grabar sin resumen de edición.',
 );
 
+/** Persian (فارسی)
+ * @author MehranVB
+ */
+$messages['fa'] = array(
+	'editpagelayout-more' => 'بیشتر',
+	'editpagelayout-less' => 'کمتر',
+	'editpagelayout-helpLink-url' => 'Help:ویرایش',
+	'editpagelayout-notificationsLink-none' => 'آگاه‌سازی‌ها',
+	'editpagelayout-edit-title' => 'ویرایش عنوان',
+	'editpagelayout-edit-info' => 'ویرایش اطلاعات',
+	'editpagelayout-pageControls-minorEdit' => 'ویرایش جزئی',
+	'editpagelayout-blocked-user' => 'نام کاربری یا نشانی IP شما مسدود شده است',
+	'wikia-editor-modules-templates-title' => 'الگوها',
+	'wikia-editor-edittools-caption' => 'بیشتر',
+);
+
 /** French (Français)
  * @author Gomoko
  * @author Verdy p
@@ -498,6 +514,7 @@ $messages['fr'] = array(
 	'editpagelayout-pageControls-changes' => 'Changements',
 	'editpagelayout-blocked-user' => 'Votre nom d’utilisateur ou adresse IP a été bloqué',
 	'editpagelayout-edit-summary-label' => 'Résumé',
+	'editpagelayout-subject-headline-label' => 'Sujet/Titre',
 	'wikia-editor-media-image' => 'Image',
 	'wikia-editor-media-gallery' => 'Galerie',
 	'wikia-editor-media-slideshow' => 'Diaporama',
@@ -527,7 +544,7 @@ $messages['fr'] = array(
 	'wikia-editor-edittools-dialog-title' => 'Raccourcis wikitext',
 	'wikia-editor-notices-dialog-title' => 'Notifications',
 	'wikia-editor-preview-editSummary' => 'Résumé de la modification : $1',
-	'wikia-editor-leaveconfirm-message' => 'Vous avez fait des modifications non publiées. Êtes-vous sûr de vouloir quitter sans les publier?',
+	'wikia-editor-leaveconfirm-message' => 'Vous avez effectué des modifications qui n’ont pas été publiées. Êtes-vous sûr(e) de vouloir quitter sans les publier ?',
 	'nonunicodebrowser-notice' => "'''Attention : votre navigateur n’est pas compatible Unicode.'''",
 	'rev-deleted-text-notice' => "Cette version de la page a été '''supprimée'''. [Plus d’infos]",
 	'readonlywarning-notice' => "'''Attention : la base de données a été verrouillée pour maintenance.''' [Plus d’infos]",
@@ -536,6 +553,8 @@ $messages['fr'] = array(
 	'protectedpagewarning-notice' => "'''Attention :''' cette page a été verrouillée de sorte que seuls les utilisateurs avec certains privilèges puissent la modifier. [Plus d’infos]",
 	'titleprotectedwarning-notice' => "'''Attention :''' cette page a été verrouillée de sorte que seuls certains utilisateurs peuvent la créer. [Plus d’infos]",
 	'recreate-moveddeleted-warn-notice' => "'''Note :''' vous êtes en train de recréer une page qui a été précédemment supprimée. [Plus d’infos]",
+	'restore-edits-notice' => "Bienvenue ! Nous avons restauré certaines modifications que vous n’avez pas mises en ligne. <a class='notice-action restoreeditlink'>Supprimez mes modifications et recommencer</a>",
+	'restore-edits-diff-notice' => "Bienvenue ! Nous avons restauré certaines modifications que vous n’avez pas mises en ligne. Toutefois, la page a été mise à jour depuis. Que souhaitez-vous faire : <a class='notice-action restoreeditlink'>Supprimer mes modifications et commencer avec la dernière version à date</a> or <a class='notice-action difflink'>Afficher une comparaison des modifications avec la dernière version à date</a>",
 	'prefs-general' => 'Général',
 	'prefs-starting-an-edit' => 'Lancement d’une modification',
 	'prefs-editing-experience' => 'Modification de l’expérience',
@@ -1076,7 +1095,7 @@ $messages['ms'] = array(
 	'prefs-editarea-size' => 'Saiz tetingkap penyuntingan (tataletak MonoBook sahaja)',
 	'tog-editsection' => 'Bolehkan penyuntingan bahagian melalui pautan sunting',
 	'tog-editwidth' => 'Luaskan ruangan penyuntingan mod Sumber supaya mengisi seluruh skrin',
-	'tog-minordefault' => 'Tandakan semua suntingan sebagai "kecil" secara sediaan',
+	'tog-minordefault' => 'Tandakan semua suntingan sebagai "kecil" secara asali',
 	'tog-forceeditsummary' => 'Ingatkan saya jika ringkasan suntingan kosong',
 );
 
@@ -1236,6 +1255,8 @@ $messages['no'] = array(
 	'protectedpagewarning-notice' => "'''Advarsel:''' Denne siden har blitt låst slik at kun brukere med spesielle rettigheter kan redigere den. [Mer info]",
 	'titleprotectedwarning-notice' => "'''Advarsel:''' Denne siden har blitt låst slik at kun enkelte brukere kan opprette den. [Mer info]",
 	'recreate-moveddeleted-warn-notice' => "'''Merk:''' Du er i ferd med å opprette en side som tidligere har blitt slettet. [Mer info]",
+	'restore-edits-notice' => "Velkommen tilbake! Vi har gjenopprettet noen endringer du ikke publiserte. <a class='notice-action restoreeditlink'>Slett endringene mine og begynn å redigere på nytt</a>",
+	'restore-edits-diff-notice' => "Velkommen tilbake! Vi har gjenopprettet noen endringer du ikke publiserte. Siden har imidlertid blirr oppdatert siden den gang. Ønsker du å: <a class='notice-action restoreeditlink'>Slette endringene mine og begynne med den siste teksten</a> eller <a class='notice-action difflink'>Vise en sammenligning av endringer med den siste siden</a>",
 	'prefs-general' => 'Generelt',
 	'prefs-starting-an-edit' => 'Starter en redigering',
 	'prefs-editing-experience' => 'Redigeringserfaring',

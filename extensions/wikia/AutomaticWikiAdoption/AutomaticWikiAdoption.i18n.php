@@ -431,7 +431,7 @@ Vous pouvez <a href="$3">vous désabonner</a> des mises à jour de cette liste.'
 	'wikiadoption-mail-second-subject' => '#WIKINAME sera bientôt placé à l’adoption',
 	'wikiadoption-mail-second-content' => 'Bonjour $1,
 
-Oh non ! Cela fait presque 30 jours qu’il n’y a eu aucun administrateur actif sur #WIKINAME. Il est important que des administrateurs apparaissent régulièrement et y contribuent afin que le wiki puisse continuer à fonctionner sans problème.
+Oh non ! Cela fait presque 60 jours qu’il n’y a eu aucun administrateur actif sur #WIKINAME. Il est important que des administrateurs apparaissent régulièrement et y contribuent afin que le wiki puisse continuer à fonctionner sans problème.
 
 Puisque cela fait tant de jours qu’aucun des administrateurs actuels n’est apparu, #WIKINAME sera maintenant offert à l’adoption par d’autres contributeurs.
 
@@ -439,7 +439,7 @@ L’équipe Wikia
 
 Vous pouvez vous désabonner des mises à jour de cette liste ici : $3.',
 	'wikiadoption-mail-second-content-HTML' => 'Bonjour $1,<br /><br />
-Oh non ! Cela fait pratiquement 30 jours qu’il n’y a eu aucun administrateur actif sur #WIKINAME. Il est important que des administrateurs apparaissent régulièrement et contribuent afin que le wiki puisse continuer de fonctionner sans problème.<br /><br />
+Oh non ! Cela fait pratiquement 60 jours qu’il n’y a eu aucun administrateur actif sur #WIKINAME. Il est important que des administrateurs apparaissent régulièrement et contribuent afin que le wiki puisse continuer de fonctionner sans problème.<br /><br />
 
 Puisque cela fait tant de jours qu’aucun administrateur actif n’est apparu, #WIKINAME sera maintenant offert à l’adoption aux autres contributeurs.<br /><br />
 
@@ -449,7 +449,7 @@ Vous pouvez <a href="$3">vous désabonner</a> des mises à jour de cette liste.'
 	'wikiadoption-mail-adoption-subject' => '#WIKINAME a été adopté',
 	'wikiadoption-mail-adoption-content' => 'Bonjour $1,
 
-#WIKINAME a été adopté. Les wikis sont placés à l’adoption lorsque aucun des administrateurs actuels n’y a été actif durant 30 jours ou plus.
+#WIKINAME a été adopté. Les wikis sont placés à l’adoption lorsqu’aucun des administrateurs actuels n’y a été actif durant 60 jours ou plus.
 
 L’utilisateur qui a adopté #WIKINAME y aura maintenant les statuts de bureaucrate et administrateur. Ne vous inquiétez pas, vous conserverez aussi votre statut d’administrateur sur ce wiki et vous restez bienvenu pour y retourner et continuer d’y contribuer à tout moment !
 
@@ -458,7 +458,7 @@ L’équipe Wikia
 Vous pouvez vous désabonner des mises à jour de cette liste ici : $3.',
 	'wikiadoption-mail-adoption-content-HTML' => 'Bonjour $1,<br /><br />
 
-#WIKINAME a été adopté ! Les wikis sont placés à l’adoption lorsque aucun des administrateurs actuels n’y ont été actifs pendant 30 jours ou plus.<br /><br />
+#WIKINAME a été adopté. Les wikis sont placés à l’adoption lorsqu’aucun des administrateurs actuels n’y ont été actifs pendant 60 jours ou plus.<br /><br />
 
 L’utilisateur ayant adopté #WIKINAME y aura maintenant les statuts de bureaucrate et administrateur. Ne vous inquiétez pas, vous conserverez votre statut d’administrateur sur ce wiki et vous restez bienvenu pour y retourner et continuer d’y contribuer à tout moment !<br /><br />
 
@@ -466,6 +466,7 @@ L’équipe Wikia<br /><br />
 
 Vous pouvez <a href="$3">vous désabonner</a> des mises à jour de cette liste.',
 	'tog-adoptionmails' => "Envoyez-moi un message si $1 devient disponible pour l'adoption",
+	'tog-adoptionmails-v2' => '...si le wiki devient disponible à l’adoption',
 	'wikiadoption-pref-label' => 'La modification de ces préférences affectera seulement les courriels de $1.',
 	'wikiadoption-welcome-header' => 'Félicitations ! Vous avez adopté {{SITENAME}} !',
 	'wikiadoption-welcome-body' => 'Vous êtes maintenant bureaucrate sur ce wiki. Avec votre nouveau statut, vous avez maintenant accès à tous les outils qui vous aideront à gérer {{SITENAME}}.

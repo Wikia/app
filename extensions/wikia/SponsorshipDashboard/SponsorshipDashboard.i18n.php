@@ -395,6 +395,7 @@ $messages['br'] = array(
 	'sponsorship-dashboard-report-source' => 'Mammenn',
 	'sponsorship-dashboard-report-keywords' => "Gerioù alc'hwez",
 	'sponsorship-dashboard-report-visitors' => 'Gweladennerien',
+	'sponsorship-dashboard-report-traffic' => 'Tremeniri',
 	'sponsorship-dashboard-report-content' => 'Danvez',
 	'sponsorship-dashboard-variables' => 'Argemmennoù',
 	'sponsorship-dashboard-overview-label' => 'Diuzañ prim',
@@ -922,6 +923,7 @@ $messages['fa'] = array(
 );
 
 /** Finnish (Suomi)
+ * @author Crt
  * @author Nike
  * @author Olli
  */
@@ -1044,7 +1046,7 @@ $messages['fi'] = array(
 	'sponsorship-dashboard-user-type' => 'Käyttäjätyyppi',
 	'sponsorship-dashboard-report-new' => 'uusi raportti',
 	'sponsorship-dashboard-description' => 'Kuvaus',
-	'sponsorship-dashboard-users-user-id' => 'Käyttäjä-ID',
+	'sponsorship-dashboard-users-user-id' => 'Tunniste',
 	'sponsorship-dashboard-users-name' => 'Nimi',
 	'sponsorship-dashboard-users-status' => 'Pois käytöstä',
 	'sponsorship-dashboard-users-type' => 'Tyyppi',
@@ -2270,7 +2272,7 @@ $messages['ms'] = array(
 	'sponsorship-dashboard-source-Variables' => 'Pemboleh ubah',
 	'sponsorship-dashboard-source-additional-dimension' => 'Dimensi tambahan',
 	'sponsorship-dashboard-source-none' => '-- tiada --',
-	'sponsorship-dashboard-source-default' => '-- tersedia --',
+	'sponsorship-dashboard-source-default' => '-- asali --',
 	'sponsorship-dashboard-source-in-case-of-empty' => 'sekiranya sifar hasil dipaparkan',
 	'sponsorship-dashboard-source-leave-empty' => '(biarkan kosong untuk menyorok hasil sifar)',
 	'sponsorship-dashboard-source-wikis' => 'Wiki',

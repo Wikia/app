@@ -1171,6 +1171,9 @@ Si vous êtes le fondateur ou bien un administrateur de ce wiki, vous pouvez cha
 	'myhome-default-view-success' => "C'est parfait, ceci est désormais votre vue par défaut",
 	'tooltip-pt-myhome' => 'Aller à Mon Accueil',
 	'activityfeed' => 'Flux d’activité',
+	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|un message|$1 messages}}',
+	'wiki-activity-wall-on' => 'le $1',
+	'wiki-activity-wall-owner' => 'Mur de $1',
 );
 
 /** Galician (Galego)
@@ -1969,8 +1972,8 @@ Misalnya, anda boleh:
 
 * Ataupun sekadar mengirim kata-kata semangat!",
 	'myhome-hot-spots-definition' => 'Laman yang paling ramai penyuntingnya pada {{PLURAL:$1|sehari|$1 hari}} yang lalu.',
-	'myhome-default-view-checkbox' => 'Jadikan $1 sebagai paparan tersedia saya',
-	'myhome-default-view-success' => 'Baiklah, inilah tetapan tersedia anda',
+	'myhome-default-view-checkbox' => 'Jadikan $1 sebagai paparan asali saya',
+	'myhome-default-view-success' => 'Baiklah, inilah tetapan asali anda sekarang',
 	'tooltip-pt-myhome' => 'Pergi ke Laman Utama Saya',
 	'activityfeed' => 'Suapan kegiatan',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|satu pesanan|$1 pesanan}}',

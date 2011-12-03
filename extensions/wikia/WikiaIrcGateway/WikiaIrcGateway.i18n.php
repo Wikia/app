@@ -235,10 +235,11 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Fryed-peach
  * @author Hosiryuhosi
  */
 $messages['ja'] = array(
-	'ircgate-username' => 'ユーザー名：',
+	'ircgate-username' => '利用者名:',
 	'ircgate-channel' => 'チャンネル:',
 );
 

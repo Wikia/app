@@ -268,6 +268,18 @@ $messages['sv'] = array(
 	'wikipayment-paypal-profile-name' => 'Betald Wiki',
 );
 
+/** Tamil (தமிழ்)
+ * @author Sodabottle
+ */
+$messages['ta'] = array(
+	'wikipayment-desc' => 'ஒவ்வொரு விக்கிக்கும் கட்டணம் செலுத்தினால் விளம்பரம்கள் தவிர்க்கப்படும்',
+	'wikipayment-paypal-redirect' => 'பேபால் தளத்துக்கு வழிமாற்றப்படுகிறீர்கள். அருள் கூர்ந்து பொறுத்திருக்கவும்.',
+	'wikipayment-paypal-error' => 'பேபால் பணம் செலுத்துதல் பிழை (code: $1)',
+	'wikipayment-paypal-return-ok' => 'பேபால் பணம் செலுத்துதல் வெற்றி',
+	'wikipayment-paypal-return-cancel' => 'பேபால் பணம் செலுத்துதல் ரத்து செய்யப்பட்டது',
+	'wikipayment-paypal-profile-name' => 'கட்டண சேவை விக்கி',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */

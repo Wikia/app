@@ -486,10 +486,12 @@ $messages['sr-ec'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'partner-feed-earned-badges' => 'Nyligen tjänade emblem för en viss Wiki',
 	'partner-feed-recent-changes' => 'Senaste ändringar',
 	'feed-title-blogposts' => 'Senaste blogginlägg',
 	'feed-title-recent-badges' => 'Senaste emblem',
 	'feed-title-recent-images' => 'Senaste bilder',
+	'feed-title-leaderboard' => 'Topplista för utmärkelser',
 	'all-blog-posts' => 'alla kategorier',
 	'blog-posts-from-listing' => 'från lista: $1',
 	'feed-title-hot-content' => 'Hett innehåll - $1',

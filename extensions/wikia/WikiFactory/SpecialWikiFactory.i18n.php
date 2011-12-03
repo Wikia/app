@@ -1180,6 +1180,7 @@ $messages['da'] = array(
  * @author Mr. Richard Bolla
  * @author MtaÄ
  * @author SVG
+ * @author Sebastian Wallroth
  * @author The Evil IP address
  * @author Umherirrender
  */
@@ -1303,6 +1304,11 @@ $messages['de'] = array(
 	'closed-confirm-btn' => 'Schließen bestätigen',
 	'closed-redirect-alert' => 'Bitte gib die neue URL der Weiterleitung ein!',
 	'closed-reason' => 'Grund:',
+	'newwikisgraph' => 'Neue Wikis-Diagramm',
+	'newwikisgraph-report-title' => 'Neue Wikis pro Tag',
+	'newwikisgraph-wikis-created' => 'Neue Wikis',
+	'newwikisgraph-param-all' => 'Alle',
+	'newwikisgraph-param-other' => 'Andere',
 );
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)
@@ -1542,6 +1548,7 @@ $messages['eu'] = array(
 /** Persian (فارسی)
  * @author Ebraminio
  * @author Mjbmr
+ * @author ZxxZxxZ
  */
 $messages['fa'] = array(
 	'wf_city_founding_user' => 'بنیان‌گذار',
@@ -1552,7 +1559,7 @@ $messages['fa'] = array(
 	'wikifactory-label-actions' => 'عملکردها',
 	'closewiki-unknown' => 'ناشناخته',
 	'wikifactory-button-saveparse' => 'تجزیه و ذخیره تغییرات',
-	'wikifactory-button-save' => 'ذخیرهٔ تغییرات',
+	'wikifactory-button-save' => 'ذخیره‌کردن تغییرات',
 	'awc-metrics-category' => 'و رده:',
 	'awc-metrics-all-languages' => 'همه زبان‌ها',
 	'awc-metrics-not-found' => 'هیچ ویکی یافت نشد',
@@ -1682,6 +1689,7 @@ $messages['fr'] = array(
 	'closewiki-return' => 'Revenir à $1',
 	'wikifactory-button-saveparse' => 'Parser et enregistrer les modifications',
 	'wikifactory-button-save' => 'Enregistrer les modifications',
+	'wikifactory-public-status-change-default-reason' => 'Statut modifié depuis l’onglet « Domaines ».',
 	'awc-metrics-wikis' => 'Afficher les wikis',
 	'awc-metrics-select' => 'Affichage des wikis :',
 	'awc-metrics-by-language' => 'par langue :',
@@ -1753,6 +1761,11 @@ $messages['fr'] = array(
 	'closed-confirm-btn' => 'Confirmer la clôture',
 	'closed-redirect-alert' => 'Veuillez donner une URL de redirection !',
 	'closed-reason' => 'Motif :',
+	'newwikisgraph' => 'Graphique des nouveaux wikis',
+	'newwikisgraph-report-title' => 'créations de wiki par jour',
+	'newwikisgraph-wikis-created' => 'wikis créés',
+	'newwikisgraph-param-all' => 'Tout',
+	'newwikisgraph-param-other' => 'Autre',
 );
 
 /** Galician (Galego)
@@ -1776,7 +1789,7 @@ $messages['gl'] = array(
 	'wikifactory-label-info' => 'Información',
 	'wikifactory-label-variables' => 'Variables',
 	'wikifactory-label-variables2' => 'Xeral',
-	'wikifactory-label-hubs' => 'Centro de actividade',
+	'wikifactory-label-hubs' => 'Centros de actividade',
 	'wikifactory-label-domains' => 'Dominios',
 	'wikifactory-label-return' => 'Volver á lista',
 	'wikifactory-label-clog' => 'Rexistro de cambios',
@@ -1808,6 +1821,7 @@ $messages['gl'] = array(
 	'closewiki-return' => 'Volver a $1',
 	'wikifactory-button-saveparse' => 'Analizar e gardar os cambios',
 	'wikifactory-button-save' => 'Gardar os cambios',
+	'wikifactory-public-status-change-default-reason' => 'O estado cambiou desde a lapela do dominio.',
 	'awc-metrics-wikis' => 'Mostrar os wikis',
 	'awc-metrics-select' => 'Mostrar os wikis:',
 	'awc-metrics-by-language' => 'por lingua:',
@@ -2089,6 +2103,7 @@ $messages['ia'] = array(
 	'closewiki-return' => 'Retornar a $1',
 	'wikifactory-button-saveparse' => 'Processar &amp; Salveguardar modificationes',
 	'wikifactory-button-save' => 'Salveguardar modificationes',
+	'wikifactory-public-status-change-default-reason' => 'Stato cambiate desde le scheda Dominios.',
 	'awc-metrics-wikis' => 'Monstrar wikis',
 	'awc-metrics-select' => 'Monstrar wikis:',
 	'awc-metrics-by-language' => 'per lingua:',
@@ -2382,6 +2397,7 @@ $messages['it'] = array(
 
 /** Japanese (日本語)
  * @author Aotake
+ * @author Fryed-peach
  * @author Hosiryuhosi
  * @author Naohiro19
  * @author Yanajin66
@@ -2391,6 +2407,7 @@ $messages['ja'] = array(
 	'wf_city_url' => 'アドレス',
 	'wf_city_id' => 'ID',
 	'wf_city_title' => 'タイトル',
+	'wf_city_created' => '作成',
 	'wf_city_founding_user' => '創設者',
 	'wf_city_founding_email' => '創設者メールアドレス',
 	'wf_city_public' => '状態',
@@ -2717,6 +2734,7 @@ $messages['mk'] = array(
 	'closewiki-return' => 'Назад кон $1',
 	'wikifactory-button-saveparse' => 'Парсирај и зачувај промени',
 	'wikifactory-button-save' => 'Зачувај промени',
+	'wikifactory-public-status-change-default-reason' => 'Статусот е изменет од јазичето „Домени“.',
 	'awc-metrics-wikis' => 'Прикажи викија',
 	'awc-metrics-select' => 'Прикажи викија:',
 	'awc-metrics-by-language' => 'по јазик:',
@@ -2871,6 +2889,7 @@ $messages['ms'] = array(
 	'closewiki-return' => 'Kembali ke $1',
 	'wikifactory-button-saveparse' => 'Hurai &amp; Simpan perubahan',
 	'wikifactory-button-save' => 'Simpan perubahan',
+	'wikifactory-public-status-change-default-reason' => 'Status ditukar dari tab Domain.',
 	'awc-metrics-wikis' => 'Paparkan Wiki',
 	'awc-metrics-select' => 'Paparkan Wiki:',
 	'awc-metrics-by-language' => 'mengikut bahasa:',
@@ -3050,6 +3069,7 @@ $messages['nl'] = array(
 	'closewiki-return' => 'Terug naar $1',
 	'wikifactory-button-saveparse' => 'Verwerken en wijzigingen opslaan',
 	'wikifactory-button-save' => 'Wijzigingen opslaan',
+	'wikifactory-public-status-change-default-reason' => 'Status gewijzigd vanuit het tabblad Domeinen.',
 	'awc-metrics-wikis' => "Wiki's weergeven",
 	'awc-metrics-select' => "Wiki's weergeven:",
 	'awc-metrics-by-language' => 'op taal:',
@@ -3198,6 +3218,7 @@ $messages['no'] = array(
 	'closewiki-return' => 'Tilbake til $1',
 	'wikifactory-button-saveparse' => 'Analyser &amp; lagre endringer',
 	'wikifactory-button-save' => 'Lagre endringer',
+	'wikifactory-public-status-change-default-reason' => 'Status endret fra domene-kategorien.',
 	'awc-metrics-wikis' => 'Vis wikier',
 	'awc-metrics-select' => 'Vis wikier:',
 	'awc-metrics-by-language' => 'etter språk:',
@@ -3968,6 +3989,7 @@ $messages['ro'] = array(
 /** Russian (Русский)
  * @author DCamer
  * @author Exlex
+ * @author Kuzura
  * @author Lockal
  * @author MaxSem
  * @author Александр Сигачёв
@@ -4089,6 +4111,11 @@ $messages['ru'] = array(
 	'closed-confirm-btn' => 'Подтвердить закрытие',
 	'closed-redirect-alert' => 'Пожалуйста, введите новый URL перенаправления!',
 	'closed-reason' => 'Причина:',
+	'newwikisgraph' => 'Новый график викий',
+	'newwikisgraph-report-title' => 'викий, созданных за день',
+	'newwikisgraph-wikis-created' => 'создано викий',
+	'newwikisgraph-param-all' => 'Всего',
+	'newwikisgraph-param-other' => 'Другие',
 );
 
 /** Sinhala (සිංහල)
@@ -4134,7 +4161,7 @@ $messages['sr-ec'] = array(
 	'wikifactory-label-hubs' => 'Чворови',
 	'wikifactory-label-domains' => 'Домени',
 	'wikifactory-label-return' => 'Повратак на списак',
-	'wikifactory-label-clog' => 'Белешке о издању',
+	'wikifactory-label-clog' => 'Дневник измена',
 	'wikifactory-label-actions' => 'Радње',
 	'wikifactory-label-google' => 'Гугл алатке',
 	'wikifactory-label-close' => 'Затвори',

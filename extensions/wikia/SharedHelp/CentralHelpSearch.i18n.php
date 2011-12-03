@@ -97,6 +97,7 @@ $messages['ru'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'centralhelpsearch-desc' => 'Låter införandet av ett formulär för att söka i Community Central Help',
 	'centralhelpsearch-placeholder' => 'Sök hjälp&hellip;',
 );
 

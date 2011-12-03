@@ -136,6 +136,22 @@ $messages['qqq'] = array(
 * $1 is the number of edits',
 );
 
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'userprofilepage-lightbox-interview-cancel' => 'Nullañ',
+	'user-identity-box-avatar-cancel' => 'Nullañ',
+	'user-identity-box-group-blocked' => 'Stanket',
+	'userprofilepage-lightbox-about-me-cancel' => 'Nullañ',
+	'userprofilepage-lightbox-about-me-save' => 'Enrollañ, poent echuiñ',
+	'userprofilepage-closing-popup-save-and-quit' => 'Enrollañ ha kuitaat',
+	'userprofilepage-closing-popup-cancel' => 'Nullañ',
+	'user-action-menu-rename' => 'Adenvel',
+	'user-action-menu-delete' => 'Diverkañ',
+	'user-action-menu-history' => 'Istor',
+);
+
 /** Catalan (Català)
  * @author BroOk
  * @author Gemmaa
@@ -240,10 +256,48 @@ $messages['ca'] = array(
 
 /** German (Deutsch)
  * @author SVG
+ * @author Sebastian Wallroth
  */
 $messages['de'] = array(
+	'userprofilepage-edit-modal-header' => 'Profil bearbeiten',
+	'userprofilepage-question-caption' => 'Frage  $1 /$2',
+	'userprofilepage-lightbox-interview-cancel' => 'Abbrechen',
+	'userprofilepage-lightbox-interview-save' => 'Speichern, ich bin fertig',
+	'userprofilepage-interview-edit-new-summary' => 'Nutzerbefragung erstellt',
+	'userprofilepage-interview-edit-update-summary' => 'Nutzerbefragung aktualisiert',
+	'userprofilepage-interview-save-error' => 'Fehler beim Speichern der Befragung',
+	'userprofilepage-interview-save-internal-error' => 'Speichern der Befragung fehlgeschlagen - Interner Fehler',
+	'userprofilepage-answers-stats-title' => 'Befragungsstatistiken',
+	'userprofilepage-answers-stats-info' => 'Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit. Curabitur Odio Augue, Pulvinar Id Malesuada nec, Aliquam Vitae est.',
+	'userprofilepage-add-question' => 'Neue Frage hinzufügen',
+	'userprofilepage-question-save' => 'Frage speichern',
+	'userprofilepage-question-list-title' => '$1/ $2  Fragen',
+	'userprofilepage-interview-section-title' => 'Nutzerbefragung',
+	'userprofilepage-invalid-user' => 'Ungültige Benutzer! Sie sind nicht eingeloggt oder haben keine Rechte um fortzufahren',
+	'userprofilepage-avatar-error-type' => 'Ungültiger MIME-Typ. Zulässig:$1',
+	'userprofilepage-avatar-error-resolution' => 'Die maximale Auflösung eines Avatars ist 2000 x 2000',
 	'user-identity-box-edit' => 'Bearbeiten',
+	'user-identity-box-wikia-contributor' => 'Ein Wikia-Nutzer',
 	'user-identity-box-edit-avatar' => 'Avatar bearbeiten',
+	'user-identity-box-delete-avatar' => 'Avatar löschen',
+	'user-identity-box-avatar-upload-avatar' => 'Einen Avatar hochladen',
+	'user-identity-box-avatar-fb-import-avatar' => 'Importieren Sie meinen Avatar von Facebook',
+	'user-identity-box-avatar-choose-avatar' => 'Wählen Sie einen Avatar',
+	'user-identity-box-avatar-save' => 'Speichern, ich bin fertig',
+	'user-identity-box-avatar-cancel' => 'Abbrechen',
+	'user-identity-box-avatar-anon-user-error' => 'Sie müssen sich einloggen, bevor Sie etwas ändern können',
+	'user-identity-box-aka-label' => '<span>aka</span> $1',
+	'user-identity-box-my-twitter' => 'Mein Twitter',
+	'user-identity-box-my-website' => 'Meine Website',
+	'user-identity-box-my-fb-page' => 'Mein Facebook',
+	'user-identity-box-fav-wikis' => 'Meine Lieblingswikis',
+	'user-identity-box-location' => '<span>Ich lebe in</span> $1',
+	'user-identity-box-was-born-on' => '<span>Ich bin geboren am</span> $1 $2',
+	'user-identity-box-was-born-in' => '<span>Ich bin geboren in</span> $1',
+	'user-identity-box-occupation' => '<span>Mein Beruf ist</span> $1',
+	'user-identity-i-am' => '<span>Ich bin</span> $1',
+	'user-identity-box-edits-since-joining' => 'Bearbeitungen seit Beitritt zu diesem Wiki<br />$1',
+	'user-identity-box-edits' => '<em>$1</em><span>BEARBEITUNGEN</span>',
 	'user-identity-box-group-blocked' => 'Gesperrt',
 	'user-identity-box-group-chatmoderator' => 'Chat-Moderator',
 	'user-identity-box-group-sysop' => 'Admin',
@@ -252,6 +306,17 @@ $messages['de'] = array(
 	'user-identity-box-group-staff' => 'Staff',
 	'user-identity-box-group-helper' => 'Helfer',
 	'user-identity-box-group-vstf' => 'VSTF',
+	'user-identity-box-zero-state-location' => 'Standort',
+	'user-identity-box-zero-state-birthday' => 'Geburtstag',
+	'user-identity-box-zero-state-gender' => 'Geschlecht',
+	'user-identity-box-zero-state-occupation' => 'Beruf',
+	'user-identity-box-zero-state-twitter' => 'Mein Twitter',
+	'user-identity-box-zero-state-website' => 'Meine Website',
+	'user-identity-box-zero-state-fb-page' => 'Mein Facebook',
+	'user-identity-box-about-name' => 'Wie heißen Sie?',
+	'user-identity-box-about-location' => 'Wo lebst Du?',
+	'user-identity-box-about-birthday' => 'Wann hast Du Geburtstag?',
+	'user-identity-box-about-occupation' => 'Was ist Ihr Beruf?',
 );
 
 /** French (Français)
@@ -1086,6 +1151,7 @@ $messages['ps'] = array(
 );
 
 /** Russian (Русский)
+ * @author Kaganer
  * @author Kuzura
  */
 $messages['ru'] = array(
@@ -1096,7 +1162,7 @@ $messages['ru'] = array(
 	'userprofilepage-interview-edit-new-summary' => 'Интервью участника создано',
 	'userprofilepage-interview-edit-update-summary' => 'Интервью участника обновлено',
 	'userprofilepage-interview-save-error' => 'Сохранить интервью не удалось',
-	'userprofilepage-interview-save-internal-error' => 'Сохранить интервью не удалось - внутренняя ошибка',
+	'userprofilepage-interview-save-internal-error' => 'Сохранить интервью не удалось — внутренняя ошибка',
 	'userprofilepage-answers-stats-title' => 'Статистика интервью',
 	'userprofilepage-add-question' => 'Добавить новый вопрос',
 	'userprofilepage-question-save' => 'Сохранить вопрос',
@@ -1125,7 +1191,7 @@ $messages['ru'] = array(
 	'user-identity-box-was-born-in' => '<span>Я родился в</span> $1',
 	'user-identity-box-occupation' => '<span>Моя профессия:</span> $1',
 	'user-identity-i-am' => '<span>Я</span> $1',
-	'user-identity-box-edits-since-joining' => 'Правок с момента присоединения к этой вики<br />$1',
+	'user-identity-box-edits-since-joining' => 'Правок с момента присоединения<br />к этой вики $1',
 	'user-identity-box-edits' => '<em>$1</em><span>ПРАВОК</span>',
 	'user-identity-box-group-blocked' => 'Заблокирован',
 	'user-identity-box-group-chatmoderator' => 'Модератор чата',
@@ -1165,7 +1231,7 @@ $messages['ru'] = array(
 	'userprofilepage-lightbox-about-me-cancel' => 'Отмена',
 	'userprofilepage-lightbox-about-me-save' => 'Сохранить, я закончил',
 	'user-identity-box-saving-error' => 'Сохранить данные участника не удалось - ваши данные должны быть обычным текстом',
-	'user-identity-box-saving-internal-error' => 'Сохранить данные участника не удалось - внутренняя ошибка',
+	'user-identity-box-saving-internal-error' => 'Сохранить данные участника не удалось — внутренняя ошибка',
 	'userprofilepage-closing-popup-header' => 'Выход из редактора профайла',
 	'userprofilepage-closing-popup-info' => 'Есть несохранённые изменения в профайле. Что вы хотите сделать?',
 	'userprofilepage-closing-popup-discard-and-quit' => 'Отменить изменения и выйти',

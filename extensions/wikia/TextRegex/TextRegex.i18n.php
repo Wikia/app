@@ -815,7 +815,7 @@ Försök igen.',
 	'textregex-create-subpage' => 'eller skapa en ny lista:',
 	'textregex-select-regexlist' => 'gå till listan',
 	'textregex-invalid-regexid' => 'Ogiltig fras.',
-	'textregex-phrase-statistics' => "Statistik för \"'''\$1'''\" fras (antal poster: \$2)",
+	'textregex-phrase-statistics' => "Statistik för frasen \"'''\$1'''\" (antal poster: \$2)",
 	'textregex-return-mainpage' => '[{{SERVER}}$1 gå tillbaka till listan]',
 );
 

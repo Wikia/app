@@ -40,7 +40,7 @@ $messages['qqq'] = array(
 * $2 is the user name of the acting user
 * $3 is the user ID of the "victim"
 * $4 is the user name of the "victim".',
-        'stafflog-wiki-status-change' => 'Log entry. Parameters:
+	'stafflog-wiki-status-change' => 'Log entry. Parameters:
 * $1 is the name of the acting user,
 * $2 is the name of the wiki of which the status was changed,
 * $3 is the new status of the wiki,
@@ -93,6 +93,7 @@ $messages['es'] = array(
 
 /** French (Français)
  * @author Peter17
+ * @author Wyz
  */
 $messages['fr'] = array(
 	'stafflog-desc' => 'Identification centralisée pour le personnel',
@@ -101,6 +102,15 @@ $messages['fr'] = array(
 	'stafflog-piggybackloginmsg' => '$1 Accès superposé - utilisateur $2 connecté en tant que $3',
 	'stafflog-piggybacklogoutmsg' => '$1 Accès superposé - utilisateur $2 déconnecté du compte $3',
 	'right-stafflog' => 'Peut afficher le journal de l’équipe d’administration',
+	'stafflog-wiki-status-change' => '$1 a changé le statut de $2 en $3. Motif : $4',
+	'stafflog-filter-label' => 'Filtre',
+	'stafflog-filter-user' => 'Utilisateur :',
+	'stafflog-filter-type' => 'Type :',
+	'stafflog-filter-apply' => 'Appliquer le filtre',
+	'stafflog-filter-type-block' => 'Blocages',
+	'stafflog-filter-type-piggyback' => 'Accès superposé',
+	'stafflog-filter-type-renameuser' => 'Renommages d’utilisateur',
+	'stafflog-filter-type-wikifactory' => 'Statut du wiki',
 );
 
 /** Galician (Galego)
@@ -113,6 +123,15 @@ $messages['gl'] = array(
 	'stafflog-piggybackloginmsg' => '$1 acceso non autorizado; usuario $2 conectado como $3',
 	'stafflog-piggybacklogoutmsg' => '$1 acceso non autorizado; usuario $2 desconectado da conta $3',
 	'right-stafflog' => 'Pode ollar o rexistro do persoal',
+	'stafflog-wiki-status-change' => '$1 cambiou o estado de $2 a $3. Motivo: $4',
+	'stafflog-filter-label' => 'Filtro',
+	'stafflog-filter-user' => 'Usuario:',
+	'stafflog-filter-type' => 'Tipo:',
+	'stafflog-filter-apply' => 'Aplicar o filtro',
+	'stafflog-filter-type-block' => 'Bloqueos',
+	'stafflog-filter-type-piggyback' => 'Acceso non autorizado',
+	'stafflog-filter-type-renameuser' => 'Cambios no nome de usuario',
+	'stafflog-filter-type-wikifactory' => 'Estado do wiki',
 );
 
 /** Interlingua (Interlingua)
@@ -125,6 +144,15 @@ $messages['ia'] = array(
 	'stafflog-piggybackloginmsg' => '$1 Portacontos - le usator $2 aperiva session como $3',
 	'stafflog-piggybacklogoutmsg' => '$1 Portacontos - le usator $2 claudeva session del conto $3',
 	'right-stafflog' => 'Pote vider le registro del personal',
+	'stafflog-wiki-status-change' => '$1 cambiava le stato de $2 in $3. Motivo: $4',
+	'stafflog-filter-label' => 'Filtro',
+	'stafflog-filter-user' => 'Usator:',
+	'stafflog-filter-type' => 'Typo:',
+	'stafflog-filter-apply' => 'Applicar filtro',
+	'stafflog-filter-type-block' => 'Blocadas',
+	'stafflog-filter-type-piggyback' => 'Portacontos',
+	'stafflog-filter-type-renameuser' => 'Renominationes de usator',
+	'stafflog-filter-type-wikifactory' => 'Stato del wiki',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -155,6 +183,15 @@ $messages['mk'] = array(
 	'stafflog-piggybackloginmsg' => '$1 на ушка - најава на корисникот $2 како $3',
 	'stafflog-piggybacklogoutmsg' => '$1 на ушка - одјава на корисникот $2 од сметката $3',
 	'right-stafflog' => 'Може да го прегледува дневникот за персоналот',
+	'stafflog-wiki-status-change' => '$1 го смени статусот на $2 во $3. Причина: $4',
+	'stafflog-filter-label' => 'Филтер',
+	'stafflog-filter-user' => 'Корисник:',
+	'stafflog-filter-type' => 'Тип:',
+	'stafflog-filter-apply' => 'Примени филтер',
+	'stafflog-filter-type-block' => 'Блокирања',
+	'stafflog-filter-type-piggyback' => 'На ушка',
+	'stafflog-filter-type-renameuser' => 'Преименувања на корисници',
+	'stafflog-filter-type-wikifactory' => 'Статус на викито',
 );
 
 /** Malay (Bahasa Melayu)
@@ -167,9 +204,19 @@ $messages['ms'] = array(
 	'stafflog-piggybackloginmsg' => 'Gendong $1 - pengguna $2 log masuk sebagai $3',
 	'stafflog-piggybacklogoutmsg' => 'Gendong $1 - pengguna $2 log keluar dari akaun $3',
 	'right-stafflog' => 'Boleh melihat log kakitangan',
+	'stafflog-wiki-status-change' => '$1 menukar status $2 kepada $3. Sebab: $4',
+	'stafflog-filter-label' => 'Penapis',
+	'stafflog-filter-user' => 'Pengguna:',
+	'stafflog-filter-type' => 'Jenis:',
+	'stafflog-filter-apply' => 'Gunakan penapis',
+	'stafflog-filter-type-block' => 'Sekatan',
+	'stafflog-filter-type-piggyback' => 'Gendong',
+	'stafflog-filter-type-renameuser' => 'Penukaran nama pengguna',
+	'stafflog-filter-type-wikifactory' => 'Status wiki',
 );
 
 /** Dutch (Nederlands)
+ * @author Saruman
  * @author Siebrand
  */
 $messages['nl'] = array(
@@ -179,6 +226,15 @@ $messages['nl'] = array(
 	'stafflog-piggybackloginmsg' => '$1 piggyback: gebruiker $2 heeft aangemeld als $4 ($3)',
 	'stafflog-piggybacklogoutmsg' => '$1 piggyback: gebruiker $2 heeft afgemeld als $4 ($3)',
 	'right-stafflog' => 'Kan het staflogboek bekijken',
+	'stafflog-wiki-status-change' => '$1 heeft de status gewijzigd van $2 naar $3. Reden: $4',
+	'stafflog-filter-label' => 'Filter',
+	'stafflog-filter-user' => 'Gebruiker:',
+	'stafflog-filter-type' => 'Type:',
+	'stafflog-filter-apply' => 'Filter toepassen',
+	'stafflog-filter-type-block' => 'Blokkades',
+	'stafflog-filter-type-piggyback' => 'Piggyback',
+	'stafflog-filter-type-renameuser' => 'Hernoemde gebruikers',
+	'stafflog-filter-type-wikifactory' => 'Wikistatus',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -191,6 +247,15 @@ $messages['no'] = array(
 	'stafflog-piggybackloginmsg' => '$1 operasjon som annen bruker - bruker $2 logger inn som $3',
 	'stafflog-piggybacklogoutmsg' => '$1 operasjon som annen bruker - bruker $2 logger ut fra $3-konto',
 	'right-stafflog' => 'Kan vise ledelsesloggen',
+	'stafflog-wiki-status-change' => '$1 endret statusen på $2 til $3. Årsak: $4',
+	'stafflog-filter-label' => 'Filter',
+	'stafflog-filter-user' => 'Bruker:',
+	'stafflog-filter-type' => 'Type:',
+	'stafflog-filter-apply' => 'Bruk filter',
+	'stafflog-filter-type-block' => 'Blokkeringer',
+	'stafflog-filter-type-piggyback' => 'Operer som annen bruker',
+	'stafflog-filter-type-renameuser' => 'Brukernavnebytter',
+	'stafflog-filter-type-wikifactory' => 'Wiki-status',
 );
 
 /** Polish (Polski)
