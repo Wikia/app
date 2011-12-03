@@ -168,6 +168,7 @@ $messages['gl'] = array(
 
 /** Hungarian (Magyar)
  * @author Dani
+ * @author Dj
  */
 $messages['hu'] = array(
 	'category-exhibition-sorttype' => 'Rendezés típusa:',
@@ -179,6 +180,7 @@ $messages['hu'] = array(
 	'category-exhibition-media-header' => 'A(z) „$1” kategóriába tartozó médiafájlok',
 	'category-exhibition-blogs-header' => 'Blogbejegyzések',
 	'category-exhibition-display-old' => 'Kategória listanézet',
+	'category-exhibition-display-new' => 'Kategória bemutatás nézet',
 );
 
 /** Interlingua (Interlingua)

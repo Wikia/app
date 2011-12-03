@@ -168,6 +168,7 @@ $messages['bg'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Y-M D
  */
 $messages['br'] = array(
@@ -178,6 +179,7 @@ $messages['br'] = array(
 	'phalanx-label-expiry' => 'Termen :',
 	'phalanx-label-type' => 'Seurt',
 	'phalanx-label-lang' => 'Yezh :',
+	'phalanx-format-exact' => 'rik',
 	'phalanx-test-submit' => 'Amprouiñ',
 	'phalanx-display-row-blocks' => 'stankadennoù : $1',
 	'phalanx-link-unblock' => 'distankañ',
@@ -189,6 +191,7 @@ $messages['br'] = array(
 	'phalanx-stats-table-language' => 'Yezh',
 	'phalanx-stats-table-text' => 'Testenn',
 	'phalanx-stats-table-reason' => 'Abeg',
+	'phalanx-stats-table-wiki-name' => 'Anv ar wiki',
 	'phalanx-stats-table-wiki-last-edited' => 'Kemmet da ziwezhañ',
 );
 
@@ -1527,6 +1530,8 @@ $messages['sv'] = array(
 	'phalanx-type-answers-question-title' => 'frågetitel',
 	'phalanx-type-answers-recent-questions' => 'senaste frågorna',
 	'phalanx-type-wiki-creation' => 'wiki-skapande',
+	'phalanx-add-block' => 'Verkställ blockering',
+	'phalanx-edit-block' => 'Spara blockering',
 	'phalanx-label-filter' => 'Filter:',
 	'phalanx-label-reason' => 'Orsak:',
 	'phalanx-label-expiry' => 'Varaktighet:',
@@ -1535,15 +1540,24 @@ $messages['sv'] = array(
 	'phalanx-view-type' => 'Typ av blockering...',
 	'phalanx-view-blocker' => 'Sök med textfilter:',
 	'phalanx-view-blocks' => 'Sökfilter',
+	'phalanx-view-id' => 'Få filter efter ID:',
 	'phalanx-format-text' => 'oformaterad text',
 	'phalanx-format-case' => 'skiftlägeskänslig',
 	'phalanx-format-exact' => 'exakt',
 	'phalanx-tab-main' => 'Hantera filter',
 	'phalanx-tab-secondary' => 'Testa filter',
+	'phalanx-modify-warning' => 'Du redigerar blockerings-ID #$1.
+Klicka på "{{int:phalanx-edit-block}}" för att spara dina ändringar!',
 	'phalanx-test-submit' => 'Test',
 	'phalanx-test-results-legend' => 'Testresultat',
+	'phalanx-display-row-blocks' => 'blockeringar: $1',
 	'phalanx-display-row-created' => "skapades av '''$1''' den $2",
+	'phalanx-link-unblock' => 'avblockera',
+	'phalanx-link-modify' => 'ändra',
+	'phalanx-link-stats' => 'statistik',
+	'phalanx-reset-form' => 'Återställ formulär',
 	'phalanx-legend-input' => 'Skapa eller ändra filter',
+	'phalanx-unblock-message' => 'Block-ID #$1 har tagits bort',
 	'phalanx-stats-block-notfound' => 'blockerings-ID hittades inte',
 	'phalanx-stats-table-id' => 'Blockerings-ID',
 	'phalanx-stats-table-user' => 'Lades till av',
@@ -1555,10 +1569,15 @@ $messages['sv'] = array(
 	'phalanx-stats-table-text' => 'Text',
 	'phalanx-stats-table-reason' => 'Anledning',
 	'phalanx-stats-row-per-wiki' => "användaren '''$2''' blockerades den '''$4''' av filter-ID '''$3''' ($5) (typ: '''$1''')",
+	'phalanx-rule-log-add' => 'Phalanx-regel lades till: $1',
+	'phalanx-rule-log-edit' => 'Phalanx-regel redigerades: $1',
+	'phalanx-rule-log-delete' => 'Phalanx-regel raderades: $1',
 	'phalanx-rule-log-details' => 'Filter: "$1", typ: "$2", orsak: "$3"',
 	'phalanx-stats-table-wiki-id' => 'Wiki-ID',
 	'phalanx-stats-table-wiki-name' => 'Wiki-namn',
+	'phalanx-stats-table-wiki-url' => 'Wiki-URL',
 	'phalanx-stats-table-wiki-last-edited' => 'Senast redigerad',
+	'right-phalanx' => 'Kan hantera globala blockeringar och spamfilter',
 );
 
 /** Telugu (తెలుగు)

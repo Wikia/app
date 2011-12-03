@@ -216,6 +216,10 @@ $messages['nl'] = array(
 	'wikiamobile-login-submit' => 'Aanmelden',
 	'wikiamobile-menu' => 'Menu',
 	'wikiamobile-explore' => 'Verkennen',
+	'wikiamobile-article-categories' => 'Categorieën',
+	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Lifestyle]]',
+	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|Vermaak]]',
+	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Gaming]]',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -257,6 +261,20 @@ $messages['ps'] = array(
 	'wikiamobile-password' => 'پټنوم',
 	'wikiamobile-login-submit' => 'ننوتل',
 	'wikiamobile-menu' => 'غورنۍ',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Pedroca cerebral
+ */
+$messages['pt-br'] = array(
+	'wikiamobile-search' => 'Pesquisa',
+	'wikiamobile-search-wiki' => 'Wiki',
+	'wikiamobile-search-wikia' => 'Wikia',
+	'wikiamobile-login' => 'Registro',
+	'wikiamobile-password' => 'Senha',
+	'wikiamobile-login-submit' => 'Entrar',
+	'wikiamobile-menu' => 'Menu',
+	'wikiamobile-explore' => 'Explorar',
 );
 
 /** Russian (Русский)

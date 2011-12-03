@@ -85,15 +85,46 @@ $messages['az'] = array(
 	'admindashboard-control-multiple-upload-label' => 'Çox sayda şəkil əlavə et',
 );
 
+/** Bavarian (Boarisch)
+ * @author Mucalexx
+ */
+$messages['bar'] = array(
+	'admindashboard-title' => '{{SITENAME}} Ywersicht',
+	'admindashboard-header' => 'Admin-Ywersicht',
+	'admindashboard-toolbar-link' => 'Admin',
+	'admindashboard-tab-advanced' => 'Daweiterd',
+	'admindashboard-tab-general' => 'Oigmoah',
+	'admindashboard-controls-wiki-header' => 'Wiki',
+	'admindashboard-control-theme-designer-label' => 'Theme-Designer',
+	'admindashboard-control-theme-designer-tooltip' => 'Theme-Designer daméglichts da, Form, Hintergrynd und vie merer aun deih Wiki auhzpassen.',
+	'admindashboard-control-recent-changes-label' => 'Létzde Änderrungen',
+	'admindashboard-control-recent-changes-tooltip' => "D' Létzden Änderrungen zoagt olle Änderrungen an deim Wiki in aner oanzing Zeidleisten.",
+	'admindashboard-control-top-navigation-label' => 'Ówerre Navigazión',
+	'admindashboard-control-top-navigation-tooltip' => "D' Ówerre Navigazión dalaabt da 's Navigaziónsmenue óm in deim Wiki auhzpassen.",
+	'admindashboard-control-wikia-labs-label' => 'Wikia Labs',
+	'admindashboard-control-wikia-labs-tooltip' => 'Mid Wikia Labs kauhst neiche Beta-Funkzióner vurob in deim Wiki ausprowiern.',
+	'admindashboard-control-wiki-features-label' => 'Wiki-Funkzióner',
+	'admindashboard-control-wiki-features-tooltip' => "D' Wiki-Funkzióner dalaam da, zuasétzliche Funkzióner fyr deih Wiki z' aktiviern.",
+	'admindashboard-control-page-layout-builder-label' => 'Seiten-Layout-Erstejer',
+);
+
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Y-M D
  */
 $messages['br'] = array(
+	'admindashboard-toolbar-link' => 'Merour',
 	'admindashboard-tab-advanced' => 'Araokaet',
 	'admindashboard-tab-general' => 'Hollek',
 	'admindashboard-controls-wiki-header' => 'Wiki',
+	'admindashboard-control-recent-changes-label' => 'Kemmoù diwezhañ',
+	'admindashboard-control-top-navigation-label' => 'Merdeiñ war laez',
+	'admindashboard-controls-community-header' => 'Kumuniezh',
+	'admindashboard-control-user-list-label' => 'Roll implijerien',
+	'admindashboard-control-group-rights-label' => 'Gwirioù ar strollad',
 	'admindashboard-control-invite-label' => 'Pediñ',
 	'admindashboard-control-help-label' => 'Skoazell',
+	'admindashboard-control-help-tooltip' => 'Kavout skoazell.',
 	'admindashboard-controls-content-header' => 'Danvez',
 	'admindashboard-control-categories-list-label' => 'An holl rummadoù',
 	'admindashboard-control-add-page-label' => 'Ouzhpennañ ur bajenn',
@@ -192,6 +223,7 @@ $messages['el'] = array(
 /** Spanish (Español)
  * @author Bola
  * @author DJ Nietzsche
+ * @author Vivaelcelta
  */
 $messages['es'] = array(
 	'admindashboard-title' => 'Panel de Administración de {{SITENAME}}',
@@ -202,7 +234,7 @@ $messages['es'] = array(
 	'admindashboard-controls-wiki-header' => 'Wiki',
 	'admindashboard-control-theme-designer-label' => 'Diseñador de Temas',
 	'admindashboard-control-theme-designer-tooltip' => 'El Diseñador de Temas te permite personalizar los colores del wiki, el fondo y mucho más.',
-	'admindashboard-control-recent-changes-label' => 'Cambios Recientes',
+	'admindashboard-control-recent-changes-label' => 'Cambios recientes',
 	'admindashboard-control-recent-changes-tooltip' => 'Los Cambios Recientes muestran todos los cambios realizados en tu wiki en un cierto periodo de tiempo',
 	'admindashboard-control-top-navigation-label' => 'Navegación Superior',
 	'admindashboard-control-top-navigation-tooltip' => 'La Navegación Superior te permite personalizar el menú de navegación en la parte superior de tu wiki',
@@ -241,14 +273,18 @@ $messages['es'] = array(
 
 /** Persian (فارسی)
  * @author Mjbmr
+ * @author Reza1615
  */
 $messages['fa'] = array(
 	'admindashboard-toolbar-link' => 'مدیر',
 	'admindashboard-tab-advanced' => 'پیشرفته',
 	'admindashboard-tab-general' => 'عمومی',
 	'admindashboard-controls-wiki-header' => 'ویکی',
+	'admindashboard-control-top-navigation-label' => 'ناوبری بالا',
 	'admindashboard-controls-community-header' => 'جامعه',
 	'admindashboard-control-user-list-label' => 'فهرست کاربران',
+	'admindashboard-control-help-label' => 'راهنما',
+	'admindashboard-control-help-tooltip' => 'جستجوی راهنما',
 	'admindashboard-control-categories-list-label' => 'همهٔ رده‌ها',
 );
 
@@ -556,9 +592,12 @@ $messages['ku-latn'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
+	'admindashboard-tab-general' => 'Allgemeng',
+	'admindashboard-control-recent-changes-label' => 'Rezent Ännerungen',
 	'admindashboard-control-user-list-label' => 'Benotzerlëscht',
 	'admindashboard-control-invite-label' => 'Invitéieren',
 	'admindashboard-control-help-label' => 'Hëllef',
+	'admindashboard-control-help-tooltip' => 'Hëllef fannen.',
 	'admindashboard-controls-content-header' => 'Inhalt',
 	'admindashboard-control-categories-list-label' => 'All Kategorien',
 	'admindashboard-control-add-page-label' => 'Eng Säit derbäisetzen',
@@ -767,6 +806,7 @@ $messages['no'] = array(
 
 /** Polish (Polski)
  * @author Cloudissimo
+ * @author Sovq
  * @author Woytecr
  */
 $messages['pl'] = array(
@@ -782,6 +822,7 @@ $messages['pl'] = array(
 	'admindashboard-control-recent-changes-tooltip' => 'Ostatnie zmiany wyświetlają wszystkie edycje dokonane na Twojej wiki w pewnym odstępie czasu.',
 	'admindashboard-control-top-navigation-label' => 'Główna nawigacja',
 	'admindashboard-control-top-navigation-tooltip' => 'Główna nawigacja pozwala dostosować menu na górze Twojej wiki.',
+	'admindashboard-control-wikia-labs-label' => 'Wikia Labs',
 	'admindashboard-control-wikia-labs-tooltip' => 'Wikia Labs pozwala przetestować beta funkcje na Twojej wiki jako jeden z pierwszych.',
 	'admindashboard-control-wiki-features-label' => 'Wiki - funkcje',
 	'admindashboard-control-wiki-features-tooltip' => 'Wiki - funkcje pozwalają na włączenie dodatkowych opcji na Twojej wiki.',
@@ -831,10 +872,23 @@ $messages['ps'] = array(
 	'admindashboard-controls-content-header' => 'منځپانګه',
 	'admindashboard-control-categories-list-label' => 'ټولې وېشنيزې',
 	'admindashboard-control-add-page-label' => 'يو مخ ورګډول',
-	'admindashboard-control-add-page-tooltip' => 'خپلې ویکي ته یوه نوې پاڼه ورډېره کړئ.',
+	'admindashboard-control-add-page-tooltip' => 'خپل ويکي ته يو نوی مخ ورګډ کړی.',
 	'admindashboard-control-add-photo-label' => 'يو انځور ورګډول',
-	'admindashboard-control-add-photo-tooltip' => 'خپلې ویکي ته یو نوی انځور ورډېر کړئ.',
+	'admindashboard-control-add-photo-tooltip' => 'خپل ويکي ته نوي انځورونه ورګډ کړی.',
 	'admindashboard-control-multiple-upload-label' => 'ګڼ انځورونه ورډېرول',
+);
+
+/** Portuguese (Português)
+ * @author Andresilvazito
+ */
+$messages['pt'] = array(
+	'admindashboard-toolbar-link' => 'Administrador',
+	'admindashboard-tab-advanced' => '↓Avançado',
+	'admindashboard-control-recent-changes-label' => 'Alterações Recentes',
+	'admindashboard-control-user-list-label' => 'Lista de Utilizadores',
+	'admindashboard-control-user-list-tooltip' => 'Exibir uma lista completa dos usuários que participaram no seu wiki.',
+	'admindashboard-control-user-rights-label' => 'Direitos de Usuário',
+	'admindashboard-control-user-rights-tooltip' => 'Adicionar e remover os direitos de grupos e permissões para usuários no seu wiki.',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -901,7 +955,7 @@ $messages['ru'] = array(
 	'admindashboard-control-top-navigation-tooltip' => 'Это позволяет настроить меню навигации, которое расположено в верхней части вики',
 	'admindashboard-control-wikia-labs-label' => 'Wikia Labs',
 	'admindashboard-control-wikia-labs-tooltip' => 'Wikia Labs позволяет вам быть подключить/отключить новые расширения Викия.',
-	'admindashboard-control-wiki-features-label' => 'Возможности Вики',
+	'admindashboard-control-wiki-features-label' => 'Wiki Features',
 	'admindashboard-control-wiki-features-tooltip' => 'Wiki Features позволяет вам подключать дополнительные расширения на ввашей вики.',
 	'admindashboard-control-page-layout-builder-label' => 'Страница создания макетов',
 	'admindashboard-control-page-layout-builder-tooltip' => 'Мастер создания макетов позволяет вам создавать макеты страниц. Участники смогут использовать их при создании новых страниц вики.',

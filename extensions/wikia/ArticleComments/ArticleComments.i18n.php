@@ -63,11 +63,6 @@ Wikia
 </p>',
 );
 
-/** Message documentation (Message documentation) */
-$messages['qqq'] = array(
-	'article-comments-rc-wall-messages' => 'shown in recent changes when there is a block of actions on a message wall (message wall extension uses some of article comments mechanisms)',
-);
-
 /** толышә зывон (толышә зывон)
  * @author Гусейн
  */
@@ -506,6 +501,7 @@ $messages['fi'] = array(
 /** French (Français)
  * @author Verdy p
  * @author Wyz
+ * @author Zetud
  */
 $messages['fr'] = array(
 	'article-comments-anonymous' => 'Utilisateur anonyme',
@@ -537,7 +533,7 @@ $messages['fr'] = array(
 	'enotif_subject_article_comment' => '$PAGEEDITOR a commenté « $PAGETITLE » sur {{SITENAME}}',
 	'enotif_body_article_comment' => '$WATCHINGUSERNAME,
 
-Un nouveau commentaire à été laissé sur « $PAGETITLE » sur {{SITENAME}}. Utilisez ce lien pour voir tous les commentaires : $PAGETITLE_URL#article-comments
+Un nouveau commentaire a été laissé sur « $PAGETITLE » sur {{SITENAME}}. Utilisez ce lien pour voir tous les commentaires : $PAGETITLE_URL#article-comments
 
 — L’équipe Wikia
 
@@ -547,7 +543,7 @@ ___________________________________________
 * Cliquez sur le lien suivant pour vous désabonner de tous les courriels de Wikia : $UNSUBSCRIBEURL',
 	'enotif_body_article_comment-HTML' => '<p>$WATCHINGUSERNAME,
 <br /><br />
-Un nouveau commentaire à été laissé sur « $PAGETITLE » sur {{SITENAME}}. Utilisez ce lien pour voir tous les commentaires : <a href="$PAGETITLE_URL#article-comments">$PAGETITLE</a>
+Un nouveau commentaire a été laissé sur « $PAGETITLE » sur {{SITENAME}}. Utilisez ce lien pour voir tous les commentaires : <a href="$PAGETITLE_URL#article-comments">$PAGETITLE</a>
 <br /><br />
 - L’équipe Wikia</p>
 <br /><hr />
@@ -615,7 +611,6 @@ Wikia
 <li>Quere controlar os correos electrónicos que recibe? <a href="{{fullurl:Special:Preferences}}">Actualice as súas preferencias<a>.</li>
 </ul>
 </p>',
-	'article-comments-rc-wall-messages' => 'Muro',
 );
 
 /** Hungarian (Magyar)
@@ -696,7 +691,6 @@ Wikia
 <li>Vole determinar qual emails tu recipe? <a href="{{fullurl:Special:Preferences}}">Actualisa tu preferentias<a>.</li>
 </ul>
 </p>',
-	'article-comments-rc-wall-messages' => 'Muro',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -990,7 +984,6 @@ $PAGEEDITOR коментираше на „$PAGETITLE“.
 <li>Сакате да определите кои пораки да ги добивате? <a href="{{fullurl:Special:Preferences}}">Изменете си ги нагодувањата<a>.</li>
 </ul>
 </p>',
-	'article-comments-rc-wall-messages' => 'Ѕид',
 );
 
 /** Malayalam (മലയാളം)
@@ -1068,7 +1061,6 @@ Wikia
 <li>Nak kawal emel mana yang anda terima? <a href="{{fullurl:Special:Preferences}}">Kemaskini Keutamaan anda<a>.</li>
 </ul>
 </p>',
-	'article-comments-rc-wall-messages' => 'Tembok',
 );
 
 /** Mazanderani (مازِرونی)
@@ -1111,6 +1103,8 @@ $messages['nl'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'De bovenliggende pagina is verwijderd.',
 	'article-comments-empty-comment' => "U kunt geen opmerking zonder inhoud plaatsen. <a href='$1'>In plaats daarvan verwijderen?</a>",
+	'wikiamobile-article-comments-header' => 'Opmerkingen ($1)',
+	'wikiamobile-article-comments-more' => 'Meer laden',
 	'enotif_subject_article_comment' => '$PAGEEDITOR heeft een opmerking geplaatst bij "$PAGETITLE" op {{SITENAME}}',
 	'enotif_body_article_comment' => 'Beste $WATCHINGUSERNAME,
 
@@ -1136,7 +1130,6 @@ Wikia
 <li>Wilt u bepalen welke e-mails u ontvangt? <a href="{{fullurl:{{ns:special}}:Preferences}}">Pas dan uw Voorkeuren<a> aan.</li>
 </ul>
 </p>',
-	'article-comments-rc-wall-messages' => 'Muur',
 );
 
 /** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
@@ -1216,7 +1209,6 @@ Wikia
 <li>Vil du kontrollere hva slags e-post du mottar? <a href="{{fullurl:Special:Preferences}}">Oppdater innstillingene dine<a>.</li>
 </ul>
 </p>',
-	'article-comments-rc-wall-messages' => 'Vegg',
 );
 
 /** Polish (Polski)
@@ -1464,7 +1456,62 @@ $messages['ru'] = array(
 	'article-comments-delete-reason' => 'Родительская статьи / родительский комментарий был удален',
 	'article-comments-empty-comment' => "Вы не можете добавить пустой комментарий. <a href='$1'>Удалить его?</a>",
 	'enotif_subject_article_comment' => '$PAGEEDITOR прокомментировал "$ PAGETITLE" на {{SITENAME}}',
-	'article-comments-rc-wall-messages' => 'Обсудить',
+);
+
+/** Serbo-Croatian (Srpskohrvatski)
+ * @author OC Ripper
+ */
+$messages['sh'] = array(
+	'article-comments-anonymous' => 'Anonimni korisnik',
+	'article-comments-comments' => 'Komentari ($1)',
+	'article-comments-post' => 'Pošalji komentar',
+	'article-comments-cancel' => 'Odustani',
+	'article-comments-delete' => 'obriši',
+	'article-comments-edit' => 'uredi',
+	'article-comments-history' => 'historija',
+	'article-comments-error' => 'Komentar se ne može snimiti',
+	'article-comments-undeleted-comment' => 'Odbrisan komentar za stranicu bloga $1',
+	'article-comments-rc-comment' => 'Komentar članka (<span class="plainlinks">[$1 $2]</span>)',
+	'article-comments-rc-comments' => 'Komentari članka ([[$1]])',
+	'article-comments-fblogin' => 'Molimo <a href="$1" rel="nofollow">prijavite se i povežite sa Facebookom</a> kako bi poslali komentar na ovu wiki!',
+	'article-comments-fbconnect' => 'Molimo <a href="$1">povežite ovaj račun s Facebookom</a> kako bi komentirali!',
+	'article-comments-rc-blog-comment' => 'Komentar nloga (<span class="plainlinks">[$1 $2]</span>)',
+	'article-comments-rc-blog-comments' => 'Komentari bloga ([[$1]])',
+	'article-comments-login' => 'Molimo <a href="$1">prijavite se</a> kako biste poslali komentar na ovu wiki.',
+	'article-comments-toc-item' => 'Komentari',
+	'article-comments-comment-cannot-add' => 'Ne možete dodati komentar na članak.',
+	'article-comments-reply' => 'Odgovori',
+	'article-comments-show-all' => 'Pokaži sve komentare',
+	'article-comments-prev-page' => 'Pret',
+	'article-comments-next-page' => 'Slijed',
+	'article-comments-page-spacer' => '&#160...&#160',
+	'article-comments-delete-reason' => 'Matični članak / matični komentar je bio izbrisan.',
+	'article-comments-empty-comment' => "Ne možete poslati prazni komentar. <a href='$1'>Umjesto toga ga izbrisati?</a>",
+	'enotif_subject_article_comment' => '$PAGEEDITOR je komentirao/la "$PAGETITLE" na {{SITENAME}}',
+	'enotif_body_article_comment' => 'Cijenjeni/a $WATCHINGUSERNAME,
+
+$PAGEEDITOR je komentirao/la "$PAGETITLE".
+
+Da vidite thread komentara, pratite donji link:
+$PAGETITLE_URL
+
+Dolazite i uređujte često...
+
+Wikia',
+	'enotif_body_article_comment-HTML' => '<p>Cijenjeni/a $WATCHINGUSERNAME,
+<br /><br />
+$PAGEEDITOR je komentirao/la "$PAGETITLE".
+<br /><br />
+Da vidite thread komentara, pratite ovaj link: <a href="$PAGETITLE_URL">$PAGETITLE</a>
+<br /><br />
+Molimo dolazite i komentirajte često...
+<br /><br />
+Wikia
+<br /><hr />
+<ul>
+<li>Želite kontrolirate koje e-mail poruke primate? <a href="{{fullurl:Special:Preferences}}">Ažurirajte svoje postavke<a>.</li>
+</ul>
+</p>',
 );
 
 /** Sinhala (සිංහල)
@@ -1531,7 +1578,6 @@ Wikia
 <li>Vill du kontrollera vilka e-postmeddelanden du får? <a href="{{fullurl:Special:Preferences}}">Uppdatera dina inställningar.<a>.</li>
 </ul>
 </p>',
-	'article-comments-rc-wall-messages' => 'Vägg',
 );
 
 /** Telugu (తెలుగు)

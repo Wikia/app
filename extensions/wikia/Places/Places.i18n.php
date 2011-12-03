@@ -9,6 +9,17 @@ $messages['en'] = array(
 	'places-toolbar-button-address' => 'Please provide address to use as a geo tag for this page',
 );
 
+/** French (Français)
+ * @author Gomoko
+ * @author Wyz
+ */
+$messages['fr'] = array(
+	'places' => 'Placer sur ce wiki',
+	'places-desc' => "Fournit le support des balises <nowiki><place> et <places></nowiki> pour marquer géographiquement les pages, ainsi qu'une [[Special:Places|carte de toutes les pages marquées]]",
+	'places-toolbar-button-tooltip' => 'Cliquez pour ajouter une balise géographique à cette page',
+	'places-toolbar-button-address' => "Veuillez indiquer l'adresse à utiliser comme balise géographique pour cette page.",
+);
+
 /** Galician (Galego)
  * @author Toliño
  */
@@ -17,6 +28,16 @@ $messages['gl'] = array(
 	'places-desc' => 'Proporciona os asociadores analíticos <nowiki><place> e <places></nowiki> para etiquetar xeograficamente as páxinas e un [[Special:Places|mapa de todas as páxinas etiquetadas]]',
 	'places-toolbar-button-tooltip' => 'Prema para engadir unha etiqueta xeográfica a esta páxina',
 	'places-toolbar-button-address' => 'Dea o enderezo que se vai empregar para etiquetar xeograficamente esta páxina',
+);
+
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'places' => 'Locos in iste wiki',
+	'places-desc' => 'Forni al analysator syntactic le uncinos <nowiki><place> e <places></nowiki> pro geo-etiquettage de paginas e un [[Special:Places|mappa de tote le paginas etiquettate]]',
+	'places-toolbar-button-tooltip' => 'Clicca pro adder un geo-etiquetta a iste pagina',
+	'places-toolbar-button-address' => 'Per favor specifica le adresse a usar como geo-etiquetta pro iste pagina',
 );
 
 /** Macedonian (Македонски)
@@ -54,11 +75,29 @@ $messages['nl'] = array(
  */
 $messages['no'] = array(
 	'places' => 'Steder på denne wikien',
+	'places-desc' => 'Legger til <nowiki><place>- og <places></nowiki>-tagger for geo-tagging av sider og et [[Special:Places|kart over alle taggede sider]]',
+	'places-toolbar-button-tooltip' => 'Klikk for å legge geo-tag til denne siden',
+	'places-toolbar-button-address' => 'Vennligst oppgi adressen som skal brukes som ge-tag for denne siden',
 );
 
 /** Polish (Polski) */
 $messages['pl'] = array(
 	'places' => 'Miejsca na tej wiki',
 	'places-desc' => 'Dodaje tagi <nowiki><place> and <places></nowiki> pozwalające na geotagowanie artykułów oraz [[Special:Places|mapę wszystkich oznaczonych artykułów]]',
+);
+
+/** Russian (Русский)
+ * @author Kuzura
+ */
+$messages['ru'] = array(
+	'places' => 'Места на этой вики',
+);
+
+/** Swedish (Svenska)
+ * @author WikiPhoenix
+ */
+$messages['sv'] = array(
+	'places' => 'Platser på denna wiki',
+	'places-toolbar-button-tooltip' => 'Klicka för att lägga till geotagg på denna sida',
 );
 

@@ -587,6 +587,7 @@ $messages['sr-ec'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'rte-edgecase-info-title' => 'Källäget krävs',
 	'rte-edgecase-comment' => 'HTML-kommentarer',
 	'rte-edgecase-triplecurls' => 'mallparametrar',
 	'rte-edgecase-complex-description' => 'en extern URL eller mall inom en länk beskrivning',

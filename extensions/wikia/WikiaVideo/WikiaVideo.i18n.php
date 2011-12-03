@@ -811,6 +811,7 @@ $messages['sl'] = array(
 	'wikiavideo-links' => 'Povezave',
 	'wikiavideo-placeholder' => 'Prostornik',
 	'wikiavideo-gallery-template' => 'Ta galerija videoposnetkov se nahaja znotraj predloge in je ni mogoče urediti iz načina pogleda. Prosimo, uredite ustrezno predlogo.',
+	'wikiavideo-not-supported' => 'Ta koža ne podpira vstavljanja videoposnetkov v galerije iz načina pogleda.',
 	'wikiavideo-deleted-old' => "Različica '''[$1 $2]''' z dne $4, $3 je izbrisana.",
 	'wikiavideo-intro-old' => "Brišete različico '''[$1 $5]''' z dne [$4 $3, $2].",
 	'wikiavideo-details' => '$1 ($2 {{PLURAL:$2|slikovna pika|slikovni piki|slikovne pike|slikovnih pik}}, ponudnik: <a href="$3" class="external" target="_blank">$4</a>)',

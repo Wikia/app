@@ -1257,6 +1257,7 @@ $messages['sv'] = array(
 	'lookupcontribsselectmodenormal' => 'senaste bidragen för användaren',
 	'lookupcontribsselectmodefinal' => 'senaste bidragen för den användaren',
 	'lookupcontribsselectmodeall' => 'alla bidrag för den användaren',
+	'lookupcontribsfullurls' => 'fullständiga webbadresser',
 	'lookupcontribslinks' => 'bidragslänkar',
 	'lookupcontribsgo' => 'Gå',
 	'lookupcontribsinvaliduser' => '<p class="error">Användaren "<b>$1</b>" finns inte.

@@ -182,6 +182,31 @@ $messages['gl'] = array(
 	'error-json-parse' => 'Houbo un problema cos datos obtidos dos nosos servidores, sentímolo.\\nInténteo de novo.',
 );
 
+/** Hungarian (Magyar)
+ * @author Dj
+ */
+$messages['hu'] = array(
+	'activityindicator-message' => 'Betöltés…',
+	'window-wikis-title' => 'Wikia játék útmutatók',
+	'window-wikis-wikilist-search-hint' => 'Legismertebb játékok keresése...',
+	'window-category-load-batch' => 'Több',
+	'window-article-button-close' => 'Bezárás',
+	'window-article-button-back' => 'Vissza',
+	'window-article-menu-search-label' => 'Keresés',
+	'window-article-menu-dashboard-label' => 'Az útmutató tartalma',
+	'window-article-menu-cancel-label' => 'Mégse',
+	'searchview-no-results' => 'Nem hozott eredményt a „%s” keresés',
+	'searchview-button-back-list' => 'Vissza a listához',
+	'searchview-button-back-article' => 'Vissza a cikkhez',
+	'searchbar-hint' => 'Keresés  %s ...',
+	'alert-download-updated-wikis-message' => 'A rendelkezésre álló útmutatók listája frissül.',
+	'alert-download-updated-wikis-button-ok' => 'OK',
+	'error-update-required' => 'Ehhez az alkalmazáshoz frissítés van, és szükséges is.',
+	'error-no-connection' => 'Nincs internet kapcsolat.\\nPróbáld meg újra!',
+	'error-server' => 'Elnézést, a szerverünk hibás választ adott.\\bPróbáld meg újra!',
+	'error-json-parse' => 'Elnézést, gond volt a szerverünk által visszaküldött adattal.\\nPróbáld meg újra!',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */

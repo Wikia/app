@@ -188,6 +188,7 @@ $messages['ru'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'slidertag-desc' => 'Ger ett allmänt sätt för användare att lägga till framhävda reglage',
 	'slidertag-featured-wikis' => 'Utvalda wikis',
 );
 

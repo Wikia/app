@@ -6061,7 +6061,7 @@ $messages['ro'] = array(
 	'wikistats_wikia' => 'Wikia',
 	'wikistats_pagetitle' => 'Statistici Wikia',
 	'wikistats_comparision' => 'Comparaţii',
-	'wikistats_showstats_btn' => 'Afişează statisticile',
+	'wikistats_showstats_btn' => 'Afișează statisticile',
 	'wikistats_wikia_information' => 'Informaţii Wikia',
 	'wikistats_panel_close_btn' => 'Închide',
 	'wikistats_daterange_from' => 'De la:',
@@ -6664,6 +6664,7 @@ $messages['sr-ec'] = array(
 /** Swedish (Svenska)
  * @author Per
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'wikistats' => 'Wikia Statistik',
@@ -6808,8 +6809,8 @@ $messages['sv'] = array(
 	'wikistats_charts' => 'Diagram',
 	'wikistats_back_to_mainpage' => 'Gå till huvudsidan för statistik',
 	'wikistats_back_to_prevpage' => 'Tillbaka',
-	'wikistats_trend_mean_info' => 'Mean = genomsnittlig räkning över visade månader',
-	'wikistats_trend_growth_info' => 'Growth = genomsnittlig månatlig tillväxt under visade månader',
+	'wikistats_trend_mean_info' => 'Medelvärde = genomsnittlig räkning över visade månader',
+	'wikistats_trend_growth_info' => 'Tillväxt = genomsnittlig månatlig tillväxt under visade månader',
 	'wikistats_trend_value' => 'värde',
 	'wikistats_trend_formula' => 'Formel',
 	'wikistats_trend_ordered' => 'Alla wiki sorteras efter antal artiklar. <br /> Välj en del av dessa statistiker:',

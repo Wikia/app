@@ -798,13 +798,9 @@ $messages['be-tarask'] = array(
 	'leaderboard-intro-hide' => 'схаваць',
 	'leaderboard-intro-open' => 'адкрыць',
 	'leaderboard-intro-headline' => 'Якія дасягненьні?',
-	'leaderboard-intro' => "'''«Што такое дасягненьні?»'''
-Вы можаце атрымаць спэцыяльныя ўзнагароды за ўдзел у {{GRAMMAR:месны|{{SITENAME}}}}!
-Кожная ўзнагарода, якую Вы атрымаеце, дадае ачкі да Вашага агульнага ліку:
-Бронзавая ўзнагарода адпавядае 10 ачкам, срэбраная ўзнагарода — 50 ачкам, і залатая ўзнагарода — 100 ачкам.
+	'leaderboard-intro' => "Вы можаце атрымаць ўзнагароды ў {{GRAMMAR:месны|{{SITENAME}}}} за рэдагаваньне старонак, загрузку фатаграфіяў і за камэнтары. Кожная ўзнагарода, якую Вы атрымаеце, дадае ачкі да Вашага агульнага ліку! Вы можаце знайсьці Вашыя атрыманыя ўзнагароды на [[$1|старонцы профілю]].
 
-Калі Вы далучаецеся да {{GRAMMAR:родны|{{SITENAME}}}}, Ваш профіль удзельніка паказвае ўзнагароды, якія Вы атрымалі, і сьпіс задачаў, якія стаяць перад Вамі.
-[[Special:MyPage|Перайсьці ў Ваш профіль удзельніка, каб яго праверыць]]!",
+'''Што такое ўзнагароды?'''",
 	'leaderboard' => 'Дошка гонару',
 	'achievements-title' => 'Дасягненьні',
 	'leaderboard-title' => 'Дошка гонару',
@@ -843,6 +839,7 @@ $messages['be-tarask'] = array(
 Калі Вы зьмянілі назву ўзнагароды, націсьніце «{{int:achievements-save}}», каб захаваць Вашыя зьмены.
 Цешцеся!',
 	'achievements-edit-plus-category-track-name' => '$1 рэдагаваў трэк',
+	'achievements-create-edit-plus-category-title' => 'Стварыць новы шлях',
 	'platinum' => 'Плятына',
 	'achievements-community-platinum-awarded-email-subject' => 'Вы атрымалі новую плятынавую ўзнагароду!',
 	'achievements-community-platinum-awarded-email-body-text' => "Віншуем, $1!
@@ -1440,6 +1437,7 @@ $messages['ce'] = array(
  * @author Darth Daron
  * @author Jkjk
  * @author Mr. Richard Bolla
+ * @author Spiffyk
  */
 $messages['cs'] = array(
 	'achievementsii-desc' => 'Systém odznaků úspěchů pro uživatele wiki',
@@ -1499,6 +1497,9 @@ Prosím zkuste jiný!',
 	'achievements-title' => 'Úspěchy',
 	'leaderboard-title' => 'Žebříček',
 	'achievements-recent-earned-badges' => 'Nedávno získané odznaky',
+	'achievements-recent-info' => '<a href="$1">$2</a><br /> získal/a odznak <strong>$3</strong><br />$4<br />$5',
+	'achievements-activityfeed-info' => 'získal/a odznak <strong><a href="$3" class="badgeName">$1</a></strong><br />$2',
+	'achievements-leaderboard-disclaimer' => 'Žebříček ukazuje změny platné od včerejška',
 	'achievements-leaderboard-rank-label' => 'Pořadí',
 	'achievements-leaderboard-member-label' => 'Člen',
 	'achievements-leaderboard-points-label' => 'Body',
@@ -1508,9 +1509,13 @@ Prosím zkuste jiný!',
 	'achievements-save' => 'Uložit změny',
 	'achievements-reverted' => 'Odznak vrácen do původní verze.',
 	'achievements-customize' => 'Upravit obrázek',
+	'achievements-customize-new-category-track' => 'Vytvořte novou stopu pro kategorii:',
 	'achievements-enable-track' => 'aktivováno',
 	'achievements-revert' => 'Zpět na výchozí',
 	'achievements-special-saved' => 'Změny uloženy',
+	'achievements-special' => 'Speciální úspěchy',
+	'achievements-secret' => 'Tajné úspěchy',
+	'achievementscustomize' => 'Upravit odznaky >',
 	'achievements-about-title' => 'O této stránce...',
 	'achievements-about-content' => 'Správci na této wiki mohou upravovat název a podobu každého odznaku.
 
@@ -1526,23 +1531,62 @@ Rovněž můžete odznaky nově pojmenovávat a odrážet tak téma wiki.
 Jakmile jste upravili název odznaku, pro uložení změn klikněte na "{{int:achievements-save}}".
 Příjemnou zábavu!',
 	'achievements-edit-plus-category-track-name' => '$1 upravit dráhu',
+	'achievements-create-edit-plus-category-title' => 'Vytvořit novou stopu pro úpravy',
+	'achievements-create-edit-plus-category-content' => 'Můžete vytvořit novou sadu odznaků, které odměňují uživatele za úpravy stránek v jednotlivých kategoriích, abyste vyzdvihli oblast stránky, na které by uživatele bavilo pracovat.
+Můžete nastavit více než jednu stopu kategorie, proto zkuste výběr dvou kategorií, které by pomohly uživatelům ukázat své přednosti.
+Zažehněte soutěživost mezi uživateli, kteří upravují stránky o upírech a mezi uživateli, kteří upravují stránky o vlkodlacích, čarodějích a mudlech nebo autobotech a deceptikonech.
+
+Pro vytvoření nové stopy "Úpravy v kategorii", napište název kategorie do pole níže.
+Základní stopa Úpravy bude stále existovat;
+tímto vytvoříte oddělenou stopu, kterou můžete nezávisle přizpůsobovat.
+
+Když je stopa vytvořena, v seznamu vlevo pod základní stopou Úpravy se objeví nové odznaky.
+Přizpůsobte si názvy a obrázky pro novou stopu, aby uživatelé poznali rozdíl!
+
+Jakmile budete s přizpůsobováním hotovi, klepněte na zaškrtávací políčko "{{int:achievements-enable-track}}", abyste novou stopu spustili. Poté klepněte na tlačítko "{{int:achievements-save}}".
+Uživatelé uvidí novou stopu v jejich uživatelských profilech a začnou získávat odznaky, když budou upravovat stránky v dané kategorii.
+Stopu můžete kdykoliv vypnout, když se rozhodnete, že již nechcete danou kategorii více zviditelňovat.
+Uživatelé, kteří získali nějaké odznaky v dané stopy, si své odznaky nechají, i když je tato stopa již vypnutá.
+
+Tato funkce může dát nový rozměr zábavy v úspěších (achievementech).
+Vyzkoušejte to!',
 	'achievements-create-edit-plus-category' => 'Vytvořit tuto stopu',
+	'platinum' => 'Platina',
+	'achievements-community-platinum-awarded-email-subject' => 'Byl vám udělen nový platinový odznak!',
 	'achievements-community-platinum-awarded-email-body-text' => "Blahopřejeme!
 
 Právě jste na $4 ($3) získali '$2' platinový odznak.
 Získáváte navíc 250 bodů k vašemu celkovému skóre.
 
 Prohlédněte si svůj báječný nový odznak na své profilové stránce:",
+	'achievements-community-platinum-awarded-email-body-html' => '<strong>Blahopřejeme, $1!</strong><br /><br />
+Právě jste byli odměněni Platinovým odznakem \'<strong>$2</strong>\' na stránce <a href="$3">$4</a>.
+Tímto jste získali 250 bodů k vašemu skóre!<br /><br />
+Podívejte se na svůj zbrusu nový odznak na vaší <a href="$5">profilové stránce</a>.',
 	'achievements-community-platinum-awarded-for' => 'Uděleno za:',
 	'achievements-community-platinum-how-to-earn' => 'Jak získat:',
 	'achievements-community-platinum-awarded-for-example' => 'např. "za..."',
-	'achievements-community-platinum-awarded-to' => 'Uděleno:',
+	'achievements-community-platinum-how-to-earn-example' => 'např. "udělej 3 úpravy"',
+	'achievements-community-platinum-badge-image' => 'Obrázek odznaku',
+	'achievements-community-platinum-awarded-to' => 'Uděleno uživateli:',
+	'achievements-community-platinum-current-badges' => 'Aktuální platinové odznaky',
+	'achievements-community-platinum-create-badge' => 'Vytvořit odznak',
 	'achievements-community-platinum-enabled' => 'aktivováno',
+	'achievements-community-platinum-show-recents' => 'zobrazit v nedávných odznacích',
 	'achievements-community-platinum-edit' => 'upravit',
 	'achievements-community-platinum-save' => 'uložit',
 	'achievements-community-platinum-cancel' => 'zrušit',
+	'achievements-community-platinum-sponsored-label' => 'Sponzorovaný odznak',
+	'achievements-community-platinum-sponsored-hover-content-label' => 'Obrázek s aktivovaným efektem přechodu <small>(minimální velikost: 270px x 100px)</small>:',
+	'achievements-community-platinum-sponsored-badge-click-tooltip' => 'Klikněte pro více informací',
 	'achievements-badge-name-edit-0' => 'Udělat rozdíl',
+	'achievements-badge-name-edit-1' => 'Pouze začátek',
+	'achievements-badge-name-edit-2' => 'Zanechat stopu',
 	'achievements-badge-name-edit-3' => 'Přítel wiki',
+	'achievements-badge-name-edit-4' => 'Kolaborant',
+	'achievements-badge-name-edit-5' => 'Wiki Stavitel',
+	'achievements-badge-name-edit-6' => 'Vůdce wiki',
+	'achievements-badge-name-edit-7' => 'Wiki Expert',
 	'achievements-badge-name-picture-0' => 'Snímek',
 	'achievements-badge-name-picture-1' => 'Paparazzi',
 	'achievements-badge-name-picture-2' => 'Ilustrátor',
@@ -1552,13 +1596,17 @@ Prohlédněte si svůj báječný nový odznak na své profilové stránce:",
 	'achievements-badge-name-picture-6' => 'Designér',
 	'achievements-badge-name-picture-7' => 'Kurátor',
 	'achievements-badge-name-category-0' => 'Navázat spojení',
+	'achievements-badge-name-category-1' => 'Průkopník',
 	'achievements-badge-name-category-2' => 'Badatel',
 	'achievements-badge-name-category-3' => 'Průvodce',
 	'achievements-badge-name-category-4' => 'Navigátor',
 	'achievements-badge-name-category-5' => 'Stavitel mostů',
+	'achievements-badge-name-category-6' => 'Wiki plánovač',
 	'achievements-badge-name-blogpost-0' => 'Říci něco',
 	'achievements-badge-name-blogpost-1' => 'Říci pět věcí',
 	'achievements-badge-name-blogpost-2' => 'Talk show',
+	'achievements-badge-name-blogpost-3' => 'Život strany',
+	'achievements-badge-name-blogpost-4' => 'Řečník',
 	'achievements-badge-name-blogcomment-0' => 'Novic',
 	'achievements-badge-name-blogcomment-1' => 'A ještě něco',
 	'achievements-badge-name-love-0' => 'Klíč k wiki!',
@@ -1568,20 +1616,49 @@ Prohlédněte si svůj báječný nový odznak na své profilové stránce:",
 	'achievements-badge-name-love-4' => 'Závislý',
 	'achievements-badge-name-love-5' => 'Wiki-život',
 	'achievements-badge-name-love-6' => 'Hrdina wiki!',
+	'achievements-badge-name-sharing-0' => 'Účastník',
+	'achievements-badge-name-sharing-1' => 'Vrať to zpátky',
+	'achievements-badge-name-sharing-2' => 'Mluvčí',
+	'achievements-badge-name-sharing-3' => 'Hlasatel',
+	'achievements-badge-name-sharing-4' => 'Evangelista',
 	'achievements-badge-name-welcome' => 'Vítejte na wiki',
 	'achievements-badge-name-introduction' => 'Úvod',
+	'achievements-badge-name-sayhi' => 'Stav se a řekni ahoj',
 	'achievements-badge-name-creator' => 'Zakladatel',
+	'achievements-badge-name-pounce' => 'Udeř!',
+	'achievements-badge-name-caffeinated' => 'zkofeinovaný',
+	'achievements-badge-name-luckyedit' => 'Šťastná úprava',
+	'achievements-badge-to-get-sharing' => '{{#ifeq:$1|0|share link|get {{PLURAL:$1|jeden člověk|$1 lidé(í)}} kliklo na tvůj odkaz}}',
+	'achievements-badge-to-get-edit' => 'udělej $1 {{PLURAL:$1|úpravu|úprav}} na {{PLURAL:$1|stránce|stránkách}}',
+	'achievements-badge-to-get-edit-plus-category' => 'udělej {{PLURAL:$1|jednu úpravu|$1 úprav}} na {{PLURAL:$1| stránce: $2|stránkách: $2}}',
+	'achievements-badge-to-get-picture' => 'přidej $1 {{PLURAL:$1|obrázek|obrázky/ů}} na {{PLURAL:$1|stránku|stránky}}',
+	'achievements-badge-to-get-category' => 'přidej $1 {{PLURAL:$1|stránku|stránek}} do {{PLURAL:$1|kategorie|kategorií}}',
+	'achievements-badge-to-get-blogpost' => 'napiš $1 {{PLURAL:$1|příspěvěk na blog|příspěvky/ů na blog}}',
+	'achievements-badge-to-get-blogcomment' => 'napiš komentář k {{PLURAL:$1|příspěvku na blogu| $1 příspěvkům na blogu}}',
+	'achievements-badge-to-get-love' => 'přispívej do wiki každý den po dobu {{PLURAL:$1|dne|$1 dnů}}!',
+	'achievements-badge-to-get-welcome' => 'připoj se k Wiki',
 	'achievements-badge-to-get-introduction' => 'přidat k vlastní uživatelské stránce',
 	'achievements-badge-to-get-sayhi' => 'zanechat někomu zprávu na diskusní stránce',
 	'achievements-badge-to-get-creator' => 'být tvůrcem této wiki',
 	'achievements-badge-to-get-pounce' => 'rychle',
+	'achievements-badge-to-get-caffeinated' => 'udělej  {{PLURAL:$1| jednu úpravu| $1  úprav(y)}} na stránkách za jediný den',
 	'achievements-badge-to-get-luckyedit' => 'mějte štěstí',
+	'achievements-badge-to-get-sharing-details' => 'Sdílej odkazy a přiměj ostatní na ně kliknout!',
 	'achievements-badge-to-get-edit-details' => 'Něco chybí?
 Vidíte chybu?
 Neostýchejte se.
 Klikněte na tlačítko „{{int:edit}}“ a upravte kteroukoliv stránku!',
+	'achievements-badge-to-get-edit-plus-category-details' => '<strong>$1</strong> stránka potřebuje tvoji pomoc!
+Klikni na tlačítko "{{int:edit}}" na jakékoliv stránce.
+Ukaž tvojí podporu $1 stránkám.',
+	'achievements-badge-to-get-picture-details' => 'Klepnětě na tlačítko "{{int:edit}}" a poté na "{{int:rte-ck-image-add}}".
+Můžete přidat fotografii ze svého počítače nebo z jiné stránky na wiki.',
+	'achievements-badge-to-get-category-details' => 'Kategorie jsou značky, které pomáhají čtenářům najít podobné stránky.
+Klikněte na tlačítko "{{int:categoryselect-addcategory-button}}" na konci stránky pro přidání kategorie k článku.',
 	'achievements-badge-to-get-blogpost-details' => 'Napište své názory či dotazy!
 Klikněte na „{{int:blogs-recent-url-text}}“ na postranním panelu a poté na odkaz „{{int:create-blog-post-title}}“.',
+	'achievements-badge-to-get-blogcomment-details' => 'Přispějte svou troškou!
+Přečtěte si kterýkoliv nedávno přidaný blogový příspěvek a napište svůj názor do komentářů.',
 	'achievements-badge-to-get-introduction-details' => 'Je vaše uživatelská stránka prázdná?
 Klikněte v horní části obrazovky  na své uživatelské jméno a podívejte se.
 Klikněte na tlačítko „{{int:edit}}“ a doplňte nějaké informace o sobě!',
@@ -2034,6 +2111,8 @@ $messages['el'] = array(
 	'achievements-gold-points' => '100<br />πόντοι',
 	'achievements-silver-points' => '50<br />πόντοι',
 	'achievements-bronze-points' => '10<br />πόντοι',
+	'achievements-you-must' => 'Χρειάζεσαι  $1  για να κερδίσεις αυτή την κονκάρδα.',
+	'achievements-masthead-points' => '$1 <small>{{PLURAL:$1|point|πόντοι}}</small>',
 	'achievements-track-name-edit' => 'Επεξεργασία γραμμής',
 	'achievements-track-name-picture' => 'Σειρά εικόνων',
 	'achievements-track-name-category' => 'Δέντρο κατηγορίας',
@@ -2063,7 +2142,9 @@ $messages['el'] = array(
 	'achievements-send' => 'Αποθήκευση εικόνας',
 	'achievements-save' => 'Αποθήκευση αλλαγών',
 	'achievements-reverted' => 'Η κονκάρδα  επανήλθε στο αρχικό της.',
-	'achievements-enable-track' => 'ενεργοποιημένη',
+	'achievements-customize' => 'Προσαρμογή εικόνας',
+	'achievements-customize-new-category-track' => 'Δημιουργία νέου ίχνους για κατηγορία:',
+	'achievements-enable-track' => 'ενεργοποιημένο',
 	'achievements-revert' => 'Επαναφορά στην προεπιλογή',
 	'achievements-special-saved' => 'Οι αλλαγές αποθηκεύτηκαν.',
 	'achievements-special' => 'Ειδικά επιτεύγματα',
@@ -2076,6 +2157,10 @@ $messages['el'] = array(
 	'platinum' => 'Πλατίνα',
 	'achievements-community-platinum-awarded-email-subject' => 'Σας  έχει απονεμηθεί ένα νέο σήμα Πλατίνας!',
 	'achievements-community-platinum-badge-image' => 'Εικόνα του παράσημου:',
+	'achievements-community-platinum-enabled' => 'ενεργοποιημένο',
+	'achievements-community-platinum-edit' => 'επεξεργασία',
+	'achievements-community-platinum-save' => 'αποθήκευση',
+	'achievements-community-platinum-cancel' => 'Άκυρο',
 	'achievements-community-platinum-sponsored-badge-click-tooltip' => 'Κάντε κλικ για περισσότερες πληροφορίες',
 	'achievements-badge-name-edit-0' => 'Κάνοντας τη Διαφορά',
 	'achievements-badge-name-edit-1' => 'Μόνο η Αρχή',
@@ -2459,6 +2544,7 @@ $messages['eu'] = array(
  * @author Ebraminio
  * @author Persianizer
  * @author Wayiran
+ * @author ZxxZxxZ
  */
 $messages['fa'] = array(
 	'achievementsii-desc' => 'سامانه‌ای برای مدال‌های افتخار کاربران ویکی',
@@ -2526,7 +2612,7 @@ $messages['fa'] = array(
 	'achievements-leaderboard-points' => '{{PLURAL:$1|امتیاز|امتیاز}}',
 	'achievements-leaderboard-most-recently-earned-label' => 'اخیرا به دست آورده',
 	'achievements-send' => 'ذخیره تصویر',
-	'achievements-save' => 'ذخیرهٔ تغییرات',
+	'achievements-save' => 'ذخیره‌کردن تغییرات',
 	'achievements-reverted' => 'نشان به اصلش واگردانده شد.',
 	'achievements-customize' => 'سفارشی‌کردن عکس',
 	'achievements-customize-new-category-track' => 'مسیر جدیدی برای رده ایجاد کن:',
@@ -4074,12 +4160,18 @@ $messages['inh'] = array(
  * @author Valepert
  */
 $messages['it'] = array(
+	'achievementsii-desc' => 'Un sistema di medaglie per i successi degli utenti',
 	'achievements-upload-error' => "Spiacenti!
 Questa immagine non funziona.
 Assicurati che sia un file .jpg o .png.
 Se non funziona comunque, allora potrebbe essere troppo grande.
 Per favore, provane un'altra!",
+	'achievements-upload-not-allowed' => 'Gli amministratori possono cambiare i nomi e le immagini delle medaglie tramite la pagina [[Special:AchievementsCustomize|per personalizzare i successi]].',
 	'achievements-non-existing-category' => 'La categoria specificata non esiste.',
+	'achievements-edit-plus-category-track-exists' => 'La categoria specificata ha già un <a href="#" onclick="$(window).scrollTo(\'#section$1\', 2500); return false;" title="Go to the track">percorso associato</a>.',
+	'achievements-no-stub-category' => 'Per favore non creare percorsi per le bozze.',
+	'right-platinum' => 'Crea e modifica medaglie di platino',
+	'right-sponsored-achievements' => 'Gestisci i successi sponsorizzati',
 	'achievements-platinum' => 'Platino',
 	'achievements-gold' => 'Oro',
 	'achievements-silver' => 'Argento',
@@ -4087,16 +4179,64 @@ Per favore, provane un'altra!",
 	'achievements-gold-points' => '100<br />punti',
 	'achievements-silver-points' => '50<br />punti',
 	'achievements-bronze-points' => '10<br />punti',
+	'achievements-you-must' => 'Devi $1 per ottenere questa medaglia.',
+	'leaderboard-button' => 'Classifica dei successi',
+	'achievements-masthead-points' => '$1 <small>{{PLURAL:$1|punto|punti}}</small>',
+	'achievements-profile-title-no' => 'Medaglie di $1',
+	'achievements-no-badges' => "Controlla l'elenco qui sotto per vedere le medaglie che puoi ottenere su questa wiki!",
+	'achievements-track-name-edit' => 'Modifica percorso',
+	'achievements-track-name-picture' => 'Percorso Immagini',
+	'achievements-track-name-category' => 'Percorso Categoria',
+	'achievements-track-name-blogpost' => 'Percorso Blog',
+	'achievements-track-name-blogcomment' => 'Percorso Commenti ai blog',
+	'achievements-track-name-love' => 'Percorso Wiki Love',
+	'achievements-track-name-sharing' => 'Percorso Condivisione',
+	'achievements-notification-title' => 'Ben fatto, $1!',
+	'achievements-notification-subtitle' => 'Hai appena ottenuto la medaglia "$1" $2',
+	'achievements-notification-link' => '<strong><big>[[Special:MyPage|Vedi le altre medaglie che puoi ottenere]]!</big></strong>',
+	'achievements-points' => '$1 {{PLURAL:$1|punto|punti}}',
+	'achievements-points-with-break' => '$1<br />{{PLURAL:$1|punto|punti}}',
+	'achievements-earned' => 'Questa medaglia è stata ottenuta da {{PLURAL:$1|1 utente|$1 utenti}}.',
+	'achievements-profile-title' => '$2 {{PLURAL:$2|medaglia|medaglie}} di $1',
+	'achievements-profile-title-challenges' => 'Altre medaglie ottenibili!',
+	'achievements-profile-customize' => 'Personalizza medaglie >',
+	'achievements-ranked' => 'Alla posizione #$1 in questa wiki',
+	'achievements-viewall' => 'Vedi tutte',
 	'achievements-viewless' => 'Chiudi',
+	'achievements-profile-title-oasis' => 'punti <br /> successi',
+	'achievements-ranked-oasis' => '$1 è [[Special:Leaderboard|alla posizione #$2]] in questa wiki',
+	'achievements-viewall-oasis' => 'Vedi tutte',
+	'achievements-toggle-hide' => 'Non mostrare i punti, le medaglie e la posizione nel mio profilo utente',
 	'leaderboard-intro-hide' => 'nascondi',
+	'leaderboard-intro-open' => 'mostra',
 	'leaderboard-intro-headline' => 'Cosa sono le Medaglie?',
-	'leaderboard-intro' => "Su questa wiki puoi ottenere le medaglie modificando articoli, caricando immagini e lasciando commenti. Ogni medaglia ti fa guadagnare punti - più punti ottieni, più in alto sarai nella classifica! Trovi l'elenco delle medaglie che hai ottenuto nel tuo [[$1|profilo utente]].
+	'leaderboard-intro' => "Su questa wiki puoi ottenere le medaglie modificando pagine, caricando immagini e lasciando commenti. Ogni medaglia ti fa guadagnare punti - più punti ottieni, più in alto sarai nella classifica! Trovi l'elenco delle medaglie che hai ottenuto nel tuo [[$1|profilo utente]].
 
 '''Quanto valgono le medaglie?'''",
+	'leaderboard' => 'Classifica dei successi',
+	'achievements-title' => 'Successi',
 	'leaderboard-title' => 'Classifica',
-	'achievements-leaderboard-most-recently-earned-label' => 'Ottenute di recente',
+	'achievements-recent-earned-badges' => 'Medaglie ottenute di recente',
+	'achievements-recent-info' => '<strong>$3</strong><br />$4<br />ottenuta da <a href="$1">$2</a><br />$5',
+	'achievements-activityfeed-info' => 'ha ottenuto la medaglia <strong><a href="$3" class="badgeName">$1</a></strong> <br />$2',
+	'achievements-leaderboard-disclaimer' => 'La classifica mostra i cambiamenti da ieri',
+	'achievements-leaderboard-rank-label' => 'Posizione',
+	'achievements-leaderboard-member-label' => 'Utente',
+	'achievements-leaderboard-points-label' => 'Punti',
+	'achievements-leaderboard-points' => '{{PLURAL:$1|punto|punti}}',
+	'achievements-leaderboard-most-recently-earned-label' => 'Ottenuta di recente',
+	'achievements-send' => 'Salva immagine',
+	'achievements-save' => 'Salva modifiche',
+	'achievements-reverted' => "Medaglia ripristinata all'originale.",
+	'achievements-customize' => 'Personalizza immagine',
+	'achievements-customize-new-category-track' => 'Crea un nuovo percorso per la categoria:',
+	'achievements-enable-track' => 'attivato',
+	'achievements-revert' => 'Ripristina default',
 	'achievements-special-saved' => 'Modifiche salvate.',
+	'achievements-special' => 'Successi speciali',
+	'achievements-secret' => 'Successi segreti',
 	'achievementscustomize' => 'Personalizza le medaglie',
+	'achievements-about-title' => 'Su questa pagina...',
 	'achievements-about-content' => "Gli amministratori di questa wiki possono personalizzare i nomi e le immagini delle medaglie.
 
 Puoi caricare qualsiasi immagine .jpg o .png e l'immagine si adatterà automaticamente all'interno della cornice.
@@ -4110,6 +4250,8 @@ Se non ti piace l'immagine che hai scelto, clicca su \"{{int:achievements-ripris
 Puoi anche dare alle medaglie nuovi nomi che riflettono l'argomento della wiki.
 Quando hai cambiato i nomi delle medaglie, clicca su \"{{int:achievements-salvare}}\" per salvare le modifiche.
 Buon divertimento!",
+	'achievements-edit-plus-category-track-name' => 'Percorso modifiche $1',
+	'achievements-create-edit-plus-category-title' => 'Crea un nuovo percorso Modifiche',
 	'achievements-create-edit-plus-category-content' => 'È possibile creare un nuovo set di medaglie per premiare gli utenti che modificano le pagine in una determinata categoria, per evidenziare un\'area particolare del sito a cui gli utenti si divertirebbero a collaborare.
 È possibile impostare più di una categoria di set, quindi provate a scegliere due categorie che aiutino gli utenti a mostrare la loro specialità!
 Per esempio, crea una rivalità tra gli utenti che modificano le pagine di Vampiri e gli utenti che modifica le pagine di Lupi mannari, o tra Maghi e Babbani, o tra Autorobots e Distructors.
@@ -4124,31 +4266,100 @@ Dopo potrai decidere di disattivare il set, se non vuoi più evidenziare tale ca
 Gli utenti che avranno guadagnato medaglie in quel set le manterranno sempre, anche se il set sarà disattivato.
 
 Questa funzione aggiungerà divertimento alla conquista delle medaglie. Provala!',
-	'achievements-create-edit-plus-category' => 'Crea questa lista',
+	'achievements-create-edit-plus-category' => 'Crea questo percorso',
+	'platinum' => 'Platino',
+	'achievements-community-platinum-awarded-email-subject' => 'Hai ottenuto una nuova medaglia di Platino!',
+	'achievements-community-platinum-awarded-email-body-text' => "Congratulazioni $1!
+
+Hai appena ottenuto la medaglia di Platino '$2' su $4 ($3).
+Questa aggiunge 250 punti al tuo punteggio!
+
+Vedi la tua nuova medaglia nel tuo profilo utente:
+
+$5",
+	'achievements-community-platinum-awarded-email-body-html' => '<strong>Congratulazioni $1!</strong><br /><br />
+Hai appena ottenuto la medaglia di Platino \'<strong>$2</strong>\' su <a href="$3">$4</a>.
+Questa aggiunge 250 punti al tuo punteggio!<br /><br />
+Vedi la tua nuova medaglia nel <a href="$5">tuo profilo utente</a>.',
+	'achievements-community-platinum-awarded-for' => 'Ottenuta per',
+	'achievements-community-platinum-how-to-earn' => 'Come ottenerla:',
+	'achievements-community-platinum-awarded-for-example' => 'es. "per aver..."',
+	'achievements-community-platinum-how-to-earn-example' => 'es. "fatto 3 modifiche..."',
+	'achievements-community-platinum-badge-image' => 'Immagine della medaglia:',
+	'achievements-community-platinum-awarded-to' => 'Ottenuta da:',
 	'achievements-community-platinum-current-badges' => 'Medaglie di platino attuali',
 	'achievements-community-platinum-create-badge' => 'Crea medaglia',
+	'achievements-community-platinum-enabled' => 'attivato',
+	'achievements-community-platinum-show-recents' => 'mostra nelle medaglie recenti',
+	'achievements-community-platinum-edit' => 'modifica',
+	'achievements-community-platinum-save' => 'salva',
+	'achievements-community-platinum-cancel' => 'annulla',
+	'achievements-community-platinum-sponsored-label' => 'successo sponsorizzato',
+	'achievements-community-platinum-sponsored-hover-content-label' => 'Immagine al passaggio del mouse <small>(dimensioni minime: 270px x 100px)</small>:',
 	'achievements-community-platinum-sponsored-badge-click-tooltip' => 'Clicca qui per maggiori informazioni',
+	'achievements-badge-name-edit-0' => 'Fai la differenza',
+	'achievements-badge-name-edit-1' => "E' solo l'inizio",
+	'achievements-badge-name-edit-2' => 'Lascia la tua traccia',
 	'achievements-badge-name-edit-3' => 'Amico della Wiki',
+	'achievements-badge-name-edit-4' => 'Collaboratore',
+	'achievements-badge-name-edit-5' => 'Costruttore della wiki',
+	'achievements-badge-name-edit-6' => 'Leader della wiki',
+	'achievements-badge-name-edit-7' => 'Esperto della wiki',
+	'achievements-badge-name-picture-0' => 'Istantanea',
+	'achievements-badge-name-picture-1' => 'Paparazzo',
+	'achievements-badge-name-picture-2' => 'Illustratore',
+	'achievements-badge-name-picture-3' => 'Collezionista',
+	'achievements-badge-name-picture-4' => "Amante dell'arte",
+	'achievements-badge-name-picture-5' => 'Decoratore',
+	'achievements-badge-name-picture-6' => 'Designer',
+	'achievements-badge-name-picture-7' => 'Curatore',
+	'achievements-badge-name-category-0' => 'Crea una connessione',
+	'achievements-badge-name-category-1' => 'Divulgatore',
+	'achievements-badge-name-category-2' => 'Esploratore',
 	'achievements-badge-name-category-3' => 'Guida Turistica',
+	'achievements-badge-name-category-4' => 'Navigatore',
 	'achievements-badge-name-category-5' => 'Costruttore di Ponti',
 	'achievements-badge-name-category-6' => 'Progettista della Wiki',
+	'achievements-badge-name-blogpost-0' => 'Qualcosa da dire',
+	'achievements-badge-name-blogpost-1' => 'Cinque cose da dire',
+	'achievements-badge-name-blogpost-2' => 'Talk show',
+	'achievements-badge-name-blogpost-3' => 'Animatore della festa',
+	'achievements-badge-name-blogpost-4' => 'Oratore',
+	'achievements-badge-name-blogcomment-0' => 'Opinionista',
 	'achievements-badge-name-blogcomment-1' => "E un'altra cosa",
+	'achievements-badge-name-love-0' => 'Chiavi della wiki!',
+	'achievements-badge-name-love-1' => 'Due settimane nella wiki',
 	'achievements-badge-name-love-2' => 'Devoto',
-	'achievements-badge-name-love-5' => 'Una vita nella Wiki',
-	'achievements-badge-name-love-6' => 'Eroe della Wiki!',
-	'achievements-badge-name-sharing-2' => 'Oratore',
+	'achievements-badge-name-love-3' => 'Appassionato',
+	'achievements-badge-name-love-4' => 'Dipendente',
+	'achievements-badge-name-love-5' => 'Una vita nella wiki',
+	'achievements-badge-name-love-6' => 'Eroe della wiki!',
+	'achievements-badge-name-sharing-0' => 'Condivisore',
+	'achievements-badge-name-sharing-1' => 'Trascinatore',
+	'achievements-badge-name-sharing-2' => 'Diplomatico',
+	'achievements-badge-name-sharing-3' => 'Annunciatore',
 	'achievements-badge-name-sharing-4' => 'Evangelista',
-	'achievements-badge-name-welcome' => 'Benvenuto nella Wiki',
+	'achievements-badge-name-welcome' => 'Benvenuto nella wiki',
 	'achievements-badge-name-introduction' => 'Presentazione',
 	'achievements-badge-name-sayhi' => 'Solo un saluto',
 	'achievements-badge-name-creator' => 'Il Creatore',
+	'achievements-badge-name-pounce' => 'Catapultato!',
+	'achievements-badge-name-caffeinated' => 'Caffeinomane',
 	'achievements-badge-name-luckyedit' => 'Modifica fortunata',
+	'achievements-badge-to-get-sharing' => '{{#ifeq:$1|0|link condiviso|fai in modo che {{PLURAL:$1|una persona|$1 persone}} clicchino sul link da te condiviso}}',
+	'achievements-badge-to-get-edit' => 'effettua $1 {{PLURAL:$1|modifica|modifiche}} in {{PLURAL:$1|una pagina|pagine}}',
+	'achievements-badge-to-get-edit-plus-category' => 'effettua {{PLURAL:$1|una modifica|$1 modifiche}} su {{PLURAL:$1|una pagina $2|pagine $2}}',
 	'achievements-badge-to-get-caffeinated-details' => 'Ci vuole una giornata piena per guadagnare questa medaglia.
 Continua a modificare!',
 	'achievements-badge-to-get-community-platinum-details' => 'Questa è una medaglia speciale di platino disponibile sono per un periodo limitato!',
 	'achievements-badge-your-desc-sayhi' => 'per aver lasciato un messaggio nella pagina di discussione di un altro utente!',
 	'achievements-badge-desc-caffeinated' => 'per aver fatto 100 modifiche alle pagine in un solo giorno!',
+	'achievements-userprofile-title-no' => 'Medaglie di $1',
+	'achievements-userprofile-title' => '{{PLURAL:$2|Medaglia|Medaglie}} di $1 ($2)',
 	'achievements-userprofile-no-badges-owner' => "Controlla l'elenco qui sotto per vedere le medaglie che puoi ottenere su questa wiki!",
+	'achievements-userprofile-no-badges-visitor' => 'Questo utente non ha ancora ottenuto alcuna medaglia.',
+	'achievements-userprofile-profile-score' => '<em>$1</em> Punti<br />successi',
+	'achievements-userprofile-ranked' => '[[Special:Leaderboard|Alla posizione #$1]]<br />in questa wiki',
 );
 
 /** Japanese (日本語)
@@ -4793,6 +5004,8 @@ $messages['lb'] = array(
 	'achievements-badge-name-edit-4' => 'Mataarbechter',
 	'achievements-badge-name-picture-1' => 'Paparazzi',
 	'achievements-badge-name-picture-5' => 'Decorateur',
+	'achievements-badge-name-blogpost-0' => 'Huet eppes ze soen',
+	'achievements-badge-name-blogpost-1' => 'Fënnef Saachen ze soen',
 	'achievements-badge-name-blogcomment-1' => 'An dann nach eppes',
 	'achievements-badge-name-love-0' => "Schlëssel fir d'Wiki!",
 	'achievements-badge-name-love-1' => 'Zwou Wochen op der Wiki',
@@ -5367,7 +5580,7 @@ Sila cuba satu lagi!',
 	'achievements-customize' => 'Ubah suai gambar',
 	'achievements-customize-new-category-track' => 'Cipta jejak baru untuk kategori:',
 	'achievements-enable-track' => 'dihidupkan',
-	'achievements-revert' => 'Pulihkan tetapan sediakala',
+	'achievements-revert' => 'Kembali ke asali',
 	'achievements-special-saved' => 'Perubahan disimpan.',
 	'achievements-special' => 'Pencapaian istimewa',
 	'achievements-secret' => 'Pencapaian rahsia',
@@ -6324,6 +6537,7 @@ $messages['pfl'] = array(
  * @author Anoon6
  * @author Macbre
  * @author Ponurak
+ * @author Sovq
  * @author Sp5uhe
  */
 $messages['pl'] = array(
@@ -6440,6 +6654,8 @@ Zobacz jak zdobyć więcej odznak: $5",
 	'achievements-community-platinum-sponsored-label' => 'Odznaki sponsorowane',
 	'achievements-community-platinum-sponsored-hover-content-label' => 'Obrazek dla stanu aktywnego <small>(minimalne rozmiary: 270 x 100 pikseli)</small>:',
 	'achievements-community-platinum-sponsored-badge-click-tooltip' => 'Kliknij, aby uzyskać więcej informacji',
+	'achievements-badge-name-edit-0' => 'Twórca Zmian',
+	'achievements-badge-name-edit-1' => 'Tylko Początek',
 	'achievements-badge-name-edit-3' => 'Przyjaciel Wiki',
 	'achievements-badge-name-edit-4' => 'Współpracownik',
 	'achievements-badge-name-edit-5' => 'Budowniczy Wiki',
@@ -6455,6 +6671,27 @@ Zobacz jak zdobyć więcej odznak: $5",
 	'achievements-badge-name-picture-7' => 'Kustosz',
 	'achievements-badge-name-category-0' => 'Budowa połączania',
 	'achievements-badge-name-category-1' => 'Trop Gafy',
+	'achievements-badge-name-category-2' => 'Odkrywca',
+	'achievements-badge-name-category-3' => 'Przewodnik',
+	'achievements-badge-name-category-4' => 'Nawigator',
+	'achievements-badge-name-category-5' => 'Budowniczy Mostów',
+	'achievements-badge-name-category-6' => 'Wiki-Planista',
+	'achievements-badge-name-blogpost-0' => 'Coś do powiedzenia',
+	'achievements-badge-name-blogpost-1' => 'Pięć rzeczy do powiedzenia',
+	'achievements-badge-name-blogpost-2' => 'Talk Show',
+	'achievements-badge-name-blogpost-3' => 'Dusza towarzystwa',
+	'achievements-badge-name-blogpost-4' => 'Mówca',
+	'achievements-badge-name-blogcomment-0' => 'Komentator',
+	'achievements-badge-name-blogcomment-1' => 'No i jeszcze jedno',
+	'achievements-badge-name-love-0' => 'Klucz do Wiki!',
+	'achievements-badge-name-love-1' => 'Dwa tygodnie na wiki',
+	'achievements-badge-name-love-2' => 'Zaangażowany',
+	'achievements-badge-name-love-3' => 'Oddany',
+	'achievements-badge-name-love-4' => 'Uzależniony',
+	'achievements-badge-name-love-6' => 'Bohater Wiki!',
+	'achievements-badge-name-welcome' => 'Witaj na Wiki',
+	'achievements-badge-name-introduction' => 'Wprowadzenie',
+	'achievements-badge-name-creator' => 'Twórca',
 	'achievements-badge-to-get-edit' => 'wykonaj $1 {{PLURAL:$1|edycję|edycje|edycji}} na {{PLURAL:$1|stronie|stronach}}',
 	'achievements-badge-to-get-edit-plus-category' => 'wykonaj {{PLURAL:$1|jedną edycję|$1 edycje|$1 edycji}} na {{PLURAL:$1|stronie|stronach}} z przestrzeni $2',
 	'achievements-badge-to-get-picture' => 'dodaj $1 {{PLURAL:$1|obrazek|obrazki/ów}} na {{PLURAL:$1|stronę|strony}}',
@@ -6462,11 +6699,47 @@ Zobacz jak zdobyć więcej odznak: $5",
 	'achievements-badge-to-get-blogcomment' => 'napisz komentarz pod {{PLURAL:$1|postem na blogu|$1 różnymi postami na blogu}}',
 	'achievements-badge-to-get-love' => 'bądź aktywny na wiki codziennie przez {{PLURAL:$1|jeden dzień|$1 dni}}',
 	'achievements-badge-to-get-welcome' => 'dołącz do wiki',
+	'achievements-badge-to-get-introduction' => 'edytuj własną strony użytkownika',
+	'achievements-badge-to-get-sayhi' => 'zostaw komuś wiadomość na stronie dyskusji',
+	'achievements-badge-to-get-creator' => 'bądź założycielem tej wiki',
 	'achievements-badge-to-get-pounce' => 'bądź szybki',
+	'achievements-badge-to-get-luckyedit' => 'miej szczęście',
+	'achievements-badge-to-get-sharing-details' => 'Podziel się linkami i zachęć innych do kliknięcia na nie',
+	'achievements-badge-to-get-picture-details' => 'Kliknij przycisk „{{int:edit}}"a następnie „{{int:rte-ck-obraz-Dodaj}}".
+Można dodać obraz z komputera lub innej strony na wiki.',
+	'achievements-badge-to-get-category-details' => 'Kategorie pomagają użytkownikom znaleźć podobne strony
+Kliknij na przycisk "{{int:categoryselect-addcategory-button}}" na dole stron, aby dodać ją do kategorii',
+	'achievements-badge-to-get-blogpost-details' => 'Zapisz własne opinie i pytania!
+Kliknij na "{{int:blogs-recent-url-text}}" w panelu bocznym, a następnie na link po prawej "{{int:create-blog-post-title}}"',
+	'achievements-badge-to-get-blogcomment-details' => 'Wtrąć własne pięć groszy!
+Zapoznaj się z którymś z ostatnich blogów i dodaj swoją opinię w komentarzach.',
+	'achievements-badge-to-get-love-details' => 'Licznik resetuje się jeżeli ominiesz dzień, więc koniecznie odwiedzaj wiki każdego dnia!',
+	'achievements-badge-to-get-welcome-details' => 'Kliknij na przycisk "{{int:autocreatewiki-create-account}}" w górnym prawym rogu aby stać się częścią społeczności wiki.
+Możesz zacząć zbieranie własnych osiągnięć!',
+	'achievements-badge-to-get-introduction-details' => 'Czy Twoja strona użytkownika jest pusta?
+Kliknij na swoją nazwę użytkownika aby się dowiedzieć.
+Kliknij na "{{int:edit}}" aby napisać coś o sobie!',
+	'achievements-badge-to-get-creator-details' => 'To osiągnięcie przyznawane jest twórcy wiki.
+Kliknij na przycisk "{{int:createwiki}}" na górze strony, aby utworzyć wiki na interesujący Cię temat!',
+	'achievements-badge-to-get-pounce-details' => 'Musisz być szybki aby otrzymać to osiągnięcie!
+Kliknij na przycisk "{{int:activityfeed}}" aby zobaczyć nowe strony tworzone przez innych!',
 	'achievements-badge-to-get-caffeinated-details' => 'Zdobycie tej odznaki może trochę potrwać.
 Nie przestawaj edytować!',
+	'achievements-badge-to-get-luckyedit-details' => 'Zdobycie tego osiągnięcia wymaga nieco szczęścia.
+Edytuj dalej!',
+	'achievements-badge-hover-desc-welcome' => 'za dołączenie do wiki!',
+	'achievements-badge-hover-desc-introduction' => 'za edytowanie<br />
+własnej strony użytkownika',
+	'achievements-badge-hover-desc-sayhi' => 'za zostawienie wiadomości<br />
+na czyjejś stronie dyskusji',
+	'achievements-badge-hover-desc-creator' => 'za utworzenie wiki!',
+	'achievements-badge-hover-desc-caffeinated' => 'za 100 edycji w ciągu jednego dnia!',
 	'achievements-badge-your-desc-edit' => 'za wykonanie {{PLURAL:$1|swojej pierwszej edycji strony|$1 edycji stron}}!',
 	'achievements-badge-your-desc-blogcomment' => 'za napisanie {{PLURAL:$1|komentarza do postu na blogu|komentarzy do $1 postów na blogu}}!',
+	'achievements-badge-your-desc-welcome' => 'za dołączenie do wiki!',
+	'achievements-badge-your-desc-introduction' => 'za edytowanie własnej strony użytkownika!',
+	'achievements-badge-your-desc-sayhi' => 'za zostawienie wiadomości na czyjejś stronie dyskusji!',
+	'achievements-badge-your-desc-creator' => 'za utworzenie wiki!',
 );
 
 /** Piedmontese (Piemontèis)
@@ -8341,6 +8614,8 @@ Kolla in ditt nya snygga emblem på din <a href="$5">användarprofilsida</a>.',
 	'achievements-community-platinum-cancel' => 'avbryt',
 	'achievements-community-platinum-sponsored-label' => 'Sponsrade utmärkelser',
 	'achievements-community-platinum-sponsored-hover-content-label' => 'Hovringsbild <small>(minsta storlek: 270px x 100px)</small>:',
+	'achievements-community-platinum-sponsored-badge-impression-pixel-url-label' => 'Spårningsadress för intrycksemblem:',
+	'achievements-community-platinum-sponsored-hover-impression-pixel-url-label' => 'Spårningsadress för muspekningsintryck:',
 	'achievements-community-platinum-sponsored-badge-click-url-label' => 'Emblem-länk <small>(DART-klickningskommando-URL)</small>:',
 	'achievements-community-platinum-sponsored-badge-click-tooltip' => 'Klicka för mer information',
 	'achievements-badge-name-edit-0' => 'Att göra skillnad',
@@ -8371,6 +8646,7 @@ Kolla in ditt nya snygga emblem på din <a href="$5">användarprofilsida</a>.',
 	'achievements-badge-name-blogpost-2' => 'Pratshow',
 	'achievements-badge-name-blogpost-3' => 'Festens medelpunkt',
 	'achievements-badge-name-blogpost-4' => 'Folktalare',
+	'achievements-badge-name-blogcomment-0' => 'Meningsinnehavare',
 	'achievements-badge-name-blogcomment-1' => 'Och en sak till',
 	'achievements-badge-name-love-0' => 'Nyckeln till Wikin!',
 	'achievements-badge-name-love-1' => 'Två veckor på wikin',
@@ -8382,6 +8658,7 @@ Kolla in ditt nya snygga emblem på din <a href="$5">användarprofilsida</a>.',
 	'achievements-badge-name-sharing-0' => 'Delare',
 	'achievements-badge-name-sharing-1' => 'Ta tillbaka det',
 	'achievements-badge-name-sharing-2' => 'Talare',
+	'achievements-badge-name-sharing-3' => 'Annonsör',
 	'achievements-badge-name-sharing-4' => 'Evangelist',
 	'achievements-badge-name-welcome' => 'Välkommen till Wikin',
 	'achievements-badge-name-introduction' => 'Introduktion',
@@ -8418,6 +8695,8 @@ Visa din stöd för $1-sidorna!',
 Klicka på knappen "{{int:categoryselect-addcategory-button}}" längst ned på en sida för att lägga till den i en kategori.',
 	'achievements-badge-to-get-blogpost-details' => 'Skriva dina åsikter och frågor!
 Klicka på "{{int:blogs-recent-url-text}}" i sidofältet och sedan på länken till vänster för "{{int:create-blog-post-title}}".',
+	'achievements-badge-to-get-blogcomment-details' => 'Lägg till din mening!
+Läs någon av de senaste bloggarna och skriva dina tankar i kommentarfältet.',
 	'achievements-badge-to-get-love-details' => 'Räknaren återställs om du missar en dag, så se till att komma tillbaka till wiki varje dag!',
 	'achievements-badge-to-get-welcome-details' => 'Klicka på knappen "{{int:autocreatewiki-create-account}}" längst upp för att gå med i gemenskapen.
 Du kan börja tjäna egna emblem!',

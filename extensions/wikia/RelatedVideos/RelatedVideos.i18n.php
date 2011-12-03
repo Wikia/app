@@ -41,6 +41,101 @@ $messages['en'] = array(
 	'related-videos-video-is-new' => 'New',
 );
 
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'related-videos-added-by' => 'Ouzhpennet gant',
+	'related-videos-remove' => 'Dilemel',
+	'related-videod-add-video-ok' => 'Graet',
+	'related-videod-add-video-label-all' => 'Gwelet pep tra',
+	'related-videos-beta-feature' => 'beta',
+);
+
+/** French (Français)
+ * @author Gomoko
+ */
+$messages['fr'] = array(
+	'related-videos-tally' => 'Vidéos associées',
+	'related-videos-added-by' => 'Ajouté par',
+	'related-videos-remove' => 'Supprimer',
+	'related-videos-add-video' => 'Ajouter une vidéo',
+	'related-videos-leave-feedback' => 'Laisser son avis',
+	'related-videos-add-video-to-this-page' => 'Ajouter une vidéo à cette page.',
+	'related-videod-add-video-ok' => 'Fait',
+	'related-videod-add-video-label-name' => "Entrez l'URL complète, de n'importe lequel des sites pris en charge.",
+	'related-videod-add-video-label-all' => 'Tout voir',
+	'related-videos-add-video-error-bad-url' => "L'URL fournie n'est pas valide.",
+	'related-videos-add-video-error-nonexisting' => "Cette vidéo n'existe pas.",
+	'related-videos-add-video-error-bad-name' => 'Le nom de la vidéo contient des caractères illégaux. Veuillez sélectionner une autre URL.',
+	'related-videos-add-video-error-permission-video' => "Vous n'avez pas les droits pour ajouter la vidéo à ce wiki.",
+	'related-videos-add-video-error-protected-video' => 'Vous ne pouvez pas ajouter une vidéo à ce wiki.',
+	'related-videos-add-video-error-duplicate' => 'Cette vidéo a déjà été ajoutée.',
+	'related-videos-error-unknown' => "Une erreur inconnue s'est produite. Code: $1.",
+	'related-videos-error-permission-article' => 'Vous ne pouvez pas modifier cet article.',
+	'related-videos-error-no-article-id' => "Aucun identifiant d'article cible n'est fourni.",
+	'related-videos-error-no-video-url' => 'Aucune URL de vidéo fournie.',
+	'related-videos-error-no-video-title' => 'Aucun titre de vidéo fourni.',
+	'related-videos-error-while-loading' => 'Une erreur est survenue lors du chargement des données. Veuillez vérifier votre connexion et rafraîchir la page.',
+	'related-videos-notify' => 'Veuillez patienter pendant que nous traitons cette vidéo',
+	'related-videos-something-went-wrong' => "Nous sommes désolés, mais quelque chose s'est mal passé pendant le téléchargement.",
+	'related-videos-remove-video-error-duplicate' => 'Cette vidéo a déjà été supprimée.',
+	'related-videos-remove-video-error-nonexisting' => "La vidéo que vous essayez de supprimer n'existe pas.",
+	'related-videos-remove-confirm' => 'Êtes-vous sûr de vouloir supprimer cette vidéo?',
+	'related-videos-remove-call' => 'Veuillez patienter pendant que nous retirons la vidéo',
+	'related-videos-wiki-summary-blacklist' => 'Supprimé [[:$2|$1]] des vidéos connexes.',
+	'related-videos-wiki-summary-whitelist' => 'Ajouté [[:$2|$1]] aux vidéos connexes.',
+	'related-videos-updated' => 'Les vidéos connexes  $1 ont été mises à jour.',
+	'related-videos-tooltip-add' => 'Ajouter une vidéo à cette page.',
+	'related-videos-tooltip-embed' => "Collez cette URL dans l'outil de vidéo intégrée",
+	'related-videos-beta-feature' => 'bêta',
+	'related-videos-repo-name' => 'Bibliothèque de vidéos Wikia',
+	'related-videos-embed-text' => 'Incorporer le code',
+	'related-videos-video-is-new' => 'Nouveau',
+);
+
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'related-videos-tally' => 'Vídeos relacionados',
+	'related-videos-added-by' => 'Engadido por',
+	'related-videos-remove' => 'Eliminar',
+	'related-videos-add-video' => 'Engadir un vídeo',
+	'related-videos-leave-feedback' => 'Deixe un comentario',
+	'related-videos-add-video-to-this-page' => 'Engadir un vídeo a esta páxina',
+	'related-videod-add-video-ok' => 'Feito',
+	'related-videod-add-video-label-name' => 'Escriba o enderezo URL completo de calquera dos sitios soportados.',
+	'related-videod-add-video-label-all' => 'Ollar todos',
+	'related-videos-add-video-error-bad-url' => 'O enderezo URL solicitado non é válido.',
+	'related-videos-add-video-error-nonexisting' => 'Este vídeo non existe.',
+	'related-videos-add-video-error-bad-name' => 'O nome do vídeo contén caracteres que non están permitidos. Escolla outro enderezo URL.',
+	'related-videos-add-video-error-permission-video' => 'Non ten os permisos necesarios para inserir vídeos neste wiki.',
+	'related-videos-add-video-error-protected-video' => 'Non pode inserir vídeos neste wiki.',
+	'related-videos-add-video-error-duplicate' => 'Este vídeo xa está engadido.',
+	'related-videos-error-unknown' => 'Houbo un erro. Código: $1.',
+	'related-videos-error-permission-article' => 'Non pode modificar este artigo.',
+	'related-videos-error-no-article-id' => 'Non se deu ningún identificador de artigo.',
+	'related-videos-error-no-video-url' => 'Non se deu o enderezo URL dun vídeo.',
+	'related-videos-error-no-video-title' => 'Non se deu o título dun vídeo.',
+	'related-videos-error-while-loading' => 'Houbo un erro ao cargar os datos. Volva comprobar a súa conexión e recargue a páxina.',
+	'related-videos-notify' => 'Agarde mentres procesamos o vídeo',
+	'related-videos-something-went-wrong' => 'Sentímolo, pero houbo algún problema coa carga.',
+	'related-videos-remove-video-error-duplicate' => 'Este vídeo xa está eliminado.',
+	'related-videos-remove-video-error-nonexisting' => 'O vídeo que intenta ver non existe.',
+	'related-videos-remove-confirm' => 'Está seguro de querer borrar este vídeo?',
+	'related-videos-remove-call' => 'Agarde mentres eliminamos o vídeo',
+	'related-videos-wiki-summary-blacklist' => 'Eliminouse "[[:$2|$1]]" dos vídeos relacionados.',
+	'related-videos-wiki-summary-whitelist' => 'Angadiuse "[[:$2|$1]]" aos vídeos relacionados.',
+	'related-videos-updated' => 'Actualizáronse os vídeos relacionados con "$1".',
+	'related-videos-tooltip-add' => 'Engadir un vídeo a esta páxina',
+	'related-videos-tooltip-embed' => 'Pegue este enderezo URL na ferramenta de incrustación de vídeos',
+	'related-videos-beta-feature' => 'beta',
+	'related-videos-repo-name' => 'Biblioteca de vídeos de Wikia',
+	'related-videos-embed-text' => 'Inserir o código',
+	'related-videos-video-is-new' => 'Novo',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -80,6 +175,7 @@ $messages['ia'] = array(
 	'related-videos-beta-feature' => 'beta',
 	'related-videos-repo-name' => 'Bibliotheca video de Wikia',
 	'related-videos-embed-text' => 'Codice de incorporation',
+	'related-videos-video-is-new' => 'Nove',
 );
 
 /** Macedonian (Македонски)
@@ -121,6 +217,7 @@ $messages['mk'] = array(
 	'related-videos-beta-feature' => 'бета',
 	'related-videos-repo-name' => 'Викиина видеотека',
 	'related-videos-embed-text' => 'Код за вметнување',
+	'related-videos-video-is-new' => 'Нова',
 );
 
 /** Malay (Bahasa Melayu)
@@ -162,9 +259,11 @@ $messages['ms'] = array(
 	'related-videos-beta-feature' => 'beta',
 	'related-videos-repo-name' => 'Pustaka Video Wikia',
 	'related-videos-embed-text' => 'Benamkan teks',
+	'related-videos-video-is-new' => 'Baru',
 );
 
 /** Dutch (Nederlands)
+ * @author Saruman
  * @author Siebrand
  */
 $messages['nl'] = array(
@@ -203,6 +302,7 @@ $messages['nl'] = array(
 	'related-videos-beta-feature' => 'beta',
 	'related-videos-repo-name' => 'Wikia Videobibliotheek',
 	'related-videos-embed-text' => 'Embedcode',
+	'related-videos-video-is-new' => 'Nieuw',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -216,15 +316,76 @@ $messages['no'] = array(
 	'related-videos-leave-feedback' => 'Gi tilbakemelding',
 	'related-videos-add-video-to-this-page' => 'Legg en video til denne siden',
 	'related-videod-add-video-ok' => 'Ferdig',
+	'related-videod-add-video-label-name' => 'Oppgi en fullstendig URL fra en av de støttede sidene.',
 	'related-videod-add-video-label-all' => 'Vis alle',
+	'related-videos-add-video-error-bad-url' => 'Den angitte URL-en er ugyldig.',
 	'related-videos-add-video-error-nonexisting' => 'Denne videoen finnes ikke.',
+	'related-videos-add-video-error-bad-name' => 'Navnet på videoen inneholder ugyldige tegn. Vennligst velg en annen URL.',
+	'related-videos-add-video-error-permission-video' => 'Du har ikke rettigheter til å legge til videoer på denne wikien.',
+	'related-videos-add-video-error-protected-video' => 'Du kan ikke legge til videoer på denne wikien.',
+	'related-videos-add-video-error-duplicate' => 'Denne videoer har allerede blitt lagt til.',
 	'related-videos-error-unknown' => 'En ukjent feil oppstod. Kode: $1.',
 	'related-videos-error-permission-article' => 'Du kan ikke endre denne artikkelen.',
+	'related-videos-error-no-article-id' => 'Ingen ID for målartikkel oppgitt.',
+	'related-videos-error-no-video-url' => 'Ingen video-URL oppgitt.',
+	'related-videos-error-no-video-title' => 'Ingen videotittel oppgitt.',
+	'related-videos-error-while-loading' => 'Det oppstod en feil under lasting av data. Vennligst sjekk din netttilkobling og oppdater siden.',
+	'related-videos-notify' => 'Vennligst vent mens vi behandler denne videoen',
 	'related-videos-something-went-wrong' => 'Vi beklager, noe gikk galt under opplastingen.',
+	'related-videos-remove-video-error-duplicate' => 'Denne videoen har allerede blitt fjernet.',
+	'related-videos-remove-video-error-nonexisting' => 'Videoen du forsøker å fjerne eksisterer ikke.',
 	'related-videos-remove-confirm' => 'Er du sikker på at du vil fjerne denne videoen?',
 	'related-videos-remove-call' => 'Vennligst vent mens vi fjerner denne videoen',
+	'related-videos-wiki-summary-blacklist' => 'Fjernet [[:$2|$1]] fra relaterte videoer.',
+	'related-videos-wiki-summary-whitelist' => 'La [[:$2|$1]] til relaterte videoer.',
+	'related-videos-updated' => 'Relaterte videoer $1 oppdatert.',
 	'related-videos-tooltip-add' => 'Legg til en video på denne siden',
+	'related-videos-tooltip-embed' => 'Lim inn denne URL-en i verktøyet for videoinnebygging',
 	'related-videos-beta-feature' => 'beta',
 	'related-videos-repo-name' => 'Wikia videobibliotek',
+	'related-videos-embed-text' => 'Innebyggingskode',
+	'related-videos-video-is-new' => 'Ny',
+);
+
+/** Swedish (Svenska)
+ * @author WikiPhoenix
+ */
+$messages['sv'] = array(
+	'related-videos-tally' => 'Relaterade videor',
+	'related-videos-added-by' => 'Lades till av',
+	'related-videos-remove' => 'Ta bort',
+	'related-videos-add-video' => 'Lägg till en video',
+	'related-videos-leave-feedback' => 'Lämna feedback',
+	'related-videos-add-video-to-this-page' => 'Lägg till en video på denna sida',
+	'related-videod-add-video-ok' => 'Färdig',
+	'related-videod-add-video-label-name' => 'Ange en fullständig URL från någon av de stödjande sidorna.',
+	'related-videod-add-video-label-all' => 'Se alla',
+	'related-videos-add-video-error-bad-url' => 'Den angivna URL:en är ogiltig.',
+	'related-videos-add-video-error-nonexisting' => 'Denna video finns inte.',
+	'related-videos-add-video-error-bad-name' => 'Namnet på videon innehåller ogiltiga tecken. Välj en annan URL.',
+	'related-videos-add-video-error-permission-video' => 'Du har inte rättigheter att lägga till videor på denna wiki.',
+	'related-videos-add-video-error-protected-video' => 'Du kan inte lägga till en video på denna wiki.',
+	'related-videos-add-video-error-duplicate' => 'Denna video har redan lagts till.',
+	'related-videos-error-unknown' => 'Ett okänt fel inträffade. Kod: $1.',
+	'related-videos-error-permission-article' => 'Du kan inte ändra denna artikel.',
+	'related-videos-error-no-article-id' => 'Inget ID för målartikeln angavs.',
+	'related-videos-error-no-video-url' => 'Ingen video-URL uppgavs.',
+	'related-videos-error-no-video-title' => 'Ingen videotitel uppgavs.',
+	'related-videos-error-while-loading' => 'Ett fel uppstod när data skulle läses in. Var god kontrollera din anslutning och uppdatera sidan.',
+	'related-videos-notify' => 'Var god vänta medan vi behandlar denna video',
+	'related-videos-something-went-wrong' => 'Vi beklagar, någonting gick fel under uppladdningen.',
+	'related-videos-remove-video-error-duplicate' => 'Denna video har redan tagits bort.',
+	'related-videos-remove-video-error-nonexisting' => 'Videon du försöker ta bort finns inte.',
+	'related-videos-remove-confirm' => 'Är du säker på att du vill ta bort denna video?',
+	'related-videos-remove-call' => 'Var god vänta medan vi tar bort videon',
+	'related-videos-wiki-summary-blacklist' => 'Tog bort [[:$2|$1]] from Relaterade videor.',
+	'related-videos-wiki-summary-whitelist' => 'Lade till [[:$2|$1]] till Relaterade videor.',
+	'related-videos-updated' => 'Relaterade videor $1 uppdaterades.',
+	'related-videos-tooltip-add' => 'Lägg till en video på denna sida',
+	'related-videos-tooltip-embed' => 'Klistra in denna URL i verktyget för videoinbäddning',
+	'related-videos-beta-feature' => 'beta',
+	'related-videos-repo-name' => 'Wikia videobibliotek',
+	'related-videos-embed-text' => 'Inbäddningskod',
+	'related-videos-video-is-new' => 'Ny',
 );
 

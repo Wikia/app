@@ -104,6 +104,24 @@ $messages['az'] = array(
 	'wikifeatures-feedback-comment-label' => 'Şərh',
 );
 
+/** Bavarian (Boarisch)
+ * @author Mucalexx
+ */
+$messages['bar'] = array(
+	'wikifeatures' => 'Wiki-Funkzióner',
+	'wikifeatures-title' => 'Wiki-Funkzióner',
+	'wikifeatures-heading' => 'Funkzióner',
+	'wikifeatures-creative' => "Griass Enk ba dé Wikia Funkzióner.
+Im fóigernden findst Tools, dést af deim Wiki aktiviern und auhpassen kauhst.
+A wengerl experimentiern - du kauhst dert jeederzeid d' Tools deaktiviern, dé du néd mechst.",
+	'wikifeatures-labs-heading' => 'Wikia Labs',
+	'wikifeatures-labs-creative' => "Af Wikia Labs findst Funkzióner und Ideen mid dénen mir grod netter experimentiern. Wei ma netter noh af vaschianne Ecker umerdumschraufer, kénner dé Funkzióner noh étlé Eckner und Kantner hom, ower és kénnts netter just schoh amoi einerschaung! Schoit d' fóigernden Funkzióner auh und schreiw ins, wejche Socher dir ba da jeeweiling Funkzión guad óder'raa néd asó taugt hod.",
+	'wikifeatures-feedback' => 'Feedback obgeem',
+	'wikifeatures-error-permission' => 'Tschuidige, ower du host koah Berechtigung daast dé Seiten aufruaffer kauhst.',
+	'wikifeatures-error-invalid-parameter' => 'Néd gijtiger Paarameeter: $1. Bitscheh vasuachs daneit.',
+	'wikifeatures-error-message' => "Der Kómmentar is z' kurz óder z' laung.",
+);
+
 /** Catalan (Català)
  * @author CuBaN VeRcEttI
  * @author Gemmaa
@@ -168,6 +186,7 @@ $messages['ca'] = array(
 /** German (Deutsch)
  * @author Kghbln
  * @author SVG
+ * @author Sebastian Wallroth
  * @author Tiin
  */
 $messages['de'] = array(
@@ -203,6 +222,7 @@ Ein wenig experimentieren – du kannst jederzeit die Tools deaktivieren, die du
 	'wikifeatures-deactivate-confirm-button' => 'Ja, deaktivieren',
 	'wikifeatures-deactivate-cancel-button' => 'Abbrechen',
 	'wikifeatures-promotion-new' => 'Neu',
+	'wikifeatures-oasis-only' => 'Wiki Features gibt es nicht in Monobook. Wenn Du dieses Feature nutzen willst, dann wechsle in Deine Einstellungen zur Benutzeroberfläche Wikia Skin.',
 	'wikifeatures-feature-heading-wgShowTopListsInCreatePage' => 'Top 10-Listen',
 	'wikifeatures-feature-description-wgShowTopListsInCreatePage' => 'Top 10-Listen erlauben es jedem in deinem Wiki eine Top-Liste zu erstellen. Diese Listen können ganz einfach angelegt werden und noch einfacher kann man dort dann seine Stimme abgeben. Du kannst auch Bilder und Links einfügen um sie noch spannender zu gestalten. 
 
@@ -223,6 +243,8 @@ Top 10-Listen sind eine gute Möglichkeit um neuen Autoren eine Möglichkeit zu 
 	'wikifeatures-feature-description-wgEnablePageLayoutBuilder' => 'Hilf Autoren in deinem Wiki schick aussehende Seiten in kürzerer Zeit zu erstellen. Der Layout-Ersteller ermöglicht es Admins vor-formatierte Seiten zur Verfügung zu stellen, wenn jemand eine neue Seite im Wiki erstellt.',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blogs',
 	'wikifeatures-feature-description-wgEnableBlogArticles' => 'Blogs ermöglichen es den Nutzern im Wiki eigene Blog-Beiträge auf ihrem Profil zu verfassen. Das ist auch ein toller Weg um Neuigkeiten und Veranstaltungen in deinem Wiki anzukündigen.',
+	'wikifeatures-feature-heading-wgOasisNavV2' => 'Erweiterte Wiki-Navigation',
+	'wikifeatures-feature-description-wgOasisNavV2' => 'Get more links, ein neues Voransichtswerkzeug, eine Zusammenfassung von unterstützenden Links und ein neues "On the Wiki"-Menü, dass wichtige Features Deiner Inhalte und Deiner Community hervorhebt.',
 	'wikifeatures-feature-heading-emptylabs' => 'Es sieht danach aus, als würde das Labor eine Pause machen',
 	'wikifeatures-feature-description-emptylabs' => 'Unsere Technik-Mitarbeiter arbeiten hart an neuen Funktionen, damit du diese ausprobieren kannst. Siehe hier bald mehr Labor-Ergebnisse!',
 );
@@ -236,10 +258,12 @@ $messages['de-formal'] = array(
 
 /** Spanish (Español)
  * @author Bola
+ * @author Vivaelcelta
  */
 $messages['es'] = array(
+	'wikifeatures' => 'Funcionalidades wiki',
 	'wikifeatures-title' => 'Funcionalidades wiki',
-	'wikifeatures-heading' => 'Funcionalidades',
+	'wikifeatures-heading' => 'Características',
 	'wikifeatures-creative' => 'Esta página te permite seleccionar qué funcionalidades opcionales de Wikia quieres tener en tu wiki. Echa un vistazo y recuerda que puedes activar o desactivar estas herramientas en cualquier momento.',
 	'wikifeatures-labs-heading' => 'Laboratorio',
 	'wikifeatures-labs-creative' => 'El laboratorio es el lugar donde puedes encontrar funcionalidades e ideas con las que estamos experimentando. Dado que aún estamos ajustando estas funcionalidades, podrían tener algunos problemas, ¡pero queremos que las pruebes! Actívalas y envíanos tus sugerencias, ya sean buenas o malas, y qué opinas sobre su funcionamiento.',
@@ -295,6 +319,7 @@ $messages['es'] = array(
  * @author Wyz
  */
 $messages['fr'] = array(
+	'wikifeatures' => 'Composants de wiki',
 	'wikifeatures-title' => 'Composants de wiki',
 	'wikifeatures-heading' => 'Fonctionnalités',
 	'wikifeatures-creative' => 'Cela vous permet de sélectionner les fonctionnalités optionnelles de Wikia que vous souhaiteriez avoir sur votre wiki. Jetez-y un œil et essayez, vous pouvez activer ou désactiver ces fonctionnalités à tout moment.',
@@ -325,6 +350,7 @@ $messages['fr'] = array(
 	'wikifeatures-deactivate-confirm-button' => 'Oui, désactiver',
 	'wikifeatures-deactivate-cancel-button' => 'Annuler',
 	'wikifeatures-promotion-new' => 'Nouveau',
+	'wikifeatures-oasis-only' => 'Composants de wiki n’est pas disponible avec Monobook. Si vous souhaitez utiliser cette fonctionnalité, veuillez modifier vos préférences pour utiliser l’apparence Wikia.',
 	'wikifeatures-feature-heading-wgShowTopListsInCreatePage' => 'Listes de top 10',
 	'wikifeatures-feature-description-wgShowTopListsInCreatePage' => 'Les listes de top 10 permettent à n’importe qui sur votre wiki de créer une liste pour laquelle on peut voter. Elles sont un bon moyen pour que vos contributeurs juniors interagissent avec le wiki. Créez une nouvelle liste via Special:CreateTopList.',
 	'wikifeatures-feature-heading-wgEnableAchievementsExt' => 'Récompenses',
@@ -343,6 +369,8 @@ $messages['fr'] = array(
 	'wikifeatures-feature-description-wgEnablePageLayoutBuilder' => 'Aide les contributeurs sur votre wiki à créer des pages superbes en un rien de temps. Le générateur de mise en page permet aux administrateurs sur votre wiki de créer des pages pré-formatées que vos contributeurs peuvent sélectionner quand ils ajoutent une page.',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blogs',
 	'wikifeatures-feature-description-wgEnableBlogArticles' => 'Les blogs permettent aux utilisateurs de votre wiki de créer leurs propres billets de blog sur leur page de profil et peuvent aussi être utilisés comme un moyen pour communiquer des nouvelles et des évènements à la communauté de votre wiki.',
+	'wikifeatures-feature-heading-wgOasisNavV2' => 'Navigation de wiki accrue',
+	'wikifeatures-feature-description-wgOasisNavV2' => "Ayez plus de liens, un nouvel outil d'aperçu, des liens pour participer regroupés en un seul endroit et un nouveau menu « Sur le wiki » qui met en exergue les fonctionnalités importantes pour le contenu et la communauté.",
 	'wikifeatures-feature-heading-emptylabs' => 'Il semble que le labo fait une pause',
 	'wikifeatures-feature-description-emptylabs' => "Nos scientifiques travaillent d'arrache-pied pour concevoir des nouvelles fonctionnalités à essayer. Revenez ici pour plus d’expériences bientôt !",
 );
@@ -382,6 +410,7 @@ $messages['gl'] = array(
 	'wikifeatures-deactivate-confirm-button' => 'Si, desactivar',
 	'wikifeatures-deactivate-cancel-button' => 'Cancelar',
 	'wikifeatures-promotion-new' => 'Novo',
+	'wikifeatures-oasis-only' => 'As características do wiki non están dispoñibles na aparencia Monobook. Se quere empregar algunha das características debe cambiar á aparencia de Wikia.',
 	'wikifeatures-feature-heading-wgShowTopListsInCreatePage' => 'Os 10 mellores',
 	'wikifeatures-feature-description-wgShowTopListsInCreatePage' => 'As listas dos 10 mellores permiten que calquera no seu wiki cree listas nas que se poida votar. Se está buscando unha boa forma de conseguir novos editores para o wiki, isto é un comezo! Se activa esta opción aparecerá a opción "Os 10 mellores" cando prema en "Engadir unha páxina"',
 	'wikifeatures-feature-heading-wgEnableAchievementsExt' => 'Logros',
@@ -400,6 +429,8 @@ $messages['gl'] = array(
 	'wikifeatures-feature-description-wgEnablePageLayoutBuilder' => 'Axude aos editores do seu wiki a crear páxinas de aspecto agradable en menos tempo. O Creador de deseños permite aos administradores do wiki crear deseños de formato para as páxinas que os editores poden escoller no momento de engadir unha páxina.',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blogues',
 	'wikifeatures-feature-description-wgEnableBlogArticles' => 'Os blogues permiten aos usuarios do wiki crear as súas propias entradas de blogue nas súas páxinas de perfil e tamén se poden empregar como medio para comunicar novas e acontecementos á comunidade.',
+	'wikifeatures-feature-heading-wgOasisNavV2' => 'Navegación do wiki estendida',
+	'wikifeatures-feature-description-wgOasisNavV2' => 'Obteña máis ligazóns, unha nova ferramenta de vista previa, un conxunto consolidado de ligazóns de colaboración e un novo menú "No wiki" que resalta características importantes do contido e a comunidade.',
 	'wikifeatures-feature-heading-emptylabs' => 'Semella que o laboratorio está descansando',
 	'wikifeatures-feature-description-emptylabs' => 'Os nosos científicos traballan arreo para concibir novas características que poida probar. Volva pronto por aquí para atopar máis funcións!',
 );
@@ -796,20 +827,70 @@ $messages['no'] = array(
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blogger',
 	'wikifeatures-feature-description-wgEnableBlogArticles' => 'Blogger tillater brukerne på wikien din å skrive sine egne blogginnlegg på profilene sine og kan også brukes som en god måte å formidle nyheter og hendelser til wiki-fellesskapet.',
 	'wikifeatures-feature-heading-wgOasisNavV2' => 'Utvidet wiki-navigasjon',
+	'wikifeatures-feature-description-wgOasisNavV2' => 'Få flere lenker, et nytt forhåndsvisningsverktøy, et konsolidert sett med lenker til bidrag, og en ny «På wikien»-meny som fremhever viktige deler av innholdet og fellesskapet ditt.',
 	'wikifeatures-feature-heading-emptylabs' => 'Ser ut til at laben tar seg en pause',
 	'wikifeatures-feature-description-emptylabs' => 'Teknikerne våre jobber hardt med å koke i hop nye funksjoner du kan prøve ut. Se etter flere laber her snart!',
 );
 
 /** Polish (Polski)
+ * @author Sovq
  * @author Wladekb
  */
 $messages['pl'] = array(
+	'wikifeatures' => 'Rozszerzenia Wiki',
+	'wikifeatures-title' => 'Rozszerzenia Wiki',
+	'wikifeatures-heading' => 'Rozszerzenia',
+	'wikifeatures-creative' => 'Rozszerzenia Wiki pozawalają wybrać i włączyć dodatkowe funkcje na Twojej wiki. Zapoznaj się z nimi - możesz je włączyć i wyłączyć w dowolnej chwili.',
+	'wikifeatures-labs-heading' => 'Laboratorium',
+	'wikifeatures-labs-creative' => 'Laboratorium to obszar, gdzie możesz zapoznać się z rozszerzeniami, które są nadal rozwijane. Jako, że nadal nad nimi pracujemy, mogą mieć drobne wady, ale możesz nam pomóc! Włącz je na swojej wiki i napisz do nas co o nich sądzisz i jakie masz z nimi problemy.',
+	'wikifeatures-feedback' => 'Prześlij opinię',
+	'wikifeatures-error-permission' => 'Przepraszamy, nie masz uprawnień do wyświetlenia tej strony.',
+	'wikifeatures-error-invalid-parameter' => 'Nieprawidłowy parametr: $1. Spróbuj ponownie.',
+	'wikifeatures-error-message' => 'Komentarz jest zbyt krótki lub za długi.',
+	'wikifeatures-error-spam-attempt' => 'Proszę poczekaj 60 sekund aby przesłać nową opinię.',
+	'wikifeatures-error-invalid-category' => 'Wybierz rodzaj zgłoszenia.',
 	'wikifeatures-toggle-active' => 'włączone',
 	'wikifeatures-toggle-inactive' => 'wyłączone',
 	'wikifeatures-active-on' => 'aktywne na $1 wikiach',
+	'wikifeatures-category-choose-one' => 'Wybierz jedną...',
+	'wikifeatures-love-this-project' => 'Kocham to rozszerzenie',
+	'wikifeatures-hate-this-project' => 'Nienawidzę tego rozszerzenia',
+	'wikifeatures-problem-with-project' => 'Mam problem z przesłaniem opinii',
+	'wikifeatures-an-idea-for-project' => 'Mam pomysł na to rozszerzenie',
 	'wikifeatures-feedback-heading' => 'Opinie',
+	'wikifeatures-feedback-description' => 'Chcemy usłyszeć Twoją opinię o rozszerzeniach, które są w Laboratorium! Masz pomysł jak ulepszyć dane rozszerzenie, chciałbyś zgłosić problem lub po prostu napisać co Ci się podoba albo nie? Daj nam znać korzystając z formularza poniżej.',
+	'wikifeatures-feedback-type-label' => 'Co to?',
 	'wikifeatures-feedback-comment-label' => 'Zostaw komentarz',
 	'wikifeatures-feedback-success' => 'Dziękujemy za przesłaną opinię!',
+	'wikifeatures-deactivate-heading' => 'Wyłączyć  $1?',
+	'wikifeatures-deactivate-description' => 'Wyłączenie rozszerzenia usunie je z Twojej wiki. Użytkownicy nie będą mogli z niego korzystać i nie zobaczą go nigdzie na wiki.',
+	'wikifeatures-deactivate-notification' => 'Możesz włączyć rozszerzenie ponownie w dowolnej chwili.',
+	'wikifeatures-deactivate-confirm-button' => 'Tak, wyłącz',
+	'wikifeatures-deactivate-cancel-button' => 'Anuluj',
+	'wikifeatures-promotion-new' => 'Nowość',
+	'wikifeatures-oasis-only' => 'Rozszerzenia Wiki nie są dostępne w skórce Monobook. Jeśli chcesz skorzystać z tego rozszerzenia, zmień skórkę na "Wikia".',
+	'wikifeatures-feature-heading-wgShowTopListsInCreatePage' => 'Listy Top 10',
+	'wikifeatures-feature-description-wgShowTopListsInCreatePage' => 'Listy Top 10 pozwalają każdemu edytorowi na Twojej wiki utworzyć ranking. Jeśli szukasz sposobu aby zaangażować innych użytkowników, oto on! Włączenie tego rozszerzenia doda opcję "Lista Top 10" przy tworzeniu nowego artykułu.',
+	'wikifeatures-feature-heading-wgEnableAchievementsExt' => 'Osiągnięcia',
+	'wikifeatures-feature-description-wgEnableAchievementsExt' => 'Osiągnięcia pomogą Twojej wiki rosnąć poprzez motywowanie użytkowników do edycji rożnego typu artykułów. Możesz tworzyć własne, unikatowe osiągnięcia, a nawet modyfikować obrazy dla poszczególnych odznaczeń.',
+	'wikifeatures-feature-heading-wgEnableArticleCommentsExt' => 'Komentarze',
+	'wikifeatures-feature-description-wgEnableArticleCommentsExt' => 'To rozszerzenie pozwoli użytkownikom dodawać komentarze na dole strony. Inni mogą na nie odpowiadać, a podpisy i daty zostają dodane automatycznie. To rozszerzenie zastąpi strony dyskusji na Twojej wiki.',
+	'wikifeatures-feature-heading-wgEnableCategoryExhibitionExt' => 'Galeria Kategorii',
+	'wikifeatures-feature-description-wgEnableCategoryExhibitionExt' => 'Najpopularniejsze 8 artykułów w Twoich kategoriach jest już wyświetlanych jako obrazy, ale to rozszerzenie pozwoli na wyświetlanie wyświetlanie wszystkich artykułów w formie galerii, którą można sortować po nazwie, dacie modyfikacji czy popularności',
+	'wikifeatures-feature-heading-wgEnableChat' => 'Czat',
+	'wikifeatures-feature-description-wgEnableChat' => 'Błyskawicznie komunikuj się z innymi edytorami, równie zainteresowanymi Twoją wiki i jej tematem! Każdy użytkownik z kontem może wejść na czat poprzez przycisk znajdujący w menu po prawej stronie.',
+	'wikifeatures-feature-heading-wgEnableEditPageReskinExt' => 'Nowy Styl Edytora',
+	'wikifeatures-feature-description-wgEnableEditPageReskinExt' => 'Sercem każdej wiki jest edytowanie, a posiadanie odpowiedniego narzędzia do edycji jest kluczem do łatwego i przyjemnego dodawania treści. Aby ulepszyć to doświadczenie, zmieniliśmy wygląd edytora.',
+	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'Ankiety',
+	'wikifeatures-feature-description-wgEnableAjaxPollExt' => 'Ankiety pozwalają każdemu na Twojej wiki na utworzenie sondy. Edytorzy mogą używać [http://help.wikia.com/wiki/Help:Poll tagów poll] aby dodawać sondy do dowolnej strony. To rozszerzenie to świetny sposób aby zachęcić nowych edytorów.',
+	'wikifeatures-feature-heading-wgEnablePageLayoutBuilder' => 'Kreator Układu',
+	'wikifeatures-feature-description-wgEnablePageLayoutBuilder' => 'Pomóż edytorom na Twojej wiki w tworzeniu świetnie wyglądających artykułów w krótkim czasie. Kreator Układu pozwala administratorom na Twojej wiki tworzyć wcześniej sformatowane układy artykułów, z których edytorzy mogą wybierać przy tworzeniu stron.',
+	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blogi',
+	'wikifeatures-feature-description-wgEnableBlogArticles' => 'Blogi pozwalają użytkownikom Twojej wiki na tworzenie wpisów we własnym profilu. Są też doskonałym narzędziem do informowania społeczności Twojej wiki o nowościach.',
+	'wikifeatures-feature-heading-wgOasisNavV2' => 'Rozszerzona Nawigacja',
+	'wikifeatures-feature-description-wgOasisNavV2' => 'Więcej linków, narzędzie do podglądu menu, zestaw narzędzi do edycji i nowe menu "Na Wiki", zawierające linki do istotnych stron na Twojej wiki.',
+	'wikifeatures-feature-heading-emptylabs' => 'Wygląda na to, że Laboratorium ma przerwę',
+	'wikifeatures-feature-description-emptylabs' => 'Nasi technicy ciężko pracują aby stworzyć dla Ciebie nowe rozszerzenia. Zajrzyj wkrótce!',
 );
 
 /** Pashto (پښتو)
@@ -860,7 +941,7 @@ $messages['ru'] = array(
 	'wikifeatures-promotion-new' => 'Новое',
 	'wikifeatures-oasis-only' => 'Это расширения Викия не доступно в Monobook. Если вы хотите использовать это расширение, пожалуйста переключите оформление на New Look.',
 	'wikifeatures-feature-heading-wgShowTopListsInCreatePage' => 'Списки Топ-10',
-	'wikifeatures-feature-description-wgShowTopListsInCreatePage' => 'Списки Топ-10 позволяют любому участник вашей вики создать собственный список для голосования. Это расширение является отличным способом наладить взаимоотношения новых участников друг с другом и с вики. [[Special:CreateTopList|Создать новый список]]!',
+	'wikifeatures-feature-description-wgShowTopListsInCreatePage' => 'Списки Топ-10 позволяют любому участник вашей вики создать собственный список для голосования. Это расширение является отличным способом наладить взаимоотношения новых участников друг с другом и с вики. Подключив это расширение, можно создать новый список Топ-10 в диалоге создания новой страницы.',
 	'wikifeatures-feature-heading-wgEnableAchievementsExt' => 'Достижения',
 	'wikifeatures-feature-description-wgEnableAchievementsExt' => 'Достижения помогут Вашей вики расти за счёт поощрения разнообразных видов деятельности участников на вики. Вы можете создавать свои собственные наборы стандартных значков, которые можно будет получить только на Вашей вики, а также загружать собственные изображения на значки.',
 	'wikifeatures-feature-heading-wgEnableArticleCommentsExt' => 'Комментарии к статьям',

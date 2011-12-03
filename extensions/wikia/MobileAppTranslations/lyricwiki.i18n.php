@@ -356,6 +356,46 @@ $messages['gl'] = array(
 	'ringtone-matcher-by-song' => 'Enviar o ton %s ao seu móbil',
 );
 
+/** Hungarian (Magyar)
+ * @author Dj
+ */
+$messages['hu'] = array(
+	'app-loading' => 'Betöltés…',
+	'app-tab-search' => 'Keresés',
+	'app-tab-about' => 'Névjegy',
+	'app-tab-browse' => 'A..Z',
+	'app-tab-sotd' => 'Napdala',
+	'app-async-error-title' => 'Hupsz',
+	'app-async-error-message' => 'Ideiglenes probléma a kapcsolattal. Kérlek próbáld meg később!',
+	'app-nonetwork-dialog-title' => 'Hálózat nem elérhető',
+	'app-nonetwork-dialog-message' => 'Nincs érzékelhető hálózati kapcsolat.',
+	'app-nonetwork-dialog-close-button' => 'OK',
+	'search-go' => 'Menj!',
+	'search-hint-text' => "pl. 'John Lennon:Imagine'",
+	'search-no-match-found' => 'Nincs egyezés.',
+	'search-no-match-found-query' => 'Keresés: %s',
+	'search-results-title' => 'Keresési eredmények: %s',
+	'login-label' => 'Bejelentkezés LyricWiki-be',
+	'login-username-hint' => 'Felhasználónév',
+	'login-password-hint' => 'Jelszó',
+	'login-submit-button' => 'Bejelentkezés',
+	'about-heading' => 'LyricWiki',
+	'about-credits' => '%s által',
+	'about-heading-tips' => 'Keresés',
+	'about-tips-0' => 'Kezd el beírni a művész nevét, és magától kiegészíti azt.',
+	'about-tips-1' => 'A fő képernyőn látható képek az iTunes az éppen aktuális Top 9 dalát mutatja.',
+	'about-heading-licensing' => 'Szerzői jogok',
+	'about-licensing-0' => 'Ez az alkalmazás 100% legális. A jogdíjak Gracenote-on kerülnek kifizetésre a dal jogtulajdonosainak - akár csak a LyricWiki oldalon',
+	'about-heading-feedback' => 'Visszajelzés',
+	'about-feedback-0' => 'El akarsz mondani valamit az alkalmazásról? Küldd e-mailt: %s',
+	'about-heading-rate' => 'Légyszíves értékeld ez alkalmazást!',
+	'about-rate-0-android' => 'Ha tetszik az alkalmazás, adják 5 csillagot az Android Market-en!',
+	'about-rate-0-ios' => 'Ha tetszik az alkalmazás, adják 5 csillagot az App Store-on!',
+	'gracenote-takedown' => 'Ehh! Sajnos a nem vagyunk feljogosítva a teljes dalszöveg megjelenítését jelenleg (ez kevesebb, mint a dalok 1%-nál fordul elő). Kérlek próbáld meg a jövő héten!',
+	'lyrics-artist-byline' => 'előadó: %s',
+	'ringtone-matcher-by-song' => 'Küldd a %s csengőhangot a telcsidre',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */

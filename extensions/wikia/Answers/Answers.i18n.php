@@ -188,9 +188,30 @@ $messages['az'] = array(
 	'answers_skins' => 'Cavablar',
 );
 
-/** Breton (Brezhoneg) */
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
 $messages['br'] = array(
+	'answer_title' => 'Respont',
+	'answered_by' => 'Respontet gant',
+	'unregistered' => 'Dienroll',
+	'ask_button' => 'Goulenn',
+	'new_question_comment' => 'goulenn nevez',
 	'research_this' => 'Klask-se',
+	'see_all_changes' => 'Gwelet an holl gemmoù',
+	'width' => 'Ledander',
+	'next_page' => "War-lerc'h &raquo;",
+	'prev_page' => '&laquo; Kent',
+	'ads_by_google' => 'Bruderezh gant Google',
+	'you_can' => 'Gallout a rit :',
+	'categorize' => 'Rummata',
+	'a' => 'Respont :',
+	'anwb-choose-logo' => 'Dibabit ho logo',
+	'anwb-fp-headline' => 'Savit un nebeud goulennoù !',
+	'answers_skins' => 'Respontoù',
+	'answers-sky' => 'Oabl',
+	'answers-spring' => 'Nevezamzer',
+	'answers-forest' => 'Koadeg',
 );
 
 /** German (Deutsch)
@@ -1630,33 +1651,78 @@ $messages['oc'] = array(
 );
 
 /** Polish (Polski)
+ * @author Sovq
  * @author Woytecr
  */
 $messages['pl'] = array(
 	'answer_title' => 'Odpowiedz',
+	'answered_by' => 'Odpowiedział',
+	'unregistered' => 'Niezarejestrowany',
 	'anonymous_edit_points' => '$1 {{PLURAL:$1|element|elementy|elementów}}',
 	'ask_a_question' => 'Zadaj pytanie...',
 	'ask_a_question-widget' => 'Zadaj pytanie...',
+	'in_category' => '...w kategorii',
 	'ask_button' => 'Zapytaj',
+	'ask_thanks' => 'Dziękujemy za pytanie!',
+	'question_asked_by' => 'Pytanie zadał',
+	'question_asked_by_a_wikia_user' => 'Pytanie zadana przez użytkownika Wikia',
 	'new_question_comment' => 'nowe pytanie',
+	'answers_toolbox' => 'Narzędzia Wikianswers',
+	'improve_this_answer' => 'Popraw tą odpowiedź',
 	'answer_this_question' => 'Odpowiedz na to pytanie:',
+	'notify_improved' => 'Wyślij e-mail przy poprawie',
 	'research_this' => 'Wyszukaj',
+	'notify_answered' => 'Wyślij e-mail przy odpowiedzi',
 	'recent_asked_questions' => 'Ostatnio zadawane pytania',
 	'recent_answered_questions' => 'Ostatnie pytania na które odpowiedziano',
 	'recent_edited_questions' => 'Ostatnio edytowane pytania',
 	'unanswered_category' => 'Pytania bez odpowiedzi',
 	'answered_category' => 'Pytania z odpowiedziami',
 	'related_questions' => 'Podobne pytania',
+	'related_answered_questions' => 'Odpowiedzi na powiązane pytania',
 	'recent_unanswered_questions' => 'Ostatnie pytania bez odpowiedzi',
+	'popular_categories' => 'Popularne Kategorie',
+	'createaccount-captcha' => 'Wpisz słowo poniżej',
+	'inline-register-title' => 'Powiadom mnie gdy zostanie udzielona odpowiedź',
+	'inline-welcome' => 'Witamy w Wikianswers',
 	'skip_this' => 'Pomiń',
 	'see_all_changes' => 'Zobacz wszystkie zmiany',
+	'toolbox_anon_message' => '<i>"Wikianswers wykorzystuje unikatowe rozwiązania wiki aby udzielać najlepszych odpowiedzi na każde pytanie"</i><br /><br /> <b>Jimmy Wales</b><br>założyciel Wikipedii i Wikianswers',
+	'no_questions_found' => 'Nie znaleziono pytania',
+	'widget_settings' => 'Ustawienia pytań',
 	'style_settings' => 'Ustawienia stylu',
+	'get_widget_title' => 'Dodaj Pytania do swojej strony',
 	'background_color' => 'Kolor tła',
+	'widget_category' => 'Rodzaj Pytań',
 	'category' => 'Nazwa kategorii',
+	'custom_category' => 'Własna Kategoria',
+	'number_of_items' => 'Liczba elementów do wyświetlenia',
 	'width' => 'Szerokość',
 	'next_page' => 'Następne &raquo;',
 	'prev_page' => '&laquo; Poprzednie',
 	'see_all' => 'Zobacz wszystkie',
+	'link_color' => 'Kolor linku pytania',
+	'widget_order' => 'Kolejność Pytań',
+	'question_redirected_help_page' => 'Dlaczego moje pytanie przekierowano tutaj',
+	'twitter_hashtag' => 'wikianswers',
+	'twitter_ask' => 'Zapytaj na Twitterze',
+	'facebook_ask' => 'Zapytaj na Facebooku',
+	'facebook_send_request' => 'Wyślij do Znajomych',
+	'ask_friends' => 'Poproś znajomych aby pomogli odpowiedzieć:',
+	'facebook_send_request_content' => 'Możesz pomóc w odpowiedzi? $1',
+	'ads_by_google' => 'Reklamy Google',
+	'magic_answer_headline' => 'Czy to wystarczająca odpowiedź?',
+	'magic_answer_yes' => 'Tak, użyj tego jako punkt wyjścia',
+	'magic_answer_no' => 'Nie, nie używaj tego',
+	'magic_answer_credit' => 'Dostarczone przez Yahoo Answers',
+	'rephrase' => 'Sformułuj to pytanie inaczej',
+	'rephrase_this' => '<a href="$1" $2>Sformułuj to pytanie inaczej</a>',
+	'question_not_answered' => 'Na to pytanie nie udzielono odpowiedzi',
+	'you_can' => 'Możesz:',
+	'answer_this' => '<a href="$1">Odpowiedz na to pytanie</a>, nawet jeśli nie znasz pełnej odpowiedzi',
+	'ask_friends_on_twitter' => 'Zapytaj znajomych na <a href="$1" $2>Twitterze</a>',
+	'categorize' => 'Określ kategorię',
+	'categorize_help' => 'Jedna kategoria na linię',
 );
 
 /** Piedmontese (Piemontèis) */
@@ -1909,6 +1975,7 @@ $messages['sv'] = array(
 	'research_this_on_wikipedia' => '<a href="$1">Undersök denna fråga</a> på Wikipedia',
 	'receive_email' => '<a href="$1" $2>Ta emot e-post</a> när denna fråga är besvarad',
 	'ask_friends_on_twitter' => 'Fråga vänner på <a href="$1" $2>Twitter</a>',
+	'quick_action_panel' => 'Snabb åtgärdspanel',
 	'categorize' => 'Kategorisera',
 	'categorize_help' => 'En kategori per rad',
 	'answers_widget_admin_note' => '<b>Administratörer:</b> Om du skulle vilja bli en administratör på <a href="http://answers.wikia.com" target="_blank">Wikianswers</a>, <a href="http://answers.wikia.com/wiki/Wikianswers:Become_an_admin" target="_blank">klicka här</a>.',
@@ -1916,6 +1983,7 @@ $messages['sv'] = array(
 	'answers_widget_anon_note' => '<a href="http://answers.wikia.com" target="_blank">Wikianswers</a> är en wiki för frågor-och-svar där svaren förbättras på wiki-vis.',
 	'answers-category-count-answered' => 'Denna kategori innehåller $1 {{PLURAL:$1|besvarad fråga|besvarade frågor}}.',
 	'answers-category-count-unanswered' => 'Denna kategori innehåller $1 {{PLURAL:$1|obesvarad fråga|obesvarade frågor}}.',
+	'answers_widget_no_questions' => '<a href="http://answers.wikia.com" target="_blank">Wikianswers</a> är en webbplats där du kan ställa frågor och bidra med svar. Vi siktar mot att skapa det bästa svaret på någon fråga. <a href="http://answers.wikia.com/wiki/Special:Search" target="_blank">Hitta</a> och svara på<a href="http://answers.wikia.com/wiki/Category:Un-answered_questions">obesvarade</a> frågor. Det är en wiki - så vara djärv!',
 	'answers_widget_no_questions_askabout' => '<br /><br />Komma igång med att ställa en fråga om "{{PAGENAME}}"',
 	'reword_this' => '<a href="$1" $2>Omformulera frågan</a>',
 	'no_related_answered_questions' => 'Det finns inga relaterade frågor ännu. Skaffa en <a href="http://answers.wikia.com/wiki/Special:Randomincategory/answered_questions">slumpmässig besvarad fråga istället</a>, eller ställ en ny fråga!<br />

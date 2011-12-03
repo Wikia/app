@@ -217,7 +217,7 @@ $messages['ar'] = array(
 	'swm-page-title-sent' => 'موقع الرسائل على نطاق واسع:: المرسلة',
 	'swm-page-title-dismiss' => 'موقع الرسائل على نطاق واسع:: استبعاد',
 	'swm-page-title-list' => 'موقع الرسائل على نطاق واسع:: قائمة',
-	'swm-label-preview' => 'معاينة',
+	'swm-label-preview' => 'عاين',
 	'swm-label-edit' => 'تحرير',
 	'swm-label-remove' => 'إزالة',
 	'swm-label-sent' => 'إرسال',
@@ -1243,7 +1243,9 @@ $messages['it'] = array(
 	'swm-no' => 'No',
 );
 
-/** Japanese (日本語) */
+/** Japanese (日本語)
+ * @author Fryed-peach
+ */
 $messages['ja'] = array(
 	'sitewidemessages' => 'サイト横断メッセージ',
 	'swm-page-title-editor' => 'サイト横断メッセージ:編集',
@@ -1281,6 +1283,7 @@ $messages['ja'] = array(
 	'swm-list-table-removed' => '削除済',
 	'swm-list-table-content' => '内容',
 	'swm-list-table-tools' => '作業',
+	'swm-no' => 'いいえ',
 	'swm-error-no-such-wiki' => 'そのようなウィキは存在しません。',
 	'swm-error-no-such-user' => '指定された利用者が存在していません。',
 	'swm-error-empty-message' => 'メッセージを入力してください。',
@@ -1432,12 +1435,12 @@ $messages['mn'] = array(
 $messages['ms'] = array(
 	'sitewidemessages' => 'Pesanan seluruh tapak',
 	'swm-page-title-editor' => 'Pesanan seluruh tapak :: Penyunting',
-	'swm-page-title-preview' => 'Pesanan seluruh tapak :: Pratonton',
+	'swm-page-title-preview' => 'Pesanan seluruh tapak :: Pralihat',
 	'swm-page-title-send' => 'Pesanan seluruh tapak :: Hantar',
 	'swm-page-title-sent' => 'Pesanan seluruh tapak :: Dihantar',
 	'swm-page-title-dismiss' => 'Pesanan seluruh tapak :: Buang',
 	'swm-page-title-list' => 'Pesanan seluruh tapak :: Senarai',
-	'swm-label-preview' => 'Pratonton',
+	'swm-label-preview' => 'Pralihat',
 	'swm-label-edit' => 'Sunting',
 	'swm-label-remove' => 'Buang',
 	'swm-label-sent' => 'Dihantar',
@@ -1463,7 +1466,7 @@ $messages['ms'] = array(
 	'swm-button-lang-checkall' => '[ Pilih semua ]',
 	'swm-button-lang-checknone' => '[ Gugurkan semua ]',
 	'swm-taskmanager-hint' => '<i>Perhatian: ada sesetengah pilihan yang mengambil masa yang agak lama, oleh itu terpaksa digilirkan dalam Pengurus Tugas.</i>',
-	'swm-button-preview' => '[ Pratonton ]',
+	'swm-button-preview' => '[ Pralihat ]',
 	'swm-button-send' => '[ Hantar ]',
 	'swm-button-save' => '[ Simpan ]',
 	'swm-button-new' => '[ Baru ]',

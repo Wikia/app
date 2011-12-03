@@ -392,6 +392,8 @@ $messages['nl'] = array(
 	'hub-show-feed' => 'Feed weergeven',
 	'hub-contributors-info' => 'Dit zijn de topgebruikers van deze week, gesorteerd op het aantal bewerkingen.',
 	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|redacteur|redacteuren}}</span>',
+	'hub-hot-news' => 'Wat is populair',
+	'hub-hot-news-post-details' => 'Door $1 op $2 $3',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)

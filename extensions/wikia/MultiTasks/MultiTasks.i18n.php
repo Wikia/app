@@ -2050,6 +2050,13 @@ $messages['no'] = array(
 	'multiwikirecords' => '$1 wiki funnet',
 );
 
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'multidelete_button' => 'LESCHE',
+);
+
 /** Polish (Polski)
  * @author Anoon6
  */
@@ -2637,13 +2644,16 @@ $messages['sv'] = array(
 	'multiwikiedit_select_yourself' => 'du',
 	'multiwikiedit_tasks_list' => 'Lista över uppgifter att köras',
 	'multiwikiedit_edit_options' => 'Redigera alternativ',
+	'multidelete' => 'Radera serie av sidor',
 	'multidelete_button' => 'RADERA',
 	'multidelete_caption' => 'Sidlista',
 	'multidelete_title' => 'Multiradering',
 	'multidelete_or' => '<b>ELLER</b>',
 	'multidelete_reason' => 'Anledning till radering',
+	'multidelete_error_empty_selection' => 'Var god lägg till listan över valda wikis',
 	'multidelete_task_added' => 'Multiraderingsuppgiften #$1 lades till.',
 	'multidelete_task_error' => 'Ett fel uppstod när multiraderingsuppgiften skulle läggas till.',
+	'multidelete_task_none_selected' => 'Du valde inte några artiklar. Uppgiften lades inte till.',
 	'multidelete_task_link' => 'Du kan kontrollera din uppgift',
 	'multidelete_select_all' => 'Välj alla',
 	'multidelete_page' => 'Sidor som ska raderas',

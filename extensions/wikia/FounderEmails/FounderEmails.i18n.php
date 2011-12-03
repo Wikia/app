@@ -1649,7 +1649,7 @@ ___________________________________________
 </ul>
 </p>
 <div style="font-size: 70%;margin-top: 25px;text-align: center;">Cliquez <a href="$UNSUBSCRIBEURL">ici</a> pour vous désabonner de tous les courriels de Wikia.</div>',
-	'founderemails-email-page-edited-anon-subject' => 'Un ami mystérieux a modifié $WIKINAME',
+	'founderemails-email-page-edited-anon-subject' => 'Un mystérieux ami a effectué des modifications sur $WIKINAME',
 	'founderemails-email-page-edited-anon-body' => 'Bonjour $USERNAME,
 
 Un contributeur Wikia vient de modifier $PAGETITLE sur $WIKINAME !
@@ -1664,7 +1664,7 @@ ___________________________________________
 * Cliquez sur le lien suivant pour vous désabonner de tous les courriels de Wikia : $UNSUBSCRIBEURL',
 	'founderemails-email-anon-edit-greeting' => 'Bonjour $USERNAME,',
 	'founderemails-email-anon-edit-headline' => 'Un contributeur Wikia vient de modifier $PAGETITLE sur $WIKINAME.',
-	'founderemails-email-anon-edit-content' => 'Les contributeurs Wikia sont des gens qui effectuent des modifications sans être connectés avec un compte Wikia. Allez voir ce que mystérieux ami a ajouté !',
+	'founderemails-email-anon-edit-content' => 'Les contributeurs Wikia sont des gens qui effectuent des modifications sans être connectés avec un compte Wikia. Allez voir ce que ce mystérieux ami a ajouté !',
 	'founderemails-email-anon-edit-signature' => "L'équipe de Wikia",
 	'founderemails-email-anon-edit-button' => 'Vérifier !',
 	'founderemails-email-page-edited-anon-body-HTML' => '<p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">Bonjour $USERNAME,</p>
@@ -1994,6 +1994,10 @@ Vous pouvez toujours vous rendre sur l’activité du wiki pour voir les modific
 	'founderemails-pref-edits' => "Envoyez-moi un courriel quand quelqu'un modifie $1",
 	'founderemails-pref-views-digest' => 'M’envoyer un courriel quotidien indiquant combien de fois $1 a été consulté',
 	'founderemails-pref-complete-digest' => 'M’envoyer un résumé quotidien de l’activité sur $1',
+	'founderemails-pref-joins-v2' => '...quelqu’un participe pour la première fois',
+	'founderemails-pref-edits-v2' => '...quelqu’un effectue une modification',
+	'founderemails-pref-views-digest-v2' => '...un résumé quotidien des vues totales est prêt',
+	'founderemails-pref-complete-digest-v2' => '...un compte-rendu quotidien des premières fois, modifications et vues est prêt',
 );
 
 /** Galician (Galego)
@@ -4498,6 +4502,7 @@ Du kan alltids stikke over til wiki-aktivitet for å se alle endringene gjort p�
 );
 
 /** Polish (Polski)
+ * @author Bartek50003
  * @author Sp5uhe
  */
 $messages['pl'] = array(
@@ -4509,6 +4514,8 @@ Gratulacje! $EDITORNAME zarejestrował się na $WIKINAME!
 Wykorzystaj tę okazję do przywitania go i nakłonienia do pomocy w edytowaniu. Przyjemniej i szybciej będzie rozrastała się Twoja wiki.
 
 Zespół Wikii',
+	'founderemails-email-user-registered-greeting' => 'Hi $USERNAME,',
+	'founderemails-email-user-registered-headline' => 'Gratulacje! $EDITORNAME właśnie przyłączył się do $WIKINAME.',
 	'founderemails-email-user-registered-body-HTML' => 'Cześć $USERNAME,<br /><br />
 $EDITORNAME zarejestrował się na twojej wiki! Może przywitasz się z nim na jego <a href="$EDITORTALKPAGEURL">stronie dyskusji</a>?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Zespół Wikii</div>',

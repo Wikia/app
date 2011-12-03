@@ -887,6 +887,13 @@ $messages['uk'] = array(
 	'multilookuplastedithdr' => 'Останнє редагування',
 );
 
+/** Yiddish (ייִדיש)
+ * @author פוילישער
+ */
+$messages['yi'] = array(
+	'multilookupprevious' => 'פֿריערדיקער',
+);
+
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Hydra
  */

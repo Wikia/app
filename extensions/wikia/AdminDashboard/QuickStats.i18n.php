@@ -51,6 +51,19 @@ $messages['az'] = array(
 	'quickstats-number-shortening' => '$1K',
 );
 
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'quickstats-header-date' => 'Deiziad',
+	'quickstats-header-views' => 'Gweladennoù',
+	'quickstats-header-edits' => 'Kemmoù',
+	'quickstats-header-photos' => "Luc'hskeudennoù",
+	'quickstats-header-likes' => 'Plijout a ra din',
+	'quickstats-totals-label' => 'Hollad',
+	'quickstats-see-more-stats-link' => "[[Special:WikiStats|Gwelet muioc'h a stadegoù]]",
+);
+
 /** Catalan (Català)
  * @author CuBaN VeRcEttI
  */
@@ -102,6 +115,15 @@ $messages['es'] = array(
 	'quickstats-totals-label' => 'Total',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Ver más estadísticas]]',
 	'quickstats-number-shortening' => '$1m',
+);
+
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'quickstats-header-date' => 'تاریخ',
+	'quickstats-header-photos' => 'عکس‌ها',
+	'quickstats-totals-label' => 'مجموع',
 );
 
 /** Finnish (Suomi)
@@ -304,8 +326,10 @@ $messages['ps'] = array(
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Giro720
+ * @author Pedroca cerebral
  */
 $messages['pt-br'] = array(
+	'quickstats-header-label' => 'Estatísticas rápidas',
 	'quickstats-header-date' => 'Data',
 	'quickstats-header-views' => 'Visualizações',
 	'quickstats-header-edits' => 'Edições',
@@ -328,6 +352,20 @@ $messages['ru'] = array(
 	'quickstats-totals-label' => 'Итого',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Ещё статистика]]',
 	'quickstats-number-shortening' => '$1K',
+);
+
+/** Serbo-Croatian (Srpskohrvatski)
+ * @author OC Ripper
+ */
+$messages['sh'] = array(
+	'quickstats-header-label' => 'Kratke statistike',
+	'quickstats-header-date' => 'Datum',
+	'quickstats-header-views' => 'Pregleda',
+	'quickstats-header-edits' => 'Izmjena',
+	'quickstats-header-photos' => 'Fotografija',
+	'quickstats-header-likes' => 'Likeova',
+	'quickstats-totals-label' => 'Ukupno',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Pogledajte još statistika]]',
 );
 
 /** Sinhala (සිංහල)

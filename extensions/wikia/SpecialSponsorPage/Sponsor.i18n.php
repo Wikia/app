@@ -587,6 +587,7 @@ $messages['sl'] = array(
 	'sponsorpage-desc' => 'Omogoča uporabnikom nakup sponzorstva strani',
 	'sponsor-header' => '<h2>Zunanje sponzorske povezave</h2>',
 	'sponsor-msg' => '<li><a href="$1" rel="nofollow">Sponzorirajte to stran</a></li>',
+	'sponsor-preview-prompt' => 'Tukaj je prikazano, kako bo izgledalo vaše sponzorstvo – kliknite »Uredi«, da se vrnete nazaj in še kaj spremenite, ali »Shrani«, da shranite in pojdete na PayPal.',
 	'sponsor-preview-errors' => 'V vašem obrazcu so napake:',
 	'sponsor-form-url' => 'URL sponzorske spletne strani (vaše spletne strani):',
 	'sponsor-form-linktext' => 'Besedilo, ki se naj prikaže v povezavi:',
