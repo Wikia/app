@@ -29,6 +29,7 @@ class WikiaResponse {
 	const FORMAT_RAW = 'raw';
 	const FORMAT_HTML = 'html';
 	const FORMAT_JSON = 'json';
+	const FORMAT_JSONP = 'jsonp';
 	const FORMAT_INVALID = 'invalid';
 	
 	/**
@@ -50,6 +51,7 @@ class WikiaResponse {
 	private $skinName = null;
 	private $controllerName = null;
 	private $methodName = null;
+	private $request = null;
 	protected $data = array();
 	protected $exception = null;
 
@@ -57,9 +59,18 @@ class WikiaResponse {
 	 * constructor
 	 * @param string $format
 	 */
-	public function __construct( $format ) {
+	public function __construct( $format, $request = null ) {
 		$this->setFormat( $format );
 		$this->setView( F::build( 'WikiaView', array( $this ) ) );
+		$this->setRequest( $request );
+	}
+
+	public function setRequest( $request ) {
+		$this->request = $request;
+	}
+
+	public function getRequest() {
+		return $this->request;
 	}
 
 	/**
@@ -223,7 +234,7 @@ class WikiaResponse {
 	}
 
 	public function setFormat( $value ) {
-		if ( $value == self::FORMAT_HTML || $value == self::FORMAT_JSON || $value == self::FORMAT_RAW ) {
+		if ( $value == self::FORMAT_HTML || $value == self::FORMAT_JSON || $value == self::FORMAT_RAW || $value == self::FORMAT_JSONP ) {
 			$this->format = $value; 
 		} else {
 			$this->format = self::FORMAT_INVALID;
@@ -350,6 +361,8 @@ class WikiaResponse {
 
 		if( ( $this->getFormat() == WikiaResponse::FORMAT_JSON ) && !$this->hasContentType() ) {
 			$this->setContentType( 'application/json; charset=utf-8' );
+		} else if ( $this->getFormat() == WikiaResponse::FORMAT_JSONP ) {
+			$this->setContentType( 'text/javascript; charset=utf-8' );
 		}
 
 		foreach ( $this->getHeaders() as $header ) {

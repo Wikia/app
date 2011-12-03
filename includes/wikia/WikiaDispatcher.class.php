@@ -41,7 +41,7 @@ class WikiaDispatcher {
 		}
 
 		$format = $request->getVal( 'format', WikiaResponse::FORMAT_HTML );		
-		$response = F::build( 'WikiaResponse', array( 'format' => $format ) );
+		$response = F::build( 'WikiaResponse', array( 'format' => $format, 'request' => $request ) );
 		if ( $app->wg->EnableSkinTemplateOverride && $app->isSkinInitialized() ) {
 			$response->setSkinName( $app->wg->User->getSkin()->getSkinName() );
 		}

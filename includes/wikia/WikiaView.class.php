@@ -230,6 +230,11 @@ class WikiaView {
 
 		return json_encode( $output );
 	}
+
+	protected function renderJsonp() {
+		$callbackName = $this->response->getRequest()->getVal('callback');
+		return "$callbackName(".$this->renderJson().");";
+	}
 	
 	// Invalid request format is an interesting case since it's not really a fatal error by itself
 	// For now, we will process the request normally, default to json and attach an exception message
