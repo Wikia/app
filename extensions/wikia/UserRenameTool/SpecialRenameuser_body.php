@@ -77,6 +77,10 @@ class SpecialRenameuser extends SpecialPage {
 			}
 		}
 
+		$showConfirm = ( empty( $errors ) && empty( $infos ) );
+
+		// note: errors and infos beyond this point are non-blocking
+
 		if ( !empty( $oldusername ) ) {
 			$olduser = User::newFromName( $oldusername );
 			if ( $olduser->getOption( 'requested-rename', 0 ) ) {
@@ -100,7 +104,7 @@ class SpecialRenameuser extends SpecialPage {
 				"warnings"      	=> $warnings,
 				"errors"        	=> $errors,
 				"infos"         	=> $infos,
-				"show_confirm"  	=> ( empty( $errors ) && empty( $infos ) ),
+				"show_confirm"  	=> $showConfirm,
 				"token"         	=> $token,
 				"notify_renamed" 	=> $notifyRenamed,
 			)
