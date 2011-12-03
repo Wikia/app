@@ -138,7 +138,7 @@ var ThemeDesigner = {
 		var currentVal = ThemeDesigner.settings["page-opacity"];
 		var base = 70;
 		$("#OpacitySlider").slider({
-			value: 100 - (((currentVal - base) / base) * 100),
+			value: 100 - ((base - currentVal) * (100 / (base - 100)) ),
 			stop: function(e, ui) {
 				var val = ui.value;
 				var wikiaNormalized = 100 - Math.round((val/100) * (100 - base));
