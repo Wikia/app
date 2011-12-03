@@ -92,8 +92,8 @@ class AdDisplay {
 	public static function ArticleCanShowAd(){
 		global $wgTitle;
 		if(!isset($wgTitle)) return false;
-		$page = $wgTitle->getText();
-		$mainpage = wfMsg('Mainpage');
+		$page = $wgTitle->getPrefixedText();
+		$mainpage = wfMsgForContent('Mainpage');
 		//Only show ads in main namespace, but not on the main page
 		if($mainpage == $page || $wgTitle->getNamespace() != NS_MAIN ) return false;
 		return true;
