@@ -149,7 +149,7 @@ class UserProfilePageController extends WikiaController {
 		$isUserPageOwner = ($user instanceof User && !$user->isAnon() && $user->getId() == $sessionUser->getId()) ? true : false;
 
 		$actionButtonArray = array();
-		if( defined('NS_USER') && $namespace == NS_USER ) {
+		if( $namespace == NS_USER ) {
 		//profile page
 			$actionButtonArray = array(
 				'action' => array(
@@ -159,7 +159,7 @@ class UserProfilePageController extends WikiaController {
 				'image' => MenuButtonModule::EDIT_ICON,
 				'name' => 'editprofile',
 			);
-		} else if( defined('NS_USER_TALK') && $namespace == NS_USER_TALK && empty($this->app->wg->EnableWallExt) ) {
+		} else if ( $namespace == NS_USER_TALK && empty($this->app->wg->EnableWallExt) ) {
 		//talk page
 			$title = F::build('Title', array($user->getName(), NS_USER_TALK), 'newFromText');
 
@@ -207,7 +207,7 @@ class UserProfilePageController extends WikiaController {
 			);
 		}
 
-		if( defined('NS_USER') && defined('NS_USER_TALK') && in_array($namespace, array(NS_USER, NS_USER_TALK)) ) {
+		if( in_array($namespace, array(NS_USER, NS_USER_TALK)) ) {
 		//profile & talk page
 			if( $canRename ) {
 				$renameUrl = F::build('SpecialPage', array('MovePage'), 'getTitleFor')->getLocalUrl().'/'.$this->title->__toString();
