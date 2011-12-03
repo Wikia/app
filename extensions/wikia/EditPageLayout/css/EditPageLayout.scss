@@ -74,7 +74,9 @@ body {
 
 #EditPageMain {
 	float: left;
-	width: $width-outside - $width-rail-epl;
+
+	// - 1px for #EditPageRail border. Fixes BugId:16911.
+	width: $width-outside - $width-rail-epl - 1px;
 }
 
 #EditPageRail {
@@ -82,7 +84,6 @@ body {
 	background-color: $color-epl-page-tertiary;
 	border-left: 1px solid $color-page-border;
 	float: right;
-	margin-left: -1px;
 	width: $width-rail-epl;
 
 	// Make sure the box shadow of #EditPageRail is layered on top of #EditPageMain
