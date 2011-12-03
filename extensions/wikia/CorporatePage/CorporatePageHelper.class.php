@@ -6,15 +6,16 @@
  */
 
 class CorporatePageHelper{
+	const CACHE_VERSION = 1;
+
 	/*
 	* Author: Tomek Odrobny
 	* Hook for clear parsed message cache
 	*/
 	static function clearMessageCache(&$article){
-		global $wgMemc;
+		global $wgMemc, $wgContLang;
 
-		$title = strtolower($article->getTitle());
-		if (! (strpos($title, "mediawiki:") === 0 )){
+		if ( $article->getTitle()->getNamespace() != NS_MEDIAWIKI ) {
 			return true;
 		}
 
@@ -32,13 +33,28 @@ class CorporatePageHelper{
 
 		wfRunHooks( 'CorporateBeforeMsgCacheClear', array( &$CorporatePageMessageList ) );
 
+		if ( !in_array( strtolower( $article->getTitle()->getText() ), $CorporatePageMessageList ) ) {
+			return true;
+		}
+
 		foreach ($CorporatePageMessageList as $value) {
-			$value = wfMemcKey( "hp_msg_parser", strtolower(  $value  ) ) ;
+			$value = self::getCacheKey( $value );
 			$wgMemc->set( $value, "-1" );
 		}
 		return true;
 	}
 
+	private static function getCacheKey( $msg, $lang = null, $content = true ) {
+		global $wgContLang;
+
+		$contentString = $content ? 'content' : 'userlang';
+
+		if ( is_null( $lang ) ) {
+			$lang = $wgContLang->getCode();
+		}
+
+		return wfMemcKey( "hp_msg_parser", $msg, $lang, $contentString, self::CACHE_VERSION );
+	}
 
 	static function jsVars($vars){
 		global $wgUser;
@@ -152,7 +168,7 @@ class CorporatePageHelper{
 		global $wgMemc, $wgLang;
 
 		$lang = $wgLang->getCode();
-		$mcKey = wfMemcKey( "hp_msg_parser", strtolower( $msg ), $lang /* BugId: 4079 */, ($forContent ? 'content' : 'userlang'), 1);
+		$mcKey = self::getCacheKey( strtolower( $msg ), $lang, $forContent );
 		$out = $wgMemc->get( $mcKey );
 		if ( is_array( $out ) && !empty( $out ) ){
 			return $out;
