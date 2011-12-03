@@ -292,7 +292,6 @@ class SiteWideMessages extends SpecialPage {
 			case 'WIKI':
 				$mHubId = null;
 				$mClusterId = null;
-				$mLang = array( MSG_LANG_ALL );
 		}
 
 		switch($mSendModeUsers) {
