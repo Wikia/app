@@ -20,6 +20,7 @@ class WallNotificationsExternalController extends WikiaController {
 
 	public function getUpdateWiki() {
 		$id = $this->request->getVal('wikiId');
+	
 		$wn = F::build('WallNotifications', array());
 		$this->getUpdateWikiInternal($wn, $id);
 		return true;

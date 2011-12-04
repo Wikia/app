@@ -119,15 +119,30 @@ class WallNotifications {
 		asort($val);
 		if($forceCurrentWiki === true) {
 			unset($val[ $this->app->wg->CityId ]);
-			$output = array( array( 'id' => $this->app->wg->CityId, 'sitename' => $this->app->wg->sitename) );
+			$output = array( array( 
+				'id' => $this->app->wg->CityId, 
+				'wgServer' => $this->getWgServer($this->app->wg->CityId),
+				'sitename' => $this->app->wg->sitename) );
 		} else {
 			$output = array();
 		}
 		foreach($val as $wikiId => $wikiSitename) {
-			$output[] = array( 'id' => $wikiId, 'sitename' => $wikiSitename);
+			$output[] = array( 
+				'id' => $wikiId, 
+				'wgServer' => $this->getWgServer($wikiId),
+				'sitename' => $wikiSitename
+			);
 		}
 		return $output;
 			
+	}
+	
+	private function getWgServer($id) {
+		$url = WikiFactory::getVarValueByName("wgServer", $id );
+		if (!empty($this->app->wg->DevelEnvironment)) {
+			$url = str_replace('wikia.com', $this->app->wg->DevelEnvironmentName.'.wikia-dev.com',$url);
+		}
+		return $url;
 	}
 	
 	private function addWikiToList($userId, $wikiId, $wikiSitename) {

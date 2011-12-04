@@ -92,7 +92,7 @@ var Wall = $.createClass(Object, {
 			.live('mouseleave', this.proxy(this.unhoverFollow));
 		
 		// If any textarea has content make sure Reply / Post button is visible
-		$(document).ready(this.iniciateTextareas);
+		$(document).ready(this.initTextareas);
 		
 		if(wgTitle.indexOf('/') > 0) {
 			var titlePart = wgTitle.split('/');
@@ -163,7 +163,7 @@ var Wall = $.createClass(Object, {
 		}
 	},
 	
-	iniciateTextareas: function() {
+	initTextareas: function() {
 		setTimeout( function() { // make sure all textareas are inicialized already
 			//$('.new-message textarea.body').trigger('focus');
 			$('.new-reply textarea').each( function() {
