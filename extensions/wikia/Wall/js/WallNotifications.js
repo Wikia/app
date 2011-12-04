@@ -4,6 +4,7 @@ $(function() {
 
 var WallNotifications = $.createClass(Object, {
 	constructor: function() {
+		this.wikisUrls = {},
 		this.updateInProgress = false; // we only want 1 update simultaneously 
 		this.notificationsCache = {}; // HTML for "trays" for different Wiki ids
 		this.wikiShown = {}; // all open "trays" (Wiki Notifications) - list of Wiki ids
@@ -61,7 +62,7 @@ var WallNotifications = $.createClass(Object, {
 		$('#wall-notifications-markasread-all-wikis')
 			.live('click', this.proxy( this.markAllAsReadAllWikis ) );
 	},
-	
+
 	updateCounts: function() {
 		if( this.updateInProgress == false ) {
 			this.updateInProgress = true;
@@ -75,7 +76,7 @@ var WallNotifications = $.createClass(Object, {
 				callback: this.proxy(function(data) {
 					if(data.status != true || data.html == '') return;
 					this.updateCountsHtml(data);
-					
+
 					// if we already have data for some Wikis, show it
 					this.restoreFromCache();
 					
@@ -223,6 +224,17 @@ var WallNotifications = $.createClass(Object, {
 				$('.bubbles').removeClass('reddot');
 			}
 			$('#WallNotificationsReminder a').html(data.reminder);
+		
+			var wikis = $('li.notifications-for-wiki');
+			
+			var self = this;
+			wikis.each(function(index) {
+				var element = $(this);
+				self.wikisUrls[element.attr('data-wiki-id')] = element.attr('data-wiki-path');
+			});
+
+			$().log(this.wikisUrls);
+			
 			$('.notifications-wiki-header',subnav).click( this.proxy( this.wikiClick ) );
 		}
 		
@@ -268,10 +280,12 @@ var WallNotifications = $.createClass(Object, {
 	},
 	
 	updateWikiFetch: function(wikiId) {
+		$().log(this.wikisUrls[wikiId]);
 		$.nirvana.sendRequest({
 			controller: 'WallNotificationsExternalController',
 			method: 'getUpdateWiki',
-			format: 'json',
+			format: 'jsonp',
+			scriptPath: this.wikisUrls[wikiId],
 			data: {
 				username: wgTitle,
 				wikiId: wikiId

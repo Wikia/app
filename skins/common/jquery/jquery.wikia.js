@@ -1146,14 +1146,16 @@ jQuery.nirvana.sendRequest = function(attr) {
 		throw "controller and method are required";
 	}
 
-	if( !(format === 'json' || format === 'html') ) {
-		throw "Only Json and Html format are allowed";
+	if( !(format === 'json' || format === 'html'  || format === 'jsonp' ) ) {
+		throw "Only Json,Jsonp and Html format are allowed";
 	}
 
 	$().log(data, 'request to nirvana');
 
+	var url = (typeof attr.scriptPath == 'undefined') ? wgScriptPath:attr.scriptPath;
+	
 	$.ajax({
-		url: wgScriptPath + '/wikia.php?' + $.param({
+		url: url + '/wikia.php?' + $.param({
 			//Iowa strips out POST parameters, Nirvana requires these to be set
 			//so we're passing them in the GET part of the request
 			controller: attr.controller,

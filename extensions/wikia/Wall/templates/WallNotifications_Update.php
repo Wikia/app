@@ -31,7 +31,7 @@
 	<? if ( $wikiCount == 1 ): ?>
 	<li class="notifications-for-wiki show" data-wiki-id="<?= $wikiData['id'] ?>">
 	<? else: ?>
-	<li class="notifications-for-wiki" data-wiki-id="<?= $wikiData['id'] ?>">
+	<li class="notifications-for-wiki" data-wiki-path="<?= $wikiData['wgServer'] ?>" data-wiki-id="<?= $wikiData['id'] ?>">
 	<? endif; ?>
 		<? if ( $wikiCount > 1): ?>
 		<div class="notifications-wiki-header">
