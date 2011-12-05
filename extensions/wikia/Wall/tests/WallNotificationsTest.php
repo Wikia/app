@@ -23,15 +23,10 @@ class WallNotificationsTest extends PHPUnit_Framework_TestCase
 		$notification->data->wall_username = 'LoremIpsum';
 		$notification->data->title_id = 555;
 		
-		$notification
-			->expects($this->once())
-			->method('isMain')
-			->will($this->returnValue(true));
-
 		$wn
 			->expects($this->once())
 			->method('sendEmails')
-			->with($this->anything(), $this->anything(), $this->equalTo(array('123')), $this->equalTo(true), $this->equalTo('123') );
+			->with($this->anything(), $this->equalTo($notification) );
 			
 		$wn
 			->expects($this->once())
@@ -53,11 +48,6 @@ class WallNotificationsTest extends PHPUnit_Framework_TestCase
 		$notification->data->title_id = 555;
 		$notification->data_noncached->parent_title_dbkey = 'dbkey';
 		
-		$notification
-			->expects($this->once())
-			->method('isMain')
-			->will($this->returnValue(false));
-
 		$users = array('123'=>'123','234'=>'234');
 		
 		$wn
@@ -68,7 +58,7 @@ class WallNotificationsTest extends PHPUnit_Framework_TestCase
 		$wn
 			->expects($this->once())
 			->method('sendEmails')
-			->with($this->anything(), $this->anything(), $this->equalTo(array('123','234')), $this->equalTo(false), $this->equalTo('123') );
+			->with($this->anything(), $this->equalTo($notification) );
 			
 		$wn
 			->expects($this->once())
@@ -132,7 +122,6 @@ class WallNotificationsTest extends PHPUnit_Framework_TestCase
 		$dataF = array(
 			'notification' => array(
 				0 => 4444,
-				1 => null,
 				2 => $uniqueId
 			),
 			'relation' => array(
@@ -160,7 +149,6 @@ class WallNotificationsTest extends PHPUnit_Framework_TestCase
 		$dataF = array(
 			'notification' => array(
 				0 => 4444,
-				1 => null,
 				2 => $uniqueId
 			),
 			'relation' => array(
@@ -192,8 +180,6 @@ class WallNotificationsTest extends PHPUnit_Framework_TestCase
 		$dataF = array(
 			'notification' => array(
 				0 => 4444,
-				1 => null,
-				2 => null,
 				3 => $uniqueId
 			),
 			'relation' => array(
@@ -226,9 +212,6 @@ class WallNotificationsTest extends PHPUnit_Framework_TestCase
 		$dataF = array(
 			'notification' => array(
 				0 => 4444,
-				1 => null,
-				2 => null,
-				3 => null,
 				4 => $uniqueId
 			),
 			'relation' => array(
@@ -260,10 +243,6 @@ class WallNotificationsTest extends PHPUnit_Framework_TestCase
 		$dataF = array(
 			'notification' => array(
 				0 => 4444,
-				1 => null,
-				2 => null,
-				3 => null,
-				4 => null,
 				5 => $uniqueId
 			),
 			'relation' => array(
@@ -295,9 +274,9 @@ class WallNotificationsTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testAddNotificationToData($uniqueId, $entityKey, $authorId, $isReply, $read, $dataS, $dataF) {
 		$wn = new testWallNotifications();
-		
+
 		$wn->addNotificationToData($dataS, $uniqueId, $entityKey, $authorId, $isReply, $read);
-		
+
 		$this->assertEquals($dataS, $dataF);
 	}
 	
