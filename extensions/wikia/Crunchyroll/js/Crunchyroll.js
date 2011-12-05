@@ -1,10 +1,8 @@
-
 var Crunchyroll = {
 
-	lockTable: new Array(),
+	lockTable: [],
 
 	init: function() {
-
 		$('#WikiaArticle').delegate('.wikia-paginator a.paginator-page', 'click', Crunchyroll.paginatorClick);
 	},
 
@@ -29,7 +27,7 @@ var Crunchyroll = {
 		if ( Crunchyroll.lockTable[ name ] == clickedObj.attr('data-page') ){
 		 	return false;
 		}
-		
+
 		Crunchyroll.lockTable[ 'crunchyroll' ] = clickedObj.attr('data-page');
 
 		// tracking;
@@ -40,7 +38,7 @@ var Crunchyroll = {
 		} else {
 			Crunchyroll.track('/crunchyrollpagination/' + clickedObj.attr('data-page'));
 		}
-		
+
 		Crunchyroll.log('begin: paginatorClick');
 		Crunchyroll.showThrobber(pageSection.find('div.crunchyroll-holder'));
 		var UrlVars = $.getUrlVars();
@@ -64,7 +62,7 @@ var Crunchyroll = {
 			if ( typeof goBack !== "undefined" && goBack ){
 				room2.html( room1.html() );
 				room1.css( 'margin-left', ( -1 * room1.width() ) );
-				room1.html( axData.page )
+				room1.html( axData.page );
 				room1.animate( { 'margin-left' : 0 }, 920);
 				room1.queue( function () {
 					room2.html('');
@@ -82,7 +80,7 @@ var Crunchyroll = {
 				});
 			}
 		});
-		
+
 		return false;
 	},
 
