@@ -1,6 +1,8 @@
+@import "../variables.scss";
+
 @mixin section-title{
-	border-bottom: 1px solid $border-color;
+	border-top: 1px solid $border-color;
 	color: $section-text-color;
 	font-size: $section-title-font-size;
-	padding: $section-title-padding;
+	padding: $page-padding 0 0;
 }
