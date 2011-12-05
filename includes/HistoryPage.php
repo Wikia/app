@@ -64,7 +64,9 @@ class HistoryPage {
 		global $wgOut, $wgRequest, $wgScript;
 		
 		/* Wikia change @author nAndy */
-		wfRunHooks( 'BeforePageHistory', array( &$this->article ) );
+		if(!wfRunHooks( 'BeforePageHistory', array( &$this->article, &$wgOut ) )) {
+			return true;
+		}
 		/* End of Wikia change */
 		
 		/*
