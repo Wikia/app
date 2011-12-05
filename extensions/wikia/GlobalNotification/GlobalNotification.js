@@ -11,15 +11,9 @@ GlobalNotification = {
 			callback = function(){};
 		}
 		if( !GlobalNotification.initialized ) {
-			// load css
-			var sassUrl = $.getSassCommonURL( '/extensions/wikia/GlobalNotification/GlobalNotification.scss' );
-			$.getCSS( sassUrl, function() {
-				GlobalNotification.initialized = true;
-				callback();
-			});
-		} else {
-			callback();
+			GlobalNotification.initialized = true;
 		}
+		callback();
 	},
 	createDom: function() {
 		// create and store dom
