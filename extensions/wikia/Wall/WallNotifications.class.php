@@ -469,7 +469,9 @@ class WallNotifications {
 	
 	protected function addNotificationToData(&$data, $uniqueId, $entityKey, $authorId, $isReply, $read = false) {
 		$data['notification'][] = $uniqueId;
-		
+		$addedAtTmp = end( $data['notification'] );
+		$addedAt = key( $data['notification'] );
+		reset( $data['notification'] );
 		if(isset($data['relation'][ $uniqueId ]['last']) && $data['relation'][ $uniqueId ]['last'] > -1) {
 			// $data['notification'][ $data['relation'][$uniqueId ]['last'] ] = null;
 			
@@ -490,7 +492,7 @@ class WallNotifications {
 		// keep track of where we are references in Notifications list, so that
 		// we can remove that entry and readd it at the end, should the new
 		// notification for that thread come in (to keep proper order)
-		$data['relation'][ $uniqueId ]['last'] = count($data['notification']) - 1;
+		$data['relation'][ $uniqueId ]['last'] = $addedAt;
 
 		
 		// we are reply and currently stored information is not? ignore new notification
