@@ -1,5 +1,5 @@
 $(function() {
-	var fogbugzTicketsNumbers = new Array(); // stores tickets ids
+	var fogbugzTicketsNumbers = []; // stores tickets ids
 	var spans =  $( 'span[class="fogbugz_tck"]' );
 	for ( var i = 0; i < spans.length; i++){
 		fogbugzTicketsNumbers.push( $(spans[i]).attr( 'data-id' ) );
