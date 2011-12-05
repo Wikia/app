@@ -7,10 +7,5 @@
 		?>
 	>
 	<img class=placeholderImg src=<?=$images[0]?>>
-	<footer>
-		<div>
-			<img src=<?= $magnifyClipSrc ?>>
-			<span><?= $counterValue ?></span>
-		</div>
-	</footer>
+	<footer><?= $counterValue ?></footer>
 </aside>
