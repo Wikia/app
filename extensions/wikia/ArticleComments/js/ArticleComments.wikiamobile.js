@@ -1,11 +1,66 @@
-$('#article-comments-counter-header').bind(WikiaMobile._clickevent, function() {
-	$(this).toggleClass('open').next().toggleClass('open').next().toggleClass('open');
-});
+/**
+ * Article Comments JS code for the WikiaMobile skin
+ *
+ * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
+ **/
 
-//$('.load-more').bind(WikiaMobile._clickevent, function() {
-//	var url = wgServer + "/index.php?action=ajax&rs=ArticleCommentsAjax&method=axGetComments&article="+51683+"&page="+3;
-//	$.get(url, function(result) {
-//		var myObject = eval('(' + result + ')');
-//		$('#article-comments-ul').html(myObject.text);
-//	});
-//});
+var ArticleComments = ArticleComments || (function(){
+	/** @private **/
+
+	var wrapper,
+		loadMore,
+		loadPrev,
+		totalPages = 0,
+		currentPage = 1,
+		ajaxUrl = wgServer + "/index.php?action=ajax&rs=ArticleCommentsAjax&method=axGetComments&useskin=" + skin + "&article=" + wgArticleId,
+		clickEvent = WikiaMobile.getClickEvent();
+	
+	function clickHandler(){
+		var elm = $(this),
+			forward = (elm.attr('id') == 'commentsLoadMore'),
+			pageIndex = (forward) ? currentPage + 1 : currentPage - 1,
+			condition = (forward) ? (currentPage < totalPages) : (currentPage > 1);
+		
+		if(condition){
+			elm.toggleClass('active');
+			$.showLoader(elm);
+
+			$.get(ajaxUrl + '&page=' + pageIndex.toString(), function(result){
+				var data = eval('(' + result + ')'),
+					finished;
+
+				currentPage = pageIndex;
+				finished = (forward) ? (currentPage == totalPages) : (currentPage == 1);
+
+				$('#article-comments-ul').html(data.text);
+				
+				elm.toggleClass('active');
+				$.hideLoader(elm);
+
+				if(finished)
+					elm.hide();
+
+				((forward) ? loadPrev : loadMore).show();
+				
+				window.scrollTo(0, wrapper.offset().top);
+			});
+		}
+	}
+
+	//init
+	$(function(){
+		wrapper = $('#WikiaArticleComments');
+		loadMore = $('#commentsLoadMore');
+		loadPrev = $('#commentsLoadPrev');
+		totalPages = parseInt($('#WikiaArticleComments').data('pages'));
+
+		if(totalPages > 1 && wgArticleId){
+			loadMore.bind(clickEvent, clickHandler);
+			loadPrev.bind(clickEvent, clickHandler);
+		}
+	});
+
+	/** @public **/
+
+	return {};
+})();

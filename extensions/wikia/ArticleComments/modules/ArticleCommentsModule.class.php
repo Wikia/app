@@ -35,7 +35,9 @@ class ArticleCommentsModule extends WikiaService {
 		$this->response->setVal( 'showMore', $this->countComments > $this->commentsPerPage );
 		$this->response->setVal( 'pagesCount', ceil( $this->countComments / $this->commentsPerPage ) );
 	}
-	
+
+	public function executeWikiaMobileComment(){/** render WikiaMobile template**/}
+
 	public function getCommentsData($title, $page, $perPage = null, $filterid = null) {
 		wfProfileIn(__METHOD__);
 
