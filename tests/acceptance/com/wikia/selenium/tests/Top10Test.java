@@ -38,7 +38,6 @@ public class Top10Test extends BaseTest {
 	public void prepareTestData() throws Exception {
 		loginAsRegular();
 		
-		/*
 		if (!isDataPrepared) {
 			editArticle(TOP10_ARTICLE_1, "Lorem ipsum " + new Date().toString());
 			editArticle(TOP10_ARTICLE_2, "Lorem ipsum " + (new Date()).toString());
@@ -46,19 +45,18 @@ public class Top10Test extends BaseTest {
 			editArticle(TOP10_ARTICLE_4, "Lorem ipsum " + (new Date()).toString());
 			isDataPrepared = true;
 		}
-		*/
 	}
 	
 	@Test(groups={"envProduction", "CI","verified"})
 	public void testCreateEmptyList() throws Exception {
 		session().open("wiki/Special:CreateTopList");
 		session().waitForPageToLoad(this.getTimeout());
+		waitForElement("//input[@value='Create list']");
 		session().click("//input[@value='Create list']");
 		session().waitForPageToLoad(this.getTimeout());
 		
 		assertTrue(session().isTextPresent("The supplied text is not valid."));
 		assertTrue(session().getLocation().contains("wiki/Special:CreateTopList"));
-		
 		
 		session().type("list_name", TOP10_LIST_NAME + (new Date()).toString());
 		
@@ -66,6 +64,7 @@ public class Top10Test extends BaseTest {
 		session().waitForPageToLoad(this.getTimeout());
 		assertTrue(session().getLocation().contains("wiki/Top_10_list"));
 	}
+
 	//Test to verify because of phalanx problems, ask TOR
 	//@Test(groups={"envProduction", "CI"}) 
 	public void testCreateListWithInvalidData() throws Exception {
@@ -104,6 +103,7 @@ public class Top10Test extends BaseTest {
 		session().waitForPageToLoad(this.getTimeout());
 		
 		String name = TOP10_LIST_NAME + (new Date()).toString();
+		waitForElement("list_name");
 		session().type("list_name", name);
 		session().click("//input[@value='Create list']");
 		session().waitForPageToLoad(this.getTimeout());
@@ -113,6 +113,7 @@ public class Top10Test extends BaseTest {
 		session().open("wiki/Special:CreateTopList");
 		session().waitForPageToLoad(this.getTimeout());
 		
+		waitForElement("list_name");
 		session().type("list_name", name);
 		session().click("//input[@value='Create list']");
 		session().waitForPageToLoad(this.getTimeout());
@@ -123,16 +124,15 @@ public class Top10Test extends BaseTest {
 	
 	@Test(groups={"envProduction", "CI","verified"}) 
 	public void testCreateTopListAndFillIt() throws Exception {
-
 		session().open("wiki/Special:CreateTopList");
 		session().waitForPageToLoad(this.getTimeout());		
-		String name = TOP10_LIST_NAME + (new Date()).toString(); 
+		String name = TOP10_LIST_NAME + (new Date()).toString();
+		waitForElement("list_name");
 		session().type("list_name", name);
 		session().type("//ul[@class='ItemsList ui-sortable']/li[2]/div[2]/input", TOP10_ARTICLE_1);
 		session().type("//ul[@class='ItemsList ui-sortable']/li[3]/div[2]/input", TOP10_ARTICLE_2);
 		session().click("//input[@value='Create list']");
 		session().waitForPageToLoad(this.getTimeout());
-		
 		
 		Number numberOfOptions = session().getXpathCount("//button[@class='VoteButton']");
 		assertEquals(2, numberOfOptions.intValue());
@@ -142,22 +142,18 @@ public class Top10Test extends BaseTest {
 	    session().type("//ul[@class='ItemsList ui-sortable']/li[4]/div[2]/input", TOP10_ARTICLE_3);
 	    session().click("//input[@value='Save list']");
 	    session().waitForPageToLoad(this.getTimeout());
-	    
 
 	    Number numberOfOptions2 = session().getXpathCount("//button[@class='VoteButton']");
 		assertEquals(3, numberOfOptions2.intValue());
-    
 
 		session().click("//nav[@class='wikia-menu-button']//img[@class='sprite edit-pencil']");
 	    session().waitForPageToLoad(this.getTimeout());
 	    session().click("//img[@class='sprite new']");
-   
 
 	    session().open("wiki/Top_10_List:" + name.replace(" ", "_"));
 	    session().waitForPageToLoad(this.getTimeout());
 	    Number numberOfOptions3 = session().getXpathCount("//button[@class='VoteButton']");
 	    assertEquals(3, numberOfOptions3.intValue());
-
 
 	    session().click("//nav[@class='wikia-menu-button']//img[@class='sprite edit-pencil']");
 	    session().waitForPageToLoad(this.getTimeout());
@@ -165,55 +161,45 @@ public class Top10Test extends BaseTest {
 	    session().type("//ul[@class='ItemsList ui-sortable']/li[5]/div[2]/input", TOP10_ARTICLE_4);
 	    session().click("//input[@value='Save list']");
 	    session().waitForPageToLoad(this.getTimeout());
-	    
 
 	    Number numberOfOptions4 = session().getXpathCount("//button[@class='VoteButton']");
 	    assertEquals(4, numberOfOptions4.intValue());
-	   
 
 	    session().click("//nav[@class='wikia-menu-button']//img[@class='sprite edit-pencil']");
 	    session().waitForPageToLoad(this.getTimeout());
 	    session().click("//form[@id='toplist-editor']/ul/li[5]/div[3]/a/img");
-	    
 
 	    session().open("wiki/Top_10_List:" + name.replace(" ", "_"));
 	    session().waitForPageToLoad(this.getTimeout());
 	    assertEquals(4, numberOfOptions4.intValue());
-	    
 
 	    session().click("//nav[@class='wikia-menu-button']//img[@class='sprite edit-pencil']");
 	    session().waitForPageToLoad(this.getTimeout());
 	    session().click("//form[@id='toplist-editor']/ul/li[5]/div[3]/a/img");
 	    session().click("//input[@value='Save list']");
 	    session().waitForPageToLoad(this.getTimeout());
-	    
 
 	    assertEquals(3, numberOfOptions3.intValue());
-
 	    
 	    session().click("//div[@id='toplists-list-body']//ul/li[2]/div[@class='ItemNumber']/button");
-	    
 
 	    session().click("//nav[@class='wikia-menu-button']//img[@class='sprite edit-pencil']");
 	    session().waitForPageToLoad(this.getTimeout());
 	    session().click("//form[@id='toplist-editor']/ul/li[2]/div[3]/a/img");
 	    session().click("//input[@value='Save list']");
-	    
 
 	    session().open("wiki/Top_10_List:" + name.replace(" ", "_"));
 	    session().waitForPageToLoad(this.getTimeout());
-
 	}
 	
 	@Test(groups={"envProduction", "CI","verified"})
 	public void testTypeSameArticleInTwoItems() throws Exception {
-    
 		session().open("wiki/Special:CreateTopList");
 		session().waitForPageToLoad(this.getTimeout());
 		
 		String name = TOP10_LIST_NAME + (new Date()).toString(); //list name
+		waitForElement("list_name");
 		session().type("list_name", name);
-		
 		
 		session().type("//ul[@class='ItemsList ui-sortable']/li[2]/div[2]/input", TOP10_ARTICLE_1);
 		session().type("//ul[@class='ItemsList ui-sortable']/li[3]/div[2]/input", TOP10_ARTICLE_1);
@@ -226,11 +212,11 @@ public class Top10Test extends BaseTest {
 	
 	@Test(groups={"envProduction", "CI", "verified"})
 	public void testRenameTopList() throws Exception {
-	
 		session().open("wiki/Special:CreateTopList");
 		session().waitForPageToLoad(this.getTimeout());
 		
-		String name = TOP10_LIST_NAME + (new Date()).toString(); 
+		String name = TOP10_LIST_NAME + (new Date()).toString();
+		waitForElement("list_name");
 		session().type("list_name", name);
 		session().click("//input[@value='Create list']");
 		session().waitForPageToLoad(this.getTimeout());	
@@ -242,14 +228,13 @@ public class Top10Test extends BaseTest {
 		session().click("//table[@id='mw-movepage-table']//input[@type='submit']");
 	}
 	
-	
 	@Test(groups={"envProduction", "CI","verified"})
 	public void testVoteAsAnonymous() throws Exception {
-		
 		session().open("wiki/Special:CreateTopList");
 		session().waitForPageToLoad(this.getTimeout());
 		
-		String name = TOP10_LIST_NAME + (new Date()).toString(); 
+		String name = TOP10_LIST_NAME + (new Date()).toString();
+		waitForElement("list_name");
 		session().type("list_name", name);
 		session().type("//ul[@class='ItemsList ui-sortable']/li[2]/div[2]/input", TOP10_ARTICLE_1);
 		session().type("//ul[@class='ItemsList ui-sortable']/li[3]/div[2]/input", TOP10_ARTICLE_2);
@@ -261,9 +246,7 @@ public class Top10Test extends BaseTest {
 	    session().open("wiki/Top_10_List:" + name.replace(" ", "_"));
 	    session().waitForPageToLoad(this.getTimeout());
 	    
-	    session().click("//div/div[2]/ul/li[2]/div[@class='ItemNumber']/button[@class='VoteButton']");
-		
-	
+	    session().click("//div[@id='toplists-list-body']/ul/li[2]/div[@class='ItemNumber']/button[@class='VoteButton']");
 	}
 	
 	@Test(groups={"envProduction", "CI","verified"})
@@ -271,7 +254,8 @@ public class Top10Test extends BaseTest {
 		session().open("wiki/Special:CreateTopList");
 		session().waitForPageToLoad(this.getTimeout());	
 		
-		String name = TOP10_LIST_NAME + (new Date()).toString(); 
+		String name = TOP10_LIST_NAME + (new Date()).toString();
+		waitForElement("list_name");
 		session().type("list_name", name);
 		session().type("//ul[@class='ItemsList ui-sortable']/li[2]/div[2]/input", TOP10_ARTICLE_1);
 		session().type("//ul[@class='ItemsList ui-sortable']/li[3]/div[2]/input", TOP10_ARTICLE_2);
@@ -280,11 +264,11 @@ public class Top10Test extends BaseTest {
 		
 		session().type("//form[@class='NewItemForm']//input[@id='toplist-new-item-name']", TOP10_ARTICLE_3);
 		session().click("//form[@class='NewItemForm']//button[@class='AddButton']");
-		waitForElementVisible("//form[@class='NewItemForm']//button[@class='AddButton']", this.getTimeout());	
+		waitForElement("//div[@id='toplists-list-body']/ul/li[3]/div[@class='ItemNumber']");
 		
 		//AddEmptyItem
 		session().click("//form[@class='NewItemForm']//button[@class='AddButton']");
-		assertTrue(session().isTextPresent("Whoops! You didn't type anything."));
+		waitForTextPresent("Whoops! You didn't type anything.");
 	}
 	
 	@Test(groups={"envProduction", "CI","verified"})
@@ -293,6 +277,7 @@ public class Top10Test extends BaseTest {
 		session().waitForPageToLoad(this.getTimeout());	
 		
 		String name = TOP10_LIST_NAME + (new Date()).toString(); //list name
+		waitForElement("list_name");
 		session().type("list_name", name);
 		session().type("//ul[@class='ItemsList ui-sortable']/li[2]/div[2]/input", TOP10_ARTICLE_1);
 		session().type("//ul[@class='ItemsList ui-sortable']/li[3]/div[2]/input", TOP10_ARTICLE_2);
@@ -308,8 +293,8 @@ public class Top10Test extends BaseTest {
 	    
 	    session().click("//form[@class='NewItemForm']//button[@class='AddButton']");
 	    assertTrue(session().isTextPresent("Anonymous users are not allowed to add items to lists."));
-	    
 	}
+
 	//Check code and verify,wait for Nandy to see why you have to be staff to delete top10 list
 	//@Test(groups={"envProduction", "CI"})
 	public void testDeleteTopList() throws Exception {
@@ -342,6 +327,7 @@ public class Top10Test extends BaseTest {
 	    }
 	}
 	
+	// BugId: 16720
 	//@Test(groups={"envProduction", "CI"}) 
 	public void testAddPhotoAndClear() throws Exception {
 		String name = TOP10_LIST_NAME + (new Date()).toString();
@@ -426,16 +412,5 @@ public class Top10Test extends BaseTest {
 		
 		clickAndWait("//form[@id='deleteconfirm']//td[@class='mw-submit']/input");
 		assertTrue(session().isTextPresent("has been deleted"));
-		
-		
-				
-		
-		
-		
-		
-		
-		
 	}
-	
-//working fine!
 }
