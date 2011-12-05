@@ -2092,13 +2092,12 @@ EOD;
 	 * @return string 
 	 */
 	protected function initGoogleIMAAdTag($cityShort='life') {
+		global $wgDBname, $wgTitle;
 		//@todo use logic in AdConfig.js to construct tag
 
 		if ($cityShort) {
-			$hubToken = '[HUB]';
-			$url = "http://ad.doubleclick.net/pfadx/wka.$hubToken/_$hubToken;sz=320x240";
-
-			return str_replace($hubToken, $cityShort, $url);
+			$url = "http://ad.doubleclick.net/pfadx/wka.{$cityShort}/_{$wgDBname};sz=320x240;artid={$wgTitle->getArticleId()}";
+			return $url;
 		}
 		
 		return '';
