@@ -8,7 +8,7 @@
 					echo "<a href='{$val['imageLink']}'>";
 				}?>
 				<?php
-					echo "<img class=wikiaPhotoGallery-slider data-src={$val['imageUrl']} src=../../skins/wikiamobile/images/loading_big.gif>";
+					echo "<img class='wikiaPhotoGallery-slider' data-src={$val['imageUrl']}>";
 				?>
 				<?php
 					if (!empty( $val['imageLink'] )){

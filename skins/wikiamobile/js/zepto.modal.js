@@ -87,10 +87,17 @@
 	};
 
 	$.changeImage = function(imageNumber, fullScreen) {
-		var image = WikiaMobile.getImages()[imageNumber];
+		var image = WikiaMobile.getImages()[imageNumber],
+		img = new Image();
 
-		fullScreen.css('background-image','url("' + image[0] + '")');
-		fullScreen.data('number', imageNumber);
+		img.src = image[0];
+		fullScreen.css('background-image','url()');
+		img.onload =  function() {
+			fullScreen.css('background-image','url("' + img.src + '")');
+			fullScreen.data('number', imageNumber);
+			$.hideLoader(fullScreen);
+		};
+		$.showLoader(fullScreen,{center: true});
 
 		this._showCaption(image[1]);
 	};
