@@ -116,19 +116,37 @@ a {
 	background-image: url("/skins/wikiamobile/images/close_chev.png");/* $wgCdnStylePath */
 }
 
-.loader {
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	width: 50px;
-	height: 50px;
-	margin: -25px 0 0 -25px;
-	-webkit-animation: rotate 1s infinite linear;
+.WikiaMobileLoader {
+	width:100%;
+	height: 100%;
+
+	&.center {
+		text-align: center;
+
+		&:before {
+			content: '';
+			display: inline-block;
+			height: 100%;
+			vertical-align: middle;
+			margin-right: -0.25em;
+		}
+
+		.WikiaMobileLoaderImg {
+			display: inline-block;
+			vertical-align: middle;
+		}
+	}
+
+	.WikiaMobileLoaderImg {
+		-webkit-animation: rotate 1s infinite linear;
+	}
 }
 
 @-webkit-keyframes rotate {
+	0% {
+		-webkit-transform: rotate(0deg);
+	}
 	100% {
 		-webkit-transform: rotate(360deg);
 	}
 }
-

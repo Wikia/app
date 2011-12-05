@@ -93,4 +93,27 @@
 
 	}
 
+	$.showLoader = function(element, options) {
+		options = options || null;
+
+		element.append('<div class=WikiaMobileLoader><img class=WikiaMobileLoaderImg src=../skins/wikiamobile/images/loader50x50.png></img></div>');
+
+		if(options) {
+			var loader = element.find('.WikiaMobileLoader'),
+			loaderImg = loader.find('.WikiaMobileLoaderImg');
+
+			if(options.center) {
+				loader.addClass('center');
+			}
+			if(options.size) {
+				loaderImg.css('width', options.size);
+			}
+		}
+
+	}
+
+	$.hideLoader = function(element) {
+		element.find('.WikiaMobileLoader').remove();
+	}
+
 })( Zepto );

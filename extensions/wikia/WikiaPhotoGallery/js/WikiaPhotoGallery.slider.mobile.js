@@ -9,6 +9,11 @@ var WikiaPhotoGallerySlider = {
 		initialSlider = $('#wikiaPhotoGallery-slider-' + sliderId + '-' + initialImageId),
 		image = initialSlider.find('a img');
 
+		image.one('load',function() {
+			$.hideLoader(slider);
+		});
+		$.showLoader(slider,{center:true});
+
 		//select nav
 		initialSlider.find('.nav').addClass('selected');
 
@@ -26,10 +31,10 @@ var WikiaPhotoGallerySlider = {
 
 	scroll: function(nav) {
 		//setup variables
-		var 	parentNav = nav.parent(),
-			image = parentNav.find('img'),
-			imageData = image.data('src'),
-			slider = parentNav.parents('.wikiaPhotoGallery-slider-body');
+		var parentNav = nav.parent(),
+		image = parentNav.find('img'),
+		imageData = image.data('src'),
+		slider = parentNav.parents('.wikiaPhotoGallery-slider-body');
 
 		//set 'selected' class
 		slider.find('.nav').removeClass('selected');
@@ -41,10 +46,13 @@ var WikiaPhotoGallerySlider = {
 
 		//show relevant img
 		slider.find('a img').hide();
-		image.show();
 		if( imageData && imageData != image.attr('src')) {
+			image.one('load',function() {
+				$.hideLoader(slider);
+			});
 			image.attr('src', imageData);
+			$.showLoader(slider,{center:true});
 		}
-
+		image.show();
 	}
 }
