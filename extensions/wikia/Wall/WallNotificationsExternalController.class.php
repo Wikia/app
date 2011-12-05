@@ -52,7 +52,7 @@ class WallNotificationsExternalController extends WikiaController {
 	private function getUpdateCountsInternal($wn) {
 		$app = F::app();
 		$all = $wn->getCounts( $this->wg->User->getId() );
-
+		
 		$sum = 0;
 		foreach($all as $k => $wiki) { 
 			$sum += $wiki['unread'];

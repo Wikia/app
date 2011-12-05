@@ -13,7 +13,6 @@ var WallNotifications = $.createClass(Object, {
 		setTimeout( this.proxy( this.updateCounts ), 300);
 		//setInterval( this.proxy( this.updateLoop ), 15000);
 		
-		
 		if($('.wall-notifications-monobook').length > 0) {
 			$('.wall-notifications-monobook').first()
 				.append('<span class="count">(?)</span>')
@@ -232,8 +231,6 @@ var WallNotifications = $.createClass(Object, {
 				var element = $(this);
 				self.wikisUrls[element.attr('data-wiki-id')] = element.attr('data-wiki-path');
 			});
-
-			$().log(this.wikisUrls);
 			
 			$('.notifications-wiki-header',subnav).click( this.proxy( this.wikiClick ) );
 		}
@@ -280,7 +277,6 @@ var WallNotifications = $.createClass(Object, {
 	},
 	
 	updateWikiFetch: function(wikiId) {
-		$().log(this.wikisUrls[wikiId]);
 		$.nirvana.sendRequest({
 			controller: 'WallNotificationsExternalController',
 			method: 'getUpdateWiki',
@@ -325,7 +321,6 @@ var WallNotifications = $.createClass(Object, {
 		$('.timeago',wikiLi).timeago();
 		
 		// hijack links for other wikis - open them in new window
-
 		if( wikiId != this.currentWikiId ) {
 			$('a', wikiEl).attr('target', '_blank');
 		}
