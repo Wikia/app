@@ -24,6 +24,10 @@ class WallController extends ArticleCommentsModule {
 			//'a' => $this->app->wf->Msg( 'wall-sorting-archived' )
 		);
 	}
+	
+	public function history() {
+		
+	}
 
 	public function index() {
 		F::build('JSMessages')->enqueuePackage('Wall', JSMessages::EXTERNAL); 

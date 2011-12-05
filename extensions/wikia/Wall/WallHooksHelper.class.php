@@ -33,6 +33,7 @@ class WallHooksHelper {
 		) {
 		//message wall index
 			$outputDone = true;
+			$action = $app->wg->request->getVal('action');
 			$app->wg->Out->addHTML($app->renderView('WallController', 'index', array( 'title' => $article->getTitle() ) ));
 		}
 		
@@ -218,7 +219,18 @@ class WallHooksHelper {
 	 * 
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	public function onBeforePageHistory(&$article) {
+	public function onBeforePageHistory(&$article, &$wgOut) {
+		
+		$title = $article->getTitle();
+		
+		if( !empty($title) && $title->getNamespace() === NS_USER_WALL 
+			&& !$title->isSubpage() 
+		) {
+			$app = F::App();
+			$app->wg->Out->addHTML($app->renderView('WallController', 'history', array( 'title' => $article->getTitle() ) ));
+			return false;
+		}
+		
 		$this->doSelfRedirect();
 		
 		return true;
@@ -428,7 +440,7 @@ class WallHooksHelper {
 	protected function doSelfRedirect() {
 		$app = F::App();
 		$title = $app->wg->Title;
-		
+	
 		if($app->wg->Request->getVal('action') == 'history' || $app->wg->Request->getVal('action') == 'historysubmit') {
 			return true;
 		}
