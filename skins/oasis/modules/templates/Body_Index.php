@@ -11,12 +11,13 @@
 <?= wfRenderModule('Ad', 'Index', array('slotname' => 'HOME_INVISIBLE_TOP')) ?>
 <?= wfRenderModule('GlobalHeader') ?>
 
-<section id="<?= !empty($wgOasisNavV2) ? 'WikiaAdvertPage' : 'WikiaPage' ?>" class="<?= !empty($wgOasisNavV2) ? 'WikiaAdvertPage' : 'WikiaPage' ?>">
+<section id="WikiaPage" class="WikiaPage<?= empty( $wgOasisNavV2 ) ? '' : ' V2' ?>">
 	<div id="WikiaPageBackground" class="WikiaPageBackground"></div>
 	<div class="WikiaPageContentWrapper">
 		<?= wfRenderModule('Notifications', 'Confirmation') ?>
 
-		<?
+		<div class="WikiaAdvertPage">
+		<?php
 		if ($isMainPage) {
 			echo '<div class="WikiaMainPageBanner">';
 		}
@@ -41,15 +42,7 @@
 			echo '</div>';
 		}
 		?>
-
-<? if($wgOasisNavV2): ?>
-	</div>
-</section>
-
-<section id="WikiaPage" class="WikiaPage<?= empty( $wgOasisNavV2 ) ? '' : ' V2' ?>">
-	<div id="WikiaPageBackground" class="WikiaPageBackground"></div>
-	<div class="WikiaPageContentWrapper">
-<? endif; ?>
+		</div>
 
 		<?php
 			if ( empty( $wgSuppressWikiHeader ) ) {
@@ -79,8 +72,6 @@
 
 		<article id="WikiaMainContent" class="WikiaMainContent">
 			<?php
-
-
 				if (!empty(F::app()->wg->WallBrickHeader)){
 					echo F::app()->renderView( 'WallController', 'brickHeader', array( "id" => F::app()->wg->WallBrickHeader) );
 				}
