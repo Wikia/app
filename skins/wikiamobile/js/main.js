@@ -127,14 +127,10 @@ var WikiaMobile = (function() {
 		handleTables();
 		getAllImages();
 
-		//I'm using delegate on document.body as it's been proved to be the fastest option
+		//Using delegate on document.body as it's been proved to be the fastest option
 		//$( document.body ).delegate( '#openToggle', 'click', function() {
 		//	$( '#navigation').toggleClass( 'open' );
 		//});
-
-		body.delegate( '#article-comments-counter-header', this._clickevent, function() {
-			$( '#article-comments').toggleClass( 'open' );
-		});
 
 		//$( document.body ).delegate( '#navigationMenu > li', 'click', function() {
 		//	if ( !( $( this ).hasClass( 'openMenu' ) ) ) {
@@ -148,9 +144,7 @@ var WikiaMobile = (function() {
 		//	}
 		//});
 
-		$( '#WikiaMainContent > h2, #article-comments-counter-header' ).append( '<span class=\"chevron\"></span>' );
-
-		body.delegate( '#WikiaMainContent > h2, #WikiaArticleCategories > h1', this._clickevent, function() {
+		body.delegate( '#WikiaMainContent > h2, #WikiaPage .collapsible-section', this._clickevent, function() {
 			$(this).toggleClass('open').next().toggleClass('open');
 		});
 

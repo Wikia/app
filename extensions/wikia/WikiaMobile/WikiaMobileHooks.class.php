@@ -27,4 +27,25 @@ class WikiaMobileHooks extends WikiaObject{
 		$limitReport = null;
 		return true;
 	}
+	
+	public function onMakeHeadline( $skin, $level, $attribs, $anchor, $text, $link, $legacyAnchor, $ret ){
+		//WikiaMobile only
+		if ( !$skin instanceof SkinWikiaMobile ) {
+			return true;
+		}
+
+		//remove bold tag from section headings
+		$text = str_replace( array( '<b>', '</b>' ), '', $text );
+
+		//$link contains the section edit link, add it to the next line to put it back
+		//ATM editing is not allowed in WikiaMobile
+		$ret = "<h{$level} id=\"{$anchor}\"{$attribs}{$text}</span>";
+
+		if ( $level == 2 ) {
+			$ret .= '<span class="chevron"></span>';
+		}
+		
+		$ret .= "</h{$level}>";
+		return true;
+	}
 }
