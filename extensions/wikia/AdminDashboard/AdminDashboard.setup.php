@@ -14,6 +14,8 @@ $app->registerClass('AdminDashboardModule', $dir . 'AdminDashboardModule.class.p
 $app->registerClass('AdminDashboardLogic', $dir . 'AdminDashboardLogic.class.php');
 $app->registerClass('QuickStatsController', $dir . 'QuickStatsController.class.php');
 
+$app->registerHook('BeforeToolbarMenu', 'AdminDashboardLogic', 'onBeforeToolbarMenu');
+
 // i18n mapping
 $wgExtensionMessagesFiles['AdminDashboard'] = $dir . 'AdminDashboard.i18n.php';
 $wgExtensionMessagesFiles['QuickStats'] = $dir . 'QuickStats.i18n.php';

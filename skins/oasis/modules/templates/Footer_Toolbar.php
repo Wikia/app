@@ -4,8 +4,3 @@
 	<a href="#"><?= wfMsg('oasis-toolbar-more') ?></a>
 	<ul class="tools-menu"></ul>
 </li>
-<?php 
-if ($showAdminDashboardLink) {
-	echo "<li>" . Wikia::specialPageLink('AdminDashboard', 'admindashboard-toolbar-link', array('data-tracking' => 'admindashboard/toolbar/admin') ) . "</li>";
-}
-?> 

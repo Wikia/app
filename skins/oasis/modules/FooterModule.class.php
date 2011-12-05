@@ -6,7 +6,6 @@ class FooterModule extends Module {
 	var $showToolbar;
 	var $showNotifications;
 	var $showLoadTime;
-	var $showAdminDashboardLink;
 
 	public function executeIndex() {
 		global $wgTitle, $wgContentNamespaces, $wgUser, $wgSuppressToolbar, $wgShowMyToolsOnly;
@@ -37,12 +36,7 @@ class FooterModule extends Module {
 	}
 
 
-	public function executeToolbar() {
-		global $wgEnableAdminDashboardExt;
-		if (!empty($wgEnableAdminDashboardExt) && F::app()->wg->User->isAllowed( 'admindashboard' )) {
-			$this->showAdminDashboardLink = true;
-		}
-				
+	public function executeToolbar() {		
 		$service = $this->getToolbarService();
 		$toolbar = $service->listToInstance($service->getVisibleList());
 		$this->toolbar = $service->instanceToRenderData($toolbar);
@@ -103,6 +97,7 @@ class FooterModule extends Module {
 
 	public function executeMenu( $params ) {
 		$this->items = (array)$params['items'];
+		wfRunHooks('BeforeToolbarMenu', array(&$this->items));
 	}
 
 }

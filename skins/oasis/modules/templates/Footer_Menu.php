@@ -24,6 +24,11 @@
 	<a href="<?= $item['href']; ?>" data-name="<?= $item['tracker-name']; ?>"><?= $item['caption']; ?></a>
 </li>
 <?php     break; ?>
+<?php case 'html': ?>
+<li>
+	<?= $item['html']; ?>
+</li>
+<?php     break; ?>
 <?php case 'customize': ?>
 <li>
 	<img height="16" width="16" class="gear-icon" src="<?= $wgBlankImgUrl; ?>">

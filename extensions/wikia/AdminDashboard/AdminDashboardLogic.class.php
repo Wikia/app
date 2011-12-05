@@ -100,4 +100,23 @@ class AdminDashboardLogic {
 		}
 		return false;
 	}
+	
+	/**
+	 *  @brief hook to add toolbar item for admin dashboard
+	 *  
+	 */
+	function onBeforeToolbarMenu(&$items) {
+		if (F::app()->wg->User->isAllowed( 'admindashboard' )) {		
+			$item = array(
+				'type' => 'html',
+				'html' => Wikia::specialPageLink('AdminDashboard', 'admindashboard-toolbar-link', array('data-tracking' => 'admindashboard/toolbar/admin') )
+			);
+			if(is_array($items)) {
+				$items[] = $item;
+			} else {
+				$items = array($item);
+			}
+		}
+		return true;
+	}
 }
