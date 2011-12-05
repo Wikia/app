@@ -1,7 +1,6 @@
 GlobalNotification = {
 	dom: false,
 	timed: false,
-	initialized: false,
 	enableShow: true,
 		// Used to avoid race condition that happens when we call show and hide in short intervals.
 		// Race condition is caused by the delay of loading css file.
@@ -9,9 +8,6 @@ GlobalNotification = {
 	init: function(callback) {		
 		if ( !jQuery.isFunction( callback ) ){
 			callback = function(){};
-		}
-		if( !GlobalNotification.initialized ) {
-			GlobalNotification.initialized = true;
 		}
 		callback();
 	},
