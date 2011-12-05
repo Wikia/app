@@ -180,9 +180,7 @@ var RelatedVideos = {
 	addVideoLoginWrapper: function( e ){
 		e.preventDefault();
 		RelatedVideos.track( 'module/addVideo/beforeLogin' );
-		GlobalNotification.init(
-			RelatedVideos.loginWrapper( RelatedVideos.addVideoModal, this )
-		);
+		RelatedVideos.loginWrapper( RelatedVideos.addVideoModal, this )
 	},
 
 	enableVideoSubmit: function(){
