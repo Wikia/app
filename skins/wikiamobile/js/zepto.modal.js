@@ -23,7 +23,6 @@
 		that._modalTopBar = $('#modalTopBar');
 		that._modalContent = $('#modalContent');
 		that._modalFooter = $('#modalFooter');
-		that._wikiaAdPlace = $('#WikiaAdPlace');
 		that._allToHide = this._modalTopBar.add(this._modalClose).add(this._modalFooter);
 		that._thePage = $('body').children().not('#modalWrapper,style,script');
 
@@ -32,7 +31,9 @@
 				if(pageYOffset == 0) window.scrollTo( 0, 1 );
 		}
 
-		$('#modalClose').bind(WikiaMobile._clickevent , function() {
+		$('#modalClose').bind(WikiaMobile._clickevent , function(event) {
+			event.stopPropagation();
+			event.preventDefault();
 			that.closeModal();
 		});
 
@@ -147,7 +148,6 @@
 		}
 
 		this._position = pageYOffset;
-		this._wikiaAdPlace.css('pointer-events','none');
 		this._thePage.hide();
 		this._modal.addClass('modalShown');
 		this._resetTimeout();
@@ -178,8 +178,7 @@
 
 	$.hideModal = function() {
 		if(this._modalCreated) {
-			var modal = this._modal,
-			wikiaAdPlace = this._wikiaAdPlace;
+			var modal = this._modal;
 
 			modal.removeClass('modalShown');
 			this._allToHide.removeClass('hidden');
@@ -187,9 +186,6 @@
 			clearTimeout(this._timer);
 			window.scrollTo(0, this._position);
 			this._position = 1;
-			setTimeout(function() {
-				wikiaAdPlace.css('pointer-events','auto');
-			},100);
 		}
 	};
 
