@@ -136,15 +136,28 @@ class WallNotifications {
 		return $output;
 			
 	}
+
 	
 	private function getWgServer($id) {
 		$url = WikiFactory::getVarValueByName("wgServer", $id );
 		if (!empty($this->app->wg->DevelEnvironment)) {
 			$url = str_replace('wikia.com', $this->app->wg->DevelEnvironmentName.'.wikia-dev.com',$url);
 		}
+		
+		//HACK for preview
+		//TODO: create helper general function for
+		$hosts = array('verify', 'preview', 'sandbox-s1'); 
+		foreach($hosts as $host) {
+			$prefix = 'http://'.$host.'.';
+			if(strpos($this->app->wg->Server, $prefix)  !== false ) {
+				$url = str_replace('http://', $prefix, $url );
+			}			
+		}
+		
 		return $url;
 	}
 	
+
 	private function addWikiToList($userId, $wikiId, $wikiSitename) {
 		$key = $this->getKey($userId, 'LIST');
 		$val = $this->app->getGlobal('wgMemc')->get($key);
