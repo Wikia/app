@@ -1,77 +1,148 @@
-@import "../../../../skins/wikiamobile/css/mixins/section-title.scss";
 @import "../../../../skins/wikiamobile/css/variables.scss";
 
+//mixins
+@import "../../../../skins/wikiamobile/css/mixins/section-title.scss";
+@import "../../../../skins/wikiamobile/css/mixins/box-shadow.scss";
+
+//vars
+$comment-left-margin: $page-padding + 50px;
+
 #WikiaArticleComments{
-	padding: $page-padding;
+	padding: 0 $page-padding;
 	
-	#article-comments-counter-header {
+	#commentsHeader{
 		@include section-title;
 		font-size: medium;
 		text-transform:uppercase;
 	}
-	
-	#article-comments-ul{
-		margin: 0;
-		padding: 0;
-		list-type: none;
-		
-		.SpeechBubble{
-			border-top: 1px solid $border-color;
-			padding: $page-padding 0;
+
+	#commentsBody{
+		display: none;
+
+		&.open{
+			display:block;
+		}
+
+		#article-comments-ul{
+			margin: 0;
+			padding: 0;
+			list-type: none;
 			
-			&:fist-of-type{
-				border-top: none;
+			&>.SpeechBubble:first-child{
+				border: none;
 			}
 			
-			.speech-bubble-message{
-				margin: 0;
-				
-				.article-comm-text{
-					p{
-						margin: 0;
-						padding: 0;
+			.sub-comments{
+				&>.SpeechBubble:first-child{
+					position: relative;
+					
+					&::before {
+						border-color: transparent transparent $border-color transparent;
+						border-style: solid;
+						border-width: 11px;
+						content: " ";
+						height: 0px;
+						position: absolute;
+						top: -22px;
+						left: 40px;
+						width: 0px;
+					}
+	
+					&::after {
+						border-color: transparent transparent $page-background-color transparent;
+						border-style: solid;
+						border-width: 10px;
+						content: " ";
+						height: 0px;
+						position: absolute;
+						top: -19px;
+						left: 41px;
+						width: 0px;
+					}
+				}
+			}
+			
+			.SpeechBubble{
+				border-top: 1px solid $border-color;
+				padding: $page-padding 0;
+
+				&:fist-of-type{
+					border-top: none;
+				}
+
+				.speech-bubble-message{
+					margin: 0 0 0 $comment-left-margin;
+
+					.comment-by{
+						font-weight: bold;
+					}
+
+					.comment-text{
+						p:first-child{
+							margin: 0;
+							padding: 0;
+						}
 					}
 					
-					.edited-by{
+					.comment-date{
 						color: $page-text-alternate-color;
 						font-size: small;
-						
+
 						a{
 							color: $page-text-alternate-color;
 						}
 					}
 				}
+
+				.speech-bubble-avatar{
+					float: left;
+					margin-right: $page-padding;
+				}
+
+				.buttons{
+					display: none;
+				}
 			}
-			
-			.speech-bubble-avatar{
-				float: left;
-				margin-right: $page-padding;
-			}
-			
-			.buttons{
-				display: none;
+
+			.sub-comments{
+				margin: 0 0 0 $comment-left-margin;
+				padding: 0;
 			}
 		}
-	}
-	
-	.load-more {
-		background-color: #E3E3E3;
-		height: 50px;
-		line-height: 50px;
-		text-align: center;
-		vertical-align: middle;
-		color: $link-color;
-		margin-top: $page-padding;
-		font-size: medium;
-		font-weight: bold;
-		border-radius: 10px;
-	}
-	
-	#article-comments-ul, .load-more{
-		display: none;
-		
-		&.open{
-			display:block;
+
+		#commentsLoadMore, #commentsLoadPrev{
+			border-top: 1px solid $border-color;
+			color: $link-color;
+			font-size: medium;
+			height: 50px;
+			line-height: 50px;
+			left: -$page-padding;
+			position: relative;
+			text-align: center;
+			vertical-align: middle;
+			width: 110%;
+
+			&.active{
+				@include box-shadow(inset 0 30px 20px -20px rgba(0,0,0,.4));
+				background-color: $border-color;
+				color: inherit;
+				padding: $page-padding 0;
+				
+				&>.label{
+					display:none;
+				}
+			}
+		}
+
+		#commentsLoadMore{
+			&.active{
+				margin-bottom: $page-padding;
+			}
+		}
+
+		#commentsLoadPrev{
+			border-bottom: 1px solid $border-color;
+			display: none;
 		}
 	}
 }

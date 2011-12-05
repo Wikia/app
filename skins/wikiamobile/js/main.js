@@ -241,12 +241,17 @@ var WikiaMobile = (function() {
 				caption: "Slideshow image #1"
 			});
 		});
-	}
+	},
+	
+	getClickEvent = function(){
+		return WikiaMobile._clickevent;
+	};
 
 	return {
 		init: init,
 		getImages: getImages,
-		getDeviceResolution: getDeviceResolution
+		getDeviceResolution: getDeviceResolution,
+		getClickEvent: getClickEvent
 	}
 })();
 
