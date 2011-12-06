@@ -1,18 +1,22 @@
 <?php
 class GlobalTitleTest extends PHPUnit_Framework_TestCase {
 	private $wgDevelEnv;
+	private $wgDevelEnvName;
 	
 	function setUp() {
 		parent::setUp();
 		
-		global $wgDevelEnvironment;
+		global $wgDevelEnvironment,$wgDevelEnvironmentName;
 		$this->wgDevelEnv = $wgDevelEnvironment;
+		$this->wgDevelEnvName = $wgDevelEnvironmentName;
 		$wgDevelEnvironment = false;
+		$wgDevelEnvironmentName = 'qa-testing-class-' . get_class($this);
 	}
 	
 	function tearDown() {
-		global $wgDevelEnvironment;
+		global $wgDevelEnvironment,$wgDevelEnvironmentName;
 		$wgDevelEnvironment = $this->wgDevelEnv;
+		$wgDevelEnvironmentName = $this->wgDevelEnvName;
 		
 		parent::tearDown();
 	}
