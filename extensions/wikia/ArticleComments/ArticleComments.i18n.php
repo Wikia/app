@@ -38,6 +38,7 @@ $messages['en'] = array(
 	'wikiamobile-article-comments-header' => 'Comments ($1)',
 	'wikiamobile-article-comments-more' => 'Load more',
 	'wikiamobile-article-comments-prev' => 'Load previous',
+	'wikiamobile-article-comments-none' => 'No comments',
 	
 	'enotif_subject_article_comment' => '$PAGEEDITOR has commented on "$PAGETITLE" on {{SITENAME}}',
 	'enotif_body_article_comment' => 'Dear $WATCHINGUSERNAME,
