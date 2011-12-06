@@ -50,7 +50,7 @@ class WikiaMobileService extends WikiaService {
 		$this->wf->RunHooks( 'SkinAfterBottomScripts', array ( $this->wg->User->getSkin(), &$bottomscripts ) );
 
 		//force skin main CSS file to be the first so it will be always overridden by other files
-		$cssFiles .= "<link rel=\"stylesheet\" href=\"" . AssetsManager::getInstance()->getSassCommonURL( 'skins/wikiamobile/css/main.scss' ) . "\"/>";
+		$cssFiles .= "<link rel=\"stylesheet\" href=\"" . AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/WikiaMobile/css/WikiaMobile.scss' ) . "\"/>";
 		$cssFiles .= $tmpOut->buildCssLinks();
 
 		$srcs = AssetsManager::getInstance()->getGroupCommonURL('wikiamobile_js_head');
