@@ -31,7 +31,7 @@ class ApiService extends Service {
 		wfProfileIn(__METHOD__);
 		$hostName = self::getHostByDbName($dbname);
 
-		// format API URL
+		// request JSON format of API response
 		$params['format'] = 'json';
 
 		$parts = array();
@@ -44,7 +44,14 @@ class ApiService extends Service {
 
 		// send request and parse response
 		$resp = Http::get($url);
-		$res = json_decode($resp, true /* $assoc */);
+
+		if ($resp === false) {
+			wfDebug(__METHOD__ . ": failed!\n");
+			$res = false;
+		}
+		else {
+			$res = json_decode($resp, true /* $assoc */);
+		}
 
 		wfProfileOut(__METHOD__);
 		return $res;
@@ -62,7 +69,8 @@ class ApiService extends Service {
 			$hostName = "http://{$dbname}.{$wgDevelEnvironmentName}.wikia-dev.com";
 		}
 		else {
-			$hostName = WikiFactory::DBtoDomain($dbname);
+			$cityId = WikiFactory::DBtoID($dbname);
+			$hostName = WikiFactory::getVarValueByName('wgServer', $cityId);
 		}
 
 		return rtrim($hostName, '/');

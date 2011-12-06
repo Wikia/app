@@ -203,6 +203,10 @@ class BlogsInHubsService extends WikiaService {
 			$parsedMessage = $this->parseHotNewsMessage($hubName);
 			$blogPostData = $this->getBlogPostData($parsedMessage['dbname'], $parsedMessage['title'], true /* $getSnippet */);
 
+			if (empty($blogPostData)) {
+				wfDebug(__METHOD__ . ": no blog post data!\n");
+			}
+
 			$this->wg->Memc->set($this->getHotNewsMemcKey($hubName), $blogPostData, self::HOT_NEWS_CACHE_TTL);
 			wfDebug(__METHOD__ . ": {$hubName} hub cache set\n");
 
