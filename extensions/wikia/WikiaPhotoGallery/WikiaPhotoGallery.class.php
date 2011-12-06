@@ -998,7 +998,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				'magnifyClipSrc' => "{$wgStylePath}/common/images/magnify-clip.png",
 				'counterValue' => wfMsg('wikiaPhotoGallery-slideshow-view-number', '1', $counter)
 			));
-			$slideshowHtml = $template->render('renderMobileSlideshow');
+			$slideshowHtml = $template->render('renderWikiaMobileSlideshow');
 
 		} else {
 
@@ -1208,7 +1208,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		}
 
 		$slideshowHtml .= F::build('JSSnippets')->addToStack(
-			array( '/extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slideshow.placeholder.scss' ),
+			array( '/extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slideshow.wikiamobile.scss' ),
 			array(),
 			'',
 			array('id' => $id, 'extension' => 'slideshow'),
@@ -1305,7 +1305,7 @@ class WikiaPhotoGallery extends ImageGallery {
 			));
 
 			if( $skin->skinname == "wikiamobile") {
-				$html = $template->render('renderMobileSlider');
+				$html = $template->render('renderWikiaMobileSlider');
 			} else {
 				$html = $template->render('renderSlider');
 			}
@@ -1323,8 +1323,8 @@ class WikiaPhotoGallery extends ImageGallery {
 
 			$html .= F::build('JSSnippets')->addToStack(
 				array(
-					'/extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slidertag.mobile.scss',
-					'/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slider.mobile.js'
+					'/extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slidertag.wikiamobile.scss',
+					'/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slider.wikiamobile.js'
 				),
 				array(),
 				'WikiaPhotoGallerySlider.init',

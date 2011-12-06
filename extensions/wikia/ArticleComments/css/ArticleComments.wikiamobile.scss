@@ -1,15 +1,14 @@
-@import "../../../../skins/wikiamobile/css/variables.scss";
-
+@import "../../WikiaMobile/css/variables.scss";
 //mixins
-@import "../../../../skins/wikiamobile/css/mixins/section-title.scss";
-@import "../../../../skins/wikiamobile/css/mixins/box-shadow.scss";
+@import "../../WikiaMobile/css/mixins/section-title.scss";
+@import "../../WikiaMobile/css/mixins/box-shadow.scss";
 
 //vars
 $comment-left-margin: $page-padding + 50px;
 
 #WikiaArticleComments{
 	padding: 0 $page-padding;
-	
+
 	#commentsHeader{
 		@include section-title;
 		font-size: medium;
@@ -27,15 +26,15 @@ $comment-left-margin: $page-padding + 50px;
 			margin: 0;
 			padding: 0;
 			list-type: none;
-			
+
 			&>.SpeechBubble:first-child{
 				border: none;
 			}
-			
+
 			.sub-comments{
 				&>.SpeechBubble:first-child{
 					position: relative;
-					
+
 					&::before {
 						border-color: transparent transparent $border-color transparent;
 						border-style: solid;
@@ -47,7 +46,7 @@ $comment-left-margin: $page-padding + 50px;
 						left: 40px;
 						width: 0px;
 					}
-	
+
 					&::after {
 						border-color: transparent transparent $page-background-color transparent;
 						border-style: solid;
@@ -61,7 +60,7 @@ $comment-left-margin: $page-padding + 50px;
 					}
 				}
 			}
-			
+
 			.SpeechBubble{
 				border-top: 1px solid $border-color;
 				padding: $page-padding 0;
@@ -83,7 +82,7 @@ $comment-left-margin: $page-padding + 50px;
 							padding: 0;
 						}
 					}
-					
+
 					.comment-date{
 						color: $page-text-alternate-color;
 						font-size: small;
@@ -127,7 +126,7 @@ $comment-left-margin: $page-padding + 50px;
 				background-color: $border-color;
 				color: inherit;
 				padding: $page-padding 0;
-				
+
 				&>.label{
 					display:none;
 				}
