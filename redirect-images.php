@@ -4,7 +4,7 @@
  * eloy@wikia.com
  */
 
-$HeadURL = split('/', '$HeadURL$');
+$HeadURL = explode('/', '$HeadURL$');
 $wgReleaseNumber = ($HeadURL[4] === "trunk" ) ? "trunk" : $HeadURL[5]; // we generally use wgCacheBuster now instead.  can use that here instead of wgReleaseNumber if desired
 
 $wgStylePath      = "http://images.wikia.com/common/__cb{$wgReleaseNumber}/skins";
