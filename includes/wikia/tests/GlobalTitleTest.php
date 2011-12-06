@@ -36,33 +36,32 @@ class GlobalTitleTest extends PHPUnit_Framework_TestCase {
 		$title = GlobalTitle::newFromText( "Test_Ze_Spacjami", NS_TALK, 177 );
 		$this->assertTrue( $title->getText() === "Test Ze Spacjami", "Underscores, spaces expected" );
 	}
-
-	function testUrls() {
+	
+	function testUrlsMainNS() {
 		$title = GlobalTitle::newFromText( "Timeline", NS_MAIN, 113 ); # memory-alpha
 		$url = "http://memory-alpha.org/wiki/Timeline";
 		$this->assertTrue( $title->getFullURL() === $url, sprintf("%s = %s, NOT MATCH", $title->getFullURL(), $url ) );
-
+	}
+	
+	function testUrlsMainNSonWoW() {
 		$title = GlobalTitle::newFromText( "Main", 116, 490); # wowwiki
 		$url = "http://www.wowwiki.com/Portal:Main";
 		$this->assertTrue( $title->getFullURL() === $url, sprintf("%s = %s, NOT MATCH", $title->getFullURL(), $url ) );
-
-		/**
-		 * spaces
-		 */
+	}
+	
+	function testUrlsSpacebars() {
 		$title = GlobalTitle::newFromText( "Test Ze Spacjami", NS_TALK, 177 );
 		$url = "http://community.wikia.com/wiki/Talk:Test_Ze_Spacjami";
 		$this->assertTrue( $title->getFullURL() === $url, sprintf("%s = %s, NOT MATCH", $title->getFullURL(), $url ) );
-
-		/**
-		 * Polish wikia
-		 */
+	}
+	
+	function testUrlsPolishWiki() {
 		$title = GlobalTitle::newFromText( "WikiFactory", NS_SPECIAL, 1686 ); # pl.wikia.com
 		$url = "http://pl.wikia.com/wiki/Special:WikiFactory";
 		$this->assertTrue( $title->getFullURL() === $url, sprintf("%s = %s, NOT MATCH", $title->getFullURL(), $url ) );
 
 		$url = "http://pl.wikia.com/wiki/Special:WikiFactory?diff=0&oldid=500";
 		$this->assertTrue( $title->getFullURL( wfArrayToCGI(array( "diff" => 0, "oldid" => 500 ) ) ) === $url, sprintf("%s = %s, NOT MATCH", $title->getFullURL(), $url ) );
-		;
 
 		$title = GlobalTitle::newFromText( "Strona główna", false, 1686 ); # pl.wikia.com
 		$url = "http://pl.wikia.com/wiki/Strona_g%C5%82%C3%B3wna?diff=0&oldid=500";
