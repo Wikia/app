@@ -94,7 +94,7 @@
 	$.showLoader = function(element, options) {
 		options = options || null;
 
-		element.append('<div class=WikiaMobileLoader><img class=WikiaMobileLoaderImg src=../skins/wikiamobile/images/loader50x50.png></img></div>');
+		element.append('<div class=WikiaMobileLoader><img class=WikiaMobileLoaderImg src=../extensions/wikia/WikiaMobile/images/loader50x50.png></img></div>');
 
 		if(options) {
 			var loader = element.find('.WikiaMobileLoader'),

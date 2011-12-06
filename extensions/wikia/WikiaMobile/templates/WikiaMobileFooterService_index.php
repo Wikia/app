@@ -1,6 +1,6 @@
 <footer id="wikiaFooter">
 	<a href="http://wikia.com">
-		<img id="wikiaLogo" src="<?= $wg->StylePath ;?>/wikiamobile/images/wordmark.png" alt="Wikia.com">
+		<img id="wikiaLogo" src="<?= $wg->ExtensionsPath ;?>/wikia/WikiaMobile/images/wordmark.png" alt="Wikia.com">
 	</a>
 	<? if( !empty( $links ) ) :?>
 		<ul>
