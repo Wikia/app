@@ -190,7 +190,7 @@ var WikiaMobile = WikiaMobile || (function() {
 		getImages: getImages,
 		getDeviceResolution: getDeviceResolution,
 		getClickEvent: getClickEvent,
-		getTouchEvent: getTouchEvent
+		getTouchEvent: getTouchEvent,
 		track: track
 	}
 })();
