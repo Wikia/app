@@ -53,6 +53,8 @@ $app->registerHook('PageHeaderIndexAfterActionButtonPrepared', 'WallHooksHelper'
 $app->registerHook('BlockIpCompleteWatch', 'WallHooksHelper', 'onBlockIpCompleteWatch');
 $app->registerHook('UserIsBlockedFrom', 'WallHooksHelper', 'onUserIsBlockedFrom');
 
+$app->registerHook('BeforeToolbarMenu', 'WallHooksHelper', 'onBeforeToolbarMenu');
+
 $app->registerHook('AllowNotifyOnPageChange', 'WallHooksHelper', 'onAllowNotifyOnPageChange');
 $app->registerHook('GetPreferences', 'WallHooksHelper', 'onGetPreferences');
 
