@@ -921,7 +921,7 @@ Text should be placed on this page if you wish to explain usage, style and polic
 'hub-Food_and_Drink' => 'Food and Drink',
 
 # Mobile skin (wikiaphone)
-'mobile-full-site' => 'View full site',
+'mobile-full-site' => 'Full site',
 'oasis-mobile-site' => 'Mobile site',
 'mobile-show' => 'Show',
 'mobile-hide' => 'Hide',

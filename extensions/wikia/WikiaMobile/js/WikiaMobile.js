@@ -1,12 +1,13 @@
 var WikiaMobile = WikiaMobile || (function() {
 	/** @private **/
-	
+
 	var allImages = [],
 	deviceWidth = ($.os.ios) ? 268 : 320,
 	deviceHeight = ($.os.ios) ? 416 : 533,
 	realWidth = (window.orientation == 0 || window.orientation == 180) ? 320 : 480,
 	//TODO: finalize the following line and update all references to it (also in extensions)
-	clickEvent = ('ontouchstart' in window) ? 'tap' : 'click';
+	clickEvent = ('ontouchstart' in window) ? 'tap' : 'click',
+	touchEvent = ('ontouchstart' in window) ? 'touchstart' : 'click';
 
 	function getImages(){
 		return allImages;
@@ -31,7 +32,7 @@ var WikiaMobile = WikiaMobile || (function() {
 	function processImages() {
 		var number = 0,
 		image;
-		
+
 		$('.infobox .image').each(function(){
 			allImages.push($(this).data('number', number++).attr('href'));
 		});
@@ -76,6 +77,10 @@ var WikiaMobile = WikiaMobile || (function() {
 		return clickEvent;
 	}
 
+	function getTouchEvent(){
+		return touchEvent;
+	}
+
 	function track(ev){
 		WikiaTracker.track('/1_mobile/' + ((ev instanceof Array) ? ev.join('/') : ev), 'main.sampled');
 	}
@@ -100,7 +105,7 @@ var WikiaMobile = WikiaMobile || (function() {
 		body.delegate( '#WikiaMainContent > h2, #WikiaPage .collapsible-section', clickEvent, function(){
 			var self = $(this);
 
-			track(['section', self.hasClass('open') ? 'close' : 'open']);	
+			track(['section', self.hasClass('open') ? 'close' : 'open']);
 			self.toggleClass('open').next().toggleClass('open');
 		});
 
@@ -118,7 +123,7 @@ var WikiaMobile = WikiaMobile || (function() {
 
 		$('.infobox img').bind(clickEvent, function(event) {
 			event.preventDefault();
-			
+
 			var thumb = $(this),
 				image = thumb.parents('.image');
 			imgModal(image.data('number'), image.attr('href'));
@@ -126,7 +131,7 @@ var WikiaMobile = WikiaMobile || (function() {
 
 		$('figure').bind(clickEvent, function(event) {
 			event.preventDefault();
-			
+
 			var thumb = $(this),
 				image = thumb.children('.image').first();
 			imgModal(image.data('number'), image.attr('href'), thumb.children('.thumbcaption').html());
@@ -134,14 +139,14 @@ var WikiaMobile = WikiaMobile || (function() {
 
 		$('.wikia-slideshow').bind(clickEvent, function(event){
 			event.preventDefault();
-			
+
 			var slideshow = $(this);
 			imgModal(slideshow.data('number'), slideshow.find('img').attr('src'), "Slideshow image #1");
 		});
 
 		$('#searchToggle').bind(clickEvent, function(event){
 			var self = $(this);
-			
+
 			if(self.hasClass('open')){
 				track(['search', 'toggle', 'close']);
 				navigationWordMark.show();
@@ -165,7 +170,7 @@ var WikiaMobile = WikiaMobile || (function() {
 
 		$('.tooBigTable').bind(clickEvent, function(event) {
 			event.preventDefault();
-			
+
 			$.openModal({
 				addClass: 'wideTable',
 				html: this.outerHTML
@@ -174,7 +179,7 @@ var WikiaMobile = WikiaMobile || (function() {
 
 		$('#fullSiteSwitch').bind('click', function(event){
 			event.preventDefault();
-			
+
 			track(['link', 'fullsite']);
 			Wikia.CookieCutter.set('mobilefullsite', 'true');
 			location.reload();
@@ -185,6 +190,7 @@ var WikiaMobile = WikiaMobile || (function() {
 		getImages: getImages,
 		getDeviceResolution: getDeviceResolution,
 		getClickEvent: getClickEvent,
+		getTouchEvent: getTouchEvent
 		track: track
 	}
 })();
