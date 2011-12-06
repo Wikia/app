@@ -64,41 +64,6 @@ var WikiaMobile = (function() {
 		return [deviceWidth, deviceHeight];
 	},
 
-	wrapArticles = function() {
-		var wikiaMainContent = $( '#WikiaMainContent' ),
-		content = wikiaMainContent.contents(),
-		mainContent = '',
-		firstH2 = true,
-		video = 1;
-
-		//Im using here plain javascript as Zepto.js does not provide me with real contents method
-		//I end up creating simple contents method that returns JS Object instead of Zepto ones
-		for( var i = 0, l = content.length; i < l; i++ ) {
-			var element = content[i],
-			open = false;
-			if (element.nodeName == 'H2') {
-				if ( !firstH2 ) {
-					open = false;
-					mainContent += '</section>';
-				}
-				mainContent += element.outerHTML + '<section class="articleSection">';
-				firstH2 = false;
-				open = true;
-			} else if (element.nodeName == 'OBJECT') {
-				mainContent += '<a href="'+ element.data +'">Video #'+ video++ +'</a>';
-			} else if(element.nodeName == "NAV") {
-				mainContent += '</section>' + element.outerHTML;
-				open = false;
-			}else if(element.nodeName != '#comment'){
-				mainContent += (!element.outerHTML)?element.textContent:element.outerHTML;
-			}
-		};
-
-		if(!open) mainContent += '</section>';
-		wikiaMainContent.html(mainContent);
-
-	},
-
 	imgModal = function(number,href,caption) {
 		$.openModal({
 			html: '<div class="changeImageButton" id="previousImage"><div class="changeImageChevron"></div></div><div class="fullScreenImage" data-number='+
@@ -137,7 +102,6 @@ var WikiaMobile = (function() {
 			deviceHeight = screen.width;
 		}
 
-		wrapArticles();
 		hideURLBar();
 		handleTables();
 		getAllImages();
