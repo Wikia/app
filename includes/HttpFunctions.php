@@ -37,13 +37,11 @@ class Http {
 		if ( $status->isOK() ) {
 			return $req->getContent();
 		} else {
-			/* Wikia change - beg (Sean) */
-			//$errMsg = "Error getting page with Http class.\n";
-			//$errMsg .= "Requested URL was: " . $req->getFinalUrl() . "\n";
-			//$errMsg .= "Errors were: \n";
-			//$errMsg .= print_r($req->status->errors, true);
-			//trigger_error($errMsg, E_USER_WARNING);
-			/* Wikia change - end (Sean) */
+			/* Wikia change - begin (Sean, macbre) */
+			$errMsg = "Requested URL was: " . $req->getFinalUrl();
+			$errMsg .= " (err: " . json_encode($req->status->errors) . ')';
+			wfDebug(__METHOD__ . ": {$errMsg}\n");
+			/* Wikia change - end (Sean, macbre) */
 			return false;
 		}
 	}
