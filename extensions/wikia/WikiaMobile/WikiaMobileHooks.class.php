@@ -14,7 +14,7 @@ class WikiaMobileHooks extends WikiaObject{
 			$text = $parserOutput->getText();
 
 			//remove inline styling
-			$text = preg_replace('/style=(\'|")[^"\']*(\'|")/im', '', $text);
+			$text = preg_replace('/(style|color|bgcolor|align|border)=(\'|")[^"\']*(\'|")/im', '', $text);
 
 			//remove image sizes
 			//$text = preg_replace('/(width|height)=(\'|")[^"\']*(\'|")/im', '', $text);
