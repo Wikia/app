@@ -1,8 +1,26 @@
-/* alternate table styling */
-/* NOTE: main table styling is in _article.scss */
+table.wikitable {
+	margin: 1em 1em 1em 0;
+	border: none;
+	th, td {
+		padding: 5px 12px 4px 5px;
+		border-width: 0px 0px 1px 0px;
+		border-bottom: 1px $color-page-border solid;
+	}
+	th {
+		background-color: mix( $color-page, $color-page-border, 50%);
+		text-align: left;
+		font-weight: bold;
+	}
+	td {
+		background-color: $color-page;
+		font-weight: normal;
+	}
+	caption {
+		font-weight: bold;
+	}
+}
 
-.WikiaDataTable {
-	@include linear-gradient($color-module-highlight, top, $color-module-highlight, 40%, $color-module-shadow, 100%);
+table.WikiaDataTable {
 	border: 1px solid $color-page-border;
 	border-collapse: collapse;
 	text-align: right;
