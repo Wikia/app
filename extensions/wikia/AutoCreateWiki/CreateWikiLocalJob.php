@@ -492,16 +492,17 @@ class CreateWikiLocalJob extends Job {
                  * revisions created during the starter import - (timestamp not
                  * greater than the timestamp of the latest starter revision.
                  */
-                $sConds = array();
+                $sCondsRev = array();
+		$sCondsImg = array();
 
                 /**
-                 * determine the timestamp of the latest starter revision
+                 * determine the timestamp of the latest starter revision and image
                  */
                 if ( !empty( $this->mParams->sDbStarter ) ) {
                     $oStarterDb = F::app()->wf->getDb( DB_SLAVE, array(), $this->mParams->sDbStarter );
                     
                     if ( is_object( $oStarterDb ) ) {
-                        $oLatestChange = $oStarterDb->selectRow(
+                        $oLatestRevision = $oStarterDb->selectRow(
                             array( 'revision' ),
                             array( 'max(rev_timestamp) AS rev_timestamp' ),
                             array(),
@@ -509,35 +510,64 @@ class CreateWikiLocalJob extends Job {
                             array()
                         );
 
-                        if ( is_object( $oLatestChange ) ) {
-                            $sConds = array( 'rev_timestamp <= ' . $dbw->addQuotes( $oLatestChange->rev_timestamp ) );
+                        if ( is_object( $oLatestRevision ) ) {
+                            $sCondsRev = array( 'rev_timestamp <= ' . $dbw->addQuotes( $oLatestRevision->rev_timestamp ) );
                         }
-                        
+
+			$oLatestImage = $oStarterDb->selectRow(
+				array( 'image' ),
+				array( 'max(img_timestamp) AS img_timestamp' ),
+				array(),
+				__METHOD__,
+				array()
+			);
+
+			if (is_object( $oLatestImage ) ) {
+				$sCondsImg = array( 'img_timestamp <= ' . $dbw->addQuotes( $oLatestImage->img_timestamp ) );
+			}
+
                         $oStarterDb->close();
                     }
                 }
                 
-                Wikia::log( __METHOD__, 'info', "about to change rev_user and rev_user_text in revisions older than {$sConds}" );
+                Wikia::log( __METHOD__, 'info', "about to change rev_user, rev_user_text and rev_timestamp in revisions older than {$sCondsRev}" );
+		Wikia::log( __METHOD__, 'info', "about to change img_user, img_user_text and img_timestamp in images older than {$sCondsImg}" );
 
 		/**
 		 * check if we are connected to local db
 		 *
 		 */
 		$contributor = User::newFromName(self::DEFAULT_USER);
-
+		$contributorData = array(
+			'id'   => $contributor->getId(),
+			'name' => $contributor->getName()
+		);
 		
 		$dbw->update(
 			"revision",
 			array(
-				"rev_user"      => $contributor->getId(),
-				"rev_user_text" => $contributor->getName(),
+				"rev_user"      => $contributorData['id'],
+				"rev_user_text" => $contributorData['name'],
                                 'rev_timestamp = date_format(now(), "%Y%m%d%H%i%S")'
+			),
+			$sCondsRev,
+			__METHOD__
+		);
+		$rows = $dbw->affectedRows();
+		Wikia::log( __METHOD__, "info", "change rev_user and rev_user_text in revisions: {$rows} rows" );
+
+		$dbw->update(
+			"image",
+			array(
+				'img_user'      => $contributorData['id'],
+				'img_user_text' => $contributorData['name'],
+                                'img_timestamp = date_format(now(), "%Y%m%d%H%i%S")'
 			),
 			$sConds,
 			__METHOD__
 		);
 		$rows = $dbw->affectedRows();
-		Wikia::log( __METHOD__, "info", "change rev_user and rev_user_text in revisions: {$rows} rows" );
+		Wikia::log( __METHOD__, "info", "change img_user, img_user_text and img_timestamp in image: {$rows} rows" );
 
 		wfProfileOut( __METHOD__ );
 	}
