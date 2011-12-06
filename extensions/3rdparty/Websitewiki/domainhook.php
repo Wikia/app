@@ -22,7 +22,7 @@ function fnDomainHook( &$article, &$text ) {
 	if( !$wgTitle->exists() ||
 		$wgTitle->getNamespace() != NS_MAIN ||
 		$wgTitle->isRedirect() ||
-		!ereg($exDomainList, $wgTitle->getText() )
+		!preg_match($exDomainList, $wgTitle->getText() )
 	) {
 		return true;
 	}
@@ -176,7 +176,7 @@ function wsinfo( $parser, $thetext ) {
   {
     $wikitext = $rev->getText();
     $regs = array();
-    if(ereg('{{PLZ\|(D|A|CH)-([0-9]{4,5})}}', $wikitext, $regs) &&
+    if(preg_match('{{PLZ\|(D|A|CH)-([0-9]{4,5})}}', $wikitext, $regs) &&
       (($regs[1] == 'D' && strlen($regs[2]) == 5)  || ($regs[1] != 'D' && strlen($regs[2]) == 4)))
     {
       $country = $regs[1];
