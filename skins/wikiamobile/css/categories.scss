@@ -5,8 +5,10 @@
 	padding: 0 $page-padding;
 
 	h1 {
-		margin: $section-title-margin;
 		@include section-title;
+		margin: $section-title-margin;
+		text-transform: uppercase;
+		font-size: medium;
 	}
 
 	#catlinks {
