@@ -30,10 +30,12 @@ var WikiaMobile = (function() {
 		var number = 0,
 		image = [];
 
-		if(image[0] = $('.infobox .image').data('number', number).attr('href')) {
+		image[0] = $('.infobox .image').data('number', number).attr('href')
+
+		if(image[0]) {
 			allImages.push(image);
 			number++;
-		}
+		};
 
 		$('figure').each(function() {
 			var self = $(this);
@@ -86,21 +88,10 @@ var WikiaMobile = (function() {
 		searchInput = $('#searchInput'),
 		wikiaAdPlace = $('#WikiaAdPlace');
 
-		realWidth = screen.width
+		deviceWidth = ($.os.ios)?268:320;
+		deviceHeight = ($.os.ios)?416:533;
 
-		if($.os.ios) {
-			deviceWidth = 268;
-			deviceHeight = 436;
-			if(window.orientation != 0) {
-				realWidth = screen.height;
-			}
-		} else if(window.orientation == 0 || window.orientation == 180) {
-			deviceWidth = screen.width;
-			deviceHeight = screen.height + 53;
-		} else {
-			deviceWidth = screen.height + 53;
-			deviceHeight = screen.width;
-		}
+		realWidth = (window.orientation == 0 || window.orientation == 180)?320:480;
 
 		hideURLBar();
 		handleTables();
@@ -113,7 +104,7 @@ var WikiaMobile = (function() {
 		$('.infobox img').bind(this._clickevent, function(event) {
 			event.preventDefault();
 			var thumb = $(this),
-			image = thumb.parents('.image');
+				image = thumb.parents('.image');
 
 			imgModal(image.data('number'), image.attr('href'));
 		});
@@ -121,7 +112,7 @@ var WikiaMobile = (function() {
 		$('figure').bind(this._clickevent, function(event) {
 			event.preventDefault();
 			var thumb = $(this),
-			image = thumb.children('.image').first();
+				image = thumb.children('.image').first();
 
 			imgModal(image.data('number'), image.attr('href'), thumb.children('.thumbcaption').html());
 		});
@@ -168,7 +159,7 @@ var WikiaMobile = (function() {
 			location.reload();
 		});
 	},
-	
+
 	getClickEvent = function(){
 		return WikiaMobile._clickevent;
 	};

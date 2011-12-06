@@ -14,55 +14,60 @@
 				<div id="modalContent"></div>\
 				<div id="modalFooter"></div>\
 			</div><style>#modalWrapper{min-height:'+resolution[1]+'px;}@media only screen and (orientation:landscape) and (min-width: 321px){#modalWrapper{min-height:'+resolution[0]+'px;}}</style>',
-		that = this;
+		that = this,
+		body = $(document.body);
 
 		$('body').append(modal);
 
-		that._modal = $('#modalWrapper');
-		that._modalClose = $('#modalClose');
-		that._modalTopBar = $('#modalTopBar');
-		that._modalContent = $('#modalContent');
-		that._modalFooter = $('#modalFooter');
-		that._allToHide = this._modalTopBar.add(this._modalClose).add(this._modalFooter);
-		that._thePage = $('body').children().not('#modalWrapper,style,script');
+		this._modal = $('#modalWrapper');
+		this._modalClose = $('#modalClose');
+		this._modalTopBar = $('#modalTopBar');
+		this._modalContent = $('#modalContent');
+		this._modalFooter = $('#modalFooter');
+		this._wikiaAdPlace = $('#WikiaAdPlace');
+		this._modalClose = $('#modalClose');
+		this._allToHide = this._modalTopBar.add(this._modalClose).add(this._modalFooter);
+		this._thePage = $('body').children().not('#modalWrapper,style,script');
 
 		//hide adress bar on orientation change
 		window.onorientationchange = function() {
 				if(pageYOffset == 0) window.scrollTo( 0, 1 );
 		}
 
-		$('#modalClose').bind(WikiaMobile._clickevent , function(event) {
+		document.getElementsByTagName('iframe')
+
+		document.getElementById('modalClose').addEventListener('touchstart' , function(event) {
 			event.stopPropagation();
 			event.preventDefault();
 			that.closeModal();
-		});
+		}, true);
 
 		$('#modalWrapper').bind(WikiaMobile._clickevent, function() {
 			that._resetTimeout();
 		});
 
 		//handling next/previous image in lightbox
-		$(document.body).delegate('#nextImage', WikiaMobile._clickevent, function() {
+		body.delegate('#nextImage', WikiaMobile._clickevent, function() {
 			$._nextImage($(this).prev());
 		});
 
-		$(document.body).delegate('#previousImage', WikiaMobile._clickevent, function() {
+		body.delegate('#previousImage', WikiaMobile._clickevent, function() {
 			that._previousImage($(this).next());
 		});
 
-		$(document.body).delegate('#nextImage', 'swipeLeft', function() {
+		body.delegate('#nextImage', 'swipeLeft', function() {
 			$._nextImage($(this).prev());
 		});
 
-		$(document.body).delegate('#previousImage', 'swipeRight', function() {
+		body.delegate('#previousImage', 'swipeRight', function() {
 			that._previousImage($(this).next());
 		});
 
-		$(document.body).delegate('.fullScreenImage', 'swipeLeft', function() {
+		body.delegate('.fullScreenImage', 'swipeLeft', function() {
 			$._nextImage($(this));
 		});
 
-		$(document.body).delegate('.fullScreenImage', 'swipeRight', function() {
+		body.delegate('.fullScreenImage', 'swipeRight', function() {
 			that._previousImage($(this));
 		});
 
@@ -75,7 +80,7 @@
 		if(WikiaMobile.getImages().length <= nextImageNumber) {
 			nextImageNumber = 0;
 		}
-		this.changeImage(nextImageNumber, imagePlace);
+		this._changeImage(nextImageNumber, imagePlace);
 	};
 
 	$._previousImage = function(imagePlace) {
@@ -84,10 +89,10 @@
 		if(previousImageNamber < 0) {
 			previousImageNamber = WikiaMobile.getImages().length-1;
 		}
-		this.changeImage(previousImageNamber, imagePlace);
+		this._changeImage(previousImageNamber, imagePlace);
 	};
 
-	$.changeImage = function(imageNumber, fullScreen) {
+	$._changeImage = function(imageNumber, fullScreen) {
 		var image = WikiaMobile.getImages()[imageNumber],
 		img = new Image();
 
