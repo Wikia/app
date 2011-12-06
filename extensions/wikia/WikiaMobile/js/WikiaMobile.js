@@ -76,6 +76,10 @@ var WikiaMobile = WikiaMobile || (function() {
 		return clickEvent;
 	}
 
+	function track(ev){
+		WikiaTracker.track('/1_mobile/' + ((ev instanceof Array) ? ev.join('/') : ev), 'main.sampled');
+	}
+
 	//init
 	$(function(){
 		var body = $(document.body),
@@ -85,13 +89,31 @@ var WikiaMobile = WikiaMobile || (function() {
 		searchInput = $('#searchInput'),
 		wikiaAdPlace = $('#WikiaAdPlace');
 
+		//analytics
+		track('view');
+
 		hideURLBar();
 		handleTables();
 		processImages();
 
 		//TODO: optimize selectors caching for this file
-		body.delegate( '#WikiaMainContent > h2, #WikiaPage .collapsible-section', clickEvent, function() {
-			$(this).toggleClass('open').next().toggleClass('open');
+		body.delegate( '#WikiaMainContent > h2, #WikiaPage .collapsible-section', clickEvent, function(){
+			var self = $(this);
+
+			track(['section', self.hasClass('open') ? 'close' : 'open']);	
+			self.toggleClass('open').next().toggleClass('open');
+		});
+
+		$('#WikiaMainContent a').bind(clickEvent, function(){
+			track(['link', 'content']);
+		});
+
+		$('#WikiaArticleCategories a').bind(clickEvent, function(){
+			track(['link', 'category']);
+		});
+
+		$('#searchForm').bind('submit', function(){
+			track(['search', 'submit']);
 		});
 
 		$('.infobox img').bind(clickEvent, function(event) {
@@ -121,11 +143,13 @@ var WikiaMobile = WikiaMobile || (function() {
 			var self = $(this);
 			
 			if(self.hasClass('open')){
+				track(['search', 'toggle', 'close']);
 				navigationWordMark.show();
 				navigationSearch.hide().removeClass('open');
 				self.removeClass('open');
 				searchInput.val('');
 			}else{
+				track(['search', 'toggle', 'open']);
 				navigationWordMark.hide();
 				navigationSearch.show().addClass('open');
 				self.addClass('open');
@@ -151,6 +175,7 @@ var WikiaMobile = WikiaMobile || (function() {
 		$('#fullSiteSwitch').bind('click', function(event){
 			event.preventDefault();
 			
+			track(['link', 'fullsite']);
 			Wikia.CookieCutter.set('mobilefullsite', 'true');
 			location.reload();
 		});
@@ -159,6 +184,7 @@ var WikiaMobile = WikiaMobile || (function() {
 	return {
 		getImages: getImages,
 		getDeviceResolution: getDeviceResolution,
-		getClickEvent: getClickEvent
+		getClickEvent: getClickEvent,
+		track: track
 	}
 })();
