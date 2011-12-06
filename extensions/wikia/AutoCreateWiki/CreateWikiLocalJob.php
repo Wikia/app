@@ -563,7 +563,7 @@ class CreateWikiLocalJob extends Job {
 				'img_user_text' => $contributorData['name'],
                                 'img_timestamp = date_format(now(), "%Y%m%d%H%i%S")'
 			),
-			$sConds,
+			$sCondsImg,
 			__METHOD__
 		);
 		$rows = $dbw->affectedRows();
