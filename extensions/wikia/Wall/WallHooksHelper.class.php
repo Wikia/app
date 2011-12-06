@@ -220,11 +220,9 @@ class WallHooksHelper {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public function onBeforePageHistory(&$article, &$wgOut) {
-		
 		$title = $article->getTitle();
 		
-		if( !empty($title) && $title->getNamespace() === NS_USER_WALL 
-			&& !$title->isSubpage() 
+		if( !empty($title) && $title->getNamespace() === NS_USER_WALL  && !$title->isSubpage() 
 		) {
 			$app = F::App();
 			$app->wg->Out->addHTML($app->renderView('WallController', 'history', array( 'title' => $article->getTitle() ) ));
@@ -235,6 +233,47 @@ class WallHooksHelper {
 		
 		return true;
 	}
+
+	/**
+	 * @brief add history to wall toolbar 
+	 * 
+	 **/
+	
+	function onBeforeToolbarMenu(&$items) {
+		$app = F::app();
+		$title = $app->wg->Title;
+
+		if ( $title instanceof Title && $title->getNamespace() === NS_USER_WALL  && !$title->isSubpage() ) {		
+			$item = array(
+				'type' => 'html',
+				'html' => XML::element('a', array('href' => $title->getFullUrl('action=history')), wfMsg('wall-toolbar-history') )
+			);
+			if(is_array($items)) {
+				$inserted = false;
+				$itemsout = array();
+
+				foreach($items as $value) {
+					$itemsout[] = $value;
+
+					if($value['type'] == 'follow') {
+						$itemsout[] = $item;
+						$inserted = true;
+					}
+				}
+				
+				if (!$inserted) {
+					array_unshift($items, $item);
+				} else {
+					$items = $itemsout;
+				}
+			} else {
+				$items = array($item);
+			}
+		}
+		
+		return true;
+	}
+	
 	
 	/**
 	 * @brief Redirects any attempts of protecting any page in NS_USER_WALL namespace
