@@ -33,8 +33,8 @@
 		window.onorientationchange = function() {
 				if(pageYOffset == 0) window.scrollTo( 0, 1 );
 		}
-
-		document.getElementById('modalClose').addEventListener(WikiaMobile.getClickEvent(), function(event) {
+		//
+		document.getElementById('modalClose').addEventListener(WikiaMobile.getTouchEvent(), function(event) {
 			event.stopPropagation();
 			event.preventDefault();
 			that.closeModal();

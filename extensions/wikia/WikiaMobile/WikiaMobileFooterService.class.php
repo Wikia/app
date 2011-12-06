@@ -12,6 +12,7 @@ class WikiaMobileFooterService extends WikiaService {
 			$this->getLinkFromMessage( 'wikiamobile-footer-link2' ),
 			$this->getLinkFromMessage( 'wikiamobile-footer-link3' )
 		) );
+		$this->response->setVal( 'feedbackLink', 'https://docs.google.com/a/wikia-inc.com/spreadsheet/viewform?hl=en_US&formkey=dDlxWlYwLV8zTGszZmZPN3hEYTVDMFE6MQ#gid=0');
 	}
 
 	private function getLinkFromMessage( $msgName ){

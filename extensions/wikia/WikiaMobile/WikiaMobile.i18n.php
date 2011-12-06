@@ -19,7 +19,8 @@ $messages['en'] = array(
 	'wikiamobile-menu' => 'Menu',
 	'wikiamobile-explore' => 'Explore',
 	'wikiamobile-article-categories' => 'Categories',
-	
+	'wikiamobile-feedback' => 'Feedback',
+
 	//footer
 	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Lifestyle]]',
 	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|Entertainment]]',
@@ -346,4 +347,3 @@ $messages['zh-hant'] = array(
 	'wikiamobile-menu' => '選單',
 	'wikiamobile-explore' => '探索',
 );
-
