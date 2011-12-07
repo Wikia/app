@@ -1,8 +1,9 @@
-@import "mixins/box-shadow.scss";
+@import "variables.scss";
 
 #WikiaMainContent {
 	.tooBigTable {
-
+		border: 1px solid $border-color;
+		padding: $page-padding;
 	}
 }
 
