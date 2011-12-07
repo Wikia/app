@@ -287,10 +287,11 @@ class ArticleComment {
 		
 		$comment = false;
 		if ( $this->load($master) ) {
-			$articleDataKey = wfMemcKey( 'articlecomment', 'comm_data', $this->mLastRevId, $wgUser->getId() );
+			$articleDataKey = wfMemcKey( 'articlecomment', 'comm_data_v2', $this->mLastRevId, $wgUser->getId() );
 			$data = $wgMemc->get( $articleDataKey );
 			if(!empty($data)) {
 				wfProfileOut( __METHOD__ );
+				$data['timestamp'] = "<a href='" . $this->getTitle()->getFullUrl( array( 'permalink' => $data['articleId'] ) ) . '#comm-' . $data['articleId'] . "' class='permalink'>" . wfTimeFormatAgo($data['rawmwtimestamp']) . "</a>";
 				return $data;
 			}
 			
@@ -341,7 +342,7 @@ class ArticleComment {
 
 			$commentId = $this->getTitle()->getArticleId();			
 			$rawmwtimestamp = $this->mFirstRevision->getTimestamp();
-			$rawtimestamp = wfTimeFormatAgo($rawmwtimestamp);  
+			$rawtimestamp = wfTimeFormatAgo($rawmwtimestamp);
 			$timestamp = "<a href='" . $this->getTitle()->getFullUrl( array( 'permalink' => $commentId ) ) . '#comm-' . $commentId . "' class='permalink'>" . wfTimeFormatAgo($rawmwtimestamp) . "</a>";
 
 			$comment = array(
