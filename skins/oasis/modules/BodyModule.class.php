@@ -393,7 +393,7 @@ class BodyModule extends Module {
 
 
 	public function executeIndex() {
-		global $wgOut, $wgTitle, $wgSitename, $wgUser, $wgEnableBlog, $wgEnableCorporatePageExt, $wgEnableInfoBoxTest, $wgEnableWikiAnswers, $wgRequest, $wgMaximizeArticleAreaArticleIds, $wgEnableAdminDashboardExt, $wgEnableUserProfilePagesV3, $wgEnableTopButton, $wgTopButtonPosition, $wgEnableMessageWall;
+		global $wgOut, $wgTitle, $wgSitename, $wgUser, $wgEnableBlog, $wgEnableCorporatePageExt, $wgEnableInfoBoxTest, $wgEnableWikiAnswers, $wgRequest, $wgMaximizeArticleAreaArticleIds, $wgEnableAdminDashboardExt, $wgEnableUserProfilePagesV3, $wgEnableTopButton, $wgTopButtonPosition, $wgEnableMessageWall, $wgEnableArticleCommentsExt;
 
 		// set up global vars
 		if (is_array($wgMaximizeArticleAreaArticleIds)
