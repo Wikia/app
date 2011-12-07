@@ -34,14 +34,5 @@ Meebo('domReady');
 };
 
 if (window.wgEnableMeeboExt) {
-	if (!window.wgUserName) {
-		if (window.skin == 'oasis') {
-			if (window.wgAction == 'view') {
-				var geoData = Geo.getGeoData();
-				if (geoData.country == 'US') {
-					MeeboBar.init();
-				}
-			}
-		}
-	}
+	MeeboBar.init();
 }

@@ -13,11 +13,21 @@ class Meebo {
 		global $wgEnableMeeboExt, $wgDBname;
 		wfProfileIn( __METHOD__ );
 
-		global $wgRequest, $wgNoExternals;
+		global $wgRequest, $wgNoExternals, $wgUser;
 		$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
 
-		if ($wgEnableMeeboExt && !$wgNoExternals && array_search($wgDBname, self::$PROHIBITED_DBNAMES) === FALSE) {
-			$vars['wgEnableMeeboExt'] = true;
+		if ($wgEnableMeeboExt) {
+			if (!$wgNoExternals) {
+				if ($wgUser->isAnon()) {
+					if ($wgUser->getSkin()->getSkinName() == 'oasis') {
+						if ($wgRequest->getText( 'action', 'view' ) == 'view') {
+							if (array_search($wgDBname, self::$PROHIBITED_DBNAMES) === FALSE) {
+								$vars['wgEnableMeeboExt'] = true;
+							}
+						}
+					}
+				}
+			}
 		}
 
 		wfProfileOut( __METHOD__ );
