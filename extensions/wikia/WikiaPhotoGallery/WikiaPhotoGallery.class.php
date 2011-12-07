@@ -976,18 +976,14 @@ class WikiaPhotoGallery extends ImageGallery {
 			$this->mAttribs );
 
 		//renderSlideshow for WikiaMobile
-		if( $sk->skinname == "wikiamobile" ) {
+		if( Wikia::isWikiaMobile() ) {
 			$counter = count($this->mImages);
 			$images = array();
 			foreach($this->mImages as $key => $val) {
 				$img = wfFindFile( $val[0], false );
-				array_push($images, $img->transform( array("width" => "320", "height" => "480") )->url);
+				if(!empty($img)) array_push($images, $img->transform( array("width" => "320", "height" => "480") )->url);
 			}
-
-
-			//$thumb = $img->transform( array('width'=>'480','height'=>'320') );
-
-
+			
 			$template = new EasyTemplate(dirname(__FILE__) . '/templates');
 			$template->set_vars(array(
 				'class' => 'wikia-slideshow',
@@ -1304,7 +1300,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				'sliderId' => $this->mData['id']
 			));
 
-			if( $skin->skinname == "wikiamobile") {
+			if( Wikia::isWikiaMobile() ) {
 				$html = $template->render('renderWikiaMobileSlider');
 			} else {
 				$html = $template->render('renderSlider');
