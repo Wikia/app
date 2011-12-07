@@ -323,6 +323,7 @@ var WallNotifications = $.createClass(Object, {
 		// hijack links for other wikis - open them in new window
 		if( wikiId != this.currentWikiId ) {
 			$('a', wikiEl).attr('target', '_blank');
+			$('.read_notification', wikiEl).remove(); // temporary fix, should be changed on server side
 		}
 		
 		$('.read_notification').click(this.proxy(function(){
