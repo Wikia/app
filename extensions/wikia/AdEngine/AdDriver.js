@@ -405,6 +405,10 @@ AdDriver.adjustSlotDisplay = function(slotname) {
 				$('#WikiaTopAds').removeClass('WikiaTopButtonLeft WikiaTopButtonRight');
 				AdDriverDelayedLoader.removeItemsBySlotname('TOP_BUTTON');
 			}
+			else if (AdDriver.country != 'US') {	// wlee 2011/12/07: do not show TOP_BUTTON outside of US
+				$('#WikiaTopAds').removeClass('WikiaTopButtonLeft WikiaTopButtonRight');
+				AdDriverDelayedLoader.removeItemsBySlotname('TOP_BUTTON');				
+			}
 			return true;
 			break;
 		case 'CORP_TOP_RIGHT_BOXAD':
