@@ -427,7 +427,7 @@ class BodyModule extends Module {
 		$this->headerModuleParams = array ('showSearchBox' => false);
 
 		// Display comments on content and blog pages
-		if ( !empty($wgEnableArticleCommentsExt) && class_exists('ArticleCommentInit') && ArticleCommentInit::ArticleCommentCheck() ) {
+		if ( class_exists('ArticleCommentInit') && ArticleCommentInit::ArticleCommentCheck() ) {
 			$this->displayComments = true;
 		} else {
 			$this->displayComments = false;
