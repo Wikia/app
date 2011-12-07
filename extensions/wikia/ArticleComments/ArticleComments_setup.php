@@ -49,43 +49,47 @@ $wgGroupPermissions['sysop']['commentmove'] = true;
 $wgGroupPermissions['sysop']['commentedit'] = true;
 $wgGroupPermissions['sysop']['commentdelete'] = true;
 
-$wgHooks['ArticleDelete'][] = 'ArticleCommentList::articleDelete';
-$wgHooks['ArticleDeleteComplete'][] = 'ArticleCommentList::articleDeleteComplete';
-$wgHooks['ArticleRevisionUndeleted'][] = 'ArticleCommentList::undeleteComments';
-$wgHooks['RecentChange_save'][] = 'ArticleComment::watchlistNotify';
-// recentchanges
-$wgHooks['ChangesListMakeSecureName'][] = 'ArticleCommentList::makeChangesListKey';
-$wgHooks['ChangesListHeaderBlockGroup'][] = 'ArticleCommentList::setHeaderBlockGroup';
-$wgHooks['ChangesListInsertArticleLink'][] = 'ArticleCommentList::ChangesListInsertArticleLink';
-// special::watchlist
-$wgHooks['ComposeCommonSubjectMail'][] = 'ArticleComment::ComposeCommonMail';
-$wgHooks['ComposeCommonBodyMail'][] = 'ArticleComment::ComposeCommonMail';
-// TOC
-$wgHooks['Parser::InjectTOCitem'][] = 'ArticleCommentInit::InjectTOCitem';
-// omit captcha
-$wgHooks['ConfirmEdit::onConfirmEdit'][] = 'ArticleCommentList::onConfirmEdit';
-// redirect
-$wgHooks['ArticleFromTitle'][] = 'ArticleCommentList::ArticleFromTitle';
-// init
-$wgHooks['SkinAfterContent'][] = 'ArticleCommentInit::ArticleCommentEnable';
-$wgHooks['CustomArticleFooter'][] = 'ArticleCommentInit::ArticleCommentEnableMonaco';
-$wgHooks['BeforePageDisplay'][] = 'ArticleCommentInit::ArticleCommentAddJS';
-$wgHooks['SkinTemplateTabs'][] = 'ArticleCommentInit::ArticleCommentHideTab';
-// user talk comment and notify
-$wgHooks['UserMailer::NotifyUser'][] = 'ArticleCommentInit::ArticleCommentNotifyUser';
-// blogs
-$wgHooks['UndeleteComplete'][] = 'ArticleCommentList::undeleteComplete';
-// prevent editing not own comments
-$wgHooks['userCan'][] = 'ArticleCommentInit::userCan';
-// HAWelcome
-$wgHooks['HAWelcomeGetPrefixText'][] = 'ArticleCommentInit::HAWelcomeGetPrefixText';
+if (!empty($wgEnableWallExt) || !empty($wgEnableArticleCommentsExt) || !empty($wgEnableBlogArticles)) {
+	
+	$wgHooks['ArticleDelete'][] = 'ArticleCommentList::articleDelete';
+	$wgHooks['ArticleDeleteComplete'][] = 'ArticleCommentList::articleDeleteComplete';
+	$wgHooks['ArticleRevisionUndeleted'][] = 'ArticleCommentList::undeleteComments';
+	$wgHooks['RecentChange_save'][] = 'ArticleComment::watchlistNotify';
+	// recentchanges
+	$wgHooks['ChangesListMakeSecureName'][] = 'ArticleCommentList::makeChangesListKey';
+	$wgHooks['ChangesListHeaderBlockGroup'][] = 'ArticleCommentList::setHeaderBlockGroup';
+	$wgHooks['ChangesListInsertArticleLink'][] = 'ArticleCommentList::ChangesListInsertArticleLink';
+	// special::watchlist
+	$wgHooks['ComposeCommonSubjectMail'][] = 'ArticleComment::ComposeCommonMail';
+	$wgHooks['ComposeCommonBodyMail'][] = 'ArticleComment::ComposeCommonMail';
+	// TOC
+	$wgHooks['Parser::InjectTOCitem'][] = 'ArticleCommentInit::InjectTOCitem';
+	// omit captcha
+	$wgHooks['ConfirmEdit::onConfirmEdit'][] = 'ArticleCommentList::onConfirmEdit';
+	// redirect
+	$wgHooks['ArticleFromTitle'][] = 'ArticleCommentList::ArticleFromTitle';
+	// init
+	$wgHooks['SkinAfterContent'][] = 'ArticleCommentInit::ArticleCommentEnable';
+	$wgHooks['CustomArticleFooter'][] = 'ArticleCommentInit::ArticleCommentEnableMonaco';
+	$wgHooks['BeforePageDisplay'][] = 'ArticleCommentInit::ArticleCommentAddJS';
+	$wgHooks['SkinTemplateTabs'][] = 'ArticleCommentInit::ArticleCommentHideTab';
+	// user talk comment and notify
+	$wgHooks['UserMailer::NotifyUser'][] = 'ArticleCommentInit::ArticleCommentNotifyUser';
+	// blogs
+	$wgHooks['UndeleteComplete'][] = 'ArticleCommentList::undeleteComplete';
+	// prevent editing not own comments
+	$wgHooks['userCan'][] = 'ArticleCommentInit::userCan';
+	// HAWelcome
+	$wgHooks['HAWelcomeGetPrefixText'][] = 'ArticleCommentInit::HAWelcomeGetPrefixText';
+	
+	// added by Moli
+	// special::movepage
+	$wgHooks['SpecialMovepageAfterMove'][] = 'ArticleComment::moveComments';
+	
+	
+	$wgHooks['ParserFirstCallInit'][] = 'ArticleComment::metadataParserInit';
 
-// added by Moli
-// special::movepage
-$wgHooks['SpecialMovepageAfterMove'][] = 'ArticleComment::moveComments';
-
-
-$wgHooks['ParserFirstCallInit'][] = 'ArticleComment::metadataParserInit';
+}
 
 // Ajax dispatcher
 $wgAjaxExportList[] = 'ArticleCommentsAjax';
