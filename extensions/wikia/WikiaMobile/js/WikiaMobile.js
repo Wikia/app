@@ -2,8 +2,8 @@ var WikiaMobile = WikiaMobile || (function() {
 	/** @private **/
 
 	var allImages = [],
-	deviceWidth = ($.os.ios) ? 268 : 320,
-	deviceHeight = ($.os.ios) ? 416 : 533,
+	deviceWidth = ($.os.ios) ? 268 : 300,
+	deviceHeight = ($.os.ios) ? 416 : 513,
 	realWidth = (window.orientation == 0 || window.orientation == 180) ? 320 : 480,
 	//TODO: finalize the following line and update all references to it (also in extensions)
 	clickEvent = ('ontouchstart' in window) ? 'tap' : 'click',
@@ -69,7 +69,8 @@ var WikiaMobile = WikiaMobile || (function() {
 				href +
 				'")></div><div class="changeImageButton" id="nextImage"><div class="changeImageChevron"></div></div>',
 			toHide: '.changeImageButton',
-			caption: caption
+			caption: caption,
+			addClass: 'imageModal'
 		});
 	}
 

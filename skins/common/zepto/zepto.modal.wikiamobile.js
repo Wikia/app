@@ -31,7 +31,7 @@
 
 		//hide adress bar on orientation change
 		window.onorientationchange = function() {
-				if(pageYOffset == 0) window.scrollTo( 0, 1 );
+				if(pageYOffset == 0) setTimeout(function() {window.scrollTo( 0, 1 )},10);
 		}
 		//
 		document.getElementById('modalClose').addEventListener(WikiaMobile.getTouchEvent(), function(event) {
@@ -40,7 +40,10 @@
 			that.closeModal();
 		}, true);
 
-		$('#modalWrapper').bind(WikiaMobile.getClickEvent(), function() {
+		$('#modalWrapper').bind(WikiaMobile.getTouchEvent(), function() {
+			if($(this).hasClass('imageModal')) {
+				window.scrollTo( 0, 1 );
+			}
 			that._resetTimeout();
 		});
 

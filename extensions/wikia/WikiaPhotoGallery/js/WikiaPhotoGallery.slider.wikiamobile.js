@@ -32,7 +32,7 @@ var WikiaPhotoGallerySlider = {
 	scroll: function(nav) {
 		//setup variables
 		var parentNav = nav.parent(),
-		image = parentNav.find('img'),
+		image = parentNav.find('a img'),
 		imageData = image.data('src'),
 		slider = parentNav.parents('.wikiaPhotoGallery-slider-body');
 

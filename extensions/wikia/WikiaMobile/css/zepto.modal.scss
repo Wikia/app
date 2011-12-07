@@ -63,7 +63,7 @@
 	bottom: 0;
 	left: 0;
 	color: white;
-	z-index: $highest-z-index + 1001;
+	z-index: $highest-z-index + 1005;
 	@include transition(all .5s ease-in);
 	display: none;
 
@@ -83,11 +83,12 @@
 	@include transition(top .5s ease-in);
 	font-size: xx-large;
 	color: white;
-	z-index: $highest-z-index + 1002;
-	padding: 0 0 3px 30px;
+	z-index: $highest-z-index + 1005;
+	padding: 0 0 30px 30px;
 
 	&.hidden {
 		top: -31px;
+		padding: 0;
 	}
 }
 
