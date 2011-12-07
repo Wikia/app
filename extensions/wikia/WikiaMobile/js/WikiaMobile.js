@@ -34,7 +34,7 @@ var WikiaMobile = WikiaMobile || (function() {
 		image;
 
 		$('.infobox .image').each(function(){
-			allImages.push($(this).data('number', number++).attr('href'));
+			allImages.push([$(this).data('number', number++).attr('href')]);
 		});
 
 		$('figure').each(function(){
@@ -50,7 +50,7 @@ var WikiaMobile = WikiaMobile || (function() {
 			length = slideshow.data('number', number++).data('image-count');
 
 			for(var i = 0; i < length; i++) {
-				allImages.push(slideshow.data('slideshow-image-id-' + i));
+				allImages.push([slideshow.data('slideshow-image-id-' + i)]);
 			}
 		});
 
@@ -141,7 +141,7 @@ var WikiaMobile = WikiaMobile || (function() {
 			event.preventDefault();
 
 			var slideshow = $(this);
-			imgModal(slideshow.data('number'), slideshow.find('img').attr('src'), "Slideshow image #1");
+			imgModal(slideshow.data('number'), slideshow.find('img').attr('src'));
 		});
 
 		$('#searchToggle').bind(clickEvent, function(event){
@@ -177,7 +177,7 @@ var WikiaMobile = WikiaMobile || (function() {
 			});
 		});
 
-		$('#fullSiteSwitch').bind('click', function(event){
+		$('#fullSiteSwitch').bind(clickEvent, function(event){
 			event.preventDefault();
 
 			track(['link', 'fullsite']);
