@@ -981,9 +981,11 @@ class WikiaPhotoGallery extends ImageGallery {
 			$images = array();
 			foreach($this->mImages as $key => $val) {
 				$img = wfFindFile( $val[0], false );
-				if(!empty($img)) array_push($images, $img->transform( array("width" => "320", "height" => "480") )->url);
+				if( !empty( $img ) ) {
+					array_push($images, $img->transform( array("width" => "320", "height" => "480") )->url);
+				}
 			}
-			
+
 			$template = new EasyTemplate(dirname(__FILE__) . '/templates');
 			$template->set_vars(array(
 				'class' => 'wikia-slideshow',
