@@ -126,9 +126,7 @@ class PlacesParserHookHandler {
 				'/extensions/wikia/Places/css/Places.css',
 				'/extensions/wikia/Places/js/Places.js',
 			),
-			array(
-				'$.loadGoogleMaps'
-			),
+			array(),
 			'Places.init',
 			null,
 			array(JSSnippets::FILTER_NONE, 'wikiamobile')

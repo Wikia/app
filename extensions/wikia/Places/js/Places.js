@@ -1,13 +1,14 @@
 /*global google: true*/
 var Places = Places || (function(){
 	/** @private **/
-	
+
 	var isWikiaMobile = (typeof WikiaMobile != 'undefined'),
 		clickEvent = (isWikiaMobile) ? WikiaMobile.getClickEvent() : 'click';
-	
+
 	function showModal(event){
 		event.preventDefault();
-
+		event.stopPropagation();
+		
 		var element = $(this),
 			latlng = new google.maps.LatLng(element.attr('data-lat'), element.attr('data-lon')),
 			options = {
@@ -38,34 +39,37 @@ var Places = Places || (function(){
 			}
 		);
 	}
-	
+
 	/** @public **/
-	
+
 	return {
 		init: function() {
-			//in WikiaMobile figure tags have a default behaviour
-			if(isWikiaMobile)
-				$('.placemap').unbind(clickEvent);
-			
-			$('#WikiaMainContent').delegate( '.placemap img', clickEvent, showModal );
+			var elms = $('.placemap');
+
+			if(elms.length){
+				$.loadGoogleMaps(function(){
+					//in WikiaMobile figure tags have a default behaviour
+					$('#WikiaMainContent').delegate('.placemap img', clickEvent, showModal);
+				});
+			}
 		},
 
 		displayDynamic: function( options ){
 			options = options || {};
 			options.markers = options.markers || [];
 			options.center = options.center || false;
-	 
+
 			$().log( options.markers, 'markers' );
-	
+
 			if ( options.markers.length > 0 ){
 				var lanSum = 0;
 				var latSum = 0;
-	
+
 				var maxLat = -181.0;
 				var maxLan = -181.0;
 				var minLat = 181.0;
 				var minLan = 181.0;
-	
+
 				$.each( options.markers,
 					function( index, value ) {
 						lanSum += value.lan;
@@ -78,33 +82,33 @@ var Places = Places || (function(){
 				);
 				$().log( options.center, 'center' );
 				if ( options.center != false ){
-	
+
 					var latDistance = Math.max( Math.abs( maxLat - options.center.lat ), Math.abs( options.center.lat - minLat ) );
 					var lanDistance = Math.max( Math.abs( maxLan - options.center.lan ), Math.abs( options.center.lan - minLan ) );
 					minLat = options.center.lat - latDistance;
 					minLan = options.center.lan - lanDistance;
 					maxLat = options.center.lat + latDistance;
 					maxLan = options.center.lan + lanDistance;
-	
+
 				}
 				var mapConfig = {
 					'center': new google.maps.LatLng( 0, 0 ),
 					'mapTypeId': google.maps.MapTypeId.ROADMAP,
 					'zoom': 14
 				}
-	
+
 				var map = new google.maps.Map(
 					document.getElementById("places-dynamic-map"),
 					mapConfig
 				);
-	
+
 				map.fitBounds(
 					new google.maps.LatLngBounds(
 						new google.maps.LatLng( minLat, minLan ),
 						new google.maps.LatLng( maxLat, maxLan )
 					)
 				);
-	
+
 				var aMarker = [];
 				var aInfoWindow = [];
 				$.each( options.markers, function( index, value ){
@@ -126,7 +130,7 @@ var Places = Places || (function(){
 						google.maps.event.addListener( aMarker[ key ], clickEvent, function() {
 							aInfoWindow[ key ].open(map, aMarker[ key ] );
 						});
-	
+
 						if ( options.center.label == value.label  ){
 							aInfoWindow[ key ].open(map, aMarker[ key ] );
 						}
