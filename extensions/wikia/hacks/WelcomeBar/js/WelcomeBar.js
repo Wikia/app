@@ -42,8 +42,8 @@ var WelcomeBar = {
 	init: function() {
 		if (this.checkShow()) {
 			$.getResources([
-					function(cb) {$.getMessagesForContent('WelcomeBar', cb)},
-					function(cb) {$.getCSS($.getSassCommonURL('extensions/wikia/hacks/WelcomeBar/css/WelcomeBar.scss'), cb)}
+					function(cb) {$.getMessagesForContent('WelcomeBar', cb);},
+					function(cb) {$.getCSS($.getSassCommonURL('extensions/wikia/hacks/WelcomeBar/css/WelcomeBar.scss'), cb);}
 				],
 				$.proxy(this.show, this));
 		}
