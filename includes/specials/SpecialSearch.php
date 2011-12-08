@@ -30,7 +30,7 @@
  */
 function wfSpecialSearch( $par = '' ) {
 	global $wgRequest, $wgUser;
-	global $wgUseWikiaSearchUI, $wgOut, $wgExtensionsPath;
+	global $wgUseWikiaSearchUI, $wgOut;
 	// Strip underscores from title parameter; most of the time we'll want
 	// text form here. But don't strip underscores from actual text params!
 	$titleParam = str_replace( '_', ' ', $par );
@@ -47,7 +47,7 @@ function wfSpecialSearch( $par = '' ) {
 		$searchPage->goResult( $search );
 	}
 	// Wikia change: /Begin - include tracking js code (ADi)
-	$wgOut->addScriptFile( $wgExtensionsPath . "/wikia/Search/Search.tracking.js" );
+	$wgOut->addHTML( F::build('JSSnippets')->addToStack( array( "/extensions/wikia/Search/Search.tracking.js" ), array(), 'SearchClickTracking.init' ) );
 	// Wikia change: /End
 }
 
