@@ -83,6 +83,10 @@ class ContactForm extends SpecialPage {
 
 			$this->mRealName = $wgRequest->getText( 'wpContactRealName' );
 			$this->mWhichWiki = $wgRequest->getText( 'wpContactWikiName', $wgServer );
+			if ( strpos( $this->mWhichWiki, 'http' ) !== 0  ) {
+				$this->mWhichWiki = 'http://' . $this->mWhichWiki;
+			}
+
 			#sibject still handled outside of post check, because of existing hardcoded prefill links
 
 			if ( $wgUser->isLoggedIn() && ( $wgUser->getName() !== $wgRequest->getText( 'wpUserName' ) ) ) {
