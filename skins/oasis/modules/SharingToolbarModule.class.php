@@ -34,6 +34,7 @@ class SharingToolbarModule extends Module {
 		$shareNetworks = array(
 			'Twitter',
 			'Facebook',
+			'Mail',
 		);
 
 		$this->shareButtons = array();

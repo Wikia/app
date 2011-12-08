@@ -19,7 +19,7 @@ var SharingToolbar = {
 		this.contributeOffsetTop = $('#WikiHeader > .buttons > .contribute').offset().top - 5 /* #SharingToolbar top */;
 
 		$(window).bind('scroll', $.proxy(this.onScroll, this));
-		this.toolbarNode.children('.email-link').bind('click', this.onEmailClick);
+		this.toolbarNode.find('.email-link').bind('click', this.onEmailClick);
 		$('.WikiHeaderRestyle .share-button').bind('click', this.toolbarToggle);
 	},
 	onScroll: function() {
