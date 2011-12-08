@@ -31,4 +31,62 @@ class PlacesController extends WikiaController {
 		$this->setVal( 'zoom', $oPlaceModel->getZoom() );
 		$this->setVal( 'rteData', $rteData );
 	}
+
+	public function saveNewPlaceToArticle(){
+
+		$oPlaceModel = F::build('PlaceModel');
+		$oPlaceModel->setPageId( $this->getVal( 'articleId', 0 ) );
+		
+		if ( $oPlaceModel->getPageId() == 0 ){
+			$this->setVal( 'error', wfMsg( 'places-error-no-article' ) );
+			$this->setVal( 'success', false );
+		} else {
+			$oStorage = PlaceStorage::newFromId( $oPlaceModel->getPageId() );
+			if ( $oStorage->getModel()->isEmpty() == false ){
+				$this->setVal( 'error', wfMsg( 'places-error-place-already-exists' ) );
+				$this->setVal( 'success', false );
+			} else {
+				$oPlaceModel->setAlign( $this->getVal( 'align', false ) );
+				$oPlaceModel->setWidth( $this->getVal( 'width', false ) );
+				$oPlaceModel->setHeight( $this->getVal( 'height', false ) );
+				$oPlaceModel->setLat( $this->getVal( 'lat', false ) );
+				$oPlaceModel->setLon( $this->getVal( 'lon', false ) );
+				$oPlaceModel->setZoom( $this->getVal( 'zoom', false ) );
+
+				$sText = $this->sendRequest(
+					'PlacesController',
+					'getPlaceWikiTextFromModel',
+					array(
+					    'model' => $oPlaceModel
+					)
+				)->toString();
+
+				$oTitle = Title::newFromID( $oPlaceModel->getPageId() );
+				if ( ($oTitle instanceof Title ) && $oTitle->exists() ){
+					$oArticle = F::build( 'Article', array( $oTitle ) );
+					$sNewContent = $sText . $oArticle->getContent();
+					$status =
+						$oArticle->doEdit(
+							$sNewContent,
+							wfMsg('places-updated-geolocation'),
+							EDIT_UPDATE
+						);
+					$this->setVal( 'success', true );
+				} else {
+					$this->setVal( 'error', wfMsg( 'places-error-no-article' ) );
+					$this->setVal( 'success', false );
+				}
+			}
+		}
+	}
+
+	public function getPlaceWikiTextFromModel(){
+
+		$oPlaceModel = $this->getVal( 'model', null );
+		if ( empty( $oPlaceModel ) || !( $oPlaceModel instanceof PlaceModel ) ){
+			$oPlaceModel = F::build('PlaceModel');
+		}
+		$this->setVal( 'oEmptyPlaceModel', F::build('PlaceModel') );
+		$this->setVal( 'oPlaceModel', $oPlaceModel );
+	}
 }

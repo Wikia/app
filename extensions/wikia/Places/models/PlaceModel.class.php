@@ -71,7 +71,7 @@ class PlaceModel {
 	public function setPageId( $int ){
 		$int = (int) $int;
 		if ( $int > 0 ){
-			$this->pageId= $int;
+			$this->pageId = $int;
 		}
 	}
 

@@ -7,6 +7,8 @@ $messages['en'] = array(
 	'places-desc' => 'Provides <nowiki><place> and <places></nowiki> parser hooks for geo tagging pages and a [[Special:Places|map of all tagged pages]]',
 	'places-toolbar-button-tooltip' => 'Click to add geo tag to this page',
 	'places-toolbar-button-address' => 'Please provide address to use as a geo tag for this page',
+	'places-error-no-article' => 'You have to specify an article',
+	'places-error-place-already-exists' => 'Article is already geo tagged',
 );
 
 /** French (Français)
