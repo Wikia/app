@@ -41,21 +41,25 @@ $.extend({
 	 *
 	 * @param string/array packages - package name or list of packages
 	 * @param function callback - function to call when request is completed
+	 * @param string language - optionally language code (fallbacks to user language)
 	 */
-	getMessages: function(packages, callback) {
+	getMessages: function(packages, callback, language) {
 		// list of packages was given
 		if (typeof packages != 'string') {
 			packages = Array.prototype.join.call(packages, ',');
 		}
 
-		$().log('loading ' + packages + ' package(s)', 'JSMessages');
+		// by default use user language
+		language == language || window.wgUserLanguage;
+
+		$().log('loading ' + packages + ' package(s) for "' + language + '"', 'JSMessages');
 
 		$.get(wgScriptPath + '/wikia.php', {
 			controller: 'JSMessages',
 			method: 'getMessages',
 			format: 'html',
 			packages: packages,
-			uselang: window.wgUserLanguage,
+			uselang: language,
 			cb: window.wgJSMessagesCB
 		}, function() {
 			$().log(packages + ' package(s) loaded', 'JSMessages');
@@ -64,5 +68,12 @@ $.extend({
 				callback();
 			}
 		}, 'script');
+	},
+
+	/**
+	 * Load messages from given package(s) using content language
+	 */
+	getMessagesForContent: function(packages, callback) {
+		this.getMessages(packages, callback, window.wgContentLanguage);
 	}
 });
