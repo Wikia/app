@@ -1,6 +1,7 @@
 var WelcomeBar = {
 	STORAGE_TIMESTAMP: 'welcome-bar-timestamp',
 	SHOW_DELAY: 7 * 24 * 3600,
+	ANIMATION_DELAY: 75,
 
 	bar: false,
 
@@ -14,10 +15,10 @@ var WelcomeBar = {
 			slideDown(1000).
 			// an extra blink
 			delay(1000).
-			animate({'opacity': 0.2}, 100).delay(100).
-			animate({'opacity': 1}, 100).
-			animate({'opacity': 0.2}, 100).delay(100).
-			animate({'opacity': 1}, 100);
+			animate({'opacity': 0.2}, this.ANIMATION_DELAY).delay(this.ANIMATION_DELAY).
+			animate({'opacity': 1}, this.ANIMATION_DELAY).
+			animate({'opacity': 0.2}, this.ANIMATION_DELAY).delay(this.ANIMATION_DELAY).
+			animate({'opacity': 1}, this.ANIMATION_DELAY);
 
 		this.bar.children('.close').bind('click', $.proxy(this.close, this));
 	},
