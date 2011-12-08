@@ -34,6 +34,7 @@ public class BlogArticleReskinTest extends EditPageBaseTest {
 		openAndWait("index.php?title=Special:CreateBlogPage");
 
 		// test modal with required fields
+		waitForElement("//section[@id='HiddenFieldsDialog']//input[@name='wpTitle']");
 		assertTrue(session().isVisible("//section[@id='HiddenFieldsDialog']//input[@name='wpTitle']"));
 
 		// click "Ok" without providing any data - modal should not be hidden

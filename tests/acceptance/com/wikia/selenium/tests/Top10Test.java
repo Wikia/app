@@ -134,6 +134,7 @@ public class Top10Test extends BaseTest {
 		session().click("//input[@value='Create list']");
 		session().waitForPageToLoad(this.getTimeout());
 		
+		waitForElement("//button[@class='VoteButton']");
 		Number numberOfOptions = session().getXpathCount("//button[@class='VoteButton']");
 		assertEquals(2, numberOfOptions.intValue());
 	    
@@ -143,6 +144,7 @@ public class Top10Test extends BaseTest {
 	    session().click("//input[@value='Save list']");
 	    session().waitForPageToLoad(this.getTimeout());
 
+		waitForElement("//button[@class='VoteButton']");
 	    Number numberOfOptions2 = session().getXpathCount("//button[@class='VoteButton']");
 		assertEquals(3, numberOfOptions2.intValue());
 
