@@ -16,6 +16,11 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 }
 
 class HealthCheck extends UnlistedSpecialPage {
+
+	const STATUS_MESSAGE_OK = "Server status is: OK";
+	const POST_PARAM_GET = 'posttest_get';
+	const POST_PARAM_POST = 'posttest_post';
+
 	/**
 	 * Constructor
 	 */
@@ -29,7 +34,7 @@ class HealthCheck extends UnlistedSpecialPage {
 	 * @param $par Mixed: parameter passed to the page or null
 	 */
 	public function execute( $par ) {
-		global $wgOut, $wgRequest;
+		global $wgOut, $wgRequest, $wgDevelEnvironment;
 
 		// Set page title and other stuff
 		$this->setHeaders();
@@ -39,7 +44,21 @@ class HealthCheck extends UnlistedSpecialPage {
 		$wgOut->setArticleBodyOnly( true );
 
 		$statusCode = 200;
-		$statusMsg = "Server status is: OK";
+		$statusMsg = self::STATUS_MESSAGE_OK;
+
+		if ( $wgRequest->wasPosted() && $wgRequest->getVal(self::POST_PARAM_GET) ) {
+			$testValue = $wgRequest->getVal(self::POST_PARAM_GET);
+			if ( empty($testValue) || $testValue != $wgRequest->getVal(self::POST_PARAM_POST) ) {
+				$statusCode = 503;
+				$statusMsg = "Server status is: NOT OK - POST data incorrect";
+			}
+			$wgOut->setStatusCode( $statusCode );
+			$wgOut->addHTML( $statusMsg );
+			return;
+		}
+
+
+
 		$maxLoad = $wgRequest->getVal('maxload');
 		$cpuCount = rtrim( shell_exec('cat /proc/cpuinfo | grep processor | wc -l') );
 		$load = sys_getloadavg();
@@ -73,10 +92,12 @@ class HealthCheck extends UnlistedSpecialPage {
 
 		// Varnish should respond with a 200 for any request to any host with this path
 		// The Http class takes care of the proxying through varnish for us.
-		$content = Http::get("http://x/__varnish_nagios_check");
-		if (!$content) {
-			$statusCode = 503;
-			$statusMsg  = 'Server status is: NOT OK - Varnish not responding';
+		if ( empty( $wgDevelEnvironment ) ) {
+			$content = Http::get("http://x/__varnish_nagios_check");
+			if (!$content) {
+				$statusCode = 503;
+				$statusMsg  = 'Server status is: NOT OK - Varnish not responding';
+			}
 		}
 
 		// check for riak if riak is using as sessions provider
@@ -103,6 +124,17 @@ class HealthCheck extends UnlistedSpecialPage {
 				$statusCode = 503;
 				$statusMsg = "Server status is: NOT OK - Riak is down";
 			}
+		}
+
+		$content = Http::post('http://'.$_SERVER['SERVER_NAME'].'/index.php?title=Special:HealthCheck&'.self::POST_PARAM_GET.'=1234',array(
+			'proxy' => '127.0.0.1:80',
+			'postData' => array(
+				self::POST_PARAM_POST => '1234',
+			),
+		));
+		if ( substr( (string)$content, 0, strlen(self::STATUS_MESSAGE_OK) ) != self::STATUS_MESSAGE_OK ) {
+			$statusCode = 503;
+			$statusMsg  = 'Server status is: NOT OK - POST request failed';
 		}
 
 		$wgOut->setStatusCode( $statusCode );
