@@ -17,7 +17,7 @@
 		<?= $globalVariablesScript ;?>
 		<?= $jsHeadFiles ;?>
 	</head>
-	<body>
+	<body class="wikiamobile">
 		<?= $advert ;?>
 		<?= $wikiaNavigation ;?>
 		<?= $pageContent ;?>
