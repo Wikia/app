@@ -20,7 +20,7 @@ class CodeLintReportText extends CodeLintReport {
 	 * @param array $results results
 	 * @return string report
 	 */
-	public function render($results) {
+	public function render($results, $tool) {
 		$report = '';
 		$line = str_repeat('-', 130) . "\n";
 		$totalTime = 0;
@@ -56,15 +56,8 @@ class CodeLintReportText extends CodeLintReport {
 			$totalTime += $fileEntry['time'];
 		}
 
-		if (!empty($results[0]['tool'])) {
-			$tool = " using {$results[0]['tool']}";
-		}
-		else {
-			$tool = '';
-		}
-
 		$report .= $line;
-		$report .= sprintf("Generated on %s in %.4f s%s\n",
+		$report .= sprintf("Generated on %s in %.4f s using %s\n",
 			date('r'),
 			$totalTime,
 			$tool

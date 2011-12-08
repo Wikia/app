@@ -33,9 +33,10 @@ abstract class CodeLintReport {
 	 * Return report for a given set of results
 	 *
 	 * @param array $results results
+	 * @param string $tool info from the tool that returned results
 	 * @return string report
 	 */
-	abstract public function render($results);
+	abstract public function render($results, $tool);
 
 	/**
 	 * Get blame trac link for given file

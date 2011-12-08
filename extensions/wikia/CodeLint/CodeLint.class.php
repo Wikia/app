@@ -319,6 +319,15 @@ abstract class CodeLint {
 	public function formatReport($results, $format = 'text') {
 		$report = CodeLintReport::factory($format);
 
-		return $report->render($results);
+		// get the first row of results to get 'tool' entry
+		$firstRow = reset($results);
+		if ($firstRow && isset($firstRow['tool'])) {
+			$tool = $firstRow['tool'];
+		}
+		else {
+			$tool = '';
+		}
+
+		return $report->render($results, $tool);
 	}
 }
