@@ -10,8 +10,14 @@ var WelcomeBar = {
 
 		this.bar = $('<div>', {id: 'WelcomeBar'}).
 			html(content).
-			appendTo('#WikiaHeader').
-			slideDown(1000);
+			insertBefore('#WikiaHeader').
+			slideDown(1000).
+			// an extra blink
+			delay(1000).
+			animate({'opacity': 0.2}, 100).delay(100).
+			animate({'opacity': 1}, 100).
+			animate({'opacity': 0.2}, 100).delay(100).
+			animate({'opacity': 1}, 100);
 
 		this.bar.children('.close').bind('click', $.proxy(this.close, this));
 	},

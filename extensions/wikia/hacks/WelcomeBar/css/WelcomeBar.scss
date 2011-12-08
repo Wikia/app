@@ -1,4 +1,5 @@
 @import "../../../../../skins/oasis/css/core/color";
+@import "../../../../../skins/oasis/css/core/layout";
 
 $welcome-bar-background: $color-buttons;
 $welcome-bar-color: $color-button-text;
@@ -8,7 +9,9 @@ $welcome-bar-color: $color-button-text;
 	color: $welcome-bar-color;
 	display: none;
 	font-size: 1.2em;
+	margin: 0 auto;
 	padding: 10px 15px;
+	width: $width-outside - 20px;
 	> a {
 		color: $welcome-bar-color;
 		text-decoration: underline;
