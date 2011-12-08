@@ -53,48 +53,51 @@ class JSSnippets {
 		 */
 		$js = "";
 		$generateJSSnippet = false;
-		
-		if ( $filters && !is_array( $filters ) ) {
+		$filterIsSet = !empty( $this->filters );
+		$stackFiltersSet = !empty( $filters );
+
+		if ( $stackFiltersSet && !is_array( $filters ) ) {
 			$filters = array( $filters );
 		}
 
 		//check wether this stack should be added
-		//both are empty
-		if ( !$this->filters && !$filters) {
+		//both are empty or filters set to output all stacks
+		if (
+			( !$filterIsSet || in_array( self::FILTER_NONE, $this->filters ) ) &&
+			( !$stackFiltersSet || in_array( self::FILTER_NONE, $filters ) )
+		) {
 			$generateJSSnippet = true;
-		//if set filter is set to output all stacks
-		} else if ( $this->filters && in_array( self::FILTER_NONE, $this->filters ) ) {
-			$generateJSSnippet = true;
-		//filter add to stack is matching set filters
-		} else if( $this->filters && $filters ) {
-			if ( array_intersect( $this->filters, $filters ) ) {
+		} elseif ( $filterIsSet && $stackFiltersSet ) {
+			$intersection = array_intersect( $this->filters, $filters );
+
+			if ( !empty( $intersection ) ) {
 				$generateJSSnippet = true;
 			}
 		}
-		
+
 		if ( $generateJSSnippet ) {
 			$entry = array(
 				'dependencies' => array(),
 				'loaders' => '',
 				'callback' => '',
 			);
-			
+
 			// add static files
 			foreach($dependencies as $dependency) {
 				$entry['dependencies'][] = Xml::encodeJsVar($dependency);
 			}
-	
+
 			// add libraries loaders / dependency functions
 			if (!empty($loaders)) {
 				$entry['loaders'] = ',getLoaders:function(){return [' . implode(',', $loaders) . ']}';
 			}
-	
+
 			// add callback
 			if (!is_null($callback)) {
 				$optionsJSON = is_null($options) ? '' : (',options:' . Wikia::json_encode($options));
 				$entry['callback'] = ',callback:function(json){' . $callback .'(json)},id:' . Xml::encodeJsVar($callback) . $optionsJSON;
 			}
-				
+
 			// generate JS snippet
 			$js = Html::inlineScript('JSSnippetsStack.push({'.
 				'dependencies:[' . implode(',', $entry['dependencies']) . ']' .
@@ -103,7 +106,6 @@ class JSSnippets {
 			'})');
 		}
 
-	
 		wfProfileOut(__METHOD__);
 		return $js;
 	}
