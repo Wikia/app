@@ -938,8 +938,7 @@ if( in_array( 'user_properties', $wgSharedTables ) ) {
 /**
  * predis client initialization and redis initialization
  */
-$wgAutoloadClasses[ 'Predis_Client' ] = "$IP/lib/predis/Predis.php";
-
+include "$IP/lib/predis/Predis.php";
 $wgRedis = new Predis_Client( array(
 	array( 'host' => '127.0.0.1', 'port' => 6379 ),
 ));
