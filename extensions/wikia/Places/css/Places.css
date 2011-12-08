@@ -6,6 +6,10 @@
 	cursor:pointer;
 }
 
+.wikiamobile #WikiaMainContent .placemap .thumbcaption{
+	display:none;
+}
+
 .placemap .geo {
 	display:none;
 }
