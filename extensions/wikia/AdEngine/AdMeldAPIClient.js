@@ -8,8 +8,7 @@ var AdMeldAPIClient = {
 		'LEFT_SKYSCRAPER_2':    {size:'160x600', placement:'test_btf_right', ad:null, pixels: null},
 		'PREFOOTER_LEFT_BOXAD': {size:'300x250', placement:'test_btf',       ad:null, pixels: null},
 		'PREFOOTER_RIGHT_BOXAD':{size:'300x250', placement:'test_btf_right', ad:null, pixels: null}
-	},
-	enable_pixels:false
+	}
 };
 
 AdMeldAPIClient.log = function(msg, level) {
@@ -43,7 +42,7 @@ AdMeldAPIClient.getAd = function(slotname) {
 	}
 	
 	try {
-		return this.slots[slotname].ad.creative + (this.enable_pixels ? this.slots[slotname].pixels.join("\n") : '');
+		return this.slots[slotname].ad.creative + this.slots[slotname].pixels.join("\n");
 	} catch(e) {
 		this.log('Error in getAd ' + slotname + ', returning null', 3);
 		this.track(['error', 'get_ad', slotname], 'error');
@@ -134,8 +133,6 @@ AdMeldAPIClient.callback = function(data) {
 		return false;
 	}
 	
-	this.track(['pixels', slot, data.pixels.length]); // temporary?
-
 	return true;
 };
 
@@ -215,8 +212,4 @@ AdMeldAPIClient.roundBidForDART = function(bid) {
 
 if (!(top.wgUserName && !top.wgUserShowAds) && top.wgEnableAdMeldAPIClient) {
 	top.AdMeldAPIClient.init();
-
-	if (top.wgEnableAdMeldAPIClientPixels) {
-		top.AdMeldAPIClient.enable_pixels = true;
-	}
 }
