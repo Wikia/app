@@ -20,3 +20,5 @@ $app->registerClass('ShareButton', "$dir/ShareButton.class.php");
 $app->registerClass('ShareButtonFacebook', "$dir/providers/ShareButtonFacebook.class.php");
 $app->registerClass('ShareButtonGooglePlus', "$dir/providers/ShareButtonGooglePlus.class.php");
 $app->registerClass('ShareButtonTwitter', "$dir/providers/ShareButtonTwitter.class.php");
+$app->registerClass('ShareButtonMailController', "$dir/modules/ShareButtonMailController.class.php");
+$app->registerClass('ShareButtonMail', "$dir/providers/ShareButtonMail.class.php");
