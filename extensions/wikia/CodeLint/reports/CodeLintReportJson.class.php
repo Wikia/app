@@ -18,7 +18,7 @@ class CodeLintReportJson extends CodeLintReport {
 	 * @param array $results results
 	 * @return string report
 	 */
-	public function render($results) {
+	public function render($results, $tool) {
 		return json_encode($results);
 	}
 }

@@ -18,7 +18,7 @@ class CodeLintReportHtml extends CodeLintReport {
 	 * @param array $results results
 	 * @return string report
 	 */
-	public function render($results) {
+	public function render($results, $tool) {
 		$tmpl = new EasyTemplate(dirname(__FILE__) . '/templates');
 		$totalTime = 0;
 
@@ -33,8 +33,8 @@ class CodeLintReportHtml extends CodeLintReport {
 			'totalTime' => $totalTime,
 		);
 
-		if (!empty($results[0]['tool'])) {
-			$stats['tool'] = $results[0]['tool'];
+		if ($tool !== '') {
+			$stats['tool'] = $tool;
 		}
 
 		$tmpl->set('results', $results);
