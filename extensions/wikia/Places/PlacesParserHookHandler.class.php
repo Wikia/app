@@ -129,7 +129,9 @@ class PlacesParserHookHandler {
 			array(
 				'$.loadGoogleMaps'
 			),
-			'Places.init'
+			'Places.init',
+			null,
+			array(JSSnippets::FILTER_NONE, 'wikiamobile')
 		);
 
 		return $html;
