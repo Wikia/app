@@ -34,6 +34,8 @@ var PlacesEditor = {
 		$.showCustomModal(modalTitle, html,
 			{
 				id: 'PlacesEditor',
+				width: 980,
+				height: 500,
 				buttons: [{
 					id: 'ok',
 					defaultButton: true,
@@ -75,6 +77,9 @@ var PlacesEditor = {
 		var form = $('#PlacesEditorWrapper form'),
 			queryField = form.find('input[type="text"]');
 
+		// get google maps key
+		this.googleMapsKey = $('#GoogleMapsKey').val();
+
 		// setup search results
 		this.searchResults = form.children('ul');
 		this.searchResults.delegate('li > a', 'click', $.proxy(function(ev) {
@@ -100,7 +105,7 @@ var PlacesEditor = {
 
 		// this still uses V2 of GoogleMaps API - v3 lacks JSONP support
 		$.getJSON("http://maps.google.com/maps/geo?" +
-			"output=json&q=" + encodeURIComponent(query) + "&key=" + wgGoogleMapsKey + "&callback=?",
+			"output=json&q=" + encodeURIComponent(query) + "&key=" + this.googleMapsKey + "&callback=?",
 			 function(data) {
 				$().log(data, 'Places results');
 				callback((data && data.Placemark) || []);

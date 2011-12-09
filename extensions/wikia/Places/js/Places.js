@@ -76,14 +76,34 @@ var Places = Places || (function(){
 
 			if(geoButton.length){
 				geoButton.bind('click', function(){
-					var check = getPosition();
-
-					if(check){
-
+					if(isWikiaMobile){
+						// TODO: support mobile localisation
 					}else{
-						$.showModal(
-							$.msg('places-geolocation-modal-error-title'),
-							'<p>' + $.msg('places-geolocation-modal-not-available') + '</p>'
+						// lazy load the editor
+						$.getResources([
+								$.loadGoogleMaps,
+								function(cb) {$.getMessages('Places', cb);},
+								wgExtensionsPath + '/wikia/Places/js/PlacesEditor.js',
+								$.getSassCommonURL('extensions/wikia/Places/css/PlacesEditor.scss')
+							],
+							function() {
+								PlacesEditor.createNew(function(location) {
+									$().log(location, 'Places');
+
+									var data = {
+										lat: location.lat,
+										lon: location.lon,
+										width: $('#WikiaArticle img').eq(0).width(),
+										align: $('#WikiaArticle figure').eq(0).css('float'),
+										articleId: wgArticleId
+									};
+
+									// TODO: add progress indicator
+									$.nirvana.postJson('Places', 'saveNewPlaceToArticle', data, function() {
+										document.location.reload();
+									});
+								});
+							}
 						);
 					}
 				});

@@ -64,9 +64,7 @@ $app->registerHook('ArticleSaveComplete', 'PlacesHooks', 'onArticleSaveComplete'
 $app->registerHook('RTEUseDefaultPlaceholder', 'PlacesHooks', 'onRTEUseDefaultPlaceholder');
 $app->registerHook('OutputPageBeforeHTML', 'PlacesHooks', 'onOutputPageBeforeHTML');
 $app->registerHook('PageHeaderIndexExtraButtons', 'PlacesHooks', 'onPageHeaderIndexExtraButtons');
-
 $app->registerHook('EditPage::showEditForm:initial', 'PlacesHooks', 'onShowEditForm');
-$app->registerHook('EditPageMakeGlobalVariablesScript', 'PlacesHooks', 'onEditPageMakeGlobalVariablesScript');
 
 // for later
 // $app->registerHook('OutputPageMakeCategoryLinks', 'PlacesHooks', 'onOutputPageMakeCategoryLinks');
