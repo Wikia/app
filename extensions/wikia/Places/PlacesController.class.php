@@ -98,7 +98,7 @@ class PlacesController extends WikiaController {
 	 */
 	public function getGeolocationButton(){
 		
-		if (	!$this->app->wg->title->isContentPage() &&
+		if (	$this->app->wg->title->isContentPage() &&
 			F::build(
 				'PlaceStorage',
 				array( $this->app->wg->title ),
@@ -110,10 +110,10 @@ class PlacesController extends WikiaController {
 				'newFromTitle'
 			)->isGeoTaggingEnabledForArticle( $this->app->wg->title )
 		){
-			$this->skipRendering();
-		} else {
 			$this->response->setVal( 'jsSnippet', PlacesParserHookHandler::getJSSnippet() );
 			F::build( 'JSMessages' )->enqueuePackage( 'PlacesGeoLocationModal', JSMessages::INLINE );
+		} else {
+			$this->skipRendering();
 		}
 	}
 }
