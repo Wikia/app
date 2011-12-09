@@ -50,7 +50,6 @@ class PlacesHooks extends WikiaObject{
 		return true;
 	}
 
-
 	public function onParserFirstCallInit( Parser $parser ){
 		$parser->setHook( 'place', 'PlacesParserHookHandler::renderPlaceTag' );
 		$parser->setHook( 'places', 'PlacesParserHookHandler::renderPlacesTag' );
@@ -106,7 +105,7 @@ class PlacesHooks extends WikiaObject{
  	}
 
 	public function onRTEUseDefaultPlaceholder( $name, $params, $frame, $wikitextIdx ) {
-		if ($name !== 'place') {
+		if ( $name !== 'place' ) {
 			return true;
 		} else {
 			// store metadata index to be used when rendering placeholder for RTE

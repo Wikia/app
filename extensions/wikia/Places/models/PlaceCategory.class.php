@@ -55,6 +55,20 @@ class PlaceCategory {
 		return !empty( $this->isEnabled );
 	}
 
+	public function isGeoTaggingEnabledForArticle( Title $oTitle ){
+		// TODO: cache this;
+		$cats = array();
+		$dbw = $this->getDB();
+		$res = $dbw->select( 'categorylinks', 'cl_to', array( 'cl_from' => $oTitle->getArticleID() ), __METHOD__ );
+		foreach ( $res as $row ){
+			$oTmpTitle = Title::newFromText( $row->cl_to, NS_CATEGORY );
+			if ( PlaceCategory::newFromTitle( $oTmpTitle->getFullText() )->isGeoTaggingEnabled() ){
+				return true;
+			};
+		}
+		return false;
+	}
+
 	public function enableGeoTagging(){
 		$this->isEnabled = 1;
 		$this->store();

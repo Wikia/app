@@ -96,10 +96,19 @@ class PlacesController extends WikiaController {
 	 * Renders the geolocation button for adding coordinates to a page
 	 */
 	public function getGeolocationButton(){
-		//TODO: @Jakub, implement real category check here
-		$enabled = true;
-
-		if ( !$enabled ) {
+		
+		if (	!$this->app->wg->title->isContentPage() ||
+			F::build(
+				'PlaceStorage',
+				array( $this->app->wg->title ),
+				'newFromTitle'
+			)->getModel()->isEmpty() ||
+			!F::build(
+				'PlaceCategory',
+				array( $this->app->wg->title->getFullText() ),
+				'newFromTitle'
+			)->isGeoTaggingEnabledForArticle( $this->app->wg->title )
+		){
 			$this->skipRendering();
 		}
 	}
