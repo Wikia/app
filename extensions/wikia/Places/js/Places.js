@@ -39,10 +39,6 @@ var Places = Places || (function(){
 			}
 		);
 	}
-/**
-	function positionFound(position){
-		alert(JSON.stringify(position));
-	}
 
 	function positionError(error){
 		$.showModal(
@@ -51,15 +47,30 @@ var Places = Places || (function(){
 		);
 	}
 
-	function getPosition(){
+	function getPosition(callback){
 		if(navigator.geolocation){
-			navigator.geolocation.getCurrentPosition(positionFound, positionError);
+			navigator.geolocation.getCurrentPosition(callback, positionError);
 			return true;
 		}
 
 		return false;
 	}
-**/
+
+	function setArticleLocation(lat, lon) {
+		var data = {
+			lat: lat,
+			lon: lon,
+			width: $('#WikiaArticle img').eq(0).width(),
+			align: $('#WikiaArticle figure').eq(0).css('float'),
+			articleId: window.wgArticleId
+		};
+
+		// TODO: add progress indicator
+		$.nirvana.postJson('Places', 'saveNewPlaceToArticle', data, function() {
+			document.location.reload();
+		});
+	}
+
 	/** @public **/
 
 	return {
@@ -76,7 +87,11 @@ var Places = Places || (function(){
 			if(geoButton.length){
 				geoButton.bind('click', function(){
 					if(isWikiaMobile){
-						// TODO: support mobile localisation
+						// support mobile localisation
+						getPosition(function(geoposition) {
+							var location = geoposition.coords;
+							setArticleLocation(location.latitude, location.longitude);
+						});
 					}else{
 						// lazy load the editor
 						$.getResources([
@@ -87,20 +102,7 @@ var Places = Places || (function(){
 							],
 							function() {
 								PlacesEditor.createNew(function(location) {
-									$().log(location, 'Places');
-
-									var data = {
-										lat: location.lat,
-										lon: location.lon,
-										width: $('#WikiaArticle img').eq(0).width(),
-										align: $('#WikiaArticle figure').eq(0).css('float'),
-										articleId: wgArticleId
-									};
-
-									// TODO: add progress indicator
-									$.nirvana.postJson('Places', 'saveNewPlaceToArticle', data, function() {
-										document.location.reload();
-									});
+									setArticleLocation(location.lat, location.lon);
 								});
 							}
 						);
