@@ -54,7 +54,7 @@ $(document).ready(function() {
 		"aoColumnDefs": [ 
 			{ "bVisible": false,  "aTargets": [ 0 ], "bSortable" : false },
 			{ "bVisible": false,  "aTargets": [ 1 ], "bSortable" : false },
-			{ "bVisible": true,  "aTargets": [ 2 ], "bSortable" : false, "sClass": "lc-datetime" },			
+			{ "bVisible": true,  "aTargets": [ 2 ], "bSortable" : true, "sClass": "lc-datetime" },			
 			{
 				"fnRender": function ( oObj ) {
 					var row = '<span class="lc-row"><a href="' + oObj.aData[3] + '">' + oObj.aData[3] + '</a></span>';
@@ -64,9 +64,9 @@ $(document).ready(function() {
 					return row;
 				},
 				"aTargets": [ 3 ],
-				"bSortable": false
+				"bSortable": true
 			},
-			{ "sClass": "lc-datetime", "aTargets": [ 4 ], "bSortable" : false },
+			{ "sClass": "lc-datetime", "aTargets": [ 4 ], "bSortable" : true },
 			{
 				"fnRender": function ( oObj ) {
 					var row = '<div style="white-space:nowrap">';
@@ -98,6 +98,10 @@ $(document).ready(function() {
 			
 			var sortingCols = 0;
 			var iColumns	= 0;
+                        
+                        var _tmp = new Array();
+                        var sortColumns = new Array();
+			var sortOrder	= new Array();
 			
 			for ( i in aoData ) {
 				switch ( aoData[i].name ) {
@@ -108,6 +112,20 @@ $(document).ready(function() {
 					case 'iColumns'			: iColumns = aoData[i].value; break;
 					case 'iSortingCols'		: sortingCols = aoData[i].value; break;
 				}
+                                 
+                                if ( aoData[i].name.indexOf( 'iSortCol_', 0) !== -1 ) 
+					sortColumns.push(aoData[i].value);
+				
+				if ( aoData[i].name.indexOf( 'sSortDir_', 0) !== -1 ) 
+					sortOrder.push(aoData[i].value);
+			}
+                        
+                        if ( sortingCols > 0 ) {
+				for ( i = 0; i < sortingCols; i++ ) {
+					var info = columns[sortColumns[i]] + ":" + sortOrder[i];
+					_tmp.push(info);
+				}
+				order = _tmp.join('|');
 			}
 				
 			$.ajax( {

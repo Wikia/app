@@ -51,11 +51,11 @@ class LookupContribsAjax {
 		}
 	
 		$oLC = new LookupContribsCore($username);
-		if ( $oLC->checkUser() ) {		
+		if ( $oLC->checkUser() ) {
 			if ( empty($mode) ) {
 				$oLC->setLimit($limit);
 				$oLC->setOffset($offset);
-				$activity = $oLC->checkUserActivity($lookupUser);
+				$activity = $oLC->checkUserActivity($lookupUser, $order);
 				if ( !empty($activity) ) {
 					$result['iTotalRecords'] = intval($limit); #( isset( $records['cnt'] ) ) ?  intval( $records['cnt'] ) : 0;
 					$result['iTotalDisplayRecords'] = intval($activity['cnt']);
