@@ -4,13 +4,21 @@ $places-column-width: 300px;
 
 #PlacesEditorWrapper {
 	height: $places-editor-height;
+}
+#PlacesEditorColumn {
+	float: left;
+	margin-right: 10px;
+	width: $places-column-width - 10px;
 	> form {
-		float: left;
-		margin-right: 10px;
-		width: $places-column-width - 10px;
-		> input[type="text"] {
+		input[type="text"] {
 			display: block;
 			width: $places-column-width - 10px;
+		}
+		ul {
+			height: 200px;
+			margin: 5px 0;
+			overflow: auto;
+			padding: 10px;
 		}
 	}
 }

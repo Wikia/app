@@ -1,4 +1,9 @@
 var PlacesEditor = {
+	map : false,
+	markers: [],
+	currentMarker: false,
+	searchResults: false,
+
 	// use this function to create a new place
 	createNew: function(callback) {
 		this._show(false, callback);
@@ -33,9 +38,9 @@ var PlacesEditor = {
 					id: 'ok',
 					defaultButton: true,
 					message: $.msg('ok'),
-					handler: function() {
-
-					}
+					handler: $.proxy(function() {
+						var marker = this.getCurrentMarker();
+					}, this)
 				}],
 				callback: $.proxy(function() {
 					this.setupMap();
@@ -47,29 +52,38 @@ var PlacesEditor = {
 
 	setupMap: function() {
 		var mapConfig = {
-				'center': new google.maps.LatLng(0, 0),
-				'mapTypeId': google.maps.MapTypeId.ROADMAP,
-				'zoom': 5
-			},
-			map = new google.maps.Map(
-				$('#PlacesEditorMap').get(0),
-				mapConfig
-			);
+			'center': new google.maps.LatLng(0, 0),
+			'mapTypeId': google.maps.MapTypeId.ROADMAP,
+			'zoom': 5
+		};
+
+		this.map = new google.maps.Map(
+			$('#PlacesEditorMap').get(0),
+			mapConfig
+		);
 	},
 
 	setupForm: function() {
-		var form = $('#PlacesEditorWrapper > form'),
-			places = form.children('ul'),
+		var form = $('#PlacesEditorWrapper form'),
 			queryField = form.find('input[type="text"]');
 
+		// setup search results
+		this.searchResults = form.children('ul');
+		this.searchResults.delegate('li > a', 'click', $.proxy(function(ev) {
+			var markerId = parseInt($(ev.target).attr('data-id'));
+			this.selectMarker(markerId);
+		}, this));
+
+		// setup geolocation form
 		form.bind('submit', $.proxy(function(ev) {
 			ev.preventDefault();
-			var query = queryField.val();
 
-			this.findPlaces(query, $.proxy(function() {
-
-			}, this));
+			this.searchResults.html('');
+			this.findPlaces(queryField.val(), $.proxy(this.onSearchResults, this));
 		}, this));
+
+		// setup browser geolocation button
+		$('#PlacesEditorMyLocation').bind('click', $.proxy(this.onGetMyLocation, this));
 	},
 
 	findPlaces: function(query, callback) {
@@ -77,9 +91,93 @@ var PlacesEditor = {
 
 		// this still uses V2 of GoogleMaps API - v3 lacks JSONP support
 		$.getJSON("http://maps.google.com/maps/geo?" +
-			"output=json&q=" +encodeURIComponent(query) + "&key=" + wgGoogleMapsKey + "&callback=?",
+			"output=json&q=" + encodeURIComponent(query) + "&key=" + wgGoogleMapsKey + "&callback=?",
 			 function(data) {
 				$().log(data, 'Places results');
+				callback((data && data.Placemark) || []);
  			});
+	},
+
+	onSearchResults: function(results) {
+		// no results
+		if (!results.length) {
+			return;
+		}
+
+		var html = '',
+			result,
+			cords;
+
+		this.resetMarkers();
+
+		// iterate through results and create pointers
+		for(var n=0, len=results.length; n<len; n++) {
+			result = results[n];
+			cords = result.Point.coordinates;
+
+			// add to results
+			html += '<li><a href="#" data-id="' + n + '" data-lat="' + cords[1] + '" data-lon="' + cords[0] + '">' + result.address + '</li>';
+
+			// add to markers
+			this.addMarker(result.address, cords[1], cords[0]);
+		}
+
+		this.searchResults.html(html);
+		this.selectMarker(0);
+	},
+
+	onGetMyLocation: function(ev) {
+		ev.preventDefault();
+
+		if (typeof navigator.geolocation == 'undefined') {
+			alert('Your browser doesn\'t support this feature');
+			return;
+		}
+
+		navigator.geolocation.getCurrentPosition($.proxy(function(position) {
+			var coords = position.coords,
+				markerId = this.addMarker('', coords.latitude, coords.longitude);
+
+			this.selectMarker(markerId);
+		}, this));
+	},
+
+	resetMarkers: function() {
+		var marker;
+
+		for(var n=0, len=this.markers.length; n<len; n++) {
+			marker = this.markers[n];
+			marker.setMap(null);
+			delete marker;
+		};
+
+		this.markers = [];
+	},
+
+	addMarker: function(label, lat, lon) {
+		var marker = new google.maps.Marker({
+			position: new google.maps.LatLng(lat, lon),
+			map: this.map,
+			title: label
+		});
+
+		this.markers.push(marker);
+
+		// return ID of stored marker
+		return this.markers.length - 1;
+	},
+
+	selectMarker: function(markerId) {
+		var marker = this.markers[markerId],
+			cords = marker.getPosition();
+
+		this.map.setCenter(cords);
+		this.map.setZoom(15);
+
+		this.currentMarker = marker;
+	},
+
+	getCurrentMarker: function() {
+		return this.currentMarker;
 	}
 }
