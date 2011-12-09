@@ -19,11 +19,9 @@ function fnDomainHook( &$article, &$text ) {
 	global $wgTitle;
 	global $wgParser;
 
-	if( !$wgTitle->exists() ||
-		$wgTitle->getNamespace() != NS_MAIN ||
-		$wgTitle->isRedirect() ||
-		!preg_match($exDomainList, $wgTitle->getText() )
-	) {
+	$condition = !$wgTitle->exists() || $wgTitle->getNamespace() != NS_MAIN || $wgTitle->isRedirect() || !preg_match( $exDomainList, $wgTitle->getText() );
+
+	if( $condition ) {
 		return true;
 	}
 
