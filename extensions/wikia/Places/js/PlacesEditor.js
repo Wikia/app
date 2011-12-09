@@ -115,20 +115,20 @@ var PlacesEditor = {
 
 		var html = '',
 			result,
-			cords;
+			coords;
 
 		this.resetMarkers();
 
 		// iterate through results and create pointers
 		for(var n=0, len=results.length; n<len; n++) {
 			result = results[n];
-			cords = result.Point.coordinates;
+			coords = result.Point.coordinates;
 
 			// add to results
-			html += '<li><a href="#" data-id="' + n + '" data-lat="' + cords[1] + '" data-lon="' + cords[0] + '">' + result.address + '</li>';
+			html += '<li><a href="#" data-id="' + n + '" data-lat="' + coords[1] + '" data-lon="' + coords[0] + '">' + result.address + '</li>';
 
 			// add to markers
-			this.addMarker(result.address, cords[1], cords[0]);
+			this.addMarker(result.address, coords[1], coords[0]);
 		}
 
 		this.searchResults.html(html);
