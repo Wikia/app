@@ -1,3 +1,4 @@
+/*global google: true*/
 var PlacesEditor = {
 	map : false,
 	markers: [],

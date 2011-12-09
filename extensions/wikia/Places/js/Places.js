@@ -1,4 +1,4 @@
-/*global google: true*/
+/*global google: true, WikiaMobile: true, PlacesEditor: true*/
 var Places = Places || (function(){
 	/** @private **/
 
@@ -32,24 +32,14 @@ var Places = Places || (function(){
 						'id': 'places-modal',
 						'width' : ($(window).width() - 100),
 						'callback' : function () {
-							Places.displayDynamic(res)
+							Places.displayDynamic(res);
 						}
 					});
 				}
 			}
 		);
 	}
-
-	function getPosition(){
-		if(navigator.geolocation){
-			navigator.geolocation.getCurrentPosition(positionFound, positionError);
-
-			return true;
-		}
-
-		return false;
-	}
-
+/**
 	function positionFound(position){
 		alert(JSON.stringify(position));
 	}
@@ -61,6 +51,15 @@ var Places = Places || (function(){
 		);
 	}
 
+	function getPosition(){
+		if(navigator.geolocation){
+			navigator.geolocation.getCurrentPosition(positionFound, positionError);
+			return true;
+		}
+
+		return false;
+	}
+**/
 	/** @public **/
 
 	return {

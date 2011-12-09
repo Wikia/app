@@ -1,15 +1,14 @@
-/*global google: true*/
 var GeoEnableButton = {
 	offButton: null,
 	onButton: null,
 	init: function() {
-		$().log('asdadad1');
-		$('#WikiaPageHeader').delegate('a[data-id="places-category-switch-off"]', 'click', GeoEnableButton.switchOn )
-		$('#WikiaPageHeader').delegate('a[data-id="places-category-switch-on"]', 'click', GeoEnableButton.switchOff )
+		$('#WikiaPageHeader').
+			delegate('a[data-id="places-category-switch-off"]', 'click', GeoEnableButton.switchOn).
+			delegate('a[data-id="places-category-switch-on"]', 'click', GeoEnableButton.switchOff);
 	},
 	switchOn: function(e){
 		e.preventDefault();
-		GeoEnableButton.doSwitch( 
+		GeoEnableButton.doSwitch(
 			$('a[data-id="places-category-switch-off"]'),
 			$('a[data-id="places-category-switch-on"]'),
 			'enableGeoTagging'
@@ -17,7 +16,7 @@ var GeoEnableButton = {
 	},
 	switchOff: function(e){
 		e.preventDefault();
-		GeoEnableButton.doSwitch( 
+		GeoEnableButton.doSwitch(
 			$('a[data-id="places-category-switch-on"]'),
 			$('a[data-id="places-category-switch-off"]'),
 			'disableGeoTagging'
