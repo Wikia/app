@@ -12,6 +12,45 @@ class PlacesHooks extends WikiaObject{
 		$this->modelToSave = $model;
 	}
 
+	public function onPageHeaderIndexExtraButtons( $extraButtons ){
+		$app = F::app();
+		if ( $app->wg->title->getNamespace() == NS_CATEGORY ){
+			$isGeotaggingEnabled =
+				F::build(
+					'PlaceCategory',
+					array( $app->wg->title->getFullText() ),
+					'newFromTitle'
+				)->isGeoTaggingEnabled();
+
+			$commonClasses = 'secondary geoEnableButton';
+			$extraButtons[] = wfRenderModule( 'MenuButton',
+				'Index',
+				array(
+					'action' => array(
+						"href" => "#",
+						"text" => wfMsg('places-category-switch')
+					),
+					'class' =>  !$isGeotaggingEnabled ? $commonClasses.' disabled': $commonClasses,
+					'name' => 'places-category-switch-on'
+				)
+			);
+			$extraButtons[] = wfRenderModule('MenuButton',
+				'Index',
+				array(
+					'action' => array(
+						"href" => "#",
+						"text" => wfMsg('places-category-switch-off')
+					),
+					'class' => $isGeotaggingEnabled ? $commonClasses.' disabled': $commonClasses,
+					'name' => 'places-category-switch-off'
+				)
+			);
+		}
+		// do hook logic;
+		return true;
+	}
+
+
 	public function onParserFirstCallInit( Parser $parser ){
 		$parser->setHook( 'place', 'PlacesParserHookHandler::renderPlaceTag' );
 		$parser->setHook( 'places', 'PlacesParserHookHandler::renderPlacesTag' );
@@ -31,6 +70,11 @@ class PlacesHooks extends WikiaObject{
 			if ($model instanceof PlaceModel && !$model->isEmpty()) {
 				$out->addMeta( 'geo.position', implode( ',', $model->getLatLon() ) );
 			}
+		}
+
+		if ( ( $title instanceof Title ) && ( $title->getNamespace() == NS_CATEGORY ) ){
+			$out->addScript( '<script src="' . F::app()->wg->extensionsPath . '/wikia/Places/js/GeoEnableButton.js"></script>' );
+			$out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/Places/css/GeoEnableButton.scss' ) );
 		}
 
 		$this->wf->profileOut( __METHOD__ );

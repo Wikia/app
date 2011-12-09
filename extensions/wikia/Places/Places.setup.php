@@ -40,6 +40,7 @@ $app->registerClass('PlacesParserHookHandler', $dir . '/PlacesParserHookHandler.
  */
 
 $app->registerClass('PlacesController', $dir . '/PlacesController.class.php');
+$app->registerClass('PlacesCategoryController', $dir . '/PlacesCategoryController.class.php');
 $app->registerClass('PlacesEditorController', $dir . '/PlacesEditorController.class.php');
 $app->registerClass('PlacesSpecialController', $dir . '/PlacesSpecialController.class.php');
 $app->registerSpecialPage('Places', 'PlacesSpecialController');
@@ -51,6 +52,7 @@ $app->registerSpecialPage('Places', 'PlacesSpecialController');
 $app->registerClass('PlacesModel', $dir . '/models/PlacesModel.class.php');
 $app->registerClass('PlaceModel', $dir . '/models/PlaceModel.class.php');
 $app->registerClass('PlaceStorage', $dir . '/models/PlaceStorage.class.php');
+$app->registerClass('PlaceCategory', $dir . '/models/PlaceCategory.class.php');
 
 /**
  * hooks
@@ -61,6 +63,7 @@ $app->registerHook('BeforePageDisplay', 'PlacesHooks', 'onBeforePageDisplay');
 $app->registerHook('ArticleSaveComplete', 'PlacesHooks', 'onArticleSaveComplete');
 $app->registerHook('RTEUseDefaultPlaceholder', 'PlacesHooks', 'onRTEUseDefaultPlaceholder');
 $app->registerHook('OutputPageBeforeHTML', 'PlacesHooks', 'onOutputPageBeforeHTML');
+$app->registerHook('PageHeaderIndexExtraButtons', 'PlacesHooks', 'onPageHeaderIndexExtraButtons');
 
 $app->registerHook('EditPage::showEditForm:initial', 'PlacesHooks', 'onShowEditForm');
 $app->registerHook('EditPageMakeGlobalVariablesScript', 'PlacesHooks', 'onEditPageMakeGlobalVariablesScript');
@@ -81,5 +84,6 @@ F::build('JSMessages')->registerPackage('Places', array(
 /**
  * constructors
  */
+F::addClassConstructor( 'PlacesCategoryController', array( 'app' => $app ) );
 F::addClassConstructor( 'PlacesController', array( 'app' => $app ) );
 F::addClassConstructor( 'PlaceStorage', array(), 'newFromId' );

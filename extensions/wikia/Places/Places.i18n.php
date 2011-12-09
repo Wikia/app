@@ -12,7 +12,10 @@ $messages['en'] = array(
 	'places-editor-title-edit' => 'Edit a geotag',
 	'places-geolocation-button-label' => 'Add location',
 	'places-error-no-article' => 'You have to specify an article',
-	'places-error-place-already-exists' => 'Article is already geo tagged'
+	'places-error-place-already-exists' => 'Article is already geo tagged',
+	'places-updated-geolocation' => 'Geotagged this article',
+	'places-category-switch' => 'Disable geotagging',
+	'places-category-switch-off' => 'Enable geotagging',
 );
 
 /** French (Français)
