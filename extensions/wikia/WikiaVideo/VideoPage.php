@@ -506,21 +506,17 @@ class VideoPage extends Article {
 			$ratios = explode( "x", $this->getTextRatio() );
 			$width = intval( trim( $ratios[0] ) );
 		}
-		
-		if ($align) {
-			$align = 't'.$align;
-		}
 
 		$code = $this->getEmbedCode($width, false, false, false);
 
 		if(empty($thumb)) {
-			return "<div class=\"{$align}\" style=\"width:{$width}px\">{$code}</div>";
+			return "<div class=\"t{$align}\" style=\"width:{$width}px\">{$code}</div>";
 		}
 
 		$url = $this->mTitle->getLocalURL('');
 
 		$s = <<<EOD
-<div class="thumb {$align}">
+<div class="thumb t{$align}">
 	<div class="thumbinner" style="width:{$width}px;">
 		{$code}
 		<div class="thumbcaption">
@@ -566,7 +562,6 @@ EOD;
 				break;
 
 			case 'right':
-			default:
 				if (empty($thumb)) {
 					$videoClass[] = 'alignRight';
 				}
