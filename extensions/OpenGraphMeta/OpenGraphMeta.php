@@ -79,17 +79,25 @@ function efOpenGraphMetaPageHook( &$out, &$sk ) {
 	}
 
 	if ( isset($out->mMainImage) && ($out->mMainImage !== false) ) {
-		$meta["og:image"] = wfExpandUrl($out->mMainImage->createThumb(100*3, 100));
+		if( is_object($out->mMainImage) ){
+			$meta["og:image"] = wfExpandUrl($out->mMainImage->createThumb(100*3, 100));
+		} else {
+			// In some edge-cases we won't have defined an object but rather a full URL.
+			$meta["og:image"] = $out->mMainImage;
+		}
 	} else if ( $isMainpage ) {
 		$meta["og:image"] = $wgLogo;
 	}
-	if ( isset($out->mDescription) ) // set by Description2 extension, install it if you want proper og:description support
+	if ( isset($out->mDescription) ) {// set by Description2 extension, install it if you want proper og:description support
 		$meta["og:description"] = $out->mDescription;
+	}
 	$meta["og:url"] = $title->getFullURL();
-	if ( $egFacebookAppId ) 
+	if ( $egFacebookAppId ) {
 		$meta["fb:app_id"] = $egFacebookAppId;
-	if ( $egFacebookAdmins )
+	}
+	if ( $egFacebookAdmins ) {
 		$meta["fb:admins"] = $egFacebookAdmins;
+	}
 	
 	foreach( $meta as $property => $value ) {
 		if ( $value ){
