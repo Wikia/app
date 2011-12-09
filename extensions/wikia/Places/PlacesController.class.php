@@ -112,6 +112,7 @@ class PlacesController extends WikiaController {
 		){
 			$this->skipRendering();
 		} else {
+			$this->response->setVal( 'jsSnippet', PlacesParserHookHandler::getJSSnippet() );
 			F::build( 'JSMessages' )->enqueuePackage( 'PlacesGeoLocationModal', JSMessages::INLINE );
 		}
 	}
