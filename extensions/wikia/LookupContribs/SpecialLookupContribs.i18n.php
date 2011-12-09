@@ -58,7 +58,8 @@ Check given username for possible typos.</p>',
 	'lookupcontribscontribtitleforuser' => 'Contributions for user:',
 	'lookupcontribsnormal' => 'recent',
 	'lookupcontribsfinal' => 'final',
-	'lookupcontribsall' => 'all'
+	'lookupcontribsall' => 'all',
+        'lookupcontribs-unknown' => 'Uknown',
 );
 
 /** Message documentation (Message documentation)
