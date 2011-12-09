@@ -10,6 +10,7 @@ $messages['en'] = array(
 	'places-toolbar-button-address' => 'Please provide address to use as a geo tag for this page',
 	'places-editor-title-create-new' => 'Add a geotag',
 	'places-editor-title-edit' => 'Edit a geotag',
+	'places-editor-show-my-location' => 'Take me to my location',
 	'places-geolocation-button-label' => 'Add location',
 
 	'places-geolocation-modal-add-title' => 'Add location',
@@ -104,6 +105,7 @@ $messages['pl'] = array(
 	'places-toolbar-button-address' => 'Podaj adres określający lokalizację tego artykułu',
 	'places-editor-title-create-new' => 'Dodaj lokalizację',
 	'places-editor-title-edit' => 'Edytuj lokalizację',
+	'places-editor-show-my-location' => 'Wskaż moją lokalizację',
 );
 
 /** Russian (Русский)

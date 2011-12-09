@@ -289,7 +289,6 @@ $.loadModalJS = function(callback) {
 }
 
 $.loadGoogleMaps = function(callback) {
-
 	window.onGoogleMapsLoaded = function() {
 		delete window.onGoogleMapsLoaded;
 		if (typeof callback === 'function') {
@@ -302,6 +301,10 @@ $.loadGoogleMaps = function(callback) {
 		typeof (window.google && google.maps),
 		function() {}
 	);
+
+	if (typeof (window.google && google.maps) != 'undefined') {
+		callback();
+	}
 }
 
 $.loadFacebookAPI = function(callback) {
@@ -1153,7 +1156,7 @@ jQuery.nirvana.sendRequest = function(attr) {
 	$().log(data, 'request to nirvana');
 
 	var url = (typeof attr.scriptPath == 'undefined') ? wgScriptPath:attr.scriptPath;
-	
+
 	$.ajax({
 		url: url + '/wikia.php?' + $.param({
 			//Iowa strips out POST parameters, Nirvana requires these to be set
