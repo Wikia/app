@@ -21,13 +21,13 @@ var PlacesEditor = {
 			method: 'getEditorModal',
 			format: 'html',
 			callback: $.proxy(function(html) {
-				this.onModalShow(model, html);
+				this.onModalShow(model, html, callback);
 			}, this)
 		});
 	},
 
 	// initialize the modal using HTML provided
-	onModalShow: function(model, html) {
+	onModalShow: function(model, html, okCallback) {
 		var createNew = (model === false),
 			modalTitle = $.msg(createNew ? 'places-editor-title-create-new' : 'places-editor-title-edit');
 
@@ -39,7 +39,15 @@ var PlacesEditor = {
 					defaultButton: true,
 					message: $.msg('ok'),
 					handler: $.proxy(function() {
-						var marker = this.getCurrentMarker();
+						var marker = this.getCurrentMarkerLocation();
+
+						$().log(marker, 'Places result');
+
+						if (typeof okCallback == 'function') {
+							okCallback(marker);
+						}
+
+						$('#PlacesEditor').closeModal();
 					}, this)
 				}],
 				callback: $.proxy(function() {
@@ -70,6 +78,7 @@ var PlacesEditor = {
 		// setup search results
 		this.searchResults = form.children('ul');
 		this.searchResults.delegate('li > a', 'click', $.proxy(function(ev) {
+			ev.preventDefault();
 			var markerId = parseInt($(ev.target).attr('data-id'));
 			this.selectMarker(markerId);
 		}, this));
@@ -169,15 +178,26 @@ var PlacesEditor = {
 
 	selectMarker: function(markerId) {
 		var marker = this.markers[markerId],
-			cords = marker.getPosition();
+			coords = marker.getPosition();
 
-		this.map.setCenter(cords);
+		this.map.setCenter(coords);
 		this.map.setZoom(15);
 
 		this.currentMarker = marker;
 	},
 
-	getCurrentMarker: function() {
-		return this.currentMarker;
+	getCurrentMarkerLocation: function() {
+		if (this.currentMarker !== false) {
+			var coords = this.currentMarker.getPosition();
+
+			return {
+				lat: coords.lat().toFixed(8),
+				lon: coords.lng().toFixed(8),
+				label: this.currentMarker.getTitle()
+			};
+		}
+		else {
+			return false;
+		}
 	}
 }
