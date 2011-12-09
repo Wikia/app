@@ -15,14 +15,14 @@ class WikiaResponse {
 	 * headers
 	 */
 	const ERROR_HEADER_NAME = 'X-Wikia-Error';
-	
+
 	/**
 	 * Response codes
 	 */
 	const RESPONSE_CODE_OK = 200;
 	const RESPONSE_CODE_ERROR = 501;
 	const RESPONSE_CODE_FORBIDDEN = 403;
-	
+
 	/**
 	 * Output formats
 	 */
@@ -31,13 +31,13 @@ class WikiaResponse {
 	const FORMAT_JSON = 'json';
 	const FORMAT_JSONP = 'jsonp';
 	const FORMAT_INVALID = 'invalid';
-	
+
 	/**
 	 * Cache targets
 	 */
 	const CACHE_TARGET_BROWSER = 0;
 	const CACHE_TARGET_VARNISH = 1;
-	
+
 	/**
 	 * View object
 	 * @var WikiaView
@@ -97,7 +97,7 @@ class WikiaResponse {
 		$this->view = $view;
 		$this->view->setResponse( $this );
 	}
-	
+
 	/**
 	 * gets requested skin name
 	 * @return String
@@ -235,7 +235,7 @@ class WikiaResponse {
 
 	public function setFormat( $value ) {
 		if ( $value == self::FORMAT_HTML || $value == self::FORMAT_JSON || $value == self::FORMAT_RAW || $value == self::FORMAT_JSONP ) {
-			$this->format = $value; 
+			$this->format = $value;
 		} else {
 			$this->format = self::FORMAT_INVALID;
 		}
@@ -256,7 +256,7 @@ class WikiaResponse {
 		 'replace' => $replace
 		);
 	}
-	
+
 	/**
 	 * Sets correct cache headers for the browser, Varnish or both
 	 *
@@ -268,26 +268,26 @@ class WikiaResponse {
 	public function setCacheValidity( $expiryTime = null, $maxAge = null, Array $targets = array() ){
 		$targetBrowser = ( in_array( self::CACHE_TARGET_BROWSER, $targets ) );
 		$targetVarnish = ( in_array( self::CACHE_TARGET_VARNISH, $targets ) );
-		
+
 		if ( !is_null( $expiryTime ) ){
 			$expiryTime = (int) $expiryTime;
-			
+
 			if ( $targetBrowser ) {
 				$this->setHeader( 'Expires', gmdate( 'D, d M Y H:i:s', time() + $expiryTime ) . ' GMT', true);
 			}
-			
+
 			if ( $targetVarnish) {
 				$this->setHeader( 'X-Pass-Expires', gmdate( 'D, d M Y H:i:s', time() + $expiryTime ) . ' GMT', true );
 			}
 		}
-		
+
 		if( !is_null( $maxAge ) ) {
 			$maxAge = (int) $maxAge;
-			
+
 			if ( $targetBrowser ) {
 				$this->setHeader( 'Cache-Control', "max-age={$maxAge}", true );
 			}
-			
+
 			if ( $targetVarnish) {
 				$this->setHeader( 'X-Pass-Cache-Control', "max-age={$maxAge}", true );
 			}
@@ -296,7 +296,7 @@ class WikiaResponse {
 
 	public function getHeader( $name ) {
 		$result = array();
-		
+
 		foreach( $this->headers as $key => $header ) {
 			if( $header['name'] == $name ) {
 				$result[] = $header;
@@ -322,7 +322,7 @@ class WikiaResponse {
 		if( isset( $this->data[$key] ) ) {
 			return $this->data[$key];
 		}
-		
+
 		return $default;
 	}
 
@@ -363,6 +363,8 @@ class WikiaResponse {
 			$this->setContentType( 'application/json; charset=utf-8' );
 		} else if ( $this->getFormat() == WikiaResponse::FORMAT_JSONP ) {
 			$this->setContentType( 'text/javascript; charset=utf-8' );
+		} else if ( $this->getFormat() == WikiaResponse::FORMAT_HTML ) {
+			$this->setContentType( 'text/html; charset=utf-8' );
 		}
 
 		foreach ( $this->getHeaders() as $header ) {
@@ -371,18 +373,18 @@ class WikiaResponse {
 
 		if ( !empty( $this->code ) ) {
 			$msg = '';
-			
+
 			//standard HTTP response codes get automatically described by PHP and those descriptions shouldn't be overridden, ever
 			//use a custom error code if you need a custom code description
 			if( !$this->isStandardHTTPCode( $this->code ) ) {
 				if ( $this->hasException() ) {
 					$msg = ' ' . $this->getException()->getMessage();
 				}
-				
+
 				if(empty($msg))
 					$msg = ' Unknown';
 			}
-			
+
 			$this->sendHeader( "HTTP/1.1 {$this->code}{$msg}", false );
 		}
 
@@ -390,7 +392,7 @@ class WikiaResponse {
 			$this->sendHeader( "Content-Type: " . $this->contentType, true );
 		}
 	}
-	
+
 	/**
 	 * @brief redirects to another URL
 	 *
@@ -399,7 +401,7 @@ class WikiaResponse {
 	public function redirect( $url ){
 		$this->sendHeader( "Location: " . $url, true );
 	}
-	
+
 	public function addAsset( $assetName ){
 		if ( $this->format == 'html' ) {
 			//check if is a configured package
@@ -407,18 +409,18 @@ class WikiaResponse {
 			$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
 			$type = $app->getAssetsConfig()->getGroupType( $assetName );
 			$isGroup = true;
-			
+
 			if ( empty( $type ) ) {
 				//single asset
 				$isGroup = false;
-				
+
 				//get the resource type from the file extension
 				$tokens = explode( '.', $assetName );
 				$tokensCount = count( $tokens );
-				
+
 				if ( $tokensCount > 1 ) {
 					$extension = strtolower( $tokens[$tokensCount - 1] );
-					
+
 					if( in_array( $extension, $assetsManager->getAllowedAssetExtensions() ) ){
 						switch ( $extension ) {
 							case 'js':
@@ -434,14 +436,14 @@ class WikiaResponse {
 					}
 				}
 			}
-			
+
 			//asset type not recognized
 			if ( empty( $type ) ) {
 				throw new WikiaException( 'Unknown asset type' );
 			}
-			
+
 			$sources = array();
-			
+
 			if ( $isGroup ) {
 				// Allinone == 0 ? returns array of URLS : returns url string
 				$sources =  $assetsManager->getGroupCommonURL( $assetName );
@@ -452,7 +454,7 @@ class WikiaResponse {
 					$sources[] =  $assetsManager->getOneCommonURL( $assetName );
 				}
 			}
-			
+
 			foreach($sources as $src){
 				switch ( $type ) {
 					case AssetsManager::TYPE_CSS:
@@ -466,7 +468,7 @@ class WikiaResponse {
 			}
 		}
 	}
-	
+
 	private function isStandardHTTPCode($code){
 		return in_array( $code, array(
 			100, 101,
