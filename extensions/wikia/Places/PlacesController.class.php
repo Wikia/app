@@ -104,7 +104,7 @@ class PlacesController extends WikiaController {
 				array( $this->app->wg->title ),
 				'newFromTitle'
 			)->getModel()->isEmpty() &&
-			!F::build(
+			F::build(
 				'PlaceCategory',
 				array( $this->app->wg->title->getFullText() ),
 				'newFromTitle'
