@@ -1,5 +1,3 @@
-$().log('places edit page');
-
 if (window.mwCustomEditButtons) {
 	window.mwCustomEditButtons.push({
 		imageId: 'mw-editbutton-places',
@@ -9,9 +7,17 @@ if (window.mwCustomEditButtons) {
 			ev.preventDefault();
 
 			// lazy load the editor
-			$.getScript(wgExtensions + '/wikia/Places/js/PlacesEditor.js', function() {
-				PlacesEditor.init();
-			});
+			$.getResources([
+					$.loadGoogleMaps,
+					wgExtensionsPath + '/wikia/Places/js/PlacesEditor.js',
+					$.getSassCommonURL('extensions/wikia/Places/css/PlacesEditor.scss')
+				],
+				function() {
+					PlacesEditor.createNew(function(model) {
+						$().log(model, 'Places');
+					});
+				}
+			);
 		}
 	});
 }

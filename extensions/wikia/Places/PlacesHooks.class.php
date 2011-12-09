@@ -91,7 +91,7 @@ class PlacesHooks extends WikiaObject{
 	public function onShowEditForm( EditPage $editpage ){
 		// add edit toolbar button for adding places
 		$src = AssetsManager::getInstance()->getOneCommonURL( 'extensions/wikia/Places/js/PlacesEditPage.js' );
-		$this->wg->Out->addScript( "<script type=\"{$app->wg->JsMimeType}\" src=\"{$src}\"></script>" );
+		$this->wg->Out->addScript( "<script type=\"{$this->app->wg->JsMimeType}\" src=\"{$src}\"></script>" );
 
 		// load JS messages
 		F::build( 'JSMessages' )->enqueuePackage( 'Places', JSMessages::INLINE );

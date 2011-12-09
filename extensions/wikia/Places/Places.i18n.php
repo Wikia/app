@@ -8,9 +8,9 @@ $messages['en'] = array(
 
 	'places-toolbar-button-tooltip' => 'Click to add geo tag to this page',
 	'places-toolbar-button-address' => 'Please provide address to use as a geo tag for this page',
-
+	'places-editor-title-create-new' => 'Add a geotag',
+	'places-editor-title-edit' => 'Edit a geotag',
 	'places-geolocation-button-label' => 'Add location',
-
 	'places-error-no-article' => 'You have to specify an article',
 	'places-error-place-already-exists' => 'Article is already geo tagged'
 );
@@ -92,6 +92,8 @@ $messages['pl'] = array(
 	'places-desc' => 'Dodaje tagi <nowiki><place> and <places></nowiki> pozwalające na geotagowanie artykułów oraz [[Special:Places|mapę wszystkich oznaczonych artykułów]]',
 	'places-toolbar-button-tooltip' => 'Dodaj lokalizację do tego artykułu',
 	'places-toolbar-button-address' => 'Podaj adres określający lokalizację tego artykułu',
+	'places-editor-title-create-new' => 'Dodaj lokalizację',
+	'places-editor-title-edit' => 'Edytuj lokalizację',
 );
 
 /** Russian (Русский)
@@ -109,3 +111,7 @@ $messages['sv'] = array(
 	'places-toolbar-button-tooltip' => 'Klicka för att lägga till geotagg på denna sida',
 );
 
+$messages['qqq'] = array(
+	'places-editor-title-create-new' => 'Title of places editor modal when creating a new geotag',
+	'places-editor-title-edit' => 'Title of places editor modal when editing an existing geotag',
+);
