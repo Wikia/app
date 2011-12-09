@@ -99,6 +99,7 @@ class PlacesHooks extends WikiaObject{
 	}
 	
 	public function onOutputPageBeforeHTML( &$out, &$text ){
+		$text = $this->app->sendRequest( 'PlacesController', 'getGeolocationButton' )->toString() . $text;
 		return $out;
 	}
 }
