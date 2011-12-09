@@ -8,7 +8,7 @@ var Places = Places || (function(){
 	function showModal(event){
 		event.preventDefault();
 		event.stopPropagation();
-		
+
 		var element = $(this),
 			latlng = new google.maps.LatLng(element.attr('data-lat'), element.attr('data-lon')),
 			options = {
@@ -40,15 +40,52 @@ var Places = Places || (function(){
 		);
 	}
 
+	function getPosition(){
+		if(navigator.geolocation){
+			navigator.geolocation.getCurrentPosition(positionFound, positionError);
+
+			return true;
+		}
+
+		return false;
+	}
+
+	function positionFound(position){
+		alert(JSON.stringify(position));
+	}
+
+	function positionError(error){
+		$.showModal(
+			$.msg('places-geolocation-modal-error-title'),
+			'<p>' + $.msg('places-geolocation-modal-error', error.message) + '</p>'
+		);
+	}
+
 	/** @public **/
 
 	return {
 		init: function() {
-			var elms = $('.placemap');
+			var miniMaps = $('.placemap'),
+				geoButton = $('#geotagButton');
 
-			if(elms.length){
+			if(miniMaps.length){
 				$.loadGoogleMaps(function(){
 					$('#WikiaMainContent').delegate('.placemap img', clickEvent, showModal);
+				});
+			}
+
+			if(geoButton.length){
+				geoButton.bind('click', function(){
+					var check = getPosition();
+					
+					if(check){
+						
+					}else{
+						$.showModal(
+							$.msg('places-geolocation-modal-error-title'),
+							'<p>' + $.msg('places-geolocation-modal-not-available') + '</p>'
+						);
+					}
 				});
 			}
 		},
