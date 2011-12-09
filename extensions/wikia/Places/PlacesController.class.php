@@ -62,7 +62,8 @@ class PlacesController extends WikiaController {
 				)->toString();
 
 				$oTitle = Title::newFromID( $oPlaceModel->getPageId() );
-				if ( ($oTitle instanceof Title ) && $oTitle->exists() ){
+
+				if ( ($oTitle instanceof Title ) && $oTitle->exists() ) {
 					$oArticle = F::build( 'Article', array( $oTitle ) );
 					$sNewContent = $sText . $oArticle->getContent();
 					$status =
@@ -81,12 +82,22 @@ class PlacesController extends WikiaController {
 	}
 
 	public function getPlaceWikiTextFromModel(){
-
 		$oPlaceModel = $this->getVal( 'model', null );
-		if ( empty( $oPlaceModel ) || !( $oPlaceModel instanceof PlaceModel ) ){
+
+		if ( empty( $oPlaceModel ) || !( $oPlaceModel instanceof PlaceModel ) ) {
 			$oPlaceModel = F::build('PlaceModel');
 		}
+
 		$this->setVal( 'oEmptyPlaceModel', F::build('PlaceModel') );
 		$this->setVal( 'oPlaceModel', $oPlaceModel );
+	}
+
+	public function getGeolocationButton(){
+		//TODO: @Jakub, implement real category check here
+		$enabled = true;
+
+		if ( !$enabled ) {
+			$this->skipRendering();
+		}
 	}
 }
