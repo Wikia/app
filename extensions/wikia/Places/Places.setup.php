@@ -59,7 +59,9 @@ $app->registerHook('ParserFirstCallInit', 'PlacesHookHandler', 'onParserFirstCal
 $app->registerHook('BeforePageDisplay', 'PlacesHookHandler', 'onBeforePageDisplay');
 $app->registerHook('ArticleSaveComplete', 'PlacesHookHandler', 'onArticleSaveComplete');
 $app->registerHook('RTEUseDefaultPlaceholder', 'PlacesHookHandler', 'onRTEUseDefaultPlaceholder');
-$app->registerHook('EditPageBeforeEditToolbar', 'PlacesHookHandler', 'onEditPageBeforeEditToolbar');
+
+$app->registerHook('EditPage::showEditForm:initial', 'PlacesHookHandler', 'onShowEditForm');
+$app->registerHook('EditPageMakeGlobalVariablesScript', 'PlacesHookHandler', 'onEditPageMakeGlobalVariablesScript');
 
 // for later
 // $app->registerHook('OutputPageMakeCategoryLinks', 'PlacesHookHandler', 'onOutputPageMakeCategoryLinks');
@@ -68,6 +70,9 @@ $app->registerHook('EditPageBeforeEditToolbar', 'PlacesHookHandler', 'onEditPage
  * messages
  */
 $app->registerExtensionMessageFile( 'Places', $dir . '/Places.i18n.php' );
+F::build('JSMessages')->registerPackage('Places', array(
+	'places-toolbar-button-*',
+));
 
 /**
  * constructors
