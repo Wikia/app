@@ -86,6 +86,8 @@ $messages['no'] = array(
 $messages['pl'] = array(
 	'places' => 'Miejsca na tej wiki',
 	'places-desc' => 'Dodaje tagi <nowiki><place> and <places></nowiki> pozwalające na geotagowanie artykułów oraz [[Special:Places|mapę wszystkich oznaczonych artykułów]]',
+	'places-toolbar-button-tooltip' => 'Dodaj lokalizację do tego artykułu',
+	'places-toolbar-button-address' => 'Podaj adres określający lokalizację tego artykułu',
 );
 
 /** Russian (Русский)

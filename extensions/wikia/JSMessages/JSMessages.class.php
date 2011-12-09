@@ -185,6 +185,7 @@ class JSMessages {
 	 */
 	public function onMakeGlobalVariablesScript($vars) {
 		$this->app->wf->ProfileIn(__METHOD__);
+		$this->log(__METHOD__, 'preparing list of inline messages...');
 
 		// get items to be rendered as a variable in <head> section
 		$packages = $this->queue['inline'];
@@ -205,6 +206,7 @@ class JSMessages {
 	 */
 	public function onSkinAfterBottomScripts($skin, $text) {
 		$this->app->wf->ProfileIn(__METHOD__);
+		$this->log(__METHOD__, 'preparing list of external packages...');
 
 		$url = $this->getExternalPackagesUrl();
 		if ($url != "") {

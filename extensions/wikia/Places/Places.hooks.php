@@ -71,52 +71,32 @@ class PlacesHookHandler {
 		}
 	}
 
-	static public function onEditPageBeforeEditToolbar($toolbar) {
-		$tooltipMsg = Xml::encodeJsVar(wfMsg('places-toolbar-button-tooltip'));
-		$promptMsg = Xml::encodeJsVar(wfMsg('places-toolbar-button-address'));
-
-		$apiKey = F::app()->wg->GoogleMapsKey;
-
-		// add toolbar button
-		// TODO: move to external file
-		$js = <<<JS
-
-window.mwEditButtons && window.mwEditButtons.push({
-	imageId: 'mw-editbutton-places',
-	imageFile: wgExtensionsPath + '/wikia/Places/images/button_place.png',
-	speedTip: {$tooltipMsg},
-	onclick: function(ev) {
-		ev.preventDefault();
-
-		var query = prompt({$promptMsg});
-		$().log(query, 'Places');
-
-		if (!query || query.length === 0) {
-			return;
-		}
-
-		$.getJSON("http://maps.google.com/maps/geo?output=json&q=" + encodeURIComponent(query) + "&key={$apiKey}&callback=?", function(data) {
-			$().log(data, 'Places');
-
-			if (data && data.Placemark && data.Placemark.length) {
-				var place = data.Placemark.shift(),
-					cords = place.Point.coordinates,
-					address = place.address,
-					wikitext = '<place lat="' + cords[1].toFixed(6) + '" lon="' + cords[0].toFixed(6) + '" />';
-
-				$().log(address, 'Places');
-				$().log(wikitext, 'Places');
-
-				insertTags(wikitext, '' /* tagClose */, '' /* sampleText */);
-			}
-		});
+	/**
+	 * Add Google Maps API key to the <head> section of the edit page
+	 *
+	 * @param mixed $vars key/value list of JS global variables
+	 * @return true it's a hook
+	 */
+	static public function onEditPageMakeGlobalVariablesScript($vars) {
+		$vars['wgGoogleMapsKey'] = F::app()->wg->GoogleMapsKey;
+		return true;
 	}
-});
 
-JS;
+	/**
+	 * Initialize edit page - load JS file and messages
+	 *
+	 * @param EditPage $editpage edit page instance
+	 * @return true it's a hook
+	 */
+	static public function onShowEditForm(EditPage $editpage) {
+		$app = F::app();
 
-		$toolbar .= Html::inlineScript($js);
+		// add edit toolbar button for adding places
+		$src = AssetsManager::getInstance()->getOneCommonURL('extensions/wikia/Places/js/PlacesEditPage.js');
+		$app->wg->Out->addScript("<script type=\"{$app->wg->JsMimeType}\" src=\"{$src}\"></script>");
 
+		// load JS messages
+		F::build('JSMessages')->enqueuePackage('Places', JSMessages::INLINE);
 		return true;
 	}
 }
