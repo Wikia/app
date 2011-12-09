@@ -23,17 +23,17 @@ $page-padding: 10px;
 $top-layer-z-index: 2000000;
 $highest-z-index: 1000000;
 
-//navigation
+//footer
+$footerBackground: #3d3d3d;
+$footerTextColor: #DDD;
+
+//navigation menu
 $arrowcolor: grey;
 $openMenuLength: 500px;
 $menuBackgroundColor: #555;
 $menuSecondColor: #333;
 
-//footer
-$footerBackground: #3d3d3d;
-$footerTextColor: #DDD;
-
-//navigation
+//navigation bar
 $navBarColorFirst: get_command_line_param("color-page", #FFF);
 $navBarColorSecond: white;
 $navBarWordmarkText: black;
@@ -58,3 +58,6 @@ $loaderSpeed: 1.5s;
 $shadowColor: #222;
 $descriptionBackgroundColor: #000;
 $descriptionTextColor: #FFF;
+
+//modal
+$modal-text-color: #FFF;
