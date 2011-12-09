@@ -57,6 +57,7 @@ function lw_ImageServingFallback(&$imageServing, $n, &$out){
 			} else {
 			
 				// TODO: Fall back to the album if there is one in the wikiText (which would automatically fall back to the artist if the album doesn't have a pic).
+					// NOTE: At the moment, I actually think artist pics might be better than album pics.
 				// TODO: Fall back to the album if there is one in the wikiText (which would automatically fall back to the artist if the album doesn't have a pic).
 				
 				// Fall back to the artist if no album could be found in the wikiText.
