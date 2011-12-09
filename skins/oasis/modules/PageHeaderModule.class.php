@@ -31,6 +31,7 @@ class PageHeaderModule extends Module {
 	var $categories;
 	var $comments;
 	var $dropdown;
+	var $extraButtons;
 	var $likes;
 	var $pageExists;
 	var $showSearchBox;
@@ -207,6 +208,11 @@ class PageHeaderModule extends Module {
 
 		/** start of wikia changes @author nAndy */
 		wfRunHooks( 'PageHeaderIndexAfterActionButtonPrepared', array(&$this->action, &$this->dropdown, $ns, $skin) );
+		/** end of wikia changes */
+
+		/** start of wikia changes @author Jakub */
+		$this->extraButtons = array();
+		wfRunHooks( 'PageHeaderIndexExtraButtons', array( &$this->extraButtons ) );
 		/** end of wikia changes */
 
 		// for not existing pages page header is a bit different
