@@ -69,7 +69,7 @@ class PlacesController extends WikiaController {
 					$status =
 						$oArticle->doEdit(
 							$sNewContent,
-							wfMsg('places-updated-geolocation'),
+							wfMsg( 'places-updated-geolocation' ),
 							EDIT_UPDATE
 						);
 					$this->setVal( 'success', true );
