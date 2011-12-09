@@ -58,23 +58,40 @@ function egOgmcParserOutputApplyValues( $out, $parserOutput, $data ) {
 				$titleImage = Title::newFromText( $value[0]['name'], NS_FILE );
 			}
 		}
+		
+		// If ImageServing was not able to deliver a good match, fall back to the wiki's wordmark.
+		if( empty($titleImage) && !is_object($titleImage) && Wikia::isOasis()){
+			$themeSettings = new ThemeSettings();
+			$settings = $themeSettings->getSettings();
+			if ($settings["wordmark-type"] == "graphic") {
+				$titleImage = Title::newFromText( $settings['wordmark-image-name'], NS_FILE );
+			}
+		}
 
+		// If we have a Title object for an image, convert it to an Image object and store it in mMainImage.
 		if (!empty($titleImage) && is_object($titleImage)) {
 			$mainImage = wfFindFile($titleImage);
 			if ($mainImage !== false) {
 				$parserOutput->setProperty('mainImage', $mainImage);
 				$out->mMainImage = $parserOutput->getProperty('mainImage');
 			}
+		} else {
+			// Fall back to using a Wikia logo.  There aren't any as "File:" pages, so we use a new config var for one that
+			// is being added to skins/common.
+			global $wgBigWikiaLogo;
+			$logoUrl = wfReplaceImageServer( $wgBigWikiaLogo );
+			$parserOutput->setProperty('mainImage', $logoUrl);
+			$out->mMainImage = $parserOutput->getProperty('mainImage');
 		}
 	}
 
+	// Get description from ArticleService
 	if (is_null($titleDescription)) {
 		$DESC_LENGTH = 100;
 		$articleService = new ArticleService( $articleId );
 		$titleDescription = $articleService->getTextSnippet( $DESC_LENGTH );
 	}
 
-	// Get description from ArticleService
 	if (!empty($titleDescription)) {
 		$parserOutput->setProperty('description', $titleDescription);
 		$out->mDescription = $parserOutput->getProperty('description');
