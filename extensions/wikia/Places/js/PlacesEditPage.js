@@ -1,3 +1,4 @@
+/*global PlacesEditor: true*/
 if (window.mwCustomEditButtons) {
 	window.mwCustomEditButtons.push({
 		imageId: 'mw-editbutton-places',
