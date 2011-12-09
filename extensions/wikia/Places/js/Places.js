@@ -77,9 +77,9 @@ var Places = Places || (function(){
 			if(geoButton.length){
 				geoButton.bind('click', function(){
 					var check = getPosition();
-					
+
 					if(check){
-						
+
 					}else{
 						$.showModal(
 							$.msg('places-geolocation-modal-error-title'),

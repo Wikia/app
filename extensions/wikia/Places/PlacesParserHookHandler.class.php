@@ -120,7 +120,7 @@ class PlacesParserHookHandler {
 	/**
 	 * Get JavaScript code snippet to be loaded
 	 */
-	static private function getJSSnippet() {
+	static public function getJSSnippet() {
 		$html = F::build('JSSnippets')->addToStack(
 			array(
 				'/extensions/wikia/Places/css/Places.css',
