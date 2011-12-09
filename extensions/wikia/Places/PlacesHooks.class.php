@@ -97,7 +97,10 @@ class PlacesHooks extends WikiaObject{
 		F::build( 'JSMessages' )->enqueuePackage( 'Places', JSMessages::INLINE );
 		return true;
 	}
-	
+
+	/**
+	 * Prepends the geolocation button for adding coordinates to a page
+	 */
 	public function onOutputPageBeforeHTML( &$out, &$text ){
 		$text = $this->app->sendRequest( 'PlacesController', 'getGeolocationButton' )->toString() . $text;
 		return $out;

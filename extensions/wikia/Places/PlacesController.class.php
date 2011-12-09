@@ -92,6 +92,9 @@ class PlacesController extends WikiaController {
 		$this->setVal( 'oPlaceModel', $oPlaceModel );
 	}
 
+	/**
+	 * Renders the geolocation button for adding coordinates to a page
+	 */
 	public function getGeolocationButton(){
 		//TODO: @Jakub, implement real category check here
 		$enabled = true;
