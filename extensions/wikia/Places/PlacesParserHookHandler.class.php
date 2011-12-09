@@ -64,7 +64,7 @@ class PlacesParserHookHandler {
 		}
 
 		// add model to be stored in database
-		PlacesHookHandler::setModelToSave($placeModel);
+		F::build( 'PlacesHooks' )->setModelToSave($placeModel);
 
 		$html = self::cleanHTML($html);
 
