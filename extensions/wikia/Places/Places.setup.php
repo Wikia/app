@@ -32,7 +32,7 @@ $dir = dirname( __FILE__ );
  * classes
  */
 
-$app->registerClass('PlacesHookHandler', $dir . '/Places.hooks.php');
+$app->registerClass('PlacesHooks', $dir . '/PlacesHooks.class.php');
 $app->registerClass('PlacesParserHookHandler', $dir . '/PlacesParserHookHandler.class.php');
 
 /**
@@ -55,16 +55,17 @@ $app->registerClass('PlaceStorage', $dir . '/models/PlaceStorage.class.php');
  * hooks
  */
 
-$app->registerHook('ParserFirstCallInit', 'PlacesHookHandler', 'onParserFirstCallInit');
-$app->registerHook('BeforePageDisplay', 'PlacesHookHandler', 'onBeforePageDisplay');
-$app->registerHook('ArticleSaveComplete', 'PlacesHookHandler', 'onArticleSaveComplete');
-$app->registerHook('RTEUseDefaultPlaceholder', 'PlacesHookHandler', 'onRTEUseDefaultPlaceholder');
+$app->registerHook('ParserFirstCallInit', 'PlacesHooks', 'onParserFirstCallInit');
+$app->registerHook('BeforePageDisplay', 'PlacesHooks', 'onBeforePageDisplay');
+$app->registerHook('ArticleSaveComplete', 'PlacesHooks', 'onArticleSaveComplete');
+$app->registerHook('RTEUseDefaultPlaceholder', 'PlacesHooks', 'onRTEUseDefaultPlaceholder');
+$app->registerHook('OutputPageBeforeHTML', 'PlacesHooks', 'onOutputPageBeforeHTML');
 
-$app->registerHook('EditPage::showEditForm:initial', 'PlacesHookHandler', 'onShowEditForm');
-$app->registerHook('EditPageMakeGlobalVariablesScript', 'PlacesHookHandler', 'onEditPageMakeGlobalVariablesScript');
+$app->registerHook('EditPage::showEditForm:initial', 'PlacesHooks', 'onShowEditForm');
+$app->registerHook('EditPageMakeGlobalVariablesScript', 'PlacesHooks', 'onEditPageMakeGlobalVariablesScript');
 
 // for later
-// $app->registerHook('OutputPageMakeCategoryLinks', 'PlacesHookHandler', 'onOutputPageMakeCategoryLinks');
+// $app->registerHook('OutputPageMakeCategoryLinks', 'PlacesHooks', 'onOutputPageMakeCategoryLinks');
 
 /**
  * messages

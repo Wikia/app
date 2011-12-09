@@ -48,7 +48,6 @@ var Places = Places || (function(){
 
 			if(elms.length){
 				$.loadGoogleMaps(function(){
-					//in WikiaMobile figure tags have a default behaviour
 					$('#WikiaMainContent').delegate('.placemap img', clickEvent, showModal);
 				});
 			}
