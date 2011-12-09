@@ -75,11 +75,14 @@ $app->registerHook('EditPageMakeGlobalVariablesScript', 'PlacesHooks', 'onEditPa
  * messages
  */
 $app->registerExtensionMessageFile('Places', $dir . '/Places.i18n.php');
+
 F::build('JSMessages')->registerPackage('Places', array(
 	'places-toolbar-button-*',
 	'places-editor-*',
 	'ok',
 ));
+
+F::build('JSMessages')->registerPackage('PlacesGeoLocationModal', array( 'places-geolocation-modal-*' ) );
 
 /**
  * constructors

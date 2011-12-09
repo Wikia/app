@@ -111,6 +111,8 @@ class PlacesController extends WikiaController {
 			)->isGeoTaggingEnabledForArticle( $this->app->wg->title )
 		){
 			$this->skipRendering();
+		} else {
+			F::build( 'JSMessages' )->enqueuePackage( 'PlacesGeoLocationModal', JSMessages::INLINE );
 		}
 	}
 }

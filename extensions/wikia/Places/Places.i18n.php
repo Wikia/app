@@ -11,11 +11,18 @@ $messages['en'] = array(
 	'places-editor-title-create-new' => 'Add a geotag',
 	'places-editor-title-edit' => 'Edit a geotag',
 	'places-geolocation-button-label' => 'Add location',
+
+	'places-geolocation-modal-add-title' => 'Add location',
+	'places-geolocation-modal-error-title' => 'Error',
+	'places-geolocation-modal-error' => 'There was an error while trying to determine your position:<br/>$1',
+	'places-geolocation-modal-not-available' => 'Ooops! This feature is currently available only on mobile devices.<br/><br/>Want to give it a try? Just visit this page using your mobile device of choice.',
+
 	'places-error-no-article' => 'You have to specify an article',
 	'places-error-place-already-exists' => 'Article is already geo tagged',
+
 	'places-updated-geolocation' => 'Geotagged this article',
 	'places-category-switch' => 'Disable geotagging',
-	'places-category-switch-off' => 'Enable geotagging',
+	'places-category-switch-off' => 'Enable geotagging'
 );
 
 /** French (Français)
