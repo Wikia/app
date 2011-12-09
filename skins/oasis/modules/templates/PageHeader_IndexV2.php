@@ -16,6 +16,9 @@
 	if( !$isWallEnabled ) {
 		echo wfRenderModule('CommentsLikes', 'Index', array('comments' => $comments, 'likes' => $likes));
 	}
+	foreach( $extraButtons as $button ){
+		echo $button;
+	}
 
 	// "pages on this wiki" counter
 	if (!is_null($total)) {
