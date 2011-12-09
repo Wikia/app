@@ -1,7 +1,7 @@
 <?php
 class PlacesHooks extends WikiaObject{
 
-	private $modelToSave;
+	private static $modelToSave;
 
 	function __construct(){
 			parent::__construct();
@@ -9,7 +9,7 @@ class PlacesHooks extends WikiaObject{
 	}
 
 	public function setModelToSave( PlaceModel $model ){
-		$this->modelToSave = $model;
+		self::$modelToSave = $model;
 	}
 
 	public function onPageHeaderIndexExtraButtons( $extraButtons ){
@@ -91,7 +91,7 @@ class PlacesHooks extends WikiaObject{
 		if ( self::$modelToSave instanceof PlaceModel ) {
 			// use model from parser hook
 			// self::$modelToSave is set in PlacesParserHookHandler::renderPlaceTag
-			$storage->setModel( $this->modelToSave );
+			$storage->setModel( self::$modelToSave );
 		}
 		else {
 			// no geo data fround - use an empty model
@@ -112,17 +112,6 @@ class PlacesHooks extends WikiaObject{
 			PlacesParserHookHandler::$lastWikitextId = $wikitextIdx;
 			return false;
 		}
-	}
-
-	/**
-	 * Add Google Maps API key to the <head> section of the edit page
-	 *
-	 * @param mixed $vars key/value list of JS global variables
-	 * @return true it's a hook
-	 */
-	public function onEditPageMakeGlobalVariablesScript( $vars ){
-		$vars['wgGoogleMapsKey'] = $this->wg->GoogleMapsKey;
-		return true;
 	}
 
 	/**

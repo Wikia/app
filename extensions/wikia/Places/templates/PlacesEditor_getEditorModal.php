@@ -1,6 +1,7 @@
 <div id="PlacesEditorWrapper">
 	<div id="PlacesEditorColumn">
 		<form>
+			<input type="hidden" id="GoogleMapsKey" value="<?= $wg->GoogleMapsKey ?>">
 			<label>
 				<?= wfMsg('places-toolbar-button-address') ?>
 				<input type="text" id="PlacesEditorAddress" autofocus>
