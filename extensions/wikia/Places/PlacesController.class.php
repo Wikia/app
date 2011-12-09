@@ -82,6 +82,7 @@ class PlacesController extends WikiaController {
 	}
 
 	public function getPlaceWikiTextFromModel(){
+		
 		$oPlaceModel = $this->getVal( 'model', null );
 
 		if ( empty( $oPlaceModel ) || !( $oPlaceModel instanceof PlaceModel ) ) {
@@ -97,12 +98,12 @@ class PlacesController extends WikiaController {
 	 */
 	public function getGeolocationButton(){
 		
-		if (	!$this->app->wg->title->isContentPage() ||
+		if (	!$this->app->wg->title->isContentPage() &&
 			F::build(
 				'PlaceStorage',
 				array( $this->app->wg->title ),
 				'newFromTitle'
-			)->getModel()->isEmpty() ||
+			)->getModel()->isEmpty() &&
 			!F::build(
 				'PlaceCategory',
 				array( $this->app->wg->title->getFullText() ),
