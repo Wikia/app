@@ -1,7 +1,7 @@
 
 var CategoryExhibition = {
 
-	lockTable: new Array(),
+	lockTable: {},
 
 	init: function() {
 
