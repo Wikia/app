@@ -1,0 +1,22 @@
+$places-editor-height: 500px;
+$places-editor-width: 950px;
+$places-column-width: 300px;
+
+#PlacesEditorWrapper {
+	height: $places-editor-height;
+	> form {
+		float: left;
+		margin-right: 10px;
+		width: $places-column-width - 10px;
+		> input[type="text"] {
+			display: block;
+			width: $places-column-width - 10px;
+		}
+	}
+}
+
+#PlacesEditorMap {
+	height: $places-editor-height;
+	margin-left: $places-column-width;
+	width: $places-editor-width - $places-column-width;
+}

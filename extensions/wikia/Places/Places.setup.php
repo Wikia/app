@@ -40,6 +40,7 @@ $app->registerClass('PlacesParserHookHandler', $dir . '/PlacesParserHookHandler.
  */
 
 $app->registerClass('PlacesController', $dir . '/PlacesController.class.php');
+$app->registerClass('PlacesEditorController', $dir . '/PlacesEditorController.class.php');
 $app->registerClass('PlacesSpecialController', $dir . '/PlacesSpecialController.class.php');
 $app->registerSpecialPage('Places', 'PlacesSpecialController');
 
@@ -70,9 +71,11 @@ $app->registerHook('EditPageMakeGlobalVariablesScript', 'PlacesHooks', 'onEditPa
 /**
  * messages
  */
-$app->registerExtensionMessageFile( 'Places', $dir . '/Places.i18n.php' );
+$app->registerExtensionMessageFile('Places', $dir . '/Places.i18n.php');
 F::build('JSMessages')->registerPackage('Places', array(
 	'places-toolbar-button-*',
+	'places-editor-*',
+	'ok',
 ));
 
 /**
