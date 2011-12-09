@@ -987,8 +987,65 @@ class WikiFactory {
 
 		return $oRow;
 	}
-
-
+        
+        /**
+         * getWikisByID
+         * 
+         * get multiple wikis params from city_list (shared database) in a single query
+         * 
+         * @access public
+         * @static
+         * @author Michał Roszka (Mix) <michal@wikia-inc.com>
+         * 
+         * @param array $ids an array containing IDs of wikis
+         * @param bool $master query master or slave
+         * 
+         * @return array an array of objects, keys are wikis ids.
+         */
+        static public function getWikisByID( $ids, $master = false ) {
+            if( !self::isUsed() ) {
+                Wikia::log( __METHOD__, "", "WikiFactory is not used." );
+                return false;
+            }
+            
+            global $wgWikiFactoryCacheType;
+            $oMemc = wfGetCache( $wgWikiFactoryCacheType );
+            
+            $aOut = array();
+            
+            // Retrieve cached data.
+            foreach ( $ids as $k => $id ) {
+                $sMemKey = self::getWikiaCacheKey( $id );
+		$cached = ( empty( $master ) ) ? $oMemc->get( $sMemKey ) : null;
+                if ( is_object( $cached ) ) {
+                    // append to the output
+                    $aOut[$id] = $cached;
+                    // remove from the list, we won't need to query the DB for it.
+                    unset( $ids[$k] );
+                }
+            }
+            
+            // Query the DB for the data we don't have cached yet.
+            $dbr = self::db( ( $master ) ? DB_MASTER : DB_SLAVE );
+            $oRes = $dbr->select(
+                array( "city_list" ),
+                array( "*" ),
+                array( "city_id" => $ids ),
+                __METHOD__
+            );
+            
+            while( $oRow = $dbr->fetchObject( $oRes ) ) {
+                // Cache single entries so other methods could use the cache
+                $sMemKey = self::getWikiaCacheKey( $oRow->city_id );
+                $oMemc->set( $sMemKey, $oRow, 60*60*24 );
+                
+                // append to the output
+                $aOut[$oRow->city_id] = $oRow;
+            }
+            
+            $dbr->freeResult( $oRes );
+            return $aOut;
+        }
 	/**
 	 * getWikiByDB
 	 *
