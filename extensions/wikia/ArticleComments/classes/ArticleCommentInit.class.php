@@ -40,44 +40,51 @@ class ArticleCommentInit {
 	 * Check whether comments should be enabled for given title
 	 */
 	static public function ArticleCommentCheckTitle($title) {
-		global $wgContentNamespaces, $wgArticleCommentsNamespaces;
 		wfProfileIn(__METHOD__);
 
 		//enable comments only on content namespaces (use $wgArticleCommentsNamespaces if defined)
-		$enable = self::ArticleCommentCheckNamespace($title);
+		if ( !self::ArticleCommentCheckNamespace($title) ) {
+			wfProfileOut(__METHOD__);
+			return false;
+		}
 
 		//non-existing articles
-		if ($enable && !$title->exists()) {
-			$enable = false;
+		if ( !$title->exists() ) {
+			wfProfileOut(__METHOD__);
+			return false;
 		}
 
 		//disable on main page (RT#33703)
-		if ($enable && Title::newMainPage()->getText() == $title->getText()) {
-			$enable = false;
+		if ( Title::newMainPage()->getText() == $title->getText() ) {
+			wfProfileOut(__METHOD__);
+			return false;
 		}
 
 		//disable on redirect pages (RT#44315)
-		if ($enable && $title->isRedirect()) {
-			$enable = false;
+		if ( $title->isRedirect() ) {
+			wfProfileOut(__METHOD__);
+			return false;
 		}
 
 		//disable on pages that cant be read (RT#49525)
-		if ($enable && !$title->userCan('read')) {
-			$enable = false;
+		if ( !$title->userCan('read') ) {
+			wfProfileOut(__METHOD__);
+			return false;
 		}
 
 		//blog listing? (eg: User:Name instead of User:Name/Blog_name) - do not show comments
 		if (
-			$enable && defined('NS_BLOG_ARTICLE') &&
+			defined('NS_BLOG_ARTICLE') &&
 			$title instanceof Title &&
 			$title->getNamespace() == NS_BLOG_ARTICLE &&
 			strpos($title->getText(), '/') === false
 		) {
-			$enable = false;
+			wfProfileOut(__METHOD__);
+			return false;
 		}
 
 		wfProfileOut(__METHOD__);
-		return $enable;
+		return true;
 	}
 
 	/**
