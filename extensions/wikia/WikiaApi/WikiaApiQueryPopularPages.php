@@ -117,7 +117,7 @@ class WikiaApiQueryPopularPages extends WikiaApiQuery {
 					throw new WikiaApiQueryError(1);
 				}
 				$this->addOption( "OFFSET", $offset );
-				$this->setCacheKey ($lcache_key, 'LO', $limit);
+				$this->setCacheKey ($lcache_key, 'LO', $offset);
 			}
 			
 			#--- order by
