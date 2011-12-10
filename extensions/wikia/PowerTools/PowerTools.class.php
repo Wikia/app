@@ -2,7 +2,7 @@
 
 class PowerTools {
 	static function onPowerDelete( $action, $article ) {
-		global $wgOut, $wgUser;
+		global $wgOut, $wgUser, $wgRequest;
 
 		if ( $action !== 'powerdelete' ) {
 			return true;
@@ -23,8 +23,10 @@ class PowerTools {
 			return false;
 		}
 
-		$article->doDelete();
-		$article->mTitle->updateTitleProtection( 'sysop', '', 'infinity' );
+		$reason = $wgRequest->getText( 'reason' );
+
+		$article->doDelete( $reason );
+		$article->mTitle->updateTitleProtection( 'sysop', $reason, 'infinity' );
 
 		return false;
 	}
