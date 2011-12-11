@@ -1625,7 +1625,6 @@ class AutoCreateWikiPage extends SpecialPage {
 				$WFSettingsVars[ "wgDefaultTheme"                    ] = 'sapphire';
 				$WFSettingsVars[ "wgEnableAnswers"                   ] = true;
 				$WFSettingsVars[ "wgEnableCategoryBlueLinks"         ] = true;
-				$WFSettingsVars[ "AutoFriendOnRegisterUsername"      ] = $this->mWikiData[ "founder-name" ];
 				$WFSettingsVars[ "wgEnableRandomInCategoryExt"       ] = true;
 				$WFSettingsVars[ "wgEnableMagicAnswer"               ] = false;
 				$WFSettingsVars[ "wgUseNewAnswersSkin"               ] = true;
