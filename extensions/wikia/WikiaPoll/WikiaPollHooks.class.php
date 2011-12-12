@@ -71,7 +71,7 @@ class WikiaPollHooks {
 
 		if ($finalTitle instanceof Title && $finalTitle->exists() && $finalTitle->getNamespace() == NS_WIKIA_POLL) {
 			wfLoadExtensionMessages('WikiaPoll');
-			$css = $js = "";
+			$css = $jsFile = "";
 			if (self::$alreadyAddedCSSJS == false) {
 				// make sure we don't include twice if there are multiple polls on one page
 				self::$alreadyAddedCSSJS = true;

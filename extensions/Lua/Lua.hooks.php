@@ -33,7 +33,7 @@ class LuaHooks {
 	}
 
 	/** Parser hook for the <lua> tag */
-	public static function renderTag($input, $args, &$parser) {
+	public static function renderTag($input, $args, $parser) {
 		global $wgLua;
 		# Create a new LuaWrapper if needed
 		if (!isset($wgLua))
