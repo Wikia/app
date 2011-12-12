@@ -152,6 +152,17 @@ def pick_word(words, blacklist, verbose):
 def read_wordlist(filename):
 	return [x.strip().lower() for x in open(wordlist).readlines()]
 
+def md5_file(filename):
+	blocksize = 65536;
+	hasher = hashlib.md5();
+	afile = open(filename,'rb');
+	buf = afile.read(blocksize)
+	while len(buf) > 0:
+		hasher.update(buf);
+		buf = afile.read(blocksize)
+	afile.close();
+	return hasher.hexdigest();
+
 if __name__ == '__main__':
 	"""This grabs random words from the dictionary 'words' (one
 	word per line) and generates a captcha image for each one,
@@ -229,7 +240,8 @@ if __name__ == '__main__':
 			print filename
 		gen_captcha(word, font, fontsize, os.path.join(output, filename))
 		if listfile:
-			listfile.write( "%s %s\n" % (word, md5hash) );
+			md5file = md5_file(os.path.join(output,filename));
+			listfile.write( "%s %s\n" % (word, md5file) );
 	
 	if listfile:
 		listfile.close();
