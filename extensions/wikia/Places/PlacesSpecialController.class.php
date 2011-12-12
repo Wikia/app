@@ -74,11 +74,19 @@ class PlacesSpecialController extends WikiaSpecialPageController {
 
 	public function getMarkersRelatedToCurrentTitle(){
 		$sTitle = $this->getVal('title', '');
-		$oTitle = F::build( 'Title', array( $sTitle ), 'newFromText' );
+		$sCategoriesText = $this->getVal('category', '');
 
-		if ($oTitle instanceof Title) {
+		$oTitle = F::build( 'Title', array( $sTitle ), 'newFromText' );
+		if ( $oTitle instanceof Title ){
 			$oPlacesModel = F::build('PlacesModel');
-			$aMarkers = $oPlacesModel->getFromCategoriesByTitle( $oTitle );
+			$oMarker = F::build( 'PlaceStorage', array( $oTitle ), 'newFromTitle' )->getModel();
+			$oMarker->setCategories( $sCategoriesText );
+
+			if( !empty( $sCategoriesText ) ){
+				$aMarkers = $oPlacesModel->getFromCategories( $oMarker->getCategories() );
+			} else {
+				$aMarkers = $oPlacesModel->getFromCategoriesByTitle( $oTitle );
+			}
 			$oMarker = F::build( 'PlaceStorage', array( $oTitle ), 'newFromTitle' )->getModel();
 			$this->setVal( 'center', $oMarker->getForMap() );
 			$this->prepareMarkers( $aMarkers );

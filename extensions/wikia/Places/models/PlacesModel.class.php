@@ -129,7 +129,7 @@
 	 * @param Title $title page title to get places from categories this title belongs to
 	 * @return array set of PlaceModel objects
 	 */
-	public function getFromCategoriesByTitle(Title $title) {
+	public function getFromCategoriesByTitle( Title $title ) {
 		wfProfileIn(__METHOD__);
 
 		// get article categories
@@ -142,9 +142,7 @@
 			$categories[] = $row->cl_to;
 		}
 
-		$models = $this->query(array(
-			'categories' => $categories
-		));
+		$models = $this->getFromCategories( $categories );
 
 		wfProfileOut(__METHOD__);
 		return $models;
