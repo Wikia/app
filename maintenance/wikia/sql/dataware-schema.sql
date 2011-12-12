@@ -558,6 +558,18 @@ CREATE TABLE IF NOT EXISTS `wikiastaff_log` (
   KEY `slog_time` (`slog_timestamp`)
 ) ENGINE=InnoDB AUTO_INCREMENT=651 DEFAULT CHARSET=binary;
 SET character_set_client = @saved_cs_client;
+
+CREATE TABLE `places` (
+  `place_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `city_id` int(10) unsigned NOT NULL,
+  `page_id` int(10) unsigned NOT NULL,
+  `lat` float,
+  `lon` float,
+  PRIMARY KEY (`place_id`),
+  KEY `city_page` (`city_id`,`page_id`),
+  KEY `geo` (`lat`,`lon`)
+) ENGINE=InnoDB;
+
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
