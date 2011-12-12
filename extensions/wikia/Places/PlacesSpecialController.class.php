@@ -7,11 +7,15 @@
  */
 class PlacesSpecialController extends WikiaSpecialPageController {
 
-	public $center = null;
-	public $markers = array();
+	private $center = null;
+	private $markers = array();
 
 	public function __construct() {
 		parent::__construct('Places');
+
+		// allow Special:Places to be included in article content
+		// use {{Special:Places}}
+		$this->includable(true);
 	}
 
 	public function index(){
@@ -31,6 +35,8 @@ class PlacesSpecialController extends WikiaSpecialPageController {
 		}
 		$this->setVal( 'center', $this->center );
 		$this->setVal( 'markers', $this->markers );
+
+		$this->wg->Out->setSubtitle(wfMsg('places-on-map', count($this->markers)));
 	}
 
 	protected function placesForCategory( Title $oTitle ){
