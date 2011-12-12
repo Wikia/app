@@ -53,8 +53,8 @@ class UserPreferencesV2 {
 		$defaultPreferences['showAds']['section'] = 'personal/appearance';
 		$defaultPreferences['showAds']['label-message'] = 'tog-showAdsv2';
 		$defaultPreferences['showAds']['type'] = 'select';
-		$adOptions[wfMsg('preferences-v2-showads-enable')] = true;
 		$adOptions[wfMsg('preferences-v2-showads-disable')] = false;
+		$adOptions[wfMsg('preferences-v2-showads-enable')] = true;
 		$defaultPreferences['showAds']['options'] = $adOptions;
 		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'showAds');
 		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'myhomedisableredirect');
@@ -87,6 +87,11 @@ class UserPreferencesV2 {
 		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'enotifusertalkpages');
 		$defaultPreferences['marketingallowed']['section'] = 'emailv2/email-me-v2';
 		$defaultPreferences['marketingallowed']['label-message'] = 'tog-marketingallowed-v2';
+		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'marketingallowed');
+		$defaultPreferences['watchlistdigest']['section'] = 'emailv2/email-me-v2';
+		$defaultPreferences['watchlistdigest']['label-message'] = 'tog-watchlistdigest-v2';
+		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'watchlistdigest');
+		$defaultPreferences['marketingallowed']['section'] = 'emailv2/email-me-v2';
 		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'marketingallowed');
 
 		$defaultPreferences['htmlemails']['section'] = 'emailv2/email-advanced-v2';
@@ -187,7 +192,6 @@ class UserPreferencesV2 {
 		unset($defaultPreferences['enotiffollowedpages']);
 		unset($defaultPreferences['enotiffollowedminoredits']);
 		unset($defaultPreferences['hidefollowedpages']);
-		unset($defaultPreferences['watchlistdigest']);
 		unset($defaultPreferences['diffonly']);
 		unset($defaultPreferences['norollbackdiff']);
 

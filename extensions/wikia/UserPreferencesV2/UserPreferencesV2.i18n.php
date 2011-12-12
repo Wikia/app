@@ -2,7 +2,7 @@
 $messages = array();
 
 $messages['en'] = array(
-	'prefs-personal' => 'My info',
+	'prefs-personal' => 'My Info',
 	'preferences-v2-username' => 'My username:',
 	'preferences-v2-usergroups' => 'My user groups:',
 	'preferences-v2-gender' => 'My gender:',
@@ -20,13 +20,14 @@ $messages['en'] = array(
 	'prefs-email-me-v2' => 'Email me when...',
 	'tog-enotifwatchlistpages-v2' => "...a page I'm following is changed",
 	'tog-enotifusertalkpages-v2' => '...my user talk page is changed',
-	'tog-enotifminoredits-v2' => "...a page I'm following is minorly change",
+	'tog-enotifminoredits-v2' => "...a page I'm following is minorly changed",
 	'tog-marketingallowed-v2' => '...Wikia has news and events',
 	'prefs-email-advanced-v2' => 'Advanced Options',
 	'tog-htmlemails-v2' => 'Send me HTML emails',
 	'prefs-wikiemail' => '{{SITENAME}} options. Email me when...',
-	'prefs-email-unsubscribe' => 'Or...',
+	'prefs-email-unsubscribe' => 'Disable all emails',
 	'unsubscribe-preferences-toggle-v2' => 'Disable all emails from Wikia (overrides all other options)',
+	'tog-watchlistdigest-v2' => '...a Weekly Digest of changes to my followed Wikia pages is ready',
 	
 	'preferences-v2-myhomedisableredirect' => 'Landing page:',
 	'preferences-v2-redirect-enable' => 'Wiki Activity',
