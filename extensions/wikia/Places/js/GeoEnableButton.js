@@ -25,6 +25,7 @@ var GeoEnableButton = {
 	doSwitch: function( elemFrom, elemTo, methodName ){
 		elemFrom.addClass('disabled');
 		if( $('.geoThrobber').length == 0 ){
+			// 2DO: Style me
 			elemFrom.before('<img class="geoThrobber" src="http://images.wikia.com/common/skins/common/images/ajax.gif" />');
 			$.nirvana.getJson(
 				'PlacesCategoryController',

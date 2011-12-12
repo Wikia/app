@@ -15,14 +15,17 @@ var Places = Places || (function(){
 				'zoom': parseInt( element.attr('data-zoom') ),
 				'center': latlng,
 				'mapTypeId': google.maps.MapTypeId.ROADMAP
-			};
+			}
+
+		var category =  $(this).attr('data-categories');
 
 		$.nirvana.postJson(
 			'PlacesSpecialController',
 			'getMarkersRelatedToCurrentTitle',
 			{
-				title: wgTitle,
-				format: 'json'
+				'title':	wgTitle,
+				'format':	'json',
+				'category':	category
 			},
 			function(res){
 				if(res.center && res.markers){

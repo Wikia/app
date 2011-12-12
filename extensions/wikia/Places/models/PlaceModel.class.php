@@ -8,6 +8,7 @@ class PlaceModel {
 	private $address = '';
 	private $zoom = 14;
 	private $pageId = 0;
+	private $categories = array();
 
 	public static function newFromAttributes( $array = null ){
 		$oModel = F::build( 'PlaceModel' );
@@ -19,7 +20,6 @@ class PlaceModel {
 				}
 			}
 		}
-
 		return $oModel;
 	}
 
@@ -33,6 +33,20 @@ class PlaceModel {
 		$int = (int) $int;
 		if ( $int > 0 ){
 			$this->width = $int;
+		}
+	}
+
+	public function setCategories( $mix ){
+		if ( is_array( $mix ) ){
+			$this->categories = $mix;
+		} else {
+			$array = explode( '|', $mix );
+			if ( count( $array ) > 0 ){
+				$this->categories = array();
+				foreach( $array as $val ){
+					$this->categories[] = ucfirst( $val );
+				}
+			}
 		}
 	}
 
@@ -118,9 +132,17 @@ class PlaceModel {
 		return $this->pageId;
 	}
 
+	public function getCategories(){
+		return $this->categories;
+	}
+
+	public function getCategoriesAsText(){
+		return implode( '|', $this->categories );
+	}
+
 	// Logic
 	public function getStaticMapUrl(){
-		$latLon = implode(',', $this->getLatLon());
+		$latLon = implode( ',', $this->getLatLon() );
 
 		// use SASS button color for marker
 		$colors = SassUtil::getOasisSettings();
