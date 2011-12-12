@@ -170,6 +170,7 @@ if __name__ == '__main__':
 	parser.add_option("--blacklist", help="A blacklist of words that should not be used", metavar="FILE")
 	parser.add_option("--fill", help="Fill the output directory to contain N files, overrides count, cannot be used with --dirs", metavar="N", type='int')
 	parser.add_option("--dirs", help="Put the images into subdirectories N levels deep - $wgCaptchaDirectoryLevels", metavar="N", type='int')
+	parser.add_option("--listfile", help="The file to store solutions to generated captchas", metavar="LISTFILE")
 	parser.add_option("--verbose", "-v", help="Show debugging information", action='store_true')	
 	
 	opts, args = parser.parse_args()
@@ -211,6 +212,10 @@ if __name__ == '__main__':
 	else:
 		blacklist = []
 	
+	listfile = 0;
+	if opts.listfile:
+		listfile = open(opts.listfile,'a');
+	
 	for i in range(count):
 		word = pick_word(words, blacklist, verbose)
 		salt = "%08x" % random.randrange(2**32)
@@ -223,4 +228,9 @@ if __name__ == '__main__':
 		if verbose:
 			print filename
 		gen_captcha(word, font, fontsize, os.path.join(output, filename))
+		if listfile:
+			listfile.write( "%s %s\n" % (word, md5hash) );
+	
+	if listfile:
+		listfile.close();
 
