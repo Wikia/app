@@ -5,6 +5,7 @@ $messages = array();
 $messages['en'] = array(
 	'places' => 'Places on this wiki',
 	'places-desc' => 'Provides <nowiki><place> and <places></nowiki> parser hooks for geo tagging pages and a [[Special:Places|map of all tagged pages]]',
+	'places-in-category' => 'Places in $1 category',
 
 	'places-toolbar-button-tooltip' => 'Click to add geo tag to this page',
 	'places-toolbar-button-address' => 'Please provide address to use as a geo tag for this page',
@@ -100,6 +101,7 @@ $messages['no'] = array(
 /** Polish (Polski) */
 $messages['pl'] = array(
 	'places' => 'Miejsca na tej wiki',
+	'places-in-category' => 'Miejsca w kategorii "$1"',
 	'places-desc' => 'Dodaje tagi <nowiki><place> and <places></nowiki> pozwalające na geotagowanie artykułów oraz [[Special:Places|mapę wszystkich oznaczonych artykułów]]',
 	'places-toolbar-button-tooltip' => 'Dodaj lokalizację do tego artykułu',
 	'places-toolbar-button-address' => 'Podaj adres określający lokalizację tego artykułu',

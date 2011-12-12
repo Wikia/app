@@ -35,7 +35,11 @@ class PlacesSpecialController extends WikiaSpecialPageController {
 
 	protected function placesForCategory( $oTitle ){
 		$placesModel = F::build( 'PlacesModel' );
-		$this->prepareMarkers( $placesModel->getFromCategories( $oTitle->getText() ) );
+		$categoryName = $oTitle->getText();
+
+		$this->prepareMarkers( $placesModel->getFromCategories( $categoryName ) );
+
+		$this->wg->Out->setPageTitle(wfMsg('places-in-category', $categoryName));
 	}
 
 	protected function allPlaces(){

@@ -7,15 +7,14 @@
  *
  * @author Jakub Kurcek <jakub at wikia-inc.com>
  * @author Maciej Brencz <macbre at wikia-inc.com>
- * @date 2010-10-11
- * @copyright Copyright (C) 2010 Jakub Kurcek, Wikia Inc.
- * @copyright Copyright (C) 2010 Maciej Brencz, Wikia Inc.
+ * @copyright Copyright (C) 2011 Jakub Kurcek, Wikia Inc.
+ * @copyright Copyright (C) 2011 Maciej Brencz, Wikia Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Places',
-	'version' => '1.0',
+	'version' => '2.0',
 	'author' => array(
 		'Maciej Brencz',
 		'Jakub Kurcek' ),
