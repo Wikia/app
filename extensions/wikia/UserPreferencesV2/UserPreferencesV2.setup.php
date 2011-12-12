@@ -9,6 +9,11 @@ $app = F::app();
 $dir = dirname(__FILE__) . '/';
 
 /**
+* new default user preferences
+*/
+$wgDefaultUserOptions['watchdeletion'] = 1;
+
+/**
 * classes
 */
 $app->registerClass('UserPreferencesV2', $dir . 'UserPreferencesV2.class.php');
