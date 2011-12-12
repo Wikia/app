@@ -1,7 +1,7 @@
 <?php
 
 /**
- * PLaces Special Page
+ * Places Special Page
  * @author Jakub
  * @author Macbre
  */
@@ -33,7 +33,7 @@ class PlacesSpecialController extends WikiaSpecialPageController {
 		$this->setVal( 'markers', $this->markers );
 	}
 
-	protected function placesForCategory( $oTitle ){
+	protected function placesForCategory( Title $oTitle ){
 		$placesModel = F::build( 'PlacesModel' );
 		$categoryName = $oTitle->getText();
 
@@ -47,7 +47,7 @@ class PlacesSpecialController extends WikiaSpecialPageController {
 		$this->prepareMarkers( $placesModel->getAll() );
 	}
 
-	protected function prepareMarkers( $aMarkers ) {
+	protected function prepareMarkers( Array $aMarkers ) {
 		foreach( $aMarkers as $oMarker ){
 			$aMapParams = $oMarker->getForMap();
 			if ( !empty( $aMapParams ) ){
@@ -75,11 +75,14 @@ class PlacesSpecialController extends WikiaSpecialPageController {
 	public function getMarkersRelatedToCurrentTitle(){
 		$sTitle = $this->getVal('title', '');
 		$oTitle = F::build( 'Title', array( $sTitle ), 'newFromText' );
-		$oPlacesModel = F::build('PlacesModel');
-		$aMarkers = $oPlacesModel->getFromCategoriesByTitle( $oTitle );
-		$oMarker = F::build( 'PlaceStorage', array( $oTitle ), 'newFromTitle' )->getModel();
-		$this->setVal( 'center', $oMarker->getForMap() );
-		$this->prepareMarkers( $aMarkers );
-		$this->setVal( 'markers', $this->markers );
+
+		if ($oTitle instanceof Title) {
+			$oPlacesModel = F::build('PlacesModel');
+			$aMarkers = $oPlacesModel->getFromCategoriesByTitle( $oTitle );
+			$oMarker = F::build( 'PlaceStorage', array( $oTitle ), 'newFromTitle' )->getModel();
+			$this->setVal( 'center', $oMarker->getForMap() );
+			$this->prepareMarkers( $aMarkers );
+			$this->setVal( 'markers', $this->markers );
+		}
 	}
 }
