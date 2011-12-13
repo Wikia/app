@@ -39,7 +39,7 @@ var Places = Places || (function(){
 						'id': 'places-modal',
 						'width' : ($(window).width() - 100),
 						'callback' : function () {
-							Places.displayDynamic(res);
+							Places.renderMap(res);
 						}
 					});
 				}
@@ -118,12 +118,10 @@ var Places = Places || (function(){
 			}
 		},
 
-		displayDynamic: function( options ){
+		renderMap: function( options ){
 			options = options || {};
 			options.markers = options.markers || [];
 			options.center = options.center || false;
-
-			$().log( options.markers, 'Places markers');
 
 			if ( options.markers.length > 0 ){
 				var lanSum = 0;
