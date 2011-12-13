@@ -29,3 +29,10 @@ $app->registerHook('AddNewAccount', 'AccountCreationTrackerController', 'onAddNe
  * message files
  */
 $app->registerExtensionMessageFile('ACT', $dir . 'ACT.i18n.php' );
+
+/**
+ * rights
+ */
+$app->wg->AvailableRights[] = 'accounttracker';
+$app->wg->GroupPermissions['*']['accounttracker'] = false;
+$app->wg->GroupPermissions['util']['accounttracker'] = true;
