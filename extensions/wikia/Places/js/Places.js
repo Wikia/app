@@ -83,7 +83,7 @@ var Places = Places || (function(){
 			var miniMaps = $('.placemap'),
 				geoButton = $('#geotagButton');
 
-			if(miniMaps.length){
+			if(miniMaps.exists()){
 				$.loadGoogleMaps(function(){
 					$('#WikiaMainContent').delegate('.placemap > img', clickEvent, showModal);
 				});
@@ -140,6 +140,18 @@ var Places = Places || (function(){
 						if ( minLan > value.lan ){minLan = value.lan}
 					}
 				);
+
+				var mapConfig = {
+						'center': new google.maps.LatLng( 0, 0 ),
+						'mapTypeId': google.maps.MapTypeId.ROADMAP,
+						'zoom': 14
+					},
+					map = new google.maps.Map(
+						document.getElementById(options.mapId),
+						mapConfig
+					);
+
+				// fit all markers inside a map
 				if ( options.center !== false ){
 					var latDistance = Math.max( Math.abs( maxLat - options.center.lat ), Math.abs( options.center.lat - minLat ) );
 					var lanDistance = Math.max( Math.abs( maxLan - options.center.lan ), Math.abs( options.center.lan - minLan ) );
@@ -147,18 +159,7 @@ var Places = Places || (function(){
 					minLan = options.center.lan - lanDistance;
 					maxLat = options.center.lat + latDistance;
 					maxLan = options.center.lan + lanDistance;
-
 				}
-				var mapConfig = {
-					'center': new google.maps.LatLng( 0, 0 ),
-					'mapTypeId': google.maps.MapTypeId.ROADMAP,
-					'zoom': 14
-				};
-
-				var map = new google.maps.Map(
-					document.getElementById(options.mapId),
-					mapConfig
-				);
 
 				map.fitBounds(
 					new google.maps.LatLngBounds(
@@ -167,6 +168,7 @@ var Places = Places || (function(){
 					)
 				);
 
+				// generate markers and tooltips
 				var aMarkers = [],
 					aInfoWindows = [];
 
