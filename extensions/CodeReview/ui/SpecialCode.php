@@ -129,7 +129,11 @@ abstract class CodeView {
 	 *	of false
 	*/
 	function authorWikiUser( $author ) {
-		return $this->mRepo->authorWikiUser( $author );
+		if(is_object($this->mRepo)){
+			return $this->mRepo->authorWikiUser( $author );
+		} else {
+			return false;
+		}
 	}
 
 	function authorLink( $author, $extraParams=array() ) {
