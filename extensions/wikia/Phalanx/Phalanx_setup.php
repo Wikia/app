@@ -20,6 +20,7 @@ $dir = dirname(__FILE__) . '/';
 $wgAutoloadClasses['Phalanx'] = $dir.'Phalanx.class.php';
 
 $wgAutoloadClasses['UserBlock'] = $dir.'blocks/UserBlock.class.php';
+$wgAutoloadClasses['UserCookieBlock'] = $dir.'blocks/UserCookieBlock.class.php';
 $wgAutoloadClasses['ContentBlock'] = $dir.'blocks/ContentBlock.class.php';
 $wgAutoloadClasses['TitleBlock'] = $dir.'blocks/TitleBlock.class.php';
 $wgAutoloadClasses['QuestionTitleBlock'] = $dir.'blocks/QuestionTitleBlock.class.php';
@@ -52,6 +53,7 @@ function efPhalanxInit() {
 
 	// former RegexBlock (TYPE_USER)
 	$wgHooks['GetBlockedStatus'][] = 'UserBlock::blockCheck';
+	$wgHooks['GetBlockedStatus'][] = 'UserCookieBlock::blockCheck';
 
 	// allow for per wiki disable the content checks
 		// (mainly for vstf wiki, causes pain when reporting block issues)
