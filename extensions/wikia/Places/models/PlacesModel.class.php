@@ -7,6 +7,8 @@
  *  - all articles on a wiki
  *  - all articles from given categories
  *  - all articles tagged as being "nearby" given place
+ *
+ * TODO: add caching
  */
 
  class PlacesModel {

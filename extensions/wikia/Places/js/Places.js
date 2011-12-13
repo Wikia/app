@@ -194,6 +194,11 @@ var Places = Places || (function(){
 						}
 					}
 				});
+				
+				// support animations
+				if (options.animate) {
+					
+				}
 			}
 		}
 	};
