@@ -319,6 +319,7 @@ class PhalanxHelper {
 					}
 					$wgMemc->set($key,$blocksData);
 				}
+				unset($wgMemc->_dupe_cache[$key]);
 			}
 		}
 
