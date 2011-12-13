@@ -47,6 +47,37 @@ class AccountCreationTrackerController extends WikiaSpecialPageController {
 		$this->setVal( 'url_form', $title->getFullURL() ); 
 	}
 
+	public function blockAccountGroup( $groupId ) {
+		if ( !$this->wg->User->isAllowed( 'phalanx' ) ) {
+			$this->displayRestrictionError($this->user);
+                        $this->skipRendering();
+                        return false;
+		}
+
+		if ( !class_exists( 'Phalanx' ) ) {
+			// TODO display some error
+                        $this->skipRendering();
+                        return false;
+		}
+
+		$data = array(
+				'text' => $groupId,
+				'exact' => false,
+				'case' => false,
+				'regex' => false,
+				'timestamp' => wfTimestampNow(),
+				'expire' => null,
+				'author_id' => $wgUser->getId(),
+				'reason' => 'cookie-based block via AccountCreationTracker',
+				'lang' => 'all',
+				'type' => Phalanx::TYPE_COOKIE,
+			     );
+
+		$status = PhalanxHelper::save( $data );
+
+		return $status;
+	}
+
 	public function renderContributions() {
 		$contribs = $this->request->getVal( 'contributions' );
 		$this->response->setVal( 'contributions', $contribs );

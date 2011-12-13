@@ -35,6 +35,6 @@ $app->registerExtensionMessageFile('ACT', $dir . 'ACT.i18n.php' );
 /**
  * rights
  */
-$app->wg->AvailableRights[] = 'accounttracker';
-$app->wg->GroupPermissions['*']['accounttracker'] = false;
-$app->wg->GroupPermissions['util']['accounttracker'] = true;
+$wgAvailableRights[] = 'accounttracker';
+$wgGroupPermissions['*']['accounttracker'] = false;
+$wgGroupPermissions['util']['accounttracker'] = true;
