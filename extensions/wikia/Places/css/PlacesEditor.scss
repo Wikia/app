@@ -7,12 +7,11 @@ $places-column-width: 300px;
 }
 #PlacesEditorColumn {
 	float: left;
-	margin-right: 10px;
-	width: $places-column-width - 10px;
+	width: $places-column-width - 30px;
 	> form {
 		input[type="text"] {
 			display: block;
-			width: $places-column-width - 10px;
+			width: 100%;
 		}
 		ul {
 			height: 200px;
@@ -21,6 +20,14 @@ $places-column-width: 300px;
 			padding: 10px;
 		}
 	}
+	label {
+		display: block;
+	}
+}
+
+#PlacesEditorGeoPosition {
+	display: block;
+	width: 100%;
 }
 
 #PlacesEditorMap {
