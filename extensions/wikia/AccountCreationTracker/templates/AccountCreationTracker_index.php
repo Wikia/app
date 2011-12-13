@@ -4,10 +4,11 @@
 	<?php endif; ?>
 	<fieldset>
 		<label for="act-username"><?= wfMsg( 'act-enter-username' ); ?></label>
-		<input type="text" id="act-username" name="username" value="<?= $username; ?>" /><a class="wikia-button" id="act-search-btn"><?= wfMsg( 'act-search' ); ?></a>
+		<input type="text" id="act-username" name="username" value="<?= $username; ?>" />
+		<input type="submit" class="wikia-button" id="act-search-btn" value="<?= wfMsg( 'act-search' ); ?>" />
 	</fieldset>
 </form>
-<br />
+
 <?php if( count( $accounts ) > 0 ): ?>
 	<strong><?= wfMsg( 'act-list-of-accounts', array( count($accounts) ) ); ?></strong>
 	<ul>
