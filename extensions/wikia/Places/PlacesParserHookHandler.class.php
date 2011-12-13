@@ -84,21 +84,23 @@ class PlacesParserHookHandler {
 	static public function renderPlacesTag($content, array $attributes, Parser $parser, PPFrame $frame) {
 		wfProfileIn(__METHOD__);
 
-		// debug code !!!
-		/**
-		$places = F::build('PlacesModel');
-		$title = F::build('Title', array('Zajezdnia tramwajowa przy ulicy Gajowej'), 'newFromText');
-		var_dump($places->getAll());
-		var_dump($places->getNearbyByTitle($title, 15));
-		var_dump($places->getFromCategories('Budynki'));
-		var_dump($places->getFromCategories(array('Budynki', 'Stary Rynek')));
-		var_dump($places->getFromCategoriesByTitle($title));
-		**/
+		// parse attributes
+		$height = !empty($attributes['height']) && is_numeric($attributes['height']) ? $attributes['height'] : 400;
+		$categories = !empty($attributes['category']) ? explode('|', $attributes['category']) : false;
 
-		$html = '';
+		// get all places on this wiki
+		$placesModel = F::build('PlacesModel');
+		$markers = empty($categories) ? $placesModel->getAll() : $placesModel->getFromCategories($categories);
 
-		// add JS snippets code
-		$html .= self::getJSSnippet();
+		// render parser hook
+		$html = F::app()->sendRequest(
+			'Places',
+			'renderMarkers',
+			array(
+				'markers' => $markers,
+				'height' => $height,
+			)
+		)->toString();
 
 		wfProfileOut(__METHOD__);
 		return $html;
@@ -120,7 +122,7 @@ class PlacesParserHookHandler {
 	/**
 	 * Get JavaScript code snippet to be loaded
 	 */
-	static public function getJSSnippet() {
+	static public function getJSSnippet(Array $options = array()) {
 		$html = F::build('JSSnippets')->addToStack(
 			array(
 				'/extensions/wikia/Places/css/Places.css',
@@ -128,7 +130,7 @@ class PlacesParserHookHandler {
 			),
 			array(),
 			'Places.init',
-			null,
+			$options,
 			array(JSSnippets::FILTER_NONE, 'wikiamobile')
 		);
 

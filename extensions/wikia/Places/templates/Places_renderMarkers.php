@@ -1,4 +1,4 @@
-<div id="places-map" style="width:100%; height:500px"></div>
+<div id="<?= $mapId ?>" class="places-map" style="width:100%; height:<?= $height; ?>px"></div>
 <?
 	echo F::build('JSSnippets')->addToStack(
 		array(
@@ -7,7 +7,7 @@
 		array('$.loadGoogleMaps'),
 		'Places.renderMap',
 		array(
-			'mapId' => 'places-map',
+			'mapId' => $mapId,
 			'markers' => $markers,
 			'center' => $center
 		)
