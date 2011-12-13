@@ -40,7 +40,8 @@ $messages['en'] = array(
 	'categoryselect-error-user-rights' => 'User rights error.',
 	'categoryselect-error-db-locked' => 'Database is locked.',
 	'categoryselect-edit-abort' => 'The modification you tried to make was aborted by an extension hook',
-	'tog-disablecategoryselect' => 'Disable Category module (only applies if editing in visual mode has been disabled)'
+	'tog-disablecategoryselect' => 'Disable Category module (only applies if editing in visual mode has been disabled)',
+	'tog-disablecategoryselect-v2' => 'Disable Category module in Source mode'
 );
 
 /** Message documentation (Message documentation)

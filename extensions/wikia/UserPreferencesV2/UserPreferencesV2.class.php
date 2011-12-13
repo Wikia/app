@@ -126,7 +126,8 @@ class UserPreferencesV2 {
 		unset($defaultPreferences['justify']);
 		unset($defaultPreferences['numberheadings']);
 		$defaultPreferences['enablerichtext']['section'] = 'editing/editing-experience';
-		unset($defaultPreferences['disablelinksuggest']);
+		$defaultPreferences['disablelinksuggest']['section'] = 'editing/editing-experience';
+		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'disablelinksuggest');
 		if ($user->mOptions['skin'] == 'monobook') {
 			$defaultPreferences['showtoolbar']['section'] = 'editing/monobookv2';
 			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'showtoolbar');
@@ -139,6 +140,10 @@ class UserPreferencesV2 {
 			$defaultPreferences['rows']['section'] = 'editing/monobookv2';
 			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'rows');
 		}
+		$defaultPreferences['editsectiononrightclick']['label-message'] = 'tog-editsectiononrightclick-v2';
+		$defaultPreferences['editondblclick']['label-message'] = 'tog-editondblclick-v2';
+		$defaultPreferences['disablecategoryselect']['section'] = 'editing/starting-an-edit';
+		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'disablecategoryselect');
 
 		//Tab 4: Under the Hood
 		$defaultPreferences['rcdays']['section'] = 'under-the-hood/recent-changesv2';
