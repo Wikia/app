@@ -5,17 +5,20 @@
  * @author Will Lee <wlee@wikia-inc.com>
  */
 class GamingCalendar {
-	private static $ENTRY_PREFIX = 'gamingcalendar-';
+	private static $ENTRY_PREFIX = 'calendar-';
 	private static $ENTRY_DATE_FORMAT = 'Ymd';
 	private static $ENTRY_TITLE_MARKER = '* ';
 	private static $ENTRY_ATTRIBUTE_MARKER = '** ';
 	private static $ENTRY_SYSTEMS_MARKER = 'SYSTEMS:';
+	private static $ENTRY_PLATFORMS_MARKER = 'PLATFORMS: ';
+	private static $ENTRY_RATING_MARKER = 'RATING: ';
 	private static $ENTRY_DESCRIPTION_MARKER = 'DESCRIPTION:';
 	private static $ENTRY_IMAGE_MARKER = 'IMAGE:';
 	private static $ENTRY_MOREINFO_MARKER = 'MOREINFO:';
 	private static $ENTRY_PREORDER_MARKER = 'PREORDER:';
+	private static $ENTRY_ORDER_MARKER = 'ORDER:';
 
-	const CACHE_KEY = 'gamingcal';
+	const CACHE_KEY = 'cal';
 	const CACHE_EXPIRY = 2700;
 
 	/**
@@ -76,6 +79,13 @@ class GamingCalendar {
 
 		return $entries;
 	}
+	
+	private static function getCacheKey() {
+		global $wgCityId;
+		
+		$catShort = WikiFactoryHub::getInstance()->getCategoryShort($wgCityId);
+		return $catShort . self::CACHE_KEY;
+	}
 		
 	/**
 	 *
@@ -83,7 +93,10 @@ class GamingCalendar {
 	 * @return string
 	 */
 	private static function getEntryKey($date) {
-		return self::$ENTRY_PREFIX . date(self::$ENTRY_DATE_FORMAT, $date);
+		global $wgCityId;
+		
+		$catShort = WikiFactoryHub::getInstance()->getCategoryShort($wgCityId);
+		return $catShort . self::$ENTRY_PREFIX . date(self::$ENTRY_DATE_FORMAT, $date);
 	}
 
 	private static function getWeekDescription( $start ) {
@@ -149,6 +162,12 @@ class GamingCalendar {
 				if (startsWith($attrib, self::$ENTRY_SYSTEMS_MARKER)) {
 					$entry->setSystems( explode(',', trim(substr($attrib, strlen(self::$ENTRY_SYSTEMS_MARKER))) ) );
 				}
+				elseif (startsWith($attrib, self::$ENTRY_PLATFORMS_MARKER)) {	// SYSTEMS and PLATFORMS are synonyms
+					$entry->setSystems( explode(',', trim(substr($attrib, strlen(self::$ENTRY_PLATFORMS_MARKER))) ) );
+				}				
+				elseif (startsWith($attrib, self::$ENTRY_RATING_MARKER)) {
+					$entry->setRating( trim(substr($attrib, strlen(self::$ENTRY_RATING_MARKER))) );
+				}
 				elseif (startsWith($attrib, self::$ENTRY_DESCRIPTION_MARKER)) {
 					$entry->setDescription( trim(substr($attrib, strlen(self::$ENTRY_DESCRIPTION_MARKER))) );
 				}
@@ -164,6 +183,9 @@ class GamingCalendar {
 				}
 				elseif (startsWith($attrib, self::$ENTRY_PREORDER_MARKER)) {
 					$entry->setPreorderUrl( trim(substr($attrib, strlen(self::$ENTRY_PREORDER_MARKER))) );
+				}
+				elseif (startsWith($attrib, self::$ENTRY_ORDER_MARKER)) {	// PREORDER and ORDER are synonyms
+					$entry->setPreorderUrl( trim(substr($attrib, strlen(self::$ENTRY_ORDER_MARKER))) );
 				}
 			}
 		}

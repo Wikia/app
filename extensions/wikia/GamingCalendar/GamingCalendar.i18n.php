@@ -9,6 +9,8 @@ $messages = array();
  * English
  */
 $messages['en'] = array(
-    'gamingcalendar-heading' => 'Game calendar',
+    'gamingcalendar-heading-gaming' => 'Game calendar',
+    'gamingcalendar-heading-ent' => 'Entertainment calendar',
+    'gamingcalendar-heading-music' => 'Music calendar',
     'gamingcalendar-today' => 'Today',
 );

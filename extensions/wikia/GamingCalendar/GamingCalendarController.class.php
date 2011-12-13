@@ -28,6 +28,10 @@ class GamingCalendarController extends WikiaController {
 	 * styling the modal window for Gaming Calendar without hardcoding HTML anywhere.
 	*/
 	public function getModalLayout() {
+		global $wgCityId;
+		
+		$catShort = WikiFactoryHub::getInstance()->getCategoryShort($wgCityId);
+		$this->setVal('calendarHeading', $this->wf->msgForContent( 'gamingcalendar-heading-'.$catShort ));
 		$this->setVal('wgBlankImgUrl', $this->wg->BlankImgUrl );
 	}
 }

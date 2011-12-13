@@ -113,7 +113,7 @@ $gaming-calendar-gray-text: mix($color-text, $color-page, 75%);
 
 	img {
 		height: 60px;
-		width: 52px;
+		//width: 52px;
 		float: left;
 		margin-right: 11px;
 	}
@@ -130,7 +130,7 @@ $gaming-calendar-gray-text: mix($color-text, $color-page, 75%);
 		font-weight: normal;
 	}
 	
-	.game-systems {
+	.game-systems, .game-rating {
 		color: $gaming-calendar-gray-text;
 		display: block;
 		font-size: 11px;

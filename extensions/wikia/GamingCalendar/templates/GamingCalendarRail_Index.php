@@ -13,6 +13,7 @@
 			<span class="game-title">##gameTitle##</span>
 			##gameSubTitle##
                         <span class="game-systems">##systems##</span>
+                        <span class="game-rating">##rating##</span>
 			<div class="game-details">
 				<p>##description##</p>
 				<a href="##moreInfoUrl##" class="game-more-info" target="_blank">More info</a>
