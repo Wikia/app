@@ -11,9 +11,11 @@ $messages['en'] = array(
 
 	'places-toolbar-button-tooltip' => 'Click to add geo tag to this page',
 	'places-toolbar-button-address' => 'Please provide address to use as a geo tag for this page',
+	'places-editor-search' => 'Search',
 	'places-editor-title-create-new' => 'Add a geotag',
 	'places-editor-title-edit' => 'Edit a geotag',
 	'places-editor-show-my-location' => 'Take me to my location',
+	'places-editor-geoposition' => 'Current geolocation:',
 	'places-geolocation-button-label' => 'Add location',
 
 	'places-geolocation-modal-add-title' => 'Add location',
@@ -109,9 +111,11 @@ $messages['pl'] = array(
 	'places-desc' => 'Dodaje tagi <nowiki><place> and <places></nowiki> pozwalające na geotagowanie artykułów oraz [[Special:Places|mapę wszystkich oznaczonych artykułów]]',
 	'places-toolbar-button-tooltip' => 'Dodaj lokalizację do tego artykułu',
 	'places-toolbar-button-address' => 'Podaj adres określający lokalizację tego artykułu',
+	'places-editor-search' => 'Szukaj',
 	'places-editor-title-create-new' => 'Dodaj lokalizację',
 	'places-editor-title-edit' => 'Edytuj lokalizację',
 	'places-editor-show-my-location' => 'Wskaż moją lokalizację',
+	'places-editor-geoposition' => 'Aktualna lokalizacja:',
 );
 
 /** Russian (Русский)

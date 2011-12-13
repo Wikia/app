@@ -56,6 +56,7 @@ var PlacesEditor = {
 				callback: $.proxy(function() {
 					this.setupMap();
 					this.setupForm();
+					this.onGetMyLocation();
 				}, this)
 			}
 		);
@@ -142,12 +143,14 @@ var PlacesEditor = {
 	},
 
 	onGetMyLocation: function(ev) {
-		ev.preventDefault();
+		ev && ev.preventDefault();
 
 		if (typeof navigator.geolocation == 'undefined') {
 			alert('Your browser doesn\'t support this feature');
 			return;
 		}
+
+		this.resetMarkers();
 
 		navigator.geolocation.getCurrentPosition($.proxy(function(position) {
 			var coords = position.coords,
@@ -173,13 +176,20 @@ var PlacesEditor = {
 		var marker = new google.maps.Marker({
 			position: new google.maps.LatLng(lat, lon),
 			map: this.map,
-			title: label
+			title: label,
+			draggable: true
 		});
 
+		// update the coordinates when marker is dropped
+		google.maps.event.addListener(marker, 'dragend', $.proxy(function() {
+			this.selectMarker(marker.markerId);
+		}, this));
+
+		// add to the list
 		this.markers.push(marker);
 
 		// return ID of stored marker
-		return this.markers.length - 1;
+		return marker.markerId = this.markers.length - 1;
 	},
 
 	selectMarker: function(markerId) {
@@ -190,6 +200,8 @@ var PlacesEditor = {
 		this.map.setZoom(15);
 
 		this.currentMarker = marker;
+
+		$('#PlacesEditorGeoPosition').val(coords.lat().toFixed(8) + ','  + coords.lng().toFixed(8));
 	},
 
 	getCurrentMarkerLocation: function() {
