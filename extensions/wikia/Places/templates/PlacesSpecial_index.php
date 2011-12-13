@@ -5,7 +5,7 @@
 			'/extensions/wikia/Places/js/Places.js',
 		),
 		array('$.loadGoogleMaps'),
-		'Places.displayDynamic',
+		'Places.renderMap',
 		array(
 			'mapId' => 'places-map',
 			'markers' => $markers,
