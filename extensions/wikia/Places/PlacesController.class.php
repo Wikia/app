@@ -110,10 +110,96 @@ class PlacesController extends WikiaController {
 				'newFromTitle'
 			)->isGeoTaggingEnabledForArticle( $this->app->wg->title )
 		){
-			$this->response->setVal( 'jsSnippet', PlacesParserHookHandler::getJSSnippet() );
-			F::build( 'JSMessages' )->enqueuePackage( 'PlacesGeoLocationModal', JSMessages::INLINE );
+			
+			$this->setVal(
+				'geolocationParams',
+				$this->getGeolocationButtonParams()
+			);
+			$this->response->setVal(
+				'jsSnippet',
+				PlacesParserHookHandler::getJSSnippet()
+			);
+			F::build( 'JSMessages' )
+				->enqueuePackage(
+					'PlacesGeoLocationModal',
+					JSMessages::INLINE
+				);
 		} else {
 			$this->skipRendering();
 		}
+	}
+
+	/**
+	 * Purge geolocationplaceholder cache
+	 */
+	public function purgeGeoLocationButton(){
+		$this->getGeolocationButtonParams( true );
+		$this->skipRendering();
+	}
+
+	/**
+	 * Returns geolocation button params
+	 */
+	private function getGeolocationButtonParams( $refreshCache = false ){
+
+		$sMemcKey = $this->app->wf->MemcKey(
+			$this->app->wg->title->getText(),
+			$this->app->wg->title->getNamespace(),
+			'GeolocationButtonParams'
+		);
+		
+		// use user default
+		if ( empty( $iWidth ) ){
+			$wopt = $this->app->wg->user->getOption( 'thumbsize' );
+			if( !isset( $this->app->wg->thumbLimits[ $wopt ] ) ) {
+				$wopt = User::getDefaultOption( 'thumbsize' );
+			}
+			$iWidth = $this->app->wg->thumbLimits[ $wopt ];
+		}
+		
+		$aResult = array(
+			'align' => 'right',
+			'width' => $iWidth
+		);
+
+		$aMemcResult = $this->app->wg->memc->get( $sMemcKey );
+		if ( $refreshCache || empty( $aMemcResult ) ){
+			$oArticle = F::build( 'Article', array( $this->app->wg->title ) );
+			$sRawText = $oArticle->getRawText();
+			$aMatches = array();
+			$iFound = preg_match (
+				'#\[\[Plik:.*|thumb.*\]\]#',
+				$sRawText,
+				$aMatches
+			);
+
+			if ( !empty( $iFound ) ){
+				reset( $aMatches );
+				$sMatch = current( $aMatches );
+				$sMatch = str_replace( '[[', '', $sMatch );
+				$sMatch = str_replace( ']]', '', $sMatch );
+				$aMatch = explode( '|', $sMatch );
+				foreach( $aMatch as $element ){
+					if ( $element == 'left' ){ $aResult['align'] = $element; }
+					if ( substr( $element, -2 ) == 'px' && (int)substr( $element, 0, -2 ) > 0 ){
+						$aResult['width'] = (int)substr( $element, 0, -2 );
+					}
+				}
+			}
+			$iExpires = 60*60*24;
+			$this->app->wg->memc->set(
+				$sMemcKey,
+				$aResult,
+				$iExpires
+			);
+		} else {
+			$aResult[ 'align' ] = $aMemcResult[ 'align' ];
+			if ( !empty( $aMemcResult['width'] ) ){
+				$aResult[ 'width' ] = $aMemcResult[ 'width' ];
+			}
+		}
+
+		// get default image width
+		return $aResult;
 	}
 }

@@ -100,6 +100,9 @@ class PlacesHooks extends WikiaObject{
 
 		$storage->store();
 
+		// purge autoplaceholdr position
+		F::app()->sendRequest( 'PlacesController', 'purgeGeoLocationButton' );
+
 		$this->wf->profileOut( __METHOD__ );
 		return true;
  	}

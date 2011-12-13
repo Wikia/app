@@ -1,6 +1,6 @@
-<figure class="thumb tright thumbinner" style="width:302px;">
-	<div style="padding:5px;">
-		<button id="geotagButton" style="margin:50px 0px"><?= $wf->Msg( 'places-geolocation-button-label' ) ;?></button>
+<figure class="thumb t<?=$geolocationParams['align'];?> thumbinner geotagthumb">
+	<div style="padding:1px; width:<?=$geolocationParams['width']?>px " >
+		<button id="geotagButton" style="margin:20px 0px"><?= $wf->Msg( 'places-geolocation-button-label' ) ;?></button>
 	</div>
 </figure>
 <?= $jsSnippet ;?>
