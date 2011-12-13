@@ -9,6 +9,7 @@ class Phalanx {
 	const TYPE_ANSWERS_QUESTION_TITLE = 16;
 	const TYPE_ANSWERS_RECENT_QUESTIONS = 32;
 	const TYPE_WIKI_CREATION = 64;
+	const TYPE_COOKIE = 128;
 	const SCRIBE_KEY = 'log_phalanx';
 	const LAST_UPDATE_KEY = 'phalanx:last-update';
 
@@ -19,7 +20,8 @@ class Phalanx {
 		8 => 'user',
 		16 => 'answers-question-title',
 		32 => 'answers-recent-questions',
-		64 => 'wiki-creation'
+		64 => 'wiki-creation',
+		128 => 'cookie'
 	);
 
 	public static $moduleData = array();

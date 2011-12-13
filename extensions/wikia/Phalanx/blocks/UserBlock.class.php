@@ -7,10 +7,14 @@
  * if the user's name matches one of the blacklisted phrases or IPs.
  *
  * @author Marooned <marooned at wikia-inc.com>
+ * @author Lucas Garczewski <tor@wikia-inc.com>
  * @date 2010-06-09
  */
 
 class UserBlock {
+	const TYPE = Phalanx::TYPE_USER;
+	const CACHE_KEY = 'user-status';
+
 	/**
 	 * @desc blockCheck() will return false if user is blocked. The reason why it was 
 	 * written in such way is below when you look at method UserBlock::onUserCanSendEmail().
@@ -26,24 +30,14 @@ class UserBlock {
 		// don't write stats for other user than visiting user
 		$isCurrentUser = $text == $wgUser->getName();
 
-		// check cache first before proceeeding
-		$cacheKey = wfSharedMemcKey( 'phalanx', 'user-status', $user->getTitleKey() );
-		$cachedState = $wgMemc->get( $cacheKey );
-		if ( !empty( $cachedState ) && $cachedState['timestamp'] > (int) Phalanx::getLastUpdate() ) {
-			if ( !$cachedState['return'] && $isCurrentUser ) {
-				self::setUserData( $user, $cachedState['block'], $text, $user->isAnon() );
-			}
-			
-			//added to make User::isBlockedGlobally() 
-			//work for this instance of User class
-			//-- Andrzej 'nAndy' Łukaszewski
-			$user->mBlockedGlobally = !$cachedState['return'];
-			
+		// check cache first before proceeding
+		$cachedState = self::getBlockFromCache( $user );
+		if ( !is_null( $cachedState ) ) {
 			wfProfileOut( __METHOD__ );
-			return $cachedState['return'];
+			return $cachedState;
 		}
 
-		$blocksData = Phalanx::getFromFilter( Phalanx::TYPE_USER );
+		$blocksData = Phalanx::getFromFilter( self::TYPE );
 
 		if ( !empty($blocksData) && !empty($text) ) {
 			if ( $user->isAnon() ) {
@@ -87,7 +81,7 @@ class UserBlock {
 				Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$text'.");
 				self::setUserData( $user, $blockData, $text, $isBlockIP );
 
-				$cacheKey = wfSharedMemcKey( 'phalanx', 'user-status', $user->getTitleKey() );
+				$cacheKey = wfSharedMemcKey( 'phalanx', self::CACHE_KEY, $user->getTitleKey() );
 				$cachedState = array(
 					'timestamp' => wfTimestampNow(),
 					'block' => $blockData,
@@ -102,6 +96,29 @@ class UserBlock {
 
 		wfProfileOut( __METHOD__ );
 		return true;
+	}
+
+	private static function getBlockFromCache( $user ) {
+		global $wgMemc;
+		wfProfilein( __METHOD__ );
+
+		$cacheKey = wfSharedMemcKey( 'phalanx', self::CACHE_KEY, $user->getTitleKey() );
+		$cachedState = $wgMemc->get( $cacheKey );
+
+		if ( !empty( $cachedState ) && $cachedState['timestamp'] > (int) Phalanx::getLastUpdate() ) {
+			if ( !$cachedState['return'] && $isCurrentUser ) {
+				self::setUserData( $user, $cachedState['block'], $text, $user->isAnon() );
+			}
+
+			//added to make User::isBlockedGlobally() work for this instance of User class
+			$user->mBlockedGlobally = !$cachedState['return'];
+
+			wfProfileOut( __METHOD__ );
+			return $cachedState['return'];
+		}
+
+		wfProfileOut( __METHOD__ );
+		return null;
 	}
 
 	//moved from RegexBlockCore.php
@@ -175,7 +192,7 @@ class UserBlock {
 	 */
 	public static function onAbortNewAccount( $user, &$abortError ) {
 		$text = $user->getName();
-		$blocksData = Phalanx::getFromFilter( Phalanx::TYPE_USER );
+		$blocksData = Phalanx::getFromFilter( self::TYPE );
 		$state = self::blockCheckInternal( $user, $blocksData, $text, false, true );
 		if ( !$state ) {
 			$abortError = wfMsg( 'phalanx-user-block-new-account' );
