@@ -70,13 +70,19 @@ class WikiaResponseTest extends PHPUnit_Framework_TestCase {
 				$i++;
 			}
 		}
+		
+		// there is one additional header to be send, content-type
+		$headersNum = $replace ? 2 : $headersNum + 1;
 
-		$this->object->expects( $replace ? $this->once() : $this->exactly( $headersNum ))->method( 'sendHeader' );
+		$this->object->expects( $this->exactly( $headersNum ))->method( 'sendHeader' );
 		$this->object->sendHeaders();
 	}
 
+	/**
+	 * By default we send content-type header, plus response code in this test
+	 */
 	public function testSettingResponseCode() {
-		$this->object->expects( $this->once() )->method( 'sendHeader' );
+		$this->object->expects( $this->exactly(2) )->method( 'sendHeader' );
 		$this->object->setCode(200);
 		$this->object->sendHeaders();
 	}
