@@ -30,8 +30,10 @@ var Places = Places || (function(){
 			function(res){
 				if(res.center && res.markers){
 					var height = (isWikiaMobile) ? '100%' : ($(window).height() - 250).toString() + 'px',
-						html = '<div id="places-dynamic-map" style="height:' + height + '"></div>' +
+						html = '<div id="popup-map" style="height:' + height + '"></div>' +
 							'<div id="places-map-caption">' + res.caption + '</div>';
+
+					res.mapId = 'popup-map';
 
 					$.showModal(wgTitle, html, {
 						'id': 'places-modal',
@@ -121,7 +123,7 @@ var Places = Places || (function(){
 			options.markers = options.markers || [];
 			options.center = options.center || false;
 
-			$().log( options.markers, 'markers' );
+			$().log( options.markers, 'Places markers');
 
 			if ( options.markers.length > 0 ){
 				var lanSum = 0;
@@ -160,7 +162,7 @@ var Places = Places || (function(){
 				}
 
 				var map = new google.maps.Map(
-					document.getElementById("places-dynamic-map"),
+					document.getElementById(options.mapId),
 					mapConfig
 				);
 
