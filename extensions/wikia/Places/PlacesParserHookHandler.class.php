@@ -87,6 +87,11 @@ class PlacesParserHookHandler {
 		// parse attributes
 		$height = !empty($attributes['height']) && is_numeric($attributes['height']) ? $attributes['height'] : 400;
 		$categories = !empty($attributes['category']) ? explode('|', $attributes['category']) : false;
+		$animate = !empty($attributes['animate'])
+			?
+			is_numeric($attributes['animate']) ? intval($attributes['animate']) : 5 /* default animation delay in sec */
+			:
+			false;
 
 		// get all places on this wiki
 		$placesModel = F::build('PlacesModel');
@@ -99,6 +104,9 @@ class PlacesParserHookHandler {
 			array(
 				'markers' => $markers,
 				'height' => $height,
+				'options' => array(
+					'animate' => $animate
+				)
 			)
 		)->toString();
 
