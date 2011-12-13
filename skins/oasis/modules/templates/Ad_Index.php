@@ -2,7 +2,7 @@
 <!-- BEGIN SLOTNAME: <?= $slotname ?> -->
 <?= $ad ?>
 <?php if(!empty($selfServeUrl)) { ?>
-<div class="SelfServeUrl">Advertisement | <a href="<?= $selfServeUrl?>">Your ad here</a></div>
+<div class="SelfServeUrl">Advertisement | <a href="<?= $selfServeUrl?>" target="_blank">Your ad here</a></div>
 <?php } ?>
 <!-- END SLOTNAME: <?= $slotname ?> -->
 <?php } ?>
