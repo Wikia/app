@@ -59,8 +59,9 @@ var WikiaButtons = {
 
 	clickToggle: function(event) {
 		var m = $('>li>ul',$(this));
-		if (m.length == 0 || $.contains(m[0],event.target))
+		if (m.length == 0 || $.contains(m[0],event.target)) {
 			return;
+		}
 		$(this).toggleClass("active");
 	},
 
@@ -80,11 +81,9 @@ var WikiaButtons = {
 		WikiaButtons.timer = setTimeout(function() {
 			$(event.currentTarget).removeClass("active");
 		}, dalay);
-
 	}
-
 };
 
 $(function() {
-	WikiaButtons.init()
+	WikiaButtons.init();
 });

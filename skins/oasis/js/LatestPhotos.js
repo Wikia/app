@@ -14,7 +14,7 @@ var UploadPhotos = {
 		if(evt) {
 			evt.preventDefault();
 		}
-		
+
 		$.get(wgScript, {
 			action: 'ajax',
 			rs: 'moduleProxy',
@@ -78,19 +78,18 @@ var UploadPhotos = {
 					return;
 				}
 
-				var title = UploadPhotos.destfile.val();
-				if ( !title ) title = 'File:Sample.jpg';
-				
+				var title = UploadPhotos.destfile.val() || 'File:Sample.jpg';
+
 				var url = wgScriptPath + '/api' + wgScriptExtension
 					+ '?action=parse&text={{' + encodeURIComponent( license ) + '}}'
-					+ '&title=' + encodeURIComponent( title ) 
+					+ '&title=' + encodeURIComponent( title )
 					+ '&prop=text&pst&format=json';
 
 				$.get(url, function(data) {
 					UploadPhotos.wpLicenseTarget.html(data.parse.text['*']);
-				}, "json");			
+				}, "json");
 			});
-			
+
 			$.tracker.byStr('action/uploadphoto/dialog');
 		});
 		if (!UploadPhotos.libinit) {
