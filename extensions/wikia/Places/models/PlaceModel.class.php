@@ -9,6 +9,7 @@ class PlaceModel {
 	private $zoom = 14;
 	private $pageId = 0;
 	private $categories = array();
+	private $caption = false;
 
 	public static function newFromAttributes( $array = null ){
 		$oModel = F::build( 'PlaceModel' );
@@ -34,6 +35,10 @@ class PlaceModel {
 		if ( $int > 0 ){
 			$this->width = $int;
 		}
+	}
+
+	public function setCaption($caption) {
+		$this->caption = $caption;
 	}
 
 	public function setCategories( $mix ){
@@ -132,6 +137,28 @@ class PlaceModel {
 		return $this->pageId;
 	}
 
+	public function getCaption() {
+		return ($this->caption === false) ? $this->getDefaultCaption() : $this->caption;
+	}
+
+	public function getDefaultCaption() {
+		$latDir = ($this->lat >= 0) ? 'N' : 'S';
+		$lonDir = ($this->lon >= 0) ? 'E' : 'W';
+
+		$lat = abs($this->lat);
+		$lon = abs($this->lon);
+
+		// 52° 40.798' N 16° 93.363' E
+		return sprintf("%d° %.3f' %s %d° %.3f' %s",
+			floor($lat),
+			($lat - floor($lat)) * 60,
+			$latDir,
+			floor($lon),
+			($lon - floor($lon)) * 60,
+			$lonDir
+		);
+	}
+
 	public function getCategories(){
 		return $this->categories;
 	}
@@ -165,7 +192,7 @@ class PlaceModel {
 		if ( $this->isEmpty() ){
 			return false;
 		};
-		
+
 		$oTitle = F::build('Title', array( $this->getPageId() ), 'newFromID' );
 
 		$imageServing = new ImageServing( array( $this->getPageId() ), 200, array( 'w' => 2, 'h' => 1 ) );
@@ -176,7 +203,8 @@ class PlaceModel {
 			$imageUrl = $images[$this->getPageId()][0]['url'];
 		}
 		return ( !empty( $oTitle ) && $oTitle->exists() )
-			? array(	'lat' => $this->getLat(),
+			? array(
+					'lat' => $this->getLat(),
 					'lan' => $this->getLon(),
 					'label' => $oTitle->getText(),
 					'imageUrl' => $imageUrl,

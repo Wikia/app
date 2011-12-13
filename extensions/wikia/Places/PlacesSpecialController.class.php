@@ -36,7 +36,7 @@ class PlacesSpecialController extends WikiaSpecialPageController {
 		$this->setVal( 'center', $this->center );
 		$this->setVal( 'markers', $this->markers );
 
-		$this->wg->Out->setSubtitle(wfMsg('places-on-map', count($this->markers)));
+		$this->wg->Out->setSubtitle($this->wf->MsgExt('places-on-map', array('parsemag'), count($this->markers)));
 	}
 
 	protected function placesForCategory( Title $oTitle ){
@@ -97,6 +97,9 @@ class PlacesSpecialController extends WikiaSpecialPageController {
 			$this->setVal( 'center', $oMarker->getForMap() );
 			$this->prepareMarkers( $aMarkers );
 			$this->setVal( 'markers', $this->markers );
+
+			// generate modal caption
+			$this->setVal('caption', $this->wf->msgExt('places-modal-go-to-special', array('parseinline', 'parsemag'), count($this->markers)));
 		}
 	}
 }
