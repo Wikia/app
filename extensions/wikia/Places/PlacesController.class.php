@@ -29,6 +29,7 @@ class PlacesController extends WikiaController {
 		$this->setVal( 'lon', $oPlaceModel->getLon() );
 		$this->setVal( 'zoom', $oPlaceModel->getZoom() );
 		$this->setVal( 'categories', $oPlaceModel->getCategoriesAsText() );
+		$this->setVal( 'caption', $oPlaceModel->getCaption() );
 		$this->setVal( 'rteData', $rteData );
 	}
 
@@ -36,7 +37,7 @@ class PlacesController extends WikiaController {
 
 		$oPlaceModel = F::build('PlaceModel');
 		$oPlaceModel->setPageId( $this->getVal( 'articleId', 0 ) );
-		
+
 		if ( $oPlaceModel->getPageId() == 0 ){
 			$this->setVal( 'error', wfMsg( 'places-error-no-article' ) );
 			$this->setVal( 'success', false );
@@ -82,7 +83,6 @@ class PlacesController extends WikiaController {
 	}
 
 	public function getPlaceWikiTextFromModel(){
-		
 		$oPlaceModel = $this->getVal( 'model', null );
 
 		if ( empty( $oPlaceModel ) || !( $oPlaceModel instanceof PlaceModel ) ) {
@@ -97,7 +97,7 @@ class PlacesController extends WikiaController {
 	 * Renders the geolocation button for adding coordinates to a page
 	 */
 	public function getGeolocationButton(){
-		
+
 		if (	$this->app->wg->title->isContentPage() &&
 			F::build(
 				'PlaceStorage',

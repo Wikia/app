@@ -29,9 +29,11 @@ var Places = Places || (function(){
 			},
 			function(res){
 				if(res.center && res.markers){
-					var height = (isWikiaMobile) ? '100%' : ($(window).height() - 200).toString() + 'px';
+					var height = (isWikiaMobile) ? '100%' : ($(window).height() - 250).toString() + 'px',
+						html = '<div id="places-dynamic-map" style="height:' + height + '"></div>' +
+							'<div id="places-map-caption">' + res.caption + '</div>';
 
-					$.showModal(wgTitle, '<div id="places-dynamic-map" style="height:' + height + '"></div>', {
+					$.showModal(wgTitle, html, {
 						'id': 'places-modal',
 						'width' : ($(window).width() - 100),
 						'callback' : function () {
@@ -83,7 +85,7 @@ var Places = Places || (function(){
 
 			if(miniMaps.length){
 				$.loadGoogleMaps(function(){
-					$('#WikiaMainContent').delegate('.placemap img', clickEvent, showModal);
+					$('#WikiaMainContent').delegate('.placemap > img', clickEvent, showModal);
 				});
 			}
 
