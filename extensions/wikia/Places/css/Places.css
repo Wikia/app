@@ -2,6 +2,21 @@
 	height: 600px;
 }
 
+a.placesBoldLink {
+	font-weight: bold;
+}
+
+a.placesBoldLink img {
+	margin-right: 15px;
+	float:left;
+	display: block
+}
+
+p.placesBelowLinkText {
+	font-size: 12px;
+	line-height: 18px;
+}
+
 .placemap > img {
 	cursor: pointer;
 }
@@ -9,3 +24,4 @@
 .wikiamobile #WikiaMainContent .placemap .thumbcaption {
 	display: none;
 }
+

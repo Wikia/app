@@ -119,6 +119,7 @@ class PlacesController extends WikiaController {
 		$this->setVal( 'imgUrl', isset( $data['imageUrl'] ) ? $data['imageUrl'] : '' );
 		$this->setVal( 'title', isset( $data['label'] ) ? $data['label'] : '' );
 		$this->setVal( 'url', isset( $data['articleUrl'] ) ? $data['articleUrl'] : '' );
+		$this->setVal( 'textSnippet', isset( $data['textSnippet'] ) ? $data['textSnippet'] : '' );
 	}
 
 	/**
@@ -278,7 +279,6 @@ class PlacesController extends WikiaController {
 						$aResult['width'] = (int)substr( $element, 0, -2 );
 					}
 				}
-
 			}
 			$iExpires = 60*60*24;
 			$this->app->wg->memc->set(

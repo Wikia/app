@@ -2,6 +2,7 @@
 <?
 	echo F::build('JSSnippets')->addToStack(
 		array(
+			'/extensions/wikia/Places/css/Places.css',
 			'/extensions/wikia/Places/js/Places.js',
 		),
 		array('$.loadGoogleMaps'),

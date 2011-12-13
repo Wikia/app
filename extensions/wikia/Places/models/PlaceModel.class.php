@@ -195,20 +195,29 @@ class PlaceModel {
 
 		$oTitle = F::build('Title', array( $this->getPageId() ), 'newFromID' );
 
-		$imageServing = new ImageServing( array( $this->getPageId() ), 200, array( 'w' => 2, 'h' => 1 ) );
+		$oArticleService = F::Build('ArticleService');
+		$oArticleService->setArticleById( $this->getPageId() );
+		$imageServing = new ImageServing( array( $this->getPageId() ), 100, array( 'w' => 1, 'h' => 1 ) );
 		$images = $imageServing->getImages(1);
 		$imageUrl = '';
 		$snippet = '';
 		if ( isset( $images[$this->getPageId()] ) && isset( $images[$this->getPageId()][0] ) && isset( $images[$this->getPageId()][0]['url'] ) ){
 			$imageUrl = $images[$this->getPageId()][0]['url'];
 		}
+		$textSnippet = $oArticleService->getTextSnippet( 120 );
+		$strPos = strrpos( $textSnippet, ' ' );
+
+		$textSnippet = substr( $textSnippet, 0, ( $strPos ) );
+		$textSnippet.= ' ...';
+		
 		return ( !empty( $oTitle ) && $oTitle->exists() )
 			? array(
 					'lat' => $this->getLat(),
 					'lan' => $this->getLon(),
 					'label' => $oTitle->getText(),
 					'imageUrl' => $imageUrl,
-					'articleUrl' => $oTitle->getLocalUrl()
+					'articleUrl' => $oTitle->getLocalUrl(),
+					'textSnippet' => $textSnippet
 				)
 			: array();
 	}
