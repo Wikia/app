@@ -617,10 +617,19 @@ function CategorySelectGenerateHTMLforView() {
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 function CategorySelectOnGetPreferences($user, &$preferences) {
+	global $wgEnableUserPreferencesV2Ext;
+	if ($wgEnableUserPreferencesV2Ext) {
+		$section = 'editing/starting-an-edit';
+		$message = wfMsg('tog-disablecategoryselect-v2');
+	}
+	else {
+		$section = 'editing/editing-experience';
+		$message = wfMsg('tog-disablecategoryselect');
+	}
 	$preferences['disablecategoryselect'] = array(
 		'type' => 'toggle',
-		'section' => 'editing/editing-experience',
-		'label' => wfMsg('tog-disablecategoryselect'),
+		'section' => $section,
+		'label' => $message,
 	);
 	return true;
 }

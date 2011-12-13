@@ -1058,7 +1058,7 @@ Text should be placed on this page if you wish to explain usage, style and polic
 # "editing" preferences sections
 'prefs-general' => 'General',
 'prefs-starting-an-edit' => 'Starting an edit',
-'prefs-editing-experience' => 'Editing experience',
+'prefs-editing-experience' => 'The editing experience',
 'prefs-monobook-layout' => 'Monobook layout only',
 'prefs-editarea-size' => 'Size of editing window (Monobook layout only)',
 # disabled namespaces (BugId:9980)

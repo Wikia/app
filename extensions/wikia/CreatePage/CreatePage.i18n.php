@@ -32,8 +32,8 @@ You can go to <a href="$1">$2</a>, or rename your page',
 	'createpage-error-article-spam' => 'Sorry, the page title was rejected by our spam filter.
 Please use a different title.',
 	'createpage-error-article-blocked' => 'Sorry, you are unable to create that page at this time.',
-	'tog-createpagedefaultblank' => 'Use blank page as default for creating a new page',
-	'tog-createpagepopupdisabled' => 'Disable "Create a new article" pop-up dialog',
+	'tog-createpagedefaultblank' => 'Use a blank page as default for creating a new page',
+	'tog-createpagepopupdisabled' => 'Disable "Create a new article" flow (Not Recommended)',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
 Write the first paragraph of your page here.
 
