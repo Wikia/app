@@ -122,13 +122,13 @@ var Places = Places || (function(){
 			options.center = options.center || false;
 
 			if ( options.markers.length > 0 ){
-				var lanSum = 0;
-				var latSum = 0;
+				var lanSum = 0,
+					latSum = 0;
 
-				var maxLat = -181.0;
-				var maxLan = -181.0;
-				var minLat = 181.0;
-				var minLan = 181.0;
+				var maxLat = -181.0,
+					maxLan = -181.0,
+					minLat = 181.0,
+					minLan = 181.0;
 
 				$.each( options.markers,
 					function( index, value ) {
@@ -153,7 +153,7 @@ var Places = Places || (function(){
 					'center': new google.maps.LatLng( 0, 0 ),
 					'mapTypeId': google.maps.MapTypeId.ROADMAP,
 					'zoom': 14
-				}
+				};
 
 				var map = new google.maps.Map(
 					document.getElementById(options.mapId),
@@ -167,37 +167,48 @@ var Places = Places || (function(){
 					)
 				);
 
-				var aMarker = [];
-				var aInfoWindow = [];
+				var aMarkers = [],
+					aInfoWindows = [];
+
 				$.each( options.markers, function( index, value ){
 					if ( ( typeof value.lat != 'undefined' ) && ( typeof value.lat != 'undefined' ) && ( typeof value.label != 'undefined' ) && ( typeof value.tooltip != 'undefined' ) ){
-						aMarker.push(
-							new google.maps.Marker({
+						var marker = new google.maps.Marker({
 								position:	new google.maps.LatLng( value.lat, value.lan ),
 								map:		map,
 								title:		value.label
-							})
-						);
-						aInfoWindow.push(
-							new google.maps.InfoWindow({
+							}),
+							tooltip = new google.maps.InfoWindow({
 								content: value.tooltip,
 								maxWidth: 300
-							})
-						);
-						var key = aMarker.length - 1;
-						google.maps.event.addListener( aMarker[ key ], clickEvent, function() {
-							aInfoWindow[ key ].open(map, aMarker[ key ] );
+							});
+
+						google.maps.event.addListener( marker, clickEvent, function() {
+							tooltip.open(map, marker);
 						});
 
-						if ( options.center.label == value.label  ){
-							aInfoWindow[ key ].open(map, aMarker[ key ] );
+						if ( options.center && (options.center.label == value.label) ){
+							marker.open(map, marker);
 						}
+
+						aMarkers.push(marker);
+						aInfoWindows.push(tooltip);
 					}
 				});
-				
+
 				// support animations
-				if (options.animate) {
-					
+				if (options.animate > 0) {
+					var current = 0,
+						count = aInfoWindows.length;
+
+					// first frame
+					aInfoWindows[current].open(map, aMarkers[current]);
+
+					setInterval(function() {
+						aInfoWindows[current].close(map, aMarkers[current]);
+
+						current = (++current) % count;
+						aInfoWindows[current].open(map, aMarkers[current]);
+					}, options.animate * 1000);
 				}
 			}
 		}
