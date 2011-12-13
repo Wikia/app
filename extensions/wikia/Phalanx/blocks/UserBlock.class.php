@@ -59,7 +59,7 @@ class UserBlock {
 				'block' => false,
 				'return' => $ret,
 			);
-			$wgMemc->set( $cacheKey, $cachedState );
+			$wgMemc->set( self::getCacheKey(), $cachedState );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -81,13 +81,12 @@ class UserBlock {
 				Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$text'.");
 				self::setUserData( $user, $blockData, $text, $isBlockIP );
 
-				$cacheKey = wfSharedMemcKey( 'phalanx', self::CACHE_KEY, $user->getTitleKey() );
 				$cachedState = array(
 					'timestamp' => wfTimestampNow(),
 					'block' => $blockData,
 					'return' => false,
 				);
-				$wgMemc->set( $cacheKey, $cachedState );
+				$wgMemc->set( self::getCacheKey( $user ), $cachedState );
 
 				wfProfileOut( __METHOD__ );
 				return false;
@@ -98,11 +97,15 @@ class UserBlock {
 		return true;
 	}
 
+	private static function getCacheKey( $user ) {
+		return wfSharedMemcKey( 'phalanx', self::CACHE_KEY, $user->getTitleKey() );
+	}
+
 	private static function getBlockFromCache( $user ) {
 		global $wgMemc;
 		wfProfilein( __METHOD__ );
 
-		$cacheKey = wfSharedMemcKey( 'phalanx', self::CACHE_KEY, $user->getTitleKey() );
+		$cacheKey = self::getCacheKey( $user );
 		$cachedState = $wgMemc->get( $cacheKey );
 
 		if ( !empty( $cachedState ) && $cachedState['timestamp'] > (int) Phalanx::getLastUpdate() ) {
