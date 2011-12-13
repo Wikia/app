@@ -50,7 +50,7 @@ $.extend({
 		}
 
 		// by default use user language
-		language == language || window.wgUserLanguage;
+		language = language || window.wgUserLanguage;
 
 		$().log('loading ' + packages + ' package(s) for "' + language + '"', 'JSMessages');
 
