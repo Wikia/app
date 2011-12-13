@@ -11,7 +11,7 @@
 		<? endif ?>
 		<? if( count($contributions)>0 && $key == 0): ?>
 			<tbody>
-		<? endif; >
+		<? endif; ?>
 		<tr>
 			<? foreach( $row as $field=>$val ): ?>
 			<td><?= $val ?></td>
@@ -20,5 +20,5 @@
 	<? endforeach; ?>
 	<? if( count($contributions)>0 ): ?>
 	</tbody>
-	<? endif; >
+	<? endif; ?>
 </table>

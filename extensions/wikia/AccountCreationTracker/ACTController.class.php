@@ -13,7 +13,7 @@ class AccountCreationTrackerController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
-		if( !$this->wg->User->isAllowed( 'accounttracker' ) ) ) {
+		if( !$this->wg->User->isAllowed( 'accounttracker' ) ) {
 			$this->displayRestrictionError($this->user);
 			$this->skipRendering();
 			return false;
