@@ -2,10 +2,18 @@
 
 class PlacesController extends WikiaController {
 
+	// avoid having interactive maps with the same ID
+	private static $mapId = 1;
+
 	public function __construct( WikiaApp $app ) {
 		$this->app = $app;
 	}
 
+	/**
+	 * Render static map from given set of attributes
+	 *
+	 * Used to render <place> parser hook
+	 */
 	public function placeFromAttributes(){
 		$attributes = $this->getVal('attributes', array());
 		$oPlaceModel = F::build( 'PlaceModel', array( $attributes ), 'newFromAttributes' );
@@ -14,6 +22,9 @@ class PlacesController extends WikiaController {
 		$this->forward( 'Places', 'placeFromModel');
 	}
 
+	/**
+	 * Render static map for given place model
+	 */
 	public function placeFromModel(){
 		$oPlaceModel = $this->getVal('model', null);
 		$rteData = $this->getVal('rteData', false);
@@ -33,8 +44,86 @@ class PlacesController extends WikiaController {
 		$this->setVal( 'rteData', $rteData );
 	}
 
-	public function saveNewPlaceToArticle(){
+	/**
+	 * Render interactive map for given set of points
+	 *
+	 * Map center can be specified
+	 */
+	public function renderMarkers() {
+		$this->setVal('markers', $this->prepareMarkers($this->getVal('markers')));
+		$this->setVal('center', $this->getVal('center'));
+		$this->setVal('height', $this->getVal('height', 500));
+		$this->setVal('mapId', 'places-map-' . self::$mapId++);
+	}
 
+	/**
+	 * Get markers from articles "related" to a given article
+	 *
+	 * Returns data to be rendered on the client-side
+	 */
+	public function getMarkersRelatedToCurrentTitle(){
+		$sTitle = $this->getVal('title', '');
+		$sCategoriesText = $this->getVal('category', '');
+
+		$oTitle = F::build( 'Title', array( $sTitle ), 'newFromText' );
+		if ( $oTitle instanceof Title ){
+			$oPlacesModel = F::build('PlacesModel');
+			$oMarker = F::build( 'PlaceStorage', array( $oTitle ), 'newFromTitle' )->getModel();
+			$oMarker->setCategories( $sCategoriesText );
+
+			if( !empty( $sCategoriesText ) ){
+				$aMarkers = $oPlacesModel->getFromCategories( $oMarker->getCategories() );
+			} else {
+				$aMarkers = $oPlacesModel->getFromCategoriesByTitle( $oTitle );
+			}
+			$oMarker = F::build( 'PlaceStorage', array( $oTitle ), 'newFromTitle' )->getModel();
+
+			$this->setVal('center', $oMarker->getForMap());
+			$this->setVal('markers', $this->prepareMarkers($aMarkers));
+
+			// generate modal caption
+			$this->setVal('caption', $this->wf->msgExt('places-modal-go-to-special', array('parseinline', 'parsemag'), count($this->markers)));
+		}
+	}
+
+	/**
+	 * Internal method used to render tooltip for each marker
+	 */
+	protected function prepareMarkers( Array $aMarkers ) {
+		$markers = array();
+
+		foreach( $aMarkers as $oMarker ){
+			$aMapParams = $oMarker->getForMap();
+			if ( !empty( $aMapParams ) ){
+				$tmpArray = $oMarker->getForMap();
+				$tmpArray['tooltip'] = $this->sendRequest(
+					'Places',
+					'getMapSnippet',
+					array(
+					    'data' => $tmpArray
+					)
+				)->toString();
+				$markers[] = $tmpArray;
+			}
+		}
+
+		return $markers;
+	}
+
+	/**
+	 * Render marker tooltip
+	 */
+	public function getMapSnippet() {
+		$data = $this->getVal( 'data' );
+		$this->setVal( 'imgUrl', isset( $data['imageUrl'] ) ? $data['imageUrl'] : '' );
+		$this->setVal( 'title', isset( $data['label'] ) ? $data['label'] : '' );
+		$this->setVal( 'url', isset( $data['articleUrl'] ) ? $data['articleUrl'] : '' );
+	}
+
+	/**
+	 * Create a new place based on geo data provided and store it in the database
+	 */
+	public function saveNewPlaceToArticle(){
 		$oPlaceModel = F::build('PlaceModel');
 		$oPlaceModel->setPageId( $this->getVal( 'articleId', 0 ) );
 
@@ -82,6 +171,9 @@ class PlacesController extends WikiaController {
 		}
 	}
 
+	/**
+	 * Render wikitext of <place> tag for given model
+	 */
 	public function getPlaceWikiTextFromModel(){
 		$oPlaceModel = $this->getVal( 'model', null );
 
@@ -110,7 +202,7 @@ class PlacesController extends WikiaController {
 				'newFromTitle'
 			)->isGeoTaggingEnabledForArticle( $this->app->wg->title )
 		){
-			
+
 			$this->setVal(
 				'geolocationParams',
 				$this->getGeolocationButtonParams()
@@ -141,13 +233,12 @@ class PlacesController extends WikiaController {
 	 * Returns geolocation button params
 	 */
 	private function getGeolocationButtonParams( $refreshCache = false ){
-
 		$sMemcKey = $this->app->wf->MemcKey(
 			$this->app->wg->title->getText(),
 			$this->app->wg->title->getNamespace(),
 			'GeolocationButtonParams'
 		);
-		
+
 		// use user default
 		if ( empty( $iWidth ) ){
 			$wopt = $this->app->wg->user->getOption( 'thumbsize' );
@@ -156,7 +247,7 @@ class PlacesController extends WikiaController {
 			}
 			$iWidth = $this->app->wg->thumbLimits[ $wopt ];
 		}
-		
+
 		$aResult = array(
 			'align' => 'right',
 			'width' => $iWidth

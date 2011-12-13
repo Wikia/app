@@ -15,17 +15,15 @@ var Places = Places || (function(){
 				'zoom': parseInt( element.attr('data-zoom') ),
 				'center': latlng,
 				'mapTypeId': google.maps.MapTypeId.ROADMAP
-			}
+			};
 
-		var category =  $(this).attr('data-categories');
-
-		$.nirvana.postJson(
-			'PlacesSpecialController',
+		$.nirvana.getJson(
+			'Places',
 			'getMarkersRelatedToCurrentTitle',
 			{
 				'title':	wgTitle,
 				'format':	'json',
-				'category':	category
+				'category':	element.attr('data-categories') || ''
 			},
 			function(res){
 				if(res.center && res.markers){
@@ -142,9 +140,7 @@ var Places = Places || (function(){
 						if ( minLan > value.lan ){minLan = value.lan}
 					}
 				);
-				$().log( options.center, 'center' );
-				if ( options.center != false ){
-
+				if ( options.center !== false ){
 					var latDistance = Math.max( Math.abs( maxLat - options.center.lat ), Math.abs( options.center.lat - minLat ) );
 					var lanDistance = Math.max( Math.abs( maxLan - options.center.lan ), Math.abs( options.center.lan - minLan ) );
 					minLat = options.center.lat - latDistance;
