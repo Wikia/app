@@ -50,17 +50,11 @@ class PlacesController extends WikiaController {
 	 * Map center can be specified
 	 */
 	public function renderMarkers() {
-		$snippetsOptions = array(
-			'mapId' => 'places-map-' . self::$mapId++,
-			'markers' => $this->prepareMarkers($this->getVal('markers')),
-			'center' => $this->getVal('center', false)
-		);
-
-		$snippetsOptions = array_merge($snippetsOptions, $this->getVal('options', array()));
-
+		$this->setVal('markers', $this->prepareMarkers($this->getVal('markers')));
+		$this->setVal('center', $this->getVal('center'));
+		$this->setVal('mapId', 'places-map-' . self::$mapId++);
 		$this->setVal('height', $this->getVal('height', 500));
-		$this->setVal('mapId', $snippetsOptions['mapId']);
-		$this->setVal('snippetsOptions', $snippetsOptions);
+		$this->setVal('options', $this->getVal('options', array()));
 	}
 
 	/**
