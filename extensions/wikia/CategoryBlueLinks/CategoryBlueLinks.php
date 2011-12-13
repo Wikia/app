@@ -3,10 +3,15 @@
 /**
  * CategoryBlueLinks
  *
- * This extension makes all link to category pages appear as "known" (aka "blue").
+ * This extension makes links to category pages with content appear as "known" (aka "blue").
  *
  * @author Lucas 'TOR' Garczewski <tor@wikia-inc.com>
  * @date 2011-08-08
+ *
+ * @author Jakub Olek
+ * @date 2011-dec-13
+ * Added simple logic to leave links to categories (with no content and no page) red.
+ *
  * @copyright Copyright (C) 2011 Wikia Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  * @package MediaWiki
@@ -27,8 +32,8 @@ function efCategoryBlueLinks( $skin, $target, &$text, &$customAttribs, &$query, 
 		return true;
 	}
 
-	// only affects non-existing Category pages
-	if ( $target->getNamespace() != NS_CATEGORY || $target->exists() ) {
+	// only affects non-existing Category pages that has content
+	if ( $target->exists() || $target->getNamespace() != NS_CATEGORY || Category::newFromTitle( $target )->getPageCount() == 0 ) {
 		return true;
 	}
 
