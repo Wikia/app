@@ -14,26 +14,25 @@ var ArticleComments = ArticleComments || (function(){
 		currentPage = 1,
 		ajaxUrl = wgServer + "/index.php?action=ajax&rs=ArticleCommentsAjax&method=axGetComments&useskin=" + skin + "&article=" + wgArticleId,
 		clickEvent = WikiaMobile.getClickEvent();
-	
+
 	function clickHandler(){
 		var elm = $(this),
 			forward = (elm.attr('id') == 'commentsLoadMore'),
 			pageIndex = (forward) ? currentPage + 1 : currentPage - 1,
 			condition = (forward) ? (currentPage < totalPages) : (currentPage > 1);
-		
+
 		if(condition){
 			elm.toggleClass('active');
 			$.showLoader(elm);
 
-			$.get(ajaxUrl + '&page=' + pageIndex.toString(), function(result){
-				var data = eval('(' + result + ')'),
-					finished;
+			$.getJSON(ajaxUrl + '&page=' + pageIndex.toString(), function(result){
+				var finished;
 
 				currentPage = pageIndex;
 				finished = (forward) ? (currentPage == totalPages) : (currentPage == 1);
 
-				$('#article-comments-ul').html(data.text);
-				
+				$('#article-comments-ul').html(result.text);
+
 				elm.toggleClass('active');
 				$.hideLoader(elm);
 
@@ -41,7 +40,7 @@ var ArticleComments = ArticleComments || (function(){
 					elm.hide();
 
 				((forward) ? loadPrev : loadMore).show();
-				
+
 				window.scrollTo(0, wrapper.offset().top);
 			});
 		}
