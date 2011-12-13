@@ -14,6 +14,7 @@ $dir = dirname(__FILE__) . '/';
  */
 $app->registerClass('AccountCreationTracker', $dir . 'ACT.class.php');
 $app->registerClass('AccountCreationTrackerController', $dir . 'ACTController.class.php');
+$app->registerClass('AccountCreationTrackerExternalController', $dir . 'ACTExternalController.class.php');
 
 /**
  * special pages
@@ -24,6 +25,7 @@ $app->registerSpecialPage('Tracker', 'AccountCreationTrackerController');
  * hooks
  */
 $app->registerHook('AddNewAccount', 'AccountCreationTrackerController', 'onAddNewAccount');
+$app->registerHook('UserLoginComplete', 'AccountCreationTrackerController', 'onUserLoginComplete');
 
 /**
  * message files

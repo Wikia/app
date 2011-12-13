@@ -20,6 +20,9 @@ class AccountCreationTrackerController extends WikiaSpecialPageController {
 		}
 
 		$this->wg->Out->addScriptFile( $this->wg->ExtensionsPath . "/wikia/AccountCreationTracker/ACT.js" );
+		$this->wg->Out->addScriptFile( $this->wg->ExtensionsPath . "/wikia/AccountCreationTracker/jquery.dataTables.min.js" );
+		$this->wg->Out->addScript("<link rel=\"stylesheet\" type=\"text/css\" href=\"{$this->wg->ExtensionsPath}/wikia/AccountCreationTracker/ACT.css?{$this->wg->StyleVersion}\" />\n");
+		
 
 		$username = $this->getVal( 'username' );
 		$accounts = array();
@@ -36,9 +39,19 @@ class AccountCreationTrackerController extends WikiaSpecialPageController {
 			}
 		}
 
+		$title = F::build('Title', array('Tracker', NS_SPECIAL), 'newFromText' );
+		
+
 		$this->setVal( 'username', $username );
 		$this->setVal( 'accounts', $accounts );
+		$this->setVal( 'url_form', $title->getFullURL() ); 
 	}
+
+	public function renderContributions() {
+		$contribs = $this->request->getVal( 'contributions' );
+		$this->response->setVal( 'contributions', $contribs );
+	}
+
 
 	public function onAddNewAccount( $user, $byEmail ) {
 		if(!($this->request instanceof WikiaRequest)) {
@@ -60,6 +73,30 @@ class AccountCreationTrackerController extends WikiaSpecialPageController {
 		}
 
 		$this->tracker->trackAccount( $user, $hash );
+
+		return true;
+	}
+
+	public function onUserLoginComplete( User &$user, &$inject_html ) {
+		if(!($this->request instanceof WikiaRequest)) {
+			$this->setRequest( F::build('WikiaRequest', array( 'params' => array( $_POST, $_GET ) ) ) );
+		}
+
+		$hash = $this->request->getCookie( self::TRACKING_COOKIE_NAME );
+		if( empty( $hash ) ) {
+			$wgDevelEnvironment = F::app()->getGlobal( 'wgDevelEnvironment' );
+			if( !empty( $wgDevelEnvironment ) ) {
+				$domain = '.wikia-dev.com';
+			}
+			else {
+				$domain = '.wikia.com';
+			}
+
+			$hash = md5( $user->getId() );
+			$this->request->setCookie( self::TRACKING_COOKIE_NAME, $hash, ( time() + ( self::TRACKING_COOKIE_TTL * 86400 ) ), '/', $domain );
+		}
+
+		$this->tracker->trackLogin( $user, $hash );
 
 		return true;
 	}
