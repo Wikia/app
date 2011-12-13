@@ -8,6 +8,7 @@ class GamingCalendarEntry {
 	private $imageSrc;
 	private $imageWidth;
 	private $systems;
+	private $rating;
 	private $moreInfoUrl;
 	private $preorderUrl;
 	
@@ -29,6 +30,10 @@ class GamingCalendarEntry {
 	
 	public function getSystems() {
 		return $this->systems;
+	}
+	
+	public function getRating() {
+		return $this->rating;
 	}
 	
 	public function getDescription() {
@@ -67,6 +72,10 @@ class GamingCalendarEntry {
 		$this->systems = $systems;
 	}
 	
+	public function setRating($rating) {
+		$this->rating = $rating;
+	}
+	
 	public function setDescription($description) {
 		$this->description = $description;
 	}
@@ -96,6 +105,7 @@ class GamingCalendarEntry {
 		$elems['description'] = $this->description;
 		$elems['image'] = array('src'=>$this->imageSrc, 'width'=>$this->imageWidth);
 		$elems['systems'] = $this->systems;
+		$elems['rating'] = $this->rating;
 		$elems['moreInfoUrl'] = $this->moreInfoUrl;
 		$elems['preorderUrl'] = $this->preorderUrl;
 

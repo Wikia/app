@@ -2,7 +2,7 @@
 	<h1>
 		<span class="title-wrapper">
 			<span class="gradient-wrapper">
-				<?= wfMsg('gamingcalendar-heading') ?>
+				<?= $calendarHeading ?>
 			</span>
 		</span>
 	</h1>
