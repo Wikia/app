@@ -163,16 +163,17 @@ class PlacesController extends WikiaController {
 		);
 
 		$aMemcResult = $this->app->wg->memc->get( $sMemcKey );
+		$refreshCache = true;
 		if ( $refreshCache || empty( $aMemcResult ) ){
 			$oArticle = F::build( 'Article', array( $this->app->wg->title ) );
 			$sRawText = $oArticle->getRawText();
 			$aMatches = array();
+			$string = $this->app->wg->contLang->getNsText( NS_IMAGE ) . '|' . MWNamespace::getCanonicalName(NS_IMAGE);
 			$iFound = preg_match (
-				'#\[\[Plik:.*|thumb.*\]\]#',
+				'#\[\[('.$string.'):[^\]]*|thumb[^\]]*\]\]#',
 				$sRawText,
 				$aMatches
 			);
-
 			if ( !empty( $iFound ) ){
 				reset( $aMatches );
 				$sMatch = current( $aMatches );
@@ -185,6 +186,7 @@ class PlacesController extends WikiaController {
 						$aResult['width'] = (int)substr( $element, 0, -2 );
 					}
 				}
+				
 			}
 			$iExpires = 60*60*24;
 			$this->app->wg->memc->set(
