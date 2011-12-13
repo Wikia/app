@@ -1,4 +1,4 @@
-<form id="act-form">
+<form id="act-form" action="<?= $url_form ?>">
 	<?php if( !empty($usernameNotFound) ): ?>
 		<p style="color: red"><?= wfMsg( 'act-username-not-found' ); ?></p>
 	<?php endif; ?>
@@ -11,11 +11,31 @@
 
 <?php if( count( $accounts ) > 0 ): ?>
 	<strong><?= wfMsg( 'act-list-of-accounts', array( count($accounts) ) ); ?></strong>
-	<ul>
+	<div style="display: table-cell">
+	<table id="TrackedUsers" class="wikitable">
+		<thead>
+			<th>ID</th>
+			<th>Username</th>
+			<th>Connected by</th>
+			<th>Connected with</th>
+		</thead>
+		<tbody>
 		<?php foreach( $accounts as $account ): ?>
-			<li><strong><?= $account->getName();?></strong> (ID: <?= $account->getId(); ?>)</li>
+			<tr>
+				<td><?= $account['user']->getId(); ?></td>
+				<td><?= $account['user']->getName(); ?></td>
+				<td><?= $account['reason']; ?></td>
+				<td><?= $account['from']->getName(); ?></td>
+			</tr>
 		<?php endforeach; ?>
-	</ul>
+		</tbody>
+	</table>
+	</div>
+	
+	<button id="FetchContributions"><?= wfMsg( 'act-fetch-contributions' ); ?></button>
+	
+	<div id="UserContributions"></div>
+	
 <?php elseif( !empty( $username) && empty( $usernameNotFound ) ): ?>
 	<?= wfMsg( 'act-username-not-tracked', array( $username ) ); ?>
 <?php endif; ?>

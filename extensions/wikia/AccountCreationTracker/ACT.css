@@ -1,0 +1,10 @@
+
+
+th.sorting, th.sorting_asc, th.sorting_desc { cursor: pointer; }
+.dataTables_wrapper tr { cursor: pointer; }
+.dataTables_wrapper th { min-width: 100px; padding-left: 20px; padding-right: 20px; }
+.dataTables_wrapper thead th { background: #efffef; }
+.dataTables_wrapper thead th:hover { background: #dfffdf; }
+.dataTables_wrapper tbody tr:hover td { background: #dfffdf !important; }
+.dataTables_wrapper table { border: 1px solid black; }
+.dataTables_wrapper table tr.row_selected, .dataTables_wrapper table tr.row_selected td { background: #7fff7f !important; }
