@@ -6,10 +6,6 @@
 		),
 		array('$.loadGoogleMaps'),
 		'Places.renderMap',
-		array(
-			'mapId' => $mapId,
-			'markers' => $markers,
-			'center' => $center
-		)
+		$snippetsOptions
 	);
 ?>
