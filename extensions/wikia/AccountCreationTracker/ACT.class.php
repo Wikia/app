@@ -115,6 +115,8 @@ class AccountCreationTracker extends WikiaObject {
 
 	public function getHashesByUser( User $user ) {
 		$results = array();
+
+		$dbr = $this->getDb();
 		
 		$res = $dbr->query( "SELECT utr_user_hash FROM user_tracker WHERE utr_user_id = '" . $user->getId() . "'");
 
@@ -123,6 +125,24 @@ class AccountCreationTracker extends WikiaObject {
 		}
 
 		return array_keys($results);
+	}
+
+	public static function getWikisCreatedByUsers( Array $users ) {
+		$wikis = array();
+
+		$dbr = $this->wf->getDB( DB_SLAVE, array(), $this->wg->ExternalSharedDB );
+
+		$res = $dbr->select( 
+			'city_list',
+			'city_id',
+			array( 'city_founding_user' => $dbr->makeList( $users ) )
+		);
+
+		while ( $row = $dbr->fetchObject( $res ) ) {
+			$wikis[] = $row->city_id;
+		}
+
+		return $wikis;
 	}
 
 }

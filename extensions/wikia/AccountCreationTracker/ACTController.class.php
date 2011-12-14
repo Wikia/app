@@ -35,6 +35,7 @@ class AccountCreationTrackerController extends WikiaSpecialPageController {
 
 			if( !empty( $userId ) ) {
 				$accounts = $this->tracker->getAccountsByUser( $user );
+				$wikisCreated = count( $this->tracker->getWikisCreatedByUsers( $accounts ) );
 			}
 			else {
 				$this->setVal( 'usernameNotFound', true );
@@ -46,7 +47,8 @@ class AccountCreationTrackerController extends WikiaSpecialPageController {
 
 		$this->setVal( 'username', $username );
 		$this->setVal( 'accounts', $accounts );
-		$this->setVal( 'url_form', $title->getFullURL() ); 
+		$this->setVal( 'url_form', $title->getFullURL() );
+		$this->setVal( 'wikis_created', $wikisCreated );
 	}
 
 	public function blockAccountGroup( $groupId ) {

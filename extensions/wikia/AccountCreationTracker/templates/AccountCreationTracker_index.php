@@ -12,7 +12,10 @@
 <?php if( count( $accounts ) > 0 ): ?>
 <form>
 	<fieldset>
-		<a href="/wiki/Special:Tracker/block?target=<?= urlencode( $username ) ?>">Block users</a>
+		<ul>
+			<li><a href="/wiki/Special:Tracker/block?target=<?= urlencode( $username ) ?>">Block users</a></li>
+			<li><a href="/wiki/Special:Tracker/closewikis?target=<?= urlencode( $username ) ?>">Close wikis</a> (<?= $wikisCreated ?> total)</li>
+			<li><a href="/wiki/Special:Tracker/nuke?target=<?= urlencode( $username ) ?>">Nuke edits</a></li>
 	</fieldset>
 </form>
 
