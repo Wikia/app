@@ -13,7 +13,7 @@ class UserPreferencesV2 {
 	 */
 
 	public function onGetPreferences($user, $defaultPreferences) {
-		global $wgEnableWallExt, $wgOut, $wgScriptPath;
+		global $wgEnableWallExt, $wgOut, $wgScriptPath, $wgUser;
 
 		//add javascript
 		$wgOut->addScriptFile($wgScriptPath . '/extensions/wikia/UserPreferencesV2/js/UserPreferencesV2.js');
@@ -74,8 +74,10 @@ class UserPreferencesV2 {
 		$defaultPreferences['watchdefault']['label-message'] = 'preferences-v2-watchdefault';
 		$defaultPreferences['watchmoves']['section'] = 'emailv2/followed-pages-iv2';
 		$defaultPreferences['watchmoves']['label-message'] = 'preferences-v2-watchmoves';
-		$defaultPreferences['watchdeletion']['section'] = 'emailv2/followed-pages-iv2';
-		$defaultPreferences['watchdeletion']['label-message'] = 'preferences-v2-watchdeletion';
+		if (in_array("autoconfirmed", $wgUser->getEffectiveGroups()) || $wgUser->isEmailConfirmed()) {
+			$defaultPreferences['watchdeletion']['section'] = 'emailv2/followed-pages-iv2';
+			$defaultPreferences['watchdeletion']['label-message'] = 'preferences-v2-watchdeletion';
+		}
 		$defaultPreferences['watchcreations']['section'] = 'emailv2/followed-pages-iv2';
 		$defaultPreferences['watchcreations']['label-message'] = 'preferences-v2-watchcreations';
 		
