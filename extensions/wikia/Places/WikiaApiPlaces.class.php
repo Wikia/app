@@ -90,7 +90,6 @@ class WikiaApiPlaces extends ApiBase {
 			'related' => array(
 				ApiBase :: PARAM_TYPE => 'string'
 			),
-
 		);
 	}
 
