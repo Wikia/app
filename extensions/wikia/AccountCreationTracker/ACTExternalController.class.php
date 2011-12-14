@@ -86,14 +86,22 @@ class AccountCreationTrackerExternalController extends WikiaSpecialPageControlle
 			}
 			$row['user_id'] = Xml::element( 'a', array( 'href' => GlobalTitle::newFromText( $name, NS_USER, $wiki->city_id )->getFullURL() ), $name );
 
-                        global $wgDevelEnvironment;
-                        if ( !$wgDevelEnvironment ) {
-                                $page = GlobalTitle::newFromId( $row['page_id'], $row['page_ns'], $wiki->wiki_id );
-                                $row['page_id'] = Xml::element( 'a', array( 'href' => $page->getFullURL() ), $page->getPrefixedText() );
-                        } else {
-                                $row['page_id'] = 'db not found';
-                        }
-                
+			global $wgDevelEnvironment;
+			$pageId = $row['page_id'];
+			$row['page_id'] = 'db not found';
+			if ( !$wgDevelEnvironment ) {
+				$title = GlobalTitle::newFromId( $row['page_id'], $wiki->city_id );
+				if ( is_object( $title ) ) {
+					$row['page_id'] = Xml::element( 'a', array( 'href' => $title->getFullURL() ), $title->getPrefixedText() );
+				}
+			}
+
+			$namespaceName = MWNamespace::getCanonicalName( $row['page_ns'] );
+			if ( $namespaceNamvn  ) {
+				$row['page_ns'] = $namespaceName;
+			} elseif( $row['page_ns'] == NS_MAIN ) {
+				$row['page_ns'] = 'main';
+			}
 
 			switch( $row['event_type'] ) {
 				case ScribeEventProducer::EDIT_CATEGORY_INT:
@@ -117,7 +125,7 @@ class AccountCreationTrackerExternalController extends WikiaSpecialPageControlle
 
 			$output['aaData'][] = $output_row;
 		}
-		
+
 		echo json_encode( $output );
 		$this->skipRendering();
 		return false;
