@@ -64,32 +64,32 @@ class AccountCreationTrackerExternalController extends WikiaSpecialPageControlle
 		while( $row = $dbr->fetchRow($res) ) {
 			$wiki = WikiFactory::getWikiById( $row['wiki_id'] );
 
-			if ( !is_object( $wiki ) || $wiki->city_public == 0 ) {
-				// wiki does not exist, skip it
-				//continue;
-				null;
-			} else {
+			if ( is_object( $wiki ) && $wiki->city_public != 0 ) {
 				$wikiSitename = WikiFactory::getVarValueByName( 'wgSitename', $row['wiki_id'] );
-				$row['wiki_id'] = Xml::element( 'a', array( 'href' => $wiki->city_url ), $wikiSitename );
-			}
+				$wikiLink = Xml::element( 'a', array( 'class'=>'wiki_name', 'href' => $wiki->city_url ), $wikiSitename );
+				$row['wiki_id'] = $wikiLink . Xml::element( 'span', array( 'class'=>'wiki_id' ), $row['wiki_id'] );
 
-			if ( !empty( $row['user_id'] ) ) {
-				$name = User::newFromId( $row['user_id'] )->getName();
-			} else {
-				$name = long2ip( $row['ip'] );
-			}
-			$nameLink = Xml::element( 'a', array( 'href' => GlobalTitle::newFromText( $name, NS_USER, $wiki->city_id )->getFullURL() ), $name );
-			$row['user_id'] = $nameLink . Xml::element( 'span', array( 'class'=>'user_id' ), $row['user_id'] );
+				if ( !empty( $row['user_id'] ) ) {
+					$name = User::newFromId( $row['user_id'] )->getName();
+				} else {
+					$name = long2ip( $row['ip'] );
+				}
+				$nameLink = Xml::element( 'a', array( 'class'=>'user_name', 'href' => GlobalTitle::newFromText( $name, NS_USER, $wiki->city_id )->getFullURL() ), $name );
+				$row['user_id'] = $nameLink . Xml::element( 'span', array( 'class'=>'user_id' ), $row['user_id'] );
 
-			global $wgDevelEnvironment;
-			$pageId = $row['page_id'];
-			$row['page_id'] = 'db not found';
-			if ( !$wgDevelEnvironment ) {
-				$title = GlobalTitle::newFromId( $row['page_id'], $wiki->city_id );
-				if ( is_object( $title ) ) {
-					$row['page_id'] = Xml::element( 'a', array( 'href' => $title->getFullURL() ), $title->getPrefixedText() );
+				global $wgDevelEnvironment;
+				$pageId = $row['page_id'];
+				$row['page_id'] = 'db not found' . Xml::element( 'span', array( 'class'=>'page_id' ), $row['page_id'] );
+				if ( !$wgDevelEnvironment ) {
+					$title = GlobalTitle::newFromId( $row['page_id'], $wiki->city_id );
+					if ( is_object( $title ) ) {
+						$pageLink = Xml::element( 'a', array( 'class'=>'page_name', 'href' => $title->getFullURL() ), $title->getPrefixedText() );
+						$row['page_id'] = $pageLink . Xml::element( 'span', array( 'class'=>'page_id' ), $row['page_id'] );  
+					}
 				}
 			}
+
+
 
 			$row['ip'] = long2ip($row['ip']);
 			
