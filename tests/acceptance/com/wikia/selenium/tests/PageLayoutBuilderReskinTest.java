@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 
 public class PageLayoutBuilderReskinTest extends EditPageBaseTest {
 
-	@Test(groups={"CI", "reskin", "verified})
+	@Test(groups={"CI", "reskin", "verified"})
 	public void testPageLayoutBuilderSpecialPageLayout() throws Exception {
 		String layoutTitle = "FooBarFooBarLayoutLongTest" + Integer.toString(new Random().nextInt(9999));
 
