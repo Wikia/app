@@ -21,7 +21,6 @@ class AccountCreationTrackerController extends WikiaSpecialPageController {
 
 		$this->wg->Out->addScriptFile( $this->wg->ExtensionsPath . "/wikia/AccountCreationTracker/ACT.js" );
 		$this->wg->Out->addScriptFile( $this->wg->ExtensionsPath . "/wikia/AccountCreationTracker/jquery.dataTables.min.js" );
-		//$this->wg->Out->addScript("<link rel=\"stylesheet\" type=\"text/css\" href=\"{$this->wg->ExtensionsPath}/wikia/AccountCreationTracker/ACT.css?{$this->wg->StyleVersion}\" />\n");
 		
 		$this->response->addAsset('extensions/wikia/AccountCreationTracker/ACT.scss');
 		

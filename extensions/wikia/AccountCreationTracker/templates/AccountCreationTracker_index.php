@@ -49,11 +49,11 @@
 		<table id="PagesToNukeDT">
 			<thead>
 				<tr>
-					<th width="100">User ID</th>
+					<th width="100">NUKE</th>
 					<th width="100">User</th>
-					<th width="100">Wiki ID</th>
 					<th width="100">Wiki</th>
 					<th width="300">Page</th>
+					<th width="100">Status</th>
 				</tr>
 			</thead>
 			<tbody>

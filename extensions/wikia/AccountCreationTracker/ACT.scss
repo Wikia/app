@@ -28,7 +28,7 @@ $highlight: mix($color-buttons, $color-page, 15%);
 					color: mix($color-text, $color-page, 50%);
 					white-space: nowrap;
 				}
-				.user_id {
+				.user_id, .wiki_id {
 					display: none;
 				}
 			}
@@ -42,7 +42,7 @@ $highlight: mix($color-buttons, $color-page, 15%);
 		thead tr {
 			border-bottom: 1px solid $color-page-border;
 			th {
-				min-width: 80px; padding-left: 10px; padding-right: 10px; 
+				min-width: 50px; 
 				background: mix($highlight, $color-page, 50%);
 				&:hover { background: $highlight; }
 				&.sorting, &.sorting_asc, &.sorting_desc { cursor: pointer; }
@@ -56,4 +56,5 @@ $highlight: mix($color-buttons, $color-page, 15%);
 		position: static;
 	}
 	.wikitable { margin: 0 !important; }
+	#PagesToNukeDT tr:hover td { text-decoration:line-through; }
 }

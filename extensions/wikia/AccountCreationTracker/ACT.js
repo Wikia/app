@@ -23,6 +23,10 @@ $(document).ready(function() {
 		"bInfo": false,
 		"bAutoWidth": false
 	});
+	
+	$('#PagesToNukeDT').delegate('tbody tr', 'click', function() {
+		oTableNukeList.fnDeleteRow(this);
+	});
 
 	
 	$('#FetchContributions').click( function() {
@@ -53,7 +57,7 @@ $(document).ready(function() {
 			<tbody> \
 			</tbody> \
 			</table> ');
-		$('#UserContributionsDT').dataTable({
+		var oTableContribs = $('#UserContributionsDT').dataTable({
 			"bPaginate": true,
 			"sPaginationType": "full_numbers",
 			"bLengthChange": false,
@@ -61,7 +65,7 @@ $(document).ready(function() {
 			"bSort": true,
 			"bInfo": true,
 			"bLengthChange": true,
-			"bAutoWidth": false,
+			"bAutoWidth": true,
 			"aaSorting": [[0,'desc']],
 			"bProcessing": true,	
 			"bServerSide": true,
@@ -69,13 +73,21 @@ $(document).ready(function() {
 			"aoColumnsDefs": [ { "bVisible": false, "aTargets": [ 2 ] } ],
 			"fnDrawCallback": function( oSettings ) {
 				$('#UserContributionsDT .timeago').timeago();
+				//setTimeout(oTableContribs.fnAdjustColumnSizing, 500);
 			}
 		});
 		
 		$('#UserContributionsDT').delegate('tbody tr', 'click', function() {
 			var user_id = $('.user_id', this).text();
-			var user_name = $('.user_id', this).parent().children('a').text();
-			oTableNukeList.fnAddData([user_id,user_name,3]);
+			var user_name = $('.user_name', this).text();
+			var wiki_id = $('.wiki_id', this).text();
+			var wiki_name = $('.wiki_name', this).text();
+			var page_id = $('.page_id', this).text();
+			var page_name = $('.page_name', this).text();
+			var nuke_url = $('.wiki_name', this).attr('href');
+			if(user_id) {
+				oTableNukeList.fnAddData([nuke_url,user_name,wiki_name,page_name,'---']);
+			}
 		});
 		
 	});
