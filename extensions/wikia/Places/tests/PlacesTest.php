@@ -45,8 +45,8 @@ class PlacesTest extends WikiaBaseTest {
 		$html = $resp->toString();
 
 		$this->assertContains('<img class="thumbimage" src="http://maps.googleapis.com/maps/api/staticmap', $html);
-		$this->assertContains('<meta itemprop="latitude" content=">52.406878">', $html);
-		$this->assertContains('<meta itemprop="longitude" content=">16.922124">', $html);
+		$this->assertContains('<meta itemprop="latitude" content="52.406878">', $html);
+		$this->assertContains('<meta itemprop="longitude" content="16.922124">', $html);
 	}
 
 	function testPlaceFromModel() {
@@ -54,8 +54,8 @@ class PlacesTest extends WikiaBaseTest {
 		$html = $resp->toString();
 
 		$this->assertContains('<img class="thumbimage" src="http://maps.googleapis.com/maps/api/staticmap', $html);
-		$this->assertContains('<meta itemprop="latitude" content=">52.406878">', $html);
-		$this->assertContains('<meta itemprop="longitude" content=">16.922124">', $html);
+		$this->assertContains('<meta itemprop="latitude" content="52.406878">', $html);
+		$this->assertContains('<meta itemprop="longitude" content="16.922124">', $html);
 	}
 
 	function testRenderMarkers() {
