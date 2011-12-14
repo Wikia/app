@@ -21,7 +21,7 @@
 
 	<strong><?= wfMsg( 'act-list-of-accounts', array( count($accounts) ) ); ?></strong>
 	<div style="display: table-cell">
-	<table id="TrackedUsers" class="">
+	<table id="TrackedUsers">
 		<thead>
 			<th>ID</th>
 			<th>Username</th>
@@ -44,6 +44,24 @@
 	<button id="FetchContributions"><?= wfMsg( 'act-fetch-contributions' ); ?></button>
 	<br /><br />
 	<div id="UserContributions"></div>
+	<br /><br />
+	<div id="PagesToNuke"><?= wfMsg( 'act-pages-to-nuke-rollback' ); ?>:
+		<table id="PagesToNukeDT">
+			<thead>
+				<tr>
+					<th width="100">User ID</th>
+					<th width="100">User</th>
+					<th width="100">Wiki ID</th>
+					<th width="100">Wiki</th>
+					<th width="300">Page</th>
+				</tr>
+			</thead>
+			<tbody>
+				
+			</tbody>
+		</table>
+		<button id="NukeRollback"><?= wfMsg( 'act-nuke-rollback-contributions' ); ?></button>
+	</div>
 	
 <?php elseif( !empty( $username) && empty( $usernameNotFound ) ): ?>
 	<?= wfMsg( 'act-username-not-tracked', array( $username ) ); ?>

@@ -28,6 +28,9 @@ $highlight: mix($color-buttons, $color-page, 15%);
 					color: mix($color-text, $color-page, 50%);
 					white-space: nowrap;
 				}
+				.user_id {
+					display: none;
+				}
 			}
 			&:hover td {
 				background: mix($highlight, $color-page, 50%);

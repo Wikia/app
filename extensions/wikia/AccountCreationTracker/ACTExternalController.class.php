@@ -78,7 +78,8 @@ class AccountCreationTrackerExternalController extends WikiaSpecialPageControlle
 			} else {
 				$name = long2ip( $row['ip'] );
 			}
-			$row['user_id'] = Xml::element( 'a', array( 'href' => GlobalTitle::newFromText( $name, NS_USER, $wiki->city_id )->getFullURL() ), $name );
+			$nameLink = Xml::element( 'a', array( 'href' => GlobalTitle::newFromText( $name, NS_USER, $wiki->city_id )->getFullURL() ), $name );
+			$row['user_id'] = $nameLink . Xml::element( 'span', array( 'class'=>'user_id' ), $row['user_id'] );
 
 			global $wgDevelEnvironment;
 			$pageId = $row['page_id'];

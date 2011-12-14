@@ -8,5 +8,7 @@ $messages['en'] = array(
 	'act-search' => 'Search',
 	'act-fetch-contributions' => 'Fetch contributions',
 	'act-list-of-accounts' => 'List of accounts ($1 total):',
-	'act-username-not-tracked' => 'No tracking data for username: $1'
+	'act-username-not-tracked' => 'No tracking data for username: $1',
+	'act-pages-to-nuke-rollback' => 'Nuke/Rollback those pages',
+	'act-nuke-rollback-contributions' => 'Nuke/Rollback changes'
 );

@@ -15,6 +15,16 @@ $(document).ready(function() {
 		"bAutoWidth": false
 	});
 	
+	var oTableNukeList = $('#PagesToNukeDT').dataTable({		
+		"bPaginate": false,
+		"bLengthChange": false,
+		"bFilter": false,
+		"bSort": false,
+		"bInfo": false,
+		"bAutoWidth": false
+	});
+
+	
 	$('#FetchContributions').click( function() {
 		function fnGetSelected( oTableLocal ) {
 			var aReturn = new Array();
@@ -62,23 +72,15 @@ $(document).ready(function() {
 			}
 		});
 		
-
-		/*
-		$.nirvana.sendRequest({
-			controller: 'AccountCreationTrackerExternalController',
-			method: 'fetchContributions',
-			format: 'json',
-			data: {
-				users: sel
-			},
-			callback: $.proxy(function(data) {
-				$('#UserContributions').html( data.html );
-			}, this),
-			onErrorCallback: $.proxy(function(jqXHR, textStatus, errorThrown) {
-			}, this)
+		$('#UserContributionsDT').delegate('tbody tr', 'click', function() {
+			var user_id = $('.user_id', this).text();
+			var user_name = $('.user_id', this).parent().children('a').text();
+			oTableNukeList.fnAddData([user_id,user_name,3]);
 		});
-		*/
+		
 	});
+
+	
 });
 
 var ACT = {
