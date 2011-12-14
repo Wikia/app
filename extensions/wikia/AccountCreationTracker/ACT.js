@@ -35,6 +35,8 @@ $(document).ready(function() {
 				<th>Action</th> \
 				<th>Wiki</th> \
 				<th>Page</th> \
+				<th>Page NS</th> \
+                                <th>Bytes added</th> \
 				<th>Revision</th> \
 				<th>IP</th> \
 			</thead> \
