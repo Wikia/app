@@ -39,7 +39,7 @@
 	</div>
 	
 	<button id="FetchContributions"><?= wfMsg( 'act-fetch-contributions' ); ?></button>
-	
+	<br /><br />
 	<div id="UserContributions"></div>
 	
 <?php elseif( !empty( $username) && empty( $usernameNotFound ) ): ?>

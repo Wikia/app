@@ -4,6 +4,7 @@
 		<th>page_id</th>
 		<th>rev_id</th>
 		<th>user_id</th>
+		<th>ip</th>
 		<th>rev_timestamp</th>
 		<th>event_type</th>
 	</thead>
