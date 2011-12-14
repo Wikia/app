@@ -78,7 +78,7 @@ Please try another one!',
 	'achievements-profile-title-oasis' => 'achievement <br /> points',
 	'achievements-ranked-oasis' => '$1 is [[Special:Leaderboard|Ranked #$2]] on this wiki',
 	'achievements-viewall-oasis' => 'See all',
-	'achievements-toggle-hide' => 'Don\'t show points, badges and ranking in my profile page',
+	'achievements-toggle-hide' => 'Hide my achievements on my profile from everybody',
 	//'achievements-viewall-oasis' => 'See all $1\'s badges',
 	/*
 	 * Leaderboard

@@ -40,7 +40,7 @@ Add pages to this list by clicking \"{{int:watch}}\" at the top of a page.",
 	'prefs-wikiafollowedpages-prefs-advanced' => 'Advanced options',
 	'prefs-wikiafollowedpages-prefs-watchlist' => 'Watchlist only',
 
-	'tog-hidefollowedpages' => 'Make my followed pages lists private',
+	'tog-hidefollowedpages' => 'Hide my followed pages list from everybody',
 	'follow-categoryadd-summary' => "Page added to category", //TODO check this
 	'follow-bloglisting-summary' => "Blog posted on blog page",
 

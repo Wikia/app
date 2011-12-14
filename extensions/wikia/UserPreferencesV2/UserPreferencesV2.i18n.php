@@ -41,7 +41,7 @@ $messages['en'] = array(
 	'contextlines-v2' => 'Length of result description:',
 	'contextchars-v2' => 'Size of result description:',
 	'prefs-advanced-displayv2' => 'Advanced display options',
-	'tog-highlightbrokenv2' => 'Format broken links',
+	'tog-highlightbrokenv2' => 'Show broken links with a question mark, not as red.',
 	'tog-showAdsv2' => 'Ads:',
 	'prefs-addressv2' => 'Address',
 	'prefs-followed-pages-iv2' => 'Follow pages I...',
@@ -55,4 +55,5 @@ $messages['en'] = array(
 	
 	'tog-editsectiononrightclick-v2' => 'Edit sections by right clicking on section titles',
 	'tog-editondblclick-v2' => 'Edit pages on double click',
+	'tog-hidefollowedpages-v2' => 'Hide my followed pages list from everybody',
 );
