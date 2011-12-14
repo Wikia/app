@@ -237,6 +237,7 @@ abstract class Job {
 				$dbw->begin();
 				$dbw->insert( 'job', $rows, __METHOD__, 'IGNORE' );
 				$dbw->commit();
+				Wikia::informJobQueue( count( $rows ) );
 				$rows = array();
 			}
 		}
@@ -244,6 +245,7 @@ abstract class Job {
 			$dbw->begin();
 			$dbw->insert( 'job', $rows, __METHOD__, 'IGNORE' );
 			$dbw->commit();
+			Wikia::informJobQueue( count( $rows ) );
 		}
 	}
 
@@ -277,6 +279,7 @@ abstract class Job {
 			}
 		}
 		$dbw->insert( 'job', $fields, __METHOD__ );
+		Wikia::informJobQueue();
 	}
 
 	protected function insertFields() {
