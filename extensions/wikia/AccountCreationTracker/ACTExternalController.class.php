@@ -7,71 +7,10 @@ class AccountCreationTrackerExternalController extends WikiaSpecialPageControlle
 	protected function getDb( $type = DB_SLAVE ) {
 		return $this->wf->getDb( $type, "stats", $this->wg->StatsDB );
 	}
-	
-	public function fetchContributions() {
 		
-		$dbr = $this->getDb( DB_SLAVE );
-		
-		$ids = $this->request->getVal('users');
-
-		$results = array();
-		
-		$table = array( 'events' );
-		$vars = array(
-			'wiki_id',
-			'page_id',
-			'rev_id',
-			'user_id',
-			'page_ns',
-			'ip',
-			'rev_timestamp',
-			'event_type'
-		);
-		$conds = array( 'user_id' => $ids );
-		$options = array( 'LIMIT' => 10 );
-		$res = $dbr->select( $table, $vars, $conds, __METHOD__, $options);
-		while( $row = $dbr->fetchRow($res) ) {
-	//		$row['page_id'] = GlobalTitle::newFromId( $row['page_id'], $row['page_ns'], $row['wiki_id'] )->getFullURL();
-
-			if ( !empty( $row['user_id'] ) ) {
-				$name = User::newFromId( $row['user_id'] )->getName();
-			} else {
-				$name = long2ip( $row['ip'] );
-			}
-			$row['user_id'] = GlobalTitle::newFromText( $name, NS_USER, $row['wiki_id'] )->getFullURL();
-
-			$row['wiki_id'] = WikiFactory::getWikiById( $row['wiki_id'] )->city_url;
-
-
-			switch( $row['event_type'] ) {
-				case ScribeEventProducer::EDIT_CATEGORY_INT:
-					$row['event_type'] = ScribeEventProducer::EDIT_CATEGORY;
-					break;
-				case ScribeEventProducer::CREATEPAGE_CATEGORY_INT:
-					$row['event_type'] = ScribeEventProducer::CREATEPAGE_CATEGORY;
-					break;
-			}
-
-			$results[] = $row;
-		}
-		
-		$this->response->setVal( 'num', $res->numRows() );
-		
-		$this->response->setVal(
-			'html', 
-			$this->app->renderView(
-				'AccountCreationTracker',
-				'renderContributions',
-				array('contributions'=>$results)
-			)
-		);
-		
-		return true;
-	}
-	
 	public function fetchContributionsDataTables() {
 		//error_log( "start" );
-		$aColumns = array( 'wiki_id', 'page_id', 'rev_id', 'user_id', 'ip', 'rev_timestamp', 'event_type' );
+		$aColumns = array( 'rev_timestamp', 'user_id', 'event_type', 'wiki_id', 'page_id', 'rev_id', 'ip' );
 		
 		$dbr = $this->getDb( DB_SLAVE );
 		
@@ -130,31 +69,46 @@ class AccountCreationTrackerExternalController extends WikiaSpecialPageControlle
 		//error_log( "fetching results" );
 		
 		while( $row = $dbr->fetchRow($res) ) {
+			$wiki = WikiFactory::getWikiById( $row['wiki_id'] );
+
+			if ( !is_object( $wiki ) || $wiki->city_public == 0 ) {
+				// wiki does not exist, skip it
+				continue;
+			}
+
+			$wikiSitename = WikiFactory::getVarValueByName( 'wgSitename', $row['wiki_id'] );
+			$row['wiki_id'] = Xml::element( 'a', array( 'href' => $wiki->city_url ), $wikiSitename );
+
 			if ( !empty( $row['user_id'] ) ) {
 				$name = User::newFromId( $row['user_id'] )->getName();
 			} else {
 				$name = long2ip( $row['ip'] );
 			}
-			$row['user_id'] = '<a href="'.GlobalTitle::newFromText( $name, NS_USER, $row['wiki_id'] )->getFullURL().'">'.$name.'</a>';
+			$row['user_id'] = Xml::element( 'a', array( 'href' => GlobalTitle::newFromText( $name, NS_USER, $wiki->city_id )->getFullURL() ), $name );
 
-			$wiki = WikiFactory::getWikiById( $row['wiki_id'] );	
-	
-			if(!empty($wiki)) {
-				$row['wiki_id'] = '<a href="'.$wiki->city_url.'">'.$wiki->city_title.'</a>';
-			}
-
+                        global $wgDevelEnvironment;
+                        if ( !$wgDevelEnvironment ) {
+                                $page = GlobalTitle::newFromId( $row['page_id'], $row['page_ns'], $wiki->wiki_id );
+                                $row['page_id'] = Xml::element( 'a', array( 'href' => $page->getFullURL() ), $page->getPrefixedText() );
+                        } else {
+                                $row['page_id'] = 'db not found';
+                        }
+                
 
 			switch( $row['event_type'] ) {
 				case ScribeEventProducer::EDIT_CATEGORY_INT:
-					$row['event_type'] = ScribeEventProducer::EDIT_CATEGORY;
+					$row['event_type'] = 'edit';
 					break;
 				case ScribeEventProducer::CREATEPAGE_CATEGORY_INT:
-					$row['event_type'] = ScribeEventProducer::CREATEPAGE_CATEGORY;
+					$row['event_type'] = 'create';
 					break;
+				case ScribeEventProducer::DELETE_CATEGORY_INT:
+					$row['event_type'] = 'delete';
+                                        break;
+				case ScribeEventProducer::UNDELETE_CATEGORY_INT:
+					$row['event_type'] = 'undelete';
 			}
-			
-			$row['ip'] = long2ip($row['ip']);
-			
+				
 			$output_row = array();
 			
 			for($i = 0; $i< count($aColumns); $i++) {
@@ -165,7 +119,6 @@ class AccountCreationTrackerExternalController extends WikiaSpecialPageControlle
 		}
 		
 		echo json_encode( $output );
-		//error_log( print_r($output,1) );
 		$this->skipRendering();
 		return false;
 	}
