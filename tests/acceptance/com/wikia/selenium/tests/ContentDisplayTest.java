@@ -8,14 +8,14 @@ import org.testng.annotations.Test;
 
 public class ContentDisplayTest extends BaseTest {
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI", "verified"})
 	public void testContentDisplay() throws Exception {
 		// find an image to use in wikitext
 		session().open("index.php?title=Special:NewFiles");
 		session().waitForPageToLoad(this.getTimeout());
 
-		String fileName = session().getEval("window.jQuery('.wikia-gallery').find('img').eq(0).attr('src')");
-		fileName = fileName.substring(fileName.lastIndexOf("/") + 1);
+		String fileName = session().getEval("window.jQuery('.wikia-gallery').find('img').eq(0).attr('title')");
+		fileName = fileName.substring(0, fileName.lastIndexOf("(") - 1);
 		String fileUploader = session().getEval("window.jQuery('.wikia-gallery').find('.wikia-gallery-item-user').eq(0).text()");
 
 		// create test page
@@ -23,9 +23,6 @@ public class ContentDisplayTest extends BaseTest {
 
 		String page = "WikiaStaffContentDisplayTest";
 		editArticle(page, "== Foo ==\n\n[[File:" + fileName + "|thumb]]\n\ntest --~~~~\n\n[[Category:Foo]][[Category:Bar]]");
-
-		// check history dropdown entry
-		assertTrue(session().isElementPresent("//details//ul[@class='history']//a[text()='" + getTestConfig().getString("ci.user.wikiastaff.username") + "']"));
 
 		// edit section chicklet button
 		assertTrue(session().isElementPresent("//div[@id='WikiaArticle']//h2//span[@class='editsection']/a"));
@@ -38,6 +35,6 @@ public class ContentDisplayTest extends BaseTest {
 		assertTrue(session().isElementPresent("//div[@id='catlinks']//a[text()='Bar']"));
 
 		// cleanup
-		doDelete("label=regexp:.*Author request", "Wikia PageTypes test");
+		//doDelete("label=regexp:.*Author request", "Wikia PageTypes test");
 	}
 }
