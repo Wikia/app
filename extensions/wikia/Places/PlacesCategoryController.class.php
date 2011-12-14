@@ -12,26 +12,33 @@ class PlacesCategoryController extends WikiaController {
 	}
 	public function enableGeoTagging(){
 
-		// TODO: Add privilage check;
-		$sTitle = $this->getVal( 'pageName', null );
-		if ( !empty( $sTitle ) ){
-			$oPlacesCategory = F::build( 'PlaceCategory', array( $sTitle ), 'newFromTitle' );
-			$oPlacesCategory->enableGeoTagging();
-			$this->setVal( 'error', 0 );
+		if ( !$this->app->wf->readOnly() && $this->app->wg->user->isAllowed('places-enable-category-geolocation') ){
+			$sTitle = $this->getVal( 'pageName', null );
+			if ( !empty( $sTitle ) ){
+				$oPlacesCategory = F::build( 'PlaceCategory', array( $sTitle ), 'newFromTitle' );
+				$oPlacesCategory->enableGeoTagging();
+				$this->setVal( 'error', 0 );
+			} else {
+				$this->setVal( 'error', 1 );
+			}
 		} else {
 			$this->setVal( 'error', 1 );
 		}
 	}
 	public function disableGeoTagging(){
 
-		// TODO: Add privilage check;
-		$sTitle = $this->getVal( 'pageName', null );
-		if ( !empty( $sTitle ) ){
-			$oPlacesCategory = F::build( 'PlaceCategory', array( $sTitle ), 'newFromTitle' );
-			$oPlacesCategory->disableGeoTagging();
-			$this->setVal( 'error', 0 );
+		if ( !$this->app->wf->readOnly() && $this->app->wg->user->isAllowed('places-enable-category-geolocation') ){
+			$sTitle = $this->getVal( 'pageName', null );
+			if ( !empty( $sTitle ) ){
+				$oPlacesCategory = F::build( 'PlaceCategory', array( $sTitle ), 'newFromTitle' );
+				$oPlacesCategory->disableGeoTagging();
+				$this->setVal( 'error', 0 );
+			} else {
+				$this->setVal( 'error', 1 );
+			}
 		} else {
 			$this->setVal( 'error', 1 );
 		}
+
 	}
 }

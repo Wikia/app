@@ -93,3 +93,10 @@ F::build('JSMessages')->registerPackage('PlacesGeoLocationModal', array( 'places
 F::addClassConstructor( 'PlacesCategoryController', array( 'app' => $app ) );
 F::addClassConstructor( 'PlacesController', array( 'app' => $app ) );
 F::addClassConstructor( 'PlaceStorage', array(), 'newFromId' );
+
+/*
+ * user rights
+ */
+$wgAvailableRights[] = 'places-enable-category-geolocation';
+$wgGroupPermissions['*']['places-enable-category-geolocation'] = false;
+$wgGroupPermissions['sysop']['places-enable-category-geolocation'] = true;
