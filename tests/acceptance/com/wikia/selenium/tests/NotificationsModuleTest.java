@@ -6,26 +6,29 @@ import static org.testng.AssertJUnit.assertFalse;
 
 import org.testng.annotations.Test;
 
+import java.util.Date;
+
 public class NotificationsModuleTest extends BaseTest {
 
 	private void randomPage() throws Exception {
-		session().open("index.php?title=Special:Random");
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("index.php?title=Special:Random");
 	}
 
-	@Test(groups={"oasis", "CI"})
+	// BugId: 17557
+	@Test(groups={"oasis", "CI", "verified"})
 	public void testTalkPageNotificationSend() throws Exception {
 		loginAsRegular();
-		session().open("index.php?title=User_talk:" + getTestConfig().getString("ci.user.wikiastaff.username") + "&action=edit&section=new");
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("index.php?title=User_talk:" + getTestConfig().getString("ci.user.wikiastaff.username") + "&action=edit&section=new");
 
 		// leave message for staff
-		session().type("//input[@name='wpSummary']", "Message");
+		waitForElement("//textarea[@name='wpSummary']");
+		session().type("//textarea[@name='wpSummary']", "Message");
 		doEdit("Test message --~~~~");
 		doSave();
 	}
 
-	@Test(groups={"oasis", "CI"},dependsOnMethods={"testTalkPageNotificationSend"})
+	// BugId: 17557
+	@Test(groups={"oasis", "CI", "verified"},dependsOnMethods={"testTalkPageNotificationSend"})
 	public void testTalkPageNotificationReceive() throws Exception {
 		// check messages for staff
 		loginAsStaff();
@@ -35,7 +38,7 @@ public class NotificationsModuleTest extends BaseTest {
 
 		// dismiss the message
 		session().click(xPath + "//a[contains(@class,'close-notification')]");
-
+		
 		// message should be removed from DOM
 		waitForElementNotPresent(xPath);
 
@@ -44,7 +47,7 @@ public class NotificationsModuleTest extends BaseTest {
 		assertFalse(session().isElementPresent(xPath));
 	}
 
-	@Test(groups={"oasis", "CI"})
+	@Test(groups={"oasis", "CI", "verified"})
 	public void testCommunityMessageNotificationSend() throws Exception {
 		loginAsStaff();
 
@@ -52,7 +55,7 @@ public class NotificationsModuleTest extends BaseTest {
 		editArticle("Mediawiki:community-corner", "Community message test --~~~~");
 	}
 
-	@Test(groups={"oasis", "CI"},dependsOnMethods={"testCommunityMessageNotificationSend"})
+	@Test(groups={"oasis", "CI", "verified"},dependsOnMethods={"testCommunityMessageNotificationSend"})
 	public void testCommunityMessageNotificationReceive() throws Exception {
 		loginAsRegular();
 	
@@ -72,7 +75,7 @@ public class NotificationsModuleTest extends BaseTest {
 		assertFalse(session().isElementPresent(xPath));
 	}
 
-	@Test(groups={"oasis", "CI"})
+	@Test(groups={"oasis", "CI", "verified"})
 	public void testPreferencesAndLogoutConfirmation() throws Exception {
 		loginAsRegular();
 
@@ -97,10 +100,11 @@ public class NotificationsModuleTest extends BaseTest {
 		assertTrue(session().isElementPresent(xPath));
 	}
 
-	@Test(groups={"oasis", "CI"})
+	@Test(groups={"oasis", "CI", "verified"})
 	public void testPageActionsConfirmation() throws Exception {
-		String pageA = "User:" + getTestConfig().getString("ci.user.wikiastaff.username") + "/Foo";
-		String pageB = "User:" + getTestConfig().getString("ci.user.wikiastaff.username") + "/Bar";
+		String date = (new Date()).toString().replace(" ", "_");
+		String pageA = "User:" + getTestConfig().getString("ci.user.wikiastaff.username") + "/Foo" + date;
+		String pageB = "User:" + getTestConfig().getString("ci.user.wikiastaff.username") + "/Bar" + date;
 		String xPath = "//div[@class='WikiaConfirmation']";
 		String reason = "Notifications test";
 

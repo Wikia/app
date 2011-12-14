@@ -25,7 +25,7 @@ import com.thoughtworks.selenium.SeleniumException;
 import org.testng.annotations.Test;
 
 public class FollowedPagesTest extends BaseTest {
-	@Test(groups={"CI"})
+	@Test(groups={"CI", "verified"})
 	public void testSpecialPreferences() throws Exception {
 		loginAsStaff();
 		session().open("index.php?title=Special:Preferences");
@@ -59,7 +59,7 @@ public class FollowedPagesTest extends BaseTest {
 		assertTrue( session().isTextPresent("Please log in to create or view your followed pages list."));
 	}
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI", "verified"})
 	public void testFollowUnFollow() throws Exception {
 		session().open("index.php");
 		login();
@@ -91,20 +91,20 @@ public class FollowedPagesTest extends BaseTest {
 	}
 
 	// Follow a random page, assert followed, unfollow, assert unfollowed
-	@Test(groups={"CI"})
+	@Test(groups={"CI", "verified"})
 	public void testFollowedPages() throws Exception {
 		login();
-		session().click("link=Random Page");
-		session().waitForPageToLoad(this.getTimeout());
-		String ArticleTitle = session().getText("//header[@id='WikiaPageHeader']/h1");
+		String ArticleTitle = "Test following pages " + (new Date()).toString();
+		String ArticleUrlTitle = ArticleTitle.replace(" ", "_");
+		editArticle(ArticleTitle, "Lorem ipsum");
 		session().click("ca-watch");
-		session().click("link=Followed pages");
-		session().waitForPageToLoad(this.getTimeout());
+		waitForElement("ca-unwatch");
+		openAndWait("wiki/Special:Following");
 		assertTrue(session().isElementPresent("link=" + ArticleTitle));
-		session().click("link=" + ArticleTitle);
-		session().waitForPageToLoad(this.getTimeout());
+		clickAndWait("link=" + ArticleTitle);
 		session().click("ca-unwatch");
-		session().click("link=Followed pages");
+		waitForElement("ca-watch");
+		openAndWait("wiki/Special:Following");
 		assertFalse(session().isElementPresent("link=" + ArticleTitle));
 	}
 }
