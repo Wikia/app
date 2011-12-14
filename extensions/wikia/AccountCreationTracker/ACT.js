@@ -85,6 +85,10 @@ $(document).ready(function() {
 			var page_id = $('.page_id', this).text();
 			var page_name = $('.page_name', this).text();
 			var nuke_url = $('.wiki_name', this).attr('href');
+			nuke_url += 'wikia.php?controller=AccountCreationTrackerExternalController&method=nukeContribs';
+			nuke_url += '&user_id=' + user_id;
+			nuke_url += '&wiki_id=' + wiki_id;
+			nuke_url += '&page_id=' + page_id;
 			if(user_id) {
 				oTableNukeList.fnAddData([nuke_url,user_name,wiki_name,page_name,'---']);
 			}
