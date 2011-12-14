@@ -30,7 +30,7 @@ var WikiBuilder = {
 		WikiBuilder.nextButtons = WikiBuilder.wb.find('nav .next');
 		WikiBuilder.finishSpinner = $('#CreateNewWiki .finish-status');
 		WikiBuilder.descWikiNext = $('#DescWiki nav .next');
-		
+
 		// Name Wiki event handlers
 		$('#NameWiki input.next').click(function() {
 			$.tracker.byStr('createnewwiki/namewiki/next');
@@ -91,7 +91,7 @@ var WikiBuilder = {
 				WikiBuilder.transition(id, false, '-');
 			}
 		});
-		
+
 		// Login/Signup event handlers
 		$('#Auth .signup-msg a').click(function() {
 			WikiBuilder.handleRegister();
@@ -103,7 +103,7 @@ var WikiBuilder = {
 			$.tracker.byStr('createnewwiki/auth/login');
 			AjaxLogin.form.submit();
 		});
-		
+
 		// Description event handlers
 		WikiBuilder.descWikiNext.click(function() {
 			WikiBuilder.descWikiNext.attr('disabled', true);
@@ -140,7 +140,7 @@ var WikiBuilder = {
 			}
 		});
 		$('#Description').placeholder();
-		
+
 		// Theme event handlers
 		$('#ThemeWiki nav .next').click(function() {
 			$.tracker.byStr('createnewwiki/themewiki/next');
@@ -152,7 +152,7 @@ var WikiBuilder = {
 				}
 			});
 		});
-		
+
 		// Upgrade event handlers
 		$('#UpgradeWiki nav .next').click(function() {
 			$.tracker.byStr('createnewwiki/upgradewiki/next');
@@ -162,7 +162,7 @@ var WikiBuilder = {
 			$.tracker.byStr('createnewwiki/upgradewiki/upgrade');
 			WikiBuilder.upgradeToWikiaPlus();
 		});
-		
+
 		// Set current step on page load
 		if(WikiBuilderCfg['currentstep']) {
 			var pane = $('#' + WikiBuilderCfg['currentstep']);
@@ -175,25 +175,26 @@ var WikiBuilder = {
 
 		WikiBuilder.wikiName.focus();
 	},
-	
+
 	requestKeys: function() {
 		WikiBuilder.keys = WikiBuilderCfg['cnw-keys'];
 	},
-	
+
 	solveKeys: function() {
-		var v = 0;
+		var v = 0,
+			i;
 		for(i = 0; i < WikiBuilder.keys.length; i++) {
 			v *= (i % 5) + 1;
 			v += WikiBuilder.keys[i];
 		}
 		WikiBuilder.answer = v;
-	}, 
+	},
 
 	handleRegister: function() {
 		AjaxLogin.showRegister();
 		$('#wpRemember').attr('checked', 'true').hide().siblings().hide();
 		if(!WikiBuilder.registerInit) {
-			$.getScript(window.wgScript + '?action=ajax&rs=getRegisterJS&uselang=' + window.wgUserLanguage + '&cb=' + wgMWrevId + '-' + wgStyleVersion, 
+			$.getScript(window.wgScript + '?action=ajax&rs=getRegisterJS&uselang=' + window.wgUserLanguage + '&cb=' + wgMWrevId + '-' + wgStyleVersion,
 				function() {
 					$('#Auth nav input.signup').click(function(){
 						$.tracker.byStr('createnewwiki/auth/signup');
@@ -205,7 +206,7 @@ var WikiBuilder = {
 		WikiBuilder.signupEntities.hide();
 		WikiBuilder.loginEntities.show();
 	},
-	
+
 	handleLogin: function() {
 		AjaxLogin.showLogin();
 		AjaxLogin.init($('#AjaxLoginLoginForm form:first'));
@@ -213,7 +214,7 @@ var WikiBuilder = {
 		WikiBuilder.signupEntities.show();
 		WikiBuilder.loginEntities.hide();
 	},
-	
+
 	checkWikiName: function(e) {
 		var name = WikiBuilder.wikiName.val();
 		var lang = WikiBuilder.wikiLanguage.val();
@@ -243,7 +244,7 @@ var WikiBuilder = {
 			WikiBuilder.wikiNameError.html('');
 		}
 	},
-	
+
 	checkDomain: function(e) {
 		var wd = WikiBuilder.wikiDomain.val();
 		var lang = WikiBuilder.wikiLanguage.val();
@@ -278,9 +279,9 @@ var WikiBuilder = {
 			WikiBuilder.wikiDomainError.html('');
 			WikiBuilder.showIcon(WikiBuilder.wikiDomainStatus, '');
 		}
-		
+
 	},
-	
+
 	showIcon: function (el, art) {
 		if(art) {
 			var markup = '<img src="';
@@ -295,12 +296,12 @@ var WikiBuilder = {
 			$(el).html('');
 		}
 	},
-	
+
 	/*
 	transition: function(from, next, dot) {
 		var f = $('#' + from);
 		var t = (next ? f.next() : f.prev());
-		
+
 		f.hide(0, function() {
 			WikiBuilder.wb.width(t.width());
 			if (dot) {
@@ -314,7 +315,7 @@ var WikiBuilder = {
 		});
 	},
 	*/
-	
+
 	transition: function (from, next, dot) {
 		var f = $('#' + from);
 		var t = (next ? f.next() : f.prev());
@@ -342,9 +343,9 @@ var WikiBuilder = {
 			}
 		});
 		f.animate({'opacity':'hide'},{queue:false, duration: 250});
-		
+
 	},
-	
+
 	saveState: function (data, callback) {
 		var c = JSON.parse($.cookies.get('createnewwiki'));
 		if (!c) {
@@ -358,7 +359,7 @@ var WikiBuilder = {
 			callback();
 		}
 	},
-	
+
 	upgradeToWikiaPlus: function() {
 		$.post(wgScript,
 			{
@@ -380,8 +381,8 @@ var WikiBuilder = {
 		.error(function() {
 			WikiBuilder.generateAjaxErrorMsg();
 		});
-	}, 
-	
+	},
+
 	gotoMainPage: function() {
 		WikiBuilder.nextButtons.attr('disabled', true);
 		if(WikiBuilder.createStatus && WikiBuilder.createStatus == 'ok' && WikiBuilder.finishCreateUrl) {
@@ -398,7 +399,7 @@ var WikiBuilder = {
 			setTimeout(WikiBuilder.gotoMainPage, 200);
 		}
 	},
-	
+
 	createWiki: function() {
 		WikiBuilder.requestKeys();
 		WikiBuilder.solveKeys();
@@ -434,7 +435,7 @@ var WikiBuilder = {
 			WikiBuilder.generateAjaxErrorMsg();
 		});
 	},
-	
+
 	generateAjaxErrorMsg: function() {
 		$.showModal(WikiBuilderCfg['cnw-error-general-heading'], WikiBuilderCfg['cnw-error-general']);
 	}
@@ -462,7 +463,7 @@ $(function() {
 	WikiBuilder.init();
 	$('#AjaxLoginButtons').hide();
 	$('#AjaxLoginLoginForm').show();
-	
+
 	ThemeDesigner.slideByDefaultWidth = 608;
 	ThemeDesigner.slideByItems = 4;
 	ThemeDesigner.themeTabInit();
