@@ -95,7 +95,7 @@ class AccountCreationTrackerExternalController extends WikiaSpecialPageControlle
 			$rawtimestamp = wfTimestamp( TS_ISO_8601, $row['rev_timestamp'] );
 			$reltimestamp = Xml::element('div', array( 'class'=>"timeago", 'title'=>$rawtimestamp), '.');
 			
-			$row['rev_timestamp'] .= "<br />". $reltimestamp; 
+			$row['rev_timestamp'] .= " ". $reltimestamp; 
 
 			$namespaceName = MWNamespace::getCanonicalName( $row['page_ns'] );
 			if ( $namespaceName  ) {

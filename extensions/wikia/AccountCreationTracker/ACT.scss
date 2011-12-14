@@ -21,7 +21,13 @@ $highlight: mix($color-buttons, $color-page, 15%);
 				background: $color-page;
 				margin: 0;
 				padding: 4px;
-				border-spacing:0; 
+				border-spacing:0;
+				white-space: nowrap;
+				.timeago {
+					display: inline;
+					color: mix($color-text, $color-page, 50%);
+					white-space: nowrap;
+				}
 			}
 			&:hover td {
 				background: mix($highlight, $color-page, 50%);
