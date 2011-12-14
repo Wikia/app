@@ -1,82 +1,151 @@
 <?php
 /**
  * WikiaApiNirvana
+ * Api access point to get to Nirvana API
  *
  * @author Jakub Olek
  *
  */
- 
-$wgAPIModules['nirvana'] = 'WikiaApiNirvana';
+
+$wgAPIModules['wikia'] = 'WikiaApiNirvana';
 
 class WikiaApiNirvana extends ApiBase {
+	private $app;
 
 	public function __construct( $main, $action ) {
-		parent :: __construct( $main, $action, '' /* prefix for parameters... so controller becomes $controller (if it were 'nirvana' then 'nirvanaController' would become $nirvanaController) */ );
+		parent :: __construct( $main, $action, '' /* prefix for parameters... so controller becomes $controller */ );
 	}
 
 	/**
 	 * See functions below for expected URL params
 	 */
 	public function execute() {
-		global $wgRequest, $wgCacheBuster;
-		wfProfileIn(__METHOD__);
+		$app = F::app();
+		$app->wf->profileIn(__METHOD__);
 
 		extract( $this->extractRequestParams() );
 
-		// TODO: IMPLEMENT HERE :)
-		// TODO: IMPLEMENT HERE :)
+		if( !empty( $controller ) ) {
 
-		$result = $this->getResult();
-		// TODO: REMOVE - JUST AN EXAMPLE
-/*		if(empty($imageUrl)){
-			$result->addValue( 'image', "error", "No good, representiative image was found for this page." ); // TODO: i18n
+			if( empty( $method ) ) {
+				$method = 'index';
+			}
+
+			if( !empty( $parameters ) ) {
+				$par = array();
+				$params = explode( '|', $parameters );
+				foreach($params as $param) {
+					$p = explode(':', $param);
+					$par[$p[0]] = $p[1];
+				}
+			} else {
+				$params = null;
+			}
+
+			$resp = $app->sendRequest( $controller , $method, $params );
+
+			if( $format == 'html' || $format == 'json' ) {
+				$resp = $resp->toString();
+			}
+
+			$result = $this->getResult()->addValue( $this->getModuleName(), $controller,  $resp );
 		} else {
-			$result->addValue( 'image', $this->getModuleName(), $imageUrl );
+			$result = $this->getResult()->addValue( $this->getModuleName(), 'Error',  'No Controller Specified' );
 		}
-*/
-		wfProfileOut(__METHOD__);
+
+		$app->wf->profileOut(__METHOD__);
 	}
-/*
+
 	public function getAllowedParams() {
 		return array (
-			'Id' => array(
-				ApiBase :: PARAM_TYPE => "integer",
-				ApiBase :: PARAM_MIN => 0,
+			'controller' => array(
+				ApiBase :: PARAM_TYPE => "string"
 			),
-			'Title' => array(
+			'method' => array(
+				ApiBase :: PARAM_TYPE => "string"
+			),
+			'format' => array (
+				ApiBase :: PARAM_TYPE => "string"
+			),
+			'parameters' => array (
 				ApiBase :: PARAM_TYPE => "string"
 			)
 		);
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: WikiaApiImageServing.php sean';
+		return __CLASS__ . ': $Id: WikiaApiNirvana.php jolek';
 	}
 
 	public function getParamDescription()
 	{
 		return array
 		(
-			'Id'	=> 'article Id (integer)',
-			'Title' => 'article Title (string)',
+			'controller' => 'name of a Nirvana controller',
+			'method' => 'name of a method. If not specified "index" is used by default',
+			'format' => 'allowed formats: html, json',
+			'parameters' => 'parameters of a controller, key:value'
 		);
 	}
 
 	public function getDescription()
 	{
-		return array
-		(
-			"This module is used to return one image from specified article given either the article id or article title (with prefix if applicable)."
-		);
-	}
+		global $wgExtensionCredits;
+		$descriptions = array("This module is used to get to Wikia API through MediaWiki API.");
 
-	// Examples
-	protected function getQueryExamples() {
-		return array (
-			'api.php?action=nirvana&controller=PhotoPop&method=Play',
-			'api.php?action=nirvana&wisTitle=LyricWiki:Community_Portal',
-			'api.php?action=nirvana&wisId=90286',
-		);
+		foreach( $wgExtensionCredits["other"] as $extension ) {
+			if( !empty( $extension['api'] ) ) {
+				$api = $extension['api'];
+
+				if( !empty( $api['controllers'] ) ) {
+					array_push( $descriptions, '', 'Name: '.$extension['name'], 'Description: ' . $extension['description'], '');
+					array_push( $descriptions, '  Controllers:' );
+
+					if( is_array( $api['controllers'] ) ) {
+						foreach( $api['controllers'] as $controller ) {
+							array_push( $descriptions, '   - '.$controller );
+						}
+					} else {
+						array_push( $descriptions, '   - ' . $api['controllers'] );
+					}
+				} else {
+					break;
+				}
+
+				if( !empty( $api['methods'] ) ) {
+					array_push( $descriptions, '  Methods:' );
+					if( is_array( $api['methods'] ) ) {
+						foreach( $api['methods'] as $method ) {
+							array_push( $descriptions, '   - '. $method );
+						}
+					} else {
+						array_push( $descriptions, '   - ' . $api['methods'] );
+					}
+				}
+
+				if( !empty( $api['parameters'] ) ) {
+					array_push( $descriptions, '  Parameters:');
+					if( is_array( $api['parameters'] ) ) {
+						foreach( $api['parameters'] as $parameter ) {
+							array_push( $descriptions, '   - '. $parameter );
+						}
+					} else {
+						array_push( $descriptions, '   - ' . $api['parameters'] );
+					}
+				}
+
+				if( !empty( $api['examples'] ) ) {
+					array_push( $descriptions, '  Examples:' );
+					if( is_array( $api['examples'] ) ) {
+						foreach( $api['examples'] as $example ) {
+							array_push( $descriptions, '     '. $example );
+						}
+					} else {
+						array_push( $descriptions, $api['examples'] );
+					}
+				}
+			};
+		}
+		return $descriptions;
 	}
-*/
 }

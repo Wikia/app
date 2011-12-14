@@ -19,14 +19,23 @@ $app->wg->append(
 	'wgExtensionCredits',
 	array(
 		"name" => "PhotoPop",
-		"description" => "Mobile Skin for Wikia",
+		"description" => "Photo guessing game",
 		"author" => array(
 			'Federico "Lox" Lucignano <federico(at)wikia-inc.com>',
 			'Jakub Olek <bukaj.kelo(at)gmail.com>',
 			'[http://www.seancolombo.com Sean Colombo]'
 		),
 		'descriptionmsg' => 'photopop-desc',
-		'version' => '0.1'
+		'version' => '0.1',
+		'api' => array (
+			'controllers' => 'PhotoPopController',
+			'methods' => 'index',
+			'examples' => array(
+				'api.php?action=wikia&controller=PhotoPopController',
+				'api.php?action=wikia&controller=PhotoPopController&format=html',
+				'api.php?action=wikia&controller=PhotoPopController&format=json'
+			)
+		)
 	),
 	'other'
 );
