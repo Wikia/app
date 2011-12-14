@@ -10,6 +10,12 @@
 </form>
 
 <?php if( count( $accounts ) > 0 ): ?>
+<form>
+	<fieldset>
+		<a href="/wiki/Special:Tracker/block?target=<?= urlencode( $username ) ?>">Block users</a>
+	</fieldset>
+</form>
+
 	<strong><?= wfMsg( 'act-list-of-accounts', array( count($accounts) ) ); ?></strong>
 	<div style="display: table-cell">
 	<table id="TrackedUsers" class="wikitable">
