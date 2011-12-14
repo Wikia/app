@@ -34,7 +34,7 @@ class UserCookieBlock extends UserBlock {
 		$isCurrentUser = $user->getName() == $wgUser->getName();
 
 		// check cache first before proceeding
-		$cachedState = self::getBlockFromCache( $user );
+		$cachedState = self::getBlockFromCache( $user, $isCurrentUser );
 		if ( !is_null( $cachedState ) ) {
 			wfProfileOut( __METHOD__ );
 			return $cachedState;
