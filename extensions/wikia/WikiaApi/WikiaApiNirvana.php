@@ -34,8 +34,8 @@ class WikiaApiNirvana extends ApiBase {
 			if( !empty( $parameters ) ) {
 				$par = array();
 				$params = explode( '|', $parameters );
-				foreach($params as $param) {
-					$p = explode(':', $param);
+				foreach( $params as $param ) {
+					$p = explode( ':', $param );
 					$par[$p[0]] = $p[1];
 				}
 			} else {
@@ -97,7 +97,7 @@ class WikiaApiNirvana extends ApiBase {
 			if( !empty( $extension['api'] ) ) {
 				$api = $extension['api'];
 
-				if( !empty( $api['controllers'] ) ) {
+				if( !empty( $api['controllers'] ) && !empty( $extension['name'] ) ) {
 					array_push( $descriptions, '', 'Name: '.$extension['name'], 'Description: ' . $extension['description'], '');
 					array_push( $descriptions, '  Controllers:' );
 
