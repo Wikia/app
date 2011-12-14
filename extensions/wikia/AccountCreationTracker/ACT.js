@@ -27,6 +27,37 @@ $(document).ready(function() {
 			return aReturn;
 		}
 		var sel = fnGetSelected( oTable );
+		$('#UserContributions').html('\
+			<table class="wikitable" id="UserContributionsDT"> \
+			<thead> \
+				<th>Wiki</th> \
+				<th>Page</th> \
+				<th>Revision</th> \
+				<th>User</th> \
+				<th>IP</th> \
+				<th>Time</th> \
+				<th>Type</th> \
+			</thead> \
+			<tbody> \
+			</tbody> \
+			</table> ');
+		$('#UserContributionsDT').dataTable({
+			"bPaginate": true,
+			"sPaginationType": "full_numbers",
+			"bLengthChange": false,
+			"bFilter": false,
+			"bSort": true,
+			"bInfo": true,
+			"bLengthChange": true,
+			"bAutoWidth": false,
+			"aaSorting": [[6,'desc']],
+			"bProcessing": true,
+			"bServerSide": true,
+			"sAjaxSource": "/wikia.php?controller=AccountCreationTrackerExternalController&method=fetchContributionsDataTables&users=" + encodeURI(sel)
+		});
+		
+
+		/*
 		$.nirvana.sendRequest({
 			controller: 'AccountCreationTrackerExternalController',
 			method: 'fetchContributions',
@@ -40,7 +71,7 @@ $(document).ready(function() {
 			onErrorCallback: $.proxy(function(jqXHR, textStatus, errorThrown) {
 			}, this)
 		});
-		
+		*/
 	});
 });
 
