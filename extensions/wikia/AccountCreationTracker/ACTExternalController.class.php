@@ -23,10 +23,6 @@ class AccountCreationTrackerExternalController extends WikiaSpecialPageControlle
 			$limitS = mysql_real_escape_string( $_GET['iDisplayStart'] );
 			$limitL = mysql_real_escape_string( $_GET['iDisplayLength'] );
 		}
-		//$limitS = 10;
-
-		//error_log( $limitS );
-		//error_log( $limitL );
 		
 		$orderBy = array();
 		if ( isset( $_GET['iSortCol_0'] ) )	{
@@ -65,19 +61,17 @@ class AccountCreationTrackerExternalController extends WikiaSpecialPageControlle
 
 		$res = $dbr->select( $table, $vars, $conds, __METHOD__, $options);
 
-		//error_log( print_r($output,1) );
-		//error_log( "fetching results" );
-		
 		while( $row = $dbr->fetchRow($res) ) {
 			$wiki = WikiFactory::getWikiById( $row['wiki_id'] );
 
 			if ( !is_object( $wiki ) || $wiki->city_public == 0 ) {
 				// wiki does not exist, skip it
-				continue;
+				//continue;
+				null;
+			} else {
+				$wikiSitename = WikiFactory::getVarValueByName( 'wgSitename', $row['wiki_id'] );
+				$row['wiki_id'] = Xml::element( 'a', array( 'href' => $wiki->city_url ), $wikiSitename );
 			}
-
-			$wikiSitename = WikiFactory::getVarValueByName( 'wgSitename', $row['wiki_id'] );
-			$row['wiki_id'] = Xml::element( 'a', array( 'href' => $wiki->city_url ), $wikiSitename );
 
 			if ( !empty( $row['user_id'] ) ) {
 				$name = User::newFromId( $row['user_id'] )->getName();
@@ -96,6 +90,13 @@ class AccountCreationTrackerExternalController extends WikiaSpecialPageControlle
 				}
 			}
 
+			$row['ip'] = long2ip($row['ip']);
+			
+			$rawtimestamp = wfTimestamp( TS_ISO_8601, $row['rev_timestamp'] );
+			$reltimestamp = Xml::element('div', array( 'class'=>"timeago", 'title'=>$rawtimestamp), '.');
+			
+			$row['rev_timestamp'] .= "<br />". $reltimestamp; 
+
 			$namespaceName = MWNamespace::getCanonicalName( $row['page_ns'] );
 			if ( $namespaceNamvn  ) {
 				$row['page_ns'] = $namespaceName;
@@ -112,7 +113,7 @@ class AccountCreationTrackerExternalController extends WikiaSpecialPageControlle
 					break;
 				case ScribeEventProducer::DELETE_CATEGORY_INT:
 					$row['event_type'] = 'delete';
-                                        break;
+					break;
 				case ScribeEventProducer::UNDELETE_CATEGORY_INT:
 					$row['event_type'] = 'undelete';
 			}

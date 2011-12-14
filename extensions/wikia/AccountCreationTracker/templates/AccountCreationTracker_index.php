@@ -18,7 +18,7 @@
 
 	<strong><?= wfMsg( 'act-list-of-accounts', array( count($accounts) ) ); ?></strong>
 	<div style="display: table-cell">
-	<table id="TrackedUsers" class="wikitable">
+	<table id="TrackedUsers" class="">
 		<thead>
 			<th>ID</th>
 			<th>Username</th>
