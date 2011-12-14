@@ -5,10 +5,10 @@
 		$aTmp[] = "align='" . $oPlaceModel->getAlign() . "'";
 	}
 	if ( $oEmptyPlaceModel->getWidth() != $oPlaceModel->getWidth() ) {
-		$aTmp[] = "width='" . $oPlaceModel->getWidth() . "px'";
+		$aTmp[] = "width='" . $oPlaceModel->getWidth() . "'";
 	}
 	if ( $oEmptyPlaceModel->getHeight() != $oPlaceModel->getHeight() ) {
-		$aTmp[] = "height='" . $oPlaceModel->getHeight() . "px'";
+		$aTmp[] = "height='" . $oPlaceModel->getHeight() . "'";
 	}
 	if ( $oEmptyPlaceModel->getLat() != $oPlaceModel->getLat() ) {
 		$aTmp[] = "lat='" . $oPlaceModel->getLat() . "'";
