@@ -33,6 +33,7 @@ $dir = dirname( __FILE__ );
 
 $app->registerClass('PlacesHooks', $dir . '/PlacesHooks.class.php');
 $app->registerClass('PlacesParserHookHandler', $dir . '/PlacesParserHookHandler.class.php');
+$app->registerClass('WikiaApiPlaces', $dir . '/WikiaApiPlaces.class.php');
 
 /**
  * controllers
@@ -67,6 +68,11 @@ $app->registerHook('EditPage::showEditForm:initial', 'PlacesHooks', 'onShowEditF
 
 // for later
 // $app->registerHook('OutputPageMakeCategoryLinks', 'PlacesHooks', 'onOutputPageMakeCategoryLinks');
+
+/**
+ * API module
+ */
+$wgAPIModules['places'] = 'WikiaApiPlaces';
 
 /**
  * messages
