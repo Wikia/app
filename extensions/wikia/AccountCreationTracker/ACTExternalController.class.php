@@ -98,7 +98,7 @@ class AccountCreationTrackerExternalController extends WikiaSpecialPageControlle
 			$row['rev_timestamp'] .= "<br />". $reltimestamp; 
 
 			$namespaceName = MWNamespace::getCanonicalName( $row['page_ns'] );
-			if ( $namespaceNamvn  ) {
+			if ( $namespaceName  ) {
 				$row['page_ns'] = $namespaceName;
 			} elseif( $row['page_ns'] == NS_MAIN ) {
 				$row['page_ns'] = 'main';
