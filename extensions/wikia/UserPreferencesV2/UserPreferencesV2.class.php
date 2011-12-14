@@ -13,7 +13,10 @@ class UserPreferencesV2 {
 	 */
 
 	public function onGetPreferences($user, $defaultPreferences) {
+		global $wgEnableWallExt, $wgOut, $wgScriptPath;
 
+		//add javascript
+		$wgOut->addScriptFile($wgScriptPath . '/extensions/wikia/UserPreferencesV2/js/UserPreferencesV2.js');
 		//Tab 1: User Profile
 		unset($defaultPreferences['userid']);
 		unset($defaultPreferences['editcount']);
@@ -93,6 +96,10 @@ class UserPreferencesV2 {
 		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'watchlistdigest');
 		$defaultPreferences['marketingallowed']['section'] = 'emailv2/email-me-v2';
 		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'marketingallowed');
+		if($wgEnableWallExt) {
+			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'enotifwallthread');
+			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'enotifmywall');
+		}
 
 		$defaultPreferences['htmlemails']['section'] = 'emailv2/email-advanced-v2';
 		$defaultPreferences['htmlemails']['label-message'] = 'tog-htmlemails-v2';
@@ -123,7 +130,6 @@ class UserPreferencesV2 {
 		unset($defaultPreferences['nocache']);
 		unset($defaultPreferences['showhiddencats']);
 		unset($defaultPreferences['showjumplinks']);
-		unset($defaultPreferences['justify']);
 		unset($defaultPreferences['numberheadings']);
 		$defaultPreferences['enablerichtext']['section'] = 'editing/editing-experience';
 		$defaultPreferences['disablelinksuggest']['section'] = 'editing/editing-experience';
@@ -199,8 +205,20 @@ class UserPreferencesV2 {
 		$defaultPreferences['hidefollowedpages']['section'] = 'under-the-hood/advanced-displayv2';
 		$defaultPreferences['hidefollowedpages']['label-message'] = 'tog-hidefollowedpages-v2';
 		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'hidefollowedpages');
+		if ($user->mOptions['skin'] == 'monobook') {
+			$defaultPreferences['justify']['section'] = 'under-the-hood/advanced-displayv2';
+			$defaultPreferences['justify']['label-message'] = 'tog-justify-v2';
+			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'justify');
+		}
+		else unset($defaultPreferences['justify']);
+		if($wgEnableWallExt) {
+			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'wallshowsource');
+		}
 		unset($defaultPreferences['enotiffollowedpages']);
 		unset($defaultPreferences['enotiffollowedminoredits']);
+		unset($defaultPreferences['nocache']);
+		unset($defaultPreferences['numberheadings']);
+		unset($defaultPreferences['showjumplinks']);
 
 		return true;
 	}

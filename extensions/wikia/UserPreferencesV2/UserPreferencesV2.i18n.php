@@ -28,6 +28,7 @@ $messages['en'] = array(
 	'prefs-email-unsubscribe' => 'Disable all emails',
 	'unsubscribe-preferences-toggle-v2' => 'Disable all emails from Wikia (overrides all other options)',
 	'tog-watchlistdigest-v2' => '...a Weekly Digest of changes to my followed Wikia pages is ready',
+	'tog-justify-v2' => 'Show justified paragraphs',
 	
 	'preferences-v2-myhomedisableredirect' => 'Landing page:',
 	'preferences-v2-redirect-enable' => 'Wiki Activity',
@@ -41,7 +42,7 @@ $messages['en'] = array(
 	'contextlines-v2' => 'Length of result description:',
 	'contextchars-v2' => 'Size of result description:',
 	'prefs-advanced-displayv2' => 'Advanced display options',
-	'tog-highlightbrokenv2' => 'Show broken links with a question mark, not as red.',
+	'tog-highlightbrokenv2' => 'Show broken links as red, not with a question mark.',
 	'tog-showAdsv2' => 'Ads:',
 	'prefs-addressv2' => 'Address',
 	'prefs-followed-pages-iv2' => 'Follow pages I...',

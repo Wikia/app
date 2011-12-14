@@ -1255,11 +1255,19 @@ class WallHooksHelper {
 	public function onGetPreferences( $user, &$preferences ) {
 		$app = F::app();
 		
-		if( $user->isLoggedIn() ) {						
+		if( $user->isLoggedIn() ) {
+			if ($app->wg->EnableUserPreferencesV2Ext) {
+				$message = 'wallshowsource-toggle-v2';
+				$section = 'under-the-hood/advanced-displayv2';
+			}
+			else {
+				$message = 'wallshowsource-toggle';
+				$section = 'misc/wall';
+			}
 			$preferences['wallshowsource'] = array(
 				'type' => 'toggle',
-				'label-message' => 'wallshowsource-toggle', // a system message
-				'section' => 'misc/wall'
+				'label-message' => $message, // a system message
+				'section' => $section
 			);
 		}
 
