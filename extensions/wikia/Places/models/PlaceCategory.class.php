@@ -58,14 +58,18 @@ class PlaceCategory {
 	public function isGeoTaggingEnabledForArticle( Title $oTitle ){
 		// TODO: cache this;
 		$cats = array();
-		$dbw = $this->getDB();
-		$res = $dbw->select( 'categorylinks', 'cl_to', array( 'cl_from' => $oTitle->getArticleID() ), __METHOD__ );
-		foreach ( $res as $row ){
-			$oTmpTitle = Title::newFromText( $row->cl_to, NS_CATEGORY );
-			if ( PlaceCategory::newFromTitle( $oTmpTitle->getFullText() )->isGeoTaggingEnabled() ){
-				return true;
-			};
+
+		$aCategories = $this->app->wg->article->mParserOutput->mCategories;
+		if ( !empty( $aCategories ) ){
+			$aCategories = array_keys( $aCategories );
+			foreach ( $aCategories as $sCategory ){
+				$oTmpTitle = Title::newFromText( $sCategory, NS_CATEGORY );
+				if ( F::build('PlaceCategory', array( $oTmpTitle->getFullText() ), 'newFromTitle' )->isGeoTaggingEnabled() ){
+					return true;
+				};
+			}
 		}
+
 		return false;
 	}
 
