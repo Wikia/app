@@ -26,18 +26,28 @@ $app->registerSpecialPage('WikiaSearch', 'WikiaSearchController');
 /**
  * IndexTank setup
  */
-require_once( $dir . 'flaptor-indextank-php/indextank.php');
-$app->registerClass('IndexTankClient', $dir . 'IndexTankClient.class.php');
+//require_once( $dir . 'flaptor-indextank-php/indextank.php');
+//$app->registerClass('IndexTankClient', $dir . 'IndexTankClient.class.php');
+$app->registerClass('AmazonCSClient', $dir . 'AmazonCSClient.class.php');
 
 /**
  * DI setup
  */
+/*
 F::addClassConstructor( 'IndexTankClient',
 	array(
 	 'apiUrl' => ( !empty( $wgWikiaSearchIndexTankApiUrl ) ? $wgWikiaSearchIndexTankApiUrl : false ),
 	 'httpProxy' => ( !empty( $wgHTTPProxy ) ? $wgHTTPProxy : false )
 	));
-F::addClassConstructor( 'WikiaSearch', array( 'client' => F::build('IndexTankClient') ) );
+*/
+F::addClassConstructor( 'AmazonCSClient',
+	array(
+	 'searchEndpoint' => 'http://search-wikia-test-dq6m57jtoklr4ajzy7zj2phhzi.us-east-1.cloudsearch.amazonaws.com/2011-02-01/search',
+	 'rankName' => '-indextank',
+	 'httpProxy' => ( !empty( $wgHTTPProxy ) ? $wgHTTPProxy : false )
+	));
+
+F::addClassConstructor( 'WikiaSearch', array( 'client' => F::build('AmazonCSClient') ) );
 
 
 $wgExtensionCredits['other'][] = array(

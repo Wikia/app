@@ -16,9 +16,9 @@ class IndexTankClient extends WikiaSearchClient {
 		}
 	}
 
-	public function search( $query, $start, $length ) {
+	public function search( $query, $start, $size ) {
 		$index = $this->client->get_index("WikiaTest");
-		return $index->search( $query, $start, $length, null, 'text', '*' );
+		return $index->search( $query, $start, $size, null, 'text', '*' );
 	}
 
 }
