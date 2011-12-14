@@ -11,7 +11,7 @@ $messages = array();
 /** English */
 $messages['en'] = array(
 	'linksuggest-desc' => 'Suggests links to editors on edit view',
-	'tog-disablelinksuggest' => 'Do not show link suggest',
+	'tog-disablelinksuggest' => 'Do not show link suggest in Source mode',
 );
 
 /** Message documentation (Message documentation)

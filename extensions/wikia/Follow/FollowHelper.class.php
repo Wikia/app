@@ -391,19 +391,30 @@ class FollowHelper {
 			'label-message' => "tog-hidefollowedpages",
 		);
 
-		global $wgEnableWallExt;
+		global $wgEnableWallExt, $wgEnableUserPreferencesV2Ext;
 		if($wgEnableWallExt) {
+			if ($wgEnableUserPreferencesV2Ext) {
+				$section = 'emailv2/email-me-v2';
+				$messageWallmy = 'tog-enotifmywall-v2';
+				$messageWallthread = 'tog-enotifwallthread-v2';
+			}
+			else {
+				$section = 'watchlist/basic';
+				$messageWallmy = 'tog-enotifmywall';
+				$messageWallthread = 'tog-enotifwallthread';
+			}
 			$defaultPreferences['enotifwallthread'] = array(
 				'type' => 'toggle',
-				'section' => 'watchlist/basic',
-				'label-message' => "tog-enotifwallthread",
+				'section' => $section,
+				'label-message' => $messageWallthread,
 			);
 			
 			$defaultPreferences['enotifmywall'] = array(
 				'type' => 'toggle',
-				'section' => 'watchlist/basic',
-				'label-message' => "tog-enotifmywall",
+				'section' => $section,
+				'label-message' => $messageWallmy,
 			);
+			
 		}
 		
 

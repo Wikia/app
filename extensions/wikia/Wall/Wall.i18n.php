@@ -101,6 +101,8 @@ $messages['en'] = array(
 	
 	'tog-enotifwallthread' => 'Email me when someone replies on a Message Wall thread I\'m following.',
 	'tog-enotifmywall' => 'Email me when somebody writes a new message on my Message Wall.',
+	'tog-enotifwallthread-v2' => '...someone replies to a Message Wall thread I follow',
+	'tog-enotifmywall-v2' => '...someone posts a new message on my Wall',
 	
 	'wall-deleted-msg-pagetitle' => 'Message deleted',
 	'wall-deleted-msg-text' => 'The message you are trying to reach has been deleted.',
@@ -197,7 +199,8 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	
 	/* Preferences */
 	'prefs-wall' => 'Wall',
-	'wallshowsource-toggle' => 'Enable View source on Message Wall posts'
+	'wallshowsource-toggle' => 'Enable View source on Message Wall posts',
+	'wallshowsource-toggle-v2' => 'Enable View source option on Message Wall posts'
 );
 
 $messages['qqq'] = array(
