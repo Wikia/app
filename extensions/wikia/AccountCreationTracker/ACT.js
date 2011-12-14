@@ -28,7 +28,7 @@ $(document).ready(function() {
 		}
 		var sel = fnGetSelected( oTable );
 		$('#UserContributions').html('\
-			<table class="wikitable" id="UserContributionsDT"> \
+			<table class="" id="UserContributionsDT"> \
 			<thead> \
 				<th>Time</th> \
 				<th>User</th> \
@@ -36,7 +36,7 @@ $(document).ready(function() {
 				<th>Wiki</th> \
 				<th>Page</th> \
 				<th>Page NS</th> \
-                                <th>Bytes added</th> \
+				<th>Bytes added</th> \
 				<th>Revision</th> \
 				<th>IP</th> \
 			</thead> \
@@ -56,7 +56,10 @@ $(document).ready(function() {
 			"bProcessing": true,	
 			"bServerSide": true,
 			"sAjaxSource": "/wikia.php?controller=AccountCreationTrackerExternalController&method=fetchContributionsDataTables&users=" + encodeURI(sel),
-			"aoColumnsDefs": [ { "bVisible": false, "aTargets": [ 2 ] } ]
+			"aoColumnsDefs": [ { "bVisible": false, "aTargets": [ 2 ] } ],
+			"fnDrawCallback": function( oSettings ) {
+				$('#UserContributionsDT .timeago').timeago();
+			}
 		});
 		
 

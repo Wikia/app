@@ -1,0 +1,50 @@
+@import "../../../skins/oasis/css/core/color";
+
+// styling datatables
+
+$highlight: mix($color-buttons, $color-page, 15%);
+@if $is-dark-wiki {
+	$highlight: mix($color-buttons, $color-page, 30%);
+}
+#WikiaMainContent .dataTables_wrapper {
+	min-height: 0;
+	color: $color-text;
+	table { 
+		border: 1px solid $color-page-border;
+		border-collapse: collapse;
+		.sorting_1, .sorting_2, .sorting_3 {
+			background: mix($highlight, $color-page, 35%);
+		}
+		tr {
+			cursor: pointer;
+			td, th {
+				background: $color-page;
+				margin: 0;
+				padding: 4px;
+				border-spacing:0; 
+			}
+			&:hover td {
+				background: mix($highlight, $color-page, 50%);
+			}
+			&.row_selected td {
+				background: $highlight;
+			}
+		}
+		thead tr {
+			border-bottom: 1px solid $color-page-border;
+			th {
+				min-width: 80px; padding-left: 10px; padding-right: 10px; 
+				background: mix($highlight, $color-page, 50%);
+				&:hover { background: $highlight; }
+				&.sorting, &.sorting_asc, &.sorting_desc { cursor: pointer; }
+			}
+		}
+	}
+	.dataTables_paginate { float: none; text-align: left; }
+	.dataTables_processing {
+		display: block;
+		float: none;
+		position: static;
+	}
+	.wikitable { margin: 0 !important; }
+}
