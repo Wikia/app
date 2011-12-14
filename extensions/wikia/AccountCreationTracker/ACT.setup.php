@@ -38,3 +38,7 @@ $app->registerExtensionMessageFile('ACT', $dir . 'ACT.i18n.php' );
 $wgAvailableRights[] = 'accounttracker';
 $wgGroupPermissions['*']['accounttracker'] = false;
 $wgGroupPermissions['util']['accounttracker'] = true;
+
+$wgAvailableRights[] = 'rollbacknuke';
+$wgGroupPermissions['*']['rollbacknuke'] = false;
+$wgGroupPermissions['staff']['rollbacknuke'] = true;
