@@ -6,32 +6,45 @@ $places-column-width: 300px;
 	height: $places-editor-height;
 }
 #PlacesEditorColumn {
-	float: left;
-	width: $places-column-width - 30px;
+	float: right;
+	width: $places-column-width;
+	margin-right: 5px;
 	> form {
-		input[type="text"] {
-			display: block;
-			width: 100%;
+		#PlacesEditorAddress {
+			display: inline-block;
+			width: $places-column-width - 80;
 		}
 		ul {
-			height: 200px;
+			list-style-image: url('/extensions/wikia/Places/images/places_marker.png'); /* $wgCdnStylePath */
+			height: 384px;
 			margin: 5px 0;
 			overflow: auto;
-			padding: 10px;
+			padding-left: 24px;
+			line-height: 17px;
+			li {
+				margin-bottom:5px
+			}
 		}
 	}
 	label {
-		display: block;
+		display: inline-block;
 	}
+	#PlacesEditorMyLocation {
+		display: block;
+		margin-bottom: 10px;
+	}
+	#PlacesEditorGeoPosition {
+		display: inline-block;
+		width: $places-column-width - 130;
+		border: none;
+	}
+
 }
 
-#PlacesEditorGeoPosition {
-	display: block;
-	width: 100%;
-}
+
 
 #PlacesEditorMap {
 	height: $places-editor-height;
-	margin-left: $places-column-width;
+	float: left;
 	width: $places-editor-width - $places-column-width;
 }
