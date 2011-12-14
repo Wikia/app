@@ -66,36 +66,48 @@ class AccountCreationTracker extends WikiaObject {
 			}
 		}
 		
-		$new_hashes = array();
-
-		$table = array( 'user_tracker' );
-		$vars = array( 'utr_user_id', 'utr_user_hash' );
-		$conds = array( 'utr_user_id' => array_keys($results_user_set) );
-		$options = array();
-		$res = $dbr->select( $table, $vars, $conds, __METHOD__, $options);
-		while( $row = $dbr->fetchObject($res) ) {
-			if( !isset($results_hash_set[ $row->utr_user_hash ]) ) {
-				$results_hash_set[ $row->utr_user_hash ] = $row->utr_user_id;
-				$new_hashes[] = $row->utr_user_hash;
-			}
-		}
+		if(count($results_user_set) > 0) {
 		
-		if(count($new_hashes)>0) {		
-			$vars = array( 'utr_user_id', 'utr_source', 'utr_user_hash' );
-			$conds = array( 'utr_user_hash' => $new_hashes );
+			$new_hashes = array();
+	
+			$table = array( 'user_tracker' );
+			$vars = array( 'utr_user_id', 'utr_user_hash' );
+			$conds = array( 'utr_user_id' => array_keys($results_user_set) );
+			$options = array();
 			$res = $dbr->select( $table, $vars, $conds, __METHOD__, $options);
 			while( $row = $dbr->fetchObject($res) ) {
-				$nuser = User::newFromId( $row->utr_user_id );
-				if( $nuser->getId() && !isset($results_user_set[ $nuser->getId() ]) ) {
-					$results_user_set[ $nuser->getId() ] = true;
-					$fuser = User::newFromId( $results_hash_set[ $row->utr_user_hash ] );
-					$results[] = array(
-						'user'=>$nuser,
-						'reason'=>self::getTrackingDisplay($row->utr_source),
-						'from'=>$fuser
-					);
+				if( !isset($results_hash_set[ $row->utr_user_hash ]) ) {
+					$results_hash_set[ $row->utr_user_hash ] = $row->utr_user_id;
+					$new_hashes[] = $row->utr_user_hash;
 				}
 			}
+			
+			if(count($new_hashes)>0) {		
+				$vars = array( 'utr_user_id', 'utr_source', 'utr_user_hash' );
+				$conds = array( 'utr_user_hash' => $new_hashes );
+				$res = $dbr->select( $table, $vars, $conds, __METHOD__, $options);
+				while( $row = $dbr->fetchObject($res) ) {
+					$nuser = User::newFromId( $row->utr_user_id );
+					if( $nuser->getId() && !isset($results_user_set[ $nuser->getId() ]) ) {
+						$results_user_set[ $nuser->getId() ] = true;
+						$fuser = User::newFromId( $results_hash_set[ $row->utr_user_hash ] );
+						$results[] = array(
+							'user'=>$nuser,
+							'reason'=>self::getTrackingDisplay($row->utr_source),
+							'from'=>$fuser
+						);
+					}
+				}
+			}
+			
+		}
+		
+		if( count($results) == 0) {
+			$results[] = array(
+				'user'=>$user,
+				'reason'=>"search",
+				'from'=>$user
+			);
 		}
 
 		return $results;

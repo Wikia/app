@@ -19,11 +19,13 @@ class AccountCreationTrackerExternalController extends WikiaSpecialPageControlle
 		$table = array( 'events' );
 		$vars = array( '*' );
 		$conds = array( 'user_id' => $ids );
-		$options = array();
+		$options = array( 'LIMIT' => 10 );
 		$res = $dbr->select( $table, $vars, $conds, __METHOD__, $options);
 		while( $row = $dbr->fetchRow($res) ) {
 			$results[] = $row;
 		}
+		
+		$this->response->setVal( 'num', $res->numRows() );
 		
 		$this->response->setVal(
 			'html', 
