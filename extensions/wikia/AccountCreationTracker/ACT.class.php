@@ -127,7 +127,7 @@ class AccountCreationTracker extends WikiaObject {
 		return array_keys($results);
 	}
 
-	public static function getWikisCreatedByUsers( Array $users ) {
+	public function getWikisCreatedByUsers( Array $users ) {
 		$wikis = array();
 
 		$dbr = $this->wf->getDB( DB_SLAVE, array(), $this->wg->ExternalSharedDB );
@@ -135,7 +135,7 @@ class AccountCreationTracker extends WikiaObject {
 		$res = $dbr->select( 
 			'city_list',
 			'city_id',
-			array( 'city_founding_user' => $dbr->makeList( $users ) )
+			array( 'city_founding_user' => $dbr->makeList( $users, LIST_OR ) )
 		);
 
 		while ( $row = $dbr->fetchObject( $res ) ) {
