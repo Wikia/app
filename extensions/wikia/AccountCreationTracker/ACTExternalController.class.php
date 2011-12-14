@@ -7,6 +7,26 @@ class AccountCreationTrackerExternalController extends WikiaSpecialPageControlle
 	protected function getDb( $type = DB_SLAVE ) {
 		return $this->wf->getDb( $type, "stats", $this->wg->StatsDB );
 	}
+
+	public function nukeContribs() {
+		$user_id = intval($_GET['user_id']);
+		$wiki_id = intval($_GET['wiki_id']);
+		$page_id = intval($_GET['page_id']);
+		
+		if($wiki_id != $this->wg->CityId) {
+			// can only process local requests
+			$this->skipRendering();
+			return false;
+		}
+		
+		if(!$this->wg->User->isAllowed('rollbacknuke')) {
+			// doesn't have permissions
+			$this->skipRendering();
+			return false;
+		}
+		
+	}
+
 		
 	public function fetchContributionsDataTables() {
 		//error_log( "start" );
