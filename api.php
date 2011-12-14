@@ -36,7 +36,7 @@
 
 // So extensions (and other code) can check whether they're running in API mode
 define( 'MW_API', true );
- 
+
 // Initialise common code
 require ( dirname( __FILE__ ) . '/includes/WebStart.php' );
 

@@ -122,7 +122,7 @@ function wfRunHooks($event, $args = array()) {
 		} elseif ( false !== ( $pos = strpos( $func, '::' ) ) ) {
 			$callback = array( substr( $func, 0, $pos ), substr( $func, $pos + 2 ) );
 			/* Wikia change begin - @author: Macbre */
-			/* BugId:6970 */ 
+			/* BugId:6970 */
 			$func .= ' (called by hook)';
 			/* Wikia change end */
 		} else {
