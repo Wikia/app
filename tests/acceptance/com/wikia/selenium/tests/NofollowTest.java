@@ -15,7 +15,7 @@ import static com.thoughtworks.selenium.grid.tools.ThreadSafeSeleniumSessionStor
 import static org.testng.AssertJUnit.assertEquals;
 
 public class NofollowTest extends BaseTest {
-	@Test(groups={"CI"})
+	@Test(groups={"CI", "verified"})
 	public void testNofollow() throws Exception {
 		login();
 		String content = (new Date()).toString();
