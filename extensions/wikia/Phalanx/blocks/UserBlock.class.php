@@ -31,7 +31,7 @@ class UserBlock {
 		$isCurrentUser = $text == $wgUser->getName();
 
 		// check cache first before proceeding
-		$cachedState = self::getBlockFromCache( $user );
+		$cachedState = self::getBlockFromCache( $user, $isCurrentUser );
 		if ( !is_null( $cachedState ) ) {
 			wfProfileOut( __METHOD__ );
 			return $cachedState;
@@ -101,7 +101,7 @@ class UserBlock {
 		return wfSharedMemcKey( 'phalanx', self::CACHE_KEY, $user->getTitleKey() );
 	}
 
-	private static function getBlockFromCache( $user ) {
+	private static function getBlockFromCache( $user, $isCurrentUser ) {
 		global $wgMemc;
 		wfProfilein( __METHOD__ );
 
