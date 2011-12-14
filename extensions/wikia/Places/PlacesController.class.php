@@ -62,7 +62,7 @@ class PlacesController extends WikiaController {
 	 *
 	 * Returns data to be rendered on the client-side
 	 */
-	public function getMarkersRelatedToCurrentTitle(){
+	public function getMarkersRelatedToCurrentTitle() {
 		$sTitle = $this->getVal('title', '');
 		$sCategoriesText = $this->getVal('category', '');
 
@@ -175,6 +175,8 @@ class PlacesController extends WikiaController {
 
 	/**
 	 * Render wikitext of <place> tag for given model
+	 *
+	 * TODO: move the logic to the controler's PHP and use Xml::element helper method
 	 */
 	public function getPlaceWikiTextFromModel(){
 		$oPlaceModel = $this->getVal( 'model', null );
