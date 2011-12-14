@@ -194,11 +194,13 @@ class UserPreferencesV2 {
 		$defaultPreferences['numberheadings']['section'] = 'under-the-hood/advanced-displayv2';
 		$defaultPreferences['numberheadings']['type'] = 'toggle';
 		$defaultPreferences['numberheadings']['label-message'] = 'tog-numberheadings';
+		$defaultPreferences['diffonly']['section'] = 'under-the-hood/advanced-displayv2';
+		$defaultPreferences['norollbackdiff']['section'] = 'under-the-hood/advanced-displayv2';
+		$defaultPreferences['hidefollowedpages']['section'] = 'under-the-hood/advanced-displayv2';
+		$defaultPreferences['hidefollowedpages']['label-message'] = 'tog-hidefollowedpages-v2';
+		$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'hidefollowedpages');
 		unset($defaultPreferences['enotiffollowedpages']);
 		unset($defaultPreferences['enotiffollowedminoredits']);
-		unset($defaultPreferences['hidefollowedpages']);
-		unset($defaultPreferences['diffonly']);
-		unset($defaultPreferences['norollbackdiff']);
 
 		return true;
 	}
