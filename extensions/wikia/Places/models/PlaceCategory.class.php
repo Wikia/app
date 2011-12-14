@@ -83,7 +83,6 @@ class PlaceCategory {
 		wfProfileIn(__METHOD__);
 
 		$this->isEnabled = 0;
-
 		$oTitle = F::build( 'Title', array( $this->sTitle ), 'newFromText' );
 		if ( is_object( $oTitle ) && ( $oTitle instanceof Title ) ){
 			$oTitle->exists();
@@ -102,19 +101,7 @@ class PlaceCategory {
 		// if memc was empty
 		if ( $this->isEnabled === false ) {
 			$this->app->wf->Debug(__METHOD__ . " - memcache miss for #{$this->pageId}\n");
-			$dbr = $this->getDB();
-			$res = $dbr->select(
-				self::WPP_TABLE,
-				array('propname', 'props'),
-				array(
-					'page_id' => $this->pageId,
-					'propname' => array( WPP_CATEGORY_GEOTAGGED ),
-				),
-				__METHOD__
-			);
-			while( $row = $res->fetchObject() ) {
-				$this->isEnabled = $row->props;
-			}
+			$this->isEnabled = $this->app->wf->GetWikiaPageProp( WPP_CATEGORY_GEOTAGGED, $this->pageId );
 			$this->memc->set( $this->getMemcKey(), $value, self::CACHE_TTL );
 		} else {
 			$this->app->wf->Debug(__METHOD__ . " - memcache hit for #{$this->pageId}\n");
@@ -128,8 +115,7 @@ class PlaceCategory {
 		wfProfileIn(__METHOD__);
 
 		if ( $this->isEnabled !== false ){
-			$dbw = $this->getDB( DB_MASTER );
-
+			
 			$oTitle = F::build( 'Title', array( $this->sTitle ), 'newFromText' );
 			if ( $oTitle instanceof Title ){
 				$oTitle->exists();
@@ -144,17 +130,12 @@ class PlaceCategory {
 					);
 					$this->pageId = $oArticle->getID();
 				}
-				// TODO - add magic word
 
-				// model has data - update props entry
-				$dbw->replace( self::WPP_TABLE, false /* $uniqueIndexes */, array(
-					array(
-						'page_id' => $this->pageId,
-						'propname' => WPP_PLACES_CATEGORY_GEOTAGGED,
-						'props' => (int)$this->isEnabled,
-					)
-				), __METHOD__);
-				$dbw->commit();
+				$this->app->wf->setWikiaPageProp(
+					WPP_PLACES_CATEGORY_GEOTAGGED, 
+					$this->pageId, 
+					(int)$this->isEnabled
+				);
 
 				// update the cache
 				$this->memc->set($this->getMemcKey(), $this->isEnabled, self::CACHE_TTL);
