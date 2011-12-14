@@ -56,10 +56,14 @@ class PlaceCategory {
 	}
 
 	public function isGeoTaggingEnabledForArticle( Title $oTitle ){
-		// TODO: cache this;
-		$cats = array();
 
-		$aCategories = $this->app->wg->article->mParserOutput->mCategories;
+		$oArticle =	$this->app->wg->article;
+		if ( is_object( $oArticle->mParserOutput ) && is_object( $oArticle->mParserOutput->mCategories ) ){
+			$aCategories = $oArticle->mParserOutput->mCategories;
+		} else {
+			return false;
+		}
+		
 		if ( !empty( $aCategories ) ){
 			$aCategories = array_keys( $aCategories );
 			foreach ( $aCategories as $sCategory ){

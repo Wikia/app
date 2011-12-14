@@ -14,7 +14,9 @@ class PlacesHooks extends WikiaObject{
 
 	public function onPageHeaderIndexExtraButtons( $extraButtons ){
 		$app = F::app();
-		if ( $app->wg->title->getNamespace() == NS_CATEGORY ){
+		if (	( $app->wg->title->getNamespace() == NS_CATEGORY ) &&
+			$app->wg->user->isAllowed('places-enable-category-geolocation') ){
+			
 			$isGeotaggingEnabled =
 				F::build(
 					'PlaceCategory',
@@ -137,7 +139,10 @@ class PlacesHooks extends WikiaObject{
 	 * Prepends the geolocation button for adding coordinates to a page
 	 */
 	public function onOutputPageBeforeHTML( &$out, &$text ){
-		$text = $this->app->sendRequest( 'PlacesController', 'getGeolocationButton' )->toString() . $text;
+
+		if ( $this->app->wg->request->getVal('action', 'view') == true ) {
+			$text = $this->app->sendRequest( 'PlacesController', 'getGeolocationButton' )->toString() . $text;
+		}
 		return $out;
 	}
 }
