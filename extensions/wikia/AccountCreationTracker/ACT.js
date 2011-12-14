@@ -30,13 +30,13 @@ $(document).ready(function() {
 		$('#UserContributions').html('\
 			<table class="wikitable" id="UserContributionsDT"> \
 			<thead> \
+				<th>Time</th> \
+				<th>User</th> \
+				<th>Action</th> \
 				<th>Wiki</th> \
 				<th>Page</th> \
 				<th>Revision</th> \
-				<th>User</th> \
 				<th>IP</th> \
-				<th>Time</th> \
-				<th>Type</th> \
 			</thead> \
 			<tbody> \
 			</tbody> \
@@ -50,10 +50,11 @@ $(document).ready(function() {
 			"bInfo": true,
 			"bLengthChange": true,
 			"bAutoWidth": false,
-			"aaSorting": [[6,'desc']],
-			"bProcessing": true,
+			"aaSorting": [[0,'desc']],
+			"bProcessing": true,	
 			"bServerSide": true,
-			"sAjaxSource": "/wikia.php?controller=AccountCreationTrackerExternalController&method=fetchContributionsDataTables&users=" + encodeURI(sel)
+			"sAjaxSource": "/wikia.php?controller=AccountCreationTrackerExternalController&method=fetchContributionsDataTables&users=" + encodeURI(sel),
+			"aoColumnsDefs": [ { "bVisible": false, "aTargets": [ 2 ] } ]
 		});
 		
 
