@@ -1,4 +1,4 @@
-
+// styling datatables
 
 th.sorting, th.sorting_asc, th.sorting_desc { cursor: pointer; }
 .dataTables_wrapper tr { cursor: pointer; }
