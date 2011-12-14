@@ -10,7 +10,7 @@ class AccountCreationTrackerExternalController extends WikiaSpecialPageControlle
 		
 	public function fetchContributionsDataTables() {
 		//error_log( "start" );
-		$aColumns = array( 'rev_timestamp', 'user_id', 'event_type', 'wiki_id', 'page_id', 'rev_id', 'ip' );
+		$aColumns = array( 'rev_timestamp', 'user_id', 'event_type', 'wiki_id', 'page_id', 'page_ns', 'rev_size', 'rev_id', 'ip' );
 		
 		$dbr = $this->getDb( DB_SLAVE );
 		
