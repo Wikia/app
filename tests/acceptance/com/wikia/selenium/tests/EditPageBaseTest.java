@@ -100,10 +100,13 @@ public class EditPageBaseTest extends BaseTest {
 		session().runScript("window.RTE.instance.setData(\"" + wikitext.replace("\n", "\\n").replace("\"", "\\\"") + "\");");
 	}
 
+	protected void checkPreviewModal(String pageTitle, String content) throws Exception {
+		this.checkPreviewModal(pageTitle, content, true);
+	}
 	/**
 	 * Test preview functionality
 	 */
-	protected void checkPreviewModal(String pageTitle, String content) throws Exception {
+	protected void checkPreviewModal(String pageTitle, String content, boolean hasPageTitle) throws Exception {
 		// remove signature syntax
 		content = content.replace("--~~~~", "--");
 
@@ -114,8 +117,10 @@ public class EditPageBaseTest extends BaseTest {
 		waitForElement("//section[@id='EditPageDialog']//div[contains(@class,'WikiaArticle')]");
 
 		// check its content
-		assertTrue(session().isElementPresent("//section[@id='EditPageDialog']//h1[@class='pagetitle' and contains(text(),'" + pageTitle + "')]"));
-		assertTrue(session().isElementPresent("//section[@id='EditPageDialog']//p[contains(text(), '" + content + "')]"));
+		if (hasPageTitle) {
+			assertTrue(session().getText("//section[@id='EditPageDialog']//h1[@class='pagetitle']").contains(pageTitle));
+		}
+		assertTrue(session().getText("//section[@id='EditPageDialog']//p").contains(content));
 
 		// check for "Publish" button
 		assertTrue(session().isElementPresent("//section[@id='EditPageDialog']//a[@id='publish']"));
@@ -146,8 +151,10 @@ public class EditPageBaseTest extends BaseTest {
 		assertTrue(session().isElementPresent("//section[@id='EditPageDialog']//table[@class='diff']"));
 
 		// check diff
-		assertTrue(session().isElementPresent("//section[@id='EditPageDialog']//table[@class='diff']" +
-			"//td[@class='diff-deletedline']/div/span[contains(text(), '" + content  + "') and contains(text(), 'Wikia')]"));
+		String diffContent = session().getText("//section[@id='EditPageDialog']//table[@class='diff']" +
+				"//td[@class='diff-deletedline']/div/span");
+		assertTrue(diffContent.contains(content));
+		assertTrue(diffContent.contains("QATests"));
 		assertTrue(session().isElementPresent("//section[@id='EditPageDialog']//table[@class='diff']" +
 			"//td[@class='diff-addedline']/div/span[text()='foo']"));
 

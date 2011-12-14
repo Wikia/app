@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 
 public class PageLayoutBuilderReskinTest extends EditPageBaseTest {
 
-	@Test(groups={"CI", "reskin"})
+	@Test(groups={"CI", "reskin", "verified})
 	public void testPageLayoutBuilderSpecialPageLayout() throws Exception {
 		String layoutTitle = "FooBarFooBarLayoutLongTest" + Integer.toString(new Random().nextInt(9999));
 
@@ -21,6 +21,11 @@ public class PageLayoutBuilderReskinTest extends EditPageBaseTest {
 		session().waitForPageToLoad(this.getTimeout());
 
 		waitForElement("HiddenFieldsDialog");
+
+		// close welcome screen
+		if (session().isElementPresent("//section[@class='modalWrapper']/button[contains(@class, 'close')]")) {
+			session().click("//section[@class='modalWrapper']/button[contains(@class, 'close')]");
+		}
 
 		// test modal with required fields
 		assertTrue(session().isVisible("//section[@id='HiddenFieldsDialog']//input[@name='wpTitle']"));
@@ -65,7 +70,12 @@ public class PageLayoutBuilderReskinTest extends EditPageBaseTest {
 		assertFalse(session().isElementPresent("//header[@id='WikiHeader']/nav"));
 		assertFalse(session().isElementPresent("//header[@id='WikiHeader']/div[@class='buttons']"));
 		assertFalse(session().isElementPresent("//div[@id='WikiaRail']"));
-		assertFalse(session().isElementPresent("//footer[@id='WikiaFooter']"));
+		assertFalse(session().isElementPresent("//footer[@id='WikiaFooter']/div[@class='FooterAd']"));
+		assertFalse(session().isElementPresent("//footer[@id='WikiaFooter']/section"));
+		assertFalse(session().isElementPresent("//footer[@id='CorporateFooter']"));
+		
+		// and some other should be visible
+		assertTrue(session().isElementPresent("//footer[@id='WikiaFooter']/div[@class='toolbar']"));
 
 		// spaces
 		assertTrue(session().isElementPresent("//div[@id='EditPageToolbar']"));
@@ -105,8 +115,8 @@ public class PageLayoutBuilderReskinTest extends EditPageBaseTest {
 		assertTrue(session().isElementPresent("//div[@id='EditPageRail']//div[contains(@class, 'module_page_controls')]//textarea[@id='wpSummary']"));
 		assertTrue(session().isElementPresent("//div[@id='EditPageRail']//div[contains(@class, 'module_page_controls')]//input[@name='wpMinoredit']"));
 		assertTrue(session().isElementPresent("//div[@id='EditPageRail']//div[contains(@class, 'module_page_controls')]//input[@id='wpSave']"));
-		assertTrue(session().isElementPresent("//div[@id='EditPageRail']//div[contains(@class, 'module_page_controls')]//ul//a[@id='wpPreview']"));
-		assertTrue(session().isElementPresent("//div[@id='EditPageRail']//div[contains(@class, 'module_page_controls')]//ul//a[@id='wpDiff']"));
+		assertTrue(session().isElementPresent("//div[@id='EditPageRail']//div[contains(@class, 'module_page_controls')]//nav//a[@id='wpPreview']"));
+		assertTrue(session().isElementPresent("//div[@id='EditPageRail']//div[contains(@class, 'module_page_controls')]//nav//a[@id='wpDiff']"));
 
 		// PLB specific page controls
 		assertTrue(session().isElementPresent("//div[@id='EditPageRail']//div[contains(@class, 'module_page_controls')]//input[@id='wpSaveDraft']"));
@@ -120,10 +130,10 @@ public class PageLayoutBuilderReskinTest extends EditPageBaseTest {
 		this.toggleMode();
 
 		// test preview
-		this.checkPreviewModal(layoutTitle, content);
+		this.checkPreviewModal(layoutTitle, content, false);
 	}
 
-	@Test(groups={"CI", "reskin"})
+	@Test(groups={"CI", "reskin", "verified"})
 	public void testEnsurePLBIsNotAvailableForAnons() throws Exception {
 		session().open("index.php?action=edit&useeditor=wysiwyg&title=Special:LayoutBuilder");
 		session().waitForPageToLoad(this.getTimeout());
