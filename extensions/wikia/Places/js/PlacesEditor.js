@@ -62,6 +62,7 @@ var PlacesEditor = {
 		);
 	},
 
+	// initialize and render Google Map
 	setupMap: function() {
 		var mapConfig = {
 			'center': new google.maps.LatLng(0, 0),
@@ -75,6 +76,7 @@ var PlacesEditor = {
 		);
 	},
 
+	// setup geolocation search form
 	setupForm: function() {
 		var form = $('#PlacesEditorWrapper form'),
 			queryField = form.find('input[type="text"]');
@@ -86,7 +88,7 @@ var PlacesEditor = {
 		this.searchResults = form.children('ul');
 		this.searchResults.delegate('li > a', 'click', $.proxy(function(ev) {
 			ev.preventDefault();
-			var markerId = parseInt($(ev.target).attr('data-id'));
+			var markerId = parseInt($(ev.target).attr('data-marker-id'));
 			this.selectMarker(markerId);
 		}, this));
 
@@ -102,6 +104,7 @@ var PlacesEditor = {
 		$('#PlacesEditorMyLocation').bind('click', $.proxy(this.onGetMyLocation, this));
 	},
 
+	// perform geolocation search
 	findPlaces: function(query, callback) {
 		$().log(query, 'Places query');
 
@@ -114,6 +117,7 @@ var PlacesEditor = {
  			});
 	},
 
+	// populate list of search results
 	onSearchResults: function(results) {
 		// no results
 		if (!results.length) {
@@ -132,7 +136,7 @@ var PlacesEditor = {
 			coords = result.Point.coordinates;
 
 			// add to results
-			html += '<li><a href="#" data-id="' + n + '" data-lat="' + coords[1] + '" data-lon="' + coords[0] + '">' + result.address + '</li>';
+			html += '<li><a href="#" data-marker-id="' + n + '">' + result.address + '</li>';
 
 			// add to markers
 			this.addMarker(result.address, coords[1], coords[0]);
@@ -142,6 +146,7 @@ var PlacesEditor = {
 		this.selectMarker(0);
 	},
 
+	// use geolocation HTML5 API
 	onGetMyLocation: function(ev) {
 		ev && ev.preventDefault();
 
@@ -160,6 +165,7 @@ var PlacesEditor = {
 		}, this));
 	},
 
+	// clear list of markers with search results
 	resetMarkers: function() {
 		var marker;
 
@@ -172,6 +178,7 @@ var PlacesEditor = {
 		this.markers = [];
 	},
 
+	// add a marker to search results
 	addMarker: function(label, lat, lon) {
 		var marker = new google.maps.Marker({
 			position: new google.maps.LatLng(lat, lon),
@@ -182,7 +189,7 @@ var PlacesEditor = {
 
 		// update the coordinates when marker is dropped
 		google.maps.event.addListener(marker, 'dragend', $.proxy(function() {
-			this.selectMarker(marker.markerId);
+			this.selectMarker(marker.markerId, true /* doNotCenter */);
 		}, this));
 
 		// add to the list
@@ -192,18 +199,22 @@ var PlacesEditor = {
 		return marker.markerId = this.markers.length - 1;
 	},
 
-	selectMarker: function(markerId) {
+	// select given marker
+	selectMarker: function(markerId, doNotCenter) {
 		var marker = this.markers[markerId],
 			coords = marker.getPosition();
 
-		this.map.setCenter(coords);
-		this.map.setZoom(15);
+		if (doNotCenter !== true) {
+			this.map.setCenter(coords);
+			this.map.setZoom(15);
+		}
 
 		this.currentMarker = marker;
 
 		$('#PlacesEditorGeoPosition').val(coords.lat().toFixed(8) + ','  + coords.lng().toFixed(8));
 	},
 
+	// get geolocation of currently selected marker
 	getCurrentMarkerLocation: function() {
 		if (this.currentMarker !== false) {
 			var coords = this.currentMarker.getPosition();
