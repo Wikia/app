@@ -42,6 +42,14 @@ class WikiaApiPlaces extends ApiBase {
 			$categories = explode('|', $params['category']);
 			$places = $placesModel->getFromCategories($categories);
 		}
+		// get geodata from articles from given categories (list of categories can be pipe separated)
+		elseif (isset($params['related'])) {
+			$title = F::build('Title', array($params['related']), 'newFromText');
+
+			if ($title instanceof Title) {
+				$places = $placesModel->getFromCategoriesByTitle($title);
+			}
+		}
 		// get geodata from all tagged articles on this wiki
 		else {
 			$places = $placesModel->getAll();
@@ -71,14 +79,18 @@ class WikiaApiPlaces extends ApiBase {
 	public function getAllowedParams() {
 		return array (
 			'pageid' => array(
-				ApiBase :: PARAM_TYPE => 'integer',
+				ApiBase :: PARAM_TYPE => 'integer'
 			),
 			'title' => array(
 				ApiBase :: PARAM_TYPE => 'string'
 			),
 			'category' => array(
 				ApiBase :: PARAM_TYPE => 'string'
-			)
+			),
+			'related' => array(
+				ApiBase :: PARAM_TYPE => 'string'
+			),
+
 		);
 	}
 
@@ -87,6 +99,7 @@ class WikiaApiPlaces extends ApiBase {
 			'pageid' => 'article id (integer)',
 			'title' => 'article title (string)',
 			'category' => 'articles category (string)',
+			'related' => 'get places related to a given title (string)',
 		);
 	}
 
@@ -100,8 +113,9 @@ class WikiaApiPlaces extends ApiBase {
 	protected function getExamples() {
 		return array (
 			'api.php?action=places',
-			'api.php?action=places&title=Foo',
-			'api.php?action=places&category=Ulice',
+			'api.php?action=places&title=Bamberka',
+			'api.php?action=places&category=Ulice|Place',
+			'api.php?action=places&related=Ratusz',
 		);
 	}
 
