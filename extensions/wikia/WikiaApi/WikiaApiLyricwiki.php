@@ -8,13 +8,14 @@
  * 
   Problems:
    - The headers aren't being set (which is important for caching).  Find out where this page is called from.
-   - getHometown wasn't ported over.
    - a lot seems to be missing... should make one pass over the code next to the original code & see what's up.
    - Refactor to make it so that less format types need to handle each API call explicitly (kind of like realJSON but for other types).  Probably only HTML (and maybe XML) needs to be handled explicitly.
    - While this is surprisingly easy to modify and doesn't have known bugs, this code is still totally ugly. Would be nice to make a good set of unit-tests (to prevent regressions) and clean up this whole ugly mess.
+   - Fix the documentation at the end... it doesn't line up entirely to the normal MediaWiki API way of doing things.
    - The REST API (this file) technically wraps the SOAP API functions. If possible, it would be nice to extract that to a third file which doesn't have the SOAP code at the top since the REST and SOAP are logically two ways to access the same data.
    - Refactor inconsistent casing so that dumpXML and writeRealJSON are dumpXml and writeRealJson, etc..
-   - Refactor to use wgRequest instead of getVal and then delete getVal (profile this change... it probably is negligible difference, but is worth checking.
+   - @FIXME: This still uses getVal() instead of wgRequest->get(), so it'll only read GET requests and not POSTed info (which is allowed for the rest of the API and should be allowed here also).
+	-- Refactor to use wgRequest instead of getVal and then delete getVal.
  */
 
 $wgAPIModules['lyrics'] = 'WikiaApiLyricwiki';
@@ -74,6 +75,10 @@ class WikiaApiLyricwiki extends ApiBase {
 				$limit = getVal($_GET, 'limit');
 				$this->rest_getTopSongs( $limit, $fmt );
 				break;
+			case 'getHometown':
+				$artist = getVal($_GET, 'artist');
+				$this->rest_getHometown( $artist, $fmt );
+				break;
 			case 'getSOTD':
 			case 'getSotd':
 				$this->rest_getSotd( $fmt );
@@ -99,6 +104,54 @@ class WikiaApiLyricwiki extends ApiBase {
 		// TODO: hand over handling to MW API instead of doing this...
 		exit (1);
 	}
+	/**
+	 * REST endpoint for the getHometown() LyricWiki API function.  Calls the LyricWiki SOAP function which
+	 * is currently in /extensions/3rdparty/LyricWiki/server.php.
+	 */
+	function rest_getHometown( $artist, $fmt ) {
+		if(empty( $fmt )){
+			$fmt = 'html';
+		}
+
+		switch ( $fmt ) {
+			case 'text':
+				$result = getHometown($artist);
+				$hometown = getVal($result, 'hometown');
+				$state = getVal($result, 'state');
+				$country = getVal($result, 'country');
+
+				print "$hometown\n$state\n$country";
+
+				break;
+			case 'xml':
+				header('Content-Type: application/xml', true);
+				print "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+				$result = getHometown($artist);
+				$result = array("getHometownResponse" => $result);
+				$this->dumpXML($result);
+				break;
+			case 'json':
+			case 'realjson':
+				$result = getHometown($artist);
+				$this->writeRealJSON($result);
+				break;
+			case 'html':
+			default:
+				$result = getHometown($artist);
+				$hometown = getVal($result, 'hometown');
+				$state = getVal($result, 'state');
+				$country = getVal($result, 'country');
+				$this->htmlHead("$artist - $hometown, $state, $country");
+				print "<h3><a href='$this->root".$this->linkEncode($artist)."'>$artist</a>'s Hometown</h3>\n";
+				print "<ul>\n";
+					print "<li>Hometown: <a href='{$this->root}Category:Hometown/$country/$state/$hometown'>$hometown</a></li>\n";
+					print "<li>State: <a href='{$this->root}Category:Hometown/$country/$state'>$state</a></li>\n";
+					print "<li>Country: <a href='{$this->root}Category:Hometown/$country'>$country</a></li>\n";
+				print "</ul>\n";
+				print "</body>\n</html>\n";
+				break;
+		}
+	} // end rest_getHometown()
 
 	/**
 	 * REST endpoint for the getArtist() LyricWiki API function.  Calls the LyricWiki SOAP function which
@@ -131,6 +184,7 @@ class WikiaApiLyricwiki extends ApiBase {
 					}
 				}
 				break;
+			case "json":
 			case "realjson":
 				$result = getArtist($artist);
 				$this->writeRealJSON($result);
@@ -627,6 +681,7 @@ class WikiaApiLyricwiki extends ApiBase {
 	}
 
 	public function getExamples() {
+		// @TODO: A _ton_ more examples.
 		return array (
 			"api.php?action=lyrics&artist=Joe%20Bonamassa&song=So%20Many%20Roads&fmt=xml&func=getSong"
 		);
