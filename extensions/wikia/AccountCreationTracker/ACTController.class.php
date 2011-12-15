@@ -24,7 +24,7 @@ class AccountCreationTrackerController extends WikiaSpecialPageController {
 		$this->wg->Out->addScriptFile( $this->wg->ExtensionsPath . "/wikia/AccountCreationTracker/jquery.dataTables.min.js" );
 		
 		$this->response->addAsset('extensions/wikia/AccountCreationTracker/ACT.scss');
-		
+
 
 		$username = $this->getVal( 'username' );
 		$accounts = array();
@@ -41,7 +41,18 @@ class AccountCreationTrackerController extends WikiaSpecialPageController {
 					$userIds[] = $accountDetails['user']->getId();
 				}
 
-				$wikisCreated = count( $this->tracker->getWikisCreatedByUsers( $userIds ) );
+				$wikisCreated = $this->tracker->getWikisCreatedByUsers( $userIds );
+
+				// execute action if specified
+				switch( $this->getPar() ) {
+					case 'closewikis':
+						$this->actionCloseWikis( $wikisCreated );
+						break;
+					case 'block':
+						$this->actionBlockAccountGroup( $userId );
+						break;
+				}
+
 			}
 			else {
 				$this->setVal( 'usernameNotFound', true );
@@ -54,10 +65,10 @@ class AccountCreationTrackerController extends WikiaSpecialPageController {
 		$this->setVal( 'username', $username );
 		$this->setVal( 'accounts', $accounts );
 		$this->setVal( 'url_form', $title->getFullURL() );
-		$this->setVal( 'wikis_created', $wikisCreated );
+		$this->setVal( 'wikis_created', count( $wikisCreated ) );
 	}
 
-	public function blockAccountGroup( $groupId ) {
+	public function actionBlockAccountGroup( $groupId ) {
 		if ( !$this->wg->User->isAllowed( 'phalanx' ) ) {
 			$this->displayRestrictionError($this->user);
                         $this->skipRendering();
