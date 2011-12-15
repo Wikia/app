@@ -125,18 +125,19 @@ $(document).ready(function() {
 		oTableNukeList.fnDeleteRow(this);
 	});
 
+	function fnGetSelected( oTableLocal ) {
+		var aReturn = new Array();
+		var aTrs = oTableLocal.fnGetNodes();
+		for ( var i=0 ; i<aTrs.length ; i++ ) {
+			if ( $(aTrs[i]).hasClass('row_selected') ) {
+				aReturn.push( parseInt($('td:first-child',aTrs[i]).text()) );
+			}
+		}
+		return aReturn;
+	}
+
 	
 	$('#FetchContributions').click( function() {
-		function fnGetSelected( oTableLocal ) {
-			var aReturn = new Array();
-			var aTrs = oTableLocal.fnGetNodes();
-			for ( var i=0 ; i<aTrs.length ; i++ ) {
-				if ( $(aTrs[i]).hasClass('row_selected') ) {
-					aReturn.push( parseInt($('td:first-child',aTrs[i]).text()) );
-				}
-			}
-			return aReturn;
-		}
 		var sel = fnGetSelected( oTable );
 		if( sel.length == 0 ) {
 			$.showModal('Error', 'You need to select at least one user');
