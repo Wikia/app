@@ -5,19 +5,21 @@
  * @author Will Lee <wlee@wikia-inc.com>
  */
 class GamingCalendar {
-	private static $ENTRY_PREFIX = 'calendar-';
+	public static $CALENDAR_TYPES = array('gaming'=>'Gaming', 'ent'=>'Entertainment', 'music'=>'Music');
+	
+	public static $ENTRY_TITLE_MARKER = '* ';
+	public static $ENTRY_ATTRIBUTE_MARKER = '** ';
+	public static $ENTRY_SYSTEMS_MARKER = 'SYSTEMS:';
+	public static $ENTRY_PLATFORMS_MARKER = 'PLATFORMS: ';
+	public static $ENTRY_RATING_MARKER = 'RATING: ';
+	public static $ENTRY_DESCRIPTION_MARKER = 'DESCRIPTION:';
+	public static $ENTRY_IMAGE_MARKER = 'IMAGE:';
+	public static $ENTRY_MOREINFO_MARKER = 'MOREINFO:';
+	public static $ENTRY_PREORDER_MARKER = 'PREORDER:';
+	public static $ENTRY_ORDER_MARKER = 'ORDER:';
+	public static $ENTRY_PREFIX = 'calendar-';
 	private static $ENTRY_DATE_FORMAT = 'Ymd';
-	private static $ENTRY_TITLE_MARKER = '* ';
-	private static $ENTRY_ATTRIBUTE_MARKER = '** ';
-	private static $ENTRY_SYSTEMS_MARKER = 'SYSTEMS:';
-	private static $ENTRY_PLATFORMS_MARKER = 'PLATFORMS: ';
-	private static $ENTRY_RATING_MARKER = 'RATING: ';
-	private static $ENTRY_DESCRIPTION_MARKER = 'DESCRIPTION:';
-	private static $ENTRY_IMAGE_MARKER = 'IMAGE:';
-	private static $ENTRY_MOREINFO_MARKER = 'MOREINFO:';
-	private static $ENTRY_PREORDER_MARKER = 'PREORDER:';
-	private static $ENTRY_ORDER_MARKER = 'ORDER:';
-
+	
 	const CACHE_KEY = 'cal';
 	const CACHE_EXPIRY = 2700;
 
@@ -27,7 +29,7 @@ class GamingCalendar {
 	 * @param int $weeks Number of weeks to return
 	 * @return array of arrays of GamingCalendarEntry
 	 */
-	public static function loadEntries($offset = 0, $weeks = 2) {
+	public static function loadEntries($offset = 0, $weeks = 2, $type=null, $startts=null, $encodeInWeeks=true) {
 		global $wgMemc;
 
 		$oneDay = 86400;
@@ -35,8 +37,11 @@ class GamingCalendar {
 		$entries = array();
 		$week = 0;
 
+		if ($startts) {
+			$thisWeekStart = $startts;
+		}
 		// determine the start of the current week
-		if ( date( 'w' ) == 1 ) {
+		elseif ( date( 'w' ) == 1 ) {
 			$thisWeekStart = time();
 		} else {
 			$thisWeekStart = strtotime( 'last Monday' );
@@ -45,7 +50,7 @@ class GamingCalendar {
 		// adjust date if needed
 		$adjustedDate = $thisWeekStart + $offset * 7 * $oneDay;
 
-		$memcKey = wfMemcKey( self::CACHE_KEY, $adjustedDate, $weeks ); 
+		$memcKey = wfMemcKey( self::getCacheKey($type), $adjustedDate, $weeks, intval($encodeInWeeks) ); 
 		$entries = $wgMemc->get( $memcKey );
 		if ( !empty( $entries ) ) {
 			return $entries;
@@ -54,17 +59,29 @@ class GamingCalendar {
 		$date = $adjustedDate;
 
 		for ( $i = 1; $i <= ( 7 * $weeks ); $i++ ) {
-			// initialize week
-			if ( empty( $entries[$week] ) ) {
-				$entries[$week] = array( 0 => self::getWeekDescription( $date ) );
+			if ($encodeInWeeks) {
+				// initialize week
+				if ( empty( $entries[$week] ) ) {
+					$entries[$week] = array( 0 => self::getWeekDescription( $date ) );
+				}
+			}
+			else {
+				if ( !is_array( $entries ) ) {
+					$entries = array();
+				}
 			}
 
-			$msgKey = self::getEntryKey( $date );
+			$msgKey = self::getEntryKey( $type, $date );
 			$msg = wfMsgForContent($msgKey);
 			if (!wfEmptyMsg($msgKey, $msg)) {
 				$newEntries = self::parseMessageForEntries($msg, $date);
 				if (!empty($newEntries)) {
-					$entries[$week] = array_merge( $entries[$week], $newEntries );
+					if ($encodeInWeeks) {
+						$entries[$week] = array_merge( $entries[$week], $newEntries );
+					}
+					else {
+						$entries = array_merge($entries, $newEntries);
+					}
 				}
 			}
 
@@ -80,11 +97,27 @@ class GamingCalendar {
 		return $entries;
 	}
 	
-	private static function getCacheKey() {
+	public static function loadEntriesForDate($type, $timestamp) {
+		$entries = array();
+		
+		$msgKey = self::getEntryKey( $type, $timestamp );
+		$msg = wfMsgForContent($msgKey);
+		if (!wfEmptyMsg($msgKey, $msg)) {
+			$entries = self::parseMessageForEntries($msg, $timestamp);
+		}
+		
+		return $entries;
+		
+	}
+	
+	private static function getCacheKey($type=null) {
 		global $wgCityId;
 		
-		$catShort = WikiFactoryHub::getInstance()->getCategoryShort($wgCityId);
-		return $catShort . self::CACHE_KEY;
+		if (!$type) {
+			$type = WikiFactoryHub::getInstance()->getCategoryShort($wgCityId);			
+		}
+		
+		return $type . self::CACHE_KEY;
 	}
 		
 	/**
@@ -92,11 +125,14 @@ class GamingCalendar {
 	 * @param int $date Unix timestamp
 	 * @return string
 	 */
-	private static function getEntryKey($date) {
+	public static function getEntryKey($type, $date) {
 		global $wgCityId;
 		
-		$catShort = WikiFactoryHub::getInstance()->getCategoryShort($wgCityId);
-		return $catShort . self::$ENTRY_PREFIX . date(self::$ENTRY_DATE_FORMAT, $date);
+		if (!$type) {
+			$type = WikiFactoryHub::getInstance()->getCategoryShort($wgCityId);			
+		}
+
+		return $type . self::$ENTRY_PREFIX . date(self::$ENTRY_DATE_FORMAT, $date);
 	}
 
 	private static function getWeekDescription( $start ) {
