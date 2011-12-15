@@ -3,6 +3,7 @@
 class AccountCreationTrackerController extends WikiaSpecialPageController {
 	const TRACKING_COOKIE_NAME = 'ACT';
 	const TRACKING_COOKIE_TTL = 365; // in days
+	const CLOSE_WIKI_REASON = 'wiki closed via AccountTracker';
 
 	protected $tracker = null;
 
@@ -34,7 +35,13 @@ class AccountCreationTrackerController extends WikiaSpecialPageController {
 
 			if( !empty( $userId ) ) {
 				$accounts = $this->tracker->getAccountsByUser( $user );
-				$wikisCreated = count( $this->tracker->getWikisCreatedByUsers( $accounts ) );
+				$userIds = array();
+
+				foreach ( $accounts as $accountDetails ) {
+					$userIds[] = $accountDetails['user']->getId();
+				}
+
+				$wikisCreated = count( $this->tracker->getWikisCreatedByUsers( $userIds ) );
 			}
 			else {
 				$this->setVal( 'usernameNotFound', true );
@@ -79,6 +86,14 @@ class AccountCreationTrackerController extends WikiaSpecialPageController {
 		$status = PhalanxHelper::save( $data );
 
 		return $status;
+	}
+
+	function actionCloseWikis( Array $userIds ) {
+		$wikis = $this->tracker->getWikisCreatedByUsers( $userIds );
+
+		foreach ( $wikis as $id ) {
+			WikiFactory::disableWiki( $id, 0, self::CLOSE_WIKI_REASON );
+		}
 	}
 
 	public function renderContributions() {
