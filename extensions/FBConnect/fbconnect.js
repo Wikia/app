@@ -56,10 +56,11 @@ window.onFBloaded = function() {
 	// Initialize the library with the API key
 	FB.init({
 		appId : window.fbAppId,
+		oauth: true,
 		status : true, // Check login status
 		cookie : true, // Enable cookies to allow the server to access the session
 		xfbml  : window.fbUseMarkup, // Whether XFBML should be automatically parsed
-		channelUrl: channelUrl
+//		channelUrl: channelUrl //for now
 	});
 
 	// NOTE: Auth.login doesn't appear to work anymore.  The onlogin attribute of the fb:login-buttons is being used instead.
@@ -206,7 +207,7 @@ function openFbLogin() {
 		return true;
 	}
 */
-	FB.login(FB.bind(sendToConnectOnLogin, null), { perms : "publish_stream" });
+	FB.login(FB.bind(sendToConnectOnLogin, null), { scope : "publish_stream" });
 }
 
 /**
