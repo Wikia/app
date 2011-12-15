@@ -948,6 +948,76 @@ class WikiFactory {
 	}
 
 	/**
+	 * getLocalEnvURL
+	 *
+	 * return URL specific to current env
+	 * (production, preview, verify, devbox, sandbox)
+	 *
+	 * @access public
+	 * @author pbablok@wikia
+	 * @static
+	 *
+	 * @param string $url	general URL pointing to any server
+	 *
+	 * @return string	url pointing to local env
+	 */
+	
+	static public function getLocalEnvURL( $url ) {
+		// first - normalize URL
+		$regexp = '/^http:\/\/([^\/]+)\/(.*)$/';
+		if(preg_match( $regexp, $url, $groups ) === 0) {
+			// on fail at least return original url
+			return $url;
+		}
+		$server = $groups[1];
+		$address = $groups[2];
+		$devbox = '';
+		
+		// what do we use?
+		//  en.wikiname.wikia.com
+		//  wikiname.wikia.com
+		//  (preview/verify/sandbox).en.wikiname.wikia.com
+		//  (preview/verify/sandbox).wikiname.wikia.com
+		//  en.wikiname.developer.wikia-dev.com
+		//  wikiname.developer.wikia-dev.com
+		
+		$servers = array( 'preview.', 'sandboxs1.', 'verify.' );
+		foreach( $servers as $serv ) {
+			if( strpos( $server, $serv ) === 0 ) {
+				$server = substr( $server, strlen( $serv ) );
+			}
+		}
+		
+		$regexp = '/\.([^\.]+)\.wikia-dev\.com$/';
+		if(preg_match( $regexp, $server, $groups ) === 1) {
+			// devbox
+			$devbox = $groups[1];
+			$server = str_replace( '.' . $devbox . '.wikia-dev.com', '', $server );
+		} else {
+			$server = str_replace( '.wikia.com', '', $server );
+		}
+		
+		// put the addres back into shape and return
+		$servername = $_SERVER['SERVER_NAME'];
+		if( strpos( $servername, 'preview.' ) !== false ) {
+			return 'http://preview. ' . $server . '.wikia.com/'.$address; 
+		}
+		if( strpos( $servername, 'verify.' ) !== false ) {
+			return 'http://verify. ' . $server . '.wikia.com/'.$address; 
+		}
+		if( strpos( $servername, 'sandboxs1.' ) !== false ) {
+			return 'http://sandbox. ' . $server . '.wikia.com/'.$address; 
+		}
+		if( preg_match( $regexp, $servername, $groups ) === 1 ) {
+			return 'http://' . $server . '.' . $groups[1] . '.wikia-dev.com/'.$address; 
+		}
+
+		// by default return original address
+		return $url;
+		
+	}
+
+	 	/**
 	 * getWikiByID
 	 *
 	 * get wiki params from city_lists (shared database)

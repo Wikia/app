@@ -6,6 +6,19 @@ $highlight: mix($color-buttons, $color-page, 15%);
 @if $is-dark-wiki {
 	$highlight: mix($color-buttons, $color-page, 30%);
 }
+#WikiaMainContent {
+	ul {
+		list-style: none;
+		margin: 0;
+		li {
+			margin: 0;
+		}
+	}
+	fieldset {
+		margin: 0;
+		padding: 10px;
+	}
+}
 #WikiaMainContent .dataTables_wrapper {
 	min-height: 0;
 	color: $color-text;
@@ -49,11 +62,21 @@ $highlight: mix($color-buttons, $color-page, 15%);
 			}
 		}
 	}
-	.dataTables_paginate { float: none; text-align: left; }
+	.dataTables_paginate {
+		display: inline;
+		float: none;
+		text-align: center;
+	}
 	.dataTables_processing {
 		display: block;
 		float: none;
 		position: static;
+	}
+	.dataTables_info {
+		display: inline-block;
+		margin: 0 20px;
+		float: none;
+		width: auto;
 	}
 	.wikitable { margin: 0 !important; }
 	#PagesToNukeDT tr:hover td { text-decoration:line-through; }

@@ -6,18 +6,20 @@
 		<label for="act-username"><?= wfMsg( 'act-enter-username' ); ?></label>
 		<input type="text" id="act-username" name="username" value="<?= $username; ?>" />
 		<input type="submit" class="wikia-button" id="act-search-btn" value="<?= wfMsg( 'act-search' ); ?>" />
+		<?php if( count( $accounts ) > 0 ): ?>
+			<div>
+			<?= wfMsg( 'act-actions-for-all-accounts' ); ?>:
+			<ul>
+				<li><a class="wikia-button" href="/wiki/Special:Tracker/block?username=<?= urlencode( $username ) ?>">Block users</a></li>
+				<li><a class="wikia-button" href="/wiki/Special:Tracker/closewikis?username=<?= urlencode( $username ) ?>">Close wikis</a> (<?= $wikis_created ?> total)</li>
+			</ul>
+			</div>
+		<?php endif; ?>
 	</fieldset>
 </form>
 
 <?php if( count( $accounts ) > 0 ): ?>
-<form>
-	<fieldset>
-		<ul>
-			<li><a class="wikia-button" href="/wiki/Special:Tracker/block?username=<?= urlencode( $username ) ?>">Block users</a></li>
-			<li><a class="wikia-button" href="/wiki/Special:Tracker/closewikis?username=<?= urlencode( $username ) ?>">Close wikis</a> (<?= $wikis_created ?> total)</li>
-	</fieldset>
-</form>
-
+	<br />
 	<strong><?= wfMsg( 'act-list-of-accounts', array( count($accounts) ) ); ?></strong>
 	<div style="display: table-cell">
 	<table id="TrackedUsers">
@@ -44,7 +46,7 @@
 	<br /><br />
 	<div id="UserContributions"></div>
 	<br /><br />
-	<div id="PagesToNuke"><?= wfMsg( 'act-pages-to-nuke-rollback' ); ?>:
+	<div id="PagesToNuke" style="display: none;"><?= wfMsg( 'act-pages-to-nuke-rollback' ); ?>:
 		<table id="PagesToNukeDT">
 			<thead>
 				<tr>

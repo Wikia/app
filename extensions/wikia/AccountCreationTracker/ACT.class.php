@@ -143,5 +143,79 @@ class AccountCreationTracker extends WikiaObject {
 
 		return $wikis;
 	}
+	
+	public function rollbackPage( $article, $user_name, $summary, &$messages = '' ) {
+		global $wgUser;
+		
+		// build article object and find article id
+		$a = $article;
+		$pageId = $a->getID();
+		
+		// check if article exists
+		if ( $pageId <= 0 ) {
+			$messages = 'page not found';
+			return false;
+		}
+		
+		// fetch revisions from this article
+		$dbw = wfGetDB( DB_MASTER );
+		$res = $dbw->select(
+			'revision',
+			array( 'rev_id', 'rev_user_text', 'rev_timestamp' ),
+			array(
+				'rev_page' => $pageId,
+			),
+			__METHOD__,
+			array(
+				'ORDER BY' => 'rev_id DESC',
+			)
+		);
+		
+		// find the newest edit done by other user
+		$revertRevId = false;
+		while ( $row = $dbw->fetchObject($res) ) {
+			if ( $row->rev_user_text != $user_name ) {
+				$revertRevId = $row->rev_id;
+				break;
+			} 
+		}
+		$dbw->freeResult($res);
+		
+		
+		if ($revertRevId) { // found an edit by other user - reverting
+			$rev = Revision::newFromId($revertRevId);
+			$text = $rev->getRawText();
+			$status = $a->doEdit( $text, $summary, EDIT_UPDATE|EDIT_MINOR|EDIT_FORCE_BOT );
+			if ($status->isOK()) {
+				$messages = 'reverted';
+				return true;
+			} else {
+				$messages = "edit errors: " . implode(', ',$status->getErrorsArray());
+			}
+		} else { // no edits by other users - deleting page
+			$errorDelete = '';
+			$status = $this->deleteArticle( $a, $summary, false, $errorDelete );
+			if ($status) {
+				$messages = 'deleted';
+				return true;
+			} else {
+				$messages = "delete errors: " . $errorDelete;
+			}
+		}
+		return false;
+	}
+
+	private function deleteArticle( $article, $reason, $suppress = false, &$error = '' ) {
+		global $wgOut, $wgUser;
+		$id = $article->getTitle()->getArticleID( GAID_FOR_UPDATE );
+
+		if ( wfRunHooks( 'ArticleDelete', array( &$article, &$wgUser, &$reason, &$error ) ) ) {
+			if ( $article->doDeleteArticle( $reason, $suppress, $id ) ) {
+				wfRunHooks( 'ArticleDeleteComplete', array( &$article, &$wgUser, $reason, $id ) );
+				return true;
+			}
+		}
+		return false;
+	}
 
 }
