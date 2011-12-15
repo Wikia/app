@@ -209,8 +209,49 @@ $(document).ready(function() {
 		
 		$('#PagesToNuke').show();
 		
+		
 	});
 
+	var interval = null;
+	var interval_i = 0;
+	var interval_in_progress = 0;
+	$('#NukeRollback').click( function() {
+		$('#NukeRollback').attr('disabled','disabled');
+		
+		var aReturn = new Array();
+		var aTrs = oTableNukeList.fnGetNodes();
+		
+		interval_i = 0;
+		interval_in_progress = 0;
+		interval = setInterval( function() {
+			var current_i = interval_i++;
+			if( current_i >= aTrs.length ) {
+				window.clearInterval(interval);
+				$('#NukeRollback').removeAttr('disabled');
+				return;
+			}
+			var link = oTableNukeList.fnGetData( current_i )[0];
+
+			$().log( link );
+
+			$.ajax({
+				url: link,
+				success: function(data) {
+					var result = $.parseJSON( data );
+					if( 'msg' in result ) {
+						$('td:eq(4)',aTrs[current_i]).text(result['msg']);
+					} else {
+						$('td:eq(4)',aTrs[current_i]).text('error');
+					}
+				},
+				error: function(jqXHR, textStatus, errorThrown) {
+					$('td:eq(4)',aTrs[current_i]).text('error');
+				}
+			});
+			
+		}, 500);
+			
+	});
 	
 });
 
