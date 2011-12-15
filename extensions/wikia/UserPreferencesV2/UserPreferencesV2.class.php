@@ -77,6 +77,7 @@ class UserPreferencesV2 {
 		if (in_array("autoconfirmed", $wgUser->getEffectiveGroups()) || $wgUser->isEmailConfirmed()) {
 			$defaultPreferences['watchdeletion']['section'] = 'emailv2/followed-pages-iv2';
 			$defaultPreferences['watchdeletion']['label-message'] = 'preferences-v2-watchdeletion';
+			$defaultPreferences['watchdeletion']['type'] = 'toggle';
 		}
 		$defaultPreferences['watchcreations']['section'] = 'emailv2/followed-pages-iv2';
 		$defaultPreferences['watchcreations']['label-message'] = 'preferences-v2-watchcreations';
