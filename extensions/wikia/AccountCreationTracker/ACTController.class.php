@@ -66,6 +66,7 @@ class AccountCreationTrackerController extends WikiaSpecialPageController {
 		$this->setVal( 'accounts', $accounts );
 		$this->setVal( 'url_form', $title->getFullURL() );
 		$this->setVal( 'wikis_created', count( $wikisCreated ) );
+		
 	}
 
 	public function actionBlockAccountGroup( $groupId ) {

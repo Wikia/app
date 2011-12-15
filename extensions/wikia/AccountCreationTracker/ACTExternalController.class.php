@@ -7,24 +7,59 @@ class AccountCreationTrackerExternalController extends WikiaSpecialPageControlle
 	protected function getDb( $type = DB_SLAVE ) {
 		return $this->wf->getDb( $type, "stats", $this->wg->StatsDB );
 	}
+	
+	private function returnError( $error ) {
+		$output = array( 'status' => 'ERROR', 'msg'=>$error );
+		echo json_encode( $output );
+		$this->skipRendering();
+		return false;
+	}
 
 	public function nukeContribs() {
+		global $wgSharedDB;
+
 		$user_id = intval($_GET['user_id']);
 		$wiki_id = intval($_GET['wiki_id']);
 		$page_id = intval($_GET['page_id']);
 		
+
+		if( empty($wgSharedDB) ) {
+			return $this->returnError( 'Non-shared Users DB, cannot continue' );
+		}
+
+		if(!$user_id || !$wiki_id || !$page_id) {
+			return $this->returnError( 'Wrong parameters' );
+		}
+		
 		if($wiki_id != $this->wg->CityId) {
 			// can only process local requests
-			$this->skipRendering();
-			return false;
+			return $this->returnError( 'Wrong wiki id' );
 		}
 		
 		if(!$this->wg->User->isAllowed('rollbacknuke')) {
 			// doesn't have permissions
-			$this->skipRendering();
-			return false;
+			return $this->returnError( 'No permissions to execute action' );
 		}
 		
+		$user = User::newFromId( $user_id );
+		if( !($user instanceof User) ) {
+			return $this->returnError ( 'Unable to create User obj with ID specified' );
+		} 
+		
+		$article = Article::newFromID( $page_id );
+		if( !($article instanceof Article) ) {
+			return $this->returnError ( 'Article does not exist' );
+		}
+		
+		$msg = '';
+		$act = AccountCreationTracker();
+		$ret = $act->rollbackPage( $article, $user->getName(), 'mass rollback', $msg);
+		
+		$status = $ret ? 'OK' : 'ERROR';
+		$output = array( 'status' => $status, 'msg'=>$msg );
+		echo json_encode( $output );
+		$this->skipRendering();
+		return false;		
 	}
 
 		
@@ -86,7 +121,8 @@ class AccountCreationTrackerExternalController extends WikiaSpecialPageControlle
 
 			if ( is_object( $wiki ) && $wiki->city_public != 0 ) {
 				$wikiSitename = WikiFactory::getVarValueByName( 'wgSitename', $row['wiki_id'] );
-				$wikiLink = Xml::element( 'a', array( 'class'=>'wiki_name', 'href' => $wiki->city_url ), $wikiSitename );
+				$url = WikiFactory::getLocalEnvURL( $wiki->city_url );
+				$wikiLink = Xml::element( 'a', array( 'class'=>'wiki_name', 'href' => $url ), $wikiSitename );
 				$row['wiki_id'] = $wikiLink . Xml::element( 'span', array( 'class'=>'wiki_id' ), $row['wiki_id'] );
 
 				if ( !empty( $row['user_id'] ) ) {
