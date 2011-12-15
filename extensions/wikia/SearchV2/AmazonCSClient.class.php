@@ -12,14 +12,19 @@ class AmazonCSClient extends WikiaSearchClient {
 		$this->httpProxy = $httpProxy;
 	}
 
-	public function search( $query, $start, $size ) {
+	public function search( $query, $start, $size, $cityId = 0 ) {
 		$params = array(
 			'q' => $query,
 			'rank' => $this->rankName,
 			'start' => $start,
 			'size' => $size,
-			'return-fields' => 'title,url,text'
+			'return-fields' => 'title,url,text,canonical'
 		);
+		if( !empty( $cityId ) ) {
+			// inter-wiki search
+			$params['bq'] = "cityid:$cityId";
+		}
+
 		list($responseCode, $response) = $this->apiCall( $this->searchEndpoint, $params );
 
 		if($responseCode == 200) {
@@ -29,10 +34,6 @@ class AmazonCSClient extends WikiaSearchClient {
 		else {
 			throw new WikiaException('Search Failed: ' . $response);
 		}
-		//var_dump( $responseCode );
-		//echo "<pre>";
-		//var_dump( json_decode($response) );
-		//exit;
 	}
 
 	private function apiCall( $url, $params = array()) {

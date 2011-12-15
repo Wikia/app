@@ -14,19 +14,22 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	public function index() {
 			$this->wg->Out->addHTML( F::build('JSSnippets')->addToStack( array( "/extensions/wikia/SearchV2/WikiaSearch.js" ), array(), 'WikiaSearchV2.init' ) );
 
+		/*
 		if( !in_array( 'staff', $this->wg->User->getEffectiveGroups() ) ) {
 			$this->displayRestrictionError($this->user);
 			$this->skipRendering();
 			return false;
 		}
+		*/
 
 		$query = $this->getVal('query');
 		$start = $this->getVal('start', 0);
+		$crossWikia = $this->getVal('crossWikia', false);
 
 		$results = false;
 		$paginationLinks = '';
 		if( !empty( $query ) ) {
-			$results = $this->wikiaSearch->doSearch( $query, $start, self::RESULTS_PER_PAGE );
+			$results = $this->wikiaSearch->doSearch( $query, $start, self::RESULTS_PER_PAGE, ( $crossWikia ? 0 : $this->wg->CityId ) );
 			if(!empty($results->found)) {
 				$paginationLinks = $this->sendSelfRequest( 'pagination', array( 'query' => $query, 'start' => $start, 'count' => $results->found ) );
 			}
@@ -37,6 +40,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'query', $query );
 		$this->setVal( 'resultsPerPage', self::RESULTS_PER_PAGE );
 		$this->setVal( 'pageUrl', $this->wg->Title->getFullUrl() );
+		$this->setVal( 'crossWikia', $crossWikia );
 	}
 
 	public function pagination() {
