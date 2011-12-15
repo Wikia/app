@@ -13,9 +13,8 @@
 <form>
 	<fieldset>
 		<ul>
-			<li><a href="/wiki/Special:Tracker/block?target=<?= urlencode( $username ) ?>">Block users</a></li>
-			<li><a href="/wiki/Special:Tracker/closewikis?target=<?= urlencode( $username ) ?>">Close wikis</a> (<?= $wikis_created ?> total)</li>
-			<li><a href="/wiki/Special:Tracker/nuke?target=<?= urlencode( $username ) ?>">Nuke edits</a></li>
+			<li><a class="wikia-button" href="/wiki/Special:Tracker/block?username=<?= urlencode( $username ) ?>">Block users</a></li>
+			<li><a class="wikia-button" href="/wiki/Special:Tracker/closewikis?username=<?= urlencode( $username ) ?>">Close wikis</a> (<?= $wikis_created ?> total)</li>
 	</fieldset>
 </form>
 
