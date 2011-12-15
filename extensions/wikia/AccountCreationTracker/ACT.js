@@ -232,8 +232,6 @@ $(document).ready(function() {
 			}
 			var link = oTableNukeList.fnGetData( current_i )[0];
 
-			$().log( link );
-
 			$.ajax({
 				url: link,
 				success: function(data) {
