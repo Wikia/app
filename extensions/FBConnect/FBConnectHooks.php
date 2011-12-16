@@ -249,7 +249,6 @@ HTML;
 	 */
 	public static function MakeGlobalVariablesScript( &$vars ) {
 		global $wgTitle, $fbScript, $fbAppId, $fbUseMarkup, $fbLogo, $wgRequest, $wgLang;
-
 		$thisurl = $wgTitle->getPrefixedURL();
 		$vars['fbAppId'] = $fbAppId;
 		$vars['fbScript'] = $fbScript;

@@ -60,7 +60,7 @@ window.onFBloaded = function() {
 		status : true, // Check login status
 		cookie : true, // Enable cookies to allow the server to access the session
 		xfbml  : window.fbUseMarkup, // Whether XFBML should be automatically parsed
-//		channelUrl: channelUrl //for now
+		channelUrl: channelUrl //for now
 	});
 
 	// NOTE: Auth.login doesn't appear to work anymore.  The onlogin attribute of the fb:login-buttons is being used instead.
