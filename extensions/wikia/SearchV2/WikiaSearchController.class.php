@@ -41,6 +41,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'resultsPerPage', self::RESULTS_PER_PAGE );
 		$this->setVal( 'pageUrl', $this->wg->Title->getFullUrl() );
 		$this->setVal( 'crossWikia', $crossWikia );
+
+		$this->setVal( 'debug', $this->getVal('debug', false) );
 	}
 
 	public function pagination() {
