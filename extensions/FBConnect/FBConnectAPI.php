@@ -48,7 +48,12 @@ class FBConnectAPI {
 		global $fbAppId, $fbAppSecret;
 		// Construct a new Facebook object on first time access
 		if ( is_null(self::$__Facebook) && self::isConfigSetup() ) {
-			self::$__Facebook = F::build('Facebook', array($fbAppId, $fbAppSecret));
+			self::$__Facebook = F::build('Facebook3', array(array(
+				'appId'  =>  $fbAppId, 
+				'secret' => $fbAppSecret
+			)));
+			
+			self::$__Facebook->api_client = F::build('FacebookRestClient', array($fbAppId, $fbAppSecret, null));
 			//Facebook( $fbAppId, $fbAppSecret );
 			if (!self::$__Facebook) {
 				error_log('Could not create facebook client.');
@@ -65,6 +70,7 @@ class FBConnectAPI {
 	 */
 	public static function isConfigSetup() {
 		$fbAppId = F::app()->getGlobal('fbAppId');
+
 		$fbAppSecret = F::app()->getGlobal('fbAppSecret');
 		
 		$isSetup = isset($fbAppId) && $fbAppId != 'YOUR_APP_KEY' &&
@@ -75,7 +81,6 @@ class FBConnectAPI {
 			$fbApiSecret = F::app()->getGlobal('fbApiSecret');
 
 			if (isset($fbApiKey) && isset($fbApiSecret)) {
-				F::app()->setGlobal('fbAppId', $fbApiKey);
 				F::app()->setGlobal('fbAppSecret', $fbApiSecret);
 				$isSetup = true;
 				
@@ -83,6 +88,8 @@ class FBConnectAPI {
 				error_log('Please update the $fbAppId in config.php');
 			}
 		}
+		
+
 		return $isSetup;
 	}
 	
@@ -91,7 +98,7 @@ class FBConnectAPI {
 	 * then an ID of 0 is returned.
 	 */
 	public function user() {
-		return $this->Facebook()->get_loggedin_user();
+		return $this->Facebook()->getUser();
 	}
 	
 	/**
@@ -101,6 +108,8 @@ class FBConnectAPI {
 		if ($user == 0) {
 			$user = $this->user();
 		}
+		
+		
 		if ($user != 0 && !isset($userinfo[$user]) )
 		{
 			try {

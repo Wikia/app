@@ -962,6 +962,7 @@ class SpecialConnect extends SpecialPage {
 		$fb_user = $fb->user();
 		
 		$error =  json_encode(array("status" => "error") );
+		
 		if (empty($fb_user)) {
 			$response->addText($error);
 			return $response;	
