@@ -53,7 +53,7 @@
 		</form>
 
 		<div class="preview">
-			<span>Preview</span>
+			<span><?= wfMsg( 'themedesigner-wodmark-preview' ) ?></span>
 			<img src="<?= $wgBlankImgUrl ?>" class="wordmark">
 			<a href="#"><?= wfMsg('themedesigner-dont-use-a-graphic') ?></a>
 		</div>
@@ -71,7 +71,7 @@
 		</form>
 		
 		<div class="preview">
-			<span>Preview</span>
+			<span><?= wfMsg('themedesigner-wodmark-preview') ?></span>
 			<img src="<?= $faviconUrl ?>">
 			<a href="#"><?= wfMsg('themedesigner-dont-use-a-graphic') ?></a>
 		</div>

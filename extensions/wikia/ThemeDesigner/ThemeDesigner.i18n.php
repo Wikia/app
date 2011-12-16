@@ -55,7 +55,8 @@ $messages['en'] = array(
 	'themedesigner-type-error' => 'Incorrect file type',
 	'themedesugber-uknown-error' => 'An error has occurred, unfortunately we were not able to identify it, please try again',
 	'themedesigner-manual-upload-error' => 'Use Theme Designer to upload wordmark or wiki background',
-        'themedesigner-favicon-heading' => 'Favicon'
+        'themedesigner-favicon-heading' => 'Favicon',
+	'themedesigner-wodmark-preview' => 'Preview',
 );
 
 /** Message documentation (Message documentation)
