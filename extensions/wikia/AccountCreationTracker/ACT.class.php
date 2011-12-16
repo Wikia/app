@@ -58,10 +58,17 @@ class AccountCreationTracker extends WikiaObject {
 			if( $nuser->getId() && !isset($results_user_set[ $nuser->getId() ]) ) {
 				$results_user_set[ $nuser->getId() ] = true;
 				$results_hash_set[ $row->utr_user_hash ] = true;
+				$connection = 90;
+				$reason = self::getTrackingDisplay($row->utr_source);
+				if( $nuser->getId() == $user->getId() ) {
+					$connection = 100;
+					$reason = 'Search';
+				}
 				$results[] = array(
 					'user'=>$nuser,
-					'reason'=>self::getTrackingDisplay($row->utr_source),
-					'from'=>$user
+					'reason'=>$reason,
+					'from'=>$user,
+					'connection'=>$connection
 				);
 			}
 		}
@@ -94,7 +101,8 @@ class AccountCreationTracker extends WikiaObject {
 						$results[] = array(
 							'user'=>$nuser,
 							'reason'=>self::getTrackingDisplay($row->utr_source),
-							'from'=>$fuser
+							'from'=>$fuser,
+							'connection'=>60
 						);
 					}
 				}
@@ -105,8 +113,9 @@ class AccountCreationTracker extends WikiaObject {
 		if( count($results) == 0) {
 			$results[] = array(
 				'user'=>$user,
-				'reason'=>"search",
-				'from'=>$user
+				'reason'=>"Search",
+				'from'=>$user,
+				'connection'=>100
 			);
 		}
 

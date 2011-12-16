@@ -24,18 +24,22 @@
 	<div style="display: table-cell">
 	<table id="TrackedUsers">
 		<thead>
+			<th></th>
 			<th>ID</th>
 			<th>Username</th>
 			<th>Connected by</th>
 			<th>Connected with</th>
+			<th>Connection</th>
 		</thead>
 		<tbody>
 		<?php foreach( $accounts as $account ): ?>
 			<tr>
+				<td><input type="checkbox" /></td>
 				<td><?= $account['user']->getId(); ?></td>
 				<td><?= $account['user']->getName(); ?></td>
 				<td><?= $account['reason']; ?></td>
 				<td><?= $account['from']->getName(); ?></td>
+				<td><?= $account['connection']; ?></td>
 			</tr>
 		<?php endforeach; ?>
 		</tbody>

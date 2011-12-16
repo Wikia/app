@@ -1,4 +1,5 @@
 $(document).ready(function() {
+	$('#TrackedUsers input[type=checkbox]').removeAttr('checked');
 	var oCache = {
 		iCacheLower: -1
 	};
@@ -92,8 +93,10 @@ $(document).ready(function() {
 	$('table#TrackedUsers tbody tr').click( function() {
 		if ( $(this).hasClass('row_selected') ) {
 			$(this).removeClass('row_selected');
+			$('input',this).removeAttr('checked');
 		} else {
 			$(this).addClass('row_selected');
+			$('input',this).attr('checked','checked');
 		}
 	} );
 	var oTable = $('table#TrackedUsers').dataTable({
@@ -102,6 +105,7 @@ $(document).ready(function() {
 		"bFilter": false,
 		"bSort": true,
 		"bInfo": false,
+		"aaSorting": [[5,'desc']],
 		"bAutoWidth": false
 	});
 	
@@ -130,7 +134,7 @@ $(document).ready(function() {
 		var aTrs = oTableLocal.fnGetNodes();
 		for ( var i=0 ; i<aTrs.length ; i++ ) {
 			if ( $(aTrs[i]).hasClass('row_selected') ) {
-				aReturn.push( parseInt($('td:first-child',aTrs[i]).text()) );
+				aReturn.push( parseInt($('td:eq(1)',aTrs[i]).text()) );
 			}
 		}
 		return aReturn;
@@ -204,6 +208,11 @@ $(document).ready(function() {
 			nuke_url += '&page_id=' + page_id;
 			if(user_id) {
 				oTableNukeList.fnAddData([nuke_url,user_name,wiki_name,page_name,'---']);
+				if(typeof $(this).data('tooltip-options') === 'undefined'){
+					$(this).wikiaTooltip('Added page to NukeList (below)', {side: 'bottom', align: 'center'});
+					$(this).unbind('mouseenter.wikiaTooltip');
+				}
+				jQuery.__wikiaTooltipOnMouseEnter.call(this);
 			}
 		});
 		
