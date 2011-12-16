@@ -97,7 +97,7 @@ class PBLoginForm extends LoginForm {
 			return ;
 		}
 		
-		if (  $u->getId()  == 0 ) {
+		if ( !is_object( $u ) || $u->getId()  == 0 ) {
 			$this->mainLoginForm( wfMsg( 'piggyback-nosuchuser', htmlspecialchars( $this->mOtherName ) ) );
 			return ;
 		}
