@@ -59,7 +59,7 @@ class UserBlock {
 				'block' => false,
 				'return' => $ret,
 			);
-			$wgMemc->set( self::getCacheKey(), $cachedState );
+			$wgMemc->set( self::getCacheKey( $user ), $cachedState );
 		}
 
 		wfProfileOut( __METHOD__ );
