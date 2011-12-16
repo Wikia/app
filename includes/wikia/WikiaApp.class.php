@@ -62,21 +62,21 @@ class WikiaApp {
 	 */
 	public function __construct(WikiaGlobalRegistry $globalRegistry = null, WikiaLocalRegistry $localRegistry = null, WikiaHookDispatcher $hookDispatcher = null, WikiaFunctionWrapper $functionWrapper = null) {
 
-		if(is_null($globalRegistry)) {
+		if(!is_object($globalRegistry)) {
 			$globalRegistry = F::build('WikiaGlobalRegistry');
 		}
 		
-		if(is_null($localRegistry)) {
+		if(!is_object($localRegistry)) {
 			F::setInstance('WikiaLocalRegistry', new WikiaLocalRegistry());
 			$localRegistry = F::build('WikiaLocalRegistry');
 		}
 		
-		if(is_null($hookDispatcher)) {
+		if(!is_object($hookDispatcher)) {
 			F::setInstance('WikiaHookDispatcher', new WikiaHookDispatcher());
 			$hookDispatcher = F::build( 'WikiaHookDispatcher' );
 		}
 		
-		if(is_null($functionWrapper)) {
+		if(!is_object($functionWrapper)) {
 			$functionWrapper = F::build( 'WikiaFunctionWrapper' );
 		}
 
