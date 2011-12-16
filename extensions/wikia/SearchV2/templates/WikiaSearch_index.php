@@ -9,6 +9,13 @@
 		<strong>Search results:</strong>&nbsp;<strong><?= $results->start; ?> - <?= (($results->start+$resultsPerPage) < $results->found) ? ($results->start+$resultsPerPage) : $results->found; ?></strong> of <strong><?= $results->found; ?></strong> document(s)<br />
 		<?= $paginationLinks; ?>
 		<?php foreach( $results->hit as $hit ): ?>
+<?php
+if( $debug ) {
+echo "<pre>";
+var_dump($hit);
+exit;
+}
+?>
 			<?php if(isset($hit->data->canonical)): ?>
 				<strong><a href="<?= $hit->data->url; ?>"><?=$hit->data->title;?></a></strong> (Redirect: <?=$hit->data->canonical;?>)<br />
 			<?php else: ?>

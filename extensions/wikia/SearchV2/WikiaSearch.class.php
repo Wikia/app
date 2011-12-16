@@ -82,7 +82,7 @@ class WikiaSearch extends WikiaObject {
 			'bltitle' => $page->getTitle(),
 			'action' => 'query',
 			'list' => 'backlinks',
-			'bllimit' => 300
+			'bllimit' => 600
 		));
 
 		if( is_array( $data['query']['backlinks'] ) ) {
