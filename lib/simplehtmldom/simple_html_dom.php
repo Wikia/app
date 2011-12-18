@@ -834,9 +834,14 @@ class simple_html_dom {
         $this->remove_noise("'<\s*(?:code)[^>]*>(.*?)<\s*/\s*(?:code)\s*>'is");
         // strip out server side scripts
         $this->remove_noise("'(<\?)(.*?)(\?>)'s", true);
+		/*
+		 * Wikia Change by tomek
+		 * https://wikia.fogbugz.com/default.asp?8323
+		 * we don't need to remove smarty scripts
+		 */
         // strip smarty scripts
-        $this->remove_noise("'(\{\w)(.*?)(\})'s", true);
-
+        //$this->remove_noise("'(\{\w)(.*?)(\})'s", true);
+        
         // parsing
         while ($this->parse());
         // end
