@@ -21,7 +21,7 @@ $messages['en'] = array(
 	'places-geolocation-modal-add-title' => 'Add location',
 	'places-geolocation-modal-error-title' => 'Error',
 	'places-geolocation-modal-error' => 'There was an error while trying to determine your position:<br />$1',
-	'places-geolocation-modal-not-available' => 'Ooops! This feature is currently available only on mobile devices.<br /><br />Want to give it a try? Just visit this page using your mobile device of choice.',
+	'places-geolocation-modal-not-available' => 'Oops! This feature is currently available only on mobile devices.<br /><br />Want to give it a try? Just visit this page using your mobile device of choice.',
 
 	'places-error-no-article' => 'You have to specify an article',
 	'places-error-place-already-exists' => 'Article is already geo tagged',
