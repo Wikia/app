@@ -2917,7 +2917,12 @@ var WikiaPhotoGallery = {
 				if (imageData.recentlyUploaded) {
 					continue;
 				}
-
+                                
+                                // skip if empty or corrupted data
+                                if ( typeof imageData.name == 'undefined' ) {
+                                    continue;
+                                }
+                                
 				HTML += imageData.name;
 				if (imageData.caption != '') {
 					HTML += '|' + imageData.caption;
