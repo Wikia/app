@@ -352,6 +352,7 @@ class WikiaApiLyricwiki extends ApiBase {
 			print "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 			$result = array("songOfTheDay" => $result);
 			$this->dumpXML($result);
+			break;
 		case "text":
 // TODO: IMPLEMENT
 // TODO: IMPLEMENT
