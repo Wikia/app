@@ -487,10 +487,11 @@ $messages['ia'] = array(
 
 /** Indonesian (Bahasa Indonesia)
  * @author Aldnonymous
+ * @author De.crown
  */
 $messages['id'] = array(
-	'admindashboard-title' => '{{SITENAME}} Dashboard',
-	'admindashboard-header' => 'Admin Dashboard',
+	'admindashboard-title' => '{{SITENAME}} Dasbor',
+	'admindashboard-header' => 'Admin Dasbor',
 	'admindashboard-toolbar-link' => 'Pengurus',
 	'admindashboard-tab-advanced' => 'Tingkat lanjut',
 	'admindashboard-tab-general' => 'Umum',
@@ -824,8 +825,8 @@ $messages['pl'] = array(
 	'admindashboard-control-top-navigation-tooltip' => 'Główna nawigacja pozwala dostosować menu na górze Twojej wiki.',
 	'admindashboard-control-wikia-labs-label' => 'Wikia Labs',
 	'admindashboard-control-wikia-labs-tooltip' => 'Wikia Labs pozwala przetestować beta funkcje na Twojej wiki jako jeden z pierwszych.',
-	'admindashboard-control-wiki-features-label' => 'Wiki - funkcje',
-	'admindashboard-control-wiki-features-tooltip' => 'Wiki - funkcje pozwalają na włączenie dodatkowych opcji na Twojej wiki.',
+	'admindashboard-control-wiki-features-label' => 'Rozszerzenia Wiki',
+	'admindashboard-control-wiki-features-tooltip' => 'Rozszerzenia Wiki pozwalają na włączenie dodatkowych opcji na Twojej wiki.',
 	'admindashboard-control-page-layout-builder-label' => 'Kreator kompozycji strony',
 	'admindashboard-control-page-layout-builder-tooltip' => 'Kreator kompozycji strony pozwala stworzyć szablonowy układ stron dla użytkowników tworzących nowy artykuł.',
 	'admindashboard-controls-community-header' => 'Społeczność',
@@ -1067,6 +1068,19 @@ $messages['tt-cyrl'] = array(
 	'admindashboard-control-help-tooltip' => 'Ярдәм табарга',
 	'admindashboard-controls-content-header' => 'Вики эчтәлеге',
 	'admindashboard-control-community-corner-label' => 'Җәмгыять үзәге',
+);
+
+/** Veps (Vepsän kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'admindashboard-toolbar-link' => 'Admin',
+	'admindashboard-controls-wiki-header' => 'Wiki',
+	'admindashboard-control-theme-designer-label' => 'Temiden dizainer',
+	'admindashboard-controls-community-header' => 'Sebr',
+	'admindashboard-control-invite-label' => 'Kucta',
+	'admindashboard-control-help-label' => 'Abu',
+	'admindashboard-control-help-tooltip' => 'Löuta abud',
 );
 
 /** Vietnamese (Tiếng Việt)

@@ -5087,7 +5087,7 @@ $messages['sv'] = array(
 	'wikiaPhotoGallery-error-outdated' => 'Detta galleri har redigerats medan du tittat på sidan. 
 Vänligen uppdatera sidan och försök igen.',
 	'wikiaPhotoGallery-error-user-rights' => 'Användarrättighetersfel.',
-	'wikiaPhotoGallery-upload-title' => 'Hitta & Ladda Upp Bild',
+	'wikiaPhotoGallery-upload-title' => 'Hitta & Ladda upp bild',
 	'wikiaPhotoGallery-upload-info-choose-list' => "'''ELLER''' välj:",
 	'wikiaPhotoGallery-upload-info-images-label' => 'bilder från denna sida',
 	'wikiaPhotoGallery-upload-info-upload' => "'''Antingen''' laddar du upp en bild från din dator",

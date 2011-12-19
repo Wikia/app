@@ -165,9 +165,11 @@ $messages['no'] = array(
 
 /** Polish (Polski)
  * @author Cloudissimo
+ * @author Sovq
  */
 $messages['pl'] = array(
 	'skinchooser-desc' => 'Pozwala użytkownikom wybrać skórkę w swoich preferencjach',
+	'skinchooser-customcss' => 'Aby zdefiniować niestandardową skórkę, wybierz opcję powyżej i dodaj swój kod CSS do [[MediaWiki:Monaco.css]].',
 	'new-look' => 'Nowy wygląd Wikii',
 	'site-layout' => 'Skórka',
 );

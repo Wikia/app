@@ -662,6 +662,7 @@ $messages['bjn'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
  */
@@ -753,7 +754,7 @@ $messages['br'] = array(
 	'awc-metrics-active' => 'oberiant',
 	'awc-metrics-closed' => 'serret',
 	'awc-metrics-redirected' => 'Klozet hag adkaset',
-	'awc-metrics-removed' => 'dilammet',
+	'awc-metrics-removed' => 'dilamet',
 	'awc-metrics-hubs' => 'Wikioù nevez (dre viz)',
 	'awc-metrics-news-day' => 'Wikioù nevez (dre zeiz)',
 	'awc-metrics-sum-month' => 'Kont (dre viz)',

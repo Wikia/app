@@ -1684,6 +1684,13 @@ vaší uživatelskou stránku!',
 	'achievements-userprofile-ranked' => '[[Special:Leaderboard|Hodnocení #$1]]<br />na této wiki',
 );
 
+/** Danish (Dansk)
+ * @author DaneOfScandinavy
+ */
+$messages['da'] = array(
+	'achievements-badge-name-edit-1' => 'Bare begyndelsen',
+);
+
 /** German (Deutsch)
  * @author Avatar
  * @author ChrisiPK
@@ -4316,10 +4323,10 @@ Vedi la tua nuova medaglia nel <a href="$5">tuo profilo utente</a>.',
 	'achievements-badge-name-category-0' => 'Crea una connessione',
 	'achievements-badge-name-category-1' => 'Divulgatore',
 	'achievements-badge-name-category-2' => 'Esploratore',
-	'achievements-badge-name-category-3' => 'Guida Turistica',
+	'achievements-badge-name-category-3' => 'Guida turistica',
 	'achievements-badge-name-category-4' => 'Navigatore',
-	'achievements-badge-name-category-5' => 'Costruttore di Ponti',
-	'achievements-badge-name-category-6' => 'Progettista della Wiki',
+	'achievements-badge-name-category-5' => 'Costruttore di ponti',
+	'achievements-badge-name-category-6' => 'Progettista della wiki',
 	'achievements-badge-name-blogpost-0' => 'Qualcosa da dire',
 	'achievements-badge-name-blogpost-1' => 'Cinque cose da dire',
 	'achievements-badge-name-blogpost-2' => 'Talk show',
@@ -4349,11 +4356,104 @@ Vedi la tua nuova medaglia nel <a href="$5">tuo profilo utente</a>.',
 	'achievements-badge-to-get-sharing' => '{{#ifeq:$1|0|link condiviso|fai in modo che {{PLURAL:$1|una persona|$1 persone}} clicchino sul link da te condiviso}}',
 	'achievements-badge-to-get-edit' => 'effettua $1 {{PLURAL:$1|modifica|modifiche}} in {{PLURAL:$1|una pagina|pagine}}',
 	'achievements-badge-to-get-edit-plus-category' => 'effettua {{PLURAL:$1|una modifica|$1 modifiche}} su {{PLURAL:$1|una pagina $2|pagine $2}}',
+	'achievements-badge-to-get-picture' => 'inserisci $1 {{PLURAL:$1|immagine|immagini}} in {{PLURAL:$1|una pagina|pagine}}',
+	'achievements-badge-to-get-category' => 'inserisci $1 {{PLURAL:$1|pagina|pagine}} in {{PLURAL:$1|una categoria|categorie}}',
+	'achievements-badge-to-get-blogpost' => 'scrivi $1 {{PLURAL:$1|blog post|blog post}}',
+	'achievements-badge-to-get-blogcomment' => 'scrivi un commento a {{PLURAL:$1|un blog post|$1 diversi blog post}}',
+	'achievements-badge-to-get-love' => 'contribuisci alla wiki ogni giorno per {{PLURAL:$1|un giorno|$1 giorni}}',
+	'achievements-badge-to-get-welcome' => 'diventa membro della wiki',
+	'achievements-badge-to-get-introduction' => 'inserisci contenuto nella tua pagina utente',
+	'achievements-badge-to-get-sayhi' => 'lascia un messaggio nella pagina di discussione di un utente',
+	'achievements-badge-to-get-creator' => 'sii il creatore di questa wiki',
+	'achievements-badge-to-get-pounce' => 'sii veloce',
+	'achievements-badge-to-get-caffeinated' => 'effettua {{PLURAL:$1|una modifica|$1 modifiche}} nelle pagine in una sola giornata',
+	'achievements-badge-to-get-luckyedit' => 'sii fortunato',
+	'achievements-badge-to-get-sharing-details' => 'Condividi i link e fai in modo che gli altri li clicchino!',
+	'achievements-badge-to-get-edit-details' => 'Manca qualcosa?
+C\'è un errore?
+Non essere timido.
+Clicca sul pulsante "{{int:edit}}" e potrai modificare qualsiasi pagina!',
+	'achievements-badge-to-get-edit-plus-category-details' => 'Le pagine di <strong> $1 </strong> hanno bisogno del tuo aiuto!
+Clicca sul pulsante "{{int:edit}}" in qualsiasi pagina di quella categoria per contribuire.
+Mostra il tuo aiuto per le pagine di $1!',
+	'achievements-badge-to-get-picture-details' => 'Clicca sul pulsante "{{int:edit}}" e poi sul pulsante "{{int:rte-ck-image-add}}". 
+Puoi inserire una foto dal tuo computer e o da un\'altra pagina della wiki.',
+	'achievements-badge-to-get-category-details' => 'Le categorie sono delle etichette che aiutano gli utenti a trovare pagine simili.
+Clicca sul pulsante "{{int:categoryselect-addcategory-button}}" in fondo alla pagina per inserire quella pagina in una categoria.',
+	'achievements-badge-to-get-blogpost-details' => 'Scrivi le tue opinioni e domande!
+Clicca su "{{int:blogs-recent-url-text}}" nella colonna laterale e poi sul link a sinistra "{{int:create-blog-post-title}}".',
+	'achievements-badge-to-get-blogcomment-details' => 'Dii la tua!
+Leggi un qualsiasi blog post recente e scrivi quello che pensi nella sezione dei commenti.',
+	'achievements-badge-to-get-love-details' => 'Il contatore viene resettato se salti un giorno, perciò cerca di tornare nella wiki ogni giorno!',
+	'achievements-badge-to-get-welcome-details' => 'Clicca sul pulsante "{{int:autocreatewiki-create-account}}" in alto a destra per unirti alla community. 
+Puoi iniziare a guadagnare le medaglie anche tu!',
+	'achievements-badge-to-get-introduction-details' => 'La tua pagina utente è vuota?
+Clicca sul tuo nome utente in cima allo schermo per controllare.
+Clicca su "{{int:edit}}" per inserire delle informazioni su di te!',
+	'achievements-badge-to-get-sayhi-details' => 'È possibile lasciare messaggi agli altri utenti cliccando su "{{int:tooltip-ca-addsection}}" nella loro pagina di discussione.
+Chiedi aiuto, ringraziali per il loro lavoro o lascia semplicemente un saluto!',
+	'achievements-badge-to-get-creator-details' => 'Questa medaglia viene assegnata alla persona che ha fondato la wiki.
+Clicca sul pulsante "{{int:createwiki}}" in cima per creare un sito su qualsiasi cosa ti interessi!',
+	'achievements-badge-to-get-pounce-details' => 'Devi essere veloce per ottenere questa medaglia.
+Clicca sul pulsante "{{int:activityfeed}}" per vedere le nuove pagine che gli utenti stanno creando!',
 	'achievements-badge-to-get-caffeinated-details' => 'Ci vuole una giornata piena per guadagnare questa medaglia.
 Continua a modificare!',
+	'achievements-badge-to-get-luckyedit-details' => 'Devi essere fortunato per ottenere questa medaglia.
+Continua a contribuire!',
 	'achievements-badge-to-get-community-platinum-details' => 'Questa è una medaglia speciale di platino disponibile sono per un periodo limitato!',
+	'achievements-badge-hover-desc-sharing' => '{{#ifeq:$1|0|per aver condiviso un link|per aver fatto in modo che {{PLURAL:$1|una persona cliccasse|$1 persone cliccassero}} i link condivisi}}',
+	'achievements-badge-hover-desc-edit' => 'per aver effettuato $1 {{PLURAL:$1|modifica|modifiche}}<br />
+in {{PLURAL:$1|una pagina|pagine}}!',
+	'achievements-badge-hover-desc-edit-plus-category' => 'per aver effettuato $1 {{PLURAL:$1|modifica|modifiche}}<br />
+in {{PLURAL:$1|una pagina di $2|pagine di $2}}!',
+	'achievements-badge-hover-desc-picture' => 'per aver inserito $1 {{PLURAL:$1|immagine|immagini}}<br />
+in {{PLURAL:$1|una pagina|pagine}}!',
+	'achievements-badge-hover-desc-category' => 'per aver inserito $1 {{PLURAL:$1|pagina|pagine}}<br />
+in {{PLURAL:$1|una categoria|categorie}}!',
+	'achievements-badge-hover-desc-blogpost' => 'per aver scritto $1 {{PLURAL:$1|blog post|blog post}}!',
+	'achievements-badge-hover-desc-blogcomment' => 'per aver scritto un commento<br />
+a $1 diversi {{PLURAL:$1|blog post|blog post}}!',
+	'achievements-badge-hover-desc-love' => 'per aver contribuito alla wiki ogni giorno per {{PLURAL:$1|un giorno|$1 giorni}}!',
+	'achievements-badge-hover-desc-welcome' => 'per essere diventato membro della wiki!',
+	'achievements-badge-hover-desc-introduction' => 'per aver modificato<br />
+la propria pagina utente!',
+	'achievements-badge-hover-desc-sayhi' => 'per aver lasciato un messaggio<br />
+nella pagina di discussione di un altro utente!',
+	'achievements-badge-hover-desc-creator' => 'per aver creato la wiki!',
+	'achievements-badge-hover-desc-pounce' => "per aver effettuato modifiche in 100 pagine nell'arco di un'ora dalla creazione della pagina!",
+	'achievements-badge-hover-desc-caffeinated' => 'per aver effettuato 100 modifiche nelle pagine in un solo giorno!',
+	'achievements-badge-hover-desc-luckyedit' => 'per aver effettuato la modifica fortunata n. $1 nella wiki!',
+	'achievements-badge-hover-desc-community-platinum' => 'Questa è una medaglia speciale di platino disponibile sono per un periodo limitato!',
+	'achievements-badge-your-desc-sharing' => '{{#ifeq:$1|0|per aver condiviso un link|per aver fatto in modo che {{PLURAL:$1|una persona cliccasse|$1 persone cliccassero}} sui link condivisi}}',
+	'achievements-badge-your-desc-edit' => 'per aver effettuato {{PLURAL:$1|la tua prima modifica|$1 modifiche}} in {{PLURAL:$1|una pagina|pagine}}!',
+	'achievements-badge-your-desc-edit-plus-category' => 'per aver effettuato {{PLURAL:$1|la tua prima modifica|$1 modifiche}} in {{PLURAL:$1|una pagina di $2|pagine di $2}}!',
+	'achievements-badge-your-desc-picture' => 'per aver inserito {{PLURAL:$1|la tua prima immagine|$1 immagini}} in {{PLURAL:$1|una pagina|pagine}}!',
+	'achievements-badge-your-desc-category' => 'per aver inserito {{PLURAL:$1|la tua prima pagina|$1 pagine}} in {{PLURAL:$1|una categoria|categorie}}!',
+	'achievements-badge-your-desc-blogpost' => 'per aver scritto {{PLURAL:$1|il tuo primo blog post|$1 blog post}}!',
+	'achievements-badge-your-desc-blogcomment' => 'per aver scritto un commento a {{PLURAL:$1|un blog post|$1 diversi blog post}}!',
+	'achievements-badge-your-desc-love' => 'per aver contribuito alla wiki ogni giorno per {{PLURAL:$1|un giorno|$1 giorni}}!',
+	'achievements-badge-your-desc-welcome' => 'per essere diventato membro della wiki!',
+	'achievements-badge-your-desc-introduction' => 'per aver modificato la propria pagina utente!',
 	'achievements-badge-your-desc-sayhi' => 'per aver lasciato un messaggio nella pagina di discussione di un altro utente!',
-	'achievements-badge-desc-caffeinated' => 'per aver fatto 100 modifiche alle pagine in un solo giorno!',
+	'achievements-badge-your-desc-creator' => 'per aver creato la wiki!',
+	'achievements-badge-your-desc-pounce' => "per aver effettuato modifiche in 100 pagine nell'arco di un'ora dalla creazione della pagina!",
+	'achievements-badge-your-desc-caffeinated' => 'per aver effettuato 100 modifiche nelle pagine in un solo giorno!',
+	'achievements-badge-your-desc-luckyedit' => 'per aver effettuato la modifica fortunata n. $1 nella wiki!',
+	'achievements-badge-desc-sharing' => '{{#ifeq:$1|0|per aver condiviso un link|per aver fatto in modo che {{PLURAL:$1|una persona cliccasse|$1 persone cliccassero}} sui link condivisi}}',
+	'achievements-badge-desc-edit' => 'per aver effettuato $1 {{PLURAL:$1|modifica|modifiche}} in {{PLURAL:$1|una pagina|pagine}}!',
+	'achievements-badge-desc-edit-plus-category' => 'per aver effettuato $1 {{PLURAL:$1|modifica|modifiche}} in {{PLURAL:$1|una pagina di $2|pagine di $2}}!',
+	'achievements-badge-desc-picture' => 'er aver inserito $1 {{PLURAL:$1|immagine|immagini}} in {{PLURAL:$1|una pagina|pagine}}!',
+	'achievements-badge-desc-category' => 'per aver inserito $1 {{PLURAL:$1|pagina|pagine}} in {{PLURAL:$1|una categoria|categorie}}!',
+	'achievements-badge-desc-blogpost' => 'per aver scritto $1 {{PLURAL:$1|blog post|blog post}}!',
+	'achievements-badge-desc-blogcomment' => 'per aver scritto un commento a {{PLURAL:$1|un blog post|$1 diversi blog post}}!',
+	'achievements-badge-desc-love' => 'per aver contribuito alla wiki ogni giorno per {{PLURAL:$1|un giorno|$1 giorni}}!',
+	'achievements-badge-desc-welcome' => 'per essere diventato membro della wiki!',
+	'achievements-badge-desc-introduction' => 'per aver modificato la propria pagina utente!',
+	'achievements-badge-desc-sayhi' => 'per aver lasciato un messaggio nella pagina di discussione di un altro utente!',
+	'achievements-badge-desc-creator' => 'per aver creato la wiki!',
+	'achievements-badge-desc-pounce' => "per aver effettuato modifiche in 100 pagine nell'arco di un'ora dalla creazione della pagina!",
+	'achievements-badge-desc-caffeinated' => 'per aver effettuato 100 modifiche nelle pagine in un solo giorno!',
+	'achievements-badge-desc-luckyedit' => 'per aver effettuato la modifica fortunata n. $1 nella wiki!',
 	'achievements-userprofile-title-no' => 'Medaglie di $1',
 	'achievements-userprofile-title' => '{{PLURAL:$2|Medaglia|Medaglie}} di $1 ($2)',
 	'achievements-userprofile-no-badges-owner' => "Controlla l'elenco qui sotto per vedere le medaglie che puoi ottenere su questa wiki!",
@@ -8402,7 +8502,7 @@ $messages['sr-ec'] = array(
 	'achievements-track-name-picture' => 'Запис слика',
 	'achievements-track-name-category' => 'Запис категорија',
 	'achievements-notification-title' => 'Само напред,  $1!',
-	'achievements-viewall' => 'Прикажи све',
+	'achievements-viewall' => 'Погледај све',
 	'achievements-viewless' => 'Затвори',
 	'leaderboard-intro-hide' => 'сакриј',
 	'leaderboard-intro-open' => 'отвори',
@@ -8790,6 +8890,7 @@ Tafadhali jaribu nyingine!',
 );
 
 /** Tamil (தமிழ்)
+ * @author Shanmugamp7
  * @author TRYPPN
  * @author செல்வா
  */
@@ -8801,6 +8902,8 @@ $messages['ta'] = array(
 	'achievements-viewall' => 'எல்லாவற்றையும் பார்க்கவும்',
 	'achievements-viewless' => 'மூடுக',
 	'achievements-viewall-oasis' => 'எல்லாவற்றையும் பார்க்கவும்',
+	'leaderboard-intro-open' => 'திற',
+	'leaderboard-intro-headline' => 'என்னென்ன சாதனைகள்?',
 	'achievements-leaderboard-rank-label' => 'தர வரிசை',
 	'achievements-leaderboard-member-label' => 'உறுப்பினர்',
 	'achievements-leaderboard-points-label' => 'புள்ளிகள்',
@@ -9371,6 +9474,35 @@ $messages['uk'] = array(
 	'achievements-badge-to-get-sayhi' => 'залишити комусь повідомлення на його сторінці обговорення',
 	'achievements-badge-to-get-pounce' => 'поспішайте',
 	'achievements-badge-to-get-luckyedit' => 'щасти',
+);
+
+/** Veps (Vepsän kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'achievements-viewall' => 'Kacta kaik',
+	'achievements-viewless' => 'Saubata',
+	'leaderboard-intro-hide' => 'peitta',
+	'leaderboard-intro-open' => 'avaita',
+	'achievements-enable-track' => 'Kävutamižes',
+	'achievements-special-saved' => 'Toižetused oma pandud muštho',
+	'platinum' => 'Platin',
+	'achievements-community-platinum-edit' => 'redaktiruida',
+	'achievements-community-platinum-save' => 'Kirjutada muštho',
+	'achievements-community-platinum-cancel' => 'Heitta',
+	'achievements-badge-name-picture-3' => 'Keradai',
+	'achievements-badge-name-picture-4' => 'Čomamahton navedii',
+	'achievements-badge-name-picture-5' => 'Čomitai',
+	'achievements-badge-name-picture-6' => 'Dizainer',
+	'achievements-badge-name-picture-7' => 'Kurator',
+	'achievements-badge-name-category-0' => 'Sidoi',
+	'achievements-badge-name-category-4' => 'Navigator',
+	'achievements-badge-name-love-6' => "Wiki-vägimez'",
+	'achievements-badge-name-sharing-2' => 'Pagižii',
+	'achievements-badge-name-welcome' => 'Tulgat tervhin Wikihe',
+	'achievements-badge-name-creator' => 'Sädai',
+	'achievements-badge-to-get-pounce' => 'rigehtida',
+	'achievements-badge-your-desc-creator' => 'wikin sädmas!',
 );
 
 /** Vietnamese (Tiếng Việt)

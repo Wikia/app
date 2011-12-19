@@ -103,6 +103,7 @@ $messages['fi'] = array(
 );
 
 /** French (Français)
+ * @author Crochet.david
  * @author Wyz
  */
 $messages['fr'] = array(
@@ -110,6 +111,7 @@ $messages['fr'] = array(
 	'timeago-day' => '{{PLURAL:$1|la veille|il y a $1 jours}}',
 	'timeago-hour' => 'il y a {{PLURAL:$1|une heure|$1 heures}}',
 	'timeago-minute' => 'il y a {{PLURAL:$1|une minute|$1 minutes}}',
+	'timeago-month' => 'il y a {{PLURAL:$1|un mois|$1 mois}}',
 	'timeago-second' => 'il y a une minute',
 );
 
@@ -121,6 +123,7 @@ $messages['gl'] = array(
 	'timeago-day' => 'hai {{PLURAL:$1|un día|$1 días}}',
 	'timeago-hour' => 'hai {{PLURAL:$1|unha hora|$1 horas}}',
 	'timeago-minute' => 'hai {{PLURAL:$1|un minuto|$1 minutos}}',
+	'timeago-month' => 'hai {{PLURAL:$1|un mes|$1 meses}}',
 	'timeago-second' => 'hai un minuto',
 );
 
@@ -142,6 +145,7 @@ $messages['ia'] = array(
 	'timeago-day' => '{{PLURAL:$1|un die|$1 dies}} retro',
 	'timeago-hour' => '{{PLURAL:$1|un hora|$1 horas}} retro',
 	'timeago-minute' => '{{PLURAL:$1|un minuta|$1 minutas}} retro',
+	'timeago-month' => '{{PLURAL:$1|un mense|$1 menses}} retro',
 	'timeago-second' => 'un minuta retro',
 );
 
@@ -174,6 +178,7 @@ $messages['mk'] = array(
 	'timeago-day' => 'пред {{PLURAL:$1|1 ден|$1 дена}}',
 	'timeago-hour' => 'пред {{PLURAL:$1|1 час|$1 часа}}',
 	'timeago-minute' => 'пред {{PLURAL:$1|1 минута|$1 минути}}',
+	'timeago-month' => '{{PLURAL:$1|пред еден месец|пред $1 месеци}}',
 	'timeago-second' => 'пред една минута',
 );
 
@@ -185,6 +190,7 @@ $messages['ms'] = array(
 	'timeago-day' => '{{PLURAL:$1|sehari|$1 hari}} yang lalu',
 	'timeago-hour' => '{{PLURAL:$1|sejam|$1 jam}} lalu',
 	'timeago-minute' => '{{PLURAL:$1|seminit|$1 minit}} yang lalu',
+	'timeago-month' => '{{PLURAL:$1|sebulan|$1 bulan}} yang lalu',
 	'timeago-second' => 'seminit lalu',
 );
 
@@ -208,6 +214,7 @@ $messages['no'] = array(
 	'timeago-day' => 'for {{PLURAL:$1|én dag|$1 dager}} siden',
 	'timeago-hour' => 'for {{PLURAL:$1|én time|$1 timer}} siden',
 	'timeago-minute' => 'for {{PLURAL:$1|ett minutt|$1 minutter}} siden',
+	'timeago-month' => '{{PLURAL:$1|én måned|$1 måneder}} siden',
 	'timeago-second' => 'for et øyeblikk siden',
 );
 
@@ -274,12 +281,14 @@ $messages['ro'] = array(
 
 /** Russian (Русский)
  * @author DCamer
+ * @author Kuzura
  */
 $messages['ru'] = array(
 	'timeagomessaging-desc' => 'Предоставляет i18n для плагина jquery.timeago.js',
 	'timeago-day' => '{{PLURAL:$1|$1 день|$1 дня|$1 дней}} назад',
 	'timeago-hour' => '{{PLURAL:$1|$1 час|$1 часа|$1 часов}} назад',
 	'timeago-minute' => '{{PLURAL:$1|$1 минута|$1 минуты|$1 минут}} назад',
+	'timeago-month' => '{{PLURAL:$1|месяц|$1 месяца|$1 месяцев}} назад',
 	'timeago-second' => 'минуту назад',
 );
 
@@ -344,6 +353,7 @@ $messages['vi'] = array(
 	'timeago-day' => '{{PLURAL:$1|1 ngày|$1 ngày}} trước',
 	'timeago-hour' => '{{PLURAL:$1|1 giờ|$1 giờ}} trước',
 	'timeago-minute' => '{{PLURAL:$1|1 phút|$1 phút}} trước',
+	'timeago-month' => '{{PLURAL:$1|1 tháng|$1 tháng}} trước',
 	'timeago-second' => '1 phút trước',
 );
 

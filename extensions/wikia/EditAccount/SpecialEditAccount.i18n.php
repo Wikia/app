@@ -212,6 +212,7 @@ $messages['ca'] = array(
 );
 
 /** Czech (Česky)
+ * @author Darth Daron
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -228,9 +229,12 @@ $messages['cs'] = array(
 	'editaccount-label-email' => 'Nastavit novou e-mailovou adresu',
 	'editaccount-label-pass' => 'Nastavit nové heslo',
 	'editaccount-label-realname' => 'Nastavit novoé skutečné jméno',
+	'editaccount-label-clearunsub' => 'Odhlášeno',
 	'editaccount-submit-email' => 'Uložit e-mailovou adresu',
 	'editaccount-submit-pass' => 'Uložit heslo',
 	'editaccount-submit-realname' => 'Uložit skutečné jméno',
+	'editaccount-submit-clearunsub' => 'Pročistit odhlášené',
+	'editaccount-submit-cleardisable' => 'Pročistit zakázané vlajky',
 	'editaccount-submit-close' => 'Zavřít účet',
 	'editaccount-usage-close' => 'Uživatelský účet můžete také zakázat vytvořením náhodného hesla a odebíráním e-mailové adresy. Data však budou nevratně ztracena.',
 	'editaccount-warning-close' => '<b>Pozor!</b> Chystáte se trvale zakázat účet uživatele <b>$1</b>. To nelze vrátit. Jste si jisti, že to chcete udělat?',
@@ -239,6 +243,8 @@ $messages['cs'] = array(
 	'editaccount-success-email-blank' => 'Úspěšně odstraněna e-mailová adresa účtu $1.',
 	'editaccount-success-pass' => 'Úspěšně změněno heslo účtu $1.',
 	'editaccount-success-realname' => 'Úspěšně změnil skutečné jméno pro účet $1.',
+	'editaccount-success-unsub' => 'Odhlašený bit pro účet $1 úspěšně odebrán.',
+	'editaccount-success-disable' => 'Zakázaný bit pro účet $1 úspěšně odebrán.',
 	'editaccount-success-close' => 'Úspěšně zakázan účet $1.',
 	'editaccount-error-email' => 'E-mail nebyl změněn. Zkuste to znovu nebo kontaktujte technický tým.',
 	'editaccount-error-pass' => 'Heslo nebylo změněno. Zkuste to znovu nebo kontaktujte technický tým.',
@@ -246,13 +252,16 @@ $messages['cs'] = array(
 	'editaccount-error-close' => 'Došlo k potížím při zavírání účtu. Zopakujte akci nebo se obraťte na technický tým.',
 	'editaccount-invalid-email' => '"$1" není platná e-mailová adresa!',
 	'editaccount-nouser' => 'Účet "$1" neexistuje!',
+	'editaccount-remove-avatar-fail' => 'Problém při auto-odstraňování avataru.',
+	'editaccount-requested' => 'Poznámka: Uživatel požadoval uzavření účtu.',
+	'editaccount-not-requested' => 'Upozornění: Uživatel nepožadoval uzavření účtu.',
 	'editaccount-log' => 'Protokol uživatelských účtů',
 	'editaccount-log-header' => 'Tato stránka obsahuje seznam změn provedených v uživatelských předvoleb zaměstnanci Wikia.',
 	'editaccount-log-entry-email' => 'změněn e-mail uživatele $2',
 	'editaccount-log-entry-pass' => 'změněno heslo uživatele $2',
 	'editaccount-log-entry-realname' => 'změněno skutečné jméno uživatele $2',
 	'editaccount-log-entry-close' => 'zakázán účet $2',
-	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Tento účet byl zakázán.</div>',
+	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Tento účet byl Wikií globálně deaktivován.</div>',
 	'right-editaccount' => 'Upravit předvolby ostatních uživatelů',
 );
 
@@ -397,8 +406,13 @@ $messages['es'] = array(
 	'right-editaccount' => 'Editar las preferencias de otros usuarios',
 );
 
-/** Persian (فارسی) */
+/** Persian (فارسی)
+ * @author BlueDevil
+ * @author ZxxZxxZ
+ */
 $messages['fa'] = array(
+	'editaccount' => 'ویرایش حساب کاربری',
+	'editaccount-label-realname' => 'تعیین نام واقعی جدید',
 	'editaccount-submit-close' => 'بستن حساب کاربری',
 );
 

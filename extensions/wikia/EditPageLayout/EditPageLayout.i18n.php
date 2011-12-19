@@ -92,6 +92,7 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author Claudia Hattitten
+ * @author McDutchie
  * @author Siebrand
  */
 $messages['qqq'] = array(
@@ -99,6 +100,7 @@ $messages['qqq'] = array(
 	'editpagelayout-edit-title' => 'This is a button label (tooltip). Should be translated as a verb phrase',
 	'editpagelayout-edit-info' => 'Tooltip for title and description edit popup icon',
 	'editpagelayout-diff-header-url' => 'See interwiki links (below categories) on http://help.wikia.com/wiki/Help:Diff for eventually an appropiate page name. {{doc-important|Do not change the "<tt>Help:</tt>" part.}}',
+	'editpagelayout-pageControls-summaryLabel' => 'This is the default text in the entry field for the edit summary. It disappears when you click on the edit field to make room for typing the summary. This message should probably be translated in the imperative rather than in the infinitive.',
 	'editpagelayout-edit-summary-label' => "Label that appears above the input for summarizing the edit you're making.",
 	'editpagelayout-subject-headline-label' => "When you add a section to an existing page, this is the label that appears above the input to add a subject or headline to the section you're adding.",
 	'wikia-editor-media-slider' => 'This refers to a special kind of slideshow which is intended for the main page. See http://help.wikia.com/wiki/Help:Galleries_and_slideshows#Creating_a_main_page_slider.',
@@ -204,20 +206,22 @@ $messages['bg'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Y-M D
  */
 $messages['br'] = array(
 	'editpagelayout-more' => "muioc'h",
 	'editpagelayout-less' => "nebeutoc'h",
 	'editpagelayout-helpLink-url' => 'Help:Penaos degas kemmoù en ur bajenn',
-	'editpagelayout-helpLink' => "Ezhomm 'pefe  [[{{MediaWiki:Editpagelayout-helpLink-url}}|sikour]] ?",
+	'editpagelayout-helpLink' => 'Ezhomm [[{{MediaWiki:Editpagelayout-helpLink-url}}|sikour]] ?',
+	'editpagelayout-notificationsLink-none' => 'Kemennoù',
 	'editpagelayout-edit-title' => 'Kemmañ an titl',
 	'editpagelayout-diff-header-url' => 'Help:Diff',
 	'editpagelayout-diff-header' => "An diforc'hioù ([[{{MediaWiki:Editpagelayout-diff-header-url}}|sikour]])",
 	'editpagelayout-myedit-header' => 'Setu ho kemm. Kopiit ho kemmoù er voest amañ a-us !',
 	'editpagelayout-pageControls-pageLink' => "distreiñ d'ar bajenn",
 	'editpagelayout-pageControls-minorEdit' => 'Kemmig dister',
-	'editpagelayout-pageControls-summaryLabel' => 'Ouzhpennañ un diverradenn deus ho kemmoù',
+	'editpagelayout-pageControls-summaryLabel' => 'Ouzhpennañ un diverradenn eus ho kemmoù',
 	'editpagelayout-pageControls-newSectionLabel' => 'Ouzhpennañ titl ar rann',
 	'editpagelayout-pageControls-back' => "Distreiñ d'ar bajenn kemmañ",
 	'editpagelayout-pageControls-changes' => 'Kemmoù',
@@ -246,7 +250,7 @@ $messages['br'] = array(
 	'wikia-editor-edittools-dialog-title' => 'Berradennoù wikitext',
 	'wikia-editor-notices-dialog-title' => 'Munudoù an alioù',
 	'nonunicodebrowser-notice' => "'''Diwallit : ho merdeer na embreg ket Unicode.'''",
-	'rev-deleted-text-notice' => "Ar stumm-mañ deus ar bajenn a zo bet '''diverket'''. [Muioc'h a ditouroù]",
+	'rev-deleted-text-notice' => "'''Diverket''' eo bet ar stumm-mañ eus ar bajenn. [Muioc'h a ditouroù]",
 	'readonlywarning-notice' => "'''Diwallit : prennet eo bet an diaz roadennoù evit ar c'has en-dro.''' [Muioc'h a ditouroù]",
 	'userinvalidcssjstitle-notice' => "'''Diwallit:''' N'eus ket eus an neuz \"\$1\". [Muioc'h a ditouroù]",
 	'prefs-general' => 'Hollek',
@@ -726,7 +730,7 @@ $messages['ia'] = array(
 	'editpagelayout-captcha-title' => 'Captcha',
 	'editpagelayout-pageControls-pageLink' => 'retornar al pagina',
 	'editpagelayout-pageControls-minorEdit' => 'Modification minor',
-	'editpagelayout-pageControls-summaryLabel' => 'Adder un summario de tu modification',
+	'editpagelayout-pageControls-summaryLabel' => 'Adde un summario de tu modification',
 	'editpagelayout-pageControls-newSectionLabel' => 'Adder le titulo del section',
 	'editpagelayout-pageControls-back' => 'Retornar al editor',
 	'editpagelayout-pageControls-changes' => 'Cambiamentos',
@@ -793,6 +797,21 @@ $messages['inh'] = array(
 	'wikia-editor-media-gallery' => 'Суртанче',
 	'wikia-editor-media-video' => 'Даьсурт',
 	'wikia-editor-modules-categories-title' => 'Цатегаш',
+);
+
+/** Italian (Italiano)
+ * @author Minerva Titani
+ */
+$messages['it'] = array(
+	'prefs-general' => 'Generale',
+	'prefs-starting-an-edit' => 'Modificare',
+	'prefs-editing-experience' => 'Esperienza di editing',
+	'prefs-monobook-layout' => 'Solo skin MonoBook',
+	'prefs-editarea-size' => 'Dimensioni della finestra di modifica (solo skin MonoBook)',
+	'tog-editsection' => 'Abilita la modifica delle sezioni tramite i link di modifica',
+	'tog-editwidth' => 'Estendi la finestra di modifica in modalità Codice sorgente allo schermo intero',
+	'tog-minordefault' => 'Contrassegna di default tutte le modifiche come "minori"',
+	'tog-forceeditsummary' => 'Avvisami se lascio vuoto il riassunto della modifica',
 );
 
 /** Japanese (日本語)
@@ -1564,6 +1583,22 @@ $messages['te'] = array(
 	'wikia-editor-modules-templates-title' => 'మూసలు',
 	'wikia-editor-modules-categories-title' => 'వర్గాలు',
 	'prefs-general' => 'సాధారణం',
+);
+
+/** Veps (Vepsän kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'editpagelayout-pageControls-changes' => 'Toižetused',
+	'wikia-editor-media-image' => 'Fotokuva',
+	'wikia-editor-media-gallery' => 'Galerei',
+	'wikia-editor-media-slideshow' => 'Slaidšou',
+	'wikia-editor-media-video' => 'Video',
+	'wikia-editor-media-image-tooltip' => 'Ližata fotokuva',
+	'wikia-editor-media-gallery-tooltip' => 'Ližata galerei',
+	'wikia-editor-media-slideshow-tooltip' => 'Ližata slaidšou',
+	'wikia-editor-media-video-tooltip' => 'Ližata video',
+	'wikia-editor-edittools-caption' => 'völ',
 );
 
 /** Vietnamese (Tiếng Việt)

@@ -513,7 +513,7 @@ Gallout a reer krouiñ pajennadoù rollañ blogoù evit rummadoù evel "Barack O
 	'create-blog-listing-matches-recalculate' => 'Adjediñ',
 	'create-blog-listing-matches-info' => 'Kavezt ez eus bet {{PLURAL:$1|1 vlogadenn|blogadennoù}} o klotañ',
 	'create-blog-listing-sortby' => 'Urzhiañ dre',
-	'create-blog-listing-sortby-date' => 'Neveshañ',
+	'create-blog-listing-sortby-date' => 'Nevesañ',
 	'create-blog-listing-sortby-author' => 'Aozer',
 	'create-blog-listing-sortby-comments' => 'Niver a evezhiadennoù',
 	'create-blog-listing-output-as-box' => 'Genel kod da eilañ ha pegañ',
@@ -604,6 +604,7 @@ $messages['ckb'] = array(
 );
 
 /** German (Deutsch)
+ * @author Kghbln
  * @author LWChris
  * @author The Evil IP address
  */
@@ -650,7 +651,7 @@ $messages['de'] = array(
 	'create-blog-listing-matches-calculate' => 'Berechnen',
 	'create-blog-listing-matches-recalculate' => 'Erneut berechnen',
 	'create-blog-listing-matches-info' => '{{PLURAL:$1|passender Eintrag|passende Einträge}} gefunden',
-	'create-blog-listing-sortby' => 'Sortiert nach',
+	'create-blog-listing-sortby' => 'Sortieren nach',
 	'create-blog-listing-sortby-date' => 'Neueste',
 	'create-blog-listing-sortby-author' => 'Verfasser',
 	'create-blog-listing-sortby-comments' => 'Kommentarzähler',
@@ -1071,7 +1072,7 @@ Luo blogilistalle sivuja luokkiin, kuten "Barack Obama", "Fan Fiction" tai voit 
 	'blog-fromsitename' => 'Tuotu $1',
 	'blogs-reportproblem' => 'Raportoi ongelmasta',
 	'blogs-comment-hidden' => 'Kommentti piilotettu.',
-	'right-blog-comments-toggle' => 'Oikeus hyväksyä blogikommentteja',
+	'right-blog-comments-toggle' => 'Kytkeä blogikirjoitusten kommentteja päälle/pois',
 	'right-blog-comments-delete' => 'Poistaa kommentteja blogiartikkeleista',
 	'right-blog-articles-edit' => 'Muokata blogiartikkeleita',
 	'right-blog-articles-move' => 'Siirtää blogiartikkeleita',
@@ -1785,8 +1786,10 @@ $messages['it'] = array(
 	'create-blog-cant-edit' => 'Impossibile effettuare la modifica',
 	'create-blog-post-category' => 'Blog',
 	'create-blog-post-category-body' => 'Questa è una lista automatica di blog',
+	'create-blog-post-category-log' => 'Creata la categoria per i blog post',
 	'create-blog-post-recent-listing' => 'Blog recenti',
 	'create-blog-post-recent-listing-title' => 'Blog recenti',
+	'create-blog-post-recent-listing-log' => 'Creata la pagina per i blog post recenti',
 	'create-blog-post-title' => 'Crea un nuovo blog',
 	'create-blog-post-title-edit' => 'Modifica un blog',
 	'create-blog-form-title' => "Che cos'è un blog?",
@@ -2768,6 +2771,7 @@ Możesz stworzyć listę dla konkretnej kategorii, np. "Barack Obama", "Gry Komp
 	'create-blog-listing-sortby-comments' => 'Liczba komentarzy',
 	'create-blog-listing-output-as-box' => 'Generuj kod do kopiowania i wklejania',
 	'create-blog-listing-output-as-page' => 'Stwórz nową listę',
+	'create-blog-listing-tag-format-not-recognized-on-page' => 'Nie odnaleziono znacznika listy blogów na stronie',
 	'blog-header' => 'Wpisy na blogu w kategorii „$1”',
 	'blog-subheader' => '{{PLURAL:$1|Jest tylko jeden wpis|Są $1 wpisy w tej kategorii|Jest $1 wpisów}} w tej kategorii.',
 	'blog-subheader-all' => '{{PLURAL:$1|Jest tylko jeden blogowy artykuł|Następujące $1 blogowe artykuły z ogólnej liczby $2 są|Następujących $1 blogowych artykułów z ogólnej liczby $2 jest}} w tej kategorii.',
@@ -3901,6 +3905,30 @@ $messages['uk'] = array(
 	'blog-comment-edit' => 'редагувати',
 	'blog-refresh-label' => 'Оновити',
 	'blogs-reportproblem' => 'Повідомити про проблему',
+);
+
+/** Veps (Vepsän kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'createblogpage' => 'Säta blog',
+	'create-blog-spam' => 'Nägub kuti spam',
+	'create-blog-post-recent-listing' => 'Tantoižed kirjutesed',
+	'create-blog-form-post-text' => 'Blogantekst',
+	'create-blog-invalid-title-error' => 'petuzline pälkirjutez',
+	'create-blog-save' => "Kirjutada lehtpol' muštho",
+	'create-blog-listing-preview' => 'Ezikacund',
+	'create-blog-listing-matches-calculate' => 'Lugeda',
+	'create-blog-listing-matches-recalculate' => 'Lugeda udes',
+	'blog-defaulttitle' => 'Blogad',
+	'blog-added' => 'ližatud',
+	'blog-edited' => 'redaktiruidud',
+	'blog-comments' => 'Kommentarijad',
+	'blog-comment-delete' => 'čuta poiš',
+	'blog-comment-hide' => 'peitta',
+	'blog-comment-unhide' => 'ozutada',
+	'blog-comment-history' => 'istorii',
+	'blog-comment-edit' => 'redaktiruida',
 );
 
 /** Vietnamese (Tiếng Việt)

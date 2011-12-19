@@ -31,6 +31,14 @@ $messages['en'] = array(
 	'places-category-switch-off' => 'Enable geotagging'
 );
 
+/** Message documentation (Message documentation) */
+$messages['qqq'] = array(
+	'places-on-map' => 'Counter of places on a map ($1 is number of places)',
+	'places-modal-go-to-special' => 'Shows below map in the modal and links to Special:Places. $1 is number of places shown on a map',
+	'places-editor-title-create-new' => 'Title of places editor modal when creating a new geotag',
+	'places-editor-title-edit' => 'Title of places editor modal when editing an existing geotag',
+);
+
 /** French (Français)
  * @author Gomoko
  * @author Wyz
@@ -105,10 +113,10 @@ $messages['no'] = array(
 /** Polish (Polski) */
 $messages['pl'] = array(
 	'places' => 'Miejsca na tej wiki',
+	'places-desc' => 'Dodaje tagi <nowiki><place> i <places></nowiki> pozwalające na geotagowanie artykułów oraz [[Special:Places|mapę wszystkich oznaczonych artykułów]]',
 	'places-in-category' => 'Miejsca w kategorii "$1"',
 	'places-on-map' => '{{PLURAL:$1|$1 miejsce|$1 miejsc}} na mapie',
 	'places-modal-go-to-special' => '{{PLURAL:$1|$1 miejsce|$1 miejsc}} na mapie ([[Special:Places|zobacz wszystkie]])',
-	'places-desc' => 'Dodaje tagi <nowiki><place> i <places></nowiki> pozwalające na geotagowanie artykułów oraz [[Special:Places|mapę wszystkich oznaczonych artykułów]]',
 	'places-toolbar-button-tooltip' => 'Dodaj lokalizację do tego artykułu',
 	'places-toolbar-button-address' => 'Podaj adres określający lokalizację tego artykułu',
 	'places-editor-search' => 'Szukaj',
@@ -133,9 +141,3 @@ $messages['sv'] = array(
 	'places-toolbar-button-tooltip' => 'Klicka för att lägga till geotagg på denna sida',
 );
 
-$messages['qqq'] = array(
-	'places-on-map' => 'Counter of places on a map ($1 is number of places)',
-	'places-modal-go-to-special' => 'Shows below map in the modal and links to Special:Places. $1 is number of places shown on a map',
-	'places-editor-title-create-new' => 'Title of places editor modal when creating a new geotag',
-	'places-editor-title-edit' => 'Title of places editor modal when editing an existing geotag',
-);

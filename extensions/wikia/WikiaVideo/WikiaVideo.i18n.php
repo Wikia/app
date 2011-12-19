@@ -659,6 +659,7 @@ $messages['pdc'] = array(
 
 /** Polish (Polski)
  * @author Marcin Łukasz Kiejzik
+ * @author Sovq
  * @author Sp5uhe
  * @author Woytecr
  */
@@ -677,6 +678,7 @@ $messages['pl'] = array(
 	'wikiavideo-not-supported' => 'Skórka w trybie przeglądania nie obsługuje dodawania filmów do galerii.',
 	'wikiavideo-deleted-old' => "Film '''[$1 $2]''' w wersji z dnia $4 o $3 został usunięty.",
 	'wikiavideo-intro-old' => "Usuwasz wersję '''[$1 $5]''' z [$4 $3, $2].",
+	'wikiavideo-details' => '$1 ($2 {{PLURAL:$2|piksel|piksele|pikseli}}, źródło: <a href="$3" class="external" target="_blank">$4</a>)',
 );
 
 /** Piedmontese (Piemontèis)
@@ -824,17 +826,17 @@ $messages['sl'] = array(
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
-	'wikiavideo-reverted' => 'Видео снимак $1 је успешно враћен. Вратите се на $2.',
+	'wikiavideo-reverted' => 'Видео-снимак $1 је враћен. Вратите се на $2.',
 	'wikiavideo-unreverted' => 'Немате дозволу да вратите $1.',
-	'wikiavideo-added' => 'видео снимак $1 је додат.',
+	'wikiavideo-added' => 'додат је видео-снимак $1',
 	'wikiavideo-back' => 'назад',
-	'wikiavideo-create' => 'Додај видео снимак',
-	'wikiavideo-replace' => 'Замени видео снимак',
-	'wikiavideo-category' => 'Видео снимци',
+	'wikiavideo-create' => 'Додај видео-снимак',
+	'wikiavideo-replace' => 'Замени видео-снимак',
+	'wikiavideo-category' => 'Видео-снимци',
 	'wikiavideo-links' => 'Везе',
 	'wikiavideo-placeholder' => 'Чувар места',
-	'wikiavideo-gallery-template' => 'Ова видео галерија је унутар шаблона, тако да се не може уредити из режима приказа. Измените одређени шаблон.',
-	'wikiavideo-not-supported' => 'Ова пресвлака не подржава убацивање видео снимака из режима приказа у галерије.',
+	'wikiavideo-gallery-template' => 'Ова видео-галерија се налази у шаблону, и не може да се уређује из режима приказа. Уредите одговарајући шаблон.',
+	'wikiavideo-not-supported' => 'Ова тема не подржава убацивање видео-снимака из режима приказа у галерије.',
 	'wikiavideo-deleted-old' => "Издање '''[$1 $2]''', као и $4, $3 је обрисано.",
 	'wikiavideo-intro-old' => "Управо ћете да обришете '''[$1 $5]''' издање, као и [$4 $3, $2].",
 );

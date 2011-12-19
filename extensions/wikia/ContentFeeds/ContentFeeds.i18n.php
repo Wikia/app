@@ -374,6 +374,14 @@ $messages['tl'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Kamalian: Kailangan ang  isang pamagat ng pahina',
 );
 
+/** Veps (Vepsän kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'contentfeeds-firstfewarticles-tag-title' => 'Pälkirjutez',
+	'contentfeeds-firstfewarticles-tag-next' => "Jäl'ghine",
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Xiao Qiao
  */

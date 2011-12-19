@@ -752,7 +752,9 @@ $messages['fa'] = array(
 	'wikiafollowedpages-special-heading-mediawiki' => 'مدیاویکی صفحات ($1)',
 	'wikiafollowedpages-special-showall' => 'نمایش همه >',
 	'wikiafollowedpages-special-showmore' => 'نمایش بیشتر',
+	'wikiafollowedpages-special-delete-tooltip' => 'حذف این صفحه',
 	'wikiafollowedpages-special-blog-by' => 'توسط $1',
+	'prefs-wikiafollowedpages-prefs-advanced' => 'گزینه‌های پیشرفته',
 	'wikiafollowedpages-userpage-more' => 'بیشتر',
 	'wikiafollowedpages-userpage-hide' => 'پنهان کردن',
 );
@@ -1288,6 +1290,15 @@ $messages['ig'] = array(
  */
 $messages['inh'] = array(
 	'wikiafollowedpages-special-heading-category' => '($1) цатегаш',
+);
+
+/** Italian (Italiano)
+ * @author Minerva Titani
+ */
+$messages['it'] = array(
+	'follow-desc' => 'Miglioramenti per la funzionalità watchlist',
+	'prefs-basic' => 'Opzioni di base',
+	'wikiafollowedpages-special-heading-category' => 'Categorie ($1)',
 );
 
 /** Japanese (日本語)
@@ -2499,7 +2510,7 @@ $messages['sr-ec'] = array(
 	'wikiafollowedpages-special-heading-user' => 'Корисничке странице ($1)',
 	'wikiafollowedpages-special-heading-templates' => 'Странице шаблона ($1)',
 	'wikiafollowedpages-special-heading-mediawiki' => 'Медијавики странице ($1)',
-	'wikiafollowedpages-special-heading-media' => 'Слике и видео записи ($1)',
+	'wikiafollowedpages-special-heading-media' => 'Слике и видео-снимци ($1)',
 	'wikiafollowedpages-special-namespace' => '($1 страна)',
 	'oasis-wikiafollowedpages-special-seeall' => 'Прикажи све >',
 	'wikiafollowedpages-special-seeall' => 'Прикажи све >',
@@ -2874,6 +2885,14 @@ ___________________________________________
 <li>Бажаєте змінити параметри отримання повідомлень електронною поштою? Перейдіть до <a href="{{fullurl:{{ns:special}}:Preferences}}">налаштувань користувача</a></li>
 </ul>
 </p>',
+);
+
+/** Veps (Vepsän kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'wikiafollowedpages-userpage-more' => 'Völ',
+	'wikiafollowedpages-userpage-hide' => 'peitta',
 );
 
 /** Vietnamese (Tiếng Việt)

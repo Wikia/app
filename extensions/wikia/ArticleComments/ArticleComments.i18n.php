@@ -251,6 +251,7 @@ Wikia
 );
 
 /** Czech (Česky)
+ * @author Darth Daron
  * @author Jkjk
  * @author Mr. Richard Bolla
  */
@@ -258,19 +259,60 @@ $messages['cs'] = array(
 	'article-comments-anonymous' => 'Anonymní uživatel',
 	'article-comments-comments' => 'Komentáře ($1)',
 	'article-comments-post' => 'Přidat komentář',
+	'article-comments-cancel' => 'Zrušit',
 	'article-comments-delete' => 'smazat',
 	'article-comments-edit' => 'upravit',
 	'article-comments-history' => 'Historie',
 	'article-comments-error' => 'Komentář nemohl být uložen',
+	'article-comments-undeleted-comment' => 'Obnovený komentář pro stránku blogu $1',
 	'article-comments-rc-comment' => 'Komentář k článku (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'Komentáře k článku ([[$1]])',
 	'article-comments-fblogin' => 'Pro přidávání komentářů na této wiki se prosím <a href="$1">přihlašte a propojte s Facebookem</a>!',
 	'article-comments-fbconnect' => 'Pro komentování připojte <a href="$1">váš Facebook účet</a>!',
+	'article-comments-rc-blog-comment' => 'Komentář blogu (<span class="plainlinks">[$1 $2]</span>)',
+	'article-comments-rc-blog-comments' => 'Komentáře blogu ([[$1]])',
+	'article-comments-login' => 'Pro přidání komentáře se prosím <a href="$1">přihlašte</a>.',
+	'article-comments-toc-item' => 'Komentáře',
+	'article-comments-comment-cannot-add' => 'Nelze přidat komentář k článku.',
+	'article-comments-vote' => 'Zahlasovat',
 	'article-comments-reply' => 'Odpovědět',
 	'article-comments-show-all' => 'Zobrazit všechny komentáře',
+	'article-comments-prev-page' => 'Předchozí',
+	'article-comments-next-page' => 'Další',
+	'article-comments-page-spacer' => '&#160...&#160',
+	'article-comments-delete-reason' => 'Nadřazený článek / komentář byl odstraněn.',
+	'article-comments-empty-comment' => "Nelze odeslat prázdný komentář. <a href='$1'>Chcete ho místo toho odstranit?</a>",
+	'wikiamobile-article-comments-header' => 'Komentáře ($1)',
+	'wikiamobile-article-comments-more' => 'Nahrát více',
+	'enotif_subject_article_comment' => '$PAGEEDITOR přidal komentář "$PAGETITLE" na {{SITENAME}}.',
+	'enotif_body_article_comment' => 'Vážený $WATCHINGUSERNAME,
+
+$PAGEEDITOR přidal komentář na "$PAGETITLE".
+
+Pro zobrazení klikněte na níže uvedený odkaz:
+$PAGETITLE_URL
+
+Prosím navštěvujte a editujte často...
+
+Wikia',
+	'enotif_body_article_comment-HTML' => '<p>Váženýr $WATCHINGUSERNAME,
+<br /><br />
+$PAGEEDITOR přidal komentář na "$PAGETITLE".
+<br /><br />
+Pro zobrazení klikněte na tento odkaz: <a href="$PAGETITLE_URL">$PAGETITLE</a>
+<br /><br />
+Prosíme navštěvujte a editujte často...
+<br /><br />
+Wikia
+<br /><hr />
+<ul>
+<li>Chcete nastavit, které e-maily budete dostávat? <a href="{{fullurl:Special:Preferences}}">Aktualizujte své předvolby<a>.</li>
+</ul>
+</p>',
 );
 
 /** German (Deutsch)
+ * @author Avatar
  * @author Claudia Hattitten
  * @author LWChris
  * @author SVG
@@ -302,6 +344,8 @@ $messages['de'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'Der übergeordnete Artikel / übergeordnete Kommentar wurde gelöscht.',
 	'article-comments-empty-comment' => 'Ein leerer Kommentar ist nicht möglich. <a href="$1">Stattdessen löschen?</a>',
+	'wikiamobile-article-comments-header' => 'Kommentare ($1)',
+	'wikiamobile-article-comments-more' => 'Weitere laden',
 	'enotif_subject_article_comment' => '$PAGEEDITOR hat "$PAGETITLE" auf {{SITENAME}} kommentiert',
 	'enotif_body_article_comment' => 'Hallo $WATCHINGUSERNAME,
 
@@ -503,6 +547,7 @@ $messages['fi'] = array(
 );
 
 /** French (Français)
+ * @author Crochet.david
  * @author Verdy p
  * @author Wyz
  * @author Zetud
@@ -534,6 +579,8 @@ $messages['fr'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'La page ou le commentaire parent a été effacé.',
 	'article-comments-empty-comment' => "Vous ne pouvez pas poster un commentaire vide. <a href='$1'>Le supprimer ?</a>",
+	'wikiamobile-article-comments-header' => 'Commentaires ($1)',
+	'wikiamobile-article-comments-more' => 'Lire la suite',
 	'enotif_subject_article_comment' => '$PAGEEDITOR a commenté « $PAGETITLE » sur {{SITENAME}}',
 	'enotif_body_article_comment' => '$WATCHINGUSERNAME,
 
@@ -590,6 +637,8 @@ $messages['gl'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'O artigo ou comentario raíz foi borrado.',
 	'article-comments-empty-comment' => "Non pode enviar un comentario baleiro. <a href='$1'>Quere borralo?</a>",
+	'wikiamobile-article-comments-header' => 'Comentarios ($1)',
+	'wikiamobile-article-comments-more' => 'Cargar máis',
 	'enotif_subject_article_comment' => '$PAGEEDITOR fixo un comentario sobre "$PAGETITLE" en {{SITENAME}}',
 	'enotif_body_article_comment' => 'Estimado $WATCHINGUSERNAME:
 
@@ -670,6 +719,8 @@ $messages['ia'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'Le commento/articulo genitor ha essite delite.',
 	'article-comments-empty-comment' => "Non es possibile publicar un commento vacue. <a href='$1'>Deler lo?</a>",
+	'wikiamobile-article-comments-header' => 'Commentos ($1)',
+	'wikiamobile-article-comments-more' => 'Cargar plus',
 	'enotif_subject_article_comment' => '$PAGEEDITOR ha commentate "$PAGETITLE" sur {{SITENAME}}',
 	'enotif_body_article_comment' => 'Car $WATCHINGUSERNAME,
 
@@ -731,6 +782,7 @@ $messages['inh'] = array(
 
 /** Italian (Italiano)
  * @author Leviathan 89
+ * @author Minerva Titani
  */
 $messages['it'] = array(
 	'article-comments-anonymous' => 'Utente anonimo',
@@ -751,6 +803,7 @@ $messages['it'] = array(
 	'article-comments-login' => 'Per favore <a href="$1">accedi</a> per postare un commento su questa wiki.',
 	'article-comments-toc-item' => 'Commenti',
 	'article-comments-comment-cannot-add' => "Non puoi commentare l'articolo",
+	'article-comments-vote' => 'Vota',
 	'article-comments-reply' => 'Rispondi',
 	'article-comments-show-all' => 'Mostra tutti i commenti',
 	'article-comments-prev-page' => 'Prec',
@@ -758,6 +811,8 @@ $messages['it'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => "L'articolo / commento padre è stato cancellato.",
 	'article-comments-empty-comment' => "Non puoi inserire un commento vuoto. <a href='$1'>Vuoi cancellarlo invece?</a>",
+	'wikiamobile-article-comments-header' => 'Commenti ($1)',
+	'wikiamobile-article-comments-more' => 'Caricane altri',
 	'enotif_subject_article_comment' => '$PAGEEDITOR ha commentato su "$PAGETITLE" su {{SITENAME}}',
 	'enotif_body_article_comment' => 'Caro $WATCHINGUSERNAME,
 
@@ -963,6 +1018,8 @@ $messages['mk'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'Матичната статија / матичниот коментар е избришан.',
 	'article-comments-empty-comment' => "Не можете да објавите празен коментар. <a href='$1'>Да го избришам?</a>",
+	'wikiamobile-article-comments-header' => 'Коментари ($1)',
+	'wikiamobile-article-comments-more' => 'Вчитај уште',
 	'enotif_subject_article_comment' => '$PAGEEDITOR коментираше на „$PAGETITLE“ на {{SITENAME}}',
 	'enotif_body_article_comment' => 'Почитуван/а $WATCHINGUSERNAME,
 
@@ -1040,6 +1097,8 @@ $messages['ms'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'Rencana induk / ulasan induk telah dihapuskan.',
 	'article-comments-empty-comment' => "Anda tidak boleh mengirim ulasan kososng. <a href='$1'>Nak padamkan atau tak?</a>",
+	'wikiamobile-article-comments-header' => 'Komen ($1)',
+	'wikiamobile-article-comments-more' => 'Muatkan lagi',
 	'enotif_subject_article_comment' => '$PAGEEDITOR telah mengulas "$PAGETITLE" di {{SITENAME}}',
 	'enotif_body_article_comment' => '$WATCHINGUSERNAME,
 
@@ -1188,6 +1247,8 @@ $messages['no'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'Overordnet artikkel/overordnet kommentar har blitt slettet.',
 	'article-comments-empty-comment' => "Du kan ikke poste en tom kommentar. <a href='$1'>Slette den istedenfor?</a>",
+	'wikiamobile-article-comments-header' => 'Kommentarer ($1)',
+	'wikiamobile-article-comments-more' => 'Last inn mer',
 	'enotif_subject_article_comment' => '$PAGEEDITOR har kommentert «$PAGETITLE» på {{SITENAME}}',
 	'enotif_body_article_comment' => 'Kjære $WATCHINGUSERNAME,
 
@@ -1246,6 +1307,8 @@ $messages['pl'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'Główny artykuł / komentarz został usunięty',
 	'article-comments-empty-comment' => "Nie możesz zapisać pustego komentarza <a href='$1'>Usunąć?</a>",
+	'wikiamobile-article-comments-header' => 'Komentarze ($1)',
+	'wikiamobile-article-comments-more' => 'Załaduj więcej',
 	'enotif_subject_article_comment' => '$PAGEEDITOR skomentował "$PAGETITLE" na {{SITENAME}}',
 	'enotif_body_article_comment' => 'Drogi $WATCHINGUSERNAME,
 
@@ -1703,21 +1766,72 @@ Wikia
 </p>',
 );
 
+/** Veps (Vepsän kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'article-comments-cancel' => 'Heitta pätand',
+	'article-comments-delete' => 'čuta poiš',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
 $messages['vi'] = array(
 	'article-comments-anonymous' => 'Người dùng chưa đăng kí',
-	'article-comments-comments' => 'Ý kiến ($1)',
-	'article-comments-post' => 'Đăng lên ý kiến',
+	'article-comments-comments' => 'Bình luận ($1)',
+	'article-comments-post' => 'Đăng lên bình luận',
+	'article-comments-cancel' => 'Hủy bỏ',
 	'article-comments-delete' => 'xóa',
-	'article-comments-edit' => 'chỉnh sửa',
+	'article-comments-edit' => 'sửa đổi',
 	'article-comments-history' => 'lịch sử',
-	'article-comments-rc-comment' => 'Trang bình luận (<span class="plainlinks">[$1 $2]</span>)',
-	'article-comments-reply' => 'Đáp lại',
+	'article-comments-error' => 'Bình luận không thể được lưu',
+	'article-comments-undeleted-comment' => 'Hồi phục bình luận cho trang blog $1',
+	'article-comments-rc-comment' => 'Bình luận bài viết (<span class="plainlinks">[$1 $2]</span>)',
+	'article-comments-rc-comments' => 'Bình luận bài viết ([[$1]])',
+	'article-comments-fblogin' => 'Xin vui lòng <a href="$1" rel="nofollow">đăng nhập và kết nối với Facebook</a> để đăng một bình luận trên wiki này!',
+	'article-comments-fbconnect' => 'Xin vui lòng <a href="$1">kết nối tài khoản này với Facebook</a> để bình luận!',
+	'article-comments-rc-blog-comment' => 'Bình luận Blog (<span class="plainlinks">[$1 $2]</span>)',
+	'article-comments-rc-blog-comments' => 'Bình luận Blog ([[$1]])',
+	'article-comments-login' => 'Xin vui lòng <a href="$1">đăng nhập</a> để đăng một bình luận trên wiki này.',
+	'article-comments-toc-item' => 'Bình luận',
+	'article-comments-comment-cannot-add' => 'Bạn không thể thêm bình luận cho bài viết.',
+	'article-comments-vote' => 'Bình chọn',
+	'article-comments-reply' => 'Trả lời',
+	'article-comments-show-all' => 'Hiển thị tất cả các bình luận',
 	'article-comments-prev-page' => 'Kế trước',
 	'article-comments-next-page' => 'Tiếp theo',
+	'article-comments-page-spacer' => '&#160...&#160',
+	'article-comments-delete-reason' => 'Bài viết gốc / bình luận gốc đã bị xóa.',
+	'article-comments-empty-comment' => "Bạn không thể đăng một bình luận rỗng. <a href='$1'>Xóa nó thay thế?</a>",
+	'wikiamobile-article-comments-header' => 'Bình luận ($1)',
+	'wikiamobile-article-comments-more' => 'Nạp thêm',
+	'enotif_subject_article_comment' => '$PAGEEDITOR đã bình luận trên "$PAGETITLE" trên {{SITENAME}}',
+	'enotif_body_article_comment' => 'Xin chào $WATCHINGUSERNAME,
+
+$PAGEEDITOR đã có một bình luận trên trang "$PAGETITLE".
+
+Để xem các chủ đề thảo luận, xin theo liên kết dưới đây:
+$PAGETITLE_URL
+
+Xin hãy truy cập và sửa đổi thường xuyên...
+
+Wikia',
+	'enotif_body_article_comment-HTML' => '<p>Xin chào $WATCHINGUSERNAME,
+<br /><br />
+$PAGEEDITOR đã có một bình luận trên trang "$PAGETITLE".
+<br /><br />
+Để xem các chủ đề thảo luận, theo liên kết này: <a href="$PAGETITLE_URL">$PAGETITLE</a>
+<br /><br />
+Xin hãy truy cập và sửa đổi thường xuyên...
+<br /><br />
+Wikia
+<br /><hr />
+<ul>
+<li>Muốn kiểm soát email mà bạn nhận được? <a href="{{fullurl:Special:Preferences}}">Nâng cấp Tùy chọn của bạn<a>.</li>
+</ul>
+</p>',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

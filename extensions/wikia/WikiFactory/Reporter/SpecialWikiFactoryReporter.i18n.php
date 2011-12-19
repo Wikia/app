@@ -11,6 +11,13 @@ $messages['en'] = array(
 	 'wikifactoryreporter' => 'WikiFactory Reporter',
 );
 
+/** адыгэбзэ (адыгэбзэ)
+ * @author Peserey
+ */
+$messages['ady-cyrl'] = array(
+	'wikifactoryreporter' => 'Уикифабрикэ л1ык1о',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */

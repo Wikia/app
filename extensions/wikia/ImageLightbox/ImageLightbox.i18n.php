@@ -404,15 +404,29 @@ Detaljer: $2',
 $messages['pl'] = array(
 	'lightbox_details_tooltip' => 'Pokaż szczegóły zdjęcia',
 	'lightbox-forum' => 'Forum',
+	'lightbox-standard-link' => 'Standardowy link',
+	'lightbox-blog-link' => 'Link do bloga',
 	'lightbox-send' => 'Wyślij',
 	'lightbox-share-description' => 'Zdjęcie na stronie $1 na $2',
 	'lightbox-share-email-subject' => '$1 wysłał ci zdjęcie na Wikia',
+	'lightbox-share-email-body' => 'Cześć,
+
+Ktoś chciał pokazać Ci obraz na Wikii. Zobacz:
+
+$1
+
+-Zespół Wikia',
 	'lightbox-share-button-email' => 'E-mail',
 	'lightbox-share-button-www' => 'Podziel się',
 	'lightbox-share-button-embed' => 'Osadź',
 	'lightbox-share-email-label' => 'Wyślij ten obraz do znajomego',
+	'lightbox-share-email-page-label' => 'Poleć tę stronę znajomemu',
+	'lightbox-share-email-page-label-address' => 'Adres e‐mail',
 	'lightbox-share-email-ok-caption' => 'Potwierdzenie',
+	'lightbox-share-email-ok-content' => '{{PLURAL:$1|E-mail został wysłany|E-maile zostały wysłane|E-maili zostało wysłanych}}.',
 	'lightbox-share-email-error-caption' => 'Błąd',
+	'lightbox-share-email-error-content' => 'Błąd przy wysyłce {{PLURAL:$1|e-maila|e-maili}}.
+Szczegóły: $2',
 	'lightbox-share-email-error-login' => 'Aby wysyłać e-maile musisz się zalogować',
 	'lightbox-share-email-error-noaddress' => 'Adresy nie zostały określone.',
 );
@@ -442,7 +456,7 @@ $messages['ru'] = array(
 $1
 
 -Команда Викия',
-	'lightbox-share-button-email' => 'Электронная почта',
+	'lightbox-share-button-email' => 'Email',
 	'lightbox-share-button-www' => 'Поделиться',
 	'lightbox-share-button-embed' => 'Вставить',
 	'lightbox-share-email-label' => 'Отправить это изображение другу по email',

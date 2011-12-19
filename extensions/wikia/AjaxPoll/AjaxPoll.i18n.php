@@ -635,7 +635,13 @@ $messages['uk'] = array(
  * @author XiaoQiaoGrace
  */
 $messages['vi'] = array(
+	'ajaxpoll-percentVotes' => '$1%&nbsp;trên tổng số phiếu',
+	'ajaxpoll-thankyou' => 'Cảm ơn bạn đã bình chọn!',
+	'ajaxpoll-error' => 'Có trục trặc trong quá trình bình chọn của bạn, xin vui lòng thử lại.',
+	'ajaxpoll-summary' => 'Bảng thăm dò được tạo ra vào lúc $1 $2 , và cho đến nay đã có $3 bỏ phiếu.',
 	'ajaxpoll-submit' => 'Bình chọn!',
+	'ajaxpoll-closed' => 'Bảng thăm dò đã đóng. Hãy xem các kết quả.',
+	'ajaxpoll-submitting' => 'Xin vui lòng chờ, đang gửi bình chọn của bạn...',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

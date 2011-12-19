@@ -122,7 +122,7 @@ $messages['br'] = array(
 	'multilookupgo' => 'Mont',
 	'multilookupnotspecify' => "N'ho peus meneget chomlec'h IP ebet",
 	'multilookupnext' => 'da-heul',
-	'multilookupprevious' => 'a-raok',
+	'multilookupprevious' => 'kent',
 	'multilookupnbrresult' => "Niver a zisoc'hoù :",
 	'multilookupinvalidresults' => "Disoc'h fall !",
 	'multilookupnoresultfound' => "N'eus bet kavet disoc'h ebet !",
@@ -181,6 +181,7 @@ $messages['ce'] = array(
 );
 
 /** German (Deutsch)
+ * @author Kghbln
  * @author LWChris
  * @author The Evil IP address
  */
@@ -195,7 +196,7 @@ $messages['de'] = array(
 	'multilookupprevious' => 'Vorherige',
 	'multilookupnbrresult' => 'Anzahl der Ergebnisse:',
 	'multilookupinvalidresults' => 'Ungültige Ergebnisse!',
-	'multilookupnoresultfound' => 'Keine Ergebnisse gefunden!',
+	'multilookupnoresultfound' => 'Keine Ergebnisse gefunden',
 	'multilookupwiki' => 'Wiki',
 	'multilookuplink' => 'Beiträge-Link',
 	'multilookupdetails' => 'Details anzeigen',

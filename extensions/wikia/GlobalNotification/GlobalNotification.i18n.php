@@ -18,6 +18,14 @@ $messages['qqq'] = array(
 	'globalnotification-general-ajax-failure' => 'General message for AJAX failure to be put on global notification',
 );
 
+/** Czech (Česky)
+ * @author Darth Daron
+ */
+$messages['cs'] = array(
+	'globalnotification-desc' => 'Zobrazuje systémová oznámení pro události, jako jsou například AJAX chyby.',
+	'globalnotification-general-ajax-failure' => 'Prohlížeč se nemohl připojit k Wikia.  Opakujte akci později.',
+);
+
 /** German (Deutsch)
  * @author Inkowik
  * @author Laximilian scoken
@@ -98,6 +106,14 @@ $messages['nl'] = array(
 $messages['no'] = array(
 	'globalnotification-desc' => 'Wikia systemvarslingsutvidelse.  Viser systemvarslinger for hendelser som AJAX-feil',
 	'globalnotification-general-ajax-failure' => 'Nettleseren kan ikke koble seg til Wikia. Prøv igjen senere.',
+);
+
+/** Polish (Polski)
+ * @author Sovq
+ */
+$messages['pl'] = array(
+	'globalnotification-desc' => 'Wyświetla komunikaty systemowe dla zdarzeń takich jak błędy AJAX',
+	'globalnotification-general-ajax-failure' => 'Przeglądarka nie była w stanie połączyć się z Wikia. Spróbuj później.',
 );
 
 /** Portuguese (Português)

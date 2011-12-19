@@ -1003,9 +1003,11 @@ $messages['ia'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Fryed-peach
  * @author Tommy6
  */
 $messages['ja'] = array(
+	'userprofilepage-about-article-title' => '解説',
 	'userprofilepage-top-wikis-title' => '$1 の編集回数の多いウィキ',
 	'userprofilepage-top-wikis-edit-count' => '編集回数',
 	'userprofilepage-top-wikis-unhide-label' => '表示',
@@ -1319,13 +1321,13 @@ $messages['nl'] = array(
 	'userprofilepage-user-group-staff' => 'Medewerker',
 	'userprofilepage-user-group-bot' => 'Robot',
 	'userprofilepage-user-group-bureaucrat' => 'Bureaucraat',
-	'userprofilepage-user-group-helper' => 'Hulpje',
+	'userprofilepage-user-group-helper' => 'Helper',
 	'userprofilepage-user-group-vstf' => 'Anti-spamgroeplid',
 	'userprofilepage-user-group-sysop-tooltip' => 'Deze gebruiker is beheerder op deze wiki',
 	'userprofilepage-user-group-staff-tooltip' => 'Deze gebruiker is een medewerker van Wikia',
 	'userprofilepage-user-group-bot-tooltip' => 'Deze gebruiker is een robot',
 	'userprofilepage-user-group-bureaucrat-tooltip' => 'Deze gebruiker is bureaucraat op deze wiki',
-	'userprofilepage-user-group-helper-tooltip' => 'Deze gebruiker is een hulpje op deze wiki',
+	'userprofilepage-user-group-helper-tooltip' => 'Deze gebruiker is een Helper',
 	'userprofilepage-user-group-vstf-tooltip' => 'Deze gebruiker is lid van de Anti-spamgroep',
 	'userprofilepage-top-wikis-title' => "Topwiki's van $1",
 	'userprofilepage-top-wikis-edit-count' => 'Aantal bewerkingen',
@@ -1448,12 +1450,15 @@ $messages['no'] = array(
 
 /** Polish (Polski)
  * @author Cloudissimo
+ * @author Sovq
  */
 $messages['pl'] = array(
 	'userprofilepage-desc' => 'Zapewnia stronę użytkownika, która jest przyjemna i prosta do aktualizowania',
 	'userprofilepage-edit-avatar-label' => 'Edytuj portret',
 	'userprofilepage-users-notes-title' => 'O mnie',
+	'userprofilepage-about-section-title' => 'Mój $1 wywiad',
 	'userprofilepage-edit-button' => 'Edytuj',
+	'userprofilepage-about-article-title' => 'Temat',
 	'userprofilepage-about-empty-section' => 'Ta sekcja jest pusta. Kliknij {{int:userprofilepage-edit-button}} żeby coś tu dodać!',
 	'userprofilepage-edit-permision-denied' => 'Odmowa uprawnień do edycji',
 	'userprofilepage-edit-permision-denied-info' => 'Nie masz uprawnień do edycji czyjeś strony lub podstrony użytkownika',
@@ -1468,8 +1473,10 @@ $messages['pl'] = array(
 	'userprofilepage-user-last-action-delete' => '$1 usunął stronę <a href="$2">$3</a>',
 	'userprofilepage-user-group-sysop' => 'Administrator',
 	'userprofilepage-user-group-staff' => 'Członek zespołu',
+	'userprofilepage-user-group-bot' => 'Bot',
 	'userprofilepage-user-group-bureaucrat' => 'Biurokrata',
 	'userprofilepage-user-group-helper' => 'Pomocnik',
+	'userprofilepage-user-group-vstf' => 'VSTF',
 	'userprofilepage-user-group-sysop-tooltip' => 'Ten użytkownik jest administratorem tej wiki',
 	'userprofilepage-user-group-staff-tooltip' => 'Ten użytkownik jest członkiem zespołu Wikia',
 	'userprofilepage-user-group-bot-tooltip' => 'Ten użytkownik jest botem',
@@ -1478,6 +1485,7 @@ $messages['pl'] = array(
 	'userprofilepage-user-group-vstf-tooltip' => 'Ten użytkownik jest członkiem Spam Task Force',
 	'userprofilepage-top-wikis-title' => 'Główne wiki $1',
 	'userprofilepage-top-wikis-edit-count' => 'Liczba edycji',
+	'userprofilepage-top-wikis-hidden-see-more' => 'Ukryto {{PLURAL:$1|$1 wiki|$1 wiki}}',
 	'userprofilepage-top-wikis-unhide-label' => 'odkryj',
 	'userprofilepage-top-wikis-hide-label' => 'ukryj',
 	'userprofilepage-top-wikis-locked-label' => 'Obecna wiki nie może zostać ukryta',
@@ -1491,16 +1499,22 @@ $messages['pl'] = array(
 	'userprofilepage-activity-talk' => 'zostawienie wiadomości na stronie dyskusji $1',
 	'userprofilepage-recent-activity-default' => '$1 dołączył do Wikii',
 	'userprofilepage-top-recent-activity-see-more' => 'Zobacz pełną &gt;',
+	'userprofilepage-top-pages-title' => 'Ulubione artykuły $1 na $2',
 	'userprofilepage-top-page-unhide-label' => 'odkryj',
+	'userprofilepage-top-pages-hidden-see-more' => 'Ukryto  {{PLURAL:$1|$1 stronę|$1 strony|$1 stron}}',
 	'userprofilepage-top-pages-default' => 'Nie masz jeszcze żadnych topowych stron. Czemu nie sprawdzisz <a href="$1">losowych stron</a> na tej wiki?',
 	'recipes-template-user-description-label' => 'Opis',
 	'recipes-template-user-description-hint' => 'Krótka informacja o użytkowniku',
 	'recipes-template-user-birthdate-label' => 'Data urodzenia',
 	'recipes-template-user-birthdate-hint' => 'Data urodzin (dowolny format)',
+	'recipes-template-user-species-label' => 'Rodzaj',
+	'recipes-template-user-species-hint' => 'Rodzaj',
 	'recipes-template-user-abilities-label' => 'Umiejętności',
 	'recipes-template-user-abilities-hint' => 'Umiejętności',
 	'recipes-template-user-gender-label' => 'Płeć',
 	'recipes-template-user-gender-hint' => 'Płeć',
+	'recipes-template-user-affiliation-label' => 'Przynależność',
+	'recipes-template-user-affiliation-hint' => 'Przynależność',
 	'right-editprofile' => 'Edytuj profile innych użytkowników',
 );
 
@@ -1714,7 +1728,7 @@ $messages['sr-ec'] = array(
 	'userprofilepage-activity-edit' => 'измени $1 страницу',
 	'userprofilepage-activity-new' => 'направи $1',
 	'userprofilepage-activity-image' => 'отпреми видео снимак на $1',
-	'userprofilepage-activity-video' => 'отпреми видео снимак на $1',
+	'userprofilepage-activity-video' => 'отпреми видео-снимак на $1',
 	'userprofilepage-activity-delete' => 'обриса $1 страницу',
 	'userprofilepage-activity-talk' => 'постави поруку на корисничкој страници члана $1',
 	'userprofilepage-recent-activity-default' => '$1 се придружи викији',

@@ -176,7 +176,7 @@ $messages['br'] = array(
 	'lookupcontribscontribs' => 'degasadennoù',
 	'lookupcontribsnbrresult' => "Niver a zisoc'hoù :",
 	'lookupcontribsnext' => 'da-heul',
-	'lookupcontribsprevious' => 'a-raok',
+	'lookupcontribsprevious' => 'kent',
 	'lookupcontribspageremoved' => 'Dilamet :',
 	'lookupcontribsrestore' => 'adsevel',
 	'lookupcontribslog' => 'marilh',
@@ -950,6 +950,37 @@ $messages['oc'] = array(
  */
 $messages['pdc'] = array(
 	'lookupcontribsgo' => 'Zeige',
+);
+
+/** Polish (Polski)
+ * @author Sovq
+ */
+$messages['pl'] = array(
+	'lookupcontribsnoresultfound' => 'Brak wyników!',
+	'lookupcontribsinvalidresults' => 'Nieprawidłowe wyniki!',
+	'lookupcontribswiki' => 'Wiki',
+	'lookupcontribswikidbname' => 'Nazwa bazy danych',
+	'lookupcontribswikiurl' => 'Adres URL',
+	'lookupcontribswikititle' => 'Tytuł',
+	'lookupcontribswikioptions' => 'Opcje',
+	'lookupcontribsdetails' => 'Zobacz szczegóły dotyczące:',
+	'lookupcontribslastedited' => 'Ostatnio edytowano',
+	'lookupcontribscontribs' => 'edycje',
+	'lookupcontribsnbrresult' => 'Liczba wyników:',
+	'lookupcontribsnext' => 'następny',
+	'lookupcontribsprevious' => 'poprzedni',
+	'lookupcontribspageremoved' => 'Usunięto:',
+	'lookupcontribsrestore' => 'Przywróć',
+	'lookupcontribslog' => 'log',
+	'lookupcontribshist' => 'hist',
+	'lookupcontribsdiff' => 'różn.',
+	'right-lookupcontribs' => 'Wyświetlić globalne edycje użytkownika',
+	'lookupcontribsshowpages' => 'Wszystkie strony (w przestrzeni nazw $1)',
+	'lookupcontribscontent' => 'zawartość',
+	'lookupcontribscontribtitleforuser' => 'Wkład użytkownika:',
+	'lookupcontribsnormal' => 'ostatnie',
+	'lookupcontribsfinal' => 'ostateczne',
+	'lookupcontribsall' => 'wszystko',
 );
 
 /** Piedmontese (Piemontèis)

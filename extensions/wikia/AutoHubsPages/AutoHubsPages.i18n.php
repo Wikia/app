@@ -232,6 +232,8 @@ $messages['fr'] = array(
 	'hub-show-feed' => 'Afficher le flux',
 	'hub-contributors-info' => 'Ces utilisateurs sont les plus actifs cette semaine, classés par nombre de modifications.',
 	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|contributeur|contributeurs}}</span>',
+	'hub-hot-news' => 'Actualité brûlante',
+	'hub-hot-news-post-details' => 'De $1 sur $2 le $3',
 );
 
 /** Galician (Galego)
@@ -255,6 +257,8 @@ $messages['gl'] = array(
 	'hub-show-feed' => 'Mostrar a fonte de novas',
 	'hub-contributors-info' => 'Estes son os usuarios máis populares desta semana, clasificados polo número de edicións.',
 	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|editor|editores}}</span>',
+	'hub-hot-news' => 'Cousas populares',
+	'hub-hot-news-post-details' => 'Por $1 en $2 o $3',
 );
 
 /** Hungarian (Magyar)
@@ -288,6 +292,8 @@ $messages['ia'] = array(
 	'hub-show-feed' => 'Revelar syndication',
 	'hub-contributors-info' => 'Le usatores le plus productive de iste septimana, rangiate per numero de modificationes.',
 	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|redactor|redactores}}</span>',
+	'hub-hot-news' => 'Popular',
+	'hub-hot-news-post-details' => 'Per $1 in $2 le $3',
 );
 
 /** Kurdish (Latin script) (‪Kurdî (latînî)‬)
@@ -336,6 +342,8 @@ $messages['mk'] = array(
 	'hub-show-feed' => 'Прикажи канал',
 	'hub-contributors-info' => 'Ова се најкотираните корисници неделава, рангирани по број науредувања.',
 	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|уредник|уредници}}</span>',
+	'hub-hot-news' => 'Актуелности',
+	'hub-hot-news-post-details' => 'Од $1 на $2 $3',
 );
 
 /** Malayalam (മലയാളം)
@@ -368,6 +376,8 @@ $messages['ms'] = array(
 	'hub-show-feed' => 'Paparkan suapan',
 	'hub-contributors-info' => 'Inilah para penyunting yang paling giat pada minggu ini, disusun mengikut suntingan terbanyak.',
 	'hub-editors' => '<strong>$1</strong><span>orang penyunting</span>',
+	'hub-hot-news' => 'Terhangat',
+	'hub-hot-news-post-details' => 'Oleh $1 di $2 pada $3',
 );
 
 /** Dutch (Nederlands)
@@ -417,6 +427,8 @@ $messages['no'] = array(
 	'hub-show-feed' => 'Vis feed',
 	'hub-contributors-info' => 'Dette er ukens toppbrukere, rangert etter flest redigeringer.',
 	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|redaktør|redaktører}}</span>',
+	'hub-hot-news' => 'Hva er i skuddet',
+	'hub-hot-news-post-details' => 'Av $1 på $2 $3',
 );
 
 /** Piedmontese (Piemontèis)
@@ -597,6 +609,13 @@ $messages['uk'] = array(
 	'unhide' => 'Показати',
 	'hub-blog-showarticle' => 'Показати сторінку',
 	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|редактор|редактори|редакторів}}</span>',
+);
+
+/** Veps (Vepsän kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'hub-header' => '$1 Wikid',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

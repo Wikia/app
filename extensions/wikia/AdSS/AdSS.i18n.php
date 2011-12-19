@@ -459,19 +459,19 @@ $messages['br'] = array(
 	'adss-form-site-premium-plan-price' => '$1 hepken evit pevar zamm !',
 	'adss-form-page-plan-header' => 'Prenañ ul liamm war ur bajenn hepken',
 	'adss-form-page-plan-price' => '$1 eo koust ul liamm',
-	'adss-form-banner-plan-header' => 'Prenañ ul lodenn deus ar gitonoù grafek 728x90 e penn ar wiki',
-	'adss-form-banner-plan-description' => 'Tapit ul lodenn deus ar gitonoù diskouezet war ar wiki evit ur priz dister.',
+	'adss-form-banner-plan-header' => 'Prenañ ul lodenn eus ar gitonoù grafek 728x90 e penn ar wiki',
+	'adss-form-banner-plan-description' => 'Tapit ul lodenn eus ar gitonoù diskouezet war ar wiki evit ur priz dister.',
 	'adss-form-banner-plan-price' => '$1 evit un tamm eus ar bannieloù',
 	'adss-form-hub-plan-header' => 'Prenañ ul liamm sponsoret war wel er $1 wiki a-bezh',
 	'adss-form-hub-plan-price' => '$1 eo an tamm',
 	'adss-form-reviews-page-year-plan-header' => 'Paeroniañ war ur bloaz',
-	'adss-form-reviews-page-year-plan-description' => "Gellout a rit prenañ ul liamm<br />deus an danevell oberiantiz-mañ<br />evit hoc'h embregerezh",
+	'adss-form-reviews-page-year-plan-description' => "Gallout a rit prenañ ul liamm<br />eus an danevell oberiantiz-mañ<br />evit hoc'h embregerezh",
 	'adss-form-reviews-page-year-plan-price' => "Espern muioc'h : evit $1",
 	'adss-form-reviews-page-month-plan-header' => 'Paeroniañ miziek',
-	'adss-form-reviews-page-month-plan-description' => "Gellout a rit prenañ ul liamm<br />deus an danevell oberiantiz-mañ<br />evit hoc'h embregerezh",
+	'adss-form-reviews-page-month-plan-description' => "Gallout a rit prenañ ul liamm<br />eus an danevell oberiantiz-mañ<br />evit hoc'h embregerezh",
 	'adss-form-reviews-page-month-plan-price' => 'Espern 50% : evit $1',
 	'adss-form-reviews-page-day-plan-header' => 'Paeroniañ an embregerezh-mañ',
-	'adss-form-reviews-page-day-plan-description' => "Gellout a rit prenañ ul liamm<br />deus an danevell oberiantiz-mañ<br />evit hoc'h embregerezh",
+	'adss-form-reviews-page-day-plan-description' => "Gallout a rit prenañ ul liamm<br />eus an danevell oberiantiz-mañ<br />evit hoc'h embregerezh",
 	'adss-form-reviews-page-day-plan-price' => 'Evit $1 hepken',
 	'adss-form-or' => '- pe -',
 	'adss-form-thanks' => "Echu eo ho prenadenn. Mat 'vo ho kemennadenn goude bezañ bet aprouet (a-benn 48 eurvezh, pe a-raok).",
@@ -1334,6 +1334,7 @@ $messages['fa'] = array(
  * @author Nike
  * @author Olli
  * @author Tofu II
+ * @author VezonThunder
  */
 $messages['fi'] = array(
 	'adss-desc' => 'Ad Self Service',
@@ -1344,14 +1345,14 @@ $messages['fi'] = array(
 	'adss-ad-default-desc' => 'Osta sponsoroitu linkki ja kuvaus verkkosivullesi tälle sivulle. Toimi nopeasti, muutamat mainospaikat myydään nopeasti loppuun!',
 	'adss-form-header' => 'Suunnittele mainos',
 	'adss-form-url' => 'Sponsoroivan verkkosivuston osoite (oman sivusi osoite):',
-	'adss-form-linktext' => 'Teksti, jonka haluat näytettävän linkissä:',
-	'adss-form-additionaltext' => 'Teksti, joka näytetään linkkisi alapuolella:',
+	'adss-form-linktext' => 'Mainoksen otsikko',
+	'adss-form-additionaltext' => 'Mainoksen kuvaus',
 	'adss-form-type' => 'Tukemistyyppi:',
 	'adss-form-page' => 'Sponsoroitava sivu:',
 	'adss-form-banner' => 'Lataa bannerisi tässä:',
 	'adss-form-price' => 'Sponsoroinnin määrä:',
 	'adss-form-shares' => 'Jako-osuuden määrä:',
-	'adss-form-email' => 'Sähköpostiosoite:',
+	'adss-form-email' => 'Sähköpostiosoitteesi',
 	'adss-form-password' => 'Salasana:',
 	'adss-form-login-link' => 'Kirjaudu sisään',
 	'adss-form-login-desc' => 'Onko sinulla salasana? $1 säästääksesi aikaasi ja ostaaksesi mainoksen vain yhdellä napsautuksella!',
@@ -1367,9 +1368,10 @@ $messages['fi'] = array(
 	'adss-form-pick-plan-errormsg' => 'Sinun täytyy valita suunnitelma',
 	'adss-form-pick-plan' => 'Valitse mainospaketti',
 	'adss-form-site-plan-header' => 'Osta sponsoroitu linkki koko wikille',
-	'adss-form-site-plan-description' => 'Saa sponsoroituja linkkejä sivustolle {{SITENAME}} yhdellä edullisella hinnalla.
+	'adss-form-site-plan-header-ribbon' => 'Halvin',
+	'adss-form-site-plan-description' => '* Hanki sponsoroituja linkkejä sivustolle {{SITENAME}} yhdellä edullisella hinnalla.
 
-1 osuus on tällä hetkellä $1% sivuston {{SITENAME}} sponsoroiduista linkeistä ja maksaa vain $2. Voit peruuttaa koska vain.',
+* 1 osuus on tällä hetkellä $1% sivuston {{SITENAME}} sponsoroiduista linkeistä ja maksaa vain $2. Voit peruuttaa koska vain.',
 	'adss-form-site-plan-price' => '$1 yhdelle osuudelle',
 	'adss-form-site-premium-plan-header' => 'Osta 4 sponsoroitua linkkiä 3:n hinnalla',
 	'adss-form-site-premium-plan-description' => 'Osta sponsoroituja linkkejä sivustolle {{SITENAME}} ja saat linkkisi useammin näkyville ostaessasi erässä.
@@ -3190,6 +3192,7 @@ Wikia-teamet',
 );
 
 /** Polish (Polski)
+ * @author Sovq
  * @author Woytecr
  */
 $messages['pl'] = array(
@@ -3197,12 +3200,33 @@ $messages['pl'] = array(
 	'adss-form-email' => 'Twój adres e-mail',
 	'adss-form-password' => 'Twoje hasło',
 	'adss-form-login-link' => 'Zaloguj się',
+	'adss-form-usd-per-day' => '$$1 dziennie',
+	'adss-form-usd-per-week' => '$$1 tygodniowo',
+	'adss-form-usd-per-month' => '$$1 miesięcznie',
+	'adss-form-usd-per-quarter' => '$$1 na kwartał',
+	'adss-form-usd-per-year' => '$$1 rocznie',
 	'adss-form-field-empty-errormsg' => 'To pole nie może być puste',
 	'adss-form-non-existent-title-errormsg' => 'Ta strona nie istnieje',
 	'adss-button-preview' => 'Podgląd',
 	'adss-button-edit' => 'Edytuj',
 	'adss-button-select' => 'Wybierz',
 	'adss-preview-header' => 'Podgląd',
+	'adss-per-site' => 'Wszystkie strony',
+	'adss-per-page' => 'Tylko na jednej stronie',
+	'adss-close' => 'Zamknij',
+	'adss-cancel' => 'Anuluj',
+	'adss-manager-tab-adList' => 'Twoje reklamy',
+	'adss-manager-tab-billing' => 'Rachunek',
+	'adss-admin-tab-adList' => 'Lista reklam',
+	'adss-admin-tab-billing' => 'Rachunek',
+	'adss-admin-tab-reports' => 'Raporty',
+	'adss-not-logged-in' => 'Musisz być zalogowany',
+	'adss-wrong-id' => 'Nieprawidłowe ID',
+	'adss-no-permission' => 'Brak uprawnień',
+	'adss-canceled' => 'Anulowano',
+	'adss-rejected' => 'Odrzucono',
+	'adss-approved' => 'Zatwierdzono',
+	'adss-pending' => 'Oczekiwanie',
 	'adss-wikia' => 'Wikia',
 	'adss-price' => 'Cena',
 );
@@ -4315,6 +4339,33 @@ $messages['uk'] = array(
 	'adss-button-no' => 'Ні',
 	'adss-type' => 'Тип',
 	'adss-status' => 'Статус',
+);
+
+/** Veps (Vepsän kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'adss-ad-default-text' => 'Paina nakhu!',
+	'adss-form-site-plan-header-ribbon' => 'Kaikiš odvamb',
+	'adss-button-preview' => 'Ezikacund',
+	'adss-button-edit' => 'Redaktiruida',
+	'adss-button-login' => 'Kirjutadas sistemha',
+	'adss-button-select' => 'Valita',
+	'adss-button-save' => 'Kirjutada muštho',
+	'adss-button-cancel' => 'Heitta',
+	'adss-button-yes' => 'Ka',
+	'adss-button-no' => 'Ei',
+	'adss-click-here' => 'Paina nakhu!',
+	'adss-per-site' => 'Kaik lehtpoled',
+	'adss-per-hub' => 'Hab',
+	'adss-per-page' => "Vaiše üks' lehtpol'",
+	'adss-close' => 'Saubata',
+	'adss-wikia' => 'Wikii',
+	'adss-type' => 'Tip',
+	'adss-price' => 'Arv',
+	'adss-status' => 'Status',
+	'adss-fee' => 'Maks',
+	'adss-paid' => 'Makstud',
 );
 
 /** Vietnamese (Tiếng Việt)

@@ -185,6 +185,18 @@ $messages['no'] = array(
 	'wikipayment-paypal-profile-name' => 'Betalt Wiki',
 );
 
+/** Polish (Polski)
+ * @author Sovq
+ */
+$messages['pl'] = array(
+	'wikipayment-desc' => 'Pozwala na odpłatne usunięcie reklam na danej wiki.',
+	'wikipayment-paypal-redirect' => 'Przekierowanie do PayPal, proszę czekać&hellip;',
+	'wikipayment-paypal-error' => 'Błąd płatności PayPal (kod: $1)',
+	'wikipayment-paypal-return-ok' => 'Płatność PayPal zakończona pomyślnie',
+	'wikipayment-paypal-return-cancel' => 'Płatność PayPal anulowana',
+	'wikipayment-paypal-profile-name' => 'Płatna Wiki',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt

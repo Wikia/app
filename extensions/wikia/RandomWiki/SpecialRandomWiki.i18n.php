@@ -326,6 +326,7 @@ $messages['uk'] = array(
  * @author Xiao Qiao
  */
 $messages['vi'] = array(
+	'randomwiki-desc' => 'Hãy để người dùng khám phá một wiki ngẫu nhiên',
 	'randomwiki' => 'Wiki ngẫu nhiên',
 );
 
