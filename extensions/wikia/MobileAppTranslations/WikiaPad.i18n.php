@@ -251,6 +251,22 @@ $messages['no'] = array(
 	'browser-loading-message' => 'Laster inn...',
 );
 
+/** Polish (Polski)
+ * @author Sovq
+ */
+$messages['pl'] = array(
+	'main-tab-discover' => 'Odkryj',
+	'main-tab-personal' => 'Moje Wikia',
+	'main-tab-search' => 'Szukaj',
+	'main-tab-offline' => 'Offline',
+	'tab-discover-loading-message' => 'Trwa ładowanie...',
+	'tab-discover-no-network-dialog-title' => 'Sieć niedostępna',
+	'tab-discover-no-network-dialog-message' => 'Nie wykryto połączenia sieciowego',
+	'tab-discover-no-network-dialog-close-button' => 'Ok',
+	'tab-search-loading-message' => 'Trwa wyszukiwanie...',
+	'browser-loading-message' => 'Trwa ładowanie...',
+);
+
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */

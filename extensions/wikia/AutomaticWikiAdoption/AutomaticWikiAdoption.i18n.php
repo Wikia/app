@@ -707,7 +707,7 @@ Instrumentos utile:
  */
 $messages['it'] = array(
 	'wikiadoption-header' => 'Adotta questa wiki',
-	'wikiadoption-mail-adoption-subject' => 'La tua wiki è stata adottata',
+	'wikiadoption-mail-adoption-subject' => '#WIKINAME è stata adottata',
 );
 
 /** Luxembourgish (Lëtzebuergesch)

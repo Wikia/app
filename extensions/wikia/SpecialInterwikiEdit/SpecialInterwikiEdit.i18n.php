@@ -185,9 +185,11 @@ $messages['gl'] = array(
 );
 
 /** Hungarian (Magyar)
+ * @author Dj
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
+	'interwikiedit' => 'Wikiközi hivatkozás szerkesztő',
 	'iwedit-title' => 'Wikiközi hivatkozás szerkesztő',
 	'iwedit-language-interwikis' => 'csak a nyelvi wikiközi hivatkozások',
 	'iwedit-all-interwikis' => 'összes wikiközi hivatkozás',

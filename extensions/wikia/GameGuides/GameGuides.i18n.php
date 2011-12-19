@@ -67,6 +67,13 @@ $messages['gl'] = array(
 	'wikiagameguides-desc' => 'Módulos de aplicacións móbiles Wikia Game Guides',
 );
 
+/** Hungarian (Magyar)
+ * @author Dj
+ */
+$messages['hu'] = array(
+	'wikiagameguides-desc' => 'Wikia játék útmutató mobil alkalmazás modulok',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */

@@ -850,6 +850,7 @@ $messages['ms'] = array(
 );
 
 /** Dutch (Nederlands)
+ * @author MarkvA
  * @author SPQRobin
  * @author Siebrand
  */
@@ -899,7 +900,7 @@ $messages['nl'] = array(
 	'user-identity-box-group-bureaucrat' => 'Bureaucraat',
 	'user-identity-box-group-founder' => 'Oprichter',
 	'user-identity-box-group-staff' => 'Staflid',
-	'user-identity-box-group-helper' => 'Hulpje',
+	'user-identity-box-group-helper' => 'Helper',
 	'user-identity-box-group-vstf' => 'Vrijwilliger Spamtaskforce',
 	'user-identity-box-zero-state-location' => 'Locatie',
 	'user-identity-box-zero-state-birthday' => 'Verjaardag',
@@ -1054,14 +1055,23 @@ $messages['no'] = array(
 
 /** Polish (Polski)
  * @author Cloudissimo
+ * @author Sovq
  */
 $messages['pl'] = array(
 	'userprofilepage-edit-modal-header' => 'Edycja profilu',
 	'userprofilepage-question-caption' => 'Pytanie $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Anuluj',
 	'userprofilepage-lightbox-interview-save' => 'Zapisz i zakończ',
+	'userprofilepage-interview-edit-new-summary' => 'Wywiad użytkownika utworzony',
+	'userprofilepage-interview-edit-update-summary' => 'Wywiad użytkownika zaktualizowany',
+	'userprofilepage-interview-save-error' => 'Zapisywanie wywiadu nie powiodło się',
+	'userprofilepage-interview-save-internal-error' => 'Zapisywanie wywiadu nie powiodło się - nastąpił błąd wewnętrzny',
+	'userprofilepage-answers-stats-title' => 'Statystyki wywiadu',
+	'userprofilepage-answers-stats-info' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur odio augue, pulvinar id malesuada nec, aliquam vitae est.',
 	'userprofilepage-add-question' => 'Dodaj nowe pytanie',
 	'userprofilepage-question-save' => 'Zapisz pytanie',
+	'userprofilepage-question-list-title' => '$1 z $2 pytań',
+	'userprofilepage-interview-section-title' => 'Wywiad użytkownika',
 	'userprofilepage-invalid-user' => 'Błąd użytkownika! Jesteś niezalogowany lub nie masz uprawnień, by przejść dalej',
 	'userprofilepage-avatar-error-type' => 'Nieprawidłowy typ MIME. Dozwolone: $1',
 	'userprofilepage-avatar-error-resolution' => 'Maksymalna rozdzielczość portretu to 2000x2000',
@@ -1075,6 +1085,7 @@ $messages['pl'] = array(
 	'user-identity-box-avatar-save' => 'Zapisz i zakończ',
 	'user-identity-box-avatar-cancel' => 'Anuluj',
 	'user-identity-box-avatar-anon-user-error' => 'Musisz się zalogować zanim cokolwiek zmienisz',
+	'user-identity-box-aka-label' => '<span>alias</span> $1',
 	'user-identity-box-my-twitter' => 'Mój Twitter',
 	'user-identity-box-my-website' => 'Moja strona',
 	'user-identity-box-my-fb-page' => 'Mój Facebook',
@@ -1263,11 +1274,14 @@ $messages['sv'] = array(
 	'userprofilepage-interview-edit-update-summary' => 'Användarintervju uppdaterades',
 	'userprofilepage-interview-save-error' => 'Sparning av intervju misslyckades',
 	'userprofilepage-interview-save-internal-error' => 'Sparning av intervju misslyckades - internt fel uppstod',
+	'userprofilepage-answers-stats-title' => 'Intervjustatistik',
 	'userprofilepage-answers-stats-info' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur odio augue, pulvinar id malesuada nec, aliquam vitae est.',
 	'userprofilepage-add-question' => 'Lägg till ny fråga',
 	'userprofilepage-question-save' => 'Spara fråga',
 	'userprofilepage-question-list-title' => '$1/$2 frågor',
+	'userprofilepage-interview-section-title' => 'Användarintervju',
 	'userprofilepage-avatar-error-type' => 'Ogiltigt MIME-typ. Tillåtna: $1',
+	'userprofilepage-avatar-error-resolution' => 'Maximal upplösning för en avatar är 2000x2000',
 	'user-identity-box-edit' => 'Redigera',
 	'user-identity-box-wikia-contributor' => 'En Wikia-bidragsgivare',
 	'user-identity-box-edit-avatar' => 'Redigera avatar',
@@ -1282,7 +1296,7 @@ $messages['sv'] = array(
 	'user-identity-box-my-twitter' => 'Min Twitter',
 	'user-identity-box-my-website' => 'Min webbplats',
 	'user-identity-box-my-fb-page' => 'Min Facebook',
-	'user-identity-box-fav-wikis' => 'Min favorit-wikis',
+	'user-identity-box-fav-wikis' => 'Mina favorit-wikis',
 	'user-identity-box-location' => '<span>Jag bor i</span> $1',
 	'user-identity-box-was-born-on' => '<span>Jag föddes den</span> $1 $2',
 	'user-identity-box-was-born-in' => '<span>Jag föddes i</span> $1',
@@ -1297,6 +1311,7 @@ $messages['sv'] = array(
 	'user-identity-box-group-founder' => 'Grundare',
 	'user-identity-box-group-staff' => 'Personal',
 	'user-identity-box-group-helper' => 'Hjälpare',
+	'user-identity-box-zero-state-location' => 'Plats',
 	'user-identity-box-zero-state-birthday' => 'Födelsedag',
 	'user-identity-box-zero-state-gender' => 'Kön',
 	'user-identity-box-zero-state-occupation' => 'Yrke',
@@ -1314,22 +1329,26 @@ $messages['sv'] = array(
 	'user-identity-box-about-fav-wikis-refresh' => 'Uppdatera',
 	'user-identity-box-join-more-wikis' => 'Gå med i fler wikis för att se dem här!',
 	'user-identity-box-import-from-fb' => 'Importera din information från Facebook',
-	'user-identity-box-connect-to-fb' => 'Ansluta med Facebook',
+	'user-identity-box-connect-to-fb' => 'Anslut med Facebook',
 	'user-identity-box-fb-page' => 'Vad är din Facebook-sida?',
 	'user-identity-box-invalid-fb-id-error' => 'Ogiltig Facebook-ID',
+	'user-identity-box-avatar-error-size' => 'Fel: Avatarfilen är för stor (max  $1KB)',
 	'userprofilepage-lightbox-about-me-cancel' => 'Avbryt',
 	'userprofilepage-lightbox-about-me-save' => 'Spara, jag är klar',
+	'userprofilepage-closing-popup-header' => 'Avsluta profilredigeraren',
 	'userprofilepage-closing-popup-discard-and-quit' => 'Ignorera ändringarna och avsluta',
 	'userprofilepage-closing-popup-save-and-quit' => 'Spara och avsluta',
 	'userprofilepage-closing-popup-cancel' => 'Avbryt',
 	'user-action-menu-edit' => 'Redigera',
 	'user-action-menu-edit-profile' => 'Redigera profil',
 	'user-action-menu-leave-message' => 'Lämna meddelande',
+	'user-action-menu-view-source' => 'Visa källa',
 	'user-action-menu-protect' => 'Skydda',
 	'user-action-menu-unprotect' => 'Ta bort skydd',
 	'user-action-menu-rename' => 'Byt namn',
 	'user-action-menu-delete' => 'Radera',
 	'user-action-menu-history' => 'Historik',
+	'usermasthead-log-message' => 'lade till profilinformation',
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -1369,7 +1388,7 @@ $messages['vi'] = array(
 	'user-identity-box-group-chatmoderator' => 'Điều phối viên phòng chat',
 	'user-identity-box-group-sysop' => 'Bảo quản viên',
 	'user-identity-box-group-bureaucrat' => 'Hành chính viên',
-	'user-identity-box-group-founder' => 'Người sáng lập',
+	'user-identity-box-group-founder' => 'Sáng lập viên',
 	'user-identity-box-group-staff' => 'Nhân viên',
 	'user-identity-box-group-helper' => 'Hỗ trợ viên',
 	'user-identity-box-zero-state-location' => 'Vị trí',

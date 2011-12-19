@@ -580,6 +580,7 @@ $messages['vi'] = array(
 	'mostvisitedpages' => 'Các trang được xem nhiều nhất',
 	'mostvisitedpagessearchtext' => 'Tên trang',
 	'mostvisitedpagessearchbtn' => 'Tìm kiếm',
+	'mostvisitedpageslatest' => 'trong $1 phút cuối',
 	'mostvisitedpageslatestlink' => 'Xem trang được truy cập mới nhất',
 	'mostvisitedpagesalllink' => 'Xem trang được truy cập nhiều nhất',
 );

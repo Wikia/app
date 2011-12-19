@@ -231,6 +231,7 @@ $messages['ca'] = array(
 );
 
 /** German (Deutsch)
+ * @author Avatar
  * @author LWChris
  * @author Sebastian Wallroth
  */
@@ -244,6 +245,7 @@ $messages['de'] = array(
 	'wikiaquiz-titlescreentext-label' => 'Titel-Bildschirmtext',
 	'wikiaquiz-titlescreenimages-label' => 'Titel-Bildschirm Bilder',
 	'wikiaquiz-moreinfoheading-label' => 'Mehr Infos Überschrift',
+	'wikiaquiz-requireemail-label' => 'Der Spieler muss am Ende des Spiels eine E-Mail-Adresse angeben',
 	'wikiaquiz-moreinfolinks-label' => 'Mehr Infos Links',
 	'wikiaquiz-moreinfoarticle-label' => 'Artikel',
 	'wikiaquiz-moreinfolinktext-label' => 'Link-Text',
@@ -377,6 +379,7 @@ $messages['fr'] = array(
 	'wikiaquiz-titlescreentext-label' => 'Texte de l’écran de titre',
 	'wikiaquiz-titlescreenimages-label' => 'Images de l’écran de titre',
 	'wikiaquiz-moreinfoheading-label' => 'En-tête « Plus d’informations »',
+	'wikiaquiz-requireemail-label' => 'Demander au joueur de saisir une adresse de courriel à la fin du jeu',
 	'wikiaquiz-moreinfolinks-label' => "Liens « Plus d'informations »",
 	'wikiaquiz-moreinfoarticle-label' => 'Article',
 	'wikiaquiz-moreinfolinktext-label' => 'Texte du lien',
@@ -442,6 +445,7 @@ $messages['gl'] = array(
 	'wikiaquiz-titlescreentext-label' => 'Texto da pantalla de título',
 	'wikiaquiz-titlescreenimages-label' => 'Imaxes da pantalla de título',
 	'wikiaquiz-moreinfoheading-label' => 'Cabeceira con máis información',
+	'wikiaquiz-requireemail-label' => 'Obrigar ao xogador a que insira o enderezo de correo electrónico ao final do xogo',
 	'wikiaquiz-moreinfolinks-label' => 'Ligazóns con máis información',
 	'wikiaquiz-moreinfoarticle-label' => 'Artigo',
 	'wikiaquiz-moreinfolinktext-label' => 'Texto da ligazón',
@@ -507,6 +511,7 @@ $messages['ia'] = array(
 	'wikiaquiz-titlescreentext-label' => 'Texto del schermo de titulo',
 	'wikiaquiz-titlescreenimages-label' => 'Imagines del schermo de titulo',
 	'wikiaquiz-moreinfoheading-label' => 'Capite pro "plus info"',
+	'wikiaquiz-requireemail-label' => 'Require que le jocator entra un adresse de e-mail al fin del joco',
 	'wikiaquiz-moreinfolinks-label' => 'Ligamines pro "plus info"',
 	'wikiaquiz-moreinfoarticle-label' => 'Articulo',
 	'wikiaquiz-moreinfolinktext-label' => 'Texto del ligamine',
@@ -783,6 +788,7 @@ $messages['mk'] = array(
 	'wikiaquiz-titlescreentext-label' => 'Текст на насловниот екран',
 	'wikiaquiz-titlescreenimages-label' => 'Слики на насловниот екран',
 	'wikiaquiz-moreinfoheading-label' => 'Заглавие за повеќе информации',
+	'wikiaquiz-requireemail-label' => 'Барај од играчот да внесе е-пошта на крајот од играта',
 	'wikiaquiz-moreinfolinks-label' => 'Врски за повеќе информации',
 	'wikiaquiz-moreinfoarticle-label' => 'Статија',
 	'wikiaquiz-moreinfolinktext-label' => 'Текст за врската',
@@ -848,6 +854,7 @@ $messages['ms'] = array(
 	'wikiaquiz-titlescreentext-label' => 'Teks skrin tajuk',
 	'wikiaquiz-titlescreenimages-label' => 'Imej skrin tajuk',
 	'wikiaquiz-moreinfoheading-label' => 'Pengatas maklumat lanjut',
+	'wikiaquiz-requireemail-label' => 'Kehendaki pemain untuk memasukkan alamat e-mel di akhir permainan',
 	'wikiaquiz-moreinfolinks-label' => 'Pautan maklumat lanjut',
 	'wikiaquiz-moreinfoarticle-label' => 'Rencana',
 	'wikiaquiz-moreinfolinktext-label' => 'Teks Pautan',
@@ -980,6 +987,7 @@ $messages['no'] = array(
 	'wikiaquiz-titlescreentext-label' => 'Tekst for tittelbildet',
 	'wikiaquiz-titlescreenimages-label' => 'Bilder for tittelbildet',
 	'wikiaquiz-moreinfoheading-label' => 'Mer info-overskrift',
+	'wikiaquiz-requireemail-label' => 'Krever at spilleren oppgir en e-postadresse ved slutten av spillet',
 	'wikiaquiz-moreinfolinks-label' => 'Flere infolenker',
 	'wikiaquiz-moreinfoarticle-label' => 'Artikkel',
 	'wikiaquiz-moreinfolinktext-label' => 'Lenketekst',

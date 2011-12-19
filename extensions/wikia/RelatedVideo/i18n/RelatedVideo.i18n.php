@@ -168,6 +168,15 @@ $messages['no'] = array(
 	'relatedvideo' => 'Relaterte videoer',
 );
 
+/** Polish (Polski)
+ * @author Sovq
+ */
+$messages['pl'] = array(
+	'related-video-random-video' => 'Losowy film',
+	'related-video-related' => 'Podobne filmy',
+	'relatedvideo' => 'Podobne filmy',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  */
@@ -207,8 +216,8 @@ $messages['ru'] = array(
  */
 $messages['sr-ec'] = array(
 	'related-video-random-video' => 'Насумичан видео снимак',
-	'related-video-related' => 'Сродни видео снимци',
-	'relatedvideo' => 'Сродни видео снимци',
+	'related-video-related' => 'Сродни видео-снимци',
+	'relatedvideo' => 'Сродни видео-снимци',
 );
 
 /** Swedish (Svenska)

@@ -420,6 +420,14 @@ $messages['tt-cyrl'] = array(
 	'quickstats-header-likes' => 'Ошый',
 );
 
+/** Veps (Vepsän kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'quickstats-header-date' => 'Dat',
+	'quickstats-header-photos' => 'Fotokuvad',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Xiao Qiao
  */

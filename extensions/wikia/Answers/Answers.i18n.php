@@ -1369,6 +1369,7 @@ $messages['ms'] = array(
 );
 
 /** Dutch (Nederlands)
+ * @author MarkvA
  * @author McDutchie
  * @author SPQRobin
  * @author Siebrand
@@ -1377,7 +1378,7 @@ $messages['nl'] = array(
 	'answer_title' => 'Antwoord',
 	'answered_by' => 'Beantwoord door',
 	'unregistered' => 'Niet-geregistreerd',
-	'anonymous_edit_points' => '$1 {{PLURAL:$1|hulpje|hulpjes}}',
+	'anonymous_edit_points' => '$1 {{PLURAL:$1|helper|helpers}}',
 	'edit_points' => '{{PLURAL:$1|bewerkingspunt|bewerkingspuntent}}',
 	'ask_a_question' => 'Stel een vraag...',
 	'ask_a_question-widget' => 'Stel een vraag...',
@@ -2054,5 +2055,21 @@ $messages['tt-cyrl'] = array(
 /** Ukrainian (Українська) */
 $messages['uk'] = array(
 	'research_this' => 'Дослідити',
+);
+
+/** Veps (Vepsän kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'answer_title' => 'Vastuz',
+	'width' => 'Leveduz',
+	'you_can' => 'Tö sat:',
+	'categorize' => 'Kategoriziruida',
+	'a' => 'Vastuz:',
+	'answers-leaf' => 'Lehtez',
+	'answers-sky' => 'Taivaz',
+	'answers-spring' => "Keväz'",
+	'answers-forest' => 'Mec',
+	'answers-moonlight' => 'Kudmavauktuz',
 );
 

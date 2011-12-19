@@ -158,7 +158,7 @@ $messages['br'] = array(
 	'textregex-stats-url' => '[{{SERVER}}$1&id=$2 stadegoù]',
 	'textregex-unblock-succ' => 'Graet eo an distankadur',
 	'textregex-block-succ' => 'Graet eo ar stankadur',
-	'textregex-unblock-message' => "Dilemet eo bet ar frazenn '''$1''' deus ar frazennoù ne vez ket c'hoant outo.",
+	'textregex-unblock-message' => "Dilamet eo bet ar frazenn '''$1''' eus roll ar frazennoù da argas.",
 	'textregex-block-message' => "Ouzhpennet eo bet ar frazenn '''$1''' d'ar frazennoù ne vez ket c'hoant outo.",
 	'textregex-regex-block' => 'Frazenn da stankañ :',
 	'textregex-submit-regex' => 'Ouzhpennañ ur frazenn',

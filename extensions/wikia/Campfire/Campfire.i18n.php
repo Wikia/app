@@ -96,6 +96,14 @@ $messages['no'] = array(
 	'campfire-licensed-under' => 'Lisensiert under $1',
 );
 
+/** Polish (Polski)
+ * @author Sovq
+ */
+$messages['pl'] = array(
+	'campfire-page-header' => '$1 z $2',
+	'campfire-licensed-under' => 'Pod licencją $1',
+);
+
 /** Portuguese (Português)
  * @author Hamilton Abreu
  */

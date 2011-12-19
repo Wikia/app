@@ -2059,9 +2059,14 @@ $messages['pdc'] = array(
 
 /** Polish (Polski)
  * @author Anoon6
+ * @author Sovq
  */
 $messages['pl'] = array(
+	'multitasks-link-back-label' => 'tutaj',
+	'multiwikiedit' => 'Edytuj grupę stron',
 	'multiwikiedit_button' => 'EDYTUJ',
+	'multiwikiedit_confirm' => 'POTWIERDZENIE',
+	'multiwikiedit_caption' => 'Lista stron',
 	'multidelete_button' => 'USUŃ',
 	'multidelete_this_wiki' => 'ta wiki',
 	'multidelete_all_wikis' => 'wszystkie wiki',

@@ -18,7 +18,7 @@ $messages['en'] = array(
  */
 $messages['fr'] = array(
 	'centralhelpsearch-desc' => "Permet l'inclusion d'un formulaire pour rechercher dans l'Aide centrale de la communauté",
-	'centralhelpsearch-placeholder' => "Rechercher dans l'aide...",
+	'centralhelpsearch-placeholder' => "Rechercher dans l'aide&hellip;",
 );
 
 /** Galician (Galego)
@@ -26,7 +26,7 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'centralhelpsearch-desc' => 'Permite a inclusión dun formulario para buscar na axuda central da comunidade',
-	'centralhelpsearch-placeholder' => 'Procurar na axuda...',
+	'centralhelpsearch-placeholder' => 'Procurar na axuda&hellip;',
 );
 
 /** Interlingua (Interlingua)
@@ -34,7 +34,7 @@ $messages['gl'] = array(
  */
 $messages['ia'] = array(
 	'centralhelpsearch-desc' => 'Permitter le inclusion de un formulario pro cercar in le adjuta del Centro del Communitate',
-	'centralhelpsearch-placeholder' => 'Cercar adjuta...',
+	'centralhelpsearch-placeholder' => 'Cercar adjuta&hellip;',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -50,7 +50,7 @@ $messages['id'] = array(
  */
 $messages['it'] = array(
 	'centralhelpsearch-desc' => "Permetti l'inclusione di un form per cercare su Community Central Help",
-	'centralhelpsearch-placeholder' => 'Cerca aiuto...',
+	'centralhelpsearch-placeholder' => 'Cerca aiuto&hellip;',
 );
 
 /** Macedonian (Македонски)
@@ -58,7 +58,7 @@ $messages['it'] = array(
  */
 $messages['mk'] = array(
 	'centralhelpsearch-desc' => 'Дозволи вклучување на образец за пребарување на Помошта на Центарот на заедницата',
-	'centralhelpsearch-placeholder' => 'Пребарај помош...',
+	'centralhelpsearch-placeholder' => 'Пребарај помош&hellip;',
 );
 
 /** Malay (Bahasa Melayu)
@@ -66,7 +66,7 @@ $messages['mk'] = array(
  */
 $messages['ms'] = array(
 	'centralhelpsearch-desc' => 'Bolehkan penyertaan borang untuk mencari dalam Bantuan Pusat Komuniti',
-	'centralhelpsearch-placeholder' => 'Cari Bantuan...',
+	'centralhelpsearch-placeholder' => 'Cari Bantuan&hellip;',
 );
 
 /** Dutch (Nederlands)
@@ -74,7 +74,7 @@ $messages['ms'] = array(
  */
 $messages['nl'] = array(
 	'centralhelpsearch-desc' => 'Opname van een formulier om Community Central Help te doorzoeken toestaan',
-	'centralhelpsearch-placeholder' => 'Zoek in Help ...',
+	'centralhelpsearch-placeholder' => 'Zoek in Help &hellip;',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -82,7 +82,7 @@ $messages['nl'] = array(
  */
 $messages['no'] = array(
 	'centralhelpsearch-desc' => 'Tillat inkludering av et skjema for søk i Community Centrals hjelperegister',
-	'centralhelpsearch-placeholder' => 'Søk Hjelp...',
+	'centralhelpsearch-placeholder' => 'Søk Hjelp&hellip;',
 );
 
 /** Russian (Русский)
@@ -90,7 +90,7 @@ $messages['no'] = array(
  */
 $messages['ru'] = array(
 	'centralhelpsearch-desc' => 'Разрешить включение формы для поиска по Справке Вики Сообщества',
-	'centralhelpsearch-placeholder' => 'Поиск по Справке...',
+	'centralhelpsearch-placeholder' => 'Поиск по Справке&hellip;',
 );
 
 /** Swedish (Svenska)
@@ -98,6 +98,6 @@ $messages['ru'] = array(
  */
 $messages['sv'] = array(
 	'centralhelpsearch-desc' => 'Låter införandet av ett formulär för att söka i Community Central Help',
-	'centralhelpsearch-placeholder' => 'Sök hjälp...',
+	'centralhelpsearch-placeholder' => 'Sök hjälp&hellip;',
 );
 

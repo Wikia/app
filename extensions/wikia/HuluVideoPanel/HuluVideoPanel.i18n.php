@@ -39,6 +39,13 @@ $messages['gl'] = array(
 	'huluvideopanel-title' => 'Vídeos Hulu de {{SITENAME}}',
 );
 
+/** Hungarian (Magyar)
+ * @author Dj
+ */
+$messages['hu'] = array(
+	'huluvideopanel-title' => '{{SITENAME}} Hulu Videók',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -79,6 +86,13 @@ $messages['nl'] = array(
  */
 $messages['no'] = array(
 	'huluvideopanel-title' => 'Hulu-videoer på {{SITENAME}}',
+);
+
+/** Polish (Polski)
+ * @author Sovq
+ */
+$messages['pl'] = array(
+	'huluvideopanel-title' => 'Filmy Hulu na {{SITENAME}}',
 );
 
 /** Swedish (Svenska)

@@ -499,15 +499,15 @@ Ha segítségre van szükséged, és nincsenek helyi adminisztrátorok, látogas
 $messages['ia'] = array(
 	'welcome-user-page' => "==A proposito de me==
 
-''Isto es tu pagina de ustor. Modifica le pagina pro informar le communitate super te!''
+''Iste es tu pagina de usator. Modifica le pagina pro presentar te al communitate!''
 
 ==Mi contributiones==
 
-* [[Special:Contributions/{{PAGENAME}}|Contributions de usator]]
+* [[Special:Contributions/{{PAGENAME}}|Contributiones de iste usator]]
 
 ==My favorite pages==
 
-* Adde hic ligamines a tu paginas favorite in le wiki!
+* Adde ligamines a tu paginas favorite in iste wiki!
 * Pagina favorite no. 2
 * Pagina favorite no. 3",
 	'welcome-message-user' => 'Salute, benvenite a {{SITENAME}}! Gratias pro tu contribution al pagina [[:$1]].

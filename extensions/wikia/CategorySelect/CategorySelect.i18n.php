@@ -221,6 +221,7 @@ $messages['cs'] = array(
 );
 
 /** German (Deutsch)
+ * @author Avatar
  * @author Inkowik
  * @author Jan Luca
  * @author LWChris
@@ -246,7 +247,7 @@ $messages['de'] = array(
 	'categoryselect-error-user-rights' => 'Keine ausreichenden Benutzerrechte.',
 	'categoryselect-error-db-locked' => 'Die Datenbank ist vorübergehend gesperrt.',
 	'categoryselect-edit-abort' => 'Deine versuchte Änderung wurde durch ein Aufhängen einer Erweiterung abgebrochen',
-	'tog-disablecategoryselect' => 'Vereinfachtes Kategorisieren ausschalten',
+	'tog-disablecategoryselect' => 'Kategorie-Modul ausschalten (greift nur, wenn das grafische Bearbeiten ausgeschaltet wurde)',
 );
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)
@@ -319,7 +320,7 @@ $messages['fa'] = array(
 $messages['fi'] = array(
 	'categoryselect-desc' => 'Tarjoaa käyttöliittymän artikkelin luokkien hallitsemiselle ilman koko artikkelin muokkaamista',
 	'categoryselect-code-view' => 'Näytä koodi',
-	'categoryselect-code-view-placeholder' => 'Lisää luokkia tässä, esim. [[Luokka:Nimi]]',
+	'categoryselect-code-view-placeholder' => 'Lisää luokkia tähän, esim. [[Luokka:Nimi]]',
 	'categoryselect-visual-view' => 'Näytä visuaalisena',
 	'categoryselect-infobox-caption' => 'Luokan asetukset',
 	'categoryselect-infobox-category' => 'Syötä luokan nimi:',
@@ -997,6 +998,13 @@ $messages['uk'] = array(
 /** Urdu (اردو) */
 $messages['ur'] = array(
 	'categoryselect-button-cancel' => 'منسوخ',
+);
+
+/** Veps (Vepsän kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'categoryselect-button-save' => 'Panda muštho',
 );
 
 /** Vietnamese (Tiếng Việt)

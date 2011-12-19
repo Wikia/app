@@ -377,12 +377,15 @@ $messages['cs'] = array(
 );
 
 /** German (Deutsch)
+ * @author Avatar
  * @author LWChris
  * @author Laximilian scoken
+ * @author MtaÄ
  * @author The Evil IP address
  * @author Tiin
  */
 $messages['de'] = array(
+	'themedesigner-or' => 'oder',
 	'themedesigner-desc' => 'Erlaubt Wiki-Administratoren die Erstellung eines Themes für ein Wiki',
 	'themedesigner-title' => 'Wikia Theme Designer',
 	'themedesigner-background' => 'Hintergrund',
@@ -403,7 +406,7 @@ $messages['de'] = array(
 	'themedesigner-tab-theme' => 'Farbschema',
 	'themedesigner-tab-customize' => 'Anpassen',
 	'themedesigner-tab-wordmark' => 'Logo',
-	'themedesigner-preview-mode' => 'Vorschau-Modus ...',
+	'themedesigner-preview-mode' => 'Vorschau-Modus...',
 	'themedesigner-previous-versions' => 'Vorherige Versionen',
 	'themedesigner-button-save-im-done' => 'Speichern, ich bin fertig',
 	'themedesigner-button-cancel' => 'Abbrechen',
@@ -416,14 +419,16 @@ $messages['de'] = array(
 	'themedesigner-upload-your-own' => 'Eigenes Bild hochladen',
 	'themedesigner-button-upload' => 'Hochladen',
 	'themedesigner-button-upload-wordmark' => 'Hochladen',
-	'themedesigner-rules-background' => 'jpg, gif oder png. Maximal 100 Kilobyte.',
+	'themedesigner-rules-background' => 'jpg, gif oder png. Maximal $1 Kilobyte.',
 	'themedesigner-default' => 'Standard',
 	'themedesigner-font' => 'Schriftart',
 	'themedesigner-size' => 'Größe',
 	'themedesigner-button-save' => 'Speichern',
 	'themedesigner-upload-a-graphic' => 'Bild hochladen',
 	'themedesigner-rules-wordmark' => 'bis zu 250 x 65 Pixel (nur PNG-Dateien)',
-	'themedesigner-dont-use-a-graphic' => 'Keine Grafik verwenden',
+	'themedesigner-rules-favicon' => 'Lade eine 16x16 Pixel große .ico-Datei hoch. Ein Favicon ist ein kleines Icon, dass in der Browser-Adressleiste angezeigt wird.',
+	'themedesigner-rules-favicon-learn-more-link' => 'Weitere Informationen',
+	'themedesigner-dont-use-a-graphic' => 'Entfernen',
 	'themedesigner-history-item' => '$1 von $2',
 	'themedesigner-button-change-text' => 'Text ändern',
 	'themedesigner-reason' => 'Theme Designer - gespeichert von $1',
@@ -432,6 +437,7 @@ $messages['de'] = array(
 	'themedesigner-type-error' => 'Falscher Dateityp',
 	'themedesugber-uknown-error' => 'Ein Fehler ist aufgetreten, leider konnten wir ihn nicht identifizieren, bitte versuche es erneut',
 	'themedesigner-manual-upload-error' => 'Verwenden den Theme Designer um ein Wortmarke oder Wiki-Hintergrund hochzuladen',
+	'themedesigner-favicon-heading' => 'Favicon',
 );
 
 /** British English (British English) */
@@ -616,7 +622,7 @@ $messages['fr'] = array(
 	'themedesigner-upload-your-own' => 'Importez la vôtre',
 	'themedesigner-button-upload' => 'Importer',
 	'themedesigner-button-upload-wordmark' => 'Importer',
-	'themedesigner-rules-background' => 'jpg, gif ou png. Limite : 100 Ko',
+	'themedesigner-rules-background' => 'jpg, gif ou png. Limité à $1 kilooctets',
 	'themedesigner-default' => 'Défaut',
 	'themedesigner-font' => 'police',
 	'themedesigner-size' => 'taille',
@@ -675,7 +681,7 @@ $messages['gl'] = array(
 	'themedesigner-upload-your-own' => 'Cargar o seu',
 	'themedesigner-button-upload' => 'Cargar',
 	'themedesigner-button-upload-wordmark' => 'Cargar',
-	'themedesigner-rules-background' => 'jpg, gif ou png. Máximo de 100 kB',
+	'themedesigner-rules-background' => 'jpg, gif ou png. Máximo de $1 kB',
 	'themedesigner-default' => 'Por defecto',
 	'themedesigner-font' => 'Fonte de letra',
 	'themedesigner-size' => 'tamaño',
@@ -774,7 +780,7 @@ $messages['ia'] = array(
 	'themedesigner-upload-your-own' => 'Incargar un proprie',
 	'themedesigner-button-upload' => 'Incargar',
 	'themedesigner-button-upload-wordmark' => 'Incargar',
-	'themedesigner-rules-background' => 'JPG, GIF o PNG. Limite de 100 kilobytes.',
+	'themedesigner-rules-background' => 'JPG, GIF o PNG. Limite de $1 kilobytes.',
 	'themedesigner-default' => 'Predefinition',
 	'themedesigner-font' => 'typo de litteras',
 	'themedesigner-size' => 'dimension',
@@ -963,7 +969,7 @@ $messages['mk'] = array(
 	'themedesigner-upload-your-own' => 'Подигнете своја',
 	'themedesigner-button-upload' => 'Подигни',
 	'themedesigner-button-upload-wordmark' => 'Подигни',
-	'themedesigner-rules-background' => 'jpg, gif или png. Ограничено на 100 килобајти',
+	'themedesigner-rules-background' => 'jpg, gif или png. Ограничено на $1 килобајти',
 	'themedesigner-default' => 'По основно',
 	'themedesigner-font' => 'фонт',
 	'themedesigner-size' => 'големина',
@@ -1029,7 +1035,7 @@ $messages['ms'] = array(
 	'themedesigner-upload-your-own' => 'Muat naik gambar sendiri',
 	'themedesigner-button-upload' => 'Muat naik',
 	'themedesigner-button-upload-wordmark' => 'Muat naik',
-	'themedesigner-rules-background' => 'jpg, gif atau png. Had 100 kilobait',
+	'themedesigner-rules-background' => 'jpg, gif atau png. Had $1 kilobait',
 	'themedesigner-default' => 'Asali',
 	'themedesigner-font' => 'fon',
 	'themedesigner-size' => 'saiz',
@@ -1181,7 +1187,7 @@ $messages['no'] = array(
 	'themedesigner-upload-your-own' => 'Last opp din egen',
 	'themedesigner-button-upload' => 'Last opp',
 	'themedesigner-button-upload-wordmark' => 'Last opp',
-	'themedesigner-rules-background' => 'jpg, gif eller png. Grense på 100 kilobyte',
+	'themedesigner-rules-background' => 'jpg, gif eller png. Grense på $1 kilobyte',
 	'themedesigner-default' => 'Standard',
 	'themedesigner-font' => 'skrifttype',
 	'themedesigner-size' => 'størrelse',
@@ -1248,7 +1254,7 @@ $messages['pl'] = array(
 	'themedesigner-upload-your-own' => 'Prześlij własne',
 	'themedesigner-button-upload' => 'Prześlij',
 	'themedesigner-button-upload-wordmark' => 'Prześlij',
-	'themedesigner-rules-background' => 'jpg, gif lub png. ograniczenie do 100 kilobajtów',
+	'themedesigner-rules-background' => 'jpg, gif lub png. ograniczenie do $1 kilobajtów',
 	'themedesigner-default' => 'Domyślne',
 	'themedesigner-font' => 'czcionka',
 	'themedesigner-size' => 'rozmiar',
@@ -1465,6 +1471,7 @@ $messages['ro'] = array(
  * @author Kuzura
  */
 $messages['ru'] = array(
+	'themedesigner-or' => 'или',
 	'themedesigner-desc' => 'Позволяет администраторам разрабатывать темы для вики',
 	'themedesigner-title' => 'Конструктор тем Викия',
 	'themedesigner-background' => 'Фон',
@@ -1498,7 +1505,7 @@ $messages['ru'] = array(
 	'themedesigner-upload-your-own' => 'Загрузить свой логотип',
 	'themedesigner-button-upload' => 'Загрузить',
 	'themedesigner-button-upload-wordmark' => 'Загрузить',
-	'themedesigner-rules-background' => 'jpg, gif или png. Лимит составляет 100 килобайт',
+	'themedesigner-rules-background' => 'jpg, gif или png. Лимит составляет $1 килобайт',
 	'themedesigner-default' => 'По умолчанию',
 	'themedesigner-font' => 'шрифт',
 	'themedesigner-size' => 'размер',
@@ -1725,20 +1732,22 @@ $messages['uk'] = array(
  * @author XiaoQiaoGrace
  */
 $messages['vi'] = array(
-	'themedesigner-desc' => 'Cho phép các bảo quản viên trong wiki để thiết kế giao diện',
-	'themedesigner-title' => 'Thiết kế giao diện Wikia',
+	'themedesigner-or' => 'hoặc',
+	'themedesigner-desc' => 'Cho phép các bảo quản viên wiki thiết kế chủ đề cho một wiki',
+	'themedesigner-title' => 'Thiết kế chủ đề Wikia',
 	'themedesigner-background' => 'Nền',
 	'themedesigner-page' => 'Trang',
 	'themedesigner-color' => 'màu sắc',
 	'themedesigner-graphic' => 'đồ họa',
-	'themedesigner-buttons' => 'nút nhấn',
+	'themedesigner-buttons' => 'nút',
 	'themedesigner-links' => 'liên kết',
 	'themedesigner-header' => 'tiêu đề',
 	'themedesigner-small' => 'Nhỏ',
 	'themedesigner-medium' => 'Vừa',
 	'themedesigner-large' => 'Lớn',
-	'themedesigner-tile-background' => 'nền',
-	'themedesigner-tab-theme' => 'Giao diện',
+	'themedesigner-tile-background' => 'lặp nền',
+	'themedesigner-fix-background' => 'giữa',
+	'themedesigner-tab-theme' => 'Chủ đề',
 	'themedesigner-tab-customize' => 'Tùy chỉnh',
 	'themedesigner-preview-mode' => 'Chế độ trước',
 	'themedesigner-previous-versions' => 'Phiên bản cũ',
@@ -1753,21 +1762,25 @@ $messages['vi'] = array(
 	'themedesigner-upload-your-own' => 'Tải lên của riêng bạn',
 	'themedesigner-button-upload' => 'Tải lên',
 	'themedesigner-button-upload-wordmark' => 'Tải lên',
-	'themedesigner-rules-background' => 'jpg, gif hoặc png. giới hạn 100 kilobyte',
+	'themedesigner-rules-background' => 'jpg, gif hoặc png. giới hạn $1 kilobyte',
 	'themedesigner-default' => 'Mặc định',
 	'themedesigner-font' => 'phông chữ',
-	'themedesigner-size' => 'Dung lượng, kích cỡ',
+	'themedesigner-size' => 'Dung lượng',
 	'themedesigner-button-save' => 'Lưu trang',
-	'themedesigner-upload-a-graphic' => 'tải lên một hình ảnh',
-	'themedesigner-rules-wordmark' => 'giới hạn 250×65 điểm ảnh (chỉ tệp .png)',
-	'themedesigner-dont-use-a-graphic' => 'Không dùng đồ họa',
+	'themedesigner-upload-a-graphic' => 'tải lên một đồ họa',
+	'themedesigner-rules-wordmark' => 'Tải lên một tập tin .png có kích thước 250 x 65 pixel hoặc ít hơn.',
+	'themedesigner-rules-favicon' => 'Tải lên một tập tin .ico 16x16 pixel. Favicon là một biểu tượng nhỏ xuất hiện trên wiki của bạn trên thanh trình duyệt.',
+	'themedesigner-rules-favicon-learn-more-link' => 'Tìm hiểu thêm.',
+	'themedesigner-dont-use-a-graphic' => 'dời bỏ',
 	'themedesigner-history-item' => '$1 bởi $2',
 	'themedesigner-button-change-text' => 'Thay đổi văn bản',
-	'themedesigner-reason' => 'Thiết kế giao diện - đã xong bởi $1',
-	'themedesigner-size-error' => 'Dung lượng, kích cỡ không chính xác',
-	'themedesigner-dimensions-error' => 'Hình ảnh vượt quá kích cỡ giới hạn',
+	'themedesigner-reason' => 'Thiết kế chủ đề - đã xong bởi $1',
+	'themedesigner-size-error' => 'Dung lượng không chính xác',
+	'themedesigner-dimensions-error' => 'Hình ảnh vượt quá dung lượng giới hạn',
 	'themedesigner-type-error' => 'Loại tệp không chính xác',
 	'themedesugber-uknown-error' => 'Lỗi đã xảy ra, tiếc là chúng tôi không thể xác định nó, xin vui lòng thử lại',
+	'themedesigner-manual-upload-error' => 'Sử dụng Thiết kế chủ đề để tải lên nhãn hiệu hoặc nền cho wiki',
+	'themedesigner-favicon-heading' => 'Favicon',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

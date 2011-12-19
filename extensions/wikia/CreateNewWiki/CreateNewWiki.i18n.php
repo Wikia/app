@@ -237,7 +237,7 @@ $messages['bg'] = array(
 $messages['br'] = array(
 	'createnewwiki-desc' => '[[Special:CreateNewWiki|Skoazeller evit krouiñ wikioù]]',
 	'cnw-next' => "War-lerc'h",
-	'cnw-back' => 'A-raok',
+	'cnw-back' => 'Distreiñ',
 	'cnw-or' => 'pe',
 	'cnw-title' => 'Krouiñ ur wiki nevez',
 	'cnw-name-wiki-headline' => 'Kregiñ gant ur wiki',
@@ -255,7 +255,7 @@ $messages['br'] = array(
 	'cnw-auth-headline' => 'Kevreañ',
 	'cnw-auth-headline2' => 'En em enskrivañ',
 	'cnw-auth-creative' => "Kevreit ouzh ho kont evit kenderc'hel da sevel ho wiki.",
-	'cnw-auth-signup-creative' => "Ezhomm ho po deus ur gont evit kenderc'hel da sevel ur wiki.<br />Ne bado nemet ur vunutenn evit bezañ enskrivet !",
+	'cnw-auth-signup-creative' => "Ezhomm ho po eus ur gont evit kenderc'hel da sevel ur wiki.<br />Ne bado nemet ur vunutenn evit bezañ enskrivet !",
 	'cnw-auth-facebook-signup' => 'En em enskrivañ dre Facebook',
 	'cnw-auth-facebook-login' => 'Kevreañ gant Facebook',
 	'cnw-desc-headline' => 'Eus petra zo kaoz en ho wiki ?',
@@ -1897,24 +1897,35 @@ $messages['tt-cyrl'] = array(
 	'cnw-desc-lang' => 'Тел',
 );
 
+/** Veps (Vepsän kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'cnw-next' => "Jäl'ghine",
+	'cnw-desc-select-one' => "Valikat üks'",
+	'cnw-desc-change-lang' => 'toižetada',
+	'cnw-desc-lang' => 'Kel’',
+	'cnw-badword-header' => 'Hei sigä',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
 $messages['vi'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Cửa sổ tạo Wiki]]',
+	'createnewwiki-desc' => '[[Special:CreateNewWiki|Thuật sĩ tạo Wiki]]',
 	'cnw-next' => 'Tiếp theo',
 	'cnw-back' => 'Trở lại',
 	'cnw-or' => 'hoặc',
 	'cnw-title' => 'Tạo Wiki mới',
-	'cnw-name-wiki-headline' => 'Bắt đầu một Wiki',
+	'cnw-name-wiki-headline' => 'Tạo lập một Wiki',
 	'cnw-name-wiki-creative' => 'Wikia là nơi tốt nhất để xây dựng một trang web và phát triển một cộng đồng xung quanh những gì bạn yêu thích.',
 	'cnw-name-wiki-label' => 'Tên wiki của bạn',
 	'cnw-name-wiki-wiki' => 'Wiki',
-	'cnw-name-wiki-domain-label' => 'Cho wiki của bạn một địa chỉ',
-	'cnw-name-wiki-submit-error' => 'Rất tiếc! Bạn cần phải điền vào cả hai ô trống ở trên để tiếp tục.',
+	'cnw-name-wiki-domain-label' => 'Tặng cho wiki của bạn một địa chỉ',
+	'cnw-name-wiki-submit-error' => 'Rất tiếc! Bạn cần phải điền vào cả hai chỗ trên ở trên để tiếp tục.',
 	'cnw-login' => 'Đăng nhập',
-	'cnw-signup' => 'Mở tài khoản',
+	'cnw-signup' => 'Tạo tài khoản',
 	'cnw-signup-prompt' => 'Cần một tài khoản?',
 	'cnw-call-to-signup' => 'Đăng ký ở đây',
 	'cnw-login-prompt' => 'Bạn đã có tài khoản?',
@@ -1927,7 +1938,7 @@ $messages['vi'] = array(
 	'cnw-auth-facebook-login' => 'Đăng nhập cùng Facebook',
 	'cnw-desc-headline' => 'Wiki của bạn đề cập về?',
 	'cnw-desc-creative' => 'Mô tả chủ đề của bạn',
-	'cnw-desc-placeholder' => 'Điều này sẽ xuất hiện trên trang chính wiki của bạn.',
+	'cnw-desc-placeholder' => 'Điều này sẽ xuất hiện trên trang chính của wiki bạn.',
 	'cnw-desc-tip1' => 'Gợi ý',
 	'cnw-desc-tip1-creative' => 'Sử dụng khoảng trống này để nói với mọi người về wiki của bạn trong một hoặc hai câu',
 	'cnw-desc-tip2-creative' => 'Cung cấp cho người truy cập một số chi tiết cụ thể về chủ đề của bạn',
@@ -1941,28 +1952,35 @@ $messages['vi'] = array(
 	'cnw-desc-wiki-submit-error' => 'Hãy chọn một thể loại',
 	'cnw-theme-headline' => 'Chọn một chủ đề',
 	'cnw-theme-creative' => 'Chọn một chủ đề dưới đây, bạn sẽ có thể xem thử từng chủ đề như bạn đã chọn nó.',
-	'cnw-theme-instruction' => 'Bạn cũng có thể thiết kế chủ đề sau này bằng cách vào "Công cụ".',
+	'cnw-theme-instruction' => 'Bạn cũng có thể thiết kế chủ đề sau này bằng cách vào "Công cụ của tôi".',
 	'cnw-upgrade-headline' => 'Bạn có muốn nâng cấp?',
-	'cnw-upgrade-creative' => 'Nâng cấp lên Wikia Plus cho phép bạn để loại bỏ quảng cáo từ <span class="wiki-name"></span> , một thời gian cung cấp chỉ dành cho những người sáng lập mới.',
-	'cnw-upgrade-marketing' => 'Wikia Plus là một giải pháp tuyệt vời cho:<ul>
+	'cnw-upgrade-creative' => 'Nâng cấp lên Wikia Cộng cho phép bạn để loại bỏ quảng cáo từ <span class="wiki-name"></span> , một thời gian cung cấp chỉ dành cho những sáng lập viên mới.',
+	'cnw-upgrade-marketing' => 'Wikia Cộng là một giải pháp tuyệt vời cho:<ul>
 <li>Wiki chuyên nghiệp</li>
 <li>Phi lợi nhuận</li>
 <li>Gia đình</li>
 <li>Trường học</li>
 <li>Dự án cá nhân</li>
 </ul>
-Nâng cấp thông qua PayPal để có được một wiki quảng cáo miễn phí với chỉ $4,95 cho một tháng!',
+Nâng cấp thông qua PayPal để có được một quảng cáo wiki miễn phí với chỉ $4,95 cho một tháng!',
 	'cnw-upgrade-now' => 'Nâng cấp ngay',
 	'cnw-upgrade-decline' => 'Không, cảm ơn, tiếp tục wiki của tôi',
 	'cnw-welcome-headline' => 'Chúc mừng! $1 đã được tạo ra',
 	'cnw-welcome-instruction1' => 'Nhấn vào nút dưới đây để bắt đầu thêm các trang cho wiki của bạn.',
 	'cnw-welcome-instruction2' => 'Bạn sẽ thấy nút này trong suốt wiki của bạn, sử dụng nó bất cứ lúc nào bạn muốn thêm một trang mới.',
-	'cnw-welcome-help' => 'Tìm câu trả lời, lời khuyên và nhiều hơn trên <a href="http://community.wikia.com">Cộng đồng trung tâm</a>.',
+	'cnw-welcome-help' => 'Tìm câu trả lời, lời khuyên và nhiều hơn trên <a href="http://vi.wikia.com">Cộng đồng trung tâm</a>.',
 	'cnw-error-general' => 'Một cái gì đó đã xảy ra trong khi tạo ra wiki của bạn. Xin vui lòng thử lại sau.',
 	'cnw-error-general-heading' => 'Lỗi tạo Wiki mới',
+	'cnw-error-database' => 'Lỗi Cơ sở dữ liệu: $1',
+	'cnw-badword-header' => 'Whoa có rồi',
 	'cnw-badword-msg' => 'Chào bạn, xin vui lòng tránh sử dụng những từ ngữ xấu hoặc từ bị cấm trong các mô tả Wiki: $1',
 	'cnw-error-wiki-limit-header' => 'Wiki đã đạt đến giới hạn',
-	'cnw-error-wiki-limit' => 'Chào, bạn bị giới hạn khi tạo ra $1 wiki mỗi ngày.  Hãy chờ 24 giờ trước khi tạo một wiki khác.',
+	'cnw-error-wiki-limit' => 'Chào, bạn bị giới hạn khi tạo ra $1 wiki mỗi ngày. Hãy chờ 24 giờ trước khi tạo một wiki khác.',
+	'cnw-error-blocked-header' => 'Tài khoản bị chặn',
+	'cnw-error-blocked' => 'Bạn đã bị cấm bởi  $1. Lý do đưa ra là: $2 . (ID cấm để tham khảo: $3 )',
+	'cnw-error-torblock' => 'Tạo wiki qua mạng Tor là không được phép.',
+	'cnw-error-bot' => 'Chúng tôi đã phát hiện rằng bạn có thể là một bot. Nếu chúng tôi đã làm sai, hãy liên hệ với chúng tôi mô tả rằng bạn đã được phát hiện sai là một bot, và chúng tôi sẽ hỗ trợ bạn trong việc tạo ra của wiki bạn: [http://www.wikia.com/Special:Contact/general Liên hệ với Chúng tôi]',
+	'cnw-error-bot-header' => 'Bạn đã được phát hiện là một bot',
 );
 
 /** Chinese (中文) */

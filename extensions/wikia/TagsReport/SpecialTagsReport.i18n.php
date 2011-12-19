@@ -566,7 +566,7 @@ $messages['uk'] = array(
 	'tagsreportgenerated' => 'Створено $1 о $2',
 );
 
-/** Veps (Vepsan kel')
+/** Veps (Vepsän kel')
  * @author Игорь Бродский
  */
 $messages['vep'] = array(

@@ -1928,31 +1928,109 @@ $messages['inh'] = array(
  * @author Minerva Titani
  */
 $messages['it'] = array(
-	'autocreatewiki' => 'Crea un nuovo wiki',
+	'autocreatewiki' => 'Crea una nuova wiki',
+	'autocreatewiki-desc' => "Crea una wiki in WikiFactory su richiesta dell'utente",
 	'autocreatewiki-page-title-default' => 'Crea una nuova wiki',
+	'autocreatewiki-page-title-answers' => 'Crea un nuovo sito di Risposte',
+	'createwiki' => 'Crea una nuova wiki',
+	'autocreatewiki-chooseone' => 'Scegli...',
+	'autocreatewiki-required' => '$1 = richiesto',
+	'autocreatewiki-web-address' => 'Indirizzo web:',
+	'autocreatewiki-category-select' => 'Scegli',
+	'autocreatewiki-language-top' => '$1 lingue principali',
+	'autocreatewiki-language-all' => 'Tutte le lingue',
 	'autocreatewiki-birthdate' => 'Data di nascita:',
-	'autocreatewiki-create-account' => 'Crea un accout',
+	'autocreatewiki-blurry-word' => 'Parola sfocata:',
+	'autocreatewiki-remember' => 'Ricordami',
+	'autocreatewiki-create-account' => 'Crea un account',
+	'autocreatewiki-done' => 'fatto',
 	'autocreatewiki-error' => 'errore',
 	'autocreatewiki-haveaccount-question' => 'Hai già un account Wikia?',
+	'autocreatewiki-success-title-default' => 'La tua wiki è stata creata!',
+	'autocreatewiki-success-title-answers' => 'Il tuo sito di Risposte è stato creato!',
+	'autocreatewiki-success-subtitle' => 'Ora puoi iniziare a lavorare nella tua wiki visitando:',
+	'autocreatewiki-success-has-been-created' => 'è stata creata!',
+	'autocreatewiki-success-get-started' => 'Per iniziare',
+	'autocreatewiki-info-domain' => 'È meglio usare una parola che sia una possibile parola chiave per le ricerche sul tuo argomento.',
+	'autocreatewiki-info-topic' => 'Aggiungi una breve descrizione come "Star Wars" o "Spettacoli televisivi"',
+	'autocreatewiki-info-category-default' => 'Questa aiuterà i visitatori a trovare la tua wiki.',
+	'autocreatewiki-info-category-answers' => 'Questa aiuterà i visitatori a trovare il tuo sito di Risposte.',
+	'autocreatewiki-info-language' => 'Questa sarà la lingua di default per i visitatori della tua wiki.',
 	'autocreatewiki-info-email-address' => 'Il tuo indirizzo e-mail non viene mai mostrato ad alcun utente di Wikia.',
+	'autocreatewiki-info-realname' => 'Se si sceglie di fornirlo, questo verrà usato per attribuirti il lavoro effettuato.',
+	'autocreatewiki-info-birthdate' => "Wikia richiede che tutti gli utenti forniscano la loro reale data di nascita sia come misura di sicurezza sia come un modo per preservare l'integrità del sito nel rispetto delle regole federali.",
+	'autocreatewiki-info-blurry-word' => 'Per aiutarci a contrastare la creazione automatica di account, per favore inserisci la parola sfocata che vedi in questo campo.',
+	'autocreatewiki-info-terms-agree' => 'Con la creazione di una wiki e di un account utente, accetti i <a href="http://www.wikia.com/wiki/Terms_of_use">Termini di utilizzo di Wikia</a>',
+	'autocreatewiki-info-staff-username' => "<b>Solo staff:</b> L'utente specificato verrà indicato come il fondatore.",
+	'autocreatewiki-title-template' => '$1 Wiki',
+	'autocreatewiki-limit-day' => 'Oggi Wikia ha superato il numero massimo di creazioni di wiki ($1).',
+	'autocreatewiki-limit-creation' => 'Hai superato il numero massimo di creazioni di wiki in 24 ore ($1).',
 	'autocreatewiki-empty-field' => 'Si prega di compilare questo campo.',
+	'autocreatewiki-bad-name' => 'Il nome non può contenere caratteri speciali (come $ o @) e deve essere una sola parola minuscola, senza spazi.',
 	'autocreatewiki-invalid-wikiname' => 'Il nome non può contenere caratteri speciali (come $ o @) e non può essere vuoto',
-	'autocreatewiki-name-too-short' => 'Questo nome è troppo breve. Per favore scegli un nome con almeno 3 caratteri.',
-	'autocreatewiki-name-too-long' => 'Questo nome è troppo lungo. Per favore scegli un nome con un massimo di 50 caratteri.',
+	'autocreatewiki-violate-policy' => 'Il nome di questa wiki contiene una parola che viola la nostra politica di denominazione',
+	'autocreatewiki-name-taken' => 'C\'è già una wiki con questo indirizzo. Contribuisci a <a href="http://$1.wikia.com">http://$1.wikia.com</a> o scegli un altro indirizzo.',
+	'autocreatewiki-name-too-short' => 'Questo indirizzo è troppo breve. Per favore scegli un indirizzo con almeno 3 caratteri.',
+	'autocreatewiki-name-too-long' => 'Questo indirizzo è troppo lungo. Per favore scegli un indirizzo con un massimo di 50 caratteri.',
 	'autocreatewiki-similar-wikis' => 'Qui sotto trovi le wiki già create su questo argomento. Ti consigliamo di contribuire a una di queste.',
+	'autocreatewiki-invalid-username' => 'Questo nome utente non è valido.',
+	'autocreatewiki-busy-username' => 'Questo nome utente è già preso.',
 	'autocreatewiki-blocked-username' => 'Non puoi creare un account.',
+	'autocreatewiki-user-notloggedin' => 'Il tuo account è stato creato ma non hai effettuato il login!',
+	'autocreatewiki-empty-language' => 'Per favore scegli la lingua per la wiki.',
+	'autocreatewiki-empty-category' => 'Per favore scegli una categoria.',
+	'autocreatewiki-empty-wikiname' => 'Il nome della wiki non può essere vuoto.',
+	'autocreatewiki-empty-username' => 'Il nome utente non può essere vuoto.',
+	'autocreatewiki-empty-password' => 'La password non può essere vuota.',
+	'autocreatewiki-empty-retype-password' => 'La ripetizione della password non può essere vuota.',
+	'autocreatewiki-category-label' => 'Categoria:',
 	'autocreatewiki-category-other' => 'Altro',
+	'autocreatewiki-set-username' => 'Imposta prima il nome utente.',
+	'autocreatewiki-invalid-category' => 'Valore della categoria non valido.
+Per favore scegliene uno dal menu a comparsa.',
+	'autocreatewiki-invalid-language' => 'Valore della lingua non valido.
+Per favore scegliene uno dal menu a comparsa.',
+	'autocreatewiki-invalid-retype-passwd' => 'Per favore ripeti la stessa password di prima',
+	'autocreatewiki-invalid-birthday' => 'Data di nascita non valida',
+	'autocreatewiki-limit-birthday' => 'Impossibile registrarti.',
+	'autocreatewiki-log-title' => 'Stiamo creando la tua wiki',
+	'autocreatewiki-step0' => 'Inizializzazione del processo ...',
+	'autocreatewiki-stepdefault' => 'Il processo è in corso, per favore attendi ...',
+	'autocreatewiki-errordefault' => 'Il processo non è ancora completato ...',
+	'autocreatewiki-step1' => 'Creazione della cartella delle immagini ...',
+	'autocreatewiki-step2' => 'Creazione del database ...',
+	'autocreatewiki-step3' => 'Impostazione delle informazioni di default nel database ...',
+	'autocreatewiki-step4' => 'Copia delle immagini e del logo di default ...',
+	'autocreatewiki-step5' => 'Impostazione delle variabili di default nel database ...',
+	'autocreatewiki-step6' => 'Impostazione delle tabelle di default nel database ...',
+	'autocreatewiki-step7' => 'Impostazione dello starter della lingua ...',
+	'autocreatewiki-step8' => 'Impostazione dei gruppi utente e delle categorie ...',
+	'autocreatewiki-step9' => 'Impostazione delle variabili per la nuova wiki ...',
+	'autocreatewiki-step10' => 'Impostazione delle pagine nella wiki centrale ...',
+	'autocreatewiki-step11' => "Invio della email all'utente ...",
+	'autocreatewiki-redirect' => 'Reindirizzamento alla nuova wiki: $1 ...',
 	'autocreatewiki-congratulation' => 'Congratulazioni!',
-	'autocreatewiki-protect-reason' => "parte dell'interfaccia ufficiale",
-	'autocreatewiki-welcomebody' => 'Ciao $2,
+	'autocreatewiki-welcometalk-log' => 'Messaggio di benvenuto',
+	'autocreatewiki-regex-error-comment' => 'usato nella wiki $1 (testo completo: $2)',
+	'autocreatewiki-step2-error' => 'Il database esiste!',
+	'autocreatewiki-step3-error' => 'Impossibile impostare le informazioni di default nel database!',
+	'autocreatewiki-step6-error' => 'Impossibile impostare le tabelle di default nel database!',
+	'autocreatewiki-step7-error' => 'Impossibile copiare il database dello starter per la lingua!',
+	'autocreatewiki-protect-reason' => "Parte dell'interfaccia ufficiale",
+	'autocreatewiki-welcomesubject' => '$1 è stata creata!',
+	'autocreatewiki-welcomebody' => "Ciao $2,
 
-La wikia che hai creato è ora disponibile su <$1>. Speriamo di vedere i tuoi contributi al più presto! <br /> Abbiamo aggiunto alcune informazione e suggerimenti alla tua pagina di discussione (<$5>) per aiutarti a mettere in moto la tua wiki. Per qualunque domanda, puoi rispondere a questa email o controllare sulle pagina di aiuto su <http://help.wikia.com>.
+La wiki che hai creato è ora disponibile su <$1>. Speriamo di vedere i tuoi contributi al più presto! <br /> Abbiamo aggiunto alcune informazioni e suggerimenti alla tua pagina di discussione (<$5>) per aiutarti a iniziare. Per qualunque domanda o problema, puoi chiedere aiuto alla community alla pagina <http://it.community.wikia.com/wiki/Forum:Index> o contattare lo staff per email all'indirizzo community@wikia.com. 
 
-Buona fortuna per il progetto,
+Buona fortuna per il tuo progetto,
 
-$3 Wikia Community Team <http://www.wikia.com/wiki/User:$4>',
+$3 
+
+Wikia Community Team 
+
+<http://www.wikia.com/wiki/User:$4>",
 	'autocreatewiki-welcometalk' => "== Benvenuto! ==
-Ciao \$1 -- siamo molto contenti di avere '''\$4''' nella nostra Wikia community!   Grazie per la tua collaborazione! Ti vogliamo dare alcuni suggerimenti per aiutarti a mettere in moto la tua wiki.
+<div style=\"font-size:120%; line-height:1.2em;\">Ciao \$1! Siamo molto contenti di avere '''\$4''' nella nostra community Wikia !   Grazie per la tua collaborazione! Ti vogliamo dare alcuni suggerimenti per aiutarti a mettere in moto la tua wiki.
 
 === '''I tuoi primi quattro passi''' ===
 1. '''Crea la tua [[Utente:\$1|Pagina Utente]]''' - è il posto per parlare di te stesso e farti conoscere (e fare pratica!)
@@ -1972,7 +2050,11 @@ Più pagine e link vengono creati e più velocemente la tua wiki diventerà popo
 
 Per qualunque altre domanda, puoi leggere le [[w:c:Aiuto:Aiuto_Wiki|pagine di aiuto]], oppure spedirci un'e-mail attraverso il nostro [[Special:Contact|modulo dei contatti]]. Non dimenticare di controllare le altre wiki su [[wikia:Wikia|Wikia]] per idee, template, layout e molto altro!
 
-Buona fortuna, [[User:\$2|\$3]] <staff />",
+Buona fortuna! 
+
+[[User:\$2|\$3]] <staff /></div>",
+	'newwikis' => 'Nuove wiki',
+	'newwikisstart' => 'Mostra le wiki a partire da:',
 );
 
 /** Japanese (日本語)
@@ -4330,6 +4412,20 @@ $messages['uk'] = array(
 	'autocreatewiki-congratulation' => 'Вітаємо!',
 	'autocreatewiki-protect-reason' => 'Частина офіційного інтерфейсу',
 	'newwikis' => 'Нові вікі',
+);
+
+/** Veps (Vepsän kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'autocreatewiki' => "Säta uz' wiki",
+	'autocreatewiki-page-title-default' => "Säta uz' wiki",
+	'createwiki' => "Säta uz' wiki",
+	'autocreatewiki-birthdate' => 'Sündunddat:',
+	'autocreatewiki-error' => 'petuz',
+	'autocreatewiki-success-get-started' => 'Radon augotiž',
+	'autocreatewiki-title-template' => '$1 Wiki',
+	'autocreatewiki-category-label' => 'Kategorii:',
 );
 
 /** Chinese (中文) */

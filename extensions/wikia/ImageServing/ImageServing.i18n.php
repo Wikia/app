@@ -119,6 +119,13 @@ $messages['no'] = array(
 	'imageserving-desc' => 'Velger ut bilder fra en angitt rekke sider basert på visuelle krav',
 );
 
+/** Polish (Polski)
+ * @author Sovq
+ */
+$messages['pl'] = array(
+	'imageserving-desc' => 'Wybiera obrazy z określonej grupy stron na bazie preferencji wizualnych.',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  */

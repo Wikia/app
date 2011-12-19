@@ -212,6 +212,14 @@ Per favor seque le ligamine ab tu e-mail.',
 	'unsubscribe-preferences-notice' => 'Le invio de e-mail ha essite disactivate pro tu conto. Visita le scheda "Profilo de usator" pro reactivar lo.',
 );
 
+/** Italian (Italiano)
+ * @author Minerva Titani
+ */
+$messages['it'] = array(
+	'unsubscribe-preferences-toggle' => 'Disattiva la ricezione di tutte le mail da Wikia (deseleziona per accedere alle opzioni sottostanti)',
+	'unsubscribe-preferences-notice' => 'Le email sono state disattivate per il tuo account. Accedi alla scheda "Profilo" per riattivarle.',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */

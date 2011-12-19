@@ -211,9 +211,14 @@ $messages['no'] = array(
 
 /** Polish (Polski)
  * @author Cloudissimo
+ * @author Sovq
  */
 $messages['pl'] = array(
+	'interstitial-default-campaign-code' => 'Wikia Cię Kocha!',
 	'interstitial-skip-ad' => 'Pomiń tę reklamę',
+	'interstitial-already-logged-in-no-link' => 'Jesteś już zalogowany i nie ustawiono lokalizacji docelowej.',
+	'interstitial-disabled-no-link' => 'Nie ustawiono docelowej lokalizacji a strony pośrednie nie są włączone na tej wiki.',
+	'interstitial-link-away' => 'Nie ma tu nic do oglądania! <br /><br />Może chcesz zobaczyć [[{{MediaWiki:Mainpage}}|Stronę główną]] lub [[Special:Random|losową stronę]]?',
 	'exitstitial-register' => '<a href="#" class="register">Zarejestruj się</a> lub <a href="#" class="login">zaloguj</a> żeby pomijać reklamy.',
 	'exitstitial-button' => 'Pomiń reklamę',
 );

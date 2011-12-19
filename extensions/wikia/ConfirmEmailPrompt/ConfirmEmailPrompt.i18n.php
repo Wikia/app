@@ -58,6 +58,14 @@ $messages['gl'] = array(
 	'confirmemailprompt-error' => 'É este o seu enderezo de correo electrónico: <strong>$1</strong>? [[$2|Confírmeo]] ou [[$3|modifíqueo]].',
 );
 
+/** Hungarian (Magyar)
+ * @author Dj
+ */
+$messages['hu'] = array(
+	'confirmemailprompt-desc' => 'Figyelmeztető üzenetet jelenít meg, ha a szerkesztő email címe nincs megerősítve',
+	'confirmemailprompt-error' => 'Ez az email címed? <strong>$1</strong>? [[$2Erősítsed meg]] vagy [[$3|változtasd meg!]].',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */

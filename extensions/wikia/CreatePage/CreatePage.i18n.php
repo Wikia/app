@@ -259,6 +259,50 @@ Escriu la primera secció de la pàgina aquí.
 Escriu la segona secció de la pàgina aquí.',
 );
 
+/** Czech (Česky)
+ * @author Darth Daron
+ */
+$messages['cs'] = array(
+	'createpage-desc' => 'Umožňuje vytvořit novou stránku pomocí WYSIWYG editoru.',
+	'createpage-sp-title' => 'Vytvořit novou stránku',
+	'createpage_title' => 'Vytvořit novou stránku',
+	'createpage_title_caption' => 'Název',
+	'createpage_enter_text' => 'Text:',
+	'createpage_empty_title_error' => 'Název povinný',
+	'createpage_empty_article_body_error' => 'Text stránky povinný',
+	'createpage_invalid_title_error' => 'Neplatný název',
+	'createpage_article_already_exists' => 'Stránka s tímto názvem již existuje.
+Vyberte prosím jiný název.',
+	'createpage_spam' => 'Omlouváme se, ale vaše úpravy nelze uložit.',
+	'createpage_cant_edit' => 'Nelze provést úpravy',
+	'createpage-dialog-title' => 'Vytvořit novou stránku',
+	'createpage-dialog-message1' => 'Hurá, vytváříte novou stránku!',
+	'createpage-dialog-message2' => 'Jaký je název článku?',
+	'createpage-dialog-choose' => 'Zvolte rozvržení stránky:',
+	'createpage-dialog-format' => 'Standardní rozložení',
+	'createpage-dialog-blank' => 'Prázdná stránka',
+	'createpage-error-empty-title' => 'Prosím, zadejte název vaší stánky.',
+	'createpage-error-invalid-title' => 'Omlovuáme se, ale název stránky je neplatný.
+Použijte prosím jiný název.',
+	'createpage-error-article-exists' => 'Stránka s tímto názvem již existuje.
+Můžete jít na <a href="$1">$2</a> nebo přejmenovat vaši stránku.',
+	'createpage-error-article-spam' => 'Omlouváme se, ale název stránky byl odmítnut naším spamovým filtrem.
+Použijte prosím jiný název.',
+	'createpage-error-article-blocked' => 'Omlouváme se, ale v současné době nemůžete vytvořit tuto stránku.',
+	'tog-createpagedefaultblank' => 'Použijte prázdnou stránku jako výchozí pro vytvoření nové stránky',
+	'tog-createpagepopupdisabled' => 'Zakázat automaticky otevíraný dialog "Vytvořit nový článek"',
+	'newpagelayout' => '[[File:Placeholder|right|300px]]
+Sem napište první odstavec.
+
+==Nadpis části==
+
+Sem napište první část stránky.
+
+==Nadpis části==
+
+Sem napište druhou část stránky.',
+);
+
 /** German (Deutsch)
  * @author Inkowik
  * @author LWChris
@@ -438,12 +482,17 @@ Hemen zure artikuluaren bigarren atala idatz ezazu.',
 /** Persian (فارسی)
  * @author BlueDevil
  * @author Mjbmr
+ * @author ZxxZxxZ
  */
 $messages['fa'] = array(
 	'createpage-sp-title' => 'ایجاد صفحهٔ جدید',
 	'createpage_title' => 'ایجاد مقالۀ جدید',
 	'createpage_title_caption' => 'عنوان',
 	'createpage_enter_text' => 'متن',
+	'createpage-dialog-title' => 'ایجاد صفحهٔ جدید',
+	'createpage-dialog-format' => 'چیدمان استاندارد',
+	'createpage-dialog-blank' => 'صفحهٔ خالی',
+	'createpage-error-empty-title' => 'لطفاً برای صفحهٔ خود عنوانی بنویسید',
 );
 
 /** Finnish (Suomi)
@@ -1645,6 +1694,16 @@ $messages['uk'] = array(
 Будь ласка, оберіть іншу назву.',
 	'createpage-dialog-title' => 'Створити нову статтю',
 	'createpage-dialog-blank' => 'Порожня сторінка',
+);
+
+/** Veps (Vepsän kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'createpage_title_caption' => 'Pälkirjutez',
+	'createpage_enter_text' => 'Tekst:',
+	'createpage-dialog-title' => "Säta uz' lehtpol'",
+	'createpage-dialog-blank' => "Puhtaz lehtpol'",
 );
 
 /** Vietnamese (Tiếng Việt)

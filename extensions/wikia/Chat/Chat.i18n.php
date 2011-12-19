@@ -256,20 +256,21 @@ $messages['bg'] = array(
  * @author Y-M D
  */
 $messages['br'] = array(
+	'chat' => 'Flap',
 	'chat-desc' => '[[Special:Chat|Flapiñ war-eeun]]',
 	'chat-no-login' => "Ret eo deoc'h bezañ kevreet evit flapiñ",
 	'chat-no-login-text' => 'Kevreit evit gallout flapiñ.',
 	'chat-default-topic' => 'Degemer mat er flap $1',
 	'chat-user-blocked' => '$1 en deus stanket $2',
 	'chat-user-allow' => '$1 en deus aotreet $2.',
-	'chat-ban-cant-ban-moderator' => "Ne c'hellit ket skarzhañ/stankañ ur merour all deus ar flap.",
+	'chat-ban-cant-ban-moderator' => "N'hallit ket skarzhañ/stankañ ur merour all eus ar flap.",
 	'chat-ban-already-banned' => '$1 a zo stanket dija war flap ar wiki-mañ.',
 	'chat-ban-you-need-permission' => "N'ho peus ket an aotreoù $1 rekis evit skarzhañ/stankañ un implijer.",
 	'chat-missing-required-parameter' => 'Rekis eo "$1" met n\'eo ket bet kavet er reked.',
 	'chat-you-are-banned' => 'Fazi aotreoù.',
 	'chat-you-are-banned-text' => "Berzet eo bet ar flap ouzhoc'h.
 Ma soñj deoc'h ez eo dre fazi pe mar fell deoc'h e vefe distroet war an diviz e c'hallit mont e darempred gant ur merour.",
-	'chat-room-is-not-on-this-wiki' => "War a seblant n' ez eus ket eus deus ar flap a glaskit keveañ outañ.",
+	'chat-room-is-not-on-this-wiki' => "Evit doare n'eus ket eus ar gaoz a glaskit kevreañ outi war ar wiki-mañ.",
 	'chat-kick-log-reason' => "Skarzhet eus ar flap er wiki-mañ gant $1.
 Kit e darempred ganto da c'houzout hiroc'h.",
 	'chat-headline' => 'Chat $1',
@@ -480,6 +481,8 @@ Por favor, contáctalo para más información.',
  * @author VezonThunder
  */
 $messages['fi'] = array(
+	'chat' => 'Chat',
+	'chat-desc' => '[[Special:Chat|Suora chat]]',
 	'chat-no-login' => 'Chatin käyttö vaatii sisäänkirjautumisen.',
 	'chat-no-login-text' => 'Ole hyvä ja kirjaudu sisään käyttääksesi chattia.',
 	'chat-default-topic' => 'Tervetuloa {{GRAMMAR:genitive|$1}} chattiin',
@@ -505,6 +508,7 @@ $messages['fi'] = array(
 	'chat-room-is-not-on-this-wiki' => 'Chat-huone, johon yrität päästä, ei näytä olevan olemassa tässä wikissä.',
 	'chat-kick-log-reason' => '$1 antoi sinulle chat-eston tässä wikissä. Ole hyvä ja ota yhteyttä häneen saadaksesi lisätietoa.',
 	'chat-headline' => '{{GRAMMAR:genitive|$1}} chat',
+	'chat-live' => 'Suorana!',
 	'chat-start-a-chat' => 'Käynnistä chat',
 	'chat-whos-here' => 'Läsnä ($1)',
 	'chat-join-the-chat' => 'Liity chattiin',
@@ -536,6 +540,7 @@ $messages['fi'] = array(
  * @author Wyz
  */
 $messages['fr'] = array(
+	'chat' => 'Tchat',
 	'chat-desc' => '[[Special:Chat|Tchater en direct]]',
 	'chat-no-login' => 'Vous devez être connecté pour tchater.',
 	'chat-no-login-text' => 'Veuillez vous connecter pour tchater.',
@@ -590,6 +595,7 @@ $messages['fr'] = array(
  * @author Toliño
  */
 $messages['gl'] = array(
+	'chat' => 'Chat',
 	'chat-desc' => '[[Special:Chat|Conversación en vivo]]',
 	'chat-no-login' => 'Debe acceder ao sistema para chatear.',
 	'chat-no-login-text' => 'Acceda ao sistema para chatear.',
@@ -641,11 +647,24 @@ $messages['gl'] = array(
 
 /** Hungarian (Magyar)
  * @author Dani
+ * @author Dj
  */
 $messages['hu'] = array(
+	'chat' => 'Csevegés',
+	'chat-desc' => '[[Special:Chat|Élő csevegés]]',
 	'chat-no-login' => 'A csevegéshez be kell jelentkezned!',
 	'chat-no-login-text' => 'Jelentkezz be a csevegéshez!',
 	'chat-default-topic' => 'Üdvözlünk a $1 csevegőben!',
+	'chat-user-joined' => '$1belépett a csevegésbe.',
+	'chat-read-only' => 'A csevegés ideiglenesen szünetel, amíg a wiki csak olvasható módban van.',
+	'chat-user-parted' => '$1 kilépett a csevegésből.',
+	'chat-user-blocked' => '$1letiltotta a  $2-t .',
+	'chat-user-allow' => '$1 engedélyezte $2-t.',
+	'chat-user-was-kickbanned' => '$1 kirúgva/kitiltva.',
+	'chat-user-permanently-disconnected' => 'A kapcsolatod megszakadt. Ellenőrizd az internet kapcsolatodat és frissítsed a böngésző ablakot!',
+	'chat-err-connected-from-another-browser' => 'Egy másik böngészőből csatlakoztál. Ez a kapcsolat meg fog szakadni.',
+	'chat-err-communicating-with-mediawiki' => 'Hiba a MediaWiki-kiszolgálóval történő kommunikáció közben.',
+	'chat-ban-cant-ban-moderator' => 'Nem tudsz kirúgni/kitiltani másik csevegő moderátort.',
 	'chat-ban-already-banned' => '$1 már ki van tiltva a wiki csevegőjéből.',
 	'chat-you-are-banned' => 'Engedélyezési hiba.',
 	'chat-headline' => '$1-csevegő',
@@ -654,12 +673,25 @@ $messages['hu'] = array(
 	'chat-whos-here' => 'Ki van itt ($1)',
 	'chat-join-the-chat' => 'Csatlakozás a csevegéshez',
 	'chat-edit-count' => '$1 szerkesztés',
+	'chat-member-since' => 'Tag $1 óta',
+	'chat-great-youre-logged-in' => 'Nagyszerű! Bejelentkeztél.',
+	'chat-user-manu-contribs' => 'Közreműködések',
+	'chat-user-manu-private' => 'Privát üzenet',
+	'chat-user-manu-private-block' => 'Privát üzenetek blokkolása',
+	'chat-user-manu-private-allow' => 'Privát üzenetek engedélyezése',
+	'chat-user-manu-private-close' => 'Privát szoba bezárása',
+	'right-chatmoderator' => 'Kirúghat/kitilthat felhasználókat a [[Help:Chat|Csevegésből]]',
+	'group-chatmoderator' => 'Csevegés moderátorok',
+	'group-chatmoderator-member' => 'Csevegés moderátorok',
+	'group-bannedfromchat' => 'Beszélgetésből kitiltva',
+	'group-bannedfromchat-member' => 'Beszélgetésből kitiltva',
 );
 
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
+	'chat' => 'Chat',
 	'chat-desc' => '[[Special:Chat|Live chat]]',
 	'chat-no-login' => 'Tu debe aperir un session pro poter chattar.',
 	'chat-no-login-text' => 'Per favor aperi session pro chattar.',
@@ -762,6 +794,8 @@ $messages['it'] = array(
 	'chat-you-are-banned-text' => "Siamo spiacenti, non hai l'autorizzazione ad accedere alla chat di questa wiki. Se ritieni che ci sia un errore o vuoi richiedere di essere riconsiderato, contatta un'amministratore.",
 	'chat-room-is-not-on-this-wiki' => 'La chat a cui stai tentando di accedere sembra che non esista su questa wiki.',
 	'chat-kick-log-reason' => 'Bannato dalla chat di questa wiki da $1. Per favore contattalo per maggiori informazioni.',
+	'chat-headline' => 'Chat $1',
+	'chat-live' => 'Live!',
 	'chat-start-a-chat' => 'Inizia una Chat',
 	'chat-whos-here' => "Chi c'è qui ($1)",
 	'chat-join-the-chat' => 'Entra in Chat',
@@ -771,7 +805,7 @@ $messages['it'] = array(
 	'chat-user-manu-profile' => 'Profilo utente',
 	'chat-user-manu-contribs' => 'Contributi',
 	'chat-user-manu-private' => 'Messaggio privato',
-	'chat-user-manu-give-chat-mod' => 'Rendi Moderatore della Chat',
+	'chat-user-manu-give-chat-mod' => 'Nomina Moderatore della Chat',
 	'chat-user-manu-kickban' => 'Banna',
 	'chat-user-manu-private-block' => 'Blocca messaggi privati',
 	'chat-user-manu-private-allow' => 'Consenti messaggi privati',
@@ -884,6 +918,7 @@ $messages['lb'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
+	'chat' => 'Разговори',
 	'chat-desc' => '[[Special:Chat|Разговори во живо]]',
 	'chat-no-login' => 'Мора да се најавени за да разговарате.',
 	'chat-no-login-text' => 'Најавете се за да разговарате.',
@@ -946,6 +981,7 @@ $messages['ml'] = array(
  * @author Anakmalaysia
  */
 $messages['ms'] = array(
+	'chat' => 'Sembang',
 	'chat-desc' => '[[Special:Chat|Sembang secara langsung]]',
 	'chat-no-login' => 'Anda mesti log masuk untuk bersembang',
 	'chat-no-login-text' => 'Sila log masuk untuk bersembang',
@@ -1073,6 +1109,7 @@ $messages['nl-informal'] = array(
  * @author Nghtwlkr
  */
 $messages['no'] = array(
+	'chat' => 'Chat',
 	'chat-desc' => '[[Special:Chat|Chat]]',
 	'chat-no-login' => 'Du må være logget inn for å chatte.',
 	'chat-no-login-text' => 'Vennligst logg inn for å chatte.',
@@ -1129,10 +1166,12 @@ Vennligst kontakt dem for mer informasjon.',
  * @author Anoon6
  * @author Cloudissimo
  * @author Nandy
+ * @author Sovq
  * @author Sp5uhe
  * @author Woytecr
  */
 $messages['pl'] = array(
+	'chat' => 'Czat',
 	'chat-desc' => '[[Special:Chat|Czat na żywo]]',
 	'chat-no-login' => 'Musisz być zalogowany, żeby korzystać z czatu.',
 	'chat-no-login-text' => 'Zaloguj się, żeby korzystać z czatu.',
@@ -1304,6 +1343,7 @@ $messages['ro'] = array(
  * @author Kuzura
  */
 $messages['ru'] = array(
+	'chat' => 'Чат',
 	'chat-desc' => '[[Special:Chat|Чат]]',
 	'chat-no-login' => 'Вы должны быть зарегистрированы, чтобы войти в чат',
 	'chat-no-login-text' => 'Пожалуйста, войдите в чат.',
@@ -1484,50 +1524,69 @@ Mangyaring makipag-ugnayan sa kanila para sa mas maraming kabatiran.',
 	'chat-member-since' => 'Kasapi magmula pa noong $1',
 );
 
+/** Veps (Vepsän kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'chat' => 'Čat',
+	'chat-start-a-chat' => 'Zavottä čat',
+	'group-chatmoderator' => 'Čatan moderatorad',
+	'group-chatmoderator-member' => 'Čatan moderator',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
 $messages['vi'] = array(
-	'chat-desc' => '[[Special:Chat|Trò chuyện trực tuyến]]',
-	'chat-no-login' => 'Bạn phải đăng nhập để trò chuyện.',
-	'chat-no-login-text' => 'Vui lòng đăng nhập để trò chuyện.',
-	'chat-default-topic' => 'Chào mừng đến với $1 chat',
+	'chat' => 'Tán gẫu',
+	'chat-desc' => '[[Special:Chat|Tán gẫu trực tuyến]]',
+	'chat-no-login' => 'Bạn phải đăng nhập để tán gẫu.',
+	'chat-no-login-text' => 'Vui lòng đăng nhập để tán gẫu.',
+	'chat-default-topic' => 'Chào mừng đến với tán gẫu $1',
 	'chat-user-joined' => '$1 đã tham gia tán gẫu.',
+	'chat-read-only' => 'Tán gẫu tạm thời không được áp dụng trong khi wiki đang ở chế độ chỉ-đọc.',
 	'chat-user-parted' => '$1 đã rời khỏi cuộc tán gẫu.',
-	'chat-user-blocked' => '$1 đã chặn $2.',
+	'chat-user-blocked' => '$1 đã cấm $2.',
 	'chat-user-allow' => '$1 đã cho phép $2.',
-	'chat-user-was-kickbanned' => '$1 đã bị bậc ra.',
-	'chat-inlinealert-a-made-b-chatmod' => '$1 đã phong cấp cho <strong>$2</strong> thành một điều phối viên tán gẫu.',
+	'chat-user-was-kickbanned' => '$1 đã bị cấm.',
+	'chat-user-permanently-disconnected' => 'Bạn đã bị ngắt kết nối, hãy kiểm tra kết nối Internet của bạn và làm mới cửa sổ trình duyệt',
+	'chat-inlinealert-a-made-b-chatmod' => '$1 đã phong cấp cho <strong>$2</strong> thành điều phối viên tán gẫu.',
 	'chat-err-connected-from-another-browser' => 'Bạn đã kết nối từ một trình duyệt khác. Kết nối này sẽ bị đóng.',
 	'chat-err-communicating-with-mediawiki' => 'Lỗi giao tiếp với hệ thống MediaWiki.',
-	'chat-ban-cant-ban-moderator' => 'Bạn không thể đẩy/cấm người điều hành trò chuyện',
-	'chat-ban-already-banned' => '$1 đã bị cấm trò chuyện trên wiki này',
-	'chat-ban-you-need-permission' => 'Bạn không có quyền từ $1 để yêu cầu đẩy/cấm một người dùng.',
+	'chat-ban-cant-ban-moderator' => 'Bạn không thể tống/cấm Điều phối viên Tán gẫu.',
+	'chat-ban-already-banned' => '$1 đã bị cấm tán gẫu trên wiki này.',
+	'chat-ban-you-need-permission' => 'Bạn không có quyền $1 để yêu cầu tống/cấm một thành viên.',
+	'chat-missing-required-parameter' => "'$1' là bắt buộc, nhưng không được tìm thấy trong yêu cầu.",
 	'chat-err-already-chatmod' => 'Lỗi: "$1" đã nằm trong nhóm "$2".',
-	'chat-err-no-permission-to-add-chatmod' => 'Lỗi: Bạn không có quyền cấp nhóm "$1" cho người dùng này.',
+	'chat-err-no-permission-to-add-chatmod' => 'Lỗi: Bạn không có quyền cấp nhóm "$1" cho thành viên này.',
 	'chat-userrightslog-a-made-b-chatmod' => '$1 đã phong cấp cho $2 thành điều phối viên tán gẫu tại wiki này.',
-	'chat-you-are-banned' => 'Lỗi về quyền',
-	'chat-you-are-banned-text' => 'Xin lỗi, bạn không được phép trò chuyện trên wiki này. Nếu bạn nghĩ rằng đây là một sai lầm hoặc muốn được xem xét lại, xin vui lòng liên hệ với một bảo quản viên.',
-	'chat-room-is-not-on-this-wiki' => 'Phòng trò chuyện bạn đang cố gắng nhập vào có vẻ không tồn tại trên wiki này.',
-	'chat-kick-log-reason' => 'Bị đẩy/cấm từ trò chuyện trong wiki này bởi $1. Xin liên hệ với họ để có thông tin.',
-	'chat-headline' => '$1 trò chuyện',
+	'chat-you-are-banned' => 'Lỗi về quyền.',
+	'chat-you-are-banned-text' => 'Xin lỗi, bạn không được phép tán gẫu trên wiki này. Nếu bạn nghĩ rằng đây là một sai lầm hoặc muốn được xem xét lại, xin vui lòng liên hệ với một bảo quản viên.',
+	'chat-room-is-not-on-this-wiki' => 'Phòng tán gẫu bạn đang cố gắng nhập vào có vẻ không tồn tại trên wiki này.',
+	'chat-kick-log-reason' => 'Bị tống/cấm từ tán gẫu trong wiki này bởi $1. Xin liên hệ họ để có thông tin.',
+	'chat-headline' => 'Tán gẫu $1',
 	'chat-live' => 'Trực tuyến!',
-	'chat-start-a-chat' => 'Bắt đầu cuộc trò chuyện',
+	'chat-start-a-chat' => 'Bắt đầu cuộc Tán gẫu',
 	'chat-whos-here' => 'Ai đang ở đây ($1)',
-	'chat-join-the-chat' => 'Tham gia trò chuyện',
-	'chat-edit-count' => '$1 chỉnh sửa',
-	'chat-member-since' => 'Gia nhập từ $1',
+	'chat-join-the-chat' => 'Tham gia Tán gẫu',
+	'chat-edit-count' => '$1 Sửa đổi',
+	'chat-member-since' => 'Thành viên từ $1',
 	'chat-great-youre-logged-in' => 'Tuyệt! Bạn đã đăng nhập.',
 	'chat-user-manu-profile' => 'Thông tin Thành viên',
 	'chat-user-manu-contribs' => 'Đóng góp',
-	'chat-user-manu-private' => 'Tin nhắn cá nhân',
+	'chat-user-manu-private' => 'Tin nhắn riêng',
 	'chat-user-manu-give-chat-mod' => 'Phong cấp Điều phối Tán gẫu',
 	'chat-user-manu-kickban' => 'Tống ra',
-	'chat-user-manu-private-block' => 'Đóng tin nhắn cá nhân',
-	'chat-user-manu-private-allow' => 'Mở tin nhắn cá nhân',
-	'chat-user-manu-private-close' => 'Đóng phòng chat riêng',
+	'chat-user-manu-private-block' => 'Đóng tin nhắn riêng',
+	'chat-user-manu-private-allow' => 'Mở tin nhắn riêng',
+	'chat-user-manu-private-close' => 'Đóng phòng tán gẫu riêng',
 	'chat-private-headline' => 'Tán gẫu riêng với $1',
+	'right-chatmoderator' => 'Có thể tống/cấm thành viên từ [[Help:Chat|Tán gẫu]]',
+	'group-chatmoderator' => 'Điều phối viên Tán gẫu',
+	'group-chatmoderator-member' => 'Điều phối viên Tán gẫu',
+	'group-bannedfromchat' => 'Bị cấm tán gẫu',
+	'group-bannedfromchat-member' => 'Bị cấm tán gẫu',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

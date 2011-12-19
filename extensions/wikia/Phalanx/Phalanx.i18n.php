@@ -1498,7 +1498,7 @@ $messages['ru'] = array(
  */
 $messages['sr-ec'] = array(
 	'phalanx-type-content' => 'садржај странице',
-	'phalanx-type-summary' => 'сажетак странице',
+	'phalanx-type-summary' => 'опис странице',
 	'phalanx-type-title' => 'наслов странице',
 	'phalanx-type-user' => 'корисник',
 	'phalanx-type-answers-recent-questions' => 'скорашња питања',

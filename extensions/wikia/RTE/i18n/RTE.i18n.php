@@ -216,10 +216,11 @@ $messages['es'] = array(
 
 /** Persian (فارسی)
  * @author Ebraminio
+ * @author ZxxZxxZ
  */
 $messages['fa'] = array(
 	'rte-edgecase-redirect' => 'تغییر مسیر',
-	'enablerichtexteditor' => 'فعال کردن ویرایشگر پیشرفته',
+	'enablerichtexteditor' => 'فعال‌کردن ویرایش در حالت بصری (علاوه بر حالت مبدأ)',
 );
 
 /** French (Français)
@@ -443,6 +444,7 @@ $messages['no'] = array(
 
 /** Polish (Polski)
  * @author Holek
+ * @author Sovq
  * @author Sp5uhe
  */
 $messages['pl'] = array(
@@ -460,9 +462,10 @@ $messages['pl'] = array(
 	'rte-edgecase-redirect' => 'przekierowanie',
 	'rte-edgecase-templateintable' => 'definicję tabeli zawierającą wywołanie szablonu',
 	'rte-edgecase-unclosed-tags' => 'niezamknięte tagi HTML',
-	'enablerichtexteditor' => 'Włącz edytor wizualny',
+	'enablerichtexteditor' => 'Włącz edytor wizualny (jako dodatek do trybu źródłowego)',
 	'rte-enablerichtexteditormessage' => 'Edytor wizualny został włączony!',
 	'rte-first-run-notice' => 'Wprowadziliśmy kilka usprawnień w edytorze. Aby dowiedzieć się więcej, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news przeczytaj ogłoszenie].',
+	'prefs-rte' => 'Edytor Wizualny',
 );
 
 /** Piedmontese (Piemontèis)

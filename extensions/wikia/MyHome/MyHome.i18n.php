@@ -416,7 +416,7 @@ $messages['br'] = array(
 	'myhome-desc' => 'Ur bajenn degemer prevez evit an implijerien kevreet',
 	'myhome' => 'Ma fajenn degemer',
 	'wikiactivity' => 'Oberiantiz ar wiki',
-	'myhome-activity-more' => 'Gwelet an oberoù neveshañ',
+	'myhome-activity-more' => 'Gwelet an oberoù nevesañ',
 	'myhome-activity-feed' => 'Gwazh obererezh',
 	'myhome-activity-feed-empty' => "Emañ ar wiki-mañ o gortoz e kemerfer perzh ennañ.
 Klikit war '''[[Special:CreatePage|Pajenn nevez]]''' evit kregiñ da skrivañ !",
@@ -597,6 +597,9 @@ Administrátoři do ní mohou psát:
 	'myhome-default-view-success' => 'OK, nyní je to Vaše výchozí zobrazení',
 	'tooltip-pt-myhome' => 'Jít na Mou domovskou stránku',
 	'activityfeed' => 'Informační kanál aktivity',
+	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|jedna zpráva|$1 zpráv(y)}}',
+	'wiki-activity-wall-on' => 'na $1',
+	'wiki-activity-wall-owner' => "Zeď uživatele $1'",
 );
 
 /** Welsh (Cymraeg)
@@ -1573,6 +1576,7 @@ $messages['ig'] = array(
 /** Italian (Italiano)
  * @author Leviathan 89
  * @author McDutchie
+ * @author Minerva Titani
  */
 $messages['it'] = array(
 	'myhome-desc' => 'Una home page privata per gli utenti registrati',
@@ -1626,21 +1630,21 @@ $messages['it'] = array(
 	'myhome-community-corner-header' => "L'angolo della comunità",
 	'oasis-myhome-community-corner-edit' => 'modifica messaggio &gt;',
 	'myhome-community-corner-edit' => 'modifica messaggio',
-	'community-corner' => "'''Benvenuto in My Home! '''
+	'community-corner' => "''' Benvenuto nell'Angolo della Community! '''
 
-Questa è una pagina che ti aiuta ad essere aggiornato con ciò che accade sul nostro wiki.
+Questa è una pagina che ti aiuta ad essere aggiornato su ciò che accade in questa wiki.
 
-Se sei il fondatore o un admin di questo wiki, puoi modificare questo messaggio per informare la comunità di importanti eventi o avvisi per il sito. Per esempio, potresti:
+Se sei il fondatore o un admin di questa wiki, puoi modificare questo messaggio per informare la community di importanti eventi o avvisi relativi al tuo sito. Per esempio, potresti:
 
-* Organizzare un progetto di costruzione di una nuova area del wiki
+* Organizzare un progetto per realizzare una nuova area nella wiki
 
-* Mostrare alcune nuove pagine che tutti dovrebbero vedere
+* Mostrare alcune pagine nuove che tutti dovrebbero vedere
 
 * Coinvolgere gli utenti in una discussione in corso
 
-* Dare rilievo ad un collaboratore che ha aggiunto qualcosa di speciale al wiki
+* Dare rilievo ad un collaboratore che ha aggiunto qualcosa di speciale alla wiki
 
-* Oppure semplicemente per inserire qualche parola di incoraggiamento per i nuovi utenti!",
+* Oppure semplicemente inserire qualche parola di incoraggiamento per i nuovi utenti!",
 	'myhome-hot-spots-definition' => 'Pagine con più editori negli ultimi {{PLURAL:$1|giorno|$1 giorni}}.',
 	'myhome-default-view-checkbox' => 'Rendi $1 la mia visualizzazione predefinita',
 	'myhome-default-view-success' => 'Bene, adesso è la tua impostazione predefinita',
@@ -2846,7 +2850,7 @@ $messages['sr-ec'] = array(
 	'myhome-feed-blogcomment' => 'коментар на блогу',
 	'myhome-feed-delete' => 'обрисано',
 	'myhome-feed-image' => 'слика је додата',
-	'myhome-feed-video' => 'видео снимак је додат',
+	'myhome-feed-video' => 'видео-снимак је додат',
 	'myhome-feed-categorization' => 'категоризација',
 	'myhome-feed-created-by' => 'направи $1',
 	'myhome-feed-added-by' => 'додао/-ла $1',
@@ -2860,7 +2864,7 @@ $messages['sr-ec'] = array(
 	'myhome-feed-by' => 'од $1',
 	'myhome-feed-diff-alt' => 'прикажи измене на овој страници',
 	'myhome-feed-new-page-details' => 'Нова страница',
-	'myhome-feed-summary-details' => 'Сажетак',
+	'myhome-feed-summary-details' => 'Опис',
 	'myhome-feed-section-edit-details' => 'Измена одељка',
 	'myhome-feed-new-blog-post-details' => 'Нови блог',
 	'myhome-feed-new-blog-comment-details' => 'Коментар',
@@ -2868,7 +2872,7 @@ $messages['sr-ec'] = array(
 	'myhome-feed-move-details' => 'Преименовано',
 	'myhome-feed-redirect-details' => 'Преусмерење',
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Додата слика|Додате слике}}',
-	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Додат видео снимак|Додати видео снимци}}',
+	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Додат видео-снимак|Додати видео-снимци}}',
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Додата категорија|Додате категорије}}',
 	'myhome-user-contributions-empty' => 'Можете се укључити овој викији кликом на дугме „{{int:editthispage}}“ на било којој страници.
 Свако може да прави измене, додаје податке или исправља грешке.
@@ -2934,8 +2938,8 @@ Du kan använda din bevakningslista för att hålla koll på de senaste ändring
 	'myhome-feed-talkpage' => 'diskussionssida',
 	'myhome-feed-blogcomment' => 'bloggkommentar',
 	'myhome-feed-delete' => 'raderad',
-	'myhome-feed-image' => 'bild tillagd',
-	'myhome-feed-video' => 'video tillagd',
+	'myhome-feed-image' => 'bild lades till',
+	'myhome-feed-video' => 'video lades till',
 	'myhome-feed-categorization' => 'kategorisering',
 	'myhome-feed-created-by' => 'skapades av $1',
 	'myhome-feed-added-by' => 'lades till av $1',

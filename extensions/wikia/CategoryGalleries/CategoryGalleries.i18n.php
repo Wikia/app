@@ -65,6 +65,13 @@ $messages['es'] = array(
 	'categorygalleries-desc' => 'Muestra una galería de páginas encima de las páginas de la categoría',
 );
 
+/** Finnish (Suomi)
+ * @author VezonThunder
+ */
+$messages['fi'] = array(
+	'categorygalleries-desc' => 'Näyttää sivugallerian luokkasivuilla',
+);
+
 /** French (Français)
  * @author Wyz
  */
@@ -225,5 +232,12 @@ $messages['tl'] = array(
  */
 $messages['uk'] = array(
 	'categorygalleries-desc' => 'Показує галерею сторінок на сторінках категорій',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Xiao Qiao
+ */
+$messages['vi'] = array(
+	'categorygalleries-desc' => 'Hiển thị một trang thư viện ảnh trên các trang thể loại',
 );
 
