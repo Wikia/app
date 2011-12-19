@@ -23,10 +23,10 @@ $messages['en'] = array(
 	'places-geolocation-modal-error' => 'There was an error while trying to determine your position:<br />$1',
 	'places-geolocation-modal-not-available' => 'Oops! This feature is currently available only on mobile devices.<br /><br />Want to give it a try? Just visit this page using your mobile device of choice.',
 
-	'places-error-no-article' => 'You have to specify an article',
-	'places-error-place-already-exists' => 'Article is already geo tagged',
+	'places-error-no-article' => 'You have to specify an page',
+	'places-error-place-already-exists' => 'This page is already geo tagged',
 
-	'places-updated-geolocation' => 'Geotagged this article',
+	'places-updated-geolocation' => 'Geotagged this page',
 	'places-category-switch' => 'Disable geotagging',
 	'places-category-switch-off' => 'Enable geotagging'
 );
