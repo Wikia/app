@@ -86,9 +86,9 @@ var WikiaMobile = WikiaMobile || (function() {
 
 	//init
 	$(function(){
-		//I need to add class to collapse section as quick as possible
-		//and addClass will return body object as well
-		var body = $(document.body).addClass('collapseSections'),
+		//add class to collapse section as quick as possible
+		//and return body object as well
+		var body = $(document.body).addClass('js'),
 		navigationWordMark = $('#navigationWordMark'),
 		navigationSearch = $('#navigationSearch'),
 		searchToggle = $('#searchToggle'),
