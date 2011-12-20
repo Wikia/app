@@ -6,14 +6,16 @@ h1, h2, h3{
 	margin: $section-title-margin;
 }
 
-#WikiaMainContent{
-	& > h2 {
+.collapseSections .articleSection {
+	display: none;
+}
+
+#WikiaPage{
+	.collapsible-section {
 		@include section-title;
 	}
 
 	.articleSection {
-		display: none;
-
 		&.open {
 			display: block;
 		}

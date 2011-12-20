@@ -4,7 +4,7 @@ var WikiaMobile = WikiaMobile || (function() {
 	var allImages = [],
 	deviceWidth = ($.os.ios) ? 268 : 300,
 	deviceHeight = ($.os.ios) ? 416 : 513,
-	realWidth = (window.orientation == 0 || window.orientation == 180) ? 320 : 480,
+	realWidth = (window.orientation == 0 || window.orientation == 180) ? 200 : 480,
 	//TODO: finalize the following line and update all references to it (also in extensions)
 	clickEvent = ('ontouchstart' in window) ? 'tap' : 'click',
 	touchEvent = ('ontouchstart' in window) ? 'touchstart' : 'click';
@@ -24,8 +24,10 @@ var WikiaMobile = WikiaMobile || (function() {
 
 	function handleTables(){
 		$('table').not('table table').each(function() {
-			if(this.offsetWidth > realWidth)
-				$(this).addClass('tooBigTable');
+			var table = $(this);
+			table.wrapAll('<div class=tooWideTable></div>');
+			if(this.offsetWidth > realWidth){};
+
 		});
 	}
 
@@ -101,7 +103,7 @@ var WikiaMobile = WikiaMobile || (function() {
 		processImages();
 
 		//TODO: optimize selectors caching for this file
-		body.delegate( '#WikiaPage .collapsible-section', clickEvent, function(){
+		body.delegate('.collapsible-section', clickEvent, function(){
 			var self = $(this);
 
 			track(['section', self.hasClass('open') ? 'close' : 'open']);

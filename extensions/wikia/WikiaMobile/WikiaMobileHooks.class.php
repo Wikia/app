@@ -43,13 +43,13 @@ class WikiaMobileHooks extends WikiaObject{
 
 			//$link contains the section edit link, add it to the next line to put it back
 			//ATM editing is not allowed in WikiaMobile
-			$ret = "<h{$level} class=collapsible-section id=\"{$anchor}\"{$attribs}{$text}";
+			$ret = "<h{$level} " . ( $level == 2 ? "class=collapsible-section" : "" ) . " id=\"{$anchor}\"{$attribs}{$text}";
 			$closure = "</h{$level}>";
 
 			if ( $level == 2 ) {
 				//add chevron to expand the section and a section tag opening to wrap
 				//the contents
-				$ret .= "<span class=\"chevron\"></span>{$closure}" . self::SECTION_OPENING;
+				$ret .= "<span class=chevron></span>{$closure}" . self::SECTION_OPENING;
 
 				//avoid closign a section if this is the first H2 as there will be
 				//no open section before it

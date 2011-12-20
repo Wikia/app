@@ -1,6 +1,9 @@
 @import "variables.scss";
 
 #WikiaMainContent {
+	.tooWideTable {
+		border: 3px solid black;
+	}
 	.tooBigTable {
 		border: 1px solid $border-color;
 		padding: $page-padding;
