@@ -422,7 +422,7 @@ if(!$funcsOnly){
 	$doc.= 'if artist is left blank, it will default to the artist of the song.';
 	$server->register('postSong',
 		array('overwriteIfExists' => 'xsd:boolean', 'artist' => 'xsd:string', 'song' => 'xsd:string',
-				'lyrics' => 'xsd:string', 'onAlbums' => 'tns:AlbumResultArray'),
+				'lyrics' => 'xsd:string', 'language' => 'xsd:string', 'onAlbums' => 'tns:AlbumResultArray'),
 		array('artist' => 'xsd:string', 'song' => 'xsd:string',
 				'dataUsed' => 'xsd:boolean', 'message' => 'xsd:string'),
 		$ns,
@@ -435,7 +435,7 @@ if(!$funcsOnly){
 	$doc.= "For example, pass 'LW_SANDBOX' in to use the sandbox for testing and not actually update the site.";
 	$server->register('postSong_flags',
 		array('overwriteIfExists' => 'xsd:boolean', 'artist' => 'xsd:string', 'song' => 'xsd:string',
-				'lyrics' => 'xsd:string', 'onAlbums' => 'tns:AlbumResultArray', 'flags' => 'xsd:string'),
+				'lyrics' => 'xsd:string', 'onAlbums' => 'tns:AlbumResultArray', 'flags' => 'xsd:string', 'language' => 'xsd:string'),
 		array('artist' => 'xsd:string', 'song' => 'xsd:string',
 				'dataUsed' => 'xsd:boolean', 'message' => 'xsd:string'),
 		$ns,
@@ -1659,7 +1659,16 @@ function postArtist($overwriteIfExists, $artist, $albums){ // TODO: IMPLEMENT
 		global $SHUT_DOWN_API_REASON;
 		$retVal['message'] = $SHUT_DOWN_API_REASON;
 	} else {
-		lw_tryLogin();
+		global $wgUser;
+		if(!$wgUser->isLoggedIn()){
+			// If this is a SOAP request, the credentials may be in the SOAP headers.
+			if($funcsOnly){
+				// Not a SOAP request, so we have to already be logged in.
+				$retVal['message'] = "Must be logged in to use postArtist().";
+			} else {
+				lw_tryLogin();
+			}
+		}
 
 		$artistName = lw_getTitle($artist);
 		$pageTitle = Title::newFromDBkey(utf8_decode(htmlspecialchars_decode($artistName)));
@@ -1795,12 +1804,14 @@ function postArtist($overwriteIfExists, $artist, $albums){ // TODO: IMPLEMENT
 			// Send the updated code here.
 			$content = "[[Category:Review_Me]]\n".$content; // TODO: REMOVE AFTER UBERBOT SUBMISSIONS
 			$summary = "Page ".(($pageExists)?"edited":"created")." using [[LyricWiki:SOAP|LyricWiki's SOAP Webservice]]";
-			$returnStr = lw_createPage($pageTitle, $content, $summary);
+			$editWorked = lw_createPage($pageTitle, $content, $summary);
 			$retVal['dataUsed'] = true;
-			if(isset($pageTitle) && $pageExists){
-				$retVal['message'] = "Page overwritten. ".($returnStr==""?"":"($returnStr)");
+			if($editWorked !== true){
+				$retVal['message'] = "Error from EditPage: $editWorked";
+			} else if(isset($pageTitle) && $pageExists){
+				$retVal['message'] = "Page overwritten. ";
 			} else {
-				$retVal['message'] = "Page created. ".($returnStr==""?"":"($returnStr)");
+				$retVal['message'] = "Page created. ";
 			}
 			}
 		} else {
@@ -1943,7 +1954,7 @@ function postAlbum($overwriteIfExists, $artist, $album, $year, $asin, $songs){
 } // end postAlbum()
 
 function postSong_flags($overwriteIfExists, $artist, $song, $lyrics, $onAlbums, $flags=""){return postSong($overwriteIfExists, $artist, $song, $lyrics, $onAlbums, $flags);}
-function postSong($overwriteIfExists, $artist, $song, $lyrics, $onAlbums, $flags=""){
+function postSong($overwriteIfExists, $artist, $song, $lyrics, $onAlbums, $flags="", $language=""){
 	ob_start();
 	print_r($onAlbums);
 	$albumStr = ob_get_clean();
@@ -1957,7 +1968,16 @@ function postSong($overwriteIfExists, $artist, $song, $lyrics, $onAlbums, $flags
 		global $SHUT_DOWN_API_REASON;
 		$retVal['message'] = $SHUT_DOWN_API_REASON;
 	} else {
-		lw_tryLogin();
+		global $wgUser;
+		if(!$wgUser->isLoggedIn()){
+			// If this is a SOAP request, the credentials may be in the SOAP headers.
+			if($funcsOnly){
+				// Not a SOAP request, so we have to already be logged in.
+				$retVal['message'] = "Must be logged in to use postSong().";
+			} else {
+				lw_tryLogin();
+			}
+		}
 
 		// Flags is a comma-delimited list of pre-defined strings.
 		$flags = strtoupper(str_replace(" ", "", ",$flags,"));
@@ -1977,19 +1997,44 @@ function postSong($overwriteIfExists, $artist, $song, $lyrics, $onAlbums, $flags
 			$songName = lw_fmtSong($song);
 			$albumName = '';
 			if(is_array($onAlbums) && (count($onAlbums) > 0)){ // will show up as an empty string if song is not on any albums
-				for($cnt=0; $cnt<count($onAlbums); $cnt++){
-					$currArtist = $onAlbums[$cnt]['artist']; // needed because of compilations
-					$currArtist = ($currArtist==""?$artist:$currArtist); // default to artist of this song.
-					$albumName = $onAlbums[$cnt]['album']." (".$onAlbums[$cnt]['year'].")";
-					$content .= "{{Song|$albumName|$currArtist}}\n";
+				$mainAlbum = array_shift($onAlbums);
+				$mainAlbumName = $mainAlbum['album']." (".$mainAlbum['year'].")";
+				$content .= "{{Song|$mainAlbumName|$artist|star=green}}\n";
+				
+				// If there are additional albums, they go in the AddAlb template.
+				if(count($onAlbums) > 0){
+					$content .= "{{AddAlb\n";
+					for($cnt=0; $cnt<count($onAlbums); $cnt++){
+						$currArtist = $onAlbums[$cnt]['artist']; // needed because of compilations
+						$albumName = $onAlbums[$cnt]['album']." (".$onAlbums[$cnt]['year'].")";
+						if($currArtist != "" && $currArtist != $artist){
+							$albumName = "$currArtist:$albumName"; // if this is an artist other than the current song's artist, prepend their name
+							$content .= "|album".($cnt+2)."=$albumName |".($cnt+2)."type=compilation\n";
+						} else {
+							// Parameters start with "album2".
+							$content .= "|album".($cnt+2)."=$albumName\n";
+						}
+					}
+					$content .= "}}\n";
 				}
 			} else {
 				$content .= "{{Song||".str_replace("_", " ", $artistName)."}}\n";
 			}
 			$content .= "<lyrics>\n$lyrics</lyrics>\n";
 			$fLetter = lw_fLetter($song);
-			$content .= "{{SongFooter\n|artist=$artist\n|song=$song\n|fLetter=".$fLetter."\n}}";
-			$summary = "Page ".(($pageExists)?"edited":"created")." using [[LyricWiki:SOAP|LyricWiki's SOAP Webservice]]";
+			$content .= "
+{{SongFooter
+|fLetter     = $fLetter
+|song        = $song
+|language    = $language
+|youtube     = 
+|goear       = 
+|asin        = 
+|iTunes      = 
+|musicbrainz = 
+|allmusic    = 
+}}";
+			$summary = "Page ".(($pageExists)?"edited":"created")." using the [[LyricWiki:API|LyricWiki API]]";
 			if($isSandbox){
 				$returnStr = "Sandbox used.  Page would have been created otherwise.";
 			} else {
@@ -2242,278 +2287,36 @@ function lw_getPage($pageTitle, &$finalName='', $debug=false, $page_namespace=NS
 ////
 // Given the vital information for a page, creates it.
 // WARNING: MUST CHECK FIRST TO SEE IF THE PAGE EXISTS
-// pageTitle is not a string but an object of type Title.
+// @returns true on success, error-code from EditPage on failure.
 ////
-function lw_createPage($pageTitle, $content, $summary="Page created using [[LyricWiki:SOAP|LyricWiki's SOAP Webservice]]"){
-	GLOBAL $wgRequestTime,$wgRUstart,$mediaWiki,$wgTitle;
-	GLOBAL $wgOut,$wgLang,$wgUser,$wgRequest;
-	$retVal = 'lw_createPage';
+function lw_createPage($titleObj, $content, $summary="Page created using [[LyricWiki:SOAP|LyricWiki's SOAP Webservice]]"){
+	global $wgUser;
+	wfProfileIn( __METHOD__ );
+	
+	$retVal = "";
 
-	$fname = "lw_createPage";
-	wfProfileIn($fname);
+	// Create the Article object.
+	$article = new Article($titleObj);
+	
+	$result = null;
 
-	lw_initAdvanced();
-	$wgTitle = $pageTitle; // must be done after lw_initAdvanced()
+	$editPage = new EditPage( $article );
+	$editPage->edittime = $article->getTimestamp();
+	$editPage->textbox1 = $content;
+	
+	$bot = $wgUser->isAllowed('bot');
+		//this function calls Article::onArticleCreate which clears cache for article and it's talk page - NOTE: I don't know what this comment refers to... it was coppied from /extensions/wikia/ArticleComments/ArticleComment.class.php
+	$status = $editPage->internalAttemptSave( $result, $bot );
 
-	// Some of this is used in Wiki.php and EditPage.php to do an edit:
-	$titleObj = Title::newFromText($pageTitle);
-	if( $titleObj == null ){
-		$retVal = "Invalid title: \"$pageTitle\"";
+	if(($status == EditPage::AS_SUCCESS_NEW_ARTICLE) || ($status == EditPage::AS_SUCCESS_UPDATE)){
+		$retVal = true;
 	} else {
-		$article = $mediaWiki->articleFromTitle( $titleObj );
-		$editor = new EditPage($article);
-
-		# These fields need to be checked for encoding.
-		# Also remove trailing whitespace, but don't remove _initial_
-		# whitespace from the text boxes. This may be significant formatting.
-	//	$this->textbox1 = $this->safeUnicodeInput( $request, 'wpTextbox1' );
-	//	$this->textbox2 = $this->safeUnicodeInput( $request, 'wpTextbox2' );
-	//	$this->mMetaData = rtrim( $request->getText( 'metadata'   ) );
-		# Truncate for whole multibyte characters. +5 bytes for ellipsis
-	//	$this->summary   = $wgLang->truncate( $request->getText( 'wpSummary'  ), 250 );
-
-		$editor->textbox1  = $content;
-		$editor->textbox2  = '';
-		$editor->mMetaData = '';
-		$editor->summary   = $summary;
-		$editor->starttime = wfTimestampNow();
-		if($wgTitle->exists()){ // if this is an edit, load the edittime
-			$editor->edittime = $editor->mArticle->getTimestamp();
-		} else {
-			$editor->edittime = wfTimestampNow();
-		}
-		$editor->preview   = false;
-		$editor->save      = true;
-		$editor->diff	 = false;
-		$editor->minoredit = false;
-		$editor->watchthis = false;
-		$editor->recreate  = false;
-		$editor->oldid = 0;
-		$editor->section = '';
-		$editor->live = false;
-		$editor->editintro = '';
-
-		// Store it.
-		$fname = 'LW_SOAP::EditPage::edit';
-		$wgOut->setArticleFlag(false);
-		$editor->firsttime = false;
-		if ( ! $editor	->mTitle->userCanEdit() ) {
-			wfDebug( "$fname: user can't edit\n" );
-			$retVal = "User cannot edit this page.";
-			//$wgOut->readOnlyPage( $editor->getContent(), true );
-			wfProfileOut( $fname );
-			return $retVal;
-		}
-
-		wfDebug( "$fname: Checking blocks\n" );
-		if ( !$editor->preview && !$editor->diff && $wgUser->isBlockedFrom( $editor->mTitle, !$editor->save ) ) {
-			# When previewing, don't check blocked state - will get caught at save time.
-			# Also, check when starting edition is done against slave to improve performance.
-			wfDebug( "$fname: user is blocked\n" );
-			$retVal = "User is blocked.";
-			$editor->blockedPage();
-			wfProfileOut( $fname );
-			return $retVal;
-		}
-		if ( !$wgUser->isAllowed('edit') ) {
-			if ( $wgUser->isAnon() ) {
-				wfDebug( "$fname: user must log in\n" );
-				$editor->userNotLoggedInPage();
-				$retVal = "Must log in first.";
-				wfProfileOut( $fname );
-				return $retVal;
-			} else {
-				wfDebug( "$fname: read-only page\n" );
-				$retVal = "This page is read only.\n";
-				$wgOut->readOnlyPage( $editor->getContent(), true );
-				wfProfileOut( $fname );
-				return $retVal;
-			}
-		}
-		if ($wgEmailConfirmToEdit && !$wgUser->isEmailConfirmed()) {
-			wfDebug("$fname: user must confirm e-mail address\n");
-			$retVal = "You must confirm your email address before editing this page.";
-			$editor->userNotConfirmedPage();
-			wfProfileOut($fname);
-			return $retVal;
-		}
-		if ( !$editor->mTitle->userCanCreate() && !$editor->mTitle->exists() ) {
-			wfDebug( "$fname: no create permission\n" );
-			$retVal = "You do not have permision to create pages.";
-			$editor->noCreatePermission();
-			wfProfileOut( $fname );
-			return $retVal;
-		}
-		if ( wfReadOnly() ) {
-			wfDebug( "$fname: read-only mode is engaged\n" );
-			if( $editor->save || $editor->preview ) {
-				$editor->formtype = 'preview';
-			} else if ( $editor->diff ) {
-				$editor->formtype = 'diff';
-			} else {
-				$wgOut->readOnlyPage( $editor->getContent() );
-				$retVal = "Page (site?) is in read-only mode.";
-				wfProfileOut( $fname );
-				return $retVal;
-			}
-		} else {
-			if ( $editor->save ) {
-				$editor->formtype = 'save';
-			} else if ( $editor->preview ) {
-				$editor->formtype = 'preview';
-			} else if ( $editor->diff ) {
-				$editor->formtype = 'diff';
-			} else { # First time through
-				$editor->firsttime = true;
-				if( $editor->previewOnOpen() ) {
-					$editor->formtype = 'preview';
-				} else {
-					$editor->extractMetaDataFromArticle () ;
-					$editor->formtype = 'initial';
-				}
-			}
-		}
-
-		wfProfileIn( "$fname-business-end" );
-
-		$editor->isConflict = false;
-		// css / js subpages of user pages get a special treatment
-		$editor->isCssJsSubpage      = $wgTitle->isCssJsSubpage();
-		$editor->isValidCssJsSubpage = $wgTitle->isValidCssJsSubpage();
-
-		/* Notice that we can't use isDeleted, because it returns true if article is ever deleted
-		 * no matter it's current state
-		 */
-		$editor->deletedSinceEdit = false;
-		if ( $editor->edittime != '' ) {
-			/* Note that we rely on logging table, which hasn't been always there,
-			 * but that doesn't matter, because this only applies to brand new
-			 * deletes. This is done on every preview and save request. Move it further down
-			 * to only perform it on saves
-			 */
-			if ( $editor->mTitle->isDeleted() ) {
-				$editor->lastDelete = $editor->getLastDelete();
-				if ( !is_null($editor->lastDelete) ) {
-					$deletetime = $editor->lastDelete->log_timestamp;
-					if ( ($deletetime - $editor->starttime) > 0 ) {
-						$editor->deletedSinceEdit = true;
-					}
-				}
-			}
-		}
-
-		if(!$editor->mTitle->getArticleID() && ('initial' == $editor->formtype || $editor->firsttime )) { # new article
-			$editor->showIntro();
-		}
-		if( $editor->mTitle->isTalkPage() ) {
-			$wgOut->addWikiText( wfMsg( 'talkpagetext' ) );
-		}
-
-		# Attempt submission here.  This will check for edit conflicts,
-		# and redundantly check for locked database, blocked IPs, etc.
-		# that edit() already checked just in case someone tries to sneak
-		# in the back door with a hand-edited submission URL.
-		if ( 'save' == $editor->formtype ) {
-			if ( !$editor->attemptSave() ) {
-				wfProfileOut( "$fname-business-end" );
-				wfProfileOut( $fname );
-				$retVal = "Page saved.";
-				return $retVal;
-			} else {
-				$retVal = "Save attempt failed.";
-			}
-		}
-
-		# First time through: get contents, set time for conflict
-		# checking, etc.
-		if ( 'initial' == $editor->formtype || $editor->firsttime ) {
-			$editor->initialiseForm();
-			if( !$editor->mTitle->getArticleId() )
-				wfRunHooks( 'EditFormPreloadText', array( &$editor->textbox1, &$editor->mTitle ) );
-		}
-
-		$editor->showEditForm();
-		wfProfileOut( "$fname-business-end" );
+		$retVal = $status;
 	}
-	wfProfileOut( $fname );
 
-	$retVal = ($retVal==""?"Page created successfully.":$retVal);
+	wfProfileOut( __METHOD__ );
 	return $retVal;
 } // end lw_createPage()
-
-////
-// Performs more advanced initialization.  Too much unneeded work for most functions, but can be used in several.
-////
-function lw_initAdvanced(&$title='', &$action=''){
-	// SWC 20060906 - This is a modified version of the code in MediaWiki's index.php
-	GLOBAL $wgRequest,$wgRequestTime,$wgRUstart,$mediaWiki,$wgTitle;
-	$wgRequestTime = microtime(true);
-
-	# getrusage() does not exist on the Microsoft Windows platforms, catching this
-	if ( function_exists ( 'getrusage' ) ) {
-		$wgRUstart = getrusage();
-	} else {
-		$wgRUstart = array();
-	}
-
-	unset( $IP );
-	@ini_set( 'allow_url_fopen', 0 ); # For security...
-
-	if ( isset( $_REQUEST['GLOBALS'] ) ) {
-		die( '<a href="http://www.hardened-php.net/index.76.html">$GLOBALS overwrite vulnerability</a>');
-	}
-
-	# Valid web server entry point, enable includes.
-	# Please don't move this line to includes/Defines.php. This line essentially
-	# defines a valid entry point. If you put it in includes/Defines.php, then
-	# any script that includes it becomes an entry point, thereby defeating
-	# its purpose.
-	// These commented-out settings are already initialized just by calling this SOAP.
-	//define( 'MEDIAWIKI', true );
-	//require_once( './includes/Defines.php' ); # Load up some global defines.
-	//require_once( './LocalSettings.php' ); # Include this site setttings
-	//require_once( 'includes/Setup.php' ); # Prepare MediaWiki
-	require_once( "includes/Wiki.php" ); # Initialize MediaWiki base class
-	$mediaWiki = new MediaWiki();
-
-	wfProfileIn( 'main-misc-setup' );
-	OutputPage::setEncodings(); # Not really used yet
-
-	# Query string fields
-	if($action == ''){
-		$action = $wgRequest->getVal( 'action', 'view' );
-	}
-	// NOTE: This must be passed in params in LyricWiki version.
-	// $title = $wgRequest->getVal( 'title' );
-
-	# Send Ajax requests to the Ajax dispatcher (this will most likely not be used in the SOAP, but it is an option).
-	if ( $wgUseAjax && $action == 'ajax' ) {
-		require_once( 'AjaxDispatcher.php' );
-		$dispatcher = new AjaxDispatcher();
-		$dispatcher->performAction();
-		exit;
-	}
-
-	$wgTitle = $mediaWiki->checkInitialQueries( $title,$action,$wgOut, $wgRequest, $wgContLang );
-	if ($wgTitle == NULL) {
-		unset( $wgTitle );
-	}
-
-	wfProfileOut( 'main-misc-setup' );
-
-	# Setting global variables in mediaWiki
-	$mediaWiki->setVal( 'Server', $wgServer );
-	$mediaWiki->setVal( 'DisableInternalSearch', $wgDisableInternalSearch );
-	$mediaWiki->setVal( 'action', $action );
-	$mediaWiki->setVal( 'SquidMaxage', $wgSquidMaxage );
-	$mediaWiki->setVal( 'EnableDublinCoreRdf', $wgEnableDublinCoreRdf );
-	$mediaWiki->setVal( 'EnableCreativeCommonsRdf', $wgEnableCreativeCommonsRdf );
-	$mediaWiki->setVal( 'CommandLineMode', $wgCommandLineMode );
-	$mediaWiki->setVal( 'UseExternalEditor', $wgUseExternalEditor );
-	$mediaWiki->setVal( 'DisabledActions', $wgDisabledActions );
-
-	wfDebug('Done with ' . __METHOD__ ."\n");
-} // end lw_initAdvanced()
 
 ////
 // If there was a username/password passed in the SOAP headers, this will use them to login.

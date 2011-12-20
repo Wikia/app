@@ -35,7 +35,7 @@ class WikiaApiLyricwiki extends ApiBase {
 	 * main function
 	 */
 	public function execute() {
-		global $IP;
+		global $IP, $wgRequest;
 
 		if(!defined('LYRICWIKI_SOAP_FUNCS_ONLY')) {
 			define('LYRICWIKI_SOAP_FUNCS_ONLY', true);
@@ -48,11 +48,12 @@ class WikiaApiLyricwiki extends ApiBase {
 
 		extract( $this->extractRequestParams() );
 
-		// TODO: Detect the API even if func is not defined (since that wasn't a documented requirement).  - SWC
+		// Detect the API even if func is not defined (since that wasn't a documented requirement).  - SWC (note: did I actually mean "even if action=lyrics isn't defined"?)
 		$func = (($func == "")?"getSong":$func);
 
 		// Phase 'title' out (deprecated).  this is not the same as the soap.  I was coding too fast whilst in an IRC discussion and someone said artist/title just for the sake of argument and I didn't check against the SOAP :[ *embarassing*
 		$song = getVal($_GET, 'song', getVal($_GET, 'title'));
+
 		$artist = getVal($_GET, 'artist');
 		$albumName = getVal($_GET, 'albumName');
 		$albumYear = getVal($_GET, 'albumYear');
@@ -95,6 +96,16 @@ class WikiaApiLyricwiki extends ApiBase {
 				}
 				$this->rest_getAlbum( $artist, $albumName, $albumYear, $fmt );
 				break;
+			case 'postSong':
+				$overwriteIfExists = $wgRequest->getVal('overwriteIfExists');
+				$artist = $wgRequest->getVal('artist');
+				$song = $wgRequest->getVal('song');
+				$lyrics = $wgRequest->getVal('lyrics');
+				$language = $wgRequest->getVal('language', ''); // optional, so default to empty string
+				$onAlbums = explode('|', $wgRequest->getVal('onAlbums'));
+
+				$this->rest_postSong($overwriteIfExists, $artist, $song, $lyrics, $onAlbums, $language, $fmt);
+				break;
 			case 'getSong':
 			default:
 				$this->rest_getSong( $artist, $song, $fmt );
@@ -104,6 +115,116 @@ class WikiaApiLyricwiki extends ApiBase {
 		// TODO: hand over handling to MW API instead of doing this...
 		exit (1);
 	}
+	
+	/**
+	 * Rest endpoint for creating/updating a song page via the postSong() method.
+	 *
+	 * The array of onAlbums can either contain strings (of album names) or arrays with keys
+	 * 'artist', 'album', and 'year'. Technically the array is a safer way to go since the
+	 * parsing will be thrown off by artists with colons in their name.
+	 */
+	function rest_postSong($overwriteIfExists, $artist, $song, $lyrics, $onAlbums, $language, $fmt){
+		if(empty( $fmt )){
+			$fmt = 'html';
+		}
+
+		// Split each item in onAlbums into artist/album/year.
+		for($cnt=0; $cnt < count($onAlbums); $cnt++){
+			$album = $onAlbums[$cnt];
+			if(!is_array($album)){
+				$matches = array();
+
+				// Parse the album parts out of the string.
+				if(0 < preg_match("/^(.*?):(.*)[ _]\(([0-9]{4})\)$/i", $album, $matches)){
+					$albumArtist = $matches[1];
+					$albumAlbum = $matches[2];
+					$albumYear = $matches[3];
+				} else if(0 < preg_match("/^(.*)[ _]\(([0-9]{4})\)$/i", $album, $matches)){
+					$albumArtist = $artist;
+					$albumAlbum = $matches[1];
+					$albumYear = $matches[2];
+				} else {
+					// TODO: HOW DO WE HANDLE AN ALBUM THAT DOESN'T PARSE? (basically means that there was no Year found)
+					$albumArtist = $albumAlbum = $albumYear = "";
+				}
+
+				$onAlbums[$cnt] = array(
+					'artist' => $albumArtist,
+					'album' => $albumAlbum,
+					'year' => $albumYear
+				);
+			}
+		}
+
+		$result = postSong($overwriteIfExists, $artist, $song, $lyrics, $onAlbums, "", $language);
+
+		switch ( $fmt ) {
+			case 'text':
+
+				// TODO: IMPLEMENT
+				// TODO: IMPLEMENT
+
+				break;
+			case 'xml':
+				header('Content-Type: application/xml', true);
+				print "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+				$result = array("postSongResponse" => $result);
+				$this->dumpXML($result);
+				break;
+			case 'json':
+			case 'realjson':
+				$this->writeRealJSON($result);
+				break;
+			case 'html':
+			default:
+
+				// TODO: IMPLEMENT
+				// TODO: IMPLEMENT
+
+/*			$result = getHometown($artist);
+				$hometown = getVal($result, 'hometown');
+				$state = getVal($result, 'state');
+				$country = getVal($result, 'country');
+				$this->htmlHead("$artist:$song posted");
+				print "<h3><a href='$this->root".$this->linkEncode($artist)."'>$artist</a></h3>\n";
+				print "<ul>\n";
+					print "<li>Hometown: <a href='{$this->root}Category:Hometown/$country/$state/$hometown'>$hometown</a></li>\n";
+					print "<li>State: <a href='{$this->root}Category:Hometown/$country/$state'>$state</a></li>\n";
+					print "<li>Country: <a href='{$this->root}Category:Hometown/$country'>$country</a></li>\n";
+				print "</ul>\n";
+				print "</body>\n</html>\n";
+				*/
+				break;
+		}
+		
+		
+		// TODO: IMPLEMENT
+	
+/*
+// NOTE: THIS IS CODE FROM THE SOAP CLIENT.
+// If the artist is left blank it defaults to the artist of the song.  Left out here to conserve space.
+//$onAlbums[] = array('artist'=>'', 'album'=>'Another Happy Ending', 'year' => 2002);
+//$onAlbums[] = array('artist'=>'', 'album'=>'Between Now And Then - Retrospective', 'year' => 2005);
+//$onAlbums[] = array('artist'=>'', 'album'=>'Still Live', 'year' => 2006);
+
+// My version of nuSOAP seems to have a problem with nested arrays.  This compensates by converting the sub-array to a string initially.
+$onAlbums[] = albumResult('', "Another Happy Ending", 2002);
+$onAlbums[] = albumResult('Pittsburgh Rock Compilation', "Between Now And Then - Retrospective", 2005);
+$onAlbums[] = albumResult('', "Still Live", 2006);
+$onAlbums = array();
+$overwriteIfExists = true;
+$result = $proxy->postSong($overwriteIfExists, $artist, $song, $lyrics, $onAlbums);
+
+function albumResult($artist, $album, $year){
+	return "<artist xsi:type=\"xsd:string\">$artist</artist><album xsi:type=\"xsd:string\">$album</album><year xsi:type=\"xsd:int\">$year</year>";
+}
+
+*/
+
+
+
+	}
+
 	/**
 	 * REST endpoint for the getHometown() LyricWiki API function.  Calls the LyricWiki SOAP function which
 	 * is currently in /extensions/3rdparty/LyricWiki/server.php.
