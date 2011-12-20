@@ -27,10 +27,11 @@ class GamingCalendarSpecialPageController extends WikiaSpecialPageController {
 			$entries = GamingCalendar::loadEntries(0, 5, $type, date_timestamp_get($date), false);
 		}
 		
+		$typeName = null;
 		if (!empty(GamingCalendar::$CALENDAR_TYPES[$type])) {
 			$typeName = GamingCalendar::$CALENDAR_TYPES[$type];
-			$this->setVal('typeName', $typeName);
 		}		
+		$this->setVal('typeName', $typeName);
 		$this->setVal('type', $type);
 		$this->setVal('year', $year);
 		$this->setVal('month', $month);
