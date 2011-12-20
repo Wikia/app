@@ -43,7 +43,7 @@ class WikiaMobileHooks extends WikiaObject{
 
 			//$link contains the section edit link, add it to the next line to put it back
 			//ATM editing is not allowed in WikiaMobile
-			$ret = "<h{$level} id=\"{$anchor}\"{$attribs}{$text}";
+			$ret = "<h{$level} class=collapsible-section id=\"{$anchor}\"{$attribs}{$text}";
 			$closure = "</h{$level}>";
 
 			if ( $level == 2 ) {

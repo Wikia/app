@@ -101,7 +101,7 @@ var WikiaMobile = WikiaMobile || (function() {
 		processImages();
 
 		//TODO: optimize selectors caching for this file
-		body.delegate( '#WikiaMainContent > h2, #WikiaPage .collapsible-section', clickEvent, function(){
+		body.delegate( '#WikiaPage .collapsible-section', clickEvent, function(){
 			var self = $(this);
 
 			track(['section', self.hasClass('open') ? 'close' : 'open']);
