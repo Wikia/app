@@ -569,7 +569,7 @@ class ArticleComment {
 	 *
 	 * @access public
 	 *
-	 * @return String
+	 * @return Array or false on error. - TODO: Document what the array contains.
 	 */
 	public function doSaveComment( $text, $user, $title = null, $commentId = 0, $force = false ) {
 		global $wgMemc, $wgTitle;
@@ -631,7 +631,7 @@ class ArticleComment {
 	 * doSaveAsArticle store comment as article
 	 *  
 	 * @access protected
-	 *
+	 * @return TODO: DOCUMENT
 	 **/
 	
 	static protected function doSaveAsArticle($text, $article, $user, $metadata = array() ) {
@@ -645,11 +645,9 @@ class ArticleComment {
 			$editPage->textbox1 =  $text. Xml::element( 'ac_metadata', $metadata, ' ' );
 		}
 		
-		global $wgParser;
-		
 		$bot = $user->isAllowed('bot');
-			//this function calls Article::onArticleCreate which clears cache for article and it's talk page
-			
+			//this function calls Article::onArticleCreate which clears cache for article and it's talk page - TODO: is this comment still valid? Does it refer to the line above or to something that got deleted?
+
 		global $wgUser; 
 		$userTmp = $wgUser;
 		$wgUser = $user;
