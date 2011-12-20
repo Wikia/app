@@ -26,4 +26,5 @@ $messages['en'] = array(
     'gamingcalendar-cancel' => 'Cancel',
     'gamingcalendar-publish' => 'Publish',
     'gamingcalendar-error-missing-type' => 'Specify a type',
+    'gamingcalendar-no-entries' => 'No entries for selected date range'
 );

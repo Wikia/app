@@ -29,6 +29,8 @@ foreach ($months as $moIdx=>$moName) {?>
 		<li><a href="/wiki/Special:GamingCalendar?method=getEntriesForDate&type=<?=$type?>&date=<?= $entry['releaseDate']?>"><?= date('M j', $entry['releaseDate']) ?></a>, <?= $entry['gameTitle'] ?><? if (!empty($entry['gameSubtitle'])) {?> <?= $entry['gameSubtitle'] ?><?} ?></li>
 <?	} ?>
 	</ul>
+<? } else { ?>
+	<?= wfMsg('gamingcalendar-no-entries') ?>
 <? } ?>
 </div>
 <div class="createEntries">
