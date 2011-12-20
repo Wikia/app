@@ -61,13 +61,9 @@ var WikiaMobile = WikiaMobile || (function() {
 		return [deviceWidth, deviceHeight];
 	}
 
-	function imgModal(number, href, caption){
+	function imgModal(number, caption){
 		$.openModal({
-			html: '<div class="changeImageButton" id="previousImage"><div class="changeImageChevron"></div></div><div class="fullScreenImage" data-number='+
-				number +
-				' style=background-image:url("'+
-				href +
-				'")></div><div class="changeImageButton" id="nextImage"><div class="changeImageChevron"></div></div>',
+			imageNumber: number,
 			toHide: '.changeImageButton',
 			caption: caption,
 			addClass: 'imageModal'
@@ -88,7 +84,9 @@ var WikiaMobile = WikiaMobile || (function() {
 
 	//init
 	$(function(){
-		var body = $(document.body),
+		//I need to add class to collapse section as quick as possible
+		//and addClass will return body object as well
+		var body = $(document.body).addClass('collapseSections'),
 		navigationWordMark = $('#navigationWordMark'),
 		navigationSearch = $('#navigationSearch'),
 		searchToggle = $('#searchToggle'),
@@ -109,40 +107,35 @@ var WikiaMobile = WikiaMobile || (function() {
 			track(['section', self.hasClass('open') ? 'close' : 'open']);
 			self.toggleClass('open').next().toggleClass('open');
 		})
-			.delegate('#WikiaMainContent a', clickEvent, function(){
-				track(['link', 'content']);
-			})
-			.delegate('#WikiaArticleCategories a', clickEvent, function(){
-				track(['link', 'category']);
-			})
-			.delegate('.infobox img', clickEvent, function(event) {
-				event.preventDefault();
+		.delegate('#WikiaMainContent a', clickEvent, function(){
+			track(['link', 'content']);
+		})
+		.delegate('#WikiaArticleCategories a', clickEvent, function(){
+			track(['link', 'category']);
+		})
+		.delegate('.infobox img', clickEvent, function(event) {
+			event.preventDefault();
+			imgModal($(this).parents('.image').data('number'));
+		})
+		.delegate('figure', clickEvent, function(event) {
+			event.preventDefault();
 
-				var thumb = $(this),
-					image = thumb.parents('.image');
-				imgModal(image.data('number'), image.attr('href'));
-			})
-			.delegate('figure', clickEvent, function(event) {
-				event.preventDefault();
+			var thumb = $(this),
+			image = thumb.children('.image').first();
+			imgModal(image.data('number'), thumb.children('.thumbcaption').html());
+		})
+		.delegate('.wikia-slideshow', clickEvent, function(event){
+			event.preventDefault();
+			imgModal($(this).data('number'));
+		})
+		.delegate('.tooBigTable', clickEvent, function(event) {
+			event.preventDefault();
 
-				var thumb = $(this),
-					image = thumb.children('.image').first();
-				imgModal(image.data('number'), image.attr('href'), thumb.children('.thumbcaption').html());
-			})
-			.delegate('.wikia-slideshow', clickEvent, function(event){
-				event.preventDefault();
-
-				var slideshow = $(this);
-				imgModal(slideshow.data('number'), slideshow.find('img').attr('src'));
-			})
-			.delegate('.tooBigTable', clickEvent, function(event) {
-				event.preventDefault();
-
-				$.openModal({
-					addClass: 'wideTable',
-					html: this.outerHTML
-				});
+			$.openModal({
+				addClass: 'wideTable',
+				html: this.outerHTML
 			});
+		});
 
 		$('#searchForm').bind('submit', function(){
 			track(['search', 'submit']);

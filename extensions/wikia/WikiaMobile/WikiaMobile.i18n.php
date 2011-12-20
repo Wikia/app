@@ -20,6 +20,7 @@ $messages['en'] = array(
 	'wikiamobile-explore' => 'Explore',
 	'wikiamobile-article-categories' => 'Categories',
 	'wikiamobile-feedback' => 'Feedback',
+	'wikiamobile-modal-no-content' => 'No content provided',
 
 	//footer
 	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Lifestyle]]',
@@ -401,4 +402,3 @@ $messages['zh-hant'] = array(
 	'wikiamobile-menu' => '選單',
 	'wikiamobile-explore' => '探索',
 );
-

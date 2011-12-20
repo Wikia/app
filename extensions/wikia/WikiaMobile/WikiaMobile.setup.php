@@ -60,6 +60,10 @@ $app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileAppCacheController.class.
  */
 $app->wg->set( 'wgExtensionMessagesFiles', "{$dir}/WikiaMobile.i18n.php", 'WikiaMobile' );
 
+F::build('JSMessages')->registerPackage('WikiaMobile', array(
+	'wikiamobile-modal-*'
+));
+F::build('JSMessages')->enqueuePackage('WikiaMobile', JSMessages::INLINE);
 /**
  * hooks
  */
