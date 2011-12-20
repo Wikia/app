@@ -6,7 +6,7 @@ var WikiaMobile = WikiaMobile || (function() {
 	deviceHeight = ($.os.ios) ? 416 : 513,
 	realWidth = (window.orientation == 0 || window.orientation == 180) ? 200 : 480,
 	//TODO: finalize the following line and update all references to it (also in extensions)
-	clickEvent = ('ontouchstart' in window) ? 'tap' : 'click',
+	clickEvent = ('ontap' in window) ? 'tap' : 'click',
 	touchEvent = ('ontouchstart' in window) ? 'touchstart' : 'click';
 
 	function getImages(){
