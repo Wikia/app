@@ -50,25 +50,20 @@
 		//handling next/previous image in lightbox
 		body.delegate('#nextImage', WikiaMobile.getClickEvent(), function() {
 			$._nextImage($(this).prev());
-		});
-
-		body.delegate('#previousImage', WikiaMobile.getClickEvent(), function() {
+		})
+		.delegate('#previousImage', WikiaMobile.getClickEvent(), function() {
 			that._previousImage($(this).next());
-		});
-
-		body.delegate('#nextImage', 'swipeLeft', function() {
+		})
+		.delegate('#nextImage', 'swipeLeft', function() {
 			$._nextImage($(this).prev());
-		});
-
-		body.delegate('#previousImage', 'swipeRight', function() {
+		})
+		.delegate('#previousImage', 'swipeRight', function() {
 			that._previousImage($(this).next());
-		});
-
-		body.delegate('.fullScreenImage', 'swipeLeft', function() {
+		})
+		.delegate('.fullScreenImage', 'swipeLeft', function() {
 			$._nextImage($(this));
-		});
-
-		body.delegate('.fullScreenImage', 'swipeRight', function() {
+		})
+		.delegate('.fullScreenImage', 'swipeRight', function() {
 			that._previousImage($(this));
 		});
 
@@ -102,6 +97,7 @@
 		img.onload =  function() {
 			fullScreen.css('background-image','url("' + img.src + '")');
 			fullScreen.data('number', imageNumber);
+			img = null;
 			$.hideLoader(fullScreen);
 		};
 		$.showLoader(fullScreen,{center: true});
@@ -132,8 +128,11 @@
 
 		if(options.html) {
 			this._modalContent.html(options.html);
+		} else if(options.imageNumber) {
+			this._modalContent.html('<div class=changeImageButton id=previousImage><div class=changeImageChevron></div></div><div class=fullScreenImage></div><div class=changeImageButton id=nextImage><div class=changeImageChevron></div></div>');
+			$._changeImage(options.imageNumber, $('.fullScreenImage'));
 		} else {
-			this._modalContent.html('No Content provided');
+			this._modalContent.html($.msg('wikiamobile-modal-no-content'));
 		}
 
 		this._showCaption(options.caption);

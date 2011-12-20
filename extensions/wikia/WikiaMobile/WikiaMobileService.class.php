@@ -44,8 +44,6 @@ class WikiaMobileService extends WikiaService {
 			}
 		}
 
-
-
 		//Bottom Scripts
 		$this->wf->RunHooks( 'SkinAfterBottomScripts', array ( $this->wg->User->getSkin(), &$bottomscripts ) );
 

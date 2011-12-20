@@ -54,15 +54,18 @@
 
 		$().log('loading ' + packages + ' package(s) for "' + language + '"', 'JSMessages');
 
-		$.get(wgScriptPath + '/wikia.php', {
+		$.post(wgScriptPath + '/wikia.php', {
 			controller: 'JSMessages',
 			method: 'getMessages',
 			format: 'html',
 			packages: packages,
 			uselang: language,
 			cb: window.wgJSMessagesCB
-		}, function() {
+		}, function(result) {
+
 			$().log(packages + ' package(s) loaded', 'JSMessages');
+
+			$(document.head).append('<script>'+result+'</script>');
 
 			if (typeof callback == 'function') {
 				callback();
