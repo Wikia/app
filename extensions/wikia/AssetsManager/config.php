@@ -199,13 +199,13 @@ $config['wikiamobile_js_body'] = array(
 		'//skins/common/zepto/zepto.getcss.js',
 		'//skins/common/zepto/zepto.wikiamobile.js',
 		'//skins/common/zepto/zepto.modal.wikiamobile.js',
-		'//extensions/wikia/WikiaMobile/js/WikiaMobile.js',
-		'//extensions/wikia/JSMessages/js/JSMessages.wikiamobile.js',
-		'//extensions/wikia/JSSnippets/js/JSSnippets.wikiamobile.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaLogger.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
-		'//extensions/wikia/WikiaTracker/js/WikiaTrackerQueue.js'
+		'//extensions/wikia/WikiaTracker/js/WikiaTrackerQueue.js',
+		'//extensions/wikia/WikiaMobile/js/WikiaMobile.js',
+		'//extensions/wikia/JSMessages/js/JSMessages.wikiamobile.js',
+		'//extensions/wikia/JSSnippets/js/JSSnippets.wikiamobile.js'
 	)
 );
 
