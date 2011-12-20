@@ -25,13 +25,15 @@ $comment-left-margin: $page-padding + 50px;
 		#article-comments-ul{
 			margin: 0;
 			padding: 0;
-			list-type: none;
+			list-style: none;
 
 			&>.SpeechBubble:first-child{
 				border: none;
 			}
 
 			.sub-comments{
+				list-style: none;
+
 				&>.SpeechBubble:first-child{
 					position: relative;
 
