@@ -4,7 +4,7 @@
 #WikiaArticleCategories {
 	padding: 0 $page-padding;
 
-	h1 {
+	.collapsible-section {
 		@include section-title;
 		margin: $section-title-margin;
 		text-transform: uppercase;
@@ -22,6 +22,6 @@
 	}
 }
 
-.collapseSections #catlinks {
+.js #catlinks {
 	display: none;
 }
