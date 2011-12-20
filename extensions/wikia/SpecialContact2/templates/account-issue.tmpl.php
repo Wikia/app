@@ -35,16 +35,15 @@ echo wfMsgExt( 'specialcontact-intro-account-issue', array( 'parse' ) );
 <input name="wpScreenshot" type="file" accept="image/*" />
 </p>
 
-<?php if( !$isLoggedIn ) { ?>
-	<table><tr>
-	<td style='width:200px'><input type='text' id='wpCaptchaWord' name='wpCaptchaWord' value='' /><br/>
-                        <span class='captchDesc'><?= wfMsg('specialcontact-captchainfo') ?></span>
-                        <input type='hidden' value='<?= $captchaIndex ?>' id='wpCaptchaId' name='wpCaptchaId'>
-	</td>
-        <td><img class='contactCaptch' height='50' src='<?= $captchaUrl ?>' /></td>
-        </tr></table>
-</p>
-<?php } ?>
+<?php
+if( !$isLoggedIn && (isset($captchaForm)) ) {
+        echo "<div class='captcha'>" .
+        wfMsg( 'specialcontact-captchatitle' ) .
+        $captchaForm .
+        wfMsg( 'specialcontact-captchainfo' ) .
+        "</div>\n";
+}
+?>
 
 <input type="submit" value="<?= wfMsg( 'specialcontact-mail' ) ?>" />
 

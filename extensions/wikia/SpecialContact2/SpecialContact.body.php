@@ -435,7 +435,7 @@ class ContactForm extends SpecialPage {
 			'encProblemDesc' => $encProblemDesc,
 			'isLoggedIn' => $wgUser->isLoggedIn(),
 		);
-		
+
 		if( $wgUser->isLoggedIn() ) {
 			#logged in
 			$vars[ 'hasEmail' ] = $wgUser->getEmail();
