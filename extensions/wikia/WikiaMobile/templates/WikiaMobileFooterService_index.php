@@ -10,7 +10,7 @@
 		</ul>
 	<? endif ;?>
 	<ul>
-		<li><a href="#" id="fullSiteSwitch"><?= $wf->Msg('mobile-full-site') ;?></a></li>
+		<li><a href="?useskin=wikia" id="fullSiteSwitch"><?= $wf->Msg('mobile-full-site') ;?></a></li>
 		<li><?= $copyrightLink ;?></li>
 		<li><a href="<?= $feedbackLink ;?>" target="_blank"><?= $wf->Msg('wikiamobile-feedback') ;?></a></li>
 	</ul>
