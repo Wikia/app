@@ -28,7 +28,7 @@
  **********************************************************************************
  */
 
-(function($,undefined){
+(function($){
 
 /**********************************************************************************
  * $.store base and convinience accessor
@@ -298,8 +298,9 @@ $.store.drivers = {
 			try
 			{
 				this.cache = $.store.serializers.json.decode( window.name + "" );
-				if( typeof this.cache != "object" )
+				if( typeof this.cache != "object" ) {
 					this.cache = {};
+				}
 			}
 			catch(e)
 			{
