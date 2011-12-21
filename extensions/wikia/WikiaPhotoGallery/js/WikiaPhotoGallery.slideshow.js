@@ -7,11 +7,11 @@ var WikiaPhotoGallerySlideshow = {
 		var slideshow = $('#' + params.id),
 		hash = slideshow.attr('hash'),
 		item = slideshow.find('li').first();
-		
+
 		if (item.attr('title') != '') {
 			item.css('backgroundImage', 'url(' + item.attr('title') + ')');
 		}
-		
+
 		item.removeAttr('title');
 
 		slideshow.slideshow({
@@ -46,7 +46,7 @@ var WikiaPhotoGallerySlideshow = {
 					return;
 				}
 
-				WikiaPhotoGallery.ajax('getGalleryData', {hash:hash, title:wgPageName}, function(data) {
+				WikiaPhotoGallery.ajax('getGalleryData', {hash:hash, articleId:wgArticleId}, function(data) {
 					if (data && data.info == 'ok') {
 						data.gallery.id = params.id;
 						WikiaPhotoGallerySlideshow.log(data.gallery);
@@ -110,7 +110,7 @@ var WikiaPhotoGallerySlideshow = {
 		isFromFeed = node.parent().hasClass('wikia-slideshow-from-feed'),
 		// tracking
 		fakeUrl = '/slideshow/basic';
-		
+
 		// stop slideshow animation
 		slideshow.trigger('stop');
 
@@ -140,7 +140,7 @@ var WikiaPhotoGallerySlideshow = {
 			//every image in feed slideshow has href - ctrl+click will lead to that page but by default - display popup
 			ev.preventDefault();
 		}
-		
+
 		// load popout
 		WikiaPhotoGalleryView.loadEditorJS(function() {
 			WikiaPhotoGallery.showSlideshowPopOut(slideshow.attr('id'), slideshow.attr('hash'), index, WikiaPhotoGalleryView.isViewPage(), isFromFeed);

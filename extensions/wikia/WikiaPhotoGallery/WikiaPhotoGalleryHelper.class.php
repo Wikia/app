@@ -1192,9 +1192,9 @@ class WikiaPhotoGalleryHelper {
 	 * AJAX helper called from view mode to get gallery data
 	 * @author Marooned
 	 */
-	static public function getGalleryDataByHash($hash, $revisionId = 0, $type = WikiaPhotoGallery::WIKIA_PHOTO_GALLERY) {
-		global $wgTitle, $wgUser, $wgOut;
-		wfProfileIn(__METHOD__);
+	static public function getGalleryDataByHash( $hash, $articleId, $revisionId = 0, $type = WikiaPhotoGallery::WIKIA_PHOTO_GALLERY ) {
+		global $wgUser, $wgOut;
+		wfProfileIn( __METHOD__ );
 
 		self::initParserHook();
 		self::$mGalleryHash = $hash;
@@ -1202,16 +1202,25 @@ class WikiaPhotoGalleryHelper {
 		$parser = new Parser();
 		$parserOptions = new ParserOptions();
 
+		$title = Title::newFromId( $articleId );
+		if ( !$title ) {
+			$result['error'] = wfMsg( 'wikiaPhotoGallery-error-wrong-title' );
+			$result['errorCaption'] = wfMsg( 'wikiaPhotoGallery-error-caption' );
+
+			wfProfileOut( __METHOD__ );
+			return $result;
+		}
+
 		// let's parse current version of wikitext and store data of gallery with provided hash in self::$mGalleryData
-		$rev = Revision::newFromTitle($wgTitle, $revisionId);
+		$rev = Revision::newFromTitle( $title, $revisionId );
 		//should never happen
 		if (!is_null($rev)) {
 			$wikitext = $rev->getText();
-			$parser->parse($wikitext, $wgTitle, $parserOptions)->getText();
+			$parser->parse( $wikitext, $title, $parserOptions )->getText();
 		}
 
 		// Marooned: check block state of user (RT #55274)
-		$permissionErrors = $wgTitle->getUserPermissionsErrors('edit', $wgUser);
+		$permissionErrors = $title->getUserPermissionsErrors('edit', $wgUser);
 		if (count($permissionErrors) && $type == WikiaPhotoGallery::WIKIA_PHOTO_GALLERY) {
 			$result['error'] = $wgOut->parse($wgOut->formatPermissionsErrorMessage($permissionErrors));
 			$result['errorCaption'] = wfMsg('wikiaPhotoGallery-error-caption');
