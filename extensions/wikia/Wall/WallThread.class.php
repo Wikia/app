@@ -95,8 +95,10 @@ class WallThread {
 		$score = 0;
 		foreach( $this->data->threadReplyObjs as $obj ) {
 			$obj->load();
-			$timestamp = $obj->mFirstRevision->getTimestamp();
-			$score += self::timestampToScore( $timestamp );
+			if( $obj->mFirstRevision ) {
+				$timestamp = $obj->mFirstRevision->getTimestamp();
+				$score += self::timestampToScore( $timestamp );
+			}
 		}
 		$ac = $this->getThreadAC();
 		$ac->load();
@@ -114,7 +116,9 @@ class WallThread {
 		//var_dump($this->mReplyObjs);
 		//var_dump($last);
 		$last->load();
-		return $last->mFirstRevision->getTimestamp();
+		if( $last->mFirstRevision ) {
+			return $last->mFirstRevision->getTimestamp();
+		}
 	
 	}
 	

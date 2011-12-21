@@ -101,7 +101,7 @@ class UserBlock {
 		return wfSharedMemcKey( 'phalanx', self::CACHE_KEY, $user->getTitleKey() );
 	}
 
-	private static function getBlockFromCache( $user, $isCurrentUser ) {
+	protected static function getBlockFromCache( $user, $isCurrentUser ) {
 		global $wgMemc;
 		wfProfilein( __METHOD__ );
 
