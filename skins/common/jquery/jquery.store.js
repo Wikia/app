@@ -44,10 +44,12 @@ $.store = function( driver, serializers )
 
 	if( typeof driver == 'string' )
 	{
-		if( $.store.drivers[ driver ] )
+		if( $.store.drivers[ driver ] ) {
 			this.driver = $.store.drivers[ driver ];
-		else
+		}
+		else {
 			throw new Error( 'Unknown driver '+ driver );
+		}
 	}
 	else if( typeof driver == 'object' )
 	{
@@ -57,8 +59,9 @@ $.store = function( driver, serializers )
 			|| !$.isFunction( driver.del )
 			|| !$.isFunction( driver.flush );
 
-		if( invalidAPI )
+		if( invalidAPI ) {
 			throw new Error( 'The specified driver does not fulfill the API requirements' );
+		}
 
 		this.driver = driver;
 	}
@@ -68,8 +71,9 @@ $.store = function( driver, serializers )
 		$.each( $.store.drivers, function()
 		{
 			// skip unavailable drivers
-			if( !$.isFunction( this.available ) || !this.available() )
+			if( !$.isFunction( this.available ) || !this.available() ) {
 				return true; // continue;
+			}
 
 			that.driver = this;
 			if( that.driver.init() === false )
@@ -83,16 +87,18 @@ $.store = function( driver, serializers )
 	}
 
 	// use default serializers if not told otherwise
-	if( !serializers )
+	if( !serializers ) {
 		serializers = $.store.serializers;
+	}
 
 	// intialize serializers
 	this.serializers = {};
 	$.each( serializers, function( key, serializer )
 	{
 		// skip invalid processors
-		if( !$.isFunction( this.init ) )
+		if( !$.isFunction( this.init ) ) {
 			return true; // continue;
+		}
 
 		that.serializers[ key ] = this;
 		that.serializers[ key ].init( that.encoders, that.decoders );
@@ -130,8 +136,9 @@ $.extend( $.store.prototype, {
 		$.each( this.encoders, function()
 		{
 			var serializer = that.serializers[ this + "" ];
-			if( !serializer || !serializer.encode )
+			if( !serializer || !serializer.encode ) {
 				return true; // continue;
+			}
 			try
 			{
 				value = serializer.encode( value );
@@ -144,14 +151,16 @@ $.extend( $.store.prototype, {
 	unserialize: function( value )
 	{
 		var that = this;
-		if( !value )
+		if( !value ) {
 			return value;
+		}
 
 		$.each( this.decoders, function()
 		{
 			var serializer = that.serializers[ this + "" ];
-			if( !serializer || !serializer.decode )
+			if( !serializer || !serializer.decode ) {
 				return true; // continue;
+			}
 
 			value = serializer.decode( value );
 		});
@@ -224,8 +233,9 @@ $.store.drivers = {
 		init: function()
 		{
 			// $.store can only utilize one userData store at a time, thus avoid duplicate initialization
-			if( this.initialized )
+			if( this.initialized ) {
 				return;
+			}
 
 			try
 			{
@@ -260,7 +270,7 @@ $.store.drivers = {
 		flush: function()
 		{
 			// flush by expiration
-			this.element.expires = (new Date).toUTCString();
+			this.element.expires = (new Date()).toUTCString();
 			this.element.save( this.nodeName );
 		}
 	},
