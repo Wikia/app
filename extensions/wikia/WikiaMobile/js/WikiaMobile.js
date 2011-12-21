@@ -4,7 +4,7 @@ var WikiaMobile = WikiaMobile || (function() {
 	var allImages = [],
 	deviceWidth = ($.os.ios) ? 268 : 300,
 	deviceHeight = ($.os.ios) ? 416 : 513,
-	realWidth = (window.orientation == 0 || window.orientation == 180) ? 200 : 480,
+	realWidth = ($.os.ios)?((window.orientation == 0) ? screen.width : screen.height) : screen.width,
 	//TODO: finalize the following line and update all references to it (also in extensions)
 	clickEvent = ('ontap' in window) ? 'tap' : 'click',
 	touchEvent = ('ontouchstart' in window) ? 'touchstart' : 'click';
@@ -17,17 +17,16 @@ var WikiaMobile = WikiaMobile || (function() {
 	//setTimeout is necessary to make it work on ios...
 	function hideURLBar(){
 		setTimeout(function(){
-		  	if(!pageYOffset)
+		  	if(!window.pageYOffset)
 				window.scrollTo(0, 1);
 		}, 1);
 	}
 
 	function handleTables(){
 		$('table').not('table table').each(function() {
-			var table = $(this);
-			table.wrapAll('<div class=tooWideTable></div>');
-			if(this.offsetWidth > realWidth){};
-
+			if(this.offsetWidth > realWidth || this.offsetHeight > deviceWidth) {
+				$(this).wrapAll('<div class=tooWideTable>');
+			};
 		});
 	}
 
@@ -130,12 +129,12 @@ var WikiaMobile = WikiaMobile || (function() {
 			event.preventDefault();
 			imgModal($(this).data('number'));
 		})
-		.delegate('.tooBigTable', clickEvent, function(event) {
+		.delegate('.tooWideTable', clickEvent, function(event) {
 			event.preventDefault();
 
 			$.openModal({
 				addClass: 'wideTable',
-				html: this.outerHTML
+				html: this.innerHTML
 			});
 		});
 
