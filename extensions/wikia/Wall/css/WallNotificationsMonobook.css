@@ -52,7 +52,6 @@
 #wall-notifications-inner a { display: block; padding: 0; }
 #wall-notifications-inner ul {	padding: 0;	margin: 0; }
 #wall-notifications-inner li {	padding: 0; margin: 0; display: list-item; position: relative; }
-#wall-notifications-inner .notification { }
 
 #wall-notifications-inner .avatars {
 	vertical-align: top;
