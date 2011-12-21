@@ -1,12 +1,31 @@
 @import "variables.scss";
+//mixins
+@import "mixins/box-sizing.scss";
 
 #WikiaMainContent {
 	.tooWideTable {
-		border: 3px solid black;
-	}
-	.tooBigTable {
+		@include box-shadow(-5px -5px 15px 0 rgb(204, 224, 245) inset);
 		border: 1px solid $border-color;
-		padding: $page-padding;
+		max-width: 100%;
+		max-height: 200px;
+		position: relative;
+		padding: 5px;
+		overflow: hidden;
+	}
+
+	.tooWideTable:after {
+		content: '';
+		position: absolute;
+		right: 0;
+		top: 0;
+		width: 30px;
+		height: 30px;
+		border-radius: 0 0 0 5px;
+		@include box-shadow(0 0 15px 0 rgb(204, 224, 245));
+		background-color: $border-color;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-image: url("/extensions/wikia/WikiaMobile/images/expand.png");/* $wgCdnStylePath */
 	}
 }
 
