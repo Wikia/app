@@ -2029,7 +2029,7 @@ class Article {
 					$dbw->rollback();
 				} else {
 					global $wgUseRCPatrol;
-					wfRunHooks( 'NewRevisionFromEditComplete', array( $this, $revision, $baseRevId, $user ) );
+					wfRunHooks( 'NewRevisionFromEditComplete', array( $this, $revision, $baseRevId, $user, false ) );
 					# Update recentchanges
 					if ( !( $flags & EDIT_SUPPRESS_RC ) ) {
 						# Mark as patrolled if the user can do so
@@ -2110,7 +2110,7 @@ class Article {
 			# Update the page record with revision data
 			$this->updateRevisionOn( $dbw, $revision, 0 );
 
-			wfRunHooks( 'NewRevisionFromEditComplete', array( $this, $revision, false, $user ) );
+			wfRunHooks( 'NewRevisionFromEditComplete', array( $this, $revision, false, $user, false ) );
 			# Update recentchanges
 			if ( !( $flags & EDIT_SUPPRESS_RC ) ) {
 				global $wgUseRCPatrol, $wgUseNPPatrol;
@@ -2489,7 +2489,7 @@ class Article {
 						), 'Article::protect'
 					);
 
-					wfRunHooks( 'NewRevisionFromEditComplete', array( $this, $nullRevision, $latest, $wgUser ) );
+					wfRunHooks( 'NewRevisionFromEditComplete', array( $this, $nullRevision, $latest, $wgUser, false ) );
 					wfRunHooks( 'ArticleProtectComplete', array( &$this, &$wgUser, $limit, $reason ) );
 
 					# Update the protection log

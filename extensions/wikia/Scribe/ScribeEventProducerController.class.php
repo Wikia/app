@@ -22,14 +22,16 @@ class ScribeEventProducerController extends WikiaController {
 		return true;
 	}
 
-	public function onSaveRevisionComplete( $oArticle, $oRevision, $revision_id, $oUser ) {
+	public function onSaveRevisionComplete( $oArticle, $oRevision, $revision_id, $oUser, $can_added = true ) {
 		$this->app->wf->ProfileIn( __METHOD__ );
 		
 		# producer
- 		$oScribeProducer = F::build( 'ScribeEventProducer', array( 'key' => 'edit' ) );		
-		if ( is_object( $oScribeProducer ) ) {
-			if ( $oScribeProducer->buildEditPackage( $oArticle, $oUser, $oRevision, $revision_id ) ) {
-				$oScribeProducer->sendLog();
+		if ( $can_added ) {
+			$oScribeProducer = F::build( 'ScribeEventProducer', array( 'key' => 'edit' ) );		
+			if ( is_object( $oScribeProducer ) ) {
+				if ( $oScribeProducer->buildEditPackage( $oArticle, $oUser, $oRevision, $revision_id ) ) {
+					$oScribeProducer->sendLog();
+				}
 			}
 		}
 		
