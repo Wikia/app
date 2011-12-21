@@ -228,11 +228,12 @@ class WikiaPhotoGalleryAjax {
 		$hash = $wgRequest->getVal('hash');
 		$maxWidth = $wgRequest->getInt('maxwidth', 650) - 20;
 		$maxHeight = $wgRequest->getInt('maxheight', 1200) - 320;
+		$articleId = $wgRequest->getVal('articleId');
 
 		// used on pages with oldid URL param
 		$revisionId = $wgRequest->getInt('revid', 0);
 
-		$slideshow = WikiaPhotoGalleryHelper::getGalleryDataByHash($hash, $revisionId, WikiaPhotoGallery::WIKIA_PHOTO_SLIDESHOW);
+		$slideshow = WikiaPhotoGalleryHelper::getGalleryDataByHash($hash, $articleId, $revisionId, WikiaPhotoGallery::WIKIA_PHOTO_SLIDESHOW);
 
 		if (isset($slideshow['info']) && $slideshow['info'] == 'ok') {
 			if (empty($slideshow['gallery']['params']->rssfeed)) {
@@ -276,14 +277,15 @@ class WikiaPhotoGalleryAjax {
 		global $wgRequest;
 		wfProfileIn(__METHOD__);
 
-		$hash = $wgRequest->getVal('hash');
+		$hash = $wgRequest->getVal( 'hash' );
+		$articleId = $wgRequest->getVal( 'articleId' );
 
-		$result = WikiaPhotoGalleryHelper::getGalleryDataByHash($hash);
+		$result = WikiaPhotoGalleryHelper::getGalleryDataByHash( $hash, $articleId );
 
 		wfProfileOut(__METHOD__);
 
 		// return JSON as HTML - decode it JS-side
-		return Wikia::json_encode($result);
+		return Wikia::json_encode( $result );
 	}
 
 	/**

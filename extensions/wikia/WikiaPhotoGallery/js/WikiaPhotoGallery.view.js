@@ -103,7 +103,7 @@ var WikiaPhotoGalleryView = {
 							// tracking
 							//self.track('/gallery/addImage'); // RT #75226
 
-							WikiaPhotoGallery.ajax('getGalleryData', {hash:hash, title:wgPageName}, function(data) {
+							WikiaPhotoGallery.ajax('getGalleryData', {hash:hash, articleId:wgArticleId}, function(data) {
 								if (data && data.info == 'ok') {
 									data.gallery.id = id;
 									$().log('data');

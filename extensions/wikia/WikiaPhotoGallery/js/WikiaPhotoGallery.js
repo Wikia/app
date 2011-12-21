@@ -2646,6 +2646,7 @@ var WikiaPhotoGallery = {
 			'maxwidth': $(window).width(),
 			'maxheight': $(window).height(),
 			'title': wgPageName,
+			'articleId': wgArticleId,
 			'revid': window.wgRevisionId
 		};
 
@@ -2681,7 +2682,7 @@ var WikiaPhotoGallery = {
 								// close slideshow pop-out
 								dialog.closeModal();
 
-								WikiaPhotoGallery.ajax('getGalleryData', {hash:hash, title:wgPageName}, function(data) {
+								WikiaPhotoGallery.ajax('getGalleryData', {hash:hash, articleId: wgArticleId}, function(data) {
 									if (data && data.info == 'ok') {
 										data.gallery.id = slideshowId;
 										WikiaPhotoGallery.showEditor({
@@ -2917,12 +2918,12 @@ var WikiaPhotoGallery = {
 				if (imageData.recentlyUploaded) {
 					continue;
 				}
-                                
+
                                 // skip if empty or corrupted data
                                 if ( typeof imageData.name == 'undefined' ) {
                                     continue;
                                 }
-                                
+
 				HTML += imageData.name;
 				if (imageData.caption != '') {
 					HTML += '|' + imageData.caption;
