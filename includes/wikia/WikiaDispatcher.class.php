@@ -167,7 +167,7 @@ class WikiaDispatcher {
 		} while ( !$request->isDispatched() );
 
 		if ( $request->isInternal() && $response->hasException() ) {
-			throw new WikiaException('Internal Throw: ' . $response->getException()->getMessage());
+			throw new WikiaDispatchedException( 'Internal Throw', $response->getException() );
 		}
 
 		$app->runFunction( 'wfProfileOut', ( __METHOD__ . " ({$controllerName}_{$method})" ) );
