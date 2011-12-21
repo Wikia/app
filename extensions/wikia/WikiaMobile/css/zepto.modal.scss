@@ -39,7 +39,6 @@
 }
 
 #modalContent {
-	text-align: center;
 	color: $modal-text-color;
 	width: 100%;
 	height: 100%;
@@ -52,7 +51,7 @@
 		background-position: center;
 		background-size: contain;
 	}
-	
+
 	&>p{
 		margin: 0;
 	}
