@@ -29,7 +29,7 @@ class ArticleCommentsAjax {
 	 * @return String -- json-ized array
 	 */
 	static public function axSave() {
-		global $wgRequest, $wgUser, $wgTitle;
+		global $wgRequest, $wgUser;
 
 		$articleId = $wgRequest->getVal( 'article', false );
 		$commentId = $wgRequest->getVal( 'id', false );
@@ -39,14 +39,13 @@ class ArticleCommentsAjax {
 		);
 
 		$title = Title::newFromID( $articleId );
-		
 		if ( !$title ) {
 			return $result;
 		}
 
 		$commentingAllowed = true;
-		if (defined('NS_BLOG_ARTICLE') && $wgTitle->getNamespace() == NS_BLOG_ARTICLE) {
-			$props = BlogArticle::getProps($wgTitle->getArticleID());
+		if (defined('NS_BLOG_ARTICLE') && $title->getNamespace() == NS_BLOG_ARTICLE) {
+			$props = BlogArticle::getProps($title->getArticleID());
 			$commentingAllowed = isset($props['commenting']) ? (bool)$props['commenting'] : true;
 		}
 		if (!$commentingAllowed) {
@@ -127,18 +126,25 @@ class ArticleCommentsAjax {
 	 * @return String -- html -> textarea
 	 */
 	static public function axReply() {
-		global $wgRequest, $wgStylePath, $wgUser, $wgTitle;
+		global $wgRequest, $wgStylePath, $wgUser;
 
+		$articleId = $wgRequest->getVal( 'article', false );
 		$commentId = $wgRequest->getVal( 'id', false );
 		$result = array('id' => $commentId);
 		wfLoadExtensionMessages('ArticleComments');
+
+		$title = Title::newFromID( $articleId );
+		if ( !$title ) {
+			$result['error'] = 1;
+			return $result;
+		}
 
 		if (wfReadOnly()) {
 			$result['error'] = 1;
 			$result['msg'] = wfMsg('readonlytext');
 		} elseif (!$wgUser->isAllowed('edit')) {
 			$result['error'] = 2;
-			$result['msg'] = wfMsg('article-comments-login', SpecialPage::getTitleFor('UserLogin')->getLocalUrl('returnto=' . $wgTitle->getPrefixedUrl()));
+			$result['msg'] = wfMsg('article-comments-login', SpecialPage::getTitleFor('UserLogin')->getLocalUrl('returnto=' . $title->getPrefixedUrl()));
 		} else {
 			$articleId = $wgRequest->getVal( 'article', false );
 
@@ -161,7 +167,7 @@ class ArticleCommentsAjax {
 	 * @return String -- json-ized array`
 	 */
 	static public function axPost() {
-		global $wgRequest, $wgUser, $wgTitle, $wgLang, $wgArticleCommentsMaxPerPage;
+		global $wgRequest, $wgUser, $wgLang, $wgArticleCommentsMaxPerPage;
 
 		$articleId = $wgRequest->getVal( 'article', false );
 		$parentId = $wgRequest->getVal( 'parentId' );
@@ -178,10 +184,11 @@ class ArticleCommentsAjax {
 		}
 
 		$commentingAllowed = true;
-		if (defined('NS_BLOG_ARTICLE') && $wgTitle->getNamespace() == NS_BLOG_ARTICLE) {
-			$props = BlogArticle::getProps($wgTitle->getArticleID());
+		if (defined('NS_BLOG_ARTICLE') && $title->getNamespace() == NS_BLOG_ARTICLE) {
+			$props = BlogArticle::getProps($title->getArticleID());
 			$commentingAllowed = isset($props['commenting']) ? (bool)$props['commenting'] : true;
 		}
+
 		if (!$commentingAllowed) {
 			return $result;
 		}
@@ -201,16 +208,16 @@ class ArticleCommentsAjax {
 		if ( $response !== false ) {
 
 			$listing = ArticleCommentList::newFromTitle($title);
-			
+
 			$addedComment = ArticleComment::newFromArticle($response[1]);
-			
+
 			$parts = ArticleComment::explode($addedComment->getTitle()->getDBkey());
-			
+
 			if(count($parts['partsOriginal']) == 1) {
 				// level1 comment
 				$comments = array($response[1]->getID() => array('level1' => $addedComment));
 			} else {
-				// level2 comment				
+				// level2 comment
 				$addedCommentParent = ArticleComment::newFromId($parentId);
 				$comments = array($parentId => array('level1' => $addedCommentParent, 'level2' => array($response[1]->getID() => $addedComment)));
 			}
