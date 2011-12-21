@@ -48,7 +48,7 @@ var GamingCalendar = {
 			e.preventDefault();
 			GamingCalendar.showCalendar();
 		});
-		
+
 		var modal = $.getUrlVar('showGamingCalendar');
 		if(modal) {
 			GamingCalendar.showCalendar();
@@ -88,7 +88,7 @@ var GamingCalendar = {
 		template = template.replace('##day##', date.getUTCDate());
 
 		template = template.replace('##gameTitle##', item.gameTitle);
-		template = template.replace('##description##', item.description ? item.description : '');
+		template = template.replace('##description##', item.description || '');
 		template = template.replace('##imageSrc##', item.image.src);
 		template = template.replace('##moreInfoUrl##', item.moreInfoUrl);
 		var orderPhrase = 'Pre-order now';
@@ -98,7 +98,7 @@ var GamingCalendar = {
 		}
 		template = template.replace('##preorderLink##', item.preorderUrl ? '<a href="'+item.preorderUrl+'" class="game-pre-order" target="_blank">'+orderPhrase+'</a>' : '');
 		template = template.replace('##systems##', item.systems ? item.systems.join(', ') : '');
-		template = template.replace('##rating##', item.rating ? item.rating : '');
+		template = template.replace('##rating##', item.rating || '');
 
 		return template;
 	},
