@@ -171,16 +171,6 @@ $config['wikiaphone_js'] = array(
 	)
 );
 
-//SkeleSkin JS
-$config['skeleskin_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//skins/common/zepto/zepto-0.8.js',
-		'//skins/common/zepto/orientation.js',
-		'//skins/skeleskin/js/main.js'
-	)
-);
-
 //WikiaMobile JS, loaded at the top of the page in the head section
 $config['wikiamobile_js_head'] = array(
 	'type' => AssetsManager::TYPE_JS,

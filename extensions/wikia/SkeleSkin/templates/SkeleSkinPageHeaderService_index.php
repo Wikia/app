@@ -1,1 +1,0 @@
-<header id="WikiaMainContentHeader"><h1><?= $wf->MsgExt( 'wikiamobile-page-header-title', array( 'parseinline' ), $pageTitle ); ?></h1></header>
