@@ -6,10 +6,11 @@
 $page-background-color: #FFF;
 $page-text-color: #3A3A3A;
 $page-text-alternate-color: #8F8F8F;
-$link-color: #006CB0;
-$section-text-color: #006CB0;
+$link-color: get_command_line_param("color-links", #006CB0);
+$section-text-color: $link-color;
 $border-color: #E3E3E3;
 $shadow-color: #DDD;
+$table-shadow-color: rgb(191,211,230);
 
 //sections
 $section-title-font-size: 1.5em;
@@ -35,16 +36,12 @@ $menuSecondColor: #333;
 
 //navigation bar
 $navBarColorFirst: get_command_line_param("color-page", #FFF);
-$navBarColorSecond: white;
-$navBarWordmarkText: black;
-@if( lightness($navBarColorFirst) < 50 ) {
-	$navBarColorSecond: lighten($navBarColorFirst, 40%);
-	$navBarWordmarkText: lighten($navBarColorFirst, 80%);
-
-} @else {
-	$navBarColorSecond: darken($navBarColorFirst, 40%);
-	$navBarWordmarkText: darken($navBarColorFirst, 80%);
+$navBarColorSecond: mix($navBarColorFirst, #000000, 80%);
+@if lightness($navBarColorFirst) < 50 {
+	$navBarColorSecond: mix($navBarColorFirst, #ffffff, 80%);
 }
+$navBarWordmarkText: $link-color;
+
 $searchOpenBackground: #474747;
 $searchOpenBorder: #878787;
 
@@ -61,3 +58,6 @@ $descriptionTextColor: #FFF;
 
 //modal
 $modal-text-color: #FFF;
+
+//shadow
+$shadow: 0 0 10px $shadow-color;
