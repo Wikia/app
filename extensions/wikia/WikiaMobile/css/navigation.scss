@@ -9,7 +9,7 @@
 	position: relative;
 	height: 50px;
 	padding: 2px 5px;
-	background-color: $menuBackgroundColor;
+	background-color: $navBarColorFirst;
 	@include linear-gradient($navBarColorFirst, $navBarColorSecond);
 	@include box-shadow(0 0 10px black);
 	@include box-sizing(content-box);
