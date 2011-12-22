@@ -152,7 +152,7 @@
 			this._toHide = null;
 		}
 
-		this._position = pageYOffset;
+		this._position = window.pageYOffset;
 		this._thePage.hide();
 		this._modal.addClass('modalShown');
 		this._resetTimeout();
