@@ -108,7 +108,8 @@ class ScribeEventProducer {
 		$this->setRevisionSize( $rev_size );
 		$this->setMediaType( $oTitle );
 		$this->setMediaLinks( $oArticle );
-		$this->setTotalWords( str_word_count( $rev_text ) );	
+		$this->setTotalWords( str_word_count( $rev_text ) );
+		$this->setEventTS(date('Y-m-d\TH:i:s.uO'));
 
 		$this->app->wf->ProfileOut( __METHOD__ );
 		
@@ -301,6 +302,10 @@ class ScribeEventProducer {
 	
 	public function setRevisionSize ( $size ) { 
 		$this->mParams['revSize'] = $size; 
+	}
+
+	public function setEventTS ( $ts ) { 
+		$this->mParams['eventTS'] = $ts; 
 	}
 	
 	public function setMediaType ( $oTitle ) { 
