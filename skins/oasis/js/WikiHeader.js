@@ -472,6 +472,14 @@ var WikiHeaderV2 = {
 			}
 		});
 
+		$.each($('.ArticlePreview #WikiHeader > nav > ul > li'), function(menuItemKey, menuItem) {
+			widthLevelFirst += $(menuItem).width();
+		});
+		if (widthLevelFirst > 550) {
+			returnVal = false;
+			WikiHeaderV2.log('menu level #1 not valid');
+		}
+
 		return returnVal;
 	},
 
