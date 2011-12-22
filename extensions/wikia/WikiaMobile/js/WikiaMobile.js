@@ -23,14 +23,14 @@ var WikiaMobile = WikiaMobile || (function() {
 	}
 
 	function handleTables(){
-		$('table').not('table table').each(function() {
+		$('table').not('table table, .infobox').each(function() {
 			if(this.offsetWidth > realWidth || this.offsetHeight > deviceWidth) {
-				$(this).wrapAll('<div class=tooWideTable>');
-			};
+				$(this).wrapAll('<div class=bigTable>');
+			}
 		});
 	}
 
-	function processImages() {
+	function processImages(){
 		var number = 0,
 		image;
 
@@ -114,11 +114,11 @@ var WikiaMobile = WikiaMobile || (function() {
 		.delegate('#WikiaArticleCategories a', clickEvent, function(){
 			track(['link', 'category']);
 		})
-		.delegate('.infobox img', clickEvent, function(event) {
+		.delegate('.infobox img', clickEvent, function(event){
 			event.preventDefault();
 			imgModal($(this).parents('.image').data('number'));
 		})
-		.delegate('figure', clickEvent, function(event) {
+		.delegate('figure', clickEvent, function(event){
 			event.preventDefault();
 
 			var thumb = $(this),
@@ -129,7 +129,7 @@ var WikiaMobile = WikiaMobile || (function() {
 			event.preventDefault();
 			imgModal($(this).data('number'));
 		})
-		.delegate('.tooWideTable', clickEvent, function(event) {
+		.delegate('.bigTable', clickEvent, function(event){
 			event.preventDefault();
 
 			$.openModal({
@@ -159,7 +159,7 @@ var WikiaMobile = WikiaMobile || (function() {
 			}
 		});
 
-		$('#WikiaPage').bind(clickEvent, function(event) {
+		$('#WikiaPage').bind(clickEvent, function(event){
 			navigationWordMark.show();
 			navigationSearch.hide().removeClass('open');
 			searchToggle.removeClass('open');
