@@ -109,7 +109,11 @@ class ScribeEventProducer {
 		$this->setMediaType( $oTitle );
 		$this->setMediaLinks( $oArticle );
 		$this->setTotalWords( str_word_count( $rev_text ) );
-		$this->setEventTS(date('Y-m-d\TH:i:s.uO'));
+
+		$t = microtime(true);
+		$micro = sprintf("%06d",($t - floor($t)) * 1000000);
+		$d = new DateTime( date('Y-m-d H:i:s.'.$micro,$t) );
+		$this->setEventTS($d->format("Y-m-d\TH:i:s.uO"));
 
 		$this->app->wf->ProfileOut( __METHOD__ );
 		
