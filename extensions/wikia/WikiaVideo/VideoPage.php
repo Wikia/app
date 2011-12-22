@@ -691,21 +691,14 @@ EOD;
 
 				$aExploded = explode( '/', $parsedUrl['path'] );
 				$id = array_pop( $aExploded );
-
-				if ( !empty( $parsedUrl['query'] ) ){
-					parse_str( $parsedUrl['query'], $aData );
-				}
 			}
 
 			if( false !== strpos( $id, "&" ) ){
 				$parsedId = explode("&",$id);
 				$id = $parsedId[0];
-				if ( isset( $id[1] ) ){
-					$aData = ( isset( $parsedId[1] ) ) ? parse_str( $parsedId[1] ) : array();
-				}
 			}
-
-			$aData[0] = !isset( $aData['hd'] ) ? 0 : $aData['hd'];
+			
+			$aData = array( $id );
 
 			$this->mProvider = $provider;
 			$this->mId = $id;
@@ -1702,7 +1695,7 @@ EOD;
 	private function getViddlerTrueID()
 	{
 		global $wgMemc,$wgTranscludeCacheExpiry;
-		$cacheKey = wfMemcKey( "wvi", "viddlerid",$this->mId, $url );
+		$cacheKey = wfMemcKey( "wvi", "viddlerid",$this->mId );
 		$obj  = $wgMemc->get( $cacheKey );
 
 		if (isset($obj))
