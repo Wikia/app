@@ -1,8 +1,10 @@
+@import "../../../../skins/oasis/css/core/color";
+
 /**
  * css classes for AjaxPoll
  */
 div.ajax-poll {
-	border: 1px dashed grey;
+	border: 1px solid $color-page-border;
 	clear: both;
 	margin-top: 1em;
 	padding: 10px 20px 10px 10px;
@@ -24,7 +26,7 @@ div.ajax-poll div.row {
 }
 
 div.ajax-poll-bar {
-	background: red;
+	background: $color-error /* is this an error? */;
 }
 
 .pollAnswerName {
@@ -33,7 +35,7 @@ div.ajax-poll-bar {
 }
 
 .pollAnswerVotes {
-	border: 1px solid #CCC;
+	border: 1px solid $color-page-border;
 	font-size: 10px;
 	height: 12px;
 	margin-left: 10px;
@@ -42,8 +44,12 @@ div.ajax-poll-bar {
 }
 
 .pollAnswerVotes div {
-	background: #E5E5E5;
-	border-right: 1px solid #CCC;
+	background: mix($color-page, #000000, 75%);
+	@if lightness($color-page) < 50 {
+		background: mix($color-page, #FFFFFF, 75%);
+	}
+
+	border-right: 1px solid $color-page-border;
 	font-size: 1px;
 	height: 12px;
 	left: 0;
@@ -54,7 +60,7 @@ div.ajax-poll-bar {
 }
 
 .poll .ourVote div {
-	border: 1px solid #777;
+	border: 1px solid #777 /* foo */;
 	left: -1px;
 	top: -1px;
 }

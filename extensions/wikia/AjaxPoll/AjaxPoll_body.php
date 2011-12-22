@@ -210,11 +210,13 @@ class AjaxPollClass {
 	 * @return string: rendered HTML code
 	 */
 	public function render() {
-		global $wgRequest, $wgContLang;
+		global $wgRequest, $wgContLang, $wgOut;
 
 		wfProfileIn( __METHOD__ );
 
 		wfDebug("AjaxPoll: rendering poll #" . self::$mCount . "\n");
+
+		$wgOut->addStyle(  AssetsManager::getInstance()->getSassCommonURL( '/extensions/wikia/AjaxPoll/css/AjaxPoll.scss' ) );
 
 		/**
 		 * check, maybe form is submited?
@@ -244,7 +246,6 @@ class AjaxPollClass {
 
 			$before .= F::build('JSSnippets')->addToStack(
 				array(
-					'/extensions/wikia/AjaxPoll/css/AjaxPoll.css',
 					'/extensions/wikia/AjaxPoll/js/AjaxPoll.js'
 				),
 				array(),
