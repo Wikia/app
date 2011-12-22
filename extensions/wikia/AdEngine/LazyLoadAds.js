@@ -26,7 +26,7 @@ var LazyLoadAds = {
 
 		var fold = LazyLoadAds.w.height() + LazyLoadAds.w.scrollTop();
 		
-		for(i = 0; i < LazyLoadAds.num; i++) {
+		for(var i = 0; i < LazyLoadAds.num; i++) {
 			if(LazyLoadAds.allAds[i]) {
 				var top = LazyLoadAds.allAds[i].offset().top;
 				if(top > 0 && top < (fold + LazyLoadAds.settings.threshhold) ) {
@@ -41,7 +41,7 @@ var LazyLoadAds = {
 	
 					if (typeof(window[fillFunction]) !== 'undefined') {
 						window[fillFunction]();
-						window[fillFunction] = null;
+						delete window[fillFunction];
 					}
 					else {
 						LazyLoadAds.log("Warning! " + fillFunction + " does not exist.");
