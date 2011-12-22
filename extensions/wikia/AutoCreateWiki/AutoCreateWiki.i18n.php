@@ -162,6 +162,8 @@ This is a brand-new project, so please write to us if you have any questions!
 
 <p>-- Wikia Community Team</p>",
 	'autocreatewiki-subname-answers' => 'Answers',
+
+	'autocreatewiki-language-top-list' => 'de,en,es,fr,it,ja,nl,no,pl,pt,pt-br,ru,zh',
 );
 
 /** Message documentation (Message documentation)
