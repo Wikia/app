@@ -34,7 +34,8 @@ class Facebook3 extends BaseFacebook
    */
   public function __construct($config) {
     if (!session_id()) {
-      session_start();
+      //commented because of Warning: "session_start() failed: No such file or directory" (by Marcin Maciejewski)
+      //session_start();
     }
     parent::__construct($config);
   }
