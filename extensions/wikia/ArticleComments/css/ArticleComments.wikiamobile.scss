@@ -10,7 +10,6 @@ $comment-left-margin: $page-padding + 50px;
 	padding: 0 $page-padding;
 
 	#commentsHeader{
-		@include section-title;
 		font-size: medium;
 		text-transform:uppercase;
 	}

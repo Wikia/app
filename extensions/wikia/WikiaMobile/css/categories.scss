@@ -5,7 +5,6 @@
 	padding: 0 $page-padding;
 
 	.collapsible-section {
-		@include section-title;
 		margin: $section-title-margin;
 		text-transform: uppercase;
 		font-size: medium;
