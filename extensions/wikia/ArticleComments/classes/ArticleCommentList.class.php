@@ -874,15 +874,23 @@ class ArticleCommentList {
 			if (($redirect != 'no') && empty($diff) && empty($oldid) && ($action != 'history') && ($action != 'delete')) {
 				$parts = ArticleComment::explode($title->getText());
 				$redirectTitle = Title::newFromText($parts['title'], MWNamespace::getSubject($title->getNamespace()));
+				$commentId = $title->getArticleID();
 				if ($redirectTitle) {
 					$query = array();
-					if ( $permalink ) {
+					
+					if ( $permalink || $commentId !== 0 ) {
+						if( $commentId !== 0 ) {
+						/** bugId:11179 @author: nAndy */ 
+							$permalink = $commentId;
+						}
+						
 						$redirectTitle->setFragment("#comm-$permalink");
 						$page = self::getPageForComment( $redirectTitle, $permalink );
 						if ( $page > 1 ) {
 							$query = array( 'page' => $page );
 						}
 					}
+					
 					$wgOut->redirect($redirectTitle->getFullUrl( $query ));
 				}
 			}
