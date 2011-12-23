@@ -100,19 +100,6 @@ a {
 	display:none;
 }
 
-.chevron {
-	float: right;
-	width: 30px;
-	height: 30px;
-	background-position: center;
-	background-repeat: no-repeat;
-	background-image: url("/extensions/wikia/WikiaMobile/images/open_chev.png");/* $wgCdnStylePath */
-}
-
-.open .chevron {
-	background-image: url("/extensions/wikia/WikiaMobile/images/close_chev.png");/* $wgCdnStylePath */
-}
-
 .WikiaMobileLoader {
 	width:100%;
 	height: 100%;
