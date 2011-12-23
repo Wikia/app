@@ -2,8 +2,17 @@
 //mixins
 @import "mixins/box-shadow.scss";
 
-@mixin tableNoWrap {
+@mixin bigTableStyle {
 	table {
+		th {
+			background-color: $shadow-color;
+		}
+		td, th {
+			border-right: 1px solid $border-color;
+			border-bottom: 1px solid $border-color;
+			padding: 5px;
+		}
+
 		white-space: nowrap;
 	}
 }
@@ -17,8 +26,8 @@
 		position: relative;
 		padding: 5px;
 		overflow: hidden;
-		
-		@include tableNoWrap;
+
+		@include bigTableStyle;
 	}
 
 	.bigTable:before {
@@ -56,5 +65,19 @@
 			color: black;
 		}
 
-		@include tableNoWrap;
+		@include bigTableStyle;
+
+		table {
+			margin-top: 66px;
+			tr:first-of-type {
+				position: absolute;
+				top: 30px;
+				left:0;
+			}
+			td, th {
+				width: 150px;
+				max-width: 150px;
+			}
+		}
+
 }

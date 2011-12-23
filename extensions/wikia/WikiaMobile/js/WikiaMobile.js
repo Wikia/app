@@ -23,10 +23,40 @@ var WikiaMobile = WikiaMobile || (function() {
 	}
 
 	function handleTables(){
-		$('table').not('table table, .infobox').each(function() {
-			if(this.offsetWidth > realWidth || this.offsetHeight > deviceWidth) {
-				$(this).wrapAll('<div class=bigTable>');
+		$('table').not('table table').each(function() {
+			var table = $(this),
+			rows = table.find('tbody tr'),
+			rowsLength = rows.length;
+console.time('tables');
+			// if table has less rows we don't want to deal with it
+			//as it is probably a layout table
+			//if infobox we already style it
+			if(!table.hasClass('infobox')) {
+				//find infobox like tables
+				if(rowsLength > 2) {
+					var correctRows = 0;
+					$.each(rows, function(index, row) {
+						var cellLength = row.cells.length;
+						if(cellLength > 2) {
+							return false;
+						} else if(cellLength === 2) {
+							correctRows++
+						}
+						return true;
+					});
+
+					if(correctRows > Math.floor(rowsLength/2)) {
+						table.addClass('infobox');
+						return false;
+					}
+				}
 			}
+				//find tables that are too big
+				if(this.offsetWidth > realWidth || this.offsetHeight > deviceWidth) {
+					$(this).wrapAll('<div class=bigTable>');
+				}
+console.timeEnd('tables');
+return true;
 		});
 	}
 
@@ -134,7 +164,8 @@ var WikiaMobile = WikiaMobile || (function() {
 
 			$.openModal({
 				addClass: 'wideTable',
-				html: this.innerHTML
+				html: this.innerHTML,
+				onOpen: WMWideTables.handleTableScrolling
 			});
 		});
 
