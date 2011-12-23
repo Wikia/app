@@ -10,14 +10,16 @@ class  WikiaMobileNavigationService extends WikiaService {
 		$themeSettings = F::build('ThemeSettings');
 		$settings = $themeSettings->getSettings();
 
-		$this->wordmarkText = $settings["wordmark-text"];
-		$this->wordmarkType = $settings["wordmark-type"];
-		$this->wordmarkFont = $settings["wordmark-font"];
+		$this->response->setVal( 'wordmarkText', $settings["wordmark-text"] );
+		$this->response->setVal( 'wordmarkType', $settings["wordmark-type"] );
+		$this->response->setVal( 'wordmarkFont', $settings["wordmark-font"] );
 
-		if ( $this->wordmarkType == "graphic" ) {
-			$this->wordmarkUrl = wfReplaceImageServer( $settings['wordmark-image-url'], SassUtil::getCacheBuster() );
+		if ( $settings["wordmark-type"] == "graphic" ) {
+			$this->response->setVal( 'wordmarkUrl', wfReplaceImageServer( $settings['wordmark-image-url'], SassUtil::getCacheBuster() ) );
 		} else {
-			$this->wikiName = ( !empty( $settings['wordmark-text'] ) ) ? $settings['wordmark-text'] : $this->wg->SiteName;
-		};
+			$this->response->setVal( 'wikiName', ( !empty( $settings['wordmark-text'] ) ) ? $settings['wordmark-text'] : $this->wg->SiteName );
+		}
+
+		$this->response->setVal( 'searchOpen', ($this->wg->Title->getText() == SpecialPage::getTitleFor( 'Search' )->getText() ) );
 	}
 }
