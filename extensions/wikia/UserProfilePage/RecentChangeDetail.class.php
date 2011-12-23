@@ -20,8 +20,6 @@ class RecentChangeDetail {
 		$this->revisionId = $revisionId;
 		$this->pageId = $pageId;
 		$this->pageNs = $pageNs;
-		$this->key = $key;
-		$this->value = $value;
 	}
 
 	/**
@@ -62,8 +60,8 @@ class RecentChangeDetail {
 					}
 				}
 				break;
-			case RC_DELETE:
-				//TODO: handle deletes ?
+			case RC_LOG:
+				//TODO: handle log/deletes ?
 				break;
 		}
 

@@ -164,8 +164,7 @@ class SpecialUserInterview extends SpecialPage {
 		}
 		else {
 			// Answers
-			$avatar = new wAvatar($user->getId(), 'ml');
-			return $avatar->getAvatarURL();
+			return AvatarService::getAvatarUrl($user->getName(), 50);
 		}
 	}
 	

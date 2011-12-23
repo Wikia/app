@@ -68,7 +68,7 @@ class SpecialRenameuser extends SpecialPage {
 			$wgRequest->getText( 'token' ) !== '' &&
 			$wgUser->matchEditToken($wgRequest->getVal('token'))
 		){
-			$process = new RenameUserProcess( $oldusername, $newusername, $confirmaction, $reason, $notifyRenamed );
+			$process = new RenameUserProcess( $oldusername, $newusername, $confirmaction, $reason );
 			$status = $process->run();
 			$warnings = $process->getWarnings();
 			$errors = $process->getErrors();
