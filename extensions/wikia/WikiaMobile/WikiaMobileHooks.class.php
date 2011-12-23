@@ -14,7 +14,7 @@ class WikiaMobileHooks extends WikiaObject{
 			$text = $parserOutput->getText();
 
 			//remove inline styling
-			$text = preg_replace('/(style|color|bgcolor|align|border)=(\'|")[^"\']*(\'|")/im', '', $text);
+			$text = preg_replace('/(style|color|bgcolor|align)=(\'|")[^"\']*(\'|")/im', '', $text);
 
 			//remove image sizes
 			//$text = preg_replace('/(width|height)=(\'|")[^"\']*(\'|")/im', '', $text);
@@ -38,8 +38,8 @@ class WikiaMobileHooks extends WikiaObject{
 			//keep the count across calls to this hook handler when rendering H2's
 			static $countH2 = 0;
 
-			//remove bold, italics and underline tags from section headings
-			$text = str_replace( array( '<b>', '</b>', '<i>', '</i>', '<u>', '</u>' ), '', $text );
+			//remove bold, italics, underline and anchor tags from section headings
+			$text = preg_replace( '/<\/?(b|u|i|a|em|strong){1}(\s+[^>]*)*>/im', '', $text );
 
 			//$link contains the section edit link, add it to the next line to put it back
 			//ATM editing is not allowed in WikiaMobile
