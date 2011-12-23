@@ -19,10 +19,13 @@
 	#navigationWordMark {
 		height: 50px;
 		line-height: 50px;
-		font-size: xx-large;
+		font-size: x-large;
 		color: $navBarWordmarkText;
 		max-height: 50px;
 		max-width: 80%;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 
 	#searchToggle {
