@@ -31,7 +31,7 @@
 
 		//hide adress bar on orientation change
 		window.onorientationchange = function() {
-				if(pageYOffset == 0) setTimeout(function() {window.scrollTo( 0, 1 )},10);
+				if(window.pageYOffset == 0) setTimeout(function() {window.scrollTo( 0, 1 )},10);
 		}
 		//
 		document.getElementById('modalClose').addEventListener(WikiaMobile.getTouchEvent(), function(event) {
@@ -152,6 +152,9 @@
 			this._toHide = null;
 		}
 
+		if(typeof options.onOpen == 'function' ) {
+			options.onOpen();
+		}
 		this._position = window.pageYOffset;
 		this._thePage.hide();
 		this._modal.addClass('modalShown');
