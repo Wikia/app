@@ -185,7 +185,7 @@ $messages['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'interwikidispatcher' => 'Interwikiavsender',
 	'interwikidispatcher-desc' => 'Løser interwikilenker for å redusere Apache-omdirigeringer',
 );

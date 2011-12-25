@@ -2801,7 +2801,7 @@ Gå attende og prøv på nytt.',
  * @author Audun
  * @author Jon Harald Søby
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'userrenametool' => 'Endre en bruker navn',
 	'renameuser' => 'Døp om bruker',
 	'userrenametool-warning' => 'Før du omdøper en bruker, vennligst sørg for at all informasjon er korrekt, og forsikre deg om at brukeren vet at det kan ta litt tid før handlingen er fullført.

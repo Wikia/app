@@ -386,7 +386,7 @@ $messages['nl'] = array(
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'cloakcheck' => 'Valgbarhetssjekk for IRC-kappe',
 	'cloakcheck-desc' => 'Gir et alt-i-ett grensesnitt for å verifisere krav til en IRC-kappe',
 	'right-cloakcheck' => 'kan sjekke IRC-cloak-relatert informasjon for andre brukere',

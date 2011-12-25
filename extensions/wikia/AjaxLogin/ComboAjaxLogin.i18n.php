@@ -559,7 +559,7 @@ Als je al een gebruiker hebt, kan je <a href="#">aanmelden</a> zoals altijd, maa
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'comboajaxlogin-desc' => 'Dynamisk boks som lar brukere logge inn, få påminnelse om passord og registrere brukere',
 	'comboajaxlogin-createlog' => 'Logg inn eller opprett en konto',
 	'comboajaxlogin-actionmsg' => 'For å utføre denne handlingen må du først logge inn eller opprette en konto',

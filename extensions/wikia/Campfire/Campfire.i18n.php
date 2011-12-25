@@ -91,7 +91,7 @@ $messages['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'campfire-page-header' => '$1 fra $2',
 	'campfire-licensed-under' => 'Lisensiert under $1',
 );

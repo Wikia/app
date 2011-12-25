@@ -3769,7 +3769,7 @@ Je kunt ook op "$2" klikken om de bijgewerkte pagina te bekijken.',
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'wikiaphotogallery-desc' => 'Gir et grensesnitt for håndtering av gallerier og lysbildeserier på sider',
 	'wikiaPhotoGallery-back' => 'Tilbake',
 	'wikiaPhotoGallery-finish' => 'Fullfør',

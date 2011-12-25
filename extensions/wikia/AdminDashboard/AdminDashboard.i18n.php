@@ -758,7 +758,7 @@ $messages['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'admindashboard-title' => '{{SITENAME}}-dashbord',
 	'admindashboard-header' => 'Dashbord for administratorer',
 	'admindashboard-toolbar-link' => 'Administrator',

@@ -115,7 +115,7 @@ $messages['nl'] = array(
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'imageserving-desc' => 'Velger ut bilder fra en angitt rekke sider basert på visuelle krav',
 );
 

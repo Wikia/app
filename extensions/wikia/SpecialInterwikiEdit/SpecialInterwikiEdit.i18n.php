@@ -326,7 +326,7 @@ $messages['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'interwikiedit' => 'Interwiki-editor',
 	'iwedit-title' => 'Interwiki Editor',
 	'iwedit-language-interwikis' => 'kun språkinterwikier',

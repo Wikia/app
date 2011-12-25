@@ -549,7 +549,7 @@ Probeer het opnieuw.',
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'textregex' => 'Regulære uttrykk for tekst',
 	'textregex-desc' => '[[Special:textregex/XXXX|Filtrer]] ut uønskede fraser fra redigerte sider basert på regulære uttrykk',
 	'textregex-page-title' => 'Liste over uønskede uttrykk',

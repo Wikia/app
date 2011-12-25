@@ -320,7 +320,7 @@ $messages['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'category-exhibition-sorttype' => 'Sorteringsmetode:',
 	'category-exhibition-alphabetical' => 'Alfabetisk',
 	'category-exhibition-mostvisited' => 'Mest besøkt',

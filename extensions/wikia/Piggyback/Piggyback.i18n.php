@@ -229,7 +229,7 @@ Controleer je schrijfwijze.',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'piggybac-desc' => 'Tillater å logge på som en annen bruker',
 	'piggyback' => 'Operer som annen bruker',
 	'piggyback-otherusername' => 'Annet brukernavn:',

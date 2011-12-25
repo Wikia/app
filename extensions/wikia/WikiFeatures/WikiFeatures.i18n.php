@@ -835,7 +835,7 @@ $messages['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'wikifeatures' => 'Wiki-funksjoner',
 	'wikifeatures-title' => 'Wiki-funksjoner',
 	'wikifeatures-heading' => 'Funksjoner',

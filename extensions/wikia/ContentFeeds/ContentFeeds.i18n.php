@@ -244,7 +244,7 @@ $messages['nl-informal'] = array(
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'contentfeeds-desc' => 'Gir utdypende og oppdatert informasjon gjennom ulike tagger eller «feeds»',
 	'contentfeeds-newimages-rss-title' => 'RSS Feed for {{#Special:NewFiles}}',
 	'contentfeeds-newimages-rss-desc' => 'Feed fra $1',

@@ -163,7 +163,7 @@ Er wordt ''geen rekening gehouden'' met beoordelingen van pagina's.",
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'graceexpired' => 'Hensyn utløpt',
 	'graceexpired-row' => '$1 (i $2, sist endret $3)',
 	'graceexpired-header' => "Denne siden lister opp alle sider som enten er [[:Category:Abandoned|forlatt]], [[:Category:Trash_builds|søppel]], [[:Category:Build stubs|stubber]] eller [[:Category:Trial Builds|tester]], og som ikke har blitt redigert på minst to uker.

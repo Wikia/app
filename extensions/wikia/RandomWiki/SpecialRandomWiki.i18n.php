@@ -215,7 +215,7 @@ $messages['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'randomwiki-desc' => 'Lar brukere utforske en tilfeldig wiki',
 	'randomwiki' => 'Tilfeldig wiki',
 );

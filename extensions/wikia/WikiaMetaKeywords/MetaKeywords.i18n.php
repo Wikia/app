@@ -292,7 +292,7 @@ $messages['nn'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'metakeywords-desc' => 'Muliggjør konfigurering av <tt><nowiki><meta "keywords"></nowiki></tt> og <tt><nowiki><meta "description"></nowiki></tt>-tagger per navnerom',
 );
 

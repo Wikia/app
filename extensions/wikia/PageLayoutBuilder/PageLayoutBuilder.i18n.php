@@ -2009,7 +2009,7 @@ $messages['nl-informal'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'pagelayoutbuilder' => 'Sideoppsett-bygger',
 	'pagelayoutbuilder-desc' => '[[Special:LayoutBuilder|Veiviser for opprettelse av sideoppsett]]',
 	'plb-special-form-article-name' => 'Hva skal denne siden hete?',

@@ -208,7 +208,7 @@ $messages['nn'] = array(
  * @author Audun
  * @author Jon Harald Søby
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'tog-disablelinksuggest' => 'Ikke vis lenkeforslag i kildemodus',
 );
 

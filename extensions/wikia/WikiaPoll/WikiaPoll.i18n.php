@@ -416,7 +416,7 @@ $messages['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'wikiapoll-desc' => 'Tilbyr en enkel måte å opprette og administrere avstemninger',
 	'wikiapoll-people-voted' => '{{PLURAL:$1|$1 person|$1 personer}} stemte',
 	'wikiapoll-question' => '$1?',

@@ -1238,7 +1238,7 @@ $messages['nl'] = array(
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'founderprogressbar-credits' => 'En oppgavehubb for nye wiki-grunnleggere',
 	'founderprogressbar-widget-label' => '{{SITENAME}}s fremgang',
 	'founderprogressbar-progress-label' => 'Gjennomførte oppgaver',

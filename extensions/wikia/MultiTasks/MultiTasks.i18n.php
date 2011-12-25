@@ -1943,7 +1943,7 @@ Voer de taak daarna opnieuw uit om alle overgebleven pagina's te verwerken.",
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'multitasks-link-back-label' => 'her',
 	'multiwikiedit' => 'Rediger en gruppe sider',
 	'multiwikiedit_button' => 'ENDRE',

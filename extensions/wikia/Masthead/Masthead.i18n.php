@@ -633,7 +633,7 @@ Avatars voor een gebruiker worden in alle Wikia verwijderd.',
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'blog-avatar-removeavatar' => 'Fjern avatar',
 	'blog-avatar-goto-userpage' => 'Gå til brukerside',
 	'blog-avatar-edit' => 'Endre',

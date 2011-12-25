@@ -96,7 +96,7 @@ $messages['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'photopop' => 'Tåkebilde-spill',
 	'photopop-desc' => 'Lager en side hvor Tåkebilde-spillet kan spilles i HTML5 + Canvas. Det vil være tilgjengelig via Nirvanas APIer',
 	'photopop-score' => 'Poengsum: <span>$1</span>',

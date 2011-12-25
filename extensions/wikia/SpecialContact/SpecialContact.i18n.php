@@ -576,7 +576,7 @@ Als je liever gebruik maakt van e-mail of bijlagen wilt meesturen, stuur dan een
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'contact' => 'Kontakt Wikia',
 	'specialcontact-wikia' => 'Kontakt Wikia',
 	'specialcontact-pagetitle' => 'Kontakt Wikia',

@@ -503,7 +503,7 @@ $messages['nl-informal'] = array(
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'wva-success' => 'Videoside $1 ble lagt til.',
 	'wva-success-replaced' => 'Videoside $1 ble erstattet.',
 	'wva-failure' => 'Vennligst oppgi gyldige parametre.',

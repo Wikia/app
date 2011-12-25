@@ -368,7 +368,7 @@ Details: $2',
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'lightbox_details_tooltip' => 'Vis bildedetaljer',
 	'lightbox-forum' => 'Forum',
 	'lightbox-standard-link' => 'Standard lenke',

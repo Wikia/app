@@ -258,7 +258,7 @@ $messages['nl'] = array(
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'spellchecker-desc' => 'Tilbyr et grensesnitt for korrekturlesning for enchant PHP-modulen',
 	'enablespellchecker' => 'Aktiver korrekturleser i visuell modus',
 	'spellchecker-info' => 'Informasjon om korrekturleseren',

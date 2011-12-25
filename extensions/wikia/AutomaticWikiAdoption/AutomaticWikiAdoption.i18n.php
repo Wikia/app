@@ -1116,7 +1116,7 @@ Handige hulpmiddelen:<br /><br />
  * @author Jon Harald Søby
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'wikiadoption' => 'Automatisk wikiadopsjon',
 	'wikiadoption-desc' => 'En AutomatiskWikiAdopsjons-utvidelse for MediaWiki',
 	'wikiadoption-header' => 'Adopter denne wikien',

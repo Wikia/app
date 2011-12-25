@@ -2826,7 +2826,7 @@ $messages['nl-informal'] = array(
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'oasis-home' => 'Hjem',
 	'oasis-more' => 'Se mer >',
 	'oasis-mytools' => 'Mine verktøy',

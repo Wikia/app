@@ -808,7 +808,7 @@ Als je hulp zoekt en er zijn geen lokale beheerders, ga dan naar de [[wikia:Foru
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'welcome-user-page' => "==Om meg==
 
 ''Dette er brukersiden din. Vennligst rediger denne siden for å fortelle fellesskapet om deg selv!''

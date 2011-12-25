@@ -524,7 +524,7 @@ $messages['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'photopop-setup-title' => 'Installasjonsprogram for Photo Pop',
 	'photopop-setup-category-label' => 'Kategori',
 	'photopop-setup-category-tip' => 'Skriv inn et kategorinavn...',

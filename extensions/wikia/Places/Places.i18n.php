@@ -103,7 +103,7 @@ $messages['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'places' => 'Steder på denne wikien',
 	'places-desc' => 'Legger til <nowiki><place>- og <places></nowiki>-tagger for geo-tagging av sider og et [[Special:Places|kart over alle taggede sider]]',
 	'places-toolbar-button-tooltip' => 'Klikk for å legge geo-tag til denne siden',

@@ -1263,7 +1263,7 @@ $messages['nl-informal'] = array(
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'createnewwiki-desc' => '[[Special:CreateNewWiki|Veiviser for opprettelse av wiki]]',
 	'cnw-next' => 'Neste',
 	'cnw-back' => 'Tilbake',

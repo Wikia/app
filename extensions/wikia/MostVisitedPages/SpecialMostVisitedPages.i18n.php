@@ -372,7 +372,7 @@ $messages['nn'] = array(
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'mostvisitedpages' => 'Mest besøkte sider',
 	'mostvisitedpagessearchtext' => 'Artikkelens navn:',
 	'mostvisitedpagessearchbtn' => 'søk',

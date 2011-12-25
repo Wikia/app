@@ -248,7 +248,7 @@ $messages['nn'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'sharefeature-desc' => 'Tillat brukere å lenke til sider fra populære nettsteder',
 	'sf-link' => 'Del denne artikkelen',
 	'sf-link-popup' => 'Del denne artikkelen',

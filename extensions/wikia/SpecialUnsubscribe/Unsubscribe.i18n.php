@@ -328,7 +328,7 @@ $messages['nl-informal'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'unsubscribe' => 'Avbryt abonnement',
 	'unsubscribe-badaccess' => 'Beklager, denne siden kan ikke brukes direkte. Vennligst følg lenken fra e-posten din.',
 	'unsubscribe-badtoken' => 'Beklager, det oppstod et problem med sikkerhetskoden.',

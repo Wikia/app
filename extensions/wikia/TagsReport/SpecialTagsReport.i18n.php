@@ -389,7 +389,7 @@ $messages['nl-informal'] = array(
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'tagsreport' => 'Merkelapprapport',
 	'tagsreporttitle' => 'Merkelapprapport',
 	'tagsreportselecttag' => 'Velg merkelapp:',

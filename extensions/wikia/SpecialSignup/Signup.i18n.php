@@ -139,7 +139,7 @@ $messages['nl'] = array(
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'signup-desc' => 'Legger til aliaset [[{{#Special:Signup}}]] for [[{{#Special:UserLogin}}/signup]]',
 	'signup' => 'Registrer',
 );

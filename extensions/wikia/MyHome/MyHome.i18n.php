@@ -2143,7 +2143,7 @@ Als je de oprichter of een beheerder van deze wiki bent, kan je dit bericht gebr
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'myhome-desc' => 'En privat hjem-side for innloggede brukere',
 	'myhome' => 'Mitt hjem',
 	'wikiactivity' => 'Wiki-aktivitet',

@@ -1108,7 +1108,7 @@ $messages['nl-informal'] = array(
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'chat' => 'Chat',
 	'chat-desc' => '[[Special:Chat|Chat]]',
 	'chat-no-login' => 'Du må være logget inn for å chatte.',

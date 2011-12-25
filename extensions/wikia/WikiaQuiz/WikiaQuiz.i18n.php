@@ -977,7 +977,7 @@ $messages['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'wikiaquiz-desc' => 'Tilbyr en enkel måte å opprette og administrere quizer.',
 	'wikiaquiz-createquiz-headline' => 'Opprett quiz',
 	'wikiaquiz-editquiz-headline' => 'Rediger quiz',

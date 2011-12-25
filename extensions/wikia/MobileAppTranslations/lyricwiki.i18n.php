@@ -662,7 +662,7 @@ $messages['nl-informal'] = array(
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'app-loading' => 'Lader...',
 	'app-tab-search' => 'Søk',
 	'app-tab-about' => 'Om',

@@ -1426,7 +1426,7 @@ $messages['nl-informal'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'scavengerhunt-desc' => 'Tillater opprettelse av et skattejakt-spill på en wiki',
 	'scavengerhunt' => 'Grensesnitt for Skattejakt',
 	'scavengerhunt-common-modal-title' => 'Skattejakt',

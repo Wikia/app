@@ -5029,7 +5029,7 @@ Je moet aangemeld zijn om de Wikia-statistieken in te zien.
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'wikistats' => 'Wikiastatistikk',
 	'wikistats_wikia' => 'Wikia',
 	'wikistats_pagetitle' => 'Wikiastatistikk',

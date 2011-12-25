@@ -539,7 +539,7 @@ $messages['nl'] = array(
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'specialprotectsite-desc' => 'Lar en sideadministrator [[Special:ProtectSite|midlertidig blokkere ulike sidemodifikasjoner]]',
 	'protectsite' => 'Beskytt side',
 	'protectsite-text-protect' => '<!-- Instruksjoner/kommentarer/fremgangsmåte for bruk -->',

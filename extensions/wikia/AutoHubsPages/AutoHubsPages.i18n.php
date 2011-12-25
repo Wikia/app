@@ -409,7 +409,7 @@ $messages['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'unhide' => 'Vis',
 	'hub-blog-header' => 'Topp $1 poster',
 	'hub-hotspot-header' => 'Populære områder',

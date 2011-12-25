@@ -6342,7 +6342,7 @@ je eigen gebruikerspagina!',
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'achievementsii-desc' => 'Et utmerkelsessystem for wikibrukere',
 	'achievements-upload-error' => 'Beklager!
 Det bildet fungerer ikke.

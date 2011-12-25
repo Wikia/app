@@ -299,7 +299,7 @@ $messages['nn'] = array(
  * @author Audun
  * @author Jon Harald Søby
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'imgplc-create' => 'Legg til bilde',
 	'imgplc-placeholder' => 'Plassholder',
 	'imgplc-image' => 'Bilde',

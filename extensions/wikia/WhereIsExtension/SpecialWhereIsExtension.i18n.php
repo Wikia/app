@@ -466,7 +466,7 @@ $messages['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'whereisextension' => 'Hvor er utvidelsen',
 	'whereisextension-submit' => 'Søk',
 	'whereisextension-list' => 'Liste over wikier med matchende kriterier',

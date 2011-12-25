@@ -202,7 +202,7 @@ $messages['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'quickcreate-desc' => 'Legger til en «opprett ny side»-knapp med muligheten for å logge inn for anonyme brukere',
 	'quickcreate' => 'send inn din oppskrift',
 );

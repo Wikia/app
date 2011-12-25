@@ -159,7 +159,7 @@ $messages['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'categorygalleries-desc' => 'Viser et sidegalleri på kategorisider',
 );
 

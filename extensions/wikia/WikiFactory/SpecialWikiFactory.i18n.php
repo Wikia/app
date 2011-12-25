@@ -3170,7 +3170,7 @@ $messages['nn'] = array(
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'wikifactorypagetitle' => 'Konfigurer Wiki Factory',
 	'wikifactory' => 'Konfigurer Wiki Factory',
 	'closewiki' => 'Steng wiki',

@@ -5209,7 +5209,7 @@ Skriv inn eit sidenamn nedanfor for å oppretta ei sida med dette skjemaet. Om e
  * @author Laaknor
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'semanticforms-desc' => 'Skjema for å legge til og endre semantiske data',
 	'specialpages-group-sf_group' => 'Semantiske skjemaer',
 	'createproperty' => 'Opprett en egenskap',

@@ -132,7 +132,7 @@ $messages['nl'] = array(
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'scribe-desc' => '[[Special:Scribeevents|Verktøyl]] for å søke etter en bestemt sidetittel på tvers av wikier',
 	'scribeevents' => 'Nylige hendelser',
 	'scribeeventsrecords' => 'Oppføringer',

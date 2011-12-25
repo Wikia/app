@@ -109,7 +109,7 @@ $messages['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'confirmemailprompt-desc' => 'Viser en advarsel dersom en bruker har en ubekreftet e-postadresse',
 	'confirmemailprompt-error' => 'Er dette e-postadressen din: <strong>$1</strong>? [[$2|Bekreft den]] eller [[$3|endre den]].',
 );

@@ -180,7 +180,7 @@ $messages['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'paginator-next' => 'Neste',
 	'paginator-back' => 'Tilbake',
 );

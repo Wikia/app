@@ -205,7 +205,7 @@ $messages['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'wikiarelatedpages-desc' => 'Legger til en liste med relaterte sider til sider',
 	'wikiarelatedpages-heading' => 'Les mer',
 );

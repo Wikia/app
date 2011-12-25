@@ -1861,7 +1861,7 @@ Kom alsjeblieft vaak langs om bewerkingen te maken...
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'follow-desc' => 'Forbedringer for overvåkningslistens funksjonalitet',
 	'prefs-basic' => 'Grunnleggende valg',
 	'wikiafollowedpages-special-heading-category' => 'Kategorier ($1)',

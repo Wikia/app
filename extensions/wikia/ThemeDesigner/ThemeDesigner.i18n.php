@@ -1152,7 +1152,7 @@ $messages['nl'] = array(
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'themedesigner-or' => 'eller',
 	'themedesigner-desc' => 'Lar wiki-administratorer utforme et tema for en wiki',
 	'themedesigner-title' => 'Wikia-temautformer',

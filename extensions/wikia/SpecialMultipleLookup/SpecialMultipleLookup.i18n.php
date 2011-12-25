@@ -558,7 +558,7 @@ $messages['nl-informal'] = array(
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'specialmultiplelookup-desc' => 'Gir brukerinformasjonsoppslag på flere wikier',
 	'multilookup' => 'Slå opp flere',
 	'multilookupstitle' => 'Slå opp flere',

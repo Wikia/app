@@ -2561,7 +2561,7 @@ $messages['nl-informal'] = array(
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'sponsorship-dashboard' => '[[Special:SponsorshipDashboard|Spesialside]] for sponsorrelaterte beregninger',
 	'sponsorship-dashboard-serie-A' => 'Totalt antall registrerte redaktører for gjeldende måned (alle navnerom)',
 	'sponsorship-dashboard-serie-B' => 'Totalt antall registrerte redaktører for gjeldende måned (innholdsnavnerommet)',

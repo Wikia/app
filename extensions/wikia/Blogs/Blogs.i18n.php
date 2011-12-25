@@ -2559,7 +2559,7 @@ $messages['nl-informal'] = array(
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'createblogpage' => 'Opprett blogg',
 	'createbloglistingpage' => 'Opprett bloggoppføring',
 	'create-blog-spam' => 'Ser ut som søppel',

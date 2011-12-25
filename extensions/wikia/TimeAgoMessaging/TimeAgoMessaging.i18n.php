@@ -209,7 +209,7 @@ $messages['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'timeagomessaging-desc' => 'Gir i18n til jquery.timeago.js plugginnen',
 	'timeago-day' => 'for {{PLURAL:$1|én dag|$1 dager}} siden',
 	'timeago-hour' => 'for {{PLURAL:$1|én time|$1 timer}} siden',

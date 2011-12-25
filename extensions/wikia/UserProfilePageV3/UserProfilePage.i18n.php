@@ -955,7 +955,7 @@ $messages['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'userprofilepage-edit-modal-header' => 'Rediger profil',
 	'userprofilepage-question-caption' => 'Spørsmål $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Avbryt',

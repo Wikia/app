@@ -401,7 +401,7 @@ $messages['nl-informal'] = array(
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'search-desc' => 'Kryss-Wikia søkemotor som bruker Solr-bakgrunnsfunksjon',
 	'wikiasearch-titles-only' => 'Kun søk i sidetitler',
 	'wikiasearch-system-error-msg' => 'På grunn av en systemfeil kunne ikke søket ditt fullføres',
