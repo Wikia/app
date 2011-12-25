@@ -237,7 +237,7 @@ $messages['nl'] = array(
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'taskmanager' => 'Vis og administrer bakgrunnsoppgaver',
 	'taskmanager_title' => 'Vis og administrer bakgrunnsoppgaver',
 	'taskmanager_tasklist' => 'Gå tilbake til oppgaveliste',

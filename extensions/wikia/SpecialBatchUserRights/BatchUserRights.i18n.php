@@ -264,7 +264,7 @@ De rest van de pagina kan uitgevoerd worden zodat je eenvoudig kunt zien of een 
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'batchuserrights' => 'Puljeoppdater brukerrettigheter',
 	'batchuserrights-desc' => 'Tillater å legge én eller flere brukere til en gruppe i én handling',
 	'batchuserrights-names' => 'Brukernavn som skal legges til denne gruppen (ett per linje):',

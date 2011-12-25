@@ -278,7 +278,7 @@ $messages['nl-informal'] = array(
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'landingpage' => 'Velkommen til Wikia',
 	'landingpage-start-exploring' => 'Klar for å begynne å utforske?',
 	'landingpage-start-exploring-text' => 'Søk i favorittemaene dine eller se gjennom noen av fellesskapets favoritter nedenfor.',

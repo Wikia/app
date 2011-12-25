@@ -1382,7 +1382,7 @@ $messages['nl-informal'] = array(
  * @author Jon Harald Søby
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'userprofilepage-desc' => 'Gir en brukerside som er morsom og enkel å oppdatere',
 	'userprofilepage-edit-avatar-label' => 'Rediger bilde',
 	'userprofilepage-users-notes-title' => 'Om meg',

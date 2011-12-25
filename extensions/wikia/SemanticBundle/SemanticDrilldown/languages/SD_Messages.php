@@ -2228,7 +2228,7 @@ $messages['nn'] = array(
  * @author Jon Harald Søby
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'semanticdrilldown-desc' => 'Et «drilldown»-grensesnitt for navigering gjennom semantiske data',
 	'specialpages-group-sd_group' => 'Semantisk «drilldown»',
 	'browsedata' => 'Bla gjennom data',

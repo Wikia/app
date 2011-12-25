@@ -162,7 +162,7 @@ $messages['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'related-video-random-video' => 'Tilfeldig video',
 	'related-video-related' => 'Relaterte videoer',
 	'relatedvideo' => 'Relaterte videoer',

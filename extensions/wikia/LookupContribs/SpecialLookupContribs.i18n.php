@@ -869,7 +869,7 @@ $messages['nl-informal'] = array(
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'lookupcontribs' => 'Slå opp bidrag',
 	'lookupcontribstitle' => 'Slå opp bidrag',
 	'lookupcontribsrecentcontributions' => 'Nylige bidrag for $1',

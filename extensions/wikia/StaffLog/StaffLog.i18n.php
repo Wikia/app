@@ -240,7 +240,7 @@ $messages['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'stafflog-desc' => 'Sentralisert loggføring for ledelse',
 	'stafflog' => 'Ledelseslogg',
 	'stafflog-blockmsg' => '$1 $2 forsøkte å blokkere ledelsesbrukeren $3 på wikien $4. Årsak: $5',

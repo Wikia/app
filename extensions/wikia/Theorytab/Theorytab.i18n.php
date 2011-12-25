@@ -239,7 +239,7 @@ $messages['nl'] = array(
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'theorytab-title' => 'Teori',
 	'theorytab-parent-title' => 'Overordnet artikkel',
 );

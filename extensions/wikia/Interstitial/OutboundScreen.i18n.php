@@ -237,7 +237,7 @@ Wil je naar de [[{{MediaWiki:Mainpage}}|hoofdpagina]] gaan, of wellicht naar een
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'outbound-screen-login-text' => '[[Special:UserLogin/signup|Opprett en ny brukerkonto]] eller [[Special:UserLogin|logg inn til din eksisterende brukerkonto]] for å hoppe over denne siden i fremtiden.',
 	'outbound-screen-already-logged-in-no-link' => 'Det er ikke satt noe mål.
 Det er ingenting å se her.

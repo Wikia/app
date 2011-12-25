@@ -1514,7 +1514,7 @@ $messages['nl-informal'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'answer_title' => 'Svar',
 	'answered_by' => 'Besvart av',
 	'unregistered' => 'Uregistrert',

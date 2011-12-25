@@ -435,7 +435,7 @@ $messages['nn'] = array(
  * @author Audun
  * @author Jon Harald Søby
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'ajaxpoll-percentVotes' => '$1%&nbsp;av alle stemmer',
 	'ajaxpoll-thankyou' => 'Takk for din stemme!',
 	'ajaxpoll-error' => 'Det oppstod et problem under overføringen av stemmen din, vennligst prøv igjen.',

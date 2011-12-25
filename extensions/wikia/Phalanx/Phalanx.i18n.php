@@ -1231,7 +1231,7 @@ Als je denkt dat dit ten onrechte is, [[Special:Contact|neem dan contact op met 
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'phalanx-desc' => 'Phalanx er en integrert mekanisme for forsvar mot spam',
 	'phalanx' => 'Phalanx',
 	'phalanx-title' => 'Phalanx - Integrert mekanisme for forsvar mot spam',

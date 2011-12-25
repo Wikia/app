@@ -4280,7 +4280,7 @@ Er gebeurt veel op je wiki vandaag! Kom naar $MYHOMEURL om te kijken wat er alle
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'founderemails-desc' => 'Hjelper til med å informere grunnleggere om endringer på deres wiki',
 	'tog-founderemailsenabled' => 'Send meg oppdateringer på e-post om hva andre personer gjør (kun grunnleggere)',
 	'founderemails-email-user-registered-subject' => 'Noen registrerte seg på $WIKINAME',

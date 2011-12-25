@@ -103,7 +103,7 @@ $messages['nl'] = array(
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'globalnotification-desc' => 'Wikia systemvarslingsutvidelse.  Viser systemvarslinger for hendelser som AJAX-feil',
 	'globalnotification-general-ajax-failure' => 'Nettleseren kan ikke koble seg til Wikia. Prøv igjen senere.',
 );

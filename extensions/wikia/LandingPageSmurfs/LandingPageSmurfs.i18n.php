@@ -11,7 +11,7 @@ $messages['en'] = array(
 	'landingpagesmurfs-facebook-url' => 'http://www.facebook.com/SmurfMovieUK',
 );
 
-$messages['no'] = array(
+$messages['nb'] = array(
 	'landingpagesmurfs' => 'Smurfene 3D',
 	'landingpagesmurfs-enternow' => 'Delta Na',
 	'landingpagesmurfs-enternow-email-title' => 'Vinn to kinobilletter til å se SMURFENE i 3D',

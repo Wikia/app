@@ -1948,7 +1948,7 @@ Klik hieronder om meer afbeeldingen aan de galerij toe te voegen.',
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'wmu-upload-image' => 'Last opp bilde',
 	'wmu-title' => 'Last opp bilde',
 	'wmu-upload' => 'Last opp',

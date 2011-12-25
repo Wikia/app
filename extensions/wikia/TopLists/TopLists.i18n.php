@@ -1383,7 +1383,7 @@ Je kunt <a href="$4">uitschrijven</a> van wijzigingen op deze lijst.',
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'toplists-desc' => 'Topp 10-lister',
 	'right-toplists-create-edit-list' => 'Opprett og rediger Topp 10-listesider.',
 	'right-toplists-create-item' => 'Opprett og legg elementer til en Topp 10-listeside',

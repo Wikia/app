@@ -683,7 +683,7 @@ $messages['nl-informal'] = array(
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'categoryselect-desc' => 'Tilbyr et grensesnitt for håndtering av kategorier i artikler uten å redigere hele artikkelen.',
 	'categoryselect-code-view' => 'Kodevisning',
 	'categoryselect-code-view-placeholder' => 'Legg til en kategori her, f. eks. [[Category:Name]]',

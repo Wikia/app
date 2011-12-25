@@ -174,7 +174,7 @@ $messages['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'cacheepoch-desc' => 'Gir et grensesnitt for endring av wgCacheEpoch per wiki',
 	'cacheepoch' => 'Grensesnitt for Cache Epoch',
 	'cacheepoch-header' => 'Øk wgCacheEpoch',

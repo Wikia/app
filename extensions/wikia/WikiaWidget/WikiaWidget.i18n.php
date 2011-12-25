@@ -243,7 +243,7 @@ $messages['nl'] = array(
  * @author Jon Harald Søby
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'wikiawidget' => 'Skjermelementer for Wikia',
 );
 

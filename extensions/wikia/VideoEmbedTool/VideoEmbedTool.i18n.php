@@ -1664,7 +1664,7 @@ Wellicht moet je de videopagina opschonen om de wijzigingen te zien.',
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'vet-upload' => 'Full URL',
 	'vet-notlogged' => 'Logg inn eller registrer deg for å sette inn videoer',
 	'vet-find' => 'Finn en video',

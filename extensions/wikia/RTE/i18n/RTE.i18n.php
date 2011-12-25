@@ -421,7 +421,7 @@ $messages['nl-informal'] = array(
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'rte-desc' => 'CKeditor-integrering for MediaWiki',
 	'rte-no-js-fallback' => 'Den rike tekstredaktøren virker ikke når JavaScript er slått av. Vennligst enten slå det på i nettleseralternativene dine, eller besøk [[Special:Preferences|innstillinger]] for å bytte til den gamle MediaWiki-redaktøren.',
 	'rte-edgecase-info-title' => 'Kildemodus påkrevd',

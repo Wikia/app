@@ -238,7 +238,7 @@ $messages['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'main-tab-discover' => 'Oppdag',
 	'main-tab-personal' => 'Min Wikia',
 	'main-tab-search' => 'Søk',

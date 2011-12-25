@@ -242,7 +242,7 @@ Gebruik de [[Special:Contact|contactpagina]] om problemen met stafmedewerkers te
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'staffpowers-ipblock-aborted' => 'Det er ikke mulig å blokkere Wikia-medarbeidere. Bruk [[Special:Contact|kontaktsiden]] for å rapportere hendelser eller problemer med medarbeidere.',
 );
 

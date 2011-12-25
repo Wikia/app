@@ -19624,7 +19624,7 @@ $messages['nl'] = array(
 	'rte-ck-undo' => 'Ongedaan maken',
 	'rte-ck-unlink' => 'Link verwijderen',
 );
-$messages['no'] = array(
+$messages['nb'] = array(
 	'rte-ck-anchor-toolbar' => 'Sett inn/Rediger anker',
 	'rte-ck-anchor-menu' => 'Egenskaper for anker',
 	'rte-ck-anchor-title' => 'Egenskaper for anker',

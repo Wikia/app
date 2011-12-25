@@ -172,7 +172,7 @@ $messages['nl'] = array(
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'sharedhelp-desc' => 'Tar sider fra [[w:c:Help|Hjelpe-Wikia]] og setter dem inn i {{ns:help}}-navnerommet på denne wikien',
 	'sharedhelp-autotalkcreate-summary' => 'Diskusjonsside opprettet automatisk',
 );

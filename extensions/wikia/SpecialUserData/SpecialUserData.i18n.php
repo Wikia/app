@@ -184,7 +184,7 @@ $messages['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'userdata' => 'Hent brukerdata',
 	'userdata-userid-label' => 'Oppgi bruker-ID:',
 	'userdata-submit' => 'Hent data',

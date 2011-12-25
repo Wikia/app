@@ -156,7 +156,7 @@ $messages['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'skinchooser-desc' => 'Lar brukere velge utseende i innstillingene sine',
 	'skinchooser-customcss' => 'For egendefinerte temaer, velg egendefinert-alternativet i menyen ovenfor og spesifiser egendefinert CDD i [[MediaWiki:Monaco.css]].',
 	'new-look' => 'Wikias nye utseende',

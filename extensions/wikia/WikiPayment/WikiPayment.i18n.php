@@ -176,7 +176,7 @@ $messages['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'wikipayment-desc' => 'Tillater betaling per wiki for å deaktivere annonser.',
 	'wikipayment-paypal-redirect' => 'Omdirigerer til PayPal, vennligst vent...',
 	'wikipayment-paypal-error' => 'PayPal-betalingsfeil (kode: $1)',

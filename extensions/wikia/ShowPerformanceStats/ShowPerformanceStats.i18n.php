@@ -176,7 +176,7 @@ $messages['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'showperformancestats-desc' => 'Returnerer menneskelig lesbar ytelsesstatistikk',
 	'performancestat-total' => 'Totalt: $1s',
 	'performancestat-apache' => 'Apache: $1s',

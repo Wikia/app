@@ -1214,7 +1214,7 @@ $messages['nl-informal'] = array(
  * @author Jon Harald Søby
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'editpagelayout-more' => 'mer',
 	'editpagelayout-less' => 'mindre',
 	'editpagelayout-helpLink-url' => 'Help:Redigering',

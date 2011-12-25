@@ -3020,7 +3020,7 @@ Het Wikia-team',
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'adss-desc' => 'Ad Self Service',
 	'adss' => 'AdSS',
 	'adss-sponsor-links' => 'Sponsede lenker på Wikia',

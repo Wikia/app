@@ -199,7 +199,7 @@ $messages['nl-informal'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'interstitial-default-campaign-code' => 'Wikia elsker deg!',
 	'interstitial-skip-ad' => 'Hopp over annonse',
 	'interstitial-already-logged-in-no-link' => 'Du er allerede logget inn, og det er ikke angitt et mål.',

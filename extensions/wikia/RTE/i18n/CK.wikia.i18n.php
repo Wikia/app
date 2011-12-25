@@ -1889,7 +1889,7 @@ $messages['nl-informal'] = array(
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'rte-ck-bucket-textAppearance' => 'Tekstutseende',
 	'rte-ck-bucket-insert' => 'Sett inn',
 	'rte-ck-bucket-controls' => 'Alternativer',

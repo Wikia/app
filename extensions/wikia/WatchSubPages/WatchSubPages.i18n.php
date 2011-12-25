@@ -171,7 +171,7 @@ $messages['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'wikia-watchsubpages-desc' => 'Autofølging for undersider',
 	'tog-watchlistsubpages' => 'Følg undersider',
 );

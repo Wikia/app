@@ -1051,7 +1051,7 @@ Schrijf hier het tweede deel van je pagina. Vergeet niet een categorie toe te vo
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'wikibuilder-desc' => '[[Special:WikiBuilder|Opprett Wiki-veiviser]]',
 	'owb-title' => 'Wiki-bygger',
 	'owb-headline' => 'Hei, $1',

@@ -1626,7 +1626,7 @@ Dit kan niet ongedaan gemaakt worden.',
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'sitewidemessages' => 'Meldinger for hele nettstedet',
 	'swm-page-title-editor' => 'Meldinger for hele nettstedet :: Skriveprogram',
 	'swm-page-title-preview' => 'Meldinger for hele nettstedet :: Forhåndsvis',

@@ -80,7 +80,7 @@ $messages['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'centralhelpsearch-desc' => 'Tillat inkludering av et skjema for søk i Community Centrals hjelperegister',
 	'centralhelpsearch-placeholder' => 'Søk Hjelp&hellip;',
 );

@@ -619,7 +619,7 @@ $messages['nl-informal'] = array(
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'wikiavideo-reverted' => 'Videoen $1 ble tilbakestilt. Gå tilbake til $2.',
 	'wikiavideo-unreverted' => 'Du har ikke tillatelse til å tilbakestille $1.',
 	'wikiavideo-added' => 'la til video $1',

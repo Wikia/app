@@ -502,7 +502,7 @@ Wikia maakt automatisch back-ups van alle wiki's.",
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'dump-database' => 'Databasedumper',
 	'dump-database-info' => 'Databasedumper kan brukes som en personlig sikkerhetskopi (Wikia produserer separate sikkerhetskopier av alle wikier automatisk) eller for vedlikeholdsroboter',
 	'dump-database-curr-pages' => 'Nåværende sider',

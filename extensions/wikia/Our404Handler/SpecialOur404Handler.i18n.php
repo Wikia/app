@@ -525,7 +525,7 @@ Artikkelen '''$1''' kunne ikkje verta funnen.
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'our404handler' => 'Feil 404: Finner ikke siden!',
 	'our404handler-oops' => 'Dette er ikke sidene du leter etter. Vennligst fortsett.',
 	'message404' => "

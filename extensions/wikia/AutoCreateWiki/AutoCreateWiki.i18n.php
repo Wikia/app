@@ -2982,7 +2982,7 @@ Dit is een volledig nieuw project, dus laat het ons weten als je met vragen zit.
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'autocreatewiki' => 'Opprett en ny Wiki',
 	'autocreatewiki-desc' => 'Opprett wiki i WikiFactory etter forespørsel fra bruker',
 	'autocreatewiki-page-title-default' => 'Opprett en ny Wiki',

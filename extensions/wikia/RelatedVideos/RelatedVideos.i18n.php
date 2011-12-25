@@ -308,7 +308,7 @@ $messages['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'related-videos-tally' => 'Relaterte videoer',
 	'related-videos-added-by' => 'Lagt til av',
 	'related-videos-remove' => 'Fjern',

@@ -344,7 +344,7 @@ $messages['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'partner-feed-achievements-leaderboard' => 'Wikiens toppliste over utmerkelser',
 	'partner-feed-earned-badges' => 'Nylig tildelte utmerkelser for en bestemt Wiki',
 	'partner-feed-recent-blog-posts' => 'Siste blogginnlegg relatert til en kampanje',

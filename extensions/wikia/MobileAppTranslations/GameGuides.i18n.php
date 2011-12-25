@@ -361,7 +361,7 @@ $messages['nl'] = array(
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'activityindicator-message' => 'Laster inn...',
 	'window-wikis-title' => 'Wikia spillguider',
 	'window-wikis-wikilist-search-hint' => 'Våre toppspill',

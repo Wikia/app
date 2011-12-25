@@ -138,7 +138,7 @@ $messages['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'slidertag-desc' => 'Gir en generisk måte for brukere å legge til utvalgte glidere',
 	'slidertag-featured-wikis' => 'Utvalgte wikier',
 );

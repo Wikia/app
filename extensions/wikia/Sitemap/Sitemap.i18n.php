@@ -175,7 +175,7 @@ $messages['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'sitemap-desc' => 'Generer Sitemaps for wikien etter forholdene',
 );
 

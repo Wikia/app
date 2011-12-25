@@ -204,7 +204,7 @@ $messages['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'communitymessages-desc' => 'Hjelpeutvidelse for Fellesskapsmeldinger',
 	'communitymessages-notice-msg' => '[[Special:WikiActivity|Fellesskapsmeldingene har blitt oppdatert]].',
 );

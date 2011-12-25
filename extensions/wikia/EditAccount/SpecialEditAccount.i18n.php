@@ -1033,7 +1033,7 @@ Weet je zeker dat u dit wilt doen?',
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'editaccount' => 'Rediger konto',
 	'editaccount-desc' => 'Lar ledelsesmedlemmer administrere brukerkontoinformasjon',
 	'editaccount-title' => 'Special:EditAccount',

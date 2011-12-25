@@ -1141,7 +1141,7 @@ Schrijf hier de tweede paragraaf van je pagina.',
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'createpage-desc' => 'Tillater å opprette en ny side med Wikias WYSIWYG-redaktør',
 	'createpage-sp-title' => 'Skriv en ny artikkel',
 	'createpage_title' => 'Skriv en ny artikkel',

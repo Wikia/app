@@ -447,7 +447,7 @@ $messages['nl-informal'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Audun
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'sponsorpage-desc' => 'Lar brukere kjøpe sponsorskap for sider',
 	'sponsor-header' => '<h2>Eksterne sponsorlenker</h2>',
 	'sponsor-msg' => '<li><a href="$1" rel="nofollow">Spons denne siden</a></li>',
