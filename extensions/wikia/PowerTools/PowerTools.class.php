@@ -25,7 +25,15 @@ class PowerTools {
 
 		$reason = $wgRequest->getText( 'reason' );
 
-		$article->doDelete( $reason );
+		$title = $article->getTitle();
+		$file = $title->getNamespace() == NS_IMAGE ? wfLocalFile( $title ) : false;
+
+		if ( $file ) {
+			$oldimage = null;
+			FileDeleteForm::doDelete( $title, $file, $oldimage, $reason, false );
+		} else {
+			$article->doDelete( $reason );
+		}
 		$article->mTitle->updateTitleProtection( 'sysop', $reason, 'infinity' );
 
 		return false;
