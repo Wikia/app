@@ -82,7 +82,8 @@ class SMWRecordValue extends SMWContainerValue {
 		$this->m_data->clear();
 		$types = $this->getTypeValues();
 		if ( count( $args ) > 0 ) {
-			foreach ( reset( $args ) as $value ) {
+			# When foreach first starts executing, the internal array pointer is automatically reset to the first element of the array 
+			foreach ( $args as $value ) {
 				if ( is_array( $value ) && ( count( $value ) == 2 ) ) {
 					$property = SMWPropertyValue::makeProperty( reset( $value ) );
 					$pnum = intval( substr( reset( $value ), 1 ) ); // try to find the number of this property
