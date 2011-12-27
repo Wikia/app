@@ -14,13 +14,12 @@ class WikiaMobileHooks extends WikiaObject{
 			$text = $parserOutput->getText();
 
 			//remove inline styling
-			$text = preg_replace('/(style|color|bgcolor|align)=(\'|")[^"\']*(\'|")/im', '', $text);
-
-			//remove image sizes
-			//$text = preg_replace('/(width|height)=(\'|")[^"\']*(\'|")/im', '', $text);
+			$text = preg_replace('/\s+(style|color|bgcolor|border|align|cellspacing|cellpadding|hpace|vspace)=(\'|")[^"\']*(\'|")/im', '', $text);
 
 			//adding a section closing tag if WikiaMobileHooks::onMakeHeadline
-			//leaves one open at the end of the output
+			//leaves one open at the end of the output; for the way it works, if
+			//there's a section opening in the page, there's always a closing missing,
+			//no need for complex checks
 			$parserOutput->setText( ( strpos( $text, self::SECTION_OPENING ) !== false ) ? $text . self::SECTION_CLOSING : $text );
 		}
 
@@ -51,7 +50,7 @@ class WikiaMobileHooks extends WikiaObject{
 				//the contents
 				$ret .= "<span class=chevron></span>{$closure}" . self::SECTION_OPENING;
 
-				//avoid closign a section if this is the first H2 as there will be
+				//avoid closing a section if this is the first H2 as there will be
 				//no open section before it
 				if ( $countH2 > 0 ) {
 					$ret = self::SECTION_CLOSING . $ret;

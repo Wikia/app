@@ -1,13 +1,19 @@
 var WikiaMobile = WikiaMobile || (function() {
 	/** @private **/
 
-	var allImages = [],
+	var body,
+	allImages = [],
+	handledTables,
 	deviceWidth = ($.os.ios) ? 268 : 300,
 	deviceHeight = ($.os.ios) ? 416 : 513,
-	realWidth = ($.os.ios)?((window.orientation == 0) ? screen.width : screen.height) : screen.width,
+	//realWidth = ($.os.ios) ? ((window.orientation == 0) ? screen.width : screen.height) : screen.width,
+	//realHeight = ($.os.ios) ? ((window.orientation == 0) ? screen.height : screen.width) : screen.height,
+	realWidth = window.innerWidth || window.clientWidth,
+	realHeight = window.innerHeight || window.clientHeight,
 	//TODO: finalize the following line and update all references to it (also in extensions)
 	clickEvent = ('ontap' in window) ? 'tap' : 'click',
-	touchEvent = ('ontouchstart' in window) ? 'touchstart' : 'click';
+	touchEvent = ('ontouchstart' in window) ? 'touchstart' : 'mousedown',
+	sizeEvent = ('onorientationchange' in window) ? 'orientationchange' : 'resize';
 
 	function getImages(){
 		return allImages;
@@ -17,47 +23,84 @@ var WikiaMobile = WikiaMobile || (function() {
 	//setTimeout is necessary to make it work on ios...
 	function hideURLBar(){
 		setTimeout(function(){
-		  	if(!window.pageYOffset)
+			if(!window.pageYOffset)
 				window.scrollTo(0, 1);
 		}, 1);
 	}
 
-	function handleTables(){
-		$('table').not('table table').each(function() {
-			var table = $(this),
-			rows = table.find('tbody tr'),
-			rowsLength = rows.length;
-console.time('tables');
-			// if table has less rows we don't want to deal with it
-			//as it is probably a layout table
-			//if infobox we already style it
-			if(!table.hasClass('infobox')) {
+	function processTables(){
+		if(typeof handledTables == 'undefined'){
+			handledTables = [];
+			
+			$('table').not('table table').each(function(){
+				var table = $(this),
+				rows = table.find('tr'),
+				rowsLength = rows.length;
+
+				//handle custom and standard infoboxes
+				if(table.hasClass('infobox'))
+					return true;
+				
 				//find infobox like tables
-				if(rowsLength > 2) {
-					var correctRows = 0;
+				if(rowsLength > 2){
+					var correctRows = 0,
+					cellLength;
+
 					$.each(rows, function(index, row) {
-						var cellLength = row.cells.length;
-						if(cellLength > 2) {
+						cellLength = row.cells.length;
+						
+						if(cellLength > 2)
 							return false;
-						} else if(cellLength === 2) {
-							correctRows++
-						}
-						return true;
+						
+						if(cellLength == 2)
+							correctRows++;
+						
+						//sample only the first X rows
+						if(index == 9)
+							return false;
 					});
 
 					if(correctRows > Math.floor(rowsLength/2)) {
 						table.addClass('infobox');
-						return false;
+						return true;
 					}
 				}
+
+				//if the table width is bigger than any screen dimension (device can rotate)
+				//or taller than the allowed vertical size, then wrap it and/or add it to
+				//the list of handled tables for speeding up successive calls
+				//NOTE: tables with 100% width have the same width of the screen, check the size of the first row instead
+				var firstRowWidth = rows.first().width(),
+					tableHeight = table.height();
+
+				table.data('width', firstRowWidth);
+				table.data('height', tableHeight);
+
+				if(firstRowWidth > realWidth || table.height() > deviceWidth){
+					table.wrapAll('<div class="bigTable">');
+					handledTables.push(table);
+				} else if(firstRowWidth > realHeight)
+					handledTables.push(table);
+			});
+
+			if(handledTables.length > 0)
+				window.addEventListener(sizeEvent, processTables);
+		}else if(handledTables.length > 0){
+			var table, row, isWrapped, isBig,
+				maxWidth = window.innerWidth || window.clientWidth;
+
+			for(var x = 0, y = handledTables.length; x < y; x++){
+				table = handledTables[x];
+				row = table.find('tr').first();
+				isWrapped = table.parent().hasClass('bigTable');
+				isBig = (table.data('width') > maxWidth || table.data('height') > deviceWidth);
+
+				if(!isWrapped && isBig)
+					table.wrap('<div class="bigTable">');
+				else if(isWrapped && !isBig)
+					table.unwrap();
 			}
-				//find tables that are too big
-				if(this.offsetWidth > realWidth || this.offsetHeight > deviceWidth) {
-					$(this).wrapAll('<div class=bigTable>');
-				}
-console.timeEnd('tables');
-return true;
-		});
+		}
 	}
 
 	function processImages(){
@@ -115,10 +158,8 @@ return true;
 
 	//init
 	$(function(){
-		//add class to collapse section as quick as possible
-		//and return body object as well
-		var body = $(document.body).addClass('js'),
-		navigationWordMark = $('#navigationWordMark'),
+		body = $(document.body);
+		var navigationWordMark = $('#navigationWordMark'),
 		navigationSearch = $('#navigationSearch'),
 		searchToggle = $('#searchToggle'),
 		searchInput = $('#searchInput'),
@@ -127,8 +168,12 @@ return true;
 		//analytics
 		track('view');
 
+		processTables();
+		//add class to collapse section as quick as possible,
+		//must be done AFTER detecting size of elements on the page
+		body.addClass('js');
+
 		hideURLBar();
-		handleTables();
 		processImages();
 
 		//TODO: optimize selectors caching for this file
@@ -164,8 +209,7 @@ return true;
 
 			$.openModal({
 				addClass: 'wideTable',
-				html: this.innerHTML,
-				onOpen: WMWideTables.handleTableScrolling
+				html: this.innerHTML
 			});
 		});
 
