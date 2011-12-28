@@ -17,6 +17,7 @@ class SponsorshipDashboardOutputChart extends SponsorshipDashboardOutputFormatte
 	public $showActionsButton = true;
 	public $chartNumericId; // So that multiple charts can be on the same page, each chart needs a unique numeric id
 	public $emptyChartMsg;
+        public $active;
 
 	protected $actualDate;
 	
@@ -32,6 +33,11 @@ class SponsorshipDashboardOutputChart extends SponsorshipDashboardOutputFormatte
 	const TEMPLATE_CHART_INFOONLY = 'chart_info';
 	const TEMPLATE_CHART = 'chart';
 	const TEMPLATE_CHART_EMPTY = 'chart_empty';
+        
+        protected function getTemplate() {
+            // TODO: REFACTOR: Use Nirvana instead of EasyTemplate.
+            return F::build( 'EasyTemplate', array( ( dirname( __FILE__ )."/templates/" ) ) );
+        }
 
 	public function getHTML( $setHtmlTitle=true ) {
 
@@ -50,8 +56,8 @@ class SponsorshipDashboardOutputChart extends SponsorshipDashboardOutputFormatte
 		}
 		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboard.scss' ) );
 
-		// TODO: REFACTOR: Use Nirvana instead of EasyTemplate.
-		$oTmpl = F::build( 'EasyTemplate', array( ( dirname( __FILE__ )."/templates/" ) ) );
+		$oTmpl = $this->getTemplate();
+
 		if ( count( $this->report->reportSources ) == 0  ) {
 
 			$description = wfMsgExt(
@@ -107,7 +113,8 @@ class SponsorshipDashboardOutputChart extends SponsorshipDashboardOutputFormatte
 									: $wgTitle->getFullURL().'/admin/CSVReport/'.$this->report->id,
 					'monthly'		=> $this->report->frequency == SponsorshipDashboardDateProvider::SD_FREQUENCY_MONTH,
 					'fromYear'		=> $this->fromYear,
-					'showActionsButton' => $this->showActionsButton
+					'showActionsButton' => $this->showActionsButton,
+                                        'active'                => $this->active,
 				)
 			);
 
