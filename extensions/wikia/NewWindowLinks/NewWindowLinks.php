@@ -38,12 +38,12 @@ $wgExtensionCredits['parserhook'][] = array(
 /**
  * Classes to be loaded.
  */
-$wgAutoloadClasses['NewWindowLinks'] = dirname( __FILE__ ) . '/NewWindowLinks.class.php';
+$wgAutoloadClasses['NewWindowLinks'] = __DIR__ . '/NewWindowLinks.class.php';
 
 /**
  * Internationalisation: messages and magic words.
  */
-$wgExtensionMessagesFiles['NewWindowLinks'] = dirname( __FILE__ ) . '/NewWindowLinks.i18n.php';
+$wgExtensionMessagesFiles['NewWindowLinks'] = __DIR__ . '/NewWindowLinks.i18n.php';
 
 /**
  * Hooks.
