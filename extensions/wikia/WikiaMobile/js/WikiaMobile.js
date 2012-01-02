@@ -31,7 +31,7 @@ var WikiaMobile = WikiaMobile || (function() {
 	function processTables(){
 		if(typeof handledTables == 'undefined'){
 			handledTables = [];
-			
+
 			$('table').not('table table').each(function(){
 				var table = $(this),
 				rows = table.find('tr'),
@@ -40,7 +40,7 @@ var WikiaMobile = WikiaMobile || (function() {
 				//handle custom and standard infoboxes
 				if(table.hasClass('infobox'))
 					return true;
-				
+
 				//find infobox like tables
 				if(rowsLength > 2){
 					var correctRows = 0,
@@ -48,13 +48,13 @@ var WikiaMobile = WikiaMobile || (function() {
 
 					$.each(rows, function(index, row) {
 						cellLength = row.cells.length;
-						
+
 						if(cellLength > 2)
 							return false;
-						
+
 						if(cellLength == 2)
 							correctRows++;
-						
+
 						//sample only the first X rows
 						if(index == 9)
 							return false;
