@@ -128,6 +128,9 @@ var WikiaMobile = WikiaMobile || (function() {
 			}
 		});
 
+		//if there is only one image in the article hide the prev/next buttons
+		//in the image modal
+		//TODO: move to a modal API call
 		if(allImages.length <= 1) $('body').addClass('justOneImage');
 	}
 
