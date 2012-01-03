@@ -6,6 +6,14 @@ class ArticleService extends Service {
 
 	private $mArticle = null;
 
+	private $mTagsToRemove = array(
+			'noscript',
+			'script',
+			'th',
+			'figure',
+			'h[1-6]'
+	);
+
 	public function __construct( $articleId = 0 ) {
 		$this->setArticleById( $articleId );
 	}
@@ -69,13 +77,6 @@ class ArticleService extends Service {
 			$re = strtr( $re_magic, array( 'S' => "\\[", 'E' => "\\]", 'X' => "($nsFileAlias:$nsFile):" ));
 			$content = preg_replace($re, '', $content);
 
-			// (FB #18271) remove heading sections
-			for ( $i = 6; $i >= 1; --$i ) {
-				$h = str_repeat( '=', $i );
-				$content = preg_replace( "/^$h(.+)$h\\s*$/m",
-				  '', $content );
-			}
-
 			// skip "edit" section and TOC
 			$content .= "\n__NOEDITSECTION__\n__NOTOC__";
 
@@ -87,19 +88,11 @@ class ArticleService extends Service {
 			$tmpParser = new Parser();
 			$content = $tmpParser->parse( $content,  $this->mArticle->getTitle(), new ParserOptions )->getText();
 
-			// remove noscript tags from wikitext (BugzId: 7295)
-			$content = preg_replace('/<noscript[^>]*>(.*?)<\/noscript>/', '', $content);
+			foreach ( $this->mTagsToRemove as $tag ) {
+				$content = preg_replace( "#<{$tag}[^>]*>(.*)<\/{$tag}>#s", '', $content );
+			}
 
-			// remove <script> tags (RT #46350)
-			$content = preg_replace('#<script[^>]*>(.*?)<\/script>#s', '', $content);
-
-			// experimental: remove <th> tags
-			$content = preg_replace('#<th[^>]*>(.*?)<\/th>#s', '', $content);
-
-			// experimental: remove <figure> tags
-			$content = preg_replace('#<figure[^>]*>(.*?)<\/figure>#s', '', $content);
-
-			// remove HTML tags
+			// strip HTML tags
 			$content = trim(strip_tags($content));
 
 			// compress white characters
@@ -110,7 +103,7 @@ class ArticleService extends Service {
 			$cacheContent = mb_substr( $content, 0, self::MAX_CACHED_TEXT_LENGTH );
 
 			if ( $length <= self::MAX_CACHED_TEXT_LENGTH ){
-				$oMemCache->set( $sKey, $cacheContent, 60*60*24 );
+				$oMemCache->set( $sKey, $cacheContent, 86400 );
 			} else {
 				wfDebug(__METHOD__ . ": requested string to long to be cached. Served without cache \n");
 			}
