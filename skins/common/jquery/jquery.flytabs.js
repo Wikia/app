@@ -1,5 +1,5 @@
 // FlyTabs version 1.01 - 12/12/2008
-// Copyright © Milan Adamovsky
+// Copyright (c) Milan Adamovsky
 // E-mail  : milan@adamovsky.com
 // Website : http://www.adamovsky.com/flytabs
 // License : Must give credit to use in any way (e.g. commercially, personally, academically).
@@ -7,13 +7,13 @@
 
 (function($) {
 
- var _data = new Object();
+ var _data = [];
 
  if (!_data['tabs'])
-  _data['tabs'] = new Object();
+  _data['tabs'] = [];
 
  if (!_data['core'])
-  _data['core'] = new Object();
+  _data['core'] = [];
 
  var _selector = '';
  var _temp_selector = '';
@@ -283,22 +283,22 @@
     return(0);
 
    o = o || this;
-   o.tabs = new Object();
+   o.tabs = [];
    o.tabs.id = tabsId;
-   o.tabs.offset = new Object();
+   o.tabs.offset = [];
    o.tabs.offset.left = function () { return ($(o.tabs.id).offset().left); };
    o.tabs.top = function () { return ($(o.tabs.id).offset().top); };
-   o.tabs.css = new Object();
+   o.tabs.css = [];
    o.tabs.css.left = function () { return (parseInt($(o.tabs.id).css("left")) || 0); };
    o.tabs.css.top = function () { return (parseInt($(o.tabs.id).css("top")) || 0); };
    o.tabs.height = function () { return ($(o.tabs.id).height()); };
    o.tabs.bottom = function () { return (o.tabs.top() + o.tabs.height()); };
-   o.tabs.wrapper = new Object();
+   o.tabs.wrapper = [];
    o.tabs.wrapper.id = o.tabs.id + '_wrapper';
-   o.tabs.wrapper.original = new Object();
-   o.tabs.wrapper.original.css = new Object();
+   o.tabs.wrapper.original = [];
+   o.tabs.wrapper.original.css = [];
    o.tabs.wrapper.original.css.borderTopWidth = function () { return (parseInt($(o.tabs.wrapper.id).css("border-top-width"))); };
-   o.tabs.wrapper.original.offset = new Object();
+   o.tabs.wrapper.original.offset = [];
    o.tabs.wrapper.original.offset.top = function () { return ($(o.tabs.wrapper.id).offset().top); };
    o.tabs.wrapper.original.top = function () { return (o.tabs.wrapper.original.offset.top() + o.tabs.wrapper.original.css.borderTopWidth()); };
    o.tabs.wrapper.original.difference = function () { return (o.tabs.wrapper.original.top() - o.tabs.bottom()); };
@@ -311,16 +311,16 @@
     return(0);
 
    o = o || this;
-   o.tab = new Object();
+   o.tab = [];
    o.tab.id = tabId;
    o.tab.height = function () { return (parseInt($(o.tab.id).height())); };
-   o.tab.offset = new Object();
+   o.tab.offset = [];
    o.tab.offset.left = function () { return ($(o.tab.id).offset().left); };
    o.tab.offset.top = function () { return ($(o.tab.id).offset().top); };
-   o.tab.original = new Object();
-   o.tab.original.css = new Object();
+   o.tab.original = [];
+   o.tab.original.css = [];
    o.tab.original.css.left = '';
-   o.tab.css = new Object();
+   o.tab.css = [];
    o.tab.css.left = function () {
                                   var _cssLeft = (parseInt($(o.tab.id).css("left")) || 0);
                                   o.tab.original.css.left = o.tab.original.css.left != '' ? o.tab.original.css.left : _cssLeft;
@@ -333,7 +333,7 @@
    o.tab.css.paddingBottom = function () { return (parseInt($(o.tab.id).css("padding-bottom")) || 0); };
    o.tab.css.borderTopWidth = function () { return (parseInt($(o.tab.id).css("border-top-width")) || 0); };
    o.tab.css.borderBottomWidth = function () { return (parseInt($(o.tab.id).css("border-bottom-width")) || 0); };
-   o.tab.full = new Object();
+   o.tab.full = [];
    o.tab.full.left =  function () { return (o.tab.css.left()); };
    o.tab.full.height =  function () { return (o.tab.height() + o.tab.css.paddingTop() + o.tab.css.paddingBottom() + o.tab.css.borderTopWidth() + o.tab.css.borderBottomWidth()); };
    o.tab.bottom = function () { return (o.tab.offset.top() + o.tab.full.height()); };
