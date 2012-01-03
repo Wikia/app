@@ -29,7 +29,7 @@ class WikiaPollHooks {
 		if( $wgTitle->getNamespace() == NS_WIKIA_POLL ) {
 			$rev = $wgTitle->getFirstRevision();
 			$isAdmin = $wgUser->isAllowed('editinterface');
-			if ($isAdmin || !$wgTitle->exists() || $wgUser->getId() == $rev->getRawUser()) {
+			if ($isAdmin || !$wgTitle->exists() || (($rev instanceof Revision) && ($wgUser->getId() == $rev->getRawUser()))) {
 				// okay to edit, do nothing
 			} else {
 				// remove button
