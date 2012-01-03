@@ -47,9 +47,10 @@ function efSetMainImagePF( $parser, $mainimage ) {
 	if ( isset($parserOutput->eHasMainImageAlready) && $parserOutput->eHasMainImageAlready )
 		return $mainimage;
 	$file = Title::newFromText( $mainimage, NS_FILE );
-	$parserOutput->addOutputHook( 'setmainimage', array( 'dbkey' => $file->getDBkey() ) );
-	$parserOutput->eHasMainImageAlready = true;
-	
+	if ( !$file instanceof Title ) {
+		$parserOutput->addOutputHook( 'setmainimage', array( 'dbkey' => $file->getDBkey() ) );
+		$parserOutput->eHasMainImageAlready = true;
+	}
 	return $mainimage;
 }
 
