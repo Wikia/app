@@ -13,7 +13,8 @@ var WikiaMobile = WikiaMobile || (function() {
 	//TODO: finalize the following line and update all references to it (also in extensions)
 	clickEvent = ('ontap' in window) ? 'tap' : 'click',
 	touchEvent = ('ontouchstart' in window) ? 'touchstart' : 'mousedown',
-	sizeEvent = ('onorientationchange' in window) ? 'orientationchange' : 'resize';
+	sizeEvent = ('onorientationchange' in window) ? 'orientationchange' : 'resize',
+	tableWrapperHTML = '<div class="bigTable">';
 
 	function getImages(){
 		return allImages;
@@ -73,32 +74,50 @@ var WikiaMobile = WikiaMobile || (function() {
 				var firstRowWidth = rows.first().width(),
 					tableHeight = table.height();
 
-				table.data('width', firstRowWidth);
-				table.data('height', tableHeight);
+				table.computedWidth = firstRowWidth;
+				table.computedHeight = tableHeight;
 
 				if(firstRowWidth > realWidth || table.height() > deviceWidth){
-					table.wrapAll('<div class="bigTable">');
+					//remove scripts to avoid re-parsing
+					table.find('script').remove();
+					table.wrapAll(tableWrapperHTML);
+					table.wasWrapped = true;
+					table.isWrapped = true;
 					handledTables.push(table);
-				} else if(firstRowWidth > realHeight)
+				} else if(firstRowWidth > realHeight){
+					table.wasWrapped = false;
+					table.isWrapped = false;
 					handledTables.push(table);
+				}
 			});
 
 			if(handledTables.length > 0)
 				window.addEventListener(sizeEvent, processTables);
 		}else if(handledTables.length > 0){
-			var table, row, isWrapped, isBig,
+			var table, row, isWrapped, isBig, wasWrapped,
 				maxWidth = window.innerWidth || window.clientWidth;
 
 			for(var x = 0, y = handledTables.length; x < y; x++){
 				table = handledTables[x];
 				row = table.find('tr').first();
-				isWrapped = table.parent().hasClass('bigTable');
-				isBig = (table.data('width') > maxWidth || table.data('height') > deviceWidth);
+				isWrapped = table.isWrapped;
+				wasWrapped = table.wasWrapped;
+				isBig = (table.computedWidth > maxWidth || table.computedHeight > deviceWidth);
 
-				if(!isWrapped && isBig)
-					table.wrap('<div class="bigTable">');
-				else if(isWrapped && !isBig)
+				if(!isWrapped && isBig){
+					table.wrap(tableWrapperHTML);
+					table.isWrapped = true;
+					
+					if(!wasWrapped){
+						table.wasWrapped = true;
+						//remove scripts to avoid re-parsing
+						table.find('script').remove();
+					}
+				}
+				else if(isWrapped && !isBig){
 					table.unwrap();
+					table.isWrapped = false;
+				}
 			}
 		}
 	}
