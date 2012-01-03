@@ -11,12 +11,6 @@ class GamingCalendarSpecialPageController extends WikiaSpecialPageController {
 		parent::__construct('GamingCalendar', 'specialgamingcalendar', false);
 	}
 	
-	public function init() {
-		$this->response->addAsset( 'skins/common/jquery/jquery-ui-1.8.14.custom.js' );
-		$this->response->addAsset( 'extensions/wikia/GamingCalendar/js/GamingCalendarSpecialPage.js' );
-		$this->response->addAsset( 'extensions/wikia/GamingCalendar/css/GamingCalendarSpecialPage.scss' );		
-}
-
 	public function index() {
 		//@todo move this to init when init supports exceptions
 		// Boilerplate special page permissions
@@ -33,6 +27,10 @@ class GamingCalendarSpecialPageController extends WikiaSpecialPageController {
 			return false;
 		}
 
+		$this->response->addAsset( 'skins/common/jquery/jquery-ui-1.8.14.custom.js' );
+		$this->response->addAsset( 'extensions/wikia/GamingCalendar/js/GamingCalendarSpecialPage.js' );
+		$this->response->addAsset( 'extensions/wikia/GamingCalendar/css/GamingCalendarSpecialPage.scss' );		
+
 		$type = $this->getVal('type', null);
 		$year = $this->getVal('year', null);
 		$month = $this->getVal('month', null);
@@ -46,16 +44,13 @@ class GamingCalendarSpecialPageController extends WikiaSpecialPageController {
 			$entries = GamingCalendar::loadEntries(0, 5, $type, date_timestamp_get($date), false);
 		}
 		
-		$typeName = null;
-		if (!empty(GamingCalendar::$CALENDAR_TYPES[$type])) {
-			$typeName = GamingCalendar::$CALENDAR_TYPES[$type];
-		}		
+		$typeName = GamingCalendar::getCalendarName($type);
 		$this->setVal('typeName', $typeName);
 		$this->setVal('type', $type);
 		$this->setVal('year', $year);
 		$this->setVal('month', $month);
 		$this->setVal('date', $date ? date_timestamp_get($date) : '');
-		$this->setVal('types', GamingCalendar::$CALENDAR_TYPES);
+		$this->setVal('types', GamingCalendar::getCalendarTypes());
 		$this->setVal('entries', $entries);
 	}
 	
@@ -65,17 +60,18 @@ class GamingCalendarSpecialPageController extends WikiaSpecialPageController {
 		//@todo move this to init once it supports exceptions
 		// Boilerplate special page permissions
 		if ($this->wg->user->isBlocked()) {
-			$this->wg->out->blockedPage();
+			$this->setVal('error', wfMsg('blockedtext'));
 			return false;	// skip rendering
 		}
 		if (!$this->wg->user->isAllowed('specialgamingcalendar')) {
-			$this->displayRestrictionError();
+			$this->setVal('error', wfMsg('badaccess-group0'));
 			return false;
 		}
 		if (wfReadOnly() && !wfAutomaticReadOnly()) {
-			$this->wg->out->readOnlyPage();
+			$this->setVal('error', wfMsg('readonlytext'));
 			return false;
 		}
+
 		$type = $this->getVal('type');
 		$date = $this->getVal('date');
 		$year = $this->getVal('year');
@@ -91,8 +87,8 @@ class GamingCalendarSpecialPageController extends WikiaSpecialPageController {
 			$entries = GamingCalendar::loadEntriesForDate($type, $date);
 		}
 		
-		if (!empty(GamingCalendar::$CALENDAR_TYPES[$type])) {
-			$typeName = GamingCalendar::$CALENDAR_TYPES[$type];
+		$typeName = GamingCalendar::getCalendarName($type);
+		if (!empty($typeName)) {
 			$this->setVal('typeName', $typeName);
 		}		
 		$this->setVal('type', $type);
@@ -107,15 +103,15 @@ class GamingCalendarSpecialPageController extends WikiaSpecialPageController {
 		//@todo move this to init once it supports exceptions
 		// Boilerplate special page permissions
 		if ($this->wg->user->isBlocked()) {
-			$this->wg->out->blockedPage();
+			$this->setVal('error', wfMsg('blockedtext'));
 			return false;	// skip rendering
 		}
 		if (!$this->wg->user->isAllowed('specialgamingcalendar')) {
-			$this->displayRestrictionError();
+			$this->setVal('error', wfMsg('badaccess-group0'));
 			return false;
 		}
 		if (wfReadOnly() && !wfAutomaticReadOnly()) {
-			$this->wg->out->readOnlyPage();
+			$this->setVal('error', wfMsg('readonlytext'));
 			return false;
 		}
 

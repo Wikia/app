@@ -9,9 +9,7 @@ $messages = array();
  * English
  */
 $messages['en'] = array(
-    'gamingcalendar-heading-gaming' => 'Game calendar',
-    'gamingcalendar-heading-ent' => 'Entertainment calendar',
-    'gamingcalendar-heading-music' => 'Music calendar',
+    'gamingcalendar-heading' => '$1 calendar',
     'gamingcalendar-today' => 'Today',
     'gamingcalendar-create-entries-for-date' => 'Create/Edit calendar entries for',
     'gamingcalendar-title' => 'Title',
