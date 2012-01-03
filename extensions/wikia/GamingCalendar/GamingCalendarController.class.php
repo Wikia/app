@@ -30,8 +30,8 @@ class GamingCalendarController extends WikiaController {
 	public function getModalLayout() {
 		global $wgCityId;
 		
-		$catShort = WikiFactoryHub::getInstance()->getCategoryShort($wgCityId);
-		$this->setVal('calendarHeading', $this->wf->msgForContent( 'gamingcalendar-heading-'.$catShort ));
+		$catName = WikiFactoryHub::getInstance()->getCategoryName($wgCityId);
+		$this->setVal('calendarHeading', $this->wf->msgForContent( 'gamingcalendar-heading', $catName ));
 		$this->setVal('wgBlankImgUrl', $this->wg->BlankImgUrl );
 	}
 }

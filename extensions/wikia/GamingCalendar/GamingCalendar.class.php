@@ -5,7 +5,7 @@
  * @author Will Lee <wlee@wikia-inc.com>
  */
 class GamingCalendar {
-	public static $CALENDAR_TYPES = array('gaming'=>'Gaming', 'ent'=>'Entertainment', 'music'=>'Music');
+	public static $CALENDAR_TYPES = array();
 	
 	public static $ENTRY_TITLE_MARKER = '* ';
 	public static $ENTRY_ATTRIBUTE_MARKER = '** ';
@@ -230,5 +230,27 @@ class GamingCalendar {
 		}
 
 		return $entries;
+	}
+	
+	public static function getCalendarTypes() {
+		if (!empty(self::$CALENDAR_TYPES)) {
+			return self::$CALENDAR_TYPES;
+		}
+		
+		$categories = WikiFactoryHub::getInstance()->getCategories();
+		foreach ($categories as $catData) {
+			self::$CALENDAR_TYPES[$catData['short']] = $catData['name'];
+		}
+		
+		return self::$CALENDAR_TYPES;
+	}
+	
+	public static function getCalendarName($type) {
+		self::getCalendarTypes();
+		if (!empty(self::$CALENDAR_TYPES[$type])) {
+			return self::$CALENDAR_TYPES[$type];
+		}
+		
+		return null;
 	}
 }
