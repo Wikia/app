@@ -559,6 +559,20 @@ $(function() {
 	$('input[placeholder], textarea[placeholder]').placeholder();
 });
 
+/**
+ * @author Marcin Maciejewski <marcin@wikia-inc.com>
+ *
+ * Plugin for easy creating Ajax Loading visualization.
+ * after using it selected elements content will apply proper css class
+ * and in the middle of it throbber will be displayed.
+ */
+jQuery.fn.startThrobbing = function() {
+	this.append('<div id="wikiaThrobber"></div>');
+}
+jQuery.fn.stopThrobbing = function() {
+	this.find('#wikiaThrobber').remove();
+}
+
 $.htmlentities = function ( s ) {
 	return String(s).replace(/\&/g,'&'+'amp;').replace(/</g,'&'+'lt;')
     	.replace(/>/g,'&'+'gt;').replace(/\'/g,'&'+'apos;').replace(/\"/g,'&'+'quot;');
