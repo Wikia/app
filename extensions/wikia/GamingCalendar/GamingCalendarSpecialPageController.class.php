@@ -8,11 +8,30 @@
 class GamingCalendarSpecialPageController extends WikiaSpecialPageController {
 	
 	public function __construct() {
-		parent::__construct('GamingCalendar', '', false);
+		parent::__construct('GamingCalendar', 'specialgamingcalendar', false);
 	}
+	
+	public function init() {
+		$this->response->addAsset( 'skins/common/jquery/jquery-ui-1.8.14.custom.js' );
+		$this->response->addAsset( 'extensions/wikia/GamingCalendar/js/GamingCalendarSpecialPage.js' );
+		$this->response->addAsset( 'extensions/wikia/GamingCalendar/css/GamingCalendarSpecialPage.scss' );		
+}
 
 	public function index() {
-		$this->setup();		
+		//@todo move this to init when init supports exceptions
+		// Boilerplate special page permissions
+		if ($this->wg->user->isBlocked()) {
+			$this->wg->out->blockedPage();
+			return false;	// skip rendering
+		}
+		if (!$this->wg->user->isAllowed('specialgamingcalendar')) {
+			$this->displayRestrictionError();
+			return false;
+		}
+		if (wfReadOnly() && !wfAutomaticReadOnly()) {
+			$this->wg->out->readOnlyPage();
+			return false;
+		}
 
 		$type = $this->getVal('type', null);
 		$year = $this->getVal('year', null);
@@ -43,8 +62,20 @@ class GamingCalendarSpecialPageController extends WikiaSpecialPageController {
 	public function getEntriesForDate() {
 		global $wgBlankImgUrl;
 		
-		$this->setup();		
-
+		//@todo move this to init once it supports exceptions
+		// Boilerplate special page permissions
+		if ($this->wg->user->isBlocked()) {
+			$this->wg->out->blockedPage();
+			return false;	// skip rendering
+		}
+		if (!$this->wg->user->isAllowed('specialgamingcalendar')) {
+			$this->displayRestrictionError();
+			return false;
+		}
+		if (wfReadOnly() && !wfAutomaticReadOnly()) {
+			$this->wg->out->readOnlyPage();
+			return false;
+		}
 		$type = $this->getVal('type');
 		$date = $this->getVal('date');
 		$year = $this->getVal('year');
@@ -73,6 +104,21 @@ class GamingCalendarSpecialPageController extends WikiaSpecialPageController {
 	public function updateCalendarEntriesForDate() {
 		global $wgUser;
 		
+		//@todo move this to init once it supports exceptions
+		// Boilerplate special page permissions
+		if ($this->wg->user->isBlocked()) {
+			$this->wg->out->blockedPage();
+			return false;	// skip rendering
+		}
+		if (!$this->wg->user->isAllowed('specialgamingcalendar')) {
+			$this->displayRestrictionError();
+			return false;
+		}
+		if (wfReadOnly() && !wfAutomaticReadOnly()) {
+			$this->wg->out->readOnlyPage();
+			return false;
+		}
+
 		wfProfileIn(__METHOD__);
 
 		$res = array();
@@ -142,12 +188,6 @@ class GamingCalendarSpecialPageController extends WikiaSpecialPageController {
 
 		$this->setVal('res', $res);
 		wfProfileOut(__METHOD__);
-	}
-	
-	private function setup() {
-		$this->response->addAsset( 'skins/common/jquery/jquery-ui-1.8.14.custom.js' );
-		$this->response->addAsset( 'extensions/wikia/GamingCalendar/js/GamingCalendarSpecialPage.js' );
-		$this->response->addAsset( 'extensions/wikia/GamingCalendar/css/GamingCalendarSpecialPage.scss' );		
 	}
 	
 }

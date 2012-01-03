@@ -27,3 +27,7 @@ $wgExtensionMessagesFiles['GamingCalendar'] = "$dir/GamingCalendar.i18n.php";
 
 // special pages
 $app->registerSpecialPage('GamingCalendar', 'GamingCalendarSpecialPageController');
+
+// permissions
+$wgAvailableRights[] = 'specialgamingcalendar';
+$wgGroupPermissions['staff']['specialgamingcalendar'] = true;
