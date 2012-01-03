@@ -13,10 +13,10 @@ class MobileContentParser {
 		$wgMobileSkins = $app->getGlobal( 'wgMobileSkins' );
 
 		if ( in_array( $skin->getSkinName(), $wgMobileSkins ) ) {
-			return $contents;
+			return $app->wg->Parser->recursiveTagParse( $contents );
 		} else {
 			return '';
-		} 
+		}
 	}
 
 	public static function hideContent( $contents, $attributes, $parser ) {
@@ -27,7 +27,7 @@ class MobileContentParser {
 		if ( in_array( $skin->getSkinName(), $wgMobileSkins ) ) {
 			return '';
 		} else {
-			return $contents;
+			return $app->wg->Parser->recursiveTagParse( $contents );
 		}
 	}
 }

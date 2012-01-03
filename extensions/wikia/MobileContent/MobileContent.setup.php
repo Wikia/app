@@ -23,7 +23,7 @@ $app->wg->append(
         array(
         	'name' => 'MobileContent',
 		'version' => '1.0',
-		'author' => array( 
+		'author' => array(
 			"[http://www.wikia.com/wiki/User:TOR Łukasz 'TOR' Garczewski]",
 			'Federico',
 		),
@@ -33,10 +33,10 @@ $app->wg->append(
 
 $app->registerHook( 'ParserFirstCallInit', 'MobileContentParser', 'onParserFirstCallInit' );
 
-/** 
+/**
  * services
  */
 $app->wg->set( 'wgAutoloadClasses', "{$dir}/MobileContentParser.class.php", 'MobileContentParser' );
 
 // allow for override in DefaultSettings
-if ( empty( $app->wg->mobileSkins ) ) $app->wg->mobileSkins = array(  'wikiphone', 'wikiaapp' );
+if ( empty( $app->wg->mobileSkins ) ) $app->wg->mobileSkins = array(  'wikiphone', 'wikiaapp', 'wikiamobile' );
