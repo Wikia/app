@@ -58,7 +58,7 @@ class PlaceCategory {
 	public function isGeoTaggingEnabledForArticle( Title $oTitle ){
 
 		$oArticle =	$this->app->wg->article;
-		if ( is_object( $oArticle->mParserOutput ) && is_object( $oArticle->mParserOutput->mCategories ) ){
+		if ( is_object( $oArticle ) && is_object( $oArticle->mParserOutput ) && is_object( $oArticle->mParserOutput->mCategories ) ){
 			$aCategories = $oArticle->mParserOutput->mCategories;
 		} else {
 			return false;
