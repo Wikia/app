@@ -6,23 +6,30 @@ h1, h2, h3{
 	margin: $section-title-margin;
 }
 
-.js .articleSection {
-	display: none;
+.js {
+	.articleSection {
+		display: none;
+	}
 }
 
-#WikiaPage{
-	.collapsible-section {
-		@include section-title;
+.collapsible-section {
+	@include section-title;
+}
+
+body {
+	&>.collapsible-section, &>.articleSection {
+		margin-left: $page-padding;
+		margin-right: $page-padding;
+	}
+}
+
+.articleSection {
+	&.open {
+		display: block;
 	}
 
-	.articleSection {
-		&.open {
-			display: block;
-		}
-
-		ul {
-			//there is already a padding so if this is not 0 it gets way too big
-			padding: 0;
-		}
+	ul {
+		//there is already a padding so if this is not 0 it gets way too big
+		padding: 0;
 	}
 }

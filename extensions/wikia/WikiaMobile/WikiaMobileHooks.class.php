@@ -7,6 +7,15 @@
 class WikiaMobileHooks extends WikiaObject{
 	const SECTION_OPENING = '<section class="articleSection">';
 	const SECTION_CLOSING = '</section>';
+	
+	private $sectionsOpenedCount = 0;
+	
+	function __construct(){
+		parent::__construct();
+		
+		//singleton
+		F::setInstance( __CLASS__, $this );
+	}
 
 	public function onOutputPageParserOutput( &$out, $parserOutput ){
 		//cleanup page output from unwanted stuff
@@ -20,7 +29,12 @@ class WikiaMobileHooks extends WikiaObject{
 			//leaves one open at the end of the output; for the way it works, if
 			//there's a section opening in the page, there's always a closing missing,
 			//no need for complex checks
-			$parserOutput->setText( ( strpos( $text, self::SECTION_OPENING ) !== false ) ? $text . self::SECTION_CLOSING : $text );
+			
+			if ( $this->sectionsOpenedCount > 0 ) {
+				$text .= self::SECTION_CLOSING;
+			}
+						
+			$parserOutput->setText( $text );
 		}
 
 		return true;
@@ -34,9 +48,6 @@ class WikiaMobileHooks extends WikiaObject{
 
 	public function onMakeHeadline( $skin, $level, $attribs, $anchor, $text, $link, $legacyAnchor, $ret ){
 		if ( $skin instanceof SkinWikiaMobile ) {
-			//keep the count across calls to this hook handler when rendering H2's
-			static $countH2 = 0;
-
 			//remove bold, italics, underline and anchor tags from section headings
 			$text = preg_replace( '/<\/?(b|u|i|a|em|strong){1}(\s+[^>]*)*>/im', '', $text );
 
@@ -49,14 +60,13 @@ class WikiaMobileHooks extends WikiaObject{
 				//add chevron to expand the section and a section tag opening to wrap
 				//the contents
 				$ret .= "<span class=chevron></span>{$closure}" . self::SECTION_OPENING;
+				$this->sectionsOpenedCount++;
 
 				//avoid closing a section if this is the first H2 as there will be
 				//no open section before it
-				if ( $countH2 > 0 ) {
+				if ( $this->sectionsOpenedCount > 1 ) {
 					$ret = self::SECTION_CLOSING . $ret;
 				}
-
-				$countH2++;
 			} else {
 				$ret .= $closure;
 			}
