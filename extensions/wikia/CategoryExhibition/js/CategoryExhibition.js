@@ -36,15 +36,6 @@ var CategoryExhibition = {
 		$().log(msg, 'CategoryExhibition');
 	},
 
-	hideThrobber: function(){
-		$('#toplists-loading-screen').remove();
-	},
-
-	showThrobber: function(elem){
-		CategoryExhibition.hideThrobber();
-		elem.prepend('<div id="toplists-loading-screen"></div>');
-	},
-
 	articlesPaginatorClick : function(e) {
 		return CategoryExhibition.paginatorClick($('#mw-pages'), 'axGetArticlesPage', $(this), 'article');
 	},
@@ -108,7 +99,7 @@ var CategoryExhibition = {
 		}
 		
 		CategoryExhibition.log('begin: paginatorClick');
-		CategoryExhibition.showThrobber(pageSection.find('div.category-gallery-holder'));
+		$('#mw-pages .category-gallery').startThrobbing();
 		var UrlVars = $.getUrlVars();
 		var data = {
 			action: 'ajax',
@@ -126,7 +117,7 @@ var CategoryExhibition = {
 			var room1 = pageSection.find('div.category-gallery-room1');
 			var room2 = pageSection.find('div.category-gallery-room2');
 			pageSection.find('div.category-gallery-paginator').html(axData.paginator);
-			CategoryExhibition.hideThrobber();
+			$('#mw-pages .category-gallery').stopThrobbing();
 
 			if ( typeof goBack !== "undefined" && goBack ){
 				room2.html(room1.html());
