@@ -12,11 +12,11 @@ EOT;
 class Advertisement
 {
 	//public fields for ad values
-  public $ad_id = 0;
-  public $ad_link_url = "";
-  public $ad_link_text = "";
-  public $ad_text = "";
-  public	$wiki_db = "";
+	public $ad_id = 0;
+	public $ad_link_url = "";
+	public $ad_link_text = "";
+	public $ad_text = "";
+	public	$wiki_db = "";
 	public	$page_id = "";
 	public $page_original_url = "";
 	//public $page_name = "";
@@ -180,7 +180,7 @@ class Advertisement
 			__METHOD__,
 			array('ORDER BY' => 'ad_price DESC','LIMIT' =>$limit,'OFFSET'=>$start)
 		);
-		if( $res->numRows() > 0 ) {
+		if( ($result !== false) && ($res->numRows() > 0) ) {
 		//or use fetchRow
 			while( $row = $res->fetchObject() ) {
 				$ad = new Advertisement();
