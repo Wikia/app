@@ -140,10 +140,12 @@ class ImageMap {
 			$link = trim( strstr( $line, '[' ) );
 			if ( preg_match( '/^ \[\[  ([^|]*+)  \|  ([^\]]*+)  \]\] \w* $ /x', $link, $m ) ) {
 				$title = Title::newFromText( $m[1] );
+				if ( !$title instanceof Title )
+					return self::error('imagemap_invalid_title', $lineNum);
 				$alt = trim( $m[2] );
 			} elseif ( preg_match( '/^ \[\[  ([^\]]*+) \]\] \w* $ /x', $link, $m ) ) {
 				$title = Title::newFromText( $m[1] );
-				if (is_null($title))
+				if ( !$title instanceof Title )
 					return self::error('imagemap_invalid_title', $lineNum);
 				$alt = $title->getFullText();
 			} elseif ( in_array( substr( $link , 1 , strpos($link, '//' )+1 ) , $wgUrlProtocols ) || in_array( substr( $link , 1 , strpos($link, ':' ) ) , $wgUrlProtocols ) ) {
