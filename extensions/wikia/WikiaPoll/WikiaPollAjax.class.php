@@ -78,15 +78,17 @@ class WikiaPollAjax {
 			}
 
 			$article = Article::newFromID($pollId);
-			$status = $article->doEdit($content, 'Poll Updated', EDIT_UPDATE, false, $wgUser);
-			$title_object = $article->getTitle();
-			// Fixme: check status object
-			$res = array (
-				'success' => true,
-				'pollId' => $article->getID(),
-				'url'  => $title_object->getLocalUrl() ,
-				'question' => $title_object->getPrefixedText()
+			if ( $article instanceof Article ) {
+				$status = $article->doEdit($content, 'Poll Updated', EDIT_UPDATE, false, $wgUser);
+				$title_object = $article->getTitle();
+				// Fixme: check status object
+				$res = array (
+					'success' => true,
+					'pollId' => $article->getID(),
+					'url'  => $title_object->getLocalUrl() ,
+					'question' => $title_object->getPrefixedText()
 				);
+			}
 		}
 
 		return $res;
