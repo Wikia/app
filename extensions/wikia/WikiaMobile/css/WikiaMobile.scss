@@ -23,7 +23,7 @@ html {
 }
 
 body {
-	background-color: $footerBackground;
+	background-color: $page-background-color;
 	color: $page-text-color;
 	font-family: helvetica, android, sans-serif;
 	font-size: medium;
@@ -62,7 +62,6 @@ a {
 
 #WikiaPage {
 	overflow-x: hidden;
-	background-color: $page-background-color;
 }
 
 #WikiaMainContent{
