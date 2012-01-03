@@ -1701,7 +1701,7 @@ class RTEReverseParser {
 	 * Check if given node was rendered from HTML node
 	 */
 	private static function wasHtml($node) {
-		return $node->hasAttribute('data-rte-washtml');
+		return ($node instanceof DOMElement) && $node->hasAttribute('data-rte-washtml');
 	}
 
 	/**
