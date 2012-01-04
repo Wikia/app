@@ -126,18 +126,24 @@ class HealthCheck extends UnlistedSpecialPage {
 			}
 		}
 
-		$content = Http::post('http://'.$_SERVER['SERVER_NAME'].'/index.php?title=Special:HealthCheck&'.self::POST_PARAM_GET.'=1234',array(
-			'proxy' => '127.0.0.1:80',
-			'postData' => array(
-				self::POST_PARAM_POST => '1234',
-			),
-		));
-		if ( substr( (string)$content, 0, strlen(self::STATUS_MESSAGE_OK) ) != self::STATUS_MESSAGE_OK ) {
-			$statusCode = 503;
-			$statusMsg  = 'Server status is: NOT OK - POST request failed';
+		// don't check POST on Iowa (i.e. when ready only mode is on)
+		if (wfReadOnly()) {
+			$statusMsg  = 'Server status is: POST check disabled';
+		}
+		else {
+			$content = Http::post('http://'.$_SERVER['SERVER_NAME'].'/index.php?title=Special:HealthCheck&'.self::POST_PARAM_GET.'=1234',array(
+				'proxy' => '127.0.0.1:80',
+				'postData' => array(
+					self::POST_PARAM_POST => '1234',
+				),
+			));
+			if ( substr( (string)$content, 0, strlen(self::STATUS_MESSAGE_OK) ) != self::STATUS_MESSAGE_OK ) {
+				$statusCode = 503;
+				$statusMsg  = 'Server status is: NOT OK - POST request failed';
+			}
 		}
 
 		$wgOut->setStatusCode( $statusCode );
-		$wgOut->addHTML( $statusMsg );
+		$wgOut->addHTML( $statusMsg . "\n" );
 	}
 }
