@@ -1099,6 +1099,11 @@ class WikiFactory {
                     unset( $ids[$k] );
                 }
             }
+
+		if ( empty( $ids ) ) {
+			// if this is empty, then we have every thing we need from cache
+			return $aOut;
+		}
             
             // Query the DB for the data we don't have cached yet.
             $dbr = self::db( ( $master ) ? DB_MASTER : DB_SLAVE );
