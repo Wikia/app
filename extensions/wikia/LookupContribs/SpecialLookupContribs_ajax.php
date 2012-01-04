@@ -30,7 +30,7 @@ class LookupContribsAjax {
 		$loop		= $wgRequest->getVal('loop');
 		$order		= $wgRequest->getVal('order');
 		$numOrder	= $wgRequest->getVal('numOrder');
-		$lookupUser = ( intval($wgRequest->getVal('lookupUser')) === 1 ? true : false );
+		$lookupUser = $wgRequest->getBool('lookupUser');
 
 		$result = array(
 			'sEcho' => intval($loop), 
@@ -55,7 +55,7 @@ class LookupContribsAjax {
 			if ( empty($mode) ) {
 				$oLC->setLimit($limit);
 				$oLC->setOffset($offset);
-				$activity = $oLC->checkUserActivity($lookupUser, $order);
+				$activity = $oLC->checkUserActivity($lookupUser, $order); 
 				if ( !empty($activity) ) {
 					$result['iTotalRecords'] = intval($limit); #( isset( $records['cnt'] ) ) ?  intval( $records['cnt'] ) : 0;
 					$result['iTotalDisplayRecords'] = intval($activity['cnt']);

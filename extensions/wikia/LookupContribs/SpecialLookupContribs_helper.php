@@ -288,6 +288,7 @@ class LookupContribsCore {
 	 * @return array
 	 * 
 	 * @author Andrzej 'nAndy' Łukaszewski
+	 * @FIXME Why does this use a pass by reference, never uses it and then !@#!$%^ sets it to array()? Confusing as hell. --love, TOR
 	 */
 	function getEditCount(&$wikisIds) {
 		global $wgStatsDB;
