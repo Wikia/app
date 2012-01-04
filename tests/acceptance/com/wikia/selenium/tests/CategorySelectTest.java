@@ -5,17 +5,15 @@ import static org.testng.AssertJUnit.assertEquals;
 import java.awt.event.KeyEvent;
 
 import org.testng.annotations.Test;
-import java.util.Random;
+import java.util.Date;
 
 public class CategorySelectTest extends BaseTest {
 
 	@Test(groups={"CI", "verified"})
 	public void testAddCategory() throws Exception {
 		loginAsStaff();
-		Random randomGenerator = new Random();
-		int randomInt = randomGenerator.nextInt(666);
-		editArticle("WikiaAutomatedTest" + randomInt,
-				"Wikia automated test for CategorySelect\n[[Category:Wikia tests]]");
+		String title = "WikiaAutomatedTest" + ((new Date()).toString());
+		editArticle(title, "Wikia automated test for CategorySelect\n[[Category:Wikia tests]]");
 
 		// Add new category on view page
 		waitForElement("link=Add category");
@@ -40,9 +38,12 @@ public class CategorySelectTest extends BaseTest {
 		waitForElement("link=Other Category");
 
 		clickAndWait(isOasis() ? "//a[@data-id='edit']" : "ca-edit");
+		waitForElement("wpTextbox1");
+		waitForElementNotVisible("//div[@class='editpage-loading-indicator']");
+		waitForElement("//a[contains(@class, 'cke_button_ModeSource')]");
 		session().click("//a[contains(@class, 'cke_button_ModeSource')]");
-		waitForElement("csWikitext");
-		waitForElementVisible("csWikitext");
+		waitForElement("//textarea[@id='csWikitext']");
+		waitForElementVisible("//textarea[@id='csWikitext']");
 
 		session().type("csWikitext", "[[Category:Other Category|Other Category sortkey]]\n[[Category:Wikia tests]]");
 		session().click("//a[contains(@class, 'cke_button_ModeWysiwyg')]");
@@ -56,6 +57,7 @@ public class CategorySelectTest extends BaseTest {
 
 		doEdit("Wikia automated test for CategorySelect\n[[Category:Other category]] added via textbox");
 		clickAndWait("wpSave");
+		waitForElement("link=Other Category");
 		assertEquals("Other Category", session().getText("link=Other Category"));
 
 		// TODO: Test to make sure that deleting one tag by clicking an X deletes exactly that one tag (and not more, if there are more). See rt#45033
