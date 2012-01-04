@@ -514,6 +514,7 @@ public class BaseTest {
 	protected void undeleteArticle(String articleName, String reason) throws Exception {
 		openAndWait("index.php?title=Special:Undelete/" + articleName);
 
+		waitForElement("wpComment");
 		session().type("wpComment", reason);
 
 		clickAndWait("mw-undelete-submit");
@@ -522,6 +523,7 @@ public class BaseTest {
 	protected void moveArticle(String oldName, String newName, String reason) throws Exception {
 		openAndWait("index.php?title=Special:MovePage/" + oldName);
 
+		waitForElement("wpNewTitle");
 		session().type("wpNewTitle", newName);
 		session().type("wpReason", reason);
 

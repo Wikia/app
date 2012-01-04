@@ -15,7 +15,7 @@ public class NotificationsModuleTest extends BaseTest {
 	}
 
 	// BugId: 17557
-	@Test(groups={"oasis", "CI", "verified"})
+	@Test(groups={"CI", "verified"})
 	public void testTalkPageNotificationSend() throws Exception {
 		loginAsRegular();
 		openAndWait("index.php?title=User_talk:" + getTestConfig().getString("ci.user.wikiastaff.username") + "&action=edit&section=new");
@@ -28,7 +28,7 @@ public class NotificationsModuleTest extends BaseTest {
 	}
 
 	// BugId: 17557
-	@Test(groups={"oasis", "CI", "verified"},dependsOnMethods={"testTalkPageNotificationSend"})
+	@Test(groups={"CI", "verified"},dependsOnMethods={"testTalkPageNotificationSend"})
 	public void testTalkPageNotificationReceive() throws Exception {
 		// check messages for staff
 		loginAsStaff();
@@ -47,7 +47,7 @@ public class NotificationsModuleTest extends BaseTest {
 		assertFalse(session().isElementPresent(xPath));
 	}
 
-	@Test(groups={"oasis", "CI", "verified"})
+	@Test(groups={"CI", "verified"})
 	public void testCommunityMessageNotificationSend() throws Exception {
 		loginAsStaff();
 
@@ -55,7 +55,7 @@ public class NotificationsModuleTest extends BaseTest {
 		editArticle("Mediawiki:community-corner", "Community message test --~~~~");
 	}
 
-	@Test(groups={"oasis", "CI", "verified"},dependsOnMethods={"testCommunityMessageNotificationSend"})
+	@Test(groups={"CI", "verified"},dependsOnMethods={"testCommunityMessageNotificationSend"})
 	public void testCommunityMessageNotificationReceive() throws Exception {
 		loginAsRegular();
 	
@@ -75,7 +75,7 @@ public class NotificationsModuleTest extends BaseTest {
 		assertFalse(session().isElementPresent(xPath));
 	}
 
-	@Test(groups={"oasis", "CI", "verified"})
+	@Test(groups={"CI", "verified"})
 	public void testPreferencesAndLogoutConfirmation() throws Exception {
 		loginAsRegular();
 
@@ -100,7 +100,7 @@ public class NotificationsModuleTest extends BaseTest {
 		assertTrue(session().isElementPresent(xPath));
 	}
 
-	@Test(groups={"oasis", "CI", "verified"})
+	@Test(groups={"CI", "verified"})
 	public void testPageActionsConfirmation() throws Exception {
 		String date = (new Date()).toString().replace(" ", "_");
 		String pageA = "User:" + getTestConfig().getString("ci.user.wikiastaff.username") + "/Foo" + date;
@@ -120,6 +120,7 @@ public class NotificationsModuleTest extends BaseTest {
 		moveArticle(pageA, pageB, reason);
 
 		// we should be redirected to B
+		session().waitForCondition("typeof window.wgPageName != 'undefined';", this.getTimeout());
 		assertTrue(session().getEval("window.wgPageName").equals(pageB));
 		assertTrue(session().isElementPresent(xPath));
 
@@ -127,6 +128,7 @@ public class NotificationsModuleTest extends BaseTest {
 		deleteArticle(pageB, "label=regexp:^.*Author request", reason);
 
 		// we should be redirected to main page
+		session().waitForCondition("typeof window.wgIsMainpage != 'undefined';", this.getTimeout());
 		assertTrue(session().getEval("window.wgIsMainpage ? 'true' : 'false'").equals("true"));
 		assertTrue(session().isElementPresent(xPath));
 
@@ -134,6 +136,7 @@ public class NotificationsModuleTest extends BaseTest {
 		undeleteArticle(pageB, reason);
 
 		// we should be redirected to B
+		session().waitForCondition("typeof window.wgPageName != 'undefined';", this.getTimeout());
 		assertTrue(session().getEval("window.wgPageName").equals(pageB));
 		assertTrue(session().isElementPresent(xPath));
 
