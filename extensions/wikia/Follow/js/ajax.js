@@ -42,14 +42,14 @@ Follow.uwatch = function(e) {
     return false;
 }
 
-Follow.loadStatus = new Array();
+Follow.loadStatus = [];
 
 Follow.showMore = function(e) {
     var eid = $(e.target).attr("id");
     var msg = eid.split("-");
     var key = msg[4];
     var head = eid.replace('more-', '');
-    WET.byStr( 'WikiaFollowedPages/specialpage/viewall/' + msg[4] );   
+    WET.byStr( 'WikiaFollowedPages/specialpage/viewall/' + msg[4] );
 
     if(typeof(Follow.loadStatus[key]) == 'undefined' || Follow.loadStatus[key] === null ) {
         var valueKey = 'count-' + head;
@@ -80,7 +80,7 @@ Follow.syncUserPrefsEvent = function(e) {
 }
 
 Follow.syncUserPrefs = function(target) {
-    var syncArray  = new Array();
+    var syncArray  = [];
     syncArray[ 'mw-input-enotifminoredits' ] = 'mw-input-enotiffollowedminoredits';
     syncArray[ 'mw-input-enotifwatchlistpages' ] = 'mw-input-enotiffollowedpages';
     syncArray[ 'mw-input-enotiffollowedminoredits' ] = 'mw-input-enotifminoredits';
