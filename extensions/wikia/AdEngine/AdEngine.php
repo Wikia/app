@@ -397,15 +397,9 @@ class AdEngine {
 		} else if ($slotname == 'RIGHT_SKYSCRAPER_1'){
 			$this->adProviders[$slotname] = $this->getProviderFromId($this->slots[$slotname]['provider_id']);
 
-		// All of the errors and toggles are handled, now switch based on language
 		} else {
 
-			if (! in_array($wgLanguageCode, AdProviderGoogle::getSupportedLanguages())){
-				// Google's TOS prevents serving ads for some languages
-				$this->adProviders[$slotname] = new AdProviderNull("Unsupported language for Google Adsense ($wgLanguageCode)", false);
-			} else {
 			 	$this->adProviders[$slotname] = $this->getProviderFromId($this->slots[$slotname]['provider_id']);
-			}
 		}
 
 		// Should never happen, but be sure that an AdProvider object is always returned.
