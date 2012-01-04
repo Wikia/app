@@ -103,8 +103,7 @@ class ApiMain extends ApiBase {
 		'txtfm' => 'ApiFormatTxt',
 		'dbg' => 'ApiFormatDbg',
 		'dbgfm' => 'ApiFormatDbg',
-		'push' => 'ApiFormatPUSH',
-		'html' => 'ApiFormatHTML'
+		'push' => 'ApiFormatPUSH'
 	);
 
 	/**
