@@ -168,14 +168,14 @@ class LookupContribsCore {
                             $options
                         );
                         
-                        if ( !isset( $wikisIds ) ) {
+                        if ( empty( $wikisIds ) ) {
                             $wikisIds = array();
                             while ( $row = $dbr->fetchObject( $res ) ) {
                                 $wikisIds[] = $row->wiki_id;
                             }
                             $dbr->dataSeek( $res, 0 );
                         }
-                        
+
                         $wData = WikiFactory::getWikisByID( $wikisIds );
                         $i = 0;
                         while ( $row = $dbr->fetchObject( $res ) ) {
