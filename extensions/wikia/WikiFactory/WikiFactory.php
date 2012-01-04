@@ -1077,6 +1077,11 @@ class WikiFactory {
                 Wikia::log( __METHOD__, "", "WikiFactory is not used." );
                 return false;
             }
+
+		// do nothing if input is empty
+		if ( empty( $ids ) ) {
+			return array();
+		}
             
             global $wgWikiFactoryCacheType;
             $oMemc = wfGetCache( $wgWikiFactoryCacheType );
