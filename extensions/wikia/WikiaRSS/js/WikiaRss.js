@@ -1,6 +1,6 @@
 var WikiaRss = WikiaRss || (function(){
 	/** @private **/
-	
+
 	/** @public **/
 	return {
 		init: function(options) {
@@ -9,7 +9,7 @@ var WikiaRss = WikiaRss || (function(){
 				method: 'getRssFeeds',
 				format: 'json',
 				data: {
-					options: options,
+					options: options
 				},
 				callback: function(data) {
 					if( data.status == true ) {
