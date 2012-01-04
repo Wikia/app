@@ -117,47 +117,57 @@
 	};
 
 	$.openModal =  function(options) {
-		if(!this._modalCreated) this._createModal();
 		options = options || {};
 
-		if(options.addClass) {
-			this._modal.addClass(options.addClass);
-		} else {
-			this._modal.attr('class', '');
+		var html = options.html,
+			imageNumber = options.imageNumber,
+			addClass = options.addClass,
+			toHide = options.toHide,
+			onOpen = options.onOpen,
+			modal;
+
+		if(!(html || imageNumber)) throw "No content provided for modal";
+
+		if(!this._modalCreated) this._createModal();
+
+		modal = this._modal;
+
+		if(addClass){
+			modal.addClass(addClass);
+		}else{
+			modal.attr('class', '');
 		}
 
-		if(options.html) {
-			this._modalContent.html(options.html);
-		} else if(options.imageNumber) {
+		if(html){
+			this._modalContent.html(html);
+		}else if(imageNumber){
 			this._modalContent.html('<div class=changeImageButton id=previousImage><div class=changeImageChevron></div></div><div class=fullScreenImage></div><div class=changeImageButton id=nextImage><div class=changeImageChevron></div></div>');
-			$._changeImage(options.imageNumber, $('.fullScreenImage'));
-		} else {
-			this._modalContent.html($.msg('wikiamobile-modal-no-content'));
+			$._changeImage(imageNumber, $('.fullScreenImage'));
 		}
 
 		this._showCaption(options.caption);
 
-		if(options.toHide) {
-			var toHide = options.toHide;
-			if(typeof toHide == 'string') {
+		if(toHide){
+			if(typeof toHide == 'string'){
 				this._toHide = $(toHide);
-			} else if(toHide instanceof Array) {
+			}else if(toHide instanceof Array){
 				for(var i = 0, l = toHide.length; i < l; i++) {
 					this._toHide.add(toHide[i]);
 				}
-			}  else {
+			}else{
 				this._toHide = null;
 			}
-		} else {
+		}else{
 			this._toHide = null;
 		}
 
-		if(typeof options.onOpen == 'function' ) {
-			options.onOpen();
+		if(typeof onOpen == 'function'){
+			onOpen();
 		}
+
 		this._position = window.pageYOffset;
 		this._thePage.hide();
-		this._modal.addClass('modalShown');
+		modal.addClass('modalShown');
 		this._resetTimeout();
 	};
 
