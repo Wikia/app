@@ -7,7 +7,7 @@ import static com.thoughtworks.selenium.grid.tools.ThreadSafeSeleniumSessionStor
 import static org.testng.AssertJUnit.assertTrue;
 
 public class ReturnToTest extends BaseTest {
-	@Test(groups={"oasis", "CI"})
+	@Test(groups={"CI", "verified"})
 	public void testBlogListingPage() throws Exception {
 		// go to Special:CreateBlogListingPage
 		session().open("index.php?title=Special:CreateBlogListingPage");
@@ -20,7 +20,7 @@ public class ReturnToTest extends BaseTest {
 		}
 	}
 
-	@Test(groups={"oasis", "CI"})
+	@Test(groups={"CI", "verified"})
 	public void testBlogPage() throws Exception {
 		// go to Special:CreateBlogPage
 		session().open("index.php?title=Special:CreateBlogPage");
@@ -33,7 +33,7 @@ public class ReturnToTest extends BaseTest {
 		}
 	}
 
-	@Test(groups={"oasis", "CI"})
+	@Test(groups={"CI", "verified"})
 	public void testMyHome() throws Exception {
 		// Oasis uses Special:WikiActivity instead of MyHome and you don't need to be logged in to see it.
 		session().open("index.php?title=Special:MyHome");
@@ -47,7 +47,7 @@ public class ReturnToTest extends BaseTest {
 		}
 	}
 
-	@Test(groups={"oasis", "CI"})
+	@Test(groups={"CI", "verified"})
 	public void testUpload() throws Exception {
 		// go to Special:Upload
 		session().open("index.php?title=Special:Upload");
@@ -64,7 +64,7 @@ public class ReturnToTest extends BaseTest {
 	 * works ONLY when $wgGroupPermissions['*']['edit'] = false;
 	 * Requires configuration management
 	 */
-	@Test(groups={"oasis", "CI", "broken"})
+	@Test(groups={"CI", "broken"})
 	public void testEditPermission() throws Exception {
 		// go to Special:Upload
 		session().open("index.php?title=Main_Page&action=edit");
@@ -77,7 +77,7 @@ public class ReturnToTest extends BaseTest {
 		}
 	}
 
-	@Test(groups={"oasis", "CI"})
+	@Test(groups={"CI", "verified"})
 	public void testSpecialPages() throws Exception {
 		// go to Special:SpecialPages
 		session().open("index.php?title=Special:SpecialPages");
@@ -90,17 +90,10 @@ public class ReturnToTest extends BaseTest {
 		assertTrue(session().isElementPresent("//" + rootElement + "//a[contains(@href,'title=Special:Signup&returnto=Special%3AChangePassword')]"));
 
 		// check link for selected special page
-		assertTrue(session().isElementPresent("//" + rootElement + "//a[contains(@href, 'title=Special:Signup&returnto=Special%3AMyHome')]"));
-
-		// check link for selected special page
 		assertTrue(session().isElementPresent("//" + rootElement + "//a[contains(@href, 'title=Special:Signup&returnto=Special%3APreferences')]"));
 
 		// check link for selected special page
 		assertTrue(session().isElementPresent("//" + rootElement + "//a[contains(@href, 'title=Special:Signup&returnto=Special%3AWatchlist')]"));
-
-		// check link for selected special page
-		// shown only to logged in
-		//assertTrue(session().isElementPresent("//" + rootElement + "//a[contains(@href, 'title=Special:Signup&returnto=Special%3AUpload')]"));
 
 		// check link for selected special page
 		assertTrue(session().isElementPresent("//" + rootElement + "//a[contains(@href, 'title=Special:Signup&returnto=Special%3ACreateBlogPage')]"));
