@@ -88,9 +88,9 @@ class MovePageForm {
 
 	/**
 	 * Show the form
-	 * @param mixed $err Error message. May either be a string message name or 
-	 *    array message name and parameters, like the second argument to 
-	 *    OutputPage::wrapWikiMsg(). 
+	 * @param mixed $err Error message. May either be a string message name or
+	 *    array message name and parameters, like the second argument to
+	 *    OutputPage::wrapWikiMsg().
 	 */
 	function showForm( $err ) {
 		global $wgOut, $wgUser, $wgContLang, $wgFixDoubleRedirects;
@@ -148,14 +148,14 @@ class MovePageForm {
 			$submitVar = 'wpMoveOverSharedFile';
 			$err = '';
 		}
-		
+
 		$oldTalk = $this->oldTitle->getTalkPage();
 		$considerTalk = ( !$this->oldTitle->isTalkPage() && $oldTalk->exists() );
 
 		$dbr = wfGetDB( DB_SLAVE );
 		if ( $wgFixDoubleRedirects ) {
-			$hasRedirects = $dbr->selectField( 'redirect', '1', 
-				array( 
+			$hasRedirects = $dbr->selectField( 'redirect', '1',
+				array(
 					'rd_namespace' => $this->oldTitle->getNamespace(),
 					'rd_title' => $this->oldTitle->getDBkey(),
 				) , __METHOD__ );
@@ -249,7 +249,7 @@ class MovePageForm {
 				<tr>
 					<td></td>
 					<td class='mw-input' >" .
-						Xml::checkLabel( wfMsg( 'move-leave-redirect' ), 'wpLeaveRedirect', 
+						Xml::checkLabel( wfMsg( 'move-leave-redirect' ), 'wpLeaveRedirect',
 							'wpLeaveRedirect', $this->leaveRedirect ) .
 					"</td>
 				</tr>"
@@ -261,7 +261,7 @@ class MovePageForm {
 				<tr>
 					<td></td>
 					<td class='mw-input' >" .
-						Xml::checkLabel( wfMsg( 'fix-double-redirects' ), 'wpFixRedirects', 
+						Xml::checkLabel( wfMsg( 'fix-double-redirects' ), 'wpFixRedirects',
 							'wpFixRedirects', $this->fixRedirects ) .
 					"</td>
 				</tr>"
@@ -300,7 +300,7 @@ class MovePageForm {
 			);
 		}
 
-		$watchChecked = $wgUser->isLoggedIn() && ($this->watch || $wgUser->getBoolOption( 'watchmoves' ) 
+		$watchChecked = $wgUser->isLoggedIn() && ($this->watch || $wgUser->getBoolOption( 'watchmoves' )
 			|| $this->oldTitle->userIsWatching());
 		# Don't allow watching if user is not logged in
 		if( $wgUser->isLoggedIn() ) {
@@ -313,7 +313,7 @@ class MovePageForm {
 			</tr>");
 		}
 
-		$wgOut->addHTML( "	
+		$wgOut->addHTML( "
 				{$confirm}
 			<tr>
 				<td>&nbsp;</td>
@@ -349,6 +349,22 @@ class MovePageForm {
 			return;
 		}
 
+		# don't allow moving to pages with # in
+		if ( !$nt || $nt->getFragment() != '' ) {
+			$this->showForm( 'badtitletext' );
+			return;
+		}
+
+		# Show a warning if the target file exists on a shared repo
+		if ( $nt->getNamespace() == NS_FILE
+			&& !( $this->moveOverShared && $wgUser->isAllowed( 'reupload-shared' ) )
+			&& !RepoGroup::singleton()->getLocalRepo()->findFile( $nt )
+			&& wfFindFile( $nt ) )
+		{
+			$this->showForm( array('file-exists-sharedrepo') );
+			return;
+		}
+
 		# Delete to make way if requested
 		if ( $wgUser->isAllowed( 'delete' ) && $this->deleteAndMove ) {
 			$article = new Article( $nt );
@@ -371,23 +387,6 @@ class MovePageForm {
 			$article->doDelete( wfMsgForContent( 'delete_and_move_reason' ) );
 		}
 
-		# don't allow moving to pages with # in
-		if ( !$nt || $nt->getFragment() != '' ) {
-			$this->showForm( 'badtitletext' );
-			return;
-		}
-
-		# Show a warning if the target file exists on a shared repo
-		if ( $nt->getNamespace() == NS_FILE 
-			&& !( $this->moveOverShared && $wgUser->isAllowed( 'reupload-shared' ) )
-			&& !RepoGroup::singleton()->getLocalRepo()->findFile( $nt ) 
-			&& wfFindFile( $nt ) )
-		{
-			$this->showForm( array('file-exists-sharedrepo') );
-			return;
-			
-		}
-		
 		if ( $wgUser->isAllowed( 'suppressredirect' ) ) {
 			$createRedirect = $this->leaveRedirect;
 		} else {
@@ -443,7 +442,7 @@ class MovePageForm {
 		# would mean that you couldn't move them back in one operation, which
 		# is bad.  FIXME: A specific error message should be given in this
 		# case.
-		
+
 		// FIXME: Use Title::moveSubpages() here
 		$dbr = wfGetDB( DB_MASTER );
 		if( $this->moveSubpages && (
@@ -557,8 +556,8 @@ class MovePageForm {
 			$wgUser->removeWatch( $ot );
 			$wgUser->removeWatch( $nt );
 		}
-		
-		# Re-clear the file redirect cache, which may have been polluted by 
+
+		# Re-clear the file redirect cache, which may have been polluted by
 		# parsing in messages above. See CR r56745.
 		# FIXME: needs a more robust solution inside FileRepo.
 		if( $ot->getNamespace() == NS_FILE ) {
@@ -599,4 +598,3 @@ class MovePageForm {
 		$out->addHTML( "</ul>\n" );
 	}
 }
-
