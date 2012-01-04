@@ -1,8 +1,6 @@
 <?php
 class UserPreferencesV2 {
 
-	public function __construct() {}
-
 	/**
 	 * @brief This function change user preferences special page
 	 *
