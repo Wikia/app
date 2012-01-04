@@ -57,6 +57,10 @@ class GamingCalendarSpecialPageController extends WikiaSpecialPageController {
 	public function getEntriesForDate() {
 		global $wgBlankImgUrl;
 		
+		$this->response->addAsset( 'skins/common/jquery/jquery-ui-1.8.14.custom.js' );
+		$this->response->addAsset( 'extensions/wikia/GamingCalendar/js/GamingCalendarSpecialPage.js' );
+		$this->response->addAsset( 'extensions/wikia/GamingCalendar/css/GamingCalendarSpecialPage.scss' );		
+
 		//@todo move this to init once it supports exceptions
 		// Boilerplate special page permissions
 		if ($this->wg->user->isBlocked()) {
