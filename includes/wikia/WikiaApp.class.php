@@ -63,6 +63,7 @@ class WikiaApp {
 	public function __construct(WikiaGlobalRegistry $globalRegistry = null, WikiaLocalRegistry $localRegistry = null, WikiaHookDispatcher $hookDispatcher = null, WikiaFunctionWrapper $functionWrapper = null) {
 
 		if(!is_object($globalRegistry)) {
+			F::setInstance('WikiaGlobalRegistry', new WikiaGlobalRegistry());
 			$globalRegistry = F::build('WikiaGlobalRegistry');
 		}
 		
