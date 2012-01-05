@@ -92,15 +92,15 @@
 		var image = WikiaMobile.getImages()[imageNumber],
 		img = new Image();
 
+		$.showLoader(fullScreen,{center: true});
+
 		img.src = image[0];
 		fullScreen.css('background-image','url()');
 		img.onload =  function() {
-			fullScreen.css('background-image','url("' + img.src + '")');
-			fullScreen.data('number', imageNumber);
+			fullScreen.css('background-image','url("' + img.src + '")').data('number', imageNumber);
 			img = null;
 			$.hideLoader(fullScreen);
 		};
-		$.showLoader(fullScreen,{center: true});
 
 		this._showCaption(image[1]);
 	};

@@ -6,19 +6,21 @@
 
 #modalWrapper {
 	position:absolute;
-	top:0;
+	top:-100%;
 	left:0;
 	height: 100%;
 	min-width: 100%;
-	visibility: hidden;
+	opacity: 0;
 	overflow: hidden;
 	color: $modal-text-color;
 	z-index: $highest-z-index + 1000;
 	-webkit-tap-highlight-color: rgba( 0,0,0,0 );
 	-webkit-focus-ring-color: rgba( 0,0,0,0 );
+	-webkit-transition: opacity 1s;
 
 	&.modalShown {
-		visibility: visible;
+		opacity: 1;
+		top: 0;
 	}
 }
 
@@ -139,5 +141,4 @@
 		border-color: transparent #006CB0 transparent transparent;
 		left: 10px;
 	}
-
 }
