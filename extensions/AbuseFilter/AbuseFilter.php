@@ -119,4 +119,6 @@ $wgAbuseFilterCentralDB = null;
 $wgAbuseFilterIsCentral = false;
 
 // Block duration
-$wgAbuseFilterBlockDuration = 'indefinite';
+/* Wikia Change Begin */
+if ( !isset( $wgAbuseFilterBlockDuration ) ) $wgAbuseFilterBlockDuration = 'indefinite';
+/* Wikia Change End */
