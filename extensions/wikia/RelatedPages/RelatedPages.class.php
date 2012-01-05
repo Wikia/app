@@ -108,52 +108,35 @@ class RelatedPages {
 		
 		global $wgContentNamespaces, $wgEnableRelatedPagesUnionSelectQueries, $wgUser;
 		wfProfileIn( __METHOD__ );
-		////use text snippets for mobile skins
-		
-		if( !in_array( get_class( $wgUser->getSkin() ), array( 'SkinWikiaphone', 'SkinWikiaApp' ) ) ){
 
-			// ImageServing extension enabled, get images
-			$imageServing = new ImageServing( array_keys($pages), 200, array( 'w' => 2, 'h' => 1 ) );
-			$images = $imageServing->getImages(1); // get just one image per article
+		// ImageServing extension enabled, get images
+		$imageServing = new ImageServing( array_keys($pages), 200, array( 'w' => 2, 'h' => 1 ) );
+		$images = $imageServing->getImages(1); // get just one image per article
 
-			// TMP: always remove last article to get a text snippeting working example
-			// macbre: removed as requested by Angie
-			//$images = array_slice($images, 0, $limit-1, true);
+		// TMP: always remove last article to get a text snippeting working example
+		// macbre: removed as requested by Angie
+		//$images = array_slice($images, 0, $limit-1, true);
 			
-			foreach( $pages as $pageId => $data ) {
-				if( isset( $images[$pageId] ) ) {
-					$image = $images[$pageId][0];
-					$data['imgUrl'] = $image['url'];
+		foreach( $pages as $pageId => $data ) {
+			if( isset( $images[$pageId] ) ) {
+				$image = $images[$pageId][0];
+				$data['imgUrl'] = $image['url'];
 
-					$this->pushData( $data );
-				}
-				else {
-					// no images, get a text snippet
-					$data['text'] = $this->getArticleSnippet( $pageId );
-
-					if ($data['text'] != '') {
-						$this->pushData( $data );
-					}
-				}
-				if (count($this->getData()) >= $limit) {
-					break;
-				}
+				$this->pushData( $data );
 			}
-		} else {
-
-			// ImageServing not enabled, just get text snippets for all articles
-			foreach( $pages as $pageId => &$data ) {
+			else {
+				// no images, get a text snippet
 				$data['text'] = $this->getArticleSnippet( $pageId );
 
 				if ($data['text'] != '') {
 					$this->pushData( $data );
 				}
-
-				if (count($this->getData()) >= $limit) {
-					break;
-				}
+			}
+			if (count($this->getData()) >= $limit) {
+				break;
 			}
 		}
+
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -376,8 +359,8 @@ class RelatedPages {
 
 	public static function onOutputPageBeforeHTML( &$out, &$text ) {
 		global $wgRequest;
-		if( $out->isArticle() && $wgRequest->getVal( 'diff' ) === null ) {
-			$text .= wfRenderModule('RelatedPages');
+		if( $out->isArticle() && $wgRequest->getVal( 'diff' ) === null && !Wikia::isWikiaMobile() ) {
+			$text .= wfRenderModule( 'RelatedPages' );
 		}
 		return true;
 	}

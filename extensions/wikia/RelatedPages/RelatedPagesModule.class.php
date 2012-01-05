@@ -59,7 +59,11 @@ class RelatedPagesModule extends Module {
 		else {
 			$this->pages = array();
 		}
-
+		
+		if ( Wikia::isWikiaMobile() ) {
+			//Render the WikiaMobile dedicated template
+			$this->response->getView()->setTemplate( __CLASS__, 'WikiaMobileIndex' );
+		}
 	}
 
 	static function onArticleSaveComplete(&$article, &$user, $text, $summary,

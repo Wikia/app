@@ -24,6 +24,7 @@ class WikiaMobileBodyService extends WikiaService {
 		
 		$this->pageHeaderContent = $this->sendRequest( 'WikiaMobilePageHeaderService', 'index' )->toString();
 		$this->bodyContent = $bodyContent;
+		$this->response->setVal( 'relatedPages', $this->app->renderView( 'RelatedPagesModule', 'index' ) );
 		$this->response->setVal(
 			'categoryLinks',
 			$this->sendRequest(
