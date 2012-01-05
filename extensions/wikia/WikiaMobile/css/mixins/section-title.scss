@@ -6,9 +6,9 @@
 	font-size: $section-title-font-size;
 	padding: $page-padding 27px 0 0;
 	position: relative;
-	
-	.chevron {
-		display: block;
+
+	//TODO: css alias
+	.chev, .chevron {
 		/*border: 1px solid mix($border-color, $page-background-color, 30%);*/
 		width: 22px;
 		height: 22px;
@@ -16,13 +16,13 @@
 		background-repeat: no-repeat;
 		background-image: url("/extensions/wikia/WikiaMobile/images/open_chev.png");/* $wgCdnStylePath */
 		position: absolute;
-		top: 37%;
 		right: 0;
-		background-color: rgba($page-background-color, 0.8);
-		border-radius: 15px;
+		-webkit-transition: all .7s ease-out;
 	}
 
-	&.open .chevron {
+	//TODO: css alias
+	&.open .chevron, &.open .chev {
+		-webkit-transform: rotateZ(360deg);
 		background-image: url("/extensions/wikia/WikiaMobile/images/close_chev.png");/* $wgCdnStylePath */
 	}
 }

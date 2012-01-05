@@ -107,7 +107,7 @@ var WikiaMobile = WikiaMobile || (function() {
 				if(!isWrapped && isBig){
 					table.wrap(tableWrapperHTML);
 					table.isWrapped = true;
-					
+
 					if(!wasWrapped){
 						table.wasWrapped = true;
 						//remove scripts to avoid re-parsing
@@ -199,7 +199,8 @@ var WikiaMobile = WikiaMobile || (function() {
 		processImages();
 
 		//TODO: optimize selectors caching for this file
-		body.delegate('.collapsible-section', clickEvent, function(){
+		//TODO: css alias
+		body.delegate('.collapsible-section, .collSec', clickEvent, function(){
 			var self = $(this);
 
 			track(['section', self.hasClass('open') ? 'close' : 'open']);
@@ -210,6 +211,9 @@ var WikiaMobile = WikiaMobile || (function() {
 		})
 		.delegate('#WikiaArticleCategories a', clickEvent, function(){
 			track(['link', 'category']);
+		})
+		.delegate('.relPag ul', clickEvent, function(){
+			track(['related_pages', 'click']);
 		})
 		.delegate('.infobox img', clickEvent, function(event){
 			event.preventDefault();

@@ -1,6 +1,5 @@
 @mixin box-sizing($value){
 	-moz-box-sizing: $value;
 	-webkit-box-sizing: $value;
-	-o-box-sizing: $value;
 	box-sizing: $value;
 }

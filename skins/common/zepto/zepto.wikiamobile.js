@@ -24,7 +24,7 @@
 
 		var onComplete = function(){
 			remaining--;
-			
+
 			// all files have been downloaded
 			if(remaining == 0 && typeof callback == 'function')
 				callback();
@@ -140,7 +140,7 @@
 			$.showModal(null, html, options);
 		});
 	};
-	
+
 	//Dummy implementation to keep compatibility with Oasis' JS code
 	$.fn.log = function(){return};
 
@@ -169,23 +169,21 @@
 	};
 
 	$.showLoader = function(element, options) {
-		options = options || null;
+		options = options || {};
 
-		element.append('<div class=WikiaMobileLoader><img class=WikiaMobileLoaderImg src=../extensions/wikia/WikiaMobile/images/loader50x50.png></img></div>');
-
-		if(options) {
-			var loader = element.find('.WikiaMobileLoader'),
-			loaderImg = loader.find('.WikiaMobileLoaderImg');
-
-			if(options.center)
-				loader.addClass('center');
-
-			if(options.size)
-				loaderImg.css('width', options.size);
+		if(element.data('hasLoader')) {
+			element.find('.WikiaMobileLoader').show();
+		} else {
+			element.append('<div class="WikiaMobileLoader' + (options.center?' center"':'"') +'><img class=WikiaMobileLoaderImg ' +
+						   (options.size?'style="width:' + options.size + '"':'') + ' src=../extensions/wikia/WikiaMobile/images/loader50x50.png></img></div>').data('hasLoader', true);
 		}
 	};
 
 	$.hideLoader = function(element) {
+		element.find('.WikiaMobileLoader').hide();
+	};
+
+	$.removeLoader = function(element) {
 		element.find('.WikiaMobileLoader').remove();
 	};
 })(Zepto);
