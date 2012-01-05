@@ -188,8 +188,9 @@ var Places = Places || (function(){
 							tooltip.open(map, marker);
 						});
 
+						// open a tooltip for the place map was initialized from
 						if ( options.center && (options.center.label == value.label) ){
-							marker.open(map, marker);
+							tooltip.open(map, marker);
 						}
 
 						aMarkers.push(marker);
