@@ -13,7 +13,7 @@
 	h2 {
 		border-bottom: solid 1px $color-headline-border;
 		font-size: 18px;
-		margin-top: 14px;
+		margin-top: 35px;
 		overflow: hidden;
 	}
 	h3 {
@@ -57,11 +57,13 @@
 
 	sup {
 		font-size: 11px;
+		line-height: 0;
 		vertical-align: super;
 	}
 
 	sub {
 		font-size: 11px;
+		line-height: 0;
 		vertical-align: sub;
 	}
 
@@ -75,6 +77,11 @@
 
 	ul {
 		list-style: square;
+	}
+
+	li {
+		line-height: 20px;
+		margin: 3px 0;
 	}
 
 	dl {
@@ -174,6 +181,9 @@
 			list-style: none;
 			ul {
 				margin-left: 2em;
+			}
+			li {
+				margin: 0;
 			}
 		}
 	}
