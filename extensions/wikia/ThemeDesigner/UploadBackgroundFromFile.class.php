@@ -21,7 +21,7 @@ class UploadBackgroundFromFile extends UploadFromFile {
 		if ( $details[ 'status' ] == self::OK ){ 
 			// check file type (just by extension)
 
-			if ( $this->checkFileExtension( $this->mFinalExtension, array( 'png', 'jpg', 'gif') ) ) {
+			if ( $this->checkFileExtension( $this->mFinalExtension, array( 'png', 'jpg', 'jpeg', 'gif') ) ) {
 				$tempPath = $this->getTempPath();
 				// check if file is correct file size
 				$imageFileSize = filesize( $tempPath );
