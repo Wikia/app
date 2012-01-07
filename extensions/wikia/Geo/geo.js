@@ -1,10 +1,10 @@
 var Geo = {
 	cookieName : 'Geo',
-	geoData : ''
+	geoData : {}
 }
 
 Geo.getGeoData = function () {
-	if (Geo.geoData == '') {
+	if ($.isEmptyObject(Geo.geoData)) {
 		var jsonData = $.cookies.get(Geo.cookieName);
 		Geo.geoData = JSON.parse(jsonData);
 	}

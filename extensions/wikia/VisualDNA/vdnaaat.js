@@ -18,8 +18,8 @@ VisualDNAAAT = {
 if (window.wgIntegrateVisualDNAAAT) {
 	if (window.Geo) {
 		var geoData = Geo.getGeoData();
-		if ($.inArray(geoData['country'], VisualDNAAAT.activeCountries) > -1) {
-			VisualDNAAAT.init();			
+		if (typeof geoData == "object" && $.inArray(geoData['country'], VisualDNAAAT.activeCountries) > -1) {
+			VisualDNAAAT.init();	
 		}
 	}
 }
