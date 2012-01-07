@@ -5,5 +5,6 @@
 
 $messages = array();
 $messages['en'] = array(
-	'videohandler-extension-desc' => 'Prototype video handler',
+	'prototype-videohandler-extension-desc' => 'Prototype video handler',
+	'youtube-videohandler-extension-desc' => 'YouTube video handler',
 );
