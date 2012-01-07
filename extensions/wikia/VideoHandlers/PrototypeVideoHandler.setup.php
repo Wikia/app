@@ -14,7 +14,7 @@ $wgExtensionCredits['media'][] = array(
 	'version' => '0.1',
 	'author' => array(
 		'Jakub Kurcek' ),
-	'descriptionmsg' => 'videohandler-extension-desc'
+	'descriptionmsg' => 'prototype-videohandler-extension-desc'
 );
 
 $dir = dirname( __FILE__ );

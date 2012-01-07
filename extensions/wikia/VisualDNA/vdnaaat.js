@@ -18,7 +18,7 @@ VisualDNAAAT = {
 if (window.wgIntegrateVisualDNAAAT) {
 	if (window.Geo) {
 		var geoData = Geo.getGeoData();
-		if (typeof geoData == "object" && $.inArray(geoData['country'], VisualDNAAAT.activeCountries) > -1) {
+		if (typeof geoData == "object" && !$.isEmptyObject(geoData) && $.inArray(geoData['country'], VisualDNAAAT.activeCountries) > -1) {
 			VisualDNAAAT.init();	
 		}
 	}
