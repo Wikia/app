@@ -19,7 +19,7 @@ class WikiaRssExternalController extends WikiaController {
 		}
 		
 		if( !empty($options) && !empty($options['url']) ) {
-			$url = $options['url'];
+			$url = html_entity_decode($options['url']);
 			$rss = @fetch_rss($url);
 			
 			if( !is_object($rss) || !is_array($rss->items) ) {
