@@ -351,6 +351,7 @@ public class BaseTest {
 	protected void clickAndWait(String location) throws Exception {
 		session().getEval("window.wikiaSeleniumUniqueKey = Math.random();");
 		session().click(location);
+		session().waitForPageToLoad(this.getTimeout());
 		session().waitForCondition("typeof window != 'undefined' && typeof window.wikiaSeleniumUniqueKey == 'undefined'", this.getTimeout());
 		session().waitForCondition("(document.readyState == 'complete') && (typeof document.body != 'undefined')", this.getTimeout());
 		session().getEval("setTimeout(function() {window.wikiaSeleniumUniqueKey = Math.random()}, 100)");

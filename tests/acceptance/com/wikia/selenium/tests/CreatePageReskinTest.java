@@ -5,20 +5,21 @@ import static org.testng.AssertJUnit.assertEquals;
 import static org.testng.AssertJUnit.assertTrue;
 import static org.testng.AssertJUnit.assertFalse;
 
-import java.util.Random;
+import java.util.Date;
 
 import org.testng.annotations.Test;
 
 public class CreatePageReskinTest extends EditPageBaseTest {
 
 	private void openDialogOnRandomPage() throws Exception {
-		session().open("index.php?title=Special:Random");
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("index.php?title=Special:Random");
 
 		if (isOasis()) {
-			session().click("//div[@id='WikiaRail']//a[@class='wikia-button createpage']");
+			waitForElement("//header[@id='WikiHeader']//a[@class='createpage']");
+			session().click("//header[@id='WikiHeader']//a[@class='createpage']");
 		}
 		else {
+			waitForElement("//a[@id='dynamic-links-write-article-link']");
 			session().click("//a[@id='dynamic-links-write-article-link']");
 		}
 
@@ -48,7 +49,7 @@ public class CreatePageReskinTest extends EditPageBaseTest {
 		assertTrue(session().isTextPresent(title));
 	}
 
-	@Test(groups={"CI", "reskin"})
+	@Test(groups={"CI", "verified", "reskin"})
 	public void testTitleErrorChecking() throws Exception {
 		openDialogOnRandomPage();
 
@@ -79,22 +80,7 @@ public class CreatePageReskinTest extends EditPageBaseTest {
 		assertTrue(session().isElementPresent("createPageErrorMsg"));
 	}
 
-	@Test(groups={"CI", "reskin"})
-	public void testCreateStandardLayoutArticle() throws Exception {
-		login();
-		openDialogOnRandomPage();
-
-		// creating new page with standard layout
-		String nonExistentTitle = "N0n 3xist3nt p4ge t1tl3";
-		session().type("wpCreatePageDialogTitle", nonExistentTitle);
-		session().click("//input[@id='CreatePageDialogFormat']");
-		session().click("//*[@id='CreatePageDialogButton']/a");
-
-		// checking edit page
-		checkEditPage(nonExistentTitle);
-	}
-
-	@Test(groups={"CI", "reskin"})
+	@Test(groups={"CI", "verified", "reskin"})
 	public void testCreateBlankArticle() throws Exception {
 		login();
 		openDialogOnRandomPage();
@@ -109,7 +95,7 @@ public class CreatePageReskinTest extends EditPageBaseTest {
 		checkEditPage(nonExistentTitle);
 	}
 
-	@Test(groups={"CI", "reskin"})
+	@Test(groups={"CI", "verified", "reskin"})
 	public void testRedlinksAndCreateboxSupport() throws Exception {
 		loginAsStaff();
 
@@ -146,7 +132,7 @@ public class CreatePageReskinTest extends EditPageBaseTest {
 		deleteArticle("Project:CreatePageTestArticle", "label=regexp:^.*Author request", "WikiaBot CreatePage test");
 	}
 
-	@Test(groups={"CI", "reskin"})
+	@Test(groups={"CI", "verified", "reskin"})
 	public void testUserSetting() throws Exception {
 		login();
 		session().open("index.php?title=Special:Preferences");
@@ -169,9 +155,10 @@ public class CreatePageReskinTest extends EditPageBaseTest {
 		assertTrue(session().isElementPresent("//li[@id='CreatePageDialogBlankContainer' and contains(@class, 'chooser accent')]"));
 	}
 
-	@Test(groups={"CI", "reskin"})
+	@Test(groups={"CI", "verified", "reskin"})
 	public void testSpecialCreatePage() throws Exception {
-		String pageTitle = "CreatePageTest" + Integer.toString(new Random().nextInt(9999));
+		String pageTitle = "CreatePageTest " + ((new Date()).toString());
+		String shortenedPageTitle = pageTitle.substring(0, 25);
 		String content = "CreatePage test --~~~~";
 		loginAsStaff();
 
@@ -183,19 +170,24 @@ public class CreatePageReskinTest extends EditPageBaseTest {
 		session().waitForPageToLoad(this.getTimeout());
 
 		// test modal with required fields
+		waitForElement("//section[@id='HiddenFieldsDialog']//input[@name='wpTitle']");
 		assertTrue(session().isVisible("//section[@id='HiddenFieldsDialog']//input[@name='wpTitle']"));
 
 		// click "Ok" without providing any data - modal should not be hidden
 		session().click("//section[@id='HiddenFieldsDialog']//*[@id='ok']");
+		waitForElement("//section[@id='HiddenFieldsDialog']");
 		assertTrue(session().isVisible("//section[@id='HiddenFieldsDialog']"));
 
 		// provide title
-		session().type("wpTitle", pageTitle + "foo");
+		String newPageTitle = "New" + pageTitle;
+		String newShortenedPageTitle = newPageTitle.substring(0, 25);
+		session().type("wpTitle", newPageTitle);
 		session().click("//section[@id='HiddenFieldsDialog']//*[@id='ok']");
 		assertFalse(session().isElementPresent("//section[@id='HiddenFieldsDialog']"));
 
 		// header should be updated with new title
-		assertTrue(session().isElementPresent("//header[@id='EditPageHeader']//h1/a[contains(text(), '" + pageTitle + "foo')]"));
+		waitForElement("//header[@id='EditPageHeader']//h1/a");
+		assertTrue(session().isElementPresent("//header[@id='EditPageHeader']//h1/a[contains(text(), '" + newShortenedPageTitle + "')]"));
 
 		// edit title
 		session().click("//a[@id='EditPageTitle']");
@@ -204,7 +196,7 @@ public class CreatePageReskinTest extends EditPageBaseTest {
 		session().click("//section[@id='HiddenFieldsDialog']//*[@id='ok']");
 
 		// header should be updated with new title
-		assertTrue(session().isElementPresent("//header[@id='EditPageHeader']//h1/a[contains(text(), '" + pageTitle + "')]"));
+		assertTrue(session().isElementPresent("//header[@id='EditPageHeader']//h1/a[contains(text(), '" + shortenedPageTitle + "')]"));
 
 		// provide content
 		doEdit(content);
@@ -218,26 +210,28 @@ public class CreatePageReskinTest extends EditPageBaseTest {
 		clickAndWait("wpSave");
 
 		// notice bar (page already exists)
+		waitForElement("//section[@id='EditPage']//div[@class='editpage-notices']/ul/li");
 		assertTrue(session().isElementPresent("//section[@id='EditPage']//div[@class='editpage-notices']/ul/li"));
 		assertTrue(session().isTextPresent("A page with that name already exists"));
 
 		// change the title and save it
 		session().click("//a[@id='EditPageTitle']");
 		assertTrue(session().isVisible("//section[@id='HiddenFieldsDialog']"));
-		session().type("wpTitle", pageTitle + "Foo");
+		session().type("wpTitle", newPageTitle);
 		session().click("//section[@id='HiddenFieldsDialog']//*[@id='ok']");
 
 		// save it
 		clickAndWait("wpSave");
 
 		// verify an edit
-		assertTrue(session().getEval("window.wgTitle").equals(pageTitle + "Foo"));
+		session().waitForCondition("typeof window.wgTitle != 'undefined'", this.getTimeout());
+		assertTrue(session().getEval("window.wgTitle").equals(newPageTitle));
 		assertTrue(session().isTextPresent("CreatePage test --"));
 	}
 
-	@Test(groups={"CI", "reskin"})
+	@Test(groups={"CI", "verified", "reskin"})
 	public void testSpecialCreatePageAnonWithCaptcha() throws Exception {
-		String pageTitle = "CreatePageTest" + Integer.toString(new Random().nextInt(9999));
+		String pageTitle = "CreatePageTest " + ((new Date()).toString());
 
 		// now try to create new page using title of the existing one
 		session().open("index.php?title=Special:CreatePage");
