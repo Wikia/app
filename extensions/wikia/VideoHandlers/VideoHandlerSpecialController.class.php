@@ -11,6 +11,8 @@ class VideoHandlerSpecialController extends WikiaSpecialPageController {
 
 	public function index() {
 
+		
+
 		$url = 'http://img.youtube.com/vi/FRKUuSnEDkU/0.jpg';
 		$data = array(
 			'wpUpload' => 1,
@@ -25,11 +27,12 @@ class VideoHandlerSpecialController extends WikiaSpecialPageController {
 		$upload->getTempPath();
 
 		$file = new WikiaLocalFile(
-				Title::newFromText('videoTest4'.rand( 0,999999 ), NS_FILE),
+				Title::newFromText('videoTestVerified', NS_FILE),
 				RepoGroup::singleton()->getLocalRepo()
 		);
 
-		$file->forceMime = 'video/prototype';
+		$file->forceMime( 'video/prototype' );
+		$file->setVideoId( '123' );
 
 		var_dump(
 			$file->upload(

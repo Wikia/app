@@ -20,5 +20,6 @@ $wgExtensionCredits['media'][] = array(
 $dir = dirname( __FILE__ );
 
 $app->registerClass('PrototypeVideoHandler', $dir . '/handlers/PrototypeVideoHandler.class.php');
+$app->registerClass('PrototypeApiWrapper', $dir . '/apiwrappers/PrototypeApiWrapper.class.php');
 
 $wgMediaHandlers['video/prototype'] = 'PrototypeVideoHandler';

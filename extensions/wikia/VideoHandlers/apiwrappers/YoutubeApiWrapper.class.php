@@ -1,6 +1,6 @@
 <?php
 
-class YoutubeApiWrapper {
+class YoutubeApiWrapper extends ApiWrapper{
 
 //	private static $interfaceObject;
 
