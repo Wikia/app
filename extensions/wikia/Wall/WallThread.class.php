@@ -102,7 +102,10 @@ class WallThread {
 		}
 		$ac = $this->getThreadAC();
 		$ac->load();
-		$score += self::timestampToScore( $ac->mFirstRevision->getTimestamp() );
+		if(!empty($ac->mFirstRevision)) {
+			$score += self::timestampToScore( $ac->mFirstRevision->getTimestamp() );	
+		}
+	
 		return $score;
 	}
 	
