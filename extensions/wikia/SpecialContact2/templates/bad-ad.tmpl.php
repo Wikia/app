@@ -11,6 +11,29 @@ echo wfMsgExt( 'specialcontact-intro-bad-ad', array( 'parse' ) );
 <form id="contactform" method="post" action="" enctype="multipart/form-data">
 <input hidden="wpContactCategory" value="bad-ad" />
 
+<?php
+if ( $isLoggedIn ) {
+	echo wfMsgExt( 'specialcontact-logged-in-as', array( 'parse' ), $encName );
+	echo wfMsgExt( 'specialcontact-mail-on-file', array( 'parse' ), $encEmail );	
+?>
+	<input name="wpEmail" type="hidden" value="<?= $encEmail ?>" />
+	<input name="wpUserName" type="hidden" value="<?= $encName ?>" />
+<?php
+} else {
+?>
+<p>
+<label for="wpUserName"><?= wfMsg( 'specialcontact-username' ) ?></label>
+<input name="wpUserName" value="<?= $encName ?>" />
+</p>
+
+<p>
+<label for="wpEmail"><?= wfMsg( 'specialcontact-yourmail' ) ?></label>
+<input name="wpEmail" value="<?= $encEmail ?>" />
+</p>
+<?php
+}
+?>
+
 <p>
 <label for="wpContactWikiName"><?= wfMsg( 'specialcontact-label-bad-ad-link' ) ?></label>
 <input name="wpContactWikiName" />
