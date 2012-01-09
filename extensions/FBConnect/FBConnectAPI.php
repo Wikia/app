@@ -288,11 +288,14 @@ class FBConnectAPI {
 	/*
 	 * 
 	 */
-	function verifyAccountReclamation($fb_user_id,$hash) {
-		if (!$this->Facebook()->verify_account_reclamation($fb_user_id,$hash) ) {
-			 return false;
+	function verifyAccountReclamation() {
+		$sr = (int) $this->Facebook()->getUser();
+
+		if($sr == 0) {
+			return true;
 		}
 
-		return FBConnectDB::getUser($fb_user_id);
+		$user = FBConnectDB::getUser($sr);
+		return $user;
 	}
 }

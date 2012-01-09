@@ -924,12 +924,11 @@ class SpecialConnect extends SpecialPage {
 		$wgOut->setRobotPolicy( 'noindex,nofollow' );
 		
 		$fb = new FBConnectAPI();
-		$fb_user_id = $wgRequest->getVal("u",0);
-		$hash = $wgRequest->getVal("h","");
-		$user_id = $fb->verifyAccountReclamation($fb_user_id, $hash);
+
+		$user = $fb->verifyAccountReclamation( $sRequest );
 		
-		if (!($user_id === false)) {
-			$result = FBConnect::coreDisconnectFromFB($user_id);
+		if (!($user === false)) {
+			$result = FBConnect::coreDisconnectFromFB($user);
 		}
 		
 		$title = Title::makeTitle( NS_SPECIAL  , "Signup"  );
@@ -937,9 +936,8 @@ class SpecialConnect extends SpecialPage {
 		$html = Xml::openElement("a",array( "href" => $title->getFullUrl() ));
 		$html .= $title->getPrefixedText();
 		$html .= Xml::closeElement( "a" );
-			
 		
-		if ( (!($user_id === false))  && ($result['status'] == "ok") ) {
+		if ( (!($user === false))  && ($result['status'] == "ok") ) {
 			$wgOut->setPageTitle(  wfMsg('fbconnect-reclamation-title') );
 			$wgOut->setHTMLTitle( wfMsg('fbconnect-reclamation-title') );
 			$wgOut->addHTML( wfMsg('fbconnect-reclamation-body',array("$1" => $html) ));
