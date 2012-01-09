@@ -258,6 +258,7 @@ class FBConnect {
 
 
 		$statusError = array('status' => "error", "msg" => wfMsg('fbconnect-unknown-error') );
+		
 		if($user->getId() == 0) {
 			return $statusError;
 		}
@@ -270,18 +271,15 @@ class FBConnect {
 			'wpName' => $user->getName()
 		));
 
-		if( !$wgAuth->allowPasswordChange() ) {
-			return $statusError;
-		}
-
 		$result = array ();
 		$loginForm = new LoginForm($params);
 
 		if ($wgUser->getOption("fbFromExist")) {
-			$res = $loginForm->mailPasswordInternal( $wgUser, true, 'fbconnect-passwordremindertitle-exist', 'fbconnect-passwordremindertext-exist' );
+			$res = $loginForm->mailPasswordInternal( $user, true, 'fbconnect-passwordremindertitle-exist', 'fbconnect-passwordremindertext-exist' );
 		} else {
-			$res = $loginForm->mailPasswordInternal( $wgUser, true, 'fbconnect-passwordremindertitle', 'fbconnect-passwordremindertext' );
+			$res = $loginForm->mailPasswordInternal( $user, true, 'fbconnect-passwordremindertitle', 'fbconnect-passwordremindertext' );
 		}
+	
 		if( WikiError::isError( $res ) ) {
 			return $statusError;
 		}
