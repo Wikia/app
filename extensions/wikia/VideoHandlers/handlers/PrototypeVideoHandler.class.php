@@ -120,6 +120,10 @@ class PrototypeVideoHandler extends VideoHandler {
 //		return array( 'jpg', 'image/jpeg' );
 //	}
 
+	function getMetaData(){
+		return 'default metadata';
+	}
+
 	function doTransform( $image, $dstPath, $dstUrl, $params, $flags = 0 ) {
 
 		$oThumbnailImage = parent::doTransform( $image, $dstPath, $dstUrl, $params, $flags );

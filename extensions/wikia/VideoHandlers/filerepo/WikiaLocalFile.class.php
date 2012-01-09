@@ -2,6 +2,8 @@
 
 class WikiaLocalFile extends LocalFile {
 
+	var $forceMime = '';
+
 	function __construct( $title, $repo ){
 		parent::__construct( $title, $repo );
 	}
@@ -33,7 +35,7 @@ class WikiaLocalFile extends LocalFile {
 
 	function isVideo(){
 		$oHandler = $this->getHandler();
-		return ( $oHandler instanceof VideoHandler );
+		return ( $this->media_type == 'video' || $oHandler instanceof VideoHandler );
 	}
 
 	/*
@@ -47,4 +49,41 @@ class WikiaLocalFile extends LocalFile {
 			false;
 		}
 	}
+
+	function setProps( $info ) {
+
+		parent::setProps( $info );
+		if ( $this->forceMime ){
+
+			$this->dataLoaded = true;
+			$this->mime = $this->forceMime;
+			list( $this->major_mime, $this->minor_mime ) = self::splitMime( $this->mime );
+			$handler = MediaHandler::getHandler( $this->getMimeType() );
+			$this->metadata = $handler->getMetaData();
+			$this->media_type = 'video';
+		}
+	}
+
+	/**
+	 * Load metadata from the file itself unless it is a video
+	 */
+	function loadFromFile() {
+
+		$aParams = array( 'minor_mime', 'major_mime', 'mime', 'media_type' );
+		if ( $this->isVideo() ){
+			$aVal = array();
+			foreach( $aParams as $param ){
+				$aVal[ $param ] = $this->$param;
+			}
+		}
+		
+		parent::loadFromFile();
+
+		if ( $this->isVideo() ){
+			foreach( $aParams as $param ){
+				$this->$param = $aVal[ $param ];
+			}
+		}
+	}
+
 }
